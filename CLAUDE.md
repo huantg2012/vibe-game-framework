@@ -38,7 +38,7 @@
 ```
 .claude/agents/*.md  = AI 的执行标准（最高权威）
 START-HERE.md        = 人的操作入口
-docs/framework/*.md  = 人的参考资料（设计原理记录）
+guides/*.md  = 人的参考资料（设计原理记录）
 ```
 
 当 Agent 定义与框架文档冲突时，以 Agent 定义为准，并修改框架文档以对齐。
@@ -49,9 +49,8 @@ docs/framework/*.md  = 人的参考资料（设计原理记录）
 
 ```
 .claude/agents/     → ideation, director, design, code, art, qa
-docs/framework/     → 00-overview, 01-agent-system, 02~07 各阶段工作流,
-                      08-agent-usage-guide, 09-document-lifecycle,
-                      10-slice-model, 11-content-design, 99-review
+guides/             → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
+docs/               → 游戏项目活文档（AI读写、人审核）
 START-HERE.md       → 用户入口
 ```
 

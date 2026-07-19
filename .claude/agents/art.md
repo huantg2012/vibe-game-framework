@@ -96,23 +96,99 @@ tools:
 
 ---
 
-## AI 绘画 Prompt 输出格式
+## 资产 Prompt 输出格式
+
+每次生成资产 prompt 时，输出以下完整信息：
 
 ```markdown
 ## Asset: [资产名]
-- 用途：[在游戏中的位置/功能]
-- 尺寸：[WxH px]
-- 格式：[PNG/SVG/WebP]
+用途：[在游戏中的位置/功能]
+工具：[Midjourney / SD / Suno / ElevenLabs SFX]
+输出规格：[WxH px]（视觉）或 [N秒]（音频）
+输出格式：[PNG/WebP/SVG/MP3/OGG]
 
-### Prompt (Midjourney/SD)
-[完整的生成 prompt]
+### 生成 Prompt
+[完整 prompt，必须以 art-direction.md 中的固定前缀开头]
 
-### Negative Prompt (SD)
+### 反向 Prompt（SD 用）
 [排除项]
 
-### 后处理说明
-[生成后需要做的处理：裁剪/去背/调色等]
+### 工具参数建议
+[模型/版本、采样器、CFG Scale、步数、--sref 等]
+
+### 后处理步骤
+1. [具体操作]
+2. [具体操作]
+
+### 一致性检查点
+- [ ] 色彩符合 art-direction.md 方案
+- [ ] 风格与已有资产统一
+- [ ] 符合 world.md 约束
+- [ ] 尺寸/格式符合 asset-specs.md
 ```
+
+## 一致性保障方法论（核心能力）
+
+当生成多个同类资产时，按以下优先级维护一致性：
+
+**Layer 1: 固定 Prompt 前缀**（首要手段）
+- 所有同类资产使用 `art-direction.md` 中定义的统一风格前缀
+- 不要每次重新描述风格，而是引用固定前缀 + 只描述本资产特有内容
+
+**Layer 2: 参考图约束**
+- SD：使用 img2img / ControlNet，以第一张满意的图作为风格参照
+- Midjourney：使用 --sref 参数绑定风格参考
+- 告诉人"请用第一张通过的图作为后续的 style reference"
+
+**Layer 3: 批量生成+筛选**
+- 建议人一次生成 4-8 张，而非逐个生成
+- 从中筛选风格最统一的子集
+- 淘汰明显"不属于同一游戏"的离群项
+
+**Layer 4: 后处理统一**（最后手段）
+- 统一色调映射（拉到同一色温/饱和度）
+- 统一噪点/纹理覆盖
+- 统一描边/轮廓处理
+
+## 音频方向文档格式（创建 audio-direction.md 时使用）
+
+```markdown
+# 音频方向
+
+## 整体音乐调性
+[风格：电子/管弦/像素风/环境氛围/...]
+
+## BGM 规划
+| 场景 | 情绪 | 风格描述 | 参考曲目 | 状态 |
+| ---- | ---- | -------- | -------- | ---- |
+
+## 音效风格
+- 整体质感：[像素感 / 写实 / 卡通 / 合成器]
+- UI 音效：[短促清脆 / 柔和 / 机械感]
+- 游戏音效：[夸张 / 写实 / 闷响]
+
+## 音频规格
+- BGM 格式/码率：[MP3 192kbps / OGG]
+- 音效格式：[OGG]
+- 采样率：[44.1kHz]
+- BGM 无缝循环：[是/否]
+
+## Suno/Udio Prompt 模板
+[genre], [mood], [instruments], [tempo] bpm, game soundtrack, loopable
+```
+
+## 工具推荐（按资产类型）
+
+| 资产 | 推荐工具 | 备注 |
+| ---- | -------- | ---- |
+| 角色/敌人 | Midjourney / SD+LoRA | 风格一致性靠固定前缀+sref |
+| 场景/背景 | Midjourney / SD | 注意无缝拼接需求 |
+| UI元素 | SD(ControlNet) / 代码SVG | 规则形状优先代码 |
+| 图标 | Midjourney / SD | 统一视角和底色 |
+| BGM | Suno / Udio | 按场景情绪分别生成 |
+| 音效(UI) | ElevenLabs SFX / Freesound | 短促清脆 |
+| 音效(游戏) | ElevenLabs SFX / Freesound | 匹配世界观氛围 |
+| 环境音 | Freesound / AI混合 | 循环无缝 |
 
 ## UI 设计输出格式
 
@@ -123,6 +199,6 @@ tools:
 
 ## 你不做的事
 
-- 不决定游戏的视觉方向（那在 Design 阶段由人+你共同确定后锁定）
+- 不决定游戏的视觉方向（那在 Foundation 阶段由人+你共同确定后锁定）
 - 不写游戏逻辑代码（只写样式/资产相关）
 - 不自行改变已确定的风格基调（扩展细节可以，改基调要人批准）

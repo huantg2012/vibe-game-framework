@@ -131,6 +131,16 @@ tools:
 - [ ] 游戏循环中是否有不必要的对象创建
 - [ ] DOM 操作是否过频
 - [ ] 是否有内存泄漏风险（事件监听未清理等）
+- [ ] FPS 是否稳定 60（最低 30）
+- [ ] 首屏加载是否 < 3 秒
+- [ ] 构建产物总大小是否 < 10MB（首屏 < 2MB）
+
+### 浏览器兼容性（Polish 阶段验收时检查）
+- [ ] Chrome (latest)
+- [ ] Firefox (latest)
+- [ ] Safari (latest)
+- [ ] Mobile Chrome (Android)
+- [ ] Mobile Safari (iOS)
 
 ## 输出格式：QA Report
 
