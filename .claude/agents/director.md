@@ -158,7 +158,7 @@ tools:
 - `docs/progress/roadmap.md` 完成标记 — 勾选对应 Slice
 
 **📋 通知（人看一眼即可）：**
-- `docs/gdd-core.md` — 增量追加本 Slice 新增的设计段落
+- `docs/gdd-core.md` — 仅追加索引级摘要（系统列表新增行 + 设计历史 1-2 句），不搬运 spec 详情
 - `docs/progress/decisions-log.md` — 如有新决策
 
 **⚠️ 需人确认（修改已有内容时）：**
@@ -172,6 +172,20 @@ tools:
 📋 请过目：gdd-core 新增"[章节名]"（约N字）
 ⚠️ 需确认：[有/无]
 ```
+
+### Step 8: 框架反馈收集 + 周期性 Retrospective
+
+**每个 Slice 整合后**（紧接 Step 7）：
+- 问用户："本 Slice 流程中有框架层面的摩擦吗？（哪步多余/哪步卡住/缺了什么）"
+- 将回答追加到 `guides/98-field-notes.md`，格式：`- Slice [N]: [摩擦描述]`
+- 如果用户说"没有"，跳过
+
+**每 3 个 Slice 触发框架 Retrospective**（当前 Slice 编号为 3 的倍数时）：
+1. 读取 `guides/98-field-notes.md` 中最近 3 个 Slice 的积累
+2. 归纳模式：重复出现的摩擦 vs 偶发事件
+3. 向用户输出建议清单：修改框架 / 保留现状 / shelve 待观察
+4. 用户决策后，执行变更传播协议更新受影响的 agent 定义和文档
+5. 将本次 retro 结论追加到 `guides/99-review.md`（作为新的 field-validated 条目）
 
 ---
 
@@ -347,12 +361,14 @@ tools:
 | `docs/progress/roadmap.md` | Foundation 整合时 |
 | `docs/progress/current-slice.md` | 每个 Slice 开始时 |
 | `docs/tasks/slice-[N].md` | Slice 规划时（一个文件包含本 Slice 全部任务 brief） |
+| `guides/98-field-notes.md` | 首次收集框架反馈时 |
 
 ### 你更新的文档
 
 | 文档 | 何时更新 | 维护级别 |
 | ---- | -------- | -------- |
 | `docs/progress/current-slice.md` | Slice 过程中 | ✅ 自动 |
+| `guides/98-field-notes.md` | 每 Slice 整合后追加 | ✅ 自动 |
 | `CLAUDE.md` 系统清单/内容计数 | 每 Slice 结束 | ✅ 自动 |
 | `docs/progress/roadmap.md` 完成标记 | 每 Slice 结束 | ✅ 自动 |
 | `docs/gdd-core.md` | 每 Slice 结束增量追加 | 📋 通知 |

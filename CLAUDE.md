@@ -79,3 +79,78 @@ Slice-based iterative development：
 - 每个 Slice = Design → Implement → Verify → Validate 完整循环
 - Slice 分类：系统 Slice / 内容 Slice / 功能 Slice / 集成 Slice / 打磨 Slice
 - 无 "prototype" 阶段，第一行代码即生产质量
+
+## Spec 维护协议（所有 Agent 遵守）
+
+### 核心原则
+- **一个逻辑系统 = 一个 spec 文件，原地更新**
+- Spec 定义的是"这个系统现在怎么工作"，不是"这个系统的设计历史"
+- Git 负责历史追溯，spec 只反映当前真相
+- 不允许同一系统存在多个"版本"spec 同时有效
+
+### 划分粒度
+- 一个 spec 对应一个能独立设计、独立验证、独立被引用的系统边界
+- 判断标准：两块功能能否被不同 agent 在不同 Slice 独立修改？能 → 拆开；否 → 合一
+
+### 变更类型与操作
+
+| 场景 | 操作 |
+| ---- | ---- |
+| 系统演进（加规则/调数值/扩状态） | 原地更新 spec + 更新 frontmatter `last-modified-date` |
+| 对外接口变更（新增/修改 event/data） | 同上 + 设 `interface-changed: true` + 更新 `exposes` |
+| 系统拆分（一个变两个） | 创建新 spec + 更新原 spec（移除拆出部分）+ 双方 `interfaces-with` 互引 |
+| 系统废弃重做 | 旧 spec 标 `status: SUPERSEDED by [新文件]` + 创建新 spec + 更新所有引用方 |
+
+### 分级加载协议（L0/L1/L2）
+- 每个 spec 的 frontmatter 必含 `interfaces-with`（声明依赖）和 `exposes`（声明对外输出）
+- 正文首行必须是 TL;DR（1-2 句系统摘要）
+- Agent 加载顺序：L0 读 CLAUDE.md → L1 Grep frontmatter 判断相关性 → L2 读完整 spec
+
+---
+
+## 框架迭代协议（开发过程中如何完善框架）
+
+本项目的框架本身是待验证的产物，通过 dogfooding（用框架做真实游戏）来持续完善。
+
+### 两种模式，严格区分
+
+**模式 1: Hot Fix（当场改，≤5 分钟）**
+
+触发条件：框架规则正在阻塞当前工作，且修复显而易见。
+- Agent 指令引用不存在的文件路径 → 改路径
+- 模板缺必要字段 → 加字段
+- 规则禁止的操作是当前任务唯一合理方案 → 改规则
+
+操作：直接改 → 一行记录到 `guides/98-field-notes.md` → 继续工作。
+
+**模式 2: Record & Continue（记下来，不停）**
+
+触发条件：感到摩擦但能绕过继续工作。
+- 流程步骤感觉多余但还是走了
+- Agent 输出格式不太好用但手动调整了
+- 职责划分觉得可以更好
+
+操作：一句话写入 `guides/98-field-notes.md`（`- Slice N: [摩擦描述]`）→ 立刻回到游戏工作。
+
+**禁止**：做游戏做到一半停下来花超过 5 分钟重构框架。需要深入思考的问题 = retro 议题，不是当前任务。
+
+### Retro 节奏（Director Step 8，每 3 Slice）
+
+这是唯一合法的集中框架开发时间：
+1. 读 `guides/98-field-notes.md` 最近 3 Slice 的积累
+2. 分类：重复出现 → 优先修；偶发 → 再观察一轮
+3. 修改框架（agent 定义/模板/CLAUDE.md）+ 执行变更传播
+4. 追加 `guides/99-review.md`
+5. 时间预算：不超过最近 3 Slice 总工时的 10%
+
+### 判断"框架问题"vs"正常困难"
+
+| 信号 | 框架问题 | 不是框架问题 |
+| ---- | -------- | ------------ |
+| 重复出现同一摩擦 | ✅ | |
+| 两个 Agent 规则互相矛盾 | ✅ | |
+| 某个步骤产出无人消费 | ✅ | |
+| 框架未覆盖当前情况 | ✅ | |
+| 设计/实现本身有难度 | | ✅ |
+| 不确定该用哪个 agent | | ✅（问 Director） |
+| 任务比预期耗时 | | ✅ |

@@ -2,6 +2,8 @@
 title: "阶段2: Design（设计）— Human+AI 工作流"
 version: 0.1
 date: 2026-07-17
+status: PARTIALLY OUTDATED
+note: "原型阶段"相关表述已过时（Slice 模型无独立 Prototype 阶段）。Prompt 策略和设计方法论部分仍可参考。
 ---
 
 # 阶段2: Design（设计）

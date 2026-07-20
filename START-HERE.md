@@ -34,6 +34,8 @@
 | 4 | 美术方向 | `art` | `docs/art-direction.md` |
 | 5 | 整合 + 创建 roadmap | `director` | `docs/gdd-core.md` + `CLAUDE.md` + `roadmap.md` |
 
+> **Bootstrap 协议**：vision.md 允许最小形态（elevator pitch + 核心循环 + MVP 范围）就进入 Foundation。文档完整度是渐进目标，不是前置条件。
+
 ### Iterative Development（基础打好，一层层构建游戏）
 
 这是最长的阶段。游戏一个 Slice 一个 Slice 地生长：
@@ -43,11 +45,14 @@
   1. Director 做一致性检查 + 规划任务
   2. Design agent 为新系统写 spec（如需要）
   3. Code/Art agent 实现
-  4. QA agent 验收
+  4. QA agent 验收（含构建验证）
   5. 你试玩验证
-  6. Director 更新文档
-  → 游戏多了一层
+  6. Director 整合更新文档
+  7. Director 收集框架反馈（"流程有摩擦吗？"）
+  → 游戏多了一层 + 框架持续进化
 ```
+
+> 每 3 个 Slice，Director 触发框架 Retrospective（分析积累的摩擦 → 提出修改建议）。
 
 **日常操作**：
 - 开 `director` agent → 它告诉你当前 Slice 进度和待做任务
@@ -56,7 +61,7 @@
 
 ### Polish / Launch
 
-按 `docs/framework/06-*`、`07-*` 的指引走。
+按 `guides/06-polish-workflow.md`、`guides/07-launch-workflow.md` 的指引走。
 
 ---
 
@@ -92,6 +97,19 @@
 ```
 
 **不要每次开工都重新规划。** Slice 规划是每周一次的事。日常就是：看任务清单 → 做 → 标完成。
+
+---
+
+## 框架迭代
+
+框架在使用中持续进化。规则很简单：
+
+- **能 5 分钟修的** → 当场改，一行记录到 `guides/98-field-notes.md`
+- **需要深入思考的** → 记一句话到 `98-field-notes.md`，立刻回到游戏工作
+- **每 3 个 Slice** → Director 触发框架 Retro（读积累 → 归纳 → 批量修改）
+- **禁止**：做游戏做到一半花超过 5 分钟重构框架
+
+详见 `CLAUDE.md` 的"框架迭代协议"。
 
 ---
 

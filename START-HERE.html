@@ -100,7 +100,7 @@ code { background: var(--surface); border: 1px solid var(--border); padding: 0.1
   <span class="phase-arrow">→</span>
   <div class="phase-node">Launch</div>
 </div>
-<p>每个 Slice 是一次完整的 <strong>设计→实现→验收→验证</strong> 循环。游戏一层一层生长，没有"原型"阶段——第一行代码即生产质量。</p>
+<p>每个 Slice 是一次完整的 <strong>设计→实现→验收→验证→框架反馈</strong> 循环。游戏和框架同步生长——第一行纳入主干的代码即生产质量。</p>
 </div>
 
 <!-- ============ QUICK STATUS ============ -->
@@ -194,13 +194,16 @@ code { background: var(--surface); border: 1px solid var(--border); padding: 0.1
 │       ↓                                                    │
 │  4. Code/Art: 执行实现（你开对应窗口逐个任务做）           │
 │       ↓                                                    │
-│  5. QA:       对照 Spec 验收 + 回归检查                    │
+│  5. QA:       对照 Spec 验收 + 构建验证 + 回归检查         │
 │       ↓                                                    │
 │  6. 你:       试玩验证 — 回答本 Slice 的验证问题           │
 │       ↓                                                    │
 │  7. Director: 整合更新文档 → 输出分级摘要                  │
+│       ↓                                                    │
+│  8. Director: 收集框架反馈 → 记录到 98-field-notes.md     │
+│              （每 3 Slice 触发框架 Retrospective）          │
 │                                                            │
-│  → 游戏多了一层，所有文档与代码同步                        │
+│  → 游戏多了一层 + 框架持续进化                             │
 └────────────────────────────────────────────────────────────┘</div>
 </div>
 
@@ -224,8 +227,10 @@ docs/                  游戏项目活文档（AI读写 + 你审核）
   ├── qa/                验收报告
   └── art/               资产规格 + 生成 prompt
 assets/                游戏资产（images/ + audio/）
-CLAUDE.md              项目规则（AI 每次启动自动加载）
-START-HERE.md          AI 读取的入口文件</pre>
+CLAUDE.md              项目规则 + Spec维护协议 + 框架迭代协议（AI 自动加载）
+guides/98-field-notes.md  框架摩擦记录（逐 Slice 积累，每 3 Slice retro）
+guides/99-review.md    Review 发现清单（Round 1 + Round 2）
+START-HERE.md          人的操作入口</pre>
 </div>
 </div>
 
@@ -271,6 +276,12 @@ START-HERE.md          AI 读取的入口文件</pre>
 <div class="scenario">
   <h4>很久没做了，忘了上次做到哪</h4>
   <p class="action">→ 开 Director agent → "看看当前状态" → 它扫描所有文件重建全景告诉你</p>
+</div>
+
+<div class="scenario">
+  <h4>感到框架流程有摩擦</h4>
+  <p>"这步好像多余" / "agent 的输出格式不太好用" / "规则互相矛盾"</p>
+  <p class="action">→ 能 5 分钟修？当场改 + 记到 <code>guides/98-field-notes.md</code>。不能？记一句话到 field-notes → 立刻回到游戏工作。每 3 Slice Director 会集中处理。</p>
 </div>
 
 <h3>权威顺序</h3>

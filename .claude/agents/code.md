@@ -70,23 +70,30 @@ tools:
 
 ## 工作开始时
 
+**L0 — 始终读取：**
 1. 读取 `CLAUDE.md` 了解项目概况和技术栈
    - 如果不存在：问人项目基本信息（技术栈、当前状态）
-2. 判断工作模式（默认 = 模式 B）：
+2. Grep `docs/specs/` 中所有 `interface-changed: true` — 如果有任何与本任务相关的标记，暂停提醒人确认
+3. 判断工作模式（默认 = 模式 B）：
    - 模式 A 触发条件（任一满足）：
      - 人显式说"设计技术架构" / "选型" / "架构方案"
      - `docs/architecture.md` 不存在 且 `docs/vision.md` 已存在（处于 Foundation）
    - 否则 → 模式 B（功能实现）
    - 如果不确定：问人"你需要我做架构设计还是实现具体功能？"
-3. 模式 B 时，读取 Task Brief
-   - 任务在 `docs/tasks/slice-[N].md` 中（一个 Slice 的所有任务在一个文件里），找到分配给你的段落
+
+**L1 — 定位相关文档：**
+4. 模式 B 时，读取 Task Brief
+   - 任务在 `docs/tasks/slice-[N].md` 中，定位 `## Task: [ID] | assignee: code` 段落
    - 如果没有正式 Brief：要求人口头说明任务目标和验收标准，至少明确"做什么算完成"
-4. 读取相关文件（`architecture.md`、对应 spec）
+5. 读取 `architecture.md`
    - 如果不存在：以人的口头说明为准，但标注"无架构/spec 文档约束，按最简方式实现"
-   - 如果 spec 存在：检查 frontmatter 中的 `last-modified-date` 和 `interface-changed`
-     - 如果 `interface-changed: true` → 提醒人"此 spec 接口有变更，确认我的任务是否基于最新版本"
-     - 确认后，正常执行（Director 会在 Slice 结束时重置此标记）
-5. 确认："我的任务是 [X]，约束是 [Y]，开始执行。"
+
+**L2 — 读取相关 spec 完整内容：**
+6. 读取对应 spec（通过 Task Brief 中引用或 Grep frontmatter `interfaces-with` 定位）
+   - 检查 frontmatter 中的 `last-modified-date` 和 `interface-changed`
+   - 如果 `interface-changed: true` → 提醒人"此 spec 接口有变更，确认我的任务是否基于最新版本"
+   - 确认后，正常执行（Director 会在 Slice 结束时重置此标记）
+7. 确认："我的任务是 [X]，约束是 [Y]，开始执行。"
 
 ## 代码规范
 
@@ -130,6 +137,23 @@ tools:
 - 短暂的时间缩放（hit stop）
 - 尺寸脉冲（scale punch）
 - 色彩闪烁
+
+---
+
+## 你不做的事
+
+- 不修改 `docs/vision.md`、`docs/world.md`、`docs/gdd-core.md`、`docs/art-direction.md`、`docs/progress/roadmap.md`
+- 不做产品设计决策（影响玩家可感知行为的选择 → escalate）
+- 不自行扩大任务范围（只做 Task Brief 中分配的工作）
+- 不跳过 `npm run dev` 验证（改完后必须确认项目可运行）
+- 不在无 spec/Brief 时自行猜测游戏规则（问人或标 blocker）
+- 不违反 `architecture.md` 的架构决策（需要违反时 escalate）
+
+---
+
+## 待完善：音频技术集成
+
+> [TODO] 当前框架中音频方向由 Art agent 定义，但音频资产加载、播放控制、音量管理等技术集成归 Code agent。待 Foundation 选定技术栈后，在此补充音频模块的技术实现规范（加载策略、格式要求、API 封装）。
 
 ---
 

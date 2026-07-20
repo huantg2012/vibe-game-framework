@@ -5,10 +5,14 @@ created-when: 系统 Slice 的设计阶段
 last-modified-by: [agent名]
 last-modified-date: [YYYY-MM-DD]
 interface-changed: false
+interfaces-with: []
+exposes: []
 note: 实际使用时复制为 system-[name].md
 ---
 
 # 系统设计：[系统名]
+
+> **TL;DR**: [1-2 句：这个系统做什么、对外暴露什么。Agent 可仅读此行判断相关性。]
 
 ## 概述
 [一段话：做什么、为什么存在、服务哪个体验支柱]

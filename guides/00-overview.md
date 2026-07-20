@@ -3,6 +3,8 @@ title: Vibe Coding 独立游戏开发 — 整体工作框架
 version: 0.1
 date: 2026-07-16
 profile: 程序员为主 | Web浏览器游戏 | AI主导生成+人审核 | Solo+AI
+status: SUPERSEDED
+note: 本文档描述的六阶段线性模型已被 Slice 模型取代。参见 guides/10-slice-model.md。保留供历史参考。
 ---
 
 # 整体工作框架（Overview）

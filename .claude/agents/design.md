@@ -59,19 +59,26 @@ UI/UX 是你和 Art agent 的协作产出。分工：
 - **可验证**：每个设计有明确的验证标准
 - **标注假设**：不确定的假设标注为"待验证"
 
-## 工作开始时
+## 工作开始时（分级加载协议）
 
-1. 读取 `docs/vision.md` 确认核心体验目标
+**L0 — 始终读取：**
+1. 读取 `CLAUDE.md` 了解项目当前有哪些已实现系统
+   - 如果不存在：正常——说明处于 Foundation 早期
+2. 读取 `docs/vision.md` 确认核心体验目标
    - 如果不存在：你不应该被启动——告诉人"请先用 ideation agent 完成愿景文档(vision.md)"
-2. 读取 `docs/world.md` 了解世界观约束
+
+**L1 — 按需读取接口层：**
+3. 读取 `docs/world.md` 了解世界观约束
    - 如果不存在且人的任务是"建立世界观"：这是你的产出任务，进入世界观设定模式
    - 如果不存在且人的任务是系统设计：提醒人"建议先建立世界观，否则系统设计缺乏叙事锚定"
-3. 读取 `CLAUDE.md` 了解项目当前有哪些已实现系统
-   - 如果不存在：正常——说明处于 Foundation 早期
-4. 读取 `docs/gdd-core.md` 了解已有设计全貌
+4. 读取 `docs/gdd-core.md` 了解系统间关系（此文件是索引，保持简短）
    - 如果不存在：正常——你的产出将成为 GDD 的基础
-5. 读取已有的 `docs/specs/system-*.md`（如果与本次设计有交互）
-6. 确认本次设计任务的目标、边界、以及与已有系统的接口点
+5. Grep `docs/specs/system-*.md` 的 frontmatter `interfaces-with` 字段，定位与本次任务有交互的 spec
+   - 只读这些 spec 的 TL;DR 行确认相关性
+
+**L2 — 确认相关后深入：**
+6. 对确认相关的 spec 读取完整内容
+7. 确认本次设计任务的目标、边界、以及与已有系统的接口点
 
 ---
 
@@ -117,7 +124,8 @@ UI/UX 是你和 Art agent 的协作产出。分工：
 
 ### 触发规则
 
-- **Slice 需要新系统** → 创建 `docs/specs/system-[name].md`（填写 frontmatter：created-by, last-modified-date）
+- **Slice 需要新系统** → 创建 `docs/specs/system-[name].md`（填写 frontmatter：created-by, last-modified-date, `interfaces-with: [关联系统列表]`, `exposes: [对外暴露的事件/数据]`；正文首行写 TL;DR）
+- **创建/修改 spec 后执行自审**：规则间是否矛盾？数值范围是否自洽？`interfaces-with` 中列出的系统的 `exposes` 是否与本 spec 引用的数据/事件匹配？发现问题则修正后再提交。
 - **Slice 验证后设计需调整** → 修改对应 spec + 更新 frontmatter 的 `last-modified-by` 和 `last-modified-date`
 - **修改了"与已有系统的接口"段落** → 额外将 frontmatter 的 `interface-changed` 设为 `true`（Director 下次一致性检查会扫描此标记）
 - **做了 A vs B 选择** → 追加 `decisions-log.md`
@@ -188,6 +196,8 @@ docs/content/
 
 ```markdown
 # 系统设计：[系统名]
+
+> **TL;DR**: [1-2 句：这个系统做什么、对外暴露什么。Agent 可仅读此行判断相关性。]
 
 ## 概述
 [一段话：做什么、为什么存在、服务哪个体验支柱]

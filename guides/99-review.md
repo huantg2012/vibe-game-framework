@@ -1,7 +1,7 @@
 ---
-title: "框架 Review 发现清单 — 待逐条核对"
-date: 2026-07-19
-source: 游戏开发视角 + AI Agent工程视角 双重审计
+title: "框架 Review 发现清单"
+last-review: 2026-07-20
+rounds: 2
 ---
 
 # Review 发现清单
@@ -12,6 +12,11 @@ source: 游戏开发视角 + AI Agent工程视角 双重审计
 全部核对完后按优先级批次修复。
 
 ---
+---
+
+# Round 1 — 2026-07-19
+
+来源：游戏开发视角 + AI Agent工程视角 双重审计
 
 ## 游戏开发视角
 
@@ -96,7 +101,7 @@ source: 游戏开发视角 + AI Agent工程视角 双重审计
 
 **建议**：world.md 增加"叙事语调"章节：文本长度约束、语气、人称、禁忌。
 
-**状态**：[✅ fixed — world.md模板新增"叙事语调"章节(语气/人称/长度/禁忌/命名风格/示例)，Design agent量产约束从4项扩至5项] 
+**状态**：[✅ fixed — world.md模板新增"叙事语调"章节(语气/人称/长度/禁忌/命名风格/示例)，Design agent量产约束从4项扩至5项]
 
 ---
 
@@ -162,7 +167,11 @@ source: 游戏开发视角 + AI Agent工程视角 双重审计
 
 **建议**：明确重建验证只做"文件/目录级存在性检查"，不判断实现对错。表述改为："检查系统列表和内容汇总的存在性信息，不验证实现正确性（那是 QA 的事）。"
 
-**状态**：[✅ fixed — 重建验证限定为存在性检查，发现矛盾时报告人而非自行修正，明确"正确性验证是QA的事"] 🔴 内容文件扁平结构无法支撑 100+ 条目
+**状态**：[✅ fixed — 重建验证限定为存在性检查，发现矛盾时报告人而非自行修正，明确"正确性验证是QA的事"]
+
+---
+
+### AE-02 🔴 内容文件扁平结构无法支撑 100+ 条目
 
 **问题**：所有条目写在单个 `content/[type].md` 中。50-100 条目时单文件过大，LLM 加载效率低，人审核困难。
 
@@ -246,7 +255,7 @@ source: 游戏开发视角 + AI Agent工程视角 双重审计
 
 **建议**：关键文档（gdd-core.md, CLAUDE.md）每次修改后做 basic sanity check（markdown 格式完整、表格行数不减少）。
 
-**状态**：[ AE-08 ]
+**状态**：[ shelved ]
 
 ---
 
@@ -282,7 +291,7 @@ source: 游戏开发视角 + AI Agent工程视角 双重审计
 
 ---
 
-## 两个视角的共识（确认为设计优势）
+## Round 1 共识（确认为设计优势）
 
 - ✅ Slice 模型对 Solo indie 合适
 - ✅ "第一行代码即生产质量" 正确
@@ -291,3 +300,287 @@ source: 游戏开发视角 + AI Agent工程视角 双重审计
 - ✅ 基于文件存在性的阶段判断可靠
 - ✅ "宁可标红让人做" 的自动化边界正确
 - ✅ Foundation 顺序合理
+
+---
+---
+
+# Round 2 — 2026-07-20
+
+来源：Indie 游戏制作人视角 + AI Agent 工程专家视角 + 内部一致性硬检查 + Round 1 修复验证
+
+## Round 1 修复验证结果
+
+**13/13 项标记 "✅ fixed" 均已完全落地，无遗漏，无引入新问题。**
+
+验证覆盖：GD-02, GD-04, GD-08, GD-10, AE-01, AE-02, AE-03, AE-04, AE-05, AE-08, AE-10, AE-11, AE-12。
+
+---
+
+## Indie 游戏制作人视角
+
+### R2-I1 🔴 框架未经实战验证
+
+**原始问题**：40+ 文件（6 agents + 16 guides + 20 模板）对一个零代码项目过重。从"打开编辑器"到"看到东西动"需要至少 17 步。
+
+**讨论结论**：框架重量本身合理——项目目标是探索"AI vibe coding game"的方法论，框架即核心产出。真正的风险不是"太重"，而是**所有规则都是未经实战验证的假设**。一个没被用过的框架和没被编译过的代码一样——你认为它能跑，但你不知道。
+
+**最终方案**：
+1. **Dogfooding**：立刻启动真实游戏项目作为框架的集成测试。每完成一个 Slice 同时产出两类反馈——对游戏的验证 + 对框架的验证（追加到 `guides/98-field-notes.md`）
+2. **Bootstrap 协议**：Foundation 阶段允许 vision.md 最小形态（elevator pitch + 核心循环 + MVP 范围即可），其余段落在 Slice 1 结束后补充。不绕过框架，而是把文档完整度从前置条件变成渐进目标
+3. **框架迭代节奏**：Director 每 Slice 整合后收集框架摩擦反馈（追加到 `guides/98-field-notes.md`），每 3 个 Slice 触发 retrospective（归纳模式→建议→用户决策→变更传播）。已写入 `director.md` Step 8
+4. **清理过时 guides**：✅ 已执行 — 删除 04-prototype/05-production；00-overview 标 SUPERSEDED；03-design 标 PARTIALLY OUTDATED
+
+**原则澄清**："第一行代码即生产质量" ≠ 提前设计所有东西。生产质量 = 写代码时工程标准达标（类型安全、模块清晰、可测试）。不要求写之前所有设计文档都就绪。
+
+**状态**：[✅ 结论确定 — 框架重量合理，风险是验证缺失，解法是 dogfood + bootstrap 协议]
+
+---
+
+### R2-I2 🔴 创意流无快速实验通道
+
+**问题**：框架中不存在 spike/experiment/jam 模式。Slice 模型要求"有 Spec → 有 Brief → Code Agent 实现 → QA 验证"的完整纪律。"第一行代码即生产质量"使得试验一个"敌人爆碎片是否爽"的 10 分钟想法，需要走完整 Slice 流程。这完全不匹配创意探索节奏。
+
+**建议**：
+1. 增加 Spike 模式：≤2h、不走完整 Slice 流程、产出标记为实验性、结束时 keep/kill 决策、keep 则纳入下一 Slice 正式实现
+2. 将原则修正为"第一行**纳入主干**的代码即生产质量"——实验代码可在分支/实验目录中存在
+3. Ideation agent 允许跳步（已有清晰概念时可跳过 Step 1-3）
+
+**状态**：[ pass ]
+
+---
+
+### R2-I3 🟡 前期 Slice 协调开销不匹配项目规模
+
+**问题**：一个 Slice 的 7 步生命周期中，非编码步骤（一致性检查/设计/规划/验收/整合）估计占 30-40% 时间。每周 10h 中 3-4h 花在文档流转。前 3-5 个 Slice（游戏还很小时）这些维护的价值和开销不成比例。
+
+**原始建议**：定义 "Light Slice" 模式、减少 Agent 切换、"1-hour session"指引。
+
+**讨论结论**：与 R2-I1 的 dogfooding 结论矛盾——如果框架是待验证产物，前几个 Slice 恰恰最需要完整跑流程。预设简化 = 绕过框架而非测试框架。30-40% 开销是理论估算（AI 自动处理可能降低实际值），需实战数据验证。正确做法：跑完整流程 → 摩擦自然出现在 `98-field-notes.md` → Slice 3 retro 时基于真实数据决定简化什么。
+
+**状态**：[ shelved — 等 dogfood 数据验证，Slice 3 retro 时重新评估 ]
+
+---
+
+### R2-I4 🟡 出货路径缺实战技术细节
+
+**问题**：Polish/Launch 的指引方向正确，但缺少可操作的技术配置：
+- 无 Build/Deploy 管线（从 commit 到线上的自动化步骤空白）
+- 无存档/持久化方案（Web 游戏的 localStorage/IndexedDB 策略）
+- 音频集成工作流不明确（Art agent 覆盖方向但缺集成步骤）
+- 无 branching model / release tagging / hotfix 流程
+
+**建议**：
+1. Architecture 模板增加 "Deployment" 章节（Vite build → Vercel 部署 → URL）
+2. Foundation 阶段就跑通部署（空白页面也部署到线上）——"持续可运行"的自然延伸
+3. 补充音频技术集成步骤（在 code agent 中处理）
+
+**状态**：[ shelved — 音频集成已在 art.md/code.md 标注待完善，其余待 Foundation 阶段落地 ]
+
+---
+
+### R2-I5 🟡 Pivot 路径只有一句话指引
+
+**问题**：Director 定义了"方向性错误 → 暂停 → 回到 vision.md 层面讨论 → 人决定新方向"。但之后呢？没有定义：如何处理已有 architecture.md/world.md、是当前 repo pivot 还是开新 repo、已有代码标记保留还是清除。文档积累增加沉没成本心理锚。
+
+**建议**：
+1. 定义 Pivot Protocol：将 docs/ 移入 `archive/attempt-N/`，保留技术栈相关部分，从加速版 Ideation 重启
+2. Slice 1 验证后设强 Go/No-Go 门禁：核心循环不 work 则立刻 pivot
+3. 显式标注"文档是过程工具不是目标产物，推翻是学习的证据"
+4. 增加 "Spike before Slice 1" 选项：Foundation 结束后允许 2-4h 无纪律快速验证
+
+**状态**：[ shelved ]
+
+---
+
+## AI Agent 工程视角
+
+### R2-A1 🟡 Design/QA agent 中后期 context 过载风险
+
+**问题**：
+- Design agent 启动时读取清单：vision.md + world.md + CLAUDE.md + gdd-core.md + 相关 specs。10+ Slice 后 gdd-core.md 可能达数万字。
+- QA 回归检查要求"对每个已有系统做基本健全检查"——10+ 系统时逐个读代码文件占用大量 context。
+- Code agent 的 Task Brief 是一个 Slice 所有任务在一个文件中，8-10 个任务时需 LLM 自行定位相关段落。
+
+**上游方案：分层文档协议（Layered Doc Protocol）**
+
+核心洞察：文档结构 = context 管理。AI 是文档主要消费者，文档应从 Day 1 就针对 LLM 消费模式设计。
+
+1. **Spec 接口层规范**：每个 spec frontmatter 必填 `interfaces-with`（声明依赖哪些系统）+ 正文首段固定为 1-2 句 TL;DR。Agent 可只读接口层判断相关性，无需读完整文件。
+2. **分级加载协议**：Agent "工作开始时"统一为 L0（CLAUDE.md 索引）→ L1（相关文档 frontmatter + 首段）→ L2（确认相关后读完整内容）。
+3. **gdd-core.md 角色重定位**：从"完整设计记录"改为"设计索引"——每系统仅 1-2 句摘要 + 指针，详情只住在各自 spec 中。Director 整合时只追加索引级信息。
+4. **Task Brief 结构化标记**：每个任务段落以 `## Task: [ID] | assignee: [agent]` 开头，便于精确定位。
+5. **QA 回归改为增量式**：只检查本 Slice 修改的系统 + frontmatter `interfaces-with` 中声明关联的系统。
+
+**状态**：[✅ 方案确定 — 已更新 spec 模板/gdd-core 模板/Director 整合规则/Design+Code+QA agent 加载协议]
+
+---
+
+### R2-A2 🔴→🟢 interface-changed 状态传递链无校验
+
+**问题**：
+- `interface-changed: true` 写入完全依赖 Design agent 行为合规性（LLM 可能改了内容但忘更新 frontmatter）
+- Code agent 检查此标记仅在"spec 存在"条件分支下，人直接口头分配任务时整条链被绕过
+- 用户绕过 Director 直接操作 agent 时，标记可能无限期停留或永不被消费
+- Director 整合涉及多文件同步更新，中断会导致部分更新状态
+
+**核心修复**（已在 R2-A1 中完成）：Code agent L0 步骤增加强制 Grep 所有 spec 的 `interface-changed: true`，消费端不再可能静默跳过。
+
+**Shelved**：git pre-commit hook（无代码阶段过早）、Director 批量写入（理论风险极低）、Director 中途扫描（已隐含于"工作开始时"逻辑）。
+
+**状态**：[✅ 核心修复已在 R2-A1 实施中完成，剩余 shelved 等 dogfood 验证]
+
+---
+
+### R2-A3 🟡 少数指令模糊 + Code agent 缺集中负面约束
+
+**问题**：
+- Code agent 的约束散落在"工作原则"、"文档权限"等多处，缺少集中的"你不做的事"段落
+- Design agent "与已有系统兼容"缺具体验证步骤
+- Director 引用 CLAUDE.md 段落名可能不匹配
+
+**已修复**：Code agent 新增"你不做的事"段落（6 条集中负面约束）。Design 兼容性验证已被 L1/L2 协议 + spec 自审覆盖。
+
+**Shelved**：Director 段落名引用（等正式 CLAUDE.md 创建时自然确定）。
+
+**状态**：[✅ fixed — Code agent 负面约束集中化；Design 兼容性由分级加载+自审覆盖]
+
+---
+
+### R2-A4 🟡 用户绕过 Director 时无即时检测
+
+**问题**：用户绕过 Director 直接操作 agent 时，一致性保障缺失。
+
+**讨论结论**：Solo 模式下绕过 Director 是合法的自主选择，不是系统故障。R2-A1 的分级加载协议已让每个 agent 在 L0 自带轻量一致性感知（读 CLAUDE.md + Grep interface-changed）。Spec 模板已定义精确 frontmatter 字段格式。
+
+**Shelved**：前置步骤完成状态检查（增加写入开销，等 dogfood 出现实际问题再加）。
+
+**状态**：[✅ 已被 R2-A1 分级加载协议充分缓解，剩余 shelved]
+
+---
+
+### R2-A5 🟢 Prompt 工程质量整体优秀
+
+**问题**（优化级）：
+- Director "情境提醒"段落（13行）对核心编排任务意义不大，占 context
+- Art agent "工具推荐"表格仅在生成 prompt 时有用，UI 设计任务时无关
+- Code agent "体验打磨清单"（19行）仅 Polish 相关但每次 session 都存在
+- 部分占位符暗示不准确：`[一段话：...]` 让 LLM 只写一句
+
+**建议**：
+1. 阶段特定内容从 agent 定义移出到 docs/ 参考文件，agent 中只写"打磨时读取 docs/ref/polish-checklist.md"
+2. Director 情境提醒压缩为一条规则 + 简短映射表
+3. 占位符统一使用"类型+长度提示"：`[1-3 句：概述系统做什么]`
+
+**状态**：[ shelved — 优化级，context 代价可接受，等 dogfood 反馈 ]
+
+---
+
+### R2-A6 🟡 QA 只能静态审查 + spec 无自审机制
+
+**问题**：
+- QA agent 验收主要是静态代码审查，不做动态测试
+- 如果 Code agent 正确实现了一个错误的 spec → QA 不会发现
+- 无 spec 内部一致性自审
+- 无"项目休眠/恢复"协议
+
+**已修复**：
+1. QA agent "工作开始时"新增构建验证步骤（`npm run build` + `npm test`）
+2. Design agent 触发规则新增 spec 自审（规则矛盾检查 + 数值自洽 + interfaces-with/exposes 匹配验证）
+
+**Shelved**：项目恢复协议（等 dogfood 中出现实际中断场景再定义）。
+
+**状态**：[✅ fixed — QA 增加构建验证、Design 增加 spec 自审；恢复协议 shelved]
+
+---
+
+## 内部一致性硬检查
+
+### R2-X1 🔴 失效路径引用
+
+| 位置 | 问题 | 状态 |
+|------|------|------|
+| `START-HERE.md` 行 59 | 引用 `docs/framework/06-*`、`07-*` | ✅ 修正为 `guides/06-*`、`07-*` |
+| `guides/01-agent-system.md` 行 88/217 | 任务文件命名 `TASK-*.md` | shelved（01 整体滞后，见 R2-X4） |
+
+**状态**：[✅ START-HERE 已修正；01 待整体处理]
+
+---
+
+### R2-X2 🔴 旧模型残留（无废弃标注）
+
+| 文件 | 问题 | 状态 |
+|------|------|------|
+| `guides/00-overview.md` | 整篇旧模型 | ✅ 已标 SUPERSEDED |
+| `guides/03-design-workflow.md` | "原型阶段"表述 | ✅ 已标 PARTIALLY OUTDATED |
+| `guides/02-ideation-workflow.md` 行 321 | "原型阶段验证" | shelved（深埋，不阻塞） |
+| `.claude/agents/ideation.md` 行 101 | "Design 阶段"→"Foundation" | ✅ 已修正 |
+| `.claude/agents/ideation.md` 行 160 | "Design 阶段"→"Foundation" | ✅ 已修正 |
+
+注：`guides/04-prototype-workflow.md`、`05-production-workflow.md` 已删除。`09-document-lifecycle.md` 已标注 PARTIALLY OUTDATED。
+
+**状态**：[✅ 核心项已修复/标注，残余 shelved]
+
+---
+
+### R2-X3 🟡 术语不统一
+
+| 问题 | 涉及 |
+|------|------|
+| Agent 名称大小写混乱 | 所有 agent 定义文件 |
+| "Sprint" 与 "Slice" 交替使用 | guides/10-slice-model.md |
+| 5 种 Slice 类型 vs agent 只引用 3 种 | CLAUDE.md vs agents/ |
+
+**状态**：[ shelved — 纯美观/低影响，等 dogfood 后统一清理 ]
+
+---
+
+### R2-X4 🟡 guides/01-agent-system.md 严重滞后
+
+| 问题 | 详情 |
+|------|------|
+| 文档结构树不完整 | 缺 world.md、audio-direction.md、content/、art/、specs/ui-*.md |
+| 权限矩阵缺条目 | 缺多个文件 |
+| vision.md 权限标错 | Ideation agent 是实际创建者 |
+
+**状态**：[ shelved — guides/ 是人的参考，agent 定义是权威。Agent 不读 guides/01，不影响执行 ]
+
+---
+
+### R2-X5 🟡 文档所有权歧义
+
+| 位置 | 问题 |
+|------|------|
+| `design.md` | `docs/world.md` 同时出现在"你更新的"和"你只读的" |
+
+**状态**：[ shelved — 语义正确：建世界观时更新，做系统设计时只读。双重身份是有意设计 ]
+
+---
+
+## Round 2 修复优先级建议
+
+### 第一批（立刻 / 低成本高收益）
+
+1. `ideation.md` 修正 "Design 阶段" → "Foundation"（2 处）
+2. `START-HERE.md` 修正 `docs/framework/` → `guides/`
+3. ~~`guides/00-overview.md` 加 frontmatter `status: SUPERSEDED`~~ ✅ done
+4. ~~`guides/03-design-workflow.md` 加 `status: PARTIALLY OUTDATED`~~ ✅ done
+5. `guides/02-ideation-workflow.md` 行 321 修正或标注
+
+### 第二批（需设计决策）
+
+6. 是否增加 Spike 模式（R2-I2）
+7. 是否定义 Light Slice（R2-I3）
+8. Code agent 增加 `interface-changed` 强制扫描（R2-A2）
+9. Code agent 增加集中"你不做的事"段落（R2-A3）
+10. 每个 agent 启动增加轻量一致性 check（R2-A4）
+
+### 第三批（可 shelve 至项目实际运转后）
+
+11. 统一 Agent 名称大小写（R2-X3）
+12. `guides/01-agent-system.md` 权限矩阵全面更新（R2-X4）
+13. gdd-core 分段策略（R2-A1）
+14. Pivot Protocol 定义（R2-I5）
+15. Architecture 模板增加 Deployment 章节（R2-I4）
+16. QA agent 动态验证能力（R2-A6）
+17. Design agent spec 自审清单（R2-A6）
+18. Prompt 优化：阶段特定内容外置（R2-A5）

@@ -12,9 +12,9 @@ Slice 类型：[系统/内容/功能/集成/打磨]
 
 ---
 
-## T1: [任务标题]
+## Task: T1 | assignee: [code/design/art/qa]
 
-Priority: [P0/P1/P2] | Agent: [code/design/art/qa] | Dispatch: [🟢/🔴]
+Title: [任务标题] | Priority: [P0/P1/P2] | Dispatch: [🟢/🔴]
 
 ### 目标
 [一句话说清楚要达到什么效果]
@@ -37,9 +37,9 @@ Priority: [P0/P1/P2] | Agent: [code/design/art/qa] | Dispatch: [🟢/🔴]
 
 ---
 
-## T2: [任务标题]
+## Task: T2 | assignee: [code/design/art/qa]
 
-Priority: [P0/P1/P2] | Agent: [code/design/art/qa] | Dispatch: [🟢/🔴]
+Title: [任务标题] | Priority: [P0/P1/P2] | Dispatch: [🟢/🔴]
 
 ### 目标
 [一句话]
