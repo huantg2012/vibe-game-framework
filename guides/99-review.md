@@ -1,168 +1,293 @@
 ---
-title: "框架自审 — 以实际用户视角 Review"
-version: 0.1
-date: 2026-07-17
+title: "框架 Review 发现清单 — 待逐条核对"
+date: 2026-07-19
+source: 游戏开发视角 + AI Agent工程视角 双重审计
 ---
 
-# 框架自审
+# Review 发现清单
 
-## 审查视角
+## 使用方式
 
-模拟场景：我是一个程序员，有一个粗略的游戏 idea，想用 Claude Code vibe coding 把它做出来。我读了这套框架，准备开始。
-
----
-
-## 🔴 严重问题（会导致用户卡住或放弃）
-
-### 1. 没有入口文件 — 用户不知道第一步做什么
-
-用户拿到 7 个 agent 定义 + 9 个 framework 文档。然后呢？
-
-- 没有一个"从这里开始"的引导
-- 没有一个"你现在应该做什么"的决策树
-- 用户必须先读完所有文档才能开始工作
-
-**缺少**：一个 `START-HERE.md` 或项目根目录的 `README.md`，告诉用户："你现在处于 [阶段]，下一步是 [动作]，使用 [agent]"
+逐条与用户核对：认同→标记待修 / 不认同→标记跳过 / 需讨论→标记待议。
+全部核对完后按优先级批次修复。
 
 ---
 
-### 2. 早期阶段（Ideation → Design）没有编排者
+## 游戏开发视角
 
-Production 阶段有 Director 编排一切。但 Ideation → Design 这段路：
+### GD-01 🔴 Foundation 缺少"核心手感快速验证"
 
-- 谁告诉用户"Ideation 结束了，该进 Design 了"？
-- Design 内部 Step 1→2→3→4→5 的切换，谁提醒用户？
-- 用户必须自己记住："现在该用 design agent 做 step 1-2，然后切 code agent 做 step 3..."
+**问题**：Foundation 要求完成世界观、系统设计、技术架构、美术方向全部定义后才能进入 Slice 1。如果花 2-3 周做完后才发现核心循环不好玩，沉没成本太高。
 
-Director 的定义中没有覆盖早期阶段的编排职责。它只从 "Design Step 5" 才开始出现。
+**建议**：在 Foundation 中增加"核心手感验证"步骤（世界观+系统设计之后、美术方向之前），用灰盒（方块/圆形）跑一遍核心循环确认手感。代码保留，只是视觉占位。
 
-**结果**：Ideation 到 Prototype 这段最关键的探索期，用户反而没有 AI 帮忙协调，全靠自己翻文档记流程。
+**状态**：[ shelved ]
 
 ---
 
-### 3. Agent 引用了尚不存在的文档
+### GD-02 🔴 缺少 UI/UX 设计文档
 
-- `code` agent 开头就要读 `CLAUDE.md`、`architecture.md`、Task Brief
-- 但在 Prototype 阶段刚启动时，这些文件可能都不存在
-- agent 的"工作开始时"协议没有处理"文件不存在"的情况
+**问题**：UI 设计是独立领域——信息架构、Screen flow、HUD 布局、交互模式——不属于系统设计也不属于美术方向，当前框架无归属。
 
-**结果**：用户按流程开一个 code agent 会话，agent 尝试读文件 → 文件不存在 → 行为不可预测。
+**建议**：增加 `docs/ui-design.md` 或 `docs/specs/ui-*.md` 模板，覆盖 Screen flow、HUD 信息层级、核心交互模式、响应式策略。
 
----
-
-### 4. 框架文档和 Agent 定义之间是割裂的
-
-- `02-ideation-workflow.md` 详细描述了 ideation 的 5 个 step 和 prompt 策略
-- `.claude/agents/ideation.md` 也描述了 5 个 step 的行为
-- 但 agent 定义**不引用**框架文档，框架文档也**不引用** agent 定义
-- 用户不确定：执行时是看框架文档还是让 agent 自己按定义走？
-
-**结果**：两套信息源可能不同步，用户困惑该以哪个为准。
+**状态**：[✅ fixed]
 
 ---
 
-## 🟡 中等问题（增加摩擦但不致命）
+### GD-03 🔴 缺少自动化测试策略
 
-### 5. 没有日常工作流描述
+**问题**：QA agent 本质是静态分析+人工 review。持续增长的代码库没有自动化测试，回归风险快速累积。
 
-框架描述了宏观阶段，但没有回答最实际的问题：
+**建议**：
+- Code agent 增加规则："关键系统核心逻辑必须有单元测试"
+- QA 验收增加"自动化测试覆盖"检查项
+- 不要求 100% coverage，但 pure logic 层（规则引擎、数值计算、状态机）必须有
 
-> "我今天有 2 小时空闲，想推进游戏。我打开电脑，第一步做什么？"
-
-缺少一个"日常开发节奏"的描述：
-- 怎么快速恢复上下文（上次做到哪了）
-- 一个典型的 2-3 小时工作 session 长什么样
-- 什么时候该做 Director 规划 vs 直接开干
+**状态**：[ shelved ]
 
 ---
 
-### 6. 阶段回退路径未定义
+### GD-04 🔴 文档维护负担可能压垮 Solo dev
 
-框架假设线性推进：Ideation → Design → Prototype → Production → Polish → Launch
+**问题**：每个 Slice 更新 5+ 文件（current-slice/gdd-core/CLAUDE.md/roadmap/decisions-log），文档维护占比过高。
 
-但现实中：
-- Prototype 验证失败 → 要回到 Design 甚至 Ideation
-- Production 中发现设计不 work → 要回到 Design 修改 spec
-- 这些"回退"时，文档状态怎么处理？之前的 Sprint/roadmap 作废吗？
+**建议**：
+- 明确区分"AI 自主维护不需人 review"（状态字段更新）和"AI 草拟人必须 review"（spec 变更、gdd 新章节）
+- Director 增加"文档健康度"自检：超过 3 个 Slice 未被引用的文档标记"可能冗余"
 
-Agent 定义中完全没有回退相关的指令。
-
----
-
-### 7. Director 自动派发的子 Agent 能力有限
-
-Director 用 Agent 工具派遣子 Agent 时：
-- 子 Agent 是单轮的，上下文非常有限
-- 它只能读 Director 传给它的 prompt + 少量文件
-- 对于"生成 10 个敌人数据"这种任务，子 Agent 可能需要读现有代码才知道数据格式
-
-实际上，大部分标记为 🟢自动 的任务可能也需要比"单轮子 Agent"更多的上下文。
-
-**需要明确**：子 Agent 能力的边界在哪、什么时候自动派发其实效果不好。
+**状态**：[✅ fixed — 文档维护三级分级：自动/通知/审批，Director输出分级摘要]
 
 ---
 
-### 8. Prototype → Production 的代码衔接问题
+### GD-05 🔴 缺少 Analytics 埋点的早期规划
 
-- prototype agent 允许脏代码
-- 进入 Production 后 code agent 要求"遵守 architecture.md"
-- 但 prototype 阶段写的代码没有遵循任何架构
+**问题**：analytics 放在发布前最后一刻才做太晚。发布后发现采集颗粒度不够需要改代码重发。
 
-**缺少**：Prototype → Production 之间的"代码 review/重构"步骤。是保留还是重写？框架文档提到了（04-prototype-workflow.md Step 5），但 agent 定义中没有体现。谁来执行这个重构判断？
+**建议**：Foundation 阶段就定义"核心事件列表"（session 开始/结束、循环完成次数、关键选择分布、流失点）。architecture.md 模板增加"Analytics 方案"字段。
 
----
-
-### 9. vision.md vs Concept Doc 命名不一致
-
-- `02-ideation-workflow.md` 中叫"Concept Doc"
-- `ideation.md` agent 把它输出为 `docs/vision.md`
-- `00-overview.md` 中也叫"概念文档"
-
-同一个东西三个名字，容易混淆。
+**状态**：[ shelved ]
 
 ---
 
-### 10. Agent 的双模式设计需要额外的模式切换信号
+### GD-06 🟡 Slice "3-7天"对副业节奏不现实
 
-- code agent 有模式 A（架构设计）和模式 B（实现）
-- director 有模式 A（整合）和模式 B（Sprint管理）
-- 谁告诉 agent "你现在是模式 A"？用户必须在启动时显式说明
-- 如果用户忘了说，agent 默认进哪个模式？
+**问题**：副业 indie 每周可能只有 10-15 小时。加上设计/验收/文档开销，实际编码时间可能只有 5-8 小时。
 
----
+**建议**：Slice 大小改以"有效工时"而非"日历天数"衡量。建议标准：10-20 有效工时/Slice。规划时加入"每周可用小时数"参数。
 
-## 🟢 可优化点（不影响使用但可以更好）
-
-### 11. 缺少 prompt 模板的实际使用说明
-
-框架文档中有大量 Prompt 策略示例，但：
-- 这些 prompt 是给用户看的（告诉用户怎么跟 AI 说话）
-- 还是给 agent 看的（agent 内部遵循的模式）？
-- 既然有了 agent 定义，很多 prompt 策略已经被内化到 agent 的指令中了
-- 框架文档中的 prompt 部分是否冗余？
+**状态**：[ shelved ]
 
 ---
 
-### 12. Quality Gates 在 agent 中没有强制执行点
+### GD-07 🟡 缺少"Kill the Darling"机制
 
-每阶段的质量门禁写在框架文档中（如"核心体验能用一句话说清楚"），但：
-- 没有 agent 被定义为"检查门禁是否通过"
-- 用户可能直接跳过门禁进入下一阶段
-- 需要一个机制让某个 agent（Director？）在阶段转换时检查门禁
+**问题**：框架有 Slice 验证失败的回退，但缺少"整个方向需要 pivot"的处理。
+
+**建议**：Director 增加触发点——连续 2 个 Slice 验证负面 → 强制进入"方向审视"会话，选择：调整/重做/砍掉。
+
+**状态**：[ shelved ]
 
 ---
 
-## 总结：优先修复建议
+### GD-08 🟡 World.md 缺少叙事语调/写作规则
 
-| 优先级 | 问题 | 建议修复 |
-| ------ | ---- | -------- |
-| P0 | 没有入口/启动引导 | 创建 START-HERE.md + 阶段路由逻辑 |
-| P0 | 早期阶段无编排 | 扩展 Director 覆盖全流程，或创建一个轻量的"flow controller" |
-| P0 | Agent 引用不存在的文档 | 每个 agent 的启动协议加入"文件不存在时的降级行为" |
-| P1 | 框架文档与 agent 定义割裂 | 明确分工：agent 定义 = 执行标准，框架文档 = 人的参考手册 |
-| P1 | 没有日常工作流 | 补充 "daily routine" 指南 |
-| P1 | 回退路径未定义 | 在 Director 中加入阶段回退处理逻辑 |
-| P1 | 子Agent能力边界模糊 | 重新定义 🟢自动 的范围，更保守 |
-| P2 | 命名不一致 | 统一为一个名字 |
-| P2 | 模式切换信号 | agent 加入默认模式 + 自动检测逻辑 |
-| P2 | Quality Gates 无执行点 | Director 在阶段转换时自动检查 |
+**问题**：即使机制驱动，也需要 flavor text 的风格一致性管理。
+
+**建议**：world.md 增加"叙事语调"章节：文本长度约束、语气、人称、禁忌。
+
+**状态**：[✅ fixed — world.md模板新增"叙事语调"章节(语气/人称/长度/禁忌/命名风格/示例)，Design agent量产约束从4项扩至5项] 
+
+---
+
+### GD-09 🟡 缺少内容解锁依赖图管理
+
+**问题**：跨内容的前置条件链（"技能 B 需要技能 A Lv.3"）仅靠关联引用表不够。50+ 条目时依赖链完整性校验关键。
+
+**建议**：progression.md 增加"解锁依赖图"。QA agent 增加"依赖链完整性校验"——检查不可达内容和循环依赖。
+
+**状态**：[ shelved ]
+
+---
+
+### GD-10 🟡 Agent 切换认知负担 + 框架学习曲线
+
+**问题**：6 个 agent 切换步骤多，<1h 短 session 效率低。框架本身 15 guides + 6 agents + 多模板，学习曲线陡。
+
+**最终方案**（用户决策：不做极简模式，框架复杂度是必要的）：
+- 不简化框架，而是强化导航能力
+- 创建 `START-HERE.html`（可视化人类入口）：Agent 路由表、Slice 生命周期图、文件结构速查
+- 核心交互路径：任何时候找 Director → 它判断状态并路由
+- "我想做 X" 路由表覆盖所有常见任务场景
+
+**状态**：[✅ fixed — START-HERE.html 创建，含可视化阶段流/agent卡片/任务路由表/Slice生命周期]
+
+---
+
+### GD-11 🟡 缺少发布相关考量
+
+**问题**：法律合规（隐私政策、AI 资产版权、年龄分级）、版本管理（版本号方案、存档兼容性）、社区建设策略均缺失。
+
+**建议**：launch 清单增加合规子章节 + architecture.md 增加版本策略字段 + guides 增加社区策略参考。
+
+**状态**：[ shelved ]
+
+---
+
+### GD-12 🟢 缺少"已知局限"文档
+
+**问题**：有意识接受的不完美（技术债、设计妥协）无集中记录，QA 每次重新发现同一问题。
+
+**建议**：progress/ 下增加 `known-limitations.md`。
+
+**状态**：[ shelved ]
+
+---
+
+### GD-13 🟢 缺少多语言/本地化预留
+
+**问题**：Content Spec 中文本字段硬编码。如有国际化需求需大改。
+
+**建议**：至少在 architecture.md 模板中标注"本地化策略"作为显式决策点。
+
+**状态**：[ shelved ]
+
+---
+
+## AI Agent 工程视角
+
+### AE-01 🔴 Director 重建验证混淆"存在性"和"正确性"
+
+**问题**：重建验证说"以实际文件为准修正 CLAUDE.md"。但如果代码实现有错（正是需要 QA 发现的），Director 会将错误合法化。
+
+**建议**：明确重建验证只做"文件/目录级存在性检查"，不判断实现对错。表述改为："检查系统列表和内容汇总的存在性信息，不验证实现正确性（那是 QA 的事）。"
+
+**状态**：[✅ fixed — 重建验证限定为存在性检查，发现矛盾时报告人而非自行修正，明确"正确性验证是QA的事"] 🔴 内容文件扁平结构无法支撑 100+ 条目
+
+**问题**：所有条目写在单个 `content/[type].md` 中。50-100 条目时单文件过大，LLM 加载效率低，人审核困难。
+
+**建议**：预设分页策略——超 30 条目按分组拆分（如 `enemies-tier1.md`）。或引入索引文件：`[type]-index.md` 只列 ID+名称，详细数据在子文件中。
+
+**状态**：[✅ fixed — Design agent含拆分规则，content模板含扩展说明，QA通过索引定位]
+
+---
+
+### AE-03 🔴 Code agent "不做设计决策"定义过宽
+
+**问题**：变量命名、数据结构选择、算法选择本身就是技术决策。"不做设计决策"实操中不可执行。
+
+**建议**：区分"产品设计决策"（影响用户可感知行为 → escalate）和"技术实现决策"（数据结构/算法/性能优化 → 自主判断）。只有前者需要标 blocker。
+
+**状态**：[✅ fixed — Code agent新增"决策边界"段落：技术实现自主判断、影响玩家感知的escalate，判断标准="玩家会有不同感受吗"]
+
+---
+
+### AE-04 🟡 Director 一致性检查 context 溢出风险
+
+**问题**：中后期项目 10+ spec、20+ content 文件，全量扫描不经济。
+
+**建议**：渐进式策略——先读 CLAUDE.md 系统列表 + 用 Glob 验证文件存在性，只对发现不一致的项深入读取。加入规则："一致性检查使用文件列表+元数据级对比，只在不一致时读具体内容。"
+
+**结论**：indie 规模（5-15 系统、<100 条目/类型）不需要知识库/向量索引。CLAUDE.md 本身就是索引，渐进式策略足够。
+
+**状态**：[✅ fixed — Director增加效率规则：CLAUDE.md=索引、Glob验证存在性、只对异常深入读取]
+
+---
+
+### AE-05 🟡 跨 session 信息传递缺少变更标记
+
+**问题**：Design agent 修改了 spec 接口，Code agent 在另一个 session 不知道 spec 变了，可能基于过时版本工作。
+
+**建议**：
+- Spec 文件头增加 `last-modified-by` + `last-modified-date`
+- 修改接口时在 current-slice.md 标注 `[INTERFACE CHANGE: system-X]`
+- Code agent 启动时对比 spec 修改时间和 Task Brief 创建时间
+
+**状态**：[✅ fixed — spec模板增加last-modified+interface-changed字段；Design修改接口时置true；Code启动时检查并提醒；Director Slice结束重置]
+
+---
+
+### AE-06 🟡 Design/Code 边界的 interface 性质未明确
+
+**问题**：Spec 中 Design agent 写的 TypeScript interface，Code agent 是"必须照搬"还是"只要外部行为匹配可以调整内部"？未定义。
+
+**建议**：在 Design agent 定义中明确：spec 中的 interface 是"接口契约"（外部行为必须匹配）还是"参考结构"（Code 可调整内部实现）。
+
+**状态**：[ shelved ]
+
+---
+
+### AE-07 🟡 decisions-log 无引用和状态管理
+
+**问题**：决策越来越多，后续被推翻的也混在一起。其他文档不引用具体决策 ID。
+
+**建议**：
+- 增加 `status` 字段（Active / Superseded）
+- 被推翻时标注 `Superseded by DEC-YYY`
+- 其他文件可引用 `DEC-XXX` ID
+
+**状态**：[ shelved ]
+
+---
+
+### AE-08 🟡 Code agent(sonnet) 做架构设计能力受限
+
+**问题**：模式 A（架构设计）需要深度分析和方案对比，opus 表现优于 sonnet。
+
+**建议**：提示用户在架构设计阶段用 opus 模型启动 Code agent。或考虑架构设计拆为独立 agent。
+
+**状态**：[✅ fixed — Code agent model 改为 opus（架构设计和功能实现统一使用高能力模型，确保代码质量）]
+
+---
+
+### AE-09 🟡 关键文档修改后无 sanity check
+
+**问题**：LLM 输出截断是真实风险。Director 整合 gdd-core.md 时如果被截断，内容丢失。
+
+**建议**：关键文档（gdd-core.md, CLAUDE.md）每次修改后做 basic sanity check（markdown 格式完整、表格行数不减少）。
+
+**状态**：[ AE-08 ]
+
+---
+
+### AE-10 🟡 Task Brief 文件会爆炸
+
+**问题**：每 Slice 5 个任务 × 10 Slices = 50 个文件。目录杂乱。
+
+**建议**：按 Slice 组织 `docs/tasks/slice-01/` 或完成后归档到 `_archive/`。
+
+**状态**：[✅ fixed — 改为per-Slice文件(slice-01.md)，一个Slice全部brief在一个文件中]
+
+---
+
+### AE-11 🟡 Director 变更传播依赖 Director 在场
+
+**问题**：Design agent 修改 spec 接口时 Director 不在场，变更不会被传播到引用该接口的其他 spec。
+
+**建议**：Design agent 修改接口时在 spec 头部标注 `[INTERFACE CHANGE]`，Director 下次一致性检查时扫描该标记。
+
+**扩展排查**：不只是 Design 改 spec——Code 改 architecture、Art 改 art/audio-direction 也有同样隐患。
+
+**状态**：[✅ fixed — 泛化为所有约束类文档的通用变更标记机制：spec用interface-changed、architecture/art-direction/audio-direction用changed-this-slice；Director一致性检查扫描全部标记；Slice结束统一重置]
+
+---
+
+### AE-12 🟡 LLM 批量生成内容的 Schema 合规性不可靠
+
+**问题**：Design agent 批量生成 10-20 条目时容易出现 ID 格式不一致、字段遗漏、引用不存在的 ID。
+
+**建议**：批量超 10 条目时分批输出（每批 5 个）。QA 验收增加自动化 schema 校验（TypeScript 类型检查或验证脚本）。
+
+**状态**：[✅ fixed — Design agent已有分批规则(每批5个)；QA agent内容验收改为结构化checklist(ID格式/必填字段/类型/叙事语调)，超10条分段检查，建议tsc类型检查]
+
+---
+
+## 两个视角的共识（确认为设计优势）
+
+- ✅ Slice 模型对 Solo indie 合适
+- ✅ "第一行代码即生产质量" 正确
+- ✅ "人在环路" 是核心设计
+- ✅ 文档所有权矩阵有效
+- ✅ 基于文件存在性的阶段判断可靠
+- ✅ "宁可标红让人做" 的自动化边界正确
+- ✅ Foundation 顺序合理

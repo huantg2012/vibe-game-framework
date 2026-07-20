@@ -93,21 +93,37 @@ tools:
 
 ### Step 1: 一致性检查 + CLAUDE.md 重建验证（每个 Slice 开始时）
 
-**重建验证**（不是增量对比，而是从文件系统重建真实状态）：
+**重建验证**——仅做文件/目录级存在性检查，不判断实现正确性（那是 QA 的事）：
 
 ```
-1. 扫描 docs/specs/ → 列出所有已设计的系统
-2. 扫描 docs/content/ → 列出所有内容文件及条目数量
-3. 扫描 src/ 结构 → 列出实际存在的模块/系统代码
+1. 扫描 docs/specs/ → 列出实际存在的 spec 文件名
+2. 扫描 docs/content/ → 列出内容索引文件及条目总数（读索引即可）
+3. 扫描 src/ 顶层结构 → 列出实际存在的模块目录
 4. 对比 CLAUDE.md 中的"系统全景"和"内容汇总"表格
-5. 不一致的地方 → 以实际文件为准修正 CLAUDE.md
+5. 修正规则：
+   - CLAUDE.md 说"已实现"但 src/ 中无对应目录 → 标为异常，报告人
+   - CLAUDE.md 没列出但实际存在新 spec/代码 → 补充到 CLAUDE.md
+   - 条目数量不匹配 → 以索引文件为准更新数字
+   - 不判断代码是否"正确实现了 spec"——那是 QA 验收的职责
 ```
 
-**一致性检查**：
-- 系统全景表中标"✅已实现"的，src/ 中确实有对应代码
-- 系统全景表中标"📐已设计未实现"的，确实还没有代码
-- docs/gdd-core.md 的描述与各 spec 不矛盾
-- 如果发现不一致 → 报告给人，标注具体偏差，修正文档
+**一致性检查**（元数据级，不读文件全文）：
+- 系统全景表中标"✅已实现"的，src/ 中有对应目录存在
+- 系统全景表中标"📐已设计未实现"的，src/ 中无对应代码
+- 如果发现矛盾 → 报告给人，不自行修正（可能是标记错误，也可能是代码有问题）
+
+**效率规则**：CLAUDE.md 本身就是项目索引，不需要额外的知识库。一致性检查的操作顺序：
+1. 先读 CLAUDE.md 获取声明的状态（成本最低）
+2. 用 Glob 验证文件存在性（不打开文件）
+3. 检查所有约束类文档的 frontmatter 变更标记（Grep `changed-this-slice: true` 或 `interface-changed: true`）：
+   - `docs/specs/system-*.md` 的 `interface-changed` → 系统接口变了，确认实现方是否已适配
+   - `docs/architecture.md` 的 `changed-this-slice` → 架构变了，确认各模块是否需要调整
+   - `docs/art-direction.md` 的 `changed-this-slice` → 美术规范变了，后续资产需遵守新规范
+   - `docs/audio-direction.md` 的 `changed-this-slice` → 音频规范变了
+4. 只在发现不匹配或变更标记时才读取具体文件内容
+5. 不做全量文档扫描（对 indie 规模不需要）
+
+**Slice 结束整合时**：将所有文档的变更标记（`interface-changed`、`changed-this-slice`）重置为 `false`。
 
 ### Step 2: Slice 设计
 
@@ -118,11 +134,12 @@ tools:
 
 ### Step 3: 任务规划
 
-将本 Slice 的工作拆解为 Task Briefs，规则：
+将本 Slice 的工作拆解为 Task Briefs：
 - 每个任务 1-3 小时可完成
 - 标注依赖关系
 - 标注派发方式（🟢自动 / 🔴手动）
-- 写入 `docs/progress/current-slice.md`
+- 所有任务写入一个文件：`docs/tasks/slice-[N].md`（不是每个任务一个文件）
+- 同步更新 `docs/progress/current-slice.md` 的任务表格
 
 ### Step 4-5-6: 执行 / 验收 / 人验证
 
@@ -133,11 +150,28 @@ tools:
 
 ### Step 7: 整合（每个 Slice 结束时）
 
-你更新以下文件：
-- `docs/gdd-core.md` — 将本 Slice 新增的设计写入（增量追加）
-- `CLAUDE.md` — 更新"已完成 Slices"和"已实现系统"
-- `docs/progress/roadmap.md` — 标记本 Slice 完成，Review 下一个 Slice 是否需要调整
-- `docs/progress/current-slice.md` — 归档为完成状态
+你更新以下文件，按维护分级处理：
+
+**✅ 自动完成（无需人 review）：**
+- `docs/progress/current-slice.md` — 标记为完成状态
+- `CLAUDE.md` 的系统清单 + 内容计数 — 数字/列表更新
+- `docs/progress/roadmap.md` 完成标记 — 勾选对应 Slice
+
+**📋 通知（人看一眼即可）：**
+- `docs/gdd-core.md` — 增量追加本 Slice 新增的设计段落
+- `docs/progress/decisions-log.md` — 如有新决策
+
+**⚠️ 需人确认（修改已有内容时）：**
+- 任何 spec 的接口变更
+- CLAUDE.md 的约束/规范段落变更
+- roadmap 优先级调整
+
+整合完成后，输出分级摘要给人：
+```
+✅ 自动完成：current-slice 标记完成、CLAUDE.md 清单更新
+📋 请过目：gdd-core 新增"[章节名]"（约N字）
+⚠️ 需确认：[有/无]
+```
 
 ---
 
@@ -312,17 +346,18 @@ tools:
 | `CLAUDE.md`（正式版） | Foundation 整合时 |
 | `docs/progress/roadmap.md` | Foundation 整合时 |
 | `docs/progress/current-slice.md` | 每个 Slice 开始时 |
-| `docs/tasks/TASK-*.md` | Slice 规划时 |
+| `docs/tasks/slice-[N].md` | Slice 规划时（一个文件包含本 Slice 全部任务 brief） |
 
 ### 你更新的文档
 
-| 文档 | 何时更新 |
-| ---- | -------- |
-| `docs/gdd-core.md` | 每个 Slice 结束时增量追加 |
-| `CLAUDE.md` | 每个 Slice 结束时更新状态 |
-| `docs/progress/roadmap.md` | 每个 Slice 结束时标记完成 + Review 下一步 |
-| `docs/progress/current-slice.md` | Slice 过程中更新任务状态 |
-| `docs/progress/decisions-log.md` | 做了协调决策时追加 |
+| 文档 | 何时更新 | 维护级别 |
+| ---- | -------- | -------- |
+| `docs/progress/current-slice.md` | Slice 过程中 | ✅ 自动 |
+| `CLAUDE.md` 系统清单/内容计数 | 每 Slice 结束 | ✅ 自动 |
+| `docs/progress/roadmap.md` 完成标记 | 每 Slice 结束 | ✅ 自动 |
+| `docs/gdd-core.md` | 每 Slice 结束增量追加 | 📋 通知 |
+| `docs/progress/decisions-log.md` | 做了协调决策时 | 📋 通知 |
+| 任何 spec/CLAUDE.md 约束变更 | 需要时 | ⚠️ 需确认 |
 
 ### 你只读的文档
 
@@ -331,4 +366,5 @@ tools:
 | `docs/vision.md` | 核心体验（Slice 规划的锚点） |
 | `docs/architecture.md` | 技术约束 |
 | `docs/specs/system-*.md` | 一致性检查用 |
+| `docs/content/*.md`（索引文件） | 一致性检查：读索引获取条目总数，不需逐个打开子文件 |
 | `src/` | 一致性检查用（确认系统存在） |

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COH — 开发框架导航</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f8f9fa;
+  --surface2: #e9ecef;
+  --border: #dee2e6;
+  --accent: #e63946;
+  --accent2: #6c63ff;
+  --text: #212529;
+  --text-dim: #6c757d;
+  --green: #2d6a4f;
+  --yellow: #b8860b;
+  --blue: #1971c2;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; padding: 2rem; max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--text); }
+h2 { font-size: 1.3rem; margin: 2.5rem 0 1rem; color: var(--blue); border-bottom: 2px solid var(--surface2); padding-bottom: 0.4rem; }
+h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; color: var(--text); }
+p { color: var(--text-dim); margin-bottom: 0.5rem; }
+code { background: var(--surface); border: 1px solid var(--border); padding: 0.15em 0.4em; border-radius: 3px; font-size: 0.88em; color: var(--accent2); }
+
+/* Phase Flow */
+.phase-flow { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin: 1.5rem 0; }
+.phase-node { background: var(--surface); border: 2px solid var(--border); border-radius: 8px; padding: 0.5rem 1.2rem; font-weight: 600; font-size: 0.85rem; color: var(--text); }
+.phase-node:hover { border-color: var(--accent); }
+.phase-arrow { color: var(--text-dim); font-size: 1.2rem; }
+.phase-node.repeat { border-style: dashed; border-color: var(--accent2); color: var(--accent2); }
+
+/* Agent Cards */
+.agent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.agent-card { background: var(--surface); border-radius: 8px; padding: 1.2rem; border-left: 4px solid var(--accent2); border: 1px solid var(--border); border-left: 4px solid var(--accent2); }
+.agent-card h4 { color: var(--accent2); margin-bottom: 0.3rem; font-size: 1rem; }
+.agent-card .role { color: var(--green); font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
+.agent-card p { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 0.4rem; }
+.agent-card .when { color: var(--text-dim); font-size: 0.8rem; font-style: italic; }
+
+/* Task Router */
+.task-router { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; overflow-x: auto; }
+.task-router table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.task-router th { text-align: left; color: var(--blue); padding: 0.6rem 0.5rem; border-bottom: 2px solid var(--border); }
+.task-router td { padding: 0.5rem; border-bottom: 1px solid var(--surface2); vertical-align: top; }
+.task-router td:first-child { color: var(--text); font-weight: 500; }
+.task-router td:nth-child(2) { color: var(--accent2); font-weight: 600; }
+.task-router tr:hover { background: var(--surface2); }
+
+/* Slice Lifecycle */
+.slice-lifecycle { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.9; white-space: pre; overflow-x: auto; color: var(--text); }
+
+/* Doc Map */
+.doc-map { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
+.doc-map pre { font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.8; white-space: pre; color: var(--text); margin: 0; }
+
+/* Tips */
+.tip { background: #fff8e1; border-radius: 6px; padding: 1rem 1.2rem; margin: 1rem 0; border-left: 4px solid var(--yellow); font-size: 0.88rem; color: var(--text); }
+.tip strong { color: var(--yellow); }
+
+.tip-blue { background: #e8f4fd; border-left-color: var(--blue); }
+.tip-blue strong { color: var(--blue); }
+
+.tip-red { background: #fde8e8; border-left-color: var(--accent); }
+.tip-red strong { color: var(--accent); }
+
+.section { margin-bottom: 3rem; }
+
+/* Daily Flow */
+.flow-steps { list-style: none; padding: 0; margin: 1rem 0; }
+.flow-steps li { padding: 0.6rem 1rem; margin: 0.3rem 0; background: var(--surface); border-radius: 6px; border-left: 3px solid var(--border); font-size: 0.88rem; }
+.flow-steps li strong { color: var(--blue); }
+.flow-steps li.highlight { border-left-color: var(--accent2); background: #f0eeff; }
+
+.scenario { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0; }
+.scenario h4 { font-size: 0.9rem; color: var(--text); margin-bottom: 0.4rem; }
+.scenario p { font-size: 0.83rem; margin-bottom: 0.3rem; }
+.scenario .action { color: var(--accent2); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<h1>COH — Indie Game 开发框架</h1>
+<p>Solo + AI 协作开发 Web 游戏的完整工作框架</p>
+
+<!-- ============ PHASE FLOW ============ -->
+<div class="section">
+<h2>开发阶段全景</h2>
+<div class="phase-flow">
+  <div class="phase-node">Ideation</div>
+  <span class="phase-arrow">→</span>
+  <div class="phase-node">Foundation</div>
+  <span class="phase-arrow">→</span>
+  <div class="phase-node repeat">Slice 1 → Slice 2 → Slice N</div>
+  <span class="phase-arrow">→</span>
+  <div class="phase-node">Polish</div>
+  <span class="phase-arrow">→</span>
+  <div class="phase-node">Launch</div>
+</div>
+<p>每个 Slice 是一次完整的 <strong>设计→实现→验收→验证</strong> 循环。游戏一层一层生长，没有"原型"阶段——第一行代码即生产质量。</p>
+</div>
+
+<!-- ============ QUICK STATUS ============ -->
+<div class="section">
+<h2>快速了解项目状态</h2>
+<div class="tip">
+  <strong>核心操作：</strong>开一个 <code>director</code> agent 会话，问"当前状态和下一步做什么"。<br>
+  它会扫描项目文件、判断阶段、告诉你进度和建议。Director 是你的参谋长——任何时候不确定就问它。
+</div>
+</div>
+
+<!-- ============ AGENT CARDS ============ -->
+<div class="section">
+<h2>Agent 角色一览</h2>
+<div class="agent-grid">
+  <div class="agent-card">
+    <h4>ideation</h4>
+    <div class="role">创意搭档</div>
+    <p>从模糊想法中提取核心体验、探索机制方向、分析参考、界定范围。</p>
+    <div class="when">Ideation 阶段</div>
+  </div>
+  <div class="agent-card">
+    <h4>director</h4>
+    <div class="role">项目总监 / 参谋长</div>
+    <p>判断阶段、规划 Slice、拆解任务、检查一致性、更新进度、变更传播。</p>
+    <div class="when">任何时候都可以找</div>
+  </div>
+  <div class="agent-card">
+    <h4>design</h4>
+    <div class="role">游戏设计师</div>
+    <p>系统设计、内容条目设计、世界观设定、UI 信息架构、进度曲线。</p>
+    <div class="when">Foundation + 每个 Slice 的设计阶段</div>
+  </div>
+  <div class="agent-card">
+    <h4>code</h4>
+    <div class="role">程序员 + 架构师</div>
+    <p>技术架构选型、按 Task Brief 实现功能、修 Bug、重构。</p>
+    <div class="when">Foundation + 每个 Slice 的实现阶段</div>
+  </div>
+  <div class="agent-card">
+    <h4>art</h4>
+    <div class="role">美术 + 音频指导</div>
+    <p>视觉/听觉一致性、AI 绘画/音频 prompt、引导外部工具使用、UI 视觉设计。</p>
+    <div class="when">Foundation + 需要资产时</div>
+  </div>
+  <div class="agent-card">
+    <h4>qa</h4>
+    <div class="role">质量保障</div>
+    <p>对照 Spec 验收、回归检查、关联引用完整性校验。</p>
+    <div class="when">每个 Slice 实现完成后</div>
+  </div>
+</div>
+</div>
+
+<!-- ============ TASK ROUTER ============ -->
+<div class="section">
+<h2>"我想做 X" — Agent 路由表</h2>
+<p>查找你想做的事，找到对应 Agent 和交互方式：</p>
+<div class="task-router">
+<table>
+<tr><th>我想做…</th><th>Agent</th><th>怎么说 / 怎么交互</th></tr>
+<tr><td>聊一个游戏 idea</td><td>ideation</td><td>直接说出你的想法，它会引导你</td></tr>
+<tr><td>设计一个新的游戏系统</td><td>design</td><td>"为 Slice N 设计 [系统名] 系统"</td></tr>
+<tr><td>设计世界观/背景</td><td>design</td><td>"建立世界观设定" → 它按 world.md 格式引导你</td></tr>
+<tr><td>设计 UI 结构/交互</td><td>design</td><td>"设计 [屏幕名] 的 UI 结构"</td></tr>
+<tr><td>批量设计物品/敌人/技能</td><td>design</td><td>"为 [系统] 设计 N 个 [类型] 条目"</td></tr>
+<tr><td>确定技术栈/搭建项目</td><td>code</td><td>"设计技术架构"（自动触发架构模式）</td></tr>
+<tr><td>实现一个具体功能</td><td>code</td><td>"执行 docs/tasks/slice-N.md 中的 T[X]"</td></tr>
+<tr><td>修一个 Bug</td><td>code</td><td>描述问题现象 + 期望行为</td></tr>
+<tr><td>确定美术/音频风格</td><td>art</td><td>"确定美术方向" / "确定音频方向"</td></tr>
+<tr><td>生成图片/音乐素材</td><td>art</td><td>"为 [对象] 生成 prompt" → 你拿去外部工具执行</td></tr>
+<tr><td>设计 UI 视觉样式</td><td>art</td><td>"补充 [ui-spec] 的视觉规格"</td></tr>
+<tr><td>验收功能/找问题</td><td>qa</td><td>"验收 [系统名]" → 它对照 spec 检查</td></tr>
+<tr><td>了解状态/规划下一步</td><td>director</td><td>"当前状态和下一步"</td></tr>
+<tr><td>规划新 Slice</td><td>director</td><td>"规划 Slice N"</td></tr>
+<tr><td>Slice 完成，收尾整合</td><td>director</td><td>"Slice N 完成，触发验收和整合"</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ============ SLICE LIFECYCLE ============ -->
+<div class="section">
+<h2>一个 Slice 的完整生命周期</h2>
+<div class="slice-lifecycle">┌─ Slice N ─────────────────────────────────────────────────┐
+│                                                            │
+│  1. Director: 一致性检查 + Slice 规划                      │
+│       ↓                                                    │
+│  2. Design:   为新系统写 Spec / 内容条目设计               │
+│       ↓                                                    │
+│  3. Director: 拆解 Task Briefs → docs/tasks/slice-N.md    │
+│       ↓                                                    │
+│  4. Code/Art: 执行实现（你开对应窗口逐个任务做）           │
+│       ↓                                                    │
+│  5. QA:       对照 Spec 验收 + 回归检查                    │
+│       ↓                                                    │
+│  6. 你:       试玩验证 — 回答本 Slice 的验证问题           │
+│       ↓                                                    │
+│  7. Director: 整合更新文档 → 输出分级摘要                  │
+│                                                            │
+│  → 游戏多了一层，所有文档与代码同步                        │
+└────────────────────────────────────────────────────────────┘</div>
+</div>
+
+<!-- ============ DOC MAP ============ -->
+<div class="section">
+<h2>文件结构速查</h2>
+<div class="doc-map">
+<pre>.claude/agents/        AI 的执行指令（6个agent定义，最高权威）
+guides/                你的参考手册（方法论、策略、陷阱警告）
+docs/                  游戏项目活文档（AI读写 + 你审核）
+  ├── vision.md          核心体验（极少变）
+  ├── world.md           世界观 + 叙事语调规则
+  ├── gdd-core.md        综合设计（随 Slice 增长）
+  ├── architecture.md    技术架构
+  ├── art-direction.md   美术方向
+  ├── audio-direction.md 音频方向
+  ├── specs/             系统规则 + schema + UI spec
+  ├── content/           内容条目（&gt;30条自动拆分为索引+子文件）
+  ├── progress/          roadmap + current-slice + decisions-log
+  ├── tasks/             per-Slice 任务文件（slice-01.md, slice-02.md...）
+  ├── qa/                验收报告
+  └── art/               资产规格 + 生成 prompt
+assets/                游戏资产（images/ + audio/）
+CLAUDE.md              项目规则（AI 每次启动自动加载）
+START-HERE.md          AI 读取的入口文件</pre>
+</div>
+</div>
+
+<!-- ============ DAILY FLOW ============ -->
+<div class="section">
+<h2>日常开发节奏</h2>
+
+<h3>标准流程："今天有时间推进游戏"</h3>
+<ul class="flow-steps">
+  <li><strong>1.</strong> 开 <code>director</code> agent，问"当前状态和待做任务"</li>
+  <li><strong>2.</strong> 它告诉你：当前 Slice、哪些任务待完成、建议先做哪个</li>
+  <li class="highlight"><strong>3.</strong> 开对应 agent 窗口，执行任务</li>
+  <li><strong>4.</strong> 做完 → 标记 Done → 还有时间就做下一个</li>
+  <li><strong>5.</strong> 如果本 Slice 任务全部完成 → Director 触发 QA 验收 → 你试玩验证</li>
+</ul>
+
+<h3>边界场景处理</h3>
+
+<div class="scenario">
+  <h4>做着做着发现设计有问题</h4>
+  <p>比如 Code 实现时发现 Spec 的规则有矛盾或不可行。</p>
+  <p class="action">→ 标记当前任务为 blocker → 开 Director 会话汇报 → Director 判断是让 Design 修 Spec 还是调整实现方案</p>
+</div>
+
+<div class="scenario">
+  <h4>想临时换一个任务做</h4>
+  <p>当前任务卡住了或者不想做了，想先做另一个。</p>
+  <p class="action">→ 看 current-slice.md 的任务表 → 选一个无依赖且状态为 Todo 的 → 直接开窗口做（不需要重新问 Director）</p>
+</div>
+
+<div class="scenario">
+  <h4>想加一个框架外的新功能</h4>
+  <p>"突然想到一个好点子想加进去"</p>
+  <p class="action">→ 不要直接做！记到 roadmap.md 的 Backlog → 下一次 Slice 规划时 Director 会评估是否纳入</p>
+</div>
+
+<div class="scenario">
+  <h4>Slice 做完了但验证不通过</h4>
+  <p>试玩后感觉"不好玩"或"方向不对"。</p>
+  <p class="action">→ 开 Director 会话 → 它引导你判断：是 Spec 需要修改（局部调整）还是方向需要重新审视（重大回退）</p>
+</div>
+
+<div class="scenario">
+  <h4>很久没做了，忘了上次做到哪</h4>
+  <p class="action">→ 开 Director agent → "看看当前状态" → 它扫描所有文件重建全景告诉你</p>
+</div>
+
+<h3>权威顺序</h3>
+<p style="color: var(--text);">冲突时：<code>.claude/agents/</code> &gt; <code>docs/</code> &gt; <code>guides/</code></p>
+</div>
+
+</body>
+</html>

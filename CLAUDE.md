@@ -67,7 +67,7 @@ docs/
 ├── specs/system-*.md      ← 系统规则 + schema
 ├── content/*.md           ← 内容条目（物品/敌人/技能/关卡/进度曲线）
 ├── progress/              ← 进度管理（roadmap/current-slice/decisions-log）
-├── tasks/                 ← Task Briefs
+├── tasks/                 ← Task Briefs（per-Slice 文件：slice-01.md, slice-02.md...）
 ├── qa/                    ← 验收报告
 └── art/                   ← 资产规格 + 生成 prompt 记录
 ```

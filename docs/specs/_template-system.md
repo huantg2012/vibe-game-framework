@@ -2,6 +2,9 @@
 status: TEMPLATE
 created-by: design agent
 created-when: 系统 Slice 的设计阶段
+last-modified-by: [agent名]
+last-modified-date: [YYYY-MM-DD]
+interface-changed: false
 note: 实际使用时复制为 system-[name].md
 ---
 

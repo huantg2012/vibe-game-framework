@@ -2,7 +2,10 @@
 status: TEMPLATE
 created-by: design agent
 created-when: 系统 Slice（首批条目）或内容 Slice（批量条目）
-note: 实际使用时复制为 [type].md（如 enemies.md, items.md, skills.md）
+note: |
+  实际使用时复制为 [type].md（如 enemies.md, items.md, skills.md）。
+  当条目超过 30 时，本文件变为索引，详细条目拆分到 [type]/ 子目录下。
+  拆分后格式见本文件末尾"扩展规则"部分。
 ---
 
 # 内容设计：[内容类型名]
@@ -40,3 +43,31 @@ note: 实际使用时复制为 [type].md（如 enemies.md, items.md, skills.md�
 - 基准线：[什么是数值 1.0 的标准]
 - 成长曲线：[每级/每稀有度增幅]
 - 待调整项：[什么存疑，需 playtest 确认]
+
+---
+
+## 扩展规则：条目超过 30 时
+
+当本文件条目总数超过 30，执行拆分：
+
+**本文件变为索引**（删除条目表格，替换为索引表格）：
+```markdown
+# 内容索引：[类型名]
+总数：[N]
+
+| id | name | 分组 | 子文件 |
+|----|------|------|--------|
+| [ID] | [名称] | [分组名] | [type]/[group].md |
+```
+
+**条目移入子文件**：
+```
+docs/content/
+├── [type].md              ← 索引（只有 ID+名称+指向子文件）
+└── [type]/
+    ├── [group-a].md       ← 子文件保持本模板的"条目列表"格式
+    └── [group-b].md
+```
+
+分组依据：按游戏内逻辑分类（敌人按 tier/区域、物品按类型/稀有度）。
+子文件格式：和本模板的"条目列表"段落相同（含 Schema 引用 + 表格 + 关联引用 + 平衡备注）。
