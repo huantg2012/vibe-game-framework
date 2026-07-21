@@ -103,6 +103,299 @@ code { background: var(--surface); border: 1px solid var(--border); padding: 0.1
 <p>每个 Slice 是一次完整的 <strong>设计→实现→验收→验证→框架反馈</strong> 循环。游戏和框架同步生长——第一行纳入主干的代码即生产质量。</p>
 </div>
 
+<!-- ============ AGENT × PHASE MATRIX ============ -->
+<div class="section">
+<h2>Agent × 阶段覆盖</h2>
+<p>深色=主导执行，浅色=协调/路由。每行一个 Agent，每列一个阶段。</p>
+
+<div style="overflow-x:auto; margin:1.5rem 0;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 260" style="width:100%;max-width:920px;font-family:'Segoe UI',system-ui,sans-serif;">
+  <rect x="0" y="0" width="920" height="260" fill="#f8f9fa" rx="8"/>
+
+  <!-- Column headers -->
+  <text x="155" y="28" font-size="11" fill="#6c757d" font-weight="600" text-anchor="middle">Ideation</text>
+  <text x="280" y="28" font-size="11" fill="#6c757d" font-weight="600" text-anchor="middle">Foundation</text>
+  <text x="410" y="28" font-size="11" fill="#6c757d" font-weight="600" text-anchor="middle">Slice:Design</text>
+  <text x="530" y="28" font-size="11" fill="#6c757d" font-weight="600" text-anchor="middle">Slice:Plan</text>
+  <text x="650" y="28" font-size="11" fill="#6c757d" font-weight="600" text-anchor="middle">Slice:Impl</text>
+  <text x="770" y="28" font-size="11" fill="#6c757d" font-weight="600" text-anchor="middle">Slice:Verify</text>
+  <text x="875" y="28" font-size="11" fill="#6c757d" font-weight="600" text-anchor="middle">Polish</text>
+
+  <!-- Grid lines -->
+  <line x1="110" y1="38" x2="110" y2="248" stroke="#dee2e6" stroke-width="0.5"/>
+  <line x1="210" y1="38" x2="210" y2="248" stroke="#dee2e6" stroke-width="0.5"/>
+  <line x1="345" y1="38" x2="345" y2="248" stroke="#dee2e6" stroke-width="0.5"/>
+  <line x1="470" y1="38" x2="470" y2="248" stroke="#dee2e6" stroke-width="0.5"/>
+  <line x1="590" y1="38" x2="590" y2="248" stroke="#dee2e6" stroke-width="0.5"/>
+  <line x1="710" y1="38" x2="710" y2="248" stroke="#dee2e6" stroke-width="0.5"/>
+  <line x1="830" y1="38" x2="830" y2="248" stroke="#dee2e6" stroke-width="0.5"/>
+
+  <!-- Row labels -->
+  <text x="10" y="65" font-size="12" fill="#6c63ff" font-weight="700">ideation</text>
+  <text x="10" y="100" font-size="12" fill="#6c63ff" font-weight="700">director</text>
+  <text x="10" y="135" font-size="12" fill="#2d6a4f" font-weight="700">design</text>
+  <text x="10" y="170" font-size="12" fill="#1971c2" font-weight="700">code</text>
+  <text x="10" y="205" font-size="12" fill="#b8860b" font-weight="700">art</text>
+  <text x="10" y="240" font-size="12" fill="#e63946" font-weight="700">qa</text>
+
+  <!-- ideation row -->
+  <rect x="115" y="50" width="90" height="24" rx="4" fill="#6c63ff" opacity="0.85"/>
+  <text x="160" y="66" font-size="9" fill="#fff" text-anchor="middle">PRIMARY</text>
+
+  <!-- director row -->
+  <rect x="115" y="85" width="90" height="24" rx="4" fill="#6c63ff" opacity="0.15" stroke="#6c63ff" stroke-width="1"/>
+  <text x="160" y="101" font-size="8" fill="#6c63ff" text-anchor="middle">route</text>
+  <rect x="215" y="85" width="125" height="24" rx="4" fill="#6c63ff" opacity="0.35"/>
+  <text x="278" y="101" font-size="8" fill="#fff" text-anchor="middle">route + integrate</text>
+  <rect x="350" y="85" width="115" height="24" rx="4" fill="#6c63ff" opacity="0.15" stroke="#6c63ff" stroke-width="1"/>
+  <text x="408" y="101" font-size="8" fill="#6c63ff" text-anchor="middle">coordinate</text>
+  <rect x="475" y="85" width="110" height="24" rx="4" fill="#6c63ff" opacity="0.85"/>
+  <text x="530" y="101" font-size="9" fill="#fff" text-anchor="middle">PLAN</text>
+  <rect x="595" y="85" width="110" height="24" rx="4" fill="#6c63ff" opacity="0.15" stroke="#6c63ff" stroke-width="1"/>
+  <text x="650" y="101" font-size="8" fill="#6c63ff" text-anchor="middle">coordinate</text>
+  <rect x="715" y="85" width="110" height="24" rx="4" fill="#6c63ff" opacity="0.15" stroke="#6c63ff" stroke-width="1"/>
+  <text x="770" y="101" font-size="8" fill="#6c63ff" text-anchor="middle">trigger QA</text>
+  <rect x="835" y="85" width="75" height="24" rx="4" fill="#6c63ff" opacity="0.15" stroke="#6c63ff" stroke-width="1"/>
+  <text x="873" y="101" font-size="8" fill="#6c63ff" text-anchor="middle">route</text>
+
+  <!-- design row -->
+  <rect x="215" y="120" width="125" height="24" rx="4" fill="#2d6a4f" opacity="0.65"/>
+  <text x="278" y="136" font-size="8" fill="#fff" text-anchor="middle">world + 1st spec</text>
+  <rect x="350" y="120" width="115" height="24" rx="4" fill="#2d6a4f" opacity="0.85"/>
+  <text x="408" y="136" font-size="9" fill="#fff" text-anchor="middle">PRIMARY</text>
+
+  <!-- code row -->
+  <rect x="215" y="155" width="125" height="24" rx="4" fill="#1971c2" opacity="0.65"/>
+  <text x="278" y="171" font-size="8" fill="#fff" text-anchor="middle">arch + scaffold</text>
+  <rect x="595" y="155" width="110" height="24" rx="4" fill="#1971c2" opacity="0.85"/>
+  <text x="650" y="171" font-size="9" fill="#fff" text-anchor="middle">PRIMARY</text>
+  <rect x="835" y="155" width="75" height="24" rx="4" fill="#1971c2" opacity="0.5"/>
+  <text x="873" y="171" font-size="8" fill="#fff" text-anchor="middle">fix</text>
+
+  <!-- art row -->
+  <rect x="215" y="190" width="125" height="24" rx="4" fill="#b8860b" opacity="0.65"/>
+  <text x="278" y="206" font-size="8" fill="#fff" text-anchor="middle">art/audio direction</text>
+  <rect x="595" y="190" width="110" height="24" rx="4" fill="#b8860b" opacity="0.85"/>
+  <text x="650" y="206" font-size="9" fill="#fff" text-anchor="middle">PRIMARY</text>
+
+  <!-- qa row -->
+  <rect x="715" y="225" width="110" height="24" rx="4" fill="#e63946" opacity="0.85"/>
+  <text x="770" y="241" font-size="9" fill="#fff" text-anchor="middle">PRIMARY</text>
+  <rect x="835" y="225" width="75" height="24" rx="4" fill="#e63946" opacity="0.6"/>
+  <text x="873" y="241" font-size="8" fill="#fff" text-anchor="middle">issues.md</text>
+</svg>
+</div>
+</div>
+
+<!-- ============ LAYERED FLOW DIAGRAM ============ -->
+<div class="section">
+<h2>Agent 协作流向</h2>
+<p>三列布局：左=Director 协调轴，中=主生产链（粗线），右=只读上下文。线条粗细反映重要性。</p>
+
+<div style="overflow-x:auto; margin:1.5rem 0;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" style="width:100%;max-width:900px;font-family:'Segoe UI',system-ui,sans-serif;">
+  <rect x="0" y="0" width="900" height="720" fill="#fafafa" rx="8"/>
+
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#495057"/>
+    </marker>
+    <marker id="arr-fade" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
+      <path d="M0,0 L6,2 L0,4 Z" fill="#adb5bd"/>
+    </marker>
+    <marker id="arr-r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#e63946"/>
+    </marker>
+    <marker id="arr-p" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#6c63ff"/>
+    </marker>
+  </defs>
+
+  <!-- ===== THREE-COLUMN LAYOUT ===== -->
+  <!-- Column backgrounds -->
+  <rect x="15" y="15" width="105" height="600" rx="8" fill="#f0eeff" opacity="0.4"/>
+  <rect x="135" y="15" width="380" height="600" rx="8" fill="#fff" opacity="0.6"/>
+  <rect x="530" y="15" width="355" height="600" rx="8" fill="#f8f8f8" opacity="0.5"/>
+
+  <!-- Column labels -->
+  <text x="67" y="38" font-size="9" fill="#6c63ff" font-weight="700" text-anchor="middle">协调层</text>
+  <text x="325" y="38" font-size="9" fill="#495057" font-weight="700" text-anchor="middle">主生产链（粗线=核心数据流）</text>
+  <text x="707" y="38" font-size="9" fill="#adb5bd" font-weight="700" text-anchor="middle">只读上下文 + 次要产出（细线）</text>
+
+  <!-- ===== LEFT: DIRECTOR SPINE ===== -->
+  <rect x="30" y="55" width="75" height="545" rx="8" fill="#fff" stroke="#6c63ff" stroke-width="2"/>
+  <text x="67" y="78" font-size="12" fill="#6c63ff" font-weight="700" text-anchor="middle">director</text>
+  <!-- Milestone dots -->
+  <circle cx="67" cy="110" r="4" fill="#6c63ff"/>
+  <text x="67" y="125" font-size="7" fill="#6c63ff" text-anchor="middle">route</text>
+  <circle cx="67" cy="200" r="4" fill="#6c63ff"/>
+  <text x="67" y="215" font-size="7" fill="#6c63ff" text-anchor="middle">plan</text>
+  <circle cx="67" cy="320" r="4" fill="#6c63ff"/>
+  <text x="67" y="335" font-size="7" fill="#6c63ff" text-anchor="middle">coordinate</text>
+  <circle cx="67" cy="430" r="4" fill="#6c63ff"/>
+  <text x="67" y="445" font-size="7" fill="#6c63ff" text-anchor="middle">trigger QA</text>
+  <circle cx="67" cy="540" r="4" fill="#6c63ff"/>
+  <text x="67" y="555" font-size="7" fill="#6c63ff" text-anchor="middle">integrate</text>
+
+  <!-- ===== CENTER: MAIN PRODUCTION CHAIN ===== -->
+
+  <!-- Step 1: ideation → vision.md -->
+  <rect x="185" y="70" width="95" height="38" rx="8" fill="#6c63ff"/>
+  <text x="232" y="94" font-size="12" fill="#fff" font-weight="600" text-anchor="middle">ideation</text>
+  <path d="M280,89 L320,89" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <rect x="330" y="73" width="115" height="32" rx="14" fill="#fff" stroke="#495057" stroke-width="2"/>
+  <text x="387" y="94" font-size="11" fill="#495057" font-weight="600" text-anchor="middle">vision.md</text>
+
+  <!-- Step 2: design → specs -->
+  <path d="M387,105 L387,135" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <rect x="185" y="150" width="95" height="38" rx="8" fill="#2d6a4f"/>
+  <text x="232" y="174" font-size="12" fill="#fff" font-weight="600" text-anchor="middle">design</text>
+  <path d="M280,169 L320,169" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <rect x="330" y="153" width="140" height="32" rx="14" fill="#fff" stroke="#495057" stroke-width="2"/>
+  <text x="400" y="174" font-size="11" fill="#495057" font-weight="600" text-anchor="middle">specs/system-*.md</text>
+
+  <!-- Step 2.5: director → tasks -->
+  <path d="M105,200 L155,225" fill="none" stroke="#6c63ff" stroke-width="1.8" marker-end="url(#arr-p)"/>
+  <rect x="155" y="215" width="140" height="28" rx="12" fill="#fff" stroke="#6c63ff" stroke-width="1.8"/>
+  <text x="225" y="234" font-size="10" fill="#6c63ff" font-weight="600" text-anchor="middle">tasks/slice-N.md</text>
+
+  <!-- Step 3: code + art (parallel) -->
+  <path d="M400,185 L310,270" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <path d="M225,243 L255,270" fill="none" stroke="#6c63ff" stroke-width="1.5" marker-end="url(#arr-p)"/>
+  <text x="340" y="240" font-size="8" fill="#495057">specs 指导实现</text>
+
+  <rect x="210" y="275" width="95" height="38" rx="8" fill="#1971c2"/>
+  <text x="257" y="299" font-size="12" fill="#fff" font-weight="600" text-anchor="middle">code</text>
+
+  <rect x="370" y="275" width="95" height="38" rx="8" fill="#b8860b"/>
+  <text x="417" y="299" font-size="12" fill="#fff" font-weight="600" text-anchor="middle">art</text>
+
+  <!-- Tasks → art -->
+  <path d="M295,235 Q340,255 390,275" fill="none" stroke="#6c63ff" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arr-p)"/>
+
+  <!-- code → src/ -->
+  <path d="M257,313 L257,340" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <rect x="195" y="345" width="80" height="30" rx="13" fill="#fff" stroke="#495057" stroke-width="2"/>
+  <text x="235" y="365" font-size="11" fill="#495057" font-weight="600" text-anchor="middle">src/</text>
+
+  <!-- art → assets -->
+  <path d="M417,313 L417,340" fill="none" stroke="#495057" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="360" y="345" width="110" height="30" rx="13" fill="#fff" stroke="#495057" stroke-width="1.5"/>
+  <text x="415" y="365" font-size="10" fill="#495057" font-weight="600" text-anchor="middle">asset-specs</text>
+
+  <!-- art assets → code (horizontal merge) -->
+  <path d="M360,360 L275,360" fill="none" stroke="#adb5bd" stroke-width="1" marker-end="url(#arr-fade)"/>
+  <text x="318" y="354" font-size="7" fill="#adb5bd" text-anchor="middle">集成</text>
+
+  <!-- Step 4: qa -->
+  <path d="M235,375 L295,415" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="250" y="402" font-size="8" fill="#495057">src/ 送验</text>
+
+  <rect x="285" y="420" width="85" height="38" rx="8" fill="#e63946"/>
+  <text x="327" y="444" font-size="12" fill="#fff" font-weight="600" text-anchor="middle">qa</text>
+
+  <path d="M370,439 L410,439" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <rect x="420" y="423" width="120" height="32" rx="14" fill="#fff" stroke="#495057" stroke-width="2"/>
+  <text x="480" y="444" font-size="10" fill="#495057" font-weight="600" text-anchor="middle">qa/report-*.md</text>
+
+  <!-- Step 5: Human -->
+  <path d="M327,458 L327,490" fill="none" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <rect x="260" y="495" width="100" height="38" rx="8" fill="#212529"/>
+  <text x="310" y="519" font-size="12" fill="#fff" font-weight="600" text-anchor="middle">Human</text>
+  <text x="310" y="548" font-size="8" fill="#6c757d" text-anchor="middle">试玩验证</text>
+
+  <!-- Human → Director (approval loop) -->
+  <path d="M260,514 L105,540" fill="none" stroke="#212529" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="170" y="533" font-size="8" fill="#212529" text-anchor="middle">approval</text>
+
+  <!-- ===== FEEDBACK ARROW (QA → Code) — distinctive ===== -->
+  <path d="M285,435 Q170,390 210,313" fill="none" stroke="#e63946" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arr-r)"/>
+  <text x="170" y="370" font-size="9" fill="#e63946" font-weight="600">bug fix ↑</text>
+
+  <!-- ===== RIGHT COLUMN: READ-ONLY CONTEXT ===== -->
+  <!-- These are secondary documents that agents READ but don't drive the main flow -->
+
+  <text x="550" y="72" font-size="8" fill="#adb5bd">vision.md → 所有 Agent 只读锚点</text>
+  <path d="M445,89 L540,72" fill="none" stroke="#dee2e6" stroke-width="0.8" marker-end="url(#arr-fade)"/>
+
+  <!-- world.md (design produces, art/code read) -->
+  <rect x="560" y="150" width="95" height="26" rx="11" fill="#fff" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="607" y="167" font-size="9" fill="#adb5bd" font-weight="600" text-anchor="middle">world.md</text>
+  <path d="M280,175 L560,163" fill="none" stroke="#dee2e6" stroke-width="0.8" marker-end="url(#arr-fade)"/>
+  <text x="620" y="183" font-size="7" fill="#adb5bd">art, code 读取（命名/设定约束）</text>
+
+  <!-- content/*.md -->
+  <rect x="690" y="150" width="100" height="26" rx="11" fill="#fff" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="740" y="167" font-size="9" fill="#adb5bd" font-weight="600" text-anchor="middle">content/*.md</text>
+  <text x="740" y="183" font-size="7" fill="#adb5bd" text-anchor="middle">code 读取实现数据</text>
+
+  <!-- ui-spec (design structural + art visual) -->
+  <rect x="560" y="210" width="120" height="26" rx="11" fill="#fff" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="620" y="227" font-size="9" fill="#adb5bd" font-weight="600" text-anchor="middle">ui-spec (结构+视觉)</text>
+  <text x="620" y="243" font-size="7" fill="#adb5bd" text-anchor="middle">design 写结构, art 补视觉 → code 实现</text>
+
+  <!-- architecture.md -->
+  <rect x="560" y="290" width="120" height="26" rx="11" fill="#fff" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="620" y="307" font-size="9" fill="#adb5bd" font-weight="600" text-anchor="middle">architecture.md</text>
+  <text x="620" y="323" font-size="7" fill="#adb5bd" text-anchor="middle">code 产出, design/qa 只读约束</text>
+
+  <!-- art/prompts -->
+  <rect x="560" y="345" width="120" height="26" rx="11" fill="#fff" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="620" y="362" font-size="9" fill="#adb5bd" font-weight="600" text-anchor="middle">art/prompts/*.md</text>
+  <text x="620" y="378" font-size="7" fill="#adb5bd" text-anchor="middle">art 产出 → Human 执行外部工具</text>
+
+  <!-- specs → qa baseline (secondary read) -->
+  <path d="M470,169 Q520,300 340,420" fill="none" stroke="#dee2e6" stroke-width="0.8" stroke-dasharray="3,3" marker-end="url(#arr-fade)"/>
+  <text x="520" y="360" font-size="7" fill="#adb5bd">specs 作为验收基线</text>
+
+  <!-- Director integrate outputs -->
+  <rect x="560" y="490" width="110" height="24" rx="10" fill="#fff" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="615" y="506" font-size="9" fill="#adb5bd" font-weight="600" text-anchor="middle">gdd-core.md</text>
+  <rect x="690" y="490" width="100" height="24" rx="10" fill="#fff" stroke="#dee2e6" stroke-width="1.2"/>
+  <text x="740" y="506" font-size="9" fill="#adb5bd" font-weight="600" text-anchor="middle">CLAUDE.md</text>
+  <rect x="560" y="522" width="110" height="24" rx="10" fill="#fff" stroke="#dee2e6" stroke-width="1"/>
+  <text x="615" y="538" font-size="8" fill="#adb5bd" text-anchor="middle">roadmap.md</text>
+  <rect x="690" y="522" width="110" height="24" rx="10" fill="#fff" stroke="#dee2e6" stroke-width="1"/>
+  <text x="745" y="538" font-size="8" fill="#adb5bd" text-anchor="middle">current-slice.md</text>
+  <text x="670" y="558" font-size="7" fill="#adb5bd" text-anchor="middle">Director 整合后更新，所有 Agent 下轮读取</text>
+
+  <path d="M105,540 L560,504" fill="none" stroke="#dee2e6" stroke-width="0.8" marker-end="url(#arr-fade)"/>
+
+  <!-- ===== LEGEND ===== -->
+  <rect x="15" y="630" width="870" height="75" rx="6" fill="#fff" stroke="#dee2e6" stroke-width="1"/>
+
+  <line x1="35" y1="655" x2="75" y2="655" stroke="#495057" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="82" y="659" font-size="9" fill="#495057" font-weight="600">主链（核心数据流）</text>
+
+  <line x1="35" y1="678" x2="75" y2="678" stroke="#6c63ff" stroke-width="1.8" marker-end="url(#arr-p)"/>
+  <text x="82" y="682" font-size="9" fill="#6c63ff">Director 协调</text>
+
+  <line x1="250" y1="655" x2="290" y2="655" stroke="#e63946" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arr-r)"/>
+  <text x="297" y="659" font-size="9" fill="#e63946" font-weight="600">反馈回路（向上）</text>
+
+  <line x1="250" y1="678" x2="290" y2="678" stroke="#dee2e6" stroke-width="0.8" marker-end="url(#arr-fade)"/>
+  <text x="297" y="682" font-size="9" fill="#adb5bd">只读引用（可忽略）</text>
+
+  <rect x="520" y="647" width="12" height="12" rx="2" fill="#6c63ff"/>
+  <text x="537" y="657" font-size="9" fill="#6c757d">Director/Ideation</text>
+  <rect x="520" y="665" width="12" height="12" rx="2" fill="#2d6a4f"/>
+  <text x="537" y="675" font-size="9" fill="#6c757d">Design</text>
+  <rect x="520" y="683" width="12" height="12" rx="2" fill="#1971c2"/>
+  <text x="537" y="693" font-size="9" fill="#6c757d">Code</text>
+  <rect x="660" y="647" width="12" height="12" rx="2" fill="#b8860b"/>
+  <text x="677" y="657" font-size="9" fill="#6c757d">Art</text>
+  <rect x="660" y="665" width="12" height="12" rx="2" fill="#e63946"/>
+  <text x="677" y="675" font-size="9" fill="#6c757d">QA</text>
+  <rect x="660" y="683" width="12" height="12" rx="2" fill="#212529"/>
+  <text x="677" y="693" font-size="9" fill="#6c757d">Human</text>
+</svg>
+</div>
+
+<div class="tip tip-blue">
+  <strong>如何读图：</strong>只看中间列的粗线就能理解核心流程（ideation → design → code/art → qa → Human）。左列是 Director 的协调节奏。右列是只读上下文——淡色意味着"不用主动关注，需要时才查"。唯一向上的红色虚线是 QA 发现 bug 后的修复回路。
+</div>
+</div>
+
 <!-- ============ QUICK STATUS ============ -->
 <div class="section">
 <h2>快速了解项目状态</h2>
