@@ -1,10 +1,11 @@
 ---
-status: DRAFT
+status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
 last-modified: 2026-07-22
+approved-date: 2026-07-22
 changed-this-slice: true
-note: Foundation Step 2. Pending human approval.
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。
 ---
 
 # 技术架构
@@ -96,20 +97,28 @@ src/
 
 系统之间通过事件解耦。不允许系统 A 直接 import 并调用系统 B 的方法（管理器除外）。
 
+> 事件契约的唯一真相是 `src/types/events.ts`（`GameEvent` 枚举 + `EventPayloads` 类型映射）。以下示例摘自该文件的现状，如与代码不符请以代码为准并回补本文档。
+
 ```typescript
-// 事件定义示例
-enum GameEvent {
+// 事件定义（节选自 src/types/events.ts）
+export enum GameEvent {
   CHAOS_CHANGED = 'chaos:changed',
-  CHAOS_THRESHOLD = 'chaos:threshold',
+  CHAOS_THRESHOLD_REACHED = 'chaos:threshold-reached',
   ENEMY_ALERT = 'enemy:alert',
   PLAYER_DAMAGED = 'player:damaged',
   KINDLING_COLLECTED = 'kindling:collected',
-  RIFT_EXIT = 'rift:exit',
+  RIFT_EXIT_REACHED = 'rift:exit-reached',
 }
 
-// 使用方式
-eventBus.emit(GameEvent.CHAOS_CHANGED, { value: 45, delta: 2 });
-eventBus.on(GameEvent.CHAOS_THRESHOLD, (data) => { /* apply penalty */ });
+// payload 类型映射（节选自 src/types/events.ts 的 EventPayloads）
+// CHAOS_CHANGED:           { value: number; delta: number; max: number }
+// CHAOS_THRESHOLD_REACHED: { level: number }
+// ENEMY_ALERT:             { enemyId: string; alertLevel: 'suspicious' | 'alert' | 'chase' }
+// KINDLING_COLLECTED:      { amount: number; total: number }
+
+// 使用方式（payload 字段由 EventPayloads 强制约束）
+eventBus.emit(GameEvent.CHAOS_CHANGED, { value: 45, delta: 2, max: 100 });
+eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty */ });
 ```
 
 **辅助模式：**
@@ -118,28 +127,46 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD, (data) => { /* apply penalty */ });
 
 **禁止：**
 - 系统间循环依赖
-- 在事件回调中同步触发其他事件（防止事件风暴）
 - 绕过事件总线直接跨系统访问状态
+- **可能形成循环的同步 emit 链**（见下方"事件回调中的 emit 规则"）
 
-## 已注册模块
+### 事件回调中的 emit 规则（可执行版本）
 
-| 模块 | 路径 | 职责 | 对外接口 |
-| ---- | ---- | ---- | -------- |
-| EventBus | src/core/event-bus.ts | 类型安全的发布/订阅系统 | emit(), on(), off() |
-| I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() |
-| GameState | src/managers/game-state.ts | 全局状态持有和查询 | get/set 方法 |
-| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化 | save(), load(), hasSave() |
-| AudioManager | src/managers/audio-manager.ts | 音频播放/停止/音量控制 | play(), stop(), setVolume() |
-| VisibilitySystem | src/systems/visibility-system.ts | 玩家视野计算与渲染遮罩 | update(playerPos, facing) |
-| AISystem | src/systems/ai/ | 敌人行为控制 | update(enemies, playerPos) |
-| ChaosSystem | src/systems/chaos-system.ts | 混乱值累积与惩罚触发 | update(dt), getValue() |
-| CombatSystem | src/systems/combat-system.ts | 伤害计算与战斗逻辑 | attack(source, target) |
-| Pathfinding | src/systems/pathfinding.ts | 网格 A* 寻路 | findPath(from, to) |
-| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外黑暗氛围渲染 | update(dt), setIntensity(n) |
-| InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) |
-| MapGenerator | src/generation/ | Voronoi+CA 程序化地图生成 | generate(config): MapData |
-| HUD | src/ui/hud.ts | 游戏内状态显示 | update(state) |
-| DOM UI | src/ui/dom/ | 复杂交互界面 | show(), hide() |
+`eventBus.emit()` 是**完全同步**的（`src/core/event-bus.ts` 中直接遍历 listener 并调用），因此在回调里再 `emit` 会在同一调用栈内递归展开。若事件链能回到自身（A → B → A），会造成无限递归 / 栈溢出。规则如下：
+
+- **允许**：在回调中同步 `emit` 单向的下游事件——即该事件不会（直接或间接）再触发回本条事件链。例：`combat` 处理伤害后同步 `emit(PLAYER_DAMAGED)`。
+- **禁止**：可能构成环的同步 `emit`（A 的回调同步触发最终会回到 A 的事件）。
+- **不确定是否成环、或明知需要回环**：不要同步 emit，改为**延迟派发**打破调用栈：
+  - 下一个 microtask：`queueMicrotask(() => eventBus.emit(...))`
+  - 下一帧（在 Phaser 场景内）：`this.time.delayedCall(0, () => eventBus.emit(...))`
+- **开发期自检**：为一条事件链画出"谁监听 / 谁再 emit"，只要闭合成环就必须在环上至少一处改用延迟派发。
+
+> 说明：当前 `EventBus` 未内建队列式 emit。上述延迟派发以标准 `queueMicrotask` / Phaser `delayedCall(0)` 约定实现，无需改动 EventBus。若后续多处需要队列语义，再评估在 EventBus 上新增 `emitDeferred()`。
+
+## 模块注册表
+
+> **状态**列以真实 `src/` 目录为准（核对日期 2026-07-22）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。目前只有 `src/core/` 与 `src/i18n/` 落地，`managers/`、`systems/`、`entities/`、`generation/`、`ui/` 等目录尚不存在。
+
+| 模块 | 路径 | 职责 | 对外接口 | 状态 |
+| ---- | ---- | ---- | -------- | ---- |
+| EventBus | src/core/event-bus.ts | 类型安全的发布/订阅系统 | emit(), on(), off(), once(), destroy() | 已实现 |
+| I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() | 已实现 |
+| GameState | src/managers/game-state.ts | 全局状态持有和查询 | get/set 方法 | 规划中 |
+| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化 | save(), load(), hasSave() | 规划中 |
+| AudioManager | src/managers/audio-manager.ts | 音频播放/停止/音量控制 | play(), stop(), setVolume() | 规划中 |
+| VisibilitySystem | src/systems/visibility-system.ts | 玩家视野计算与渲染遮罩（Rift+Purification 共用） | update(playerPos, facing) | 规划中 |
+| TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线） | render(tileData): Tilemap | 规划中 |
+| AISystem | src/systems/ai/ | 敌人行为控制 | update(enemies, playerPos) | 规划中 |
+| ChaosSystem | src/systems/chaos-system.ts | 混乱值累积与惩罚触发 | update(dt), getValue() | 规划中 |
+| CombatSystem | src/systems/combat-system.ts | 伤害计算与战斗逻辑 | attack(source, target) | 规划中 |
+| Pathfinding | src/systems/pathfinding.ts | 网格 A* 寻路 | findPath(from, to) | 规划中 |
+| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外黑暗氛围渲染 | update(dt), setIntensity(n) | 规划中 |
+| InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中 |
+| MapGenerator | src/generation/ | Voronoi+CA 程序化地图生成 | generate(config): MapData | 规划中 |
+| HUD | src/ui/hud.ts | 游戏内状态显示 | update(state) | 规划中 |
+| DOM UI | src/ui/dom/ | 复杂交互界面 | show(), hide() | 规划中 |
+
+> 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`）、`src/scenes/`（4 个场景，当前为占位实现）已真实存在，但属于基础设施/类型/场景骨架，不在本"系统模块"注册表内单列。
 
 ## 关键架构决策
 
@@ -160,6 +187,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD, (data) => { /* apply penalty */ });
 ### DEC-ARCH-003: Voronoi + Cellular Automata 混合地图生成
 
 - **选择**：宏观 Voronoi 分区 + 微观 Cellular Automata 有机地形 + 碎片间裂口连接
+- **技术路线定位（重要）**：Voronoi+CA 混合是本项目**要认真验证并落地的核心技术路线**，不是临时方案。下述"风险/缓解策略"的目的是**把 Voronoi+CA 做成**（保证连通性、面积均衡、可玩性），而**不是**为回退到"纯 CA"或其他生成方案预留降级路径。明确：本架构**不设纯 CA 降级路径**——若验证中遇到问题，方向是修好混合方案本身（调参、修补、约束），而非放弃 Voronoi 分层。
 - **理由**：世界观设定裂隙内部是"异时空碎片"——不规则、非建筑逻辑。BSP 产出的直角房间+走廊结构过于人工/有建筑感，与设定冲突。Voronoi 切割天然产生不规则碎片边界，CA 填充产生有机洞穴感。碎片间的窄裂口（"空间撕裂"）是天然决策点（进/不进？哪个方向？），同时提供视线遮挡和路线瓶颈。
 - **设计**：
   - 宏观层：Voronoi 切出 4-6 个碎片区域，定义推进方向（起点碎片 → 目标碎片）
@@ -172,7 +200,11 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD, (data) => { /* apply penalty */ });
   - 多路径选择：碎片内 CA 地形有多条通道；碎片间可能有多个裂口
   - 开阔 vs 狭窄交替：CA 参数控制开阔度 + 裂口本身是瓶颈
   - 内容散布合理：content-placer 按碎片区域类型分配（安全区/巡逻区/高价值区）
-- **风险**：CA 可能产出不连通区域 → flood fill + 重连修补；Voronoi 碎片大小差异过大 → 约束最小/最大面积
+- **风险与缓解（均服务于"把混合方案做成"，非退回 CA）**：
+  - CA 可能产出不连通区域 → flood fill 连通性验证 + 自动打通 / 重连修补
+  - Voronoi 碎片大小差异过大 → 约束最小/最大面积 + Lloyd 松弛迭代平衡
+  - 裂口位置不理想 / 碎片过碎 → 在共享边界上按规则重选裂口、限制碎片数量区间
+  - 上述任一缓解失败 → 在同一混合框架内重试 / 调参（重试上限内），而非切换到纯 CA 或其他生成器
 
 ### DEC-ARCH-004: 自实现 Raycasting 做视野
 
@@ -207,16 +239,29 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD, (data) => { /* apply penalty */ });
   - 插值语法：`{variableName}`，运行时替换
   - 语言偏好存储在 localStorage（key: `coh_locale`）
 
-### DEC-ARCH-008: 净化点为可行走空间（非纯 UI 界面）
+### DEC-ARCH-008: 净化点为可行走空间（非纯 UI 界面）—— 核心功能决策
 
-- **选择**：PurificationScene 是一个极小的俯视角可行走空间，复用 RiftScene 渲染管线，模块交互通过接近触发 DOM 面板
+- **选择**：PurificationScene 是一个极小的俯视角可行走空间，复用共享移动/渲染管线，模块交互通过接近触发 DOM 面板
+- **重要性（重要）**：这是本项目**核心的体验型功能决策，不是可选装饰**。它把"基地管理"从一张静态 UI 界面升级为可持续感知外部压迫的空间体验，直接支撑"孤独的仪式感""绝望边缘的紧绷"两根体验支柱。默认按本决策落地，不降级为纯 DOM/静态界面。
 - **理由**：
   1. 复用渲染基础设施减少代码量（不需要为基地单独写一套 UI 系统）
   2. 可行走空间让"能看到外面的黑暗"成为持续的视觉体验而非静态背景图
   3. 接近触发 + DOM 面板 = 空间感（走向模块的过程）+ 操作效率（DOM 表单比 Canvas 交互好用）
   4. 边界外的动态黑暗内容强化"孤独的仪式感"体验支柱
+
+- **共享移动/渲染管线的模块归属（消除"归属待定"）**：
+  可复用的移动 / 视野 / tile 渲染**不属于任何单一场景**，抽为独立的"共享场景管线"模块，`RiftScene` 与 `PurificationScene` 均依赖它；各场景只保留自己独有的逻辑。归属如下：
+
+  | 共享能力 | 归属模块（路径） | 说明 |
+  | -------- | ---------------- | ---- |
+  | 角色移动 | `src/entities/player.ts` | 同一 Player 实体实现，两场景共用输入 + Arcade 物理碰撞 |
+  | 视野 / 光照 | `src/systems/visibility-system.ts` | 参数化复用（净化点内视野更大，主要用于边界外黑暗遮罩） |
+  | Tile 渲染 | `src/systems/tilemap-renderer.ts`（新增共享模块） | 把 tile 数据渲染为 Phaser Tilemap；Rift 输入程序化数据、净化点输入手工静态数据。与 `src/generation/tilemap-builder.ts` 分工：builder 负责"生成数据→tile 数组"，renderer 负责"tile 数组→场景内可见图层" |
+
+  场景独有逻辑（**不进共享管线**）：RiftScene 独有 AI / 混乱值 / 寻路 / 战斗；PurificationScene 独有 BoundaryAtmosphere / InteractionTrigger。
+
 - **影响**：
-  - 需要抽取 RiftScene 的渲染/移动/视野为可复用模块（不能硬编码在 RiftScene 内）
+  - 上述共享管线模块必须独立于任何场景实现（不能把移动/视野/tile 渲染硬编码在 RiftScene 内），否则 PurificationScene 无法复用
   - PurificationScene 地图是手工设计的静态小地图（非程序化）
   - 新增 BoundaryAtmosphere 系统（粒子+sprite 周期性渲染）
   - 新增 InteractionTrigger 系统（overlap 检测 + DOM 面板生命周期）
