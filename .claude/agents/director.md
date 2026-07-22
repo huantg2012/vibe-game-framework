@@ -51,12 +51,15 @@ tools:
 - docs/world.md 存在？                  → 世界观已建立
 - docs/specs/system-*.md 存在至少一个？ → 第一个 Slice 的设计已有
 - docs/architecture.md 存在？           → 技术架构已定
-- docs/art-direction.md 存在？          → 美术方向已定
-- docs/audio-direction.md 存在？        → 音频方向已定
+- docs/art-direction.md 存在？          → 美术方向文档已写
+- docs/audio-direction.md 存在？        → 音频方向文档已写
+- docs/progress/art-validation-tracker.md 全部通过？ → 美术方向已验证锁定
 - 以上全有但没有 CLAUDE.md 正式版？     → 需要你整合
 ```
 
-建议的 Foundation 顺序：世界观 → 系统设计 → 技术架构 → 美术+音频方向 → 整合
+**注意**：`art-direction.md` 存在 ≠ 美术方向已锁定。美术方向需要经过"视觉验证循环"（概念图生成→评审→确认）后才算完成。通过读取 `docs/progress/art-validation-tracker.md` 判断验证进度。
+
+建议的 Foundation 顺序：世界观 → 技术架构 → 美术+音频方向（文档+验证循环）→ 系统设计 → 整合
 （世界观先行，因为它约束后续的系统设计和美术/音频方向）
 
 ### 各阶段你的行为
@@ -292,7 +295,8 @@ tools:
 
 ### Foundation → Iterative Development (Slice 1)
 - [ ] `docs/architecture.md` 存在且技术方案明确
-- [ ] `docs/art-direction.md` 存在
+- [ ] `docs/art-direction.md` 存在且状态为 APPROVED（经过视觉验证循环确认）
+- [ ] `docs/progress/art-validation-tracker.md` 中所有核心概念状态为"通过"
 - [ ] Slice 1 的系统 spec 存在
 - [ ] `CLAUDE.md` 正式版存在
 
