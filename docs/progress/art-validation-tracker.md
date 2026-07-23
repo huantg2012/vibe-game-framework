@@ -17,9 +17,9 @@ purpose: 追踪美术概念验证循环的进度。支持跨会话恢复。
 | 2 | 裂隙内部环境 | **通过** | `docs/art/demos/rift/VERDICT.md` | 192829确认；图底比例75:20:5；污染色谱+暖光锚点规则已回写art-direction.md |
 | 3 | 污染体：渗透体 | **通过** | `docs/art/demos/entity-infiltrator/VERDICT.md` | 渲染崩坏签名确认；前倾猎食姿态；基底+动态分层设计 |
 | 4 | 污染体：改写体 | **通过** | `docs/art/demos/entity-rewriter/VERDICT.md` | 两种崩坏变体确认（爆发型/溶解型）；个体差异合法 |
-| 5 | 污染体：覆盖体 | 待生成 | `docs/art/demos/entity-overwriter/` | — |
-| 6 | 空间裂口 | 待生成 | `docs/art/demos/fracture/` | — |
-| 7 | 边界外的黑暗 | 待生成 | `docs/art/demos/boundary-darkness/` | — |
+| 5 | 污染体：覆盖体 | **通过** | `docs/art/demos/entity-overwriter/VERDICT.md` | 多重偏移叠加几何体；三级递进完整验证；gameplay光照联动确认 |
+| 6 | 空间裂口 | **通过** | `docs/art/demos/fracture/VERDICT.md` | 纵向撕裂+应力辐射；碎片色温差可辨；远距离地标确认 |
+| 7 | 边界外的黑暗 | **通过** | `docs/art/demos/boundary-darkness/VERDICT.md` | 渐变过渡确认；占据感由代码BoundaryAtmosphere承载；过渡弧验证 |
 
 ## 已确认的全局经验（传播到所有后续 prompt）
 
