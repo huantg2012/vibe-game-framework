@@ -16,25 +16,51 @@ note: These are direction-finding concepts. Results will inform the formal art-d
 - Use results to lock color palette and style parameters in `docs/art-direction.md`.
 - These are reference/mood images, not final game assets.
 
-## Validated Style Baseline (from Purification Point evaluation)
+## Validated Style Baseline (概念1+2评审综合)
 
-以下经验来自净化点概念图评审（见 `demos/home/VERDICT.md`），适用于所有后续概念图生成：
+来源：`demos/home/VERDICT.md`（概念1）+ `demos/rift/VERDICT.md`（概念2）
+
+### 全局规则（适用于所有 7 个概念）
 
 **确认偏好：**
 - 高细节像素渲染风格（有机光照渐变、柔和边界）优于传统硬边像素画
 - 整体极暗，发光/光源面积占画面 < 30%
 - 色彩极度克制——大面积冷灰/近黑，仅功能性光源或污染发光提供色彩
+- 污染色非统一 teal，允许色谱偏移：新生偏蓝teal → 标准 cyan-teal → 古老偏暖绿teal
 
 **拒绝标准（任何概念图出现以下情况应重新生成）：**
 - 整体偏暖或亮度过高（像正常游戏房间而非末日场景）
 - 墙壁/边界过于清晰硬实（应该是渐变融入黑暗，或有机形态）
 - 看起来像传统 16-bit RPG 地图（过于"干净"和"可爱"）
 - 像素格过于明显导致丢失氛围感（我们要的是"用像素画表达的氛围"而非"强调像素感的画"）
+- 污染呈有机/生物形态（触手、黏液、苔藓、珊瑚、植物）——必须几何/结晶/棱角
+- 出现非调色板内的颜色（如粉红、橙红、紫色等）
 
 **追加到所有 prompt 的建议后缀：**
 ```
-high-detail pixel art rendering, organic lighting gradients, extremely dark atmosphere, soft edge falloff into darkness, NOT retro-cute pixel art, NOT bright color palette
+high-detail pixel art rendering, organic lighting gradients, extremely dark atmosphere, soft edge falloff into darkness, NOT retro-cute pixel art, NOT bright color palette, geometric crystalline contamination only, no organic growths
 ```
+
+### 环境级概念专用规则（概念 2、6、7）
+
+- **图底比例**：~75% 暗色安静地面 : ~15-20% teal 渗出 : ~5% 暖光锚点
+- 污染是"从缝隙/裂缝中透出"的脉络，**不是**"铺在表面上"的覆盖层
+- 地面材质需要有存在感（裂缝、材质变化、拼接痕迹），不能只是"空黑"
+- 加入一个小型暖色光源（amber #8a5c2a）作为人类存在的视觉锚点
+- prompt 中直接写面积占比指令对 AI 有效（如 "75% should be dark quiet ground"）
+
+环境级追加后缀：
+```
+75% of image should be dark quiet ground with minimal glow, contamination only in seams and cracks, one small warm amber light source as contrast anchor
+```
+
+### 实体级概念专用规则（概念 3、4、5）
+
+- 背景为纯黑或近黑，实体本身是画面唯一主体
+- 污染覆盖比例是区分等级的核心视觉信号：渗透体 ~15% / 改写体 ~50% / 覆盖体 ~90%+
+- 实体轮廓在 32px 缩小后仍需可辨识——概念图中验证缩小可读性
+- 发光点即"感知器官"，用几何形状而非眼睛
+- 基体色（人形残余部分）使用 dead grey (#2e2d30)，与地面同色系——和环境融为一体而非跳出
 
 ---
 

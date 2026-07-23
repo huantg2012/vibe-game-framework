@@ -14,9 +14,9 @@ purpose: 追踪美术概念验证循环的进度。支持跨会话恢复。
 | # | 概念 | 状态 | VERDICT 位置 | 备注 |
 |---|------|------|-------------|------|
 | 1 | 净化点全景 | **通过** | `docs/art/demos/home/VERDICT.md` | 风格A确认，分层固定布局方案确认 |
-| 2 | 裂隙内部环境 | 待生成 | `docs/art/demos/rift/` | 下一个要做 |
-| 3 | 污染体：渗透体 | 待生成 | `docs/art/demos/entity-infiltrator/` | — |
-| 4 | 污染体：改写体 | 待生成 | `docs/art/demos/entity-rewriter/` | — |
+| 2 | 裂隙内部环境 | **通过** | `docs/art/demos/rift/VERDICT.md` | 192829确认；图底比例75:20:5；污染色谱+暖光锚点规则已回写art-direction.md |
+| 3 | 污染体：渗透体 | **通过** | `docs/art/demos/entity-infiltrator/VERDICT.md` | 渲染崩坏签名确认；前倾猎食姿态；基底+动态分层设计 |
+| 4 | 污染体：改写体 | **通过** | `docs/art/demos/entity-rewriter/VERDICT.md` | 两种崩坏变体确认（爆发型/溶解型）；个体差异合法 |
 | 5 | 污染体：覆盖体 | 待生成 | `docs/art/demos/entity-overwriter/` | — |
 | 6 | 空间裂口 | 待生成 | `docs/art/demos/fracture/` | — |
 | 7 | 边界外的黑暗 | 待生成 | `docs/art/demos/boundary-darkness/` | — |
