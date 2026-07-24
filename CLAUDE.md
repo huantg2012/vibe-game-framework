@@ -30,7 +30,9 @@
 1. **识别**：列出本次变更涉及的关键词/旧概念名
 2. **搜索**：Grep 以下范围查找所有引用：
    - `.claude/agents/*.md`
+   - `.cursor/agents/*.md`
    - `docs/**/*.md`
+   - `guides/**`
    - `START-HERE.md`
    - `CLAUDE.md`
 3. **处理**：逐个更新受影响的文件，或明确标记为待更新
@@ -45,9 +47,9 @@
 ## 文档层级与权威性
 
 ```
-.claude/agents/*.md  = AI 的执行标准（最高权威）
-START-HERE.md        = 人的操作入口
-guides/*.md  = 人的参考资料（设计原理记录）
+.claude/agents/*.md 与 .cursor/agents/*.md = AI 的执行标准（最高权威；两份定义必须内容一致）
+START-HERE.md                            = 人的操作入口
+guides/*.md                              = 人的参考资料（设计原理记录）
 ```
 
 当 Agent 定义与框架文档冲突时，以 Agent 定义为准，并修改框架文档以对齐。

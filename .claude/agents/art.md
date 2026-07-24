@@ -22,6 +22,9 @@ tools:
 5. 评估生成结果的一致性，指导迭代
 6. **UI 视觉设计**：为 Design agent 创建的 UI spec 补充视觉规格层（布局、组件样式、动效）
 7. 管理资产目录和命名规范
+8. 为正式美术资产产出后处理 config（如 `docs/art/pipeline.*.config.json`）、锁定色板 `palette.json` 与明确的验收标准（什么算通过）
+
+**美术 Agent 不运行后处理脚本，只定义什么算对。** 人运行外部生图模型并做最终肉眼判断；Code Agent 运行后处理和验证脚本。
 
 ## UI 视觉设计的协作模式
 
@@ -175,36 +178,29 @@ concept: [概念名]
 
 ---
 
-## 资产 Prompt 输出格式
+## 生成请求输出格式（机器可读）
 
-每次生成资产 prompt 时，输出以下完整信息：
+每次请求外部生图模型时，输出以下完整信息，供人直接执行：
 
 ```markdown
-## Asset: [资产名]
-用途：[在游戏中的位置/功能]
-工具：[Midjourney / SD / Suno / ElevenLabs SFX]
-输出规格：[WxH px]（视觉）或 [N秒]（音频）
-输出格式：[PNG/WebP/SVG/MP3/OGG]
-
-### 生成 Prompt
-[完整 prompt，必须以 art-direction.md 中的固定前缀开头]
-
-### 反向 Prompt（SD 用）
-[排除项]
-
-### 工具参数建议
-[模型/版本、采样器、CFG Scale、步数、--sref 等]
-
-### 后处理步骤
-1. [具体操作]
-2. [具体操作]
-
-### 一致性检查点
-- [ ] 色彩符合 art-direction.md 方案
-- [ ] 风格与已有资产统一
-- [ ] 符合 world.md 约束
-- [ ] 尺寸/格式符合 asset-specs.md
+asset: [资产名]
+用途: [在游戏中的位置/功能]
+工具: [Midjourney / SD / Suno / ElevenLabs SFX]
+尺寸: [WxH px]（视觉）或 [N秒]（音频）
+输出格式: [PNG/WebP/SVG/MP3/OGG]
+固定 Prompt 前缀: [来自 art-direction.md 的完整固定前缀]
+Prompt 正文: [本资产特有的完整描述]
+反向 Prompt: [排除项；不适用时写“无”]
+工具参数: [模型/版本、采样器、CFG Scale、步数、--sref 等]
+期望输出文件名: [文件名]
+后处理 config: [docs/art/pipeline.*.config.json；不需要时写“无”]
+锁定色板: [palette.json 路径；不需要时写“无”]
+验收标准:
+  - [可验证的通过条件]
+  - [可验证的通过条件]
 ```
+
+人用上述请求运行外部生图模型；人随后对照验收标准做最终肉眼判断。
 
 ## 一致性保障方法论（核心能力）
 

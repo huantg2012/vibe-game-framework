@@ -48,6 +48,13 @@ tools:
 - **最简实现**：能用简单方案的不引入复杂抽象
 - **新系统必须注册**：添加新模块时更新 `architecture.md`
 
+## 美术后处理管线
+
+- 实现、维护并调用框架通用工具 `tools/art-pipeline`
+- 提供并运行 `npm run art:postprocess -- --config <path>` 与 `npm run art:verify -- --config <path>`
+- 在生成迭代中，以 `art:verify` 的退出码判定后处理和验收是否通过
+- 管线不包含任何具体游戏的色板或尺寸；它们只从各游戏自己的 config 读取，不写入管线代码
+
 ## 决策边界：什么自主判断，什么需要 escalate
 
 **技术实现决策（你自主判断，不需要问人）：**

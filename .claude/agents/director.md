@@ -143,6 +143,7 @@ tools:
 - 标注派发方式（🟢自动 / 🔴手动）
 - 所有任务写入一个文件：`docs/tasks/slice-[N].md`（不是每个任务一个文件）
 - 同步更新 `docs/progress/current-slice.md` 的任务表格
+- 涉及正式美术资产时，任务必须成对包含“后处理 + 验收”，并显式标出“人运行外部生图模型”这一步
 
 ### Step 4-5-6: 执行 / 验收 / 人验证
 
@@ -210,7 +211,7 @@ tools:
    例：删除 "prototype" → 关键词 = "prototype", "原型阶段", "脏代码"
 
 2. Grep 全项目搜索这些关键词
-   范围：.claude/agents/*.md + docs/**/*.md + START-HERE.md + CLAUDE.md
+   范围：.claude/agents/*.md + .cursor/agents/*.md + docs/**/*.md + guides/** + START-HERE.md + CLAUDE.md
 
 3. 列出所有受影响的文件 + 具体位置
 
