@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-07-22
+last-modified: 2026-07-24
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。
@@ -89,7 +89,19 @@ src/
     ├── game-types.ts           # 核心游戏类型定义
     ├── events.ts               # 事件类型枚举 + payload 定义
     └── save-data.ts            # 存档数据 schema
+
+tools/
+└── art-pipeline/               # 构建期离线美术资源后处理与机器验收工具
 ```
+
+## 构建期美术资源后处理工具
+
+`tools/art-pipeline/` 是构建期/离线工具，独立于游戏运行时的 `src/`：它读取游戏层的后处理配置与锁定色板，处理外部生成的原始图片并验证产物，不会被游戏打包或在 Phaser 场景中运行。
+
+- `npm run art:postprocess -- --config <配置路径>`：按配置执行资源后处理。
+- `npm run art:verify -- --config <配置路径>`：执行机器验收；退出码为 0 表示通过，非 0 表示不通过。
+
+具体游戏的尺寸、色板、处理阶段和验收阈值存放于 `docs/art/pipeline.*.config.json` 与 `docs/art/palette.json`，不写入通用工具代码。正式视觉资产的职责约定为：美术 Agent 维护配置与验收标准，程序 Agent 运行命令，人执行外部生图并完成最终审美判断。
 
 ## 模块通信方式
 

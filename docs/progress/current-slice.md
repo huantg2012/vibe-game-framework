@@ -69,7 +69,7 @@ vision 的完整核心循环 = 裂隙出击（前半段）+ 净化点分配/冲�
 | **美术门禁（并行验证，依据 art-direction.md §14）** ||||||
 | A-G1 | 32px 尺度可读性实测：把关键 tile/sprite 缩到 32px + 视野遮罩下确认细节是否幸存 | art | 🔴 | Todo | - | 验证 art-direction §14.2 |
 | A-G2 | 俯视角敌人验证：将正面立绘概念转为俯视角 sprite，确认轮廓/朝向/威胁可读 | art | 🔴 | Todo | - | 验证 art-direction §14.1 |
-| A-G3 | AI→资产后处理管线往返：至少手动跑通一次 1024px→32px 降采样/量化/去背 | art/code | 🔴 | Todo | - | 验证 art-direction §14.3；依赖框架 B 的 `npm run` 管线，若 B 未就绪则先手动跑一次作为可行性验证 |
+| A-G3 | AI→资产后处理管线往返：以真实资产和配置跑通一次高分辨率原图→游戏资产的降采样/量化/去背 | art/code | 🔴 | Todo | - | 验证 art-direction §14.3；美术 Agent 维护配置与验收标准，程序 Agent 运行 `npm run` 后处理和验证命令 |
 
 > 说明：美术门禁（A-G1~3）是验证 art-direction.md 第 14 节遗留假设的任务，可与游戏系统实现并行；Slice 1 玩法本身用占位资产推进，不被美术门禁阻塞。
 

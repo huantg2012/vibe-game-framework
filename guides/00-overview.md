@@ -4,10 +4,12 @@ version: 0.1
 date: 2026-07-16
 profile: 程序员为主 | Web浏览器游戏 | AI主导生成+人审核 | Solo+AI
 status: SUPERSEDED
-note: 本文档描述的六阶段线性模型已被 Slice 模型取代。参见 guides/10-slice-model.md。保留供历史参考。
+note: 本文档描述的六阶段线性模型已被 Slice 模型取代。本文只保留框架方法论的历史参考，不描述当前仓库“框架 + 用于验证框架的进行中游戏项目”的双层结构；参见 CLAUDE.md 与 guides/10-slice-model.md。
 ---
 
 # 整体工作框架（Overview）
+
+> 历史定位说明：本仓库现在同时承载 AI agent 框架和一个用该框架进行 dogfooding 的游戏项目。本页仅记录旧版框架流程，不能作为游戏项目状态或仓库结构的依据。
 
 ## 核心理念
 

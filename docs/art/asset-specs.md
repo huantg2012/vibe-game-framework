@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: art agent
 created-date: 2026-07-22
-last-modified: 2026-07-22
+last-modified: 2026-07-24
 ---
 
 # 资产规格
@@ -54,6 +54,19 @@ last-modified: 2026-07-22
 | 净化点模块 | spr-pp-module- | 64x64 / 96x96 px | PNG-24 | 透明 | 多状态（健康/受损/严重受损） |
 | UI 元素 | ui- | 可变 | PNG-24 | 透明 | HUD 元素；简单几何优先代码绘制 |
 | 粒子/特效 | fx- | 8x8 / 16x16 px | PNG-24 | 透明 | 小尺寸粒子图 |
+
+## 后处理规格
+
+正式视觉资产通过仓库根目录的 `tools/art-pipeline/` 在构建期离线处理，不属于游戏运行时 `src/` 的一部分。每类资产使用独立配置：
+
+- 后处理配置：`docs/art/pipeline.*.config.json`
+- 锁定色板：`docs/art/palette.json`（或由配置中的 `paletteFile` 指向的同目录色板文件）
+
+配置至少声明输入与输出位置、处理阶段及其顺序、目标尺寸和机器验收条件；常用阶段包括去背、调色、降采样、色板量化与裁切补齐。锁定色板定义本游戏允许写入最终资产的颜色集合，供量化与验收共同使用。具体色值、尺寸和阈值由本项目的美术方向及资产需求确定，不写入通用工具。
+
+- **美术 Agent**：为正式资产产出和维护后处理配置、锁定色板及验收标准。
+- **程序 Agent**：运行 `npm run art:postprocess -- --config <配置路径>` 与 `npm run art:verify -- --config <配置路径>`，按验证命令退出码确认机器验收结果。
+- **人**：运行外部生图工具，并在机器验收通过后完成最终审美判断。
 
 ### Spritesheet 规格
 

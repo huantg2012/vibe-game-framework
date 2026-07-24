@@ -29,9 +29,10 @@ note: 实际使用时复制为 [asset-name].md
 - 风格参考：[--sref xxx]（MJ）
 
 ### 后处理步骤
-1. [具体操作，如：去除背景]
-2. [具体操作，如：resize 到 xxx]
-3. [具体操作，如：调整色调匹配调色板]
+- 后处理配置：[docs/art/pipeline.*.config.json；不需要时写“无”]
+- 锁定色板：[docs/art/palette.json 或配置指定路径]
+- 由程序 Agent 运行：`npm run art:postprocess -- --config <配置路径>`
+- 机器验收：`npm run art:verify -- --config <配置路径>`（退出码为 0 才通过）
 
 ### 一致性检查点
 - [ ] 色彩符合 art-direction.md 的色彩方案
