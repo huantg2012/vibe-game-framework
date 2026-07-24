@@ -25,4 +25,23 @@ describe('postprocess', () => {
       await rm(dir, { recursive: true, force: true });
     }
   });
+
+  it('rejects output name collision for same stem different extensions', async () => {
+    const dir = join(tmpdir(), 'art-pp-collision-test');
+    const inDir = join(dir, 'in'), outDir = join(dir, 'out');
+    try {
+      await rm(dir, { recursive: true, force: true });
+      await mkdir(inDir, { recursive: true });
+      const solid = makeSolid(8, 8, [9, 9, 9, 255]);
+      await saveRaw(solid, join(inDir, 'a.png'));
+      await saveRaw(solid, join(inDir, 'a.jpg'));
+      const cfg = { targetSize: { width: 8, height: 8 }, sourceDir: inDir, outputDir: outDir,
+        stages: [{ name: 'downscale', enabled: true, filter: 'nearest' }], acceptance: { exactSize: [8, 8] } };
+      const cfgFile = join(dir, 'c.json');
+      await writeFile(cfgFile, JSON.stringify(cfg));
+      await expect(runPipeline(cfgFile)).rejects.toThrow(/output name collision/);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
 });

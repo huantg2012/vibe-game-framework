@@ -1,5 +1,7 @@
 import { readFile, readdir, mkdir, writeFile } from 'node:fs/promises';
+import { realpathSync } from 'node:fs';
 import { join, basename, extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { loadRaw, saveRaw, loadPalette } from './io';
 import { validateConfig } from './validate';
@@ -18,6 +20,9 @@ export async function runPipeline(configPath: string, inOverride?: string, outOv
   const cfgHash = createHash('sha256').update(JSON.stringify(config)).digest('hex').slice(0, 12);
   const enabled = config.stages.filter(s => s.enabled);
   const inputs = (await readdir(sourceDir)).filter(f => /\.(png|jpg|jpeg|webp)$/i.test(f));
+  const stems = inputs.map(f => basename(f, extname(f)));
+  const dup = stems.find((s, i) => stems.indexOf(s) !== i);
+  if (dup) throw new Error(`output name collision: multiple inputs map to "${dup}.png"`);
   for (const file of inputs) {
     let img = await loadRaw(join(sourceDir, file));
     const chain: string[] = [];
@@ -32,4 +37,14 @@ export async function runPipeline(configPath: string, inOverride?: string, outOv
 
 const args = process.argv.slice(2);
 const getArg = (k: string) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
-if (getArg('--config')) runPipeline(getArg('--config')!, getArg('--in'), getArg('--out')).catch(e => { console.error(e); process.exit(1); });
+
+function invokedDirectly(): boolean {
+  try { return !!process.argv[1] && realpathSync(process.argv[1]) === fileURLToPath(import.meta.url); }
+  catch { return false; }
+}
+
+if (invokedDirectly()) {
+  const cfg = getArg('--config');
+  if (!cfg) { console.error('usage: --config <path> [--in <dir>] [--out <dir>]'); process.exit(1); }
+  runPipeline(cfg, getArg('--in'), getArg('--out')).catch(e => { console.error(e); process.exit(1); });
+}
