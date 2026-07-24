@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PipelineConfig",
+  "type": "object",
+  "required": ["targetSize", "sourceDir", "outputDir", "stages", "acceptance"],
+  "properties": {
+    "targetSize": { "type": "object", "required": ["width","height"],
+      "properties": { "width": {"type":"integer"}, "height": {"type":"integer"} } },
+    "sourceDir": { "type": "string" },
+    "outputDir": { "type": "string" },
+    "paletteFile": { "type": "string" },
+    "stages": { "type": "array", "items": {
+      "type": "object", "required": ["name","enabled"],
+      "properties": { "name": {"enum":["bgRemove","colorGrade","downscale","quantize","cropPad"]},
+        "enabled": {"type":"boolean"} } } },
+    "acceptance": { "type": "object", "properties": {
+      "maxAvgBrightness": {"type":"number"}, "paletteConformance": {"type":"number"},
+      "paletteTolerance": {"type":"number"}, "requireTransparentBg": {"type":"boolean"},
+      "exactSize": {"type":"array","items":{"type":"integer"},"minItems":2,"maxItems":2} } }
+  }
+}
