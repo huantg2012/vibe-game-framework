@@ -73,6 +73,20 @@ vision 的完整核心循环 = 裂隙出击（前半段）+ 净化点分配/冲�
 
 > 说明：美术门禁（A-G1~3）是验证 art-direction.md 第 14 节遗留假设的任务，可与游戏系统实现并行；Slice 1 玩法本身用占位资产推进，不被美术门禁阻塞。**其中 A-G3（合成测试）是方向性验证**：其结果将决定"氛围目标 vs 逐像素目标"以及是否回炉美术方向/架构，建议尽早做、让证据说话。
 
+### A-G3 合成测试步骤分解（agent 驱动，人只碰生图+审美）
+
+| 步 | 做什么 | 谁做 |
+| - | ------ | ---- |
+| 1 | 列出合成测试所需 tile/decal 清单（地面变体×N、墙、数据错误块、裂缝 decal） | art agent |
+| 2 | 为每块 tile/decal 写生成 prompt（固定前缀 + 本块描述） | art agent |
+| 3 | 用 prompt 在外部模型生成单块原图 | 🙋 人（唯一：外部生图） |
+| 4 | 逐块过 `npm run art:postprocess` + `art:verify` 处理为合规资产 | code agent |
+| 5 | 搭最小合成场景：真实 tilemap 渲染 + 覆盖层 decal + 有限视野光照，输出截图 | code agent |
+| 6 | 结构性自检（重复感 / 边界马赛克 / 色板合规）+ 截图与参考图并排 | code/art agent |
+| 7 | 看合成效果拍板"氛围 vs 逐像素"、是否回炉 | 🙋 人（唯一：最终审美） |
+
+> 人肉参与仅第 3、7 步；其余全部 agent 执行、Director 编排（对应 director.md 的"人肉手工唯二例外"）。第 5 步的合成场景不是一次性玩具——它就是 Slice 1 真实渲染路径（TilemapRenderer + VisibilitySystem）的提早落地，因此 A-G3 天然是 Slice 1 实现的**第一段**，而非独立于 Slice 之外的前置工序。
+
 ## 设计产出（本 Slice 新增/修改的文档）
 
 - [ ] docs/specs/system-*.md（移动+视野 / 敌人AI / 混乱值+搜刮+撤离，具体拆分由 design agent 定）
