@@ -8,9 +8,12 @@ export function validateConfig(cfg: PipelineConfig): string[] {
   if (!Array.isArray(cfg?.stages)) e.push('stages must be an array');
   else {
     cfg.stages.forEach((s,i)=>{ if(!KNOWN.has((s as any).name)) e.push(`unknown stage[${i}]: ${(s as any).name}`); });
-    const gi = cfg.stages.findIndex(s=>s.name==='colorGrade' && s.enabled);
-    const qi = cfg.stages.findIndex(s=>s.name==='quantize' && s.enabled);
-    if (gi>=0 && qi>=0 && gi>qi) e.push('colorGrade must run before quantize');
+    let quantizeSeen = false;
+    for (const s of cfg.stages) {
+      if (!s.enabled) continue;
+      if (s.name === 'quantize') quantizeSeen = true;
+      else if (s.name === 'colorGrade' && quantizeSeen) { e.push('colorGrade must run before quantize'); break; }
+    }
   }
   if (cfg?.stages?.some(s=>s.name==='quantize'&&s.enabled) && !cfg.paletteFile)
     e.push('quantize enabled but config.paletteFile missing');

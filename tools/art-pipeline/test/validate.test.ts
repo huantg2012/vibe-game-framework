@@ -10,6 +10,11 @@ it('flags colorGrade after quantize', () => {
     stages:[{name:'quantize',enabled:true},{name:'colorGrade',enabled:true}], acceptance:{} } as any);
   expect(errs.some(e=>e.includes('colorGrade must run before quantize'))).toBe(true);
 });
+it('flags second colorGrade after quantize', () => {
+  const errs = validateConfig({ targetSize:{width:32,height:32}, sourceDir:'a', outputDir:'b', paletteFile:'p.json',
+    stages:[{name:'colorGrade',enabled:true},{name:'quantize',enabled:true},{name:'colorGrade',enabled:true}], acceptance:{} } as any);
+  expect(errs.some(e=>e.includes('colorGrade must run before quantize'))).toBe(true);
+});
 it('passes a minimal valid config', () => {
   const errs = validateConfig({ targetSize:{width:32,height:32}, sourceDir:'a', outputDir:'b',
     stages:[{name:'downscale',enabled:true,filter:'nearest'}], acceptance:{} } as any);

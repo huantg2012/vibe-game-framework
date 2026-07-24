@@ -10,6 +10,9 @@ describe('color', () => {
     expect(nearestColor([10,10,10], pal)).toEqual([0,0,0]);
     expect(nearestColor([240,240,240], pal)).toEqual([255,255,255]);
   });
+  it('nearestColor throws on empty palette', () => {
+    expect(() => nearestColor([0,0,0], [])).toThrow();
+  });
   it('rgbToLuma uses Rec.601 weights', () => {
     expect(Math.round(rgbToLuma([255,255,255]))).toBe(255);
     expect(Math.round(rgbToLuma([0,0,0]))).toBe(0);
