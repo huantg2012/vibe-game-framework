@@ -2,7 +2,16 @@
 
 ## 本项目是什么
 
-这是一个 indie game 开发项目的工作框架 + 未来的游戏代码仓库。当前阶段：框架设计中。
+本仓库是**双层结构**：
+
+1. **AI agent 框架**（层 A）：用于 vibe coding 独立游戏的工作框架，由 agents（ideation/director/design/code/art/qa）+ 约束文档（`guides/**`、agent 定义、本文件的框架规则）组成。
+2. **dogfood 游戏项目**（层 B）：一个进行中的真实独立游戏，用来验证并打磨框架层 A。游戏活文档住在 `docs/**`，代码住在 `src/**`。
+
+两层同处一仓库但边界清晰：改框架（层 A）与做游戏（层 B）是两块独立工作，互不混入。
+
+**当前阶段：**
+- 层 A（框架）：随 dogfooding 持续迭代（见"框架迭代协议"）。
+- 层 B（游戏）：**Foundation 已完成**（vision / world / architecture / art-direction[APPROVED] / audio-direction[APPROVED] 均就位，美术视觉方向已通过验证循环锁定）。**当前进入 Slice 1 规划**（提案待人确认，见 `docs/progress/current-slice.md`）。
 
 ## 变更传播规则（强制）
 

@@ -1,13 +1,15 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-date: 2026-07-22
-last-modified: 2026-07-22
+last-modified: 2026-07-24
 purpose: 追踪美术概念验证循环的进度。支持跨会话恢复。
 ---
 
 # 美术概念验证进度
 
-## 当前阶段：Foundation Step 3 — 视觉方向锁定
+## 当前阶段：Foundation Step 3 — COMPLETE（视觉方向已锁定，2026-07-24）
+
+> 7/7 核心概念 + 色彩架构补充验证全部通过。四项门禁全部关闭。`docs/art-direction.md` 已转为 APPROVED。Foundation Step 3 正式完成，进入 Slice 1 规划。仍有若干英雄图层面无法验证的项目移交 Slice 1 美术门禁实测（见 `art-direction.md` 第 14 节）。
 
 ## 验证清单
 
@@ -45,8 +47,8 @@ purpose: 追踪美术概念验证循环的进度。支持跨会话恢复。
 **全部 7 张通过 + 色彩补充验证通过**：
 1. ~~提取统一色板~~ → 已在迭代过程中同步完成（四层色彩架构）
 2. ~~确认像素分辨率/细节级别~~ → 已确认（32x32 + 高细节像素渲染）
-3. art-direction.md 状态从 DRAFT → APPROVED ← **待执行**
-4. Foundation Step 3 正式完成 ← **待执行**
+3. ~~art-direction.md 状态从 DRAFT → APPROVED~~ → ✅ 已完成（2026-07-24）
+4. ~~Foundation Step 3 正式完成~~ → ✅ 已完成（2026-07-24）
 
 ## 恢复指引（新会话用）
 

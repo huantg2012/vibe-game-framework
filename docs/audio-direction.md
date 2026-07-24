@@ -1,13 +1,16 @@
 ---
-status: DRAFT
+status: APPROVED
 created-by: art agent
 created-date: 2026-07-22
-last-modified: 2026-07-22
-changed-this-slice: true
-note: Foundation Step 3. Pending human approval.
+last-modified: 2026-07-24
+approved-date: 2026-07-24
+changed-this-slice: false
+note: Foundation Step 3. 音频方向已批准。注意：本次仅批准方向，尚未做任何音频小样验证；音频资产验证顺延至相关 Slice。
 ---
 
 # 音频方向
+
+> ⚠️ **批准范围说明（2026-07-24）**：本文档批准的是**音频方向/设计原则**，不是任何具体音频资产。与美术方向不同，音频**尚未经过任何小样验证**（无 BGM/环境音/音效试听样本）。所有 prompt 模板、响度标准、通道分配等均为待验证假设。真实音频资产的生成与验证顺延到需要它们的相关 Slice（预计核心循环跑通后）。届时需按本文档流程实际生成小样并试听确认。
 
 ## TL;DR
 
