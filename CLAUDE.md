@@ -11,7 +11,7 @@
 
 **当前阶段：**
 - 层 A（框架）：随 dogfooding 持续迭代（见"框架迭代协议"）。
-- 层 B（游戏）：**Foundation 已完成**（vision / world / architecture / art-direction[APPROVED] / audio-direction[APPROVED] 均就位，美术视觉方向已通过验证循环锁定）。**当前进入 Slice 1 规划**（提案待人确认，见 `docs/progress/current-slice.md`）。
+- 层 B（游戏）：**Foundation 已完成**（vision / world / architecture / art-direction[APPROVED] / audio-direction[APPROVED] 均就位，美术视觉方向已通过验证循环锁定）。**已进入 Iterative Development：Slice 1「裂隙潜行核心手感」已锁定 ACTIVE**（范围三取舍已拍板——固定地图 / 纳入简化战斗 / 只做裂隙出击环，见 `docs/progress/current-slice.md` 与 `docs/tasks/slice-1.md`）。
 
 ## 变更传播规则（强制）
 
