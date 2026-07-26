@@ -9,6 +9,22 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-013: Combat is priced as a loss-mitigation tool (dual-track cost)
+- Date: 2026-07-27
+- Phase: Slice 1 (T4 design)
+- Type: Design choice (combat positioning)
+- Decision: Combat cost is levied on two non-interchangeable axes — chaos (time, via ENEMY_DAMAGED → COMBAT_BONUS) and exposure (space/routes, via reportNoise alerting nearby enemies) — plus non-recoverable HP loss. Net: killing an enemy costs ~1.5–2× the chaos of waiting for a patrol window. Combat is deliberately kept worthwhile in exactly three situations (repeated traversal of a segment, already-caught-can't-flee, chaos overflow where detour cost is inflated). Combat is a loss-mitigation tool, not a progression tool.
+- Reason: vision.md defines combat as "optional, costly, controllable; a decision option, not the main interaction." The success signal is a player saying "I could've just sneaked past." If playtesters start enjoying combat / clearing rooms, the pricing is too low, not a design win.
+- Impact: T8 implements the two cost paths (events + noise); no combat-side chaos writes (T3 owns values). Playtest calibration knobs, in priority order: NOISE_HIT_RADIUS > COMBAT_BONUS > ENEMY_MAX_HEALTH; never nerf PLAYER_DAMAGE. Target: median kills/run 0–1.
+
+## DEC-012: Enemy = three-hit kill, zero-random damage
+- Date: 2026-07-27
+- Phase: Slice 1 (T4 design)
+- Type: Design choice (combat feel)
+- Decision: Infiltrator HP = 75 = exactly 3 × PLAYER_DAMAGE(25). All combat damage is fixed — no randomness, no crits, no variance. Kill count is always an integer (invariant K1). Enemy attacks have a 350ms telegraph (windup) that resolves once at the end, so correct positioning avoids all damage ("controllable = dodgeable, not = damage-free").
+- Reason: "Cost must be computable" — the player learns a fixed price on the first encounter (one fight = 3 hits = ~15 chaos + one health chunk), so every later encounter is arithmetic, not a gamble. Same discipline as T3's "only computable pressure creates real hesitation." The tradeoff is combat has zero surprise, which is intentional.
+- Impact: When balancing, adjust ENEMY_MAX_HEALTH in 25-steps (keep integer kills), not PLAYER_DAMAGE. K5 (player survives ≥6 hits) keeps a single misjudgment non-lethal. constants COMBAT section is pure-additive in T8.
+
 ## DEC-011: Extraction requires pressing E (not auto-on-touch)
 - Date: 2026-07-26
 - Phase: Slice 1 (T3 design)

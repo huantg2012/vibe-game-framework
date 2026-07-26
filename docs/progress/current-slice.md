@@ -62,7 +62,7 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 | T1 | 设计 spec：移动 + 有限视野系统（含 schema/接口） | design | 🔴 | Done | - | docs/specs/system-movement-vision.md（含 7 项 escalate 待拍板） |
 | T2 | 设计 spec：敌人 AI（FSM + 感知） | design | 🔴 | Done | - | docs/specs/system-enemy-ai.md |
 | T3 | 设计 spec：混乱值 + 搜刮 + 撤离 | design | 🔴 | Done | - | docs/specs/system-chaos-scavenge-extract.md |
-| T4 | 设计 spec：简化战斗 | design | 🔴 | Todo | - | 取舍②新增；docs/specs/system-combat.md |
+| T4 | 设计 spec：简化战斗 | design | 🔴 | Done | - | 取舍②新增；docs/specs/system-combat.md |
 | T5 | 实现：移动 + 视野（占位资产） | code | 🔴 | Todo | T1 | 建立共享 Player + VisibilitySystem |
 | T6 | 实现：固定裂隙地图（写死 tile 数据 + TilemapRenderer 渲染） | code | 🔴 | Todo | T1 | 取舍①：固定地图，非程序生成 |
 | T7 | 实现：敌人 AI + 感知 | code | 🔴 | Todo | T2,T5,T6 | - |
@@ -95,7 +95,7 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 - [x] docs/specs/system-movement-vision.md（移动 + 有限视野）
 - [x] docs/specs/system-enemy-ai.md（敌人 FSM + 感知）
 - [x] docs/specs/system-chaos-scavenge-extract.md（混乱值 + 搜刮 + 撤离）
-- [ ] docs/specs/system-combat.md（简化战斗）
+- [x] docs/specs/system-combat.md（简化战斗）
 - [x] docs/tasks/slice-1.md（Director 已拆解）
 
 ## 验收结果（Slice 结束时填写）
