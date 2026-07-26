@@ -32,7 +32,7 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 4. **简化战斗**（玩家可攻击敌人 + 敌人可伤害玩家 + 受伤/死亡处理）— 取舍②：纳入简化版
 5. 薪柴搜刮（地图散布，部分安全 / 部分被敌人看守 → 制造博弈）
 6. 混乱值系统（匀速上涨 + UI 显示 + 至少一种超阈值惩罚，如视野缩小）
-7. 撤离机制（地图上有撤离点，到达即结束本次出击）
+7. 撤离机制（地图上有撤离点，进入触发半径后按 E 确认结束本次出击 — DEC-011）
 8. 占位资产（按 art-direction.md §12 占位策略：色块 + 代码绘制的视野/光照，不等正式 AI 资产）
 
 ### 暂不纳入（推迟到后续 Slice，保持 Slice 1 可验证且够小）
@@ -59,9 +59,9 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 
 | ID | 任务 | Agent | 派发 | 状态 | 依赖 | 备注 |
 | -- | ---- | ----- | ---- | ---- | ---- | ---- |
-| T1 | 设计 spec：移动 + 有限视野系统（含 schema/接口） | design | 🔴 | Todo | - | docs/specs/system-movement-vision.md |
-| T2 | 设计 spec：敌人 AI（FSM + 感知） | design | 🔴 | Todo | - | docs/specs/system-enemy-ai.md |
-| T3 | 设计 spec：混乱值 + 搜刮 + 撤离 | design | 🔴 | Todo | - | docs/specs/system-chaos-scavenge-extract.md |
+| T1 | 设计 spec：移动 + 有限视野系统（含 schema/接口） | design | 🔴 | Done | - | docs/specs/system-movement-vision.md（含 7 项 escalate 待拍板） |
+| T2 | 设计 spec：敌人 AI（FSM + 感知） | design | 🔴 | Done | - | docs/specs/system-enemy-ai.md |
+| T3 | 设计 spec：混乱值 + 搜刮 + 撤离 | design | 🔴 | Done | - | docs/specs/system-chaos-scavenge-extract.md |
 | T4 | 设计 spec：简化战斗 | design | 🔴 | Todo | - | 取舍②新增；docs/specs/system-combat.md |
 | T5 | 实现：移动 + 视野（占位资产） | code | 🔴 | Todo | T1 | 建立共享 Player + VisibilitySystem |
 | T6 | 实现：固定裂隙地图（写死 tile 数据 + TilemapRenderer 渲染） | code | 🔴 | Todo | T1 | 取舍①：固定地图，非程序生成 |
@@ -92,9 +92,9 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 
 ## 设计产出（本 Slice 新增/修改的文档）
 
-- [ ] docs/specs/system-movement-vision.md（移动 + 有限视野）
-- [ ] docs/specs/system-enemy-ai.md（敌人 FSM + 感知）
-- [ ] docs/specs/system-chaos-scavenge-extract.md（混乱值 + 搜刮 + 撤离）
+- [x] docs/specs/system-movement-vision.md（移动 + 有限视野）
+- [x] docs/specs/system-enemy-ai.md（敌人 FSM + 感知）
+- [x] docs/specs/system-chaos-scavenge-extract.md（混乱值 + 搜刮 + 撤离）
 - [ ] docs/specs/system-combat.md（简化战斗）
 - [x] docs/tasks/slice-1.md（Director 已拆解）
 

@@ -97,7 +97,7 @@ Title: 设计 spec — 混乱值 + 搜刮 + 撤离 | Priority: P0 | Dispatch: �
 - [ ] 混乱值：初值、上涨速率（匀速为主）、是否有加速来源（如战斗/被追击）、上限
 - [ ] 阈值惩罚：至少一级超阈值惩罚（视野缩小 / teal 噪点），与 T1 视野接口对接；`CHAOS_THRESHOLD_REACHED`
 - [ ] 搜刮：薪柴在固定地图上的分布原则（部分安全 / 部分被敌人看守）、拾取规则、`KINDLING_COLLECTED`
-- [ ] 撤离：撤离点触发方式、到达即结束本次出击、结算带出的薪柴、`RIFT_EXIT_REACHED`
+- [ ] 撤离：进入触发半径后**按 E 确认**结束本次出击（DEC-011，非到达即撤离）、结算带出的薪柴、`RIFT_EXIT_REACHED`
 - [ ] HUD 需要显示什么（混乱值条顶部中央、薪柴计数、生命值——见 art-direction §6.3）
 
 ### 约束
@@ -266,7 +266,7 @@ Title: 实现 — 薪柴搜刮 + 混乱值 + 撤离 + HUD | Priority: P0 | Dispa
 - [ ] 混乱值：匀速上涨 + 至少一级超阈值惩罚（视野缩小/teal 噪点，接 T5 视野）；`CHAOS_CHANGED` / `CHAOS_THRESHOLD_REACHED`
 - [ ] 撤离：到达撤离点结束出击、结算带出薪柴；`RIFT_EXIT_REACHED`
 - [ ] HUD：混乱值条（顶部中央）、薪柴计数、生命值（art-direction §6.3），Phaser Text/Graphics 占位
-- [ ] 占位：薪柴=amber 小色块、撤离点=白色脉动（art-direction §12）
+- [ ] 占位：薪柴=teal 小色块、撤离点=白色脉动（art-direction §12；薪柴属污染侧，非暖色）
 
 ### 约束
 - 事件契约以 `src/types/events.ts` 为准；HUD 频繁更新数值需缓存字符串
