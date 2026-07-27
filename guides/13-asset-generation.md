@@ -86,8 +86,8 @@ date: 2026-07-17
 ├────────────────────────────────────────────────────┤
 │ 6. 后处理                                           │
 │    已提交管线按 config 执行：去背/调色/降采样/量化/裁切补齐 │
-│    npm run art:postprocess -- --config <配置路径>   │
-│    npm run art:verify -- --config <配置路径>        │
+│    在 tools/art-pipeline/ 内运行 npm run art:*      │
+│    art:postprocess / art:verify -- --config <路径>  │
 ├────────────────────────────────────────────────────┤
 │ 7. 集成到项目                                       │
 │    放入指定目录 + 注册到资产清单                     │
@@ -253,15 +253,16 @@ assets/
 
 - **Art Agent**：产出后处理 config、用于外部生图的完整 prompt，以及“什么算通过”的验收标准；不运行脚本。
 - **人**：在外部生图模型中使用 prompt 生成原图；在机器验收通过后，对最终资产做肉眼审美判断。
-- **Code Agent**：运行后处理和机器验收命令，并以 `art:verify` 的退出码判断是否通过：
+- **Code Agent**：运行后处理和机器验收命令，并以 `art:verify` 的退出码判断是否通过（工具自包含在 `tools/art-pipeline/`，命令在该目录内运行）：
 
   ```bash
+  cd tools/art-pipeline
   npm run art:postprocess -- --config <配置路径>
   npm run art:verify -- --config <配置路径>
   ```
 
   `art:verify` 退出码为 0 表示机器验收通过；非 0 表示不通过。
-- **任何人**：都可手动运行上述 `npm run` 命令作为兜底。
+- **任何人**：都可手动运行上述命令作为兜底。
 
 验收失败时按原因分流：
 
@@ -287,4 +288,4 @@ art:verify 非 0
 
 **原则：早期用占位（甚至纯色方块），只在确认设计稳定后投入正式资产生成。** 避免"精心生成的资产因为设计改了而作废"。
 
-**正式资产要求：** 每个正式视觉资产在集成前都必须经过 `npm run art:postprocess -- --config <配置路径>` 和 `npm run art:verify -- --config <配置路径>`；仅有机器验收通过还不替代人的审美判断。
+**正式资产要求：** 每个正式视觉资产在集成前都必须经过 `tools/art-pipeline/` 内的 `npm run art:postprocess -- --config <配置路径>` 和 `npm run art:verify -- --config <配置路径>`；仅有机器验收通过还不替代人的审美判断。

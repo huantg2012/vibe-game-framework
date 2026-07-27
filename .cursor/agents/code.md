@@ -51,7 +51,7 @@ tools:
 ## 美术后处理管线
 
 - 实现、维护并调用框架通用工具 `tools/art-pipeline`
-- 提供并运行 `npm run art:postprocess -- --config <path>` 与 `npm run art:verify -- --config <path>`
+- 提供并运行后处理与验收命令（在 `tools/art-pipeline/` 目录内：`npm run art:postprocess -- --config <path>` 与 `npm run art:verify -- --config <path>`；该工具自包含独立 package.json）
 - **管线的输入是单块 tile / 单个 sprite 的原始素材图（一张图 = 一个原子资产），不是整场景概念图**；不要把整场景图降采样当资产
 - 在生成迭代中，以 `art:verify` 的退出码判定后处理和验收是否通过
 - 管线不包含任何具体游戏的色板或尺寸；它们只从各游戏自己的 config 读取，不写入管线代码

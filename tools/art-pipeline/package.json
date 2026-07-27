@@ -2,6 +2,11 @@
   "name": "art-pipeline",
   "private": true,
   "type": "module",
+  "scripts": {
+    "art:postprocess": "tsx src/postprocess.ts",
+    "art:verify": "tsx src/verify.ts",
+    "test": "vitest run"
+  },
   "dependencies": { "sharp": "^0.33.0" },
   "devDependencies": {
     "tsx": "^4.0.0", "vitest": "^2.0.0", "typescript": "^5.4.0", "@types/node": "^20.0.0"

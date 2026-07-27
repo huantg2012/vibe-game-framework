@@ -2,16 +2,17 @@
 
 ## 本项目是什么
 
-本仓库是**双层结构**：
+本仓库的 `master` 分支是一套**用于 vibe coding 独立游戏的 AI agent 框架**，由以下部分组成：
 
-1. **AI agent 框架**（层 A）：用于 vibe coding 独立游戏的工作框架，由 agents（ideation/director/design/code/art/qa）+ 约束文档（`guides/**`、agent 定义、本文件的框架规则）组成。
-2. **dogfood 游戏项目**（层 B）：一个进行中的真实独立游戏，用来验证并打磨框架层 A。游戏活文档住在 `docs/**`，代码住在 `src/**`。
+- **Agent 定义**：`.claude/agents/*` 与 `.cursor/agents/*`（ideation / director / design / code / art / qa；两份内容必须一致）
+- **约束与参考文档**：`guides/**`、本文件（`CLAUDE.md`）中的框架规则
+- **文档模板**：`docs/**/_template-*.md`（agent 据此生成具体游戏的活文档）
+- **可复用工具**：`tools/art-pipeline/`（构建期美术资源后处理与机器验收，自包含、可独立运行）
+- **用户入口**：`START-HERE.md`
 
-两层同处一仓库但边界清晰：改框架（层 A）与做游戏（层 B）是两块独立工作，互不混入。
+它定义了整个 vibe coding game 的流程与开发者交互方式。
 
-**当前阶段：**
-- 层 A（框架）：随 dogfooding 持续迭代（见"框架迭代协议"）。
-- 层 B（游戏）：**Foundation 已完成**（vision / world / architecture / art-direction[APPROVED] / audio-direction[APPROVED] 均就位，美术视觉方向已通过验证循环锁定）。**已进入 Iterative Development：Slice 1「裂隙潜行核心手感」已锁定 ACTIVE**（范围三取舍已拍板——固定地图 / 纳入简化战斗 / 只做裂隙出击环，见 `docs/progress/current-slice.md` 与 `docs/tasks/slice-1.md`）。
+> **分支约定（重要）**：`master` 只维护框架本身，**不含任何具体游戏的活文档或代码**。用本框架开发的具体游戏（含 dogfood 验证项目）活在独立分支（如 `coh`）上——`docs/` 活文档实例、`src/` 游戏代码、游戏构建配置（`package.json`/`vite.config.ts`/`index.html` 等）都只存在于游戏分支，不回流 `master`。
 
 ## 变更传播规则（强制）
 
@@ -59,10 +60,11 @@ guides/*.md                              = 人的参考资料（设计原理记�
 ## 当前框架结构
 
 ```
-.claude/agents/     → ideation, director, design, code, art, qa
-guides/             → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
-docs/               → 游戏项目活文档（AI读写、人审核）
-START-HERE.md       → 用户入口
+.claude/agents/ 与 .cursor/agents/ → ideation, director, design, code, art, qa（两份一致）
+guides/                → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
+docs/**/_template-*.md → 游戏活文档的模板（实例在游戏分支开发时生成）
+tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）
+START-HERE.md          → 用户入口
 ```
 
 ## 游戏项目的文档体系（开发时产生）
