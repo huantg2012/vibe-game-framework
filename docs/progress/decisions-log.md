@@ -9,6 +9,15 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-014: CHAOS.BASE_RATE lowered from 1.5 to 0.8
+- Date: 2026-07-29
+- Phase: Slice 1 (pre-implementation kickoff)
+- Type: Tuning decision (existing constant, substantive change)
+- Decision: `CHAOS.BASE_RATE` goes from the Foundation value 1.5 to **0.8** points/s. This is now a decided value, not a suggestion — `src/config/constants.ts` still holds 1.5 and is changed by the code agent during T9. Everything downstream (run-length math, penalty curve anchors) assumes 0.8.
+- Alternatives: keep 1.5 and shrink the map instead; pick 1.0 as a midpoint.
+- Reason: Adopts the T3 design recommendation (`system-chaos-scavenge-extract.md`, "出击时长推算"). At 1.5 a run lasts ~1:40 and a full-clear player hits HARD_CAP by the 4th loot node, so the back half is spent permanently capped — the greed-vs-retreat gamble collapses into pure endurance. At 0.8 a run is ~3:07 and a full-clear player would arrive at extraction around chaos 175, i.e. taking everything is just barely out of reach, which is the calibration target.
+- Impact: T9 writes 0.8 into constants. The number is explicitly a playtest knob — recalibrate once T6's fixed map has a final scale (target: full-clear time ≈ time-to-HARD_CAP × 1.15). Resolves T3 escalate item 3.
+
 ## DEC-013: Combat is priced as a loss-mitigation tool (dual-track cost)
 - Date: 2026-07-27
 - Phase: Slice 1 (T4 design)

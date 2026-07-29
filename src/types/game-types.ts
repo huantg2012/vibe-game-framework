@@ -29,6 +29,12 @@ export interface TileCoord {
   row: number;
 }
 
+/**
+ * Four-way facing, used for sprite frame selection.
+ * The continuous facing angle stays separate (the vision cone needs it).
+ */
+export type Facing4 = 'up' | 'down' | 'left' | 'right';
+
 /** Enemy AI states */
 export enum AIState {
   PATROL = 'patrol',

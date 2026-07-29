@@ -4,6 +4,7 @@
  */
 
 import Phaser from 'phaser';
+import { GAME_CONSTANTS } from '@/config/constants';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -54,47 +55,66 @@ export class BootScene extends Phaser.Scene {
 
   /**
    * Generate placeholder graphics so the game can run without art assets.
-   * These will be replaced with real sprites as art is produced.
+   * Colours follow the placeholder encoding protocol in art-direction section 12;
+   * they get replaced per asset class as real art lands.
    */
   private generatePlaceholders(): void {
-    // Player placeholder (green square)
+    const tile = GAME_CONSTANTS.TILE_SIZE;
+    const bodySize = GAME_CONSTANTS.PLAYER.BODY_SIZE;
+
+    // Player: white rectangle matching the collider, inside a tile-sized frame.
     const playerGfx = this.make.graphics({ x: 0, y: 0 });
-    playerGfx.fillStyle(0x44cc44, 1);
-    playerGfx.fillRect(0, 0, 24, 24);
-    playerGfx.generateTexture('placeholder-player', 24, 24);
+    playerGfx.fillStyle(0xffffff, 1);
+    playerGfx.fillRect((tile - bodySize) / 2, (tile - bodySize) / 2, bodySize, bodySize);
+    playerGfx.generateTexture('placeholder-player', tile, tile);
     playerGfx.destroy();
 
-    // Enemy placeholder (red square)
+    // Player facing marker: a triangle pointing along +x, rotated to the facing angle.
+    const facingGfx = this.make.graphics({ x: 0, y: 0 });
+    facingGfx.fillStyle(0xffffff, 1);
+    facingGfx.fillTriangle(10, 6, 0, 0, 0, 12);
+    facingGfx.generateTexture('placeholder-player-facing', 10, 12);
+    facingGfx.destroy();
+
+    // Enemy placeholder (dark red, lowest threat tier)
     const enemyGfx = this.make.graphics({ x: 0, y: 0 });
     enemyGfx.fillStyle(0xcc4444, 1);
     enemyGfx.fillRect(0, 0, 24, 24);
     enemyGfx.generateTexture('placeholder-enemy', 24, 24);
     enemyGfx.destroy();
 
-    // Kindling placeholder (yellow diamond)
+    // Kindling placeholder (teal diamond: kindling is contamination-side, not warm)
     const kindlingGfx = this.make.graphics({ x: 0, y: 0 });
-    kindlingGfx.fillStyle(0xccaa22, 1);
+    kindlingGfx.fillStyle(0x2ae6c8, 1);
     kindlingGfx.fillTriangle(8, 0, 16, 8, 8, 16);
     kindlingGfx.fillTriangle(8, 0, 0, 8, 8, 16);
     kindlingGfx.generateTexture('placeholder-kindling', 16, 16);
     kindlingGfx.destroy();
 
-    // Wall tile placeholder (dark gray)
-    const wallGfx = this.make.graphics({ x: 0, y: 0 });
-    wallGfx.fillStyle(0x333333, 1);
-    wallGfx.fillRect(0, 0, 32, 32);
-    wallGfx.lineStyle(1, 0x444444, 0.5);
-    wallGfx.strokeRect(0, 0, 32, 32);
-    wallGfx.generateTexture('placeholder-wall', 32, 32);
-    wallGfx.destroy();
+    this.generateRiftTileset(tile);
+  }
 
-    // Floor tile placeholder (slightly lighter)
-    const floorGfx = this.make.graphics({ x: 0, y: 0 });
-    floorGfx.fillStyle(0x1a1a1a, 1);
-    floorGfx.fillRect(0, 0, 32, 32);
-    floorGfx.lineStyle(1, 0x222222, 0.3);
-    floorGfx.strokeRect(0, 0, 32, 32);
-    floorGfx.generateTexture('placeholder-floor', 32, 32);
-    floorGfx.destroy();
+  /**
+   * Rift tileset placeholder: frame index equals the `TileType` value, so tile data can
+   * be handed to the tilemap unchanged. Solid colours with a 1px inner border, per the
+   * placeholder strategy (walkable #1a1a1a, wall #000000).
+   */
+  private generateRiftTileset(tile: number): void {
+    const gfx = this.make.graphics({ x: 0, y: 0 });
+
+    // frame 0 - wall
+    gfx.fillStyle(0x000000, 1);
+    gfx.fillRect(0, 0, tile, tile);
+    gfx.lineStyle(1, 0x0a0a0a, 1);
+    gfx.strokeRect(0.5, 0.5, tile - 1, tile - 1);
+
+    // frame 1 - walkable floor
+    gfx.fillStyle(0x1a1a1a, 1);
+    gfx.fillRect(tile, 0, tile, tile);
+    gfx.lineStyle(1, 0x232323, 1);
+    gfx.strokeRect(tile + 0.5, 0.5, tile - 1, tile - 1);
+
+    gfx.generateTexture('placeholder-rift-tileset', tile * 2, tile);
+    gfx.destroy();
   }
 }

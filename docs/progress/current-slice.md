@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director agent
 created-when: 每个 Slice 开始时
-last-modified: 2026-07-24
-note: Slice 1 范围已由人拍板锁定（2026-07-24）。三项设计取舍已决：固定地图 / 纳入简化战斗 / 只做裂隙出击环。任务 Brief 见 docs/tasks/slice-1.md。
+last-modified: 2026-07-29
+note: Slice 1 范围已由人拍板锁定（2026-07-24）。三项设计取舍已决：固定地图 / 纳入简化战斗 / 只做裂隙出击环。设计阶段（T1-T4）已收口，2026-07-29 进入实现阶段。任务 Brief 见 docs/tasks/slice-1.md。
 ---
 
 # Slice 1: 裂隙潜行核心手感 【ACTIVE — 已锁定 2026-07-24】
@@ -59,12 +59,12 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 
 | ID | 任务 | Agent | 派发 | 状态 | 依赖 | 备注 |
 | -- | ---- | ----- | ---- | ---- | ---- | ---- |
-| T1 | 设计 spec：移动 + 有限视野系统（含 schema/接口） | design | 🔴 | Done | - | docs/specs/system-movement-vision.md（含 7 项 escalate 待拍板） |
+| T1 | 设计 spec：移动 + 有限视野系统（含 schema/接口） | design | 🔴 | Done | - | docs/specs/system-movement-vision.md；7 项 escalate 已全部闭合（见该 spec 的决策落定块） |
 | T2 | 设计 spec：敌人 AI（FSM + 感知） | design | 🔴 | Done | - | docs/specs/system-enemy-ai.md |
 | T3 | 设计 spec：混乱值 + 搜刮 + 撤离 | design | 🔴 | Done | - | docs/specs/system-chaos-scavenge-extract.md |
 | T4 | 设计 spec：简化战斗 | design | 🔴 | Done | - | 取舍②新增；docs/specs/system-combat.md |
-| T5 | 实现：移动 + 视野（占位资产） | code | 🔴 | Todo | T1 | 建立共享 Player + VisibilitySystem |
-| T6 | 实现：固定裂隙地图（写死 tile 数据 + TilemapRenderer 渲染） | code | 🔴 | Todo | T1 | 取舍①：固定地图，非程序生成 |
+| T5 | 实现：移动 + 视野（占位资产） | code | 🔴 | **In Progress** | T1 | 建立共享 Player + VisibilitySystem；与 T6 由同一 code agent 连续做（都写 rift-scene.ts），**顺序为 T6 → T5** |
+| T6 | 实现：固定裂隙地图（写死 tile 数据 + TilemapRenderer 渲染） | code | 🔴 | **In Progress** | T1 | 取舍①：固定地图，非程序生成。**先于 T5 做**：VisibilitySystem 的 raycasting 遮挡需要真实墙体网格才能验证 |
 | T7 | 实现：敌人 AI + 感知 | code | 🔴 | Todo | T2,T5,T6 | - |
 | T8 | 实现：简化战斗（玩家攻击 + 敌人伤害 + 受伤/死亡） | code | 🔴 | Todo | T4,T5,T7 | 取舍②新增 |
 | T9 | 实现：薪柴搜刮 + 混乱值 + 撤离 + HUD | code | 🔴 | Todo | T3,T5,T6 | - |
@@ -72,7 +72,7 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 | **美术门禁（并行验证，依据 art-direction.md §14）** |||||||
 | A-G1 | 32px 尺度可读性实测：把关键 tile/sprite 缩到 32px + 视野遮罩下确认细节是否幸存 | art | 🔴 | Todo | - | 验证 art-direction §14.2 |
 | A-G2 | 俯视角敌人验证：将正面立绘概念转为俯视角 sprite，确认轮廓/朝向/威胁可读 | art | 🔴 | Todo | - | 验证 art-direction §14.1 |
-| A-G3 | **合成测试（表现力验证）**：做 3-5 块真实 32px tile（地面/墙/数据错误块）+ 覆盖层 decal，经管线处理为合规资产后用 tilemap 渲染 + 有限视野光照拼一小块场景，与参考图并排对比 | art/code | 🔴 | Todo | - | 验证 art-direction §14.3（**最高风险项**）；管线吃单块 tile/sprite 原图而非整场景概念图；美术维护 tile/decal 需求+配置+验收，程序运行 `npm run art:*` 并搭合成场景 |
+| A-G3 | **合成测试（表现力验证）**：做 3-5 块真实 32px tile（地面/墙/数据错误块）+ 覆盖层 decal，经管线处理为合规资产后用 tilemap 渲染 + 有限视野光照拼一小块场景，与参考图并排对比 | art/code | 🔴 | **In Progress**（art 已领取第 1、2 步） | - | 验证 art-direction §14.3（**最高风险项**）；管线吃单块 tile/sprite 原图而非整场景概念图；美术维护 tile/decal 需求+配置+验收，程序运行 `npm run art:*` 并搭合成场景 |
 
 > 说明：美术门禁（A-G1~3）是验证 art-direction.md 第 14 节遗留假设的任务，可与游戏系统实现并行；Slice 1 玩法本身用占位资产推进，不被美术门禁阻塞。**其中 A-G3（合成测试）验证并调优纯俯视像素路线的表现力**（视角/风格已按 DEC-007 锁定为 Darkwood 路线，**不再是回炉门禁**）：证明够用则锁定，不够则在同一路线内加强 tile 多样性/过渡 tile/覆盖层 decal/光照，建议尽早做、让证据说话。
 
@@ -89,6 +89,20 @@ vision 的完整核心循环 = **裂隙出击环** + **净化点环**。完整�
 | 7 | 看合成效果做最终审美判断（够用则锁定；不够则在同路线内加强，**不回炉**——见 DEC-007） | 🙋 人（唯一：最终审美） |
 
 > 人肉参与仅第 3、7 步；其余全部 agent 执行、Director 编排（对应 director.md 的"人肉手工唯二例外"）。第 5 步的合成场景不是一次性玩具——它就是 Slice 1 真实渲染路径（TilemapRenderer + VisibilitySystem）的提早落地，因此 A-G3 天然是 Slice 1 实现的**第一段**，而非独立于 Slice 之外的前置工序。
+
+## 实现阶段开工记录（2026-07-29）
+
+设计阶段（T1-T4，四份 spec）已收口，实现阶段以**双线并行**开工：
+
+- **代码线**：code agent 连做 **T6 → T5**。先 T6 的理由是 VisibilitySystem 的 raycasting 遮挡必须有真实墙体网格才能验证，墙体网格是 T6 的产出；反过来做会返工。两者都写 `src/scenes/rift-scene.ts`，因此归同一个 agent 一次性做完，避免撞车。
+- **美术线**：art agent 做 A-G3 的第 1、2 步（tile/decal 清单 + 逐块生成 prompt），与代码线零依赖。第 3 步（外部生图）需要人；第 4-6 步（过管线 + 搭合成场景 + 自检）在 T5/T6 落地后由 code agent 接手。
+
+本轮同时闭合的遗留项：
+
+- `CHAOS.BASE_RATE` 1.5 → 0.8 已由人拍板，记为 **DEC-014**。spec 已改为决定值；`src/config/constants.ts` 仍是 1.5，**由 code agent 在 T9 落地**。
+- T1 的 7 项 escalate 全部闭合（见 `system-movement-vision.md` 的决策落定块），上方 T1 行的旧备注已更正。
+- T3 escalate 第 8 项（与 T2 事件语义交叉核对）已由 Director 核对完毕并关闭：`ENEMY_ALERT.alertLevel` 三级语义与 `ENEMY_LOST_PLAYER` 时机两侧一致，"suspicious 档不计混乱值"也吻合，无需回改任何 spec。
+- ⏰ **待 Slice 1 整合时处理**：`docs/architecture.md` 与 `docs/art-direction.md` 的 frontmatter `changed-this-slice: true` 本轮**故意不动**，留到 Step 7 整合时与其他文档的变更标记一起统一重置为 `false`。
 
 ## 设计产出（本 Slice 新增/修改的文档）
 

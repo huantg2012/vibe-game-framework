@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director agent
 created-when: Slice 1 锁定时（2026-07-24）
-last-modified: 2026-07-24
-note: Slice 1 全部任务 Brief。范围三取舍已由人拍板：固定地图 / 纳入简化战斗 / 只做裂隙出击环。
+last-modified: 2026-07-29
+note: Slice 1 全部任务 Brief。范围三取舍已由人拍板：固定地图 / 纳入简化战斗 / 只做裂隙出击环。2026-07-29 进入实现阶段（T6→T5 与 A-G3 前两步并行开工）。
 ---
 
 # Tasks: Slice 1 — 裂隙潜行核心手感
@@ -18,7 +18,11 @@ Slice 类型：系统
 
 **派发说明：** 🟢 Director 可直接派发 / 🔴 人主导（人拍板 + 驱动对应 agent 执行，**非人肉手工**）。真正的人肉触点全项目只有两个：外部生图、最终审美/体验判断（见 director.md）。
 
-**执行顺序建议：** T1-T4（设计 spec）先行 → T5/T6（移动+视野、固定地图，即真实渲染路径）作为实现第一段，A-G3 合成测试搭在这一段上 → T7/T8/T9（AI/战斗/搜刮混乱撤离）→ T10 QA。美术门禁 A-G1~3 与实现并行，不阻塞玩法（玩法用占位资产）。
+**执行顺序建议：** T1-T4（设计 spec）先行 → **T6 → T5**（固定地图、移动+视野，即真实渲染路径）作为实现第一段，A-G3 合成测试搭在这一段上 → T7/T8/T9（AI/战斗/搜刮混乱撤离）→ T10 QA。美术门禁 A-G1~3 与实现并行，不阻塞玩法（玩法用占位资产）。
+
+**为什么是 T6 先于 T5（2026-07-29 Director 定）：** VisibilitySystem 的 raycasting 遮挡只有对着真实墙体网格才能验证，而墙体网格是 T6 的产出——反过来做等于先写一个无法验证的视野系统，必然返工。两者都写 `src/scenes/rift-scene.ts`，因此归同一个 code agent 一次任务连续完成，避免并行改同一文件。
+
+**本 Slice 已定的数值变更：** `CHAOS.BASE_RATE` 1.5 → **0.8**（DEC-014）。`src/config/constants.ts` 现值仍是 1.5，由 code agent 在 **T9** 落地。
 
 ---
 
@@ -147,7 +151,7 @@ Title: 设计 spec — 简化战斗 | Priority: P1 | Dispatch: 🔴
 
 ## Task: T5 | assignee: code
 
-Title: 实现 — 移动 + 有限视野（占位资产） | Priority: P0 | Dispatch: 🔴
+Title: 实现 — 移动 + 有限视野（占位资产） | Priority: P0 | Dispatch: 🔴 | Status: **In Progress**（2026-07-29 派给 code agent，**排在 T6 之后**，同一次任务连续做）
 
 ### 目标
 按 T1 spec 实现玩家移动与 Raycasting 视野，占位资产先行。
@@ -176,7 +180,7 @@ Title: 实现 — 移动 + 有限视野（占位资产） | Priority: P0 | Dispa
 
 ## Task: T6 | assignee: code
 
-Title: 实现 — 固定裂隙地图（写死 tile 数据 + 渲染） | Priority: P0 | Dispatch: 🔴
+Title: 实现 — 固定裂隙地图（写死 tile 数据 + 渲染） | Priority: P0 | Dispatch: 🔴 | Status: **In Progress**（2026-07-29 派给 code agent，**实现阶段第一个代码任务**）
 
 ### 目标
 用 code agent 写死一张固定裂隙地图的 tile 数据，并通过 TilemapRenderer 渲染出来。
@@ -264,7 +268,8 @@ Title: 实现 — 薪柴搜刮 + 混乱值 + 撤离 + HUD | Priority: P0 | Dispa
 ### 具体要求
 - [ ] 薪柴：地图散布拾取（部分安全/部分被守）；`KINDLING_COLLECTED`
 - [ ] 混乱值：匀速上涨 + 至少一级超阈值惩罚（视野缩小/teal 噪点，接 T5 视野）；`CHAOS_CHANGED` / `CHAOS_THRESHOLD_REACHED`
-- [ ] 撤离：到达撤离点结束出击、结算带出薪柴；`RIFT_EXIT_REACHED`
+- [ ] **`CHAOS.BASE_RATE` 从 constants 现值 1.5 改为 0.8**（DEC-014 已拍板，本任务是唯一落地点）；`CHAOS` 段其余改动按 T3 spec 的 constants 影响表执行
+- [ ] 撤离：进入撤离点触发半径后**按 E 确认**结束出击（DEC-011，非到达即撤离）、结算带出薪柴；`RIFT_EXIT_REACHED`
 - [ ] HUD：混乱值条（顶部中央）、薪柴计数、生命值（art-direction §6.3），Phaser Text/Graphics 占位
 - [ ] 占位：薪柴=teal 小色块、撤离点=白色脉动（art-direction §12；薪柴属污染侧，非暖色）
 
@@ -291,6 +296,7 @@ Title: QA 验收（对照 spec） | Priority: P0 | Dispatch: 🟢
 - [ ] 逐 spec 比对实现；列出偏差（缺失/多做/歧义处理不一致）
 - [ ] 边界：混乱值上/下限、视野遮挡边角、敌人跟丢、死亡与撤离并发、搜刮空/满
 - [ ] 跨系统：战斗代价是否真的抬升混乱值；超阈值惩罚是否真的改变视野
+- [ ] **专项测量：一次命中造成的混乱值总量**（T4 escalate 第 6 项要求）。命中噪声会经 T2 的 `ENEMY_ALERT` 让每个被惊动的敌人在 T3 侧各加一次 `DETECTION_BONUS`(3)，所以真实账单是 `COMBAT_BONUS`(5) + `DETECTION_BONUS`(3) × N（N = 被惊动的敌人数）。这个叠加量级没有被任何一份 spec 单独设计过，必须实测：分别记录敌人密集处与孤立敌人处的单刀总代价。若判定过重，调节旋钮优先级 = `NOISE_HIT_RADIUS` > `COMBAT_BONUS` > `DETECTION_BONUS`
 - [ ] 性能抽查（FPS / 视野 raycasting 预算）
 
 ### 验收标准
@@ -343,7 +349,7 @@ Title: 俯视角敌人验证 | Priority: P1 | Dispatch: 🔴（生 prompt 部分
 
 ## Art Gate: A-G3 | assignee: art + code
 
-Title: 合成测试（纯俯视像素路线表现力验证 + 调优） | Priority: P0 | Dispatch: 🔴（人只碰生图+审美）
+Title: 合成测试（纯俯视像素路线表现力验证 + 调优） | Priority: P0 | Dispatch: 🔴（人只碰生图+审美） | Status: **In Progress**（2026-07-29 art agent 领取第 1、2 步；第 3 步等人生图）
 
 ### 目标
 证明并调优**纯俯视角像素路线**能合成出接近参考图的**氛围**（不追等距纵深，DEC-007）；验证"模块化多样性能压住网格马赛克"。

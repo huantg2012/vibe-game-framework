@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: design agent
-last-modified-date: 2026-07-26
+last-modified-by: director agent
+last-modified-date: 2026-07-29
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -183,7 +183,7 @@ interface RunResult {
 | `CHAOS.CHASE_RATE_MULT: 2.0` | **新增** | 被追击时的速率倍率 |
 | `CHAOS.DETECTION_BONUS_COOLDOWN: 10000` | **新增** | ms，同一敌人的侦测脉冲去抖 |
 | `CHAOS.EMIT_STEP: 1.0` / `CHAOS.MODULATOR_STEP: 1.0` | **新增** | 节流步长 |
-| `CHAOS.BASE_RATE: 1.5` | **建议下调为 0.8** | 见"可调参数表"的时长推算，待校准 |
+| `CHAOS.BASE_RATE: 1.5` | **改为 0.8（已决定，DEC-014）** | 依据见"可调参数表"的时长推算。constants 现值仍是 1.5，**待 T9 落地为 0.8**；落地后仍是首要试玩校准旋钮 |
 | `CHAOS.PENALTIES.*` | **替换为锚点表** | 现有的两档离散惩罚被本 spec 的四锚点连续曲线取代，不允许两套并存 |
 
 **`CHAOS_CHANGED` payload 的 `max` 字段**：继续传 `100`（= 满格刻度），**不传 `HARD_CAP`**。这样 HUD 的 50% / 75% 刻度线落在条的一半和四分之三处，与 art §7.2 的读法一致；若传 150，阈值会挤到 33% / 50%，玩家无法从条上读出阈值位置。代价是 `value > max` 成为合法状态——HUD 必须把填充宽度钳在 100% 并用溢出态表现超出部分（见 HUD 规则 H5）。这条**必须**写进 events.ts 的注释，否则后来的消费方会假设 `value ≤ max`。
@@ -367,7 +367,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 | 参数 | 含义 | 建议初值 | 合理范围 | 对博弈手感的影响 | 状态 |
 | ---- | ---- | -------- | -------- | ---------------- | ---- |
 | `CHAOS.START_VALUE` | 进入裂隙时的初值 | 0 | — | 非 0 会让"刚进来就有压力"，Slice 1 不需要（那是净化点模块受损的后果，Slice 2+） | 技术定 |
-| `CHAOS.BASE_RATE` | 基础上涨速率 | **0.8 点/s**（现值 1.5，建议下调） | 0.5–1.5 | **最重要的一个数**。它单独决定一次出击有多长、玩家有多少次决策机会。见下方时长推算 | 建议值（待校准） |
+| `CHAOS.BASE_RATE` | 基础上涨速率 | **0.8 点/s**（已定，DEC-014；constants 现值 1.5，待 T9 落地） | 0.5–1.5 | **最重要的一个数**。它单独决定一次出击有多长、玩家有多少次决策机会。见下方时长推算 | 已决定 · 待试玩校准 |
 | `CHAOS.MAX_VALUE` | HUD 满格刻度 + 第三阈值 | 100 | — | 语义已变更（不再是钳制上限），见"溢出决策" | 既有 constants（语义变更） |
 | `CHAOS.HARD_CAP` | 真实上限 | 150 | 120–200 | 决定溢出区间有多厚。太小则加码空间不足；太大则末段惩罚过于缓慢，读作"卡住了" | 建议值（待校准）· 新增 |
 | `CHAOS.THRESHOLD_1` | 警告阈值 | 50 | 40–60 | 第一次"越线"的时刻；太晚则前半程毫无提示 | 既有 constants |
@@ -385,9 +385,9 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 | `BASE_RATE` | 0→50 安全 | →75 警告 | →100 危险 | →150 溢出 | 总时长 |
 | ----------- | --------- | -------- | --------- | --------- | ------ |
 | 0.6 | 83 s | 42 s | 42 s | 83 s | 4:10 |
-| **0.8（建议）** | **62 s** | **31 s** | **31 s** | **62 s** | **3:07** |
+| **0.8（已定，DEC-014）** | **62 s** | **31 s** | **31 s** | **62 s** | **3:07** |
 | 1.0 | 50 s | 25 s | 25 s | 50 s | 2:30 |
-| 1.5（现值） | 33 s | 17 s | 17 s | 33 s | 1:40 |
+| 1.5（constants 旧值，已被 DEC-014 取代） | 33 s | 17 s | 17 s | 33 s | 1:40 |
 
 选 0.8 的理由：一次"全清"出击的估算成本 ≈ 主干通行 50 s + safe 档 10 s + contested 档 3×20 s + deep 档 2×50 s ≈ **220 s**。在 0.8 的速率下，全清玩家将在混乱值约 **175**（超过硬上限）时才抵达撤离点——即**全拿是够不着的，但差得不多**。这正是想要的校准点：玩家每次都觉得"再放弃一个 deep 就能全身而退"，于是每次都会试。1.5 的现值下全清玩家在拿到第 4 个节点时就已顶到 150，后半局全程处于封顶惩罚下，博弈退化为纯粹的煎熬。
 
@@ -621,7 +621,7 @@ interface RunControllerAPI {
 
 2. **【已决定，偏离 Brief 措辞，请 Director 知悉】撤离改为"按 E 确认"**，而非 Brief / `vision.md` 的"到达即撤离"。理由：撤离点是唯一 glow source，玩家全程朝它移动，误触会在最关键的时刻终结整局。→ 建议 **DEC-011**。若 Director 认为必须严格执行"到达即撤离"，最小折中是"进入触发格后停留 0.8 s 自动撤离"（仍可防误触）。
 
-3. **【建议下调既有 constants】`CHAOS.BASE_RATE` 1.5 → 0.8**。这是一次对既有数值的实质修改而非补充，理由与推算见"出击时长推算"。→ 请 Director / 人在试玩前确认，或直接按 0.8 实现后由试玩校准。
+3. ~~**【建议下调既有 constants】`CHAOS.BASE_RATE` 1.5 → 0.8**~~ **【已关闭 2026-07-29 — 人已拍板同意，记为 DEC-014】** 决定值 = 0.8，理由与推算见"出击时长推算"。`src/config/constants.ts` 现值仍为 1.5，**由 code agent 在 T9 落地为 0.8**；落地后仍是首要试玩校准旋钮。
 
 4. **【需 code agent 在 T9 执行】`src/types/events.ts` 建议新增 `CHAOS_CHANGED.rate?: number`**，并为 `max` 字段加注释说明 `value` 可以超过它。这是本 spec 唯一的事件契约变更请求。
 
@@ -636,4 +636,4 @@ interface RunControllerAPI {
 
 7. **【记录，暂不处理】出击时长与 `vision.md` 的 "Session 15-30 分钟" 不一致。** 本 spec 的一局约 3 分钟。原因是 Slice 1 只有一张固定小地图，不是完整 session。不建议改 `vision.md`。但需要 Director 知悉：**当后续 Slice 换成程序化大地图时，纯时间驱动的混乱值会不成比例地惩罚大地图**，届时可能需要把速率与地图规模解耦（例如按"已探索区域"或"已进入的碎片数"驱动）。这是一个已知的、被推迟的设计债。
 
-8. **【依赖 T2，需回头核对】** 本 spec 规则 5/7 依赖 `ENEMY_ALERT.alertLevel` 的三级语义与 `ENEMY_LOST_PLAYER` 的发出时机。T2（`system-enemy-ai`）与本 spec 并行编写，T2 定稿后请 Director 做一次交叉核对；若语义不同，以 T2 为准并回改本 spec。
+8. ~~**【依赖 T2，需回头核对】**~~ **【已关闭 2026-07-29 — Director 已交叉核对，语义一致，本 spec 无需回改】** 核对结论：T2 `system-enemy-ai` 的 `ENEMY_ALERT.alertLevel` 三级语义与 `ENEMY_LOST_PLAYER` 发出时机，与本 spec 规则 5/7 的消费方式吻合；两侧对"suspicious 档不计混乱值"的处理也一致。
