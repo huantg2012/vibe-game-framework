@@ -29,6 +29,10 @@ export class MainMenuScene extends Phaser.Scene {
       fontFamily: 'monospace',
     }).setOrigin(0.5);
 
+    // The game itself is keyboard-driven (DEC-008), so the menu is too.
+    this.input.keyboard?.once('keydown-ENTER', () => this.scene.start('RiftScene'));
+    this.input.keyboard?.once('keydown-SPACE', () => this.scene.start('RiftScene'));
+
     // Start new game button
     const startBtn = this.add.text(width / 2, height / 2 + 40, '[ New Expedition ]', {
       fontSize: '18px',

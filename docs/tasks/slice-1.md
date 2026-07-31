@@ -151,7 +151,7 @@ Title: 设计 spec — 简化战斗 | Priority: P1 | Dispatch: 🔴
 
 ## Task: T5 | assignee: code
 
-Title: 实现 — 移动 + 有限视野（占位资产） | Priority: P0 | Dispatch: 🔴 | Status: **In Progress**（2026-07-29 派给 code agent，**排在 T6 之后**，同一次任务连续做）
+Title: 实现 — 移动 + 有限视野（占位资产） | Priority: P0 | Dispatch: 🔴 | Status: **Done**（2026-07-29）。产出 `src/entities/player.ts` + `src/systems/visibility-system.ts` + `src/utils/grid-raycast.ts`；`camera.setZoom(1.5)` 实测视口 20.0×13.3 tile（DEC-009 达标）；raycasting 60 线实测均值 0.1ms（预算 2ms）；`setRadiusScale()` 缓存失效已补并回填 T1 规则 20。**遗留：键盘手感需人试玩**（浏览器无法模拟按住键）。
 
 ### 目标
 按 T1 spec 实现玩家移动与 Raycasting 视野，占位资产先行。
@@ -180,7 +180,7 @@ Title: 实现 — 移动 + 有限视野（占位资产） | Priority: P0 | Dispa
 
 ## Task: T6 | assignee: code
 
-Title: 实现 — 固定裂隙地图（写死 tile 数据 + 渲染） | Priority: P0 | Dispatch: 🔴 | Status: **In Progress**（2026-07-29 派给 code agent，**实现阶段第一个代码任务**）
+Title: 实现 — 固定裂隙地图（写死 tile 数据 + 渲染） | Priority: P0 | Dispatch: 🔴 | Status: **Done**（2026-07-29）。产出 `src/scenes/rift-map-data.ts`（64×44 ASCII 固定地图 + 布点 + `validateRiftMap()`）+ `src/systems/tile-grid.ts` + `src/systems/tilemap-renderer.ts`；两条路线 + 8 薪柴点 + 撤离点 + 4 巡逻路点就绪供 T7/T9 消费。**遗留：纯步行全清约 59s，低于 DEC-014 的 0.8 速率所假设的 220s 前提——见下方"待拍板"**。
 
 ### 目标
 用 code agent 写死一张固定裂隙地图的 tile 数据，并通过 TilemapRenderer 渲染出来。
@@ -349,7 +349,7 @@ Title: 俯视角敌人验证 | Priority: P1 | Dispatch: 🔴（生 prompt 部分
 
 ## Art Gate: A-G3 | assignee: art + code
 
-Title: 合成测试（纯俯视像素路线表现力验证 + 调优） | Priority: P0 | Dispatch: 🔴（人只碰生图+审美） | Status: **In Progress**（2026-07-29 art agent 领取第 1、2 步；第 3 步等人生图）
+Title: 合成测试（纯俯视像素路线表现力验证 + 调优） | Priority: P0 | Dispatch: 🔴（人只碰生图+审美） | Status: **✅ PASS（2026-07-31）** — 结论见 DEC-018 与 art-direction §14.3。纯俯视像素路线成立；破马赛克的正解是**程序化连续表面**（地面 + 墙），而非离散 AI tile。实测产物：`docs/art/demos/rift-synth/`（loop1-5 = AI-tile 尝试，已被否；`floor.f3` / `scene.s3` = 程序化胜出）。实机化转入 Part C。
 
 ### 目标
 证明并调优**纯俯视角像素路线**能合成出接近参考图的**氛围**（不追等距纵深，DEC-007）；验证"模块化多样性能压住网格马赛克"。

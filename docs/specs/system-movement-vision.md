@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: design agent
-last-modified-date: 2026-07-26
+last-modified-by: code agent (T5 实现回填：规则 20 缓存失效条件)
+last-modified-date: 2026-07-29
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -156,6 +156,7 @@ interface OccluderGrid {
 18. **玩家暖光叠加**：在实体层之上、黑暗遮罩**之下**叠加一层以玩家为中心、半径 = `radiusAmbient` 的暖色径向渐变（放在遮罩之下，暖光才会被视野边界正确切掉，而不是透过黑暗发亮）（warm-dim #8a5c2a，ADD 混合）。它是裂隙中唯一的暖色来源，也是保证低对比度的渗透体在贴身距离能被看见的手段（art §13.2）。
 19. **发光泄露**：注册为 glow source 的对象即使落在视野外，仍以极低 alpha 渲染为一个光点（art §7.1「远处发光泄露」/ §4.3「远距离导航辅助」）。**Slice 1 的 glow source 只有撤离点**——它是导航锚点，玩家应当始终知道回家的方向。**薪柴不是 glow source**：薪柴必须靠视野找到，否则搜刮退化为"看着光点跑过去"，博弈消失。（撤离点/薪柴的内容定义归 T3，此处只定义机制与 Slice 1 的默认归类建议。）
 20. **静止缓存**：当 `|Δorigin| < CACHE_POS_EPSILON` 且 `|Δfacing| < CACHE_ANGLE_EPSILON` 且 `grid.version` 未变时，直接复用上一帧的三层多边形，跳过全部射线计算（架构要求）。
+    - **`setRadiusScale()` 必须同时置 `cacheValid = false`**（2026-07-29 由 code agent 在 T5 实现时补入，闭合 `system-chaos-scavenge-extract` escalate 第 5 项）。射程是每条射线 `maxDist` 的输入，调制器改了射程就等于改了缓存的前提；不失效的话玩家静止时视野不会跟随混乱值收缩，会出现"站着不动混乱值涨了视野却没变、一动突然缩一大截"。`setEdgeCorruption` / `setScreenFlicker` **不需要**失效缓存——它们只改渲染，不改射线几何（边缘抖动在多边形组装阶段叠加，不影响命中距离）。T3 的 `MODULATOR_STEP` 节流正是为了让这次失效的频率可控。
 21. **性能降级**：连续 30 帧平均耗时超预算时，降级顺序为 ① 光线数 60 → 40（前向 28 / 环身 12）；② 视野每 2 帧更新一次（中间帧沿用上一帧多边形）。不降级 alpha 分级与噪点（它们是固定成本）。
 22. **混乱值调制**（接口由本系统定义，取值由 T3 定义）：三个互相正交的调制器，均由**场景层**在收到混乱值事件后调用（见"与已有系统的接口"）：
     - `setRadiusScale(s)`：`radiusForward` 与 `radiusAmbient` 同乘 `s`，下限 `MIN_RADIUS_SCALE` 防止完全失明。
@@ -407,8 +408,8 @@ declare function hasLineOfSight(
 
 | 对象 | 影响 |
 | ---- | ---- |
-| `src/config/constants.ts` | 需要替换 `VISIBILITY` 段：现有的 `BASE_RADIUS: 200` / `EDGE_SOFTNESS: 20` 与本 spec 的"双射程 + 三级固定带宽"模型不对应，应改为本表的参数集。`RAY_COUNT: 60` 保留。`PLAYER.SPEED: 160` 保留。（由 code agent 在 T5 执行） |
-| `architecture.md` 模块注册表 | T5 完成后需登记：`VisibilitySystem` 状态改为已实现并补全接口列；新增 `Player`（`src/entities/player.ts`）；新增工具模块 `src/utils/grid-raycast.ts`。**登记由 code agent 执行**（T5 Brief 已含此项），本 spec 不修改 architecture.md |
+| `src/config/constants.ts` | ✅ **已于 2026-07-29（T5）执行**：`VISIBILITY` 段整段替换为本 spec 的双射程 + 三级固定带宽参数集（`BASE_RADIUS` / `EDGE_SOFTNESS` 已删除，不存在两套并存）；`RAY_COUNT: 60` 保留；`PLAYER.SPEED: 160` 保留并补入本 spec 的移动参数；新增 `CAMERA.ZOOM: 1.5`（DEC-009） |
+| `architecture.md` 模块注册表 | ✅ **已于 2026-07-29（T5/T6）执行**：登记 `VisibilitySystem`（已实现）、`Player`、`TilemapRenderer`、`TileGrid`、`GridRaycast` |
 | `RiftScene` / `PurificationScene` | 两者都需持有 Player + VisibilitySystem 实例，并各自提供 `VisionConfig` 与 `OccluderGrid`；RiftScene 额外承担混乱值调制的事件转发 |
 | `system-enemy-ai`（T2） | 敌人视线判定应直接使用 `utils/grid-raycast.hasLineOfSight()`，不要另写遮挡逻辑；其 `SIGHT_RANGE` 应保持 < `VISION_RADIUS_FORWARD` |
 | `system-chaos-scavenge-extract`（T3） | 惩罚的视觉部分应表达为本 spec 的三个调制器取值，而不是自行改视野内部字段 |
@@ -453,7 +454,7 @@ declare function hasLineOfSight(
 - [ ] **60 条光线（前向 4°/条）的多边形边缘 faceting 不可见** —— 若可见，备选是改用 Red Blob 式墙角端点射线（架构 DEC-ARCH-004 提到的参考实现），光线数可变但通常更少。
 - [ ] **加速 0.08s / 减速 0.10s 提供"重量感"而不牺牲精确度** —— 潜行游戏对精确落位敏感，若窄通道操作受挫，优先降 `MOVE_DECEL_TIME` 到 0。
 - [ ] **撤离点作为唯一发光泄露源足以支撑导航** —— 若玩家仍频繁迷路，下一步是给撤离点加方向指示而不是放宽薪柴的可见性（保住搜刮的信息博弈）。
-- [ ] **`ERASE` 混合的三层遮罩在 WebGL/Canvas 两种渲染后端下表现一致** —— 需在 T5 实现时实测；若 Canvas 后端有差异，改用 RenderTexture + mask。
+- [x] **`ERASE` 混合的三层遮罩在 WebGL/Canvas 两种渲染后端下表现一致** —— 2026-07-29（T5）实测：`RenderTexture.fill` + 三次 `erase` 在 WebGL 下正确产出 0.20/0.60/1.00 三级可见度。**Canvas 后端未实测**（`Phaser.AUTO` 在所有目标浏览器上都会选 WebGL），若将来需要支持 Canvas 后端需回头验证。实现时踩到的坑：`RenderTexture.draw()` 的 `alpha` 参数对 Game Object 入参无效（只对贴图 key 生效），噪点层的强度必须设在 sprite 自身上。
 
 ---
 

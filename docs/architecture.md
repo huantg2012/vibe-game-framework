@@ -157,7 +157,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 
 ## 模块注册表
 
-> **状态**列以真实 `src/` 目录为准（核对日期 2026-07-22）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。目前只有 `src/core/` 与 `src/i18n/` 落地，`managers/`、`systems/`、`entities/`、`generation/`、`ui/` 等目录尚不存在。
+> **状态**列以真实 `src/` 目录为准（核对日期 2026-07-29，Slice 1 T6/T5 完成后）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`、`src/entities/`、`src/utils/`；`managers/`、`generation/`、`ui/` 尚不存在。
 
 | 模块 | 路径 | 职责 | 对外接口 | 状态 |
 | ---- | ---- | ---- | -------- | ---- |
@@ -166,8 +166,11 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | GameState | src/managers/game-state.ts | 全局状态持有和查询 | get/set 方法 | 规划中 |
 | SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化 | save(), load(), hasSave() | 规划中 |
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/音量控制 | play(), stop(), setVolume() | 规划中 |
-| VisibilitySystem | src/systems/visibility-system.ts | 玩家视野计算与渲染遮罩（Rift+Purification 共用） | update(playerPos, facing) | 规划中 |
-| TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线） | render(tileData): Tilemap | 规划中 |
+| Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用） | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5） |
+| VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 三级遮罩渲染 + 混乱值调制（Rift+Purification 共用） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5） |
+| GridRaycast | src/utils/grid-raycast.ts | 网格 DDA 射线（含对角缝隙规则）；无状态纯函数，视野与敌人 AI 共用同一套遮挡判定 | castRay(), castRayDirection(), hasLineOfSight(), createRayHit() | 已实现（T5） |
+| TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
+| TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线，依赖 Phaser 视锥裁剪） | create(scene, map, config): TilemapLayer, getLayer(), getWorldSize(), destroy() | 已实现（T6） |
 | AISystem | src/systems/ai/ | 敌人行为控制 | update(enemies, playerPos) | 规划中 |
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积与惩罚触发 | update(dt), getValue() | 规划中 |
 | CombatSystem | src/systems/combat-system.ts | 伤害计算与战斗逻辑 | attack(source, target) | 规划中 |
@@ -178,7 +181,10 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | HUD | src/ui/hud.ts | 游戏内状态显示 | update(state) | 规划中 |
 | DOM UI | src/ui/dom/ | 复杂交互界面 | show(), hide() | 规划中 |
 
-> 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`）、`src/scenes/`（4 个场景，当前为占位实现）已真实存在，但属于基础设施/类型/场景骨架，不在本"系统模块"注册表内单列。
+> 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`/`map-types.ts`）、`src/scenes/` 已真实存在，但属于基础设施/类型/场景，不在本"系统模块"注册表内单列。其中：
+> - `src/types/map-types.ts`（T6 新增）持有地图侧数据契约：`TileMapData` / `OccluderGrid` / `WalkGrid` / `EnemySpawnData` / `PatrolRouteData` / `KindlingNodeDef` / `ExtractionPointDef` / `RiftLayoutData`。
+> - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**数据**（ASCII tile 网格 + 布点），与渲染分离；导出 `RIFT_MAP`（含 `tileMap` / `grid` / `layout`）与开发期校验 `validateRiftMap()`。程序化地图生成（`src/generation/`）本 Slice 未动。
+> - `RiftScene` 已从占位实现转为真实场景（固定地图 + Player + VisibilitySystem），`BootScene` / `MainMenuScene` / `PurificationScene` 仍为骨架。
 
 ## 关键架构决策
 

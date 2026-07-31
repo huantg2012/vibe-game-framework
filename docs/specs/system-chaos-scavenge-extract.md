@@ -625,7 +625,7 @@ interface RunControllerAPI {
 
 4. **【需 code agent 在 T9 执行】`src/types/events.ts` 建议新增 `CHAOS_CHANGED.rate?: number`**，并为 `max` 字段加注释说明 `value` 可以超过它。这是本 spec 唯一的事件契约变更请求。
 
-5. **【需 code agent 在 T5/T9 注意】T1 规则 20 的视野缓存失效条件未包含调制器变更。** `setRadiusScale()` 改变了射程，必须同时置 `cacheValid = false`，否则玩家静止时视野不会跟随混乱值收缩，会出现"站着不动混乱值涨了但视野没变，一动就突然缩一大截"。本 spec 的 `MODULATOR_STEP` 节流正是为了让这次失效的代价可控。→ 属于 T1 的实现细节遗漏，建议由 code agent 在 T5 实现时直接补上，并回填 T1 spec 规则 20。
+5. ~~**【需 code agent 在 T5/T9 注意】T1 规则 20 的视野缓存失效条件未包含调制器变更。**~~ **【已关闭 2026-07-29 — code agent 在 T5 实现时已补上 `setRadiusScale()` 置 `cacheValid = false`，并已回填 T1 规则 20】** 原文保留供追溯： `setRadiusScale()` 改变了射程，必须同时置 `cacheValid = false`，否则玩家静止时视野不会跟随混乱值收缩，会出现"站着不动混乱值涨了但视野没变，一动就突然缩一大截"。本 spec 的 `MODULATOR_STEP` 节流正是为了让这次失效的代价可控。→ 属于 T1 的实现细节遗漏，建议由 code agent 在 T5 实现时直接补上，并回填 T1 spec 规则 20。
 
 6. **【已解决 2026-07-26 — art agent 已定稿：裂隙内薪柴实体 = teal 污染侧，HUD 计数 = warm-dim；art-direction §5.3/§12/§13.1 已统一】薪柴的色彩归属在 art-direction 内部原有三处不一致：**
    - §5.3：薪柴 = "不规则晶体/残渣，微弱 **teal** 余晖"

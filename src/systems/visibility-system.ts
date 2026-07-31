@@ -49,6 +49,9 @@ export interface VisionConfig {
   readonly voidNoiseEnabled: boolean;
   readonly playerLampEnabled: boolean;
   readonly playerLampAlpha: number;
+  /** Forward flashlight beam that brightens (not just reveals) the cone. */
+  readonly flashlightEnabled: boolean;
+  readonly flashlightAlpha: number;
   /** Depth of the darkness mask; the glow, corruption and flicker layers sit just above. */
   readonly depth: number;
 }
@@ -86,6 +89,8 @@ export function createRiftVisionConfig(depth = 50): VisionConfig {
     voidNoiseEnabled: true,
     playerLampEnabled: true,
     playerLampAlpha: v.PLAYER_LAMP_ALPHA,
+    flashlightEnabled: true,
+    flashlightAlpha: v.FLASHLIGHT_ALPHA,
     depth,
   };
 }
@@ -105,6 +110,7 @@ export function createPurificationVisionConfig(depth = 50): VisionConfig {
     rayCountAmbient: 0,
     voidNoiseEnabled: false,
     playerLampAlpha: v.PLAYER_LAMP_ALPHA * 0.5,
+    flashlightEnabled: false, // omni mode already lights the whole room
   };
 }
 
@@ -130,6 +136,7 @@ export class VisibilitySystem {
   private bandGraphics: Phaser.GameObjects.Graphics[] = [];
   private noiseSprite: Phaser.GameObjects.TileSprite | null = null;
   private lamp: Phaser.GameObjects.Image | null = null;
+  private flashlight: Phaser.GameObjects.Image | null = null;
   private glowGraphics!: Phaser.GameObjects.Graphics;
   private corruptionGraphics!: Phaser.GameObjects.Graphics;
   private flicker!: Phaser.GameObjects.Rectangle;
@@ -208,6 +215,18 @@ export class VisibilitySystem {
           .setDepth(config.depth - 1)
           .setBlendMode(Phaser.BlendModes.ADD)
           .setAlpha(config.playerLampAlpha);
+      }
+    }
+
+    if (config.flashlightEnabled && config.mode === 'cone') {
+      const beamKey = ensureFlashlightTexture(scene);
+      if (beamKey) {
+        // Below the mask like the lamp, so the cone-shaped visible region clips it into a beam.
+        this.flashlight = scene.add
+          .image(0, 0, beamKey)
+          .setDepth(config.depth - 1)
+          .setBlendMode(Phaser.BlendModes.ADD)
+          .setAlpha(config.flashlightAlpha);
       }
     }
 
@@ -383,6 +402,8 @@ export class VisibilitySystem {
     this.noiseSprite = null;
     this.lamp?.destroy();
     this.lamp = null;
+    this.flashlight?.destroy();
+    this.flashlight = null;
     this.glowGraphics?.destroy();
     this.corruptionGraphics?.destroy();
     this.flicker?.destroy();
@@ -392,6 +413,10 @@ export class VisibilitySystem {
 
   // ------------------------------------------------------------ internals
 
+  /**
+   * (Re)allocates the ray and polygon buffers. Called once at create and at most once
+   * more if performance degradation kicks in - never on a normal frame.
+   */
   private setRayCounts(forward: number, ambient: number): void {
     this.rayCountForward = forward;
     this.rayCountAmbient = ambient;
@@ -517,6 +542,7 @@ export class VisibilitySystem {
     this.buildPolygons(facingAngle);
     this.drawMask();
     this.drawLamp();
+    this.drawFlashlight(facingAngle);
     this.drawCorruption(facingAngle);
     this.drawGlowSources();
     this.drawFlicker();
@@ -591,9 +617,30 @@ export class VisibilitySystem {
    */
   private drawLamp(): void {
     if (!this.lamp) return;
-    const diameter = this.getEffectiveRadius(TAU / 2) * 2;
+    // Sized to the ambient range (directly behind the player), so the lamp reads as the
+    // 360-degree pool of warmth rather than following the cone.
+    const diameter = this.getEffectiveRadius(Math.PI) * 2;
     this.lamp.setPosition(this.origin.x, this.origin.y);
     this.lamp.setDisplaySize(diameter, diameter);
+  }
+
+  /**
+   * The flashlight beam: a warm additive pool pushed forward along the facing direction and
+   * sized to the forward range. It is drawn under the darkness mask, so the cone-shaped hole
+   * in the mask clips the round pool into a beam - the forward cone reads as *lit*, not just
+   * *revealed*. Follows the range modulation so a chaos-shrunk view dims its own light.
+   */
+  private drawFlashlight(facingAngle: number): void {
+    if (!this.flashlight) return;
+    const v = GAME_CONSTANTS.VISIBILITY;
+    const forward = this.getEffectiveRadius(0);
+    const push = forward * v.FLASHLIGHT_FORWARD_FRAC;
+    const diameter = forward * 2 * v.FLASHLIGHT_RADIUS_FRAC;
+    this.flashlight.setPosition(
+      this.origin.x + Math.cos(facingAngle) * push,
+      this.origin.y + Math.sin(facingAngle) * push
+    );
+    this.flashlight.setDisplaySize(diameter, diameter);
   }
 
   /** Teal eating into the outer part of the field of view, driven entirely by `edgeCorruption`. */
@@ -667,6 +714,7 @@ export class VisibilitySystem {
 
 const NOISE_TEXTURE_KEY = 'vision-void-noise';
 const LAMP_TEXTURE_KEY = 'vision-player-lamp';
+const FLASHLIGHT_TEXTURE_KEY = 'vision-flashlight';
 
 /**
  * A tileable noise patch. The void is not "nothing loaded yet" - it is space the player
@@ -714,6 +762,30 @@ function ensureLampTexture(scene: Phaser.Scene): string | null {
   context.fillRect(0, 0, size, size);
   canvas.refresh();
   return LAMP_TEXTURE_KEY;
+}
+
+/**
+ * Warm radial falloff for the flashlight pool. Brighter and tighter in the centre than the
+ * lamp so that, once clipped to the cone by the mask, it reads as a directed beam.
+ */
+function ensureFlashlightTexture(scene: Phaser.Scene): string | null {
+  if (scene.textures.exists(FLASHLIGHT_TEXTURE_KEY)) return FLASHLIGHT_TEXTURE_KEY;
+
+  const size = 256;
+  const half = size / 2;
+  const canvas = scene.textures.createCanvas(FLASHLIGHT_TEXTURE_KEY, size, size);
+  if (!canvas) return null;
+
+  const color = Phaser.Display.Color.IntegerToRGB(GAME_CONSTANTS.VISIBILITY.FLASHLIGHT_COLOR);
+  const context = canvas.getContext();
+  const gradient = context.createRadialGradient(half, half, 0, half, half, half);
+  gradient.addColorStop(0, `rgba(${color.r},${color.g},${color.b},1)`);
+  gradient.addColorStop(0.45, `rgba(${color.r},${color.g},${color.b},0.55)`);
+  gradient.addColorStop(1, `rgba(${color.r},${color.g},${color.b},0)`);
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, size, size);
+  canvas.refresh();
+  return FLASHLIGHT_TEXTURE_KEY;
 }
 
 /** Normalises an angle to [-PI, PI]. */

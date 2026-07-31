@@ -15,24 +15,28 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { Player } from '@/entities/player';
 import { RIFT_MAP, validateRiftMap } from '@/scenes/rift-map-data';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
+import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { TileType } from '@/types/game-types';
 
 /** Render depths. The gaps leave room for decals, entities and the HUD. */
 const DEPTH = {
-  tilemap: 0,
+  surface: 0,
   player: 30,
   visionMask: 50,
-  debug: 200,
 } as const;
+
+const RIFT_SURFACE_KEY = 'rift-surface';
 
 export class RiftScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private readonly visibility = new VisibilitySystem();
 
-  private debugText: Phaser.GameObjects.Text | null = null;
-  private debugAccumulatorMs = 0;
+  private debugPanel: HTMLDivElement | null = null;
+  private debugVisible = true;
+  /** Seeded past the refresh interval so the panel has content on the first frame. */
+  private debugAccumulatorMs = Number.POSITIVE_INFINITY;
 
   constructor() {
     super({ key: 'RiftScene' });
@@ -48,11 +52,17 @@ export class RiftScene extends Phaser.Scene {
       }
     }
 
+    // The tilemap layer stays for physics/collision but is made invisible: the visible
+    // surface is a continuous procedural texture (DEC-018), not the flat placeholder tiles.
     const layer = this.tilemapRenderer.create(this, tileMap, {
       tilesetKey: 'placeholder-rift-tileset',
       collidingIndices: [TileType.WALL],
-      depth: DEPTH.tilemap,
+      depth: DEPTH.surface,
     });
+    layer.setVisible(false);
+
+    createRiftSurfaceTexture(this, tileMap, RIFT_SURFACE_KEY);
+    this.add.image(0, 0, RIFT_SURFACE_KEY).setOrigin(0, 0).setDepth(DEPTH.surface);
 
     this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
 
@@ -85,7 +95,7 @@ export class RiftScene extends Phaser.Scene {
   private onPostUpdate(_time: number, delta: number): void {
     this.player.postUpdate();
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
-    if (this.debugText) this.updateDebugOverlay(delta);
+    if (this.debugPanel) this.updateDebugOverlay(delta);
   }
 
   private returnToMenu(): void {
@@ -99,8 +109,8 @@ export class RiftScene extends Phaser.Scene {
     this.visibility.destroy();
     this.player.destroy();
     this.tilemapRenderer.destroy();
-    this.debugText?.destroy();
-    this.debugText = null;
+    this.debugPanel?.remove();
+    this.debugPanel = null;
   }
 
   // ------------------------------------------------------------ dev overlay
@@ -108,23 +118,32 @@ export class RiftScene extends Phaser.Scene {
   /**
    * Reports the numbers this slice has to be verified against: framing in tiles, the
    * raycasting cost against its 2 ms budget, and whether the static cache is holding.
+   *
+   * A DOM overlay rather than a Phaser Text: scroll-factor-0 game objects are still
+   * transformed by the camera zoom, so anything meant to be screen-space needs either a
+   * second camera or the DOM. The DOM is the cheaper answer for a dev panel.
    * Dev builds only; F1 toggles it.
    */
   private createDebugOverlay(): void {
-    this.debugText = this.add
-      .text(6, 6, '', {
-        fontSize: '11px',
-        color: '#8ad8cc',
-        fontFamily: 'monospace',
-        backgroundColor: '#00000088',
-        padding: { x: 4, y: 3 },
-      })
-      .setScrollFactor(0)
-      .setScale(1 / GAME_CONSTANTS.CAMERA.ZOOM)
-      .setDepth(DEPTH.debug);
+    const panel = document.createElement('div');
+    panel.style.cssText = [
+      'position:absolute',
+      'top:8px',
+      'left:8px',
+      'z-index:10',
+      'padding:4px 6px',
+      'font:11px/1.45 monospace',
+      'color:#8ad8cc',
+      'background:rgba(0,0,0,0.55)',
+      'white-space:pre',
+      'pointer-events:none',
+    ].join(';');
+    (document.getElementById('game-container') ?? document.body).appendChild(panel);
+    this.debugPanel = panel;
 
     this.input.keyboard?.on('keydown-F1', () => {
-      this.debugText?.setVisible(!this.debugText.visible);
+      this.debugVisible = !this.debugVisible;
+      if (this.debugPanel) this.debugPanel.style.display = this.debugVisible ? 'block' : 'none';
     });
   }
 
@@ -139,19 +158,18 @@ export class RiftScene extends Phaser.Scene {
     const position = this.player.getPosition();
     const view = camera.worldView;
 
-    this.debugText?.setText(
-      [
-        `fps ${Math.round(this.game.loop.actualFps)}  zoom ${camera.zoom}`,
-        `viewport ${Math.round(view.width)}x${Math.round(view.height)}px = ` +
-          `${(view.width / tile).toFixed(1)}x${(view.height / tile).toFixed(1)} tiles`,
-        `rays ${stats.rayCount}  last ${stats.lastMs.toFixed(2)}ms  ` +
-          `avg ${stats.avgMs.toFixed(2)}ms  budget ${GAME_CONSTANTS.VISIBILITY.BUDGET_MS}ms`,
-        `degrade ${stats.degradeLevel}  ${stats.cached ? 'cached' : 'recast'}`,
-        `pos ${Math.round(position.x)},${Math.round(position.y)}  ` +
-          `tile ${Math.floor(position.x / tile)},${Math.floor(position.y / tile)}  ` +
-          `facing ${this.player.getFacing4()}`,
-        'F1 overlay   ESC menu',
-      ].join('\n')
-    );
+    if (!this.debugPanel) return;
+    this.debugPanel.textContent = [
+      `fps ${Math.round(this.game.loop.actualFps)}  zoom ${camera.zoom}`,
+      `viewport ${Math.round(view.width)}x${Math.round(view.height)}px = ` +
+        `${(view.width / tile).toFixed(1)}x${(view.height / tile).toFixed(1)} tiles`,
+      `rays ${stats.rayCount}  last ${stats.lastMs.toFixed(2)}ms  ` +
+        `avg ${stats.avgMs.toFixed(2)}ms  budget ${GAME_CONSTANTS.VISIBILITY.BUDGET_MS}ms`,
+      `degrade ${stats.degradeLevel}  ${stats.cached ? 'cached' : 'recast'}`,
+      `pos ${Math.round(position.x)},${Math.round(position.y)}  ` +
+        `tile ${Math.floor(position.x / tile)},${Math.floor(position.y / tile)}  ` +
+        `facing ${this.player.getFacing4()}`,
+      'F1 overlay   ESC menu',
+    ].join('\n');
   }
 }
