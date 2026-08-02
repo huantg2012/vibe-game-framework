@@ -1,28 +1,37 @@
 /**
  * Rift Scene - core gameplay.
  *
- * At this point in Slice 1 it owns the fixed map, the player and the limited field of
- * view. Enemies (T7), combat (T8) and chaos/loot/extraction (T9) plug in on top; the
- * layout data they need is already published by `RIFT_MAP.layout`.
+ * At this point in Slice 1 it owns the fixed map, the player, the limited field of view,
+ * the enemies (T7) and combat (T8). Chaos/loot/extraction (T9) plugs in on top; the layout
+ * data it needs is already published by `RIFT_MAP.layout`.
  *
  * The scene is the orchestration layer: it owns the system instances and does the wiring
  * between them, which is what keeps the systems from calling each other directly
- * (architecture DEC-ARCH-002).
+ * (architecture DEC-ARCH-002). Combat and the AI are the clearest case - neither imports
+ * the other, and every effect one has on the other passes through the translations below.
  */
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
 import { RIFT_MAP, validateRiftMap } from '@/scenes/rift-map-data';
+import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
+import { CombatSystem, COMBAT_FX_DEPTH, type NoiseLevel } from '@/systems/combat-system';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
 import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
-import { TileType } from '@/types/game-types';
+import { TileType, type Vector2 } from '@/types/game-types';
+import { GameEvent } from '@/types/events';
 
 /** Render depths. The gaps leave room for decals, entities and the HUD. */
 const DEPTH = {
   surface: 0,
+  /** Owned by the AI system, which creates the enemy sprites. */
+  enemy: ENEMY_DEPTH,
   player: 30,
+  /** Owned by the combat system: telegraphs and flashes, under the darkness mask. */
+  combatFx: COMBAT_FX_DEPTH,
   visionMask: 50,
 } as const;
 
@@ -32,6 +41,10 @@ export class RiftScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private readonly visibility = new VisibilitySystem();
+  private readonly ai = new AISystem();
+  private readonly combat = new CombatSystem();
+
+  private attackKey: Phaser.Input.Keyboard.Key | null = null;
 
   private debugPanel: HTMLDivElement | null = null;
   private debugVisible = true;
@@ -78,11 +91,25 @@ export class RiftScene extends Phaser.Scene {
 
     this.visibility.create(this, createRiftVisionConfig(DEPTH.visionMask), grid);
 
+    // The AI reads the same grid twice through two different contracts: as an occluder
+    // grid for line of sight, as a walk grid for pathfinding. Slice 1 derives both from
+    // one tile array, but low walls or chasms would break that equivalence later.
+    this.ai.create(this, layout.enemySpawns, grid, grid);
+    this.ai.setVisibilityProvider(this.visibilityAt);
+    this.ai.addWallCollider(layer);
+
+    // Combat gets a read-only view of the AI (`getEnemies` / `getEnemyById`) plus one
+    // callback. Noise is the only cross-system output that does not go through the bus: a
+    // whiffed swing is audible yet emits nothing, so there is no event to carry it.
+    this.combat.create(this, grid, this.player, this.ai, { onNoise: this.reportNoise });
+    this.bindAttackKey();
+
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
 
+    this.bindAIStimuli();
     this.input.keyboard?.on('keydown-ESC', this.returnToMenu, this);
 
     if (import.meta.env.DEV) this.createDebugOverlay();
@@ -90,13 +117,79 @@ export class RiftScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     this.player.update(delta);
+    this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
+
+    // Edge-triggered: holding the key does not chain swings.
+    if (this.attackKey && Phaser.Input.Keyboard.JustDown(this.attackKey)) {
+      this.combat.requestPlayerAttack();
+    }
+    // After the AI, always. Whether an enemy may swing is read from this frame's engaged
+    // state; one frame of lag on that at 30 px reads as "it is right there and doing
+    // nothing".
+    this.combat.update(delta);
   }
 
   private onPostUpdate(_time: number, delta: number): void {
     this.player.postUpdate();
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
+    // Enemies are drawn last of the three: their visibility is looked up against the mask
+    // this frame produced, so an enemy is never drawn into darkness (rule R4).
+    this.ai.postUpdate(delta);
     if (this.debugPanel) this.updateDebugOverlay(delta);
   }
+
+  /**
+   * Forwards the events the AI reacts to. This indirection is the point: combat and the
+   * AI never call each other, the scene translates between them (architecture
+   * DEC-ARCH-002). Combat emits these; the AI only ever receives them.
+   */
+  private bindAIStimuli(): void {
+    eventBus.on(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
+    eventBus.on(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
+    eventBus.on(GameEvent.PLAYER_DIED, this.onRunEnded);
+    eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
+    eventBus.on(GameEvent.RIFT_EXITED, this.onRunEnded);
+  }
+
+  private bindAttackKey(): void {
+    const keyboard = this.input.keyboard;
+    if (!keyboard) return;
+    // Captured so the browser does not scroll the page on space.
+    const code = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.COMBAT.ATTACK_KEY];
+    this.attackKey = keyboard.addKey(code, true, false);
+  }
+
+  private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {
+    this.ai.reportDamage(enemyId, this.player.getPosition());
+  };
+
+  private readonly onEnemyKilled = ({ enemyId }: { enemyId: string }): void => {
+    this.ai.despawn(enemyId);
+  };
+
+  /**
+   * Death and extraction both end the run: everyone stands down and combat stops
+   * accepting input or dealing damage. Combat disables itself on death as well; the two
+   * are deliberately redundant, because a run that ends any other way still has to clear
+   * the enemies mid-windup and the player's swing slow.
+   */
+  private readonly onRunEnded = (): void => {
+    this.ai.onPlayerLost();
+    this.combat.setEnabled(false);
+  };
+
+  /** The single line that turns combat's noise policy into an AI stimulus. */
+  private readonly reportNoise = (
+    pos: Readonly<Vector2>,
+    radius: number,
+    level: NoiseLevel
+  ): void => {
+    this.ai.reportNoise(pos, radius, level);
+  };
+
+  /** Bound once so injecting it into the AI system allocates nothing per frame. */
+  private readonly visibilityAt = (point: Readonly<Vector2>): number =>
+    this.visibility.getVisibilityAt(point);
 
   private returnToMenu(): void {
     this.scene.start('MainMenuScene');
@@ -106,6 +199,18 @@ export class RiftScene extends Phaser.Scene {
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.input.keyboard?.off('keydown-ESC', this.returnToMenu, this);
     this.input.keyboard?.off('keydown-F1');
+    eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
+    eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
+    eventBus.off(GameEvent.PLAYER_DIED, this.onRunEnded);
+    eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
+    eventBus.off(GameEvent.RIFT_EXITED, this.onRunEnded);
+    if (this.attackKey) {
+      this.input.keyboard?.removeKey(this.attackKey, true);
+      this.attackKey = null;
+    }
+    // Before the player is destroyed: this is what releases the swing speed modifier.
+    this.combat.destroy();
+    this.ai.destroy();
     this.visibility.destroy();
     this.player.destroy();
     this.tilemapRenderer.destroy();
@@ -155,11 +260,13 @@ export class RiftScene extends Phaser.Scene {
     const camera = this.cameras.main;
     const tile = GAME_CONSTANTS.TILE_SIZE;
     const stats = this.visibility.getStats();
+    const ai = this.ai.getStats();
+    const combat = this.combat.getStats();
     const position = this.player.getPosition();
     const view = camera.worldView;
 
     if (!this.debugPanel) return;
-    this.debugPanel.textContent = [
+    const lines = [
       `fps ${Math.round(this.game.loop.actualFps)}  zoom ${camera.zoom}`,
       `viewport ${Math.round(view.width)}x${Math.round(view.height)}px = ` +
         `${(view.width / tile).toFixed(1)}x${(view.height / tile).toFixed(1)} tiles`,
@@ -169,7 +276,32 @@ export class RiftScene extends Phaser.Scene {
       `pos ${Math.round(position.x)},${Math.round(position.y)}  ` +
         `tile ${Math.floor(position.x / tile)},${Math.floor(position.y / tile)}  ` +
         `facing ${this.player.getFacing4()}`,
-      'F1 overlay   ESC menu',
-    ].join('\n');
+      `ai ${ai.lastMs.toFixed(2)}ms avg ${ai.avgMs.toFixed(2)}ms  ` +
+        `rays/frame ${ai.raysThisFrame}  paths/frame ${ai.pathsThisFrame}  ` +
+        `unstick ${ai.unstickEvents}`,
+      `A* calls ${ai.pathCalls} fail ${ai.pathFailures}  last ${ai.lastPathMs.toFixed(2)}ms ` +
+        `(${ai.lastPathNodes}n) avg ${ai.avgPathMs.toFixed(2)}ms  queued ${ai.pendingPathRequests}`,
+      `cue ${ai.lastCue}`,
+      `hp ${combat.health}/${combat.maxHealth}  atk ${combat.phase.padEnd(8)} ` +
+        `cd ${Math.round(combat.cooldownRemainingMs)}  iframe ${Math.round(combat.invulnRemainingMs)}` +
+        `  tokens ${combat.attackTokensInUse}${combat.isDead ? '  DEAD' : ''}`,
+      `combat cue ${combat.lastCue}  noise ${combat.lastNoise}`,
+    ];
+
+    // Per-enemy line: the fastest way to check a downgrade chain actually walks itself
+    // back down (chase -> alert -> suspicious -> return -> patrol).
+    for (const enemy of this.ai.getEnemies()) {
+      const enemyPos = enemy.getPosition();
+      lines.push(
+        `  ${enemy.getId()} ${enemy.getState().padEnd(10)} ` +
+          `hp ${this.combat.getEnemyHealth(enemy.getId()) ?? '-'} ` +
+          `det ${enemy.getDetection().toFixed(2)} ` +
+          `d ${Math.round(Math.hypot(enemyPos.x - position.x, enemyPos.y - position.y))}` +
+          (enemy.isEngaged() ? ' engaged' : '')
+      );
+    }
+
+    lines.push('F1 overlay   ESC menu');
+    this.debugPanel.textContent = lines.join('\n');
   }
 }

@@ -49,8 +49,16 @@ export enum GameEvent {
 export interface EventPayloads {
   [GameEvent.CHAOS_CHANGED]: { value: number; delta: number; max: number };
   [GameEvent.CHAOS_THRESHOLD_REACHED]: { level: number };
+  /** `source` is the enemyId that dealt the damage (e.g. 'ENM_INF_01'), not a category. */
   [GameEvent.PLAYER_DAMAGED]: { amount: number; source: string };
-  [GameEvent.ENEMY_DAMAGED]: { enemyId: string; amount: number };
+  /**
+   * `source` distinguishes a player hit from any future damage source. The chaos system
+   * treats this event as "the player landed a hit" and bills for it, so environmental or
+   * enemy-on-enemy damage arriving later must be filterable - otherwise chaos would be
+   * charged silently and the cause would be near impossible to find from the symptom.
+   * Slice 1 has one source and always fills `'player'`.
+   */
+  [GameEvent.ENEMY_DAMAGED]: { enemyId: string; amount: number; source?: 'player' };
   [GameEvent.ENEMY_KILLED]: { enemyId: string; position: { x: number; y: number } };
   [GameEvent.ENEMY_ALERT]: { enemyId: string; alertLevel: 'suspicious' | 'alert' | 'chase' };
   [GameEvent.ENEMY_LOST_PLAYER]: { enemyId: string };
@@ -64,6 +72,7 @@ export interface EventPayloads {
   [GameEvent.IMPACT_RESOLVED]: { moduleDamage: Record<string, number> };
   [GameEvent.MODULE_DAMAGED]: { moduleId: string; newHealth: number };
   [GameEvent.ALLOCATION_CONFIRMED]: { allocations: Record<string, number> };
+  /** Slice 1 has exactly one cause: 'enemy_attack'. Emitted at most once per run. */
   [GameEvent.PLAYER_DIED]: { cause: string };
   [GameEvent.PLAYER_HEALTH_CHANGED]: { current: number; max: number };
   [GameEvent.GAME_SAVED]: { timestamp: number };

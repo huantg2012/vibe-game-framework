@@ -157,7 +157,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 
 ## 模块注册表
 
-> **状态**列以真实 `src/` 目录为准（核对日期 2026-07-29，Slice 1 T6/T5 完成后）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`、`src/entities/`、`src/utils/`；`managers/`、`generation/`、`ui/` 尚不存在。
+> **状态**列以真实 `src/` 目录为准（核对日期 2026-08-01，Slice 1 T8 完成后）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`、`src/entities/`、`src/utils/`；`managers/`、`generation/`、`ui/` 尚不存在。
 
 | 模块 | 路径 | 职责 | 对外接口 | 状态 |
 | ---- | ---- | ---- | -------- | ---- |
@@ -168,13 +168,14 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/音量控制 | play(), stop(), setVolume() | 规划中 |
 | Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用） | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5） |
 | VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 三级遮罩渲染 + 混乱值调制（Rift+Purification 共用） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5） |
-| GridRaycast | src/utils/grid-raycast.ts | 网格 DDA 射线（含对角缝隙规则）；无状态纯函数，视野与敌人 AI 共用同一套遮挡判定 | castRay(), castRayDirection(), hasLineOfSight(), createRayHit() | 已实现（T5） |
+| GridRaycast | src/utils/grid-raycast.ts | 网格 DDA 射线（含对角缝隙规则）；无状态纯函数，视野与敌人 AI 共用同一套遮挡判定。`hasClearPath()` 是同一射线的双侧偏移版，回答"这么宽的身体过不过得去"（DEC-021），**不是视线判定，禁止用于感知** | castRay(), castRayDirection(), hasLineOfSight(), hasClearPath(), createRayHit() | 已实现（T5，T7 增 hasClearPath） |
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
 | TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线，依赖 Phaser 视锥裁剪） | create(scene, map, config): TilemapLayer, getLayer(), getWorldSize(), destroy() | 已实现（T6） |
-| AISystem | src/systems/ai/ | 敌人行为控制 | update(enemies, playerPos) | 规划中 |
+| AISystem | src/systems/ai/ | 渗透体的感知（10Hz tick / 单射线）+ 五态 FSM + 移动/巡逻 + 寻路预算调度；拥有敌人实体的生命周期 | create(scene, spawns, occluders, walk), update(dt, playerPos, playerIsMoving), postUpdate(dt), getEnemies(), getEnemyById(), reportNoise(pos, radius, level), reportDamage(enemyId, sourcePos), despawn(enemyId), onPlayerLost(), setVisibilityProvider(), setCueListener(), addWallCollider(layer), getSprites(), getStats(), destroy() | 已实现（T7） |
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积与惩罚触发 | update(dt), getValue() | 规划中 |
-| CombatSystem | src/systems/combat-system.ts | 伤害计算与战斗逻辑 | attack(source, target) | 规划中 |
-| Pathfinding | src/systems/pathfinding.ts | 网格 A* 寻路 | findPath(from, to) | 规划中 |
+| CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
+| Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
+| EnemyFactory | src/entities/enemy-factory.ts | 渗透体实体：碰撞体 + 占位表现（朝向可读的五边形本体、teal 状态指示物、追击残影环）+ 承载 AI 可变状态块 | createInfiltrator(scene, spawn, config, position, factoryConfig), createInfiltratorConfig(); `Enemy`：getId/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection, getSprite(), syncPositionFromBody(), setVelocity(), measureDisplacement(), syncVisuals(dt, visibility), destroy() | 已实现（T7） |
 | BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外黑暗氛围渲染 | update(dt), setIntensity(n) | 规划中 |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中 |
 | MapGenerator | src/generation/ | Voronoi+CA 程序化地图生成 | generate(config): MapData | 规划中 |
@@ -183,8 +184,10 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 
 > 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`/`map-types.ts`）、`src/scenes/` 已真实存在，但属于基础设施/类型/场景，不在本"系统模块"注册表内单列。其中：
 > - `src/types/map-types.ts`（T6 新增）持有地图侧数据契约：`TileMapData` / `OccluderGrid` / `WalkGrid` / `EnemySpawnData` / `PatrolRouteData` / `KindlingNodeDef` / `ExtractionPointDef` / `RiftLayoutData`。
+> - `src/types/ai-types.ts`（T7 新增）持有敌人 AI 契约：`EnemyView`（对外只读视图，T3/T4/渲染层消费）/ `EnemyAIState`（可变运行时状态，仅 AI 系统写）/ `InfiltratorConfig` / `Perception` / `AlertLevel` / `SightZone` / `AICueId`。放在 `types/` 而非 `systems/ai/` 是为了打断循环依赖：实体实现 `EnemyView`，AI 系统持有可变状态。
+> - `src/config/invariants.ts`（T7 新增）把设计所依赖的常量关系写成可执行断言，dev 构建在 `main.ts` 启动时校验（DEC-020）。Slice 1 覆盖敌人 AI 的 I1–I6 + 一条跨 spec 补充检查。T8/T9 的 spec 不变量应追加进同一文件。
 > - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**数据**（ASCII tile 网格 + 布点），与渲染分离；导出 `RIFT_MAP`（含 `tileMap` / `grid` / `layout`）与开发期校验 `validateRiftMap()`。程序化地图生成（`src/generation/`）本 Slice 未动。
-> - `RiftScene` 已从占位实现转为真实场景（固定地图 + Player + VisibilitySystem），`BootScene` / `MainMenuScene` / `PurificationScene` 仍为骨架。
+> - `RiftScene` 已从占位实现转为真实场景（固定地图 + Player + VisibilitySystem + AISystem），`BootScene` / `MainMenuScene` / `PurificationScene` 仍为骨架。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），AI 与 Combat 互不 import（DEC-002）。
 
 ## 关键架构决策
 
@@ -320,7 +323,7 @@ MainMenuScene (标题/开始/继续)
 │   Player    │←──player:damaged──────│  Combat  │
 └──────┬──────┘                       └────┬─────┘
        │ position                          │
-       ↓                                   │ enemy:hit
+       ↓                                   │ enemy:damaged / enemy:killed
 ┌─────────────┐     enemy:alert      ┌────┴─────┐
 │ Visibility  │──────────────────────→│    AI    │
 └─────────────┘                       └────┬─────┘
@@ -330,6 +333,8 @@ MainMenuScene (标题/开始/继续)
                                     │ Pathfinding  │
                                     └──────────────┘
 ```
+
+> 图中箭头是**数据流向**，不是调用关系。Combat → AI 的两条事件由 `RiftScene` 转译为 `reportDamage()` / `despawn()`；战斗的噪声（挥空也会发出，因此没有对应事件）走 `create()` 注入的 `CombatHooks.onNoise` 回调，同样由场景层转调 `AISystem.reportNoise()`。两个系统互不 import。
 
 ## 净化点场景技术方案 (PurificationScene)
 

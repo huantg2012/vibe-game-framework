@@ -5,6 +5,11 @@
 
 import Phaser from 'phaser';
 import { gameConfig } from '@/config/game-config';
+import { assertBalanceInvariants } from '@/config/invariants';
+
+// Before anything boots: a tuning pass that broke a balance invariant would make every
+// playtest afterwards answer the wrong question.
+if (import.meta.env.DEV) assertBalanceInvariants();
 
 // Create game instance
 const game = new Phaser.Game(gameConfig);

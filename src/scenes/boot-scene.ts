@@ -77,12 +77,7 @@ export class BootScene extends Phaser.Scene {
     facingGfx.generateTexture('placeholder-player-facing', 10, 12);
     facingGfx.destroy();
 
-    // Enemy placeholder (dark red, lowest threat tier)
-    const enemyGfx = this.make.graphics({ x: 0, y: 0 });
-    enemyGfx.fillStyle(0xcc4444, 1);
-    enemyGfx.fillRect(0, 0, 24, 24);
-    enemyGfx.generateTexture('placeholder-enemy', 24, 24);
-    enemyGfx.destroy();
+    this.generateEnemyPlaceholders();
 
     // Kindling placeholder (teal diamond: kindling is contamination-side, not warm)
     const kindlingGfx = this.make.graphics({ x: 0, y: 0 });
@@ -93,6 +88,48 @@ export class BootScene extends Phaser.Scene {
     kindlingGfx.destroy();
 
     this.generateRiftTileset(tile);
+  }
+
+  /**
+   * Infiltrator placeholders. Dark red is the low threat *tier* (art-direction 12) and
+   * never changes with state; the pentagon is not decoration either - the enemy's facing
+   * has to be readable at 24 px, because "which way is it looking" is the question the
+   * whole stealth decision hangs on (system-enemy-ai rule R2).
+   *
+   * State rides on separate teal marks: one breathing dot for suspicion, two blinking
+   * dots for a search, one steady triangle for a lock-on. Blinking versus steady is
+   * quicker to read than any brightness gradient, and it does not ask the player to
+   * remember a colour scale.
+   */
+  private generateEnemyPlaceholders(): void {
+    const ai = GAME_CONSTANTS.AI;
+
+    const bodyGfx = this.make.graphics({ x: 0, y: 0 });
+    bodyGfx.fillStyle(ai.BODY_COLOR, 1);
+    bodyGfx.fillPoints(
+      [
+        { x: 24, y: 12 }, // nose, pointing along +x (rotated to the facing angle)
+        { x: 11, y: 21 },
+        { x: 3, y: 16 },
+        { x: 3, y: 8 },
+        { x: 11, y: 3 },
+      ],
+      true
+    );
+    bodyGfx.generateTexture('placeholder-enemy', 24, 24);
+    bodyGfx.destroy();
+
+    const dotGfx = this.make.graphics({ x: 0, y: 0 });
+    dotGfx.fillStyle(ai.INDICATOR_COLOR, 1);
+    dotGfx.fillRect(0, 0, 4, 4);
+    dotGfx.generateTexture('placeholder-enemy-dot', 4, 4);
+    dotGfx.destroy();
+
+    const lockGfx = this.make.graphics({ x: 0, y: 0 });
+    lockGfx.fillStyle(ai.INDICATOR_COLOR, 1);
+    lockGfx.fillTriangle(0, 0, 8, 0, 4, 6);
+    lockGfx.generateTexture('placeholder-enemy-lock', 8, 6);
+    lockGfx.destroy();
   }
 
   /**

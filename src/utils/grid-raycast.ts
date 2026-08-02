@@ -171,6 +171,52 @@ export function hasLineOfSight(
   return !losScratch.hit || losScratch.dist >= length - 0.001;
 }
 
+/**
+ * True when a `width`-wide corridor between the two points is clear of anything opaque.
+ *
+ * This is **not** a sight test and must never be used for perception: it answers "does a
+ * body this wide fit through", which is a different question and would break the
+ * symmetry that `hasLineOfSight` guarantees between the player and the enemies. It exists
+ * because a clear sight line does not imply a passable one - a ray threads the corner
+ * between two diagonally offset walls that a 20 px collider wedges against
+ * (system-enemy-ai rules N4/N7).
+ *
+ * Implemented as the same ray test offset to either flank, rather than as new geometry,
+ * so there is still exactly one piece of code that decides what a tile blocks.
+ */
+export function hasClearPath(
+  grid: OccluderGrid,
+  from: Vector2,
+  to: Vector2,
+  width: number,
+  maxDist?: number
+): boolean {
+  if (!hasLineOfSight(grid, from, to, maxDist)) return false;
+  if (width <= 0) return true;
+
+  const deltaX = to.x - from.x;
+  const deltaY = to.y - from.y;
+  const length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  if (length < 1e-6) return true;
+
+  const half = width / 2;
+  const offsetX = (-deltaY / length) * half;
+  const offsetY = (deltaX / length) * half;
+
+  for (const side of [1, -1]) {
+    flankFrom.x = from.x + offsetX * side;
+    flankFrom.y = from.y + offsetY * side;
+    flankTo.x = to.x + offsetX * side;
+    flankTo.y = to.y + offsetY * side;
+    if (!hasLineOfSight(grid, flankFrom, flankTo)) return false;
+  }
+
+  return true;
+}
+
+const flankFrom: Vector2 = { x: 0, y: 0 };
+const flankTo: Vector2 = { x: 0, y: 0 };
+
 function writeHit(
   out: RayHit,
   originX: number,

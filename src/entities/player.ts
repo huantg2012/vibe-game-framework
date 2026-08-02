@@ -15,19 +15,7 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { Facing4, Vector2 } from '@/types/game-types';
-import { degToRad } from '@/utils/math';
-
-const TAU = Math.PI * 2;
-
-/** Canonical angle of each four-way facing, in screen space (y grows downward). */
-const FACING_ANGLES: Readonly<Record<Facing4, number>> = {
-  right: 0,
-  down: Math.PI / 2,
-  left: Math.PI,
-  up: -Math.PI / 2,
-};
-
-const FACING_ORDER: readonly Facing4[] = ['right', 'down', 'left', 'up'];
+import { degToRad, FACING4_ANGLES, quantizeFacing4, stepAngleToward } from '@/utils/math';
 
 export interface PlayerConfig {
   /** World position (px) to spawn at. */
@@ -70,7 +58,7 @@ export class Player {
     this.scene = scene;
     this.baseSpeed = config.baseSpeed ?? GAME_CONSTANTS.PLAYER.SPEED;
     this.facing4 = config.facing ?? 'right';
-    this.facingAngle = FACING_ANGLES[this.facing4];
+    this.facingAngle = FACING4_ANGLES[this.facing4];
 
     const depth = config.depth ?? 30;
     this.image = scene.physics.add.image(
@@ -238,42 +226,17 @@ export class Player {
 
   /** Rotates toward `target` along the shortest arc at `FACING_TURN_RATE`. */
   private stepFacing(target: number, dt: number): void {
-    let diff = target - this.facingAngle;
-    while (diff > Math.PI) diff -= TAU;
-    while (diff < -Math.PI) diff += TAU;
-
     const maxStep = degToRad(GAME_CONSTANTS.PLAYER.FACING_TURN_RATE) * dt;
-    if (Math.abs(diff) <= maxStep) {
-      this.facingAngle = target;
-    } else {
-      this.facingAngle += Math.sign(diff) * maxStep;
-    }
-
-    while (this.facingAngle > Math.PI) this.facingAngle -= TAU;
-    while (this.facingAngle < -Math.PI) this.facingAngle += TAU;
+    this.facingAngle = stepAngleToward(this.facingAngle, target, maxStep);
   }
 
   /** Quantises to four directions with hysteresis, so 45 degree inputs do not flip frames. */
   private updateFacing4(): void {
-    const threshold = degToRad(45 + GAME_CONSTANTS.PLAYER.FACING_QUANT_HYSTERESIS);
-    let diff = this.facingAngle - FACING_ANGLES[this.facing4];
-    while (diff > Math.PI) diff -= TAU;
-    while (diff < -Math.PI) diff += TAU;
-    if (Math.abs(diff) <= threshold) return;
-
-    let best = this.facing4;
-    let bestDiff = Infinity;
-    for (const candidate of FACING_ORDER) {
-      let candidateDiff = this.facingAngle - FACING_ANGLES[candidate];
-      while (candidateDiff > Math.PI) candidateDiff -= TAU;
-      while (candidateDiff < -Math.PI) candidateDiff += TAU;
-      candidateDiff = Math.abs(candidateDiff);
-      if (candidateDiff < bestDiff) {
-        bestDiff = candidateDiff;
-        best = candidate;
-      }
-    }
-    this.facing4 = best;
+    this.facing4 = quantizeFacing4(
+      this.facingAngle,
+      this.facing4,
+      degToRad(GAME_CONSTANTS.PLAYER.FACING_QUANT_HYSTERESIS)
+    );
   }
 
   /** Linear approach to the target velocity: a little weight, no perceptible sliding. */

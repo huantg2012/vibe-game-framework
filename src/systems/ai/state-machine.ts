@@ -1,0 +1,400 @@
+/**
+ * The infiltrator's five-state FSM (docs/specs/system-enemy-ai.md, section T).
+ *
+ * Transitions are evaluated top-down in one fixed priority order and stop at the first
+ * match, so the state after any tick is deterministic - there is no ordering ambiguity to
+ * debug later. The goal is not a clever enemy but a *legible* one: the player has to be
+ * able to reconstruct which of their own actions got them noticed, which means every
+ * escalation has to come from one nameable cause.
+ *
+ * Detection accumulation lives here too, because "how long until it is sure" is the same
+ * question as "when does the state change".
+ */
+
+import { GAME_CONSTANTS } from '@/config/constants';
+import { AIState, type Vector2 } from '@/types/game-types';
+import type { AlertLevel, Perception } from '@/types/ai-types';
+import type { Enemy } from '@/entities/enemy-factory';
+import type { AIContext } from '@/systems/ai/context';
+import { clearPath, nearestWaypointIndex } from '@/systems/ai/behaviors';
+import { clamp, degToRad, lerp } from '@/utils/math';
+
+/** How escalated a state reads to the outside world (contract E1). */
+export function alertLevelOf(state: AIState): AlertLevel {
+  switch (state) {
+    case AIState.SUSPICIOUS:
+      return 'suspicious';
+    case AIState.ALERT:
+      return 'alert';
+    case AIState.CHASE:
+      return 'chase';
+    default:
+      return 'none';
+  }
+}
+
+const ALERT_RANK: Readonly<Record<AlertLevel, number>> = {
+  none: 0,
+  suspicious: 1,
+  alert: 2,
+  chase: 3,
+};
+
+export function alertRank(level: AlertLevel): number {
+  return ALERT_RANK[level];
+}
+
+/**
+ * Runs one perception tick's worth of state machine. `tickDtMs` is the real time since
+ * this enemy's previous tick - timers and detection use real elapsed time, so the 10 Hz
+ * perception cadence never changes how fast anything fills or expires (rule P1).
+ */
+export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AIContext): void {
+  const ai = enemy.ai;
+  const config = GAME_CONSTANTS.AI;
+
+  updateDetection(enemy, p, tickDtMs);
+
+  // --- priority 1: it was hit. Being attacked needs no confidence. ---
+  if (ai.pendingDamage) {
+    ai.pendingDamage = false;
+    ai.detection = 1;
+    setLastSeen(enemy, ai.pendingDamagePos.x, ai.pendingDamagePos.y, ctx.playerVel);
+    ai.losGraceMs = 0;
+    if (ai.state !== AIState.CHASE) transitionTo(enemy, AIState.CHASE, ctx);
+    return;
+  }
+
+  // --- priority 2: certain and looking right at them ---
+  if (ai.detection >= 1 && p.visible) {
+    setLastSeen(enemy, ctx.playerPos.x, ctx.playerPos.y, ctx.playerVel);
+    ai.losGraceMs = 0;
+    if (ai.state !== AIState.CHASE) transitionTo(enemy, AIState.CHASE, ctx);
+    return;
+  }
+
+  // --- priority 3: already searching, so the bar to re-lock is lower ---
+  if (ai.state === AIState.ALERT && ai.detection >= config.REACQUIRE_THRESHOLD && p.visible) {
+    setLastSeen(enemy, ctx.playerPos.x, ctx.playerPos.y, ctx.playerVel);
+    transitionTo(enemy, AIState.CHASE, ctx);
+    return;
+  }
+
+  // --- priority 4: an "alert" grade noise (combat) ---
+  if (ai.pendingNoiseLevel === 'alert') {
+    ai.pendingNoiseLevel = null;
+    // A noise says "something happened over there", not "the player is moving that way":
+    // no velocity to extrapolate from.
+    setLastSeen(enemy, ai.pendingNoisePos.x, ai.pendingNoisePos.y, null);
+    if (ai.state === AIState.CHASE) {
+      ai.losGraceMs = 0;
+    } else if (ai.state === AIState.ALERT) {
+      ai.searchTimerMs = 0;
+      ai.searchHoldMs = 0;
+      buildSearchPoints(enemy, ctx, ai.pendingNoisePos.x, ai.pendingNoisePos.y);
+      clearPath(enemy);
+    } else {
+      transitionTo(enemy, AIState.ALERT, ctx);
+    }
+    return;
+  }
+
+  // --- priority 5: something is off. Vision below certainty, hearing, or a noise report ---
+  const seenEnough = ai.detection >= config.SUSPICION_THRESHOLD && p.visible;
+  const noiseStimulus = ai.pendingNoiseLevel === 'suspicious';
+  if (seenEnough || p.hearingHit || noiseStimulus) {
+    ai.pendingNoiseLevel = null;
+    const entering = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
+
+    // Where to look. Sight gives an exact position; hearing must not - a through-wall
+    // exact locator reads as cheating, so it is fuzzed and sampled only once per episode
+    // (rule P7). A reported noise always refreshes the point (rule P8).
+    if (noiseStimulus) {
+      setInvestigatePos(enemy, ai.pendingNoisePos.x, ai.pendingNoisePos.y, enemy.config.hearing.posJitter);
+    } else if (seenEnough) {
+      setInvestigatePos(enemy, ctx.playerPos.x, ctx.playerPos.y, 0);
+    } else if (entering) {
+      setInvestigatePos(enemy, ctx.playerPos.x, ctx.playerPos.y, enemy.config.hearing.posJitter);
+    }
+
+    if (entering) {
+      transitionTo(enemy, AIState.SUSPICIOUS, ctx);
+    } else {
+      // Already wary: same state, timer back to zero (rule 5). Escalating from suspicion
+      // to a full search on its own would let it frighten itself into a loop (rule T-C3).
+      switch (ai.state) {
+        case AIState.SUSPICIOUS:
+          ai.suspicionTimerMs = 0;
+          break;
+        case AIState.ALERT:
+          ai.searchTimerMs = 0;
+          break;
+        case AIState.CHASE:
+          ai.losGraceMs = 0;
+          break;
+        default:
+          break;
+      }
+    }
+    return;
+  }
+
+  applyDowngrades(enemy, p, tickDtMs, ctx);
+}
+
+/**
+ * Timer and distance driven de-escalation (priority 6). The full ladder takes about
+ * 8.4 s plus the walk home, which is what makes being spotted an actual cost rather than
+ * an inconvenience - long enough to hurt, short enough not to abandon the map over.
+ */
+function applyDowngrades(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AIContext): void {
+  const ai = enemy.ai;
+  const config = GAME_CONSTANTS.AI;
+
+  switch (ai.state) {
+    case AIState.CHASE: {
+      if (p.visible) {
+        ai.losGraceMs = 0;
+        setLastSeen(enemy, ctx.playerPos.x, ctx.playerPos.y, ctx.playerVel);
+        return;
+      }
+      ai.losGraceMs += tickDtMs;
+      if (ai.losGraceMs >= config.LOS_GRACE_MS || p.distance > config.CHASE_ABANDON_RANGE) {
+        transitionTo(enemy, AIState.ALERT, ctx);
+      }
+      return;
+    }
+    case AIState.ALERT: {
+      if (ai.searchTimerMs >= config.LOST_PLAYER_DURATION) {
+        // Nothing left to investigate: it stands where it is and stays wary.
+        ai.investigatePos = null;
+        transitionTo(enemy, AIState.SUSPICIOUS, ctx);
+      }
+      return;
+    }
+    case AIState.SUSPICIOUS: {
+      if (
+        ai.suspicionTimerMs >= config.ALERT_DURATION &&
+        ai.detection < config.SUSPICION_THRESHOLD
+      ) {
+        transitionTo(enemy, AIState.RETURN, ctx);
+      }
+      return;
+    }
+    default:
+      // PATROL has nothing below it; RETURN ends on arrival, which the behaviour detects.
+      return;
+  }
+}
+
+/**
+ * Applies a state change: entry actions, then the outward-facing events.
+ *
+ * Escalations emit `ENEMY_ALERT`; de-escalations stay silent, and the single
+ * `ENEMY_LOST_PLAYER` that closes an episode is emitted when the enemy drops back to a
+ * calm state. That pairing is what lets consumers keep a "how many enemies are alerted"
+ * count without leaking (contract E1/E2).
+ */
+export function transitionTo(enemy: Enemy, next: AIState, ctx: AIContext): void {
+  const ai = enemy.ai;
+  if (ai.state === next) return;
+
+  const fromLevel = alertLevelOf(ai.state);
+  const toLevel = alertLevelOf(next);
+  ai.state = next;
+
+  clearPath(enemy);
+  ai.repathCooldownMs = 0;
+  ai.pathFailCount = 0;
+  ai.scanPhaseMs = 0;
+  ai.scanIndex = 0;
+
+  switch (next) {
+    case AIState.PATROL:
+      // Arriving home counts as reaching a waypoint: dwell and scan before moving on.
+      ai.waypointPauseMs = enemy.spawnData.patrol.pauseMs ?? GAME_CONSTANTS.AI.WAYPOINT_PAUSE_MS;
+      ai.engaged = false;
+      ai.investigatePos = null;
+      ai.searchPointCount = 0;
+      break;
+    case AIState.SUSPICIOUS:
+      ai.suspicionTimerMs = 0;
+      ai.suspiciousTurnHoldMs = suspiciousTurnHoldFor(enemy);
+      ai.engaged = false;
+      break;
+    case AIState.ALERT:
+      ai.searchTimerMs = 0;
+      ai.searchHoldMs = 0;
+      ai.engaged = false;
+      buildSearchPoints(
+        enemy,
+        ctx,
+        ai.lastSeenPlayerPos?.x ?? ai.position.x,
+        ai.lastSeenPlayerPos?.y ?? ai.position.y
+      );
+      break;
+    case AIState.CHASE:
+      ai.losGraceMs = 0;
+      ai.searchPointCount = 0;
+      break;
+    case AIState.RETURN:
+      ai.engaged = false;
+      ai.investigatePos = null;
+      ai.searchPointCount = 0;
+      ai.patrolIndex = nearestWaypointIndex(enemy);
+      ai.waypointPauseMs = 0;
+      break;
+  }
+
+  if (alertRank(toLevel) > alertRank(fromLevel)) {
+    ai.alertEpisodeActive = true;
+    ctx.emitAlert(enemy, toLevel as Exclude<AlertLevel, 'none'>);
+    ctx.cue(enemy, toLevel === 'chase' ? 'ai.cue.chase' : toLevel === 'alert' ? 'ai.cue.alert' : 'ai.cue.suspicious');
+  } else if (toLevel === 'none' && ai.alertEpisodeActive) {
+    closeAlertEpisode(enemy, ctx);
+  }
+}
+
+/** Emits the episode-closing `ENEMY_LOST_PLAYER` exactly once. */
+export function closeAlertEpisode(enemy: Enemy, ctx: AIContext): void {
+  const ai = enemy.ai;
+  if (!ai.alertEpisodeActive) return;
+  ai.alertEpisodeActive = false;
+  ctx.emitLost(enemy);
+  ctx.cue(enemy, 'ai.cue.lost');
+}
+
+/**
+ * Builds the ALERT search queue around `originX/originY` (rule B3): where the player was
+ * last seen, where they would be if they kept running, and one spot nearby. The
+ * extrapolated point is what makes fleeing in a straight line a bad idea.
+ */
+export function buildSearchPoints(
+  enemy: Enemy,
+  ctx: AIContext,
+  originX: number,
+  originY: number
+): void {
+  const ai = enemy.ai;
+  const config = GAME_CONSTANTS.AI;
+  const points = ai.searchPoints;
+  let count = 0;
+
+  if (ctx.pathfinder.findNearestWalkable(originX, originY, points[count]!)) count++;
+
+  const velocity = ai.lastSeenPlayerVel;
+  if (velocity && (velocity.x !== 0 || velocity.y !== 0)) {
+    const aheadX = originX + velocity.x * config.EXTRAPOLATE_SEC;
+    const aheadY = originY + velocity.y * config.EXTRAPOLATE_SEC;
+    if (ctx.pathfinder.findNearestWalkable(aheadX, aheadY, points[count]!)) {
+      const first = points[0]!;
+      const spread = Math.hypot(points[count]!.x - first.x, points[count]!.y - first.y);
+      if (count === 0 || spread > config.ARRIVE_EPSILON) count++;
+    }
+  }
+
+  const angle = Math.random() * Math.PI * 2;
+  const radius = config.SEARCH_SPREAD * (0.5 + Math.random() * 0.5);
+  if (
+    count < points.length &&
+    ctx.pathfinder.findNearestWalkable(
+      originX + Math.cos(angle) * radius,
+      originY + Math.sin(angle) * radius,
+      points[count]!
+    )
+  ) {
+    count++;
+  }
+
+  ai.searchPointCount = count;
+  ai.searchIndex = 0;
+}
+
+/**
+ * Records a sighting: where, and how fast they were going. The velocity is what the
+ * search later extrapolates from, so passing `null` (a noise, not a sighting) correctly
+ * leaves the search with nothing to guess with.
+ *
+ * Allocates on the very first sighting only - these two vectors then live for the
+ * lifetime of the enemy.
+ */
+function setLastSeen(enemy: Enemy, x: number, y: number, velocity: Readonly<Vector2> | null): void {
+  const ai = enemy.ai;
+  if (!ai.lastSeenPlayerPos) ai.lastSeenPlayerPos = { x, y };
+  else {
+    ai.lastSeenPlayerPos.x = x;
+    ai.lastSeenPlayerPos.y = y;
+  }
+
+  const velocityX = velocity?.x ?? 0;
+  const velocityY = velocity?.y ?? 0;
+  if (!ai.lastSeenPlayerVel) ai.lastSeenPlayerVel = { x: velocityX, y: velocityY };
+  else {
+    ai.lastSeenPlayerVel.x = velocityX;
+    ai.lastSeenPlayerVel.y = velocityY;
+  }
+}
+
+function setInvestigatePos(enemy: Enemy, x: number, y: number, jitter: number): void {
+  const ai = enemy.ai;
+  let targetX = x;
+  let targetY = y;
+  if (jitter > 0) {
+    const angle = Math.random() * Math.PI * 2;
+    const radius = Math.random() * jitter;
+    targetX += Math.cos(angle) * radius;
+    targetY += Math.sin(angle) * radius;
+  }
+  if (!ai.investigatePos) ai.investigatePos = { x: targetX, y: targetY };
+  else {
+    ai.investigatePos.x = targetX;
+    ai.investigatePos.y = targetY;
+  }
+}
+
+/**
+ * How long the enemy stands still while turning to look. Rule B2 requires this pause to
+ * last long enough to be *seen* - it is the player's only advance warning, so a target
+ * that happens to be dead ahead must not skip it.
+ */
+function suspiciousTurnHoldFor(enemy: Enemy): number {
+  const ai = enemy.ai;
+  const config = GAME_CONSTANTS.AI;
+  if (!ai.investigatePos) return config.SUSPICIOUS_TURN_HOLD_MS;
+
+  const target = Math.atan2(
+    ai.investigatePos.y - ai.position.y,
+    ai.investigatePos.x - ai.position.x
+  );
+  const sweep = Math.abs(Math.atan2(Math.sin(target - ai.facingAngle), Math.cos(target - ai.facingAngle)));
+  const turnMs = (sweep / degToRad(config.TURN_RATE)) * 1000;
+  return Math.max(config.SUSPICIOUS_TURN_HOLD_MS, turnMs);
+}
+
+/** Detection fill and decay (rules P5/P6). */
+function updateDetection(enemy: Enemy, p: Perception, tickDtMs: number): void {
+  const ai = enemy.ai;
+  const config = GAME_CONSTANTS.AI;
+  const dt = tickDtMs / 1000;
+
+  if (ai.state === AIState.CHASE) {
+    // Locked on: certainty no longer decays, the line-of-sight grace timer takes over.
+    if (p.visible) ai.detection = 1;
+    return;
+  }
+
+  if (p.visible) {
+    const distFactor = lerp(
+      config.DETECT_DIST_FACTOR_NEAR,
+      config.DETECT_DIST_FACTOR_FAR,
+      clamp(p.distance / config.SIGHT_RANGE, 0, 1)
+    );
+    const zoneFactor = p.zone === 'peripheral' ? config.DETECT_ZONE_FACTOR_PERIPH : 1;
+    const rate = (1 / config.DETECT_FILL_TIME) * distFactor * zoneFactor;
+    ai.detection = Math.min(1, ai.detection + rate * dt);
+    return;
+  }
+
+  const decayScale = ai.state === AIState.ALERT ? config.DETECT_DECAY_ALERT_SCALE : 1;
+  ai.detection = Math.max(0, ai.detection - config.DETECT_DECAY_RATE * decayScale * dt);
+}

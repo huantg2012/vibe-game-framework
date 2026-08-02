@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director agent
 created-when: Slice 1 锁定时（2026-07-24）
-last-modified: 2026-07-29
-note: Slice 1 全部任务 Brief。范围三取舍已由人拍板：固定地图 / 纳入简化战斗 / 只做裂隙出击环。2026-07-29 进入实现阶段（T6→T5 与 A-G3 前两步并行开工）。
+last-modified: 2026-07-31
+note: Slice 1 全部任务 Brief。范围三取舍已由人拍板：固定地图 / 纳入简化战斗 / 只做裂隙出击环。2026-07-29 进入实现阶段（T6→T5 与 A-G3 前两步并行开工）。2026-08-01：T7/T8 均收口 Done，下一个是 T9。
 ---
 
 # Tasks: Slice 1 — 裂隙潜行核心手感
@@ -210,17 +210,30 @@ Title: 实现 — 固定裂隙地图（写死 tile 数据 + 渲染） | Priority
 
 ## Task: T7 | assignee: code
 
-Title: 实现 — 敌人 AI + 感知 | Priority: P0 | Dispatch: 🔴
+Title: 实现 — 敌人 AI + 感知 | Priority: P0 | Dispatch: 🔴 | Status: **Done**（2026-07-31）。产出 `src/systems/ai/`（ai-system 编排器 + state-machine FSM + behaviors + context + index）、`src/systems/pathfinding.ts`（grid A*）、`src/entities/enemy-factory.ts`、`src/types/ai-types.ts`、`src/config/invariants.ts`；`rift-scene.ts` 已接线（生成 + 每帧 update + `setVisibilityProvider` + `addWallCollider` + `bindAIStimuli`）。**核实证据**（详见 `current-slice.md` 的"T7 完成记录"）：typecheck 干净（仅 T8 并行文件报错）；六条平衡不变量成立并加了 dev 启动断言（DEC-020）；巡逻腿 create 时全预计算、**运行时 A\* 调用 0**；跨图最坏 A\* 1050 节点/0.31 ms、追击距离内 avg 0.02 ms（预算 5 ms）；N2 不许切角用合成网格实测通过且与 `hasLineOfSight` 一致；4 个渗透体持续沿路点巡逻（pingpong 掉头 / loop 绕行均实测）、AI 0.00–0.10 ms/帧、视野锥外不渲染。**实现期修掉两个 bug**：路径平滑/直线优先用点大小视线判定导致 20 px 身体卡挡板（改为宽度感知 `hasClearPath()`，DEC-021，就地回答了 spec 的 N4 待验证假设）；卡死看门狗在 `Scene.update()` 测位移恒为 0（Arcade 在 POST_UPDATE 才写回 sprite）导致误判并清掉巡逻路径。**fps 33 更正**：是浏览器标签未聚焦的节流，非 AI 开销。**遗留（人）**：状态可读性（R1–R3）与五态降级链需真人试玩确认（浏览器无法模拟按住方向键，同 T5 限制）。**T7 实现期 5 项 escalate 已由 Director 收口（DEC-022）**：① `ASTAR_MAX_NODES` 1200→3000（已应用 constants+spec）；② ALERT 重锁补「非盲区」；③ N6 补 ALERT/SUSPICIOUS 失败兜底；④ 弃用 `peakAlertLevelThisEpisode` 字段；⑤ N8 限定巡逻态、RETURN 保留最低优先级 A\*。均无接口变更、不阻塞 T8。
 
 ### 目标
 按 T2 spec 实现渗透体的 FSM + 感知 + 巡逻/追击。
 
+### 开工核实（Director，2026-07-31）
+依赖 T2/T5/T6 全部满足，无阻塞：
+- `docs/specs/system-enemy-ai.md` = ACTIVE，含五态 FSM、察觉度累积、6 条平衡不变量、`AISystemAPI`/`EnemyView` 契约。
+- `src/utils/grid-raycast.ts` 导出 `hasLineOfSight(grid, from, to, maxDist?)`，含对角缝隙规则 —— DEC-015 指定的唯一遮挡来源。
+- `src/types/map-types.ts` 已定义 `OccluderGrid` / `WalkGrid`；`src/systems/tile-grid.ts` 的 `TileGrid` 同时实现两者（`isOpaque` / `isWalkable` / `version`）。
+- `RIFT_MAP.layout.enemySpawns` 已产出 4 个 `EnemySpawnData`（ENM_INF_01..04，含 spawn/facing/waypoints/mode/pauseMs/scanAngles），`validateRiftMap()` 已校验路点可通行且互相可达。
+- `Player` 已暴露 `getPosition()` / `isMoving()`；`VisibilitySystem.getVisibilityAt()` 可用于 R4 的渲染门槛；占位纹理 `placeholder-enemy` 已在 boot-scene 生成。
+
+### 沿用的 escalate 结论（Director 确认）
+- escalate ①：听觉取 `Player.isMoving()`，半径恒定、仅移动时命中 —— 采纳 spec 的读法。
+- escalate ⑦：敌人行为完全不受混乱值影响，压力只从玩家侧收紧 —— 保持不受影响，本次不加调制器接口。
+- escalate ⑥：`AI.SIGHT_ANGLE: 90` 旧键删除，替换为 `SIGHT_HALF_ANGLE_CORE`(55) / `SIGHT_HALF_ANGLE_PERIPH`(90)，避免两套语义并存。
+
 ### 具体要求
-- [ ] FSM（巡逻/警觉/警报/追击）+ 转换；感知（视野范围/角度 + 视线遮挡）
-- [ ] 沿固定路点巡逻；发现玩家→追击；失去目标→降级
-- [ ] grid A* 寻路，分帧计算（每帧最多 1 次 A*）
-- [ ] 占位：敌人=暗红多边形（art-direction §12）；发出 `ENEMY_ALERT`
-- [ ] 占位期可读性：让玩家能从占位表现看出当前状态（如颜色/闪烁区分警觉/追击）
+- [x] FSM（巡逻/警觉/警报/追击 + RETURN）+ 转换；感知（核心锥 + 余光带 + 听觉，视线一律走 `hasLineOfSight`）
+- [x] 沿固定路点巡逻；发现玩家→追击；失去目标→降级（转换表逐条实现；端到端时序待真人试玩确认）
+- [x] grid A* 寻路，分帧计算（每帧最多 1 次 A*，全局单队列按 CHASE>ALERT>SUSPICIOUS>RETURN 出队）
+- [x] 占位：敌人=暗红五边形（朝向可读）；按 E1 契约发出 `ENEMY_ALERT`（升级才发 / 同级 1000 ms 冷却）
+- [x] 占位期可读性：teal 指示物三态（SUSPICIOUS 呼吸随 detection 提频 / ALERT 3Hz 闪 / CHASE 常亮+残影）（**待真人确认可读**）
 
 ### 约束
 - 只做渗透体一种；遵守 architecture 性能规则
@@ -236,25 +249,51 @@ Title: 实现 — 敌人 AI + 感知 | Priority: P0 | Dispatch: 🔴
 
 ## Task: T8 | assignee: code
 
-Title: 实现 — 简化战斗 | Priority: P1 | Dispatch: 🔴
+Title: 实现 — 简化战斗 | Priority: P1 | Dispatch: 🔴 | Status: **Done**（2026-08-01）。产出 `src/systems/combat-system.ts`；`constants.ts` 的 `COMBAT` 段补全、`events.ts` 加 `ENEMY_DAMAGED.source?` + 语义注释（**零新增事件**）、`invariants.ts` 加 K1/K2/K3/K5、`rift-scene.ts` 接线（`combat.update` 在 `ai.update` 之后）、`enemy-factory.ts` 导出白闪用纹理 key。`player.ts` 未改（**DEC-023**：战斗状态由 CombatSystem 独占，避免两处存血量）。**核实证据**：typecheck + build 干净；实机三刀击杀（`ENEMY_DAMAGED`×3 → `ENEMY_KILLED`）、超距不命中、被打死 7 次全流程（`PLAYER_DAMAGED`/`PLAYER_HEALTH_CHANGED` 成对 → `PLAYER_DIED` 一次）、敌人出手节拍 ~1593 ms、噪声 `suspicious r96` / `alert r160` 实测；白色扇形与前摇细线截图确认。**遗留**：美术口径（白闪毫秒 + 白色=攻击语义 + 玩家占位本身是白色导致白闪需放大 6 px 才可读）仍待 art 裁定；手感与三刀规模需真人试玩；`combat.reset()` 待 T9 的 R 键接线。
 
 ### 目标
-按 T4 spec 实现玩家攻击、敌人伤害玩家、受伤/死亡，含"战斗有代价"。
+按 `docs/specs/system-combat.md`（T4）实现玩家攻击、敌人伤害玩家、受伤/死亡，含"战斗有代价"。
+
+### 开工核实（Director，2026-07-31）
+依赖 T4/T5/T7 全部满足，无阻塞：
+- T4 spec = ACTIVE，规则 A1–A10 / E1–E7 / H1–H3 / V0–V6 齐备，含"场景层接线清单"。
+- T5：`Player` 已暴露 `getPosition()` / `getFacingAngle()` / `setSpeedModifier()` / `clearSpeedModifier()`；`utils/grid-raycast` 的 `hasLineOfSight()` 就绪。
+- T7：`AISystemAPI` 已暴露 `getEnemies()` / `getEnemyById()` / `reportNoise()` / `reportDamage()` / `despawn()` / `onPlayerLost()`，与 spec 的 `AISystemReadView` + 三个刺激入口完全对齐。
+- **五个事件全部已存在**于 `src/types/events.ts`（`PLAYER_DAMAGED` / `PLAYER_HEALTH_CHANGED` / `PLAYER_DIED` / `ENEMY_DAMAGED` / `ENEMY_KILLED`），spec 声称属实，**本任务不新增任何事件**。
+- **场景层已预接线**：`rift-scene.ts` 的 `bindAIStimuli()` 已接好 `ENEMY_DAMAGED → reportDamage` / `ENEMY_KILLED → despawn` / `PLAYER_DIED → onPlayerLost`；本任务只需补 `combat.create(..., { onNoise })` 与 `combat.update(dt)`。
+- `constants.ts` 的 `COMBAT` 段现有四键与 spec 一致，本任务为纯新增（约 16 键）。
+
+### Director 拍板（沿用的 escalate 结论）
+- escalate ③：**噪声走注入回调 `CombatHooks.onNoise`，不新增 `COMBAT_NOISE` 事件**（先例 = T3 的 `getChaosModulators` 场景层转发）。
+- escalate ④/⑤ → **DEC-012**（75 HP = 三刀、零随机）/ **DEC-013**（代价双轨 + 战斗 = 止损工具），按此实现。
+- escalate ①/②（美术口径）**仍挂起**：白闪毫秒数与"白色 = 攻击语义"未获 art agent 确认。**按 spec 建议值实现占位，不得视为美术定案**；若实现中出现新的美术判断需求，列 escalate 交回，不自行定死。
+- escalate ⑥：一次命中的混乱值总量归 T10 QA 专项实测，本任务不预调参。
 
 ### 具体要求
-- [ ] 玩家攻击判定 + 敌人 HP/死亡；敌人攻击 + 玩家 HP/死亡（死亡=出击失败）
-- [ ] "代价"钩子：攻击/被追击提升混乱值上涨（与 T9 混乱值对接）
-- [ ] 受伤视觉：sprite 白闪 1-2 帧；发 `PLAYER_DAMAGED`
-- [ ] 与 T7 敌人状态联动（战斗噪声可惊动/升级敌人警觉）
+- [ ] `CombatSystem`：玩家挥击时序（windup 100 / active 50 / recovery 70，冷却 500 从输入起算）、朝向按下瞬间锁定、前向扇形命中（半径 40 / 半角 60° / `hasLineOfSight` 硬性）、`hitSet` 去重、`ATTACK_MIN_ANGLE_BYPASS`(16) 贴身直判
+- [ ] 出手僵直：`setSpeedModifier('attack', 0.35)` 220 ms；死亡 / `setEnabled(false)` / `destroy()` / `reset()` 路径**必须** `clearSpeedModifier('attack')`（spec 标注的最易漏 bug）
+- [ ] 敌人 75 HP、玩家伤害 25 → **恰好三刀，零随机**（不变量 K1，DEC-012）；`ENEMY_DAMAGED { enemyId, amount, source: 'player' }`（新增可选 `source` 字段）
+- [ ] 敌人反击：`isEngaged()` 查询 + 38 px + 60° + 视线 + 冷却 1200 + 接敌延迟 300 + attack token(2)；**前摇 350 ms、前摇结束瞬间重新求值结算**，落空不扣血不发事件
+- [ ] 玩家 100 HP、单次受伤 15、无敌帧 400 ms、**局内不可恢复**（H1）、每次出击回满并发初始 `PLAYER_HEALTH_CHANGED {100,100}`
+- [ ] 死亡：`PLAYER_HEALTH_CHANGED {0,100}` → `PLAYER_DIED { cause: 'enemy_attack' }` → `setEnabled(false)`；一次出击只发一次；**死亡不做视野收黑**（spec escalate ⑧ 裁定）
+- [ ] 噪声三档经 `hooks.onNoise` 转 `ai.reportNoise`：挥击 96px/suspicious（空挥也发）、命中 160px/alert、击杀 192px/alert；场景层**不得**再从事件二次生成噪声
+- [ ] 视觉占位（V2）：挥击白色扇形描边、命中/受伤白闪、敌人前摇白色细线渐亮、死亡 180 ms 淡出；**不做**屏震/顿帧/伤害数字/击退（V3/V4）
+- [ ] `constants.ts` 的 `COMBAT` 段按 spec 参数表补齐；`architecture.md` 模块注册表登记 `CombatSystem` 并更新其接口列
+- [ ] `rift-scene.ts` 接线：`combat.update(dt)` **必须排在 `ai.update()` 之后**（spec 明示，反过来会滞后一帧）
 
 ### 约束
-- 最简实现，Arcade 判定；保持"潜行仍更划算"
+- 严格遵循 `docs/specs/system-combat.md`；遵守 architecture 事件总线（DEC-002）与目录约定；生产质量代码
+- **不新增事件**；**不 import AISystem**（只收窄只读视图 + 回调）；**不改 FSM**；**不直接改混乱值**（K6）
+- 游戏循环不 new 对象（`hitSet` / 判定原点预分配）；dt 钳制 100 ms 与 T2 一致
+- 遇到 spec 未覆盖的情况**不要自行改设计**，列 escalate 交回
 
 ### 验收标准
-- 可打死渗透体、可被打死并正确结束出击；试玩能感到"打是有代价的"
+- 可打死渗透体（恰好三刀）、可被打死并正确结束出击；不变量 K1–K6 全部成立
+- 实机可攻击 / 被攻击 / 死亡；typecheck + lint 干净
+- 自检报告须覆盖：五个事件是否全部复用（零新增）、DEC-012/013 是否落地、与 T7 API 对接是否正确、`'attack'` 移速调制的全部清理路径
 
 ### 相关文件
-- `src/systems/combat-system.ts`、`src/entities/player.ts`、`src/entities/enemy-factory.ts`
+- `src/systems/combat-system.ts`、`src/entities/player.ts`、`src/entities/enemy-factory.ts`、`src/scenes/rift-scene.ts`、`src/config/constants.ts`、`src/types/events.ts`
 
 ---
 

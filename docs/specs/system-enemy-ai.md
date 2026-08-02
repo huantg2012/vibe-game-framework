@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: design agent
-last-modified-date: 2026-07-26
+last-modified-by: director agent (T7 escalate resolution, DEC-022)
+last-modified-date: 2026-08-01
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -112,7 +112,7 @@ interface EnemyAIState {
 
   // —— 对外可读的派生量 ——
   engaged: boolean;              // CHASE 态且已到达接敌距离；由 system-combat 消费
-  peakAlertLevelThisEpisode: 'none' | 'suspicious' | 'alert' | 'chase';  // 事件去重用
+  peakAlertLevelThisEpisode?: 'none' | 'suspicious' | 'alert' | 'chase';  // 事件去重用（可选：T7 实现改用 lastEmittedLevel + 1000ms 冷却完整覆盖去重，本字段未使用 — DEC-022 ④）
   alertEmitCooldownMs: number;
 }
 
@@ -221,7 +221,7 @@ detection += rate × dt
 | ------ | ---- | ---------- | -------- |
 | 1 | `reportDamage` 本 tick 到达 | **CHASE** | `detection = 1.0`；重置 `losGraceMs` |
 | 2 | `detection ≥ 1.0` 且有视线且非盲区 | **CHASE** | 记录 `lastSeenPlayerPos/Vel` |
-| 3 | 当前是 ALERT 且 `detection ≥ AI_REACQUIRE_THRESHOLD`（0.5）且有视线 | **CHASE** | 重新锁定的阈值更低——它已经在找你 |
+| 3 | 当前是 ALERT 且 `detection ≥ AI_REACQUIRE_THRESHOLD`（0.5）且有视线**且非盲区**（与优先级 2 同口径） | **CHASE** | 重新锁定的阈值更低——它已经在找你。「非盲区」是 DEC-022 ② 补的：否则玩家绕到 ALERT 敌人背后会因残留察觉度被无视线锁定，违反"每次被发现都能回溯"的承诺 |
 | 4 | `reportNoise(level='alert')` 命中 | **ALERT** | `searchTimerMs = 0`，搜索点以噪声位置重建 |
 | 5 | `detection ≥ AI_SUSPICION_THRESHOLD`（0.35）／听觉命中／`reportNoise(level='suspicious')` | 若当前为 PATROL/RETURN → **SUSPICIOUS**；若已是 SUSPICIOUS/ALERT/CHASE → **不换态，只重置该态计时器** | 设 `investigatePos` |
 | 6 | 计时器/距离型降级（见下） | 见下 | — |
@@ -290,14 +290,16 @@ detection += rate × dt
 
 **N5｜远距离降级**：目标距离 > `AI_SIMPLE_PATH_RANGE`（384 px = 12 tile）的请求降为最低优先级，且该敌人的重规划间隔放宽到 1000 ms。由于 CHASE 有 320 px 的放弃距离，长距离请求只可能来自 RETURN——它不急。
 
-**N6｜搜索上限与失败处理**：`AI_ASTAR_MAX_NODES`（1200）个节点内未找到即判失败。失败处理：
+**N6｜搜索上限与失败处理**：`AI_ASTAR_MAX_NODES`（3000，DEC-022 ①）个节点内未找到即判失败。失败处理：
 - CHASE 目标不可达（玩家站在敌人到不了的地方）→ 立即转 ALERT，正常走 5 s 搜索后降级。**不允许**敌人在障碍前无限抖动。
+- ALERT 目标搜索点不可达 → 跳到搜索点队列的下一个；队列走完仍未到即在当前位置扫视至超时。（DEC-022 ③ 补：原 spec 未定义 ALERT 失败）
+- SUSPICIOUS 疑点不可达 → 清空 `investigatePos`，转为原地扫视直到计时结束。（DEC-022 ③ 补：原 spec 未定义 SUSPICIOUS 失败）
 - RETURN 失败 3 次 → 就地转 PATROL（见降级表）。
 - 记录一次开发模式告警（地图数据问题的早期信号）。
 
 **N7｜路径平滑**：A\* 返回的 tile 路径做一次 string-pulling——用 `hasLineOfSight` 逐点尝试跳过中间点，保留最少的拐点。目的是消除网格锯齿走位，让敌人的移动读起来像"生物"而不是"棋子"。
 
-**N8｜远处敌人降频**：距玩家 > `AI_ACTIVE_RANGE`（640 px）的敌人，FSM 与感知降到 5 Hz，且不发起任何 A\*（巡逻走预计算路径，不需要）。玩家看不到也听不到的地方，AI 的精度没有观察者。
+**N8｜远处敌人降频**：距玩家 > `AI_ACTIVE_RANGE`（640 px）的敌人，FSM 与感知降到 5 Hz。**巡逻态**走预计算路径、不发起任何 A\*；但**远处 RETURN 态**仍可发起 A\*（否则会永久贴墙走不回路点），只是降到队列最低优先级，永不延误近处追击（DEC-022 ⑤，修正原 spec 括号"都在巡逻"的隐含假设）。玩家看不到也听不到的地方，AI 的精度没有观察者。
 
 ### R — 状态可读性（占位期即必须成立，A-G2 验证项）
 
@@ -412,7 +414,7 @@ detection += rate × dt
 | `AI_REPATH_INTERVAL_MS` | 同一敌人重规划最小间隔 | 500 ms | 500–1200 | 建议值 |
 | `AI_REPATH_MOVE_THRESHOLD` | CHASE 提前重规划的目标位移阈值 | 48 px | 32–96 | 建议值 |
 | `AI_SIMPLE_PATH_RANGE` | 降级为低优先级的距离 | 384 px（12 tile） | 见 N5 | 技术定 |
-| `AI_ASTAR_MAX_NODES` | 单次 A\* 节点上限 | 1200 | 保证 < 5 ms/次（architecture 性能预算） | 架构定 |
+| `AI_ASTAR_MAX_NODES` | 单次 A\* 节点上限 | 3000（原 1200，DEC-022 ①） | 真实约束是 < 5 ms/次（architecture 性能预算）而非节点数；实测跨图最坏 1050 节点仅 0.31 ms，抬到 3000 仍远低于预算，同时给 RETURN 跨图路径留出余量 | 架构定 |
 | `AI_PATH_FAIL_LIMIT` | 连续失败上限 | 3 | 超出即放弃并降级 | 技术定 |
 | `AI_ACTIVE_RANGE` | 全速 AI 的作用半径 | 640 px（20 tile） | 超出降到 5 Hz 且不寻路 | 技术定 |
 | `AI_ARRIVE_EPSILON` | 到达判定距离 | 8 px | 小于此距离视为到达路径点 | 技术定 |
