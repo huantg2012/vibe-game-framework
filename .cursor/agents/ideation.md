@@ -1,6 +1,6 @@
 ---
 name: ideation
-model: opus
+model: claude-opus-5-thinking-high
 description: "创意搭档 — 帮助从模糊想法中提取核心体验、探索机制方向、分析参考、界定范围。输出愿景文档(vision.md)。"
 tools:
   - Read
