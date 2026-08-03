@@ -20,7 +20,8 @@ note: 已更新为 Slice 模型
 ```
 
 每个文件包含：
-- Frontmatter：名称、模型、可用工具（Claude Code 原生识别）
+- Frontmatter：名称、模型、可用工具（Claude Code 与 Cursor 均原生识别）
+  - `model` 的取值按运行时不同：Cursor 用全名（`claude-opus-5-thinking-high`），Claude Code 用别名（`opus`）。档位与角色的对应关系见 `CLAUDE.md`「模型路由与 token 经济性」，这也是两份定义唯一允许不一致的字段
 - 正文：角色指令、工作规范、文档职责、触发规则
 
 ---

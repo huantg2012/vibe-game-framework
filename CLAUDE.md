@@ -4,7 +4,7 @@
 
 本仓库是**双层结构**：
 
-1. **AI agent 框架**（层 A）：用于 vibe coding 独立游戏的工作框架，由 agents（ideation/director/design/code/art/qa）+ 约束文档（`guides/**`、agent 定义、本文件的框架规则）组成。
+1. **AI agent 框架**（层 A）：用于 vibe coding 独立游戏的工作框架，由 agents（ideation/director/design/code/art/qa）+ 约束文档（`guides/**`、agent 定义、本文件的框架规则）组成。Agent 定义同时存在于 `.claude/agents/*` 与 `.cursor/agents/*`，两份**正文**必须逐字一致，frontmatter 的 `model` 按运行时取值。
 2. **dogfood 游戏项目**（层 B）：一个进行中的真实独立游戏，用来验证并打磨框架层 A。游戏活文档住在 `docs/**`，代码住在 `src/**`。
 
 两层同处一仓库但边界清晰：改框架（层 A）与做游戏（层 B）是两块独立工作，互不混入。
@@ -47,7 +47,8 @@
 ## 文档层级与权威性
 
 ```
-.claude/agents/*.md 与 .cursor/agents/*.md = AI 的执行标准（最高权威；两份定义必须内容一致）
+.claude/agents/*.md 与 .cursor/agents/*.md = AI 的执行标准（最高权威；两份正文逐字一致，
+                                            frontmatter 仅 model 允许按运行时差异）
 START-HERE.md                            = 人的操作入口
 guides/*.md                              = 人的参考资料（设计原理记录）
 ```
@@ -59,10 +60,12 @@ guides/*.md                              = 人的参考资料（设计原理记�
 ## 当前框架结构
 
 ```
-.claude/agents/     → ideation, director, design, code, art, qa
-guides/             → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
-docs/               → 游戏项目活文档（AI读写、人审核）
-START-HERE.md       → 用户入口
+.claude/agents/ 与 .cursor/agents/ → ideation, director, design, code, art, qa（两份正文一致）
+guides/                → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
+docs/                  → 游戏项目活文档（AI读写、人审核）
+tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）
+tools/agent-parity/    → 两份 agent 定义的一致性校验（无依赖，node 直接跑）
+START-HERE.md          → 用户入口
 ```
 
 ## 游戏项目的文档体系（开发时产生）
@@ -116,6 +119,48 @@ Slice-based iterative development：
 - 每个 spec 的 frontmatter 必含 `interfaces-with`（声明依赖）和 `exposes`（声明对外输出）
 - 正文首行必须是 TL;DR（1-2 句系统摘要）
 - Agent 加载顺序：L0 读 CLAUDE.md → L1 Grep frontmatter 判断相关性 → L2 读完整 spec
+
+---
+
+## 模型路由与 token 经济性（强制）
+
+### 核心原则：按"错误能否被机器抓住"分配模型，而不是按"任务重不重要"
+
+强模型的代价**每次调用都要付**；弱模型犯错的代价**只在错误逃逸时才付**。所以真正的决策变量是逃逸概率——下游有没有自动闸门。
+
+- **有机器闸门**（`tsc` / lint / 测试 / `art:verify` / 运行时冒烟）：错误会被抓回来重试，而"便宜模型跑两次"仍远比"强模型跑一次"便宜 → **放心降档**
+- **无机器闸门，且产出会被其他 agent 当作事实来源**（spec / 决策 / 范围）：错误不会报错，只会静默传播——先烙进代码，再烙进更多代码，拆的时候成本远超省下的 token → **保持强模型**
+
+### 档位与角色映射
+
+| 档位 | Cursor ID | Claude Code | 角色 | 依据 |
+| ---- | --------- | ----------- | ---- | ---- |
+| T1 顶配 | `claude-opus-5-thinking-high` | `opus` | ideation / director / design | 产出不可机器验证，且是下游一切的事实来源 |
+| T2 中档 | `claude-sonnet-5-thinking-high` | `sonnet` | code / art | code 有四道机器闸门兜底（token 消耗最大的角色）；art 有 `art:verify` 部分兜底 |
+| T3 廉价 | `composer-2.5` | `sonnet` | qa | 本质是 spec↔实现的机械比对，有 spec 作基准 |
+
+**运行时差异**：两个运行时的模型 ID 词汇表不重叠（Cursor 认全名如 `claude-opus-5`，Claude Code 认别名如 `opus`），且 Claude Code 侧没有对应 T3 的廉价编码档，故 T2/T3 在该运行时合并到 `sonnet`。这就是 agent 定义 frontmatter 允许 per-runtime 差异的原因。写错 ID 的后果是**静默回退**——配置看起来生效，实际没有。
+
+### 逃逸兜底（强制）
+
+降档的前提是失败有上界。**同一任务连续 2 次过不了机器闸门 → 停止重试，升档到 T1 重做**，并在报告中标注。这把"便宜模型失败"变成有界成本，而不是无限重试的坑。
+
+### 探索循环的成本闸门（强制）
+
+多轮探索（调参数 → 跑脚本 → 看结果 → 再调）里，绝大多数轮次是机械劳动，只有最后"这个方向对不对"是判断。
+
+- **循环体跑 T2/T3**，只有**收敛判断**那一次上 T1
+- 循环次数必须有硬上限；到顶未收敛 → 升级给人，不许无声续跑
+
+### 不用 Cursor Auto 做框架内路由
+
+Auto（Cursor Router）用分类器**猜**任务复杂度。而本框架的每份工作到达时都已被结构化分类（具名 agent + Task Brief + 已知闸门），信息量严格多于分类器，没有理由把决定权交出去。更要紧的是 Auto 不可观测、不可复现，会污染 dogfooding 的框架验证信号——**验证框架时，模型必须是被固定住的变量**。
+
+Auto 适用的位置是框架外的自由对话窗口（任务类型确实不可预测时）。
+
+### 一致性校验
+
+`node tools/agent-parity/check.mjs` — 校验两份 agent 定义正文逐字一致，且 frontmatter 只在 `model` 上有差异。改动任何 agent 定义后必须跑，退出码非 0 即为不合格。
 
 ---
 
