@@ -15,7 +15,7 @@ export const GAME_CONSTANTS = {
 
   /** Player movement (docs/specs/system-movement-vision.md, section M) */
   PLAYER: {
-    SPEED: 160,               // px/s base speed = 5 tiles/s
+    SPEED: 80,                // px/s base speed = 2.5 tiles/s (tuned down for deliberate stealth feel)
     MAX_HEALTH: 100,
     INVENTORY_SLOTS: 4,
     MOVE_ACCEL_TIME: 0.08,    // s from standstill to full speed
@@ -122,11 +122,11 @@ export const GAME_CONSTANTS = {
    */
   AI: {
     // --- movement and body (section "移动与体型") ---
-    PATROL_SPEED: 60,         // px/s; slow enough that "wait for it to pass" is a real tactic (I4)
-    CHASE_SPEED: 130,         // px/s; below PLAYER.SPEED so retreating always works (I3)
-    SUSPICIOUS_SPEED: 45,     // px/s; slower than patrol - "creeping closer"
-    ALERT_SPEED: 90,          // px/s; between patrol and chase so searching reads differently
-    RETURN_SPEED: 75,         // px/s; slightly above patrol so "walking back" is legible
+    PATROL_SPEED: 30,         // px/s; slow enough that "wait for it to pass" is a real tactic (I4)
+    CHASE_SPEED: 65,          // px/s; below PLAYER.SPEED so retreating always works (I3)
+    SUSPICIOUS_SPEED: 22,     // px/s; slower than patrol - "creeping closer"
+    ALERT_SPEED: 45,          // px/s; between patrol and chase so searching reads differently
+    RETURN_SPEED: 38,         // px/s; slightly above patrol so "walking back" is legible
     TURN_RATE: 360,           // deg/s; a third of the player's, which is what makes flanking work (I6)
     BODY_SIZE: 20,            // px collider edge; < TILE_SIZE so 1-tile gaps stay passable
     BODY_OFFSET: { x: 2, y: 2 }, // centres the collider inside the 24x24 placeholder sprite
