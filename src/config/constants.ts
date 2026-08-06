@@ -27,25 +27,38 @@ export const GAME_CONSTANTS = {
     SPEED_MOD_MIN: 0.5,       // floor on the multiplied speed modifier stack
   },
 
-  /** Chaos system */
+  /** Chaos system (docs/specs/system-chaos-scavenge-extract.md) */
   CHAOS: {
-    MAX_VALUE: 100,
-    BASE_RATE: 1.5,       // points per second (base growth)
-    COMBAT_BONUS: 5,      // extra points when entering combat
-    DETECTION_BONUS: 3,   // extra points when detected by enemy
-    THRESHOLD_1: 50,      // first penalty threshold
-    THRESHOLD_2: 75,      // second penalty threshold
-    /** Penalties at each threshold */
-    PENALTIES: {
-      THRESHOLD_1: {
-        SPEED_MULTIPLIER: 0.85,    // 15% speed reduction
-        VISION_MULTIPLIER: 0.9,    // 10% vision reduction
-      },
-      THRESHOLD_2: {
-        SPEED_MULTIPLIER: 0.7,     // 30% speed reduction
-        VISION_MULTIPLIER: 0.75,   // 25% vision reduction
-      },
-    },
+    START_VALUE: 0,
+    MAX_VALUE: 100,       // HUD gauge max (value CAN exceed this)
+    HARD_CAP: 150,
+    BASE_RATE: 0.8,       // points per second (DEC-014)
+    THRESHOLD_1: 50,
+    THRESHOLD_2: 75,
+    THRESHOLD_3: 100,
+    COMBAT_BONUS: 5,
+    DETECTION_BONUS: 3,
+    DETECTION_BONUS_COOLDOWN: 10000, // ms per-enemy cooldown on detection chaos
+    CHASE_RATE_MULT: 2.0,
+    EMIT_STEP: 1.0,       // minimum delta before emitting CHAOS_CHANGED
+    MODULATOR_STEP: 1.0,  // minimum delta before calling onModulate callback
+  },
+
+  /** Loot / kindling nodes (docs/specs/system-chaos-scavenge-extract.md) */
+  LOOT: {
+    PICKUP_RADIUS: 16,
+    NODE_COUNT: 8,
+    VALUE_SAFE: 1,
+    VALUE_CONTESTED: 2,
+    VALUE_DEEP: 4,
+  },
+
+  /** Extraction point (docs/specs/system-chaos-scavenge-extract.md) */
+  EXTRACTION: {
+    TRIGGER_RADIUS: 48,
+    KEY: 'E',
+    SETTLE_DELAY_MS: 600,
+    RESTART_KEY: 'R',
   },
 
   /**

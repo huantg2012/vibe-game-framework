@@ -47,8 +47,10 @@ export enum GameEvent {
  * Ensures type safety when emitting/listening to events.
  */
 export interface EventPayloads {
-  [GameEvent.CHAOS_CHANGED]: { value: number; delta: number; max: number };
-  [GameEvent.CHAOS_THRESHOLD_REACHED]: { level: number };
+  /** Emitted when chaos value changes by >= EMIT_STEP from the last emission. */
+  [GameEvent.CHAOS_CHANGED]: { value: number; delta: number; max: number; rate: number };
+  /** Emitted once per level as chaos crosses 50 (1), 75 (2), 100 (3). */
+  [GameEvent.CHAOS_THRESHOLD_REACHED]: { level: 1 | 2 | 3 };
   /** `source` is the enemyId that dealt the damage (e.g. 'ENM_INF_01'), not a category. */
   [GameEvent.PLAYER_DAMAGED]: { amount: number; source: string };
   /**

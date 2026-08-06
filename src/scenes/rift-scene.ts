@@ -17,10 +17,15 @@ import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
 import { RIFT_MAP, validateRiftMap } from '@/scenes/rift-map-data';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
+import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
 import { CombatSystem, COMBAT_FX_DEPTH, type NoiseLevel } from '@/systems/combat-system';
+import { ExtractionSystem } from '@/systems/extraction-system';
+import { LootSystem } from '@/systems/loot-system';
+import { RunController } from '@/systems/run-controller';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
 import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
+import { HUD } from '@/ui/hud';
 import { TileType, type Vector2 } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
 
@@ -43,8 +48,15 @@ export class RiftScene extends Phaser.Scene {
   private readonly visibility = new VisibilitySystem();
   private readonly ai = new AISystem();
   private readonly combat = new CombatSystem();
+  private readonly loot = new LootSystem();
+  private readonly extraction = new ExtractionSystem();
+  private readonly runController = new RunController();
+  private readonly hud = new HUD();
+  private chaos!: ChaosSystem;
 
   private attackKey: Phaser.Input.Keyboard.Key | null = null;
+  private extractKey: Phaser.Input.Keyboard.Key | null = null;
+  private restartKey: Phaser.Input.Keyboard.Key | null = null;
 
   private debugPanel: HTMLDivElement | null = null;
   private debugVisible = true;
@@ -102,7 +114,44 @@ export class RiftScene extends Phaser.Scene {
     // callback. Noise is the only cross-system output that does not go through the bus: a
     // whiffed swing is audible yet emits nothing, so there is no event to carry it.
     this.combat.create(this, grid, this.player, this.ai, { onNoise: this.reportNoise });
+
+    // --- T9 systems: chaos, loot, extraction, run controller, HUD ---
+
+    this.chaos = new ChaosSystem({
+      onModulate: this.applyChaosModulators,
+    });
+
+    this.loot.create(this, layout.kindlingNodes, this.player.getSprite(), {
+      getVisibilityAt: this.visibilityAt,
+    });
+
+    this.extraction.create(
+      this,
+      layout.extractionPoint,
+      () => this.player.getPosition(),
+      () => this.runController.isRunEnded(),
+      { registerGlowSource: (id, pos, r) => this.visibility.registerGlowSource(id, pos, r) },
+    );
+
+    this.runController.create(this, {
+      pauseChaos: (paused) => this.chaos.setPaused(paused),
+      setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
+      getCarriedKindling: () => this.loot.getCarriedKindling(),
+      resetAll: () => this.resetAllSystems(),
+    });
+
+    this.hud.create(this, {
+      canExtract: () => this.extraction.canExtract(),
+      isRunEnded: () => this.runController.isRunEnded(),
+      getPeakChaos: () => this.chaos.getPeak(),
+      getElapsedMs: () => this.runController.getElapsedMs(),
+    });
+
+    // Apply initial chaos modulators (all at 0 - no effect)
+    this.applyChaosModulators(getChaosModulators(0));
+
     this.bindAttackKey();
+    this.bindExtractionKeys();
 
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
@@ -127,6 +176,23 @@ export class RiftScene extends Phaser.Scene {
     // state; one frame of lag on that at 30 px reads as "it is right there and doing
     // nothing".
     this.combat.update(delta);
+
+    // T9 systems
+    this.chaos.update(delta);
+    this.loot.update();
+    this.extraction.update(delta);
+    this.hud.update(delta);
+
+    // Extraction key (edge-triggered)
+    if (this.extractKey && Phaser.Input.Keyboard.JustDown(this.extractKey)) {
+      this.extraction.requestExtract();
+    }
+    // Restart key (edge-triggered, only when run ended)
+    if (this.restartKey && Phaser.Input.Keyboard.JustDown(this.restartKey)) {
+      if (this.runController.isRunEnded()) {
+        this.runController.restart();
+      }
+    }
   }
 
   private onPostUpdate(_time: number, delta: number): void {
@@ -157,6 +223,15 @@ export class RiftScene extends Phaser.Scene {
     // Captured so the browser does not scroll the page on space.
     const code = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.COMBAT.ATTACK_KEY];
     this.attackKey = keyboard.addKey(code, true, false);
+  }
+
+  private bindExtractionKeys(): void {
+    const keyboard = this.input.keyboard;
+    if (!keyboard) return;
+    const extractCode = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.EXTRACTION.KEY];
+    this.extractKey = keyboard.addKey(extractCode, true, false);
+    const restartCode = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.EXTRACTION.RESTART_KEY];
+    this.restartKey = keyboard.addKey(restartCode, true, false);
   }
 
   private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {
@@ -191,6 +266,24 @@ export class RiftScene extends Phaser.Scene {
   private readonly visibilityAt = (point: Readonly<Vector2>): number =>
     this.visibility.getVisibilityAt(point);
 
+  /** Wired as the chaos system's onModulate callback. */
+  private readonly applyChaosModulators = (mods: ChaosModulators): void => {
+    this.visibility.setRadiusScale(mods.radiusScale);
+    this.visibility.setEdgeCorruption(mods.edgeCorruption);
+    this.visibility.setScreenFlicker(mods.screenFlicker);
+    this.player.setSpeedModifier('chaos', mods.speedMult);
+  };
+
+  /** Resets all T9 systems and combat for a fresh run. */
+  private resetAllSystems(): void {
+    this.chaos.reset();
+    this.loot.reset();
+    this.extraction.reset();
+    this.combat.reset();
+    this.hud.reset();
+    this.applyChaosModulators(getChaosModulators(0));
+  }
+
   private returnToMenu(): void {
     this.scene.start('MainMenuScene');
   }
@@ -208,8 +301,21 @@ export class RiftScene extends Phaser.Scene {
       this.input.keyboard?.removeKey(this.attackKey, true);
       this.attackKey = null;
     }
+    if (this.extractKey) {
+      this.input.keyboard?.removeKey(this.extractKey, true);
+      this.extractKey = null;
+    }
+    if (this.restartKey) {
+      this.input.keyboard?.removeKey(this.restartKey, true);
+      this.restartKey = null;
+    }
     // Before the player is destroyed: this is what releases the swing speed modifier.
     this.combat.destroy();
+    this.hud.destroy();
+    this.runController.destroy();
+    this.extraction.destroy();
+    this.loot.destroy();
+    this.chaos.destroy();
     this.ai.destroy();
     this.visibility.destroy();
     this.player.destroy();
@@ -286,6 +392,9 @@ export class RiftScene extends Phaser.Scene {
         `cd ${Math.round(combat.cooldownRemainingMs)}  iframe ${Math.round(combat.invulnRemainingMs)}` +
         `  tokens ${combat.attackTokensInUse}${combat.isDead ? '  DEAD' : ''}`,
       `combat cue ${combat.lastCue}  noise ${combat.lastNoise}`,
+      `chaos ${this.chaos.getValue().toFixed(1)} [${this.chaos.getStage()}] ` +
+        `rate ${this.chaos.getRate().toFixed(2)}/s  peak ${this.chaos.getPeak().toFixed(0)}`,
+      `loot ${this.loot.getCarriedKindling()} carried  ${this.loot.getRemainingNodes()} remaining`,
     ];
 
     // Per-enemy line: the fastest way to check a downgrade chain actually walks itself

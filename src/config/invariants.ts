@@ -141,6 +141,32 @@ export function checkBalanceInvariants(): InvariantViolation[] {
       'leaves them slowed with no swing to blame'
   );
 
+  // --- chaos (docs/specs/system-chaos-scavenge-extract.md, "不变量") ---
+
+  const chaos = GAME_CONSTANTS.CHAOS;
+
+  require(
+    chaos.THRESHOLD_1 < chaos.THRESHOLD_2 && chaos.THRESHOLD_2 < chaos.THRESHOLD_3,
+    'CH1',
+    'CHAOS.THRESHOLD_1 < THRESHOLD_2 < THRESHOLD_3',
+    `${chaos.THRESHOLD_1} vs ${chaos.THRESHOLD_2} vs ${chaos.THRESHOLD_3}`,
+    'thresholds must form a strict ascending sequence or the stage transitions are ambiguous'
+  );
+  require(
+    chaos.THRESHOLD_3 <= chaos.HARD_CAP,
+    'CH2',
+    'CHAOS.THRESHOLD_3 <= CHAOS.HARD_CAP',
+    `${chaos.THRESHOLD_3} vs ${chaos.HARD_CAP}`,
+    'the highest threshold must be reachable before the value is clamped'
+  );
+  require(
+    chaos.MAX_VALUE <= chaos.HARD_CAP,
+    'CH3',
+    'CHAOS.MAX_VALUE <= CHAOS.HARD_CAP',
+    `${chaos.MAX_VALUE} vs ${chaos.HARD_CAP}`,
+    'the HUD gauge max cannot exceed the absolute clamp or the bar would never fill'
+  );
+
   return violations;
 }
 
