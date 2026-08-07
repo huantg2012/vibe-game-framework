@@ -23,10 +23,13 @@ import { ExtractionSystem } from '@/systems/extraction-system';
 import { LootSystem } from '@/systems/loot-system';
 import { RunController } from '@/systems/run-controller';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
+import { TrailSystem } from '@/systems/trail-system';
 import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { HUD } from '@/ui/hud';
+import { Minimap } from '@/ui/minimap';
 import { TileType, type Vector2 } from '@/types/game-types';
+import type { LandmarkDef } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
 
 /** Render depths. The gaps leave room for decals, entities and the HUD. */
@@ -46,13 +49,17 @@ export class RiftScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private readonly visibility = new VisibilitySystem();
+  private readonly trail = new TrailSystem();
   private readonly ai = new AISystem();
   private readonly combat = new CombatSystem();
   private readonly loot = new LootSystem();
   private readonly extraction = new ExtractionSystem();
   private readonly runController = new RunController();
   private readonly hud = new HUD();
+  private readonly minimap = new Minimap();
   private chaos!: ChaosSystem;
+
+  private landmarkGraphics: Phaser.GameObjects.Graphics | null = null;
 
   private attackKey: Phaser.Input.Keyboard.Key | null = null;
   private extractKey: Phaser.Input.Keyboard.Key | null = null;
@@ -102,6 +109,10 @@ export class RiftScene extends Phaser.Scene {
     camera.startFollow(this.player.getSprite(), true);
 
     this.visibility.create(this, createRiftVisionConfig(DEPTH.visionMask), grid);
+    this.visibility.setExtractionPosition(layout.extractionPoint.position);
+
+    this.trail.create(this, tileMap.cols, tileMap.tileSize, this.visibilityAt);
+    this.createLandmarkDecals(layout.landmarks, tileMap.tileSize);
 
     // The AI reads the same grid twice through two different contracts: as an occluder
     // grid for line of sight, as a walk grid for pathfinding. Slice 1 derives both from
@@ -150,6 +161,14 @@ export class RiftScene extends Phaser.Scene {
     // Apply initial chaos modulators (all at 0 - no effect)
     this.applyChaosModulators(getChaosModulators(0));
 
+    this.minimap.create(
+      tileMap.tiles,
+      tileMap.cols,
+      tileMap.rows,
+      tileMap.tileSize,
+      layout.extractionPoint.position,
+    );
+
     this.bindAttackKey();
     this.bindExtractionKeys();
 
@@ -182,6 +201,19 @@ export class RiftScene extends Phaser.Scene {
     this.loot.update();
     this.extraction.update(delta);
     this.hud.update(delta);
+
+    // Trail system: record player position and redraw visible trail marks.
+    const playerPos = this.player.getPosition();
+    const tile = GAME_CONSTANTS.TILE_SIZE;
+    this.trail.update(
+      Math.floor(playerPos.x / tile),
+      Math.floor(playerPos.y / tile),
+      this.chaos.getValue(),
+      delta
+    );
+
+    // Minimap: reveal tiles within ambient radius around player
+    this.minimap.update(playerPos);
 
     // Extraction key (edge-triggered)
     if (this.extractKey && Phaser.Input.Keyboard.JustDown(this.extractKey)) {
@@ -281,7 +313,136 @@ export class RiftScene extends Phaser.Scene {
     this.extraction.reset();
     this.combat.reset();
     this.hud.reset();
+    this.trail.reset();
+    this.minimap.reset();
     this.applyChaosModulators(getChaosModulators(0));
+  }
+
+  /**
+   * Draws all 8 navigation landmarks as simple coloured geometric marks onto a single
+   * static Graphics object. Drawn once at create, never updated.
+   */
+  private createLandmarkDecals(landmarks: readonly LandmarkDef[], tileSize: number): void {
+    const g = this.add.graphics();
+    g.setDepth(2); // Above surface (0), below trail (5)
+    this.landmarkGraphics = g;
+
+    for (const lm of landmarks) {
+      const cx = lm.col * tileSize + tileSize * 0.5;
+      const cy = lm.row * tileSize + tileSize * 0.5;
+
+      switch (lm.style) {
+        case 'pool': {
+          // Deep purple ellipse spanning 2x1 tiles
+          g.fillStyle(0x2a0e3d, 0.55);
+          g.fillEllipse(cx + tileSize * 0.5, cy, tileSize * 1.8, tileSize * 0.7);
+          break;
+        }
+        case 'scratches': {
+          // Three parallel diagonal lines, dark red
+          g.lineStyle(1.5, 0x5c1a1a, 0.6);
+          for (let i = -1; i <= 1; i++) {
+            const offsetX = i * 6;
+            g.beginPath();
+            g.moveTo(cx + offsetX - 8, cy - 10);
+            g.lineTo(cx + offsetX + 8, cy + 10);
+            g.strokePath();
+          }
+          break;
+        }
+        case 'rubble': {
+          // Scattered small grey squares
+          g.fillStyle(0x4a4a4a, 0.5);
+          const offsets = [
+            [-8, -6], [4, -9], [10, -2], [-5, 5], [7, 8], [-10, 1], [2, -1],
+          ];
+          for (const [ox, oy] of offsets) {
+            const size = 3 + Math.abs((ox! + oy!) % 3);
+            g.fillRect(cx + ox! - size * 0.5, cy + oy! - size * 0.5, size, size);
+          }
+          break;
+        }
+        case 'crack': {
+          // A single glowing green crack line
+          g.lineStyle(1.5, 0x2dcc70, 0.65);
+          g.beginPath();
+          g.moveTo(cx - 12, cy - 2);
+          g.lineTo(cx - 4, cy + 5);
+          g.lineTo(cx + 3, cy - 3);
+          g.lineTo(cx + 11, cy + 1);
+          g.strokePath();
+          break;
+        }
+        case 'scorch': {
+          // Black radial burn mark
+          g.fillStyle(0x0a0a0a, 0.5);
+          g.fillCircle(cx, cy, 8);
+          g.lineStyle(1, 0x1a1a1a, 0.4);
+          for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
+            g.beginPath();
+            g.moveTo(cx + Math.cos(angle) * 5, cy + Math.sin(angle) * 5);
+            g.lineTo(cx + Math.cos(angle) * 13, cy + Math.sin(angle) * 13);
+            g.strokePath();
+          }
+          break;
+        }
+        case 'crystals': {
+          // Teal small triangle cluster
+          g.fillStyle(0x1aad96, 0.55);
+          const triangles = [
+            [0, -8, -4, -2, 4, -2],
+            [6, -4, 3, 3, 9, 3],
+            [-6, -1, -9, 6, -3, 6],
+            [1, 4, -2, 10, 4, 10],
+          ];
+          for (const t of triangles) {
+            g.beginPath();
+            g.moveTo(cx + t[0]!, cy + t[1]!);
+            g.lineTo(cx + t[2]!, cy + t[3]!);
+            g.lineTo(cx + t[4]!, cy + t[5]!);
+            g.closePath();
+            g.fillPath();
+          }
+          break;
+        }
+        case 'bloodtrail': {
+          // Dark red drag line
+          g.lineStyle(2.5, 0x4a1010, 0.55);
+          g.beginPath();
+          g.moveTo(cx - 14, cy - 1);
+          g.lineTo(cx - 6, cy + 3);
+          g.lineTo(cx + 2, cy - 1);
+          g.lineTo(cx + 10, cy + 2);
+          g.lineTo(cx + 14, cy);
+          g.strokePath();
+          // Small droplets
+          g.fillStyle(0x4a1010, 0.4);
+          g.fillCircle(cx - 10, cy + 6, 1.5);
+          g.fillCircle(cx + 5, cy + 5, 1.2);
+          break;
+        }
+        case 'rune': {
+          // Pale white geometric pattern
+          g.lineStyle(1, 0xcccccc, 0.4);
+          // Outer diamond
+          g.beginPath();
+          g.moveTo(cx, cy - 10);
+          g.lineTo(cx + 8, cy);
+          g.lineTo(cx, cy + 10);
+          g.lineTo(cx - 8, cy);
+          g.closePath();
+          g.strokePath();
+          // Inner cross
+          g.beginPath();
+          g.moveTo(cx - 4, cy);
+          g.lineTo(cx + 4, cy);
+          g.moveTo(cx, cy - 4);
+          g.lineTo(cx, cy + 4);
+          g.strokePath();
+          break;
+        }
+      }
+    }
   }
 
   private returnToMenu(): void {
@@ -317,9 +478,13 @@ export class RiftScene extends Phaser.Scene {
     this.loot.destroy();
     this.chaos.destroy();
     this.ai.destroy();
+    this.trail.destroy();
+    this.minimap.destroy();
     this.visibility.destroy();
     this.player.destroy();
     this.tilemapRenderer.destroy();
+    this.landmarkGraphics?.destroy();
+    this.landmarkGraphics = null;
     this.debugPanel?.remove();
     this.debugPanel = null;
   }

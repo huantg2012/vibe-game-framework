@@ -152,6 +152,9 @@ export class VisibilitySystem {
   private edgeCorruption = 0;
   private screenFlicker = 0;
 
+  // --- extraction proximity (void noise scroll acceleration) ---
+  private extractionPos: Vector2 | null = null;
+
   // --- cache / perf ---
   private cacheValid = false;
   private readonly originCache: Vector2 = { x: 0, y: 0 };
@@ -281,6 +284,10 @@ export class VisibilitySystem {
 
   // ------------------------------------------------------------ chaos modulators
 
+  getRadiusScale(): number {
+    return this.radiusScale;
+  }
+
   /**
    * Shrinks the whole field of view. Invalidates the cache: the ranges the cached rays
    * were measured against just changed, and without this the view would stay frozen
@@ -302,6 +309,15 @@ export class VisibilitySystem {
   /** Periodic full-screen shimmer at the highest chaos stage. */
   setScreenFlicker(intensity: number): void {
     this.screenFlicker = clamp(intensity, 0, 1);
+  }
+
+  /**
+   * Sets the extraction point position for the proximity-based void noise scroll
+   * acceleration. The closer the player is to extraction, the faster the noise drifts
+   * (subtle spatial cue, not a compass).
+   */
+  setExtractionPosition(pos: Vector2): void {
+    this.extractionPos = { x: pos.x, y: pos.y };
   }
 
   // ------------------------------------------------------------ queries
@@ -595,7 +611,19 @@ export class VisibilitySystem {
     this.mask.fill(config.voidColor, 1);
 
     if (this.noiseSprite) {
-      const scroll = (this.elapsedMs / 1000) * GAME_CONSTANTS.VISIBILITY.VOID_NOISE_SCROLL;
+      // Proximity-based scroll acceleration: noise drifts faster near the extraction point.
+      const baseSpeed = GAME_CONSTANTS.VISIBILITY.VOID_NOISE_SCROLL;
+      let scrollSpeed = baseSpeed;
+      if (this.extractionPos) {
+        const tileSize = this.occluders.tileSize;
+        const dx = this.origin.x - this.extractionPos.x;
+        const dy = this.origin.y - this.extractionPos.y;
+        const distTiles = Math.sqrt(dx * dx + dy * dy) / tileSize;
+        // Lerp: full effect below 5 tiles, no effect beyond 40 tiles.
+        const proximityFactor = clamp(1 - (distTiles - 5) / 35, 0, 1);
+        scrollSpeed = baseSpeed * (1 + proximityFactor);
+      }
+      const scroll = (this.elapsedMs / 1000) * scrollSpeed;
       this.noiseSprite.tilePositionX = scroll;
       this.noiseSprite.tilePositionY = scroll;
       this.mask.draw(this.noiseSprite, 0, 0);

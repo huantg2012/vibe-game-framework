@@ -9,6 +9,33 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-025: Slice 1 playtest — minimap + navigation + kindling density
+- Date: 2026-08-07
+- Phase: Slice 1 (playtest validation iteration)
+- Type: UX / balance (player-reported)
+- Context: First human playtest confirmed atmosphere/combat/speed feel right. Three navigation and pacing issues identified and addressed in-session:
+  1. Movement speeds halved (160→80 all, DEC-024 scope)
+  2. Chaos BASE_RATE 0.8→0.5 (calibrated for doubled travel times)
+  3. Extraction glow radius 12→48 px, alpha 0.15→0.25
+  4. Added trail system (afterimage on walked tiles, chaos-coupled decay)
+  5. Added 8 landmark decals at key intersections
+  6. Added void noise proximity gradient toward extraction
+  7. Added fog-of-war minimap (right-bottom corner, reveals explored tiles)
+  8. Added pause overlay on window blur (click/key to resume)
+- **Known issues requiring future tuning:**
+  - **Minimap reveal radius too generous** — currently uses full `RADIUS_FORWARD / tileSize` (~7 tiles), resulting in near-complete map reveal after one traversal. Needs to be reduced to ~2-3 tiles (ambient vision radius) or use a different reveal mechanism (e.g., only reveal tiles the player actually steps on). Parameter: `MINIMAP_SCALE`, reveal radius in `minimap.ts update()`. The entire minimap implementation may be reworked in presentation and parameters.
+  - **Kindling density feels low** — 8 nodes across 64x44 map. Distribution is fully configurable: node positions in `rift-map-data.ts` ASCII markers, tiers in `KINDLING_TIERS`, values in `LOOT.VALUE_*` constants. Consider 12-16 nodes or higher per-node value to make "one more" temptation more frequent.
+- Decision: Ship current state for continued iteration. Both items are tuning, not structural.
+- Impact: No spec changes needed. `minimap.ts` and `rift-map-data.ts` are the two files to touch.
+
+## DEC-024: Slice 1 playtest calibration — chaos rate and extraction navigation
+- Date: 2026-08-07
+- Phase: Slice 1 (playtest validation)
+- Type: Balance + UX
+- Context: PLAYER.SPEED halved (160→80) after chaos spec's time budget was calculated, doubling all transit times. Extraction glow (12px) functionally invisible.
+- Decision: BASE_RATE 0.8→0.5; GLOW_LEAK_RADIUS 12→48; GLOW_LEAK_ALPHA 0.15→0.25.
+- Impact: constants.ts only.
+
 ## DEC-023: Combat owns player combat state; the Player entity keeps only movement
 - Date: 2026-08-01
 - Phase: Slice 1 (T8 implementation)

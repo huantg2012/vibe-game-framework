@@ -32,7 +32,7 @@ export const GAME_CONSTANTS = {
     START_VALUE: 0,
     MAX_VALUE: 100,       // HUD gauge max (value CAN exceed this)
     HARD_CAP: 150,
-    BASE_RATE: 0.8,       // points per second (DEC-014)
+    BASE_RATE: 0.5,       // points per second (DEC-024: calibrated for 80 px/s travel)
     THRESHOLD_1: 50,
     THRESHOLD_2: 75,
     THRESHOLD_3: 100,
@@ -105,8 +105,8 @@ export const GAME_CONSTANTS = {
     FLASHLIGHT_FORWARD_FRAC: 0.34, // push the pool centre this fraction of forward range ahead
     FLASHLIGHT_RADIUS_FRAC: 0.85,  // pool radius as a fraction of forward range
     /** Glow bleeding through the darkness (Slice 1: extraction point only) */
-    GLOW_LEAK_ALPHA: 0.15,
-    GLOW_LEAK_RADIUS: 12,
+    GLOW_LEAK_ALPHA: 0.25,
+    GLOW_LEAK_RADIUS: 48,
     /** Chaos corruption of the vision edge */
     CORRUPTION_COLOR: 0x1aad96,
     CORRUPTION_MAX_MIX: 0.6,   // alpha of the teal band at corruption 1.0

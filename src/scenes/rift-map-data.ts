@@ -6,58 +6,43 @@
  * fed to any scene.
  *
  * ---------------------------------------------------------------------------
- * LAYOUT
+ * LAYOUT — OUTDOOR OPEN SPACE
  * ---------------------------------------------------------------------------
- * Spawn sits bottom-left, the extraction point top-left; the route between them
- * never doubles back (docs/specs/system-chaos-scavenge-extract.md rule 21).
+ * The rift is a swallowed outdoor fragment — a piece of some other world pulled
+ * into the void. The map is mostly open floor with scattered static obstacles
+ * (rock formations, ruined walls, alien debris, cliff fragments) that compress
+ * the player's movement space and break sight lines.
  *
- * Two ways across, both ending on the same final corridor:
- *   - SHORT / EXPOSED (~177 tiles, ~35 s of pure walking): bottom corridor -> the open
- *     central shaft -> upper corridor -> right riser -> top corridor -> exit. The shaft
- *     is a wide open hall with almost no cover and one patrol looping inside it.
- *   - LONG / HIDDEN (~228 tiles, ~46 s): bottom corridor all the way right -> right
- *     riser -> middle corridor -> left riser -> upper corridor -> ... The middle
- *     corridor is baffled the whole way, so it is slower but keeps walls between the
- *     player and everything else.
+ * Spawn sits bottom-center, extraction top-center; the player must cross 3-4
+ * distinct "zones" separated by major obstacle clusters. Multiple paths exist
+ * between all zones — no corridors, always 2+ ways around any obstacle.
  *
- * Every corridor is 3 tiles tall with alternating single-tile wall stubs ("baffles").
- * They leave a 1-tile gap (passable, `BODY_SIZE` 20 < 32) while breaking sight lines
- * along the corridor, which is what makes peeking and corner-holding meaningful.
+ * Zone layout (top to bottom):
+ *   Zone 4 (rows 1-7):   Extraction area — moderate obstacles, last gate patrol
+ *   Zone 3 (rows 8-14):  Upper contested — dense obstacles, two patrols
+ *   Zone 2 (rows 15-22): Lower transition — C-shape ruin, cliff ridge, loop patrol
+ *   Zone 1 (rows 23-30): Spawn area — sparse obstacles, safe start
  *
- * The last stretch to the extraction point is the top corridor, patrolled by
- * `ENM_INF_04`. The extraction chamber itself sits behind the wall stub at column 11
- * and is 17 tiles from the nearest patrol waypoint, so it is never inside a patrol's
- * standing line of sight.
+ * Obstacle density: ~12% interior wall tiles. Gaps between adjacent clusters
+ * average 3-5 tiles horizontally, breaking most 7-tile sight lines in the
+ * contested zones while leaving spawn area relatively open for learning.
  *
- * ---------------------------------------------------------------------------
- * MEASURED TRAVEL COSTS (Dijkstra, 8-way, no corner cutting, at MOVE_SPEED 160 px/s)
- * ---------------------------------------------------------------------------
- *   spawn -> exit, short route : 177 tiles (~35 s)
- *   spawn -> exit, long route  : 228 tiles (~46 s)
- *   round-trip detour per node : KDL_01/02/04 ~0 | KDL_03 14 | KDL_05 1 | KDL_06 2
- *                                KDL_07 54 | KDL_08 50
- *   full clear, walking only   : ~297 tiles (~59 s), before any waiting on patrols
- *
- * Both deep nodes sit >= 25 tiles off the main route one-way, satisfying the ">= 15
- * tile" layout requirement. NOTE FOR T9: the chaos spec's `BASE_RATE` derivation
- * assumed a full clear of ~220 s and asks for a recalculation once the map is final
- * (target: full-clear time ~= time-to-HARD_CAP x 1.15). The numbers above are the
- * walking-only floor; the remainder has to come from waiting on patrol windows, so
- * `BASE_RATE` must be re-measured against real play, not recomputed on paper.
+ * Obstacle shapes: L-shapes, T-shapes, C-shapes, irregular clusters (2-12 tiles),
+ * linear ridge/cliff features, pillar pairs. No rectangles that read as "rooms".
  *
  * ---------------------------------------------------------------------------
  * ASCII LEGEND
  * ---------------------------------------------------------------------------
- *   #        wall              .   walkable floor
- *   S        player spawn      X   extraction point
+ *   #        wall / obstacle     .   walkable floor (outdoor ground)
+ *   S        player spawn        X   extraction point
  *   1-8      kindling KDL_01..KDL_08 (1-3 safe, 4-6 contested, 7-8 deep)
- *   A B      ENM_INF_01 patrol waypoints, in alphabetical order (first = spawn)
+ *   A B      ENM_INF_01 patrol waypoints (first = spawn)
  *   C D      ENM_INF_02
  *   E F G H  ENM_INF_03
  *   J K      ENM_INF_04
  *
- * Markers always occupy floor tiles; `validateRiftMap()` fails loudly if that ever
- * stops being true.
+ * Markers always occupy floor tiles; `validateRiftMap()` fails loudly if that
+ * ever stops being true.
  */
 
 import { TileType, type Vector2 } from '@/types/game-types';
@@ -65,6 +50,7 @@ import type {
   EnemySpawnData,
   KindlingNodeDef,
   KindlingTier,
+  LandmarkDef,
   PatrolMode,
   RiftLayoutData,
   TileMapData,
@@ -72,52 +58,40 @@ import type {
 import { TileGrid } from '@/systems/tile-grid';
 import { GAME_CONSTANTS } from '@/config/constants';
 
-/** 64 x 44 tiles = 2048 x 1408 px. */
+/** 48 x 32 tiles = 1536 x 1024 px. */
 const RIFT_MAP_ASCII: readonly string[] = [
-  '################################################################',
-  '################################################################',
-  '##.......#######################################################',
-  '##.......#######################################################',
-  '##...X...#######################################################',
-  '##.........#...............#..............#................#####',
-  '##.........#......#...J....#......#.......#.......#.K......#####',
-  '##................#...............#...............#........#####',
-  '##.......###############################################...#####',
-  '##########..........#...............####################...#####',
-  '##########..........#.......#.......####################...#####',
-  '##########.7................#.......####################...#####',
-  '##########......#################...####################...#####',
-  '##########......#################...####################...#####',
-  '#################################...####################...#####',
-  '#####......#..............#...................#............#####',
-  '#####......#.....#....C...#.............#.....#5..D.#......#####',
-  '#####............#......................#...........#......#####',
-  '#####...####...#################################################',
-  '#####...####.....#.....................#########################',
-  '#####...####.....#.....#...............#########################',
-  '#####...####...........#...............#########################',
-  '#####...####################..E.....F..#########################',
-  '#####...####################...........#########################',
-  '#####...####################...##......#########################',
-  '#####...####################...##......#########################',
-  '#####.......#.........#.........................#..........#####',
-  '#####.......#.3...#...#...................#.....#....#.....#####',
-  '#####.............#.......................#..........#.....#####',
-  '############################...........#################...#####',
-  '############################.....6##...##########......#...#####',
-  '############################......##...####.........8..#...#####',
-  '############################...........####............#...#####',
-  '############################..H.....G..##..............#...#####',
-  '############################...........##...############...#####',
-  '############################...........##...############...#####',
-  '##.......###################...........##...############...#####',
-  '##.......######################....######...############...#####',
-  '##..........#.........2..#...................#.............#####',
-  '##...S......#......#.....#..........B.#......#.....#.......#####',
-  '##........1.....A..#......4...........#............#.......#####',
-  '##.......#######################################################',
-  '################################################################',
-  '################################################################',
+  '################################################',
+  '#..............................................#',
+  '#.....##..............X.........###............#',
+  '#.....###.........##..............##.....##....#',
+  '#..........##...............##.................#',
+  '#.......J....##.......................K...##...#',
+  '#.....##...........###........##...............#',
+  '#.........##.............##............##......#',
+  '#..7........###........##..........###.........#',
+  '#...####..........######.........##............#',
+  '#...###..........##....##...........6..........#',
+  '#........##.........##...........##............#',
+  '#.........##.............###...................#',
+  '#.....C...##........5....###..........D........#',
+  '#...####..........##.....##....................#',
+  '#..##.........##..........##..........###......#',
+  '#......###............##.......###.............#',
+  '#.....E...##.....##...................##.......#',
+  '#......####..........##............4.....##....#',
+  '#..............####.........##...........##....#',
+  '#..##..........###..........##........###......#',
+  '#.............##...............##...F.....8....#',
+  '#...........##............##...................#',
+  '#.......##........##........##.................#',
+  '#.....H.......##...................G...##......#',
+  '#...........3........##...........##...........#',
+  '#....##.....A.................2......B.........#',
+  '#........##...........1............##..........#',
+  '#.....................S..........##............#',
+  '#....##....................##..................#',
+  '#..............................................#',
+  '################################################',
 ];
 
 /** Tier per kindling marker. Values come from `LOOT.VALUE_*` (T9); see the tier table. */
@@ -153,21 +127,21 @@ const PATROL_UNITS: readonly PatrolUnitDef[] = [
     waypointChars: 'AB',
     mode: 'pingpong',
     facing: 0,
-    role: 'bottom corridor; sweeps across KDL_04, the first contested pickup',
+    role: 'spawn area sweep; east-west patrol covering the open ground between safe kindling and the transition zone',
   },
   {
     id: 'ENM_INF_02',
     waypointChars: 'CD',
     mode: 'pingpong',
     facing: 0,
-    role: 'upper corridor; covers KDL_05 near its turnaround and the mouth of the NW deep branch',
+    role: 'upper contested area; sweeps east-west through the debris field, guards KDL_05 and approach to deep zone',
   },
   {
     id: 'ENM_INF_03',
     waypointChars: 'EFGH',
     mode: 'loop',
     facing: 0,
-    role: 'loops the open central shaft; makes the short route the exposed one and guards KDL_06',
+    role: 'rectangular loop in the transition zone; covers the C-shape ruin and cliff ridge areas, guards KDL_04 and KDL_08 approaches',
   },
   {
     id: 'ENM_INF_04',
@@ -175,8 +149,23 @@ const PATROL_UNITS: readonly PatrolUnitDef[] = [
     mode: 'pingpong',
     facing: 0,
     scanAngles: [180, 0],
-    role: 'final corridor before extraction - the last gate',
+    role: 'top zone gate; sweeps east-west in the extraction approach — the last obstacle before exit',
   },
+];
+
+/**
+ * Visual landmarks placed at key junctions for navigation orientation.
+ * All positions are verified to land on floor tiles during `validateRiftMap()`.
+ */
+const LANDMARKS: readonly LandmarkDef[] = [
+  { id: 'LMK_POOL', col: 28, row: 6, style: 'pool' },
+  { id: 'LMK_SCRATCHES', col: 20, row: 26, style: 'scratches' },
+  { id: 'LMK_RUBBLE', col: 8, row: 15, style: 'rubble' },
+  { id: 'LMK_CRACK', col: 40, row: 18, style: 'crack' },
+  { id: 'LMK_SCORCH', col: 30, row: 4, style: 'scorch' },
+  { id: 'LMK_CRYSTALS', col: 41, row: 9, style: 'crystals' },
+  { id: 'LMK_BLOODTRAIL', col: 22, row: 22, style: 'bloodtrail' },
+  { id: 'LMK_RUNE', col: 6, row: 19, style: 'rune' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -269,6 +258,7 @@ function parseRiftMap(): ParsedRiftMap {
       },
       kindlingNodes,
       enemySpawns,
+      landmarks: LANDMARKS,
     },
   };
 }
@@ -304,6 +294,11 @@ export function validateRiftMap(): string[] {
   check('spawnPoint', layout.spawnPoint);
   check('extractionPoint', layout.extractionPoint.position);
   for (const node of layout.kindlingNodes) check(node.id, node.position);
+  for (const landmark of layout.landmarks) {
+    if (!grid.isWalkable(landmark.col, landmark.row)) {
+      problems.push(`${landmark.id} at tile (${landmark.col},${landmark.row}) is not walkable`);
+    }
+  }
   for (const enemy of layout.enemySpawns) {
     enemy.patrol.waypoints.forEach((wp, i) => {
       if (!grid.isWalkable(wp.col, wp.row)) {

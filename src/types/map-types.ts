@@ -81,6 +81,25 @@ export interface ExtractionPointDef {
   readonly triggerRadius: number;
 }
 
+/** A visual landmark decal placed at a key junction for navigation orientation. */
+export interface LandmarkDef {
+  readonly id: string;
+  /** Tile column (grid coordinate, not pixels). */
+  readonly col: number;
+  /** Tile row (grid coordinate, not pixels). */
+  readonly row: number;
+  /** Which drawing routine to use. */
+  readonly style:
+    | 'pool'
+    | 'scratches'
+    | 'rubble'
+    | 'crack'
+    | 'scorch'
+    | 'crystals'
+    | 'bloodtrail'
+    | 'rune';
+}
+
 /**
  * Everything a rift scene needs to place its content.
  * `enemySpawns` is consumed by the AI system (T7), the rest by loot/extraction (T9).
@@ -90,4 +109,5 @@ export interface RiftLayoutData {
   readonly extractionPoint: ExtractionPointDef;
   readonly kindlingNodes: readonly KindlingNodeDef[];
   readonly enemySpawns: readonly EnemySpawnData[];
+  readonly landmarks: readonly LandmarkDef[];
 }

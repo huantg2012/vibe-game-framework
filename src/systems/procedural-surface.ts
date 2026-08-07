@@ -12,6 +12,10 @@
  * Deterministic: all variation comes from a hashed value-noise field, so the same map
  * always produces the same surface (no Math.random). Runs once at scene create.
  *
+ * Color palette: outdoor rift feel using `frag-outdoor` (deep olive-grey) for floor
+ * and warm brownish-grey for wall obstacles (rock/debris). Moss patches replace the
+ * original rust for organic ground staining. Teal seepage (rift contamination) retained.
+ *
  * Art recipe and validated parameters: docs/art-direction.md 14.3 and the harness in
  * docs/art/demos/rift-synth/ (floor.mjs / scene.mjs).
  */
@@ -242,21 +246,21 @@ export function createRiftSurfaceTexture(
       let b: number;
 
       if (wallPix[y * W + x]) {
-        // wall: cold dark material; continuous top-rim highlight / bottom drop-shadow / side AO
+        // wall: warm rock/debris material; continuous top-rim highlight / bottom drop-shadow / side AO
         const n = (fractal(x, y, 555) - 0.5) * 10;
-        let bv = 23 + n;
-        r = bv * 0.8;
-        g = bv * 0.9;
-        b = bv * 1.05;
+        let bv = 24 + n;
+        r = bv * 1.0;
+        g = bv * 0.88;
+        b = bv * 0.75;
         let dN = 1;
         while (dN <= 4 && y - dN >= 0 && wallPix[(y - dN) * W + x]) dN++;
         let dS = 1;
         while (dS <= 4 && y + dS < H && wallPix[(y + dS) * W + x]) dS++;
         const topRim = dN <= 3 ? (4 - dN) / 3 : 0;
         const botShad = dS <= 3 ? (4 - dS) / 3 : 0;
-        r += 24 * topRim;
-        g += 26 * topRim;
-        b += 28 * topRim;
+        r += 28 * topRim;
+        g += 24 * topRim;
+        b += 18 * topRim;
         const sf = 1 - 0.55 * botShad;
         r *= sf;
         g *= sf;
@@ -275,21 +279,22 @@ export function createRiftSurfaceTexture(
         g = CONTAM_TEAL[1];
         b = CONTAM_TEAL[2];
       } else {
-        // floor: cold-grey base + macro pools + mid grime + scratches - wall drop shadow
+        // floor: deep olive-grey base (outdoor ground) + macro pools + mid grime + scratches - wall drop shadow
         const grime = (fractal(x, y, 1) - 0.5) * 2 * SURFACE.grimeAmp;
         const macro = (vnoise(x, y, 1 / 210, 99) - 0.5) * 2 * SURFACE.macroAmp;
         let bv = 26 * (1 + grime + macro);
         bv += scratchMap[y * W + x]!;
         bv *= 1 - shadowAt(x, y) * 0.6;
-        r = bv * 0.82;
-        g = bv * 0.92;
-        b = bv * 1.05;
-        const rust = fractal(x + 1000, y - 500, 7);
-        if (rust > 0.72) {
-          const k = ((rust - 0.72) / 0.28) * 0.4;
-          r = r + (0x2a - r) * k;
-          g = g + (0x20 - g) * k;
-          b = b + (0x18 - b) * k;
+        r = bv * 0.88;
+        g = bv * 1.02;
+        b = bv * 0.82;
+        // moss patches (organic ground staining; replaces rust for outdoor feel)
+        const moss = fractal(x + 1000, y - 500, 7);
+        if (moss > 0.72) {
+          const k = ((moss - 0.72) / 0.28) * 0.4;
+          r = r + (0x12 - r) * k;
+          g = g + (0x2a - g) * k;
+          b = b + (0x14 - b) * k;
         }
       }
 
