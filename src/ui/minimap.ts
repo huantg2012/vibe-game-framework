@@ -55,6 +55,7 @@ export class Minimap {
     this.tileSize = tileSize;
     this.tiles = mapTiles;
     this.explored = new Uint8Array(mapWidth * mapHeight);
+    this.extractionDiscovered = false;
 
     this.extractionTile = {
       x: Math.floor(extractionPos.x / tileSize),

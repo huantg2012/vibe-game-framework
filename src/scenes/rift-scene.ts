@@ -18,6 +18,7 @@ import { Player } from '@/entities/player';
 import { RIFT_MAP, validateRiftMap } from '@/scenes/rift-map-data';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
+import type { SortieModifiers } from '@/managers/game-state';
 import { CombatSystem, COMBAT_FX_DEPTH, type NoiseLevel } from '@/systems/combat-system';
 import { ExtractionSystem } from '@/systems/extraction-system';
 import { LootSystem } from '@/systems/loot-system';
@@ -74,7 +75,8 @@ export class RiftScene extends Phaser.Scene {
     super({ key: 'RiftScene' });
   }
 
-  create(): void {
+  create(data?: { modifiers?: SortieModifiers; cycle?: number }): void {
+    const sortieModifiers = data?.modifiers;
     const { tileMap, grid, layout } = RIFT_MAP;
 
     if (import.meta.env.DEV) {
@@ -130,10 +132,12 @@ export class RiftScene extends Phaser.Scene {
 
     this.chaos = new ChaosSystem({
       onModulate: this.applyChaosModulators,
+      chaosRateModifier: sortieModifiers?.chaosRateModifier,
     });
 
     this.loot.create(this, layout.kindlingNodes, this.player.getSprite(), {
       getVisibilityAt: this.visibilityAt,
+      kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
     });
 
     this.extraction.create(
@@ -219,12 +223,7 @@ export class RiftScene extends Phaser.Scene {
     if (this.extractKey && Phaser.Input.Keyboard.JustDown(this.extractKey)) {
       this.extraction.requestExtract();
     }
-    // Restart key (edge-triggered, only when run ended)
-    if (this.restartKey && Phaser.Input.Keyboard.JustDown(this.restartKey)) {
-      if (this.runController.isRunEnded()) {
-        this.runController.restart();
-      }
-    }
+    // Restart key handled via event listener (see bindExtractionKeys)
   }
 
   private onPostUpdate(_time: number, delta: number): void {
@@ -264,6 +263,13 @@ export class RiftScene extends Phaser.Scene {
     this.extractKey = keyboard.addKey(extractCode, true, false);
     const restartCode = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.EXTRACTION.RESTART_KEY];
     this.restartKey = keyboard.addKey(restartCode, true, false);
+    // Use event listener instead of polling in update() — works even when scene is paused
+    keyboard.on('keydown-R', () => {
+      console.log('[RiftScene] R pressed. runEnded:', this.runController.isRunEnded());
+      if (this.runController.isRunEnded()) {
+        this.runController.restart();
+      }
+    });
   }
 
   private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {

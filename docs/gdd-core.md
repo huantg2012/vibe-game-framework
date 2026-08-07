@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-07-24
+last-modified: 2026-08-07
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,17 +17,18 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Foundation 已完成，但 `docs/specs/` 目前仅有模板，尚无任何真实 spec；`src/` 仅含项目骨架与基础设施（Phaser 引导场景、事件总线、i18n、配置、类型、工具），**无任何游戏系统实现**。下表系统均为"计划中"，spec 待 Slice 设计阶段创建后回填路径。技术方向来源见 `docs/architecture.md` 与 `docs/progress/decisions-log.md`。
+> **现状说明**：Slice 1 已完成。`docs/specs/` 含 4 份已实现的系统 spec；`src/` 包含裂隙出击环全部系统实现（移动+视野、敌人AI、战斗、混乱值+搜刮+撤离、trail导航、minimap、HUD）。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
-| 移动 + 有限视野 | 计划中 | 待创建 | 俯视角移动 + Raycasting 视野遮罩（Darkwood 式，核心体验支撑；净化点/裂隙共用） |
+| 移动 + 有限视野 | **已实现** (Slice 1) | `docs/specs/system-movement-vision.md` | 俯视角 WASD 移动 + 60 射线 Raycasting 视野遮罩；速度 80px/s，视野半径 180px |
+| 敌人 AI | **已实现** (Slice 1) | `docs/specs/system-enemy-ai.md` | 五态 FSM（巡逻/可疑/警觉/追击/返回）+ 锥形视觉感知 + A* 寻路 |
+| 战斗系统 | **已实现** (Slice 1) | `docs/specs/system-combat.md` | 前向扇形挥击、三刀击杀、敌人反击 token 机制；定位为止损工具非主要手段 |
+| 混乱值 + 搜刮 + 撤离 | **已实现** (Slice 1) | `docs/specs/system-chaos-scavenge-extract.md` | 混乱值匀速上涨(0.5/s) + 阈值惩罚；薪柴搜刮点散布；撤离点按 E 确认 |
+| Trail 导航 | **已实现** (Slice 1) | - (无独立 spec) | 面包屑路径标记，辅助玩家在有限视野下找回撤离点 |
+| Minimap | **已实现** (Slice 1) | - (无独立 spec) | 角落小地图显示已探索区域与关键点位 |
+| HUD | **已实现** (Slice 1) | - (无独立 spec) | 血量/混乱值/薪柴数量实时显示 |
 | 程序化地图生成 | 计划中 | 待创建 | Voronoi 碎片切分 + Cellular Automata 有机地形 + 裂口连接（DEC-005） |
-| 敌人 AI | 计划中 | 待创建 | FSM 状态机（巡逻/警觉/追击）+ 感知范围；行为稳定可学习 |
-| 战斗系统 | 计划中 | 待创建 | 简化版；定位为"可选、有代价、可控"的决策选项 |
-| 混乱值系统 | 计划中 | 待创建 | 随时间匀速上涨 + 行为加速；超阈值软限制惩罚（视野缩小/移速降低） |
-| 搜刮 / 薪柴经济 | 计划中 | 待创建 | 地图散布薪柴收集；薪柴为唯一通用货币（据点防御 + 自身强化） |
-| 撤离机制 | 计划中 | 待创建 | 裂隙内撤离点，到达即返回净化点（混乱值清零） |
 | 净化点分区防御 + 冲击结算 | 计划中 | 待创建 | 2 模块薪柴分配 + 不均匀攻击分布结算；冲击强度递增 |
 | 边界氛围（BoundaryAtmosphere） | 计划中 | 待创建 | 净化点边界外黑暗 + 周期性模糊幽影（粒子 + 定时 sprite）（DEC-006） |
 | 交互触发（InteractionTrigger） | 计划中 | 待创建 | 接近触发交互（overlap 检测 + 提示 + DOM 面板生命周期）（DEC-006） |
@@ -60,4 +61,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 ## 设计历史（仅决策，不含详情）
 
 - Foundation: 确立世界观（world.md）、技术架构（architecture.md，Phaser 3 + TS + Vite）、美术方向（art-direction.md，APPROVED，7/7 概念验证）、音频方向（audio-direction.md，APPROVED 方向但未做小样）。关键技术决策见 decisions-log DEC-001~006（Phaser / Event Bus / Voronoi+CA 地图 / 自实现 i18n / 净化点为可行走空间）。
-- Slice 1: [待人确认范围后填写]
+- Slice 1「裂隙潜行核心手感」(2026-07-24 ~ 2026-08-07, COMPLETE): 实现裂隙出击环全系统（移动+视野、敌人AI五态FSM、简化战斗、混乱值+搜刮+撤离、trail+minimap导航辅助、HUD）。固定地图 48x32 室外布局。验证结论：紧绷决策手感成立。试玩迭代关键调校：速度 160->80、混乱值 0.8->0.5、地图重做为室外、新增导航辅助。决策 DEC-007~023。

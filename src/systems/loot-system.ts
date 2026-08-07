@@ -26,6 +26,8 @@ interface KindlingNode {
 export interface LootSystemConfig {
   /** Called each frame per node to query visibility at its position. */
   getVisibilityAt: (point: Readonly<Vector2>) => number;
+  /** Multiplier on kindling pickup values from STORAGE module. Default 1.0. */
+  kindlingValueModifier?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -67,6 +69,8 @@ export class LootSystem {
   private carried = 0;
   private getVisibilityAt!: (point: Readonly<Vector2>) => number;
   private overlapCollider: Phaser.Physics.Arcade.Collider | null = null;
+  /** STORAGE module bonus applied to pickup values. */
+  private kindlingValueModifier = 1.0;
 
   create(
     scene: Phaser.Scene,
@@ -76,6 +80,8 @@ export class LootSystem {
   ): void {
     this.scene = scene;
     this.getVisibilityAt = config.getVisibilityAt;
+    this.kindlingValueModifier = config.kindlingValueModifier ?? 1.0;
+    this.carried = 0;
 
     ensureLootTexture(scene);
 
@@ -140,7 +146,7 @@ export class LootSystem {
 
   destroy(): void {
     if (this.overlapCollider) {
-      this.scene.physics.world.removeCollider(this.overlapCollider);
+      this.scene?.physics?.world?.removeCollider(this.overlapCollider);
       this.overlapCollider = null;
     }
     for (const node of this.nodes) {
@@ -161,7 +167,9 @@ export class LootSystem {
     const body = node.sprite.body as Phaser.Physics.Arcade.StaticBody | null;
     if (body) body.enable = false;
 
-    const value = node.def.value ?? tierValue(node.def.tier);
+    const baseValue = node.def.value ?? tierValue(node.def.tier);
+    // Apply STORAGE module bonus (spec rule 29), floor to 1
+    const value = Math.max(1, Math.floor(baseValue * this.kindlingValueModifier));
     this.carried += value;
 
     eventBus.emit(GameEvent.KINDLING_COLLECTED, {

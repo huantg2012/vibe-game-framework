@@ -49,9 +49,19 @@ export class BootScene extends Phaser.Scene {
     // Generate placeholder textures for development
     this.generatePlaceholders();
 
-    // Dev deep link: `#rift` boots straight into the scene under development.
-    const deepLink = import.meta.env.DEV && window.location.hash === '#rift';
-    this.scene.start(deepLink ? 'RiftScene' : 'MainMenuScene');
+    // Dev deep link: `#rift` or `#purif` boots straight into the target scene.
+    if (import.meta.env.DEV) {
+      const hash = window.location.hash;
+      if (hash === '#rift') {
+        this.scene.start('RiftScene');
+        return;
+      }
+      if (hash === '#purif') {
+        this.scene.start('PurificationScene');
+        return;
+      }
+    }
+    this.scene.start('MainMenuScene');
   }
 
   /**

@@ -149,6 +149,8 @@ export class AISystem implements AISystemAPI {
     this.scene = scene;
     this.occluders = occluders;
     this.walk = walk;
+    this.hasPreviousPlayerPos = false;
+    this.playerIsMoving = false;
     // Smoothing has to keep a body's width of room, not just a sight line: a shortcut
     // that only a point could take leaves the enemy grinding against a corner.
     this.pathfinder = new GridPathfinder(walk, occluders, GAME_CONSTANTS.AI.BODY_SIZE);

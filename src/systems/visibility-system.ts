@@ -180,6 +180,20 @@ export class VisibilitySystem {
     this.config = config;
     this.occluders = occluders;
 
+    // Reset mutable state for scene re-entry
+    this.degradeLevel = 0;
+    this.budgetIndex = 0;
+    this.budgetFilled = 0;
+    this.budgetSum = 0;
+    this.budgetSamples.fill(0);
+    this.frameIndex = 0;
+    this.elapsedMs = 0;
+    this.radiusScale = 1;
+    this.edgeCorruption = 0;
+    this.screenFlicker = 0;
+    this.cacheValid = false;
+    this.glowSources.clear();
+
     const camera = scene.cameras.main;
     this.padding = occluders.tileSize * 2;
     this.maskWidth = Math.ceil(camera.width / camera.zoomX) + this.padding * 2;

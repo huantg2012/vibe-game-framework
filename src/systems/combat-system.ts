@@ -228,21 +228,30 @@ export class CombatSystem implements CombatSystemAPI {
     this.ai = ai;
     this.hooks = hooks;
 
+    // Reset all combat state (critical for scene re-entry via scene.start)
+    this.enabled = true;
+    this.dead = false;
+    this.health = this.maxHealth;
+    this.invulnRemainingMs = 0;
+    this.flashRemainingMs = 0;
+    this.cooldownRemainingMs = 0;
+    this.phase = 'idle';
+    this.swingElapsedMs = 0;
+    this.attackTokensInUse = 0;
+    this.enemies.clear();
+    this.hitSet.clear();
+
     this.graphics = scene.add.graphics().setDepth(COMBAT_FX_DEPTH);
     for (let i = 0; i < GAME_CONSTANTS.COMBAT.FX_POOL_SIZE; i++) {
       const image = scene.add
         .image(0, 0, ENEMY_BODY_TEXTURE)
         .setDepth(COMBAT_FX_DEPTH)
         .setVisible(false);
-      // Fill rather than tint: a multiply tint leaves a red sprite red, while a fill
-      // replaces every opaque pixel with white and keeps the silhouette.
       image.setTintFill(GAME_CONSTANTS.COMBAT.FX_COLOR);
       this.fx.push({ image, remainingMs: 0, durationMs: 0, fade: false });
     }
 
     this.syncRoster();
-    // The HUD's only source of health is this event, so the run has to open with one.
-    // Consequence for wiring order: whoever listens must exist before `create()` runs.
     this.emitHealth();
   }
 

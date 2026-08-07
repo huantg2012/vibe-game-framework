@@ -78,6 +78,8 @@ export interface ChaosSystemAPI {
 export interface ChaosSystemConfig {
   /** Called when value moves far enough to warrant a modulator update. */
   onModulate?: (modulators: ChaosModulators) => void;
+  /** Multiplier on BASE_RATE from the purification module (BARRIER effect). Default 1.0. */
+  chaosRateModifier?: number;
 }
 
 /** Max dt (ms) clamped to prevent background-tab chaos explosions. */
@@ -88,6 +90,8 @@ export class ChaosSystem implements ChaosSystemAPI {
   private peak = 0;
   private paused = false;
   private rateMultiplier = 1.0;
+  /** Module-based rate modifier (BARRIER effect). Applied multiplicatively on BASE_RATE. */
+  private readonly chaosRateModifier: number;
 
   private lastEmitted: number = GAME_CONSTANTS.CHAOS.START_VALUE;
   private lastModulated: number = GAME_CONSTANTS.CHAOS.START_VALUE;
@@ -112,6 +116,7 @@ export class ChaosSystem implements ChaosSystemAPI {
   private readonly onEnemyKilled: (payload: { enemyId: string; position: { x: number; y: number } }) => void;
 
   constructor(config?: ChaosSystemConfig) {
+    this.chaosRateModifier = config?.chaosRateModifier ?? 1.0;
     this.onModulate = config?.onModulate ?? null;
 
     this.onEnemyAlert = (payload) => {
@@ -156,7 +161,7 @@ export class ChaosSystem implements ChaosSystemAPI {
     this.clockMs += dtMs;
 
     const chaos = GAME_CONSTANTS.CHAOS;
-    const increment = chaos.BASE_RATE * this.rateMultiplier * dtSec;
+    const increment = chaos.BASE_RATE * this.chaosRateModifier * this.rateMultiplier * dtSec;
     this.value = Math.min(this.value + increment, chaos.HARD_CAP);
     if (this.value > this.peak) this.peak = this.value;
 
@@ -192,7 +197,7 @@ export class ChaosSystem implements ChaosSystemAPI {
   }
 
   getRate(): number {
-    return GAME_CONSTANTS.CHAOS.BASE_RATE * this.rateMultiplier;
+    return GAME_CONSTANTS.CHAOS.BASE_RATE * this.chaosRateModifier * this.rateMultiplier;
   }
 
   getStage(): 'safe' | 'warning' | 'danger' | 'overflow' {

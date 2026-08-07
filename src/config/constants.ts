@@ -239,29 +239,39 @@ export const GAME_CONSTANTS = {
     FRACTURE_MAX_PER_EDGE: 2, // max connections between two adjacent fragments
   },
 
-  /** Purification point */
+  /** Purification point (docs/specs/system-purification-impact.md) */
   PURIFICATION: {
-    INITIAL_KINDLING: 10,
-    BASE_IMPACT_INTENSITY: 20,
-    IMPACT_GROWTH_RATE: 1.3,   // multiplier per cycle
-    MODULE_MAX_HEALTH: 100,
     /** Spatial layout */
-    MAP_WIDTH: 12,             // tiles
-    MAP_HEIGHT: 10,            // tiles
-    INTERACTION_RADIUS: 48,    // pixels (~1.5 tiles) for module overlap trigger
+    MAP_COLS: 14,              // tiles
+    MAP_ROWS: 12,             // tiles
+    INTERACTION_RADIUS: 32,    // pixels for module/rift-entrance interaction
+    /** Module state */
+    MODULE_INITIAL_HP: 80,
+    MODULE_MAX_HP: 100,
+    REPAIR_PER_KINDLING: 10,   // 1 kindling = this many hp
+    /** Impact system */
+    BASE_IMPACT_DAMAGE: 25,
+    INTENSITY_STEP: 0.15,      // impactIntensity grows by this each cycle
+    MAX_INTENSITY: 2.5,
+    THREAT_FOCUS_RATIO: 0.65,  // primary target gets this fraction of total damage
+    FORECAST_ACCURACY: 0.80,   // particle prediction accuracy
+    /** Module effects */
+    MAX_BARRIER_REDUCTION: 0.30, // chaosRate reduction at full hp
+    MAX_STORAGE_BONUS: 0.50,     // kindling value bonus at full hp
     /** Boundary atmosphere */
     ATMOSPHERE: {
-      PARTICLE_COUNT: 40,          // max particles in boundary darkness
-      PARTICLE_ALPHA_MIN: 0.03,    // barely visible
-      PARTICLE_ALPHA_MAX: 0.12,    // subtle but noticeable
-      PARTICLE_SPEED: 8,           // pixels per second (very slow drift)
-      APPARITION_INTERVAL_MIN: 8000,  // ms between blurry shape appearances
+      PARTICLE_COUNT: 25,          // active boundary particles
+      PARTICLE_ALPHA_MIN: 0.03,
+      PARTICLE_ALPHA_MAX: 0.12,
+      PARTICLE_SPEED: 8,           // px/s slow inward drift
+      APPARITION_INTERVAL_MIN: 8000,  // ms
       APPARITION_INTERVAL_MAX: 15000,
-      APPARITION_DURATION: 3000,      // ms a shape stays visible
+      APPARITION_DURATION: 3000,      // ms (0.5s fade in + 2s hold + 0.5s fade out)
       APPARITION_MAX_SIMULTANEOUS: 2,
-      /** Intensity multiplier when impact is imminent (scales alpha/frequency) */
-      IMPACT_INTENSITY_SCALE: 1.5,
     },
+    /** Scene transition timing */
+    IMPACT_RESULT_DISPLAY_MS: 2000,
+    SCENE_TRANSITION_DELAY_MS: 600,
   },
 
   /**

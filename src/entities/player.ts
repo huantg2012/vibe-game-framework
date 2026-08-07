@@ -56,6 +56,10 @@ export class Player {
 
   create(scene: Phaser.Scene, config: PlayerConfig): void {
     this.scene = scene;
+    this.inputEnabled = true;
+    this.moving = false;
+    this.speedModifiers.clear();
+    this.speedMultiplier = 1;
     this.baseSpeed = config.baseSpeed ?? GAME_CONSTANTS.PLAYER.SPEED;
     this.facing4 = config.facing ?? 'right';
     this.facingAngle = FACING4_ANGLES[this.facing4];

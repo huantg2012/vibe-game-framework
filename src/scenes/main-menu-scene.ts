@@ -4,6 +4,7 @@
  */
 
 import Phaser from 'phaser';
+import { gameState } from '@/managers/game-state';
 import { SAVE_KEY } from '@/types/save-data';
 
 export class MainMenuScene extends Phaser.Scene {
@@ -30,8 +31,8 @@ export class MainMenuScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     // The game itself is keyboard-driven (DEC-008), so the menu is too.
-    this.input.keyboard?.once('keydown-ENTER', () => this.scene.start('RiftScene'));
-    this.input.keyboard?.once('keydown-SPACE', () => this.scene.start('RiftScene'));
+    this.input.keyboard?.once('keydown-ENTER', () => { gameState.reset(); this.scene.start('PurificationScene'); });
+    this.input.keyboard?.once('keydown-SPACE', () => { gameState.reset(); this.scene.start('PurificationScene'); });
 
     // Start new game button
     const startBtn = this.add.text(width / 2, height / 2 + 40, '[ New Expedition ]', {
@@ -43,7 +44,8 @@ export class MainMenuScene extends Phaser.Scene {
     startBtn.on('pointerover', () => startBtn.setColor('#ffffff'));
     startBtn.on('pointerout', () => startBtn.setColor('#aaaaaa'));
     startBtn.on('pointerdown', () => {
-      this.scene.start('RiftScene');
+      gameState.reset();
+      this.scene.start('PurificationScene');
     });
 
     // Continue button (only if save exists)

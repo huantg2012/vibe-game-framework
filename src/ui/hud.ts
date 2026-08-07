@@ -89,6 +89,10 @@ export class HUD {
 
   create(scene: Phaser.Scene, config: HUDConfig): void {
     this.config = config;
+    this.chaosValue = 0;
+    this.healthFrac = 1;
+    this.kindling = 0;
+    this.overflowPulseMs = 0;
 
     const cam = scene.cameras.main;
     const w = cam.width / cam.zoomX;
@@ -274,7 +278,7 @@ export class HUD {
       `峰值混乱: ${peak}`,
       `用时: ${elapsed}s`,
       '',
-      '按 R 重新出击',
+      survived ? '按 R 返回净化点' : '按 R 重新出击',
     ];
     this.resultBody.setText(lines.join('\n'));
   }

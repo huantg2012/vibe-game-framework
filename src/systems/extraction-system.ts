@@ -53,6 +53,7 @@ export class ExtractionSystem {
     this.extractionPoint = extractionPoint;
     this.getPlayerPosition = getPlayerPosition;
     this.isRunEnded = isRunEnded;
+    this.elapsed = 0;
 
     // Pulsing circle marker
     this.marker = scene.add.circle(
