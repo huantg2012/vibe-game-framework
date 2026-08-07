@@ -250,10 +250,11 @@ export class ChaosSystem implements ChaosSystemAPI {
   private checkEmit(): void {
     const step = GAME_CONSTANTS.CHAOS.EMIT_STEP;
     if (Math.abs(this.value - this.lastEmitted) >= step) {
+      const delta = this.value - this.lastEmitted;
       this.lastEmitted = this.value;
       eventBus.emit(GameEvent.CHAOS_CHANGED, {
         value: this.value,
-        delta: this.value - this.lastEmitted,
+        delta,
         max: GAME_CONSTANTS.CHAOS.MAX_VALUE,
         rate: this.getRate(),
       });
