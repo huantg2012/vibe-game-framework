@@ -246,11 +246,11 @@ export const GAME_CONSTANTS = {
     MAP_ROWS: 12,             // tiles
     INTERACTION_RADIUS: 32,    // pixels for module/rift-entrance interaction
     /** Module state */
-    MODULE_INITIAL_HP: 80,
+    MODULE_INITIAL_HP: 70,
     MODULE_MAX_HP: 100,
-    REPAIR_PER_KINDLING: 10,   // 1 kindling = this many hp
+    REPAIR_PER_KINDLING: 4,    // 1 kindling = this many hp (tuned for scarcity)
     /** Impact system */
-    BASE_IMPACT_DAMAGE: 25,
+    BASE_IMPACT_DAMAGE: 30,
     INTENSITY_STEP: 0.15,      // impactIntensity grows by this each cycle
     MAX_INTENSITY: 2.5,
     THREAT_FOCUS_RATIO: 0.65,  // primary target gets this fraction of total damage

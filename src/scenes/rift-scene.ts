@@ -160,6 +160,7 @@ export class RiftScene extends Phaser.Scene {
       isRunEnded: () => this.runController.isRunEnded(),
       getPeakChaos: () => this.chaos.getPeak(),
       getElapsedMs: () => this.runController.getElapsedMs(),
+      kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
     });
 
     // Apply initial chaos modulators (all at 0 - no effect)
@@ -265,7 +266,6 @@ export class RiftScene extends Phaser.Scene {
     this.restartKey = keyboard.addKey(restartCode, true, false);
     // Use event listener instead of polling in update() — works even when scene is paused
     keyboard.on('keydown-R', () => {
-      console.log('[RiftScene] R pressed. runEnded:', this.runController.isRunEnded());
       if (this.runController.isRunEnded()) {
         this.runController.restart();
       }

@@ -82,7 +82,6 @@ export class RunController {
    * the auto-transition delay and go to purification immediately.
    */
   restart(): void {
-    console.log('[RunController.restart] called. runEnded:', this.runEnded, 'lastEndReason:', this.lastEndReason, 'restarted:', this.restarted);
     if (!this.runEnded) return;
 
     if (this.lastEndReason === 'player_died') {
@@ -107,13 +106,11 @@ export class RunController {
   // ------------------------------------------------------------------ internal
 
   private endRun(reason: EndRunReason): void {
-    console.log('[RunController.endRun] reason:', reason, 'already ended:', this.runEnded);
     if (this.runEnded) return;
     this.runEnded = true;
     this.restarted = false;
     this.lastEndReason = reason;
     this.lastKindling = reason === 'extract' ? this.deps.getCarriedKindling() : 0;
-    console.log('[RunController.endRun] set runEnded=true, lastKindling:', this.lastKindling);
 
     this.deps.pauseChaos(true);
     this.deps.setPlayerInput(false);
@@ -133,16 +130,10 @@ export class RunController {
   }
 
   private transitionToPurification(): void {
-    console.log('[RunController.transitionToPurification] calling scene.start("PurificationScene"). lastKindling:', this.lastKindling);
     this.restarted = true;
-    try {
-      this.scene.scene.start('PurificationScene', {
-        kindlingGained: this.lastKindling,
-        survived: this.lastEndReason === 'extract',
-      });
-      console.log('[RunController.transitionToPurification] scene.start called successfully');
-    } catch (err) {
-      console.error('[RunController.transitionToPurification] ERROR:', err);
-    }
+    this.scene.scene.start('PurificationScene', {
+      kindlingGained: this.lastKindling,
+      survived: this.lastEndReason === 'extract',
+    });
   }
 }

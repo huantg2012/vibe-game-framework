@@ -94,6 +94,35 @@ function onKeyDown(e: KeyboardEvent): void {
 }
 
 // ---------------------------------------------------------------------------
+// Effect helpers
+// ---------------------------------------------------------------------------
+
+const P = GAME_CONSTANTS.PURIFICATION;
+
+function computeEffectText(type: ModuleType, hp: number): string {
+  if (type === 'BARRIER') {
+    const pct = Math.round((hp / 100) * P.MAX_BARRIER_REDUCTION * 100);
+    return `混乱增速 -${pct}%`;
+  }
+  const mult = (1 + (hp / 100) * P.MAX_STORAGE_BONUS).toFixed(2);
+  return `拾取价值 x${mult}`;
+}
+
+function computeEffectDiff(type: ModuleType, currentHp: number, repairedHp: number): string {
+  if (repairedHp <= currentHp) return '';
+  if (type === 'BARRIER') {
+    const currentPct = Math.round((currentHp / 100) * P.MAX_BARRIER_REDUCTION * 100);
+    const repairedPct = Math.round((repairedHp / 100) * P.MAX_BARRIER_REDUCTION * 100);
+    const diff = repairedPct - currentPct;
+    return diff > 0 ? `(+${diff}%)` : '';
+  }
+  const currentMult = 1 + (currentHp / 100) * P.MAX_STORAGE_BONUS;
+  const repairedMult = 1 + (repairedHp / 100) * P.MAX_STORAGE_BONUS;
+  const diff = repairedMult - currentMult;
+  return diff > 0.001 ? `(+${diff.toFixed(2)})` : '';
+}
+
+// ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
 
@@ -108,12 +137,30 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const typeLabel = type === 'BARRIER' ? 'BARRIER (Chaos Reduction)' : 'STORAGE (Kindling Bonus)';
   const typeColor = type === 'BARRIER' ? '#4488cc' : '#cc8844';
 
+  // --- Effect preview calculations ---
+  const currentEffectText = computeEffectText(type, hp);
+  const repairedHp = Math.min(hp + selectedAmount * repairPer, maxHp);
+  const repairedEffectText = computeEffectText(type, repairedHp);
+  const diffText = computeEffectDiff(type, hp, repairedHp);
+  const showRepaired = selectedAmount > 0;
+
+  // Brighter variant of typeColor for "after repair" line
+  const repairedColor = type === 'BARRIER' ? '#66aaee' : '#eea866';
+
   panel.innerHTML = `
     <div style="margin-bottom:12px;font-size:14px;color:${typeColor};font-weight:bold;">
       ${typeLabel}
     </div>
     <div style="margin-bottom:8px;font-size:12px;">
       HP: <span style="color:#fff;">${hp}</span> / ${maxHp}
+    </div>
+    <div style="margin:8px 0;border-top:1px solid #333;border-bottom:1px solid #333;padding:8px 0;">
+      <div style="font-size:11px;color:${typeColor};">
+        当前效果: ${currentEffectText}
+      </div>
+      ${showRepaired ? `<div style="font-size:11px;color:${repairedColor};margin-top:4px;">
+        修复后: ${repairedEffectText} <span style="color:#66cc88;">${diffText}</span>
+      </div>` : ''}
     </div>
     <div style="margin-bottom:12px;font-size:12px;">
       Available Kindling: <span style="color:#2ae6c8;">${reserve}</span>

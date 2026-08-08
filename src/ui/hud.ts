@@ -37,6 +37,7 @@ export interface HUDConfig {
   isRunEnded: () => boolean;
   getPeakChaos: () => number;
   getElapsedMs: () => number;
+  kindlingValueModifier?: number;
 }
 
 export class HUD {
@@ -50,6 +51,9 @@ export class HUD {
   private healthBarBg!: Phaser.GameObjects.Rectangle;
   private healthBarFill!: Phaser.GameObjects.Rectangle;
   private kindlingText!: Phaser.GameObjects.Text;
+  private modifierText: Phaser.GameObjects.Text | null = null;
+  private pickupFlash: Phaser.GameObjects.Text | null = null;
+  private pickupFlashTween: Phaser.Tweens.Tween | null = null;
   private extractPrompt!: Phaser.GameObjects.Text;
 
   // Result panel
@@ -58,6 +62,7 @@ export class HUD {
   private resultBody!: Phaser.GameObjects.Text;
 
   // State
+  private scene!: Phaser.Scene;
   private chaosValue = 0;
   private overflowPulseMs = 0;
   private healthFrac = 1;
@@ -79,8 +84,10 @@ export class HUD {
       this.updateHealthBar();
     };
     this.onKindlingCollected = (payload) => {
+      if (!this.scene?.scene?.isActive()) return;
       this.kindling = payload.total;
       this.updateKindlingText();
+      this.showPickupFlash(payload.amount);
     };
     this.onRiftExited = (payload) => {
       this.showResultPanel(payload.survived, payload.kindlingGained);
@@ -88,11 +95,15 @@ export class HUD {
   }
 
   create(scene: Phaser.Scene, config: HUDConfig): void {
+    this.scene = scene;
     this.config = config;
     this.chaosValue = 0;
     this.healthFrac = 1;
     this.kindling = 0;
     this.overflowPulseMs = 0;
+    this.pickupFlash = null;
+    this.pickupFlashTween = null;
+    this.modifierText = null;
 
     const cam = scene.cameras.main;
     const w = cam.width / cam.zoomX;
@@ -151,6 +162,22 @@ export class HUD {
       .setOrigin(1, 0)
       .setScrollFactor(0)
       .setDepth(HUD_DEPTH);
+
+    // --- Kindling value modifier (below kindling count) ---
+    const modifier = config.kindlingValueModifier ?? 1.0;
+    if (modifier > 1.0) {
+      this.modifierText = scene.add
+        .text(w - BAR_MARGIN, BAR_MARGIN + 14, `x${modifier.toFixed(1)}`, {
+          fontSize: '9px',
+          color: '#cc8844',
+          fontFamily: 'monospace',
+        })
+        .setOrigin(1, 0)
+        .setScrollFactor(0)
+        .setDepth(HUD_DEPTH);
+    } else {
+      this.modifierText = null;
+    }
 
     // --- Extract prompt (bottom center) ---
     this.extractPrompt = scene.add
@@ -227,6 +254,11 @@ export class HUD {
     this.updateKindlingText();
     this.resultPanel.setVisible(false);
     this.extractPrompt.setVisible(false);
+    if (this.pickupFlashTween) {
+      this.pickupFlashTween.stop();
+      this.pickupFlashTween = null;
+    }
+    this.pickupFlash?.setVisible(false);
   }
 
   destroy(): void {
@@ -235,6 +267,11 @@ export class HUD {
     eventBus.off(GameEvent.KINDLING_COLLECTED, this.onKindlingCollected);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRiftExited);
 
+    if (this.pickupFlashTween) {
+      this.pickupFlashTween.stop();
+      this.pickupFlashTween = null;
+    }
+
     this.chaosBarBg?.destroy();
     this.chaosBarFill?.destroy();
     this.chaosTick50?.destroy();
@@ -242,6 +279,8 @@ export class HUD {
     this.healthBarBg?.destroy();
     this.healthBarFill?.destroy();
     this.kindlingText?.destroy();
+    this.modifierText?.destroy();
+    this.pickupFlash?.destroy();
     this.extractPrompt?.destroy();
     this.resultPanel?.destroy();
   }
@@ -259,6 +298,51 @@ export class HUD {
 
   private updateKindlingText(): void {
     this.kindlingText.setText(String(this.kindling));
+  }
+
+  private showPickupFlash(amount: number): void {
+    // Guard: scene may be shutting down (overlap fires after scene.start)
+    if (!this.scene.scene.isActive()) return;
+
+    // Kill old tween if still running (handles rapid consecutive pickups)
+    if (this.pickupFlashTween) {
+      this.pickupFlashTween.stop();
+      this.pickupFlashTween = null;
+    }
+
+    const cam = this.scene.cameras.main;
+    const w = cam.width / cam.zoomX;
+    // Position: to the left of the kindling number, same baseline
+    const flashX = w - BAR_MARGIN - this.kindlingText.width - 4;
+
+    if (this.pickupFlash) {
+      // Reuse existing text object
+      this.pickupFlash.setText(`+${amount}`);
+      this.pickupFlash.setPosition(flashX, BAR_MARGIN);
+      this.pickupFlash.setAlpha(1);
+      this.pickupFlash.setVisible(true);
+    } else {
+      this.pickupFlash = this.scene.add
+        .text(flashX, BAR_MARGIN, `+${amount}`, {
+          fontSize: '12px',
+          color: KINDLING_COLOR,
+          fontFamily: 'monospace',
+        })
+        .setOrigin(1, 0)
+        .setScrollFactor(0)
+        .setDepth(HUD_DEPTH);
+    }
+
+    this.pickupFlashTween = this.scene.tweens.add({
+      targets: this.pickupFlash,
+      alpha: 0,
+      duration: 800,
+      ease: 'Linear',
+      onComplete: () => {
+        this.pickupFlash?.setVisible(false);
+        this.pickupFlashTween = null;
+      },
+    });
   }
 
   private showResultPanel(survived: boolean, kindlingGained: number): void {

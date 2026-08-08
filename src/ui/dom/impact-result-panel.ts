@@ -5,7 +5,6 @@
  * Pure HTML/CSS overlay, no Phaser UI.
  */
 
-import { GAME_CONSTANTS } from '@/config/constants';
 import type { ImpactDamageEntry } from '@/systems/impact-system';
 
 // ---------------------------------------------------------------------------
@@ -25,7 +24,7 @@ export const impactResultPanel = {
   },
 
   /**
-   * Show the impact result. Calls onDone after the display period.
+   * Show the impact result. Calls onDone when the user dismisses the panel.
    */
   show(damages: readonly ImpactDamageEntry[], intensity: number, onDone: () => void): void {
     if (panel) destroyPanel();
@@ -47,6 +46,7 @@ export const impactResultPanel = {
       'text-align:center',
       'box-shadow:0 0 30px rgba(200,0,0,0.4)',
       'animation:impact-shake 0.3s ease-out',
+      'cursor:pointer',
     ].join(';');
 
     // Inject keyframe if not already present
@@ -72,19 +72,30 @@ export const impactResultPanel = {
 
     panel.innerHTML = `
       <div style="font-size:16px;font-weight:bold;margin-bottom:10px;color:#ff4444;">
-        IMPACT! (x${intensity.toFixed(2)})
+        冲击! (x${intensity.toFixed(2)})
       </div>
       <div style="font-size:13px;line-height:1.8;">
         ${lines.join('<br>')}
+      </div>
+      <div style="font-size:11px;color:#888;margin-top:12px;">
+        点击或按任意键关闭
       </div>
     `;
 
     document.body.appendChild(panel);
 
-    timer = setTimeout(() => {
+    // Close on click or any keypress
+    const dismiss = (): void => {
+      panel?.removeEventListener('click', dismiss);
+      document.removeEventListener('keydown', onKey);
       destroyPanel();
       onDone();
-    }, GAME_CONSTANTS.PURIFICATION.IMPACT_RESULT_DISPLAY_MS);
+    };
+    const onKey = (e: KeyboardEvent): void => {
+      if (!e.repeat) dismiss();
+    };
+    panel.addEventListener('click', dismiss);
+    document.addEventListener('keydown', onKey);
   },
 
   destroy(): void {

@@ -142,7 +142,10 @@ export class PurificationScene extends Phaser.Scene {
       gameState.addKindling(data.kindlingGained);
     }
 
-    // Generate forecast for boundary atmosphere
+    // Run impact on arrival (not on departure) — spec adjustment per playtest feedback
+    const impactResult = impactSystem.run();
+
+    // Generate forecast for boundary atmosphere (for NEXT impact)
     impactSystem.generateForecast();
 
     this.transitioning = false;
@@ -222,6 +225,15 @@ export class PurificationScene extends Phaser.Scene {
     // Post-update for visibility sync
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+
+    // Show impact result on arrival (player must dismiss before interacting)
+    if (!impactResult.skipped) {
+      this.player.setInputEnabled(false);
+      this.cameras.main.shake(300, 0.005);
+      impactResultPanel.show(impactResult.damages, impactResult.intensity, () => {
+        this.player.setInputEnabled(true);
+      });
+    }
   }
 
   update(_time: number, delta: number): void {
@@ -295,22 +307,7 @@ export class PurificationScene extends Phaser.Scene {
     if (this.transitioning) return;
     this.transitioning = true;
     this.player.setInputEnabled(false);
-
-    // Run impact (spec rule 19-23)
-    const result = impactSystem.run();
-
-    if (result.skipped) {
-      // First sortie: skip impact, go straight to rift
-      this.transitionToRift();
-    } else {
-      // Camera shake
-      this.cameras.main.shake(300, 0.005);
-
-      // Show result panel, then transition
-      impactResultPanel.show(result.damages, result.intensity, () => {
-        this.transitionToRift();
-      });
-    }
+    this.transitionToRift();
   }
 
   private transitionToRift(): void {
