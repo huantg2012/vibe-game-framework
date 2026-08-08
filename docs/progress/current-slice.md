@@ -1,12 +1,12 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-07
-last-modified: 2026-08-07
-note: Slice 2 启动。净化点闭环。
+last-modified: 2026-08-08
+note: Slice 2 完成。净化点闭环验证通过。
 ---
 
-# Slice 2: 净化点闭环 【ACTIVE — 2026-08-07 启动】
+# Slice 2: 净化点闭环 【COMPLETE — 2026-08-08 验证通过】
 
 类型：系统
 日期：2026-08-07 启动
@@ -73,7 +73,7 @@ Menu → 净化点 → 裂隙出击 → 撤离 → 净化点 → 分配薪柴 �
 | T7 | 实现：薪柴分配面板（DOM） | code | 🔴 | Done | T6, T2 | `src/ui/dom/allocation-panel.ts` |
 | T8 | 实现：冲击系统 + 结果面板 | code | 🔴 | Done | T7, T2 | `src/systems/impact-system.ts` + `src/ui/dom/impact-result-panel.ts` |
 | T9 | 实现：模块效果→出击参数 | code | 🔴 | Done | T8, T3 | 修改 chaos-system + loot-system |
-| T10 | QA 验收 | qa | 🟢 | Active | T9 | `docs/qa/slice-2-report.md` |
+| T10 | QA 验收 | qa | 🟢 | Done | T9 | `docs/qa/slice-2-report.md` |
 
 ---
 
@@ -90,7 +90,20 @@ Menu → 净化点 → 裂隙出击 → 撤离 → 净化点 → 分配薪柴 �
 
 **Blocking**：MainMenuScene "New Expedition" 仍跳转 RiftScene 而非 PurificationScene，且未调用 gameState.reset()。
 
-**下一步**：
-1. 修复 B1（code agent，5 分钟）
-2. 修复后人试玩验证（回答验证问题）
-3. D1/D2 视觉演出偏差可推迟到打磨 Slice
+**修复**：B1 已修复（code agent）。
+
+---
+
+## 人验证结果（2026-08-08）
+
+**结论：PASS**
+
+**验证问题**：资源分配的纠结感是否成立？
+**回答**：YES。经济数值调校后（REPAIR_PER_KINDLING 10->4, BASE_IMPACT_DAMAGE 25->30, MODULE_INITIAL_HP 80->70），分配纠结从第一轮起就存在。
+
+**附加收获**：
+- 模块效果 UI 信息展示改善了决策可读性
+- 冲击面板时机调整为返回时显示（手动关闭），避免打断节奏
+
+**遗留项（归入后续 Slice）**：
+- 长期经济平衡（螺旋下降后的翻盘机制）→ Slice 3+ 规划
