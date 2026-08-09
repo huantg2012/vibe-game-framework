@@ -1,0 +1,150 @@
+/**
+ * ContaminantNodeSystem — places and manages contaminant pickup nodes in the rift map.
+ *
+ * Each node is a deep-purple 8x8 pulsing sprite. Pickup via Phaser Arcade overlap.
+ * Follows the same pattern as LootSystem but for contaminant acquisition.
+ *
+ * Spec: docs/specs/system-growth-tide.md, rules CN8-CN9.
+ */
+
+import Phaser from 'phaser';
+import { GAME_CONSTANTS } from '@/config/constants';
+import { contaminantSystem } from '@/systems/contaminant-system';
+import type { ContaminantRarity, ContaminantType, Vector2 } from '@/types/game-types';
+import type { ContaminantNodeDef } from '@/types/map-types';
+
+interface ContaminantNode {
+  readonly def: ContaminantNodeDef;
+  readonly sprite: Phaser.GameObjects.Rectangle;
+  collected: boolean;
+}
+
+export interface ContaminantNodeSystemConfig {
+  /** Called each frame per node to query visibility at its position. */
+  getVisibilityAt: (point: Readonly<Vector2>) => number;
+}
+
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+const NODE_COLOR = 0x7722aa;
+const NODE_SIZE = 8;
+const NODE_DEPTH = 15; // same layer as loot nodes
+
+/** The 3 types available in Slice 3. */
+const SLICE3_TYPES: ContaminantType[] = ['solidify', 'delay', 'erode'];
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+function rollRarity(): ContaminantRarity {
+  const weights = GAME_CONSTANTS.CONTAMINANT.RARITY_WEIGHTS;
+  const total = weights.common + weights.fine + weights.rare;
+  const roll = Math.random() * total;
+  if (roll < weights.common) return 'common';
+  if (roll < weights.common + weights.fine) return 'fine';
+  return 'rare';
+}
+
+function rollType(): ContaminantType {
+  return SLICE3_TYPES[Math.floor(Math.random() * SLICE3_TYPES.length)]!;
+}
+
+// ---------------------------------------------------------------------------
+// ContaminantNodeSystem
+// ---------------------------------------------------------------------------
+
+export class ContaminantNodeSystem {
+  private scene!: Phaser.Scene;
+  private nodes: ContaminantNode[] = [];
+  private getVisibilityAt!: (point: Readonly<Vector2>) => number;
+  private overlapCollider: Phaser.Physics.Arcade.Collider | null = null;
+  private pulseTime = 0;
+
+  create(
+    scene: Phaser.Scene,
+    nodeDefs: readonly ContaminantNodeDef[],
+    playerSprite: Phaser.GameObjects.GameObject,
+    config: ContaminantNodeSystemConfig,
+  ): void {
+    this.scene = scene;
+    this.getVisibilityAt = config.getVisibilityAt;
+    this.pulseTime = 0;
+
+    for (const def of nodeDefs) {
+      const sprite = scene.add.rectangle(
+        def.position.x,
+        def.position.y,
+        NODE_SIZE,
+        NODE_SIZE,
+        NODE_COLOR,
+      );
+      sprite.setDepth(NODE_DEPTH);
+      scene.physics.add.existing(sprite, true); // static body
+      this.nodes.push({ def, sprite, collected: false });
+    }
+
+    // Single overlap collider for all node sprites
+    const group = scene.physics.add.staticGroup();
+    for (const node of this.nodes) group.add(node.sprite);
+    this.overlapCollider = scene.physics.add.overlap(
+      playerSprite,
+      group,
+      (_player, nodeObj) => this.onOverlap(nodeObj as Phaser.GameObjects.Rectangle),
+    );
+  }
+
+  /** Update visibility alpha and pulse effect each frame. */
+  update(delta: number): void {
+    this.pulseTime += delta * 0.004;
+    const pulse = 0.6 + Math.sin(this.pulseTime) * 0.4; // 0.2 .. 1.0
+
+    for (const node of this.nodes) {
+      if (node.collected) continue;
+      const vis = this.getVisibilityAt(node.def.position);
+      node.sprite.setAlpha(vis * pulse);
+    }
+  }
+
+  reset(): void {
+    this.pulseTime = 0;
+    for (const node of this.nodes) {
+      node.collected = false;
+      node.sprite.setVisible(true);
+      node.sprite.setActive(true);
+      const body = node.sprite.body as Phaser.Physics.Arcade.StaticBody | null;
+      if (body) body.enable = true;
+    }
+  }
+
+  destroy(): void {
+    if (this.overlapCollider) {
+      this.scene?.physics?.world?.removeCollider(this.overlapCollider);
+      this.overlapCollider = null;
+    }
+    for (const node of this.nodes) {
+      node.sprite.destroy();
+    }
+    this.nodes = [];
+  }
+
+  // ------------------------------------------------------------------ internal
+
+  private onOverlap(nodeObj: Phaser.GameObjects.Rectangle): void {
+    const node = this.nodes.find((n) => n.sprite === nodeObj);
+    if (!node || node.collected) return;
+
+    node.collected = true;
+    node.sprite.setVisible(false);
+    node.sprite.setActive(false);
+    const body = node.sprite.body as Phaser.Physics.Arcade.StaticBody | null;
+    if (body) body.enable = false;
+
+    const rarity = rollRarity();
+    const type = rollType();
+    // acquire() internally emits CONTAMINANT_ACQUIRED
+    contaminantSystem.acquire(type, rarity);
+  }
+}

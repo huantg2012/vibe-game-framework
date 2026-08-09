@@ -5,11 +5,35 @@
 
 import Phaser from 'phaser';
 import { gameState } from '@/managers/game-state';
-import { SAVE_KEY } from '@/types/save-data';
+import { saveManager } from '@/managers/save-manager';
+import { contaminantSystem } from '@/systems/contaminant-system';
+import { growthSystem } from '@/systems/growth-system';
+import { stabilityTracker } from '@/systems/stability-tracker';
+import { tideSystem } from '@/systems/tide-system';
 
 export class MainMenuScene extends Phaser.Scene {
   constructor() {
     super({ key: 'MainMenuScene' });
+  }
+
+  private startNewExpedition(): void {
+    saveManager.deleteSave();
+    gameState.reset();
+    tideSystem.reset();
+    contaminantSystem.reset();
+    growthSystem.reset();
+    stabilityTracker.reset();
+    this.scene.start('PurificationScene');
+  }
+
+  private continueExpedition(): void {
+    const loaded = saveManager.load();
+    if (loaded) {
+      this.scene.start('PurificationScene');
+    } else {
+      // Save corrupted, start fresh
+      this.startNewExpedition();
+    }
   }
 
   create(): void {
@@ -31,8 +55,8 @@ export class MainMenuScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     // The game itself is keyboard-driven (DEC-008), so the menu is too.
-    this.input.keyboard?.once('keydown-ENTER', () => { gameState.reset(); this.scene.start('PurificationScene'); });
-    this.input.keyboard?.once('keydown-SPACE', () => { gameState.reset(); this.scene.start('PurificationScene'); });
+    this.input.keyboard?.once('keydown-ENTER', () => { this.startNewExpedition(); });
+    this.input.keyboard?.once('keydown-SPACE', () => { this.startNewExpedition(); });
 
     // Start new game button
     const startBtn = this.add.text(width / 2, height / 2 + 40, '[ New Expedition ]', {
@@ -43,14 +67,10 @@ export class MainMenuScene extends Phaser.Scene {
 
     startBtn.on('pointerover', () => startBtn.setColor('#ffffff'));
     startBtn.on('pointerout', () => startBtn.setColor('#aaaaaa'));
-    startBtn.on('pointerdown', () => {
-      gameState.reset();
-      this.scene.start('PurificationScene');
-    });
+    startBtn.on('pointerdown', () => { this.startNewExpedition(); });
 
     // Continue button (only if save exists)
-    const hasSave = localStorage.getItem(SAVE_KEY) !== null;
-    if (hasSave) {
+    if (saveManager.hasSave()) {
       const continueBtn = this.add.text(width / 2, height / 2 + 80, '[ Continue ]', {
         fontSize: '18px',
         color: '#aaaaaa',
@@ -59,10 +79,7 @@ export class MainMenuScene extends Phaser.Scene {
 
       continueBtn.on('pointerover', () => continueBtn.setColor('#ffffff'));
       continueBtn.on('pointerout', () => continueBtn.setColor('#aaaaaa'));
-      continueBtn.on('pointerdown', () => {
-        // TODO: Load save and determine which scene to start
-        this.scene.start('PurificationScene');
-      });
+      continueBtn.on('pointerdown', () => { this.continueExpedition(); });
     }
   }
 }

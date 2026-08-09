@@ -3,6 +3,8 @@
  * All inter-system communication goes through these typed events.
  */
 
+import type { Contaminant, ContaminantType } from './game-types';
+
 export enum GameEvent {
   // Chaos system
   CHAOS_CHANGED = 'chaos:changed',
@@ -40,6 +42,15 @@ export enum GameEvent {
   // Game flow
   GAME_SAVED = 'game:saved',
   GAME_LOADED = 'game:loaded',
+
+  // Slice 3: Growth + Tide Economy
+  CONTAMINANT_ACQUIRED = 'contaminant:acquired',
+  CONTAMINANT_TRANSFORMED = 'contaminant:transformed',
+  CONTAMINANT_BROKEN = 'contaminant:broken',
+  GROWTH_PURCHASED = 'growth:purchased',
+  TIDE_PHASE_CHANGED = 'tide:phase-changed',
+  STABILITY_CHANGED = 'stability:changed',
+  TOOL_USED = 'tool:used',
 }
 
 /**
@@ -79,4 +90,13 @@ export interface EventPayloads {
   [GameEvent.PLAYER_HEALTH_CHANGED]: { current: number; max: number };
   [GameEvent.GAME_SAVED]: { timestamp: number };
   [GameEvent.GAME_LOADED]: { cycle: number };
+
+  // Slice 3: Growth + Tide Economy
+  [GameEvent.CONTAMINANT_ACQUIRED]: { contaminant: Contaminant };
+  [GameEvent.CONTAMINANT_TRANSFORMED]: { contaminantId: string };
+  [GameEvent.CONTAMINANT_BROKEN]: { contaminantId: string };
+  [GameEvent.GROWTH_PURCHASED]: { upgradeId: string; newLevel: number };
+  [GameEvent.TIDE_PHASE_CHANGED]: { tide: number; phase: 'rise' | 'crest' | 'ebb'; intensity: number };
+  [GameEvent.STABILITY_CHANGED]: { progress: number; delta: number };
+  [GameEvent.TOOL_USED]: { contaminantId: string; toolType: ContaminantType; usesLeft: number };
 }

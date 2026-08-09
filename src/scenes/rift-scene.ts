@@ -20,16 +20,20 @@ import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
 import type { SortieModifiers } from '@/managers/game-state';
 import { CombatSystem, COMBAT_FX_DEPTH, type NoiseLevel } from '@/systems/combat-system';
+import { ContaminantNodeSystem } from '@/systems/contaminant-node-system';
+import { contaminantSystem } from '@/systems/contaminant-system';
 import { ExtractionSystem } from '@/systems/extraction-system';
+import { growthSystem } from '@/systems/growth-system';
 import { LootSystem } from '@/systems/loot-system';
 import { RunController } from '@/systems/run-controller';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
+import { ToolSystem } from '@/systems/tool-system';
 import { TrailSystem } from '@/systems/trail-system';
 import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { HUD } from '@/ui/hud';
 import { Minimap } from '@/ui/minimap';
-import { TileType, type Vector2 } from '@/types/game-types';
+import { TileType, type Contaminant, type Vector2 } from '@/types/game-types';
 import type { LandmarkDef } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
 
@@ -54,6 +58,8 @@ export class RiftScene extends Phaser.Scene {
   private readonly ai = new AISystem();
   private readonly combat = new CombatSystem();
   private readonly loot = new LootSystem();
+  private readonly contaminantNodes = new ContaminantNodeSystem();
+  private readonly toolSystem = new ToolSystem();
   private readonly extraction = new ExtractionSystem();
   private readonly runController = new RunController();
   private readonly hud = new HUD();
@@ -65,6 +71,8 @@ export class RiftScene extends Phaser.Scene {
   private attackKey: Phaser.Input.Keyboard.Key | null = null;
   private extractKey: Phaser.Input.Keyboard.Key | null = null;
   private restartKey: Phaser.Input.Keyboard.Key | null = null;
+  private toolKey0: Phaser.Input.Keyboard.Key | null = null;
+  private toolKey1: Phaser.Input.Keyboard.Key | null = null;
 
   private debugPanel: HTMLDivElement | null = null;
   private debugVisible = true;
@@ -75,8 +83,9 @@ export class RiftScene extends Phaser.Scene {
     super({ key: 'RiftScene' });
   }
 
-  create(data?: { modifiers?: SortieModifiers; cycle?: number }): void {
+  create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[] }): void {
     const sortieModifiers = data?.modifiers;
+    const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
     const { tileMap, grid, layout } = RIFT_MAP;
 
     if (import.meta.env.DEV) {
@@ -130,15 +139,34 @@ export class RiftScene extends Phaser.Scene {
 
     // --- T9 systems: chaos, loot, extraction, run controller, HUD ---
 
+    // Apply growth modifiers on top of module modifiers
+    const growthMods = growthSystem.getModifiers();
+    const effectiveChaosRate = (sortieModifiers?.chaosRateModifier ?? 1.0) * (1 - growthMods.chaosResist);
+    // growthMods.kindlingAffinity (+N per pickup) applied through LootSystem config below
+    // growthMods.vitalityBonus (+HP) applied through combat system max health
+
     this.chaos = new ChaosSystem({
       onModulate: this.applyChaosModulators,
-      chaosRateModifier: sortieModifiers?.chaosRateModifier,
+      chaosRateModifier: effectiveChaosRate,
     });
 
     this.loot.create(this, layout.kindlingNodes, this.player.getSprite(), {
       getVisibilityAt: this.visibilityAt,
       kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
     });
+
+    // Contaminant pickup nodes (Slice 3)
+    this.contaminantNodes.create(this, layout.contaminantNodes, this.player.getSprite(), {
+      getVisibilityAt: this.visibilityAt,
+    });
+
+    // Tool system (Slice 3): sortie loadout
+    this.toolSystem.create(
+      this,
+      sortieLoadout,
+      () => this.player.getPosition(),
+      () => this.ai.getEnemies(),
+    );
 
     this.extraction.create(
       this,
@@ -155,12 +183,22 @@ export class RiftScene extends Phaser.Scene {
       resetAll: () => this.resetAllSystems(),
     });
 
+    // Build tool slot info for HUD display
+    const toolSlots = sortieLoadout
+      .filter((c): c is Contaminant => c !== null)
+      .map((c, i) => ({
+        label: i === 0 ? 'Q' : i === 1 ? 'F' : '被动',
+        name: c.type,
+        usesRemaining: c.usesRemaining,
+      }));
+
     this.hud.create(this, {
       canExtract: () => this.extraction.canExtract(),
       isRunEnded: () => this.runController.isRunEnded(),
       getPeakChaos: () => this.chaos.getPeak(),
       getElapsedMs: () => this.runController.getElapsedMs(),
       kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
+      toolSlots: toolSlots.length > 0 ? toolSlots : undefined,
     });
 
     // Apply initial chaos modulators (all at 0 - no effect)
@@ -176,6 +214,7 @@ export class RiftScene extends Phaser.Scene {
 
     this.bindAttackKey();
     this.bindExtractionKeys();
+    this.bindToolKeys();
 
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
@@ -204,8 +243,18 @@ export class RiftScene extends Phaser.Scene {
     // T9 systems
     this.chaos.update(delta);
     this.loot.update();
+    this.contaminantNodes.update(delta);
+    this.toolSystem.update(delta);
     this.extraction.update(delta);
     this.hud.update(delta);
+
+    // Tool key input (edge-triggered)
+    if (this.toolKey0 && Phaser.Input.Keyboard.JustDown(this.toolKey0)) {
+      this.toolSystem.useSlot(0);
+    }
+    if (this.toolKey1 && Phaser.Input.Keyboard.JustDown(this.toolKey1)) {
+      this.toolSystem.useSlot(1);
+    }
 
     // Trail system: record player position and redraw visible trail marks.
     const playerPos = this.player.getPosition();
@@ -272,6 +321,14 @@ export class RiftScene extends Phaser.Scene {
     });
   }
 
+  private bindToolKeys(): void {
+    const keyboard = this.input.keyboard;
+    if (!keyboard) return;
+    // Q = slot 0, F = slot 1 (spec F29)
+    this.toolKey0 = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q, true, false);
+    this.toolKey1 = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F, true, false);
+  }
+
   private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {
     this.ai.reportDamage(enemyId, this.player.getPosition());
   };
@@ -316,6 +373,8 @@ export class RiftScene extends Phaser.Scene {
   private resetAllSystems(): void {
     this.chaos.reset();
     this.loot.reset();
+    this.contaminantNodes.reset();
+    this.toolSystem.reset();
     this.extraction.reset();
     this.combat.reset();
     this.hud.reset();
@@ -476,11 +535,21 @@ export class RiftScene extends Phaser.Scene {
       this.input.keyboard?.removeKey(this.restartKey, true);
       this.restartKey = null;
     }
+    if (this.toolKey0) {
+      this.input.keyboard?.removeKey(this.toolKey0, true);
+      this.toolKey0 = null;
+    }
+    if (this.toolKey1) {
+      this.input.keyboard?.removeKey(this.toolKey1, true);
+      this.toolKey1 = null;
+    }
     // Before the player is destroyed: this is what releases the swing speed modifier.
     this.combat.destroy();
     this.hud.destroy();
     this.runController.destroy();
     this.extraction.destroy();
+    this.toolSystem.destroy();
+    this.contaminantNodes.destroy();
     this.loot.destroy();
     this.chaos.destroy();
     this.ai.destroy();

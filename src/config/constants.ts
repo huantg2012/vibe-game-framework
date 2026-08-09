@@ -249,10 +249,8 @@ export const GAME_CONSTANTS = {
     MODULE_INITIAL_HP: 70,
     MODULE_MAX_HP: 100,
     REPAIR_PER_KINDLING: 4,    // 1 kindling = this many hp (tuned for scarcity)
-    /** Impact system */
+    /** Impact system (intensity now driven by TideSystem, see TIDE constants) */
     BASE_IMPACT_DAMAGE: 30,
-    INTENSITY_STEP: 0.15,      // impactIntensity grows by this each cycle
-    MAX_INTENSITY: 2.5,
     THREAT_FOCUS_RATIO: 0.65,  // primary target gets this fraction of total damage
     FORECAST_ACCURACY: 0.80,   // particle prediction accuracy
     /** Module effects */
@@ -341,5 +339,54 @@ export const GAME_CONSTANTS = {
     DEFAULT_SFX_VOLUME: 0.7,
     DEFAULT_BGM_VOLUME: 0.4,
     DEFAULT_AMBIENT_VOLUME: 0.5,
+  },
+
+  /** Tide system (docs/specs/system-growth-tide.md, section T) */
+  TIDE: {
+    TIDES: [
+      { floor: 1.0, peak: 1.6, riseCycles: 3, crestCycles: 1, ebbCycles: 2, ebbTarget: 1.2 },
+      { floor: 1.2, peak: 2.0, riseCycles: 4, crestCycles: 1, ebbCycles: 2, ebbTarget: 1.5 },
+      { floor: 1.5, peak: 2.4, riseCycles: 4, crestCycles: 2, ebbCycles: 2, ebbTarget: 1.8 },
+      { floor: 1.8, peak: 2.8, riseCycles: 4, crestCycles: 2, ebbCycles: 3, ebbTarget: 2.0 },
+      { floor: 2.0, peak: 3.0, riseCycles: 5, crestCycles: Infinity, ebbCycles: 0, ebbTarget: 2.0 },
+    ],
+    CREST_CHARGE_COST: 3,       // impact charge cost during Crest phase
+    NORMAL_CHARGE_COST: 1,      // impact charge cost during Rise/Ebb phases
+    TRANSFORM_THRESHOLD: 3,     // charges needed to transform defense -> tool
+  },
+
+  /** Growth / permanent upgrades (docs/specs/system-growth-tide.md, section G) */
+  GROWTH: {
+    UPGRADES: {
+      growth_chaos_resist: { maxLevel: 5, effectPerLevel: 0.04 },      // -4%/level chaos rate
+      growth_kindling_affinity: { maxLevel: 3, effectPerLevel: 1 },     // +1/level kindling per pickup
+      growth_vitality: { maxLevel: 4, effectPerLevel: 15 },             // +15/level max health
+    },
+    COST_PER_LEVEL: [8, 12, 18, 25, 35],  // index 0 = level 1 cost, etc.
+  },
+
+  /** Contaminant system (docs/specs/system-growth-tide.md, section CN) */
+  CONTAMINANT: {
+    NODES_PER_MAP: 3,           // contaminant pickup nodes per rift map
+    RARITY_WEIGHTS: { common: 60, fine: 30, rare: 10 },
+    DEFENSE_SLOTS: 3,
+    SORTIE_SLOTS: 3,
+    USES: { common: 5, fine: 3, rare: 2 },  // uses remaining after transformation
+  },
+
+  /** Purification stability (docs/specs/system-growth-tide.md, section S) */
+  STABILITY: {
+    MAX: 100,
+    GAIN_EXTRACT: 2,            // successful extraction
+    GAIN_GROWTH: 3,             // purchased an upgrade
+    GAIN_CREST_SURVIVED: 5,     // survived a full Crest with no module at zero
+    GAIN_TIDE_ADVANCE: 8,       // tide advanced to next number
+    LOSS_MODULE_ZERO: -1,       // a module reached 0 hp
+  },
+
+  /** Persistent save (docs/specs/system-growth-tide.md, section P) */
+  SAVE: {
+    KEY: 'coh-save-v1',
+    VERSION: 1,
   },
 } as const;

@@ -100,6 +100,13 @@ export interface LandmarkDef {
     | 'rune';
 }
 
+/** Contaminant pickup node position (Slice 3, spec CN8-CN9). */
+export interface ContaminantNodeDef {
+  readonly id: string;
+  /** World position (px), tile centre. */
+  readonly position: Vector2;
+}
+
 /**
  * Everything a rift scene needs to place its content.
  * `enemySpawns` is consumed by the AI system (T7), the rest by loot/extraction (T9).
@@ -108,6 +115,7 @@ export interface RiftLayoutData {
   readonly spawnPoint: Vector2;
   readonly extractionPoint: ExtractionPointDef;
   readonly kindlingNodes: readonly KindlingNodeDef[];
+  readonly contaminantNodes: readonly ContaminantNodeDef[];
   readonly enemySpawns: readonly EnemySpawnData[];
   readonly landmarks: readonly LandmarkDef[];
 }

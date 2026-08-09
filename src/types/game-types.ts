@@ -123,3 +123,79 @@ export enum TileType {
   FLOOR = 1,
   FRACTURE = 2,
 }
+
+// ─── Slice 3: Growth + Tide Economy types ───────────────────────────────────
+
+/** Contaminant type (10 kinds) */
+export type ContaminantType =
+  | 'solidify' | 'ruminate' | 'scatter' | 'retrograde'
+  | 'delay' | 'siphon' | 'expand'
+  | 'resonate' | 'overwrite' | 'erode';
+
+/** Contaminant rarity */
+export type ContaminantRarity = 'common' | 'fine' | 'rare';
+
+/** Contaminant lifecycle stage */
+export type ContaminantStage = 'defense' | 'tool' | 'broken';
+
+/** A single contaminant instance */
+export interface Contaminant {
+  id: string;
+  type: ContaminantType;
+  rarity: ContaminantRarity;
+  stage: ContaminantStage;
+  /** Impact charges accumulated during defense stage (transforms at 3) */
+  impactCharges: number;
+  /** Uses remaining during sortie tool stage */
+  usesRemaining: number;
+}
+
+/** Tide phase within a single tide */
+export type TidePhase = 'rise' | 'crest' | 'ebb';
+
+/** Runtime tide state */
+export interface TideState {
+  /** Current tide number: 1-5, where 5 = Final */
+  tideNumber: number;
+  phase: TidePhase;
+  /** Current cycle within the active phase */
+  cycleInPhase: number;
+  /** Current impact intensity multiplier */
+  currentIntensity: number;
+}
+
+/** Permanent upgrade IDs (Slice 3: one per axis) */
+export type GrowthUpgradeId =
+  | 'growth_chaos_resist'
+  | 'growth_kindling_affinity'
+  | 'growth_vitality';
+
+/** Persistent growth state */
+export interface GrowthState {
+  /** upgradeId -> current level (0 = not purchased) */
+  upgrades: Record<GrowthUpgradeId, number>;
+}
+
+/** Purification stability tracker state */
+export interface StabilityState {
+  /** Progress toward purification completion: 0-100 */
+  progress: number;
+  /** Whether progress has reached 100% */
+  reached: boolean;
+}
+
+/** Save data structure (version 1) */
+export interface SaveDataV1 {
+  version: 1;
+  kindlingReserve: number;
+  modules: { id: string; type: string; hp: number; maxHp: number }[];
+  cycle: number;
+  tide: TideState;
+  contaminants: Contaminant[];
+  /** 3 defense slots at the purification point (contaminant id or null) */
+  defenseSlots: (string | null)[];
+  /** 3 sortie loadout slots (contaminant id or null) */
+  sortieLoadout: (string | null)[];
+  growth: GrowthState;
+  stability: StabilityState;
+}

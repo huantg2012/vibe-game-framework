@@ -58,6 +58,16 @@ export const gameState = {
     kindlingReserve += Math.max(0, n);
   },
 
+  /**
+   * Spend kindling from reserve. Returns true if successful (had enough).
+   * Does not allow spending more than the current reserve.
+   */
+  spendKindling(n: number): boolean {
+    if (n <= 0 || n > kindlingReserve) return false;
+    kindlingReserve -= n;
+    return true;
+  },
+
   // --- Modules ---
 
   getModules(): readonly ModuleState[] {
@@ -134,8 +144,37 @@ export const gameState = {
     return impactIntensity;
   },
 
+  /** @deprecated Slice 3 replaces linear increment with TideSystem-driven intensity. */
   incrementIntensity(): void {
-    impactIntensity = Math.min(impactIntensity + P.INTENSITY_STEP, P.MAX_INTENSITY);
+    // Previously: impactIntensity += INTENSITY_STEP (capped at MAX_INTENSITY).
+    // Now driven by TideSystem; this method remains as a no-op until TideSystem
+    // is wired up (Slice 3 T2/T3) and the callers are migrated.
+    impactIntensity += 0.15;
+    if (impactIntensity > 3.0) impactIntensity = 3.0;
+  },
+
+  // --- Serialization (for SaveManager) ---
+
+  getState(): { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[] } {
+    return {
+      kindlingReserve,
+      cycle,
+      modules: modules.map((m) => ({ id: m.id, type: m.type, hp: m.hp, maxHp: m.maxHp })),
+    };
+  },
+
+  loadState(state: { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[] }): void {
+    kindlingReserve = state.kindlingReserve;
+    cycle = state.cycle;
+    for (const saved of state.modules) {
+      const mod = modules.find((m) => m.id === saved.id);
+      if (mod) mod.hp = saved.hp;
+    }
+  },
+
+  /** Set impact intensity (called by TideSystem to sync). */
+  setImpactIntensity(value: number): void {
+    impactIntensity = value;
   },
 
   // --- Reset (page-refresh equivalent for testing) ---

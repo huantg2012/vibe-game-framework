@@ -1,109 +1,115 @@
 ---
-status: COMPLETE
+status: ACTIVE
 created-by: director agent
-created-when: 2026-08-07
-last-modified: 2026-08-08
-note: Slice 2 完成。净化点闭环验证通过。
+created-when: 2026-08-09
+last-modified: 2026-08-09
+note: Slice 3 启动。角色成长 + 潮汐经济。
 ---
 
-# Slice 2: 净化点闭环 【COMPLETE — 2026-08-08 验证通过】
+# Slice 3: 角色成长 + 潮汐经济 【ACTIVE — 2026-08-09 启动】
 
 类型：系统
-日期：2026-08-07 启动
-验证问题：**净化点环**（撤离→薪柴分配到分区模块→冲击结算→模块受损影响下次出击）是否形成"出击表现→冲击后果→出击条件变化"的连环压力？资源分配的纠结感是否成立？
+日期：2026-08-09 启动
+验证问题：**潮汐节奏 + 污染物循环 + 永久改造**是否打破了必然下行螺旋？玩家是否感到"这次出击有所积累、不是在等死"？改造投资的时机选择（现在修模块 vs 存钱买改造）是否构成有意义的纠结？
 
-> 范围已锁定（2026-08-07）。四项取舍由人拍板：① 完整步行空间（含粒子氛围+apparition+模块交互）；② session-only 内存状态；③ 每次出击后触发冲击（N=1）；④ 模块 0 HP 不设 game-over，效果移除使下次出击更难。任务 Brief 见 `docs/tasks/slice-2.md`。
+> 范围已锁定（2026-08-09）。五项取舍由人拍板：① TideSystem 状态机替代线性递增；② Slice 3 实现 3 种污染物（覆盖三档）；③ 3 个永久改造（每轴 1 个）；④ localStorage 持久存档；⑤ 美术门禁并行不阻塞。任务 Brief 见 `docs/tasks/slice-3.md`。
 
 ---
 
 ## 范围推导
 
-Slice 1 验证了裂隙出击环的核心手感（moment-to-moment 博弈）。Slice 2 补上元循环的另一半——净化点环，验证 session-level 的资源分配压力是否成立（体验支柱 1「绝望边缘的紧绷」+ 支柱 3「孤独的仪式感」）。
+Slice 1 验证了裂隙出击环的 moment-to-moment 博弈。Slice 2 验证了净化点环的资源分配纠结。但两个 Slice 结合后暴露了核心问题：**线性递增的冲击强度 + 无能力成长 = 必然的下行螺旋**。玩家感觉"反正会死，只是时间问题"。
 
-完整循环从 Slice 2 开始可以跑通：
+Slice 3 通过四个子系统同时解决这个问题：
+1. **潮汐模型**：压力有涨有退（不再只涨），给玩家"低谷期积攒资源"的窗口
+2. **污染物循环**：裂隙中获取的东西不只是薪柴——污染物先当防御盾，再变出击工具
+3. **永久改造**：薪柴的第三个去处，投资自身能力使后续出击更高效
+4. **稳定度**：长期进度目标，所有"做对了的事"都在向终点推进
+
+完整循环从 Slice 3 开始有正向反馈：
 ```
-Menu → 净化点 → 裂隙出击 → 撤离 → 净化点 → 分配薪柴 → 冲击结算 → 模块受损
-  → 下次出击条件变化 → 裂隙出击 → ...
+裂隙出击 → 获取薪柴+污染物 → 撤离
+→ 净化点：分配薪柴（模块修复 / 改造投资）
+→ 冲击结算：防御 slot 减伤 + 转化为工具
+→ 下次出击：带工具+改造加成 → 更高效的出击
+→ ...（正向积累 vs 潮汐压力 的拉扯）
 ```
 
-### 锁定的 Slice 2 最小范围
+### 锁定的 Slice 3 最小范围
 
-1. GameState 管理器（session-only 内存状态，跨场景持久）
-2. 场景流转（RiftScene ↔ PurificationScene 双向切换）
-3. 净化点步行空间（~12x10 手设计 tilemap、Player 复用、VisibilitySystem 复用）
-4. 边界氛围系统（粒子 + apparition + intensity 耦合）
-5. 模块实体 + 交互触发系统（2 个模块 + 裂隙入口，接近按 E 交互）
-6. 分配面板（DOM overlay，薪柴分配 + 修复）
-7. 冲击系统（威力分布 + 防御结算 + 模块伤害 + 强度递增）
-8. 模块效果反馈（BARRIER→chaos rate modifier；STORAGE→kindling pickup modifier）
+**P0（必须）：**
+1. TideSystem（5 Tide 状态机，替代线性 intensity）
+2. ContaminantSystem（库存 + 防御 slot + 生命周期）
+3. 3 种污染物完整实现（固化→凝锁、延时→时裂、侵蚀→侵蚀领域）
+4. GrowthSystem（3 个永久改造 + 费用曲线）
+5. StabilityTracker（进度条 0-100%）
+6. SaveManager（localStorage 持久存档）
+7. 裂隙污染物节点（新节点类型 + 拾取）
+8. 出击工具系统（3 种工具 + 键位 Q/F）
+9. 防御 slot 管理 UI
+10. 出击前 loadout 选择 UI
+
+**P1（应该）：**
+11. 改造祭坛 UI
+12. 潮汐信息 + 稳定度 HUD
 
 ### 暂不纳入
 
-- 持久存档（LocalStorage save/load）→ 后续基础设施 Slice
-- Game-over 条件 → 后续 Slice
-- 净化点视觉状态变化（模块正式美术 + 受损动画）→ 后续美术 Slice
-- 第三个模块 → Nice-to-have
-- 音效 → 后续 Slice
+- 其余 7 种污染物（延后到内容 Slice）
+- 其余 6 个改造项（延后到 Slice 4+）
+- 终局内容（稳定度 100% 后的结局）
+- 被动工具实现（本 Slice 3 种均为主动）
+- 音效
+- 正式美术资产
 
 ---
 
-## 设计取舍（已由人拍板，2026-08-07）
+## 设计取舍（已由人拍板，2026-08-09）
 
 | # | 决策点 | 人的决定 | 说明 |
 | - | ------ | -------- | ---- |
-| 1 | 净化点呈现方式 | **完整步行空间**（粒子氛围 + apparition + 模块交互） | 验证支柱 3「仪式感」 |
-| 2 | 状态持久化 | **Session-only 内存状态** | 验证问题不涉及跨 session |
-| 3 | 冲击频率 | **每次出击后触发（N=1）** | 快速迭代验证 |
-| 4 | 模块 0 HP | **不设 game-over，效果移除使下次更难** | 聚焦"压力链" |
+| 1 | 潮汐模型 | **TideSystem 状态机** | 5 Tide x 3 Phase，打破线性递增的必然下行 |
+| 2 | 污染物数量 | **3 种（固化/延时/侵蚀）** | 覆盖三档 rarity，效果差异大，实现可控 |
+| 3 | 改造数量 | **3 个（每轴 1 个）** | 验证改造循环，不过度扩展内容量 |
+| 4 | 存档方式 | **localStorage** | 跨 session 持久；自动保存于返回净化点时 |
+| 5 | 美术门禁 | **并行不阻塞** | A-G1/A-G2 独立推进，系统任务照常 |
 
 ---
 
 ## 任务进度
 
-> 派发列：🟢 Director 可直接派发 / 🔴 人主导。详细 Brief 见 `docs/tasks/slice-2.md`。
+> 派发列：🟢 Director 可直接派发 / 🔴 人主导。详细 Brief 见 `docs/tasks/slice-3.md`。
 
 | ID | 任务 | Agent | 派发 | 状态 | 依赖 | 备注 |
 | -- | ---- | ----- | ---- | ---- | ---- | ---- |
-| T1 | 设计 spec：净化点 + 冲击系统 | design | 🔴 | Done | - | 产出 `docs/specs/system-purification-impact.md` |
-| T2 | 实现：GameState 管理器（session-only） | code | 🔴 | Done | T1 | `src/managers/game-state.ts` |
-| T3 | 实现：场景流转（裂隙↔净化点切换） | code | 🔴 | Done | T1, T2 | 修改 rift-scene + purification-scene + main-menu |
-| T4 | 实现：净化点步行空间 | code | 🔴 | Done | T1, T3 | 内嵌于 purification-scene.ts（椭圆形 14x12） |
-| T5 | 实现：边界氛围系统 | code | 🔴 | Done | T4 | `src/systems/boundary-atmosphere.ts` |
-| T6 | 实现：模块实体 + 交互触发 | code | 🔴 | Done | T4, T2 | `src/entities/purification-module.ts`（交互内嵌） |
-| T7 | 实现：薪柴分配面板（DOM） | code | 🔴 | Done | T6, T2 | `src/ui/dom/allocation-panel.ts` |
-| T8 | 实现：冲击系统 + 结果面板 | code | 🔴 | Done | T7, T2 | `src/systems/impact-system.ts` + `src/ui/dom/impact-result-panel.ts` |
-| T9 | 实现：模块效果→出击参数 | code | 🔴 | Done | T8, T3 | 修改 chaos-system + loot-system |
-| T10 | QA 验收 | qa | 🟢 | Done | T9 | `docs/qa/slice-2-report.md` |
+| T1 | Types + Events + Constants 扩展 | code | 🔴 | Pending | - | 全部后续任务的类型基础 |
+| T2 | TideSystem 状态机 | code | 🔴 | Pending | T1 | 替代线性 intensity |
+| T3 | ContaminantSystem 库存+防御 | code | 🔴 | Pending | T1 | 核心生命周期管理 |
+| T4 | GrowthSystem 永久改造 | code | 🔴 | Pending | T1 | 3 个改造项 |
+| T5 | StabilityTracker | code | 🔴 | Pending | T1 | 积分+进度 |
+| T6 | SaveManager | code | 🔴 | Pending | T1 | localStorage 持久化 |
+| T7 | 裂隙污染物节点 | code | 🔴 | Pending | T3 | 新拾取物类型 |
+| T8 | 出击工具系统（3 种） | code | 🔴 | Pending | T3 | 凝锁/时裂/侵蚀领域 |
+| T9 | Integration wiring | code | 🔴 | Pending | T2,T3,T4,T5 | 接入现有系统 |
+| T10 | 防御 slot 管理 UI | code | 🔴 | Pending | T3,T9 | 净化点 DOM 面板 |
+| T11 | Loadout 选择 UI | code | 🔴 | Pending | T3,T8 | 出击前装备选择 |
+| T12 | 改造祭坛 UI [P1] | code | 🔴 | Pending | T4,T9 | DOM 面板 |
+| T13 | 潮汐+稳定度 HUD [P1] | code | 🔴 | Pending | T2,T5,T9 | 信息展示 |
+| T14 | QA 验收 | qa | 🟢 | Pending | T1-T13 | spec 对照验收 |
+| A-G1 | 玩家 sprite 32px 验证 | art | 🔴 | Pending | - | 美术门禁，并行 |
+| A-G2 | 敌人 sprite 俯视验证 | art | 🔴 | Pending | - | 美术门禁，并行 |
 
 ---
 
 ## 设计产出（本 Slice 新增/修改的文档）
 
-- [ ] docs/specs/system-purification-impact.md（净化点 + 冲击 + 分配 + 模块效果）
-- [ ] docs/tasks/slice-2.md（Director 已拆解）
+- [x] docs/specs/system-growth-tide.md（Slice 3 核心 spec，已完成）
+- [ ] docs/tasks/slice-3.md（Director 已拆解）
 
 ---
 
-## QA 验收结果（2026-08-07）
+## 下一步
 
-**结论：CONDITIONAL PASS** — 1 blocking issue, 2 moderate deviations. 详见 `docs/qa/slice-2-report.md`。
-
-**Blocking**：MainMenuScene "New Expedition" 仍跳转 RiftScene 而非 PurificationScene，且未调用 gameState.reset()。
-
-**修复**：B1 已修复（code agent）。
-
----
-
-## 人验证结果（2026-08-08）
-
-**结论：PASS**
-
-**验证问题**：资源分配的纠结感是否成立？
-**回答**：YES。经济数值调校后（REPAIR_PER_KINDLING 10->4, BASE_IMPACT_DAMAGE 25->30, MODULE_INITIAL_HP 80->70），分配纠结从第一轮起就存在。
-
-**附加收获**：
-- 模块效果 UI 信息展示改善了决策可读性
-- 冲击面板时机调整为返回时显示（手动关闭），避免打断节奏
-
-**遗留项（归入后续 Slice）**：
-- 长期经济平衡（螺旋下降后的翻盘机制）→ Slice 3+ 规划
+1. 从 **T1** 开始：让 code agent 扩展 types/events/constants
+2. T1 完成后，T2-T6 五个系统可并行推进（按关键路径优先 T3）
+3. 美术任务 A-G1/A-G2 随时可启动，不阻塞系统工作

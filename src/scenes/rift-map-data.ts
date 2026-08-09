@@ -47,6 +47,7 @@
 
 import { TileType, type Vector2 } from '@/types/game-types';
 import type {
+  ContaminantNodeDef,
   EnemySpawnData,
   KindlingNodeDef,
   KindlingTier,
@@ -63,7 +64,7 @@ const RIFT_MAP_ASCII: readonly string[] = [
   '################################################',
   '#..............................................#',
   '#.....##..............X.........###............#',
-  '#.....###.........##..............##.....##....#',
+  '#.....###.........##..............##..P..##....#',
   '#..........##...............##.................#',
   '#.......J....##.......................K...##...#',
   '#.....##...........###........##...............#',
@@ -71,7 +72,7 @@ const RIFT_MAP_ASCII: readonly string[] = [
   '#..7........###........##..........###.........#',
   '#...####..........######.........##............#',
   '#...###..........##....##...........6..........#',
-  '#........##.........##...........##............#',
+  '#.Q......##.........##...........##............#',
   '#.........##.............###...................#',
   '#.....C...##........5....###..........D........#',
   '#...####..........##.....##....................#',
@@ -80,7 +81,7 @@ const RIFT_MAP_ASCII: readonly string[] = [
   '#.....E...##.....##...................##.......#',
   '#......####..........##............4.....##....#',
   '#..............####.........##...........##....#',
-  '#..##..........###..........##........###......#',
+  '#..##..........###..........##....R...###......#',
   '#.............##...............##...F.....8....#',
   '#...........##............##...................#',
   '#.......##........##........##.................#',
@@ -105,6 +106,9 @@ const KINDLING_TIERS: Readonly<Record<string, KindlingTier>> = {
   '7': 'deep',
   '8': 'deep',
 };
+
+/** ASCII markers for contaminant pickup nodes (Slice 3, spec CN8). */
+const CONTAMINANT_MARKER_CHARS = ['P', 'Q', 'R'] as const;
 
 /**
  * Patrol units. `waypointChars` lists the ASCII markers of the route in walk order;
@@ -222,6 +226,11 @@ function parseRiftMap(): ParsedRiftMap {
       position: requireMarker(char),
     }));
 
+  const contaminantNodes: ContaminantNodeDef[] = CONTAMINANT_MARKER_CHARS.map((char, idx) => ({
+    id: `CTM_NODE_0${idx + 1}`,
+    position: requireMarker(char),
+  }));
+
   const enemySpawns: EnemySpawnData[] = PATROL_UNITS.map((unit) => {
     const waypoints = unit.waypointChars.split('').map((char) => {
       const position = requireMarker(char);
@@ -257,6 +266,7 @@ function parseRiftMap(): ParsedRiftMap {
         triggerRadius: GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS,
       },
       kindlingNodes,
+      contaminantNodes,
       enemySpawns,
       landmarks: LANDMARKS,
     },
@@ -294,6 +304,7 @@ export function validateRiftMap(): string[] {
   check('spawnPoint', layout.spawnPoint);
   check('extractionPoint', layout.extractionPoint.position);
   for (const node of layout.kindlingNodes) check(node.id, node.position);
+  for (const node of layout.contaminantNodes) check(node.id, node.position);
   for (const landmark of layout.landmarks) {
     if (!grid.isWalkable(landmark.col, landmark.row)) {
       problems.push(`${landmark.id} at tile (${landmark.col},${landmark.row}) is not walkable`);
@@ -316,6 +327,7 @@ export function validateRiftMap(): string[] {
   };
   reach('extractionPoint', layout.extractionPoint.position);
   for (const node of layout.kindlingNodes) reach(node.id, node.position);
+  for (const node of layout.contaminantNodes) reach(node.id, node.position);
   for (const enemy of layout.enemySpawns) {
     for (let i = 0; i < enemy.patrol.waypoints.length; i++) {
       const wp = enemy.patrol.waypoints[i]!;

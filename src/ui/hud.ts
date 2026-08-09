@@ -32,12 +32,20 @@ const PULSE_PERIOD_MS = 300;
 // HUD class
 // ---------------------------------------------------------------------------
 
+export interface ToolSlotInfo {
+  label: string;
+  name: string;
+  usesRemaining: number;
+}
+
 export interface HUDConfig {
   canExtract: () => boolean;
   isRunEnded: () => boolean;
   getPeakChaos: () => number;
   getElapsedMs: () => number;
   kindlingValueModifier?: number;
+  /** Sortie loadout slots (max 3: Q, F, Passive). Undefined if no loadout. */
+  toolSlots?: ToolSlotInfo[];
 }
 
 export class HUD {
@@ -61,6 +69,10 @@ export class HUD {
   private resultTitle!: Phaser.GameObjects.Text;
   private resultBody!: Phaser.GameObjects.Text;
 
+  // Tool slot display (bottom left)
+  private toolSlotText: Phaser.GameObjects.Text | null = null;
+  private toolSlotData: ToolSlotInfo[] = [];
+
   // State
   private scene!: Phaser.Scene;
   private chaosValue = 0;
@@ -73,6 +85,7 @@ export class HUD {
   private readonly onHealthChanged: (payload: { current: number; max: number }) => void;
   private readonly onKindlingCollected: (payload: { amount: number; total: number }) => void;
   private readonly onRiftExited: (payload: { kindlingGained: number; survived: boolean }) => void;
+  private readonly onToolUsed: (payload: { contaminantId: string; toolType: string; usesLeft: number }) => void;
 
   constructor() {
     this.onChaosChanged = (payload) => {
@@ -91,6 +104,20 @@ export class HUD {
     };
     this.onRiftExited = (payload) => {
       this.showResultPanel(payload.survived, payload.kindlingGained);
+    };
+    this.onToolUsed = (payload) => {
+      // Update the matching tool slot's remaining uses
+      for (const slot of this.toolSlotData) {
+        if (slot.usesRemaining > 0 && slot.usesRemaining > payload.usesLeft) {
+          // Match by decrement (since we don't have per-slot contaminant id tracking)
+          // A more robust approach: compare toolType
+          if (slot.name === payload.toolType || slot.label === payload.toolType) {
+            slot.usesRemaining = payload.usesLeft;
+            break;
+          }
+        }
+      }
+      this.updateToolSlotText();
     };
   }
 
@@ -216,11 +243,29 @@ export class HUD {
       .setDepth(HUD_DEPTH + 10)
       .setVisible(false);
 
+    // --- Tool slot display (bottom left) ---
+    this.toolSlotData = config.toolSlots ? [...config.toolSlots] : [];
+    if (this.toolSlotData.length > 0) {
+      this.toolSlotText = scene.add
+        .text(BAR_MARGIN, h - BAR_MARGIN * 4, '', {
+          fontSize: '10px',
+          color: '#aaaaaa',
+          fontFamily: 'monospace',
+        })
+        .setOrigin(0, 1)
+        .setScrollFactor(0)
+        .setDepth(HUD_DEPTH);
+      this.updateToolSlotText();
+    } else {
+      this.toolSlotText = null;
+    }
+
     // Subscribe to events
     eventBus.on(GameEvent.CHAOS_CHANGED, this.onChaosChanged);
     eventBus.on(GameEvent.PLAYER_HEALTH_CHANGED, this.onHealthChanged);
     eventBus.on(GameEvent.KINDLING_COLLECTED, this.onKindlingCollected);
     eventBus.on(GameEvent.RIFT_EXITED, this.onRiftExited);
+    eventBus.on(GameEvent.TOOL_USED, this.onToolUsed);
   }
 
   /** Called from scene update for pulse animation and extract prompt visibility. */
@@ -266,6 +311,7 @@ export class HUD {
     eventBus.off(GameEvent.PLAYER_HEALTH_CHANGED, this.onHealthChanged);
     eventBus.off(GameEvent.KINDLING_COLLECTED, this.onKindlingCollected);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRiftExited);
+    eventBus.off(GameEvent.TOOL_USED, this.onToolUsed);
 
     if (this.pickupFlashTween) {
       this.pickupFlashTween.stop();
@@ -283,6 +329,7 @@ export class HUD {
     this.pickupFlash?.destroy();
     this.extractPrompt?.destroy();
     this.resultPanel?.destroy();
+    this.toolSlotText?.destroy();
   }
 
   // ------------------------------------------------------------------ internal
@@ -343,6 +390,27 @@ export class HUD {
         this.pickupFlashTween = null;
       },
     });
+  }
+
+  private updateToolSlotText(): void {
+    if (!this.toolSlotText) return;
+
+    const SLOT_KEYS = ['Q', 'F', '被动'];
+    const parts: string[] = [];
+    for (let i = 0; i < this.toolSlotData.length; i++) {
+      const slot = this.toolSlotData[i]!;
+      const key = SLOT_KEYS[i] ?? `${i + 1}`;
+      if (slot.usesRemaining > 0) {
+        parts.push(`[${key}] ${slot.name} x${slot.usesRemaining}`);
+      } else {
+        parts.push(`[${key}] 已耗尽`);
+      }
+    }
+    this.toolSlotText.setText(parts.join('  '));
+
+    // Grey out if all exhausted
+    const anyActive = this.toolSlotData.some((s) => s.usesRemaining > 0);
+    this.toolSlotText.setColor(anyActive ? '#aaaaaa' : '#555555');
   }
 
   private showResultPanel(survived: boolean, kindlingGained: number): void {
