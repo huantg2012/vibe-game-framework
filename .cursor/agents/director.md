@@ -1,6 +1,6 @@
 ---
 name: director
-model: claude-opus-5-thinking-high
+model: opus
 description: "项目总监 — 全流程编排：判断阶段、规划Slice、拆解任务、派发执行、检查一致性、更新进度。"
 tools:
   - Read
@@ -151,6 +151,19 @@ tools:
 - 执行完毕 → 触发 QA 验收
 - QA 通过 → 让人试玩验证
 - **试玩前提醒人**：参考 `guides/02-ideation-workflow.md` Step 4（Playtest 方法：至少自己玩 10 次完整循环，找 1-2 人试玩，记录结构化反馈）
+
+**试玩反馈处理协议**：
+
+收到试玩反馈时，先判断问题性质再决定路由：
+
+| 反馈性质 | 判断标准 | 路由 |
+| -------- | -------- | ---- |
+| **数值调参** | 现有系统结构正确但某个参数不对（太快/太慢/太多/太少） | → code agent 改 constants.ts |
+| **结构性循环问题** | 现有系统结构无法通过调参解决（如：经济必然崩溃、缺少关键反馈回路） | → **design agent 重新审视循环设计** |
+| **UX/表现问题** | 系统逻辑正确但玩家感知不到/理解不了 | → design agent 设计信息展示 → code agent 实现 |
+| **Bug** | 实现与 spec 不一致 | → code agent 修复 |
+
+**关键规则**：结构性循环问题**不能**通过直接改 constants 来"修"——那只是把表象推迟了。必须回到 design agent 从循环层面重新设计。
 
 ### Step 7: 整合（每个 Slice 结束时）
 
