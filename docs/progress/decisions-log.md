@@ -9,6 +9,23 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-026: Slice 3 growth economy — single currency + tidal pressure + 3-axis growth
+- Date: 2026-08-08
+- Phase: Slice 3 (design proposal)
+- Type: Design direction (major system — growth + long-term economy)
+- Context: Slice 1+2 validated sortie tension and allocation dilemma, but the current economy is a provable death spiral (fixed income ~12/cycle vs rising expense that hits 19+ by cycle 10). Game needs growth to break the spiral without reaching "safe state."
+- Decision (pending user approval): Three interlocking changes proposed —
+  1. **Single currency (kindling) funds growth**: Three-way allocation (module repair / module enhancement / self-growth). Maximizes "顾此失彼" per vision.md's explicit "唯一通用货币，三个出口" design.
+  2. **Tidal impact model replaces linear ramp**: Intensity cycles through Rise→Crest→Ebb phases across 4-5 Tides. Ebb periods are "hope windows" where reduced repair pressure allows growth investment. Crests remain the survival challenge. Prevents both monotonic despair and stable safety.
+  3. **3-axis character growth with hard caps**: Sortie Efficiency (chaos resistance, speed), Resource Efficiency (kindling bonus), Survivability (HP, iframes). Each axis 3-5 levels with escalating cost. Hard ceiling ensures max-growth player still can't cruise through Final Tide crests.
+- Alternatives considered:
+  - Second currency (rejected: dilutes 顾此失彼 tension, vision.md explicitly wants one currency)
+  - Auto-accumulating growth (rejected: removes investment decision, which is the new decision layer)
+  - Monotonic pressure + pure growth offset (rejected: no rhythm = no hope signal, player can't see relief coming)
+- Key risk: If single-currency growth makes early game too punishing (can't afford both repair AND first upgrade), mitigation is lowering 1st-level cost or extending Tide 1's ebb phase.
+- Impact: Requires new GrowthSystem + TideSystem + ProgressTracker; modifies GameState (persistence needed), ImpactSystem (tide state machine), ChaosSystem/LootSystem/Player (growth modifiers). Full proposal: `docs/design-notes/slice3-growth-economy-proposal.md`.
+- Status: **PROPOSAL — awaiting user review and selection of 4 trade-off options (A.1-A.4).**
+
 ## DEC-025: Slice 1 playtest — minimap + navigation + kindling density
 - Date: 2026-08-07
 - Phase: Slice 1 (playtest validation iteration)
