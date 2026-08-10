@@ -377,10 +377,10 @@ export const GAME_CONSTANTS = {
   /** Purification stability (docs/specs/system-growth-tide.md, section S) */
   STABILITY: {
     MAX: 100,
-    GAIN_EXTRACT: 2,            // successful extraction
-    GAIN_GROWTH: 3,             // purchased an upgrade
-    GAIN_CREST_SURVIVED: 5,     // survived a full Crest with no module at zero
-    GAIN_TIDE_ADVANCE: 8,       // tide advanced to next number
+    GAIN_EXTRACT: 1,            // successful extraction (calibrated: ~35 cycles to cap)
+    GAIN_GROWTH: 1,             // purchased an upgrade
+    GAIN_CREST_SURVIVED: 3,     // survived a full Crest with no module at zero
+    GAIN_TIDE_ADVANCE: 5,       // tide advanced to next number
     LOSS_MODULE_ZERO: -1,       // a module reached 0 hp
   },
 

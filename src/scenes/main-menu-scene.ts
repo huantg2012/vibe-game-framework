@@ -23,13 +23,13 @@ export class MainMenuScene extends Phaser.Scene {
     contaminantSystem.reset();
     growthSystem.reset();
     stabilityTracker.reset();
-    this.scene.start('PurificationScene');
+    this.scene.start('PurificationScene', { fromMenu: true });
   }
 
   private continueExpedition(): void {
     const loaded = saveManager.load();
     if (loaded) {
-      this.scene.start('PurificationScene');
+      this.scene.start('PurificationScene', { fromMenu: true });
     } else {
       // Save corrupted, start fresh
       this.startNewExpedition();

@@ -179,9 +179,9 @@ export class PurificationScene extends Phaser.Scene {
     super({ key: 'PurificationScene' });
   }
 
-  create(data?: { kindlingGained?: number; survived?: boolean }): void {
+  create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean }): void {
     // Determine if this is a return from rift (vs. menu/load entry)
-    const isReturnFromRift = data !== undefined && data.kindlingGained !== undefined;
+    const isReturnFromRift = !data?.fromMenu && data?.kindlingGained !== undefined;
 
     // Credit kindling from the rift run (spec rule 10)
     if (data?.survived && data.kindlingGained !== undefined && data.kindlingGained > 0) {
@@ -275,20 +275,23 @@ export class PurificationScene extends Phaser.Scene {
     });
     this.storageModule.create(this);
 
+    // Unified interaction text style (12px, white, monospace, dark bg)
+    const interactionTextStyle = {
+      fontSize: '12px',
+      color: '#ffffff',
+      fontFamily: 'monospace',
+      align: 'center' as const,
+      backgroundColor: '#000000cc',
+      padding: { x: 4, y: 4 },
+    };
+
     // Rift entrance marker (pulsing teal)
     this.riftEntranceGraphics = this.add.graphics().setDepth(20);
     this.riftPromptText = this.add.text(
       RIFT_ENTRANCE_POS.x,
       RIFT_ENTRANCE_POS.y - 24,
       'E - 进入裂隙',
-      {
-        fontSize: '10px',
-        color: '#ffffff',
-        fontFamily: 'monospace',
-        align: 'center',
-        backgroundColor: '#000000aa',
-        padding: { x: 4, y: 2 },
-      },
+      interactionTextStyle,
     ).setOrigin(0.5).setDepth(21).setVisible(false);
 
     // Defense management point (purple, bottom-left)
@@ -297,14 +300,7 @@ export class PurificationScene extends Phaser.Scene {
       DEFENSE_POS.x,
       DEFENSE_POS.y - 24,
       'E - 防御配置',
-      {
-        fontSize: '10px',
-        color: '#ffffff',
-        fontFamily: 'monospace',
-        align: 'center',
-        backgroundColor: '#000000aa',
-        padding: { x: 4, y: 2 },
-      },
+      interactionTextStyle,
     ).setOrigin(0.5).setDepth(21).setVisible(false);
 
     // Growth altar (orange, center-bottom)
@@ -313,14 +309,7 @@ export class PurificationScene extends Phaser.Scene {
       GROWTH_POS.x,
       GROWTH_POS.y - 24,
       'E - 永久改造',
-      {
-        fontSize: '10px',
-        color: '#ffffff',
-        fontFamily: 'monospace',
-        align: 'center',
-        backgroundColor: '#000000aa',
-        padding: { x: 4, y: 2 },
-      },
+      interactionTextStyle,
     ).setOrigin(0.5).setDepth(21).setVisible(false);
 
     // Purification HUD (DOM overlay — Phaser text invisible on void background)
@@ -624,6 +613,8 @@ export class PurificationScene extends Phaser.Scene {
   /** A4: Enhanced purification HUD with tide intensity and phase progress. */
   private createPurifHud(): void {
     if (this.purifHud) this.purifHud.remove();
+    // Defensive: remove any orphaned element with the same ID
+    document.getElementById('purif-hud')?.remove();
 
     const tideState = tideSystem.getState();
     const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };

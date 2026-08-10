@@ -396,7 +396,7 @@ export class RiftScene extends Phaser.Scene {
       `background:rgba(${color}, ${alpha})`,
       'display:flex', 'align-items:flex-start', 'justify-content:center',
       'padding-top:20vh',
-      'animation:chaos-flash-in 0.3s ease-out forwards',
+      'animation:chaos-flash-in 0.5s ease-out forwards',
     ].join(';');
 
     // Narration text
@@ -404,19 +404,19 @@ export class RiftScene extends Phaser.Scene {
     narration.style.cssText = [
       'font-family:monospace', 'font-size:14px', 'color:#ffffff',
       'text-shadow:0 0 8px rgba(0,0,0,0.8)',
-      'opacity:0', 'animation:chaos-flash-in 0.3s ease-out forwards',
+      'opacity:0', 'animation:chaos-flash-in 0.5s ease-out forwards',
     ].join(';');
     narration.textContent = text;
     overlay.appendChild(narration);
 
     document.body.appendChild(overlay);
 
-    // Timeline: 0.3s fade-in, 0.5s hold, 0.3s fade-out, then remove
+    // Timeline: 0.5s fade-in, 2.0s hold, 0.5s fade-out, then remove (total 3s)
     setTimeout(() => {
-      overlay.style.animation = 'chaos-flash-out 0.3s ease-in forwards';
-      narration.style.animation = 'chaos-flash-out 0.3s ease-in forwards';
-      setTimeout(() => overlay.remove(), 300);
-    }, 800); // 300ms fade-in + 500ms hold
+      overlay.style.animation = 'chaos-flash-out 0.5s ease-in forwards';
+      narration.style.animation = 'chaos-flash-out 0.5s ease-in forwards';
+      setTimeout(() => overlay.remove(), 500);
+    }, 2500); // 500ms fade-in + 2000ms hold
   };
 
   /** The single line that turns combat's noise policy into an AI stimulus. */
@@ -451,6 +451,67 @@ export class RiftScene extends Phaser.Scene {
     for (const effect of effects) {
       this.applySingleSideEffect(effect);
     }
+
+    // Show toast notifications for side effects so the player understands what happened
+    this.showSideEffectToasts(effects);
+  }
+
+  /** Show DOM toast notifications for defense side effects. */
+  private showSideEffectToasts(effects: PendingSideEffect[]): void {
+    // Map effect types to human-readable descriptions
+    const describeEffect = (e: PendingSideEffect): string | null => {
+      const sourceNames: Record<string, string> = {
+        solidify: '晶锁残渣', ruminate: '噬化残渣', scatter: '裂散残渣',
+        retrograde: '回溯残渣', delay: '缓释残渣', siphon: '虹吸残渣',
+        expand: '膨胀残渣', muffle: '消声残渣', kindle: '燃尽残渣',
+        stitch: '缝合残渣', compress: '致密残渣', echo: '回响残渣',
+        erode: '侵蚀残渣', combust: '灰烬残渣', resonate: '共振残渣',
+        overwrite: '覆写残渣', mirror: '镜映残渣', abyss: '深渊残渣',
+      };
+      const sourceName = e.source ? (sourceNames[e.source] ?? e.source) : '未知';
+
+      switch (e.type) {
+        case 'initial_chaos':
+          return `防御残留: 初始混乱 +${e.value} (${sourceName})`;
+        case 'chaos_rate_mult':
+          return `防御残留: 混乱增速 x${e.value} ${e.durationMs ? `${e.durationMs / 1000}s` : ''} (${sourceName})`;
+        case 'vision_reduction':
+          return `防御残留: 视野 -${Math.round(e.value * 100)}% (${sourceName})`;
+        case 'speed_reduction':
+          return `防御残留: 移速 -${Math.round(e.value * 100)}% (${sourceName})`;
+        case 'proximity_sense_boost':
+          return `防御残留: 敌近距感知 +${Math.round(e.value * 100)}% (${sourceName})`;
+        case 'storage_halved':
+          return `防御残留: 储藏效果减半 (${sourceName})`;
+        default:
+          return null;
+      }
+    };
+
+    const messages = effects.map(describeEffect).filter((m): m is string => m !== null);
+    if (messages.length === 0) return;
+
+    // Inject animation style if needed
+    if (!document.getElementById('side-effect-toast-style')) {
+      const style = document.createElement('style');
+      style.id = 'side-effect-toast-style';
+      style.textContent = `@keyframes side-effect-fade { 0%{opacity:1;} 70%{opacity:1;} 100%{opacity:0;} }`;
+      document.head.appendChild(style);
+    }
+
+    const toast = document.createElement('div');
+    toast.style.cssText = [
+      'position:fixed', 'top:60px', 'left:50%', 'transform:translateX(-50%)',
+      'z-index:998', 'background:rgba(100,40,40,0.2)', 'border:1px solid #884444',
+      'padding:8px 16px', 'font-family:monospace', 'font-size:11px',
+      'color:#cc8888', 'border-radius:4px', 'pointer-events:none',
+      'animation:side-effect-fade 3s ease-out forwards',
+      'text-align:left', 'line-height:1.6',
+    ].join(';');
+    toast.innerHTML = messages.join('<br>');
+
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
   }
 
   private applySingleSideEffect(effect: PendingSideEffect): void {

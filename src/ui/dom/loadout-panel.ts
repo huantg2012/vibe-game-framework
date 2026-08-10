@@ -12,6 +12,7 @@ import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
 import type { ContaminantType } from '@/types/game-types';
 
@@ -192,10 +193,16 @@ function render(): void {
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
-      // Show equip buttons for each empty slot
+      // Determine tool type (active or passive)
+      const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+      // Show equip buttons only for compatible empty slots:
+      // Slots 0,1 (Q/F) = active only; Slot 2 (passive) = passive only
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
-      const equipBtns = emptySlots
-        .map((idx) => `<button class="loadout-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle('#1a3333','#2a5555')}">装备到 ${idx + 1}</button>`)
+      const compatibleSlots = emptySlots.filter((idx) =>
+        toolType === 'passive' ? idx === 2 : idx <= 1,
+      );
+      const equipBtns = compatibleSlots
+        .map((idx) => `<button class="loadout-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle('#1a3333','#2a5555')}">装备到 ${SLOT_LABELS[idx]}</button>`)
         .join(' ');
 
       html += `<div style="margin-bottom:6px;padding:4px 8px;background:#111118;border-radius:3px;">
@@ -237,6 +244,14 @@ function wireEvents(): void {
       const el = btn as HTMLElement;
       const id = el.dataset.id!;
       const slot = parseInt(el.dataset.slot!, 10);
+      // Validate slot-type compatibility before equipping
+      const allContaminants = contaminantSystem.getAll();
+      const c = allContaminants.find((x) => x.id === id);
+      if (c) {
+        const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+        const slotValid = toolType === 'passive' ? slot === 2 : slot <= 1;
+        if (!slotValid) return;
+      }
       contaminantSystem.slotSortie(id, slot);
       render();
     });

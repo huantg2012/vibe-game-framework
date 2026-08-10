@@ -114,12 +114,12 @@ export class PurificationModuleEntity {
 
     // Interaction prompt (hidden by default)
     this.promptText = scene.add.text(x, y - 34, 'E - 分配薪柴', {
-      fontSize: '10px',
+      fontSize: '12px',
       color: '#ffffff',
       fontFamily: 'monospace',
       align: 'center',
-      backgroundColor: '#000000aa',
-      padding: { x: 4, y: 2 },
+      backgroundColor: '#000000cc',
+      padding: { x: 4, y: 4 },
     }).setOrigin(0.5).setDepth(depth + 3).setVisible(false);
 
     this.updateHpBar();

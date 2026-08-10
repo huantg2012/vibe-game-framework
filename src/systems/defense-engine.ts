@@ -35,6 +35,8 @@ export interface PendingSideEffect {
   value: number;
   duration: SideEffectDuration;
   durationMs?: number;
+  /** The contaminant type that produced this side effect (for UI display). */
+  source?: string;
 }
 
 export interface DefenseContext {
@@ -145,6 +147,7 @@ export function applyDefenseEffects(
     if (effect.expandNullified) expandNullified = true;
 
     for (const se of effect.sideEffects) {
+      se.source = contaminant.type;
       sideEffects.push(se);
     }
   }

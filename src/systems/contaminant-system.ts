@@ -160,8 +160,9 @@ export const contaminantSystem = {
       c.impactCharges += chargeCost * chargeMult;
 
       if (c.impactCharges >= TIDE.TRANSFORM_THRESHOLD) {
-        // Transform: defense -> tool
+        // Transform: defense -> tool; reset uses to per-type value from CSV data
         c.stage = 'tool';
+        c.usesRemaining = CONTAMINANT_DATA[c.type]?.toolUses ?? CN.USES[c.rarity];
         defenseSlots[i] = null;
         results.push({ contaminantId: c.id, type: c.type, slotIndex: i });
         eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: c.id });
