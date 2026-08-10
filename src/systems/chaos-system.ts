@@ -160,8 +160,18 @@ export class ChaosSystem implements ChaosSystemAPI {
     const dtSec = dtMs / 1000;
     this.clockMs += dtMs;
 
+    // Check temporary rate multiplier expiry
+    if (this.tempRateDeadlineMs > 0 && this.clockMs >= this.tempRateDeadlineMs) {
+      this.tempRateDeadlineMs = 0;
+      this.tempRateMult = 1.0;
+      this.updateRateMultiplier();
+    }
+
     const chaos = GAME_CONSTANTS.CHAOS;
-    const increment = chaos.BASE_RATE * this.chaosRateModifier * this.rateMultiplier * dtSec;
+    const effectiveRateMult = this.tempRateDeadlineMs > 0
+      ? Math.max(this.rateMultiplier, this.tempRateMult)
+      : this.rateMultiplier;
+    const increment = chaos.BASE_RATE * this.chaosRateModifier * effectiveRateMult * dtSec;
     this.value = Math.min(this.value + increment, chaos.HARD_CAP);
     if (this.value > this.peak) this.peak = this.value;
 
@@ -175,6 +185,8 @@ export class ChaosSystem implements ChaosSystemAPI {
     this.peak = 0;
     this.paused = false;
     this.rateMultiplier = 1.0;
+    this.tempRateDeadlineMs = 0;
+    this.tempRateMult = 1.0;
     this.lastEmitted = GAME_CONSTANTS.CHAOS.START_VALUE;
     this.lastModulated = GAME_CONSTANTS.CHAOS.START_VALUE;
     this.thresholdsFired = [false, false, false];
@@ -224,6 +236,26 @@ export class ChaosSystem implements ChaosSystemAPI {
   setPaused(paused: boolean): void {
     this.paused = paused;
   }
+
+  /**
+   * Add chaos immediately (e.g. from defense side effects at sortie start).
+   * Same as addChaos but with a clearer name for the use case.
+   */
+  addImmediate(amount: number): void {
+    this.addChaos('defense_side_effect', amount);
+  }
+
+  /**
+   * Set a temporary rate multiplier that decays after a given duration.
+   * Used by defense side effects (e.g. delay: chaos rate x2 for 30s).
+   */
+  setTemporaryRateMult(mult: number, durationMs: number): void {
+    this.tempRateDeadlineMs = this.clockMs + durationMs;
+    this.tempRateMult = mult;
+  }
+
+  private tempRateDeadlineMs = 0;
+  private tempRateMult = 1.0;
 
   // ------------------------------------------------------------------ internal
 

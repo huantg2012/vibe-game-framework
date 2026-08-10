@@ -9,6 +9,7 @@
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import type { ContaminantRarity, ContaminantType, Vector2 } from '@/types/game-types';
 import type { ContaminantNodeDef } from '@/types/map-types';
@@ -32,12 +33,21 @@ const NODE_COLOR = 0x7722aa;
 const NODE_SIZE = 8;
 const NODE_DEPTH = 15; // same layer as loot nodes
 
-/** The 3 types available in Slice 3. */
-const SLICE3_TYPES: ContaminantType[] = ['solidify', 'delay', 'erode'];
-
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+/** Types grouped by rarity for weighted random selection. */
+const TYPES_BY_RARITY: Record<ContaminantRarity, ContaminantType[]> = {
+  common: [],
+  fine: [],
+  rare: [],
+};
+
+// Populate from CONTAMINANT_DATA at module load
+for (const [id, def] of Object.entries(CONTAMINANT_DATA)) {
+  TYPES_BY_RARITY[def.rarity].push(id as ContaminantType);
+}
 
 function rollRarity(): ContaminantRarity {
   const weights = GAME_CONSTANTS.CONTAMINANT.RARITY_WEIGHTS;
@@ -48,8 +58,10 @@ function rollRarity(): ContaminantRarity {
   return 'rare';
 }
 
-function rollType(): ContaminantType {
-  return SLICE3_TYPES[Math.floor(Math.random() * SLICE3_TYPES.length)]!;
+/** Roll a random contaminant type from the given rarity pool. */
+function rollType(rarity: ContaminantRarity): ContaminantType {
+  const pool = TYPES_BY_RARITY[rarity];
+  return pool[Math.floor(Math.random() * pool.length)]!;
 }
 
 // ---------------------------------------------------------------------------
@@ -108,6 +120,17 @@ export class ContaminantNodeSystem {
     }
   }
 
+  /** Get positions of all collected (empty) nodes — for ruminate tool. */
+  getCollectedPositions(): readonly Vector2[] {
+    const positions: Vector2[] = [];
+    for (const node of this.nodes) {
+      if (node.collected) {
+        positions.push(node.def.position);
+      }
+    }
+    return positions;
+  }
+
   reset(): void {
     this.pulseTime = 0;
     for (const node of this.nodes) {
@@ -143,7 +166,7 @@ export class ContaminantNodeSystem {
     if (body) body.enable = false;
 
     const rarity = rollRarity();
-    const type = rollType();
+    const type = rollType(rarity);
     // acquire() internally emits CONTAMINANT_ACQUIRED
     contaminantSystem.acquire(type, rarity);
   }

@@ -18,7 +18,7 @@ import { Player } from '@/entities/player';
 import { RIFT_MAP, validateRiftMap } from '@/scenes/rift-map-data';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
-import type { SortieModifiers } from '@/managers/game-state';
+import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { CombatSystem, COMBAT_FX_DEPTH, type NoiseLevel } from '@/systems/combat-system';
 import { ContaminantNodeSystem } from '@/systems/contaminant-node-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -33,6 +33,7 @@ import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { HUD } from '@/ui/hud';
 import { Minimap } from '@/ui/minimap';
+import type { PendingSideEffect } from '@/systems/defense-engine';
 import { TileType, type Contaminant, type Vector2 } from '@/types/game-types';
 import type { LandmarkDef } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
@@ -160,12 +161,22 @@ export class RiftScene extends Phaser.Scene {
       getVisibilityAt: this.visibilityAt,
     });
 
-    // Tool system (Slice 3): sortie loadout
+    // Tool system (Slice 4): sortie loadout with expanded options
     this.toolSystem.create(
       this,
       sortieLoadout,
       () => this.player.getPosition(),
       () => this.ai.getEnemies(),
+      {
+        setPlayerCollision: (enabled) => {
+          const sprite = this.player.getSprite();
+          const body = sprite.body as Phaser.Physics.Arcade.Body | null;
+          if (body) body.enable = enabled;
+        },
+        setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
+        getCollectedNodes: () => this.contaminantNodes.getCollectedPositions(),
+        addKindling: (n) => this.loot.addBonusKindling(n),
+      },
     );
 
     this.extraction.create(
@@ -203,6 +214,9 @@ export class RiftScene extends Phaser.Scene {
 
     // Apply initial chaos modulators (all at 0 - no effect)
     this.applyChaosModulators(getChaosModulators(0));
+
+    // Consume pending side effects from defense engine (Slice 4)
+    this.applyPendingSideEffects();
 
     this.minimap.create(
       tileMap.tiles,
@@ -425,6 +439,51 @@ export class RiftScene extends Phaser.Scene {
     this.visibility.setScreenFlicker(mods.screenFlicker);
     this.player.setSpeedModifier('chaos', mods.speedMult);
   };
+
+  /**
+   * Consume and apply pending side effects from defense engine.
+   * These modify the sortie's starting conditions (chaos, speed, vision, etc.).
+   */
+  private applyPendingSideEffects(): void {
+    const effects = gameState.consumePendingSideEffects();
+    if (effects.length === 0) return;
+
+    for (const effect of effects) {
+      this.applySingleSideEffect(effect);
+    }
+  }
+
+  private applySingleSideEffect(effect: PendingSideEffect): void {
+    switch (effect.type) {
+      case 'initial_chaos':
+        // Add chaos immediately at sortie start
+        this.chaos.addImmediate(effect.value);
+        break;
+      case 'chaos_rate_mult':
+        // Multiply chaos rate for a duration
+        if (effect.duration === 'timed' && effect.durationMs) {
+          this.chaos.setTemporaryRateMult(effect.value, effect.durationMs);
+        }
+        break;
+      case 'speed_reduction':
+        // Reduce player speed for the sortie
+        this.player.setSpeedModifier('defense_side_effect', 1.0 - effect.value);
+        break;
+      case 'vision_reduction':
+        // Reduce visibility radius slightly
+        this.visibility.setRadiusScale(1.0 - effect.value);
+        break;
+      case 'proximity_sense_boost':
+        // Handled by the AI system reading tool debuffs (muffle passive may counteract)
+        // Store as metadata for AI to read — simplified: no-op if muffle is active
+        break;
+      case 'repair_efficiency':
+      case 'upgrade_discount':
+      case 'storage_halved':
+        // These are purification-phase effects, not sortie effects. No-op here.
+        break;
+    }
+  }
 
   /** Resets all T9 systems and combat for a fresh run. */
   private resetAllSystems(): void {

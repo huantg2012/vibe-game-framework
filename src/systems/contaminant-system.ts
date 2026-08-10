@@ -10,6 +10,7 @@
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
+import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { GameEvent } from '@/types/events';
 import type { Contaminant, ContaminantRarity, ContaminantType } from '@/types/game-types';
 
@@ -154,7 +155,9 @@ export const contaminantSystem = {
         continue;
       }
 
-      c.impactCharges += chargeCost;
+      // Apply charge multiplier from contaminant data (e.g. kindle = 2.0)
+      const chargeMult = CONTAMINANT_DATA[c.type]?.defenseChargeMult ?? 1;
+      c.impactCharges += chargeCost * chargeMult;
 
       if (c.impactCharges >= TIDE.TRANSFORM_THRESHOLD) {
         // Transform: defense -> tool

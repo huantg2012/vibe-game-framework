@@ -9,6 +9,7 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import type { PendingSideEffect } from '@/systems/defense-engine';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -37,6 +38,9 @@ const P = GAME_CONSTANTS.PURIFICATION;
 let kindlingReserve = 0;
 let cycle = 0;
 let impactIntensity = 1.0;
+let pendingSideEffects: PendingSideEffect[] = [];
+let repairEfficiencyMult = 1.0;
+let upgradeDiscount = 0;
 
 const modules: ModuleState[] = [
   { id: 'BARRIER', type: 'BARRIER', hp: P.MODULE_INITIAL_HP, maxHp: P.MODULE_MAX_HP },
@@ -155,26 +159,75 @@ export const gameState = {
 
   // --- Serialization (for SaveManager) ---
 
-  getState(): { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[] } {
+  getState(): { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects: PendingSideEffect[]; repairEfficiencyMult: number; upgradeDiscount: number } {
     return {
       kindlingReserve,
       cycle,
       modules: modules.map((m) => ({ id: m.id, type: m.type, hp: m.hp, maxHp: m.maxHp })),
+      pendingSideEffects: [...pendingSideEffects],
+      repairEfficiencyMult,
+      upgradeDiscount,
     };
   },
 
-  loadState(state: { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[] }): void {
+  loadState(state: { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects?: PendingSideEffect[]; repairEfficiencyMult?: number; upgradeDiscount?: number }): void {
     kindlingReserve = state.kindlingReserve;
     cycle = state.cycle;
     for (const saved of state.modules) {
       const mod = modules.find((m) => m.id === saved.id);
       if (mod) mod.hp = saved.hp;
     }
+    pendingSideEffects = state.pendingSideEffects ?? [];
+    repairEfficiencyMult = state.repairEfficiencyMult ?? 1.0;
+    upgradeDiscount = state.upgradeDiscount ?? 0;
   },
 
   /** Set impact intensity (called by TideSystem to sync). */
   setImpactIntensity(value: number): void {
     impactIntensity = value;
+  },
+
+  // --- Pending side effects (defense engine output, consumed at sortie start) ---
+
+  getPendingSideEffects(): PendingSideEffect[] {
+    return pendingSideEffects;
+  },
+
+  addPendingSideEffects(effects: PendingSideEffect[]): void {
+    pendingSideEffects.push(...effects);
+  },
+
+  /** Consume and clear all pending side effects. Called at rift scene create. */
+  consumePendingSideEffects(): PendingSideEffect[] {
+    const effects = [...pendingSideEffects];
+    pendingSideEffects = [];
+    return effects;
+  },
+
+  // --- Repair efficiency (siphon defense effect) ---
+
+  getRepairEfficiencyMult(): number {
+    return repairEfficiencyMult;
+  },
+
+  setRepairEfficiencyMult(value: number): void {
+    repairEfficiencyMult = value;
+  },
+
+  // --- Upgrade discount (retrograde defense effect) ---
+
+  getUpgradeDiscount(): number {
+    return upgradeDiscount;
+  },
+
+  setUpgradeDiscount(value: number): void {
+    upgradeDiscount = value;
+  },
+
+  consumeUpgradeDiscount(): number {
+    const d = upgradeDiscount;
+    upgradeDiscount = 0;
+    return d;
   },
 
   // --- Reset (page-refresh equivalent for testing) ---
@@ -183,6 +236,9 @@ export const gameState = {
     kindlingReserve = 0;
     cycle = 0;
     impactIntensity = 1.0;
+    pendingSideEffects = [];
+    repairEfficiencyMult = 1.0;
+    upgradeDiscount = 0;
     modules[0]!.hp = P.MODULE_INITIAL_HP;
     modules[1]!.hp = P.MODULE_INITIAL_HP;
   },

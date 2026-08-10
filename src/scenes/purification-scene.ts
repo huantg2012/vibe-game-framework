@@ -210,8 +210,9 @@ export class PurificationScene extends Phaser.Scene {
       // Compute charge changes for impact panel (D2)
       chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
 
-      // Run impact on arrival
-      impactResult = impactSystem.run();
+      // Run impact on arrival (pass defense slots to avoid cross-system import)
+      const defenseSlots = contaminantSystem.getDefenseSlotted();
+      impactResult = impactSystem.run(defenseSlots);
 
       // Advance tide cycle after impact resolves (E1: capture phase change)
       phaseChange = tideSystem.advanceCycle();

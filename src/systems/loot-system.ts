@@ -124,6 +124,11 @@ export class LootSystem {
     return this.carried;
   }
 
+  /** Add bonus kindling (e.g. from ruminate tool). */
+  addBonusKindling(n: number): void {
+    this.carried += Math.max(0, n);
+  }
+
   getRemainingNodes(): number {
     let count = 0;
     for (const node of this.nodes) {

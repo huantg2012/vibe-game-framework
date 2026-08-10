@@ -7,12 +7,16 @@
  *
  * Architecture: does not import other systems. Reads/writes GameState,
  * emits events through the bus.
+ *
+ * Slice 4: integrates DefenseEngine to apply defense slot effects before damage.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
+import { applyDefenseEffects, type DefenseContext, type DefenseResult } from '@/systems/defense-engine';
 import { GameEvent } from '@/types/events';
+import type { Contaminant } from '@/types/game-types';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -28,6 +32,8 @@ export interface ImpactResult {
   readonly damages: ImpactDamageEntry[];
   readonly intensity: number;
   readonly skipped: boolean;
+  /** Defense engine result (null when skipped or no defense slots active). */
+  readonly defenseResult?: DefenseResult;
 }
 
 // ---------------------------------------------------------------------------
@@ -59,8 +65,11 @@ export const impactSystem = {
   /**
    * Run the impact calculation. Returns the result for the scene to display.
    * On cycle=0, returns skipped=true and does nothing.
+   *
+   * @param defenseSlots - The 3 defense-slotted contaminants, passed from the scene layer
+   *   to preserve the "systems never import each other" rule (DEC-ARCH-002).
    */
-  run(): ImpactResult {
+  run(defenseSlots?: (Contaminant | null)[]): ImpactResult {
     const cycle = gameState.getCycle();
 
     // First sortie: no impact (spec rule 20)
@@ -81,25 +90,84 @@ export const impactSystem = {
       : (forecastTargetId === modules[1]!.id ? 0 : 1);
     const secondaryIndex = primaryIndex === 0 ? 1 : 0;
 
+    const primary = modules[primaryIndex]!;
+    const secondary = modules[secondaryIndex]!;
+
     const primaryDamage = Math.round(totalDamage * P.THREAT_FOCUS_RATIO);
     const secondaryDamage = Math.round(totalDamage * (1 - P.THREAT_FOCUS_RATIO));
 
+    // Base damage per module before defense
+    const baseDamagePerModule: Record<string, number> = {
+      [primary.id]: primaryDamage,
+      [secondary.id]: secondaryDamage,
+    };
+
+    // --- Defense engine phase (Slice 4) ---
+    const slots = defenseSlots ?? [];
+    const hasDefense = slots.some((s) => s !== null);
+
+    let defenseResult: DefenseResult | undefined;
+
+    if (hasDefense) {
+      const context: DefenseContext = {
+        forecastTargetId,
+        actualPrimaryId: primary.id,
+        stabilityProgress: 0, // TODO: wire stabilityTracker
+        moduleHps: { [primary.id]: primary.hp, [secondary.id]: secondary.hp },
+        moduleMaxHps: { [primary.id]: primary.maxHp, [secondary.id]: secondary.maxHp },
+      };
+
+      defenseResult = applyDefenseEffects(baseDamagePerModule, slots, context);
+
+      // Apply kindling gain
+      if (defenseResult.kindlingGain > 0) {
+        gameState.addKindling(defenseResult.kindlingGain);
+      }
+
+      // Store side effects for next sortie
+      if (defenseResult.sideEffects.length > 0) {
+        gameState.addPendingSideEffects(defenseResult.sideEffects);
+      }
+
+      // Store repair efficiency and upgrade discount
+      if (defenseResult.repairEfficiencyMult > 1.0) {
+        gameState.setRepairEfficiencyMult(defenseResult.repairEfficiencyMult);
+      }
+      if (defenseResult.upgradeDiscount > 0) {
+        gameState.setUpgradeDiscount(defenseResult.upgradeDiscount);
+      }
+    }
+
+    // Determine final damage per module
+    const finalDamageMap = defenseResult
+      ? defenseResult.finalDamagePerModule
+      : baseDamagePerModule;
+
+    // Apply damage to modules
     const damages: ImpactDamageEntry[] = [];
     const moduleDamage: Record<string, number> = {};
 
-    // Apply to primary
-    const primary = modules[primaryIndex]!;
-    const actualPrimary = gameState.applyDamage(primary.id, primaryDamage);
-    damages.push({ moduleId: primary.id, damage: actualPrimary, newHp: primary.hp });
-    moduleDamage[primary.id] = actualPrimary;
-    eventBus.emit(GameEvent.MODULE_DAMAGED, { moduleId: primary.id, newHealth: primary.hp });
+    for (const mod of modules) {
+      const dmg = finalDamageMap[mod.id] ?? 0;
+      const actualDmg = gameState.applyDamage(mod.id, dmg);
+      damages.push({ moduleId: mod.id, damage: actualDmg, newHp: mod.hp });
+      moduleDamage[mod.id] = actualDmg;
+      eventBus.emit(GameEvent.MODULE_DAMAGED, { moduleId: mod.id, newHealth: mod.hp });
+    }
 
-    // Apply to secondary
-    const secondary = modules[secondaryIndex]!;
-    const actualSecondary = gameState.applyDamage(secondary.id, secondaryDamage);
-    damages.push({ moduleId: secondary.id, damage: actualSecondary, newHp: secondary.hp });
-    moduleDamage[secondary.id] = actualSecondary;
-    eventBus.emit(GameEvent.MODULE_DAMAGED, { moduleId: secondary.id, newHealth: secondary.hp });
+    // Stitch equalization: transfer HP between modules after damage
+    if (defenseResult && Object.keys(defenseResult.stitchEqualization).length > 0) {
+      for (const [moduleId, change] of Object.entries(defenseResult.stitchEqualization)) {
+        const mod = modules.find((m) => m.id === moduleId);
+        if (mod && change > 0) {
+          // Positive change = heal this module (capped at maxHp)
+          mod.hp = Math.min(mod.hp + change, mod.maxHp);
+        } else if (mod && change < 0) {
+          // Negative change = take from this module (floor at 0)
+          mod.hp = Math.max(mod.hp + change, 0);
+        }
+      }
+    }
 
     // Emit resolved
     eventBus.emit(GameEvent.IMPACT_RESOLVED, { moduleDamage });
@@ -107,7 +175,7 @@ export const impactSystem = {
     // Increment intensity for next cycle (spec rule 12)
     gameState.incrementIntensity();
 
-    return { damages, intensity, skipped: false };
+    return { damages, intensity, skipped: false, defenseResult };
   },
 
   /**
