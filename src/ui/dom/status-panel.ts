@@ -27,6 +27,14 @@ const TYPE_NAMES: Record<ContaminantType, string> = {
   resonate: '共鸣残渣',
   overwrite: '覆写残渣',
   erode: '侵蛀残渣',
+  muffle: '消声残渣',
+  kindle: '燃尽残渣',
+  stitch: '缝合残渣',
+  compress: '致密残渣',
+  mirror: '镜映残渣',
+  echo: '回响残渣',
+  abyss: '深渊残渣',
+  combust: '灰烬残渣',
 };
 
 const TOOL_NAMES: Record<ContaminantType, string> = {
@@ -40,6 +48,14 @@ const TOOL_NAMES: Record<ContaminantType, string> = {
   resonate: '共振链接',
   overwrite: '规则覆写',
   erode: '侵蚀领域',
+  muffle: '消声步',
+  kindle: '燃素弹',
+  stitch: '缝合线',
+  compress: '重力锚',
+  mirror: '镜像诱饵',
+  echo: '回响脉冲',
+  abyss: '深渊之眼',
+  combust: '焚天',
 };
 
 const RARITY_COLORS: Record<string, string> = {

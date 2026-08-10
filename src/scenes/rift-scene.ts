@@ -296,6 +296,7 @@ export class RiftScene extends Phaser.Scene {
     eventBus.on(GameEvent.PLAYER_DIED, this.onRunEnded);
     eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
     eventBus.on(GameEvent.RIFT_EXITED, this.onRunEnded);
+    eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
   }
 
   private bindAttackKey(): void {
@@ -346,6 +347,62 @@ export class RiftScene extends Phaser.Scene {
   private readonly onRunEnded = (): void => {
     this.ai.onPlayerLost();
     this.combat.setEnabled(false);
+  };
+
+  /**
+   * T9: Chaos threshold visual + narration overlay.
+   * DOM-based (pointer-events:none, z-index:998) so it won't be clipped by the
+   * Phaser vision mask and won't block gameplay input.
+   */
+  private readonly onChaosThreshold = ({ level }: { level: 1 | 2 | 3 }): void => {
+    const config: Record<1 | 2 | 3, { color: string; alpha: number; text: string }> = {
+      1: { color: '0, 180, 160', alpha: 0.08, text: '边界在渗透。' },
+      2: { color: '0, 180, 160', alpha: 0.12, text: '混乱在蔓延。视野正在收缩。' },
+      3: { color: '220, 40, 40', alpha: 0.15, text: '临界。净化点的回忆在模糊。' },
+    };
+    const { color, alpha, text } = config[level];
+
+    // Inject keyframes once
+    if (!document.getElementById('chaos-threshold-style')) {
+      const style = document.createElement('style');
+      style.id = 'chaos-threshold-style';
+      style.textContent = `
+        @keyframes chaos-flash-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes chaos-flash-out { from { opacity: 1; } to { opacity: 0; } }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Full-screen flash overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'chaos-threshold-overlay';
+    overlay.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'z-index:998', 'pointer-events:none',
+      `background:rgba(${color}, ${alpha})`,
+      'display:flex', 'align-items:flex-start', 'justify-content:center',
+      'padding-top:20vh',
+      'animation:chaos-flash-in 0.3s ease-out forwards',
+    ].join(';');
+
+    // Narration text
+    const narration = document.createElement('div');
+    narration.style.cssText = [
+      'font-family:monospace', 'font-size:14px', 'color:#ffffff',
+      'text-shadow:0 0 8px rgba(0,0,0,0.8)',
+      'opacity:0', 'animation:chaos-flash-in 0.3s ease-out forwards',
+    ].join(';');
+    narration.textContent = text;
+    overlay.appendChild(narration);
+
+    document.body.appendChild(overlay);
+
+    // Timeline: 0.3s fade-in, 0.5s hold, 0.3s fade-out, then remove
+    setTimeout(() => {
+      overlay.style.animation = 'chaos-flash-out 0.3s ease-in forwards';
+      narration.style.animation = 'chaos-flash-out 0.3s ease-in forwards';
+      setTimeout(() => overlay.remove(), 300);
+    }, 800); // 300ms fade-in + 500ms hold
   };
 
   /** The single line that turns combat's noise policy into an AI stimulus. */
@@ -523,6 +580,7 @@ export class RiftScene extends Phaser.Scene {
     eventBus.off(GameEvent.PLAYER_DIED, this.onRunEnded);
     eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRunEnded);
+    eventBus.off(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
     if (this.attackKey) {
       this.input.keyboard?.removeKey(this.attackKey, true);
       this.attackKey = null;

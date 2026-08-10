@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
+    "codegen": "node tools/csv-codegen/generate.mjs",
     "art:postprocess": "tsx tools/art-pipeline/src/postprocess.ts",
     "art:verify": "tsx tools/art-pipeline/src/verify.ts"
   },

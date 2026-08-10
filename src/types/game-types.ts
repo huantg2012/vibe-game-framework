@@ -126,11 +126,14 @@ export enum TileType {
 
 // ─── Slice 3: Growth + Tide Economy types ───────────────────────────────────
 
-/** Contaminant type (10 kinds) */
+/** Contaminant type (18 kinds) */
 export type ContaminantType =
   | 'solidify' | 'ruminate' | 'scatter' | 'retrograde'
   | 'delay' | 'siphon' | 'expand'
-  | 'resonate' | 'overwrite' | 'erode';
+  | 'resonate' | 'overwrite' | 'erode'
+  | 'muffle' | 'kindle' | 'stitch'
+  | 'compress' | 'mirror' | 'echo'
+  | 'abyss' | 'combust';
 
 /** Contaminant rarity */
 export type ContaminantRarity = 'common' | 'fine' | 'rare';

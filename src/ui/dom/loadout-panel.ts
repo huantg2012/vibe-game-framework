@@ -30,6 +30,14 @@ const TYPE_NAMES: Record<ContaminantType, string> = {
   resonate: '共鸣',
   overwrite: '覆写',
   erode: '侵蚀领域',
+  muffle: '消声',
+  kindle: '燃素',
+  stitch: '缝合',
+  compress: '重力锚',
+  mirror: '镜像',
+  echo: '回响',
+  abyss: '深渊',
+  combust: '焚天',
 };
 
 const RARITY_STARS: Record<string, string> = {

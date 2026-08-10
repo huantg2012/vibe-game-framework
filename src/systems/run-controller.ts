@@ -132,24 +132,80 @@ export class RunController {
   private transitionToPurification(): void {
     this.restarted = true;
 
-    // D4: Scene transition narrative overlay
-    const overlay = document.createElement('div');
-    overlay.id = 'scene-transition-overlay';
-    overlay.style.cssText = [
-      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
-      'z-index:2000', 'background:#000', 'display:flex',
-      'align-items:center', 'justify-content:center',
-      'font-family:monospace', 'font-size:14px', 'color:#888',
-    ].join(';');
-    overlay.textContent = '裂隙坍缩。回到净化点。';
-    document.body.appendChild(overlay);
+    // Inject transition animation styles once
+    this.injectTransitionStyles();
 
+    // Phase 1: 0.3s shrink + teal glow effect on game canvas
+    const glowOverlay = document.createElement('div');
+    glowOverlay.id = 'scene-transition-glow';
+    glowOverlay.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'z-index:1999', 'pointer-events:none',
+      'animation:rift-collapse-glow 0.3s ease-in forwards',
+    ].join(';');
+    document.body.appendChild(glowOverlay);
+
+    // Apply shrink to the game canvas
+    const canvas = document.querySelector('#game-container canvas') as HTMLElement | null;
+    if (canvas) {
+      canvas.style.transition = 'transform 0.3s ease-in';
+      canvas.style.transform = 'scale(0.95)';
+    }
+
+    // Phase 2: After 0.3s, show black screen with text
     setTimeout(() => {
-      overlay.remove();
-      this.scene.scene.start('PurificationScene', {
-        kindlingGained: this.lastKindling,
-        survived: this.lastEndReason === 'extract',
-      });
-    }, 500);
+      glowOverlay.remove();
+      if (canvas) {
+        canvas.style.transition = '';
+        canvas.style.transform = '';
+      }
+
+      const overlay = document.createElement('div');
+      overlay.id = 'scene-transition-overlay';
+      overlay.style.cssText = [
+        'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+        'z-index:2000', 'background:#000', 'display:flex',
+        'align-items:center', 'justify-content:center',
+        'font-family:monospace', 'font-size:14px', 'color:#888',
+      ].join(';');
+      overlay.textContent = '裂隙坍缩。回到净化点。';
+      document.body.appendChild(overlay);
+
+      setTimeout(() => {
+        overlay.remove();
+        this.scene.scene.start('PurificationScene', {
+          kindlingGained: this.lastKindling,
+          survived: this.lastEndReason === 'extract',
+        });
+      }, 500);
+    }, 300);
+  }
+
+  /** Inject CSS keyframes for scene transition animations (idempotent). */
+  private injectTransitionStyles(): void {
+    if (document.getElementById('scene-transition-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'scene-transition-styles';
+    style.textContent = `
+      @keyframes rift-collapse-glow {
+        from {
+          box-shadow: inset 0 0 0px rgba(0, 180, 160, 0);
+          background: transparent;
+        }
+        to {
+          box-shadow: inset 0 0 60px rgba(0, 180, 160, 0.3);
+          background: rgba(0, 0, 0, 0.3);
+        }
+      }
+      @keyframes rift-enter-glow {
+        from {
+          background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 180, 160, 0) 100%);
+        }
+        to {
+          background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 180, 160, 0.25) 100%);
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 }

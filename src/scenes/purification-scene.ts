@@ -71,7 +71,9 @@ const TOOL_NAMES: Record<string, string> = {
   solidify: '凝锁', delay: '时裂', erode: '侵蚀领域',
   ruminate: '反刍之口', scatter: '碎影', retrograde: '残响标记',
   siphon: '寄生引流', expand: '虚化步', resonate: '共振链接',
-  overwrite: '规则覆写',
+  overwrite: '规则覆写', muffle: '消声步', kindle: '燃素弹',
+  stitch: '缝合线', compress: '重力锚', mirror: '镜像诱饵',
+  echo: '回响脉冲', abyss: '深渊之眼', combust: '焚天',
 };
 
 // ---------------------------------------------------------------------------
@@ -541,7 +543,7 @@ export class PurificationScene extends Phaser.Scene {
     );
   }
 
-  /** D4: Scene transition with narrative overlay. */
+  /** D4: Scene transition with narrative overlay + T10 radial glow. */
   private transitionToRift(): void {
     // Increment cycle before entering
     gameState.incrementCycle();
@@ -555,22 +557,67 @@ export class PurificationScene extends Phaser.Scene {
 
     eventBus.emit(GameEvent.RIFT_ENTERED, { cycle });
 
-    // D4: Transition overlay
-    const overlay = document.createElement('div');
-    overlay.id = 'scene-transition-overlay';
-    overlay.style.cssText = [
-      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
-      'z-index:2000', 'background:#000', 'display:flex',
-      'align-items:center', 'justify-content:center',
-      'font-family:monospace', 'font-size:14px', 'color:#888',
-    ].join(';');
-    overlay.textContent = '进入裂隙。';
-    document.body.appendChild(overlay);
+    // Inject transition animation styles once
+    this.injectTransitionStyles();
 
+    // Phase 1: 0.3s teal radial glow from edges inward
+    const glowOverlay = document.createElement('div');
+    glowOverlay.id = 'scene-transition-glow';
+    glowOverlay.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'z-index:1999', 'pointer-events:none',
+      'animation:rift-enter-glow 0.3s ease-in forwards',
+    ].join(';');
+    document.body.appendChild(glowOverlay);
+
+    // Phase 2: After 0.3s, show black screen with text
     setTimeout(() => {
-      overlay.remove();
-      this.scene.start('RiftScene', { modifiers, cycle, loadout });
-    }, 500);
+      glowOverlay.remove();
+
+      const overlay = document.createElement('div');
+      overlay.id = 'scene-transition-overlay';
+      overlay.style.cssText = [
+        'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+        'z-index:2000', 'background:#000', 'display:flex',
+        'align-items:center', 'justify-content:center',
+        'font-family:monospace', 'font-size:14px', 'color:#888',
+      ].join(';');
+      overlay.textContent = '进入裂隙。';
+      document.body.appendChild(overlay);
+
+      setTimeout(() => {
+        overlay.remove();
+        this.scene.start('RiftScene', { modifiers, cycle, loadout });
+      }, 500);
+    }, 300);
+  }
+
+  /** Inject CSS keyframes for scene transition animations (idempotent). */
+  private injectTransitionStyles(): void {
+    if (document.getElementById('scene-transition-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'scene-transition-styles';
+    style.textContent = `
+      @keyframes rift-collapse-glow {
+        from {
+          box-shadow: inset 0 0 0px rgba(0, 180, 160, 0);
+          background: transparent;
+        }
+        to {
+          box-shadow: inset 0 0 60px rgba(0, 180, 160, 0.3);
+          background: rgba(0, 0, 0, 0.3);
+        }
+      }
+      @keyframes rift-enter-glow {
+        from {
+          background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 180, 160, 0) 100%);
+        }
+        to {
+          background: radial-gradient(ellipse at center, transparent 30%, rgba(0, 180, 160, 0.25) 100%);
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 
   /** A4: Enhanced purification HUD with tide intensity and phase progress. */

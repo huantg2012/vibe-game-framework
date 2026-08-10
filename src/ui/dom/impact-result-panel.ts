@@ -38,6 +38,14 @@ const TYPE_NAMES: Record<ContaminantType, string> = {
   resonate: '共鸣残渣',
   overwrite: '覆写残渣',
   erode: '侵蛀残渣',
+  muffle: '消声残渣',
+  kindle: '燃尽残渣',
+  stitch: '缝合残渣',
+  compress: '致密残渣',
+  mirror: '镜映残渣',
+  echo: '回响残渣',
+  abyss: '深渊残渣',
+  combust: '灰烬残渣',
 };
 
 // ---------------------------------------------------------------------------
