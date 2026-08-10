@@ -84,7 +84,7 @@ export class PurificationModuleEntity {
     }
 
     // Label
-    const label = type === 'BARRIER' ? 'BARRIER' : 'STORAGE';
+    const label = type === 'BARRIER' ? '屏障' : '储藏';
     this.labelText = scene.add.text(x, y + 20, label, {
       fontSize: '9px',
       color: '#aaaaaa',
@@ -103,7 +103,7 @@ export class PurificationModuleEntity {
     this.hpBarFill.setDepth(depth + 2);
 
     // Interaction prompt (hidden by default)
-    this.promptText = scene.add.text(x, y - 34, 'E - Allocate', {
+    this.promptText = scene.add.text(x, y - 34, 'E - 分配薪柴', {
       fontSize: '10px',
       color: '#ffffff',
       fontFamily: 'monospace',

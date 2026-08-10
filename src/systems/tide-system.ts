@@ -14,6 +14,13 @@ import { eventBus } from '@/core/event-bus';
 import { GameEvent } from '@/types/events';
 import type { TidePhase, TideState } from '@/types/game-types';
 
+/** Returned by advanceCycle() when a phase transition occurs. */
+export interface PhaseChangeInfo {
+  from: TidePhase;
+  to: TidePhase;
+  newTideNumber: number;
+}
+
 const TIDES = GAME_CONSTANTS.TIDE.TIDES;
 
 // ---------------------------------------------------------------------------
@@ -60,9 +67,12 @@ export const tideSystem = {
    * Advance the tide state machine by one cycle (called after each sortie return).
    * Updates intensity according to the current phase, and transitions phases/tides
    * when the current phase is exhausted.
+   *
+   * Returns phase change info if a transition occurred, or null otherwise.
    */
-  advanceCycle(): void {
+  advanceCycle(): PhaseChangeInfo | null {
     const cfg = getTideConfig(state.tideNumber);
+    const prevPhase = state.phase;
     state.cycleInPhase++;
 
     // Apply intensity change for the current phase
@@ -115,7 +125,10 @@ export const tideSystem = {
         phase: state.phase,
         intensity: state.currentIntensity,
       });
+      return { from: prevPhase, to: state.phase, newTideNumber: state.tideNumber };
     }
+
+    return null;
   },
 
   /** Reset to initial state (new game). */

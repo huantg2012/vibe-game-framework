@@ -1,11 +1,44 @@
 /**
  * ImpactResultPanel - DOM overlay showing impact damage results.
  *
- * Displays for IMPACT_RESULT_DISPLAY_MS then auto-closes.
+ * Displays module damage + defense slot charge progress.
  * Pure HTML/CSS overlay, no Phaser UI.
  */
 
 import type { ImpactDamageEntry } from '@/systems/impact-system';
+import type { ContaminantType } from '@/types/game-types';
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+/** Charge change data for a single defense slot. */
+export interface ChargeChangeEntry {
+  slotIndex: number;
+  type: ContaminantType;
+  name: string;
+  before: number;
+  after: number;
+  threshold: number;
+  transformed: boolean;
+}
+
+// ---------------------------------------------------------------------------
+// Display name mapping (defense stage names)
+// ---------------------------------------------------------------------------
+
+const TYPE_NAMES: Record<ContaminantType, string> = {
+  solidify: '固化残渣',
+  ruminate: '反刍残渣',
+  scatter: '散射残渣',
+  retrograde: '逆行残渣',
+  delay: '延时残渣',
+  siphon: '虹吸残渣',
+  expand: '膨胀残渣',
+  resonate: '共鸣残渣',
+  overwrite: '覆写残渣',
+  erode: '侵蛀残渣',
+};
 
 // ---------------------------------------------------------------------------
 // State
@@ -25,8 +58,14 @@ export const impactResultPanel = {
 
   /**
    * Show the impact result. Calls onDone when the user dismisses the panel.
+   * @param chargeChanges Optional defense slot charge progress data.
    */
-  show(damages: readonly ImpactDamageEntry[], intensity: number, onDone: () => void): void {
+  show(
+    damages: readonly ImpactDamageEntry[],
+    intensity: number,
+    onDone: () => void,
+    chargeChanges?: readonly ChargeChangeEntry[],
+  ): void {
     if (panel) destroyPanel();
 
     panel = document.createElement('div');
@@ -65,10 +104,34 @@ export const impactResultPanel = {
       document.head.appendChild(style);
     }
 
+    const moduleLabels: Record<string, string> = {
+      BARRIER: '屏障',
+      STORAGE: '储藏',
+    };
+
     const lines = damages.map((d) => {
       const color = d.moduleId === 'BARRIER' ? '#4488cc' : '#cc8844';
-      return `<span style="color:${color}">${d.moduleId}</span> <span style="color:#ff4444">-${d.damage}</span> hp`;
+      const label = moduleLabels[d.moduleId] ?? d.moduleId;
+      return `<span style="color:${color}">${label}</span> <span style="color:#ff4444">-${d.damage}</span> 完整度`;
     });
+
+    // Build charge progress section
+    let chargeHtml = '';
+    if (chargeChanges && chargeChanges.length > 0) {
+      const chargeLines = chargeChanges.map((c) => {
+        const name = TYPE_NAMES[c.type] ?? c.name;
+        if (c.transformed) {
+          return `<div style="color:#2ae6c8;font-size:11px;">${name} ${c.before}/${c.threshold} → ${c.threshold}/${c.threshold} <span style="color:#44ffcc;font-weight:bold;">[已转化]</span></div>`;
+        }
+        return `<div style="color:#aaa;font-size:11px;">${name} ${c.before}/${c.threshold} → ${c.after}/${c.threshold}</div>`;
+      });
+      chargeHtml = `
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid #442222;">
+          <div style="font-size:10px;color:#888;margin-bottom:4px;">防御充能:</div>
+          ${chargeLines.join('')}
+        </div>
+      `;
+    }
 
     panel.innerHTML = `
       <div style="font-size:16px;font-weight:bold;margin-bottom:10px;color:#ff4444;">
@@ -77,6 +140,7 @@ export const impactResultPanel = {
       <div style="font-size:13px;line-height:1.8;">
         ${lines.join('<br>')}
       </div>
+      ${chargeHtml}
       <div style="font-size:11px;color:#888;margin-top:12px;">
         点击或按任意键关闭
       </div>

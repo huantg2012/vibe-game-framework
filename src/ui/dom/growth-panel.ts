@@ -41,8 +41,8 @@ const UPGRADES: UpgradeDisplay[] = [
   {
     id: 'growth_vitality',
     name: '生命强化',
-    effectLabel: (level) => level > 0 ? `HP+${level * 15}` : '(未解锁)',
-    nextEffectLabel: (nextLevel) => `HP+${nextLevel * 15}`,
+    effectLabel: (level) => level > 0 ? `完整度+${level * 15}` : '(未解锁)',
+    nextEffectLabel: (nextLevel) => `完整度+${nextLevel * 15}`,
   },
 ];
 

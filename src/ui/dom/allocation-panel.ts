@@ -134,7 +134,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const maxUseful = Math.ceil((maxHp - hp) / repairPer);
   const maxAllocatable = Math.min(reserve, maxUseful);
 
-  const typeLabel = type === 'BARRIER' ? 'BARRIER (Chaos Reduction)' : 'STORAGE (Kindling Bonus)';
+  const typeLabel = type === 'BARRIER' ? '屏障 (混乱抑制)' : '储藏 (薪柴增幅)';
   const typeColor = type === 'BARRIER' ? '#4488cc' : '#cc8844';
 
   // --- Effect preview calculations ---
@@ -152,7 +152,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
       ${typeLabel}
     </div>
     <div style="margin-bottom:8px;font-size:12px;">
-      HP: <span style="color:#fff;">${hp}</span> / ${maxHp}
+      完整度: <span style="color:#fff;">${hp}</span> / ${maxHp}
     </div>
     <div style="margin:8px 0;border-top:1px solid #333;border-bottom:1px solid #333;padding:8px 0;">
       <div style="font-size:11px;color:${typeColor};">
@@ -163,10 +163,10 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
       </div>` : ''}
     </div>
     <div style="margin-bottom:12px;font-size:12px;">
-      Available Kindling: <span style="color:#2ae6c8;">${reserve}</span>
+      可用薪柴: <span style="color:#2ae6c8;">${reserve}</span>
     </div>
     <div style="margin-bottom:8px;font-size:11px;color:#888;">
-      1 kindling = ${repairPer} HP
+      1 薪柴 = ${repairPer} 完整度
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
       <button id="alloc-minus" style="${btnStyle()}" ${selectedAmount <= 0 ? 'disabled' : ''}>-</button>
@@ -175,14 +175,14 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
       </span>
       <button id="alloc-plus" style="${btnStyle()}" ${selectedAmount >= maxAllocatable ? 'disabled' : ''}>+</button>
       <span style="font-size:11px;color:#888;margin-left:8px;">
-        (+${selectedAmount * repairPer} HP)
+        (+${selectedAmount * repairPer} 完整度)
       </span>
     </div>
     <div style="display:flex;gap:8px;">
       <button id="alloc-confirm" style="${confirmBtnStyle()}" ${selectedAmount <= 0 ? 'disabled' : ''}>
-        Confirm
+        确认
       </button>
-      <button id="alloc-cancel" style="${cancelBtnStyle()}">Cancel</button>
+      <button id="alloc-cancel" style="${cancelBtnStyle()}">取消</button>
     </div>
   `;
 

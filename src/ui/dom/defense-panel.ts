@@ -11,6 +11,7 @@ import { contaminantSystem } from '@/systems/contaminant-system';
 import { saveManager } from '@/managers/save-manager';
 import type { ContaminantType } from '@/types/game-types';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
 
 // ---------------------------------------------------------------------------
 // Display name mapping
@@ -139,16 +140,22 @@ function render(): void {
       const name = TYPE_NAMES[c.type];
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
-      html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
-        <span style="color:#888;min-width:48px;">Slot ${i + 1}:</span>
-        <span style="color:${color};">${name} ${stars}</span>
-        <span style="color:#666;font-size:10px;margin-left:4px;">${c.impactCharges}/${threshold}</span>
-        <button class="defense-unslot-btn" data-index="${i}" style="${actionBtnStyle('#663333','#884444')}">卸下</button>
+      const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
+      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="color:#888;min-width:48px;">槽 ${i + 1}:</span>
+          <span style="color:${color};">${name} ${stars}</span>
+          <span style="color:#666;font-size:10px;margin-left:4px;">${c.impactCharges}/${threshold}</span>
+          <button class="defense-unslot-btn" data-index="${i}" style="${actionBtnStyle('#663333','#884444')}">卸下</button>
+        </div>
+        <div style="font-size:10px;color:#666;margin-top:3px;padding-left:56px;">${desc}</div>
       </div>`;
     } else {
-      html += `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
-        <span style="color:#888;min-width:48px;">Slot ${i + 1}:</span>
-        <span style="color:#555;">空</span>
+      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="color:#888;min-width:48px;">槽 ${i + 1}:</span>
+          <span style="color:#555;">空</span>
+        </div>
       </div>`;
     }
   }
@@ -165,15 +172,19 @@ function render(): void {
       const name = TYPE_NAMES[c.type];
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
+      const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
       // Show equip buttons for each empty slot
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
       const equipBtns = emptySlots
         .map((idx) => `<button class="defense-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle('#2a4433','#3a6644')}">装备到 ${idx + 1}</button>`)
         .join(' ');
 
-      html += `<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;padding:4px 8px;background:#111118;border-radius:3px;flex-wrap:wrap;">
-        <span style="color:${color};font-size:11px;">${name} ${stars}</span>
-        ${equipBtns || '<span style="color:#555;font-size:10px;">已满</span>'}
+      html += `<div style="margin-bottom:6px;padding:4px 8px;background:#111118;border-radius:3px;">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="color:${color};font-size:11px;">${name} ${stars}</span>
+          ${equipBtns || '<span style="color:#555;font-size:10px;">已满</span>'}
+        </div>
+        <div style="font-size:10px;color:#666;margin-top:2px;">${desc}</div>
       </div>`;
     }
   }

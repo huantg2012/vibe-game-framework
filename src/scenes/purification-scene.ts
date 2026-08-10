@@ -31,6 +31,8 @@ import { defensePanel } from '@/ui/dom/defense-panel';
 import { growthPanel } from '@/ui/dom/growth-panel';
 import { loadoutPanel } from '@/ui/dom/loadout-panel';
 import { impactResultPanel } from '@/ui/dom/impact-result-panel';
+import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
+import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
 import type { TileMapData, OccluderGrid } from '@/types/map-types';
@@ -149,10 +151,11 @@ export class PurificationScene extends Phaser.Scene {
   private growthPromptText!: Phaser.GameObjects.Text;
   private growthPulse = 0;
 
-  // Purification HUD elements (stability + tide info)
+  // Purification HUD elements (stability + tide info + kindling)
   private stabilityBarBg!: Phaser.GameObjects.Rectangle;
   private stabilityBarFill!: Phaser.GameObjects.Rectangle;
   private tideText!: Phaser.GameObjects.Text;
+  private kindlingText!: Phaser.GameObjects.Text;
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
@@ -173,15 +176,21 @@ export class PurificationScene extends Phaser.Scene {
     // Sync impact intensity from tide system (Slice 3 replaces linear escalation)
     gameState.setImpactIntensity(tideSystem.getCurrentIntensity());
 
+    // Snapshot defense slot charges before applying impact (for D2 visualization)
+    const chargesBefore = this.snapshotDefenseCharges();
+
     // Apply contaminant defense charges before running impact
     const isHighTide = tideSystem.isHighTide();
-    contaminantSystem.applyImpactCharge(isHighTide);
+    const transformResults = contaminantSystem.applyImpactCharge(isHighTide);
+
+    // Compute charge changes for impact panel (D2)
+    const chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
 
     // Run impact on arrival (not on departure) — spec adjustment per playtest feedback
     const impactResult = impactSystem.run();
 
-    // Advance tide cycle after impact resolves
-    tideSystem.advanceCycle();
+    // Advance tide cycle after impact resolves (E1: capture phase change)
+    const phaseChange = tideSystem.advanceCycle();
 
     // Generate forecast for boundary atmosphere (for NEXT impact)
     impactSystem.generateForecast();
@@ -242,7 +251,7 @@ export class PurificationScene extends Phaser.Scene {
     this.riftPromptText = this.add.text(
       RIFT_ENTRANCE_POS.x,
       RIFT_ENTRANCE_POS.y - 24,
-      'E - Enter Rift',
+      'E - 进入裂隙',
       {
         fontSize: '10px',
         color: '#ffffff',
@@ -310,9 +319,20 @@ export class PurificationScene extends Phaser.Scene {
     const tideState = tideSystem.getState();
     const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
     this.tideText = this.add
-      .text(stabilityX + STAB_BAR_W, stabilityY + STAB_BAR_H + 3, `Tide ${tideState.tideNumber} · ${phaseLabels[tideState.phase]}`, {
+      .text(stabilityX + STAB_BAR_W, stabilityY + STAB_BAR_H + 3, `第${tideState.tideNumber}潮 · ${phaseLabels[tideState.phase]}`, {
         fontSize: '9px',
         color: '#44aa66',
+        fontFamily: 'monospace',
+      })
+      .setOrigin(1, 0)
+      .setScrollFactor(0)
+      .setDepth(100);
+
+    // Kindling reserve display (A2: right-top, below tide text)
+    this.kindlingText = this.add
+      .text(stabilityX + STAB_BAR_W, stabilityY + STAB_BAR_H + 15, `薪柴: ${gameState.getKindlingReserve()}`, {
+        fontSize: '10px',
+        color: '#c89040',
         fontFamily: 'monospace',
       })
       .setOrigin(1, 0)
@@ -338,8 +358,19 @@ export class PurificationScene extends Phaser.Scene {
       this.player.setInputEnabled(false);
       this.cameras.main.shake(300, 0.005);
       impactResultPanel.show(impactResult.damages, impactResult.intensity, () => {
-        this.player.setInputEnabled(true);
-      });
+        // After impact panel dismissed, show tide phase notification if applicable (E1)
+        if (phaseChange) {
+          this.showPhaseChangeNotification(phaseChange, () => {
+            this.player.setInputEnabled(true);
+            this.refreshKindlingDisplay();
+          });
+        } else {
+          this.player.setInputEnabled(true);
+          this.refreshKindlingDisplay();
+        }
+      }, chargeChanges.length > 0 ? chargeChanges : undefined);
+    } else {
+      this.refreshKindlingDisplay();
     }
   }
 
@@ -453,6 +484,7 @@ export class PurificationScene extends Phaser.Scene {
     this.player.setInputEnabled(false);
     allocationPanel.open(moduleId, () => {
       this.player.setInputEnabled(true);
+      this.refreshKindlingDisplay();
     });
   }
 
@@ -460,6 +492,7 @@ export class PurificationScene extends Phaser.Scene {
     this.player.setInputEnabled(false);
     defensePanel.open(() => {
       this.player.setInputEnabled(true);
+      this.refreshKindlingDisplay();
     });
   }
 
@@ -467,6 +500,7 @@ export class PurificationScene extends Phaser.Scene {
     this.player.setInputEnabled(false);
     growthPanel.open(() => {
       this.player.setInputEnabled(true);
+      this.refreshKindlingDisplay();
     });
   }
 
@@ -501,6 +535,117 @@ export class PurificationScene extends Phaser.Scene {
     eventBus.emit(GameEvent.RIFT_ENTERED, { cycle });
 
     this.scene.start('RiftScene', { modifiers, cycle, loadout });
+  }
+
+  /** Refresh the kindling HUD text (A2). */
+  private refreshKindlingDisplay(): void {
+    if (this.kindlingText) {
+      this.kindlingText.setText(`薪柴: ${gameState.getKindlingReserve()}`);
+    }
+  }
+
+  /** Snapshot current defense slot charge levels before impact application (D2). */
+  private snapshotDefenseCharges(): { slotIndex: number; id: string; type: string; charges: number }[] {
+    const slots = contaminantSystem.getDefenseSlotted();
+    const result: { slotIndex: number; id: string; type: string; charges: number }[] = [];
+    for (let i = 0; i < slots.length; i++) {
+      const c = slots[i];
+      if (c) {
+        result.push({ slotIndex: i, id: c.id, type: c.type, charges: c.impactCharges });
+      }
+    }
+    return result;
+  }
+
+  /** Compute charge change entries by comparing before snapshot with current state (D2). */
+  private computeChargeChanges(
+    before: { slotIndex: number; id: string; type: string; charges: number }[],
+    transformResults: { contaminantId: string; type: string; slotIndex: number }[],
+  ): ChargeChangeEntry[] {
+    const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
+    const transformedIds = new Set(transformResults.map((r) => r.contaminantId));
+    const changes: ChargeChangeEntry[] = [];
+
+    for (const entry of before) {
+      const transformed = transformedIds.has(entry.id);
+      // After transformation, the contaminant is no longer in defense slots
+      // so we compute the "after" charge from the threshold if transformed
+      const allContaminants = contaminantSystem.getAll();
+      const current = allContaminants.find((c) => c.id === entry.id);
+      const afterCharges = transformed ? threshold : (current?.impactCharges ?? entry.charges);
+
+      changes.push({
+        slotIndex: entry.slotIndex,
+        type: entry.type as import('@/types/game-types').ContaminantType,
+        name: entry.type,
+        before: entry.charges,
+        after: afterCharges,
+        threshold,
+        transformed,
+      });
+    }
+
+    return changes;
+  }
+
+  /** Show tide phase change notification overlay (E1). */
+  private showPhaseChangeNotification(info: PhaseChangeInfo, onDone: () => void): void {
+    let message: string;
+    let borderColor: string;
+
+    if (info.to === 'crest') {
+      message = '潮峰期。冲击强度维持峰值。';
+      borderColor = '#cc4444';
+    } else if (info.to === 'ebb') {
+      message = '退潮期。压力暂缓。';
+      borderColor = '#44aa66';
+    } else {
+      // New tide (rise phase of a higher tide number)
+      message = `第${info.newTideNumber}潮汐。边界压力上升。`;
+      borderColor = '#8866cc';
+    }
+
+    const overlay = document.createElement('div');
+    overlay.id = 'tide-phase-overlay';
+    overlay.style.cssText = [
+      'position:fixed',
+      'top:50%',
+      'left:50%',
+      'transform:translate(-50%,-50%)',
+      'z-index:1002',
+      'background:rgba(10,10,14,0.92)',
+      `border:2px solid ${borderColor}`,
+      'padding:18px 32px',
+      'font-family:monospace',
+      `color:${borderColor}`,
+      'font-size:14px',
+      'border-radius:4px',
+      'text-align:center',
+      'box-shadow:0 0 20px rgba(0,0,0,0.6)',
+      'cursor:pointer',
+    ].join(';');
+
+    overlay.innerHTML = `
+      <div style="font-weight:bold;margin-bottom:6px;">${message}</div>
+      <div style="font-size:10px;color:#666;">点击或等待关闭</div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const dismiss = (): void => {
+      overlay.removeEventListener('click', dismiss);
+      document.removeEventListener('keydown', keyDismiss);
+      if (autoTimer) clearTimeout(autoTimer);
+      overlay.remove();
+      onDone();
+    };
+    const keyDismiss = (e: KeyboardEvent): void => {
+      if (!e.repeat) dismiss();
+    };
+
+    overlay.addEventListener('click', dismiss);
+    document.addEventListener('keydown', keyDismiss);
+    const autoTimer = setTimeout(dismiss, 2000);
   }
 
   private onShutdown(): void {
@@ -539,5 +684,6 @@ export class PurificationScene extends Phaser.Scene {
     this.stabilityBarBg?.destroy();
     this.stabilityBarFill?.destroy();
     this.tideText?.destroy();
+    this.kindlingText?.destroy();
   }
 }
