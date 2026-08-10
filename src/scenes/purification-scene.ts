@@ -21,6 +21,7 @@ import { gameState } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
 import { BoundaryAtmosphere } from '@/systems/boundary-atmosphere';
 import { contaminantSystem } from '@/systems/contaminant-system';
+import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
@@ -30,10 +31,12 @@ import { allocationPanel } from '@/ui/dom/allocation-panel';
 import { defensePanel } from '@/ui/dom/defense-panel';
 import { growthPanel } from '@/ui/dom/growth-panel';
 import { loadoutPanel } from '@/ui/dom/loadout-panel';
+import { statusPanel } from '@/ui/dom/status-panel';
 import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
+import type { GrowthUpgradeId } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
 import type { TileMapData, OccluderGrid } from '@/types/map-types';
 
@@ -62,6 +65,14 @@ const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 3 * TILE };
 const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 3 * TILE };
 // Growth altar (center-bottom)
 const GROWTH_POS = { x: CENTER_X, y: CENTER_Y + 2.5 * TILE };
+
+// B3: Tool name mapping for toast
+const TOOL_NAMES: Record<string, string> = {
+  solidify: '凝锁', delay: '时裂', erode: '侵蚀领域',
+  ruminate: '反刍之口', scatter: '碎影', retrograde: '残响标记',
+  siphon: '寄生引流', expand: '虚化步', resonate: '共振链接',
+  overwrite: '规则覆写',
+};
 
 // ---------------------------------------------------------------------------
 // Build the static tilemap
@@ -156,7 +167,11 @@ export class PurificationScene extends Phaser.Scene {
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
+  private tabKey: Phaser.Input.Keyboard.Key | null = null;
   private transitioning = false;
+
+  // E3: Track stability milestones already shown
+  private lastStabilityMilestone = 0;
 
   constructor() {
     super({ key: 'PurificationScene' });
@@ -177,6 +192,7 @@ export class PurificationScene extends Phaser.Scene {
     let impactResult = { skipped: true, damages: [] as { moduleId: string; damage: number; newHp: number }[], intensity: 0 };
     let chargeChanges: ChargeChangeEntry[] = [];
     let phaseChange: ReturnType<typeof tideSystem.advanceCycle> = null;
+    let transformResults: { contaminantId: string; type: string; slotIndex: number }[] = [];
 
     if (isReturnFromRift) {
       // Sync impact intensity from tide system
@@ -187,7 +203,7 @@ export class PurificationScene extends Phaser.Scene {
 
       // Apply contaminant defense charges before running impact
       const isHighTide = tideSystem.isHighTide();
-      const transformResults = contaminantSystem.applyImpactCharge(isHighTide);
+      transformResults = contaminantSystem.applyImpactCharge(isHighTide);
 
       // Compute charge changes for impact panel (D2)
       chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
@@ -206,6 +222,9 @@ export class PurificationScene extends Phaser.Scene {
     saveManager.save();
 
     this.transitioning = false;
+
+    // E3: Initialize stability milestone tracker
+    this.lastStabilityMilestone = Math.floor(stabilityTracker.getProgress() / 25) * 25;
 
     // Build tilemap
     const tileMap = buildPurificationTileMap();
@@ -312,7 +331,14 @@ export class PurificationScene extends Phaser.Scene {
     if (keyboard) {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
+      this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
     }
+
+    // C2: Listen for allocation confirmed to flash modules
+    eventBus.on(GameEvent.ALLOCATION_CONFIRMED, this.onAllocationConfirmed);
+
+    // E3: Listen for stability changes
+    eventBus.on(GameEvent.STABILITY_CHANGED, this.onStabilityChanged);
 
     // Post-update for visibility sync
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
@@ -328,10 +354,14 @@ export class PurificationScene extends Phaser.Scene {
           this.showPhaseChangeNotification(phaseChange, () => {
             this.player.setInputEnabled(true);
             this.refreshKindlingDisplay();
+            // B3: Show new tool toast after impact flow completes
+            this.showNewToolToast(transformResults);
           });
         } else {
           this.player.setInputEnabled(true);
           this.refreshKindlingDisplay();
+          // B3: Show new tool toast after impact panel dismissed
+          this.showNewToolToast(transformResults);
         }
       }, chargeChanges.length > 0 ? chargeChanges : undefined);
     } else {
@@ -371,7 +401,7 @@ export class PurificationScene extends Phaser.Scene {
     const nearGrowth = groDist <= GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
     this.growthPromptText.setVisible(nearGrowth);
 
-    // Draw rift entrance (pulsing teal)
+    // Draw rift entrance (pulsing teal) - always normal pulse
     this.riftEntrancePulse += delta * 0.003;
     const pulseAlpha = 0.5 + Math.sin(this.riftEntrancePulse) * 0.3;
     this.riftEntranceGraphics.clear();
@@ -380,18 +410,24 @@ export class PurificationScene extends Phaser.Scene {
     this.riftEntranceGraphics.lineStyle(2, 0x2ae6c8, pulseAlpha * 0.7);
     this.riftEntranceGraphics.strokeCircle(RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y, 14);
 
-    // Draw defense point (pulsing purple)
-    this.defensePulse += delta * 0.0025;
-    const defAlpha = 0.4 + Math.sin(this.defensePulse) * 0.25;
+    // D1: Defense point pulse (accelerated when has unequipped contaminants)
+    const defHighlight = this.shouldHighlight('defense');
+    const defSpeed = defHighlight ? 0.006 : 0.0025;
+    this.defensePulse += delta * defSpeed;
+    const defBaseAlpha = defHighlight ? 0.55 : 0.4;
+    const defAlpha = defBaseAlpha + Math.sin(this.defensePulse) * 0.3;
     this.defenseGraphics.clear();
     this.defenseGraphics.fillStyle(0x8866cc, defAlpha);
     this.defenseGraphics.fillCircle(DEFENSE_POS.x, DEFENSE_POS.y, 8);
     this.defenseGraphics.lineStyle(2, 0xaa88ee, defAlpha * 0.7);
     this.defenseGraphics.strokeCircle(DEFENSE_POS.x, DEFENSE_POS.y, 12);
 
-    // Draw growth altar (pulsing orange)
-    this.growthPulse += delta * 0.002;
-    const groAlpha = 0.45 + Math.sin(this.growthPulse) * 0.25;
+    // D1: Growth altar pulse (accelerated when can afford upgrade)
+    const groHighlight = this.shouldHighlight('growth');
+    const groSpeed = groHighlight ? 0.005 : 0.002;
+    this.growthPulse += delta * groSpeed;
+    const groBaseAlpha = groHighlight ? 0.6 : 0.45;
+    const groAlpha = groBaseAlpha + Math.sin(this.growthPulse) * 0.3;
     this.growthGraphics.clear();
     this.growthGraphics.fillStyle(0xcc8844, groAlpha);
     this.growthGraphics.fillRect(GROWTH_POS.x - 7, GROWTH_POS.y - 7, 14, 14);
@@ -428,8 +464,19 @@ export class PurificationScene extends Phaser.Scene {
         growthPanel.close();
       } else if (loadoutPanel.isOpen()) {
         loadoutPanel.close();
+      } else if (statusPanel.isOpen()) {
+        statusPanel.close();
       } else {
         this.scene.start('MainMenuScene');
+      }
+    }
+
+    // Tab: Status & Inventory panel (A1 + B1)
+    if (this.tabKey && Phaser.Input.Keyboard.JustDown(this.tabKey)) {
+      if (statusPanel.isOpen()) {
+        statusPanel.close();
+      } else if (!this.isAnyPanelOpen()) {
+        this.openStatusPanel();
       }
     }
   }
@@ -442,7 +489,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private isAnyPanelOpen(): boolean {
-    return allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen();
+    return allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen() || statusPanel.isOpen();
   }
 
   private openAllocationPanel(moduleId: string): void {
@@ -469,6 +516,14 @@ export class PurificationScene extends Phaser.Scene {
     });
   }
 
+  /** A1 + B1: Open the combined status & inventory panel. */
+  private openStatusPanel(): void {
+    this.player.setInputEnabled(false);
+    statusPanel.open(() => {
+      this.player.setInputEnabled(true);
+    });
+  }
+
   private enterRift(): void {
     if (this.transitioning) return;
     // Show loadout panel first, then transition on confirm
@@ -486,6 +541,7 @@ export class PurificationScene extends Phaser.Scene {
     );
   }
 
+  /** D4: Scene transition with narrative overlay. */
   private transitionToRift(): void {
     // Increment cycle before entering
     gameState.incrementCycle();
@@ -499,9 +555,25 @@ export class PurificationScene extends Phaser.Scene {
 
     eventBus.emit(GameEvent.RIFT_ENTERED, { cycle });
 
-    this.scene.start('RiftScene', { modifiers, cycle, loadout });
+    // D4: Transition overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'scene-transition-overlay';
+    overlay.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'z-index:2000', 'background:#000', 'display:flex',
+      'align-items:center', 'justify-content:center',
+      'font-family:monospace', 'font-size:14px', 'color:#888',
+    ].join(';');
+    overlay.textContent = '进入裂隙。';
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+      overlay.remove();
+      this.scene.start('RiftScene', { modifiers, cycle, loadout });
+    }, 500);
   }
 
+  /** A4: Enhanced purification HUD with tide intensity and phase progress. */
   private createPurifHud(): void {
     if (this.purifHud) this.purifHud.remove();
 
@@ -509,6 +581,14 @@ export class PurificationScene extends Phaser.Scene {
     const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
     const stabPct = Math.round(stabilityTracker.getProgress());
     const reserve = gameState.getKindlingReserve();
+
+    // A4: Get phase cycle count for progress display
+    const tidesCfg = GAME_CONSTANTS.TIDE.TIDES;
+    const cfg = tidesCfg[Math.min(tideState.tideNumber - 1, tidesCfg.length - 1)]!;
+    let phaseCycles = 0;
+    if (tideState.phase === 'rise') phaseCycles = cfg.riseCycles;
+    else if (tideState.phase === 'crest') phaseCycles = cfg.crestCycles;
+    else phaseCycles = cfg.ebbCycles;
 
     this.purifHud = document.createElement('div');
     this.purifHud.id = 'purif-hud';
@@ -519,6 +599,7 @@ export class PurificationScene extends Phaser.Scene {
       <div style="color:#c89040;">薪柴: ${reserve}</div>
       <div style="color:#44aa66;font-size:10px;">稳定度: ${stabPct}%</div>
       <div style="color:#44aa66;font-size:10px;">第${tideState.tideNumber}潮 · ${phaseLabels[tideState.phase]}</div>
+      <div style="color:#668888;font-size:10px;">强度: ${tideState.currentIntensity.toFixed(2)} (${phaseLabels[tideState.phase]} ${tideState.cycleInPhase}/${phaseCycles})</div>
     `;
     document.body.appendChild(this.purifHud);
   }
@@ -526,6 +607,122 @@ export class PurificationScene extends Phaser.Scene {
   /** Refresh the kindling HUD text (A2). */
   private refreshKindlingDisplay(): void {
     this.createPurifHud();
+  }
+
+  /** D1: Check whether an interaction point should pulse faster (has actionable content). */
+  private shouldHighlight(point: 'defense' | 'growth' | 'barrier' | 'storage'): boolean {
+    const reserve = gameState.getKindlingReserve();
+    switch (point) {
+      case 'barrier': {
+        const mod = gameState.getModule('BARRIER');
+        return reserve > 0 && mod !== undefined && mod.hp < mod.maxHp;
+      }
+      case 'storage': {
+        const mod = gameState.getModule('STORAGE');
+        return reserve > 0 && mod !== undefined && mod.hp < mod.maxHp;
+      }
+      case 'defense': {
+        const all = contaminantSystem.getAll();
+        const slotted = contaminantSystem.getDefenseSlotted();
+        return all.some((c) => c.stage === 'defense' && !slotted.some((s) => s?.id === c.id));
+      }
+      case 'growth': {
+        const ids: GrowthUpgradeId[] = ['growth_chaos_resist', 'growth_kindling_affinity', 'growth_vitality'];
+        return ids.some((id) => growthSystem.canAfford(id, reserve));
+      }
+    }
+  }
+
+  /** B3: Show toast when new tools are available from transformation. */
+  private showNewToolToast(transformResults: { contaminantId: string; type: string; slotIndex: number }[]): void {
+    if (transformResults.length === 0) return;
+
+    const names = transformResults.map((r) => TOOL_NAMES[r.type] ?? r.type);
+    const text = `新工具可用: ${names.join(', ')}`;
+
+    // Inject animation style if needed
+    if (!document.getElementById('toast-fade-style')) {
+      const style = document.createElement('style');
+      style.id = 'toast-fade-style';
+      style.textContent = `@keyframes toast-fade { 0%{opacity:1;} 70%{opacity:1;} 100%{opacity:0;} }`;
+      document.head.appendChild(style);
+    }
+
+    const toast = document.createElement('div');
+    toast.style.cssText = [
+      'position:fixed', 'top:40px', 'left:50%', 'transform:translateX(-50%)',
+      'z-index:998', 'background:rgba(26,173,150,0.15)', 'border:1px solid #1aad96',
+      'padding:8px 16px', 'font-family:monospace', 'font-size:11px',
+      'color:#2ae6c8', 'border-radius:4px', 'pointer-events:none',
+      'animation:toast-fade 3s ease-out forwards',
+    ].join(';');
+    toast.textContent = text;
+
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  /** C2: Flash the module entity when repair is confirmed. */
+  private readonly onAllocationConfirmed = (payload: { allocations: Record<string, number> }): void => {
+    for (const moduleId of Object.keys(payload.allocations)) {
+      if (moduleId === 'BARRIER') {
+        this.flashModule(this.barrierModule);
+      } else if (moduleId === 'STORAGE') {
+        this.flashModule(this.storageModule);
+      }
+    }
+  };
+
+  private flashModule(mod: PurificationModuleEntity): void {
+    const flash = this.add.rectangle(mod.x, mod.y, 30, 30, 0xffffff, 0.7).setDepth(25);
+    this.tweens.add({
+      targets: flash,
+      alpha: 0,
+      duration: 300,
+      onComplete: () => flash.destroy(),
+    });
+  }
+
+  /** E3: Show stability milestone notifications. */
+  private readonly onStabilityChanged = (payload: { progress: number; delta: number }): void => {
+    const milestones = [25, 50, 75, 100];
+    const messages: Record<number, string> = {
+      25: '净化进度: 25%。坚持住。',
+      50: '净化进度: 50%。已经过半。',
+      75: '净化进度: 75%。终点在望。',
+      100: '净化完成。',
+    };
+
+    for (const m of milestones) {
+      if (payload.progress >= m && this.lastStabilityMilestone < m) {
+        this.lastStabilityMilestone = m;
+        this.showStabilityMilestone(messages[m]!);
+        break;
+      }
+    }
+  };
+
+  private showStabilityMilestone(message: string): void {
+    // Inject animation style if needed
+    if (!document.getElementById('milestone-fade-style')) {
+      const style = document.createElement('style');
+      style.id = 'milestone-fade-style';
+      style.textContent = `@keyframes milestone-fade { 0%{opacity:1;} 70%{opacity:1;} 100%{opacity:0;} }`;
+      document.head.appendChild(style);
+    }
+
+    const overlay = document.createElement('div');
+    overlay.style.cssText = [
+      'position:fixed', 'top:50%', 'left:50%', 'transform:translate(-50%,-50%)',
+      'z-index:1002', 'background:rgba(10,10,14,0.92)', 'border:2px solid #44aa66',
+      'padding:14px 28px', 'font-family:monospace', 'color:#44aa66',
+      'font-size:13px', 'border-radius:4px', 'text-align:center',
+      'pointer-events:none', 'animation:milestone-fade 2s ease-out forwards',
+    ].join(';');
+    overlay.textContent = message;
+
+    document.body.appendChild(overlay);
+    setTimeout(() => overlay.remove(), 2000);
   }
 
   /** Snapshot current defense slot charge levels before impact application (D2). */
@@ -635,14 +832,19 @@ export class PurificationScene extends Phaser.Scene {
   private onShutdown(): void {
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
 
+    // Clean up event listeners
+    eventBus.off(GameEvent.ALLOCATION_CONFIRMED, this.onAllocationConfirmed);
+    eventBus.off(GameEvent.STABILITY_CHANGED, this.onStabilityChanged);
+
     // Clean up DOM panels
     allocationPanel.close();
     defensePanel.close();
     growthPanel.close();
     loadoutPanel.close();
+    statusPanel.close();
     impactResultPanel.destroy();
 
-    // Clean up interact key
+    // Clean up input keys
     if (this.interactKey) {
       this.input.keyboard?.removeKey(this.interactKey, true);
       this.interactKey = null;
@@ -650,6 +852,10 @@ export class PurificationScene extends Phaser.Scene {
     if (this.escKey) {
       this.input.keyboard?.removeKey(this.escKey, true);
       this.escKey = null;
+    }
+    if (this.tabKey) {
+      this.input.keyboard?.removeKey(this.tabKey, true);
+      this.tabKey = null;
     }
 
     // Destroy systems

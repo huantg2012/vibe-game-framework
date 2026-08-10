@@ -42,6 +42,7 @@ export class PurificationModuleEntity {
   private hpBarFill!: Phaser.GameObjects.Graphics;
   private promptText!: Phaser.GameObjects.Text;
   private labelText!: Phaser.GameObjects.Text;
+  private effectText!: Phaser.GameObjects.Text;
 
   private readonly config: ModuleEntityConfig;
   private inRange = false;
@@ -91,6 +92,15 @@ export class PurificationModuleEntity {
       fontFamily: 'monospace',
       align: 'center',
     }).setOrigin(0.5).setDepth(depth + 1);
+
+    // A3: Effect value text below the label
+    this.effectText = scene.add.text(x, y + 30, '', {
+      fontSize: '9px',
+      color: '#888888',
+      fontFamily: 'monospace',
+      align: 'center',
+    }).setOrigin(0.5).setDepth(depth + 1);
+    this.updateEffectText();
 
     // HP bar background
     this.hpBarBg = scene.add.graphics();
@@ -144,6 +154,7 @@ export class PurificationModuleEntity {
     this.hpBarFill?.destroy();
     this.promptText?.destroy();
     this.labelText?.destroy();
+    this.effectText?.destroy();
   }
 
   // ------------------------------------------------------------------ internal
@@ -164,6 +175,23 @@ export class PurificationModuleEntity {
       HP_BAR_WIDTH * ratio,
       HP_BAR_HEIGHT,
     );
+
+    this.updateEffectText();
+  }
+
+  /** A3: Show current effect value below the module label. */
+  private updateEffectText(): void {
+    if (!this.effectText) return;
+    const mod = gameState.getModule(this.config.id);
+    if (!mod) return;
+    const P = GAME_CONSTANTS.PURIFICATION;
+    if (this.config.type === 'BARRIER') {
+      const pct = Math.round((mod.hp / 100) * P.MAX_BARRIER_REDUCTION * 100);
+      this.effectText.setText(`混乱抑制 -${pct}%`);
+    } else {
+      const pct = Math.round((mod.hp / 100) * P.MAX_STORAGE_BONUS * 100);
+      this.effectText.setText(`薪柴增幅 +${pct}%`);
+    }
   }
 
   private drawHexagon(cx: number, cy: number, radius: number, color: number): void {

@@ -186,12 +186,17 @@ function wireEvents(): void {
   panel.querySelectorAll('.growth-upgrade-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const id = (btn as HTMLElement).dataset.id as GrowthUpgradeId;
+      const prevLevel = growthSystem.getLevel(id);
       const spent = growthSystem.purchase(id);
       if (spent > 0) {
         // Stability: purchased an upgrade (spec S21)
         stabilityTracker.addProgress('growth', GAME_CONSTANTS.STABILITY.GAIN_GROWTH);
         saveManager.save();
         render();
+        // C1: Purchase animation flash
+        showPurchaseFlash(id, prevLevel + 1);
+        // E2: First growth milestone check
+        checkFirstGrowthMilestone(id, prevLevel + 1);
       }
     });
   });
@@ -199,6 +204,85 @@ function wireEvents(): void {
   panel.querySelector('#growth-close-btn')?.addEventListener('click', () => {
     growthPanel.close();
   });
+}
+
+// ---------------------------------------------------------------------------
+// C1: Purchase flash animation
+// ---------------------------------------------------------------------------
+
+function showPurchaseFlash(id: GrowthUpgradeId, newLevel: number): void {
+  if (!panel) return;
+
+  // Inject animation style if needed
+  if (!document.getElementById('growth-flash-style')) {
+    const style = document.createElement('style');
+    style.id = 'growth-flash-style';
+    style.textContent = `@keyframes growth-flash { 0%{opacity:1;color:#44cc88;} 100%{opacity:0;} }`;
+    document.head.appendChild(style);
+  }
+
+  const names: Record<GrowthUpgradeId, string> = {
+    growth_chaos_resist: '渗透抗性',
+    growth_kindling_affinity: '薪柴亲和',
+    growth_vitality: '生命强化',
+  };
+
+  const flash = document.createElement('div');
+  flash.style.cssText = 'font-size:11px;color:#44cc88;text-align:center;padding:4px;animation:growth-flash 2s ease-out forwards;';
+  flash.textContent = `${names[id]} → Lv.${newLevel}`;
+
+  // Insert after the title
+  const title = panel.querySelector('div');
+  if (title && title.nextSibling) {
+    panel.insertBefore(flash, title.nextSibling);
+  } else {
+    panel.prepend(flash);
+  }
+
+  setTimeout(() => flash.remove(), 2000);
+}
+
+// ---------------------------------------------------------------------------
+// E2: First growth milestone
+// ---------------------------------------------------------------------------
+
+function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void {
+  if (newLevel !== 1) return;
+  const flag = localStorage.getItem('coh_first_growth_done');
+  if (flag) return;
+
+  // Check all other upgrades are still 0
+  const ids: GrowthUpgradeId[] = ['growth_chaos_resist', 'growth_kindling_affinity', 'growth_vitality'];
+  const otherLevels = ids.filter((i) => i !== id).map((i) => growthSystem.getLevel(i));
+  if (otherLevels.some((l) => l > 0)) return; // not the first ever
+
+  localStorage.setItem('coh_first_growth_done', '1');
+
+  // Show milestone overlay after a short delay (panel may close first)
+  setTimeout(() => {
+    const overlay = document.createElement('div');
+    overlay.id = 'first-growth-milestone';
+    overlay.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'z-index:2000', 'background:rgba(0,0,0,0.85)', 'display:flex',
+      'align-items:center', 'justify-content:center',
+      'font-family:monospace', 'font-size:16px', 'color:#cc8844',
+      'cursor:pointer',
+    ].join(';');
+    overlay.textContent = '永久改造已刻入';
+    document.body.appendChild(overlay);
+
+    const dismiss = (): void => {
+      overlay.removeEventListener('click', dismiss);
+      document.removeEventListener('keydown', keyDismiss);
+      clearTimeout(timer);
+      overlay.remove();
+    };
+    const keyDismiss = (e: KeyboardEvent): void => { if (!e.repeat) dismiss(); };
+    overlay.addEventListener('click', dismiss);
+    document.addEventListener('keydown', keyDismiss);
+    const timer = setTimeout(dismiss, 1500);
+  }, 300);
 }
 
 // ---------------------------------------------------------------------------

@@ -131,9 +131,25 @@ export class RunController {
 
   private transitionToPurification(): void {
     this.restarted = true;
-    this.scene.scene.start('PurificationScene', {
-      kindlingGained: this.lastKindling,
-      survived: this.lastEndReason === 'extract',
-    });
+
+    // D4: Scene transition narrative overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'scene-transition-overlay';
+    overlay.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'z-index:2000', 'background:#000', 'display:flex',
+      'align-items:center', 'justify-content:center',
+      'font-family:monospace', 'font-size:14px', 'color:#888',
+    ].join(';');
+    overlay.textContent = '裂隙坍缩。回到净化点。';
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+      overlay.remove();
+      this.scene.scene.start('PurificationScene', {
+        kindlingGained: this.lastKindling,
+        survived: this.lastEndReason === 'extract',
+      });
+    }, 500);
   }
 }

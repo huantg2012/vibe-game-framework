@@ -79,6 +79,9 @@ export class HUD {
   private overflowPulseMs = 0;
   private healthFrac = 1;
   private kindling = 0;
+  // C4: Track kills and contaminant pickups during the run
+  private killCount = 0;
+  private contaminantCount = 0;
 
   // Event references for cleanup
   private readonly onChaosChanged: (payload: { value: number; rate: number }) => void;
@@ -86,6 +89,8 @@ export class HUD {
   private readonly onKindlingCollected: (payload: { amount: number; total: number }) => void;
   private readonly onRiftExited: (payload: { kindlingGained: number; survived: boolean }) => void;
   private readonly onToolUsed: (payload: { contaminantId: string; toolType: string; usesLeft: number }) => void;
+  private readonly onEnemyKilled: () => void;
+  private readonly onContaminantAcquired: () => void;
 
   constructor() {
     this.onChaosChanged = (payload) => {
@@ -119,6 +124,9 @@ export class HUD {
       }
       this.updateToolSlotText();
     };
+    // C4: Kill and contaminant tracking
+    this.onEnemyKilled = () => { this.killCount++; };
+    this.onContaminantAcquired = () => { this.contaminantCount++; };
   }
 
   create(scene: Phaser.Scene, config: HUDConfig): void {
@@ -128,6 +136,8 @@ export class HUD {
     this.healthFrac = 1;
     this.kindling = 0;
     this.overflowPulseMs = 0;
+    this.killCount = 0;
+    this.contaminantCount = 0;
     this.pickupFlash = null;
     this.pickupFlashTween = null;
     this.modifierText = null;
@@ -266,6 +276,8 @@ export class HUD {
     eventBus.on(GameEvent.KINDLING_COLLECTED, this.onKindlingCollected);
     eventBus.on(GameEvent.RIFT_EXITED, this.onRiftExited);
     eventBus.on(GameEvent.TOOL_USED, this.onToolUsed);
+    eventBus.on(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
+    eventBus.on(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
   }
 
   /** Called from scene update for pulse animation and extract prompt visibility. */
@@ -294,6 +306,8 @@ export class HUD {
     this.healthFrac = 1;
     this.kindling = 0;
     this.overflowPulseMs = 0;
+    this.killCount = 0;
+    this.contaminantCount = 0;
     this.updateChaosBar();
     this.updateHealthBar();
     this.updateKindlingText();
@@ -312,6 +326,8 @@ export class HUD {
     eventBus.off(GameEvent.KINDLING_COLLECTED, this.onKindlingCollected);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRiftExited);
     eventBus.off(GameEvent.TOOL_USED, this.onToolUsed);
+    eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
+    eventBus.off(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
 
     if (this.pickupFlashTween) {
       this.pickupFlashTween.stop();
@@ -425,10 +441,10 @@ export class HUD {
 
     const elapsed = Math.round(this.config.getElapsedMs() / 1000);
     const peak = Math.round(this.config.getPeakChaos());
+    // C4: Enriched result with contaminant count and kill count
     const lines = [
-      `薪柴: ${kindlingGained}`,
-      `峰值混乱: ${peak}`,
-      `用时: ${elapsed}s`,
+      `薪柴: ${kindlingGained}  污染物: ${this.contaminantCount}  击杀: ${this.killCount}`,
+      `峰值混乱: ${peak}  用时: ${elapsed}s`,
       '',
       survived ? '按 R 返回净化点' : '按 R 重新出击',
     ];
