@@ -94,6 +94,15 @@ Slice-based iterative development：
 - Slice 分类：系统 Slice / 内容 Slice / 功能 Slice / 集成 Slice / 打磨 Slice
 - 无 "prototype" 阶段，第一行代码即生产质量
 
+## 策划数据源规则（强制）
+
+**所有策划取向的数据（物品定义、敌人属性、技能参数、进度曲线等）的初始来源必须是 CSV 表格。**
+
+- Source of truth = `data/*.csv`（策划拥有、人可编辑）
+- 代码中的 registry/constant 对象通过构建期脚本或运行时 loader 从 CSV 生成
+- 方向固定为 **CSV → code**，不允许在代码中手写数据再反向导出
+- 不适用于系统常量（TILE_SIZE、物理参数等程序员拥有的值）——这些留在 `constants.ts`
+
 ## Spec 维护协议（所有 Agent 遵守）
 
 ### 核心原则
