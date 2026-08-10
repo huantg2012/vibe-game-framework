@@ -165,6 +165,8 @@ tools:
 
 **关键规则**：结构性循环问题**不能**通过直接改 constants 来"修"——那只是把表象推迟了。必须回到 design agent 从循环层面重新设计。
 
+**临时任务追踪**：试玩反馈中产生的未即时修复的问题，必须追加到 `docs/progress/backlog-issues.md`（格式：`- [ ] 描述 (来源/日期)`）。这是防止跨 session/跨 conversation 丢失工作项的唯一保障。每个 Slice 规划（Step 3）时 review 此列表决定纳入哪些。
+
 ### Step 7: 整合（每个 Slice 结束时）
 
 你更新以下文件，按维护分级处理：
