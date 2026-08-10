@@ -152,10 +152,7 @@ export class PurificationScene extends Phaser.Scene {
   private growthPulse = 0;
 
   // Purification HUD elements (stability + tide info + kindling)
-  private stabilityBarBg!: Phaser.GameObjects.Rectangle;
-  private stabilityBarFill!: Phaser.GameObjects.Rectangle;
-  private tideText!: Phaser.GameObjects.Text;
-  private kindlingText!: Phaser.GameObjects.Text;
+  private purifHud: HTMLDivElement | null = null;
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
@@ -166,6 +163,9 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   create(data?: { kindlingGained?: number; survived?: boolean }): void {
+    // Determine if this is a return from rift (vs. menu/load entry)
+    const isReturnFromRift = data !== undefined && data.kindlingGained !== undefined;
+
     // Credit kindling from the rift run (spec rule 10)
     if (data?.survived && data.kindlingGained !== undefined && data.kindlingGained > 0) {
       gameState.addKindling(data.kindlingGained);
@@ -173,29 +173,36 @@ export class PurificationScene extends Phaser.Scene {
       stabilityTracker.addProgress('extraction', GAME_CONSTANTS.STABILITY.GAIN_EXTRACT);
     }
 
-    // Sync impact intensity from tide system (Slice 3 replaces linear escalation)
-    gameState.setImpactIntensity(tideSystem.getCurrentIntensity());
+    // Impact only triggers on return from rift, not on menu/load entry
+    let impactResult = { skipped: true, damages: [] as { moduleId: string; damage: number; newHp: number }[], intensity: 0 };
+    let chargeChanges: ChargeChangeEntry[] = [];
+    let phaseChange: ReturnType<typeof tideSystem.advanceCycle> = null;
 
-    // Snapshot defense slot charges before applying impact (for D2 visualization)
-    const chargesBefore = this.snapshotDefenseCharges();
+    if (isReturnFromRift) {
+      // Sync impact intensity from tide system
+      gameState.setImpactIntensity(tideSystem.getCurrentIntensity());
 
-    // Apply contaminant defense charges before running impact
-    const isHighTide = tideSystem.isHighTide();
-    const transformResults = contaminantSystem.applyImpactCharge(isHighTide);
+      // Snapshot defense slot charges before applying impact (for D2 visualization)
+      const chargesBefore = this.snapshotDefenseCharges();
 
-    // Compute charge changes for impact panel (D2)
-    const chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
+      // Apply contaminant defense charges before running impact
+      const isHighTide = tideSystem.isHighTide();
+      const transformResults = contaminantSystem.applyImpactCharge(isHighTide);
 
-    // Run impact on arrival (not on departure) — spec adjustment per playtest feedback
-    const impactResult = impactSystem.run();
+      // Compute charge changes for impact panel (D2)
+      chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
 
-    // Advance tide cycle after impact resolves (E1: capture phase change)
-    const phaseChange = tideSystem.advanceCycle();
+      // Run impact on arrival
+      impactResult = impactSystem.run();
+
+      // Advance tide cycle after impact resolves (E1: capture phase change)
+      phaseChange = tideSystem.advanceCycle();
+    }
 
     // Generate forecast for boundary atmosphere (for NEXT impact)
     impactSystem.generateForecast();
 
-    // Save game state after arriving at purification point (spec P24)
+    // Save game state
     saveManager.save();
 
     this.transitioning = false;
@@ -294,50 +301,8 @@ export class PurificationScene extends Phaser.Scene {
       },
     ).setOrigin(0.5).setDepth(21).setVisible(false);
 
-    // Purification HUD: stability bar (top right, green)
-    const cam = this.cameras.main;
-    const hudW = cam.width / cam.zoomX;
-    const stabilityX = hudW - 8 - 80;
-    const stabilityY = 8;
-    const STAB_BAR_W = 80;
-    const STAB_BAR_H = 6;
-
-    this.stabilityBarBg = this.add
-      .rectangle(stabilityX, stabilityY, STAB_BAR_W, STAB_BAR_H, 0x000000, 0.4)
-      .setOrigin(0, 0)
-      .setScrollFactor(0)
-      .setDepth(100);
-
-    const stabProgress = stabilityTracker.getProgress() / GAME_CONSTANTS.STABILITY.MAX;
-    this.stabilityBarFill = this.add
-      .rectangle(stabilityX, stabilityY, STAB_BAR_W * stabProgress, STAB_BAR_H, 0x44aa66)
-      .setOrigin(0, 0)
-      .setScrollFactor(0)
-      .setDepth(101);
-
-    // Tide info text below stability bar
-    const tideState = tideSystem.getState();
-    const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
-    this.tideText = this.add
-      .text(stabilityX + STAB_BAR_W, stabilityY + STAB_BAR_H + 3, `第${tideState.tideNumber}潮 · ${phaseLabels[tideState.phase]}`, {
-        fontSize: '9px',
-        color: '#44aa66',
-        fontFamily: 'monospace',
-      })
-      .setOrigin(1, 0)
-      .setScrollFactor(0)
-      .setDepth(100);
-
-    // Kindling reserve display (A2: right-top, below tide text)
-    this.kindlingText = this.add
-      .text(stabilityX + STAB_BAR_W, stabilityY + STAB_BAR_H + 15, `薪柴: ${gameState.getKindlingReserve()}`, {
-        fontSize: '10px',
-        color: '#c89040',
-        fontFamily: 'monospace',
-      })
-      .setOrigin(1, 0)
-      .setScrollFactor(0)
-      .setDepth(100);
+    // Purification HUD (DOM overlay — Phaser text invisible on void background)
+    this.createPurifHud();
 
     // Boundary atmosphere
     this.atmosphere.create(this);
@@ -537,11 +502,30 @@ export class PurificationScene extends Phaser.Scene {
     this.scene.start('RiftScene', { modifiers, cycle, loadout });
   }
 
+  private createPurifHud(): void {
+    if (this.purifHud) this.purifHud.remove();
+
+    const tideState = tideSystem.getState();
+    const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
+    const stabPct = Math.round(stabilityTracker.getProgress());
+    const reserve = gameState.getKindlingReserve();
+
+    this.purifHud = document.createElement('div');
+    this.purifHud.id = 'purif-hud';
+    this.purifHud.style.cssText =
+      'position:fixed;top:8px;right:8px;z-index:999;pointer-events:none;' +
+      'font-family:monospace;font-size:12px;text-align:right;line-height:1.6;';
+    this.purifHud.innerHTML = `
+      <div style="color:#c89040;">薪柴: ${reserve}</div>
+      <div style="color:#44aa66;font-size:10px;">稳定度: ${stabPct}%</div>
+      <div style="color:#44aa66;font-size:10px;">第${tideState.tideNumber}潮 · ${phaseLabels[tideState.phase]}</div>
+    `;
+    document.body.appendChild(this.purifHud);
+  }
+
   /** Refresh the kindling HUD text (A2). */
   private refreshKindlingDisplay(): void {
-    if (this.kindlingText) {
-      this.kindlingText.setText(`薪柴: ${gameState.getKindlingReserve()}`);
-    }
+    this.createPurifHud();
   }
 
   /** Snapshot current defense slot charge levels before impact application (D2). */
@@ -681,9 +665,7 @@ export class PurificationScene extends Phaser.Scene {
     this.defensePromptText?.destroy();
     this.growthGraphics?.destroy();
     this.growthPromptText?.destroy();
-    this.stabilityBarBg?.destroy();
-    this.stabilityBarFill?.destroy();
-    this.tideText?.destroy();
-    this.kindlingText?.destroy();
+    this.purifHud?.remove();
+    this.purifHud = null;
   }
 }
