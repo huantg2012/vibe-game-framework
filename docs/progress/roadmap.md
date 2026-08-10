@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-08-08
+last-modified: 2026-08-10
 ---
 
 # Roadmap
@@ -16,10 +16,11 @@ last-modified: 2026-08-08
 | ---- | ---- | -------- | -------- |
 | Slice 1 | 裂隙潜行核心手感 | 2026-08-07 | PASS — 紧绷决策手感成立，"还敢不敢再多拿一点"的博弈让人上头。试玩中调校了速度/混乱值/地图/导航辅助。 |
 | Slice 2 | 净化点闭环 | 2026-08-08 | PASS — 资源分配纠结感成立。经济数值调校（修复成本降低+冲击伤害提高+模块初始HP降低）后，分配纠结从第一轮起存在。 |
+| Slice 3 | 角色成长 + 潮汐经济 | 2026-08-10 | PASS — 潮汐节奏+污染物循环+永久改造打破了必然下行螺旋。动态平衡让人想继续。试玩中修复净化点HUD/冲击时机/薪柴显示+6项game-feel。 |
 
 ## 当前 Slice
 
-**Slice 3: 角色成长 + 潮汐经济** — ACTIVE（2026-08-09 启动）。验证问题：潮汐节奏+污染物循环+永久改造是否打破必然下行螺旋？详见 `docs/progress/current-slice.md`。
+**Slice 3.5: UX 打磨** — NEXT（待启动）。12 项 game-feel 改善（信息架构/反馈动效/场景过渡/里程碑），来源于 Slice 3 验收时的 game-feel-audit。详见下方清单。
 
 ## 计划中的 Slices（近期方向，未锁定）
 
