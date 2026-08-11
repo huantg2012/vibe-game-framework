@@ -87,13 +87,20 @@ function createPanel(): void {
   panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
-    'top:50%',
-    'left:50%',
-    'transform:translate(-50%,-50%)',
+    'top:0',
+    'right:0',
+    'height:100vh',
+    'width:440px',
     'z-index:1001',
-    'min-width:420px',
-    'max-width:560px',
+    'display:flex',
+    'flex-direction:column',
+    'overflow-y:auto',
   ].join(';');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'game-panel-backdrop';
+  backdrop.id = 'growth-backdrop';
+  document.body.appendChild(backdrop);
 
   render();
   document.body.appendChild(panel);
@@ -106,6 +113,7 @@ function destroyPanel(): void {
     panel.remove();
     panel = null;
   }
+  document.getElementById('growth-backdrop')?.remove();
 }
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -126,8 +134,9 @@ function render(): void {
   const reserve = gameState.getKindlingReserve();
 
   let html = `<div class="panel-title" style="color:#aa6622;">蜕变</div>`;
+  html += `<div style="flex:1;overflow-y:auto;">`;
   html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-    <span style="font-size:12px;color:#5a5f66;">薪柴储备</span>
+    <span style="font-size:13px;color:#5a5f66;">薪柴储备</span>
     <span style="font-size:16px;color:#c4873a;font-weight:bold;">${reserve}</span>
   </div>`;
 
@@ -168,11 +177,11 @@ function render(): void {
       <div class="card-body">
         <div class="card-name" style="color:${nameColor};">${upgrade.name}</div>
         <div class="card-dots">${dots}</div>
-        <div style="font-size:12px;color:#5a5f66;margin-top:1px;">${upgrade.effectLabel(level)}</div>
+        <div style="font-size:13px;color:#5a5f66;margin-top:1px;">${upgrade.effectLabel(level)}</div>
       </div>`;
 
     if (isMaxed) {
-      html += `<div style="font-size:12px;color:#aa6622;font-weight:bold;">MAX</div>`;
+      html += `<div style="font-size:13px;color:#aa6622;font-weight:bold;">MAX</div>`;
     } else {
       const costColor = canAfford ? '#c4873a' : '#2a2d32';
       html += `<div class="card-cost"><span class="${canAfford ? 'affordable' : ''}" style="color:${costColor};">${cost}</span></div>`;
@@ -182,8 +191,11 @@ function render(): void {
   }
 
   html += `</div>`; // end card-grid
+  html += `</div>`; // end flex:1 content wrapper
 
-  html += `<div id="growth-close-btn" class="action-btn btn-muted" style="text-align:center;margin-top:12px;cursor:pointer;">…不了</div>`;
+  html += `<div class="action-bar">
+    <span id="growth-close-btn" class="action-btn btn-muted" style="cursor:pointer;">…不了</span>
+  </div>`;
 
   panel.innerHTML = html;
   wireEvents();

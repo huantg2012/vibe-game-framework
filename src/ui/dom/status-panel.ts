@@ -114,15 +114,20 @@ function createPanel(): void {
   panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
-    'top:50%',
-    'left:50%',
-    'transform:translate(-50%,-50%)',
+    'top:0',
+    'right:0',
+    'height:100vh',
+    'width:440px',
     'z-index:1001',
-    'min-width:460px',
-    'max-width:620px',
-    'max-height:80vh',
+    'display:flex',
+    'flex-direction:column',
     'overflow-y:auto',
   ].join(';');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'game-panel-backdrop';
+  backdrop.id = 'status-backdrop';
+  document.body.appendChild(backdrop);
 
   render();
   document.body.appendChild(panel);
@@ -135,6 +140,7 @@ function destroyPanel(): void {
     panel.remove();
     panel = null;
   }
+  document.getElementById('status-backdrop')?.remove();
 }
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -174,6 +180,7 @@ function render(): void {
   const storageMod = gameState.getModule('STORAGE');
 
   let html = `<div class="panel-title">存续报告</div>`;
+  html += `<div style="flex:1;overflow-y:auto;">`;
 
   // === Module status with bars ===
   html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">`;
@@ -260,7 +267,7 @@ function render(): void {
 
   if (defenseItems.length > 0) {
     const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
-    html += `<div style="font-size:12px;color:#6644aa;margin-bottom:4px;">防御</div>`;
+    html += `<div style="font-size:13px;color:#6644aa;margin-bottom:4px;">防御</div>`;
     html += `<div class="tile-grid">`;
     for (const c of defenseItems) {
       const name = TYPE_NAMES[c.type];
@@ -274,7 +281,7 @@ function render(): void {
   }
 
   if (toolItems.length > 0) {
-    html += `<div style="font-size:12px;color:#1aad96;margin:6px 0 4px;">工具</div>`;
+    html += `<div style="font-size:13px;color:#1aad96;margin:6px 0 4px;">工具</div>`;
     html += `<div class="tile-grid">`;
     for (const c of toolItems) {
       const name = TOOL_NAMES[c.type];
@@ -288,7 +295,7 @@ function render(): void {
   }
 
   if (brokenItems.length > 0) {
-    html += `<div style="font-size:12px;color:#2a2d32;margin:6px 0 4px;">已碎</div>`;
+    html += `<div style="font-size:13px;color:#2a2d32;margin:6px 0 4px;">已碎</div>`;
     html += `<div class="tile-grid">`;
     for (const c of brokenItems) {
       const name = TYPE_NAMES[c.type];
@@ -301,7 +308,10 @@ function render(): void {
     html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">尚无污染物</div>`;
   }
 
-  html += `<div id="status-close-btn" class="action-btn btn-muted" style="text-align:center;margin-top:12px;cursor:pointer;">合上</div>`;
+  html += `</div>`; // end flex:1 content wrapper
+  html += `<div class="action-bar">
+    <span id="status-close-btn" class="action-btn btn-muted" style="cursor:pointer;">合上</span>
+  </div>`;
 
   panel.innerHTML = html;
 

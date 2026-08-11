@@ -86,12 +86,14 @@ export const impactResultPanel = {
     panel.className = 'game-panel';
     panel.style.cssText = [
       'position:fixed',
-      'top:50%',
-      'left:50%',
-      'transform:translate(-50%,-50%)',
+      'top:0',
+      'right:0',
+      'height:100vh',
+      'width:440px',
       'z-index:1001',
-      'min-width:380px',
-      'max-width:520px',
+      'display:flex',
+      'flex-direction:column',
+      'overflow-y:auto',
       'border-color:#cc3333',
       'animation:impact-shake 0.3s ease-out',
     ].join(';');
@@ -102,15 +104,20 @@ export const impactResultPanel = {
       style.id = 'impact-shake-style';
       style.textContent = `
         @keyframes impact-shake {
-          0%, 100% { transform: translate(-50%, -50%); }
-          20% { transform: translate(-52%, -48%); }
-          40% { transform: translate(-48%, -52%); }
-          60% { transform: translate(-51%, -49%); }
-          80% { transform: translate(-49%, -51%); }
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-4px); }
+          40% { transform: translateX(4px); }
+          60% { transform: translateX(-2px); }
+          80% { transform: translateX(2px); }
         }
       `;
       document.head.appendChild(style);
     }
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'game-panel-backdrop';
+    backdrop.id = 'impact-backdrop';
+    document.body.appendChild(backdrop);
 
     const moduleLabels: Record<string, string> = {
       CORE: '核心',
@@ -125,6 +132,7 @@ export const impactResultPanel = {
     let html = `<div style="text-align:center;margin-bottom:8px;">
       <div style="font-size:18px;font-weight:bold;color:#cc3333;">冲击 x${intensity.toFixed(2)}</div>
     </div>`;
+    html += `<div style="flex:1;overflow-y:auto;">`;
 
     // Damage bars
     const maxDmg = Math.max(...damages.map((d) => d.damage), 1);
@@ -144,7 +152,7 @@ export const impactResultPanel = {
     // Charge progress
     if (chargeChanges && chargeChanges.length > 0) {
       html += `<div class="separator"></div>`;
-      html += `<div style="font-size:12px;color:#5a5f66;margin-bottom:4px;">防御充能</div>`;
+      html += `<div style="font-size:13px;color:#5a5f66;margin-bottom:4px;">防御充能</div>`;
       for (const c of chargeChanges) {
         const name = TYPE_NAMES[c.type] ?? c.name;
         const afterPct = Math.round((c.after / c.threshold) * 100);
@@ -159,7 +167,10 @@ export const impactResultPanel = {
       }
     }
 
-    html += `<div id="impact-close-btn" class="action-btn btn-muted" style="text-align:center;margin-top:12px;cursor:pointer;">…知道了</div>`;
+    html += `</div>`; // end flex:1 content wrapper
+    html += `<div class="action-bar">
+      <span id="impact-close-btn" class="action-btn btn-muted" style="cursor:pointer;">…知道了</span>
+    </div>`;
 
     panel.innerHTML = html;
     document.body.appendChild(panel);
@@ -215,4 +226,5 @@ function destroyPanel(): void {
     panel.remove();
     panel = null;
   }
+  document.getElementById('impact-backdrop')?.remove();
 }

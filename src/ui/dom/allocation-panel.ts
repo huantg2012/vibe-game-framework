@@ -60,13 +60,20 @@ function createPanel(): void {
   panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
-    'top:50%',
-    'left:50%',
-    'transform:translate(-50%,-50%)',
+    'top:0',
+    'right:0',
+    'height:100vh',
+    'width:440px',
     'z-index:1000',
-    'min-width:380px',
-    'max-width:520px',
+    'display:flex',
+    'flex-direction:column',
+    'overflow-y:auto',
   ].join(';');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'game-panel-backdrop';
+  backdrop.id = 'allocation-backdrop';
+  document.body.appendChild(backdrop);
 
   render(mod.type, mod.hp, mod.maxHp);
   document.body.appendChild(panel);
@@ -80,6 +87,7 @@ function destroyPanel(): void {
     panel.remove();
     panel = null;
   }
+  document.getElementById('allocation-backdrop')?.remove();
   currentModuleId = null;
   selectedAmount = 0;
 }
@@ -137,7 +145,8 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const plusDisabled = selectedAmount >= maxAllocatable;
   const confirmDisabled = selectedAmount <= 0;
 
-  let html = `<div class="panel-title" style="color:${typeColor};">${typeLabel} <span style="font-size:12px;color:#5a5f66;text-transform:none;font-weight:normal;">${effectDesc}</span></div>`;
+  let html = `<div class="panel-title" style="color:${typeColor};">${typeLabel} <span style="font-size:13px;color:#5a5f66;text-transform:none;font-weight:normal;">${effectDesc}</span></div>`;
+  html += `<div style="flex:1;overflow-y:auto;">`;
 
   // Progress bar with preview
   html += `<div style="margin:8px 0;">
@@ -161,15 +170,16 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     <span id="alloc-minus" class="action-btn btn-muted${minusDisabled ? '' : ''}" style="padding:4px 10px;${minusDisabled ? 'opacity:0.3;cursor:default;' : ''}">-</span>
     <div style="min-width:60px;text-align:center;">
       <div style="font-size:16px;color:#c8ccd0;font-weight:bold;">${selectedAmount}</div>
-      <div style="font-size:12px;color:#5a5f66;">薪柴</div>
+      <div style="font-size:13px;color:#5a5f66;">薪柴</div>
     </div>
     <span id="alloc-plus" class="action-btn btn-muted" style="padding:4px 10px;${plusDisabled ? 'opacity:0.3;cursor:default;' : ''}">+</span>
   </div>`;
 
   // Reserve info
-  html += `<div style="font-size:12px;color:#5a5f66;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度</div>`;
+  html += `<div style="font-size:13px;color:#5a5f66;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度</div>`;
 
   // Action bar
+  html += `</div>`; // end flex:1 content wrapper
   html += `<div class="action-bar">
     <span id="alloc-confirm" class="action-btn${confirmDisabled ? ' btn-muted' : ''}" style="color:${confirmDisabled ? '#2a2d32' : typeColor};border-color:${confirmDisabled ? '#2a2d32' : typeColor};${confirmDisabled ? 'cursor:default;' : ''}">注入</span>
     <span id="alloc-cancel" class="action-btn btn-muted" style="cursor:pointer;">…算了</span>

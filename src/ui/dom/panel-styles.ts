@@ -158,7 +158,7 @@ const CSS = `
 .game-panel .card-dots .dot-filled { color: #c4873a; }
 .game-panel .card-dots .dot-empty { color: #2a2d32; }
 .game-panel .card-cost {
-  font-size: 9px;
+  font-size: 12px;
   color: #5a5f66;
   margin-top: 2px;
 }
@@ -185,7 +185,7 @@ const CSS = `
   transition: width 0.2s ease-out, left 0.2s ease-out;
 }
 .game-panel .pbar-label {
-  font-size: 9px;
+  font-size: 12px;
   color: #8a8f96;
   margin-top: 2px;
   display: flex;
@@ -220,19 +220,19 @@ const CSS = `
   border-style: solid;
 }
 .game-panel .slot-cell .slot-label {
-  font-size: 9px;
+  font-size: 12px;
   color: #5a5f66;
   position: absolute;
   top: 2px;
   left: 4px;
 }
 .game-panel .slot-cell .slot-name {
-  font-size: 10px;
+  font-size: 13px;
   font-weight: bold;
   margin-bottom: 2px;
 }
 .game-panel .slot-cell .slot-info {
-  font-size: 9px;
+  font-size: 12px;
   color: #5a5f66;
 }
 
@@ -246,7 +246,7 @@ const CSS = `
 .game-panel .item-tile {
   border: 1px solid #2a2d32;
   padding: 4px 8px;
-  font-size: 10px;
+  font-size: 13px;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
   white-space: nowrap;
@@ -275,7 +275,7 @@ const CSS = `
   justify-content: center;
   padding: 6px 14px;
   border: 1px solid #2a2d32;
-  font: 11px 'Courier New', monospace;
+  font: 13px 'Courier New', monospace;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.15s;
@@ -318,7 +318,7 @@ const CSS = `
   align-items: center;
   gap: 6px;
   padding: 3px 0;
-  font-size: 10px;
+  font-size: 13px;
 }
 .game-panel .stat-label {
   color: #5a5f66;
@@ -346,7 +346,7 @@ const CSS = `
   display: inline-block;
   padding: 2px 6px;
   border: 1px solid #2a2d32;
-  font-size: 9px;
+  font-size: 12px;
   margin: 1px;
 }
 
@@ -359,7 +359,7 @@ const CSS = `
 }
 .game-panel .dmg-label {
   min-width: 36px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: bold;
 }
 .game-panel .dmg-bar-wrap {
@@ -375,7 +375,7 @@ const CSS = `
   transition: width 0.4s ease-out;
 }
 .game-panel .dmg-value {
-  font-size: 10px;
+  font-size: 13px;
   min-width: 32px;
   text-align: right;
 }
@@ -386,6 +386,17 @@ const CSS = `
   gap: 8px;
   justify-content: center;
   margin-top: 10px;
+}
+
+/* === Backdrop overlay === */
+.game-panel-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 /* === Scrollbar === */

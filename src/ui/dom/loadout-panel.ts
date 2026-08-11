@@ -98,13 +98,20 @@ function createPanel(): void {
   panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
-    'top:50%',
-    'left:50%',
-    'transform:translate(-50%,-50%)',
+    'top:0',
+    'right:0',
+    'height:100vh',
+    'width:440px',
     'z-index:1001',
-    'min-width:420px',
-    'max-width:560px',
+    'display:flex',
+    'flex-direction:column',
+    'overflow-y:auto',
   ].join(';');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'game-panel-backdrop';
+  backdrop.id = 'loadout-backdrop';
+  document.body.appendChild(backdrop);
 
   render();
   document.body.appendChild(panel);
@@ -117,6 +124,7 @@ function destroyPanel(): void {
     panel.remove();
     panel = null;
   }
+  document.getElementById('loadout-backdrop')?.remove();
 }
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -141,6 +149,7 @@ function render(): void {
   );
 
   let html = `<div class="panel-title" style="color:#1aad96;">踏入裂隙</div>`;
+  html += `<div style="flex:1;overflow-y:auto;">`;
 
   // Slot grid - 3 cells (Q / F / Passive)
   html += `<div class="slot-grid">`;
@@ -167,7 +176,7 @@ function render(): void {
 
   // Inventory tiles
   html += `<div class="separator"></div>`;
-  html += `<div style="font-size:12px;color:#5a5f66;margin-bottom:6px;">可用工具:</div>`;
+  html += `<div style="font-size:13px;color:#5a5f66;margin-bottom:6px;">可用工具:</div>`;
 
   if (inventory.length === 0) {
     html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">无可用工具</div>`;
@@ -193,6 +202,7 @@ function render(): void {
 
   // Sortie attribute preview
   html += buildSortiePreview();
+  html += `</div>`; // end flex:1 content wrapper
 
   // Action bar
   html += `<div class="action-bar">
@@ -271,17 +281,17 @@ function buildSortiePreview(): string {
     <div class="separator"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;margin-top:6px;">
       <div>
-        <div style="font-size:12px;color:#5a5f66;">完整度</div>
+        <div style="font-size:13px;color:#5a5f66;">完整度</div>
         <div style="font-size:16px;color:#c8ccd0;font-weight:bold;">${totalHp}</div>
-        ${hpBonus > 0 ? `<div style="font-size:12px;color:#4a9e5a;">+${hpBonus}</div>` : ''}
+        ${hpBonus > 0 ? `<div style="font-size:13px;color:#4a9e5a;">+${hpBonus}</div>` : ''}
       </div>
       <div>
-        <div style="font-size:12px;color:#5a5f66;">混乱率</div>
+        <div style="font-size:13px;color:#5a5f66;">混乱率</div>
         <div style="font-size:16px;color:${totalChaosRate < 1 ? '#4a9e5a' : '#c8ccd0'};font-weight:bold;">x${totalChaosRate.toFixed(2)}</div>
-        ${(coreReduction + growthReduction) > 0 ? `<div style="font-size:12px;color:#4a9e5a;">-${coreReduction + growthReduction}%</div>` : ''}
+        ${(coreReduction + growthReduction) > 0 ? `<div style="font-size:13px;color:#4a9e5a;">-${coreReduction + growthReduction}%</div>` : ''}
       </div>
       <div>
-        <div style="font-size:12px;color:#5a5f66;">薪柴值</div>
+        <div style="font-size:13px;color:#5a5f66;">薪柴值</div>
         <div style="font-size:16px;color:${storageEffect > 1 ? '#c4873a' : '#c8ccd0'};font-weight:bold;">x${storageEffect.toFixed(2)}</div>
       </div>
     </div>

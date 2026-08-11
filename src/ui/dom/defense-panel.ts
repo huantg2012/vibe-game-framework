@@ -91,13 +91,20 @@ function createPanel(): void {
   panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
-    'top:50%',
-    'left:50%',
-    'transform:translate(-50%,-50%)',
+    'top:0',
+    'right:0',
+    'height:100vh',
+    'width:440px',
     'z-index:1001',
-    'min-width:420px',
-    'max-width:560px',
+    'display:flex',
+    'flex-direction:column',
+    'overflow-y:auto',
   ].join(';');
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'game-panel-backdrop';
+  backdrop.id = 'defense-backdrop';
+  document.body.appendChild(backdrop);
 
   render();
   document.body.appendChild(panel);
@@ -110,6 +117,7 @@ function destroyPanel(): void {
     panel.remove();
     panel = null;
   }
+  document.getElementById('defense-backdrop')?.remove();
 }
 
 function onKeyDown(e: KeyboardEvent): void {
@@ -136,6 +144,7 @@ function render(): void {
   const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
   let html = `<div class="panel-title" style="color:#6644aa;">供奉</div>`;
+  html += `<div style="flex:1;overflow-y:auto;">`;
 
   // Slot grid - 3 visual containers
   html += `<div class="slot-grid">`;
@@ -167,7 +176,7 @@ function render(): void {
 
   // Inventory tiles
   html += `<div class="separator"></div>`;
-  html += `<div style="font-size:12px;color:#5a5f66;margin-bottom:6px;">可装备:</div>`;
+  html += `<div style="font-size:13px;color:#5a5f66;margin-bottom:6px;">可装备:</div>`;
 
   if (inventory.length === 0) {
     html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">无可用残渣</div>`;
@@ -188,7 +197,10 @@ function render(): void {
   }
 
   // Close button
-  html += `<div id="defense-close-btn" class="action-btn btn-muted" style="text-align:center;margin-top:12px;cursor:pointer;">离开</div>`;
+  html += `</div>`; // end flex:1 content wrapper
+  html += `<div class="action-bar">
+    <span id="defense-close-btn" class="action-btn btn-muted" style="cursor:pointer;">离开</span>
+  </div>`;
   html += `<div style="font-size:12px;color:#5a5f66;text-align:center;margin-top:4px;">点击以取下</div>`;
 
   panel.innerHTML = html;
