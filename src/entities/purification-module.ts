@@ -2,7 +2,8 @@
  * PurificationModule entity - visual representation of a module in the purification scene.
  *
  * Each module is a coloured geometric shape (BARRIER=blue hexagon, STORAGE=orange square)
- * with an hp bar and proximity-based interaction prompt.
+ * with an hp bar displayed as a same-colour thin bar below the module body.
+ * No text is rendered in the game world; all readable info lives in DOM overlays.
  */
 
 import Phaser from 'phaser';
@@ -26,11 +27,23 @@ export interface ModuleEntityConfig {
 // ---------------------------------------------------------------------------
 
 const INTERACTION_RADIUS = GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
-const BARRIER_COLOR = 0x4488cc;
-const STORAGE_COLOR = 0xcc8844;
-const HP_BAR_WIDTH = 32;
-const HP_BAR_HEIGHT = 4;
-const HP_BAR_OFFSET_Y = -24;
+
+// Module colours
+const BARRIER_MAIN = 0x4488cc;
+const BARRIER_EDGE = 0x6699dd;
+const STORAGE_MAIN = 0xcc8844;
+const STORAGE_EDGE = 0xddaa66;
+const DANGER_COLOR = 0xcc3333;
+
+// Module sizes (spec B1)
+const BARRIER_RADIUS = 16;
+const STORAGE_HALF = 14; // half-side = 14 => 28px side
+
+// HP bar (spec B2)
+const HP_BAR_HEIGHT = 3;
+const HP_BAR_GAP = 4; // px below module body
+const HP_BAR_WIDTH = 28;
+const HP_SHOW_DISTANCE = 80; // 2.5 tiles
 
 // ---------------------------------------------------------------------------
 // PurificationModuleEntity
@@ -40,12 +53,11 @@ export class PurificationModuleEntity {
   private graphics!: Phaser.GameObjects.Graphics;
   private hpBarBg!: Phaser.GameObjects.Graphics;
   private hpBarFill!: Phaser.GameObjects.Graphics;
-  private promptText!: Phaser.GameObjects.Text;
-  private labelText!: Phaser.GameObjects.Text;
-  private effectText!: Phaser.GameObjects.Text;
 
   private readonly config: ModuleEntityConfig;
   private inRange = false;
+  private proximityGlow = false;
+  private scene!: Phaser.Scene;
 
   constructor(config: ModuleEntityConfig) {
     this.config = config;
@@ -68,64 +80,26 @@ export class PurificationModuleEntity {
   }
 
   create(scene: Phaser.Scene): void {
-    const { x, y, type } = this.config;
-    const color = type === 'BARRIER' ? BARRIER_COLOR : STORAGE_COLOR;
+    this.scene = scene;
     const depth = 20;
 
     // Module shape
     this.graphics = scene.add.graphics();
     this.graphics.setDepth(depth);
-    if (type === 'BARRIER') {
-      this.drawHexagon(x, y, 14, color);
-    } else {
-      this.graphics.fillStyle(color, 1);
-      this.graphics.fillRect(x - 12, y - 12, 24, 24);
-      this.graphics.lineStyle(1, 0xffffff, 0.3);
-      this.graphics.strokeRect(x - 12, y - 12, 24, 24);
-    }
-
-    // Label
-    const label = type === 'BARRIER' ? '屏障' : '储藏';
-    this.labelText = scene.add.text(x, y + 22, label, {
-      fontSize: '14px',
-      color: '#cccccc',
-      fontFamily: 'monospace',
-      align: 'center',
-      backgroundColor: '#00000099',
-      padding: { x: 3, y: 1 },
-    }).setOrigin(0.5).setDepth(depth + 1);
-
-    // A3: Effect value text below the label
-    this.effectText = scene.add.text(x, y + 38, '', {
-      fontSize: '11px',
-      color: '#aaaaaa',
-      fontFamily: 'monospace',
-      align: 'center',
-      backgroundColor: '#00000099',
-      padding: { x: 3, y: 1 },
-    }).setOrigin(0.5).setDepth(depth + 1);
-    this.updateEffectText();
 
     // HP bar background
+    const barY = this.getHpBarY();
     this.hpBarBg = scene.add.graphics();
     this.hpBarBg.setDepth(depth + 1);
-    this.hpBarBg.fillStyle(0x222222, 0.8);
-    this.hpBarBg.fillRect(x - HP_BAR_WIDTH / 2, y + HP_BAR_OFFSET_Y, HP_BAR_WIDTH, HP_BAR_HEIGHT);
+    this.hpBarBg.fillStyle(this.config.type === 'BARRIER' ? 0x222233 : 0x332222, 0.8);
+    this.hpBarBg.fillRect(this.config.x - HP_BAR_WIDTH / 2, barY, HP_BAR_WIDTH, HP_BAR_HEIGHT);
 
     // HP bar fill
     this.hpBarFill = scene.add.graphics();
     this.hpBarFill.setDepth(depth + 2);
 
-    // Interaction prompt (hidden by default)
-    this.promptText = scene.add.text(x, y - 34, 'E - 分配薪柴', {
-      fontSize: '12px',
-      color: '#ffffff',
-      fontFamily: 'monospace',
-      align: 'center',
-      backgroundColor: '#000000cc',
-      padding: { x: 4, y: 4 },
-    }).setOrigin(0.5).setDepth(depth + 3).setVisible(false);
-
+    // Initial draw
+    this.drawModule();
     this.updateHpBar();
   }
 
@@ -137,14 +111,16 @@ export class PurificationModuleEntity {
     const dx = playerX - this.config.x;
     const dy = playerY - this.config.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    const wasInRange = this.inRange;
     this.inRange = dist <= INTERACTION_RADIUS;
 
-    if (this.inRange !== wasInRange) {
-      this.promptText.setVisible(this.inRange);
+    // Proximity glow: within HP_SHOW_DISTANCE
+    const newGlow = dist <= HP_SHOW_DISTANCE;
+    if (newGlow !== this.proximityGlow) {
+      this.proximityGlow = newGlow;
+      this.drawModule();
     }
 
-    this.updateHpBar();
+    this.updateHpBar(dist);
     return this.inRange;
   }
 
@@ -152,64 +128,165 @@ export class PurificationModuleEntity {
     return this.inRange;
   }
 
+  /** Set proximity glow state (called by scene for edge glow boost). */
+  setProximityGlow(inRange: boolean): void {
+    if (inRange !== this.proximityGlow) {
+      this.proximityGlow = inRange;
+      this.drawModule();
+    }
+  }
+
+  /** Get module effect percentage for display in prompt bar. */
+  getEffectPct(): number {
+    const mod = gameState.getModule(this.config.id);
+    if (!mod) return 0;
+    const P = GAME_CONSTANTS.PURIFICATION;
+    if (this.config.type === 'BARRIER') {
+      return Math.round((mod.hp / 100) * P.MAX_BARRIER_REDUCTION * 100);
+    }
+    return Math.round((mod.hp / 100) * P.MAX_STORAGE_BONUS * 100);
+  }
+
+  /** Get module HP data for prompt display. */
+  getHpData(): { hp: number; maxHp: number } | null {
+    const mod = gameState.getModule(this.config.id);
+    if (!mod) return null;
+    return { hp: mod.hp, maxHp: mod.maxHp };
+  }
+
   destroy(): void {
     this.graphics?.destroy();
     this.hpBarBg?.destroy();
     this.hpBarFill?.destroy();
-    this.promptText?.destroy();
-    this.labelText?.destroy();
-    this.effectText?.destroy();
   }
 
   // ------------------------------------------------------------------ internal
 
-  private updateHpBar(): void {
+  private drawModule(): void {
+    const { x, y, type } = this.config;
+    const mainColor = type === 'BARRIER' ? BARRIER_MAIN : STORAGE_MAIN;
+    const edgeColor = type === 'BARRIER' ? BARRIER_EDGE : STORAGE_EDGE;
+
+    const mod = gameState.getModule(this.config.id);
+    const hpRatio = mod ? mod.hp / mod.maxHp : 1;
+
+    // Calculate alpha based on HP (spec B1)
+    let fillAlpha: number;
+    let edgeAlpha: number;
+    if (hpRatio >= 0.75) {
+      fillAlpha = 0.9;
+      edgeAlpha = 0.7;
+    } else if (hpRatio >= 0.5) {
+      fillAlpha = 0.7;
+      edgeAlpha = 0.5;
+    } else if (hpRatio >= 0.25) {
+      fillAlpha = 0.5;
+      edgeAlpha = 0.3;
+    } else {
+      fillAlpha = 0.3;
+      edgeAlpha = 0.15;
+    }
+
+    // Proximity glow boost
+    if (this.proximityGlow) {
+      edgeAlpha = Math.min(1.0, edgeAlpha + 0.2);
+    }
+
+    this.graphics.clear();
+
+    if (type === 'BARRIER') {
+      // Hexagon
+      const points: Phaser.Geom.Point[] = [];
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i - Math.PI / 6;
+        points.push(new Phaser.Geom.Point(
+          x + BARRIER_RADIUS * Math.cos(angle),
+          y + BARRIER_RADIUS * Math.sin(angle),
+        ));
+      }
+      this.graphics.fillStyle(mainColor, fillAlpha);
+      this.graphics.fillPoints(points, true);
+      this.graphics.lineStyle(2, edgeColor, edgeAlpha);
+      this.graphics.strokePoints(points, true);
+
+      // Danger overlay for critical HP
+      if (hpRatio < 0.25) {
+        const time = this.scene.time.now;
+        const flickerAlpha = 0.1 + Math.abs(Math.sin(time * 0.008)) * 0.2;
+        this.graphics.lineStyle(1, DANGER_COLOR, flickerAlpha);
+        // Slightly larger hexagon for danger ring
+        const dangerPoints: Phaser.Geom.Point[] = [];
+        for (let i = 0; i < 6; i++) {
+          const angle = (Math.PI / 3) * i - Math.PI / 6;
+          dangerPoints.push(new Phaser.Geom.Point(
+            x + (BARRIER_RADIUS + 2) * Math.cos(angle),
+            y + (BARRIER_RADIUS + 2) * Math.sin(angle),
+          ));
+        }
+        this.graphics.strokePoints(dangerPoints, true);
+      }
+    } else {
+      // Square
+      this.graphics.fillStyle(mainColor, fillAlpha);
+      this.graphics.fillRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
+      this.graphics.lineStyle(2, edgeColor, edgeAlpha);
+      this.graphics.strokeRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
+
+      // Danger overlay for critical HP
+      if (hpRatio < 0.25) {
+        const time = this.scene.time.now;
+        const flickerAlpha = 0.1 + Math.abs(Math.sin(time * 0.008)) * 0.2;
+        this.graphics.lineStyle(1, DANGER_COLOR, flickerAlpha);
+        this.graphics.strokeRect(
+          x - STORAGE_HALF - 2, y - STORAGE_HALF - 2,
+          (STORAGE_HALF + 2) * 2, (STORAGE_HALF + 2) * 2,
+        );
+      }
+    }
+  }
+
+  private updateHpBar(distance?: number): void {
     const mod = gameState.getModule(this.config.id);
     if (!mod) return;
 
-    const { x, y } = this.config;
+    const { x } = this.config;
+    const barY = this.getHpBarY();
     const ratio = mod.hp / mod.maxHp;
-    const color = ratio > 0.5 ? 0x44cc44 : ratio > 0.25 ? 0xcccc44 : 0xcc4444;
+
+    // Visibility: show if close enough or HP is low
+    const shouldShow = (distance !== undefined && distance <= HP_SHOW_DISTANCE) || ratio < 0.5;
+    const barAlpha = shouldShow ? 1 : 0.15;
+
+    // Background
+    this.hpBarBg.clear();
+    this.hpBarBg.fillStyle(this.config.type === 'BARRIER' ? 0x222233 : 0x332222, barAlpha * 0.8);
+    this.hpBarBg.fillRect(x - HP_BAR_WIDTH / 2, barY, HP_BAR_WIDTH, HP_BAR_HEIGHT);
+
+    // Fill (same color as module, or danger red when critical)
+    const fillColor = ratio < 0.25 ? DANGER_COLOR :
+      (this.config.type === 'BARRIER' ? BARRIER_MAIN : STORAGE_MAIN);
 
     this.hpBarFill.clear();
-    this.hpBarFill.fillStyle(color, 1);
+    this.hpBarFill.fillStyle(fillColor, barAlpha);
     this.hpBarFill.fillRect(
       x - HP_BAR_WIDTH / 2,
-      y + HP_BAR_OFFSET_Y,
+      barY,
       HP_BAR_WIDTH * ratio,
       HP_BAR_HEIGHT,
     );
 
-    this.updateEffectText();
-  }
-
-  /** A3: Show current effect value below the module label. */
-  private updateEffectText(): void {
-    if (!this.effectText) return;
-    const mod = gameState.getModule(this.config.id);
-    if (!mod) return;
-    const P = GAME_CONSTANTS.PURIFICATION;
-    if (this.config.type === 'BARRIER') {
-      const pct = Math.round((mod.hp / 100) * P.MAX_BARRIER_REDUCTION * 100);
-      this.effectText.setText(`混乱抑制 -${pct}%`);
-    } else {
-      const pct = Math.round((mod.hp / 100) * P.MAX_STORAGE_BONUS * 100);
-      this.effectText.setText(`薪柴增幅 +${pct}%`);
+    // Redraw module shape (needed for flicker animation when HP < 25%)
+    if (ratio < 0.25) {
+      this.drawModule();
     }
   }
 
-  private drawHexagon(cx: number, cy: number, radius: number, color: number): void {
-    this.graphics.fillStyle(color, 1);
-    const points: Phaser.Geom.Point[] = [];
-    for (let i = 0; i < 6; i++) {
-      const angle = (Math.PI / 3) * i - Math.PI / 6;
-      points.push(new Phaser.Geom.Point(
-        cx + radius * Math.cos(angle),
-        cy + radius * Math.sin(angle),
-      ));
+  private getHpBarY(): number {
+    const { y, type } = this.config;
+    // Position below module body
+    if (type === 'BARRIER') {
+      return y + BARRIER_RADIUS + HP_BAR_GAP;
     }
-    this.graphics.fillPoints(points, true);
-    this.graphics.lineStyle(1, 0xffffff, 0.3);
-    this.graphics.strokePoints(points, true);
+    return y + STORAGE_HALF + HP_BAR_GAP;
   }
 }

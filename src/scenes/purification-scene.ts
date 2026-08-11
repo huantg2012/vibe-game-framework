@@ -32,6 +32,8 @@ import { defensePanel } from '@/ui/dom/defense-panel';
 import { growthPanel } from '@/ui/dom/growth-panel';
 import { loadoutPanel } from '@/ui/dom/loadout-panel';
 import { statusPanel } from '@/ui/dom/status-panel';
+import { purificationHud } from '@/ui/dom/purification-hud';
+import type { InteractionTarget } from '@/ui/dom/purification-hud';
 import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
@@ -65,6 +67,19 @@ const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 3 * TILE };
 const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 3 * TILE };
 // Growth altar (center-bottom)
 const GROWTH_POS = { x: CENTER_X, y: CENTER_Y + 2.5 * TILE };
+
+// Interaction point colours (spec B3)
+const RIFT_CENTER = 0x1aad96;
+const RIFT_RING = 0x2ae6c8;
+const DEFENSE_CENTER = 0x6644aa;
+const DEFENSE_RING = 0x8866cc;
+const GROWTH_CENTER = 0xaa6622;
+const GROWTH_RING = 0xcc8844;
+
+// Breathing animation speeds (radians per ms)
+const BREATH_SPEED_NORMAL = (2 * Math.PI) / 2500;
+const BREATH_SPEED_NEAR = (2 * Math.PI) / 1200;
+const BREATH_SPEED_HIGHLIGHT = (2 * Math.PI) / 800;
 
 // B3: Tool name mapping for toast
 const TOOL_NAMES: Record<string, string> = {
@@ -138,6 +153,31 @@ function ensurePurificationTileset(scene: Phaser.Scene): void {
 }
 
 // ---------------------------------------------------------------------------
+// Unified interaction point drawing (spec B3)
+// ---------------------------------------------------------------------------
+
+function drawInteractionPoint(
+  graphics: Phaser.GameObjects.Graphics,
+  x: number, y: number,
+  centerColor: number, ringColor: number,
+  centerRadius: number, ringRadius: number,
+  pulse: number,
+  highlighted: boolean,
+  inRange: boolean,
+): void {
+  const baseAlpha = highlighted ? 0.55 : 0.4;
+  const pulseAmp = 0.25;
+  const alpha = baseAlpha + Math.sin(pulse) * pulseAmp;
+  const rBonus = inRange ? 3 : 0;
+
+  graphics.clear();
+  graphics.fillStyle(centerColor, Math.min(1, alpha + 0.15));
+  graphics.fillCircle(x, y, centerRadius);
+  graphics.lineStyle(2, ringColor, alpha);
+  graphics.strokeCircle(x, y, ringRadius + rBonus);
+}
+
+// ---------------------------------------------------------------------------
 // Scene
 // ---------------------------------------------------------------------------
 
@@ -151,21 +191,15 @@ export class PurificationScene extends Phaser.Scene {
   private storageModule!: PurificationModuleEntity;
 
   private riftEntranceGraphics!: Phaser.GameObjects.Graphics;
-  private riftPromptText!: Phaser.GameObjects.Text;
   private riftEntrancePulse = 0;
 
   // Defense management interaction point
   private defenseGraphics!: Phaser.GameObjects.Graphics;
-  private defensePromptText!: Phaser.GameObjects.Text;
   private defensePulse = 0;
 
   // Growth altar interaction point
   private growthGraphics!: Phaser.GameObjects.Graphics;
-  private growthPromptText!: Phaser.GameObjects.Text;
   private growthPulse = 0;
-
-  // Purification HUD elements (stability + tide info + kindling)
-  private purifHud: HTMLDivElement | null = null;
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
@@ -275,45 +309,14 @@ export class PurificationScene extends Phaser.Scene {
     });
     this.storageModule.create(this);
 
-    // Unified interaction text style (12px, white, monospace, dark bg)
-    const interactionTextStyle = {
-      fontSize: '12px',
-      color: '#ffffff',
-      fontFamily: 'monospace',
-      align: 'center' as const,
-      backgroundColor: '#000000cc',
-      padding: { x: 4, y: 4 },
-    };
-
-    // Rift entrance marker (pulsing teal)
+    // Interaction point graphics (unified circles, spec B3)
     this.riftEntranceGraphics = this.add.graphics().setDepth(20);
-    this.riftPromptText = this.add.text(
-      RIFT_ENTRANCE_POS.x,
-      RIFT_ENTRANCE_POS.y - 24,
-      'E - 进入裂隙',
-      interactionTextStyle,
-    ).setOrigin(0.5).setDepth(21).setVisible(false);
-
-    // Defense management point (purple, bottom-left)
     this.defenseGraphics = this.add.graphics().setDepth(20);
-    this.defensePromptText = this.add.text(
-      DEFENSE_POS.x,
-      DEFENSE_POS.y - 24,
-      'E - 防御配置',
-      interactionTextStyle,
-    ).setOrigin(0.5).setDepth(21).setVisible(false);
-
-    // Growth altar (orange, center-bottom)
     this.growthGraphics = this.add.graphics().setDepth(20);
-    this.growthPromptText = this.add.text(
-      GROWTH_POS.x,
-      GROWTH_POS.y - 24,
-      'E - 永久改造',
-      interactionTextStyle,
-    ).setOrigin(0.5).setDepth(21).setVisible(false);
 
-    // Purification HUD (DOM overlay — Phaser text invisible on void background)
-    this.createPurifHud();
+    // Purification HUD (DOM overlay)
+    purificationHud.create();
+    purificationHud.refresh();
 
     // Boundary atmosphere
     this.atmosphere.create(this);
@@ -345,19 +348,17 @@ export class PurificationScene extends Phaser.Scene {
         if (phaseChange) {
           this.showPhaseChangeNotification(phaseChange, () => {
             this.player.setInputEnabled(true);
-            this.refreshKindlingDisplay();
+            purificationHud.refresh();
             // B3: Show new tool toast after impact flow completes
             this.showNewToolToast(transformResults);
           });
         } else {
           this.player.setInputEnabled(true);
-          this.refreshKindlingDisplay();
+          purificationHud.refresh();
           // B3: Show new tool toast after impact panel dismissed
           this.showNewToolToast(transformResults);
         }
       }, chargeChanges.length > 0 ? chargeChanges : undefined);
-    } else {
-      this.refreshKindlingDisplay();
     }
   }
 
@@ -372,59 +373,65 @@ export class PurificationScene extends Phaser.Scene {
     this.barrierModule.update(pos.x, pos.y);
     this.storageModule.update(pos.x, pos.y);
 
-    // Rift entrance proximity
-    const riftDx = pos.x - RIFT_ENTRANCE_POS.x;
-    const riftDy = pos.y - RIFT_ENTRANCE_POS.y;
-    const riftDist = Math.sqrt(riftDx * riftDx + riftDy * riftDy);
+    // Calculate distances to all interaction points
+    const riftDist = this.distTo(pos, RIFT_ENTRANCE_POS);
+    const defDist = this.distTo(pos, DEFENSE_POS);
+    const groDist = this.distTo(pos, GROWTH_POS);
+
     const nearRift = riftDist <= GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
-    this.riftPromptText.setVisible(nearRift);
-
-    // Defense point proximity
-    const defDx = pos.x - DEFENSE_POS.x;
-    const defDy = pos.y - DEFENSE_POS.y;
-    const defDist = Math.sqrt(defDx * defDx + defDy * defDy);
     const nearDefense = defDist <= GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
-    this.defensePromptText.setVisible(nearDefense);
-
-    // Growth altar proximity
-    const groDx = pos.x - GROWTH_POS.x;
-    const groDy = pos.y - GROWTH_POS.y;
-    const groDist = Math.sqrt(groDx * groDx + groDy * groDy);
     const nearGrowth = groDist <= GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
-    this.growthPromptText.setVisible(nearGrowth);
 
-    // Draw rift entrance (pulsing teal) - always normal pulse
-    this.riftEntrancePulse += delta * 0.003;
-    const pulseAlpha = 0.5 + Math.sin(this.riftEntrancePulse) * 0.3;
-    this.riftEntranceGraphics.clear();
-    this.riftEntranceGraphics.fillStyle(0x1aad96, pulseAlpha);
-    this.riftEntranceGraphics.fillCircle(RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y, 10);
-    this.riftEntranceGraphics.lineStyle(2, 0x2ae6c8, pulseAlpha * 0.7);
-    this.riftEntranceGraphics.strokeCircle(RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y, 14);
+    // --- Determine nearest interaction target for prompt bar ---
+    const target = this.findNearestTarget(nearRift, nearDefense, nearGrowth, riftDist, defDist, groDist);
+    purificationHud.updatePrompt(target);
 
-    // D1: Defense point pulse (accelerated when has unequipped contaminants)
+    // Hide prompt when a panel is open
+    purificationHud.setPromptVisible(!this.isAnyPanelOpen());
+
+    // --- Draw interaction points (unified breathing circles) ---
+
+    // Rift entrance
+    const riftHighlight = false; // rift always available
+    const riftSpeed = nearRift ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL;
+    this.riftEntrancePulse += delta * riftSpeed;
+    drawInteractionPoint(
+      this.riftEntranceGraphics,
+      RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y,
+      RIFT_CENTER, RIFT_RING,
+      8, 14,
+      this.riftEntrancePulse,
+      riftHighlight,
+      nearRift,
+    );
+
+    // Defense point
     const defHighlight = this.shouldHighlight('defense');
-    const defSpeed = defHighlight ? 0.006 : 0.0025;
+    const defSpeed = defHighlight ? BREATH_SPEED_HIGHLIGHT : (nearDefense ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
     this.defensePulse += delta * defSpeed;
-    const defBaseAlpha = defHighlight ? 0.55 : 0.4;
-    const defAlpha = defBaseAlpha + Math.sin(this.defensePulse) * 0.3;
-    this.defenseGraphics.clear();
-    this.defenseGraphics.fillStyle(0x8866cc, defAlpha);
-    this.defenseGraphics.fillCircle(DEFENSE_POS.x, DEFENSE_POS.y, 8);
-    this.defenseGraphics.lineStyle(2, 0xaa88ee, defAlpha * 0.7);
-    this.defenseGraphics.strokeCircle(DEFENSE_POS.x, DEFENSE_POS.y, 12);
+    drawInteractionPoint(
+      this.defenseGraphics,
+      DEFENSE_POS.x, DEFENSE_POS.y,
+      DEFENSE_CENTER, DEFENSE_RING,
+      7, 12,
+      this.defensePulse,
+      defHighlight,
+      nearDefense,
+    );
 
-    // D1: Growth altar pulse (accelerated when can afford upgrade)
+    // Growth altar (unified to circle instead of square)
     const groHighlight = this.shouldHighlight('growth');
-    const groSpeed = groHighlight ? 0.005 : 0.002;
+    const groSpeed = groHighlight ? BREATH_SPEED_HIGHLIGHT : (nearGrowth ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
     this.growthPulse += delta * groSpeed;
-    const groBaseAlpha = groHighlight ? 0.6 : 0.45;
-    const groAlpha = groBaseAlpha + Math.sin(this.growthPulse) * 0.3;
-    this.growthGraphics.clear();
-    this.growthGraphics.fillStyle(0xcc8844, groAlpha);
-    this.growthGraphics.fillRect(GROWTH_POS.x - 7, GROWTH_POS.y - 7, 14, 14);
-    this.growthGraphics.lineStyle(2, 0xeea866, groAlpha * 0.7);
-    this.growthGraphics.strokeRect(GROWTH_POS.x - 10, GROWTH_POS.y - 10, 20, 20);
+    drawInteractionPoint(
+      this.growthGraphics,
+      GROWTH_POS.x, GROWTH_POS.y,
+      GROWTH_CENTER, GROWTH_RING,
+      7, 12,
+      this.growthPulse,
+      groHighlight,
+      nearGrowth,
+    );
 
     // Atmosphere
     this.atmosphere.update(delta);
@@ -475,6 +482,52 @@ export class PurificationScene extends Phaser.Scene {
 
   // ------------------------------------------------------------------ private
 
+  private distTo(pos: { x: number; y: number }, target: { x: number; y: number }): number {
+    const dx = pos.x - target.x;
+    const dy = pos.y - target.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  /** Find the nearest in-range interaction target for the prompt bar. */
+  private findNearestTarget(
+    nearRift: boolean, nearDefense: boolean, nearGrowth: boolean,
+    riftDist: number, defDist: number, groDist: number,
+  ): InteractionTarget | null {
+    const candidates: InteractionTarget[] = [];
+
+    if (this.barrierModule.isInRange()) {
+      const hpData = this.barrierModule.getHpData();
+      candidates.push({
+        type: 'barrier',
+        distance: 0, // modules handle their own distance check
+        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.barrierModule.getEffectPct() } : undefined,
+      });
+    }
+    if (this.storageModule.isInRange()) {
+      const hpData = this.storageModule.getHpData();
+      candidates.push({
+        type: 'storage',
+        distance: 0,
+        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.storageModule.getEffectPct() } : undefined,
+      });
+    }
+    if (nearRift) {
+      candidates.push({ type: 'rift', distance: riftDist });
+    }
+    if (nearDefense) {
+      candidates.push({ type: 'defense', distance: defDist });
+    }
+    if (nearGrowth) {
+      candidates.push({ type: 'growth', distance: groDist });
+    }
+
+    if (candidates.length === 0) return null;
+
+    // Return the closest candidate
+    candidates.sort((a, b) => a.distance - b.distance);
+    return candidates[0]!;
+  }
+
   private onPostUpdate(_time: number, delta: number): void {
     this.player.postUpdate();
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
@@ -488,7 +541,7 @@ export class PurificationScene extends Phaser.Scene {
     this.player.setInputEnabled(false);
     allocationPanel.open(moduleId, () => {
       this.player.setInputEnabled(true);
-      this.refreshKindlingDisplay();
+      purificationHud.refresh();
     });
   }
 
@@ -496,7 +549,7 @@ export class PurificationScene extends Phaser.Scene {
     this.player.setInputEnabled(false);
     defensePanel.open(() => {
       this.player.setInputEnabled(true);
-      this.refreshKindlingDisplay();
+      purificationHud.refresh();
     });
   }
 
@@ -504,7 +557,7 @@ export class PurificationScene extends Phaser.Scene {
     this.player.setInputEnabled(false);
     growthPanel.open(() => {
       this.player.setInputEnabled(true);
-      this.refreshKindlingDisplay();
+      purificationHud.refresh();
     });
   }
 
@@ -608,44 +661,6 @@ export class PurificationScene extends Phaser.Scene {
       }
     `;
     document.head.appendChild(style);
-  }
-
-  /** A4: Enhanced purification HUD with tide intensity and phase progress. */
-  private createPurifHud(): void {
-    if (this.purifHud) this.purifHud.remove();
-    // Defensive: remove any orphaned element with the same ID
-    document.getElementById('purif-hud')?.remove();
-
-    const tideState = tideSystem.getState();
-    const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
-    const stabPct = Math.round(stabilityTracker.getProgress());
-    const reserve = gameState.getKindlingReserve();
-
-    // A4: Get phase cycle count for progress display
-    const tidesCfg = GAME_CONSTANTS.TIDE.TIDES;
-    const cfg = tidesCfg[Math.min(tideState.tideNumber - 1, tidesCfg.length - 1)]!;
-    let phaseCycles = 0;
-    if (tideState.phase === 'rise') phaseCycles = cfg.riseCycles;
-    else if (tideState.phase === 'crest') phaseCycles = cfg.crestCycles;
-    else phaseCycles = cfg.ebbCycles;
-
-    this.purifHud = document.createElement('div');
-    this.purifHud.id = 'purif-hud';
-    this.purifHud.style.cssText =
-      'position:fixed;top:8px;right:8px;z-index:999;pointer-events:none;' +
-      'font-family:monospace;font-size:12px;text-align:right;line-height:1.6;';
-    this.purifHud.innerHTML = `
-      <div style="color:#c89040;">薪柴: ${reserve}</div>
-      <div style="color:#44aa66;font-size:10px;">稳定度: ${stabPct}%</div>
-      <div style="color:#44aa66;font-size:10px;">第${tideState.tideNumber}潮 · ${phaseLabels[tideState.phase]}</div>
-      <div style="color:#668888;font-size:10px;">强度: ${tideState.currentIntensity.toFixed(2)} (${phaseLabels[tideState.phase]} ${tideState.cycleInPhase}/${phaseCycles})</div>
-    `;
-    document.body.appendChild(this.purifHud);
-  }
-
-  /** Refresh the kindling HUD text (A2). */
-  private refreshKindlingDisplay(): void {
-    this.createPurifHud();
   }
 
   /** D1: Check whether an interaction point should pulse faster (has actionable content). */
@@ -905,12 +920,10 @@ export class PurificationScene extends Phaser.Scene {
     this.player.destroy();
     this.tilemapRenderer.destroy();
     this.riftEntranceGraphics?.destroy();
-    this.riftPromptText?.destroy();
     this.defenseGraphics?.destroy();
-    this.defensePromptText?.destroy();
     this.growthGraphics?.destroy();
-    this.growthPromptText?.destroy();
-    this.purifHud?.remove();
-    this.purifHud = null;
+
+    // Destroy DOM HUD
+    purificationHud.destroy();
   }
 }
