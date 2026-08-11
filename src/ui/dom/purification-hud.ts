@@ -234,13 +234,9 @@ export class PurificationHud {
   }
 
   private buildDefaultPrompt(): string {
-    return `<span style="color:${COL.dimText};">E:注入</span>` +
+    return `<span style="color:${COL.dimText};">Tab:存续报告</span>` +
       `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` +
-      `<span style="color:${COL.dimText};">Q:装备</span>` +
-      `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` +
-      `<span style="color:${COL.dimText};">Tab:总览</span>` +
-      `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` +
-      `<span style="color:${COL.dimText};">Esc:退出</span>`;
+      `<span style="color:${COL.dimText};">Esc:主菜单</span>`;
   }
 
   private buildPromptWithContext(action: string, target: InteractionTarget): string {
@@ -256,9 +252,9 @@ export class PurificationHud {
     switch (target.type) {
       case 'core': return '◈ 核心';
       case 'storage': return '▣ 储藏';
-      case 'rift': return '◩ 裂隙';
-      case 'defense': return '△ 防御';
-      case 'growth': return '✦ 改造';
+      case 'rift': return '◩ 踏入裂隙';
+      case 'defense': return '△ 供奉';
+      case 'growth': return '✦ 蜕变';
     }
   }
 
@@ -267,7 +263,7 @@ export class PurificationHud {
       if (target.type === 'rift') {
         const cycle = gameState.getCycle();
         const tideState = tideSystem.getState();
-        return `#${cycle} x${tideState.currentIntensity.toFixed(1)}`;
+        return `第${cycle + 1}次出击 · 强度 x${tideState.currentIntensity.toFixed(1)}`;
       }
       return null;
     }
