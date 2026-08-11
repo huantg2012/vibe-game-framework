@@ -118,7 +118,7 @@ export const GAME_CONSTANTS = {
     FLICKER_PERIOD_MS: 4000,
     /** Purification point overrides (omni mode) */
     PURIFY_RADIUS: 400,
-    PURIFY_RAY_COUNT: 36,
+    PURIFY_RAY_COUNT: 90,
   },
 
   /**
@@ -254,18 +254,36 @@ export const GAME_CONSTANTS = {
     THREAT_FOCUS_RATIO: 0.65,  // primary target gets this fraction of total damage
     FORECAST_ACCURACY: 0.80,   // particle prediction accuracy
     /** Module effects */
-    MAX_BARRIER_REDUCTION: 0.30, // chaosRate reduction at full hp
+    MAX_CORE_REDUCTION: 0.30, // chaosRate reduction at full hp
     MAX_STORAGE_BONUS: 0.50,     // kindling value bonus at full hp
     /** Boundary atmosphere */
     ATMOSPHERE: {
-      PARTICLE_COUNT: 25,          // active boundary particles
-      PARTICLE_ALPHA_MIN: 0.03,
-      PARTICLE_ALPHA_MAX: 0.12,
+      PARTICLE_COUNT: 50,          // active boundary particles
+      PARTICLE_ALPHA_MIN: 0.06,
+      PARTICLE_ALPHA_MAX: 0.25,
       PARTICLE_SPEED: 8,           // px/s slow inward drift
       APPARITION_INTERVAL_MIN: 8000,  // ms
       APPARITION_INTERVAL_MAX: 15000,
       APPARITION_DURATION: 3000,      // ms (0.5s fade in + 2s hold + 0.5s fade out)
-      APPARITION_MAX_SIMULTANEOUS: 2,
+      APPARITION_MAX_SIMULTANEOUS: 3,
+    },
+    /** Dynamic boundary shape (polar pressure blob) */
+    BOUNDARY: {
+      SHRINK_AT_MAX_INTENSITY: 0.72,    // tideScale at intensity 3.0 (boundary loses up to 28%)
+      PRESSURE_PRIMARY_AMP: 0.20,       // max inward push fraction (primary Gaussian lobe)
+      PRESSURE_SECONDARY_AMP: 0.10,     // secondary lobe amplitude
+      PRESSURE_LOBE_SIGMA: 0.7,         // radians; width of each Gaussian lobe
+      PRESSURE_CREST_BONUS: 0.4,        // +40% amplitude during crest phase
+      PRESSURE_EBB_FACTOR: 0.6,         // amplitude multiplier during ebb phase
+      SAFE_MARGIN_TILES: 1.0,           // minimum distance from any interaction point to boundary
+      GRADIENT_INNER_START: 0.80,       // fraction of R where darkening begins
+      GRADIENT_MEMBRANE_START: 0.95,    // fraction where "membrane" teal band begins
+      GRADIENT_OUTER_END: 1.15,         // fraction where full void begins
+      BREATH_BASE_ALPHA: 0.18,          // base alpha of the breathing edge overlay
+      BREATH_AMP: 0.12,                 // oscillation amplitude (+/- from base)
+      BREATH_FREQ: 0.4,                 // Hz (one full pulse every 2.5s)
+      BREATH_CREST_FREQ_MULT: 2.0,     // frequency multiplier during crest (stressed feel)
+      BREATH_EBB_AMP_MULT: 0.5,        // amplitude multiplier during ebb (calm)
     },
     /** Scene transition timing */
     IMPACT_RESULT_DISPLAY_MS: 2000,

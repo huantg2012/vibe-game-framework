@@ -2,7 +2,7 @@
 
 ## 问题
 
-玩家无法感知 BARRIER/STORAGE 模块 hp 带来的具体增益。分配面板只显示 hp 数字，裂隙 HUD 只显示薪柴总数——没有任何信息帮助玩家理解"修这个模块值不值"或"我的拾取正在被加成"。
+玩家无法感知 CORE/STORAGE 模块 hp 带来的具体增益。分配面板只显示 hp 数字，裂隙 HUD 只显示薪柴总数——没有任何信息帮助玩家理解"修这个模块值不值"或"我的拾取正在被加成"。
 
 ---
 
@@ -17,7 +17,7 @@
 在现有 HP 行和分配控件之间，插入一个"效果区块"：
 
 ```
-BARRIER (Chaos Reduction)
+CORE (Chaos Reduction)
 HP: 60 / 100
 ────────────────────────
 当前效果: 混乱增速 -18%
@@ -44,7 +44,7 @@ Available Kindling: 5
 
 ### 规则
 
-- BARRIER 效果文案：`混乱增速 -${Math.round(hp/100 * MAX_BARRIER_REDUCTION * 100)}%`
+- CORE 效果文案：`混乱增速 -${Math.round(hp/100 * MAX_CORE_REDUCTION * 100)}%`
 - STORAGE 效果文案：`拾取价值 x${(1 + hp/100 * MAX_STORAGE_BONUS).toFixed(2)}`
 - "修复后"行根据当前 `selectedAmount` 实时更新（hp + selectedAmount * REPAIR_PER_KINDLING, clamped to maxHp）
 - 差值部分 `(+N%)` / `(+0.xx)` 用绿色 `#66cc88` 标注（有增益时才显示）
@@ -54,7 +54,7 @@ Available Kindling: 5
 ### 视觉规格
 
 - 效果区块用 1px `#333` 水平线与上下内容隔开（符合 art-direction 6.4 的分区规则）
-- 当前效果颜色：BARRIER 用 `#4488cc`，STORAGE 用 `#cc8844`（与 typeColor 一致）
+- 当前效果颜色：CORE 用 `#4488cc`，STORAGE 用 `#cc8844`（与 typeColor 一致）
 - 修复后效果颜色：比当前效果略亮（同色相，亮度 +20%）
 - 字号 11px，与现有 "1 kindling = 10 HP" 行一致
 
@@ -113,7 +113,7 @@ Available Kindling: 5
 
 1. 在 `render()` 函数的 HP 行和 Available Kindling 行之间插入效果区块
 2. 新增 `computeEffectText(type, hp)` 辅助函数：
-   - BARRIER: 返回 `混乱增速 -${Math.round(hp/100 * P.MAX_BARRIER_REDUCTION * 100)}%`
+   - CORE: 返回 `混乱增速 -${Math.round(hp/100 * P.MAX_CORE_REDUCTION * 100)}%`
    - STORAGE: 返回 `拾取价值 x${(1 + hp/100 * P.MAX_STORAGE_BONUS).toFixed(2)}`
 3. "修复后" hp = `Math.min(mod.hp + selectedAmount * repairPer, maxHp)`
 4. 差值 = 修复后效果值 - 当前效果值，>0 时绿色显示

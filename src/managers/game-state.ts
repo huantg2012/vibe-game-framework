@@ -15,7 +15,7 @@ import type { PendingSideEffect } from '@/systems/defense-engine';
 // Types
 // ---------------------------------------------------------------------------
 
-export type ModuleType = 'BARRIER' | 'STORAGE';
+export type ModuleType = 'CORE' | 'STORAGE';
 
 export interface ModuleState {
   readonly id: string;
@@ -43,7 +43,7 @@ let repairEfficiencyMult = 1.0;
 let upgradeDiscount = 0;
 
 const modules: ModuleState[] = [
-  { id: 'BARRIER', type: 'BARRIER', hp: P.MODULE_INITIAL_HP, maxHp: P.MODULE_MAX_HP },
+  { id: 'CORE', type: 'CORE', hp: P.MODULE_INITIAL_HP, maxHp: P.MODULE_MAX_HP },
   { id: 'STORAGE', type: 'STORAGE', hp: P.MODULE_INITIAL_HP, maxHp: P.MODULE_MAX_HP },
 ];
 
@@ -115,11 +115,11 @@ export const gameState = {
 
   getModuleEffect(type: ModuleType): number {
     const mod = modules.find((m) => m.type === type);
-    if (!mod) return type === 'BARRIER' ? 1.0 : 1.0;
+    if (!mod) return type === 'CORE' ? 1.0 : 1.0;
 
-    if (type === 'BARRIER') {
+    if (type === 'CORE') {
       // chaosRateModifier: lower is better; at full hp = 1 - 0.30 = 0.70
-      return 1.0 - (mod.hp / 100) * P.MAX_BARRIER_REDUCTION;
+      return 1.0 - (mod.hp / 100) * P.MAX_CORE_REDUCTION;
     }
     // STORAGE: kindlingValueModifier; at full hp = 1 + 0.50 = 1.50
     return 1.0 + (mod.hp / 100) * P.MAX_STORAGE_BONUS;
@@ -127,7 +127,7 @@ export const gameState = {
 
   getSortieModifiers(): SortieModifiers {
     return {
-      chaosRateModifier: gameState.getModuleEffect('BARRIER'),
+      chaosRateModifier: gameState.getModuleEffect('CORE'),
       kindlingValueModifier: gameState.getModuleEffect('STORAGE'),
     };
   },

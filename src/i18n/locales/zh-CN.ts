@@ -56,7 +56,7 @@ export const zhCN: LocaleSchema = {
       remaining: '剩余：{amount}',
     },
     module: {
-      barrier: '屏障模块',
+      core: '核心模块',
       storage: '储藏模块',
       healthy: '正常',
       damaged: '受损',

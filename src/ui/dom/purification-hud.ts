@@ -1,11 +1,15 @@
 /**
- * Purification HUD - DOM overlay for the purification scene.
+ * Purification HUD - Compact symbol-grid overlay for the purification scene.
  *
- * Manages two fixed-position DOM elements:
- * 1. Right-top HUD panel (kindling, stability, tide info)
- * 2. Bottom-center interaction prompt bar (context-sensitive)
+ * Design principles:
+ * - No text labels; position + color + shape ARE the language
+ * - No borders/frames; information floats directly at screen edges
+ * - Pixel-aesthetic, cold-gray base + semantic accent colors
+ * - UI is part of the game world, not floating above it
  *
- * All readable text lives here in DOM, keeping the game world free of Phaser.Text.
+ * Layout:
+ * - Right-top: kindling (diamond + number), stability (block bar), tide (wave bar)
+ * - Bottom-center: compact key hints (one line, semi-transparent)
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -18,7 +22,7 @@ import { injectPanelStyles } from './panel-styles';
 // Types
 // ---------------------------------------------------------------------------
 
-export type InteractionTargetType = 'barrier' | 'storage' | 'rift' | 'defense' | 'growth';
+export type InteractionTargetType = 'core' | 'storage' | 'rift' | 'defense' | 'growth';
 
 export interface InteractionTarget {
   type: InteractionTargetType;
@@ -27,10 +31,19 @@ export interface InteractionTarget {
 }
 
 // ---------------------------------------------------------------------------
-// Constants
+// Color palette
 // ---------------------------------------------------------------------------
 
-const PHASE_LABELS: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
+const COL = {
+  kindlingOrange: '#c4873a',
+  stabilityGreen: '#4a9e5a',
+  dangerRed: '#cc3333',
+  tideCyan: '#1aad96',
+  darkBg: '#1a1e22',
+  dimText: '#5a5f66',
+  brightText: '#c8ccd0',
+  barEmpty: '#1a1e22',
+} as const;
 
 // ---------------------------------------------------------------------------
 // Implementation
@@ -61,16 +74,12 @@ export class PurificationHud {
     let html: string;
 
     if (target) {
-      const mainLine = this.getPromptMain(target);
-      const detailLine = this.getPromptDetail(target);
-      html = `<div style="font-size:11px;color:#c8cdd4;"><span style="color:#5a5f66;">&gt;</span> <span style="color:#c8cdd4;">[E]</span> <span style="color:#8a8f96;">${mainLine}</span></div>`;
-      if (detailLine) {
-        html += `<div style="font-size:10px;color:#666666;margin-top:4px;">${detailLine}</div>`;
-      }
-      this.promptEl.style.opacity = '1';
+      const action = this.getActionLabel(target);
+      html = this.buildPromptWithContext(action, target);
+      this.promptEl.style.opacity = '0.9';
     } else {
-      html = `<div style="font-size:11px;color:#5a5f66;"><span style="color:#5a5f66;">&gt;</span> <span style="color:#5a5f66;">[Tab]</span> <span style="color:#5a5f66;">状态总览</span></div>`;
-      this.promptEl.style.opacity = '0.5';
+      html = this.buildDefaultPrompt();
+      this.promptEl.style.opacity = '0.6';
     }
 
     if (html !== this.lastPromptHtml) {
@@ -86,30 +95,25 @@ export class PurificationHud {
     const reserve = gameState.getKindlingReserve();
     const stabPct = Math.round(stabilityTracker.getProgress());
     const tideState = tideSystem.getState();
-    const stabFill = stabPct >= 75 ? '#66cc88' : '#44aa66';
 
-    const tidesCfg = GAME_CONSTANTS.TIDE.TIDES;
-    const cfg = tidesCfg[Math.min(tideState.tideNumber - 1, tidesCfg.length - 1)]!;
-    let phaseCycles = 0;
-    if (tideState.phase === 'rise') phaseCycles = cfg.riseCycles;
-    else if (tideState.phase === 'crest') phaseCycles = cfg.crestCycles;
-    else phaseCycles = cfg.ebbCycles;
+    // --- Kindling row ---
+    const kindlingRow = `<div style="margin-bottom:4px;"><span style="color:${COL.kindlingOrange};font-size:13px;">◇</span><span style="color:${COL.kindlingOrange};font-size:14px;font-weight:bold;margin-left:4px;">${reserve}</span></div>`;
 
-    const html = `
-      <div style="display:flex;justify-content:space-between;align-items:baseline;padding-bottom:6px;border-bottom:1px solid #2a2d32;margin-bottom:6px;">
-        <span style="font-size:11px;color:#8a8f96;">薪柴</span>
-        <span style="font-size:14px;font-weight:bold;color:#c89040;">${reserve}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:baseline;">
-        <span style="font-size:10px;color:#8a8f96;">稳定度</span>
-        <span style="font-size:11px;color:#44aa66;">${stabPct}%</span>
-      </div>
-      <div style="height:3px;background:#151a1e;margin-top:3px;margin-bottom:6px;border-bottom:1px solid #2a2d32;padding-bottom:6px;">
-        <div style="height:100%;width:${stabPct}%;background:${stabFill};"></div>
-      </div>
-      <div style="font-size:10px;color:#668888;">第${tideState.tideNumber}潮 · ${PHASE_LABELS[tideState.phase]}</div>
-      <div style="font-size:9px;color:#556666;margin-top:2px;">强度 ${tideState.currentIntensity.toFixed(2)} (${tideState.cycleInPhase}/${phaseCycles})</div>
-    `;
+    // --- Stability bar (10 blocks) ---
+    const stabBlocks = 10;
+    const filledBlocks = Math.round((stabPct / 100) * stabBlocks);
+    const stabColor = stabPct <= 30 ? COL.dangerRed : COL.stabilityGreen;
+    let stabBar = '';
+    for (let i = 0; i < stabBlocks; i++) {
+      const color = i < filledBlocks ? stabColor : COL.barEmpty;
+      stabBar += `<span style="color:${color};">▮</span>`;
+    }
+    const stabilityRow = `<div style="font-size:12px;letter-spacing:1px;margin-bottom:4px;">${stabBar}</div>`;
+
+    // --- Tide wave bar ---
+    const tideRow = this.buildTideRow(tideState);
+
+    const html = kindlingRow + stabilityRow + tideRow;
 
     if (html !== this.lastHudHtml) {
       this.hudEl.innerHTML = html;
@@ -137,16 +141,17 @@ export class PurificationHud {
   // ------------------------------------------------------------------ private
 
   private createHudPanel(): void {
-    // Remove any orphaned element
     document.getElementById('purif-hud')?.remove();
 
     this.hudEl = document.createElement('div');
     this.hudEl.id = 'purif-hud';
-    this.hudEl.className = 'game-panel';
+    // No .game-panel class — borderless, frameless
     this.hudEl.style.cssText = [
-      'position:fixed', 'top:12px', 'right:12px', 'z-index:999',
+      'position:fixed', 'top:10px', 'right:12px', 'z-index:999',
       'pointer-events:none',
-      'padding:10px 12px', 'min-width:120px',
+      'font-family:"Courier New",monospace',
+      'line-height:1.4',
+      'text-shadow:0 0 2px rgba(0,0,0,0.8)',
     ].join(';');
     document.body.appendChild(this.hudEl);
     this.refresh();
@@ -157,27 +162,103 @@ export class PurificationHud {
 
     this.promptEl = document.createElement('div');
     this.promptEl.id = 'purif-prompt';
-    this.promptEl.className = 'game-panel';
+    // No .game-panel class — minimal, floating
     this.promptEl.style.cssText = [
-      'position:fixed', 'bottom:24px', 'left:50%', 'transform:translateX(-50%)',
+      'position:fixed', 'bottom:16px', 'left:50%', 'transform:translateX(-50%)',
       'z-index:999', 'pointer-events:none',
-      'padding:6px 16px', 'text-align:center',
-      'min-width:160px', 'transition:opacity 0.15s ease-out',
-      'opacity:0.5',
+      'font:11px "Courier New",monospace',
+      'color:' + COL.dimText,
+      'text-align:center',
+      'transition:opacity 0.15s ease-out',
+      'opacity:0.6',
+      'text-shadow:0 0 2px rgba(0,0,0,0.8)',
+      'white-space:nowrap',
     ].join(';');
-    // Start with default prompt
-    this.promptEl.innerHTML = `<div style="font-size:11px;color:#5a5f66;"><span style="color:#5a5f66;">&gt;</span> <span style="color:#5a5f66;">[Tab]</span> <span style="color:#5a5f66;">状态总览</span></div>`;
+    this.promptEl.innerHTML = this.buildDefaultPrompt();
     this.lastPromptHtml = this.promptEl.innerHTML;
     document.body.appendChild(this.promptEl);
   }
 
-  private getPromptMain(target: InteractionTarget): string {
+  /**
+   * Build the tide wave bar.
+   * Represents a full tide cycle as 10 characters.
+   * Current position highlighted in cyan; rising = brighter, ebbing = dimmer.
+   */
+  private buildTideRow(tideState: { tideNumber: number; phase: string; cycleInPhase: number; currentIntensity: number }): string {
+    const tidesCfg = GAME_CONSTANTS.TIDE.TIDES;
+    const cfg = tidesCfg[Math.min(tideState.tideNumber - 1, tidesCfg.length - 1)]!;
+
+    // Calculate total cycles and current position
+    const totalCycles = cfg.riseCycles + cfg.crestCycles + cfg.ebbCycles;
+    let currentPos = tideState.cycleInPhase;
+    if (tideState.phase === 'crest') currentPos += cfg.riseCycles;
+    else if (tideState.phase === 'ebb') currentPos += cfg.riseCycles + cfg.crestCycles;
+
+    // Map position to 0-9 index in a 10-char bar
+    const barLen = 10;
+    const posIndex = totalCycles > 0 ? Math.min(Math.floor((currentPos / totalCycles) * barLen), barLen - 1) : 0;
+
+    // Wave height pattern: rises then falls
+    // Use block characters of increasing height: ▁ ▂ ▃ ▄ ▅ ▆ ▇ █
+    const waveChars = ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
+
+    // Generate wave shape: rise to peak at center, fall back
+    const heights = new Array<number>(barLen);
+    const peakIdx = Math.floor(barLen * (cfg.riseCycles / totalCycles));
+    for (let i = 0; i < barLen; i++) {
+      if (i <= peakIdx) {
+        // Rising portion
+        heights[i] = Math.round((i / Math.max(peakIdx, 1)) * 7);
+      } else {
+        // Falling portion
+        const fallLen = barLen - 1 - peakIdx;
+        heights[i] = Math.round(((barLen - 1 - i) / Math.max(fallLen, 1)) * 7);
+      }
+    }
+
+    // Determine base color: rising = brighter, ebbing = dimmer
+    const isRising = tideState.phase === 'rise' || tideState.phase === 'crest';
+    const baseColor = isRising ? '#2a7a6a' : '#1a4a42';
+
+    let bar = '';
+    for (let i = 0; i < barLen; i++) {
+      const ch = waveChars[heights[i]!] ?? waveChars[0]!;
+      const color = i === posIndex ? COL.tideCyan : baseColor;
+      bar += `<span style="color:${color};">${ch}</span>`;
+    }
+
+    // Tide number indicator
+    const tideLabel = `<span style="color:${COL.dimText};font-size:9px;margin-left:4px;">${tideState.tideNumber}</span>`;
+
+    return `<div style="font-size:12px;letter-spacing:0px;">${bar}${tideLabel}</div>`;
+  }
+
+  private buildDefaultPrompt(): string {
+    return `<span style="color:${COL.dimText};">E:注入</span>` +
+      `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` +
+      `<span style="color:${COL.dimText};">Q:装备</span>` +
+      `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` +
+      `<span style="color:${COL.dimText};">Tab:总览</span>` +
+      `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` +
+      `<span style="color:${COL.dimText};">Esc:退出</span>`;
+  }
+
+  private buildPromptWithContext(action: string, target: InteractionTarget): string {
+    const detail = this.getPromptDetail(target);
+    let html = `<span style="color:${COL.brightText};">[E]</span> <span style="color:#8a8f96;">${action}</span>`;
+    if (detail) {
+      html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span><span style="color:${COL.dimText};font-size:10px;">${detail}</span>`;
+    }
+    return html;
+  }
+
+  private getActionLabel(target: InteractionTarget): string {
     switch (target.type) {
-      case 'barrier': return '分配薪柴 - 屏障';
-      case 'storage': return '分配薪柴 - 储藏';
-      case 'rift': return '进入裂隙';
-      case 'defense': return '防御配置';
-      case 'growth': return '永久改造';
+      case 'core': return '◈ 核心';
+      case 'storage': return '▣ 储藏';
+      case 'rift': return '◩ 裂隙';
+      case 'defense': return '△ 防御';
+      case 'growth': return '✦ 改造';
     }
   }
 
@@ -185,15 +266,16 @@ export class PurificationHud {
     if (!target.moduleData) {
       if (target.type === 'rift') {
         const cycle = gameState.getCycle();
-        return `第${cycle}次出击`;
+        const tideState = tideSystem.getState();
+        return `#${cycle} x${tideState.currentIntensity.toFixed(1)}`;
       }
       return null;
     }
     const { hp, maxHp, effectPct } = target.moduleData;
-    if (target.type === 'barrier') {
-      return `HP ${hp}/${maxHp} · 混乱抑制 -${effectPct}%`;
+    if (target.type === 'core') {
+      return `${hp}/${maxHp} -${effectPct}%`;
     }
-    return `HP ${hp}/${maxHp} · 薪柴增幅 +${effectPct}%`;
+    return `${hp}/${maxHp} +${effectPct}%`;
   }
 }
 

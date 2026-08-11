@@ -25,7 +25,7 @@ const PLAYER_COLOR = '#ffffff';
 const PLAYER_DOT_SIZE = 2;
 const EXTRACTION_COLOR = '#ffffff';
 const EXTRACTION_DOT_SIZE = 2;
-const BORDER_COLOR = '#333840';
+const BORDER_COLOR = '#2a2d32';
 const OPACITY = 0.85;
 
 // ---------------------------------------------------------------------------

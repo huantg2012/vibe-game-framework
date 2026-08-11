@@ -151,7 +151,7 @@ export const CONTAMINANT_DATA: Record<ContaminantType, ContaminantDef> = {
     id: 'resonate',
     rarity: 'rare',
     displayNameDefense: '共振残渣',
-    descriptionDefense: '来自谐振时空的频率碎片。减伤30%且装备期间BARRIER和STORAGE模块效果上限各提升10%。多个共振残渣不叠加此增益。',
+    descriptionDefense: '来自谐振时空的频率碎片。减伤30%且装备期间CORE和STORAGE模块效果上限各提升10%。多个共振残渣不叠加此增益。',
     defenseCategory: '模块增益',
     defenseReduction: 0.3,
     defenseSideEffect: '30%概率全slot同步+1冲击计数',

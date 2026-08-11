@@ -1,8 +1,8 @@
 /**
  * LoadoutPanel - DOM overlay for selecting sortie tools before entering the rift.
  *
- * Terminal-style UI: clickable text rows, CRT scanline background.
- * Uses shared panel-styles.
+ * Game-style layout: 3 slot cells (Q/F/Passive) at top, compact tile inventory
+ * below, sortie attribute preview as stat bars, prominent action button.
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -29,7 +29,7 @@ const TYPE_NAMES: Record<ContaminantType, string> = {
   expand: '膨胀',
   resonate: '共鸣',
   overwrite: '覆写',
-  erode: '侵蚀领域',
+  erode: '侵蚀',
   muffle: '消声',
   kindle: '燃素',
   stitch: '缝合',
@@ -71,11 +71,6 @@ export const loadoutPanel = {
     return panel !== null;
   },
 
-  /**
-   * Open the loadout panel.
-   * @param onConfirm Called when player clicks "sortie!" - triggers rift entry.
-   * @param onClose Called when panel is closed without confirming (cancel/ESC).
-   */
   open(onConfirm: () => void, onClose?: () => void): void {
     if (panel) return;
     onConfirmCallback = onConfirm;
@@ -107,8 +102,8 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'min-width:340px',
-    'max-width:420px',
+    'min-width:420px',
+    'max-width:560px',
   ].join(';');
 
   render();
@@ -126,6 +121,8 @@ function destroyPanel(): void {
 
 function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Escape') {
+    e.stopPropagation();
+    e.preventDefault();
     loadoutPanel.close();
   }
 }
@@ -143,77 +140,65 @@ function render(): void {
     (c) => c.stage === 'tool' && !isSlotted(c.id),
   );
 
-  let html = `<div class="panel-title" style="color:#1aad96;">出击装备</div>`;
+  let html = `<div class="panel-title" style="color:#1aad96;">踏入裂隙</div>`;
 
-  // Slots
+  // Slot grid - 3 cells (Q / F / Passive)
+  html += `<div class="slot-grid">`;
   for (let i = 0; i < 3; i++) {
     const c = slots[i];
     const label = SLOT_LABELS[i];
     if (c) {
       const name = TYPE_NAMES[c.type];
-      const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
-      const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
-      html += `<div class="panel-section">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="color:#1aad96;min-width:50px;font-size:11px;">(${label})</span>
-          <span style="color:${color};">${name} ${stars}</span>
-          <span style="color:#8a8f96;font-size:10px;">x${c.usesRemaining}</span>
-        </div>
-        <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:58px;">${desc}</div>
-        <div class="option loadout-remove-btn" data-index="${i}" style="margin-top:4px;padding-left:58px;">[移除]</div>
+      html += `<div class="slot-cell slot-filled loadout-remove-btn" data-index="${i}" style="border-color:${color};">
+        <span class="slot-label" style="color:#1aad96;">${label}</span>
+        <span class="slot-name" style="color:${color};">${name}</span>
+        <span class="slot-info">x${c.usesRemaining}</span>
       </div>`;
     } else {
-      html += `<div class="panel-section">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="color:#1aad96;min-width:50px;font-size:11px;">(${label})</span>
-          <span style="color:#5a5f66;">空</span>
-        </div>
+      html += `<div class="slot-cell" data-index="${i}">
+        <span class="slot-label" style="color:#1aad96;">${label}</span>
+        <span style="font-size:14px;color:#2a2d32;">+</span>
+        <span class="slot-info">空</span>
       </div>`;
     }
   }
+  html += `</div>`;
 
-  // Inventory
+  // Inventory tiles
   html += `<div class="separator"></div>`;
-  html += `<div class="info-line" style="margin-bottom:6px;">可用工具：</div>`;
+  html += `<div style="font-size:12px;color:#5a5f66;margin-bottom:6px;">可用工具:</div>`;
 
   if (inventory.length === 0) {
-    html += `<div class="info-line" style="color:#5a5f66;">无可用的出击工具</div>`;
+    html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">无可用工具</div>`;
   } else {
+    html += `<div class="tile-grid">`;
     for (const c of inventory) {
       const name = TYPE_NAMES[c.type];
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
-      // Determine tool type (active or passive)
       const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
-      // Show equip options only for compatible empty slots
+      // Check if there's a compatible empty slot
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
-      const compatibleSlots = emptySlots.filter((idx) =>
+      const hasSlot = emptySlots.some((idx) =>
         toolType === 'passive' ? idx === 2 : idx <= 1,
       );
-      const equipOptions = compatibleSlots
-        .map((idx) => `<div class="option loadout-equip-btn" data-id="${c.id}" data-slot="${idx}">[装备到 ${SLOT_LABELS[idx]}]</div>`)
-        .join('');
-
-      html += `<div class="panel-section">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="color:${color};font-size:11px;">${name} ${stars} x${c.usesRemaining}</span>
-          ${compatibleSlots.length === 0 ? '<span style="color:#5a5f66;font-size:10px;">已满</span>' : ''}
-        </div>
-        <div style="font-size:9px;color:#5a5f66;margin-top:2px;">${desc}</div>
-        ${equipOptions}
+      html += `<div class="item-tile loadout-equip-tile${hasSlot ? '' : ' tile-disabled'}" data-id="${c.id}" data-tool-type="${toolType}" style="border-color:${hasSlot ? color : '#2a2d32'};" title="${desc}">
+        <span style="color:${color};">${name}</span> <span style="color:#5a5f66;">${stars} x${c.usesRemaining}</span>
       </div>`;
     }
+    html += `</div>`;
   }
 
-  // Sortie attribute preview (A5)
+  // Sortie attribute preview
   html += buildSortiePreview();
 
-  // Confirm and Cancel
-  html += `<div class="separator"></div>`;
-  html += `<div id="loadout-confirm-btn" class="option" style="color:#1aad96;font-weight:bold;">[出击]</div>`;
-  html += `<div id="loadout-cancel-btn" class="option">[取消]</div>`;
+  // Action bar
+  html += `<div class="action-bar">
+    <span id="loadout-confirm-btn" class="action-btn btn-primary">踏入</span>
+    <span id="loadout-cancel-btn" class="action-btn btn-muted" style="cursor:pointer;">…还是算了</span>
+  </div>`;
 
   panel.innerHTML = html;
   wireEvents();
@@ -222,6 +207,7 @@ function render(): void {
 function wireEvents(): void {
   if (!panel) return;
 
+  // Remove from slot by clicking filled cell
   panel.querySelectorAll('.loadout-remove-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const index = parseInt((btn as HTMLElement).dataset.index!, 10);
@@ -230,21 +216,22 @@ function wireEvents(): void {
     });
   });
 
-  panel.querySelectorAll('.loadout-equip-btn').forEach((btn) => {
+  // Equip tile: auto-assign to first compatible empty slot
+  panel.querySelectorAll('.loadout-equip-tile').forEach((btn) => {
     btn.addEventListener('click', () => {
       const el = btn as HTMLElement;
+      if (el.classList.contains('tile-disabled')) return;
       const id = el.dataset.id!;
-      const slot = parseInt(el.dataset.slot!, 10);
-      // Validate slot-type compatibility before equipping
-      const allContaminants = contaminantSystem.getAll();
-      const c = allContaminants.find((x) => x.id === id);
-      if (c) {
-        const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
-        const slotValid = toolType === 'passive' ? slot === 2 : slot <= 1;
-        if (!slotValid) return;
+      const toolType = el.dataset.toolType as string;
+      const currentSlots = contaminantSystem.getSortieLoadout();
+      const emptySlots = currentSlots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
+      const target = emptySlots.find((idx) =>
+        toolType === 'passive' ? idx === 2 : idx <= 1,
+      );
+      if (target !== undefined) {
+        contaminantSystem.slotSortie(id, target);
+        render();
       }
-      contaminantSystem.slotSortie(id, slot);
-      render();
     });
   });
 
@@ -270,32 +257,33 @@ function buildSortiePreview(): string {
   const baseHp = GAME_CONSTANTS.PLAYER.MAX_HEALTH;
   const mods = growthSystem.getModifiers();
 
-  // HP
   const hpBonus = mods.vitalityBonus;
   const totalHp = baseHp + hpBonus;
-  const hpDetail = hpBonus > 0 ? ` (基础${baseHp} + 改造${hpBonus})` : '';
 
-  // Chaos rate modifier: barrier module + growth
-  const barrierEffect = gameState.getModuleEffect('BARRIER'); // e.g. 0.82
-  const barrierReduction = Math.round((1 - barrierEffect) * 100); // e.g. 18
-  const growthReduction = Math.round(mods.chaosResist * 100); // e.g. 12
-  const totalChaosRate = Math.max(0, barrierEffect - mods.chaosResist);
-  const chaosDetails: string[] = [];
-  if (barrierReduction > 0) chaosDetails.push(`屏障-${barrierReduction}%`);
-  if (growthReduction > 0) chaosDetails.push(`改造-${growthReduction}%`);
-  const chaosDetail = chaosDetails.length > 0 ? ` (${chaosDetails.join(' + ')})` : '';
+  const coreEffect = gameState.getModuleEffect('CORE');
+  const coreReduction = Math.round((1 - coreEffect) * 100);
+  const growthReduction = Math.round(mods.chaosResist * 100);
+  const totalChaosRate = Math.max(0, coreEffect - mods.chaosResist);
 
-  // Kindling value modifier: storage module
-  const storageEffect = gameState.getModuleEffect('STORAGE'); // e.g. 1.35
-  const storageBonus = Math.round((storageEffect - 1) * 100);
-  const kindlingDetail = storageBonus > 0 ? ` (储藏+${storageBonus}%)` : '';
+  const storageEffect = gameState.getModuleEffect('STORAGE');
 
-  return `<div style="margin-top:10px;padding:8px;">
-    <div class="section-title">本次出击</div>
-    <div class="info-line" style="line-height:1.7;">
-      完整度上限: <span style="color:#c8cdd4;">${totalHp}</span>${hpDetail}<br>
-      混乱增速: <span style="color:#c8cdd4;">x${totalChaosRate.toFixed(2)}</span>${chaosDetail}<br>
-      薪柴价值: <span style="color:#c8cdd4;">x${storageEffect.toFixed(2)}</span>${kindlingDetail}
+  return `<div style="margin-top:8px;padding:6px 0;">
+    <div class="separator"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;margin-top:6px;">
+      <div>
+        <div style="font-size:12px;color:#5a5f66;">完整度</div>
+        <div style="font-size:16px;color:#c8ccd0;font-weight:bold;">${totalHp}</div>
+        ${hpBonus > 0 ? `<div style="font-size:12px;color:#4a9e5a;">+${hpBonus}</div>` : ''}
+      </div>
+      <div>
+        <div style="font-size:12px;color:#5a5f66;">混乱率</div>
+        <div style="font-size:16px;color:${totalChaosRate < 1 ? '#4a9e5a' : '#c8ccd0'};font-weight:bold;">x${totalChaosRate.toFixed(2)}</div>
+        ${(coreReduction + growthReduction) > 0 ? `<div style="font-size:12px;color:#4a9e5a;">-${coreReduction + growthReduction}%</div>` : ''}
+      </div>
+      <div>
+        <div style="font-size:12px;color:#5a5f66;">薪柴值</div>
+        <div style="font-size:16px;color:${storageEffect > 1 ? '#c4873a' : '#c8ccd0'};font-weight:bold;">x${storageEffect.toFixed(2)}</div>
+      </div>
     </div>
   </div>`;
 }

@@ -402,7 +402,7 @@ export class RiftScene extends Phaser.Scene {
     // Narration text
     const narration = document.createElement('div');
     narration.style.cssText = [
-      'font-family:monospace', 'font-size:14px', 'color:#ffffff',
+      "font:14px 'Courier New',monospace", 'color:#c8cdd4',
       'text-shadow:0 0 8px rgba(0,0,0,0.8)',
       'opacity:0', 'animation:chaos-flash-in 0.5s ease-out forwards',
     ].join(';');
@@ -502,9 +502,9 @@ export class RiftScene extends Phaser.Scene {
     const toast = document.createElement('div');
     toast.style.cssText = [
       'position:fixed', 'top:60px', 'left:50%', 'transform:translateX(-50%)',
-      'z-index:998', 'background:rgba(100,40,40,0.2)', 'border:1px solid #884444',
-      'padding:8px 16px', 'font-family:monospace', 'font-size:11px',
-      'color:#cc8888', 'border-radius:4px', 'pointer-events:none',
+      'z-index:998', 'background:rgba(15,17,20,0.92)', 'border:1px solid #cc3333',
+      'padding:8px 16px', "font:11px 'Courier New',monospace",
+      'color:#cc3333', 'pointer-events:none',
       'animation:side-effect-fade 3s ease-out forwards',
       'text-align:left', 'line-height:1.6',
     ].join(';');

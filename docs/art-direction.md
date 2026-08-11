@@ -637,9 +637,9 @@ bright lighting, colorful, high saturation, warm tones, orange, yellow, red domi
   spr-shared-player-walk-down-01.png
   spr-rift-enemy-infiltrator-patrol-01.png
   spr-rift-loot-kindling-01.png
-  spr-pp-module-barrier-healthy.png
-  spr-pp-module-barrier-damaged.png
-  spr-pp-module-barrier-critical.png
+  spr-pp-module-core-healthy.png
+  spr-pp-module-core-damaged.png
+  spr-pp-module-core-critical.png
   ui-hud-chaos-bar-bg.png
   fx-rift-contam-pulse-01.png
 ```

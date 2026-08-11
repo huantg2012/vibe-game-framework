@@ -59,7 +59,7 @@ One blocking issue in MainMenuScene (spec rule 30/31 violation). Two moderate de
 | Rule | Description | Status | Notes |
 | ---- | ----------- | ------ | ----- |
 | P1 | Elliptical safe area ~12x10 tiles, player walks | PASS | 14x12 grid, ellipse 5.5x4.5 tiles radius |
-| P2 | 2 modules (BARRIER left, STORAGE right), 32px interact | PASS | INTERACTION_RADIUS=32 |
+| P2 | 2 modules (CORE center, STORAGE right), 32px interact | PASS | INTERACTION_RADIUS=32 |
 | P3 | Rift entrance center-top, pulsing teal, E to enter | PASS | Pulsing circle with sin alpha |
 | P4 | Boundary particles 20-30, drifting inward | PASS | PARTICLE_COUNT=25 |
 | P5 | Apparition every 8-15s, alpha 0->0.3, fade in/hold/out | PASS | 500ms/2000ms/500ms timing correct |
@@ -103,7 +103,7 @@ One blocking issue in MainMenuScene (spec rule 30/31 violation). Two moderate de
 
 | Rule | Description | Status | Notes |
 | ---- | ----------- | ------ | ----- |
-| M26 | BARRIER: 1.0 - (hp/100)*0.30. hp=100->0.70, hp=0->1.0 | PASS | Formula exact match |
+| M26 | CORE: 1.0 - (hp/100)*0.30. hp=100->0.70, hp=0->1.0 | PASS | Formula exact match |
 | M27 | STORAGE: 1.0 + (hp/100)*0.50. hp=100->1.50, hp=0->1.0 | PASS | Formula exact match |
 | M28 | Calculated once before rift transition, as SortieModifiers | PASS | getSortieModifiers() in transitionToRift() |
 | M29 | ChaosSystem: BASE_RATE * modifier. LootSystem: value * modifier (floor 1) | PASS | Both correctly applied |

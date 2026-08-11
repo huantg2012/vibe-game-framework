@@ -1,7 +1,7 @@
 /**
  * PurificationModule entity - visual representation of a module in the purification scene.
  *
- * Each module is a coloured geometric shape (BARRIER=blue hexagon, STORAGE=orange square)
+ * Each module is a coloured geometric shape (CORE=blue hexagon, STORAGE=orange square)
  * with an hp bar displayed as a same-colour thin bar below the module body.
  * No text is rendered in the game world; all readable info lives in DOM overlays.
  */
@@ -29,14 +29,14 @@ export interface ModuleEntityConfig {
 const INTERACTION_RADIUS = GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
 
 // Module colours
-const BARRIER_MAIN = 0x4488cc;
-const BARRIER_EDGE = 0x6699dd;
+const CORE_MAIN = 0x4488cc;
+const CORE_EDGE = 0x6699dd;
 const STORAGE_MAIN = 0xcc8844;
 const STORAGE_EDGE = 0xddaa66;
 const DANGER_COLOR = 0xcc3333;
 
 // Module sizes (spec B1)
-const BARRIER_RADIUS = 16;
+const CORE_RADIUS = 16;
 const STORAGE_HALF = 14; // half-side = 14 => 28px side
 
 // HP bar (spec B2)
@@ -91,7 +91,7 @@ export class PurificationModuleEntity {
     const barY = this.getHpBarY();
     this.hpBarBg = scene.add.graphics();
     this.hpBarBg.setDepth(depth + 1);
-    this.hpBarBg.fillStyle(this.config.type === 'BARRIER' ? 0x222233 : 0x332222, 0.8);
+    this.hpBarBg.fillStyle(this.config.type === 'CORE' ? 0x222233 : 0x332222, 0.8);
     this.hpBarBg.fillRect(this.config.x - HP_BAR_WIDTH / 2, barY, HP_BAR_WIDTH, HP_BAR_HEIGHT);
 
     // HP bar fill
@@ -141,8 +141,8 @@ export class PurificationModuleEntity {
     const mod = gameState.getModule(this.config.id);
     if (!mod) return 0;
     const P = GAME_CONSTANTS.PURIFICATION;
-    if (this.config.type === 'BARRIER') {
-      return Math.round((mod.hp / 100) * P.MAX_BARRIER_REDUCTION * 100);
+    if (this.config.type === 'CORE') {
+      return Math.round((mod.hp / 100) * P.MAX_CORE_REDUCTION * 100);
     }
     return Math.round((mod.hp / 100) * P.MAX_STORAGE_BONUS * 100);
   }
@@ -164,8 +164,8 @@ export class PurificationModuleEntity {
 
   private drawModule(): void {
     const { x, y, type } = this.config;
-    const mainColor = type === 'BARRIER' ? BARRIER_MAIN : STORAGE_MAIN;
-    const edgeColor = type === 'BARRIER' ? BARRIER_EDGE : STORAGE_EDGE;
+    const mainColor = type === 'CORE' ? CORE_MAIN : STORAGE_MAIN;
+    const edgeColor = type === 'CORE' ? CORE_EDGE : STORAGE_EDGE;
 
     const mod = gameState.getModule(this.config.id);
     const hpRatio = mod ? mod.hp / mod.maxHp : 1;
@@ -194,14 +194,14 @@ export class PurificationModuleEntity {
 
     this.graphics.clear();
 
-    if (type === 'BARRIER') {
+    if (type === 'CORE') {
       // Hexagon
       const points: Phaser.Geom.Point[] = [];
       for (let i = 0; i < 6; i++) {
         const angle = (Math.PI / 3) * i - Math.PI / 6;
         points.push(new Phaser.Geom.Point(
-          x + BARRIER_RADIUS * Math.cos(angle),
-          y + BARRIER_RADIUS * Math.sin(angle),
+          x + CORE_RADIUS * Math.cos(angle),
+          y + CORE_RADIUS * Math.sin(angle),
         ));
       }
       this.graphics.fillStyle(mainColor, fillAlpha);
@@ -219,8 +219,8 @@ export class PurificationModuleEntity {
         for (let i = 0; i < 6; i++) {
           const angle = (Math.PI / 3) * i - Math.PI / 6;
           dangerPoints.push(new Phaser.Geom.Point(
-            x + (BARRIER_RADIUS + 2) * Math.cos(angle),
-            y + (BARRIER_RADIUS + 2) * Math.sin(angle),
+            x + (CORE_RADIUS + 2) * Math.cos(angle),
+            y + (CORE_RADIUS + 2) * Math.sin(angle),
           ));
         }
         this.graphics.strokePoints(dangerPoints, true);
@@ -259,12 +259,12 @@ export class PurificationModuleEntity {
 
     // Background
     this.hpBarBg.clear();
-    this.hpBarBg.fillStyle(this.config.type === 'BARRIER' ? 0x222233 : 0x332222, barAlpha * 0.8);
+    this.hpBarBg.fillStyle(this.config.type === 'CORE' ? 0x222233 : 0x332222, barAlpha * 0.8);
     this.hpBarBg.fillRect(x - HP_BAR_WIDTH / 2, barY, HP_BAR_WIDTH, HP_BAR_HEIGHT);
 
     // Fill (same color as module, or danger red when critical)
     const fillColor = ratio < 0.25 ? DANGER_COLOR :
-      (this.config.type === 'BARRIER' ? BARRIER_MAIN : STORAGE_MAIN);
+      (this.config.type === 'CORE' ? CORE_MAIN : STORAGE_MAIN);
 
     this.hpBarFill.clear();
     this.hpBarFill.fillStyle(fillColor, barAlpha);
@@ -284,8 +284,8 @@ export class PurificationModuleEntity {
   private getHpBarY(): number {
     const { y, type } = this.config;
     // Position below module body
-    if (type === 'BARRIER') {
-      return y + BARRIER_RADIUS + HP_BAR_GAP;
+    if (type === 'CORE') {
+      return y + CORE_RADIUS + HP_BAR_GAP;
     }
     return y + STORAGE_HALF + HP_BAR_GAP;
   }

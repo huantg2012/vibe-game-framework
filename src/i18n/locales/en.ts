@@ -56,7 +56,7 @@ export const en: LocaleSchema = {
       remaining: 'Remaining: {amount}',
     },
     module: {
-      barrier: 'Barrier Module',
+      core: 'Core Module',
       storage: 'Storage Module',
       healthy: 'Operational',
       damaged: 'Damaged',

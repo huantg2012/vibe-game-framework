@@ -45,7 +45,7 @@ export interface LocaleSchema {
       remaining: string;
     };
     module: {
-      barrier: string;
+      core: string;
       storage: string;
       healthy: string;
       damaged: string;

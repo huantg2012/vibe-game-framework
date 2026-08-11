@@ -54,6 +54,12 @@ export interface VisionConfig {
   readonly flashlightAlpha: number;
   /** Depth of the darkness mask; the glow, corruption and flicker layers sit just above. */
   readonly depth: number;
+  /**
+   * When provided, bypasses grid-based raycasting entirely.
+   * Returns the hit distance (px) for a ray cast from `origin` at `angle` (radians).
+   * Used by purification scene to produce a smooth boundary polygon from BoundaryShape.
+   */
+  readonly rayDistanceOverride?: (origin: Vector2, angle: number, maxRange: number) => number;
 }
 
 export interface VisibilityStats {
@@ -497,6 +503,22 @@ export class VisibilitySystem {
 
   private castRays(origin: Vector2, facingAngle: number): void {
     const start = performance.now();
+
+    // If a distance override is provided (e.g. purification blob boundary),
+    // bypass grid raycasting entirely for a smooth polygon.
+    const override = this.config.rayDistanceOverride;
+    if (override) {
+      for (let i = 0; i < this.rayCount; i++) {
+        const offset = this.rayOffsets[i]!;
+        const range = this.getEffectiveRadius(offset);
+        this.rayRange[i] = range;
+        const dist = override(origin, facingAngle + offset, range);
+        this.rayDist[i] = Math.min(Math.max(dist, MIN_HIT_DIST), range);
+      }
+      this.lastMs = performance.now() - start;
+      return;
+    }
+
     const tileSize = this.occluders.tileSize;
     const insideWall = this.occluders.isOpaque(
       Math.floor(origin.x / tileSize),
@@ -504,7 +526,6 @@ export class VisibilitySystem {
     );
 
     if (insideWall) {
-      // Bad map data or a teleport gone wrong: fall back to a solid disc, do not crash.
       if (import.meta.env.DEV && !this.warnedOriginInWall) {
         this.warnedOriginInWall = true;
         console.warn('[VisibilitySystem] vision origin is inside a wall; falling back to a solid disc');

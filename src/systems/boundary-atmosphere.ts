@@ -1,15 +1,19 @@
 /**
  * BoundaryAtmosphere - particles and apparitions at the purification point boundary.
  *
- * Renders grey micro-particles drifting inward from the darkness, plus periodic
+ * Renders teal micro-particles drifting inward from the darkness, plus periodic
  * blurry humanoid silhouettes that fade in and out. A directional density boost
  * on one side hints at the next impact's primary target (spec rule 7, 80% accurate).
+ *
+ * Now uses BoundaryShape for spawn/despawn radii instead of a fixed circle,
+ * so particles track the dynamic polar-blob boundary.
  *
  * Uses Phaser Graphics only - no external particle libraries.
  */
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
+import type { BoundaryShape } from '@/systems/boundary-shape';
 import { impactSystem } from '@/systems/impact-system';
 
 // ---------------------------------------------------------------------------
@@ -24,6 +28,7 @@ interface Particle {
   alpha: number;
   life: number;
   maxLife: number;
+  color: number;
 }
 
 interface Apparition {
@@ -39,13 +44,6 @@ interface Apparition {
 // ---------------------------------------------------------------------------
 
 const ATM = GAME_CONSTANTS.PURIFICATION.ATMOSPHERE;
-const TILE = GAME_CONSTANTS.TILE_SIZE;
-const MAP_COLS = GAME_CONSTANTS.PURIFICATION.MAP_COLS;
-const MAP_ROWS = GAME_CONSTANTS.PURIFICATION.MAP_ROWS;
-
-const CENTER_X = (MAP_COLS * TILE) / 2;
-const CENTER_Y = (MAP_ROWS * TILE) / 2;
-const BOUNDARY_RADIUS = Math.min(MAP_COLS, MAP_ROWS) * TILE * 0.42;
 
 // ---------------------------------------------------------------------------
 // BoundaryAtmosphere
@@ -57,8 +55,10 @@ export class BoundaryAtmosphere {
   private apparitions: Apparition[] = [];
   private apparitionTimer = 0;
   private nextApparitionDelay = 0;
+  private shape!: BoundaryShape;
 
-  create(scene: Phaser.Scene): void {
+  create(scene: Phaser.Scene, shape: BoundaryShape): void {
+    this.shape = shape;
     this.graphics = scene.add.graphics();
     this.graphics.setDepth(60); // above the vision mask
 
@@ -78,8 +78,8 @@ export class BoundaryAtmosphere {
    */
   getForecastAngle(): number {
     const target = impactSystem.getForecastTarget();
-    // BARRIER is left side, STORAGE is right side
-    if (target === 'BARRIER') return Math.PI; // left
+    // CORE is at center, STORAGE is right side — use left direction for CORE forecast
+    if (target === 'CORE') return Math.PI; // left (default direction for core)
     return 0; // right (default)
   }
 
@@ -112,13 +112,18 @@ export class BoundaryAtmosphere {
   }
 
   private spawnParticleAt(angle: number): Particle {
-    const dist = BOUNDARY_RADIUS + 10 + Math.random() * 30;
-    const x = CENTER_X + Math.cos(angle) * dist;
-    const y = CENTER_Y + Math.sin(angle) * dist;
-    // Drift inward
+    // Use blob radius at this angle instead of fixed BOUNDARY_RADIUS
+    const blobR = this.shape.radiusAt(angle);
+    const dist = blobR + 10 + Math.random() * 30;
+    const x = this.shape.centerX + Math.cos(angle) * dist;
+    const y = this.shape.centerY + Math.sin(angle) * dist;
+    // Drift inward toward center
     const speed = ATM.PARTICLE_SPEED * (0.7 + Math.random() * 0.6);
-    const inwardAngle = Math.atan2(CENTER_Y - y, CENTER_X - x) + (Math.random() - 0.5) * 0.4;
+    const inwardAngle = Math.atan2(this.shape.centerY - y, this.shape.centerX - x) + (Math.random() - 0.5) * 0.4;
     const maxLife = 4000 + Math.random() * 4000;
+    // Assign color: 60% teal-dark, 20% teal-bright, 20% grey
+    const colorRoll = Math.random();
+    const color = colorRoll < 0.6 ? 0x1a6b5c : colorRoll < 0.8 ? 0x1aad96 : 0x555555;
     return {
       x,
       y,
@@ -127,6 +132,7 @@ export class BoundaryAtmosphere {
       alpha: ATM.PARTICLE_ALPHA_MIN + Math.random() * (ATM.PARTICLE_ALPHA_MAX - ATM.PARTICLE_ALPHA_MIN),
       life: 0,
       maxLife,
+      color,
     };
   }
 
@@ -138,12 +144,13 @@ export class BoundaryAtmosphere {
       p.y += p.vy * dt;
       p.life += delta;
 
-      // Respawn if expired or too close to center
-      const dx = p.x - CENTER_X;
-      const dy = p.y - CENTER_Y;
-      const distSq = dx * dx + dy * dy;
-      const innerLimit = BOUNDARY_RADIUS * 0.5;
-      if (p.life >= p.maxLife || distSq < innerLimit * innerLimit) {
+      // Respawn if expired or crossed 50% of boundary inward
+      const dx = p.x - this.shape.centerX;
+      const dy = p.y - this.shape.centerY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx);
+      const innerLimit = this.shape.radiusAt(angle) * 0.5;
+      if (p.life >= p.maxLife || dist < innerLimit) {
         this.particles[i] = this.spawnParticle();
       }
     }
@@ -165,10 +172,12 @@ export class BoundaryAtmosphere {
       const activeCount = this.apparitions.filter((a) => a.active).length;
       if (activeCount < ATM.APPARITION_MAX_SIMULTANEOUS) {
         const angle = Math.random() * Math.PI * 2;
-        const dist = BOUNDARY_RADIUS + 40 + Math.random() * 40;
+        // Spawn just outside the blob boundary at this angle
+        const blobR = this.shape.radiusAt(angle);
+        const dist = blobR + 40 + Math.random() * 40;
         this.apparitions.push({
-          x: CENTER_X + Math.cos(angle) * dist,
-          y: CENTER_Y + Math.sin(angle) * dist,
+          x: this.shape.centerX + Math.cos(angle) * dist,
+          y: this.shape.centerY + Math.sin(angle) * dist,
           elapsed: 0,
           duration: ATM.APPARITION_DURATION,
           active: true,
@@ -200,15 +209,15 @@ export class BoundaryAtmosphere {
       const fadeIn = Math.min(p.life / 500, 1);
       const fadeOut = Math.min((p.maxLife - p.life) / 500, 1);
       const alpha = p.alpha * fadeIn * fadeOut;
-      this.graphics.fillStyle(0x888888, alpha);
-      this.graphics.fillCircle(p.x, p.y, 1.5);
+      this.graphics.fillStyle(p.color, alpha);
+      this.graphics.fillCircle(p.x, p.y, 2.0);
     }
 
     // Draw apparitions
     for (const app of this.apparitions) {
       const t = app.elapsed / app.duration;
       let alpha: number;
-      // 0-0.167: fade in (0→0.3), 0.167-0.833: hold (0.3), 0.833-1: fade out (0.3→0)
+      // 0-0.167: fade in, 0.167-0.833: hold, 0.833-1: fade out
       if (t < 0.167) {
         alpha = (t / 0.167) * 0.3;
       } else if (t < 0.833) {
@@ -222,7 +231,7 @@ export class BoundaryAtmosphere {
 
   private drawApparition(x: number, y: number, alpha: number): void {
     // Simple humanoid silhouette: head + body
-    this.graphics.fillStyle(0x444444, alpha);
+    this.graphics.fillStyle(0x2a4a4a, alpha);
     // Head
     this.graphics.fillCircle(x, y - 12, 5);
     // Body (rectangle)

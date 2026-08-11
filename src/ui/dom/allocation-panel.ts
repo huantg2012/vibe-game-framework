@@ -1,8 +1,8 @@
 /**
  * AllocationPanel - DOM overlay for allocating kindling to a module.
  *
- * Terminal-style UI: no buttons, only clickable text rows with hover highlight
- * and CRT scanline background. Uses shared panel-styles.
+ * Game-style layout: visual progress bar for module HP, preview fill for
+ * allocation amount, compact +/- bar controls, inline confirm.
  */
 
 import { eventBus } from '@/core/event-bus';
@@ -64,13 +64,13 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1000',
-    'min-width:280px',
+    'min-width:380px',
+    'max-width:520px',
   ].join(';');
 
   render(mod.type, mod.hp, mod.maxHp);
   document.body.appendChild(panel);
 
-  // ESC to close
   document.addEventListener('keydown', onKeyDown);
 }
 
@@ -86,6 +86,8 @@ function destroyPanel(): void {
 
 function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Escape') {
+    e.stopPropagation();
+    e.preventDefault();
     allocationPanel.close();
   }
 }
@@ -97,26 +99,12 @@ function onKeyDown(e: KeyboardEvent): void {
 const P = GAME_CONSTANTS.PURIFICATION;
 
 function computeEffectText(type: ModuleType, hp: number): string {
-  if (type === 'BARRIER') {
-    const pct = Math.round((hp / 100) * P.MAX_BARRIER_REDUCTION * 100);
+  if (type === 'CORE') {
+    const pct = Math.round((hp / 100) * P.MAX_CORE_REDUCTION * 100);
     return `混乱增速 -${pct}%`;
   }
   const mult = (1 + (hp / 100) * P.MAX_STORAGE_BONUS).toFixed(2);
-  return `拾取价值 x${mult}`;
-}
-
-function computeEffectDiff(type: ModuleType, currentHp: number, repairedHp: number): string {
-  if (repairedHp <= currentHp) return '';
-  if (type === 'BARRIER') {
-    const currentPct = Math.round((currentHp / 100) * P.MAX_BARRIER_REDUCTION * 100);
-    const repairedPct = Math.round((repairedHp / 100) * P.MAX_BARRIER_REDUCTION * 100);
-    const diff = repairedPct - currentPct;
-    return diff > 0 ? `(+${diff}%)` : '';
-  }
-  const currentMult = 1 + (currentHp / 100) * P.MAX_STORAGE_BONUS;
-  const repairedMult = 1 + (repairedHp / 100) * P.MAX_STORAGE_BONUS;
-  const diff = repairedMult - currentMult;
-  return diff > 0.001 ? `(+${diff.toFixed(2)})` : '';
+  return `薪柴价值 x${mult}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -131,59 +119,63 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const maxUseful = Math.ceil((maxHp - hp) / repairPer);
   const maxAllocatable = Math.min(reserve, maxUseful);
 
-  const typeLabel = type === 'BARRIER' ? '屏障 (混乱抑制)' : '储藏 (薪柴增幅)';
-  const typeColor = type === 'BARRIER' ? '#4d9a6b' : '#c4873a';
+  const typeLabel = type === 'CORE' ? '核心' : '储藏';
+  const typeColor = type === 'CORE' ? '#4d9a6b' : '#c4873a';
+  const effectDesc = type === 'CORE' ? '混乱抑制' : '薪柴增幅';
 
-  // --- Effect preview calculations ---
-  const currentEffectText = computeEffectText(type, hp);
-  const repairedHp = Math.min(hp + selectedAmount * repairPer, maxHp);
-  const repairedEffectText = computeEffectText(type, repairedHp);
-  const diffText = computeEffectDiff(type, hp, repairedHp);
-  const showRepaired = selectedAmount > 0;
+  // Progress calculations
+  const hpPct = Math.round((hp / maxHp) * 100);
+  const repairAmount = selectedAmount * repairPer;
+  const repairedHp = Math.min(hp + repairAmount, maxHp);
+  const repairedPct = Math.round((repairedHp / maxHp) * 100);
+  const previewPct = repairedPct - hpPct;
 
-  const repairedColor = type === 'BARRIER' ? '#4d9a6b' : '#c4873a';
+  const currentEffect = computeEffectText(type, hp);
+  const afterEffect = selectedAmount > 0 ? computeEffectText(type, repairedHp) : '';
 
   const minusDisabled = selectedAmount <= 0;
   const plusDisabled = selectedAmount >= maxAllocatable;
   const confirmDisabled = selectedAmount <= 0;
 
-  panel.innerHTML = `
-    <div class="panel-title" style="color:${typeColor};">
-      ${typeLabel}
+  let html = `<div class="panel-title" style="color:${typeColor};">${typeLabel} <span style="font-size:12px;color:#5a5f66;text-transform:none;font-weight:normal;">${effectDesc}</span></div>`;
+
+  // Progress bar with preview
+  html += `<div style="margin:8px 0;">
+    <div class="pbar-wrap">
+      <div class="pbar-fill" style="width:${hpPct}%;background:${typeColor};"></div>
+      <div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;background:${typeColor};"></div>
     </div>
-    <div class="info-line">
-      完整度: <span style="color:#c8cdd4;">${hp}</span> / ${maxHp}
+    <div class="pbar-label">
+      <span>${hp}/${maxHp}</span>
+      ${selectedAmount > 0 ? `<span style="color:${typeColor};">+${repairAmount} → ${repairedHp}</span>` : `<span>${currentEffect}</span>`}
     </div>
-    <div class="separator"></div>
-    <div class="info-line" style="color:${typeColor};">
-      当前效果: ${currentEffectText}
+  </div>`;
+
+  // Effect preview (only if allocating)
+  if (selectedAmount > 0) {
+    html += `<div style="font-size:13px;color:${typeColor};text-align:center;margin:4px 0;">${afterEffect}</div>`;
+  }
+
+  // Allocation control bar
+  html += `<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 8px;">
+    <span id="alloc-minus" class="action-btn btn-muted${minusDisabled ? '' : ''}" style="padding:4px 10px;${minusDisabled ? 'opacity:0.3;cursor:default;' : ''}">-</span>
+    <div style="min-width:60px;text-align:center;">
+      <div style="font-size:16px;color:#c8ccd0;font-weight:bold;">${selectedAmount}</div>
+      <div style="font-size:12px;color:#5a5f66;">薪柴</div>
     </div>
-    ${showRepaired ? `<div class="info-line" style="color:${repairedColor};">
-      修复后: ${repairedEffectText} <span style="color:#4d9a6b;">${diffText}</span>
-    </div>` : ''}
-    <div class="separator"></div>
-    <div class="info-line">
-      可用薪柴: <span style="color:#c4873a;">${reserve}</span>
-    </div>
-    <div class="info-line" style="font-size:9px;color:#5a5f66;">
-      1 薪柴 = ${repairPer} 完整度
-    </div>
-    <div style="padding:8px;margin:8px 0;display:flex;align-items:center;gap:12px;">
-      <span id="alloc-minus" class="option ${minusDisabled ? 'disabled' : ''}" style="display:inline-block;padding:2px 6px;">◂</span>
-      <span style="font-size:14px;color:#c8cdd4;min-width:30px;text-align:center;">${selectedAmount}</span>
-      <span id="alloc-plus" class="option ${plusDisabled ? 'disabled' : ''}" style="display:inline-block;padding:2px 6px;">▸</span>
-      <span style="font-size:9px;color:#8a8f96;margin-left:4px;">
-        (+${selectedAmount * repairPer} 完整度)
-      </span>
-    </div>
-    <div class="separator"></div>
-    <div id="alloc-confirm" class="option ${confirmDisabled ? 'disabled' : ''}" style="color:${confirmDisabled ? '#3a3f44' : '#c8cdd4'};">
-      [确认分配]
-    </div>
-    <div id="alloc-cancel" class="option">
-      [取消]
-    </div>
-  `;
+    <span id="alloc-plus" class="action-btn btn-muted" style="padding:4px 10px;${plusDisabled ? 'opacity:0.3;cursor:default;' : ''}">+</span>
+  </div>`;
+
+  // Reserve info
+  html += `<div style="font-size:12px;color:#5a5f66;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度</div>`;
+
+  // Action bar
+  html += `<div class="action-bar">
+    <span id="alloc-confirm" class="action-btn${confirmDisabled ? ' btn-muted' : ''}" style="color:${confirmDisabled ? '#2a2d32' : typeColor};border-color:${confirmDisabled ? '#2a2d32' : typeColor};${confirmDisabled ? 'cursor:default;' : ''}">注入</span>
+    <span id="alloc-cancel" class="action-btn btn-muted" style="cursor:pointer;">…算了</span>
+  </div>`;
+
+  panel.innerHTML = html;
 
   // Wire up event listeners
   panel.querySelector('#alloc-minus')?.addEventListener('click', () => {

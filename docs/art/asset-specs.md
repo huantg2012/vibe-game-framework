@@ -21,7 +21,7 @@ last-modified: 2026-07-24
   tile-rift-wall-crystal-straight.png
   spr-shared-player-idle-down.png
   spr-rift-enemy-infiltrator-patrol-01.png
-  spr-pp-module-barrier-healthy.png
+  spr-pp-module-core-healthy.png
   ui-hud-chaos-bar-bg.png
   fx-rift-contam-pulse-01.png
 ```

@@ -1,8 +1,9 @@
 /**
  * DefensePanel - DOM overlay for managing the 3 defense slots at the purification point.
  *
- * Terminal-style UI: clickable text rows instead of buttons, CRT scanline background.
- * Uses shared panel-styles.
+ * Game-style slot grid: 3 visual container cells with dashed empty borders,
+ * equipped items displayed as colored tiles within cells. Inventory shown as
+ * compact clickable tiles below.
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -17,24 +18,24 @@ import { injectPanelStyles } from './panel-styles';
 // ---------------------------------------------------------------------------
 
 const TYPE_NAMES: Record<ContaminantType, string> = {
-  solidify: '固化残渣',
-  ruminate: '反刍残渣',
-  scatter: '散射残渣',
-  retrograde: '逆行残渣',
-  delay: '延时残渣',
-  siphon: '虹吸残渣',
-  expand: '膨胀残渣',
-  resonate: '共鸣残渣',
-  overwrite: '覆写残渣',
-  erode: '侵蛀残渣',
-  muffle: '消声残渣',
-  kindle: '燃尽残渣',
-  stitch: '缝合残渣',
-  compress: '致密残渣',
-  mirror: '镜映残渣',
-  echo: '回响残渣',
-  abyss: '深渊残渣',
-  combust: '灰烬残渣',
+  solidify: '固化',
+  ruminate: '反刍',
+  scatter: '散射',
+  retrograde: '逆行',
+  delay: '延时',
+  siphon: '虹吸',
+  expand: '膨胀',
+  resonate: '共鸣',
+  overwrite: '覆写',
+  erode: '侵蛀',
+  muffle: '消声',
+  kindle: '燃尽',
+  stitch: '缝合',
+  compress: '致密',
+  mirror: '镜映',
+  echo: '回响',
+  abyss: '深渊',
+  combust: '灰烬',
 };
 
 const RARITY_STARS: Record<string, string> = {
@@ -94,8 +95,8 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'min-width:320px',
-    'max-width:400px',
+    'min-width:420px',
+    'max-width:560px',
   ].join(';');
 
   render();
@@ -113,6 +114,8 @@ function destroyPanel(): void {
 
 function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Escape') {
+    e.stopPropagation();
+    e.preventDefault();
     defensePanel.close();
   }
 }
@@ -132,67 +135,61 @@ function render(): void {
 
   const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
-  let html = `<div class="panel-title" style="color:#1aad96;">防御配置</div>`;
+  let html = `<div class="panel-title" style="color:#6644aa;">供奉</div>`;
 
-  // Slots
+  // Slot grid - 3 visual containers
+  html += `<div class="slot-grid">`;
   for (let i = 0; i < 3; i++) {
     const c = slots[i];
     if (c) {
       const name = TYPE_NAMES[c.type];
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
-      const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
-      html += `<div class="panel-section">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="color:#8a8f96;min-width:48px;">槽 ${i + 1}:</span>
-          <span style="color:${color};">${name} ${stars}</span>
-          <span style="color:#5a5f66;font-size:10px;margin-left:4px;">${c.impactCharges}/${threshold}</span>
+      const chargePct = Math.round((c.impactCharges / threshold) * 100);
+      html += `<div class="slot-cell slot-filled defense-unslot-btn" data-index="${i}" style="border-color:${color};">
+        <span class="slot-label">${i + 1}</span>
+        <span class="slot-name" style="color:${color};">${name}</span>
+        <span style="font-size:12px;color:${color};">${stars}</span>
+        <div class="stat-bar" style="width:100%;margin-top:4px;">
+          <div class="stat-bar-fill" style="width:${chargePct}%;background:#6644aa;"></div>
         </div>
-        <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:56px;">${desc}</div>
-        <div class="option defense-unslot-btn" data-index="${i}" style="margin-top:4px;padding-left:56px;">[卸下]</div>
+        <span class="slot-info">${c.impactCharges}/${threshold}</span>
       </div>`;
     } else {
-      html += `<div class="panel-section">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <span style="color:#8a8f96;min-width:48px;">槽 ${i + 1}:</span>
-          <span style="color:#5a5f66;">空</span>
-        </div>
+      html += `<div class="slot-cell" data-index="${i}">
+        <span class="slot-label">${i + 1}</span>
+        <span style="font-size:14px;color:#2a2d32;">+</span>
+        <span class="slot-info">空</span>
       </div>`;
     }
   }
+  html += `</div>`;
 
-  // Inventory
+  // Inventory tiles
   html += `<div class="separator"></div>`;
-  html += `<div class="info-line" style="margin-bottom:6px;">库存（可装备）：</div>`;
+  html += `<div style="font-size:12px;color:#5a5f66;margin-bottom:6px;">可装备:</div>`;
 
   if (inventory.length === 0) {
-    html += `<div class="info-line" style="color:#5a5f66;">无可用的防御污染物</div>`;
+    html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">无可用残渣</div>`;
   } else {
+    html += `<div class="tile-grid">`;
+    const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
     for (const c of inventory) {
       const name = TYPE_NAMES[c.type];
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
-      // Show equip options for each empty slot
-      const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
-      const equipOptions = emptySlots
-        .map((idx) => `<div class="option defense-equip-btn" data-id="${c.id}" data-slot="${idx}">[装备到 槽${idx + 1}]</div>`)
-        .join('');
-
-      html += `<div class="panel-section">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="color:${color};font-size:11px;">${name} ${stars}</span>
-          ${emptySlots.length === 0 ? '<span style="color:#5a5f66;font-size:10px;">已满</span>' : ''}
-        </div>
-        <div style="font-size:9px;color:#5a5f66;margin-top:2px;">${desc}</div>
-        ${equipOptions}
+      const canEquip = emptySlots.length > 0;
+      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}" data-id="${c.id}" style="border-color:${canEquip ? color : '#2a2d32'};" title="${desc}">
+        <span style="color:${color};">${name}</span> <span style="color:#5a5f66;">${stars}</span>
       </div>`;
     }
+    html += `</div>`;
   }
 
-  // Close
-  html += `<div class="separator"></div>`;
-  html += `<div id="defense-close-btn" class="option">[关闭]</div>`;
+  // Close button
+  html += `<div id="defense-close-btn" class="action-btn btn-muted" style="text-align:center;margin-top:12px;cursor:pointer;">离开</div>`;
+  html += `<div style="font-size:12px;color:#5a5f66;text-align:center;margin-top:4px;">点击以取下</div>`;
 
   panel.innerHTML = html;
   wireEvents();
@@ -201,6 +198,11 @@ function render(): void {
 function wireEvents(): void {
   if (!panel) return;
 
+  panel.querySelector('#defense-close-btn')?.addEventListener('click', () => {
+    defensePanel.close();
+  });
+
+  // Unslot by clicking filled slots
   panel.querySelectorAll('.defense-unslot-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const index = parseInt((btn as HTMLElement).dataset.index!, 10);
@@ -210,19 +212,20 @@ function wireEvents(): void {
     });
   });
 
-  panel.querySelectorAll('.defense-equip-btn').forEach((btn) => {
+  // Equip by clicking inventory tiles (auto-assign to first empty slot)
+  panel.querySelectorAll('.defense-equip-tile').forEach((btn) => {
     btn.addEventListener('click', () => {
       const el = btn as HTMLElement;
+      if (el.classList.contains('tile-disabled')) return;
       const id = el.dataset.id!;
-      const slot = parseInt(el.dataset.slot!, 10);
-      contaminantSystem.slotDefense(id, slot);
-      saveManager.save();
-      render();
+      const slots = contaminantSystem.getDefenseSlotted();
+      const firstEmpty = slots.findIndex((s) => s === null);
+      if (firstEmpty >= 0) {
+        contaminantSystem.slotDefense(id, firstEmpty);
+        saveManager.save();
+        render();
+      }
     });
-  });
-
-  panel.querySelector('#defense-close-btn')?.addEventListener('click', () => {
-    defensePanel.close();
   });
 }
 

@@ -57,7 +57,7 @@ export interface PurificationModule {
 /** Module effects on gameplay */
 export enum ModuleEffect {
   /** Affects chaos value base growth rate */
-  BARRIER = 'barrier',
+  CORE = 'core',
   /** Affects carry capacity / inventory slots */
   STORAGE = 'storage',
 }

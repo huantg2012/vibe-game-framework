@@ -78,7 +78,7 @@ export interface ChaosSystemAPI {
 export interface ChaosSystemConfig {
   /** Called when value moves far enough to warrant a modulator update. */
   onModulate?: (modulators: ChaosModulators) => void;
-  /** Multiplier on BASE_RATE from the purification module (BARRIER effect). Default 1.0. */
+  /** Multiplier on BASE_RATE from the purification module (CORE effect). Default 1.0. */
   chaosRateModifier?: number;
 }
 
@@ -90,7 +90,7 @@ export class ChaosSystem implements ChaosSystemAPI {
   private peak = 0;
   private paused = false;
   private rateMultiplier = 1.0;
-  /** Module-based rate modifier (BARRIER effect). Applied multiplicatively on BASE_RATE. */
+  /** Module-based rate modifier (CORE effect). Applied multiplicatively on BASE_RATE. */
   private readonly chaosRateModifier: number;
 
   private lastEmitted: number = GAME_CONSTANTS.CHAOS.START_VALUE;

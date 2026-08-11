@@ -37,7 +37,7 @@ interface GameState {
 
 interface ModuleState {
   id: string;
-  type: 'BARRIER' | 'STORAGE';
+  type: 'CORE' | 'STORAGE';
   hp: number;
   maxHp: number;
 }
@@ -60,7 +60,7 @@ interface SortieModifiers {
 ### P — 净化点场景
 
 1. **空间**：圆形安全区约 12x10 tiles，中心有微弱暖光。玩家可自由行走（复用 Player + VisibilitySystem omni 模式）。
-2. **模块实体**：2 个可交互物体放在场景中——BARRIER（左侧）和 STORAGE（右侧）。玩家走近（32px 内）时显示交互提示"按 E 分配薪柴"。
+2. **模块实体**：2 个可交互物体放在场景中——CORE（中央）和 STORAGE（右侧）。玩家走近（32px 内）时显示交互提示"按 E 分配薪柴"。
 3. **裂隙入口**：场景中央偏上，一个脉冲的 teal 标记。走近显示"按 E 进入裂隙"。按 E 触发冲击→切换场景。
 4. **边界**：安全区外是黑暗虚空。边界处有粒子系统——灰色微粒缓慢向内飘动（暗示外界压力），密度约 20-30 个活跃粒子。
 5. **Apparition**：每 8-15 秒（随机），边界外 40-80px 处出现一个模糊人形轮廓（alpha 0→0.3 淡入 0.5s → 持续 2s → 0.3→0 淡出 0.5s）。不移动，位置随机，颜色为暗灰。纯氛围，无游戏功能。
@@ -96,14 +96,14 @@ interface SortieModifiers {
     - 计算并应用伤害
     - 每个受损模块 emit `MODULE_DAMAGED { moduleId, newHealth }`（事件类型已存在）
     - emit `IMPACT_RESOLVED { moduleDamage: { [id]: damage } }`
-    - 显示结果面板 2 秒（"冲击！BARRIER -18 hp / STORAGE -9 hp"）
+    - 显示结果面板 2 秒（"冲击！CORE -18 hp / STORAGE -9 hp"）
     - 结果面板关闭后切换到裂隙场景
 24. **hp 下限**：模块 hp 最低为 0，不进负数。
 25. **冲击预告准确率**：粒子密集方向与实际重点目标相符的概率 = `FORECAST_ACCURACY`（0.8）。20% 的时候会"骗人"。
 
 ### M — 模块效果
 
-26. **BARRIER 效果**：提供混乱值 BASE_RATE 减免。公式：`chaosRateModifier = 1.0 - (barrierHp / 100) * MAX_BARRIER_REDUCTION`。`MAX_BARRIER_REDUCTION = 0.3`（满血 hp=100 时 -30% 混乱值增速）。hp=0 时无减免。
+26. **CORE 效果**：提供混乱值 BASE_RATE 减免。公式：`chaosRateModifier = 1.0 - (coreHp / 100) * MAX_CORE_REDUCTION`。`MAX_CORE_REDUCTION = 0.3`（满血 hp=100 时 -30% 混乱值增速）。hp=0 时无减免。
 27. **STORAGE 效果**：提供薪柴拾取价值加成。公式：`kindlingValueModifier = 1.0 + (storageHp / 100) * MAX_STORAGE_BONUS`。`MAX_STORAGE_BONUS = 0.5`（满血 hp=100 时 +50% 每次拾取价值）。hp=0 时无加成。
 28. **效果计算时机**：在场景切换到裂隙前计算一次，作为 `SortieModifiers` 传递给 RiftScene。
 29. **裂隙侧应用**：
@@ -131,7 +131,7 @@ interface SortieModifiers {
 | `MAX_INTENSITY` | 2.5 | 2.0-3.0 | 强度上限 |
 | `THREAT_FOCUS_RATIO` | 0.65 | 0.55-0.75 | 重点目标承受的伤害比例 |
 | `FORECAST_ACCURACY` | 0.80 | 0.7-0.9 | 粒子预告的准确率 |
-| `MAX_BARRIER_REDUCTION` | 0.30 | 0.2-0.4 | BARRIER 满血时的混乱值减免 |
+| `MAX_CORE_REDUCTION` | 0.30 | 0.2-0.4 | CORE 满血时的混乱值减免 |
 | `MAX_STORAGE_BONUS` | 0.50 | 0.3-0.7 | STORAGE 满血时的薪柴加成 |
 | `APPARITION_INTERVAL_MIN` | 8000 | ms | 最短间隔 |
 | `APPARITION_INTERVAL_MAX` | 15000 | ms | 最长间隔 |
@@ -199,7 +199,7 @@ interface SortieModifiers {
 
 - [ ] **BASE_IMPACT_DAMAGE=25 是否让模块 hp 下降得太快/太慢？** 期望：3-4 次出击后如果不修复，至少一个模块到达 0。
 - [ ] **REPAIR_PER_KINDLING=10 是否让修复太容易？** 期望：一次出击带回 3-5 薪柴（约 30-50 hp），恰好修复一个模块的一次冲击伤害，但不够修两个。
-- [ ] **BARRIER -30% 减免是否可感知？** BASE_RATE=0.5，减免后 0.35。0→100 从 200s 变为 286s——多出 86s 是否足够让人"想保住 BARRIER"？
+- [ ] **CORE -30% 减免是否可感知？** BASE_RATE=0.5，减免后 0.35。0→100 从 200s 变为 286s——多出 86s 是否足够让人"想保住 CORE"？
 - [ ] **STORAGE +50% 是否改变决策？** 薪柴 1→1.5（取整=1），2→3，4→6。对 contested/deep 节点影响大，对 safe 节点影响小——是否让人倾向保 STORAGE？
 - [ ] **预告准确率 80% 是否造成有趣的纠结？** 还是只是让人觉得被骗了？
 - [ ] **两个模块都到 0 后是否真的"不可能但能继续"？** 还是玩家会觉得该重开了？

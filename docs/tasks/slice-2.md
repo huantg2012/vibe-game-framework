@@ -65,7 +65,7 @@ T1 (spec)
 
 **1. 状态模型**
 - PurificationState：modules（2 个）、kindlingReserve、cycle、impactIntensity
-- 每个 Module：id、name、health（0-100）、maxHealth、effect（BARRIER/STORAGE）、allocated
+- 每个 Module：id、name、health（0-100）、maxHealth、effect（CORE/STORAGE）、allocated
 - 已有类型（`game-types.ts` 的 `PurificationModule` + `ModuleEffect`）作为基础，spec 应明确值域和默认值
 
 **2. 薪柴分配规则**
@@ -84,7 +84,7 @@ T1 (spec)
 - health 到 0：效果完全移除，需额外薪柴修复才能恢复
 
 **4. 模块效果定义**
-- BARRIER（屏障）：满 health 时降低裂隙内 chaos BASE_RATE（乘数，如 0.7x）；health 下降时乘数线性回升至 1.0；health=0 时无加成
+- CORE（核心）：满 health 时降低裂隙内 chaos BASE_RATE（乘数，如 0.7x）；health 下降时乘数线性回升至 1.0；health=0 时无加成
 - STORAGE（储藏）：满 health 时提高薪柴拾取倍率（如 1.5x）或增加节点价值；health 下降时倍率线性回落至 1.0
 
 **5. 边界氛围系统**
@@ -147,7 +147,7 @@ getModules(): readonly PurificationModule[]
 getKindlingReserve(): number
 getCycle(): number
 getImpactIntensity(): number
-getChaosRateModifier(): number      // BARRIER 模块效果
+getChaosRateModifier(): number      // CORE 模块效果
 getKindlingPickupModifier(): number // STORAGE 模块效果
 
 // 变更
@@ -448,7 +448,7 @@ advanceCycle(): void
 
 **实现内容**：
 
-1. **BARRIER 模块效果**：
+1. **CORE 模块效果**：
    - RiftScene.create() 时从 GameState.getChaosRateModifier() 读取修正值
    - 将修正值注入 ChaosSystem 的 baseRate 计算
    - 满 health（100）：baseRate *= 0.7（混乱值慢 30%，玩家有更多时间）
@@ -469,7 +469,7 @@ advanceCycle(): void
    - 不修改 constants.ts 的值（运行时覆盖，常量仍是 unmodified baseline）
 
 4. **玩家感知**：
-   - HUD 或裂隙开始时的简短文字提示当前模块效果状态（如"屏障受损：混乱值增速 +15%"）
+   - HUD 或裂隙开始时的简短文字提示当前模块效果状态（如"核心受损：混乱值增速 +15%"）
    - 叙事语调
 
 **闸门**：模块满 health 时裂隙内混乱值增速明显慢于模块 0 HP 时；薪柴拾取量变化可在 HUD 观察到；typecheck 通过。
@@ -495,7 +495,7 @@ advanceCycle(): void
 1. **流程闭环**：Menu → 净化点 → 裂隙 → 出击 → 撤离 → 净化点 → 分配 → 冲击 → 结果 → 进裂隙 → ... （至少跑 3 个完整 cycle 不崩溃）
 2. **分配逻辑**：不能超额分配；跳过时 allocated=0；修复消耗正确
 3. **冲击计算**：damage = max(0, threat - allocated)；维护成本按比例扣除；intensity 递增
-4. **模块效果**：BARRIER 满 health 时 chaos rate 低于基线；受损后升高；STORAGE 同理测拾取量
+4. **模块效果**：CORE 满 health 时 chaos rate 低于基线；受损后升高；STORAGE 同理测拾取量
 5. **模块 0 HP**：效果完全移除但游戏继续；下次出击参数变为无加成
 6. **边界氛围**：粒子可见；apparition 出现和消失；intensity 变化影响氛围强度
 7. **交互系统**：接近出现提示；远离消失；按 E 触发；同时只有一个提示

@@ -2,7 +2,7 @@
  * Purification Scene - the base management walkable space.
  *
  * A small tilemap (~14x12 tiles) with a circular safe area. The player walks around,
- * interacts with two modules (BARRIER left, STORAGE right) via allocation panels,
+ * interacts with two modules (CORE center, STORAGE right) via allocation panels,
  * and enters the rift via a central entrance. The boundary features particle atmosphere
  * and periodic apparitions.
  *
@@ -20,9 +20,12 @@ import { PurificationModuleEntity } from '@/entities/purification-module';
 import { gameState } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
 import { BoundaryAtmosphere } from '@/systems/boundary-atmosphere';
+import { BoundaryBreath } from '@/systems/boundary-breath';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
+import { createBoundaryShape } from '@/systems/boundary-shape';
+import type { BoundaryShape } from '@/systems/boundary-shape';
 import { createPurificationSurfaceTexture } from '@/systems/procedural-purification-surface';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
@@ -56,18 +59,18 @@ const CENTER_X = WIDTH_PX / 2;
 const CENTER_Y = HEIGHT_PX / 2;
 
 // Elliptical safe area (spec: ~12x10 usable tiles in a 14x12 map)
-const ELLIPSE_RX = 5.5; // tiles
-const ELLIPSE_RY = 4.5; // tiles
+const ELLIPSE_RX = 5.2; // tiles
+const ELLIPSE_RY = 5.0; // tiles
 
-// Module positions (world px)
-const BARRIER_POS = { x: CENTER_X - 4 * TILE, y: CENTER_Y };
-const STORAGE_POS = { x: CENTER_X + 4 * TILE, y: CENTER_Y };
-// Rift entrance (center-top area)
-const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 3 * TILE };
-// Defense management point (bottom-left)
-const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 3 * TILE };
-// Growth altar (center-bottom)
-const GROWTH_POS = { x: CENTER_X, y: CENTER_Y + 2.5 * TILE };
+// Module positions (world px) — CORE at center, others radially around it
+const CORE_POS = { x: CENTER_X, y: CENTER_Y };
+const STORAGE_POS = { x: CENTER_X + 3.5 * TILE, y: CENTER_Y };
+// Rift entrance (north edge)
+const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 3.5 * TILE };
+// Defense management point (south-west)
+const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 2.5 * TILE };
+// Growth altar (west)
+const GROWTH_POS = { x: CENTER_X - 3.5 * TILE, y: CENTER_Y };
 
 // Interaction point colours (spec B3)
 const RIFT_CENTER = 0x1aad96;
@@ -93,27 +96,72 @@ const TOOL_NAMES: Record<string, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Build the static tilemap
+// Build the static tilemap (for occluder grid / visibility only, NOT physics)
 // ---------------------------------------------------------------------------
 
-function buildPurificationTileMap(): TileMapData {
+/**
+ * Build the tilemap using the dynamic boundary shape.
+ * Tiles are FLOOR if their center is inside the boundary at 98% radius.
+ * Used for visibility occluder grid only -- physics uses the smooth blob collider.
+ */
+function buildPurificationTileMap(shape: BoundaryShape): TileMapData {
   const tiles: number[][] = [];
-  const cx = COLS / 2;
-  const cy = ROWS / 2;
 
   for (let row = 0; row < ROWS; row++) {
     const rowData: number[] = [];
     for (let col = 0; col < COLS; col++) {
-      // Elliptical check
-      const dx = (col + 0.5 - cx) / ELLIPSE_RX;
-      const dy = (row + 0.5 - cy) / ELLIPSE_RY;
-      const inside = dx * dx + dy * dy <= 1.0;
-      rowData.push(inside ? TileType.FLOOR : TileType.WALL);
+      const worldX = (col + 0.5) * TILE;
+      const worldY = (row + 0.5) * TILE;
+      const nDist = shape.normalizedDist(worldX, worldY);
+      rowData.push(nDist <= 0.98 ? TileType.FLOOR : TileType.WALL);
     }
     tiles.push(rowData);
   }
 
   return { cols: COLS, rows: ROWS, tileSize: TILE, tiles };
+}
+
+// ---------------------------------------------------------------------------
+// Smooth blob collider (replaces tile-based collision)
+// ---------------------------------------------------------------------------
+
+const COLLIDER_SEGMENT_SIZE = 8; // px per collider block
+const COLLIDER_SAMPLES = 90;     // angular samples (4° each)
+
+/**
+ * Creates a ring of small static bodies along the blob boundary at 98% radius.
+ * Returns the static group so the scene can set up a collider with the player.
+ */
+function createBlobCollider(
+  scene: Phaser.Scene,
+  shape: BoundaryShape,
+): Phaser.Physics.Arcade.StaticGroup {
+  const group = scene.physics.add.staticGroup();
+  const cx = shape.centerX;
+  const cy = shape.centerY;
+
+  // Also add world-bounds collider bodies along outer edges
+  // (in case blob doesn't cover corners)
+
+  for (let i = 0; i < COLLIDER_SAMPLES; i++) {
+    const angle = (i / COLLIDER_SAMPLES) * Math.PI * 2;
+    const r = shape.radiusAt(angle) * 0.98;
+
+    // Place collider blocks outward from the boundary point to form a wall
+    // We place 2 blocks deep (8px + 8px = 16px wall thickness) for reliability
+    for (let depth = 0; depth < 2; depth++) {
+      const rr = r + depth * COLLIDER_SEGMENT_SIZE;
+      const bx = cx + Math.cos(angle) * rr;
+      const by = cy + Math.sin(angle) * rr;
+
+      // Create an invisible static rectangle
+      const block = scene.add.rectangle(bx, by, COLLIDER_SEGMENT_SIZE, COLLIDER_SEGMENT_SIZE);
+      block.setVisible(false);
+      group.add(block);
+    }
+  }
+
+  return group;
 }
 
 function buildOccluderGrid(tileMap: TileMapData): OccluderGrid {
@@ -187,8 +235,11 @@ export class PurificationScene extends Phaser.Scene {
   private readonly player = new Player();
   private readonly visibility = new VisibilitySystem();
   private readonly atmosphere = new BoundaryAtmosphere();
+  private readonly breath = new BoundaryBreath();
 
-  private barrierModule!: PurificationModuleEntity;
+  private boundaryShape!: BoundaryShape;
+
+  private coreModule!: PurificationModuleEntity;
   private storageModule!: PurificationModuleEntity;
 
   private riftEntranceGraphics!: Phaser.GameObjects.Graphics;
@@ -206,6 +257,7 @@ export class PurificationScene extends Phaser.Scene {
   private escKey: Phaser.Input.Keyboard.Key | null = null;
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
   private transitioning = false;
+  private panelClosedAt = 0;
 
   // E3: Track stability milestones already shown
   private lastStabilityMilestone = 0;
@@ -264,53 +316,107 @@ export class PurificationScene extends Phaser.Scene {
     // E3: Initialize stability milestone tracker
     this.lastStabilityMilestone = Math.floor(stabilityTracker.getProgress() / 25) * 25;
 
-    // Build tilemap
-    const tileMap = buildPurificationTileMap();
+    // Build dynamic boundary shape from current tide state
+    const tideState = tideSystem.getState();
+    const interactionPts = [CORE_POS, STORAGE_POS, RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS];
+    this.boundaryShape = createBoundaryShape({
+      ellipseRx: ELLIPSE_RX,
+      ellipseRy: ELLIPSE_RY,
+      tideIntensity: tideState.currentIntensity,
+      tidePhase: tideState.phase,
+      pressureSeed: gameState.getCycle() * 7919, // deterministic per-cycle
+      interactionPoints: interactionPts,
+      centerX: CENTER_X,
+      centerY: CENTER_Y,
+    });
+
+    // Build tilemap from boundary shape
+    const tileMap = buildPurificationTileMap(this.boundaryShape);
     const grid = buildOccluderGrid(tileMap);
 
-    // Procedural surface texture (replaces flat tileset visuals)
+    // Procedural surface texture (uses boundary shape for gradient bands)
+    // Remove stale texture from prior visit (boundary shape changes with tide)
     const surfaceKey = 'purification-surface';
+    if (this.textures.exists(surfaceKey)) {
+      this.textures.remove(surfaceKey);
+    }
     createPurificationSurfaceTexture(
       this, tileMap, surfaceKey,
-      ELLIPSE_RX, ELLIPSE_RY,
-      [BARRIER_POS, STORAGE_POS, RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS],
+      this.boundaryShape,
+      interactionPts,
     );
     this.add.image(0, 0, surfaceKey).setOrigin(0, 0).setDepth(0);
 
-    // Invisible tilemap layer retained solely for physics collision
+    // Tilemap layer for visibility occluder only (no physics collision)
     ensurePurificationTileset(this);
     const layer = this.tilemapRenderer.create(this, tileMap, {
       tilesetKey: PURIFICATION_TILESET_KEY,
-      collidingIndices: [TileType.WALL],
+      collidingIndices: [],
       depth: -1,
     });
     layer.setVisible(false);
 
+    // Smooth blob collider (replaces tile-based collision for curved boundary)
+    const blobCollider = createBlobCollider(this, this.boundaryShape);
+
     this.physics.world.setBounds(0, 0, WIDTH_PX, HEIGHT_PX);
 
-    // Camera
+    // Camera — no bounds constraint; the visibility mask handles what's shown.
+    // Without this the camera can't center the map when viewport > map size.
     const camera = this.cameras.main;
-    camera.setBounds(0, 0, WIDTH_PX, HEIGHT_PX);
     camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM);
     camera.setBackgroundColor(0x0a0a0a);
 
     // Player
-    const spawnPoint = { x: CENTER_X, y: CENTER_Y + TILE };
+    const spawnPoint = { x: CENTER_X, y: CENTER_Y + 2 * TILE };
     this.player.create(this, { spawn: spawnPoint, depth: 30, facing: 'up' });
-    this.physics.add.collider(this.player.getSprite(), layer);
-    camera.startFollow(this.player.getSprite(), true);
+    this.physics.add.collider(this.player.getSprite(), blobCollider);
+    camera.centerOn(CENTER_X, CENTER_Y);
 
-    // Visibility (omni mode - full room lit)
-    this.visibility.create(this, createPurificationVisionConfig(50), grid);
+    // Visibility (omni mode - smooth blob boundary instead of tile-based raycast)
+    const boundaryShape = this.boundaryShape;
+    const visionConfig = {
+      ...createPurificationVisionConfig(50),
+      rayDistanceOverride: (origin: { x: number; y: number }, angle: number, maxRange: number): number => {
+        // Ray-blob intersection: march along the ray until normalizedDist >= GRADIENT_OUTER_END.
+        // This lets the procedural texture's own vignette (membrane + fade) be the visual boundary,
+        // while the visibility mask only takes over where the texture has already faded to void.
+        const cutoff = GAME_CONSTANTS.PURIFICATION.BOUNDARY.GRADIENT_OUTER_END;
+        const dx = Math.cos(angle);
+        const dy = Math.sin(angle);
+        const step = 8;
+        let t = 0;
+        while (t < maxRange) {
+          const px = origin.x + dx * t;
+          const py = origin.y + dy * t;
+          if (boundaryShape.normalizedDist(px, py) >= cutoff) break;
+          t += step;
+        }
+        let lo = Math.max(0, t - step);
+        let hi = Math.min(t, maxRange);
+        for (let i = 0; i < 6; i++) {
+          const mid = (lo + hi) * 0.5;
+          const px = origin.x + dx * mid;
+          const py = origin.y + dy * mid;
+          if (boundaryShape.normalizedDist(px, py) >= cutoff) {
+            hi = mid;
+          } else {
+            lo = mid;
+          }
+        }
+        return Math.min(hi, maxRange);
+      },
+    };
+    this.visibility.create(this, visionConfig, grid);
 
     // Module entities
-    this.barrierModule = new PurificationModuleEntity({
-      id: 'BARRIER',
-      type: 'BARRIER',
-      x: BARRIER_POS.x,
-      y: BARRIER_POS.y,
+    this.coreModule = new PurificationModuleEntity({
+      id: 'CORE',
+      type: 'CORE',
+      x: CORE_POS.x,
+      y: CORE_POS.y,
     });
-    this.barrierModule.create(this);
+    this.coreModule.create(this);
 
     this.storageModule = new PurificationModuleEntity({
       id: 'STORAGE',
@@ -329,8 +435,9 @@ export class PurificationScene extends Phaser.Scene {
     purificationHud.create();
     purificationHud.refresh();
 
-    // Boundary atmosphere
-    this.atmosphere.create(this);
+    // Boundary atmosphere + breathing overlay
+    this.atmosphere.create(this, this.boundaryShape);
+    this.breath.create(this, this.boundaryShape, tideState.phase);
 
     // Input
     const keyboard = this.input.keyboard;
@@ -381,7 +488,7 @@ export class PurificationScene extends Phaser.Scene {
     const pos = this.player.getPosition();
 
     // Update modules (checks proximity)
-    this.barrierModule.update(pos.x, pos.y);
+    this.coreModule.update(pos.x, pos.y);
     this.storageModule.update(pos.x, pos.y);
 
     // Calculate distances to all interaction points
@@ -444,15 +551,16 @@ export class PurificationScene extends Phaser.Scene {
       nearGrowth,
     );
 
-    // Atmosphere
+    // Atmosphere + breathing overlay
     this.atmosphere.update(delta);
+    this.breath.update(delta);
 
     // Interaction key (edge-triggered)
     if (this.interactKey && Phaser.Input.Keyboard.JustDown(this.interactKey)) {
       if (this.isAnyPanelOpen()) return; // panel already open, ignore
 
-      if (this.barrierModule.isInRange()) {
-        this.openAllocationPanel('BARRIER');
+      if (this.coreModule.isInRange()) {
+        this.openAllocationPanel('CORE');
       } else if (this.storageModule.isInRange()) {
         this.openAllocationPanel('STORAGE');
       } else if (nearDefense) {
@@ -466,17 +574,25 @@ export class PurificationScene extends Phaser.Scene {
 
     // ESC
     if (this.escKey && Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      if (allocationPanel.isOpen()) {
+      if (impactResultPanel.isOpen()) {
+        impactResultPanel.close();
+        this.panelClosedAt = this.time.now;
+      } else if (allocationPanel.isOpen()) {
         allocationPanel.close();
+        this.panelClosedAt = this.time.now;
       } else if (defensePanel.isOpen()) {
         defensePanel.close();
+        this.panelClosedAt = this.time.now;
       } else if (growthPanel.isOpen()) {
         growthPanel.close();
+        this.panelClosedAt = this.time.now;
       } else if (loadoutPanel.isOpen()) {
         loadoutPanel.close();
+        this.panelClosedAt = this.time.now;
       } else if (statusPanel.isOpen()) {
         statusPanel.close();
-      } else {
+        this.panelClosedAt = this.time.now;
+      } else if (this.time.now - this.panelClosedAt > 150) {
         this.scene.start('MainMenuScene');
       }
     }
@@ -506,12 +622,12 @@ export class PurificationScene extends Phaser.Scene {
   ): InteractionTarget | null {
     const candidates: InteractionTarget[] = [];
 
-    if (this.barrierModule.isInRange()) {
-      const hpData = this.barrierModule.getHpData();
+    if (this.coreModule.isInRange()) {
+      const hpData = this.coreModule.getHpData();
       candidates.push({
-        type: 'barrier',
+        type: 'core',
         distance: 0, // modules handle their own distance check
-        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.barrierModule.getEffectPct() } : undefined,
+        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.coreModule.getEffectPct() } : undefined,
       });
     }
     if (this.storageModule.isInRange()) {
@@ -545,7 +661,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private isAnyPanelOpen(): boolean {
-    return allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen() || statusPanel.isOpen();
+    return allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen() || statusPanel.isOpen() || impactResultPanel.isOpen();
   }
 
   private openAllocationPanel(moduleId: string): void {
@@ -634,7 +750,7 @@ export class PurificationScene extends Phaser.Scene {
         'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
         'z-index:2000', 'background:#000', 'display:flex',
         'align-items:center', 'justify-content:center',
-        'font-family:monospace', 'font-size:14px', 'color:#888',
+        "font:14px 'Courier New',monospace", 'color:#5a5f66',
       ].join(';');
       overlay.textContent = '进入裂隙。';
       document.body.appendChild(overlay);
@@ -675,11 +791,11 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   /** D1: Check whether an interaction point should pulse faster (has actionable content). */
-  private shouldHighlight(point: 'defense' | 'growth' | 'barrier' | 'storage'): boolean {
+  private shouldHighlight(point: 'defense' | 'growth' | 'core' | 'storage'): boolean {
     const reserve = gameState.getKindlingReserve();
     switch (point) {
-      case 'barrier': {
-        const mod = gameState.getModule('BARRIER');
+      case 'core': {
+        const mod = gameState.getModule('CORE');
         return reserve > 0 && mod !== undefined && mod.hp < mod.maxHp;
       }
       case 'storage': {
@@ -716,9 +832,9 @@ export class PurificationScene extends Phaser.Scene {
     const toast = document.createElement('div');
     toast.style.cssText = [
       'position:fixed', 'top:40px', 'left:50%', 'transform:translateX(-50%)',
-      'z-index:998', 'background:rgba(26,173,150,0.15)', 'border:1px solid #1aad96',
-      'padding:8px 16px', 'font-family:monospace', 'font-size:11px',
-      'color:#2ae6c8', 'border-radius:4px', 'pointer-events:none',
+      'z-index:998', 'background:rgba(15,17,20,0.92)', 'border:1px solid #1aad96',
+      "padding:8px 16px", "font:11px 'Courier New',monospace",
+      'color:#2ae6c8', 'pointer-events:none',
       'animation:toast-fade 3s ease-out forwards',
     ].join(';');
     toast.textContent = text;
@@ -730,8 +846,8 @@ export class PurificationScene extends Phaser.Scene {
   /** C2: Flash the module entity when repair is confirmed. */
   private readonly onAllocationConfirmed = (payload: { allocations: Record<string, number> }): void => {
     for (const moduleId of Object.keys(payload.allocations)) {
-      if (moduleId === 'BARRIER') {
-        this.flashModule(this.barrierModule);
+      if (moduleId === 'CORE') {
+        this.flashModule(this.coreModule);
       } else if (moduleId === 'STORAGE') {
         this.flashModule(this.storageModule);
       }
@@ -779,9 +895,9 @@ export class PurificationScene extends Phaser.Scene {
     const overlay = document.createElement('div');
     overlay.style.cssText = [
       'position:fixed', 'top:50%', 'left:50%', 'transform:translate(-50%,-50%)',
-      'z-index:1002', 'background:rgba(10,10,14,0.92)', 'border:2px solid #44aa66',
-      'padding:14px 28px', 'font-family:monospace', 'color:#44aa66',
-      'font-size:13px', 'border-radius:4px', 'text-align:center',
+      'z-index:1002', 'background:rgba(15,17,20,0.92)', 'border:1px solid #44aa66',
+      "padding:14px 28px", "font:13px 'Courier New',monospace", 'color:#44aa66',
+      'text-align:center',
       'pointer-events:none', 'animation:milestone-fade 2s ease-out forwards',
     ].join(';');
     overlay.textContent = message;
@@ -859,15 +975,13 @@ export class PurificationScene extends Phaser.Scene {
       'left:50%',
       'transform:translate(-50%,-50%)',
       'z-index:1002',
-      'background:rgba(10,10,14,0.92)',
-      `border:2px solid ${borderColor}`,
+      'background:rgba(15,17,20,0.92)',
+      `border:1px solid ${borderColor}`,
       'padding:18px 32px',
-      'font-family:monospace',
+      "font:14px 'Courier New',monospace",
       `color:${borderColor}`,
-      'font-size:14px',
-      'border-radius:4px',
       'text-align:center',
-      'box-shadow:0 0 20px rgba(0,0,0,0.6)',
+      'box-shadow:0 0 12px rgba(0,0,0,0.6)',
       'cursor:pointer',
     ].join(';');
 
@@ -925,8 +1039,9 @@ export class PurificationScene extends Phaser.Scene {
 
     // Destroy systems
     this.atmosphere.destroy();
+    this.breath.destroy();
     this.visibility.destroy();
-    this.barrierModule.destroy();
+    this.coreModule.destroy();
     this.storageModule.destroy();
     this.player.destroy();
     this.tilemapRenderer.destroy();

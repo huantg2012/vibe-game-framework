@@ -4,7 +4,7 @@
 
 当前净化点场景的视觉问题根源是**信息呈现缺乏层级和统一规则**：
 
-1. **Phaser Text 与 DOM 文字混排**：模块标签（"屏障"/"储藏"）、效果文字（"薪柴增幅 +35%"）、交互提示（"E - 分配薪柴"）全部用 Phaser.Text 渲染在世界空间，受 pixelArt:true 影响模糊/锯齿，与右上角清晰的 DOM HUD 视觉断裂
+1. **Phaser Text 与 DOM 文字混排**：模块标签（"核心"/"储藏"）、效果文字（"薪柴增幅 +35%"）、交互提示（"E - 分配薪柴"）全部用 Phaser.Text 渲染在世界空间，受 pixelArt:true 影响模糊/锯齿，与右上角清晰的 DOM HUD 视觉断裂
 2. **文字被裁切**：储藏模块位于 CENTER_X + 4*TILE = 右侧 224px 处，14x12 地图总宽 448px，效果文字溢出地图边界被 camera bounds 裁切
 3. **信息始终可见**：所有模块的 label、HP bar、效果文字始终显示，无论玩家距离如何。信息密度均匀 = 无层级 = 混乱
 4. **交互点视觉语言不统一**：裂隙入口（teal 圆）、防御点（紫圆）、成长祭坛（橙方块）——形状/色彩/大小各异，像是不同开发者各写各的
@@ -34,7 +34,7 @@
 移除所有 Phaser.Text（labelText、effectText、promptText）。模块通过以下视觉语言传达身份和状态：
 
 **形状即身份：**
-- BARRIER：正六边形，半径 16px（当前 14px 稍增）
+- CORE：正六边形，半径 16px（当前 14px 稍增）
 - STORAGE：正方形，边长 28px（当前 24px 稍增）
 
 **HP 状态通过发光强度表达：**
@@ -47,8 +47,8 @@
 | 0-24% | 0.15 | 0.3 | 边缘持续快速闪烁（800ms 周期），颜色偏移向 `#cc3333` |
 
 **色彩规格：**
-- BARRIER 主色：`#4488cc`（保持）
-- BARRIER 边缘光：`#6699dd`（比主色亮一级）
+- CORE 主色：`#4488cc`（保持）
+- CORE 边缘光：`#6699dd`（比主色亮一级）
 - STORAGE 主色：`#cc8844`（保持）
 - STORAGE 边缘光：`#ddaa66`（比主色亮一级）
 - 严重受损叠加色：`#cc3333`（art-direction ui-danger）
@@ -62,7 +62,7 @@
 ```
 
 **移除的元素：**
-- `labelText`（"屏障"/"储藏"）：删除。形状+颜色已传达身份。详情在 HUD tooltip 中。
+- `labelText`（"核心"/"储藏"）：删除。形状+颜色已传达身份。详情在 HUD tooltip 中。
 - `effectText`（"薪柴增幅 +35%"）：删除。效果信息移至靠近时的 DOM tooltip 或 HUD。
 - `promptText`（"E - 分配薪柴"）：删除。交互提示移至屏幕底部统一提示条。
 
@@ -71,9 +71,9 @@
 当前 HP 条是浮在模块上方 24px 的独立绿色条。重构为**模块形体内的内嵌条**：
 
 **位置：** 模块形体正下方 4px 处（不是上方），紧贴形体底边。
-**尺寸：** 宽度与模块形体宽度一致（BARRIER: 28px，STORAGE: 28px），高度 3px。
+**尺寸：** 宽度与模块形体宽度一致（CORE: 28px，STORAGE: 28px），高度 3px。
 **颜色：** 与模块同色系（不是通用绿色）。
-- BARRIER HP 条：`#4488cc` 填充，`#222233` 背景
+- CORE HP 条：`#4488cc` 填充，`#222233` 背景
 - STORAGE HP 条：`#cc8844` 填充，`#332222` 背景
 - 当 HP < 25% 时：填充色变为 `#cc3333`
 
@@ -180,7 +180,7 @@ transition: opacity 0.15s ease-out;
 
 | 靠近目标 | 提示文字 |
 |----------|----------|
-| BARRIER 模块 | `[E] 分配薪柴 - 屏障` |
+| CORE 模块 | `[E] 分配薪柴 - 核心` |
 | STORAGE 模块 | `[E] 分配薪柴 - 储藏` |
 | 裂隙入口 | `[E] 进入裂隙` |
 | 防御配置点 | `[E] 防御配置` |
@@ -204,7 +204,7 @@ transition: opacity 0.15s ease-out;
 
 ```
  ┌─────────────────────────────────┐
- │  [E] 分配薪柴 - 屏障            │
+ │  [E] 分配薪柴 - 核心            │
  │  HP 60/100 · 混乱抑制 -18%      │  ← 10px, #666
  └─────────────────────────────────┘
 ```
@@ -216,7 +216,7 @@ transition: opacity 0.15s ease-out;
 - 颜色：`#666666`
 - 上间距：4px
 - 内容格式：
-  - BARRIER: `HP ${hp}/${maxHp} · 混乱抑制 -${pct}%`
+  - CORE: `HP ${hp}/${maxHp} · 混乱抑制 -${pct}%`
   - STORAGE: `HP ${hp}/${maxHp} · 薪柴增幅 +${pct}%`
   - 裂隙入口: `第${cycle}次出击`
   - 防御/成长: 无第二行
@@ -303,7 +303,7 @@ interface PurificationHud {
 }
 
 type InteractionTarget = {
-  type: 'barrier' | 'storage' | 'rift' | 'defense' | 'growth';
+  type: 'core' | 'storage' | 'rift' | 'defense' | 'growth';
   distance: number;
   moduleData?: { hp: number; maxHp: number; effectPct: number };
 };
@@ -330,7 +330,7 @@ type InteractionTarget = {
    - 计算玩家到所有交互点的距离
    - 找出最近的在范围内的目标
    - 调用 `hud.updatePrompt(target)`
-   - 调用 `barrierModule.setProximityGlow(...)` 等
+   - 调用 `coreModule.setProximityGlow(...)` 等
 4. 面板打开时调用 `hud.setPromptVisible(false)`
 5. `onShutdown` 中调用 `hud.destroy()`
 
@@ -386,15 +386,15 @@ const PURIF_UI_COLORS = {
   promptDetail: '#666666',
 
   // Module colors (unchanged from current)
-  barrierMain: 0x4488cc,
-  barrierEdge: 0x6699dd,
+  coreMain: 0x4488cc,
+  coreEdge: 0x6699dd,
   storageMain: 0xcc8844,
   storageEdge: 0xddaa66,
   dangerOverlay: 0xcc3333,
 
   // HP bar (module-colored)
-  barrierHpFill: '#4488cc',
-  barrierHpBg: '#222233',
+  coreHpFill: '#4488cc',
+  coreHpBg: '#222233',
   storageHpFill: '#cc8844',
   storageHpBg: '#332222',
   hpDanger: '#cc3333',
@@ -436,7 +436,7 @@ const PURIF_UI_METRICS = {
   promptKeyGap: 6,   // px between key and description
 
   // Module visual
-  barrierRadius: 16,  // px hexagon radius (up from 14)
+  coreRadius: 16,  // px hexagon radius (up from 14)
   storageSize: 28,    // px square side (up from 24)
   hpBarHeight: 3,     // px
   hpBarGap: 4,        // px below module body
@@ -470,7 +470,7 @@ const PURIF_UI_METRICS = {
     │                                    │
     │   ●"E-防御配置"                    │
     │                                    │
-    │  [屏障]          ○"E-进入裂隙"     │ ← 世界内 Phaser Text
+    │  [核心]          ○"E-进入裂隙"     │ ← 世界内 Phaser Text
     │  [HP ████░░]  ←Player→  [储藏]    │
     │  [混乱抑制-21%]      [薪柴增幅+35%]│ ← 被裁切!
     │                                    │
@@ -496,7 +496,7 @@ const PURIF_UI_METRICS = {
     │   ■(orange glow)                   │
     │                                    │
     │      ┌──────────────────────────┐  │
-    │      │[E] 分配薪柴 - 屏障       │  │ ← DOM 提示条
+    │      │[E] 分配薪柴 - 核心       │  │ ← DOM 提示条
     │      │HP 60/100 · 混乱抑制 -18% │  │
     │      └──────────────────────────┘  │
     └────────────────────────────────────┘

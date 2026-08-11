@@ -166,7 +166,7 @@ export class RunController {
         'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
         'z-index:2000', 'background:#000', 'display:flex',
         'align-items:center', 'justify-content:center',
-        'font-family:monospace', 'font-size:14px', 'color:#888',
+        "font:14px 'Courier New',monospace", 'color:#5a5f66',
       ].join(';');
       overlay.textContent = '裂隙坍缩。回到净化点。';
       document.body.appendChild(overlay);

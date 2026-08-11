@@ -20,6 +20,8 @@
  */
 
 import type Phaser from 'phaser';
+import { GAME_CONSTANTS } from '@/config/constants';
+import type { BoundaryShape } from '@/systems/boundary-shape';
 import { TileType } from '@/types/game-types';
 import type { TileMapData } from '@/types/map-types';
 
@@ -44,22 +46,22 @@ const SURFACE = {
   /** Noise amplitude: brightness offset range +/- */
   noiseAmp: 8,
   /** Warm shift at ellipse center */
-  warmR: 3, warmG: 1, warmB: -2,
+  warmR: 12, warmG: 6, warmB: -8,
   /** Cold shift at ellipse edge */
-  coldR: -3, coldG: -1, coldB: 3,
+  coldR: -8, coldG: -3, coldB: 10,
   /** Worn path brightness bonus */
-  pathBrightness: 5,
+  pathBrightness: 2,
   /** Path width in pixels (half-width for falloff) */
-  pathHalfWidth: 1.5,
+  pathHalfWidth: 1.0,
   /** Joint line interval range (px) */
-  jointMinSpacing: 28,
-  jointMaxSpacing: 36,
+  jointMinSpacing: 22,
+  jointMaxSpacing: 48,
   /** Joint line darkening */
   jointDarken: 12,
   /** Warm debris density (per 100 px^2 inside the inner 60%) */
   debrisPer100: 0.01,
   /** Vignette band width in px (ellipse edge to full black) */
-  vignetteWidth: 20,
+  vignetteWidth: 38,
   /** Teal seep point count (entire map) */
   tealCount: 12,
   /** Teal seep distance from ellipse edge (px, inward) */
@@ -224,16 +226,17 @@ function pathInfluence(
  * Builds the purification point surface texture and registers it. Returns the key.
  * Idempotent: if the texture already exists it is reused.
  *
- * @param ellipseRx - ellipse semi-major axis in tiles
- * @param ellipseRy - ellipse semi-minor axis in tiles
+ * Now uses a BoundaryShape (polar pressure blob) instead of a static ellipse
+ * for all distance-based rendering: vignette, edge darkening, teal membrane, seeps.
+ *
+ * @param shape - the dynamic boundary shape for this scene instance
  * @param interactionPoints - world-px positions of interaction targets (for worn paths)
  */
 export function createPurificationSurfaceTexture(
   scene: Phaser.Scene,
   tileMap: TileMapData,
   key: string,
-  ellipseRx: number,
-  ellipseRy: number,
+  shape: BoundaryShape,
   interactionPoints: ReadonlyArray<{ x: number; y: number }>,
 ): string {
   if (scene.textures.exists(key)) return key;
@@ -241,10 +244,9 @@ export function createPurificationSurfaceTexture(
   const T = tileMap.tileSize;
   const W = tileMap.cols * T;
   const H = tileMap.rows * T;
-  const cx = W / 2;
-  const cy = H / 2;
-  const rxPx = ellipseRx * T;
-  const ryPx = ellipseRy * T;
+  const cx = shape.centerX;
+  const cy = shape.centerY;
+  const B = GAME_CONSTANTS.PURIFICATION.BOUNDARY;
 
   const canvas = scene.textures.createCanvas(key, W, H);
   if (!canvas) throw new Error(`ProceduralPurificationSurface: could not create canvas '${key}'`);
@@ -261,48 +263,75 @@ export function createPurificationSurfaceTexture(
   const joints = generateJointLines(W, H, 4242);
 
   // Precompute joint pixel map (1px wide, with noise offset)
+  // Values: 0 = no joint, 1/2/3 = darkness level (varied per pixel)
   const jointMap = new Uint8Array(W * H);
   for (const jy of joints.horizontals) {
     for (let x = 0; x < W; x++) {
-      // Noise offset of +/-1 px vertically
-      const offset = Math.round((hash2(x, jy, 8888) - 0.5) * 2);
+      // Skip pixels with ~18% probability for random gaps
+      if (hash2(x, jy, 6161) < 0.18) continue;
+      // Noise offset of +/-3 px vertically (wobbly lines)
+      const offset = Math.round((hash2(x, jy, 8888) - 0.5) * 6);
       const yy = jy + offset;
       if (yy >= 0 && yy < H) {
         const col = (x / T) | 0;
         const row = (yy / T) | 0;
-        if (!isWall(col, row)) jointMap[yy * W + x] = 1;
+        if (!isWall(col, row)) {
+          // Vary darkness: 1, 2, or 3
+          const darkness = 1 + Math.floor(hash2(x, yy, 7272) * 3);
+          jointMap[yy * W + x] = darkness as 1 | 2 | 3;
+        }
       }
     }
   }
+  // Per-slab offset: shift vertical joints by a random amount per horizontal band
+  const hBands = [0, ...joints.horizontals, H];
   for (const jx of joints.verticals) {
     for (let y = 0; y < H; y++) {
-      const offset = Math.round((hash2(jx, y, 9999) - 0.5) * 2);
-      const xx = jx + offset;
+      // Skip pixels with ~18% probability for random gaps
+      if (hash2(jx, y, 6262) < 0.18) continue;
+      // Determine which horizontal band this y belongs to
+      let bandIdx = 0;
+      for (let b = 1; b < hBands.length; b++) {
+        if (y < hBands[b]!) break;
+        bandIdx = b;
+      }
+      // Per-slab horizontal offset based on band index
+      const slabOffset = Math.round((hash2(jx, bandIdx, 5050) - 0.5) * 12);
+      // Noise offset of +/-3 px horizontally (wobbly lines)
+      const offset = Math.round((hash2(jx, y, 9999) - 0.5) * 6);
+      const xx = jx + offset + slabOffset;
       if (xx >= 0 && xx < W) {
         const col = (xx / T) | 0;
         const row = (y / T) | 0;
-        if (!isWall(col, row)) jointMap[y * W + xx] = 1;
+        if (!isWall(col, row)) {
+          const darkness = 1 + Math.floor(hash2(xx, y, 7373) * 3);
+          jointMap[y * W + xx] = darkness as 1 | 2 | 3;
+        }
       }
     }
   }
 
-  // Precompute warm debris positions (inner 60% of ellipse)
+  // Precompute warm debris positions (inner 60% of boundary)
   const debrisMap = new Uint8Array(W * H);
   const dRng = mulberry32(7070);
-  const innerArea = Math.PI * (rxPx * 0.6) * (ryPx * 0.6);
+  // Approximate area using average blob radius for debris count estimation
+  const avgR = (shape.radiusAt(0) + shape.radiusAt(Math.PI / 2) +
+    shape.radiusAt(Math.PI) + shape.radiusAt(Math.PI * 1.5)) / 4;
+  const innerArea = Math.PI * (avgR * 0.6) * (avgR * 0.6);
   const debrisCount = Math.round(innerArea * SURFACE.debrisPer100 / 100);
   for (let i = 0; i < debrisCount; i++) {
-    // Sample uniformly within inner 60% ellipse
+    // Sample uniformly within inner 60% of blob
     const angle = dRng() * Math.PI * 2;
+    const blobR = shape.radiusAt(angle);
     const radius = Math.sqrt(dRng()) * 0.6; // sqrt for uniform disk sampling, scaled to 60%
-    const dx = Math.round(cx + Math.cos(angle) * radius * rxPx);
-    const dy = Math.round(cy + Math.sin(angle) * radius * ryPx);
+    const dx = Math.round(cx + Math.cos(angle) * radius * blobR);
+    const dy = Math.round(cy + Math.sin(angle) * radius * blobR);
     if (dx >= 0 && dx < W && dy >= 0 && dy < H) {
       debrisMap[dy * W + dx] = 1;
     }
   }
 
-  // Precompute teal seep points (near ellipse edge, inside)
+  // Precompute teal seep points (near boundary edge, inside the blob)
   const tealMap = new Uint8Array(W * H);
   const tRng = mulberry32(1313);
   let placed = 0;
@@ -310,15 +339,14 @@ export function createPurificationSurfaceTexture(
   while (placed < SURFACE.tealCount && attempts < SURFACE.tealCount * 20) {
     attempts++;
     const angle = tRng() * Math.PI * 2;
-    // Place at 85-100% of ellipse radius (near edge, inside)
+    // Place at 85-100% of blob radius at this angle (near edge, inside)
     const radiusFrac = 0.85 + tRng() * 0.15;
-    const tx = Math.round(cx + Math.cos(angle) * radiusFrac * rxPx);
-    const ty = Math.round(cy + Math.sin(angle) * radiusFrac * ryPx);
+    const blobR = shape.radiusAt(angle);
+    const tx = Math.round(cx + Math.cos(angle) * radiusFrac * blobR);
+    const ty = Math.round(cy + Math.sin(angle) * radiusFrac * blobR);
     if (tx < 0 || tx >= W || ty < 0 || ty >= H) continue;
-    // Verify it's inside the ellipse
-    const edx = (tx - cx) / rxPx;
-    const edy = (ty - cy) / ryPx;
-    if (edx * edx + edy * edy > 1.0) continue;
+    // Verify it's inside the boundary
+    if (!shape.isInside(tx, ty)) continue;
     // Place a small cluster (2-4 px)
     tealMap[ty * W + tx] = 1;
     const spread = 1 + Math.floor(tRng() * 3);
@@ -326,38 +354,38 @@ export function createPurificationSurfaceTexture(
       const sx = tx + Math.round((tRng() - 0.5) * 3);
       const sy = ty + Math.round((tRng() - 0.5) * 3);
       if (sx >= 0 && sx < W && sy >= 0 && sy < H) {
-        const sedx = (sx - cx) / rxPx;
-        const sedy = (sy - cy) / ryPx;
-        if (sedx * sedx + sedy * sedy <= 1.0) tealMap[sy * W + sx] = 1;
+        if (shape.isInside(sx, sy)) tealMap[sy * W + sx] = 1;
       }
     }
     placed++;
   }
 
-  // --- Per-pixel rendering ---
+  // --- Per-pixel rendering (using BoundaryShape for distance) ---
 
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
       const idx = (y * W + x) * 4;
 
-      // Ellipse distance: normalized (0 = center, 1 = edge, >1 = outside)
-      const edx = (x - cx) / rxPx;
-      const edy = (y - cy) / ryPx;
-      const ellipseT = edx * edx + edy * edy; // squared normalized distance
-      const ellipseDist = Math.sqrt(ellipseT);
+      // Blob distance: normalized (0 = center, 1 = boundary, >1 = outside)
+      const blobDist = shape.normalizedDist(x, y);
 
-      // --- Layer 6: Outside ellipse = void vignette ---
-      if (ellipseDist > 1.0) {
-        // Distance beyond ellipse edge in pixels (approximate)
-        const overDist = (ellipseDist - 1.0) * Math.min(rxPx, ryPx);
-        const fade = Math.min(overDist / SURFACE.vignetteWidth, 1.0);
-        // Blend from edge color toward full black
-        const edgeBase = SURFACE.baseBrightness * 0.45; // dim edge brightness
+      // --- Layer 6: Outside boundary = multi-band void transition ---
+      if (blobDist > 1.0) {
+        // Gradient from boundary (1.0) to full void (GRADIENT_OUTER_END)
+        const outerRange = B.GRADIENT_OUTER_END - 1.0;
+        const fade = Math.min((blobDist - 1.0) / outerRange, 1.0);
+        const edgeBase = SURFACE.baseBrightness * 0.4;
         const brightness = edgeBase * (1 - fade);
-        // Cold tint for edge
-        let r = brightness * 0.85;
-        let g = brightness * 0.9;
-        let b = brightness * 1.1;
+
+        // Teal membrane glow at the boundary (strongest at 1.0, fading outward)
+        const membraneGlow = (1 - fade) * 0.15;
+        // Pressure-aware: brighter teal where pressure is higher
+        const angle = Math.atan2(y - cy, x - cx);
+        const pressureBoost = shape.pressureAt(angle) * 0.3;
+
+        let r = brightness * 0.75;
+        let g = brightness * 0.85 + (membraneGlow + pressureBoost) * 173;
+        let b = brightness * 0.95 + (membraneGlow + pressureBoost) * 150;
 
         // Dither
         const d = (hash2(x, y, 31337) - 0.5) * SURFACE.ditherAmp * 0.5;
@@ -373,20 +401,24 @@ export function createPurificationSurfaceTexture(
       let brightness = SURFACE.baseBrightness + noiseVal * SURFACE.noiseAmp;
 
       // --- Layer 2: Radial temperature gradient ---
-      // ellipseDist: 0 at center, 1 at edge
-      const warmFrac = 1 - ellipseDist; // 1 at center, 0 at edge
-      const coldFrac = ellipseDist;      // 0 at center, 1 at edge
+      // blobDist: 0 at center, 1 at boundary edge
+      const warmFrac = 1 - blobDist; // 1 at center, 0 at edge
+      const coldFrac = blobDist;      // 0 at center, 1 at edge
       let rShift = SURFACE.warmR * warmFrac + SURFACE.coldR * coldFrac;
       let gShift = SURFACE.warmG * warmFrac + SURFACE.coldG * coldFrac;
       let bShift = SURFACE.warmB * warmFrac + SURFACE.coldB * coldFrac;
+
+      // Brightness gradient: center brighter, edges darker
+      brightness += (1 - blobDist) * 5 - blobDist * 5;
 
       // --- Layer 3: Worn path traces ---
       const pathVal = pathInfluence(x, y, cx, cy, interactionPoints, 202);
       brightness += pathVal * SURFACE.pathBrightness;
 
-      // --- Layer 4: Stone joint lines ---
-      if (jointMap[y * W + x]) {
-        brightness -= SURFACE.jointDarken;
+      // --- Layer 4: Stone joint lines (variable darkness) ---
+      const jointLevel = jointMap[y * W + x];
+      if (jointLevel) {
+        brightness -= (jointLevel / 3) * SURFACE.jointDarken;
       }
 
       // --- Compose base color (blue-grey tint: r < g < b slightly) ---
@@ -411,13 +443,30 @@ export function createPurificationSurfaceTexture(
         b = b * (1 - alpha) + 150 * alpha;
       }
 
-      // --- Edge darkening (inner side of ellipse, last 20% radius) ---
-      if (ellipseDist > 0.8) {
-        const edgeFade = (ellipseDist - 0.8) / 0.2; // 0..1
-        const darken = edgeFade * 0.35;
-        r *= (1 - darken);
-        g *= (1 - darken);
-        b *= (1 - darken);
+      // --- Edge darkening + membrane band (gradient bands from BOUNDARY constants) ---
+      if (blobDist > B.GRADIENT_INNER_START) {
+        if (blobDist > B.GRADIENT_MEMBRANE_START) {
+          // Membrane band (0.95-1.0): strong darkening + teal energy seep
+          const memT = (blobDist - B.GRADIENT_MEMBRANE_START) / (1.0 - B.GRADIENT_MEMBRANE_START);
+          const darken = 0.35 + memT * 0.25; // 35-60% darkening
+          r *= (1 - darken);
+          g *= (1 - darken);
+          b *= (1 - darken);
+          // Teal membrane energy: pressure-aware intensity
+          const angle = Math.atan2(y - cy, x - cx);
+          const pressureHere = shape.pressureAt(angle);
+          const tealStrength = (0.08 + pressureHere * 0.12) * memT;
+          r = r * (1 - tealStrength) + 26 * tealStrength;
+          g = g * (1 - tealStrength) + 173 * tealStrength;
+          b = b * (1 - tealStrength) + 150 * tealStrength;
+        } else {
+          // Transition inner band (0.80-0.95): progressive darkening only
+          const edgeFade = (blobDist - B.GRADIENT_INNER_START) / (B.GRADIENT_MEMBRANE_START - B.GRADIENT_INNER_START);
+          const darken = edgeFade * 0.35;
+          r *= (1 - darken);
+          g *= (1 - darken);
+          b *= (1 - darken);
+        }
       }
 
       // --- Dither ---
