@@ -33,7 +33,6 @@ export interface PlayerConfig {
 export class Player {
   private scene!: Phaser.Scene;
   private image!: Phaser.Physics.Arcade.Image;
-  private lamp!: Phaser.GameObjects.Image;
 
   private keys: Phaser.Input.Keyboard.Key[] = [];
   private keyUp: Phaser.Input.Keyboard.Key[] = [];
@@ -78,11 +77,7 @@ export class Player {
     body.setOffset(GAME_CONSTANTS.PLAYER.BODY_OFFSET.x, GAME_CONSTANTS.PLAYER.BODY_OFFSET.y);
     body.setCollideWorldBounds(true);
 
-    // Lamp follows the player at a fixed offset that rotates with facing
-    this.lamp = scene.add
-      .image(config.spawn.x, config.spawn.y, config.facingTexture ?? 'player-lamp')
-      .setDepth(depth + 1);
-
+    // Lamp is baked into the directional textures — no separate sprite needed
     this.bindKeys(scene);
     this.position.x = config.spawn.x;
     this.position.y = config.spawn.y;
@@ -172,7 +167,6 @@ export class Player {
     this.keyLeft.length = 0;
     this.keyRight.length = 0;
     this.speedModifiers.clear();
-    this.lamp?.destroy();
     this.image?.destroy();
   }
 
@@ -288,14 +282,6 @@ export class Player {
     up: 'player-up',
   };
 
-  /** Lamp offset positions per facing direction (relative to player center). */
-  private static readonly LAMP_OFFSETS: Record<Facing4, Vector2> = {
-    down: { x: 5, y: 0 },
-    left: { x: -6, y: 0 },
-    right: { x: 6, y: 0 },
-    up: { x: 5, y: 0 },
-  };
-
   private syncVisuals(): void {
     // Switch texture based on facing4 direction (no rotation)
     const textureKey = Player.FACING_TEXTURES[this.facing4];
@@ -303,11 +289,6 @@ export class Player {
       this.image.setTexture(textureKey);
     }
     this.image.setRotation(0);
-
-    // Lamp sits at a fixed offset per facing direction
-    const offset = Player.LAMP_OFFSETS[this.facing4];
-    this.lamp.setPosition(this.image.x + offset.x, this.image.y + offset.y);
-    this.lamp.setRotation(0);
   }
 }
 

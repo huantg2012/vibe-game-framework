@@ -23,6 +23,7 @@ import { BoundaryAtmosphere } from '@/systems/boundary-atmosphere';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
+import { createPurificationSurfaceTexture } from '@/systems/procedural-purification-surface';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
@@ -267,13 +268,23 @@ export class PurificationScene extends Phaser.Scene {
     const tileMap = buildPurificationTileMap();
     const grid = buildOccluderGrid(tileMap);
 
-    ensurePurificationTileset(this);
+    // Procedural surface texture (replaces flat tileset visuals)
+    const surfaceKey = 'purification-surface';
+    createPurificationSurfaceTexture(
+      this, tileMap, surfaceKey,
+      ELLIPSE_RX, ELLIPSE_RY,
+      [BARRIER_POS, STORAGE_POS, RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS],
+    );
+    this.add.image(0, 0, surfaceKey).setOrigin(0, 0).setDepth(0);
 
+    // Invisible tilemap layer retained solely for physics collision
+    ensurePurificationTileset(this);
     const layer = this.tilemapRenderer.create(this, tileMap, {
       tilesetKey: PURIFICATION_TILESET_KEY,
       collidingIndices: [TileType.WALL],
-      depth: 0,
+      depth: -1,
     });
+    layer.setVisible(false);
 
     this.physics.world.setBounds(0, 0, WIDTH_PX, HEIGHT_PX);
 
