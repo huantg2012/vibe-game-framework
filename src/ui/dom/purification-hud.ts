@@ -8,12 +8,18 @@
  * - UI is part of the game world, not floating above it
  *
  * Layout:
- * - Right-top: kindling (diamond + number), stability (block bar), tide (wave bar)
+ * - Right-top: kindling (diamond + number), stability (block bar), tide (wave bar),
+ *   impact forecast (module icon + 4-pip severity bar — DEC-034, target+severity only,
+ *   no direction; direction is BoundaryShape's pressure-lobe visualization elsewhere),
+ *   and — only while muffle is defense-slotted — a second, visually fainter row
+ *   previewing the impact after next (muffle's "one extra round of warning")
  * - Bottom-center: compact key hints (one line, semi-transparent)
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { gameState } from '@/managers/game-state';
+import { impactSystem } from '@/systems/impact-system';
+import type { ForecastSeverity } from '@/systems/impact-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { injectPanelStyles } from './panel-styles';
@@ -45,6 +51,26 @@ const COL = {
   barEmpty: '#1a1e22',
 } as const;
 
+// Reuses the exact icons already established for these modules in getActionLabel()
+// below (the interaction prompt bar), so the forecast row reads as "the same device"
+// rather than inventing new iconography (U11).
+const MODULE_ICON: Record<string, string> = { CORE: '◈', STORAGE: '▣' };
+
+// Second encoding beyond color for severity (U9): pip count. Colors reuse the existing
+// semantic palette above rather than introducing new hex values (U3).
+const SEVERITY_PIPS: Record<ForecastSeverity, number> = {
+  light: 1,
+  moderate: 2,
+  heavy: 3,
+  extreme: 4,
+};
+const SEVERITY_COLOR: Record<ForecastSeverity, string> = {
+  light: COL.stabilityGreen,
+  moderate: COL.kindlingOrange,
+  heavy: COL.dangerRed,
+  extreme: COL.dangerRed,
+};
+
 // ---------------------------------------------------------------------------
 // Implementation
 // ---------------------------------------------------------------------------
@@ -58,6 +84,7 @@ export class PurificationHud {
 
   create(): void {
     injectPanelStyles();
+    this.injectForecastStyles();
     this.createHudPanel();
     this.createPromptBar();
   }
@@ -113,7 +140,13 @@ export class PurificationHud {
     // --- Tide wave bar ---
     const tideRow = this.buildTideRow(tideState);
 
-    const html = kindlingRow + stabilityRow + tideRow;
+    // --- Impact forecast (target module + severity, DEC-034) ---
+    const forecastRow = this.buildForecastRow();
+
+    // --- muffle's extra lookahead row (impact after next; empty string if not slotted) ---
+    const lookaheadRow = this.buildForecastLookaheadRow();
+
+    const html = kindlingRow + stabilityRow + tideRow + forecastRow + lookaheadRow;
 
     if (html !== this.lastHudHtml) {
       this.hudEl.innerHTML = html;
@@ -231,6 +264,69 @@ export class PurificationHud {
     const tideLabel = `<span style="color:${COL.dimText};font-size:9px;margin-left:4px;">${tideState.tideNumber}</span>`;
 
     return `<div style="font-size:12px;letter-spacing:0px;">${bar}${tideLabel}</div>`;
+  }
+
+  /**
+   * Build the impact forecast row: target module icon + 4-pip severity bar (DEC-034).
+   * Deliberately no direction — spatial hinting is BoundaryShape's pressure-lobe
+   * visualization now, not this HUD. May be misreported (mirror) or blurred (baseline
+   * forecast noise); this just renders whatever impactSystem currently reports.
+   */
+  private buildForecastRow(): string {
+    const forecast = impactSystem.getForecastDisplay();
+    if (!forecast) return '';
+
+    const icon = MODULE_ICON[forecast.targetId] ?? '?';
+    const filled = SEVERITY_PIPS[forecast.severity];
+    const pipColor = SEVERITY_COLOR[forecast.severity];
+    const pulseStyle = forecast.severity === 'extreme' ? 'animation:hud-critical-pulse 0.3s ease-in-out infinite;' : '';
+
+    let pips = '';
+    for (let i = 0; i < 4; i++) {
+      const color = i < filled ? pipColor : COL.barEmpty;
+      pips += `<span style="color:${color};">▮</span>`;
+    }
+
+    return `<div style="font-size:12px;letter-spacing:1px;${pulseStyle}"><span style="color:${COL.dimText};">${icon}</span> ${pips}</div>`;
+  }
+
+  /**
+   * Build muffle's extra lookahead row: preview of the impact AFTER next (one round
+   * further than buildForecastRow() above). Only rendered while muffle is defense-slotted
+   * (impactSystem.getForecastLookahead() returns null otherwise — the HUD doesn't need to
+   * know about muffle itself, same "renders whatever the system reports" pattern as the
+   * layer-1 row).
+   *
+   * Deliberately weaker than the layer-1 row so it never reads as equally certain
+   * information (it previews something one round further out): same ▮ pip glyph and same
+   * dim/empty colors reused verbatim from the existing palette (U3/U11 — no new symbol or
+   * hex value), but always COL.dimText instead of the severity color, half opacity, a
+   * smaller font, and never the critical-pulse animation even at 'extreme' severity.
+   */
+  private buildForecastLookaheadRow(): string {
+    const lookahead = impactSystem.getForecastLookahead();
+    if (!lookahead) return '';
+
+    const icon = MODULE_ICON[lookahead.targetId] ?? '?';
+    const filled = SEVERITY_PIPS[lookahead.severity];
+
+    let pips = '';
+    for (let i = 0; i < 4; i++) {
+      const color = i < filled ? COL.dimText : COL.barEmpty;
+      pips += `<span style="color:${color};">▮</span>`;
+    }
+
+    return `<div style="font-size:10px;letter-spacing:1px;opacity:0.55;margin-top:1px;"><span style="color:${COL.dimText};">${icon}</span> ${pips}</div>`;
+  }
+
+  /** Inject the critical-pulse keyframe (idempotent) — same idiom as the existing
+   *  临界脉动 spec (ui-art-overhaul.md A5: alpha 0.6-1.0, 300ms cycle). */
+  private injectForecastStyles(): void {
+    if (document.getElementById('hud-forecast-pulse-style')) return;
+    const style = document.createElement('style');
+    style.id = 'hud-forecast-pulse-style';
+    style.textContent = `@keyframes hud-critical-pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }`;
+    document.head.appendChild(style);
   }
 
   private buildDefaultPrompt(): string {

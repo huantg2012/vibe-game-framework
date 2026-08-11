@@ -28,6 +28,21 @@ const EXTRACTION_DOT_SIZE = 2;
 const BORDER_COLOR = '#2a2d32';
 const OPACITY = 0.85;
 
+/**
+ * abyss tool (`docs/art/tool-vfx-spec.md` A5 族群H): "地图上所有敌人和薪柴节点位置以标记
+ * 显示(含视野外)". Spec calls for tiny SQUARE dots (方点) in the palette's contam-peak,
+ * one shared color for both enemies and nodes - not the old red/brown pair, which was
+ * also a palette violation (A3-2 bans non-teal-spectrum colors project-wide).
+ */
+const ABYSS_DOT_COLOR_RGB = '127,255,238'; // contam-peak #7fffee
+const ABYSS_DOT_SIZE = 3;
+/** Brightness decay floor - never fades all the way to invisible before the final-second
+ * flicker (below) takes over; keeps "信息正在流失" readable as a fade, not a vanish. */
+const ABYSS_DOT_ALPHA_FLOOR = 0.30;
+/** Last-second flicker window and toggle period - "最后1s加速闪烁2-3次后统一移除". */
+const ABYSS_FLICKER_WINDOW_MS = 1000;
+const ABYSS_FLICKER_PERIOD_MS = 180;
+
 // ---------------------------------------------------------------------------
 // Minimap class
 // ---------------------------------------------------------------------------
@@ -42,6 +57,14 @@ export class Minimap {
   private tiles!: readonly number[][];
   private extractionTile: { x: number; y: number } | null = null;
   private extractionDiscovered = false;
+
+  /** Slice 5 abyss tool (T1). Empty/zero when no reveal is active. */
+  private abyssEnemyPositions: readonly Vector2[] = [];
+  private abyssNodePositions: readonly Vector2[] = [];
+  private abyssRemainingMs = 0;
+  /** Captured once per reveal so brightness decay (below) has a stable denominator even
+   * as `abyssRemainingMs` counts down. */
+  private abyssTotalMs = 0;
 
   create(
     mapTiles: readonly number[][],
@@ -82,9 +105,19 @@ export class Minimap {
   /**
    * Called each frame with the player's world position and the vision radius.
    * Reveals tiles within a generous radius around the player (approximating
-   * what they've actually seen).
+   * what they've actually seen). `deltaMs` only drives the abyss reveal countdown
+   * (Slice 5 T1); fog-of-war reveal itself is not time-based.
    */
-  update(playerWorldPos: Vector2): void {
+  update(playerWorldPos: Vector2, deltaMs = 0): void {
+    if (this.abyssRemainingMs > 0) {
+      this.abyssRemainingMs -= deltaMs;
+      if (this.abyssRemainingMs <= 0) {
+        this.abyssRemainingMs = 0;
+        this.abyssEnemyPositions = [];
+        this.abyssNodePositions = [];
+      }
+    }
+
     const tx = Math.floor(playerWorldPos.x / this.tileSize);
     const ty = Math.floor(playerWorldPos.y / this.tileSize);
 
@@ -117,9 +150,25 @@ export class Minimap {
     this.drawDynamic(tx, ty);
   }
 
+  /** abyss: "10秒内地图上所有敌人和薪柴节点位置以标记显示(含视野外)". */
+  showAbyssReveal(
+    enemyPositions: readonly Vector2[],
+    nodePositions: readonly Vector2[],
+    durationMs: number,
+  ): void {
+    this.abyssEnemyPositions = enemyPositions;
+    this.abyssNodePositions = nodePositions;
+    this.abyssRemainingMs = durationMs;
+    this.abyssTotalMs = durationMs;
+  }
+
   reset(): void {
     this.explored.fill(0);
     this.extractionDiscovered = false;
+    this.abyssEnemyPositions = [];
+    this.abyssNodePositions = [];
+    this.abyssRemainingMs = 0;
+    this.abyssTotalMs = 0;
     this.drawBase();
   }
 
@@ -128,6 +177,23 @@ export class Minimap {
   }
 
   // ------------------------------------------------------------------ internal
+
+  /**
+   * abyss's minimap brightness: linearly decays from full to `ABYSS_DOT_ALPHA_FLOOR` over
+   * the reveal's duration ("方点亮度随10s倒计时逐渐衰减"), then in the final
+   * `ABYSS_FLICKER_WINDOW_MS` switches to a discrete on/off toggle ("最后1s加速闪烁2-3次
+   * 后统一移除") - a deliberate discrete jump, not a continued fade, matching the rest of
+   * this Slice's "结束消散用离散跳变不用连续渐隐" rule. Returns 0 to mean "don't draw".
+   */
+  private abyssDotAlpha(): number {
+    if (this.abyssRemainingMs <= ABYSS_FLICKER_WINDOW_MS) {
+      const elapsedInWindow = ABYSS_FLICKER_WINDOW_MS - this.abyssRemainingMs;
+      const toggleIndex = Math.floor(elapsedInWindow / ABYSS_FLICKER_PERIOD_MS);
+      return toggleIndex % 2 === 0 ? 1 : 0;
+    }
+    const fraction = this.abyssTotalMs > 0 ? this.abyssRemainingMs / this.abyssTotalMs : 1;
+    return ABYSS_DOT_ALPHA_FLOOR + (1 - ABYSS_DOT_ALPHA_FLOOR) * fraction;
+  }
 
   private drawBase(): void {
     const ctx = this.ctx;
@@ -155,6 +221,21 @@ export class Minimap {
   }
 
   private drawDynamic(playerTileX: number, playerTileY: number): void {
+    // Slice 5 abyss tool (T1/T4): drawn first so the player/extraction dots stay on top.
+    if (this.abyssRemainingMs > 0) {
+      const alpha = this.abyssDotAlpha();
+      if (alpha > 0) {
+        const ctx = this.ctx;
+        ctx.fillStyle = `rgba(${ABYSS_DOT_COLOR_RGB},${alpha})`;
+        const half = ABYSS_DOT_SIZE / 2;
+        for (const pos of [...this.abyssNodePositions, ...this.abyssEnemyPositions]) {
+          const x = (pos.x / this.tileSize) * MINIMAP_SCALE;
+          const y = (pos.y / this.tileSize) * MINIMAP_SCALE;
+          ctx.fillRect(x - half, y - half, ABYSS_DOT_SIZE, ABYSS_DOT_SIZE);
+        }
+      }
+    }
+
     // Extraction point (once discovered)
     if (this.extractionDiscovered && this.extractionTile) {
       const ctx = this.ctx;

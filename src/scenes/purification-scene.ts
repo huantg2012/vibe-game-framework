@@ -42,7 +42,6 @@ import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
-import type { GrowthUpgradeId } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
 import type { TileMapData, OccluderGrid } from '@/types/map-types';
 
@@ -305,8 +304,16 @@ export class PurificationScene extends Phaser.Scene {
       phaseChange = tideSystem.advanceCycle();
     }
 
-    // Generate forecast for boundary atmosphere (for NEXT impact)
-    impactSystem.generateForecast();
+    // Generate the non-spatial forecast (target module + severity) for the NEXT impact
+    // (DEC-034), plus muffle's extra lookahead layer for the impact after that (previewed
+    // via a pure, RNG-free peek at tide state). Intensity/clarity/peek are read here and
+    // passed in so impact-system.ts doesn't import tideSystem/growthSystem directly
+    // (DEC-ARCH-002) — see its generateForecast() doc.
+    impactSystem.generateForecast(
+      tideSystem.getCurrentIntensity(),
+      growthSystem.getModifiers().forecastClarity,
+      tideSystem.peekNextIntensity(),
+    );
 
     // Save game state
     saveManager.save();
@@ -808,8 +815,7 @@ export class PurificationScene extends Phaser.Scene {
         return all.some((c) => c.stage === 'defense' && !slotted.some((s) => s?.id === c.id));
       }
       case 'growth': {
-        const ids: GrowthUpgradeId[] = ['growth_chaos_resist', 'growth_kindling_affinity', 'growth_vitality'];
-        return ids.some((id) => growthSystem.canAfford(id, reserve));
+        return growthSystem.getAllUpgradeIds().some((id) => growthSystem.canAfford(id, reserve));
       }
     }
   }

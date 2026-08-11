@@ -2,8 +2,14 @@
  * BoundaryAtmosphere - particles and apparitions at the purification point boundary.
  *
  * Renders teal micro-particles drifting inward from the darkness, plus periodic
- * blurry humanoid silhouettes that fade in and out. A directional density boost
- * on one side hints at the next impact's primary target (spec rule 7, 80% accurate).
+ * blurry humanoid silhouettes that fade in and out.
+ *
+ * Previously boosted particle density toward a "forecast direction" as a pre-impact
+ * hint. DEC-034 (Slice 5 D6) removed that: the forecast is now non-spatial (target
+ * module + severity tier, shown in the purification HUD) since the old direction had no
+ * real spatial meaning (CORE sits at the map's center) and duplicated the boundary's own
+ * pressure-lobe direction signal. Spatial hinting is now solely BoundaryShape's job.
+ * Particle spawning here is uniform-random again.
  *
  * Now uses BoundaryShape for spawn/despawn radii instead of a fixed circle,
  * so particles track the dynamic polar-blob boundary.
@@ -14,7 +20,6 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { BoundaryShape } from '@/systems/boundary-shape';
-import { impactSystem } from '@/systems/impact-system';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -72,17 +77,6 @@ export class BoundaryAtmosphere {
     this.draw();
   }
 
-  /**
-   * Returns the angle (radians) toward the forecasted threat direction.
-   * Used by the scene to position the density boost.
-   */
-  getForecastAngle(): number {
-    const target = impactSystem.getForecastTarget();
-    // CORE is at center, STORAGE is right side — use left direction for CORE forecast
-    if (target === 'CORE') return Math.PI; // left (default direction for core)
-    return 0; // right (default)
-  }
-
   destroy(): void {
     this.graphics?.destroy();
     this.particles = [];
@@ -98,16 +92,9 @@ export class BoundaryAtmosphere {
   }
 
   private spawnParticle(): Particle {
-    // Spawn at boundary edge, slightly outside
+    // Spawn at boundary edge, slightly outside. Uniform angle — no direction hinting
+    // (DEC-034 moved the forecast to a non-spatial target+severity readout).
     const angle = Math.random() * Math.PI * 2;
-    const forecastAngle = this.getForecastAngle();
-    // Boost density near forecast direction (2x more likely to spawn there)
-    const angleDiff = Math.abs(normalizeAngle(angle - forecastAngle));
-    const boosted = angleDiff < Math.PI / 3;
-    if (!boosted && Math.random() < 0.3) {
-      // Re-roll toward the forecast direction
-      return this.spawnParticleAt(forecastAngle + (Math.random() - 0.5) * Math.PI * 0.6);
-    }
     return this.spawnParticleAt(angle);
   }
 
@@ -240,14 +227,4 @@ export class BoundaryAtmosphere {
     this.graphics.fillRect(x - 4, y + 11, 3, 8);
     this.graphics.fillRect(x + 1, y + 11, 3, 8);
   }
-}
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function normalizeAngle(a: number): number {
-  while (a > Math.PI) a -= Math.PI * 2;
-  while (a < -Math.PI) a += Math.PI * 2;
-  return a;
 }

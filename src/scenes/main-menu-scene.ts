@@ -7,7 +7,9 @@ import Phaser from 'phaser';
 import { gameState } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
 import { contaminantSystem } from '@/systems/contaminant-system';
+import { resetDefenseEngine } from '@/systems/defense-engine';
 import { growthSystem } from '@/systems/growth-system';
+import { impactSystem } from '@/systems/impact-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 
@@ -23,6 +25,13 @@ export class MainMenuScene extends Phaser.Scene {
     contaminantSystem.reset();
     growthSystem.reset();
     stabilityTracker.reset();
+    // D3/DEC-032: defense-engine's per-contaminant runtime state (solidify/combust)
+    // was never reset anywhere before Slice 5 T3 — a latent gap now that it matters
+    // for save/load correctness.
+    resetDefenseEngine();
+    // muffle lookahead's pendingTargetQueue would otherwise leak a stale pre-committed
+    // target across playthroughs (harmless since module ids are stable, but incorrect).
+    impactSystem.resetForecastState();
     this.scene.start('PurificationScene', { fromMenu: true });
   }
 

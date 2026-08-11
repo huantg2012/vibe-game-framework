@@ -66,16 +66,25 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
   }
 
   // --- priority 2: certain and looking right at them ---
-  if (ai.detection >= 1 && p.visible) {
-    setLastSeen(enemy, ctx.playerPos.x, ctx.playerPos.y, ctx.playerVel);
+  // delay (T7 rewire): "不会从警戒升级为追击" - only the ALERT→CHASE leg is named, so a
+  // SUSPICIOUS enemy reaching full detection still completes its suspicion normally.
+  if (ai.detection >= 1 && p.visible && !(ai.state === AIState.ALERT && ai.escalationSuppressed)) {
+    const target = sightTargetPos(enemy, ctx);
+    setLastSeen(enemy, target.x, target.y, target === ctx.playerPos ? ctx.playerVel : null);
     ai.losGraceMs = 0;
     if (ai.state !== AIState.CHASE) transitionTo(enemy, AIState.CHASE, ctx);
     return;
   }
 
   // --- priority 3: already searching, so the bar to re-lock is lower ---
-  if (ai.state === AIState.ALERT && ai.detection >= config.REACQUIRE_THRESHOLD && p.visible) {
-    setLastSeen(enemy, ctx.playerPos.x, ctx.playerPos.y, ctx.playerVel);
+  if (
+    ai.state === AIState.ALERT &&
+    ai.detection >= config.REACQUIRE_THRESHOLD &&
+    p.visible &&
+    !ai.escalationSuppressed
+  ) {
+    const target = sightTargetPos(enemy, ctx);
+    setLastSeen(enemy, target.x, target.y, target === ctx.playerPos ? ctx.playerVel : null);
     transitionTo(enemy, AIState.CHASE, ctx);
     return;
   }
@@ -93,6 +102,9 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
       ai.searchHoldMs = 0;
       buildSearchPoints(enemy, ctx, ai.pendingNoisePos.x, ai.pendingNoisePos.y);
       clearPath(enemy);
+    } else if (ai.state === AIState.SUSPICIOUS && ai.escalationSuppressed) {
+      // delay: "不会从怀疑升级为警戒" - stays wary in place instead of starting a search.
+      ai.suspicionTimerMs = 0;
     } else {
       transitionTo(enemy, AIState.ALERT, ctx);
     }
@@ -102,9 +114,21 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
   // --- priority 5: something is off. Vision below certainty, hearing, or a noise report ---
   const seenEnough = ai.detection >= config.SUSPICION_THRESHOLD && p.visible;
   const noiseStimulus = ai.pendingNoiseLevel === 'suspicious';
+
+  // muffle (T7 rewire): a hearing-only signal pulling a calm enemy into SUSPICIOUS is
+  // exactly "被近距发现" - the one case the CSV describes ("360度近距检测对玩家无效").
+  // Sight and reported noises are never swallowed, only this.
+  const hearingOnly = p.hearingHit && !seenEnough && !noiseStimulus;
+  const entering = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
+  if (hearingOnly && entering && ctx.hearingSuppressed) {
+    ctx.onHearingAvoided(enemy);
+    // Stays calm (PATROL/RETURN have no downgrade of their own) - the whole point of
+    // muffle is that this tick looks exactly like nothing happened.
+    return;
+  }
+
   if (seenEnough || p.hearingHit || noiseStimulus) {
     ai.pendingNoiseLevel = null;
-    const entering = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
 
     // Where to look. Sight gives an exact position; hearing must not - a through-wall
     // exact locator reads as cheating, so it is fuzzed and sampled only once per episode
@@ -112,7 +136,8 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
     if (noiseStimulus) {
       setInvestigatePos(enemy, ai.pendingNoisePos.x, ai.pendingNoisePos.y, enemy.config.hearing.posJitter);
     } else if (seenEnough) {
-      setInvestigatePos(enemy, ctx.playerPos.x, ctx.playerPos.y, 0);
+      const target = sightTargetPos(enemy, ctx);
+      setInvestigatePos(enemy, target.x, target.y, 0);
     } else if (entering) {
       setInvestigatePos(enemy, ctx.playerPos.x, ctx.playerPos.y, enemy.config.hearing.posJitter);
     }
@@ -155,7 +180,8 @@ function applyDowngrades(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AIC
     case AIState.CHASE: {
       if (p.visible) {
         ai.losGraceMs = 0;
-        setLastSeen(enemy, ctx.playerPos.x, ctx.playerPos.y, ctx.playerVel);
+        const target = sightTargetPos(enemy, ctx);
+        setLastSeen(enemy, target.x, target.y, target === ctx.playerPos ? ctx.playerVel : null);
         return;
       }
       ai.losGraceMs += tickDtMs;
@@ -335,6 +361,27 @@ function setLastSeen(enemy: Enemy, x: number, y: number, velocity: Readonly<Vect
   }
 }
 
+/**
+ * Slice 5 mirror tool (T1): redirects a *visual* sighting to the decoy's position when
+ * one is active and within this enemy's core sight range - "视野内敌人优先对镜像产生
+ * 怀疑,忽略真身方向" (`data/contaminants.csv`, mirror). Deliberately not used by the
+ * hearing- or noise-driven branches above: a silent decoy cannot fool an ear.
+ */
+function sightTargetPos(enemy: Enemy, ctx: AIContext): Readonly<Vector2> {
+  const decoy = ctx.decoyPos;
+  if (decoy) {
+    const range = enemy.config.sight.rangeCore;
+    const dx = decoy.x - enemy.ai.position.x;
+    const dy = decoy.y - enemy.ai.position.y;
+    if (dx * dx + dy * dy <= range * range) {
+      enemy.ai.targetingDecoy = true;
+      return decoy;
+    }
+  }
+  enemy.ai.targetingDecoy = false;
+  return ctx.playerPos;
+}
+
 function setInvestigatePos(enemy: Enemy, x: number, y: number, jitter: number): void {
   const ai = enemy.ai;
   let targetX = x;
@@ -390,7 +437,9 @@ function updateDetection(enemy: Enemy, p: Perception, tickDtMs: number): void {
       clamp(p.distance / config.SIGHT_RANGE, 0, 1)
     );
     const zoneFactor = p.zone === 'peripheral' ? config.DETECT_ZONE_FACTOR_PERIPH : 1;
-    const rate = (1 / config.DETECT_FILL_TIME) * distFactor * zoneFactor;
+    // scatter (T7 rewire): "感知填充速度降低30%" while this enemy's current suspicion
+    // episode is under scatter's effect. 1 = no effect.
+    const rate = (1 / config.DETECT_FILL_TIME) * distFactor * zoneFactor * ai.detectionFillRateMult;
     ai.detection = Math.min(1, ai.detection + rate * dt);
     return;
   }

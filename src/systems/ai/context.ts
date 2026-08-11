@@ -42,6 +42,40 @@ export interface AIContext {
   dtMs: number;
 
   /**
+   * Slice 5 mirror tool (T1): while set, a sighting that would otherwise target the
+   * player (visually, not by hearing or by being hit) targets this position instead, if
+   * it is within the seeing enemy's core sight range - "视野内敌人优先对镜像产生怀疑,
+   * 忽略真身方向" (`data/contaminants.csv`, mirror). Set/cleared by `AISystem.
+   * setDecoyPosition()`, which `ToolSystem` calls; null when no decoy is active.
+   */
+  decoyPos: Vector2 | null;
+
+  /**
+   * Slice 4 muffle passive (T7 rewire): while true, a hearing-only signal that would
+   * otherwise pull a calm (PATROL/RETURN) enemy into SUSPICIOUS is swallowed instead -
+   * "360度近距检测对玩家无效仅保留视线锥检测" (`data/contaminants.csv`, muffle). Set by
+   * `AISystem.setHearingSuppressed()`, which `ToolSystem` calls every frame from whether
+   * muffle is equipped and still has charges.
+   */
+  hearingSuppressed: boolean;
+  /**
+   * Fires exactly when `hearingSuppressed` swallowed a would-be discovery (rule above),
+   * so `ToolSystem.notifyProximityAvoid()` can spend one of muffle's charges. Never fires
+   * for a sighting or a noise - only for the hearing-alone case muffle actually covers.
+   */
+  onHearingAvoided(enemy: Enemy): void;
+
+  /**
+   * muffle's *defense-slot* side effect (Slice 5 gap-fill, DEC-039), not to be confused
+   * with `hearingSuppressed` above (muffle as an equipped *tool*, the opposite direction).
+   * "下次出击敌人近距感知范围+15%" (`data/contaminants.csv`, muffle) - a flat global
+   * multiplier on every enemy's `hearing.range`, applied for the whole sortie. 1 = no
+   * effect. Set once at sortie start by `AISystem.setHearingRangeMultiplier()`, which
+   * `RiftScene` calls from the consumed `proximity_sense_boost` pending side effect.
+   */
+  hearingRangeMult: number;
+
+  /**
    * Requests a state change from a behaviour. Used for completions the perception tick
    * has no opinion about - reaching the waypoint you were walking home to, for instance,
    * which has to be noticed on the frame it happens rather than up to a tick later.

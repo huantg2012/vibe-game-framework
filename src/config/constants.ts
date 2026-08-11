@@ -253,9 +253,25 @@ export const GAME_CONSTANTS = {
     BASE_IMPACT_DAMAGE: 30,
     THREAT_FOCUS_RATIO: 0.65,  // primary target gets this fraction of total damage
     FORECAST_ACCURACY: 0.80,   // particle prediction accuracy
+    /** combust defense mechanic (DEC-030): fixed threshold, not derived from
+     * BASE_IMPACT_DAMAGE, so tide-driven damage swings don't shift the trigger point.
+     * Value chosen to equal ~2x BASE_IMPACT_DAMAGE(30) per the CSV's "约等于2次满额冲击". */
+    COMBUST_BURN_THRESHOLD: 60,
     /** Module effects */
     MAX_CORE_REDUCTION: 0.30, // chaosRate reduction at full hp
     MAX_STORAGE_BONUS: 0.50,     // kindling value bonus at full hp
+    /** resonate (Slice 5 gap-fill, DEC-039): "装备期间CORE和STORAGE模块效果上限各提升10%".
+     * A flat bump to both caps above while at least one resonate sits in a defense slot -
+     * not a multiplier, so it reads the same way the CSV states it ("+10%" alongside two
+     * numbers already expressed as flat percentages). "不叠加" is enforced by storing this
+     * as a single on/off flag (`GameState.isResonateBonusActive()`), not a per-item count. */
+    RESONATE_MODULE_CAP_BONUS: 0.10,
+    /** siphon (Slice 5 gap-fill): "装备期间所有薪柴修复模块的效率翻倍(1薪柴=8hp)" - same
+     * "装备期间" derivation pattern as RESONATE_MODULE_CAP_BONUS above (owned by
+     * `ContaminantSystem.syncRepairEfficiencyMult()` + `GameState`, not a per-impact
+     * defense-engine effect), since the CSV names it a standing equip-state bonus rather
+     * than a one-impact trigger. 4 (REPAIR_PER_KINDLING) * 2.0 = 8, matching the CSV. */
+    SIPHON_REPAIR_EFFICIENCY_MULT: 2.0,
     /** Boundary atmosphere */
     ATMOSPHERE: {
       PARTICLE_COUNT: 50,          // active boundary particles
@@ -279,11 +295,29 @@ export const GAME_CONSTANTS = {
       GRADIENT_INNER_START: 0.80,       // fraction of R where darkening begins
       GRADIENT_MEMBRANE_START: 0.95,    // fraction where "membrane" teal band begins
       GRADIENT_OUTER_END: 1.15,         // fraction where full void begins
-      BREATH_BASE_ALPHA: 0.18,          // base alpha of the breathing edge overlay
-      BREATH_AMP: 0.12,                 // oscillation amplitude (+/- from base)
-      BREATH_FREQ: 0.4,                 // Hz (one full pulse every 2.5s)
-      BREATH_CREST_FREQ_MULT: 2.0,     // frequency multiplier during crest (stressed feel)
-      BREATH_EBB_AMP_MULT: 0.5,        // amplitude multiplier during ebb (calm)
+      /**
+       * B4 (Slice 5): the old BREATH_BASE_ALPHA/AMP/FREQ/CREST_FREQ_MULT/EBB_AMP_MULT
+       * keys described a single global sinusoidal pulse from a "whole-boundary breathing"
+       * design that DEC-028 (Slice 4.5) replaced with localized pressure impacts
+       * (`src/systems/boundary-breath.ts`). Those 5 keys had zero consumers and were
+       * removed; this nested object holds boundary-breath.ts's real tuning knobs
+       * (previously inlined as top-of-file `const`s there) instead. Values unchanged.
+       */
+      BREATH: {
+        SAMPLE_COUNT: 72,              // angular resolution of the membrane/impact draw
+        MAX_IMPACTS: 5,                // max simultaneous localized impacts
+        ARC_HALF_MIN: 0.4,             // rad; narrowest impact arc half-width
+        ARC_HALF_MAX: 0.8,             // rad; widest impact arc half-width
+        SPAWN_DIST_MIN: 14,            // px; closest impact spawn distance outside the membrane
+        SPAWN_DIST_MAX: 30,            // px; farthest impact spawn distance
+        IMPACT_DURATION_MIN: 1800,     // ms; shortest single-impact lifetime
+        IMPACT_DURATION_MAX: 3500,     // ms; longest single-impact lifetime
+        SPAWN_INTERVAL_MIN: 400,       // ms; shortest gap between new impacts
+        SPAWN_INTERVAL_MAX: 1200,      // ms; longest gap between new impacts (x0.6 during crest)
+        WAVE_COLOR: 0x0e4a3f,          // dark desaturated teal, the inbound wave arcs
+        MEMBRANE_COLOR: 0x1a7a6a,      // the boundary membrane line itself
+        DEFORM_MAX_PX: 8,              // px; max inward push of the membrane at impact center
+      },
     },
     /** Scene transition timing */
     IMPACT_RESULT_DISPLAY_MS: 2000,
@@ -373,23 +407,33 @@ export const GAME_CONSTANTS = {
     TRANSFORM_THRESHOLD: 3,     // charges needed to transform defense -> tool
   },
 
-  /** Growth / permanent upgrades (docs/specs/system-growth-tide.md, section G) */
-  GROWTH: {
-    UPGRADES: {
-      growth_chaos_resist: { maxLevel: 5, effectPerLevel: 0.04 },      // -4%/level chaos rate
-      growth_kindling_affinity: { maxLevel: 3, effectPerLevel: 1 },     // +1/level kindling per pickup
-      growth_vitality: { maxLevel: 4, effectPerLevel: 15 },             // +15/level max health
-    },
-    COST_PER_LEVEL: [8, 12, 18, 25, 35],  // index 0 = level 1 cost, etc.
-  },
+  // Growth / permanent upgrades (docs/specs/system-growth-tide.md, section G):
+  // axis/maxLevel/effectPerLevel/costs are CSV-driven data (data/upgrades.csv ->
+  // src/generated/upgrade-data.ts, CLAUDE.md 策划数据源规则) — no constants block here
+  // by design; growth-system.ts reads UPGRADE_DATA directly.
 
   /** Contaminant system (docs/specs/system-growth-tide.md, section CN) */
   CONTAMINANT: {
     NODES_PER_MAP: 3,           // contaminant pickup nodes per rift map
     RARITY_WEIGHTS: { common: 60, fine: 30, rare: 10 },
-    DEFENSE_SLOTS: 3,
-    SORTIE_SLOTS: 3,
+    DEFENSE_SLOTS: 3,           // base slots; growth_defense_slot (Slice 5 T5) adds +1
+    SORTIE_SLOTS: 3,            // base slots (2 active + 1 passive); growth_sortie_slot adds +1 active
+    MAX_DEFENSE_SLOTS: 4,       // DEFENSE_SLOTS + max growth_defense_slot bonus (maxLevel 1)
+    MAX_SORTIE_SLOTS: 4,        // SORTIE_SLOTS + max growth_sortie_slot bonus (maxLevel 1)
     USES: { common: 5, fine: 3, rare: 2 },  // uses remaining after transformation
+    /** echo defense mechanic: "单件因此最多+2" — per-tool cap on echo bonus grants. */
+    ECHO_MAX_TOOL_USE_BONUS: 2,
+    /**
+     * Hotkeys for the active sortie slots, in slot order. The passive slot (always the
+     * last unlocked slot, see `contaminantSystem.getSortiePassiveSlotIndex()`) never gets
+     * an entry here - it has no hotkey by design. G was picked for the 3rd slot
+     * (growth_sortie_slot, Slice 5 T5) because it sits directly beside F on the keyboard,
+     * the same "one key past the movement cluster" reach as Q/F already use, and every
+     * other neighbour (E/R/T) is already taken by extraction/restart/nothing-reserved-but-
+     * awkward. Single source of truth for both the RiftScene binding and any UI that needs
+     * to render the real key label.
+     */
+    SORTIE_ACTIVE_KEYS: ['Q', 'F', 'G'],
   },
 
   /** Purification stability (docs/specs/system-growth-tide.md, section S) */
@@ -400,6 +444,41 @@ export const GAME_CONSTANTS = {
     GAIN_CREST_SURVIVED: 3,     // survived a full Crest with no module at zero
     GAIN_TIDE_ADVANCE: 5,       // tide advanced to next number
     LOSS_MODULE_ZERO: -1,       // a module reached 0 hp
+  },
+
+  /**
+   * Fine/Rare active+passive tool numbers not already carried by
+   * `src/generated/contaminant-data.ts` (radius/duration/uses read straight from the CSV
+   * at the point of use instead of being re-hardcoded here - see `docs/design-notes/
+   * slice3-sortie-tools.md`). Everything below is either a multiplier/amount the CSV
+   * description states in prose (`data/contaminants.csv`, `description_tool` column) or,
+   * where flagged, a placeholder-tier number the CSV leaves unspecified (Slice 5 T1).
+   */
+  TOOLS: {
+    /** compress: "半径2格内敌人移速-60%" */
+    COMPRESS_SPEED_MULT: 0.4,
+    /** resonate: "弹回3格并眩晕2秒" */
+    RESONATE_KNOCKBACK_PX: 96,
+    RESONATE_STUN_MS: 2000,
+    /** overwrite: "感知范围缩小50%" */
+    OVERWRITE_PERCEPTION_MULT: 0.5,
+    /** combust: "感知范围-50%"(烈焰遮蔽视线) */
+    COMBUST_PERCEPTION_MULT: 0.5,
+    /** combust: "每秒受到持续伤害" - CSV gives no amount; placeholder tuned so an enemy
+     * that stays the full 8s duration dies (75 hp / 15 = 5 ticks), matching the tool's
+     * rare-tier power level. Flagged for design confirmation (see delivery report). */
+    COMBUST_DAMAGE_PER_TICK: 15,
+    COMBUST_TICK_MS: 1000,
+    /** mirror: "被敌人接触后碎裂消失" - CSV gives no contact radius; placeholder tuned to
+     * roughly one enemy body width. Flagged for design confirmation. */
+    MIRROR_CONTACT_RADIUS: 20,
+    /** abyss: "使用后5秒内混乱增速+50%" - a second timing value the CSV's single
+     * `tool_duration_ms` column cannot carry (that field holds the 10s reveal instead). */
+    ABYSS_CHAOS_BOOST_MULT: 1.5,
+    ABYSS_CHAOS_BOOST_MS: 5000,
+    /** siphon: "吸取2点薪柴且...混乱值增速减半" */
+    SIPHON_KINDLING_GAIN: 2,
+    SIPHON_CHAOS_REDUCTION_MULT: 0.5,
   },
 
   /** Persistent save (docs/specs/system-growth-tide.md, section P) */

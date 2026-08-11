@@ -7,12 +7,13 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
 import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
-import type { ContaminantType, GrowthUpgradeId } from '@/types/game-types';
+import type { ContaminantType } from '@/types/game-types';
 import { injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
@@ -65,12 +66,6 @@ const RARITY_COLORS: Record<string, string> = {
   common: '#aaaaaa',
   fine: '#5599ff',
   rare: '#cc66ff',
-};
-
-const UPGRADE_NAMES: Record<GrowthUpgradeId, string> = {
-  growth_chaos_resist: '渗透抗性',
-  growth_kindling_affinity: '薪柴亲和',
-  growth_vitality: '生命强化',
 };
 
 // ---------------------------------------------------------------------------
@@ -246,12 +241,12 @@ function render(): void {
   }
 
   // === Upgrades as pills ===
-  const upgradeIds: GrowthUpgradeId[] = ['growth_chaos_resist', 'growth_kindling_affinity', 'growth_vitality'];
+  const upgradeIds = growthSystem.getAllUpgradeIds();
   const purchasedUpgrades = upgradeIds.filter((id) => growthSystem.getLevel(id) > 0);
   if (purchasedUpgrades.length > 0) {
     html += `<div style="margin:6px 0;">`;
     for (const id of purchasedUpgrades) {
-      html += `<span class="pill" style="border-color:#aa6622;color:#aa6622;">${UPGRADE_NAMES[id]} ${growthSystem.getLevel(id)}</span> `;
+      html += `<span class="pill" style="border-color:#aa6622;color:#aa6622;">${GROWTH_UPGRADE_NAMES[id]} ${growthSystem.getLevel(id)}</span> `;
     }
     html += `</div>`;
   }

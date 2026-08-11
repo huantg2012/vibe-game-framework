@@ -1,8 +1,9 @@
 /**
  * LoadoutPanel - DOM overlay for selecting sortie tools before entering the rift.
  *
- * Game-style layout: 3 slot cells (Q/F/Passive) at top, compact tile inventory
- * below, sortie attribute preview as stat bars, prominent action button.
+ * Game-style layout: one slot cell per unlocked sortie slot (2 active + 1 passive
+ * base, +1 active via growth_sortie_slot) at top, compact tile inventory below,
+ * sortie attribute preview as stat bars, prominent action button.
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -52,7 +53,16 @@ const RARITY_COLORS: Record<string, string> = {
   rare: '#cc66ff',
 };
 
-const SLOT_LABELS = ['Q', 'F', '被动'];
+/**
+ * Slot label for a given index. Active slots use their hotkey letter, read from
+ * `GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS` (never hardcoded) so this panel can
+ * never drift from RiftScene's actual key bindings (U7 "输入一致"). The passive slot is
+ * always the last unlocked slot, labeled "被动" regardless of position.
+ */
+function getSlotLabel(index: number, passiveIndex: number): string {
+  if (index === passiveIndex) return '被动';
+  return GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[index] ?? '?';
+}
 
 // ---------------------------------------------------------------------------
 // State
@@ -151,11 +161,14 @@ function render(): void {
   let html = `<div class="panel-title" style="color:#1aad96;">踏入裂隙</div>`;
   html += `<div style="flex:1;overflow-y:auto;">`;
 
-  // Slot grid - 3 cells (Q / F / Passive)
-  html += `<div class="slot-grid">`;
-  for (let i = 0; i < 3; i++) {
+  // Slot grid - one cell per unlocked sortie slot (active slots first, passive last;
+  // column count follows slots.length so growth_sortie_slot's 4th slot doesn't wrap
+  // into an uneven row, per the existing .slot-grid component in panel-styles.ts).
+  const passiveIndex = contaminantSystem.getSortiePassiveSlotIndex();
+  html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
+  for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
-    const label = SLOT_LABELS[i];
+    const label = getSlotLabel(i, passiveIndex);
     if (c) {
       const name = TYPE_NAMES[c.type];
       const color = RARITY_COLORS[c.rarity];
@@ -188,10 +201,12 @@ function render(): void {
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
       const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
-      // Check if there's a compatible empty slot
+      // Check if there's a compatible empty slot (active tools -> any active slot,
+      // passive tools -> the passive slot; both bounds are queried, never hardcoded).
+      const activeCount = contaminantSystem.getSortieActiveSlotCount();
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
       const hasSlot = emptySlots.some((idx) =>
-        toolType === 'passive' ? idx === 2 : idx <= 1,
+        toolType === 'passive' ? idx === passiveIndex : idx < activeCount,
       );
       html += `<div class="item-tile loadout-equip-tile${hasSlot ? '' : ' tile-disabled'}" data-id="${c.id}" data-tool-type="${toolType}" style="border-color:${hasSlot ? color : '#2a2d32'};" title="${desc}">
         <span style="color:${color};">${name}</span> <span style="color:#5a5f66;">${stars} x${c.usesRemaining}</span>
@@ -234,9 +249,11 @@ function wireEvents(): void {
       const id = el.dataset.id!;
       const toolType = el.dataset.toolType as string;
       const currentSlots = contaminantSystem.getSortieLoadout();
+      const activeCount = contaminantSystem.getSortieActiveSlotCount();
+      const passiveIdx = contaminantSystem.getSortiePassiveSlotIndex();
       const emptySlots = currentSlots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
       const target = emptySlots.find((idx) =>
-        toolType === 'passive' ? idx === 2 : idx <= 1,
+        toolType === 'passive' ? idx === passiveIdx : idx < activeCount,
       );
       if (target !== undefined) {
         contaminantSystem.slotSortie(id, target);

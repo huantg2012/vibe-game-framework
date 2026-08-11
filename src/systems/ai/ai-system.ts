@@ -89,6 +89,46 @@ export interface AISystemAPI {
   despawn(enemyId: string): void;
   onPlayerLost(): void;
   destroy(): void;
+
+  // --- Slice 5 tool overrides (T1), called by ToolSystem through the scene's wiring. ---
+  /** compress / echo / resonate's post-knockback stun: 1 = no effect. */
+  setEnemySpeedMultiplier(enemyId: string, mult: number): void;
+  /** compress: "无法改变移动方向". Captures the current heading the first time it engages. */
+  setEnemyMovementLocked(enemyId: string, locked: boolean): void;
+  /** overwrite / combust: "感知范围-50%". 1 = no effect. */
+  setEnemyPerceptionMultiplier(enemyId: string, mult: number): void;
+  /** overwrite: "巡逻路线反转"; echo: "巡逻方向立刻反转". No-op if the enemy has < 2 waypoints. */
+  reverseEnemyPatrol(enemyId: string): void;
+  /** overwrite: "若目标正在追击则立刻降级为返回状态". No-op unless the enemy is CHASE right now. */
+  forceEnemyReturn(enemyId: string): void;
+  /** mirror's decoy position, or null while no decoy is active. */
+  setDecoyPosition(pos: Readonly<Vector2> | null): void;
+  /** resonate: "被弹回3格". A direct reposition (placeholder-tier: no wall-awareness),
+   * since nothing today moves an enemy's body except its own steering. */
+  knockbackEnemy(enemyId: string, dx: number, dy: number): void;
+
+  // --- Slice 4 tool overrides (T7 rewire), same shape as the Slice 5 block above. ---
+  /** delay: blocks SUSPICIOUS→ALERT and ALERT→CHASE only (see `EnemyAIState`). */
+  setEnemyEscalationSuppressed(enemyId: string, suppressed: boolean): void;
+  /** solidify: "解冻后立即进入警戒状态"; kindle: "追击者失去目标锁定". Transitions
+   * unconditionally to ALERT, searching around the enemy's last known sighting (or its
+   * own position if it never had one). */
+  forceEnemyAlert(enemyId: string): void;
+  /** stitch: "感知状态强制降一级(chase→alert→suspicious→patrol)". No-op on an enemy
+   * already at PATROL/RETURN - there is nothing lower to drop to. */
+  demoteEnemyAlertLevel(enemyId: string): void;
+  /** scatter: "感知填充速度降低30%". 1 = no effect. */
+  setEnemyDetectionFillRateMult(enemyId: string, mult: number): void;
+  /** muffle: "360度近距检测对玩家无效". Global (muffle is a player loadout passive, not
+   * tied to a single enemy), unlike every other override above. */
+  setHearingSuppressed(active: boolean): void;
+  /** Fires once per hearing signal muffle actually swallowed, so `ToolSystem` can spend
+   * a charge. Pass `null` to stop listening (scene shutdown / reset). */
+  setHearingAvoidedListener(listener: ((enemyId: string) => void) | null): void;
+  /** muffle's defense-slot side effect: "下次出击敌人近距感知范围+15%". Global (every
+   * enemy, for the whole sortie), unlike every per-enemy override above. 1 = no effect.
+   * Distinct from `setHearingSuppressed()` - that one is muffle as an equipped tool. */
+  setHearingRangeMultiplier(mult: number): void;
 }
 
 export class AISystem implements AISystemAPI {
@@ -104,6 +144,8 @@ export class AISystem implements AISystemAPI {
 
   private visibilityProvider: VisibilityProvider | null = null;
   private cueListener: CueListener | null = null;
+  /** muffle (T7 rewire): fires once per hearing signal actually swallowed. */
+  private hearingAvoidedListener: ((enemyId: string) => void) | null = null;
 
   // --- per-frame inputs, copied so nothing outside can mutate them mid-update ---
   private readonly playerPos: Vector2 = { x: 0, y: 0 };
@@ -208,6 +250,7 @@ export class AISystem implements AISystemAPI {
     this.sprites.length = 0;
     this.visibilityProvider = null;
     this.cueListener = null;
+    this.hearingAvoidedListener = null;
   }
 
   // ------------------------------------------------------------------ update
@@ -271,6 +314,136 @@ export class AISystem implements AISystemAPI {
 
   getEnemyById(id: string): EnemyView | undefined {
     return this.findEnemy(id);
+  }
+
+  // ------------------------------------------------------------------ Slice 5 tool overrides (T1)
+
+  setEnemySpeedMultiplier(enemyId: string, mult: number): void {
+    const enemy = this.findEnemy(enemyId);
+    if (enemy) enemy.ai.externalSpeedMult = mult;
+  }
+
+  setEnemyMovementLocked(enemyId: string, locked: boolean): void {
+    const enemy = this.findEnemy(enemyId);
+    if (!enemy) return;
+    const ai = enemy.ai;
+    if (locked === ai.movementDirLocked) return;
+
+    if (locked) {
+      const speed = Math.hypot(ai.velocity.x, ai.velocity.y);
+      if (speed > 0.01) {
+        ai.lockedDir.x = ai.velocity.x / speed;
+        ai.lockedDir.y = ai.velocity.y / speed;
+      } else {
+        ai.lockedDir.x = Math.cos(ai.facingAngle);
+        ai.lockedDir.y = Math.sin(ai.facingAngle);
+      }
+    }
+    ai.movementDirLocked = locked;
+  }
+
+  setEnemyPerceptionMultiplier(enemyId: string, mult: number): void {
+    const enemy = this.findEnemy(enemyId);
+    if (enemy) enemy.ai.perceptionRangeMult = mult;
+  }
+
+  reverseEnemyPatrol(enemyId: string): void {
+    const enemy = this.findEnemy(enemyId);
+    if (!enemy) return;
+    const ai = enemy.ai;
+    const count = ai.patrolWaypoints.length;
+    if (count <= 1) return;
+
+    // Mirrors `advancePatrol()` (behaviors.ts) but starting from the flipped direction,
+    // so a reversed pingpong route picks up its precomputed leg exactly the same way.
+    const newDir: 1 | -1 = ai.patrolDir === 1 ? -1 : 1;
+    const from = ai.patrolIndex;
+    const next = resolveNextWaypoint(ai.patrolMode, count, from, newDir);
+    ai.patrolDir = next.direction;
+    ai.patrolIndex = next.index;
+    setPatrolLeg(enemy, ai.patrolPaths[patrolLegIndex(from, next.direction)] ?? null);
+  }
+
+  forceEnemyReturn(enemyId: string): void {
+    const enemy = this.findEnemy(enemyId);
+    if (!enemy) return;
+    if (enemy.ai.state === AIState.CHASE) transitionTo(enemy, AIState.RETURN, this.context);
+  }
+
+  setDecoyPosition(pos: Readonly<Vector2> | null): void {
+    if (!pos) {
+      this.context.decoyPos = null;
+      return;
+    }
+    if (!this.context.decoyPos) this.context.decoyPos = { x: pos.x, y: pos.y };
+    else {
+      this.context.decoyPos.x = pos.x;
+      this.context.decoyPos.y = pos.y;
+    }
+  }
+
+  knockbackEnemy(enemyId: string, dx: number, dy: number): void {
+    const enemy = this.findEnemy(enemyId);
+    if (!enemy) return;
+    const ai = enemy.ai;
+    const newX = ai.position.x + dx;
+    const newY = ai.position.y + dy;
+
+    // `Body.reset()` moves both the physics body and its Game Object in one call and
+    // zeroes velocity - a plain `sprite.setPosition()` would leave the Arcade body where
+    // it was, and the two would fight on the next physics step.
+    (enemy.getSprite().body as Phaser.Physics.Arcade.Body).reset(newX, newY);
+    ai.position.x = newX;
+    ai.position.y = newY;
+  }
+
+  // ------------------------------------------------------------------ Slice 4 tool overrides (T7 rewire)
+
+  setEnemyEscalationSuppressed(enemyId: string, suppressed: boolean): void {
+    const enemy = this.findEnemy(enemyId);
+    if (enemy) enemy.ai.escalationSuppressed = suppressed;
+  }
+
+  forceEnemyAlert(enemyId: string): void {
+    const enemy = this.findEnemy(enemyId);
+    if (!enemy) return;
+    if (enemy.ai.state !== AIState.ALERT) transitionTo(enemy, AIState.ALERT, this.context);
+  }
+
+  demoteEnemyAlertLevel(enemyId: string): void {
+    const enemy = this.findEnemy(enemyId);
+    if (!enemy) return;
+    switch (enemy.ai.state) {
+      case AIState.CHASE:
+        transitionTo(enemy, AIState.ALERT, this.context);
+        break;
+      case AIState.ALERT:
+        transitionTo(enemy, AIState.SUSPICIOUS, this.context);
+        break;
+      case AIState.SUSPICIOUS:
+        transitionTo(enemy, AIState.PATROL, this.context);
+        break;
+      default:
+        // PATROL/RETURN: already at the bottom of the ladder.
+        break;
+    }
+  }
+
+  setEnemyDetectionFillRateMult(enemyId: string, mult: number): void {
+    const enemy = this.findEnemy(enemyId);
+    if (enemy) enemy.ai.detectionFillRateMult = mult;
+  }
+
+  setHearingSuppressed(active: boolean): void {
+    this.context.hearingSuppressed = active;
+  }
+
+  setHearingAvoidedListener(listener: ((enemyId: string) => void) | null): void {
+    this.hearingAvoidedListener = listener;
+  }
+
+  setHearingRangeMultiplier(mult: number): void {
+    this.context.hearingRangeMult = mult;
   }
 
   getStats(): AIStats {
@@ -412,9 +585,18 @@ export class AISystem implements AISystemAPI {
 
     out.distance = distance;
 
+    // Slice 5 tool override (T1): overwrite / combust shrink every sense by the same
+    // fraction rather than picking one - "感知范围-50%" reads as the target being duller
+    // all around, not blind in one particular way. 1 = no effect.
+    const rangeMult = ai.perceptionRangeMult;
+    // muffle's defense-slot side effect (Slice 5 gap-fill, DEC-039): global, applies on
+    // top of the per-enemy tool override above rather than replacing it - the two stack
+    // because they come from different rulebooks (one enemy's tool debuff vs. every
+    // enemy's sortie-wide side effect).
+    const hearingMult = rangeMult * this.context.hearingRangeMult;
     const chasing = ai.state === AIState.CHASE;
-    const sightRange = chasing ? sight.chaseRange : sight.rangeCore;
-    const rayRange = Math.max(sightRange, hearing.range);
+    const sightRange = (chasing ? sight.chaseRange : sight.rangeCore) * rangeMult;
+    const rayRange = Math.max(sightRange, hearing.range * hearingMult);
 
     out.rayCast = distance <= rayRange;
     out.hasLineOfSight = out.rayCast
@@ -431,8 +613,8 @@ export class AISystem implements AISystemAPI {
         this.playerPos.x - ai.position.x
       );
       const offset = Math.abs(shortestArc(bearing - ai.facingAngle));
-      if (offset <= sight.halfAngleCore && distance <= sight.rangeCore) out.zone = 'core';
-      else if (offset <= sight.halfAnglePeripheral && distance <= sight.rangePeripheral) {
+      if (offset <= sight.halfAngleCore && distance <= sight.rangeCore * rangeMult) out.zone = 'core';
+      else if (offset <= sight.halfAnglePeripheral && distance <= sight.rangePeripheral * rangeMult) {
         out.zone = 'peripheral';
       } else out.zone = 'blind';
     }
@@ -440,12 +622,12 @@ export class AISystem implements AISystemAPI {
     // Once locked on it is looking straight at the player: the cone stops applying, or a
     // chase would keep "going blind" every time it turned a corner (rule T-C1).
     out.visible = chasing
-      ? out.hasLineOfSight && distance <= sight.chaseRange
+      ? out.hasLineOfSight && distance <= sight.chaseRange * rangeMult
       : out.hasLineOfSight && out.zone !== 'blind';
 
     // Hearing carries through walls at a reduced radius - that is the whole reason it
     // exists rather than being a shorter second pair of eyes. Standing still defeats it.
-    const hearingRadius = hearing.range * (out.hasLineOfSight ? 1 : hearing.wallFactor);
+    const hearingRadius = hearing.range * hearingMult * (out.hasLineOfSight ? 1 : hearing.wallFactor);
     out.hearingHit = this.playerIsMoving && out.rayCast && distance <= hearingRadius;
   }
 
@@ -593,6 +775,10 @@ export class AISystem implements AISystemAPI {
       playerVel: this.playerVel,
       playerIsMoving: false,
       dtMs: 0,
+      decoyPos: null,
+      hearingSuppressed: false,
+      hearingRangeMult: 1.0,
+      onHearingAvoided: (enemy) => this.hearingAvoidedListener?.(enemy.id),
       requestState: (enemy, next) => transitionTo(enemy, next, this.context),
       emitAlert: (enemy, level) => this.emitAlert(enemy, level),
       emitLost: (enemy) => this.emitLost(enemy),

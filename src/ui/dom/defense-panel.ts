@@ -1,9 +1,9 @@
 /**
- * DefensePanel - DOM overlay for managing the 3 defense slots at the purification point.
+ * DefensePanel - DOM overlay for managing the defense slots at the purification point.
  *
- * Game-style slot grid: 3 visual container cells with dashed empty borders,
- * equipped items displayed as colored tiles within cells. Inventory shown as
- * compact clickable tiles below.
+ * Game-style slot grid: one visual container cell per unlocked defense slot (3 base,
+ * +1 via growth_defense_slot), dashed empty borders, equipped items displayed as
+ * colored tiles within cells. Inventory shown as compact clickable tiles below.
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -146,9 +146,11 @@ function render(): void {
   let html = `<div class="panel-title" style="color:#6644aa;">供奉</div>`;
   html += `<div style="flex:1;overflow-y:auto;">`;
 
-  // Slot grid - 3 visual containers
-  html += `<div class="slot-grid">`;
-  for (let i = 0; i < 3; i++) {
+  // Slot grid - one visual container per unlocked defense slot (Slice 5 T5:
+  // growth_defense_slot unlocks a 4th; column count follows slots.length so the
+  // grid stays evenly divided instead of hardcoding 3).
+  html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
+  for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
     if (c) {
       const name = TYPE_NAMES[c.type];

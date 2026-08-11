@@ -7,6 +7,7 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
 import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
@@ -14,37 +15,9 @@ import { stabilityTracker } from '@/systems/stability-tracker';
 import type { GrowthUpgradeId } from '@/types/game-types';
 import { injectPanelStyles } from './panel-styles';
 
-// ---------------------------------------------------------------------------
-// Upgrade display config
-// ---------------------------------------------------------------------------
-
-interface UpgradeDisplay {
-  id: GrowthUpgradeId;
-  name: string;
-  icon: string;
-  effectLabel: (level: number) => string;
-}
-
-const UPGRADES: UpgradeDisplay[] = [
-  {
-    id: 'growth_chaos_resist',
-    name: '渗透抗性',
-    icon: '◈', // diamond
-    effectLabel: (level) => level > 0 ? `混乱增速 -${level * 4}%` : '抵御裂隙侵蚀',
-  },
-  {
-    id: 'growth_kindling_affinity',
-    name: '薪柴亲和',
-    icon: '✦', // four-point star
-    effectLabel: (level) => level > 0 ? `拾取额外 +${level}` : '更高效的收割',
-  },
-  {
-    id: 'growth_vitality',
-    name: '生命强化',
-    icon: '♥', // heart
-    effectLabel: (level) => level > 0 ? `完整度 +${level * 15}` : '强化躯壳',
-  },
-];
+// Upgrade display config (name/icon/effect label) is CSV-id-driven and shared with
+// status-panel.ts via src/config/growth-upgrade-display.ts — single source of truth.
+const UPGRADES = GROWTH_UPGRADE_DISPLAY;
 
 // ---------------------------------------------------------------------------
 // State
@@ -240,15 +213,9 @@ function showPurchaseFlash(id: GrowthUpgradeId, newLevel: number): void {
     document.head.appendChild(style);
   }
 
-  const names: Record<GrowthUpgradeId, string> = {
-    growth_chaos_resist: '渗透抗性',
-    growth_kindling_affinity: '薪柴亲和',
-    growth_vitality: '生命强化',
-  };
-
   const flash = document.createElement('div');
   flash.style.cssText = 'font-size:13px;color:#44cc88;text-align:center;padding:4px;animation:growth-flash 2s ease-out forwards;';
-  flash.textContent = `${names[id]} → Lv.${newLevel}`;
+  flash.textContent = `${GROWTH_UPGRADE_NAMES[id]} → Lv.${newLevel}`;
 
   const title = panel.querySelector('.panel-title');
   if (title && title.nextSibling) {
@@ -269,7 +236,7 @@ function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void 
   const flag = localStorage.getItem('coh_first_growth_done');
   if (flag) return;
 
-  const ids: GrowthUpgradeId[] = ['growth_chaos_resist', 'growth_kindling_affinity', 'growth_vitality'];
+  const ids = growthSystem.getAllUpgradeIds();
   const otherLevels = ids.filter((i) => i !== id).map((i) => growthSystem.getLevel(i));
   if (otherLevels.some((l) => l > 0)) return;
 

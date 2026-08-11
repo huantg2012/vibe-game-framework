@@ -8,11 +8,16 @@
  * This module is pure logic (no Phaser dependency). It reads contaminant data and
  * returns a result struct consumed by the impact system and stored in game state.
  *
- * Spec: docs/tasks/slice-4.md, T3-T4.
+ * Spec: docs/tasks/slice-4.md, T3-T4. Slice 5 T3 (docs/tasks/slice-5.md) wires the
+ * six mechanics that Slice 4 left as `handled externally` / `future iteration` stubs
+ * — see decisions-log.md DEC-029..DEC-033.
  */
 
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { GAME_CONSTANTS } from '@/config/constants';
 import type { Contaminant, ContaminantType } from '@/types/game-types';
+
+const P = GAME_CONSTANTS.PURIFICATION;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -26,7 +31,11 @@ export type SideEffectType =
   | 'repair_efficiency'
   | 'upgrade_discount'
   | 'storage_halved'
-  | 'proximity_sense_boost';
+  | 'proximity_sense_boost'
+  /** overwrite (DEC-031): announces the module-swap toast at next sortie start.
+   *  The swap itself is applied immediately at impact-resolution time (GameState);
+   *  this side effect only drives the existing toast channel. */
+  | 'module_swap';
 
 export type SideEffectDuration = 'next_sortie' | 'timed';
 
@@ -57,7 +66,7 @@ export interface DefenseResult {
   finalDamagePerModule: Record<string, number>;
   /** Side effects to store for consumption at next sortie start. */
   sideEffects: PendingSideEffect[];
-  /** Kindling gained from defense effects (e.g. ruminate). */
+  /** Kindling gained from defense effects (e.g. ruminate, mirror). */
   kindlingGain: number;
   /** Stability change from defense effects (e.g. expand nullification). */
   stabilityChange: number;
@@ -69,8 +78,32 @@ export interface DefenseResult {
   forecastCorrect: boolean;
   /** Upgrade discount percentage (retrograde correct prediction). */
   upgradeDiscount: number;
-  /** Repair efficiency multiplier (siphon). */
-  repairEfficiencyMult: number;
+  /** Module HP healed after damage resolution (module id -> heal amount). combust burst. */
+  healOut: Record<string, number>;
+  /** Bonus impact charges granted to defense-slotted contaminants (contaminant id -> count).
+   *  resonate/erode (DEC-033). Consumed by contaminantSystem.applyBonusCharges(). */
+  bonusCharges: Record<string, number>;
+  /** Number of "+1 use to a random tool-stage contaminant" grants this impact. echo.
+   *  Consumed by contaminantSystem.grantRandomToolUse(). */
+  toolUseGrants: number;
+  /** Whether CORE/STORAGE module effects should swap for the next sortie. overwrite
+   *  (25% chance, DEC-031). Applied immediately to GameState by the caller. */
+  moduleSwapTriggered: boolean;
+}
+
+/**
+ * Per-contaminant runtime state that persists across impacts and must survive a
+ * save/load cycle (DEC-032/D3). Indexed by contaminant id. New persistent mechanics
+ * added later add a field here rather than inventing a new save channel.
+ */
+export interface ContaminantRuntimeState {
+  /** solidify: impacts since last shatter cycle (0 to TIDE-cycle-3). */
+  solidifyCounter?: number;
+  /** combust: accumulated actual damage toward COMBUST_BURN_THRESHOLD. */
+  combustAccumulator?: number;
+  /** echo: how many times this (tool-stage) contaminant has received an echo bonus
+   *  use. Owned/written by contaminant-system.ts, typed here for the shared schema. */
+  echoBonusGranted?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -82,6 +115,12 @@ export interface DefenseResult {
  * Key = contaminant ID, value = count (0-3). At 3, next impact shatters (reduced defense).
  */
 const solidifyCounters: Map<string, number> = new Map();
+
+/**
+ * Combust burn accumulator: tracks cumulative actual damage taken while combust is
+ * slotted. Key = contaminant ID, value = accumulated damage. Resets to 0 on burst release.
+ */
+const combustAccumulators: Map<string, number> = new Map();
 
 // ---------------------------------------------------------------------------
 // Main export
@@ -106,7 +145,10 @@ export function applyDefenseEffects(
   let scatterRedistributed = false;
   const stitchEqualization: Record<string, number> = {};
   let upgradeDiscount = 0;
-  let repairEfficiencyMult = 1.0;
+  const bonusCharges: Record<string, number> = {};
+  let toolUseGrants = 0;
+  let moduleSwapTriggered = false;
+  const bonusModuleDamage: Record<string, number> = {};
 
   // Start with base damage
   const finalDamage: Record<string, number> = { ...baseDamagePerModule };
@@ -139,16 +181,37 @@ export function applyDefenseEffects(
     stabilityChange += effect.stabilityChange;
     upgradeDiscount += effect.upgradeDiscount;
 
-    if (effect.repairEfficiencyMult > 1.0) {
-      repairEfficiencyMult = Math.max(repairEfficiencyMult, effect.repairEfficiencyMult);
-    }
-
     if (effect.scatterRedistribute) scatterActive = true;
     if (effect.expandNullified) expandNullified = true;
+    if (effect.toolUseGrant) toolUseGrants++;
+    if (effect.moduleSwapTriggered) moduleSwapTriggered = true;
+
+    for (const [moduleId, dmg] of Object.entries(effect.bonusModuleDamage)) {
+      bonusModuleDamage[moduleId] = (bonusModuleDamage[moduleId] ?? 0) + dmg;
+    }
 
     for (const se of effect.sideEffects) {
       se.source = contaminant.type;
       sideEffects.push(se);
+    }
+
+    // Cross-slot impact-charge bonuses (DEC-033/D5). These need the sibling slot
+    // list, which applySlotEffect() does not have, so they are computed here.
+    if (contaminant.type === 'resonate' && Math.random() < 0.30) {
+      // 30% chance: every currently-slotted contaminant (including resonate itself)
+      // gets +1 impact charge, all at once.
+      for (const other of defenseSlots) {
+        if (other) bonusCharges[other.id] = (bonusCharges[other.id] ?? 0) + 1;
+      }
+    }
+    if (contaminant.type === 'erode') {
+      // Unconditional every impact: +1 to every OTHER slotted contaminant, regardless
+      // of how many other slots exist (DEC-033 changed this from a hardcoded "2").
+      for (const other of defenseSlots) {
+        if (other && other.id !== contaminant.id) {
+          bonusCharges[other.id] = (bonusCharges[other.id] ?? 0) + 1;
+        }
+      }
     }
   }
 
@@ -173,6 +236,12 @@ export function applyDefenseEffects(
     for (const key of Object.keys(finalDamage)) {
       finalDamage[key] = Math.round(finalDamage[key]! * totalReductionMult);
     }
+  }
+
+  // abyss: 5% chance of unmitigated bonus damage to a full-HP module. Applied on top
+  // of (not reduced by) the normal defense math, since it is a distinct debuff.
+  for (const [moduleId, dmg] of Object.entries(bonusModuleDamage)) {
+    finalDamage[moduleId] = (finalDamage[moduleId] ?? 0) + dmg;
   }
 
   // Post-damage: stitch equalization (after damage is determined but before applied)
@@ -202,6 +271,60 @@ export function applyDefenseEffects(
     break; // Only apply once even if multiple stitch are slotted
   }
 
+  // Post-damage: combust accumulation + burst release (DEC-030). Needs the actual
+  // damage taken this impact, so it runs after the damage math above is final.
+  const healOut: Record<string, number> = {};
+  for (const contaminant of defenseSlots) {
+    if (!contaminant || contaminant.type !== 'combust') continue;
+    if (contaminant.stage !== 'defense') continue;
+
+    const moduleIds = Object.keys(context.moduleHps);
+    const actualDamageThisImpact = moduleIds.reduce(
+      (sum, id) => sum + Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0),
+      0,
+    );
+
+    const prevAccum = combustAccumulators.get(contaminant.id) ?? 0;
+    let accum = prevAccum + actualDamageThisImpact;
+
+    if (accum >= P.COMBUST_BURN_THRESHOLD) {
+      const healAmount = Math.round(accum * 0.5);
+
+      // Lowest-HP module after this impact's damage (pre-heal).
+      let lowestId = moduleIds[0]!;
+      let lowestHp = Infinity;
+      for (const id of moduleIds) {
+        const hpAfter = Math.max(0, (context.moduleHps[id] ?? 0) - Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0));
+        if (hpAfter < lowestHp) {
+          lowestHp = hpAfter;
+          lowestId = id;
+        }
+      }
+
+      healOut[lowestId] = (healOut[lowestId] ?? 0) + healAmount;
+      accum = 0;
+      sideEffects.push({ type: 'initial_chaos', value: 10, duration: 'next_sortie', source: 'combust' });
+    }
+
+    combustAccumulators.set(contaminant.id, accum);
+    break; // Only one combust accumulator processed even if multiple are slotted
+  }
+
+  // Post-damage: mirror kindling return (moved here so it is based on actual damage
+  // taken this impact, not damage accumulated before reduction was known).
+  for (const contaminant of defenseSlots) {
+    if (!contaminant || contaminant.type !== 'mirror') continue;
+    if (contaminant.stage !== 'defense') continue;
+
+    const moduleIds = Object.keys(context.moduleHps);
+    const actualDamageThisImpact = moduleIds.reduce(
+      (sum, id) => sum + Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0),
+      0,
+    );
+    kindlingGain += Math.max(1, Math.floor(actualDamageThisImpact * 0.1));
+    break; // Only once even if multiple mirror are slotted
+  }
+
   return {
     finalDamagePerModule: finalDamage,
     sideEffects,
@@ -211,13 +334,47 @@ export function applyDefenseEffects(
     stitchEqualization,
     forecastCorrect,
     upgradeDiscount,
-    repairEfficiencyMult,
+    healOut,
+    bonusCharges,
+    toolUseGrants,
+    moduleSwapTriggered,
   };
 }
 
 /** Reset internal counters (on new game). */
 export function resetDefenseEngine(): void {
   solidifyCounters.clear();
+  combustAccumulators.clear();
+}
+
+/**
+ * Snapshot persistent per-contaminant state for SaveManager (D3). Covers solidify's
+ * shatter counter and combust's burn accumulator; echo's bonus-grant cap lives in
+ * contaminant-system.ts and is merged into the same save section by SaveManager.
+ */
+export function getDefenseRuntimeState(): Record<string, ContaminantRuntimeState> {
+  const out: Record<string, ContaminantRuntimeState> = {};
+  for (const [id, counter] of solidifyCounters) {
+    out[id] = { ...out[id], solidifyCounter: counter };
+  }
+  for (const [id, accum] of combustAccumulators) {
+    out[id] = { ...out[id], combustAccumulator: accum };
+  }
+  return out;
+}
+
+/**
+ * Restore persistent per-contaminant state from a save file (D3). Missing/undefined
+ * input (old saves without this field) resets to empty, matching resetDefenseEngine().
+ */
+export function loadDefenseRuntimeState(state: Record<string, ContaminantRuntimeState> | undefined): void {
+  solidifyCounters.clear();
+  combustAccumulators.clear();
+  if (!state) return;
+  for (const [id, s] of Object.entries(state)) {
+    if (typeof s.solidifyCounter === 'number') solidifyCounters.set(id, s.solidifyCounter);
+    if (typeof s.combustAccumulator === 'number') combustAccumulators.set(id, s.combustAccumulator);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -229,27 +386,34 @@ interface SlotEffectResult {
   kindlingGain: number;
   stabilityChange: number;
   upgradeDiscount: number;
-  repairEfficiencyMult: number;
   scatterRedistribute: boolean;
   expandNullified: boolean;
   sideEffects: PendingSideEffect[];
+  /** echo: grant +1 use to a random tool-stage contaminant this impact. */
+  toolUseGrant: boolean;
+  /** overwrite: 25% roll succeeded, swap CORE/STORAGE effects for next sortie. */
+  moduleSwapTriggered: boolean;
+  /** abyss: 5% roll succeeded, extra unmitigated damage to a full-HP module (module id -> amount). */
+  bonusModuleDamage: Record<string, number>;
 }
 
 function applySlotEffect(
   contaminant: Contaminant,
   baseReduction: number,
   forecastCorrect: boolean,
-  _context: DefenseContext,
+  context: DefenseContext,
 ): SlotEffectResult {
   const result: SlotEffectResult = {
     damageReduction: baseReduction,
     kindlingGain: 0,
     stabilityChange: 0,
     upgradeDiscount: 0,
-    repairEfficiencyMult: 1.0,
     scatterRedistribute: false,
     expandNullified: false,
     sideEffects: [],
+    toolUseGrant: false,
+    moduleSwapTriggered: false,
+    bonusModuleDamage: {},
   };
 
   switch (contaminant.type) {
@@ -284,9 +448,9 @@ function applySlotEffect(
       applyExpand(result);
       break;
     default:
-      // For types without special mechanics, just use the base reduction from data
-      // and apply generic side effect if the CSV defines one
-      applyGenericDefense(contaminant.type, result);
+      // For types without special common-tier mechanics, apply the CSV base reduction
+      // plus whichever generic mechanic (Slice 5 T3) that type defines.
+      applyGenericDefense(contaminant.type, result, context);
       break;
   }
 
@@ -351,8 +515,11 @@ function applyRetrograde(forecastCorrect: boolean, result: SlotEffectResult): vo
 /** Muffle: 30% reduction + advance forecast 1 round. Side effect: enemy proximity sense +15%. */
 function applyMuffle(result: SlotEffectResult): void {
   result.damageReduction = 0.30;
-  // The "forecast advance" is a passive benefit handled by the purification scene reading
-  // defense slots. The side effect is what we track here.
+  // The "forecast advance" (extra lookahead layer in the impact forecast) is a passive
+  // while-equipped benefit, not a per-impact damage-resolution effect — implemented in
+  // impact-system.ts's generateForecast() (checks getDefenseSlotted() for 'muffle'
+  // directly, same pattern as its existing mirror check) and rendered in
+  // purification-hud.ts. The side effect below is what this file tracks.
   result.sideEffects.push({
     type: 'proximity_sense_boost',
     value: 0.15,
@@ -395,10 +562,17 @@ function applyDelay(result: SlotEffectResult): void {
   });
 }
 
-/** Siphon: 25% reduction + repair efficiency doubled. Side effect: 25% chance storage halved. */
+/**
+ * Siphon: 25% reduction. Side effect: 25% chance storage halved.
+ *
+ * The repair-efficiency doubling this type's CSV also promises ("装备期间所有薪柴修复
+ * 模块的效率翻倍") is NOT computed here: it is a standing "while equipped" bonus, not a
+ * per-impact trigger, so it is owned by `ContaminantSystem.syncRepairEfficiencyMult()` +
+ * `GameState` instead (same split as resonate's module-cap bonus, which for the same
+ * reason never appears in this file either) - see `PURIFICATION.SIPHON_REPAIR_EFFICIENCY_MULT`.
+ */
 function applySiphon(result: SlotEffectResult): void {
   result.damageReduction = 0.25;
-  result.repairEfficiencyMult = 2.0;
   if (Math.random() < 0.25) {
     result.sideEffects.push({
       type: 'storage_halved',
@@ -419,25 +593,42 @@ function applyExpand(result: SlotEffectResult): void {
   }
 }
 
-// --- Generic fallback for rare+ types without special common-tier mechanics ---
+// --- Rare (+ remaining Fine) tier implementations (Slice 5 T3) ---
 
-function applyGenericDefense(type: ContaminantType, result: SlotEffectResult): void {
+function applyGenericDefense(type: ContaminantType, result: SlotEffectResult, context: DefenseContext): void {
   const def = CONTAMINANT_DATA[type];
   if (!def) return;
   result.damageReduction = def.defenseReduction;
 
-  // Apply generic side effects based on the CSV data
-  // These are probabilistic or conditional per the spec
   switch (type) {
     case 'resonate':
-      // 30% chance all slots get +1 impact count (handled externally via event)
+      // Main effect (reduction) only here; the 30% cross-slot charge bonus needs the
+      // sibling slot list and is computed in applyDefenseEffects (DEC-033).
       break;
     case 'overwrite':
-      // 25% chance module function swap (too complex for Slice 4, skip)
+      // Base effect: unconditional 30% discount on the next upgrade purchase.
       result.upgradeDiscount = 0.30;
+      // Side effect: 25% chance to swap CORE/STORAGE module effects for 1 sortie (DEC-031).
+      if (Math.random() < 0.25) {
+        result.moduleSwapTriggered = true;
+        result.sideEffects.push({
+          type: 'module_swap',
+          value: 1,
+          duration: 'next_sortie',
+        });
+      }
       break;
     case 'erode':
-      // +1 impact count to other 2 defense slots (handled externally)
+      // Main effect (+1 impact charge to all other slots) is unconditional and computed
+      // in applyDefenseEffects (needs sibling slot list, DEC-033/D5).
+      // Side effect: 20% chance next sortie initial chaos +8.
+      if (Math.random() < 0.20) {
+        result.sideEffects.push({
+          type: 'initial_chaos',
+          value: 8,
+          duration: 'next_sortie',
+        });
+      }
       break;
     case 'compress':
       result.damageReduction = 0.45;
@@ -449,13 +640,20 @@ function applyGenericDefense(type: ContaminantType, result: SlotEffectResult): v
       });
       break;
     case 'mirror':
-      // 10% chance of forecast misinformation (handled by purification scene)
+      // Kindling return is computed post-damage in applyDefenseEffects (needs actual
+      // damage taken). The forecast-misinformation side effect (DEC-034: mirror lies
+      // about which module the forecast targets, 10% chance, checked against whether
+      // mirror is currently defense-slotted) lives in impact-system.ts's
+      // generateForecast() instead — it's a property of the *forecast* (generated once
+      // per purification-scene visit, before this per-impact defense math runs), not of
+      // this impact's damage resolution.
       result.damageReduction = 0.25;
-      // Return kindling = 10% of damage taken (calculated elsewhere after damage is known)
       break;
     case 'echo':
-      // +1 use to a random tool (handled externally)
       result.damageReduction = 0.20;
+      // Main effect: unconditional +1 use to a random tool-stage contaminant (up to a
+      // per-tool cap of +2, enforced by contaminant-system.grantRandomToolUse()).
+      result.toolUseGrant = true;
       if (Math.random() < 0.20) {
         result.sideEffects.push({
           type: 'initial_chaos',
@@ -464,16 +662,35 @@ function applyGenericDefense(type: ContaminantType, result: SlotEffectResult): v
         });
       }
       break;
-    case 'abyss':
-      // Bonus reduction per low-HP module (calculated from context)
-      result.damageReduction = 0.20;
-      // The dynamic bonus is handled via context in a future iteration
+    case 'abyss': {
+      // Dynamic reduction: 20% base + 15% per module below 50% HP, capped at 65%.
+      // DEC-029: judged on PRE-damage module HP (this impact's own damage does not
+      // count toward the bonus that reduces it).
+      const moduleIds = Object.keys(context.moduleHps);
+      const lowHpCount = moduleIds.filter((id) => {
+        const hp = context.moduleHps[id] ?? 0;
+        const maxHp = context.moduleMaxHps[id] ?? 1;
+        return maxHp > 0 && hp / maxHp < 0.5;
+      }).length;
+      result.damageReduction = Math.min(0.65, 0.20 + lowHpCount * 0.15);
+
+      // Side effect: 5% chance to hit a full-HP module for 10% of its max HP,
+      // unmitigated (applied after the normal reduction math in applyDefenseEffects).
       if (Math.random() < 0.05) {
-        // 5% chance to hurt a full-HP module by 10% (handled externally)
+        const fullHpIds = moduleIds.filter(
+          (id) => (context.moduleHps[id] ?? 0) >= (context.moduleMaxHps[id] ?? 0),
+        );
+        if (fullHpIds.length > 0) {
+          const targetId = fullHpIds[Math.floor(Math.random() * fullHpIds.length)]!;
+          const dmg = Math.round((context.moduleMaxHps[targetId] ?? 0) * 0.10);
+          result.bonusModuleDamage[targetId] = (result.bonusModuleDamage[targetId] ?? 0) + dmg;
+        }
       }
       break;
+    }
     case 'combust':
-      // Accumulates damage for burst heal (requires persistent state, future iteration)
+      // Accumulation + burst-release heal is computed post-damage in applyDefenseEffects
+      // (needs the contaminant id + actual damage taken this impact, DEC-030).
       result.damageReduction = 0.25;
       break;
     default:

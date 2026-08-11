@@ -10,19 +10,32 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 
 ## 待处理
 
-- [ ] 永久改造深度太浅——设计方向已记录到 upgrades.csv（3 个 Slice 5 设计项），实现推迟 (Slice 4 playtest / 2026-08-11) → Slice 5 设计任务
-- [ ] 净化点模块受损三态视觉未实现——规格已在 `ui-art-overhaul.md` B3 (Slice 4.5 / 2026-08-12) → Slice 5+ 或独立打磨
-- [ ] `art-direction.md` §6.2/§6.4 由 Director 做了最小事实回填（按钮状态改游戏语义、面板改右侧抽屉），**需 art agent 复核措辞是否符合其规范体系** (Slice 4.5 收尾 / 2026-08-12)
-- [ ] `architecture.md` 模块注册表的"规划中"标记大面积过期（GameState / SaveManager / ChaosSystem / HUD / DOM UI 等实际已实现），2026-08-12 只补核了边界/地表/面板三块 → **Slice 5 T0 全量补核**。Slice 5 一致性检查发现欠账更大：另有约 14 个 Slice 2/3/4 模块从未登记（contaminant-system / contaminant-node-system / defense-engine / tool-system / growth-system / tide-system / impact-system / stability-tracker / run-controller / extraction-system / loot-system / trail-system / ui-minimap / purification-module / src/generated）
+- [ ] `abyss` 减伤上限 65%（CSV 写"3 模块均低于半血"）在当前 2 模块下触不到，真实上限 50%；`stitch` 文案同样假设 3 模块 → Slice 7 加第三模块后自动成立，届时复核 (Slice 5 / 2026-08-12)
+- [ ] 四个工具占位数值 CSV 结构装不下，暂存 `constants.ts`：`combust` 每秒伤害、`mirror` 诱饵接触半径、`resonate` 两点最大距离（CSV 字段 0，同构的 `stitch` 是 96px，疑为数据疏漏）、`abyss` 的第二计时（5s 混乱惩罚，CSV 每行只有一个 duration 列）→ 需给 CSV 扩列才能回归策划数据源规则 (Slice 5 / 2026-08-12)
+- [ ] `purification-hud` 未套 `.game-panel`——该文件设计为无边框符号网格，与 `.game-panel` 风格互斥，code agent 选择延续其自身符号语言。**需 QA/人确认这个判断** (Slice 5 / 2026-08-12)
+- [ ] `GameState.incrementIntensity()` 的 +0.15 残留仍在每次冲击末尾被调用（结果总被潮汐覆盖，玩法无影响，但两次访问之间 `getImpactIntensity()` 会返回过期值）；`DefenseContext.stabilityProgress` 恒为 0（`stabilityTracker` 未接入） (Slice 5 / 2026-08-12)
+- [ ] `architecture.md` 的「项目结构」ASCII 目录树列了三个不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、整个 `generation/` 五个文件）——T0 只补核了模块注册表，目录树不在范围内 (Slice 5 T0 / 2026-08-12)
+
 - [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。Slice 5 收尾二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除 (Slice 5 一致性检查 / 2026-08-12)
 - [ ] 敌人属性全在 `constants.ts` 的 `GAME_CONSTANTS.AI`，与 CLAUDE.md「策划数据源规则」（明确把"敌人属性"列为必须 CSV 起源）冲突 → Slice 6 第二敌人开工时必须拍板：建 `data/enemies.csv` 并迁移渗透体，还是显式破例 (Slice 5 一致性检查 / 2026-08-12)
-- [ ] 清理死常量 `PURIFICATION.BOUNDARY.BREATH_*`（5 个）——旧「整体脉动」方案残留，呼吸层真实调参已内联在 `boundary-breath.ts`；顺手把内联值迁回 constants (design 补写边界 spec / 2026-08-12)
-- [ ] 冲击预告方向映射无空间意义——`getForecastAngle()` 把 CORE→左、STORAGE→右（CORE 在中心，"左"是任选的），且只认识两个模块、场景已有五个交互点；与 BoundaryShape 压力主方向叠成两个互不相关的方向暗示 (design 补写边界 spec / 2026-08-12) → **纳入 Slice 5 设计议题 D6**（与 `mirror` 的预告镜像误导、`growth_forecast_clarity` 改造合并讨论）
 - [ ] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]`，不是真正最旧 (design 补写边界 spec / 2026-08-12)
-- [ ] `system-purification-impact.md` 若干与边界无关的既有漂移未修：MODULE_INITIAL_HP 80↔70、REPAIR_PER_KINDLING 10↔4、BASE_IMPACT_DAMAGE 25↔30；INTENSITY_STEP/MAX_INTENSITY 已被潮汐取代仍列表；规则 2 只写两个交互物体（实为五个）；规则 9 说"不做 localStorage"（SaveManager 已存在） (design 补写边界 spec / 2026-08-12) → 下次改该系统时一并回填
-- [ ] `system-growth-tide.md` 的 `exposes` 写 `TideSystem.getCurrentPhase()/getIntensity()`，代码实际是 `getState()/getCurrentIntensity()` (design 补写边界 spec / 2026-08-12)
 
 ## 已处理/已归档
+
+### Slice 5 消费（2026-08-12，待人验收）
+
+- [x] 永久改造深度太浅 (Slice 4 playtest) → Slice 5 T5：三项新改造落地 + 成长系统泛化（成本改读 CSV、ID 列表收敛单一来源）
+- [x] 净化点模块受损三态视觉未实现 (Slice 4.5) → Slice 5 T6，阈值 >60% / 30-60% / <30%
+- [x] `art-direction.md` §6.2/§6.4 措辞需 art 复核 (Slice 4.5 收尾) → Slice 5 B3，art agent 补"临界"态并厘清与 `ui-art-overhaul.md` 的权威关系
+- [x] `architecture.md` 模块注册表大面积过期 (Slice 4.5) → Slice 5 T0 全量补核：新增 21 行、修正 6 行状态，`changed-this-slice` 已重置
+- [x] 清理死常量 `PURIFICATION.BOUNDARY.BREATH_*` (2026-08-12) → Slice 5 B4，删 5 个死常量并迁回 13 个内联值
+- [x] 冲击预告方向映射无空间意义 (2026-08-12) → Slice 5 DEC-034：预告改为非空间（目标模块 + 强度档位），方向表达权移交 BoundaryShape 压力可视化
+- [x] `system-purification-impact.md` 既有漂移 (2026-08-12) → Slice 5 B1，修 6 项漂移并登记 13 条新规则
+- [x] `system-growth-tide.md` `exposes` 与代码不符 (2026-08-12) → Slice 5 B2，另修正"防御 slot 固定 3 个"的过时描述
+- [x] **Slice 4 的 8 个工具对敌人无真实效果**——`ToolDebuffs`/`getDebuffs()` 零消费方 (Slice 5 T1 发现 / 2026-08-12) → Slice 5 T7：统一为直连 setter 模式，删除描述符管线；顺带修 `retrograde` 绘制深度低于视野暗雾
+- [x] **四处 CSV 承诺但代码从未接的机制** (Slice 5 收口发现 / 2026-08-12) → Slice 5 T8：`resonate` 装备期模块上限 +10%、`siphon` 修复效率翻倍、`proximity_sense_boost`、`muffle` 预告提前一轮（DEC-040）
+
+### 更早
 
 - [x] 动态力场边界缺 spec (Slice 4.5 收尾 / 2026-08-12) → design 就地扩写进 `system-purification-impact.md`（B 组 17 条 + BOUNDARY 数值表 + 六消费方）；**结论：不拆独立 spec**
 

@@ -72,8 +72,8 @@ export class RiftScene extends Phaser.Scene {
   private attackKey: Phaser.Input.Keyboard.Key | null = null;
   private extractKey: Phaser.Input.Keyboard.Key | null = null;
   private restartKey: Phaser.Input.Keyboard.Key | null = null;
-  private toolKey0: Phaser.Input.Keyboard.Key | null = null;
-  private toolKey1: Phaser.Input.Keyboard.Key | null = null;
+  /** One entry per active sortie slot (2 base, 3 with growth_sortie_slot), see `bindToolKeys`. */
+  private toolKeys: Phaser.Input.Keyboard.Key[] = [];
 
   private debugPanel: HTMLDivElement | null = null;
   private debugVisible = true;
@@ -161,13 +161,18 @@ export class RiftScene extends Phaser.Scene {
       getVisibilityAt: this.visibilityAt,
     });
 
-    // Tool system (Slice 4): sortie loadout with expanded options
+    // Tool system (Slice 4/5): sortie loadout with expanded options. The Slice 5 (T1/T2)
+    // entries route enemy-, combat- and chaos-facing tool effects into AISystem /
+    // CombatSystem / ChaosSystem the same way `setPlayerCollision` / `addKindling` above
+    // already route player- and loot-facing ones - the scene stays the only place two
+    // systems' effects on each other get translated (architecture DEC-ARCH-002).
     this.toolSystem.create(
       this,
       sortieLoadout,
       () => this.player.getPosition(),
       () => this.ai.getEnemies(),
       {
+        getPlayerSprite: () => this.player.getSprite(),
         setPlayerCollision: (enabled) => {
           const sprite = this.player.getSprite();
           const body = sprite.body as Phaser.Physics.Arcade.Body | null;
@@ -176,8 +181,28 @@ export class RiftScene extends Phaser.Scene {
         setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
         getCollectedNodes: () => this.contaminantNodes.getCollectedPositions(),
         addKindling: (n) => this.loot.addBonusKindling(n),
+        setEnemySpeedMultiplier: (id, mult) => this.ai.setEnemySpeedMultiplier(id, mult),
+        setEnemyMovementLocked: (id, locked) => this.ai.setEnemyMovementLocked(id, locked),
+        setEnemyPerceptionMultiplier: (id, mult) => this.ai.setEnemyPerceptionMultiplier(id, mult),
+        reverseEnemyPatrol: (id) => this.ai.reverseEnemyPatrol(id),
+        forceEnemyReturn: (id) => this.ai.forceEnemyReturn(id),
+        knockbackEnemy: (id, dx, dy) => this.ai.knockbackEnemy(id, dx, dy),
+        setDecoyPosition: (pos) => this.ai.setDecoyPosition(pos),
+        damageEnemy: (id, amount) => this.combat.applyToolDamage(id, amount),
+        showAbyssReveal: (enemies, nodes, durationMs) => this.minimap.showAbyssReveal(enemies, nodes, durationMs),
+        boostChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateMult(mult, durationMs),
+        reduceChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateReduction(mult, durationMs),
+        // T7 rewire: the 8 Slice 4 tools' enemy-facing overrides, wired the same way.
+        setEnemyEscalationSuppressed: (id, suppressed) => this.ai.setEnemyEscalationSuppressed(id, suppressed),
+        forceEnemyAlert: (id) => this.ai.forceEnemyAlert(id),
+        demoteEnemyAlertLevel: (id) => this.ai.demoteEnemyAlertLevel(id),
+        setEnemyDetectionFillRateMult: (id, mult) => this.ai.setEnemyDetectionFillRateMult(id, mult),
+        setHearingSuppressed: (active) => this.ai.setHearingSuppressed(active),
       },
     );
+    // muffle (T7 rewire): the AI announces a swallowed hearing signal here; ToolSystem
+    // spends one of muffle's charges for it (same translation role as `reportNoise`).
+    this.ai.setHearingAvoidedListener((_enemyId) => this.toolSystem.notifyProximityAvoid());
 
     this.extraction.create(
       this,
@@ -194,14 +219,25 @@ export class RiftScene extends Phaser.Scene {
       resetAll: () => this.resetAllSystems(),
     });
 
-    // Build tool slot info for HUD display
+    // Build tool slot info for HUD display. The passive slot is always the last unlocked
+    // slot (growth_sortie_slot adds a 4th slot ahead of it, never after) - never a
+    // hardcoded index, so a 4-slot loadout doesn't mislabel slot 2 as passive. Labelled
+    // by mapping over the loadout BEFORE filtering out empties, so an empty earlier slot
+    // (the panel lets you unslot any individual cell) can't shift a later filled slot's
+    // label off its real hotkey.
+    const passiveSlotIndex = contaminantSystem.getSortiePassiveSlotIndex();
+    const activeKeys = GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS;
     const toolSlots = sortieLoadout
-      .filter((c): c is Contaminant => c !== null)
-      .map((c, i) => ({
-        label: i === 0 ? 'Q' : i === 1 ? 'F' : '被动',
-        name: c.type,
-        usesRemaining: c.usesRemaining,
-      }));
+      .map((c, i) =>
+        c
+          ? {
+              label: i === passiveSlotIndex ? '被动' : activeKeys[i] ?? '?',
+              name: c.type,
+              usesRemaining: c.usesRemaining,
+            }
+          : null,
+      )
+      .filter((s): s is { label: string; name: Contaminant['type']; usesRemaining: number } => s !== null);
 
     this.hud.create(this, {
       canExtract: () => this.extraction.canExtract(),
@@ -262,12 +298,11 @@ export class RiftScene extends Phaser.Scene {
     this.extraction.update(delta);
     this.hud.update(delta);
 
-    // Tool key input (edge-triggered)
-    if (this.toolKey0 && Phaser.Input.Keyboard.JustDown(this.toolKey0)) {
-      this.toolSystem.useSlot(0);
-    }
-    if (this.toolKey1 && Phaser.Input.Keyboard.JustDown(this.toolKey1)) {
-      this.toolSystem.useSlot(1);
+    // Tool key input (edge-triggered), one entry per active sortie slot.
+    for (let i = 0; i < this.toolKeys.length; i++) {
+      if (Phaser.Input.Keyboard.JustDown(this.toolKeys[i]!)) {
+        this.toolSystem.useSlot(i);
+      }
     }
 
     // Trail system: record player position and redraw visible trail marks.
@@ -280,8 +315,9 @@ export class RiftScene extends Phaser.Scene {
       delta
     );
 
-    // Minimap: reveal tiles within ambient radius around player
-    this.minimap.update(playerPos);
+    // Minimap: reveal tiles within ambient radius around player. `delta` only drives the
+    // abyss tool's reveal countdown (Slice 5 T1).
+    this.minimap.update(playerPos, delta);
 
     // Extraction key (edge-triggered)
     if (this.extractKey && Phaser.Input.Keyboard.JustDown(this.extractKey)) {
@@ -336,12 +372,25 @@ export class RiftScene extends Phaser.Scene {
     });
   }
 
+  /**
+   * One key per active sortie slot (spec F29 for Q/F; the 3rd slot's G follows the same
+   * "single source of truth" constant so it can never drift from what the loadout panel
+   * displays). Bound dynamically off `getSortieActiveSlotCount()` rather than a fixed 2,
+   * so growth_sortie_slot's 3rd active slot (Slice 5 T5) is actually usable in the rift,
+   * not just equippable.
+   */
   private bindToolKeys(): void {
     const keyboard = this.input.keyboard;
     if (!keyboard) return;
-    // Q = slot 0, F = slot 1 (spec F29)
-    this.toolKey0 = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q, true, false);
-    this.toolKey1 = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F, true, false);
+    const activeCount = contaminantSystem.getSortieActiveSlotCount();
+    const keyNames = GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS;
+    const codes = Phaser.Input.Keyboard.KeyCodes;
+    this.toolKeys = [];
+    for (let i = 0; i < activeCount; i++) {
+      const keyName = keyNames[i];
+      if (!keyName) break; // ran out of assigned keys; report as a gap rather than guess
+      this.toolKeys.push(keyboard.addKey(codes[keyName], true, false));
+    }
   }
 
   private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {
@@ -483,6 +532,8 @@ export class RiftScene extends Phaser.Scene {
           return `防御残留: 敌近距感知 +${Math.round(e.value * 100)}% (${sourceName})`;
         case 'storage_halved':
           return `防御残留: 储藏效果减半 (${sourceName})`;
+        case 'module_swap':
+          return `防御残留: 模块功能已互换 (${sourceName})`;
         default:
           return null;
       }
@@ -535,13 +586,21 @@ export class RiftScene extends Phaser.Scene {
         this.visibility.setRadiusScale(1.0 - effect.value);
         break;
       case 'proximity_sense_boost':
-        // Handled by the AI system reading tool debuffs (muffle passive may counteract)
-        // Store as metadata for AI to read — simplified: no-op if muffle is active
+        // muffle's *defense*-slot side effect (next sortie's enemies hear better) -
+        // distinct from muffle's tool-slot passive (`AISystem.setHearingSuppressed()`,
+        // wired by the T7 rewire). `effect.value` is the fractional boost (0.15 = +15%),
+        // so the multiplier handed to AISystem is `1 + value`.
+        this.ai.setHearingRangeMultiplier(1.0 + effect.value);
         break;
       case 'repair_efficiency':
       case 'upgrade_discount':
       case 'storage_halved':
         // These are purification-phase effects, not sortie effects. No-op here.
+        break;
+      case 'module_swap':
+        // Already applied directly to GameState at impact-resolution time (DEC-031,
+        // see impact-system.ts) so it takes effect before getSortieModifiers() is read
+        // at the purification→rift transition. This case exists only to drive the toast.
         break;
     }
   }
@@ -713,14 +772,10 @@ export class RiftScene extends Phaser.Scene {
       this.input.keyboard?.removeKey(this.restartKey, true);
       this.restartKey = null;
     }
-    if (this.toolKey0) {
-      this.input.keyboard?.removeKey(this.toolKey0, true);
-      this.toolKey0 = null;
+    for (const key of this.toolKeys) {
+      this.input.keyboard?.removeKey(key, true);
     }
-    if (this.toolKey1) {
-      this.input.keyboard?.removeKey(this.toolKey1, true);
-      this.toolKey1 = null;
-    }
+    this.toolKeys = [];
     // Before the player is destroyed: this is what releases the swing speed modifier.
     this.combat.destroy();
     this.hud.destroy();

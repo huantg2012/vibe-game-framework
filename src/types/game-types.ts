@@ -167,11 +167,19 @@ export interface TideState {
   currentIntensity: number;
 }
 
-/** Permanent upgrade IDs (Slice 3: one per axis) */
+/**
+ * Permanent upgrade IDs. Source of truth is data/upgrades.csv (generated into
+ * src/generated/upgrade-data.ts) — this union must list exactly the same ids.
+ * Slice 3: growth_chaos_resist / growth_kindling_affinity / growth_vitality.
+ * Slice 5 T5: growth_sortie_slot / growth_defense_slot / growth_forecast_clarity.
+ */
 export type GrowthUpgradeId =
   | 'growth_chaos_resist'
   | 'growth_kindling_affinity'
-  | 'growth_vitality';
+  | 'growth_vitality'
+  | 'growth_sortie_slot'
+  | 'growth_defense_slot'
+  | 'growth_forecast_clarity';
 
 /** Persistent growth state */
 export interface GrowthState {
@@ -201,4 +209,10 @@ export interface SaveDataV1 {
   sortieLoadout: (string | null)[];
   growth: GrowthState;
   stability: StabilityState;
+  /**
+   * Contaminant runtime state (Slice 5 T3/D3, DEC-032): per-contaminant-id persistent
+   * counters (solidify shatter cycle, combust burn accumulator, echo bonus-grant cap).
+   * Optional so saves written before this field existed still load (empty state).
+   */
+  contaminantRuntimeState?: Record<string, { solidifyCounter?: number; combustAccumulator?: number; echoBonusGranted?: number }>;
 }

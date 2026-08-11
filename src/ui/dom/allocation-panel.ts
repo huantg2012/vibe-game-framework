@@ -123,7 +123,8 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   if (!panel) return;
 
   const reserve = gameState.getKindlingReserve();
-  const repairPer = GAME_CONSTANTS.PURIFICATION.REPAIR_PER_KINDLING;
+  const repairPer = gameState.getEffectiveRepairPerKindling();
+  const siphonBoosted = gameState.getRepairEfficiencyMult() > 1;
   const maxUseful = Math.ceil((maxHp - hp) / repairPer);
   const maxAllocatable = Math.min(reserve, maxUseful);
 
@@ -175,8 +176,10 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     <span id="alloc-plus" class="action-btn btn-muted" style="padding:4px 10px;${plusDisabled ? 'opacity:0.3;cursor:default;' : ''}">+</span>
   </div>`;
 
-  // Reserve info
-  html += `<div style="font-size:13px;color:#5a5f66;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度</div>`;
+  // Reserve info. siphon (Slice 5 gap-fill): while equipped, repairPer is already the
+  // doubled value (gameState.getEffectiveRepairPerKindling()) - the "(虹吸增效)" tag is
+  // what makes that fact visible rather than just a bigger number the player might miss.
+  html += `<div style="font-size:13px;color:#5a5f66;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度${siphonBoosted ? ' <span style="color:#c4873a;">(虹吸增效)</span>' : ''}</div>`;
 
   // Action bar
   html += `</div>`; // end flex:1 content wrapper

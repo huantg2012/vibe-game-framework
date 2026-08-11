@@ -12,6 +12,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
 import { contaminantSystem } from '@/systems/contaminant-system';
+import { getDefenseRuntimeState, loadDefenseRuntimeState, type ContaminantRuntimeState } from '@/systems/defense-engine';
 import { growthSystem } from '@/systems/growth-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
@@ -19,6 +20,26 @@ import { GameEvent } from '@/types/events';
 import type { SaveDataV1 } from '@/types/game-types';
 
 const SAVE = GAME_CONSTANTS.SAVE;
+
+// ---------------------------------------------------------------------------
+// Contaminant runtime state (D3 / DEC-032): a single flat save section indexed by
+// contaminant id, merged from two owning modules — defense-engine (solidify shatter
+// counter + combust burn accumulator) and contaminant-system (echo's per-tool bonus
+// cap). IDs never collide because a contaminant is either defense-slotted (solidify/
+// combust) or tool-stage (echo target), never both at once.
+// ---------------------------------------------------------------------------
+
+function mergeRuntimeState(
+  ...maps: Record<string, ContaminantRuntimeState>[]
+): Record<string, ContaminantRuntimeState> {
+  const out: Record<string, ContaminantRuntimeState> = {};
+  for (const m of maps) {
+    for (const [id, state] of Object.entries(m)) {
+      out[id] = { ...out[id], ...state };
+    }
+  }
+  return out;
+}
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -40,6 +61,10 @@ export const saveManager = {
     const tide = tideSystem.getState();
     const growth = growthSystem.getState();
     const stability = stabilityTracker.getState();
+    const contaminantRuntimeState = mergeRuntimeState(
+      getDefenseRuntimeState(),
+      contaminantSystem.getEchoBonusState(),
+    );
 
     const data: SaveDataV1 = {
       version: SAVE.VERSION as 1,
@@ -52,6 +77,7 @@ export const saveManager = {
       sortieLoadout: cs.sortieLoadout,
       growth,
       stability,
+      contaminantRuntimeState,
     };
 
     localStorage.setItem(SAVE.KEY, JSON.stringify(data));
@@ -97,6 +123,12 @@ export const saveManager = {
 
     growthSystem.loadState(data.growth);
     stabilityTracker.loadState(data.stability);
+
+    // Contaminant runtime state (D3/DEC-032). Old saves without this field load as
+    // empty for both owners — never "loaded, then immediately cleared" because this
+    // runs on the load path only, not on the new-game reset path.
+    loadDefenseRuntimeState(data.contaminantRuntimeState);
+    contaminantSystem.loadEchoBonusState(data.contaminantRuntimeState);
 
     // Sync impact intensity from tide
     gameState.setImpactIntensity(data.tide.currentIntensity);

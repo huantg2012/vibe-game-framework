@@ -131,6 +131,49 @@ export const tideSystem = {
     return null;
   },
 
+  /**
+   * Pure preview of what getCurrentIntensity() will report after the NEXT advanceCycle()
+   * call, without mutating state. Mirrors advanceCycle()'s per-phase step + transition
+   * logic exactly on a local copy. advanceCycle() has no RNG, so this is an exact
+   * prediction, not a heuristic — valid as long as no other code path advances tide state
+   * between now and then (true today: advanceCycle() is only ever called once per
+   * rift-return visit, immediately followed by the very generateForecast() call this
+   * preview feeds — muffle's lookahead, see impact-system.ts).
+   */
+  peekNextIntensity(): number {
+    const cfg = getTideConfig(state.tideNumber);
+    let intensity = state.currentIntensity;
+    const cycleInPhase = state.cycleInPhase + 1;
+
+    switch (state.phase) {
+      case 'rise': {
+        const step = (cfg.peak - cfg.floor) / cfg.riseCycles;
+        intensity += step;
+        if (intensity > cfg.peak) intensity = cfg.peak;
+        break;
+      }
+      case 'crest':
+        intensity = cfg.peak;
+        break;
+      case 'ebb': {
+        const step = (cfg.peak - cfg.ebbTarget) / cfg.ebbCycles;
+        intensity -= step;
+        if (intensity < cfg.ebbTarget) intensity = cfg.ebbTarget;
+        break;
+      }
+    }
+
+    // Transition overrides (crest->ebb has no intensity effect of its own — the value
+    // set by the 'crest' case above already equals cfg.peak either way).
+    if (state.phase === 'rise' && cycleInPhase >= cfg.riseCycles) {
+      intensity = cfg.peak;
+    } else if (state.phase === 'ebb' && cycleInPhase >= cfg.ebbCycles) {
+      intensity = cfg.ebbTarget;
+    }
+
+    return intensity;
+  },
+
   /** Reset to initial state (new game). */
   reset(): void {
     state = {

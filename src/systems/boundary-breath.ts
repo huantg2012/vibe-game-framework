@@ -11,37 +11,41 @@
  */
 
 import Phaser from 'phaser';
+import { GAME_CONSTANTS } from '@/config/constants';
 import type { BoundaryShape } from '@/systems/boundary-shape';
 import type { TidePhase } from '@/types/game-types';
 
 // ---------------------------------------------------------------------------
-// Tuning
+// Tuning (B4, Slice 5: migrated into constants.ts as GAME_CONSTANTS.PURIFICATION.
+// BOUNDARY.BREATH; values unchanged from the original inline consts)
 // ---------------------------------------------------------------------------
 
-const SAMPLE_COUNT = 72;
+const BREATH = GAME_CONSTANTS.PURIFICATION.BOUNDARY.BREATH;
+
+const SAMPLE_COUNT = BREATH.SAMPLE_COUNT;
 const ANGLE_STEP = (2 * Math.PI) / SAMPLE_COUNT;
 
 /** Max simultaneous localized impacts. */
-const MAX_IMPACTS = 5;
+const MAX_IMPACTS = BREATH.MAX_IMPACTS;
 /** Impact arc half-width in radians (~25-45 degrees per impact). */
-const ARC_HALF_MIN = 0.4;
-const ARC_HALF_MAX = 0.8;
+const ARC_HALF_MIN = BREATH.ARC_HALF_MIN;
+const ARC_HALF_MAX = BREATH.ARC_HALF_MAX;
 /** Distance range: spawn outside, push toward membrane. */
-const SPAWN_DIST_MIN = 14;
-const SPAWN_DIST_MAX = 30;
+const SPAWN_DIST_MIN = BREATH.SPAWN_DIST_MIN;
+const SPAWN_DIST_MAX = BREATH.SPAWN_DIST_MAX;
 /** Single impact duration (ms). */
-const IMPACT_DURATION_MIN = 1800;
-const IMPACT_DURATION_MAX = 3500;
+const IMPACT_DURATION_MIN = BREATH.IMPACT_DURATION_MIN;
+const IMPACT_DURATION_MAX = BREATH.IMPACT_DURATION_MAX;
 /** Spawn interval range (ms between new impacts). */
-const SPAWN_INTERVAL_MIN = 400;
-const SPAWN_INTERVAL_MAX = 1200;
+const SPAWN_INTERVAL_MIN = BREATH.SPAWN_INTERVAL_MIN;
+const SPAWN_INTERVAL_MAX = BREATH.SPAWN_INTERVAL_MAX;
 
 // Dark, desaturated teal — background-level
-const WAVE_COLOR = 0x0e4a3f;
-const MEMBRANE_COLOR = 0x1a7a6a;
+const WAVE_COLOR = BREATH.WAVE_COLOR;
+const MEMBRANE_COLOR = BREATH.MEMBRANE_COLOR;
 
 /** Max inward deformation of the membrane at impact center (px). */
-const DEFORM_MAX_PX = 8;
+const DEFORM_MAX_PX = BREATH.DEFORM_MAX_PX;
 
 // ---------------------------------------------------------------------------
 // Impact state

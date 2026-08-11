@@ -111,7 +111,7 @@ export class ChaosSystem implements ChaosSystemAPI {
 
   // Stored references for cleanup
   private readonly onEnemyAlert: (payload: { enemyId: string; alertLevel: 'suspicious' | 'alert' | 'chase' }) => void;
-  private readonly onEnemyDamaged: (payload: { enemyId: string; amount: number; source?: 'player' }) => void;
+  private readonly onEnemyDamaged: (payload: { enemyId: string; amount: number; source?: 'player' | 'tool' }) => void;
   private readonly onEnemyLostPlayer: (payload: { enemyId: string }) => void;
   private readonly onEnemyKilled: (payload: { enemyId: string; position: { x: number; y: number } }) => void;
 
@@ -166,12 +166,16 @@ export class ChaosSystem implements ChaosSystemAPI {
       this.tempRateMult = 1.0;
       this.updateRateMultiplier();
     }
+    if (this.reductionDeadlineMs > 0 && this.clockMs >= this.reductionDeadlineMs) {
+      this.reductionDeadlineMs = 0;
+      this.reductionMult = 1.0;
+    }
 
     const chaos = GAME_CONSTANTS.CHAOS;
     const effectiveRateMult = this.tempRateDeadlineMs > 0
       ? Math.max(this.rateMultiplier, this.tempRateMult)
       : this.rateMultiplier;
-    const increment = chaos.BASE_RATE * this.chaosRateModifier * effectiveRateMult * dtSec;
+    const increment = chaos.BASE_RATE * this.chaosRateModifier * effectiveRateMult * this.reductionMult * dtSec;
     this.value = Math.min(this.value + increment, chaos.HARD_CAP);
     if (this.value > this.peak) this.peak = this.value;
 
@@ -187,6 +191,8 @@ export class ChaosSystem implements ChaosSystemAPI {
     this.rateMultiplier = 1.0;
     this.tempRateDeadlineMs = 0;
     this.tempRateMult = 1.0;
+    this.reductionDeadlineMs = 0;
+    this.reductionMult = 1.0;
     this.lastEmitted = GAME_CONSTANTS.CHAOS.START_VALUE;
     this.lastModulated = GAME_CONSTANTS.CHAOS.START_VALUE;
     this.thresholdsFired = [false, false, false];
@@ -254,8 +260,21 @@ export class ChaosSystem implements ChaosSystemAPI {
     this.tempRateMult = mult;
   }
 
+  /**
+   * Slice 5 siphon tool (T1): "接下来5秒内混乱值增速减半". `setTemporaryRateMult` above
+   * cannot express this - it takes `Math.max(rateMultiplier, tempRateMult)`, a floor that
+   * can only ever raise the rate, never lower it. This is a separate, purely multiplicative
+   * factor for the opposite direction, composed on top rather than replacing it.
+   */
+  setTemporaryRateReduction(mult: number, durationMs: number): void {
+    this.reductionDeadlineMs = this.clockMs + durationMs;
+    this.reductionMult = mult;
+  }
+
   private tempRateDeadlineMs = 0;
   private tempRateMult = 1.0;
+  private reductionDeadlineMs = 0;
+  private reductionMult = 1.0;
 
   // ------------------------------------------------------------------ internal
 

@@ -34,6 +34,14 @@ export interface EnemyView {
   isEngaged(): boolean;
   /** 0..1. Debug and QA only - never a gameplay input for another system. */
   getDetection(): number;
+  /**
+   * mirror (Slice 5 T4 gap-fill): true on exactly the frames this enemy's most recent
+   * sighting was redirected to the decoy instead of the real player position (see
+   * `state-machine.ts`'s `sightTargetPos()`). The read-side counterpart to `AISystem.
+   * setDecoyPosition()` - lets `ToolSystem`/`tool-vfx.ts` draw the "被诱饵吸引" bracket
+   * marker on the right enemy without AISystem needing to know anything about VFX.
+   */
+  isTargetingDecoy(): boolean;
 }
 
 /** The static per-type configuration. Slice 1 has exactly one type: the infiltrator. */
@@ -163,4 +171,32 @@ export interface EnemyAIState {
   readonly pendingDamagePos: Vector2;
   pendingNoiseLevel: 'suspicious' | 'alert' | null;
   readonly pendingNoisePos: Vector2;
+
+  // --- Slice 5 tool overrides (T1), set/cleared by ToolSystem via AISystem's setters.
+  // All default to "no effect" so an enemy nobody has ever used a tool on behaves exactly
+  // as before; nothing in the FSM or behaviours reads these except the two application
+  // points named alongside each field. ---
+  /** Multiplies final movement speed (compress / echo / resonate's post-knockback stun). */
+  externalSpeedMult: number;
+  /** While true, `applyVelocity` (behaviors.ts) keeps moving along `lockedDir` instead of
+   * whatever the state wanted this frame (compress: "无法改变移动方向"). */
+  movementDirLocked: boolean;
+  /** Captured once when the lock engages; stays put while `movementDirLocked` is true. */
+  readonly lockedDir: Vector2;
+  /** Multiplies sight/hearing range in `AISystem.perceive()` (overwrite / combust: "感知范围-50%"). */
+  perceptionRangeMult: number;
+
+  /** mirror (Slice 5 T4 gap-fill): set/cleared by `sightTargetPos()` every time it runs,
+   * so it always reflects "was the last sighting redirected", never a stale sticky flag. */
+  targetingDecoy: boolean;
+
+  // --- Slice 4 tool overrides (T7 rewire), same "default = no effect" contract as above. ---
+  /** delay: "感知状态被冻结". Blocks exactly SUSPICIOUS→ALERT and ALERT→CHASE in
+   * `state-machine.ts`'s `stepFsm` - the two transitions the CSV names. Escalations that
+   * are not a perception judgement call (being hit) are untouched. */
+  escalationSuppressed: boolean;
+  /** scatter: "感知填充速度降低30%". Multiplies the detection fill rate in
+   * `updateDetection` (state-machine.ts). Set when this enemy enters SUSPICIOUS while
+   * scatter has a charge, cleared when its alert episode closes (`ENEMY_LOST_PLAYER`). */
+  detectionFillRateMult: number;
 }

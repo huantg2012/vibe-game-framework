@@ -5,15 +5,24 @@
  * Owns no rendering; the scene that calls `run()` is responsible for the
  *演出 (shake, particle surge, result panel).
  *
- * Architecture: does not import other systems. Reads/writes GameState,
- * emits events through the bus.
+ * Architecture: does not import other systems (contaminantSystem is a pre-existing
+ * exception used for bonus-charge/tool-use grants and, since Slice 5 D6, the mirror
+ * forecast-misreport check below — reuses that existing import rather than adding a new
+ * one). Tide/growth-derived numbers (intensity, forecast_clarity level) are passed in as
+ * parameters by the scene layer instead, to preserve DEC-ARCH-002 (see generateForecast()).
+ * Reads/writes GameState, emits events through the bus.
  *
  * Slice 4: integrates DefenseEngine to apply defense slot effects before damage.
+ * Slice 5 D6 (DEC-034): forecast is non-spatial — see generateForecast()/getForecastDisplay().
+ * Slice 5 (muffle forecast-advance closure): while muffle is defense-slotted, an extra
+ * "lookahead" layer previews the impact AFTER next — see generateForecast()'s queue logic
+ * and getForecastLookahead().
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
+import { contaminantSystem } from '@/systems/contaminant-system';
 import { applyDefenseEffects, type DefenseContext, type DefenseResult } from '@/systems/defense-engine';
 import { GameEvent } from '@/types/events';
 import type { Contaminant } from '@/types/game-types';
@@ -36,30 +45,119 @@ export interface ImpactResult {
   readonly defenseResult?: DefenseResult;
 }
 
+/**
+ * Non-spatial forecast severity tier (DEC-034). Ordered light -> extreme; the order in
+ * SEVERITY_ORDER below is what "blur by one notch" walks along.
+ */
+export type ForecastSeverity = 'light' | 'moderate' | 'heavy' | 'extreme';
+
+/** What the boundary atmosphere / HUD actually shows the player. May lie (mirror) or
+ *  blur (baseline forecast noise) relative to the true target/severity — see
+ *  generateForecast(). */
+export interface ForecastDisplay {
+  readonly targetId: string;
+  readonly severity: ForecastSeverity;
+}
+
+/**
+ * muffle's "one extra round of warning" (CSV: 装备期间冲击预告多显示一层). Previews the
+ * impact AFTER next — one step further than `ForecastDisplay`. Both fields are as
+ * reliable as the layer-1 forecast (same FORECAST_ACCURACY bias applies once it becomes
+ * the real forecast; see generateForecast()'s doc comment for why tide progression makes
+ * the severity component an exact prediction, not a guess). Only ever non-null while
+ * muffle is currently defense-slotted.
+ */
+export interface ForecastLookahead {
+  readonly targetId: string;
+  readonly severity: ForecastSeverity;
+}
+
 // ---------------------------------------------------------------------------
 // ImpactSystem
 // ---------------------------------------------------------------------------
 
 const P = GAME_CONSTANTS.PURIFICATION;
 
+const SEVERITY_ORDER: ForecastSeverity[] = ['light', 'moderate', 'heavy', 'extreme'];
+
 /**
- * Chooses which module is the "heavy target" this cycle.
- * Returns the id of the primary target.
- * `forecastDirection` is set externally (for particle pre-cue) before calling run().
+ * Severity tier boundaries over the tide's intensity range [1.0, 3.0] (constants.ts
+ * TIDE.TIDES floor/peak). Divides that range into 4 roughly equal bands. Local constant
+ * (not in constants.ts) per this task's file-ownership scope.
+ */
+const SEVERITY_TIER_MAX: { max: number; tier: ForecastSeverity }[] = [
+  { max: 1.5, tier: 'light' },
+  { max: 2.0, tier: 'moderate' },
+  { max: 2.5, tier: 'heavy' },
+  { max: Infinity, tier: 'extreme' },
+];
+
+/**
+ * mirror's forecast deception (DEC-034 replaces the old "particle direction mirror-flip"
+ * with a lie about the target module). Rate carried over unchanged from the Slice 4/CSV
+ * intent ("10% 概率...预告...误导"). Local constant — mirror's damage-reduction effect
+ * itself still lives in defense-engine.ts; this is purely the display-layer deception.
+ */
+const MIRROR_MISREPORT_CHANCE = 0.10;
+
+/**
+ * Baseline chance the severity tier shown is blurred by one notch (independent of
+ * mirror) — represents the boundary reading's inherent noise. growth_forecast_clarity
+ * sharpens both this and MIRROR_MISREPORT_CHANCE via the same reliability bonus.
+ */
+const SEVERITY_BLUR_BASE_CHANCE = 0.20;
+const SEVERITY_BLUR_FLOOR_CHANCE = 0.05;
+
+function severityFromIntensity(intensity: number): ForecastSeverity {
+  for (const { max, tier } of SEVERITY_TIER_MAX) {
+    if (intensity < max) return tier;
+  }
+  return 'extreme';
+}
+
+/**
+ * Chooses which module is the "heavy target" this cycle (ground truth). Feeds run()'s
+ * FORECAST_ACCURACY bias and defense-engine's `forecastCorrect` check (retrograde) — both
+ * unchanged by DEC-034. `forecastDisplay` (below) is the separate, possibly-inaccurate
+ * value actually rendered to the player.
  */
 let forecastTargetId: string | null = null;
+let forecastDisplay: ForecastDisplay | null = null;
+
+/**
+ * Pre-committed ground-truth targets not yet consumed as `forecastTargetId`. Populated
+ * one entry ahead while muffle is defense-slotted (see generateForecast()) so that the
+ * lookahead layer it previews is an actual promise — the value shown now is guaranteed to
+ * become the real forecastTargetId on the following generateForecast() call, not an
+ * independent re-roll that could disagree with what was shown.
+ */
+const pendingTargetQueue: string[] = [];
+let forecastLookahead: ForecastLookahead | null = null;
 
 export const impactSystem = {
   /**
-   * Set the forecasted primary target (called during boundary atmosphere setup).
-   * 80% of the time this matches the actual target; 20% it's the other one.
+   * The player-facing forecast (target module + severity tier), possibly misreported
+   * by mirror or blurred by baseline forecast noise (DEC-034). Null before the first
+   * generateForecast() call.
    */
-  setForecastTarget(id: string): void {
-    forecastTargetId = id;
+  getForecastDisplay(): ForecastDisplay | null {
+    return forecastDisplay;
   },
 
-  getForecastTarget(): string | null {
-    return forecastTargetId;
+  /**
+   * muffle's extra lookahead layer (preview of the impact after next). Null unless
+   * muffle is currently defense-slotted — see generateForecast().
+   */
+  getForecastLookahead(): ForecastLookahead | null {
+    return forecastLookahead;
+  },
+
+  /** Clears forecast state (new game) — see main-menu-scene.ts's startNewExpedition(). */
+  resetForecastState(): void {
+    forecastTargetId = null;
+    forecastDisplay = null;
+    pendingTargetQueue.length = 0;
+    forecastLookahead = null;
   },
 
   /**
@@ -76,6 +174,11 @@ export const impactSystem = {
     if (cycle === 0) {
       return { damages: [], intensity: 0, skipped: true };
     }
+
+    // overwrite's module-swap side effect lasts exactly "1 次出击" (DEC-031): the sortie
+    // between this impact and the next one. Clear it here, before this impact's own
+    // defense processing may re-trigger it, so the window is always exactly one sortie.
+    gameState.setModuleSwapActive(false);
 
     const intensity = gameState.getImpactIntensity();
     const totalDamage = P.BASE_IMPACT_DAMAGE * intensity;
@@ -129,12 +232,30 @@ export const impactSystem = {
         gameState.addPendingSideEffects(defenseResult.sideEffects);
       }
 
-      // Store repair efficiency and upgrade discount
-      if (defenseResult.repairEfficiencyMult > 1.0) {
-        gameState.setRepairEfficiencyMult(defenseResult.repairEfficiencyMult);
-      }
+      // Store upgrade discount. Repair efficiency (siphon) is NOT set here - it is a
+      // standing "while equipped" bonus owned by ContaminantSystem.syncRepairEfficiencyMult()
+      // (called on every defense-slot mutation), not a per-impact trigger. See
+      // defense-engine.ts's applySiphon() doc comment for why.
       if (defenseResult.upgradeDiscount > 0) {
         gameState.setUpgradeDiscount(defenseResult.upgradeDiscount);
+      }
+
+      // resonate/erode: cross-slot impact-charge bonuses (DEC-033)
+      if (Object.keys(defenseResult.bonusCharges).length > 0) {
+        contaminantSystem.applyBonusCharges(defenseResult.bonusCharges);
+      }
+
+      // echo: grant +1 use to a random tool-stage contaminant (no-ops if none eligible)
+      for (let i = 0; i < defenseResult.toolUseGrants; i++) {
+        contaminantSystem.grantRandomToolUse();
+      }
+
+      // overwrite: swap CORE/STORAGE module effects for the next sortie (DEC-031).
+      // Applied immediately (not deferred to rift-scene's pending-side-effect consumer)
+      // because purification-scene reads gameState.getSortieModifiers() to build the
+      // rift scene's transition data before the rift scene itself starts.
+      if (defenseResult.moduleSwapTriggered) {
+        gameState.setModuleSwapActive(true);
       }
     }
 
@@ -169,6 +290,13 @@ export const impactSystem = {
       }
     }
 
+    // combust: burst-release heal to the lowest-HP module (DEC-030)
+    if (defenseResult && Object.keys(defenseResult.healOut).length > 0) {
+      for (const [moduleId, amount] of Object.entries(defenseResult.healOut)) {
+        gameState.healModule(moduleId, amount);
+      }
+    }
+
     // Emit resolved
     eventBus.emit(GameEvent.IMPACT_RESOLVED, { moduleDamage });
 
@@ -179,13 +307,87 @@ export const impactSystem = {
   },
 
   /**
-   * Decide and store the forecast target for the boundary atmosphere pre-cue.
-   * Call this when entering the purification scene.
+   * Decide and store the forecast target + severity for the NEXT impact, and (while
+   * muffle is defense-slotted) pre-commit + preview the target/severity for the impact
+   * AFTER that. Call this when entering the purification scene (both on fresh entry and
+   * on return from the rift).
+   *
+   * @param nextIntensity - The intensity the next impact will actually use. Callers pass
+   *   `tideSystem.getCurrentIntensity()` (read AFTER `tideSystem.advanceCycle()` has run
+   *   for this visit, if it did) — that value is exactly what `run()` will read via
+   *   `gameState.setImpactIntensity()` at the start of the next visit, since tide state
+   *   doesn't change between visits except through advanceCycle(). Passed as a parameter
+   *   (rather than importing tideSystem here) to preserve DEC-ARCH-002.
+   * @param forecastReliabilityBonus - `growthSystem.getModifiers().forecastClarity`
+   *   (already level * effectPerLevel, i.e. 0/0.05/0.10/0.15 — not a raw level). Defaults
+   *   to 0 if the caller can't provide it. Passed in rather than importing growthSystem
+   *   directly, same DEC-ARCH-002 reasoning as nextIntensity.
+   * @param nextNextIntensityEstimate - The intensity the impact AFTER next will use, i.e.
+   *   `tideSystem.peekNextIntensity()` read at the SAME call site as `nextIntensity`
+   *   above (a pure preview of tide state one more advanceCycle() ahead — exact, since
+   *   advanceCycle() has no RNG). Only consumed when muffle is defense-slotted.
    */
-  generateForecast(): void {
+  generateForecast(
+    nextIntensity: number,
+    forecastReliabilityBonus = 0,
+    nextNextIntensityEstimate: number,
+  ): void {
     const modules = gameState.getModules();
-    // Pick a random target for the forecast
-    const targetIndex = Math.random() < 0.5 ? 0 : 1;
-    forecastTargetId = modules[targetIndex]!.id;
+
+    // Ground truth for the upcoming impact. Consumes a pre-committed pick from
+    // pendingTargetQueue if muffle queued one ahead of time (see below); otherwise rolls
+    // fresh, identical to the pre-lookahead behaviour. Feeds run()'s FORECAST_ACCURACY
+    // bias and defense-engine's `forecastCorrect` check (retrograde) — both unaffected by
+    // where the value came from, since only the resulting id matters to either.
+    forecastTargetId = pendingTargetQueue.length > 0
+      ? pendingTargetQueue.shift()!
+      : modules[Math.random() < 0.5 ? 0 : 1]!.id;
+    const targetIndex = modules.findIndex((m) => m.id === forecastTargetId);
+    const trueSeverity = severityFromIntensity(nextIntensity);
+
+    // growth_forecast_clarity (DEC-034): sharpens both the mirror misreport chance and
+    // the baseline severity blur chance via the same reliability bonus.
+    const reliabilityBonus = Math.max(0, forecastReliabilityBonus);
+
+    // mirror (DEC-034): if currently defense-slotted, 10% chance (minus reliability) to
+    // misreport the target module. Uses the existing contaminantSystem import (see file
+    // header) rather than threading defenseSlots through as a second parameter.
+    const slotted = contaminantSystem.getDefenseSlotted();
+    const mirrorSlotted = slotted.some((c) => c !== null && c.type === 'mirror' && c.stage === 'defense');
+    const misreportChance = mirrorSlotted ? Math.max(0, MIRROR_MISREPORT_CHANCE - reliabilityBonus) : 0;
+    const otherIndex = targetIndex === 0 ? 1 : 0;
+    const displayTargetId = Math.random() < misreportChance ? modules[otherIndex]!.id : forecastTargetId;
+
+    // Baseline severity blur: independent of mirror, always possible, sharpened by the
+    // same reliability bonus down to a residual floor (never perfectly precise).
+    const blurChance = Math.max(SEVERITY_BLUR_FLOOR_CHANCE, SEVERITY_BLUR_BASE_CHANCE - reliabilityBonus);
+    let displaySeverity = trueSeverity;
+    if (Math.random() < blurChance) {
+      const idx = SEVERITY_ORDER.indexOf(trueSeverity);
+      const dir = Math.random() < 0.5 ? -1 : 1;
+      const clamped = Math.min(SEVERITY_ORDER.length - 1, Math.max(0, idx + dir));
+      displaySeverity = SEVERITY_ORDER[clamped]!;
+    }
+
+    forecastDisplay = { targetId: displayTargetId, severity: displaySeverity };
+
+    // muffle (CSV: 装备期间冲击预告多显示一层 — "比正常多1轮准备时间"): while equipped,
+    // pre-commit (if not already promised by a previous round) the ground-truth target
+    // for the impact AFTER next, and preview it alongside a severity read off the
+    // deterministic tide-state peek. This queued target is what forecastTargetId will
+    // actually become on the NEXT generateForecast() call — not a second independent
+    // guess — so the preview carries the same reliability as the layer-1 forecast above,
+    // it is just further out. The reuses-getDefenseSlotted() call above avoids a second
+    // contaminantSystem query.
+    const muffleSlotted = slotted.some((c) => c !== null && c.type === 'muffle' && c.stage === 'defense');
+    if (muffleSlotted) {
+      if (pendingTargetQueue.length === 0) {
+        pendingTargetQueue.push(modules[Math.random() < 0.5 ? 0 : 1]!.id);
+      }
+      const lookaheadTargetId = pendingTargetQueue[0]!;
+      forecastLookahead = { targetId: lookaheadTargetId, severity: severityFromIntensity(nextNextIntensityEstimate) };
+    } else {
+      forecastLookahead = null;
+    }
   },
 };

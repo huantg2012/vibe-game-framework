@@ -9,6 +9,141 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-040: `muffle` 的"提前一轮"实现为第二层预告（预支承诺，非二次猜测）
+- Date: 2026-08-12
+- Phase: Slice 5（收口）
+- Type: Rule clarification + implementation
+- Context: `muffle` 的防御副作用"冲击预告提前 1 轮显示——比正常多 1 轮准备时间"从 Slice 4 起从未实现（`applyMuffle()` 只留了一句"由净化点场景处理"的注释，而场景里没有对应代码）。DEC-034 把预告改为非空间后，"方向预告提前"这个措辞也失效了。
+- Decision: 在新语义下"提前一轮"= 装备 muffle 时，HUD 除第一层预告外**额外显示下下次冲击的目标模块与强度**。实现用"预支承诺"：装备时提前掷定目标存入队列，下一轮生成第一层预告时消费该队列值作为 ground truth——所以第二层展示的目标**保证**会原样成为下一轮的第一层，而不是两次独立猜测偶然吻合。强度取 `tideSystem.peekNextIntensity()`（潮汐推进无随机数，是精确预测而非估计）。
+- Alternatives: (a) 判定该效果在非空间预告下已废弃、改 CSV 换一个收益（拒绝：这是降级，人已明确否决"觉得难就改设计"）；(b) 第二层只显示模块不显示强度（未采用：`peekNextIntensity()` 使强度可精确预测，没有必要隐藏）。
+- Reason: "多一轮准备时间"的字面收益就是多看一层。预支承诺保证了这个收益是真的，而不是概率巧合。
+- Impact: `retrograde` 依赖的 ground-truth 判定链未改动（`forecastTargetId === actualPrimaryId` 一行原样保留）。第二层预告**不叠加** `mirror` 谎报与基线档位模糊——即它是字面意义的"预知"。若试玩觉得过强，加失真是数值层调整，不回退本决策。CSV 文案已同步。
+
+## DEC-039: Slice 5 收口期的四项局部实现选择
+- Date: 2026-08-12
+- Phase: Slice 5（收口）
+- Type: Implementation choices（由 code agent 在执行中做出，Director 补记）
+- Decision:
+  - **第 3 个主动工具快捷键选 G**。Q/F 已占用，E/R 分别是交互与重启；G 紧邻 F，与 Q/F 同属"移动区外扩一格"的手感，不需要移动手部位置。键位序列收敛为 `GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS`，HUD 与装备面板都从该常量读，杜绝"面板写一个键、实际绑另一个"。
+  - **`resonate` 装备期被动用布尔开关而非计数器**。CSV 要求"多件不叠加"，布尔开关从结构上保证了这一点（1 件或 5 件都只置 true 一次），比计数器再夹逼更不容易写错。
+  - **`siphon` 的修复效率改为"装备期间"实时同步**，与 `resonate` 走同一组防御槽变更点（`slotDefense`/`unslotDefense`/两处冲击转化/`reset`/`loadState`）。原先那条"每次冲击结算时一次性赋值、且卸下后从不复位"的旧管线已删除，避免两套逻辑并存。该状态不进存档（纯派生态，加载后从防御槽重算）。
+  - **听觉范围倍率是全局字段而非逐敌人字段**。`proximity_sense_boost`（muffle 作为防御残渣的副作用）影响的是本次出击所有敌人，与 `setHearingSuppressed()`（muffle 作为工具时屏蔽听觉）是两套独立机制，刻意分开命名以免后来者混淆。
+- Reason: 四项都是实现层选择，不改变已拍板的设计语义，但都属于"下一个人必须知道才不会改坏"的约束，故留痕。
+
+## DEC-038: 工具使用 VFX 规格 — "世界痕迹"而非"施法动作"；网格块集群替代圆形；受影响敌人复用坏像素亮度联动
+
+- Date: 2026-08-12
+- Phase: Slice 5（T4 工具使用 VFX 规格 + B3 art-direction §6 复核 + T5 第 4 槽位视觉判断）
+- Type: Visual design decision
+- Context: 15 种主动工具（`tool-system.ts`）已全部实现游戏效果（T1/T2），但表现层是 Slice 4 起的占位手法：`fillCircle`/`strokeCircle` 画圆形范围，色值大量不在 `palette.json` 锁定色内（白色/蓝灰/橙黄/暗红/紫色），且 15 件工具彼此没有共享视觉语言。
+- Decision:
+  1. **载体 = 世界被改写的痕迹，不是角色施放的动作**（`expand` 因效果发生在玩家自身而作为唯一例外，仍不做"施法手势"）。理由：玩家 sprite 规格锁定"无个性无姿态"，工具是残渣转化物不是玩家超能力，效果主体应落在目标位置/敌人身上而不是玩家身体。
+  2. **禁用圆形填充/描边**，范围/领域效果改为网格对齐的矩形块集群（`echo` 的扩散环例外，用分段折线近似圆）。理由：`world.md` §4.2 明确污染签名是"矩形的、网格对齐的、数据错误式的"，圆形渐变是当前实现对世界观的偏离，不是刻意设计。
+  3. **15 件工具按机制形状归纳为 8 个视觉族群**（定点凝滞/单体标记/领域覆写/连线贯穿/即时脉冲/分身诱饵/自身相变/资源情报），族群内共享三阶段时序模板和渲染基元，差异只来自 `narrative_origin` 决定的色相（`contam-*` 谱系内取值）与运动方向（内收/外扩/振荡/静止），不换形状语言（Degree not Kind）。
+  4. **受影响敌人的主标示 = 复用已有的坏像素/感知点亮度**，直接绑定该敌人当前的感知倍率（倍率降到 0 熄灭、部分降低按比例调暗），零新增视觉基元；只有纯行为类效果（无感知分量）才追加一个共用的方括号标记作为副标示。
+  5. **第 4 槽位面板判断（T5）**：440px 宽面板下单行 4 列槽位（≈95px/格）仍在可读范围内，判定**复用即可**，只需把 `grid-template-columns: repeat(3, 1fr)` 参数化为按实际槽位数生成，不需要新视觉规格或分组布局。
+  6. **art-direction.md §6.2/§6.4 措辞复核（B3）**：§6.2 补齐 `_template-ui.md` 五态里缺的"临界"态；§6.4 补充与 `ui-art-overhaul.md` 的权威关系说明（后者是实操基线，§6 是其上位规范）。均为措辞细化，不改变已锁定的视觉方向。
+- Alternatives: 圆形范围改用"柔和光晕渐变"以贴近其他动作游戏的技能特效审美（拒绝：违反 §1.1 视觉统一性原则，会让工具效果读作"另一款游戏的截图"，且渐变填充与像素风的硬边纪律冲突）；受影响敌人标示用独立图标/buff 气泡（拒绝：违反 U2"无通用图标"约束，且会遮挡敌人轮廓破坏"威胁识别"这一既有 gameplay 信号系统，参见 §5.2 覆盖体的面积光池预警逻辑）。
+- Reason: 15 件工具是本 Slice 里工程量最大的表现层缺口，且此前从未有统一规格约束——不趁这次一次性建立底层语法，后续每加一件工具都会再长出一套自己的特效风格。
+- Impact: 规格文档 `docs/art/tool-vfx-spec.md`（新建）。`art-direction.md` §6.2/§6.4 措辞更新，`changed-this-slice` 置 `true`。code agent 实现时需要替换当前 8 个占位工具里全部不合规色值，并把连续 alpha tween 渐隐改为离散跳变消散（规格 A3-5）。第 4 槽位的键位标签分配（`SLOT_LABELS` 扩到 4 项）留给 code agent 决定，art 只约束"必须与实际绑定一致"。
+
+## DEC-037: Slice 5 T3 defense-engine wiring — direct system-to-system calls for the cross-slot/tool-grant outputs, unified per-contaminant runtime-state schema for D3
+
+- Date: 2026-08-12
+- Phase: Slice 5（T3 防御侧未接线机制全量补齐 + D3 存档 + B4 死常量清理）
+- Type: Technical choice (implements DEC-029/030/031/032/033 literally; two new small deviations flagged below)
+- Context: Implemented all 6 previously-`handled externally`/`future iteration` mechanics in `applyGenericDefense()`: `abyss` dynamic reduction (DEC-029), `combust` accumulate+burst heal (DEC-030), `overwrite` module swap (DEC-031), `resonate`/`erode` cross-slot charge bonuses (DEC-033), `echo` tool-use grants, `mirror` post-damage kindling return. Also closed two CSV-documented but previously entirely-unstubbed side effects while at it (not in the Brief's enumerated 6, flagged for awareness, not scope creep beyond what "18 种污染物防御行为均与 CSV 描述一致" requires): `abyss`'s 5% chance to hit a full-HP module for 10% of its max HP (unmitigated, applied after normal reduction), and `erode`'s 20% chance next-sortie initial chaos +8 (identical pattern to `kindle`/`echo`'s existing chaos-bonus side effects).
+- Decision:
+  1. **`resonate`/`erode`'s bonusCharges and `echo`'s toolUseGrants are consumed by `impact-system.ts` calling `contaminantSystem.applyBonusCharges()`/`grantRandomToolUse()` directly**, not routed through the scene layer (`purification-scene.ts`) even though that scene is the established "translator" between systems (DEC-036's rationale). Reason: `impact-system.ts` already directly imports `defense-engine.ts` (Slice 4 precedent), and `purification-scene.ts` is out of this task's owned-file set — adding a second system import to an already-not-pure module was lower risk than editing a file outside the assigned boundary.
+  2. **`overwrite`'s module swap is applied immediately to `GameState` at impact-resolution time** (inside `impactSystem.run()`), not deferred to the rift-scene's `consumePendingSideEffects()` toast-application step. Reason: `purification-scene.ts` reads `gameState.getSortieModifiers()` to build the rift scene's transition data *before* the rift scene itself starts and consumes pending side effects — deferring the swap to that step would make it always one sortie too late. A `PendingSideEffect{type:'module_swap'}` is still pushed and still flows through the existing toast channel (DEC-031's hard requirement), it just no longer *applies* anything when consumed there (documented no-op in `rift-scene.ts`).
+  3. **Unified `ContaminantRuntimeState` schema (D3)** lives as an interface in `defense-engine.ts` (`solidifyCounter` / `combustAccumulator` / `echoBonusGranted`), even though `echoBonusGranted` is tracked and written by `contaminant-system.ts` (it caps bonus grants per *tool*, not per defense-slotted contaminant — a different id-space than solidify/combust, but no collision is possible since a contaminant is never simultaneously in `defense` and `tool` stage). `SaveManager` merges both modules' snapshots into one flat save section via a local `mergeRuntimeState()` helper; each module's own loader only reads the fields it recognizes.
+  4. **`resetDefenseEngine()` was never called anywhere in the codebase before this task** (verified by grep) — a latent gap that would have let `solidifyCounters` leak across "New Expedition" resets even before D3 existed. Added the call to `main-menu-scene.ts`'s `startNewExpedition()`, outside this task's owned-file set but necessary for D3's "reset vs. load must not fight" requirement to hold.
+- Alternatives considered for (1): routing through `purification-scene.ts` as the architecturally "correct" translator (rejected: file not owned by this task, and the existing precedent already tolerates `impact-system.ts` → `defense-engine.ts` direct calls); for (2): deferring the swap to the toast-consumption step and accepting it lags one sortie (rejected: contradicts DEC-031's "1 次出击" duration — it would actually apply to sortie N+1 while the toast announces it at the start of sortie N+1, meaning the *displayed* sortie and the *affected* sortie would be off by one in the other direction depending on read order); for (3): a second, separate save key for `echoBonusGranted` (rejected: reintroduces exactly the "every new persistent mechanic re-litigates the channel" cost D3 was meant to close).
+- Reason: Minimize edits outside the assigned owned-file boundary while keeping every new mechanic's actual effect correct at the moment code reads it (`getModuleEffect()` at scene-transition time; `getSortieModifiers()` before rift-scene creation).
+- Impact: `DefenseResult` gained `healOut` / `bonusCharges` / `toolUseGrants` / `moduleSwapTriggered`; `DefenseContext`'s `moduleHps`/`moduleMaxHps` are now read (previously ignored `_context`). `GameState` gained `healModule()`, `isModuleSwapActive()`/`setModuleSwapActive()`, and `getModuleEffect()` now swaps its HP *source* module (not its output value) when active — chosen deliberately because swapping the two output values outright would make the effect strictly bad for the player every time (kindlingValueModifier's range is always ≥1.0, chaosRateModifier's is always ≤1.0, so plugging one into the other's consumer could never be a net win), contradicting DEC-031's own "sometimes favours the player" premise. `SaveDataV1` gained an optional `contaminantRuntimeState` field (old saves load with empty state, matching `resetDefenseEngine()`'s empty state — never "loaded then cleared"). `data/contaminants.csv`: `erode`'s row text changed per DEC-033; `combust`'s row text changed from "约等于2次满额冲击" to the literal "60" per DEC-030's own Impact note ("CSV 描述文案需同步为确切数值"), which the Slice 5 Brief's bullet list didn't call out explicitly but the decision it's implementing does. **Known discrepancy flagged, not fixed**: `abyss`'s CSV text ("最高65%当3模块均低于半血") assumes 3 HP-bearing purification modules; the game only has 2 (CORE/STORAGE), so the 65% cap is unreachable in practice (2 modules low-HP maxes out at 50%). Implemented the formula literally (`min(0.65, 0.20 + count*0.15)`) so it self-corrects if a 3rd module is ever added, but this is a real CSV/design inconsistency, not a code bug — flagged for design, not resolved unilaterally. **Also out of scope, flagged not implemented**: `resonate`'s CSV main effect ("装备期间CORE和STORAGE模块效果上限各提升10%") has no code path at all (not even a stub) — it is a passive while-equipped modifier to `MAX_CORE_REDUCTION`/`MAX_STORAGE_BONUS`, architecturally the same category of "while-equipped passive" that Slice 4 already deferred for `muffle`'s forecast-advance (still un-implemented today). Not in this task's enumerated 6 items and not covered by any D1-D6 ruling; needs its own design decision on whether it's Slice 5 scope or backlog.
+
+## DEC-036: Slice 5 (T1/T2) tool-facing AI/combat/chaos overrides added as small setter APIs, not the Slice 4 debuff-descriptor pattern
+
+- Date: 2026-08-12
+- Phase: Slice 5（T1 七种主动工具 + T2 `siphon` 被动）
+- Type: Technical choice (interface addition; discovered + flagged a pre-existing gap)
+- Context: `tool-system.ts` 的文档注释声称 8 个既有工具通过 `ToolDebuffs` 描述符把效果交给"scene 层在 AI update 后应用"。核实发现**这条消费链从未接线**——`getDebuffs()` 全项目无任何调用方，`notifyEnemySuspicious`/`notifyProximityAvoid` 也无调用方。也就是说 solidify/erode/delay/kindle/stitch/retrograde/scatter/muffle 这 8 个工具对敌人行为目前只有表现层效果，没有实际游戏效果。这不在 T1/T2 范围内，未修复，仅记录并汇报。
+- Decision: 新增 7 主动 + `siphon` 不复用这条已失效的管线，改为 `AISystem` 新增一组小方法（`setEnemySpeedMultiplier` / `setEnemyMovementLocked` / `setEnemyPerceptionMultiplier` / `reverseEnemyPatrol` / `forceEnemyReturn` / `setDecoyPosition` / `knockbackEnemy`），`tool-system.ts` 通过 `rift-scene.ts` 注入的可选回调直接调用，和现有 `setPlayerCollision`/`addKindling` 同一形状。`combat-system.ts` 新增 `applyToolDamage()`（combust 的持续伤害出口）、`chaos-system.ts` 新增 `setTemporaryRateReduction()`（siphon 的减速出口——已有的 `setTemporaryRateMult` 是 `Math.max` 语义,只能加速不能减速,语义不够）。`mirror` 的镜像诱饵通过 `AIContext.decoyPos` + `state-machine.ts` 里新增的 `sightTargetPos()` 帮助函数,把"视觉命中"重定向到诱饵位置,不触碰听觉/受伤路径。
+- Alternatives: (a) 修复并复用 `ToolDebuffs` 管线（拒绝：范围膨胀到 T1/T2 之外，且旧 8 个工具的效果设计本身可能需要重新核对，属于另一次任务）；(b) 让 `tool-system.ts` 直接 import `AISystem`/`CombatSystem`/`ChaosSystem`（拒绝：违反 `architecture.md` DEC-ARCH-002 的单向数据流,scene 才是翻译层）。
+- Reason: 新工具的 Done 标准是"效果真的发生"，而不是"产生一个没人读的描述符"。小方法比修复整条旧管线风险更低、改动面更小。
+- Impact: `EnemyAIState` 新增 4 个字段（`externalSpeedMult`/`movementDirLocked`/`lockedDir`/`perceptionRangeMult`，默认值等于"无效果"，对旧 8 个工具和地图其余行为零影响）；`AIContext` 新增 `decoyPos`；`behaviors.ts` 的 `applyVelocity()` 与 `ai-system.ts` 的 `perceive()` 各加一处读取。`rift-scene.ts` 的 `toolSystem.create()` 选项对象新增约 10 个可选回调（纯新增，未改动既有字段）。**待办**：8 个既有工具的敌人向效果未接线一事需要升报给 Director——是否需要一次单独的清账任务。
+
+## DEC-035: Module low-HP red flicker ring removed, replaced by B3 三态视觉
+
+- Date: 2026-08-12
+- Phase: Slice 5（T6）
+- Type: Technical choice（纯内部实现，非玩法/数值变更）
+- Context: `purification-module.ts` 原有一个未在任何 spec 中登记的临时视觉——hp<25% 时框架描边红色闪烁（`DANGER_COLOR`，基于 `scene.time.now` 每帧重绘）。T6 要求实现 `ui-art-overhaul.md` B3 的受损三态（健康/受损/严重受损：裂缝线 + 指示灯 + 严重受损边缘 teal 渗入）。两者在低 HP 区间会同时触发，视觉上互相打架，且旧红环从未写入任何 spec，不是需要保留的约定。
+- Decision: 移除旧的红环闪烁，改为完全按 B3 实现三态（阈值 >60% 健康 / 30%-60% 受损 / <30% 严重受损，spec 未定分界故取 Task Brief 给的默认值）。三态改变时才重绘模块主体（cracks），指示灯用独立 Graphics + 500ms `Phaser.Time.TimerEvent` 闪烁，不逐帧重绘整个模块。
+- Alternatives: (a) 保留红环与新三态叠加显示（拒绝：两套"低血警告"语言同时出现，且旧红环本身不在任何 spec 中，保留它没有依据）；(b) 只在 hp<25% 时额外叠加红环作为"critical 的强化"（拒绝：B3 已经明确定义了 critical 态的完整视觉，不需要再叠一层未经设计的红色）。
+- Reason: B3 是当前唯一权威的模块三态规格；旧红环是无 spec 支撑的历史遗留，两者共存会违反"industrial device 而非后台管理系统"的美术基调（多重告警色叠加是典型 admin-panel 味）。
+- Impact: HP 数值条本身在 ratio<0.25 时仍变红填充（`DANGER_COLOR` 保留用于 HP 条，未删除该常量），只移除了模块主体轮廓的红环闪烁。三态阈值（0.6 / 0.3）定义为 `purification-module.ts` 内的局部常量，未写入 `constants.ts`；登记进 `system-purification-impact.md` 由 director/design 在 B1 回填时一并处理。
+
+## DEC-034: Impact forecast becomes non-spatial (target + severity, no direction)
+- Date: 2026-08-12
+- Phase: Slice 5（设计议题 D6）
+- Type: System redesign
+- Context: 三件事同时指向预告系统：`mirror` 的副作用要"预告方向镜像反转（误导）"、`growth_forecast_clarity` 改造要"提升预告准确率"、以及 backlog 已记的缺陷——`getForecastAngle()` 把 CORE→左、STORAGE→右，**而 CORE 就在场地正中心**，"左"是任选的；它只认识两个模块（场景实有五个交互点），且与 BoundaryShape 的压力主方向叠成两个互不相关的方向暗示。
+- Decision: 预告不再给方向。改为只播报**目标模块**与**强度档位**。空间方向的表达权完全交给 BoundaryShape 的压力可视化（那是唯一有真实空间语义的方向源）。相应地：`mirror` 的误导 = 谎报目标模块；`growth_forecast_clarity` = 降低谎报概率 / 提升强度档位精度。
+- Alternatives: (a) 先把方向重做成真有空间意义的（压力主方向或实际受击模块位置），再实现误导与准确率（拒绝：本 Slice 多一块设计工作，且与压力可视化功能重叠）；(b) 按现状接线（拒绝：等于明知故犯地交付两个无意义的功能——反转一个任意方向玩家察觉不到，"准确率"提升的是什么的准确率也说不清）。
+- Reason: 一次解掉三个问题且工作量最小。方向暗示已经由压力可视化承担，预告面板重复表达同一维度只会制造矛盾信号。
+- Impact: `getForecastAngle()` 移除；预告面板/HUD 改为"目标 + 强度"；`system-purification-impact.md` 的预告规则需重写。backlog 中"冲击预告方向映射无空间意义"一项由此闭合。
+
+## DEC-033: Defense slot cross-slot effects apply to all other slots (not a hardcoded 2)
+- Date: 2026-08-12
+- Phase: Slice 5（设计议题 D5）
+- Type: Rule clarification + CSV 文案同步
+- Context: `erode` 的 CSV 描述写死"其他 **2** 个防御 slot"。Slice 5 的 `growth_defense_slot` 改造会解锁第 4 个防御槽，届时"2 个"指谁没有定义。
+- Decision: 改为"其他所有槽位"，并同步修改 `data/contaminants.csv` 的 `description_defense` 文案。`resonate` 的"全 slot 同步"本就无歧义，不变。
+- Alternatives: 保留固定 2 个并定义选取规则（拒绝：每次扩槽都要回来改一遍，且"选哪 2 个"没有设计理由）。
+- Reason: 这是描述与规则对齐，不是机制降级。写死数量会让槽位数变成散落在数据里的隐式耦合。
+- Impact: 四槽下 `erode` 变强（影响 3 个而非 2 个）。若试玩发现过强，走数值调参（降低加成值），不回退本决策。
+
+## DEC-032: Contaminant runtime state enters the save file
+- Date: 2026-08-12
+- Phase: Slice 5（设计议题 D3）
+- Type: Architecture
+- Context: `defense-engine.ts` 的 `solidifyCounters` 是跨冲击累积的运行时状态，但不进存档，重载即清零。Slice 5 会再加两个同类状态：`combust` 的焚尽累加器、`echo` 的"单件最多 +2"上限计数。
+- Decision: 把污染物运行时状态纳入 `SaveManager`。
+- Alternatives: (a) 接受重载清零并改设计避免长周期累积（拒绝：等于为了回避存档改动而砍掉 `combust` 的核心玩法——"我快攒满了"的预期感）；(b) 只给 `combust` 单独存档（拒绝：留下不一致，下一件带状态的污染物又要重新决定一次）。
+- Reason: `solidify` 丢计数只影响一次减伤档位、玩家无感；但 `combust` 攒到九成时退出游戏、回来归零，玩家会当成 bug。`echo` 的上限计数丢失方向相反——会让玩家超出设计上限反复获益。一次性纳入存档同时解决三个，并顺带修掉 `solidify` 的既有缺陷。
+- Impact: 存档结构扩展 + 版本兼容处理。此后新增带持久状态的污染物按同一通道走，不再逐个决策。
+
+## DEC-031: `overwrite` module swap implemented as designed; side effects may occasionally favour the player
+- Date: 2026-08-12
+- Phase: Slice 5（设计议题 D4）
+- Type: Design principle + implementation
+- Context: `overwrite` 的副作用是"25% 概率模块功能互换 1 次出击"。Slice 4 的源码注释判定 `too complex for Slice 4, skip`。核实后该判断不成立——`GameState.getModuleEffect(type)` 是模块效果的唯一入口，全项目仅三处消费方，而"模块功能"实际就是两个标量（CORE → `chaosRateModifier`，STORAGE → `kindlingValueModifier`）。互换是单点改造。真正的问题是设计层面：互换两个标量的后果取决于当时哪个模块更强，**有相当概率反而帮到玩家**，而它名义上是惩罚。
+- Decision: 忠于原设计实现互换，并在出击开始的 toast 中明确提示"模块功能已互换"（该提示通道 Slice 4 已建，用于防御副作用来源播报）。**确立原则：副作用不要求永远负面。**
+- Alternatives: (a) 只在对玩家不利时触发（拒绝：语义清晰但失去混沌感，且与该污染物的世界观相悖）；(b) 换一个语义单一的惩罚（拒绝：承认互换不成立，但它其实成立）。
+- Reason: `overwrite` 的世界观是"模式覆盖时空——极快速度重写现实规则"，不可预测本身就是它的性格；且它属 rare 层，玩家已在承担高风险高回报。
+- Impact: 这条确立的是跨全表原则——后续污染物的副作用允许有随机有利面，不必逐个论证。可读性由 toast 承担，缺了提示这个机制就不成立。
+
+## DEC-030: `combust` burn threshold is a fixed constant, not derived from impact damage
+- Date: 2026-08-12
+- Phase: Slice 5（设计议题 D2）
+- Type: Tuning rule
+- Context: CSV 写"焚尽值达到阈值（约等于 2 次满额冲击）时自动释放"。这不是能写进代码的数，而冲击伤害会随潮汐强度浮动。
+- Decision: 定为固定常量（`constants.ts` 中的独立字段，取值约等于两次基准冲击伤害），不按"N 次冲击"推导。
+- Alternatives: 按 `BASE_IMPACT_DAMAGE × 2` 动态推导（拒绝：潮汐会让触发时机漂移）。
+- Reason: 这个机制的乐趣在于"我快攒满了"的预期感。触发点随潮汐浮动会让玩家无法建立预期，机制就只剩随机性。
+- Impact: 潮汐高峰期（伤害高）会更快攒满，这是符合直觉的；但阈值本身恒定可预期。CSV 描述文案需同步为确切数值。
+
+## DEC-029: `abyss` low-HP bonus is evaluated on pre-damage module HP
+- Date: 2026-08-12
+- Phase: Slice 5（设计议题 D1）
+- Type: Rule clarification
+- Context: `abyss` 的减伤按"有几个模块 HP 低于 50%"动态叠加（20% 基础 + 每个 15%，上限 65%）。判定时点未定义。
+- Decision: 用**本次伤害结算前**的模块 HP。
+- Alternatives: 结算后（拒绝：自我指涉——减伤影响伤害、伤害又反过来影响减伤，需要定义迭代或近似）。
+- Reason: 避开自我指涉，且更贴合"你已经处于危急才获得守护"的叙事。代价是那记把模块打到半血以下的一击本身不吃加成，这是可接受的。
+- Impact: 实现上无需新管道——`DefenseContext` 已携带 `moduleHps` / `moduleMaxHps`，此前被 `applySlotEffect()` 的 `_context` 参数忽略。
+
 ## DEC-028: Purification boundary becomes a dynamic force-field blob (not tile-based)
 - Date: 2026-08-12
 - Phase: Slice 4.5

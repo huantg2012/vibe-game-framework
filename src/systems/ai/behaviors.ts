@@ -537,20 +537,38 @@ function applyFacing(enemy: Enemy, ctx: AIContext): void {
   );
 }
 
+/**
+ * Slice 5 tool overrides (T1) are applied here, after every state's own movement intent
+ * is decided, rather than threaded through each `update*` handler: `externalSpeedMult`
+ * and `movementDirLocked` (compress / echo / resonate) act on the *output* velocity, not
+ * on what the FSM wants to do, which is exactly what "it can still see and want to chase
+ * you, it just cannot" means. Both default to "no effect", so an enemy no tool has ever
+ * touched behaves identically to before this existed.
+ */
 function applyVelocity(enemy: Enemy): void {
-  if (intent.speed <= 0) {
+  const ai = enemy.ai;
+  let dirX = intent.dirX;
+  let dirY = intent.dirY;
+  const speed = intent.speed * ai.externalSpeedMult;
+
+  if (ai.movementDirLocked) {
+    dirX = ai.lockedDir.x;
+    dirY = ai.lockedDir.y;
+  }
+
+  if (speed <= 0) {
     enemy.setVelocity(0, 0);
     return;
   }
 
-  const length = Math.hypot(intent.dirX, intent.dirY);
+  const length = Math.hypot(dirX, dirY);
   if (length <= 0.0001) {
     enemy.setVelocity(0, 0);
     return;
   }
 
-  const scale = intent.speed / length;
-  enemy.setVelocity(intent.dirX * scale, intent.dirY * scale);
+  const scale = speed / length;
+  enemy.setVelocity(dirX * scale, dirY * scale);
 }
 
 function distanceTo(ai: EnemyAIState, target: Readonly<Vector2>): number {

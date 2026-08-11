@@ -120,6 +120,14 @@ export interface CombatSystemAPI extends PlayerCombatAPI {
   setEnabled(enabled: boolean): void;
   reset(): void;
   destroy(): void;
+  /**
+   * A damage source outside the melee swing (Slice 5 combust: "区域内敌人每秒受到持续
+   * 伤害"). Funnels through the same health/event pipeline as a player hit so chaos,
+   * death and the hit flash all stay consistent, but skips the hit-test entirely - the
+   * caller has already decided who is affected. Returns false if the enemy is unknown or
+   * already dead.
+   */
+  applyToolDamage(enemyId: string, amount: number): boolean;
 }
 
 /** Dev overlay / QA readout. Nothing in here is a gameplay input. */
@@ -369,6 +377,21 @@ export class CombatSystem implements CombatSystemAPI {
 
   isEnemyAlive(enemyId: string): boolean {
     return this.enemies.get(enemyId)?.alive === true;
+  }
+
+  applyToolDamage(enemyId: string, amount: number): boolean {
+    if (!this.enabled || amount <= 0) return false;
+    const state = this.enemies.get(enemyId);
+    if (!state || !state.alive) return false;
+
+    state.health -= amount;
+    const pos = state.view.getPosition();
+    this.spawnFx(pos, state.view.getFacingAngle(), GAME_CONSTANTS.COMBAT.ENEMY_HIT_FLASH_MS, false);
+
+    eventBus.emit(GameEvent.ENEMY_DAMAGED, { enemyId: state.id, amount, source: 'tool' });
+
+    if (state.health <= 0) this.killEnemy(state, pos);
+    return true;
   }
 
   getStats(): CombatStats {

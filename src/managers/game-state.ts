@@ -39,8 +39,28 @@ let kindlingReserve = 0;
 let cycle = 0;
 let impactIntensity = 1.0;
 let pendingSideEffects: PendingSideEffect[] = [];
+/**
+ * siphon (Slice 5 gap-fill): "装备期间所有薪柴修复模块的效率翻倍" - same "装备期间"
+ * derivation as `resonateBonusActive` below, kept in sync by
+ * `ContaminantSystem.syncRepairEfficiencyMult()` on every defense-slot mutation.
+ */
 let repairEfficiencyMult = 1.0;
 let upgradeDiscount = 0;
+/**
+ * overwrite (Slice 5 T3, DEC-031): while active, getModuleEffect() reads the OTHER
+ * module's HP through the requested type's formula, swapping which module feeds which
+ * stat. Cleared at the start of the next impact resolution (exactly "1 次出击").
+ */
+let moduleSwapActive = false;
+/**
+ * resonate (Slice 5 gap-fill, DEC-039): "装备期间CORE和STORAGE模块效果上限各提升10%,
+ * 多个共振残渣不叠加此增益" - unlike overwrite's one-impact toggle, this tracks a
+ * continuous "is at least one resonate currently in a defense slot" state, kept in sync
+ * by ContaminantSystem on every defense-slot mutation (slot/unslot/transform-out). A
+ * single boolean rather than a count is what makes "不叠加" automatic: 1 or 5 resonate
+ * defense-slotted both just set this true.
+ */
+let resonateBonusActive = false;
 
 const modules: ModuleState[] = [
   { id: 'CORE', type: 'CORE', hp: P.MODULE_INITIAL_HP, maxHp: P.MODULE_MAX_HP },
@@ -90,12 +110,13 @@ export const gameState = {
     const mod = modules.find((m) => m.id === id);
     if (!mod || kindling <= 0) return 0;
 
-    const maxUseful = Math.ceil((mod.maxHp - mod.hp) / P.REPAIR_PER_KINDLING);
+    const perKindling = gameState.getEffectiveRepairPerKindling();
+    const maxUseful = Math.ceil((mod.maxHp - mod.hp) / perKindling);
     const actual = Math.min(kindling, kindlingReserve, maxUseful);
     if (actual <= 0) return 0;
 
     kindlingReserve -= actual;
-    mod.hp = Math.min(mod.hp + actual * P.REPAIR_PER_KINDLING, mod.maxHp);
+    mod.hp = Math.min(mod.hp + actual * perKindling, mod.maxHp);
     return actual;
   },
 
@@ -111,18 +132,62 @@ export const gameState = {
     return actual;
   },
 
-  // --- Module effects (spec rules 26-27) ---
+  /**
+   * Heal a module directly (not via kindling repair). Returns actual amount healed
+   * (clamped at maxHp). Used by combust's burst-release (DEC-030).
+   */
+  healModule(id: string, amount: number): number {
+    const mod = modules.find((m) => m.id === id);
+    if (!mod || amount <= 0) return 0;
+
+    const actual = Math.min(amount, mod.maxHp - mod.hp);
+    if (actual <= 0) return 0;
+    mod.hp += actual;
+    return actual;
+  },
+
+  // --- Module effects (spec rules 26-27; swap per DEC-031) ---
 
   getModuleEffect(type: ModuleType): number {
-    const mod = modules.find((m) => m.type === type);
-    if (!mod) return type === 'CORE' ? 1.0 : 1.0;
+    // overwrite (DEC-031): swap which module's HP feeds this stat, but keep the
+    // formula tied to `type` — this is what makes the swap sometimes favour the
+    // player (whichever module is currently healthier ends up feeding the stat).
+    const sourceType: ModuleType = moduleSwapActive
+      ? (type === 'CORE' ? 'STORAGE' : 'CORE')
+      : type;
+    const mod = modules.find((m) => m.type === sourceType);
+    if (!mod) return 1.0;
+
+    // resonate (DEC-039): raises the CAP, not the current value - at low module hp the
+    // bonus is barely noticeable, same as the rest of these formulas scaling with hp.
+    const resonateBonus = resonateBonusActive ? P.RESONATE_MODULE_CAP_BONUS : 0;
 
     if (type === 'CORE') {
       // chaosRateModifier: lower is better; at full hp = 1 - 0.30 = 0.70
-      return 1.0 - (mod.hp / 100) * P.MAX_CORE_REDUCTION;
+      return 1.0 - (mod.hp / 100) * (P.MAX_CORE_REDUCTION + resonateBonus);
     }
     // STORAGE: kindlingValueModifier; at full hp = 1 + 0.50 = 1.50
-    return 1.0 + (mod.hp / 100) * P.MAX_STORAGE_BONUS;
+    return 1.0 + (mod.hp / 100) * (P.MAX_STORAGE_BONUS + resonateBonus);
+  },
+
+  /** overwrite (DEC-031): whether CORE/STORAGE module effects are currently swapped. */
+  isModuleSwapActive(): boolean {
+    return moduleSwapActive;
+  },
+
+  /** overwrite (DEC-031): set by ImpactSystem when the 25% swap roll succeeds/expires. */
+  setModuleSwapActive(active: boolean): void {
+    moduleSwapActive = active;
+  },
+
+  /** resonate (DEC-039): whether the module-effect cap bonus is currently active. */
+  isResonateBonusActive(): boolean {
+    return resonateBonusActive;
+  },
+
+  /** resonate (DEC-039): set by ContaminantSystem whenever the defense loadout changes. */
+  setResonateBonusActive(active: boolean): void {
+    resonateBonusActive = active;
   },
 
   getSortieModifiers(): SortieModifiers {
@@ -159,18 +224,25 @@ export const gameState = {
 
   // --- Serialization (for SaveManager) ---
 
-  getState(): { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects: PendingSideEffect[]; repairEfficiencyMult: number; upgradeDiscount: number } {
+  getState(): { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects: PendingSideEffect[]; upgradeDiscount: number; moduleSwapActive: boolean } {
     return {
       kindlingReserve,
       cycle,
       modules: modules.map((m) => ({ id: m.id, type: m.type, hp: m.hp, maxHp: m.maxHp })),
       pendingSideEffects: [...pendingSideEffects],
-      repairEfficiencyMult,
       upgradeDiscount,
+      moduleSwapActive,
+      // resonateBonusActive/repairEfficiencyMult are deliberately NOT persisted here: they
+      // are not game-state facts, they are live derivations from ContaminantSystem's
+      // defense loadout (which IS saved separately). SaveManager.load() restores
+      // contaminants first, and ContaminantSystem.loadState() resyncs both flags from the
+      // restored defense slots - persisting a second copy here would just be a second
+      // source of truth to drift (siphon unslotted-but-still-2x-until-next-impact was
+      // exactly this kind of drift before the Slice 5 gap-fill).
     };
   },
 
-  loadState(state: { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects?: PendingSideEffect[]; repairEfficiencyMult?: number; upgradeDiscount?: number }): void {
+  loadState(state: { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects?: PendingSideEffect[]; upgradeDiscount?: number; moduleSwapActive?: boolean }): void {
     kindlingReserve = state.kindlingReserve;
     cycle = state.cycle;
     for (const saved of state.modules) {
@@ -178,8 +250,8 @@ export const gameState = {
       if (mod) mod.hp = saved.hp;
     }
     pendingSideEffects = state.pendingSideEffects ?? [];
-    repairEfficiencyMult = state.repairEfficiencyMult ?? 1.0;
     upgradeDiscount = state.upgradeDiscount ?? 0;
+    moduleSwapActive = state.moduleSwapActive ?? false;
   },
 
   /** Set impact intensity (called by TideSystem to sync). */
@@ -210,8 +282,20 @@ export const gameState = {
     return repairEfficiencyMult;
   },
 
+  /** siphon (Slice 5 gap-fill): set by `ContaminantSystem.syncRepairEfficiencyMult()`
+   * whenever the defense loadout changes - "装备期间", present tense, same lifecycle as
+   * `setResonateBonusActive()`. Not a per-impact one-shot: unslotting siphon resets this
+   * to 1.0 immediately, without waiting for the next impact to resolve. */
   setRepairEfficiencyMult(value: number): void {
     repairEfficiencyMult = value;
+  },
+
+  /** Single source of truth for "how much module HP one kindling repairs right now" -
+   * `allocateToModule()` below and the allocation panel's preview both read this instead
+   * of `PURIFICATION.REPAIR_PER_KINDLING` directly, so siphon's doubling can never drift
+   * between the two. */
+  getEffectiveRepairPerKindling(): number {
+    return P.REPAIR_PER_KINDLING * repairEfficiencyMult;
   },
 
   // --- Upgrade discount (retrograde defense effect) ---
@@ -239,6 +323,8 @@ export const gameState = {
     pendingSideEffects = [];
     repairEfficiencyMult = 1.0;
     upgradeDiscount = 0;
+    moduleSwapActive = false;
+    resonateBonusActive = false;
     modules[0]!.hp = P.MODULE_INITIAL_HP;
     modules[1]!.hp = P.MODULE_INITIAL_HP;
   },

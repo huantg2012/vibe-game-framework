@@ -46,6 +46,44 @@ const HP_BAR_WIDTH = 28;
 const HP_SHOW_DISTANCE = 80; // 2.5 tiles
 
 // ---------------------------------------------------------------------------
+// T6: 受损三态视觉 (docs/design-notes/ui-art-overhaul.md B3)
+//
+// 阈值：spec 未定义具体分界，按 Task Brief 取值 >60% 健康 / 30%-60% 受损 / <30% 严重受损。
+// 登记进 docs/specs/system-purification-impact.md 由 B1 一并回填。
+// ---------------------------------------------------------------------------
+
+type ModuleHealthState = 'healthy' | 'damaged' | 'critical';
+
+const MODULE_HEALTHY_HP_RATIO = 0.6; // > 此值 = 健康
+const MODULE_CRITICAL_HP_RATIO = 0.3; // < 此值 = 严重受损；介于两者之间 = 受损
+
+// 指示灯色值 (spec B3)
+const INDICATOR_HEALTHY_COLOR = 0x44aa66;
+const INDICATOR_DAMAGED_COLOR = 0xb89040;
+const INDICATOR_OFF_COLOR = 0x2a2d32; // 严重受损时熄灭，同时用作受损闪烁的"灭"帧与灯座底色
+const INDICATOR_SIZE = 3; // 3x3px 方点，避免圆形抗锯齿破坏像素风
+const INDICATOR_BLINK_INTERVAL_MS = 500;
+
+// 裂缝线色值与形状 (spec B3：受损 2-3 条 1px，严重受损同样的线加宽)
+const CRACK_COLOR = 0x151a1e;
+const CRACK_LINE_OFFSETS: ReadonlyArray<{ x1: number; y1: number; x2: number; y2: number }> = [
+  { x1: -0.55, y1: -0.65, x2: -0.15, y2: -0.1 },
+  { x1: 0.25, y1: -0.6, x2: 0.6, y2: -0.05 },
+  { x1: -0.2, y1: 0.15, x2: 0.35, y2: 0.7 },
+];
+
+// 边缘 teal 渗入点色值与位置 (spec B3：严重受损时出现)
+const SEEP_COLOR = 0x1aad96;
+const SEEP_SIZE = 3; // 2-3px 渗入点
+const SEEP_ANGLES = [Math.PI * (40 / 180), Math.PI * (165 / 180), Math.PI * (280 / 180)];
+
+function classifyModuleHealth(hpRatio: number): ModuleHealthState {
+  if (hpRatio > MODULE_HEALTHY_HP_RATIO) return 'healthy';
+  if (hpRatio >= MODULE_CRITICAL_HP_RATIO) return 'damaged';
+  return 'critical';
+}
+
+// ---------------------------------------------------------------------------
 // PurificationModuleEntity
 // ---------------------------------------------------------------------------
 
@@ -53,11 +91,17 @@ export class PurificationModuleEntity {
   private graphics!: Phaser.GameObjects.Graphics;
   private hpBarBg!: Phaser.GameObjects.Graphics;
   private hpBarFill!: Phaser.GameObjects.Graphics;
+  private indicatorLight!: Phaser.GameObjects.Graphics;
 
   private readonly config: ModuleEntityConfig;
   private inRange = false;
   private proximityGlow = false;
   private scene!: Phaser.Scene;
+
+  // T6: 三态视觉状态
+  private healthState: ModuleHealthState = 'healthy';
+  private blinkOn = true;
+  private blinkTimer?: Phaser.Time.TimerEvent;
 
   constructor(config: ModuleEntityConfig) {
     this.config = config;
@@ -98,9 +142,16 @@ export class PurificationModuleEntity {
     this.hpBarFill = scene.add.graphics();
     this.hpBarFill.setDepth(depth + 2);
 
+    // Indicator light (T6 三态视觉)
+    this.indicatorLight = scene.add.graphics();
+    this.indicatorLight.setDepth(depth + 1);
+
     // Initial draw
+    const mod = gameState.getModule(this.config.id);
+    this.healthState = classifyModuleHealth(mod ? mod.hp / mod.maxHp : 1);
     this.drawModule();
     this.updateHpBar();
+    this.setupIndicatorBlink();
   }
 
   /**
@@ -115,8 +166,24 @@ export class PurificationModuleEntity {
 
     // Proximity glow: within HP_SHOW_DISTANCE
     const newGlow = dist <= HP_SHOW_DISTANCE;
+    let needsRedraw = false;
     if (newGlow !== this.proximityGlow) {
       this.proximityGlow = newGlow;
+      needsRedraw = true;
+    }
+
+    // T6: 三态实时迁移检测（每帧读取 hp，但只在状态桶变化时才重绘）
+    const mod = gameState.getModule(this.config.id);
+    if (mod) {
+      const newState = classifyModuleHealth(mod.hp / mod.maxHp);
+      if (newState !== this.healthState) {
+        this.healthState = newState;
+        needsRedraw = true;
+        this.setupIndicatorBlink();
+      }
+    }
+
+    if (needsRedraw) {
       this.drawModule();
     }
 
@@ -155,9 +222,12 @@ export class PurificationModuleEntity {
   }
 
   destroy(): void {
+    this.blinkTimer?.remove();
+    this.blinkTimer = undefined;
     this.graphics?.destroy();
     this.hpBarBg?.destroy();
     this.hpBarFill?.destroy();
+    this.indicatorLight?.destroy();
   }
 
   // ------------------------------------------------------------------ internal
@@ -209,22 +279,8 @@ export class PurificationModuleEntity {
       this.graphics.lineStyle(2, edgeColor, edgeAlpha);
       this.graphics.strokePoints(points, true);
 
-      // Danger overlay for critical HP
-      if (hpRatio < 0.25) {
-        const time = this.scene.time.now;
-        const flickerAlpha = 0.1 + Math.abs(Math.sin(time * 0.008)) * 0.2;
-        this.graphics.lineStyle(1, DANGER_COLOR, flickerAlpha);
-        // Slightly larger hexagon for danger ring
-        const dangerPoints: Phaser.Geom.Point[] = [];
-        for (let i = 0; i < 6; i++) {
-          const angle = (Math.PI / 3) * i - Math.PI / 6;
-          dangerPoints.push(new Phaser.Geom.Point(
-            x + (CORE_RADIUS + 2) * Math.cos(angle),
-            y + (CORE_RADIUS + 2) * Math.sin(angle),
-          ));
-        }
-        this.graphics.strokePoints(dangerPoints, true);
-      }
+      // T6: 受损/严重受损裂缝 + 严重受损边缘渗入 (spec B3，替代旧的低血红环闪烁)
+      this.drawDamageDecoration(CORE_RADIUS);
     } else {
       // Square
       this.graphics.fillStyle(mainColor, fillAlpha);
@@ -232,16 +288,81 @@ export class PurificationModuleEntity {
       this.graphics.lineStyle(2, edgeColor, edgeAlpha);
       this.graphics.strokeRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
 
-      // Danger overlay for critical HP
-      if (hpRatio < 0.25) {
-        const time = this.scene.time.now;
-        const flickerAlpha = 0.1 + Math.abs(Math.sin(time * 0.008)) * 0.2;
-        this.graphics.lineStyle(1, DANGER_COLOR, flickerAlpha);
-        this.graphics.strokeRect(
-          x - STORAGE_HALF - 2, y - STORAGE_HALF - 2,
-          (STORAGE_HALF + 2) * 2, (STORAGE_HALF + 2) * 2,
-        );
+      // T6: 受损/严重受损裂缝 + 严重受损边缘渗入 (spec B3，替代旧的低血红环闪烁)
+      this.drawDamageDecoration(STORAGE_HALF);
+    }
+  }
+
+  /**
+   * T6: 三态视觉中"框架"部分——受损时画裂缝线，严重受损时裂缝加宽并叠加边缘 teal 渗入点。
+   * 健康状态不绘制任何附加物。指示灯部分见 drawIndicator()/setupIndicatorBlink()。
+   */
+  private drawDamageDecoration(size: number): void {
+    if (this.healthState === 'healthy') return;
+
+    const { x, y } = this.config;
+    const crackWidth = this.healthState === 'critical' ? 2 : 1;
+
+    this.graphics.lineStyle(crackWidth, CRACK_COLOR, 1);
+    for (const line of CRACK_LINE_OFFSETS) {
+      this.graphics.beginPath();
+      this.graphics.moveTo(x + line.x1 * size, y + line.y1 * size);
+      this.graphics.lineTo(x + line.x2 * size, y + line.y2 * size);
+      this.graphics.strokePath();
+    }
+
+    if (this.healthState === 'critical') {
+      this.graphics.fillStyle(SEEP_COLOR, 1);
+      for (const angle of SEEP_ANGLES) {
+        const sx = x + size * Math.cos(angle);
+        const sy = y + size * Math.sin(angle);
+        this.graphics.fillRect(sx - SEEP_SIZE / 2, sy - SEEP_SIZE / 2, SEEP_SIZE, SEEP_SIZE);
       }
+    }
+  }
+
+  /**
+   * T6: 指示灯闪烁调度。健康=常亮，受损=每 500ms 切换亮/灭，严重受损=常灭。
+   * 只在状态桶变化时被调用一次，不会每帧重建 timer。
+   */
+  private setupIndicatorBlink(): void {
+    this.blinkTimer?.remove();
+    this.blinkTimer = undefined;
+    this.blinkOn = true;
+
+    if (this.healthState === 'damaged') {
+      this.blinkTimer = this.scene.time.addEvent({
+        delay: INDICATOR_BLINK_INTERVAL_MS,
+        loop: true,
+        callback: () => {
+          this.blinkOn = !this.blinkOn;
+          this.drawIndicator();
+        },
+      });
+    }
+
+    this.drawIndicator();
+  }
+
+  /** T6: 重绘指示灯（独立 Graphics，不牵动整个模块的重绘）。 */
+  private drawIndicator(): void {
+    const { x, y } = this.config;
+    this.indicatorLight.clear();
+
+    // 灯座底色：常亮/闪烁灯的“灭”帧也复用这个颜色
+    this.indicatorLight.fillStyle(INDICATOR_OFF_COLOR, 1);
+    this.indicatorLight.fillRect(x - INDICATOR_SIZE / 2, y - INDICATOR_SIZE / 2, INDICATOR_SIZE, INDICATOR_SIZE);
+
+    let litColor: number | null = null;
+    if (this.healthState === 'healthy') {
+      litColor = INDICATOR_HEALTHY_COLOR;
+    } else if (this.healthState === 'damaged' && this.blinkOn) {
+      litColor = INDICATOR_DAMAGED_COLOR;
+    }
+
+    if (litColor !== null) {
+      this.indicatorLight.fillStyle(litColor, 1);
+      this.indicatorLight.fillRect(x - INDICATOR_SIZE / 2, y - INDICATOR_SIZE / 2, INDICATOR_SIZE, INDICATOR_SIZE);
     }
   }
 
@@ -274,11 +395,6 @@ export class PurificationModuleEntity {
       HP_BAR_WIDTH * ratio,
       HP_BAR_HEIGHT,
     );
-
-    // Redraw module shape (needed for flicker animation when HP < 25%)
-    if (ratio < 0.25) {
-      this.drawModule();
-    }
   }
 
   private getHpBarY(): number {

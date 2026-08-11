@@ -11,11 +11,15 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { gameState } from '@/managers/game-state';
+import { growthSystem } from '@/systems/growth-system';
+import type { ContaminantRuntimeState } from '@/systems/defense-engine';
 import { GameEvent } from '@/types/events';
 import type { Contaminant, ContaminantRarity, ContaminantType } from '@/types/game-types';
 
 const CN = GAME_CONSTANTS.CONTAMINANT;
 const TIDE = GAME_CONSTANTS.TIDE;
+const P = GAME_CONSTANTS.PURIFICATION;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -38,8 +42,20 @@ interface ContaminantSystemState {
 // ---------------------------------------------------------------------------
 
 let contaminants: Contaminant[] = [];
-let defenseSlots: (string | null)[] = [null, null, null];
-let sortieLoadout: (string | null)[] = [null, null, null];
+// Both arrays are always allocated at MAX capacity (Slice 5 T5: growth_defense_slot /
+// growth_sortie_slot unlock a 4th slot). Which slots are actually usable is gated by
+// computeDefenseSlotCount()/computeSortieSlotCount() below, not by array length — this
+// way a slot purchased mid-run "just appears" without any migration of existing state.
+let defenseSlots: (string | null)[] = new Array(CN.MAX_DEFENSE_SLOTS).fill(null);
+let sortieLoadout: (string | null)[] = new Array(CN.MAX_SORTIE_SLOTS).fill(null);
+
+/**
+ * echo (Slice 5 T3, DEC-033/D3): how many times each tool-stage contaminant has
+ * received an echo bonus use. Key = contaminant id, capped by CN.ECHO_MAX_TOOL_USE_BONUS.
+ * Persisted via getEchoBonusState()/loadEchoBonusState() (unified with defense-engine's
+ * runtime state in SaveManager).
+ */
+const echoBonusGranted: Map<string, number> = new Map();
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -47,6 +63,62 @@ let sortieLoadout: (string | null)[] = [null, null, null];
 
 function findById(id: string): Contaminant | undefined {
   return contaminants.find((c) => c.id === id);
+}
+
+/**
+ * resonate (Slice 5 gap-fill, DEC-039): recomputes GameState's module-effect-cap bonus
+ * flag from the current defense loadout. Called after every mutation of `defenseSlots`
+ * (slot/unslot/transform-out/reset/load) so `GameState.getModuleEffect()` always reflects
+ * "is currently equipped", not a stale snapshot. A defense-slotted resonate that has just
+ * transformed to a tool no longer counts - the CSV's "装备期间" is present tense.
+ */
+function syncResonateBonus(): void {
+  const active = defenseSlots.some((id) => {
+    if (!id) return false;
+    const c = findById(id);
+    return c !== undefined && c.type === 'resonate' && c.stage === 'defense';
+  });
+  gameState.setResonateBonusActive(active);
+}
+
+/**
+ * siphon (Slice 5 gap-fill): recomputes GameState's repair-efficiency multiplier from the
+ * current defense loadout - identical "装备期间" derivation pattern to syncResonateBonus()
+ * above, called from the same mutation points. Previously this was a per-impact one-shot
+ * set by ImpactSystem from DefenseEngine's output, which never reset back to 1.0 when
+ * siphon left the defense slot (only another impact happening to compute exactly 1.0 could
+ * have corrected it, and the code never even did that). This is the fix: the multiplier
+ * now always reflects "is siphon defense-slotted right now", not "what did the last impact
+ * compute".
+ */
+function syncRepairEfficiencyMult(): void {
+  const active = defenseSlots.some((id) => {
+    if (!id) return false;
+    const c = findById(id);
+    return c !== undefined && c.type === 'siphon' && c.stage === 'defense';
+  });
+  gameState.setRepairEfficiencyMult(active ? P.SIPHON_REPAIR_EFFICIENCY_MULT : 1.0);
+}
+
+/** Effective defense slot count: base + growth_defense_slot bonus (0 or 1). */
+function computeDefenseSlotCount(): number {
+  return CN.DEFENSE_SLOTS + growthSystem.getDefenseSlotBonus();
+}
+
+/**
+ * Effective sortie loadout slot count: base + growth_sortie_slot bonus (0 or 1).
+ * Exactly one of these slots is always the passive slot (the last index) — the rest
+ * are active. See getSortieActiveSlotCount()/getSortiePassiveSlotIndex().
+ */
+function computeSortieSlotCount(): number {
+  return CN.SORTIE_SLOTS + growthSystem.getSortieSlotBonus();
+}
+
+/** Pad/truncate a loaded slot array to exactly `size` entries (backward-compat for saves). */
+function normalizeSlotArray(saved: (string | null)[] | undefined, size: number): (string | null)[] {
+  const out = (saved ?? []).slice(0, size);
+  while (out.length < size) out.push(null);
+  return out;
 }
 
 // ---------------------------------------------------------------------------
@@ -58,12 +130,32 @@ export const contaminantSystem = {
     return contaminants;
   },
 
+  /** Effective number of defense slots (base 3 + growth_defense_slot bonus). */
+  getDefenseSlotCount(): number {
+    return computeDefenseSlotCount();
+  },
+
+  /** Effective number of sortie loadout slots (base 3 + growth_sortie_slot bonus). */
+  getSortieSlotCount(): number {
+    return computeSortieSlotCount();
+  },
+
+  /** Number of ACTIVE sortie slots — exactly one slot (the last) is always passive. */
+  getSortieActiveSlotCount(): number {
+    return computeSortieSlotCount() - 1;
+  },
+
+  /** Index of the passive sortie slot — always the last unlocked slot. */
+  getSortiePassiveSlotIndex(): number {
+    return computeSortieSlotCount() - 1;
+  },
+
   getDefenseSlotted(): (Contaminant | null)[] {
-    return defenseSlots.map((id) => (id ? findById(id) ?? null : null));
+    return defenseSlots.slice(0, computeDefenseSlotCount()).map((id) => (id ? findById(id) ?? null : null));
   },
 
   getSortieLoadout(): (Contaminant | null)[] {
-    return sortieLoadout.map((id) => (id ? findById(id) ?? null : null));
+    return sortieLoadout.slice(0, computeSortieSlotCount()).map((id) => (id ? findById(id) ?? null : null));
   },
 
   /**
@@ -90,7 +182,7 @@ export const contaminantSystem = {
    * Returns false if the slot is occupied or contaminant is not in defense stage.
    */
   slotDefense(contaminantId: string, slotIndex: number): boolean {
-    if (slotIndex < 0 || slotIndex >= CN.DEFENSE_SLOTS) return false;
+    if (slotIndex < 0 || slotIndex >= computeDefenseSlotCount()) return false;
     if (defenseSlots[slotIndex] !== null) return false;
 
     const c = findById(contaminantId);
@@ -100,13 +192,17 @@ export const contaminantSystem = {
     if (defenseSlots.includes(contaminantId)) return false;
 
     defenseSlots[slotIndex] = contaminantId;
+    syncResonateBonus();
+    syncRepairEfficiencyMult();
     return true;
   },
 
   /** Remove a contaminant from a defense slot (back to inventory). */
   unslotDefense(slotIndex: number): void {
-    if (slotIndex < 0 || slotIndex >= CN.DEFENSE_SLOTS) return;
+    if (slotIndex < 0 || slotIndex >= computeDefenseSlotCount()) return;
     defenseSlots[slotIndex] = null;
+    syncResonateBonus();
+    syncRepairEfficiencyMult();
   },
 
   /**
@@ -114,7 +210,7 @@ export const contaminantSystem = {
    * Returns false if the slot is occupied or contaminant is not in tool stage.
    */
   slotSortie(contaminantId: string, slotIndex: number): boolean {
-    if (slotIndex < 0 || slotIndex >= CN.SORTIE_SLOTS) return false;
+    if (slotIndex < 0 || slotIndex >= computeSortieSlotCount()) return false;
     if (sortieLoadout[slotIndex] !== null) return false;
 
     const c = findById(contaminantId);
@@ -129,7 +225,7 @@ export const contaminantSystem = {
 
   /** Remove a contaminant from a sortie loadout slot. */
   unslotSortie(slotIndex: number): void {
-    if (slotIndex < 0 || slotIndex >= CN.SORTIE_SLOTS) return;
+    if (slotIndex < 0 || slotIndex >= computeSortieSlotCount()) return;
     sortieLoadout[slotIndex] = null;
   },
 
@@ -169,6 +265,8 @@ export const contaminantSystem = {
       }
     }
 
+    syncResonateBonus();
+    syncRepairEfficiencyMult();
     return results;
   },
 
@@ -202,11 +300,81 @@ export const contaminantSystem = {
     return false;
   },
 
+  /**
+   * Apply cross-slot impact-charge bonuses computed by defense-engine (resonate/erode,
+   * DEC-033). Bonus charges are flat +N (not multiplied by defenseChargeMult) — that
+   * multiplier only applies to the normal per-cycle charge in applyImpactCharge().
+   * Returns transform results for any contaminant that crossed the transform threshold.
+   */
+  applyBonusCharges(bonus: Record<string, number>): ContaminantTransformResult[] {
+    const results: ContaminantTransformResult[] = [];
+
+    for (const [id, amount] of Object.entries(bonus)) {
+      if (amount <= 0) continue;
+      const c = findById(id);
+      if (!c || c.stage !== 'defense') continue;
+
+      c.impactCharges += amount;
+
+      if (c.impactCharges >= TIDE.TRANSFORM_THRESHOLD) {
+        c.stage = 'tool';
+        c.usesRemaining = CONTAMINANT_DATA[c.type]?.toolUses ?? CN.USES[c.rarity];
+        const slotIdx = defenseSlots.indexOf(id);
+        if (slotIdx !== -1) defenseSlots[slotIdx] = null;
+        results.push({ contaminantId: c.id, type: c.type, slotIndex: slotIdx });
+        eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: c.id });
+      }
+    }
+
+    syncResonateBonus();
+    syncRepairEfficiencyMult();
+    return results;
+  },
+
+  /**
+   * echo (Slice 5 T3): grant +1 usesRemaining to a random tool-stage contaminant,
+   * respecting the per-tool cap (CN.ECHO_MAX_TOOL_USE_BONUS). Silently no-ops (returns
+   * false) if the tool library is empty or every tool is already at the cap.
+   */
+  grantRandomToolUse(): boolean {
+    const cap = CN.ECHO_MAX_TOOL_USE_BONUS;
+    const candidates = contaminants.filter(
+      (c) => c.stage === 'tool' && (echoBonusGranted.get(c.id) ?? 0) < cap,
+    );
+    if (candidates.length === 0) return false;
+
+    const target = candidates[Math.floor(Math.random() * candidates.length)]!;
+    target.usesRemaining++;
+    echoBonusGranted.set(target.id, (echoBonusGranted.get(target.id) ?? 0) + 1);
+    return true;
+  },
+
+  /** Runtime state snapshot for SaveManager (D3): echo's per-tool bonus-grant counter. */
+  getEchoBonusState(): Record<string, ContaminantRuntimeState> {
+    const out: Record<string, ContaminantRuntimeState> = {};
+    for (const [id, count] of echoBonusGranted) {
+      out[id] = { echoBonusGranted: count };
+    }
+    return out;
+  },
+
+  /** Restore echo's per-tool bonus-grant counter from a save file (D3). */
+  loadEchoBonusState(state: Record<string, ContaminantRuntimeState> | undefined): void {
+    echoBonusGranted.clear();
+    if (!state) return;
+    for (const [id, s] of Object.entries(state)) {
+      if (typeof s.echoBonusGranted === 'number') echoBonusGranted.set(id, s.echoBonusGranted);
+    }
+  },
+
   /** Reset to empty state (new game). */
   reset(): void {
     contaminants = [];
-    defenseSlots = [null, null, null];
-    sortieLoadout = [null, null, null];
+    defenseSlots = new Array(CN.MAX_DEFENSE_SLOTS).fill(null);
+    sortieLoadout = new Array(CN.MAX_SORTIE_SLOTS).fill(null);
+    echoBonusGranted.clear();
+    syncResonateBonus();
+    syncRepairEfficiencyMult();
   },
 
   /** Serialize current state for saving. */
@@ -218,10 +386,16 @@ export const contaminantSystem = {
     };
   },
 
-  /** Restore state from save data. */
+  /**
+   * Restore state from save data. Normalizes slot arrays to MAX capacity length —
+   * pre-Slice-5 saves have length-3 arrays; padding with null here means the newly
+   * unlocked 4th slot always starts empty rather than throwing on old saves.
+   */
   loadState(saved: ContaminantSystemState): void {
     contaminants = saved.contaminants.map((c) => ({ ...c }));
-    defenseSlots = [...saved.defenseSlots];
-    sortieLoadout = [...saved.sortieLoadout];
+    defenseSlots = normalizeSlotArray(saved.defenseSlots, CN.MAX_DEFENSE_SLOTS);
+    sortieLoadout = normalizeSlotArray(saved.sortieLoadout, CN.MAX_SORTIE_SLOTS);
+    syncResonateBonus();
+    syncRepairEfficiencyMult();
   },
 };

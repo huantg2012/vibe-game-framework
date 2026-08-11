@@ -253,3 +253,71 @@ roadmap 原计划把「Fine/Rare 工具 + 第二敌人 + 新改造 + 工具 VFX 
 ```
 
 **约束提醒**：本项目刚修完 in-game UI 的框架弱点（`guides/99-review.md` FV-01）。T4 工具 VFX 与 T5 第 4 槽位面板改动**必须走 art 路径**，art 需先做载体决策并锚定 2-3 个具名游戏参考；收尾逐条过 `docs/specs/_template-ui.md` 的 U1-U12。不允许直接派 code 写样式。
+
+---
+
+## Director 交付汇总（2026-08-12）— 待人验收
+
+范围内全部任务已实现，机器闸门（`codegen` / `typecheck` / `build`）全绿。**本 Slice 尚未 COMPLETE——等人试玩验收后才由 Director 收尾。**
+
+### 实际交付（超出原定范围两项）
+
+| 任务 | 状态 | 备注 |
+| ---- | ---- | ---- |
+| T0 架构注册表全量补核 | 完成 | 新增 21 行、修正 6 行状态；`changed-this-slice` 已重置 |
+| T1 七种 Fine/Rare 主动工具 | 完成 | 15 种主动工具全部可用 |
+| T2 `siphon` 被动工具 | 完成 | 被动工具补齐至 3 种 |
+| T3 防御侧未接线机制 | 完成 | 6 处 `handled externally` 全部接线，另补 2 处从无 stub 的琐碎项 |
+| T4 工具使用 VFX | 完成 | art 规格 `docs/art/tool-vfx-spec.md` + code 实现 `src/systems/tool-vfx.ts`（8 视觉族群） |
+| T5 改造深度 + 三项新改造 | 完成 | 含成长系统泛化：成本改读 CSV、ID 列表收敛到单一来源 |
+| T6 模块受损三态视觉 | 完成 | 阈值 >60% / 30-60% / <30% |
+| B1 purification spec 回填 | 完成 | 修 6 项旧漂移 + 登记 13 条新规则（D 组 51-61、V 组 62-63） |
+| B2 growth-tide exposes 对齐 | 完成 | 另修正槽位数固定为 3 的过时描述 |
+| B3 art-direction §6 复核 | 完成 | 补"临界"态 + 与 `ui-art-overhaul.md` 的权威关系 |
+| B4 `BREATH_*` 死常量清理 | 完成 | 删 5 个死常量，迁回 13 个内联值 |
+| **T7 修复失效的工具 debuff 管线**（计划外） | 完成 | 见下 |
+| **T8 补实四处 CSV 承诺但无代码的机制**（计划外） | 完成 | 见下 |
+
+### 计划外增加的两项，及其理由
+
+**T7 — Slice 4 的 8 个工具对敌人没有真实效果。** T1 的 code agent 在实现新工具时发现 `ToolDebuffs` / `getDebuffs()` / `notifyEnemySuspicious()` / `notifyProximityAvoid()` 在全项目零消费方——玩家按键、扣次数、看到特效，但敌人行为完全不变。这直接架空本 Slice 的验证问题（15 件工具里有 8 件是假的，"带什么"就无从纠结），故当场纳入范围。已统一收敛为直连 setter 模式，删除描述符管线，不留死接口。顺带修了 `retrograde` 的绘制深度低于视野暗雾（导致它唯一的卖点"离开视野仍可见"从来没成立过）。
+
+**T8 — 四处 CSV 承诺了但代码从未接的机制。** 在回填 spec 与收口时逐一浮现：`resonate` 的装备期模块上限 +10%（连 stub 都没有）、`siphon` 的修复效率翻倍（`setRepairEfficiencyMult` 有人写没人读，CSV 承诺 1 薪柴=8hp 实际永远 4）、`proximity_sense_boost`（muffle 防御副作用空实现）、`muffle` 的预告提前一轮（见 DEC-040）。这些都属于"CSV 是策划真相源"这条项目规则被违反的实例，与本 Slice"不接受半实现态"的拍板一致，故一并补齐。
+
+### 已知遗留（不阻塞验收，已进 backlog）
+
+- `abyss` 的 65% 减伤上限触不到——公式按 CSV 字面实现，但游戏只有 CORE/STORAGE 两个模块，实际上限 50%。第三模块要到 Slice 7，届时自动成立。`stitch` 的 CSV 文案同样假设 3 模块。
+- 四个占位数值 CSV 结构装不下：`combust` 每秒伤害、`mirror` 诱饵接触半径、`resonate` 两点最大距离（CSV 字段为 0，而同构的 `stitch` 是 96px，疑为数据疏漏）、`abyss` 的第二个计时（5s 混乱惩罚，CSV 每行只有一个 duration 列）。当前作为 `constants.ts` 常量，需要 CSV 扩列才能回归数据源规则。
+- `purification-hud` 未套 `.game-panel`——该文件自身设计为无边框符号网格，与 `.game-panel` 风格互斥。code agent 选择延续该文件已验证的符号语言，此判断留给 QA/人确认。
+- `GameState.incrementIntensity()` 的 +0.15 残留仍在每次冲击末尾被调用（结果总被潮汐覆盖，玩法无影响）；`DefenseContext.stabilityProgress` 恒为 0。
+- `architecture.md` 的「项目结构」ASCII 目录树列了三个不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、整个 `generation/`）——T0 只补核了注册表，目录树不在其范围。
+
+---
+
+## T3 / D3 / B4 完成状态（code agent，2026-08-12）
+
+- **T3（防御侧未接线机制全量补齐）**：`defense-engine.ts` 的 6 处 `handled externally`/`future iteration` 全部接线，均照 D1-D6 拍板结论实现（未重新论证、未降级）：`abyss` 动态减伤（DEC-029，判定用伤害结算前 HP）、`combust` 累积焚尽（DEC-030，阈值定为固定常量 `PURIFICATION.COMBUST_BURN_THRESHOLD = 60` = 2×`BASE_IMPACT_DAMAGE(30)`）、`overwrite` 模块功能互换（DEC-031，25% 概率，出击开始 toast 播报"模块功能已互换"）、`resonate`/`erode` 跨 slot 冲击计数（DEC-033，`erode` 改为"其他所有槽位"且已同步 CSV 文案+codegen）、`echo` 工具次数+1（单件最多+2，见 D3）、`mirror` 按承伤返还薪柴（结算移到伤害确定之后）。顺带补齐两处 CSV 有描述但源码完全没有 stub 的琐碎项：`abyss` 5%概率满HP模块扣10%HP、`erode` 20%概率初始混乱+8（均为与已有 `kindle`/`echo` 同构的机械模式，非新设计）。
+- **发现但未处理、需 escalate 的一项**：`resonate` 的 CSV 主效果"装备期间 CORE/STORAGE 模块效果上限各+10%"目前完全没有任何代码路径（连 stub 都没有）。这是一个"装备时被动生效"的效果，与 Slice 4 就已搁置的 `muffle` 预告提前同属一类（至今未实现）。不在 T3 枚举的 6 项范围内，也不在 D1-D6 任一议题内，需要单独拍板是否纳入 Slice 5 还是转 backlog。
+- **发现的 CSV/设计不一致，未自行修改**：`abyss` 文案"最高65%当3模块均低于半血"假设 3 个模块，但游戏实际只有 CORE/STORAGE 2 个模块，2 模块全部低血最高只能到 50%，65% 永远触及不到。已按公式字面实现（`min(0.65, 0.20+N×0.15)`），行为正确、上限数字暂时是摆设，需设计判断是否改文案或改公式。
+- **D3（污染物运行时状态进存档）**：新增 `ContaminantRuntimeState`（`solidifyCounter`/`combustAccumulator`/`echoBonusGranted`，`defense-engine.ts` 定义，`contaminant-system.ts` 复用同一类型）。`SaveManager` 合并两个模块的快照为存档里的单一 `contaminantRuntimeState` 字段（按 contaminant id 索引）；老存档缺该字段时 `loadDefenseRuntimeState`/`loadEchoBonusState` 均以空态兜底。顺带修了一个此前从未被调用过的 `resetDefenseEngine()`（`main-menu-scene.ts` 的"新远征"现在会调用它，此前 `solidifyCounters` 新游戏不清零）。
+- **B4（清理死常量）**：删除 `PURIFICATION.BOUNDARY.BREATH_BASE_ALPHA/AMP/FREQ/CREST_FREQ_MULT/EBB_AMP_MULT`（5 个，旧整体脉动方案残留，零消费方）；把 `boundary-breath.ts` 里原本内联的 13 个调参值（`SAMPLE_COUNT`/`MAX_IMPACTS`/`ARC_HALF_MIN/MAX`/`SPAWN_DIST_MIN/MAX`/`IMPACT_DURATION_MIN/MAX`/`SPAWN_INTERVAL_MIN/MAX`/`WAVE_COLOR`/`MEMBRANE_COLOR`/`DEFORM_MAX_PX`）迁入 `PURIFICATION.BOUNDARY.BREATH`，行为数值不变。
+- **架构文档滞留**：`architecture.md` 里 `DefenseEngine` 一行仍写着"6 处机制标注 handled externally/future iteration 待 Slice5 T3 接线"，已过期。本任务禁止改 `architecture.md`（归 T0/Director），仅在此标注待更新。
+- 机器闸门：`npm run codegen`（CSV 改了 erode/combust 两行）/ `npm run typecheck` / `npm run build` 均通过。详见 `decisions-log.md` DEC-037。
+
+## T1 / T2 完成状态（code agent，2026-08-12）
+
+- **T1（七种主动工具）**：`compress` / `mirror` / `echo` / `resonate` / `overwrite` / `abyss` / `combust` 已在 `tool-system.ts` 实现，15 种主动工具全部可激活。为支撑 AI 层效果，`AISystem` 新增 7 个设置方法（速度倍率 / 移动方向锁定 / 感知倍率 / 巡逻反转 / 强制 RETURN / 诱饵位置 / 击退），`state-machine.ts` 新增诱饵重定向逻辑，`combat-system.ts` 新增 `applyToolDamage()`，`chaos-system.ts` 新增 `setTemporaryRateReduction()`，`minimap.ts` 新增 `showAbyssReveal()`。详见 `decisions-log.md` DEC-036。
+- **T2（`siphon` 被动）**：已实现，击杀事件驱动，走与 scatter/muffle 相同的登记-触发-耗次模式。
+- **发现但未处理的问题（升报 Director）**：核实发现 Slice 4 的 8 个既有工具（solidify/erode/delay/kindle/stitch/retrograde/scatter/muffle）对敌人的游戏效果从未被消费——`ToolDebuffs`/`getDebuffs()` 全项目无调用方。这不在 T1/T2 范围内，仅记录、未修复。
+- **CSV 描述歧义/未定值，已用占位数值实现，需设计确认**：`combust` 每秒伤害量、`mirror` 诱饵接触半径、`resonate` 两点选取的最大距离（CSV `tool_range_px` 为 0，未如 `stitch` 一样给出限制）。数值定义见 `constants.ts` `GAME_CONSTANTS.TOOLS` 注释。
+- 机器闸门：`npm run typecheck` / `npm run build` 均通过。
+
+## T4（art 阶段）/ B3 完成状态（art agent，2026-08-12）
+
+- **T4 art 阶段**：产出 `docs/art/tool-vfx-spec.md`（新建）。载体决策：工具 VFX 是"世界被改写的痕迹"，不是"角色施放的动作"（`expand` 因效果发生在玩家自身例外）。锚定 3 个具名参考：Into the Breach（AOE 形状语言——矩形网格块取代当前实现的圆形）、Hyper Light Drifter（能力特效的帧数/质感，已有锚点扩展新维度）、Darkest Dungeon（受影响单位标示的克制度）。15 件工具归纳为 8 个视觉族群，规格已给出三阶段时序模板、色值表（严格落在 `palette.json` 内）、受影响敌人标示规则（主标示复用坏像素/感知点亮度联动，零新增基元；副标示方括号仅用于纯行为类效果）。
+- **发现并记录的问题（需 code agent 阶段处理）**：当前 8 个 Slice 4 占位实现的色值大量不在锁定色板内（白色/蓝灰/橙黄/暗红/紫色），且普遍用圆形填充/描边和连续 alpha tween 渐隐——均与 `art-direction.md` §4.2"矩形网格数据错误"签名冲突。规格已逐一列出违规色值和替换值（A3-2），并要求消散阶段改为离散跳变（A3-5）。这不是本次新引入的问题，是补规格时发现的既有偏差。
+- **T5 第 4 槽位视觉判断（并入本次 art 调用）**：结论**复用即可**——440px 面板宽度下单行 4 列槽位仍可读（≈95px/格，文字纵向排列不受影响），不需要新视觉规格或分组布局。唯一需要 code agent 注意的技术点：`loadout-panel.ts` 的 `SLOT_LABELS` 需扩到 4 项且必须与实际键位绑定一致（U7）。
+- **B3（art-direction.md §6.2/§6.4 措辞复核）**：已直接改 `art-direction.md`（§6.2 补"临界"态、§6.4 补与 `ui-art-overhaul.md` 的权威关系说明），`changed-this-slice` 置 `true`。详见 `decisions-log.md` DEC-038。
+- **循环预算**：本次为第 1 轮产出，未触发 3 轮上限。
+- 未跑机器闸门（本阶段只产出规格文档，未改 `src/`）；`npm run typecheck`/`build` 留给 T4 code 阶段验证。
+

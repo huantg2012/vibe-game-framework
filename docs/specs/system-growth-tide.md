@@ -9,11 +9,11 @@ interfaces-with:
   - system-movement-vision       # 永久改造修正移速/视野；出击工具修正感知/移动
   - system-enemy-ai              # 出击工具影响敌人状态（冻结/覆写/削弱）
 exposes:
-  - TideSystem.getCurrentPhase() / getIntensity() / getTideNumber()
-  - ContaminantInventory.getDefenseSlots() / getSortieTools()
-  - GrowthState.getUpgradeLevel(id) / getModifiers()
-  - StabilityTracker.getProgress()
-  - SaveManager.save() / load() / hasSave()
+  - tideSystem.getState() (含 phase / tideNumber / currentIntensity) / getCurrentIntensity() / isHighTide()
+  - contaminantSystem.getDefenseSlotted() / getSortieLoadout()
+  - growthSystem.getLevel(id) / getModifiers()
+  - stabilityTracker.getProgress()
+  - saveManager.save() / load() / hasSave()
 ---
 
 # 系统设计：成长 + 潮汐经济
@@ -68,8 +68,8 @@ interface SaveData {
   };
   tide: TideState;
   contaminants: Contaminant[];
-  defenseSlots: (string | null)[];   // 3 slot，存 contaminant id 或 null
-  sortieLoadout: (string | null)[];  // 3 slot，存 contaminant id 或 null
+  defenseSlots: (string | null)[];   // 基础 3 slot（growth_defense_slot 解锁第 4），存 contaminant id 或 null
+  sortieLoadout: (string | null)[];  // 基础 3 slot（growth_sortie_slot 解锁第 4），存 contaminant id 或 null
   growth: GrowthState;
   stability: StabilityState;
 }
@@ -113,7 +113,7 @@ interface SaveData {
 10. **库存**：玩家的污染物库存无上限。所有已获取的污染物存在 `contaminants[]` 中。
 
 11. **防御阶段**：
-    - 净化点有 3 个防御 slot（等价，不分方向）
+    - 净化点有 3 个防御 slot（等价，不分方向）。**Slice 5 起槽位数可变**：改造 `growth_defense_slot` 解锁第 4 槽，唯一真相是 `contaminantSystem.getDefenseSlotCount()`，任何地方都不得假定固定为 3
     - 玩家在净化点将库存中 `stage === 'defense'` 的污染物装入 slot
     - 已装备的污染物在每次冲击时：(a) 执行其防御效果，(b) `impactCharges += chargeCost`（一般 1，高潮 3）
     - `impactCharges >= 3` 时自动转化：`stage = 'tool'`，从防御 slot 弹出，进入工具池
@@ -188,7 +188,7 @@ interface SaveData {
 
 29. **裂隙场景新增**：
     - 2-3 个污染物节点（紫色，与薪柴共存但独立）
-    - 出击工具的使用键位绑定（Q 和 F，对应 slot 1 和 slot 2 的主动工具；被动工具无键位）
+    - 出击工具的使用键位绑定。**Slice 5 起为动态绑定**：键位序列是 `GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS`（Q / F / G），按 `contaminantSystem.getSortieActiveSlotCount()` 绑定前 N 个；被动工具无键位，其槽位下标由 `getSortiePassiveSlotIndex()` 给出，不得硬编码
     - 改造效果应用到 Player/ChaosSystem/LootSystem
 
 30. **净化点场景新增**：
@@ -206,8 +206,8 @@ interface SaveData {
 | ---- | -- | ---- |
 | 污染物节点/地图 | 2-3 | 裂隙中每次出击可获得 |
 | Rarity 权重 | 60/30/10 | common/fine/rare |
-| 防御 slot 数 | 3 | 净化点 |
-| 出击 slot 数 | 3 | 出击前选装 |
+| 防御 slot 数 | 3（改造后 4） | 净化点；`growth_defense_slot` 解锁第 4 槽 |
+| 出击 slot 数 | 3（改造后 4） | 出击前选装；`growth_sortie_slot` 解锁第 4 槽（3 主动 + 1 被动） |
 | 冲击点转化阈值 | 3 | 一般冲击 1 点，高潮 3 点 |
 | 工具使用次数 | 普通 4-5 / 精良 3 / 稀有 2 | 用完破碎 |
 | 改造 1 级费用 | 8 薪柴 | 递增到 35 |
@@ -255,8 +255,8 @@ interface SaveData {
 | ------ | ---- | ---- |
 | RiftScene | `SortieModifiers`（扩展版：含改造效果+模块效果） | scene data |
 | RiftScene | 出击工具效果（冻结/领域/穿墙等） | ToolSystem API |
-| PurificationScene | TideState + ContaminantInventory + GrowthState + StabilityState | GameState 查询 |
-| ImpactSystem | 防御 slot 内容 + 各污染物效果 | ContaminantInventory 查询 |
+| PurificationScene | TideState + Contaminant[] 库存 + GrowthState + StabilityState | tideSystem / contaminantSystem / growthSystem / stabilityTracker 查询 |
+| ImpactSystem | 防御 slot 内容 + 各污染物效果 | contaminantSystem 查询（实际效果计算在 defense-engine.ts） |
 | HUD | 工具剩余次数 + 冷却状态 | ToolSystem 查询 |
 
 ---

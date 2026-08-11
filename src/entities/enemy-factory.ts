@@ -159,6 +159,10 @@ export class Enemy implements EnemyView {
     return this.ai.detection;
   }
 
+  isTargetingDecoy(): boolean {
+    return this.ai.targetingDecoy;
+  }
+
   // ------------------------------------------------------------------ physics
 
   getSprite(): Phaser.Physics.Arcade.Image {
@@ -390,5 +394,15 @@ function createEnemyAIState(spawnPosition: Readonly<Vector2>, facingAngle: numbe
     pendingDamagePos: { x: 0, y: 0 },
     pendingNoiseLevel: null,
     pendingNoisePos: { x: 0, y: 0 },
+
+    externalSpeedMult: 1,
+    movementDirLocked: false,
+    lockedDir: { x: 0, y: 0 },
+    perceptionRangeMult: 1,
+
+    escalationSuppressed: false,
+    detectionFillRateMult: 1,
+
+    targetingDecoy: false,
   };
 }

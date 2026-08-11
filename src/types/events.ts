@@ -69,9 +69,10 @@ export interface EventPayloads {
    * treats this event as "the player landed a hit" and bills for it, so environmental or
    * enemy-on-enemy damage arriving later must be filterable - otherwise chaos would be
    * charged silently and the cause would be near impossible to find from the symptom.
-   * Slice 1 has one source and always fills `'player'`.
+   * Slice 1 has one source ('player'); Slice 5 adds 'tool' for combust's burn field, which
+   * chaos correctly does not bill (it only listens for 'player').
    */
-  [GameEvent.ENEMY_DAMAGED]: { enemyId: string; amount: number; source?: 'player' };
+  [GameEvent.ENEMY_DAMAGED]: { enemyId: string; amount: number; source?: 'player' | 'tool' };
   [GameEvent.ENEMY_KILLED]: { enemyId: string; position: { x: number; y: number } };
   [GameEvent.ENEMY_ALERT]: { enemyId: string; alertLevel: 'suspicious' | 'alert' | 'chase' };
   [GameEvent.ENEMY_LOST_PLAYER]: { enemyId: string };
