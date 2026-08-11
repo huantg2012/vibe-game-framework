@@ -1,8 +1,8 @@
 /**
  * AllocationPanel - DOM overlay for allocating kindling to a module.
  *
- * Pure HTML/CSS; no Phaser UI. Position:fixed + z-index so it sits above the canvas.
- * Emits ALLOCATION_CONFIRMED through the event bus on confirm.
+ * Terminal-style UI: no buttons, only clickable text rows with hover highlight
+ * and CRT scanline background. Uses shared panel-styles.
  */
 
 import { eventBus } from '@/core/event-bus';
@@ -10,6 +10,7 @@ import { gameState } from '@/managers/game-state';
 import type { ModuleType } from '@/managers/game-state';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // State
@@ -52,20 +53,18 @@ function createPanel(): void {
   const mod = gameState.getModule(currentModuleId!);
   if (!mod) return;
 
+  injectPanelStyles();
+
   panel = document.createElement('div');
   panel.id = 'allocation-panel';
+  panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
     'top:50%',
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1000',
-    'background:rgba(15,17,20,0.92)',
-    'border:1px solid #2a2d32',
-    'padding:12px',
     'min-width:280px',
-    'font-family:"Courier New",monospace',
-    'color:#c8cdd4',
   ].join(';');
 
   render(mod.type, mod.hp, mod.maxHp);
@@ -142,45 +141,47 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const diffText = computeEffectDiff(type, hp, repairedHp);
   const showRepaired = selectedAmount > 0;
 
-  // Brighter variant of typeColor for "after repair" line
   const repairedColor = type === 'BARRIER' ? '#4d9a6b' : '#c4873a';
 
+  const minusDisabled = selectedAmount <= 0;
+  const plusDisabled = selectedAmount >= maxAllocatable;
+  const confirmDisabled = selectedAmount <= 0;
+
   panel.innerHTML = `
-    <div style="margin-bottom:12px;font-size:14px;color:#c4873a;font-weight:bold;">
+    <div class="panel-title" style="color:${typeColor};">
       ${typeLabel}
     </div>
-    <div style="margin-bottom:8px;font-size:10px;color:#c8cdd4;">
+    <div class="info-line">
       完整度: <span style="color:#c8cdd4;">${hp}</span> / ${maxHp}
     </div>
-    <div style="margin:8px 0;border-top:1px solid #2a2d32;border-bottom:1px solid #2a2d32;padding:8px 0;">
-      <div style="font-size:11px;color:${typeColor};">
-        当前效果: ${currentEffectText}
-      </div>
-      ${showRepaired ? `<div style="font-size:11px;color:${repairedColor};margin-top:4px;">
-        修复后: ${repairedEffectText} <span style="color:#4d9a6b;">${diffText}</span>
-      </div>` : ''}
+    <div class="separator"></div>
+    <div class="info-line" style="color:${typeColor};">
+      当前效果: ${currentEffectText}
     </div>
-    <div style="margin-bottom:12px;font-size:10px;color:#c8cdd4;">
-      可用薪柴: <span style="color:#1aad96;">${reserve}</span>
+    ${showRepaired ? `<div class="info-line" style="color:${repairedColor};">
+      修复后: ${repairedEffectText} <span style="color:#4d9a6b;">${diffText}</span>
+    </div>` : ''}
+    <div class="separator"></div>
+    <div class="info-line">
+      可用薪柴: <span style="color:#c4873a;">${reserve}</span>
     </div>
-    <div style="margin-bottom:8px;font-size:9px;color:#8a8f96;">
+    <div class="info-line" style="font-size:9px;color:#5a5f66;">
       1 薪柴 = ${repairPer} 完整度
     </div>
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
-      <button id="alloc-minus" style="${btnStyle()}" ${selectedAmount <= 0 ? 'disabled' : ''}>-</button>
-      <span id="alloc-amount" style="font-size:14px;color:#c8cdd4;min-width:30px;text-align:center;">
-        ${selectedAmount}
-      </span>
-      <button id="alloc-plus" style="${btnStyle()}" ${selectedAmount >= maxAllocatable ? 'disabled' : ''}>+</button>
-      <span style="font-size:9px;color:#8a8f96;margin-left:8px;">
+    <div style="padding:8px;margin:8px 0;display:flex;align-items:center;gap:12px;">
+      <span id="alloc-minus" class="option ${minusDisabled ? 'disabled' : ''}" style="display:inline-block;padding:2px 6px;">◂</span>
+      <span style="font-size:14px;color:#c8cdd4;min-width:30px;text-align:center;">${selectedAmount}</span>
+      <span id="alloc-plus" class="option ${plusDisabled ? 'disabled' : ''}" style="display:inline-block;padding:2px 6px;">▸</span>
+      <span style="font-size:9px;color:#8a8f96;margin-left:4px;">
         (+${selectedAmount * repairPer} 完整度)
       </span>
     </div>
-    <div style="display:flex;gap:8px;">
-      <button id="alloc-confirm" style="${confirmBtnStyle()}" ${selectedAmount <= 0 ? 'disabled' : ''}>
-        确认
-      </button>
-      <button id="alloc-cancel" style="${cancelBtnStyle()}">取消</button>
+    <div class="separator"></div>
+    <div id="alloc-confirm" class="option ${confirmDisabled ? 'disabled' : ''}" style="color:${confirmDisabled ? '#3a3f44' : '#c8cdd4'};">
+      ▸ 确认分配
+    </div>
+    <div id="alloc-cancel" class="option">
+      ▸ 取消
     </div>
   `;
 
@@ -221,47 +222,4 @@ function rerender(): void {
   const mod = gameState.getModule(currentModuleId);
   if (!mod) return;
   render(mod.type, mod.hp, mod.maxHp);
-}
-
-// ---------------------------------------------------------------------------
-// Styles
-// ---------------------------------------------------------------------------
-
-function btnStyle(): string {
-  return [
-    'width:24px',
-    'height:24px',
-    'font-size:14px',
-    'font-family:"Courier New",monospace',
-    'background:#0f1114',
-    'color:#8a8f96',
-    'border:1px solid #2a2d32',
-    'cursor:pointer',
-  ].join(';');
-}
-
-function confirmBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:11px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#c8cdd4',
-    'border:none',
-    'cursor:pointer',
-    'text-decoration:underline',
-  ].join(';');
-}
-
-function cancelBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:11px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#8a8f96',
-    'border:none',
-    'cursor:pointer',
-    'text-decoration:underline',
-  ].join(';');
 }

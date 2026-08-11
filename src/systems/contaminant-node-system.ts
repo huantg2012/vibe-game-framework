@@ -30,7 +30,7 @@ export interface ContaminantNodeSystemConfig {
 // Constants
 // ---------------------------------------------------------------------------
 
-// Reference color (legacy rectangle fill; now baked into texture generation)
+// Reference color (purple sphere, distinct from both teal enemies and gold kindling)
 // const NODE_COLOR = 0x7722aa;
 const NODE_SIZE = 12; // was 8
 const NODE_DEPTH = 15; // same layer as loot nodes
@@ -40,20 +40,24 @@ function ensureContaminantTexture(scene: Phaser.Scene): void {
   if (scene.textures.exists(NODE_TEXTURE_KEY)) return;
   const g = scene.make.graphics({ x: 0, y: 0 }, false);
 
-  // Outer shell: dark teal sphere-like shape
-  g.fillStyle(0x0e4a3f, 1);
+  // Outer circle: dark purple
+  g.fillStyle(0x4a1566, 1);
   g.fillCircle(6, 6, 5);
 
-  // Active surface highlights (random-looking but fixed)
-  g.fillStyle(0x1aad96, 1);
-  g.fillRect(4, 3, 2, 1);
-  g.fillRect(7, 5, 1, 2);
-  g.fillRect(3, 7, 1, 1);
-  g.fillRect(8, 8, 1, 1);
+  // Inner bright ring highlight (partial)
+  g.fillStyle(0x7722aa, 1);
+  g.fillCircle(6, 6, 3);
 
   // Core bright center
-  g.fillStyle(0x2ae6c8, 1);
+  g.fillStyle(0xaa44dd, 1);
   g.fillRect(5, 5, 2, 2);
+
+  // Radial "radiation" dots (will appear to spin due to sprite rotation in update)
+  g.fillStyle(0x9933cc, 1);
+  g.fillRect(6, 1, 1, 1);  // top
+  g.fillRect(10, 5, 1, 1); // right
+  g.fillRect(6, 10, 1, 1); // bottom
+  g.fillRect(2, 5, 1, 1);  // left
 
   g.generateTexture(NODE_TEXTURE_KEY, NODE_SIZE, NODE_SIZE);
   g.destroy();
@@ -134,15 +138,17 @@ export class ContaminantNodeSystem {
     );
   }
 
-  /** Update visibility alpha and pulse effect each frame. */
+  /** Update visibility alpha, pulse and rotation effect each frame. */
   update(delta: number): void {
-    this.pulseTime += delta * 0.004;
-    const pulse = 0.6 + Math.sin(this.pulseTime) * 0.4; // 0.2 .. 1.0
+    this.pulseTime += delta * 0.006; // faster than kindling (~1.5x)
+    const pulse = 0.5 + Math.sin(this.pulseTime) * 0.3; // 0.2 .. 0.8
 
     for (const node of this.nodes) {
       if (node.collected) continue;
       const vis = this.getVisibilityAt(node.def.position);
       node.sprite.setAlpha(vis * pulse);
+      // Slow continuous rotation gives a "radiating" spinning feel
+      node.sprite.rotation += delta * 0.002;
     }
   }
 

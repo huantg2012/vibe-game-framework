@@ -158,7 +158,8 @@ export class HUD {
       .rectangle(chaosX, chaosY, CHAOS_BAR_WIDTH, BAR_HEIGHT, BG_COLOR, BG_ALPHA)
       .setOrigin(0, 0)
       .setScrollFactor(0)
-      .setDepth(HUD_DEPTH);
+      .setDepth(HUD_DEPTH)
+      .setStrokeStyle(1, 0x0f1114);
 
     this.chaosBarFill = scene.add
       .rectangle(chaosX, chaosY, 0, BAR_HEIGHT, CHAOS_COLOR)
@@ -185,7 +186,8 @@ export class HUD {
       .rectangle(BAR_MARGIN, BAR_MARGIN, HEALTH_BAR_WIDTH, BAR_HEIGHT, BG_COLOR, BG_ALPHA)
       .setOrigin(0, 0)
       .setScrollFactor(0)
-      .setDepth(HUD_DEPTH);
+      .setDepth(HUD_DEPTH)
+      .setStrokeStyle(1, 0x0f1114);
 
     this.healthBarFill = scene.add
       .rectangle(BAR_MARGIN, BAR_MARGIN, HEALTH_BAR_WIDTH, BAR_HEIGHT, HEALTH_COLOR)

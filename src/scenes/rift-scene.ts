@@ -256,7 +256,7 @@ export class RiftScene extends Phaser.Scene {
 
     // T9 systems
     this.chaos.update(delta);
-    this.loot.update();
+    this.loot.update(delta);
     this.contaminantNodes.update(delta);
     this.toolSystem.update(delta);
     this.extraction.update(delta);

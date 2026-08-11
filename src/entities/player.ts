@@ -33,7 +33,7 @@ export interface PlayerConfig {
 export class Player {
   private scene!: Phaser.Scene;
   private image!: Phaser.Physics.Arcade.Image;
-  private facingMarker!: Phaser.GameObjects.Image;
+  private lamp!: Phaser.GameObjects.Image;
 
   private keys: Phaser.Input.Keyboard.Key[] = [];
   private keyUp: Phaser.Input.Keyboard.Key[] = [];
@@ -71,13 +71,16 @@ export class Player {
       config.bodyTexture ?? 'player-body'
     );
     this.image.setDepth(depth);
+    // Rotate entire body sprite to indicate facing
+    this.image.setRotation(this.facingAngle);
 
     const body = this.image.body as Phaser.Physics.Arcade.Body;
     body.setSize(GAME_CONSTANTS.PLAYER.BODY_SIZE, GAME_CONSTANTS.PLAYER.BODY_SIZE, false);
     body.setOffset(GAME_CONSTANTS.PLAYER.BODY_OFFSET.x, GAME_CONSTANTS.PLAYER.BODY_OFFSET.y);
     body.setCollideWorldBounds(true);
 
-    this.facingMarker = scene.add
+    // Lamp follows the player at a fixed offset that rotates with facing
+    this.lamp = scene.add
       .image(config.spawn.x, config.spawn.y, config.facingTexture ?? 'player-lamp')
       .setDepth(depth + 1);
 
@@ -170,7 +173,7 @@ export class Player {
     this.keyLeft.length = 0;
     this.keyRight.length = 0;
     this.speedModifiers.clear();
-    this.facingMarker?.destroy();
+    this.lamp?.destroy();
     this.image?.destroy();
   }
 
@@ -279,18 +282,15 @@ export class Player {
   }
 
   private syncVisuals(): void {
-    const offsets: Record<Facing4, { x: number; y: number }> = {
-      down: { x: -5, y: -4 },
-      up: { x: -5, y: 4 },
-      left: { x: 4, y: -3 },
-      right: { x: -5, y: -3 },
-    };
-    const off = offsets[this.facing4];
-    this.facingMarker.setPosition(
-      this.image.x + off.x,
-      this.image.y + off.y
-    );
-    this.facingMarker.setRotation(0);
+    // Rotate the entire body to indicate facing direction
+    this.image.setRotation(this.facingAngle);
+
+    // Lamp sits at a fixed offset from center, rotated with the body
+    const lampDist = 8;
+    const lampX = this.image.x + Math.cos(this.facingAngle) * lampDist;
+    const lampY = this.image.y + Math.sin(this.facingAngle) * lampDist;
+    this.lamp.setPosition(lampX, lampY);
+    this.lamp.setRotation(this.facingAngle);
   }
 }
 

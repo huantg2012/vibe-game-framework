@@ -83,11 +83,24 @@ export class BootScene extends Phaser.Scene {
 
     this.generateEnemyPlaceholders();
 
-    // Kindling placeholder (teal diamond: kindling is contamination-side, not warm)
+    // Kindling placeholder (dark gold crystalline downward triangle, 5 irregular vertices)
     const kindlingGfx = this.make.graphics({ x: 0, y: 0 });
-    kindlingGfx.fillStyle(0x2ae6c8, 1);
-    kindlingGfx.fillTriangle(8, 0, 16, 8, 8, 16);
-    kindlingGfx.fillTriangle(8, 0, 0, 8, 8, 16);
+    kindlingGfx.fillStyle(0x8a6020, 1);
+    kindlingGfx.fillPoints([
+      { x: 8, y: 0 },
+      { x: 14, y: 3 },
+      { x: 15, y: 9 },
+      { x: 8, y: 16 },
+      { x: 1, y: 9 },
+    ], true);
+    // Bright facet highlight
+    kindlingGfx.fillStyle(0xb88030, 1);
+    kindlingGfx.fillPoints([
+      { x: 8, y: 1 },
+      { x: 12, y: 4 },
+      { x: 10, y: 7 },
+      { x: 6, y: 5 },
+    ], true);
     kindlingGfx.generateTexture('placeholder-kindling', 16, 16);
     kindlingGfx.destroy();
 
@@ -95,100 +108,106 @@ export class BootScene extends Phaser.Scene {
   }
 
   /**
-   * Player body: 32x32 industrial suit silhouette + 2x2 shoulder lamp texture.
-   * Generated once, cached by key. The lamp sprite follows the player based on facing.
+   * Player body: 32x32 top-down silhouette (warm brown tones) + 2x2 shoulder lamp.
+   * Viewed from directly above: elliptical head, broad shoulders, backpack bump behind.
+   * The entire sprite rotates to indicate facing direction.
    */
   private generatePlayerSprite(): void {
     const g = this.make.graphics({ x: 0, y: 0 });
     const cx = 16; // center x
+    const cy = 16; // center y
 
-    // Legs (bottom shadow)
-    g.fillStyle(0x151a1e);
-    g.fillRect(cx - 4, 22, 3, 4);
-    g.fillRect(cx + 1, 22, 3, 4);
+    // Backpack (rendered first, sits below/behind body)
+    g.fillStyle(0x2a2018);
+    g.fillRect(cx - 3, cy + 2, 6, 4);
 
-    // Torso (hexagonal-ish shape)
-    g.fillStyle(0x2c2e33);
-    g.fillRect(cx - 5, 10, 10, 12);
-    // Shoulder widening
-    g.fillRect(cx - 6, 11, 12, 8);
+    // Body/shoulders (wide oval, warm dark brown)
+    g.fillStyle(0x3a2a1a);
+    g.fillRect(cx - 5, cy - 3, 10, 7);
+    g.fillRect(cx - 4, cy - 4, 8, 9);
+    g.fillRect(cx - 3, cy + 4, 6, 2);
 
-    // Backpack bump
-    g.fillStyle(0x2a2a2e);
-    g.fillRect(cx - 3, 14, 6, 5);
+    // Head (ellipse above body, slightly lighter warm brown)
+    g.fillStyle(0x4a3a2a);
+    g.fillRect(cx - 3, cy - 8, 6, 5);
+    g.fillRect(cx - 2, cy - 9, 4, 1);
+    g.fillRect(cx - 2, cy - 3, 4, 1);
 
-    // Head
-    g.fillStyle(0x3a3d42);
-    g.fillRect(cx - 2, 6, 4, 5);
+    // Shoulder lamp (warm orange, offset to one side near the facing direction)
+    g.fillStyle(0xc4873a);
+    g.fillRect(cx + 3, cy - 6, 2, 2);
 
-    // Bottom/right shadow edge (1px)
-    g.fillStyle(0x151a1e);
-    g.fillRect(cx - 6, 19, 12, 1);
-    g.fillRect(cx + 6, 11, 1, 8);
+    // Subtle edge shadow
+    g.fillStyle(0x1a1208);
+    g.fillRect(cx - 5, cy + 3, 1, 2);
+    g.fillRect(cx + 4, cy + 3, 1, 2);
 
     g.generateTexture('player-body', 32, 32);
     g.destroy();
 
-    // Shoulder lamp: tiny 2x2 texture (orange dot)
+    // Shoulder lamp: tiny 2x2 texture (orange dot) for the separate lamp sprite
     const lamp = this.make.graphics({ x: 0, y: 0 });
     lamp.fillStyle(0xc4873a);
     lamp.fillRect(0, 0, 2, 2);
     lamp.generateTexture('player-lamp', 2, 2);
     lamp.destroy();
 
-    // Also register 'placeholder-player' pointing to the same silhouette so any
-    // remaining references still resolve to a valid texture.
+    // Backward-compat texture alias
     const compat = this.make.graphics({ x: 0, y: 0 });
     const ccx = 16;
-    compat.fillStyle(0x151a1e);
-    compat.fillRect(ccx - 4, 22, 3, 4);
-    compat.fillRect(ccx + 1, 22, 3, 4);
-    compat.fillStyle(0x2c2e33);
-    compat.fillRect(ccx - 5, 10, 10, 12);
-    compat.fillRect(ccx - 6, 11, 12, 8);
-    compat.fillStyle(0x2a2a2e);
-    compat.fillRect(ccx - 3, 14, 6, 5);
-    compat.fillStyle(0x3a3d42);
-    compat.fillRect(ccx - 2, 6, 4, 5);
-    compat.fillStyle(0x151a1e);
-    compat.fillRect(ccx - 6, 19, 12, 1);
-    compat.fillRect(ccx + 6, 11, 1, 8);
+    const ccy = 16;
+    compat.fillStyle(0x2a2018);
+    compat.fillRect(ccx - 3, ccy + 2, 6, 4);
+    compat.fillStyle(0x3a2a1a);
+    compat.fillRect(ccx - 5, ccy - 3, 10, 7);
+    compat.fillRect(ccx - 4, ccy - 4, 8, 9);
+    compat.fillRect(ccx - 3, ccy + 4, 6, 2);
+    compat.fillStyle(0x4a3a2a);
+    compat.fillRect(ccx - 3, ccy - 8, 6, 5);
+    compat.fillRect(ccx - 2, ccy - 9, 4, 1);
+    compat.fillRect(ccx - 2, ccy - 3, 4, 1);
+    compat.fillStyle(0xc4873a);
+    compat.fillRect(ccx + 3, ccy - 6, 2, 2);
+    compat.fillStyle(0x1a1208);
+    compat.fillRect(ccx - 5, ccy + 3, 1, 2);
+    compat.fillRect(ccx + 4, ccy + 3, 1, 2);
     compat.generateTexture('placeholder-player', 32, 32);
     compat.destroy();
   }
 
   /**
-   * Infiltrator: distorted humanoid silhouette with teal scatter dots ("bad pixels").
-   * The asymmetric proportions (one shoulder higher, arms too long) signal "not quite
-   * human" at a glance. State communication rides on the separate indicator sprites
-   * (dot + lock triangle) positioned above the head by enemy-factory.
+   * Infiltrator (top-down): irregular asymmetric polygon, cold blue-gray with teal
+   * scatter dots. Larger than the player (24x24 vs 32x32 canvas but ~16px diameter
+   * vs player's ~14px), distinctly colder in hue. Rotation indicates facing.
    */
   private generateEnemyPlaceholders(): void {
     const ai = GAME_CONSTANTS.AI;
 
     const bodyGfx = this.make.graphics({ x: 0, y: 0 });
-    // Base body (dark, low contrast with environment)
-    bodyGfx.fillStyle(0x2e2d30);
-    // Head (small, offset slightly)
-    bodyGfx.fillRect(10, 1, 3, 3);
-    // Shoulders (asymmetric - one higher than other)
-    bodyGfx.fillRect(7, 4, 4, 2);  // left shoulder (higher)
-    bodyGfx.fillRect(13, 5, 4, 2); // right shoulder (lower)
-    // Torso
-    bodyGfx.fillRect(8, 6, 8, 8);
-    // Arms (too long - 2px longer than normal)
-    bodyGfx.fillRect(5, 5, 3, 10);  // left arm (long)
-    bodyGfx.fillRect(16, 6, 3, 10); // right arm (long)
-    // Legs
-    bodyGfx.fillRect(9, 14, 3, 6);
-    bodyGfx.fillRect(13, 14, 3, 6);
-    // Teal scatter dots (5 "bad pixels" signature)
+    const cx = 12; // center of 24x24
+    const cy = 12;
+
+    // Irregular asymmetric polygon (cold gray) - 9 vertices, not symmetric
+    bodyGfx.fillStyle(0x3a4448);
+    bodyGfx.fillPoints([
+      { x: cx, y: cy - 8 },       // top (facing direction)
+      { x: cx + 5, y: cy - 5 },   // top-right
+      { x: cx + 7, y: cy - 1 },   // right shoulder (wider)
+      { x: cx + 6, y: cy + 4 },   // right lower
+      { x: cx + 3, y: cy + 7 },   // bottom-right
+      { x: cx - 2, y: cy + 6 },   // bottom-left (narrower)
+      { x: cx - 5, y: cy + 3 },   // left lower
+      { x: cx - 6, y: cy - 2 },   // left shoulder (narrower than right)
+      { x: cx - 3, y: cy - 6 },   // top-left
+    ], true);
+
+    // Teal scatter dots (4 "pollution leak" dots, irregular positions)
     bodyGfx.fillStyle(0x1aad96);
-    bodyGfx.fillRect(9, 7, 1, 1);   // dot 1 on torso
-    bodyGfx.fillRect(14, 9, 1, 1);  // dot 2 on torso
-    bodyGfx.fillRect(6, 8, 1, 1);   // dot 3 on left arm
-    bodyGfx.fillRect(17, 12, 1, 1); // dot 4 on right arm
-    bodyGfx.fillRect(11, 3, 1, 1);  // dot 5 on head
+    bodyGfx.fillRect(cx + 2, cy - 3, 1, 1);   // dot 1
+    bodyGfx.fillRect(cx - 3, cy + 1, 1, 1);   // dot 2
+    bodyGfx.fillRect(cx + 4, cy + 2, 1, 1);   // dot 3
+    bodyGfx.fillRect(cx - 1, cy + 4, 1, 1);   // dot 4
+
     bodyGfx.generateTexture('placeholder-enemy', 24, 24);
     bodyGfx.destroy();
 

@@ -1,12 +1,13 @@
 /**
  * ImpactResultPanel - DOM overlay showing impact damage results.
  *
- * Displays module damage + defense slot charge progress.
- * Pure HTML/CSS overlay, no Phaser UI.
+ * Terminal-style UI: entire panel is clickable to dismiss, no buttons.
+ * CRT scanline background. Uses shared panel-styles.
  */
 
 import type { ImpactDamageEntry } from '@/systems/impact-system';
 import type { ContaminantType } from '@/types/game-types';
+import { injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -76,19 +77,19 @@ export const impactResultPanel = {
   ): void {
     if (panel) destroyPanel();
 
+    injectPanelStyles();
+
     panel = document.createElement('div');
     panel.id = 'impact-result-panel';
+    panel.className = 'game-panel';
     panel.style.cssText = [
       'position:fixed',
       'top:50%',
       'left:50%',
       'transform:translate(-50%,-50%)',
       'z-index:1001',
-      'background:rgba(15,17,20,0.92)',
-      'border:2px solid #cc4444',
-      'padding:12px',
-      'font-family:"Courier New",monospace',
-      'color:#cc4444',
+      'border-color:#cc4444',
+      'border-width:2px',
       'text-align:center',
       'animation:impact-shake 0.3s ease-out',
       'cursor:pointer',
@@ -132,10 +133,9 @@ export const impactResultPanel = {
         return `<div style="color:#8a8f96;font-size:10px;">${name} ${c.before}/${c.threshold} → ${c.after}/${c.threshold}</div>`;
       });
       chargeHtml = `
-        <div style="margin-top:12px;padding-top:10px;border-top:1px solid #2a2d32;">
-          <div style="font-size:9px;color:#8a8f96;margin-bottom:4px;">防御充能:</div>
-          ${chargeLines.join('')}
-        </div>
+        <div class="separator"></div>
+        <div style="font-size:9px;color:#8a8f96;margin-bottom:4px;">防御充能:</div>
+        ${chargeLines.join('')}
       `;
     }
 
@@ -147,7 +147,7 @@ export const impactResultPanel = {
         ${lines.join('<br>')}
       </div>
       ${chargeHtml}
-      <div style="font-size:9px;color:#5a5f66;margin-top:12px;">
+      <div class="hint">
         点击或按任意键关闭
       </div>
     `;

@@ -1,10 +1,8 @@
 /**
  * LoadoutPanel - DOM overlay for selecting sortie tools before entering the rift.
  *
- * Shows 3 sortie slots (Q/F/Passive), tool inventory, and confirm/cancel controls.
- * On confirm, invokes a callback that triggers the sortie flow + scene transition.
- *
- * Follows the same DOM pattern as AllocationPanel (position:fixed, z-index, ESC to close).
+ * Terminal-style UI: clickable text rows, CRT scanline background.
+ * Uses shared panel-styles.
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -15,6 +13,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
 import type { ContaminantType } from '@/types/game-types';
+import { injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Display name mapping
@@ -97,21 +96,19 @@ export const loadoutPanel = {
 // ---------------------------------------------------------------------------
 
 function createPanel(): void {
+  injectPanelStyles();
+
   panel = document.createElement('div');
   panel.id = 'loadout-panel';
+  panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
     'top:50%',
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'background:rgba(15,17,20,0.92)',
-    'border:1px solid #2a2d32',
-    'padding:12px',
     'min-width:340px',
     'max-width:420px',
-    'font-family:"Courier New",monospace',
-    'color:#c8cdd4',
   ].join(';');
 
   render();
@@ -146,9 +143,7 @@ function render(): void {
     (c) => c.stage === 'tool' && !isSlotted(c.id),
   );
 
-  let html = `<div style="margin-bottom:14px;font-size:14px;color:#1aad96;font-weight:bold;">
-    出击装备
-  </div>`;
+  let html = `<div class="panel-title" style="color:#1aad96;">出击装备</div>`;
 
   // Slots
   for (let i = 0; i < 3; i++) {
@@ -159,17 +154,17 @@ function render(): void {
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
+      html += `<div class="panel-section">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="color:#1aad96;min-width:50px;font-size:11px;">(${label})</span>
           <span style="color:${color};">${name} ${stars}</span>
           <span style="color:#8a8f96;font-size:10px;">x${c.usesRemaining}</span>
-          <button class="loadout-remove-btn" data-index="${i}" style="${actionBtnStyle()}">移除</button>
         </div>
         <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:58px;">${desc}</div>
+        <div class="option loadout-remove-btn" data-index="${i}" style="margin-top:4px;padding-left:58px;">▸ 移除</div>
       </div>`;
     } else {
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
+      html += `<div class="panel-section">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="color:#1aad96;min-width:50px;font-size:11px;">(${label})</span>
           <span style="color:#5a5f66;">空</span>
@@ -179,12 +174,11 @@ function render(): void {
   }
 
   // Inventory
-  html += `<div style="margin-top:14px;margin-bottom:8px;font-size:11px;color:#8a8f96;border-top:1px solid #2a2d32;padding-top:10px;">
-    可用工具：
-  </div>`;
+  html += `<div class="separator"></div>`;
+  html += `<div class="info-line" style="margin-bottom:6px;">可用工具：</div>`;
 
   if (inventory.length === 0) {
-    html += `<div style="color:#5a5f66;font-size:10px;padding:4px 0;">无可用的出击工具</div>`;
+    html += `<div class="info-line" style="color:#5a5f66;">无可用的出击工具</div>`;
   } else {
     for (const c of inventory) {
       const name = TYPE_NAMES[c.type];
@@ -193,22 +187,22 @@ function render(): void {
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
       // Determine tool type (active or passive)
       const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
-      // Show equip buttons only for compatible empty slots:
-      // Slots 0,1 (Q/F) = active only; Slot 2 (passive) = passive only
+      // Show equip options only for compatible empty slots
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
       const compatibleSlots = emptySlots.filter((idx) =>
         toolType === 'passive' ? idx === 2 : idx <= 1,
       );
-      const equipBtns = compatibleSlots
-        .map((idx) => `<button class="loadout-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle()}">装备到 ${SLOT_LABELS[idx]}</button>`)
-        .join(' ');
+      const equipOptions = compatibleSlots
+        .map((idx) => `<div class="option loadout-equip-btn" data-id="${c.id}" data-slot="${idx}">▸ 装备到 ${SLOT_LABELS[idx]}</div>`)
+        .join('');
 
-      html += `<div style="margin-bottom:6px;padding:4px 8px;background:#151a1e;">
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+      html += `<div class="panel-section">
+        <div style="display:flex;align-items:center;gap:6px;">
           <span style="color:${color};font-size:11px;">${name} ${stars} x${c.usesRemaining}</span>
-          ${equipBtns || '<span style="color:#5a5f66;font-size:10px;">已满</span>'}
+          ${compatibleSlots.length === 0 ? '<span style="color:#5a5f66;font-size:10px;">已满</span>' : ''}
         </div>
         <div style="font-size:9px;color:#5a5f66;margin-top:2px;">${desc}</div>
+        ${equipOptions}
       </div>`;
     }
   }
@@ -217,10 +211,9 @@ function render(): void {
   html += buildSortiePreview();
 
   // Confirm and Cancel
-  html += `<div style="margin-top:16px;display:flex;gap:10px;justify-content:center;">
-    <button id="loadout-confirm-btn" style="${confirmBtnStyle()}">出击</button>
-    <button id="loadout-cancel-btn" style="${cancelBtnStyle()}">取消</button>
-  </div>`;
+  html += `<div class="separator"></div>`;
+  html += `<div id="loadout-confirm-btn" class="option" style="color:#1aad96;font-weight:bold;">▸ 出击</div>`;
+  html += `<div id="loadout-cancel-btn" class="option">▸ 取消</div>`;
 
   panel.innerHTML = html;
   wireEvents();
@@ -297,9 +290,9 @@ function buildSortiePreview(): string {
   const storageBonus = Math.round((storageEffect - 1) * 100);
   const kindlingDetail = storageBonus > 0 ? ` (储藏+${storageBonus}%)` : '';
 
-  return `<div style="margin-top:14px;padding:10px;background:#151a1e;border-left:3px solid #1aad96;">
+  return `<div style="margin-top:10px;padding:8px;background:#151a1e;border-left:3px solid #1aad96;">
     <div style="font-size:11px;color:#1aad96;margin-bottom:6px;font-weight:bold;">本次出击:</div>
-    <div style="font-size:10px;color:#8a8f96;line-height:1.7;">
+    <div class="info-line" style="line-height:1.7;">
       完整度上限: <span style="color:#c8cdd4;">${totalHp}</span>${hpDetail}<br>
       混乱增速: <span style="color:#c8cdd4;">x${totalChaosRate.toFixed(2)}</span>${chaosDetail}<br>
       薪柴价值: <span style="color:#c8cdd4;">x${storageEffect.toFixed(2)}</span>${kindlingDetail}
@@ -314,45 +307,4 @@ function buildSortiePreview(): string {
 function isSlotted(id: string): boolean {
   const slots = contaminantSystem.getSortieLoadout();
   return slots.some((c) => c?.id === id);
-}
-
-function actionBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:10px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#8a8f96',
-    'border:none',
-    'cursor:pointer',
-    'margin-left:auto',
-    'text-decoration:underline',
-  ].join(';');
-}
-
-function confirmBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:11px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#1aad96',
-    'border:none',
-    'cursor:pointer',
-    'text-decoration:underline',
-    'font-weight:bold',
-  ].join(';');
-}
-
-function cancelBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:11px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#8a8f96',
-    'border:none',
-    'cursor:pointer',
-    'text-decoration:underline',
-  ].join(';');
 }

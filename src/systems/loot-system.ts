@@ -47,25 +47,23 @@ function ensureLootTexture(scene: Phaser.Scene): void {
   if (scene.textures.exists(LOOT_TEXTURE_KEY)) return;
   const g = scene.make.graphics({ x: 0, y: 0 }, false);
 
-  // Main body: dark teal irregular polyhedron
-  g.fillStyle(0x1a6b5c, 1);
+  // Gold crystalline downward-pointing triangle (5 irregular vertices)
+  g.fillStyle(0x8a6020, 1);
   g.fillPoints([
-    { x: 5, y: 0 },
-    { x: 10, y: 2 },
-    { x: 12, y: 6 },
-    { x: 9, y: 11 },
-    { x: 4, y: 10 },
+    { x: 6, y: 0 },
+    { x: 11, y: 2 },
+    { x: 12, y: 7 },
+    { x: 6, y: 12 },
     { x: 1, y: 7 },
-    { x: 2, y: 3 },
   ], true);
 
-  // Highlight facet on top (1-2px brighter area)
-  g.fillStyle(0x1aad96, 1);
+  // Bright facet highlight on top face
+  g.fillStyle(0xb88030, 1);
   g.fillPoints([
-    { x: 5, y: 1 },
-    { x: 9, y: 2 },
-    { x: 7, y: 4 },
-    { x: 4, y: 3 },
+    { x: 6, y: 1 },
+    { x: 10, y: 3 },
+    { x: 8, y: 5 },
+    { x: 5, y: 4 },
   ], true);
 
   g.generateTexture(LOOT_TEXTURE_KEY, LOOT_SIZE, LOOT_SIZE);
@@ -93,6 +91,8 @@ export class LootSystem {
   private overlapCollider: Phaser.Physics.Arcade.Collider | null = null;
   /** STORAGE module bonus applied to pickup values. */
   private kindlingValueModifier = 1.0;
+  /** Accumulated time for breathing pulse animation. */
+  private pulseTime = 0;
 
   create(
     scene: Phaser.Scene,
@@ -104,6 +104,7 @@ export class LootSystem {
     this.getVisibilityAt = config.getVisibilityAt;
     this.kindlingValueModifier = config.kindlingValueModifier ?? 1.0;
     this.carried = 0;
+    this.pulseTime = 0;
 
     ensureLootTexture(scene);
 
@@ -131,12 +132,16 @@ export class LootSystem {
     );
   }
 
-  /** Update visibility alpha each frame. */
-  update(): void {
+  /** Update visibility alpha with slow breathing pulse each frame. */
+  update(delta: number): void {
+    // ~1Hz breathing: alpha oscillates between 0.5 and 0.8
+    this.pulseTime += delta * 0.001 * Math.PI * 2; // convert ms to radians at 1Hz
+    const breath = 0.65 + 0.15 * Math.sin(this.pulseTime);
+
     for (const node of this.nodes) {
       if (node.collected) continue;
       const vis = this.getVisibilityAt(node.def.position);
-      node.sprite.setAlpha(vis);
+      node.sprite.setAlpha(vis * breath);
     }
   }
 

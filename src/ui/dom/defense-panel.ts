@@ -1,10 +1,8 @@
 /**
  * DefensePanel - DOM overlay for managing the 3 defense slots at the purification point.
  *
- * Displays currently slotted contaminants (name + rarity + impact charge progress),
- * inventory of defense-stage contaminants available for slotting, and unslot/equip controls.
- *
- * Follows the same DOM pattern as AllocationPanel (position:fixed, z-index, ESC to close).
+ * Terminal-style UI: clickable text rows instead of buttons, CRT scanline background.
+ * Uses shared panel-styles.
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -12,6 +10,7 @@ import { saveManager } from '@/managers/save-manager';
 import type { ContaminantType } from '@/types/game-types';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
+import { injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Display name mapping
@@ -84,21 +83,19 @@ export const defensePanel = {
 // ---------------------------------------------------------------------------
 
 function createPanel(): void {
+  injectPanelStyles();
+
   panel = document.createElement('div');
   panel.id = 'defense-panel';
+  panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
     'top:50%',
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'background:rgba(15,17,20,0.92)',
-    'border:1px solid #2a2d32',
-    'padding:12px',
     'min-width:320px',
     'max-width:400px',
-    'font-family:"Courier New",monospace',
-    'color:#c8cdd4',
   ].join(';');
 
   render();
@@ -135,9 +132,7 @@ function render(): void {
 
   const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
-  let html = `<div style="margin-bottom:14px;font-size:14px;color:#1aad96;font-weight:bold;">
-    防御配置
-  </div>`;
+  let html = `<div class="panel-title" style="color:#1aad96;">防御配置</div>`;
 
   // Slots
   for (let i = 0; i < 3; i++) {
@@ -147,17 +142,17 @@ function render(): void {
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
+      html += `<div class="panel-section">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="color:#8a8f96;min-width:48px;">槽 ${i + 1}:</span>
           <span style="color:${color};">${name} ${stars}</span>
           <span style="color:#5a5f66;font-size:10px;margin-left:4px;">${c.impactCharges}/${threshold}</span>
-          <button class="defense-unslot-btn" data-index="${i}" style="${actionBtnStyle()}">卸下</button>
         </div>
         <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:56px;">${desc}</div>
+        <div class="option defense-unslot-btn" data-index="${i}" style="margin-top:4px;padding-left:56px;">▸ 卸下</div>
       </div>`;
     } else {
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
+      html += `<div class="panel-section">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="color:#8a8f96;min-width:48px;">槽 ${i + 1}:</span>
           <span style="color:#5a5f66;">空</span>
@@ -167,38 +162,37 @@ function render(): void {
   }
 
   // Inventory
-  html += `<div style="margin-top:14px;margin-bottom:8px;font-size:11px;color:#8a8f96;border-top:1px solid #2a2d32;padding-top:10px;">
-    库存（可装备）：
-  </div>`;
+  html += `<div class="separator"></div>`;
+  html += `<div class="info-line" style="margin-bottom:6px;">库存（可装备）：</div>`;
 
   if (inventory.length === 0) {
-    html += `<div style="color:#5a5f66;font-size:10px;padding:4px 0;">无可用的防御污染物</div>`;
+    html += `<div class="info-line" style="color:#5a5f66;">无可用的防御污染物</div>`;
   } else {
     for (const c of inventory) {
       const name = TYPE_NAMES[c.type];
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
-      // Show equip buttons for each empty slot
+      // Show equip options for each empty slot
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
-      const equipBtns = emptySlots
-        .map((idx) => `<button class="defense-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle()}">装备到 ${idx + 1}</button>`)
-        .join(' ');
+      const equipOptions = emptySlots
+        .map((idx) => `<div class="option defense-equip-btn" data-id="${c.id}" data-slot="${idx}">▸ 装备到 槽${idx + 1}</div>`)
+        .join('');
 
-      html += `<div style="margin-bottom:6px;padding:4px 8px;background:#151a1e;">
-        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+      html += `<div class="panel-section">
+        <div style="display:flex;align-items:center;gap:6px;">
           <span style="color:${color};font-size:11px;">${name} ${stars}</span>
-          ${equipBtns || '<span style="color:#5a5f66;font-size:10px;">已满</span>'}
+          ${emptySlots.length === 0 ? '<span style="color:#5a5f66;font-size:10px;">已满</span>' : ''}
         </div>
         <div style="font-size:9px;color:#5a5f66;margin-top:2px;">${desc}</div>
+        ${equipOptions}
       </div>`;
     }
   }
 
-  // Close button
-  html += `<div style="margin-top:14px;text-align:center;">
-    <button id="defense-close-btn" style="${closeBtnStyle()}">关闭</button>
-  </div>`;
+  // Close
+  html += `<div class="separator"></div>`;
+  html += `<div id="defense-close-btn" class="option">▸ 关闭</div>`;
 
   panel.innerHTML = html;
   wireEvents();
@@ -239,31 +233,4 @@ function wireEvents(): void {
 function isSlotted(id: string): boolean {
   const slots = contaminantSystem.getDefenseSlotted();
   return slots.some((c) => c?.id === id);
-}
-
-function actionBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:10px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#8a8f96',
-    'border:none',
-    'cursor:pointer',
-    'margin-left:auto',
-    'text-decoration:underline',
-  ].join(';');
-}
-
-function closeBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:11px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#8a8f96',
-    'border:none',
-    'cursor:pointer',
-    'text-decoration:underline',
-  ].join(';');
 }

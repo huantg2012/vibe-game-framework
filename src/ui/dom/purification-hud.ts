@@ -12,6 +12,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { gameState } from '@/managers/game-state';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
+import { injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -43,6 +44,7 @@ export class PurificationHud {
   private promptVisible = true;
 
   create(): void {
+    injectPanelStyles();
     this.createHudPanel();
     this.createPromptBar();
   }
@@ -140,11 +142,11 @@ export class PurificationHud {
 
     this.hudEl = document.createElement('div');
     this.hudEl.id = 'purif-hud';
+    this.hudEl.className = 'game-panel';
     this.hudEl.style.cssText = [
       'position:fixed', 'top:12px', 'right:12px', 'z-index:999',
-      'pointer-events:none', 'font-family:"Courier New",monospace',
-      'background:rgba(15,17,20,0.92)', 'border:1px solid #2a2d32',
-      'padding:10px 12px', 'border-radius:0', 'min-width:120px',
+      'pointer-events:none',
+      'padding:10px 12px', 'min-width:120px',
     ].join(';');
     document.body.appendChild(this.hudEl);
     this.refresh();
@@ -155,12 +157,11 @@ export class PurificationHud {
 
     this.promptEl = document.createElement('div');
     this.promptEl.id = 'purif-prompt';
+    this.promptEl.className = 'game-panel';
     this.promptEl.style.cssText = [
       'position:fixed', 'bottom:24px', 'left:50%', 'transform:translateX(-50%)',
       'z-index:999', 'pointer-events:none',
-      'font-family:"Courier New",monospace',
-      'background:rgba(15,17,20,0.92)', 'border:1px solid #2a2d32',
-      'padding:6px 16px', 'border-radius:0', 'text-align:center',
+      'padding:6px 16px', 'text-align:center',
       'min-width:160px', 'transition:opacity 0.15s ease-out',
       'opacity:0.5',
     ].join(';');

@@ -1,10 +1,8 @@
 /**
  * GrowthPanel - DOM overlay for purchasing permanent upgrades at the growth altar.
  *
- * Displays current kindling reserve, each upgrade's level/effect/cost, and upgrade buttons.
- * Buttons are disabled when at max level or when the player cannot afford the next level.
- *
- * Follows the same DOM pattern as AllocationPanel (position:fixed, z-index, ESC to close).
+ * Terminal-style UI: clickable text rows, CRT scanline background.
+ * Uses shared panel-styles.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -13,6 +11,7 @@ import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import type { GrowthUpgradeId } from '@/types/game-types';
+import { injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Upgrade display config
@@ -80,21 +79,19 @@ export const growthPanel = {
 // ---------------------------------------------------------------------------
 
 function createPanel(): void {
+  injectPanelStyles();
+
   panel = document.createElement('div');
   panel.id = 'growth-panel';
+  panel.className = 'game-panel';
   panel.style.cssText = [
     'position:fixed',
     'top:50%',
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'background:rgba(15,17,20,0.92)',
-    'border:1px solid #2a2d32',
-    'padding:12px',
     'min-width:340px',
     'max-width:420px',
-    'font-family:"Courier New",monospace',
-    'color:#c8cdd4',
   ].join(';');
 
   render();
@@ -125,11 +122,9 @@ function render(): void {
 
   const reserve = gameState.getKindlingReserve();
 
-  let html = `<div style="margin-bottom:14px;font-size:14px;color:#c4873a;font-weight:bold;">
-    永久改造
-  </div>`;
+  let html = `<div class="panel-title" style="color:#c4873a;">永久改造</div>`;
 
-  html += `<div style="margin-bottom:14px;font-size:11px;color:#8a8f96;">
+  html += `<div class="info-line" style="margin-bottom:12px;">
     薪柴储备: <span style="color:#c4873a;font-weight:bold;">${reserve}</span>
   </div>`;
 
@@ -143,36 +138,32 @@ function render(): void {
     const effectText = upgrade.effectLabel(level);
     const nextEffect = !isMaxed ? upgrade.nextEffectLabel(level + 1) : '';
 
-    html += `<div style="margin-bottom:12px;padding:10px;background:#151a1e;border-left:3px solid #c4873a;">
+    html += `<div style="margin-bottom:10px;padding:8px;background:#151a1e;border-left:3px solid #c4873a;">
       <div style="font-size:11px;color:#c4873a;font-weight:bold;margin-bottom:4px;">
-        ◆ ${upgrade.name} <span style="color:#8a8f96;">Lv.${level}/${maxLevel}</span>
+        ${upgrade.name} <span style="color:#8a8f96;">Lv.${level}/${maxLevel}</span>
       </div>
-      <div style="font-size:10px;color:#8a8f96;margin-bottom:4px;">
+      <div class="info-line" style="margin-bottom:4px;">
         效果: ${effectText}
       </div>`;
 
     if (isMaxed) {
-      html += `<div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:9px;color:#4d9a6b;">已满</span>
-        <button disabled style="${upgradeBtnStyle(true)}">已满</button>
-      </div>`;
+      html += `<div class="option disabled">  已满</div>`;
     } else {
       const costColor = canAfford ? '#c4873a' : '#5a5f66';
-      html += `<div style="font-size:10px;color:#8a8f96;margin-bottom:6px;">
-        下一级: ${nextEffect} (费用: <span style="color:${costColor};">${cost}</span>)
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <button class="growth-upgrade-btn" data-id="${upgrade.id}" ${canAfford ? '' : 'disabled'} style="${upgradeBtnStyle(!canAfford)}">升级</button>
+      html += `<div class="info-line" style="margin-bottom:4px;">
+        下一级: ${nextEffect}
+      </div>`;
+      html += `<div class="option growth-upgrade-btn ${canAfford ? '' : 'disabled'}" data-id="${upgrade.id}" style="color:${canAfford ? '#c4873a' : '#3a3f44'};">
+        ▸ 升级 (费用: <span style="color:${costColor};">${cost}</span>)
       </div>`;
     }
 
     html += `</div>`;
   }
 
-  // Close button
-  html += `<div style="margin-top:14px;text-align:center;">
-    <button id="growth-close-btn" style="${closeBtnStyle()}">关闭</button>
-  </div>`;
+  // Close
+  html += `<div class="separator"></div>`;
+  html += `<div id="growth-close-btn" class="option">▸ 关闭</div>`;
 
   panel.innerHTML = html;
   wireEvents();
@@ -183,7 +174,9 @@ function wireEvents(): void {
 
   panel.querySelectorAll('.growth-upgrade-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      const id = (btn as HTMLElement).dataset.id as GrowthUpgradeId;
+      const el = btn as HTMLElement;
+      if (el.classList.contains('disabled')) return;
+      const id = el.dataset.id as GrowthUpgradeId;
       const prevLevel = growthSystem.getLevel(id);
       const spent = growthSystem.purchase(id);
       if (spent > 0) {
@@ -260,11 +253,12 @@ function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void 
   setTimeout(() => {
     const overlay = document.createElement('div');
     overlay.id = 'first-growth-milestone';
+    overlay.className = 'game-panel';
     overlay.style.cssText = [
       'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
       'z-index:2000', 'background:rgba(0,0,0,0.85)', 'display:flex',
       'align-items:center', 'justify-content:center',
-      'font-family:"Courier New",monospace', 'font-size:16px', 'color:#c4873a',
+      'font-size:16px', 'color:#c4873a',
       'cursor:pointer',
     ].join(';');
     overlay.textContent = '永久改造已刻入';
@@ -281,35 +275,4 @@ function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void 
     document.addEventListener('keydown', keyDismiss);
     const timer = setTimeout(dismiss, 1500);
   }, 300);
-}
-
-// ---------------------------------------------------------------------------
-// Styles
-// ---------------------------------------------------------------------------
-
-function upgradeBtnStyle(disabled: boolean): string {
-  const color = disabled ? '#3a3f44' : '#c4873a';
-  return [
-    'padding:4px 8px',
-    'font-size:11px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    `color:${color}`,
-    'border:none',
-    disabled ? 'text-decoration:none' : 'text-decoration:underline',
-    disabled ? 'cursor:not-allowed' : 'cursor:pointer',
-  ].join(';');
-}
-
-function closeBtnStyle(): string {
-  return [
-    'padding:4px 8px',
-    'font-size:11px',
-    'font-family:"Courier New",monospace',
-    'background:none',
-    'color:#8a8f96',
-    'border:none',
-    'cursor:pointer',
-    'text-decoration:underline',
-  ].join(';');
 }
