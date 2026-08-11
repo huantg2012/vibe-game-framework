@@ -129,7 +129,7 @@ function buildOccluderGrid(tileMap: TileMapData): OccluderGrid {
 }
 
 // ---------------------------------------------------------------------------
-// Purification tileset (warm grey/beige tones, contrast to the cold rift)
+// Purification tileset (cold grey tones - player is the only warm color here)
 // ---------------------------------------------------------------------------
 
 const PURIFICATION_TILESET_KEY = 'placeholder-purification-tileset';
@@ -142,10 +142,10 @@ function ensurePurificationTileset(scene: Phaser.Scene): void {
   gfx.fillStyle(0x0a0a0a, 1);
   gfx.fillRect(0, 0, TILE, TILE);
 
-  // frame 1 - floor (warm grey/beige)
-  gfx.fillStyle(0x2e2a25, 1);
+  // frame 1 - floor (cold grey / concrete-dark)
+  gfx.fillStyle(0x2c2e33, 1);
   gfx.fillRect(TILE, 0, TILE, TILE);
-  gfx.lineStyle(1, 0x3a3530, 1);
+  gfx.lineStyle(1, 0x3a3d42, 1);
   gfx.strokeRect(TILE + 0.5, 0.5, TILE - 1, TILE - 1);
 
   gfx.generateTexture(PURIFICATION_TILESET_KEY, TILE * 2, TILE);

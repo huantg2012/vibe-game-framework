@@ -149,7 +149,7 @@ function render(): void {
           <span style="color:#5a5f66;font-size:10px;margin-left:4px;">${c.impactCharges}/${threshold}</span>
         </div>
         <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:56px;">${desc}</div>
-        <div class="option defense-unslot-btn" data-index="${i}" style="margin-top:4px;padding-left:56px;">▸ 卸下</div>
+        <div class="option defense-unslot-btn" data-index="${i}" style="margin-top:4px;padding-left:56px;">[卸下]</div>
       </div>`;
     } else {
       html += `<div class="panel-section">
@@ -176,7 +176,7 @@ function render(): void {
       // Show equip options for each empty slot
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
       const equipOptions = emptySlots
-        .map((idx) => `<div class="option defense-equip-btn" data-id="${c.id}" data-slot="${idx}">▸ 装备到 槽${idx + 1}</div>`)
+        .map((idx) => `<div class="option defense-equip-btn" data-id="${c.id}" data-slot="${idx}">[装备到 槽${idx + 1}]</div>`)
         .join('');
 
       html += `<div class="panel-section">
@@ -192,7 +192,7 @@ function render(): void {
 
   // Close
   html += `<div class="separator"></div>`;
-  html += `<div id="defense-close-btn" class="option">▸ 关闭</div>`;
+  html += `<div id="defense-close-btn" class="option">[关闭]</div>`;
 
   panel.innerHTML = html;
   wireEvents();

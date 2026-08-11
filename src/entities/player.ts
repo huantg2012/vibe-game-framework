@@ -71,8 +71,7 @@ export class Player {
       config.bodyTexture ?? 'player-body'
     );
     this.image.setDepth(depth);
-    // Rotate entire body sprite to indicate facing
-    this.image.setRotation(this.facingAngle);
+    // Direction is indicated by texture swap, not rotation
 
     const body = this.image.body as Phaser.Physics.Arcade.Body;
     body.setSize(GAME_CONSTANTS.PLAYER.BODY_SIZE, GAME_CONSTANTS.PLAYER.BODY_SIZE, false);
@@ -281,16 +280,34 @@ export class Player {
     this.speedMultiplier = Math.max(GAME_CONSTANTS.PLAYER.SPEED_MOD_MIN, product);
   }
 
-  private syncVisuals(): void {
-    // Rotate the entire body to indicate facing direction
-    this.image.setRotation(this.facingAngle);
+  /** Texture key mapping for each facing direction. */
+  private static readonly FACING_TEXTURES: Record<Facing4, string> = {
+    down: 'player-down',
+    left: 'player-left',
+    right: 'player-right',
+    up: 'player-up',
+  };
 
-    // Lamp sits at a fixed offset from center, rotated with the body
-    const lampDist = 8;
-    const lampX = this.image.x + Math.cos(this.facingAngle) * lampDist;
-    const lampY = this.image.y + Math.sin(this.facingAngle) * lampDist;
-    this.lamp.setPosition(lampX, lampY);
-    this.lamp.setRotation(this.facingAngle);
+  /** Lamp offset positions per facing direction (relative to player center). */
+  private static readonly LAMP_OFFSETS: Record<Facing4, Vector2> = {
+    down: { x: 5, y: 0 },
+    left: { x: -6, y: 0 },
+    right: { x: 6, y: 0 },
+    up: { x: 5, y: 0 },
+  };
+
+  private syncVisuals(): void {
+    // Switch texture based on facing4 direction (no rotation)
+    const textureKey = Player.FACING_TEXTURES[this.facing4];
+    if (this.image.texture.key !== textureKey) {
+      this.image.setTexture(textureKey);
+    }
+    this.image.setRotation(0);
+
+    // Lamp sits at a fixed offset per facing direction
+    const offset = Player.LAMP_OFFSETS[this.facing4];
+    this.lamp.setPosition(this.image.x + offset.x, this.image.y + offset.y);
+    this.lamp.setRotation(0);
   }
 }
 

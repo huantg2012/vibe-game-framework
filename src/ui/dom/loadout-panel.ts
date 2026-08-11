@@ -161,7 +161,7 @@ function render(): void {
           <span style="color:#8a8f96;font-size:10px;">x${c.usesRemaining}</span>
         </div>
         <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:58px;">${desc}</div>
-        <div class="option loadout-remove-btn" data-index="${i}" style="margin-top:4px;padding-left:58px;">▸ 移除</div>
+        <div class="option loadout-remove-btn" data-index="${i}" style="margin-top:4px;padding-left:58px;">[移除]</div>
       </div>`;
     } else {
       html += `<div class="panel-section">
@@ -193,7 +193,7 @@ function render(): void {
         toolType === 'passive' ? idx === 2 : idx <= 1,
       );
       const equipOptions = compatibleSlots
-        .map((idx) => `<div class="option loadout-equip-btn" data-id="${c.id}" data-slot="${idx}">▸ 装备到 ${SLOT_LABELS[idx]}</div>`)
+        .map((idx) => `<div class="option loadout-equip-btn" data-id="${c.id}" data-slot="${idx}">[装备到 ${SLOT_LABELS[idx]}]</div>`)
         .join('');
 
       html += `<div class="panel-section">
@@ -212,8 +212,8 @@ function render(): void {
 
   // Confirm and Cancel
   html += `<div class="separator"></div>`;
-  html += `<div id="loadout-confirm-btn" class="option" style="color:#1aad96;font-weight:bold;">▸ 出击</div>`;
-  html += `<div id="loadout-cancel-btn" class="option">▸ 取消</div>`;
+  html += `<div id="loadout-confirm-btn" class="option" style="color:#1aad96;font-weight:bold;">[出击]</div>`;
+  html += `<div id="loadout-cancel-btn" class="option">[取消]</div>`;
 
   panel.innerHTML = html;
   wireEvents();
@@ -290,8 +290,8 @@ function buildSortiePreview(): string {
   const storageBonus = Math.round((storageEffect - 1) * 100);
   const kindlingDetail = storageBonus > 0 ? ` (储藏+${storageBonus}%)` : '';
 
-  return `<div style="margin-top:10px;padding:8px;background:#151a1e;border-left:3px solid #1aad96;">
-    <div style="font-size:11px;color:#1aad96;margin-bottom:6px;font-weight:bold;">本次出击:</div>
+  return `<div style="margin-top:10px;padding:8px;">
+    <div class="section-title">本次出击</div>
     <div class="info-line" style="line-height:1.7;">
       完整度上限: <span style="color:#c8cdd4;">${totalHp}</span>${hpDetail}<br>
       混乱增速: <span style="color:#c8cdd4;">x${totalChaosRate.toFixed(2)}</span>${chaosDetail}<br>

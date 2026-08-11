@@ -138,7 +138,7 @@ function render(): void {
     const effectText = upgrade.effectLabel(level);
     const nextEffect = !isMaxed ? upgrade.nextEffectLabel(level + 1) : '';
 
-    html += `<div style="margin-bottom:10px;padding:8px;background:#151a1e;border-left:3px solid #c4873a;">
+    html += `<div style="margin-bottom:10px;padding:8px;">
       <div style="font-size:11px;color:#c4873a;font-weight:bold;margin-bottom:4px;">
         ${upgrade.name} <span style="color:#8a8f96;">Lv.${level}/${maxLevel}</span>
       </div>
@@ -154,7 +154,7 @@ function render(): void {
         下一级: ${nextEffect}
       </div>`;
       html += `<div class="option growth-upgrade-btn ${canAfford ? '' : 'disabled'}" data-id="${upgrade.id}" style="color:${canAfford ? '#c4873a' : '#3a3f44'};">
-        ▸ 升级 (费用: <span style="color:${costColor};">${cost}</span>)
+        [升级] 费用: <span style="color:${costColor};">${cost}</span>
       </div>`;
     }
 
@@ -163,7 +163,7 @@ function render(): void {
 
   // Close
   html += `<div class="separator"></div>`;
-  html += `<div id="growth-close-btn" class="option">▸ 关闭</div>`;
+  html += `<div id="growth-close-btn" class="option">[关闭]</div>`;
 
   panel.innerHTML = html;
   wireEvents();

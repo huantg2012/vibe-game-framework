@@ -178,10 +178,10 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     </div>
     <div class="separator"></div>
     <div id="alloc-confirm" class="option ${confirmDisabled ? 'disabled' : ''}" style="color:${confirmDisabled ? '#3a3f44' : '#c8cdd4'};">
-      ▸ 确认分配
+      [确认分配]
     </div>
     <div id="alloc-cancel" class="option">
-      ▸ 取消
+      [取消]
     </div>
   `;
 

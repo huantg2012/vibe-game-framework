@@ -108,42 +108,99 @@ export class BootScene extends Phaser.Scene {
   }
 
   /**
-   * Player body: 32x32 top-down silhouette (warm brown tones) + 2x2 shoulder lamp.
-   * Viewed from directly above: elliptical head, broad shoulders, backpack bump behind.
-   * The entire sprite rotates to indicate facing direction.
+   * Player body: 4 directional textures (32x32 each) for 3/4 top-down view.
+   * Generates: player-down, player-left, player-right, player-up
+   * Warm orange tones (#8a5c2a body) so the player is the only warm object on screen.
    */
   private generatePlayerSprite(): void {
-    const g = this.make.graphics({ x: 0, y: 0 });
-    const cx = 16; // center x
-    const cy = 16; // center y
+    // --- Frame 0: Down (facing toward camera) ---
+    const gDown = this.make.graphics({ x: 0, y: 0 });
+    // Body (torso)
+    gDown.fillStyle(0x5a3818);
+    gDown.fillRect(12, 16, 8, 6);
+    // Shoulders
+    gDown.fillStyle(0x6a4420);
+    gDown.fillRect(10, 12, 12, 4);
+    // Head (top)
+    gDown.fillStyle(0x8a5c2a);
+    gDown.fillEllipse(16, 10, 7, 5);
+    // Face hint (dark area on head)
+    gDown.fillStyle(0x3a2818);
+    gDown.fillRect(14, 10, 4, 3);
+    // Shoulder lamp (right shoulder)
+    gDown.fillStyle(0xc4873a);
+    gDown.fillRect(21, 12, 2, 2);
+    gDown.generateTexture('player-down', 32, 32);
+    gDown.destroy();
 
-    // Backpack (rendered first, sits below/behind body)
-    g.fillStyle(0x2a2018);
-    g.fillRect(cx - 3, cy + 2, 6, 4);
+    // --- Frame 1: Left (facing left) ---
+    const gLeft = this.make.graphics({ x: 0, y: 0 });
+    // Body
+    gLeft.fillStyle(0x5a3818);
+    gLeft.fillRect(13, 16, 7, 6);
+    // Shoulders (left shoulder prominent)
+    gLeft.fillStyle(0x6a4420);
+    gLeft.fillRect(10, 12, 11, 4);
+    // Head
+    gLeft.fillStyle(0x8a5c2a);
+    gLeft.fillEllipse(15, 10, 6, 5);
+    // Shoulder lamp (left shoulder visible)
+    gLeft.fillStyle(0xc4873a);
+    gLeft.fillRect(10, 12, 2, 2);
+    gLeft.generateTexture('player-left', 32, 32);
+    gLeft.destroy();
 
-    // Body/shoulders (wide oval, warm dark brown)
-    g.fillStyle(0x3a2a1a);
-    g.fillRect(cx - 5, cy - 3, 10, 7);
-    g.fillRect(cx - 4, cy - 4, 8, 9);
-    g.fillRect(cx - 3, cy + 4, 6, 2);
+    // --- Frame 2: Right (facing right, mirror of left) ---
+    const gRight = this.make.graphics({ x: 0, y: 0 });
+    // Body
+    gRight.fillStyle(0x5a3818);
+    gRight.fillRect(12, 16, 7, 6);
+    // Shoulders (right shoulder prominent)
+    gRight.fillStyle(0x6a4420);
+    gRight.fillRect(11, 12, 11, 4);
+    // Head
+    gRight.fillStyle(0x8a5c2a);
+    gRight.fillEllipse(17, 10, 6, 5);
+    // Shoulder lamp (right shoulder visible)
+    gRight.fillStyle(0xc4873a);
+    gRight.fillRect(20, 12, 2, 2);
+    gRight.generateTexture('player-right', 32, 32);
+    gRight.destroy();
 
-    // Head (ellipse above body, slightly lighter warm brown)
-    g.fillStyle(0x4a3a2a);
-    g.fillRect(cx - 3, cy - 8, 6, 5);
-    g.fillRect(cx - 2, cy - 9, 4, 1);
-    g.fillRect(cx - 2, cy - 3, 4, 1);
+    // --- Frame 3: Up (facing away from camera) ---
+    const gUp = this.make.graphics({ x: 0, y: 0 });
+    // Backpack bump (visible from behind)
+    gUp.fillStyle(0x2a2018);
+    gUp.fillRect(13, 18, 6, 4);
+    // Body
+    gUp.fillStyle(0x5a3818);
+    gUp.fillRect(12, 16, 8, 6);
+    // Shoulders
+    gUp.fillStyle(0x6a4420);
+    gUp.fillRect(10, 12, 12, 4);
+    // Head (back of head, slightly darker)
+    gUp.fillStyle(0x7a4c22);
+    gUp.fillEllipse(16, 10, 7, 5);
+    // Shoulder lamp (right shoulder)
+    gUp.fillStyle(0xc4873a);
+    gUp.fillRect(21, 12, 2, 2);
+    gUp.generateTexture('player-up', 32, 32);
+    gUp.destroy();
 
-    // Shoulder lamp (warm orange, offset to one side near the facing direction)
-    g.fillStyle(0xc4873a);
-    g.fillRect(cx + 3, cy - 6, 2, 2);
-
-    // Subtle edge shadow
-    g.fillStyle(0x1a1208);
-    g.fillRect(cx - 5, cy + 3, 1, 2);
-    g.fillRect(cx + 4, cy + 3, 1, 2);
-
-    g.generateTexture('player-body', 32, 32);
-    g.destroy();
+    // Also generate a single 'player-body' as default (uses down frame)
+    const gDefault = this.make.graphics({ x: 0, y: 0 });
+    gDefault.fillStyle(0x5a3818);
+    gDefault.fillRect(12, 16, 8, 6);
+    gDefault.fillStyle(0x6a4420);
+    gDefault.fillRect(10, 12, 12, 4);
+    gDefault.fillStyle(0x8a5c2a);
+    gDefault.fillEllipse(16, 10, 7, 5);
+    gDefault.fillStyle(0x3a2818);
+    gDefault.fillRect(14, 10, 4, 3);
+    gDefault.fillStyle(0xc4873a);
+    gDefault.fillRect(21, 12, 2, 2);
+    gDefault.generateTexture('player-body', 32, 32);
+    gDefault.destroy();
 
     // Shoulder lamp: tiny 2x2 texture (orange dot) for the separate lamp sprite
     const lamp = this.make.graphics({ x: 0, y: 0 });
@@ -154,23 +211,16 @@ export class BootScene extends Phaser.Scene {
 
     // Backward-compat texture alias
     const compat = this.make.graphics({ x: 0, y: 0 });
-    const ccx = 16;
-    const ccy = 16;
-    compat.fillStyle(0x2a2018);
-    compat.fillRect(ccx - 3, ccy + 2, 6, 4);
-    compat.fillStyle(0x3a2a1a);
-    compat.fillRect(ccx - 5, ccy - 3, 10, 7);
-    compat.fillRect(ccx - 4, ccy - 4, 8, 9);
-    compat.fillRect(ccx - 3, ccy + 4, 6, 2);
-    compat.fillStyle(0x4a3a2a);
-    compat.fillRect(ccx - 3, ccy - 8, 6, 5);
-    compat.fillRect(ccx - 2, ccy - 9, 4, 1);
-    compat.fillRect(ccx - 2, ccy - 3, 4, 1);
+    compat.fillStyle(0x5a3818);
+    compat.fillRect(12, 16, 8, 6);
+    compat.fillStyle(0x6a4420);
+    compat.fillRect(10, 12, 12, 4);
+    compat.fillStyle(0x8a5c2a);
+    compat.fillEllipse(16, 10, 7, 5);
+    compat.fillStyle(0x3a2818);
+    compat.fillRect(14, 10, 4, 3);
     compat.fillStyle(0xc4873a);
-    compat.fillRect(ccx + 3, ccy - 6, 2, 2);
-    compat.fillStyle(0x1a1208);
-    compat.fillRect(ccx - 5, ccy + 3, 1, 2);
-    compat.fillRect(ccx + 4, ccy + 3, 1, 2);
+    compat.fillRect(21, 12, 2, 2);
     compat.generateTexture('placeholder-player', 32, 32);
     compat.destroy();
   }
