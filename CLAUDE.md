@@ -93,6 +93,17 @@ Slice-based iterative development：
 - 每个 Slice = Design → Implement → Verify → Validate 完整循环
 - Slice 分类：系统 Slice / 内容 Slice / 功能 Slice / 集成 Slice / 打磨 Slice
 - 无 "prototype" 阶段，第一行代码即生产质量
+- **打磨/表现类 Slice 走轻量路径**：免完整 Task Brief，但收尾必须登记四项（架构登记 / spec 判断 / 交付范围记录 / UI 清单），四项未完成不得标 COMPLETE。详见 director agent 定义 Step 3。
+
+## 游戏内 UI 的硬约束（所有 Agent 遵守）
+
+**in-game UI ≠ admin panel。** 本项目实测中这是最容易翻车的地方（一次表现层翻修花了七轮人工返工才收敛，根因是框架用 web 应用词汇描述游戏界面，见 `guides/99-review.md` FV-01）。
+
+- 任何 UI 工作开工前先做**载体决策**：世界内装置（Phaser 层）/ 世界内终端（DOM，但视觉上是那台设备的屏幕）/ 元界面（主菜单等）。**只有元界面允许有"软件界面感"。**
+- 必须锚定 **2-3 个具名游戏参考**并写进 spec。实测中这是唯一能稳定拉住风格的输入。
+- 验收走 `docs/specs/_template-ui.md` 末尾的「游戏内 UI 验收清单」U1-U12——那是全项目唯一权威清单（design 自查结构层、art 自查视觉层、qa 逐条验收）。
+- 视觉真相的优先级：ui spec > `docs/design-notes/ui-art-overhaul.md`（人已逐轮确认的基线）> `docs/art-direction.md` §6 > `docs/world.md` 术语表。
+- 不写响应式断点：固定逻辑分辨率，手机端 out-of-scope。
 
 ## 策划数据源规则（强制）
 

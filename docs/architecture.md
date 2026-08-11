@@ -2,10 +2,10 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-07-24
+last-modified: 2026-08-12
 approved-date: 2026-07-22
-changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。
+changed-this-slice: true
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）——该 Slice 走了流程绕过路径，架构登记是事后补的，故 changed-this-slice 置 true 以触发 Slice 5 的一致性复查。
 ---
 
 # 技术架构
@@ -43,7 +43,11 @@ src/
 │   └── purification-scene.ts   # 净化点管理（基地场景）
 ├── systems/
 │   ├── visibility-system.ts    # 视野/光照 raycasting（RiftScene + PurificationScene 共用）
-│   ├── boundary-atmosphere.ts  # 净化点边界外黑暗+模糊内容周期渲染
+│   ├── boundary-shape.ts       # 净化点边界几何：潮汐驱动的极坐标压力 blob（形状唯一真相）
+│   ├── boundary-breath.ts      # 边界局部压力冲击与膜变形（纯视觉叠加层）
+│   ├── boundary-atmosphere.ts  # 净化点边界外黑暗+模糊内容周期渲染（跟随 boundary-shape）
+│   ├── procedural-surface.ts             # 裂隙地表逐像素程序化生成（DEC-018）
+│   ├── procedural-purification-surface.ts # 净化点地表逐像素程序化生成 + 边界 vignette
 │   ├── interaction-trigger.ts  # 接近触发交互（overlap检测+提示+面板激活）
 │   ├── ai/
 │   │   ├── state-machine.ts    # 通用 FSM 框架
@@ -69,6 +73,7 @@ src/
 ├── ui/
 │   ├── hud.ts                  # 游戏内 HUD（Phaser 层）
 │   ├── dom/
+│   │   ├── panel-styles.ts     # 共享面板样式层：全部 DOM 面板的单一 <style> 注入点
 │   │   ├── allocation-panel.ts # 净化点薪柴分配界面（DOM）
 │   │   └── impact-panel.ts     # 冲击结算界面（DOM）
 │   └── components/
@@ -158,6 +163,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 ## 模块注册表
 
 > **状态**列以真实 `src/` 目录为准（核对日期 2026-08-01，Slice 1 T8 完成后）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`、`src/entities/`、`src/utils/`；`managers/`、`generation/`、`ui/` 尚不存在。
+>
+> **部分补核（2026-08-12，Slice 4.5 事后登记）**：本次只重新核对了边界 / 地表 / 面板样式相关行（BoundaryShape、BoundaryBreath、BoundaryAtmosphere、两个 ProceduralSurface、PanelStyles），其余行的"规划中"标记仍是 2026-08-01 的状态，其中若干（GameState / SaveManager / ChaosSystem / HUD / DOM UI 等）实际已实现，待下次一致性检查全量补核。`generation/` 仍不存在；`managers/` 与 `ui/` 已存在。
 
 | 模块 | 路径 | 职责 | 对外接口 | 状态 |
 | ---- | ---- | ---- | -------- | ---- |
@@ -176,7 +183,12 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
 | EnemyFactory | src/entities/enemy-factory.ts | 渗透体实体：碰撞体 + 占位表现（朝向可读的五边形本体、teal 状态指示物、追击残影环）+ 承载 AI 可变状态块 | createInfiltrator(scene, spawn, config, position, factoryConfig), createInfiltratorConfig(); `Enemy`：getId/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection, getSprite(), syncPositionFromBody(), setVelocity(), measureDisplacement(), syncVisuals(dt, visibility), destroy() | 已实现（T7） |
-| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外黑暗氛围渲染 | update(dt), setIntensity(n) | 规划中 |
+| BoundaryShape | src/systems/boundary-shape.ts | 净化点边界几何的唯一真相：潮汐驱动的极坐标压力 blob（椭圆 × 潮汐缩放 × 方向压力叶 × 交互点安全钳制）。每次 scene create 构建一次，构建后为无状态廉价查询 | `createBoundaryShape(config)`：radiusAt(angle), normalizedDist(x,y), isInside(x,y), pressureAt(angle), pressureDirection, tideScale, centerX/centerY | 已实现（Slice 4.5） |
+| BoundaryBreath | src/systems/boundary-breath.ts | 边界局部压力冲击与膜变形的纯视觉叠加层（并发短弧向内扫入 + 虚空侵入楔形 + 膜线内凹）。不参与碰撞/可见性/gameplay | create(scene, shape, tidePhase), update(dt), destroy() | 已实现（Slice 4.5） |
+| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外粒子与 apparition 氛围渲染；生成/消亡半径跟随 BoundaryShape 而非固定圆 | create(scene, shape), update(dt), destroy() | 已实现（Slice 2，Slice 4.5 改为跟随 blob） |
+| ProceduralSurface | src/systems/procedural-surface.ts | 裂隙地表按世界坐标逐像素程序化生成（DEC-018：替代离散 AI tile 平铺） | createRiftSurfaceTexture(scene, map, key) | 已实现 |
+| ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
+| PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等），统一 `.game-panel` 类族——工业终端外观、右侧抽屉布局、条形/槽位/徽标组件。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles() | 已实现（Slice 4.5） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中 |
 | MapGenerator | src/generation/ | Voronoi+CA 程序化地图生成 | generate(config): MapData | 规划中 |
 | HUD | src/ui/hud.ts | 游戏内状态显示 | update(state) | 规划中 |
@@ -240,6 +252,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 - **理由**：Canvas 内构建表单/按钮/拖拽交互的成本极高。DOM 原生支持布局、事件、无障碍。不引入 React/Vue 因为界面不超过 3 个面板。
 - **影响**：需要管理 DOM 层和 Canvas 层的显隐切换和输入焦点。
 - **约束**：DOM UI 不能与游戏画面同时需要玩家输入（切场景时切换）。
+- **[Slice 4.5 追加] 共享面板样式层**：面板数量从 3 个涨到 7 个后，每个面板各自写内联样式必然漂移（同一个"按钮"在两块面板长得不一样）。现在全部 DOM 面板共用 `src/ui/dom/panel-styles.ts`——单一幂等的 `<style>` 注入点 + 统一 `.game-panel` 类族（终端外观、右侧全高抽屉布局、条形/槽位/徽标组件）。**约束**：面板不得写自己的一套视觉基元；需要新组件时扩样式层，不在面板内联。视觉规范的真相在 `docs/design-notes/ui-art-overhaul.md` 与 `docs/art-direction.md` §6，样式层只是它们的实现。
 
 ### DEC-ARCH-006: LocalStorage 单存档
 
@@ -287,6 +300,17 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
   - 新增 BoundaryAtmosphere 系统（粒子+sprite 周期性渲染）
   - 新增 InteractionTrigger 系统（overlap 检测 + DOM 面板生命周期）
 - **性能约束**：边界外渲染额外增加 30-50 粒子 + 最多 2 个 sprite，对帧率影响可忽略
+
+### DEC-ARCH-009: 净化点边界的几何真相是曲面对象，不是 tile 网格
+
+- **选择**：净化点边界由 `BoundaryShape`（极坐标压力 blob）定义；碰撞、可见性、地表 vignette、氛围粒子全部查询同一个形状对象。tile 网格降级为**仅供视野遮挡使用的不可见图层**。
+- **理由**：边界要能被潮汐压缩、被方向性压力挤出不对称形态。tile 判定只能表达 32px 台阶状的圆，压缩时会出现可见的锯齿跳变，且"膜"这种 1-2px 的曲线结构无法落在 tile 边界上。把形状抽成可按角度查询的函数后，四个消费方自动保持一致——这是避免"碰撞边界和视觉边界差半格"这类经典 bug 的结构性手段。
+- **影响**：
+  - 碰撞：沿边界角度采样生成小静态体环（Arcade 只有 AABB，曲面墙只能用密排小体近似）
+  - 可见性：`VisibilitySystem` 新增 `rayDistanceOverride` 注入点，净化点用 ray-blob 行进（步进 + 二分细化）替代网格 DDA；裂隙侧仍走 DDA。**这是 VisibilitySystem 唯一的场景差异化接口**
+  - 形状每次进入净化点重算一次（潮汐状态变了），因此地表纹理必须同时失效重建
+- **约束**：任何新增的"和边界有关"的表现或判定，必须查询 `BoundaryShape`，不得自己重算一个圆或读 tile。
+- **风险**：静态体环的数量随边界周长增长；当前规模（约 180 个 8px 体）无性能问题，若净化点显著变大需改为逐帧动态生成玩家附近的碰撞段。
 
 ## 场景流转
 
@@ -362,9 +386,26 @@ PurificationScene 复用 RiftScene 的以下基础设施：
 
 不复用的部分：AI 系统、混乱值、寻路、战斗（净化点内无敌人无威胁）。
 
+### 动态力场边界（Slice 4.5 新增，取代静态圆形安全区）
+
+Slice 4.5 前，净化点的边界是"tile 判定出的固定圆 + 边界外粒子"。现在**边界几何是一个独立的、被多方共用的形状对象**（`BoundaryShape`），世界模型是"被外界污染压力不均匀挤压的残余力场气泡"。
+
+- **形状**：极坐标椭圆 × 潮汐强度缩放 × 两个高斯方向压力叶 × 交互点安全钳制（保证气泡永不挤破任何交互点）。压力方向按周期确定性生成，潮汐相位（crest / ebb）调制振幅。
+- **生命周期**：每次 `PurificationScene.create()` 构建一次，之后是无状态查询对象（`radiusAt` / `normalizedDist` / `isInside`）。**不逐帧变形**——观感上的"呼吸"由独立的视觉层负责。
+- **六个消费方**（这是本块最容易再次漂移的地方，改动 BoundaryShape 必须同步检查）：
+  1. **tilemap 构建**：tile 中心在 98% 半径内即 FLOOR。该图层 `setVisible(false)`，**只作为视野遮挡网格存在**
+  2. **程序化地表纹理**：用边界梯度带（inner / membrane / outer）画 vignette，软过渡替代硬墙
+  3. **平滑 blob 碰撞体**：沿 98% 半径角度采样生成小静态体环，替代 tile 碰撞（曲面边界无法用 tile AABB 表达）
+  4. **可见性**：`VisibilitySystem` 的 `rayDistanceOverride` 做 ray-blob 行进 + 二分细化，**替代 tile DDA**（见 DEC-ARCH-009）
+  5. **BoundaryAtmosphere**：粒子/apparition 的生成与消亡半径跟随 blob
+  6. **BoundaryBreath**：纯视觉叠加层——并发的局部短弧向内扫入 + 虚空侵入楔形 + 膜线内凹变形。视觉权重刻意压到背景级，无 gameplay 影响
+- **设计权威**：规则与数值住在 `docs/specs/system-purification-impact.md`（边界规则组），不在本文档。
+
 ### 边界外黑暗氛围系统（Boundary Atmosphere）
 
 这是净化点的核心氛围系统，目的是让玩家视觉上持续感受到"外面有东西在压迫"。
+
+> **[Slice 4.5 更新]** 下文的"方案 A+B 混合（粒子 + 半透明 Sprite）"仍然成立，但它现在是**边界的氛围层，不是边界本身**：形状由 `BoundaryShape` 定义，粒子半径跟随该形状；地面到虚空的过渡由程序化地表的 vignette 承担，不再是"半透明黑雾层 + 硬墙"。原文中"圆形安全区""黑色底层 + 黑雾层"的描述按此理解。
 
 **技术实现方案：**
 
@@ -417,7 +458,10 @@ PurificationScene 复用 RiftScene 的以下基础设施：
 
 | 模块 | 路径 | 职责 |
 | ---- | ---- | ---- |
+| BoundaryShape | src/systems/boundary-shape.ts | 边界几何唯一真相（潮汐驱动的压力 blob） |
+| BoundaryBreath | src/systems/boundary-breath.ts | 边界局部压力冲击与膜变形（纯视觉） |
 | BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外的黑暗+模糊内容周期性渲染 |
+| ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素生成 + 边界 vignette |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互（overlap 检测 + 提示 + 面板激活） |
 
 ## 性能约束

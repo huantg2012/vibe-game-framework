@@ -65,6 +65,8 @@ tools:
 | 文档 | 你从中获取什么 |
 | ---- | -------------- |
 | `docs/specs/system-*.md` | "应该怎样"的标准（验证基准） |
+| `docs/specs/ui-*.md` + `docs/specs/_template-ui.md` | UI 的验证基准；模板末尾的「游戏内 UI 验收清单」U1-U12 是全项目权威清单 |
+| `docs/design-notes/ui-art-overhaul.md` | 已被人验证过的 UI 基线（色彩/字号/组件/HUD 布局） |
 | `docs/tasks/slice-[N].md` | 当前 Slice 的任务及验收标准 |
 | `docs/architecture.md` | 技术约束（判断是否违反架构） |
 | `docs/gdd-core.md` | 跨系统交互的设计意图 |
@@ -117,7 +119,19 @@ tools:
 
 如果内容已拆分为索引+子文件结构：先读索引，按需定位到具体子文件。
 
-### 3. 回归检查（增量式，非全量）
+### 3. 游戏内 UI 验收（当本 Slice 触碰任何 UI/HUD/面板时，必做）
+
+游戏内 UI 是本框架已知的薄弱环节：它没有机器闸门（`tsc` 抓不到"这个面板看起来像后台管理系统"），实测中一次表现层翻修花了七轮人工返工才收敛。**这份清单就是它的闸门，你是执行者。**
+
+权威清单在 `docs/specs/_template-ui.md` 末尾的「游戏内 UI 验收清单」（U1-U12）。**逐条过**，即使本屏幕没有单独的 ui spec，清单本身仍然适用。
+
+- 判定依据的优先级：ui spec（若存在）> `docs/design-notes/ui-art-overhaul.md`（已验证基线）> `docs/art-direction.md` §6 > `docs/world.md` 术语表
+- 报告时以条目号定位偏差，例如 `UI 偏差 U5：面板按钮文案为"确认"，world.md 术语表要求用游戏内措辞`
+- 可静态核查的条目优先给结论：U3 色值（比对 `palette.json`）、U4 字号层级、U5 术语、U7 按键提示与实际绑定是否一致、U11 是否复用 `panel-styles.ts` 而非内联新基元
+- 需要肉眼判断的条目（U1 载体感、U2 后台管理气味、U12 与参考锚点的贴合度）：给出你的判断 + 证据（具体是哪段样式/哪个布局造成的），最终审美判断归人
+- 清单全通过也不等于"好看"——你确认的是"没有踩已知的坑"
+
+### 4. 回归检查（增量式，非全量）
 - 读取 `CLAUDE.md` 的"已实现系统"列表
 - **范围限定**：只检查以下系统（不逐个扫描所有已有系统）：
   1. 本 Slice 直接修改的系统
@@ -161,8 +175,7 @@ tools:
 - [ ] Chrome (latest)
 - [ ] Firefox (latest)
 - [ ] Safari (latest)
-- [ ] Mobile Chrome (Android)
-- [ ] Mobile Safari (iOS)
+- [ ] ~~Mobile Chrome / Mobile Safari~~ — 本项目手机端适配明确 out-of-scope（见 `docs/progress/roadmap.md`），不作为验收项
 
 ## 输出格式：QA Report
 

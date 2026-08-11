@@ -4,8 +4,8 @@ created-by: art agent
 created-date: 2026-07-22
 last-modified: 2026-08-12
 approved-date: 2026-07-24
-changed-this-slice: false
-note: Foundation Step 3. 视觉方向已批准锁定（7/7 概念 + 色彩架构验证通过）。已知待验证项移交 Slice 1 美术门禁，见文末章节。§14.3（A-G3 表现力）已于 2026-07-31 验证 PASS——地面/墙走程序化连续表面（DEC-018）。
+changed-this-slice: true
+note: Foundation Step 3. 视觉方向已批准锁定（7/7 概念 + 色彩架构验证通过）。已知待验证项移交 Slice 1 美术门禁，见文末章节。§14.3（A-G3 表现力）已于 2026-07-31 验证 PASS——地面/墙走程序化连续表面（DEC-018）。2026-08-12 由 Director 做最小事实校正：§6.2 按钮状态改为游戏语义命名、§6.4 面板布局由"居中 ≤70% viewport"改为"右侧全高抽屉 440px"，以对齐 Slice 4.5 人已逐轮确认的实现——**属事实回填，需 art agent 复核措辞是否符合其规范体系**。
 ---
 
 # 美术方向
@@ -399,11 +399,11 @@ UI 是净化点设备的监控终端——不是"游戏外"的信息层，是世
   - 标题/关键数值：ui-text-bright（#c8cdd4）
   - 正文/标签：ui-text（#8a8f96）
   - 次要信息：ui-text 降至 60% opacity
-- **按钮状态**：
-  - Default：ui-border 边框 + ui-bg 填充 + ui-text 文字
-  - Hover：边框亮度 +20%（~#3a3d44）+ 文字变 ui-text-bright
-  - Active/Pressed：背景提亮一级（#1a1d22）+ 1px 内嵌效果
-  - Disabled：全元素 opacity 40%
+- **可选项状态**（Slice 4.5 修订：面板改为零 HTML 按钮的终端行式交互，键盘为第一公民；下表按游戏语义命名，原 Default/Hover/Active/Disabled 的 web 控件说法作废）：
+  - 静默：ui-border 边框 + ui-bg 填充 + ui-text 文字
+  - 已选中（键盘游标停留 / 指针悬停）：边框亮度 +20%（~#3a3d44）+ 文字变 ui-text-bright
+  - 按下：背景提亮一级（#1a1d22）+ 1px 内嵌效果
+  - 不可用：全元素 opacity 40%，且必须同时说明缺什么（资源不足/前置未满足），不能只变灰
 - **状态条设计**：
   - 生命值条：ui-danger 的暗版（#661a1a 填充，#cc3333 在 <25% 时脉动）
   - 混乱值条：contam-core（#1aad96）填充，超阈值后脉动加速
@@ -425,8 +425,10 @@ UI 是净化点设备的监控终端——不是"游戏外"的信息层，是世
 
 - 与 Canvas HUD 同色板、同边框规则
 - 弹出时全屏暗色遮罩（void-black 70% opacity）
-- 面板居中，宽度不超过 viewport 的 70%
+- **布局：右侧全高抽屉，宽约 440px**（Slice 4.5 修订，人已逐轮确认。原规则"面板居中，宽度不超过 viewport 的 70%"作废——居中弹窗会挡住场景中心，实测是最主要的可读性投诉来源）。抽屉内含滚动区 + 底部固定操作栏
 - 基础间距单位：8px
+- 实现层：全部 DOM 面板共用 `src/ui/dom/panel-styles.ts` 的 `.game-panel` 类族；面板不得自带一套视觉基元
+- 已验证的完整规格（色彩层级/字号层级/组件/HUD 布局/动效表）见 `docs/design-notes/ui-art-overhaul.md`——那是本项目 UI 的实操基线，本节是其上位规范
 - 进入动画：opacity 0→1，200ms，ease-out
 - 退出动画：opacity 1→0，150ms，ease-in
 - 面板内分区用 1px ui-border 水平线隔开（不用粗边框嵌套）

@@ -63,10 +63,15 @@ Slice 4 收尾时游戏功能已闭环，但表现层仍是原型状态：面板
 
 | 项 | 说明 | 归属 |
 | -- | ---- | ---- |
-| 边界形态无 spec | `BoundaryShape` / `BoundaryBreath` 是新系统，`system-purification-impact.md` 仍把边界描述为"安全区外黑暗 + 粒子"，未记录动态 blob 与潮汐缩放 | 需人拍板：让 design agent 补写进 purification-impact spec |
-| architecture.md 未登记新系统 | 边界形态 / 程序化地表 / 共享面板样式层三块新增未反映在架构文档 | 需人确认后更新 |
+| ~~边界形态无 spec~~ | **已闭合（2026-08-12）**：design agent 就地扩写 `system-purification-impact.md`——新增 B 组「边界形态与呼吸」、BOUNDARY 数值表、BoundaryShape 查询接口与六个消费方登记；P1/P4/P5/P7 过时描述已改为当前真相；`interface-changed: true` | 完成 |
+| ~~architecture.md 未登记新系统~~ | **已闭合（2026-08-12）**：模块注册表新增 6 行、新增「动态力场边界」小节、新增 DEC-ARCH-009（边界几何真相是曲面对象而非 tile 网格）、DEC-ARCH-005 追加共享面板样式层约束 | 完成 |
 | 模块受损三态视觉 | `ui-art-overhaul.md` B3 已规格化，未实现 | Slice 5+ 或独立打磨 |
 | 永久改造深度太浅 | 从 Slice 4 继承（`backlog-issues.md`） | Slice 5 设计任务 |
+| art-direction §6.2/§6.4 事实回填待复核 | Director 做了最小校正（按钮状态改游戏语义、面板改右侧抽屉 440px）以对齐已验证实现，措辞需 art agent 复核 | `backlog-issues.md` |
+
+## 框架反馈（Step 8）
+
+人指出一条严重摩擦：**框架在 in-game UX / 游戏风格 UI 设计上产出质量差，"这个必须想办法"**。已诊断根因（框架的 UI 词汇表是 web 应用词汇表）并落地六处对策，见 `guides/98-field-notes.md` 与 `guides/99-review.md` FV-01 / FV-02。
 
 ---
 

@@ -11,11 +11,14 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 ## 待处理
 
 - [ ] 永久改造深度太浅——设计方向已记录到 upgrades.csv（3 个 Slice 5 设计项），实现推迟 (Slice 4 playtest / 2026-08-11) → Slice 5 设计任务
-- [ ] 动态力场边界（BoundaryShape / BoundaryBreath）无 spec——`system-purification-impact.md` 仍把边界描述为静态"黑暗+粒子" (Slice 4.5 收尾 / 2026-08-12) → 需人拍板派 design agent 补写
-- [ ] architecture.md 未登记 Slice 4.5 三块新系统（边界形态 / 程序化地表 / 共享面板样式层） (Slice 4.5 收尾 / 2026-08-12) → 需人确认后更新
 - [ ] 净化点模块受损三态视觉未实现——规格已在 `ui-art-overhaul.md` B3 (Slice 4.5 / 2026-08-12) → Slice 5+ 或独立打磨
+- [ ] `art-direction.md` §6.2/§6.4 由 Director 做了最小事实回填（按钮状态改游戏语义、面板改右侧抽屉），**需 art agent 复核措辞是否符合其规范体系** (Slice 4.5 收尾 / 2026-08-12)
+- [ ] `architecture.md` 模块注册表的"规划中"标记大面积过期（GameState / SaveManager / ChaosSystem / HUD / DOM UI 等实际已实现），2026-08-12 只补核了边界/地表/面板三块 → 下次一致性检查全量补核
 
 ## 已处理/已归档
+
+- [x] architecture.md 未登记 Slice 4.5 三块新系统（边界形态 / 程序化地表 / 共享面板样式层） (Slice 4.5 收尾 / 2026-08-12) → 已登记：模块注册表 6 行 + 「动态力场边界」小节 + DEC-ARCH-009 + DEC-ARCH-005 追加
+- [x] 框架在 in-game UX 上产出质量差（人评"必须想办法"）(Slice 4.5 收尾 / 2026-08-12) → 六处落地，见 `guides/99-review.md` FV-01
 
 - [x] 裂隙内混乱值到达重要节点(50/75/100)时给玩家显著提示——视觉效果+旁白文字结合 (Slice 3.5 playtest / 2026-08-10) → 纳入 Slice 4 T9
 - [x] 场景过渡"裂隙坍缩"需要视觉表现（画面收缩/teal闪烁/扭曲），当前仅黑屏+文字 (Slice 3.5 playtest / 2026-08-10) → 纳入 Slice 4 T10
