@@ -1,16 +1,25 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-11
 last-modified: 2026-08-11
-note: Slice 4 启动。Data Pipeline + Defense Engine + Common Tier。
+completed: 2026-08-11
+note: Slice 4 完成。Data Pipeline + Defense Engine + Common Tier 全部实现并验证。
 ---
 
-# Slice 4: Data Pipeline + Defense Engine + Common Tier 【ACTIVE】
+# Slice 4: Data Pipeline + Defense Engine + Common Tier 【COMPLETE】
 
 类型：系统 + 内容
-日期：2026-08-11 启动
+日期：2026-08-11 启动 / 2026-08-11 完成
 验证问题：**数据驱动的污染物管线是否正确加载并区分逐类行为？防御效果（减伤 + 副作用）是否让装备选择有意义地不同？被动工具是否创造了区别于主动工具的独特玩法？**
+
+### 验证结果：PASS
+
+- CSV 管线生成 18 种类型数据，构建期类型安全编译正确区分逐类行为
+- 防御引擎实现 Common 档全部 7 种特殊机制 + 副作用，让 slot 选择有意义地不同
+- 被动工具（碎影 scatter / 消声步 muffle）提供无操作的策略层，区别于主动工具
+- 试玩后额外完成：9 项 bug/体验修复 + 净化点 UX 重构（世界内零文字交互 + 底部提示条 + HUD 面板化）
+- 遗留项：永久改造深度扩展（Slice 5 设计任务，CSV 已有占位列）
 
 ---
 
@@ -92,4 +101,4 @@ Slice 4 解决三个架构缺口：
 
 ## 下一步
 
-启动 T1（CSV Build Pipeline）。T9/T10 可与 T1-T2 并行推进。
+Slice 4 已完成。进入 Slice 5 规划。

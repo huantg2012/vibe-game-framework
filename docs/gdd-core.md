@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-08-10
+last-modified: 2026-08-11
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济全部系统实现。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济 + 数据管线 + 防御引擎 + Common 档全部系统实现。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
@@ -47,6 +47,13 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 程序化地图生成 | 计划中 | 待创建 | Voronoi 碎片切分 + Cellular Automata 有机地形 + 裂口连接（DEC-005） |
 | 角色属性/能力成长 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 永久改造+污染物循环+潮汐经济，出击正向积累 |
 | 音频（AudioManager） | 计划中 | 待创建 | BGM/环境/SFX 播放 + 动态分层混音 + 距离衰减（方向见 audio-direction.md） |
+| CSV 数据管线 | **已实现** (Slice 4) | - (构建期工具) | 构建期将 data/*.csv 编译为 src/generated/*.ts，类型安全、tree-shakeable |
+| 防御效果引擎 (DefenseEffectSystem) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 冲击时按污染物类型施加不同减伤+副作用，5 种防御分类逻辑 |
+| Common 档防御效果 (7种) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | solidify/delay/erode/scatter/muffle/ruminate/retrograde/kindle/stitch 中 7 种防御行为+副作用 |
+| 被动工具架构 | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 事件驱动被动工具框架：无需按键、事件触发、使用次数消耗、HUD 区分 |
+| Common 主动工具 (ruminate/retrograde/kindle/stitch) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 4 种新主动工具扩展出击策略 |
+| Common 被动工具 (scatter/muffle) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 碎影(受攻击分裂残影)+消声步(移动静音) |
+| 净化点 UX 重构 | **已实现** (Slice 4) | - (无独立 spec) | 世界内零文字交互 + 底部提示条 + HUD 面板化 |
 | i18n | 已实现（骨架） | 自实现（src/i18n/，DEC-004） | 简体中文 + 英文，TypeScript locale + 类型安全 key |
 
 ## 核心循环
@@ -76,10 +83,11 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 内容类型 | 数量 | 详情路径 |
 | -------- | ---- | -------- |
 | 进度曲线 | 1（框架文档） | docs/content/progression.md |
-| 污染物类型 | 3（固化/延时/侵蚀） | docs/specs/system-growth-tide.md 内定义 |
-| 出击工具 | 3（凝锁/时裂/侵蚀领域） | docs/specs/system-growth-tide.md 内定义 |
-| 永久改造 | 3（每轴1个） | docs/specs/system-growth-tide.md 内定义 |
-| 敌人 / 关卡 | 0（未创建） | 待内容 Slice 创建 |
+| 污染物类型 | 18（CSV 数据驱动，Common 7 + Fine 6 + Rare 5） | data/contaminants.csv → src/generated/contaminant-data.ts |
+| 出击工具 | 9 已实现（Common 6: solidify/delay/erode/ruminate/retrograde/kindle/stitch + 被动 scatter/muffle） | data/contaminants.csv 工具列 |
+| 防御效果 | 7 种 Common 已实现（含副作用） | src/systems/defense-effect-system.ts |
+| 永久改造 | 3（每轴1个） | data/upgrades.csv → src/generated/upgrade-data.ts |
+| 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 5 |
 
 ## 设计历史（仅决策，不含详情）
 
@@ -87,3 +95,5 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 1「裂隙潜行核心手感」(2026-07-24 ~ 2026-08-07, COMPLETE): 实现裂隙出击环全系统（移动+视野、敌人AI五态FSM、简化战斗、混乱值+搜刮+撤离、trail+minimap导航辅助、HUD）。固定地图 48x32 室外布局。验证结论：紧绷决策手感成立。试玩迭代关键调校：速度 160->80、混乱值 0.8->0.5、地图重做为室外、新增导航辅助。决策 DEC-007~023。
 - Slice 2「净化点闭环」(2026-08-07 ~ 2026-08-08, COMPLETE): 实现净化点环全系统（GameState管理器、场景流转、净化点步行空间14x12椭圆、边界氛围粒子+apparition、2模块实体+交互触发、薪柴分配面板DOM、冲击系统+结果面板、模块效果→出击参数联动）。验证结论：资源分配纠结感成立。关键调校：REPAIR_PER_KINDLING 10->4、BASE_IMPACT_DAMAGE 25->30、MODULE_INITIAL_HP 80->70。遗留：长期经济翻盘机制归后续。
 - Slice 3「角色成长+潮汐经济」(2026-08-09 ~ 2026-08-10, COMPLETE): 实现成长经济全系统（TideSystem 5潮x3相状态机、ContaminantSystem库存+防御slot+生命周期、3种污染物完整实现、GrowthSystem 3项永久改造、StabilityTracker进度条、SaveManager localStorage持久存档、裂隙污染物节点、出击工具系统3种主动工具、防御slot/Loadout/改造祭坛/潮汐稳定度 UI面板）。验证结论：动态平衡体验成立，潮汐涨退+污染物循环+永久改造打破了必然下行螺旋。试玩修复：净化点HUD可见性、冲击触发时机、薪柴显示+6项game-feel改善。
+- Slice 3.5「UX 打磨」(2026-08-11, COMPLETE): 12 项 game-feel 改善（信息架构/反馈动效/场景过渡/里程碑），来自 `docs/design-notes/game-feel-audit.md` 审计清单全部完成。
+- Slice 4「Data Pipeline + Defense Engine + Common Tier」(2026-08-11, COMPLETE): 构建期 CSV 数据管线（contaminants.csv + upgrades.csv -> src/generated/*.ts，18 种污染物类型安全编译）；防御效果引擎（5 种防御分类 + 7 种 Common 副作用）；被动工具架构（事件驱动、无按键触发、scatter/muffle 两种实现）；4 种新主动工具（ruminate/retrograde/kindle/stitch）；净化点 UX 重构（世界内零文字交互 + 底部提示条 + HUD 面板化）。验证结论：数据驱动管线正确区分逐类行为，防御效果让 slot 选择有意义，被动工具创造独特玩法。试玩后修复 9 项 backlog issue。遗留：永久改造深度扩展归 Slice 5。
