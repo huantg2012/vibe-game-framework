@@ -14,8 +14,15 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 - [ ] 净化点模块受损三态视觉未实现——规格已在 `ui-art-overhaul.md` B3 (Slice 4.5 / 2026-08-12) → Slice 5+ 或独立打磨
 - [ ] `art-direction.md` §6.2/§6.4 由 Director 做了最小事实回填（按钮状态改游戏语义、面板改右侧抽屉），**需 art agent 复核措辞是否符合其规范体系** (Slice 4.5 收尾 / 2026-08-12)
 - [ ] `architecture.md` 模块注册表的"规划中"标记大面积过期（GameState / SaveManager / ChaosSystem / HUD / DOM UI 等实际已实现），2026-08-12 只补核了边界/地表/面板三块 → 下次一致性检查全量补核
+- [ ] 清理死常量 `PURIFICATION.BOUNDARY.BREATH_*`（5 个）——旧「整体脉动」方案残留，呼吸层真实调参已内联在 `boundary-breath.ts`；顺手把内联值迁回 constants (design 补写边界 spec / 2026-08-12)
+- [ ] 冲击预告方向映射无空间意义——`getForecastAngle()` 把 CORE→左、STORAGE→右（CORE 在中心，"左"是任选的），且只认识两个模块、场景已有五个交互点；与 BoundaryShape 压力主方向叠成两个互不相关的方向暗示 (design 补写边界 spec / 2026-08-12)
+- [ ] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]`，不是真正最旧 (design 补写边界 spec / 2026-08-12)
+- [ ] `system-purification-impact.md` 若干与边界无关的既有漂移未修：MODULE_INITIAL_HP 80↔70、REPAIR_PER_KINDLING 10↔4、BASE_IMPACT_DAMAGE 25↔30；INTENSITY_STEP/MAX_INTENSITY 已被潮汐取代仍列表；规则 2 只写两个交互物体（实为五个）；规则 9 说"不做 localStorage"（SaveManager 已存在） (design 补写边界 spec / 2026-08-12) → 下次改该系统时一并回填
+- [ ] `system-growth-tide.md` 的 `exposes` 写 `TideSystem.getCurrentPhase()/getIntensity()`，代码实际是 `getState()/getCurrentIntensity()` (design 补写边界 spec / 2026-08-12)
 
 ## 已处理/已归档
+
+- [x] 动态力场边界缺 spec (Slice 4.5 收尾 / 2026-08-12) → design 就地扩写进 `system-purification-impact.md`（B 组 17 条 + BOUNDARY 数值表 + 六消费方）；**结论：不拆独立 spec**
 
 - [x] architecture.md 未登记 Slice 4.5 三块新系统（边界形态 / 程序化地表 / 共享面板样式层） (Slice 4.5 收尾 / 2026-08-12) → 已登记：模块注册表 6 行 + 「动态力场边界」小节 + DEC-ARCH-009 + DEC-ARCH-005 追加
 - [x] 框架在 in-game UX 上产出质量差（人评"必须想办法"）(Slice 4.5 收尾 / 2026-08-12) → 六处落地，见 `guides/99-review.md` FV-01
