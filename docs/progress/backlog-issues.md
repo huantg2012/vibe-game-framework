@@ -11,8 +11,9 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 ## 待处理
 
 - [ ] 永久改造深度太浅——设计方向已记录到 upgrades.csv（3 个 Slice 5 设计项），实现推迟 (Slice 4 playtest / 2026-08-11) → Slice 5 设计任务
-
-（当前无待处理项）
+- [ ] 动态力场边界（BoundaryShape / BoundaryBreath）无 spec——`system-purification-impact.md` 仍把边界描述为静态"黑暗+粒子" (Slice 4.5 收尾 / 2026-08-12) → 需人拍板派 design agent 补写
+- [ ] architecture.md 未登记 Slice 4.5 三块新系统（边界形态 / 程序化地表 / 共享面板样式层） (Slice 4.5 收尾 / 2026-08-12) → 需人确认后更新
+- [ ] 净化点模块受损三态视觉未实现——规格已在 `ui-art-overhaul.md` B3 (Slice 4.5 / 2026-08-12) → Slice 5+ 或独立打磨
 
 ## 已处理/已归档
 

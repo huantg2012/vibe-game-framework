@@ -11,7 +11,7 @@
 
 **当前阶段：**
 - 层 A（框架）：随 dogfooding 持续迭代（见"框架迭代协议"）。
-- 层 B（游戏）：**Foundation 已完成**（vision / world / architecture / art-direction[APPROVED] / audio-direction[APPROVED] 均就位，美术视觉方向已通过验证循环锁定）。**Iterative Development 进行中：Slice 1「裂隙潜行核心手感」COMPLETE（2026-08-07）。Slice 2「净化点闭环」COMPLETE（2026-08-08）。Slice 3「角色成长+潮汐经济」COMPLETE（2026-08-10）。Slice 3.5「UX 打磨」COMPLETE（2026-08-11）。Slice 4「Data Pipeline + Defense Engine + Common Tier」COMPLETE（2026-08-11，CSV管线+防御引擎+被动工具+净化点UX重构）。Slice 5 待启动**（见 `docs/progress/roadmap.md`）。
+- 层 B（游戏）：**Foundation 已完成**（vision / world / architecture / art-direction[APPROVED] / audio-direction[APPROVED] 均就位，美术视觉方向已通过验证循环锁定）。**Iterative Development 进行中：Slice 1「裂隙潜行核心手感」COMPLETE（2026-08-07）。Slice 2「净化点闭环」COMPLETE（2026-08-08）。Slice 3「角色成长+潮汐经济」COMPLETE（2026-08-10）。Slice 3.5「UX 打磨」COMPLETE（2026-08-11）。Slice 4「Data Pipeline + Defense Engine + Common Tier」COMPLETE（2026-08-11，CSV管线+防御引擎+被动工具+净化点UX重构）。Slice 4.5「视觉与界面翻修 + 动态力场边界」COMPLETE（2026-08-12，UI Kit+右侧抽屉面板+4向角色贴图+程序化地表+潮汐驱动力场边界+BARRIER→CORE重命名）。Slice 5 待启动**（见 `docs/progress/roadmap.md`）。
 
 ## 变更传播规则（强制）
 

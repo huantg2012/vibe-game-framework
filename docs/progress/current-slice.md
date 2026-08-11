@@ -1,104 +1,75 @@
 ---
 status: COMPLETE
 created-by: director agent
-created-when: 2026-08-11
-last-modified: 2026-08-11
-completed: 2026-08-11
-note: Slice 4 完成。Data Pipeline + Defense Engine + Common Tier 全部实现并验证。
+created-when: 2026-08-12（事后补记——本 Slice 由对话直接驱动，未预先建 Task Brief）
+last-modified: 2026-08-12
+completed: 2026-08-12
+note: Slice 4.5 完成。UI/视觉整体翻修 + 动态力场边界 + BARRIER→CORE 重命名。
 ---
 
-# Slice 4: Data Pipeline + Defense Engine + Common Tier 【COMPLETE】
+# Slice 4.5: 视觉与界面翻修 + 动态力场边界 【COMPLETE】
 
-类型：系统 + 内容
-日期：2026-08-11 启动 / 2026-08-11 完成
-验证问题：**数据驱动的污染物管线是否正确加载并区分逐类行为？防御效果（减伤 + 副作用）是否让装备选择有意义地不同？被动工具是否创造了区别于主动工具的独特玩法？**
+类型：打磨 Slice（UI/UX + 视觉表现 + 术语统一）
+日期：2026-08-11 启动 / 2026-08-12 完成
+验证问题：**界面是否从"调试信息 + 后台管理系统"变成游戏内体验（可读、不遮挡、有氛围）？净化点是否从"色块场地"变成有物质感的场所？边界是否传达出"力场被外界压力挤压"的紧张感？**
 
-### 验证结果：PASS
+### 验证结果：PASS（人已在迭代中逐轮确认）
 
-- CSV 管线生成 18 种类型数据，构建期类型安全编译正确区分逐类行为
-- 防御引擎实现 Common 档全部 7 种特殊机制 + 副作用，让 slot 选择有意义地不同
-- 被动工具（碎影 scatter / 消声步 muffle）提供无操作的策略层，区别于主动工具
-- 试玩后额外完成：9 项 bug/体验修复 + 净化点 UX 重构（世界内零文字交互 + 底部提示条 + HUD 面板化）
-- 遗留项：永久改造深度扩展（Slice 5 设计任务，CSV 已有占位列）
+- 七轮迭代全部由人当场看图/试玩确认（art/ui v1 → v2 → v3 → 程序化地表 → 力场边界 → 右侧抽屉 → 提示栏文案），每轮的问题都在下一轮被指名修掉
+- 可读性问题（字号过小、面板遮挡场景中心、条形不可见、文案与实际键位不符）逐项消除
+- 角色朝向辨识问题（"往左走头朝下"）通过 4 向贴图解决；玩家/敌人冷暖色分离后可瞬间区分
+- BARRIER→CORE 重命名已跨 15 个源文件 / 13 个文档 / 1 个 CSV 传播完毕（残留的 `barrier` 命中均为 stitch 工具的"感知屏障"，与模块无关）
+- 遗留项见下方「遗留」
 
 ---
 
 ## 范围推导
 
-Slice 3 验证了污染物循环核心（获取 -> 防御 -> 转化 -> 工具 -> 破碎）但只实现了 3 种（solidify/delay/erode），且防御阶段实际上不减伤（只累积充能）。CSV 定义了 18 种污染物各有独特防御行为和工具效果，但代码未消费 CSV。
+Slice 4 收尾时游戏功能已闭环，但表现层仍是原型状态：面板是后台管理系统外观、角色是几何体、净化点地面是纯色 tileset、边界是静态 tile 判定。这既伤氛围（vision 的"孤独仪式"支柱靠场所感承载），也伤可用性（文字太小、面板挡住场景中心）。
 
-Slice 4 解决三个架构缺口：
-1. **CSV 数据管线**：构建期将策划 CSV 编译为类型安全的 TypeScript，代码从生成文件读取
-2. **防御效果引擎**：冲击时按类型施加不同减伤 + 副作用，让装备 slot 选择有策略深度
-3. **被动工具架构**：不需按键、事件触发的工具类型，扩展出击策略维度
+同时"BARRIER 模块"这个命名与它实际承担的职责（中央力场锚点）已经不符，越晚改传播面越大。
 
-同时实现 Common 档全部 7 种的完整行为（6 种新 + solidify 已有），验证管线端到端。
+本 Slice 不加任何新玩法系统，只做表现层与命名收口。
 
-### 锁定的 Slice 4 范围
+### 实际交付范围（git 溯源，7 个 commit）
 
-**P0（必须）：**
-1. CSV 构建期代码生成管线（contaminants.csv + upgrades.csv -> src/generated/*.ts）
-2. ContaminantType 扩展至 18 种（类型声明）
-3. 防御效果引擎（per-type 减伤 + 5 种防御分类逻辑 + 副作用系统）
-4. Common 档 7 种防御效果实现（含副作用）
-5. 被动工具架构（事件钩子 + 使用次数消耗 + HUD 区分）
-6. Common 档 4 种主动工具实现（ruminate/retrograde/kindle/stitch）
-7. Common 档 2 种被动工具实现（scatter/muffle）
-8. 集成接线（impact-system 调用防御引擎、rift-scene 调用被动检查、节点系统刷新）
-
-**P1（应该）：**
-9. 混乱值里程碑视觉效果（50/75/100 阈值）[from backlog]
-10. 裂隙坍缩场景过渡效果 [from backlog]
+| # | commit | 内容 |
+| - | ------ | ---- |
+| 1 | `7163138` | UI Kit：7 个 DOM 面板统一工业终端风格；裂隙 HUD 重设计（4px 条 / ◇薪柴 / 工具槽点记号）；玩家、敌人、节点改为 boot 期缓存贴图 |
+| 2 | `56a80ef` | 俯视剪影 + 冷暖色分离；面板改零 HTML 按钮的终端行式交互（新增 `src/ui/dom/panel-styles.ts`）；节点按形状+色彩+动画区分 |
+| 3 | `1ed0cea` | 玩家 4 向 3/4 视角贴图（`setTexture` 替代 `setRotation`）；面板改 Rimworld/DF 风格（去 scanline、`── 标题 ──`、`[方括号]` 选项） |
+| 4 | `131447b` | 程序化净化点地表（`procedural-purification-surface.ts`，7 层逐像素生成，替代纯色 tileset；tilemap 保留但不可见仅供碰撞）；修玩家双肩灯 |
+| 5 | `0c0fa92` | 动态力场边界（`boundary-shape.ts` 极坐标压力 blob + 潮汐缩放、`boundary-breath.ts` 局部压力冲击与膜变形、平滑碰撞体、ray-blob 可见性替代 tile DDA）；面板/HUD/文案全面翻修；**BARRIER→CORE 重命名** |
+| 6 | `b6acd2d` | 六个面板改右侧全高抽屉（440px）+ 遮罩 + 滚动区 + 底部固定操作栏；全局放大字号 |
+| 7 | `1833803` `10d9805` | 修 Phaser `autoCenter` 与 CSS flex 双居中；净化点底部提示栏文案对齐实际键位与面板标题 |
 
 ### 暂不纳入
 
-- Fine/Rare 档工具效果实现（Slice 5）
-- 第二种敌人类型（Slice 5）
-- 新增改造项（Slice 5）
-- 正式美术资产 sprite（并行不阻塞）
-- C3 工具视觉效果（需全部工具就位后统一做）
-
----
-
-## 设计取舍（已由人拍板，2026-08-11）
-
-| # | 决策点 | 人的决定 | 说明 |
-| - | ------ | -------- | ---- |
-| 1 | CSV 管线方式 | **构建期生成 .ts** | 类型安全、tree-shakeable、无运行时解析开销 |
-| 2 | 防御副作用范围 | **Slice 4 实现 Common 7 种全部副作用** | 不做半吊子，验证完整副作用循环 |
-| 3 | 内容拆分 | **Slice 4 = 基建 + Common，Slice 5 = Fine/Rare + 敌人 + 改造** | 先验证架构再填内容 |
-
----
-
-## 任务进度
-
-> 派发列：:green_circle: Director 可直接派发 / :red_circle: 人主导。详细 Brief 见 `docs/tasks/slice-4.md`。
-
-| ID | 任务 | Agent | 派发 | 状态 | 依赖 | 备注 |
-| -- | ---- | ----- | ---- | ---- | ---- | ---- |
-| T1 | CSV Build Pipeline | code | :red_circle: | Pending | - | 构建期生成 typed .ts |
-| T2 | Type Expansion + Generated Data Integration | code | :red_circle: | Pending | T1 | 扩展到 18 种 + 接入生成数据 |
-| T3 | Defense Effect Engine Architecture | code | :red_circle: | Pending | T2 | 冲击时调用的防御引擎 |
-| T4 | Defense Effects — Common Tier Implementation | code | :red_circle: | Pending | T3 | 7 种防御行为 + 全部副作用 |
-| T5 | Passive Tool Architecture | code | :red_circle: | Pending | T2 | 事件驱动被动工具框架 |
-| T6 | Common Active Tools (ruminate/retrograde/kindle/stitch) | code | :red_circle: | Pending | T2 | 4 种新主动工具 |
-| T7 | Common Passive Tools (scatter/muffle) | code | :red_circle: | Pending | T5 | 2 种被动工具 |
-| T8 | Integration Wiring | code | :red_circle: | Pending | T3,T4,T5,T6,T7 | 全系统接线 |
-| T9 | Chaos Milestone Visuals [P1] | code | :red_circle: | Pending | - | 50/75/100 视觉+旁白 |
-| T10 | Rift Collapse Transition [P1] | code | :red_circle: | Pending | - | 替代当前纯黑屏过渡 |
-| T11 | QA Verification | qa | :green_circle: | Pending | T1-T10 | spec 对照验收 |
+- 正式 AI 生图资产（当前全部为程序化绘制，方向已验证，替换是独立工作）
+- 音频接入
+- 改写体 / 覆盖体敌人视觉（敌人本体尚未实现）
+- 净化点模块的三态受损视觉（`ui-art-overhaul.md` B3 已规格化，未实现）
 
 ---
 
 ## 设计产出（本 Slice 新增/修改的文档）
 
-- [ ] docs/tasks/slice-4.md（Director 已拆解）
-- [ ] src/generated/contaminant-data.ts（T1 生成）
-- [ ] src/generated/upgrade-data.ts（T1 生成）
-- [ ] src/systems/defense-effect-system.ts（T3 新建）
+- [x] `docs/design-notes/ui-art-overhaul.md`（新建，400 行：UI Design Kit 规范 + 角色/敌人/模块/节点美术方案 + 实施优先级）
+- [x] `docs/art-direction.md`、`docs/art/asset-specs.md`、`docs/specs/system-purification-impact.md` 等 13 个文档随 CORE 重命名同步
+
+---
+
+## 遗留
+
+| 项 | 说明 | 归属 |
+| -- | ---- | ---- |
+| 边界形态无 spec | `BoundaryShape` / `BoundaryBreath` 是新系统，`system-purification-impact.md` 仍把边界描述为"安全区外黑暗 + 粒子"，未记录动态 blob 与潮汐缩放 | 需人拍板：让 design agent 补写进 purification-impact spec |
+| architecture.md 未登记新系统 | 边界形态 / 程序化地表 / 共享面板样式层三块新增未反映在架构文档 | 需人确认后更新 |
+| 模块受损三态视觉 | `ui-art-overhaul.md` B3 已规格化，未实现 | Slice 5+ 或独立打磨 |
+| 永久改造深度太浅 | 从 Slice 4 继承（`backlog-issues.md`） | Slice 5 设计任务 |
 
 ---
 
 ## 下一步
 
-Slice 4 已完成。进入 Slice 5 规划。
+Slice 4.5 已完成。进入 Slice 5「Fine/Rare 工具 + 第二敌人 + 新改造」规划。

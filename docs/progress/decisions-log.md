@@ -9,6 +9,25 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-028: Purification boundary becomes a dynamic force-field blob (not tile-based)
+- Date: 2026-08-12
+- Phase: Slice 4.5
+- Type: Technical + presentation direction
+- Context: 净化点边界原本是 tilemap 上的固定椭圆——碰撞按 tile 判定、可见性按 tile DDA 遍历、边界只是"墙"。但世界观里净化点的边界是一层被外界污染持续挤压的力场，静态 tile 边界无法承载这个叙事，也无法表达潮汐压力的涨退。
+- Decision: 引入 `BoundaryShape`（极坐标压力 blob，半径随潮汐状态缩放）作为边界的唯一真相源。碰撞改为 8px 分段的平滑 collider，可见性改为 ray-blob 求交（替代 tile DDA），程序化地表按 blob 距离做 5 段渐变，氛围粒子沿 blob 轮廓生成。新增 `BoundaryBreath` 表达局部压力冲击造成的膜变形。tilemap 保留但不可见，仅作为兜底碰撞数据。
+- Alternatives: (a) 保留 tile 边界，只加视觉遮罩（拒绝：形状与碰撞不一致，玩家会撞到看不见的角）；(b) Phaser Matter 物理软体（拒绝：为一个边界引入第二套物理引擎，架构代价过高）。
+- Reason: 让"边界形状"成为一个可被潮汐系统驱动的运行时状态，压力变化就能同时体现在视觉、碰撞和视野三处，而不需要三套各自为政的表现。
+- Impact: 新增 `src/systems/boundary-shape.ts`、`src/systems/boundary-breath.ts`；`visibility-system.ts`、`boundary-atmosphere.ts`、`purification-scene.ts`、`procedural-purification-surface.ts` 均改为消费 blob。**遗留**：这两个系统尚无 spec，`system-purification-impact.md` 仍把边界描述为"安全区外黑暗 + 粒子"；`architecture.md` 未登记。需 design agent 补写。
+
+## DEC-027: BARRIER module renamed to CORE
+- Date: 2026-08-12
+- Phase: Slice 4.5
+- Type: Terminology change (structural — triggers change propagation)
+- Context: 两个净化点模块自 Slice 2 起叫 BARRIER 与 STORAGE。但 BARRIER 实际承担的是"中央力场锚点"职责（提供混乱值减免、位于场景中心、是边界力场的来源），而"barrier/屏障"这个词同时被 stitch 工具的"感知屏障"占用，两处含义冲突。
+- Decision: BARRIER → CORE。布局同步调整为 CORE 居中、其余模块径向分布。
+- Reason: 命名冲突越晚改传播面越大；且 CORE 更准确地表达"边界力场由它产生"这一因果，与 DEC-028 的动态力场边界互为支撑。
+- Impact: 跨 15 个源文件 / 13 个文档 / 1 个 CSV 传播完毕（含 `MAX_BARRIER_REDUCTION` → `MAX_CORE_REDUCTION`、i18n key、spec 与 task 正文）。历史 task 文件（slice-3/slice-4）中的旧名保留不改（属历史记录）。残留的 `barrier` 命中均为 stitch 工具的"感知屏障"，与模块无关。
+
 ## DEC-026: Slice 3 growth economy — single currency + tidal pressure + 3-axis growth
 - Date: 2026-08-08
 - Phase: Slice 3 (design proposal)

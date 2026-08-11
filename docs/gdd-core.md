@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-08-11
+last-modified: 2026-08-12
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3+3.5+4 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济 + 数据管线 + 防御引擎 + Common 档全部系统实现。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4+4.5 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济 + 数据管线 + 防御引擎 + Common 档全部系统实现 + 表现层（UI Kit / 程序化地表 / 动态力场边界）。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
@@ -54,6 +54,11 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | Common 主动工具 (ruminate/retrograde/kindle/stitch) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 4 种新主动工具扩展出击策略 |
 | Common 被动工具 (scatter/muffle) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 碎影(受攻击分裂残影)+消声步(移动静音) |
 | 净化点 UX 重构 | **已实现** (Slice 4) | - (无独立 spec) | 世界内零文字交互 + 底部提示条 + HUD 面板化 |
+| 动态力场边界 (BoundaryShape) | **已实现** (Slice 4.5) | ⚠️ 待补 spec | 极坐标压力 blob 定义净化点边界，随潮汐缩放；平滑碰撞体 + ray-blob 可见性替代 tile 判定 |
+| 边界压力反馈 (BoundaryBreath) | **已实现** (Slice 4.5) | ⚠️ 待补 spec | 局部压力冲击造成膜变形，把"外界在挤压力场"变成可见事件 |
+| 程序化净化点地表 | **已实现** (Slice 4.5) | - (无独立 spec) | 7 层逐像素生成（石噪底/冷暖径向渐变/踩踏路径/石缝/暖色碎屑/边缘暗角/teal 渗点），tilemap 仅留碰撞 |
+| UI Kit + 共享面板样式层 | **已实现** (Slice 4.5) | 规格见 `docs/design-notes/ui-art-overhaul.md` | `src/ui/dom/panel-styles.ts`：工业终端风格、右侧全高抽屉、行式交互、语义色与字号层级 |
+| 角色/敌人/节点程序化贴图 | **已实现** (Slice 4.5) | 规格见 `docs/design-notes/ui-art-overhaul.md` | boot 期生成缓存贴图：玩家 4 向 3/4 视角（暖色）、敌人不对称剪影（冷色+坏像素）、薪柴/污染物形状区分 |
 | i18n | 已实现（骨架） | 自实现（src/i18n/，DEC-004） | 简体中文 + 英文，TypeScript locale + 类型安全 key |
 
 ## 核心循环
@@ -85,7 +90,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 进度曲线 | 1（框架文档） | docs/content/progression.md |
 | 污染物类型 | 18（CSV 数据驱动，Common 7 + Fine 6 + Rare 5） | data/contaminants.csv → src/generated/contaminant-data.ts |
 | 出击工具 | 9 已实现（Common 6: solidify/delay/erode/ruminate/retrograde/kindle/stitch + 被动 scatter/muffle） | data/contaminants.csv 工具列 |
-| 防御效果 | 7 种 Common 已实现（含副作用） | src/systems/defense-effect-system.ts |
+| 防御效果 | 7 种 Common 已实现（含副作用） | src/systems/defense-engine.ts |
 | 永久改造 | 3（每轴1个） | data/upgrades.csv → src/generated/upgrade-data.ts |
 | 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 5 |
 
@@ -97,3 +102,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 3「角色成长+潮汐经济」(2026-08-09 ~ 2026-08-10, COMPLETE): 实现成长经济全系统（TideSystem 5潮x3相状态机、ContaminantSystem库存+防御slot+生命周期、3种污染物完整实现、GrowthSystem 3项永久改造、StabilityTracker进度条、SaveManager localStorage持久存档、裂隙污染物节点、出击工具系统3种主动工具、防御slot/Loadout/改造祭坛/潮汐稳定度 UI面板）。验证结论：动态平衡体验成立，潮汐涨退+污染物循环+永久改造打破了必然下行螺旋。试玩修复：净化点HUD可见性、冲击触发时机、薪柴显示+6项game-feel改善。
 - Slice 3.5「UX 打磨」(2026-08-11, COMPLETE): 12 项 game-feel 改善（信息架构/反馈动效/场景过渡/里程碑），来自 `docs/design-notes/game-feel-audit.md` 审计清单全部完成。
 - Slice 4「Data Pipeline + Defense Engine + Common Tier」(2026-08-11, COMPLETE): 构建期 CSV 数据管线（contaminants.csv + upgrades.csv -> src/generated/*.ts，18 种污染物类型安全编译）；防御效果引擎（5 种防御分类 + 7 种 Common 副作用）；被动工具架构（事件驱动、无按键触发、scatter/muffle 两种实现）；4 种新主动工具（ruminate/retrograde/kindle/stitch）；净化点 UX 重构（世界内零文字交互 + 底部提示条 + HUD 面板化）。验证结论：数据驱动管线正确区分逐类行为，防御效果让 slot 选择有意义，被动工具创造独特玩法。试玩后修复 9 项 backlog issue。遗留：永久改造深度扩展归 Slice 5。
+- Slice 4.5「视觉与界面翻修 + 动态力场边界」(2026-08-11 ~ 2026-08-12, COMPLETE): 表现层脱离原型状态，无新玩法系统。UI Kit 统一 7 个 DOM 面板并改为右侧全高抽屉；裂隙 HUD 符号化；角色/敌人/节点改 boot 期缓存贴图（玩家 4 向 3/4 视角 + 冷暖色分离）；净化点地表改 7 层程序化逐像素生成；净化点边界从 tile 判定改为潮汐驱动的动态力场 blob（BoundaryShape + BoundaryBreath）。同步完成 BARRIER→CORE 术语重命名（15 源文件 / 13 文档 / 1 CSV，见 DEC-027）。验证方式为七轮"改一版→人当场看→指名下一版问题"，非一次性试玩签字。遗留：力场边界缺 spec、architecture.md 未登记新系统。

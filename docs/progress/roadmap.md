@@ -3,6 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-08-12
+last-closed-slice: 4.5
 ---
 
 # Roadmap
@@ -19,6 +20,7 @@ last-modified: 2026-08-12
 | Slice 3 | 角色成长 + 潮汐经济 | 2026-08-10 | PASS — 潮汐节奏+污染物循环+永久改造打破了必然下行螺旋。动态平衡让人想继续。试玩中修复净化点HUD/冲击时机/薪柴显示+6项game-feel。 |
 | Slice 3.5 | UX 打磨 | 2026-08-11 | PASS — 12 项 game-feel 改善全部完成（信息架构/反馈动效/场景过渡/里程碑）。 |
 | Slice 4 | Data Pipeline + Defense Engine + Common Tier | 2026-08-11 | PASS — CSV 管线正确区分 18 种类型；防御引擎 7 种 Common 特殊机制+副作用让 slot 选择有意义；被动工具创造独特玩法。试玩后修复 9 项 backlog + 净化点 UX 重构。 |
+| Slice 4.5 | 视觉与界面翻修 + 动态力场边界 | 2026-08-12 | PASS — 表现层脱离原型状态：UI Kit 统一 + 面板改右侧抽屉、4 向角色贴图、程序化净化点地表、潮汐驱动的动态力场边界。七轮迭代逐轮人工确认。同步完成 BARRIER→CORE 重命名。 |
 
 ## 当前 Slice
 
@@ -40,6 +42,11 @@ last-modified: 2026-08-12
 
 CSV 构建期管线 + 防御效果引擎（7 种 Common 副作用）+ 被动工具架构 + 净化点 UX 重构。
 从 backlog 消费 2 项：混乱值里程碑视觉 + 裂隙坍缩过渡。
+
+### Slice 4.5 完成总结（已完成 2026-08-12）
+
+表现层翻修，无新玩法系统。规格见 `docs/design-notes/ui-art-overhaul.md`，逐 commit 范围见 `docs/progress/current-slice.md`。
+遗留两项需人拍板：动态力场边界缺 spec（BoundaryShape / BoundaryBreath）、architecture.md 未登记三块新系统。
 
 > Slice 1/2 的拆分（裂隙出击环 vs 净化点环）已由人拍板：拆分（见 decisions-log 取舍3）。
 

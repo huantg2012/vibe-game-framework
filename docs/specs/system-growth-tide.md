@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 3
-last-modified-date: 2026-08-09
-interface-changed: true
+last-modified-date: 2026-08-12
+interface-changed: false
 interfaces-with:
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
   - system-chaos-scavenge-extract # 出击工具 + 永久改造修正出击参数；新增污染物拾取节点
@@ -242,7 +242,7 @@ interface SaveData {
 | 库存中无 tool-stage 污染物 | 出击时 slot 可以为空（少于 3 件或 0 件），不阻止出击 |
 | 高潮冲击使 impactCharges 从 0 直接到 3 | 一次即转化，正确。该 slot 立刻空出 |
 | 转化发生在冲击中 | 本次冲击的防御效果仍然生效（先防御后转化） |
-| 改造效果 + 模块效果 + 出击工具叠加 | 乘法叠加：`finalRate = BASE_RATE * moduleBarrierMod * growthChaosMod`。加法叠加薪柴：`value = base + growthAffinity`，再乘 `storageModifier` |
+| 改造效果 + 模块效果 + 出击工具叠加 | 乘法叠加：`finalRate = BASE_RATE * moduleCoreMod * growthChaosMod`。加法叠加薪柴：`value = base + growthAffinity`，再乘 `storageModifier` |
 | 存档损坏/版本不匹配 | 提示"存档无法读取"，提供"开始新游戏"选项 |
 | Final Tide 无限 Crest | 游戏不自动结束。玩家可以无限玩下去（但稳定度可能早已到 100%） |
 | 污染物库存膨胀 | 无上限，但每次出击只能带 3 件工具+损耗机制自然控制数量 |
