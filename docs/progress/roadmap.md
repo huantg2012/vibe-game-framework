@@ -24,15 +24,19 @@ last-closed-slice: 4.5
 
 ## 当前 Slice
 
-**Slice 5: Fine/Rare Tools + Second Enemy + New Upgrades** — 待启动。详见 `docs/progress/current-slice.md`。
+**Slice 5: 工具库深度（Fine/Rare 完成 + 工具视觉 + 改造深度）** — 规划中，范围待人拍板。详见 `docs/progress/current-slice.md`。
 
 ## 计划中的 Slices（近期方向，未锁定）
 
 | 序号 | 方向 | 说明 |
 | ---- | ---- | ---- |
-| Slice 5 | Fine/Rare 工具 + 第二敌人 + 新改造 | 9 种 Fine/Rare 工具效果 + 第二种敌人类型 + 新永久改造项 + C3 工具视觉效果 + 永久改造深度扩展 |
-| Slice 6 | 净化点扩张 | 第三模块、模块升级 maxHp，扩展分配纬度 |
-| Slice 7 | 程序化地图 | Voronoi+CA 生成，替代固定地图 |
+| Slice 5 | 工具库深度（装配轴） | Fine/Rare 补完：7 种主动工具效果 + `siphon` 被动 + 6~8 处防御侧跨系统接线；工具使用 VFX；永久改造深度扩展。**验证「出击前带什么」的决策纠结** |
+| Slice 6 | 第二敌人（潜行轴） | 改写体：不同感知/行为模式 + AI 类型泛化 + `data/enemies.csv`（CSV 数据源规则的欠账）+ 敌人视觉。概念图已 APPROVED。**验证「裂隙内临场潜行判断」的多样性** |
+| Slice 7 | 净化点扩张 | 第三模块、模块升级 maxHp，扩展分配纬度 |
+| Slice 8 | 程序化地图 | Voronoi+CA 生成，替代固定地图 |
+
+> **Slice 5/6 拆分理由**（Director，2026-08-12）：原计划把工具、第二敌人、新改造放进一个 Slice。两块验证的是不同的轴，混在一起试玩反馈无法归因；且第二敌人有独立前置债（敌人属性在 `constants.ts` 而非 CSV，与 CLAUDE.md 策划数据源规则冲突）。
+> **数字订正**：原写「9 种 Fine/Rare 工具」，`contaminants.csv` 实际为 Fine 6 + Rare 5 = **11 种**。
 
 ### Slice 3.5 UX 打磨清单（已完成 2026-08-11）
 
@@ -45,7 +49,7 @@ CSV 构建期管线 + 防御效果引擎（7 种 Common 副作用）+ 被动工�
 
 ### Slice 4.5 完成总结（已完成 2026-08-12）
 
-表现层翻修，无新玩法系统。规格见 `docs/design-notes/ui-art-overhaul.md`，逐 commit 范围见 `docs/progress/current-slice.md`。
+表现层翻修，无新玩法系统。规格见 `docs/design-notes/ui-art-overhaul.md`，逐 commit 范围见 commit `ad14cf5` 版本的 `docs/progress/current-slice.md`（该文件每 Slice 覆写）。
 遗留两项需人拍板：动态力场边界缺 spec（BoundaryShape / BoundaryBreath）、architecture.md 未登记三块新系统。
 
 > Slice 1/2 的拆分（裂隙出击环 vs 净化点环）已由人拍板：拆分（见 decisions-log 取舍3）。

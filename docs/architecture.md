@@ -5,7 +5,7 @@ created-date: 2026-07-22
 last-modified: 2026-08-12
 approved-date: 2026-07-22
 changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）——该 Slice 走了流程绕过路径，架构登记是事后补的，故 changed-this-slice 置 true 以触发 Slice 5 的一致性复查。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）。**Slice 5 一致性复查已执行（2026-08-12）**：模块注册表欠账比 backlog 记录的更大——除若干"规划中"标记过期外，Slice 2/3/4 引入的约 14 个模块从未登记。故 changed-this-slice 保持 true，直到 Slice 5 T0（注册表全量补核）完成后再重置。
 ---
 
 # 技术架构
@@ -165,6 +165,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 > **状态**列以真实 `src/` 目录为准（核对日期 2026-08-01，Slice 1 T8 完成后）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`、`src/entities/`、`src/utils/`；`managers/`、`generation/`、`ui/` 尚不存在。
 >
 > **部分补核（2026-08-12，Slice 4.5 事后登记）**：本次只重新核对了边界 / 地表 / 面板样式相关行（BoundaryShape、BoundaryBreath、BoundaryAtmosphere、两个 ProceduralSurface、PanelStyles），其余行的"规划中"标记仍是 2026-08-01 的状态，其中若干（GameState / SaveManager / ChaosSystem / HUD / DOM UI 等）实际已实现，待下次一致性检查全量补核。`generation/` 仍不存在；`managers/` 与 `ui/` 已存在。
+>
+> **Slice 5 开工前复查（2026-08-12，Director）**：本表的欠账不止"规划中过期"。以下 Slice 2/3/4 落地的模块**从未出现在本表中**：`contaminant-system`、`contaminant-node-system`、`defense-engine`、`tool-system`、`growth-system`、`tide-system`、`impact-system`、`stability-tracker`、`run-controller`、`extraction-system`、`loot-system`、`trail-system`、`ui/minimap`、`entities/purification-module`、`src/generated/`（CSV codegen 产物）。全量补核已排为 Slice 5 T0，完成后重置 `changed-this-slice`。
 
 | 模块 | 路径 | 职责 | 对外接口 | 状态 |
 | ---- | ---- | ---- | -------- | ---- |

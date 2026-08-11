@@ -13,7 +13,9 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 - [ ] 永久改造深度太浅——设计方向已记录到 upgrades.csv（3 个 Slice 5 设计项），实现推迟 (Slice 4 playtest / 2026-08-11) → Slice 5 设计任务
 - [ ] 净化点模块受损三态视觉未实现——规格已在 `ui-art-overhaul.md` B3 (Slice 4.5 / 2026-08-12) → Slice 5+ 或独立打磨
 - [ ] `art-direction.md` §6.2/§6.4 由 Director 做了最小事实回填（按钮状态改游戏语义、面板改右侧抽屉），**需 art agent 复核措辞是否符合其规范体系** (Slice 4.5 收尾 / 2026-08-12)
-- [ ] `architecture.md` 模块注册表的"规划中"标记大面积过期（GameState / SaveManager / ChaosSystem / HUD / DOM UI 等实际已实现），2026-08-12 只补核了边界/地表/面板三块 → 下次一致性检查全量补核
+- [ ] `architecture.md` 模块注册表的"规划中"标记大面积过期（GameState / SaveManager / ChaosSystem / HUD / DOM UI 等实际已实现），2026-08-12 只补核了边界/地表/面板三块 → **Slice 5 T0 全量补核**。Slice 5 一致性检查发现欠账更大：另有约 14 个 Slice 2/3/4 模块从未登记（contaminant-system / contaminant-node-system / defense-engine / tool-system / growth-system / tide-system / impact-system / stability-tracker / run-controller / extraction-system / loot-system / trail-system / ui-minimap / purification-module / src/generated）
+- [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。Slice 5 收尾二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除 (Slice 5 一致性检查 / 2026-08-12)
+- [ ] 敌人属性全在 `constants.ts` 的 `GAME_CONSTANTS.AI`，与 CLAUDE.md「策划数据源规则」（明确把"敌人属性"列为必须 CSV 起源）冲突 → Slice 6 第二敌人开工时必须拍板：建 `data/enemies.csv` 并迁移渗透体，还是显式破例 (Slice 5 一致性检查 / 2026-08-12)
 - [ ] 清理死常量 `PURIFICATION.BOUNDARY.BREATH_*`（5 个）——旧「整体脉动」方案残留，呼吸层真实调参已内联在 `boundary-breath.ts`；顺手把内联值迁回 constants (design 补写边界 spec / 2026-08-12)
 - [ ] 冲击预告方向映射无空间意义——`getForecastAngle()` 把 CORE→左、STORAGE→右（CORE 在中心，"左"是任选的），且只认识两个模块、场景已有五个交互点；与 BoundaryShape 压力主方向叠成两个互不相关的方向暗示 (design 补写边界 spec / 2026-08-12)
 - [ ] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]`，不是真正最旧 (design 补写边界 spec / 2026-08-12)
