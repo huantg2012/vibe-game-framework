@@ -86,19 +86,23 @@ export class PurificationModuleEntity {
 
     // Label
     const label = type === 'BARRIER' ? '屏障' : '储藏';
-    this.labelText = scene.add.text(x, y + 20, label, {
-      fontSize: '9px',
-      color: '#aaaaaa',
+    this.labelText = scene.add.text(x, y + 22, label, {
+      fontSize: '14px',
+      color: '#cccccc',
       fontFamily: 'monospace',
       align: 'center',
+      backgroundColor: '#00000099',
+      padding: { x: 3, y: 1 },
     }).setOrigin(0.5).setDepth(depth + 1);
 
     // A3: Effect value text below the label
-    this.effectText = scene.add.text(x, y + 30, '', {
-      fontSize: '9px',
-      color: '#888888',
+    this.effectText = scene.add.text(x, y + 38, '', {
+      fontSize: '11px',
+      color: '#aaaaaa',
       fontFamily: 'monospace',
       align: 'center',
+      backgroundColor: '#00000099',
+      padding: { x: 3, y: 1 },
     }).setOrigin(0.5).setDepth(depth + 1);
     this.updateEffectText();
 
