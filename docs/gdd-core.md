@@ -92,7 +92,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 出击工具 | 9 已实现（Common 6: solidify/delay/erode/ruminate/retrograde/kindle/stitch + 被动 scatter/muffle） | data/contaminants.csv 工具列 |
 | 防御效果 | 7 种 Common 已实现（含副作用） | src/systems/defense-engine.ts |
 | 永久改造 | 3（每轴1个） | data/upgrades.csv → src/generated/upgrade-data.ts |
-| 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 5 |
+| 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 6 |
 
 ## 设计历史（仅决策，不含详情）
 

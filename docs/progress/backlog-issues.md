@@ -17,7 +17,7 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 - [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。Slice 5 收尾二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除 (Slice 5 一致性检查 / 2026-08-12)
 - [ ] 敌人属性全在 `constants.ts` 的 `GAME_CONSTANTS.AI`，与 CLAUDE.md「策划数据源规则」（明确把"敌人属性"列为必须 CSV 起源）冲突 → Slice 6 第二敌人开工时必须拍板：建 `data/enemies.csv` 并迁移渗透体，还是显式破例 (Slice 5 一致性检查 / 2026-08-12)
 - [ ] 清理死常量 `PURIFICATION.BOUNDARY.BREATH_*`（5 个）——旧「整体脉动」方案残留，呼吸层真实调参已内联在 `boundary-breath.ts`；顺手把内联值迁回 constants (design 补写边界 spec / 2026-08-12)
-- [ ] 冲击预告方向映射无空间意义——`getForecastAngle()` 把 CORE→左、STORAGE→右（CORE 在中心，"左"是任选的），且只认识两个模块、场景已有五个交互点；与 BoundaryShape 压力主方向叠成两个互不相关的方向暗示 (design 补写边界 spec / 2026-08-12)
+- [ ] 冲击预告方向映射无空间意义——`getForecastAngle()` 把 CORE→左、STORAGE→右（CORE 在中心，"左"是任选的），且只认识两个模块、场景已有五个交互点；与 BoundaryShape 压力主方向叠成两个互不相关的方向暗示 (design 补写边界 spec / 2026-08-12) → **纳入 Slice 5 设计议题 D6**（与 `mirror` 的预告镜像误导、`growth_forecast_clarity` 改造合并讨论）
 - [ ] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]`，不是真正最旧 (design 补写边界 spec / 2026-08-12)
 - [ ] `system-purification-impact.md` 若干与边界无关的既有漂移未修：MODULE_INITIAL_HP 80↔70、REPAIR_PER_KINDLING 10↔4、BASE_IMPACT_DAMAGE 25↔30；INTENSITY_STEP/MAX_INTENSITY 已被潮汐取代仍列表；规则 2 只写两个交互物体（实为五个）；规则 9 说"不做 localStorage"（SaveManager 已存在） (design 补写边界 spec / 2026-08-12) → 下次改该系统时一并回填
 - [ ] `system-growth-tide.md` 的 `exposes` 写 `TideSystem.getCurrentPhase()/getIntensity()`，代码实际是 `getState()/getCurrentIntensity()` (design 补写边界 spec / 2026-08-12)
