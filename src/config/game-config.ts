@@ -26,7 +26,9 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
   scene: [BootScene, MainMenuScene, RiftScene, PurificationScene],
   scale: {
     mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
+    // #game-container 已用 flex 居中（index.html），此处不再让 Phaser 用 margin 二次居中，
+    // 否则 flex 会把 "canvas + Phaser 居中 margin" 整体再居中一次，导致内容偏移。
+    autoCenter: Phaser.Scale.NO_CENTER,
   },
   render: {
     antialias: false,
