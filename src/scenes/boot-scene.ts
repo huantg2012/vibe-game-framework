@@ -71,16 +71,10 @@ export class BootScene extends Phaser.Scene {
    */
   private generatePlaceholders(): void {
     const tile = GAME_CONSTANTS.TILE_SIZE;
-    const bodySize = GAME_CONSTANTS.PLAYER.BODY_SIZE;
 
-    // Player: white rectangle matching the collider, inside a tile-sized frame.
-    const playerGfx = this.make.graphics({ x: 0, y: 0 });
-    playerGfx.fillStyle(0xffffff, 1);
-    playerGfx.fillRect((tile - bodySize) / 2, (tile - bodySize) / 2, bodySize, bodySize);
-    playerGfx.generateTexture('placeholder-player', tile, tile);
-    playerGfx.destroy();
+    this.generatePlayerSprite();
 
-    // Player facing marker: a triangle pointing along +x, rotated to the facing angle.
+    // Legacy facing marker kept for backward compat (other systems may reference it).
     const facingGfx = this.make.graphics({ x: 0, y: 0 });
     facingGfx.fillStyle(0xffffff, 1);
     facingGfx.fillTriangle(10, 6, 0, 0, 0, 12);
@@ -101,31 +95,100 @@ export class BootScene extends Phaser.Scene {
   }
 
   /**
-   * Infiltrator placeholders. Dark red is the low threat *tier* (art-direction 12) and
-   * never changes with state; the pentagon is not decoration either - the enemy's facing
-   * has to be readable at 24 px, because "which way is it looking" is the question the
-   * whole stealth decision hangs on (system-enemy-ai rule R2).
-   *
-   * State rides on separate teal marks: one breathing dot for suspicion, two blinking
-   * dots for a search, one steady triangle for a lock-on. Blinking versus steady is
-   * quicker to read than any brightness gradient, and it does not ask the player to
-   * remember a colour scale.
+   * Player body: 32x32 industrial suit silhouette + 2x2 shoulder lamp texture.
+   * Generated once, cached by key. The lamp sprite follows the player based on facing.
+   */
+  private generatePlayerSprite(): void {
+    const g = this.make.graphics({ x: 0, y: 0 });
+    const cx = 16; // center x
+
+    // Legs (bottom shadow)
+    g.fillStyle(0x151a1e);
+    g.fillRect(cx - 4, 22, 3, 4);
+    g.fillRect(cx + 1, 22, 3, 4);
+
+    // Torso (hexagonal-ish shape)
+    g.fillStyle(0x2c2e33);
+    g.fillRect(cx - 5, 10, 10, 12);
+    // Shoulder widening
+    g.fillRect(cx - 6, 11, 12, 8);
+
+    // Backpack bump
+    g.fillStyle(0x2a2a2e);
+    g.fillRect(cx - 3, 14, 6, 5);
+
+    // Head
+    g.fillStyle(0x3a3d42);
+    g.fillRect(cx - 2, 6, 4, 5);
+
+    // Bottom/right shadow edge (1px)
+    g.fillStyle(0x151a1e);
+    g.fillRect(cx - 6, 19, 12, 1);
+    g.fillRect(cx + 6, 11, 1, 8);
+
+    g.generateTexture('player-body', 32, 32);
+    g.destroy();
+
+    // Shoulder lamp: tiny 2x2 texture (orange dot)
+    const lamp = this.make.graphics({ x: 0, y: 0 });
+    lamp.fillStyle(0xc4873a);
+    lamp.fillRect(0, 0, 2, 2);
+    lamp.generateTexture('player-lamp', 2, 2);
+    lamp.destroy();
+
+    // Also register 'placeholder-player' pointing to the same silhouette so any
+    // remaining references still resolve to a valid texture.
+    const compat = this.make.graphics({ x: 0, y: 0 });
+    const ccx = 16;
+    compat.fillStyle(0x151a1e);
+    compat.fillRect(ccx - 4, 22, 3, 4);
+    compat.fillRect(ccx + 1, 22, 3, 4);
+    compat.fillStyle(0x2c2e33);
+    compat.fillRect(ccx - 5, 10, 10, 12);
+    compat.fillRect(ccx - 6, 11, 12, 8);
+    compat.fillStyle(0x2a2a2e);
+    compat.fillRect(ccx - 3, 14, 6, 5);
+    compat.fillStyle(0x3a3d42);
+    compat.fillRect(ccx - 2, 6, 4, 5);
+    compat.fillStyle(0x151a1e);
+    compat.fillRect(ccx - 6, 19, 12, 1);
+    compat.fillRect(ccx + 6, 11, 1, 8);
+    compat.generateTexture('placeholder-player', 32, 32);
+    compat.destroy();
+  }
+
+  /**
+   * Infiltrator: distorted humanoid silhouette with teal scatter dots ("bad pixels").
+   * The asymmetric proportions (one shoulder higher, arms too long) signal "not quite
+   * human" at a glance. State communication rides on the separate indicator sprites
+   * (dot + lock triangle) positioned above the head by enemy-factory.
    */
   private generateEnemyPlaceholders(): void {
     const ai = GAME_CONSTANTS.AI;
 
     const bodyGfx = this.make.graphics({ x: 0, y: 0 });
-    bodyGfx.fillStyle(ai.BODY_COLOR, 1);
-    bodyGfx.fillPoints(
-      [
-        { x: 24, y: 12 }, // nose, pointing along +x (rotated to the facing angle)
-        { x: 11, y: 21 },
-        { x: 3, y: 16 },
-        { x: 3, y: 8 },
-        { x: 11, y: 3 },
-      ],
-      true
-    );
+    // Base body (dark, low contrast with environment)
+    bodyGfx.fillStyle(0x2e2d30);
+    // Head (small, offset slightly)
+    bodyGfx.fillRect(10, 1, 3, 3);
+    // Shoulders (asymmetric - one higher than other)
+    bodyGfx.fillRect(7, 4, 4, 2);  // left shoulder (higher)
+    bodyGfx.fillRect(13, 5, 4, 2); // right shoulder (lower)
+    // Torso
+    bodyGfx.fillRect(8, 6, 8, 8);
+    // Arms (too long - 2px longer than normal)
+    bodyGfx.fillRect(5, 5, 3, 10);  // left arm (long)
+    bodyGfx.fillRect(16, 6, 3, 10); // right arm (long)
+    // Legs
+    bodyGfx.fillRect(9, 14, 3, 6);
+    bodyGfx.fillRect(13, 14, 3, 6);
+    // Teal scatter dots (5 "bad pixels" signature)
+    bodyGfx.fillStyle(0x1aad96);
+    bodyGfx.fillRect(9, 7, 1, 1);   // dot 1 on torso
+    bodyGfx.fillRect(14, 9, 1, 1);  // dot 2 on torso
+    bodyGfx.fillRect(6, 8, 1, 1);   // dot 3 on left arm
+    bodyGfx.fillRect(17, 12, 1, 1); // dot 4 on right arm
+    bodyGfx.fillRect(11, 3, 1, 1);  // dot 5 on head
     bodyGfx.generateTexture('placeholder-enemy', 24, 24);
     bodyGfx.destroy();
 

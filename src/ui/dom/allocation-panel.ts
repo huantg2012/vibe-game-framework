@@ -60,14 +60,12 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1000',
-    'background:#1a1a1a',
-    'border:1px solid #444',
-    'padding:20px',
+    'background:rgba(15,17,20,0.92)',
+    'border:1px solid #2a2d32',
+    'padding:12px',
     'min-width:280px',
-    'font-family:monospace',
-    'color:#ccc',
-    'border-radius:4px',
-    'box-shadow:0 4px 20px rgba(0,0,0,0.8)',
+    'font-family:"Courier New",monospace',
+    'color:#c8cdd4',
   ].join(';');
 
   render(mod.type, mod.hp, mod.maxHp);
@@ -135,7 +133,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const maxAllocatable = Math.min(reserve, maxUseful);
 
   const typeLabel = type === 'BARRIER' ? '屏障 (混乱抑制)' : '储藏 (薪柴增幅)';
-  const typeColor = type === 'BARRIER' ? '#4488cc' : '#cc8844';
+  const typeColor = type === 'BARRIER' ? '#4d9a6b' : '#c4873a';
 
   // --- Effect preview calculations ---
   const currentEffectText = computeEffectText(type, hp);
@@ -145,36 +143,36 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const showRepaired = selectedAmount > 0;
 
   // Brighter variant of typeColor for "after repair" line
-  const repairedColor = type === 'BARRIER' ? '#66aaee' : '#eea866';
+  const repairedColor = type === 'BARRIER' ? '#4d9a6b' : '#c4873a';
 
   panel.innerHTML = `
-    <div style="margin-bottom:12px;font-size:14px;color:${typeColor};font-weight:bold;">
+    <div style="margin-bottom:12px;font-size:14px;color:#c4873a;font-weight:bold;">
       ${typeLabel}
     </div>
-    <div style="margin-bottom:8px;font-size:12px;">
-      完整度: <span style="color:#fff;">${hp}</span> / ${maxHp}
+    <div style="margin-bottom:8px;font-size:10px;color:#c8cdd4;">
+      完整度: <span style="color:#c8cdd4;">${hp}</span> / ${maxHp}
     </div>
-    <div style="margin:8px 0;border-top:1px solid #333;border-bottom:1px solid #333;padding:8px 0;">
+    <div style="margin:8px 0;border-top:1px solid #2a2d32;border-bottom:1px solid #2a2d32;padding:8px 0;">
       <div style="font-size:11px;color:${typeColor};">
         当前效果: ${currentEffectText}
       </div>
       ${showRepaired ? `<div style="font-size:11px;color:${repairedColor};margin-top:4px;">
-        修复后: ${repairedEffectText} <span style="color:#66cc88;">${diffText}</span>
+        修复后: ${repairedEffectText} <span style="color:#4d9a6b;">${diffText}</span>
       </div>` : ''}
     </div>
-    <div style="margin-bottom:12px;font-size:12px;">
-      可用薪柴: <span style="color:#2ae6c8;">${reserve}</span>
+    <div style="margin-bottom:12px;font-size:10px;color:#c8cdd4;">
+      可用薪柴: <span style="color:#1aad96;">${reserve}</span>
     </div>
-    <div style="margin-bottom:8px;font-size:11px;color:#888;">
+    <div style="margin-bottom:8px;font-size:9px;color:#8a8f96;">
       1 薪柴 = ${repairPer} 完整度
     </div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
       <button id="alloc-minus" style="${btnStyle()}" ${selectedAmount <= 0 ? 'disabled' : ''}>-</button>
-      <span id="alloc-amount" style="font-size:16px;color:#fff;min-width:30px;text-align:center;">
+      <span id="alloc-amount" style="font-size:14px;color:#c8cdd4;min-width:30px;text-align:center;">
         ${selectedAmount}
       </span>
       <button id="alloc-plus" style="${btnStyle()}" ${selectedAmount >= maxAllocatable ? 'disabled' : ''}>+</button>
-      <span style="font-size:11px;color:#888;margin-left:8px;">
+      <span style="font-size:9px;color:#8a8f96;margin-left:8px;">
         (+${selectedAmount * repairPer} 完整度)
       </span>
     </div>
@@ -231,40 +229,39 @@ function rerender(): void {
 
 function btnStyle(): string {
   return [
-    'width:28px',
-    'height:28px',
-    'font-size:16px',
-    'font-family:monospace',
-    'background:#333',
-    'color:#fff',
-    'border:1px solid #555',
-    'border-radius:3px',
+    'width:24px',
+    'height:24px',
+    'font-size:14px',
+    'font-family:"Courier New",monospace',
+    'background:#0f1114',
+    'color:#8a8f96',
+    'border:1px solid #2a2d32',
     'cursor:pointer',
   ].join(';');
 }
 
 function confirmBtnStyle(): string {
   return [
-    'padding:6px 16px',
-    'font-size:12px',
-    'font-family:monospace',
-    'background:#2a6644',
-    'color:#fff',
-    'border:1px solid #4a8866',
-    'border-radius:3px',
+    'padding:4px 8px',
+    'font-size:11px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#c8cdd4',
+    'border:none',
     'cursor:pointer',
+    'text-decoration:underline',
   ].join(';');
 }
 
 function cancelBtnStyle(): string {
   return [
-    'padding:6px 16px',
-    'font-size:12px',
-    'font-family:monospace',
-    'background:#444',
-    'color:#ccc',
-    'border:1px solid #666',
-    'border-radius:3px',
+    'padding:4px 8px',
+    'font-size:11px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#8a8f96',
+    'border:none',
     'cursor:pointer',
+    'text-decoration:underline',
   ].join(';');
 }

@@ -105,15 +105,13 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'background:rgba(20,20,24,0.95)',
-    'border:1px solid #444',
-    'padding:20px',
+    'background:rgba(15,17,20,0.92)',
+    'border:1px solid #2a2d32',
+    'padding:12px',
     'min-width:340px',
     'max-width:420px',
-    'font-family:monospace',
-    'color:#ccc',
-    'border-radius:4px',
-    'box-shadow:0 4px 20px rgba(0,0,0,0.8)',
+    'font-family:"Courier New",monospace',
+    'color:#c8cdd4',
   ].join(';');
 
   render();
@@ -161,32 +159,32 @@ function render(): void {
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
+      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="color:#1aad96;min-width:50px;font-size:11px;">(${label})</span>
           <span style="color:${color};">${name} ${stars}</span>
-          <span style="color:#888;font-size:10px;">x${c.usesRemaining}</span>
-          <button class="loadout-remove-btn" data-index="${i}" style="${actionBtnStyle('#663333','#884444')}">移除</button>
+          <span style="color:#8a8f96;font-size:10px;">x${c.usesRemaining}</span>
+          <button class="loadout-remove-btn" data-index="${i}" style="${actionBtnStyle()}">移除</button>
         </div>
-        <div style="font-size:10px;color:#666;margin-top:3px;padding-left:58px;">${desc}</div>
+        <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:58px;">${desc}</div>
       </div>`;
     } else {
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
+      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
         <div style="display:flex;align-items:center;gap:8px;">
           <span style="color:#1aad96;min-width:50px;font-size:11px;">(${label})</span>
-          <span style="color:#555;">空</span>
+          <span style="color:#5a5f66;">空</span>
         </div>
       </div>`;
     }
   }
 
   // Inventory
-  html += `<div style="margin-top:14px;margin-bottom:8px;font-size:12px;color:#888;border-top:1px solid #333;padding-top:10px;">
+  html += `<div style="margin-top:14px;margin-bottom:8px;font-size:11px;color:#8a8f96;border-top:1px solid #2a2d32;padding-top:10px;">
     可用工具：
   </div>`;
 
   if (inventory.length === 0) {
-    html += `<div style="color:#555;font-size:11px;padding:4px 0;">无可用的出击工具</div>`;
+    html += `<div style="color:#5a5f66;font-size:10px;padding:4px 0;">无可用的出击工具</div>`;
   } else {
     for (const c of inventory) {
       const name = TYPE_NAMES[c.type];
@@ -202,15 +200,15 @@ function render(): void {
         toolType === 'passive' ? idx === 2 : idx <= 1,
       );
       const equipBtns = compatibleSlots
-        .map((idx) => `<button class="loadout-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle('#1a3333','#2a5555')}">装备到 ${SLOT_LABELS[idx]}</button>`)
+        .map((idx) => `<button class="loadout-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle()}">装备到 ${SLOT_LABELS[idx]}</button>`)
         .join(' ');
 
-      html += `<div style="margin-bottom:6px;padding:4px 8px;background:#111118;border-radius:3px;">
+      html += `<div style="margin-bottom:6px;padding:4px 8px;background:#151a1e;">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
           <span style="color:${color};font-size:11px;">${name} ${stars} x${c.usesRemaining}</span>
-          ${equipBtns || '<span style="color:#555;font-size:10px;">已满</span>'}
+          ${equipBtns || '<span style="color:#5a5f66;font-size:10px;">已满</span>'}
         </div>
-        <div style="font-size:10px;color:#666;margin-top:2px;">${desc}</div>
+        <div style="font-size:9px;color:#5a5f66;margin-top:2px;">${desc}</div>
       </div>`;
     }
   }
@@ -299,12 +297,12 @@ function buildSortiePreview(): string {
   const storageBonus = Math.round((storageEffect - 1) * 100);
   const kindlingDetail = storageBonus > 0 ? ` (储藏+${storageBonus}%)` : '';
 
-  return `<div style="margin-top:14px;padding:10px;background:#111118;border-radius:4px;border-left:3px solid #1aad96;">
+  return `<div style="margin-top:14px;padding:10px;background:#151a1e;border-left:3px solid #1aad96;">
     <div style="font-size:11px;color:#1aad96;margin-bottom:6px;font-weight:bold;">本次出击:</div>
-    <div style="font-size:11px;color:#aaa;line-height:1.7;">
-      完整度上限: <span style="color:#fff;">${totalHp}</span>${hpDetail}<br>
-      混乱增速: <span style="color:#fff;">x${totalChaosRate.toFixed(2)}</span>${chaosDetail}<br>
-      薪柴价值: <span style="color:#fff;">x${storageEffect.toFixed(2)}</span>${kindlingDetail}
+    <div style="font-size:10px;color:#8a8f96;line-height:1.7;">
+      完整度上限: <span style="color:#c8cdd4;">${totalHp}</span>${hpDetail}<br>
+      混乱增速: <span style="color:#c8cdd4;">x${totalChaosRate.toFixed(2)}</span>${chaosDetail}<br>
+      薪柴价值: <span style="color:#c8cdd4;">x${storageEffect.toFixed(2)}</span>${kindlingDetail}
     </div>
   </div>`;
 }
@@ -318,43 +316,43 @@ function isSlotted(id: string): boolean {
   return slots.some((c) => c?.id === id);
 }
 
-function actionBtnStyle(bg: string, border: string): string {
+function actionBtnStyle(): string {
   return [
-    'padding:3px 8px',
+    'padding:4px 8px',
     'font-size:10px',
-    'font-family:monospace',
-    `background:${bg}`,
-    'color:#ccc',
-    `border:1px solid ${border}`,
-    'border-radius:3px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#8a8f96',
+    'border:none',
     'cursor:pointer',
     'margin-left:auto',
+    'text-decoration:underline',
   ].join(';');
 }
 
 function confirmBtnStyle(): string {
   return [
-    'padding:8px 24px',
-    'font-size:13px',
-    'font-family:monospace',
-    'background:#1a5544',
-    'color:#2ae6c8',
-    'border:1px solid #2a8866',
-    'border-radius:3px',
+    'padding:4px 8px',
+    'font-size:11px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#1aad96',
+    'border:none',
     'cursor:pointer',
+    'text-decoration:underline',
     'font-weight:bold',
   ].join(';');
 }
 
 function cancelBtnStyle(): string {
   return [
-    'padding:8px 20px',
-    'font-size:12px',
-    'font-family:monospace',
-    'background:#333',
-    'color:#ccc',
-    'border:1px solid #555',
-    'border-radius:3px',
+    'padding:4px 8px',
+    'font-size:11px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#8a8f96',
+    'border:none',
     'cursor:pointer',
+    'text-decoration:underline',
   ].join(';');
 }

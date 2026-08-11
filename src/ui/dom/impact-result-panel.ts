@@ -84,14 +84,12 @@ export const impactResultPanel = {
       'left:50%',
       'transform:translate(-50%,-50%)',
       'z-index:1001',
-      'background:rgba(20,0,0,0.9)',
+      'background:rgba(15,17,20,0.92)',
       'border:2px solid #cc4444',
-      'padding:20px 28px',
-      'font-family:monospace',
-      'color:#ff6666',
-      'border-radius:4px',
+      'padding:12px',
+      'font-family:"Courier New",monospace',
+      'color:#cc4444',
       'text-align:center',
-      'box-shadow:0 0 30px rgba(200,0,0,0.4)',
       'animation:impact-shake 0.3s ease-out',
       'cursor:pointer',
     ].join(';');
@@ -118,9 +116,9 @@ export const impactResultPanel = {
     };
 
     const lines = damages.map((d) => {
-      const color = d.moduleId === 'BARRIER' ? '#4488cc' : '#cc8844';
+      const color = d.moduleId === 'BARRIER' ? '#4d9a6b' : '#c4873a';
       const label = moduleLabels[d.moduleId] ?? d.moduleId;
-      return `<span style="color:${color}">${label}</span> <span style="color:#ff4444">-${d.damage}</span> 完整度`;
+      return `<span style="color:${color}">${label}</span> <span style="color:#cc4444">-${d.damage}</span> 完整度`;
     });
 
     // Build charge progress section
@@ -129,27 +127,27 @@ export const impactResultPanel = {
       const chargeLines = chargeChanges.map((c) => {
         const name = TYPE_NAMES[c.type] ?? c.name;
         if (c.transformed) {
-          return `<div style="color:#2ae6c8;font-size:11px;">${name} ${c.before}/${c.threshold} → ${c.threshold}/${c.threshold} <span style="color:#44ffcc;font-weight:bold;">[已转化]</span></div>`;
+          return `<div style="color:#1aad96;font-size:10px;">${name} ${c.before}/${c.threshold} → ${c.threshold}/${c.threshold} <span style="color:#1aad96;font-weight:bold;">[已转化]</span></div>`;
         }
-        return `<div style="color:#aaa;font-size:11px;">${name} ${c.before}/${c.threshold} → ${c.after}/${c.threshold}</div>`;
+        return `<div style="color:#8a8f96;font-size:10px;">${name} ${c.before}/${c.threshold} → ${c.after}/${c.threshold}</div>`;
       });
       chargeHtml = `
-        <div style="margin-top:12px;padding-top:10px;border-top:1px solid #442222;">
-          <div style="font-size:10px;color:#888;margin-bottom:4px;">防御充能:</div>
+        <div style="margin-top:12px;padding-top:10px;border-top:1px solid #2a2d32;">
+          <div style="font-size:9px;color:#8a8f96;margin-bottom:4px;">防御充能:</div>
           ${chargeLines.join('')}
         </div>
       `;
     }
 
     panel.innerHTML = `
-      <div style="font-size:16px;font-weight:bold;margin-bottom:10px;color:#ff4444;">
+      <div style="font-size:14px;font-weight:bold;margin-bottom:10px;color:#cc4444;">
         冲击! (x${intensity.toFixed(2)})
       </div>
-      <div style="font-size:13px;line-height:1.8;">
+      <div style="font-size:11px;line-height:1.8;">
         ${lines.join('<br>')}
       </div>
       ${chargeHtml}
-      <div style="font-size:11px;color:#888;margin-top:12px;">
+      <div style="font-size:9px;color:#5a5f66;margin-top:12px;">
         点击或按任意键关闭
       </div>
     `;

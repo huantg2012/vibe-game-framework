@@ -17,13 +17,15 @@ import { GameEvent } from '@/types/events';
 // ---------------------------------------------------------------------------
 
 const HUD_DEPTH = 100;
-const BAR_HEIGHT = 6;
+const BAR_HEIGHT = 4;
 const BAR_MARGIN = 8;
-const CHAOS_BAR_WIDTH = 120;
-const HEALTH_BAR_WIDTH = 80;
+const CHAOS_BAR_WIDTH = 100;
+const HEALTH_BAR_WIDTH = 60;
 const CHAOS_COLOR = 0x1aad96;
-const HEALTH_COLOR = 0xffffff;
-const KINDLING_COLOR = '#c89040';
+const HEALTH_COLOR = 0x8a8f96;
+const HEALTH_LOW_COLOR = 0xcc3333;
+const HEALTH_LOW_THRESHOLD = 0.25;
+const KINDLING_COLOR = '#c4873a';
 const BG_COLOR = 0x000000;
 const BG_ALPHA = 0.4;
 const PULSE_PERIOD_MS = 300;
@@ -77,6 +79,7 @@ export class HUD {
   private scene!: Phaser.Scene;
   private chaosValue = 0;
   private overflowPulseMs = 0;
+  private healthPulseMs = 0;
   private healthFrac = 1;
   private kindling = 0;
   // C4: Track kills and contaminant pickups during the run
@@ -136,6 +139,7 @@ export class HUD {
     this.healthFrac = 1;
     this.kindling = 0;
     this.overflowPulseMs = 0;
+    this.healthPulseMs = 0;
     this.killCount = 0;
     this.contaminantCount = 0;
     this.pickupFlash = null;
@@ -166,12 +170,12 @@ export class HUD {
     const tick50X = chaosX + CHAOS_BAR_WIDTH * 0.5;
     const tick75X = chaosX + CHAOS_BAR_WIDTH * 0.75;
     this.chaosTick50 = scene.add
-      .rectangle(tick50X, chaosY, 1, BAR_HEIGHT, 0xffffff, 0.4)
+      .rectangle(tick50X, chaosY, 1, BAR_HEIGHT, 0xffffff, 0.3)
       .setOrigin(0, 0)
       .setScrollFactor(0)
       .setDepth(HUD_DEPTH + 2);
     this.chaosTick75 = scene.add
-      .rectangle(tick75X, chaosY, 1, BAR_HEIGHT, 0xffffff, 0.4)
+      .rectangle(tick75X, chaosY, 1, BAR_HEIGHT, 0xffffff, 0.3)
       .setOrigin(0, 0)
       .setScrollFactor(0)
       .setDepth(HUD_DEPTH + 2);
@@ -191,8 +195,8 @@ export class HUD {
 
     // --- Kindling count (top right) ---
     this.kindlingText = scene.add
-      .text(w - BAR_MARGIN, BAR_MARGIN, '0', {
-        fontSize: '12px',
+      .text(w - BAR_MARGIN, BAR_MARGIN, '◇ 0', {
+        fontSize: '11px',
         color: KINDLING_COLOR,
         fontFamily: 'monospace',
       })
@@ -219,8 +223,8 @@ export class HUD {
     // --- Extract prompt (bottom center) ---
     this.extractPrompt = scene.add
       .text(w / 2, h - BAR_MARGIN * 3, '按 E 撤离', {
-        fontSize: '12px',
-        color: '#ffffff',
+        fontSize: '10px',
+        color: '#c8cdd4',
         fontFamily: 'monospace',
       })
       .setOrigin(0.5, 1)
@@ -232,7 +236,7 @@ export class HUD {
     this.resultTitle = scene.add
       .text(0, -30, '', {
         fontSize: '16px',
-        color: '#ffffff',
+        color: '#c8cdd4',
         fontFamily: 'monospace',
         align: 'center',
       })
@@ -241,7 +245,7 @@ export class HUD {
     this.resultBody = scene.add
       .text(0, 10, '', {
         fontSize: '11px',
-        color: '#aaaaaa',
+        color: '#8a8f96',
         fontFamily: 'monospace',
         align: 'center',
       })
@@ -293,6 +297,19 @@ export class HUD {
       this.chaosBarFill.setAlpha(1);
     }
 
+    // Health bar low-HP pulse
+    if (this.healthFrac < HEALTH_LOW_THRESHOLD) {
+      this.healthPulseMs += deltaMs;
+      const phase = (this.healthPulseMs % PULSE_PERIOD_MS) / PULSE_PERIOD_MS;
+      const alpha = 0.6 + 0.4 * Math.sin(phase * Math.PI * 2);
+      this.healthBarFill.setAlpha(alpha);
+      this.healthBarFill.setFillStyle(HEALTH_LOW_COLOR);
+    } else {
+      this.healthPulseMs = 0;
+      this.healthBarFill.setAlpha(1);
+      this.healthBarFill.setFillStyle(HEALTH_COLOR);
+    }
+
     // Extract prompt visibility (only when near extraction and run not ended)
     if (!this.config.isRunEnded() && this.config.canExtract()) {
       this.extractPrompt.setVisible(true);
@@ -306,6 +323,7 @@ export class HUD {
     this.healthFrac = 1;
     this.kindling = 0;
     this.overflowPulseMs = 0;
+    this.healthPulseMs = 0;
     this.killCount = 0;
     this.contaminantCount = 0;
     this.updateChaosBar();
@@ -360,7 +378,7 @@ export class HUD {
   }
 
   private updateKindlingText(): void {
-    this.kindlingText.setText(String(this.kindling));
+    this.kindlingText.setText(`◇ ${this.kindling}`);
   }
 
   private showPickupFlash(amount: number): void {
@@ -387,7 +405,7 @@ export class HUD {
     } else {
       this.pickupFlash = this.scene.add
         .text(flashX, BAR_MARGIN, `+${amount}`, {
-          fontSize: '12px',
+          fontSize: '11px',
           color: KINDLING_COLOR,
           fontFamily: 'monospace',
         })
@@ -416,11 +434,8 @@ export class HUD {
     for (let i = 0; i < this.toolSlotData.length; i++) {
       const slot = this.toolSlotData[i]!;
       const key = SLOT_KEYS[i] ?? `${i + 1}`;
-      if (slot.usesRemaining > 0) {
-        parts.push(`[${key}] ${slot.name} x${slot.usesRemaining}`);
-      } else {
-        parts.push(`[${key}] 已耗尽`);
-      }
+      const dots = '·'.repeat(slot.usesRemaining);
+      parts.push(`[${key}] ${dots || '—'}`);
     }
     this.toolSlotText.setText(parts.join('  '));
 

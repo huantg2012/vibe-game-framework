@@ -112,17 +112,15 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'background:rgba(16,16,20,0.95)',
-    'border:1px solid #444',
-    'padding:20px',
+    'background:rgba(15,17,20,0.92)',
+    'border:1px solid #2a2d32',
+    'padding:12px',
     'min-width:380px',
     'max-width:480px',
     'max-height:80vh',
     'overflow-y:auto',
-    'font-family:monospace',
-    'color:#ccc',
-    'border-radius:4px',
-    'box-shadow:0 4px 20px rgba(0,0,0,0.8)',
+    'font-family:"Courier New",monospace',
+    'color:#c8cdd4',
   ].join(';');
 
   render();
@@ -169,28 +167,28 @@ function render(): void {
   const tideState = tideSystem.getState();
   const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
 
-  let html = `<div style="font-size:14px;color:#88aacc;font-weight:bold;margin-bottom:12px;">状态概览</div>`;
-  html += `<div style="font-size:11px;line-height:2;padding:8px;background:#1a1a2e;border-radius:4px;margin-bottom:14px;">`;
-  html += `完整度上限: <span style="color:#fff;">${totalHp}</span> (基础${baseHp}${mods.vitalityBonus > 0 ? ` + 改造${mods.vitalityBonus}` : ''})<br>`;
-  html += `混乱抗性: <span style="color:#fff;">${totalResist}%</span> (${barrierReduction > 0 ? `屏障${barrierReduction}%` : ''}${barrierReduction > 0 && growthReduction > 0 ? ' + ' : ''}${growthReduction > 0 ? `改造${growthReduction}%` : ''}${totalResist === 0 ? '无' : ''})<br>`;
-  html += `薪柴价值: <span style="color:#fff;">x${storageEffect.toFixed(2)}</span> (储藏+${storageBonus}%${kindlingAffinity > 0 ? ` + 亲和+${kindlingAffinity}` : ''})<br>`;
-  html += `潮汐: <span style="color:#fff;">第${tideState.tideNumber}潮 · ${phaseLabels[tideState.phase]} · 强度${tideState.currentIntensity.toFixed(2)}</span>`;
+  let html = `<div style="font-size:14px;color:#c8cdd4;font-weight:bold;margin-bottom:12px;">状态概览</div>`;
+  html += `<div style="font-size:10px;line-height:2;padding:8px;background:#151a1e;margin-bottom:14px;">`;
+  html += `完整度上限: <span style="color:#c8cdd4;">${totalHp}</span> (基础${baseHp}${mods.vitalityBonus > 0 ? ` + 改造${mods.vitalityBonus}` : ''})<br>`;
+  html += `混乱抗性: <span style="color:#c8cdd4;">${totalResist}%</span> (${barrierReduction > 0 ? `屏障${barrierReduction}%` : ''}${barrierReduction > 0 && growthReduction > 0 ? ' + ' : ''}${growthReduction > 0 ? `改造${growthReduction}%` : ''}${totalResist === 0 ? '无' : ''})<br>`;
+  html += `薪柴价值: <span style="color:#c8cdd4;">x${storageEffect.toFixed(2)}</span> (储藏+${storageBonus}%${kindlingAffinity > 0 ? ` + 亲和+${kindlingAffinity}` : ''})<br>`;
+  html += `潮汐: <span style="color:#c8cdd4;">第${tideState.tideNumber}潮 · ${phaseLabels[tideState.phase]} · 强度${tideState.currentIntensity.toFixed(2)}</span>`;
   html += `</div>`;
 
   // Upgrades list
   const upgradeIds: GrowthUpgradeId[] = ['growth_chaos_resist', 'growth_kindling_affinity', 'growth_vitality'];
   const purchasedUpgrades = upgradeIds.filter((id) => growthSystem.getLevel(id) > 0);
   if (purchasedUpgrades.length > 0) {
-    html += `<div style="font-size:11px;color:#888;margin-bottom:4px;">已购改造:</div>`;
-    html += `<div style="font-size:11px;padding:6px 8px;background:#1a1a2e;border-radius:4px;margin-bottom:14px;">`;
+    html += `<div style="font-size:11px;color:#8a8f96;margin-bottom:4px;">已购改造:</div>`;
+    html += `<div style="font-size:10px;padding:6px 8px;background:#151a1e;margin-bottom:14px;">`;
     for (const id of purchasedUpgrades) {
-      html += `<div style="color:#cc8844;">${UPGRADE_NAMES[id]} Lv.${growthSystem.getLevel(id)}</div>`;
+      html += `<div style="color:#c4873a;">${UPGRADE_NAMES[id]} Lv.${growthSystem.getLevel(id)}</div>`;
     }
     html += `</div>`;
   }
 
   // --- Inventory section ---
-  html += `<div style="font-size:14px;color:#88aacc;font-weight:bold;margin-bottom:10px;border-top:1px solid #333;padding-top:14px;">库存</div>`;
+  html += `<div style="font-size:14px;color:#c8cdd4;font-weight:bold;margin-bottom:10px;border-top:1px solid #2a2d32;padding-top:14px;">库存</div>`;
 
   const allContaminants = contaminantSystem.getAll();
   const defenseItems = allContaminants.filter((c) => c.stage === 'defense');
@@ -199,14 +197,14 @@ function render(): void {
 
   if (defenseItems.length > 0) {
     const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
-    html += `<div style="font-size:11px;color:#8866cc;margin-bottom:4px;">防御中:</div>`;
+    html += `<div style="font-size:11px;color:#1aad96;margin-bottom:4px;">防御中:</div>`;
     for (const c of defenseItems) {
       const name = TYPE_NAMES[c.type];
-      const color = RARITY_COLORS[c.rarity] ?? '#aaa';
+      const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
-      html += `<div style="font-size:10px;padding:3px 8px;margin-bottom:3px;background:#111118;border-radius:3px;">
-        <span style="color:${color};">${name}</span> <span style="color:#666;">充能 ${c.impactCharges}/${threshold}</span>
-        <div style="color:#555;font-size:9px;">${desc}</div>
+      html += `<div style="font-size:10px;padding:3px 8px;margin-bottom:3px;background:#151a1e;">
+        <span style="color:${color};">${name}</span> <span style="color:#5a5f66;">充能 ${c.impactCharges}/${threshold}</span>
+        <div style="color:#5a5f66;font-size:9px;">${desc}</div>
       </div>`;
     }
   }
@@ -215,29 +213,29 @@ function render(): void {
     html += `<div style="font-size:11px;color:#1aad96;margin-top:8px;margin-bottom:4px;">工具:</div>`;
     for (const c of toolItems) {
       const name = TOOL_NAMES[c.type];
-      const color = RARITY_COLORS[c.rarity] ?? '#aaa';
+      const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
-      html += `<div style="font-size:10px;padding:3px 8px;margin-bottom:3px;background:#111118;border-radius:3px;">
-        <span style="color:${color};">${name}</span> <span style="color:#888;">x${c.usesRemaining}</span>
-        <div style="color:#555;font-size:9px;">${desc}</div>
+      html += `<div style="font-size:10px;padding:3px 8px;margin-bottom:3px;background:#151a1e;">
+        <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">x${c.usesRemaining}</span>
+        <div style="color:#5a5f66;font-size:9px;">${desc}</div>
       </div>`;
     }
   }
 
   if (brokenItems.length > 0) {
-    html += `<div style="font-size:11px;color:#555;margin-top:8px;margin-bottom:4px;">已碎:</div>`;
+    html += `<div style="font-size:11px;color:#5a5f66;margin-top:8px;margin-bottom:4px;">已碎:</div>`;
     for (const c of brokenItems) {
       const name = TYPE_NAMES[c.type];
-      html += `<div style="font-size:10px;padding:2px 8px;color:#444;">${name}</div>`;
+      html += `<div style="font-size:10px;padding:2px 8px;color:#3a3f44;">${name}</div>`;
     }
   }
 
   if (defenseItems.length === 0 && toolItems.length === 0 && brokenItems.length === 0) {
-    html += `<div style="font-size:11px;color:#555;padding:4px 0;">尚无污染物</div>`;
+    html += `<div style="font-size:10px;color:#5a5f66;padding:4px 0;">尚无污染物</div>`;
   }
 
   // Close hint
-  html += `<div style="margin-top:14px;text-align:center;font-size:10px;color:#555;">Tab / ESC 关闭</div>`;
+  html += `<div style="margin-top:14px;text-align:center;font-size:9px;color:#5a5f66;">Tab / ESC 关闭</div>`;
 
   panel.innerHTML = html;
 }

@@ -61,13 +61,13 @@ export class PurificationHud {
     if (target) {
       const mainLine = this.getPromptMain(target);
       const detailLine = this.getPromptDetail(target);
-      html = `<div style="font-size:11px;color:#c8cdd4;"><span style="color:#c8cdd4;">[E]</span> <span style="color:#8a8f96;">${mainLine}</span></div>`;
+      html = `<div style="font-size:11px;color:#c8cdd4;"><span style="color:#5a5f66;">&gt;</span> <span style="color:#c8cdd4;">[E]</span> <span style="color:#8a8f96;">${mainLine}</span></div>`;
       if (detailLine) {
         html += `<div style="font-size:10px;color:#666666;margin-top:4px;">${detailLine}</div>`;
       }
       this.promptEl.style.opacity = '1';
     } else {
-      html = `<div style="font-size:11px;color:#666666;"><span style="color:#666666;">[Tab]</span> <span style="color:#666666;">状态总览</span></div>`;
+      html = `<div style="font-size:11px;color:#5a5f66;"><span style="color:#5a5f66;">&gt;</span> <span style="color:#5a5f66;">[Tab]</span> <span style="color:#5a5f66;">状态总览</span></div>`;
       this.promptEl.style.opacity = '0.5';
     }
 
@@ -102,7 +102,7 @@ export class PurificationHud {
         <span style="font-size:10px;color:#8a8f96;">稳定度</span>
         <span style="font-size:11px;color:#44aa66;">${stabPct}%</span>
       </div>
-      <div style="height:3px;background:#1a1d22;margin-top:3px;margin-bottom:6px;border-bottom:1px solid #2a2d32;padding-bottom:6px;">
+      <div style="height:3px;background:#151a1e;margin-top:3px;margin-bottom:6px;border-bottom:1px solid #2a2d32;padding-bottom:6px;">
         <div style="height:100%;width:${stabPct}%;background:${stabFill};"></div>
       </div>
       <div style="font-size:10px;color:#668888;">第${tideState.tideNumber}潮 · ${PHASE_LABELS[tideState.phase]}</div>
@@ -143,8 +143,8 @@ export class PurificationHud {
     this.hudEl.style.cssText = [
       'position:fixed', 'top:12px', 'right:12px', 'z-index:999',
       'pointer-events:none', 'font-family:"Courier New",monospace',
-      'background:rgba(15,17,20,0.85)', 'border:1px solid #2a2d32',
-      'padding:10px 12px', 'border-radius:2px', 'min-width:120px',
+      'background:rgba(15,17,20,0.92)', 'border:1px solid #2a2d32',
+      'padding:10px 12px', 'border-radius:0', 'min-width:120px',
     ].join(';');
     document.body.appendChild(this.hudEl);
     this.refresh();
@@ -159,13 +159,13 @@ export class PurificationHud {
       'position:fixed', 'bottom:24px', 'left:50%', 'transform:translateX(-50%)',
       'z-index:999', 'pointer-events:none',
       'font-family:"Courier New",monospace',
-      'background:rgba(15,17,20,0.88)', 'border:1px solid #2a2d32',
-      'padding:6px 16px', 'border-radius:2px', 'text-align:center',
+      'background:rgba(15,17,20,0.92)', 'border:1px solid #2a2d32',
+      'padding:6px 16px', 'border-radius:0', 'text-align:center',
       'min-width:160px', 'transition:opacity 0.15s ease-out',
       'opacity:0.5',
     ].join(';');
     // Start with default prompt
-    this.promptEl.innerHTML = `<div style="font-size:11px;color:#666666;"><span style="color:#666666;">[Tab]</span> <span style="color:#666666;">状态总览</span></div>`;
+    this.promptEl.innerHTML = `<div style="font-size:11px;color:#5a5f66;"><span style="color:#5a5f66;">&gt;</span> <span style="color:#5a5f66;">[Tab]</span> <span style="color:#5a5f66;">状态总览</span></div>`;
     this.lastPromptHtml = this.promptEl.innerHTML;
     document.body.appendChild(this.promptEl);
   }

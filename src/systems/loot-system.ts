@@ -1,9 +1,10 @@
 /**
  * LootSystem - kindling node placement, visibility and pickup.
  *
- * Each node is a teal 8x8 sprite placed at the position defined in the map layout.
- * Pickup is detected via Phaser Arcade overlap; the system never imports another system,
- * receiving everything it needs through its constructor and the event bus.
+ * Each node is an irregular teal polyhedron sprite placed at the position defined
+ * in the map layout. Pickup is detected via Phaser Arcade overlap; the system never
+ * imports another system, receiving everything it needs through its constructor and
+ * the event bus.
  */
 
 import Phaser from 'phaser';
@@ -19,7 +20,7 @@ import type { Vector2 } from '@/types/game-types';
 
 interface KindlingNode {
   readonly def: KindlingNodeDef;
-  readonly sprite: Phaser.GameObjects.Rectangle;
+  readonly sprite: Phaser.GameObjects.Image;
   collected: boolean;
 }
 
@@ -34,20 +35,41 @@ export interface LootSystemConfig {
 // Helpers
 // ---------------------------------------------------------------------------
 
-const LOOT_COLOR = 0x1aad96;
-const LOOT_SIZE = 8;
+// Reference color for the kindling node palette (used in texture generation above)
+// const LOOT_COLOR = 0x1aad96;
+const LOOT_SIZE = 12; // slightly larger to accommodate irregular shape (was 8)
 const LOOT_DEPTH = 15; // between surface (0) and player (30)
 
 /** Texture key generated once per scene lifetime. */
-const LOOT_TEXTURE_KEY = '__loot_node_8x8';
+const LOOT_TEXTURE_KEY = '__loot_node_12x12';
 
 function ensureLootTexture(scene: Phaser.Scene): void {
   if (scene.textures.exists(LOOT_TEXTURE_KEY)) return;
-  const graphics = scene.make.graphics({ x: 0, y: 0 }, false);
-  graphics.fillStyle(LOOT_COLOR, 1);
-  graphics.fillRect(0, 0, LOOT_SIZE, LOOT_SIZE);
-  graphics.generateTexture(LOOT_TEXTURE_KEY, LOOT_SIZE, LOOT_SIZE);
-  graphics.destroy();
+  const g = scene.make.graphics({ x: 0, y: 0 }, false);
+
+  // Main body: dark teal irregular polyhedron
+  g.fillStyle(0x1a6b5c, 1);
+  g.fillPoints([
+    { x: 5, y: 0 },
+    { x: 10, y: 2 },
+    { x: 12, y: 6 },
+    { x: 9, y: 11 },
+    { x: 4, y: 10 },
+    { x: 1, y: 7 },
+    { x: 2, y: 3 },
+  ], true);
+
+  // Highlight facet on top (1-2px brighter area)
+  g.fillStyle(0x1aad96, 1);
+  g.fillPoints([
+    { x: 5, y: 1 },
+    { x: 9, y: 2 },
+    { x: 7, y: 4 },
+    { x: 4, y: 3 },
+  ], true);
+
+  g.generateTexture(LOOT_TEXTURE_KEY, LOOT_SIZE, LOOT_SIZE);
+  g.destroy();
 }
 
 function tierValue(tier: KindlingTier): number {
@@ -87,12 +109,10 @@ export class LootSystem {
 
     // Pre-allocate all nodes
     for (const def of nodeDefs) {
-      const sprite = scene.add.rectangle(
+      const sprite = scene.add.image(
         def.position.x,
         def.position.y,
-        LOOT_SIZE,
-        LOOT_SIZE,
-        LOOT_COLOR,
+        LOOT_TEXTURE_KEY,
       );
       sprite.setDepth(LOOT_DEPTH);
       // Enable physics body for overlap detection
@@ -107,7 +127,7 @@ export class LootSystem {
     this.overlapCollider = scene.physics.add.overlap(
       playerSprite,
       group,
-      (_player, nodeObj) => this.onOverlap(nodeObj as Phaser.GameObjects.Rectangle),
+      (_player, nodeObj) => this.onOverlap(nodeObj as Phaser.GameObjects.Image),
     );
   }
 
@@ -162,7 +182,7 @@ export class LootSystem {
 
   // ------------------------------------------------------------------ internal
 
-  private onOverlap(nodeObj: Phaser.GameObjects.Rectangle): void {
+  private onOverlap(nodeObj: Phaser.GameObjects.Image): void {
     const node = this.nodes.find((n) => n.sprite === nodeObj);
     if (!node || node.collected) return;
 

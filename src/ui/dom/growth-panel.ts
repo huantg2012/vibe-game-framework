@@ -88,15 +88,13 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'background:rgba(20,20,24,0.95)',
-    'border:1px solid #444',
-    'padding:20px',
+    'background:rgba(15,17,20,0.92)',
+    'border:1px solid #2a2d32',
+    'padding:12px',
     'min-width:340px',
     'max-width:420px',
-    'font-family:monospace',
-    'color:#ccc',
-    'border-radius:4px',
-    'box-shadow:0 4px 20px rgba(0,0,0,0.8)',
+    'font-family:"Courier New",monospace',
+    'color:#c8cdd4',
   ].join(';');
 
   render();
@@ -127,12 +125,12 @@ function render(): void {
 
   const reserve = gameState.getKindlingReserve();
 
-  let html = `<div style="margin-bottom:14px;font-size:14px;color:#cc8844;font-weight:bold;">
+  let html = `<div style="margin-bottom:14px;font-size:14px;color:#c4873a;font-weight:bold;">
     永久改造
   </div>`;
 
-  html += `<div style="margin-bottom:14px;font-size:12px;">
-    薪柴储备: <span style="color:#c89040;font-weight:bold;">${reserve}</span>
+  html += `<div style="margin-bottom:14px;font-size:11px;color:#8a8f96;">
+    薪柴储备: <span style="color:#c4873a;font-weight:bold;">${reserve}</span>
   </div>`;
 
   for (const upgrade of UPGRADES) {
@@ -145,22 +143,22 @@ function render(): void {
     const effectText = upgrade.effectLabel(level);
     const nextEffect = !isMaxed ? upgrade.nextEffectLabel(level + 1) : '';
 
-    html += `<div style="margin-bottom:12px;padding:10px;background:#1a1a2e;border-radius:4px;border-left:3px solid #cc8844;">
-      <div style="font-size:12px;color:#cc8844;font-weight:bold;margin-bottom:4px;">
-        ◆ ${upgrade.name} <span style="color:#888;">Lv.${level}/${maxLevel}</span>
+    html += `<div style="margin-bottom:12px;padding:10px;background:#151a1e;border-left:3px solid #c4873a;">
+      <div style="font-size:11px;color:#c4873a;font-weight:bold;margin-bottom:4px;">
+        ◆ ${upgrade.name} <span style="color:#8a8f96;">Lv.${level}/${maxLevel}</span>
       </div>
-      <div style="font-size:11px;color:#aaa;margin-bottom:4px;">
+      <div style="font-size:10px;color:#8a8f96;margin-bottom:4px;">
         效果: ${effectText}
       </div>`;
 
     if (isMaxed) {
       html += `<div style="display:flex;align-items:center;gap:8px;">
-        <span style="font-size:10px;color:#44aa66;">已满</span>
+        <span style="font-size:9px;color:#4d9a6b;">已满</span>
         <button disabled style="${upgradeBtnStyle(true)}">已满</button>
       </div>`;
     } else {
-      const costColor = canAfford ? '#c89040' : '#664422';
-      html += `<div style="font-size:11px;color:#888;margin-bottom:6px;">
+      const costColor = canAfford ? '#c4873a' : '#5a5f66';
+      html += `<div style="font-size:10px;color:#8a8f96;margin-bottom:6px;">
         下一级: ${nextEffect} (费用: <span style="color:${costColor};">${cost}</span>)
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -266,7 +264,7 @@ function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void 
       'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
       'z-index:2000', 'background:rgba(0,0,0,0.85)', 'display:flex',
       'align-items:center', 'justify-content:center',
-      'font-family:monospace', 'font-size:16px', 'color:#cc8844',
+      'font-family:"Courier New",monospace', 'font-size:16px', 'color:#c4873a',
       'cursor:pointer',
     ].join(';');
     overlay.textContent = '永久改造已刻入';
@@ -290,30 +288,28 @@ function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void 
 // ---------------------------------------------------------------------------
 
 function upgradeBtnStyle(disabled: boolean): string {
-  const bg = disabled ? '#222' : '#3a4422';
-  const border = disabled ? '#333' : '#5a6644';
-  const color = disabled ? '#555' : '#aac866';
+  const color = disabled ? '#3a3f44' : '#c4873a';
   return [
-    'padding:4px 12px',
+    'padding:4px 8px',
     'font-size:11px',
-    'font-family:monospace',
-    `background:${bg}`,
+    'font-family:"Courier New",monospace',
+    'background:none',
     `color:${color}`,
-    `border:1px solid ${border}`,
-    'border-radius:3px',
+    'border:none',
+    disabled ? 'text-decoration:none' : 'text-decoration:underline',
     disabled ? 'cursor:not-allowed' : 'cursor:pointer',
   ].join(';');
 }
 
 function closeBtnStyle(): string {
   return [
-    'padding:6px 20px',
-    'font-size:12px',
-    'font-family:monospace',
-    'background:#333',
-    'color:#ccc',
-    'border:1px solid #555',
-    'border-radius:3px',
+    'padding:4px 8px',
+    'font-size:11px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#8a8f96',
+    'border:none',
     'cursor:pointer',
+    'text-decoration:underline',
   ].join(';');
 }

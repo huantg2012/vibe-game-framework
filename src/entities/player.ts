@@ -68,7 +68,7 @@ export class Player {
     this.image = scene.physics.add.image(
       config.spawn.x,
       config.spawn.y,
-      config.bodyTexture ?? 'placeholder-player'
+      config.bodyTexture ?? 'player-body'
     );
     this.image.setDepth(depth);
 
@@ -78,7 +78,7 @@ export class Player {
     body.setCollideWorldBounds(true);
 
     this.facingMarker = scene.add
-      .image(config.spawn.x, config.spawn.y, config.facingTexture ?? 'placeholder-player-facing')
+      .image(config.spawn.x, config.spawn.y, config.facingTexture ?? 'player-lamp')
       .setDepth(depth + 1);
 
     this.bindKeys(scene);
@@ -279,12 +279,18 @@ export class Player {
   }
 
   private syncVisuals(): void {
-    const offset = GAME_CONSTANTS.PLAYER.BODY_SIZE * 0.7;
+    const offsets: Record<Facing4, { x: number; y: number }> = {
+      down: { x: -5, y: -4 },
+      up: { x: -5, y: 4 },
+      left: { x: 4, y: -3 },
+      right: { x: -5, y: -3 },
+    };
+    const off = offsets[this.facing4];
     this.facingMarker.setPosition(
-      this.image.x + Math.cos(this.facingAngle) * offset,
-      this.image.y + Math.sin(this.facingAngle) * offset
+      this.image.x + off.x,
+      this.image.y + off.y
     );
-    this.facingMarker.setRotation(this.facingAngle);
+    this.facingMarker.setRotation(0);
   }
 }
 

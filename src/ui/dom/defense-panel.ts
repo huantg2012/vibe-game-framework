@@ -92,15 +92,13 @@ function createPanel(): void {
     'left:50%',
     'transform:translate(-50%,-50%)',
     'z-index:1001',
-    'background:rgba(20,20,24,0.95)',
-    'border:1px solid #444',
-    'padding:20px',
+    'background:rgba(15,17,20,0.92)',
+    'border:1px solid #2a2d32',
+    'padding:12px',
     'min-width:320px',
     'max-width:400px',
-    'font-family:monospace',
-    'color:#ccc',
-    'border-radius:4px',
-    'box-shadow:0 4px 20px rgba(0,0,0,0.8)',
+    'font-family:"Courier New",monospace',
+    'color:#c8cdd4',
   ].join(';');
 
   render();
@@ -137,7 +135,7 @@ function render(): void {
 
   const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
-  let html = `<div style="margin-bottom:14px;font-size:14px;color:#8866cc;font-weight:bold;">
+  let html = `<div style="margin-bottom:14px;font-size:14px;color:#1aad96;font-weight:bold;">
     防御配置
   </div>`;
 
@@ -149,32 +147,32 @@ function render(): void {
       const stars = RARITY_STARS[c.rarity];
       const color = RARITY_COLORS[c.rarity];
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
+      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
         <div style="display:flex;align-items:center;gap:8px;">
-          <span style="color:#888;min-width:48px;">槽 ${i + 1}:</span>
+          <span style="color:#8a8f96;min-width:48px;">槽 ${i + 1}:</span>
           <span style="color:${color};">${name} ${stars}</span>
-          <span style="color:#666;font-size:10px;margin-left:4px;">${c.impactCharges}/${threshold}</span>
-          <button class="defense-unslot-btn" data-index="${i}" style="${actionBtnStyle('#663333','#884444')}">卸下</button>
+          <span style="color:#5a5f66;font-size:10px;margin-left:4px;">${c.impactCharges}/${threshold}</span>
+          <button class="defense-unslot-btn" data-index="${i}" style="${actionBtnStyle()}">卸下</button>
         </div>
-        <div style="font-size:10px;color:#666;margin-top:3px;padding-left:56px;">${desc}</div>
+        <div style="font-size:9px;color:#5a5f66;margin-top:3px;padding-left:56px;">${desc}</div>
       </div>`;
     } else {
-      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#1a1a2e;border-radius:3px;">
+      html += `<div style="margin-bottom:8px;padding:6px 8px;background:#151a1e;">
         <div style="display:flex;align-items:center;gap:8px;">
-          <span style="color:#888;min-width:48px;">槽 ${i + 1}:</span>
-          <span style="color:#555;">空</span>
+          <span style="color:#8a8f96;min-width:48px;">槽 ${i + 1}:</span>
+          <span style="color:#5a5f66;">空</span>
         </div>
       </div>`;
     }
   }
 
   // Inventory
-  html += `<div style="margin-top:14px;margin-bottom:8px;font-size:12px;color:#888;border-top:1px solid #333;padding-top:10px;">
+  html += `<div style="margin-top:14px;margin-bottom:8px;font-size:11px;color:#8a8f96;border-top:1px solid #2a2d32;padding-top:10px;">
     库存（可装备）：
   </div>`;
 
   if (inventory.length === 0) {
-    html += `<div style="color:#555;font-size:11px;padding:4px 0;">无可用的防御污染物</div>`;
+    html += `<div style="color:#5a5f66;font-size:10px;padding:4px 0;">无可用的防御污染物</div>`;
   } else {
     for (const c of inventory) {
       const name = TYPE_NAMES[c.type];
@@ -184,15 +182,15 @@ function render(): void {
       // Show equip buttons for each empty slot
       const emptySlots = slots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
       const equipBtns = emptySlots
-        .map((idx) => `<button class="defense-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle('#2a4433','#3a6644')}">装备到 ${idx + 1}</button>`)
+        .map((idx) => `<button class="defense-equip-btn" data-id="${c.id}" data-slot="${idx}" style="${actionBtnStyle()}">装备到 ${idx + 1}</button>`)
         .join(' ');
 
-      html += `<div style="margin-bottom:6px;padding:4px 8px;background:#111118;border-radius:3px;">
+      html += `<div style="margin-bottom:6px;padding:4px 8px;background:#151a1e;">
         <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
           <span style="color:${color};font-size:11px;">${name} ${stars}</span>
-          ${equipBtns || '<span style="color:#555;font-size:10px;">已满</span>'}
+          ${equipBtns || '<span style="color:#5a5f66;font-size:10px;">已满</span>'}
         </div>
-        <div style="font-size:10px;color:#666;margin-top:2px;">${desc}</div>
+        <div style="font-size:9px;color:#5a5f66;margin-top:2px;">${desc}</div>
       </div>`;
     }
   }
@@ -243,29 +241,29 @@ function isSlotted(id: string): boolean {
   return slots.some((c) => c?.id === id);
 }
 
-function actionBtnStyle(bg: string, border: string): string {
+function actionBtnStyle(): string {
   return [
-    'padding:3px 8px',
+    'padding:4px 8px',
     'font-size:10px',
-    'font-family:monospace',
-    `background:${bg}`,
-    'color:#ccc',
-    `border:1px solid ${border}`,
-    'border-radius:3px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#8a8f96',
+    'border:none',
     'cursor:pointer',
     'margin-left:auto',
+    'text-decoration:underline',
   ].join(';');
 }
 
 function closeBtnStyle(): string {
   return [
-    'padding:6px 20px',
-    'font-size:12px',
-    'font-family:monospace',
-    'background:#333',
-    'color:#ccc',
-    'border:1px solid #555',
-    'border-radius:3px',
+    'padding:4px 8px',
+    'font-size:11px',
+    'font-family:"Courier New",monospace',
+    'background:none',
+    'color:#8a8f96',
+    'border:none',
     'cursor:pointer',
+    'text-decoration:underline',
   ].join(';');
 }

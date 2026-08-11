@@ -1,8 +1,9 @@
 /**
  * ContaminantNodeSystem — places and manages contaminant pickup nodes in the rift map.
  *
- * Each node is a deep-purple 8x8 pulsing sprite. Pickup via Phaser Arcade overlap.
- * Follows the same pattern as LootSystem but for contaminant acquisition.
+ * Each node is a spherical teal sprite with center highlight and breathing glow.
+ * Pickup via Phaser Arcade overlap. Follows the same pattern as LootSystem but for
+ * contaminant acquisition.
  *
  * Spec: docs/specs/system-growth-tide.md, rules CN8-CN9.
  */
@@ -16,7 +17,7 @@ import type { ContaminantNodeDef } from '@/types/map-types';
 
 interface ContaminantNode {
   readonly def: ContaminantNodeDef;
-  readonly sprite: Phaser.GameObjects.Rectangle;
+  readonly sprite: Phaser.GameObjects.Image;
   collected: boolean;
 }
 
@@ -29,9 +30,34 @@ export interface ContaminantNodeSystemConfig {
 // Constants
 // ---------------------------------------------------------------------------
 
-const NODE_COLOR = 0x7722aa;
-const NODE_SIZE = 8;
+// Reference color (legacy rectangle fill; now baked into texture generation)
+// const NODE_COLOR = 0x7722aa;
+const NODE_SIZE = 12; // was 8
 const NODE_DEPTH = 15; // same layer as loot nodes
+const NODE_TEXTURE_KEY = '__contaminant_node_12x12';
+
+function ensureContaminantTexture(scene: Phaser.Scene): void {
+  if (scene.textures.exists(NODE_TEXTURE_KEY)) return;
+  const g = scene.make.graphics({ x: 0, y: 0 }, false);
+
+  // Outer shell: dark teal sphere-like shape
+  g.fillStyle(0x0e4a3f, 1);
+  g.fillCircle(6, 6, 5);
+
+  // Active surface highlights (random-looking but fixed)
+  g.fillStyle(0x1aad96, 1);
+  g.fillRect(4, 3, 2, 1);
+  g.fillRect(7, 5, 1, 2);
+  g.fillRect(3, 7, 1, 1);
+  g.fillRect(8, 8, 1, 1);
+
+  // Core bright center
+  g.fillStyle(0x2ae6c8, 1);
+  g.fillRect(5, 5, 2, 2);
+
+  g.generateTexture(NODE_TEXTURE_KEY, NODE_SIZE, NODE_SIZE);
+  g.destroy();
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -85,13 +111,13 @@ export class ContaminantNodeSystem {
     this.getVisibilityAt = config.getVisibilityAt;
     this.pulseTime = 0;
 
+    ensureContaminantTexture(scene);
+
     for (const def of nodeDefs) {
-      const sprite = scene.add.rectangle(
+      const sprite = scene.add.image(
         def.position.x,
         def.position.y,
-        NODE_SIZE,
-        NODE_SIZE,
-        NODE_COLOR,
+        NODE_TEXTURE_KEY,
       );
       sprite.setDepth(NODE_DEPTH);
       scene.physics.add.existing(sprite, true); // static body
@@ -104,7 +130,7 @@ export class ContaminantNodeSystem {
     this.overlapCollider = scene.physics.add.overlap(
       playerSprite,
       group,
-      (_player, nodeObj) => this.onOverlap(nodeObj as Phaser.GameObjects.Rectangle),
+      (_player, nodeObj) => this.onOverlap(nodeObj as Phaser.GameObjects.Image),
     );
   }
 
@@ -155,7 +181,7 @@ export class ContaminantNodeSystem {
 
   // ------------------------------------------------------------------ internal
 
-  private onOverlap(nodeObj: Phaser.GameObjects.Rectangle): void {
+  private onOverlap(nodeObj: Phaser.GameObjects.Image): void {
     const node = this.nodes.find((n) => n.sprite === nodeObj);
     if (!node || node.collected) return;
 
