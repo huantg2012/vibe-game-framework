@@ -7,7 +7,7 @@
 
 import type { ImpactDamageEntry } from '@/systems/impact-system';
 import type { ContaminantType } from '@/types/game-types';
-import { injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -85,10 +85,10 @@ export const impactResultPanel = {
     panel.id = 'impact-result-panel';
     panel.className = 'game-panel';
     panel.style.cssText = [
-      'position:fixed',
+      'position:absolute',
       'top:0',
       'right:0',
-      'height:100vh',
+      'height:640px',
       'width:440px',
       'z-index:1001',
       'display:flex',
@@ -96,6 +96,7 @@ export const impactResultPanel = {
       'overflow-y:auto',
       'border-color:#cc3333',
       'animation:impact-shake 0.3s ease-out',
+      'pointer-events:auto',
     ].join(';');
 
     // Inject keyframe if not already present
@@ -114,17 +115,19 @@ export const impactResultPanel = {
       document.head.appendChild(style);
     }
 
+    const root = getDomUiRoot();
     const backdrop = document.createElement('div');
     backdrop.className = 'game-panel-backdrop';
     backdrop.id = 'impact-backdrop';
-    document.body.appendChild(backdrop);
+    root.appendChild(backdrop);
 
     const moduleLabels: Record<string, string> = {
       CORE: '核心',
       STORAGE: '储藏',
     };
+    // A2 mapping: CORE green #4d9a6b → ui-text-bright; STORAGE stays warm-glow.
     const moduleColors: Record<string, string> = {
-      CORE: '#4d9a6b',
+      CORE: '#c8cdd4',
       STORAGE: '#c4873a',
     };
 
@@ -137,7 +140,7 @@ export const impactResultPanel = {
     // Damage bars
     const maxDmg = Math.max(...damages.map((d) => d.damage), 1);
     for (const d of damages) {
-      const color = moduleColors[d.moduleId] ?? '#c8ccd0';
+      const color = moduleColors[d.moduleId] ?? '#c8cdd4';
       const label = moduleLabels[d.moduleId] ?? d.moduleId;
       const barPct = Math.round((d.damage / maxDmg) * 100);
       html += `<div class="dmg-row">
@@ -152,17 +155,18 @@ export const impactResultPanel = {
     // Charge progress
     if (chargeChanges && chargeChanges.length > 0) {
       html += `<div class="separator"></div>`;
-      html += `<div style="font-size:13px;color:#5a5f66;margin-bottom:4px;">防御充能</div>`;
+      html += `<div style="font-size:13px;color:#8a8f96;margin-bottom:4px;">防御充能</div>`;
       for (const c of chargeChanges) {
         const name = TYPE_NAMES[c.type] ?? c.name;
         const afterPct = Math.round((c.after / c.threshold) * 100);
-        const barColor = c.transformed ? '#1aad96' : '#6644aa';
+        // A2: #6644aa → contam-deep (charging dark state)
+        const barColor = c.transformed ? '#1aad96' : '#0e4a3f';
         html += `<div style="display:flex;align-items:center;gap:6px;padding:2px 0;">
           <span style="font-size:12px;color:#8a8f96;min-width:32px;">${name}</span>
           <div class="stat-bar" style="flex:1;">
             <div class="stat-bar-fill" style="width:${afterPct}%;background:${barColor};"></div>
           </div>
-          <span style="font-size:12px;color:${c.transformed ? '#1aad96' : '#5a5f66'};">${c.transformed ? '转化!' : `${c.after}/${c.threshold}`}</span>
+          <span style="font-size:12px;color:${c.transformed ? '#1aad96' : '#8a8f96'};">${c.transformed ? '转化!' : `${c.after}/${c.threshold}`}</span>
         </div>`;
       }
     }
@@ -173,7 +177,7 @@ export const impactResultPanel = {
     </div>`;
 
     panel.innerHTML = html;
-    document.body.appendChild(panel);
+    root.appendChild(panel);
 
     // Wire close button click
     panel.querySelector('#impact-close-btn')?.addEventListener('click', () => {

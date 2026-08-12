@@ -11,7 +11,7 @@ import { saveManager } from '@/managers/save-manager';
 import type { ContaminantType } from '@/types/game-types';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
-import { injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Display name mapping
@@ -44,10 +44,17 @@ const RARITY_STARS: Record<string, string> = {
   rare: '★★★',
 };
 
+// Rarity is "Degree not Kind": escalating contam brightness instead of unrelated hues
+// per tier (ui-art-overhaul.md A2 maps common -> contam-mid #1a6b5c, but that value is
+// ~3:1 against this panel's background — under the 4.5:1 text floor (A1) whenever it
+// lands on name text rather than a border. Resolved per the "可读性优先" tie-break rule:
+// common stays plain readable text (no color escalation earned yet), fine/rare use the
+// two contam tones that do clear 4.5:1. Star count remains the redundant rarity signal
+// at every tier (unaffected by this).
 const RARITY_COLORS: Record<string, string> = {
-  common: '#aaaaaa',
-  fine: '#5599ff',
-  rare: '#cc66ff',
+  common: '#8a8f96',
+  fine: '#1aad96',
+  rare: '#3cffd4',
 };
 
 // ---------------------------------------------------------------------------
@@ -93,21 +100,23 @@ function createPanel(): void {
     'position:fixed',
     'top:0',
     'right:0',
-    'height:100vh',
+    'height:640px',
     'width:440px',
     'z-index:1001',
     'display:flex',
     'flex-direction:column',
     'overflow-y:auto',
+    'pointer-events:auto',
   ].join(';');
 
+  const root = getDomUiRoot();
   const backdrop = document.createElement('div');
   backdrop.className = 'game-panel-backdrop';
   backdrop.id = 'defense-backdrop';
-  document.body.appendChild(backdrop);
+  root.appendChild(backdrop);
 
   render();
-  document.body.appendChild(panel);
+  root.appendChild(panel);
   document.addEventListener('keydown', onKeyDown);
 }
 
@@ -143,7 +152,12 @@ function render(): void {
 
   const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
-  let html = `<div class="panel-title" style="color:#6644aa;">供奉</div>`;
+  // Defense stage = "charging/dormant" reading of the same substance the tool stage is
+  // the "active" reading of — same contam-core tone as the loadout panel's title
+  // (ui-art-overhaul.md A2's "no separate purple class"), not the darker contam-deep
+  // tone: that fails the 4.5:1 text floor (A1), so it's reserved for the charge bar
+  // fill below (a decorative fill, not text).
+  let html = `<div class="panel-title" style="color:#1aad96;">供奉</div>`;
   html += `<div style="flex:1;overflow-y:auto;">`;
 
   // Slot grid - one visual container per unlocked defense slot (Slice 5 T5:
@@ -162,7 +176,7 @@ function render(): void {
         <span class="slot-name" style="color:${color};">${name}</span>
         <span style="font-size:12px;color:${color};">${stars}</span>
         <div class="stat-bar" style="width:100%;margin-top:4px;">
-          <div class="stat-bar-fill" style="width:${chargePct}%;background:#6644aa;"></div>
+          <div class="stat-bar-fill" style="width:${chargePct}%;background:#0e4a3f;"></div>
         </div>
         <span class="slot-info">${c.impactCharges}/${threshold}</span>
       </div>`;
@@ -178,7 +192,7 @@ function render(): void {
 
   // Inventory tiles
   html += `<div class="separator"></div>`;
-  html += `<div style="font-size:13px;color:#5a5f66;margin-bottom:6px;">可装备:</div>`;
+  html += `<div style="font-size:13px;color:#8a8f96;margin-bottom:6px;">可装备:</div>`;
 
   if (inventory.length === 0) {
     html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">无可用残渣</div>`;
@@ -192,7 +206,7 @@ function render(): void {
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
       const canEquip = emptySlots.length > 0;
       html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}" data-id="${c.id}" style="border-color:${canEquip ? color : '#2a2d32'};" title="${desc}">
-        <span style="color:${color};">${name}</span> <span style="color:#5a5f66;">${stars}</span>
+        <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">${stars}</span>
       </div>`;
     }
     html += `</div>`;
@@ -203,7 +217,7 @@ function render(): void {
   html += `<div class="action-bar">
     <span id="defense-close-btn" class="action-btn btn-muted" style="cursor:pointer;">离开</span>
   </div>`;
-  html += `<div style="font-size:12px;color:#5a5f66;text-align:center;margin-top:4px;">点击以取下</div>`;
+  html += `<div style="font-size:12px;color:#8a8f96;text-align:center;margin-top:4px;">点击以取下</div>`;
 
   panel.innerHTML = html;
   wireEvents();

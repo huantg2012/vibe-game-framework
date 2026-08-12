@@ -10,7 +10,7 @@ import { gameState } from '@/managers/game-state';
 import type { ModuleType } from '@/managers/game-state';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
-import { injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // State
@@ -62,21 +62,23 @@ function createPanel(): void {
     'position:fixed',
     'top:0',
     'right:0',
-    'height:100vh',
+    'height:640px',
     'width:440px',
     'z-index:1000',
     'display:flex',
     'flex-direction:column',
     'overflow-y:auto',
+    'pointer-events:auto',
   ].join(';');
 
+  const root = getDomUiRoot();
   const backdrop = document.createElement('div');
   backdrop.className = 'game-panel-backdrop';
   backdrop.id = 'allocation-backdrop';
-  document.body.appendChild(backdrop);
+  root.appendChild(backdrop);
 
   render(mod.type, mod.hp, mod.maxHp);
-  document.body.appendChild(panel);
+  root.appendChild(panel);
 
   document.addEventListener('keydown', onKeyDown);
 }
@@ -129,7 +131,8 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const maxAllocatable = Math.min(reserve, maxUseful);
 
   const typeLabel = type === 'CORE' ? '核心' : '储藏';
-  const typeColor = type === 'CORE' ? '#4d9a6b' : '#c4873a';
+  // CORE identity color: neutral ui-text-bright, not green — "结构性但非资源" (ui-art-overhaul.md A2).
+  const typeColor = type === 'CORE' ? '#c8cdd4' : '#c4873a';
   const effectDesc = type === 'CORE' ? '混乱抑制' : '薪柴增幅';
 
   // Progress calculations
@@ -146,7 +149,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const plusDisabled = selectedAmount >= maxAllocatable;
   const confirmDisabled = selectedAmount <= 0;
 
-  let html = `<div class="panel-title" style="color:${typeColor};">${typeLabel} <span style="font-size:13px;color:#5a5f66;text-transform:none;font-weight:normal;">${effectDesc}</span></div>`;
+  let html = `<div class="panel-title" style="color:${typeColor};">${typeLabel} <span style="font-size:13px;color:#8a8f96;text-transform:none;font-weight:normal;">${effectDesc}</span></div>`;
   html += `<div style="flex:1;overflow-y:auto;">`;
 
   // Progress bar with preview
@@ -170,8 +173,8 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   html += `<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 8px;">
     <span id="alloc-minus" class="action-btn btn-muted${minusDisabled ? '' : ''}" style="padding:4px 10px;${minusDisabled ? 'opacity:0.3;cursor:default;' : ''}">-</span>
     <div style="min-width:60px;text-align:center;">
-      <div style="font-size:16px;color:#c8ccd0;font-weight:bold;">${selectedAmount}</div>
-      <div style="font-size:13px;color:#5a5f66;">薪柴</div>
+      <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">${selectedAmount}</div>
+      <div style="font-size:13px;color:#8a8f96;">薪柴</div>
     </div>
     <span id="alloc-plus" class="action-btn btn-muted" style="padding:4px 10px;${plusDisabled ? 'opacity:0.3;cursor:default;' : ''}">+</span>
   </div>`;
@@ -179,7 +182,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   // Reserve info. siphon (Slice 5 gap-fill): while equipped, repairPer is already the
   // doubled value (gameState.getEffectiveRepairPerKindling()) - the "(虹吸增效)" tag is
   // what makes that fact visible rather than just a bigger number the player might miss.
-  html += `<div style="font-size:13px;color:#5a5f66;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度${siphonBoosted ? ' <span style="color:#c4873a;">(虹吸增效)</span>' : ''}</div>`;
+  html += `<div style="font-size:13px;color:#8a8f96;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度${siphonBoosted ? ' <span style="color:#c4873a;">(虹吸增效)</span>' : ''}</div>`;
 
   // Action bar
   html += `</div>`; // end flex:1 content wrapper

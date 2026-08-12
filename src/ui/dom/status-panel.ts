@@ -14,7 +14,7 @@ import { tideSystem } from '@/systems/tide-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
 import type { ContaminantType } from '@/types/game-types';
-import { injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Display name mappings
@@ -62,10 +62,12 @@ const TOOL_NAMES: Record<ContaminantType, string> = {
   combust: '焚天',
 };
 
+// Rarity is "Degree not Kind": same contam color family, rising brightness
+// (ui-art-overhaul.md A2) instead of unrelated hues per tier.
 const RARITY_COLORS: Record<string, string> = {
-  common: '#aaaaaa',
-  fine: '#5599ff',
-  rare: '#cc66ff',
+  common: '#1a6b5c',
+  fine: '#1aad96',
+  rare: '#3cffd4',
 };
 
 // ---------------------------------------------------------------------------
@@ -111,21 +113,23 @@ function createPanel(): void {
     'position:fixed',
     'top:0',
     'right:0',
-    'height:100vh',
+    'height:640px',
     'width:440px',
     'z-index:1001',
     'display:flex',
     'flex-direction:column',
     'overflow-y:auto',
+    'pointer-events:auto',
   ].join(';');
 
+  const root = getDomUiRoot();
   const backdrop = document.createElement('div');
   backdrop.className = 'game-panel-backdrop';
   backdrop.id = 'status-backdrop';
-  document.body.appendChild(backdrop);
+  root.appendChild(backdrop);
 
   render();
-  document.body.appendChild(panel);
+  root.appendChild(panel);
   document.addEventListener('keydown', onKeyDown);
 }
 
@@ -168,7 +172,9 @@ function render(): void {
 
   const tideState = tideSystem.getState();
   const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
-  const phaseColors: Record<string, string> = { rise: '#cc3333', crest: '#cc3333', ebb: '#4a9e5a' };
+  // ebb = pressure easing, expressed as "fading to neutral" rather than "turning green"
+  // (ui-art-overhaul.md A2 — green-as-safe has no place in this palette).
+  const phaseColors: Record<string, string> = { rise: '#cc3333', crest: '#cc3333', ebb: '#8a8f96' };
 
   // Module HP data
   const coreMod = gameState.getModule('CORE');
@@ -185,13 +191,13 @@ function render(): void {
     const coreHpPct = Math.round((coreMod.hp / coreMod.maxHp) * 100);
     html += `<div style="padding:6px;border:1px solid #2a2d32;">
       <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-        <span style="font-size:13px;color:#4d9a6b;font-weight:bold;">核心</span>
-        <span style="font-size:12px;color:#5a5f66;">${coreMod.hp}/${coreMod.maxHp}</span>
+        <span style="font-size:13px;color:#c8cdd4;font-weight:bold;">核心</span>
+        <span style="font-size:12px;color:#8a8f96;">${coreMod.hp}/${coreMod.maxHp}</span>
       </div>
       <div class="stat-bar" style="width:100%;">
-        <div class="stat-bar-fill" style="width:${coreHpPct}%;background:#4d9a6b;"></div>
+        <div class="stat-bar-fill" style="width:${coreHpPct}%;background:#c8cdd4;"></div>
       </div>
-      <div style="font-size:12px;color:#5a5f66;margin-top:2px;">混乱 -${coreReduction}%</div>
+      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">混乱 -${coreReduction}%</div>
     </div>`;
   }
 
@@ -201,12 +207,12 @@ function render(): void {
     html += `<div style="padding:6px;border:1px solid #2a2d32;">
       <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
         <span style="font-size:13px;color:#c4873a;font-weight:bold;">储藏</span>
-        <span style="font-size:12px;color:#5a5f66;">${storageMod.hp}/${storageMod.maxHp}</span>
+        <span style="font-size:12px;color:#8a8f96;">${storageMod.hp}/${storageMod.maxHp}</span>
       </div>
       <div class="stat-bar" style="width:100%;">
         <div class="stat-bar-fill" style="width:${storHpPct}%;background:#c4873a;"></div>
       </div>
-      <div style="font-size:12px;color:#5a5f66;margin-top:2px;">薪柴 +${storageBonus}%</div>
+      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">薪柴 +${storageBonus}%</div>
     </div>`;
   }
 
@@ -220,15 +226,15 @@ function render(): void {
     </div>
     <div class="stat-row">
       <span class="stat-label">混乱抗</span>
-      <span class="stat-value" style="color:${totalResist > 0 ? '#4a9e5a' : '#c8ccd0'};">${totalResist}%</span>
+      <span class="stat-value" style="color:#c8cdd4;">${totalResist}%</span>
     </div>
     <div class="stat-row">
       <span class="stat-label">薪柴值</span>
-      <span class="stat-value" style="color:${storageEffect > 1 ? '#c4873a' : '#c8ccd0'};">x${storageEffect.toFixed(2)}</span>
+      <span class="stat-value" style="color:${storageEffect > 1 ? '#c4873a' : '#c8cdd4'};">x${storageEffect.toFixed(2)}</span>
     </div>
     <div class="stat-row">
       <span class="stat-label">潮汐</span>
-      <span class="stat-value" style="color:${phaseColors[tideState.phase] ?? '#c8ccd0'};">第${tideState.tideNumber}潮 ${phaseLabels[tideState.phase]}</span>
+      <span class="stat-value" style="color:${phaseColors[tideState.phase] ?? '#c8cdd4'};">第${tideState.tideNumber}潮 ${phaseLabels[tideState.phase]}</span>
     </div>
   </div>`;
 
@@ -246,7 +252,7 @@ function render(): void {
   if (purchasedUpgrades.length > 0) {
     html += `<div style="margin:6px 0;">`;
     for (const id of purchasedUpgrades) {
-      html += `<span class="pill" style="border-color:#aa6622;color:#aa6622;">${GROWTH_UPGRADE_NAMES[id]} ${growthSystem.getLevel(id)}</span> `;
+      html += `<span class="pill" style="border-color:#8a5c2a;color:#8a5c2a;">${GROWTH_UPGRADE_NAMES[id]} ${growthSystem.getLevel(id)}</span> `;
     }
     html += `</div>`;
   }
@@ -262,14 +268,14 @@ function render(): void {
 
   if (defenseItems.length > 0) {
     const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
-    html += `<div style="font-size:13px;color:#6644aa;margin-bottom:4px;">防御</div>`;
+    html += `<div style="font-size:13px;color:#0e4a3f;margin-bottom:4px;">防御</div>`;
     html += `<div class="tile-grid">`;
     for (const c of defenseItems) {
       const name = TYPE_NAMES[c.type];
       const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
       const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
       html += `<div class="item-tile" style="border-color:${color};cursor:default;" title="${desc}">
-        <span style="color:${color};">${name}</span> <span style="color:#5a5f66;">${c.impactCharges}/${threshold}</span>
+        <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">${c.impactCharges}/${threshold}</span>
       </div>`;
     }
     html += `</div>`;

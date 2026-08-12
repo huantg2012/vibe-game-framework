@@ -22,7 +22,7 @@ import { impactSystem } from '@/systems/impact-system';
 import type { ForecastSeverity } from '@/systems/impact-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
-import { injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -37,17 +37,19 @@ export interface InteractionTarget {
 }
 
 // ---------------------------------------------------------------------------
-// Color palette
+// Color palette (ui-art-overhaul.md A2 — locked values only; V2/V9 mapped)
 // ---------------------------------------------------------------------------
 
 const COL = {
   kindlingOrange: '#c4873a',
-  stabilityGreen: '#4a9e5a',
+  // Was #4a9e5a (unregistered "good green"). CORE/stability is structure info → neutral bright.
+  stabilityNeutral: '#c8cdd4',
   dangerRed: '#cc3333',
   tideCyan: '#1aad96',
   darkBg: '#1a1e22',
-  dimText: '#5a5f66',
-  brightText: '#c8ccd0',
+  // Was #5a5f66 (V2: metal-light forbidden as text). Labels use secondary text.
+  dimText: '#8a8f96',
+  brightText: '#c8cdd4',
   barEmpty: '#1a1e22',
 } as const;
 
@@ -65,7 +67,7 @@ const SEVERITY_PIPS: Record<ForecastSeverity, number> = {
   extreme: 4,
 };
 const SEVERITY_COLOR: Record<ForecastSeverity, string> = {
-  light: COL.stabilityGreen,
+  light: COL.stabilityNeutral,
   moderate: COL.kindlingOrange,
   heavy: COL.dangerRed,
   extreme: COL.dangerRed,
@@ -129,7 +131,7 @@ export class PurificationHud {
     // --- Stability bar (10 blocks) ---
     const stabBlocks = 10;
     const filledBlocks = Math.round((stabPct / 100) * stabBlocks);
-    const stabColor = stabPct <= 30 ? COL.dangerRed : COL.stabilityGreen;
+    const stabColor = stabPct <= 30 ? COL.dangerRed : COL.stabilityNeutral;
     let stabBar = '';
     for (let i = 0; i < stabBlocks; i++) {
       const color = i < filledBlocks ? stabColor : COL.barEmpty;
@@ -178,15 +180,15 @@ export class PurificationHud {
 
     this.hudEl = document.createElement('div');
     this.hudEl.id = 'purif-hud';
-    // No .game-panel class — borderless, frameless
+    // No .game-panel class — borderless, frameless (A-class device readout)
     this.hudEl.style.cssText = [
-      'position:fixed', 'top:10px', 'right:12px', 'z-index:999',
+      'position:absolute', 'top:10px', 'right:12px', 'z-index:999',
       'pointer-events:none',
       'font-family:"Courier New",monospace',
       'line-height:1.4',
       'text-shadow:0 0 2px rgba(0,0,0,0.8)',
     ].join(';');
-    document.body.appendChild(this.hudEl);
+    getDomUiRoot().appendChild(this.hudEl);
     this.refresh();
   }
 
@@ -197,9 +199,9 @@ export class PurificationHud {
     this.promptEl.id = 'purif-prompt';
     // No .game-panel class — minimal, floating
     this.promptEl.style.cssText = [
-      'position:fixed', 'bottom:16px', 'left:50%', 'transform:translateX(-50%)',
+      'position:absolute', 'bottom:16px', 'left:50%', 'transform:translateX(-50%)',
       'z-index:999', 'pointer-events:none',
-      'font:11px "Courier New",monospace',
+      'font:12px "Courier New",monospace',
       'color:' + COL.dimText,
       'text-align:center',
       'transition:opacity 0.15s ease-out',
@@ -209,7 +211,7 @@ export class PurificationHud {
     ].join(';');
     this.promptEl.innerHTML = this.buildDefaultPrompt();
     this.lastPromptHtml = this.promptEl.innerHTML;
-    document.body.appendChild(this.promptEl);
+    getDomUiRoot().appendChild(this.promptEl);
   }
 
   /**
@@ -251,7 +253,8 @@ export class PurificationHud {
 
     // Determine base color: rising = brighter, ebbing = dimmer
     const isRising = tideState.phase === 'rise' || tideState.phase === 'crest';
-    const baseColor = isRising ? '#2a7a6a' : '#1a4a42';
+    // Mapped from unregistered #2a7a6a/#1a4a42 → locked contam-mid / contam-deep (A2).
+    const baseColor = isRising ? '#1a6b5c' : '#0e4a3f';
 
     let bar = '';
     for (let i = 0; i < barLen; i++) {
@@ -260,8 +263,8 @@ export class PurificationHud {
       bar += `<span style="color:${color};">${ch}</span>`;
     }
 
-    // Tide number indicator
-    const tideLabel = `<span style="color:${COL.dimText};font-size:9px;margin-left:4px;">${tideState.tideNumber}</span>`;
+    // Tide number indicator (label tier ≥12px — was 9px, V3)
+    const tideLabel = `<span style="color:${COL.dimText};font-size:12px;margin-left:4px;">${tideState.tideNumber}</span>`;
 
     return `<div style="font-size:12px;letter-spacing:0px;">${bar}${tideLabel}</div>`;
   }

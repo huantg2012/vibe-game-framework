@@ -14,7 +14,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
 import type { ContaminantType } from '@/types/game-types';
-import { injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Display name mapping
@@ -47,10 +47,12 @@ const RARITY_STARS: Record<string, string> = {
   rare: '★★★',
 };
 
+// Rarity is "Degree not Kind": same contam color family, rising brightness
+// (ui-art-overhaul.md A2) instead of unrelated hues per tier.
 const RARITY_COLORS: Record<string, string> = {
-  common: '#aaaaaa',
-  fine: '#5599ff',
-  rare: '#cc66ff',
+  common: '#1a6b5c',
+  fine: '#1aad96',
+  rare: '#3cffd4',
 };
 
 /**
@@ -110,21 +112,23 @@ function createPanel(): void {
     'position:fixed',
     'top:0',
     'right:0',
-    'height:100vh',
+    'height:640px',
     'width:440px',
     'z-index:1001',
     'display:flex',
     'flex-direction:column',
     'overflow-y:auto',
+    'pointer-events:auto',
   ].join(';');
 
+  const root = getDomUiRoot();
   const backdrop = document.createElement('div');
   backdrop.className = 'game-panel-backdrop';
   backdrop.id = 'loadout-backdrop';
-  document.body.appendChild(backdrop);
+  root.appendChild(backdrop);
 
   render();
-  document.body.appendChild(panel);
+  root.appendChild(panel);
   document.addEventListener('keydown', onKeyDown);
 }
 
@@ -189,7 +193,7 @@ function render(): void {
 
   // Inventory tiles
   html += `<div class="separator"></div>`;
-  html += `<div style="font-size:13px;color:#5a5f66;margin-bottom:6px;">可用工具:</div>`;
+  html += `<div style="font-size:13px;color:#8a8f96;margin-bottom:6px;">可用工具:</div>`;
 
   if (inventory.length === 0) {
     html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">无可用工具</div>`;
@@ -209,7 +213,7 @@ function render(): void {
         toolType === 'passive' ? idx === passiveIndex : idx < activeCount,
       );
       html += `<div class="item-tile loadout-equip-tile${hasSlot ? '' : ' tile-disabled'}" data-id="${c.id}" data-tool-type="${toolType}" style="border-color:${hasSlot ? color : '#2a2d32'};" title="${desc}">
-        <span style="color:${color};">${name}</span> <span style="color:#5a5f66;">${stars} x${c.usesRemaining}</span>
+        <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">${stars} x${c.usesRemaining}</span>
       </div>`;
     }
     html += `</div>`;
@@ -298,18 +302,18 @@ function buildSortiePreview(): string {
     <div class="separator"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;text-align:center;margin-top:6px;">
       <div>
-        <div style="font-size:13px;color:#5a5f66;">完整度</div>
-        <div style="font-size:16px;color:#c8ccd0;font-weight:bold;">${totalHp}</div>
-        ${hpBonus > 0 ? `<div style="font-size:13px;color:#4a9e5a;">+${hpBonus}</div>` : ''}
+        <div style="font-size:13px;color:#8a8f96;">完整度</div>
+        <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">${totalHp}</div>
+        ${hpBonus > 0 ? `<div style="font-size:13px;color:#c8cdd4;">+${hpBonus}</div>` : ''}
       </div>
       <div>
-        <div style="font-size:13px;color:#5a5f66;">混乱率</div>
-        <div style="font-size:16px;color:${totalChaosRate < 1 ? '#4a9e5a' : '#c8ccd0'};font-weight:bold;">x${totalChaosRate.toFixed(2)}</div>
-        ${(coreReduction + growthReduction) > 0 ? `<div style="font-size:13px;color:#4a9e5a;">-${coreReduction + growthReduction}%</div>` : ''}
+        <div style="font-size:13px;color:#8a8f96;">混乱率</div>
+        <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">x${totalChaosRate.toFixed(2)}</div>
+        ${(coreReduction + growthReduction) > 0 ? `<div style="font-size:13px;color:#c8cdd4;">-${coreReduction + growthReduction}%</div>` : ''}
       </div>
       <div>
-        <div style="font-size:13px;color:#5a5f66;">薪柴值</div>
-        <div style="font-size:16px;color:${storageEffect > 1 ? '#c4873a' : '#c8ccd0'};font-weight:bold;">x${storageEffect.toFixed(2)}</div>
+        <div style="font-size:13px;color:#8a8f96;">薪柴值</div>
+        <div style="font-size:16px;color:${storageEffect > 1 ? '#c4873a' : '#c8cdd4'};font-weight:bold;">x${storageEffect.toFixed(2)}</div>
       </div>
     </div>
   </div>`;
