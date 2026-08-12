@@ -9,6 +9,22 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-046: Slice 5.5 C3 键盘游标导航 + 检视层落地的实现取舍
+- Date: 2026-08-12
+- Phase: Slice 5.5 实现（C3）
+- Type: Technical choice
+- Context: `loadout-panel.ts` / `defense-panel.ts` 此前完全没有键盘游标导航（`onKeyDown` 只处理 Escape），检视层要落地必须先补这层。以下四点是施工中做的、影响后续批次（C4/C5/C6）该怎么复用这套基础设施的取舍：
+- Decision:
+  1. **游标模型用"一维环绕移动"而非真正的二维空间寻址**：四个方向键统一映射为"当前区内 prev/next"（↓/→ = next，↑/← = prev，越界环绕），不按屏幕上的实际行列坐标做二维寻址。理由：槽位区最多 4 格、库存区是 flex-wrap 网格，视觉换行位置随窗口宽度变化，做真二维寻址需要在渲染后读取实际 DOM 几何——收益（更符合"上下"字面语义）不足以抵消复杂度和脆弱性。IA §0.4 原文本身也只要求"移动焦点"，未强制二维。
+  2. **新增第三个焦点区 `actions`（确认/取消/离开按钮），扫描任务原文只点名了"槽位格与物品格"**：若不做，`loadout-panel` 的"踏入"确认操作将完全没有键盘路径（Escape 只能取消，不能确认），造成一个新的键盘陷阱，直接违反 U7。三个面板的 Tab 循环顺序固定为 `slots → inventory → actions → slots`。
+  3. **L2 摘要走"取现有长描述第一分句 + 40 字上限截断"的降级方案**，不是真正的 ≤15 字摘要。`summaryDefense`/`summaryTool` 两列尚未加入 `data/contaminants.csv`（IA §S13 已给 4 条标杆但未获人确认批量语感），本批不擅自扩列 CSV schema。降级函数集中在 `inspect-dock.ts` 一处，CSV 列到位后只需替换这一处即可全量生效。
+  4. **`getRarityStars`/`sortContaminants` 收进 `contaminant-names.ts`**（而非新开文件），随手带上把 C2 遗留的 `contaminant-names.ts` 补登记进 `architecture.md`（该模块 C2 引入但当时未登记）。
+  5. **`status-panel.ts` 一并接上检视层**（任务原文允许"改动成本低则一并接上"）：判断为低成本，因为该面板已有 Tab/Escape 关闭约定不变，只需新增一维游标 + 移除 3 处 `title`，不需要 `actions` 区（面板本身只读，无装填/卸下动作）。
+- Impact:
+  - C4（供奉/踏入裂隙的整面板视觉重排）继承这套 `slots/inventory/actions` 三区游标模型，若要改用真二维寻址需要重新设计移动函数，非本批遗留债务。
+  - `data/contaminants.csv` 扩列 `summaryDefense`/`summaryTool` 仍是 open item，登记见本批交付报告；扩列后只需替换 `inspect-dock.ts` 的 `degradeSummary()` 调用点。
+  - `docs/specs/system-growth-tide.md` 规则 22 及 IA §4.1 列出的"污染物命名权威规则 / 检视层五层契约 / 库存排序规则"仍未落笔到 spec 正文——按 `code.md` 的文档权限范围，spec 正文由 design/director 在 Slice 收尾时处理，本批只登记不越权代写。
+
 ## DEC-045: Slice 5.5 方向确认通过，九项裁决落定，进入 C0–C6 实现
 - Date: 2026-08-12
 - Phase: Slice 5.5 实现开始

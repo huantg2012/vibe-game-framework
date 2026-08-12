@@ -4,8 +4,8 @@ created-by: code agent (mode A)
 created-date: 2026-07-22
 last-modified: 2026-08-12
 approved-date: 2026-07-22
-changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）。**Slice 5 T0 模块注册表全量补核已完成（2026-08-12）**：核对 `src/` 全目录树，补齐 Slice 2-4.5 引入但从未登记的模块，修正过期的"规划中"标记，重置本字段。
+changed-this-slice: true
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）。**Slice 5 T0 模块注册表全量补核已完成（2026-08-12）**：核对 `src/` 全目录树，补齐 Slice 2-4.5 引入但从未登记的模块，修正过期的"规划中"标记，重置本字段。2026-08-12 Slice 5.5 C3 补登记 `contaminant-names.ts`（C2 引入但未登记）与新增的 `inspect-dock.ts`。
 ---
 
 # 技术架构
@@ -199,6 +199,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ProceduralSurface | src/systems/procedural-surface.ts | 裂隙地表按世界坐标逐像素程序化生成（DEC-018：替代离散 AI tile 平铺） | createRiftSurfaceTexture(scene, map, key) | 已实现 |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
 | PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等），统一 `.game-panel` 类族——工业终端外观、右侧抽屉布局、条形/槽位/徽标组件。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles() | 已实现（Slice 4.5） |
+| ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
+| InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 摘要/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3） |
 | PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块的视觉表现（CORE=蓝色六边形/STORAGE=橙色方块，HP 驱动的 alpha 分级 + 临界闪烁 + 邻近发光），Slice 5 T6 三态受损视觉将扩展此模块 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv` | `CONTAMINANT_DATA: Record<ContaminantType, ContaminantDef>`；`UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef>`（数据常量，非函数接口） | 已实现（Slice 4） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |

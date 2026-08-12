@@ -12,55 +12,10 @@ import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
-import { CONTAMINANT_DESCRIPTIONS } from '@/config/contaminant-descriptions';
-import type { ContaminantType } from '@/types/game-types';
+import { getDefenseName, getToolName, sortContaminants } from '@/ui/contaminant-names';
+import { buildDefenseInspectHtml, buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
+import type { Contaminant } from '@/types/game-types';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
-
-// ---------------------------------------------------------------------------
-// Display name mappings
-// ---------------------------------------------------------------------------
-
-const TYPE_NAMES: Record<ContaminantType, string> = {
-  solidify: '固化',
-  ruminate: '反刍',
-  scatter: '散射',
-  retrograde: '逆行',
-  delay: '延时',
-  siphon: '虹吸',
-  expand: '膨胀',
-  resonate: '共鸣',
-  overwrite: '覆写',
-  erode: '侵蛀',
-  muffle: '消声',
-  kindle: '燃尽',
-  stitch: '缝合',
-  compress: '致密',
-  mirror: '镜映',
-  echo: '回响',
-  abyss: '深渊',
-  combust: '灰烬',
-};
-
-const TOOL_NAMES: Record<ContaminantType, string> = {
-  solidify: '凝锁',
-  ruminate: '反刍之口',
-  scatter: '碎影',
-  retrograde: '残响标记',
-  delay: '时裂',
-  siphon: '寄生引流',
-  expand: '虚化步',
-  resonate: '共振链接',
-  overwrite: '规则覆写',
-  erode: '侵蚀领域',
-  muffle: '消声步',
-  kindle: '燃素弹',
-  stitch: '缝合线',
-  compress: '重力锚',
-  mirror: '镜像诱饵',
-  echo: '回响脉冲',
-  abyss: '深渊之眼',
-  combust: '焚天',
-};
 
 // Rarity is "Degree not Kind": same contam color family, rising brightness
 // (ui-art-overhaul.md A2) instead of unrelated hues per tier.
@@ -77,6 +32,14 @@ const RARITY_COLORS: Record<string, string> = {
 let panel: HTMLDivElement | null = null;
 let onCloseCallback: (() => void) | null = null;
 
+// Keyboard cursor over the combined defense+tool inventory list (IA §S6
+// "↑↓←→ 在库存中移动（检视区随之刷新）"; broken items are inert pills, not
+// inspectable — they have no live numeric state left to show). Tab/Escape keep
+// their existing "close the panel" behavior (S6 interaction contract), so this
+// panel doesn't need a separate region cursor like loadout/defense do.
+let cursorIndex = 0;
+let hoverIndex: number | null = null;
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -89,6 +52,8 @@ export const statusPanel = {
   open(onClose?: () => void): void {
     if (panel) return;
     onCloseCallback = onClose ?? null;
+    cursorIndex = 0;
+    hoverIndex = null;
     createPanel();
   },
 
@@ -147,7 +112,26 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     statusPanel.close();
+    return;
   }
+
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    const count = getInspectableCount();
+    if (count === 0) return;
+    e.stopPropagation();
+    e.preventDefault();
+    const dir = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
+    cursorIndex = (cursorIndex + dir + count) % count;
+    hoverIndex = null;
+    render();
+  }
+}
+
+function getInspectableCount(): number {
+  const all = contaminantSystem.getAll();
+  const defenseCount = all.filter((c) => c.stage === 'defense').length;
+  const toolCount = all.filter((c) => c.stage === 'tool').length;
+  return defenseCount + toolCount;
 }
 
 // ---------------------------------------------------------------------------
@@ -262,36 +246,41 @@ function render(): void {
   html += `<div style="font-size:14px;color:#8a8f96;margin-bottom:6px;font-weight:bold;">库存</div>`;
 
   const allContaminants = contaminantSystem.getAll();
-  const defenseItems = allContaminants.filter((c) => c.stage === 'defense');
-  const toolItems = allContaminants.filter((c) => c.stage === 'tool');
-  const brokenItems = allContaminants.filter((c) => c.stage === 'broken');
+  const defenseItems = sortContaminants(allContaminants.filter((c) => c.stage === 'defense'));
+  const toolItems = sortContaminants(allContaminants.filter((c) => c.stage === 'tool'));
+  const brokenItems = sortContaminants(allContaminants.filter((c) => c.stage === 'broken'));
+  // Flat cursor space: defense first, then tool (matches the fixed 阶段 sort order
+  // and the section rendering order below) — broken items are inert, not inspectable.
+  const inspectable: Contaminant[] = [...defenseItems, ...toolItems];
+  if (cursorIndex >= inspectable.length) cursorIndex = Math.max(0, inspectable.length - 1);
+
+  const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
   if (defenseItems.length > 0) {
-    const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
     html += `<div style="font-size:13px;color:#0e4a3f;margin-bottom:4px;">防御</div>`;
     html += `<div class="tile-grid">`;
-    for (const c of defenseItems) {
-      const name = TYPE_NAMES[c.type];
+    defenseItems.forEach((c, i) => {
+      const name = getDefenseName(c.type);
       const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
-      const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.defense ?? '';
-      html += `<div class="item-tile" style="border-color:${color};cursor:default;" title="${desc}">
+      const selected = inspectable[cursorIndex] === c;
+      html += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${i}" style="border-color:${color};cursor:default;">
         <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">${c.impactCharges}/${threshold}</span>
       </div>`;
-    }
+    });
     html += `</div>`;
   }
 
   if (toolItems.length > 0) {
     html += `<div style="font-size:13px;color:#1aad96;margin:6px 0 4px;">工具</div>`;
     html += `<div class="tile-grid">`;
-    for (const c of toolItems) {
-      const name = TOOL_NAMES[c.type];
+    toolItems.forEach((c, i) => {
+      const name = getToolName(c.type);
       const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
-      const desc = CONTAMINANT_DESCRIPTIONS[c.type]?.tool ?? '';
-      html += `<div class="item-tile" style="border-color:${color};cursor:default;" title="${desc}">
+      const selected = inspectable[cursorIndex] === c;
+      html += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${defenseItems.length + i}" style="border-color:${color};cursor:default;">
         <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">x${c.usesRemaining}</span>
       </div>`;
-    }
+    });
     html += `</div>`;
   }
 
@@ -299,7 +288,7 @@ function render(): void {
     html += `<div style="font-size:13px;color:#2a2d32;margin:6px 0 4px;">已碎</div>`;
     html += `<div class="tile-grid">`;
     for (const c of brokenItems) {
-      const name = TYPE_NAMES[c.type];
+      const name = getDefenseName(c.type);
       html += `<span class="pill" style="color:#2a2d32;border-color:#1a1c1f;">${name}</span>`;
     }
     html += `</div>`;
@@ -308,6 +297,10 @@ function render(): void {
   if (defenseItems.length === 0 && toolItems.length === 0 && brokenItems.length === 0) {
     html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">尚无污染物</div>`;
   }
+
+  // Inspect dock (选中即检视 — IA §S13 / ui-art-overhaul.md A5-13). Only wired for
+  // the defense/tool tiles above; broken items have no live numeric state to show.
+  html += `<div class="inspect-dock" id="status-inspect-dock">${computeInspectHtml(inspectable, threshold)}</div>`;
 
   html += `</div>`; // end flex:1 content wrapper
   html += `<div class="action-bar">
@@ -319,4 +312,50 @@ function render(): void {
   panel.querySelector('#status-close-btn')?.addEventListener('click', () => {
     statusPanel.close();
   });
+
+  panel.querySelectorAll<HTMLElement>('.item-tile[data-inspect-index]').forEach((el) => {
+    const idx = parseInt(el.dataset.inspectIndex!, 10);
+    el.addEventListener('mouseenter', () => {
+      hoverIndex = idx;
+      refreshInspectDock(inspectable, threshold);
+    });
+    el.addEventListener('mouseleave', () => {
+      hoverIndex = null;
+      refreshInspectDock(inspectable, threshold);
+    });
+  });
+}
+
+function refreshInspectDock(inspectable: Contaminant[], threshold: number): void {
+  const dock = panel?.querySelector('#status-inspect-dock');
+  if (!dock) return;
+  dock.innerHTML = computeInspectHtml(inspectable, threshold);
+}
+
+/** Whether `id` currently occupies one of the defense slots (vs. sitting unequipped
+ *  in inventory) — both read as `stage === 'defense'`, so this is the only way to
+ *  tell them apart for an accurate L4 "与我的关系" reading. */
+function isDefenseSlotted(id: string): boolean {
+  return contaminantSystem.getDefenseSlotted().some((c) => c?.id === id);
+}
+
+function computeInspectHtml(inspectable: Contaminant[], threshold: number): string {
+  const index = hoverIndex ?? cursorIndex;
+  const c = inspectable[index];
+  if (!c) return INSPECT_EMPTY_HTML;
+
+  if (c.stage === 'defense') {
+    const slotted = isDefenseSlotted(c.id);
+    return buildDefenseInspectHtml(c, { chargeThreshold: threshold, slotState: slotted ? 'slotted' : 'unslotted', canEquip: true });
+  }
+
+  const sortieSlots = contaminantSystem.getSortieLoadout();
+  const slotIndex = sortieSlots.findIndex((s) => s?.id === c.id);
+  if (slotIndex >= 0) {
+    const passiveIndex = contaminantSystem.getSortiePassiveSlotIndex();
+    const isPassiveSlot = slotIndex === passiveIndex;
+    const hotkeyLabel = isPassiveSlot ? undefined : GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[slotIndex];
+    return buildToolInspectHtml(c, { slotState: 'slotted', hotkeyLabel, canEquip: true });
+  }
+  return buildToolInspectHtml(c, { slotState: 'unslotted', canEquip: true });
 }

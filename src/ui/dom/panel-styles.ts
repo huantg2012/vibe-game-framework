@@ -313,7 +313,8 @@ const CSS = `
   letter-spacing: 1px;
 }
 .game-panel .action-btn:hover,
-.game-panel .action-btn:focus-visible {
+.game-panel .action-btn:focus-visible,
+.game-panel .action-btn.btn-focused {
   background: rgba(42, 45, 50, 0.4);
   outline: none;
 }
@@ -323,7 +324,8 @@ const CSS = `
   color: #1aad96;
 }
 .game-panel .action-btn.btn-primary:hover,
-.game-panel .action-btn.btn-primary:focus-visible {
+.game-panel .action-btn.btn-primary:focus-visible,
+.game-panel .action-btn.btn-primary.btn-focused {
   background: rgba(26, 173, 150, 0.12);
 }
 .game-panel .action-btn.btn-danger {
@@ -335,7 +337,8 @@ const CSS = `
   color: #8a8f96;
 }
 .game-panel .action-btn.btn-muted:hover,
-.game-panel .action-btn.btn-muted:focus-visible {
+.game-panel .action-btn.btn-muted:focus-visible,
+.game-panel .action-btn.btn-muted.btn-focused {
   color: #c8cdd4;
 }
 
@@ -415,8 +418,9 @@ const CSS = `
 /* === Inspect dock (ui-art-overhaul.md A5-13) ===
    Fixed-height detail strip fed by keyboard/mouse focus on a list/grid item.
    Content swap must be instant (no fade-in) per A6 — the delay is the bug being
-   fixed, not an effect to reproduce. Wiring (focus tracking) lands in C3+; this
-   batch only establishes the container and its styling. */
+   fixed, not an effect to reproduce. C3 wires focus tracking + the five-layer
+   content (IA §S13 L1-L5); layout is block (not the C0 flex-centered placeholder)
+   because five stacked lines don't fit a single centered row. */
 .game-panel .inspect-dock {
   border: 1px solid #2a2d32;
   padding: 8px 10px;
@@ -425,8 +429,23 @@ const CSS = `
   font-size: 13px;
   color: #8a8f96;
   line-height: 1.5;
-  display: flex;
-  align-items: center;
+}
+.game-panel .inspect-dock .inspect-empty {
+  color: #8a8f96;
+}
+.game-panel .inspect-dock .inspect-l1 {
+  color: #c8cdd4;
+  font-weight: bold;
+}
+.game-panel .inspect-dock .inspect-l2,
+.game-panel .inspect-dock .inspect-l3 {
+  color: #8a8f96;
+}
+.game-panel .inspect-dock .inspect-l4 {
+  color: #b89040;
+}
+.game-panel .inspect-dock .inspect-l5 {
+  color: #1aad96;
 }
 
 /* === Action bar (bottom of panel) === */
