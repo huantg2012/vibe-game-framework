@@ -20,11 +20,13 @@ export const en: LocaleSchema = {
 
   // Main Menu
   menu: {
-    title: 'COH',
-    subtitle: 'Prototype Build',
-    newGame: 'New Expedition',
-    continue: 'Continue',
+    title: 'Enduring',
+    subtitle: 'The boundary holds. The light has not gone out.',
+    newGame: 'Enter the Purification Point',
+    continue: 'Return by the old path',
     language: 'Language',
+    overwriteWarning: 'This will erase all records of Tide {tideNumber}.',
+    overwriteClear: 'Erase Records',
   },
 
   // HUD (in-game overlay)

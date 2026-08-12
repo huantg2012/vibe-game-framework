@@ -141,4 +141,25 @@ export const saveManager = {
   deleteSave(): void {
     localStorage.removeItem(SAVE.KEY);
   },
+
+  /**
+   * Peek at a save's tide number without loading it into any system (no side
+   * effects). Used by the main menu to phrase the overwrite-confirmation warning
+   * and to tell an unparsable save apart from a genuinely absent one — a save
+   * that exists but fails this check is treated as "no continuable record"
+   * rather than surfaced as a distinct corrupted-save state (main-menu-scene.ts,
+   * Slice 5.5 C1).
+   */
+  peekTideNumber(): number | null {
+    const raw = localStorage.getItem(SAVE.KEY);
+    if (!raw) return null;
+    try {
+      const data = JSON.parse(raw) as SaveDataV1;
+      if (data.version !== SAVE.VERSION) return null;
+      if (typeof data.tide?.tideNumber !== 'number') return null;
+      return data.tide.tideNumber;
+    } catch {
+      return null;
+    }
+  },
 };

@@ -20,6 +20,8 @@ export interface LocaleSchema {
     newGame: string;
     continue: string;
     language: string;
+    overwriteWarning: string;
+    overwriteClear: string;
   };
   hud: {
     chaos: {

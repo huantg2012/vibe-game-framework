@@ -20,11 +20,13 @@ export const zhCN: LocaleSchema = {
 
   // Main Menu
   menu: {
-    title: 'COH',
-    subtitle: '原型构建',
-    newGame: '新远征',
-    continue: '继续',
+    title: '存续',
+    subtitle: '边界仍在，光尚未熄',
+    newGame: '进入净化点',
+    continue: '沿旧路返回',
     language: '语言',
+    overwriteWarning: '将清除第 {tideNumber} 潮的全部记录',
+    overwriteClear: '清除记录',
   },
 
   // HUD (in-game overlay)
