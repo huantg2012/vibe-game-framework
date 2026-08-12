@@ -9,6 +9,28 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-045: Slice 5.5 方向确认通过，九项裁决落定，进入 C0–C6 实现
+- Date: 2026-08-12
+- Phase: Slice 5.5 实现开始
+- Type: Process / scope
+- Context: 第一波规格齐备（`ux-references.md` + `ui-art-overhaul.md` v2 + `ux-information-architecture.md`），Director 向人提交 D1–D9 九项方向确认清单。人回「开搞吧」——批准全部默认建议并要求立刻进第三波。
+- Decision（D1–D9 全部按 Director 建议默认落定）:
+  1. **D1 参考五选通过**：Signalis（世界内终端物理感）/ FTL（资源分配 HUD 语言）/ Darkest Dungeon（密集词条三层独立编码）/ Into the Breach（预告的诚实）/ Barotrauma（设备读数即状态）。
+  2. **D2 可读性硬规则通过**：DOM 标题≥16px / 正文≥13px / 标签≥12px；Phaser HUD ≥8（等效 12px）；换算 `Phaser × 1.5 = 等效 DOM px` 且 DOM 根节点跟随 `Scale.FIT` 同步缩放；对比度 ≥4.5:1；`#5a5f66` 禁作文字色；关键数值须有除颜色外的第二重编码。**该节即为本 Slice 的 U9 项目内实例化，验收以它为准。**
+  3. **D3 通过**：`purification-hud` 不套 `.game-panel`，与裂隙 HUD 同走「无边框装置读数」语言（A 类世界内装置）。要修的是内容完整度，不是载体。
+  4. **D4 通过**：污染物中文名的唯一权威是 CSV，代码不得维护本地名表；同一效果的四种表达（`混乱增速 -18%` / `混乱率 x0.70` / `混乱抗 30%` / `-12%`）收敛为一种。
+  5. **D5 通过**：冲击结算必须披露防御十项结果（`DefenseResult` 已算出但只传了 damages/intensity）；一次归来只保留**一个**需按键消解的通知——潮汐相位与稳定度里程碑并入冲击结算面板。
+  6. **D6 通过**：检视层走「选中即检视」，五层（身份 / ≤15 字摘要 / 数值 / 与我的关系 / **转化去向**）；L2 摘要走 CSV 新增列 `summaryDefense` / `summaryTool`，先做 4 条标杆再批量补。
+  7. **D7 通过（降级）**：稳定度从净化点 HUD 降到存续报告。理由：净化点每秒不变、不影响任何即时决策，且 100% 无终局内容（R6），进度条隐喻是空头承诺。**这需要改写 `system-growth-tide.md` 规则 22**——属展示层变更、不改数值，可回退。
+  8. **D8 推迟到 Slice 6**：不在 5.5 做「被发现指示」。它不改数值，但会把潜行从"猜"变成"看"，是手感层的实质改动；Slice 6 潜行轴本来就要重做，同批做更干净。**裂隙 HUD 的 P1 信息集因此去掉这一项。**
+  9. **D9 通过**：接受结构性风险 R1 的判定——当前机制下防御与工具**不构成二选一**（装进防御槽 = 先吃减伤，积满 3 点仍自动转化为工具，严格优于放着不动；稀缺的是 4 个槽位而非物品）。5.5 只负责把这个事实讲清楚（检视层 L5 转化去向），**不在本 Slice 改机制**。若人要真实的犹豫，另开 design 重审收益结构。
+- 附带裁决（Director，实现期）:
+  - **「术语单一来源」从 C6 提前到 C2**：裂隙 HUD 要显示工具中文名，而全项目没有权威名称源（五个面板五套名、同一工具两个名字），先建入口再接 HUD 比事后统一便宜。各面板本地名表的清理仍留在 C4/C5/C6。
+- Impact:
+  - 实现按 C0（共享基元层 + 可读性硬规则）→ C1（主菜单）→ C2（裂隙真 HUD + 调试面板降级）→ C3（检视层）→ C4（装配/供奉）→ C5（其余净化点面板）→ C6（反馈层 + 术语收口）推进，每批独立可看、独立 commit。
+  - D5 涉及 `system-purification-impact.md` 的 `interface-changed: true`；D6 涉及 CSV schema 扩列；D7 涉及 `system-growth-tide.md` 规则 22 改写——三项均在收尾登记时统一处理（轻量路径收尾四项之「spec 判断」）。
+  - D8 的推迟需在 Slice 6 规划时接住：`AISystem` 暴露 detection 值与来源方向的接口要求已由 design 登记。
+
 ## DEC-044: Slice 5.5 范围锁定为 ALL UI 表面，走参考驱动的体系设计（跳过 UX audit）
 - Date: 2026-08-12
 - Phase: Slice 5.5 ACTIVE
