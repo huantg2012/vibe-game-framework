@@ -9,6 +9,42 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-043: Slice 5 在未回签试玩验证的情况下收尾，插入打磨 Slice 5.5「UX 重构」
+- Date: 2026-08-12
+- Phase: Slice 5 收尾 / Slice 5.5 立项
+- Type: Process / sequencing
+- Context: Slice 5 锁定范围 12 项全交付（另计划外 2 项），机器闸门（codegen/typecheck/build）全绿。人拿到了验收清单与 U1-U12，但未逐项回签，直接指示"收尾 5，增加 5.5，做 UX 重构"。同时 Slice 5 把界面承载的信息量推到新量级：主动工具 15 + 被动 3 + 污染物 18 + 工具槽 4 + 防御槽 4。
+- Decision:
+  1. **Slice 5 标 COMPLETE**，验证结论如实记为「实现完成、体验未验证」——不虚构 PASS，也不记 FAIL。其验证问题（装配决策是否纠结）**转入 Slice 5.5 期间观察**。
+  2. **插入 Slice 5.5「UX 重构」**（打磨 Slice，走 FV-02 轻量路径，免完整 Task Brief），**Slice 6-10 编号不变**。
+  3. Slice 5 未回签的 **U1-U12 并入 5.5 的强制验收范围**（5.5 必然触碰 in-game UI，一次过完比补签两次便宜）。
+  4. 5.5 状态先记 **PLANNING**：范围由人指名痛点、或授权 art+design 做一次 in-game UX 审计后再锁定。Director 只出候选方向清单，不擅自开工大改。
+- Alternatives: (a) 先补完 Slice 5 的试玩签字再开 5.5（拒绝：人已判断当前界面状态会污染试玩信号——玩家分不清 15 件工具做什么，装配决策的纠结感无从测量，先测等于测噪声）；(b) 把 UX 工作并进 Slice 6（拒绝：6 是第二敌人，验证潜行轴，混轴则反馈无法归因，与 DEC 拆分 Slice 5/6 的理由同源）；(c) 记 Slice 5 为 PASS 走完形式（拒绝：没有证据的 PASS 会让后续 Slice 建立在假前提上，恰是本项目反复付过代价的失败模式）。
+- Reason: 装配决策的"纠结感"是**通过界面被感知的**——信息读不出来，机制再对玩家也感受不到。先收敛 UX 再验证装配决策，是把验证放在能产生有效信号的时点，而不是补一次注定不可归因的试玩。
+- Impact: `roadmap.md`（Slice 5 入已完成表 + 完成总结 + 当前 Slice 改 5.5 + 范围草案 + `last-closed-slice: 5`）、`current-slice.md`（Slice 5 收尾章节，随后由 5.5 覆写）、`CLAUDE.md` 阶段行、`gdd-core.md`（系统列表 4 行 + 内容计数 3 行 + 设计历史 1 条）、`backlog-issues.md`（Slice 5 遗留归属，`purification-hud` 划归 5.5）、`system-purification-impact.md` 与 `art-direction.md` 变更标记重置为 false。
+
+## DEC-042: 建立 Slice 9（音乐/音效）与 Slice 10（NPC）
+- Date: 2026-08-12
+- Phase: Roadmap 规划（Slice 5 验收前）
+- Type: Scope / sequencing
+- Context: vision 将「音效接入」放在中期候选、「完整音乐/音景」「NPC 互动」放在 Out-of-scope；人要求正式占位排期。
+- Decision:
+  1. **Slice 9 = 音乐 / 音效**（环境音 + 关键交互反馈 + 音乐/音景；启动时再锁 P0/P1）。
+  2. **Slice 10 = NPC**（占位排期；**具体设计在该 Slice 启动时再做**，现在不定机制与范围细则）。
+- Alternatives: 继续留在 backlog/Out-of-scope 不占号（拒绝：人要可见的后续槽位）；把 NPC 提前到玩法系统 Slice 之间（拒绝：人指定 9=音频、10=NPC）。
+- Reason: 音频与 NPC 都依赖玩法闭环稳定后再做；占号避免遗忘，细则留到启动时设计以免现在空转。
+- Impact: `roadmap.md` 计划表新增 9/10；原 Out-of-scope / 中期对应条目迁入「已排入计划 Slice」；CLAUDE.md / `slice-5.md` 不做列表已同步。
+
+## DEC-041: 撤离点多样性并入 Slice 8（与程序化地图同 Slice）
+- Date: 2026-08-12
+- Phase: Roadmap 规划（Slice 5 验收前）
+- Type: Scope / sequencing
+- Context: vision Nice-to-have「撤离点多样性（多个位置 / 不同条件）」原在 roadmap backlog 近期候选；Slice 8 已定为程序化地图（Voronoi+CA）。
+- Decision: 撤离点多样性从 backlog 迁出，并入 **Slice 8**，与程序化地图同 Slice 交付。
+- Alternatives: (a) 独立成 Slice 9（拒绝：生成地图时天然要决定撤离点放置，拆开会二次改布局约束）；(b) 提前到固定地图阶段做（拒绝：固定地图上补多撤离点，生成器上还要再做一遍）。
+- Reason: 程序化生成与多撤离点/不同条件是同一套放置与可达性约束，同 Slice 更干净。
+- Impact: `docs/progress/roadmap.md` Slice 8 行与 backlog 分区已更新；CLAUDE.md 顺移说明追加一句。
+
 ## DEC-040: `muffle` 的"提前一轮"实现为第二层预告（预支承诺，非二次猜测）
 - Date: 2026-08-12
 - Phase: Slice 5（收口）

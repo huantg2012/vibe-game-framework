@@ -1,12 +1,13 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-12
 last-modified: 2026-08-12
-note: Slice 5 进行中。范围已锁定，Task Brief 见 docs/tasks/slice-5.md。T3/T5 等设计讨论（D1-D6）拍板。
+completed: 2026-08-12
+note: Slice 5 已收尾（人决定关闭并转入 Slice 5.5 UX 重构）。Task Brief 见 docs/tasks/slice-5.md。收尾结论见文末「Slice 5 收尾」。
 ---
 
-# Slice 5: 工具库深度（Fine/Rare 补完 + 工具视觉 + 改造深度）【ACTIVE】
+# Slice 5: 工具库深度（Fine/Rare 补完 + 工具视觉 + 改造深度）【COMPLETE】
 
 类型：系统 Slice（补完已有系统的深度，不新建系统边界）
 日期：2026-08-12 启动
@@ -256,9 +257,9 @@ roadmap 原计划把「Fine/Rare 工具 + 第二敌人 + 新改造 + 工具 VFX 
 
 ---
 
-## Director 交付汇总（2026-08-12）— 待人验收
+## Director 交付汇总（2026-08-12）
 
-范围内全部任务已实现，机器闸门（`codegen` / `typecheck` / `build`）全绿。**本 Slice 尚未 COMPLETE——等人试玩验收后才由 Director 收尾。**
+范围内全部任务已实现，机器闸门（`codegen` / `typecheck` / `build`）全绿。收尾结论见文末「Slice 5 收尾」。
 
 ### 实际交付（超出原定范围两项）
 
@@ -320,4 +321,53 @@ roadmap 原计划把「Fine/Rare 工具 + 第二敌人 + 新改造 + 工具 VFX 
 - **B3（art-direction.md §6.2/§6.4 措辞复核）**：已直接改 `art-direction.md`（§6.2 补"临界"态、§6.4 补与 `ui-art-overhaul.md` 的权威关系说明），`changed-this-slice` 置 `true`。详见 `decisions-log.md` DEC-038。
 - **循环预算**：本次为第 1 轮产出，未触发 3 轮上限。
 - 未跑机器闸门（本阶段只产出规格文档，未改 `src/`）；`npm run typecheck`/`build` 留给 T4 code 阶段验证。
+
+---
+
+## Slice 5 收尾（Director Step 7，2026-08-12）
+
+### 交付范围（实际）
+
+锁定范围 12 项（T0-T6 / B1-B4）全部完成，另计划外补 2 项（T7 工具 debuff 管线失效修复、T8 四处 CSV 承诺但无代码的机制）。主 commit `e9f611d`，逐项状态见本文件上方各 agent 完成报告。
+
+- 主动工具 15/15 可用（Fine/Rare 7 种补完），被动工具 3/3（`siphon` 补齐）
+- 防御侧 6 处 `handled externally` 全部接线 + 2 处从无 stub 的琐碎项
+- 工具使用 VFX（art 规格 `docs/art/tool-vfx-spec.md` + `src/systems/tool-vfx.ts`，8 视觉族群）
+- 永久改造深度（第 4 工具槽 / 第 4 防御槽 / 预告准确率）+ 成长系统泛化
+- 模块受损三态视觉
+- 文档清账四项 + 架构注册表全量补核（新增 21 行 / 修正 6 行）
+
+### 验证结论
+
+**人决定关闭并进入打磨 Slice 5.5（UX 重构）。**
+
+如实记录：**本 Slice 未走完整试玩签字**。已完成的验证是机器闸门（`codegen` / `typecheck` / `build` 全绿）+ 各 agent 的实现自检；人拿到了验收清单但未逐项回签，而是直接要求收尾并转入 UX 重构。因此**本 Slice 的验证问题（"出击前带什么的决策是否变得纠结？拿到 Fine/Rare 污染物时，是否真的在'当防御吃'与'攒成工具'之间犹豫？"）目前状态为未回答**，留到 Slice 5.5 的 UX 工作中一并观察——15 工具 + 18 污染物 + 4 槽位的信息量本身就是 5.5 要处理的对象，装配决策的纠结感能否被玩家感知到，取决于 5.5 的可读性结果。
+
+这不是 PASS，也不是 FAIL：是"实现完成、体验未验证"。若 5.5 期间发现装配决策并不纠结，回退路径是回 design agent 重审工具/防御的收益结构（属结构性循环问题，不得靠改 constants 掩盖）。
+
+### 遗留归属
+
+全部 5 项已知遗留在 `docs/progress/backlog-issues.md` 追踪，归属如下：
+
+| 遗留 | 归属 |
+| ---- | ---- |
+| `abyss` 65% 减伤上限在 2 模块下触不到（`stitch` 文案同理） | Slice 7（第三模块落地后自动成立，届时复核） |
+| 四个工具占位数值 CSV 装不下（需扩列） | backlog，待 CSV 结构扩展 |
+| `purification-hud` 未套 `.game-panel`（code agent 的判断待确认） | **Slice 5.5**（in-game UX 范畴，随 UX 重构一并拍板） |
+| `incrementIntensity()` +0.15 残留 / `DefenseContext.stabilityProgress` 恒 0 | backlog（无玩法影响，随手清） |
+| `architecture.md` 项目结构 ASCII 目录树列了 3 个不存在的文件 | backlog（T0 只补核注册表，目录树未在范围内） |
+| `docs/content/progression.md` 空 TEMPLATE（产出无人消费） | backlog → 下次 retro 拍板（填充为 CSV 索引 / 删除并从 CLAUDE.md 移除）。**本 Slice 未按原计划在收尾时二选一**，因为它是框架层判断而非本 Slice 交付物 |
+| 敌人属性在 `constants.ts` 而非 CSV（违反策划数据源规则） | Slice 6（第二敌人开工时必须拍板） |
+
+### 收尾四项登记（系统 Slice 走完整路径，此处仅确认）
+
+1. **架构登记**：T0 已全量补核注册表；`architecture.md` 中 `DefenseEngine` 那行"6 处 handled externally 待 Slice5 T3 接线"的过期描述已随 T0 处理范围外——**已并入 backlog 的目录树项一起追踪**
+2. **spec 判断**：B1 回填 `system-purification-impact.md`（修 6 项漂移 + 登记 13 条新规则）、B2 对齐 `system-growth-tide.md` `exposes`；无新建 spec 文件（就地扩写，符合规则）
+3. **交付范围记录**：本文件（收尾后由 Slice 5.5 覆写，历史见 commit `e9f611d` 与本次收尾 commit）
+4. **UI 清单**：T4 工具 VFX 与 T5 第 4 槽位面板均触碰 UI；art 阶段已做载体决策 + 3 个具名参考锚点。**U1-U12 逐条验收未由人回签**，与试玩签字同一状态 → 转入 Slice 5.5 的强制 U1-U12 范围内一并过
+
+### 变更标记重置
+
+- `docs/specs/system-purification-impact.md` `interface-changed: true` → `false`（B1 回填已被 T3 消费方读取；边界规则组为对已落地实现的事后描述）
+- `docs/art-direction.md` `changed-this-slice: true` → `false`（B3 §6.2/§6.4 复核已完成并被 T4 art 规格消费）
 

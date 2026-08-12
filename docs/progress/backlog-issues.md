@@ -12,17 +12,18 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 
 - [ ] `abyss` 减伤上限 65%（CSV 写"3 模块均低于半血"）在当前 2 模块下触不到，真实上限 50%；`stitch` 文案同样假设 3 模块 → Slice 7 加第三模块后自动成立，届时复核 (Slice 5 / 2026-08-12)
 - [ ] 四个工具占位数值 CSV 结构装不下，暂存 `constants.ts`：`combust` 每秒伤害、`mirror` 诱饵接触半径、`resonate` 两点最大距离（CSV 字段 0，同构的 `stitch` 是 96px，疑为数据疏漏）、`abyss` 的第二计时（5s 混乱惩罚，CSV 每行只有一个 duration 列）→ 需给 CSV 扩列才能回归策划数据源规则 (Slice 5 / 2026-08-12)
-- [ ] `purification-hud` 未套 `.game-panel`——该文件设计为无边框符号网格，与 `.game-panel` 风格互斥，code agent 选择延续其自身符号语言。**需 QA/人确认这个判断** (Slice 5 / 2026-08-12)
+- [ ] `purification-hud` 未套 `.game-panel`——该文件设计为无边框符号网格，与 `.game-panel` 风格互斥，code agent 选择延续其自身符号语言。**需 QA/人确认这个判断** → **划归 Slice 5.5**（in-game UX 范畴） (Slice 5 / 2026-08-12)
+- [ ] Slice 5 的试玩验证与 U1-U12 未回签——人决定收尾转入 5.5（DEC-043）。**装配决策纠结感（Slice 5 的验证问题）需在 5.5 期间一并观察**；若不成立则回 design 重审工具/防御收益结构 (Slice 5 收尾 / 2026-08-12)
 - [ ] `GameState.incrementIntensity()` 的 +0.15 残留仍在每次冲击末尾被调用（结果总被潮汐覆盖，玩法无影响，但两次访问之间 `getImpactIntensity()` 会返回过期值）；`DefenseContext.stabilityProgress` 恒为 0（`stabilityTracker` 未接入） (Slice 5 / 2026-08-12)
 - [ ] `architecture.md` 的「项目结构」ASCII 目录树列了三个不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、整个 `generation/` 五个文件）——T0 只补核了模块注册表，目录树不在范围内 (Slice 5 T0 / 2026-08-12)
 
-- [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。Slice 5 收尾二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除 (Slice 5 一致性检查 / 2026-08-12)
+- [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除。**Slice 5 收尾时未处理**——这是框架层判断（文档体系是否该有这一层）而非本 Slice 交付物，转下次 retro 拍板 (Slice 5 一致性检查 / 2026-08-12)
 - [ ] 敌人属性全在 `constants.ts` 的 `GAME_CONSTANTS.AI`，与 CLAUDE.md「策划数据源规则」（明确把"敌人属性"列为必须 CSV 起源）冲突 → Slice 6 第二敌人开工时必须拍板：建 `data/enemies.csv` 并迁移渗透体，还是显式破例 (Slice 5 一致性检查 / 2026-08-12)
 - [ ] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]`，不是真正最旧 (design 补写边界 spec / 2026-08-12)
 
 ## 已处理/已归档
 
-### Slice 5 消费（2026-08-12，待人验收）
+### Slice 5 消费（2026-08-12，已交付；Slice 5 收尾见 DEC-043）
 
 - [x] 永久改造深度太浅 (Slice 4 playtest) → Slice 5 T5：三项新改造落地 + 成长系统泛化（成本改读 CSV、ID 列表收敛单一来源）
 - [x] 净化点模块受损三态视觉未实现 (Slice 4.5) → Slice 5 T6，阈值 >60% / 30-60% / <30%

@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3+3.5+4+4.5 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济 + 数据管线 + 防御引擎 + Common 档全部系统实现 + 表现层（UI Kit / 程序化地表 / 动态力场边界）。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4+4.5+5 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济 + 数据管线 + 防御引擎 + 污染物 18 型全档实现（工具 + 防御两侧）+ 表现层（UI Kit / 程序化地表 / 动态力场边界 / 工具 VFX）。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
@@ -53,6 +53,10 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 被动工具架构 | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 事件驱动被动工具框架：无需按键、事件触发、使用次数消耗、HUD 区分 |
 | Common 主动工具 (ruminate/retrograde/kindle/stitch) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 4 种新主动工具扩展出击策略 |
 | Common 被动工具 (scatter/muffle) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 碎影(受攻击分裂残影)+消声步(移动静音) |
+| Fine/Rare 主动工具 (7种) | **已实现** (Slice 5) | `docs/specs/system-growth-tide.md` | resonate/overwrite/compress/mirror/echo/abyss/combust——主动工具补齐至 15/15 |
+| Fine/Rare 被动工具 (siphon) | **已实现** (Slice 5) | `docs/specs/system-growth-tide.md` | 击杀吸薪柴 + 混乱增速减半 + 修复效率翻倍；被动工具补齐至 3/3 |
+| Fine/Rare 防御效果 | **已实现** (Slice 5) | `docs/specs/system-purification-impact.md`（D 组规则） | 跨 slot 冲击计数、动态低血减伤、累积焚尽治疗、模块功能互换、承伤返还薪柴等——18 型全部接线，无 `handled externally` 残留 |
+| 工具使用 VFX (ToolVfx) | **已实现** (Slice 5) | 规格见 `docs/art/tool-vfx-spec.md` | 8 视觉族群，"世界被改写的痕迹"而非施法动作；网格块集群替代圆形（DEC-038） |
 | 净化点 UX 重构 | **已实现** (Slice 4) | - (无独立 spec) | 世界内零文字交互 + 底部提示条 + HUD 面板化 |
 | 动态力场边界 (BoundaryShape) | **已实现** (Slice 4.5) | `docs/specs/system-purification-impact.md`（边界规则组，2026-08-12 补写） | 极坐标压力 blob 定义净化点边界，随潮汐缩放；平滑碰撞体 + ray-blob 可见性替代 tile 判定。架构侧见 `architecture.md` DEC-ARCH-009 |
 | 边界压力反馈 (BoundaryBreath) | **已实现** (Slice 4.5) | `docs/specs/system-purification-impact.md`（边界规则组，2026-08-12 补写） | 局部压力冲击造成膜变形，把"外界在挤压力场"变成可见事件 |
@@ -89,9 +93,9 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | -------- | ---- | -------- |
 | 进度曲线 | 1（框架文档） | docs/content/progression.md |
 | 污染物类型 | 18（CSV 数据驱动，Common 7 + Fine 6 + Rare 5） | data/contaminants.csv → src/generated/contaminant-data.ts |
-| 出击工具 | 9 已实现（Common 6: solidify/delay/erode/ruminate/retrograde/kindle/stitch + 被动 scatter/muffle） | data/contaminants.csv 工具列 |
-| 防御效果 | 7 种 Common 已实现（含副作用） | src/systems/defense-engine.ts |
-| 永久改造 | 3（每轴1个） | data/upgrades.csv → src/generated/upgrade-data.ts |
+| 出击工具 | 18 全部实现（主动 15 + 被动 3：scatter/muffle/siphon） | data/contaminants.csv 工具列 |
+| 防御效果 | 18 型全部接线（含副作用），Slice 5 起无未接线机制 | src/systems/defense-engine.ts |
+| 永久改造 | 6（出击效率/资源效率/生存韧性/出击扩展/防御扩展/信息优势） | data/upgrades.csv → src/generated/upgrade-data.ts |
 | 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 6 |
 
 ## 设计历史（仅决策，不含详情）
@@ -103,3 +107,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 3.5「UX 打磨」(2026-08-11, COMPLETE): 12 项 game-feel 改善（信息架构/反馈动效/场景过渡/里程碑），来自 `docs/design-notes/game-feel-audit.md` 审计清单全部完成。
 - Slice 4「Data Pipeline + Defense Engine + Common Tier」(2026-08-11, COMPLETE): 构建期 CSV 数据管线（contaminants.csv + upgrades.csv -> src/generated/*.ts，18 种污染物类型安全编译）；防御效果引擎（5 种防御分类 + 7 种 Common 副作用）；被动工具架构（事件驱动、无按键触发、scatter/muffle 两种实现）；4 种新主动工具（ruminate/retrograde/kindle/stitch）；净化点 UX 重构（世界内零文字交互 + 底部提示条 + HUD 面板化）。验证结论：数据驱动管线正确区分逐类行为，防御效果让 slot 选择有意义，被动工具创造独特玩法。试玩后修复 9 项 backlog issue。遗留：永久改造深度扩展归 Slice 5。
 - Slice 4.5「视觉与界面翻修 + 动态力场边界」(2026-08-11 ~ 2026-08-12, COMPLETE): 表现层脱离原型状态，无新玩法系统。UI Kit 统一 7 个 DOM 面板并改为右侧全高抽屉；裂隙 HUD 符号化；角色/敌人/节点改 boot 期缓存贴图（玩家 4 向 3/4 视角 + 冷暖色分离）；净化点地表改 7 层程序化逐像素生成；净化点边界从 tile 判定改为潮汐驱动的动态力场 blob（BoundaryShape + BoundaryBreath）。同步完成 BARRIER→CORE 术语重命名（15 源文件 / 13 文档 / 1 CSV，见 DEC-027）。验证方式为七轮"改一版→人当场看→指名下一版问题"，非一次性试玩签字。**收尾补记（2026-08-12）**：两项遗留已闭合——边界规则组补写进 `system-purification-impact.md`，三块新系统登记进 `architecture.md`（含 DEC-ARCH-009）。本 Slice 同时暴露了框架在 in-game UI 上的系统性弱点，对策见 `guides/99-review.md` FV-01 / FV-02。
+- Slice 5「工具库深度」(2026-08-12, COMPLETE): 污染物 18 型在工具侧与防御侧全部落地——Fine/Rare 主动工具 7 种（主动 15/15）、`siphon` 被动（3/3）、防御侧 6 处 `handled externally` 全部接线；工具使用 VFX（8 视觉族群，DEC-038）；永久改造从 3 项扩到 6 项（第 4 工具槽 / 第 4 防御槽 / 预告可靠度）+ 成长系统泛化；模块受损三态视觉；文档清账四项 + 架构注册表全量补核。关键设计决策 DEC-029~040：`abyss` 用伤害结算前 HP 判定、`combust` 阈值定为固定常量、`overwrite` 忠于原设计（副作用允许偶尔有利于玩家）、跨 slot 效果作用于"其他所有槽位"、**冲击预告改为非空间（目标+强度，不给方向）**、污染物运行时状态进存档。计划外补两项：Slice 4 的 8 个工具此前对敌人零效果（`ToolDebuffs` 无消费方，直接架空本 Slice 验证问题）、四处 CSV 承诺但无代码的机制。**验证状态：实现完成、体验未验证**——机器闸门全绿但人未回签试玩清单与 U1-U12，直接决定收尾并转入 Slice 5.5 UX 重构；装配决策纠结感留到 5.5 观察。
