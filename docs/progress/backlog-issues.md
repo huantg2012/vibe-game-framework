@@ -12,7 +12,7 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 
 - [ ] `abyss` 减伤上限 65%（CSV 写"3 模块均低于半血"）在当前 2 模块下触不到，真实上限 50%；`stitch` 文案同样假设 3 模块 → Slice 7 加第三模块后自动成立，届时复核 (Slice 5 / 2026-08-12)
 - [ ] 四个工具占位数值 CSV 结构装不下，暂存 `constants.ts`：`combust` 每秒伤害、`mirror` 诱饵接触半径、`resonate` 两点最大距离（CSV 字段 0，同构的 `stitch` 是 96px，疑为数据疏漏）、`abyss` 的第二计时（5s 混乱惩罚，CSV 每行只有一个 duration 列）→ 需给 CSV 扩列才能回归策划数据源规则 (Slice 5 / 2026-08-12)
-- [ ] `purification-hud` 未套 `.game-panel`——该文件设计为无边框符号网格，与 `.game-panel` 风格互斥，code agent 选择延续其自身符号语言。**需 QA/人确认这个判断** → **划归 Slice 5.5**（in-game UX 范畴） (Slice 5 / 2026-08-12)
+- [ ] `purification-hud` 未套 `.game-panel`——该文件设计为无边框符号网格，与 `.game-panel` 风格互斥，code agent 选择延续其自身符号语言。**需 QA/人确认这个判断** → **已纳入 Slice 5.5 范围（表面 S2），由 art 在 UX Design Kit v2 的载体决策表中裁定** (Slice 5 / 2026-08-12)
 - [ ] Slice 5 的试玩验证与 U1-U12 未回签——人决定收尾转入 5.5（DEC-043）。**装配决策纠结感（Slice 5 的验证问题）需在 5.5 期间一并观察**；若不成立则回 design 重审工具/防御收益结构 (Slice 5 收尾 / 2026-08-12)
 - [ ] `GameState.incrementIntensity()` 的 +0.15 残留仍在每次冲击末尾被调用（结果总被潮汐覆盖，玩法无影响，但两次访问之间 `getImpactIntensity()` 会返回过期值）；`DefenseContext.stabilityProgress` 恒为 0（`stabilityTracker` 未接入） (Slice 5 / 2026-08-12)
 - [ ] `architecture.md` 的「项目结构」ASCII 目录树列了三个不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、整个 `generation/` 五个文件）——T0 只补核了模块注册表，目录树不在范围内 (Slice 5 T0 / 2026-08-12)

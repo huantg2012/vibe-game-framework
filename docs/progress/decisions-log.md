@@ -9,6 +9,28 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-044: Slice 5.5 范围锁定为 ALL UI 表面，走参考驱动的体系设计（跳过 UX audit）
+- Date: 2026-08-12
+- Phase: Slice 5.5 ACTIVE
+- Type: Process / scope
+- Context: DEC-043 立项 5.5 时留了两条路——人给痛点清单，或先派 art+design 做一次 UX audit 让人从清单上挑。人直接给了诊断：**「不像游戏、不成体系」**，并把范围亲口定为 **ALL**（所有菜单、所有交互面板、所有 HUD、所有物品信息展示）。同时点名两处：裂隙场景**缺少真正的玩家 HUD**（显眼的是 dev 调试面板）；**文字信息必须能看清**。方法论上明确要求"不要闭门造车"，先梳理参考游戏的 UX 方法论与审美。
+- Decision:
+  1. **跳过 audit 路径**。audit 的价值是帮人从模糊摩擦里挑优先级；人已给出根因判断且范围是全量，audit 只会重复产出一份人已经说完的结论。
+  2. **范围写死为 S1-S15 十五个表面**（Director 扫描 `src/` 全部 UI 表面产出，逐项附已核实病灶），不允许缩减。清单在 `current-slice.md`。
+  3. **体系设计先于代码**。第一波只出规格：art 产出具名游戏参考研究 + 方法论（`ux-references.md`）并**就地升级** `ui-art-overhaul.md` 为 UX Design Kit v2；design 产出全表面信息架构（`ux-information-architecture.md`）。第三波 code 分 C0-C6 批落地，C0 先落共享基元库。
+  4. **不新建 v2 视觉基线文件**。视觉真相优先级链是 `ui spec > ui-art-overhaul.md > art-direction §6 > world.md`；新建并行基线必然打架，故 v2 走就地升级（B 节角色美术不动）。
+  5. **可读性升为硬门槛**，优先级高于装饰。具体数字（最小字号 / 最小对比度 / 第二重编码）由 art 在 v2 §A1 给出并经人确认，确认后即为本 Slice 验收基准，等同 U9 的项目内实例化。
+  6. **裂隙 HUD 与 dev 调试面板分离**：交付真正的玩家 HUD；调试面板可作为开发开关保留，但不得默认显示、不得冒充游戏 UI（现状 `debugVisible = true`）。
+- Alternatives:
+  - 先做 audit 再挑 → 否，见上
+  - 只修人点名的两处（裂隙 HUD + 可读性）→ 否，人明确说 ALL；且"不成体系"这个病本质上修不了局部（改一个面板只会让它和其余面板更不像同一台设备）
+  - 新建 `ux-system-v2.md` 作为新基线 → 否，双基线打架
+- Impact:
+  - 这是本项目第二次表现层翻修（Slice 4.5 是第一次，七轮返工，根因记 FV-01）。本次前置了 FV-01 的全部对策：art 必经、载体决策、具名参考锚点、U1-U12 收尾。**若仍需大量返工，说明 FV-01 的对策不足，届时必须进 retro 而不是继续加轮次。**
+  - 两套 UI 技术栈（Phaser Text/Graphics vs DOM overlay）的字号不对齐问题被正式认定为"不成体系"的技术性根因，必须在体系里解决，不再各自为政。
+  - 物品信息展示从浏览器原生 `title` tooltip 迁移到世界内检视信息层——预期新增 `src/` 模块，收尾需登记 architecture.md。
+  - Slice 5 的验证问题（装配决策是否纠结）继续挂在 5.5 观察；若 UX 收敛后仍不纠结，回 design 重审收益结构，不得改 constants 掩盖。
+
 ## DEC-043: Slice 5 在未回签试玩验证的情况下收尾，插入打磨 Slice 5.5「UX 重构」
 - Date: 2026-08-12
 - Phase: Slice 5 收尾 / Slice 5.5 立项
