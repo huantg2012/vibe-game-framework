@@ -40,6 +40,7 @@ import { purificationHud } from '@/ui/dom/purification-hud';
 import type { InteractionTarget } from '@/ui/dom/purification-hud';
 import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
+import type { ForecastDisplay } from '@/systems/impact-system';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
 import type { ContaminantType } from '@/types/game-types';
@@ -261,18 +262,34 @@ export class PurificationScene extends Phaser.Scene {
     // Determine if this is a return from rift (vs. menu/load entry)
     const isReturnFromRift = !data?.fromMenu && data?.kindlingGained !== undefined;
 
+    // Stability milestone crossed by this visit's extraction bonus, if any (Slice 5.5
+    // D5: this used to fire through the STABILITY_CHANGED event, but the listener is
+    // registered later in create() — after this addProgress() call — so it never
+    // actually reached `onStabilityChanged` (a pre-existing gap this batch closes by
+    // computing the crossing here, directly, instead of relying on the event for this
+    // particular trigger). Captured before/after so the merged notice below reports
+    // exactly what changed on this return, no more/no less.
+    let stabilityMilestoneMessage: string | null = null;
+
     // Credit kindling from the rift run (spec rule 10)
     if (data?.survived && data.kindlingGained !== undefined && data.kindlingGained > 0) {
       gameState.addKindling(data.kindlingGained);
       // Stability: successful extraction (spec S21)
+      const beforeProgress = stabilityTracker.getProgress();
       stabilityTracker.addProgress('extraction', GAME_CONSTANTS.STABILITY.GAIN_EXTRACT);
+      const afterProgress = stabilityTracker.getProgress();
+      stabilityMilestoneMessage = this.findCrossedStabilityMilestone(beforeProgress, afterProgress);
     }
 
     // Impact only triggers on return from rift, not on menu/load entry
-    let impactResult = { skipped: true, damages: [] as { moduleId: string; damage: number; newHp: number }[], intensity: 0 };
+    let impactResult: ReturnType<typeof impactSystem.run> = { skipped: true, damages: [], intensity: 0 };
     let chargeChanges: ChargeChangeEntry[] = [];
-    let phaseChange: ReturnType<typeof tideSystem.advanceCycle> = null;
+    let phaseChange: PhaseChangeInfo | null = null;
     let transformResults: { contaminantId: string; type: string; slotIndex: number }[] = [];
+    // Captured BEFORE run() consumes/regenerates the forecast, so this is exactly what
+    // the player saw on their way out — the prediction this impact is judged against
+    // (Slice 5.5 D5 "预告 vs 实际", IA §S8).
+    let predictedForecast: ForecastDisplay | null = null;
 
     if (isReturnFromRift) {
       // Sync impact intensity from tide system
@@ -287,6 +304,8 @@ export class PurificationScene extends Phaser.Scene {
 
       // Compute charge changes for impact panel (D2)
       chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
+
+      predictedForecast = impactSystem.getForecastDisplay();
 
       // Run impact on arrival (pass defense slots to avoid cross-system import)
       const defenseSlots = contaminantSystem.getDefenseSlotted();
@@ -456,26 +475,29 @@ export class PurificationScene extends Phaser.Scene {
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
 
-    // Show impact result on arrival (player must dismiss before interacting)
+    // Show impact result on arrival (player must dismiss before interacting).
+    // Slice 5.5 D5: the tide-phase-change and stability-milestone notices that used to
+    // chain as separate "knowledge  " overlays after this panel are now rendered as a
+    // trailing section INSIDE it — one blocking notification per return, not three.
     if (!impactResult.skipped) {
       this.player.setInputEnabled(false);
       this.cameras.main.shake(300, 0.005);
       impactResultPanel.show(impactResult.damages, impactResult.intensity, () => {
-        // After impact panel dismissed, show tide phase notification if applicable (E1)
-        if (phaseChange) {
-          this.showPhaseChangeNotification(phaseChange, () => {
-            this.player.setInputEnabled(true);
-            purificationHud.refresh();
-            // B3: Show new tool toast after impact flow completes
-            this.showNewToolToast(transformResults);
-          });
-        } else {
-          this.player.setInputEnabled(true);
-          purificationHud.refresh();
-          // B3: Show new tool toast after impact panel dismissed
-          this.showNewToolToast(transformResults);
-        }
-      }, chargeChanges.length > 0 ? chargeChanges : undefined);
+        this.player.setInputEnabled(true);
+        purificationHud.refresh();
+        // B3: Show new tool toast after the merged panel is dismissed (Channel B —
+        // non-blocking, so it doesn't re-introduce a second confirmation step).
+        this.showNewToolToast(transformResults);
+      }, {
+        chargeChanges: chargeChanges.length > 0 ? chargeChanges : undefined,
+        defenseResult: impactResult.defenseResult,
+        baseDamagePerModule: impactResult.baseDamagePerModule,
+        forecastPrediction: predictedForecast,
+        actualPrimaryModuleId: impactResult.primaryModuleId,
+        actualSeverity: impactResult.trueSeverity,
+        phaseChange,
+        stabilityMilestoneMessage,
+      });
     }
   }
 
@@ -862,24 +884,40 @@ export class PurificationScene extends Phaser.Scene {
     });
   }
 
-  /** E3: Show stability milestone notifications. */
+  /** E3: Show stability milestone notifications for changes NOT already folded into
+   *  the merged impact-result panel (Slice 5.5 D5) — e.g. buying an upgrade at the
+   *  growth altar while standing in the purification point. The extraction-triggered
+   *  crossing is handled separately in create() via `findCrossedStabilityMilestone()`,
+   *  since this listener is registered after that particular addProgress() call fires
+   *  (see the comment at its call site). */
   private readonly onStabilityChanged = (payload: { progress: number; delta: number }): void => {
-    const milestones = [25, 50, 75, 100];
-    const messages: Record<number, string> = {
-      25: '净化进度: 25%。坚持住。',
-      50: '净化进度: 50%。已经过半。',
-      75: '净化进度: 75%。终点在望。',
-      100: '净化完成。',
-    };
+    const message = this.findCrossedStabilityMilestone(this.lastStabilityMilestone, payload.progress);
+    this.lastStabilityMilestone = Math.floor(payload.progress / 25) * 25;
+    if (message) this.showStabilityMilestone(message);
+  };
 
+  /** World.md 无人称/不描述玩家感受: the old copy had second-person encouragement
+   *  ("坚持住"/"终点在望") on the 25/75 lines (IA §S15 类别2) — restated as plain fact. */
+  private static readonly STABILITY_MILESTONE_MESSAGES: Record<number, string> = {
+    25: '净化进度 25%。',
+    50: '净化进度 50%。已过半。',
+    75: '净化进度 75%。',
+    100: '净化完成。',
+  };
+
+  /** Returns the highest milestone (25/50/75/100) newly crossed between `before` and
+   *  `after`, or null if none. Shared by the extraction-triggered path (create()) and
+   *  the event-driven path (onStabilityChanged) so the two can never disagree on
+   *  wording. Does NOT mutate `lastStabilityMilestone` — callers own that. */
+  private findCrossedStabilityMilestone(before: number, after: number): string | null {
+    const milestones = [25, 50, 75, 100];
     for (const m of milestones) {
-      if (payload.progress >= m && this.lastStabilityMilestone < m) {
-        this.lastStabilityMilestone = m;
-        this.showStabilityMilestone(messages[m]!);
-        break;
+      if (after >= m && before < m) {
+        return PurificationScene.STABILITY_MILESTONE_MESSAGES[m] ?? null;
       }
     }
-  };
+    return null;
+  }
 
   private showStabilityMilestone(message: string): void {
     // Inject animation style if needed
@@ -945,64 +983,6 @@ export class PurificationScene extends Phaser.Scene {
     }
 
     return changes;
-  }
-
-  /** Show tide phase change notification overlay (E1). */
-  private showPhaseChangeNotification(info: PhaseChangeInfo, onDone: () => void): void {
-    let message: string;
-    let borderColor: string;
-
-    if (info.to === 'crest') {
-      message = '潮峰期。冲击强度维持峰值。';
-      borderColor = '#cc4444';
-    } else if (info.to === 'ebb') {
-      message = '退潮期。压力暂缓。';
-      borderColor = '#44aa66';
-    } else {
-      // New tide (rise phase of a higher tide number)
-      message = `第${info.newTideNumber}潮汐。边界压力上升。`;
-      borderColor = '#8866cc';
-    }
-
-    const overlay = document.createElement('div');
-    overlay.id = 'tide-phase-overlay';
-    overlay.style.cssText = [
-      'position:fixed',
-      'top:50%',
-      'left:50%',
-      'transform:translate(-50%,-50%)',
-      'z-index:1002',
-      'background:rgba(15,17,20,0.92)',
-      `border:1px solid ${borderColor}`,
-      'padding:18px 32px',
-      "font:14px 'Courier New',monospace",
-      `color:${borderColor}`,
-      'text-align:center',
-      'box-shadow:0 0 12px rgba(0,0,0,0.6)',
-      'cursor:pointer',
-    ].join(';');
-
-    overlay.innerHTML = `
-      <div style="font-weight:bold;margin-bottom:6px;">${message}</div>
-      <div style="font-size:10px;color:#666;">点击或等待关闭</div>
-    `;
-
-    document.body.appendChild(overlay);
-
-    const dismiss = (): void => {
-      overlay.removeEventListener('click', dismiss);
-      document.removeEventListener('keydown', keyDismiss);
-      if (autoTimer) clearTimeout(autoTimer);
-      overlay.remove();
-      onDone();
-    };
-    const keyDismiss = (e: KeyboardEvent): void => {
-      if (!e.repeat) dismiss();
-    };
-
-    overlay.addEventListener('click', dismiss);
-    document.addEventListener('keydown', keyDismiss);
-    const autoTimer = setTimeout(dismiss, 2000);
   }
 
   private onShutdown(): void {

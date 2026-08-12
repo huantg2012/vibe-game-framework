@@ -43,6 +43,17 @@ export interface ImpactResult {
   readonly skipped: boolean;
   /** Defense engine result (null when skipped or no defense slots active). */
   readonly defenseResult?: DefenseResult;
+  /** The module that took the 65% "重点目标" share this impact (ground truth).
+   *  Always set when `!skipped`. Slice 5.5 D5: lets the result panel show a
+   *  predicted-vs-actual line without exposing the internal forecastTargetId. */
+  readonly primaryModuleId?: string;
+  /** This impact's true severity tier, independent of forecast display noise
+   *  (mirror misreport / baseline blur — see generateForecast()). */
+  readonly trueSeverity?: ForecastSeverity;
+  /** Per-module damage before any defense reduction (only meaningful when
+   *  `defenseResult` is set — otherwise base === final and the panel doesn't need
+   *  a second column). Slice 5.5 D5: lets the panel show "基础 → 实际". */
+  readonly baseDamagePerModule?: Record<string, number>;
 }
 
 /**
@@ -107,6 +118,16 @@ const MIRROR_MISREPORT_CHANCE = 0.10;
  */
 const SEVERITY_BLUR_BASE_CHANCE = 0.20;
 const SEVERITY_BLUR_FLOOR_CHANCE = 0.05;
+
+/** Chinese labels for the four severity tiers (Slice 5.5 D5 — these had never been
+ *  named in the UI before; only the pip count rendered). Kept here since this module
+ *  owns the `ForecastSeverity` type. */
+export const SEVERITY_LABEL: Record<ForecastSeverity, string> = {
+  light: '轻微',
+  moderate: '中等',
+  heavy: '剧烈',
+  extreme: '极端',
+};
 
 function severityFromIntensity(intensity: number): ForecastSeverity {
   for (const { max, tier } of SEVERITY_TIER_MAX) {
@@ -303,7 +324,15 @@ export const impactSystem = {
     // Increment intensity for next cycle (spec rule 12)
     gameState.incrementIntensity();
 
-    return { damages, intensity, skipped: false, defenseResult };
+    return {
+      damages,
+      intensity,
+      skipped: false,
+      defenseResult,
+      primaryModuleId: primary.id,
+      trueSeverity: severityFromIntensity(intensity),
+      baseDamagePerModule: defenseResult ? baseDamagePerModule : undefined,
+    };
   },
 
   /**

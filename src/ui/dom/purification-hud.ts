@@ -8,19 +8,27 @@
  * - UI is part of the game world, not floating above it
  *
  * Layout:
- * - Right-top: kindling (diamond + number), stability (block bar), tide (wave bar),
- *   impact forecast (module icon + 4-pip severity bar — DEC-034, target+severity only,
- *   no direction; direction is BoundaryShape's pressure-lobe visualization elsewhere),
- *   and — only while muffle is defense-slotted — a second, visually fainter row
- *   previewing the impact after next (muffle's "one extra round of warning")
+ * - Right-top: kindling (diamond + number), tide (wave bar), impact forecast (module
+ *   icon + 4-pip severity bar — DEC-034, target+severity only, no direction; direction
+ *   is BoundaryShape's pressure-lobe visualization elsewhere), and — only while muffle
+ *   is defense-slotted — a second, visually fainter row previewing the impact after
+ *   next (muffle's "one extra round of warning")
  * - Bottom-center: compact key hints (one line, semi-transparent)
+ *
+ * Slice 5.5 D7: stability progress was removed from this always-visible readout and
+ * moved to the survival report (`status-panel.ts`) as a state statement rather than a
+ * progress bar. It never changes moment-to-moment inside the purification point and
+ * has no end-state content yet (IA §R6) — a P0 progress bar for it was a standing
+ * promise this Slice couldn't cash. Its removal also collapses the diagnosed "three
+ * unrelated readouts sharing the same ▮ glyph" problem (IA §S2) down to one: only the
+ * forecast (and its muffle lookahead variant, deliberately the same family) still uses
+ * pips here.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { gameState } from '@/managers/game-state';
 import { impactSystem } from '@/systems/impact-system';
 import type { ForecastSeverity } from '@/systems/impact-system';
-import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
@@ -42,7 +50,8 @@ export interface InteractionTarget {
 
 const COL = {
   kindlingOrange: '#c4873a',
-  // Was #4a9e5a (unregistered "good green"). CORE/stability is structure info → neutral bright.
+  // Was #4a9e5a (unregistered "good green"). Structure info → neutral bright. Still
+  // used by the forecast row's 'light' severity pip color (not stability anymore, D7).
   stabilityNeutral: '#c8cdd4',
   dangerRed: '#cc3333',
   tideCyan: '#1aad96',
@@ -117,27 +126,16 @@ export class PurificationHud {
     }
   }
 
-  /** Refresh HUD values (call after kindling/stability/tide changes). */
+  /** Refresh HUD values (call after kindling/tide changes). Stability moved to the
+   *  survival report — see the class doc comment (D7). */
   refresh(): void {
     if (!this.hudEl) return;
 
     const reserve = gameState.getKindlingReserve();
-    const stabPct = Math.round(stabilityTracker.getProgress());
     const tideState = tideSystem.getState();
 
     // --- Kindling row ---
     const kindlingRow = `<div style="margin-bottom:4px;"><span style="color:${COL.kindlingOrange};font-size:13px;">◇</span><span style="color:${COL.kindlingOrange};font-size:14px;font-weight:bold;margin-left:4px;">${reserve}</span></div>`;
-
-    // --- Stability bar (10 blocks) ---
-    const stabBlocks = 10;
-    const filledBlocks = Math.round((stabPct / 100) * stabBlocks);
-    const stabColor = stabPct <= 30 ? COL.dangerRed : COL.stabilityNeutral;
-    let stabBar = '';
-    for (let i = 0; i < stabBlocks; i++) {
-      const color = i < filledBlocks ? stabColor : COL.barEmpty;
-      stabBar += `<span style="color:${color};">▮</span>`;
-    }
-    const stabilityRow = `<div style="font-size:12px;letter-spacing:1px;margin-bottom:4px;">${stabBar}</div>`;
 
     // --- Tide wave bar ---
     const tideRow = this.buildTideRow(tideState);
@@ -148,7 +146,7 @@ export class PurificationHud {
     // --- muffle's extra lookahead row (impact after next; empty string if not slotted) ---
     const lookaheadRow = this.buildForecastLookaheadRow();
 
-    const html = kindlingRow + stabilityRow + tideRow + forecastRow + lookaheadRow;
+    const html = kindlingRow + tideRow + forecastRow + lookaheadRow;
 
     if (html !== this.lastHudHtml) {
       this.hudEl.innerHTML = html;
@@ -266,7 +264,14 @@ export class PurificationHud {
     // Tide number indicator (label tier ≥12px — was 9px, V3)
     const tideLabel = `<span style="color:${COL.dimText};font-size:12px;margin-left:4px;">${tideState.tideNumber}</span>`;
 
-    return `<div style="font-size:12px;letter-spacing:0px;">${bar}${tideLabel}</div>`;
+    // Minimal label prefix (IA §S2 diagnosis: three unrelated readouts sharing one
+    // shape/position language with color as the only differentiator). The wave glyphs
+    // are already a distinct shape from the forecast row's ▮ pips, but a one-character
+    // tag costs nothing and removes any doubt about which readout this is — same idiom
+    // as the forecast row's module icon prefix, not a new visual language.
+    const tideTag = `<span style="color:${COL.dimText};">潮</span> `;
+
+    return `<div style="font-size:12px;letter-spacing:0px;">${tideTag}${bar}${tideLabel}</div>`;
   }
 
   /**
@@ -319,7 +324,9 @@ export class PurificationHud {
       pips += `<span style="color:${color};">▮</span>`;
     }
 
-    return `<div style="font-size:10px;letter-spacing:1px;opacity:0.55;margin-top:1px;"><span style="color:${COL.dimText};">${icon}</span> ${pips}</div>`;
+    // A1 硬下限: DOM 面板文字 ≥12px（was 10px — the "weaker" reading intentionally
+    // still comes from dim color + low opacity + no pulse, not from an illegible size).
+    return `<div style="font-size:12px;letter-spacing:1px;opacity:0.55;margin-top:1px;"><span style="color:${COL.dimText};">${icon}</span> ${pips}</div>`;
   }
 
   /** Inject the critical-pulse keyframe (idempotent) — same idiom as the existing
@@ -342,7 +349,8 @@ export class PurificationHud {
     const detail = this.getPromptDetail(target);
     let html = `<span style="color:${COL.brightText};">[E]</span> <span style="color:#8a8f96;">${action}</span>`;
     if (detail) {
-      html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span><span style="color:${COL.dimText};font-size:10px;">${detail}</span>`;
+      // A1 硬下限: DOM 面板文字 ≥12px（was 10px）.
+      html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span><span style="color:${COL.dimText};font-size:12px;">${detail}</span>`;
     }
     return html;
   }

@@ -89,6 +89,49 @@ export interface DefenseResult {
   /** Whether CORE/STORAGE module effects should swap for the next sortie. overwrite
    *  (25% chance, DEC-031). Applied immediately to GameState by the caller. */
   moduleSwapTriggered: boolean;
+  /**
+   * Per-slot breakdown of what each defense-slotted contaminant actually did this
+   * impact (Slice 5.5 D5 / IA §S8). This is the disclosure data the impact result
+   * panel renders — none of the ten aggregate outputs above name *which slot*
+   * produced them, which is exactly the gap D5 closes. One entry per processed
+   * defense-stage contaminant, in slot order.
+   */
+  slotDisclosures: SlotDisclosure[];
+}
+
+/** What a single defense-slotted contaminant did during one impact resolution
+ *  (Slice 5.5 D5). Optional fields are only set by the mechanic they belong to. */
+export interface SlotDisclosure {
+  contaminantId: string;
+  type: ContaminantType;
+  /** This slot's own reduction fraction (0-1), before compounding with siblings. */
+  damageReductionPct: number;
+  /** Marginal absolute damage this slot removed this impact — an exact telescoping
+   *  decomposition of the multiplicative chain (see applyDefenseEffects), valid for
+   *  the normal/scatter paths. Under `expandNullified` this naturally reads as "the
+   *  remaining total at that point", since nothing downstream had damage left to
+   *  reduce. */
+  damageBlocked: number;
+  kindlingGain: number;
+  stabilityChange: number;
+  upgradeDiscount: number;
+  sideEffects: PendingSideEffect[];
+  toolUseGrant: boolean;
+  moduleSwapTriggered: boolean;
+  expandNullified: boolean;
+  scatterRedistributed: boolean;
+  /** stitch: total HP moved toward the mean this impact (sum of positive transfers). */
+  equalizationAmount?: number;
+  /** combust: burst-release heal amount + which module received it. */
+  healAmount?: number;
+  healModuleId?: string;
+  /** mirror: kindling returned based on this impact's actual damage taken. */
+  kindlingReturned?: number;
+  /** resonate/erode: total bonus impact charges granted to OTHER slots this impact. */
+  bonusChargesGranted?: number;
+  /** abyss: bonus unmitigated damage dealt to a full-HP module + which module. */
+  bonusDamageDealt?: number;
+  bonusDamageModuleId?: string;
 }
 
 /**
@@ -149,6 +192,13 @@ export function applyDefenseEffects(
   let toolUseGrants = 0;
   let moduleSwapTriggered = false;
   const bonusModuleDamage: Record<string, number> = {};
+  const slotDisclosures: SlotDisclosure[] = [];
+  // Marginal telescoping decomposition of the multiplicative reduction chain (D5):
+  // runningTotal starts at the pre-defense total and each slot's own reduction is
+  // applied to whatever remains, so summing every slot's `damageBlocked` below is
+  // exactly `sum(baseDamagePerModule) - sum(baseDamagePerModule) * totalReductionMult`
+  // — an exact decomposition, not an approximation (see SlotDisclosure doc comment).
+  let runningTotalDamage = Object.values(baseDamagePerModule).reduce((a, b) => a + b, 0);
 
   // Start with base damage
   const finalDamage: Record<string, number> = { ...baseDamagePerModule };
@@ -195,24 +245,57 @@ export function applyDefenseEffects(
       sideEffects.push(se);
     }
 
+    const blocked = Math.round(runningTotalDamage * effect.damageReduction);
+    runningTotalDamage -= blocked;
+
+    const disclosure: SlotDisclosure = {
+      contaminantId: contaminant.id,
+      type: contaminant.type,
+      damageReductionPct: effect.damageReduction,
+      damageBlocked: blocked,
+      kindlingGain: effect.kindlingGain,
+      stabilityChange: effect.stabilityChange,
+      upgradeDiscount: effect.upgradeDiscount,
+      sideEffects: effect.sideEffects,
+      toolUseGrant: effect.toolUseGrant,
+      moduleSwapTriggered: effect.moduleSwapTriggered,
+      expandNullified: effect.expandNullified,
+      scatterRedistributed: effect.scatterRedistribute,
+    };
+    if (Object.keys(effect.bonusModuleDamage).length > 0) {
+      const [moduleId, dmg] = Object.entries(effect.bonusModuleDamage)[0]!;
+      disclosure.bonusDamageDealt = dmg;
+      disclosure.bonusDamageModuleId = moduleId;
+    }
+
     // Cross-slot impact-charge bonuses (DEC-033/D5). These need the sibling slot
     // list, which applySlotEffect() does not have, so they are computed here.
     if (contaminant.type === 'resonate' && Math.random() < 0.30) {
       // 30% chance: every currently-slotted contaminant (including resonate itself)
       // gets +1 impact charge, all at once.
+      let granted = 0;
       for (const other of defenseSlots) {
-        if (other) bonusCharges[other.id] = (bonusCharges[other.id] ?? 0) + 1;
+        if (other) {
+          bonusCharges[other.id] = (bonusCharges[other.id] ?? 0) + 1;
+          granted++;
+        }
       }
+      disclosure.bonusChargesGranted = granted;
     }
     if (contaminant.type === 'erode') {
       // Unconditional every impact: +1 to every OTHER slotted contaminant, regardless
       // of how many other slots exist (DEC-033 changed this from a hardcoded "2").
+      let granted = 0;
       for (const other of defenseSlots) {
         if (other && other.id !== contaminant.id) {
           bonusCharges[other.id] = (bonusCharges[other.id] ?? 0) + 1;
+          granted++;
         }
       }
+      disclosure.bonusChargesGranted = granted;
     }
+
+    slotDisclosures.push(disclosure);
   }
 
   // Apply damage modifications
@@ -259,6 +342,7 @@ export function applyDefenseEffects(
 
     const avgHp = moduleIds.reduce((sum, id) => sum + (hpAfterDamage[id] ?? 0), 0) / moduleIds.length;
 
+    let totalTransferred = 0;
     for (const id of moduleIds) {
       const hp = hpAfterDamage[id] ?? 0;
       const diff = avgHp - hp;
@@ -266,8 +350,11 @@ export function applyDefenseEffects(
       const transfer = Math.round(diff * 0.2);
       if (transfer !== 0) {
         stitchEqualization[id] = transfer;
+        if (transfer > 0) totalTransferred += transfer;
       }
     }
+    const stitchDisclosure = slotDisclosures.find((d) => d.contaminantId === contaminant.id);
+    if (stitchDisclosure) stitchDisclosure.equalizationAmount = totalTransferred;
     break; // Only apply once even if multiple stitch are slotted
   }
 
@@ -304,6 +391,16 @@ export function applyDefenseEffects(
       healOut[lowestId] = (healOut[lowestId] ?? 0) + healAmount;
       accum = 0;
       sideEffects.push({ type: 'initial_chaos', value: 10, duration: 'next_sortie', source: 'combust' });
+
+      const combustDisclosure = slotDisclosures.find((d) => d.contaminantId === contaminant.id);
+      if (combustDisclosure) {
+        combustDisclosure.healAmount = healAmount;
+        combustDisclosure.healModuleId = lowestId;
+        combustDisclosure.sideEffects = [
+          ...combustDisclosure.sideEffects,
+          { type: 'initial_chaos', value: 10, duration: 'next_sortie', source: 'combust' },
+        ];
+      }
     }
 
     combustAccumulators.set(contaminant.id, accum);
@@ -321,7 +418,10 @@ export function applyDefenseEffects(
       (sum, id) => sum + Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0),
       0,
     );
-    kindlingGain += Math.max(1, Math.floor(actualDamageThisImpact * 0.1));
+    const returned = Math.max(1, Math.floor(actualDamageThisImpact * 0.1));
+    kindlingGain += returned;
+    const mirrorDisclosure = slotDisclosures.find((d) => d.contaminantId === contaminant.id);
+    if (mirrorDisclosure) mirrorDisclosure.kindlingReturned = returned;
     break; // Only once even if multiple mirror are slotted
   }
 
@@ -338,6 +438,7 @@ export function applyDefenseEffects(
     bonusCharges,
     toolUseGrants,
     moduleSwapTriggered,
+    slotDisclosures,
   };
 }
 

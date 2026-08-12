@@ -11,6 +11,7 @@ import { GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
 import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
+import { stabilityTracker } from '@/systems/stability-tracker';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { getDefenseName, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
@@ -164,6 +165,15 @@ function render(): void {
   // (ui-art-overhaul.md A2 — green-as-safe has no place in this palette).
   const phaseColors: Record<string, string> = { rise: '#cc3333', crest: '#cc3333', ebb: '#8a8f96' };
 
+  // Slice 5.5 D7: moved here from the always-visible purification HUD (was a 10-block
+  // progress bar). A state statement, not a progress bar — there is no end-state
+  // content yet to promise a finish line toward (IA §R6), and this value never changes
+  // moment-to-moment while walking around the purification point, so it doesn't earn
+  // P1 常驻 real estate either way.
+  const stabilityStateText = stabilityTracker.isReached()
+    ? '已完成'
+    : `${Math.round(stabilityTracker.getProgress())}%`;
+
   // Module HP data
   const coreMod = gameState.getModule('CORE');
   const storageMod = gameState.getModule('STORAGE');
@@ -223,6 +233,10 @@ function render(): void {
     <div class="stat-row">
       <span class="stat-label">潮汐</span>
       <span class="stat-value" style="color:${phaseColors[tideState.phase] ?? '#c8cdd4'};">第${tideState.tideNumber}潮 ${phaseLabels[tideState.phase]}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">稳定度</span>
+      <span class="stat-value" style="color:#c8cdd4;">${stabilityStateText}</span>
     </div>
   </div>`;
 
@@ -316,6 +330,7 @@ function render(): void {
   html += `<div class="action-bar">
     <span id="status-close-btn" class="action-btn btn-muted" style="cursor:pointer;">合上</span>
   </div>`;
+  html += `<div class="key-hint-bar"><span class="key">↑↓←→</span> 浏览库存 · <span class="key">Tab</span> / <span class="key">Esc</span> 合上</div>`;
 
   panel.innerHTML = html;
 

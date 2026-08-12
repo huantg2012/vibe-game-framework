@@ -34,6 +34,7 @@ import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-s
 import { HUD, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/hud';
 import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
+import { describeSideEffectBody } from '@/ui/side-effect-labels';
 import { riftResultPanel } from '@/ui/dom/rift-result-panel';
 import type { PendingSideEffect } from '@/systems/defense-engine';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
@@ -579,30 +580,14 @@ export class RiftScene extends Phaser.Scene {
 
   /** Show DOM toast notifications for defense side effects. */
   private showSideEffectToasts(effects: PendingSideEffect[]): void {
-    // Map effect types to human-readable descriptions
+    // Shared with impact-result-panel.ts (Slice 5.5 D5/V8) so the two "what did
+    // this side effect do" mappings can never drift apart. This site keeps its own
+    // "防御残留: " prefix + parenthesized source (its own established toast style).
     const describeEffect = (e: PendingSideEffect): string | null => {
-      // Single name entry point (Slice 5.5 C2) - this used to be a 5th local
-      // hardcoded copy of the defense-name table (V8, ui-art-overhaul.md A1).
+      const body = describeSideEffectBody(e);
+      if (!body) return null;
       const sourceName = e.source ? getDefenseName(e.source as ContaminantType) : '未知';
-
-      switch (e.type) {
-        case 'initial_chaos':
-          return `防御残留: 初始混乱 +${e.value} (${sourceName})`;
-        case 'chaos_rate_mult':
-          return `防御残留: 混乱增速 x${e.value} ${e.durationMs ? `${e.durationMs / 1000}s` : ''} (${sourceName})`;
-        case 'vision_reduction':
-          return `防御残留: 视野 -${Math.round(e.value * 100)}% (${sourceName})`;
-        case 'speed_reduction':
-          return `防御残留: 移速 -${Math.round(e.value * 100)}% (${sourceName})`;
-        case 'proximity_sense_boost':
-          return `防御残留: 敌近距感知 +${Math.round(e.value * 100)}% (${sourceName})`;
-        case 'storage_halved':
-          return `防御残留: 储藏效果减半 (${sourceName})`;
-        case 'module_swap':
-          return `防御残留: 模块功能已互换 (${sourceName})`;
-        default:
-          return null;
-      }
+      return `防御残留: ${body} (${sourceName})`;
     };
 
     const messages = effects.map(describeEffect).filter((m): m is string => m !== null);

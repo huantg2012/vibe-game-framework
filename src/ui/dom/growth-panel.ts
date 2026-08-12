@@ -209,7 +209,7 @@ function render(): void {
       <div class="card-body">
         <div class="card-name" style="color:${nameColor};">${upgrade.name}</div>
         <div class="card-dots">${dots}</div>
-        <div style="font-size:13px;color:#8a8f96;margin-top:1px;">${upgrade.effectLabel(level)}</div>
+        <div style="font-size:13px;color:#8a8f96;margin-top:1px;">${upgrade.effectLabel(level, maxLevel)}</div>
       </div>`;
 
     if (isMaxed) {

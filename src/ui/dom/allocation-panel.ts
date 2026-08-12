@@ -8,6 +8,8 @@
 import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
 import type { ModuleType } from '@/managers/game-state';
+import { growthSystem } from '@/systems/growth-system';
+import { impactSystem } from '@/systems/impact-system';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
@@ -179,6 +181,45 @@ function getMaxAllocatable(hp: number, maxHp: number): number {
   return Math.min(reserve, maxUseful);
 }
 
+/** Cost of the single cheapest not-yet-maxed upgrade, or null if every axis is
+ *  maxed. Used by the opportunity-cost row below (IA §S3). */
+function getCheapestUpgradeCost(): number | null {
+  let min: number | null = null;
+  for (const id of growthSystem.getAllUpgradeIds()) {
+    if (growthSystem.getLevel(id) >= growthSystem.getMaxLevel(id)) continue;
+    const cost = growthSystem.getCost(id);
+    if (min === null || cost < min) min = cost;
+  }
+  return min;
+}
+
+/**
+ * Opportunity-cost row (IA §S3, new): this panel used to show the module being
+ * repaired in a vacuum. Three numbers make "投入这里而非别处" an actual comparison
+ * instead of a form to fill out: the other module's own HP (the alternative use of
+ * the same kindling), the cheapest permanent upgrade not yet bought (the third
+ * outlet the single currency competes with), and whether this module is the
+ * forecast's current target (the module that will actually eat the next impact).
+ */
+function buildOpportunityCostRow(type: ModuleType): string {
+  const otherType: ModuleType = type === 'CORE' ? 'STORAGE' : 'CORE';
+  const otherLabel = otherType === 'CORE' ? '核心' : '储藏';
+  const other = gameState.getModule(otherType);
+  const otherText = other ? `${otherLabel} ${other.hp}/${other.maxHp}` : `${otherLabel} —`;
+
+  const cheapestCost = getCheapestUpgradeCost();
+  const upgradeText = cheapestCost !== null ? `蜕变最低 ${cheapestCost} 薪柴` : '蜕变已全部购满';
+
+  const forecast = impactSystem.getForecastDisplay();
+  const isForecastTarget = forecast?.targetId === type;
+  const forecastText = isForecastTarget ? '下次冲击目标' : '非下次冲击目标';
+  const forecastColor = isForecastTarget ? '#cc3333' : '#8a8f96';
+
+  return `<div style="font-size:12px;color:#8a8f96;text-align:center;padding:6px 0;border-top:1px solid #2a2d32;margin-bottom:8px;">
+    ${otherText} · ${upgradeText} · <span style="color:${forecastColor};">${forecastText}</span>
+  </div>`;
+}
+
 // ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
@@ -229,6 +270,9 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   if (selectedAmount > 0) {
     html += `<div style="font-size:13px;color:${typeColor};text-align:center;margin:4px 0;">${afterEffect}</div>`;
   }
+
+  // Opportunity-cost row (IA §S3, new) — see buildOpportunityCostRow() doc comment.
+  html += buildOpportunityCostRow(type);
 
   // Allocation control bar. Boundary state (can't go lower/higher) is opacity-dimmed
   // per ui-art-overhaul.md A5-5~A5-12 ("不可用（-/+到边界）：按钮 opacity 40%"), not

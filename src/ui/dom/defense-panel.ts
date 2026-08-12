@@ -274,7 +274,9 @@ function render(): void {
   html += `<div style="font-size:13px;color:#8a8f96;margin-bottom:6px;">可装备:</div>`;
 
   if (inventory.length === 0) {
-    html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">无可用残渣</div>`;
+    // C4 遗留修复: #2a2d32 是边框/装饰色，不是文字色（A1 对比度硬下限） — 曾在此处
+    // 落在文字上，对比度约 1:1，不可读。
+    html += `<div style="font-size:13px;color:#8a8f96;text-align:center;padding:8px;">无可用残渣</div>`;
   } else {
     html += `<div class="tile-grid">`;
     const canEquip = slots.some((s) => s === null);
@@ -299,6 +301,7 @@ function render(): void {
   html += `<div class="action-bar">
     <span id="defense-close-btn" class="action-btn btn-muted${leaveFocused ? ' btn-focused' : ''}" style="cursor:pointer;">离开</span>
   </div>`;
+  html += `<div class="key-hint-bar"><span class="key">Tab</span> 切区 · <span class="key">↑↓←→</span> 移动 · <span class="key">Enter</span> 装填/取下 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
   wireEvents(slots, inventory);
