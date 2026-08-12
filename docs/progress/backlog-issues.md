@@ -10,6 +10,8 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 
 ## 待处理
 
+- [ ] `minimap.ts` 的 canvas 仍直接挂 `document.body`（`position:fixed`），未走 `#dom-ui-root`——窗口宽高比偏离 960:640 出现 letterbox 时可能与画布错位；与裂隙 HUD 同源的技术债（scrollFactor/屏幕空间应对齐同一根节点）。建议下次触碰小地图时一并迁移 (Slice 5.5 R3.1 / 2026-08-13)
+- [ ] UX Kit v2 §A1「Phaser HUD 字号 ×1.5 换算 DOM px」对裂隙 HUD 已失效（HUD 已迁纯 DOM）——需 art 下次修订时更新该表，直接用 DOM ≥12px 规则 (Slice 5.5 R3.1 / 2026-08-13)
 - [ ] `abyss` 减伤上限 65%（CSV 写"3 模块均低于半血"）在当前 2 模块下触不到，真实上限 50%；`stitch` 文案同样假设 3 模块 → Slice 7 加第三模块后自动成立，届时复核 (Slice 5 / 2026-08-12)
 - [ ] 四个工具占位数值 CSV 结构装不下，暂存 `constants.ts`：`combust` 每秒伤害、`mirror` 诱饵接触半径、`resonate` 两点最大距离（CSV 字段 0，同构的 `stitch` 是 96px，疑为数据疏漏）、`abyss` 的第二计时（5s 混乱惩罚，CSV 每行只有一个 duration 列）→ 需给 CSV 扩列才能回归策划数据源规则 (Slice 5 / 2026-08-12)
 - [ ] `purification-hud` 未套 `.game-panel`——该文件设计为无边框符号网格，与 `.game-panel` 风格互斥，code agent 选择延续其自身符号语言。**需 QA/人确认这个判断** → **已纳入 Slice 5.5 范围（表面 S2），由 art 在 UX Design Kit v2 的载体决策表中裁定** (Slice 5 / 2026-08-12)
