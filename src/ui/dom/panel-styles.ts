@@ -579,6 +579,86 @@ interface ScalableGame {
   events: { once(event: string, fn: () => void): unknown };
 }
 
+// ---------------------------------------------------------------------------
+// Toast primitives (C6 — ui-art-overhaul.md §A4/A6 "toast-inline"/"toast-stamp")
+//
+// Before this, `showSideEffectToasts` (rift-scene.ts), `showNewToolToast` and
+// `showStabilityMilestone` (purification-scene.ts) each re-implemented the same
+// "fixed-position banner, fade out, mount on document.body" boilerplate with their
+// own keyframe-injection guard and their own (sometimes sub-12px, IA §A1 floor)
+// font size. Both callers now funnel through these two functions so duration,
+// mount point (#dom-ui-root, not document.body) and the minimum font size can't
+// drift per call site again.
+// ---------------------------------------------------------------------------
+
+export interface ToastInlineOptions {
+  /** CSS position/placement declarations, e.g. 'top:60px;left:50%;transform:translateX(-50%);'. */
+  position: string;
+  /** Text colour. Defaults to the standard bright text colour. */
+  color?: string;
+  /** Extra CSS merged in after the shared base (background/border/padding for the
+   *  "banner" look already established at the three migrated call sites). */
+  extraStyle?: string;
+  durationMs?: number;
+}
+
+const TOAST_INLINE_FADE_STYLE_ID = 'toast-inline-fade-style';
+
+function ensureToastInlineFadeKeyframes(): void {
+  if (document.getElementById(TOAST_INLINE_FADE_STYLE_ID)) return;
+  const style = document.createElement('style');
+  style.id = TOAST_INLINE_FADE_STYLE_ID;
+  style.textContent = `@keyframes toast-inline-fade { 0%{opacity:1;} 70%{opacity:1;} 100%{opacity:0;} }`;
+  document.head.appendChild(style);
+}
+
+/** Channel B banner (ux-information-architecture.md §S14): one line, non-blocking,
+ *  auto-dismiss, queued only in the sense that a new call replaces the visual slot -
+ *  no overlap handling beyond that is attempted here. `html` may contain `<br>` for
+ *  the multi-line case (side-effect disclosure). */
+export function showToastInline(html: string, opts: ToastInlineOptions): void {
+  ensureToastInlineFadeKeyframes();
+  const durationMs = opts.durationMs ?? 3000;
+
+  const toast = document.createElement('div');
+  toast.className = 'toast-inline';
+  toast.style.cssText = [
+    opts.position,
+    `color:${opts.color ?? '#c8cdd4'}`,
+    `animation:toast-inline-fade ${durationMs}ms ease-out forwards`,
+    opts.extraStyle ?? '',
+  ].join(';');
+  toast.innerHTML = html;
+
+  getDomUiRoot().appendChild(toast);
+  setTimeout(() => toast.remove(), durationMs);
+}
+
+/** Channel C stamp (ux-information-architecture.md §S14): rare, one-shot, full-screen,
+ *  dismissed by click / any key / timeout — whichever comes first. */
+export function showToastStamp(text: string, opts: { durationMs?: number } = {}): void {
+  const durationMs = opts.durationMs ?? 1500;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'toast-stamp';
+  overlay.style.pointerEvents = 'auto';
+  overlay.textContent = text;
+  getDomUiRoot().appendChild(overlay);
+
+  const dismiss = (): void => {
+    overlay.removeEventListener('click', dismiss);
+    document.removeEventListener('keydown', keyDismiss);
+    clearTimeout(tmr);
+    overlay.remove();
+  };
+  const keyDismiss = (e: KeyboardEvent): void => {
+    if (!e.repeat) dismiss();
+  };
+  overlay.addEventListener('click', dismiss);
+  document.addEventListener('keydown', keyDismiss);
+  const tmr = setTimeout(dismiss, durationMs);
+}
+
 /**
  * Bind the DOM UI root's transform to the game canvas's actual on-screen box.
  * Call once, right after the Phaser.Game instance is created (see main.ts).

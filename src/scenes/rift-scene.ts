@@ -36,6 +36,7 @@ import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { describeSideEffectBody } from '@/ui/side-effect-labels';
 import { riftResultPanel } from '@/ui/dom/rift-result-panel';
+import { getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
 import type { PendingSideEffect } from '@/systems/defense-engine';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { TileType, type Contaminant, type ContaminantRarity, type ContaminantType, type Vector2 } from '@/types/game-types';
@@ -501,7 +502,10 @@ export class RiftScene extends Phaser.Scene {
     narration.textContent = text;
     overlay.appendChild(narration);
 
-    document.body.appendChild(overlay);
+    // Mounted on the shared DOM UI root (C6), not document.body directly - the root's
+    // transform is what keeps this text scaling in step with the canvas under Scale.FIT
+    // (ui-art-overhaul.md §A1), same as every other DOM overlay.
+    getDomUiRoot().appendChild(overlay);
 
     // Timeline: 0.5s fade-in, 2.0s hold, 0.5s fade-out, then remove (total 3s)
     setTimeout(() => {
@@ -578,7 +582,8 @@ export class RiftScene extends Phaser.Scene {
     return lines;
   }
 
-  /** Show DOM toast notifications for defense side effects. */
+  /** Show a Channel-B toast (ui-art-overhaul.md §A4, C6 shared primitive) disclosing
+   *  defense side effects carried into this sortie. */
   private showSideEffectToasts(effects: PendingSideEffect[]): void {
     // Shared with impact-result-panel.ts (Slice 5.5 D5/V8) so the two "what did
     // this side effect do" mappings can never drift apart. This site keeps its own
@@ -593,27 +598,13 @@ export class RiftScene extends Phaser.Scene {
     const messages = effects.map(describeEffect).filter((m): m is string => m !== null);
     if (messages.length === 0) return;
 
-    // Inject animation style if needed
-    if (!document.getElementById('side-effect-toast-style')) {
-      const style = document.createElement('style');
-      style.id = 'side-effect-toast-style';
-      style.textContent = `@keyframes side-effect-fade { 0%{opacity:1;} 70%{opacity:1;} 100%{opacity:0;} }`;
-      document.head.appendChild(style);
-    }
-
-    const toast = document.createElement('div');
-    toast.style.cssText = [
-      'position:fixed', 'top:60px', 'left:50%', 'transform:translateX(-50%)',
-      'z-index:998', 'background:rgba(15,17,20,0.92)', 'border:1px solid #cc3333',
-      'padding:8px 16px', "font:11px 'Courier New',monospace",
-      'color:#cc3333', 'pointer-events:none',
-      'animation:side-effect-fade 3s ease-out forwards',
-      'text-align:left', 'line-height:1.6',
-    ].join(';');
-    toast.innerHTML = messages.join('<br>');
-
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+    showToastInline(messages.join('<br>'), {
+      position: 'top:60px;left:50%;transform:translateX(-50%);',
+      color: '#cc3333',
+      // C6: was 11px, below the IA §A1 12px floor for DOM text.
+      extraStyle: "background:rgba(15,17,20,0.92);border:1px solid #cc3333;padding:8px 16px;" +
+        "font:12px 'Courier New',monospace;text-align:left;line-height:1.6;",
+    });
   }
 
   private applySingleSideEffect(effect: PendingSideEffect): void {

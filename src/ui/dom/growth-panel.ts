@@ -13,7 +13,7 @@ import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import type { GrowthUpgradeId } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles, showToastStamp } from './panel-styles';
 
 // Upgrade display config (name/icon/effect label) is CSV-id-driven and shared with
 // status-panel.ts via src/config/growth-upgrade-display.ts — single source of truth.
@@ -216,7 +216,9 @@ function render(): void {
       // "已至上限" replaces the English "MAX" (S15 类别2, U5).
       html += `<div style="font-size:13px;color:#8a5c2a;font-weight:bold;">已至上限</div>`;
     } else {
-      const costColor = canAfford ? '#c4873a' : '#2a2d32';
+      // C6: unaffordable used to fall back to #2a2d32 (border/divider-only per A1 -
+      // unreadable as text). Muted text colour instead, so the cost stays legible.
+      const costColor = canAfford ? '#c4873a' : '#8a8f96';
       html += `<div class="card-cost"><span class="${canAfford ? 'affordable' : ''}" style="color:${costColor};">${cost}</span></div>`;
     }
 
@@ -312,29 +314,7 @@ function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void 
 
   localStorage.setItem('coh_first_growth_done', '1');
 
-  setTimeout(() => {
-    const overlay = document.createElement('div');
-    overlay.id = 'first-growth-milestone';
-    overlay.className = 'game-panel';
-    overlay.style.cssText = [
-      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
-      'z-index:2000', 'background:rgba(0,0,0,0.85)', 'border:none',
-      'display:flex', 'align-items:center', 'justify-content:center',
-      'font-size:16px', 'color:#c4873a',
-      'cursor:pointer', 'pointer-events:auto',
-    ].join(';');
-    overlay.textContent = '已刻入';
-    getDomUiRoot().appendChild(overlay);
-
-    const dismiss = (): void => {
-      overlay.removeEventListener('click', dismiss);
-      document.removeEventListener('keydown', keyDismiss);
-      clearTimeout(tmr);
-      overlay.remove();
-    };
-    const keyDismiss = (e: KeyboardEvent): void => { if (!e.repeat) dismiss(); };
-    overlay.addEventListener('click', dismiss);
-    document.addEventListener('keydown', keyDismiss);
-    const tmr = setTimeout(dismiss, 1500);
-  }, 300);
+  // C6: migrated onto the shared `.toast-stamp` primitive (was a hand-rolled overlay
+  // with an equivalent but independently-maintained dismiss-on-click/key/timeout).
+  setTimeout(() => showToastStamp('已刻入'), 300);
 }

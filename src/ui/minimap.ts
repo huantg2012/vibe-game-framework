@@ -18,12 +18,17 @@ import { TileType, type Vector2 } from '@/types/game-types';
 
 const MINIMAP_SCALE = 3;          // px per tile
 const MARGIN = 8;                 // px from screen edge
-const BG_COLOR = '#0a0d0a';
-const EXPLORED_FLOOR = '#2a3228';
-const EXPLORED_WALL = '#4a4038';
-const PLAYER_COLOR = '#ffffff';
+// C6 (ui-art-overhaul.md §A2 minimap row): mapped onto locked palette values - was
+// #0a0d0a/#2a3228/#4a4038/#ffffff/#ffffff, none of which are registered colours and
+// whose colour temperature didn't match the rest of the scene. Player dot moves onto
+// the warm-glow colour ("玩家=暖色" per A2's stated reasoning); extraction keeps the
+// world's own extraction-point near-white so the two markers stay distinct.
+const BG_COLOR = '#0d1114';
+const EXPLORED_FLOOR = '#151a1e';
+const EXPLORED_WALL = '#4a4e55';
+const PLAYER_COLOR = '#c4873a';
 const PLAYER_DOT_SIZE = 2;
-const EXTRACTION_COLOR = '#ffffff';
+const EXTRACTION_COLOR = '#b0fff5';
 const EXTRACTION_DOT_SIZE = 2;
 const BORDER_COLOR = '#2a2d32';
 const OPACITY = 0.85;

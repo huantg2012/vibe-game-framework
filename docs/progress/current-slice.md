@@ -261,9 +261,9 @@ Slice 5 的验证问题是「出击前'带什么'的决策是否变得纠结」�
 | C3 | 物品检视层（先补键盘游标导航） | ✅ `1e04ffb`（三区键盘游标；选中即检视 L1–L5，L2 摘要降级待 CSV 扩列；title tooltip 已清；DEC-046） |
 | C4 | 分配/蜕变收敛 + 本地名表清零 | ✅ `4d954a1`（全项目 TYPE_NAMES/TOOL_NAMES 代码零残留；分配/蜕变键盘可达） |
 | C5 | 冲击披露 D5 + 稳定度降级 D7 + 阻断链合并 + 净化点 HUD | ✅ `0b491de`（十项归因全披露；归来单次确认；稳定度改存续报告陈述；spec 已标 interface-changed） |
-| C6 | 反馈层统一 + 小地图 + 术语/文案收口 | 🔄 派发中 |
+| C6 | 反馈层统一 + 小地图 + 术语/文案收口 | ✅（见下方本轮记录） |
 
-_下一轮：C6 交付 → 给人完整验收清单（不标 COMPLETE）。_
+_C6 是本轮（也是当前已排期的最后一批）交付 → 给人完整验收清单（不标 COMPLETE，由 Director 整理）。_
 
 | 表面 | 看什么 | commit |
 | ---- | ------ | ------ |
@@ -278,4 +278,46 @@ _下一轮：C6 交付 → 给人完整验收清单（不标 COMPLETE）。_
 - C1 跳过了存档摘要行；危险红对比度不够未用
 - **C3 前置已核实：现有面板无键盘游标导航**——检视层批次必须先补这层
 
-_下一轮：C3 交付 → 继续 C4。_
+### R2 — C6 交付（2026-08-13）· 反馈层统一 + 小地图色值 + 文案收口
+
+**范围**：施工图见 C6 派发指令（S14 反馈层收口 + S12 小地图色值 + S1/main.ts/术语杂项文案收口）。commit `a1e4600`。
+
+**反馈层（S14）**：
+- 新增共享 toast 基元 `showToastInline` / `showToastStamp`（`panel-styles.ts`），统一挂载点为 `#dom-ui-root`（此前多处直接挂 `document.body`）
+- 已迁移到共享基元：裂隙防御副作用 toast（`rift-scene.ts` `showSideEffectToasts`）、净化点新工具 toast（`purification-scene.ts` `showNewToolToast`）、净化点稳定度里程碑 toast（`showStabilityMilestone`，同时把误用的绿色 `#44aa66` 改为暖色 `#e0a848`/`#c4873a`）、首次蜕变印记（`growth-panel.ts` `checkFirstGrowthMilestone` → `.toast-stamp`）
+- 顺手修复：迁移的三处 banner toast 字号原为 11px，低于 A1 的 12px 硬下限，一并提到 12px
+- 混乱阈值全屏氛围提示（`rift-scene.ts` `onChaosThreshold`）：IA 判定"已有,保留"，未改视觉，仅把挂载点从 `document.body` 改为 `#dom-ui-root`（与其余 DOM 层一致，文字随 canvas 缩放）
+- **未迁移、保持原状**：`growth-panel.ts` `showPurchaseFlash`（购买闪现）——它是插入面板内容流的行内元素，不是浮层 toast，结构上不适配 `.toast-inline`（后者是 `position:fixed` 浮层），强行套用属于自创视觉，故保留其既有实现（颜色已合规）
+- **通道分级未做的部分**：IA §S14 定义的 Channel B"队列最多同时 2 条"未实现并发队列管理——现状是"各自独立计时器，同时触发会重叠"，与 C6 之前一致。这是范围内的已知缺口，不是本批引入的新问题，登记供下一次触碰反馈层时处理
+
+**小地图（S12）色值映射**（`minimap.ts`，按 §A2 表逐一替换，新增色值 = 0）：
+
+| 用途 | 旧值 | 新值 |
+| ---- | ---- | ---- |
+| 背景 | `#0a0d0a` | `#0d1114` |
+| 已探索地板 | `#2a3228` | `#151a1e` |
+| 已探索墙 | `#4a4038` | `#4a4e55` |
+| 玩家点 | `#ffffff` | `#c4873a` |
+| 撤离点 | `#ffffff` | `#b0fff5` |
+
+未做（本批不在施工图内，登记留意）：IA §S12 建议玩家点带朝向、撤离点用不同形状（当前两者仍同形同尺寸圆点，只是不同色）——纯色值映射任务未要求形状变更，视为下一次触碰小地图时的候选项。
+
+**文案/术语收口**：
+- `main.ts` 暂停遮罩 `#ccc`/`#888` → 锁定色 `#c8cdd4`/`#8a8f96`，字体族对齐 `'Courier New', monospace`
+- 场景过渡叙事文字误用边框色 `#5a5f66` 作正文色（`run-controller.ts` 裂隙→净化点、`purification-scene.ts` 净化点→裂隙）→ 统一改 `#c8cdd4`（与混乱阈值叙事文字同色）
+- `growth-panel.ts` 蜕变卡片"买不起"态的费用数字误用边框色 `#2a2d32` 作文字色（几乎不可读）→ 改 `#8a8f96`
+- 扫描确认：无英文软件词/`Prototype`/感叹号鼓励语残留；`#5a5f66`/`#2a2d32` 误作正文色的残留已清零（`.option.disabled`/`.card-dots .dot-empty` 等纯装饰性用法不算，未改动）
+
+**待补录术语表的词（不擅自改 world.md，列给 Director/design）**：
+- 强度档位「轻微/中等/剧烈/极端」（`impact-system.ts SEVERITY_LABEL`，冲击结算与预告共用）
+- 混乱档位「稳定/渗透/侵蚀/临界」（`hud.ts chaosTierLabel`；R1 已记录一次，此处重申仍未收录）
+
+**CSV**：`summaryDefense`/`summaryTool` 本批未扩列（按指令保持不变）。
+
+**架构登记**：`side-effect-labels.ts`（C5 引入未登记）+ `PanelStyles` 新增导出，均已补登记 `architecture.md`。
+
+**spec 判断**：本批改动是 toast 基础设施收敛 + 纯色值映射 + 文字色修复，不含新数值/条件/状态转移，判定为不需要就地扩写任何 spec。
+
+**逃逸**：本批 typecheck / build 一次通过，dev 冒烟正常。
+
+_下一轮：Director 汇总 U1-U12 与 S1-S15 完整验收清单，交人试玩。_
