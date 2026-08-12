@@ -31,7 +31,7 @@ import { ToolSystem } from '@/systems/tool-system';
 import { TrailSystem } from '@/systems/trail-system';
 import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
-import { HUD, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/hud';
+import { RiftHud, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/dom/rift-hud';
 import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { describeSideEffectBody } from '@/ui/side-effect-labels';
@@ -68,7 +68,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly toolSystem = new ToolSystem();
   private readonly extraction = new ExtractionSystem();
   private readonly runController = new RunController();
-  private readonly hud = new HUD();
+  private readonly hud = new RiftHud();
   private readonly minimap = new Minimap();
   private chaos!: ChaosSystem;
 
@@ -255,7 +255,7 @@ export class RiftScene extends Phaser.Scene {
       )
       .filter((s): s is ToolSlotInfo => s !== null);
 
-    this.hud.create(this, {
+    this.hud.create({
       canExtract: () => this.extraction.canExtract(),
       isRunEnded: () => this.runController.isRunEnded(),
       toolSlots: toolSlots.length > 0 ? toolSlots : undefined,

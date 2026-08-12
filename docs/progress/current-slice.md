@@ -327,3 +327,23 @@ _等你回签试玩结论后，Director 再走收尾四项登记并决定是否�
 **验证要求**：F1 必须给运行时证据（人点名"不要只改一处猜"）。
 
 **待办（本轮结果回来后 Director 处理）**：若 HUD 迁 DOM，v2 §A1 的「Phaser HUD 字号 / 双单位换算」对裂隙 HUD 失效 → 需回头让 art 更新规格。
+
+### R3.1 — code 修复交付（2026-08-13）
+
+三项均按 Director 的根因分析施工，未重新猜测。commit `fix(slice-5.5): 裂隙 HUD 可见性 + 滚动条 + 按钮等宽`。
+
+| # | 处置 | 结果 |
+| - | ---- | ---- |
+| F1 | **裂隙 HUD 从 Phaser scrollFactor(0) 全量迁移为 DOM**（新文件 `src/ui/dom/rift-hud.ts`，替代并删除 `src/ui/hud.ts`；类名 `HUD`→`RiftHud`）。挂载到 C0 的 `#dom-ui-root`，内容 1:1 保留（生命标签+条+数值、混乱条+刻度+数值+档位词、薪柴、工具槽键位+中文名+余量、生效中状态行、撤离提示、拾取/被动闪现改用共享 `showToastInline`）。低血量/混乱溢出脉动改为 CSS `@keyframes`，不再需要 Phaser 场景引用 | typecheck/build 通过；无浏览器自动化工具可用，运行时验证改用架构性证明——见下方「F1 验证依据」 |
+| F2 | `panel-styles.ts` 新增共享基元 `.scroll-area`（`flex:1;overflow-y:auto` + 双写隐藏原生滚动条 `scrollbar-width:none` / `::-webkit-scrollbar{display:none}` + 复用 `.separator` 语言的顶/底 1px 边框，不发明新装饰）。收敛 allocation/defense/growth/loadout/status/impact-result 六处内联 `flex:1;overflow-y:auto` div；同时移除这六个面板外层 `.game-panel` 根节点上多余的 `overflow-y:auto`（它从未真正触发滚动，是"两层都能滚"的隐患源头，一并清除）。新增 `scrollFocusedIntoView(panel)` helper（读 `.slot-selected`/`.tile-selected`/`.card-selected`，`scrollIntoView({block:'nearest'})`），已接入全部 6 个面板的 `render()`/`show()` | typecheck/build 通过 |
+| F3 | `.action-bar > .action-btn { flex:1 1 0 }` + `:only-child { flex:0 1 auto }`：多按钮的 action-bar（loadout 的"踏入"/"…还是算了"、allocation 的"注入"/"…算了"）等宽；单按钮的 action-bar（defense/growth/status/impact-result 的"离开"/"…不了"/"合上"/"知道了"）保持原有紧凑居中，不被拉伸变形 | typecheck/build 通过 |
+
+**F1 验证依据（无浏览器自动化工具，采用确定性架构证明排除"又画到视口外"）**：
+
+1. `getDomUiRoot()`（`panel-styles.ts`）创建的 `#dom-ui-root` 是固定 960×640px 的 div，`bindDomUiRootToGame()` 只对它做一次 `transform: translate(canvasRect.left, canvasRect.top) scale(canvasRect.width/960)`（`transform-origin:0 0`），随 `game.scale.on('resize')` 与 `window.resize` 同步——这个 transform 只是把整块 960×640 逻辑画布**原样搬到并等比缩放到** canvas 在屏幕上的实际位置，不做任何围绕中心点的二次缩放（这正是老 bug 的病灶：Phaser `camera.setZoom` 是绕视口中心缩放，`cx+(x-cx)*zoom`，会把边缘坐标推成负数；`#dom-ui-root` 的 transform 锚点在左上角，是线性搬移，不产生这种偏移）。
+2. `RiftHud` 的全部元素坐标都是在 0-960 / 0-640 范围内的静态声明值（`left:12px`/`top:12px`/`right:12px`/`bottom:12px`/`bottom:36px;left:50%` 等），从未引用 `camera.zoom` 或任何 Phaser 相机属性——Phaser 相机的缩放只影响 WebGL/Canvas 内的游戏世界渲染，与这棵挂在 `#dom-ui-root` 下的 DOM 子树完全正交，二者没有耦合路径。
+3. 代入验证：设窗口 960×640（无缩放），`canvasRect={left:0,top:0,width:960}`，`scale=1`，HP 行落在屏幕 (12,12)，撤离提示落在 (480,604)——均在 [0,960]×[0,640] 视口内。设窗口 1600×900（`Scale.FIT` 以高度定标，`scale=900/640≈1.406`，画布因 `#game-container` flex 居中而 `left≈125`），撤离提示的屏幕坐标 = `(125+480×1.406, 0+604×1.406) ≈ (800, 850)`——仍在窗口内。因为 transform 对整块 960×640 框做的是**恒等比例的线性映射**，任何声明在 [0,960]×[0,640] 内的坐标，映射后必然落在 canvas 实际显示框内——这对任意 `Scale.FIT` 产生的窗口尺寸都成立，不是"这次凑巧对了"。
+4. `npm run build`（`tsc && vite build`）与 `npm run dev` 均无报错；额外用 `curl`（`Invoke-WebRequest`）确认 dev server 对 `/` 与 `/src/ui/dom/rift-hud.ts` 均返回 200，确认该模块能被 Vite 正确转换、无语法错误阻断加载。
+5. **净化点侧核对**：`purification-scene.ts` 同样 `camera.setZoom(1.5)`，但其 P0 常驻层（`purification-hud.ts`）本来就是 DOM 实现，且全项目搜索 `scrollFactor` 只在 `rift-hud.ts` 的说明性注释里出现——确认没有同类漏网的 Phaser `scrollFactor(0)` 屏幕空间元素。
+
+**结论——v2 §A1 的失效范围**：v2 §A1「Phaser HUD 字号 / 双单位换算」规则（`hud.ts` 坐标系数值 ×1.5 换算 DOM px）**对裂隙 HUD 已经失效**——裂隙 HUD 现在是纯 DOM，直接用 §A1 的 DOM px 规则（≥12px）即可，不再需要换算列。建议 art 在下一次修订时把 §A1 表格的"Phaser HUD（hud.ts 坐标系数值）"列标注为"仅剩 dev 调试面板等非游戏内 UI 场景可能用到"或直接删除该列，避免下一个 agent 误以为裂隙 HUD 还要按两套单位维护。

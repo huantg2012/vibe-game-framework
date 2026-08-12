@@ -19,7 +19,7 @@ import type { PhaseChangeInfo } from '@/systems/tide-system';
 import type { ContaminantType } from '@/types/game-types';
 import { getDefenseName } from '@/ui/contaminant-names';
 import { describeSideEffectWithSource } from '@/ui/side-effect-labels';
-import { getDomUiRoot, injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -101,7 +101,6 @@ export const impactResultPanel = {
       'z-index:1001',
       'display:flex',
       'flex-direction:column',
-      'overflow-y:auto',
       'border-color:#cc3333',
       'animation:impact-shake 0.3s ease-out',
       'pointer-events:auto',
@@ -131,6 +130,7 @@ export const impactResultPanel = {
 
     panel.innerHTML = buildHtml(damages, intensity, options);
     root.appendChild(panel);
+    scrollFocusedIntoView(panel);
 
     // Wire close button click
     panel.querySelector('#impact-close-btn')?.addEventListener('click', dismiss);
@@ -161,7 +161,7 @@ function buildHtml(
   let html = `<div style="text-align:center;margin-bottom:8px;">
     <div style="font-size:18px;font-weight:bold;color:#cc3333;">冲击 x${intensity.toFixed(2)}</div>
   </div>`;
-  html += `<div style="flex:1;overflow-y:auto;">`;
+  html += `<div class="scroll-area">`;
 
   // --- Damage bars (基础 → 实际 when defense reduced them, D5) ---
   const base = options.baseDamagePerModule;

@@ -12,7 +12,7 @@ import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
-import { getDomUiRoot, injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // State
@@ -69,7 +69,6 @@ function createPanel(): void {
     'z-index:1000',
     'display:flex',
     'flex-direction:column',
-    'overflow-y:auto',
     'pointer-events:auto',
   ].join(';');
 
@@ -252,7 +251,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const confirmDisabled = selectedAmount <= 0;
 
   let html = `<div class="panel-title" style="color:${typeColor};">${typeLabel} <span style="font-size:13px;color:#8a8f96;text-transform:none;font-weight:normal;">${effectDesc}</span></div>`;
-  html += `<div style="flex:1;overflow-y:auto;">`;
+  html += `<div class="scroll-area">`;
 
   // Progress bar with preview
   html += `<div style="margin:8px 0;">
@@ -305,6 +304,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   html += `<div class="key-hint-bar"><span class="key">←→</span> 调整1 · <span class="key">Shift+←→</span> 调整5 · <span class="key">Home/End</span> 归零/拉满 · <span class="key">Enter</span> 注入 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
+  scrollFocusedIntoView(panel);
 
   // Wire up event listeners
   panel.querySelector('#alloc-minus')?.addEventListener('click', () => {

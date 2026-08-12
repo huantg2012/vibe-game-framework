@@ -206,7 +206,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv` | `CONTAMINANT_DATA: Record<ContaminantType, ContaminantDef>`；`UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef>`（数据常量，非函数接口） | 已实现（Slice 4） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | MapGenerator | src/generation/ | Voronoi+CA 程序化地图生成 | generate(config): MapData | 规划中（目录不存在；RiftScene 当前用 `src/scenes/rift-map-data.ts` 手工编排的固定地图） |
-| HUD | src/ui/hud.ts | 裂隙内游戏状态显示（混乱值条/生命条/薪柴数/工具槽/撤离提示/结算结果面板），`class HUD` 由 RiftScene 持有实例 | create(scene, config), update(deltaMs), reset(), destroy() | 已实现（Slice 1+） |
+| RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（混乱值条/生命条/薪柴数/工具槽/撤离提示），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 修复"HUD 不可见"——从 Phaser scrollFactor(0) Text/Graphics 迁移为 DOM，因 zoom=1.5 下 scrollFactor(0) 对象仍被相机缩放变换，四角锚点全部落在视口外） |
+| RiftResultPanel | src/ui/dom/rift-result-panel.ts | 裂隙撤离/阵亡结算 DOM 面板，与冲击结算面板视觉同源（本轮补登记，模块本身为 Slice 5.5 C2 交付） | isOpen(), show(data), close(), destroy() | 已实现（Slice 5.5） |
 | Minimap | src/ui/minimap.ts | 裂隙战争迷雾小地图：独立 canvas overlay（不走 Phaser 渲染管线），已探索区域/玩家点/撤离点渲染 | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), update(playerWorldPos), reset(), destroy() | 已实现 |
 | AllocationPanel | src/ui/dom/allocation-panel.ts | 净化点单模块薪柴分配 DOM 面板 | isOpen(), open(moduleId, onClose?), close() | 已实现（Slice 2+，Slice 4.5 迁移至共享面板样式层） |
 | DefensePanel | src/ui/dom/defense-panel.ts | 防御 slot 管理 DOM 面板（装/卸污染物） | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |

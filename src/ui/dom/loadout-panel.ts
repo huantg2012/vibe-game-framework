@@ -19,7 +19,7 @@ import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import type { Contaminant } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
 
 // Rarity is "Degree not Kind": same contam color family, rising brightness
 // (ui-art-overhaul.md A2) instead of unrelated hues per tier.
@@ -110,7 +110,6 @@ function createPanel(): void {
     'z-index:1001',
     'display:flex',
     'flex-direction:column',
-    'overflow-y:auto',
     'pointer-events:auto',
   ].join(';');
 
@@ -248,7 +247,7 @@ function render(): void {
   const activeCount = contaminantSystem.getSortieActiveSlotCount();
 
   let html = `<div class="panel-title" style="color:#1aad96;">踏入裂隙</div>`;
-  html += `<div style="flex:1;overflow-y:auto;">`;
+  html += `<div class="scroll-area">`;
 
   // Slot grid - one cell per unlocked sortie slot (active slots first, passive last;
   // column count follows slots.length so growth_sortie_slot's 4th slot doesn't wrap
@@ -319,6 +318,7 @@ function render(): void {
   html += `<div class="key-hint-bar"><span class="key">Tab</span> 切区 · <span class="key">↑↓←→</span> 移动 · <span class="key">Enter</span> 装/卸/确认 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
+  scrollFocusedIntoView(panel);
   wireEvents(slots, inventory);
 }
 

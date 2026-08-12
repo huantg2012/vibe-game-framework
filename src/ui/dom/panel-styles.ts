@@ -455,6 +455,21 @@ const CSS = `
   justify-content: center;
   margin-top: 10px;
 }
+/* Equal-width buttons (Slice 5.5 playtest fix #3): width used to follow label
+   length ("算了" vs "踏入"), reading as unfinished. flex:1 makes every direct
+   .action-btn child of an .action-bar share the row equally; :only-child reverts
+   to the natural compact/centered width for single-button bars (defense/growth/
+   status/impact-result "离开"/"…不了"/"合上"/"知道了"), where there is nothing to
+   be unequal with and stretching to the full row width would be a regression, not
+   a fix. Direct-child selector only, so this never reaches the allocation panel's
+   separate +/- stepper row, which is not an .action-bar. */
+.game-panel .action-bar > .action-btn {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.game-panel .action-bar > .action-btn:only-child {
+  flex: 0 1 auto;
+}
 
 /* === Backdrop overlay === */
 .game-panel-backdrop {
@@ -497,10 +512,25 @@ const CSS = `
   z-index: 2000;
 }
 
-/* === Scrollbar === */
-.game-panel::-webkit-scrollbar { width: 4px; }
-.game-panel::-webkit-scrollbar-track { background: #0f1114; }
-.game-panel::-webkit-scrollbar-thumb { background: #2a2d32; }
+/* === Scroll area (Slice 5.5 playtest fix #2) ===
+   Single primitive for every panel's internal scrolling content region, replacing
+   the 6 files that each hand-rolled their own inline "flex:1;overflow-y:auto;" div
+   with zero scrollbar styling — that inline div (not the .game-panel root, which
+   never actually overflows once its flex:1 middle absorbs the extra height) is
+   where the un-skinned native browser scrollbar was showing through. Scrollbar is
+   hidden (not just re-skinned) in both engines — scroll capability is unaffected,
+   only the browser-native chrome is removed. Top/bottom 1px borders (existing
+   .separator colour) mark the scrollable region using a primitive already in the
+   vocabulary rather than inventing a new affordance (fade/▲▼ etc. were considered
+   and explicitly not used — see director's brief). */
+.game-panel .scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  border-top: 1px solid #2a2d32;
+  border-bottom: 1px solid #2a2d32;
+  scrollbar-width: none; /* Firefox */
+}
+.game-panel .scroll-area::-webkit-scrollbar { display: none; width: 0; height: 0; } /* Chrome/Safari/Edge */
 `;
 
 let injected = false;
@@ -518,6 +548,23 @@ export function injectPanelStyles(): void {
   style.textContent = CSS;
   document.head.appendChild(style);
   injected = true;
+}
+
+/**
+ * Scrolls the panel's current keyboard-cursor element into view (Slice 5.5 playtest
+ * fix #2, second half): hiding the native scrollbar via `.scroll-area` above removes
+ * the one browser-native affordance keyboard-only navigation used to lean on for
+ * "scroll me there yourself". Every panel's re-render call site should call this
+ * right after setting `panel.innerHTML`, so the keyboard cursor's own "已选中" class
+ * (shared across all panels — `.slot-selected` / `.tile-selected` / `.card-selected`)
+ * is the single source of truth this reads, rather than each panel tracking its own
+ * scroll offset. `{ block: 'nearest' }` means it only moves the scroll position when
+ * the element is actually out of view - already-visible selections don't jump.
+ */
+export function scrollFocusedIntoView(panel: HTMLElement): void {
+  panel
+    .querySelector('.slot-selected, .tile-selected, .card-selected')
+    ?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
 // ---------------------------------------------------------------------------

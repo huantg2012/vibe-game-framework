@@ -13,7 +13,7 @@ import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import type { GrowthUpgradeId } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles, showToastStamp } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView, showToastStamp } from './panel-styles';
 
 // Upgrade display config (name/icon/effect label) is CSV-id-driven and shared with
 // status-panel.ts via src/config/growth-upgrade-display.ts — single source of truth.
@@ -80,7 +80,6 @@ function createPanel(): void {
     'z-index:1001',
     'display:flex',
     'flex-direction:column',
-    'overflow-y:auto',
     'pointer-events:auto',
   ].join(';');
 
@@ -159,7 +158,7 @@ function render(): void {
   const reserve = gameState.getKindlingReserve();
 
   let html = `<div class="panel-title" style="color:#8a5c2a;">蜕变</div>`;
-  html += `<div style="flex:1;overflow-y:auto;">`;
+  html += `<div class="scroll-area">`;
   html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
     <span style="font-size:13px;color:#8a8f96;">薪柴储备</span>
     <span style="font-size:16px;color:#c4873a;font-weight:bold;">${reserve}</span>
@@ -235,6 +234,7 @@ function render(): void {
   html += `<div class="key-hint-bar"><span class="key">↑↓</span> 选卡 · <span class="key">Enter</span> 购买 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
+  scrollFocusedIntoView(panel);
   wireEvents();
 }
 

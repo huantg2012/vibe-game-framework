@@ -16,7 +16,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { getDefenseName, getRarityStars, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import type { Contaminant } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
 
 // Rarity is "Degree not Kind": escalating contam brightness instead of unrelated hues
 // per tier (ui-art-overhaul.md A2 maps common -> contam-mid #1a6b5c, but that value is
@@ -97,7 +97,6 @@ function createPanel(): void {
     'z-index:1001',
     'display:flex',
     'flex-direction:column',
-    'overflow-y:auto',
     'pointer-events:auto',
   ].join(';');
 
@@ -236,7 +235,7 @@ function render(): void {
   // tone: that fails the 4.5:1 text floor (A1), so it's reserved for the charge bar
   // fill below (a decorative fill, not text).
   let html = `<div class="panel-title" style="color:#1aad96;">供奉</div>`;
-  html += `<div style="flex:1;overflow-y:auto;">`;
+  html += `<div class="scroll-area">`;
 
   // Slot grid - one visual container per unlocked defense slot (Slice 5 T5:
   // growth_defense_slot unlocks a 4th; column count follows slots.length so the
@@ -304,6 +303,7 @@ function render(): void {
   html += `<div class="key-hint-bar"><span class="key">Tab</span> 切区 · <span class="key">↑↓←→</span> 移动 · <span class="key">Enter</span> 装填/取下 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
+  scrollFocusedIntoView(panel);
   wireEvents(slots, inventory);
 }
 

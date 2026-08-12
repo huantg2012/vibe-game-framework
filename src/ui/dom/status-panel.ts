@@ -16,7 +16,7 @@ import { contaminantSystem } from '@/systems/contaminant-system';
 import { getDefenseName, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import type { Contaminant } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
 
 // Rarity is "Degree not Kind": same contam color family, rising brightness
 // (ui-art-overhaul.md A2) instead of unrelated hues per tier.
@@ -88,7 +88,6 @@ function createPanel(): void {
     'z-index:1001',
     'display:flex',
     'flex-direction:column',
-    'overflow-y:auto',
     'pointer-events:auto',
   ].join(';');
 
@@ -179,7 +178,7 @@ function render(): void {
   const storageMod = gameState.getModule('STORAGE');
 
   let html = `<div class="panel-title">存续报告</div>`;
-  html += `<div style="flex:1;overflow-y:auto;">`;
+  html += `<div class="scroll-area">`;
 
   // === Module status with bars ===
   html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">`;
@@ -333,6 +332,7 @@ function render(): void {
   html += `<div class="key-hint-bar"><span class="key">↑↓←→</span> 浏览库存 · <span class="key">Tab</span> / <span class="key">Esc</span> 合上</div>`;
 
   panel.innerHTML = html;
+  scrollFocusedIntoView(panel);
 
   panel.querySelector('#status-close-btn')?.addEventListener('click', () => {
     statusPanel.close();
