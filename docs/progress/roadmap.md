@@ -67,7 +67,7 @@ CSV 构建期管线 + 防御效果引擎（7 种 Common 副作用）+ 被动工�
 
 交付：Fine/Rare 主动工具 7 种补完（主动 15/15 可用）、`siphon` 被动（3/3）、防御侧 6 处 `handled externally` 全部接线 + 2 处琐碎项、工具使用 VFX（8 视觉族群，规格 `docs/art/tool-vfx-spec.md`）、永久改造深度（第 4 工具槽 / 第 4 防御槽 / 预告准确率）+ 成长系统泛化、模块受损三态视觉、文档清账四项 + 架构注册表全量补核。
 计划外补两项：**T7** Slice 4 的 8 个工具对敌人零效果（`ToolDebuffs` 全项目无消费方——按键有反馈但敌人行为不变，直接架空本 Slice 的验证问题）；**T8** 四处 CSV 承诺但代码从未接的机制。
-主 commit `e9f611d`；逐项完成报告见该 commit 与收尾 commit 版本的 `docs/progress/current-slice.md`（该文件每 Slice 覆写）。
+主 commit `e9f611d`；逐项完成报告 + 收尾章节见 commit `d0bd785` 版本的 `docs/progress/current-slice.md`（该文件每 Slice 覆写）。
 **验证状态：实现完成、体验未验证。** 机器闸门全绿，人未逐项回签试玩清单与 U1-U12，直接要求收尾转入 5.5。装配决策纠结感是否成立 → Slice 5.5 期间观察；若不成立，回退路径是回 design 重审工具/防御收益结构（结构性问题，不得靠改 constants 掩盖）。
 遗留 7 项全部在 `backlog-issues.md` 追踪，其中 `purification-hud` 是否套 `.game-panel` 划归 Slice 5.5。
 
