@@ -1,8 +1,9 @@
 ---
 status: ACTIVE
-slice: 3
-last-modified-date: 2026-08-12
-interface-changed: false
+slice: 3 (extended in 5, 5.5)
+last-modified-date: 2026-08-13
+last-modified-by: director agent
+interface-changed: true
 interfaces-with:
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
   - system-chaos-scavenge-extract # 出击工具 + 永久改造修正出击参数；新增污染物拾取节点
@@ -173,8 +174,8 @@ interface SaveData {
 | 潮汐切换（进入新 Tide） | +8 |
 | 模块归零 | -1 |
 
-22. **显示**：净化点 HUD 中一个进度条（0-100%）。当前 Tide 编号也显示。
-23. **到达 100%**：本 Slice 仅标记 `reached = true`，不触发终局内容（推迟到后续 Slice）。显示"净化完成...?"的文字提示。
+22. **显示**（Slice 5.5 DEC-045 D7 修订）：稳定度**不**在净化点常驻 HUD 以进度条呈现——它不影响净化点即时决策，且 100% 尚无终局内容（规则 23），进度条隐喻是空头承诺。改为存续报告（P2）内的**状态陈述**（如 `42%` / `已完成`）。潮汐编号仍由净化点 HUD 的潮汐行承载。
+23. **到达 100%**：本 Slice 仅标记 `reached = true`，不触发终局内容（推迟到后续 Slice）。显示用状态陈述「已完成」，不用进度条拉满动画。
 
 ### P — 持久存档
 
@@ -195,7 +196,7 @@ interface SaveData {
     - 防御 slot 管理 UI（走到边界区域按 E 打开）
     - 改造祭坛交互点
     - 潮汐信息显示（当前 Tide + Phase）
-    - 稳定度进度条
+    - 稳定度：存续报告内状态陈述（非 HUD 进度条；见规则 22）
     - 出击前装备选择界面（走到裂隙入口按 E 前弹出 loadout 选择）
 
 ---
@@ -276,7 +277,7 @@ interface SaveData {
 | P0 | 出击 loadout UI | 出击前选择面板 |
 | P1 | 改造祭坛 UI | DOM 面板 |
 | P1 | 潮汐信息 HUD | 净化点 + 冲击结果面板扩展 |
-| P1 | 稳定度 HUD | 净化点进度条 |
+| P1 | 稳定度显示 | 存续报告状态陈述（Slice 5.5 起；原「净化点进度条」已废） |
 
 **Slice 3 实现的 3 种污染物**：
 - 普通：固化残渣 → 凝锁

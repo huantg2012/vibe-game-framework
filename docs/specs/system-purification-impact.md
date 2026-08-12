@@ -1,9 +1,9 @@
 ---
 status: ACTIVE
-slice: 2 (extended in 4.5, 5)
-last-modified-by: design agent
-last-modified-date: 2026-08-12
-interface-changed: false
+slice: 2 (extended in 4.5, 5, 5.5)
+last-modified-by: director agent
+last-modified-date: 2026-08-13
+interface-changed: true
 interfaces-with:
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier back
   - system-movement-vision          # purification scene reuses Player + VisibilitySystem (DEC-ARCH-008)
@@ -14,10 +14,11 @@ exposes:
   - GameState.getModuleEffect(type) / getSortieModifiers()
   - GameState.getKindlingReserve() / healModule(id, amount)
   - GameState.isModuleSwapActive() / setModuleSwapActive(active)
-  - ImpactSystem.run(defenseSlots) -> ImpactResult （含 defenseResult）
+  - ImpactSystem.run(defenseSlots) -> ImpactResult （含 defenseResult；Slice 5.5 增 primaryModuleId / trueSeverity / baseDamagePerModule）
   - ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus) / getForecastDisplay() -> ForecastDisplay
   - applyDefenseEffects(baseDamage, slots, context) -> DefenseResult
-    （Slice 5 新增出口 healOut / bonusCharges / toolUseGrants / moduleSwapTriggered）
+    （Slice 5 新增出口 healOut / bonusCharges / toolUseGrants / moduleSwapTriggered；
+     Slice 5.5 新增 slotDisclosures 供结算面板逐槽归因）
   - getDefenseRuntimeState() / loadDefenseRuntimeState(state) / ContaminantRuntimeState
   - AllocationPanel.open(moduleId)
   - BoundaryShape.radiusAt(angle) / normalizedDist(x,y) / isInside(x,y)
@@ -69,6 +70,10 @@ interface ImpactResult {
   intensity: number;
   skipped: boolean;               // cycle=0 的首次豁免
   defenseResult?: DefenseResult;  // 无防御槽占用时缺省
+  // Slice 5.5 C5：结算面板披露用（预告 vs 实际对照）
+  primaryModuleId?: string;
+  trueSeverity?: 'light' | 'moderate' | 'heavy' | 'extreme';
+  baseDamagePerModule?: Record<string, number>;
 }
 
 /** 冲击预告的玩家可见值（DEC-034）。可能与 ground truth 不同——见规则 7 / 25。 */
@@ -77,7 +82,7 @@ interface ForecastDisplay {
   severity: 'light' | 'moderate' | 'heavy' | 'extreme';
 }
 
-/** 防御结算的输出。Slice 5 新增后四项（DEC-037）。 */
+/** 防御结算的输出。Slice 5 新增后四项（DEC-037）；Slice 5.5 新增 slotDisclosures（DEC-045 D5）。 */
 interface DefenseResult {
   finalDamagePerModule: Record<string, number>;
   sideEffects: PendingSideEffect[];
@@ -92,6 +97,18 @@ interface DefenseResult {
   bonusCharges: Record<string, number>;   // erode / resonate 跨槽冲击计数
   toolUseGrants: number;                  // echo 的工具次数 +1
   moduleSwapTriggered: boolean;           // overwrite 的模块功能互换
+  /** Slice 5.5：逐槽归因，供冲击结算面板披露「谁挡了多少 / 谁触发了什么」 */
+  slotDisclosures: SlotDisclosure[];
+}
+
+/** 单槽在一次冲击中的可披露贡献（Slice 5.5）。减伤链用精确 telescoping 分解，非估算。 */
+interface SlotDisclosure {
+  contaminantId: string;
+  type: ContaminantType;
+  damageReductionPct: number;
+  damageBlocked: number;
+  // 以下字段按类型选填：副作用文案键、薪柴返还、稳定度变化、治疗量/目标、
+  // 是否无效化、是否均衡、是否给工具次数、是否触发模块互换、改造折扣增量等
 }
 
 /** 跨冲击持久的污染物运行时状态，按 contaminant id 索引（DEC-032）。 */
