@@ -313,3 +313,17 @@ Slice 5 的验证问题是「出击前'带什么'的决策是否变得纠结」�
 8. 「被发现指示」刻意未做（D8 → Slice 6）
 
 _等你回签试玩结论后，Director 再走收尾四项登记并决定是否标 COMPLETE。_
+
+---
+
+### R3 — 人第一轮试玩反馈（2026-08-13）· 三项必须修，已派 code
+
+| # | 人的原话 | Director 已确认的根因 | 处置 |
+| - | -------- | -------------------- | ---- |
+| F1 | **裂隙场景还是看不到 HUD** | **真 bug，C2 交付有洞。** `rift-scene.ts:128` `camera.setZoom(1.5)`；`hud.ts` 全部元素是 Phaser + `setScrollFactor(0)`，锚在 `(8,8)` 一类左上角坐标。**scrollFactor(0) 不免除 camera zoom**——缩放绕相机中点做，渲染位置 ≈ `cx + (x-cx)*zoom`，代入得 `(-228, -148)`，**画到了视口外**。zoom=1.5 下 scrollFactor-0 的可见区间只有 x∈[160,800]、y∈[107,533]，四角读数全部在区间外。本项目已踩过同一个坑并写进 `rift-scene.ts:856-858` 注释（dev 面板因此走 DOM），Slice 3「净化点 HUD 不可见」也是同病同解 | **裁决：迁 DOM，挂 C0 的 `#dom-ui-root`**。不违反 art 载体决策——v2 §A0 的「A 类世界内装置」是视觉语言分类，`purification-hud` 同为 A 类且本就是 DOM；迁移后两场景常驻读数层反而更一致（U11），且免疫整类 zoom bug、字号统一 DOM 一套 |
+| F2 | **部分交互面板有很出戏的滚动条** | `panel-styles.ts` 只给 `.game-panel` 根写了 `::-webkit-scrollbar`，真正滚动的是各面板内层 `flex:1;overflow-y:auto` 的**内联 div**（7 个文件），完全没样式 → 走浏览器默认；且 Firefox 不认 webkit 伪元素 | 收敛为共享滚动容器基元；隐藏原生外观（webkit + Firefox 双写）保留滚动；滚动提示用现有终端语言。**附带正确性要求**：原生条隐藏后，C3 的键盘游标移动必须自动把焦点项滚进可视区 |
+| F3 | **底部按钮（算了、那些）不等宽** | `.action-bar` flex + `.action-btn` 纯 padding 撑宽 → 宽度跟文字长度走 | 等宽（等分或统一 min-width），保持居中/直角/1px 边框/四态不变，走共享样式层 |
+
+**验证要求**：F1 必须给运行时证据（人点名"不要只改一处猜"）。
+
+**待办（本轮结果回来后 Director 处理）**：若 HUD 迁 DOM，v2 §A1 的「Phaser HUD 字号 / 双单位换算」对裂隙 HUD 失效 → 需回头让 art 更新规格。
