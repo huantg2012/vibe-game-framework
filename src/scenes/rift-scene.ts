@@ -31,10 +31,13 @@ import { ToolSystem } from '@/systems/tool-system';
 import { TrailSystem } from '@/systems/trail-system';
 import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
-import { HUD } from '@/ui/hud';
+import { HUD, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/hud';
 import { Minimap } from '@/ui/minimap';
+import { getDefenseName, getToolName } from '@/ui/contaminant-names';
+import { riftResultPanel } from '@/ui/dom/rift-result-panel';
 import type { PendingSideEffect } from '@/systems/defense-engine';
-import { TileType, type Contaminant, type Vector2 } from '@/types/game-types';
+import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { TileType, type Contaminant, type ContaminantRarity, type ContaminantType, type Vector2 } from '@/types/game-types';
 import type { LandmarkDef } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
 
@@ -76,9 +79,16 @@ export class RiftScene extends Phaser.Scene {
   private toolKeys: Phaser.Input.Keyboard.Key[] = [];
 
   private debugPanel: HTMLDivElement | null = null;
-  private debugVisible = true;
+  /** V7 (ui-art-overhaul.md A1): dev overlay must not outshine the real HUD by
+   *  default. F1 opens it; DEV builds only (see `createDebugOverlay`). */
+  private debugVisible = false;
   /** Seeded past the refresh interval so the panel has content on the first frame. */
   private debugAccumulatorMs = Number.POSITIVE_INFINITY;
+
+  // --- Sortie result tracking (feeds the DOM result panel on exit, C2) ---
+  private sortieKillCount = 0;
+  private sortieAcquired: { type: ContaminantType; rarity: ContaminantRarity }[] = [];
+  private sortiePassiveTriggers = new Map<ContaminantType, number>();
 
   constructor() {
     super({ key: 'RiftScene' });
@@ -228,25 +238,30 @@ export class RiftScene extends Phaser.Scene {
     const passiveSlotIndex = contaminantSystem.getSortiePassiveSlotIndex();
     const activeKeys = GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS;
     const toolSlots = sortieLoadout
-      .map((c, i) =>
+      .map((c, i): ToolSlotInfo | null =>
         c
           ? {
               label: i === passiveSlotIndex ? '被动' : activeKeys[i] ?? '?',
-              name: c.type,
+              type: c.type,
+              // Single-source name lookup (Slice 5.5 C2) - this field used to carry the
+              // raw type id (`solidify`), which is not a display name at all (S10 diagnosis).
+              name: getToolName(c.type),
               usesRemaining: c.usesRemaining,
+              isPassive: i === passiveSlotIndex,
             }
           : null,
       )
-      .filter((s): s is { label: string; name: Contaminant['type']; usesRemaining: number } => s !== null);
+      .filter((s): s is ToolSlotInfo => s !== null);
 
     this.hud.create(this, {
       canExtract: () => this.extraction.canExtract(),
       isRunEnded: () => this.runController.isRunEnded(),
-      getPeakChaos: () => this.chaos.getPeak(),
-      getElapsedMs: () => this.runController.getElapsedMs(),
-      kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
       toolSlots: toolSlots.length > 0 ? toolSlots : undefined,
     });
+
+    this.sortieKillCount = 0;
+    this.sortieAcquired = [];
+    this.sortiePassiveTriggers = new Map();
 
     // Apply initial chaos modulators (all at 0 - no effect)
     this.applyChaosModulators(getChaosModulators(0));
@@ -346,7 +361,10 @@ export class RiftScene extends Phaser.Scene {
     eventBus.on(GameEvent.PLAYER_DIED, this.onRunEnded);
     eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
     eventBus.on(GameEvent.RIFT_EXITED, this.onRunEnded);
+    eventBus.on(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
     eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
+    eventBus.on(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
+    eventBus.on(GameEvent.TOOL_USED, this.onToolUsedForResult);
   }
 
   private bindAttackKey(): void {
@@ -399,6 +417,30 @@ export class RiftScene extends Phaser.Scene {
 
   private readonly onEnemyKilled = ({ enemyId }: { enemyId: string }): void => {
     this.ai.despawn(enemyId);
+    this.sortieKillCount++;
+  };
+
+  private readonly onContaminantAcquired = ({ contaminant }: { contaminant: Contaminant }): void => {
+    this.sortieAcquired.push({ type: contaminant.type, rarity: contaminant.rarity });
+  };
+
+  /** Passive tools (碎影/消声步/寄生引流) have no button - this is the only place
+   *  their trigger count is captured for the result panel's "被动触发" line (S10). */
+  private readonly onToolUsedForResult = ({ toolType }: { toolType: ContaminantType }): void => {
+    if (CONTAMINANT_DATA[toolType]?.toolType !== 'passive') return;
+    this.sortiePassiveTriggers.set(toolType, (this.sortiePassiveTriggers.get(toolType) ?? 0) + 1);
+  };
+
+  private readonly onRiftExitedShowResult = (payload: { kindlingGained: number; survived: boolean }): void => {
+    riftResultPanel.show({
+      survived: payload.survived,
+      kindlingGained: payload.kindlingGained,
+      killCount: this.sortieKillCount,
+      peakChaos: this.chaos.getPeak(),
+      elapsedMs: this.runController.getElapsedMs(),
+      acquired: this.sortieAcquired,
+      passiveTriggers: this.sortiePassiveTriggers,
+    });
   };
 
   /**
@@ -501,23 +543,47 @@ export class RiftScene extends Phaser.Scene {
       this.applySingleSideEffect(effect);
     }
 
-    // Show toast notifications for side effects so the player understands what happened
+    // Channel B (IA S14): a queued 3s toast confirms what just happened on entry.
     this.showSideEffectToasts(effects);
+    // Persistent HUD line for whatever is still active for the rest of the sortie -
+    // the toast alone used to be the only feedback, which faded before the player
+    // could act on it ("防御副作用持续整趟必须常驻,不得只用3秒toast").
+    this.hud.setActiveEffects(this.buildActiveEffectLines(effects));
+  }
+
+  /** Turns sortie-duration side effects into HUD status lines. Instant/one-shot
+   *  effects (initial_chaos, module_swap, purification-phase-only effects) have
+   *  nothing ongoing to show and are intentionally omitted. */
+  private buildActiveEffectLines(effects: PendingSideEffect[]): ActiveEffectInfo[] {
+    const lines: ActiveEffectInfo[] = [];
+    for (const e of effects) {
+      switch (e.type) {
+        case 'chaos_rate_mult':
+          if (e.durationMs) lines.push({ label: `混乱增速 x${e.value}`, remainingMs: e.durationMs });
+          break;
+        case 'vision_reduction':
+          lines.push({ label: `视野 -${Math.round(e.value * 100)}%` });
+          break;
+        case 'speed_reduction':
+          lines.push({ label: `移速 -${Math.round(e.value * 100)}%` });
+          break;
+        case 'proximity_sense_boost':
+          lines.push({ label: `敌近距感知 +${Math.round(e.value * 100)}%` });
+          break;
+        default:
+          break; // initial_chaos / module_swap / purification-phase-only: no ongoing state
+      }
+    }
+    return lines;
   }
 
   /** Show DOM toast notifications for defense side effects. */
   private showSideEffectToasts(effects: PendingSideEffect[]): void {
     // Map effect types to human-readable descriptions
     const describeEffect = (e: PendingSideEffect): string | null => {
-      const sourceNames: Record<string, string> = {
-        solidify: '晶锁残渣', ruminate: '噬化残渣', scatter: '裂散残渣',
-        retrograde: '回溯残渣', delay: '缓释残渣', siphon: '虹吸残渣',
-        expand: '膨胀残渣', muffle: '消声残渣', kindle: '燃尽残渣',
-        stitch: '缝合残渣', compress: '致密残渣', echo: '回响残渣',
-        erode: '侵蚀残渣', combust: '灰烬残渣', resonate: '共振残渣',
-        overwrite: '覆写残渣', mirror: '镜映残渣', abyss: '深渊残渣',
-      };
-      const sourceName = e.source ? (sourceNames[e.source] ?? e.source) : '未知';
+      // Single name entry point (Slice 5.5 C2) - this used to be a 5th local
+      // hardcoded copy of the defense-name table (V8, ui-art-overhaul.md A1).
+      const sourceName = e.source ? getDefenseName(e.source as ContaminantType) : '未知';
 
       switch (e.type) {
         case 'initial_chaos':
@@ -617,6 +683,10 @@ export class RiftScene extends Phaser.Scene {
     this.trail.reset();
     this.minimap.reset();
     this.applyChaosModulators(getChaosModulators(0));
+    riftResultPanel.close();
+    this.sortieKillCount = 0;
+    this.sortieAcquired = [];
+    this.sortiePassiveTriggers = new Map();
   }
 
   /**
@@ -759,7 +829,11 @@ export class RiftScene extends Phaser.Scene {
     eventBus.off(GameEvent.PLAYER_DIED, this.onRunEnded);
     eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRunEnded);
+    eventBus.off(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
     eventBus.off(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
+    eventBus.off(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
+    eventBus.off(GameEvent.TOOL_USED, this.onToolUsedForResult);
+    riftResultPanel.destroy();
     if (this.attackKey) {
       this.input.keyboard?.removeKey(this.attackKey, true);
       this.attackKey = null;
@@ -810,10 +884,16 @@ export class RiftScene extends Phaser.Scene {
    */
   private createDebugOverlay(): void {
     const panel = document.createElement('div');
+    // S11 (ux-information-architecture.md): default OFF, F1 toggles. Anchored
+    // top-center rather than top-left so it never sits on top of the real HUD's
+    // four corner readouts (HP top-left, kindling top-right, tool slots
+    // bottom-left, minimap bottom-right) - it now occupies the strip those four
+    // deliberately leave empty.
     panel.style.cssText = [
       'position:absolute',
       'top:8px',
-      'left:8px',
+      'left:50%',
+      'transform:translateX(-50%)',
       'z-index:10',
       'padding:4px 6px',
       'font:11px/1.45 monospace',
@@ -821,6 +901,7 @@ export class RiftScene extends Phaser.Scene {
       'background:rgba(0,0,0,0.55)',
       'white-space:pre',
       'pointer-events:none',
+      'display:none',
     ].join(';');
     (document.getElementById('game-container') ?? document.body).appendChild(panel);
     this.debugPanel = panel;
@@ -832,6 +913,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private updateDebugOverlay(delta: number): void {
+    if (!this.debugVisible) return;
     this.debugAccumulatorMs += delta;
     if (this.debugAccumulatorMs < 200) return;
     this.debugAccumulatorMs = 0;
