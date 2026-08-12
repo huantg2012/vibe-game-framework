@@ -7,47 +7,24 @@
 
 import type { ImpactDamageEntry } from '@/systems/impact-system';
 import type { ContaminantType } from '@/types/game-types';
+import { getDefenseName } from '@/ui/contaminant-names';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-/** Charge change data for a single defense slot. */
+/** Charge change data for a single defense slot. Display name is derived from
+ *  `type` via `getDefenseName` (CLAUDE.md 策划数据源规则) — not carried here, so
+ *  there is no local copy that can drift from the CSV. */
 export interface ChargeChangeEntry {
   slotIndex: number;
   type: ContaminantType;
-  name: string;
   before: number;
   after: number;
   threshold: number;
   transformed: boolean;
 }
-
-// ---------------------------------------------------------------------------
-// Display name mapping (defense stage names)
-// ---------------------------------------------------------------------------
-
-const TYPE_NAMES: Record<ContaminantType, string> = {
-  solidify: '固化',
-  ruminate: '反刍',
-  scatter: '散射',
-  retrograde: '逆行',
-  delay: '延时',
-  siphon: '虹吸',
-  expand: '膨胀',
-  resonate: '共鸣',
-  overwrite: '覆写',
-  erode: '侵蛀',
-  muffle: '消声',
-  kindle: '燃尽',
-  stitch: '缝合',
-  compress: '致密',
-  mirror: '镜映',
-  echo: '回响',
-  abyss: '深渊',
-  combust: '灰烬',
-};
 
 // ---------------------------------------------------------------------------
 // State
@@ -157,7 +134,7 @@ export const impactResultPanel = {
       html += `<div class="separator"></div>`;
       html += `<div style="font-size:13px;color:#8a8f96;margin-bottom:4px;">防御充能</div>`;
       for (const c of chargeChanges) {
-        const name = TYPE_NAMES[c.type] ?? c.name;
+        const name = getDefenseName(c.type);
         const afterPct = Math.round((c.after / c.threshold) * 100);
         // A2: #6644aa → contam-deep (charging dark state)
         const barColor = c.transformed ? '#1aad96' : '#0e4a3f';

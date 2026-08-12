@@ -42,6 +42,8 @@ import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
+import type { ContaminantType } from '@/types/game-types';
+import { getToolName } from '@/ui/contaminant-names';
 import { GameEvent } from '@/types/events';
 import type { TileMapData, OccluderGrid } from '@/types/map-types';
 
@@ -83,16 +85,6 @@ const GROWTH_RING = 0xcc8844;
 const BREATH_SPEED_NORMAL = (2 * Math.PI) / 2500;
 const BREATH_SPEED_NEAR = (2 * Math.PI) / 1200;
 const BREATH_SPEED_HIGHLIGHT = (2 * Math.PI) / 800;
-
-// B3: Tool name mapping for toast
-const TOOL_NAMES: Record<string, string> = {
-  solidify: '凝锁', delay: '时裂', erode: '侵蚀领域',
-  ruminate: '反刍之口', scatter: '碎影', retrograde: '残响标记',
-  siphon: '寄生引流', expand: '虚化步', resonate: '共振链接',
-  overwrite: '规则覆写', muffle: '消声步', kindle: '燃素弹',
-  stitch: '缝合线', compress: '重力锚', mirror: '镜像诱饵',
-  echo: '回响脉冲', abyss: '深渊之眼', combust: '焚天',
-};
 
 // ---------------------------------------------------------------------------
 // Build the static tilemap (for occluder grid / visibility only, NOT physics)
@@ -824,7 +816,7 @@ export class PurificationScene extends Phaser.Scene {
   private showNewToolToast(transformResults: { contaminantId: string; type: string; slotIndex: number }[]): void {
     if (transformResults.length === 0) return;
 
-    const names = transformResults.map((r) => TOOL_NAMES[r.type] ?? r.type);
+    const names = transformResults.map((r) => getToolName(r.type as ContaminantType));
     const text = `新工具可用: ${names.join(', ')}`;
 
     // Inject animation style if needed
@@ -945,7 +937,6 @@ export class PurificationScene extends Phaser.Scene {
       changes.push({
         slotIndex: entry.slotIndex,
         type: entry.type as import('@/types/game-types').ContaminantType,
-        name: entry.type,
         before: entry.charges,
         after: afterCharges,
         threshold,

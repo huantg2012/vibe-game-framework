@@ -10,13 +10,13 @@
  * `docs/design-notes/ui-art-overhaul.md` A1).
  *
  * C2 wired the rift HUD and `rift-scene.ts`'s side-effect toast onto the name
- * getters. C3 wires `loadout-panel.ts` / `defense-panel.ts` onto both the name
- * getters and `sortContaminants` (IA §S13 "库存排序"), and adds `getRarityStars`
- * to remove the last remaining duplicated small tables from those two files.
- * The remaining local name tables are left for a later batch (C4/C5/C6) to migrate:
- * - `src/ui/dom/status-panel.ts` `TYPE_NAMES` / `TOOL_NAMES`
- * - `src/ui/dom/impact-result-panel.ts` `TYPE_NAMES`
- * - `src/scenes/purification-scene.ts` `TOOL_NAMES`
+ * getters. C3 wired `loadout-panel.ts` / `defense-panel.ts` / `status-panel.ts`
+ * onto both the name getters and `sortContaminants` (IA §S13 "库存排序"), and
+ * added `getRarityStars`. C4 wired the two remaining holdouts —
+ * `src/ui/dom/impact-result-panel.ts` `TYPE_NAMES` and
+ * `src/scenes/purification-scene.ts` `TOOL_NAMES` — onto `getDefenseName` /
+ * `getToolName`, so no panel in the project maintains its own copy of these
+ * names anymore (V8 in `ui-art-overhaul.md` A1 is fully closed).
  */
 
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';

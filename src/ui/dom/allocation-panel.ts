@@ -94,10 +94,63 @@ function destroyPanel(): void {
   selectedAmount = 0;
 }
 
+// Direct amount adjustment (IA §S3 交互契约: ←→ ±1 / Shift+←→ ±5 / Home 归零 /
+// End 拉满 / Enter 注入 / Esc 离开). There is no list of selectable options here —
+// the amount itself is the thing keyboard input drives, so no cursor/"已选中"
+// state is needed (this satisfies "键盘可达" without a button-focus model).
 function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Escape') {
     e.stopPropagation();
     e.preventDefault();
+    allocationPanel.close();
+    return;
+  }
+
+  const mod = currentModuleId ? gameState.getModule(currentModuleId) : null;
+  if (!mod) return;
+  const maxAllocatable = getMaxAllocatable(mod.hp, mod.maxHp);
+
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.stopPropagation();
+    e.preventDefault();
+    const step = e.shiftKey ? 5 : 1;
+    const dir = e.key === 'ArrowRight' ? 1 : -1;
+    selectedAmount = Math.max(0, Math.min(maxAllocatable, selectedAmount + dir * step));
+    rerender();
+    return;
+  }
+
+  if (e.key === 'Home') {
+    e.stopPropagation();
+    e.preventDefault();
+    selectedAmount = 0;
+    rerender();
+    return;
+  }
+
+  if (e.key === 'End') {
+    e.stopPropagation();
+    e.preventDefault();
+    selectedAmount = maxAllocatable;
+    rerender();
+    return;
+  }
+
+  if (e.key === 'Enter') {
+    e.stopPropagation();
+    e.preventDefault();
+    confirmAllocation();
+  }
+}
+
+function confirmAllocation(): void {
+  if (selectedAmount > 0 && currentModuleId) {
+    const spent = gameState.allocateToModule(currentModuleId, selectedAmount);
+    if (spent > 0) {
+      eventBus.emit(GameEvent.ALLOCATION_CONFIRMED, {
+        allocations: { [currentModuleId]: spent },
+      });
+    }
     allocationPanel.close();
   }
 }
@@ -117,6 +170,15 @@ function computeEffectText(type: ModuleType, hp: number): string {
   return `薪柴价值 x${mult}`;
 }
 
+/** Shared by render() (for +/- boundary state) and onKeyDown() (for the keyboard
+ *  amount adjustment), so the two never compute the ceiling differently. */
+function getMaxAllocatable(hp: number, maxHp: number): number {
+  const reserve = gameState.getKindlingReserve();
+  const repairPer = gameState.getEffectiveRepairPerKindling();
+  const maxUseful = Math.ceil((maxHp - hp) / repairPer);
+  return Math.min(reserve, maxUseful);
+}
+
 // ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
@@ -127,8 +189,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const reserve = gameState.getKindlingReserve();
   const repairPer = gameState.getEffectiveRepairPerKindling();
   const siphonBoosted = gameState.getRepairEfficiencyMult() > 1;
-  const maxUseful = Math.ceil((maxHp - hp) / repairPer);
-  const maxAllocatable = Math.min(reserve, maxUseful);
+  const maxAllocatable = getMaxAllocatable(hp, maxHp);
 
   const typeLabel = type === 'CORE' ? '核心' : '储藏';
   // CORE identity color: neutral ui-text-bright, not green — "结构性但非资源" (ui-art-overhaul.md A2).
@@ -169,14 +230,17 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     html += `<div style="font-size:13px;color:${typeColor};text-align:center;margin:4px 0;">${afterEffect}</div>`;
   }
 
-  // Allocation control bar
+  // Allocation control bar. Boundary state (can't go lower/higher) is opacity-dimmed
+  // per ui-art-overhaul.md A5-5~A5-12 ("不可用（-/+到边界）：按钮 opacity 40%"), not
+  // a text-color swap — the displayed number already states the limit, no extra
+  // wording needed.
   html += `<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 8px;">
-    <span id="alloc-minus" class="action-btn btn-muted${minusDisabled ? '' : ''}" style="padding:4px 10px;${minusDisabled ? 'opacity:0.3;cursor:default;' : ''}">-</span>
+    <span id="alloc-minus" class="action-btn btn-muted" style="padding:4px 10px;${minusDisabled ? 'opacity:0.4;cursor:default;' : ''}">-</span>
     <div style="min-width:60px;text-align:center;">
       <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">${selectedAmount}</div>
       <div style="font-size:13px;color:#8a8f96;">薪柴</div>
     </div>
-    <span id="alloc-plus" class="action-btn btn-muted" style="padding:4px 10px;${plusDisabled ? 'opacity:0.3;cursor:default;' : ''}">+</span>
+    <span id="alloc-plus" class="action-btn btn-muted" style="padding:4px 10px;${plusDisabled ? 'opacity:0.4;cursor:default;' : ''}">+</span>
   </div>`;
 
   // Reserve info. siphon (Slice 5 gap-fill): while equipped, repairPer is already the
@@ -184,12 +248,17 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   // what makes that fact visible rather than just a bigger number the player might miss.
   html += `<div style="font-size:13px;color:#8a8f96;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度${siphonBoosted ? ' <span style="color:#c4873a;">(虹吸增效)</span>' : ''}</div>`;
 
-  // Action bar
+  // Action bar. Disabled state relies on the .btn-muted class's own readable
+  // #8a8f96/#2a2d32 pairing instead of forcing the border color as text (that
+  // was the bug: an inline color override was landing #2a2d32 directly on text,
+  // ~1:1 contrast against the panel background — a real V1-class violation, not
+  // just a style nit).
   html += `</div>`; // end flex:1 content wrapper
   html += `<div class="action-bar">
-    <span id="alloc-confirm" class="action-btn${confirmDisabled ? ' btn-muted' : ''}" style="color:${confirmDisabled ? '#2a2d32' : typeColor};border-color:${confirmDisabled ? '#2a2d32' : typeColor};${confirmDisabled ? 'cursor:default;' : ''}">注入</span>
+    <span id="alloc-confirm" class="action-btn${confirmDisabled ? ' btn-muted' : ''}" style="${confirmDisabled ? 'cursor:default;' : `color:${typeColor};border-color:${typeColor};`}">注入</span>
     <span id="alloc-cancel" class="action-btn btn-muted" style="cursor:pointer;">…算了</span>
   </div>`;
+  html += `<div class="key-hint-bar"><span class="key">←→</span> 调整1 · <span class="key">Shift+←→</span> 调整5 · <span class="key">Home/End</span> 归零/拉满 · <span class="key">Enter</span> 注入 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
 
@@ -208,17 +277,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     }
   });
 
-  panel.querySelector('#alloc-confirm')?.addEventListener('click', () => {
-    if (selectedAmount > 0 && currentModuleId) {
-      const spent = gameState.allocateToModule(currentModuleId, selectedAmount);
-      if (spent > 0) {
-        eventBus.emit(GameEvent.ALLOCATION_CONFIRMED, {
-          allocations: { [currentModuleId]: spent },
-        });
-      }
-      allocationPanel.close();
-    }
-  });
+  panel.querySelector('#alloc-confirm')?.addEventListener('click', confirmAllocation);
 
   panel.querySelector('#alloc-cancel')?.addEventListener('click', () => {
     allocationPanel.close();

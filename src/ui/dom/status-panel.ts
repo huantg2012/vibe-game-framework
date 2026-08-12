@@ -19,8 +19,12 @@ import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // Rarity is "Degree not Kind": same contam color family, rising brightness
 // (ui-art-overhaul.md A2) instead of unrelated hues per tier.
+// C4 readability scan: this panel's own copy still had `common: '#1a6b5c'`
+// (~3:1 against the panel background, under the 4.5:1 text floor per A1) —
+// defense-panel.ts / loadout-panel.ts already carry the corrected value.
+// Brought into line here rather than left to drift.
 const RARITY_COLORS: Record<string, string> = {
-  common: '#1a6b5c',
+  common: '#8a8f96',
   fine: '#1aad96',
   rare: '#3cffd4',
 };
@@ -257,7 +261,10 @@ function render(): void {
   const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
   if (defenseItems.length > 0) {
-    html += `<div style="font-size:13px;color:#0e4a3f;margin-bottom:4px;">防御</div>`;
+    // contam-deep (#0e4a3f) is reserved for decorative fills (charge bars), not
+    // text — same reasoning defense-panel.ts's title already documents. Section
+    // labels use the readable contam-core tone, same as "工具" below.
+    html += `<div style="font-size:13px;color:#1aad96;margin-bottom:4px;">防御</div>`;
     html += `<div class="tile-grid">`;
     defenseItems.forEach((c, i) => {
       const name = getDefenseName(c.type);
@@ -285,17 +292,20 @@ function render(): void {
   }
 
   if (brokenItems.length > 0) {
-    html += `<div style="font-size:13px;color:#2a2d32;margin:6px 0 4px;">已碎</div>`;
+    // #2a2d32 is border/divider-only (A2) — it was landing on text here at
+    // ~1:1 contrast, unreadable regardless of the intentionally de-emphasized
+    // "broken" semantics. #8a8f96 keeps the muted read without disappearing.
+    html += `<div style="font-size:13px;color:#8a8f96;margin:6px 0 4px;">已碎</div>`;
     html += `<div class="tile-grid">`;
     for (const c of brokenItems) {
       const name = getDefenseName(c.type);
-      html += `<span class="pill" style="color:#2a2d32;border-color:#1a1c1f;">${name}</span>`;
+      html += `<span class="pill" style="color:#8a8f96;border-color:#1a1c1f;">${name}</span>`;
     }
     html += `</div>`;
   }
 
   if (defenseItems.length === 0 && toolItems.length === 0 && brokenItems.length === 0) {
-    html += `<div style="font-size:13px;color:#2a2d32;text-align:center;padding:8px;">尚无污染物</div>`;
+    html += `<div style="font-size:13px;color:#8a8f96;text-align:center;padding:8px;">尚无污染物</div>`;
   }
 
   // Inspect dock (选中即检视 — IA §S13 / ui-art-overhaul.md A5-13). Only wired for
