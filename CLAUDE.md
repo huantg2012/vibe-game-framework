@@ -7,12 +7,14 @@
 - **Agent 定义**：`.claude/agents/*` 与 `.cursor/agents/*`（ideation / director / design / code / art / qa；两份**正文**必须逐字一致，frontmatter 的 `model` 按运行时取值）
 - **约束与参考文档**：`guides/**`、本文件（`CLAUDE.md`）中的框架规则
 - **文档模板**：`docs/**/_template-*.md`（agent 据此生成具体游戏的活文档）
+- **项目 skill**：`.cursor/skills/`（HOW；自定义 agent 不会自动加载，必须显式 Read）
 - **可复用工具**：`tools/art-pipeline/`（构建期美术资源后处理与机器验收，自包含、可独立运行）
 - **用户入口**：`START-HERE.md`
+- **Cursor 钩子**：`AGENTS.md` + `.cursor/rules/*.mdc`（alwaysApply；正文仍是本文件）
 
 它定义了整个 vibe coding game 的流程与开发者交互方式。
 
-> **分支约定（重要）**：`master` 只维护框架本身，**不含任何具体游戏的活文档或代码**。用本框架开发的具体游戏（含 dogfood 验证项目）活在独立分支（如 `coh`）上——`docs/` 活文档实例、`src/` 游戏代码、游戏构建配置（`package.json`/`vite.config.ts`/`index.html` 等）都只存在于游戏分支，不回流 `master`。
+> **分支约定（重要）**：`master` 只维护框架本身，**不含任何具体游戏的活文档或代码**。用本框架开发的具体游戏（含 dogfood 验证项目）活在独立分支上——`docs/` 活文档实例、`src/` 游戏代码、游戏构建配置（`package.json`/`vite.config.ts`/`index.html` 等）都只存在于游戏分支，不回流 `master`。框架改动先上 `master`，再合并到游戏分支。
 
 ## 变更传播规则（强制）
 
@@ -32,10 +34,12 @@
 2. **搜索**：Grep 以下范围查找所有引用：
    - `.claude/agents/*.md`
    - `.cursor/agents/*.md`
+   - `.cursor/skills/**`
    - `docs/**/*.md`
    - `guides/**`
    - `START-HERE.md`
    - `CLAUDE.md`
+   - `AGENTS.md`
 3. **处理**：逐个更新受影响的文件，或明确标记为待更新
 4. **报告**：向用户列出所有已更新/待更新的文件
 
@@ -50,6 +54,9 @@
 ```
 .claude/agents/*.md 与 .cursor/agents/*.md = AI 的执行标准（最高权威；两份正文逐字一致，
                                             frontmatter 仅 model 允许按运行时差异）
+.cursor/skills/                          = HOW（自定义 agent 必须显式 Read）
+CLAUDE.md                                = 项目执行标准正文（阶段、硬约束、路由）
+AGENTS.md                                = Cursor 侧钩子（指向 CLAUDE.md + 硬约束摘要，不复制全文）
 START-HERE.md                            = 人的操作入口
 guides/*.md                              = 人的参考资料（设计原理记录）
 ```
@@ -62,11 +69,14 @@ guides/*.md                              = 人的参考资料（设计原理记�
 
 ```
 .claude/agents/ 与 .cursor/agents/ → ideation, director, design, code, art, qa（两份正文一致）
+.cursor/skills/        → 项目 skill（in-game UX HOW；自定义 agent 须显式 Read）
 guides/                → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
 docs/**/_template-*.md → 游戏活文档的模板（实例在游戏分支开发时生成）
 tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）
 tools/agent-parity/    → 两份 agent 定义的一致性校验（无依赖，node 直接跑）
 START-HERE.md          → 用户入口
+AGENTS.md              → Cursor 侧 Agent 入口（钩子，正文仍是 CLAUDE.md）
+.cursor/rules/*.mdc    → Cursor alwaysApply 规则（强制加载上述钩子）
 ```
 
 ## 游戏项目的文档体系（开发时产生）
@@ -94,6 +104,26 @@ Slice-based iterative development：
 - 每个 Slice = Design → Implement → Verify → Validate 完整循环
 - Slice 分类：系统 Slice / 内容 Slice / 功能 Slice / 集成 Slice / 打磨 Slice
 - 无 "prototype" 阶段，第一行代码即生产质量
+- **打磨/表现类 Slice 走轻量路径**：免完整 Task Brief，但收尾必须登记四项（架构登记 / spec 判断 / 交付范围记录 / UI 清单），四项未完成不得标 COMPLETE。仍须**单批上下文预算**（每一批 = 一次 agent 会话可独立完成并过闸门；ALL 表面不得打成一批）。系统 Slice 的验证若依赖界面可读，规划时要么把 UX 收进同一 Slice，要么把验证转下游并写回退路径。「实现完成、体验未验证」是合法收尾态，禁止无证据记 PASS。详见 director agent 定义 Step 2–3 与 `guides/99-review.md` FV-02 / FV-04。
+
+## 游戏内 UI 的硬约束（所有 Agent 遵守）
+
+人最在意两件事，**缺一即不合格**（人终审，清单不能替代）：
+
+1. **审美过关** — 对得起该游戏的 `art-direction.md` 与具名游戏参考。人说丑就是不合格。过 U2 反模式清单 ≠ 好看。
+2. **读作游戏** — 不是后台管理系统、不是调试面板、不是通用 web。载体错了会稳定产出这个失败。
+
+**in-game UI ≠ admin panel。** 这是本框架实测中最容易翻车的地方（见 `guides/99-review.md` FV-01）。下面各条是保住上述两件北星的手段，不是北星本身。项目色板、参考游戏、组件类、overlay 挂载根住在该游戏的 art-direction / UI Kit / architecture，不写进本段。
+
+- **HOW 住在 skill，不靠口号。** 触碰 in-game UI 必须执行 `.cursor/skills/in-game-ux/SKILL.md`（开工闸门 + 写完自检；按**本游戏**文档填写，禁止套用别的游戏的皮）。自定义 agent 不会自动加载 skill，必须显式 Read。Director 派 UI 任务时 Task Brief 必须写明这一步。记「要审美过关 / 要像游戏」而不走该 HOW = 不合格（见 FV-05）。
+- 任何 UI 工作开工前先做**载体决策**：世界内装置 / 世界内终端 / 元界面。**只有元界面允许有"软件界面感"。** 载体是视觉语言，不是实现层：屏幕空间读数挂 `architecture.md` 声明的 overlay 根；钉世界坐标的才走引擎世界层。禁止把角锚 HUD 绑在会因 camera zoom / letterbox 漂移的实现上。
+- 必须锚定 **2-3 个具名游戏参考**并写进 spec（学什么动作 / 明确不学什么）。没有参考研究时走 skill 的 Bootstrap，请人锁定后再画。
+- 验收走 `docs/specs/_template-ui.md` 末尾的「游戏内 UI 验收清单」U1-U12——那是全项目唯一权威清单（design 自查结构层、art 自查视觉层、qa 逐条验收）。清单是闸门，不是 HOW。
+- 视觉真相的优先级：ui spec > 项目 UI Kit 活文档 > `art-direction.md` 的 UI 节 > `world.md` 术语表。Kit 是活文档：实现一偏就改 Kit，禁止拿过期换算当验收基准。
+- 不写响应式断点：固定逻辑分辨率（项目配置）；手机端默认 out-of-scope。
+- **术语收口 ≠ 句子能读。** 表名 / 数值 / 档位必须分开展示；禁止拼成会被读成复合名词的一句。
+- **试玩热修仍须 art。** 即使人已点名样式 / 蒙层 / HUD 布局方案，仍须 art 做最短合规核对（载体 + 参考 + 相关 U 项）；禁止 code 独自发明新视觉语言。
+- **UX 不能制造机制里没有的犹豫。** 界面只讲清机制里已有的事实；纠结不成立则回 design 重审收益结构，禁止用面板假装有选择。
 
 ## 策划数据源规则（强制）
 
