@@ -15,10 +15,9 @@
  * box directly (`panel-styles.ts` `bindDomUiRootToGame`), independent of whatever
  * the Phaser camera's zoom is doing - 1 declared px here is always 1 on-screen px.
  *
- * Content parity with the old Phaser HUD is intentional (IA S10 P1 set): HP
- * (label+bar+value), chaos (bar+50/75 ticks+value+tier word), kindling, tool slots
- * (key+name+uses), active-effect lines, extract prompt, pickup/passive toasts. Same
- * layout, same information - technology only.
+ * Content: HP (label+bar+value), chaos (label + 0–150 bar with 50/75/100 ticks +
+ * number + separate stage caption), kindling, tool slots (key+name+uses),
+ * active-effect lines, extract prompt, pickup/passive toasts, overflow veil.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -37,12 +36,14 @@ import { getDomUiRoot, showToastInline } from './panel-styles';
 
 const MARGIN = 12; // was BAR_MARGIN 8
 const CHAOS_ROW_TOP = 30; // was hpY(8) + 12, i.e. (8+12)*1.5
-const EFFECTS_ROW_TOP = 48; // was hpY(8) + 12 + 12, i.e. (8+24)*1.5
+const EFFECTS_ROW_TOP = 56; // room for the stage caption under the chaos row
 const HEALTH_BAR_WIDTH = 75; // was 50
 const CHAOS_BAR_WIDTH = 135; // was 90
 const BAR_HEIGHT = 6; // was 4
+const LABEL_WIDTH = 32;
 
 const CHAOS_COLOR = '#1aad96';
+const CHAOS_OVERFLOW_COLOR = '#2ae6c8';
 const HEALTH_COLOR = '#8a8f96';
 const HEALTH_LOW_COLOR = '#cc3333';
 const HEALTH_LOW_THRESHOLD = 0.25;
@@ -52,6 +53,8 @@ const TEXT_DIM = '#8a8f96';
 const TEXT_EXHAUSTED = '#5a5f66'; // A1: exhausted-state is the one text use this colour permits
 const TEXT_SHADOW = '0 0 2px rgba(0,0,0,0.8)';
 const FONT = "'Courier New', monospace";
+const NOISE_SVG =
+  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.68  0 0 0 0 0.59  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")";
 
 const PULSE_STYLE_ID = 'rift-hud-pulse-style';
 
@@ -64,7 +67,16 @@ function ensurePulseKeyframes(): void {
   if (document.getElementById(PULSE_STYLE_ID)) return;
   const style = document.createElement('style');
   style.id = PULSE_STYLE_ID;
-  style.textContent = `@keyframes rift-hud-pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }`;
+  style.textContent = [
+    '@keyframes rift-hud-pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }',
+    '@keyframes rift-overflow-jump {',
+    '  0%, 76%, 100% { opacity: 0; }',
+    '  80% { opacity: 1; }',
+    '  84% { opacity: 0.12; }',
+    '  88% { opacity: 0.55; }',
+    '  93% { opacity: 0; }',
+    '}',
+  ].join('\n');
   document.head.appendChild(style);
 }
 
@@ -119,7 +131,12 @@ export class RiftHud {
   private hpFill!: HTMLDivElement;
   private hpValue!: HTMLSpanElement;
   private chaosFill!: HTMLDivElement;
+  private chaosOverflowFill!: HTMLDivElement;
   private chaosValueEl!: HTMLSpanElement;
+  private chaosStageEl!: HTMLSpanElement;
+  private overflowVeil!: HTMLDivElement;
+  private overflowJump!: HTMLDivElement;
+  private overflowGrain!: HTMLDivElement;
   private effectsEl!: HTMLDivElement;
   private lastEffectsString = '';
 
@@ -133,6 +150,7 @@ export class RiftHud {
 
   // State
   private chaosValue = 0;
+  private chaosOverflowing = false;
   private healthCurrent = 0;
   private healthMax = 1;
   private healthFrac = 1;
@@ -272,7 +290,7 @@ export class RiftHud {
 
     const hpLabel = document.createElement('span');
     hpLabel.textContent = 'HP';
-    hpLabel.style.cssText = `font-size:12px;color:${TEXT_DIM};text-shadow:${TEXT_SHADOW};`;
+    hpLabel.style.cssText = `font-size:12px;color:${TEXT_DIM};text-shadow:${TEXT_SHADOW};width:${LABEL_WIDTH}px;flex-shrink:0;`;
 
     const hpBarWrap = document.createElement('div');
     hpBarWrap.style.cssText = `width:${HEALTH_BAR_WIDTH}px;height:${BAR_HEIGHT}px;background:rgba(0,0,0,0.4);border:1px solid #0f1114;position:relative;overflow:hidden;`;
@@ -287,27 +305,50 @@ export class RiftHud {
     hpRow.appendChild(hpBarWrap);
     hpRow.appendChild(this.hpValue);
 
-    // --- Chaos row (below HP, top-left) ---
+    // --- Chaos cluster (below HP): meter name, 0–HARD_CAP bar, number, stage caption ---
+    const chaosCluster = document.createElement('div');
+    chaosCluster.style.cssText = `position:absolute;left:${MARGIN}px;top:${CHAOS_ROW_TOP}px;display:flex;flex-direction:column;gap:2px;`;
+
     const chaosRow = document.createElement('div');
-    chaosRow.style.cssText = `position:absolute;left:${MARGIN}px;top:${CHAOS_ROW_TOP}px;display:flex;align-items:center;gap:4px;`;
+    chaosRow.style.cssText = 'display:flex;align-items:center;gap:4px;';
+
+    const chaosLabel = document.createElement('span');
+    chaosLabel.textContent = '混乱';
+    chaosLabel.style.cssText = `font-size:12px;color:${TEXT_DIM};text-shadow:${TEXT_SHADOW};width:${LABEL_WIDTH}px;flex-shrink:0;`;
 
     const chaosBarWrap = document.createElement('div');
     chaosBarWrap.style.cssText = `width:${CHAOS_BAR_WIDTH}px;height:${BAR_HEIGHT}px;background:rgba(0,0,0,0.4);border:1px solid #0f1114;position:relative;overflow:hidden;`;
     this.chaosFill = document.createElement('div');
-    this.chaosFill.style.cssText = `height:100%;width:0%;background:${CHAOS_COLOR};`;
+    this.chaosFill.style.cssText = `position:absolute;left:0;top:0;height:100%;width:0;background:${CHAOS_COLOR};`;
+    this.chaosOverflowFill = document.createElement('div');
+    this.chaosOverflowFill.style.cssText = `position:absolute;top:0;height:100%;width:0;background:${CHAOS_OVERFLOW_COLOR};`;
     chaosBarWrap.appendChild(this.chaosFill);
-    // Tick marks at 50%/75% - second encoding beyond the tier word (A1 "第二重编码").
-    for (const pct of [50, 75]) {
+    chaosBarWrap.appendChild(this.chaosOverflowFill);
+    // Ticks at 50 / 75 / 100 on a HARD_CAP-length bar. 100 is the overflow gate.
+    const cap = GAME_CONSTANTS.CHAOS.HARD_CAP;
+    for (const mark of [GAME_CONSTANTS.CHAOS.THRESHOLD_1, GAME_CONSTANTS.CHAOS.THRESHOLD_2, GAME_CONSTANTS.CHAOS.THRESHOLD_3]) {
+      const gate = mark === GAME_CONSTANTS.CHAOS.THRESHOLD_3;
       const tick = document.createElement('div');
-      tick.style.cssText = `position:absolute;top:0;bottom:0;left:${pct}%;width:1px;background:rgba(255,255,255,0.3);`;
+      tick.style.cssText = [
+        'position:absolute', 'top:0', 'bottom:0',
+        `left:${(mark / cap) * 100}%`,
+        `width:${gate ? 2 : 1}px`,
+        `background:${gate ? 'rgba(255,255,255,0.75)' : 'rgba(255,255,255,0.3)'}`,
+      ].join(';');
       chaosBarWrap.appendChild(tick);
     }
 
     this.chaosValueEl = document.createElement('span');
     this.chaosValueEl.style.cssText = `font-size:13px;color:${TEXT_BRIGHT};text-shadow:${TEXT_SHADOW};`;
 
+    chaosRow.appendChild(chaosLabel);
     chaosRow.appendChild(chaosBarWrap);
     chaosRow.appendChild(this.chaosValueEl);
+
+    this.chaosStageEl = document.createElement('span');
+    this.chaosStageEl.style.cssText = `font-size:12px;color:${TEXT_DIM};text-shadow:${TEXT_SHADOW};padding-left:${LABEL_WIDTH + 4}px;`;
+    chaosCluster.appendChild(chaosRow);
+    chaosCluster.appendChild(this.chaosStageEl);
 
     // --- Active-effects lines (below chaos, top-left) ---
     this.effectsEl = document.createElement('div');
@@ -322,8 +363,28 @@ export class RiftHud {
     this.extractPromptEl.textContent = '按 E 撤离';
     this.extractPromptEl.style.cssText = `position:absolute;left:50%;bottom:36px;transform:translateX(-50%);font-size:13px;color:${TEXT_BRIGHT};text-shadow:${TEXT_SHADOW};display:none;`;
 
+    this.overflowVeil = document.createElement('div');
+    this.overflowVeil.style.cssText = [
+      'position:absolute', 'inset:0', 'pointer-events:none', 'opacity:0',
+      'background:rgba(8,12,14,0.55)',
+    ].join(';');
+    this.overflowGrain = document.createElement('div');
+    this.overflowGrain.style.cssText = [
+      'position:absolute', 'inset:0', 'pointer-events:none', 'opacity:0',
+      `background-image:${NOISE_SVG}`,
+      'background-size:80px 80px',
+    ].join(';');
+    this.overflowJump = document.createElement('div');
+    this.overflowJump.style.cssText = [
+      'position:absolute', 'inset:0', 'pointer-events:none', 'opacity:0',
+      'background:rgba(26,173,150,0.22)',
+    ].join(';');
+
+    root.appendChild(this.overflowVeil);
+    root.appendChild(this.overflowGrain);
+    root.appendChild(this.overflowJump);
     root.appendChild(hpRow);
-    root.appendChild(chaosRow);
+    root.appendChild(chaosCluster);
     root.appendChild(this.effectsEl);
     root.appendChild(this.kindlingEl);
     root.appendChild(this.extractPromptEl);
@@ -342,12 +403,34 @@ export class RiftHud {
   }
 
   private updateChaosBar(): void {
-    const frac = Math.min(this.chaosValue / GAME_CONSTANTS.CHAOS.MAX_VALUE, 1.0);
-    this.chaosFill.style.width = `${CHAOS_BAR_WIDTH * frac}px`;
-    this.chaosValueEl.textContent = `${Math.round(this.chaosValue)} 混乱 · ${chaosTierLabel(this.chaosValue)}`;
+    const C = GAME_CONSTANTS.CHAOS;
+    const cap = C.HARD_CAP;
+    const gate = C.MAX_VALUE;
+    const value = Math.max(0, this.chaosValue);
+    const overflowing = value > gate;
+    const overflowFrac = overflowing ? Math.min((value - gate) / (cap - gate), 1) : 0;
 
-    const overflowing = this.chaosValue > GAME_CONSTANTS.CHAOS.MAX_VALUE;
-    this.chaosFill.style.animation = overflowing ? 'rift-hud-pulse 300ms ease-in-out infinite' : '';
+    this.chaosFill.style.width = `${CHAOS_BAR_WIDTH * Math.min(value, gate) / cap}px`;
+    this.chaosOverflowFill.style.left = `${CHAOS_BAR_WIDTH * gate / cap}px`;
+    this.chaosOverflowFill.style.width = `${CHAOS_BAR_WIDTH * Math.max(0, Math.min(value, cap) - gate) / cap}px`;
+
+    this.chaosValueEl.textContent = `${Math.round(value)}`;
+    this.chaosValueEl.style.color = overflowing ? HEALTH_LOW_COLOR : TEXT_BRIGHT;
+
+    this.chaosStageEl.textContent = chaosTierLabel(value);
+    this.chaosStageEl.style.color = overflowing ? HEALTH_LOW_COLOR : TEXT_DIM;
+
+    this.overflowVeil.style.opacity = overflowing ? String(0.10 + overflowFrac * 0.22) : '0';
+    this.overflowGrain.style.opacity = overflowing ? String(0.12 + overflowFrac * 0.28) : '0';
+    this.overflowJump.style.background = `rgba(26,173,150,${0.12 + overflowFrac * 0.20})`;
+    if (overflowing !== this.chaosOverflowing) {
+      this.chaosOverflowing = overflowing;
+      this.chaosOverflowFill.style.animation = overflowing ? 'rift-hud-pulse 300ms ease-in-out infinite' : '';
+      this.overflowJump.style.animation = overflowing
+        ? `rift-overflow-jump ${GAME_CONSTANTS.VISIBILITY.FLICKER_JUMP_PERIOD_MS}ms ease-in-out infinite`
+        : 'none';
+      if (!overflowing) this.overflowJump.style.opacity = '0';
+    }
   }
 
   private updateHealthBar(): void {

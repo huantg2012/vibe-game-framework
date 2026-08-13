@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code agent (T5 实现回填：规则 20 缓存失效条件)
-last-modified-date: 2026-07-29
+last-modified-by: code agent
+last-modified-date: 2026-08-13
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -269,7 +269,7 @@ art-direction 两处给出的分级不一致，本 spec 的取舍如下（同时
 | ------ | ---- | -------- | -------------------- |
 | `radiusScale` | 1.0 | 0.4–1.0 | `MIN_RADIUS_SCALE = 0.4`，低于此值直接钳制（完全失明不是玩法，是故障） |
 | `edgeCorruption` | 0.0 | 0.0–1.0 | L=1 时 teal 最多吃掉外侧 35% 射程；色相混合比上限 0.6；边缘抖动幅度上限 4 px @ 6 Hz |
-| `screenFlicker` | 0.0 | 0.0–1.0 | 峰值屏幕 alpha 上限 0.08，周期 4 s（避免癫痫风险与视觉疲劳） |
+| `screenFlicker` | 0.0 | 0.0–1.0 | 驱动溢出世界层强度。常驻蒙层 + 颗粒噪点随该值加厚；跳变为约 2.2 s 一次、脉宽 ~140 ms 的离散脉冲（禁止变成闪光训练）。Phaser 层跳变峰值 alpha ≤ 0.16 |
 
 **给 T3 的参考映射**（对齐 art §7.2 的四档，T3 拥有最终解释权）：
 

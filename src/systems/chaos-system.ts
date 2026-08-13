@@ -36,25 +36,30 @@ export interface ChaosModulators {
  */
 export function getChaosModulators(value: number): ChaosModulators {
   const t = clamp(value, 0, 150);
+  // Overflow band steepens: vision/speed hit their floors by 130, not 150, so the
+  // first moments past the 100 gate already feel like a new gear. Flicker/corruption
+  // keep ramping through 150 so the overlay still has somewhere to go.
+  const over = Math.max(0, t - 100);
+  const overToFloor = Math.min(1, over / 30); // 1 at 130
+  const overToCap = Math.min(1, over / 50);   // 1 at 150
+  const overToEdge = Math.min(1, over / 40);  // 1 at 140
 
   let radiusScale: number;
   if (t <= 75) radiusScale = 1.0;
   else if (t <= 100) radiusScale = 1.0 - 0.10 * (t - 75) / 25;
-  else radiusScale = 0.90 - 0.50 * (t - 100) / 50;
+  else radiusScale = 0.90 - 0.50 * overToFloor;
 
   let edgeCorruption: number;
   if (t < 50) edgeCorruption = 0;
   else if (t <= 100) edgeCorruption = 0.20 + 0.45 * (t - 50) / 50;
-  else edgeCorruption = 0.65 + 0.35 * (t - 100) / 50;
+  else edgeCorruption = 0.65 + 0.35 * overToEdge;
 
-  let screenFlicker: number;
-  if (t <= 100) screenFlicker = 0;
-  else screenFlicker = 0.60 * (t - 100) / 50;
+  const screenFlicker = t <= 100 ? 0 : overToCap;
 
   let speedMult: number;
   if (t <= 75) speedMult = 1.0;
   else if (t <= 100) speedMult = 1.0 - 0.10 * (t - 75) / 25;
-  else speedMult = 0.90 - 0.40 * (t - 100) / 50;
+  else speedMult = 0.90 - 0.40 * overToFloor;
 
   return { radiusScale, edgeCorruption, screenFlicker, speedMult };
 }

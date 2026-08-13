@@ -113,9 +113,18 @@ export const GAME_CONSTANTS = {
     CORRUPTION_MAX_DEPTH: 0.35, // fraction of the range teal can eat at corruption 1.0
     CORRUPTION_JITTER_PX: 4,
     CORRUPTION_JITTER_HZ: 6,
-    /** Full-screen flicker at the highest chaos stage */
-    FLICKER_MAX_ALPHA: 0.08,
-    FLICKER_PERIOD_MS: 4000,
+    /**
+     * Overflow (chaos > 100) full-screen teal wash. Persistent base stays well below the
+     * old 0.08 epilepsy cap; the jump is a discrete ~2 s pulse (not a strobe), so its
+     * peak can read as a "skip" without a rapid flash train.
+     */
+    FLICKER_BASE_ALPHA: 0.05,
+    FLICKER_JUMP_ALPHA: 0.16,
+    FLICKER_JUMP_PERIOD_MS: 2200,
+    FLICKER_JUMP_WIDTH_MS: 140,
+    /** Extra teal bite / edge jitter scale at screenFlicker = 1.0 */
+    OVERFLOW_CORRUPTION_DEPTH_BOOST: 0.40,
+    OVERFLOW_JITTER_BOOST: 1.0,
     /** Purification point overrides (omni mode) */
     PURIFY_RADIUS: 400,
     PURIFY_RAY_COUNT: 90,

@@ -58,7 +58,12 @@ export enum GameEvent {
  * Ensures type safety when emitting/listening to events.
  */
 export interface EventPayloads {
-  /** Emitted when chaos value changes by >= EMIT_STEP from the last emission. */
+  /**
+   * Emitted when chaos value changes by >= EMIT_STEP from the last emission.
+   * `max` is the 100-point gauge gate (`CHAOS.MAX_VALUE`), not the clamp.
+   * `value` may exceed `max` up to `CHAOS.HARD_CAP` (150). HUD bar geometry uses
+   * HARD_CAP as the denominator; do not assume `value <= max`.
+   */
   [GameEvent.CHAOS_CHANGED]: { value: number; delta: number; max: number; rate: number };
   /** Emitted once per level as chaos crosses 50 (1), 75 (2), 100 (3). */
   [GameEvent.CHAOS_THRESHOLD_REACHED]: { level: 1 | 2 | 3 };

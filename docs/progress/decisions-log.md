@@ -432,6 +432,7 @@ note: Append-only. Do not modify historical entries.
 - Alternatives: (a) hard cap at 100 (original constant); (b) redefine "超阈值" as "reaching 100" (no overflow band).
 - Reason: A hard cap at 100 removes any additional cost the moment it's hit — the optimal play degrades to "cap out, then clear the map calmly," switching off the greed-vs-retreat gamble in the exact phase it should be tightest. vision.md states chaos is a "soft limit, not a hard cutoff, with penalties escalating past the threshold," which requires headroom above 100. art §7.2's 4th tier is a ramp, not an instant. Capping at 150 (not infinite) guarantees the player can always crawl back to extraction (world.md is "infiltration," not "execution").
 - Impact: constants CHAOS overhaul in T9 (add HARD_CAP/THRESHOLD_3/CHASE_RATE_MULT/etc.; replace 2-tier discrete penalties with the 4-anchor continuous curve). HUD needs an explicit overflow state. Resolves T1 escalate item 5. Delegated to and decided by the T3 design pass.
+- Playtest amendment (2026-08-13, Slice 5.5): HUD bar denominator is `HARD_CAP` (150), with an emphasized tick at 100 as the overflow gate and a distinct pulsing fill on 100–150. Concatenating the meter name with the stage word is forbidden. Overflow world layer is a persistent teal veil + grain + ~2.2 s jump, and vision/speed hit their floors by 130 so the gate itself feels like a new gear. Does not overturn overflow-to-150.
 
 ## DEC-009: Rift viewport via camera zoom (match art framing)
 - Date: 2026-07-26

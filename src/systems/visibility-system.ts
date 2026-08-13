@@ -607,8 +607,10 @@ export class VisibilitySystem {
   private buildPolygons(facingAngle: number): void {
     const config = this.config;
     const corruption = this.edgeCorruption;
-    const jitterAmplitude = GAME_CONSTANTS.VISIBILITY.CORRUPTION_JITTER_PX * corruption;
-    const jitterPhase = (this.elapsedMs / 1000) * GAME_CONSTANTS.VISIBILITY.CORRUPTION_JITTER_HZ * TAU;
+    const v = GAME_CONSTANTS.VISIBILITY;
+    const jitterAmplitude =
+      v.CORRUPTION_JITTER_PX * corruption * (1 + v.OVERFLOW_JITTER_BOOST * this.screenFlicker);
+    const jitterPhase = (this.elapsedMs / 1000) * v.CORRUPTION_JITTER_HZ * TAU;
 
     for (let i = 0; i < this.rayCount; i++) {
       const angle = facingAngle + this.rayOffsets[i]!;
@@ -713,7 +715,10 @@ export class VisibilitySystem {
     if (this.edgeCorruption <= 0) return;
 
     const v = GAME_CONSTANTS.VISIBILITY;
-    const depthFraction = v.CORRUPTION_MAX_DEPTH * this.edgeCorruption;
+    const depthFraction =
+      v.CORRUPTION_MAX_DEPTH *
+      this.edgeCorruption *
+      (1 + v.OVERFLOW_CORRUPTION_DEPTH_BOOST * this.screenFlicker);
     graphics.fillStyle(v.CORRUPTION_COLOR, v.CORRUPTION_MAX_MIX * this.edgeCorruption);
 
     for (let i = 0; i < this.rayCount; i++) {
@@ -765,9 +770,12 @@ export class VisibilitySystem {
       return;
     }
     const v = GAME_CONSTANTS.VISIBILITY;
-    const phase = (this.elapsedMs % v.FLICKER_PERIOD_MS) / v.FLICKER_PERIOD_MS;
-    const pulse = 0.5 - 0.5 * Math.cos(phase * TAU);
-    this.flicker.setAlpha(v.FLICKER_MAX_ALPHA * this.screenFlicker * pulse);
+    const t = this.elapsedMs % v.FLICKER_JUMP_PERIOD_MS;
+    const inJump = t < v.FLICKER_JUMP_WIDTH_MS;
+    const jump = inJump ? Math.sin((t / v.FLICKER_JUMP_WIDTH_MS) * Math.PI) : 0;
+    const base = v.FLICKER_BASE_ALPHA * this.screenFlicker;
+    const peak = v.FLICKER_JUMP_ALPHA * this.screenFlicker;
+    this.flicker.setAlpha(base + (peak - base) * jump);
   }
 }
 
