@@ -31,8 +31,8 @@ note: 实际使用时复制为 [asset-name].md
 ### 后处理步骤
 - 后处理配置：[docs/art/pipeline.*.config.json；不需要时写“无”]
 - 锁定色板：[docs/art/palette.json 或配置指定路径]
-- 由程序 Agent 运行：`npm run art:postprocess -- --config <配置路径>`
-- 机器验收：`npm run art:verify -- --config <配置路径>`（退出码为 0 才通过）
+- 由程序 Agent 运行（在 `tools/art-pipeline/` 目录内）：`npm run art:postprocess -- --config <配置路径>`
+- 机器验收（同目录）：`npm run art:verify -- --config <配置路径>`（退出码为 0 才通过）
 
 ### 一致性检查点
 - [ ] 色彩符合 art-direction.md 的色彩方案

@@ -23,10 +23,14 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。202
 | 地图生成 | Voronoi + Cellular Automata 混合 | 宏观 Voronoi 切不规则碎片区域（世界观"时空碎片"）；微观 CA 生成有机洞穴地形；碎片间窄裂口连接；兼具方向感和探索感 | BSP（过于规则/建筑感）、WFC（调参困难） |
 | 存档 | LocalStorage + JSON | 最简方案；单存档够用；无需后端 | IndexedDB（数据量大时升级） |
 | 音频 | Phaser 内置 (WebAudio) | 框架自带，跨浏览器兼容已处理 | Howler.js（如需更精细控制） |
-| UI (游戏内 HUD) | Phaser 内置 Text/Graphics | 状态条/数值显示用 Phaser 原生足够 | - |
-| UI (复杂界面) | 原生 DOM overlay | 净化点分配界面用 DOM 构建（比 Canvas UI 开发效率高 10x）；不引入 React/Vue（杀鸡焉用牛刀） | - |
+| UI (游戏内 HUD / 屏幕空间读数) | DOM overlay，挂 `#dom-ui-root`（与画布对齐） | 角锚 HUD 必须跟 letterbox/缩放走同一套根。Phaser `scrollFactor(0)` 不免除 camera zoom，会把四角甩出画面 | Phaser Text/Graphics 仅用于钉世界坐标的标记 |
+| UI (复杂界面) | 原生 DOM overlay | 管理面板用 DOM 构建；不引入 React/Vue | - |
 | 国际化 (i18n) | 自实现 JSON + TypeScript | 文本量有限（<300 条）；自实现零依赖、类型安全、无学习成本；支持简体中文/英文 | i18next（过重）、typesafe-i18n（额外构建步骤） |
 | 部署 | 静态文件 (Vite build) | 产出纯静态文件，可部署到任何静态托管 | - |
+
+### 屏幕空间 UI 挂载（本游戏填充）
+
+屏幕空间读数与 DOM 面板一律挂 `#dom-ui-root`（`getDomUiRoot()` / `bindDomUiRootToGame()`），与画布 letterbox/缩放对齐。钉世界坐标的标记才走 Phaser 世界层。禁止用 `scrollFactor(0)` 在 `camera.zoom ≠ 1` 下画角锚 HUD。新 overlay 不要挂 `document.body`（小地图现状是已知债，下次触碰时迁）。共享样式入口：`src/ui/dom/panel-styles.ts`。视觉基线：`docs/design-notes/ui-art-overhaul.md`。
 
 ## 项目结构
 

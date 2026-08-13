@@ -1,6 +1,6 @@
 ---
 name: ideation
-model: cursor-grok-4.6-high
+model: cursor-grok-4.6-xhigh-fast
 description: "创意搭档 — 帮助从模糊想法中提取核心体验、探索机制方向、分析参考、界定范围。输出愿景文档(vision.md)。"
 tools:
   - Read

@@ -7,7 +7,7 @@
 1. **AI agent 框架**（层 A）：用于 vibe coding 独立游戏的工作框架，由 agents（ideation/director/design/code/art/qa）+ 约束文档（`guides/**`、agent 定义、本文件的框架规则）组成。Agent 定义同时存在于 `.claude/agents/*` 与 `.cursor/agents/*`，两份**正文**必须逐字一致，frontmatter 的 `model` 按运行时取值。
 2. **dogfood 游戏项目**（层 B）：一个进行中的真实独立游戏，用来验证并打磨框架层 A。游戏活文档住在 `docs/**`，代码住在 `src/**`。
 
-两层同处一仓库但边界清晰：改框架（层 A）与做游戏（层 B）是两块独立工作，互不混入。
+两层同处一仓库但边界清晰：改框架（层 A）与做游戏（层 B）是两块独立工作，互不混入。**框架改动先上 `master`，再合并到本分支。**
 
 **当前阶段：**
 - 层 A（框架）：随 dogfooding 持续迭代（见"框架迭代协议"）。
@@ -33,6 +33,7 @@
 2. **搜索**：Grep 以下范围查找所有引用：
    - `.claude/agents/*.md`
    - `.cursor/agents/*.md`
+   - `.cursor/skills/**`
    - `docs/**/*.md`
    - `guides/**`
    - `START-HERE.md`
@@ -52,6 +53,7 @@
 ```
 .claude/agents/*.md 与 .cursor/agents/*.md = AI 的执行标准（最高权威；两份正文逐字一致，
                                             frontmatter 仅 model 允许按运行时差异）
+.cursor/skills/in-game-ux/               = in-game UI 的 HOW（开工闸门+自检；自定义 agent 必须显式 Read）
 CLAUDE.md                                = 项目执行标准正文（阶段、硬约束、路由）
 AGENTS.md                                = Cursor 侧钩子（指向 CLAUDE.md + 硬约束摘要，不复制全文）
 START-HERE.md                            = 人的操作入口
@@ -66,6 +68,7 @@ guides/*.md                              = 人的参考资料（设计原理记�
 
 ```
 .claude/agents/ 与 .cursor/agents/ → ideation, director, design, code, art, qa（两份正文一致）
+.cursor/skills/in-game-ux/ → in-game UI 的 HOW（自定义 agent 不会自动加载，必须显式 Read）
 guides/                → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
 docs/                  → 游戏项目活文档（AI读写、人审核）
 tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）
@@ -100,17 +103,26 @@ Slice-based iterative development：
 - 每个 Slice = Design → Implement → Verify → Validate 完整循环
 - Slice 分类：系统 Slice / 内容 Slice / 功能 Slice / 集成 Slice / 打磨 Slice
 - 无 "prototype" 阶段，第一行代码即生产质量
-- **打磨/表现类 Slice 走轻量路径**：免完整 Task Brief，但收尾必须登记四项（架构登记 / spec 判断 / 交付范围记录 / UI 清单），四项未完成不得标 COMPLETE。详见 director agent 定义 Step 3。
+- **打磨/表现类 Slice 走轻量路径**：免完整 Task Brief，但收尾必须登记四项（架构登记 / spec 判断 / 交付范围记录 / UI 清单），四项未完成不得标 COMPLETE。仍须**单批上下文预算**（每一批 = 一次 agent 会话可独立完成并过闸门；ALL 表面不得打成一批）。系统 Slice 的验证若依赖界面可读，规划时要么把 UX 收进同一 Slice，要么把验证转下游并写回退路径。「实现完成、体验未验证」是合法收尾态，禁止无证据记 PASS。详见 director agent 定义 Step 2–3 与 `guides/99-review.md` FV-02 / FV-04。
 
 ## 游戏内 UI 的硬约束（所有 Agent 遵守）
 
-**in-game UI ≠ admin panel。** 本项目实测中这是最容易翻车的地方（一次表现层翻修花了七轮人工返工才收敛，根因是框架用 web 应用词汇描述游戏界面，见 `guides/99-review.md` FV-01）。
+人最在意两件事，**缺一即不合格**（人终审，清单不能替代）：
 
-- 任何 UI 工作开工前先做**载体决策**：世界内装置（Phaser 层）/ 世界内终端（DOM，但视觉上是那台设备的屏幕）/ 元界面（主菜单等）。**只有元界面允许有"软件界面感"。**
-- 必须锚定 **2-3 个具名游戏参考**并写进 spec。实测中这是唯一能稳定拉住风格的输入。
-- 验收走 `docs/specs/_template-ui.md` 末尾的「游戏内 UI 验收清单」U1-U12——那是全项目唯一权威清单（design 自查结构层、art 自查视觉层、qa 逐条验收）。
-- 视觉真相的优先级：ui spec > `docs/design-notes/ui-art-overhaul.md`（人已逐轮确认的基线）> `docs/art-direction.md` §6 > `docs/world.md` 术语表。
-- 不写响应式断点：固定逻辑分辨率，手机端 out-of-scope。
+1. **审美过关** — 对得起 `art-direction.md` 与具名游戏参考。人说丑就是不合格。过 U2 反模式清单 ≠ 好看。
+2. **读作游戏** — 不是后台管理系统、不是调试面板、不是通用 web。载体错了会稳定产出这个失败。
+
+**in-game UI ≠ admin panel。** 这是本框架实测中最容易翻车的地方（见 `guides/99-review.md` FV-01）。下面各条是保住上述两件北星的手段，不是北星本身。项目色板、参考游戏、组件类、overlay 挂载根住在 art-direction / UI Kit / architecture，不写进本段。
+
+- **HOW 住在 skill，不靠口号。** 触碰 in-game UI 必须执行 `.cursor/skills/in-game-ux/SKILL.md`（开工闸门 + 写完自检；按项目文档填写，禁止套用别的游戏的皮）。自定义 agent 不会自动加载 skill，必须显式 Read。Director 派 UI 任务时 Task Brief 必须写明这一步。记「要审美过关 / 要像游戏」而不走该 HOW = 不合格（见 FV-05）。
+- 任何 UI 工作开工前先做**载体决策**：世界内装置 / 世界内终端 / 元界面。**只有元界面允许有"软件界面感"。** 载体是视觉语言，不是实现层：屏幕空间读数挂 `architecture.md` 声明的 overlay 根；钉世界坐标的才走引擎世界层。禁止把角锚 HUD 绑在会因 camera zoom / letterbox 漂移的实现上。
+- 必须锚定 **2-3 个具名游戏参考**并写进 spec（学什么动作 / 明确不学什么）。没有参考研究时走 skill 的 Bootstrap，请人锁定后再画。
+- 验收走 `docs/specs/_template-ui.md` 末尾的「游戏内 UI 验收清单」U1-U12——那是全项目唯一权威清单（design 自查结构层、art 自查视觉层、qa 逐条验收）。清单是闸门，不是 HOW。
+- 视觉真相的优先级：ui spec > 项目 UI Kit 活文档 > `art-direction.md` 的 UI 节 > `world.md` 术语表。Kit 是活文档：实现一偏就改 Kit，禁止拿过期换算当验收基准。
+- 不写响应式断点：固定逻辑分辨率（项目配置）；手机端默认 out-of-scope。
+- **术语收口 ≠ 句子能读。** 表名 / 数值 / 档位必须分开展示；禁止拼成会被读成复合名词的一句。
+- **试玩热修仍须 art。** 即使人已点名样式 / 蒙层 / HUD 布局方案，仍须 art 做最短合规核对（载体 + 参考 + 相关 U 项）；禁止 code 独自发明新视觉语言。
+- **UX 不能制造机制里没有的犹豫。** 界面只讲清机制里已有的事实；纠结不成立则回 design 重审收益结构，禁止用面板假装有选择。
 
 ## 策划数据源规则（强制）
 
@@ -168,7 +180,7 @@ Slice-based iterative development：
 
 **运行时差异**：两个运行时的模型 ID 词汇表不重叠（Cursor 认全名如 `claude-opus-5`，Claude Code 认别名如 `opus`），且 Claude Code 侧没有对应 T3 的廉价编码档，故 T2/T3 在该运行时合并到 `sonnet`。这就是 agent 定义 frontmatter 允许 per-runtime 差异的原因。写错 ID 的后果是**静默回退**——配置看起来生效，实际没有。
 
-**Cursor 试验（2026-08-13，人拍板，可回退）**：`.cursor/agents/*` 六个 agent 的 `model` **全部临时固定为** `cursor-grok-4.6-high`，暂停上表 Cursor 列的分档。Claude Code 侧档位表不变。试完效果后恢复分档或改写本表。
+**Cursor 试验（2026-08-13，人拍板，可回退）**：`.cursor/agents/*` 六个 agent 的 `model` **全部临时固定为** `cursor-grok-4.6-xhigh-fast`（Grok 4.6 Extra High Fast），暂停上表 Cursor 列的分档。Claude Code 侧档位表不变。试完效果后恢复分档或改写本表。
 
 ### 逃逸兜底（强制）
 

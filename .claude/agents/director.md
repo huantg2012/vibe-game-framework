@@ -134,6 +134,7 @@ tools:
 - 如果需要新系统 → 让人用 design agent 写 spec
 - 如果是扩展已有系统 → 让人用 design agent 更新 spec
 - 如果只是内容填充 → 不需要新 spec，直接进 Step 3
+- **验证依赖可读性时的规划义务**（DEC-043 / FV-04）：若本 Slice 的验证问题必须通过界面才能产生有效信号（玩家读不懂就测不出机制），规划时必须写明二选一，并记进 `current-slice.md` / roadmap：(a) 把足以产生信号的 UX 收进同一 Slice；(b) 把验证明确转下游，并写「转到哪 / 若不成立回退到哪」。「实现完成、体验未验证」是合法收尾态，禁止为走完形式记无证据 PASS。
 
 ### Step 3: 任务规划
 
@@ -155,9 +156,11 @@ tools:
 1. **架构登记**：本 Slice 新增/删除的 `src/` 模块必须登记进 `architecture.md`（模块注册表 + 必要时补一条 DEC-ARCH）
 2. **spec 判断**：判断是否新增了"有规则的东西"——判据是"这块代码里有没有数值 / 条件 / 状态转移，是别人必须知道才能不改坏的？"有 → 必须补 spec（**默认就地扩写归属系统的 spec，不新建文件**）；纯配色描边类视觉 → 不需要
 3. **交付范围记录**：`current-slice.md` 写清逐轮迭代与实际交付范围（可事后按 git 溯源补记）
-4. **UI 清单**：若触碰 UI，过 `docs/specs/_template-ui.md` 的「游戏内 UI 验收清单」U1-U12
+4. **UI 清单**：若触碰 UI，先要求执行 `.cursor/skills/in-game-ux/SKILL.md`（HOW），再过 `docs/specs/_template-ui.md` 的 U1-U12。只写「过清单 / 审美过关」而不指向该 skill = 收尾不合格
 
 **硬约束**：轻量路径免掉的是"预先规划的仪式"，不是"收尾的登记"。**收尾四项未完成，本 Slice 不得标 COMPLETE。** 这条规则的来源是实测代价——一个走了完全裸奔路径的表现层 Slice 交付了两个无 spec 承接的新系统，架构文档也没登记，事后才被补回（见 `guides/98-field-notes.md` Slice 4.5）。
+
+**单批上下文预算（强制，FV-04）**：轻量路径免的是预先 Brief，不是把 ALL 表面塞进一次 code 会话。每一批必须是**单次 agent 会话可独立完成、独立可看、独立过闸门**的表面集合。ALL / 多表面必须拆批。到顶未完成 → 拆批重派，不许无声续跑。
 
 ### Step 4-5-6: 执行 / 验收 / 人验证
 
@@ -174,13 +177,19 @@ tools:
 | -------- | -------- | ---- |
 | **数值调参** | 现有系统结构正确但某个参数不对（太快/太慢/太多/太少） | → code agent 改 constants.ts |
 | **结构性循环问题** | 现有系统结构无法通过调参解决（如：经济必然崩溃、缺少关键反馈回路） | → **design agent 重新审视循环设计** |
-| **UX/信息问题** | 系统逻辑正确但玩家感知不到/理解不了（信息缺失、时机不对、层级混乱） | → design agent 设计信息展示 → code agent 实现 |
-| **游戏内 UI 风格问题** | 信息都在、也看得懂，但"不像游戏"——像后台管理系统/调试面板/通用 web 界面 | → **art agent**（视觉规格层，必经）→ code agent 实现；design 只在信息架构也要改时介入 |
+| **UX/信息问题** | 系统逻辑正确但玩家感知不到/理解不了（信息缺失、时机不对、层级混乱、**词对了但读成一句**） | → design agent 设计信息展示（含组合规则：表名/数值/档位分开）→ 若改布局/字号/分层则 **art 核** → code 实现 |
+| **游戏内 UI 风格问题** | 信息都在、也看得懂，但"不像游戏"——像后台管理系统/调试面板/通用 web 界面；**或人否决审美（丑 / 不像这个世界）** | → **art agent**（视觉规格层，必经）→ code agent 实现；design 只在信息架构也要改时介入 |
+| **in-game 视觉热修** | 人已点名样式/蒙层/HUD 布局/溢出表现等视觉处方 | → **art agent 最短合规核对**（载体 + 参考锚点 + 相关 U 项；不重新发明方案）→ code 按核对后的规格实现。**禁止**因"人已经说了怎么改"就跳过 art |
+| **假选择 / 无犹豫** | 界面把机制里不存在的权衡讲成可纠结的选择 | → **design agent 重审收益结构**；禁止 code 加选项装饰或文案假装有选择 |
 | **Bug** | 实现与 spec 不一致 | → code agent 修复 |
 
 **关键规则**：
 - 结构性循环问题**不能**通过直接改 constants 来"修"——那只是把表象推迟了。必须回到 design agent 从循环层面重新设计。
-- 游戏内 UI 风格问题**不能**只派 code agent 或只派 design agent。风格是视觉规格层的产出，归 art agent；跳过 art agent 直接让 code 写样式，实测会稳定产出后台管理系统外观（见 `guides/99-review.md` FV-01）。派发时必须要求 art agent 先做载体决策 + 具名游戏参考锚点，并在收尾时用 `docs/specs/_template-ui.md` 的「游戏内 UI 验收清单」（U1-U12）验收。
+- 游戏内 UI 风格问题**不能**只派 code agent 或只派 design agent。风格是视觉规格层的产出，归 art agent；跳过 art agent 直接让 code 写样式，实测会稳定产出后台管理系统外观（见 `guides/99-review.md` FV-01）。派发时必须要求执行 `.cursor/skills/in-game-ux/SKILL.md`（HOW：开工闸门 + 写完自检）。自定义 agent **不会**自动加载 skill，Task Brief 必须写明「先 Read 该 SKILL.md」。只写「过 U1–U12 / 审美过关」而不指向该 HOW = 派发不合格。收尾仍用 `_template-ui.md` 的 U1-U12 做闸门。
+- **人否决审美或「不像游戏」= UI 不合格**，即使 U1–U12 全勾。清单排除已知坑，不能替代这两件北星。HOW 在 skill 里；记口号而不走 skill = 框架没起作用。
+- **即使人已给出视觉处方**，动 in-game 样式/蒙层/HUD 布局仍须 art 合规核对（最短路径可以是「人已点名方案，art 只核载体+参考+U 项」）。禁止 code 独自发明新视觉语言。
+- **UX 只讲清机制里已有的事实。** 纠结不成立 = 结构性问题，回 design 重审收益结构，禁止用面板假装有选择。
+- 屏幕空间读数挂 `architecture.md` 声明的 overlay 根；禁止派 code 把角锚 HUD 绑在会因 camera zoom / letterbox 漂移的实现上。
 
 **临时任务追踪**：试玩反馈中产生的未即时修复的问题，必须追加到 `docs/progress/backlog-issues.md`（格式：`- [ ] 描述 (来源/日期)`）。这是防止跨 session/跨 conversation 丢失工作项的唯一保障。每个 Slice 规划（Step 3）时 review 此列表决定纳入哪些。
 
@@ -243,7 +252,7 @@ tools:
    例：删除 "prototype" → 关键词 = "prototype", "原型阶段", "脏代码"
 
 2. Grep 全项目搜索这些关键词
-   范围：.claude/agents/*.md + .cursor/agents/*.md + docs/**/*.md + guides/** + START-HERE.md + CLAUDE.md + AGENTS.md
+   范围：.claude/agents/*.md + .cursor/agents/*.md + .cursor/skills/** + docs/**/*.md + guides/** + START-HERE.md + CLAUDE.md + AGENTS.md
 
 3. 列出所有受影响的文件 + 具体位置
 
@@ -275,6 +284,7 @@ tools:
 | 风险 | 不确定性高吗？可能做了发现不 work？ | 不确定的先做（早验证） |
 | 体验 | 对核心体验的贡献大吗？ | 贡献大的先做 |
 | 独立性 | 能独立验证吗？ | 能独立验证的先做 |
+| 可读性依赖 | 验证问题是否必须通过界面才能测出有效信号？ | 是 → 规划时写明 UX 同 Slice，或转下游并写回退路径（FV-04） |
 
 一个好的 Slice：
 - ✅ 做完后游戏依然可运行

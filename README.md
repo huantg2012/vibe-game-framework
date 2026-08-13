@@ -44,6 +44,7 @@ See [`START-HERE.md`](START-HERE.md) for the full routing table.
 ```
 .claude/agents/    Agent definitions (Claude Code runtime)
 .cursor/agents/    Agent definitions (Cursor runtime) — body identical, model may differ
+.cursor/skills/    Project skills (in-game UX HOW; custom agents must Read explicitly)
 guides/            Human reference manuals (workflow docs, not consumed by agents)
 tools/             Build-time utilities (art pipeline, parity checker)
 data/              CSV tables — source of truth for game design data
