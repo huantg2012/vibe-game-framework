@@ -1,6 +1,6 @@
 ---
 name: design
-model: opus
+model: cursor-grok-4.6-high
 description: "游戏设计师 — 为每个Slice设计系统机制、数值结构、关卡规则。增量设计，确保与已有系统一致。"
 tools:
   - Read

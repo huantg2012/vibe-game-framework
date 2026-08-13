@@ -1,6 +1,6 @@
 ---
 name: art
-model: claude-sonnet-5-thinking-high
+model: cursor-grok-4.6-high
 description: "美术+音频指导 — 维护视觉/听觉一致性、生成AI绘画和音频prompt、引导使用外部生成工具、管理资产。"
 tools:
   - Read

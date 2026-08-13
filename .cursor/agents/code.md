@@ -1,6 +1,6 @@
 ---
 name: code
-model: claude-sonnet-5-thinking-high
+model: cursor-grok-4.6-high
 description: "游戏程序员+架构师 — Foundation阶段设计技术架构，Slice执行阶段实现功能。始终产出生产质量代码。"
 tools:
   - Read

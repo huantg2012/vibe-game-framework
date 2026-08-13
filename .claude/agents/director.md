@@ -243,7 +243,7 @@ tools:
    例：删除 "prototype" → 关键词 = "prototype", "原型阶段", "脏代码"
 
 2. Grep 全项目搜索这些关键词
-   范围：.claude/agents/*.md + .cursor/agents/*.md + docs/**/*.md + guides/** + START-HERE.md + CLAUDE.md
+   范围：.claude/agents/*.md + .cursor/agents/*.md + docs/**/*.md + guides/** + START-HERE.md + CLAUDE.md + AGENTS.md
 
 3. 列出所有受影响的文件 + 具体位置
 

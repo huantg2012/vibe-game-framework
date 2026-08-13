@@ -1,6 +1,6 @@
 ---
 name: qa
-model: composer-2.5
+model: cursor-grok-4.6-high
 description: "质量保障 — 对比spec和实现找偏差、生成测试用例、检查边界条件、验证跨系统交互。"
 tools:
   - Read

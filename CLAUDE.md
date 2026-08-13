@@ -37,6 +37,7 @@
    - `guides/**`
    - `START-HERE.md`
    - `CLAUDE.md`
+   - `AGENTS.md`
 3. **处理**：逐个更新受影响的文件，或明确标记为待更新
 4. **报告**：向用户列出所有已更新/待更新的文件
 
@@ -51,6 +52,8 @@
 ```
 .claude/agents/*.md 与 .cursor/agents/*.md = AI 的执行标准（最高权威；两份正文逐字一致，
                                             frontmatter 仅 model 允许按运行时差异）
+CLAUDE.md                                = 项目执行标准正文（阶段、硬约束、路由）
+AGENTS.md                                = Cursor 侧钩子（指向 CLAUDE.md + 硬约束摘要，不复制全文）
 START-HERE.md                            = 人的操作入口
 guides/*.md                              = 人的参考资料（设计原理记录）
 ```
@@ -68,6 +71,8 @@ docs/                  → 游戏项目活文档（AI读写、人审核）
 tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）
 tools/agent-parity/    → 两份 agent 定义的一致性校验（无依赖，node 直接跑）
 START-HERE.md          → 用户入口
+AGENTS.md              → Cursor 侧 Agent 入口（钩子，正文仍是 CLAUDE.md）
+.cursor/rules/coh.mdc  → Cursor alwaysApply 规则（强制加载上述钩子）
 ```
 
 ## 游戏项目的文档体系（开发时产生）
@@ -162,6 +167,8 @@ Slice-based iterative development：
 | T3 廉价 | `composer-2.5` | `sonnet` | qa | 本质是 spec↔实现的机械比对，有 spec 作基准 |
 
 **运行时差异**：两个运行时的模型 ID 词汇表不重叠（Cursor 认全名如 `claude-opus-5`，Claude Code 认别名如 `opus`），且 Claude Code 侧没有对应 T3 的廉价编码档，故 T2/T3 在该运行时合并到 `sonnet`。这就是 agent 定义 frontmatter 允许 per-runtime 差异的原因。写错 ID 的后果是**静默回退**——配置看起来生效，实际没有。
+
+**Cursor 试验（2026-08-13，人拍板，可回退）**：`.cursor/agents/*` 六个 agent 的 `model` **全部临时固定为** `cursor-grok-4.6-high`，暂停上表 Cursor 列的分档。Claude Code 侧档位表不变。试完效果后恢复分档或改写本表。
 
 ### 逃逸兜底（强制）
 

@@ -1,0 +1,15 @@
+---
+description: 项目执行标准钩子——CLAUDE.md 为唯一正文，本规则保证 Cursor 会话始终加载
+alwaysApply: true
+---
+
+# COH 项目规则
+
+执行标准的**唯一正文**是仓库根目录 `CLAUDE.md`。本规则不复制全文。
+
+- 普通对话与自定义 agent（`.cursor/agents/*`）开工都先读 `CLAUDE.md`。
+- Cursor 侧短入口：`AGENTS.md`（硬约束摘要）。与 `CLAUDE.md` 冲突时以 `CLAUDE.md` 为准，并改 `AGENTS.md` 对齐。
+- 双层不混：框架（层 A）与游戏（层 B）分开改。
+- 游戏内 UI：必经 art 路径 + U1–U12；不是后台管理系统。
+- 策划数据：`data/*.csv` → code。
+- 框架内不用 Cursor Auto 路由。
