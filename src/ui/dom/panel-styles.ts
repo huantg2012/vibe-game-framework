@@ -482,6 +482,23 @@ const CSS = `
   z-index: 999;
 }
 
+/* === In-game Esc record menu (pause-menu.ts) === */
+.game-panel.pause-menu-panel .pause-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 0 8px;
+}
+.game-panel.pause-menu-panel .pause-menu-row {
+  font-size: 13px;
+  color: #8a8f96;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+.game-panel.pause-menu-panel .pause-menu-row.is-selected {
+  color: #c8cdd4;
+}
+
 /* === Toast primitives (ui-art-overhaul.md A4/A6) ===
    Two variants for the unified feedback layer: "inline" (brief, non-blocking,
    appears at the source of the event) and "stamp" (rare, one-shot, full-screen,

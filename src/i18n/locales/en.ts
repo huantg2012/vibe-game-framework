@@ -24,9 +24,13 @@ export const en: LocaleSchema = {
     subtitle: 'The boundary holds. The light has not gone out.',
     newGame: 'Enter the Purification Point',
     continue: 'Return by the old path',
+    newSave: 'New record',
+    loadSave: 'Load record',
+    resume: 'Resume',
+    pauseTitle: 'Records',
     language: 'Language',
     overwriteWarning: 'This will erase all records of Tide {tideNumber}.',
-    overwriteClear: 'Erase Records',
+    overwriteClear: 'Erase and start new',
   },
 
   // HUD (in-game overlay)

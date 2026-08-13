@@ -24,9 +24,13 @@ export const zhCN: LocaleSchema = {
     subtitle: '边界仍在，光尚未熄',
     newGame: '进入净化点',
     continue: '沿旧路返回',
+    newSave: '新存档',
+    loadSave: '读取存档',
+    resume: '继续',
+    pauseTitle: '记录',
     language: '语言',
     overwriteWarning: '将清除第 {tideNumber} 潮的全部记录',
-    overwriteClear: '清除记录',
+    overwriteClear: '清除并新建',
   },
 
   // HUD (in-game overlay)

@@ -39,6 +39,7 @@ import { statusPanel } from '@/ui/dom/status-panel';
 import { purificationHud } from '@/ui/dom/purification-hud';
 import type { InteractionTarget } from '@/ui/dom/purification-hud';
 import { impactResultPanel } from '@/ui/dom/impact-result-panel';
+import { pauseMenu } from '@/ui/dom/pause-menu';
 import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
 import type { ForecastDisplay } from '@/systems/impact-system';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
@@ -614,8 +615,8 @@ export class PurificationScene extends Phaser.Scene {
       } else if (statusPanel.isOpen()) {
         statusPanel.close();
         this.panelClosedAt = this.time.now;
-      } else if (this.time.now - this.panelClosedAt > 150) {
-        this.scene.start('MainMenuScene');
+      } else if (!pauseMenu.isOpen() && this.time.now - this.panelClosedAt > 150) {
+        pauseMenu.open(this);
       }
     }
 
@@ -981,6 +982,7 @@ export class PurificationScene extends Phaser.Scene {
     loadoutPanel.close();
     statusPanel.close();
     impactResultPanel.destroy();
+    pauseMenu.discard();
 
     // Clean up input keys
     if (this.interactKey) {

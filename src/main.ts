@@ -7,6 +7,7 @@ import Phaser from 'phaser';
 import { gameConfig } from '@/config/game-config';
 import { assertBalanceInvariants } from '@/config/invariants';
 import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
+import { pauseMenu } from '@/ui/dom/pause-menu';
 
 // Before anything boots: a tuning pass that broke a balance invariant would make every
 // playtest afterwards answer the wrong question.
@@ -40,6 +41,7 @@ overlay.innerHTML =
 document.body.appendChild(overlay);
 
 function pauseGame(): void {
+  if (pauseMenu.isOpen()) return;
   if (paused) return;
   paused = true;
   game.scene.scenes.forEach((scene) => {
@@ -66,6 +68,7 @@ window.addEventListener('focus', () => {
 
 overlay.addEventListener('click', resumeGame);
 document.addEventListener('keydown', (e) => {
+  if (pauseMenu.isOpen()) return;
   if (paused && !e.repeat) resumeGame();
 });
 

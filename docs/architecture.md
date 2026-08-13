@@ -215,6 +215,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ImpactResultPanel | src/ui/dom/impact-result-panel.ts | 冲击结算结果 DOM 面板 | isOpen(), show(damages, intensity, onDone, chargeChanges?), close(), destroy() | 已实现（Slice 2+） |
 | LoadoutPanel | src/ui/dom/loadout-panel.ts | 出击前工具装载选择 DOM 面板 | isOpen(), open(onConfirm, onClose?), close() | 已实现（Slice 3+） |
 | StatusPanel | src/ui/dom/status-panel.ts | 潮汐/稳定度/工具库存状态查看 DOM 面板 | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |
+| PauseMenu | src/ui/dom/pause-menu.ts | 局内 Esc 记录菜单：新存档 / 读取存档 / 继续。关闭=场景原样恢复；在裂隙内选新存档或读取会结束当前出击 | isOpen(), open(scene), close(), discard() | 已实现 |
+| Session | src/managers/session.ts | 新档/读档的共享启动序列（主菜单与记录菜单共用，避免漏 reset） | hasReadableSave(), beginNewExpedition(scene), loadExpedition(scene) | 已实现 |
 | PurificationHud | src/ui/dom/purification-hud.ts | 净化点场景内交互提示条（DOM，贴靠世界内交互目标，不是独立弹出面板） | create(), updatePrompt(target), refresh(), setPromptVisible(visible), destroy() | 已实现（Slice 2+） |
 
 > 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`/`map-types.ts`）、`src/scenes/` 已真实存在，但属于基础设施/类型/场景，不在本"系统模块"注册表内单列。其中：

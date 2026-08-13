@@ -19,6 +19,10 @@ export interface LocaleSchema {
     subtitle: string;
     newGame: string;
     continue: string;
+    newSave: string;
+    loadSave: string;
+    resume: string;
+    pauseTitle: string;
     language: string;
     overwriteWarning: string;
     overwriteClear: string;

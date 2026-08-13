@@ -36,6 +36,7 @@ import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { describeSideEffectBody } from '@/ui/side-effect-labels';
 import { riftResultPanel } from '@/ui/dom/rift-result-panel';
+import { pauseMenu } from '@/ui/dom/pause-menu';
 import { getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
 import type { PendingSideEffect } from '@/systems/defense-engine';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
@@ -289,7 +290,7 @@ export class RiftScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
 
     this.bindAIStimuli();
-    this.input.keyboard?.on('keydown-ESC', this.returnToMenu, this);
+    this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
 
     if (import.meta.env.DEV) this.createDebugOverlay();
   }
@@ -792,13 +793,14 @@ export class RiftScene extends Phaser.Scene {
     }
   }
 
-  private returnToMenu(): void {
-    this.scene.start('MainMenuScene');
+  private openPauseMenu(): void {
+    if (riftResultPanel.isOpen()) return;
+    pauseMenu.open(this);
   }
 
   private onShutdown(): void {
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
-    this.input.keyboard?.off('keydown-ESC', this.returnToMenu, this);
+    this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
     this.input.keyboard?.off('keydown-F1');
     eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
     eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
@@ -810,6 +812,7 @@ export class RiftScene extends Phaser.Scene {
     eventBus.off(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
     eventBus.off(GameEvent.TOOL_USED, this.onToolUsedForResult);
     riftResultPanel.destroy();
+    pauseMenu.discard();
     if (this.attackKey) {
       this.input.keyboard?.removeKey(this.attackKey, true);
       this.attackKey = null;

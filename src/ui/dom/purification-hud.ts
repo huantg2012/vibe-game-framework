@@ -342,7 +342,7 @@ export class PurificationHud {
   private buildDefaultPrompt(): string {
     return `<span style="color:${COL.dimText};">Tab:存续报告</span>` +
       `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` +
-      `<span style="color:${COL.dimText};">Esc:主菜单</span>`;
+      `<span style="color:${COL.dimText};">Esc:记录</span>`;
   }
 
   private buildPromptWithContext(action: string, target: InteractionTarget): string {
