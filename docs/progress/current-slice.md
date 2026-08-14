@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-12
-last-modified: 2026-08-12
+last-modified: 2026-08-14
 note: Slice 5.5「UX 重构」ACTIVE。范围由人亲口锁定为 ALL（所有菜单/交互面板/HUD/物品信息展示）。打磨 Slice，走 FV-02 轻量路径（免完整 Task Brief，收尾四项登记不免）。人的核心痛点：不像游戏、不成体系。
 ---
 
@@ -276,7 +276,7 @@ Slice 5 的验证问题是「出击前'带什么'的决策是否变得纠结」�
 | # | 表面 | 看什么 |
 | - | ---- | ------ |
 | S1 | 主菜单 | 是否还有英文/`Prototype`；有存档时「进入净化点」是否先确认再清档；↑↓/Enter |
-| S2 | 净化点 HUD | 无稳定度进度条；薪柴/潮汐/预告可区分；不套 `.game-panel` |
+| S2 | 净化点 HUD | 无稳定度进度条；不套 `.game-panel`；**贴顶横排三槽**（薪柴 数字；潮汐 第 N 潮 相位；下次归来 核心/储藏 档位名；消声第四槽「再下一轮」）。无菱形/波形/pip。人未回签 |
 | S3 | 分配 | 键盘 ±1/±5；机会成本行；注入禁用态可读 |
 | S4 | 供奉 | 键盘游标三区；选中即检视五层；空状态可读；键位提示 |
 | S5 | 踏入裂隙 | 同上；工具中文名与 CSV 一致 |
@@ -347,3 +347,64 @@ _等你回签试玩结论后，Director 再走收尾四项登记并决定是否�
 5. **净化点侧核对**：`purification-scene.ts` 同样 `camera.setZoom(1.5)`，但其 P0 常驻层（`purification-hud.ts`）本来就是 DOM 实现，且全项目搜索 `scrollFactor` 只在 `rift-hud.ts` 的说明性注释里出现——确认没有同类漏网的 Phaser `scrollFactor(0)` 屏幕空间元素。
 
 **结论——v2 §A1 的失效范围**：v2 §A1「Phaser HUD 字号 / 双单位换算」规则（`hud.ts` 坐标系数值 ×1.5 换算 DOM px）**对裂隙 HUD 已经失效**——裂隙 HUD 现在是纯 DOM，直接用 §A1 的 DOM px 规则（≥12px）即可，不再需要换算列。建议 art 在下一次修订时把 §A1 表格的"Phaser HUD（hud.ts 坐标系数值）"列标注为"仅剩 dev 调试面板等非游戏内 UI 场景可能用到"或直接删除该列，避免下一个 agent 误以为裂隙 HUD 还要按两套单位维护。
+
+---
+
+### R4 — S2 右上常驻读数写明（2026-08-13）· 人拍板后派 design → art → code
+
+**人原话**：右上整块「完全不需要这么隐晦，直接写明就行」。起因：预告行只有 `◈/▣` + 四格 `▮`，人读不出核心还是储藏。
+
+**范围（锁死）**：只改 `#purif-hud` 右上四行（薪柴 / 潮汐 / 冲击预告 / 消声淡预告）。不做 S3–S8；不改机制（DEC-034 仍是目标+档位，不报方向）；稳定度不加回常驻 HUD；底栏 `#purif-prompt` 不是本批主交付（已有「◈ 核心 / ▣ 储藏」）。
+
+**产品判断（人锁定）**：不要让玩家学符号；表名/数值/档位分开展示；落地 IA §S2 已有目标文案（潮汐 `第 N 潮 · 涨潮`、预告 `下次归来 · 核心 · 中`）；档位中文；薪柴加表名「薪柴」；仍不套 `.game-panel`；仍挂 `#dom-ui-root`。
+
+**派发**：design 收口四行最终文案结构（对照 tide/impact 现有术语；冲突则停、不改机制）→ art 最短合规核（先 Read `.cursor/skills/in-game-ux/SKILL.md`）→ code 只改 `purification-hud.ts`（及确有必要的 i18n）。本 Slice **不标 COMPLETE**。
+
+**design 已锁（DEC-047）**：四行独立节点——`薪柴`+数字；`潮汐`+`第 N 潮`+涨潮/潮峰/退潮；`下次归来`+核心/储藏+`SEVERITY_LABEL`；消声行时机必须是`再下一轮`。档位中文沿用已上屏轻微/中等/剧烈/极端（人口授「轻/中/重」视为口语）。无硬停。
+
+**art 已核（最短合规）**：载体仍 A，不套 `.game-panel`。Kit §A5-3 已换四行死约束。消声行 opacity 下限 **0.85**（现 0.55 对比度不够）。
+
+**code 已落地**：只改 `src/ui/dom/purification-hud.ts`。底栏未动。`typecheck` / `build` 通过。人验收 / U1–U12 **未勾 PASS**。本 Slice **不标 COMPLETE**。
+
+**design 已锁（2026-08-13）**：四行可见结构见 IA §S2 合同表。档位中文选定 `SEVERITY_LABEL`（轻微/中等/剧烈/极端）。无硬停冲突。请 art 只核视觉，勿另起结构。
+
+### R5 — S2 布局锁定 Alt B 贴顶横槽（2026-08-14）· 人点名 BBBBBBB
+
+**人原话**：四套互斥方案后锁定 B。竖表否决（丑、主次不分、散）。
+
+**落地**：`#purif-hud` 改为 `flex-direction:row; gap:32px` 三槽（消声可选第四槽在左）。文案节点仍是 DEC-047。无菱形/波形/pip/`·`。Kit §A5-3 / IA §S2 / DEC-048 已回写。底栏未动。本 Slice **不标 COMPLETE**。审美 / U1–U12 仍等人终审。
+
+---
+
+### R6 — 方案 1 CRT 整页 · 六块交互面板重构示例（2026-08-14）· 等人看完再裁
+
+**人原话**：倾向方案 1 CRT 整页，但从上一版图里觉得信息缺失。授权 design/art 出所有交互 panel 重构示例，人看完再判断。不写 `src/**`，不标 COMPLETE。
+
+**上一版（`menu-alt-1-crt-page.html`）丢掉的 P1（点名）**：机会成本三簇；S4 槽上减伤%/转化去向/副作用；S5 槽摘要、主动/被动、出击残留；S4/S5/S6 固定检视区；S7 整屏；S8 基础→实际、「挡下 N」两行、残留。半屏对照本身也不是「同一台监视器铺满」。
+
+**本轮交付（只 `docs/art/demos/`，未改 `src/**`，未把 Kit 标成已通过）**：
+
+| 文件 | 表面 | 机械层 P1 |
+| ---- | ---- | --------- |
+| `menu-crt-_shell.html` | 共用机身 | 面框/扫描线/标题行/底键行/分区线 |
+| `menu-crt-_layout.md` | 分区合同 | design：无「需人裁定」；P1 只改落点不删 |
+| `menu-crt-s3-alloc.html` | S3 分配 | 全 |
+| `menu-crt-s4-defense.html` | S4 供奉 | 全（含检视 L1–L5） |
+| `menu-crt-s5-loadout.html` | S5 踏入 | 全（既有残留现实现未上屏，示例已画） |
+| `menu-crt-s6-status.html` | S6 存续 | 全（稳定度陈述、无条） |
+| `menu-crt-s7-growth.html` | S7 蜕变 | 全（还差 9 / 已至上限） |
+| `menu-crt-s8-impact.html` | S8 冲击 | 全（挡下 12、挡下 9 两行） |
+
+审美 / U1–U12 **未勾 PASS**。等人看完点头或点名哪块还缺/还丑。本 Slice **不标 COMPLETE**。
+
+### R6 — CRT 整页分区（2026-08-14）· design 只出落点
+
+方案 1「CRT 整页」已锁。design 产出 `docs/art/demos/menu-crt-_layout.md`：S3–S8 ASCII 分区 + P1 核对表，不删 P1、不改机制、不进 `src/**`。无「需人裁定」。待 art 按该文件复制六张。本 Slice **不标 COMPLETE**。
+
+### R7 — CRT 磷光屏写入 `src/**`（2026-08-14）· DEC-049
+
+**人原话**：风格不错；全屏太大；几乎纯黑白不符配色；灰色金属框不符；取消 1px 外框。随后「搞吧」——样张进实现。
+
+**落地**：`.game-panel` 默认 680×468 磷光屏（无金属/无外框）。S3 分配 / S4 供奉 / S5 踏入 / S6 存续 / S7 蜕变 / S8 冲击 切到 `createCrtPanel` + P1 分节点。Esc 记录菜单与裂隙结算保持居中小读出。Kit §A5-5 / `art-direction.md` §6.4 / `architecture.md` PanelStyles / DEC-049 已回写。
+
+审美 / U1–U12 **未勾 PASS**。本 Slice **不标 COMPLETE**。

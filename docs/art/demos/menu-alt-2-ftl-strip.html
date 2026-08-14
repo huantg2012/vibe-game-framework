@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>Alt-2 · 贴边子系统条</title>
+  <!--
+    方案：贴边子系统条（打破 A5-5 440px 全高抽屉）
+    只出视觉。不改 src/**。挂载约定：屏幕空间 → #dom-ui-root。
+
+    载体 A：净化点监控装置贴边打出的子系统条。走近模块 / Tab 时同一条带亮起来，
+    不是终端窗口，不套 .game-panel，无遮罩。极窄：228px / 960 = 23.8%（< 30% 宽）。
+
+    参考（ux-references.md FTL 节 + A5-2 槽语言）：
+    | FTL | 一名+一条+一量同屏；贴边；键写在条上 | 不学供电格 / 全息蓝 |
+    | Into the Breach | 预告写成可读事实（5→63、-18%） | 不学战棋网格 |
+    | Barotrauma | 装置自己报状态 | 不学整屏仪表 |
+    本屏不像：Dashboard / 完整度表单 / 双栏后台报表。
+
+    哪台机器：净化点监控装置贴右边打出的 Courier 等宽读数（与 A5-3 HUD 同一台）。
+    打开：走近核心 → 该行进入已选中，←→ 改投入；Tab → 同一条带换成若干系统条+短列表。
+    无投影、无圆角、无 +/-、无「注入」、无按钮排。
+
+    P0 分配（≤6）：核心名+条+43/100；投入 5→63/100；混乱增速 -12%→-18%；薪柴 11；储藏条；键。
+    P0 Tab（≤6）：核心条；储藏条；稳定度 42%；潮汐 第 1 潮 涨潮；库存两件。
+    蜕变 最低 8 还差 2 = 缺口（投入后薪柴 6 < 8），不是变灰按钮。
+
+    画完自检（机械层；审美待人终审）：
+    1 A，#dom-ui-root，右缘不随 zoom 漂。
+    2 FTL / ItB / Barotrauma；不像 Dashboard / 表单 / 双栏报表。
+    3 上列 P0；不操作可读名+量。
+    4 监控装置贴边条。无投影/发光/圆角。
+    5 蜕变 还差 2。
+    6 灰度靠条长+数字+▸；表名/数值/档位分节点。
+    7 走近核心 / Tab。阻断确认 0。
+    8 术语表用词；键 = ←→ Enter Esc。
+  -->
+  <style>
+    :root {
+      --void: #080a0c;
+      --bg: #0f1114;
+      --line: #2a2d32;
+      --text: #8a8f96;
+      --bright: #c8cdd4;
+      --kindling: #c4873a;
+      --tide: #1aad96;
+      --danger: #cc3333;
+      --rare: #3cffd4;
+      --halo: 0 0 2px rgba(0, 0, 0, 0.8);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 960px;
+      background: var(--void);
+      color: var(--text);
+    }
+    body { font-family: "Courier New", Courier, monospace; }
+
+    .stage {
+      position: relative;
+      width: 960px;
+      height: 640px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 60% at 48% 50%, #0e4a3f 0%, transparent 55%),
+        radial-gradient(ellipse 36% 32% at 60% 46%, #1a6b5c 0%, transparent 52%),
+        linear-gradient(180deg, #0a0b0d 0%, #080a0c 42%, #0d1114 100%);
+    }
+    .stage + .stage { border-top: 1px solid var(--line); }
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(8, 10, 12, 0) 0px,
+        rgba(8, 10, 12, 0) 2px,
+        rgba(0, 0, 0, 0.18) 2px,
+        rgba(0, 0, 0, 0.18) 3px
+      );
+      pointer-events: none;
+    }
+
+    .mode-tag {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      z-index: 3;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text);
+      text-shadow: var(--halo);
+    }
+
+    .ring {
+      position: absolute;
+      left: 48%;
+      top: 50%;
+      width: 420px;
+      height: 420px;
+      margin: -210px 0 0 -210px;
+      border: 1px solid rgba(26, 173, 150, 0.18);
+      border-radius: 50%;
+    }
+    .core-mod {
+      position: absolute;
+      left: 48%;
+      top: 50%;
+      width: 28px;
+      height: 36px;
+      margin: -18px 0 0 -14px;
+      border: 1px solid var(--bright);
+      background: var(--bg);
+      opacity: 0.55;
+    }
+    .core-mod::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      top: 16px;
+      width: 4px;
+      height: 4px;
+      background: var(--bright);
+    }
+    .store-mod {
+      position: absolute;
+      left: 28%;
+      top: 62%;
+      width: 32px;
+      height: 24px;
+      margin: -12px 0 0 -16px;
+      border: 1px solid var(--kindling);
+      background: var(--bg);
+      opacity: 0.4;
+    }
+    .player {
+      position: absolute;
+      left: 48%;
+      top: 50%;
+      width: 4px;
+      height: 4px;
+      margin: 22px 0 0 18px;
+      background: var(--kindling);
+    }
+    .stage-tab .player { display: none; }
+
+    /* A5-3 贴顶三槽，右上；条带从它下方开始，不抢槽。 */
+    .hud {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      z-index: 3;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      justify-content: flex-end;
+      gap: 32px;
+      text-shadow: var(--halo);
+    }
+    .hud-slot {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .hud-name { font-size: 12px; color: var(--text); }
+    .hud-qty { font-size: 13px; }
+    .hud-grade { font-size: 12px; color: var(--text); }
+    .qty-kindling { color: var(--kindling); }
+    .qty-tide { color: var(--tide); }
+    .qty-core { color: var(--bright); }
+
+    /* 细右条：内容多高就多高，不是全高抽屉。 */
+    .rail {
+      position: absolute;
+      top: 168px;
+      right: 12px;
+      width: 228px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 12px 8px 12px 10px;
+      background: rgba(15, 17, 20, 0.9);
+      border-left: 1px solid var(--line);
+    }
+    .stage-tab .rail { top: 108px; }
+    .sys {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sys-head {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .tick {
+      width: 12px;
+      font-size: 13px;
+      line-height: 1;
+      color: var(--text);
+      flex: 0 0 12px;
+    }
+    .sys.is-on .tick { color: var(--bright); }
+    .sys-name {
+      font-size: 13px;
+      line-height: 1.2;
+      color: var(--bright);
+      min-width: 36px;
+    }
+    .sys-store .sys-name { color: var(--kindling); }
+    .sys-hp {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0;
+      margin-left: auto;
+      font-size: 13px;
+      line-height: 1.2;
+      color: var(--bright);
+    }
+    .sys-store .sys-hp { color: var(--kindling); }
+    .slash { color: var(--text); font-size: 12px; }
+
+    .bar {
+      display: block;
+      width: 100%;
+      height: 6px;
+      background: var(--void);
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    .bar > .now,
+    .bar > .soon {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+    .bar > .now { background: var(--bright); }
+    .sys-store .bar > .now { background: var(--kindling); }
+    .bar > .soon { background: var(--kindling); }
+
+    .sys-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-left: 16px;
+    }
+    .fact {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 4px;
+      white-space: nowrap;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .fact .k { color: var(--text); }
+    .fact .n { font-size: 13px; color: var(--bright); }
+    .fact .n-warm { font-size: 13px; color: var(--kindling); }
+    .fact .to { color: var(--text); }
+
+    .tide-row {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 4px;
+      padding-left: 16px;
+      white-space: nowrap;
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .tide-row .k { color: var(--text); }
+    .tide-row .n { font-size: 13px; color: var(--tide); }
+    .tide-row .g { color: var(--text); }
+
+    .stock {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-left: 16px;
+    }
+    .stock-head {
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .stock-row {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+    .stock-row .item { color: var(--bright); }
+    .stock-row .grade { font-size: 12px; }
+    .grade-fine { color: var(--tide); }
+    .grade-rare { color: var(--rare); }
+
+    .rail-foot {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: 4px;
+      border-top: 1px solid var(--line);
+    }
+    .need {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 4px;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .need .n { font-size: 13px; color: var(--kindling); }
+    .need .short { font-size: 13px; color: var(--danger); }
+    .keys {
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--bright);
+      white-space: nowrap;
+    }
+    .keys .rest { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <!-- ========== 分配：走近核心 ========== -->
+  <section class="stage stage-alloc" aria-label="分配">
+    <div class="mode-tag">分配</div>
+    <div class="ring"></div>
+    <div class="store-mod"></div>
+    <div class="core-mod"></div>
+    <div class="player"></div>
+
+    <div class="hud">
+      <div class="hud-slot">
+        <span class="hud-name">薪柴</span>
+        <span class="hud-qty qty-kindling">11</span>
+      </div>
+      <div class="hud-slot">
+        <span class="hud-name">潮汐</span>
+        <span class="hud-qty qty-tide">第 1 潮</span>
+        <span class="hud-grade">涨潮</span>
+      </div>
+      <div class="hud-slot">
+        <span class="hud-name">下次归来</span>
+        <span class="hud-qty qty-core">核心</span>
+        <span class="hud-grade">中等</span>
+      </div>
+    </div>
+
+    <div class="rail">
+      <div class="sys is-on">
+        <div class="sys-head">
+          <span class="tick">▸</span>
+          <span class="sys-name">核心</span>
+          <span class="sys-hp">43<span class="slash">/</span>100</span>
+        </div>
+        <span class="bar">
+          <span class="now" style="width:43%"></span>
+          <span class="soon" style="left:43%;width:20%"></span>
+        </span>
+        <div class="sys-facts">
+          <div class="fact">
+            <span class="k">投入</span>
+            <span class="n-warm">5</span>
+            <span class="to">→</span>
+            <span class="n-warm">63</span>
+            <span class="slash">/</span>
+            <span class="k">100</span>
+          </div>
+          <div class="fact">
+            <span class="k">混乱增速</span>
+            <span class="n">-12%</span>
+            <span class="to">→</span>
+            <span class="n">-18%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sys sys-store">
+        <div class="sys-head">
+          <span class="tick"></span>
+          <span class="sys-name">储藏</span>
+          <span class="sys-hp">70<span class="slash">/</span>100</span>
+        </div>
+        <span class="bar"><span class="now" style="width:70%"></span></span>
+      </div>
+
+      <div class="rail-foot">
+        <div class="need">
+          <span>薪柴</span>
+          <span class="n">11</span>
+          <span>蜕变</span>
+          <span>最低</span>
+          <span class="n">8</span>
+          <span class="short">还差 2</span>
+        </div>
+        <div class="keys">←→ <span class="rest">增减</span>  Enter <span class="rest">投入</span>  Esc <span class="rest">离开</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Tab：同一条带，若干系统条 + 短列表 ========== -->
+  <section class="stage stage-tab" aria-label="Tab 存续">
+    <div class="mode-tag">Tab</div>
+    <div class="ring"></div>
+    <div class="store-mod"></div>
+    <div class="core-mod"></div>
+
+    <div class="hud">
+      <div class="hud-slot">
+        <span class="hud-name">薪柴</span>
+        <span class="hud-qty qty-kindling">11</span>
+      </div>
+      <div class="hud-slot">
+        <span class="hud-name">潮汐</span>
+        <span class="hud-qty qty-tide">第 1 潮</span>
+        <span class="hud-grade">涨潮</span>
+      </div>
+      <div class="hud-slot">
+        <span class="hud-name">下次归来</span>
+        <span class="hud-qty qty-core">核心</span>
+        <span class="hud-grade">中等</span>
+      </div>
+    </div>
+
+    <div class="rail">
+      <div class="sys">
+        <div class="sys-head">
+          <span class="tick"></span>
+          <span class="sys-name">核心</span>
+          <span class="sys-hp">43<span class="slash">/</span>100</span>
+        </div>
+        <span class="bar"><span class="now" style="width:43%"></span></span>
+        <div class="sys-facts">
+          <div class="fact">
+            <span class="k">混乱增速</span>
+            <span class="n">-12%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sys sys-store">
+        <div class="sys-head">
+          <span class="tick"></span>
+          <span class="sys-name">储藏</span>
+          <span class="sys-hp">70<span class="slash">/</span>100</span>
+        </div>
+        <span class="bar"><span class="now" style="width:70%"></span></span>
+      </div>
+
+      <div class="sys">
+        <div class="sys-head">
+          <span class="tick"></span>
+          <span class="sys-name">稳定度</span>
+          <span class="sys-hp">42%</span>
+        </div>
+        <span class="bar"><span class="now" style="width:42%"></span></span>
+      </div>
+
+      <div class="tide-row">
+        <span class="k">潮汐</span>
+        <span class="n">第 1 潮</span>
+        <span class="g">涨潮</span>
+      </div>
+
+      <div class="stock">
+        <div class="stock-head">库存</div>
+        <div class="stock-row">
+          <span class="item">凝锁</span>
+          <span class="grade grade-fine">Fine</span>
+        </div>
+        <div class="stock-row">
+          <span class="item">反刍</span>
+          <span class="grade grade-rare">Rare</span>
+        </div>
+      </div>
+
+      <div class="rail-foot">
+        <div class="keys">Esc <span class="rest">收回</span></div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

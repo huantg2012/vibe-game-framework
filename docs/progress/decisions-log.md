@@ -9,6 +9,41 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-049: 净化点交互面板锁定 CRT 磷光屏（680×468，无金属/无外框）
+- Date: 2026-08-14
+- Phase: Slice 5.5 轻量路径（S3–S8）
+- Type: Display / UX
+- Context: 人锁方案 1 CRT。样张审美「风格不错」；否决全屏太大、几乎纯黑白、灰色金属底色框。后取消 1px 外框——靠扫描线与发暗边缘从场景分开。授权把锁定稿写入 `src/**`。
+- Decision:
+  1. S3–S8 共用 `.game-panel` 默认机身：`680×468`，`top:52px; left:140px`（960×640），挂 `#dom-ui-root`。不盖 DEC-048 贴顶三槽 HUD。
+  2. 无金属面壳、无 1px 外框、无圆角、无 box-shadow、无 HTML 主按钮排。玻璃 `rgba(15,17,20,0.88)`；teal 扫描线；backdrop 透明。键印屏底。
+  3. Kit A2 语义色：薪柴/储藏/费用 `#c4873a`；潮汐/混乱/工具防御/转化 `#1aad96`（★★★ `#3cffd4`）；冲击 `#cc3333`；中等/临界 `#b89040`。表名/数值/档位分节点。
+  4. Esc 记录菜单与裂隙结算保持居中小读出（内联覆盖 CRT 占位），本批不铺满磷光屏。
+  5. 原「右侧 440px 全高抽屉」作废。
+- Impact: `panel-styles.ts` + S3–S8 六个面板；Kit §A5-5～A5-12；`art-direction.md` §6.4；`architecture.md` PanelStyles。审美 / U1–U12 仍等人终审。本 Slice **不标 COMPLETE**。
+
+## DEC-048: 净化点 HUD 布局锁定 Alt B 贴顶横槽
+- Date: 2026-08-14
+- Phase: Slice 5.5 轻量路径（S2）
+- Type: Display / UX
+- Context: 人否决竖表/三列对齐（丑、主次不分、散）。四套互斥方案后人口授「就 B」。
+- Decision:
+  1. `#purif-hud` 改为贴顶靠右横排三槽：`薪柴 11` / `潮汐 第 N 潮 涨潮` / `下次归来 核心 中等`。槽内 gap 4px，槽间 gap 32px。
+  2. DEC-047 文案节点仍有效。取消常驻 HUD 上的 ◇/◈/▣、波形、pip、间隔号 `·`。消声为可选第四槽（三槽左侧），opacity 0.85。
+  3. 轻微/中等档位不上薪柴橙；剧烈/极端用 `#cc3333`。不套 `.game-panel`。
+- Impact: `purification-hud.ts`；Kit §A5-3；IA §S2。底栏不改。
+
+## DEC-047: 净化点 HUD 右上四行写明；冲击档位中文沿用 SEVERITY_LABEL
+- Date: 2026-08-13
+- Phase: Slice 5.5 轻量路径（S2 右上读数）
+- Type: Display / UX
+- Context: 人要求右上不要隐晦符号（不要学 ◈=核心、▮ 格数=档位）。档位中文当时有三套说法：人口授「轻/中/重/极端」、IA 例句「中」、S8 已上屏 `SEVERITY_LABEL`（轻微/中等/剧烈/极端）。相位必须对照已有 TidePhase，不得发明满潮/落潮。
+- Decision:
+  1. `#purif-hud` 四行结构锁为独立节点：薪柴＝表名「薪柴」+ 数字；潮汐＝「潮汐」+「第 N 潮」+ 涨潮/潮峰/退潮；预告＝「下次归来」+ 核心/储藏 + SEVERITY_LABEL；消声淡预告＝「再下一轮」+ 同一套目标/档位（仅 `getForecastLookahead()` 非空）。
+  2. 全项目冲击档位中文沿用已上屏 `SEVERITY_LABEL`，HUD 必须读同一份，不另造短档名。U5：预告不得写「中」而结算写「中等」。
+  3. 符号（◇/◈/▣/波形/pip）最多前缀或第二编码，不能代替字。不套 `.game-panel`，仍挂 `#dom-ui-root`。稳定度不加回 HUD。DEC-034 仍不报方向。
+- Impact: `docs/design-notes/ux-information-architecture.md` §S2；`system-growth-tide.md` 规则 22；`system-purification-impact.md` 规则 7；`docs/world.md` 术语表补核心/储藏/潮汐三态/四档中文。art 只核视觉；code 改 `purification-hud.ts`。S8 本批不改。
+
 ## DEC-046: Slice 5.5 C3 键盘游标导航 + 检视层落地的实现取舍
 - Date: 2026-08-12
 - Phase: Slice 5.5 实现（C3）

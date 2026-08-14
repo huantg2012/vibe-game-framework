@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>HUD alt C — CRT 纸带</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 960px;
+      height: 640px;
+      overflow: hidden;
+      background: #080a0c;
+    }
+    .stage {
+      width: 960px;
+      height: 640px;
+      position: relative;
+      background: #080a0c;
+    }
+    /* 整屏磷光材质，极淡；不盖在字上 */
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(200, 205, 212, 0.025) 3px,
+        rgba(200, 205, 212, 0.025) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* 一块字：单一左缘，连续打出，无卡片/无 gap */
+    .tape {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      z-index: 2;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      line-height: 1.08;
+      color: #8a8f96;
+      text-align: left;
+      text-shadow: 0 0 2px #080a0c;
+    }
+    .tape div { margin: 0; padding: 0; }
+    .val {
+      font-size: 13px;
+    }
+    .k { color: #c4873a; }
+    .t { color: #1aad96; }
+    .c { color: #c8cdd4; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="tape">
+      <div>薪柴</div>
+      <div><span class="val k">11</span></div>
+      <div>潮汐</div>
+      <div><span class="val t">第 1 潮</span> <span>涨潮</span></div>
+      <div>下次归来</div>
+      <div><span class="val c">核心</span> <span>中等</span></div>
+    </div>
+  </div>
+</body>
+</html>

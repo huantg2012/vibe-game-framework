@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-crt-s8-impact · 冲击结算</title>
+  <!--
+    S8 冲击结算 CRT v2。680×468。P1：强度；基础→实际；挡下两行；充能/转化；本次残留。
+    冲击标题危险红。储藏暖。挡下/转化 teal。返还薪柴暖。档位中等警告金。
+  -->
+  <link rel="stylesheet" href="menu-crt-_shell.css" />
+  <style>
+    .readout .rule { margin:6px 0; }
+    .pair-pad { margin-top:6px; }
+    .dmg-line { align-items:center; }
+    .dmg-line + .dmg-line { margin-top:8px; }
+    .dmg-line .bar { flex:1 1 auto; margin-top:0; min-width:80px; }
+    .zone-def { min-height:72px; }
+    .slot-row { min-height:20px; }
+    .zone-charge .pair + .pair { margin-top:6px; }
+    .crt-title.hurt { color:#cc3333; }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <i class="scene-floor"></i>
+    <i class="scene-rift"></i>
+    <i class="scene-rift-glow"></i>
+    <i class="scene-lamp"></i>
+    <i class="scene-node"></i>
+  </div>
+  <div class="hud-strip" aria-hidden="true">
+    <div class="hud-slot"><span class="name">薪柴</span><span class="num warm">11</span></div>
+    <div class="hud-slot"><span class="name">潮汐</span><span class="num-sm teal">第 2 潮</span><span class="tier teal">涨潮</span></div>
+    <div class="hud-slot"><span class="name">下次归来</span><span class="num-sm">核心</span><span class="tier warn">中等</span></div>
+  </div>
+  <div class="console">
+    <i class="pwr"></i>
+    <div class="glass">
+      <div class="readout">
+        <div class="crt-title hurt">冲击结算</div>
+        <div class="pair pair-pad">
+          <span class="name">冲击</span>
+          <div class="rest">
+            <span class="num hurt">x1.60</span>
+            <span class="tier warn">中等</span>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="pair dmg-line">
+          <span class="num-sm">核心</span>
+          <span class="name">基础</span>
+          <span class="num">32</span>
+          <span class="tier">→</span>
+          <span class="name">实际</span>
+          <span class="num hurt">11</span>
+          <div class="bar"><i class="now-hurt" style="width:100%"></i></div>
+        </div>
+        <div class="pair dmg-line">
+          <span class="num-sm warm">储藏</span>
+          <span class="name">基础</span>
+          <span class="num">8</span>
+          <span class="tier">→</span>
+          <span class="name">实际</span>
+          <span class="num warm">8</span>
+          <div class="bar"><i class="now-hurt" style="width:73%"></i></div>
+        </div>
+        <div class="rule"></div>
+        <div class="zone-def">
+          <div class="pair slot-row">
+            <span class="num-sm teal">晶锁残渣</span>
+            <div class="rest">
+              <span class="name">挡下</span>
+              <span class="num teal">12</span>
+            </div>
+          </div>
+          <div class="pair slot-row">
+            <span class="num-sm rare">噬化残渣</span>
+            <div class="rest">
+              <span class="name">挡下</span>
+              <span class="num teal">9</span>
+              <span class="name">返还</span>
+              <span class="num-sm warm">2</span>
+              <span class="tier">薪柴</span>
+            </div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="zone-charge">
+          <div class="pair">
+            <span class="num-sm teal">晶锁残渣</span>
+            <div class="rest">
+              <span class="num-sm">1</span><span class="tier">→</span>
+              <span class="num-sm">2</span><span class="tier">/</span><span class="num-sm">3</span>
+            </div>
+          </div>
+          <div class="pair">
+            <span class="num-sm rare">噬化残渣</span>
+            <div class="rest">
+              <span class="num-sm">2</span><span class="tier">→</span>
+              <span class="num-sm">3</span><span class="tier">/</span><span class="num-sm">3</span>
+              <span class="tier teal">转化</span>
+              <span class="num-sm teal">反刍之口</span>
+            </div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="pair">
+          <span class="name">本次残留</span>
+          <div class="rest">
+            <span class="num-sm">初始混乱</span>
+            <span class="num teal">+8</span>
+            <span class="tier">←</span>
+            <span class="num-sm rare">噬化残渣</span>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="pair">
+          <span class="name">预告</span>
+          <div class="rest">
+            <span class="tier">核心</span>
+            <span class="tier warn">中等</span>
+            <span class="tier">与实际一致</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faceplate">
+      <div class="keys">
+        <span><span class="key">Enter</span> <span class="act">合上</span></span>
+        <span><span class="key">Esc</span> <span class="act">合上</span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

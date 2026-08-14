@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-alt-4 钉旁铭牌</title>
+  <!--
+    方案：钉旁铭牌（载体 A · 世界内装置铭牌）
+    命题：走近交互物按 E = 铭牌钉在该物件旁；Tab = 玩家拿出的小报告偏一角。
+    禁止：440×640 全高抽屉、居中网页 popup、圆角、投影。
+
+    挂载（实现层，本文件只示意）：屏幕空间挂 architecture.md 的 #dom-ui-root。
+    每帧把核心世界坐标换成屏幕坐标，铭牌贴其右侧；不要 scrollFactor(0) 角锚，
+    也不要挂 document.body。钉世界坐标的只有核心/储藏两个点本身。
+
+    参考（学动作 / 不学）：
+      Signalis — 检视=装置读出，不是浮动 tooltip；不学 CRT 曲面畸变
+      FTL — 名+量+状态同条、不靠 hover；不学供电格 / 全息蓝
+      Barotrauma — 设备自己报状态；不学指针仪表盘
+    本屏不像：Dashboard / 设置页 / 确认对话框 / 全高侧栏抽屉
+
+    哪台机器：核心侧面焊死的近距铭牌（E）；从监控口撕下的存续打印条（Tab）。
+    1px 边 = 金属板裁边。投入行左侧 1px 亮条 = 游标停在该数字。
+    下次归来行左侧 1px = 这块装置就是预告目标（板上的告警刻线，不是装饰发光）。
+    完整度预览段用薪柴橙 = 正在把储备打进这块板。无圆角、无投影。
+
+    字号：身份/主值 13px = Kit H2；表名/键/档位 12px = Label。不低于 12px。
+    色仅用：#080a0c #0f1114 #2a2d32 #8a8f96 #c8cdd4 #c4873a #1aad96 #cc3333 #3cffd4
+    （本页未用 #3cffd4：铭牌不是污染高亮点。）
+
+    机械层自检（审美待人终审；不写好看/像游戏/PASS）：
+    1 载体 A。示意挂 overlay 根、跟物件屏幕坐标，不跟 zoom 飘。
+    2 参考见上。不像 Dashboard / 设置页 / 确认链。
+    3 E 态 P1：完整度、投入后效果、投入/储备、储藏、蜕变最低、下次归来。
+       Tab 态 P1：稳定度、潮汐、库存两件。均表名/值/档位分节点。
+    4 哪台机器见上。无投影/圆角。亮条有物理原因。
+    5 本样例投入=5，注入可执行。若投入 0，键行应写「未投入 · 先调整」（本页未画该态）。
+    6 灰度：六边形=核心 vs 方=储藏；条长；43/100 与 70/100；★ 数量；「中等」是字。
+    7 E = 走近核心按下；Tab = 拿出报告。无阻断确认链。
+    8 用词：核心/储藏/薪柴/投入/储备/蜕变/下次归来/中等/潮汐/涨潮/稳定度/凝锁/反刍/注入/离开/合上。
+       稀有度用 ★ 档，不写 Fine/Rare。键=绑定。
+  -->
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 960px;
+      background: #080a0c;
+      font-family: "Courier New", Courier, monospace;
+    }
+    body { height: 1280px; }
+
+    .stage {
+      position: relative;
+      width: 960px;
+      height: 640px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 22% 20% at 36% 48%, rgba(196, 135, 58, 0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 48% at 44% 50%, #0f1114 0%, #080a0c 72%);
+    }
+    .stage + .stage {
+      border-top: 1px solid #2a2d32;
+    }
+
+    /* 世界：力场膜。椭圆是场地几何，不是 UI 圆角卡片。 */
+    .membrane {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 520px;
+      height: 400px;
+      margin: -200px 0 0 -260px;
+      border: 1px solid rgba(196, 135, 58, 0.28);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .key-slate {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      font-size: 12px;
+      color: #8a8f96;
+      letter-spacing: 0.04em;
+    }
+
+    .player {
+      position: absolute;
+      left: 302px;
+      top: 298px;
+      width: 8px;
+      height: 12px;
+      background: #c4873a;
+    }
+
+    .mod {
+      position: absolute;
+    }
+    .mod-core {
+      left: 332px;
+      top: 292px;
+      width: 22px;
+      height: 24px;
+      background: linear-gradient(to top, #c8cdd4 0%, #c8cdd4 43%, #2a2d32 43%, #2a2d32 100%);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    }
+    .mod-storage {
+      left: 708px;
+      top: 424px;
+      width: 16px;
+      height: 16px;
+      background: linear-gradient(to top, #c4873a 0%, #c4873a 70%, #2a2d32 70%, #2a2d32 100%);
+    }
+    .mod-label {
+      position: absolute;
+      font-size: 12px;
+      color: #8a8f96;
+      text-shadow: 0 0 2px #080a0c;
+      white-space: nowrap;
+    }
+    .lab-core { left: 328px; top: 320px; color: #c8cdd4; }
+    .lab-storage { left: 698px; top: 444px; color: #c4873a; }
+
+    /* 焊在机壳右侧的短接片，不是网页 callout 箭头 */
+    .weld {
+      position: absolute;
+      left: 354px;
+      top: 303px;
+      width: 14px;
+      height: 1px;
+      background: #2a2d32;
+    }
+
+    .plaque {
+      position: absolute;
+      background: rgba(15, 17, 20, 0.90);
+      border: 1px solid #2a2d32;
+      color: #8a8f96;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .plaque * { font-family: inherit; }
+
+    .plaque-e {
+      left: 368px;
+      top: 168px;
+      width: 208px;
+      padding: 8px 10px 8px 10px;
+    }
+    .plaque-tab {
+      left: 16px;
+      bottom: 20px;
+      width: 196px;
+      padding: 8px 10px;
+    }
+
+    .id {
+      font-size: 13px;
+      color: #c8cdd4;
+      margin-bottom: 6px;
+    }
+    .stamp {
+      font-size: 12px;
+      color: #8a8f96;
+      margin-bottom: 8px;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      padding: 2px 0;
+    }
+    .k { color: #8a8f96; font-size: 12px; flex: 0 0 auto; }
+    .v { color: #c8cdd4; font-size: 13px; font-weight: bold; text-align: right; }
+    .v-dim { color: #8a8f96; font-size: 12px; font-weight: normal; }
+    .v-kindling { color: #c4873a; font-size: 13px; font-weight: bold; }
+    .v-tide { color: #1aad96; font-size: 13px; font-weight: bold; }
+
+    .nodes {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    /* 这块就是下次目标：左侧告警刻线（形状），不是只靠红 */
+    .forecast {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 2px 0 2px 6px;
+      margin: 0 0 6px 0;
+      border-left: 1px solid #cc3333;
+    }
+
+    .bar {
+      height: 6px;
+      background: #080a0c;
+      border: 1px solid #2a2d32;
+      margin: 3px 0 6px 0;
+      position: relative;
+    }
+    .bar-now {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 43%;
+      background: #c8cdd4;
+    }
+    .bar-preview {
+      position: absolute;
+      left: 43%; top: 0; bottom: 0;
+      width: 20%;
+      background: #c4873a;
+    }
+
+    .fx {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0 0 6px 0;
+      margin-bottom: 2px;
+    }
+    .fx .from { color: #8a8f96; font-size: 13px; font-weight: bold; }
+    .fx .arrow { color: #2a2d32; font-size: 12px; }
+    .fx .to { color: #c8cdd4; font-size: 13px; font-weight: bold; }
+
+    /* 游标停在投入数字上 */
+    .selected {
+      padding-left: 6px;
+      border-left: 1px solid #c8cdd4;
+    }
+
+    .quiet { opacity: 0.92; }
+    .sep {
+      height: 1px;
+      background: #2a2d32;
+      margin: 6px 0;
+    }
+    .keys {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid #2a2d32;
+      font-size: 12px;
+      color: #8a8f96;
+      line-height: 1.35;
+    }
+    .keys .bind { color: #c8cdd4; }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== 态 1：走近核心 · E ========== -->
+  <div class="stage" id="state-e">
+    <div class="membrane"></div>
+    <div class="key-slate">E</div>
+
+    <div class="player"></div>
+    <div class="mod mod-core"></div>
+    <div class="mod-label lab-core">核心</div>
+    <div class="weld"></div>
+    <div class="mod mod-storage"></div>
+    <div class="mod-label lab-storage">储藏</div>
+
+    <div class="plaque plaque-e">
+      <div class="id">核心</div>
+
+      <div class="forecast">
+        <span class="k">下次归来</span>
+        <span class="nodes">
+          <span class="v">核心</span>
+          <span class="v-dim">中等</span>
+        </span>
+      </div>
+
+      <div class="row">
+        <span class="k">完整度</span>
+        <span class="nodes">
+          <span class="v">43</span>
+          <span class="v-dim">/</span>
+          <span class="v-dim">100</span>
+        </span>
+      </div>
+      <div class="bar">
+        <div class="bar-now"></div>
+        <div class="bar-preview"></div>
+      </div>
+
+      <div class="row">
+        <span class="k">混乱抑制</span>
+        <span class="v-dim">投入后</span>
+      </div>
+      <div class="fx">
+        <span class="from">-12%</span>
+        <span class="arrow">→</span>
+        <span class="to">-18%</span>
+      </div>
+
+      <div class="row selected">
+        <span class="k">投入</span>
+        <span class="v">5</span>
+      </div>
+      <div class="row">
+        <span class="k">储备</span>
+        <span class="v-kindling">11</span>
+      </div>
+
+      <div class="sep"></div>
+
+      <div class="row quiet">
+        <span class="k">储藏</span>
+        <span class="nodes">
+          <span class="v-kindling">70</span>
+          <span class="v-dim">/</span>
+          <span class="v-dim">100</span>
+        </span>
+      </div>
+      <div class="row quiet">
+        <span class="k">蜕变</span>
+        <span class="nodes">
+          <span class="v-dim">最低</span>
+          <span class="v-kindling">8</span>
+        </span>
+      </div>
+
+      <div class="keys">
+        <span class="bind">←→</span> 调整
+        <span class="bind">Enter</span> 注入
+        <span class="bind">Esc</span> 离开
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 态 2：拿出报告 · Tab ========== -->
+  <div class="stage" id="state-tab">
+    <div class="membrane"></div>
+    <div class="key-slate">Tab</div>
+
+    <div class="player" style="left: 448px; top: 318px;"></div>
+    <div class="mod mod-core"></div>
+    <div class="mod-label lab-core">核心</div>
+    <div class="mod mod-storage"></div>
+    <div class="mod-label lab-storage">储藏</div>
+
+    <div class="plaque plaque-tab">
+      <div class="stamp">存续</div>
+
+      <div class="row">
+        <span class="k">稳定度</span>
+        <span class="v">42%</span>
+      </div>
+
+      <div class="row">
+        <span class="k">潮汐</span>
+        <span class="stack">
+          <span class="v-tide">第 1 潮</span>
+          <span class="v-dim">涨潮</span>
+        </span>
+      </div>
+
+      <div class="sep"></div>
+
+      <div class="row">
+        <span class="k">凝锁</span>
+        <span class="v-dim">★★</span>
+      </div>
+      <div class="row">
+        <span class="k">反刍</span>
+        <span class="v-dim">★★★</span>
+      </div>
+
+      <div class="keys">
+        <span class="bind">Tab</span> 合上
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-crt-s7-growth · 蜕变</title>
+  <!--
+    S7 蜕变 CRT v2。680×468。P1：储备；六卡名/点阵/当前→下一级/费用或还差。
+    储备与费用暖色（L3 薪柴）。已至上限 warm-dim。混乱增速 teal。选中格暖色左边框。
+  -->
+  <link rel="stylesheet" href="menu-crt-_shell.css" />
+  <style>
+    .s7-body { flex:1 1 auto; min-height:0; display:flex; flex-direction:column; }
+    .zone-stock { flex:0 0 auto; display:flex; flex-direction:row; align-items:baseline; gap:12px; }
+    .grid-6 {
+      flex:1 1 auto; min-height:0;
+      display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:1fr 1fr; gap:6px;
+    }
+    .g-cell {
+      border:1px solid #2a2d32; padding:6px;
+      display:flex; flex-direction:row; align-items:stretch; gap:6px;
+      min-height:0; overflow:hidden;
+    }
+    .g-cell.is-sel { border-color:#c4873a; }
+    .glyph {
+      flex:0 0 24px; align-self:flex-start; width:24px; height:24px;
+      border:1px solid #2a2d32; display:flex; align-items:center; justify-content:center;
+      font-size:12px; line-height:1; color:#c4873a;
+    }
+    .g-cell.is-sel .glyph { border-color:#c4873a; }
+    .g-body { flex:1 1 auto; min-width:0; min-height:0; display:flex; flex-direction:column; gap:2px; }
+    .g-name { display:flex; flex-direction:row; align-items:baseline; }
+    .uname { font-size:13px; line-height:1.2; font-weight:bold; color:#8a8f96; }
+    .g-cell.is-sel .uname { color:#c8cdd4; }
+    .dots { font-size:13px; line-height:1.2; letter-spacing:2px; }
+    .dot-on { color:#c4873a; }
+    .dot-off { color:#8a8f96; }
+    .cur { font-size:12px; line-height:1.2; color:#8a8f96; }
+    .nxt { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px; }
+    .price { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; margin-top:auto; }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <i class="scene-floor"></i>
+    <i class="scene-rift"></i>
+    <i class="scene-rift-glow"></i>
+    <i class="scene-lamp"></i>
+    <i class="scene-node"></i>
+  </div>
+  <div class="hud-strip" aria-hidden="true">
+    <div class="hud-slot"><span class="name">薪柴</span><span class="num warm">11</span></div>
+    <div class="hud-slot"><span class="name">潮汐</span><span class="num-sm teal">第 2 潮</span><span class="tier teal">涨潮</span></div>
+    <div class="hud-slot"><span class="name">下次归来</span><span class="num-sm">核心</span><span class="tier warn">中等</span></div>
+  </div>
+  <div class="console">
+    <i class="pwr"></i>
+    <div class="glass">
+      <div class="readout">
+        <div class="crt-title">蜕变</div>
+        <div class="s7-body">
+          <div class="rule"></div>
+          <div class="zone-stock">
+            <span class="name">储备</span>
+            <span class="num warm">11</span>
+          </div>
+          <div class="rule"></div>
+          <div class="grid-6">
+            <div class="g-cell is-sel">
+              <div class="glyph">◈</div>
+              <div class="g-body">
+                <div class="g-name"><span class="cursor">&gt;</span><span class="uname">渗透抗性</span></div>
+                <div class="dots"><span class="dot-off">○</span><span class="dot-off">○</span><span class="dot-off">○</span><span class="dot-off">○</span><span class="dot-off">○</span></div>
+                <div class="cur">抵御裂隙侵蚀</div>
+                <div class="nxt"><span class="tier">→</span><span class="tier">混乱增速</span><span class="num-sm teal">-4%</span></div>
+                <div class="price"><span class="num warm">8</span></div>
+              </div>
+            </div>
+            <div class="g-cell">
+              <div class="glyph">◇</div>
+              <div class="g-body">
+                <div class="g-name"><span class="uname">薪柴亲和</span></div>
+                <div class="dots"><span class="dot-off">○</span><span class="dot-off">○</span><span class="dot-off">○</span></div>
+                <div class="cur">更高效的收割</div>
+                <div class="nxt"><span class="tier">→</span><span class="tier">拾取额外</span><span class="num-sm warm">+1</span></div>
+                <div class="price"><span class="num warm">8</span></div>
+              </div>
+            </div>
+            <div class="g-cell">
+              <div class="glyph">▣</div>
+              <div class="g-body">
+                <div class="g-name"><span class="uname">生命强化</span></div>
+                <div class="dots"><span class="dot-off">○</span><span class="dot-off">○</span><span class="dot-off">○</span><span class="dot-off">○</span></div>
+                <div class="cur">强化躯壳</div>
+                <div class="nxt"><span class="tier">→</span><span class="tier">完整度</span><span class="num-sm">+15</span></div>
+                <div class="price"><span class="num warm">8</span></div>
+              </div>
+            </div>
+            <div class="g-cell">
+              <div class="glyph">▤</div>
+              <div class="g-body">
+                <div class="g-name"><span class="uname">出击扩容</span></div>
+                <div class="dots"><span class="dot-on">●</span></div>
+                <div class="cur">已解锁第4出击槽位</div>
+                <div class="price"><span class="num-sm warm-dim">已至上限</span></div>
+              </div>
+            </div>
+            <div class="g-cell">
+              <div class="glyph">▥</div>
+              <div class="g-body">
+                <div class="g-name"><span class="uname">供奉扩容</span></div>
+                <div class="dots"><span class="dot-on">●</span></div>
+                <div class="cur">已解锁第4供奉槽位</div>
+                <div class="price"><span class="num-sm warm-dim">已至上限</span></div>
+              </div>
+            </div>
+            <div class="g-cell">
+              <div class="glyph">◎</div>
+              <div class="g-body">
+                <div class="g-name"><span class="uname">预兆洞察</span></div>
+                <div class="dots"><span class="dot-on">●</span><span class="dot-off">○</span><span class="dot-off">○</span></div>
+                <div class="cur"><span class="tier">预告可靠度</span> <span class="num-sm">+5%</span></div>
+                <div class="nxt"><span class="tier">→</span><span class="num-sm">+10%</span></div>
+                <div class="price">
+                  <span class="num warm">20</span>
+                  <span class="tier">还差</span>
+                  <span class="num warm">9</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faceplate">
+      <div class="keys">
+        <span><span class="key">↑</span> <span class="key">↓</span> <span class="act">选卡</span></span>
+        <span><span class="key">Enter</span> <span class="act">购买</span></span>
+        <span><span class="key">Esc</span> <span class="act">离开</span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

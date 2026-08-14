@@ -1,49 +1,72 @@
 /**
- * Panel Styles - In-world terminal/CRT panels for all DOM overlays.
+ * Panel Styles — 净化点墙机 CRT（载体 B）。
  *
- * Injects a single <style> element (idempotent). All panels use `.game-panel`
- * as their root class. Game-style layouts: cards, progress bars, slot grids,
- * pill badges, compact action buttons.
+ * `.game-panel` 默认是 680×468 磷光屏：无金属面框、无 1px 外框，边缘靠扫描线与发暗。
+ * 挂 `#dom-ui-root`。Esc 记录菜单 / 裂隙结算用内联尺寸覆盖，不走这套占位。
  *
- * Visual reference: Hades skill screens / Darkest Dungeon equipment /
- * FTL resource bars / Dwarf Fortress menus — devices IN the game world.
- *
- * Art direction source: docs/design-notes/ui-art-overhaul.md (UX Design Kit v2, §A2-A4).
+ * 参考：Signalis 设备读出（不学曲面畸变）/ FTL 名+条+量（不学供电格）/
+ * Barotrauma 键印在屏上（不学指针仪表）。
+ * 色：docs/design-notes/ui-art-overhaul.md §A2。
  */
 
 const STYLE_ID = 'game-panel-styles';
 
 const CSS = `
-/* === Base panel === */
+/* === CRT 磷光屏（Slice 5.5 · 人锁方案 1，无金属圈、无 1px 外框） === */
 .game-panel {
-  background: rgba(15, 17, 20, 0.92);
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.06) 2px,
-    rgba(0, 0, 0, 0.06) 4px
-  );
-  border: 1px solid #2a2d32;
-  padding: 20px;
-  font: 14px 'Courier New', monospace;
-  color: #c8cdd4;
-  line-height: 1.6;
+  position: absolute;
+  top: 52px;
+  left: 140px;
+  width: 680px;
+  height: 468px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: rgba(15, 17, 20, 0.88);
+  border: none;
+  padding: 10px 12px 0;
+  font: 13px 'Courier New', Courier, monospace;
+  color: #8a8f96;
+  line-height: 1.3;
   image-rendering: pixelated;
-  /* V4 (ui-art-overhaul.md A1): no box-shadow/glow — U2 "无后台管理气味" forbids
-     drop-shadow panels. Separation from the background comes from the border color
-     and the backdrop dim layer (.game-panel-backdrop) alone. */
+  pointer-events: auto;
+  z-index: 1000;
+}
+.game-panel > * {
+  position: relative;
+  z-index: 1;
+}
+.game-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 78% 72% at 50% 42%, transparent 38%, #080a0c 100%);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 2;
+}
+.game-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(26, 173, 150, 0.08) 2px,
+    rgba(8, 10, 12, 0.28) 3px
+  );
+  pointer-events: none;
+  z-index: 3;
 }
 .game-panel .panel-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 12px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.game-panel .panel-title::before {
-  content: '\\25b8 ';
-  color: #2a2d32;
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0 0 4px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #8a8f96;
 }
 .game-panel .section-title {
   color: #8a8f96;
@@ -69,15 +92,29 @@ const CSS = `
 
 /* === Key hint bar (IA §0.4 — reserved primitive, wired starting C4) === */
 .game-panel .key-hint-bar {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
   font-size: 12px;
   color: #8a8f96;
-  text-align: center;
+  text-align: left;
   border-top: 1px solid #2a2d32;
-  padding-top: 6px;
-  margin-top: 6px;
+  padding: 6px 0 8px;
+  margin: 4px 0 0;
 }
 .game-panel .key-hint-bar .key {
+  display: inline-block;
+  border: 1px solid #2a2d32;
+  padding: 0 4px;
   color: #c8cdd4;
+  font-size: 12px;
+  line-height: 16px;
+}
+.game-panel .key-hint-bar [id] {
+  cursor: pointer;
 }
 
 /* === Legacy compat (for any leftover uses) === */
@@ -114,23 +151,23 @@ const CSS = `
 /* === Card grid (growth/upgrade panels) === */
 .game-panel .card-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 6px;
 }
 .game-panel .upgrade-card {
   border: 1px solid #2a2d32;
-  padding: 8px 10px;
+  padding: 6px 8px;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: border-color 0.15s, background 0.15s;
+  align-items: stretch;
+  gap: 8px;
   cursor: pointer;
   position: relative;
+  min-height: 0;
 }
 .game-panel .upgrade-card:hover,
 .game-panel .upgrade-card.card-selected {
-  border-color: #1aad96;
-  background: rgba(26, 173, 150, 0.12);
+  border-color: #c4873a;
+  background: transparent;
 }
 .game-panel .upgrade-card.card-maxed {
   border-color: #8a5c2a;
@@ -190,22 +227,23 @@ const CSS = `
    lives in each caller's markup, not here. */
 .game-panel .pbar-wrap {
   width: 100%;
-  height: 10px;
-  background: #0a0c0e;
+  height: 6px;
+  background: #080a0c;
   border: 1px solid #2a2d32;
   position: relative;
   overflow: hidden;
 }
 .game-panel .pbar-fill {
   height: 100%;
-  transition: width 0.3s ease-out;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .game-panel .pbar-preview {
   position: absolute;
   top: 0;
   height: 100%;
-  opacity: 0.4;
-  transition: width 0.2s ease-out, left 0.2s ease-out;
+  background: repeating-linear-gradient(-45deg, #c8cdd4 0 2px, #080a0c 2px 5px);
 }
 .game-panel .pbar-label {
   font-size: 12px;
@@ -218,46 +256,46 @@ const CSS = `
 /* === Slot grid (defense / loadout) === */
 .game-panel .slot-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin: 8px 0;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 4px 0;
+  border: 1px solid #2a2d32;
 }
 .game-panel .slot-cell {
-  border: 1px dashed #2a2d32;
-  padding: 8px 6px;
-  min-height: 52px;
+  border: none;
+  border-right: 1px solid #2a2d32;
+  padding: 6px 6px 6px 4px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: border-color 0.15s, background 0.15s;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 2px;
   cursor: pointer;
   position: relative;
 }
+.game-panel .slot-cell:last-child { border-right: 0; }
 .game-panel .slot-cell:hover {
-  border-color: #5a5f66;
-  background: rgba(42, 45, 50, 0.2);
+  background: transparent;
 }
 .game-panel .slot-cell.slot-filled {
-  border-style: solid;
+  border-style: none;
+  border-right: 1px solid #2a2d32;
 }
 .game-panel .slot-cell.slot-selected {
-  /* Keyboard cursor — must be visually distinguishable from mere hover (IA §0.3). */
-  border-color: #1aad96;
-  background: rgba(26, 173, 150, 0.12);
+  border-left: 2px solid #c4873a;
+  background: transparent;
 }
 .game-panel .slot-cell .slot-label {
   font-size: 12px;
   color: #8a8f96;
-  position: absolute;
-  top: 2px;
-  left: 4px;
+  position: static;
 }
 .game-panel .slot-cell .slot-name {
   font-size: 13px;
-  font-weight: bold;
-  margin-bottom: 2px;
+  font-weight: normal;
+  margin: 0;
 }
 .game-panel .slot-cell .slot-info {
   font-size: 12px;
@@ -284,10 +322,8 @@ const CSS = `
   background: rgba(42, 45, 50, 0.3);
 }
 .game-panel .item-tile.tile-selected {
-  /* Doubles as "keyboard cursor here" (IA §0.3 "已选中") and "picked" — same teal
-     language as .slot-cell.slot-selected / .upgrade-card.card-selected (U11). */
-  border-color: #1aad96;
-  background: rgba(26, 173, 150, 0.1);
+  border-color: #c4873a;
+  background: transparent;
 }
 .game-panel .item-tile.tile-disabled {
   opacity: 0.35;
@@ -422,13 +458,15 @@ const CSS = `
    content (IA §S13 L1-L5); layout is block (not the C0 flex-centered placeholder)
    because five stacked lines don't fit a single centered row. */
 .game-panel .inspect-dock {
-  border: 1px solid #2a2d32;
-  padding: 8px 10px;
-  min-height: 40px;
-  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #2a2d32;
+  padding: 6px 0 4px;
+  min-height: 88px;
+  margin: 4px 0 0;
   font-size: 13px;
   color: #8a8f96;
-  line-height: 1.5;
+  line-height: 1.3;
+  flex: 0 0 auto;
 }
 .game-panel .inspect-dock .inspect-empty {
   color: #8a8f96;
@@ -450,10 +488,7 @@ const CSS = `
 
 /* === Action bar (bottom of panel) === */
 .game-panel .action-bar {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 10px;
+  display: none;
 }
 /* Equal-width buttons (Slice 5.5 playtest fix #3): width used to follow label
    length ("算了" vs "踏入"), reading as unfinished. flex:1 makes every direct
@@ -473,13 +508,11 @@ const CSS = `
 
 /* === Backdrop overlay === */
 .game-panel-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 998;
+  pointer-events: auto;
 }
 
 /* === In-game Esc record menu (pause-menu.ts) === */
@@ -498,6 +531,17 @@ const CSS = `
 .game-panel.pause-menu-panel .pause-menu-row.is-selected {
   color: #c8cdd4;
 }
+
+/* Esc 记录菜单 / 裂隙结算：覆盖 CRT 默认 680×468 占位，居中小读出。 */
+.game-panel.pause-menu-panel,
+#rift-result-panel.game-panel {
+  top: 50%;
+  left: 50%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+.game-panel.pause-menu-panel { width: 320px; }
+#rift-result-panel.game-panel { width: 360px; }
 
 /* === Toast primitives (ui-art-overhaul.md A4/A6) ===
    Two variants for the unified feedback layer: "inline" (brief, non-blocking,
@@ -565,6 +609,16 @@ export function injectPanelStyles(): void {
   style.textContent = CSS;
   document.head.appendChild(style);
   injected = true;
+}
+
+/** Shared CRT shell: 680×468 phosphor, position from `.game-panel` CSS. */
+export function createCrtPanel(id: string): HTMLDivElement {
+  injectPanelStyles();
+  const el = document.createElement('div');
+  el.id = id;
+  el.className = 'game-panel';
+  el.style.pointerEvents = 'auto';
+  return el;
 }
 
 /**

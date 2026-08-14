@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>Alt B · 贴顶横排三槽</title>
+  <!--
+    载体 A：净化点监控装置贴边读数，不套 .game-panel。
+    参考：FTL（一槽=名+量、贴边、战斗不查表；不学供电格/全息蓝）
+          Into the Breach（预告写成可读事实；不学战棋网格）
+          Barotrauma（装置自报；不学整屏仪表）
+    本屏不像：Dashboard / 设置页 / 浏览器 tab 栏。
+    命题：横排三槽贴顶。槽内紧、槽间空。禁止竖表/三列网格/pip/波形/菱形/居中仪表盘。
+  -->
+  <style>
+    :root {
+      --kindling: #c4873a;
+      --tide: #1aad96;
+      --bright: #c8cdd4;
+      --text: #8a8f96;
+      --void: #080a0c;
+      --halo: 0 0 2px rgba(0, 0, 0, 0.8);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 960px;
+      height: 640px;
+      overflow: hidden;
+      background: var(--void);
+    }
+    body { font-family: "Courier New", Courier, monospace; }
+    .stage {
+      width: 960px;
+      height: 640px;
+      position: relative;
+      background: var(--void);
+    }
+    .ring {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      width: 420px;
+      height: 420px;
+      margin: -210px 0 0 -210px;
+      border: 1px solid var(--tide);
+      opacity: 0.18;
+    }
+    .core-dot {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      width: 10px;
+      height: 10px;
+      margin: -5px 0 0 -5px;
+      background: var(--bright);
+      opacity: 0.35;
+    }
+
+    /* 贴顶靠右横排：内容宽，不是 1fr 三列。 */
+    .hud {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      justify-content: flex-end;
+      gap: 32px;
+      z-index: 2;
+    }
+    .slot {
+      display: flex;
+      flex-direction: row;
+      flex: 0 0 auto;
+      align-items: baseline;
+      gap: 4px;
+      white-space: nowrap;
+      text-shadow: var(--halo);
+    }
+    .name {
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .qty {
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: normal;
+    }
+    .grade {
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .qty-kindling { color: var(--kindling); }
+    .qty-tide { color: var(--tide); }
+    .qty-core { color: var(--bright); }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="ring"></div>
+    <div class="core-dot"></div>
+    <div class="hud">
+      <div class="slot">
+        <span class="name">薪柴</span>
+        <span class="qty qty-kindling">11</span>
+      </div>
+      <div class="slot">
+        <span class="name">潮汐</span>
+        <span class="qty qty-tide">第 1 潮</span>
+        <span class="grade">涨潮</span>
+      </div>
+      <div class="slot">
+        <span class="name">下次归来</span>
+        <span class="qty qty-core">核心</span>
+        <span class="grade">中等</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

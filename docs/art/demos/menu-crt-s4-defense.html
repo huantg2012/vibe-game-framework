@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-crt-s4-defense · 供奉</title>
+  <!--
+    S4 供奉 CRT v2。680×468。P1：四槽减伤/充能/转化/副作用；库存类别；检视 L1–L5。
+    稀有度：★ mid / ★★ teal / ★★★ rare。减伤与转化走污染色谱。不进 src/**。
+  -->
+  <link rel="stylesheet" href="menu-crt-_shell.css" />
+  <style>
+    .name-md { font-size:13px; line-height:1.2; font-weight:normal; color:#c8cdd4; }
+    .cursor-gap { visibility:hidden; }
+    .slot-row {
+      display:grid; grid-template-columns:1fr 1fr 1fr 1fr;
+      flex:0 0 auto; min-width:0; border:1px solid #2a2d32;
+    }
+    .slot {
+      min-width:0; padding:6px 5px 6px 4px; border-right:1px solid #2a2d32;
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .slot:last-child { border-right:0; }
+    .slot.is-sel { border-left: 2px solid #c4873a; }
+    .slot-head { display:flex; flex-direction:row; align-items:baseline; gap:4px; min-width:0; }
+    .slot-stat { display:flex; flex-direction:row; align-items:baseline; gap:6px; min-width:0; }
+    .slot-stat .name { display:inline; }
+    .slot-need { display:flex; flex-direction:row; align-items:baseline; gap:4px; font-size:12px; line-height:1.2; color:#8a8f96; }
+    .slot-side { font-size:12px; line-height:1.2; color:#8a8f96; }
+    .inv-list { flex:1 1 auto; min-height:0; overflow:hidden; display:flex; flex-direction:column; gap:6px; }
+    .inspect { flex:0 0 96px; min-height:96px; overflow:hidden; display:flex; flex-direction:column; gap:2px; }
+    .inspect-l1, .inspect-l2, .inspect-l3 {
+      font-size:13px; line-height:1.25; color:#c8cdd4;
+      display:flex; flex-direction:row; flex-wrap:wrap; align-items:baseline; gap:8px;
+    }
+    .inspect-l4, .inspect-l5 {
+      font-size:12px; line-height:1.25; color:#8a8f96;
+      display:flex; flex-direction:row; flex-wrap:wrap; align-items:baseline; gap:8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <i class="scene-floor"></i>
+    <i class="scene-rift"></i>
+    <i class="scene-rift-glow"></i>
+    <i class="scene-lamp"></i>
+    <i class="scene-node"></i>
+  </div>
+  <div class="hud-strip" aria-hidden="true">
+    <div class="hud-slot"><span class="name">薪柴</span><span class="num warm">11</span></div>
+    <div class="hud-slot"><span class="name">潮汐</span><span class="num-sm teal">第 2 潮</span><span class="tier teal">涨潮</span></div>
+    <div class="hud-slot"><span class="name">下次归来</span><span class="num-sm">核心</span><span class="tier warn">中等</span></div>
+  </div>
+  <div class="console">
+    <i class="pwr"></i>
+    <div class="glass">
+      <div class="readout">
+        <div class="crt-title">供奉</div>
+        <div class="rule"></div>
+        <div class="slot-row">
+          <div class="slot is-sel">
+            <div class="slot-head">
+              <span class="cursor">&gt;</span>
+              <span class="name-md teal">晶锁残渣</span>
+              <span class="tier teal">★★</span>
+            </div>
+            <div class="slot-stat"><span class="name">减伤</span><span class="num teal">35%</span></div>
+            <div class="slot-stat"><span class="num-sm">1</span><span class="tier">/</span><span class="num-sm">3</span></div>
+            <div class="slot-stat"><span class="tier">→</span><span class="name-md teal">凝锁</span></div>
+            <div class="slot-need"><span>还需</span><span>2</span><span>次</span></div>
+            <div class="slot-side">每 3 次冲击<br>碎裂一轮</div>
+          </div>
+          <div class="slot">
+            <div class="slot-head">
+              <span class="cursor cursor-gap">&gt;</span>
+              <span class="name-md rare">噬化残渣</span>
+              <span class="tier rare">★★★</span>
+            </div>
+            <div class="slot-stat"><span class="name">减伤</span><span class="num teal">30%</span></div>
+            <div class="slot-stat"><span class="num-sm">2</span><span class="tier">/</span><span class="num-sm">3</span></div>
+            <div class="slot-stat"><span class="tier">→</span><span class="name-md teal">反刍之口</span></div>
+            <div class="slot-need"><span>还需</span><span class="warn">1</span><span>次</span></div>
+            <div class="slot-side">初始混乱 <span class="teal">+8</span></div>
+          </div>
+          <div class="slot">
+            <div class="slot-head"><span class="cursor cursor-gap">&gt;</span><span class="name">空</span></div>
+            <span class="name">可装填</span>
+          </div>
+          <div class="slot">
+            <div class="slot-head"><span class="cursor cursor-gap">&gt;</span><span class="name">空</span></div>
+            <span class="name">可装填</span>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="inv-list">
+          <div class="pair">
+            <span class="name-md teal">缓释残渣</span>
+            <div class="rest">
+              <span class="tier teal">★★</span>
+              <span class="tier">伤害转化</span>
+              <span class="num-sm teal">50%</span>
+            </div>
+          </div>
+          <div class="pair">
+            <span class="name-md mid">裂散残渣</span>
+            <div class="rest">
+              <span class="tier mid">★</span>
+              <span class="tier">纯减伤</span>
+              <span class="num-sm teal">50%</span>
+            </div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="inspect">
+          <div class="inspect-l1">
+            <span class="name-md teal">晶锁残渣</span>
+            <span class="tier teal">★★</span>
+            <span class="tier">防御</span>
+            <span class="tier">纯减伤</span>
+          </div>
+          <div class="inspect-l2">减伤 35%。每 3 次失效一轮。</div>
+          <div class="inspect-l3">
+            <span class="name">减伤</span><span class="num-sm teal">35%</span>
+            <span class="name">充能</span><span class="num-sm">1</span><span class="tier">/</span><span class="num-sm">3</span>
+          </div>
+          <div class="inspect-l4">
+            <span>副作用</span><span>每 3 次冲击碎裂一轮</span><span>（1次冲击）</span>
+          </div>
+          <div class="inspect-l5">
+            <span>还需</span><span>2</span><span>次冲击</span><span>→</span>
+            <span class="teal">凝锁</span><span>冻结最近敌人 4 秒。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faceplate">
+      <div class="keys">
+        <span><span class="key">Tab</span> <span class="act">切区</span></span>
+        <span><span class="key">↑↓←→</span> <span class="act">移动</span></span>
+        <span><span class="key">Enter</span> <span class="act">装填/取下</span></span>
+        <span><span class="key">Esc</span> <span class="act">离开</span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

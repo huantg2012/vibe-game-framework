@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>HUD alt-a 量先行</title>
+  <!--
+    载体 A 世界内装置；挂右上；不套 .game-panel。
+    参考：FTL（贴边、先看见量）/ Into the Breach（预告当事实词）/ Barotrauma（装置自报）。
+    不学：FTL 供电格、ItB 战棋网格、Barotrauma 整屏仪表。
+    本屏不像：Dashboard / 设置页 / 三列对齐表。
+    哪台机器：净化点监控装置贴边打出的 Courier 读数。
+    暗晕 text-shadow 是浮在场景上的可读性处理（Kit A5-3），不是装饰发光。
+    字号：薪柴主值 16px = Kit H1 关键数值；其余主值 13px = H2；表名/档位 12px = Label。
+  -->
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 960px;
+      height: 640px;
+      overflow: hidden;
+      background: #080a0c;
+    }
+    body { font-family: "Courier New", monospace; }
+
+    .hud {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .obj {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      white-space: nowrap;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+    }
+
+    /* 11 是角上物件：更大、更多气。不是等权第三行。 */
+    .obj-kindling { margin-bottom: 20px; }
+    .obj-tide { margin-bottom: 12px; }
+
+    .val {
+      line-height: 1;
+      font-weight: bold;
+    }
+    .obj-kindling .val {
+      font-size: 16px;
+      color: #c4873a;
+    }
+    .obj-tide .val {
+      font-size: 13px;
+      color: #1aad96;
+    }
+    .obj-forecast .val {
+      font-size: 13px;
+      color: #c8cdd4;
+    }
+
+    /* 表名/档位 = 贴在主值底下的小声说明，不是左列 */
+    .whisper {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 2px;
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: normal;
+      color: #8a8f96;
+    }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <div class="obj obj-kindling">
+      <span class="val">11</span>
+      <span class="whisper"><span>薪柴</span></span>
+    </div>
+    <div class="obj obj-tide">
+      <span class="val">第 1 潮</span>
+      <span class="whisper"><span>潮汐</span><span>涨潮</span></span>
+    </div>
+    <div class="obj obj-forecast">
+      <span class="val">核心</span>
+      <span class="whisper"><span>下次归来</span><span>中等</span></span>
+    </div>
+  </div>
+</body>
+</html>

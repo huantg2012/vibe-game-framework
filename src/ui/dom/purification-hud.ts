@@ -1,35 +1,19 @@
 /**
- * Purification HUD - Compact symbol-grid overlay for the purification scene.
+ * Purification HUD — purification-point monitor readout (carrier A, edge-anchored).
  *
- * Design principles:
- * - No text labels; position + color + shape ARE the language
- * - No borders/frames; information floats directly at screen edges
- * - Pixel-aesthetic, cold-gray base + semantic accent colors
- * - UI is part of the game world, not floating above it
+ * Layout (人锁定 Alt B，2026-08-14)：贴顶靠右横排三槽，槽内名+量(+档位)，
+ * 槽间 32px。学 FTL「一槽 = 名 + 量、贴边」；不学供电格。不套 `.game-panel`。
  *
- * Layout:
- * - Right-top: kindling (diamond + number), tide (wave bar), impact forecast (module
- *   icon + 4-pip severity bar — DEC-034, target+severity only, no direction; direction
- *   is BoundaryShape's pressure-lobe visualization elsewhere), and — only while muffle
- *   is defense-slotted — a second, visually fainter row previewing the impact after
- *   next (muffle's "one extra round of warning")
- * - Bottom-center: compact key hints (one line, semi-transparent)
- *
- * Slice 5.5 D7: stability progress was removed from this always-visible readout and
- * moved to the survival report (`status-panel.ts`) as a state statement rather than a
- * progress bar. It never changes moment-to-moment inside the purification point and
- * has no end-state content yet (IA §R6) — a P0 progress bar for it was a standing
- * promise this Slice couldn't cash. Its removal also collapses the diagnosed "three
- * unrelated readouts sharing the same ▮ glyph" problem (IA §S2) down to one: only the
- * forecast (and its muffle lookahead variant, deliberately the same family) still uses
- * pips here.
+ * Copy (DEC-047)：表名 / 值 / 档位分节点。无菱形、无波形、无 pip、无 `·`。
+ * 消声预告是第四槽（更淡），仅 `getForecastLookahead()` 非空时出现。
+ * 稳定度不在本层（D7）。底栏 `#purif-prompt` 不是本批。
  */
 
-import { GAME_CONSTANTS } from '@/config/constants';
 import { gameState } from '@/managers/game-state';
-import { impactSystem } from '@/systems/impact-system';
+import { impactSystem, SEVERITY_LABEL } from '@/systems/impact-system';
 import type { ForecastSeverity } from '@/systems/impact-system';
 import { tideSystem } from '@/systems/tide-system';
+import type { TidePhase } from '@/types/game-types';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
@@ -45,42 +29,29 @@ export interface InteractionTarget {
 }
 
 // ---------------------------------------------------------------------------
-// Color palette (ui-art-overhaul.md A2 — locked values only; V2/V9 mapped)
+// Color palette (ui-art-overhaul.md A2 / A5-3 — locked values only)
 // ---------------------------------------------------------------------------
 
 const COL = {
   kindlingOrange: '#c4873a',
-  // Was #4a9e5a (unregistered "good green"). Structure info → neutral bright. Still
-  // used by the forecast row's 'light' severity pip color (not stability anymore, D7).
-  stabilityNeutral: '#c8cdd4',
   dangerRed: '#cc3333',
   tideCyan: '#1aad96',
-  darkBg: '#1a1e22',
-  // Was #5a5f66 (V2: metal-light forbidden as text). Labels use secondary text.
   dimText: '#8a8f96',
   brightText: '#c8cdd4',
   barEmpty: '#1a1e22',
 } as const;
 
-// Reuses the exact icons already established for these modules in getActionLabel()
-// below (the interaction prompt bar), so the forecast row reads as "the same device"
-// rather than inventing new iconography (U11).
-const MODULE_ICON: Record<string, string> = { CORE: '◈', STORAGE: '▣' };
+const MODULE_LABEL: Record<string, string> = { CORE: '核心', STORAGE: '储藏' };
 
-// Second encoding beyond color for severity (U9): pip count. Colors reuse the existing
-// semantic palette above rather than introducing new hex values (U3).
-const SEVERITY_PIPS: Record<ForecastSeverity, number> = {
-  light: 1,
-  moderate: 2,
-  heavy: 3,
-  extreme: 4,
+/** Same phase words as status-panel `phaseLabels`. Do not invent 满潮 / 落潮. */
+const TIDE_PHASE_LABEL: Record<TidePhase, string> = {
+  rise: '涨潮',
+  crest: '潮峰',
+  ebb: '退潮',
 };
-const SEVERITY_COLOR: Record<ForecastSeverity, string> = {
-  light: COL.stabilityNeutral,
-  moderate: COL.kindlingOrange,
-  heavy: COL.dangerRed,
-  extreme: COL.dangerRed,
-};
+
+const SLOT =
+  'display:flex;flex-direction:row;flex:0 0 auto;align-items:baseline;gap:4px;white-space:nowrap;';
 
 // ---------------------------------------------------------------------------
 // Implementation
@@ -134,19 +105,12 @@ export class PurificationHud {
     const reserve = gameState.getKindlingReserve();
     const tideState = tideSystem.getState();
 
-    // --- Kindling row ---
-    const kindlingRow = `<div style="margin-bottom:4px;"><span style="color:${COL.kindlingOrange};font-size:13px;">◇</span><span style="color:${COL.kindlingOrange};font-size:14px;font-weight:bold;margin-left:4px;">${reserve}</span></div>`;
-
-    // --- Tide wave bar ---
-    const tideRow = this.buildTideRow(tideState);
-
-    // --- Impact forecast (target module + severity, DEC-034) ---
-    const forecastRow = this.buildForecastRow();
-
-    // --- muffle's extra lookahead row (impact after next; empty string if not slotted) ---
-    const lookaheadRow = this.buildForecastLookaheadRow();
-
-    const html = kindlingRow + tideRow + forecastRow + lookaheadRow;
+    // DOM order + flex-end → visual left-to-right: lookahead (if any), 薪柴, 潮汐, 下次归来
+    const html =
+      this.buildLookaheadSlot() +
+      this.buildKindlingSlot(reserve) +
+      this.buildTideSlot(tideState.tideNumber, tideState.phase) +
+      this.buildForecastSlot();
 
     if (html !== this.lastHudHtml) {
       this.hudEl.innerHTML = html;
@@ -178,12 +142,12 @@ export class PurificationHud {
 
     this.hudEl = document.createElement('div');
     this.hudEl.id = 'purif-hud';
-    // No .game-panel class — borderless, frameless (A-class device readout)
     this.hudEl.style.cssText = [
       'position:absolute', 'top:10px', 'right:12px', 'z-index:999',
       'pointer-events:none',
+      'display:flex', 'flex-direction:row', 'flex-wrap:nowrap',
+      'align-items:baseline', 'justify-content:flex-end', 'gap:32px',
       'font-family:"Courier New",monospace',
-      'line-height:1.4',
       'text-shadow:0 0 2px rgba(0,0,0,0.8)',
     ].join(';');
     getDomUiRoot().appendChild(this.hudEl);
@@ -195,7 +159,6 @@ export class PurificationHud {
 
     this.promptEl = document.createElement('div');
     this.promptEl.id = 'purif-prompt';
-    // No .game-panel class — minimal, floating
     this.promptEl.style.cssText = [
       'position:absolute', 'bottom:16px', 'left:50%', 'transform:translateX(-50%)',
       'z-index:999', 'pointer-events:none',
@@ -212,125 +175,78 @@ export class PurificationHud {
     getDomUiRoot().appendChild(this.promptEl);
   }
 
-  /**
-   * Build the tide wave bar.
-   * Represents a full tide cycle as 10 characters.
-   * Current position highlighted in cyan; rising = brighter, ebbing = dimmer.
-   */
-  private buildTideRow(tideState: { tideNumber: number; phase: string; cycleInPhase: number; currentIntensity: number }): string {
-    const tidesCfg = GAME_CONSTANTS.TIDE.TIDES;
-    const cfg = tidesCfg[Math.min(tideState.tideNumber - 1, tidesCfg.length - 1)]!;
-
-    // Calculate total cycles and current position
-    const totalCycles = cfg.riseCycles + cfg.crestCycles + cfg.ebbCycles;
-    let currentPos = tideState.cycleInPhase;
-    if (tideState.phase === 'crest') currentPos += cfg.riseCycles;
-    else if (tideState.phase === 'ebb') currentPos += cfg.riseCycles + cfg.crestCycles;
-
-    // Map position to 0-9 index in a 10-char bar
-    const barLen = 10;
-    const posIndex = totalCycles > 0 ? Math.min(Math.floor((currentPos / totalCycles) * barLen), barLen - 1) : 0;
-
-    // Wave height pattern: rises then falls
-    // Use block characters of increasing height: ▁ ▂ ▃ ▄ ▅ ▆ ▇ █
-    const waveChars = ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'];
-
-    // Generate wave shape: rise to peak at center, fall back
-    const heights = new Array<number>(barLen);
-    const peakIdx = Math.floor(barLen * (cfg.riseCycles / totalCycles));
-    for (let i = 0; i < barLen; i++) {
-      if (i <= peakIdx) {
-        // Rising portion
-        heights[i] = Math.round((i / Math.max(peakIdx, 1)) * 7);
-      } else {
-        // Falling portion
-        const fallLen = barLen - 1 - peakIdx;
-        heights[i] = Math.round(((barLen - 1 - i) / Math.max(fallLen, 1)) * 7);
-      }
-    }
-
-    // Determine base color: rising = brighter, ebbing = dimmer
-    const isRising = tideState.phase === 'rise' || tideState.phase === 'crest';
-    // Mapped from unregistered #2a7a6a/#1a4a42 → locked contam-mid / contam-deep (A2).
-    const baseColor = isRising ? '#1a6b5c' : '#0e4a3f';
-
-    let bar = '';
-    for (let i = 0; i < barLen; i++) {
-      const ch = waveChars[heights[i]!] ?? waveChars[0]!;
-      const color = i === posIndex ? COL.tideCyan : baseColor;
-      bar += `<span style="color:${color};">${ch}</span>`;
-    }
-
-    // Tide number indicator (label tier ≥12px — was 9px, V3)
-    const tideLabel = `<span style="color:${COL.dimText};font-size:12px;margin-left:4px;">${tideState.tideNumber}</span>`;
-
-    // Minimal label prefix (IA §S2 diagnosis: three unrelated readouts sharing one
-    // shape/position language with color as the only differentiator). The wave glyphs
-    // are already a distinct shape from the forecast row's ▮ pips, but a one-character
-    // tag costs nothing and removes any doubt about which readout this is — same idiom
-    // as the forecast row's module icon prefix, not a new visual language.
-    const tideTag = `<span style="color:${COL.dimText};">潮</span> `;
-
-    return `<div style="font-size:12px;letter-spacing:0px;">${tideTag}${bar}${tideLabel}</div>`;
+  private span(text: string, color: string, sizePx: number, extra = ''): string {
+    return `<span style="color:${color};font-size:${sizePx}px;line-height:1.2;${extra}">${text}</span>`;
   }
 
-  /**
-   * Build the impact forecast row: target module icon + 4-pip severity bar (DEC-034).
-   * Deliberately no direction — spatial hinting is BoundaryShape's pressure-lobe
-   * visualization now, not this HUD. May be misreported (mirror) or blurred (baseline
-   * forecast noise); this just renders whatever impactSystem currently reports.
-   */
-  private buildForecastRow(): string {
+  private name(text: string): string {
+    return this.span(text, COL.dimText, 12);
+  }
+
+  private qty(text: string, color: string): string {
+    return this.span(text, color, 13);
+  }
+
+  private grade(text: string, color: string): string {
+    return this.span(text, color, 12);
+  }
+
+  private wrapSlot(inner: string, extra = ''): string {
+    return `<div style="${SLOT}${extra}">${inner}</div>`;
+  }
+
+  /** 轻微/中等 stay dim so they don't steal kindling orange. 剧烈/极端 use danger. */
+  private gradeColor(severity: ForecastSeverity): string {
+    return severity === 'heavy' || severity === 'extreme' ? COL.dangerRed : COL.dimText;
+  }
+
+  private targetColor(targetId: string): string {
+    return targetId === 'STORAGE' ? COL.kindlingOrange : COL.brightText;
+  }
+
+  private buildKindlingSlot(reserve: number): string {
+    return this.wrapSlot(this.name('薪柴') + this.qty(String(reserve), COL.kindlingOrange));
+  }
+
+  private buildTideSlot(tideNumber: number, phase: TidePhase): string {
+    return this.wrapSlot(
+      this.name('潮汐') +
+      this.qty(`第 ${tideNumber} 潮`, COL.tideCyan) +
+      this.grade(TIDE_PHASE_LABEL[phase], COL.dimText),
+    );
+  }
+
+  private buildForecastSlot(): string {
     const forecast = impactSystem.getForecastDisplay();
     if (!forecast) return '';
 
-    const icon = MODULE_ICON[forecast.targetId] ?? '?';
-    const filled = SEVERITY_PIPS[forecast.severity];
-    const pipColor = SEVERITY_COLOR[forecast.severity];
-    const pulseStyle = forecast.severity === 'extreme' ? 'animation:hud-critical-pulse 0.3s ease-in-out infinite;' : '';
+    const targetName = MODULE_LABEL[forecast.targetId] ?? '?';
+    const pulse = forecast.severity === 'extreme'
+      ? 'animation:hud-critical-pulse 0.3s ease-in-out infinite;'
+      : '';
 
-    let pips = '';
-    for (let i = 0; i < 4; i++) {
-      const color = i < filled ? pipColor : COL.barEmpty;
-      pips += `<span style="color:${color};">▮</span>`;
-    }
-
-    return `<div style="font-size:12px;letter-spacing:1px;${pulseStyle}"><span style="color:${COL.dimText};">${icon}</span> ${pips}</div>`;
+    return this.wrapSlot(
+      this.name('下次归来') +
+      this.qty(targetName, this.targetColor(forecast.targetId)) +
+      this.grade(SEVERITY_LABEL[forecast.severity], this.gradeColor(forecast.severity)),
+      pulse,
+    );
   }
 
-  /**
-   * Build muffle's extra lookahead row: preview of the impact AFTER next (one round
-   * further than buildForecastRow() above). Only rendered while muffle is defense-slotted
-   * (impactSystem.getForecastLookahead() returns null otherwise — the HUD doesn't need to
-   * know about muffle itself, same "renders whatever the system reports" pattern as the
-   * layer-1 row).
-   *
-   * Deliberately weaker than the layer-1 row so it never reads as equally certain
-   * information (it previews something one round further out): same ▮ pip glyph and same
-   * dim/empty colors reused verbatim from the existing palette (U3/U11 — no new symbol or
-   * hex value), but always COL.dimText instead of the severity color, half opacity, a
-   * smaller font, and never the critical-pulse animation even at 'extreme' severity.
-   */
-  private buildForecastLookaheadRow(): string {
+  private buildLookaheadSlot(): string {
     const lookahead = impactSystem.getForecastLookahead();
     if (!lookahead) return '';
 
-    const icon = MODULE_ICON[lookahead.targetId] ?? '?';
-    const filled = SEVERITY_PIPS[lookahead.severity];
-
-    let pips = '';
-    for (let i = 0; i < 4; i++) {
-      const color = i < filled ? COL.dimText : COL.barEmpty;
-      pips += `<span style="color:${color};">▮</span>`;
-    }
-
-    // A1 硬下限: DOM 面板文字 ≥12px（was 10px — the "weaker" reading intentionally
-    // still comes from dim color + low opacity + no pulse, not from an illegible size).
-    return `<div style="font-size:12px;letter-spacing:1px;opacity:0.55;margin-top:1px;"><span style="color:${COL.dimText};">${icon}</span> ${pips}</div>`;
+    const targetName = MODULE_LABEL[lookahead.targetId] ?? '?';
+    return this.wrapSlot(
+      this.name('再下一轮') +
+      this.qty(targetName, COL.dimText) +
+      this.grade(SEVERITY_LABEL[lookahead.severity], COL.dimText),
+      'opacity:0.85;',
+    );
   }
 
-  /** Inject the critical-pulse keyframe (idempotent) — same idiom as the existing
-   *  临界脉动 spec (ui-art-overhaul.md A5: alpha 0.6-1.0, 300ms cycle). */
+  /** Inject the critical-pulse keyframe (idempotent) — Kit §A5-3 / A6: alpha 0.6-1.0, 300ms. */
   private injectForecastStyles(): void {
     if (document.getElementById('hud-forecast-pulse-style')) return;
     const style = document.createElement('style');
@@ -349,7 +265,6 @@ export class PurificationHud {
     const detail = this.getPromptDetail(target);
     let html = `<span style="color:${COL.brightText};">[E]</span> <span style="color:#8a8f96;">${action}</span>`;
     if (detail) {
-      // A1 硬下限: DOM 面板文字 ≥12px（was 10px）.
       html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span><span style="color:${COL.dimText};font-size:12px;">${detail}</span>`;
     }
     return html;

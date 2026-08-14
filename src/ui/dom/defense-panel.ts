@@ -13,10 +13,11 @@
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { saveManager } from '@/managers/save-manager';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { getDefenseName, getRarityStars, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import type { Contaminant } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
+import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 
 // Rarity is "Degree not Kind": escalating contam brightness instead of unrelated hues
 // per tier (ui-art-overhaul.md A2 maps common -> contam-mid #1a6b5c, but that value is
@@ -83,22 +84,7 @@ export const defensePanel = {
 // ---------------------------------------------------------------------------
 
 function createPanel(): void {
-  injectPanelStyles();
-
-  panel = document.createElement('div');
-  panel.id = 'defense-panel';
-  panel.className = 'game-panel';
-  panel.style.cssText = [
-    'position:fixed',
-    'top:0',
-    'right:0',
-    'height:640px',
-    'width:440px',
-    'z-index:1001',
-    'display:flex',
-    'flex-direction:column',
-    'pointer-events:auto',
-  ].join(';');
+  panel = createCrtPanel('defense-panel');
 
   const root = getDomUiRoot();
   const backdrop = document.createElement('div');
@@ -234,73 +220,68 @@ function render(): void {
   // (ui-art-overhaul.md A2's "no separate purple class"), not the darker contam-deep
   // tone: that fails the 4.5:1 text floor (A1), so it's reserved for the charge bar
   // fill below (a decorative fill, not text).
-  let html = `<div class="panel-title" style="color:#1aad96;">供奉</div>`;
+  let html = `<div class="panel-title">供奉</div>`;
   html += `<div class="scroll-area">`;
 
-  // Slot grid - one visual container per unlocked defense slot (Slice 5 T5:
-  // growth_defense_slot unlocks a 4th; column count follows slots.length so the
-  // grid stays evenly divided instead of hardcoding 3).
   html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
   for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
     const selected = cursorRegion === 'slots' && cursorSlot === i;
+    const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
     if (c) {
+      const def = CONTAMINANT_DATA[c.type];
       const name = getDefenseName(c.type);
       const stars = getRarityStars(c.rarity);
       const color = RARITY_COLORS[c.rarity];
-      const chargePct = Math.round((c.impactCharges / threshold) * 100);
-      html += `<div class="slot-cell slot-filled defense-unslot-btn${selected ? ' slot-selected' : ''}" data-index="${i}" style="border-color:${color};">
-        <span class="slot-label">${i + 1}</span>
-        <span class="slot-name" style="color:${color};">${name}</span>
-        <span style="font-size:12px;color:${color};">${stars}</span>
-        <div class="stat-bar" style="width:100%;margin-top:4px;">
-          <div class="stat-bar-fill" style="width:${chargePct}%;background:#0e4a3f;"></div>
-        </div>
-        <span class="slot-info">${c.impactCharges}/${threshold}</span>
+      const reductionPct = Math.round(def.defenseReduction * 100);
+      const remain = Math.max(0, threshold - c.impactCharges);
+      html += `<div class="slot-cell slot-filled defense-unslot-btn${selected ? ' slot-selected' : ''}" data-index="${i}">
+        <div>${cursor}<span class="slot-name" style="color:${color};">${name}</span> <span style="color:${color};">${stars}</span></div>
+        <div><span style="font-size:12px;color:#8a8f96;">减伤</span> <span style="font-size:16px;font-weight:bold;color:#1aad96;">${reductionPct}%</span></div>
+        <div class="slot-info">${c.impactCharges} / ${threshold}</div>
+        <div><span>→</span> <span style="color:#1aad96;">${def.displayNameTool}</span></div>
+        <div class="slot-info">还需 ${remain} 次</div>
+        <div class="slot-info">${def.defenseSideEffect}</div>
       </div>`;
     } else {
       html += `<div class="slot-cell${selected ? ' slot-selected' : ''}" data-index="${i}">
-        <span class="slot-label">${i + 1}</span>
-        <span style="font-size:14px;color:#2a2d32;">+</span>
-        <span class="slot-info">空</span>
+        <div>${cursor}<span class="slot-info">空</span></div>
+        <span class="slot-info">可装填</span>
       </div>`;
     }
   }
   html += `</div>`;
 
-  // Inventory tiles
   html += `<div class="separator"></div>`;
-  html += `<div style="font-size:13px;color:#8a8f96;margin-bottom:6px;">可装备:</div>`;
 
   if (inventory.length === 0) {
-    // C4 遗留修复: #2a2d32 是边框/装饰色，不是文字色（A1 对比度硬下限） — 曾在此处
-    // 落在文字上，对比度约 1:1，不可读。
-    html += `<div style="font-size:13px;color:#8a8f96;text-align:center;padding:8px;">无可用残渣</div>`;
+    html += `<div style="font-size:13px;color:#8a8f96;padding:8px 0;">无可用残渣</div>`;
   } else {
-    html += `<div class="tile-grid">`;
     const canEquip = slots.some((s) => s === null);
     inventory.forEach((c, idx) => {
       const name = getDefenseName(c.type);
       const stars = getRarityStars(c.rarity);
       const color = RARITY_COLORS[c.rarity];
+      const def = CONTAMINANT_DATA[c.type];
+      const reductionPct = Math.round(def.defenseReduction * 100);
       const selected = cursorRegion === 'inventory' && cursorInv === idx;
-      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${c.id}" data-inv-index="${idx}" style="border-color:${canEquip ? color : '#2a2d32'};">
-        <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">${stars}</span>
+      const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
+      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${c.id}" data-inv-index="${idx}" style="display:flex;width:100%;justify-content:space-between;gap:8px;">
+        <span>${cursor}<span style="color:${color};">${name}</span> <span style="color:${color};">${stars}</span></span>
+        <span style="color:#8a8f96;">${def.defenseCategory}</span>
+        <span style="color:#1aad96;font-weight:bold;">${reductionPct}%</span>
       </div>`;
     });
-    html += `</div>`;
   }
 
-  // Inspect dock (选中即检视 — IA §S13 / ui-art-overhaul.md A5-13)
+  html += `</div>`;
   html += `<div class="inspect-dock" id="defense-inspect-dock">${computeInspectHtml(slots, inventory, threshold)}</div>`;
-
-  // Close button
-  html += `</div>`; // end flex:1 content wrapper
-  const leaveFocused = cursorRegion === 'actions';
-  html += `<div class="action-bar">
-    <span id="defense-close-btn" class="action-btn btn-muted${leaveFocused ? ' btn-focused' : ''}" style="cursor:pointer;">离开</span>
+  html += `<div class="key-hint-bar">
+    <span><span class="key">Tab</span> 切区</span>
+    <span><span class="key">↑↓←→</span> 移动</span>
+    <span><span class="key">Enter</span> 装填/取下</span>
+    <span id="defense-close-btn"><span class="key">Esc</span> 离开</span>
   </div>`;
-  html += `<div class="key-hint-bar"><span class="key">Tab</span> 切区 · <span class="key">↑↓←→</span> 移动 · <span class="key">Enter</span> 装填/取下 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);

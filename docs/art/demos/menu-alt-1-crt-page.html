@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-alt-1 · CRT 整页</title>
+  <!--
+    方案名：CRT 整页（menu-alt-1）
+    只出视觉对照，不进 src/**。
+
+    载体：B 世界内终端。
+    理由：走近装置 = 盯着这台机器自己的屏；视觉是这块磷光玻璃，不是软件抽屉。
+
+    参考锚点（学动作 / 不学）：
+    - Signalis：检视是设备读出、扫描线是旧屏结构、层级靠亮度。不学曲面畸变。
+    - Barotrauma：设备自己报状态；键印在面壳上。不学指针仪表。
+    - FTL：名 + 量 + 后果同屏。不学供电格 / 全息蓝。
+    本屏不像：右侧抽屉 / 居中卡片 / 浏览器窗口。
+
+    哪台机器：净化点核心控制台的低保真 CRT。字是磷光打出来的。
+    扫描线 = 光栅；玻璃四周发暗 = 显像管边缘照度不均；面壳键位 = 机身丝印。
+    无投影、无圆角卡片、无 pip/菱形、无「提交/确认/OK」。
+
+    挂载（实机）：#dom-ui-root，铺满 960×640 逻辑画布。
+    本页左右各半是对照缩框；实机只有一块屏。
+
+    破 440px 抽屉：命题本身。U6 在此不是「给战场留中心」，是「人已停在装置前，视野换成这台监视器」；
+    边缘 8–12px 场景证明还站在净化点，不是战斗中弹窗。
+
+    色仅：#080a0c #0f1114 #2a2d32 #8a8f96 #c8cdd4 #c4873a #1aad96 #cc3333 #3cffd4
+    字：Courier New；H1 16 / H2 13 / Label 12（Kit A3）。条高 6px。
+
+    P0（分配，屏开着时 ≤6）：核心量、混乱增速、投入量、投入后量+效果、薪柴储备、键。
+    P0（Tab）：模块量、储备、下次归来、库存光标行；稳定度/潮汐/蜕变同屏可读，不进常驻 HUD。
+
+    打开：E 走近核心；Tab 净化点任意处。Esc 离开。键盘第一。
+
+    写完自检（机械层；审美待人终审）：
+    1 载体 B；实机挂 #dom-ui-root。
+    2 Signalis / Barotrauma / FTL 如上；不像抽屉/卡片/浏览器窗。
+    3 分配 P0 六项均有表名+数字，不操作也能读。
+    4 机器=核心控制台 CRT。扫描线/边缘发暗/面壳键 = 光栅、照度、丝印。无「好看」才留的效果。
+    5 本样例可注入（储备 11 / 投入 5）。不可用文案预留：投入为 0 →「未划入 · 无法注入」；储备不够 →「薪柴不足 · 还差 N」。
+    6 灰度后：条长、43/100 与 70/100、> 光标、Fine/Rare 单词、键框仍在。表名/数值/档位分节点。
+    7 E / Tab 打开；阻断确认 0（Enter 直接注入，无第二道确认）。
+    8 术语：核心/储藏/薪柴/混乱增速/蜕变/稳定度/潮汐/存续报告/注入。键=绑定。
+  -->
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    html, body {
+      width: 960px;
+      height: 640px;
+      overflow: hidden;
+      background: #080a0c;
+    }
+    body {
+      font-family: "Courier New", Courier, monospace;
+      color: #8a8f96;
+    }
+
+    .page {
+      width: 960px;
+      height: 640px;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .col {
+      position: relative;
+      width: 480px;
+      height: 640px;
+      background: #080a0c;
+    }
+    .col + .col {
+      border-left: 1px solid #2a2d32;
+    }
+
+    /* 对照页标签：不是机内 UI */
+    .tag {
+      position: absolute;
+      top: 2px;
+      left: 8px;
+      z-index: 3;
+      font-size: 12px;
+      line-height: 14px;
+      color: #8a8f96;
+    }
+
+    /* 机身：几乎铺满，边缘漏场景 */
+    .console {
+      position: absolute;
+      top: 18px;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      background: #080a0c;
+      border: 1px solid #2a2d32;
+      padding: 12px 12px 0 12px;
+    }
+
+    .glass {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      background: #0f1114;
+      border: 1px solid #2a2d32;
+      overflow: hidden;
+    }
+
+    /* 显像管边缘照度下降 — 物理，不是投影 */
+    .glass::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 78% 72% at 50% 42%,
+        transparent 38%,
+        #080a0c 100%
+      );
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 光栅扫描线 — Signalis：结构，不是装饰滤镜 */
+    .glass::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(8, 10, 12, 0.45) 2px,
+        rgba(8, 10, 12, 0.45) 3px
+      );
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .readout {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 14px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .faceplate {
+      flex: 0 0 auto;
+      padding: 8px 4px 10px;
+      background: #080a0c;
+    }
+
+    .name {
+      display: block;
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: normal;
+      color: #8a8f96;
+    }
+    .num {
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: bold;
+      color: #c8cdd4;
+    }
+    .num-sm {
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: bold;
+      color: #c8cdd4;
+    }
+    .tier {
+      font-size: 12px;
+      line-height: 1.2;
+      color: #8a8f96;
+    }
+    .teal {
+      color: #1aad96;
+    }
+    .warm {
+      color: #c4873a;
+    }
+    .bright {
+      color: #c8cdd4;
+    }
+    .rare {
+      color: #3cffd4;
+    }
+
+    .pair {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .pair .name {
+      flex: 0 0 auto;
+    }
+    .pair .rest {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .rule {
+      height: 1px;
+      background: #2a2d32;
+      margin: 12px 0;
+      border: 0;
+    }
+
+    .bar {
+      margin-top: 4px;
+      height: 6px;
+      border: 1px solid #2a2d32;
+      background: #080a0c;
+      position: relative;
+    }
+    .bar > i {
+      display: block;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .bar .now {
+      background: #c8cdd4;
+    }
+    .bar .now-warm {
+      background: #c4873a;
+    }
+    .bar .soon {
+      background: repeating-linear-gradient(
+        -45deg,
+        #c8cdd4 0 2px,
+        #080a0c 2px 5px
+      );
+    }
+
+    .cursor {
+      color: #c8cdd4;
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+
+    .live .name {
+      color: #c8cdd4;
+    }
+
+    .keys {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 12px;
+      font-size: 12px;
+      line-height: 1.3;
+      color: #8a8f96;
+    }
+    .key {
+      display: inline-block;
+      border: 1px solid #2a2d32;
+      padding: 0 4px;
+      color: #c8cdd4;
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .keys .act {
+      color: #8a8f96;
+    }
+
+    .inv {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .inv-row {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .inv-row .id {
+      font-size: 13px;
+      color: #8a8f96;
+    }
+    .inv-row.is-on .id {
+      color: #c8cdd4;
+      font-weight: bold;
+    }
+    .inv-row .mark {
+      width: 10px;
+      font-size: 13px;
+      color: #c8cdd4;
+      flex: 0 0 10px;
+    }
+    .inv-row .rarity {
+      margin-left: auto;
+      font-size: 12px;
+    }
+
+    .grow {
+      flex: 1 1 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 左：E 走近核心 · 注入 -->
+    <section class="col" aria-label="对照 分配">
+      <div class="tag">对照 · E</div>
+      <div class="console">
+        <div class="glass">
+          <div class="readout">
+            <div class="stack">
+              <span class="name">核心</span>
+              <div class="pair">
+                <span class="num">43</span>
+                <span class="tier">/</span>
+                <span class="num">100</span>
+              </div>
+              <div class="bar">
+                <i class="now" style="width:43%"></i>
+                <i class="soon" style="left:43%;width:20%"></i>
+              </div>
+            </div>
+
+            <div class="pair" style="margin-top:10px">
+              <span class="name">混乱增速</span>
+              <div class="rest">
+                <span class="num-sm teal">-12%</span>
+              </div>
+            </div>
+
+            <div class="rule"></div>
+
+            <div class="stack live">
+              <span class="name">投入</span>
+              <div class="pair">
+                <span class="cursor">&gt;</span>
+                <span class="num">5</span>
+              </div>
+            </div>
+
+            <div class="stack" style="margin-top:10px">
+              <span class="name">后</span>
+              <div class="pair">
+                <span class="num-sm">63</span>
+                <span class="tier">/</span>
+                <span class="num-sm">100</span>
+                <span class="num-sm teal" style="margin-left:auto">-18%</span>
+              </div>
+            </div>
+
+            <div class="rule"></div>
+
+            <div class="pair">
+              <span class="name">薪柴储备</span>
+              <div class="rest">
+                <span class="num warm">11</span>
+              </div>
+            </div>
+
+            <div class="grow"></div>
+          </div>
+        </div>
+        <div class="faceplate">
+          <div class="keys">
+            <span><span class="key">←</span> <span class="key">→</span> <span class="act">调整</span></span>
+            <span><span class="key">Enter</span> <span class="act">注入</span></span>
+            <span><span class="key">Esc</span> <span class="act">离开</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右：Tab 存续报告 -->
+    <section class="col" aria-label="对照 存续报告">
+      <div class="tag">对照 · Tab</div>
+      <div class="console">
+        <div class="glass">
+          <div class="readout">
+            <span class="name">存续报告</span>
+
+            <div class="stack" style="margin-top:10px">
+              <div class="pair">
+                <span class="name">核心</span>
+                <div class="rest">
+                  <span class="num-sm">43</span>
+                  <span class="tier">/</span>
+                  <span class="num-sm">100</span>
+                </div>
+              </div>
+              <div class="bar">
+                <i class="now" style="width:43%"></i>
+              </div>
+              <div class="pair" style="margin-top:4px">
+                <span class="name">混乱增速</span>
+                <div class="rest">
+                  <span class="num-sm teal">-12%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="stack" style="margin-top:10px">
+              <div class="pair">
+                <span class="name">储藏</span>
+                <div class="rest">
+                  <span class="num-sm warm">70</span>
+                  <span class="tier">/</span>
+                  <span class="num-sm warm">100</span>
+                </div>
+              </div>
+              <div class="bar">
+                <i class="now-warm" style="width:70%"></i>
+              </div>
+            </div>
+
+            <div class="rule"></div>
+
+            <div class="pair">
+              <span class="name">薪柴储备</span>
+              <div class="rest"><span class="num-sm warm">11</span></div>
+            </div>
+            <div class="pair" style="margin-top:6px">
+              <span class="name">蜕变</span>
+              <div class="rest">
+                <span class="tier">最低</span>
+                <span class="num-sm">8</span>
+              </div>
+            </div>
+            <div class="pair" style="margin-top:6px">
+              <span class="name">稳定度</span>
+              <div class="rest"><span class="num-sm">42%</span></div>
+            </div>
+            <div class="pair" style="margin-top:6px">
+              <span class="name">潮汐</span>
+              <div class="rest">
+                <span class="num-sm teal">第 1 潮</span>
+                <span class="tier">涨潮</span>
+              </div>
+            </div>
+            <div class="pair" style="margin-top:6px">
+              <span class="name">下次归来</span>
+              <div class="rest">
+                <span class="num-sm bright">核心</span>
+                <span class="tier">中等</span>
+              </div>
+            </div>
+
+            <div class="rule"></div>
+
+            <span class="name">库存</span>
+            <div class="inv">
+              <div class="inv-row is-on">
+                <span class="mark">&gt;</span>
+                <span class="id">凝锁</span>
+                <span class="rarity teal">Fine</span>
+              </div>
+              <div class="inv-row">
+                <span class="mark"></span>
+                <span class="id">反刍</span>
+                <span class="rarity rare">Rare</span>
+              </div>
+            </div>
+
+            <div class="grow"></div>
+          </div>
+        </div>
+        <div class="faceplate">
+          <div class="keys">
+            <span><span class="key">↑</span> <span class="key">↓</span> <span class="act">浏览</span></span>
+            <span><span class="key">Tab</span> <span class="key">Esc</span> <span class="act">合上</span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

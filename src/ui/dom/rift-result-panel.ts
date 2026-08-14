@@ -71,8 +71,8 @@ export const riftResultPanel = {
       'left:50%',
       'transform:translate(-50%,-50%)',
       'width:360px',
+      'height:auto',
       'z-index:1001',
-      data.survived ? '' : 'border-color:#cc3333;',
       'pointer-events:auto',
     ].join(';');
 

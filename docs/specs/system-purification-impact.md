@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5)
-last-modified-by: director agent
-last-modified-date: 2026-08-13
+last-modified-by: design agent
+last-modified-date: 2026-08-14
 interface-changed: true
 interfaces-with:
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier back
@@ -15,7 +15,7 @@ exposes:
   - GameState.getKindlingReserve() / healModule(id, amount)
   - GameState.isModuleSwapActive() / setModuleSwapActive(active)
   - ImpactSystem.run(defenseSlots) -> ImpactResult （含 defenseResult；Slice 5.5 增 primaryModuleId / trueSeverity / baseDamagePerModule）
-  - ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus) / getForecastDisplay() -> ForecastDisplay
+  - ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus) / getForecastDisplay() / getForecastLookahead() -> ForecastDisplay
   - applyDefenseEffects(baseDamage, slots, context) -> DefenseResult
     （Slice 5 新增出口 healOut / bonusCharges / toolUseGrants / moduleSwapTriggered；
      Slice 5.5 新增 slotDisclosures 供结算面板逐槽归因）
@@ -146,11 +146,13 @@ interface SortieModifiers {
 4. **边界**：安全区外是虚空，但边界本身不是硬边——从内向外依次是变暗带、teal 膜带、虚空（梯度带定义见 B 组）。边界处有粒子系统：微粒在当前边界外 10-40px 处生成，缓慢向内漂移，越过该角度半径的 50% 或寿命耗尽后重新生成，常驻 `PARTICLE_COUNT` 个。颜色以暗 teal 为主（60%），亮 teal 与灰各占 20%。生成与消亡半径跟随当前边界形状，不是固定圆。
 5. **Apparition**：每 8-15 秒（随机），在当前边界外 40-80px 处出现一个模糊人形轮廓（alpha 0→0.3 淡入 0.5s → 持续 2s → 0.3→0 淡出 0.5s）。不移动，角度随机，生成距离以该角度的边界半径为基准，最多同时 3 个，颜色为暗青灰。纯氛围，无游戏功能。
 6. **视觉基调**：地面为冷蓝灰的程序化石板（中心略暖、向边缘转冷并逐级压暗），ambient 使用 omni 模式；玩家的肩灯是场景中唯一的暖色。
-7. **冲击预告是非空间的**（DEC-034，改写自旧的"粒子密度指向预告方向"）：预告只播报两件事——**下次冲击的重点目标模块** 与 **强度档位**（light / moderate / heavy / extreme 四档）。它不给方向。承载它的是净化点 HUD 的一行：模块图标 + 4 格 pip 条（点亮格数 = 档位序号）。边界粒子恢复各角度均匀生成，不再做方向暗示。
+7. **冲击预告是非空间的**（DEC-034，改写自旧的"粒子密度指向预告方向"）：预告只播报两件事——**下次冲击的重点目标模块** 与 **强度档位**（light / moderate / heavy / extreme 四档）。它不给方向。
+    - **HUD 展示**（Slice 5.5 DEC-048 贴顶横槽，只改展示、不改结算/数值）：净化点常驻 HUD 用文字写明，三个独立可见节点——时机 `下次归来`、目标全称 `核心` 或 `储藏`（对应 CORE / STORAGE；与底栏 / 结算已上屏用词一致）、档位中文读 `ImpactSystem` 导出的 `SEVERITY_LABEL`（light→轻微 / moderate→中等 / heavy→剧烈 / extreme→极端）。HUD **必须 import 这一份标签**，禁止另造「轻/中/重」平行表。常驻 HUD 不画 ◈/▣ 与 4 格 pip。
+    - **消声淡预告**（仅 `getForecastLookahead()` 非空）：同样三节点，但时机词必须是 `再下一轮`（不得再用 `下次归来`，以免读成第二份现在）。目标名与档位名同一套。可更淡、无临界脉动，文字节点不得省略。
     - **为什么不给方向**：旧实现把 CORE 映射为"左"、STORAGE 映射为"右"，而 CORE 就在场地正中心——"左"是任选的，玩家无法据此做任何决策；同时它与边界压力主方向（规则 37/42/47）叠成两个互不相关的方向暗示。
     - **方向暗示的唯一合法来源是 BoundaryShape 的压力可视化**。那是全系统唯一有真实空间语义的方向源。预告不再与它争夺同一维度。
     - 预告在**每次进入净化点时**（无论是从裂隙返回还是从菜单/读档进入）重算一次，用的是"下次冲击将要使用的强度"（即当前潮汐强度，在本次访问的 `advanceCycle()` 之后读取）。
-    - 档位分界按潮汐强度区间 [1.0, 3.0] 四等分：< 1.5 light / < 2.0 moderate / < 2.5 heavy / 其余 extreme。extreme 档的 pip 条附加 300ms 临界脉动。
+    - 档位分界按潮汐强度区间 [1.0, 3.0] 四等分：< 1.5 light / < 2.0 moderate / < 2.5 heavy / 其余 extreme。extreme 档的临界脉动（300ms）可留作第二编码，不能代替可见词「极端」。边界粒子恢复各角度均匀生成，不再做方向暗示。
 
 ### G — GameState
 
@@ -424,7 +426,7 @@ interface SortieModifiers {
 | LootSystem | `kindlingValueModifier` | 乘在 node.value 上 |
 | HUD / 结果面板 | `GameState.getKindlingReserve()` / `getModules()` | 查询 |
 | PurificationScene | `ImpactSystem.run(defenseSlots): ImpactResult` | 方法调用（槽位由场景传入，避免系统互相 import） |
-| 净化点 HUD | `ImpactSystem.getForecastDisplay(): ForecastDisplay \| null` | 查询（渲染目标图标 + 4 格 pip） |
+| 净化点 HUD | `ImpactSystem.getForecastDisplay()` / `getForecastLookahead()` | 查询（时机词 + 模块全称 + `SEVERITY_LABEL`；图标/pip 最多第二编码） |
 | PurificationScene | `ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus)` | 方法调用（强度与改造等级由场景读取后传入） |
 | ContaminantSystem | `DefenseResult.bonusCharges` / `toolUseGrants` | 由 ImpactSystem 直接调用其 `applyBonusCharges()` / `grantRandomToolUse()` 消费 |
 | GameState | `DefenseResult.healOut` / `moduleSwapTriggered` | `healModule()` / `setModuleSwapActive()` |
@@ -497,7 +499,7 @@ interface SortieModifiers {
 | `src/systems/impact-system.ts` | 非空间预告（`generateForecast` / `getForecastDisplay`）；消费 DefenseResult 的四个新出口 |
 | `src/managers/game-state.ts` | `healModule()`、`isModuleSwapActive()` / `setModuleSwapActive()`、`getModuleEffect()` 的互换分支 |
 | `src/managers/save-manager.ts` | 合并两个模块的运行时状态为一段存档；老存档兜底 |
-| `src/ui/dom/purification-hud.ts` | 预告行：模块图标 + 4 格 pip + extreme 档临界脉动 |
+| `src/ui/dom/purification-hud.ts` | 预告槽：下次归来 + 核心/储藏 + SEVERITY_LABEL；extreme 临界脉动 |
 | `src/entities/purification-module.ts` | 三态阈值与状态机（视觉规格来自 ui-art-overhaul B3） |
 | `src/systems/boundary-atmosphere.ts` | 移除粒子方向偏置，恢复均匀生成 |
 

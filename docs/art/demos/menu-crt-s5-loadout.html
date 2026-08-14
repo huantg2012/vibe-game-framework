@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-crt-s5-loadout · 踏入裂隙</title>
+  <!--
+    S5 踏入裂隙 CRT v2。680×468。P1：四槽键位/名/余量/摘要；出击三项；既有残留；库存主动/被动；检视。
+    Enter 装/卸/确认（焦点在动作区时踏入）。工具名按稀有度 teal 梯。薪柴值暖。混乱率 teal。
+  -->
+  <link rel="stylesheet" href="menu-crt-_shell.css" />
+  <style>
+    .readout > .rule { margin:5px 0; }
+    .slots {
+      flex:0 0 auto; display:grid; grid-template-columns:1fr 1fr 1fr 1fr;
+      min-height:0; border:1px solid #2a2d32;
+    }
+    .slot {
+      min-width:0; padding:5px 6px; border-right:1px solid #2a2d32;
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .slot:last-child { border-right:0; }
+    .slot.is-sel { border-left:2px solid #c4873a; }
+    .slot-k { display:flex; flex-direction:row; align-items:baseline; }
+    .slot-k .name { display:inline; }
+    .slot-n { font-size:13px; line-height:1.2; font-weight:normal; }
+    .slot-u { display:flex; flex-direction:row; align-items:baseline; gap:6px; }
+    .slot-u .name { display:inline; }
+    .slot-s { font-size:12px; line-height:1.2; color:#8a8f96; }
+    .cursor.idle { visibility:hidden; }
+    .stats { flex:0 0 auto; display:grid; grid-template-columns:1fr 1fr 1fr; gap:0 16px; }
+    .stat { display:flex; flex-direction:column; gap:2px; }
+    .residue { flex:0 0 auto; display:flex; flex-direction:row; align-items:baseline; gap:12px; }
+    .residue .name { display:inline; }
+    .inv { flex:1 1 auto; min-height:0; overflow:hidden; display:flex; flex-direction:column; gap:6px; }
+    .inv-row { display:flex; flex-direction:row; align-items:baseline; gap:12px; }
+    .inv-n { font-size:13px; line-height:1.2; flex:0 0 96px; }
+    .inspect { flex:0 0 92px; min-height:92px; display:flex; flex-direction:column; gap:2px; overflow:hidden; }
+    .l13 { font-size:13px; line-height:1.25; color:#c8cdd4; display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; }
+    .l12 { font-size:12px; line-height:1.25; color:#8a8f96; display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <i class="scene-floor"></i>
+    <i class="scene-rift"></i>
+    <i class="scene-rift-glow"></i>
+    <i class="scene-lamp"></i>
+    <i class="scene-node"></i>
+  </div>
+  <div class="hud-strip" aria-hidden="true">
+    <div class="hud-slot"><span class="name">薪柴</span><span class="num warm">11</span></div>
+    <div class="hud-slot"><span class="name">潮汐</span><span class="num-sm teal">第 2 潮</span><span class="tier teal">涨潮</span></div>
+    <div class="hud-slot"><span class="name">下次归来</span><span class="num-sm">核心</span><span class="tier warn">中等</span></div>
+  </div>
+  <div class="console">
+    <i class="pwr"></i>
+    <div class="glass">
+      <div class="readout">
+        <div class="crt-title">踏入裂隙</div>
+        <div class="slots">
+          <div class="slot is-sel">
+            <div class="slot-k"><span class="cursor">&gt;</span><span class="name">Q</span></div>
+            <span class="slot-n teal">虚化步</span>
+            <div class="slot-u"><span class="name">余量</span><span class="num-sm">3</span></div>
+            <span class="slot-s">穿越一层墙 3 秒</span>
+          </div>
+          <div class="slot">
+            <div class="slot-k"><span class="cursor idle">&gt;</span><span class="name">F</span></div>
+            <span class="slot-n rare">深渊之眼</span>
+            <div class="slot-u"><span class="name">余量</span><span class="num-sm">2</span></div>
+            <span class="slot-s">全图敌人与节点可见</span>
+          </div>
+          <div class="slot">
+            <div class="slot-k"><span class="cursor idle">&gt;</span><span class="name">G</span></div>
+            <span class="slot-n mid">燃素弹</span>
+            <div class="slot-u"><span class="name">余量</span><span class="num-sm">4</span></div>
+            <span class="slot-s">过载感知 3 秒</span>
+          </div>
+          <div class="slot">
+            <div class="slot-k"><span class="cursor idle">&gt;</span><span class="name">被动</span></div>
+            <span class="slot-n mid">消声步</span>
+            <div class="slot-u"><span class="name">余量</span><span class="num-sm">5</span></div>
+            <span class="slot-s">免疫近距感知</span>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="stats">
+          <div class="stat"><span class="name">完整度</span><span class="num">100</span></div>
+          <div class="stat"><span class="name">混乱率</span><span class="num teal">x0.88</span></div>
+          <div class="stat"><span class="name">薪柴值</span><span class="num warm">x1.20</span></div>
+        </div>
+        <div class="rule"></div>
+        <div class="residue">
+          <span class="name">既有残留</span>
+          <span class="tier">初始混乱</span>
+          <span class="num teal">+8</span>
+          <span class="tier">←</span>
+          <span class="num-sm rare">噬化残渣</span>
+        </div>
+        <div class="rule"></div>
+        <div class="inv">
+          <div class="inv-row">
+            <span class="inv-n mid">残响标记</span>
+            <span class="tier mid">★</span>
+            <span class="tier">主动</span>
+            <span class="num-sm">4</span>
+          </div>
+          <div class="inv-row">
+            <span class="inv-n teal">寄生引流</span>
+            <span class="tier teal">★★</span>
+            <span class="tier">被动</span>
+            <span class="num-sm">3</span>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="inspect">
+          <div class="l13">
+            <span class="teal">虚化步</span><span class="teal">★★</span><span>工具</span><span>主动</span>
+          </div>
+          <div class="l13"><span>穿越一层墙 3 秒。</span></div>
+          <div class="l13">
+            <span>剩余</span><span class="num-sm">3</span><span>/</span><span class="num-sm">3</span><span>次</span>
+            <span>范围</span><span>无范围</span><span>持续</span><span>3秒</span>
+          </div>
+          <div class="l12"><span>触发键</span><span class="bright">Q</span><span>已装填</span></div>
+          <div class="l12"><span>次数归零即破碎，不可恢复</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="faceplate">
+      <div class="keys">
+        <span><span class="key">Tab</span> <span class="act">切区</span></span>
+        <span><span class="key">↑↓←→</span> <span class="act">移动</span></span>
+        <span><span class="key">Enter</span> <span class="act">装/卸/确认</span></span>
+        <span><span class="key">Esc</span> <span class="act">离开</span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

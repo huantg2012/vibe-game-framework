@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-crt-s6-status · 存续报告</title>
+  <!--
+    S6 Tab 存续 CRT v2。680×468。P1：两模块+效果；四属性+潮汐；稳定度陈述；库存检视。
+    核心中性 / 储藏暖 / 潮汐 teal / 稀有度污染梯。不进 src/**。
+  -->
+  <link rel="stylesheet" href="menu-crt-_shell.css" />
+  <style>
+    .readout > .rule { margin:6px 0; }
+    .zone-mods { flex:0 0 auto; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .mod { border:1px solid #2a2d32; padding:6px 8px; min-width:0; }
+    .zone-stats { flex:0 0 auto; }
+    .stats-row { display:grid; grid-template-columns:1fr 1fr 1fr 1.7fr; gap:6px 10px; align-items:start; }
+    .cluster { display:flex; flex-direction:column; gap:2px; min-width:0; }
+    .cluster .vals { display:flex; flex-direction:row; align-items:baseline; gap:8px; }
+    .stab { display:flex; flex-direction:row; align-items:baseline; gap:10px; margin-top:6px; }
+    .badge-row { display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:6px; font-size:12px; color:#8a8f96; }
+    .zone-inv { flex:1 1 auto; min-height:0; overflow:hidden; }
+    .inv-grid { display:grid; grid-template-columns:40px 1fr 1fr; column-gap:10px; row-gap:4px; align-items:baseline; }
+    .inv-g-def { grid-row:span 2; align-self:start; }
+    .inv-g-tool { grid-row:span 3; align-self:start; }
+    .inv-item { display:flex; flex-direction:row; align-items:baseline; gap:5px; min-width:0; white-space:nowrap; }
+    .inv-item .cursor { visibility:hidden; flex:0 0 auto; }
+    .inv-item.on .cursor { visibility:visible; }
+    .inv-item .lab { font-size:13px; line-height:1.2; font-weight:bold; color:#8a8f96; }
+    .zone-inspect { flex:0 0 88px; height:88px; overflow:hidden; display:flex; flex-direction:column; gap:2px; }
+    .insp-l { display:flex; flex-direction:row; align-items:baseline; gap:8px; min-width:0; }
+    .v12 { font-size:12px; line-height:1.2; color:#c8cdd4; }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <i class="scene-floor"></i>
+    <i class="scene-rift"></i>
+    <i class="scene-rift-glow"></i>
+    <i class="scene-lamp"></i>
+    <i class="scene-node"></i>
+  </div>
+  <div class="hud-strip" aria-hidden="true">
+    <div class="hud-slot"><span class="name">薪柴</span><span class="num warm">11</span></div>
+    <div class="hud-slot"><span class="name">潮汐</span><span class="num-sm teal">第 2 潮</span><span class="tier teal">涨潮</span></div>
+    <div class="hud-slot"><span class="name">下次归来</span><span class="num-sm">核心</span><span class="tier warn">中等</span></div>
+  </div>
+  <div class="console">
+    <i class="pwr"></i>
+    <div class="glass">
+      <div class="readout">
+        <div class="crt-title">存续报告</div>
+        <div class="rule"></div>
+        <div class="zone-mods">
+          <div class="mod">
+            <div class="pair">
+              <span class="num-sm">核心</span>
+              <div class="rest">
+                <span class="num">43</span><span class="tier">/</span><span class="num">100</span>
+              </div>
+            </div>
+            <div class="bar"><i class="now" style="width:43%"></i></div>
+            <div class="pair" style="margin-top:6px">
+              <span class="name">混乱增速</span>
+              <div class="rest"><span class="num-sm teal">-12%</span></div>
+            </div>
+          </div>
+          <div class="mod">
+            <div class="pair">
+              <span class="num-sm warm">储藏</span>
+              <div class="rest">
+                <span class="num warm">70</span><span class="tier">/</span><span class="num warm">100</span>
+              </div>
+            </div>
+            <div class="bar"><i class="now-warm" style="width:70%"></i></div>
+            <div class="pair" style="margin-top:6px">
+              <span class="name">薪柴价值</span>
+              <div class="rest"><span class="num-sm warm">x1.20</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="zone-stats">
+          <div class="stats-row">
+            <div class="cluster"><span class="name">完整度</span><span class="num">100</span></div>
+            <div class="cluster"><span class="name">混乱抗</span><span class="num teal">12%</span></div>
+            <div class="cluster"><span class="name">薪柴值</span><span class="num warm">x1.20</span></div>
+            <div class="cluster">
+              <span class="name">潮汐</span>
+              <div class="vals">
+                <span class="num-sm teal">第 2 潮</span>
+                <span class="tier teal">涨潮</span>
+              </div>
+            </div>
+          </div>
+          <div class="stab">
+            <span class="name">稳定度</span>
+            <span class="num-sm warn">未完成</span>
+            <span class="num">42%</span>
+          </div>
+          <div class="badge-row">
+            <span>出击扩容</span><span>供奉扩容</span><span>预兆洞察</span><span class="warm-dim">1</span>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="zone-inv">
+          <div class="inv-grid">
+            <span class="name inv-g-def">防御</span>
+            <div class="inv-item on">
+              <span class="cursor">&gt;</span>
+              <span class="lab rare">噬化残渣</span>
+              <span class="tier rare">★★★</span>
+              <span class="num-sm">2</span><span class="tier">/</span><span class="num-sm">3</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab teal">晶锁残渣</span>
+              <span class="tier teal">★★</span>
+              <span class="num-sm">1</span><span class="tier">/</span><span class="num-sm">3</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab teal">缓释残渣</span>
+              <span class="tier teal">★★</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab mid">裂散残渣</span>
+              <span class="tier mid">★</span>
+            </div>
+            <span class="name inv-g-tool">工具</span>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab teal">虚化步</span>
+              <span class="tier teal">★★</span>
+              <span class="num-sm">3</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab rare">深渊之眼</span>
+              <span class="tier rare">★★★</span>
+              <span class="num-sm">2</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab mid">燃素弹</span>
+              <span class="tier mid">★</span>
+              <span class="num-sm">4</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab mid">消声步</span>
+              <span class="tier mid">★</span>
+              <span class="num-sm">5</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab mid">残响标记</span>
+              <span class="tier mid">★</span>
+              <span class="num-sm">4</span>
+            </div>
+            <div class="inv-item">
+              <span class="cursor">&gt;</span>
+              <span class="lab teal">寄生引流</span>
+              <span class="tier teal">★★</span>
+              <span class="num-sm">3</span>
+            </div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <div class="zone-inspect">
+          <div class="insp-l">
+            <span class="num-sm rare">噬化残渣</span>
+            <span class="tier rare">★★★</span>
+            <span class="tier">防御</span>
+            <span class="tier">经济收益</span>
+          </div>
+          <div class="insp-l"><span class="num-sm">减伤 30%。返还 2 薪柴。</span></div>
+          <div class="insp-l">
+            <span class="name">减伤</span><span class="num-sm teal">30%</span>
+            <span class="name">充能</span><span class="num-sm">2</span><span class="tier">/</span><span class="num-sm">3</span>
+          </div>
+          <div class="insp-l">
+            <span class="name">副作用</span><span class="tier">初始混乱</span>
+            <span class="v12 teal">+8</span><span class="tier">1次出击</span>
+          </div>
+          <div class="insp-l">
+            <span class="name">还需</span><span class="v12">1</span><span class="tier">次冲击</span>
+            <span class="tier">→</span><span class="v12 teal">反刍之口</span>
+            <span class="tier">从空节点回收 1 薪柴。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faceplate">
+      <div class="keys">
+        <span><span class="key">↑↓←→</span> <span class="act">浏览库存</span></span>
+        <span><span class="key">Tab</span> / <span class="key">Esc</span> <span class="act">合上</span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

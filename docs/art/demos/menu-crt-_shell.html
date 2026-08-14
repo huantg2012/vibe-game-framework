@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-crt-_shell · CRT 机身骨架 v2</title>
+  <!--
+    共用 CRT 机身 v2。人 2026-08-14：风格可；全屏太大；几乎纯黑白不符游戏配色。
+    机身 680×468，顶栏 HUD 与净化点场景露出。语义色 Kit A2。
+    后续 6 块复制本页 DOM 顺序，只换 .readout 与 .keys。不进 src/**。
+
+    载体 B：走近装置 = 盯墙机 CRT，不是铺满逻辑画布的黑墙。
+    参考：Signalis 设备读出（不学曲面畸变）/ FTL 名+条+量（不学供电格）/ Barotrauma 键印面壳（不学指针仪表）。
+    本屏不像：右侧抽屉 / 居中网页卡片 / 浏览器窗 / SaaS 表单。
+    哪台机器：净化点墙机 CRT 的磷光面。无混凝土灰金属框（读成软件窗）。扫描线=污染磷光光栅。
+    玻璃 88% 不透明：房间 teal/暖灯可渗入。1px ui-border 即管边。
+  -->
+  <link rel="stylesheet" href="menu-crt-_shell.css" />
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <i class="scene-floor"></i>
+    <i class="scene-rift"></i>
+    <i class="scene-rift-glow"></i>
+    <i class="scene-lamp"></i>
+    <i class="scene-node"></i>
+  </div>
+  <div class="hud-strip" aria-hidden="true">
+    <div class="hud-slot">
+      <span class="name">薪柴</span>
+      <span class="num warm">11</span>
+    </div>
+    <div class="hud-slot">
+      <span class="name">潮汐</span>
+      <span class="num-sm teal">第 2 潮</span>
+      <span class="tier teal">涨潮</span>
+    </div>
+    <div class="hud-slot">
+      <span class="name">下次归来</span>
+      <span class="num-sm">核心</span>
+      <span class="tier warn">中等</span>
+    </div>
+  </div>
+  <div class="console">
+    <i class="pwr"></i>
+    <div class="glass">
+      <div class="readout">
+        <div class="crt-title">占位标题</div>
+        <div class="rule"></div>
+        <div class="pair">
+          <span class="name">表名</span>
+          <div class="rest">
+            <span class="cursor">&gt;</span>
+            <span class="num warm">00</span>
+            <span class="tier teal">档位</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faceplate">
+      <div class="keys">
+        <span><span class="key">Esc</span> <span class="act">离开</span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

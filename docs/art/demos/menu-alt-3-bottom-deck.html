@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>Alt-3 · 底栏甲板</title>
+  <!--
+    方案名：底栏甲板（Alt-3）
+    命题：E / Tab 都从底栏向上长成装置读数带。禁止右抽屉、禁止 .game-panel 全高。
+
+    开工闸门
+    1 载体 A 世界内装置。底栏 #purif-prompt 就是这块装置的印字条；展开 = 同一条变高，不是另开窗口。
+       屏幕空间挂 architecture #dom-ui-root。不是 B 终端窗，不是 C 元界面。
+    2 参考（ux-references，不另起）
+       FTL：贴边子系统条 = 名+条+状态同屏，战斗不跳侧栏；不学供电格 / 全息蓝。
+       Into the Breach：预告写成可读事实，与顶栏同一套词；不学战棋网格。
+       Barotrauma：装置自己报读数（地板控制台掀起）；不学整屏仪表。
+       本屏不像：Dashboard / 设置页 / 右侧报告抽屉。
+    3 P0（展开后仍 ≤6）
+       E：核心身份 · 完整度条含投入预览 · 混乱增速 当前→注入后 · 投入+储备 · 机会成本（储藏/蜕变最低/打此）· 键
+       Tab：两模块 · 稳定度（陈述，无进度条）· 潮汐 · 库存两件 · 键
+       顶右三槽仍是场景 P0，展开不拆。
+    4 哪台机器：净化点地面控制台从提示条掀起的印字带。Courier New。
+       1px 顶唇 = 金属掀起边。中央 16×2 锁舌 = 铰链。无圆角/投影/外发光。
+       预览段暖色 = 薪柴进模块（L3），不是高亮。打此方标 = 临界第二编码（中等不脉动）。
+    5 复用：A5-3 顶右横槽；A5-4 底栏作铰链；Kit 字号 16/13/12；色仅下列 9 值。
+       不套 .game-panel，不新增色，不写 Fine/Rare 英文。
+
+    写完自检（机械层；审美待人终审）
+    1 A；挂 #dom-ui-root；底满宽，不随 zoom 漂到画外。
+    2 FTL / ItB / Barotrauma 如上。不像 Dashboard / 设置页 / 右抽屉。
+    3 不操作可读：E 有核心 43/100→63/100、-12%→-18%、投入 5、储备 11、打此；Tab 有两模块、42%、第 1 潮 涨潮、凝锁/反刍。
+    4 地面控制台印字带。唇/锁舌/预览暖段/打此方标皆有物理原因。无投影圆角。
+    5 缺 X：投入后 薪柴不足 · 还差 2（11-5=6，蜕变最低 8）。
+    6 灰度：条长短、★ 数量、[键]、打此位置。表名/值/档位分节点。
+    7 打开：走近核心按 E / 无面板时按 Tab。无居中阻断。
+    8 词：核心/储藏/薪柴/潮汐/涨潮/稳定度/蜕变/注入/存续报告/记录。键=绑定。
+
+    样例：核心 43/100 -12%，投入 5→63/100 -18%；储备 11；储藏 70/100；蜕变最低 8；下次归来打核心·中等。
+          Tab：稳定度 42%；第 1 潮 涨潮；凝锁 Fine→★★；反刍 Rare→★★★。
+  -->
+  <style>
+    :root {
+      --void: #080a0c;
+      --bg: #0f1114;
+      --line: #2a2d32;
+      --text: #8a8f96;
+      --bright: #c8cdd4;
+      --kindling: #c4873a;
+      --tide: #1aad96;
+      --danger: #cc3333;
+      --rare: #3cffd4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 960px;
+      background: var(--void);
+      color: var(--text);
+    }
+    body { font-family: "Courier New", Courier, monospace; }
+
+    .shot-label {
+      width: 960px;
+      height: 24px;
+      padding: 4px 12px;
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--text);
+      background: var(--void);
+    }
+
+    .stage {
+      width: 960px;
+      height: 640px;
+      position: relative;
+      overflow: hidden;
+      background: var(--void);
+    }
+    .ring {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: 420px;
+      height: 420px;
+      margin: -210px 0 0 -210px;
+      border: 1px solid var(--tide);
+      opacity: 0.18;
+    }
+    .core-dot {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: 10px;
+      height: 10px;
+      margin: -5px 0 0 -5px;
+      background: var(--bright);
+      opacity: 0.35;
+    }
+
+    /* A5-3 顶右三槽，展开时仍在 */
+    .hud {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      justify-content: flex-end;
+      gap: 32px;
+      z-index: 2;
+    }
+    .hud-slot {
+      display: flex;
+      flex-direction: row;
+      flex: 0 0 auto;
+      align-items: baseline;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .k { font-size: 12px; line-height: 1.2; color: var(--text); font-weight: normal; }
+    .v { font-size: 13px; line-height: 1.2; font-weight: normal; color: var(--bright); }
+    .g { font-size: 12px; line-height: 1.2; color: var(--text); font-weight: normal; }
+    .v-kindling { color: var(--kindling); }
+    .v-tide { color: var(--tide); }
+    .v-rare { color: var(--rare); }
+
+    /* 从底栏长出的同一条带：满宽，不上半屏 */
+    .deck {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+    .latch {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      width: 16px;
+      height: 2px;
+      margin-left: -8px;
+      background: var(--text);
+    }
+    .deck-body {
+      padding: 12px 16px 0;
+    }
+    .deck-hinge {
+      margin-top: 8px;
+      padding: 6px 16px 10px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .hinge-key { color: var(--bright); }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+    .row + .row { margin-top: 8px; }
+    .cluster {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .cluster-lg { gap: 8px; }
+    .cluster-mid { align-items: center; }
+    .push { margin-left: auto; }
+
+    .mark {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--danger);
+      vertical-align: middle;
+    }
+
+    .bar {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      width: 160px;
+      height: 6px;
+      background: var(--void);
+      border: 1px solid var(--line);
+      flex: 0 0 160px;
+    }
+    .bar-sm { width: 96px; flex-basis: 96px; }
+    .fill-core { height: 100%; background: var(--bright); }
+    .fill-preview { height: 100%; background: var(--kindling); }
+    .fill-store { height: 100%; background: var(--kindling); }
+
+    .cursor {
+      border: 1px solid var(--bright);
+      padding: 0 4px;
+      color: var(--kindling);
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .keys {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--text);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 16px;
+    }
+    .keys .prime { color: var(--bright); }
+
+    .gap32 { gap: 32px; }
+    .tab-row { align-items: flex-end; }
+  </style>
+</head>
+<body>
+
+  <div class="shot-label">样张 E · 分配展开（走近核心按 E）</div>
+  <div class="stage" id="state-e">
+    <div class="ring"></div>
+    <div class="core-dot"></div>
+    <div class="hud">
+      <div class="hud-slot">
+        <span class="k">薪柴</span>
+        <span class="v v-kindling">11</span>
+      </div>
+      <div class="hud-slot">
+        <span class="k">潮汐</span>
+        <span class="v v-tide">第 1 潮</span>
+        <span class="g">涨潮</span>
+      </div>
+      <div class="hud-slot">
+        <span class="k">下次归来</span>
+        <span class="v">核心</span>
+        <span class="g">中等</span>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="latch"></div>
+      <div class="deck-body">
+        <div class="row">
+          <span class="mark"></span>
+          <span class="v">核心</span>
+          <span class="cluster push">
+            <span class="k">打此</span>
+            <span class="k">下次归来</span>
+            <span class="v">核心</span>
+            <span class="g">中等</span>
+          </span>
+        </div>
+        <div class="row cluster-mid">
+          <span class="k">完整度</span>
+          <div class="bar" aria-hidden="true">
+            <div class="fill-core" style="width:43%"></div>
+            <div class="fill-preview" style="width:20%"></div>
+          </div>
+          <span class="cluster cluster-lg">
+            <span class="v">43</span>
+            <span class="k">/</span>
+            <span class="v">100</span>
+            <span class="k">→</span>
+            <span class="v">63</span>
+            <span class="k">/</span>
+            <span class="v">100</span>
+          </span>
+        </div>
+        <div class="row">
+          <span class="k">混乱增速</span>
+          <span class="cluster cluster-lg">
+            <span class="v">-12%</span>
+            <span class="k">→</span>
+            <span class="v">-18%</span>
+          </span>
+        </div>
+        <div class="row">
+          <span class="k">投入</span>
+          <span class="cursor">5</span>
+          <span class="cluster" style="margin-left:16px">
+            <span class="k">储备</span>
+            <span class="v v-kindling">11</span>
+          </span>
+        </div>
+        <div class="row">
+          <span class="cluster">
+            <span class="k">储藏</span>
+            <span class="v">70</span>
+            <span class="k">/</span>
+            <span class="v">100</span>
+          </span>
+          <span class="cluster" style="margin-left:24px">
+            <span class="k">蜕变最低</span>
+            <span class="v v-kindling">8</span>
+          </span>
+          <span class="cluster" style="margin-left:24px">
+            <span class="k">投入后</span>
+            <span class="k">薪柴不足 · 还差</span>
+            <span class="v">2</span>
+          </span>
+        </div>
+        <div class="keys">
+          <span><span class="prime">[← →]</span> ±1</span>
+          <span><span class="prime">[Shift+← →]</span> ±5</span>
+          <span><span class="prime">[Home]</span> 0</span>
+          <span><span class="prime">[End]</span> 满</span>
+          <span class="prime">[Enter] 注入</span>
+          <span>[Esc] 收起</span>
+        </div>
+      </div>
+      <div class="deck-hinge">
+        <span class="hinge-key">[E]</span>
+        <span> ◈ 核心 </span>
+        <span>│</span>
+        <span> 43</span>
+        <span> / </span>
+        <span>100</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot-label">样张 Tab · 展开（无面板时按 Tab）</div>
+  <div class="stage" id="state-tab">
+    <div class="ring"></div>
+    <div class="core-dot"></div>
+    <div class="hud">
+      <div class="hud-slot">
+        <span class="k">薪柴</span>
+        <span class="v v-kindling">11</span>
+      </div>
+      <div class="hud-slot">
+        <span class="k">潮汐</span>
+        <span class="v v-tide">第 1 潮</span>
+        <span class="g">涨潮</span>
+      </div>
+      <div class="hud-slot">
+        <span class="k">下次归来</span>
+        <span class="v">核心</span>
+        <span class="g">中等</span>
+      </div>
+    </div>
+
+    <div class="deck">
+      <div class="latch"></div>
+      <div class="deck-body">
+        <div class="row tab-row gap32">
+          <span class="cluster cluster-lg cluster-mid">
+            <span class="mark"></span>
+            <span class="k">核心</span>
+            <span class="v">43</span>
+            <span class="k">/</span>
+            <span class="v">100</span>
+            <div class="bar bar-sm" aria-hidden="true">
+              <div class="fill-core" style="width:43%"></div>
+            </div>
+            <span class="k">混乱增速</span>
+            <span class="v">-12%</span>
+          </span>
+          <span class="cluster cluster-lg cluster-mid">
+            <span class="k">储藏</span>
+            <span class="v">70</span>
+            <span class="k">/</span>
+            <span class="v">100</span>
+            <div class="bar bar-sm" aria-hidden="true">
+              <div class="fill-store" style="width:70%"></div>
+            </div>
+          </span>
+        </div>
+        <div class="row gap32">
+          <span class="cluster">
+            <span class="k">稳定度</span>
+            <span class="v">42%</span>
+          </span>
+          <span class="cluster">
+            <span class="k">潮汐</span>
+            <span class="v v-tide">第 1 潮</span>
+            <span class="g">涨潮</span>
+          </span>
+          <span class="cluster cluster-lg">
+            <span class="k">库存</span>
+            <span class="v">凝锁</span>
+            <span class="v v-tide">★★</span>
+            <span class="v">反刍</span>
+            <span class="v v-rare">★★★</span>
+          </span>
+        </div>
+        <div class="keys">
+          <span class="prime">[Tab] 收起</span>
+          <span>[Esc] 记录</span>
+        </div>
+      </div>
+      <div class="deck-hinge">
+        <span>Tab</span>
+        <span>:</span>
+        <span>存续报告</span>
+        <span> │ </span>
+        <span>Esc</span>
+        <span>:</span>
+        <span>记录</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

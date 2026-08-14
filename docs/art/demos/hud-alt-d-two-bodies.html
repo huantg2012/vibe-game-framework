@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>Alt D · 两团物体（威胁先）</title>
+  <style>
+    /* 载体 A：净化点监控装置贴边读数。不套 .game-panel。中等 = 不脉动。 */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 960px; height: 640px; overflow: hidden; background: #080a0c; }
+    body { font-family: "Courier New", Courier, monospace; }
+    .stage {
+      width: 960px;
+      height: 640px;
+      position: relative;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 48%, #0e4a3f 0%, transparent 55%),
+        radial-gradient(ellipse 36% 32% at 62% 44%, #1a6b5c 0%, transparent 52%),
+        linear-gradient(180deg, #0a0b0d 0%, #080a0c 42%, #0d1114 100%);
+    }
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(8, 10, 12, 0) 0px,
+        rgba(8, 10, 12, 0) 2px,
+        rgba(0, 0, 0, 0.18) 2px,
+        rgba(0, 0, 0, 0.18) 3px
+      );
+      pointer-events: none;
+    }
+    .ring {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: 420px;
+      height: 420px;
+      margin: -210px 0 0 -210px;
+      border: 1px solid rgba(26, 173, 150, 0.18);
+      border-radius: 50%;
+    }
+    .core-dot {
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: 10px;
+      height: 10px;
+      margin: -5px 0 0 -5px;
+      background: #c8cdd4;
+      opacity: 0.35;
+    }
+
+    .hud {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+      z-index: 2;
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+    }
+
+    /* 物体 2：你会挨什么 — 角上唯一大声的一团；核心最响 */
+    .body-threat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.2;
+    }
+    .body-threat .when,
+    .body-threat .grade {
+      font-size: 12px;
+      color: #8a8f96;
+      font-weight: normal;
+    }
+    .body-threat .target {
+      font-size: 13px;
+      color: #c8cdd4;
+      font-weight: bold;
+      line-height: 1.15;
+    }
+
+    /* 物体 1：你现在怎样 — 薪柴+潮汐收成一团；次要、更紧、更暗 */
+    .body-now {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 12px;
+      color: #8a8f96;
+      font-weight: normal;
+      line-height: 1.2;
+      opacity: 0.85;
+    }
+    .body-now .kindling {
+      color: #c4873a;
+    }
+    .body-now .tide-n {
+      color: #1aad96;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="ring"></div>
+    <div class="core-dot"></div>
+    <div class="hud">
+      <div class="body-threat">
+        <span class="when">下次归来</span>
+        <span class="target">核心</span>
+        <span class="grade">中等</span>
+      </div>
+      <div class="body-now">
+        <span>薪柴</span>
+        <span class="kindling">11</span>
+        <span>潮汐</span>
+        <span class="tide-n">第 1 潮</span>
+        <span>涨潮</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

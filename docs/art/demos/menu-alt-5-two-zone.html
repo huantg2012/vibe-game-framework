@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>Alt-5 两区终端 · 分配 / 存续</title>
+  <!--
+    方案：Alt-5 两区终端（同一块 CRT，上下两窗格）
+
+    载体 B 世界内终端。走近核心模块 / 按 Tab 唤出。
+    屏幕空间挂 #dom-ui-root（本文件是 960×640 静帧，不另起 overlay 根）。
+
+    参考：
+    - Barotrauma：装置自己报状态；上窗格=正在操作的回路，下窗格=旁路读数。
+      不学：指针/阀门轮、整屏仪表。
+    - Darkest Dungeon：词条=名+档位+数三层分开；检视是固定读出面。
+      不学：羊皮纸/立绘卡/哥特边框。
+    - FTL：一条=表名+条+量，决策不靠 hover。
+      不学：供电格、全息蓝、圆形能量点。
+
+    本屏不像：设置页 / Dashboard KPI 网格 / 带 ± 的后台表单。
+
+    哪台机器：净化点模块控制台的双窗格 CRT。Courier 是这台机打出来的字。
+    1px 直角边框=金属框；扫描线=这块屏的磷光层；分界铆钉=两块屏装在同一机箱上。
+    下次归来左侧 2px #cc3333 = 该回路的告警灯（本模块即下次冲击目标），中等不脉动。
+
+    复用（落地时进 panel-styles，禁止面板内联第二套）：
+    .game-panel / .panel-title / .pbar-wrap / .inspect-dock / .key-hint-bar
+    新增基元（须进共享样式层）：.pane-ask / .pane-read / .chassis-split
+
+    色仅用：#080a0c #0f1114 #2a2d32 #8a8f96 #c8cdd4 #c4873a #1aad96 #cc3333 #3cffd4
+    字号：H1 16 / H2·Body 13 / Label 12。无圆角、无投影、无 HTML 按钮排。
+  -->
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 960px;
+      height: 640px;
+      overflow: hidden;
+      background: #080a0c;
+    }
+    body { font-family: "Courier New", Courier, monospace; }
+
+    .page {
+      width: 960px;
+      height: 640px;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .frame {
+      position: relative;
+      width: 480px;
+      height: 640px;
+      overflow: hidden;
+    }
+    .frame + .frame {
+      border-left: 1px solid #2a2d32;
+    }
+
+    .scene {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #0f1114 0%, #080a0c 100%);
+    }
+    .scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(8, 10, 12, 0) 0px,
+        rgba(8, 10, 12, 0) 2px,
+        rgba(0, 0, 0, 0.18) 2px,
+        rgba(0, 0, 0, 0.18) 3px
+      );
+      pointer-events: none;
+    }
+    .ring {
+      position: absolute;
+      left: 38%;
+      top: 48%;
+      width: 280px;
+      height: 280px;
+      margin: -140px 0 0 -140px;
+      border: 1px solid #1aad96;
+      opacity: 0.18;
+      border-radius: 50%;
+    }
+    .core-dot {
+      position: absolute;
+      left: 38%;
+      top: 48%;
+      width: 8px;
+      height: 8px;
+      margin: -4px 0 0 -4px;
+      background: #c8cdd4;
+      opacity: 0.35;
+    }
+    .mode {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      z-index: 1;
+      font-size: 12px;
+      line-height: 1.2;
+      color: #8a8f96;
+    }
+
+    /* —— 机箱：右侧全高，宽 360（<440）。不是 settings 抽屉。 —— */
+    .chassis {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 360px;
+      height: 640px;
+      background: #0f1114;
+      border-left: 1px solid #2a2d32;
+      display: flex;
+      flex-direction: column;
+      z-index: 2;
+    }
+    .chassis::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(8, 10, 12, 0) 0px,
+        rgba(8, 10, 12, 0) 2px,
+        rgba(0, 0, 0, 0.18) 2px,
+        rgba(0, 0, 0, 0.18) 3px
+      );
+      pointer-events: none;
+      z-index: 3;
+    }
+    .rivet {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #8a8f96;
+      z-index: 4;
+      pointer-events: none;
+    }
+    .rivet.tl { top: 6px; left: 6px; }
+    .rivet.tr { top: 6px; right: 6px; }
+    .rivet.bl { bottom: 6px; left: 6px; }
+    .rivet.br { bottom: 6px; right: 6px; }
+
+    .head {
+      flex: 0 0 auto;
+      padding: 12px 12px 8px;
+      border-bottom: 1px solid #2a2d32;
+    }
+    .head .title {
+      font-size: 16px;
+      line-height: 1.2;
+      color: #c8cdd4;
+      font-weight: bold;
+    }
+    .head .title::before {
+      content: "▸ ";
+      color: #8a8f96;
+      font-weight: normal;
+    }
+
+    .pane-ask,
+    .pane-read {
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      min-height: 0;
+    }
+    .alloc .pane-ask { flex: 1.15; background: #0f1114; }
+    .alloc .pane-read { flex: 1; background: #080a0c; }
+    .tab .pane-ask { flex: 0.72; background: #0f1114; }
+    .tab .pane-read { flex: 1.28; background: #080a0c; }
+
+    .split {
+      flex: 0 0 auto;
+      position: relative;
+      height: 1px;
+      background: #2a2d32;
+    }
+    .split .rivet-l,
+    .split .rivet-r {
+      position: absolute;
+      top: -1px;
+      width: 3px;
+      height: 3px;
+      background: #8a8f96;
+    }
+    .split .rivet-l { left: 12px; }
+    .split .rivet-r { right: 12px; }
+
+    .k {
+      font-size: 12px;
+      line-height: 1.2;
+      color: #8a8f96;
+      font-weight: normal;
+    }
+    .v {
+      font-size: 13px;
+      line-height: 1.2;
+      color: #c8cdd4;
+      font-weight: bold;
+    }
+    .v-lg {
+      font-size: 16px;
+      line-height: 1.2;
+      color: #c8cdd4;
+      font-weight: bold;
+    }
+    .g { font-size: 12px; line-height: 1.2; color: #8a8f96; }
+    .warm { color: #c4873a; }
+    .teal { color: #1aad96; }
+    .rare { color: #3cffd4; }
+    .core { color: #c8cdd4; }
+    .stor { color: #c4873a; }
+
+    .cluster { margin-bottom: 12px; }
+    .cluster:last-child { margin-bottom: 0; }
+    .name-row {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .nums {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .bar {
+      position: relative;
+      height: 6px;
+      background: #080a0c;
+      border: 1px solid #2a2d32;
+      margin: 4px 0;
+    }
+    .bar .fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+    }
+    .bar .fill.core { background: #c8cdd4; }
+    .bar .fill.stor { background: #c4873a; }
+    .bar .preview {
+      position: absolute;
+      top: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        #c8cdd4 0px,
+        #c8cdd4 2px,
+        transparent 2px,
+        transparent 4px
+      );
+    }
+
+    .delta {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .arrow { color: #8a8f96; font-size: 12px; }
+
+    .input-field {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .nudge { font-size: 13px; color: #8a8f96; }
+    .amt { font-size: 16px; color: #c4873a; font-weight: bold; }
+
+    /* 告警灯：下次冲击打的就是正在操作的这条回路。中等 = 亮灯不脉动。 */
+    .alarm {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-left: 8px;
+      border-left: 2px solid #cc3333;
+    }
+
+    .cost-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .cost-row:last-of-type { margin-bottom: 0; }
+    .cost-top {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .tide-line {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .stock {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+    .item {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.3;
+      color: #8a8f96;
+      padding: 4px 0;
+      cursor: default;
+    }
+    .item .nm { min-width: 3em; }
+    .item .grade { font-size: 12px; }
+    .item .stars { font-size: 12px; }
+    .item.sel {
+      color: #c8cdd4;
+    }
+    .item .cur {
+      width: 1em;
+      flex: 0 0 auto;
+      visibility: hidden;
+      color: #c8cdd4;
+    }
+    .item.sel .cur { visibility: visible; }
+
+    /* 检视是下窗格里的固定读出面，不是嵌套卡片、不是 tooltip。 */
+    .dock {
+      border-top: 1px solid #2a2d32;
+      padding-top: 8px;
+      min-height: 72px;
+    }
+    .dock .id {
+      font-size: 13px;
+      line-height: 1.2;
+      color: #c8cdd4;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .dock .grade {
+      font-size: 12px;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .dock .desc {
+      font-size: 13px;
+      line-height: 1.4;
+      color: #8a8f96;
+      font-weight: normal;
+    }
+
+    .keys {
+      margin-top: auto;
+      padding-top: 12px;
+      font-size: 12px;
+      line-height: 1.3;
+      color: #8a8f96;
+    }
+    .keys .key { color: #c8cdd4; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ========== 态 1：分配终端 ========== -->
+    <section class="frame" aria-label="分配终端">
+      <div class="scene">
+        <div class="ring"></div>
+        <div class="core-dot"></div>
+      </div>
+      <div class="mode">分配</div>
+      <aside class="chassis alloc">
+        <i class="rivet tl"></i><i class="rivet tr"></i>
+        <i class="rivet bl"></i><i class="rivet br"></i>
+
+        <header class="head">
+          <div class="title">核心</div>
+        </header>
+
+        <div class="pane-ask">
+          <div class="cluster">
+            <div class="name-row">
+              <span class="k">核心</span>
+            </div>
+            <div class="nums">
+              <span class="v-lg core">43</span>
+              <span class="g">/</span>
+              <span class="v">100</span>
+            </div>
+            <div class="bar" aria-hidden="true">
+              <div class="fill core" style="width:43%"></div>
+              <div class="preview" style="left:43%;width:20%"></div>
+            </div>
+            <div class="nums">
+              <span class="k">投入后</span>
+              <span class="v-lg core">63</span>
+              <span class="g">/</span>
+              <span class="v">100</span>
+            </div>
+            <div class="delta">
+              <span class="k">混乱</span>
+              <span class="v">-12%</span>
+              <span class="arrow">→</span>
+              <span class="v">-18%</span>
+            </div>
+          </div>
+
+          <div class="cluster">
+            <span class="k">投入</span>
+            <div class="input-field">
+              <span class="nudge">‹</span>
+              <span class="amt">5</span>
+              <span class="nudge">›</span>
+            </div>
+          </div>
+
+          <div class="cluster alarm">
+            <span class="k">下次归来</span>
+            <span class="v core">核心</span>
+            <span class="g">中等</span>
+          </div>
+        </div>
+
+        <div class="split" aria-hidden="true">
+          <span class="rivet-l"></span>
+          <span class="rivet-r"></span>
+        </div>
+
+        <div class="pane-read">
+          <div class="cost-row">
+            <div class="cost-top">
+              <span class="k">储藏</span>
+            </div>
+            <div class="nums">
+              <span class="v-lg stor">70</span>
+              <span class="g">/</span>
+              <span class="v">100</span>
+            </div>
+            <div class="bar" aria-hidden="true">
+              <div class="fill stor" style="width:70%"></div>
+            </div>
+          </div>
+
+          <div class="cost-row">
+            <div class="cost-top">
+              <span class="k">蜕变</span>
+              <span class="g">最低</span>
+            </div>
+            <span class="v-lg warm">8</span>
+          </div>
+
+          <div class="cost-row">
+            <div class="cost-top">
+              <span class="k">储备</span>
+            </div>
+            <span class="v-lg warm">11</span>
+          </div>
+
+          <div class="keys">
+            <span class="key">←→</span> 量
+            · <span class="key">Enter</span> 注入
+            · <span class="key">Esc</span> 离开
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ========== 态 2：Tab / 存续终端 ========== -->
+    <section class="frame" aria-label="存续终端">
+      <div class="scene">
+        <div class="ring"></div>
+        <div class="core-dot"></div>
+      </div>
+      <div class="mode">存续</div>
+      <aside class="chassis tab">
+        <i class="rivet tl"></i><i class="rivet tr"></i>
+        <i class="rivet bl"></i><i class="rivet br"></i>
+
+        <header class="head">
+          <div class="title">存续</div>
+        </header>
+
+        <div class="pane-ask">
+          <div class="cluster">
+            <div class="name-row">
+              <span class="k">核心</span>
+            </div>
+            <div class="nums">
+              <span class="v core">43</span>
+              <span class="g">/</span>
+              <span class="v">100</span>
+            </div>
+            <div class="bar" aria-hidden="true">
+              <div class="fill core" style="width:43%"></div>
+            </div>
+          </div>
+
+          <div class="cluster">
+            <div class="name-row">
+              <span class="k">储藏</span>
+            </div>
+            <div class="nums">
+              <span class="v stor">70</span>
+              <span class="g">/</span>
+              <span class="v">100</span>
+            </div>
+            <div class="bar" aria-hidden="true">
+              <div class="fill stor" style="width:70%"></div>
+            </div>
+          </div>
+
+          <div class="tide-line">
+            <span class="k">潮汐</span>
+            <span class="v teal">第 1 潮</span>
+            <span class="g">涨潮</span>
+            <span class="k">稳定度</span>
+            <span class="v">42%</span>
+          </div>
+        </div>
+
+        <div class="split" aria-hidden="true">
+          <span class="rivet-l"></span>
+          <span class="rivet-r"></span>
+        </div>
+
+        <div class="pane-read">
+          <div class="stock" id="stock">
+            <div class="item sel" data-id="lock" tabindex="0">
+              <span class="cur">▸</span>
+              <span class="nm">凝锁</span>
+              <span class="grade teal">Fine</span>
+              <span class="stars teal">★★</span>
+            </div>
+            <div class="item" data-id="rum" tabindex="0">
+              <span class="cur">▸</span>
+              <span class="nm">反刍</span>
+              <span class="grade rare">Rare</span>
+              <span class="stars rare">★★★</span>
+            </div>
+          </div>
+
+          <div class="dock" id="dock">
+            <div class="id">凝锁</div>
+            <div class="grade teal">Fine</div>
+            <div class="desc">冻结最近污染体 4 秒。</div>
+          </div>
+
+          <div class="keys">
+            <span class="key">↑↓</span> 检视
+            · <span class="key">Tab</span>
+            <span class="key">Esc</span> 合上
+          </div>
+        </div>
+      </aside>
+    </section>
+
+  </div>
+
+  <script>
+    (function () {
+      var data = {
+        lock: { id: "凝锁", grade: "Fine", gradeClass: "teal", desc: "冻结最近污染体 4 秒。" },
+        rum: { id: "反刍", grade: "Rare", gradeClass: "rare", desc: "消化已拾过的空节点，回收 1 薪柴。" }
+      };
+      var stock = document.getElementById("stock");
+      var dock = document.getElementById("dock");
+      var items = stock.querySelectorAll(".item");
+
+      function paint(id) {
+        var d = data[id];
+        dock.innerHTML =
+          '<div class="id">' + d.id + '</div>' +
+          '<div class="grade ' + d.gradeClass + '">' + d.grade + '</div>' +
+          '<div class="desc">' + d.desc + '</div>';
+        items.forEach(function (el) {
+          var on = el.getAttribute("data-id") === id;
+          el.classList.toggle("sel", on);
+        });
+      }
+
+      items.forEach(function (el) {
+        el.addEventListener("click", function () {
+          paint(el.getAttribute("data-id"));
+        });
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+        var ids = ["lock", "rum"];
+        var cur = stock.querySelector(".item.sel");
+        var i = ids.indexOf(cur.getAttribute("data-id"));
+        if (e.key === "ArrowUp") i = (i + ids.length - 1) % ids.length;
+        else i = (i + 1) % ids.length;
+        paint(ids[i]);
+        e.preventDefault();
+      });
+    })();
+  </script>
+</body>
+</html>

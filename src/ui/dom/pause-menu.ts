@@ -197,6 +197,7 @@ export const pauseMenu = {
       'left:50%',
       'transform:translate(-50%,-50%)',
       'width:320px',
+      'height:auto',
       'z-index:1001',
       'pointer-events:auto',
     ].join(';');

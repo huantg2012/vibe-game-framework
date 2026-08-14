@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-08-13
-last-modified-by: director agent
+last-modified-date: 2026-08-14
+last-modified-by: design agent
 interface-changed: true
 interfaces-with:
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
@@ -174,7 +174,11 @@ interface SaveData {
 | 潮汐切换（进入新 Tide） | +8 |
 | 模块归零 | -1 |
 
-22. **显示**（Slice 5.5 DEC-045 D7 修订）：稳定度**不**在净化点常驻 HUD 以进度条呈现——它不影响净化点即时决策，且 100% 尚无终局内容（规则 23），进度条隐喻是空头承诺。改为存续报告（P2）内的**状态陈述**（如 `42%` / `已完成`）。潮汐编号仍由净化点 HUD 的潮汐行承载。
+22. **显示**（Slice 5.5 DEC-045 D7 + 2026-08-13 右上写明）：稳定度**不**在净化点常驻 HUD 以进度条呈现——它不影响净化点即时决策，且 100% 尚无终局内容（规则 23），进度条隐喻是空头承诺。改为存续报告（P2）内的**状态陈述**（如 `42%` / `已完成`）。潮汐由净化点 HUD 潮汐行承载，**三个独立可见节点**（不得粘成一句）：
+    - 表名：`潮汐`
+    - 值：`第 N 潮`（N = `tideNumber`）
+    - 相位：`涨潮` / `潮峰` / `退潮`，对照 TidePhase `rise` / `crest` / `ebb`（与存续报告已上屏 `phaseLabels` 同一套）。禁止发明「满潮」「落潮」等机制里没有的词。
+    常驻 HUD 不画波形与 `◇`。薪柴槽必须有独立表名「薪柴」+ 独立数字。稳定度不加回常驻 HUD。
 23. **到达 100%**：本 Slice 仅标记 `reached = true`，不触发终局内容（推迟到后续 Slice）。显示用状态陈述「已完成」，不用进度条拉满动画。
 
 ### P — 持久存档
@@ -257,6 +261,7 @@ interface SaveData {
 | RiftScene | `SortieModifiers`（扩展版：含改造效果+模块效果） | scene data |
 | RiftScene | 出击工具效果（冻结/领域/穿墙等） | ToolSystem API |
 | PurificationScene | TideState + Contaminant[] 库存 + GrowthState + StabilityState | tideSystem / contaminantSystem / growthSystem / stabilityTracker 查询 |
+| 净化点 HUD | `tideSystem.getState()`（`tideNumber` + `phase`） | 查询；潮汐行展示见规则 22 |
 | ImpactSystem | 防御 slot 内容 + 各污染物效果 | contaminantSystem 查询（实际效果计算在 defense-engine.ts） |
 | HUD | 工具剩余次数 + 冷却状态 | ToolSystem 查询 |
 

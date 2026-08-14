@@ -13,10 +13,10 @@ import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { contaminantSystem } from '@/systems/contaminant-system';
-import { getDefenseName, getToolName, sortContaminants } from '@/ui/contaminant-names';
+import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import type { Contaminant } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
+import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 
 // Rarity is "Degree not Kind": same contam color family, rising brightness
 // (ui-art-overhaul.md A2) instead of unrelated hues per tier.
@@ -74,22 +74,7 @@ export const statusPanel = {
 // ---------------------------------------------------------------------------
 
 function createPanel(): void {
-  injectPanelStyles();
-
-  panel = document.createElement('div');
-  panel.id = 'status-panel';
-  panel.className = 'game-panel';
-  panel.style.cssText = [
-    'position:fixed',
-    'top:0',
-    'right:0',
-    'height:640px',
-    'width:440px',
-    'z-index:1001',
-    'display:flex',
-    'flex-direction:column',
-    'pointer-events:auto',
-  ].join(';');
+  panel = createCrtPanel('status-panel');
 
   const root = getDomUiRoot();
   const backdrop = document.createElement('div');
@@ -155,23 +140,22 @@ function render(): void {
   const totalResist = coreReduction + growthReduction;
 
   const storageEffect = gameState.getModuleEffect('STORAGE');
-  const storageBonus = Math.round((storageEffect - 1) * 100);
   const kindlingAffinity = mods.kindlingAffinity;
 
   const tideState = tideSystem.getState();
   const phaseLabels: Record<string, string> = { rise: '涨潮', crest: '潮峰', ebb: '退潮' };
   // ebb = pressure easing, expressed as "fading to neutral" rather than "turning green"
   // (ui-art-overhaul.md A2 — green-as-safe has no place in this palette).
-  const phaseColors: Record<string, string> = { rise: '#cc3333', crest: '#cc3333', ebb: '#8a8f96' };
+  const phaseColors: Record<string, string> = { rise: '#1aad96', crest: '#cc3333', ebb: '#8a8f96' };
 
   // Slice 5.5 D7: moved here from the always-visible purification HUD (was a 10-block
   // progress bar). A state statement, not a progress bar — there is no end-state
   // content yet to promise a finish line toward (IA §R6), and this value never changes
   // moment-to-moment while walking around the purification point, so it doesn't earn
   // P1 常驻 real estate either way.
-  const stabilityStateText = stabilityTracker.isReached()
-    ? '已完成'
-    : `${Math.round(stabilityTracker.getProgress())}%`;
+  const stabilityReached = stabilityTracker.isReached();
+  const stabilityStateText = stabilityReached ? '已完成' : '未完成';
+  const stabilityPct = `${Math.round(stabilityTracker.getProgress())}%`;
 
   // Module HP data
   const coreMod = gameState.getModule('CORE');
@@ -194,7 +178,7 @@ function render(): void {
       <div class="stat-bar" style="width:100%;">
         <div class="stat-bar-fill" style="width:${coreHpPct}%;background:#c8cdd4;"></div>
       </div>
-      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">混乱 -${coreReduction}%</div>
+      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">混乱增速 <span style="color:#1aad96;font-weight:bold;">-${coreReduction}%</span></div>
     </div>`;
   }
 
@@ -209,7 +193,7 @@ function render(): void {
       <div class="stat-bar" style="width:100%;">
         <div class="stat-bar-fill" style="width:${storHpPct}%;background:#c4873a;"></div>
       </div>
-      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">薪柴 +${storageBonus}%</div>
+      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">薪柴价值 <span style="color:#c4873a;font-weight:bold;">x${storageEffect.toFixed(2)}</span></div>
     </div>`;
   }
 
@@ -223,7 +207,7 @@ function render(): void {
     </div>
     <div class="stat-row">
       <span class="stat-label">混乱抗</span>
-      <span class="stat-value" style="color:#c8cdd4;">${totalResist}%</span>
+      <span class="stat-value" style="color:#1aad96;">${totalResist}%</span>
     </div>
     <div class="stat-row">
       <span class="stat-label">薪柴值</span>
@@ -231,11 +215,13 @@ function render(): void {
     </div>
     <div class="stat-row">
       <span class="stat-label">潮汐</span>
-      <span class="stat-value" style="color:${phaseColors[tideState.phase] ?? '#c8cdd4'};">第${tideState.tideNumber}潮 ${phaseLabels[tideState.phase]}</span>
+      <span class="stat-value" style="color:#1aad96;">第 ${tideState.tideNumber} 潮</span>
+      <span style="font-size:12px;color:${phaseColors[tideState.phase] ?? '#8a8f96'};">${phaseLabels[tideState.phase]}</span>
     </div>
     <div class="stat-row">
       <span class="stat-label">稳定度</span>
-      <span class="stat-value" style="color:#c8cdd4;">${stabilityStateText}</span>
+      <span class="stat-value" style="color:${stabilityReached ? '#c8cdd4' : '#b89040'};">${stabilityStateText}</span>
+      <span style="font-size:16px;font-weight:bold;color:#c8cdd4;">${stabilityPct}</span>
     </div>
   </div>`;
 
@@ -283,8 +269,8 @@ function render(): void {
       const name = getDefenseName(c.type);
       const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
       const selected = inspectable[cursorIndex] === c;
-      html += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${i}" style="border-color:${color};cursor:default;">
-        <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">${c.impactCharges}/${threshold}</span>
+      html += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${i}" style="cursor:default;">
+        <span style="color:${color};">${name}</span> <span style="color:${color};">${getRarityStars(c.rarity)}</span> <span style="color:#8a8f96;">${c.impactCharges}/${threshold}</span>
       </div>`;
     });
     html += `</div>`;
@@ -297,8 +283,8 @@ function render(): void {
       const name = getToolName(c.type);
       const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
       const selected = inspectable[cursorIndex] === c;
-      html += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${defenseItems.length + i}" style="border-color:${color};cursor:default;">
-        <span style="color:${color};">${name}</span> <span style="color:#8a8f96;">x${c.usesRemaining}</span>
+      html += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${defenseItems.length + i}" style="cursor:default;">
+        <span style="color:${color};">${name}</span> <span style="color:${color};">${getRarityStars(c.rarity)}</span> <span style="color:#8a8f96;">${c.usesRemaining}</span>
       </div>`;
     });
     html += `</div>`;
@@ -323,13 +309,12 @@ function render(): void {
 
   // Inspect dock (选中即检视 — IA §S13 / ui-art-overhaul.md A5-13). Only wired for
   // the defense/tool tiles above; broken items have no live numeric state to show.
+  html += `</div>`;
   html += `<div class="inspect-dock" id="status-inspect-dock">${computeInspectHtml(inspectable, threshold)}</div>`;
-
-  html += `</div>`; // end flex:1 content wrapper
-  html += `<div class="action-bar">
-    <span id="status-close-btn" class="action-btn btn-muted" style="cursor:pointer;">合上</span>
+  html += `<div class="key-hint-bar">
+    <span><span class="key">↑↓←→</span> 浏览库存</span>
+    <span id="status-close-btn"><span class="key">Tab</span> / <span class="key">Esc</span> 合上</span>
   </div>`;
-  html += `<div class="key-hint-bar"><span class="key">↑↓←→</span> 浏览库存 · <span class="key">Tab</span> / <span class="key">Esc</span> 合上</div>`;
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);

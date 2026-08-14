@@ -13,7 +13,7 @@ import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import type { GrowthUpgradeId } from '@/types/game-types';
-import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView, showToastStamp } from './panel-styles';
+import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView, showToastStamp } from './panel-styles';
 
 // Upgrade display config (name/icon/effect label) is CSV-id-driven and shared with
 // status-panel.ts via src/config/growth-upgrade-display.ts — single source of truth.
@@ -26,15 +26,9 @@ const UPGRADES = GROWTH_UPGRADE_DISPLAY;
 let panel: HTMLDivElement | null = null;
 let onCloseCallback: (() => void) | null = null;
 
-// Keyboard cursor (IA §0.4 "键盘是第一公民" / §S7 交互契约: ↑↓ 选卡 · Enter 购买 ·
-// Esc 离开). Two regions cycled with Tab so the "…不了" close action stays
-// keyboard-reachable too (U7), matching the region model already used by
-// loadout-panel.ts / defense-panel.ts.
-type CursorRegion = 'cards' | 'actions';
-const ACTION_COUNT = 1; // 0 = 关闭
-let cursorRegion: CursorRegion = 'cards';
+// Keyboard cursor (IA §0.4 / §S7: ↑↓ 选卡 · Enter 购买 · Esc 离开).
+// 关闭走底键丝印 + Esc，不再另开「…不了」按钮区。
 let cursorCard = 0;
-let cursorAction = 0;
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -48,9 +42,7 @@ export const growthPanel = {
   open(onClose?: () => void): void {
     if (panel) return;
     onCloseCallback = onClose ?? null;
-    cursorRegion = 'cards';
     cursorCard = 0;
-    cursorAction = 0;
     createPanel();
   },
 
@@ -66,22 +58,7 @@ export const growthPanel = {
 // ---------------------------------------------------------------------------
 
 function createPanel(): void {
-  injectPanelStyles();
-
-  panel = document.createElement('div');
-  panel.id = 'growth-panel';
-  panel.className = 'game-panel';
-  panel.style.cssText = [
-    'position:fixed',
-    'top:0',
-    'right:0',
-    'height:640px',
-    'width:440px',
-    'z-index:1001',
-    'display:flex',
-    'flex-direction:column',
-    'pointer-events:auto',
-  ].join(';');
+  panel = createCrtPanel('growth-panel');
 
   const root = getDomUiRoot();
   const backdrop = document.createElement('div');
@@ -114,8 +91,6 @@ function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Tab') {
     e.stopPropagation();
     e.preventDefault();
-    cursorRegion = cursorRegion === 'cards' ? 'actions' : 'cards';
-    render();
     return;
   }
 
@@ -123,11 +98,7 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     const dir = e.key === 'ArrowDown' ? 1 : -1;
-    if (cursorRegion === 'cards') {
-      cursorCard = (cursorCard + dir + UPGRADES.length) % UPGRADES.length;
-    } else {
-      cursorAction = (cursorAction + dir + ACTION_COUNT) % ACTION_COUNT;
-    }
+    cursorCard = (cursorCard + dir + UPGRADES.length) % UPGRADES.length;
     render();
     return;
   }
@@ -135,16 +106,8 @@ function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Enter' || e.key === ' ') {
     e.stopPropagation();
     e.preventDefault();
-    activateFocused();
-  }
-}
-
-function activateFocused(): void {
-  if (cursorRegion === 'cards') {
     const upgrade = UPGRADES[cursorCard];
     if (upgrade) purchaseCard(upgrade.id);
-  } else {
-    growthPanel.close();
   }
 }
 
@@ -157,10 +120,10 @@ function render(): void {
 
   const reserve = gameState.getKindlingReserve();
 
-  let html = `<div class="panel-title" style="color:#8a5c2a;">蜕变</div>`;
+  let html = `<div class="panel-title">蜕变</div>`;
   html += `<div class="scroll-area">`;
-  html += `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-    <span style="font-size:13px;color:#8a8f96;">薪柴储备</span>
+  html += `<div style="display:flex;align-items:baseline;gap:12px;margin:4px 0 8px;">
+    <span style="font-size:12px;color:#8a8f96;">储备</span>
     <span style="font-size:16px;color:#c4873a;font-weight:bold;">${reserve}</span>
   </div>`;
 
@@ -194,44 +157,45 @@ function render(): void {
     // Keyboard cursor (IA §0.3 "已选中"): forced via inline style so it stays
     // visible even on maxed/locked cards, whose own state classes share the same
     // CSS specificity as .card-selected and would otherwise win by source order.
-    const selected = cursorRegion === 'cards' && cursorCard === i;
+    const selected = cursorCard === i;
     if (selected) cardClass += ' card-selected';
-    const selectedStyle = selected ? 'border-color:#1aad96;background:rgba(26,173,150,0.12);' : '';
+    const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
 
-    // Icon border color
     const iconBorder = isMaxed ? '#8a5c2a' : (canAfford ? '#c4873a' : '#2a2d32');
     const iconColor = isMaxed ? '#8a5c2a' : (canAfford ? '#c4873a' : '#8a8f96');
     const nameColor = isMaxed ? '#8a5c2a' : '#c8cdd4';
+    const shortfall = !isMaxed && !canAfford ? cost - reserve : 0;
 
-    html += `<div class="${cardClass}" data-id="${upgrade.id}" style="${selectedStyle}">
+    html += `<div class="${cardClass}" data-id="${upgrade.id}">
       <div class="card-icon" style="border-color:${iconBorder};color:${iconColor};">${upgrade.icon}</div>
       <div class="card-body">
-        <div class="card-name" style="color:${nameColor};">${upgrade.name}</div>
+        <div class="card-name" style="color:${nameColor};">${cursor}${upgrade.name}</div>
         <div class="card-dots">${dots}</div>
-        <div style="font-size:13px;color:#8a8f96;margin-top:1px;">${upgrade.effectLabel(level, maxLevel)}</div>
+        <div style="font-size:12px;color:#8a8f96;margin-top:1px;">${upgrade.effectLabel(level, maxLevel)}</div>
       </div>`;
 
     if (isMaxed) {
-      // "已至上限" replaces the English "MAX" (S15 类别2, U5).
-      html += `<div style="font-size:13px;color:#8a5c2a;font-weight:bold;">已至上限</div>`;
+      html += `<div style="font-size:13px;color:#8a5c2a;align-self:flex-end;">已至上限</div>`;
+    } else if (shortfall > 0) {
+      html += `<div class="card-cost" style="align-self:flex-end;">
+        <span style="color:#c4873a;font-weight:bold;">${cost}</span>
+        <span style="color:#8a8f96;"> 还差 </span>
+        <span style="color:#c4873a;font-weight:bold;">${shortfall}</span>
+      </div>`;
     } else {
-      // C6: unaffordable used to fall back to #2a2d32 (border/divider-only per A1 -
-      // unreadable as text). Muted text colour instead, so the cost stays legible.
-      const costColor = canAfford ? '#c4873a' : '#8a8f96';
-      html += `<div class="card-cost"><span class="${canAfford ? 'affordable' : ''}" style="color:${costColor};">${cost}</span></div>`;
+      html += `<div class="card-cost" style="align-self:flex-end;"><span class="affordable">${cost}</span></div>`;
     }
 
     html += `</div>`;
   }
 
   html += `</div>`; // end card-grid
-  html += `</div>`; // end flex:1 content wrapper
-
-  const closeFocused = cursorRegion === 'actions';
-  html += `<div class="action-bar">
-    <span id="growth-close-btn" class="action-btn btn-muted${closeFocused ? ' btn-focused' : ''}" style="cursor:pointer;">…不了</span>
+  html += `</div>`;
+  html += `<div class="key-hint-bar">
+    <span><span class="key">↑</span> <span class="key">↓</span> 选卡</span>
+    <span><span class="key">Enter</span> 购买</span>
+    <span id="growth-close-btn"><span class="key">Esc</span> 离开</span>
   </div>`;
-  html += `<div class="key-hint-bar"><span class="key">↑↓</span> 选卡 · <span class="key">Enter</span> 购买 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);

@@ -1,0 +1,306 @@
+/* CRT 机身 v3 — 同目录 HTML 共用。不进 src/**。
+   人 2026-08-14：灰色金属底色框与游戏风格不符。
+   去掉混凝土灰面壳；只留磷光屏 + 1px ui-border。键印在屏上。 */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+html, body {
+  width: 960px;
+  height: 640px;
+  overflow: hidden;
+  background: #0d1114;
+}
+
+body {
+  font-family: "Courier New", Courier, monospace;
+  color: #8a8f96;
+}
+
+/* —— 净化点场景（装置背后的房间，不是 UI 装饰） —— */
+.scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(to top, #151a1e 0%, #0d1114 42%, #080a0c 100%);
+}
+
+.scene-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 240px;
+  background: linear-gradient(to top, #2c2e33 0%, #3a3d42 28%, transparent 100%);
+  opacity: 0.55;
+}
+
+/* 裂隙方向的 teal 渗漏 — L2 污染在房间里 */
+.scene-rift {
+  position: absolute;
+  left: 36px;
+  bottom: 64px;
+  width: 4px;
+  height: 180px;
+  background: linear-gradient(to top, #1aad96, transparent);
+  opacity: 0.5;
+}
+
+.scene-rift-glow {
+  position: absolute;
+  left: 12px;
+  bottom: 48px;
+  width: 72px;
+  height: 72px;
+  background: radial-gradient(circle, #1aad96 0%, transparent 70%);
+  opacity: 0.18;
+}
+
+/* 玩家侧暖灯 — L3，面积很小 */
+.scene-lamp {
+  position: absolute;
+  right: 48px;
+  top: 88px;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, #c4873a 0%, transparent 68%);
+  opacity: 0.22;
+}
+
+.scene-node {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border: 1px solid #1aad96;
+  background: #0e4a3f;
+  opacity: 0.7;
+}
+
+/* —— DEC-048 贴顶三槽：CRT 不再盖住 —— */
+.hud-strip {
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  align-items: baseline;
+  pointer-events: none;
+}
+
+.hud-slot {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+}
+
+/* —— 屏：680×468。无金属面框；1px 即显像管边缘 —— */
+.console {
+  position: absolute;
+  z-index: 2;
+  top: 52px;
+  left: 140px;
+  width: 680px;
+  height: 468px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 17, 20, 0.88);
+  border: 1px solid #2a2d32;
+  padding: 0;
+  overflow: hidden;
+}
+
+.console::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 78% 72% at 50% 42%,
+    transparent 38%,
+    #080a0c 100%
+  );
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.console::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(26, 173, 150, 0.08) 2px,
+    rgba(8, 10, 12, 0.28) 3px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* 电源灯已撤：角上暖色方块读成窗框控件 */
+.pwr { display: none; }
+
+.glass {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: transparent;
+  border: 0;
+  overflow: hidden;
+}
+
+.readout {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 10px 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+}
+
+.crt-title {
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: normal;
+  color: #8a8f96;
+}
+
+.faceplate {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  padding: 6px 12px 8px;
+  background: transparent;
+  border-top: 1px solid #2a2d32;
+}
+
+.name {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: normal;
+  color: #8a8f96;
+}
+
+.num {
+  font-size: 16px;
+  line-height: 1.15;
+  font-weight: bold;
+  color: #c8cdd4;
+}
+
+.num-sm {
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: bold;
+  color: #c8cdd4;
+}
+
+.tier {
+  font-size: 12px;
+  line-height: 1.2;
+  color: #8a8f96;
+}
+
+/* Kit A2 语义色 — 必须上到数值/身份，不能只定义不用 */
+.teal { color: #1aad96; }
+.mid { color: #1a6b5c; }
+.rare { color: #3cffd4; }
+.warm { color: #c4873a; }
+.warm-dim { color: #8a5c2a; }
+.warn { color: #b89040; }
+.hurt { color: #cc3333; }
+.bright { color: #c8cdd4; }
+
+.pair {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 10px;
+}
+.pair .name { flex: 0 0 auto; }
+.pair .rest {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.rule {
+  height: 1px;
+  background: #2a2d32;
+  margin: 8px 0;
+  border: 0;
+}
+
+.bar {
+  margin-top: 4px;
+  height: 6px;
+  border: 1px solid #2a2d32;
+  background: #080a0c;
+  position: relative;
+}
+.bar > i {
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.bar .now { background: #c8cdd4; }
+.bar .now-warm { background: #c4873a; }
+.bar .now-teal { background: #1aad96; }
+.bar .now-hurt { background: #cc3333; }
+.bar .soon {
+  background: repeating-linear-gradient(
+    -45deg,
+    #c8cdd4 0 2px,
+    #080a0c 2px 5px
+  );
+}
+
+.cursor {
+  color: #c4873a;
+  font-size: 16px;
+  line-height: 1.15;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.keys {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #8a8f96;
+}
+.key {
+  display: inline-block;
+  border: 1px solid #2a2d32;
+  padding: 0 4px;
+  color: #c8cdd4;
+  font-size: 12px;
+  line-height: 16px;
+}
+.keys .act { color: #8a8f96; }

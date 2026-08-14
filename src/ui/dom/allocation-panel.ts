@@ -12,7 +12,7 @@ import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
-import { getDomUiRoot, injectPanelStyles, scrollFocusedIntoView } from './panel-styles';
+import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 
 // ---------------------------------------------------------------------------
 // State
@@ -55,22 +55,7 @@ function createPanel(): void {
   const mod = gameState.getModule(currentModuleId!);
   if (!mod) return;
 
-  injectPanelStyles();
-
-  panel = document.createElement('div');
-  panel.id = 'allocation-panel';
-  panel.className = 'game-panel';
-  panel.style.cssText = [
-    'position:fixed',
-    'top:0',
-    'right:0',
-    'height:640px',
-    'width:440px',
-    'z-index:1000',
-    'display:flex',
-    'flex-direction:column',
-    'pointer-events:auto',
-  ].join(';');
+  panel = createCrtPanel('allocation-panel');
 
   const root = getDomUiRoot();
   const backdrop = document.createElement('div');
@@ -202,21 +187,33 @@ function getCheapestUpgradeCost(): number | null {
  */
 function buildOpportunityCostRow(type: ModuleType): string {
   const otherType: ModuleType = type === 'CORE' ? 'STORAGE' : 'CORE';
-  const otherLabel = otherType === 'CORE' ? '核心' : '储藏';
+  const otherLabel = otherType === 'CORE' ? '核心完整度' : '储藏完整度';
   const other = gameState.getModule(otherType);
-  const otherText = other ? `${otherLabel} ${other.hp}/${other.maxHp}` : `${otherLabel} —`;
+  const otherHp = other ? String(other.hp) : '—';
+  const otherMax = other ? String(other.maxHp) : '—';
+  const otherColor = otherType === 'STORAGE' ? '#c4873a' : '#c8cdd4';
 
   const cheapestCost = getCheapestUpgradeCost();
-  const upgradeText = cheapestCost !== null ? `蜕变最低 ${cheapestCost} 薪柴` : '蜕变已全部购满';
-
   const forecast = impactSystem.getForecastDisplay();
   const isForecastTarget = forecast?.targetId === type;
-  const forecastText = isForecastTarget ? '下次冲击目标' : '非下次冲击目标';
-  const forecastColor = isForecastTarget ? '#cc3333' : '#8a8f96';
 
-  return `<div style="font-size:12px;color:#8a8f96;text-align:center;padding:6px 0;border-top:1px solid #2a2d32;margin-bottom:8px;">
-    ${otherText} · ${upgradeText} · <span style="color:${forecastColor};">${forecastText}</span>
-  </div>`;
+  return `<div class="separator"></div>
+    <div style="display:flex;gap:24px;padding:4px 0;">
+      <div style="flex:1;">
+        <div style="font-size:12px;color:#8a8f96;">${otherLabel}</div>
+        <div><span style="font-size:13px;font-weight:bold;color:${otherColor};">${otherHp}</span>
+        <span style="color:#8a8f96;"> / </span>
+        <span style="font-size:13px;font-weight:bold;color:${otherColor};">${otherMax}</span></div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:12px;color:#8a8f96;">蜕变最低</div>
+        <div style="font-size:13px;font-weight:bold;color:#c4873a;">${cheapestCost !== null ? cheapestCost : '已全部购满'}</div>
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:12px;color:#8a8f96;">下次冲击目标</div>
+        <div style="font-size:13px;font-weight:bold;color:${isForecastTarget ? '#b89040' : '#8a8f96'};">${isForecastTarget ? '本模块' : '另一模块'}</div>
+      </div>
+    </div>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -232,76 +229,73 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const maxAllocatable = getMaxAllocatable(hp, maxHp);
 
   const typeLabel = type === 'CORE' ? '核心' : '储藏';
-  // CORE identity color: neutral ui-text-bright, not green — "结构性但非资源" (ui-art-overhaul.md A2).
   const typeColor = type === 'CORE' ? '#c8cdd4' : '#c4873a';
-  const effectDesc = type === 'CORE' ? '混乱抑制' : '薪柴增幅';
+  const forecast = impactSystem.getForecastDisplay();
+  const isForecastTarget = forecast?.targetId === type;
 
-  // Progress calculations
   const hpPct = Math.round((hp / maxHp) * 100);
   const repairAmount = selectedAmount * repairPer;
   const repairedHp = Math.min(hp + repairAmount, maxHp);
   const repairedPct = Math.round((repairedHp / maxHp) * 100);
-  const previewPct = repairedPct - hpPct;
+  const previewPct = Math.max(0, repairedPct - hpPct);
+  const remaining = reserve - selectedAmount;
 
   const currentEffect = computeEffectText(type, hp);
-  const afterEffect = selectedAmount > 0 ? computeEffectText(type, repairedHp) : '';
+  const afterEffect = computeEffectText(type, repairedHp);
+  const effectParts = currentEffect.split(' ');
+  const effectName = effectParts[0] ?? '';
+  const currentVal = effectParts.slice(1).join(' ');
+  const afterVal = afterEffect.split(' ').slice(1).join(' ') || afterEffect;
+  const effectColor = type === 'CORE' ? '#1aad96' : '#c4873a';
 
-  const minusDisabled = selectedAmount <= 0;
-  const plusDisabled = selectedAmount >= maxAllocatable;
-  const confirmDisabled = selectedAmount <= 0;
-
-  let html = `<div class="panel-title" style="color:${typeColor};">${typeLabel} <span style="font-size:13px;color:#8a8f96;text-transform:none;font-weight:normal;">${effectDesc}</span></div>`;
+  let html = `<div class="panel-title" style="display:flex;justify-content:space-between;">
+    <span style="font-size:16px;font-weight:bold;color:${typeColor};">${typeLabel}</span>
+    ${isForecastTarget ? '<span style="color:#b89040;">下次冲击目标</span>' : ''}
+  </div>`;
   html += `<div class="scroll-area">`;
 
-  // Progress bar with preview
-  html += `<div style="margin:8px 0;">
-    <div class="pbar-wrap">
-      <div class="pbar-fill" style="width:${hpPct}%;background:${typeColor};"></div>
-      <div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;background:${typeColor};"></div>
-    </div>
-    <div class="pbar-label">
-      <span>${hp}/${maxHp}</span>
-      ${selectedAmount > 0 ? `<span style="color:${typeColor};">+${repairAmount} → ${repairedHp}</span>` : `<span>${currentEffect}</span>`}
-    </div>
+  html += `<div style="margin:8px 0 4px;display:flex;gap:12px;align-items:baseline;">
+    <span style="font-size:12px;color:#8a8f96;width:96px;">完整度</span>
+    <span style="font-size:16px;font-weight:bold;color:${typeColor};">${hp}</span>
+    <span>/</span>
+    <span style="font-size:16px;font-weight:bold;color:${typeColor};">${maxHp}</span>
+  </div>
+  <div class="pbar-wrap">
+    <div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div>
+    <div class="pbar-fill" style="width:${hpPct}%;background:${typeColor};"></div>
+  </div>
+  <div style="margin-top:8px;display:flex;gap:12px;align-items:baseline;">
+    <span style="font-size:12px;color:#8a8f96;width:96px;">${effectName}</span>
+    <span style="font-size:16px;font-weight:bold;color:${effectColor};">${currentVal}</span>
+    <span>→</span>
+    <span style="font-size:16px;font-weight:bold;color:${effectColor};">${afterVal}</span>
   </div>`;
 
-  // Effect preview (only if allocating)
-  if (selectedAmount > 0) {
-    html += `<div style="font-size:13px;color:${typeColor};text-align:center;margin:4px 0;">${afterEffect}</div>`;
-  }
+  html += `<div class="separator"></div>
+    <div style="display:flex;gap:12px;align-items:baseline;margin:6px 0;">
+      <span style="font-size:12px;color:#8a8f96;width:96px;">投入</span>
+      <span style="color:#c4873a;font-weight:bold;margin-right:6px;">&gt;</span>
+      <span style="font-size:16px;font-weight:bold;color:#c4873a;">${selectedAmount}</span>
+    </div>
+    <div style="display:flex;gap:12px;align-items:baseline;margin:6px 0;">
+      <span style="font-size:12px;color:#8a8f96;width:96px;">储备</span>
+      <span style="font-size:16px;font-weight:bold;color:#c4873a;">${reserve}</span>
+    </div>
+    <div style="display:flex;gap:12px;align-items:baseline;margin:6px 0;">
+      <span style="font-size:12px;color:#8a8f96;width:96px;">注入后剩余</span>
+      <span style="font-size:13px;font-weight:bold;color:#c4873a;">${remaining}</span>
+      <span style="margin-left:auto;font-size:12px;color:#8a8f96;">1薪柴=${repairPer}完整度${siphonBoosted ? ' <span style="color:#c4873a;">虹吸增效</span>' : ''}</span>
+    </div>`;
 
-  // Opportunity-cost row (IA §S3, new) — see buildOpportunityCostRow() doc comment.
   html += buildOpportunityCostRow(type);
-
-  // Allocation control bar. Boundary state (can't go lower/higher) is opacity-dimmed
-  // per ui-art-overhaul.md A5-5~A5-12 ("不可用（-/+到边界）：按钮 opacity 40%"), not
-  // a text-color swap — the displayed number already states the limit, no extra
-  // wording needed.
-  html += `<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 8px;">
-    <span id="alloc-minus" class="action-btn btn-muted" style="padding:4px 10px;${minusDisabled ? 'opacity:0.4;cursor:default;' : ''}">-</span>
-    <div style="min-width:60px;text-align:center;">
-      <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">${selectedAmount}</div>
-      <div style="font-size:13px;color:#8a8f96;">薪柴</div>
-    </div>
-    <span id="alloc-plus" class="action-btn btn-muted" style="padding:4px 10px;${plusDisabled ? 'opacity:0.4;cursor:default;' : ''}">+</span>
+  html += `</div>`;
+  html += `<div class="key-hint-bar">
+    <span><span class="key" id="alloc-minus">←</span> <span class="key" id="alloc-plus">→</span> ±1</span>
+    <span><span class="key">Shift+←→</span> ±5</span>
+    <span><span class="key">Home</span> <span class="key">End</span> 归零 / 拉满</span>
+    <span id="alloc-confirm"><span class="key">Enter</span> 注入</span>
+    <span><span class="key">Esc</span> 离开</span>
   </div>`;
-
-  // Reserve info. siphon (Slice 5 gap-fill): while equipped, repairPer is already the
-  // doubled value (gameState.getEffectiveRepairPerKindling()) - the "(虹吸增效)" tag is
-  // what makes that fact visible rather than just a bigger number the player might miss.
-  html += `<div style="font-size:13px;color:#8a8f96;text-align:center;margin-bottom:8px;">储备 ${reserve} | 1薪柴=${repairPer}完整度${siphonBoosted ? ' <span style="color:#c4873a;">(虹吸增效)</span>' : ''}</div>`;
-
-  // Action bar. Disabled state relies on the .btn-muted class's own readable
-  // #8a8f96/#2a2d32 pairing instead of forcing the border color as text (that
-  // was the bug: an inline color override was landing #2a2d32 directly on text,
-  // ~1:1 contrast against the panel background — a real V1-class violation, not
-  // just a style nit).
-  html += `</div>`; // end flex:1 content wrapper
-  html += `<div class="action-bar">
-    <span id="alloc-confirm" class="action-btn${confirmDisabled ? ' btn-muted' : ''}" style="${confirmDisabled ? 'cursor:default;' : `color:${typeColor};border-color:${typeColor};`}">注入</span>
-    <span id="alloc-cancel" class="action-btn btn-muted" style="cursor:pointer;">…算了</span>
-  </div>`;
-  html += `<div class="key-hint-bar"><span class="key">←→</span> 调整1 · <span class="key">Shift+←→</span> 调整5 · <span class="key">Home/End</span> 归零/拉满 · <span class="key">Enter</span> 注入 · <span class="key">Esc</span> 离开</div>`;
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);
@@ -322,10 +316,6 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   });
 
   panel.querySelector('#alloc-confirm')?.addEventListener('click', confirmAllocation);
-
-  panel.querySelector('#alloc-cancel')?.addEventListener('click', () => {
-    allocationPanel.close();
-  });
 }
 
 function rerender(): void {

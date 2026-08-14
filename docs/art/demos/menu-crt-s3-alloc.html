@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>menu-crt-s3-alloc · 分配</title>
+  <!--
+    S3 分配 CRT v2。机身 680×468，场景+顶 HUD 露出。不进 src/**。
+    P1：模块名；完整度条+预览；当前→注入后；投入；储备；机会成本三簇；键。
+    载体 B。参考 Signalis / FTL / Barotrauma。不像抽屉/卡片/浏览器窗。
+    色：核心结构亮灰；储备/投入/储藏暖；混乱增速 teal；临界警告金。
+  -->
+  <link rel="stylesheet" href="menu-crt-_shell.css" />
+  <style>
+    .id-head { display:flex; flex-direction:row; align-items:baseline; justify-content:space-between; gap:16px; }
+    .s3-body { flex:1 1 auto; min-height:0; display:flex; flex-direction:column; }
+    .kv, .in-row { display:flex; flex-direction:row; align-items:baseline; gap:12px; margin-top:8px; }
+    .kv:first-child, .in-row:first-child { margin-top:0; }
+    .kv .name, .in-row .name { flex:0 0 96px; display:inline; }
+    .kv .vals, .in-row .vals { display:flex; flex-direction:row; align-items:baseline; gap:8px; }
+    .rate { margin-left:auto; }
+    .cost-row { display:flex; flex-direction:row; align-items:flex-start; gap:24px; margin-top:4px; }
+    .cost-cluster { flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:4px; }
+    .cost-cluster .vals { display:flex; flex-direction:row; align-items:baseline; gap:8px; }
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <i class="scene-floor"></i>
+    <i class="scene-rift"></i>
+    <i class="scene-rift-glow"></i>
+    <i class="scene-lamp"></i>
+    <i class="scene-node"></i>
+  </div>
+  <div class="hud-strip" aria-hidden="true">
+    <div class="hud-slot"><span class="name">薪柴</span><span class="num warm">11</span></div>
+    <div class="hud-slot"><span class="name">潮汐</span><span class="num-sm teal">第 2 潮</span><span class="tier teal">涨潮</span></div>
+    <div class="hud-slot"><span class="name">下次归来</span><span class="num-sm">核心</span><span class="tier warn">中等</span></div>
+  </div>
+  <div class="console">
+    <i class="pwr"></i>
+    <div class="glass">
+      <div class="readout">
+        <div class="crt-title">
+          <div class="id-head">
+            <span class="num">核心</span>
+            <span class="name warn">下次冲击目标</span>
+          </div>
+        </div>
+        <div class="s3-body">
+          <div class="rule"></div>
+          <div class="kv">
+            <span class="name">完整度</span>
+            <div class="vals">
+              <span class="num">43</span>
+              <span class="tier">/</span>
+              <span class="num">100</span>
+            </div>
+          </div>
+          <div class="bar">
+            <i class="soon" style="left:43%;width:20%"></i>
+            <i class="now" style="width:43%"></i>
+          </div>
+          <div class="kv">
+            <span class="name">混乱增速</span>
+            <div class="vals">
+              <span class="num teal">-12%</span>
+              <span class="tier">→</span>
+              <span class="num teal">-18%</span>
+            </div>
+          </div>
+          <div class="rule"></div>
+          <div class="in-row">
+            <span class="name">投入</span>
+            <div class="vals">
+              <span class="cursor">&gt;</span>
+              <span class="num warm">5</span>
+            </div>
+          </div>
+          <div class="in-row">
+            <span class="name">储备</span>
+            <div class="vals"><span class="num warm">11</span></div>
+          </div>
+          <div class="in-row">
+            <span class="name">注入后剩余</span>
+            <div class="vals"><span class="num-sm warm">6</span></div>
+            <span class="name rate">1薪柴=4完整度</span>
+          </div>
+          <div class="rule"></div>
+          <div class="cost-row">
+            <div class="cost-cluster">
+              <span class="name">储藏完整度</span>
+              <div class="vals">
+                <span class="num-sm warm">70</span>
+                <span class="tier">/</span>
+                <span class="num-sm warm">100</span>
+              </div>
+            </div>
+            <div class="cost-cluster">
+              <span class="name">蜕变最低</span>
+              <div class="vals"><span class="num-sm warm">8</span></div>
+            </div>
+            <div class="cost-cluster">
+              <span class="name">下次冲击目标</span>
+              <div class="vals"><span class="num-sm warn">本模块</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="faceplate">
+      <div class="keys">
+        <span><span class="key">←</span> <span class="key">→</span> <span class="act">±1</span></span>
+        <span><span class="key">Shift+←→</span> <span class="act">±5</span></span>
+        <span><span class="key">Home</span> <span class="key">End</span> <span class="act">归零 / 拉满</span></span>
+        <span><span class="key">Enter</span> <span class="act">注入</span></span>
+        <span><span class="key">Esc</span> <span class="act">离开</span></span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
