@@ -12,6 +12,7 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { GameEvent } from '@/types/events';
+import { getDomUiRoot } from '@/ui/dom/panel-styles';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -139,11 +140,11 @@ export class RunController {
     const glowOverlay = document.createElement('div');
     glowOverlay.id = 'scene-transition-glow';
     glowOverlay.style.cssText = [
-      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'position:absolute', 'inset:0',
       'z-index:1999', 'pointer-events:none',
       'animation:rift-collapse-glow 0.3s ease-in forwards',
     ].join(';');
-    document.body.appendChild(glowOverlay);
+    getDomUiRoot().appendChild(glowOverlay);
 
     // Apply shrink to the game canvas
     const canvas = document.querySelector('#game-container canvas') as HTMLElement | null;
@@ -163,7 +164,7 @@ export class RunController {
       const overlay = document.createElement('div');
       overlay.id = 'scene-transition-overlay';
       overlay.style.cssText = [
-        'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+        'position:absolute', 'inset:0',
         'z-index:2000', 'background:#000', 'display:flex',
         'align-items:center', 'justify-content:center',
         // C6: was #5a5f66 (metal-light, border/divider-only per A1 V1/V2 - unreadable
@@ -171,7 +172,7 @@ export class RunController {
         "font:14px 'Courier New',monospace", 'color:#c8cdd4',
       ].join(';');
       overlay.textContent = '裂隙坍缩。回到净化点。';
-      document.body.appendChild(overlay);
+      getDomUiRoot().appendChild(overlay);
 
       setTimeout(() => {
         overlay.remove();

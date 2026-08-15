@@ -8,10 +8,8 @@
  *
  * Five layers per item:
  *   L1 身份   — name (CSV-authoritative via contaminant-names.ts) · rarity · stage · category
- *   L2 摘要   — one-line mechanism summary. `summaryDefense`/`summaryTool` CSV columns
- *               do not exist yet (IA §S13 "CSV 需新增两列", not yet approved) — this
- *               degrades to "first clause of the existing long description, capped at
- *               world.md's 40-char detail limit" until those columns land.
+ *   L2 摘要   — one-line mechanism summary from CSV `summaryDefense` / `summaryTool`
+ *               (≤15 字；禁止再截断长描述).
  *   L3 数值   — the CSV numeric fields the IA flagged as "从未上屏": defenseReduction /
  *               toolRangePx / toolDurationMs / toolUses, plus live runtime state
  *               (charge progress / uses remaining).
@@ -27,25 +25,12 @@ import type { Contaminant } from '@/types/game-types';
 import { GAME_CONSTANTS } from '@/config/constants';
 
 /** Shown when no item currently has keyboard/mouse focus (A5-13's default state). */
-export const INSPECT_EMPTY_HTML = '<div class="inspect-empty">移动光标查看详情</div>';
+export const INSPECT_EMPTY_HTML = '<div class="inspect-empty">空</div>';
 
 const LINE_CLASSES = ['inspect-l1', 'inspect-l2', 'inspect-l3', 'inspect-l4', 'inspect-l5'];
 
 function wrapInspectLines(lines: string[]): string {
   return lines.map((line, i) => `<div class="${LINE_CLASSES[i]}">${line}</div>`).join('');
-}
-
-/**
- * L2 degrade path: `descriptionDefense`/`descriptionTool` are 40-80 char mechanism
- * descriptions (fit for L3/L4 detail, not a one-line summary). Until the CSV grows
- * `summaryDefense`/`summaryTool` columns, take the first clause up to the first
- * Chinese full stop and cap at world.md's 40-char detail ceiling as a stand-in.
- */
-function degradeSummary(description: string): string {
-  const trimmed = description.trim();
-  const firstClause = trimmed.split('。')[0];
-  const summary = firstClause ? `${firstClause}。` : trimmed;
-  return summary.length > 40 ? `${summary.slice(0, 40)}…` : summary;
 }
 
 export interface DefenseInspectContext {
@@ -64,7 +49,7 @@ export function buildDefenseInspectHtml(c: Contaminant, ctx: DefenseInspectConte
   const reductionPct = Math.round(def.defenseReduction * 100);
 
   const l1 = `${name} ${stars} · 防御 · ${def.defenseCategory}`;
-  const l2 = degradeSummary(def.descriptionDefense);
+  const l2 = def.summaryDefense;
   const l3 = ctx.slotState === 'slotted'
     ? `减伤 ${reductionPct}% · 充能 ${c.impactCharges}/${ctx.chargeThreshold}`
     : `减伤 ${reductionPct}%`;
@@ -72,10 +57,9 @@ export function buildDefenseInspectHtml(c: Contaminant, ctx: DefenseInspectConte
     ? `副作用：${def.defenseSideEffect}（${def.sideEffectDuration}）`
     : (ctx.canEquip ? '可装填 · 空槽待选' : '槽位已满 · 先取下一件');
   const remaining = Math.max(0, ctx.chargeThreshold - c.impactCharges);
-  const toolSummary = degradeSummary(def.descriptionTool);
   const l5 = remaining > 0
-    ? `还需 ${remaining} 次冲击 → 【${def.displayNameTool}】：${toolSummary}`
-    : `转化在即 → 【${def.displayNameTool}】：${toolSummary}`;
+    ? `还需 ${remaining} 次冲击 → 【${def.displayNameTool}】：${def.summaryTool}`
+    : `转化在即 → 【${def.displayNameTool}】：${def.summaryTool}`;
 
   return wrapInspectLines([l1, l2, l3, l4, l5]);
 }
@@ -98,7 +82,7 @@ export function buildToolInspectHtml(c: Contaminant, ctx: ToolInspectContext): s
   const typeLabel = isPassive ? '被动' : '主动';
 
   const l1 = `${name} ${stars} · 工具 · ${typeLabel}`;
-  const l2 = degradeSummary(def.descriptionTool);
+  const l2 = def.summaryTool;
   const rangeLabel = def.toolRangePx > 0 ? `${Math.round(def.toolRangePx / GAME_CONSTANTS.TILE_SIZE)}格` : '无范围';
   const durationLabel = def.toolDurationMs > 0 ? `${(def.toolDurationMs / 1000).toFixed(0)}秒` : '即时';
   const l3 = `剩余 ${c.usesRemaining}/${def.toolUses} 次 · 范围 ${rangeLabel} · 持续 ${durationLabel}`;

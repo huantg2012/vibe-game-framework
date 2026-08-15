@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-12
+last-modified: 2026-08-15
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）。**Slice 5 T0 模块注册表全量补核已完成（2026-08-12）**：核对 `src/` 全目录树，补齐 Slice 2-4.5 引入但从未登记的模块，修正过期的"规划中"标记，重置本字段。2026-08-12 Slice 5.5 C3 补登记 `contaminant-names.ts`（C2 引入但未登记）与新增的 `inspect-dock.ts`。2026-08-12 Slice 5.5 C6 补登记 `side-effect-labels.ts`（C5 引入但未登记）；`PanelStyles` 条目补 `showToastInline`/`showToastStamp` 两个新导出（未新增文件，未创建独立模块条目）。
@@ -30,7 +30,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。202
 
 ### 屏幕空间 UI 挂载（本游戏填充）
 
-屏幕空间读数与 DOM 面板一律挂 `#dom-ui-root`（`getDomUiRoot()` / `bindDomUiRootToGame()`），与画布 letterbox/缩放对齐。钉世界坐标的标记才走 Phaser 世界层。禁止用 `scrollFactor(0)` 在 `camera.zoom ≠ 1` 下画角锚 HUD。新 overlay 不要挂 `document.body`（小地图现状是已知债，下次触碰时迁）。共享样式入口：`src/ui/dom/panel-styles.ts`。视觉基线：`docs/design-notes/ui-art-overhaul.md`。
+屏幕空间读数与 DOM 面板一律挂 `#dom-ui-root`（`getDomUiRoot()` / `bindDomUiRootToGame()`），与画布 letterbox/缩放对齐。钉世界坐标的标记才走 Phaser 世界层。禁止用 `scrollFactor(0)` 在 `camera.zoom ≠ 1` 下画角锚 HUD。新 overlay 不要挂 `document.body`（小地图 / 场景过渡 / 失焦层已迁到 `#dom-ui-root`；debug 可仍挂 game-container）。共享样式入口：`src/ui/dom/panel-styles.ts`（`.game-panel` 墙机 + `.device-plate` 裂隙随身罩）。视觉基线：`docs/design-notes/ui-art-overhaul.md`。
 
 ## 项目结构
 
@@ -173,7 +173,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | EventBus | src/core/event-bus.ts | 类型安全的发布/订阅系统 | emit(), on(), off(), once(), destroy() | 已实现 |
 | I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() | 已实现 |
 | GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/模块/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), getModuleEffect(type), getSortieModifiers(), getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 3） |
-| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统） | hasSave(), save(), load(), deleteSave() | 已实现（Slice 3） |
+| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度） | hasSave(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek） |
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/音量控制 | play(), stop(), setVolume() | 规划中 |
 | Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用） | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5） |
 | VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 三级遮罩渲染 + 混乱值调制（Rift+Purification 共用） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5） |
@@ -188,7 +188,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ContaminantSystem | src/systems/contaminant-system.ts | 污染物库存管理与生命周期（防御 slot 承伤 → 冲击点数满 3 转化为工具 → 出击使用 → 耗尽破碎），module-level singleton | getAll(), getDefenseSlotted(), getSortieLoadout(), acquire(type, rarity), slotDefense(id, slotIndex), unslotDefense(slotIndex), slotSortie(id, slotIndex), unslotSortie(slotIndex), applyImpactCharge(isHighTide), useTool(id), getState(), loadState(), reset() | 已实现（Slice 3） |
 | ContaminantNodeSystem | src/systems/contaminant-node-system.ts | 裂隙地图中污染物拾取节点的放置、脉冲/旋转表现与拾取（紫色球体，与 LootSystem 同模式但独立实现） | create(scene, nodeDefs, playerSprite, config), update(delta), getCollectedPositions(), reset(), destroy() | 已实现（Slice 3） |
 | DefenseEngine | src/systems/defense-engine.ts | 冲击结算时计算各防御 slot 的效果（减伤/薪柴增益/稳定度变化/副作用等），纯函数无 Phaser 依赖；`solidifyCounters` 是唯一跨冲击持久的内部状态（不进存档） | applyDefenseEffects(baseDamagePerModule, defenseSlots, context), resetDefenseEngine() | 已实现（Slice 4，`applyGenericDefense()` 内 6 处机制标注 `handled externally`/`future iteration` 待 Slice 5 T3 接线） |
-| ToolSystem | src/systems/tool-system.ts | 出击主动/被动工具使用与效果管理（switch + 私有方法，非基类继承），产出 `ToolDebuffs` 描述符，由场景层在 AI update 之后应用到敌人/玩家 | create(scene, loadout, getPlayerPos, getEnemies, options?), useSlot(slotIndex), update(deltaMs), getDebuffs(), getSlotUses(slotIndex), getSlotType(slotIndex), notifyEnemySuspicious(enemyId), notifyProximityAvoid(), reset(), destroy() | 已实现 8/15 种（Slice 3-4：solidify/delay/erode/ruminate/retrograde/kindle/stitch/expand 主动 + scatter/muffle 被动；Slice 5 T1/T2 补齐剩余 7 主动 + 1 被动） |
+| ToolSystem | src/systems/tool-system.ts | 出击主动/被动工具使用与效果管理（switch + 私有方法，非基类继承），产出 `ToolDebuffs` 描述符，由场景层在 AI update 之后应用到敌人/玩家 | create(scene, loadout, getPlayerPos, getEnemies, options?), useSlot(slotIndex), update(deltaMs), getDebuffs(), getSlotUses(slotIndex), getSlotType(slotIndex), getActiveTimedEffects(), notifyEnemySuspicious(enemyId), notifyProximityAvoid(), reset(), destroy() | 已实现 15 种。Slice 5.5：只读 `getActiveTimedEffects()`（进行中限时效果，不含 dissolving / scatter CD / duration 0） |
 | GrowthSystem | src/systems/growth-system.ts | 永久改造购买、费用计算与效果聚合，module-level singleton | getLevel(id), getMaxLevel(id), getCost(id), canAfford(id, reserve), purchase(id), getModifiers(), getState(), loadState(), reset() | 已实现（Slice 3，当前 3 项改造） |
 | TideSystem | src/systems/tide-system.ts | 潮汐冲击强度状态机（Rise→Crest→Ebb→下一 Tide），替代线性递增，module-level singleton | getState(), getCurrentIntensity(), isHighTide(), advanceCycle(), loadState(), reset() | 已实现（Slice 3） |
 | ImpactSystem | src/systems/impact-system.ts | 冲击伤害计算与结算（主/次目标分配、接入 DefenseEngine、写回 GameState），module-level singleton | setForecastTarget(id), getForecastTarget(), run(defenseSlots?), generateForecast() | 已实现（Slice 2-4） |
@@ -202,24 +202,24 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外粒子与 apparition 氛围渲染；生成/消亡半径跟随 BoundaryShape 而非固定圆 | create(scene, shape), update(dt), destroy() | 已实现（Slice 2，Slice 4.5 改为跟随 blob） |
 | ProceduralSurface | src/systems/procedural-surface.ts | 裂隙地表按世界坐标逐像素程序化生成（DEC-018：替代离散 AI tile 平铺） | createRiftSurfaceTexture(scene, map, key) | 已实现 |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
-| PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等）。`.game-panel` 默认是净化点墙机 CRT（680×468 磷光屏，无金属/无外框）；Esc 记录菜单与裂隙结算用内联尺寸覆盖。同时是全部瞬时反馈 toast 的唯一实现与挂载点（Channel B `.toast-inline` / Channel C `.toast-stamp`，IA §S14）。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles(), createCrtPanel(id), getDomUiRoot(), bindDomUiRootToGame(game), showToastInline(html, opts), showToastStamp(text, opts?) | 已实现（Slice 4.5；Slice 5.5 改为 CRT 占位 + createCrtPanel；C6 toast 收编） |
-| SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移 | describeSideEffectBody(e), describeSideEffectWithSource(e) | 已实现（Slice 5.5 C5 引入，本轮补登记） |
+| PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等）。`.game-panel` 默认是净化点墙机 CRT（680×468 磷光屏，无金属/无外框，8px 凹槽暗边）；六块墙机另加 `.crt-stack`（固定子项 + 库存 `.scroll-area`）。Esc 记录菜单与裂隙结算用内联尺寸覆盖（5px 凹槽），不加 crt-stack。`.device-plate` 是裂隙随身罩。Channel B toast 挂 `#toast-inline-queue`（同时最多 2 条）；`skipQueue` 贴源短闪仍挂 `#dom-ui-root`。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles(), createCrtPanel(id), getDomUiRoot(), bindDomUiRootToGame(game), showToastInline(html, opts), showToastStamp(text, opts?) | 已实现（Slice 4.5；Slice 5.5 CRT + createCrtPanel；C6 toast；R9 凹槽；R10 crt-stack / 队列 / device-effect） |
+| SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移。混乱增速可见写法也从这里出（相对 1.0 的 ±N%） | describeSideEffectBody(e), describeSideEffectWithSource(e), formatChaosRateDelta(rate), formatChaosMultDelta(mult) | 已实现（Slice 5.5 C5 引入，本轮补登记；R9 收口混乱增速） |
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
-| InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 摘要/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3） |
+| InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
 | PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块的视觉表现（CORE=蓝色六边形/STORAGE=橙色方块，HP 驱动的 alpha 分级 + 临界闪烁 + 邻近发光），Slice 5 T6 三态受损视觉将扩展此模块 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv` | `CONTAMINANT_DATA: Record<ContaminantType, ContaminantDef>`；`UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef>`（数据常量，非函数接口） | 已实现（Slice 4） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | MapGenerator | src/generation/ | Voronoi+CA 程序化地图生成 | generate(config): MapData | 规划中（目录不存在；RiftScene 当前用 `src/scenes/rift-map-data.ts` 手工编排的固定地图） |
-| RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（混乱值条/生命条/薪柴数/工具槽/撤离提示），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 修复"HUD 不可见"——从 Phaser scrollFactor(0) Text/Graphics 迁移为 DOM，因 zoom=1.5 下 scrollFactor(0) 对象仍被相机缩放变换，四角锚点全部落在视口外） |
+| RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（完整度条/混乱条/薪柴数/工具槽/撤离提示/生效中行），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel。生效行用 `.device-effect` 名+秒分节点；remainingMs 由场景每帧权威 set，HUD 不再自减 | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 迁 DOM；R10 工具剩余秒） |
 | RiftResultPanel | src/ui/dom/rift-result-panel.ts | 裂隙撤离/阵亡结算 DOM 面板，与冲击结算面板视觉同源（本轮补登记，模块本身为 Slice 5.5 C2 交付） | isOpen(), show(data), close(), destroy() | 已实现（Slice 5.5） |
-| Minimap | src/ui/minimap.ts | 裂隙战争迷雾小地图：独立 canvas overlay（不走 Phaser 渲染管线），已探索区域/玩家点/撤离点渲染 | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), update(playerWorldPos), reset(), destroy() | 已实现 |
+| Minimap | src/ui/minimap.ts | 裂隙战争迷雾小地图：`#rift-minimap.device-plate` 挂 `#dom-ui-root`，内层 canvas。已探索区域 + 玩家十字 / 撤离竖缝 / 深渊方点 / 节点菱形 | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), update(playerWorldPos), reset(), destroy() | 已实现（Slice 5.5 迁挂载根、改标记形状） |
 | AllocationPanel | src/ui/dom/allocation-panel.ts | 净化点单模块薪柴分配 DOM 面板 | isOpen(), open(moduleId, onClose?), close() | 已实现（Slice 2+，Slice 4.5 迁移至共享面板样式层） |
 | DefensePanel | src/ui/dom/defense-panel.ts | 防御 slot 管理 DOM 面板（装/卸污染物） | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |
 | GrowthPanel | src/ui/dom/growth-panel.ts | 改造祭坛 DOM 面板（购买永久改造） | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |
 | ImpactResultPanel | src/ui/dom/impact-result-panel.ts | 冲击结算结果 DOM 面板 | isOpen(), show(damages, intensity, onDone, chargeChanges?), close(), destroy() | 已实现（Slice 2+） |
 | LoadoutPanel | src/ui/dom/loadout-panel.ts | 出击前工具装载选择 DOM 面板 | isOpen(), open(onConfirm, onClose?), close() | 已实现（Slice 3+） |
 | StatusPanel | src/ui/dom/status-panel.ts | 潮汐/稳定度/工具库存状态查看 DOM 面板 | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |
-| PauseMenu | src/ui/dom/pause-menu.ts | 局内 Esc 记录菜单：新存档 / 读取存档 / 继续。关闭=场景原样恢复；在裂隙内选新存档或读取会结束当前出击 | isOpen(), open(scene), close(), discard() | 已实现 |
+| PauseMenu | src/ui/dom/pause-menu.ts | 局内 Esc 记录菜单：新的纪录 / 沿旧路返回 / 合上。关闭=场景原样恢复；在裂隙内选新的纪录或沿旧路返回会结束当前出击 | isOpen(), open(scene), close(), discard() | 已实现 |
 | Session | src/managers/session.ts | 新档/读档的共享启动序列（主菜单与记录菜单共用，避免漏 reset） | hasReadableSave(), beginNewExpedition(scene), loadExpedition(scene) | 已实现 |
 | PurificationHud | src/ui/dom/purification-hud.ts | 净化点场景内交互提示条（DOM，贴靠世界内交互目标，不是独立弹出面板） | create(), updatePrompt(target), refresh(), setPromptVisible(visible), destroy() | 已实现（Slice 2+） |
 

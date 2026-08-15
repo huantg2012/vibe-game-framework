@@ -6,7 +6,7 @@
 import Phaser from 'phaser';
 import { gameConfig } from '@/config/game-config';
 import { assertBalanceInvariants } from '@/config/invariants';
-import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
+import { bindDomUiRootToGame, getDomUiRoot } from '@/ui/dom/panel-styles';
 import { pauseMenu } from '@/ui/dom/pause-menu';
 
 // Before anything boots: a tuning pass that broke a balance invariant would make every
@@ -33,12 +33,12 @@ let paused = false;
 const overlay = document.createElement('div');
 overlay.id = 'pause-overlay';
 overlay.style.cssText =
-  'position:fixed;inset:0;background:rgba(0,0,0,0.7);display:none;' +
-  'align-items:center;justify-content:center;z-index:9999;cursor:pointer;';
+  'position:absolute;inset:0;background:rgba(0,0,0,0.7);display:none;' +
+  'align-items:center;justify-content:center;z-index:9999;pointer-events:auto;';
 overlay.innerHTML =
   '<div style="color:#c8cdd4;font-family:\'Courier New\',monospace;font-size:20px;text-align:center;">' +
-  '已暂停<br><span style="font-size:13px;color:#8a8f96;">点击继续</span></div>';
-document.body.appendChild(overlay);
+  '已暂停<br><span style="font-size:13px;color:#8a8f96;">按任意键</span></div>';
+getDomUiRoot().appendChild(overlay);
 
 function pauseGame(): void {
   if (pauseMenu.isOpen()) return;

@@ -3,48 +3,35 @@
  *
  * Renders a small top-down view of the map in the corner. Only tiles the player
  * has seen (entered their vision cone at least once) are revealed. The extraction
- * point is shown once discovered. Player position is always shown as a dot.
+ * point is shown once discovered. Player / extract / abyss marks use distinct
+ * shapes (cross / slit / square / diamond) so they stay readable in grayscale.
  *
- * Uses a dedicated canvas element overlaid on the game, avoiding Phaser's render
- * pipeline entirely (no depth/scroll/camera concerns).
+ * Canvas sits inside `#rift-minimap.device-plate` on `#dom-ui-root`.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { TileType, type Vector2 } from '@/types/game-types';
+import { getDomUiRoot, injectPanelStyles } from '@/ui/dom/panel-styles';
 
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
 
 const MINIMAP_SCALE = 3;          // px per tile
-const MARGIN = 8;                 // px from screen edge
-// C6 (ui-art-overhaul.md §A2 minimap row): mapped onto locked palette values - was
-// #0a0d0a/#2a3228/#4a4038/#ffffff/#ffffff, none of which are registered colours and
-// whose colour temperature didn't match the rest of the scene. Player dot moves onto
-// the warm-glow colour ("玩家=暖色" per A2's stated reasoning); extraction keeps the
-// world's own extraction-point near-white so the two markers stay distinct.
-const BG_COLOR = '#0d1114';
+const BG_COLOR = '#080a0c';
 const EXPLORED_FLOOR = '#151a1e';
 const EXPLORED_WALL = '#4a4e55';
 const PLAYER_COLOR = '#c4873a';
-const PLAYER_DOT_SIZE = 2;
 const EXTRACTION_COLOR = '#b0fff5';
-const EXTRACTION_DOT_SIZE = 2;
-const BORDER_COLOR = '#2a2d32';
-const OPACITY = 0.85;
+const ABYSS_ENEMY_COLOR = '#7fffee';
+const ABYSS_NODE_COLOR = '#1aad96';
 
 /**
  * abyss tool (`docs/art/tool-vfx-spec.md` A5 族群H): "地图上所有敌人和薪柴节点位置以标记
- * 显示(含视野外)". Spec calls for tiny SQUARE dots (方点) in the palette's contam-peak,
- * one shared color for both enemies and nodes - not the old red/brown pair, which was
- * also a palette violation (A3-2 bans non-teal-spectrum colors project-wide).
+ * 显示(含视野外)". Enemies stay 3×3 squares; nodes are a 3px diamond in a darker
+ * same-family teal so the two marks are not the same shape.
  */
-const ABYSS_DOT_COLOR_RGB = '127,255,238'; // contam-peak #7fffee
-const ABYSS_DOT_SIZE = 3;
-/** Brightness decay floor - never fades all the way to invisible before the final-second
- * flicker (below) takes over; keeps "信息正在流失" readable as a fade, not a vanish. */
 const ABYSS_DOT_ALPHA_FLOOR = 0.30;
-/** Last-second flicker window and toggle period - "最后1s加速闪烁2-3次后统一移除". */
 const ABYSS_FLICKER_WINDOW_MS = 1000;
 const ABYSS_FLICKER_PERIOD_MS = 180;
 
@@ -53,6 +40,7 @@ const ABYSS_FLICKER_PERIOD_MS = 180;
 // ---------------------------------------------------------------------------
 
 export class Minimap {
+  private wrap: HTMLDivElement | null = null;
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
   private explored!: Uint8Array;
@@ -78,6 +66,8 @@ export class Minimap {
     tileSize: number,
     extractionPos: Vector2,
   ): void {
+    this.destroy();
+
     this.mapWidth = mapWidth;
     this.mapHeight = mapHeight;
     this.tileSize = tileSize;
@@ -93,15 +83,28 @@ export class Minimap {
     const w = mapWidth * MINIMAP_SCALE;
     const h = mapHeight * MINIMAP_SCALE;
 
+    injectPanelStyles();
+
+    const wrap = document.createElement('div');
+    wrap.id = 'rift-minimap';
+    wrap.className = 'device-plate';
+    wrap.style.cssText = [
+      'position:absolute',
+      'right:12px',
+      'bottom:12px',
+      'z-index:1000',
+      'pointer-events:none',
+      'padding:4px',
+    ].join(';');
+
     this.canvas = document.createElement('canvas');
     this.canvas.width = w;
     this.canvas.height = h;
     this.canvas.style.cssText =
-      `position:fixed;bottom:${MARGIN}px;right:${MARGIN}px;` +
-      `width:${w}px;height:${h}px;` +
-      `opacity:${OPACITY};border:1px solid ${BORDER_COLOR};` +
-      `pointer-events:none;z-index:1000;image-rendering:pixelated;`;
-    document.body.appendChild(this.canvas);
+      `width:${w}px;height:${h}px;border:none;display:block;image-rendering:pixelated;`;
+    wrap.appendChild(this.canvas);
+    getDomUiRoot().appendChild(wrap);
+    this.wrap = wrap;
 
     this.ctx = this.canvas.getContext('2d')!;
     this.drawBase();
@@ -130,7 +133,6 @@ export class Minimap {
     const baseRadius = GAME_CONSTANTS.VISIBILITY.RADIUS_AMBIENT / this.tileSize;
     const revealRadius = Math.ceil(baseRadius);
 
-    let changed = false;
     for (let dy = -revealRadius; dy <= revealRadius; dy++) {
       for (let dx = -revealRadius; dx <= revealRadius; dx++) {
         if (dx * dx + dy * dy > revealRadius * revealRadius) continue;
@@ -138,10 +140,7 @@ export class Minimap {
         const my = ty + dy;
         if (mx < 0 || mx >= this.mapWidth || my < 0 || my >= this.mapHeight) continue;
         const idx = my * this.mapWidth + mx;
-        if (!this.explored[idx]) {
-          this.explored[idx] = 1;
-          changed = true;
-        }
+        if (!this.explored[idx]) this.explored[idx] = 1;
       }
     }
 
@@ -151,7 +150,7 @@ export class Minimap {
       if (this.explored[eidx]) this.extractionDiscovered = true;
     }
 
-    if (changed) this.drawExplored();
+    this.drawExplored();
     this.drawDynamic(tx, ty);
   }
 
@@ -178,7 +177,8 @@ export class Minimap {
   }
 
   destroy(): void {
-    this.canvas?.remove();
+    this.wrap?.remove();
+    this.wrap = null;
   }
 
   // ------------------------------------------------------------------ internal
@@ -225,40 +225,71 @@ export class Minimap {
     }
   }
 
+  private cellCenter(tileX: number, tileY: number): { cx: number; cy: number } {
+    return {
+      cx: Math.round(tileX * MINIMAP_SCALE + MINIMAP_SCALE / 2),
+      cy: Math.round(tileY * MINIMAP_SCALE + MINIMAP_SCALE / 2),
+    };
+  }
+
+  private drawPlayerCross(cx: number, cy: number): void {
+    const ctx = this.ctx;
+    ctx.fillStyle = PLAYER_COLOR;
+    ctx.fillRect(cx - 2, cy - 1, 5, 2);
+    ctx.fillRect(cx - 1, cy - 2, 2, 5);
+  }
+
+  private drawExtractSlit(cx: number, cy: number): void {
+    const ctx = this.ctx;
+    ctx.fillStyle = EXTRACTION_COLOR;
+    ctx.fillRect(cx - 1, cy - 3, 2, 7);
+  }
+
+  private drawEnemySquare(cx: number, cy: number, alpha: number): void {
+    const ctx = this.ctx;
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = ABYSS_ENEMY_COLOR;
+    ctx.fillRect(cx - 1, cy - 1, 3, 3);
+    ctx.globalAlpha = 1;
+  }
+
+  private drawNodeDiamond(cx: number, cy: number, alpha: number): void {
+    const ctx = this.ctx;
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = ABYSS_NODE_COLOR;
+    ctx.fillRect(cx, cy - 1, 1, 1);
+    ctx.fillRect(cx - 1, cy, 3, 1);
+    ctx.fillRect(cx, cy + 1, 1, 1);
+    ctx.globalAlpha = 1;
+  }
+
   private drawDynamic(playerTileX: number, playerTileY: number): void {
-    // Slice 5 abyss tool (T1/T4): drawn first so the player/extraction dots stay on top.
     if (this.abyssRemainingMs > 0) {
       const alpha = this.abyssDotAlpha();
       if (alpha > 0) {
-        const ctx = this.ctx;
-        ctx.fillStyle = `rgba(${ABYSS_DOT_COLOR_RGB},${alpha})`;
-        const half = ABYSS_DOT_SIZE / 2;
-        for (const pos of [...this.abyssNodePositions, ...this.abyssEnemyPositions]) {
-          const x = (pos.x / this.tileSize) * MINIMAP_SCALE;
-          const y = (pos.y / this.tileSize) * MINIMAP_SCALE;
-          ctx.fillRect(x - half, y - half, ABYSS_DOT_SIZE, ABYSS_DOT_SIZE);
+        for (const pos of this.abyssNodePositions) {
+          const { cx, cy } = this.cellCenter(
+            Math.floor(pos.x / this.tileSize),
+            Math.floor(pos.y / this.tileSize),
+          );
+          this.drawNodeDiamond(cx, cy, alpha);
+        }
+        for (const pos of this.abyssEnemyPositions) {
+          const { cx, cy } = this.cellCenter(
+            Math.floor(pos.x / this.tileSize),
+            Math.floor(pos.y / this.tileSize),
+          );
+          this.drawEnemySquare(cx, cy, alpha);
         }
       }
     }
 
-    // Extraction point (once discovered)
     if (this.extractionDiscovered && this.extractionTile) {
-      const ctx = this.ctx;
-      ctx.fillStyle = EXTRACTION_COLOR;
-      const ex = this.extractionTile.x * MINIMAP_SCALE + MINIMAP_SCALE / 2;
-      const ey = this.extractionTile.y * MINIMAP_SCALE + MINIMAP_SCALE / 2;
-      ctx.beginPath();
-      ctx.arc(ex, ey, EXTRACTION_DOT_SIZE, 0, Math.PI * 2);
-      ctx.fill();
+      const { cx, cy } = this.cellCenter(this.extractionTile.x, this.extractionTile.y);
+      this.drawExtractSlit(cx, cy);
     }
 
-    // Player dot
-    const ctx = this.ctx;
-    ctx.fillStyle = PLAYER_COLOR;
-    const px = playerTileX * MINIMAP_SCALE + MINIMAP_SCALE / 2;
-    const py = playerTileY * MINIMAP_SCALE + MINIMAP_SCALE / 2;
-    ctx.beginPath();
-    ctx.arc(px, py, PLAYER_DOT_SIZE, 0, Math.PI * 2);
-    ctx.fill();
+    const { cx, cy } = this.cellCenter(playerTileX, playerTileY);
+    this.drawPlayerCross(cx, cy);
   }
 }

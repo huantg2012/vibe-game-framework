@@ -12,13 +12,29 @@ import type { PendingSideEffect } from '@/systems/defense-engine';
 import { getDefenseName } from '@/ui/contaminant-names';
 import type { ContaminantType } from '@/types/game-types';
 
+/** Relative to base rate 1.0: slower `-N%`, faster `+N%`. */
+export function formatChaosRateDelta(rate: number): string {
+  const pct = Math.round((1 - rate) * 100);
+  if (pct > 0) return `-${pct}%`;
+  if (pct < 0) return `+${-pct}%`;
+  return '0%';
+}
+
+/** Multiplier form (e.g. 1.5 → `+50%`). */
+export function formatChaosMultDelta(mult: number): string {
+  const pct = Math.round((mult - 1) * 100);
+  if (pct > 0) return `+${pct}%`;
+  if (pct < 0) return `${pct}%`;
+  return '0%';
+}
+
 /** Describe a side effect's mechanical content alone (no source attribution). */
 export function describeSideEffectBody(e: PendingSideEffect): string | null {
   switch (e.type) {
     case 'initial_chaos':
       return `初始混乱 +${e.value}`;
     case 'chaos_rate_mult':
-      return `混乱增速 x${e.value}${e.durationMs ? ` (${e.durationMs / 1000}s)` : ''}`;
+      return `混乱增速 ${formatChaosMultDelta(e.value)}`;
     case 'vision_reduction':
       return `视野 -${Math.round(e.value * 100)}%`;
     case 'speed_reduction':

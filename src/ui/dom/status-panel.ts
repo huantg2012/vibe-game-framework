@@ -15,6 +15,7 @@ import { stabilityTracker } from '@/systems/stability-tracker';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
+import { formatChaosRateDelta } from '@/ui/side-effect-labels';
 import type { Contaminant } from '@/types/game-types';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 
@@ -136,8 +137,6 @@ function render(): void {
 
   const coreEffect = gameState.getModuleEffect('CORE');
   const coreReduction = Math.round((1 - coreEffect) * 100);
-  const growthReduction = Math.round(mods.chaosResist * 100);
-  const totalResist = coreReduction + growthReduction;
 
   const storageEffect = gameState.getModuleEffect('STORAGE');
   const kindlingAffinity = mods.kindlingAffinity;
@@ -162,9 +161,8 @@ function render(): void {
   const storageMod = gameState.getModule('STORAGE');
 
   let html = `<div class="panel-title">存续报告</div>`;
-  html += `<div class="scroll-area">`;
 
-  // === Module status with bars ===
+  html += `<div class="panel-fixed">`;
   html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">`;
 
   // Core module
@@ -198,7 +196,9 @@ function render(): void {
   }
 
   html += `</div>`;
+  html += `</div>`;
 
+  html += `<div class="panel-fixed">`;
   // === Stats grid ===
   html += `<div class="stat-grid" style="margin-bottom:8px;">
     <div class="stat-row">
@@ -206,8 +206,8 @@ function render(): void {
       <span class="stat-value">${totalHp}</span>
     </div>
     <div class="stat-row">
-      <span class="stat-label">混乱抗</span>
-      <span class="stat-value" style="color:#1aad96;">${totalResist}%</span>
+      <span class="stat-label">混乱增速</span>
+      <span class="stat-value" style="color:#1aad96;">${formatChaosRateDelta(Math.max(0, coreEffect - mods.chaosResist))}</span>
     </div>
     <div class="stat-row">
       <span class="stat-label">薪柴值</span>
@@ -243,10 +243,10 @@ function render(): void {
     }
     html += `</div>`;
   }
+  html += `</div>`;
 
+  html += `<div class="scroll-area">`;
   // === Inventory section ===
-  html += `<div class="separator"></div>`;
-  html += `<div style="font-size:14px;color:#8a8f96;margin-bottom:6px;font-weight:bold;">库存</div>`;
 
   const allContaminants = contaminantSystem.getAll();
   const defenseItems = sortContaminants(allContaminants.filter((c) => c.stage === 'defense'));
@@ -263,7 +263,7 @@ function render(): void {
     // contam-deep (#0e4a3f) is reserved for decorative fills (charge bars), not
     // text — same reasoning defense-panel.ts's title already documents. Section
     // labels use the readable contam-core tone, same as "工具" below.
-    html += `<div style="font-size:13px;color:#1aad96;margin-bottom:4px;">防御</div>`;
+    html += `<div style="font-size:13px;color:#1aad96;margin-bottom:4px;">残渣</div>`;
     html += `<div class="tile-grid">`;
     defenseItems.forEach((c, i) => {
       const name = getDefenseName(c.type);
@@ -304,7 +304,7 @@ function render(): void {
   }
 
   if (defenseItems.length === 0 && toolItems.length === 0 && brokenItems.length === 0) {
-    html += `<div style="font-size:13px;color:#8a8f96;text-align:center;padding:8px;">尚无污染物</div>`;
+    html += `<div style="font-size:13px;color:#8a8f96;text-align:center;padding:8px;">尚无残渣</div>`;
   }
 
   // Inspect dock (选中即检视 — IA §S13 / ui-art-overhaul.md A5-13). Only wired for
@@ -312,7 +312,7 @@ function render(): void {
   html += `</div>`;
   html += `<div class="inspect-dock" id="status-inspect-dock">${computeInspectHtml(inspectable, threshold)}</div>`;
   html += `<div class="key-hint-bar">
-    <span><span class="key">↑↓←→</span> 浏览库存</span>
+    <span><span class="key">↑↓←→</span> 浏览</span>
     <span id="status-close-btn"><span class="key">Tab</span> / <span class="key">Esc</span> 合上</span>
   </div>`;
 

@@ -221,8 +221,8 @@ function render(): void {
   // tone: that fails the 4.5:1 text floor (A1), so it's reserved for the charge bar
   // fill below (a decorative fill, not text).
   let html = `<div class="panel-title">供奉</div>`;
-  html += `<div class="scroll-area">`;
 
+  html += `<div class="panel-fixed">`;
   html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
   for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
@@ -251,9 +251,9 @@ function render(): void {
     }
   }
   html += `</div>`;
+  html += `</div>`;
 
-  html += `<div class="separator"></div>`;
-
+  html += `<div class="scroll-area">`;
   if (inventory.length === 0) {
     html += `<div style="font-size:13px;color:#8a8f96;padding:8px 0;">无可用残渣</div>`;
   } else {
@@ -273,7 +273,6 @@ function render(): void {
       </div>`;
     });
   }
-
   html += `</div>`;
   html += `<div class="inspect-dock" id="defense-inspect-dock">${computeInspectHtml(slots, inventory, threshold)}</div>`;
   html += `<div class="key-hint-bar">

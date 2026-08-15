@@ -65,6 +65,7 @@ function generateContaminants() {
     rarity: cols[idx.rarity],
     displayNameDefense: cols[idx.display_name_defense],
     descriptionDefense: cols[idx.description_defense],
+    summaryDefense: cols[idx.summary_defense] ?? '',
     defenseCategory: cols[idx.defense_category],
     defenseReduction: parseFloat(cols[idx.defense_reduction]),
     defenseSideEffect: cols[idx.defense_side_effect],
@@ -72,6 +73,7 @@ function generateContaminants() {
     defenseChargeMult: parseFloat(cols[idx.defense_charge_mult]),
     displayNameTool: cols[idx.display_name_tool],
     descriptionTool: cols[idx.description_tool],
+    summaryTool: cols[idx.summary_tool] ?? '',
     toolType: cols[idx.tool_type],
     toolUses: parseInt(cols[idx.tool_uses], 10),
     toolRangePx: parseInt(cols[idx.tool_range_px], 10),
@@ -88,6 +90,7 @@ function generateContaminants() {
     '  rarity: ContaminantRarity;',
     '  displayNameDefense: string;',
     '  descriptionDefense: string;',
+    '  summaryDefense: string;',
     '  defenseCategory: string;',
     '  defenseReduction: number;',
     '  defenseSideEffect: string;',
@@ -95,6 +98,7 @@ function generateContaminants() {
     '  defenseChargeMult: number;',
     '  displayNameTool: string;',
     '  descriptionTool: string;',
+    '  summaryTool: string;',
     "  toolType: 'active' | 'passive';",
     '  toolUses: number;',
     '  toolRangePx: number;',
@@ -111,6 +115,7 @@ function generateContaminants() {
     lines.push(`    rarity: '${e.rarity}',`);
     lines.push(`    displayNameDefense: '${escapeStr(e.displayNameDefense)}',`);
     lines.push(`    descriptionDefense: '${escapeStr(e.descriptionDefense)}',`);
+    lines.push(`    summaryDefense: '${escapeStr(e.summaryDefense)}',`);
     lines.push(`    defenseCategory: '${escapeStr(e.defenseCategory)}',`);
     lines.push(`    defenseReduction: ${e.defenseReduction},`);
     lines.push(`    defenseSideEffect: '${escapeStr(e.defenseSideEffect)}',`);
@@ -118,6 +123,7 @@ function generateContaminants() {
     lines.push(`    defenseChargeMult: ${e.defenseChargeMult},`);
     lines.push(`    displayNameTool: '${escapeStr(e.displayNameTool)}',`);
     lines.push(`    descriptionTool: '${escapeStr(e.descriptionTool)}',`);
+    lines.push(`    summaryTool: '${escapeStr(e.summaryTool)}',`);
     lines.push(`    toolType: '${e.toolType}',`);
     lines.push(`    toolUses: ${e.toolUses},`);
     lines.push(`    toolRangePx: ${e.toolRangePx},`);

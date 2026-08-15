@@ -376,6 +376,10 @@ export class ToolSystem {
   private scatterActive = false;
   private muffleEquipped = false;
   private siphonEquipped = false;
+  /** abyss 10s map reveal — not the 150ms burst VFX. */
+  private abyssRevealRemainingMs = 0;
+  /** siphon's 5s chaos-rate cut. */
+  private siphonEffectRemainingMs = 0;
 
   // Stitch placement state (two-click)
   private stitchPendingPoint: Vector2 | null = null;
@@ -495,6 +499,8 @@ export class ToolSystem {
     this.muffleEquipped = false;
     this.siphonEquipped = false;
     this.scatterCooldownMs = 0;
+    this.abyssRevealRemainingMs = 0;
+    this.siphonEffectRemainingMs = 0;
 
     for (const contaminant of loadout) {
       if (!contaminant) continue;
@@ -572,6 +578,8 @@ export class ToolSystem {
     this.updateCombustFields(deltaMs);
     this.updateStunnedEnemies(deltaMs);
     this.updateAbyssBursts(deltaMs);
+    this.updateAbyssReveal(deltaMs);
+    this.updateSiphonEffect(deltaMs);
 
     // A4 主标示: redraw every registered "perception dimmed" indicator last, once all of
     // the above have had a chance to set/clear this frame's sources.
@@ -587,6 +595,45 @@ export class ToolSystem {
   /** Get the tool type for a slot (for HUD). Returns null if empty. */
   getSlotType(slotIndex: number): ContaminantType | null {
     return this.loadout[slotIndex]?.type ?? null;
+  }
+
+  /**
+   * Read-only: in-progress timed tool effects (not dissolving / not cooldown).
+   * Same type merges; remainingMs is the max across instances.
+   * Types with `toolDurationMs === 0` are omitted. Scatter's 15s CD is omitted.
+   */
+  getActiveTimedEffects(): { type: ContaminantType; remainingMs: number }[] {
+    const maxByType = new Map<ContaminantType, number>();
+    const consider = (type: ContaminantType, remainingMs: number, ended: boolean): void => {
+      if (ended || remainingMs <= 0) return;
+      if ((CONTAMINANT_DATA[type]?.toolDurationMs ?? 0) === 0) return;
+      const prev = maxByType.get(type) ?? 0;
+      if (remainingMs > prev) maxByType.set(type, remainingMs);
+    };
+
+    for (const e of this.freezeEffects) consider('solidify', e.remainingMs, e.dissolving);
+    for (const d of this.delayDevices) consider('delay', d.remainingMs, d.dissolving);
+    for (const z of this.erodeZones) consider('erode', z.remainingMs, z.dissolving);
+    for (const m of this.retrogradeMarks) consider('retrograde', m.remainingMs, m.collapsing);
+    for (const z of this.kindleZones) consider('kindle', z.remainingMs, z.dissolving);
+    for (const b of this.stitchBarriers) consider('stitch', b.remainingMs, b.dissolving);
+    if (this.expandEffect?.phase === 'active') {
+      consider('expand', this.expandEffect.remainingMs, false);
+    }
+    for (const a of this.compressAnchors) consider('compress', a.remainingMs, a.dissolving);
+    for (const d of this.mirrorDecoys) consider('mirror', d.remainingMs, d.shattering);
+    for (const s of this.resonateStrings) consider('resonate', s.remainingMs, s.dissolving);
+    for (const m of this.overwriteMarks) consider('overwrite', m.remainingMs, false);
+    for (const f of this.combustFields) consider('combust', f.remainingMs, f.dissolving);
+    for (const s of this.stunnedEnemies) {
+      if (s.tag === 'echo') consider('echo', s.remainingMs, false);
+      else if (s.tag === 'kindle') consider('kindle', s.remainingMs, false);
+      else if (s.tag === 'resonate') consider('resonate', s.remainingMs, false);
+    }
+    consider('abyss', this.abyssRevealRemainingMs, false);
+    consider('siphon', this.siphonEffectRemainingMs, false);
+
+    return [...maxByType.entries()].map(([type, remainingMs]) => ({ type, remainingMs }));
   }
 
   /** Notify tool system that an enemy entered suspicious (for scatter passive). */
@@ -655,6 +702,8 @@ export class ToolSystem {
     this.combustFields = [];
     this.stunnedEnemies = [];
     this.abyssBursts = [];
+    this.abyssRevealRemainingMs = 0;
+    this.siphonEffectRemainingMs = 0;
     this.resonatePendingPoint = null;
     this.resonatePendingVisual = null;
   }
@@ -1975,6 +2024,7 @@ export class ToolSystem {
     const nodePositions = RIFT_MAP.layout.kindlingNodes.map((n) => ({ ...n.position }));
 
     this.showAbyssReveal?.(enemyPositions, nodePositions, def.toolDurationMs);
+    this.abyssRevealRemainingMs = def.toolDurationMs;
     this.boostChaosRate?.(
       GAME_CONSTANTS.TOOLS.ABYSS_CHAOS_BOOST_MULT,
       GAME_CONSTANTS.TOOLS.ABYSS_CHAOS_BOOST_MS,
@@ -2009,6 +2059,16 @@ export class ToolSystem {
         this.abyssBursts.splice(i, 1);
       }
     }
+  }
+
+  private updateAbyssReveal(deltaMs: number): void {
+    if (this.abyssRevealRemainingMs <= 0) return;
+    this.abyssRevealRemainingMs = Math.max(0, this.abyssRevealRemainingMs - deltaMs);
+  }
+
+  private updateSiphonEffect(deltaMs: number): void {
+    if (this.siphonEffectRemainingMs <= 0) return;
+    this.siphonEffectRemainingMs = Math.max(0, this.siphonEffectRemainingMs - deltaMs);
   }
 
   // =========================================================================
@@ -2184,6 +2244,7 @@ export class ToolSystem {
       GAME_CONSTANTS.TOOLS.SIPHON_CHAOS_REDUCTION_MULT,
       CONTAMINANT_DATA.siphon.toolDurationMs,
     );
+    this.siphonEffectRemainingMs = CONTAMINANT_DATA.siphon.toolDurationMs;
 
     // Consume a use from the siphon contaminant in loadout (same pattern as scatter/muffle).
     for (const contaminant of this.loadout) {

@@ -121,12 +121,14 @@ function render(): void {
   const reserve = gameState.getKindlingReserve();
 
   let html = `<div class="panel-title">蜕变</div>`;
-  html += `<div class="scroll-area">`;
-  html += `<div style="display:flex;align-items:baseline;gap:12px;margin:4px 0 8px;">
-    <span style="font-size:12px;color:#8a8f96;">储备</span>
-    <span style="font-size:16px;color:#c4873a;font-weight:bold;">${reserve}</span>
+  html += `<div class="panel-fixed">
+    <div style="display:flex;align-items:baseline;gap:12px;margin:4px 0 8px;">
+      <span style="font-size:12px;color:#8a8f96;">储备</span>
+      <span style="font-size:16px;color:#c4873a;font-weight:bold;">${reserve}</span>
+    </div>
   </div>`;
 
+  html += `<div class="panel-fixed">`;
   html += `<div class="card-grid">`;
 
   for (let i = 0; i < UPGRADES.length; i++) {
@@ -190,10 +192,10 @@ function render(): void {
   }
 
   html += `</div>`; // end card-grid
-  html += `</div>`;
+  html += `</div>`; // end panel-fixed
   html += `<div class="key-hint-bar">
     <span><span class="key">↑</span> <span class="key">↓</span> 选卡</span>
-    <span><span class="key">Enter</span> 购买</span>
+    <span><span class="key">Enter</span> 刻入</span>
     <span id="growth-close-btn"><span class="key">Esc</span> 离开</span>
   </div>`;
 

@@ -34,7 +34,7 @@ import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-s
 import { RiftHud, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/dom/rift-hud';
 import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
-import { describeSideEffectBody } from '@/ui/side-effect-labels';
+import { describeSideEffectBody, formatChaosMultDelta } from '@/ui/side-effect-labels';
 import { riftResultPanel } from '@/ui/dom/rift-result-panel';
 import { pauseMenu } from '@/ui/dom/pause-menu';
 import { getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
@@ -92,6 +92,9 @@ export class RiftScene extends Phaser.Scene {
   private sortieKillCount = 0;
   private sortieAcquired: { type: ContaminantType; rarity: ContaminantRarity }[] = [];
   private sortiePassiveTriggers = new Map<ContaminantType, number>();
+  /** Defense residue lines shown in the rift HUD; remainingMs ticked here, then
+   *  merged with tool-system remaining each frame so tool rows are not double-counted. */
+  private defenseHudEffects: ActiveEffectInfo[] = [];
 
   constructor() {
     super({ key: 'RiftScene' });
@@ -313,6 +316,8 @@ export class RiftScene extends Phaser.Scene {
     this.loot.update(delta);
     this.contaminantNodes.update(delta);
     this.toolSystem.update(delta);
+    this.tickDefenseHudEffects(delta);
+    this.syncHudActiveEffects();
     this.extraction.update(delta);
     this.hud.update(delta);
 
@@ -549,12 +554,10 @@ export class RiftScene extends Phaser.Scene {
       this.applySingleSideEffect(effect);
     }
 
-    // Channel B (IA S14): a queued 3s toast confirms what just happened on entry.
+    // Channel B: one toast per residue, queued (max 2 visible).
     this.showSideEffectToasts(effects);
-    // Persistent HUD line for whatever is still active for the rest of the sortie -
-    // the toast alone used to be the only feedback, which faded before the player
-    // could act on it ("防御副作用持续整趟必须常驻,不得只用3秒toast").
-    this.hud.setActiveEffects(this.buildActiveEffectLines(effects));
+    this.defenseHudEffects = this.buildActiveEffectLines(effects);
+    this.syncHudActiveEffects();
   }
 
   /** Turns sortie-duration side effects into HUD status lines. Instant/one-shot
@@ -565,7 +568,9 @@ export class RiftScene extends Phaser.Scene {
     for (const e of effects) {
       switch (e.type) {
         case 'chaos_rate_mult':
-          if (e.durationMs) lines.push({ label: `混乱增速 x${e.value}`, remainingMs: e.durationMs });
+          if (e.durationMs) {
+            lines.push({ label: `混乱增速 ${formatChaosMultDelta(e.value)}`, remainingMs: e.durationMs });
+          }
           break;
         case 'vision_reduction':
           lines.push({ label: `视野 -${Math.round(e.value * 100)}%` });
@@ -581,6 +586,25 @@ export class RiftScene extends Phaser.Scene {
       }
     }
     return lines;
+  }
+
+  private tickDefenseHudEffects(deltaMs: number): void {
+    if (this.defenseHudEffects.length === 0) return;
+    for (const e of this.defenseHudEffects) {
+      if (e.remainingMs === undefined) continue;
+      e.remainingMs -= deltaMs;
+    }
+    this.defenseHudEffects = this.defenseHudEffects.filter(
+      (e) => e.remainingMs === undefined || e.remainingMs > 0,
+    );
+  }
+
+  private syncHudActiveEffects(): void {
+    const toolLines: ActiveEffectInfo[] = this.toolSystem.getActiveTimedEffects().map((e) => ({
+      label: getToolName(e.type),
+      remainingMs: e.remainingMs,
+    }));
+    this.hud.setActiveEffects([...this.defenseHudEffects, ...toolLines]);
   }
 
   /** Show a Channel-B toast (ui-art-overhaul.md §A4, C6 shared primitive) disclosing
@@ -599,13 +623,14 @@ export class RiftScene extends Phaser.Scene {
     const messages = effects.map(describeEffect).filter((m): m is string => m !== null);
     if (messages.length === 0) return;
 
-    showToastInline(messages.join('<br>'), {
-      position: 'top:60px;left:50%;transform:translateX(-50%);',
-      color: '#cc3333',
-      // C6: was 11px, below the IA §A1 12px floor for DOM text.
-      extraStyle: "background:rgba(15,17,20,0.92);border:1px solid #cc3333;padding:8px 16px;" +
-        "font:12px 'Courier New',monospace;text-align:left;line-height:1.6;",
-    });
+    const extraStyle = "background:rgba(15,17,20,0.92);border:1px solid #cc3333;padding:8px 16px;" +
+      "font:12px 'Courier New',monospace;text-align:left;line-height:1.6;";
+    for (const msg of messages) {
+      showToastInline(msg, {
+        color: '#cc3333',
+        extraStyle,
+      });
+    }
   }
 
   private applySingleSideEffect(effect: PendingSideEffect): void {
@@ -664,6 +689,7 @@ export class RiftScene extends Phaser.Scene {
     this.sortieKillCount = 0;
     this.sortieAcquired = [];
     this.sortiePassiveTriggers = new Map();
+    this.defenseHudEffects = [];
   }
 
   /**

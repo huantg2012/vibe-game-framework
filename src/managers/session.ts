@@ -17,7 +17,7 @@ import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 
 export function hasReadableSave(): boolean {
-  return saveManager.hasSave() && saveManager.peekTideNumber() !== null;
+  return saveManager.peekRecordSummary() !== null;
 }
 
 /** Wipe runtime + save, then enter the purification point as a new record. */

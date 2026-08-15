@@ -1,10 +1,10 @@
 /**
  * In-game Esc record menu.
  *
- * Opens over the current scene without leaving it. Three intents, in player language:
- *   - 新存档  — wipe and start a new record (exits the rift if that is where we are)
- *   - 读取存档 — load the stored record (same: exits the rift)
- *   - 继续     — dismiss; the current scene resumes, nothing happened
+ * Opens over the current scene without leaving it. Three intents:
+ *   - 新的纪录 — wipe and start a new record (exits the rift if that is where we are)
+ *   - 沿旧路返回 — load the stored record (same: exits the rift)
+ *   - 合上 — dismiss; the current scene resumes, nothing happened
  *
  * Carrier: B-class world-in-terminal overlay (same `.game-panel` as other blocking
  * readouts). Esc on the root list closes; Esc on the overwrite guard returns to
@@ -78,7 +78,7 @@ function onLoadSave(): void {
 function buildRootItems(): void {
   items = [{ label: t('menu.newSave'), action: onNewSave }];
   if (hasReadableSave()) {
-    items.push({ label: t('menu.loadSave'), action: onLoadSave });
+    items.push({ label: t('menu.continue'), action: onLoadSave });
   }
   items.push({ label: t('menu.resume'), action: () => pauseMenu.close() });
   selectedIndex = items.length - 1;
@@ -87,7 +87,7 @@ function buildRootItems(): void {
 function buildOverwriteItems(): void {
   items = [
     { label: t('menu.overwriteClear'), action: () => leaveForSession(beginNewExpedition) },
-    { label: t('menu.loadSave'), action: onLoadSave },
+    { label: t('menu.continue'), action: onLoadSave },
   ];
   selectedIndex = 1;
 }
@@ -111,9 +111,7 @@ function paint(): void {
     `<div class="panel-title">${t('menu.pauseTitle')}</div>` +
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
-    `<div class="key-hint-bar"><span class="key">↑↓</span> 选择 · <span class="key">Enter</span> 确认 · <span class="key">Esc</span> ${
-      mode === 'confirmOverwrite' ? '返回' : '关闭'
-    }</div>`;
+    `<div class="key-hint-bar"><span><span class="key">↑↓</span> 选中</span><span class="key">Enter</span><span><span class="key">Esc</span> 合上</span></div>`;
 
   panel.querySelectorAll<HTMLElement>('.pause-menu-row').forEach((row) => {
     row.addEventListener('pointerover', () => {

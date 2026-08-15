@@ -46,7 +46,7 @@ import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
 import type { ContaminantType } from '@/types/game-types';
 import { getToolName } from '@/ui/contaminant-names';
-import { showToastInline } from '@/ui/dom/panel-styles';
+import { getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
 import { GameEvent } from '@/types/events';
 import type { TileMapData, OccluderGrid } from '@/types/map-types';
 
@@ -757,11 +757,11 @@ export class PurificationScene extends Phaser.Scene {
     const glowOverlay = document.createElement('div');
     glowOverlay.id = 'scene-transition-glow';
     glowOverlay.style.cssText = [
-      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+      'position:absolute', 'inset:0',
       'z-index:1999', 'pointer-events:none',
       'animation:rift-enter-glow 0.3s ease-in forwards',
     ].join(';');
-    document.body.appendChild(glowOverlay);
+    getDomUiRoot().appendChild(glowOverlay);
 
     // Phase 2: After 0.3s, show black screen with text
     setTimeout(() => {
@@ -770,7 +770,7 @@ export class PurificationScene extends Phaser.Scene {
       const overlay = document.createElement('div');
       overlay.id = 'scene-transition-overlay';
       overlay.style.cssText = [
-        'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
+        'position:absolute', 'inset:0',
         'z-index:2000', 'background:#000', 'display:flex',
         'align-items:center', 'justify-content:center',
         // C6: was #5a5f66 (metal-light, border/divider-only per A1 V1/V2 - unreadable
@@ -778,7 +778,7 @@ export class PurificationScene extends Phaser.Scene {
         "font:14px 'Courier New',monospace", 'color:#c8cdd4',
       ].join(';');
       overlay.textContent = '进入裂隙。';
-      document.body.appendChild(overlay);
+      getDomUiRoot().appendChild(overlay);
 
       setTimeout(() => {
         overlay.remove();
@@ -847,9 +847,7 @@ export class PurificationScene extends Phaser.Scene {
     const text = `新工具可用: ${names.join(', ')}`;
 
     showToastInline(text, {
-      position: 'top:40px;left:50%;transform:translateX(-50%);',
       color: '#2ae6c8',
-      // C6: was 11px, below the IA §A1 12px floor for DOM text.
       extraStyle: "background:rgba(15,17,20,0.92);border:1px solid #1aad96;padding:8px 16px;" +
         "font:12px 'Courier New',monospace;",
     });
@@ -891,9 +889,9 @@ export class PurificationScene extends Phaser.Scene {
   /** World.md 无人称/不描述玩家感受: the old copy had second-person encouragement
    *  ("坚持住"/"终点在望") on the 25/75 lines (IA §S15 类别2) — restated as plain fact. */
   private static readonly STABILITY_MILESTONE_MESSAGES: Record<number, string> = {
-    25: '净化进度 25%。',
-    50: '净化进度 50%。已过半。',
-    75: '净化进度 75%。',
+    25: '<span style="color:#8a8f96;">稳定度</span> <span style="color:#c8cdd4;font-weight:bold;">25%</span>',
+    50: '<span style="color:#8a8f96;">稳定度</span> <span style="color:#c8cdd4;font-weight:bold;">50%</span> <span style="color:#8a8f96;">已过半</span>',
+    75: '<span style="color:#8a8f96;">稳定度</span> <span style="color:#c8cdd4;font-weight:bold;">75%</span>',
     100: '净化完成。',
   };
 
@@ -917,11 +915,9 @@ export class PurificationScene extends Phaser.Scene {
     // module colour fix). Stability progress is a human-side positive outcome, so it
     // takes the warm palette instead, same family as the growth-panel purchase flash.
     showToastInline(message, {
-      position: 'top:50%;left:50%;transform:translate(-50%,-50%);',
       color: '#e0a848',
-      extraStyle: "background:rgba(15,17,20,0.92);border:1px solid #c4873a;padding:14px 28px;" +
+      extraStyle: "background:rgba(15,17,20,0.92);padding:8px 16px;" +
         "font:13px 'Courier New',monospace;text-align:center;",
-      durationMs: 2000,
     });
   }
 

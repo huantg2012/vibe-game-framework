@@ -20,12 +20,12 @@ import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@
 import { buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import type { Contaminant } from '@/types/game-types';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
-import { describeSideEffectBody } from '@/ui/side-effect-labels';
+import { describeSideEffectBody, formatChaosRateDelta } from '@/ui/side-effect-labels';
 
 // Rarity is "Degree not Kind": same contam color family, rising brightness
 // (ui-art-overhaul.md A2) instead of unrelated hues per tier.
 const RARITY_COLORS: Record<string, string> = {
-  common: '#1a6b5c',
+  common: '#8a8f96',
   fine: '#1aad96',
   rare: '#3cffd4',
 };
@@ -233,8 +233,8 @@ function render(): void {
   const activeCount = contaminantSystem.getSortieActiveSlotCount();
 
   let html = `<div class="panel-title">踏入裂隙</div>`;
-  html += `<div class="scroll-area">`;
 
+  html += `<div class="panel-fixed">`;
   html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
   for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
@@ -260,11 +260,12 @@ function render(): void {
     }
   }
   html += `</div>`;
+  html += `</div>`;
 
-  html += buildSortiePreview();
-  html += buildResidueRow();
+  html += `<div class="panel-fixed">${buildSortiePreview()}</div>`;
+  html += `<div class="panel-fixed">${buildResidueRow()}</div>`;
 
-  html += `<div class="separator"></div>`;
+  html += `<div class="scroll-area">`;
   if (inventory.length === 0) {
     html += `<div style="font-size:13px;color:#8a8f96;padding:8px 0;">无可用工具</div>`;
   } else {
@@ -285,7 +286,6 @@ function render(): void {
       </div>`;
     });
   }
-
   html += `</div>`;
   html += `<div class="inspect-dock" id="loadout-inspect-dock">${computeInspectHtml(slots, inventory, activeCount, passiveIndex)}</div>`;
   html += `<div class="key-hint-bar">
@@ -445,9 +445,7 @@ function tileHasCompatibleSlot(
 // ---------------------------------------------------------------------------
 
 function toolSummary(type: Contaminant['type']): string {
-  const d = CONTAMINANT_DATA[type]?.descriptionTool ?? '';
-  const clause = d.split('。')[0] ?? d;
-  return clause.length > 15 ? `${clause.slice(0, 15)}` : clause;
+  return CONTAMINANT_DATA[type]?.summaryTool ?? '';
 }
 
 function buildResidueRow(): string {
@@ -487,8 +485,8 @@ function buildSortiePreview(): string {
         <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">${totalHp}</div>
       </div>
       <div>
-        <div style="font-size:12px;color:#8a8f96;">混乱率</div>
-        <div style="font-size:16px;color:#1aad96;font-weight:bold;">x${totalChaosRate.toFixed(2)}</div>
+        <div style="font-size:12px;color:#8a8f96;">混乱增速</div>
+        <div style="font-size:16px;color:#1aad96;font-weight:bold;">${formatChaosRateDelta(totalChaosRate)}</div>
       </div>
       <div>
         <div style="font-size:12px;color:#8a8f96;">薪柴值</div>

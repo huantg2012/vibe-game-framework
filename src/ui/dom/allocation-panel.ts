@@ -252,26 +252,28 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     <span style="font-size:16px;font-weight:bold;color:${typeColor};">${typeLabel}</span>
     ${isForecastTarget ? '<span style="color:#b89040;">下次冲击目标</span>' : ''}
   </div>`;
-  html += `<div class="scroll-area">`;
 
-  html += `<div style="margin:8px 0 4px;display:flex;gap:12px;align-items:baseline;">
-    <span style="font-size:12px;color:#8a8f96;width:96px;">完整度</span>
-    <span style="font-size:16px;font-weight:bold;color:${typeColor};">${hp}</span>
-    <span>/</span>
-    <span style="font-size:16px;font-weight:bold;color:${typeColor};">${maxHp}</span>
-  </div>
-  <div class="pbar-wrap">
-    <div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div>
-    <div class="pbar-fill" style="width:${hpPct}%;background:${typeColor};"></div>
-  </div>
-  <div style="margin-top:8px;display:flex;gap:12px;align-items:baseline;">
-    <span style="font-size:12px;color:#8a8f96;width:96px;">${effectName}</span>
-    <span style="font-size:16px;font-weight:bold;color:${effectColor};">${currentVal}</span>
-    <span>→</span>
-    <span style="font-size:16px;font-weight:bold;color:${effectColor};">${afterVal}</span>
+  html += `<div class="panel-fixed">
+    <div style="margin:8px 0 4px;display:flex;gap:12px;align-items:baseline;">
+      <span style="font-size:12px;color:#8a8f96;width:96px;">完整度</span>
+      <span style="font-size:16px;font-weight:bold;color:${typeColor};">${hp}</span>
+      <span>/</span>
+      <span style="font-size:16px;font-weight:bold;color:${typeColor};">${maxHp}</span>
+    </div>
+    <div class="pbar-wrap">
+      <div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div>
+      <div class="pbar-fill" style="width:${hpPct}%;background:${typeColor};"></div>
+    </div>
+    <div style="margin-top:8px;display:flex;gap:12px;align-items:baseline;">
+      <span style="font-size:12px;color:#8a8f96;width:96px;">${effectName}</span>
+      <span style="font-size:16px;font-weight:bold;color:${effectColor};">${currentVal}</span>
+      <span>→</span>
+      <span style="font-size:16px;font-weight:bold;color:${effectColor};">${afterVal}</span>
+    </div>
   </div>`;
 
-  html += `<div class="separator"></div>
+  html += `<div class="panel-fixed">
+    <div class="separator"></div>
     <div style="display:flex;gap:12px;align-items:baseline;margin:6px 0;">
       <span style="font-size:12px;color:#8a8f96;width:96px;">投入</span>
       <span style="color:#c4873a;font-weight:bold;margin-right:6px;">&gt;</span>
@@ -285,10 +287,10 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
       <span style="font-size:12px;color:#8a8f96;width:96px;">注入后剩余</span>
       <span style="font-size:13px;font-weight:bold;color:#c4873a;">${remaining}</span>
       <span style="margin-left:auto;font-size:12px;color:#8a8f96;">1薪柴=${repairPer}完整度${siphonBoosted ? ' <span style="color:#c4873a;">虹吸增效</span>' : ''}</span>
-    </div>`;
+    </div>
+  </div>`;
 
-  html += buildOpportunityCostRow(type);
-  html += `</div>`;
+  html += `<div class="panel-fixed">${buildOpportunityCostRow(type)}</div>`;
   html += `<div class="key-hint-bar">
     <span><span class="key" id="alloc-minus">←</span> <span class="key" id="alloc-plus">→</span> ±1</span>
     <span><span class="key">Shift+←→</span> ±5</span>

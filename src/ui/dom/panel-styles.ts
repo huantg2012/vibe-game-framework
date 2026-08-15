@@ -23,9 +23,15 @@ const CSS = `
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: rgba(15, 17, 20, 0.88);
+  background-color: rgba(15, 17, 20, 0.88);
+  background-image:
+    linear-gradient(to bottom, #080a0c 0%, transparent 8px),
+    linear-gradient(to top,    #080a0c 0%, transparent 8px),
+    linear-gradient(to right,  #080a0c 0%, transparent 8px),
+    linear-gradient(to left,   #080a0c 0%, transparent 8px);
+  background-repeat: no-repeat;
   border: none;
-  padding: 10px 12px 0;
+  padding: 14px 16px 4px;
   font: 13px 'Courier New', Courier, monospace;
   color: #8a8f96;
   line-height: 1.3;
@@ -37,12 +43,22 @@ const CSS = `
   position: relative;
   z-index: 1;
 }
+.game-panel.crt-stack > *:not(.scroll-area) {
+  flex: 0 0 auto;
+}
+.game-panel.crt-stack > .scroll-area {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.game-panel .panel-fixed {
+  flex: 0 0 auto;
+}
 .game-panel::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 78% 72% at 50% 42%, transparent 38%, #080a0c 100%);
-  opacity: 0.4;
+  background: radial-gradient(ellipse 86% 82% at 50% 46%, transparent 28%, #080a0c 100%);
+  opacity: 0.58;
   pointer-events: none;
   z-index: 2;
 }
@@ -55,7 +71,7 @@ const CSS = `
     transparent 0px,
     transparent 2px,
     rgba(26, 173, 150, 0.08) 2px,
-    rgba(8, 10, 12, 0.28) 3px
+    rgba(8, 10, 12, 0.34) 3px
   );
   pointer-events: none;
   z-index: 3;
@@ -461,7 +477,7 @@ const CSS = `
   border: none;
   border-top: 1px solid #2a2d32;
   padding: 6px 0 4px;
-  min-height: 88px;
+  min-height: 110px;
   margin: 4px 0 0;
   font-size: 13px;
   color: #8a8f96;
@@ -539,9 +555,56 @@ const CSS = `
   left: 50%;
   height: auto;
   transform: translate(-50%, -50%);
+  background-image:
+    linear-gradient(to bottom, #080a0c 0%, transparent 5px),
+    linear-gradient(to top,    #080a0c 0%, transparent 5px),
+    linear-gradient(to right,  #080a0c 0%, transparent 5px),
+    linear-gradient(to left,   #080a0c 0%, transparent 5px);
+  padding: 12px 14px 8px;
 }
 .game-panel.pause-menu-panel { width: 320px; }
 #rift-result-panel.game-panel { width: 360px; }
+
+/* 裂隙随身读出 / 小地图：同一族更薄的罩，暗扫描、无金属线。 */
+.device-plate {
+  position: absolute;
+  background: rgba(15, 17, 20, 0.72);
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 6px 8px;
+  pointer-events: none;
+}
+.device-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(8, 10, 12, 0.14) 2px,
+    rgba(8, 10, 12, 0.14) 3px
+  );
+  z-index: 0;
+}
+.device-plate .device-effect {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+}
+.device-plate .device-effect-name {
+  font-size: 12px;
+  color: #8a8f96;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+}
+.device-plate .device-effect-time {
+  font-size: 13px;
+  color: #c8cdd4;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+}
 
 /* === Toast primitives (ui-art-overhaul.md A4/A6) ===
    Two variants for the unified feedback layer: "inline" (brief, non-blocking,
@@ -558,6 +621,21 @@ const CSS = `
   white-space: nowrap;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
   z-index: 1500;
+}
+#toast-inline-queue {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  z-index: 1500;
+}
+#toast-inline-queue .toast-inline {
+  position: static;
 }
 .toast-stamp {
   position: fixed;
@@ -616,7 +694,7 @@ export function createCrtPanel(id: string): HTMLDivElement {
   injectPanelStyles();
   const el = document.createElement('div');
   el.id = id;
-  el.className = 'game-panel';
+  el.className = 'game-panel crt-stack';
   el.style.pointerEvents = 'auto';
   return el;
 }
@@ -633,7 +711,9 @@ export function createCrtPanel(id: string): HTMLDivElement {
  * the element is actually out of view - already-visible selections don't jump.
  */
 export function scrollFocusedIntoView(panel: HTMLElement): void {
-  panel
+  const area = panel.querySelector('.scroll-area');
+  if (!area) return;
+  area
     .querySelector('.slot-selected, .tile-selected, .card-selected')
     ?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
@@ -710,14 +790,18 @@ interface ScalableGame {
 // ---------------------------------------------------------------------------
 
 export interface ToastInlineOptions {
-  /** CSS position/placement declarations, e.g. 'top:60px;left:50%;transform:translateX(-50%);'. */
-  position: string;
+  /** CSS position/placement. Used when `skipQueue` is true (Channel A local flash).
+   *  Queued Channel B toasts ignore this — they live in `#toast-inline-queue`. */
+  position?: string;
   /** Text colour. Defaults to the standard bright text colour. */
   color?: string;
   /** Extra CSS merged in after the shared base (background/border/padding for the
    *  "banner" look already established at the three migrated call sites). */
   extraStyle?: string;
   durationMs?: number;
+  /** Pickup `+N` / passive short flash: mount on `#dom-ui-root` at `position`,
+   *  do not occupy the 2-slot Channel B queue. */
+  skipQueue?: boolean;
 }
 
 const TOAST_INLINE_FADE_STYLE_ID = 'toast-inline-fade-style';
@@ -730,26 +814,86 @@ function ensureToastInlineFadeKeyframes(): void {
   document.head.appendChild(style);
 }
 
-/** Channel B banner (ux-information-architecture.md §S14): one line, non-blocking,
- *  auto-dismiss, queued only in the sense that a new call replaces the visual slot -
- *  no overlap handling beyond that is attempted here. `html` may contain `<br>` for
- *  the multi-line case (side-effect disclosure). */
-export function showToastInline(html: string, opts: ToastInlineOptions): void {
-  ensureToastInlineFadeKeyframes();
-  const durationMs = opts.durationMs ?? 3000;
+const TOAST_QUEUE_ID = 'toast-inline-queue';
+const TOAST_QUEUE_MAX_VISIBLE = 2;
 
+interface QueuedToast {
+  html: string;
+  color: string;
+  extraStyle: string;
+  durationMs: number;
+}
+
+const toastInlinePending: QueuedToast[] = [];
+
+function getToastInlineQueueHost(): HTMLDivElement {
+  injectPanelStyles();
+  const root = getDomUiRoot();
+  let host = document.getElementById(TOAST_QUEUE_ID) as HTMLDivElement | null;
+  if (!host) {
+    host = document.createElement('div');
+    host.id = TOAST_QUEUE_ID;
+    root.appendChild(host);
+  }
+  return host;
+}
+
+function flushToastInlineQueue(): void {
+  const host = getToastInlineQueueHost();
+  while (
+    toastInlinePending.length > 0
+    && host.querySelectorAll('.toast-inline').length < TOAST_QUEUE_MAX_VISIBLE
+  ) {
+    const next = toastInlinePending.shift();
+    if (!next) break;
+    mountQueuedToastInline(host, next);
+  }
+}
+
+function mountQueuedToastInline(host: HTMLDivElement, item: QueuedToast): void {
   const toast = document.createElement('div');
   toast.className = 'toast-inline';
   toast.style.cssText = [
-    opts.position,
-    `color:${opts.color ?? '#c8cdd4'}`,
-    `animation:toast-inline-fade ${durationMs}ms ease-out forwards`,
-    opts.extraStyle ?? '',
+    'position:static',
+    `color:${item.color}`,
+    `animation:toast-inline-fade ${item.durationMs}ms ease-out forwards`,
+    item.extraStyle,
   ].join(';');
-  toast.innerHTML = html;
+  toast.innerHTML = item.html;
+  host.appendChild(toast);
+  setTimeout(() => {
+    toast.remove();
+    flushToastInlineQueue();
+  }, item.durationMs);
+}
 
-  getDomUiRoot().appendChild(toast);
-  setTimeout(() => toast.remove(), durationMs);
+/** Channel B banner (ux-information-architecture.md §S14): one line, non-blocking.
+ *  Default: queued in `#toast-inline-queue`, at most 2 visible, later calls wait.
+ *  `skipQueue` mounts on `#dom-ui-root` at the caller's `position` (pickup / passive). */
+export function showToastInline(html: string, opts: ToastInlineOptions): void {
+  injectPanelStyles();
+  ensureToastInlineFadeKeyframes();
+  const durationMs = opts.durationMs ?? 2000;
+  const color = opts.color ?? '#c8cdd4';
+  const extraStyle = opts.extraStyle ?? '';
+
+  if (opts.skipQueue) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-inline';
+    toast.style.cssText = [
+      opts.position ?? '',
+      `color:${color}`,
+      `animation:toast-inline-fade ${durationMs}ms ease-out forwards`,
+      extraStyle,
+    ].join(';');
+    toast.innerHTML = html;
+    getDomUiRoot().appendChild(toast);
+    setTimeout(() => toast.remove(), durationMs);
+    return;
+  }
+
+  toastInlinePending.push({ html, color, extraStyle, durationMs });
+  flushToastInlineQueue();
 }
 
 /** Channel C stamp (ux-information-architecture.md §S14): rare, one-shot, full-screen,

@@ -9,6 +9,29 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-051: Slice 5.5 四处缺口合同（CRT 分区 + L2 摘要 + toast 队列 + 工具剩余秒）
+- Date: 2026-08-15
+- Phase: Slice 5.5 轻量路径（人选择先补四处小缺口再走第二种敌人）
+- Type: Display / UX（只锁结构与文案；CSV 策划源可改；不改玩法公式）
+- Context: 人点名四件事：净化点大屏重要信息与库存同卷滚动；物品说明是长文截断；提示叠在一起；裂隙看不到工具还剩几秒。上一轮文案合同（DEC-050）已声明这四项「不在本轮」。
+- Decision:
+  1. S3–S8 按 `menu-crt-_layout.md` 分区落地：决策区 `.panel-fixed` 永不滚；只有库存（蜕变六卡装不下才滚卡区）是 `.scroll-area`；检视 `min-height` 110px 不被挤掉。不重做机身、不删 P1。S3/S8 无滚动区。
+  2. `data/contaminants.csv` 扩 `summary_defense` / `summary_tool`（分列在对应 description 后）。硬上限 15 字（标点计入、空格不计）。IA 四条标杆原样。其余 14 型本轮批量写入。L2 不再截断长描述。
+  3. `showToastInline` 通道 B：同时最多 2 条可见，后来排队，不重叠同一像素，默认 2s。拾取 `+N` 仍 800ms 不入队。不要新通道、不要居中弹窗。
+  4. 裂隙生效中：每条进行中限时工具 = `displayNameTool` + 剩余整数秒（分节点）。防御残留限时行保持。`tool_duration_ms === 0` 不上。tool-system 只读暴露列表，不改效果。
+- Impact: `docs/design-notes/ux-gap-lock-slice-55.md`；`data/contaminants.csv`。code 未改。codegen 需把新列打进 `ContaminantDef`。审美待人终审。本 Slice **不标 COMPLETE**。
+
+## DEC-050: Slice 5.5 文案合同（完整度 + 主菜单 + 上屏错名）
+- Date: 2026-08-15
+- Phase: Slice 5.5 轻量路径（写错的必须修 + 主菜单内容）
+- Type: Display / UX（只锁可见字符串与信息结构，不改玩法）
+- Context: 人问「生命值？在本游戏里不叫完整度吗？」净化点已上屏完整度，裂隙 HUD 写 HP、结算写 HP 均摊、蜕变卡名生命强化、i18n 写「状态」。主菜单是「新存档/读取存档」、无摘要。人授权 design 定文案、code 去改。
+- Decision:
+  1. 玩家那条量一律「完整度」。禁止 HP / 生命值 / 状态。「生命强化」保留为仪式卡名，效果行「完整度 +N」。stitch「HP 均摊」→ 表名「均摊」+ 数值。模块保持「核心完整度 / 储藏完整度」。HUD 不加「躯壳」。
+  2. 主菜单：无纪录唯一「进入净化点」；有纪录默认「沿旧路返回」+ 潮汐/出击/稳定度分节点摘要；第二项「新的纪录」。覆盖警告保留。暂停三项「新的纪录 / 沿旧路返回 / 合上」。禁止存档/读取/确认/OK/Continue。
+  3. 拾取=残渣名；计数/空态=残渣；蜕变底栏=刻入；失焦=按任意键；开机=载入；薪柴有表名无 ◇；混乱增速一种写法。
+- Impact: `docs/design-notes/ux-copy-lock-slice-55.md`；`docs/world.md` 术语表。code 未改。审美待人终审。本 Slice **不标 COMPLETE**。
+
 ## DEC-049: 净化点交互面板锁定 CRT 磷光屏（680×468，无金属/无外框）
 - Date: 2026-08-14
 - Phase: Slice 5.5 轻量路径（S3–S8）

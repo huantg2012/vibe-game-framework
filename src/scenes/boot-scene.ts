@@ -21,7 +21,7 @@ export class BootScene extends Phaser.Scene {
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRect(width / 2 - 160, height / 2 - 15, 320, 30);
 
-    const loadingText = this.add.text(width / 2, height / 2 - 40, 'Loading...', {
+    const loadingText = this.add.text(width / 2, height / 2 - 40, '载入', {
       fontSize: '16px',
       color: '#cccccc',
     });

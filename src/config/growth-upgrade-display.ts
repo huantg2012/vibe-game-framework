@@ -69,7 +69,7 @@ export const GROWTH_UPGRADE_DISPLAY: GrowthUpgradeDisplay[] = [
     effectLabel: (level, maxLevel) => numericEffectLabel(
       level, maxLevel,
       (lvl) => `完整度 +${lvl * UPGRADE_DATA.growth_vitality.effectPerLevel}`,
-      '强化躯壳',
+      '延缓覆盖',
     ),
   },
   {

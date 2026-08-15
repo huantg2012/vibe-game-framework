@@ -21,6 +21,18 @@ import type { SaveDataV1 } from '@/types/game-types';
 
 const SAVE = GAME_CONSTANTS.SAVE;
 
+function readSaveJson(): SaveDataV1 | null {
+  const raw = localStorage.getItem(SAVE.KEY);
+  if (!raw) return null;
+  try {
+    const data = JSON.parse(raw) as SaveDataV1;
+    if (data.version !== SAVE.VERSION) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Contaminant runtime state (D3 / DEC-032): a single flat save section indexed by
 // contaminant id, merged from two owning modules — defense-engine (solidify shatter
@@ -151,15 +163,42 @@ export const saveManager = {
    * Slice 5.5 C1).
    */
   peekTideNumber(): number | null {
-    const raw = localStorage.getItem(SAVE.KEY);
-    if (!raw) return null;
-    try {
-      const data = JSON.parse(raw) as SaveDataV1;
-      if (data.version !== SAVE.VERSION) return null;
-      if (typeof data.tide?.tideNumber !== 'number') return null;
-      return data.tide.tideNumber;
-    } catch {
+    const data = readSaveJson();
+    if (typeof data?.tide?.tideNumber !== 'number') return null;
+    return data.tide.tideNumber;
+  },
+
+  peekTidePhase(): 'rise' | 'crest' | 'ebb' | null {
+    const phase = readSaveJson()?.tide?.phase;
+    if (phase === 'rise' || phase === 'crest' || phase === 'ebb') return phase;
+    return null;
+  },
+
+  peekCycle(): number | null {
+    const cycle = readSaveJson()?.cycle;
+    return typeof cycle === 'number' ? cycle : null;
+  },
+
+  peekStability(): { progress: number; reached: boolean } | null {
+    const stability = readSaveJson()?.stability;
+    if (!stability || typeof stability.progress !== 'number' || typeof stability.reached !== 'boolean') {
       return null;
     }
+    return { progress: stability.progress, reached: stability.reached };
+  },
+
+  peekRecordSummary(): {
+    tideNumber: number;
+    phase: 'rise' | 'crest' | 'ebb';
+    cycle: number;
+    progress: number;
+    reached: boolean;
+  } | null {
+    const tideNumber = this.peekTideNumber();
+    const phase = this.peekTidePhase();
+    const cycle = this.peekCycle();
+    const stability = this.peekStability();
+    if (tideNumber === null || phase === null || cycle === null || stability === null) return null;
+    return { tideNumber, phase, cycle, progress: stability.progress, reached: stability.reached };
   },
 };

@@ -150,12 +150,13 @@ function buildHtml(
 ): string {
   const severity = options.actualSeverity;
   let html = `<div class="panel-title" style="color:#cc3333;">冲击结算</div>`;
-  html += `<div style="display:flex;align-items:baseline;gap:8px;margin:4px 0 8px;">
+  html += `<div class="panel-fixed" style="display:flex;align-items:baseline;gap:8px;margin:4px 0 8px;">
     <span style="font-size:12px;color:#8a8f96;">冲击</span>
     <span style="font-size:16px;font-weight:bold;color:#cc3333;">x${intensity.toFixed(2)}</span>
     ${severity ? `<span style="font-size:12px;color:${severityColor(severity)};">${SEVERITY_LABEL[severity]}</span>` : ''}
   </div>`;
-  html += `<div class="scroll-area">`;
+
+  html += `<div class="panel-fixed">`;
 
   // 表名 / 基础 / 数值 / 实际 / 数值 分节点（禁止 32 → -11 粘一句）
   const base = options.baseDamagePerModule;
@@ -180,24 +181,33 @@ function buildHtml(
       </div>
     </div>`;
   }
+  html += `</div>`;
 
-  // 逐槽：残渣名 + 挡下 N（分节点）
   const defenseResult = options.defenseResult;
-  if (defenseResult && defenseResult.slotDisclosures.length > 0) {
-    html += `<div class="separator"></div>`;
-    for (const sd of defenseResult.slotDisclosures) {
-      const name = getDefenseName(sd.type);
-      const facts = buildSlotFacts(sd);
-      html += `<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:3px 0;">
-        <span style="font-size:13px;font-weight:bold;color:#1aad96;">${name}</span>
-        ${facts.map((f) => `<span style="font-size:12px;color:#8a8f96;">${f.label}</span><span style="font-size:16px;font-weight:bold;color:${f.color};">${f.value}</span>${f.unit ? `<span style="font-size:12px;color:#8a8f96;">${f.unit}</span>` : ''}`).join('')}
-      </div>`;
+
+  // 逐槽：残渣名 + 挡下 N（分节点）。预留 4 行槽位高度，空槽留空行高。
+  const DEFENSE_SLOT_ROWS = 4;
+  html += `<div class="panel-fixed">`;
+  const disclosures = defenseResult?.slotDisclosures ?? [];
+  for (let i = 0; i < DEFENSE_SLOT_ROWS; i++) {
+    const sd = disclosures[i];
+    if (!sd) {
+      html += `<div style="padding:3px 0;min-height:1.3em;"></div>`;
+      continue;
     }
+    const name = getDefenseName(sd.type);
+    const facts = buildSlotFacts(sd);
+    html += `<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:3px 0;">
+      <span style="font-size:13px;font-weight:bold;color:#1aad96;">${name}</span>
+      ${facts.map((f) => `<span style="font-size:12px;color:#8a8f96;">${f.label}</span><span style="font-size:16px;font-weight:bold;color:${f.color};">${f.value}</span>${f.unit ? `<span style="font-size:12px;color:#8a8f96;">${f.unit}</span>` : ''}`).join('')}
+    </div>`;
   }
+  html += `</div>`;
 
   // 充能 / 转化
   const chargeChanges = options.chargeChanges;
   if (chargeChanges && chargeChanges.length > 0) {
+    html += `<div class="panel-fixed">`;
     html += `<div class="separator"></div>`;
     for (const c of chargeChanges) {
       const name = getDefenseName(c.type);
@@ -211,6 +221,7 @@ function buildHtml(
         ${c.transformed ? `<span style="font-size:12px;color:#1aad96;">转化</span><span style="font-size:13px;font-weight:bold;color:#1aad96;">${getToolName(c.type)}</span>` : ''}
       </div>`;
     }
+    html += `</div>`;
   }
 
   // 本次残留（表名 / 事实 / 数值 / 来源 分节点）
@@ -223,42 +234,47 @@ function buildHtml(
         const fact = split > 0 ? body.slice(0, split).trim() : body;
         const value = split > 0 ? body.slice(split) : '';
         const src = e.source ? getDefenseName(e.source as ContaminantType) : '';
-        return { fact, value, src };
+        const duration = e.durationMs ? `${e.durationMs / 1000}s` : '';
+        return { fact, value, src, duration };
       })
-      .filter((x): x is { fact: string; value: string; src: string } => x !== null);
+      .filter((x): x is { fact: string; value: string; src: string; duration: string } => x !== null);
     if (rows.length > 0) {
+      html += `<div class="panel-fixed">`;
       html += `<div class="separator"></div>`;
       for (const row of rows) {
         html += `<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:3px 0;">
           <span style="font-size:12px;color:#8a8f96;">本次残留</span>
           <span style="font-size:13px;color:#c8cdd4;">${row.fact}</span>
           ${row.value ? `<span style="font-size:16px;font-weight:bold;color:#1aad96;">${row.value}</span>` : ''}
+          ${row.duration ? `<span style="font-size:12px;color:#8a8f96;">${row.duration}</span>` : ''}
           ${row.src ? `<span style="font-size:12px;color:#8a8f96;">←</span><span style="font-size:13px;color:#3cffd4;">${row.src}</span>` : ''}
         </div>`;
       }
+      html += `</div>`;
     }
   }
 
   const forecastHtml = buildForecastHtml(options);
-  if (forecastHtml) {
-    html += `<div class="separator"></div>`;
-    html += forecastHtml;
-  }
-
-  // --- Merged: tide phase change + stability milestone (D5 — one notification, not three) ---
   const mergedNotices: { text: string; color: string }[] = [];
   if (options.phaseChange) mergedNotices.push(buildPhaseChangeNotice(options.phaseChange));
   if (options.stabilityMilestoneMessage) {
     mergedNotices.push({ text: options.stabilityMilestoneMessage, color: '#8a5c2a' });
   }
-  if (mergedNotices.length > 0) {
-    html += `<div class="separator"></div>`;
-    for (const n of mergedNotices) {
-      html += `<div style="font-size:13px;color:${n.color};text-align:center;padding:3px 0;">${n.text}</div>`;
+  if (forecastHtml || mergedNotices.length > 0) {
+    html += `<div class="panel-fixed">`;
+    if (forecastHtml) {
+      html += `<div class="separator"></div>`;
+      html += forecastHtml;
     }
+    if (mergedNotices.length > 0) {
+      html += `<div class="separator"></div>`;
+      for (const n of mergedNotices) {
+        html += `<div style="font-size:13px;color:${n.color};text-align:center;padding:3px 0;">${n.text}</div>`;
+      }
+    }
+    html += `</div>`;
   }
 
-  html += `</div>`;
   html += `<div class="key-hint-bar">
     <span id="impact-close-btn"><span class="key">Enter</span> 合上</span>
     <span><span class="key">Esc</span> 合上</span>
@@ -301,7 +317,7 @@ function buildSlotFacts(sd: SlotDisclosure): SlotFact[] {
   }
   if (sd.toolUseGrant) facts.push({ label: '随机工具', value: '次数+1', color: teal });
   if (sd.moduleSwapTriggered) facts.push({ label: '效果', value: '模块互换', color: warn });
-  if (sd.equalizationAmount) facts.push({ label: '效果', value: 'HP 均摊', color: teal });
+  if (sd.equalizationAmount) facts.push({ label: '均摊', value: String(sd.equalizationAmount), color: teal });
   if (sd.healAmount) {
     const moduleLabel = MODULE_LABELS[sd.healModuleId ?? ''] ?? sd.healModuleId ?? '';
     facts.push({ label: '修复', value: String(sd.healAmount), color: teal, unit: moduleLabel });

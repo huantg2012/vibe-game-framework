@@ -10,7 +10,7 @@
  */
 
 import type { ContaminantRarity, ContaminantType } from '@/types/game-types';
-import { getToolName } from '@/ui/contaminant-names';
+import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 // ---------------------------------------------------------------------------
@@ -38,7 +38,7 @@ const RARITY_STARS: Record<ContaminantRarity, string> = {
   rare: '★★★',
 };
 const RARITY_COLORS: Record<ContaminantRarity, string> = {
-  common: '#1a6b5c',
+  common: '#8a8f96',
   fine: '#1aad96',
   rare: '#3cffd4',
 };
@@ -92,8 +92,8 @@ export const riftResultPanel = {
     </div>`;
 
     html += `<div class="stat-grid" style="margin-bottom:8px;">
-      <div class="stat-row"><span class="stat-label">薪柴</span><span class="stat-value" style="color:#c4873a;">◇ ${data.kindlingGained}</span></div>
-      <div class="stat-row"><span class="stat-label">污染物</span><span class="stat-value">${data.acquired.length}</span></div>
+      <div class="stat-row"><span class="stat-label">薪柴</span><span class="stat-value" style="color:#c4873a;">${data.kindlingGained}</span></div>
+      <div class="stat-row"><span class="stat-label">残渣</span><span class="stat-value">${data.acquired.length}</span></div>
       <div class="stat-row"><span class="stat-label">击杀</span><span class="stat-value">${data.killCount}</span></div>
       <div class="stat-row"><span class="stat-label">峰值混乱</span><span class="stat-value">${peak}</span></div>
       <div class="stat-row"><span class="stat-label">用时</span><span class="stat-value">${elapsedS}s</span></div>
@@ -104,7 +104,7 @@ export const riftResultPanel = {
       html += `<div class="section-title">拾取</div>`;
       html += `<div class="tile-grid">`;
       for (const c of data.acquired) {
-        const name = getToolName(c.type);
+        const name = getDefenseName(c.type);
         const color = RARITY_COLORS[c.rarity];
         const stars = RARITY_STARS[c.rarity];
         html += `<span class="pill" style="border-color:${color};color:${color};">${name} ${stars}</span>`;

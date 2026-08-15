@@ -15,7 +15,7 @@ export const gameConfig: Phaser.Types.Core.GameConfig = {
   height: 640,
   pixelArt: true,
   roundPixels: true,
-  backgroundColor: '#0a0a0a',
+  backgroundColor: '#0a0b0d',
   physics: {
     default: 'arcade',
     arcade: {

@@ -26,6 +26,15 @@ export interface LocaleSchema {
     language: string;
     overwriteWarning: string;
     overwriteClear: string;
+    summaryTide: string;
+    summaryCycle: string;
+    summaryStability: string;
+    tideNth: string;
+    phaseRise: string;
+    phaseCrest: string;
+    phaseEbb: string;
+    stabilityIncomplete: string;
+    stabilityComplete: string;
   };
   hud: {
     chaos: {
