@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-08-14
+last-modified-date: 2026-08-16
 last-modified-by: design agent
 interface-changed: true
 interfaces-with:
@@ -125,14 +125,23 @@ interface SaveData {
     - 空 slot 无防御效果
 
 13. **出击工具阶段**：
-    - 出击前从 `stage === 'tool'` 的库存中选 3 件装入出击 slot
-    - 出击中使用主动工具：按对应键位触发（最多同时 2 个主动键位）
+    - 出击前从 `stage === 'tool'` 的库存中选件装入出击 slot
+    - **Slice 5 起**：基础 3 槽（最多 3 主动键 `Q / F / G`）+ 改造可解锁第 4 槽（被动）。唯一真相是 `getSortieActiveSlotCount()` / `getSortiePassiveSlotIndex()`，不得写死「选 3 件 / 最多 2 个主动键」
+    - 出击中使用主动工具：按对应键位触发
     - 每次使用 `usesRemaining--`
     - `usesRemaining === 0` 时 `stage = 'broken'`，从库存中移除
 
 14. **出击工具效果**：每种转化后工具的具体能力见 `docs/design-notes/slice3-sortie-tools.md`。
 
-15. **被动工具**：装了即生效，不占主动键位。触发次数计为 `usesRemaining`（每次触发消耗 1 次）。
+15. **被动工具**：装了即生效，不占主动键位。触发次数计为 `usesRemaining`（每次触发消耗 1 次）。**每次触发必须有可见反馈**（贴源短闪 + 通道 B 事件条，见 Kit 反馈通道；不得静默扣次数）。
+
+15a. **名称权威（Slice 5.5）**：上屏中文名的唯一真相是 `data/contaminants.csv` 的 `display_name_defense` / `display_name_tool`。代码禁止维护第二套本地名表。入口：`getDefenseName` / `getToolName`。
+
+15b. **摘要列（Slice 5.5）**：CSV `summary_defense` / `summary_tool`（硬上限 15 个汉字，标点计入、空格不计）。检视 L2 与踏入槽摘要读这两列，禁止再截断长描述。
+
+15c. **检视五层（Slice 5.5）**：选中即填充，无第二层打开。L1 身份 / L2 摘要 / L3 数值 / L4 与我的关系 / L5 转化去向。转化去向必须在防御槽第一屏可见（不得只藏在滚动区）。
+
+15d. **库存排序**：阶段 → 稀有度 → 类型 id，固定，不随获取时间变。
 
 ### G — 永久改造
 

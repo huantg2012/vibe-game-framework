@@ -2,10 +2,10 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-15
+last-modified: 2026-08-16
 approved-date: 2026-07-22
-changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）。**Slice 5 T0 模块注册表全量补核已完成（2026-08-12）**：核对 `src/` 全目录树，补齐 Slice 2-4.5 引入但从未登记的模块，修正过期的"规划中"标记，重置本字段。2026-08-12 Slice 5.5 C3 补登记 `contaminant-names.ts`（C2 引入但未登记）与新增的 `inspect-dock.ts`。2026-08-12 Slice 5.5 C6 补登记 `side-effect-labels.ts`（C5 引入但未登记）；`PanelStyles` 条目补 `showToastInline`/`showToastStamp` 两个新导出（未新增文件，未创建独立模块条目）。
+changed-this-slice: false
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）。**Slice 5 T0 模块注册表全量补核已完成（2026-08-12）**：核对 `src/` 全目录树，补齐 Slice 2-4.5 引入但从未登记的模块，修正过期的"规划中"标记，重置本字段。2026-08-12 Slice 5.5 C3 补登记 `contaminant-names.ts`（C2 引入但未登记）与新增的 `inspect-dock.ts`。2026-08-12 Slice 5.5 C6 补登记 `side-effect-labels.ts`（C5 引入但未登记）；`PanelStyles` 条目补 `showToastInline`/`showToastStamp` 两个新导出（未新增文件，未创建独立模块条目）。**Slice 5.5 收尾核对（2026-08-16，DEC-054）**：注册表已含 InspectDock / RiftHud / Minimap 挂 `#dom-ui-root` / toast 队列；本 Slice 无未登记新 `src/` 文件；未补 DEC-ARCH（无新系统边界）。`changed-this-slice` 收尾重置。目录树 ASCII 过期项仍在 backlog。
 ---
 
 # 技术架构

@@ -5,7 +5,8 @@ created-when: 2026-08-15
 slice: 5.5
 note: |
   QA 子代理两轮未产出文件；Director 按授权用 Read/Grep 补闸门证据。
-  机械通过 ≠ 审美通过。不代人勾好看 / 像游戏 / PASS。不标 Slice COMPLETE。
+  机械通过 ≠ 审美通过。不代人勾好看 / 像游戏 / PASS。
+  本报告日期 2026-08-15。Slice 5.5 于 2026-08-16 COMPLETE（DEC-054）；R9–R12 已关 Q2 挂载、Q4 HP、Q6 摘要列、Q7 toast/剩余秒、Q8 小地图异形、Q9 主菜单摘要。未关项见 backlog 与 current-slice 已知问题。
   CRT demo HTML 只作对照，实现真相以 src/** 为准。
 ---
 

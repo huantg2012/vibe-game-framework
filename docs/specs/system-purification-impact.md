@@ -2,7 +2,7 @@
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5)
 last-modified-by: design agent
-last-modified-date: 2026-08-14
+last-modified-date: 2026-08-16
 interface-changed: true
 interfaces-with:
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier back
@@ -185,8 +185,10 @@ interface SortieModifiers {
     - 计算并应用伤害（防御结算见 D 组）
     - 每个受损模块 emit `MODULE_DAMAGED { moduleId, newHealth }`
     - emit `IMPACT_RESOLVED { moduleDamage: { [id]: damage } }`
-    - 画面震动 300ms + 结果面板：逐模块伤害、强度、防御槽冲击计数进度
-    - 结果面板**由玩家关闭**（不自动 2 秒消失）→ 潮汐阶段变化通知（如有）→ 新工具 toast（如有转化）→ 恢复玩家输入
+    - 画面震动 300ms + 结果面板：逐模块伤害、强度、**逐槽防御归因**（规则 23a）
+    - 结果面板**由玩家关闭**（不自动 2 秒消失；Enter / Esc 合上）→ 恢复玩家输入。潮汐/稳定度里程碑并入本面板（规则 23b），不另开阻断窗。新工具可用走通道 B toast。
+23a. **必须披露（Slice 5.5）**：每槽减伤实绩、副作用来源、经济返还、稳定度变化、转化事件、预告命中与否。接口：`ImpactResult` 含 `defenseResult.slotDisclosures`、`primaryModuleId` / `trueSeverity` / `baseDamagePerModule`。缺一项即结算不合格。
+23b. **一次归来一条阻断**：潮汐相位与稳定度里程碑并入冲击结算。进行中同时只 1 条需按键消解的确认。
 24. **hp 下限**：模块 hp 最低为 0，不进负数；`applyDamage()` 返回实际造成的伤害（用于 D 组的承伤类结算）。
 25. **两个"准确率"必须分开看**（DEC-034）：
     - **ground truth 层**：预告在生成时先随机挑一个模块作为预测目标（`forecastTargetId`）。冲击结算时以 `FORECAST_ACCURACY`（0.8）的概率让实际重点目标等于它。`retrograde` 的"预判命中"（`forecastCorrect`）判定用的是**这个 ground-truth 值**与实际重点目标的比较，**不是玩家看到的显示值**——所以 `mirror` 谎报不会影响 `retrograde` 的收益。

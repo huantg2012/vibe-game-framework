@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-08-12
+last-modified: 2026-08-16
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3+3.5+4+4.5+5 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济 + 数据管线 + 防御引擎 + 污染物 18 型全档实现（工具 + 防御两侧）+ 表现层（UI Kit / 程序化地表 / 动态力场边界 / 工具 VFX）。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5 已完成。`docs/specs/` 含 6 份已实现的系统 spec；`src/` 包含裂隙出击环 + 净化点环 + 成长潮汐经济 + 数据管线 + 防御引擎 + 污染物 18 型全档实现（工具 + 防御两侧）+ 表现层（UI Kit / 程序化地表 / 动态力场边界 / 工具 VFX）+ Slice 5.5 UX 重构（墙机 / 裂隙 DOM HUD / 检视层）。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
@@ -36,15 +36,15 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 防御slot管理面板 | **已实现** (Slice 3) | - (无独立 spec) | DOM面板：装备污染物到防御slot减伤 |
 | Loadout选择面板 | **已实现** (Slice 3) | - (无独立 spec) | 出击前选择携带的工具 |
 | 改造祭坛面板 (GrowthPanel) | **已实现** (Slice 3) | - (无独立 spec) | DOM面板：永久改造购买界面 |
-| 潮汐+稳定度 HUD | **已实现** (Slice 3) | - (无独立 spec) | 显示当前潮汐阶段+稳定度进度 |
+| 潮汐+稳定度 HUD | **已实现** (Slice 3；5.5 改展示) | `docs/specs/system-growth-tide.md` | 净化点贴顶：薪柴 / 潮汐 / 冲击预告。稳定度改存续报告陈述，不在常驻 HUD |
 | GameState 管理器 | **已实现** (Slice 2) | - (无独立 spec) | session-only 内存状态管理，跨场景持久（薪柴/模块HP/冲击强度/sortie计数） |
 | 场景流转 | **已实现** (Slice 2) | - (无独立 spec) | Menu → PurificationScene ↔ RiftScene 双向切换 + 状态传递 |
 | 边界氛围（BoundaryAtmosphere） | **已实现** (Slice 2) | `docs/specs/system-purification-impact.md`（净化点场景规则组） | 净化点边界外黑暗 + 周期性模糊幽影（粒子 + apparition）；Slice 4.5 起半径跟随 BoundaryShape |
 | 分配面板 + 冲击结果面板 | **已实现** (Slice 2) | - (无独立 spec) | DOM overlay：薪柴分配到模块（修复/防御）+ 冲击结算结果展示 |
 | Trail 导航 | **已实现** (Slice 1) | - (无独立 spec) | 面包屑路径标记，辅助玩家在有限视野下找回撤离点 |
 | Minimap | **已实现** (Slice 1) | - (无独立 spec) | 角落小地图显示已探索区域与关键点位 |
-| HUD | **已实现** (Slice 1) | - (无独立 spec) | 血量/混乱值/薪柴数量实时显示 |
-| 程序化地图生成 | 计划中 | 待创建 | Voronoi 碎片切分 + Cellular Automata 有机地形 + 裂口连接（DEC-005） |
+| HUD | **已实现** (Slice 1；5.5 迁 DOM) | `docs/specs/system-chaos-scavenge-extract.md` | 裂隙完整度 / 混乱 / 薪柴 / 工具槽 / 生效中；挂 `#dom-ui-root` |
+| 程序化地图生成 | 计划中（Slice 6，DEC-053） | 待创建 | Voronoi 碎片切分 + Cellular Automata 有机地形 + 裂口连接（DEC-005）；撤离点多样性同 Slice |
 | 角色属性/能力成长 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 永久改造+污染物循环+潮汐经济，出击正向积累 |
 | 音频（AudioManager） | 计划中 | 待创建 | BGM/环境/SFX 播放 + 动态分层混音 + 距离衰减（方向见 audio-direction.md） |
 | CSV 数据管线 | **已实现** (Slice 4) | - (构建期工具) | 构建期将 data/*.csv 编译为 src/generated/*.ts，类型安全、tree-shakeable |
@@ -96,7 +96,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 出击工具 | 18 全部实现（主动 15 + 被动 3：scatter/muffle/siphon） | data/contaminants.csv 工具列 |
 | 防御效果 | 18 型全部接线（含副作用），Slice 5 起无未接线机制 | src/systems/defense-engine.ts |
 | 永久改造 | 6（出击效率/资源效率/生存韧性/出击扩展/防御扩展/信息优势） | data/upgrades.csv → src/generated/upgrade-data.ts |
-| 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 6 |
+| 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 8（DEC-053） |
 
 ## 设计历史（仅决策，不含详情）
 
@@ -108,3 +108,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 4「Data Pipeline + Defense Engine + Common Tier」(2026-08-11, COMPLETE): 构建期 CSV 数据管线（contaminants.csv + upgrades.csv -> src/generated/*.ts，18 种污染物类型安全编译）；防御效果引擎（5 种防御分类 + 7 种 Common 副作用）；被动工具架构（事件驱动、无按键触发、scatter/muffle 两种实现）；4 种新主动工具（ruminate/retrograde/kindle/stitch）；净化点 UX 重构（世界内零文字交互 + 底部提示条 + HUD 面板化）。验证结论：数据驱动管线正确区分逐类行为，防御效果让 slot 选择有意义，被动工具创造独特玩法。试玩后修复 9 项 backlog issue。遗留：永久改造深度扩展归 Slice 5。
 - Slice 4.5「视觉与界面翻修 + 动态力场边界」(2026-08-11 ~ 2026-08-12, COMPLETE): 表现层脱离原型状态，无新玩法系统。UI Kit 统一 7 个 DOM 面板并改为右侧全高抽屉；裂隙 HUD 符号化；角色/敌人/节点改 boot 期缓存贴图（玩家 4 向 3/4 视角 + 冷暖色分离）；净化点地表改 7 层程序化逐像素生成；净化点边界从 tile 判定改为潮汐驱动的动态力场 blob（BoundaryShape + BoundaryBreath）。同步完成 BARRIER→CORE 术语重命名（15 源文件 / 13 文档 / 1 CSV，见 DEC-027）。验证方式为七轮"改一版→人当场看→指名下一版问题"，非一次性试玩签字。**收尾补记（2026-08-12）**：两项遗留已闭合——边界规则组补写进 `system-purification-impact.md`，三块新系统登记进 `architecture.md`（含 DEC-ARCH-009）。本 Slice 同时暴露了框架在 in-game UI 上的系统性弱点，对策见 `guides/99-review.md` FV-01 / FV-02。
 - Slice 5「工具库深度」(2026-08-12, COMPLETE): 污染物 18 型在工具侧与防御侧全部落地——Fine/Rare 主动工具 7 种（主动 15/15）、`siphon` 被动（3/3）、防御侧 6 处 `handled externally` 全部接线；工具使用 VFX（8 视觉族群，DEC-038）；永久改造从 3 项扩到 6 项（第 4 工具槽 / 第 4 防御槽 / 预告可靠度）+ 成长系统泛化；模块受损三态视觉；文档清账四项 + 架构注册表全量补核。关键设计决策 DEC-029~040：`abyss` 用伤害结算前 HP 判定、`combust` 阈值定为固定常量、`overwrite` 忠于原设计（副作用允许偶尔有利于玩家）、跨 slot 效果作用于"其他所有槽位"、**冲击预告改为非空间（目标+强度，不给方向）**、污染物运行时状态进存档。计划外补两项：Slice 4 的 8 个工具此前对敌人零效果（`ToolDebuffs` 无消费方，直接架空本 Slice 验证问题）、四处 CSV 承诺但无代码的机制。**验证状态：实现完成、体验未验证**——机器闸门全绿但人未回签试玩清单与 U1-U12，直接决定收尾并转入 Slice 5.5 UX 重构；装配决策纠结感留到 5.5 观察。
+- Slice 5.5「UX 重构」(2026-08-12 ~ 2026-08-16, COMPLETE)：打磨 Slice，无新玩法系统。墙机磷光屏、裂隙 HUD 迁 DOM、检视五层、toast 队列、完整度文案、主菜单三组、底栏按键对齐。装配纠结：机制上不是二选一，界面只讲清事实。被发现指示留给 Slice 8。收尾四项见 `current-slice.md` 与 DEC-054。下一手 Slice 6 程序化地图 + 撤离点（DEC-053）。

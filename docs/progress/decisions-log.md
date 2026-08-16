@@ -9,6 +9,29 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-054: Slice 5.5「UX 重构」COMPLETE
+- Date: 2026-08-16
+- Phase: Slice 5.5 轻量路径收尾
+- Type: Process
+- Context: 人指令「完成当前 slice」。此前多轮当场看过墙机/裂隙 HUD/主菜单/底栏按键，并说过改了的看上去 ok。轻量路径收尾四项此前未记完，不得标 COMPLETE。
+- Decision:
+  1. Slice 5.5 标 COMPLETE。验证方式是打磨 Slice 的「改一版→人看→再改」，以人要求收尾为终审信号。审美与「读作游戏」由人拍，agent 不代写好看/PASS。
+  2. 收尾四项：架构注册表已含检视层 / 裂隙 HUD / toast / 小地图挂载根；spec 就地扩写 growth-tide / chaos-scavenge-extract / purification-impact；Kit §A0/A1 回写（裂隙 HUD 已是 DOM，废 Phaser ×1.5）；本文件 + current-slice + roadmap 记交付范围；U1–U12 机械层登记，审美以人收尾指令为准。
+  3. Slice 5 遗留「装配是否纠结」：机制上装防御不是放弃工具。5.5 只讲清事实。若要真实犹豫，回 design 重审收益结构，不在本 Slice 改公式。
+  4. 「被发现指示」仍不做；按 DEC-053 留给 Slice 8。
+- Impact: `docs/progress/current-slice.md` COMPLETE；`roadmap.md`；`CLAUDE.md` 当前阶段。下一 Slice = 6 程序化地图 + 撤离点。
+
+## DEC-053: Slice 6 与 Slice 8 对调
+- Date: 2026-08-16
+- Phase: Iterative Development（5.5 收尾时人拍板）
+- Type: Process / 编号
+- Context: 人要求「slice 6/8 对调」。此前（2026-08-12）第二敌人是 Slice 6、程序化地图+撤离点是 Slice 8（DEC-041 把撤离点并入当时的 Slice 8）。
+- Decision:
+  1. **Slice 6** = 程序化地图 + 撤离点多样性（Voronoi+CA；多个撤离位置/条件）。DEC-041 的「撤离点与程序化地图同 Slice」内容保留，编号改为 6。
+  2. **Slice 8** = 第二敌人（潜行轴：改写体、感知/行为、AI 类型泛化、敌人 CSV 拍板、敌人视觉、「被发现」指示）。
+  3. Slice 7 净化点扩张、9 音乐/音效、10 NPC **不变**。
+- Impact: `roadmap.md`、`CLAUDE.md` 编号段、`gdd-core.md`、`backlog-issues.md`、活文档里「第二敌人→6 / 地图→8」的指向。历史 DEC 正文不改写。
+
 ## DEC-052: 主菜单三组身份 / 纪录读数 / 动作；游标只属动作行
 - Date: 2026-08-15
 - Phase: Slice 5.5 轻量路径（人主菜单截图：关系/主次不清）

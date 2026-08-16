@@ -14,7 +14,7 @@ created-when: 2026-08-12
 - **P0**：T0 架构注册表全量补核 / T1 七种 Fine·Rare 主动工具 / T2 `siphon` 被动工具 / T3 防御侧全部未接线机制 / T4 工具使用 VFX
 - **P1（已确认纳入）**：T5 永久改造深度 + `upgrades.csv` 三项落地 / T6 净化点模块受损三态视觉
 - **清账（已确认纳入）**：B1 purification-impact 漂移回填 / B2 growth-tide exposes 对齐 / B3 art-direction §6 措辞复核 / B4 `BREATH_*` 死常量清理
-- **不做**：第二敌人（→ Slice 6）、净化点扩张（→ Slice 7）、程序化地图 + 撤离点多样性（→ Slice 8）、音乐/音效（→ Slice 9）、NPC（→ Slice 10）、i18n 补全
+- **不做**：第二敌人（→ Slice 8，DEC-053 对调）、净化点扩张（→ Slice 7）、程序化地图 + 撤离点多样性（→ Slice 6，DEC-053 对调）、音乐/音效（→ Slice 9）、NPC（→ Slice 10）、i18n 补全
 
 **Fine/Rare 全量落地，不分批。** 人明确拒绝"做一半留 fallback"的半实现态。
 

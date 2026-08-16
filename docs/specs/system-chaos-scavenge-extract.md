@@ -3,9 +3,8 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: code agent
-last-modified-date: 2026-08-13
-interface-changed: false
-slice: 1
+last-modified-date: 2026-08-16
+slice: 1 (extended in 5.5)
 interfaces-with:
   - system-movement-vision     # T1：经场景层消费其三个视野调制器 + Player.setSpeedModifier('chaos')；撤离点注册为 glow source
   - system-enemy-ai            # T2：消费 ENEMY_ALERT / ENEMY_LOST_PLAYER / ENEMY_KILLED 判定"被侦测"与"被追击"
@@ -301,11 +300,17 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
     | 元素 | 位置 | 显示内容 | 更新时机 |
     | ---- | ---- | -------- | -------- |
-    | 混乱值条 | **左上（生命条下方）** | 标签 `混乱` + 0–150 条（刻度 50/75/**100 闸门**）+ 纯数字 + 档位词另起一行（`稳定`/`渗透`/`侵蚀`/`临界`） | 条几何：`CHAOS_CHANGED`；文本：整数变化时 |
-    | 生命值条 | 左上 | 填充比例 + `生命 80/100` | `PLAYER_HEALTH_CHANGED` |
-    | 薪柴计数 | 右上 | `薪柴 7`（warm-dim 纯数字，无条形） | `KINDLING_COLLECTED` |
-    | 交互提示 | 屏幕中下 | `按 E 撤离` | 进入/离开撤离点触发半径 |
-    | 结算面板 | 居中 | 见规则 33 | `RIFT_EXITED` |
+    | 完整度条 | 左上 `.device-plate` | 表名 `完整度` + 条 + 当前/上限分节点 | `PLAYER_HEALTH_CHANGED` |
+    | 混乱值条 | 完整度下方 | 表名 `混乱` + 0–150 条（刻度 50/75/**100 闸门**）+ 纯数字 + 档位词另起一行（`稳定`/`渗透`/`侵蚀`/`临界`） | 条几何：`CHAOS_CHANGED`；文本：整数变化时 |
+    | 生效中 | 混乱簇下方 | 防御残留限时行 + 每条进行中限时工具：中文名与剩余整数秒分节点。`tool_duration_ms === 0` 与冷却不上此行 | 每帧 `setActiveEffects`（权威 remainingMs，HUD 不自减） |
+    | 工具槽 | 左下 | `[Q]/[F]/[G]` + 工具中文名 + 余量 | 使用/装载变化 |
+    | 薪柴计数 | 右上 | 表名 `薪柴` + 数字（warm-dim，无条形） | `KINDLING_COLLECTED` |
+    | 小地图 | 右下 `#rift-minimap.device-plate` | 战争迷雾 + 玩家十字 / 撤离竖缝 / 敌方 / 节点。挂 `#dom-ui-root` | 每帧 |
+    | 交互提示 | 屏幕中下 | `[E] 撤离`（仅可撤离时） | 进入/离开撤离点触发半径 |
+    | 结算面板 | 居中小读出（宽 360，DEC-049） | 见规则 33 | `RIFT_EXITED` |
+
+    挂载：屏幕空间一律 `#dom-ui-root`。禁止用 Phaser `scrollFactor(0)` 画角锚 HUD。
+    「被发现」指示不在本清单（Slice 8）。
 
 31. **禁止每帧刷新文本**（architecture 约束）：所有 `setText` 只在上述事件回调中执行，且先比对新旧字符串，相同则跳过。混乱值条的**几何**可以每帧插值以保证平滑，但**文本**必须走事件。
 32. **混乱值条的状态表现**（art §6.2/§7.2 的 HUD 侧）：
@@ -319,17 +324,8 @@ speedMult(t)      = 1.00                                   , t ≤ 75
     | 速率加速中（被追击） | 填充色提亮一档 + 数字旁显示 `▲` |
 
     溢出态必须在条上"看得出来"，否则规则 4 的溢出设计对玩家不可见——玩家会以为满格就是终点，从而失去继续加码的感知。条的身份（`混乱`）与档位词（`稳定`/`渗透`/`侵蚀`/`临界`）必须分开呈现，禁止拼成 `N 混乱 · 稳定` 这种会被读成复合名词的字符串。
-33. **结算面板内容**（`world.md` 叙事语调：冷峻、无人称、无感叹号、单条 ≤15 字）：
-    ```
-    出击结束            ← 死亡时为「出击失败」
-    带出薪柴  12        ← 死亡时为 0
-    遗留薪柴  5
-    混乱值峰值  128%
-    用时  3:07
-    本次 12 / 最佳 17   ← session 内内存，不进存档
-    按 R 重新出击
-    ```
-    `本次 / 最佳` 是给试玩者的即时贪婪锚点——没有净化点消费出口时，它是"多拿一点"唯一的价值反馈。实现成本约十行，不要省。
+33. **结算面板内容**（冷峻、无人称；拾取用防御名）：
+    标题撤离成功/阵亡；薪柴 / 残渣数 / 击杀 / 峰值混乱 / 用时；拾取列出本趟残渣**具体条目**（不得只报计数）；被动触发次数。底栏 `R`：生还「返回净化点」/ 阵亡「重新出击」。挂 `#dom-ui-root`，宽 360 居中小读出，不加墙机 680×468。
 34. **文本走 i18n**：所有面向玩家的字符串使用 `t()`，key 按 architecture DEC-004 的 `[domain].[context].[item]` 约定（`hud.chaos.label`、`hud.extract.prompt`、`hud.result.title` 等）。占位期只需 zh-CN。
 35. **HUD 不参与逻辑**：HUD 只监听事件与读取查询接口，不持有游戏状态、不回写。结算面板的"按 R"通过回调交给 `RunController` 执行。
 

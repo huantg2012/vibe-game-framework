@@ -31,3 +31,5 @@ purpose: 开发过程中随手记录框架摩擦/热修/刻意框架会话。ret
 - 框架会话（2026-08-13）：人纠正「记上要过关不够，要让 agent 知道如何审美过关、如何做得像游戏 UX」。第一版 skill 把本游戏 Kit/色值/五参考/Phaser 挂载写进了 framework。人补约束：framework 改动必须可上 master，只能是通用方法论。已拆层：skill 教「根据本游戏 vision/world/art-direction 发明 UX」；填充物留在游戏 docs。见 FV-05。
 - Slice 5.5 / UX 审查（2026-08-15）：Director 把审查子代理打成 background 后提前结束，导致审查空转。
 - Slice 5.5 / 主菜单热修（2026-08-15）：本轮按投诉改成顺序等返回，未 background。新摩擦：code 把交付记进了 Director 拥有的 `current-slice.md`（R11 被先写了一截），Director 只能覆盖成完整轮次记录。轻量路径下「谁写进度文件」仍会抢笔。
+- Slice 5.5 COMPLETE（2026-08-16）：人指令对调 6/8 并收尾。轻量路径收尾四项在 ACTIVE 期间一直欠着，到「完成当前 slice」才一次性补完——打磨 Slice 容易把登记拖到最后一天。
+- Slice 编号对调（2026-08-16，DEC-053）：历史 DEC-041/045 正文保留「当时的 6/8」，活文档要逐条改指向。append-only 决策日志与活编号并存，检索时会读到过期编号。
