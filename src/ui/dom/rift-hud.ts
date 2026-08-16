@@ -359,7 +359,7 @@ export class RiftHud {
 
     // --- Extract prompt (bottom-center) ---
     this.extractPromptEl = document.createElement('div');
-    this.extractPromptEl.textContent = '按 E 撤离';
+    this.extractPromptEl.textContent = '[E] 撤离';
     this.extractPromptEl.style.cssText = `position:absolute;left:50%;bottom:36px;transform:translateX(-50%);font-size:13px;color:${TEXT_BRIGHT};text-shadow:${TEXT_SHADOW};display:none;`;
 
     this.overflowVeil = document.createElement('div');

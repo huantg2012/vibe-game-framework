@@ -121,7 +121,9 @@ export const riftResultPanel = {
       html += `</div>`;
     }
 
-    html += `<div class="hint">${data.survived ? '按 R 返回净化点' : '按 R 重新出击'}</div>`;
+    html += `<div class="key-hint-bar">
+      <span><span class="key">R</span> ${data.survived ? '返回净化点' : '重新出击'}</span>
+    </div>`;
 
     panel.innerHTML = html;
     root.appendChild(panel);

@@ -9,6 +9,17 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-052: 主菜单三组身份 / 纪录读数 / 动作；游标只属动作行
+- Date: 2026-08-15
+- Phase: Slice 5.5 轻量路径（人主菜单截图：关系/主次不清）
+- Type: Display / UX（结构澄清，不改玩法、不改 DEC-050 文案词）
+- Context: 摘要与选项几乎同字号、同列、组间距不够，读数和可点项分不清。未选项 `>` 与已选项 `▸` 同时出现，像两种按钮。载体仍 C；不要改成 DEC-049 墙机。
+- Decision:
+  1. 标题屏永远三组：身份（`存续` + 副题）/ 纪录读数（有纪录才画潮汐·出击·稳定度；覆盖确认改留警告句）/ 动作（无纪录仅「进入净化点」；有纪录「沿旧路返回」默认 + 「新的纪录」）。
+  2. 摘要贴动作组正上方，属读数，不是第三种按钮。组间空隙必须明显大于组内行距。
+  3. 游标只属动作行。未选中动作行无可见前缀（本屏列表静默不再用 `>`）；已选中 `▸`。读数 / 警告 / 身份禁止 `>` / `▸`。净化点底栏单行 `>` 本轮不改。
+- Impact: `docs/design-notes/ux-menu-structure-slice-55.md`；Kit §A5-1；`src/scenes/main-menu-scene.ts`。审美待人终审。本 Slice **不标 COMPLETE**。
+
 ## DEC-051: Slice 5.5 四处缺口合同（CRT 分区 + L2 摘要 + toast 队列 + 工具剩余秒）
 - Date: 2026-08-15
 - Phase: Slice 5.5 轻量路径（人选择先补四处小缺口再走第二种敌人）

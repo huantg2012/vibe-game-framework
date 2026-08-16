@@ -267,6 +267,7 @@ export class PurificationHud {
     if (detail) {
       html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span><span style="color:${COL.dimText};font-size:12px;">${detail}</span>`;
     }
+    html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` + this.buildDefaultPrompt();
     return html;
   }
 

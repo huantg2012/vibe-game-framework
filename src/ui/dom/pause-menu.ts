@@ -111,7 +111,7 @@ function paint(): void {
     `<div class="panel-title">${t('menu.pauseTitle')}</div>` +
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
-    `<div class="key-hint-bar"><span><span class="key">↑↓</span> 选中</span><span class="key">Enter</span><span><span class="key">Esc</span> 合上</span></div>`;
+    buildKeyHintBar();
 
   panel.querySelectorAll<HTMLElement>('.pause-menu-row').forEach((row) => {
     row.addEventListener('pointerover', () => {
@@ -124,6 +124,32 @@ function paint(): void {
       items[selectedIndex]?.action();
     });
   });
+}
+
+function buildKeyHintBar(): string {
+  const selectedLabel = items[selectedIndex]?.label ?? '';
+  const resumeLabel = t('menu.resume');
+
+  if (mode === 'confirmOverwrite') {
+    return `<div class="key-hint-bar">
+    <span><span class="key">↑↓</span> 选中</span>
+    <span><span class="key">Enter</span> ${selectedLabel}</span>
+    <span><span class="key">Esc</span></span>
+  </div>`;
+  }
+
+  if (selectedLabel === resumeLabel) {
+    return `<div class="key-hint-bar">
+    <span><span class="key">↑↓</span> 选中</span>
+    <span><span class="key">Enter</span> / <span class="key">Esc</span> 合上</span>
+  </div>`;
+  }
+
+  return `<div class="key-hint-bar">
+    <span><span class="key">↑↓</span> 选中</span>
+    <span><span class="key">Enter</span> ${selectedLabel}</span>
+    <span><span class="key">Esc</span> 合上</span>
+  </div>`;
 }
 
 function onKey(e: KeyboardEvent): void {

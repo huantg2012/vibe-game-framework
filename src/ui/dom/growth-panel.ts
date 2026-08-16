@@ -1,5 +1,5 @@
 /**
- * GrowthPanel - DOM overlay for purchasing permanent upgrades at the growth altar.
+ * GrowthPanel - DOM overlay for inscribing (刻入) permanent upgrades at the growth altar.
  *
  * Game-style card layout: each upgrade is a visual card with icon, name,
  * dot-based level indicator, and inline cost. Maxed cards glow gold,
@@ -26,7 +26,7 @@ const UPGRADES = GROWTH_UPGRADE_DISPLAY;
 let panel: HTMLDivElement | null = null;
 let onCloseCallback: (() => void) | null = null;
 
-// Keyboard cursor (IA §0.4 / §S7: ↑↓ 选卡 · Enter 购买 · Esc 离开).
+// Keyboard cursor (IA §0.4 / §S7: ↑↓ 选卡 · Enter 刻入 · Esc 离开).
 // 关闭走底键丝印 + Esc，不再另开「…不了」按钮区。
 let cursorCard = 0;
 

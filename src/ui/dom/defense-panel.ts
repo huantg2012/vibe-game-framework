@@ -275,16 +275,34 @@ function render(): void {
   }
   html += `</div>`;
   html += `<div class="inspect-dock" id="defense-inspect-dock">${computeInspectHtml(slots, inventory, threshold)}</div>`;
-  html += `<div class="key-hint-bar">
-    <span><span class="key">Tab</span> 切区</span>
-    <span><span class="key">↑↓←→</span> 移动</span>
-    <span><span class="key">Enter</span> 装填/取下</span>
-    <span id="defense-close-btn"><span class="key">Esc</span> 离开</span>
-  </div>`;
+  html += buildKeyHintBar(slots, inventory);
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);
   wireEvents(slots, inventory);
+}
+
+function buildKeyHintBar(slots: (Contaminant | null)[], inventory: Contaminant[]): string {
+  if (cursorRegion === 'actions') {
+    return `<div class="key-hint-bar">
+    <span><span class="key">Tab</span> 切区</span>
+    <span id="defense-close-btn"><span class="key">Enter</span> / <span class="key">Esc</span> 离开</span>
+  </div>`;
+  }
+
+  const parts: string[] = [
+    `<span><span class="key">Tab</span> 切区</span>`,
+    `<span><span class="key">↑↓←→</span> 移动</span>`,
+  ];
+  if (cursorRegion === 'slots' && slots[cursorSlot]) {
+    parts.push(`<span><span class="key">Enter</span> 取下</span>`);
+  } else if (cursorRegion === 'inventory' && inventory[cursorInv] && slots.some((s) => s === null)) {
+    parts.push(`<span><span class="key">Enter</span> 装填</span>`);
+  }
+  parts.push(`<span id="defense-close-btn"><span class="key">Esc</span> 离开</span>`);
+  return `<div class="key-hint-bar">
+    ${parts.join('\n    ')}
+  </div>`;
 }
 
 function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): void {

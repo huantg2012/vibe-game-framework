@@ -276,8 +276,7 @@ function buildHtml(
   }
 
   html += `<div class="key-hint-bar">
-    <span id="impact-close-btn"><span class="key">Enter</span> 合上</span>
-    <span><span class="key">Esc</span> 合上</span>
+    <span id="impact-close-btn"><span class="key">Enter</span> / <span class="key">Esc</span> 合上</span>
   </div>`;
 
   return html;

@@ -26,6 +26,7 @@ export class BootScene extends Phaser.Scene {
       color: '#cccccc',
     });
     loadingText.setOrigin(0.5, 0.5);
+    loadingText.setPadding({ top: 4, right: 0, bottom: 0, left: 0 });
 
     this.load.on('progress', (value: number) => {
       progressBar.clear();

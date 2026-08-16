@@ -52,7 +52,7 @@ let onCloseCallback: (() => void) | null = null;
 // Keyboard cursor (IA §0.4 "键盘是第一公民"): three focus regions, cycled with Tab.
 type CursorRegion = 'slots' | 'inventory' | 'actions';
 const REGION_ORDER: CursorRegion[] = ['slots', 'inventory', 'actions'];
-const ACTION_COUNT = 2; // 0 = 踏入 (confirm), 1 = …还是算了 (cancel)
+const ACTION_COUNT = 2; // 0 = 踏入, 1 = 离开
 
 let cursorRegion: CursorRegion = 'slots';
 let cursorSlot = 0;
@@ -288,17 +288,53 @@ function render(): void {
   }
   html += `</div>`;
   html += `<div class="inspect-dock" id="loadout-inspect-dock">${computeInspectHtml(slots, inventory, activeCount, passiveIndex)}</div>`;
-  html += `<div class="key-hint-bar">
-    <span><span class="key">Tab</span> 切区</span>
-    <span><span class="key">↑↓←→</span> 移动</span>
-    <span><span class="key">Enter</span> 装/卸/确认</span>
-    <span id="loadout-confirm-btn"><span class="key">Enter</span> 踏入</span>
-    <span id="loadout-cancel-btn"><span class="key">Esc</span> 离开</span>
-  </div>`;
+  html += buildKeyHintBar(slots, inventory, activeCount, passiveIndex);
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);
   wireEvents(slots, inventory);
+}
+
+function buildKeyHintBar(
+  slots: (Contaminant | null)[],
+  inventory: Contaminant[],
+  activeCount: number,
+  passiveIndex: number,
+): string {
+  const parts: string[] = [
+    `<span><span class="key">Tab</span> 切区</span>`,
+    `<span><span class="key">↑↓←→</span> 移动</span>`,
+  ];
+
+  const enterIsStepIn = cursorRegion === 'actions' && cursorAction === 0;
+  const enterIsLeave = cursorRegion === 'actions' && cursorAction === 1;
+
+  if (cursorRegion === 'slots' && slots[cursorSlot]) {
+    parts.push(`<span><span class="key">Enter</span> 取下</span>`);
+  } else if (cursorRegion === 'inventory') {
+    const c = inventory[cursorInv];
+    if (c) {
+      const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+      if (tileHasCompatibleSlot(slots, activeCount, passiveIndex, toolType)) {
+        parts.push(`<span><span class="key">Enter</span> 装填</span>`);
+      }
+    }
+  } else if (enterIsStepIn) {
+    parts.push(`<span id="loadout-confirm-btn"><span class="key">Enter</span> 踏入</span>`);
+  } else if (enterIsLeave) {
+    parts.push(`<span id="loadout-cancel-btn"><span class="key">Enter</span> / <span class="key">Esc</span> 离开</span>`);
+  }
+
+  if (!enterIsLeave) {
+    parts.push(`<span id="loadout-cancel-btn"><span class="key">Esc</span> 离开</span>`);
+  }
+  if (!enterIsStepIn) {
+    parts.push(`<span id="loadout-confirm-btn">踏入</span>`);
+  }
+
+  return `<div class="key-hint-bar">
+    ${parts.join('\n    ')}
+  </div>`;
 }
 
 function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): void {
