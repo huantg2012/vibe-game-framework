@@ -9,6 +9,42 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-057: 裂隙地表按碎片类型表驱动（三种先接通）
+- Date: 2026-08-16
+- Phase: Slice 6
+- Type: Art
+- Context: 人认体验方案并说继续。A1 要给户外 / 医院 / 地铁写世界层视觉合同，成品靠扩展+组合，不发明新色。
+- Decision:
+  1. 种类差异 = 已锁 L1 + 材质残影 + 墙形状语法（土脊 / 隔断 / 柱列）。禁止只换底色同一堆石头。
+  2. 污染仍是 §4.2 数据错误。`contaminationAge` / `ruinSeverity` 只调已有浓度表与 `SURFACE` 旋钮。
+  3. 虚空三种地方共用 `void-black`。加第四种 = CSV 新行。
+  4. 合同：`docs/art/rift-fragment-surfaces.md`。`procedural-surface.ts` 写死的 `frag-outdoor` 必须改读表。
+- Impact: art-direction §4.2 / §14.3 各回写一句指针。图书馆 / 居民区本批不写完整参数。
+
+## DEC-056: 阵亡回净化点；撤离坐标改由生成器给出
+- Date: 2026-08-16
+- Phase: Slice 6
+- Type: Rules
+- Context: 人明确阵亡=失败、回净化点，最好带轻微惩罚。现状阵亡结算按 R 是原地重新出击，可以不回净化点。人同时要求旧撤离规格补「位置从生成器来」。
+- Decision:
+  1. 阵亡与撤离成功同一去向：结算后回净化点。禁止原地按 R 再打这一次。
+  2. 薪柴仍为 0。这次出击仍走归来/冲击。不另扣稳定度——相对「死了按 R 逃课」，必须回去就是惩罚。
+  3. 出生/撤离/薪柴坐标由地图生成器给出。`system-chaos-scavenge-extract.md` 已就地补句。
+- Impact: 结算底栏阵亡也写「返回净化点」。`RunController.restart()` 阵亡分支待实现时删掉原地重开。
+
+## DEC-055: Slice 6 开工范围（程序化地图；撤离多样性延后）
+- Date: 2026-08-16
+- Phase: Slice 6 开工
+- Type: Scope
+- Context: 人接受「程序化替换裂隙固定图」，但明确不要捷径口、本 Slice 不考虑撤离多样性。另点名三条体验约束：可走区外轮廓必须不规则；障碍必须有情景；不同出击禁止同一套配色/氛围。相交矩形并集只是外轮廓参考之一。
+- Decision:
+  1. Slice 6 名称按交付收为「程序化地图」。vision Nice-to-have「撤离点多样性」**不**在本 Slice；DEC-041「与生成同 Slice」对多样性这条暂缓，生成器仍要放**一个**撤离点（位置不固定）。
+  2. 每一次从净化点踏入裂隙时生成完整布局；出击未结束前不变。尺度：主干走路约 40–60 秒。
+  3. 三条体验约束写入 `current-slice.md`，规格必须每条给多解，禁止唯一算法先写死。
+  4. 新建 `docs/specs/system-map-generation.md`。撤离规格默认不扩。
+  5. 「多种裂隙环境」在 vision 为明确不做、world 写过 MVP 一套主题——**本 Slice 以人的指令为准**，做有限种碎片氛围（优先用已锁 L1 记忆色），不是无限生物群落。
+- Impact: `current-slice.md` ACTIVE；`docs/tasks/slice-6.md`；roadmap 当前行。多样性仍留待后续 Slice。
+
 ## DEC-054: Slice 5.5「UX 重构」COMPLETE
 - Date: 2026-08-16
 - Phase: Slice 5.5 轻量路径收尾

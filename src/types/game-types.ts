@@ -117,11 +117,13 @@ export interface MapData {
   exitPoints: Position[];
 }
 
-/** Tile types */
+/** Tile types. Frame index in the rift tileset equals the enum value. */
 export enum TileType {
   WALL = 0,
   FLOOR = 1,
   FRACTURE = 2,
+  /** Unwalkable, not opaque, painted void-black. Not a wall. */
+  VOID = 3,
 }
 
 // ─── Slice 3: Growth + Tide Economy types ───────────────────────────────────

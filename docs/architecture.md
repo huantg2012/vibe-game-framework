@@ -4,8 +4,8 @@ created-by: code agent (mode A)
 created-date: 2026-07-22
 last-modified: 2026-08-16
 approved-date: 2026-07-22
-changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。2026-08-12 补登记 Slice 4.5 新增三块（动态力场边界 / 程序化净化点地表 / 共享面板样式层）。**Slice 5 T0 模块注册表全量补核已完成（2026-08-12）**：核对 `src/` 全目录树，补齐 Slice 2-4.5 引入但从未登记的模块，修正过期的"规划中"标记，重置本字段。2026-08-12 Slice 5.5 C3 补登记 `contaminant-names.ts`（C2 引入但未登记）与新增的 `inspect-dock.ts`。2026-08-12 Slice 5.5 C6 补登记 `side-effect-labels.ts`（C5 引入但未登记）；`PanelStyles` 条目补 `showToastInline`/`showToastStamp` 两个新导出（未新增文件，未创建独立模块条目）。**Slice 5.5 收尾核对（2026-08-16，DEC-054）**：注册表已含 InspectDock / RiftHud / Minimap 挂 `#dom-ui-root` / toast 队列；本 Slice 无未登记新 `src/` 文件；未补 DEC-ARCH（无新系统边界）。`changed-this-slice` 收尾重置。目录树 ASCII 过期项仍在 backlog。
+changed-this-slice: true
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 6 C1（2026-08-16）**：登记 `src/generation/`（outline-mask）+ DEC-ARCH-010；RiftScene 仍读固定图。目录树 ASCII 过期项仍在 backlog。
 ---
 
 # 技术架构
@@ -65,11 +65,11 @@ src/
 │   ├── enemy-factory.ts        # 敌人工厂（按类型创建）
 │   └── interactables.ts        # 可交互物（薪柴/物品/撤离点）
 ├── generation/
-│   ├── voronoi-partitioner.ts  # Voronoi 切分：生成 4-6 个不规则碎片区域
-│   ├── cellular-automata.ts    # CA 有机地形：在碎片内部生成洞穴/有机结构
-│   ├── fracture-connector.ts   # 裂口连接：碎片间窄小的空间裂口生成
-│   ├── content-placer.ts       # 房间内容放置（敌人/物品/撤离点）
-│   └── tilemap-builder.ts      # 生成数据 → Phaser Tilemap
+│   ├── outline-mask.ts         # C1：生长+腐蚀陆地掩膜（VOID / FLOOR）
+│   ├── ruins.ts                # C2：按碎片语法落情景墙
+│   ├── preview-paint.ts        # 图册用层次漆（进游戏仍走 procedural-surface）
+│   ├── types.ts                # OutlineMask / RuinedMask 契约
+│   └── index.ts                # 生成器出口（布点后续批次追加）
 ├── managers/
 │   ├── game-state.ts           # 全局游戏状态（跨场景持久）
 │   ├── save-manager.ts         # 存档读写（LocalStorage）
@@ -166,7 +166,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 
 ## 模块注册表
 
-> **状态**列以真实 `src/` 目录为准（Slice 5 T0 全量补核，核对日期 2026-08-12）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`（含 `ai/`）、`src/entities/`、`src/utils/`、`src/managers/`、`src/ui/`（含 `dom/`）、`src/config/`、`src/types/`、`src/scenes/`、`src/generated/`；`src/generation/` 仍不存在。
+> **状态**列以真实 `src/` 目录为准（Slice 5 T0 全量补核，核对日期 2026-08-12）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`（含 `ai/`）、`src/entities/`、`src/utils/`、`src/managers/`、`src/ui/`（含 `dom/`）、`src/config/`、`src/types/`、`src/scenes/`、`src/generated/`、`src/generation/`（Slice 6 C1：仅陆地掩膜）。
 
 | 模块 | 路径 | 职责 | 对外接口 | 状态 |
 | ---- | ---- | ---- | -------- | ---- |
@@ -207,9 +207,9 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
 | InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
 | PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块的视觉表现（CORE=蓝色六边形/STORAGE=橙色方块，HP 驱动的 alpha 分级 + 临界闪烁 + 邻近发光），Slice 5 T6 三态受损视觉将扩展此模块 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+） |
-| Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv` | `CONTAMINANT_DATA: Record<ContaminantType, ContaminantDef>`；`UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef>`（数据常量，非函数接口） | 已实现（Slice 4） |
+| Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS` | 已实现（Slice 4；Slice 6 C2 加碎片表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
-| MapGenerator | src/generation/ | Voronoi+CA 程序化地图生成 | generate(config): MapData | 规划中（目录不存在；RiftScene 当前用 `src/scenes/rift-map-data.ts` 手工编排的固定地图） |
+| MapGenerator | src/generation/ | 裂隙程序化布局。C1 陆地掩膜；C2 按 CSV 语法落情景墙 | generateOutline(seed)；generateRuins(seed, typeId?) | C1+C2 已实现。RiftScene 仍读固定图（C4）。布点/氛围未做 |
 | RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（完整度条/混乱条/薪柴数/工具槽/撤离提示/生效中行），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel。生效行用 `.device-effect` 名+秒分节点；remainingMs 由场景每帧权威 set，HUD 不再自减 | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 迁 DOM；R10 工具剩余秒） |
 | RiftResultPanel | src/ui/dom/rift-result-panel.ts | 裂隙撤离/阵亡结算 DOM 面板，与冲击结算面板视觉同源（本轮补登记，模块本身为 Slice 5.5 C2 交付） | isOpen(), show(data), close(), destroy() | 已实现（Slice 5.5） |
 | Minimap | src/ui/minimap.ts | 裂隙战争迷雾小地图：`#rift-minimap.device-plate` 挂 `#dom-ui-root`，内层 canvas。已探索区域 + 玩家十字 / 撤离竖缝 / 深渊方点 / 节点菱形 | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), update(playerWorldPos), reset(), destroy() | 已实现（Slice 5.5 迁挂载根、改标记形状） |
@@ -227,7 +227,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 > - `src/types/map-types.ts`（T6 新增）持有地图侧数据契约：`TileMapData` / `OccluderGrid` / `WalkGrid` / `EnemySpawnData` / `PatrolRouteData` / `KindlingNodeDef` / `ExtractionPointDef` / `RiftLayoutData`。
 > - `src/types/ai-types.ts`（T7 新增）持有敌人 AI 契约：`EnemyView`（对外只读视图，T3/T4/渲染层消费）/ `EnemyAIState`（可变运行时状态，仅 AI 系统写）/ `InfiltratorConfig` / `Perception` / `AlertLevel` / `SightZone` / `AICueId`。放在 `types/` 而非 `systems/ai/` 是为了打断循环依赖：实体实现 `EnemyView`，AI 系统持有可变状态。
 > - `src/config/invariants.ts`（T7 新增）把设计所依赖的常量关系写成可执行断言，dev 构建在 `main.ts` 启动时校验（DEC-020）。Slice 1 覆盖敌人 AI 的 I1–I6 + 一条跨 spec 补充检查。T8/T9 的 spec 不变量应追加进同一文件。
-> - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**数据**（ASCII tile 网格 + 布点），与渲染分离；导出 `RIFT_MAP`（含 `tileMap` / `grid` / `layout`）与开发期校验 `validateRiftMap()`。程序化地图生成（`src/generation/`）本 Slice 未动。
+> - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**数据**（ASCII tile 网格 + 布点），与渲染分离；导出 `RIFT_MAP`（含 `tileMap` / `grid` / `layout`）与开发期校验 `validateRiftMap()`。Slice 6 C1 已有 `src/generation/outline-mask.ts`；RiftScene 接线仍是 C4。
 > - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 固定地图 + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap 等系统的场景层编排；`PurificationScene` 动态力场边界 + 模块交互 + 全部 DOM 面板编排。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），AI 与 Combat 互不 import（DEC-002）。
 
 ## 关键架构决策
@@ -267,6 +267,14 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
   - Voronoi 碎片大小差异过大 → 约束最小/最大面积 + Lloyd 松弛迭代平衡
   - 裂口位置不理想 / 碎片过碎 → 在共享边界上按规则重选裂口、限制碎片数量区间
   - 上述任一缓解失败 → 在同一混合框架内重试 / 调参（重试上限内），而非切换到纯 CA 或其他生成器
+
+### DEC-ARCH-010: Slice 6 外轮廓先交一块岛（生长+腐蚀）
+
+- **选择**：C1 可走陆地 = 种子生长 + 腐蚀 + 最大四连通块。缓冲 64×42，界外格是 `TileType.VOID`（不可走、不挡视线、不画墙皮）。
+- **与 DEC-ARCH-003**：003 的 Voronoi 分层仍是碎片内部 / 多块拼合的长期路线。本批不切 4–6 块 Voronoi 岛。人认的体验是「一块不规则陆地漂在虚空里」；约束 1 验收看看见的边，不看宏观分区是否先落地。
+- **不退回**：BSP 方正房间。CA 不当墙的结构来源（墙是 C2 情景残块）。
+- **坏图**：填满缓冲、啃边矩形、贴齐四边 → 丢弃重试，不换算法。
+- **影响**：`TileType.VOID` 入枚举；`TileGrid.isWalkable` 只认地板/裂口。裂隙场景仍用手写图，直到 C4。
 
 ### DEC-ARCH-004: 自实现 Raycasting 做视野
 

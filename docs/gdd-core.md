@@ -44,7 +44,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | Trail 导航 | **已实现** (Slice 1) | - (无独立 spec) | 面包屑路径标记，辅助玩家在有限视野下找回撤离点 |
 | Minimap | **已实现** (Slice 1) | - (无独立 spec) | 角落小地图显示已探索区域与关键点位 |
 | HUD | **已实现** (Slice 1；5.5 迁 DOM) | `docs/specs/system-chaos-scavenge-extract.md` | 裂隙完整度 / 混乱 / 薪柴 / 工具槽 / 生效中；挂 `#dom-ui-root` |
-| 程序化地图生成 | 计划中（Slice 6，DEC-053） | 待创建 | Voronoi 碎片切分 + Cellular Automata 有机地形 + 裂口连接（DEC-005）；撤离点多样性同 Slice |
+| 程序化地图生成 | **进行中** (Slice 6) | `system-map-generation.md` | C1 陆地 + C2 三种残墙已交。布点 / 场景接线 / 氛围未做。每一次踏入生成；一个撤离点；撤离多样性延后（DEC-055） |
 | 角色属性/能力成长 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 永久改造+污染物循环+潮汐经济，出击正向积累 |
 | 音频（AudioManager） | 计划中 | 待创建 | BGM/环境/SFX 播放 + 动态分层混音 + 距离衰减（方向见 audio-direction.md） |
 | CSV 数据管线 | **已实现** (Slice 4) | - (构建期工具) | 构建期将 data/*.csv 编译为 src/generated/*.ts，类型安全、tree-shakeable |

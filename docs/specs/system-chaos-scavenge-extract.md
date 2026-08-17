@@ -2,14 +2,15 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code agent
+last-modified-by: design agent
 last-modified-date: 2026-08-16
-slice: 1 (extended in 5.5)
+slice: 1 (extended in 5.5, 6)
+interface-changed: true
 interfaces-with:
   - system-movement-vision     # T1：经场景层消费其三个视野调制器 + Player.setSpeedModifier('chaos')；撤离点注册为 glow source
   - system-enemy-ai            # T2：消费 ENEMY_ALERT / ENEMY_LOST_PLAYER / ENEMY_KILLED 判定"被侦测"与"被追击"
   - system-combat              # T4：消费 ENEMY_DAMAGED（战斗代价）与 PLAYER_DIED（出击失败路径）
-  - tilemap-renderer           # T6：固定地图提供薪柴节点 / 撤离点 / 出生点的位置数据
+  - system-map-generation      # Slice 6：出生 / 撤离 / 薪柴坐标由生成器给出，不再读手写固定图
 exposes:
   - ChaosSystem.getValue() / getRate() / getStage() / addChaos(source, amount) / setPaused(b)
   - getChaosModulators(value)  # 纯函数：混乱值 → { radiusScale, edgeCorruption, screenFlicker, speedMult }
@@ -97,7 +98,7 @@ interface KindlingNode {
   id: string;                 // 格式 KDL_01 ...
   tier: 'safe' | 'contested' | 'deep';
   value: number;              // 拾取获得的薪柴点数
-  position: Vector2;          // 世界坐标（px），由 T6 固定地图提供
+  position: Vector2;          // 世界坐标（px）。Slice 6 起由地图生成器给出，禁止钉死手写图格子
   collected: boolean;         // 运行时；拾取后置 true 并禁用碰撞体
 }
 
@@ -254,7 +255,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
     - 单价随成本**超线性**增长（1 / 2 / 4 对应约 0 / 20 s / 50 s）是刻意的：如果单价与成本线性，理性玩家会算出"全拿"和"只拿安全的"收益率相同，于是不存在纠结。超线性让深处的诱惑真实存在，而混乱值让它真实危险。
     - `contested` 档是本系统的核心：它把"等待"变成一笔**明码标价的支出**（等 20 s = 16 点混乱值 = 约 1/6 条命）。这是整个 Slice 里最纯粹的博弈时刻。
 21. **地图布局约束**（供 T6，与薪柴分布同为一体）：
-    - **出生点（裂隙入口）与撤离点分列地图两端**，主干直线通行 ≈ 40–60 s。撤离是"继续前进抵达终点"，不是"原路折返"——固定地图上折返会让后半程变成已知路线的重复播放，紧张感归零。
+    - **出生点（裂隙入口）与撤离点分列可走陆地两端**，主干走路 ≈ 40–60 s。坐标由 `system-map-generation` 生成，禁止落在 Slice 1 手写图那个撤离格上。撤离是"继续前进抵达终点"，不是"原路折返"。
     - 至少两条从出生点到撤离点的路线：一条短而暴露，一条长而隐蔽。这让"混乱值高了怎么办"有一个可执行的战术答案（换路），而不只是"跑快点"。
     - `contested` 与 `deep` 节点必须挂在主干**侧枝**上，使"多拿一个"= 一次明确的离线绕行。
     - 通往撤离点的最后一段走廊由 1 个巡逻单位覆盖——**最后一道关**。但撤离点触发格本身不在任何巡逻路径的常驻视野内：最后一关应当可以靠等待/绕行/战斗解决，而不是靠运气。
@@ -287,7 +288,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
     | 结算面板标题 | `出击结束` | `出击失败` |
     | 混乱值 | 冻结在当前值 | 冻结在当前值 |
 
-    死亡不额外扣除任何东西（没有装备耐久、没有惩罚计时）——**丢掉全部薪柴已经足够重**。当玩家携带 15 点薪柴、混乱值 130、离撤离点还有 20 秒时，这条规则会让他手心出汗。这就是全部设计意图。
+    死亡不另扣装备。**丢掉全部薪柴**仍是主惩罚。Slice 6 起阵亡与撤离成功同一去向：结算后面回净化点，**禁止原地按 R 再打这一次**（现状「阵亡 → 重新出击」作废）。这次出击仍计入归来/冲击——以前按 R 可以逃掉回净化点，那才是空惩罚。不另扣稳定度，除非人以后要求加码。
 27. **撤离点注册为 glow source**：场景创建时调用 `VisibilitySystem.registerGlowSource('EXIT_01', pos, GLOW_LEAK_RADIUS)`，出击结束时 `unregisterGlowSource`。这是 Slice 1 唯一的 glow source（T1 规则 19）。
 28. **允许空手撤离**：`carried = 0` 时也能撤离。侦察一圈就跑是合法策略，系统不做评判（`world.md` 叙事语调：陈述事实，不渲染情绪）。
 29. **重开**：结算面板上按 **R** 重新开始出击（重置混乱值、薪柴、节点、敌人、玩家位置）。Slice 1 没有净化点场景，这是让人反复试玩、回答验证问题的唯一途径，不是可选项。
@@ -325,7 +326,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
     溢出态必须在条上"看得出来"，否则规则 4 的溢出设计对玩家不可见——玩家会以为满格就是终点，从而失去继续加码的感知。条的身份（`混乱`）与档位词（`稳定`/`渗透`/`侵蚀`/`临界`）必须分开呈现，禁止拼成 `N 混乱 · 稳定` 这种会被读成复合名词的字符串。
 33. **结算面板内容**（冷峻、无人称；拾取用防御名）：
-    标题撤离成功/阵亡；薪柴 / 残渣数 / 击杀 / 峰值混乱 / 用时；拾取列出本趟残渣**具体条目**（不得只报计数）；被动触发次数。底栏 `R`：生还「返回净化点」/ 阵亡「重新出击」。挂 `#dom-ui-root`，宽 360 居中小读出，不加墙机 680×468。
+    标题撤离成功/阵亡；薪柴 / 残渣数 / 击杀 / 峰值混乱 / 用时；拾取列出本趟残渣**具体条目**（不得只报计数）；被动触发次数。底栏 `R`：**撤离成功与阵亡都是「返回净化点」**。挂 `#dom-ui-root`，宽 360 居中小读出，不加墙机 680×468。
 34. **文本走 i18n**：所有面向玩家的字符串使用 `t()`，key 按 architecture DEC-004 的 `[domain].[context].[item]` 约定（`hud.chaos.label`、`hud.extract.prompt`、`hud.result.title` 等）。占位期只需 zh-CN。
 35. **HUD 不参与逻辑**：HUD 只监听事件与读取查询接口，不持有游戏状态、不回写。结算面板的"按 R"通过回调交给 `RunController` 执行。
 
@@ -339,7 +340,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
   | ---- | ---- | ---- |
   | 拾取薪柴 | 无（走上去自动） | 立即入账，HUD 右上数字跳动 |
   | 撤离 | `E`（仅在撤离点触发半径内有效） | 结束本次出击 |
-  | 重新出击 | `R`（仅在结算面板显示时有效） | 重置并重开 |
+  | 返回净化点 | `R`（仅在结算面板显示时有效） | 撤离成功与阵亡都回净化点。阵亡禁止原地重开 |
 
   `E` / `R` 的按键读取归 RiftScene，不进 Player（Player 的输入只负责移动，见 T1 所有权边界）。
 

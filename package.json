@@ -10,7 +10,11 @@
     "typecheck": "tsc --noEmit",
     "codegen": "node tools/csv-codegen/generate.mjs",
     "art:postprocess": "tsx tools/art-pipeline/src/postprocess.ts",
-    "art:verify": "tsx tools/art-pipeline/src/verify.ts"
+    "art:verify": "tsx tools/art-pipeline/src/verify.ts",
+    "preview:outline": "tsx --tsconfig tsconfig.json tools/map-preview/render-outline.ts",
+    "check:outline": "tsx --tsconfig tsconfig.json tools/map-preview/check-outline.ts",
+    "preview:ruins": "tsx --tsconfig tsconfig.json tools/map-preview/render-ruins.ts",
+    "check:ruins": "tsx --tsconfig tsconfig.json tools/map-preview/check-ruins.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1"

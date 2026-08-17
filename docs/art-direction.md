@@ -2,9 +2,9 @@
 status: APPROVED
 created-by: art agent
 created-date: 2026-07-22
-last-modified: 2026-08-14
+last-modified: 2026-08-16
 approved-date: 2026-07-24
-changed-this-slice: false
+changed-this-slice: true
 note: Foundation Step 3. 视觉方向已批准锁定（7/7 概念 + 色彩架构验证通过）。已知待验证项移交 Slice 1 美术门禁，见文末章节。§14.3（A-G3 表现力）已于 2026-07-31 验证 PASS——地面/墙走程序化连续表面（DEC-018）。2026-08-12 由 Director 做最小事实校正：§6.2 按钮状态改为游戏语义命名、§6.4 面板布局由"居中 ≤70% viewport"改为"右侧全高抽屉 440px"，以对齐 Slice 4.5 人已逐轮确认的实现。同日 art agent 复核完成（Slice 5 B3）：§6.2 补齐"临界"态（原表漏了 `_template-ui.md` 五态状态表里的这一态）、§6.4 补充与 `ui-art-overhaul.md` 的权威关系说明（后者是实操基线，本节是其上位规范）。2026-08-14 Slice 5.5 DEC-049：§6.4 由 440px 抽屉改为 680×468 磷光屏（无金属/无外框），对齐人锁定的 CRT 实现。
 ---
 
@@ -302,6 +302,8 @@ note: Foundation Step 3. 视觉方向已批准锁定（7/7 概念 + 色彩架构
 - 乱码 tile：2-3 种噪点/错误纹理 tile（仅重度区使用）
 - 环境物件：碎片来源的残余物（家具残骸、设备、植被——但随浓度增加越来越不可辨）
 - 裂口标记：高亮发光 tile（碎片间连接处，最亮元素）
+
+裂隙地表按碎片类型表驱动，见 `docs/art/rift-fragment-surfaces.md`。
 
 ### 4.3 视野与黑暗
 
@@ -777,7 +779,7 @@ assets/
    **验证结果（关键结论，回写自 A-G3 实测）：**
    - **路线成立**：纯俯视角像素 + 有限视野能达到目标氛围（暗、脏、压迫、teal 污染点缀）。参见 `docs/art/demos/rift-synth/scene.s3.png`（实测台，忠实复刻 DEC-016 视野模型）。
    - **破马赛克的正解＝程序化连续表面，不是"多做几种离散 tile"**：A-G3 先按原计划试了"离散 AI tile + 旋转 + decal"五轮——即使做了逐块亮度归一（消棋盘）、随机旋转、降权，AI tile 的显著特征（尤其违反冷色环境规则的暖олив裂纹）仍读作规律重复，马赛克只是从"明暗棋盘"变成"特征重复"。改用**按世界坐标程序化生成整块地面/墙体**后一次成型：连续 = 结构上零接缝零重复，丰富度（脏污/磨损/teal 渗漏）完全可控、确定性、零成本、色板合规，且比 AI tile 更契合程序化地图（DEC-005）与 AI-vibe 像素（DEC-007）两个赌注。**决策见 DEC-018。**
-   - **地面配方**（`docs/art/demos/rift-synth/floor.mjs`）：多层 value-noise 脏污 + 低频宏观起伏 + 有符号划痕/碎屑（暗磨痕 + 反光浅痕）+ 稀疏蜿蜒 teal 渗漏裂缝 + flat teal 数据错误块 → 量化到 `palette.json`。
+   - **地面配方**（`docs/art/demos/rift-synth/floor.mjs`）：多层 value-noise 脏污 + 低频宏观起伏 + 有符号划痕/碎屑（暗磨痕 + 反光浅痕）+ 稀疏蜿蜒 teal 渗漏裂缝 + flat teal 数据错误块 → 量化到 `palette.json`。裂隙地表按碎片类型表驱动，见 `docs/art/rift-fragment-surfaces.md`（本节数字是 `frag-outdoor` 基线行）。
    - **墙体配方**（`docs/art/demos/rift-synth/scene.mjs`）：基于像素级墙 bitmap 的连续边缘明暗（北侧顶沿高光 / 南侧落影 / 侧沿 AO）→ 墙成连续实体量感，无 32px 分段。
    - **光照配方**（`docs/art/demos/rift-synth/darkwood.mjs`，对齐真实 `VisibilitySystem`）：前向锥 + 环形 + 三段可见度 + 手电光束提亮（**暖心**）+ **视野边缘 teal 冷渗** + 贴身暖灯 + void 颗粒 + 墙体投影遮挡。"暖心冷边"用视野系统本身表达了"人类暖光 vs 污染冷色"的核心张力。
    - **AI 生图的定位收窄**：AI 生图保留给**离散 sprite/道具**（敌人/薪柴/撤离点等有个体身份的对象），**不再用于连续地面/墙体**。`tools/art-pipeline/` 仍是离散 sprite/decal 的处理路径。

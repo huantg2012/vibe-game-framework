@@ -116,7 +116,7 @@ export class RiftScene extends Phaser.Scene {
     // surface is a continuous procedural texture (DEC-018), not the flat placeholder tiles.
     const layer = this.tilemapRenderer.create(this, tileMap, {
       tilesetKey: 'placeholder-rift-tileset',
-      collidingIndices: [TileType.WALL],
+      collidingIndices: [TileType.WALL, TileType.VOID],
       depth: DEPTH.surface,
     });
     layer.setVisible(false);

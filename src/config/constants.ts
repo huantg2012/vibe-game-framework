@@ -248,6 +248,37 @@ export const GAME_CONSTANTS = {
     FRACTURE_MAX_PER_EDGE: 2, // max connections between two adjacent fragments
   },
 
+  /**
+   * Slice 6 C1 land outline. Rectangular tile buffer; walkable land must not fill it.
+   * 80×80 MAP.* numbers stay architecture placeholders — do not use them for this generator.
+   */
+  GENERATION: {
+    BUFFER_COLS: 64,
+    BUFFER_ROWS: 42,
+    MAX_OUTLINE_ATTEMPTS: 28,
+    LAND_FILL_MIN: 0.24,
+    LAND_FILL_MAX: 0.48,
+    BORDER_RING: 2,
+    /** Fraction of the outer ring that may be land. Higher = island hugging the rectangle. */
+    BORDER_OCCUPANCY_MAX: 0.12,
+    /** Land / axis-aligned bbox. Circles sit near 0.78; filled rectangles sit near 1. */
+    BBOX_FILL_MAX: 0.80,
+    /**
+     * Share of land cells that touch void. Large blobs naturally sit lower;
+     * this only rejects near-solid blocks (a 1-cell frame around a filled rect).
+     */
+    ROUGHNESS_MIN: 0.08,
+    /** bbox must leave at least this many leftover cells on width+height combined. */
+    MIN_BBOX_SLACK: 8,
+    MAX_EDGES_TOUCHING: 3,
+    MAX_RUIN_ATTEMPTS: 40,
+    MIN_FEATURE_SEPARATION: 7,
+    WALL_RATIO_MIN: 0.018,
+    WALL_RATIO_MAX: 0.22,
+    /** Largest leftover open rectangle (tiles). Bigger than this reads as an empty plaza. */
+    YARD_AREA_MAX: 64,
+  },
+
   /** Purification point (docs/specs/system-purification-impact.md) */
   PURIFICATION: {
     /** Spatial layout */

@@ -295,7 +295,17 @@ export class BootScene extends Phaser.Scene {
     gfx.lineStyle(1, 0x232323, 1);
     gfx.strokeRect(tile + 0.5, 0.5, tile - 1, tile - 1);
 
-    gfx.generateTexture('placeholder-rift-tileset', tile * 2, tile);
+    // frame 2 - fracture (unused by C1; keep index == TileType)
+    gfx.fillStyle(0x12141a, 1);
+    gfx.fillRect(tile * 2, 0, tile, tile);
+    gfx.lineStyle(1, 0x1a1e24, 1);
+    gfx.strokeRect(tile * 2 + 0.5, 0.5, tile - 1, tile - 1);
+
+    // frame 3 - void (void-black; not a wall skin)
+    gfx.fillStyle(0x080a0c, 1);
+    gfx.fillRect(tile * 3, 0, tile, tile);
+
+    gfx.generateTexture('placeholder-rift-tileset', tile * 4, tile);
     gfx.destroy();
   }
 }

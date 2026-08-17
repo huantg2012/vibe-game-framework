@@ -3,7 +3,7 @@ status: ACTIVE
 slice: 3 (extended in 5, 5.5)
 last-modified-date: 2026-08-16
 last-modified-by: design agent
-interface-changed: true
+interface-changed: false
 interfaces-with:
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
   - system-chaos-scavenge-extract # 出击工具 + 永久改造修正出击参数；新增污染物拾取节点

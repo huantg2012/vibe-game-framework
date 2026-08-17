@@ -3,7 +3,7 @@ status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5)
 last-modified-by: design agent
 last-modified-date: 2026-08-16
-interface-changed: true
+interface-changed: false
 interfaces-with:
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier back
   - system-movement-vision          # purification scene reuses Player + VisibilitySystem (DEC-ARCH-008)
