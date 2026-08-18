@@ -1,0 +1,26 @@
+---
+description: 裂隙地图活策略入口——锚+种子+邻域抖动；扩空间走合同清单
+globs: src/generation/**/*.ts,tools/map-preview/**/*.ts,data/rift-fragments.csv,docs/specs/system-map-generation.md,docs/design-notes/**
+alwaysApply: true
+---
+
+# 地图生成策略（找 / 扩）
+
+裂隙每一次踏入用同一套策略**生成并烤图**，不是搬画廊静帧。
+
+**正文：** `docs/design-notes/slice-6-layered-generation.md`（先读「Agent 入口」）。
+**十锚 / 抖动：** `src/generation/recipes.ts`（`PREVIEW_RECIPES`、`jitterRecipe`）。
+**出击：** `src/generation/rift-layout.ts`（`pickRecipe` → `generateRiftLayout`）。
+
+## 必须成立
+
+1. 新图 = 抽一个风格锚 + 新种子 + 邻域抖动。十张 PNG 是样例，不是地图库。
+2. 扩空间按合同三种粒度：改抖动 / 加锚 / 开碎片表。新身份必须锁死骨架语法 + 碎片种类 + 覆盖方言。
+3. 天空巨影是氛围场的一部分：同一份场只改 `phase` 循环；雾池烤死。
+
+## 禁止
+
+- 两种骨架对半插值
+- 只换底色 / 着色器当新身份
+- 把画廊图拷进游戏当地图
+- 装饰挡路；坏图换另一套生成算法（连通仍 FATAL，见 `map-generation-connectivity.mdc`）

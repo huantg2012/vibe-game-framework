@@ -2,7 +2,7 @@
 status: DRAFT
 created: 2026-08-17
 last-modified: 2026-08-18
-note: 人已认可褶脊/撕缝/残体作基础。2026-08-18 锁迷宫读法诊断，并拍密度方向 1 + 正交 B。样例仍是预览，不接裂隙场景。
+note: 十锚是风格样例不是地图库。裂隙每次抽锚+新种子+邻域抖动再生成烤图。天空影循环。扩空间读本文「Agent 入口」。
 ---
 
 # Slice 6 分层生成（草案合同）
@@ -16,12 +16,41 @@ note: 人已认可褶脊/撕缝/残体作基础。2026-08-18 锁迷宫读法诊�
 
 ---
 
+## Agent 入口（找策略 / 扩空间）
+
+人说「地图策略 / 空间草案 / 把裂隙再丰富一点 / 加一种身份」：先读本文件，再动手。画廊 PNG 是风格锚的样例，不是要搬进游戏的地图库。
+
+| 角色 | 路径 |
+| ---- | ---- |
+| 合同正文（本文件） | `docs/design-notes/slice-6-layered-generation.md` |
+| 十锚 + 邻域抖动 | `src/generation/recipes.ts` → `PREVIEW_RECIPES`、`jitterRecipe` |
+| 出击抽锚生成 | `src/generation/rift-layout.ts` → `pickRecipe`、`generateRiftLayout` |
+| 分层栈 | `outline-mask.ts` → `structure-grammars.ts` → `cover.ts` → `stealth-density.ts` → `atmosphere.ts` → `draft-pipeline.ts` |
+| 「曾经是什么」底色 | `data/rift-fragments.csv`（正式抽取只开 `enabled: true`） |
+| 漆 | `src/generation/preview-paint.ts`；裂隙地面烤一次，天空走低分辨率叠层（`RiftSurfacePainter`） |
+| 样例画廊 | `docs/art/demos/slice-6-outline/spatial-drafts/index.html` |
+| 再生样例 / 闸门 | `npm run preview:recipes`；`npm run check:recipes`；`npm run check:layout` |
+
+**新图怎么来：** 抽一个锚 + 新种子 + 在邻域抖参数。禁止两种骨架对半插值。游戏必须每次用这套策略生成并烤图，禁止接静帧当成品。
+
+**扩的三种粒度（人点名选一种，不要混）：**
+
+1. **邻域更大 / 更小** — 只改 `jitterRecipe`。语法、`fragmentTypeId`、墙厚、「有没有树」继续锁死；密度 / 掩护计数 / 散射 / 雾影现为 ±30%。
+2. **新风格锚** — 在 `PREVIEW_RECIPES` 加一行：锁死骨架语法 + 碎片种类 + 覆盖方言。新身份 ≠ 只换底色。出画廊、过 `check:recipes` 与 `check:layout`。该 `fragmentTypeId` 已 `enabled` 则裂隙会抽到。
+3. **新碎片种类** — 改 `data/rift-fragments.csv`（新行，或把 `frag-library` / `frag-residential` 的 `enabled` 改 true），并至少配一个锚用该 id。色只走已锁板。改完跑 `npm run codegen`。
+
+**还没乘进生成器的轴：** 污染年龄 × 残破度（下文样本空间 10⁶ 的后两轴）。要扩这两轴仍走本栈，不要另起生成器。
+
+**禁止：** 把画廊 PNG 拷进游戏当地图；只改着色器 / 底色假装新身份；装饰挡路；坏图换另一套算法；两种骨架插值。
+
+---
+
 ## 人要的两件事
 
 1. **分层出细节。** 在已认可的野外走法上叠装饰、植被、残骸、光影、粒子、波动。
 2. **参考点衍生极大样本。** 10 张样例是风格锚，不是地图上限。新图 = 抽一个锚 + 新种子，在邻域里抖参数，不在两个骨架之间插值。
 
-本批不接 `RiftScene`、不放出生/撤离。粒子在静帧里是盖章；天空巨影在预览里用 8 帧循环证明「同一份场只改 `phase`」。裂隙场景仍走旧图，进游戏还不会动。
+十张样例锁锚。粒子在静帧里是盖章；天空巨影用 8 帧循环证明「同一份场只改 `phase`」。裂隙出击：抽锚 + 新种子 + 邻域抖动再生成烤图；天空影在裂隙里循环。
 
 ---
 
@@ -94,7 +123,7 @@ note: 人已认可褶脊/撕缝/残体作基础。2026-08-18 锁迷宫读法诊�
 4. **尘点**：从地板雾²加权抽样，沿风向偏半格。不是均匀撒。
 5. **渗光**：每个污染格一枚 teal glow，强度随 `seep`。学净化点伤口渗色，不抄呼吸环。
 
-**输出**（`AtmosphereField`）：`phase`、`slideSpan`、`windX/Y`、`occluders[]`、每格 `fog`、`motes`（含 seep glow）。十锚静帧各烤一份随机 `phase`。动态预览（`atmo-ridge-soil-*` / `atmo-ridge-clinic-*`）同一份场扫 8 个 phase。裂隙场景未接，进游戏还不会动。尘点沿风位移以后再做。
+**输出**（`AtmosphereField`）：`phase`、`slideSpan`、`windX/Y`、`occluders[]`、每格 `fog`、`motes`（含 seep glow）。十锚静帧各烤一份随机 `phase`。动态预览与裂隙出击同一份场扫 phase：雾池烤死，天空胶囊沿风向平移。尘点沿风位移以后再做。
 
 **方言（十锚怎么配，不是 case 分支）**：
 
@@ -107,9 +136,9 @@ note: 人已认可褶脊/撕缝/残体作基础。2026-08-18 锁迷宫读法诊�
 
 **闸门**：场必须在；`skyShadow > 0.04` 时陆地平均遮挡 ∈ [0.04, 0.88]（测的是落地阴影，不是标量大小序——诊所「更干」不等于「更暗」）；`fog > 0.35` 时陆地雾极差 ≥ 0.06（禁止整图洗一层灰）。漆不得写 `walls[]`。`generateRecipeDraft` 在 `trees ≥ 1` 却放不下 2×2 桩时重试，不静默出无桩图。
 
-本批**已交预览**的机器刹车仍是空矩形 ≤ 80、视线 ≤ 14。人已确认这条视线闸门在倒逼迷宫（见下「墙剪影」）。潜行目标 48 / 10 / 墙约 18% **不要**当下一手的生产循环；48/10 当硬闸门只会更密。波动（`ripple`/`band`）本批未做。
+本批预览的机器刹车是形状闸门 + 连通 + 掩护距离（DEC-060：P90≤8，远块≤48）。禁止把 `sight≤14` / 空矩形 48 当生产循环。波动（`ripple`/`band`）未做。
 
-出生 / 撤离 / 薪柴是以后的层 10。本批已交机器闸门：墙后地板 == 1；预览空矩形 ≤ 80；轴对齐视线 ≤ 14（**诊断为过时生产目标**）。空洞不挡视线。木格不得与石墙四邻相接。`trees ≥ 1` 必须至少 1 个 2×2 桩。下一手形状闸门见「墙剪影 / 反迷宫」，未改机器。
+出生 / 撤离 / 薪柴是以后的层 10。墙后地板 == 1。空洞不挡视线。木格不得与石墙四邻相接。`trees ≥ 1` 必须至少 1 个 2×2 桩。形状闸门见「墙剪影 / 反迷宫」。
 
 父本是 `wilderness-draft` 的三种走法。`masses.ts` 的围院语言不进这条栈。
 
@@ -205,7 +234,7 @@ note: 人已认可褶脊/撕缝/残体作基础。2026-08-18 锁迷宫读法诊�
 
 机器闸门改打形状（见上），`sight≤14` 不再 FATAL。墙占比 18% 是顶。连通仍 FATAL。
 
-落地后空地过大（DEC-059）。五案对照：`docs/art/demos/slice-6-outline/spatial-drafts/probes/index.html`。密度补丁待人拍，禁止把视线工厂请回来。
+落地后空地过大（DEC-059）。人看五案后授权结合（DEC-060）：D 当尺，A 落点，B 缝宽/停手，C 只给适合的锚切盆地，E 法兰上限。人随后要求空地再收约 20%：先切最大空地再长法兰，空矩形目标约 96、顶 112（沿缘岛心除外）。实现：`src/generation/stealth-density.ts`，接在 1b 之后。种子 101 实测墙约 18%、空矩形 72–99、掩护 P90 5–7。禁止把视线工厂请回来。十锚图待人认。
 
 ---
 

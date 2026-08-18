@@ -101,7 +101,7 @@ export const GAME_CONSTANTS = {
      * "lit by a flashlight" rather than merely "revealed" (A-G3 / DEC-018 beam gain).
      */
     FLASHLIGHT_COLOR: 0xa8906a,    // pale warm; a saturated brown would wash the cold floor out
-    FLASHLIGHT_ALPHA: 0.42,
+    FLASHLIGHT_ALPHA: 0.16,        // low enough that fragment L1 (clinic/metro/soil) still reads under the cone
     FLASHLIGHT_FORWARD_FRAC: 0.34, // push the pool centre this fraction of forward range ahead
     FLASHLIGHT_RADIUS_FRAC: 0.85,  // pool radius as a fraction of forward range
     /** Glow bleeding through the darkness (Slice 1: extraction point only) */

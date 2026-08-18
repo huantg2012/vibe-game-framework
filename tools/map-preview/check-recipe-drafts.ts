@@ -10,6 +10,7 @@ import { generateRecipeDraft } from '../../src/generation/draft-pipeline.ts';
 import { maxOpenYard } from '../../src/generation/masses.ts';
 import { PREVIEW_RECIPES } from '../../src/generation/recipes.ts';
 import { measureSilhouette, silhouetteFails } from '../../src/generation/silhouette.ts';
+import { coverReachFails, measureCoverReach } from '../../src/generation/stealth-density.ts';
 
 const GALLERY_SEED = 101;
 
@@ -74,6 +75,15 @@ for (const recipe of PREVIEW_RECIPES) {
   );
   const silFail = silhouetteFails(sil);
   assert(!silFail, `${recipe.id}: silhouette ${silFail}`);
+  const reach = measureCoverReach(
+    mask.outline.land,
+    mask.walls,
+    mask.outline.cols,
+    mask.outline.rows,
+    mask.features[0]?.paint ?? [],
+  );
+  const reachFail = coverReachFails(reach, yard, recipe.id === 'rim-soil');
+  assert(!reachFail, `${recipe.id}: ${reachFail}`);
 
   const atmo = mask.atmosphere;
   assert(atmo, `${recipe.id}: missing atmosphere field`);
@@ -96,10 +106,10 @@ for (const recipe of PREVIEW_RECIPES) {
   }
 
   console.log(
-    `${recipe.id}: yard ${yard} sight ${sight} walls ${(sil.wallRatio * 100).toFixed(1)}% thick ${(sil.thickRatio * 100).toFixed(0)}% thin ${sil.thinRun} alley ${sil.longAlley} bole ${boles} fogΔ ${metrics.fogSpread.toFixed(2)} shade ${metrics.shadeMeanLand.toFixed(2)}`,
+    `${recipe.id}: yard ${yard} sight ${sight} walls ${(sil.wallRatio * 100).toFixed(1)}% thick ${(sil.thickRatio * 100).toFixed(0)}% thin ${sil.thinRun} alley ${sil.longAlley} cover p50 ${reach.median.toFixed(0)} p90 ${reach.p90.toFixed(0)} far ${reach.farBlob} bole ${boles} fogΔ ${metrics.fogSpread.toFixed(2)} shade ${metrics.shadeMeanLand.toFixed(2)}`,
   );
 }
 
 console.log(
-  `check-recipe-drafts: ${PREVIEW_RECIPES.length} recipes, seed ${GALLERY_SEED}, connected, silhouette`,
+  `check-recipe-drafts: ${PREVIEW_RECIPES.length} recipes, seed ${GALLERY_SEED}, connected, silhouette, cover-reach`,
 );

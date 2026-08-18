@@ -9,10 +9,17 @@
  *   4. Motes sampled from fog² and drifted along wind.
  *   5. Seep glows at glitch cells; local fog bump.
  *
- * Preview bakes one phase. Same field can animate later by moving phase.
+ * Same field animates by moving phase — fog stays, capsules slide on the wind.
  * Learns from the purification stack (edge fade, teal seeps, drifting motes)
  * without copying the polar membrane.
  */
+
+/** One full slide of the sky mass across the island. Fog does not move. */
+export const SKY_SLIDE_PERIOD_MS = 8000;
+/** Capsule motion blur; matches the 8-frame gallery loop. */
+export const SKY_TRAVEL_SCALE = 0.35;
+/** How often the live rift refreshes the low-res sky overlay. */
+export const SKY_REPAINT_MS = 180;
 
 import type { AtmosphereField, OverlayStamp, RuinCell, SkyOccluder } from '@/generation/types';
 import { SeededRandom } from '@/utils/random';

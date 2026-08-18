@@ -1,6 +1,6 @@
 /**
- * Preview-only recipe drafts. Same island, different recipes.
- * Does not replace masses.ts. Does not wire RiftScene.
+ * Recipe-stack island used by `generateRiftLayout` and the spatial-draft preview.
+ * Does not replace masses.ts. Does not paint C5 surfaces.
  */
 
 import {
@@ -11,17 +11,24 @@ import {
 } from '@/generation/connectivity';
 import { buildAtmosphere } from '@/generation/atmosphere';
 import { applyCover, countBoles, stumpTouchesStone } from '@/generation/cover';
+import { maxOpenYard } from '@/generation/masses';
 import { generateOutline } from '@/generation/outline-mask';
 import type { MapRecipe } from '@/generation/recipes';
 import { forkMapRngs } from '@/generation/seed-fork';
 import { measureSilhouette, silhouetteFails } from '@/generation/silhouette';
+import {
+  applyStealthDensity,
+  coverReachFails,
+  measureCoverReach,
+  stealthSpecFor,
+} from '@/generation/stealth-density';
 import { buildStructure } from '@/generation/structure-grammars';
 import type { RuinPaintCell, RuinPaintRole, RuinedMask } from '@/generation/types';
 import { TileType } from '@/types/game-types';
 import type { TileMapData } from '@/types/map-types';
 import { SeededRandom } from '@/utils/random';
 
-const MAX_STRUCTURE_ATTEMPTS = 24;
+const MAX_STRUCTURE_ATTEMPTS = 36;
 
 const ROLE_RANK: Record<RuinPaintRole, number> = {
   glitch: 5,
@@ -211,13 +218,42 @@ export function generateRecipeDraft(seed: number, recipe: MapRecipe): RuinedMask
       lastWhy = 'missing bole';
       continue;
     }
-    const sil = measureSilhouette(land, walls, cols, rows, structurePaint.concat(coverPaint));
+    const painted = structurePaint.concat(coverPaint);
+    const spec = stealthSpecFor(recipe);
+    applyStealthDensity(
+      land,
+      walls,
+      cols,
+      rows,
+      painted,
+      keepWood,
+      forked.densityRng,
+      spec,
+    );
+    for (let i = 0; i < walls.length; i++) if (!land[i]) walls[i] = 0;
+    openSealedFloors(land, walls, cols, rows, keepWood);
+    if (countWalkableComponents(land, walls, cols, rows) !== 1) {
+      lastWhy = 'density walkable != 1';
+      continue;
+    }
+    if (stumpTouchesStone(walls, cols, rows, coverPaint)) {
+      lastWhy = 'stump touches stone after density';
+      continue;
+    }
+    const sil = measureSilhouette(land, walls, cols, rows, painted);
     const silFail = silhouetteFails(sil);
     if (silFail) {
       lastWhy = silFail;
       continue;
     }
-    structurePaint = structurePaint.concat(coverPaint);
+    const reach = measureCoverReach(land, walls, cols, rows, painted);
+    const yardNow = maxOpenYard(land, walls, cols, rows);
+    const reachFail = coverReachFails(reach, yardNow, spec.rimRing);
+    if (reachFail) {
+      lastWhy = reachFail;
+      continue;
+    }
+    structurePaint = painted;
     ok = true;
     break;
   }

@@ -2,9 +2,9 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-08-16
+last-modified: 2026-08-19
 last-closed-slice: 5.5
-note: Slice 6「程序化地图」ACTIVE（DEC-055）。撤离多样性本 Slice 不做。8=第二敌人。7/9/10 不变。
+note: Slice 6「程序化地图」ACTIVE（DEC-055）。2026-08-19 检查点 DEC-062（人 ok；不收工）。撤离多样性本 Slice 不做。8=第二敌人。7/9/10 不变。
 ---
 
 # Roadmap
@@ -27,13 +27,13 @@ note: Slice 6「程序化地图」ACTIVE（DEC-055）。撤离多样性本 Slice
 
 ## 当前 Slice
 
-**Slice 6: 程序化地图** ACTIVE（2026-08-16）。权威范围 `docs/progress/current-slice.md`。撤离多样性延后（DEC-055）。
+**Slice 6: 程序化地图** ACTIVE（2026-08-16）。权威范围 `docs/progress/current-slice.md`。撤离多样性延后（DEC-055）。**检查点（2026-08-19，DEC-062）：** 策略已进裂隙（锚 + 种子 + 邻域抖动）+ 天空低分辨率叠层循环 + 人 ok。仍 ACTIVE，不标 COMPLETE。
 
 ## 计划中的 Slices（近期方向，未锁定）
 
 | 序号 | 方向 | 说明 |
 | ---- | ---- | ---- |
-| Slice 6 | 程序化地图 | **ACTIVE。** 替代裂隙固定图；一个撤离点位置由生成器给出。外轮廓不规则 + 障碍有情景 + 有限种碎片氛围。撤离多样性延后（DEC-055） |
+| Slice 6 | 程序化地图 | **ACTIVE。** 替代裂隙固定图；一个撤离点位置由生成器给出。外轮廓不规则 + 障碍有情景 + 有限种碎片氛围。撤离多样性延后（DEC-055）。**2026-08-19 检查点（DEC-062）：** 策略进裂隙 + 天空叠层循环 + 人 ok；不标 COMPLETE。 |
 | Slice 7 | 净化点扩张 | 第三模块、模块升级 maxHp，扩展分配纬度 |
 | Slice 8 | 第二敌人（潜行轴） | 改写体：不同感知/行为 + AI 类型泛化 + `data/enemies.csv` 拍板 + 敌人视觉 + 「被发现」指示。概念图已 APPROVED。**验证裂隙内临场潜行判断的多样性** |
 | Slice 9 | 音乐 / 音效 | 环境音 + 关键交互反馈音 + 音乐/音景接入；具体范围启动时定 |

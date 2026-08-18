@@ -1,10 +1,18 @@
 /**
  * Slice 6 map-generation contracts. C1 = land outline. C2 = scenic walls.
- * Spawn / extract arrive in later batches. Atmosphere is a generated field
- * on the ruined mask (preview-baked; not wired to RiftScene yet).
+ * C3 = `GeneratedRiftLayout` (spawn / extract / loot / patrols). Atmosphere is
+ * a generated field on the ruined mask (preview-baked; C5 paints it in-game).
  */
 
-import type { TileMapData } from '@/types/map-types';
+import type { Vector2 } from '@/types/game-types';
+import type {
+  ContaminantNodeDef,
+  EnemySpawnData,
+  ExtractionPointDef,
+  KindlingNodeDef,
+  LandmarkDef,
+  TileMapData,
+} from '@/types/map-types';
 
 export interface OutlineBBox {
   readonly minCol: number;
@@ -141,4 +149,27 @@ export interface RuinedMask {
   readonly metrics: RuinMetrics;
   readonly overlays?: readonly OverlayStamp[];
   readonly atmosphere?: AtmosphereField;
+}
+
+export interface WalkableMask {
+  readonly cols: number;
+  readonly rows: number;
+  isWalkable(col: number, row: number): boolean;
+}
+
+/** One sortie of generated rift content. Unchanged until the player leaves. */
+export interface GeneratedRiftLayout {
+  readonly seed: number;
+  readonly fragmentTypeId: string;
+  readonly recipeId: string;
+  readonly tileMap: TileMapData;
+  /** Full recipe-stack island, including paint roles and atmosphere for the surface. */
+  readonly ruins: RuinedMask;
+  readonly walkableMask: WalkableMask;
+  readonly spawnPoint: Vector2;
+  readonly extractionPoint: ExtractionPointDef;
+  readonly kindlingNodes: readonly KindlingNodeDef[];
+  readonly contaminantNodes: readonly ContaminantNodeDef[];
+  readonly enemySpawns: readonly EnemySpawnData[];
+  readonly landmarks: readonly LandmarkDef[];
 }

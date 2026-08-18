@@ -1,9 +1,9 @@
 /**
  * Rift Scene - core gameplay.
  *
- * At this point in Slice 1 it owns the fixed map, the player, the limited field of view,
- * the enemies (T7) and combat (T8). Chaos/loot/extraction (T9) plugs in on top; the layout
- * data it needs is already published by `RIFT_MAP.layout`.
+ * At this point it owns the generated layout, the player, the limited field of view,
+ * the enemies and combat. Chaos/loot/extraction plug in on top; the layout
+ * comes from `generateRiftLayout(seed)` for this sortie.
  *
  * The scene is the orchestration layer: it owns the system instances and does the wiring
  * between them, which is what keeps the systems from calling each other directly
@@ -15,7 +15,7 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
-import { RIFT_MAP, validateRiftMap } from '@/scenes/rift-map-data';
+import { generateRiftLayout } from '@/generation/rift-layout';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
 import { gameState, type SortieModifiers } from '@/managers/game-state';
@@ -26,10 +26,11 @@ import { ExtractionSystem } from '@/systems/extraction-system';
 import { growthSystem } from '@/systems/growth-system';
 import { LootSystem } from '@/systems/loot-system';
 import { RunController } from '@/systems/run-controller';
+import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
 import { ToolSystem } from '@/systems/tool-system';
 import { TrailSystem } from '@/systems/trail-system';
-import { createRiftSurfaceTexture } from '@/systems/procedural-surface';
+import { RiftSurfacePainter } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { RiftHud, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/dom/rift-hud';
 import { Minimap } from '@/ui/minimap';
@@ -71,6 +72,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly runController = new RunController();
   private readonly hud = new RiftHud();
   private readonly minimap = new Minimap();
+  private readonly riftSurface = new RiftSurfacePainter();
   private chaos!: ChaosSystem;
 
   private landmarkGraphics: Phaser.GameObjects.Graphics | null = null;
@@ -87,6 +89,7 @@ export class RiftScene extends Phaser.Scene {
   private debugVisible = false;
   /** Seeded past the refresh interval so the panel has content on the first frame. */
   private debugAccumulatorMs = Number.POSITIVE_INFINITY;
+  private layoutDebug = { seed: 0, fragmentTypeId: '', recipeId: '' };
 
   // --- Sortie result tracking (feeds the DOM result panel on exit, C2) ---
   private sortieKillCount = 0;
@@ -103,14 +106,22 @@ export class RiftScene extends Phaser.Scene {
   create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[] }): void {
     const sortieModifiers = data?.modifiers;
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
-    const { tileMap, grid, layout } = RIFT_MAP;
-
-    if (import.meta.env.DEV) {
-      const problems = validateRiftMap();
-      if (problems.length > 0) {
-        console.error(`[RiftScene] fixed map validation failed:\n- ${problems.join('\n- ')}`);
-      }
+    const seed = Date.now() >>> 0;
+    let generated;
+    try {
+      generated = generateRiftLayout(seed);
+    } catch (err) {
+      console.error(`[RiftScene] generateRiftLayout(${seed}) failed`, err);
+      throw err;
     }
+    const tileMap = generated.tileMap;
+    const grid = new TileGrid(tileMap);
+    const layout = generated;
+    this.layoutDebug = {
+      seed: generated.seed,
+      fragmentTypeId: generated.fragmentTypeId,
+      recipeId: generated.recipeId,
+    };
 
     // The tilemap layer stays for physics/collision but is made invisible: the visible
     // surface is a continuous procedural texture (DEC-018), not the flat placeholder tiles.
@@ -121,8 +132,7 @@ export class RiftScene extends Phaser.Scene {
     });
     layer.setVisible(false);
 
-    createRiftSurfaceTexture(this, tileMap, RIFT_SURFACE_KEY);
-    this.add.image(0, 0, RIFT_SURFACE_KEY).setOrigin(0, 0).setDepth(DEPTH.surface);
+    this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface);
 
     this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
 
@@ -137,6 +147,7 @@ export class RiftScene extends Phaser.Scene {
     camera.startFollow(this.player.getSprite(), true);
 
     this.visibility.create(this, createRiftVisionConfig(DEPTH.visionMask), grid);
+    this.visibility.clipLightsToIsland(tileMap);
     this.visibility.setExtractionPosition(layout.extractionPoint.position);
 
     this.trail.create(this, tileMap.cols, tileMap.tileSize, this.visibilityAt);
@@ -206,6 +217,7 @@ export class RiftScene extends Phaser.Scene {
         setDecoyPosition: (pos) => this.ai.setDecoyPosition(pos),
         damageEnemy: (id, amount) => this.combat.applyToolDamage(id, amount),
         showAbyssReveal: (enemies, nodes, durationMs) => this.minimap.showAbyssReveal(enemies, nodes, durationMs),
+        getKindlingPositions: () => layout.kindlingNodes.map((n) => ({ ...n.position })),
         boostChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateMult(mult, durationMs),
         reduceChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateReduction(mult, durationMs),
         // T7 rewire: the 8 Slice 4 tools' enemy-facing overrides, wired the same way.
@@ -232,7 +244,6 @@ export class RiftScene extends Phaser.Scene {
       pauseChaos: (paused) => this.chaos.setPaused(paused),
       setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
       getCarriedKindling: () => this.loot.getCarriedKindling(),
-      resetAll: () => this.resetAllSystems(),
     });
 
     // Build tool slot info for HUD display. The passive slot is always the last unlocked
@@ -320,6 +331,7 @@ export class RiftScene extends Phaser.Scene {
     this.syncHudActiveEffects();
     this.extraction.update(delta);
     this.hud.update(delta);
+    this.riftSurface.update(delta);
 
     // Tool key input (edge-triggered), one entry per active sortie slot.
     for (let i = 0; i < this.toolKeys.length; i++) {
@@ -673,27 +685,8 @@ export class RiftScene extends Phaser.Scene {
     }
   }
 
-  /** Resets all T9 systems and combat for a fresh run. */
-  private resetAllSystems(): void {
-    this.chaos.reset();
-    this.loot.reset();
-    this.contaminantNodes.reset();
-    this.toolSystem.reset();
-    this.extraction.reset();
-    this.combat.reset();
-    this.hud.reset();
-    this.trail.reset();
-    this.minimap.reset();
-    this.applyChaosModulators(getChaosModulators(0));
-    riftResultPanel.close();
-    this.sortieKillCount = 0;
-    this.sortieAcquired = [];
-    this.sortiePassiveTriggers = new Map();
-    this.defenseHudEffects = [];
-  }
-
   /**
-   * Draws all 8 navigation landmarks as simple coloured geometric marks onto a single
+   * Draws navigation landmarks as simple coloured geometric marks onto a single
    * static Graphics object. Drawn once at create, never updated.
    */
   private createLandmarkDecals(landmarks: readonly LandmarkDef[], tileSize: number): void {
@@ -867,6 +860,7 @@ export class RiftScene extends Phaser.Scene {
     this.ai.destroy();
     this.trail.destroy();
     this.minimap.destroy();
+    this.riftSurface.destroy();
     this.visibility.destroy();
     this.player.destroy();
     this.tilemapRenderer.destroy();
@@ -934,6 +928,7 @@ export class RiftScene extends Phaser.Scene {
     if (!this.debugPanel) return;
     const lines = [
       `fps ${Math.round(this.game.loop.actualFps)}  zoom ${camera.zoom}`,
+      `layout seed ${this.layoutDebug.seed}  ${this.layoutDebug.fragmentTypeId}  ${this.layoutDebug.recipeId}`,
       `viewport ${Math.round(view.width)}x${Math.round(view.height)}px = ` +
         `${(view.width / tile).toFixed(1)}x${(view.height / tile).toFixed(1)} tiles`,
       `rays ${stats.rayCount}  last ${stats.lastMs.toFixed(2)}ms  ` +

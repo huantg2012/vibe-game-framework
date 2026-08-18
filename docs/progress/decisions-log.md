@@ -9,6 +9,42 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-062: 裂隙程序化地图检查点（人 ok；不收工）
+- Date: 2026-08-19
+- Phase: Slice 6
+- Type: Design + Process
+- Context: 人试玩后说「ok了」，要求记录当下这个关键节点。这是检查点，不是 Slice 收工。不要标 COMPLETE，不要开下一 Slice。
+- Decision:
+  1. **活策略锁死：** 每一次踏入裂隙 = 抽一个风格锚 + 新种子 + 邻域抖动，再生成并烤图。十张 PNG 是样例，不是地图库。禁止两种骨架插值。禁止把画廊静帧接进游戏当地图。
+  2. **合同入口：** `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」。代码：`src/generation/recipes.ts`（`PREVIEW_RECIPES` / `jitterRecipe`）、`src/generation/rift-layout.ts`（`pickRecipe` / `generateRiftLayout`）。找/扩钩子：CLAUDE.md 当前阶段、AGENTS.md、`.cursor/rules/map-generation-strategy.mdc`（alwaysApply）。
+  3. **人认此节点：** C3+C4 已接（RiftScene 吃 `generateRiftLayout`；手写图只当夹具；阵亡/撤离回净化点，DEC-056）。C5 已接：地表读碎片表；正式抽取只开 CSV `enabled` 的三行（`frag-outdoor` / `frag-clinic` / `frag-metro`）；library / residential 锚在配方表，CSV 仍 `false`。
+  4. **天空必须循环，且不得整图 CPU 重烤：** 同一份场只改 `phase`；雾烤死。曾对 2048×1344 整图 CPU `compositePaint` ~5s/帧，角色几乎无法移动。生产约束：地面（含雾）出击烤一次；天空 64×42 低分辨率叠层循环。人已 ok。
+  5. Slice 6 仍 **ACTIVE**。仍待：规格 21 双路径软目标；尘点沿风位移；污染年龄 × 残破度轴还没乘进生成器。
+- Impact: 进度文档登记检查点。不标 COMPLETE。不发明下一手范围。
+
+## DEC-061: C2 密度人锁；开 C3/C4 接到裂隙
+- Date: 2026-08-18
+- Phase: Slice 6
+- Type: Design + Process
+- Context: 人看过五案结合后再收约 20% 空地的十锚，效果认可，指令「落地到游戏里吧」。覆盖 DEC-060 / current-slice「下一手是人看收紧后的十锚」。不要再问人确认密度。
+- Decision:
+  1. 预览密度视为人锁。种子 101：墙约 18%（顶）、空矩形 72–99、掩护 P90 5–7。`sight≤14` / 空矩形 48 **禁止**当生产循环。形状仍走 DEC-058 厚短残块 + 正交 B；密度仍走 DEC-060 结合层。
+  2. 本批开 **C3 布点 + C4 裂隙接线**。活路径是配方栈 `generateRecipeDraft`，禁止把 `masses.ts` 围院语言接进 RiftScene。
+  3. 规格 21「至少两条换路」本批为软目标：C3 先做出生→撤离可达 + 两端分列。不要为双路径破坏形状闸门。缺口记进 current-slice。
+  4. C5（`procedural-surface` 读 `fragmentTypeId`）本批不做。A1 合同已写，但实现是改写着色参数，和 C3+C4 同会话会爆。踏入后本批仍可能是写死户外灰绿（规格规则 24），下一批补。
+- Impact: C3/C4 开工。Slice 6 不标 COMPLETE。阵亡/撤离按 R 回净化点（DEC-056）必须在 C4 改 `RunController.restart()`。
+
+## DEC-060: 五案结合进预览密度（待人看十锚）
+- Date: 2026-08-18
+- Phase: Slice 6
+- Type: Design (preview trial)
+- Context: 人看完 A/B/C/D/E 对照后说有一点意思，授权大胆把方案合理结合起来试。禁止把 `sight≤14` / 空矩形 48 请回生产循环。
+- Decision:
+  1. 预览栈在身份墙（骨架 + 1b）之后加一层结合密度 `stealth-density.ts`，仍不接裂隙。
+  2. 结合方式：D 当尺（可藏距离 P90≤8、距掩护 >7 的最大块 ≤48；薄墙/雾/2×2 胡椒不计分）；A 的落点（新件进当前最大空地，同家族厚短件）；B 的缝宽与停手（邻件约 4–6 格，下一坨进入 7 格锥且院不太大就停，留一块 6×6 院）；C 只给褶脊 / L / 双梁 / 宅基加尽端开口的 2 厚隔断；E 从已有大件长 2 厚短刺，不织网；`rim-soil` 只沿缘向内长牙，岛心空。
+  3. 形状闸门与连通仍 FATAL。墙占比 18% 仍是顶。十锚身份句不改。
+- Impact: C2 试结合，等人看 `spatial-drafts/index.html`。机器闸门已含掩护距离。未接 RiftScene。C3 仍等密度被人认。
+
 ## DEC-059: 方向 1 落地成操场；中等空地待拍
 - Date: 2026-08-18
 - Phase: Slice 6

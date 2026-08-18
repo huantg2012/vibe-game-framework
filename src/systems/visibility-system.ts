@@ -21,8 +21,8 @@
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
-import type { Vector2 } from '@/types/game-types';
-import type { OccluderGrid } from '@/types/map-types';
+import { TileType, type Vector2 } from '@/types/game-types';
+import type { OccluderGrid, TileMapData } from '@/types/map-types';
 import { castRay, createRayHit, hasLineOfSight, type RayHit } from '@/utils/grid-raycast';
 import { clamp, degToRad } from '@/utils/math';
 
@@ -146,6 +146,8 @@ export class VisibilitySystem {
   private glowGraphics!: Phaser.GameObjects.Graphics;
   private corruptionGraphics!: Phaser.GameObjects.Graphics;
   private flicker!: Phaser.GameObjects.Rectangle;
+  /** Island stencil so the warm lamp/beam cannot paint void as tan. */
+  private lightClipGraphics: Phaser.GameObjects.Graphics | null = null;
 
   private maskWidth = 0;
   private maskHeight = 0;
@@ -430,16 +432,52 @@ export class VisibilitySystem {
     this.glowSources.delete(id);
   }
 
+  /**
+   * Clip the additive lamp and flashlight to land tiles. Warm ADD light on
+   * void-black reads as a flat earth-yellow fill of "outside", which is the
+   * opposite of a black hole.
+   */
+  clipLightsToIsland(map: TileMapData): void {
+    this.lamp?.clearMask(false);
+    this.flashlight?.clearMask(false);
+    this.lightClipGraphics?.destroy();
+    this.lightClipGraphics = null;
+
+    const graphics = this.scene.make.graphics({ x: 0, y: 0 }, false);
+    graphics.fillStyle(0xffffff, 1);
+    const tile = map.tileSize;
+    for (let row = 0; row < map.rows; row++) {
+      const line = map.tiles[row]!;
+      let run = -1;
+      for (let col = 0; col <= map.cols; col++) {
+        const land = col < map.cols && line[col] !== TileType.VOID;
+        if (land && run < 0) run = col;
+        if (!land && run >= 0) {
+          graphics.fillRect(run * tile, row * tile, (col - run) * tile, tile);
+          run = -1;
+        }
+      }
+    }
+    this.lightClipGraphics = graphics;
+    const mask = graphics.createGeometryMask();
+    this.lamp?.setMask(mask);
+    this.flashlight?.setMask(mask);
+  }
+
   destroy(): void {
     for (const graphics of this.bandGraphics) graphics.destroy();
     this.bandGraphics.length = 0;
     this.polygons.length = 0;
     this.noiseSprite?.destroy();
     this.noiseSprite = null;
+    this.lamp?.clearMask(false);
     this.lamp?.destroy();
     this.lamp = null;
+    this.flashlight?.clearMask(false);
     this.flashlight?.destroy();
     this.flashlight = null;
+    this.lightClipGraphics?.destroy();
+    this.lightClipGraphics = null;
     this.glowGraphics?.destroy();
     this.corruptionGraphics?.destroy();
     this.flicker?.destroy();

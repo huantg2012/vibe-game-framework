@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-16
-last-modified: 2026-08-18
-note: Slice 6「程序化地图」ACTIVE。系统 Slice。撤离多样性本 Slice 不做（人 2026-08-16）。三条体验约束见正文。
+last-modified: 2026-08-19
+note: Slice 6「程序化地图」ACTIVE。2026-08-19 人认检查点（DEC-062）。不标 COMPLETE。
 ---
 
 # Slice 6: 程序化地图【ACTIVE】
@@ -11,6 +11,10 @@ note: Slice 6「程序化地图」ACTIVE。系统 Slice。撤离多样性本 Sli
 类型：**系统 Slice**（新生成规则；完整规划路径，不走打磨轻量路径）
 日期：2026-08-16 开工
 上一手：Slice 5.5「UX 重构」COMPLETE（DEC-054）
+
+**活策略（找 / 扩先读）：** `docs/design-notes/slice-6-layered-generation.md` 的「Agent 入口」。十锚在 `src/generation/recipes.ts`；出击 `generateRiftLayout`。画廊是样例不是地图库。
+
+**检查点（2026-08-19，DEC-062）：** 人试玩后认此节点。策略已进裂隙（锚 + 新种子 + 邻域抖动，再生成并烤图）；天空走低分辨率叠层循环。不标 COMPLETE。
 
 ---
 
@@ -120,13 +124,14 @@ note: Slice 6「程序化地图」ACTIVE。系统 Slice。撤离多样性本 Sli
 | 3 | art | **A1** 户外 / 医院 / 地铁 的地表/墙/虚空 | **已交**（`docs/art/rift-fragment-surfaces.md`） |
 | 4 | design | **D2** 撤离规格最少补句 | **已做** |
 | 5 | code | **C1** 可走陆地掩膜 | **已交** |
-| 6 | code | **C2** 情景障碍（按 A1 形状语言） | **形状过闸，密度待拍**（DEC-058 厚短残块已交；空地过大；五案对照待人锁） |
-| 7 | code | **C3** 布点（出生 / 一个撤离 / 薪柴 / 巡逻） | 密度锁完再做 |
-| 8 | code | C4 场景接线 → C5 氛围 | 未开始 |
+| 6 | code | **C2** 情景障碍（按 A1 形状语言） | **已交；密度人锁**（DEC-061） |
+| 7 | code | **C3** 布点（出生 / 一个撤离 / 薪柴 / 巡逻） | **已交** |
+| 8 | code | **C4** 场景接线 | **已交** |
+| 8b | code | **C5** 氛围进裂隙 | **已交**（抽锚生成 + 邻域抖动 + 天空影循环；尘点位移 / 年龄轴仍待） |
 | 9 | qa | 对照规格 | 实现后 |
-| 10 | 人 | 连续踏入至少两次 | 验收时 |
+| 10 | 人 | 连续踏入至少两次 | **已回 / ok**（2026-08-19，DEC-062；检查点，不标 COMPLETE） |
 
-批次必须单次会话做完。禁止把外轮廓+情景+三套氛围+场景接线打成一批。
+批次必须单次会话做完。禁止把外轮廓+情景+三套氛围+场景接线打成一批。2026-08-18 那一批 = C3 + C4，不含 C5。C5 已于其后接上（DEC-062）。
 
 ---
 
@@ -140,10 +145,72 @@ note: Slice 6「程序化地图」ACTIVE。系统 Slice。撤离多样性本 Sli
 - 架构模块表已有 MapGenerator「规划中」，实现后回填。
 - `system-growth-tide` / `system-purification-impact` 的 `interface-changed: true` 是 5.5 收尾漏复位，**本步复位**，不是本 Slice 的输入。
 
+## 一致性检查（2026-08-18，开 C3/C4 前）
+
+**当时快照，不是现在。** 无假装已接线。矛盾只有「进度文档还在等人看十锚」——人指令「落地到游戏里吧」覆盖，记 DEC-061。`procedural-surface` 写死 `frag-outdoor` / C5 下一批：当时属实；2026-08-19 已接，见 DEC-062。
+
+| 源 | 声明 | 实际 |
+| -- | ---- | ---- |
+| `current-slice` / 任务书 / 规格 frontmatter | C1/C2 已交；`generateRiftLayout` 未实现；未接 RiftScene | 属实 |
+| `src/scenes/rift-scene.ts` | `const { tileMap, grid, layout } = RIFT_MAP` | 仍读手写图 |
+| `src/systems/tool-system.ts` | `import { RIFT_MAP }`，abyss 直读 `kindlingNodes` | 仍直读；C4 必须解开 |
+| `src/systems/run-controller.ts` | 阵亡按 R `resetAll()` 原地重开 | 与 DEC-056 不符；C4 必须改 |
+| `docs/architecture.md` MapGenerator 行 | C1+C2 已实现。RiftScene 仍读固定图（C4） | 属实；接线后回填 |
+| `procedural-surface.ts` | 写死 `frag-outdoor` | 属实；C5 下一批 |
+| 规格规则 21 双路径 | 硬规则 | 本批软目标（DEC-061），缺口记下一批 |
+
+`system-map-generation` / `system-chaos-scavenge-extract` 的 `interface-changed: true` 是本 Slice 进行中标记，不阻塞本批。
+
+## 一致性检查（2026-08-18，C3/C4 交后）
+
+当时属实：RiftScene / tool-system / RunController 已接线。`procedural-surface` **当时**仍写死 `frag-outdoor`（C5 未做）。**2026-08-19 已过时，见下。**
+
+| 源 | 2026-08-18 交后 |
+| -- | ---- |
+| `RiftScene.create` | `generateRiftLayout(Date.now())`；不解构 `RIFT_MAP` |
+| `tool-system` | 无 `import { RIFT_MAP }`；abyss 经 `getKindlingPositions` |
+| `RunController.restart()` | 阵亡与撤离都 `transitionToPurification` |
+| 规格 21 双路径 | 软目标；八锚 4/8 有第二条换路 |
+
+## 一致性检查（2026-08-19，DEC-062 检查点）
+
+| 源 | 现在 |
+| -- | ---- |
+| 活策略 | 每一次踏入 = 抽锚 + 新种子 + 邻域抖动，再生成并烤图。十张 PNG 是样例不是地图库。 |
+| `RiftScene` | 吃 `generateRiftLayout`；手写图只当夹具 |
+| `RunController` | 阵亡/撤离回净化点（DEC-056） |
+| C5 / `procedural-surface` | **已接，不再写死 `frag-outdoor`。** 旋钮读碎片表。正式抽取只开 CSV `enabled` 的三行：`frag-outdoor` / `frag-clinic` / `frag-metro`。library / residential 锚在配方表，CSV 仍 `false`。 |
+| 天空 | 地面（含雾）出击烤一次；天空 64×42 低分辨率叠层循环（同一份场只改 `phase`）。禁止再对 2048×1344 整图 CPU `compositePaint`。 |
+| 规格 21 双路径 | 仍软目标，未做成硬保证 |
+| 人试玩 | **ok 此节点**。不标 COMPLETE。 |
+
+## 试玩 bug 修复（2026-08-18）
+
+生成几何已换、画面仍像旧手写户外图。原因：非墙格一律画成地板（虚空变成隐形墙），以及 `rift-surface` 第一次踏入后被缓存复用。
+
+已改：虚空填 `void-black`；地表旋钮读 `data/rift-fragments.csv`；每次出击删掉旧纹理再烤；小地图不把虚空画成已探索地板。未做：污染年龄矩形块。不标 COMPLETE。
+
 ---
 
-## 人现在不用做的
+## 性能（2026-08-18）
 
-C2 还没进游戏。十锚：`docs/art/demos/slice-6-outline/spatial-drafts/index.html`（种子 101）。墙已是厚短残块，形状闸门替换 `sight≤14`，连通仍 FATAL。
+天空循环曾对整张 2048×1344 地表做 CPU `compositePaint`（约 5s/次），角色几乎无法移动。已改：地面（含雾）出击时烤一次；天空胶囊走低分辨率叠层，只改 `phase`。
 
-人看图后：方向 1 交成了操场（墙约 2–8%，空矩形 187–336），不是原文「空地中等」。五案程序化对照：`spatial-drafts/probes/index.html`（A 加件 / B 锥距补洞 / C 链式院子 / D 可藏距离热力 / E 法兰+双带）。**下一手是人拍密度方案**，再改生成器；还没到布点（C3）。
+---
+
+## 人现在怎么试
+
+人已于 2026-08-19 认此节点（DEC-062）。密度已锁，不必再看预览十锚。需要复现时：
+
+1. `npm run dev`，主菜单进净化点，踏入裂隙（dev 也可 `#rift` 直进）。
+2. 光圈里应能认出这一趟抽到的碎片（户外桩/植被、医院冷灰隔断、地铁锈板），岛外黑洞。天空暗带会慢慢从岛上滑过。
+3. 撤出再进几次：结构、底色、墙形都不该是画廊那十张的复印。开发构建按 **F1** 能看到这一趟的锚名。
+
+试玩方法：`guides/02-ideation-workflow.md` Step 4。小地图仍是一个撤离竖缝。
+
+## 本批缺口（检查点后仍待，不挡「人认此节点」）
+
+人 2026-08-19 认此节点，**不标 COMPLETE**。
+
+- 规格 21 双路径：软目标，闸门不 FATAL。`check:layout` 八锚里 **4/8** 有第二条换路，未做成硬保证。不挡试玩「两趟不同 + 走得到」。
+- C5 余项：尘点沿风位移；污染年龄 × 残破度轴还没乘进生成器。天空影已循环。

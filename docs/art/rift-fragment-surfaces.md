@@ -231,7 +231,7 @@ L1 色值差只有 5–10。32px + 视野遮罩下，只换雾/亮度/底色标�
 
 ## 给 code 的死约束
 
-1. **读表。** `createRiftSurfaceTexture` 必须吃本次 `fragmentTypeId` + `FragmentRoll`（或已 join 好的行）。禁止再写死 `frag-outdoor`。禁止 `if (id === 'frag-outdoor')` 另开绘制 pass。
+1. **读表。** 裂隙每次出击吃本次生成的 `fragmentTypeId`（经配方锚）。禁止再写死 `frag-outdoor`。禁止 `if (id === 'frag-outdoor')` 另开绘制 pass。画廊 PNG 是样例，不是要搬进游戏的图。
 2. **CSV → generated。** 种类行进 `data/rift-fragments.csv`（或按 id 连接的 surfaces CSV）。禁止在 `procedural-surface.ts` 手写主题表再反向导出。
 3. **加行不改着色器结构。** 新种类 = 新行。循环仍是：噪声、划痕/碎屑图、渗缝、矩形错误块、墙沿、抖动、量化。新行不准加液体层、藤蔓层、第三套墙几何。
 4. **必须改掉的写死点**（现文件）：

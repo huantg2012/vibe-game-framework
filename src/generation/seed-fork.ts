@@ -16,6 +16,7 @@ export function forkMapRngs(seed: number, recipeId: string, attempt = 0) {
     outlineSeed: seed >>> 0,
     structureRng: new SeededRandom(mix32(seed, `structure:${recipeId}:${attempt}`)),
     coverRng: new SeededRandom(mix32(seed, `cover:${recipeId}:${attempt}`)),
+    densityRng: new SeededRandom(mix32(seed, `density:${recipeId}:${attempt}`)),
     scatterRng: new SeededRandom(mix32(seed, `scatter:${recipeId}`)),
     atmosphereRng: new SeededRandom(mix32(seed, `atmosphere:${recipeId}`)),
   };

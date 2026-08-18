@@ -218,8 +218,9 @@ export class Minimap {
         const idx = y * this.mapWidth + x;
         if (!this.explored[idx]) continue;
 
-        const isWall = row[x] === TileType.WALL;
-        ctx.fillStyle = isWall ? EXPLORED_WALL : EXPLORED_FLOOR;
+        const tile = row[x];
+        if (tile === TileType.VOID) continue;
+        ctx.fillStyle = tile === TileType.WALL ? EXPLORED_WALL : EXPLORED_FLOOR;
         ctx.fillRect(x * MINIMAP_SCALE, y * MINIMAP_SCALE, MINIMAP_SCALE, MINIMAP_SCALE);
       }
     }

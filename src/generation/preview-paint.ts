@@ -1,7 +1,6 @@
 /**
- * Headless paint of a ruined mask. Preview / tools only — the live rift still
- * uses procedural-surface.ts until C5. Same layer ideas: noise, wall rim,
- * south drop shadow, edge fade into void.
+ * Headless paint of a ruined mask. Gallery cards are samples of this painter.
+ * Live sorties call the same functions on a freshly generated island.
  */
 
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
@@ -83,6 +82,60 @@ function nearestPalette(r: number, g: number, b: number): readonly [number, numb
     }
   }
   return best;
+}
+
+/** 5-bit RGB cube. Live static bake uses this; gallery stills stay exact. */
+const LUT_RES = 32;
+let paletteLut: Uint8Array | null = null;
+
+function ensurePaletteLut(): Uint8Array {
+  if (paletteLut) return paletteLut;
+  const lut = new Uint8Array(LUT_RES * LUT_RES * LUT_RES * 3);
+  for (let r = 0; r < LUT_RES; r++) {
+    for (let g = 0; g < LUT_RES; g++) {
+      for (let b = 0; b < LUT_RES; b++) {
+        const q = nearestPalette((r << 3) + 4, (g << 3) + 4, (b << 3) + 4);
+        const i = ((r << 10) | (g << 5) | b) * 3;
+        lut[i] = q[0];
+        lut[i + 1] = q[1];
+        lut[i + 2] = q[2];
+      }
+    }
+  }
+  paletteLut = lut;
+  return lut;
+}
+
+function writeQuantizedRgba(
+  work: Float32Array,
+  rgba: Uint8Array,
+  W: number,
+  H: number,
+  mode: 'exact' | 'lut',
+): void {
+  const lut = mode === 'lut' ? ensurePaletteLut() : null;
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const s = (y * W + x) * 3;
+      const d = (hash2(x, y, 31337) - 0.5) * 12;
+      const r = clamp255(work[s]! + d);
+      const g = clamp255(work[s + 1]! + d);
+      const b = clamp255(work[s + 2]! + d);
+      const o = (y * W + x) * 4;
+      if (lut) {
+        const i = (((r >> 3) << 10) | ((g >> 3) << 5) | (b >> 3)) * 3;
+        rgba[o] = lut[i]!;
+        rgba[o + 1] = lut[i + 1]!;
+        rgba[o + 2] = lut[i + 2]!;
+      } else {
+        const q = nearestPalette(r, g, b);
+        rgba[o] = q[0];
+        rgba[o + 1] = q[1];
+        rgba[o + 2] = q[2];
+      }
+      rgba[o + 3] = 255;
+    }
+  }
 }
 
 function stainRgb(key: string): readonly [number, number, number] {
@@ -348,6 +401,56 @@ function sampleField(field: Float32Array, cols: number, rows: number, fx: number
   );
 }
 
+function sampleGrid(
+  map: Float32Array,
+  gw: number,
+  gh: number,
+  px: number,
+  py: number,
+  step: number,
+): number {
+  const u = (px + 0.5) / step - 0.5;
+  const v = (py + 0.5) / step - 0.5;
+  const x0 = Math.floor(u);
+  const y0 = Math.floor(v);
+  const tx = u - x0;
+  const ty = v - y0;
+  const g = (c: number, r: number): number => {
+    const cc = c < 0 ? 0 : c >= gw ? gw - 1 : c;
+    const rr = r < 0 ? 0 : r >= gh ? gh - 1 : r;
+    return map[rr * gw + cc]!;
+  };
+  return (
+    g(x0, y0) * (1 - tx) * (1 - ty) +
+    g(x0 + 1, y0) * tx * (1 - ty) +
+    g(x0, y0 + 1) * (1 - tx) * ty +
+    g(x0 + 1, y0 + 1) * tx * ty
+  );
+}
+
+/** Fog only (shade = 0). Live sky is a separate low-res overlay. */
+function applyFog(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  cols: number,
+  rows: number,
+  field: AtmosphereField | undefined,
+): void {
+  if (!field) return;
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const fogV = sampleField(field.fog, cols, rows, (x + 0.5) / T, (y + 0.5) / T);
+      const haze = fogV * 0.5;
+      const o = (y * W + x) * 3;
+      raw[o] = raw[o]! + (0x2c - raw[o]!) * haze;
+      raw[o + 1] = raw[o + 1]! + (0x2e - raw[o + 1]!) * haze;
+      raw[o + 2] = raw[o + 2]! + (0x33 - raw[o + 2]!) * haze;
+    }
+  }
+}
+
 function applyAtmosphere(
   raw: Float32Array,
   W: number,
@@ -360,13 +463,27 @@ function applyAtmosphere(
   travelScale: number,
 ): void {
   if (!field) return;
+  const step = Math.max(1, (T / 8) | 0);
+  const gw = Math.ceil(W / step) + 1;
+  const gh = Math.ceil(H / step) + 1;
+  const shadeMap = new Float32Array(gw * gh);
+  const rimMap = new Float32Array(gw * gh);
+  for (let gy = 0; gy < gh; gy++) {
+    for (let gx = 0; gx < gw; gx++) {
+      const fx = (gx * step + 0.5) / T;
+      const fy = (gy * step + 0.5) / T;
+      const shade = shadeAt(field, fx, fy, phase, travelScale);
+      const shadeFore = shadeAt(field, fx + field.windX * 1.15, fy + field.windY * 1.15, phase, travelScale);
+      shadeMap[gy * gw + gx] = shade;
+      rimMap[gy * gw + gx] = shadeFore > shade ? shadeFore - shade : 0;
+    }
+  }
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
       const fx = (x + 0.5) / T;
       const fy = (y + 0.5) / T;
-      const shade = shadeAt(field, fx, fy, phase, travelScale);
-      const shadeFore = shadeAt(field, fx + field.windX * 1.15, fy + field.windY * 1.15, phase, travelScale);
-      const rim = shadeFore > shade ? shadeFore - shade : 0;
+      const shade = sampleGrid(shadeMap, gw, gh, x, y, step);
+      const rim = sampleGrid(rimMap, gw, gh, x, y, step);
       const fogV = sampleField(field.fog, cols, rows, fx, fy);
       const o = (y * W + x) * 3;
       let r = raw[o]!;
@@ -389,6 +506,63 @@ function applyAtmosphere(
       raw[o + 2] = b * mist;
     }
   }
+}
+
+/** Live overlay: one sample per tile. Gallery stills keep T/8 inside applyAtmosphere. */
+export function skyOverlaySize(
+  mapWidth: number,
+  mapHeight: number,
+  tileSize: number,
+): { width: number; height: number; step: number } {
+  const step = Math.max(1, tileSize);
+  return {
+    width: Math.ceil(mapWidth / step),
+    height: Math.ceil(mapHeight / step),
+    step,
+  };
+}
+
+/**
+ * Sky capsules only. `dim` is a multiply layer; `rim` is additive leading-edge light.
+ * One overlay pixel = `step` source pixels.
+ */
+export function paintSkyShade(
+  field: AtmosphereField,
+  mapWidth: number,
+  mapHeight: number,
+  tileSize: number,
+  phase: number,
+  travelScale: number,
+  dim: Uint8Array,
+  rim: Uint8Array,
+): { width: number; height: number } {
+  const { width: ow, height: oh, step } = skyOverlaySize(mapWidth, mapHeight, tileSize);
+  for (let y = 0; y < oh; y++) {
+    for (let x = 0; x < ow; x++) {
+      const fx = (x * step + 0.5) / tileSize;
+      const fy = (y * step + 0.5) / tileSize;
+      const shade = shadeAt(field, fx, fy, phase, travelScale);
+      const shadeFore = shadeAt(
+        field,
+        fx + field.windX * 1.15,
+        fy + field.windY * 1.15,
+        phase,
+        travelScale,
+      );
+      const rimV = shadeFore > shade ? shadeFore - shade : 0;
+      const dimK = 1 - shade * 0.7;
+      const o = (y * ow + x) * 4;
+      dim[o] = clamp255(255 * dimK * (1 - shade * 0.08));
+      dim[o + 1] = clamp255(255 * dimK);
+      dim[o + 2] = clamp255(255 * dimK * (1 + shade * 0.04));
+      dim[o + 3] = 255;
+      rim[o] = clamp255(3 * rimV);
+      rim[o + 1] = clamp255(5 * rimV);
+      rim[o + 2] = clamp255(7 * rimV);
+      rim[o + 3] = 255;
+    }
+  }
+  return { width: ow, height: oh };
 }
 
 function applyOverlays(
@@ -451,11 +625,16 @@ function applyOverlays(
   }
 }
 
-export function paintRuinedMask(
-  mask: RuinedMask,
-  pxPerTile = 16,
-  opts?: { phase?: number; travelScale?: number },
-): { rgba: Uint8Array; width: number; height: number } {
+export interface BakedGround {
+  readonly raw: Float32Array;
+  readonly width: number;
+  readonly height: number;
+  readonly tileSize: number;
+  readonly mask: RuinedMask;
+  readonly roles: Array<RuinPaintRole | ''>;
+}
+
+export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
   const def = RIFT_FRAGMENT_DATA[mask.fragmentTypeId];
   if (!def) throw new Error(`paintRuinedMask: unknown type ${mask.fragmentTypeId}`);
 
@@ -465,7 +644,6 @@ export function paintRuinedMask(
   const walls = mask.walls;
   const W = cols * pxPerTile;
   const H = rows * pxPerTile;
-  const rgba = new Uint8Array(W * H * 4);
   const raw = new Float32Array(W * H * 3);
   const T = pxPerTile;
 
@@ -649,32 +827,55 @@ export function paintRuinedMask(
     }
   }
 
+  return { raw, width: W, height: H, tileSize: T, mask, roles };
+}
+
+/** Gallery stills: fog + sky + overlays + exact palette. Do not call from the live update loop. */
+export function compositePaint(
+  ground: BakedGround,
+  work: Float32Array,
+  rgba: Uint8Array,
+  opts?: { phase?: number; travelScale?: number },
+): void {
+  const { raw, width: W, height: H, tileSize: T, mask, roles } = ground;
+  work.set(raw);
   applyAtmosphere(
-    raw,
+    work,
     W,
     H,
     T,
-    cols,
-    rows,
+    mask.outline.cols,
+    mask.outline.rows,
     mask.atmosphere,
     opts?.phase ?? mask.atmosphere?.phase ?? 0.5,
     opts?.travelScale ?? 1,
   );
-  applyOverlays(raw, W, H, T, mask.overlays ?? []);
-  stampStumps(raw, roles, land, cols, rows, W, H, T);
+  applyOverlays(work, W, H, T, mask.overlays ?? []);
+  stampStumps(work, roles, mask.outline.land, mask.outline.cols, mask.outline.rows, W, H, T);
+  writeQuantizedRgba(work, rgba, W, H, 'exact');
+}
 
-  for (let y = 0; y < H; y++) {
-    for (let x = 0; x < W; x++) {
-      const s = (y * W + x) * 3;
-      const d = (hash2(x, y, 31337) - 0.5) * 12;
-      const q = nearestPalette(clamp255(raw[s]! + d), clamp255(raw[s + 1]! + d), clamp255(raw[s + 2]! + d));
-      const o = (y * W + x) * 4;
-      rgba[o] = q[0];
-      rgba[o + 1] = q[1];
-      rgba[o + 2] = q[2];
-      rgba[o + 3] = 255;
-    }
-  }
+/** Live rift: fog + overlays baked once. Sky is `paintSkyShade` on a small overlay. */
+export function compositeStaticPaint(ground: BakedGround, work: Float32Array, rgba: Uint8Array): void {
+  const { raw, width: W, height: H, tileSize: T, mask, roles } = ground;
+  work.set(raw);
+  applyFog(work, W, H, T, mask.outline.cols, mask.outline.rows, mask.atmosphere);
+  applyOverlays(work, W, H, T, mask.overlays ?? []);
+  stampStumps(work, roles, mask.outline.land, mask.outline.cols, mask.outline.rows, W, H, T);
+  writeQuantizedRgba(work, rgba, W, H, 'lut');
+}
 
-  return { rgba, width: W, height: H };
+/** Live paint matches gallery card resolution; the sprite scales to world tile size. */
+export const LIVE_PAINT_PX_PER_TILE = 16;
+
+export function paintRuinedMask(
+  mask: RuinedMask,
+  pxPerTile = 16,
+  opts?: { phase?: number; travelScale?: number },
+): { rgba: Uint8Array; width: number; height: number } {
+  const ground = bakeGround(mask, pxPerTile);
+  const rgba = new Uint8Array(ground.width * ground.height * 4);
+  const work = new Float32Array(ground.raw.length);
+  compositePaint(ground, work, rgba, opts);
+  return { rgba, width: ground.width, height: ground.height };
 }

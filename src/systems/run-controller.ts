@@ -2,8 +2,8 @@
  * RunController - the single `endRun` exit and restart logic.
  *
  * Owns the run lifecycle: when a run ends (by death or extraction), it pauses chaos,
- * disables player input, waits a settle delay and emits `RIFT_EXITED`. On restart it
- * resets everything and emits `RIFT_ENTERED`.
+ * disables player input, waits a settle delay and emits `RIFT_EXITED`. On restart
+ * (R) both death and extraction return to the purification scene (DEC-056).
  *
  * The `runEnded` flag is the gate that prevents double-fires (a death event arriving
  * while the settle delay from extraction is still running, or vice versa).
@@ -24,7 +24,6 @@ export interface RunControllerDeps {
   pauseChaos: (paused: boolean) => void;
   setPlayerInput: (enabled: boolean) => void;
   getCarriedKindling: () => number;
-  resetAll: () => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -35,11 +34,10 @@ export class RunController {
   private runEnded = false;
   private deps!: RunControllerDeps;
   private scene!: Phaser.Scene;
-  private runCycle = 1;
   private startTimeMs = 0;
   /** Set to true when R is pressed to cancel the pending scene transition. */
   private restarted = false;
-  /** Tracks the last endRun reason for quick-retry eligibility. */
+  /** Tracks the last endRun reason so purification gets the right survived flag. */
   private lastEndReason: EndRunReason | null = null;
   /** Kindling carried at end of run (captured before any reset). */
   private lastKindling = 0;
@@ -79,24 +77,12 @@ export class RunController {
   }
 
   /**
-   * R key handler. After death: quick-retry in place. After extraction: skip
-   * the auto-transition delay and go to purification immediately.
+   * R key handler. After death or extraction: skip any remaining delay and go
+   * to purification (DEC-056). Survived is still decided by endRun reason.
    */
   restart(): void {
     if (!this.runEnded) return;
-
-    if (this.lastEndReason === 'player_died') {
-      this.restarted = true;
-      this.runEnded = false;
-      this.runCycle++;
-      this.startTimeMs = this.scene.time.now;
-      this.deps.resetAll();
-      this.deps.pauseChaos(false);
-      this.deps.setPlayerInput(true);
-      eventBus.emit(GameEvent.RIFT_ENTERED, { cycle: this.runCycle });
-    } else {
-      this.transitionToPurification();
-    }
+    this.transitionToPurification();
   }
 
   destroy(): void {

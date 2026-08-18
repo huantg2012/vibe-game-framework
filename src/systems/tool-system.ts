@@ -56,7 +56,6 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
-import { RIFT_MAP } from '@/scenes/rift-map-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { AIState, type Contaminant, type ContaminantType, type Vector2 } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
@@ -342,6 +341,7 @@ export class ToolSystem {
     nodePositions: readonly Vector2[],
     durationMs: number,
   ) => void;
+  private getKindlingPositions?: () => readonly Vector2[];
   private boostChaosRate?: (mult: number, durationMs: number) => void;
   private reduceChaosRate?: (mult: number, durationMs: number) => void;
 
@@ -430,6 +430,7 @@ export class ToolSystem {
         nodePositions: readonly Vector2[],
         durationMs: number,
       ) => void;
+      getKindlingPositions?: () => readonly Vector2[];
       boostChaosRate?: (mult: number, durationMs: number) => void;
       reduceChaosRate?: (mult: number, durationMs: number) => void;
       // T7 rewire (Slice 4 tools)
@@ -458,6 +459,7 @@ export class ToolSystem {
     this.setDecoyPosition = options?.setDecoyPosition;
     this.damageEnemy = options?.damageEnemy;
     this.showAbyssReveal = options?.showAbyssReveal;
+    this.getKindlingPositions = options?.getKindlingPositions;
     this.boostChaosRate = options?.boostChaosRate;
     this.reduceChaosRate = options?.reduceChaosRate;
     this.setEnemyEscalationSuppressed = options?.setEnemyEscalationSuppressed;
@@ -2021,7 +2023,7 @@ export class ToolSystem {
   private applyAbyss(): boolean {
     const def = CONTAMINANT_DATA.abyss;
     const enemyPositions = this.getEnemies().map((e) => ({ ...e.getPosition() }));
-    const nodePositions = RIFT_MAP.layout.kindlingNodes.map((n) => ({ ...n.position }));
+    const nodePositions = (this.getKindlingPositions?.() ?? []).map((n) => ({ ...n }));
 
     this.showAbyssReveal?.(enemyPositions, nodePositions, def.toolDurationMs);
     this.abyssRevealRemainingMs = def.toolDurationMs;

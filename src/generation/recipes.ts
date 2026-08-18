@@ -1,6 +1,8 @@
 import type { AtmosphereSpec } from '@/generation/atmosphere';
 import type { CoverSpec } from '@/generation/cover';
+import { mix32 } from '@/generation/seed-fork';
 import type { StructureBuildSpec } from '@/generation/structure-grammars';
+import { SeededRandom } from '@/utils/random';
 
 export type ScatterKind = 'none' | 'thicket' | 'rimMoss' | 'aisleLitter' | 'grassPads';
 
@@ -123,4 +125,55 @@ export function recipeById(id: string): MapRecipe {
   const hit = PREVIEW_RECIPES.find((r) => r.id === id);
   if (!hit) throw new Error(`unknown recipe ${id}`);
   return hit;
+}
+
+const NEIGHBORHOOD = 0.3;
+
+function jitterScalar(rng: SeededRandom, value: number, min = 0, max = 1): number {
+  const scaled = value * (1 - NEIGHBORHOOD + rng.next() * 2 * NEIGHBORHOOD);
+  return scaled < min ? min : scaled > max ? max : scaled;
+}
+
+function jitterCount(rng: SeededRandom, value: number, min: number, max: number): number {
+  const n = Math.round(jitterScalar(rng, value, min, max));
+  return n < min ? min : n > max ? max : n;
+}
+
+/**
+ * Production sample from an anchor. Grammar, fragment, thickness and tree-or-not
+ * stay locked. Density / cover / scatter / atmosphere scalars move ±30%.
+ * Gallery tools must keep calling the raw anchor — this is for live sorties.
+ */
+export function jitterRecipe(anchor: MapRecipe, seed: number): MapRecipe {
+  const rng = new SeededRandom(mix32(seed, `jitter:${anchor.id}`));
+  return {
+    ...anchor,
+    structure: {
+      ...anchor.structure,
+      density: jitterScalar(rng, anchor.structure.density),
+      gapiness: jitterScalar(rng, anchor.structure.gapiness),
+    },
+    cover: {
+      ...anchor.cover,
+      trees: anchor.cover.trees === 0 ? 0 : jitterCount(rng, anchor.cover.trees, 1, 3),
+      remains: jitterCount(rng, anchor.cover.remains, 1, 4),
+      hollows: jitterCount(rng, anchor.cover.hollows, 0, 3),
+      cuts: jitterCount(rng, anchor.cover.cuts, 0, 4),
+    },
+    scatter: {
+      ...anchor.scatter,
+      vegetation: jitterScalar(rng, anchor.scatter.vegetation),
+      wreck: jitterScalar(rng, anchor.scatter.wreck),
+      glitch: jitterCount(rng, anchor.scatter.glitch, 0, 6),
+    },
+    atmosphere: {
+      skyShadow: jitterScalar(rng, anchor.atmosphere.skyShadow),
+      fog: jitterScalar(rng, anchor.atmosphere.fog),
+      motes: jitterCount(rng, anchor.atmosphere.motes, 0, 48),
+      seep: jitterScalar(rng, anchor.atmosphere.seep),
+      poolRim: jitterScalar(rng, anchor.atmosphere.poolRim),
+      poolHollow: jitterScalar(rng, anchor.atmosphere.poolHollow),
+      poolOpen: jitterScalar(rng, anchor.atmosphere.poolOpen),
+    },
+  };
 }
