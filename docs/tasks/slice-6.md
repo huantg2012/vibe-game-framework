@@ -114,6 +114,8 @@ Depends: D1 人过 +（若需要）A1
 - [x] `src/generation/ruins.ts` + `masses.ts`：多坨小体量切开空地；身份走 CSV 维度；围死的地会挖开
 - [x] 墙只落在陆地上；剩下的地仍连通；胡椒粒墙丢掉
 - [x] 预览 `docs/art/demos/slice-6-outline/c2-*.png`；闸门 `npm run check:ruins`
+- [x] 十锚配方栈（`structure-grammars` + `cover` + 氛围场 + 桩）；画廊 `spatial-drafts/index.html`
+- [ ] DEC-058 反迷宫：细长条读成迷宫；形状闸门未改机器；密度待人拍
 - [x] **不**布出生/撤离；**不**改 RiftScene；**不**改地表着色
 
 **C3** 布点：出生 / 一个撤离 / 薪柴 / 污染物 / 巡逻；出生能走到撤离；撤离不钉旧格子。  

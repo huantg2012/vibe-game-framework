@@ -6,6 +6,8 @@ export {
   enabledFragmentIds,
   fragmentDef,
 } from '@/generation/ruins';
+export { buildAtmosphere, occluderCoverage, measureAtmosphere, shadeAt } from '@/generation/atmosphere';
+export type { AtmosphereSpec, AtmosphereMetrics } from '@/generation/atmosphere';
 export type {
   OutlineMask,
   OutlineMetrics,
@@ -18,4 +20,8 @@ export type {
   RuinMetrics,
   RuinPaintCell,
   RuinPaintRole,
+  OverlayStamp,
+  OverlayKind,
+  AtmosphereField,
+  SkyOccluder,
 } from '@/generation/types';

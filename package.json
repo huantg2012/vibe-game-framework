@@ -14,7 +14,9 @@
     "preview:outline": "tsx --tsconfig tsconfig.json tools/map-preview/render-outline.ts",
     "check:outline": "tsx --tsconfig tsconfig.json tools/map-preview/check-outline.ts",
     "preview:ruins": "tsx --tsconfig tsconfig.json tools/map-preview/render-ruins.ts",
-    "check:ruins": "tsx --tsconfig tsconfig.json tools/map-preview/check-ruins.ts"
+    "check:ruins": "tsx --tsconfig tsconfig.json tools/map-preview/check-ruins.ts",
+    "preview:recipes": "tsx --tsconfig tsconfig.json tools/map-preview/render-recipe-drafts.ts",
+    "check:recipes": "tsx --tsconfig tsconfig.json tools/map-preview/check-recipe-drafts.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1"

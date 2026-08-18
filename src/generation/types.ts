@@ -1,6 +1,7 @@
 /**
  * Slice 6 map-generation contracts. C1 = land outline. C2 = scenic walls.
- * Spawn / extract / atmosphere arrive in later batches.
+ * Spawn / extract arrive in later batches. Atmosphere is a generated field
+ * on the ruined mask (preview-baked; not wired to RiftScene yet).
  */
 
 import type { TileMapData } from '@/types/map-types';
@@ -62,8 +63,27 @@ export interface RuinCell {
 
 export type RuinFeatureKind = 'enclosure' | 'ridge' | 'slab' | 'cluster' | 'lattice' | 'growth';
 
-/** Floor marks for the atlas. Never stamped as walls. */
-export type RuinPaintRole = 'interior' | 'debris';
+/** Floor marks, except `stump` / `root` which skin bole and root wall cells. */
+export type RuinPaintRole =
+  | 'interior'
+  | 'debris'
+  | 'vegetation'
+  | 'organic'
+  | 'stump'
+  | 'root'
+  | 'wreck'
+  | 'glitch';
+
+export type OverlayKind = 'glow' | 'mote' | 'ripple' | 'band';
+
+/** Sub-tile FX, preview-baked. Never a wall. */
+export interface OverlayStamp {
+  readonly kind: OverlayKind;
+  readonly col: number;
+  readonly row: number;
+  readonly radiusTiles: number;
+  readonly strength: number;
+}
 
 export interface RuinPaintCell {
   readonly col: number;
@@ -85,6 +105,30 @@ export interface RuinMetrics {
   readonly leftoverConnected: boolean;
 }
 
+/** One sky mass. rest* is the pose at phase 0.5; paint slides it along wind. */
+export interface SkyOccluder {
+  readonly restCx: number;
+  readonly restCy: number;
+  readonly ux: number;
+  readonly uy: number;
+  readonly length: number;
+  readonly halfWidth: number;
+  readonly softness: number;
+  readonly strength: number;
+  readonly travel: number;
+}
+
+/** Layers 7–9 as one field. Same field animates by changing phase. */
+export interface AtmosphereField {
+  readonly phase: number;
+  readonly slideSpan: number;
+  readonly windX: number;
+  readonly windY: number;
+  readonly occluders: readonly SkyOccluder[];
+  readonly fog: Float32Array;
+  readonly motes: readonly OverlayStamp[];
+}
+
 export interface RuinedMask {
   readonly seed: number;
   readonly attempt: number;
@@ -95,4 +139,6 @@ export interface RuinedMask {
   readonly features: readonly RuinFeature[];
   readonly tileMap: TileMapData;
   readonly metrics: RuinMetrics;
+  readonly overlays?: readonly OverlayStamp[];
+  readonly atmosphere?: AtmosphereField;
 }

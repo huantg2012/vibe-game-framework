@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>空间草案 · 十风格锚</title>
+  <style>
+    body { margin: 24px; background: #0a0b0d; color: #c8cdd4; font: 14px/1.5 "Courier New", monospace; }
+    h1 { font-size: 16px; font-weight: normal; color: #8a8f96; }
+    p { color: #8a8f96; max-width: 80ch; }
+    section { margin: 36px 0; }
+    .row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
+    figure { margin: 0; }
+    figcaption { margin-top: 6px; font-size: 12px; color: #8a8f96; }
+    h2 { font-size: 14px; font-weight: normal; color: #8a8f96; margin: 28px 0 8px; }
+    img { display: block; image-rendering: pixelated; background: #080a0c; border: 1px solid #151a1e; }
+    a { color: #c8cdd4; }
+    .closeups img { width: 256px; height: auto; }
+  </style>
+</head>
+<body>
+  <h1>空间草案 · 十风格锚</h1>
+  <p>同一块岛（种子 101），十个配方。程序化俯视，和游戏同一套漆。墙后地板必须连通。树是圆切面桩 + 细根（氛围之后盖上去，避免被雾洗成短墙）。黑坑是空洞；矩形青块是污染。有限胶囊暗影是天空巨物；缘/空洞/空地的灰雾是池化+平流后的地雾场。诊所 / 地铁没有树。进游戏仍是旧图。</p>
+  <p><a href="../index.html">返回陆地预览</a></p>
+  <section>
+    <h2>桩在哪</h2>
+    <p>全图里桩是 2×2 圆切面（年轮 + 深色外皮），不是短石墙。下面三张是户外配方的特写。</p>
+    <div class="row closeups">
+      <figure><img src="stump-ridge-soil.png" alt="吞没褶脊桩" /><figcaption>吞没褶脊 · 桩特写</figcaption></figure>
+      <figure><img src="stump-hunks-soil.png" alt="园缘残体桩" /><figcaption>园缘残体 · 桩特写</figcaption></figure>
+      <figure><img src="stump-shear-soil.png" alt="土壤撕缝桩" /><figcaption>土壤撕缝 · 桩特写</figcaption></figure>
+    </div>
+  </section>
+  <section>
+    <h2>暗带会动</h2>
+    <p>会。同一份氛围场只改 <code>phase</code>，胶囊沿风向滑过岛。雾池是烤死的，这 8 帧只动天空影。裂隙场景还没接这条场，进游戏暂时不会动。</p>
+    <div class="row">
+      <figure>
+        <img id="atmo-ridge-soil" src="atmo-ridge-soil-0.png" width="512" height="336" alt="褶脊天空影循环" />
+        <figcaption>吞没褶脊 · 8 帧循环</figcaption>
+      </figure>
+      <figure>
+        <img id="atmo-ridge-clinic" src="atmo-ridge-clinic-0.png" width="512" height="336" alt="诊所天空影循环" />
+        <figcaption>无菌折脊 · 8 帧循环（影更重、没有树）</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section>
+    <div class="row">
+      <figure><img src="recipe-ridge-soil.png" width="512" height="336" alt="吞没褶脊" /><figcaption>吞没褶脊<br />ridge-soil · frag-outdoor</figcaption></figure>
+      <figure><img src="recipe-shear-clinic.png" width="512" height="336" alt="瓷面错位" /><figcaption>瓷面错位<br />shear-clinic · frag-clinic</figcaption></figure>
+      <figure><img src="recipe-hunks-metro.png" width="512" height="336" alt="嵌板残体" /><figcaption>嵌板残体<br />hunks-metro · frag-metro</figcaption></figure>
+      <figure><img src="recipe-ridge-library.png" width="512" height="336" alt="断梁残脊" /><figcaption>断梁残脊<br />ridge-library · frag-library</figcaption></figure>
+      <figure><img src="recipe-hunks-soil.png" width="512" height="336" alt="园缘残体" /><figcaption>园缘残体<br />hunks-soil · frag-outdoor</figcaption></figure>
+    </div>
+    <div class="row">
+      <figure><img src="recipe-shear-soil.png" width="512" height="336" alt="土壤撕缝" /><figcaption>土壤撕缝<br />shear-soil · frag-outdoor</figcaption></figure>
+      <figure><img src="recipe-hunks-residential.png" width="512" height="336" alt="宅基残体" /><figcaption>宅基残体<br />hunks-residential · frag-residential</figcaption></figure>
+      <figure><img src="recipe-ridge-clinic.png" width="512" height="336" alt="无菌折脊" /><figcaption>无菌折脊<br />ridge-clinic · frag-clinic</figcaption></figure>
+      <figure><img src="recipe-shear-metro.png" width="512" height="336" alt="锈板撕缝" /><figcaption>锈板撕缝<br />shear-metro · frag-metro</figcaption></figure>
+      <figure><img src="recipe-rim-soil.png" width="512" height="336" alt="沿缘残体" /><figcaption>沿缘残体<br />rim-soil · frag-outdoor</figcaption></figure>
+    </div>
+  </section>
+  <script>
+    (function () {
+      var frames = 8;
+      function cycle(id, prefix) {
+        var img = document.getElementById(id);
+        if (!img) return;
+        var i = 0;
+        setInterval(function () {
+          i = (i + 1) % frames;
+          img.src = prefix + i + ".png";
+        }, 180);
+      }
+      cycle("atmo-ridge-soil", "atmo-ridge-soil-");
+      cycle("atmo-ridge-clinic", "atmo-ridge-clinic-");
+    })();
+  </script>
+</body>
+</html>

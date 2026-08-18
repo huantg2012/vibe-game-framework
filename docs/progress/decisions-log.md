@@ -9,6 +9,18 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-058: 细长条墙读成迷宫；改形状不改色
+- Date: 2026-08-18
+- Phase: Slice 6
+- Type: Design
+- Context: 人看十锚预览，第一反应是迷宫。设计 + 美术独立看图后再互批。实机前向视野 7 格、敌锥约 5.6 格；预览却用 `sight≤14` 当生产目标去加 1 格宽墙。
+- Decision:
+  1. 诊断锁定：迷宫是墙与路宽度反了（1 格墙夹 1–2 格槽），不是墙格百分比。层 1 贯穿细骨架 + 层 1b 劈院工厂 + 视线闸门三件事叠在一起。真实长墙可以有，不能用很多根同样细的条拼接。换色救不了。
+  2. 只改掩护层、或只把 `sight` 放到 18–22，不够。潜行目标 48/10 当硬闸门会更迷宫。
+  3. 下一手无论密度选哪条，都必须：停掉「切到看不见」；拆 `bisectYard` / extra 细条；层 1 贯穿 1 格骨架一起改；形状闸门见 `docs/design-notes/slice-6-layered-generation.md`「墙剪影 / 反迷宫」。
+  4. **未锁**：密度（厚短残块铺开 vs 一簇大地标+大空场）；诊所/地铁正交还留多少。
+- Impact: 规格规则 O 补 16a。生成器形状未改；现预览图仍可能是迷宫。连通 / 不封房间 / 不换算法不动。
+
 ## DEC-057: 裂隙地表按碎片类型表驱动（三种先接通）
 - Date: 2026-08-16
 - Phase: Slice 6

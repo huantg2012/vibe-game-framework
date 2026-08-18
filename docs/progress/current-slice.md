@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-16
-last-modified: 2026-08-16
+last-modified: 2026-08-18
 note: Slice 6「程序化地图」ACTIVE。系统 Slice。撤离多样性本 Slice 不做（人 2026-08-16）。三条体验约束见正文。
 ---
 
@@ -120,8 +120,8 @@ note: Slice 6「程序化地图」ACTIVE。系统 Slice。撤离多样性本 Sli
 | 3 | art | **A1** 户外 / 医院 / 地铁 的地表/墙/虚空 | **已交**（`docs/art/rift-fragment-surfaces.md`） |
 | 4 | design | **D2** 撤离规格最少补句 | **已做** |
 | 5 | code | **C1** 可走陆地掩膜 | **已交** |
-| 6 | code | **C2** 情景障碍（按 A1 形状语言） | **重做中**（走法骨架 + 表驱动身份；图在 `docs/art/demos/slice-6-outline/c2-*.png`） |
-| 7 | code | **C3** 布点（出生 / 一个撤离 / 薪柴 / 巡逻） | **下一步** |
+| 6 | code | **C2** 情景障碍（按 A1 形状语言） | **草案预览已交**（十锚+氛围+桩：`spatial-drafts/`）。人判细长条=迷宫（DEC-058）；形状闸门未改机器 |
+| 7 | code | **C3** 布点（出生 / 一个撤离 / 薪柴 / 巡逻） | 形状改完后再做 |
 | 8 | code | C4 场景接线 → C5 氛围 | 未开始 |
 | 9 | qa | 对照规格 | 实现后 |
 | 10 | 人 | 连续踏入至少两次 | 验收时 |
@@ -144,4 +144,4 @@ note: Slice 6「程序化地图」ACTIVE。系统 Slice。撤离多样性本 Sli
 
 ## 人现在不用做的
 
-C2 残墙还没进游戏。打开 `docs/art/demos/slice-6-outline/index.html` 看最下面三排（同一编号=同一块岛）。走法是多坨小体量切开空地；三种碎片只是表上的三个样本。下一手是布出生点和一个撤离点（C3）。
+C2 还没进游戏。打开 `docs/art/demos/slice-6-outline/spatial-drafts/index.html` 看十锚（同一岛、种子 101）。现图细长条墙读成迷宫，结论在合同「墙剪影 / 反迷宫」和 DEC-058。下一手是人拍密度之后改墙形状，不是布点（C3）。
