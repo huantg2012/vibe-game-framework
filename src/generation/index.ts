@@ -6,7 +6,8 @@ export {
   enabledFragmentIds,
   fragmentDef,
 } from '@/generation/ruins';
-export { buildAtmosphere, occluderCoverage, measureAtmosphere, shadeAt } from '@/generation/atmosphere';
+export { measureSilhouette, silhouetteFails } from '@/generation/silhouette';
+export type { SilhouetteMetrics } from '@/generation/silhouette';
 export type { AtmosphereSpec, AtmosphereMetrics } from '@/generation/atmosphere';
 export type {
   OutlineMask,

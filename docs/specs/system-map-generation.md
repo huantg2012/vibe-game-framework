@@ -2,10 +2,10 @@
 status: DRAFT
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: design agent
+last-modified-by: code agent
 last-modified-date: 2026-08-18
-  # anti-maze wall silhouette (DEC-058); preview atmosphere + stumps; still not wired to RiftScene
-note: C1 陆地掩膜已交。预览栈：走法骨架 + 掩护 + 氛围场 + 桩，未接 RiftScene。人确认细长条墙读成迷宫（DEC-058）；形状闸门未改机器。布点 / 场景接线未做。
+  # DEC-058 silhouette gates live; DEC-059 empty-yard probes pending pick; still not wired to RiftScene
+note: C1 陆地掩膜已交。预览栈：走法骨架 + 掩护 + 氛围场 + 桩，未接 RiftScene。DEC-058 形状闸门已改机器。DEC-059：空地过大，五案对照待人拍。布点 / 场景接线未做。
 interface-changed: true
 slice: 6
 interfaces-with:
@@ -13,7 +13,7 @@ interfaces-with:
   - system-movement-vision         # 输出 OccluderGrid / 出生点；虚空格不可走、默认不挡视线
   - system-enemy-ai                # 输出 WalkGrid + 巡逻路点；路点必须可走且从出生可达
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
-note: C1 陆地已交。预览栈有氛围场与桩。细长条墙读成迷宫（DEC-058），形状未改。布点 / 接线未做。
+note: C1 陆地已交。预览栈有氛围场与桩。DEC-058 形状闸门已改机器。DEC-059 空地待拍。布点 / 接线未做。
 exposes:
   - OutlineMask（矩形缓冲 + 陆地/虚空掩膜 + 质量指标）
   - generateOutline(seed) → OutlineMask | 坏图重试后仍失败则抛错
@@ -212,8 +212,8 @@ interface FragmentTypeDef {
 13. DEC-005 反的是「方正房间 + 走廊像地牢游戏」，**不是**「这段墙曾是一栋房子」。残缺体量允许。闭合房间 + 门廊，禁止。禁止完整器物剪影（整节车厢、完整月台色带）。**1 格宽长条正交织网同样读成迷宫**（DEC-058）：真实长墙可以有，但不能用很多根同样细的条拼接。障碍要读成体积残骸，不要读成地牢平面图。
 14. 细胞自动机（CA）可以当风化（咬边、穿洞、让残块显老），**不能当唯一结构来源**。禁止只靠 CA 胡椒粒墙交差。
 15. 现图已有 L/T/C 和小簇（2–12 格），人仍读成细碎随机。所以「把簇稍微加大」本身不够。见约束 2。把簇改成贯穿细篱笆也不够——那是迷宫，不是情景。
-16. 障碍策略：**草案收口中**。走法骨架与残片身份分开。预览栈：`structure-grammars.ts` + `cover.ts` + 配方（`docs/design-notes/slice-6-layered-generation.md`）。`masses.ts` 的围院语言不进这条栈。人 2026-08-18 确认现图细长条 = 迷宫；形状闸门（1 宽直行 ≤6、厚件占比、禁窄槽/三向巷、空地边缘掩护）写在合同里，**未改机器**。密度（厚短铺开 vs 一簇+大空场）待人拍。墙围死的地就地挖开。CA 不当结构。
-16a. 预览不得用「最长轴对齐空直线 ≤14」当生产循环去加细墙。实机前向视野 7 格、敌锥约 5.6 格；上帝视切视线会倒逼走廊。潜行目标空矩形 ≤48 / 视线 ≤10 **不要**当下一手硬闸门。
+16. 障碍策略：**方向 1 厚短残块**（DEC-058，2026-08-18 人锁）。走法骨架与残片身份分开。预览栈：`structure-grammars.ts` + `cover.ts` + 配方。`masses.ts` 的围院语言不进这条栈。诊所/地铁也走短板/坨，全图最多一把 L。墙围死的地就地挖开。CA 不当结构。
+16a. 预览 **不得**用「最长轴对齐空直线 ≤14」当生产循环或 FATAL。形状闸门：1 宽直行 ≤6；非木墙至少一半属 2 厚/坨；平行窄槽 0；无三向 1 宽巷；至少一块 6×6 空地且边缘有厚掩护；禁 2–4 宽且长 >8 的巷；墙占比 ≤18% 是顶。连通仍 FATAL。
 
 ### P — 布点（一个撤离，不要多样性）
 
@@ -528,7 +528,7 @@ interface FragmentRoll {
 4. 一个撤离点，走近按 E。位置由生成器给，禁止钉在手写图那个格子。
 5. 不要多出口、不要第二种条件、不要捷径口。
 6. 可走区外轮廓必须不规则。矩形缓冲 + 虚空掩膜合法。禁止矩形可走区啃缺口充数。
-7. 障碍必须有情景。DEC-005 反地牢房间，不反「这段墙曾是房子」。CA 只可风化，不可当唯一结构。1 格宽长条正交织网同样读成迷宫（DEC-058）；形状闸门待改机器。
+7. 障碍必须有情景。DEC-005 反地牢房间，不反「这段墙曾是房子」。CA 只可风化，不可当唯一结构。1 格宽长条正交织网同样读成迷宫（DEC-058）；形状闸门打剪影，不用 `sight≤14`。
 8. 不同出击禁止同一套配色 / 氛围。有限种碎片氛围，优先已锁 L1，不发明新色。
 9. 不退回 BSP 方正房间。
 10. 策划向字段进 `data/*.csv`。数据从生成器出。
@@ -543,10 +543,10 @@ interface FragmentRoll {
 人负责拍**体验方案**。算法组合由 design/code 收口，见 `docs/design-notes/slice-6-system-proposal.md`。
 
 - **外轮廓**：生长 + 腐蚀，取最大连通块。预览：`docs/art/demos/slice-6-outline/`。
-- **障碍**：按碎片身份换墙的形状；禁止细碎孤岛；禁止 1 格宽长条织走廊网（DEC-058）。CA 只风化。密度待人拍。
+- **障碍**：按碎片身份换墙的形状；禁止细碎孤岛；禁止 1 格宽长条织走廊网（DEC-058）。CA 只风化。密度已锁：方向 1 厚短残块；正交 B。
 - **氛围**：五类是词表起点，不是天花板。成品靠 CSV 扩展 +（种类 × 污染年龄 × 残破）组合。本 Slice 先接通三种：**户外、医院、地铁**。一张图一种类型。
 - **阵亡**：回净化点；薪柴仍为 0；这次出击仍走归来/冲击。不另扣稳定度。
 
 ## 待人拍板
 
-体验方向人已认。十锚预览：`docs/art/demos/slice-6-outline/spatial-drafts/index.html`。待拍：墙密度（厚短铺开 vs 一簇+大空场）。
+体验方向人已认。十锚：`docs/art/demos/slice-6-outline/spatial-drafts/index.html`。形状（厚短、正交 B）已锁并过机器闸门。空地中等未达标（DEC-059）。五案对照：`spatial-drafts/probes/index.html`。待拍：密度补丁（A/B/C/D/E 或组合）。布点仍未做。

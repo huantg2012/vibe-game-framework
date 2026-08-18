@@ -14,13 +14,14 @@ import { applyCover, countBoles, stumpTouchesStone } from '@/generation/cover';
 import { generateOutline } from '@/generation/outline-mask';
 import type { MapRecipe } from '@/generation/recipes';
 import { forkMapRngs } from '@/generation/seed-fork';
+import { measureSilhouette, silhouetteFails } from '@/generation/silhouette';
 import { buildStructure } from '@/generation/structure-grammars';
 import type { RuinPaintCell, RuinPaintRole, RuinedMask } from '@/generation/types';
 import { TileType } from '@/types/game-types';
 import type { TileMapData } from '@/types/map-types';
 import { SeededRandom } from '@/utils/random';
 
-const MAX_STRUCTURE_ATTEMPTS = 12;
+const MAX_STRUCTURE_ATTEMPTS = 24;
 
 const ROLE_RANK: Record<RuinPaintRole, number> = {
   glitch: 5,
@@ -177,6 +178,7 @@ export function generateRecipeDraft(seed: number, recipe: MapRecipe): RuinedMask
   let structurePaint: RuinPaintCell[] = [];
   let attempt = 0;
   let ok = false;
+  let lastWhy = 'no attempt';
 
   for (; attempt < MAX_STRUCTURE_ATTEMPTS; attempt++) {
     land.set(base.land);
@@ -185,7 +187,10 @@ export function generateRecipeDraft(seed: number, recipe: MapRecipe): RuinedMask
     walls = new Uint8Array(built.walls);
     structurePaint = built.paint;
     openSealedFloors(land, walls, cols, rows);
-    if (countWalkableComponents(land, walls, cols, rows) !== 1) continue;
+    if (countWalkableComponents(land, walls, cols, rows) !== 1) {
+      lastWhy = 'structure walkable != 1';
+      continue;
+    }
     const coverPaint = applyCover(land, walls, cols, rows, recipe.cover, forked.coverRng);
     for (let i = 0; i < walls.length; i++) if (!land[i]) walls[i] = 0;
     const keepWood = new Uint8Array(walls.length);
@@ -194,9 +199,24 @@ export function generateRecipeDraft(seed: number, recipe: MapRecipe): RuinedMask
       keepWood[at(cols, cell.col, cell.row)] = 1;
     }
     openSealedFloors(land, walls, cols, rows, keepWood);
-    if (countWalkableComponents(land, walls, cols, rows) !== 1) continue;
-    if (stumpTouchesStone(walls, cols, rows, coverPaint)) continue;
-    if (recipe.cover.trees >= 1 && countBoles(coverPaint, walls, cols) < 1) continue;
+    if (countWalkableComponents(land, walls, cols, rows) !== 1) {
+      lastWhy = 'cover walkable != 1';
+      continue;
+    }
+    if (stumpTouchesStone(walls, cols, rows, coverPaint)) {
+      lastWhy = 'stump touches stone';
+      continue;
+    }
+    if (recipe.cover.trees >= 1 && countBoles(coverPaint, walls, cols) < 1) {
+      lastWhy = 'missing bole';
+      continue;
+    }
+    const sil = measureSilhouette(land, walls, cols, rows, structurePaint.concat(coverPaint));
+    const silFail = silhouetteFails(sil);
+    if (silFail) {
+      lastWhy = silFail;
+      continue;
+    }
     structurePaint = structurePaint.concat(coverPaint);
     ok = true;
     break;
@@ -204,7 +224,7 @@ export function generateRecipeDraft(seed: number, recipe: MapRecipe): RuinedMask
 
   const label = `generateRecipeDraft ${recipe.id} seed ${seed}`;
   if (!ok) {
-    throw new Error(`${label}: no connected structure after ${MAX_STRUCTURE_ATTEMPTS} attempts`);
+    throw new Error(`${label}: no connected structure after ${MAX_STRUCTURE_ATTEMPTS} attempts (${lastWhy})`);
   }
   assertSingleWalkable(land, walls, cols, rows, label);
 

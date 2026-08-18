@@ -15,8 +15,8 @@ export type WildernessKind = (typeof WILDERNESS_KINDS)[number];
 
 const SPECS: Record<WildernessKind, StructureBuildSpec> = {
   ridge: { grammar: 'ridge', density: 0.55, gapiness: 0.4, thickness: 2, align: 'free' },
-  shear: { grammar: 'shear', density: 0.5, gapiness: 0.4, thickness: 1, align: 'free' },
-  hunks: { grammar: 'hunks', density: 0.7, gapiness: 0.5, thickness: 1, align: 'free' },
+  shear: { grammar: 'shear', density: 0.5, gapiness: 0.4, thickness: 2, align: 'free' },
+  hunks: { grammar: 'hunks', density: 0.7, gapiness: 0.5, thickness: 2, align: 'free' },
 };
 
 function hashKind(kind: WildernessKind): number {

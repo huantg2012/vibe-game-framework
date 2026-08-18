@@ -70,206 +70,23 @@ function landBBox(land: Uint8Array, cols: number, rows: number) {
   return { minC, minR, maxC, maxR, width: maxC - minC + 1, height: maxR - minR + 1 };
 }
 
-function firstLandOnRay(
-  land: Uint8Array,
-  cols: number,
-  rows: number,
-  col: number,
-  row: number,
-  dx: number,
-  dy: number,
-): RuinCell | null {
-  for (let s = 0; s < cols + rows; s++) {
-    const c = col + dx * s;
-    const r = row + dy * s;
-    if (!inBounds(cols, rows, c, r)) return null;
-    if (land[at(cols, c, r)]) return { col: c, row: r };
-  }
-  return null;
-}
-
-function walkRidge(
-  land: Uint8Array,
-  cols: number,
-  rows: number,
-  start: RuinCell,
-  toward: RuinCell,
-  rng: SeededRandom,
-): RuinCell[] {
-  const cells: RuinCell[] = [];
-  const seen = new Set<string>();
-  let col = start.col;
-  let row = start.row;
-  for (let step = 0; step < 220; step++) {
-    const key = `${col},${row}`;
-    if (!seen.has(key) && isLand(land, cols, rows, col, row)) {
-      seen.add(key);
-      cells.push({ col, row });
-    }
-    if (Math.abs(col - toward.col) + Math.abs(row - toward.row) <= 2) break;
-    const pullC = Math.sign(toward.col - col);
-    const pullR = Math.sign(toward.row - row);
-    let nc = col + pullC;
-    let nr = row + pullR;
-    if (rng.next() < 0.55) {
-      const j = rng.nextInt(-1, 1);
-      if (Math.abs(pullC) >= Math.abs(pullR)) nr += j;
-      else nc += j;
-    }
-    if (!isLand(land, cols, rows, nc, nr)) {
-      const opts: RuinCell[] = [];
-      for (const [dx, dy] of DIRS8) {
-        if (isLand(land, cols, rows, col + dx, row + dy)) opts.push({ col: col + dx, row: row + dy });
-      }
-      if (opts.length === 0) break;
-      const pick = opts[rng.nextInt(0, opts.length - 1)]!;
-      nc = pick.col;
-      nr = pick.row;
-    }
-    col = nc;
-    row = nr;
-  }
-  return cells;
-}
-
-function walkOrtho(
-  land: Uint8Array,
-  cols: number,
-  rows: number,
-  start: RuinCell,
-  toward: RuinCell,
-  rng: SeededRandom,
-): RuinCell[] {
-  const cells: RuinCell[] = [];
-  const seen = new Set<string>();
-  let col = start.col;
-  let row = start.row;
-  let horiz = Math.abs(toward.col - start.col) >= Math.abs(toward.row - start.row);
-  for (let step = 0; step < 220; step++) {
-    const key = `${col},${row}`;
-    if (!seen.has(key) && isLand(land, cols, rows, col, row)) {
-      seen.add(key);
-      cells.push({ col, row });
-    }
-    if (Math.abs(col - toward.col) + Math.abs(row - toward.row) <= 1) break;
-    if (rng.next() < 0.16) horiz = !horiz;
-    const pullC = Math.sign(toward.col - col);
-    const pullR = Math.sign(toward.row - row);
-    let nc = col;
-    let nr = row;
-    if (horiz) nc = col + (pullC || (rng.next() < 0.5 ? 1 : -1));
-    else nr = row + (pullR || (rng.next() < 0.5 ? 1 : -1));
-    if (!isLand(land, cols, rows, nc, nr)) {
-      horiz = !horiz;
-      nc = col;
-      nr = row;
-      if (horiz) nc = col + (pullC || 0);
-      else nr = row + (pullR || 0);
-    }
-    if (!isLand(land, cols, rows, nc, nr)) {
-      const opts: RuinCell[] = [];
-      for (const [dx, dy] of DIRS4) {
-        if (isLand(land, cols, rows, col + dx, row + dy)) opts.push({ col: col + dx, row: row + dy });
-      }
-      if (opts.length === 0) break;
-      const pick = opts[rng.nextInt(0, opts.length - 1)]!;
-      nc = pick.col;
-      nr = pick.row;
-    }
-    col = nc;
-    row = nr;
-  }
-  return cells;
-}
-
-function thicken(
+function thicken2(
   spine: readonly RuinCell[],
   land: Uint8Array,
   cols: number,
   rows: number,
-  radius: number,
 ): RuinCell[] {
   const out: RuinCell[] = [];
   const seen = new Set<number>();
   for (const cell of spine) {
-    for (let dy = -radius; dy <= radius; dy++) {
-      for (let dx = -radius; dx <= radius; dx++) {
-        if (dx * dx + dy * dy > radius * radius + 1) continue;
-        const col = cell.col + dx;
-        const row = cell.row + dy;
-        if (!isLand(land, cols, rows, col, row)) continue;
-        const i = at(cols, col, row);
-        if (seen.has(i)) continue;
-        seen.add(i);
-        out.push({ col, row });
-      }
-    }
-  }
-  return out;
-}
-
-function punchGaps(cells: RuinCell[], nGaps: number, gapLen: number, rng: SeededRandom): RuinCell[] {
-  if (cells.length < 20) return cells;
-  const n = cells.length < 36 ? Math.min(nGaps, 1) : nGaps;
-  const len = Math.min(gapLen, cells.length < 36 ? 2 : gapLen);
-  const drop = new Set<string>();
-  const span = Math.max(4, cells.length - len - 4);
-  for (let g = 0; g < n; g++) {
-    const atIndex = rng.nextInt(4, span);
-    for (let k = 0; k < len; k++) {
-      const cell = cells[atIndex + k];
-      if (cell) drop.add(`${cell.col},${cell.row}`);
-    }
-  }
-  const kept = cells.filter((c) => !drop.has(`${c.col},${c.row}`));
-  return kept.length < 8 ? cells : kept;
-}
-
-function growBlob(
-  land: Uint8Array,
-  cols: number,
-  rows: number,
-  seed: RuinCell,
-  want: number,
-  rng: SeededRandom,
-): RuinCell[] {
-  const out: RuinCell[] = [];
-  const seen = new Set<number>([at(cols, seed.col, seed.row)]);
-  const frontier: RuinCell[] = [seed];
-  while (out.length < want && frontier.length > 0) {
-    const idx = rng.nextInt(0, frontier.length - 1);
-    const cur = frontier.splice(idx, 1)[0]!;
-    if (!isLand(land, cols, rows, cur.col, cur.row)) continue;
-    out.push(cur);
-    const order = [...DIRS8];
-    for (let i = order.length - 1; i > 0; i--) {
-      const j = rng.nextInt(0, i);
-      const tmp = order[i]!;
-      order[i] = order[j]!;
-      order[j] = tmp;
-    }
-    for (const [dx, dy] of order) {
-      const col = cur.col + dx;
-      const row = cur.row + dy;
-      if (!isLand(land, cols, rows, col, row)) continue;
-      const i = at(cols, col, row);
+    for (const extra of solidRect(cell.col, cell.row, 2, 2, land, cols, rows)) {
+      const i = at(cols, extra.col, extra.row);
       if (seen.has(i)) continue;
       seen.add(i);
-      frontier.push({ col, row });
+      out.push(extra);
     }
   }
   return out;
-}
-
-function shellOf(blob: readonly RuinCell[]): RuinCell[] {
-  const set = new Set(blob.map((c) => `${c.col},${c.row}`));
-  return blob.filter((c) => {
-    let open = 0;
-    for (const [dx, dy] of DIRS4) {
-      if (!set.has(`${c.col + dx},${c.row + dy}`)) open++;
-    }
-    return open > 0;
-  });
 }
 
 function stamp(walls: Uint8Array, cells: readonly RuinCell[], cols: number): void {
@@ -337,71 +154,129 @@ function nearVoid(land: Uint8Array, cols: number, rows: number, col: number, row
   return false;
 }
 
-function gapCount(gapiness: number): number {
-  return 1 + ((gapiness * 3) | 0);
-}
-
-function gapLen(gapiness: number): number {
-  return 2 + ((gapiness * 2) | 0);
-}
-
-function pairEnds(outline: OutlineMask, rng: SeededRandom, align: 'free' | 'ortho') {
-  const { land, cols, rows } = outline;
+function pickInterior(
+  land: Uint8Array,
+  cols: number,
+  rows: number,
+  rng: SeededRandom,
+  inset = 3,
+): RuinCell | null {
   const box = landBBox(land, cols, rows);
-  const horiz = box.width >= box.height;
-  const jitter = align === 'ortho' ? 0 : rng.nextInt(0, 2);
-  const a = horiz
-    ? firstLandOnRay(land, cols, rows, box.minC, box.minR + ((box.height / 2) | 0) + jitter, 1, 0)
-    : firstLandOnRay(land, cols, rows, box.minC + ((box.width / 2) | 0) + jitter, box.minR, 0, 1);
-  const b = horiz
-    ? firstLandOnRay(land, cols, rows, box.maxC, box.minR + ((box.height / 2) | 0) - jitter, -1, 0)
-    : firstLandOnRay(land, cols, rows, box.minC + ((box.width / 2) | 0) - jitter, box.maxR, 0, -1);
-  return { a, b, horiz, box };
+  const hits: RuinCell[] = [];
+  const minC = box.minC + inset;
+  const maxC = box.maxC - inset;
+  const minR = box.minR + inset;
+  const maxR = box.maxR - inset;
+  for (let row = minR; row <= maxR; row++) {
+    for (let col = minC; col <= maxC; col++) {
+      if (isLand(land, cols, rows, col, row)) hits.push({ col, row });
+    }
+  }
+  if (hits.length === 0) return pickLand(land, cols, rows, rng, 1, 1)[0] ?? null;
+  return hits[rng.nextInt(0, hits.length - 1)]!;
 }
 
-function walkByAlign(
+function walkLimited(
   land: Uint8Array,
   cols: number,
   rows: number,
   start: RuinCell,
-  toward: RuinCell,
+  dx: number,
+  dy: number,
+  len: number,
   rng: SeededRandom,
-  align: 'free' | 'ortho',
+  bend: boolean,
 ): RuinCell[] {
-  return align === 'ortho'
-    ? walkOrtho(land, cols, rows, start, toward, rng)
-    : walkRidge(land, cols, rows, start, toward, rng);
+  const cells: RuinCell[] = [];
+  const seen = new Set<string>();
+  let col = start.col;
+  let row = start.row;
+  let ux = dx;
+  let uy = dy;
+  const bendAt = bend ? ((len / 2) | 0) : -1;
+  for (let step = 0; step < len; step++) {
+    const key = `${col},${row}`;
+    if (!seen.has(key) && isLand(land, cols, rows, col, row)) {
+      seen.add(key);
+      cells.push({ col, row });
+    }
+    if (step === bendAt) {
+      const left = rng.next() < 0.5;
+      const nx = left ? -uy : uy;
+      const ny = left ? ux : -ux;
+      ux = nx;
+      uy = ny;
+    }
+    let nc = col + ux;
+    let nr = row + uy;
+    if (bend && rng.next() < 0.28) {
+      nc += rng.next() < 0.5 ? -uy : uy;
+      nr += rng.next() < 0.5 ? ux : -ux;
+    }
+    if (!isLand(land, cols, rows, nc, nr)) {
+      const opts: RuinCell[] = [];
+      for (const [sx, sy] of DIRS8) {
+        if (isLand(land, cols, rows, col + sx, row + sy) && !seen.has(`${col + sx},${row + sy}`)) {
+          opts.push({ col: col + sx, row: row + sy });
+        }
+      }
+      if (opts.length === 0) break;
+      const pick = opts[rng.nextInt(0, opts.length - 1)]!;
+      nc = pick.col;
+      nr = pick.row;
+    }
+    col = nc;
+    row = nr;
+  }
+  return cells;
+}
+
+function heading(rng: SeededRandom): { dx: number; dy: number } {
+  const dirs = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+    [-1, -1],
+  ] as const;
+  const d = dirs[rng.nextInt(0, dirs.length - 1)]!;
+  return { dx: d[0], dy: d[1] };
+}
+
+function splitGap(spine: readonly RuinCell[], gapAt: number, gap: number): RuinCell[] {
+  return spine.filter((_, i) => i < gapAt || i >= gapAt + gap);
+}
+
+function solidRect(ox: number, oy: number, w: number, h: number, land: Uint8Array, cols: number, rows: number): RuinCell[] {
+  const cells: RuinCell[] = [];
+  for (let row = oy; row < oy + h; row++) {
+    for (let col = ox; col < ox + w; col++) {
+      if (isLand(land, cols, rows, col, row)) cells.push({ col, row });
+    }
+  }
+  return cells;
 }
 
 function buildRidge(outline: OutlineMask, rng: SeededRandom, spec: StructureBuildSpec) {
   const { land, cols, rows } = outline;
   const walls = new Uint8Array(land.length);
   const paint: RuinPaintCell[] = [];
-  const { a, b, horiz, box } = pairEnds(outline, rng, spec.align);
-  if (!a || !b) return { walls, paint };
-  const spine = walkByAlign(land, cols, rows, a, b, rng, spec.align);
-  const thick = thicken(spine, land, cols, rows, spec.thickness - 1);
-  stamp(walls, punchGaps(thick, gapCount(spec.gapiness), gapLen(spec.gapiness), rng), cols);
-  paint.push(...raiseNear(land, walls, cols, rows, spine, 2));
-  if (spec.align === 'ortho') {
-    const stubs = 2 + (spec.density > 0.5 ? 1 : 0);
-    for (const seed of pickLand(land, cols, rows, rng, stubs, 8)) {
-      const toward: RuinCell = horiz
-        ? { col: seed.col, row: seed.row + (rng.next() < 0.5 ? 8 : -8) }
-        : { col: seed.col + (rng.next() < 0.5 ? 8 : -8), row: seed.row };
-      const stub = walkOrtho(land, cols, rows, seed, toward, rng).slice(0, rng.nextInt(6, 10));
-      stamp(walls, punchGaps(thicken(stub, land, cols, rows, 0), 1, 2, rng), cols);
-    }
-  } else if (spec.density > 0.4 && rng.next() < 0.7) {
-    const c = pickLand(land, cols, rows, rng, 1, 8)[0];
-    if (c) {
-      const d: RuinCell = horiz
-        ? { col: c.col, row: c.row + (c.row > box.minR + box.height / 2 ? -10 : 10) }
-        : { col: c.col + (c.col > box.minC + box.width / 2 ? -10 : 10), row: c.row };
-      const spine2 = walkByAlign(land, cols, rows, c, d, rng, spec.align).slice(0, 16);
-      stamp(walls, punchGaps(thicken(spine2, land, cols, rows, 0), 1, 2, rng), cols);
-    }
+  const start = pickInterior(land, cols, rows, rng, 4);
+  if (!start) return { walls, paint };
+  const { dx, dy } = heading(rng);
+  const len = rng.nextInt(7, 10);
+  const spine = walkLimited(land, cols, rows, start, dx, dy, len, rng, true);
+  const gapped = splitGap(spine, Math.max(2, ((spine.length / 2) | 0) - 1), 2);
+  stamp(walls, thicken2(gapped, land, cols, rows), cols);
+  const nugs = 1 + (rng.next() < spec.density ? 1 : 0);
+  for (const seed of pickLand(land, cols, rows, rng, nugs, 6)) {
+    if (Math.abs(seed.col - start.col) + Math.abs(seed.row - start.row) > 8) continue;
+    stamp(walls, solidRect(seed.col, seed.row, rng.nextInt(2, 3), rng.nextInt(2, 3), land, cols, rows), cols);
   }
+  paint.push(...raiseNear(land, walls, cols, rows, gapped, 2));
   return { walls, paint };
 }
 
@@ -411,124 +286,139 @@ function buildShear(outline: OutlineMask, rng: SeededRandom, spec: StructureBuil
   const walls = new Uint8Array(land.length);
   const paint: RuinPaintCell[] = [];
   const vertical = box.height >= box.width * 0.7;
-  const fault: RuinCell[] = [];
-  if (vertical) {
-    let col = box.minC + ((box.width / 2) | 0);
-    for (let row = box.minR; row <= box.maxR; row++) {
-      if (spec.align === 'free') col += rng.nextInt(-1, 1);
-      else if (rng.next() < 0.12) col += rng.next() < 0.5 ? -1 : 1;
-      col = Math.max(box.minC + 3, Math.min(box.maxC - 3, col));
-      if (isLand(land, cols, rows, col, row)) fault.push({ col, row });
+  const segments = 2 + (spec.density > 0.55 ? 1 : 0);
+  const lipLen = rng.nextInt(4, 7);
+  const thick = Math.max(2, spec.thickness);
+  const gap = thick + 3 + (rng.next() < 0.5 ? 1 : 0);
+  const axis0 = vertical
+    ? box.minR + 3 + rng.nextInt(0, Math.max(1, box.height - lipLen - 8))
+    : box.minC + 3 + rng.nextInt(0, Math.max(1, box.width - lipLen - 8));
+  const cross = vertical
+    ? box.minC + ((box.width / 2) | 0) - ((gap / 2) | 0)
+    : box.minR + ((box.height / 2) | 0) - ((gap / 2) | 0);
+  for (let s = 0; s < segments; s++) {
+    const stagger = s * (lipLen + 1);
+    const along = axis0 + stagger;
+    const shift = (s % 2) * gap;
+    const cells: RuinCell[] = [];
+    for (let k = 0; k < lipLen; k++) {
+      for (let t = 0; t < thick; t++) {
+        const col = vertical ? cross + shift + t : along + k;
+        const row = vertical ? along + k : cross + shift + t;
+        if (isLand(land, cols, rows, col, row)) cells.push({ col, row });
+      }
     }
-  } else {
-    let row = box.minR + ((box.height / 2) | 0);
-    for (let col = box.minC; col <= box.maxC; col++) {
-      if (spec.align === 'free') row += rng.nextInt(-1, 1);
-      else if (rng.next() < 0.12) row += rng.next() < 0.5 ? -1 : 1;
-      row = Math.max(box.minR + 3, Math.min(box.maxR - 3, row));
-      if (isLand(land, cols, rows, col, row)) fault.push({ col, row });
-    }
-  }
-  stamp(walls, punchGaps(thicken(fault, land, cols, rows, spec.thickness - 1), gapCount(spec.gapiness), 3, rng), cols);
-  if (spec.align === 'ortho') {
-    const slip = 2;
-    const slipped: RuinCell[] = fault.map((c) =>
-      vertical ? { col: c.col + slip, row: c.row } : { col: c.col, row: c.row + slip },
-    );
-    stamp(
-      walls,
-      punchGaps(
-        thicken(
-          slipped.filter((c) => isLand(land, cols, rows, c.col, c.row)),
-          land,
-          cols,
-          rows,
-          0,
-        ),
-        1,
-        2,
-        rng,
-      ),
-      cols,
-    );
-  }
-  const split = vertical
-    ? (c: RuinCell) => c.col < box.minC + ((box.width / 2) | 0)
-    : (c: RuinCell) => c.row < box.minR + ((box.height / 2) | 0);
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const i = at(cols, col, row);
-      if (!land[i] || walls[i]) continue;
-      if (split({ col, row })) paint.push({ col, row, role: 'debris' });
-    }
-  }
-  if (spec.density > 0.45) {
-    for (const seed of pickLand(land, cols, rows, rng, spec.align === 'ortho' ? 1 : 2, 10)) {
-      const blob = growBlob(land, cols, rows, seed, rng.nextInt(16, 28), rng);
-      stamp(walls, punchGaps(shellOf(blob), 2, 2, rng), cols);
-    }
-  }
-  return { walls, paint };
-}
-
-function stampShells(
-  outline: OutlineMask,
-  rng: SeededRandom,
-  seeds: readonly RuinCell[],
-  wantMin: number,
-  wantMax: number,
-  gapiness: number,
-) {
-  const { land, cols, rows } = outline;
-  const walls = new Uint8Array(land.length);
-  const paint: RuinPaintCell[] = [];
-  for (const seed of seeds) {
-    const blob = growBlob(land, cols, rows, seed, rng.nextInt(wantMin, wantMax), rng);
-    stamp(walls, punchGaps(shellOf(blob), gapCount(gapiness), gapLen(gapiness), rng), cols);
-    for (const cell of blob) {
-      if (!walls[at(cols, cell.col, cell.row)]) paint.push({ col: cell.col, row: cell.row, role: 'interior' });
-    }
-    paint.push(...raiseNear(land, walls, cols, rows, blob, 1));
+    stamp(walls, cells, cols);
+    paint.push(...raiseNear(land, walls, cols, rows, cells, 1));
   }
   return { walls, paint };
 }
 
 function buildHunks(outline: OutlineMask, rng: SeededRandom, spec: StructureBuildSpec) {
-  const n = 2 + ((spec.density * 3) | 0);
-  const seeds = pickLand(outline.land, outline.cols, outline.rows, rng, n, 10);
-  return stampShells(outline, rng, seeds, 24, 48, spec.gapiness);
+  const { land, cols, rows } = outline;
+  const walls = new Uint8Array(land.length);
+  const paint: RuinPaintCell[] = [];
+  const n = 3 + (spec.density > 0.6 ? 2 : 1);
+  const seeds = pickLand(land, cols, rows, rng, n, 7);
+  for (const seed of seeds) {
+    const w = rng.nextInt(2, 4);
+    const h = rng.nextInt(2, 4);
+    const cells = solidRect(seed.col, seed.row, w, h, land, cols, rows);
+    stamp(walls, cells, cols);
+    paint.push(...raiseNear(land, walls, cols, rows, cells, 1));
+  }
+  return { walls, paint };
 }
 
 function buildRim(outline: OutlineMask, rng: SeededRandom, spec: StructureBuildSpec) {
   const { land, cols, rows } = outline;
-  const n = 4 + ((spec.density * 2) | 0);
-  const seeds = pickLand(land, cols, rows, rng, n, 7, (c) => nearVoid(land, cols, rows, c.col, c.row));
-  return stampShells(outline, rng, seeds, 14, 24, spec.gapiness);
+  const walls = new Uint8Array(land.length);
+  const paint: RuinPaintCell[] = [];
+  const n = 2 + (spec.density > 0.6 ? 1 : 0);
+  const seeds = pickLand(land, cols, rows, rng, n, 8, (c) => nearVoid(land, cols, rows, c.col, c.row));
+  for (const seed of seeds) {
+    const alongEdge: RuinCell[] = [seed];
+    let col = seed.col;
+    let row = seed.row;
+    for (let step = 0; step < rng.nextInt(5, 8); step++) {
+      let next: RuinCell | null = null;
+      for (const [dx, dy] of DIRS4) {
+        const nc = col + dx;
+        const nr = row + dy;
+        if (!isLand(land, cols, rows, nc, nr)) continue;
+        if (!nearVoid(land, cols, rows, nc, nr)) continue;
+        if (alongEdge.some((c) => c.col === nc && c.row === nr)) continue;
+        next = { col: nc, row: nr };
+        break;
+      }
+      if (!next) break;
+      alongEdge.push(next);
+      col = next.col;
+      row = next.row;
+    }
+    stamp(walls, thicken2(alongEdge, land, cols, rows), cols);
+    paint.push(...raiseNear(land, walls, cols, rows, alongEdge, 1));
+  }
+  return { walls, paint };
 }
 
 function buildOrthoRidge(outline: OutlineMask, rng: SeededRandom, spec: StructureBuildSpec) {
-  return buildRidge(outline, rng, { ...spec, align: 'ortho', thickness: 1 });
+  const { land, cols, rows } = outline;
+  const walls = new Uint8Array(land.length);
+  const paint: RuinPaintCell[] = [];
+  const start = pickInterior(land, cols, rows, rng, 4);
+  if (!start) return { walls, paint };
+  const arm = rng.nextInt(4, 6);
+  const thick = Math.max(2, spec.thickness);
+  const horizFirst = rng.next() < 0.5;
+  const sH = rng.next() < 0.5 ? 1 : -1;
+  const sV = rng.next() < 0.5 ? 1 : -1;
+  const cells: RuinCell[] = [];
+  const addArm = (dx: number, dy: number): void => {
+    for (let k = 0; k < arm; k++) {
+      for (let t = 0; t < thick; t++) {
+        const col = start.col + dx * k + (dy !== 0 ? t : 0);
+        const row = start.row + dy * k + (dx !== 0 ? t : 0);
+        if (isLand(land, cols, rows, col, row)) cells.push({ col, row });
+      }
+    }
+  };
+  if (horizFirst) {
+    addArm(sH, 0);
+    addArm(0, sV);
+  } else {
+    addArm(0, sV);
+    addArm(sH, 0);
+  }
+  stamp(walls, cells, cols);
+  paint.push(...raiseNear(land, walls, cols, rows, cells, 1));
+  return { walls, paint };
 }
 
 function buildTwinRidge(outline: OutlineMask, rng: SeededRandom, spec: StructureBuildSpec) {
   const { land, cols, rows } = outline;
+  const box = landBBox(land, cols, rows);
   const walls = new Uint8Array(land.length);
   const paint: RuinPaintCell[] = [];
-  const { a, b, horiz } = pairEnds(outline, rng, 'ortho');
-  if (!a || !b) return { walls, paint };
-  const spine = walkOrtho(land, cols, rows, a, b, rng);
-  const off = rng.nextInt(2, 3);
-  const spine2: RuinCell[] = [];
-  for (const cell of spine) {
-    const col = horiz ? cell.col : cell.col + off;
-    const row = horiz ? cell.row + off : cell.row;
-    if (isLand(land, cols, rows, col, row)) spine2.push({ col, row });
+  const horiz = box.width >= box.height;
+  const len = rng.nextInt(5, 6);
+  const thick = Math.max(2, spec.thickness);
+  const spacing = 3;
+  const cx = box.minC + ((box.width / 2) | 0) - ((horiz ? len : thick) / 2 | 0);
+  const cy = box.minR + ((box.height / 2) | 0) - ((horiz ? thick : len) / 2 | 0);
+  const cells: RuinCell[] = [];
+  for (let beam = 0; beam < 2; beam++) {
+    const off = beam * (thick + spacing);
+    for (let k = 0; k < len; k++) {
+      for (let t = 0; t < thick; t++) {
+        const col = horiz ? cx + k : cx + off + t;
+        const row = horiz ? cy + off + t : cy + k;
+        if (isLand(land, cols, rows, col, row)) cells.push({ col, row });
+      }
+    }
   }
-  const g = Math.min(2, gapCount(spec.gapiness));
-  const gl = 2;
-  stamp(walls, punchGaps(thicken(spine, land, cols, rows, 0), g, gl, rng), cols);
-  stamp(walls, punchGaps(thicken(spine2, land, cols, rows, 0), g, gl, rng), cols);
-  paint.push(...raiseNear(land, walls, cols, rows, spine.concat(spine2), 1));
+  stamp(walls, cells, cols);
+  paint.push(...raiseNear(land, walls, cols, rows, cells, 1));
   return { walls, paint };
 }
 
@@ -538,15 +428,15 @@ function buildPlates(outline: OutlineMask, rng: SeededRandom, spec: StructureBui
   const walls = new Uint8Array(land.length);
   const paint: RuinPaintCell[] = [];
   const horiz = box.width >= box.height;
-  const n = 5 + (spec.density > 0.6 ? 1 : 0);
-  const thick = spec.thickness;
+  const n = 2 + (spec.density > 0.65 ? 1 : 0);
+  const thick = Math.max(2, spec.thickness);
+  const spacing = 4;
   for (let i = 0; i < n; i++) {
-    const t = (i + 1) / (n + 1);
+    const len = rng.nextInt(5, 8);
     const cells: RuinCell[] = [];
     if (horiz) {
-      const row = box.minR + ((box.height * t) | 0);
-      const len = rng.nextInt(8, 14);
-      const start = box.minC + rng.nextInt(1, Math.max(1, box.width - len - 1));
+      const row = box.minR + 3 + i * (thick + spacing);
+      const start = box.minC + 2 + rng.nextInt(0, 4) + (i % 2) * 2;
       for (let k = 0; k < len; k++) {
         for (let w = 0; w < thick; w++) {
           const col = start + k;
@@ -555,9 +445,8 @@ function buildPlates(outline: OutlineMask, rng: SeededRandom, spec: StructureBui
         }
       }
     } else {
-      const col = box.minC + ((box.width * t) | 0);
-      const len = rng.nextInt(8, 14);
-      const start = box.minR + rng.nextInt(1, Math.max(1, box.height - len - 1));
+      const col = box.minC + 3 + i * (thick + spacing);
+      const start = box.minR + 2 + rng.nextInt(0, 4) + (i % 2) * 2;
       for (let k = 0; k < len; k++) {
         for (let w = 0; w < thick; w++) {
           const c = col + w;
@@ -566,7 +455,7 @@ function buildPlates(outline: OutlineMask, rng: SeededRandom, spec: StructureBui
         }
       }
     }
-    stamp(walls, punchGaps(cells, 1, 2, rng), cols);
+    stamp(walls, cells, cols);
     paint.push(...raiseNear(land, walls, cols, rows, cells, 1));
   }
   return { walls, paint };
@@ -594,28 +483,29 @@ function buildPads(outline: OutlineMask, rng: SeededRandom, spec: StructureBuild
   const { land, cols, rows } = outline;
   const walls = new Uint8Array(land.length);
   const paint: RuinPaintCell[] = [];
-  const want = 5 + (spec.density > 0.55 ? 1 : 0);
+  const want = spec.density > 0.9 ? 2 : 1;
   const placed: RuinCell[] = [];
   let guard = 0;
-  while (placed.length < want && guard++ < 500) {
-    const w = rng.nextInt(6, 8);
-    const h = rng.nextInt(5, 7);
-    const seed = pickLand(land, cols, rows, rng, 1, 1)[0];
+  while (placed.length < want && guard++ < 400) {
+    const w = rng.nextInt(8, 10);
+    const h = rng.nextInt(7, 9);
+    const seed = pickInterior(land, cols, rows, rng, 3);
     if (!seed) break;
     const minC = seed.col - ((w / 2) | 0);
     const minR = seed.row - ((h / 2) | 0);
     if (landInRect(land, cols, rows, minC, minR, w, h) < w * h * 0.72) continue;
-    if (placed.some((p) => Math.abs(p.col - seed.col) + Math.abs(p.row - seed.row) < 8)) continue;
+    if (placed.some((p) => Math.abs(p.col - seed.col) + Math.abs(p.row - seed.row) < 10)) continue;
     placed.push(seed);
     const open = rng.nextInt(0, 3);
     const cells: RuinCell[] = [];
+    const ring = 2;
     for (let row = minR; row < minR + h; row++) {
       for (let col = minC; col < minC + w; col++) {
         if (!isLand(land, cols, rows, col, row)) continue;
-        const onN = row === minR;
-        const onS = row === minR + h - 1;
-        const onW = col === minC;
-        const onE = col === minC + w - 1;
+        const onN = row < minR + ring;
+        const onS = row >= minR + h - ring;
+        const onW = col < minC + ring;
+        const onE = col >= minC + w - ring;
         const onEdge = onN || onS || onW || onE;
         if (!onEdge) {
           paint.push({ col, row, role: 'interior' });

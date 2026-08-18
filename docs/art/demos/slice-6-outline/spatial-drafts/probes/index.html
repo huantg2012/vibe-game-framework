@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>密度五案 · 程序化对照</title>
+  <style>
+    body { margin: 24px; background: #0a0b0d; color: #c8cdd4; font: 14px/1.5 "Courier New", monospace; }
+    h1 { font: 16px/1.4 "Courier New", monospace; font-weight: normal; color: #8a8f96; }
+    p, li { color: #8a8f96; max-width: 88ch; }
+    a { color: #c8cdd4; }
+    .row { display: flex; flex-wrap: wrap; gap: 16px; margin: 16px 0 36px; }
+    figure { margin: 0; max-width: 512px; }
+    figcaption { margin-top: 6px; font-size: 12px; color: #8a8f96; }
+    img { display: block; image-rendering: pixelated; background: #080a0c; border: 1px solid #151a1e; }
+    strong { color: #c8cdd4; font-weight: normal; }
+    h2 { font-size: 14px; font-weight: normal; color: #8a8f96; margin: 28px 0 8px; }
+  </style>
+</head>
+<body>
+  <h1>密度五案 · 同一岛（种子 101）</h1>
+  <p>程序化俯视，和十锚同一套漆。不是概念图。左列户外褶脊，右列诊所折脊（无树、雾轻）。现图是对照；A–E 是五条方案的极限草稿，<strong>还没定哪条进生成器</strong>。</p>
+  <p><a href="../index.html">返回十锚</a></p>
+  <ul>
+    <li><strong>A</strong> 同家族加件，落到最大空地里</li>
+    <li><strong>B</strong> 按 7 格锥补洞，留一块 6×6 院</li>
+    <li><strong>C</strong> 厚隔断开盆地，口在尽端</li>
+    <li><strong>D</strong> 不改墙，只给现图涂可藏距离（红 = 灯里没有下一坨）</li>
+    <li><strong>E</strong> 大件长法兰；青 = 贴墙隐蔽带，黄 = 暴露空地</li>
+  </ul>
+  <h2>吞没褶脊 · frag-outdoor</h2>
+  <div class="row">
+    <figure><img src="ridge-soil-now.png" width="512" height="336" alt="吞没褶脊 现图" /><figcaption>吞没褶脊 · 现图<br />墙 5.0% · 空矩形 187 · 掩护距离中位 9 / P90 21</figcaption></figure>
+    <figure><img src="ridge-soil-A.png" width="512" height="336" alt="吞没褶脊 方案 A" /><figcaption><strong>A</strong> 吞没褶脊<br />同一套形状加件，新坨落进当前最大空地<br />墙 10.0% · 空矩形 132 · 掩护距离中位 4 / P90 11</figcaption></figure>
+    <figure><img src="ridge-soil-B.png" width="512" height="336" alt="吞没褶脊 方案 B" /><figcaption><strong>B</strong> 吞没褶脊<br />补到下一坨进入 7 格锥就停；留一块 6×6 院<br />墙 12.8% · 空矩形 147 · 掩护距离中位 3 / P90 6</figcaption></figure>
+    <figure><img src="ridge-soil-C.png" width="512" height="336" alt="吞没褶脊 方案 C" /><figcaption><strong>C</strong> 吞没褶脊<br />一道厚隔断切开盆地，口在尽端，院内再放家具<br />墙 10.7% · 空矩形 96 · 掩护距离中位 4 / P90 8</figcaption></figure>
+    <figure><img src="ridge-soil-D.png" width="512" height="336" alt="吞没褶脊 方案 D" /><figcaption><strong>D</strong> 吞没褶脊<br />现图上的可藏距离场：越红越远，>7 格就是操场<br />墙 5.0% · 空矩形 187 · 掩护距离中位 9 / P90 21</figcaption></figure>
+    <figure><img src="ridge-soil-E.png" width="512" height="336" alt="吞没褶脊 方案 E" /><figcaption><strong>E</strong> 吞没褶脊<br />从已有大件长出 2 厚法兰；青带贴墙，黄带暴露<br />墙 11.1% · 空矩形 187 · 掩护距离中位 8 / P90 21</figcaption></figure>
+  </div>
+  <h2>无菌折脊 · frag-clinic</h2>
+  <div class="row">
+    <figure><img src="ridge-clinic-now.png" width="512" height="336" alt="无菌折脊 现图" /><figcaption>无菌折脊 · 现图<br />墙 3.8% · 空矩形 336 · 掩护距离中位 14 / P90 26</figcaption></figure>
+    <figure><img src="ridge-clinic-A.png" width="512" height="336" alt="无菌折脊 方案 A" /><figcaption><strong>A</strong> 无菌折脊<br />同一套形状加件，新坨落进当前最大空地<br />墙 11.2% · 空矩形 114 · 掩护距离中位 4 / P90 9</figcaption></figure>
+    <figure><img src="ridge-clinic-B.png" width="512" height="336" alt="无菌折脊 方案 B" /><figcaption><strong>B</strong> 无菌折脊<br />补到下一坨进入 7 格锥就停；留一块 6×6 院<br />墙 13.3% · 空矩形 232 · 掩护距离中位 3 / P90 6</figcaption></figure>
+    <figure><img src="ridge-clinic-C.png" width="512" height="336" alt="无菌折脊 方案 C" /><figcaption><strong>C</strong> 无菌折脊<br />一道厚隔断切开盆地，口在尽端，院内再放家具<br />墙 12.4% · 空矩形 96 · 掩护距离中位 3 / P90 8</figcaption></figure>
+    <figure><img src="ridge-clinic-D.png" width="512" height="336" alt="无菌折脊 方案 D" /><figcaption><strong>D</strong> 无菌折脊<br />现图上的可藏距离场：越红越远，>7 格就是操场<br />墙 3.8% · 空矩形 336 · 掩护距离中位 14 / P90 26</figcaption></figure>
+    <figure><img src="ridge-clinic-E.png" width="512" height="336" alt="无菌折脊 方案 E" /><figcaption><strong>E</strong> 无菌折脊<br />从已有大件长出 2 厚法兰；青带贴墙，黄带暴露<br />墙 5.3% · 空矩形 288 · 掩护距离中位 13 / P90 25</figcaption></figure>
+  </div>
+</body>
+</html>

@@ -5,7 +5,7 @@
  */
 
 import { countWalkableComponents } from '@/generation/connectivity';
-import { maxOpenYard, maxOpenYardRect } from '@/generation/masses';
+import { maxOpenYardRect } from '@/generation/masses';
 import type { RuinCell, RuinPaintCell } from '@/generation/types';
 import { SeededRandom } from '@/utils/random';
 
@@ -21,9 +21,7 @@ export interface CoverSpec {
   readonly cycle: readonly CoverCut[];
 }
 
-const YARD_TARGET = 48;
-const SIGHT_TARGET = 10;
-const WALL_RATIO_CAP = 0.22;
+const WALL_RATIO_CAP = 0.18;
 
 function at(cols: number, col: number, row: number): number {
   return row * cols + col;
@@ -326,23 +324,6 @@ function pickFloor(
   return candidates[rng.nextInt(0, candidates.length - 1)]!;
 }
 
-function stubCells(seed: RuinCell, align: CoverAlign, rng: SeededRandom): RuinCell[] {
-  const len = rng.nextInt(3, 5);
-  const horiz = align === 'ortho' ? rng.next() < 0.5 : rng.next() < 0.5;
-  const turn = align === 'ortho' && rng.next() < 0.4;
-  const cells: RuinCell[] = [];
-  let col = seed.col;
-  let row = seed.row;
-  let h = horiz;
-  for (let k = 0; k < len; k++) {
-    cells.push({ col, row });
-    if (turn && k === ((len / 2) | 0)) h = !h;
-    if (h) col += 1;
-    else row += 1;
-  }
-  return cells;
-}
-
 function clumpCells(seed: RuinCell, rng: SeededRandom): RuinCell[] {
   const w = rng.nextInt(2, 3);
   const h = rng.nextInt(2, 3);
@@ -353,118 +334,74 @@ function clumpCells(seed: RuinCell, rng: SeededRandom): RuinCell[] {
   return cells;
 }
 
-function plateCells(seed: RuinCell, align: CoverAlign, rng: SeededRandom): RuinCell[] {
-  const long = rng.nextInt(3, 6);
-  const thick = rng.nextInt(1, 2);
-  const horiz = align === 'ortho' ? rng.next() < 0.5 : rng.next() < 0.55;
-  const cells: RuinCell[] = [];
-  for (let a = 0; a < long; a++) {
-    for (let t = 0; t < thick; t++) {
-      cells.push(horiz ? { col: seed.col + a, row: seed.row + t } : { col: seed.col + t, row: seed.row + a });
+function wallNormal(
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  col: number,
+  row: number,
+): { dx: number; dy: number } | null {
+  for (const [dx, dy] of [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+  ] as const) {
+    const nc = col + dx;
+    const nr = row + dy;
+    if (!inBounds(cols, rows, nc, nr)) continue;
+    if (walls[at(cols, nc, nr)]) return { dx, dy };
+  }
+  return null;
+}
+
+function pickAbutting(
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  rng: SeededRandom,
+  used: readonly RuinCell[],
+  minDist: number,
+): RuinCell | null {
+  const candidates: RuinCell[] = [];
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (!isFloor(land, walls, cols, rows, col, row)) continue;
+      if (!wallNormal(walls, cols, rows, col, row)) continue;
+      if (used.some((p) => Math.abs(p.col - col) + Math.abs(p.row - row) < minDist)) continue;
+      candidates.push({ col, row });
     }
   }
-  return cells;
+  if (candidates.length === 0) return null;
+  return candidates[rng.nextInt(0, candidates.length - 1)]!;
 }
 
-function bisectYard(
-  land: Uint8Array,
-  walls: Uint8Array,
-  cols: number,
-  rows: number,
+function abutMass(
   kind: CoverCut,
-  slot: number,
-): RuinCell[] {
-  const yard = maxOpenYardRect(land, walls, cols, rows);
-  if (yard.area < 9) return [];
-  const frac = 0.3 + (slot % 3) * 0.2;
-  const cx = yard.col + Math.max(0, Math.min(yard.width - 1, (yard.width * frac) | 0));
-  const cy = yard.row + Math.max(0, Math.min(yard.height - 1, (yard.height * frac) | 0));
-  const wide = yard.width >= yard.height;
-  const useClump = kind === 'clump' && yard.area <= 64;
-  if (useClump) {
-    return [
-      { col: cx, row: cy },
-      { col: cx + 1, row: cy },
-      { col: cx, row: cy + 1 },
-      { col: cx + 1, row: cy + 1 },
-    ];
-  }
-  const vertical = wide;
-  const gap = 1 + (slot % 2);
-  const span = vertical ? Math.max(2, yard.height - gap) : Math.max(2, yard.width - gap);
-  const thick = kind === 'plate' ? 2 : 1;
-  const cells: RuinCell[] = [];
-  for (let a = 0; a < span; a++) {
-    for (let t = 0; t < thick; t++) {
-      cells.push(
-        vertical
-          ? { col: cx + t, row: yard.row + a }
-          : { col: yard.col + a, row: cy + t },
-      );
-    }
-  }
-  return cells;
-}
-
-function floorCellsOnRun(
-  land: Uint8Array,
+  seed: RuinCell,
   walls: Uint8Array,
   cols: number,
   rows: number,
-  run: SightRun,
-): RuinCell[] {
-  const out: RuinCell[] = [];
-  for (let k = 0; k < run.length; k++) {
-    const cell = run.horizontal
-      ? { col: run.col + k, row: run.row }
-      : { col: run.col, row: run.row + k };
-    if (isFloor(land, walls, cols, rows, cell.col, cell.row)) out.push(cell);
-  }
-  return out;
-}
-
-function bisectSightline(
-  land: Uint8Array,
-  walls: Uint8Array,
-  cols: number,
-  rows: number,
-  kind: CoverCut,
-  slot: number,
   rng: SeededRandom,
 ): RuinCell[] {
-  const run = longestOpenSightRun(land, walls, cols, rows);
-  if (run.length < 5) return [];
-  const floors = floorCellsOnRun(land, walls, cols, rows, run);
-  if (floors.length === 0) return [];
-  const exterior = exteriorVoidMask(land, cols, rows);
-  const seed = floors[Math.max(0, Math.min(floors.length - 1, ((floors.length * (0.35 + (slot % 3) * 0.15)) | 0)))]!;
-  const width = perpSpan(walls, exterior, cols, rows, seed.col, seed.row, run.horizontal);
-  const keepGap = Math.max(1, width - 1);
-  if (kind === 'clump' && keepGap >= 2 && run.length <= 12) return clumpCells(seed, rng);
-  const along = Math.min(keepGap, kind === 'plate' ? 6 : 5);
+  const n = wallNormal(walls, cols, rows, seed.col, seed.row);
+  if (kind === 'clump' || !n) return clumpCells(seed, rng);
+  const alongX = n.dy !== 0;
+  const long = rng.nextInt(4, 6);
   const cells: RuinCell[] = [];
-  for (let a = 0; a < along; a++) {
-    cells.push(
-      run.horizontal
-        ? { col: seed.col, row: seed.row - ((along / 2) | 0) + a }
-        : { col: seed.col - ((along / 2) | 0) + a, row: seed.row },
-    );
-  }
-  if (kind === 'plate' && keepGap >= 3) {
-    for (let a = 0; a < along; a++) {
-      cells.push(
-        run.horizontal
-          ? { col: seed.col + 1, row: seed.row - ((along / 2) | 0) + a }
-          : { col: seed.col - ((along / 2) | 0) + a, row: seed.row + 1 },
-      );
+  for (let a = 0; a < long; a++) {
+    for (let t = 0; t < 2; t++) {
+      const col = alongX ? seed.col + a : seed.col - n.dx * t;
+      const row = alongX ? seed.row - n.dy * t : seed.row + a;
+      cells.push({ col, row });
     }
   }
-  return cells.length > 0 ? cells : [seed];
+  return cells;
 }
 
-function remainsCells(seed: RuinCell, align: CoverAlign, rng: SeededRandom): RuinCell[] {
-  if (rng.next() < 0.55) return clumpCells(seed, rng).slice(0, rng.nextInt(2, 4));
-  return stubCells(seed, align, rng).slice(0, rng.nextInt(3, 4));
+function remainsCells(seed: RuinCell, rng: SeededRandom): RuinCell[] {
+  return clumpCells(seed, rng).slice(0, rng.nextInt(3, 4));
 }
 
 const ROOT_DIRS: ReadonlyArray<readonly [number, number]> = [
@@ -649,7 +586,8 @@ function scoreStumpSite(
     seed.col < yard.col + yard.width &&
     seed.row >= yard.row &&
     seed.row < yard.row + yard.height;
-  return (inYard ? 24 : 0) + voidDist(land, cols, rows, seed.col, seed.row);
+  const nearWall = wallNormal(walls, cols, rows, seed.col, seed.row) ? 20 : 0;
+  return (inYard ? 8 : 0) + nearWall + voidDist(land, cols, rows, seed.col, seed.row);
 }
 
 function pickStumpSite(
@@ -750,15 +688,17 @@ export function applyCover(
   }
 
   for (let r = 0; r < spec.remains; r++) {
-    const seed = pickFloor(land, walls, cols, rows, rng, used, 7, true);
+    const seed =
+      pickAbutting(land, walls, cols, rows, rng, used, 6) ??
+      pickFloor(land, walls, cols, rows, rng, used, 7, false);
     if (!seed) break;
-    place(remainsCells(seed, spec.align, rng), 'wreck', 1);
+    place(remainsCells(seed, rng), 'wreck', 1);
   }
 
   for (let h = 0; h < spec.hollows; h++) {
     let placed = false;
     for (let tryN = 0; tryN < 24 && !placed; tryN++) {
-      const seed = pickFloor(land, walls, cols, rows, rng, used, 8, true);
+      const seed = pickFloor(land, walls, cols, rows, rng, used, 8, false);
       if (!seed) break;
       if (voidDist(land, cols, rows, seed.col, seed.row) < 3) continue;
       const cells = hollowCells(land, walls, cols, rows, seed, rng);
@@ -769,58 +709,18 @@ export function applyCover(
     }
   }
 
-  const cycle = spec.cycle.length > 0 ? spec.cycle : (['clump', 'stub'] as const);
-  const checkYard = 80;
-  const checkSight = 14;
-  for (let c = 0; c < spec.cuts; c++) {
+  const cycle = spec.cycle.length > 0 ? spec.cycle : (['clump', 'plate'] as const);
+  const cutN = Math.min(spec.cuts, 4);
+  for (let c = 0; c < cutN; c++) {
     const landN = landCount(land);
     const ratio = landN === 0 ? 0 : wallCount(walls) / landN;
-    const yard = maxOpenYard(land, walls, cols, rows);
-    const sight = maxClearSightline(land, walls, cols, rows);
-    if (yard <= YARD_TARGET && sight <= SIGHT_TARGET) break;
-    if (ratio >= WALL_RATIO_CAP && yard <= checkYard && sight <= checkSight) break;
-    const kind = cycle[c % cycle.length]!;
-    const preferSight = sight > checkSight && (sight * 2 >= yard || yard <= checkYard);
-    const cells = preferSight
-      ? bisectSightline(land, walls, cols, rows, kind, c, rng)
-      : bisectYard(land, walls, cols, rows, kind, c);
+    if (ratio >= WALL_RATIO_CAP) break;
+    const kind = cycle[c % cycle.length]! === 'stub' ? 'clump' : cycle[c % cycle.length]!;
+    const seed = pickAbutting(land, walls, cols, rows, rng, used, 5);
+    if (!seed) break;
+    const cells = abutMass(kind, seed, walls, cols, rows, rng);
     if (place(cells, null, 0)) continue;
-    const run = longestOpenSightRun(land, walls, cols, rows);
-    const floors = floorCellsOnRun(land, walls, cols, rows, run);
-    if (floors.length > 0 && run.length > checkSight) {
-      const nib = floors[(floors.length / 2) | 0]!;
-      if (place([nib], null, 0)) continue;
-    }
-    const seed = pickFloor(land, walls, cols, rows, rng, used, 4, true);
-    if (!seed) continue;
-    const fallback =
-      kind === 'plate'
-        ? plateCells(seed, spec.align, rng)
-        : kind === 'clump'
-          ? clumpCells(seed, rng)
-          : stubCells(seed, spec.align, rng);
-    if (place(fallback, null, 0)) continue;
-    if (yard > checkYard) {
-      const hole = hollowCells(land, walls, cols, rows, seed, rng);
-      if (tryPunchLand(land, walls, cols, rows, hole, reserved)) used.push(seed);
-    }
-  }
-
-  for (let extra = 0; extra < 16; extra++) {
-    const sight = maxClearSightline(land, walls, cols, rows);
-    const yard = maxOpenYard(land, walls, cols, rows);
-    if (sight <= checkSight && yard <= checkYard) break;
-    const run = longestOpenSightRun(land, walls, cols, rows);
-    const floors = floorCellsOnRun(land, walls, cols, rows, run);
-    if (floors.length === 0) break;
-    const nib = floors[(extra * 3 + ((floors.length / 2) | 0)) % floors.length]!;
-    const cells = bisectSightline(land, walls, cols, rows, 'stub', extra, rng);
-    if (place(cells, null, 0)) continue;
-    if (place([nib], null, 0)) continue;
-    if (yard > checkYard) {
-      const hole = hollowCells(land, walls, cols, rows, nib, rng);
-      tryPunchLand(land, walls, cols, rows, hole, reserved);
-    }
+    place(clumpCells(seed, rng), null, 0);
   }
 
   return paint;

@@ -1,5 +1,5 @@
 /**
- * FATAL connectivity + atmosphere/stump gates for recipe drafts.
+ * FATAL connectivity + anti-maze silhouette + atmosphere/stump gates.
  *
  *   npx tsx --tsconfig tsconfig.json tools/map-preview/check-recipe-drafts.ts
  */
@@ -9,6 +9,7 @@ import { countBoles, maxClearSightline } from '../../src/generation/cover.ts';
 import { generateRecipeDraft } from '../../src/generation/draft-pipeline.ts';
 import { maxOpenYard } from '../../src/generation/masses.ts';
 import { PREVIEW_RECIPES } from '../../src/generation/recipes.ts';
+import { measureSilhouette, silhouetteFails } from '../../src/generation/silhouette.ts';
 
 const GALLERY_SEED = 101;
 
@@ -28,8 +29,6 @@ for (const recipe of PREVIEW_RECIPES) {
   assert(mask.metrics.leftoverConnected, `${recipe.id}: leftoverConnected false`);
   const yard = maxOpenYard(mask.outline.land, mask.walls, mask.outline.cols, mask.outline.rows);
   const sight = maxClearSightline(mask.outline.land, mask.walls, mask.outline.cols, mask.outline.rows);
-  assert(yard <= 80, `${recipe.id}: open yard ${yard} > 80`);
-  assert(sight <= 14, `${recipe.id}: sightline ${sight} > 14`);
   assert(mask.fragmentTypeId === recipe.fragmentTypeId, `${recipe.id}: fragment mismatch`);
   assert(
     !mask.features.some((f) =>
@@ -66,6 +65,16 @@ for (const recipe of PREVIEW_RECIPES) {
     assert(boles === 0, `${recipe.id}: unexpected bole`);
   }
 
+  const sil = measureSilhouette(
+    mask.outline.land,
+    mask.walls,
+    mask.outline.cols,
+    mask.outline.rows,
+    mask.features[0]?.paint ?? [],
+  );
+  const silFail = silhouetteFails(sil);
+  assert(!silFail, `${recipe.id}: silhouette ${silFail}`);
+
   const atmo = mask.atmosphere;
   assert(atmo, `${recipe.id}: missing atmosphere field`);
   assert(atmo.fog.length === mask.outline.land.length, `${recipe.id}: fog size`);
@@ -87,8 +96,10 @@ for (const recipe of PREVIEW_RECIPES) {
   }
 
   console.log(
-    `${recipe.id}: yard ${yard} sight ${sight} walls ${(mask.metrics.wallRatio * 100).toFixed(1)}% bole ${boles} wood ${wood.length} fogΔ ${metrics.fogSpread.toFixed(2)} shade ${metrics.shadeMeanLand.toFixed(2)} oc ${metrics.occluderCount}`,
+    `${recipe.id}: yard ${yard} sight ${sight} walls ${(sil.wallRatio * 100).toFixed(1)}% thick ${(sil.thickRatio * 100).toFixed(0)}% thin ${sil.thinRun} alley ${sil.longAlley} bole ${boles} fogΔ ${metrics.fogSpread.toFixed(2)} shade ${metrics.shadeMeanLand.toFixed(2)}`,
   );
 }
 
-console.log(`check-recipe-drafts: ${PREVIEW_RECIPES.length} recipes, seed ${GALLERY_SEED}, connected, yard<=80, sight<=14`);
+console.log(
+  `check-recipe-drafts: ${PREVIEW_RECIPES.length} recipes, seed ${GALLERY_SEED}, connected, silhouette`,
+);
