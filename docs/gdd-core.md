@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8 已完成。`docs/specs/` 含 7 份系统 spec + `ui-detection-pulse`；`src/` 含裂隙出击环 + 两种敌人剖面 + 净化点三模块（含净化器/加厚）+ 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8+9 已完成。`docs/specs/` 含 8 份系统 spec + `ui-detection-pulse`；`src/` 含裂隙出击环 + 两种敌人剖面 + 净化点三模块 + 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙 + AudioManager。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
@@ -47,7 +47,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 被发现屏缘干涉 | **已实现** (Slice 8) | `docs/specs/ui-detection-pulse.md` | 屏缘方向齿带，强度跟察觉度；无数字条；最多 2 方位 |
 | 程序化地图生成 | **已实现** (Slice 6) | `docs/specs/system-map-generation.md` | 每一次踏入抽锚+种子+邻域抖动生成并烤图；一个撤离点；换路硬保证；尘点沿风；年龄×残破。撤离多样性延后（DEC-055） |
 | 角色属性/能力成长 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 永久改造+污染物循环+潮汐经济，出击正向积累 |
-| 音频（AudioManager） | 计划中 | 待创建 | BGM/环境/SFX 播放 + 动态分层混音 + 距离衰减（方向见 audio-direction.md） |
+| 音频（AudioManager） | **已实现** (Slice 9) | `docs/specs/system-audio.md` | 5 条氛围床 + 裂隙四层混音 + §4.2 短音；39 key 非空 OGG+MP3；同时 8 轨 |
 | CSV 数据管线 | **已实现** (Slice 4) | - (构建期工具) | 构建期将 data/*.csv 编译为 src/generated/*.ts，类型安全、tree-shakeable |
 | 防御效果引擎 (DefenseEffectSystem) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | 冲击时按污染物类型施加不同减伤+副作用，5 种防御分类逻辑 |
 | Common 档防御效果 (7种) | **已实现** (Slice 4) | `docs/specs/system-growth-tide.md` | solidify/delay/erode/scatter/muffle/ruminate/retrograde/kindle/stitch 中 7 种防御行为+副作用 |
@@ -113,3 +113,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 6「程序化地图」(2026-08-16 ~ 2026-08-19, COMPLETE)：每一次踏入抽风格锚 + 新种子 + 邻域抖动生成并烤图；一个撤离点；外轮廓不规则 + 情景障碍 + 有限种碎片氛围。收工三件（DEC-064）：换路硬保证、尘点沿风、污染年龄×残破。小地图圆形窗口机械层已交（DEC-063）。撤离多样性不做。下一手 Slice 7 净化点扩张。
 - Slice 7「净化点扩张」(2026-08-19, COMPLETE)：第三模块净化器写入出击起始混乱（满完整度 0）；祭坛旁加厚三档抬全部模块 maxHp；效果仍按对基准 100。下一手 Slice 8 第二敌人。
 - Slice 8「第二敌人」(2026-08-19, COMPLETE)：改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv` + 一份五态。审美待人终审。下一手 Slice 9 音乐/音效。
+- Slice 9「音乐 / 音效」(2026-08-19, COMPLETE)：AudioManager 落地；39 个占位 key 双格式进仓库；裂隙分层混音；同时 8 轨。听感待人终审。Slice 10 不做（DEC-064）。

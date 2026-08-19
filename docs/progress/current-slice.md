@@ -1,12 +1,12 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 9「音乐 / 音效」ACTIVE。范围锁死 DEC-064。不改 roadmap 完成标记直到 COMPLETE。
+note: Slice 9「音乐 / 音效」COMPLETE。QA PASS。DEC-064 的 7/8/9 已完。Slice 10 不做。
 ---
 
-# Slice 9: 音乐 / 音效【ACTIVE】
+# Slice 9: 音乐 / 音效【COMPLETE】
 
 类型：**系统 Slice**
 日期：2026-08-19 开工
@@ -24,7 +24,7 @@ note: Slice 9「音乐 / 音效」ACTIVE。范围锁死 DEC-064。不改 roadmap
 2. **裂隙会分层。** 混乱升高或被发现时层变厚，不是另切一首曲子硬切。
 3. **动作有短声。** 清单上的 SFX 能响；同时不超过 8 轨；没有 jump scare。
 
-不验证正式作曲替代占位、不验证 NPC、不做音量设置面板。审美/听感待人终审。
+不验证正式作曲替代占位、不验证 NPC、不做音量设置面板。审美/听感待人终审。机器闸门 PASS。
 
 ---
 
@@ -42,7 +42,7 @@ note: Slice 9「音乐 / 音效」ACTIVE。范围锁死 DEC-064。不改 roadmap
 
 ## 验证是否依赖界面
 
-**不依赖新界面。** 声音挂现有场景与事件。不做设置页。若触碰暂停菜单只接线既有暂停，不改视觉语言。不派 in-game UI 翻修。
+**不依赖新界面。** 声音挂现有场景与事件。不做设置页。
 
 ---
 
@@ -51,27 +51,22 @@ note: Slice 9「音乐 / 音效」ACTIVE。范围锁死 DEC-064。不改 roadmap
 | 步 | 谁 | 做什么 | 状态 |
 | -- | -- | ------ | ---- |
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
-| 1 | design | **D1** 新建 `docs/specs/system-audio.md`（从 audio-direction 收口可实现契约） | **完成** |
-| 2 | art | **A1** 占位音色配方（dark ambient drone，禁止 8-bit beep / jump scare） | **完成** |
-| 3 | code | **C1** 生成 OGG+MP3 + AudioManager + 场景接线 | **已交** |
-| 4 | qa | 对照规格：文件非空、8 轨、无 jump scare 契约、架构已实现 | 未开 |
-
-批次必须单次会话做完。禁止把「全表 SFX + 新设置界面 + 正式作曲」打成一批。
+| 1 | design | **D1** 新建 `docs/specs/system-audio.md` | **已做** `dda62ab` |
+| 2 | art | **A1** 占位音色配方 | **已做** `266f22c` |
+| 3 | code | **C1** 生成 OGG+MP3 + AudioManager + 场景接线 | **已交** `caddf4c` |
+| 4 | qa | 对照规格 | **已交**（`docs/qa/report-slice-9.md`，PASS） |
 
 ---
 
 ## 一致性检查（2026-08-19，开 Slice 9）
 
-无阻断。摘要：
-
-- Slice 8 COMPLETE `69281ee`。`interface-changed` / `changed-this-slice` 已复位。
-- 规格：7 份 `system-*` + `ui-detection-pulse`。**无** `system-audio.md` → 本 Slice 新建。
-- `src/managers/` 现有 GameState / SaveManager / session。**无** `audio-manager.ts`。架构表 AudioManager = 规划中。
-- `audio-direction.md` APPROVED，表状态均为「未生成」。清单含 `enemy-overwriter-hum`：本游戏敌人是渗透体/改写体，D1 必须把该键收口到改写体，禁止第三种敌人。
-- 已有钩子：`AISystem` audio cue；`CombatSystem` 可选音；`main.ts` / pause-menu `pauseAll`/`resumeAll`。D1 必须声明这些谁消费。
-- 架构音频规范：Phaser Sound、MP3+OGG、8 轨、首次交互解锁。与 audio-direction 一致处写入 spec；冲突以 audio-direction 原则 + 本 Slice 锁（占位进仓库、不要空文件）为准。
-- 不做：Slice 10、撤离多样性、音量设置 UI、框架层 A。
+无阻断。开 Slice 时无 `system-audio.md`、无 `audio-manager.ts`。本 Slice 已补齐。
 
 ## 收尾四项
 
-未完成，不得标 COMPLETE。
+1. **架构登记**：`docs/architecture.md` AudioManager 已实现（Slice 9）。`changed-this-slice` 已复位。
+2. **spec**：新建 `docs/specs/system-audio.md`（39 key、8 轨、无 jump scare）。`interface-changed` 已复位。配方 `docs/art/audio-placeholders.md`。
+3. **交付范围**：5 条场景氛围 + 裂隙四层混音 + §4.2 短音；每 key 非空 OGG+MP3（`assets/audio/` 与 `public/assets/audio/`）；同时 8 轨；暂停/解锁走 AudioManager。无音量面板。听感待人终审。
+4. **UI 清单**：本 Slice 无新游戏内界面。未走 in-game-ux 翻修。U1–U12 不逐条勾。
+
+DEC-064 锁的 Slice 7/8/9 均 COMPLETE。Slice 10 不做。

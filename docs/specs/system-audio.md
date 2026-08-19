@@ -5,7 +5,7 @@ created-date: 2026-08-19
 created-when: Slice 9 设计阶段
 last-modified-by: design agent
 last-modified-date: 2026-08-19
-interface-changed: true
+interface-changed: false
 slice: 9
 interfaces-with:
   - system-enemy-ai                 # 消费 AISystem.setCueListener 的 ai.cue.*；渗透体 idle / 改写体 hum；警觉与追击循环

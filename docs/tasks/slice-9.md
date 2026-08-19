@@ -1,5 +1,5 @@
 ---
-status: ACTIVE
+status: COMPLETE
 slice: 9
 created-by: director agent
 created-when: 2026-08-19
@@ -60,4 +60,4 @@ Depends: D1+A1。
 
 ## Task: Q1 | assignee: qa
 
-Depends: C1。写 `docs/qa/report-slice-9.md`。核对：每个声明 key 双格式非空；8 轨；无 jump scare 契约；AudioManager 已实现；pause/unlock。跑 `npx tsc --noEmit`。本任务未开。
+Depends: C1。写 `docs/qa/report-slice-9.md`。**已交** PASS。
