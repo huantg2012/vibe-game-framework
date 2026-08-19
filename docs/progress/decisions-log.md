@@ -9,6 +9,20 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 9 D1：音频可实现契约（design，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 9
+- Type: Design
+- Context: DEC-064 / D1 已锁几乎全表。禁止再问人。把方向文档收成现行接线，不留待定。
+- Decision:
+  1. 裂隙高混乱不是切主床：`bgm-rift-high-chaos` = Tension 层。Base 始终是 `bgm-rift-base-drone`。
+  2. `sfx-rift-enemy-overwriter-hum` 现行 = 改写体，衰减 10–15 tile。渗透体只用 idle。禁止第三种敌人。
+  3. Proximity 层按最近污染物节点距离，不绑改写体（hum 已占远距）。Tension 抬起时停掉 `amb-rift-alien-atmosphere`，避免第五条循环床打满 8 轨。
+  4. 冲击音频吃 `ImpactResult` 返回值，不依赖 create 期已发出的 `IMPACT_*` 事件。
+  5. `main.ts` / `pause-menu.ts` 的 pauseAll/resumeAll 改走 AudioManager。AI / 战斗 cue 由 `RiftScene` 翻译。
+  6. §3 偶发环境不另开 key，编进两条环境循环床。不做 >90% 侧链吞噬、不做动作回声、不做音量面板、§9 振荡器占位作废。
+- Impact: 新建 `docs/specs/system-audio.md`（`interface-changed: true`）。39 个 key，每 key 非空 OGG+MP3。
+
 ## Slice 8 C1：剖面读表 + 一份 FSM + 屏缘 DTO（code，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 8

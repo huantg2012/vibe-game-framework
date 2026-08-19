@@ -1,16 +1,16 @@
 ---
-status: COMPLETE
+status: ACTIVE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 8「第二敌人」COMPLETE。QA PASS。下一手 Slice 9。
+note: Slice 9「音乐 / 音效」ACTIVE。范围锁死 DEC-064。不改 roadmap 完成标记直到 COMPLETE。
 ---
 
-# Slice 8: 第二敌人（潜行轴）【COMPLETE】
+# Slice 9: 音乐 / 音效【ACTIVE】
 
 类型：**系统 Slice**
 日期：2026-08-19 开工
-上一手：Slice 7「净化点扩张」COMPLETE
+上一手：Slice 8「第二敌人」COMPLETE（`69281ee`）
 
 **范围已锁（DEC-064），禁止再问人。**
 
@@ -18,12 +18,13 @@ note: Slice 8「第二敌人」COMPLETE。QA PASS。下一手 Slice 9。
 
 ## 验证问题
 
-玩家不看文档，在同一张裂隙里同时面对渗透体与改写体，能否感到：
+玩家不看文档，进出菜单 / 净化点 / 裂隙，能否感到：
 
-1. **两条不同的潜行判断。** 渗透体：绕视锥。改写体：听觉为主、视锥更窄，对移动噪声敏感——停步/贴墙消声才过得去。
-2. **被发现有方向、没有数字条。** 屏缘脉冲指向威胁，强度跟察觉度；警戒时形态变。
+1. **空间有声音质地。** 五个场景氛围能分开（菜单、净化点、裂隙基准、裂隙高混乱、冲击），不是静默或缺文件。
+2. **裂隙会分层。** 混乱升高或被发现时层变厚，不是另切一首曲子硬切。
+3. **动作有短声。** 清单上的 SFX 能响；同时不超过 8 轨；没有 jump scare。
 
-不验证第三种敌人、音乐、撤离多样性。体验/审美待人终审。机器闸门 PASS。
+不验证正式作曲替代占位、不验证 NPC、不做音量设置面板。审美/听感待人终审。
 
 ---
 
@@ -31,19 +32,17 @@ note: Slice 8「第二敌人」COMPLETE。QA PASS。下一手 Slice 9。
 
 | 项 | 锁 |
 | -- | -- |
-| 改写体 | 听觉为主、视锥更窄；对移动噪声敏感 |
-| 数量 | 每张裂隙渗透体为主 + **恰好 1 个**改写体 |
-| 被发现 | 屏缘方向脉冲，强度跟察觉度；警戒变形；**无数字条** |
-| 数据 | `data/enemies.csv` + codegen；渗透体策划字段迁出 `constants.ts` |
-| 视觉 | 概念图 APPROVED：`docs/art/demos/entity-rewriter/VERDICT.md`。俯视 4 向。不对称、teal 成簇。不要紫粉史莱姆 |
-| 架构 | AI 类型泛化，禁止复制一整份 FSM 文件只改数字 |
-| 不做 | Slice 9/10；撤离多样性；新 HUD 根 |
+| 范围 | `docs/audio-direction.md` **几乎全表** |
+| 资产 | 仓库生成 OGG+MP3 占位音（ffmpeg/sox/脚本合成 drone，**不要空文件**） |
+| 代码 | 实现 `AudioManager`；架构注册表从「规划中」改为已实现 |
+| 上限 | 同时播放 **8** |
+| 禁止 | jump scare；空 ogg/mp3；Slice 10；撤离多样性；新 HUD / 音量滑条面板 |
 
 ---
 
 ## 验证是否依赖界面
 
-**依赖。** 被发现脉冲是游戏内界面。选 (a)：UX 收进本 Slice。派 art 前必须 Read `.cursor/skills/in-game-ux/SKILL.md`。载体：**A 世界内装置**（屏缘干涉，挂 `#dom-ui-root`），不是雷达数字条，也不是元界面。
+**不依赖新界面。** 声音挂现有场景与事件。不做设置页。若触碰暂停菜单只接线既有暂停，不改视觉语言。不派 in-game UI 翻修。
 
 ---
 
@@ -52,41 +51,27 @@ note: Slice 8「第二敌人」COMPLETE。QA PASS。下一手 Slice 9。
 | 步 | 谁 | 做什么 | 状态 |
 | -- | -- | ------ | ---- |
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
-| 1 | design | **D1** 就地扩写敌人 AI + 被发现指示 + enemies.csv 契约 | **已做** |
-| 2 | art | **A1** 改写体 4 向 + 屏缘脉冲视觉 | **已做** |
-| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | **已交** `a76a6ff` |
-| 4 | qa | 对照规格 | **已交**（`docs/qa/report-slice-8.md`，PASS） |
+| 1 | design | **D1** 新建 `docs/specs/system-audio.md`（从 audio-direction 收口可实现契约） | **完成** |
+| 2 | art | **A1** 占位音色配方（dark ambient drone，禁止 8-bit beep / jump scare） | 未开 |
+| 3 | code | **C1** 生成 OGG+MP3 + AudioManager + 场景接线 | 未开 |
+| 4 | qa | 对照规格：文件非空、8 轨、无 jump scare 契约、架构已实现 | 未开 |
+
+批次必须单次会话做完。禁止把「全表 SFX + 新设置界面 + 正式作曲」打成一批。
 
 ---
 
-## 一致性检查（2026-08-19，开 Slice 8）
+## 一致性检查（2026-08-19，开 Slice 9）
 
-无阻断。D1 已把 `system-enemy-ai` 从「只一种敌人」扩成两种剖面共用五态；生成器契约「每图恰好 1 改写体」已写入本 spec 与 `system-map-generation` 规则 22；屏缘干涉结构层在 `ui-detection-pulse`。
+无阻断。摘要：
 
-## D1 落地（2026-08-19，不再问人）
-
-| 项 | 锁 |
-| -- | -- |
-| FSM | 一份五态。差异 = 感知剖面 / 刺激权重，禁止复制 FSM 文件 |
-| 改写体数字 | 半角 32°；听觉 150；移动倍率 2.0；停步半径 40；停步察觉封顶 0.20；听觉可推到警戒，追击仍要视线 |
-| 渗透体数字 | 从现行 constants 迁出，不改手感（180/55°/100/30/65） |
-| 多威胁脉冲 | 最多 2 个方位（不是只显示最高者）；夹角 < 28° 合并 |
-| 生成 | 3–4 巡逻，恰好 1 改写体；撤离门必须是渗透体 |
-| 载体 | A 世界内装置，`#dom-ui-root`，无数字 |
-
-## A1 落地（2026-08-19，art，不再问人）
-
-| 项 | 锁 |
-| -- | -- |
-| 屏缘脉冲 | `#rift-detection-rim` 挂 `#dom-ui-root`。16 px 边带。留意 3 齿 `#1aad96` 慢呼吸；搜寻 5 齿 `#2ae6c8` 3 Hz；锁定 7 齿近常亮。强度 = 察觉度（alpha / 齿长）。最多 2 方位。无数字、无条、无雷达细框 |
-| 改写体占位 | 程序化 32×48 × 4 向。身体右侧崩坏、teal 簇 17 px、爪/前倾。不旋转一张图。合同 `docs/art/rewriter-sprite.md` |
-| 警戒变形 | 搜寻：崩坏侧再亮 4 px、3 Hz。追击：簇改 `#2ae6c8`；残影 55 ms；每 8 帧抖 1 px。无新色 |
+- Slice 8 COMPLETE `69281ee`。`interface-changed` / `changed-this-slice` 已复位。
+- 规格：7 份 `system-*` + `ui-detection-pulse`。**无** `system-audio.md` → 本 Slice 新建。
+- `src/managers/` 现有 GameState / SaveManager / session。**无** `audio-manager.ts`。架构表 AudioManager = 规划中。
+- `audio-direction.md` APPROVED，表状态均为「未生成」。清单含 `enemy-overwriter-hum`：本游戏敌人是渗透体/改写体，D1 必须把该键收口到改写体，禁止第三种敌人。
+- 已有钩子：`AISystem` audio cue；`CombatSystem` 可选音；`main.ts` / pause-menu `pauseAll`/`resumeAll`。D1 必须声明这些谁消费。
+- 架构音频规范：Phaser Sound、MP3+OGG、8 轨、首次交互解锁。与 audio-direction 一致处写入 spec；冲突以 audio-direction 原则 + 本 Slice 锁（占位进仓库、不要空文件）为准。
+- 不做：Slice 10、撤离多样性、音量设置 UI、框架层 A。
 
 ## 收尾四项
 
-1. **架构登记**：`docs/architecture.md` 已写 EnemyData / RewriterSprite / DetectionPulse / AISystem 剖面泛化。`changed-this-slice` 已复位。
-2. **spec**：就地扩写 `system-enemy-ai`；新建 `ui-detection-pulse`；`system-map-generation` 规则 22。`interface-changed` 已复位。策划数据 `data/enemies.csv` → codegen。
-3. **交付范围**：每图恰好 1 改写体；一份五态读 CSV 剖面；屏缘齿带无数字；改写体 32×48 四向程序化占位。闸门：`tsc` 0；`check:layout passed (8 seeds)`。
-4. **UI 清单**：先 Read `.cursor/skills/in-game-ux/SKILL.md`。载体 A。参考 Dead Space / Barotrauma / Signalis。U1–U12 机械层 QA 已扫。审美待人终审。非阻断：警戒闪约 6 Hz、边带溢 1–2 px（见 QA O1–O3）。
-
-下一手 Slice 9。
+未完成，不得标 COMPLETE。
