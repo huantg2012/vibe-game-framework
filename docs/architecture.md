@@ -5,7 +5,7 @@ created-date: 2026-07-22
 last-modified: 2026-08-19
 approved-date: 2026-07-22
 changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 6 C5（2026-08-18）**：裂隙用锚+种子+邻域抖动生成；天空影循环。目录树 ASCII 过期项仍在 backlog。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 6 收工余项（2026-08-19）**：换路硬保证（规则 21）+ 尘点 phase 动画 + FragmentRoll。目录树 ASCII 过期项仍在 backlog。
 ---
 
 # 技术架构
@@ -67,8 +67,11 @@ src/
 ├── generation/
 │   ├── outline-mask.ts         # C1：生长+腐蚀陆地掩膜（VOID / FLOOR）
 │   ├── ruins.ts                # C2：按碎片语法落情景墙
-│   ├── preview-paint.ts        # 画廊整图漆；裂隙地面烤一次 + 天空低分辨率叠层
-│   ├── types.ts                # OutlineMask / RuinedMask 契约
+│   ├── preview-paint.ts        # 画廊整图漆；裂隙地面烤一次 + 天空/尘点低分辨率叠层
+│   ├── dual-path.ts            # 规格 21 换路机器判定（生成器与 check:layout 共用）
+│   ├── fragment-roll.ts        # 每次踏入抽 contaminationAge × ruinSeverity
+│   ├── rift-layout.ts          # 出击布局：锚+抖动+换路硬保证+FragmentRoll
+│   ├── types.ts                # OutlineMask / RuinedMask / GeneratedRiftLayout 契约
 │   └── index.ts                # 生成器出口（布点后续批次追加）
 ├── managers/
 │   ├── game-state.ts           # 全局游戏状态（跨场景持久）
@@ -200,7 +203,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | BoundaryShape | src/systems/boundary-shape.ts | 净化点边界几何的唯一真相：潮汐驱动的极坐标压力 blob（椭圆 × 潮汐缩放 × 方向压力叶 × 交互点安全钳制）。每次 scene create 构建一次，构建后为无状态廉价查询 | `createBoundaryShape(config)`：radiusAt(angle), normalizedDist(x,y), isInside(x,y), pressureAt(angle), pressureDirection, tideScale, centerX/centerY | 已实现（Slice 4.5） |
 | BoundaryBreath | src/systems/boundary-breath.ts | 边界局部压力冲击与膜变形的纯视觉叠加层（并发短弧向内扫入 + 虚空侵入楔形 + 膜线内凹）。不参与碰撞/可见性/gameplay | create(scene, shape, tidePhase), update(dt), destroy() | 已实现（Slice 4.5） |
 | BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外粒子与 apparition 氛围渲染；生成/消亡半径跟随 BoundaryShape 而非固定圆 | create(scene, shape), update(dt), destroy() | 已实现（Slice 2，Slice 4.5 改为跟随 blob） |
-| ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表；天空低分辨率叠层只改 phase | RiftSurfacePainter.mount / update / destroy | 已实现（Slice 6） |
+| ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表（含雾；尘点不烤死）；天空+尘点低分辨率叠层只改 phase，沿本趟 windX/Y | RiftSurfacePainter.mount / update / destroy | 已实现（Slice 6；尘点跟天空同一份 AtmosphereField） |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
 | PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等）。`.game-panel` 默认是净化点墙机 CRT（680×468 磷光屏，无金属/无外框，8px 凹槽暗边）；六块墙机另加 `.crt-stack`（固定子项 + 库存 `.scroll-area`）。Esc 记录菜单与裂隙结算用内联尺寸覆盖（5px 凹槽），不加 crt-stack。`.device-plate` 是裂隙随身罩。Channel B toast 挂 `#toast-inline-queue`（同时最多 2 条）；`skipQueue` 贴源短闪仍挂 `#dom-ui-root`。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles(), createCrtPanel(id), getDomUiRoot(), bindDomUiRootToGame(game), showToastInline(html, opts), showToastStamp(text, opts?) | 已实现（Slice 4.5；Slice 5.5 CRT + createCrtPanel；C6 toast；R9 凹槽；R10 crt-stack / 队列 / device-effect） |
 | SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移。混乱增速可见写法也从这里出（相对 1.0 的 ±N%） | describeSideEffectBody(e), describeSideEffectWithSource(e), formatChaosRateDelta(rate), formatChaosMultDelta(mult) | 已实现（Slice 5.5 C5 引入，本轮补登记；R9 收口混乱增速） |
@@ -209,7 +212,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块的视觉表现（CORE=蓝色六边形/STORAGE=橙色方块，HP 驱动的 alpha 分级 + 临界闪烁 + 邻近发光），Slice 5 T6 三态受损视觉将扩展此模块 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS` | 已实现（Slice 4；Slice 6 C2 加碎片表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
-| MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」 | generateOutline；generateRecipeDraft；jitterRecipe；generateRiftLayout | C1–C5：裂隙吃生成结果。画廊是样例。天空影循环 |
+| MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout | C1–C5 + 收工余项：裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图 |
 | RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（完整度条/混乱条/薪柴数/工具槽/撤离提示/生效中行），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel。生效行用 `.device-effect` 名+秒分节点；remainingMs 由场景每帧权威 set，HUD 不再自减 | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 迁 DOM；R10 工具剩余秒） |
 | RiftResultPanel | src/ui/dom/rift-result-panel.ts | 裂隙撤离/阵亡结算 DOM 面板，与冲击结算面板视觉同源（本轮补登记，模块本身为 Slice 5.5 C2 交付） | isOpen(), show(data), close(), destroy() | 已实现（Slice 5.5） |
 | Minimap | src/ui/minimap.ts | 裂隙圆形局部窗口：直径 33 格、画布 99 像素，跟随玩家当前格。已探索由场景层用真实视野累积后写入；玩家十字带朝向短臂；覆盖内撤离竖缝 / 深渊方点 / 节点菱形。`#rift-minimap.device-plate` 挂 `#dom-ui-root` | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), markExplored(tileX, tileY), update(playerWorldPos, facing, deltaMs), reset(), destroy() | 已实现（Slice 5.5 迁挂载根、改标记形状；Slice 6 C6 圆窗 + 真实视野 + 朝向） |

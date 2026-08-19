@@ -84,6 +84,16 @@ export type RuinPaintRole =
 
 export type OverlayKind = 'glow' | 'mote' | 'ripple' | 'band';
 
+export type ContaminationAge = 'new' | 'standard' | 'ancient';
+export type RuinSeverity = 'intact' | 'broken' | 'eaten';
+
+/** Per-sortie roll. typeId is fragmentTypeId. Axes are not CSV kinds. */
+export interface FragmentRoll {
+  readonly typeId: string;
+  readonly contaminationAge: ContaminationAge;
+  readonly ruinSeverity: RuinSeverity;
+}
+
 /** Sub-tile FX, preview-baked. Never a wall. */
 export interface OverlayStamp {
   readonly kind: OverlayKind;
@@ -149,6 +159,8 @@ export interface RuinedMask {
   readonly metrics: RuinMetrics;
   readonly overlays?: readonly OverlayStamp[];
   readonly atmosphere?: AtmosphereField;
+  readonly contaminationAge?: ContaminationAge;
+  readonly ruinSeverity?: RuinSeverity;
 }
 
 export interface WalkableMask {
@@ -162,6 +174,8 @@ export interface GeneratedRiftLayout {
   readonly seed: number;
   readonly fragmentTypeId: string;
   readonly recipeId: string;
+  readonly contaminationAge: ContaminationAge;
+  readonly ruinSeverity: RuinSeverity;
   readonly tileMap: TileMapData;
   /** Full recipe-stack island, including paint roles and atmosphere for the surface. */
   readonly ruins: RuinedMask;

@@ -127,7 +127,7 @@ note: Slice 6「程序化地图」ACTIVE。DEC-064：三件余项必须做完才
 | 6 | code | **C2** 情景障碍（按 A1 形状语言） | **已交；密度人锁**（DEC-061） |
 | 7 | code | **C3** 布点（出生 / 一个撤离 / 薪柴 / 巡逻） | **已交** |
 | 8 | code | **C4** 场景接线 | **已交** |
-| 8b | code | **C5** 氛围进裂隙 | **已交**（抽锚生成 + 邻域抖动 + 天空影循环；尘点位移 / 年龄轴仍待） |
+| 8b | code | **C5** 氛围进裂隙 | **已交**（抽锚生成 + 邻域抖动 + 天空影循环）。DEC-064 余项（换路硬保证 / 尘点沿风 / 年龄×残破）另交，见收工余项表 |
 | 9 | qa | 对照规格 | 实现后 |
 | 10 | 人 | 连续踏入至少两次 | **已回 / ok**（2026-08-19，DEC-062；检查点，不标 COMPLETE） |
 
@@ -179,9 +179,9 @@ note: Slice 6「程序化地图」ACTIVE。DEC-064：三件余项必须做完才
 | 活策略 | 每一次踏入 = 抽锚 + 新种子 + 邻域抖动，再生成并烤图。十张 PNG 是样例不是地图库。 |
 | `RiftScene` | 吃 `generateRiftLayout`；手写图只当夹具 |
 | `RunController` | 阵亡/撤离回净化点（DEC-056） |
-| C5 / `procedural-surface` | **已接，不再写死 `frag-outdoor`。** 旋钮读碎片表。正式抽取只开 CSV `enabled` 的三行：`frag-outdoor` / `frag-clinic` / `frag-metro`。library / residential 锚在配方表，CSV 仍 `false`。 |
-| 天空 | 地面（含雾）出击烤一次；天空 64×42 低分辨率叠层循环（同一份场只改 `phase`）。禁止再对 2048×1344 整图 CPU `compositePaint`。 |
-| 规格 21 双路径 | 仍软目标，未做成硬保证 |
+| C5 / `procedural-surface` | **已接，不再写死 `frag-outdoor`。** 旋钮读碎片表。正式抽取只开 CSV `enabled` 的三行：`frag-outdoor` / `frag-clinic` / `frag-metro`。library / residential 锚在配方表，CSV 仍 `false`。每一次踏入抽 `contaminationAge` × `ruinSeverity`。 |
+| 天空 | 地面（含雾）出击烤一次；天空 64×42 低分辨率叠层循环（同一份场只改 `phase`）。尘点不烤死，跟天空同一叠层沿 `windX/Y` 漂。禁止再对 2048×1344 整图 CPU `compositePaint`。 |
+| 规格 21 双路径 | **硬保证。** `evaluateDualPath` 与 `check:layout` 同一口径。无换路 = 坏图。 |
 | 人试玩 | **ok 此节点**。不标 COMPLETE。 |
 
 ## 试玩 bug 修复（2026-08-18）
@@ -243,9 +243,9 @@ note: Slice 6「程序化地图」ACTIVE。DEC-064：三件余项必须做完才
 
 | 项 | 锁 | 状态 |
 | -- | -- | ---- |
-| 规格 21 换路 | 硬保证。出生→唯一撤离必须有短暴露 + 长隐蔽两条路。重试，不拆形状闸门。`check:layout` 无换路 = 坏图。机器定义已锁（`system-map-generation` 规则 21，2026-08-19） | 规格已锁；实现待做 |
-| 尘点沿风 | 出击中随 `phase` 沿本趟风向漂移；雾仍烤死 | 待做 |
-| 污染年龄 × 残破 | 每次踏入抽 `contaminationAge` × `ruinSeverity`，按 `rift-fragment-surfaces.md` 组合轴落地。规格规则 24a 已锁 | 规格已锁；实现待做 |
+| 规格 21 换路 | 硬保证。出生→唯一撤离必须有短暴露 + 长隐蔽两条路。重试，不拆形状闸门。`check:layout` 无换路 = 坏图。机器定义已锁（`system-map-generation` 规则 21，2026-08-19） | **实现已交**（`evaluateDualPath` 共用；无换路 FATAL；`MAX_ISLAND_ATTEMPTS = 32`） |
+| 尘点沿风 | 出击中随 `phase` 沿本趟风向漂移；雾仍烤死 | **实现已交**（不烤进地面；跟天空同一份场扫 phase，画在低分辨率 additive 叠层） |
+| 污染年龄 × 残破 | 每次踏入抽 `contaminationAge` × `ruinSeverity`，按 `rift-fragment-surfaces.md` 组合轴落地。规格规则 24a 已锁 | **实现已交**（`rollFragmentAxes` → `GeneratedRiftLayout` / `RuinedMask`；`bakeGround` 按年龄画矩形块、按残破乘 scratch/fleck/渍/墙沿） |
 | 小地图 DEC-063 | 机械层已交。收工不等人终审 | 机械已交 |
 
 7/8/9 范围见 DEC-064，本文件仍只服务 Slice 6，直到本 Slice COMPLETE。

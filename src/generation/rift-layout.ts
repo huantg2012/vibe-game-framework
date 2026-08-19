@@ -1,18 +1,21 @@
 /**
  * C3: place spawn, one extract, kindling, contaminants and patrols on a
- * recipe-stack island. Does not switch generators. Does not punch new walls
- * for a second path (spec 21 is a soft preference).
+ * recipe-stack island. Does not switch generators. Does not punch walls to
+ * invent a second path. Spec 21 dual-path is a hard gate: fail and retry
+ * the island.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { ENABLED_RIFT_FRAGMENTS } from '@/generated/rift-fragment-data';
 import { generateRecipeDraft } from '@/generation/draft-pipeline';
+import { evaluateDualPath } from '@/generation/dual-path';
+import { rollFragmentAxes } from '@/generation/fragment-roll';
 import { PREVIEW_RECIPES, jitterRecipe, type MapRecipe } from '@/generation/recipes';
 import { mix32 } from '@/generation/seed-fork';
 import type { GeneratedRiftLayout, WalkableMask } from '@/generation/types';
 import { RIFT_MAP } from '@/scenes/rift-map-data';
 import { TileGrid } from '@/systems/tile-grid';
-import type { Vector2 } from '@/types/game-types';
+import { TileType, type Vector2 } from '@/types/game-types';
 import type {
   ContaminantNodeDef,
   EnemySpawnData,
@@ -23,7 +26,7 @@ import type {
 import { hasLineOfSight } from '@/utils/grid-raycast';
 import { SeededRandom } from '@/utils/random';
 
-const MAX_ISLAND_ATTEMPTS = 10;
+const MAX_ISLAND_ATTEMPTS = 32;
 const MAX_PLACE_ATTEMPTS = 20;
 const SIGHT_PX = GAME_CONSTANTS.AI.SIGHT_RANGE;
 const TILE = GAME_CONSTANTS.TILE_SIZE;
@@ -97,6 +100,16 @@ function walkBits(grid: TileGrid): Uint8Array {
   for (let row = 0; row < grid.rows; row++) {
     for (let col = 0; col < grid.cols; col++) {
       if (grid.isWalkable(col, row)) bits[at(grid.cols, col, row)] = 1;
+    }
+  }
+  return bits;
+}
+
+function wallBits(grid: TileGrid): Uint8Array {
+  const bits = new Uint8Array(grid.cols * grid.rows);
+  for (let row = 0; row < grid.rows; row++) {
+    for (let col = 0; col < grid.cols; col++) {
+      if (grid.getTile(col, row) === TileType.WALL) bits[at(grid.cols, col, row)] = 1;
     }
   }
   return bits;
@@ -192,22 +205,6 @@ function pathDistField(
     }
   }
   return dist;
-}
-
-function hasAltPath(
-  walk: Uint8Array,
-  cols: number,
-  rows: number,
-  spawn: number,
-  extract: number,
-  path: readonly number[],
-): boolean {
-  const blocked = new Uint8Array(walk);
-  for (const i of path) {
-    if (i !== spawn && i !== extract) blocked[i] = 0;
-  }
-  const { dist } = bfs(blocked, cols, rows, spawn);
-  return (dist[extract] ?? -1) >= 0;
 }
 
 function manhattan(cols: number, a: number, b: number): number {
@@ -385,6 +382,7 @@ interface PlaceOk {
 function placeOnIsland(
   grid: TileGrid,
   walk: Uint8Array,
+  walls: Uint8Array,
   rng: SeededRandom,
 ): PlaceOk | string {
   const cols = grid.cols;
@@ -421,19 +419,8 @@ function placeOnIsland(
   const path = reconstruct(fromSpawn.parent, spawn, extract);
   if (path.length < 12) return `path too short (${path.length})`;
 
-  // Soft: prefer an open second route, but do not fail the island for it.
-  if (!hasAltPath(walk, cols, rows, spawn, extract, path)) {
-    const altExtract = extractPool[rng.nextInt(0, extractPool.length - 1)]!;
-    const altFrom = bfs(walk, cols, rows, spawn);
-    if (altFrom.dist[altExtract]! >= minPole) {
-      const altPath = reconstruct(altFrom.parent, spawn, altExtract);
-      if (altPath.length >= 12 && hasAltPath(walk, cols, rows, spawn, altExtract, altPath)) {
-        extract = altExtract;
-        path.length = 0;
-        path.push(...altPath);
-      }
-    }
-  }
+  const dual = evaluateDualPath(walk, walls, cols, rows, spawn, extract);
+  if (!dual.ok) return dual.reason;
 
   const extractPos = worldOf(colOf(cols, extract), rowOf(cols, extract));
   if (sameWorld(extractPos, forbiddenExtract)) return 'extract matches handwritten X';
@@ -599,6 +586,7 @@ function placeOnIsland(
 
 export function generateRiftLayout(seed: number): GeneratedRiftLayout {
   const inputSeed = seed >>> 0;
+  const roll = rollFragmentAxes(inputSeed);
   let lastWhy = 'no attempt';
 
   for (let island = 0; island < MAX_ISLAND_ATTEMPTS; island++) {
@@ -614,6 +602,7 @@ export function generateRiftLayout(seed: number): GeneratedRiftLayout {
 
     const grid = new TileGrid(draft.tileMap);
     const walk = walkBits(grid);
+    const walls = wallBits(grid);
     let floorCount = 0;
     for (let i = 0; i < walk.length; i++) if (walk[i]) floorCount++;
     if (floorCount < 80) {
@@ -623,7 +612,7 @@ export function generateRiftLayout(seed: number): GeneratedRiftLayout {
 
     for (let place = 0; place < MAX_PLACE_ATTEMPTS; place++) {
       const rng = new SeededRandom(mix32(inputSeed, `place:${island}:${place}`));
-      const placed = placeOnIsland(grid, walk, rng);
+      const placed = placeOnIsland(grid, walk, walls, rng);
       if (typeof placed === 'string') {
         lastWhy = placed;
         continue;
@@ -644,8 +633,14 @@ export function generateRiftLayout(seed: number): GeneratedRiftLayout {
         seed: inputSeed,
         fragmentTypeId: recipe.fragmentTypeId,
         recipeId: recipe.id,
+        contaminationAge: roll.contaminationAge,
+        ruinSeverity: roll.ruinSeverity,
         tileMap: draft.tileMap,
-        ruins: draft,
+        ruins: {
+          ...draft,
+          contaminationAge: roll.contaminationAge,
+          ruinSeverity: roll.ruinSeverity,
+        },
         walkableMask: makeWalkableMask(grid),
         spawnPoint,
         extractionPoint,

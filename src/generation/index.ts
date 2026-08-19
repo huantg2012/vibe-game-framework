@@ -29,6 +29,8 @@ export {
 } from '@/generation/preview-paint';
 export { jitterRecipe } from '@/generation/recipes';
 export { generateRiftLayout } from '@/generation/rift-layout';
+export { evaluateDualPath, DUAL_PATH_MIN_LENGTH_RATIO } from '@/generation/dual-path';
+export { rollFragmentAxes, isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
 export type {
   OutlineMask,
   OutlineMetrics,
@@ -47,4 +49,7 @@ export type {
   SkyOccluder,
   WalkableMask,
   GeneratedRiftLayout,
+  ContaminationAge,
+  RuinSeverity,
+  FragmentRoll,
 } from '@/generation/types';

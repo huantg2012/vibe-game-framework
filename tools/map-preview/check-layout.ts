@@ -3,9 +3,11 @@
  *
  *   npm run check:layout
  *
- * Dual path / sight≤14 / empty-rect 48 are NOT fatal.
+ * Dual path (spec 21) and walkable-component count are FATAL.
  */
 import { countWalkableComponents } from '../../src/generation/connectivity.ts';
+import { evaluateDualPath } from '../../src/generation/dual-path.ts';
+import { isContaminationAge, isRuinSeverity } from '../../src/generation/fragment-roll.ts';
 import {
   LIVE_PAINT_PX_PER_TILE,
   paintSkyShade,
@@ -88,68 +90,25 @@ function floodFrom(
   return seen;
 }
 
-function hasAltPath(layout: GeneratedRiftLayout): boolean {
+function dualPathOf(layout: GeneratedRiftLayout) {
   const spawn = tileOf(layout, layout.spawnPoint);
   const extract = tileOf(layout, layout.extractionPoint.position);
   const { cols, rows } = layout.walkableMask;
   const walk = new Uint8Array(cols * rows);
+  const walls = new Uint8Array(cols * rows);
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-      if (layout.walkableMask.isWalkable(col, row)) walk[row * cols + col] = 1;
+      const i = row * cols + col;
+      if (layout.walkableMask.isWalkable(col, row)) walk[i] = 1;
+      if (layout.tileMap.tiles[row]![col] === TileType.WALL) walls[i] = 1;
     }
   }
-  const dist = new Int32Array(walk.length).fill(-1);
-  const parent = new Int32Array(walk.length).fill(-1);
-  const start = spawn.row * cols + spawn.col;
-  const goal = extract.row * cols + extract.col;
-  dist[start] = 0;
-  const queue = [start];
-  let q = 0;
-  while (q < queue.length) {
-    const cur = queue[q++]!;
-    const col = cur % cols;
-    const row = (cur / cols) | 0;
-    for (const [dx, dy] of DIRS4) {
-      const nx = col + dx;
-      const ny = row + dy;
-      if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
-      const ni = ny * cols + nx;
-      if (!walk[ni] || dist[ni] !== -1) continue;
-      dist[ni] = dist[cur]! + 1;
-      parent[ni] = cur;
-      queue.push(ni);
-    }
-  }
-  if (dist[goal]! < 0) return false;
-  const blocked = new Uint8Array(walk);
-  let cur = goal;
-  while (cur !== start && cur >= 0) {
-    if (cur !== start && cur !== goal) blocked[cur] = 0;
-    cur = parent[cur]!;
-  }
-  const seen = new Uint8Array(blocked.length);
-  const stack = [start];
-  seen[start] = 1;
-  while (stack.length > 0) {
-    const i = stack.pop()!;
-    if (i === goal) return true;
-    const col = i % cols;
-    const row = (i / cols) | 0;
-    for (const [dx, dy] of DIRS4) {
-      const nx = col + dx;
-      const ny = row + dy;
-      if (nx < 0 || ny < 0 || nx >= cols || ny >= rows) continue;
-      const ni = ny * cols + nx;
-      if (!blocked[ni] || seen[ni]) continue;
-      seen[ni] = 1;
-      stack.push(ni);
-    }
-  }
-  return false;
+  return evaluateDualPath(walk, walls, cols, rows, spawn.row * cols + spawn.col, extract.row * cols + extract.col);
 }
 
 const forbidden = RIFT_MAP.layout.extractionPoint.position;
-let altHits = 0;
+const ages = new Set<string>();
+const ruins = new Set<string>();
 
 for (const seed of SEEDS) {
   const layout = generateRiftLayout(seed);
@@ -203,6 +162,19 @@ for (const seed of SEEDS) {
     }
   }
 
+  const dual = dualPathOf(layout);
+  assert(
+    dual.ok,
+    `seed ${seed}: no dual-path (main=${dual.mainSteps} alt=${dual.altSteps} open ${dual.mainOpenRatio.toFixed(2)}/${dual.altOpenRatio.toFixed(2)})`,
+  );
+
+  assert(isContaminationAge(layout.contaminationAge), `seed ${seed}: bad contaminationAge ${String(layout.contaminationAge)}`);
+  assert(isRuinSeverity(layout.ruinSeverity), `seed ${seed}: bad ruinSeverity ${String(layout.ruinSeverity)}`);
+  assert(layout.ruins.contaminationAge === layout.contaminationAge, `seed ${seed}: ruins.contaminationAge drifted`);
+  assert(layout.ruins.ruinSeverity === layout.ruinSeverity, `seed ${seed}: ruins.ruinSeverity drifted`);
+  ages.add(layout.contaminationAge);
+  ruins.add(layout.ruinSeverity);
+
   const again = generateRiftLayout(seed);
   assert(again.fragmentTypeId === layout.fragmentTypeId, `seed ${seed}: fragmentTypeId drifted`);
   assert(again.spawnPoint.x === layout.spawnPoint.x && again.spawnPoint.y === layout.spawnPoint.y, `seed ${seed}: spawn drifted`);
@@ -212,14 +184,18 @@ for (const seed of SEEDS) {
     `seed ${seed}: extract drifted`,
   );
   assert(wallCount(again.tileMap) === wallCount(layout.tileMap), `seed ${seed}: wall count drifted`);
+  assert(again.contaminationAge === layout.contaminationAge, `seed ${seed}: contaminationAge drifted`);
+  assert(again.ruinSeverity === layout.ruinSeverity, `seed ${seed}: ruinSeverity drifted`);
 
-  if (hasAltPath(layout)) altHits++;
   console.log(
-    `ok seed ${seed} frag=${layout.fragmentTypeId} recipe=${layout.recipeId} patrols=${layout.enemySpawns.length} walls=${wallCount(layout.tileMap)}`,
+    `ok seed ${seed} frag=${layout.fragmentTypeId} recipe=${layout.recipeId} age=${layout.contaminationAge} ruin=${layout.ruinSeverity} dual ${dual.mainSteps}/${dual.altSteps} patrols=${layout.enemySpawns.length} walls=${wallCount(layout.tileMap)}`,
   );
 }
 
-console.log(`info dual-path ${altHits}/${SEEDS.length} (soft, not fatal)`);
+assert(
+  ages.size >= 2 || ruins.size >= 2,
+  `fragment roll collapsed: ages=${[...ages].join(',')} ruins=${[...ruins].join(',')}`,
+);
 
 {
   const layout = generateRiftLayout(101);

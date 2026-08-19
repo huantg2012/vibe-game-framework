@@ -9,6 +9,17 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 6 收工余项实现取舍（code，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 6 收工
+- Type: Technical
+- Context: DEC-064 三件落地。换路从软偏好改硬保证后，单岛失败率升高；尘点不能每帧整图复合。
+- Decision:
+  1. `evaluateDualPath` 单文件，生成器与 `check:layout` 共用。换路失败返回 `no dual-path`，重试整岛，不换生成器、不加细墙。`MAX_ISLAND_ATTEMPTS` 从 10 提到 **32**（上限内的技术判断）。
+  2. 尘点不烤进出击地面。`paintSkyShade` 把 mote stamp 画进已有 additive rim 缓冲，位移 `(phase - field.phase) * slideSpan` 沿 `windX/Y`。雾仍烤死。
+  3. `rollFragmentAxes(seed)` 均匀抽 3×3，写进 `GeneratedRiftLayout` 与 `RuinedMask`。缺字段才回退 `standard`+`broken`。矩形错误块按年龄真画，不把年龄写进 CSV 当新碎片种类。
+- Impact: `npm run check:layout` 无换路 = FAIL。不标 Slice COMPLETE。
+
 ## DEC-064: Slice 6 收工条件 + Slice 7/8/9 一次拍板（人锁）
 - Date: 2026-08-19
 - Phase: Slice 6 收工 → 接着做 7 / 8 / 9

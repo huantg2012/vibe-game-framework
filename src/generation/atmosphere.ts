@@ -9,7 +9,7 @@
  *   4. Motes sampled from fog² and drifted along wind.
  *   5. Seep glows at glitch cells; local fog bump.
  *
- * Same field animates by moving phase — fog stays, capsules slide on the wind.
+ * Same field animates by moving phase — fog stays, capsules and motes slide on the wind.
  * Learns from the purification stack (edge fade, teal seeps, drifting motes)
  * without copying the polar membrane.
  */
@@ -402,6 +402,15 @@ export function measureAtmosphere(
     shadeMeanLand: n === 0 ? 0 : shadeSum / n,
     occluderCount: field.occluders.length,
   };
+}
+
+/** Mote rest poses are baked at `field.phase`. Live/gallery slide from that origin along wind. */
+export function moteSlide(
+  field: AtmosphereField,
+  phase: number,
+): { dx: number; dy: number } {
+  const t = (phase - field.phase) * field.slideSpan;
+  return { dx: field.windX * t, dy: field.windY * t };
 }
 
 export function shadeAt(

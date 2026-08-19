@@ -4,8 +4,18 @@
  */
 
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
-import { shadeAt } from '@/generation/atmosphere';
-import type { AtmosphereField, OverlayStamp, RuinPaintRole, RuinedMask } from '@/generation/types';
+import { moteSlide, shadeAt } from '@/generation/atmosphere';
+import { isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
+import { mix32 } from '@/generation/seed-fork';
+import type {
+  AtmosphereField,
+  ContaminationAge,
+  OverlayStamp,
+  RuinPaintRole,
+  RuinSeverity,
+  RuinedMask,
+} from '@/generation/types';
+import { SeededRandom } from '@/utils/random';
 
 const ROLE_RANK: Record<RuinPaintRole, number> = {
   glitch: 5,
@@ -562,6 +572,31 @@ export function paintSkyShade(
       rim[o + 3] = 255;
     }
   }
+
+  const slide = moteSlide(field, phase);
+  const scale = tileSize / step;
+  for (const stamp of field.motes) {
+    if (stamp.kind !== 'mote') continue;
+    const cx = (stamp.col + slide.dx) * scale;
+    const cy = (stamp.row + slide.dy) * scale;
+    const rad = 1.2;
+    const x0 = Math.max(0, Math.floor(cx - rad));
+    const y0 = Math.max(0, Math.floor(cy - rad));
+    const x1 = Math.min(ow - 1, Math.ceil(cx + rad));
+    const y1 = Math.min(oh - 1, Math.ceil(cy + rad));
+    for (let y = y0; y <= y1; y++) {
+      for (let x = x0; x <= x1; x++) {
+        const d = Math.hypot(x + 0.5 - cx, y + 0.5 - cy);
+        if (d > rad) continue;
+        const k = (1 - d / rad) * stamp.strength;
+        const o = (y * ow + x) * 4;
+        rim[o] = clamp255(rim[o]! + 14 * k);
+        rim[o + 1] = clamp255(rim[o + 1]! + 14 * k);
+        rim[o + 2] = clamp255(rim[o + 2]! + 16 * k);
+      }
+    }
+  }
+
   return { width: ow, height: oh };
 }
 
@@ -571,10 +606,14 @@ function applyOverlays(
   H: number,
   T: number,
   overlays: readonly OverlayStamp[],
+  opts?: { skipMotes?: boolean; phase?: number; field?: AtmosphereField },
 ): void {
+  const slide =
+    opts?.field && opts.phase != null ? moteSlide(opts.field, opts.phase) : { dx: 0, dy: 0 };
   for (const stamp of overlays) {
-    const cx = stamp.col * T;
-    const cy = stamp.row * T;
+    if (stamp.kind === 'mote' && opts?.skipMotes) continue;
+    const cx = (stamp.col + (stamp.kind === 'mote' ? slide.dx : 0)) * T;
+    const cy = (stamp.row + (stamp.kind === 'mote' ? slide.dy : 0)) * T;
     const rad = Math.max(1, stamp.radiusTiles * T);
     const x0 = Math.max(0, (cx - rad - 2) | 0);
     const y0 = Math.max(0, (cy - rad - 2) | 0);
@@ -625,6 +664,322 @@ function applyOverlays(
   }
 }
 
+const TEAL_PER_100K_PX2 = 1.6;
+const CONTAM_COLD = [0x1a, 0x7a, 0x9a] as const;
+const CONTAM_MID = [0x1a, 0x6b, 0x5c] as const;
+const CONTAM_CORE = [0x1a, 0xad, 0x96] as const;
+const CONTAM_ANCIENT = [0x4a, 0xdf, 0x8a] as const;
+const SHADOW_GREY = [0x15, 0x1a, 0x1e] as const;
+const BONE_GREY = [0x3a, 0x38, 0x38] as const;
+
+function resolveAge(mask: RuinedMask): ContaminationAge {
+  return isContaminationAge(mask.contaminationAge) ? mask.contaminationAge : 'standard';
+}
+
+function resolveRuin(mask: RuinedMask): RuinSeverity {
+  return isRuinSeverity(mask.ruinSeverity) ? mask.ruinSeverity : 'broken';
+}
+
+function desatAncient(): readonly [number, number, number] {
+  const s = 0.42;
+  return [
+    CONTAM_ANCIENT[0] * s + BONE_GREY[0] * (1 - s),
+    CONTAM_ANCIENT[1] * s + BONE_GREY[1] * (1 - s),
+    CONTAM_ANCIENT[2] * s + BONE_GREY[2] * (1 - s),
+  ];
+}
+
+function agePaint(age: ContaminationAge): {
+  body: readonly [number, number, number];
+  highlight: readonly [number, number, number] | null;
+  tealMul: number;
+  seamW: number;
+} {
+  if (age === 'new') {
+    return { body: CONTAM_COLD, highlight: null, tealMul: 0.35, seamW: 0 };
+  }
+  if (age === 'ancient') {
+    return { body: desatAncient(), highlight: CONTAM_CORE, tealMul: 2.2, seamW: 2 };
+  }
+  return { body: CONTAM_MID, highlight: CONTAM_CORE, tealMul: 1, seamW: 1 };
+}
+
+function ruinKnobs(ruin: RuinSeverity): {
+  scratchMul: number;
+  fleckMul: number;
+  stainOffset: number;
+  topMul: number;
+  sideMul: number;
+} {
+  if (ruin === 'intact') {
+    return { scratchMul: 0.7, fleckMul: 0.7, stainOffset: 0.06, topMul: 1, sideMul: 1 };
+  }
+  if (ruin === 'eaten') {
+    return { scratchMul: 1.4, fleckMul: 1.5, stainOffset: -0.1, topMul: 0.35, sideMul: 1.85 };
+  }
+  return { scratchMul: 1, fleckMul: 1, stainOffset: 0, topMul: 1, sideMul: 1 };
+}
+
+function putFloorRgb(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  x: number,
+  y: number,
+  rgb: readonly [number, number, number],
+): boolean {
+  if (x < 0 || y < 0 || x >= W || y >= H) return false;
+  const col = (x / T) | 0;
+  const row = (y / T) | 0;
+  if (cellAt(land, walls, cols, rows, col, row) !== 'floor') return false;
+  const o = (y * W + x) * 3;
+  raw[o] = rgb[0];
+  raw[o + 1] = rgb[1];
+  raw[o + 2] = rgb[2];
+  return true;
+}
+
+function fillFloorRect(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  col0: number,
+  row0: number,
+  col1: number,
+  row1: number,
+  body: readonly [number, number, number],
+  highlight: readonly [number, number, number] | null,
+): void {
+  const x0 = col0 * T;
+  const y0 = row0 * T;
+  const x1 = (col1 + 1) * T - 1;
+  const y1 = (row1 + 1) * T - 1;
+  for (let y = y0; y <= y1; y++) {
+    for (let x = x0; x <= x1; x++) {
+      const inset =
+        highlight && x > x0 + 1 && x < x1 - 1 && y > y0 + 1 && y < y1 - 1;
+      putFloorRgb(raw, W, H, T, land, walls, cols, rows, x, y, inset && highlight ? highlight : body);
+    }
+  }
+}
+
+function stampWear(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  mask: RuinedMask,
+  scratchMul: number,
+  fleckMul: number,
+  scratchAngle: string,
+): void {
+  const floors: number[] = [];
+  for (let i = 0; i < land.length; i++) {
+    if (land[i] && !walls[i]) floors.push(i);
+  }
+  if (floors.length === 0) return;
+  const rng = new SeededRandom(mix32(mask.seed, 'wear'));
+  const area = W * H;
+  const def = RIFT_FRAGMENT_DATA[mask.fragmentTypeId];
+  if (!def) return;
+  const scratchN = Math.round(def.scratchPer1000px2 * scratchMul * (area / 1000));
+  const fleckN = Math.round(def.fleckPer1000px2 * fleckMul * (area / 1000));
+  const angleOf = (): number => {
+    if (scratchAngle === 'orthogonal') return rng.next() < 0.5 ? 0 : Math.PI / 2;
+    if (scratchAngle === 'longitudinal') return W >= H ? 0 : Math.PI / 2;
+    return rng.next() * Math.PI * 2;
+  };
+  for (let n = 0; n < scratchN; n++) {
+    const cell = floors[rng.nextInt(0, floors.length - 1)]!;
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    const x0 = col * T + rng.nextInt(0, Math.max(0, T - 1));
+    const y0 = row * T + rng.nextInt(0, Math.max(0, T - 1));
+    const ang = angleOf();
+    const len = 3 + rng.next() * 6;
+    const steps = Math.max(2, len | 0);
+    const cos = Math.cos(ang);
+    const sin = Math.sin(ang);
+    for (let s = 0; s <= steps; s++) {
+      const x = (x0 + cos * s) | 0;
+      const y = (y0 + sin * s) | 0;
+      if (x < 0 || y < 0 || x >= W || y >= H) continue;
+      if (cellAt(land, walls, cols, rows, (x / T) | 0, (y / T) | 0) !== 'floor') continue;
+      const o = (y * W + x) * 3;
+      raw[o] = raw[o]! * 0.62;
+      raw[o + 1] = raw[o + 1]! * 0.62;
+      raw[o + 2] = raw[o + 2]! * 0.64;
+    }
+  }
+  for (let n = 0; n < fleckN; n++) {
+    const cell = floors[rng.nextInt(0, floors.length - 1)]!;
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    const x = col * T + rng.nextInt(0, Math.max(0, T - 1));
+    const y = row * T + rng.nextInt(0, Math.max(0, T - 1));
+    if (cellAt(land, walls, cols, rows, (x / T) | 0, (y / T) | 0) !== 'floor') continue;
+    const light = rng.next() < 0.45;
+    const rgb = light ? BONE_GREY : SHADOW_GREY;
+    const o = (y * W + x) * 3;
+    const k = 0.55;
+    raw[o] = raw[o]! * (1 - k) + rgb[0] * k;
+    raw[o + 1] = raw[o + 1]! * (1 - k) + rgb[1] * k;
+    raw[o + 2] = raw[o + 2]! * (1 - k) + rgb[2] * k;
+  }
+}
+
+function stampContamination(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  roles: Array<RuinPaintRole | ''>,
+  mask: RuinedMask,
+  age: ContaminationAge,
+): void {
+  const paint = agePaint(age);
+  const rng = new SeededRandom(mix32(mask.seed, 'contam-blocks'));
+  const floors: number[] = [];
+  const glitches: number[] = [];
+  for (let i = 0; i < land.length; i++) {
+    if (!land[i] || walls[i]) continue;
+    floors.push(i);
+    if (roles[i] === 'glitch') glitches.push(i);
+  }
+  if (floors.length === 0) return;
+
+  const pickFloor = (): number => floors[rng.nextInt(0, floors.length - 1)]!;
+
+  if (age === 'new') {
+    const specks = rng.nextInt(6, 14);
+    for (let n = 0; n < specks; n++) {
+      const cell = pickFloor();
+      const col = cell % cols;
+      const row = (cell / cols) | 0;
+      putFloorRgb(
+        raw,
+        W,
+        H,
+        T,
+        land,
+        walls,
+        cols,
+        rows,
+        col * T + rng.nextInt(0, Math.max(0, T - 1)),
+        row * T + rng.nextInt(0, Math.max(0, T - 1)),
+        paint.body,
+      );
+    }
+  } else if (age === 'standard') {
+    const count = rng.nextInt(3, 5);
+    for (let n = 0; n < count; n++) {
+      const cell = (n < glitches.length ? glitches[n] : pickFloor())!;
+      const col = cell % cols;
+      const row = (cell / cols) | 0;
+      fillFloorRect(raw, W, H, T, land, walls, cols, rows, col, row, col, row, paint.body, paint.highlight);
+    }
+  } else {
+    const count = rng.nextInt(15, 22);
+    for (let n = 0; n < count; n++) {
+      const cell = (n < glitches.length ? glitches[n] : pickFloor())!;
+      const col = cell % cols;
+      const row = (cell / cols) | 0;
+      const span = rng.next() < 0.55 ? 1 : 2;
+      fillFloorRect(
+        raw,
+        W,
+        H,
+        T,
+        land,
+        walls,
+        cols,
+        rows,
+        col,
+        row,
+        Math.min(cols - 1, col + span),
+        Math.min(rows - 1, row + span),
+        paint.body,
+        paint.highlight,
+      );
+    }
+  }
+
+  const budget = Math.max(0, Math.round((TEAL_PER_100K_PX2 * paint.tealMul * W * H) / 100000));
+  if (budget <= 0 || paint.seamW <= 0) return;
+  const dirs: ReadonlyArray<readonly [number, number]> = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+  ];
+  let painted = 0;
+  let guard = 0;
+  while (painted < budget && guard++ < budget * 24) {
+    const origin = glitches.length > 0 && rng.next() < 0.7 ? glitches[rng.nextInt(0, glitches.length - 1)]! : pickFloor();
+    let x = (origin % cols) * T + (T / 2) | 0;
+    let y = ((origin / cols) | 0) * T + (T / 2) | 0;
+    let [dx, dy] = dirs[rng.nextInt(0, 3)]!;
+    const len = 6 + rng.nextInt(0, 10);
+    for (let s = 0; s < len && painted < budget; s++) {
+      if (rng.next() < 0.28) [dx, dy] = dirs[rng.nextInt(0, 3)]!;
+      x += dx;
+      y += dy;
+      for (let t = 0; t < paint.seamW; t++) {
+        const px = x + (dx === 0 ? t : 0);
+        const py = y + (dy === 0 ? t : 0);
+        if (putFloorRgb(raw, W, H, T, land, walls, cols, rows, px, py, paint.body)) painted++;
+      }
+    }
+  }
+}
+
+function stampAncientDots(
+  rgba: Uint8Array,
+  W: number,
+  H: number,
+  T: number,
+  mask: RuinedMask,
+): void {
+  if (resolveAge(mask) !== 'ancient') return;
+  const land = mask.outline.land;
+  const walls = mask.walls;
+  const cols = mask.outline.cols;
+  const rows = mask.outline.rows;
+  const rng = new SeededRandom(mix32(mask.seed, 'ancient-dots'));
+  const want = Math.max(12, Math.floor((W * H) / 14000));
+  let n = 0;
+  let guard = 0;
+  while (n < want && guard++ < want * 40) {
+    const x = rng.nextInt(0, W - 1);
+    const y = rng.nextInt(0, H - 1);
+    if (cellAt(land, walls, cols, rows, (x / T) | 0, (y / T) | 0) !== 'floor') continue;
+    const rgb = rng.next() < 0.5 ? SHADOW_GREY : BONE_GREY;
+    const o = (y * W + x) * 4;
+    rgba[o] = rgb[0];
+    rgba[o + 1] = rgb[1];
+    rgba[o + 2] = rgb[2];
+    n++;
+  }
+}
+
 export interface BakedGround {
   readonly raw: Float32Array;
   readonly width: number;
@@ -637,6 +992,10 @@ export interface BakedGround {
 export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
   const def = RIFT_FRAGMENT_DATA[mask.fragmentTypeId];
   if (!def) throw new Error(`paintRuinedMask: unknown type ${mask.fragmentTypeId}`);
+
+  const age = resolveAge(mask);
+  const ruin = resolveRuin(mask);
+  const knobs = ruinKnobs(ruin);
 
   const cols = mask.outline.cols;
   const rows = mask.outline.rows;
@@ -715,9 +1074,9 @@ export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
         r = bv * def.wallBiasR;
         g = bv * def.wallBiasG;
         b = bv * def.wallBiasB;
-        r += 28 * topRim;
-        g += 24 * topRim;
-        b += 18 * topRim;
+        r += 28 * topRim * knobs.topMul;
+        g += 24 * topRim * knobs.topMul;
+        b += 18 * topRim * knobs.topMul;
         const sf = 1 - 0.55 * botShad;
         r *= sf;
         g *= sf;
@@ -727,7 +1086,7 @@ export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
         let dE = 1;
         while (dE <= 3 && x + dE < W && stonePix[y * W + x + dE]) dE++;
         const sideAO = Math.max(dW <= 2 ? (3 - dW) / 2 : 0, dE <= 2 ? (3 - dE) / 2 : 0);
-        const af = 1 - 0.22 * sideAO;
+        const af = 1 - 0.22 * sideAO * knobs.sideMul;
         r *= af;
         g *= af;
         b *= af;
@@ -750,20 +1109,7 @@ export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
         g = bv * def.floorBiasG;
         b = bv * def.floorBiasB;
 
-        if (role === 'glitch') {
-          const lx = x % T;
-          const ly = y % T;
-          const inset = lx > 1 && lx < T - 2 && ly > 1 && ly < T - 2;
-          if (inset) {
-            r = 0x1a;
-            g = 0xad;
-            b = 0x96;
-          } else {
-            r = 0x1a;
-            g = 0x7a;
-            b = 0x9a;
-          }
-        } else if (role === 'organic') {
+        if (role === 'organic') {
           const k = 0.62;
           r += (0x1a - r) * k;
           g += (0x6b - g) * k;
@@ -798,9 +1144,10 @@ export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
           b *= 0.78;
         } else {
           const stain = fractal(x + 800, y - 400, 7);
-          if (stain > def.stainThreshold) {
+          const stainTh = def.stainThreshold + knobs.stainOffset;
+          if (stain > stainTh) {
             const k =
-              ((stain - def.stainThreshold) / Math.max(0.05, 1 - def.stainThreshold)) *
+              ((stain - stainTh) / Math.max(0.05, 1 - stainTh)) *
               def.stainStrength;
             const srgb = stainRgb(def.stainKey);
             r += (srgb[0] - r) * k;
@@ -827,6 +1174,9 @@ export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
     }
   }
 
+  stampWear(raw, W, H, T, land, walls, cols, rows, mask, knobs.scratchMul, knobs.fleckMul, def.scratchAngle);
+  stampContamination(raw, W, H, T, land, walls, cols, rows, roles, mask, age);
+
   return { raw, width: W, height: H, tileSize: T, mask, roles };
 }
 
@@ -850,19 +1200,24 @@ export function compositePaint(
     opts?.phase ?? mask.atmosphere?.phase ?? 0.5,
     opts?.travelScale ?? 1,
   );
-  applyOverlays(work, W, H, T, mask.overlays ?? []);
+  applyOverlays(work, W, H, T, mask.overlays ?? [], {
+    phase: opts?.phase ?? mask.atmosphere?.phase ?? 0.5,
+    field: mask.atmosphere,
+  });
   stampStumps(work, roles, mask.outline.land, mask.outline.cols, mask.outline.rows, W, H, T);
   writeQuantizedRgba(work, rgba, W, H, 'exact');
+  stampAncientDots(rgba, W, H, T, mask);
 }
 
-/** Live rift: fog + overlays baked once. Sky is `paintSkyShade` on a small overlay. */
+/** Live rift: fog + non-mote overlays baked once. Sky and motes are `paintSkyShade`. */
 export function compositeStaticPaint(ground: BakedGround, work: Float32Array, rgba: Uint8Array): void {
   const { raw, width: W, height: H, tileSize: T, mask, roles } = ground;
   work.set(raw);
   applyFog(work, W, H, T, mask.outline.cols, mask.outline.rows, mask.atmosphere);
-  applyOverlays(work, W, H, T, mask.overlays ?? []);
+  applyOverlays(work, W, H, T, mask.overlays ?? [], { skipMotes: true });
   stampStumps(work, roles, mask.outline.land, mask.outline.cols, mask.outline.rows, W, H, T);
   writeQuantizedRgba(work, rgba, W, H, 'lut');
+  stampAncientDots(rgba, W, H, T, mask);
 }
 
 /** Live paint matches gallery card resolution; the sprite scales to world tile size. */

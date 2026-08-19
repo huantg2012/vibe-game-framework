@@ -1,7 +1,8 @@
 /**
  * Live rift surface. Each sortie bakes a newly generated island once
- * (anchor + seed + neighborhood jitter). Sky capsules are a low-res overlay
- * that only changes `phase`. Gallery PNGs are samples, not a tileset to copy.
+ * (anchor + seed + neighborhood jitter). Sky capsules and dust motes are a
+ * low-res overlay that only changes `phase` (same wind axis). Fog stays baked.
+ * Gallery PNGs are samples, not a tileset to copy.
  *
  * The tilemap layer still exists for physics; it is hidden. This texture is
  * what the player sees, revealed by the visibility mask.
