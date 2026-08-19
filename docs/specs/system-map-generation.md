@@ -2,15 +2,15 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director agent
+last-modified-by: design agent
 last-modified-date: 2026-08-19
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。
-interface-changed: false
+interface-changed: true
 slice: 6
 interfaces-with:
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出
   - system-movement-vision         # 输出 OccluderGrid / 出生点；虚空格不可走、默认不挡视线
-  - system-enemy-ai                # 输出 WalkGrid + 巡逻路点；路点必须可走且从出生可达
+  - system-enemy-ai                # 输出 WalkGrid + 巡逻；恰好 1 个改写体（Slice 8）
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
   - OutlineMask（矩形缓冲 + 陆地/虚空掩膜 + 质量指标）
@@ -218,7 +218,7 @@ interface FragmentTypeDef {
 
 17. 出生与撤离分列陆地两端。撤离是继续前进抵达，不是原路折返。
 18. 恰好一个撤离点。走近按 E。触发半径沿用现规则。位置由生成器给。禁止落在手写图那个固定格上（现图大约是偏上居中的 `X`）。
-19. 撤离格本身不在任何巡逻的常驻视野内。通往撤离的最后一段由 1 个巡逻覆盖（最后一道关）。
+19. 撤离格本身不在任何巡逻的常驻视野内。通往撤离的最后一段由 1 个巡逻覆盖（最后一道关）。**这道关必须是渗透体**（`type: 'infiltrator'`）。改写体不站撤离门。
 20. 薪柴分档与数量沿用 `system-chaos-scavenge-extract`：safe 3 / contested 3 / deep 2。坐标改由生成器按「离撤离路程 × 巡逻覆盖」放置，不再写死 ASCII。
 21. **换路是硬保证**（DEC-064，覆盖 DEC-061 / DEC-062 的软目标）。仍是**一个**撤离点。不是两个撤离点，不是捷径口。`npm run check:layout`：无换路 = **坏图（FATAL）**，不是 info。失败则**重试整岛**（换种子、同一条算法）。禁止为挤路加细墙、破坏规则 16a/16b、或让墙后地板四连通分量 ≠ 1。连通仍 FATAL。规则 8 的发行期强制挖通只救连通，不救换路。
 
@@ -230,7 +230,7 @@ interface FragmentTypeDef {
     4. **开阔格**：可走格满足「四邻（上右下左）墙格数 ≤ 1」**或**「到最近墙格的四连通格距（曼哈顿，格为单位）≥ 2」。墙 = 墙格，不含虚空。四连通距墙 ≥ 2 蕴含四邻墙数 = 0，故本 OR 的有效判定是 **四邻墙数 ≤ 1**（贴着一面墙走仍算开阔；夹在两面墙之间的 1 宽缝不算）。
     5. 一条路的**开阔格占比** = 该路路径格中开阔格数 / 该路路径格数（含出生与撤离）。两条路里**较短者**（格子步数更小；若步数并列则主路视为较短）必须开阔格占比**严格更高**（= 更暴露）。较短者不够暴露 = 坏图。
     6. 以上任一步失败：丢弃本岛，重试整岛。禁止用加细墙、拆形状闸门、切开地板连通来「做出第二条路」。
-22. 巡逻 3–4 个。路点可走、从出生可达。
+22. 巡逻 3–4 个。路点可走、从出生可达。其中**恰好 1 个** `type: 'rewriter'`（改写体），其余 `'infiltrator'`（渗透体）。0 个或 ≥2 个改写体 = 坏图，重试。禁止用「全换成渗透体」糊过去。改写体优先落在 contested/deep 薪柴附近或侧路（贪婪路线），不担任规则 19 的撤离门。契约细节在 `system-enemy-ai`「生成器契约」。
 23. 污染物节点放在可走格，从出生可达。数量沿用现图量级（现为 3），本 Slice 不新开节点规则。
 
 ### A — 氛围
@@ -425,7 +425,7 @@ DEC-005 反的是地牢房间，不是「这段墙曾是房子」。CA 可以风
 | 缓冲长边 | 矩形数组边长 | 约 48–64 格；不强上 80 | 装得下弯路和虚空，不把世界做成广场 |
 | 撤离点数量 | 出口 | 1 | 本 Slice 不做多样性 |
 | 薪柴 | 分档与数量 | 3 / 3 / 2 | 沿用旧规格，只改坐标来源 |
-| 巡逻 | 单位数 | 3–4 | 沿用旧规格覆盖 |
+| 巡逻 | 单位数 | 3–4，其中恰好 1 个改写体 | Slice 8 / DEC-064 |
 | 污染物节点 | 拾取点 | 现图量级（3） | 本 Slice 不新开规则 |
 | 碎片类型 | 开放词表 | 起点 5 个已锁 L1；本 Slice 先接通 3 个 | 成品靠扩展+组合，不是写死枚举 |
 | 换路加长比 | 第二路步数 / 主路步数 | ≥ 1.15 | 长路必须明显更长，不是贴着主路的平行线 |
@@ -485,7 +485,7 @@ interface FragmentRoll {
 - 从 **净化点场景流转** 接收：踏入裂隙这一下（触发生成）。不读净化点力场形状当裂隙陆地。
 - 从 **system-chaos-scavenge-extract** 接收：薪柴分档原则、一个撤离、走近按 E、主干 40–60 秒、换路体验（短暴露 / 长隐蔽）。换路机器判定在本文件规则 21。**坐标不再向固定图要。**
 - 从 **system-movement-vision** 接收：OccluderGrid / 出生点契约。向它提供网格与出生。撤离点仍注册 glow source，位置改读生成器。
-- 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走。向它提供本次 `enemySpawns`。
+- 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走、`EnemySpawnData.type` ∈ {infiltrator, rewriter}。向它提供本次 `enemySpawns`（恰好 1 个改写体）。
 - 从 **system-growth-tide** 接收：污染物节点契约。向它提供本次节点。工具 abyss 改读本次薪柴坐标，禁止 `import { RIFT_MAP }`。
 - 向 **RiftScene** 发送：整份 `GeneratedRiftLayout`。场景不再在 create 时写死 `RIFT_MAP`。
 - 向 **ExtractionSystem** 发送：恰好一个 `ExtractionPointDef`。规则仍是走近按 E。

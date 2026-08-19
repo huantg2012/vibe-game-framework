@@ -9,6 +9,18 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 8 D1：两种感知剖面 + 屏缘干涉（design，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 8
+- Type: Design
+- Context: DEC-064 已锁改写体听觉为主、每图 1 个、屏缘脉冲无数字条、CSV 迁出。D1 把可实现数字与 UI 结构写死，不再问人。
+- Decision:
+  1. 渗透体 / 改写体共用一份五态 FSM。差异只在 `data/enemies.csv` 感知剖面与刺激权重。禁止复制 FSM。
+  2. 改写体现行数字：视锥半角 32°、移动听觉 150、`hearing_move_mult` 2.0、停步听力半径 40、停步察觉封顶 0.20、`hearing_max_push = alert`。锁定追击仍要视线。渗透体从现行 constants 迁出，不改手感。
+  3. 屏缘干涉：载体 A，挂 `#dom-ui-root`。强度 = 察觉度 0–1。形态 留意 / 搜寻 / 锁定。最多 2 个方位（夹角 < 28° 合并）。无数字、无「察觉 73%」。
+  4. 每张裂隙 3–4 巡逻、恰好 1 改写体；撤离最后一道关必须是渗透体。
+- Impact: `system-enemy-ai` `interface-changed: true`；`system-map-generation` 规则 19/22；`ui-detection-pulse` 新建；`data/enemies.csv` 两行。
+
 ## Slice 7 A1：净化器三棱锥台 + 加厚桩换色相（art，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 7

@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
 last-modified-by: design agent
-last-modified-date: 2026-07-27
+last-modified-date: 2026-08-19
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -495,7 +495,9 @@ interface AISystemReadView {
 }
 ```
 
-### 敌人战斗数据（Slice 1 只有一种敌人）
+### 敌人战斗数据（Slice 8：两种敌人共用本切面）
+
+Slice 8 改写体的潜行差异在 `system-enemy-ai` 感知剖面。**HP / 伤害 / 前摇沿用渗透体本表**，本 Slice 不另开战斗数值。
 
 ```typescript
 /** 渗透体的战斗侧配置。与 T2 的 InfiltratorConfig 并列，同一 type 的两个切面 */

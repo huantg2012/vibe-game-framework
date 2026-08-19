@@ -1,16 +1,16 @@
 ---
-status: COMPLETE
+status: ACTIVE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 7「净化点扩张」COMPLETE。QA PASS。下一手 Slice 8。
+note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 已做。Slice 7 COMPLETE。未开 8 的代码。
 ---
 
-# Slice 7: 净化点扩张【COMPLETE】
+# Slice 8: 第二敌人（潜行轴）【ACTIVE】
 
-类型：**系统 Slice**（扩已有净化点环，不新开 spec 文件）
+类型：**系统 Slice**
 日期：2026-08-19 开工
-上一手：Slice 6「程序化地图」COMPLETE（2026-08-19，DEC-064）
+上一手：Slice 7「净化点扩张」COMPLETE
 
 **范围已锁（DEC-064），禁止再问人。**
 
@@ -18,12 +18,12 @@ note: Slice 7「净化点扩张」COMPLETE。QA PASS。下一手 Slice 8。
 
 ## 验证问题
 
-玩家不看文档，连续两次出击，能否感到：
+玩家不看文档，在同一张裂隙里同时面对渗透体与改写体，能否感到：
 
-1. **第三模块在干活。** 净化器完整度越高，这次出击起始混乱越低；满血时大约从 0 起。残血会带入一部分混乱。不改出击起始生命。
-2. **花薪柴抬上限是全局的。** 在改造祭坛旁花薪柴，全部模块的 `maxHp` 一起涨（100→115→130→145，3 档每档 +15）。不是按模块分别升级，本 Slice 不抬效果上限公式。
+1. **两条不同的潜行判断。** 渗透体：绕视锥。改写体：听觉为主、视锥更窄，对移动噪声敏感——停步/贴墙消声才过得去。
+2. **被发现有方向、没有数字条。** 屏缘脉冲指向威胁，强度跟察觉度；警戒时形态变。
 
-不验证第二种敌人、音乐、撤离多样性。
+不验证第三种敌人、音乐、撤离多样性。
 
 ---
 
@@ -31,16 +31,19 @@ note: Slice 7「净化点扩张」COMPLETE。QA PASS。下一手 Slice 8。
 
 | 项 | 锁 |
 | -- | -- |
-| 第三模块 | **净化器**。完整度↑ → 出击起始混乱↓。满血约从 0。不改起始生命。 |
-| 模块升级 | 改造祭坛旁新交互。花薪柴永久提高**全部模块** `maxHp`。3 档 +15（100→115→130→145）。不按模块分别升级。不抬效果上限公式。 |
-| 复核 | `abyss` 65% 上限与 `stitch` 三模块文案，第三模块落地后对照 CSV / 实现。 |
-| 不做 | Slice 8/9/10；撤离多样性；改出击起始生命；新 hex；框架层 A |
+| 改写体 | 听觉为主、视锥更窄；对移动噪声敏感 |
+| 数量 | 每张裂隙渗透体为主 + **恰好 1 个**改写体 |
+| 被发现 | 屏缘方向脉冲，强度跟察觉度；警戒变形；**无数字条** |
+| 数据 | `data/enemies.csv` + codegen；渗透体策划字段迁出 `constants.ts` |
+| 视觉 | 概念图 APPROVED：`docs/art/demos/entity-rewriter/VERDICT.md`。俯视 4 向。不对称、teal 成簇。不要紫粉史莱姆 |
+| 架构 | AI 类型泛化，禁止复制一整份 FSM 文件只改数字 |
+| 不做 | Slice 9/10；撤离多样性；新 HUD 根 |
 
 ---
 
 ## 验证是否依赖界面
 
-**依赖。** 第三模块是世界内装置；maxHp 升级是祭坛旁交互。规划选 (a)：足以产生信号的 UX 收进本 Slice。触碰游戏内界面必须先 Read `.cursor/skills/in-game-ux/SKILL.md`，再 art → code。载体：世界内装置（模块实体 + 祭坛交互）；屏幕读数挂 `#dom-ui-root`。
+**依赖。** 被发现脉冲是游戏内界面。选 (a)：UX 收进本 Slice。派 art 前必须 Read `.cursor/skills/in-game-ux/SKILL.md`。载体：**A 世界内装置**（屏缘干涉，挂 `#dom-ui-root`），不是雷达数字条，也不是元界面。
 
 ---
 
@@ -49,30 +52,28 @@ note: Slice 7「净化点扩张」COMPLETE。QA PASS。下一手 Slice 8。
 | 步 | 谁 | 做什么 | 状态 |
 | -- | -- | ------ | ---- |
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
-| 1 | design | **D1** 就地扩写 `system-purification-impact.md`（+ 混乱起始句若必须） | **已做** |
-| 2 | art | **A1** 第三模块形体 + 祭坛旁加厚交互最短合规核对 | **已做** |
-| 3 | code | **C1** 净化器 + 起始混乱 + maxHp 三档 + abyss/stitch 复核 | **已交** |
-| 4 | qa | 对照规格 | **已交**（`docs/qa/report-slice-7.md`，PASS） |
-
-批次必须单次会话做完。禁止把「新模块实体 + 全墙机翻修 + 升级经济」打成一批无闸门的 ALL 表面。
+| 1 | design | **D1** 就地扩写敌人 AI + 被发现指示 + enemies.csv 契约 | **已做** |
+| 2 | art | **A1** 改写体 4 向 + 屏缘脉冲视觉 | 可开工 |
+| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | 待 A1 |
+| 4 | qa | 对照规格 | 待 C1 |
 
 ---
 
-## 一致性检查（2026-08-19，开 Slice 7）
+## 一致性检查（2026-08-19，开 Slice 8）
 
-无阻断。摘要：
+无阻断。D1 已把 `system-enemy-ai` 从「只一种敌人」扩成两种剖面共用五态；生成器契约「每图恰好 1 改写体」已写入本 spec 与 `system-map-generation` 规则 22；屏缘干涉结构层在 `ui-detection-pulse`。
 
-- Slice 6 COMPLETE。`interface-changed` / `changed-this-slice` 已复位（`art-direction` 一并复位）。
-- 规格 7 份。`system-purification-impact` 已写「第三模块要到 Slice 7」；`abyss` 65% 张力已登记。
-- `GameState` 模块类型为 `CORE` \| `STORAGE` \| `PURIFIER`。`moduleMaxHpTier` 抬 maxHp。出击初值读 `getStartingChaos()`。
-- backlog 纳入本 Slice：`abyss` 65% / `stitch` 三模块文案复核。不纳入：`enemies.csv`（Slice 8）、CSV 占位列（除非本 Slice 改到那条工具）。
-- `docs/content/progression.md` 仍是空模板（已知，不本 Slice 修框架）。
+## D1 落地（2026-08-19，不再问人）
+
+| 项 | 锁 |
+| -- | -- |
+| FSM | 一份五态。差异 = 感知剖面 / 刺激权重，禁止复制 FSM 文件 |
+| 改写体数字 | 半角 32°；听觉 150；移动倍率 2.0；停步半径 40；停步察觉封顶 0.20；听觉可推到警戒，追击仍要视线 |
+| 渗透体数字 | 从现行 constants 迁出，不改手感（180/55°/100/30/65） |
+| 多威胁脉冲 | 最多 2 个方位（不是只显示最高者）；夹角 < 28° 合并 |
+| 生成 | 3–4 巡逻，恰好 1 改写体；撤离门必须是渗透体 |
+| 载体 | A 世界内装置，`#dom-ui-root`，无数字 |
 
 ## 收尾四项
 
-1. **架构登记**：`docs/architecture.md` 已写 PURIFIER、加厚点、`startingChaos`。`changed-this-slice` 已复位。
-2. **spec**：就地扩写 `system-purification-impact` / `system-chaos-scavenge-extract`。`interface-changed` 已复位。
-3. **交付范围**：第三模块净化器；起始混乱满完整度 0、空血 50；加厚 12/20/32、maxHp 100→115→130→145；效果分母锁 100；abyss/stitch 三模块列入。不改出击起始生命。
-4. **UI 清单**：先 Read `.cursor/skills/in-game-ux/SKILL.md`。载体 A/B 已核。U1–U12 机械层 QA 已扫。本 Slice 无新 HUD 根。非阻断：存续报告净化器卡「起始混乱」与数字同句（记 backlog）。
-
-下一手 Slice 8。
+未完成，不得标 COMPLETE。

@@ -312,7 +312,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
     | 结算面板 | 居中小读出（宽 360，DEC-049） | 见规则 33 | `RIFT_EXITED` |
 
     挂载：屏幕空间一律 `#dom-ui-root`。禁止用 Phaser `scrollFactor(0)` 画角锚 HUD。禁止把小地图挂到 `document.body` 再用 `position:fixed`。
-    「被发现」指示不在本清单（Slice 8）。
+    「被发现」指示：屏缘干涉，结构层 `docs/specs/ui-detection-pulse.md`。挂 `#dom-ui-root`。无数字条。
 
     #### 裂隙小地图（规则 30 扩写，DEC-063）
 
