@@ -2,15 +2,16 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: director agent
+last-modified-by: design agent
 last-modified-date: 2026-08-19
-slice: 1 (extended in 5.5, 6)
-interface-changed: false
+slice: 1 (extended in 5.5, 6, 7)
+interface-changed: true
 interfaces-with:
   - system-movement-vision     # T1：经场景层消费其三个视野调制器 + Player.setSpeedModifier('chaos')；撤离点注册为 glow source
   - system-enemy-ai            # T2：消费 ENEMY_ALERT / ENEMY_LOST_PLAYER / ENEMY_KILLED 判定"被侦测"与"被追击"
   - system-combat              # T4：消费 ENEMY_DAMAGED（战斗代价）与 PLAYER_DIED（出击失败路径）
   - system-map-generation      # Slice 6：出生 / 撤离 / 薪柴坐标由生成器给出，不再读手写固定图
+  - system-purification-impact # Slice 7：出击起始混乱由 GameState.getStartingChaos() / SortieModifiers.startingChaos 写入
 exposes:
   - ChaosSystem.getValue() / getRate() / getStage() / addChaos(source, amount) / setPaused(b)
   - getChaosModulators(value)  # 纯函数：混乱值 → { radiusScale, edgeCorruption, screenFlicker, speedMult }
@@ -132,7 +133,7 @@ interface RunResult {
 
 ### C — 混乱值
 
-1. **初值与起点**：进入裂隙时 `value = 0`。混乱值只在 `RIFT_ENTERED` 之后、出击结束之前累积（`paused = false` 期间）。
+1. **初值与起点**：进入裂隙时 `value` **不是恒为 0**。初值由净化器完整度写入（`system-purification-impact` 规则 27b / 31a）：`GameState.getStartingChaos()` → `SortieModifiers.startingChaos`，满完整度时为 0，残血线性带入，hp=0 时为 `CHAOS_HARD_START`（50）。防御残留 `initial_chaos` 叠在该值之上，一次写入，钳制到 `HARD_CAP`。混乱值只在 `RIFT_ENTERED` 之后、出击结束之前累积（`paused = false` 期间）。**本 Slice 不改**基础上涨、阈值、惩罚映射。`CHAOS.START_VALUE = 0` 仅表示「净化器满完整度且无残留」时的初值。
 2. **基础上涨**：每帧 `value += baseRate × rateMultiplier × dt`。**匀速为主**——不随深度、不随位置、不随已拾取薪柴数变化。理由：玩家必须能在脑内做"我还剩多少秒"的估算，估算成立，纠结才成立。
 3. **单调不减**：裂隙内没有任何降低混乱值的手段（`world.md` 机制约束）。因此阈值只会被向上穿越一次，无需处理降级/回滚。
 4. **硬上限**：`value` 钳制在 `HARD_CAP`（建议 150）。到达后停止增长，**不强制死亡、不强制传送**——`vision.md` 明确混乱值是软限制而非硬截止。此时惩罚同时封顶（见规则 9），玩家仍可自行爬回撤离点。
@@ -424,7 +425,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
 | 参数 | 含义 | 建议初值 | 合理范围 | 对博弈手感的影响 | 状态 |
 | ---- | ---- | -------- | -------- | ---------------- | ---- |
-| `CHAOS.START_VALUE` | 进入裂隙时的初值 | 0 | — | 非 0 会让"刚进来就有压力"，Slice 1 不需要（那是净化点模块受损的后果，Slice 2+） | 技术定 |
+| `CHAOS.START_VALUE` | 净化器满完整度且无防御残留时的初值 | 0 | — | 实际开局读 `getStartingChaos()`，可为 0–50 再加残留。增长曲线不改 | 技术定（Slice 7 改语义） |
 | `CHAOS.BASE_RATE` | 基础上涨速率 | **0.8 点/s**（已定，DEC-014；constants 现值 1.5，待 T9 落地） | 0.5–1.5 | **最重要的一个数**。它单独决定一次出击有多长、玩家有多少次决策机会。见下方时长推算 | 已决定 · 待试玩校准 |
 | `CHAOS.MAX_VALUE` | HUD 满格刻度 + 第三阈值 | 100 | — | 语义已变更（不再是钳制上限），见"溢出决策" | 既有 constants（语义变更） |
 | `CHAOS.HARD_CAP` | 真实上限 | 150 | 120–200 | 决定溢出区间有多厚。太小则加码空间不足；太大则末段惩罚过于缓慢，读作"卡住了" | 建议值（待校准）· 新增 |
@@ -570,7 +571,7 @@ interface RunControllerAPI {
 | 撤离结算期间敌人仍在攻击 | 结算序列第 ② 步已 `setInputEnabled(false)`；同时 `RunController` 应在 `runEnded` 后忽略 `PLAYER_DIED`。撤离一旦确认就不可撤销（规则 23） |
 | `getChaosModulators` 收到 NaN / 负值 / 超界值 | 输入先 `clamp(0, HARD_CAP)`；输出在 setter 侧再钳一次（见映射节说明） |
 | 场景切换 / shutdown | ChaosSystem / LootSystem / ExtractionSystem 各自 `destroy()`：解绑全部事件监听、清空集合、`unregisterGlowSource('EXIT_01')`。（架构风险表：Phaser 场景切换内存泄漏） |
-| 重新出击（按 R） | 完全重建状态：`value=0`、`carried=0`、全部节点 `collected=false`、`thresholdsFired` 清零、`peakValue=0`、调制器复位为 (1.0, 0, 0, 1.0)。**不要复用旧实例的残留状态** |
+| 重新出击（按 R） | Slice 6 起阵亡/撤离都回净化点，不再原地重开。若仍调用 `ChaosSystem.reset()` 再开新裂隙：初值读本次 `startingChaos`，不是写死 0。其余：`carried=0`、节点重置、`thresholdsFired` 按初值已越过的阈记为已触发 |
 
 ---
 
@@ -587,6 +588,7 @@ interface RunControllerAPI {
 | `system-combat` | `PLAYER_DIED { cause }` | 事件 | 触发死亡结束路径 |
 | `system-combat` | `PLAYER_HEALTH_CHANGED { current, max }` | 事件 | HUD 生命值条 |
 | T6 固定地图 | `RiftLayoutData`（出生点 / 撤离点 / 薪柴节点） | 场景创建时注入 | 布点 |
+| `system-purification-impact`（Slice 7） | `SortieModifiers.startingChaos` | 场景 data / `getStartingChaos()` | 出击混乱初值。增长曲线不改 |
 | `system-movement-vision`（T1/T5） | `Player.getPosition()`、`VisibilitySystem.getVisibilityAt(p)` / `isPointVisible(p)`、`Player.getFacingAngle()` / `getFacing4()` | 同步查询，**经场景层** | 拾取判定、节点 sprite alpha；小地图已探索集合与玩家朝向。小地图不 import VisibilitySystem |
 
 ### 向其他系统提供

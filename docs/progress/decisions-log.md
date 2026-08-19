@@ -9,6 +9,18 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 7 D1：净化器公式与加厚费用（design，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 7
+- Type: Design
+- Context: DEC-064 已锁第三模块=净化器、maxHp 三档 +15、不抬效果上限。D1 把可实现数值写成现行，不再问人。
+- Decision:
+  1. 起始混乱：`startingChaos = round(CHAOS_HARD_START * (1 - hp/maxHp))`，`CHAOS_HARD_START = 50`。满完整度 0；hp=0 为 50。防御残留 `initial_chaos` 一次叠加上去。不改出击起始生命。
+  2. CORE/STORAGE 效果分母锁死基准 100：`min(hp, 100) / 100`。加厚只抬血池。净化器起始混乱用 hp/maxHp 比例。
+  3. 加厚费用 12 / 20 / 32 薪柴（档 1/2/3）。存档记 `moduleMaxHpTier`。不是蜕变项，不进 `upgrades.csv`。
+  4. `abyss` 公式不改；三模块列入 context 后 65% 可触到。`stitch` 防御均衡覆盖三模块。不改 CSV、不改工具机制。
+- Impact: `system-purification-impact` / `system-chaos-scavenge-extract` `interface-changed: true`。
+
 ## Slice 6 收工余项实现取舍（code，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 6 收工

@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-08-16
+last-modified-date: 2026-08-19
 last-modified-by: design agent
 interface-changed: false
 interfaces-with:
@@ -145,7 +145,7 @@ interface SaveData {
 
 ### G — 永久改造
 
-16. **改造交互**：净化点中新增"改造祭坛"交互点（走近按 E 打开面板）。
+16. **改造交互**：净化点中"改造祭坛"交互点（走近按 E 打开蜕变面板）。**Slice 7 加厚**（全局抬模块 `maxHp`）是祭坛**旁**的另一处世界内装置，规则归 `system-purification-impact` U 组。加厚不是蜕变项：不进 `upgrades.csv`、不出现在蜕变六卡、不吃改造折扣。
 17. **改造项**：
 
 **Slice 3 实现（3 个，每轴 1 个）**：
