@@ -19,12 +19,14 @@ import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
 import { PurificationModuleEntity } from '@/entities/purification-module';
 import { gameState } from '@/managers/game-state';
+import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
 import { BoundaryAtmosphere } from '@/systems/boundary-atmosphere';
 import { BoundaryBreath } from '@/systems/boundary-breath';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
+import type { ForecastDisplay, ImpactResult } from '@/systems/impact-system';
 import { createBoundaryShape } from '@/systems/boundary-shape';
 import type { BoundaryShape } from '@/systems/boundary-shape';
 import { createPurificationSurfaceTexture } from '@/systems/procedural-purification-surface';
@@ -42,7 +44,6 @@ import type { InteractionTarget } from '@/ui/dom/purification-hud';
 import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import { pauseMenu } from '@/ui/dom/pause-menu';
 import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
-import type { ForecastDisplay } from '@/systems/impact-system';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
 import type { ContaminantType } from '@/types/game-types';
@@ -262,6 +263,8 @@ export class PurificationScene extends Phaser.Scene {
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
   private transitioning = false;
   private panelClosedAt = 0;
+  private lastStepAt = -1000;
+  private lastBoundaryPulseAt = -10000;
 
   // E3: Track stability milestones already shown
   private lastStabilityMilestone = 0;
@@ -491,6 +494,7 @@ export class PurificationScene extends Phaser.Scene {
 
     // C2: Listen for allocation confirmed to flash modules
     eventBus.on(GameEvent.ALLOCATION_CONFIRMED, this.onAllocationConfirmed);
+    eventBus.on(GameEvent.GROWTH_PURCHASED, this.onGrowthPurchased);
 
     // E3: Listen for stability changes
     eventBus.on(GameEvent.STABILITY_CHANGED, this.onStabilityChanged);
@@ -504,11 +508,13 @@ export class PurificationScene extends Phaser.Scene {
     // chain as separate "knowledge  " overlays after this panel are now rendered as a
     // trailing section INSIDE it — one blocking notification per return, not three.
     if (!impactResult.skipped) {
+      this.playImpactAudio(impactResult);
       this.player.setInputEnabled(false);
       this.cameras.main.shake(300, 0.005);
       impactResultPanel.show(impactResult.damages, impactResult.intensity, () => {
         this.player.setInputEnabled(true);
         purificationHud.refresh();
+        this.startIsolationBed();
         // B3: Show new tool toast after the merged panel is dismissed (Channel B —
         // non-blocking, so it doesn't re-introduce a second confirmation step).
         this.showNewToolToast(transformResults);
@@ -522,15 +528,18 @@ export class PurificationScene extends Phaser.Scene {
         phaseChange,
         stabilityMilestoneMessage,
       });
+    } else {
+      this.startIsolationBed();
     }
   }
 
-  update(_time: number, delta: number): void {
+  update(time: number, delta: number): void {
     if (this.transitioning) return;
 
     this.player.update(delta);
 
     const pos = this.player.getPosition();
+    this.tickPurificationAudio(time, pos);
 
     // Update modules (checks proximity)
     this.coreModule.update(pos.x, pos.y);
@@ -765,10 +774,58 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private tryRaiseModuleMaxHp(): void {
-    if (!gameState.raiseModuleMaxHp()) return;
+    if (!gameState.raiseModuleMaxHp()) {
+      audioManager.playSFX('sfx-ui-error');
+      return;
+    }
     purificationHud.flashThickenSuccess();
     purificationHud.refresh();
   }
+
+  private startIsolationBed(): void {
+    audioManager.playBGM('bgm-pp-isolation-drone');
+    audioManager.playAmbient('amb-pp-mechanical-hum');
+  }
+
+  private playImpactAudio(result: ImpactResult): void {
+    audioManager.playSFX('sfx-impact-start');
+    audioManager.playSFX('sfx-ui-warning');
+    audioManager.playBGM('bgm-impact-pressure', 2, { loop: false });
+    result.damages.forEach((entry, i) => {
+      this.time.delayedCall(200 * (i + 1), () => {
+        if (entry.damage === 0) {
+          audioManager.playSFX('sfx-impact-survive', { priority: 'low' });
+        } else if (entry.newHp === 0) {
+          audioManager.playSFX('sfx-impact-break');
+        } else {
+          audioManager.playSFX('sfx-impact-hit');
+        }
+      });
+    });
+  }
+
+  private tickPurificationAudio(time: number, pos: { x: number; y: number }): void {
+    if (this.player.isMoving() && time - this.lastStepAt >= 400) {
+      this.lastStepAt = time;
+      audioManager.playSFX('sfx-shared-player-step-metal', { priority: 'low' });
+    }
+    const angle = Math.atan2(pos.y - CENTER_Y, pos.x - CENTER_X);
+    const radius = this.boundaryShape.radiusAt(angle);
+    const distPx = Math.hypot(pos.x - CENTER_X, pos.y - CENTER_Y);
+    const tiles = Math.abs(distPx - radius) / TILE;
+    if (tiles <= 2 && time - this.lastBoundaryPulseAt >= 10000) {
+      this.lastBoundaryPulseAt = time;
+      audioManager.playSpatialSFX(
+        'sfx-pp-boundary-pulse',
+        { x: CENTER_X + Math.cos(angle) * radius, y: CENTER_Y + Math.sin(angle) * radius },
+        pos,
+      );
+    }
+  }
+
+  private readonly onGrowthPurchased = (): void => {
+    audioManager.playSFX('sfx-ui-click');
+  };
 
   private onPostUpdate(_time: number, delta: number): void {
     this.player.postUpdate();
@@ -951,6 +1008,11 @@ export class PurificationScene extends Phaser.Scene {
 
   /** C2: Flash the module entity when repair is confirmed. */
   private readonly onAllocationConfirmed = (payload: { allocations: Record<string, number> }): void => {
+    const spent = Object.values(payload.allocations).reduce((sum, n) => sum + n, 0);
+    if (spent > 0) {
+      audioManager.playSFX('sfx-ui-allocate');
+      audioManager.playSFX('sfx-shared-module-repair');
+    }
     for (const moduleId of Object.keys(payload.allocations)) {
       if (moduleId === 'CORE') {
         this.flashModule(this.coreModule);
@@ -1067,7 +1129,9 @@ export class PurificationScene extends Phaser.Scene {
 
     // Clean up event listeners
     eventBus.off(GameEvent.ALLOCATION_CONFIRMED, this.onAllocationConfirmed);
+    eventBus.off(GameEvent.GROWTH_PURCHASED, this.onGrowthPurchased);
     eventBus.off(GameEvent.STABILITY_CHANGED, this.onStabilityChanged);
+    audioManager.haltNonBgm();
 
     // Clean up DOM panels
     allocationPanel.close();

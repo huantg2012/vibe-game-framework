@@ -7,6 +7,7 @@
 
 import { eventBus } from '@/core/event-bus';
 import { computeStartingChaos, gameState } from '@/managers/game-state';
+import { audioManager } from '@/managers/audio-manager';
 import type { ModuleType } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
@@ -38,9 +39,12 @@ export const allocationPanel = {
     selectedAmount = 0;
     onCloseCallback = onClose ?? null;
     createPanel();
+    audioManager.playSFX('sfx-ui-open');
   },
 
   close(): void {
+    if (!panel) return;
+    audioManager.playSFX('sfx-ui-close');
     destroyPanel();
     onCloseCallback?.();
     onCloseCallback = null;
@@ -138,6 +142,8 @@ function confirmAllocation(): void {
       });
     }
     allocationPanel.close();
+  } else {
+    audioManager.playSFX('sfx-ui-error');
   }
 }
 

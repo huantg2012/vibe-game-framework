@@ -19,7 +19,8 @@ import { generateRiftLayout } from '@/generation/rift-layout';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
 import { gameState, type SortieModifiers } from '@/managers/game-state';
-import { CombatSystem, COMBAT_FX_DEPTH, type NoiseLevel } from '@/systems/combat-system';
+import { audioManager } from '@/managers/audio-manager';
+import { CombatSystem, COMBAT_FX_DEPTH, type CombatCueId, type NoiseLevel } from '@/systems/combat-system';
 import { ContaminantNodeSystem } from '@/systems/contaminant-node-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { ExtractionSystem } from '@/systems/extraction-system';
@@ -42,7 +43,9 @@ import { pauseMenu } from '@/ui/dom/pause-menu';
 import { getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
 import type { PendingSideEffect } from '@/systems/defense-engine';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
-import { TileType, type Contaminant, type ContaminantRarity, type ContaminantType, type Vector2 } from '@/types/game-types';
+import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
+import { AIState, TileType, type Contaminant, type ContaminantRarity, type ContaminantType, type Vector2 } from '@/types/game-types';
+import type { AICueId } from '@/types/ai-types';
 import type { LandmarkDef } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
@@ -93,6 +96,10 @@ export class RiftScene extends Phaser.Scene {
   /** Seeded past the refresh interval so the panel has content on the first frame. */
   private debugAccumulatorMs = Number.POSITIVE_INFINITY;
   private layoutDebug = { seed: 0, fragmentTypeId: '', recipeId: '' };
+  private lastStepAt = -1000;
+  private wasSpotted = false;
+  private atmosphereHeldOff = false;
+  private atmosphereRestoreAt = 0;
 
   // --- Sortie result tracking (feeds the DOM result panel on exit, C2) ---
   private sortieKillCount = 0;
@@ -168,7 +175,10 @@ export class RiftScene extends Phaser.Scene {
     // Combat gets a read-only view of the AI (`getEnemies` / `getEnemyById`) plus one
     // callback. Noise is the only cross-system output that does not go through the bus: a
     // whiffed swing is audible yet emits nothing, so there is no event to carry it.
-    this.combat.create(this, grid, this.player, this.ai, { onNoise: this.reportNoise });
+    this.combat.create(this, grid, this.player, this.ai, {
+      onNoise: this.reportNoise,
+      onCue: this.onCombatCue,
+    });
 
     // --- T9 systems: chaos, loot, extraction, run controller, HUD ---
 
@@ -318,6 +328,8 @@ export class RiftScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
 
     this.bindAIStimuli();
+    this.ai.setCueListener(this.onAiCue);
+    this.startRiftAudio();
     this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
 
     if (import.meta.env.DEV) this.createDebugOverlay();
@@ -325,6 +337,7 @@ export class RiftScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     this.player.update(delta);
+    this.syncRiftAudio();
     this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
 
     // Edge-triggered: holding the key does not chain swings.
@@ -465,6 +478,12 @@ export class RiftScene extends Phaser.Scene {
     eventBus.on(GameEvent.RIFT_EXITED, this.onRunEnded);
     eventBus.on(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
     eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
+    eventBus.on(GameEvent.CHAOS_CHANGED, this.onChaosChangedAudio);
+    eventBus.on(GameEvent.KINDLING_COLLECTED, this.onPickupAudio);
+    eventBus.on(GameEvent.ITEM_COLLECTED, this.onPickupAudio);
+    eventBus.on(GameEvent.ITEM_USED, this.onUseAudio);
+    eventBus.on(GameEvent.TOOL_USED, this.onUseAudio);
+    eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onExitAudio);
     eventBus.on(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
     eventBus.on(GameEvent.TOOL_USED, this.onToolUsedForResult);
   }
@@ -562,6 +581,7 @@ export class RiftScene extends Phaser.Scene {
    * Phaser vision mask and won't block gameplay input.
    */
   private readonly onChaosThreshold = ({ level }: { level: 1 | 2 | 3 }): void => {
+    audioManager.playSFX('sfx-shared-chaos-threshold');
     const config: Record<1 | 2 | 3, { color: string; alpha: number; text: string }> = {
       1: { color: '0, 180, 160', alpha: 0.08, text: '边界在渗透。' },
       2: { color: '0, 180, 160', alpha: 0.12, text: '混乱在蔓延。视野正在收缩。' },
@@ -622,6 +642,153 @@ export class RiftScene extends Phaser.Scene {
     level: NoiseLevel
   ): void => {
     this.ai.reportNoise(pos, radius, level);
+  };
+
+  private startRiftAudio(): void {
+    audioManager.playBGM('bgm-rift-base-drone', 3.5);
+    audioManager.setLayerVolume('base', 0.4, 0);
+    audioManager.playSFX('sfx-rift-enter');
+    if (this.chaos.getValue() <= 25) {
+      audioManager.playAmbient('amb-rift-alien-atmosphere');
+    }
+  }
+
+  private stepKey(): string {
+    const material = RIFT_FRAGMENT_DATA[this.layoutDebug.fragmentTypeId]?.surfaceMaterial ?? 'soil';
+    if (material === 'metal') return 'sfx-shared-player-step-metal';
+    if (material === 'soil' || material === 'wood') return 'sfx-shared-player-step-organic';
+    return 'sfx-shared-player-step-crystal';
+  }
+
+  private syncRiftAudio(): void {
+    const now = this.time.now;
+    const playerPos = this.player.getPosition();
+    if (this.player.isMoving() && now - this.lastStepAt >= 400) {
+      this.lastStepAt = now;
+      audioManager.playSFX(this.stepKey(), { priority: 'low' });
+    }
+
+    const value = this.chaos.getValue();
+    const tension = value > 25 ? 0.4 * clamp((value - 25) / 75, 0, 1) : 0;
+    const enemies = this.ai.getEnemies();
+    const spotted = enemies.some((enemy) => {
+      const state = enemy.getState();
+      return state === AIState.ALERT || state === AIState.CHASE;
+    });
+    const chaosThreat = value > 60 ? 0.5 * clamp((value - 60) / 40, 0, 1) : 0;
+    const threat = spotted ? Math.max(0.5, chaosThreat) : chaosThreat;
+
+    let prox = 0;
+    const nodes = this.contaminantNodes.getRemainingPositions();
+    if (nodes.length > 0) {
+      let best = Infinity;
+      for (const node of nodes) {
+        const d = Math.hypot(node.x - playerPos.x, node.y - playerPos.y) / GAME_CONSTANTS.TILE_SIZE;
+        if (d < best) best = d;
+      }
+      if (best <= 3) prox = 0.3;
+      else if (best < 6) prox = 0.3 * (1 - (best - 3) / 3);
+    }
+
+    audioManager.setLayerVolume('base', 0.4, 0);
+    audioManager.setLayerVolume('tension', tension, 1);
+    audioManager.setLayerVolume('threat', threat, spotted ? 0.5 : 1);
+    audioManager.setLayerVolume('proximity', prox, 1);
+
+    if (tension > 0.05) {
+      if (!this.atmosphereHeldOff) {
+        audioManager.stopAmbient('amb-rift-alien-atmosphere', 0.4);
+        this.atmosphereHeldOff = true;
+      }
+      this.atmosphereRestoreAt = 0;
+    } else if (this.atmosphereHeldOff) {
+      if (this.atmosphereRestoreAt === 0) this.atmosphereRestoreAt = now + 1000;
+      if (now >= this.atmosphereRestoreAt) {
+        audioManager.playAmbient('amb-rift-alien-atmosphere', 1);
+        this.atmosphereHeldOff = false;
+        this.atmosphereRestoreAt = 0;
+      }
+    }
+
+    if (spotted && !this.wasSpotted) audioManager.duckAmbientGroup();
+    this.wasSpotted = spotted;
+    this.syncEnemyLoops(playerPos);
+  }
+
+  private syncEnemyLoops(playerPos: Readonly<Vector2>): void {
+    const enemies = this.ai.getEnemies();
+    const rewriter = enemies.find((enemy) => enemy.getRole() === 'rewriter');
+    if (rewriter) {
+      const chasing = rewriter.getState() === AIState.CHASE;
+      audioManager.playSpatialSFX(
+        chasing ? 'sfx-rift-enemy-chase' : 'sfx-rift-enemy-overwriter-hum',
+        rewriter.getPosition(),
+        playerPos,
+        { loop: true, instanceId: 'slot-r' },
+      );
+    } else {
+      audioManager.stopLoop('slot-r');
+    }
+
+    const infiltrators = enemies.filter((enemy) => enemy.getRole() === 'infiltrator');
+    if (infiltrators.length === 0) {
+      audioManager.stopLoop('slot-i');
+      return;
+    }
+    const chasing = infiltrators.filter((enemy) => enemy.getState() === AIState.CHASE);
+    const pool = chasing.length > 0 ? chasing : infiltrators;
+    let nearest = pool[0]!;
+    let best = Infinity;
+    for (const enemy of pool) {
+      const pos = enemy.getPosition();
+      const d = Math.hypot(pos.x - playerPos.x, pos.y - playerPos.y);
+      if (d < best) {
+        best = d;
+        nearest = enemy;
+      }
+    }
+    audioManager.playSpatialSFX(
+      chasing.length > 0 ? 'sfx-rift-enemy-chase' : 'sfx-rift-enemy-idle',
+      nearest.getPosition(),
+      playerPos,
+      { loop: true, instanceId: 'slot-i' },
+    );
+  }
+
+  private readonly onAiCue = (enemyId: string, cue: AICueId): void => {
+    if (cue === 'ai.cue.suspicious') return;
+    const enemy = this.ai.getEnemyById(enemyId);
+    if (!enemy) return;
+    const playerPos = this.player.getPosition();
+    if (cue === 'ai.cue.alert') {
+      audioManager.playSpatialSFX('sfx-rift-enemy-alert', enemy.getPosition(), playerPos);
+    }
+    // chase / lost: looping slots are driven every frame by syncEnemyLoops
+  };
+
+  private readonly onCombatCue = (cue: CombatCueId, pos: Readonly<Vector2>): void => {
+    const playerPos = this.player.getPosition();
+    if (cue === 'combat.cue.swing') audioManager.playSFX('sfx-shared-player-attack');
+    else if (cue === 'combat.cue.hit') audioManager.playSpatialSFX('sfx-rift-enemy-hit', pos, playerPos);
+    else if (cue === 'combat.cue.enemyDeath') audioManager.playSpatialSFX('sfx-rift-enemy-die', pos, playerPos);
+    else if (cue === 'combat.cue.enemyWindup') audioManager.playSpatialSFX('sfx-rift-enemy-alert', pos, playerPos);
+    else if (cue === 'combat.cue.playerHurt') audioManager.playSFX('sfx-shared-player-hurt');
+  };
+
+  private readonly onChaosChangedAudio = ({ delta }: { delta: number }): void => {
+    if (delta > 0) audioManager.playSFX('sfx-shared-chaos-tick', { volume: 0.15, priority: 'low' });
+  };
+
+  private readonly onPickupAudio = (): void => {
+    audioManager.playSFX('sfx-shared-player-pickup');
+  };
+
+  private readonly onUseAudio = (): void => {
+    audioManager.playSFX('sfx-shared-player-use-item');
+  };
+
+  private readonly onExitAudio = (): void => {
+    audioManager.playSFX('sfx-rift-exit');
   };
 
   /** Bound once so injecting it into the AI system allocates nothing per frame. */
@@ -909,8 +1076,16 @@ export class RiftScene extends Phaser.Scene {
     eventBus.off(GameEvent.RIFT_EXITED, this.onRunEnded);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
     eventBus.off(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
+    eventBus.off(GameEvent.CHAOS_CHANGED, this.onChaosChangedAudio);
+    eventBus.off(GameEvent.KINDLING_COLLECTED, this.onPickupAudio);
+    eventBus.off(GameEvent.ITEM_COLLECTED, this.onPickupAudio);
+    eventBus.off(GameEvent.ITEM_USED, this.onUseAudio);
+    eventBus.off(GameEvent.TOOL_USED, this.onUseAudio);
+    eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onExitAudio);
     eventBus.off(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
     eventBus.off(GameEvent.TOOL_USED, this.onToolUsedForResult);
+    this.ai.setCueListener(null);
+    audioManager.haltNonBgm();
     riftResultPanel.destroy();
     pauseMenu.discard();
     if (this.attackKey) {

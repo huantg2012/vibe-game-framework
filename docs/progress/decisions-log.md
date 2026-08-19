@@ -9,6 +9,17 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 9 C1：AudioManager + 占位音进仓库（code，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 9
+- Type: Technical
+- Context: DEC-064 / D1 / A1。本机 Homebrew 因 macOS 26 无法运行，未装上 sox；用静态 ffmpeg（libvorbis / libmp3lame + lavfi sine/anoisesrc）按 A1 合成非空 OGG+MP3。
+- Decision:
+  1. 资产写到 `assets/audio/` 并复制到 `public/assets/audio/`，Boot 用 `/assets/audio/...` 预加载。不引入 Howler。
+  2. `AudioManager` 走 Phaser Sound；场景/main/pause-menu 的 pause/resume 只调 AudioManager。冲击音频吃 `ImpactResult` 返回值。
+  3. 架构注册表 AudioManager 改为已实现，API 对齐 spec B。
+- Impact: `src/managers/audio-manager.ts`、39×2 占位文件、场景接线。听感仍待人终审。
+
 ## Slice 9 A1：占位合成配方（art，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 9

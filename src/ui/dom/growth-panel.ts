@@ -9,6 +9,7 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
 import { gameState } from '@/managers/game-state';
+import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
 import { stabilityTracker } from '@/systems/stability-tracker';
@@ -44,9 +45,12 @@ export const growthPanel = {
     onCloseCallback = onClose ?? null;
     cursorCard = 0;
     createPanel();
+    audioManager.playSFX('sfx-ui-open');
   },
 
   close(): void {
+    if (!panel) return;
+    audioManager.playSFX('sfx-ui-close');
     destroyPanel();
     onCloseCallback?.();
     onCloseCallback = null;
@@ -214,7 +218,10 @@ function wireEvents(): void {
   panel.querySelectorAll('.upgrade-card').forEach((card) => {
     card.addEventListener('click', () => {
       const el = card as HTMLElement;
-      if (el.classList.contains('card-maxed') || el.classList.contains('card-locked')) return;
+      if (el.classList.contains('card-maxed') || el.classList.contains('card-locked')) {
+        audioManager.playSFX('sfx-ui-error');
+        return;
+      }
       purchaseCard(el.dataset.id as GrowthUpgradeId);
     });
   });
@@ -231,6 +238,8 @@ function purchaseCard(id: GrowthUpgradeId): void {
     render();
     showPurchaseFlash(id, prevLevel + 1);
     checkFirstGrowthMilestone(id, prevLevel + 1);
+  } else {
+    audioManager.playSFX('sfx-ui-error');
   }
 }
 

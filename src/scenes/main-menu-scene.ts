@@ -16,6 +16,7 @@
 
 import Phaser from 'phaser';
 import { t } from '@/i18n';
+import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
 import { beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/session';
 
@@ -100,13 +101,19 @@ export class MainMenuScene extends Phaser.Scene {
 
     this.renderRoot();
 
+    audioManager.unlock();
+    audioManager.playBGM('bgm-menu-void-pad');
+
     this.input.keyboard?.on('keydown-UP', () => this.moveCursor(-1));
     this.input.keyboard?.on('keydown-DOWN', () => this.moveCursor(1));
     this.input.keyboard?.on('keydown-ENTER', () => this.activateSelection());
     this.input.keyboard?.on('keydown-SPACE', () => this.activateSelection());
     this.input.keyboard?.on('keydown-ESC', () => this.handleEscape());
 
-    this.events.once('shutdown', () => this.input.keyboard?.removeAllListeners());
+    this.events.once('shutdown', () => {
+      this.input.keyboard?.removeAllListeners();
+      audioManager.haltNonBgm();
+    });
   }
 
   private readGroupY(): number {
@@ -116,10 +123,12 @@ export class MainMenuScene extends Phaser.Scene {
   private moveCursor(delta: number): void {
     if (this.items.length === 0) return;
     this.selectedIndex = (this.selectedIndex + delta + this.items.length) % this.items.length;
+    audioManager.playSFX('sfx-ui-hover');
     this.refreshItemVisuals();
   }
 
   private activateSelection(): void {
+    audioManager.playSFX('sfx-ui-click');
     this.items[this.selectedIndex]?.action();
   }
 
@@ -264,11 +273,13 @@ export class MainMenuScene extends Phaser.Scene {
       }).setOrigin(0, 0.5).setInteractive({ useHandCursor: true }), 16);
 
       itemText.on('pointerover', () => {
+        if (this.selectedIndex !== index) audioManager.playSFX('sfx-ui-hover');
         this.selectedIndex = index;
         this.refreshItemVisuals();
       });
       itemText.on('pointerdown', () => {
         this.selectedIndex = index;
+        audioManager.playSFX('sfx-ui-click');
         item.action();
       });
 

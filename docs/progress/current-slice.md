@@ -53,7 +53,7 @@ note: Slice 9「音乐 / 音效」ACTIVE。范围锁死 DEC-064。不改 roadmap
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
 | 1 | design | **D1** 新建 `docs/specs/system-audio.md`（从 audio-direction 收口可实现契约） | **完成** |
 | 2 | art | **A1** 占位音色配方（dark ambient drone，禁止 8-bit beep / jump scare） | **完成** |
-| 3 | code | **C1** 生成 OGG+MP3 + AudioManager + 场景接线 | 未开 |
+| 3 | code | **C1** 生成 OGG+MP3 + AudioManager + 场景接线 | **已交** |
 | 4 | qa | 对照规格：文件非空、8 轨、无 jump scare 契约、架构已实现 | 未开 |
 
 批次必须单次会话做完。禁止把「全表 SFX + 新设置界面 + 正式作曲」打成一批。

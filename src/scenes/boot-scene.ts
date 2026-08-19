@@ -6,6 +6,8 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { generateRewriterPlaceholders } from '@/entities/rewriter-sprite';
+import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
+import { audioManager } from '@/managers/audio-manager';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -41,13 +43,15 @@ export class BootScene extends Phaser.Scene {
       loadingText.destroy();
     });
 
-    // -------------------------------------------------------
-    // Asset loading goes here as the project grows.
-    // For now, we generate placeholder graphics at runtime.
-    // -------------------------------------------------------
+    for (const asset of AUDIO_ASSETS) {
+      this.load.audio(asset.key, audioUrlsFor(asset));
+    }
   }
 
   create(): void {
+    audioManager.bind(this.game);
+    audioManager.unlock();
+
     // Generate placeholder textures for development
     this.generatePlaceholders();
 

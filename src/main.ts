@@ -8,6 +8,7 @@ import { gameConfig } from '@/config/game-config';
 import { assertBalanceInvariants } from '@/config/invariants';
 import { bindDomUiRootToGame, getDomUiRoot } from '@/ui/dom/panel-styles';
 import { pauseMenu } from '@/ui/dom/pause-menu';
+import { audioManager } from '@/managers/audio-manager';
 
 // Before anything boots: a tuning pass that broke a balance invariant would make every
 // playtest afterwards answer the wrong question.
@@ -47,7 +48,7 @@ function pauseGame(): void {
   game.scene.scenes.forEach((scene) => {
     if (scene.scene.isActive()) scene.scene.pause();
   });
-  game.sound?.pauseAll();
+  audioManager.pauseAll();
   overlay.style.display = 'flex';
 }
 
@@ -57,7 +58,7 @@ function resumeGame(): void {
   game.scene.scenes.forEach((scene) => {
     if (scene.scene.isPaused()) scene.scene.resume();
   });
-  game.sound?.resumeAll();
+  audioManager.resumeAll();
   overlay.style.display = 'none';
 }
 

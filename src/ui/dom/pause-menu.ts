@@ -13,6 +13,7 @@
 
 import Phaser from 'phaser';
 import { t } from '@/i18n';
+import { audioManager } from '@/managers/audio-manager';
 import { beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/session';
 import { saveManager } from '@/managers/save-manager';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
@@ -36,13 +37,13 @@ let closedAt = 0;
 function pauseHost(): void {
   if (!host) return;
   if (host.scene.isActive() && !host.scene.isPaused()) host.scene.pause();
-  host.sound?.pauseAll();
+  audioManager.pauseAll();
 }
 
 function resumeHost(): void {
   if (!host) return;
   if (host.scene.isPaused()) host.scene.resume();
-  host.sound?.resumeAll();
+  audioManager.resumeAll();
 }
 
 function destroyDom(): void {
@@ -54,7 +55,7 @@ function destroyDom(): void {
 
 function leaveForSession(apply: (scene: Phaser.Scene) => void): void {
   const scene = host;
-  scene?.sound?.resumeAll();
+  audioManager.resumeAll();
   destroyDom();
   document.removeEventListener('keydown', onKey, true);
   host = null;
@@ -115,12 +116,15 @@ function paint(): void {
 
   panel.querySelectorAll<HTMLElement>('.pause-menu-row').forEach((row) => {
     row.addEventListener('pointerover', () => {
-      selectedIndex = Number(row.dataset.index);
+      const next = Number(row.dataset.index);
+      if (next !== selectedIndex) audioManager.playSFX('sfx-ui-hover');
+      selectedIndex = next;
       paint();
     });
     row.addEventListener('pointerdown', (e) => {
       e.preventDefault();
       selectedIndex = Number(row.dataset.index);
+      audioManager.playSFX('sfx-ui-click');
       items[selectedIndex]?.action();
     });
   });
@@ -173,6 +177,7 @@ function onKey(e: KeyboardEvent): void {
     e.stopPropagation();
     if (items.length === 0) return;
     selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+    audioManager.playSFX('sfx-ui-hover');
     paint();
     return;
   }
@@ -181,12 +186,14 @@ function onKey(e: KeyboardEvent): void {
     e.stopPropagation();
     if (items.length === 0) return;
     selectedIndex = (selectedIndex + 1) % items.length;
+    audioManager.playSFX('sfx-ui-hover');
     paint();
     return;
   }
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
     e.stopPropagation();
+    audioManager.playSFX('sfx-ui-click');
     items[selectedIndex]?.action();
   }
 }
@@ -204,6 +211,7 @@ export const pauseMenu = {
     mode = 'root';
     ignoreEscUntil = performance.now() + 200;
     pauseHost();
+    audioManager.playSFX('sfx-ui-open');
 
     const root = getDomUiRoot();
     backdrop = document.createElement('div');
@@ -235,6 +243,7 @@ export const pauseMenu = {
 
   close(): void {
     if (!panel) return;
+    audioManager.playSFX('sfx-ui-close');
     destroyDom();
     document.removeEventListener('keydown', onKey, true);
     resumeHost();

@@ -11,6 +11,7 @@
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
+import { audioManager } from '@/managers/audio-manager';
 import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
@@ -82,9 +83,12 @@ export const loadoutPanel = {
     cursorAction = 0;
     hoverTarget = null;
     createPanel();
+    audioManager.playSFX('sfx-ui-open');
   },
 
   close(): void {
+    if (!panel) return;
+    audioManager.playSFX('sfx-ui-close');
     destroyPanel();
     onCloseCallback?.();
     onCloseCallback = null;

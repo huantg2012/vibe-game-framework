@@ -11,6 +11,7 @@
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
+import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
@@ -70,9 +71,12 @@ export const defensePanel = {
     cursorAction = 0;
     hoverTarget = null;
     createPanel();
+    audioManager.playSFX('sfx-ui-open');
   },
 
   close(): void {
+    if (!panel) return;
+    audioManager.playSFX('sfx-ui-close');
     destroyPanel();
     onCloseCallback?.();
     onCloseCallback = null;

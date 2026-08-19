@@ -152,6 +152,15 @@ export class ContaminantNodeSystem {
     }
   }
 
+  /** Positions of contaminant nodes that have not been collected (Proximity layer). */
+  getRemainingPositions(): readonly Vector2[] {
+    const positions: Vector2[] = [];
+    for (const node of this.nodes) {
+      if (!node.collected) positions.push(node.def.position);
+    }
+    return positions;
+  }
+
   /** Get positions of all collected (empty) nodes — for ruminate tool. */
   getCollectedPositions(): readonly Vector2[] {
     const positions: Vector2[] = [];

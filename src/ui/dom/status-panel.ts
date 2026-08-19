@@ -9,6 +9,7 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import { GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
 import { gameState } from '@/managers/game-state';
+import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
@@ -61,9 +62,12 @@ export const statusPanel = {
     cursorIndex = 0;
     hoverIndex = null;
     createPanel();
+    audioManager.playSFX('sfx-ui-open');
   },
 
   close(): void {
+    if (!panel) return;
+    audioManager.playSFX('sfx-ui-close');
     destroyPanel();
     onCloseCallback?.();
     onCloseCallback = null;

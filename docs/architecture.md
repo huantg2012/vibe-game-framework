@@ -4,8 +4,8 @@ created-by: code agent (mode A)
 created-date: 2026-07-22
 last-modified: 2026-08-19
 approved-date: 2026-07-22
-changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 8 C1（2026-08-19）**：EnemyData / DetectionPulse / rewriter。目录树 ASCII 过期项仍在 backlog。
+changed-this-slice: true
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 9 C1（2026-08-19）**：AudioManager 已实现。目录树 ASCII 过期项仍在 backlog。
 ---
 
 # 技术架构
@@ -179,7 +179,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() | 已实现 |
 | GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
 | SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | hasSave(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
-| AudioManager | src/managers/audio-manager.ts | 音频播放/停止/音量控制 | play(), stop(), setVolume() | 规划中 |
+| AudioManager | src/managers/audio-manager.ts | 音频播放/停止/分层混音/空间衰减 | playBGM(), stopBGM(), playSFX(), playAmbient(), stopAmbient(), setLayerVolume(), playSpatialSFX(), pauseAll(), resumeAll(), unlock() | 已实现（Slice 9） |
 | Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用） | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5） |
 | VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 三级遮罩渲染 + 混乱值调制（Rift+Purification 共用） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5） |
 | GridRaycast | src/utils/grid-raycast.ts | 网格 DDA 射线（含对角缝隙规则）；无状态纯函数，视野与敌人 AI 共用同一套遮挡判定。`hasClearPath()` 是同一射线的双侧偏移版，回答"这么宽的身体过不过得去"（DEC-021），**不是视线判定，禁止用于感知** | castRay(), castRayDirection(), hasLineOfSight(), hasClearPath(), createRayHit() | 已实现（T5，T7 增 hasClearPath） |
@@ -559,12 +559,12 @@ Slice 4.5 前，净化点的边界是"tile 判定出的固定圆 + 边界外粒�
 
 ## 音频技术规范
 
-- **API**：Phaser 内置 Sound Manager（基于 WebAudio，fallback HTML5 Audio）
-- **加载**：随场景预加载；环境音使用流式加载
-- **控制**：AudioManager 封装全局音量/静音/分类音量（SFX/BGM/Ambient）
-- **格式**：MP3（主）+ OGG（兼容）
-- **限制**：同时播放音效数上限 8 个（防止音频过载）
-- **首次交互解锁**：BootScene 中监听首次用户输入后 resume AudioContext
+- **API**：Phaser 内置 Sound Manager（基于 WebAudio，fallback HTML5 Audio）。场景与系统不直打 `game.sound.pauseAll` / `resumeAll`。
+- **加载**：BootScene 预加载全部 39 个 key 的 `.ogg` + `.mp3`（`/assets/audio/{bgm,ambient,sfx/...}/`）。Vite 从 `public/assets/audio/` 提供。
+- **控制**：`AudioManager`（`src/managers/audio-manager.ts`）封装 playBGM / stopBGM / playSFX / playAmbient / stopAmbient / setLayerVolume / playSpatialSFX / pauseAll / resumeAll / unlock。分组常量 Master 1.0 / BGM 0.6 / Ambient 0.5 / SFX 0.8（本 Slice 无面板、不进存档）。
+- **格式**：每个 key 非空 OGG + MP3（浏览器择一）。禁止运行时 OscillatorNode 冒充交付。
+- **限制**：同时播放上限 8 轨。溢出踢最早/最低优先级的 game SFX；UI（`sfx-ui-*`）与循环床不可被踢。
+- **首次交互解锁**：BootScene 绑定 pointerdown/keydown/touchstart；MainMenuScene 再绑一次（已解锁则空操作）。
 
 ## 存档数据结构（概要）
 

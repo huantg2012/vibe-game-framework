@@ -20,6 +20,7 @@ import type { ContaminantType } from '@/types/game-types';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { describeSideEffectBody } from '@/ui/side-effect-labels';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
+import { audioManager } from '@/managers/audio-manager';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -121,6 +122,7 @@ export const impactResultPanel = {
     // Enter/Esc both close — the button text implies Enter, so Enter must actually
     // work (IA §S8 called this out: "按钮文案暗示回车，绑定却没有").
     document.addEventListener('keydown', onKeyDown);
+    audioManager.playSFX('sfx-ui-open');
   },
 
   close(): void {
@@ -387,6 +389,7 @@ function onKeyDown(e: KeyboardEvent): void {
 
 function dismiss(): void {
   document.removeEventListener('keydown', onKeyDown);
+  audioManager.playSFX('sfx-ui-close');
   const cb = onDoneCallback;
   onDoneCallback = null;
   destroyPanel();
