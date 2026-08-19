@@ -4,8 +4,8 @@ created-by: code agent (mode A)
 created-date: 2026-07-22
 last-modified: 2026-08-19
 approved-date: 2026-07-22
-changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 7 C1（2026-08-19）**：第三模块净化器、加厚点、SortieModifiers.startingChaos。Slice 6 COMPLETE。目录树 ASCII 过期项仍在 backlog。
+changed-this-slice: false
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 7 COMPLETE（2026-08-19）**：第三模块净化器、加厚点、SortieModifiers.startingChaos。目录树 ASCII 过期项仍在 backlog。
 ---
 
 # 技术架构

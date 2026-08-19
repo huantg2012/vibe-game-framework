@@ -3,8 +3,8 @@ status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-08-19
-last-closed-slice: 6
-note: Slice 6「程序化地图」COMPLETE（2026-08-19，DEC-064）。下一手 Slice 7「净化点扩张」。撤离多样性不做。8=第二敌人。10 不做。
+last-closed-slice: 7
+note: Slice 7「净化点扩张」COMPLETE（2026-08-19）。下一手 Slice 8 第二敌人。10 不做。
 ---
 
 # Roadmap
@@ -25,17 +25,17 @@ note: Slice 6「程序化地图」COMPLETE（2026-08-19，DEC-064）。下一手
 | Slice 5 | 工具库深度（Fine/Rare 补完 + 工具 VFX + 改造深度） | 2026-08-12 | **实现完成，体验未验证** — 锁定 12 项全交付 + 计划外 2 项。装配决策纠结感转到 5.5 观察（机制上不是二选一；若要真实犹豫回 design）。 |
 | Slice 5.5 | UX 重构 | 2026-08-16 | **人要求收尾** — 打磨 Slice。界面从「不像游戏、不成体系」收敛到墙机/裂隙读数/主菜单/底栏按键可玩。审美由人终审（指令完成 = 收尾信号）。收尾四项已登记（DEC-054）。被发现指示留给 Slice 8。 |
 | Slice 6 | 程序化地图 | 2026-08-19 | **COMPLETE** — 每一次踏入抽锚+种子+邻域抖动生成并烤图；一个撤离点；外轮廓不规则 + 情景障碍 + 有限种碎片氛围。收工三件：换路硬保证、尘点沿风、年龄×残破（DEC-064）。小地图圆形窗口机械层已交（DEC-063）。撤离多样性不做。机器闸门 PASS。 |
+| Slice 7 | 净化点扩张 | 2026-08-19 | **COMPLETE** — 第三模块净化器写入出击起始混乱（满完整度 0 / 空血 50）；祭坛旁加厚 12/20/32 抬全部模块 maxHp 至 145；效果分母锁基准 100；abyss 65% / stitch 三模块列入。机器闸门 PASS。 |
 
 ## 当前 Slice
 
-**Slice 7: 净化点扩张**（DEC-064 已锁范围，尚未开工代码）。第三模块 = 净化器（完整度↑ → 出击起始混乱↓；满血约从 0）。祭坛旁花薪柴全局抬全部模块 maxHp，3 档 +15。复核 abyss 65% / stitch。权威范围待 `current-slice.md` 开 Slice 7 时改写。
+**Slice 8: 第二敌人（潜行轴）**（DEC-064 已锁范围）。改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv`。权威范围待本 Slice 开工时写进 `current-slice.md`。
 
 ## 计划中的 Slices（近期方向，DEC-064 已锁 7/8/9）
 
 | 序号 | 方向 | 说明 |
 | ---- | ---- | ---- |
-| Slice 7 | 净化点扩张 | **下一手。** 第三模块净化器；模块 maxHp 三档 +15；复核 abyss / stitch。不改出击起始生命。 |
-| Slice 8 | 第二敌人（潜行轴） | 改写体：听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv`。概念图已 APPROVED。 |
+| Slice 8 | 第二敌人（潜行轴） | **下一手。** 改写体：听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv`。概念图已 APPROVED。 |
 | Slice 9 | 音乐 / 音效 | `audio-direction.md` 几乎全表；生成 OGG+MP3 占位音进仓库。 |
 | Slice 10 | NPC | **不做**（DEC-064）。 |
 

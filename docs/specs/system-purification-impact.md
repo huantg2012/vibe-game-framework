@@ -3,7 +3,7 @@ status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
 last-modified-by: art agent
 last-modified-date: 2026-08-19
-interface-changed: true
+interface-changed: false
 interfaces-with:
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier
                                     # + startingChaos (Slice 7 净化器完整度写入出击初值)

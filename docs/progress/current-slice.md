@@ -1,12 +1,12 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 7「净化点扩张」ACTIVE。C1 已交。本文件未标 COMPLETE。
+note: Slice 7「净化点扩张」COMPLETE。QA PASS。下一手 Slice 8。
 ---
 
-# Slice 7: 净化点扩张【ACTIVE】
+# Slice 7: 净化点扩张【COMPLETE】
 
 类型：**系统 Slice**（扩已有净化点环，不新开 spec 文件）
 日期：2026-08-19 开工
@@ -52,7 +52,7 @@ note: Slice 7「净化点扩张」ACTIVE。C1 已交。本文件未标 COMPLETE�
 | 1 | design | **D1** 就地扩写 `system-purification-impact.md`（+ 混乱起始句若必须） | **已做** |
 | 2 | art | **A1** 第三模块形体 + 祭坛旁加厚交互最短合规核对 | **已做** |
 | 3 | code | **C1** 净化器 + 起始混乱 + maxHp 三档 + abyss/stitch 复核 | **已交** |
-| 4 | qa | 对照规格 | 待 C1 |
+| 4 | qa | 对照规格 | **已交**（`docs/qa/report-slice-7.md`，PASS） |
 
 批次必须单次会话做完。禁止把「新模块实体 + 全墙机翻修 + 升级经济」打成一批无闸门的 ALL 表面。
 
@@ -68,6 +68,11 @@ note: Slice 7「净化点扩张」ACTIVE。C1 已交。本文件未标 COMPLETE�
 - backlog 纳入本 Slice：`abyss` 65% / `stitch` 三模块文案复核。不纳入：`enemies.csv`（Slice 8）、CSV 占位列（除非本 Slice 改到那条工具）。
 - `docs/content/progression.md` 仍是空模板（已知，不本 Slice 修框架）。
 
-## 收尾四项（未完成，不得标 COMPLETE）
+## 收尾四项
 
-待本 Slice 实现+QA 后再填。
+1. **架构登记**：`docs/architecture.md` 已写 PURIFIER、加厚点、`startingChaos`。`changed-this-slice` 已复位。
+2. **spec**：就地扩写 `system-purification-impact` / `system-chaos-scavenge-extract`。`interface-changed` 已复位。
+3. **交付范围**：第三模块净化器；起始混乱满完整度 0、空血 50；加厚 12/20/32、maxHp 100→115→130→145；效果分母锁 100；abyss/stitch 三模块列入。不改出击起始生命。
+4. **UI 清单**：先 Read `.cursor/skills/in-game-ux/SKILL.md`。载体 A/B 已核。U1–U12 机械层 QA 已扫。本 Slice 无新 HUD 根。非阻断：存续报告净化器卡「起始混乱」与数字同句（记 backlog）。
+
+下一手 Slice 8。

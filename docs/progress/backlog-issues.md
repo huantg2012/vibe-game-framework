@@ -12,7 +12,8 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 
 - [x] `minimap.ts` 挂 `#dom-ui-root`（Slice 5.5 R9；收尾划掉 2026-08-16）
 - [x] UX Kit §A1 Phaser ×1.5 换算——5.5 收尾回写为 DOM ≥12px（2026-08-16）
-- [ ] `abyss` 减伤上限 65%（CSV 写"3 模块均低于半血"）在当前 2 模块下触不到，真实上限 50%；`stitch` 文案同样假设 3 模块 → Slice 7 加第三模块后自动成立，届时复核 (Slice 5 / 2026-08-12)
+- [x] `abyss` 65% / `stitch` 三模块 — Slice 7 已把 PURIFIER 列入 DefenseContext；不改 CSV (2026-08-19)
+- [ ] 存续报告净化器卡把「起始混乱」与数字写在同一句式（QA Slice 7 非阻断 U9）(2026-08-19)
 - [ ] 四个工具占位数值 CSV 结构装不下，暂存 `constants.ts`：`combust` 每秒伤害、`mirror` 诱饵接触半径、`resonate` 两点最大距离（CSV 字段 0，同构的 `stitch` 是 96px，疑为数据疏漏）、`abyss` 的第二计时（5s 混乱惩罚，CSV 每行只有一个 duration 列）→ 需给 CSV 扩列才能回归策划数据源规则 (Slice 5 / 2026-08-12)
 - [x] `purification-hud` 不套 `.game-panel`——5.5 D3 人批准为 A 类装置读数 (2026-08-12)
 - [x] Slice 5 装配纠结观察到 5.5：机制上不是二选一，UX 已讲清。若要真实犹豫回 design（DEC-054） (2026-08-16)

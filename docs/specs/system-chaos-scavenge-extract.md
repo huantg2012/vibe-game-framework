@@ -5,7 +5,7 @@ created-date: 2026-07-26
 last-modified-by: design agent
 last-modified-date: 2026-08-19
 slice: 1 (extended in 5.5, 6, 7)
-interface-changed: true
+interface-changed: false
 interfaces-with:
   - system-movement-vision     # T1：经场景层消费其三个视野调制器 + Player.setSpeedModifier('chaos')；撤离点注册为 glow source
   - system-enemy-ai            # T2：消费 ENEMY_ALERT / ENEMY_LOST_PLAYER / ENEMY_KILLED 判定"被侦测"与"被追击"

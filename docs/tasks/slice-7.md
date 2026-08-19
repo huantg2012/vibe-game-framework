@@ -1,8 +1,9 @@
 ---
-status: ACTIVE
+status: COMPLETE
 slice: 7
 created-by: director agent
 created-when: 2026-08-19
+last-modified: 2026-08-19
 ---
 
 # Tasks: Slice 7 — 净化点扩张
@@ -42,7 +43,7 @@ Title: 就地扩写净化点规格（净化器 + maxHp 三档） | Priority: P0 
 
 Title: 第三模块形体 + 祭坛升级交互最短合规核对 | Priority: P0
 
-Depends: D1
+Depends: D1 | Status: 已交
 
 先 Read `/Users/yilungao/coh/.cursor/skills/in-game-ux/SKILL.md`。就地补视觉规格（净化器几何/色只引用已锁板；祭坛升级读数不是新墙机皮）。无新 HUD 根。不要重做概念图。
 
@@ -52,9 +53,9 @@ Depends: D1
 
 Title: 净化器 + 起始混乱 + maxHp 三档 + 复核 abyss/stitch | Priority: P0
 
-Depends: D1 + A1
+Depends: D1 + A1 | Status: 已交
 
-生产质量。CSV→code。跑 `npx tsc --noEmit`。连续 2 次闸门失败停止。禁止 Slice 8/9 代码。本任务未开。
+生产质量。CSV→code。跑 `npx tsc --noEmit`。连续 2 次闸门失败停止。禁止 Slice 8/9 代码。
 
 ---
 
@@ -62,6 +63,6 @@ Depends: D1 + A1
 
 Title: 对照更新后规格验收 | Priority: P0
 
-Depends: C1
+Depends: C1 | Status: 已交
 
-写 `docs/qa/report-slice-7.md`。本任务未开。
+写 `docs/qa/report-slice-7.md`。PASS。
