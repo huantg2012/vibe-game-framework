@@ -21,7 +21,8 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 - [ ] `architecture.md` 的「项目结构」ASCII 目录树列了三个不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、整个 `generation/` 五个文件）——T0 只补核了模块注册表，目录树不在范围内 (Slice 5 T0 / 2026-08-12)
 
 - [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除。**Slice 5 收尾时未处理**——这是框架层判断（文档体系是否该有这一层）而非本 Slice 交付物，转下次 retro 拍板 (Slice 5 一致性检查 / 2026-08-12)
-- [ ] 敌人属性全在 `constants.ts` 的 `GAME_CONSTANTS.AI`，与 CLAUDE.md「策划数据源规则」冲突 → **Slice 8** 第二敌人开工时必须拍板：建 `data/enemies.csv` 并迁移渗透体，还是显式破例 (Slice 5 一致性检查 / 2026-08-12；编号 DEC-053)
+- [x] 敌人属性进 `data/enemies.csv`，渗透体一并迁移（Slice 8 / 2026-08-19）
+- [ ] 屏缘干涉警戒闪约 6 Hz、边带可能溢 1–2 px（QA Slice 8 非阻断）(2026-08-19)
 - [ ] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]`，不是真正最旧 (design 补写边界 spec / 2026-08-12)
 - [ ] loadout / 裂隙结算档位色 `#1a6b5c` 作字对比度约 3:1，低于 Kit ≥4.5:1 (QA Q3 / Slice 5.5 收尾登记)
 - [ ] 上屏仍可能混用「污染物」与术语表「污染体」(QA Q4 / Slice 5.5 收尾登记)
