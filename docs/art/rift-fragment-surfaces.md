@@ -2,10 +2,12 @@
 status: DRAFT
 created-by: art agent
 created-when: 2026-08-16
-last-modified: 2026-08-17
+last-modified: 2026-08-19
 slice: 6
 note: |
-  Slice 6 A1。残片身份走表维度。走法骨架与身份分开。色值只引用 art-direction §2.2 已锁名与 palette.json。
+  Slice 6 收工（DEC-064）。残片身份走表维度。走法骨架与身份分开。色值只引用 art-direction §2.2 已锁名与 palette.json。
+  每一次踏入必须抽 contaminationAge × ruinSeverity；禁止永远 standard+broken。两轴是收工交付，不是「可先不抽」。
+  尘点是漆，出击中沿 AtmosphereField 的 windX/Y 随 phase 漂。无新色、无新 HUD。
   审美由人看。本文件不验收好看。
 ---
 
@@ -15,7 +17,7 @@ note: |
 
 每一次踏入抽一种「曾经是什么」。地面底色走已锁 L1，墙用不同形状语法，污染仍是同一套 tilemap 数据错误（矩形 teal 块 + 接缝漏光）。虚空三种地方同一套 void-black。加第四种 = CSV 新行，不新开着色器。
 
-本批只接通三行：`frag-outdoor` / `frag-clinic` / `frag-metro`。图书馆、居民区只留加行空位。本批不写 overlay、不写 HUD / 小地图新皮、不写撤离多样性、不碰音乐。
+本批只接通三行：`frag-outdoor` / `frag-clinic` / `frag-metro`。图书馆、居民区只留加行空位。无新 HUD、不重做小地图、不写撤离多样性、不碰音乐。每一次踏入必须抽 `contaminationAge` × `ruinSeverity`（DEC-064）；尘点是漆，不是碰撞。
 
 ---
 
@@ -184,7 +186,11 @@ L1 色值差只有 5–10。32px + 视野遮罩下，只换雾/亮度/底色标�
 
 ## 组合轴
 
-`FragmentRoll = typeId × contaminationAge × ruinSeverity`。两轴只乘已有旋钮，不换表达。种类行决定「曾是什么」；组合轴决定「覆盖多深 / 残块多破」。本 Slice 可先只抽 `contaminationAge`，`ruinSeverity` 默认 `broken`。
+`FragmentRoll = typeId × contaminationAge × ruinSeverity`。两轴只乘已有旋钮，不换表达。种类行决定「曾是什么」；组合轴决定「覆盖多深 / 残块多破」。
+
+**DEC-064 收工交付（两轴都抽）：** 每一次踏入必须抽 `contaminationAge` ∈ {`new`, `standard`, `ancient`} 与 `ruinSeverity` ∈ {`intact`, `broken`, `eaten`}。禁止所有出击永远 `standard` + `broken`。禁止只抽年龄、残破永远停在 `broken`。
+
+生成器抽失败、或调试入口未带组合轴时，**回退**仍是 `standard` + `broken`。回退只用于缺字段，不是生产路径。生产路径必须抽，不能永远走回退。
 
 ### `contaminationAge` → 浓度表 + L2 色相
 
@@ -196,7 +202,7 @@ L1 色值差只有 5–10。32px + 视野遮罩下，只换雾/亮度/底色标�
 
 乱码（仅 `ancient` / 重度）：在量化后打 1px 错点，色取色板内非本行 L1 的暗色（`shadow-grey` 或 `bone-grey`）。不是新纹理，不是另一块碎片的底色铺上来。
 
-现实现把所有渗色写成 `CONTAM_TEAL = contam-cold`，且**只有折线、没有矩形块**。默认档若是 `standard`，渗色应改读 `contam-mid` / `contam-core`；块按上表补。不要用加粗折线冒充数据错误块。
+渗色按本表选已锁 L2，禁止新 hex。禁止 `CONTAM_TEAL = contam-cold` 冒充所有年龄：`new` → `contam-cold`；`standard` → `contam-mid` / `contam-core` + 矩形块；`ancient` → `contam-ancient`（按 §14.4 压饱和）+ 更大块。现实现若把所有渗色写成 `CONTAM_TEAL = contam-cold`，且**只有折线、没有矩形块**，必须改掉。不要用加粗折线冒充矩形错误块。
 
 `tealPer100kPx2` 不进种类行。医院新生和户外新生可以分清，靠的是隔断 vs 土脊，不是 teal 多少。
 
@@ -212,7 +218,19 @@ L1 色值差只有 5–10。32px + 视野遮罩下，只换雾/亮度/底色标�
 
 `ancient` + `eaten` = 重块 + 材质更糊。仍是数据错误 + 同一套噪声，不是第二种污染。
 
-本 Slice 未抽残破度时：`ruinSeverity = broken`。
+---
+
+## 尘点（漆，不是碰撞）
+
+氛围场合同在 `docs/design-notes/slice-6-layered-generation.md`「7–9 氛围场」。天空已用同一份场只改 `phase`（`src/systems/procedural-surface.ts` `RiftSurfacePainter`）。雾池烤死。DEC-064：尘点必须在出击中沿本趟 `windX/Y` 随 `phase` 漂，不再「以后再做」。无新色、无新 HUD。
+
+给 code 的死约束：
+
+1. **尘点 = 已烤 / 已采样的漆。** 不占 tile、不写 `walls[]`、不挡路、不加新粒子系统实体碰撞。装饰不得拆连通。
+2. **动画 = 同一份 `AtmosphereField` 只改 `phase`。** 尘点位置沿本趟 `windX/Y` 平移，与天空胶囊同一根风轴。
+3. **禁止每帧对整张 2048×1344 地表 `compositePaint`。** 地面（含雾）出击烤一次；尘点跟天空一样只扫 `phase`。
+4. **雾池烤死。** 不要为了带动尘点去重烤雾。
+5. **无新色、无新 HUD。** 尘点色只走已锁板；不上屏新读数、不新造标记。
 
 ---
 
@@ -248,8 +266,9 @@ L1 色值差只有 5–10。32px + 视野遮罩下，只换雾/亮度/底色标�
 5. **虚空。** 虚空格填 `void-black`。三种 `l1Key` 共用。不要医院白虚空、地铁隧道虚空、户外夜空。
 6. **墙形在生成器。** 走法骨架 + `massGrammar` + `feature*` 决定落哪些墙格。着色器不根据种类改 rim 算法，只改 `wallBias*` / 键名。
 7. **污染密度不是种类差异。** 禁止「医院少 teal、地铁多 teal」来拉开差异。
-8. **默认组合。** 未抽轴时：`contaminationAge = standard`，`ruinSeverity = broken`。
-9. **本批不画 overlay。** 不上屏碎片名，不新造撤离/小地图标记。
+8. **默认组合。** 缺字段时回退：`contaminationAge = standard`，`ruinSeverity = broken`。生产路径每一次踏入必须两轴都抽；禁止永远走回退。
+9. **无新 HUD。** 不上屏碎片名，不新造撤离/小地图标记。小地图机械层已交（DEC-063），本收工不重做。
+10. **尘点是漆。** 见上文「尘点」五条。不占 tile、不挡路；同一份场只改 `phase`，沿 `windX/Y` 漂；禁止每帧整图 `compositePaint`；雾池烤死；无新色。
 
 ---
 
@@ -259,7 +278,9 @@ L1 色值差只有 5–10。32px + 视野遮罩下，只换雾/亮度/底色标�
 - [x] 现实现苔藓 `(0x12, 0x2a, 0x14)` 已标为非法中间色，改指向 `frag-outdoor`。
 - [x] 三种墙形状不同：脊 / 围合残 / 板片。并排栏写了禁止只换底色、禁止岛心完整器物。
 - [x] 虚空统一：`void-black` + `deep-black`，三种地方同一句。
-- [x] 污染仍是 §4.2 数据错误；组合轴只调浓度表与已有 `SURFACE` 旋钮。
+- [x] 污染仍是 §4.2 数据错误；组合轴只调浓度表与已有 `SURFACE` 旋钮。三行年龄 + 三行残破数值未改。
+- [x] 每一次踏入必须抽两轴（DEC-064）。回退仍是 `standard` + `broken`，但生成器不能永远回退。
 - [x] 图书馆 / 居民区视觉列已填（预览用，`enabled` 仍 false）。
-- [x] 无 overlay / HUD / 小地图新皮。预览 PNG 的粒子/波动是生成器烘焙，不是 HUD。
+- [x] 无新 HUD / 无 overlay 新皮。小地图不重做。预览 PNG 的粒子/波动是生成器烘焙，不是 HUD。
+- [x] 尘点是漆：不占 tile、不挡路；同一份 `AtmosphereField` 只改 `phase`，沿 `windX/Y` 漂；禁止整图 `compositePaint`。
 - [ ] 审美：等人看。本文不写结论。

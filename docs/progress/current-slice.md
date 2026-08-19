@@ -243,9 +243,9 @@ note: Slice 6「程序化地图」ACTIVE。DEC-064：三件余项必须做完才
 
 | 项 | 锁 | 状态 |
 | -- | -- | ---- |
-| 规格 21 换路 | 硬保证。出生→唯一撤离必须有短暴露 + 长隐蔽两条路。重试，不拆形状闸门。`check:layout` 无换路 = 坏图 | 待做 |
+| 规格 21 换路 | 硬保证。出生→唯一撤离必须有短暴露 + 长隐蔽两条路。重试，不拆形状闸门。`check:layout` 无换路 = 坏图。机器定义已锁（`system-map-generation` 规则 21，2026-08-19） | 规格已锁；实现待做 |
 | 尘点沿风 | 出击中随 `phase` 沿本趟风向漂移；雾仍烤死 | 待做 |
-| 污染年龄 × 残破 | 每次踏入抽 `contaminationAge` × `ruinSeverity`，按 `rift-fragment-surfaces.md` 组合轴落地 | 待做 |
+| 污染年龄 × 残破 | 每次踏入抽 `contaminationAge` × `ruinSeverity`，按 `rift-fragment-surfaces.md` 组合轴落地。规格规则 24a 已锁 | 规格已锁；实现待做 |
 | 小地图 DEC-063 | 机械层已交。收工不等人终审 | 机械已交 |
 
 7/8/9 范围见 DEC-064，本文件仍只服务 Slice 6，直到本 Slice COMPLETE。

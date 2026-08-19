@@ -1,7 +1,7 @@
 ---
 status: DRAFT
 created: 2026-08-17
-last-modified: 2026-08-18
+last-modified: 2026-08-19
 note: 十锚是风格样例不是地图库。裂隙每次抽锚+新种子+邻域抖动再生成烤图。天空影循环。扩空间读本文「Agent 入口」。
 ---
 
@@ -123,7 +123,7 @@ note: 十锚是风格样例不是地图库。裂隙每次抽锚+新种子+邻域
 4. **尘点**：从地板雾²加权抽样，沿风向偏半格。不是均匀撒。
 5. **渗光**：每个污染格一枚 teal glow，强度随 `seep`。学净化点伤口渗色，不抄呼吸环。
 
-**输出**（`AtmosphereField`）：`phase`、`slideSpan`、`windX/Y`、`occluders[]`、每格 `fog`、`motes`（含 seep glow）。十锚静帧各烤一份随机 `phase`。动态预览与裂隙出击同一份场扫 phase：雾池烤死，天空胶囊沿风向平移。尘点沿风位移以后再做。
+**输出**（`AtmosphereField`）：`phase`、`slideSpan`、`windX/Y`、`occluders[]`、每格 `fog`、`motes`（含 seep glow）。十锚静帧各烤一份随机 `phase`。动态预览与裂隙出击同一份场扫 phase：雾池烤死，天空胶囊沿风向平移。尘点出击中沿本趟 `windX/Y` 随 `phase` 漂（与天空同一根风轴），仍是漆、不挡路；禁止整图 CPU `compositePaint`。视觉死约束见 `docs/art/rift-fragment-surfaces.md`「尘点」。
 
 **方言（十锚怎么配，不是 case 分支）**：
 
