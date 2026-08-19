@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 已做。Slice 7 COMPLETE。未开 8 的代码。
+note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 已做。Slice 7 COMPLETE。未开 8 的代码。
 ---
 
 # Slice 8: 第二敌人（潜行轴）【ACTIVE】
@@ -53,8 +53,8 @@ note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 已做。Slice
 | -- | -- | ------ | ---- |
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
 | 1 | design | **D1** 就地扩写敌人 AI + 被发现指示 + enemies.csv 契约 | **已做** |
-| 2 | art | **A1** 改写体 4 向 + 屏缘脉冲视觉 | 可开工 |
-| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | 待 A1 |
+| 2 | art | **A1** 改写体 4 向 + 屏缘脉冲视觉 | **已做** |
+| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | 可开工 |
 | 4 | qa | 对照规格 | 待 C1 |
 
 ---
@@ -73,6 +73,14 @@ note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 已做。Slice
 | 多威胁脉冲 | 最多 2 个方位（不是只显示最高者）；夹角 < 28° 合并 |
 | 生成 | 3–4 巡逻，恰好 1 改写体；撤离门必须是渗透体 |
 | 载体 | A 世界内装置，`#dom-ui-root`，无数字 |
+
+## A1 落地（2026-08-19，art，不再问人）
+
+| 项 | 锁 |
+| -- | -- |
+| 屏缘脉冲 | `#rift-detection-rim` 挂 `#dom-ui-root`。16 px 边带。留意 3 齿 `#1aad96` 慢呼吸；搜寻 5 齿 `#2ae6c8` 3 Hz；锁定 7 齿近常亮。强度 = 察觉度（alpha / 齿长）。最多 2 方位。无数字、无条、无雷达细框 |
+| 改写体占位 | 程序化 32×48 × 4 向。身体右侧崩坏、teal 簇 17 px、爪/前倾。不旋转一张图。合同 `docs/art/rewriter-sprite.md` |
+| 警戒变形 | 搜寻：崩坏侧再亮 4 px、3 Hz。追击：簇改 `#2ae6c8`；残影 55 ms；每 8 帧抖 1 px。无新色 |
 
 ## 收尾四项
 

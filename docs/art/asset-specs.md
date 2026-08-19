@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: art agent
 created-date: 2026-07-22
-last-modified: 2026-07-24
+last-modified: 2026-08-19
 ---
 
 # 资产规格
@@ -47,7 +47,7 @@ last-modified: 2026-07-24
 | 环境 Tile | tile- | 32x32 px | PNG-8/24 | 不透明 | 排列为 512px 宽 tileset |
 | 玩家 Sprite | spr-shared-player- | 32x32 px | PNG-24 | 透明 | 含 padding，实际内容约 20x28 |
 | 敌人（低度） | spr-rift-enemy- | 32x32 px | PNG-24 | 透明 | 人形轮廓 |
-| 敌人（中度） | spr-rift-enemy- | 32x48 / 48x48 px | PNG-24 | 透明 | 超人形比例 |
+| 敌人（中度） | spr-rift-enemy- | 32x48 / 48x48 px | PNG-24 | 透明 | 超人形比例。Slice 8 占位：程序化 `placeholder-rewriter-{facing}` 32×48，见 `docs/art/rewriter-sprite.md` |
 | 敌人（高度） | spr-rift-enemy- | 48x48 / 64x64 px | PNG-24 | 透明 | 非人形几何体 |
 | 可交互物（小） | spr- | 16x16 px | PNG-24 | 透明 | 薪柴、消耗品 |
 | 可交互物（中） | spr- | 32x32 px | PNG-24 | 透明 | 撤离点标记 |

@@ -9,6 +9,17 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 8 A1：屏缘刻痕 + 改写体程序化占位（art，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 8
+- Type: Art
+- Context: DEC-064 / D1 已锁载体 A、无数字条、改写体 VERDICT。A1 写像素死约束，人全托管程序化占位，不新 hex。
+- Decision:
+  1. 屏缘干涉是随身罩边缘矩形齿（`veil-bite`），挂 `#rift-detection-rim` → `#dom-ui-root`。16 px 边带。留意 3 齿 `#1aad96` 呼吸；搜寻 5 齿 `#2ae6c8` 3 Hz；锁定 7 齿近常亮。强度只调 alpha 与齿长。禁止雷达细框、进度条、血条式察觉条。
+  2. 改写体占位 32×48 四向独立缓冲，崩坏锁在身体右侧，teal 簇 17 px，保留爪/前倾。禁止旋转单图、禁止眼睛、禁止紫粉史莱姆。
+  3. 搜寻 = 崩坏侧加亮；追击 = 加亮 + 残影 55 ms + 8 帧 1 px 抖动。无新色。
+- Impact: `ui-detection-pulse` 视觉规格；`docs/art/rewriter-sprite.md`；Kit A0 #19 / A4 / A5-2b / B2。
+
 ## Slice 8 D1：两种感知剖面 + 屏缘干涉（design，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 8
