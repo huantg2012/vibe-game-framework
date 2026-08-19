@@ -9,6 +9,17 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 9 A1：占位合成配方（art，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 9
+- Type: Art
+- Context: DEC-064 / D1 已锁 39 key。A1 只锁 ffmpeg/sox 占位怎么响；文件仍待 C1 生成。不改 audio-direction「未生成」列。无新色、无新 UI。
+- Decision:
+  1. 床 = 多层失谐低频 + 轻棕噪；循环只 crossfade 噪声层。净化点 BGM 用 55/57/62 Hz，环境循环用 60+120 Hz 工频，禁止合成同一条嗡。
+  2. UI 全走带通噪声金属微动。警告/警戒/阈值/冲击/边界淡入 ≥ 40 ms，低频压迫渐起，禁止纯正弦警报与 8-bit beep。
+  3. 改写体 hum 基频 ≤ 42 Hz、无颤、窄频谱；渗透体 idle ≥ 72 Hz、带 1.2 Hz 微颤。敌人非动物、非惨叫。
+- Impact: `docs/art/audio-placeholders.md`。C1 按表生成非空 OGG+MP3。状态仍待生成。
+
 ## Slice 9 D1：音频可实现契约（design，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 9
