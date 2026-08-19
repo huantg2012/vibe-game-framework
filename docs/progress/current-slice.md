@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 7「净化点扩张」ACTIVE。范围锁死 DEC-064。Slice 6 COMPLETE。本文件未开 7 的代码。
+note: Slice 7「净化点扩张」ACTIVE。C1 已交。本文件未标 COMPLETE。
 ---
 
 # Slice 7: 净化点扩张【ACTIVE】
@@ -51,7 +51,7 @@ note: Slice 7「净化点扩张」ACTIVE。范围锁死 DEC-064。Slice 6 COMPLE
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
 | 1 | design | **D1** 就地扩写 `system-purification-impact.md`（+ 混乱起始句若必须） | **已做** |
 | 2 | art | **A1** 第三模块形体 + 祭坛旁加厚交互最短合规核对 | **已做** |
-| 3 | code | **C1** 净化器 + 起始混乱 + maxHp 三档 + abyss/stitch 复核 | 待 A1 |
+| 3 | code | **C1** 净化器 + 起始混乱 + maxHp 三档 + abyss/stitch 复核 | **已交** |
 | 4 | qa | 对照规格 | 待 C1 |
 
 批次必须单次会话做完。禁止把「新模块实体 + 全墙机翻修 + 升级经济」打成一批无闸门的 ALL 表面。
@@ -64,7 +64,7 @@ note: Slice 7「净化点扩张」ACTIVE。范围锁死 DEC-064。Slice 6 COMPLE
 
 - Slice 6 COMPLETE。`interface-changed` / `changed-this-slice` 已复位（`art-direction` 一并复位）。
 - 规格 7 份。`system-purification-impact` 已写「第三模块要到 Slice 7」；`abyss` 65% 张力已登记。
-- `GameState` 模块类型只有 `CORE` \| `STORAGE`。`MODULE_MAX_HP = 100`。混乱起始未吃第三模块。
+- `GameState` 模块类型为 `CORE` \| `STORAGE` \| `PURIFIER`。`moduleMaxHpTier` 抬 maxHp。出击初值读 `getStartingChaos()`。
 - backlog 纳入本 Slice：`abyss` 65% / `stitch` 三模块文案复核。不纳入：`enemies.csv`（Slice 8）、CSV 占位列（除非本 Slice 改到那条工具）。
 - `docs/content/progression.md` 仍是空模板（已知，不本 Slice 修框架）。
 

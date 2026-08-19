@@ -5,7 +5,7 @@
  * transitions because it lives outside any single scene. Systems never import each
  * other; they read/write GameState and communicate through the event bus.
  *
- * All state resets on page refresh (no localStorage).
+ * Persisted via SaveManager (localStorage). reset() restores a new expedition.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -15,18 +15,41 @@ import type { PendingSideEffect } from '@/systems/defense-engine';
 // Types
 // ---------------------------------------------------------------------------
 
-export type ModuleType = 'CORE' | 'STORAGE';
+export type ModuleType = 'CORE' | 'STORAGE' | 'PURIFIER';
+export type EffectModuleType = 'CORE' | 'STORAGE';
+export type ModuleMaxHpTier = 0 | 1 | 2 | 3;
 
 export interface ModuleState {
   readonly id: string;
   readonly type: ModuleType;
   hp: number;
-  readonly maxHp: number;
+  maxHp: number;
 }
 
 export interface SortieModifiers {
   readonly chaosRateModifier: number;
   readonly kindlingValueModifier: number;
+  readonly startingChaos: number;
+}
+
+export interface GameStateSnapshot {
+  kindlingReserve: number;
+  cycle: number;
+  modules: { id: string; type: string; hp: number; maxHp: number }[];
+  moduleMaxHpTier: ModuleMaxHpTier;
+  pendingSideEffects: PendingSideEffect[];
+  upgradeDiscount: number;
+  moduleSwapActive: boolean;
+}
+
+export interface GameStateLoadInput {
+  kindlingReserve: number;
+  cycle: number;
+  modules: { id: string; type: string; hp: number; maxHp: number }[];
+  moduleMaxHpTier?: number;
+  pendingSideEffects?: PendingSideEffect[];
+  upgradeDiscount?: number;
+  moduleSwapActive?: boolean;
 }
 
 // ---------------------------------------------------------------------------
@@ -39,6 +62,7 @@ let kindlingReserve = 0;
 let cycle = 0;
 let impactIntensity = 1.0;
 let pendingSideEffects: PendingSideEffect[] = [];
+let moduleMaxHpTier: ModuleMaxHpTier = 0;
 /**
  * siphon (Slice 5 gap-fill): "装备期间所有薪柴修复模块的效率翻倍" - same "装备期间"
  * derivation as `resonateBonusActive` below, kept in sync by
@@ -50,6 +74,7 @@ let upgradeDiscount = 0;
  * overwrite (Slice 5 T3, DEC-031): while active, getModuleEffect() reads the OTHER
  * module's HP through the requested type's formula, swapping which module feeds which
  * stat. Cleared at the start of the next impact resolution (exactly "1 次出击").
+ * Purifier is never swapped.
  */
 let moduleSwapActive = false;
 /**
@@ -62,10 +87,58 @@ let moduleSwapActive = false;
  */
 let resonateBonusActive = false;
 
-const modules: ModuleState[] = [
-  { id: 'CORE', type: 'CORE', hp: P.MODULE_INITIAL_HP, maxHp: P.MODULE_MAX_HP },
-  { id: 'STORAGE', type: 'STORAGE', hp: P.MODULE_INITIAL_HP, maxHp: P.MODULE_MAX_HP },
-];
+function maxHpForTier(tier: number): number {
+  return P.MODULE_BASE_MAX_HP + P.MODULE_MAX_HP_PER_TIER * tier;
+}
+
+function clampTier(value: number | undefined): ModuleMaxHpTier {
+  const n = value ?? 0;
+  if (n <= 0) return 0;
+  if (n >= P.MODULE_MAX_HP_TIERS) return P.MODULE_MAX_HP_TIERS as ModuleMaxHpTier;
+  return n as ModuleMaxHpTier;
+}
+
+function makeModule(type: ModuleType, hp: number, maxHp: number): ModuleState {
+  return { id: type, type, hp, maxHp };
+}
+
+function createDefaultModules(): ModuleState[] {
+  const maxHp = maxHpForTier(0);
+  return [
+    makeModule('CORE', P.MODULE_INITIAL_HP, maxHp),
+    makeModule('STORAGE', P.MODULE_INITIAL_HP, maxHp),
+    makeModule('PURIFIER', P.MODULE_INITIAL_HP, maxHp),
+  ];
+}
+
+const modules: ModuleState[] = createDefaultModules();
+
+function applyMaxHpFromTier(): void {
+  const cap = maxHpForTier(moduleMaxHpTier);
+  for (const mod of modules) {
+    mod.maxHp = cap;
+    if (mod.hp > cap) mod.hp = cap;
+  }
+}
+
+function ensurePurifier(hp = P.MODULE_INITIAL_HP): void {
+  if (modules.some((m) => m.type === 'PURIFIER')) return;
+  modules.push(makeModule('PURIFIER', hp, maxHpForTier(moduleMaxHpTier)));
+}
+
+/**
+ * Starting chaos for a given purifier hp/maxHp (rule 27b). Used by GameState and by
+ * the allocation wall-machine preview so the two cannot drift.
+ */
+export function computeStartingChaos(hp: number, maxHp: number): number {
+  if (maxHp <= 0) return P.CHAOS_HARD_START;
+  const integrity = Math.max(0, Math.min(1, hp / maxHp));
+  return Math.round(P.CHAOS_HARD_START * (1 - integrity));
+}
+
+function effectHp(hp: number): number {
+  return Math.min(hp, P.MODULE_EFFECT_HP_REF);
+}
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -146,13 +219,14 @@ export const gameState = {
     return actual;
   },
 
-  // --- Module effects (spec rules 26-27; swap per DEC-031) ---
+  // --- Module effects (spec rules 26-27b; swap per DEC-031) ---
 
-  getModuleEffect(type: ModuleType): number {
+  /** CORE/STORAGE only. Purifier does not go through this entry. */
+  getModuleEffect(type: EffectModuleType): number {
     // overwrite (DEC-031): swap which module's HP feeds this stat, but keep the
     // formula tied to `type` — this is what makes the swap sometimes favour the
     // player (whichever module is currently healthier ends up feeding the stat).
-    const sourceType: ModuleType = moduleSwapActive
+    const sourceType: EffectModuleType = moduleSwapActive
       ? (type === 'CORE' ? 'STORAGE' : 'CORE')
       : type;
     const mod = modules.find((m) => m.type === sourceType);
@@ -161,13 +235,56 @@ export const gameState = {
     // resonate (DEC-039): raises the CAP, not the current value - at low module hp the
     // bonus is barely noticeable, same as the rest of these formulas scaling with hp.
     const resonateBonus = resonateBonusActive ? P.RESONATE_MODULE_CAP_BONUS : 0;
+    const ratio = effectHp(mod.hp) / P.MODULE_EFFECT_HP_REF;
 
     if (type === 'CORE') {
-      // chaosRateModifier: lower is better; at full hp = 1 - 0.30 = 0.70
-      return 1.0 - (mod.hp / 100) * (P.MAX_CORE_REDUCTION + resonateBonus);
+      // chaosRateModifier: lower is better; at hp>=100 = 1 - 0.30 = 0.70
+      return 1.0 - ratio * (P.MAX_CORE_REDUCTION + resonateBonus);
     }
-    // STORAGE: kindlingValueModifier; at full hp = 1 + 0.50 = 1.50
-    return 1.0 + (mod.hp / 100) * (P.MAX_STORAGE_BONUS + resonateBonus);
+    // STORAGE: kindlingValueModifier; at hp>=100 = 1 + 0.50 = 1.50
+    return 1.0 + ratio * (P.MAX_STORAGE_BONUS + resonateBonus);
+  },
+
+  /** Unique entry for sortie starting chaos (rule 27b). */
+  getStartingChaos(): number {
+    const purifier = modules.find((m) => m.type === 'PURIFIER');
+    if (!purifier) return P.CHAOS_HARD_START;
+    return computeStartingChaos(purifier.hp, purifier.maxHp);
+  },
+
+  getModuleMaxHpTier(): ModuleMaxHpTier {
+    return moduleMaxHpTier;
+  },
+
+  getModuleMaxHp(): number {
+    return maxHpForTier(moduleMaxHpTier);
+  },
+
+  /** Cost of the next thicken tier, or null if already at cap. */
+  getNextModuleMaxHpCost(): number | null {
+    if (moduleMaxHpTier === 0) return P.MODULE_MAX_HP_COST[0];
+    if (moduleMaxHpTier === 1) return P.MODULE_MAX_HP_COST[1];
+    if (moduleMaxHpTier === 2) return P.MODULE_MAX_HP_COST[2];
+    return null;
+  },
+
+  /** True when a thicken purchase can actually complete (not capped, enough kindling). */
+  canRaiseModuleMaxHp(): boolean {
+    const cost = gameState.getNextModuleMaxHpCost();
+    return cost !== null && kindlingReserve >= cost;
+  },
+
+  /**
+   * Spend kindling to raise every module's maxHp by one tier. Current hp is unchanged.
+   * upgradeDiscount does not apply. Returns false if capped or kindling is short.
+   */
+  raiseModuleMaxHp(): boolean {
+    const cost = gameState.getNextModuleMaxHpCost();
+    if (cost === null) return false;
+    if (!gameState.spendKindling(cost)) return false;
+    moduleMaxHpTier = (moduleMaxHpTier + 1) as ModuleMaxHpTier;
+    applyMaxHpFromTier();
+    return true;
   },
 
   /** overwrite (DEC-031): whether CORE/STORAGE module effects are currently swapped. */
@@ -194,6 +311,7 @@ export const gameState = {
     return {
       chaosRateModifier: gameState.getModuleEffect('CORE'),
       kindlingValueModifier: gameState.getModuleEffect('STORAGE'),
+      startingChaos: gameState.getStartingChaos(),
     };
   },
 
@@ -224,11 +342,12 @@ export const gameState = {
 
   // --- Serialization (for SaveManager) ---
 
-  getState(): { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects: PendingSideEffect[]; upgradeDiscount: number; moduleSwapActive: boolean } {
+  getState(): GameStateSnapshot {
     return {
       kindlingReserve,
       cycle,
       modules: modules.map((m) => ({ id: m.id, type: m.type, hp: m.hp, maxHp: m.maxHp })),
+      moduleMaxHpTier,
       pendingSideEffects: [...pendingSideEffects],
       upgradeDiscount,
       moduleSwapActive,
@@ -242,13 +361,17 @@ export const gameState = {
     };
   },
 
-  loadState(state: { kindlingReserve: number; cycle: number; modules: { id: string; type: string; hp: number; maxHp: number }[]; pendingSideEffects?: PendingSideEffect[]; upgradeDiscount?: number; moduleSwapActive?: boolean }): void {
+  loadState(state: GameStateLoadInput): void {
     kindlingReserve = state.kindlingReserve;
     cycle = state.cycle;
+    moduleMaxHpTier = clampTier(state.moduleMaxHpTier);
+    ensurePurifier(P.MODULE_INITIAL_HP);
     for (const saved of state.modules) {
       const mod = modules.find((m) => m.id === saved.id);
       if (mod) mod.hp = saved.hp;
     }
+    // maxHp is derived from the persisted tier (rule 65); rewrite if the save disagrees.
+    applyMaxHpFromTier();
     pendingSideEffects = state.pendingSideEffects ?? [];
     upgradeDiscount = state.upgradeDiscount ?? 0;
     moduleSwapActive = state.moduleSwapActive ?? false;
@@ -325,7 +448,11 @@ export const gameState = {
     upgradeDiscount = 0;
     moduleSwapActive = false;
     resonateBonusActive = false;
-    modules[0]!.hp = P.MODULE_INITIAL_HP;
-    modules[1]!.hp = P.MODULE_INITIAL_HP;
+    moduleMaxHpTier = 0;
+    ensurePurifier(P.MODULE_INITIAL_HP);
+    for (const mod of modules) {
+      mod.hp = P.MODULE_INITIAL_HP;
+      mod.maxHp = maxHpForTier(0);
+    }
   },
 };

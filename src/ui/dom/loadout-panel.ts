@@ -515,7 +515,7 @@ function buildSortiePreview(): string {
   const storageEffect = gameState.getModuleEffect('STORAGE');
 
   return `<div class="separator"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;">
       <div>
         <div style="font-size:12px;color:#8a8f96;">完整度</div>
         <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">${totalHp}</div>
@@ -527,6 +527,10 @@ function buildSortiePreview(): string {
       <div>
         <div style="font-size:12px;color:#8a8f96;">薪柴值</div>
         <div style="font-size:16px;color:#c4873a;font-weight:bold;">x${storageEffect.toFixed(2)}</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:#8a8f96;">起始混乱</div>
+        <div style="font-size:16px;color:#1aad96;font-weight:bold;">${gameState.getStartingChaos()}</div>
       </div>
     </div>`;
 }

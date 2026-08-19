@@ -1,9 +1,9 @@
 /**
  * PurificationModule entity - visual representation of a module in the purification scene.
  *
- * Each module is a coloured geometric shape (CORE=blue hexagon, STORAGE=orange square)
- * with an hp bar displayed as a same-colour thin bar below the module body.
- * No text is rendered in the game world; all readable info lives in DOM overlays.
+ * Each module is a coloured geometric shape:
+ * CORE = blue hexagon, STORAGE = orange square, PURIFIER = teal truncated tri-pyramid.
+ * HP bar lives in the world; all readable copy lives in DOM overlays.
  */
 
 import Phaser from 'phaser';
@@ -35,9 +35,27 @@ const STORAGE_MAIN = 0xcc8844;
 const STORAGE_EDGE = 0xddaa66;
 const DANGER_COLOR = 0xcc3333;
 
-// Module sizes (spec B1)
+const PURIFIER_FILL_OUTER = 0x1a6b5c; // contam-mid
+const PURIFIER_FILL_INNER = 0x0e4a3f; // contam-deep
+const PURIFIER_EDGE_OUTER = 0x1aad96; // contam-core
+const PURIFIER_EDGE_INNER = 0x4a4e55; // metal-grey
+const PURIFIER_LAMP = 0x1aad96;
+const PURIFIER_BAR_SLOT = 0x0e4a3f;
+
 const CORE_RADIUS = 16;
 const STORAGE_HALF = 14; // half-side = 14 => 28px side
+const PURIFIER_RADIUS = 18;
+
+const PURIFIER_OUTER: ReadonlyArray<{ x: number; y: number }> = [
+  { x: 0, y: 18 },
+  { x: -16, y: -9 },
+  { x: 16, y: -9 },
+];
+const PURIFIER_INNER: ReadonlyArray<{ x: number; y: number }> = [
+  { x: 0, y: 8 },
+  { x: -7, y: -4 },
+  { x: 7, y: -4 },
+];
 
 // HP bar (spec B2)
 const HP_BAR_HEIGHT = 3;
@@ -135,7 +153,7 @@ export class PurificationModuleEntity {
     const barY = this.getHpBarY();
     this.hpBarBg = scene.add.graphics();
     this.hpBarBg.setDepth(depth + 1);
-    this.hpBarBg.fillStyle(this.config.type === 'CORE' ? 0x222233 : 0x332222, 0.8);
+    this.hpBarBg.fillStyle(this.hpBarSlotColor(), 0.8);
     this.hpBarBg.fillRect(this.config.x - HP_BAR_WIDTH / 2, barY, HP_BAR_WIDTH, HP_BAR_HEIGHT);
 
     // HP bar fill
@@ -208,10 +226,14 @@ export class PurificationModuleEntity {
     const mod = gameState.getModule(this.config.id);
     if (!mod) return 0;
     const P = GAME_CONSTANTS.PURIFICATION;
+    const ratio = Math.min(mod.hp, P.MODULE_EFFECT_HP_REF) / P.MODULE_EFFECT_HP_REF;
     if (this.config.type === 'CORE') {
-      return Math.round((mod.hp / 100) * P.MAX_CORE_REDUCTION * 100);
+      return Math.round(ratio * P.MAX_CORE_REDUCTION * 100);
     }
-    return Math.round((mod.hp / 100) * P.MAX_STORAGE_BONUS * 100);
+    if (this.config.type === 'STORAGE') {
+      return Math.round(ratio * P.MAX_STORAGE_BONUS * 100);
+    }
+    return 0;
   }
 
   /** Get module HP data for prompt display. */
@@ -234,8 +256,6 @@ export class PurificationModuleEntity {
 
   private drawModule(): void {
     const { x, y, type } = this.config;
-    const mainColor = type === 'CORE' ? CORE_MAIN : STORAGE_MAIN;
-    const edgeColor = type === 'CORE' ? CORE_EDGE : STORAGE_EDGE;
 
     const mod = gameState.getModule(this.config.id);
     const hpRatio = mod ? mod.hp / mod.maxHp : 1;
@@ -265,7 +285,6 @@ export class PurificationModuleEntity {
     this.graphics.clear();
 
     if (type === 'CORE') {
-      // Hexagon
       const points: Phaser.Geom.Point[] = [];
       for (let i = 0; i < 6; i++) {
         const angle = (Math.PI / 3) * i - Math.PI / 6;
@@ -274,22 +293,29 @@ export class PurificationModuleEntity {
           y + CORE_RADIUS * Math.sin(angle),
         ));
       }
-      this.graphics.fillStyle(mainColor, fillAlpha);
+      this.graphics.fillStyle(CORE_MAIN, fillAlpha);
       this.graphics.fillPoints(points, true);
-      this.graphics.lineStyle(2, edgeColor, edgeAlpha);
+      this.graphics.lineStyle(2, CORE_EDGE, edgeAlpha);
       this.graphics.strokePoints(points, true);
-
-      // T6: 受损/严重受损裂缝 + 严重受损边缘渗入 (spec B3，替代旧的低血红环闪烁)
       this.drawDamageDecoration(CORE_RADIUS);
-    } else {
-      // Square
-      this.graphics.fillStyle(mainColor, fillAlpha);
+    } else if (type === 'STORAGE') {
+      this.graphics.fillStyle(STORAGE_MAIN, fillAlpha);
       this.graphics.fillRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
-      this.graphics.lineStyle(2, edgeColor, edgeAlpha);
+      this.graphics.lineStyle(2, STORAGE_EDGE, edgeAlpha);
       this.graphics.strokeRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
-
-      // T6: 受损/严重受损裂缝 + 严重受损边缘渗入 (spec B3，替代旧的低血红环闪烁)
       this.drawDamageDecoration(STORAGE_HALF);
+    } else {
+      const outer = PURIFIER_OUTER.map((p) => new Phaser.Geom.Point(x + p.x, y + p.y));
+      const inner = PURIFIER_INNER.map((p) => new Phaser.Geom.Point(x + p.x, y + p.y));
+      this.graphics.fillStyle(PURIFIER_FILL_OUTER, fillAlpha);
+      this.graphics.fillPoints(outer, true);
+      this.graphics.fillStyle(PURIFIER_FILL_INNER, fillAlpha);
+      this.graphics.fillPoints(inner, true);
+      this.graphics.lineStyle(2, PURIFIER_EDGE_OUTER, edgeAlpha);
+      this.graphics.strokePoints(outer, true);
+      this.graphics.lineStyle(1, PURIFIER_EDGE_INNER, edgeAlpha);
+      this.graphics.strokePoints(inner, true);
+      this.drawDamageDecoration(PURIFIER_RADIUS);
     }
   }
 
@@ -355,7 +381,7 @@ export class PurificationModuleEntity {
 
     let litColor: number | null = null;
     if (this.healthState === 'healthy') {
-      litColor = INDICATOR_HEALTHY_COLOR;
+      litColor = this.config.type === 'PURIFIER' ? PURIFIER_LAMP : INDICATOR_HEALTHY_COLOR;
     } else if (this.healthState === 'damaged' && this.blinkOn) {
       litColor = INDICATOR_DAMAGED_COLOR;
     }
@@ -380,12 +406,10 @@ export class PurificationModuleEntity {
 
     // Background
     this.hpBarBg.clear();
-    this.hpBarBg.fillStyle(this.config.type === 'CORE' ? 0x222233 : 0x332222, barAlpha * 0.8);
+    this.hpBarBg.fillStyle(this.hpBarSlotColor(), barAlpha * 0.8);
     this.hpBarBg.fillRect(x - HP_BAR_WIDTH / 2, barY, HP_BAR_WIDTH, HP_BAR_HEIGHT);
 
-    // Fill (same color as module, or danger red when critical)
-    const fillColor = ratio < 0.25 ? DANGER_COLOR :
-      (this.config.type === 'CORE' ? CORE_MAIN : STORAGE_MAIN);
+    const fillColor = ratio < 0.25 ? DANGER_COLOR : this.hpBarFillColor();
 
     this.hpBarFill.clear();
     this.hpBarFill.fillStyle(fillColor, barAlpha);
@@ -397,12 +421,20 @@ export class PurificationModuleEntity {
     );
   }
 
+  private hpBarSlotColor(): number {
+    if (this.config.type === 'PURIFIER') return PURIFIER_BAR_SLOT;
+    return this.config.type === 'CORE' ? 0x222233 : 0x332222;
+  }
+
+  private hpBarFillColor(): number {
+    if (this.config.type === 'PURIFIER') return PURIFIER_FILL_OUTER;
+    return this.config.type === 'CORE' ? CORE_MAIN : STORAGE_MAIN;
+  }
+
   private getHpBarY(): number {
     const { y, type } = this.config;
-    // Position below module body
-    if (type === 'CORE') {
-      return y + CORE_RADIUS + HP_BAR_GAP;
-    }
+    if (type === 'CORE') return y + CORE_RADIUS + HP_BAR_GAP;
+    if (type === 'PURIFIER') return y + PURIFIER_RADIUS + HP_BAR_GAP;
     return y + STORAGE_HALF + HP_BAR_GAP;
   }
 }

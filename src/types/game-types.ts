@@ -217,4 +217,9 @@ export interface SaveDataV1 {
    * Optional so saves written before this field existed still load (empty state).
    */
   contaminantRuntimeState?: Record<string, { solidifyCounter?: number; combustAccumulator?: number; echoBonusGranted?: number }>;
+  /**
+   * Global module maxHp thicken tier (Slice 7, DEC-064). 0–3 → maxHp 100/115/130/145.
+   * Optional so pre-Slice-7 saves still load (treated as 0; missing PURIFIER is filled).
+   */
+  moduleMaxHpTier?: 0 | 1 | 2 | 3;
 }

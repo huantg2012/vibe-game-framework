@@ -159,11 +159,13 @@ function render(): void {
   // Module HP data
   const coreMod = gameState.getModule('CORE');
   const storageMod = gameState.getModule('STORAGE');
+  const purifierMod = gameState.getModule('PURIFIER');
+  const startingChaos = gameState.getStartingChaos();
 
   let html = `<div class="panel-title">存续报告</div>`;
 
   html += `<div class="panel-fixed">`;
-  html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">`;
+  html += `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;">`;
 
   // Core module
   if (coreMod) {
@@ -195,6 +197,20 @@ function render(): void {
     </div>`;
   }
 
+  if (purifierMod) {
+    const purifHpPct = Math.round((purifierMod.hp / purifierMod.maxHp) * 100);
+    html += `<div style="padding:6px;border:1px solid #2a2d32;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+        <span style="font-size:13px;color:#1aad96;font-weight:bold;">净化器</span>
+        <span style="font-size:12px;color:#8a8f96;"><span style="color:#1aad96;font-weight:bold;">${purifierMod.hp}</span> / <span style="color:#1aad96;font-weight:bold;">${purifierMod.maxHp}</span></span>
+      </div>
+      <div class="stat-bar" style="width:100%;">
+        <div class="stat-bar-fill" style="width:${purifHpPct}%;background:#1aad96;"></div>
+      </div>
+      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">起始混乱 <span style="color:#1aad96;font-weight:bold;">${startingChaos}</span></div>
+    </div>`;
+  }
+
   html += `</div>`;
   html += `</div>`;
 
@@ -212,6 +228,10 @@ function render(): void {
     <div class="stat-row">
       <span class="stat-label">薪柴值</span>
       <span class="stat-value" style="color:${storageEffect > 1 ? '#c4873a' : '#c8cdd4'};">x${storageEffect.toFixed(2)}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">起始混乱</span>
+      <span class="stat-value" style="color:#1aad96;">${startingChaos}</span>
     </div>
     <div class="stat-row">
       <span class="stat-label">潮汐</span>

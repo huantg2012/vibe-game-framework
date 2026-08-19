@@ -44,6 +44,7 @@ import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { TileType, type Contaminant, type ContaminantRarity, type ContaminantType, type Vector2 } from '@/types/game-types';
 import type { LandmarkDef } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
+import { clamp } from '@/utils/math';
 
 /** Render depths. The gaps leave room for decals, entities and the HUD. */
 const DEPTH = {
@@ -175,9 +176,17 @@ export class RiftScene extends Phaser.Scene {
     // growthMods.kindlingAffinity (+N per pickup) applied through LootSystem config below
     // growthMods.vitalityBonus (+HP) applied through combat system max health
 
+    const startingChaos = sortieModifiers?.startingChaos ?? gameState.getStartingChaos();
+    let residueChaos = 0;
+    for (const effect of gameState.getPendingSideEffects()) {
+      if (effect.type === 'initial_chaos') residueChaos += effect.value;
+    }
+    const openingChaos = clamp(startingChaos + residueChaos, 0, GAME_CONSTANTS.CHAOS.HARD_CAP);
+
     this.chaos = new ChaosSystem({
       onModulate: this.applyChaosModulators,
       chaosRateModifier: effectiveChaosRate,
+      startingValue: openingChaos,
     });
 
     this.loot.create(this, layout.kindlingNodes, this.player.getSprite(), {
@@ -282,10 +291,10 @@ export class RiftScene extends Phaser.Scene {
     this.sortieAcquired = [];
     this.sortiePassiveTriggers = new Map();
 
-    // Apply initial chaos modulators (all at 0 - no effect)
-    this.applyChaosModulators(getChaosModulators(0));
+    this.applyChaosModulators(getChaosModulators(this.chaos.getValue()));
 
-    // Consume pending side effects from defense engine (Slice 4)
+    // Consume pending side effects from defense engine (Slice 4).
+    // initial_chaos is already folded into openingChaos — do not add it again.
     this.applyPendingSideEffects();
 
     this.minimap.create(
@@ -692,8 +701,7 @@ export class RiftScene extends Phaser.Scene {
   private applySingleSideEffect(effect: PendingSideEffect): void {
     switch (effect.type) {
       case 'initial_chaos':
-        // Add chaos immediately at sortie start
-        this.chaos.addImmediate(effect.value);
+        // Already written into ChaosSystem.startingValue (rule 31a). Toast still fires.
         break;
       case 'chaos_rate_mult':
         // Multiply chaos rate for a duration

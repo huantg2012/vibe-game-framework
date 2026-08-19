@@ -20,12 +20,22 @@ import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 // Types
 // ---------------------------------------------------------------------------
 
-export type InteractionTargetType = 'core' | 'storage' | 'rift' | 'defense' | 'growth';
+export type InteractionTargetType = 'core' | 'storage' | 'purifier' | 'rift' | 'defense' | 'growth' | 'thicken';
+
+export interface ThickenPromptData {
+  currentMax: number;
+  nextMax: number | null;
+  tier: number;
+  cost: number | null;
+  shortfall: number;
+  status: 'affordable' | 'short' | 'capped';
+}
 
 export interface InteractionTarget {
   type: InteractionTargetType;
   distance: number;
   moduleData?: { hp: number; maxHp: number; effectPct: number };
+  thickenData?: ThickenPromptData;
 }
 
 // ---------------------------------------------------------------------------
@@ -41,7 +51,7 @@ const COL = {
   barEmpty: '#1a1e22',
 } as const;
 
-const MODULE_LABEL: Record<string, string> = { CORE: '核心', STORAGE: '储藏' };
+const MODULE_LABEL: Record<string, string> = { CORE: '核心', STORAGE: '储藏', PURIFIER: '净化器' };
 
 /** Same phase words as status-panel `phaseLabels`. Do not invent 满潮 / 落潮. */
 const TIDE_PHASE_LABEL: Record<TidePhase, string> = {
@@ -63,6 +73,7 @@ export class PurificationHud {
   private lastPromptHtml = '';
   private lastHudHtml = '';
   private promptVisible = true;
+  private thickenFlashUntil = 0;
 
   create(): void {
     injectPanelStyles();
@@ -133,6 +144,13 @@ export class PurificationHud {
     this.promptEl = null;
     this.lastPromptHtml = '';
     this.lastHudHtml = '';
+    this.thickenFlashUntil = 0;
+  }
+
+  /** Human-side positive flash after a successful thicken (300ms #e0a848 → rest). */
+  flashThickenSuccess(): void {
+    this.thickenFlashUntil = performance.now() + 300;
+    this.lastPromptHtml = '';
   }
 
   // ------------------------------------------------------------------ private
@@ -201,7 +219,9 @@ export class PurificationHud {
   }
 
   private targetColor(targetId: string): string {
-    return targetId === 'STORAGE' ? COL.kindlingOrange : COL.brightText;
+    if (targetId === 'STORAGE') return COL.kindlingOrange;
+    if (targetId === 'PURIFIER') return COL.tideCyan;
+    return COL.brightText;
   }
 
   private buildKindlingSlot(reserve: number): string {
@@ -262,6 +282,13 @@ export class PurificationHud {
   }
 
   private buildPromptWithContext(action: string, target: InteractionTarget): string {
+    if (target.type === 'thicken' && target.thickenData) {
+      return this.buildThickenPrompt(target.thickenData);
+    }
+    if (target.type === 'purifier') {
+      return this.buildPurifierPrompt(target);
+    }
+
     const detail = this.getPromptDetail(target);
     let html = `<span style="color:${COL.brightText};">[E]</span> <span style="color:#8a8f96;">${action}</span>`;
     if (detail) {
@@ -271,10 +298,56 @@ export class PurificationHud {
     return html;
   }
 
+  private buildPurifierPrompt(target: InteractionTarget): string {
+    const hp = target.moduleData?.hp;
+    const maxHp = target.moduleData?.maxHp;
+    let html = `<span style="color:${COL.brightText};font-size:12px;">[E]</span>`
+      + `<span style="color:#8a8f96;font-size:12px;margin-left:6px;">净化器</span>`;
+    if (hp !== undefined && maxHp !== undefined) {
+      html += `<span style="color:#5a5f66;font-size:12px;margin:0 6px;">│</span>`
+        + `<span style="color:#8a8f96;font-size:12px;">净化器完整度</span>`
+        + `<span style="color:#c8cdd4;font-size:13px;margin-left:6px;">${hp}</span>`
+        + `<span style="color:#8a8f96;font-size:12px;margin:0 4px;">/</span>`
+        + `<span style="color:#c8cdd4;font-size:13px;">${maxHp}</span>`;
+    }
+    html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` + this.buildDefaultPrompt();
+    return html;
+  }
+
+  private buildThickenPrompt(data: ThickenPromptData): string {
+    const flash = performance.now() < this.thickenFlashUntil;
+    const numColor = flash ? '#e0a848' : '#c8cdd4';
+    const sep = `<span style="color:#5a5f66;font-size:12px;margin:0 6px;">│</span>`;
+    let html = `<span style="color:#c8cdd4;font-size:12px;">[E]</span>`
+      + `<span style="color:#8a8f96;font-size:12px;margin-left:6px;">加厚</span>`
+      + sep
+      + `<span style="color:#8a8f96;font-size:12px;">完整度上限</span>`
+      + `<span style="color:${numColor};font-size:13px;margin-left:6px;">${data.currentMax}</span>`;
+    if (data.status !== 'capped' && data.nextMax !== null) {
+      html += `<span style="color:${numColor};font-size:13px;margin-left:6px;">${data.nextMax}</span>`;
+    }
+    html += `<span style="color:#8a8f96;font-size:12px;margin-left:8px;">档</span>`
+      + `<span style="color:#8a8f96;font-size:12px;margin-left:6px;">第 ${data.tier} 档</span>`;
+    html += `<span style="color:#8a8f96;font-size:12px;margin-left:8px;">薪柴</span>`;
+    if (data.status === 'capped') {
+      html += `<span style="color:#8a8f96;font-size:12px;margin-left:6px;">上限已至</span>`;
+    } else if (data.status === 'short') {
+      html += `<span style="color:#b89040;font-size:13px;margin-left:6px;">还差 ${data.shortfall}</span>`
+        + `<span style="color:#b89040;font-size:12px;margin-left:8px;">薪柴不足 · 还差 ${data.shortfall}</span>`;
+    } else {
+      html += `<span style="color:#c4873a;font-size:13px;margin-left:6px;">${data.cost ?? ''}</span>`
+        + `<span style="color:#c8cdd4;font-size:12px;margin-left:8px;">可加厚</span>`;
+    }
+    html += `<span style="color:${COL.barEmpty};margin:0 6px;">│</span>` + this.buildDefaultPrompt();
+    return html;
+  }
+
   private getActionLabel(target: InteractionTarget): string {
     switch (target.type) {
       case 'core': return '◈ 核心';
       case 'storage': return '▣ 储藏';
+      case 'purifier': return '净化器';
+      case 'thicken': return '加厚';
       case 'rift': return '◩ 踏入裂隙';
       case 'defense': return '△ 供奉';
       case 'growth': return '✦ 蜕变';

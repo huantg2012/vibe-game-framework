@@ -6,7 +6,7 @@
  */
 
 import { eventBus } from '@/core/event-bus';
-import { gameState } from '@/managers/game-state';
+import { computeStartingChaos, gameState } from '@/managers/game-state';
 import type { ModuleType } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
@@ -147,13 +147,36 @@ function confirmAllocation(): void {
 
 const P = GAME_CONSTANTS.PURIFICATION;
 
-function computeEffectText(type: ModuleType, hp: number): string {
+const MODULE_NAME: Record<ModuleType, string> = {
+  CORE: '核心',
+  STORAGE: '储藏',
+  PURIFIER: '净化器',
+};
+const MODULE_COLOR: Record<ModuleType, string> = {
+  CORE: '#c8cdd4',
+  STORAGE: '#c4873a',
+  PURIFIER: '#1aad96',
+};
+const MODULE_HP_LABEL: Record<ModuleType, string> = {
+  CORE: '核心完整度',
+  STORAGE: '储藏完整度',
+  PURIFIER: '净化器完整度',
+};
+
+function effectHp(hp: number): number {
+  return Math.min(hp, P.MODULE_EFFECT_HP_REF);
+}
+
+function computeEffectParts(type: ModuleType, hp: number, maxHp: number): { name: string; value: string } {
   if (type === 'CORE') {
-    const pct = Math.round((hp / 100) * P.MAX_CORE_REDUCTION * 100);
-    return `混乱增速 -${pct}%`;
+    const pct = Math.round((effectHp(hp) / P.MODULE_EFFECT_HP_REF) * P.MAX_CORE_REDUCTION * 100);
+    return { name: '混乱增速', value: `-${pct}%` };
   }
-  const mult = (1 + (hp / 100) * P.MAX_STORAGE_BONUS).toFixed(2);
-  return `薪柴价值 x${mult}`;
+  if (type === 'STORAGE') {
+    const mult = (1 + (effectHp(hp) / P.MODULE_EFFECT_HP_REF) * P.MAX_STORAGE_BONUS).toFixed(2);
+    return { name: '薪柴价值', value: `x${mult}` };
+  }
+  return { name: '起始混乱', value: String(computeStartingChaos(hp, maxHp)) };
 }
 
 /** Shared by render() (for +/- boundary state) and onKeyDown() (for the keyboard
@@ -186,32 +209,37 @@ function getCheapestUpgradeCost(): number | null {
  * forecast's current target (the module that will actually eat the next impact).
  */
 function buildOpportunityCostRow(type: ModuleType): string {
-  const otherType: ModuleType = type === 'CORE' ? 'STORAGE' : 'CORE';
-  const otherLabel = otherType === 'CORE' ? '核心完整度' : '储藏完整度';
-  const other = gameState.getModule(otherType);
-  const otherHp = other ? String(other.hp) : '—';
-  const otherMax = other ? String(other.maxHp) : '—';
-  const otherColor = otherType === 'STORAGE' ? '#c4873a' : '#c8cdd4';
-
+  const others = (['CORE', 'STORAGE', 'PURIFIER'] as const).filter((t) => t !== type);
   const cheapestCost = getCheapestUpgradeCost();
   const forecast = impactSystem.getForecastDisplay();
   const isForecastTarget = forecast?.targetId === type;
+  const forecastName = forecast
+    ? (MODULE_NAME[forecast.targetId as ModuleType] ?? forecast.targetId)
+    : '—';
 
-  return `<div class="separator"></div>
-    <div style="display:flex;gap:24px;padding:4px 0;">
-      <div style="flex:1;">
-        <div style="font-size:12px;color:#8a8f96;">${otherLabel}</div>
+  const otherCells = others.map((otherType) => {
+    const other = gameState.getModule(otherType);
+    const otherHp = other ? String(other.hp) : '—';
+    const otherMax = other ? String(other.maxHp) : '—';
+    const otherColor = MODULE_COLOR[otherType];
+    return `<div style="flex:1;">
+        <div style="font-size:12px;color:#8a8f96;">${MODULE_HP_LABEL[otherType]}</div>
         <div><span style="font-size:13px;font-weight:bold;color:${otherColor};">${otherHp}</span>
         <span style="color:#8a8f96;"> / </span>
         <span style="font-size:13px;font-weight:bold;color:${otherColor};">${otherMax}</span></div>
-      </div>
+      </div>`;
+  }).join('');
+
+  return `<div class="separator"></div>
+    <div style="display:flex;gap:24px;padding:4px 0;">
+      ${otherCells}
       <div style="flex:1;">
         <div style="font-size:12px;color:#8a8f96;">蜕变最低</div>
         <div style="font-size:13px;font-weight:bold;color:#c4873a;">${cheapestCost !== null ? cheapestCost : '已全部购满'}</div>
       </div>
       <div style="flex:1;">
         <div style="font-size:12px;color:#8a8f96;">下次冲击目标</div>
-        <div style="font-size:13px;font-weight:bold;color:${isForecastTarget ? '#b89040' : '#8a8f96'};">${isForecastTarget ? '本模块' : '另一模块'}</div>
+        <div style="font-size:13px;font-weight:bold;color:${isForecastTarget ? '#b89040' : '#8a8f96'};">${isForecastTarget ? '本模块' : forecastName}</div>
       </div>
     </div>`;
 }
@@ -228,10 +256,11 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const siphonBoosted = gameState.getRepairEfficiencyMult() > 1;
   const maxAllocatable = getMaxAllocatable(hp, maxHp);
 
-  const typeLabel = type === 'CORE' ? '核心' : '储藏';
-  const typeColor = type === 'CORE' ? '#c8cdd4' : '#c4873a';
+  const typeLabel = MODULE_NAME[type];
+  const typeColor = MODULE_COLOR[type];
   const forecast = impactSystem.getForecastDisplay();
   const isForecastTarget = forecast?.targetId === type;
+  const hpLabel = type === 'PURIFIER' ? '净化器完整度' : '完整度';
 
   const hpPct = Math.round((hp / maxHp) * 100);
   const repairAmount = selectedAmount * repairPer;
@@ -240,13 +269,10 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const previewPct = Math.max(0, repairedPct - hpPct);
   const remaining = reserve - selectedAmount;
 
-  const currentEffect = computeEffectText(type, hp);
-  const afterEffect = computeEffectText(type, repairedHp);
-  const effectParts = currentEffect.split(' ');
-  const effectName = effectParts[0] ?? '';
-  const currentVal = effectParts.slice(1).join(' ');
-  const afterVal = afterEffect.split(' ').slice(1).join(' ') || afterEffect;
-  const effectColor = type === 'CORE' ? '#1aad96' : '#c4873a';
+  const currentEffect = computeEffectParts(type, hp, maxHp);
+  const afterEffect = computeEffectParts(type, repairedHp, maxHp);
+  const effectColor = type === 'STORAGE' ? '#c4873a' : '#1aad96';
+  const barColor = type === 'PURIFIER' ? '#1aad96' : typeColor;
 
   let html = `<div class="panel-title" style="display:flex;justify-content:space-between;">
     <span style="font-size:16px;font-weight:bold;color:${typeColor};">${typeLabel}</span>
@@ -255,20 +281,20 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
 
   html += `<div class="panel-fixed">
     <div style="margin:8px 0 4px;display:flex;gap:12px;align-items:baseline;">
-      <span style="font-size:12px;color:#8a8f96;width:96px;">完整度</span>
+      <span style="font-size:12px;color:#8a8f96;width:96px;">${hpLabel}</span>
       <span style="font-size:16px;font-weight:bold;color:${typeColor};">${hp}</span>
       <span>/</span>
       <span style="font-size:16px;font-weight:bold;color:${typeColor};">${maxHp}</span>
     </div>
     <div class="pbar-wrap">
       <div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div>
-      <div class="pbar-fill" style="width:${hpPct}%;background:${typeColor};"></div>
+      <div class="pbar-fill" style="width:${hpPct}%;background:${barColor};"></div>
     </div>
     <div style="margin-top:8px;display:flex;gap:12px;align-items:baseline;">
-      <span style="font-size:12px;color:#8a8f96;width:96px;">${effectName}</span>
-      <span style="font-size:16px;font-weight:bold;color:${effectColor};">${currentVal}</span>
+      <span style="font-size:12px;color:#8a8f96;width:96px;">${currentEffect.name}</span>
+      <span style="font-size:16px;font-weight:bold;color:${effectColor};">${currentEffect.value}</span>
       <span>→</span>
-      <span style="font-size:16px;font-weight:bold;color:${effectColor};">${afterVal}</span>
+      <span style="font-size:16px;font-weight:bold;color:${effectColor};">${afterEffect.value}</span>
     </div>
   </div>`;
 

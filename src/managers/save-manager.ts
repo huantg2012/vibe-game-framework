@@ -82,6 +82,7 @@ export const saveManager = {
       version: SAVE.VERSION as 1,
       kindlingReserve: gs.kindlingReserve,
       modules: gs.modules,
+      moduleMaxHpTier: gs.moduleMaxHpTier,
       cycle: gs.cycle,
       tide,
       contaminants: cs.contaminants,
@@ -123,6 +124,7 @@ export const saveManager = {
       kindlingReserve: data.kindlingReserve,
       cycle: data.cycle,
       modules: data.modules,
+      moduleMaxHpTier: data.moduleMaxHpTier,
     });
 
     tideSystem.loadState(data.tide);

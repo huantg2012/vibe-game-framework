@@ -76,7 +76,7 @@ export interface ChaosSystemAPI {
   getPeak(): number;
   addChaos(source: string, amount: number): void;
   setPaused(paused: boolean): void;
-  reset(): void;
+  reset(startingValue?: number): void;
   destroy(): void;
 }
 
@@ -85,21 +85,26 @@ export interface ChaosSystemConfig {
   onModulate?: (modulators: ChaosModulators) => void;
   /** Multiplier on BASE_RATE from the purification module (CORE effect). Default 1.0. */
   chaosRateModifier?: number;
+  /**
+   * Sortie opening value (purifier startingChaos + Σ initial_chaos, already clamped).
+   * Thresholds already crossed at this value are marked fired without emitting.
+   */
+  startingValue?: number;
 }
 
 /** Max dt (ms) clamped to prevent background-tab chaos explosions. */
 const DT_CLAMP_MS = 100;
 
 export class ChaosSystem implements ChaosSystemAPI {
-  private value: number = GAME_CONSTANTS.CHAOS.START_VALUE;
+  private value = 0;
   private peak = 0;
   private paused = false;
   private rateMultiplier = 1.0;
   /** Module-based rate modifier (CORE effect). Applied multiplicatively on BASE_RATE. */
   private readonly chaosRateModifier: number;
 
-  private lastEmitted: number = GAME_CONSTANTS.CHAOS.START_VALUE;
-  private lastModulated: number = GAME_CONSTANTS.CHAOS.START_VALUE;
+  private lastEmitted = 0;
+  private lastModulated = 0;
 
   /** Thresholds already fired (reset on reset()). */
   private thresholdsFired: [boolean, boolean, boolean] = [false, false, false];
@@ -123,6 +128,7 @@ export class ChaosSystem implements ChaosSystemAPI {
   constructor(config?: ChaosSystemConfig) {
     this.chaosRateModifier = config?.chaosRateModifier ?? 1.0;
     this.onModulate = config?.onModulate ?? null;
+    this.applyOpeningValue(config?.startingValue);
 
     this.onEnemyAlert = (payload) => {
       const { enemyId, alertLevel } = payload;
@@ -189,21 +195,17 @@ export class ChaosSystem implements ChaosSystemAPI {
     this.checkModulate();
   }
 
-  reset(): void {
-    this.value = GAME_CONSTANTS.CHAOS.START_VALUE;
-    this.peak = 0;
+  reset(startingValue?: number): void {
     this.paused = false;
     this.rateMultiplier = 1.0;
     this.tempRateDeadlineMs = 0;
     this.tempRateMult = 1.0;
     this.reductionDeadlineMs = 0;
     this.reductionMult = 1.0;
-    this.lastEmitted = GAME_CONSTANTS.CHAOS.START_VALUE;
-    this.lastModulated = GAME_CONSTANTS.CHAOS.START_VALUE;
-    this.thresholdsFired = [false, false, false];
     this.chasingEnemies.clear();
     this.detectionCooldowns.clear();
     this.clockMs = 0;
+    this.applyOpeningValue(startingValue);
   }
 
   destroy(): void {
@@ -282,6 +284,24 @@ export class ChaosSystem implements ChaosSystemAPI {
   private reductionMult = 1.0;
 
   // ------------------------------------------------------------------ internal
+
+  /**
+   * Write the sortie opening value once. Thresholds already at or below this value
+   * are marked fired without emitting, so the opening does not flash as a crossing.
+   */
+  private applyOpeningValue(startingValue?: number): void {
+    const chaos = GAME_CONSTANTS.CHAOS;
+    const start = clamp(startingValue ?? chaos.START_VALUE, 0, chaos.HARD_CAP);
+    this.value = start;
+    this.peak = start;
+    this.lastEmitted = start;
+    this.lastModulated = start;
+    this.thresholdsFired = [
+      start >= chaos.THRESHOLD_1,
+      start >= chaos.THRESHOLD_2,
+      start >= chaos.THRESHOLD_3,
+    ];
+  }
 
   private applyDetectionBonus(enemyId: string): void {
     const chaos = GAME_CONSTANTS.CHAOS;

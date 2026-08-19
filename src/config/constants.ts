@@ -287,7 +287,20 @@ export const GAME_CONSTANTS = {
     INTERACTION_RADIUS: 32,    // pixels for module/rift-entrance interaction
     /** Module state */
     MODULE_INITIAL_HP: 70,
+    /** Tier-0 repair cap / effect denominator baseline (DEC-064). */
+    MODULE_BASE_MAX_HP: 100,
+    /** Alias of MODULE_BASE_MAX_HP so older call sites still compile. */
     MODULE_MAX_HP: 100,
+    /** Each thicken tier adds this many maxHp to every module. */
+    MODULE_MAX_HP_PER_TIER: 15,
+    /** Highest purchasable thicken tier (maxHp = 100 + 15*3 = 145). */
+    MODULE_MAX_HP_TIERS: 3,
+    /** Kindling cost to raise 0→1 / 1→2 / 2→3. Not an upgrade; no discount. */
+    MODULE_MAX_HP_COST: [12, 20, 32] as const,
+    /** CORE/STORAGE effect denominator; thicken does not raise this. */
+    MODULE_EFFECT_HP_REF: 100,
+    /** Starting chaos when purifier hp = 0 (full integrity → 0). */
+    CHAOS_HARD_START: 50,
     REPAIR_PER_KINDLING: 4,    // 1 kindling = this many hp (tuned for scarcity)
     /** Impact system (intensity now driven by TideSystem, see TIDE constants) */
     BASE_IMPACT_DAMAGE: 30,

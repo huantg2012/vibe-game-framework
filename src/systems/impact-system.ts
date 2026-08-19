@@ -136,6 +136,47 @@ function severityFromIntensity(intensity: number): ForecastSeverity {
   return 'extreme';
 }
 
+function pickUniform<T extends { id: string }>(items: readonly T[], exceptId?: string | null): T {
+  const pool = exceptId ? items.filter((m) => m.id !== exceptId) : items;
+  const source = pool.length > 0 ? pool : items;
+  return source[Math.floor(Math.random() * source.length)]!;
+}
+
+function pickPrimaryModule<T extends { id: string }>(
+  modules: readonly T[],
+  forecastId: string | null,
+): T {
+  const forecast = forecastId ? modules.find((m) => m.id === forecastId) : undefined;
+  if (Math.random() < P.FORECAST_ACCURACY) {
+    return forecast ?? pickUniform(modules);
+  }
+  return pickUniform(modules, forecastId);
+}
+
+/** Primary takes THREAT_FOCUS_RATIO; remainder split across the others; last eats residue. */
+function distributeThreatDamage<T extends { id: string }>(
+  totalDamage: number,
+  primaryId: string,
+  modules: readonly T[],
+): Record<string, number> {
+  const total = Math.round(totalDamage);
+  const primaryDamage = Math.round(totalDamage * P.THREAT_FOCUS_RATIO);
+  const rest = total - primaryDamage;
+  const result: Record<string, number> = {};
+  for (const mod of modules) result[mod.id] = 0;
+  result[primaryId] = primaryDamage;
+
+  const others = modules.filter((m) => m.id !== primaryId);
+  let allocated = 0;
+  for (let i = 0; i < others.length; i++) {
+    const isLast = i === others.length - 1;
+    const share = isLast ? rest - allocated : Math.round(rest / others.length);
+    result[others[i]!.id] = share;
+    allocated += share;
+  }
+  return result;
+}
+
 /**
  * Chooses which module is the "heavy target" this cycle (ground truth). Feeds run()'s
  * FORECAST_ACCURACY bias and defense-engine's `forecastCorrect` check (retrograde) — both
@@ -207,24 +248,11 @@ export const impactSystem = {
     // Emit start
     eventBus.emit(GameEvent.IMPACT_STARTED, { intensity });
 
-    // Determine primary target (spec rule 22)
+    // Determine primary target (spec rule 22): 80% keep forecast, else pick uniformly
+    // among the remaining blood-bearing modules. Never hardcode modules[0]/[1].
     const modules = gameState.getModules();
-    const primaryIndex = Math.random() < P.FORECAST_ACCURACY
-      ? (forecastTargetId === modules[1]!.id ? 1 : 0)
-      : (forecastTargetId === modules[1]!.id ? 0 : 1);
-    const secondaryIndex = primaryIndex === 0 ? 1 : 0;
-
-    const primary = modules[primaryIndex]!;
-    const secondary = modules[secondaryIndex]!;
-
-    const primaryDamage = Math.round(totalDamage * P.THREAT_FOCUS_RATIO);
-    const secondaryDamage = Math.round(totalDamage * (1 - P.THREAT_FOCUS_RATIO));
-
-    // Base damage per module before defense
-    const baseDamagePerModule: Record<string, number> = {
-      [primary.id]: primaryDamage,
-      [secondary.id]: secondaryDamage,
-    };
+    const primary = pickPrimaryModule(modules, forecastTargetId);
+    const baseDamagePerModule = distributeThreatDamage(totalDamage, primary.id, modules);
 
     // --- Defense engine phase (Slice 4) ---
     const slots = defenseSlots ?? [];
@@ -233,12 +261,18 @@ export const impactSystem = {
     let defenseResult: DefenseResult | undefined;
 
     if (hasDefense) {
+      const moduleHps: Record<string, number> = {};
+      const moduleMaxHps: Record<string, number> = {};
+      for (const mod of modules) {
+        moduleHps[mod.id] = mod.hp;
+        moduleMaxHps[mod.id] = mod.maxHp;
+      }
       const context: DefenseContext = {
         forecastTargetId,
         actualPrimaryId: primary.id,
         stabilityProgress: 0, // TODO: wire stabilityTracker
-        moduleHps: { [primary.id]: primary.hp, [secondary.id]: secondary.hp },
-        moduleMaxHps: { [primary.id]: primary.maxHp, [secondary.id]: secondary.maxHp },
+        moduleHps,
+        moduleMaxHps,
       };
 
       defenseResult = applyDefenseEffects(baseDamagePerModule, slots, context);
@@ -370,8 +404,7 @@ export const impactSystem = {
     // where the value came from, since only the resulting id matters to either.
     forecastTargetId = pendingTargetQueue.length > 0
       ? pendingTargetQueue.shift()!
-      : modules[Math.random() < 0.5 ? 0 : 1]!.id;
-    const targetIndex = modules.findIndex((m) => m.id === forecastTargetId);
+      : pickUniform(modules).id;
     const trueSeverity = severityFromIntensity(nextIntensity);
 
     // growth_forecast_clarity (DEC-034): sharpens both the mirror misreport chance and
@@ -384,8 +417,9 @@ export const impactSystem = {
     const slotted = contaminantSystem.getDefenseSlotted();
     const mirrorSlotted = slotted.some((c) => c !== null && c.type === 'mirror' && c.stage === 'defense');
     const misreportChance = mirrorSlotted ? Math.max(0, MIRROR_MISREPORT_CHANCE - reliabilityBonus) : 0;
-    const otherIndex = targetIndex === 0 ? 1 : 0;
-    const displayTargetId = Math.random() < misreportChance ? modules[otherIndex]!.id : forecastTargetId;
+    const displayTargetId = Math.random() < misreportChance
+      ? pickUniform(modules, forecastTargetId).id
+      : forecastTargetId;
 
     // Baseline severity blur: independent of mirror, always possible, sharpened by the
     // same reliability bonus down to a residual floor (never perfectly precise).
@@ -411,7 +445,7 @@ export const impactSystem = {
     const muffleSlotted = slotted.some((c) => c !== null && c.type === 'muffle' && c.stage === 'defense');
     if (muffleSlotted) {
       if (pendingTargetQueue.length === 0) {
-        pendingTargetQueue.push(modules[Math.random() < 0.5 ? 0 : 1]!.id);
+        pendingTargetQueue.push(pickUniform(modules).id);
       }
       const lookaheadTargetId = pendingTargetQueue[0]!;
       forecastLookahead = { targetId: lookaheadTargetId, severity: severityFromIntensity(nextNextIntensityEstimate) };

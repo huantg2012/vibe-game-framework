@@ -2,9 +2,10 @@
  * Purification Scene - the base management walkable space.
  *
  * A small tilemap (~14x12 tiles) with a circular safe area. The player walks around,
- * interacts with two modules (CORE center, STORAGE right) via allocation panels,
- * and enters the rift via a central entrance. The boundary features particle atmosphere
- * and periodic apparitions.
+ * interacts with three modules (CORE center, STORAGE right, PURIFIER south) via
+ * allocation panels, thickens maxHp at the altar-north stake, and enters the rift
+ * via the north entrance. The boundary features particle atmosphere and periodic
+ * apparitions.
  *
  * Reuses Player entity + VisibilitySystem (omni mode). Does NOT use: AI, combat, chaos.
  *
@@ -69,20 +70,24 @@ const ELLIPSE_RY = 5.0; // tiles
 // Module positions (world px) — CORE at center, others radially around it
 const CORE_POS = { x: CENTER_X, y: CENTER_Y };
 const STORAGE_POS = { x: CENTER_X + 3.5 * TILE, y: CENTER_Y };
+const PURIFIER_POS = { x: CENTER_X, y: CENTER_Y + 3.5 * TILE };
 // Rift entrance (north edge)
 const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 3.5 * TILE };
 // Defense management point (south-west)
 const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 2.5 * TILE };
 // Growth altar (west)
 const GROWTH_POS = { x: CENTER_X - 3.5 * TILE, y: CENTER_Y };
+// Thicken stake: 2.2 tiles north of the altar, same west axis (rule 2 / U)
+const THICKEN_POS = { x: GROWTH_POS.x, y: GROWTH_POS.y - 2.2 * TILE };
 
-// Interaction point colours (spec B3)
 const RIFT_CENTER = 0x1aad96;
 const RIFT_RING = 0x2ae6c8;
 const DEFENSE_CENTER = 0x6644aa;
 const DEFENSE_RING = 0x8866cc;
 const GROWTH_CENTER = 0xaa6622;
 const GROWTH_RING = 0xcc8844;
+const THICKEN_CENTER = 0x5a5f66;
+const THICKEN_RING = 0xc8cdd4;
 
 // Breathing animation speeds (radians per ms)
 const BREATH_SPEED_NORMAL = (2 * Math.PI) / 2500;
@@ -235,6 +240,7 @@ export class PurificationScene extends Phaser.Scene {
 
   private coreModule!: PurificationModuleEntity;
   private storageModule!: PurificationModuleEntity;
+  private purifierModule!: PurificationModuleEntity;
 
   private riftEntranceGraphics!: Phaser.GameObjects.Graphics;
   private riftEntrancePulse = 0;
@@ -246,6 +252,10 @@ export class PurificationScene extends Phaser.Scene {
   // Growth altar interaction point
   private growthGraphics!: Phaser.GameObjects.Graphics;
   private growthPulse = 0;
+
+  // Thicken stake (not a fourth module)
+  private thickenGraphics!: Phaser.GameObjects.Graphics;
+  private thickenPulse = 0;
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
@@ -338,7 +348,10 @@ export class PurificationScene extends Phaser.Scene {
 
     // Build dynamic boundary shape from current tide state
     const tideState = tideSystem.getState();
-    const interactionPts = [CORE_POS, STORAGE_POS, RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS];
+    const interactionPts = [
+      CORE_POS, STORAGE_POS, PURIFIER_POS,
+      RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS, THICKEN_POS,
+    ];
     this.boundaryShape = createBoundaryShape({
       ellipseRx: ELLIPSE_RX,
       ellipseRy: ELLIPSE_RY,
@@ -446,10 +459,19 @@ export class PurificationScene extends Phaser.Scene {
     });
     this.storageModule.create(this);
 
+    this.purifierModule = new PurificationModuleEntity({
+      id: 'PURIFIER',
+      type: 'PURIFIER',
+      x: PURIFIER_POS.x,
+      y: PURIFIER_POS.y,
+    });
+    this.purifierModule.create(this);
+
     // Interaction point graphics (unified circles, spec B3)
     this.riftEntranceGraphics = this.add.graphics().setDepth(20);
     this.defenseGraphics = this.add.graphics().setDepth(20);
     this.growthGraphics = this.add.graphics().setDepth(20);
+    this.thickenGraphics = this.add.graphics().setDepth(20);
 
     // Purification HUD (DOM overlay)
     purificationHud.create();
@@ -513,18 +535,23 @@ export class PurificationScene extends Phaser.Scene {
     // Update modules (checks proximity)
     this.coreModule.update(pos.x, pos.y);
     this.storageModule.update(pos.x, pos.y);
+    this.purifierModule.update(pos.x, pos.y);
 
-    // Calculate distances to all interaction points
     const riftDist = this.distTo(pos, RIFT_ENTRANCE_POS);
     const defDist = this.distTo(pos, DEFENSE_POS);
     const groDist = this.distTo(pos, GROWTH_POS);
+    const thickenDist = this.distTo(pos, THICKEN_POS);
+    const radius = GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
 
-    const nearRift = riftDist <= GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
-    const nearDefense = defDist <= GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
-    const nearGrowth = groDist <= GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
+    const nearRift = riftDist <= radius;
+    const nearDefense = defDist <= radius;
+    const nearGrowth = groDist <= radius;
+    const nearThicken = thickenDist <= radius;
 
-    // --- Determine nearest interaction target for prompt bar ---
-    const target = this.findNearestTarget(nearRift, nearDefense, nearGrowth, riftDist, defDist, groDist);
+    const target = this.findNearestTarget(
+      nearRift, nearDefense, nearGrowth, nearThicken,
+      riftDist, defDist, groDist, thickenDist,
+    );
     purificationHud.updatePrompt(target);
 
     // Hide prompt when a panel is open
@@ -574,24 +601,51 @@ export class PurificationScene extends Phaser.Scene {
       nearGrowth,
     );
 
+    const thickenHighlight = this.shouldHighlight('thicken');
+    const thickenSpeed = thickenHighlight ? BREATH_SPEED_HIGHLIGHT : (nearThicken ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
+    this.thickenPulse += delta * thickenSpeed;
+    drawInteractionPoint(
+      this.thickenGraphics,
+      THICKEN_POS.x, THICKEN_POS.y,
+      THICKEN_CENTER, THICKEN_RING,
+      7, 12,
+      this.thickenPulse,
+      thickenHighlight,
+      nearThicken,
+    );
+
     // Atmosphere + breathing overlay
     this.atmosphere.update(delta);
     this.breath.update(delta);
 
     // Interaction key (edge-triggered)
     if (this.interactKey && Phaser.Input.Keyboard.JustDown(this.interactKey)) {
-      if (this.isAnyPanelOpen()) return; // panel already open, ignore
+      if (this.isAnyPanelOpen()) return;
 
-      if (this.coreModule.isInRange()) {
-        this.openAllocationPanel('CORE');
-      } else if (this.storageModule.isInRange()) {
-        this.openAllocationPanel('STORAGE');
-      } else if (nearDefense) {
-        this.openDefensePanel();
-      } else if (nearGrowth) {
-        this.openGrowthPanel();
-      } else if (nearRift) {
-        this.enterRift();
+      switch (target?.type) {
+        case 'core':
+          this.openAllocationPanel('CORE');
+          break;
+        case 'storage':
+          this.openAllocationPanel('STORAGE');
+          break;
+        case 'purifier':
+          this.openAllocationPanel('PURIFIER');
+          break;
+        case 'defense':
+          this.openDefensePanel();
+          break;
+        case 'growth':
+          this.openGrowthPanel();
+          break;
+        case 'thicken':
+          this.tryRaiseModuleMaxHp();
+          break;
+        case 'rift':
+          this.enterRift();
+          break;
+        default:
+          break;
       }
     }
 
@@ -640,8 +694,8 @@ export class PurificationScene extends Phaser.Scene {
 
   /** Find the nearest in-range interaction target for the prompt bar. */
   private findNearestTarget(
-    nearRift: boolean, nearDefense: boolean, nearGrowth: boolean,
-    riftDist: number, defDist: number, groDist: number,
+    nearRift: boolean, nearDefense: boolean, nearGrowth: boolean, nearThicken: boolean,
+    riftDist: number, defDist: number, groDist: number, thickenDist: number,
   ): InteractionTarget | null {
     const candidates: InteractionTarget[] = [];
 
@@ -649,7 +703,7 @@ export class PurificationScene extends Phaser.Scene {
       const hpData = this.coreModule.getHpData();
       candidates.push({
         type: 'core',
-        distance: 0, // modules handle their own distance check
+        distance: 0,
         moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.coreModule.getEffectPct() } : undefined,
       });
     }
@@ -661,8 +715,13 @@ export class PurificationScene extends Phaser.Scene {
         moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.storageModule.getEffectPct() } : undefined,
       });
     }
-    if (nearRift) {
-      candidates.push({ type: 'rift', distance: riftDist });
+    if (this.purifierModule.isInRange()) {
+      const hpData = this.purifierModule.getHpData();
+      candidates.push({
+        type: 'purifier',
+        distance: 0,
+        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: 0 } : undefined,
+      });
     }
     if (nearDefense) {
       candidates.push({ type: 'defense', distance: defDist });
@@ -670,12 +729,45 @@ export class PurificationScene extends Phaser.Scene {
     if (nearGrowth) {
       candidates.push({ type: 'growth', distance: groDist });
     }
+    if (nearThicken) {
+      candidates.push({ type: 'thicken', distance: thickenDist, thickenData: this.readThickenPrompt() });
+    }
+    if (nearRift) {
+      candidates.push({ type: 'rift', distance: riftDist });
+    }
 
     if (candidates.length === 0) return null;
 
-    // Return the closest candidate
-    candidates.sort((a, b) => a.distance - b.distance);
+    const order: InteractionTarget['type'][] = [
+      'core', 'storage', 'purifier', 'defense', 'growth', 'thicken', 'rift',
+    ];
+    candidates.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
     return candidates[0]!;
+  }
+
+  private readThickenPrompt(): NonNullable<InteractionTarget['thickenData']> {
+    const tier = gameState.getModuleMaxHpTier();
+    const currentMax = gameState.getModuleMaxHp();
+    const cost = gameState.getNextModuleMaxHpCost();
+    const nextMax = cost === null ? null : currentMax + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER;
+    const reserve = gameState.getKindlingReserve();
+    let status: 'affordable' | 'short' | 'capped';
+    let shortfall = 0;
+    if (cost === null) {
+      status = 'capped';
+    } else if (reserve >= cost) {
+      status = 'affordable';
+    } else {
+      status = 'short';
+      shortfall = cost - reserve;
+    }
+    return { currentMax, nextMax, tier, cost, shortfall, status };
+  }
+
+  private tryRaiseModuleMaxHp(): void {
+    if (!gameState.raiseModuleMaxHp()) return;
+    purificationHud.flashThickenSuccess();
+    purificationHud.refresh();
   }
 
   private onPostUpdate(_time: number, delta: number): void {
@@ -816,7 +908,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   /** D1: Check whether an interaction point should pulse faster (has actionable content). */
-  private shouldHighlight(point: 'defense' | 'growth' | 'core' | 'storage'): boolean {
+  private shouldHighlight(point: 'defense' | 'growth' | 'core' | 'storage' | 'thicken'): boolean {
     const reserve = gameState.getKindlingReserve();
     switch (point) {
       case 'core': {
@@ -834,6 +926,10 @@ export class PurificationScene extends Phaser.Scene {
       }
       case 'growth': {
         return growthSystem.getAllUpgradeIds().some((id) => growthSystem.canAfford(id, reserve));
+      }
+      case 'thicken': {
+        const cost = gameState.getNextModuleMaxHpCost();
+        return cost !== null && cost <= reserve;
       }
     }
   }
@@ -860,6 +956,8 @@ export class PurificationScene extends Phaser.Scene {
         this.flashModule(this.coreModule);
       } else if (moduleId === 'STORAGE') {
         this.flashModule(this.storageModule);
+      } else if (moduleId === 'PURIFIER') {
+        this.flashModule(this.purifierModule);
       }
     }
   };
@@ -1000,11 +1098,13 @@ export class PurificationScene extends Phaser.Scene {
     this.visibility.destroy();
     this.coreModule.destroy();
     this.storageModule.destroy();
+    this.purifierModule.destroy();
     this.player.destroy();
     this.tilemapRenderer.destroy();
     this.riftEntranceGraphics?.destroy();
     this.defenseGraphics?.destroy();
     this.growthGraphics?.destroy();
+    this.thickenGraphics?.destroy();
 
     // Destroy DOM HUD
     purificationHud.destroy();

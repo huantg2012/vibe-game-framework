@@ -64,9 +64,8 @@ let panel: HTMLDivElement | null = null;
 let timer: ReturnType<typeof setTimeout> | null = null;
 let onDoneCallback: (() => void) | null = null;
 
-const MODULE_LABELS: Record<string, string> = { CORE: '核心', STORAGE: '储藏' };
-// A2 mapping: CORE green #4d9a6b → ui-text-bright; STORAGE stays warm-glow.
-const MODULE_COLORS: Record<string, string> = { CORE: '#c8cdd4', STORAGE: '#c4873a' };
+const MODULE_LABELS: Record<string, string> = { CORE: '核心', STORAGE: '储藏', PURIFIER: '净化器' };
+const MODULE_COLORS: Record<string, string> = { CORE: '#c8cdd4', STORAGE: '#c4873a', PURIFIER: '#1aad96' };
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -175,7 +174,7 @@ function buildHtml(
       <span style="font-size:16px;font-weight:bold;color:#c8cdd4;">${baseDmg}</span>
       <span style="font-size:12px;color:#8a8f96;">→</span>
       <span style="font-size:12px;color:#8a8f96;">实际</span>
-      <span style="font-size:16px;font-weight:bold;color:${d.moduleId === 'STORAGE' ? '#c4873a' : '#cc3333'};">${d.damage}</span>
+      <span style="font-size:16px;font-weight:bold;color:${d.moduleId === 'STORAGE' ? '#c4873a' : d.moduleId === 'PURIFIER' ? '#1aad96' : '#cc3333'};">${d.damage}</span>
       <div class="dmg-bar-wrap">
         <div class="dmg-bar-fill" style="width:${barPct}%;background:#cc3333;"></div>
       </div>
@@ -344,13 +343,16 @@ function buildForecastHtml(options: ImpactPanelOptions): string | null {
   const matched = predicted.targetId === options.actualPrimaryModuleId
     && predicted.severity === options.actualSeverity;
 
-  let rest = `<span style="font-size:13px;color:#c8cdd4;">${predictedModule}</span>
+  const predictedColor = MODULE_COLORS[predicted.targetId] ?? '#c8cdd4';
+  const actualColor = MODULE_COLORS[options.actualPrimaryModuleId] ?? '#c8cdd4';
+
+  let rest = `<span style="font-size:13px;color:${predictedColor};">${predictedModule}</span>
     <span style="font-size:12px;color:${severityColor(predicted.severity)};">${SEVERITY_LABEL[predicted.severity]}</span>`;
   if (matched) {
     rest += `<span style="font-size:12px;color:#8a8f96;">与实际一致</span>`;
   } else {
     rest += `<span style="font-size:12px;color:#8a8f96;">实际</span>
-      <span style="font-size:13px;color:#c8cdd4;">${actualModule}</span>
+      <span style="font-size:13px;color:${actualColor};">${actualModule}</span>
       <span style="font-size:12px;color:${severityColor(options.actualSeverity)};">${SEVERITY_LABEL[options.actualSeverity]}</span>`;
   }
 

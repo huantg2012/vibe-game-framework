@@ -4,8 +4,8 @@ created-by: code agent (mode A)
 created-date: 2026-07-22
 last-modified: 2026-08-19
 approved-date: 2026-07-22
-changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 6 COMPLETE（2026-08-19）**：换路硬保证（规则 21）+ 尘点 phase 动画 + FragmentRoll 已登记。目录树 ASCII 过期项仍在 backlog。
+changed-this-slice: true
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 7 C1（2026-08-19）**：第三模块净化器、加厚点、SortieModifiers.startingChaos。Slice 6 COMPLETE。目录树 ASCII 过期项仍在 backlog。
 ---
 
 # 技术架构
@@ -175,8 +175,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ---- | ---- | ---- | -------- | ---- |
 | EventBus | src/core/event-bus.ts | 类型安全的发布/订阅系统 | emit(), on(), off(), once(), destroy() | 已实现 |
 | I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() | 已实现 |
-| GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/模块/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), getModuleEffect(type), getSortieModifiers(), getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 3） |
-| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度） | hasSave(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek） |
+| GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
+| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | hasSave(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/音量控制 | play(), stop(), setVolume() | 规划中 |
 | Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用） | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5） |
 | VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 三级遮罩渲染 + 混乱值调制（Rift+Purification 共用） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5） |
@@ -184,7 +184,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
 | TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线，依赖 Phaser 视锥裁剪） | create(scene, map, config): TilemapLayer, getLayer(), getWorldSize(), destroy() | 已实现（T6） |
 | AISystem | src/systems/ai/ | 渗透体的感知（10Hz tick / 单射线）+ 五态 FSM + 移动/巡逻 + 寻路预算调度；拥有敌人实体的生命周期 | create(scene, spawns, occluders, walk), update(dt, playerPos, playerIsMoving), postUpdate(dt), getEnemies(), getEnemyById(), reportNoise(pos, radius, level), reportDamage(enemyId, sourcePos), despawn(enemyId), onPlayerLost(), setVisibilityProvider(), setCueListener(), addWallCollider(layer), getSprites(), getStats(), destroy() | 已实现（T7） |
-| ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例） | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(), destroy()；模块函数 getChaosModulators(value) | 已实现（Slice 1-2） |
+| ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
 | EnemyFactory | src/entities/enemy-factory.ts | 渗透体实体：碰撞体 + 占位表现（朝向可读的五边形本体、teal 状态指示物、追击残影环）+ 承载 AI 可变状态块 | createInfiltrator(scene, spawn, config, position, factoryConfig), createInfiltratorConfig(); `Enemy`：getId/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection, getSprite(), syncPositionFromBody(), setVelocity(), measureDisplacement(), syncVisuals(dt, visibility), destroy() | 已实现（T7） |
@@ -194,7 +194,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ToolSystem | src/systems/tool-system.ts | 出击主动/被动工具使用与效果管理（switch + 私有方法，非基类继承），产出 `ToolDebuffs` 描述符，由场景层在 AI update 之后应用到敌人/玩家 | create(scene, loadout, getPlayerPos, getEnemies, options?), useSlot(slotIndex), update(deltaMs), getDebuffs(), getSlotUses(slotIndex), getSlotType(slotIndex), getActiveTimedEffects(), notifyEnemySuspicious(enemyId), notifyProximityAvoid(), reset(), destroy() | 已实现 15 种。Slice 6 C4：abyss 经 `options.getKindlingPositions` 读本次薪柴，不再 import 手写图 |
 | GrowthSystem | src/systems/growth-system.ts | 永久改造购买、费用计算与效果聚合，module-level singleton | getLevel(id), getMaxLevel(id), getCost(id), canAfford(id, reserve), purchase(id), getModifiers(), getState(), loadState(), reset() | 已实现（Slice 3，当前 3 项改造） |
 | TideSystem | src/systems/tide-system.ts | 潮汐冲击强度状态机（Rise→Crest→Ebb→下一 Tide），替代线性递增，module-level singleton | getState(), getCurrentIntensity(), isHighTide(), advanceCycle(), loadState(), reset() | 已实现（Slice 3） |
-| ImpactSystem | src/systems/impact-system.ts | 冲击伤害计算与结算（主/次目标分配、接入 DefenseEngine、写回 GameState），module-level singleton | setForecastTarget(id), getForecastTarget(), run(defenseSlots?), generateForecast() | 已实现（Slice 2-4） |
+| ImpactSystem | src/systems/impact-system.ts | 冲击伤害计算与结算（重点目标 + 其余承血模块均分残差、接入 DefenseEngine、写回 GameState），预告在全部三模块中抽 | getForecastDisplay(), getForecastLookahead(), resetForecastState(), run(defenseSlots?), generateForecast() | 已实现（Slice 2-4；Slice 7 三模块抽目标 + DefenseContext 三键） |
 | StabilityTracker | src/systems/stability-tracker.ts | 净化稳定度积分与进度追踪（0-100，到达后 `reached` 永久为真），module-level singleton | getProgress(), isReached(), addProgress(reason, amount), getState(), loadState(), reset() | 已实现（Slice 3） |
 | RunController | src/systems/run-controller.ts | 出击生命周期唯一出口：死亡/撤离 → 结算延迟 → 场景过渡；`runEnded` 标志防止双触发；`class` 由 RiftScene 持有实例 | create(scene, deps), isRunEnded(), getElapsedMs(), restart(), destroy() | 已实现（Slice 2+；Slice 6 C4：`restart()` 阵亡与撤离都回净化点） |
 | ExtractionSystem | src/systems/extraction-system.ts | 撤离点脉冲标记渲染与撤离请求判定（不 import 其他系统，视野 glow 源经注入回调注册） | create(scene, extractionPoint, getPlayerPosition, isRunEnded, config?), update(deltaMs), canExtract(), requestExtract(), reset(), destroy() | 已实现 |
@@ -209,7 +209,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移。混乱增速可见写法也从这里出（相对 1.0 的 ±N%） | describeSideEffectBody(e), describeSideEffectWithSource(e), formatChaosRateDelta(rate), formatChaosMultDelta(mult) | 已实现（Slice 5.5 C5 引入，本轮补登记；R9 收口混乱增速） |
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
 | InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
-| PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块的视觉表现（CORE=蓝色六边形/STORAGE=橙色方块，HP 驱动的 alpha 分级 + 临界闪烁 + 邻近发光），Slice 5 T6 三态受损视觉将扩展此模块 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+） |
+| PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块视觉（CORE=蓝六边形 / STORAGE=橙方块 / PURIFIER=竖立三棱锥台，HP 三态 + 灯 + 脚下完整度条）。净化器色只引用 contam / metal 板 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+；Slice 7 第三模块形体） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS` | 已实现（Slice 4；Slice 6 C2 加碎片表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图 |
@@ -224,14 +224,14 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | StatusPanel | src/ui/dom/status-panel.ts | 潮汐/稳定度/工具库存状态查看 DOM 面板 | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |
 | PauseMenu | src/ui/dom/pause-menu.ts | 局内 Esc 记录菜单：新的纪录 / 沿旧路返回 / 合上。关闭=场景原样恢复；在裂隙内选新的纪录或沿旧路返回会结束当前出击 | isOpen(), open(scene), close(), discard() | 已实现 |
 | Session | src/managers/session.ts | 新档/读档的共享启动序列（主菜单与记录菜单共用，避免漏 reset） | hasReadableSave(), beginNewExpedition(scene), loadExpedition(scene) | 已实现 |
-| PurificationHud | src/ui/dom/purification-hud.ts | 净化点场景内交互提示条（DOM，贴靠世界内交互目标，不是独立弹出面板） | create(), updatePrompt(target), refresh(), setPromptVisible(visible), destroy() | 已实现（Slice 2+） |
+| PurificationHud | src/ui/dom/purification-hud.ts | 净化点贴顶读数 + 底栏 `#purif-prompt`（走近模块 / 加厚桩分节点），挂 `#dom-ui-root` | create(), updatePrompt(target), refresh(), setPromptVisible(visible), flashThickenSuccess(), destroy() | 已实现（Slice 2+；Slice 7 净化器目标名 + 加厚底栏） |
 
 > 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`/`map-types.ts`）、`src/scenes/` 已真实存在，但属于基础设施/类型/场景，不在本"系统模块"注册表内单列。其中：
 > - `src/types/map-types.ts`（T6 新增）持有地图侧数据契约：`TileMapData` / `OccluderGrid` / `WalkGrid` / `EnemySpawnData` / `PatrolRouteData` / `KindlingNodeDef` / `ExtractionPointDef` / `RiftLayoutData`。
 > - `src/types/ai-types.ts`（T7 新增）持有敌人 AI 契约：`EnemyView`（对外只读视图，T3/T4/渲染层消费）/ `EnemyAIState`（可变运行时状态，仅 AI 系统写）/ `InfiltratorConfig` / `Perception` / `AlertLevel` / `SightZone` / `AICueId`。放在 `types/` 而非 `systems/ai/` 是为了打断循环依赖：实体实现 `EnemyView`，AI 系统持有可变状态。
 > - `src/config/invariants.ts`（T7 新增）把设计所依赖的常量关系写成可执行断言，dev 构建在 `main.ts` 启动时校验（DEC-020）。Slice 1 覆盖敌人 AI 的 I1–I6 + 一条跨 spec 补充检查。T8/T9 的 spec 不变量应追加进同一文件。
 > - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**夹具**（ASCII tile 网格 + 布点），导出 `RIFT_MAP` 与 `validateRiftMap()`。运行时裂隙走 `generateRiftLayout`；夹具给对照 / 测试。
-> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap 等系统的场景层编排；`PurificationScene` 动态力场边界 + 模块交互 + 全部 DOM 面板编排。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），AI 与 Combat 互不 import（DEC-002）。
+> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 加厚桩 + 七点安全区钳制 + 全部 DOM 面板编排。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），AI 与 Combat 互不 import（DEC-002）。
 
 ## 关键架构决策
 
@@ -371,7 +371,7 @@ MainMenuScene (标题/开始/继续)
 ```
 
 - **RiftScene**：裂隙内的核心玩法（移动/潜行/战斗/搜刮/撤离）
-- **PurificationScene**：净化点——极小可行走空间，复用俯视角渲染管线；玩家走近模块触发 DOM 管理面板；边界外渲染黑暗+周期性模糊内容营造压迫氛围
+- **PurificationScene**：净化点——极小可行走空间，复用俯视角渲染管线；玩家走近三个模块触发分配墙机，走近加厚桩当场抬 maxHp；边界外渲染黑暗+周期性模糊内容营造压迫氛围
 - 两个场景共用同一套渲染基础设施（角色移动、视野系统、tile 渲染）
 - 场景间通过 GameState 传递持久数据
 
@@ -411,7 +411,8 @@ MainMenuScene (标题/开始/继续)
 - **尺寸**：约 12x10 tile（几步路的范围）
 - **内容**：
   - 玩家角色（可移动）
-  - 2-3 个功能模块实体（可交互对象，发光标记）
+  - 三个功能模块实体（CORE 中心 / STORAGE 右 / PURIFIER 下，可交互，三态灯）
+  - 加厚桩（改造祭坛北 2.2 tile，同心圆读数桩，不是第四个模块）
   - 裂隙入口（出击入口点）
   - 边界墙/栏杆（标记安全区域边缘）
 - **边界外**：黑暗区域延伸到屏幕边缘（不是黑幕遮挡，是有内容的黑暗）
