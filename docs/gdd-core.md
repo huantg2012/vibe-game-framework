@@ -17,12 +17,12 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7 已完成。`docs/specs/` 含 7 份系统 spec；`src/` 含裂隙出击环 + 净化点三模块（含净化器/加厚）+ 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8 已完成。`docs/specs/` 含 7 份系统 spec + `ui-detection-pulse`；`src/` 含裂隙出击环 + 两种敌人剖面 + 净化点三模块（含净化器/加厚）+ 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
 | 移动 + 有限视野 | **已实现** (Slice 1) | `docs/specs/system-movement-vision.md` | 俯视角 WASD 移动 + 60 射线 Raycasting 视野遮罩；速度 80px/s，视野半径 180px |
-| 敌人 AI | **已实现** (Slice 1) | `docs/specs/system-enemy-ai.md` | 五态 FSM（巡逻/可疑/警觉/追击/返回）+ 锥形视觉感知 + A* 寻路 |
+| 敌人 AI | **已实现** (Slice 1；8 扩) | `docs/specs/system-enemy-ai.md` | 一份五态 FSM + 两种感知剖面（渗透体视锥 / 改写体听觉为主）；每图恰好 1 改写体 |
 | 战斗系统 | **已实现** (Slice 1) | `docs/specs/system-combat.md` | 前向扇形挥击、三刀击杀、敌人反击 token 机制；定位为止损工具非主要手段 |
 | 混乱值 + 搜刮 + 撤离 | **已实现** (Slice 1) | `docs/specs/system-chaos-scavenge-extract.md` | 混乱值匀速上涨(0.5/s) + 阈值惩罚；薪柴搜刮点散布；撤离点按 E 确认 |
 | 净化点 + 冲击系统 | **已实现** (Slice 2；7 扩) | `docs/specs/system-purification-impact.md` | 三模块（核心/储藏/净化器）+ 加厚抬血池 + 冲击结算；净化器写入出击起始混乱 |
@@ -44,6 +44,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | Trail 导航 | **已实现** (Slice 1) | - (无独立 spec) | 面包屑路径标记，辅助玩家在有限视野下找回撤离点 |
 | Minimap | **已实现** (Slice 1) | - (无独立 spec) | 角落小地图显示已探索区域与关键点位 |
 | HUD | **已实现** (Slice 1；5.5 迁 DOM) | `docs/specs/system-chaos-scavenge-extract.md` | 裂隙完整度 / 混乱 / 薪柴 / 工具槽 / 生效中；挂 `#dom-ui-root` |
+| 被发现屏缘干涉 | **已实现** (Slice 8) | `docs/specs/ui-detection-pulse.md` | 屏缘方向齿带，强度跟察觉度；无数字条；最多 2 方位 |
 | 程序化地图生成 | **已实现** (Slice 6) | `docs/specs/system-map-generation.md` | 每一次踏入抽锚+种子+邻域抖动生成并烤图；一个撤离点；换路硬保证；尘点沿风；年龄×残破。撤离多样性延后（DEC-055） |
 | 角色属性/能力成长 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 永久改造+污染物循环+潮汐经济，出击正向积累 |
 | 音频（AudioManager） | 计划中 | 待创建 | BGM/环境/SFX 播放 + 动态分层混音 + 距离衰减（方向见 audio-direction.md） |
@@ -96,7 +97,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 出击工具 | 18 全部实现（主动 15 + 被动 3：scatter/muffle/siphon） | data/contaminants.csv 工具列 |
 | 防御效果 | 18 型全部接线（含副作用），Slice 5 起无未接线机制 | src/systems/defense-engine.ts |
 | 永久改造 | 6（出击效率/资源效率/生存韧性/出击扩展/防御扩展/信息优势） | data/upgrades.csv → src/generated/upgrade-data.ts |
-| 敌人 / 关卡 | 1 种敌人（Patrol 五态 FSM） | 第二种敌人待 Slice 8（DEC-053） |
+| 敌人 / 关卡 | 2 种剖面共用一份五态（渗透体 + 改写体）；每图恰好 1 改写体 | `data/enemies.csv` → `src/generated/enemy-data.ts` |
 
 ## 设计历史（仅决策，不含详情）
 
@@ -111,3 +112,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 5.5「UX 重构」(2026-08-12 ~ 2026-08-16, COMPLETE)：打磨 Slice，无新玩法系统。墙机磷光屏、裂隙 HUD 迁 DOM、检视五层、toast 队列、完整度文案、主菜单三组、底栏按键对齐。装配纠结：机制上不是二选一，界面只讲清事实。被发现指示留给 Slice 8。收尾四项见 `current-slice.md` 与 DEC-054。下一手 Slice 6 程序化地图 + 撤离点（DEC-053）。
 - Slice 6「程序化地图」(2026-08-16 ~ 2026-08-19, COMPLETE)：每一次踏入抽风格锚 + 新种子 + 邻域抖动生成并烤图；一个撤离点；外轮廓不规则 + 情景障碍 + 有限种碎片氛围。收工三件（DEC-064）：换路硬保证、尘点沿风、污染年龄×残破。小地图圆形窗口机械层已交（DEC-063）。撤离多样性不做。下一手 Slice 7 净化点扩张。
 - Slice 7「净化点扩张」(2026-08-19, COMPLETE)：第三模块净化器写入出击起始混乱（满完整度 0）；祭坛旁加厚三档抬全部模块 maxHp；效果仍按对基准 100。下一手 Slice 8 第二敌人。
+- Slice 8「第二敌人」(2026-08-19, COMPLETE)：改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv` + 一份五态。审美待人终审。下一手 Slice 9 音乐/音效。

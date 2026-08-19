@@ -4,7 +4,7 @@ created-by: design agent
 created-date: 2026-07-26
 last-modified-by: design agent
 last-modified-date: 2026-08-19
-interface-changed: true
+interface-changed: false
 slice: 8
 interfaces-with:
   - system-movement-vision         # 复用 utils/grid-raycast 做视线遮挡；敌人渲染可见性由 VisibilitySystem 决定；平衡不变量来源（玩家视距/移速）

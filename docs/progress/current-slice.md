@@ -1,12 +1,12 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 / C1 已交。未标 COMPLETE。不改 roadmap。
+note: Slice 8「第二敌人」COMPLETE。QA PASS。下一手 Slice 9。
 ---
 
-# Slice 8: 第二敌人（潜行轴）【ACTIVE】
+# Slice 8: 第二敌人（潜行轴）【COMPLETE】
 
 类型：**系统 Slice**
 日期：2026-08-19 开工
@@ -23,7 +23,7 @@ note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 / C1 已�
 1. **两条不同的潜行判断。** 渗透体：绕视锥。改写体：听觉为主、视锥更窄，对移动噪声敏感——停步/贴墙消声才过得去。
 2. **被发现有方向、没有数字条。** 屏缘脉冲指向威胁，强度跟察觉度；警戒时形态变。
 
-不验证第三种敌人、音乐、撤离多样性。
+不验证第三种敌人、音乐、撤离多样性。体验/审美待人终审。机器闸门 PASS。
 
 ---
 
@@ -54,8 +54,8 @@ note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 / C1 已�
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
 | 1 | design | **D1** 就地扩写敌人 AI + 被发现指示 + enemies.csv 契约 | **已做** |
 | 2 | art | **A1** 改写体 4 向 + 屏缘脉冲视觉 | **已做** |
-| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | **已交** |
-| 4 | qa | 对照规格 | 待 C1 |
+| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | **已交** `a76a6ff` |
+| 4 | qa | 对照规格 | **已交**（`docs/qa/report-slice-8.md`，PASS） |
 
 ---
 
@@ -84,4 +84,9 @@ note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 / C1 已�
 
 ## 收尾四项
 
-未完成，不得标 COMPLETE。
+1. **架构登记**：`docs/architecture.md` 已写 EnemyData / RewriterSprite / DetectionPulse / AISystem 剖面泛化。`changed-this-slice` 已复位。
+2. **spec**：就地扩写 `system-enemy-ai`；新建 `ui-detection-pulse`；`system-map-generation` 规则 22。`interface-changed` 已复位。策划数据 `data/enemies.csv` → codegen。
+3. **交付范围**：每图恰好 1 改写体；一份五态读 CSV 剖面；屏缘齿带无数字；改写体 32×48 四向程序化占位。闸门：`tsc` 0；`check:layout passed (8 seeds)`。
+4. **UI 清单**：先 Read `.cursor/skills/in-game-ux/SKILL.md`。载体 A。参考 Dead Space / Barotrauma / Signalis。U1–U12 机械层 QA 已扫。审美待人终审。非阻断：警戒闪约 6 Hz、边带溢 1–2 px（见 QA O1–O3）。
+
+下一手 Slice 9。

@@ -1,5 +1,5 @@
 ---
-status: ACTIVE
+status: COMPLETE
 slice: 8
 created-by: director agent
 created-when: 2026-08-19
@@ -38,10 +38,10 @@ Depends: D1。先 Read in-game-ux skill。改写体 4 向程序化/像素管线�
 
 ## Task: C1 | assignee: code
 
-Depends: D1+A1。`data/enemies.csv` + codegen。AI 类型泛化。每图 1 改写体。脉冲挂 `#dom-ui-root`。`tsc` 必须过。本任务未开。
+Depends: D1+A1。`data/enemies.csv` + codegen。AI 类型泛化。每图 1 改写体。脉冲挂 `#dom-ui-root`。`tsc` 必须过。**已交** `a76a6ff`。
 
 ---
 
 ## Task: Q1 | assignee: qa
 
-Depends: C1。写 `docs/qa/report-slice-8.md`。本任务未开。
+Depends: C1。写 `docs/qa/report-slice-8.md`。**已交** PASS。

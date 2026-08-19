@@ -3,8 +3,8 @@ status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-08-19
-last-closed-slice: 7
-note: Slice 7「净化点扩张」COMPLETE（2026-08-19）。下一手 Slice 8 第二敌人。10 不做。
+last-closed-slice: 8
+note: Slice 8「第二敌人」COMPLETE（2026-08-19）。下一手 Slice 9 音乐/音效。10 不做。
 ---
 
 # Roadmap
@@ -26,17 +26,18 @@ note: Slice 7「净化点扩张」COMPLETE（2026-08-19）。下一手 Slice 8 �
 | Slice 5.5 | UX 重构 | 2026-08-16 | **人要求收尾** — 打磨 Slice。界面从「不像游戏、不成体系」收敛到墙机/裂隙读数/主菜单/底栏按键可玩。审美由人终审（指令完成 = 收尾信号）。收尾四项已登记（DEC-054）。被发现指示留给 Slice 8。 |
 | Slice 6 | 程序化地图 | 2026-08-19 | **COMPLETE** — 每一次踏入抽锚+种子+邻域抖动生成并烤图；一个撤离点；外轮廓不规则 + 情景障碍 + 有限种碎片氛围。收工三件：换路硬保证、尘点沿风、年龄×残破（DEC-064）。小地图圆形窗口机械层已交（DEC-063）。撤离多样性不做。机器闸门 PASS。 |
 | Slice 7 | 净化点扩张 | 2026-08-19 | **COMPLETE** — 第三模块净化器写入出击起始混乱（满完整度 0 / 空血 50）；祭坛旁加厚 12/20/32 抬全部模块 maxHp 至 145；效果分母锁基准 100；abyss 65% / stitch 三模块列入。机器闸门 PASS。 |
+| Slice 8 | 第二敌人（潜行轴） | 2026-08-19 | **COMPLETE** — 改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv` + 一份五态。机器闸门 PASS。审美待人终审。 |
 
 ## 当前 Slice
 
-**Slice 8: 第二敌人（潜行轴）**（DEC-064 已锁范围）。改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv`。权威范围待本 Slice 开工时写进 `current-slice.md`。
+**Slice 9: 音乐 / 音效**（DEC-064 已锁范围）。`audio-direction.md` 几乎全表；仓库生成 OGG+MP3 占位音；实现 AudioManager；同时播放上限 8。权威范围待本 Slice 开工时写进 `current-slice.md`。
 
 ## 计划中的 Slices（近期方向，DEC-064 已锁 7/8/9）
 
 | 序号 | 方向 | 说明 |
 | ---- | ---- | ---- |
-| Slice 8 | 第二敌人（潜行轴） | **下一手。** 改写体：听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv`。概念图已 APPROVED。 |
-| Slice 9 | 音乐 / 音效 | `audio-direction.md` 几乎全表；生成 OGG+MP3 占位音进仓库。 |
+| Slice 8 | 第二敌人（潜行轴） | **COMPLETE**（2026-08-19）。 |
+| Slice 9 | 音乐 / 音效 | **下一手。** `audio-direction.md` 几乎全表；生成 OGG+MP3 占位音进仓库；AudioManager；同时 8 轨。 |
 | Slice 10 | NPC | **不做**（DEC-064）。 |
 
 > **编号顺移**（人拍板，2026-08-12）：原 Slice 5 计划把工具、第二敌人、新改造放进一个 Slice。两块验证的是不同的轴，混在一起试玩反馈无法归因。第二敌人独立成 Slice，其后整体顺移。**当时第二敌人编号为 6；DEC-053 后为 8。**
@@ -105,7 +106,7 @@ CSV 构建期管线 + 防御效果引擎（7 种 Common 副作用）+ 被动工�
 **已排入计划 Slice（从 backlog 迁出）：**
 - ~~程序化地图生成~~ → Slice 6 COMPLETE（2026-08-19，DEC-055/064）
 - 撤离点多样性 → **延后**（DEC-055；不再塞进 Slice 6）
-- ~~第二种敌人类型~~ → Slice 8（DEC-053）
+- ~~第二种敌人类型~~ → Slice 8 COMPLETE（2026-08-19）
 - ~~净化点视觉状态变化（模块健康/受损）~~ → Slice 5 T6（已交付 2026-08-12）
 - ~~音效接入 / 完整音乐·音景~~ → Slice 9
 - ~~NPC 互动~~ → Slice 10（启动时再具体设计）
