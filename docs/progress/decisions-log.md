@@ -9,6 +9,17 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 7 A1：净化器三棱锥台 + 加厚桩换色相（art，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 7
+- Type: Art
+- Context: DEC-064 第三模块落地。要一眼不同于核心六边形 / 储藏方块；色只引用已锁板；加厚不是第四模块也不是墙机。
+- Decision:
+  1. 净化器形体锁 **竖立三棱锥台**（俯视朝下等边外三角半径 18 + 内三角半径 8）。身份填/描走 `contam-mid` / `contam-core`；健康灯 `#1aad96`，禁止新绿。三态复用现模块裂缝/渗入/500ms 灯，不新图集。
+  2. 加厚桩复用 `drawInteractionPoint`，中心 `#5a5f66`、环 `#c8cdd4`、半径 7/12。读数只走底栏，禁止中心 ±120×80，无第二条确认。
+  3. 分配 / 出击装配复用既有 680×468 CRT 行式；净化器数字与起始混乱用 `#1aad96`。不新开 ui spec、不重画核心/储藏世界实体。
+- Impact: `system-purification-impact.md` UX 视觉规格；`ui-art-overhaul.md` A0 #17/#18、B3 净化器小节。
+
 ## Slice 7 D1：净化器公式与加厚费用（design，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 7

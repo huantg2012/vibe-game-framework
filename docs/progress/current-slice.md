@@ -50,7 +50,7 @@ note: Slice 7「净化点扩张」ACTIVE。范围锁死 DEC-064。Slice 6 COMPLE
 | -- | -- | ------ | ---- |
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
 | 1 | design | **D1** 就地扩写 `system-purification-impact.md`（+ 混乱起始句若必须） | **已做** |
-| 2 | art | **A1** 第三模块形体 + 祭坛旁加厚交互最短合规核对 | **可开** |
+| 2 | art | **A1** 第三模块形体 + 祭坛旁加厚交互最短合规核对 | **已做** |
 | 3 | code | **C1** 净化器 + 起始混乱 + maxHp 三档 + abyss/stitch 复核 | 待 A1 |
 | 4 | qa | 对照规格 | 待 C1 |
 
