@@ -4,7 +4,7 @@ created-by: art agent
 created-date: 2026-07-22
 last-modified: 2026-08-16
 approved-date: 2026-07-24
-changed-this-slice: true
+changed-this-slice: false
 note: Foundation Step 3. 视觉方向已批准锁定（7/7 概念 + 色彩架构验证通过）。已知待验证项移交 Slice 1 美术门禁，见文末章节。§14.3（A-G3 表现力）已于 2026-07-31 验证 PASS——地面/墙走程序化连续表面（DEC-018）。2026-08-12 由 Director 做最小事实校正：§6.2 按钮状态改为游戏语义命名、§6.4 面板布局由"居中 ≤70% viewport"改为"右侧全高抽屉 440px"，以对齐 Slice 4.5 人已逐轮确认的实现。同日 art agent 复核完成（Slice 5 B3）：§6.2 补齐"临界"态（原表漏了 `_template-ui.md` 五态状态表里的这一态）、§6.4 补充与 `ui-art-overhaul.md` 的权威关系说明（后者是实操基线，本节是其上位规范）。2026-08-14 Slice 5.5 DEC-049：§6.4 由 440px 抽屉改为 680×468 磷光屏（无金属/无外框），对齐人锁定的 CRT 实现。
 ---
 

@@ -1,20 +1,22 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-16
 last-modified: 2026-08-19
-note: Slice 6「程序化地图」ACTIVE。DEC-064：三件余项必须做完才 COMPLETE（换路硬保证 / 尘点沿风 / 年龄×残破）。之后一口气做 7/8/9。不标 COMPLETE。
+note: Slice 6「程序化地图」COMPLETE（2026-08-19）。DEC-064 三件已交；QA PASS。下一手 Slice 7。
 ---
 
-# Slice 6: 程序化地图【ACTIVE】
+# Slice 6: 程序化地图【COMPLETE】
 
 类型：**系统 Slice**（新生成规则；完整规划路径，不走打磨轻量路径）
-日期：2026-08-16 开工
+日期：2026-08-16 开工 → 2026-08-19 收工
 上一手：Slice 5.5「UX 重构」COMPLETE（DEC-054）
 
 **活策略（找 / 扩先读）：** `docs/design-notes/slice-6-layered-generation.md` 的「Agent 入口」。十锚在 `src/generation/recipes.ts`；出击 `generateRiftLayout`。画廊是样例不是地图库。
 
-**检查点（2026-08-19，DEC-062）：** 人试玩后认此节点。策略已进裂隙（锚 + 新种子 + 邻域抖动，再生成并烤图）；天空走低分辨率叠层循环。不标 COMPLETE。
+**检查点（2026-08-19，DEC-062）：** 人试玩后认此节点。策略已进裂隙（锚 + 新种子 + 邻域抖动，再生成并烤图）；天空走低分辨率叠层循环。当时不标 COMPLETE。
+
+**收工（2026-08-19，DEC-064）：** 换路硬保证 + 尘点沿风 + 年龄×残破已交；QA PASS；标 COMPLETE。
 
 ---
 
@@ -128,7 +130,7 @@ note: Slice 6「程序化地图」ACTIVE。DEC-064：三件余项必须做完才
 | 7 | code | **C3** 布点（出生 / 一个撤离 / 薪柴 / 巡逻） | **已交** |
 | 8 | code | **C4** 场景接线 | **已交** |
 | 8b | code | **C5** 氛围进裂隙 | **已交**（抽锚生成 + 邻域抖动 + 天空影循环）。DEC-064 余项（换路硬保证 / 尘点沿风 / 年龄×残破）另交，见收工余项表 |
-| 9 | qa | 对照规格 | 实现后 |
+| 9 | qa | 对照规格 | **已交**（DEC-064 收工三件：`docs/qa/report-slice-6-closeout.md`，PASS） |
 | 10 | 人 | 连续踏入至少两次 | **已回 / ok**（2026-08-19，DEC-062；检查点，不标 COMPLETE） |
 
 批次必须单次会话做完。禁止把外轮廓+情景+三套氛围+场景接线打成一批。2026-08-18 那一批 = C3 + C4，不含 C5。C5 已于其后接上（DEC-062）。
@@ -247,5 +249,13 @@ note: Slice 6「程序化地图」ACTIVE。DEC-064：三件余项必须做完才
 | 尘点沿风 | 出击中随 `phase` 沿本趟风向漂移；雾仍烤死 | **实现已交**（不烤进地面；跟天空同一份场扫 phase，画在低分辨率 additive 叠层） |
 | 污染年龄 × 残破 | 每次踏入抽 `contaminationAge` × `ruinSeverity`，按 `rift-fragment-surfaces.md` 组合轴落地。规格规则 24a 已锁 | **实现已交**（`rollFragmentAxes` → `GeneratedRiftLayout` / `RuinedMask`；`bakeGround` 按年龄画矩形块、按残破乘 scratch/fleck/渍/墙沿） |
 | 小地图 DEC-063 | 机械层已交。收工不等人终审 | 机械已交 |
+| QA | 对照规格验收收工三件 | **已交**（`docs/qa/report-slice-6-closeout.md`，PASS） |
 
-7/8/9 范围见 DEC-064，本文件仍只服务 Slice 6，直到本 Slice COMPLETE。
+## 收尾四项（缺一不可）
+
+1. **架构登记**：`docs/architecture.md` MapGenerator / ProceduralSurface / `dual-path.ts` / `fragment-roll.ts` 已写换路硬保证、尘点 phase 动画、FragmentRoll。`changed-this-slice` 已复位。
+2. **spec**：规则 21 是硬保证（不再写软目标）。规则 24a 两轴必抽。`system-map-generation` / `system-chaos-scavenge-extract` 的 `interface-changed` 已复位。`last-modified-date: 2026-08-19`。
+3. **交付范围**：每一次踏入 = 抽锚 + 新种子 + 邻域抖动并烤图；一个撤离点；换路硬保证（`evaluateDualPath`，无换路 FATAL）；尘点跟天空同一份场沿风扫 phase；每次踏入抽 `contaminationAge` × `ruinSeverity`。小地图圆形窗口机械层已交（DEC-063）。撤离多样性不做。本收工无新 HUD。
+4. **UI 清单**：本收工无新 HUD。不新开表面，不走 U1–U12。小地图不重验审美。
+
+7/8/9 范围见 DEC-064。下一手 Slice 7。

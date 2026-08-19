@@ -1,12 +1,11 @@
 ---
-status: DRAFT
+status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: design agent
+last-modified-by: director agent
 last-modified-date: 2026-08-19
-  # C5: ground baked once; sky is a low-res overlay (do not compositePaint in the game loop)
-note: C1–C5。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空低分辨率叠层循环。画廊是样例不是成品图库。
-interface-changed: true
+note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。
+interface-changed: false
 slice: 6
 interfaces-with:
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出

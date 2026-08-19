@@ -4,8 +4,8 @@ created-by: code agent (mode A)
 created-date: 2026-07-22
 last-modified: 2026-08-19
 approved-date: 2026-07-22
-changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 6 收工余项（2026-08-19）**：换路硬保证（规则 21）+ 尘点 phase 动画 + FragmentRoll。目录树 ASCII 过期项仍在 backlog。
+changed-this-slice: false
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 6 COMPLETE（2026-08-19）**：换路硬保证（规则 21）+ 尘点 phase 动画 + FragmentRoll 已登记。目录树 ASCII 过期项仍在 backlog。
 ---
 
 # 技术架构
@@ -169,7 +169,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 
 ## 模块注册表
 
-> **状态**列以真实 `src/` 目录为准（Slice 5 T0 全量补核，核对日期 2026-08-12）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`（含 `ai/`）、`src/entities/`、`src/utils/`、`src/managers/`、`src/ui/`（含 `dom/`）、`src/config/`、`src/types/`、`src/scenes/`、`src/generated/`、`src/generation/`（Slice 6 C1：仅陆地掩膜）。
+> **状态**列以真实 `src/` 目录为准（Slice 5 T0 全量补核，核对日期 2026-08-12）。"已实现"= 文件真实存在且有实质实现；"规划中"= 目录/文件尚未创建，接口为设计意图，实现时以本表为契约起点并回填状态。已落地目录：`src/core/`、`src/i18n/`、`src/systems/`（含 `ai/`）、`src/entities/`、`src/utils/`、`src/managers/`、`src/ui/`（含 `dom/`）、`src/config/`、`src/types/`、`src/scenes/`、`src/generated/`、`src/generation/`（Slice 6 COMPLETE：陆地/残墙/布点/换路/FragmentRoll/氛围场）。
 
 | 模块 | 路径 | 职责 | 对外接口 | 状态 |
 | ---- | ---- | ---- | -------- | ---- |
@@ -212,7 +212,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块的视觉表现（CORE=蓝色六边形/STORAGE=橙色方块，HP 驱动的 alpha 分级 + 临界闪烁 + 邻近发光），Slice 5 T6 三态受损视觉将扩展此模块 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS` | 已实现（Slice 4；Slice 6 C2 加碎片表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
-| MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout | C1–C5 + 收工余项：裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图 |
+| MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图 |
 | RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（完整度条/混乱条/薪柴数/工具槽/撤离提示/生效中行），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel。生效行用 `.device-effect` 名+秒分节点；remainingMs 由场景每帧权威 set，HUD 不再自减 | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 迁 DOM；R10 工具剩余秒） |
 | RiftResultPanel | src/ui/dom/rift-result-panel.ts | 裂隙撤离/阵亡结算 DOM 面板，与冲击结算面板视觉同源（本轮补登记，模块本身为 Slice 5.5 C2 交付） | isOpen(), show(data), close(), destroy() | 已实现（Slice 5.5） |
 | Minimap | src/ui/minimap.ts | 裂隙圆形局部窗口：直径 33 格、画布 99 像素，跟随玩家当前格。已探索由场景层用真实视野累积后写入；玩家十字带朝向短臂；覆盖内撤离竖缝 / 深渊方点 / 节点菱形。`#rift-minimap.device-plate` 挂 `#dom-ui-root` | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), markExplored(tileX, tileY), update(playerWorldPos, facing, deltaMs), reset(), destroy() | 已实现（Slice 5.5 迁挂载根、改标记形状；Slice 6 C6 圆窗 + 真实视野 + 朝向） |

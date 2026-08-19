@@ -1,8 +1,9 @@
 ---
-status: ACTIVE
+status: COMPLETE
 slice: 6
 created-by: director agent
 created-when: 2026-08-16
+last-modified: 2026-08-19
 ---
 
 # Tasks: Slice 6 — 程序化地图
@@ -12,9 +13,9 @@ Slice 类型：系统
 
 权威范围与三条约束：`docs/progress/current-slice.md`。
 
-**现状（2026-08-19，DEC-062）：** C3+C4 已接。C5 已接（地表读 CSV、抽锚生成、天空 64×42 叠层循环）；人试玩 ok。下文 C3+C4 Brief 里「本批不做 C5 / C5 未做 / 不改写死 `frag-outdoor`」只描述 2026-08-18 接线批，**不要当现在的任务书再执行一遍。** Slice 仍 ACTIVE。仍待：规格 21 软目标、尘点沿风、污染年龄×残破度。
+**现状（2026-08-19，COMPLETE）：** C1–C6 已交。DEC-064 收工三件已交。QA PASS（`docs/qa/report-slice-6-closeout.md`）。下文历史 Brief 不要当未做任务再执行。
 
-**检查点后（DEC-063）：** 裂隙小地图改为跟随玩家的圆形局部窗口。任务 D3 / A2 / C6 / Q2 写在本文件文末。不标 COMPLETE。
+**检查点后（DEC-063）：** 裂隙小地图改为跟随玩家的圆形局部窗口。任务 D3 / A2 / C6 / Q2 已交。
 
 ---
 
@@ -405,3 +406,36 @@ Depends: C6
 - 挂载 `#dom-ui-root`
 
 写 `docs/qa/report-rift-minimap-circular.md`。不代勾审美。不修代码。
+
+---
+
+## Task: D4 | assignee: design | status: 已交
+
+Title: 规格 21 换路改为可机器判定的硬保证 | Priority: P0
+
+- [x] `system-map-generation.md` 规则 21：主路最短、封死后第二路 ≥1.15×、较短者更暴露
+- [x] `system-chaos-scavenge-extract.md` 最少补归属句
+- [x] 规则 24a：每次踏入抽 contaminationAge × ruinSeverity
+
+## Task: A3 | assignee: art | status: 已交
+
+Title: 核年龄轴无新色、尘点是漆 | Priority: P0
+
+- [x] 两轴都抽；组合表数值不改
+- [x] 尘点五条死约束；无新 HUD
+
+## Task: C7 | assignee: code | status: 已交
+
+Title: 三件接线 | Priority: P0
+
+- [x] `evaluateDualPath` 共用；`check:layout` 无换路 FATAL
+- [x] 尘点跟天空同一份场扫 phase
+- [x] `rollFragmentAxes` → 地表着色；矩形错误块按年龄
+- [x] `npx tsc --noEmit` / `npm run check:layout` / `npm run check:recipes`
+
+## Task: Q3 | assignee: qa | status: 已交
+
+Title: 收工三件对照 spec | Priority: P0
+
+- [x] `docs/qa/report-slice-6-closeout.md` PASS
+- [x] 本收工无新 HUD
