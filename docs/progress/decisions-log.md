@@ -9,6 +9,31 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-064: Slice 6 收工条件 + Slice 7/8/9 一次拍板（人锁）
+- Date: 2026-08-19
+- Phase: Slice 6 收工 → 接着做 7 / 8 / 9
+- Type: Design + Process
+- Context: 人要求全托管收 Slice 6，再一口气做完 Slice 7、8、9。设计/实施前一次性问完；之后禁止再问。中途只在游戏打不开或地图连通 FATAL 时停。不做人中途审美否决等待。Slice 10（NPC）不做。撤离多样性不塞回 6。Slice 5「体验未验证」不挡 7/8/9。
+- Decision:
+  1. **Slice 6 收工必须三件都做完才标 COMPLETE（覆盖 DEC-062 第 5 条「仍待」）：**
+     1. **换路硬保证（规格 21）：** 每张成品图从出生到唯一撤离点必须有两条可走的路——一条更短更暴露、一条更长更隐蔽。不是两个撤离点，不是捷径口。生成失败则重试，禁止为了挤路而破坏形状闸门或连通 FATAL。`check:layout` 无换路 = 坏图。
+     2. **尘点沿风位移：** 氛围场已有的尘点不再只烤死在地上；出击中沿本趟风向随 `phase` 漂移。与天空巨影同一根风轴。雾池仍烤死。
+     3. **污染年龄 × 残破度乘进生成器：** 每一次踏入抽 `contaminationAge`（new / standard / ancient）与 `ruinSeverity`（intact / broken / eaten），旋钮按 `docs/art/rift-fragment-surfaces.md` 组合轴落地。禁止所有碎片永远 `standard` + `broken`。禁止新色。
+     4. **小地图（DEC-063）：** 机械层已交。本收工不等人终审；中途只停 FATAL。
+  2. **Slice 7 净化点扩张：**
+     1. 第三模块 = **净化器**。完整度越高，出击**起始混乱越低**（满血约从 0 起；残血带入部分混乱）。不改出击起始生命。
+     2. 模块升级：改造祭坛旁新交互，花薪柴永久提高**全部模块** `maxHp`，3 档每档 +15（100→115→130→145）。不按模块分别升级，本 Slice 不抬效果上限公式。
+     3. `abyss` 65% 上限与 `stitch` 三模块文案在第三模块落地后复核。
+  3. **Slice 8 第二敌人：**
+     1. 改写体 = **听觉为主、视锥更窄**；对移动噪声敏感。与渗透体「绕视锥」形成第二条判断。
+     2. 每张裂隙 **渗透体为主 + 恰好 1 个改写体**。
+     3. 「被发现」= 屏缘方向脉冲，强度跟察觉度；警戒时形态变。**没有数字条。**
+     4. 敌人属性进 `data/enemies.csv` 再 codegen；渗透体一并迁出 `constants.ts` 的策划向字段。
+  4. **Slice 9 音乐/音效：** 按 `docs/audio-direction.md` **几乎全表**落地（5 条场景氛围循环 + 裂隙分层混音 + 清单内 SFX）。仓库无现成音频：本 Slice **生成占位音进仓库**（OGG+MP3），接线可播，不等人投外部音色。
+  5. **关键节点：** 每个 Slice 收工提交一次；spec 落地、大功能接线再各提交一次。进度写入本文件与 `current-slice.md`。
+  6. **不做：** Slice 10；撤离多样性；框架层 A 改动。
+- Impact: Slice 6 在三件落地前不得标 COMPLETE。7/8/9 范围以此条为准，不再问人。
+
 ## DEC-063: 裂隙小地图改为跟随玩家的圆形局部窗口（人锁）
 - Date: 2026-08-19
 - Phase: Slice 6（检查点后热修，不是新 Slice）
