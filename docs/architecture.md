@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-18
+last-modified: 2026-08-19
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 6 C5（2026-08-18）**：裂隙用锚+种子+邻域抖动生成；天空影循环。目录树 ASCII 过期项仍在 backlog。
@@ -212,7 +212,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」 | generateOutline；generateRecipeDraft；jitterRecipe；generateRiftLayout | C1–C5：裂隙吃生成结果。画廊是样例。天空影循环 |
 | RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（完整度条/混乱条/薪柴数/工具槽/撤离提示/生效中行），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel。生效行用 `.device-effect` 名+秒分节点；remainingMs 由场景每帧权威 set，HUD 不再自减 | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 迁 DOM；R10 工具剩余秒） |
 | RiftResultPanel | src/ui/dom/rift-result-panel.ts | 裂隙撤离/阵亡结算 DOM 面板，与冲击结算面板视觉同源（本轮补登记，模块本身为 Slice 5.5 C2 交付） | isOpen(), show(data), close(), destroy() | 已实现（Slice 5.5） |
-| Minimap | src/ui/minimap.ts | 裂隙战争迷雾小地图：`#rift-minimap.device-plate` 挂 `#dom-ui-root`，内层 canvas。已探索区域 + 玩家十字 / 撤离竖缝 / 深渊方点 / 节点菱形 | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), update(playerWorldPos), reset(), destroy() | 已实现（Slice 5.5 迁挂载根、改标记形状） |
+| Minimap | src/ui/minimap.ts | 裂隙圆形局部窗口：直径 33 格、画布 99 像素，跟随玩家当前格。已探索由场景层用真实视野累积后写入；玩家十字带朝向短臂；覆盖内撤离竖缝 / 深渊方点 / 节点菱形。`#rift-minimap.device-plate` 挂 `#dom-ui-root` | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), markExplored(tileX, tileY), update(playerWorldPos, facing, deltaMs), reset(), destroy() | 已实现（Slice 5.5 迁挂载根、改标记形状；Slice 6 C6 圆窗 + 真实视野 + 朝向） |
 | AllocationPanel | src/ui/dom/allocation-panel.ts | 净化点单模块薪柴分配 DOM 面板 | isOpen(), open(moduleId, onClose?), close() | 已实现（Slice 2+，Slice 4.5 迁移至共享面板样式层） |
 | DefensePanel | src/ui/dom/defense-panel.ts | 防御 slot 管理 DOM 面板（装/卸污染物） | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |
 | GrowthPanel | src/ui/dom/growth-panel.ts | 改造祭坛 DOM 面板（购买永久改造） | isOpen(), open(onClose?), close() | 已实现（Slice 3+） |

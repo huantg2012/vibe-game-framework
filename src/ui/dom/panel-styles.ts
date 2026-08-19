@@ -606,6 +606,41 @@ const CSS = `
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
 }
 
+#rift-minimap.device-plate {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1000;
+  pointer-events: none;
+  box-sizing: content-box;
+  padding: 4px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  overflow: hidden;
+  background-color: rgba(15, 17, 20, 0.72);
+  /* 凹槽暗边：径向，色与墙机凹槽相同 #080a0c，宽约 5px（暂停小窗那一档，不是墙机 8px） */
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    transparent 0px,
+    transparent 48px,
+    #080a0c 53px
+  );
+  clip-path: circle(50% at 50% 50%);
+}
+#rift-minimap.device-plate::after {
+  z-index: 1; /* 暗扫描压在圆画布上，与左上同一条 repeating 暗线，不要另写 teal */
+}
+#rift-minimap canvas {
+  display: block;
+  width: 99px;
+  height: 99px;
+  border: none;
+  clip-path: circle(50% at 50% 50%);
+  image-rendering: pixelated;
+}
+
 /* === Toast primitives (ui-art-overhaul.md A4/A6) ===
    Two variants for the unified feedback layer: "inline" (brief, non-blocking,
    appears at the source of the event) and "stamp" (rare, one-shot, full-screen,

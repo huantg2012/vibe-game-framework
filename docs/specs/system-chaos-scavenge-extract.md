@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: design agent
-last-modified-date: 2026-08-16
+last-modified-date: 2026-08-19
 slice: 1 (extended in 5.5, 6)
 interface-changed: true
 interfaces-with:
@@ -241,7 +241,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 15. **拾取即结算**：`carried += node.value`，节点 `collected = true`、禁用碰撞体、隐藏 sprite，emit `KINDLING_COLLECTED { amount: node.value, total: carried }`。节点不重生。
 16. **拾取不依赖可见性**：即使节点当前不在视野内（例如玩家从黑暗中撞上它），仍然拾取。逻辑与渲染分离——"我明明踩上去了却没捡到"是纯粹的挫败，没有任何设计价值。
 17. **薪柴不是发光泄露源**（T1 规则 19）。节点 sprite 的 alpha = `VisibilitySystem.getVisibilityAt(node.position)`，视野外即完全不可见。搜刮必须靠视野推进，否则退化为"看着光点跑过去"。
-18. **没有记忆标记**：离开视野的已发现节点不留任何 HUD/地图标记（Slice 1 无小地图）。玩家自己记方位是"信息不足"的一部分。→ 列为待验证假设；若试玩证明这造成的是烦躁而非紧张，最小补丁是给**已被看见过**的节点加极弱 glow，而不是给全部节点加。
+18. **没有记忆标记（只约束薪柴节点）**：离开当前视野的已发现薪柴节点，不在主画面或 HUD 上留独立方位标记。玩家自己记「那个节点在哪」仍是信息不足的一部分。本条**不**禁止小地图记住已探索格子——战争迷雾是规则 30 的另一条规则。深渊之眼时限内画在小地图上的节点菱形是工具揭示，不是本条所说的记忆标记。→ 列为待验证假设；若试玩证明这造成的是烦躁而非紧张，最小补丁是给**已被看见过**的节点加极弱 glow，而不是给全部节点加。
 19. **无携带上限**（`carried` 无上限）。`vision.md` 的储藏模块容量属于净化点元循环（Slice 2+）。本 Slice 只验证"时间压力 vs 贪婪"这一条轴；加入容量上限会引入第二条约束轴，两者的信号会互相污染，人将无法判断纠结感来自哪一个。
 20. **价值分档与分布原则**（这是本系统真正的关卡设计工具，供 T6 消费）：
 
@@ -306,12 +306,69 @@ speedMult(t)      = 1.00                                   , t ≤ 75
     | 生效中 | 混乱簇下方 | 防御残留限时行 + 每条进行中限时工具：中文名与剩余整数秒分节点。`tool_duration_ms === 0` 与冷却不上此行 | 每帧 `setActiveEffects`（权威 remainingMs，HUD 不自减） |
     | 工具槽 | 左下 | `[Q]/[F]/[G]` + 工具中文名 + 余量 | 使用/装载变化 |
     | 薪柴计数 | 右上 | 表名 `薪柴` + 数字（warm-dim，无条形） | `KINDLING_COLLECTED` |
-    | 小地图 | 右下 `#rift-minimap.device-plate` | 战争迷雾 + 玩家十字 / 撤离竖缝 / 敌方 / 节点。挂 `#dom-ui-root` | 每帧 |
+    | 小地图 | 右下 `#rift-minimap.device-plate` | 跟随玩家的圆形局部窗口：覆盖范围内同时显示已探索与未探索迷雾；玩家标记带朝向；覆盖范围内只标一个撤离竖缝；深渊之眼时限内在同一窗口画敌方方与节点菱形。挂 `#dom-ui-root`。见下方 30a–30k | 每帧（场景层翻译可见性与朝向） |
     | 交互提示 | 屏幕中下 | `[E] 撤离`（仅可撤离时） | 进入/离开撤离点触发半径 |
     | 结算面板 | 居中小读出（宽 360，DEC-049） | 见规则 33 | `RIFT_EXITED` |
 
-    挂载：屏幕空间一律 `#dom-ui-root`。禁止用 Phaser `scrollFactor(0)` 画角锚 HUD。
+    挂载：屏幕空间一律 `#dom-ui-root`。禁止用 Phaser `scrollFactor(0)` 画角锚 HUD。禁止把小地图挂到 `document.body` 再用 `position:fixed`。
     「被发现」指示不在本清单（Slice 8）。
+
+    #### 裂隙小地图（规则 30 扩写，DEC-063）
+
+    本节是 HUD 结构层。像素直径、圆边画法、朝向标记的像素形由 **Art agent 补充**（视觉通行证第 4 节就地更新）。不发明新色、不新造第二种撤离符号、不新开挂载根。
+
+    **载体（U1）**：**A 世界内装置**。这是裂隙随身罩上的一块方位读数（与左上完整度 / 混乱同一族 `.device-plate`），不是游戏外的软件窗口，也不是净化点墙机。屏幕空间挂 `architecture.md` 声明的 overlay 根 `#dom-ui-root`；不钉世界坐标。净化点没有小地图。
+
+    **参考锚点（U12）**：从项目参考研究选取，学动作、不学皮。
+
+    | 游戏 | 锚的维度（学什么动作） | 明确不学什么 |
+    | ---- | --------------------- | ------------ |
+    | Signalis | 方位读数是随身设备上的一块内容，不是浮在游戏外的软件层 | 复古显像管曲面畸变、把整张区域当可翻页全图 |
+    | FTL: Faster Than Light | 决策信息常驻屏幕边缘，出击过程不必停下来点开地图 | 科幻全息蓝、圆形能量格当通用图标、把整艘船压进一块圆 |
+    | Darkest Dungeon | 「走过的地方」与「没走过的黑暗」始终可对照，朝向/位置一眼可辨 | 羊皮纸花边、插画式图例、全屏大地图 |
+
+    本屏不像：战术 Dashboard 鹰眼全图、通用雷达细框、设置页缩略图。
+
+    **玩家必须回答的问题**：我在哪、探过哪儿？撤离点在不在这块窗口里、离我哪一侧？（深渊之眼生效时）敌人和薪柴在哪？
+
+    | 优先级 | 信息 | 说明 |
+    | ------ | ---- | ---- |
+    | P0（始终可见，零操作） | 圆形局部窗口内的已探索地形剪影 | 与未探索迷雾同屏对照 |
+    | P0 | 圆形局部窗口内的未探索迷雾 | 覆盖范围内必须同时有雾，不能只画已探索 |
+    | P0 | 带朝向的玩家标记 | 与主画面朝向同一真相 |
+    | P0 | 覆盖范围内的那一个撤离竖缝 | 仍只标一个撤离点；竖缝可保留 |
+    | P1 | （无） | 小地图不另设按键打开或放大 |
+    | P2 | 深渊之眼时限内的敌方方、节点菱形 | 接到同一圆形窗口，不另起一层 |
+
+    **打开方式**：踏入裂隙后右下常驻，无需按键。不居中、不阻断。净化点不出现。出击结束随 HUD 卸下。禁止占用区仍是信息架构 S10：画面中心 ±120×80 逻辑像素与玩家朝向前方。
+
+    **已锁规则句（qa 逐条打勾）**：
+
+    30a. **圆形局部窗口，不是整张缓冲压进圆。** 小地图是圆形。圆跟随玩家：窗口中心对准玩家当前所在格，只显示该圆覆盖到的局部。禁止把生成器整块格子缓冲（现状 64×42）缩放到刚好塞进这个圆，也禁止让覆盖范围等于或显示完整 64×42。
+
+    30b. **直径必须小于缓冲。** 以格子计的窗口直径必须严格小于生成器格子缓冲的较短边（现状 42 行），使玩家即使站在可走陆地几何中心，圆形覆盖范围也罩不住整张缓冲。具体像素直径由 art 定。不改生成器缓冲尺寸来「藏」边界。
+
+    30c. **覆盖范围内同时显示已探索与未探索迷雾。** 圆内已见过的陆地 / 墙画已探索；圆内从未见过的格子画未探索迷雾。禁止只画已探索、把未探索留成空白或裁掉。
+
+    30d. **玩家不能从小地图读出 64×42 矩形缓冲。** 禁止靠硬切边露出直线缓冲边。禁止缩放到刚好塞进整张缓冲。走到岛边时，虚空与雾必须仍被圆裁切；二者不能拼出矩形缓冲的直角。窗口伸出缓冲外的像素，用与未探索迷雾 / 岛外虚空同一套语言填，不得出现「数据到此为止」的矩形裁口。
+
+    30e. **揭示 = 真实视野。** 一格被记为已探索，当且仅当该格曾被与裂隙主画面同一套可见性判为当前可见（遮挡 + 前向锥 ∪ 环身圈，查询 `VisibilitySystem.isPointVisible` / `getVisibilityAt`，经场景层翻译）。禁止用环身灯半径近似圆（脚边约 2.5 格、`RADIUS_AMBIENT` 单独画圈）代替视锥与遮挡。当前正被看见的格子与曾经看见过的格子都算已探索；未探索迷雾只覆盖从未被这套查询点亮过的格子。
+
+    30f. **玩家标记带朝向。** 标记朝向与主画面 `Player.getFacingAngle()` / `getFacing4()` 同一真相，由场景层每帧传入。禁止再做成无朝向十字作为终态。像素画法由 art 在既有暖色玩家标记上补朝向，不新造第二种玩家色。
+
+    30g. **深渊之眼接到同一圆形窗口。** 保留现有工具语义：时限、衰减、闪、敌方方、节点菱形。工具仍揭示所有敌人与未拾取薪柴节点的位置（含当前视野外）；小地图只在圆形覆盖范围内画出这些标记。不另起一层界面，不新造符号。
+
+    30h. **仍只标一个撤离点。** 标记形状不新造第二种撤离符号；竖缝可保留。撤离点落在当前圆形窗口外时不画；落在窗口内时画那一条竖缝。
+
+    30i. **挂载根。** 外层仍是 `#rift-minimap.device-plate`，挂 `#dom-ui-root`。禁止 `document.body` + `position:fixed`。禁止 Phaser `scrollFactor(0)` 角锚。
+
+    30j. **圆边界的皮。** 圆的边界必须与裂隙随身罩 `.device-plate`、项目色板同一视觉语言。禁止通用雷达细框、灰金属线。人否过 1 像素 `#2a2d32` 框。像素级画法留给 art。
+
+    30k. **净化点没有小地图。** 本条只约束裂隙。不改生成器缓冲尺寸。不写撤离多样性、不写第二种敌人。
+
+    **结构层自检（机械层；审美待人终审）**：U1 载体 A、挂 `#dom-ui-root`。U5 可见词只用术语表已有项（撤离点 / 薪柴 / 裂隙）；本表面无新句子。U6 右下常驻，不占画面中心。U7 无按键、无悬停才可得的信息。U8 状态用已探索 / 未探索迷雾 / 深渊之眼生效中，不用 hover/disabled。U9 玩家带朝向、撤离用竖缝、深渊敌人用方、节点用菱形，不靠同形只靠色。U12 上表三款参考。
+
+    **视觉规格部分由 Art agent 补充。**
 
 31. **禁止每帧刷新文本**（architecture 约束）：所有 `setText` 只在上述事件回调中执行，且先比对新旧字符串，相同则跳过。混乱值条的**几何**可以每帧插值以保证平滑，但**文本**必须走事件。
 32. **混乱值条的状态表现**（art §6.2/§7.2 的 HUD 侧）：
@@ -530,13 +587,13 @@ interface RunControllerAPI {
 | `system-combat` | `PLAYER_DIED { cause }` | 事件 | 触发死亡结束路径 |
 | `system-combat` | `PLAYER_HEALTH_CHANGED { current, max }` | 事件 | HUD 生命值条 |
 | T6 固定地图 | `RiftLayoutData`（出生点 / 撤离点 / 薪柴节点） | 场景创建时注入 | 布点 |
-| `system-movement-vision`（T1/T5） | `Player.getPosition()`、`VisibilitySystem.getVisibilityAt(p)` | 同步查询 | 拾取判定、节点 sprite alpha |
+| `system-movement-vision`（T1/T5） | `Player.getPosition()`、`VisibilitySystem.getVisibilityAt(p)` / `isPointVisible(p)`、`Player.getFacingAngle()` / `getFacing4()` | 同步查询，**经场景层** | 拾取判定、节点 sprite alpha；小地图已探索集合与玩家朝向。小地图不 import VisibilitySystem |
 
 ### 向其他系统提供
 
 | 消费方 | 提供什么 | 形式 |
 | ------ | -------- | ---- |
-| HUD | `CHAOS_CHANGED` / `CHAOS_THRESHOLD_REACHED` / `KINDLING_COLLECTED` / `RIFT_EXITED` | 事件 |
+| HUD / 裂隙小地图 | `CHAOS_CHANGED` / `CHAOS_THRESHOLD_REACHED` / `KINDLING_COLLECTED` / `RIFT_EXITED`；已见格子与朝向由场景层写入小地图 | 事件 + 场景翻译 |
 | RiftScene（转发给 T1） | `getChaosModulators(value)` 纯函数的返回值 | import 纯函数 + 场景层调用 setter |
 | `system-movement-vision`（经场景层） | `radiusScale` / `edgeCorruption` / `screenFlicker` / `speedMult` | setter 调用 |
 | `system-combat`（T4） | `ChaosSystem.addChaos(source, amount)`——若 T4 需要新增其他"战斗代价"钩子，走这个统一入口而不是直接改 `value` | 经场景层调用 / 或 T4 emit 事件由本系统监听（**优先后者**） |
@@ -562,7 +619,7 @@ interface RunControllerAPI {
 | ---- | ---- |
 | `src/config/constants.ts` | `CHAOS` 段需按"溢出决策"的变更表改写：`MAX_VALUE` 语义变更 + 新增 6 个字段 + `BASE_RATE` 建议下调 + `PENALTIES` 两档离散值**替换**为四锚点连续曲线（不允许两套并存）。新增 `LOOT` 与 `EXTRACTION` 段。由 code agent 在 T9 执行 |
 | `src/types/events.ts` | 建议给 `CHAOS_CHANGED` payload 加可选 `rate` 字段 + 两条语义注释。由 code agent 在 T9 执行 |
-| `system-movement-vision`（T1） | **接口无变更**，本 spec 只填了它留空的调制器取值。但有一条实现提醒：`setRadiusScale()` 必须让视野静止缓存失效（T1 规则 20 只列了位置/朝向/gridVersion 三个失效条件，未列调制器变更）。见 escalate ⑤ |
+| `system-movement-vision`（T1） | **不新增「已见格子」只读接口。** 小地图已探索集合由场景层每帧用既有 `isPointVisible` / `getVisibilityAt` 累积。调制器取值仍由本 spec 填写。实现提醒：`setRadiusScale()` 必须让视野静止缓存失效（T1 规则 20）。见 escalate ⑤ |
 | `system-enemy-ai`（T2） | 无需修改设计，但本系统依赖其 `ENEMY_ALERT` 的 `alertLevel` 语义（`suspicious` = 怀疑、`alert` = 已确认发现、`chase` = 正在追击）与 `ENEMY_LOST_PLAYER` 的发出时机。若 T2 的语义与此不同，以 T2 为准并回改本 spec 规则 5/7 |
 | `system-combat`（T4） | 需要 emit `ENEMY_DAMAGED`（命中时）与 `PLAYER_DIED`（死亡时）。T4 的"战斗有代价"在混乱值侧已由本 spec 规则 6 落地，T4 无需自行修改混乱值 |
 | T6 固定地图 | 必须满足规则 21 的布局约束并提供 `RiftLayoutData`。这是本 spec 对地图提出的**硬要求**，不是建议——分布原则失效则整个博弈失效 |

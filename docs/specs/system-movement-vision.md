@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code agent
-last-modified-date: 2026-08-13
+last-modified-by: design agent
+last-modified-date: 2026-08-19
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -164,6 +164,7 @@ interface OccluderGrid {
     - `setScreenFlicker(i)`：周期性全屏微闪（art §7.2 的最高档表现）。
 23. **调制不改变几何契约**：调制只影响渲染与射程，不改变 `isPointVisible` 的语义——被缩小后看不见的地方，查询也必须返回不可见。视觉与逻辑必须一致，否则玩家会被"我明明看见了却打不到"骗。
 24. **净化点差异靠配置**：`mode: 'omni'` 时忽略朝向，全角使用同一射程，`voidNoiseEnabled = false`（边界外由 BoundaryAtmosphere 负责）。其余规则不变。
+25. **小地图已探索集合的真相来源**：裂隙小地图的「已探索格子」与主画面同一套可见性（遮挡 + 前向锥 ∪ 环身圈，见规则 11–16、23）。一格被记为已探索，当且仅当该格上一点曾被 `isPointVisible` / `getVisibilityAt` 判为当前可见。禁止用环身灯半径近似圆单独代替视锥与遮挡。本系统不持久保存已见集合、**不新增「已见格子」只读接口**；场景层每帧用既有查询累积，再交给小地图。小地图不 import VisibilitySystem。`system-chaos-scavenge-extract` 规则 18「没有记忆标记」约束的是薪柴节点不在视野外留 HUD 标记，不禁止小地图记住已探索格子。净化点没有小地图，本条只约束裂隙。
 
 ### 边缘渐变的推导（为什么是固定带宽而非半径百分比）
 
@@ -392,6 +393,7 @@ declare function hasLineOfSight(
 | 混乱值系统（T3，经场景层） | `setRadiusScale` / `setEdgeCorruption` / `setScreenFlicker` / `Player.setSpeedModifier('chaos', m)` | setter |
 | 战斗系统（T4/T8） | `Player.getPosition()` / `getFacingAngle()`（近战挥击的方向与判定原点） | 同步查询 |
 | 搜刮 / 撤离（T3/T9） | `registerGlowSource()`（撤离点）、`isPointVisible()`（薪柴是否渲染） | 调用 / 查询 |
+| 裂隙小地图（经场景层） | 当前可见性查询；已见集合由场景层用既有 `isPointVisible` / `getVisibilityAt` 累积后写入小地图。玩家朝向走 `Player.getFacingAngle()` / `getFacing4()` | 场景翻译。小地图不 import VisibilitySystem。不新增「已见格子」只读接口 |
 
 ### 为什么不用事件总线
 
@@ -401,6 +403,7 @@ declare function hasLineOfSight(
 2. **ChaosSystem 不调用 VisibilitySystem**。ChaosSystem 只 `emit` 既有事件（`CHAOS_CHANGED` / `CHAOS_THRESHOLD_REACHED`）；**由场景层监听并把调制值转发给 VisibilitySystem 和 Player**。场景是系统的拥有者与编排层，这条路径不违反解耦规则，且让"混乱值→视野"的映射集中在一处可读可调。
 3. **视野本身不 emit 事件**。视野是每帧连续量，走事件总线只会制造每帧 60 次的同步 emit。对外一律用同步查询 API。
 4. **本 slice 不建议新增任何事件**。`src/types/events.ts` 现有事件已足够覆盖本系统的所有交互路径。
+5. **小地图不调用 VisibilitySystem。** 已探索集合由场景层每帧用既有同步查询累积，再写入小地图。这与混乱值调制同一条编排路径，不构成系统互 import。
 
 ---
 
@@ -412,7 +415,7 @@ declare function hasLineOfSight(
 | `architecture.md` 模块注册表 | ✅ **已于 2026-07-29（T5/T6）执行**：登记 `VisibilitySystem`（已实现）、`Player`、`TilemapRenderer`、`TileGrid`、`GridRaycast` |
 | `RiftScene` / `PurificationScene` | 两者都需持有 Player + VisibilitySystem 实例，并各自提供 `VisionConfig` 与 `OccluderGrid`；RiftScene 额外承担混乱值调制的事件转发 |
 | `system-enemy-ai`（T2） | 敌人视线判定应直接使用 `utils/grid-raycast.hasLineOfSight()`，不要另写遮挡逻辑；其 `SIGHT_RANGE` 应保持 < `VISION_RADIUS_FORWARD` |
-| `system-chaos-scavenge-extract`（T3） | 惩罚的视觉部分应表达为本 spec 的三个调制器取值，而不是自行改视野内部字段 |
+| `system-chaos-scavenge-extract`（T3） | 惩罚的视觉部分应表达为本 spec 的三个调制器取值，而不是自行改视野内部字段。裂隙小地图已探索集合经场景层消费既有可见性查询（规则 25），本系统不扩 `VisibilitySystemAPI` |
 | `system-combat`（T4） | 共享 Player 实体；HP/攻击字段由 T4 追加，不得改动本 spec 拥有的移动字段语义 |
 | 事件契约 | 无变更 |
 

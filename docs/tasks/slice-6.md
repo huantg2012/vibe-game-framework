@@ -14,6 +14,8 @@ Slice 类型：系统
 
 **现状（2026-08-19，DEC-062）：** C3+C4 已接。C5 已接（地表读 CSV、抽锚生成、天空 64×42 叠层循环）；人试玩 ok。下文 C3+C4 Brief 里「本批不做 C5 / C5 未做 / 不改写死 `frag-outdoor`」只描述 2026-08-18 接线批，**不要当现在的任务书再执行一遍。** Slice 仍 ACTIVE。仍待：规格 21 软目标、尘点沿风、污染年龄×残破度。
 
+**检查点后（DEC-063）：** 裂隙小地图改为跟随玩家的圆形局部窗口。任务 D3 / A2 / C6 / Q2 写在本文件文末。不标 COMPLETE。
+
 ---
 
 ## Task: D1 | assignee: design
@@ -235,3 +237,171 @@ Title: 对照规格验收 | Priority: P0 | Dispatch: 🟢
 Depends: C1–C5
 
 对照 `system-map-generation.md`：连通、一个撤离、外轮廓不规则、障碍最小尺度/情景、两次生成氛围可分、提示仍是按 E。不代勾好看。
+
+---
+
+## 检查点后热修：裂隙小地图圆形局部窗口（DEC-063）
+
+**不是新 Slice。** 人已锁需求。顺序：D3 → A2 → C6 → Q2。对人用完整短语，禁止自造缩写。
+
+---
+
+## Task: D3 | assignee: design
+
+Title: 就地扩写裂隙小地图规则（圆形局部窗口 + 真实视野） | Priority: P0 | Dispatch: 🔴（人已发起，本会话执行）
+
+Depends: 无（检查点 DEC-062 之后）
+
+### 目标
+
+就地扩写已有规格，让 code 能按规则实现、qa 能机械比对。**禁止**新开一份小地图规格文件。
+
+### 必须先读
+
+- `CLAUDE.md`
+- `docs/progress/current-slice.md` 中「检查点后：裂隙小地图圆形局部窗口」
+- `docs/progress/decisions-log.md` DEC-063（人已锁，禁止再开选项）
+- `docs/specs/system-chaos-scavenge-extract.md` 规则 30 与 HUD 节
+- `docs/specs/system-movement-vision.md` 视野规则 11–23 与 `VisibilitySystemAPI`
+- `docs/design-notes/ux-information-architecture.md` S12
+- `.cursor/skills/in-game-ux/SKILL.md` 步骤 1–3、6（结构层：载体 / 参考 / 信息优先级）。自定义 agent 不会自动加载 skill。
+
+### 人已锁（写成规则句，不要 A/B/C）
+
+1. 小地图应是圆形，其覆盖范围不能等于或显示完整 64×42 区域。
+2. 覆盖范围内同时显示：玩家已探索部分，以及未探索迷雾。
+3. 圆的边界渲染必须与当前游戏视觉语言一致（裂隙随身罩 `.device-plate`、色板、禁止通用雷达细框 / 灰金属线；人否过 1 像素 `#2a2d32` 框）。像素级画法留给 art。
+4. 玩家不能以任何方式从小地图读出 64×42 这个矩形边界（不要硬切边、不要靠缩放到刚好塞进整张缓冲、走到岛边时虚空与雾不能暴露矩形缓冲的直角）。
+5. （人未写第 5 条。）
+6. 小地图要跟踪玩家真实视野（与 `VisibilitySystem` 的看见过 / 当前看见一致，不是现在的灯半径近似圆），并且玩家标记带朝向。
+
+解释约束（必须写进规格）：
+
+- 圆是跟随玩家的局部窗口，不是「把整张 64×42 压进一个圆」。
+- 直径（以格子计）必须小于缓冲，使得即使站在岛中央也看不全整张缓冲。具体像素直径留给 art。
+- 真实视野：与裂隙主画面同一套遮挡 / 视锥真相；已探索集合应来自实际见过的格子，不是「脚边 2.5 格圆」。
+- 深渊之眼揭示：保留现有工具语义（时限、衰减、闪、敌方、节点形状），接到新圆形窗口上，不要另起一层界面。
+- 仍只标一个撤离点；标记形状不新造第二种撤离符号（竖缝可保留）。
+- 屏幕空间仍挂 `#dom-ui-root`。禁止 `document.body` + `position:fixed`。禁止 Phaser `scrollFactor(0)` 角锚。
+- 净化点仍然没有小地图。不改生成器缓冲尺寸。
+
+### 具体要求
+
+- [ ] 扩写 `docs/specs/system-chaos-scavenge-extract.md` 规则 30（小地图行 + 必要的规则句）。写清：圆形局部窗口、覆盖范围内已探索 / 迷雾、禁止暴露矩形缓冲、揭示 = 真实视野、玩家标记带朝向、深渊之眼接到同一窗口、一个撤离竖缝。
+- [ ] 揭示绑定视野：在 `docs/specs/system-movement-vision.md` **最少补句**（已见格子的查询契约）。已有 `getVisibilityAt` / `isPointVisible`。若必须新增「已见格子」只读接口，写入 `VisibilitySystemAPI` 与 frontmatter `exposes`，并设 `interface-changed: true`。若场景层每帧用现有查询累积即可、不扩接口，则 `interface-changed` 保持 false，仍要写一句「小地图已探索集合的真相来源」。
+- [ ] 系统互不直接 import：小地图不 import `VisibilitySystem`；场景层翻译。写进接口段。
+- [ ] 更新两份规格的 `last-modified-date`（2026-08-19）。`interface-changed` 仅在对外接口真变时为 true。
+- [ ] 规则 18「没有记忆标记」针对的是薪柴节点不在视野外留 HUD 标记，不要写成「小地图也不得记住已探索格子」。小地图战争迷雾是另一条规则。
+- [ ] 视觉规格部分标注由 art 补充。结构层不要发明新色、新符号、新挂载根。
+- [ ] 不写 `src/**`。不改地图生成规格。不写撤离多样性。不写第二种敌人。
+
+### 验收标准
+
+- 规则句能让 qa 逐条打勾：圆、局部窗口、迷雾、真实视野、朝向、矩形缓冲不可读、深渊之眼、一个撤离、挂载根。
+- 无人锁需求被改成可选项。
+
+---
+
+## Task: A2 | assignee: art
+
+Title: 圆形随身罩小地图最短合规核对 | Priority: P0 | Dispatch: 🔴（人已发起，本会话在 D3 之后执行）
+
+Depends: D3
+
+### 目标
+
+人已点名「圆形 + 跟现行裂隙随身罩风格一致」。你不重新发明方案。最短合规核对后，把可施工像素规格写进活文档。
+
+### 必须先做（缺一不合格）
+
+1. **先 Read** `/Users/yilungao/coh/.cursor/skills/in-game-ux/SKILL.md`（开工闸门 + 写完自检）。自定义 agent 不会自动加载 skill。只写「审美过关 / 像游戏」而不走该 HOW = 不合格。
+2. 按**本游戏** `docs/art-direction.md`、`docs/design-notes/ui-art-overhaul.md`（Kit）、`docs/architecture.md` 填写，禁止套用别的游戏的皮。
+3. 色只准 `docs/art/palette.json`。
+
+### 最短合规核三件事
+
+- **载体 A 仍成立：** 裂隙随身装置第二块屏，`#rift-minimap.device-plate` 挂 `#dom-ui-root`。
+- **2–3 个具名参考：** 写清学什么动作 / 明确不学什么。必须包含：不学通用雷达细框。人否过 1 像素 `#2a2d32` 框。
+- **相关 U 项：** U1 载体、U2 无后台 / 无雷达窗、U6 不挡战场中心、U9 形状可读（十字带朝向、竖缝、方、菱）、U11 与左上 `.device-plate` 同族。
+
+### 产出（就地更新，不要另起一套皮）
+
+优先就地更新 `docs/art/ux-visual-pass-slice-55.md` **第 4 节**；Kit 对应节（`ui-art-overhaul.md` A5-14）若仍写「整张矩形画布」则改一句对齐。必须写清：
+
+- 圆直径（格子数 + 画布像素）。直径必须小于 64×42 缓冲较短边，站在岛中央也看不全整张缓冲。
+- 圆边界怎么画才像这块随身罩而不是雷达（凹槽 / 玻璃 / 暗扫描 / 禁止细金属线圈）。
+- 雾 / 地 / 墙 / 虚空色（沿用色板已锁值，除非与圆窗口冲突必须改——改则说明理由）。
+- 玩家标记如何带朝向（在现有暖橙十字上加方向，不要改成圆点）。
+- 岛边：圆内超出陆地的区域怎么填，才不会读出矩形缓冲直角。
+- 深渊之眼标记仍在同一块圆 canvas 上。
+
+### 禁止
+
+- 重新发明方案、新色相、新撤离符号、净化点小地图、灰金属线、圆角卡片、投影、teal 扫描。
+- 不写 `src/**`。
+
+### 写完自检
+
+按 skill 逐条书面作答。不许写「好看 / 像游戏 / PASS」。
+
+---
+
+## Task: C6 | assignee: code
+
+Title: 按核对后规格改裂隙圆形小地图 | Priority: P0 | Dispatch: 🔴（人已发起，本会话在 A2 之后执行）
+
+Depends: D3 + A2
+
+### 目标
+
+只按 **D3 规格 + A2 像素规格** 改实现。不要自己发明皮。
+
+### 改哪些文件
+
+- `src/ui/minimap.ts`（主）
+- `src/scenes/rift-scene.ts`（create / 每帧 update / destroy 接线）
+- 若 D3 要求「已见格子」只读接口：`src/systems/visibility-system.ts` 提供查询；**场景层翻译**给小地图。小地图 **禁止** import `VisibilitySystem`（架构：系统互不直接 import；场景是编排层）。
+- 若架构 Minimap 行过时：就地改 `docs/architecture.md` 模块表那一行。
+- `tsc` 必须过。连续 2 次过不了机器闸门 → 停止，升档报告，不要第三次盲改。
+
+### 必须成立
+
+- 圆形局部窗口跟随玩家，不是把 64×42 压进圆。
+- 圆内同时有已探索与未探索迷雾。
+- 已探索集合来自真实视野（`getVisibilityAt` > 0 的格子累积），不是 `RADIUS_AMBIENT` 近似圆。
+- 玩家标记带朝向（用 `Player.getFacingAngle()`，经场景传入）。
+- 走到岛边：虚空 / 雾填满圆，不露出缓冲直角。
+- 深渊之眼语义不变，画在圆窗口内。
+- 一个撤离竖缝；格子被揭示后才出现。
+- 挂 `#dom-ui-root`。禁止 `document.body` + `position:fixed`。禁止 Phaser `scrollFactor(0)` 角锚。
+
+### 禁止
+
+- 改净化点、撤离多样性、生成器 `BUFFER_COLS` / `BUFFER_ROWS`、第二种敌人、音乐、全界面翻修。
+- 用缩小缓冲来「藏」边界。
+
+### 验收
+
+- `npx tsc --noEmit` 退出码 0。
+- 交回：改了哪些文件、真实视野怎么接到已探索集合、闸门输出。
+
+---
+
+## Task: Q2 | assignee: qa
+
+Title: 对照更新后规格验收圆形小地图 | Priority: P0 | Dispatch: 🟢
+
+Depends: C6
+
+对照更新后的 `system-chaos-scavenge-extract.md` 规则 30 与 `system-movement-vision.md` 补句，机械比对实现：
+
+- 圆形（覆盖 ≠ 完整 64×42）
+- 圆内已探索 + 未探索迷雾
+- 揭示 = 真实视野，不是灯半径圆
+- 玩家标记带朝向
+- 矩形缓冲不可读（代码路径上没有「整张缓冲硬切进圆」或「缩放到刚好塞进缓冲」）
+- 深渊之眼仍在同一窗口
+- 一个撤离竖缝
+- 挂载 `#dom-ui-root`
+
+写 `docs/qa/report-rift-minimap-circular.md`。不代勾审美。不修代码。

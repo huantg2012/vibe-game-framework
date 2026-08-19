@@ -98,6 +98,8 @@ export class RiftScene extends Phaser.Scene {
   /** Defense residue lines shown in the rift HUD; remainingMs ticked here, then
    *  merged with tool-system remaining each frame so tool rows are not double-counted. */
   private defenseHudEffects: ActiveEffectInfo[] = [];
+  /** Reused each post-update so the minimap visibility scan does not allocate. */
+  private readonly minimapVisibilityQuery: Vector2 = { x: 0, y: 0 };
 
   constructor() {
     super({ key: 'RiftScene' });
@@ -350,10 +352,6 @@ export class RiftScene extends Phaser.Scene {
       delta
     );
 
-    // Minimap: reveal tiles within ambient radius around player. `delta` only drives the
-    // abyss tool's reveal countdown (Slice 5 T1).
-    this.minimap.update(playerPos, delta);
-
     // Extraction key (edge-triggered)
     if (this.extractKey && Phaser.Input.Keyboard.JustDown(this.extractKey)) {
       this.extraction.requestExtract();
@@ -367,7 +365,53 @@ export class RiftScene extends Phaser.Scene {
     // Enemies are drawn last of the three: their visibility is looked up against the mask
     // this frame produced, so an enemy is never drawn into darkness (rule R4).
     this.ai.postUpdate(delta);
+    // Minimap after visibility so explored tiles match this frame's cone + occlusion.
+    this.syncMinimapExploration();
+    this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
     if (this.debugPanel) this.updateDebugOverlay(delta);
+  }
+
+  /**
+   * Accumulates tiles currently visible by the same queries the main view uses.
+   * Writes into the minimap; does not expand VisibilitySystem.
+   *
+   * Wall cells are opaque, so a center sample never gets line of sight. If the
+   * center is dark, sample 1px outside each edge (in the adjacent cell). A
+   * visible wall face then lights the wall; a blocked neighbor does not.
+   */
+  private syncMinimapExploration(): void {
+    const tileSize = GAME_CONSTANTS.TILE_SIZE;
+    const playerPos = this.player.getPosition();
+    const playerTileX = Math.floor(playerPos.x / tileSize);
+    const playerTileY = Math.floor(playerPos.y / tileSize);
+    const range = Math.ceil(GAME_CONSTANTS.VISIBILITY.RADIUS_FORWARD / tileSize) + 1;
+
+    for (let dy = -range; dy <= range; dy++) {
+      for (let dx = -range; dx <= range; dx++) {
+        const tileX = playerTileX + dx;
+        const tileY = playerTileY + dy;
+        const left = tileX * tileSize;
+        const top = tileY * tileSize;
+        const midX = left + tileSize * 0.5;
+        const midY = top + tileSize * 0.5;
+        if (
+          this.isMinimapSampleVisible(midX, midY) ||
+          this.isMinimapSampleVisible(left - 1, midY) ||
+          this.isMinimapSampleVisible(left + tileSize, midY) ||
+          this.isMinimapSampleVisible(midX, top - 1) ||
+          this.isMinimapSampleVisible(midX, top + tileSize)
+        ) {
+          this.minimap.markExplored(tileX, tileY);
+        }
+      }
+    }
+  }
+
+  private isMinimapSampleVisible(x: number, y: number): boolean {
+    const point = this.minimapVisibilityQuery;
+    point.x = x;
+    point.y = y;
+    return this.visibility.getVisibilityAt(point) > 0;
   }
 
   /**

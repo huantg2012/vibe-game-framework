@@ -27,7 +27,7 @@ note: Slice 6「程序化地图」ACTIVE（DEC-055）。2026-08-19 检查点 DEC
 
 ## 当前 Slice
 
-**Slice 6: 程序化地图** ACTIVE（2026-08-16）。权威范围 `docs/progress/current-slice.md`。撤离多样性延后（DEC-055）。**检查点（2026-08-19，DEC-062）：** 策略已进裂隙（锚 + 种子 + 邻域抖动）+ 天空低分辨率叠层循环 + 人 ok。仍 ACTIVE，不标 COMPLETE。
+**Slice 6: 程序化地图** ACTIVE（2026-08-16）。权威范围 `docs/progress/current-slice.md`。撤离多样性延后（DEC-055）。**检查点（2026-08-19，DEC-062）：** 策略已进裂隙（锚 + 种子 + 邻域抖动）+ 天空低分辨率叠层循环 + 人 ok。仍 ACTIVE，不标 COMPLETE。**检查点后热修（DEC-063）：** 裂隙小地图改为跟随玩家的圆形局部窗口；机械层已交，待人试玩。
 
 ## 计划中的 Slices（近期方向，未锁定）
 

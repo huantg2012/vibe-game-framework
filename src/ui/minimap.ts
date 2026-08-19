@@ -1,23 +1,29 @@
 /**
- * Minimap - fog-of-war overlay showing explored areas.
+ * Minimap - circular local fog-of-war window.
  *
- * Renders a small top-down view of the map in the corner. Only tiles the player
- * has seen (entered their vision cone at least once) are revealed. The extraction
- * point is shown once discovered. Player / extract / abyss marks use distinct
- * shapes (cross / slit / square / diamond) so they stay readable in grayscale.
+ * 33-tile (99px) window follows the player's current tile. Explored tiles are
+ * accumulated by the scene from real visibility queries; this module does not
+ * import VisibilitySystem. Player / extract / abyss marks use distinct shapes.
  *
  * Canvas sits inside `#rift-minimap.device-plate` on `#dom-ui-root`.
  */
 
-import { GAME_CONSTANTS } from '@/config/constants';
-import { TileType, type Vector2 } from '@/types/game-types';
+import { TileType, type Facing4, type Vector2 } from '@/types/game-types';
 import { getDomUiRoot, injectPanelStyles } from '@/ui/dom/panel-styles';
 
 // ---------------------------------------------------------------------------
-// Config
+// Config (docs/art/ux-visual-pass-slice-55.md §4)
 // ---------------------------------------------------------------------------
 
-const MINIMAP_SCALE = 3;          // px per tile
+const MINIMAP_SCALE = 3;
+/** 25 × 1.3 = 32.5, kept odd so the player stays on the center tile. */
+const WINDOW_TILES = 33;
+const WINDOW_RADIUS_TILES = (WINDOW_TILES - 1) / 2;
+const CANVAS_SIZE = WINDOW_TILES * MINIMAP_SCALE;
+const CLIP_CX = (CANVAS_SIZE - 1) / 2;
+const CLIP_CY = CLIP_CX;
+const CLIP_RADIUS = CLIP_CX;
+
 const BG_COLOR = '#080a0c';
 const EXPLORED_FLOOR = '#151a1e';
 const EXPLORED_WALL = '#4a4e55';
@@ -80,43 +86,50 @@ export class Minimap {
       y: Math.floor(extractionPos.y / tileSize),
     };
 
-    const w = mapWidth * MINIMAP_SCALE;
-    const h = mapHeight * MINIMAP_SCALE;
-
     injectPanelStyles();
 
     const wrap = document.createElement('div');
     wrap.id = 'rift-minimap';
     wrap.className = 'device-plate';
-    wrap.style.cssText = [
-      'position:absolute',
-      'right:12px',
-      'bottom:12px',
-      'z-index:1000',
-      'pointer-events:none',
-      'padding:4px',
-    ].join(';');
 
     this.canvas = document.createElement('canvas');
-    this.canvas.width = w;
-    this.canvas.height = h;
-    this.canvas.style.cssText =
-      `width:${w}px;height:${h}px;border:none;display:block;image-rendering:pixelated;`;
+    this.canvas.width = CANVAS_SIZE;
+    this.canvas.height = CANVAS_SIZE;
     wrap.appendChild(this.canvas);
     getDomUiRoot().appendChild(wrap);
     this.wrap = wrap;
 
     this.ctx = this.canvas.getContext('2d')!;
-    this.drawBase();
+    this.drawClear();
   }
 
   /**
-   * Called each frame with the player's world position and the vision radius.
-   * Reveals tiles within a generous radius around the player (approximating
-   * what they've actually seen). `deltaMs` only drives the abyss reveal countdown
-   * (Slice 5 T1); fog-of-war reveal itself is not time-based.
+   * Scene-owned exploration: mark a tile the current visibility query just saw.
+   * Persistent `Uint8Array` lives here; VisibilitySystem is not imported.
    */
-  update(playerWorldPos: Vector2, deltaMs = 0): void {
+  markExplored(tileX: number, tileY: number): void {
+    if (tileX < 0 || tileX >= this.mapWidth || tileY < 0 || tileY >= this.mapHeight) {
+      return;
+    }
+    const idx = tileY * this.mapWidth + tileX;
+    if (!this.explored[idx]) this.explored[idx] = 1;
+
+    if (
+      !this.extractionDiscovered &&
+      this.extractionTile &&
+      this.extractionTile.x === tileX &&
+      this.extractionTile.y === tileY
+    ) {
+      this.extractionDiscovered = true;
+    }
+  }
+
+  /**
+   * Draw the local circular window. `deltaMs` only drives the abyss reveal countdown
+   * (Slice 5 T1); fog-of-war itself is not time-based. Facing comes from the scene
+   * (`Player.getFacing4()`); last facing is kept by the player when standing still.
+   */
+  update(playerWorldPos: Vector2, facing: Facing4, deltaMs = 0): void {
     if (this.abyssRemainingMs > 0) {
       this.abyssRemainingMs -= deltaMs;
       if (this.abyssRemainingMs <= 0) {
@@ -126,32 +139,12 @@ export class Minimap {
       }
     }
 
-    const tx = Math.floor(playerWorldPos.x / this.tileSize);
-    const ty = Math.floor(playerWorldPos.y / this.tileSize);
+    const playerTileX = Math.floor(playerWorldPos.x / this.tileSize);
+    const playerTileY = Math.floor(playerWorldPos.y / this.tileSize);
+    const originTileX = playerTileX - WINDOW_RADIUS_TILES;
+    const originTileY = playerTileY - WINDOW_RADIUS_TILES;
 
-    // Reveal only tiles within ambient vision range (~2.5 tiles) — not the full forward cone
-    const baseRadius = GAME_CONSTANTS.VISIBILITY.RADIUS_AMBIENT / this.tileSize;
-    const revealRadius = Math.ceil(baseRadius);
-
-    for (let dy = -revealRadius; dy <= revealRadius; dy++) {
-      for (let dx = -revealRadius; dx <= revealRadius; dx++) {
-        if (dx * dx + dy * dy > revealRadius * revealRadius) continue;
-        const mx = tx + dx;
-        const my = ty + dy;
-        if (mx < 0 || mx >= this.mapWidth || my < 0 || my >= this.mapHeight) continue;
-        const idx = my * this.mapWidth + mx;
-        if (!this.explored[idx]) this.explored[idx] = 1;
-      }
-    }
-
-    // Check if extraction point discovered
-    if (!this.extractionDiscovered && this.extractionTile) {
-      const eidx = this.extractionTile.y * this.mapWidth + this.extractionTile.x;
-      if (this.explored[eidx]) this.extractionDiscovered = true;
-    }
-
-    this.drawExplored();
-    this.drawDynamic(tx, ty);
+    this.drawFrame(originTileX, originTileY, facing);
   }
 
   /** abyss: "10秒内地图上所有敌人和薪柴节点位置以标记显示(含视野外)". */
@@ -173,7 +166,7 @@ export class Minimap {
     this.abyssNodePositions = [];
     this.abyssRemainingMs = 0;
     this.abyssTotalMs = 0;
-    this.drawBase();
+    this.drawClear();
   }
 
   destroy(): void {
@@ -200,44 +193,68 @@ export class Minimap {
     return ABYSS_DOT_ALPHA_FLOOR + (1 - ABYSS_DOT_ALPHA_FLOOR) * fraction;
   }
 
-  private drawBase(): void {
-    const ctx = this.ctx;
-    ctx.fillStyle = BG_COLOR;
-    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  private drawClear(): void {
+    this.ctx.fillStyle = BG_COLOR;
+    this.ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
   }
 
-  private drawExplored(): void {
+  private drawFrame(originTileX: number, originTileY: number, facing: Facing4): void {
     const ctx = this.ctx;
     ctx.fillStyle = BG_COLOR;
-    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-    for (let y = 0; y < this.mapHeight; y++) {
-      const row = this.tiles[y];
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(CLIP_CX, CLIP_CY, CLIP_RADIUS, 0, Math.PI * 2);
+    ctx.clip();
+
+    for (let wy = 0; wy < WINDOW_TILES; wy++) {
+      const my = originTileY + wy;
+      if (my < 0 || my >= this.mapHeight) continue;
+      const row = this.tiles[my];
       if (!row) continue;
-      for (let x = 0; x < this.mapWidth; x++) {
-        const idx = y * this.mapWidth + x;
-        if (!this.explored[idx]) continue;
+      for (let wx = 0; wx < WINDOW_TILES; wx++) {
+        const mx = originTileX + wx;
+        if (mx < 0 || mx >= this.mapWidth) continue;
+        if (!this.explored[my * this.mapWidth + mx]) continue;
 
-        const tile = row[x];
-        if (tile === TileType.VOID) continue;
+        const tile = row[mx];
+        if (tile === undefined || tile === TileType.VOID) continue;
         ctx.fillStyle = tile === TileType.WALL ? EXPLORED_WALL : EXPLORED_FLOOR;
-        ctx.fillRect(x * MINIMAP_SCALE, y * MINIMAP_SCALE, MINIMAP_SCALE, MINIMAP_SCALE);
+        ctx.fillRect(wx * MINIMAP_SCALE, wy * MINIMAP_SCALE, MINIMAP_SCALE, MINIMAP_SCALE);
       }
     }
+
+    this.drawMarks(originTileX, originTileY, facing);
+    ctx.restore();
   }
 
-  private cellCenter(tileX: number, tileY: number): { cx: number; cy: number } {
-    return {
-      cx: Math.round(tileX * MINIMAP_SCALE + MINIMAP_SCALE / 2),
-      cy: Math.round(tileY * MINIMAP_SCALE + MINIMAP_SCALE / 2),
-    };
+  /** Pixel center of a map tile inside the current window, or null if outside coverage. */
+  private windowCellCenter(
+    tileX: number,
+    tileY: number,
+    originTileX: number,
+    originTileY: number,
+  ): { cx: number; cy: number } | null {
+    const wx = tileX - originTileX;
+    const wy = tileY - originTileY;
+    if (wx < 0 || wx >= WINDOW_TILES || wy < 0 || wy >= WINDOW_TILES) return null;
+    const cx = wx * MINIMAP_SCALE + 1;
+    const cy = wy * MINIMAP_SCALE + 1;
+    return { cx, cy };
   }
 
-  private drawPlayerCross(cx: number, cy: number): void {
+  private drawPlayerCross(facing: Facing4): void {
     const ctx = this.ctx;
+    const cx = CLIP_CX;
+    const cy = CLIP_CY;
     ctx.fillStyle = PLAYER_COLOR;
-    ctx.fillRect(cx - 2, cy - 1, 5, 2);
-    ctx.fillRect(cx - 1, cy - 2, 2, 5);
+    ctx.fillRect(cx - 2, cy, 5, 2);
+    ctx.fillRect(cx, cy - 2, 2, 5);
+    if (facing === 'up') ctx.fillRect(cx, cy - 4, 2, 2);
+    else if (facing === 'right') ctx.fillRect(cx + 3, cy, 2, 2);
+    else if (facing === 'down') ctx.fillRect(cx, cy + 3, 2, 2);
+    else ctx.fillRect(cx - 4, cy, 2, 2);
   }
 
   private drawExtractSlit(cx: number, cy: number): void {
@@ -264,33 +281,41 @@ export class Minimap {
     ctx.globalAlpha = 1;
   }
 
-  private drawDynamic(playerTileX: number, playerTileY: number): void {
+  private drawMarks(originTileX: number, originTileY: number, facing: Facing4): void {
     if (this.abyssRemainingMs > 0) {
       const alpha = this.abyssDotAlpha();
       if (alpha > 0) {
         for (const pos of this.abyssNodePositions) {
-          const { cx, cy } = this.cellCenter(
+          const cell = this.windowCellCenter(
             Math.floor(pos.x / this.tileSize),
             Math.floor(pos.y / this.tileSize),
+            originTileX,
+            originTileY,
           );
-          this.drawNodeDiamond(cx, cy, alpha);
+          if (cell) this.drawNodeDiamond(cell.cx, cell.cy, alpha);
         }
         for (const pos of this.abyssEnemyPositions) {
-          const { cx, cy } = this.cellCenter(
+          const cell = this.windowCellCenter(
             Math.floor(pos.x / this.tileSize),
             Math.floor(pos.y / this.tileSize),
+            originTileX,
+            originTileY,
           );
-          this.drawEnemySquare(cx, cy, alpha);
+          if (cell) this.drawEnemySquare(cell.cx, cell.cy, alpha);
         }
       }
     }
 
     if (this.extractionDiscovered && this.extractionTile) {
-      const { cx, cy } = this.cellCenter(this.extractionTile.x, this.extractionTile.y);
-      this.drawExtractSlit(cx, cy);
+      const cell = this.windowCellCenter(
+        this.extractionTile.x,
+        this.extractionTile.y,
+        originTileX,
+        originTileY,
+      );
+      if (cell) this.drawExtractSlit(cell.cx, cell.cy);
     }
 
-    const { cx, cy } = this.cellCenter(playerTileX, playerTileY);
-    this.drawPlayerCross(cx, cy);
+    this.drawPlayerCross(facing);
   }
 }
