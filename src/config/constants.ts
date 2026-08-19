@@ -68,7 +68,7 @@ export const GAME_CONSTANTS = {
    * extended, so the two parameter sets never coexist.
    */
   VISIBILITY: {
-    RADIUS_FORWARD: 224,      // px straight ahead (7 tiles); must exceed AI.SIGHT_RANGE
+    RADIUS_FORWARD: 224,      // px straight ahead (7 tiles); must exceed every profile sightRange (I1)
     RADIUS_AMBIENT: 80,       // px all around (2.5 tiles) = the lamp the player carries
     CONE_HALF_ANGLE: 50,      // deg half-angle of the full-range sector
     CONE_FALLOFF_ANGLE: 30,   // deg of transition from forward range down to ambient
@@ -143,12 +143,7 @@ export const GAME_CONSTANTS = {
    * parameters would have been three ways to be wrong.
    */
   AI: {
-    // --- movement and body (section "移动与体型") ---
-    PATROL_SPEED: 30,         // px/s; slow enough that "wait for it to pass" is a real tactic (I4)
-    CHASE_SPEED: 65,          // px/s; below PLAYER.SPEED so retreating always works (I3)
-    SUSPICIOUS_SPEED: 22,     // px/s; slower than patrol - "creeping closer"
-    ALERT_SPEED: 45,          // px/s; between patrol and chase so searching reads differently
-    RETURN_SPEED: 38,         // px/s; slightly above patrol so "walking back" is legible
+    // --- movement and body (shared; per-role speeds live in data/enemies.csv) ---
     TURN_RATE: 360,           // deg/s; a third of the player's, which is what makes flanking work (I6)
     BODY_SIZE: 20,            // px collider edge; < TILE_SIZE so 1-tile gaps stay passable
     BODY_OFFSET: { x: 2, y: 2 }, // centres the collider inside the 24x24 placeholder sprite
@@ -158,13 +153,11 @@ export const GAME_CONSTANTS = {
     STANDOFF_BAND: 4,         // px of tolerance around it (26..34)
     STANDOFF_ADJUST_SPEED: 60, // px/s used to back off when the player crowds it
 
-    // --- perception (section "感知") ---
-    SIGHT_RANGE: 180,         // px core cone range; must stay under VISIBILITY.RADIUS_FORWARD (I1)
-    SIGHT_HALF_ANGLE_CORE: 55,    // deg -> 110 deg cone
-    SIGHT_RANGE_PERIPH: 90,       // px; stops "walk past its flank for free"
-    SIGHT_HALF_ANGLE_PERIPH: 90,  // deg -> straight behind stays a true blind spot
-    CHASE_SIGHT_RANGE: 210,   // px, 360 deg once locked on; still under 224 (I2)
-    DETECT_FILL_TIME: 0.45,   // s of clear sight to go from 0 to certain
+    // --- perception (shared; cone / hearing radii / weights live in data/enemies.csv) ---
+    DETECT_FILL_TIME: 0.45,   // s of clear sight to go from 0 to certain; then × visionWeight
+    HEAR_FILL_TIME: 2.0,      // s of hearing fill baseline; then × hearingWeight × moveMult
+    HEARING_STILL_CAP: 0.20,  // still-hearing cannot push detection past this (below 0.35)
+    HEAR_ALERT_THRESHOLD: 0.70, // rewriter T0-4b: hearing can push to ALERT, never CHASE
     DETECT_DIST_FACTOR_NEAR: 1.6, // detection rate multiplier at point blank
     DETECT_DIST_FACTOR_FAR: 0.5,  // ...and at the edge of sight range
     DETECT_ZONE_FACTOR_PERIPH: 0.45, // peripheral vision fills far slower than the core cone
@@ -172,8 +165,6 @@ export const GAME_CONSTANTS = {
     REACQUIRE_THRESHOLD: 0.5,  // lower bar to re-lock while already searching
     DETECT_DECAY_RATE: 0.67,   // per s; ~1.5 s to clear after breaking sight
     DETECT_DECAY_ALERT_SCALE: 0.5, // decays half as fast while searching: it is holding a grudge
-    HEARING_RANGE: 100,       // px, 360 deg; must stay under SIGHT_RANGE (I5)
-    HEARING_WALL_FACTOR: 0.6, // through-wall hearing radius multiplier (-> 60 px)
     HEARING_JITTER: 32,       // px of positional fuzz, so hearing is not a wall-hack locator
     PERCEPTION_TICK_MS: 100,  // 10 Hz perception; one raycast per enemy per tick
     PERCEPTION_TICK_MS_FAR: 200, // 5 Hz beyond ACTIVE_RANGE (rule N8)

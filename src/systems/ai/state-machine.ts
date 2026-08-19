@@ -111,14 +111,19 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
     return;
   }
 
+  // --- priority 4b: rewriter hearing fill can push to ALERT, never CHASE ---
+  if (applyHearingAlertPush(enemy, p, ctx)) return;
+
   // --- priority 5: something is off. Vision below certainty, hearing, or a noise report ---
-  const seenEnough = ai.detection >= config.SUSPICION_THRESHOLD && p.visible;
+  const hearingFill = p.hearingRate > 0;
+  const seenEnough =
+    ai.detection >= config.SUSPICION_THRESHOLD && (p.visible || hearingFill);
   const noiseStimulus = ai.pendingNoiseLevel === 'suspicious';
 
   // muffle (T7 rewire): a hearing-only signal pulling a calm enemy into SUSPICIOUS is
   // exactly "被近距发现" - the one case the CSV describes ("360度近距检测对玩家无效").
   // Sight and reported noises are never swallowed, only this.
-  const hearingOnly = p.hearingHit && !seenEnough && !noiseStimulus;
+  const hearingOnly = (p.hearingHit || hearingFill) && !p.visible && !noiseStimulus;
   const entering = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
   if (hearingOnly && entering && ctx.hearingSuppressed) {
     ctx.onHearingAvoided(enemy);
@@ -139,7 +144,7 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
       const target = sightTargetPos(enemy, ctx);
       setInvestigatePos(enemy, target.x, target.y, 0);
     } else if (entering) {
-      setInvestigatePos(enemy, ctx.playerPos.x, ctx.playerPos.y, enemy.config.hearing.posJitter);
+      setHearingInvestigatePos(enemy, ctx);
     }
 
     if (entering) {
@@ -281,11 +286,50 @@ export function transitionTo(enemy: Enemy, next: AIState, ctx: AIContext): void 
   }
 }
 
+function applyHearingAlertPush(enemy: Enemy, p: Perception, ctx: AIContext): boolean {
+  const ai = enemy.ai;
+  const profile = enemy.config.profile;
+  const config = GAME_CONSTANTS.AI;
+  if (profile.hearingMaxPush !== 'alert') return false;
+  if (p.hearingRate <= 0) return false;
+  if (ai.detection < config.HEAR_ALERT_THRESHOLD) return false;
+  if (p.visible) return false;
+
+  if (ai.state === AIState.ALERT || ai.state === AIState.CHASE) {
+    ai.searchTimerMs = 0;
+    setHearingInvestigatePos(enemy, ctx);
+    if (ai.state === AIState.ALERT && ai.investigatePos) {
+      buildSearchPoints(enemy, ctx, ai.investigatePos.x, ai.investigatePos.y);
+    }
+    return true;
+  }
+
+  if (ai.state === AIState.SUSPICIOUS && ai.escalationSuppressed) {
+    ai.suspicionTimerMs = 0;
+    return true;
+  }
+
+  setHearingInvestigatePos(enemy, ctx);
+  if (ai.investigatePos) {
+    setLastSeen(enemy, ai.investigatePos.x, ai.investigatePos.y, null);
+  }
+  transitionTo(enemy, AIState.ALERT, ctx);
+  return true;
+}
+
+function setHearingInvestigatePos(enemy: Enemy, ctx: AIContext): void {
+  const ai = enemy.ai;
+  if (ai.hearingJitterLocked && ai.investigatePos) return;
+  setInvestigatePos(enemy, ctx.playerPos.x, ctx.playerPos.y, enemy.config.hearing.posJitter);
+  ai.hearingJitterLocked = true;
+}
+
 /** Emits the episode-closing `ENEMY_LOST_PLAYER` exactly once. */
 export function closeAlertEpisode(enemy: Enemy, ctx: AIContext): void {
   const ai = enemy.ai;
   if (!ai.alertEpisodeActive) return;
   ai.alertEpisodeActive = false;
+  ai.hearingJitterLocked = false;
   ctx.emitLost(enemy);
   ctx.cue(enemy, 'ai.cue.lost');
 }
@@ -370,7 +414,7 @@ function setLastSeen(enemy: Enemy, x: number, y: number, velocity: Readonly<Vect
 function sightTargetPos(enemy: Enemy, ctx: AIContext): Readonly<Vector2> {
   const decoy = ctx.decoyPos;
   if (decoy) {
-    const range = enemy.config.sight.rangeCore;
+    const range = enemy.config.profile.sightRange;
     const dx = decoy.x - enemy.ai.position.x;
     const dy = decoy.y - enemy.ai.position.y;
     if (dx * dx + dy * dy <= range * range) {
@@ -418,29 +462,43 @@ function suspiciousTurnHoldFor(enemy: Enemy): number {
   return Math.max(config.SUSPICIOUS_TURN_HOLD_MS, turnMs);
 }
 
-/** Detection fill and decay (rules P5/P6). */
+/** Detection fill and decay (rules P5 / P5b / P5c / P6). */
 function updateDetection(enemy: Enemy, p: Perception, tickDtMs: number): void {
   const ai = enemy.ai;
   const config = GAME_CONSTANTS.AI;
+  const profile = enemy.config.profile;
   const dt = tickDtMs / 1000;
 
   if (ai.state === AIState.CHASE) {
-    // Locked on: certainty no longer decays, the line-of-sight grace timer takes over.
     if (p.visible) ai.detection = 1;
     return;
   }
 
+  let rateVision = 0;
   if (p.visible) {
     const distFactor = lerp(
       config.DETECT_DIST_FACTOR_NEAR,
       config.DETECT_DIST_FACTOR_FAR,
-      clamp(p.distance / config.SIGHT_RANGE, 0, 1)
+      clamp(p.distance / profile.sightRange, 0, 1)
     );
     const zoneFactor = p.zone === 'peripheral' ? config.DETECT_ZONE_FACTOR_PERIPH : 1;
-    // scatter (T7 rewire): "感知填充速度降低30%" while this enemy's current suspicion
-    // episode is under scatter's effect. 1 = no effect.
-    const rate = (1 / config.DETECT_FILL_TIME) * distFactor * zoneFactor * ai.detectionFillRateMult;
-    ai.detection = Math.min(1, ai.detection + rate * dt);
+    rateVision =
+      (1 / config.DETECT_FILL_TIME) *
+      distFactor *
+      zoneFactor *
+      profile.visionWeight *
+      ai.detectionFillRateMult;
+  }
+
+  const rateHear = p.hearingRate;
+  if (rateVision > 0 || rateHear > 0) {
+    const before = ai.detection;
+    const next = Math.min(1, before + (rateVision + rateHear) * dt);
+    if (p.hearingStill && rateHear > 0 && rateVision <= 0) {
+      ai.detection = before >= config.HEARING_STILL_CAP ? before : Math.min(next, config.HEARING_STILL_CAP);
+    } else {
+      ai.detection = next;
+    }
     return;
   }
 

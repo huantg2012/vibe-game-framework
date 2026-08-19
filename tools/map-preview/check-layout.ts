@@ -143,6 +143,11 @@ for (const seed of SEEDS) {
     layout.enemySpawns.length >= 3 && layout.enemySpawns.length <= 4,
     `seed ${seed}: patrols ${layout.enemySpawns.length}`,
   );
+  const rewriterCount = layout.enemySpawns.filter((e) => e.type === 'rewriter').length;
+  assert(rewriterCount === 1, `seed ${seed}: rewriter count ${rewriterCount} (must be exactly 1)`);
+  const gate = layout.enemySpawns[0];
+  assert(gate?.type === 'infiltrator', `seed ${seed}: extract gate ${gate?.id} is ${gate?.type}`);
+  assert(gate?.id === 'ENM_INF_01', `seed ${seed}: gate id ${gate?.id}`);
 
   const checkReach = (label: string, pos: { x: number; y: number }): void => {
     const t = tileOf(layout, pos);

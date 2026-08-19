@@ -11,8 +11,11 @@
  * `reportDamage()` instead.
  */
 
+import type { EnemyRole, PerceptionProfile } from '@/generated/enemy-data';
 import type { AIState, Facing4, Vector2 } from '@/types/game-types';
 import type { PatrolMode } from '@/types/map-types';
+
+export type { EnemyRole, HearingMaxPush, PerceptionProfile } from '@/generated/enemy-data';
 
 /** Escalation ladder used by the `ENEMY_ALERT` contract. `none` = patrolling or returning. */
 export type AlertLevel = 'none' | 'suspicious' | 'alert' | 'chase';
@@ -23,16 +26,17 @@ export type SightZone = 'core' | 'peripheral' | 'blind';
 /** Audio cue ids handed to the scene layer on state changes (rule R7). */
 export type AICueId = 'ai.cue.suspicious' | 'ai.cue.alert' | 'ai.cue.chase' | 'ai.cue.lost';
 
-/** Read-only view of one enemy, for the renderer, chaos (T3) and combat (T4). */
+/** Read-only view of one enemy, for the renderer, chaos (T3), combat (T4) and the rim pulse. */
 export interface EnemyView {
   getId(): string;
+  getRole(): EnemyRole;
   getPosition(): Readonly<Vector2>;
   getFacingAngle(): number;
   getFacing4(): Facing4;
   getState(): AIState;
   /** Chasing and already standing at attack distance. Combat uses it to decide to swing. */
   isEngaged(): boolean;
-  /** 0..1. Debug and QA only - never a gameplay input for another system. */
+  /** 0..1. Play input for the rim pulse; debug overlay may also read it. */
   getDetection(): number;
   /**
    * mirror (Slice 5 T4 gap-fill): true on exactly the frames this enemy's most recent
@@ -44,9 +48,14 @@ export interface EnemyView {
   isTargetingDecoy(): boolean;
 }
 
-/** The static per-type configuration. Slice 1 has exactly one type: the infiltrator. */
-export interface InfiltratorConfig {
-  readonly type: 'infiltrator';
+/**
+ * Runtime type config = CSV perception profile + shared body/turn constants.
+ * Speeds and cone numbers are copied from the profile so the FSM never reads
+ * a second copy of infiltrator tuning from GAME_CONSTANTS.AI.
+ */
+export interface EnemyTypeConfig {
+  readonly role: EnemyRole;
+  readonly profile: PerceptionProfile;
   readonly bodySize: number;
   readonly speeds: Readonly<Record<AIState, number>>;
   readonly sight: {
@@ -63,6 +72,9 @@ export interface InfiltratorConfig {
   };
 }
 
+/** @deprecated Use EnemyTypeConfig. Kept as an alias so older comments still resolve. */
+export type InfiltratorConfig = EnemyTypeConfig;
+
 /** What one perception tick concluded. Recomputed in place every tick; never stored. */
 export interface Perception {
   /** Distance to the player (px). */
@@ -73,7 +85,14 @@ export interface Perception {
   zone: SightZone;
   /** Sight that counts: unobstructed and not blind. In CHASE this is the 360 degree rule. */
   visible: boolean;
+  /** Infiltrator binary nominate (hearingWeight === 0). Rewriter fill uses hearingRate. */
   hearingHit: boolean;
+  /** Continuous hearing fill this tick (rewriter). 0 when the channel is silent. */
+  hearingRate: number;
+  /** Effective hearing radius used for distFactorHear this tick. */
+  hearingRadius: number;
+  /** True when this tick's hearing channel is the still-standing one (cap applies). */
+  hearingStill: boolean;
 }
 
 /**
@@ -95,8 +114,15 @@ export interface EnemyAIState {
   lastSeenPlayerPos: Vector2 | null;
   lastSeenPlayerVel: Vector2 | null;
   losGraceMs: number;
+  /** Frozen at spawn from the CSV row. Never changes at runtime. */
+  role: EnemyRole;
   /** Accumulates real time between perception ticks (rule P1's staggered phase). */
   perceptionAccumMs: number;
+  /**
+   * Hearing investigate-point jitter is sampled once per alert episode (rule P5b / T0-4b).
+   * Cleared when the episode closes.
+   */
+  hearingJitterLocked: boolean;
 
   // --- timers (ms; each only advances in the state that owns it) ---
   suspicionTimerMs: number;

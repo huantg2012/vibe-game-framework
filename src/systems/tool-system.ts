@@ -56,6 +56,7 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { ENEMY_DATA } from '@/generated/enemy-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { AIState, type Contaminant, type ContaminantType, type Vector2 } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
@@ -1001,11 +1002,6 @@ export class ToolSystem {
     const enemies = this.getEnemies();
     // "追击速度降为巡逻级别": a ratio, not a flat -40%, so a chaser inside the zone
     // moves at exactly patrol speed regardless of how much faster it chases normally.
-    const chaseToPatrolMult =
-      GAME_CONSTANTS.AI.CHASE_SPEED > 0
-        ? GAME_CONSTANTS.AI.PATROL_SPEED / GAME_CONSTANTS.AI.CHASE_SPEED
-        : ERODE_SPEED_MULT;
-
     for (let i = this.erodeZones.length - 1; i >= 0; i--) {
       const zone = this.erodeZones[i]!;
 
@@ -1024,7 +1020,10 @@ export class ToolSystem {
             if (dx * dx + dy * dy > zone.radius * zone.radius) continue;
             const id = enemy.getId();
             stillIn.add(id);
-            const speedMult = enemy.getState() === AIState.CHASE ? chaseToPatrolMult : ERODE_SPEED_MULT;
+            const profile = ENEMY_DATA[enemy.getRole()];
+            const chaseToPatrol =
+              profile.chaseSpeed > 0 ? profile.patrolSpeed / profile.chaseSpeed : ERODE_SPEED_MULT;
+            const speedMult = enemy.getState() === AIState.CHASE ? chaseToPatrol : ERODE_SPEED_MULT;
             this.setEnemySpeedMultiplier?.(id, speedMult);
             this.setEnemyPerceptionMultiplier?.(id, ERODE_PERCEPTION_MULT);
             this.indicators.set(id, 'erode', ERODE_PERCEPTION_MULT, false);

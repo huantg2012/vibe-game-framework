@@ -10,6 +10,7 @@
  *                             -> docs/specs/system-chaos-scavenge-extract.md
  */
 
+import type { EnemyRole } from '@/generated/enemy-data';
 import type { TileCoord, Vector2 } from '@/types/game-types';
 
 /** Raw tile index grid. Values are `TileType` members and double as tileset frame indices. */
@@ -55,7 +56,7 @@ export interface PatrolRouteData {
 
 export interface EnemySpawnData {
   readonly id: string;
-  readonly type: 'infiltrator';
+  readonly type: EnemyRole;
   readonly spawn: TileCoord;
   /** Initial heading in degrees, 0 = right, clockwise. */
   readonly facing: number;

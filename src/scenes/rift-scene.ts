@@ -32,6 +32,7 @@ import { ToolSystem } from '@/systems/tool-system';
 import { TrailSystem } from '@/systems/trail-system';
 import { RiftSurfacePainter } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
+import { DetectionPulse } from '@/ui/dom/detection-pulse';
 import { RiftHud, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/dom/rift-hud';
 import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
@@ -72,6 +73,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly extraction = new ExtractionSystem();
   private readonly runController = new RunController();
   private readonly hud = new RiftHud();
+  private readonly detectionPulse = new DetectionPulse();
   private readonly minimap = new Minimap();
   private readonly riftSurface = new RiftSurfacePainter();
   private chaos!: ChaosSystem;
@@ -286,6 +288,7 @@ export class RiftScene extends Phaser.Scene {
       isRunEnded: () => this.runController.isRunEnded(),
       toolSlots: toolSlots.length > 0 ? toolSlots : undefined,
     });
+    this.detectionPulse.create();
 
     this.sortieKillCount = 0;
     this.sortieAcquired = [];
@@ -377,6 +380,7 @@ export class RiftScene extends Phaser.Scene {
     // Minimap after visibility so explored tiles match this frame's cone + occlusion.
     this.syncMinimapExploration();
     this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
+    this.syncDetectionPulse(delta);
     if (this.debugPanel) this.updateDebugOverlay(delta);
   }
 
@@ -414,6 +418,31 @@ export class RiftScene extends Phaser.Scene {
         }
       }
     }
+  }
+
+  /**
+   * Scene-layer translation only: AI and the rim pulse never import each other.
+   * World positions become a 960×640 view box that tracks the camera, not Phaser HUD.
+   */
+  private syncDetectionPulse(deltaMs: number): void {
+    const cam = this.cameras.main;
+    const view = cam.worldView;
+    const player = this.player.getPosition();
+    this.detectionPulse.update(
+      deltaMs,
+      { worldX: view.x, worldY: view.y, worldW: view.width, worldH: view.height },
+      player,
+      this.ai.getEnemies().map((enemy) => {
+        const pos = enemy.getPosition();
+        return {
+          id: enemy.getId(),
+          detection: enemy.getDetection(),
+          state: enemy.getState(),
+          worldX: pos.x,
+          worldY: pos.y,
+        };
+      }),
+    );
   }
 
   private isMinimapSampleVisible(x: number, y: number): boolean {
@@ -902,6 +931,7 @@ export class RiftScene extends Phaser.Scene {
     this.toolKeys = [];
     // Before the player is destroyed: this is what releases the swing speed modifier.
     this.combat.destroy();
+    this.detectionPulse.destroy();
     this.hud.destroy();
     this.runController.destroy();
     this.extraction.destroy();

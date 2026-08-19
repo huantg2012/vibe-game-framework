@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-19
-note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 已做。Slice 7 COMPLETE。未开 8 的代码。
+note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 / C1 已交。未标 COMPLETE。不改 roadmap。
 ---
 
 # Slice 8: 第二敌人（潜行轴）【ACTIVE】
@@ -54,7 +54,7 @@ note: Slice 8「第二敌人」ACTIVE。范围锁死 DEC-064。D1 / A1 已做。
 | 0 | director | 一致性检查 + 本文件 + 任务书 | **已做** |
 | 1 | design | **D1** 就地扩写敌人 AI + 被发现指示 + enemies.csv 契约 | **已做** |
 | 2 | art | **A1** 改写体 4 向 + 屏缘脉冲视觉 | **已做** |
-| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | 可开工 |
+| 3 | code | **C1** CSV→codegen、AI 泛化、每图 1 改写体、脉冲接线 | **已交** |
 | 4 | qa | 对照规格 | 待 C1 |
 
 ---

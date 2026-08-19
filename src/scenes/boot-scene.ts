@@ -5,6 +5,7 @@
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { generateRewriterPlaceholders } from '@/entities/rewriter-sprite';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -74,6 +75,7 @@ export class BootScene extends Phaser.Scene {
     const tile = GAME_CONSTANTS.TILE_SIZE;
 
     this.generatePlayerSprite();
+    generateRewriterPlaceholders(this);
 
     // Legacy facing marker kept for backward compat (other systems may reference it).
     const facingGfx = this.make.graphics({ x: 0, y: 0 });

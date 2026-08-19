@@ -13,11 +13,14 @@
  * no new write path to the chaos meter) is a statement about code structure - combat only
  * emits events and never imports the chaos system.
  *
+ * I1–I5 are asserted per perception profile from data/enemies.csv. I6 is shared.
+ *
  * Checked once at boot in dev builds, which is the only moment cheap enough to be free
  * and early enough to be useful.
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { ENEMY_DATA, ENEMY_ROLES, type PerceptionProfile } from '@/generated/enemy-data';
 
 export interface InvariantViolation {
   /** Invariant id from a spec table (I1..I6, K1..K6), or S* for a supplementary check. */
@@ -29,6 +32,10 @@ export interface InvariantViolation {
 
 /** Ratio below which `A << B` is considered satisfied. */
 const MUCH_LESS_RATIO = 0.5;
+
+function profileLabel(profile: PerceptionProfile): string {
+  return profile.role;
+}
 
 export function checkBalanceInvariants(): InvariantViolation[] {
   const ai = GAME_CONSTANTS.AI;
@@ -47,40 +54,58 @@ export function checkBalanceInvariants(): InvariantViolation[] {
     if (!ok) violations.push({ id, relation, actual, why });
   };
 
+  for (const role of ENEMY_ROLES) {
+    const profile = ENEMY_DATA[role];
+    const tag = profileLabel(profile);
+
+    require(
+      profile.sightRange < vision.RADIUS_FORWARD,
+      'I1',
+      `${tag}.sightRange < VISIBILITY.RADIUS_FORWARD`,
+      `${profile.sightRange} vs ${vision.RADIUS_FORWARD}`,
+      'the player has to see the enemy first, or every encounter starts on the back foot'
+    );
+    require(
+      profile.chaseSightRange < vision.RADIUS_FORWARD,
+      'I2',
+      `${tag}.chaseSightRange < VISIBILITY.RADIUS_FORWARD`,
+      `${profile.chaseSightRange} vs ${vision.RADIUS_FORWARD}`,
+      'the locked-on sight bonus must not cross the boundary I1 protects'
+    );
+    require(
+      profile.chaseSpeed < player.SPEED,
+      'I3',
+      `${tag}.chaseSpeed < PLAYER.SPEED`,
+      `${profile.chaseSpeed} vs ${player.SPEED}`,
+      'retreat must always remain an option: a chase is pressure, not a death sentence'
+    );
+    require(
+      profile.patrolSpeed <= player.SPEED * MUCH_LESS_RATIO,
+      'I4',
+      `${tag}.patrolSpeed << PLAYER.SPEED (<= ${MUCH_LESS_RATIO} x)`,
+      `${profile.patrolSpeed} vs ${player.SPEED}`,
+      'going around needs a wide enough time window to be worth choosing'
+    );
+  }
+
+  const infiltrator = ENEMY_DATA.infiltrator;
+  const rewriter = ENEMY_DATA.rewriter;
+
   require(
-    ai.SIGHT_RANGE < vision.RADIUS_FORWARD,
-    'I1',
-    'AI.SIGHT_RANGE < VISIBILITY.RADIUS_FORWARD',
-    `${ai.SIGHT_RANGE} vs ${vision.RADIUS_FORWARD}`,
-    'the player has to see the enemy first, or every encounter starts on the back foot'
-  );
-  require(
-    ai.CHASE_SIGHT_RANGE < vision.RADIUS_FORWARD,
-    'I2',
-    'AI.CHASE_SIGHT_RANGE < VISIBILITY.RADIUS_FORWARD',
-    `${ai.CHASE_SIGHT_RANGE} vs ${vision.RADIUS_FORWARD}`,
-    'the locked-on sight bonus must not cross the boundary I1 protects'
-  );
-  require(
-    ai.CHASE_SPEED < player.SPEED,
-    'I3',
-    'AI.CHASE_SPEED < PLAYER.SPEED',
-    `${ai.CHASE_SPEED} vs ${player.SPEED}`,
-    'retreat must always remain an option: a chase is pressure, not a death sentence'
-  );
-  require(
-    ai.PATROL_SPEED <= player.SPEED * MUCH_LESS_RATIO,
-    'I4',
-    `AI.PATROL_SPEED << PLAYER.SPEED (<= ${MUCH_LESS_RATIO} x)`,
-    `${ai.PATROL_SPEED} vs ${player.SPEED}`,
-    'going around needs a wide enough time window to be worth choosing'
-  );
-  require(
-    ai.HEARING_RANGE < ai.SIGHT_RANGE,
+    infiltrator.hearingRange < infiltrator.sightRange && infiltrator.hearingStillRange === 0,
     'I5',
-    'AI.HEARING_RANGE < AI.SIGHT_RANGE',
-    `${ai.HEARING_RANGE} vs ${ai.SIGHT_RANGE}`,
-    'sight is the primary sense; louder hearing would make hiding outside the cone pointless'
+    'infiltrator hearingRange < sightRange and still hearing is 0',
+    `${infiltrator.hearingRange} vs ${infiltrator.sightRange}, still ${infiltrator.hearingStillRange}`,
+    'hiding outside the cone must still mean something; standing still defeats its ear'
+  );
+  require(
+    rewriter.hearingRange < rewriter.sightRange &&
+      rewriter.hearingStillRange <= 40 &&
+      ai.HEARING_STILL_CAP < ai.SUSPICION_THRESHOLD,
+    'I5',
+    'rewriter move-hearing < sight; still radius ≤ 40; still cap < suspicion',
+    `move ${rewriter.hearingRange} vs ${rewriter.sightRange}, still ${rewriter.hearingStillRange}, cap ${ai.HEARING_STILL_CAP} vs ${ai.SUSPICION_THRESHOLD}`,
+    'hearing is the main channel by weight, not by replacing chase-needs-sight; standing still must stay below suspicion'
   );
   require(
     ai.TURN_RATE < player.FACING_TURN_RATE,

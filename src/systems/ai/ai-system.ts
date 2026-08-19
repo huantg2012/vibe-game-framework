@@ -24,8 +24,9 @@ import { eventBus } from '@/core/event-bus';
 import { AIState, type Vector2 } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
 import type { EnemySpawnData, OccluderGrid, WalkGrid } from '@/types/map-types';
-import type { AICueId, AlertLevel, EnemyView, InfiltratorConfig, Perception } from '@/types/ai-types';
-import { createInfiltrator, createInfiltratorConfig, type Enemy } from '@/entities/enemy-factory';
+import { ENEMY_DATA } from '@/generated/enemy-data';
+import type { AICueId, AlertLevel, EnemyView, Perception } from '@/types/ai-types';
+import { createEnemy, createEnemyTypeConfig, type Enemy } from '@/entities/enemy-factory';
 import { GridPathfinder } from '@/systems/pathfinding';
 import { PathPriority, type AIContext, type PathPriorityValue } from '@/systems/ai/context';
 import {
@@ -38,7 +39,7 @@ import {
 } from '@/systems/ai/behaviors';
 import { closeAlertEpisode, stepFsm, transitionTo } from '@/systems/ai/state-machine';
 import { hasLineOfSight } from '@/utils/grid-raycast';
-import { shortestArc } from '@/utils/math';
+import { clamp, lerp, shortestArc } from '@/utils/math';
 
 /** How the player's field of view rates a world position: 0 means "not drawn" (rule R4). */
 export type VisibilityProvider = (point: Readonly<Vector2>) => number;
@@ -136,8 +137,6 @@ export class AISystem implements AISystemAPI {
   private occluders!: OccluderGrid;
   private walk!: WalkGrid;
   private pathfinder!: GridPathfinder;
-  private enemyConfig: InfiltratorConfig = createInfiltratorConfig();
-
   private readonly enemies: Enemy[] = [];
   /** Live array handed to the scene's wall collider; despawn splices it. */
   private readonly sprites: Phaser.Physics.Arcade.Image[] = [];
@@ -162,6 +161,9 @@ export class AISystem implements AISystemAPI {
     zone: 'blind',
     visible: false,
     hearingHit: false,
+    hearingRate: 0,
+    hearingRadius: 0,
+    hearingStill: false,
   };
 
   private readonly scratch: Vector2 = { x: 0, y: 0 };
@@ -196,13 +198,26 @@ export class AISystem implements AISystemAPI {
     // Smoothing has to keep a body's width of room, not just a sight line: a shortcut
     // that only a point could take leaves the enemy grinding against a corner.
     this.pathfinder = new GridPathfinder(walk, occluders, GAME_CONSTANTS.AI.BODY_SIZE);
-    this.enemyConfig = createInfiltratorConfig();
     this.context = this.createContext();
 
     if (import.meta.env.DEV && spawns.length > GAME_CONSTANTS.AI.MAX_ACTIVE_ENEMIES) {
       console.warn(
         `[AISystem] ${spawns.length} spawns exceeds MAX_ACTIVE_ENEMIES ` +
           `(${GAME_CONSTANTS.AI.MAX_ACTIVE_ENEMIES}); the map data is probably wrong`
+      );
+    }
+
+    let rewriterCount = 0;
+    for (const spawn of spawns) {
+      if (!(spawn.type in ENEMY_DATA)) {
+        throw new Error(`[AISystem] unknown enemy type '${spawn.type}' on ${spawn.id}`);
+      }
+      if (spawn.type === 'rewriter') rewriterCount += 1;
+    }
+    if (rewriterCount !== 1) {
+      throw new Error(
+        `[AISystem] spawn table must contain exactly 1 rewriter (got ${rewriterCount}); ` +
+          'refusing to silently treat every patrol as an infiltrator'
       );
     }
 
@@ -579,24 +594,23 @@ export class AISystem implements AISystemAPI {
   private perceive(enemy: Enemy, distance: number): void {
     const ai = enemy.ai;
     const config = GAME_CONSTANTS.AI;
+    const profile = enemy.config.profile;
     const sight = enemy.config.sight;
     const hearing = enemy.config.hearing;
     const out = this.perception;
 
     out.distance = distance;
+    out.hearingRate = 0;
+    out.hearingRadius = 0;
+    out.hearingStill = false;
+    out.hearingHit = false;
 
-    // Slice 5 tool override (T1): overwrite / combust shrink every sense by the same
-    // fraction rather than picking one - "感知范围-50%" reads as the target being duller
-    // all around, not blind in one particular way. 1 = no effect.
     const rangeMult = ai.perceptionRangeMult;
-    // muffle's defense-slot side effect (Slice 5 gap-fill, DEC-039): global, applies on
-    // top of the per-enemy tool override above rather than replacing it - the two stack
-    // because they come from different rulebooks (one enemy's tool debuff vs. every
-    // enemy's sortie-wide side effect).
     const hearingMult = rangeMult * this.context.hearingRangeMult;
     const chasing = ai.state === AIState.CHASE;
     const sightRange = (chasing ? sight.chaseRange : sight.rangeCore) * rangeMult;
-    const rayRange = Math.max(sightRange, hearing.range * hearingMult);
+    const hearingBase = (this.playerIsMoving ? profile.hearingRange : profile.hearingStillRange) * hearingMult;
+    const rayRange = Math.max(sightRange, hearingBase);
 
     out.rayCast = distance <= rayRange;
     out.hasLineOfSight = out.rayCast
@@ -605,7 +619,6 @@ export class AISystem implements AISystemAPI {
     if (out.rayCast) this.raysThisFrame++;
 
     if (distance <= config.ARRIVE_EPSILON) {
-      // Standing on top of each other: the angle is meaningless, call it a core hit.
       out.zone = 'core';
     } else {
       const bearing = Math.atan2(
@@ -619,16 +632,31 @@ export class AISystem implements AISystemAPI {
       } else out.zone = 'blind';
     }
 
-    // Once locked on it is looking straight at the player: the cone stops applying, or a
-    // chase would keep "going blind" every time it turned a corner (rule T-C1).
     out.visible = chasing
       ? out.hasLineOfSight && distance <= sight.chaseRange * rangeMult
       : out.hasLineOfSight && out.zone !== 'blind';
 
-    // Hearing carries through walls at a reduced radius - that is the whole reason it
-    // exists rather than being a shorter second pair of eyes. Standing still defeats it.
-    const hearingRadius = hearing.range * hearingMult * (out.hasLineOfSight ? 1 : hearing.wallFactor);
-    out.hearingHit = this.playerIsMoving && out.rayCast && distance <= hearingRadius;
+    const hearingRadius = hearingBase * (out.hasLineOfSight ? 1 : hearing.wallFactor);
+    out.hearingRadius = hearingRadius;
+    out.hearingStill = !this.playerIsMoving;
+
+    if (hearingBase <= 0 || !out.rayCast || distance > hearingRadius) {
+      return;
+    }
+
+    if (profile.hearingWeight <= 0) {
+      // Infiltrator: binary nominate only. Standing still never hits.
+      out.hearingHit = this.playerIsMoving;
+      return;
+    }
+
+    const loudness = this.playerIsMoving ? profile.hearingMoveMult : 1;
+    const distFactorHear = lerp(
+      config.DETECT_DIST_FACTOR_NEAR,
+      config.DETECT_DIST_FACTOR_FAR,
+      clamp(distance / Math.max(hearingRadius, 1), 0, 1)
+    );
+    out.hearingRate = (1 / config.HEAR_FILL_TIME) * distFactorHear * profile.hearingWeight * loudness;
   }
 
   /** Makes the next frame a perception tick for this enemy, for "immediate" stimuli. */
@@ -806,7 +834,7 @@ export class AISystem implements AISystemAPI {
       );
     }
 
-    const enemy = createInfiltrator(this.scene, spawn, this.enemyConfig, this.scratch, {
+    const enemy = createEnemy(this.scene, spawn, createEnemyTypeConfig(spawn.type), this.scratch, {
       depth: ENEMY_DEPTH,
     });
 

@@ -9,6 +9,17 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## Slice 8 C1：剖面读表 + 一份 FSM + 屏缘 DTO（code，2026-08-19）
+- Date: 2026-08-19
+- Phase: Slice 8
+- Type: Technical
+- Context: DEC-064 / D1 已锁。C1 落地时不复制 FSM，不新开 HUD 根。
+- Decision:
+  1. `data/enemies.csv` → `src/generated/enemy-data.ts`。渗透体策划字段从 `GAME_CONSTANTS.AI` 删迁；感知节拍、I 不变量用的玩家视距、停步封顶等共享量留 constants。
+  2. 同一套 `state-machine.ts` / `ai-system.ts` 读 `PerceptionProfile`。改写体听觉连续填充与 T0-4b 是刺激路由，不是第二份状态表。非法 spawn（改写体 ≠ 1）开发期抛错，不默默全当渗透体。
+  3. 屏缘脉冲是独立 DOM 模块。场景层把 `EnemyView` 折成 threat DTO；AI 与 UI 互不 import。挂 `#rift-detection-rim` → `#dom-ui-root`。
+- Impact: `architecture.md` `changed-this-slice: true`。`check:layout` 断言 rewriter 恰好 1。不标 Slice COMPLETE。
+
 ## Slice 8 A1：屏缘刻痕 + 改写体程序化占位（art，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 8

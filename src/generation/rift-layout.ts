@@ -6,6 +6,7 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { ENEMY_DATA } from '@/generated/enemy-data';
 import { ENABLED_RIFT_FRAGMENTS } from '@/generated/rift-fragment-data';
 import { generateRecipeDraft } from '@/generation/draft-pipeline';
 import { evaluateDualPath } from '@/generation/dual-path';
@@ -28,7 +29,7 @@ import { SeededRandom } from '@/utils/random';
 
 const MAX_ISLAND_ATTEMPTS = 32;
 const MAX_PLACE_ATTEMPTS = 20;
-const SIGHT_PX = GAME_CONSTANTS.AI.SIGHT_RANGE;
+const SIGHT_PX = ENEMY_DATA.infiltrator.sightRange;
 const TILE = GAME_CONSTANTS.TILE_SIZE;
 const EXTRACT_EPS = 1;
 const DIRS4: ReadonlyArray<readonly [number, number]> = [
@@ -209,6 +210,34 @@ function pathDistField(
 
 function manhattan(cols: number, a: number, b: number): number {
   return Math.abs(colOf(cols, a) - colOf(cols, b)) + Math.abs(rowOf(cols, a) - rowOf(cols, b));
+}
+
+/** Side-route extra closest to contested/deep kindling. Never the extract gate. */
+function pickRewriterExtraIndex(
+  extraWps: readonly number[][],
+  contested: readonly number[],
+  deep: readonly number[],
+  cols: number,
+): number {
+  if (extraWps.length === 0) return -1;
+  const greedy = [...contested, ...deep];
+  let best = 0;
+  let bestDist = Infinity;
+  extraWps.forEach((wps, idx) => {
+    let d = Infinity;
+    for (const wp of wps) {
+      if (greedy.length === 0) {
+        d = 0;
+        break;
+      }
+      for (const cell of greedy) d = Math.min(d, manhattan(cols, wp, cell));
+    }
+    if (d < bestDist) {
+      bestDist = d;
+      best = idx;
+    }
+  });
+  return best;
 }
 
 function worldDistCells(cols: number, a: number, b: number): number {
@@ -555,10 +584,10 @@ function placeOnIsland(
   }));
 
   const enemies: EnemySpawnData[] = [];
-  const pushPatrol = (id: string, wps: readonly number[]): void => {
+  const pushPatrol = (id: string, wps: readonly number[], type: EnemySpawnData['type']): void => {
     enemies.push({
       id,
-      type: 'infiltrator',
+      type,
       spawn: { col: colOf(cols, wps[0]!), row: rowOf(cols, wps[0]!) },
       facing: facingDeg(cols, wps[0]!, wps[1] ?? wps[0]!),
       patrol: {
@@ -568,8 +597,16 @@ function placeOnIsland(
       },
     });
   };
-  pushPatrol('ENM_INF_01', gateWps);
-  extraWps.forEach((wps, idx) => pushPatrol(`ENM_INF_0${idx + 2}`, wps));
+  // Rule 19: the extract gate stays an infiltrator. Exactly one rewriter among the rest.
+  pushPatrol('ENM_INF_01', gateWps, 'infiltrator');
+  const rewriterExtra = pickRewriterExtraIndex(extraWps, contested, deep, cols);
+  extraWps.forEach((wps, idx) => {
+    const rewriter = idx === rewriterExtra;
+    pushPatrol(rewriter ? 'ENM_RWR_01' : `ENM_INF_0${idx + 2}`, wps, rewriter ? 'rewriter' : 'infiltrator');
+  });
+  if (enemies.filter((e) => e.type === 'rewriter').length !== 1) {
+    return 'rewriter count not 1';
+  }
 
   const landmarkPool = floors.filter((i) => !occupied.has(i) && toPath[i]! >= 0);
   const landmarkCount = rng.nextInt(2, 4);
