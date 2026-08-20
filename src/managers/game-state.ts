@@ -331,15 +331,6 @@ export const gameState = {
     return impactIntensity;
   },
 
-  /** @deprecated Slice 3 replaces linear increment with TideSystem-driven intensity. */
-  incrementIntensity(): void {
-    // Previously: impactIntensity += INTENSITY_STEP (capped at MAX_INTENSITY).
-    // Now driven by TideSystem; this method remains as a no-op until TideSystem
-    // is wired up (Slice 3 T2/T3) and the callers are migrated.
-    impactIntensity += 0.15;
-    if (impactIntensity > 3.0) impactIntensity = 3.0;
-  },
-
   // --- Serialization (for SaveManager) ---
 
   getState(): GameStateSnapshot {

@@ -207,7 +207,7 @@ export const CONTAMINANT_DATA: Record<ContaminantType, ContaminantDef> = {
     id: 'erode',
     rarity: 'rare',
     displayNameDefense: '侵蚀残渣',
-    descriptionDefense: '来自吞噬扩张时空的反向碎片。减伤30%且每次冲击使其他所有防御slot的污染物额外+1冲击计数加速它们转化为工具。工具产出加速器。',
+    descriptionDefense: '来自吞噬扩张时空的反向碎片。减伤30%且每次冲击使其他所有防御槽里的残渣额外+1冲击计数加速它们转化为工具。工具产出加速器。',
     summaryDefense: '减伤 30%。其它槽充能 +1。',
     defenseCategory: '加速/催化',
     defenseReduction: 0.3,

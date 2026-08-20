@@ -56,7 +56,6 @@ const REWRITER_AFTERIMAGE_LIFETIME_MS = 240;
 const REWRITER_AFTERIMAGE_ALPHA = 0.28;
 const REWRITER_AFTERIMAGE_SLOTS = 5;
 const REWRITER_PATROL_PULSE_MS = 2000;
-const REWRITER_SEARCH_BLINK_HZ = 3;
 const REWRITER_CHASE_JITTER_FRAMES = 8;
 const INFILTRATOR_HITCH_PLANT_MS = 220;
 const INFILTRATOR_HITCH_LUNGE_MS = 220;
@@ -425,7 +424,8 @@ export class Enemy implements EnemyView {
 
     let key = rewriterTextureFor(facing, variant, gait, frame);
     if (variant === 'search') {
-      this.indicatorPhase += REWRITER_SEARCH_BLINK_HZ * (deltaMs / 1000);
+      // Phase advances once, in the ALERT indicator branch (ALERT_BLINK_HZ = 3).
+      // Do not add another 3 Hz here — that stacked to ~6 Hz.
       const bright = this.indicatorPhase % 1 < 0.5;
       if (!bright) key = rewriterTextureFor(facing, 'patrol', gait, frame);
     }

@@ -4,6 +4,13 @@
 
 import Phaser from 'phaser';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
+import { readGymLesson, type GymLesson } from '@/gym/gym-lesson';
+
+const SCENE_BY_LESSON: Record<GymLesson, string> = {
+  enemy: 'GymScene',
+  player: 'GymPlayerScene',
+  map: 'GymMapScene',
+};
 
 export class GymBootScene extends Phaser.Scene {
   constructor() {
@@ -12,21 +19,35 @@ export class GymBootScene extends Phaser.Scene {
 
   create(): void {
     generatePlaceholderTextures(this);
-    const lesson = new URLSearchParams(window.location.search).get('lesson');
-    const playerLesson = lesson === 'player';
-    if (playerLesson) {
-      document.getElementById('gym-link-player')?.setAttribute('aria-current', 'page');
-      document.getElementById('gym-link-enemy')?.removeAttribute('aria-current');
-    } else {
-      document.getElementById('gym-link-enemy')?.setAttribute('aria-current', 'page');
-      document.getElementById('gym-link-player')?.removeAttribute('aria-current');
-    }
-    const dirs = document.getElementById('gym-dirs-block');
-    if (dirs) dirs.hidden = playerLesson;
-    const enemyRules = document.getElementById('gym-rules-enemy');
-    const playerRules = document.getElementById('gym-rules-player');
-    if (enemyRules) enemyRules.hidden = playerLesson;
-    if (playerRules) playerRules.hidden = !playerLesson;
-    this.scene.start(playerLesson ? 'GymPlayerScene' : 'GymScene');
+    const lesson = readGymLesson();
+
+    setCurrentNav(lesson);
+    setHidden('gym-dirs-block', lesson !== 'enemy');
+    setHidden('gym-map-controls', lesson !== 'map');
+    setHidden('gym-rules-enemy', lesson !== 'enemy');
+    setHidden('gym-rules-player', lesson !== 'player');
+    setHidden('gym-rules-map', lesson !== 'map');
+    setHidden('gym-map-legend', lesson !== 'map');
+
+    this.scene.start(SCENE_BY_LESSON[lesson]);
   }
+}
+
+function setCurrentNav(lesson: GymLesson): void {
+  const ids: Record<GymLesson, string> = {
+    enemy: 'gym-link-enemy',
+    player: 'gym-link-player',
+    map: 'gym-link-map',
+  };
+  for (const [key, id] of Object.entries(ids)) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    if (key === lesson) el.setAttribute('aria-current', 'page');
+    else el.removeAttribute('aria-current');
+  }
+}
+
+function setHidden(id: string, hidden: boolean): void {
+  const el = document.getElementById(id);
+  if (el) el.hidden = hidden;
 }

@@ -28,7 +28,7 @@ export {
   skyOverlaySize,
 } from '@/generation/preview-paint';
 export { jitterRecipe } from '@/generation/recipes';
-export { generateRiftLayout } from '@/generation/rift-layout';
+export { generateRiftLayout, type RiftLayoutOptions } from '@/generation/rift-layout';
 export { evaluateDualPath, DUAL_PATH_MIN_LENGTH_RATIO } from '@/generation/dual-path';
 export { rollFragmentAxes, isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
 export type {

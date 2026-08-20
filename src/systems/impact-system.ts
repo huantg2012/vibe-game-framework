@@ -355,9 +355,6 @@ export const impactSystem = {
     // Emit resolved
     eventBus.emit(GameEvent.IMPACT_RESOLVED, { moduleDamage });
 
-    // Increment intensity for next cycle (spec rule 12)
-    gameState.incrementIntensity();
-
     return {
       damages,
       intensity,

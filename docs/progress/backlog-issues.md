@@ -13,19 +13,23 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 - [x] `minimap.ts` 挂 `#dom-ui-root`（Slice 5.5 R9；收尾划掉 2026-08-16）
 - [x] UX Kit §A1 Phaser ×1.5 换算——5.5 收尾回写为 DOM ≥12px（2026-08-16）
 - [x] `abyss` 65% / `stitch` 三模块 — Slice 7 已把 PURIFIER 列入 DefenseContext；不改 CSV (2026-08-19)
-- [ ] 存续报告净化器卡把「起始混乱」与数字写在同一句式（QA Slice 7 非阻断 U9）(2026-08-19)
+- [x] 存续报告净化器卡把「起始混乱」与数字写在同一句式（QA Slice 7 非阻断 U9）(2026-08-19) → 2026-08-20 拆成 `stat-label` / `stat-value`
 - [ ] 四个工具占位数值 CSV 结构装不下，暂存 `constants.ts`：`combust` 每秒伤害、`mirror` 诱饵接触半径、`resonate` 两点最大距离（CSV 字段 0，同构的 `stitch` 是 96px，疑为数据疏漏）、`abyss` 的第二计时（5s 混乱惩罚，CSV 每行只有一个 duration 列）→ 需给 CSV 扩列才能回归策划数据源规则 (Slice 5 / 2026-08-12)
 - [x] `purification-hud` 不套 `.game-panel`——5.5 D3 人批准为 A 类装置读数 (2026-08-12)
 - [x] Slice 5 装配纠结观察到 5.5：机制上不是二选一，UX 已讲清。若要真实犹豫回 design（DEC-054） (2026-08-16)
-- [ ] `GameState.incrementIntensity()` 的 +0.15 残留仍在每次冲击末尾被调用（结果总被潮汐覆盖，玩法无影响，但两次访问之间 `getImpactIntensity()` 会返回过期值）；`DefenseContext.stabilityProgress` 恒为 0（`stabilityTracker` 未接入） (Slice 5 / 2026-08-12)
-- [ ] `architecture.md` 的「项目结构」ASCII 目录树列了三个不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、整个 `generation/` 五个文件）——T0 只补核了模块注册表，目录树不在范围内 (Slice 5 T0 / 2026-08-12)
+- [x] `GameState.incrementIntensity()` 的 +0.15 残留仍在每次冲击末尾被调用 (Slice 5 / 2026-08-12) → 2026-08-20 删除调用与方法
+- [ ] `DefenseContext.stabilityProgress` 恒为 0（字段无消费方；接 `stabilityTracker` 而不改防御公式等于白接） (Slice 5 / 2026-08-12)
+- [x] `architecture.md` 的「项目结构」ASCII 列了不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、`ui/hud.ts`）(Slice 5 T0 / 2026-08-12) → 2026-08-20 按现行树改；`generation/` 早在 Slice 6 已落地
 
 - [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除。**Slice 5 收尾时未处理**——这是框架层判断（文档体系是否该有这一层）而非本 Slice 交付物，转下次 retro 拍板 (Slice 5 一致性检查 / 2026-08-12)
 - [x] 敌人属性进 `data/enemies.csv`，渗透体一并迁移（Slice 8 / 2026-08-19）
-- [ ] 屏缘干涉警戒闪约 6 Hz、边带可能溢 1–2 px（QA Slice 8 非阻断）(2026-08-19)
-- [ ] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]`，不是真正最旧 (design 补写边界 spec / 2026-08-12)
-- [ ] loadout / 裂隙结算档位色 `#1a6b5c` 作字对比度约 3:1，低于 Kit ≥4.5:1 (QA Q3 / Slice 5.5 收尾登记)
-- [ ] 上屏仍可能混用「污染物」与术语表「污染体」(QA Q4 / Slice 5.5 收尾登记)
+- [x] 改写体搜寻身体闪与头上指示物共用相位却各加 3 Hz，合计约 6 Hz（QA Slice 8 O1）(2026-08-19) → 2026-08-20 身体只读 `ALERT_BLINK_HZ` 一次
+- [ ] 屏缘锁定齿可比 16 px 边带多 1–2 px（QA Slice 8 O3，非阻断）(2026-08-19)
+- [x] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]` (design 补写边界 spec / 2026-08-12) → 2026-08-20 按 `elapsed` 最大替换
+- [x] loadout / 裂隙结算档位色 `#1a6b5c` 作字对比度约 3:1，低于 Kit ≥4.5:1 (QA Q3 / Slice 5.5 收尾登记) → 代码已是 `#8a8f96`；2026-08-20 核对划掉
+- [x] 上屏仍可能混用「污染物」与术语表「污染体」(QA Q4 / Slice 5.5 收尾登记) → 面板已用「残渣」；2026-08-20 改 CSV `erode` 防御长描述
+
+## 已处理/已归档
 
 ## 已处理/已归档
 

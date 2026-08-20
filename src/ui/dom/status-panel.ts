@@ -211,7 +211,10 @@ function render(): void {
       <div class="stat-bar" style="width:100%;">
         <div class="stat-bar-fill" style="width:${purifHpPct}%;background:#1aad96;"></div>
       </div>
-      <div style="font-size:12px;color:#8a8f96;margin-top:2px;">起始混乱 <span style="color:#1aad96;font-weight:bold;">${startingChaos}</span></div>
+      <div class="stat-row" style="margin-top:2px;">
+        <span class="stat-label">起始混乱</span>
+        <span class="stat-value" style="color:#1aad96;">${startingChaos}</span>
+      </div>
     </div>`;
   }
 

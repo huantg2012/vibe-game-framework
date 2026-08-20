@@ -70,7 +70,7 @@ src/
 │   ├── infiltrator-sprite.ts   # 渗透体 32×32 密像素（成品，DEC-066；碰撞仍 20）
 │   ├── contam-flakes.ts        # 敌人青绿脱落尘（往外/下飘，非暖灯尘）
 │   ├── rewriter-sprite.ts      # 改写体 32×48 程序像素（成品，DEC-066）
-│   └── interactables.ts        # 可交互物（薪柴/物品/撤离点）
+│   └── purification-module.ts  # 净化点三模块世界实体
 ├── generation/
 │   ├── outline-mask.ts         # C1：生长+腐蚀陆地掩膜（VOID / FLOOR）
 │   ├── ruins.ts                # C2：按碎片语法落情景墙
@@ -85,14 +85,15 @@ src/
 │   ├── save-manager.ts         # 存档读写（LocalStorage）
 │   └── audio-manager.ts        # 音频播放控制
 ├── ui/
-│   ├── hud.ts                  # 游戏内 HUD（Phaser 层）
-│   ├── dom/
-│   │   ├── panel-styles.ts     # 共享面板样式层：全部 DOM 面板的单一 <style> 注入点
-│   │   ├── detection-pulse.ts  # 裂隙屏缘被发现干涉（#rift-detection-rim）
-│   │   ├── allocation-panel.ts # 净化点薪柴分配界面（DOM）
-│   │   └── impact-panel.ts     # 冲击结算界面（DOM）
-│   └── components/
-│       └── status-bar.ts       # 通用状态条组件
+│   ├── contaminant-names.ts    # 残渣/工具中文名单一入口
+│   ├── minimap.ts              # 裂隙圆形局部窗口（挂 #dom-ui-root）
+│   └── dom/
+│       ├── panel-styles.ts     # 共享面板样式层：全部 DOM 面板的单一 <style> 注入点
+│       ├── rift-hud.ts         # 裂隙读数（DOM，非 Phaser hud.ts）
+│       ├── detection-pulse.ts  # 裂隙屏缘被发现干涉（#rift-detection-rim）
+│       ├── purification-hud.ts # 净化点贴顶装置读数
+│       ├── allocation-panel.ts # 净化点薪柴分配界面（DOM）
+│       └── status-panel.ts     # 存续报告
 ├── i18n/
 │   ├── index.ts                # i18n 初始化 + t() 函数导出
 │   ├── types.ts                # 翻译 key 的类型定义（自动推导）
@@ -199,7 +200,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
-| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：敌人巡逻（默认）；玩家外形 `?lesson=player`（加厚像素 + 灯尘假人绕圈，与出击同一套）。敌人课必须复用 AISystem / Enemy / 与出击同一套敌人像素。Agent 入口 `docs/dev/gym.md`。角色外形 HOW：`docs/art/actor-pixels.md` | `npm run gym` 或 `/gym.html`；玩家课 `/gym.html?lesson=player` | 已实现（2026-08-20） |
+| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：敌人巡逻（默认）；玩家外形 `?lesson=player`（加厚像素 + 灯尘假人绕圈，与出击同一套）；地图生成 `?lesson=map`（`generateRiftLayout` + `RiftSurfacePainter`，无视野迷雾）。敌人课必须复用 AISystem / Enemy / 与出击同一套敌人像素。Agent 入口 `docs/dev/gym.md`。角色外形 HOW：`docs/art/actor-pixels.md` | `npm run gym` 或 `/gym.html`；玩家课 `/gym.html?lesson=player`；地图课 `/gym.html?lesson=map` | 已实现（2026-08-20） |
 | EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 程序像素（渗透体 32×32 / 改写体 32×48；GameObject 不旋转）+ teal 指示物 + 残影 + 脱落尘 + 木偶步态 + AI 状态块 | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection | 已实现（T7；Slice 8 C1 rewriter；DEC-066 锁定程序像素） |
 | InfiltratorSprite | src/entities/infiltrator-sprite.ts | 渗透体密像素 32×32 四向 + 步态帧（前倾猎食）。碰撞仍 20。成品，不换精灵表 | generateInfiltratorPlaceholders(scene), infiltratorMotionTexture | 已实现（DEC-066） |
 | ContamFlakes | src/entities/contam-flakes.ts | 敌人青绿 1px 脱落尘 + 改写体脚下污斑。迈步可爆发 | generateContamFlakeTextures, ContamFlakes, ContamStain | 已实现（2026-08-20） |
@@ -248,7 +249,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 > - `src/types/ai-types.ts`（T7 新增）持有敌人 AI 契约：`EnemyView`（含 `getRole` / `getDetection`，T3/T4/屏缘脉冲/渲染层消费）/ `EnemyAIState`（可变运行时状态，仅 AI 系统写）/ `EnemyTypeConfig` / `Perception` / `AlertLevel` / `SightZone` / `AICueId`。剖面类型从 `src/generated/enemy-data.ts` 再导出。放在 `types/` 而非 `systems/ai/` 是为了打断循环依赖。
 > - `src/config/invariants.ts`（T7 新增）把设计所依赖的常量关系写成可执行断言，dev 构建在 `main.ts` 启动时校验（DEC-020）。Slice 1 覆盖敌人 AI 的 I1–I6 + 一条跨 spec 补充检查。T8/T9 的 spec 不变量应追加进同一文件。
 > - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**夹具**（ASCII tile 网格 + 布点），导出 `RIFT_MAP` 与 `validateRiftMap()`。运行时裂隙走 `generateRiftLayout`；夹具给对照 / 测试。
-> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成（`src/scenes/placeholder-textures.ts`，练习场共用）；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 加厚桩 + 七点安全区钳制 + 全部 DOM 面板编排。另有开发练习场 `gym.html`（`GymBootScene` / `GymScene` / `GymPlayerScene`，见 `docs/dev/gym.md`）。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
+> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成（`src/scenes/placeholder-textures.ts`，练习场共用）；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 加厚桩 + 七点安全区钳制 + 全部 DOM 面板编排。另有开发练习场 `gym.html`（`GymBootScene` / `GymScene` / `GymPlayerScene` / `GymMapScene`，见 `docs/dev/gym.md`）。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
 
 ## 关键架构决策
 

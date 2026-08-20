@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: art agent
-last-modified-date: 2026-08-19
+last-modified-by: code agent
+last-modified-date: 2026-08-20
 interface-changed: false
 interfaces-with:
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier
@@ -170,8 +170,7 @@ interface SortieModifiers {
 9. **内存单例 + 持久化**：GameState 是模块级单例（DEC-ARCH-002），跨场景存活。它同时被 `SaveManager` 持久化到 localStorage——存档写入点为「进入净化点时」与「出击前」两处，读档由主菜单驱动。落存档的字段见状态模型；污染物运行时状态走同一通道（规则 60）。
 10. **薪柴入账**：从裂隙返回时（`RIFT_EXITED.survived === true`），`kindlingReserve += kindlingGained`。死亡时 `kindlingGained = 0`，不入账。
 11. **周期计数**：每次进入裂隙时 `cycle++`。
-12. **冲击强度由潮汐驱动，不自增**：`impactIntensity` 不再逐周期 +0.15。每次从裂隙返回、结算冲击之前，由场景层把 `tideSystem.getCurrentIntensity()` 同步写入 GameState，冲击读这个值。强度的涨退规则归 `system-growth-tide` 的 T 组（`INTENSITY_STEP` / `MAX_INTENSITY` 两个旧常量已从 `constants.ts` 移除）。
-    - ⚠ 代码残留：`GameState.incrementIntensity()` 仍带着旧的 +0.15/上限 3.0 逻辑，并仍在每次冲击末尾被调用。它的结果总会在下次返回时被潮汐同步覆盖，所以对玩法无影响；但两次访问之间 `getImpactIntensity()` 会返回一个偏高的过期值。属待清理项，不构成设计规则。
+12. **冲击强度由潮汐驱动，不自增**：`impactIntensity` 不再逐周期 +0.15。每次从裂隙返回、结算冲击之前，由场景层把 `tideSystem.getCurrentIntensity()` 同步写入 GameState，冲击读这个值。强度的涨退规则归 `system-growth-tide` 的 T 组（`INTENSITY_STEP` / `MAX_INTENSITY` 两个旧常量已从 `constants.ts` 移除）。`incrementIntensity()` 已删除。
 
 ### A — 分配系统
 
@@ -832,7 +831,7 @@ interface SortieModifiers {
 | 1 | `resonate` 的装备期被动（CORE/STORAGE 上限各 +10%） | 规则已定，无任何代码路径 | 规则 59 |
 | 2 | `muffle` 的"预告提前 1 轮" | 同上（Slice 4 起就没有） | `defense-engine.ts` 注释声称由场景层处理，实际无消费方 |
 | 3 | `siphon` 的修复效率翻倍 | 值已写入 GameState，分配时不读 | 规则 15 |
-| 4 | `GameState.incrementIntensity()` 的 +0.15 残留 | 代码残留，对玩法无影响 | 规则 12 |
+| 4 | ~~`GameState.incrementIntensity()` 的 +0.15 残留~~ | **已删**（2026-08-20）。冲击只读潮汐同步值 | 规则 12 |
 | 5 | `IMPACT_STARTED` / `IMPACT_RESOLVED` / `MODULE_DAMAGED` / `RIFT_ENTERED` 只发不收 | 事件保留，演出走返回值 | 事件契约段 |
 | 6 | `BOUNDARY.BREATH_*` 五个死常量 | 旧方案残留（Slice 5 的 B4 负责清理） | 边界形态数值表下的注 |
 | 7 | `DefenseContext.stabilityProgress` 恒为 0 | `stabilityTracker` 未接入冲击结算 | `impact-system.ts` 内 TODO |

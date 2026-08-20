@@ -2,10 +2,10 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: design agent
-last-modified-date: 2026-08-19
-note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。
-interface-changed: false
+last-modified-by: code agent
+last-modified-date: 2026-08-20
+note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。
+interface-changed: true
 slice: 6
 interfaces-with:
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出
@@ -19,7 +19,7 @@ exposes:
   - RuinedMask（陆地 + 墙 + 具名残块）
   - generateRuins(seed, fragmentTypeId?) → RuinedMask
   - GeneratedRiftLayout（C3 交齐出生/撤离/薪柴/污染物/巡逻）
-  - generateRiftLayout(seed) → GeneratedRiftLayout | 坏图重试到顶则抛错（已实现）
+  - generateRiftLayout(seed, options?) → GeneratedRiftLayout | 坏图重试到顶则抛错。options 可锁风格锚、关闭邻域抖动、覆盖污染年龄与残破度（练习场）；缺省与出击相同
 ---
 
 # 系统设计：裂隙地图生成

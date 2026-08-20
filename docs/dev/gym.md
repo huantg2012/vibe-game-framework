@@ -5,7 +5,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
-独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。
+独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。地图课用出击同一套生成器烤图，不开视野迷雾。
 
 **打开：** `npm run gym` 或 `npm run dev`，再用 Cursor 的 Simple Browser 打开对应地址。不要用系统浏览器。
 
@@ -13,8 +13,9 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | -- | -- |
 | 敌人移动 | `http://localhost:3000/gym.html` |
 | 玩家外形 | `http://localhost:3000/gym.html?lesson=player` |
+| 地图生成 | `http://localhost:3000/gym.html?lesson=map` |
 
-**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` 或 `GymPlayerScene`。场地：`src/gym/arena.ts`。
+**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）。地图课走出击 `generateRiftLayout`，不走院子。
 
 ---
 
@@ -24,11 +25,13 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 2. **禁止**为练习场另写敌人移动、另画一套敌人外形、用 DOM/Canvas 2D 冒充巡逻。敌人画面就是出击那套程序像素。
 3. 练习场必须调用正式模块：
    - 敌人课：`AISystem`（巡逻预计算腿 + `GridPathfinder` 8 邻接 A*）、`Enemy` / `createEnemyTypeConfig`（`enemy-factory.ts`）
+   - 地图课：`generateRiftLayout`、`RiftSurfacePainter`（与 `RiftScene` 同一份）
    - 所有课：`generatePlaceholderTextures`（与 `BootScene` 同一份）、`gameConfigWithScenes`（与出击同一套 pixelArt / FIT / Arcade）
 4. 新敌人角色（`data/enemies.csv` 新行）时：`npm run codegen`，然后给 `GYM_LOOPS` 补一条 8 点环。`Record<EnemyRole, …>` 会在漏补时编不过。`AISystem.create` 仍要求出生表里**恰好 1 个改写体**——练习场不要用两个改写体来「多演示一次皮肤」。
 5. 练习场侧栏是开发说明，不是游戏内界面。不要走 in-game UX 清单，也不要把它做成墙机/随身罩。
 6. 玩家外形：出击与练习场同一套（DEC-068）——方案 1 加厚像素 + 方案 3 灯尘。本课用假人绕圈对照体量，不接 WASD。贴图在 `player-sprite-dense.ts`；灯尘在 `player-lamp-aura.ts`。
 7. **角色外形怎么验：** Cursor Simple Browser 打开上表地址，对照 `docs/art/actor-pixels.md`（朝向不转 GameObject、家族密度、压迫感、禁忌）。不要用系统浏览器。
+8. 地图生成：必须调用 `generateRiftLayout` 与 `RiftSurfacePainter`。禁止为练习场另写生成器或拷画廊 PNG。默认（风格锚按种子抽、邻域抖动开、污染年龄/残破度按种子抽）与出击路径相同。侧栏可锁锚 / 关抖动 / 覆盖两轴。不开 `VisibilitySystem`。布点用色块标记，不刷玩家、不刷会走的敌人。
 
 ---
 
@@ -48,8 +51,14 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 院子里一个假人绕矩形走，角上短停。外形是方案 1：加厚工业像素（侧影加厚、配色略暖）+ 方案 3 留下的灯尘，**与出击 `Player` 同一套**（DEC-068）。北墙站住的渗透体与改写体是出击像素，只对照体量。这课没有键盘操作，也不把假人当 AI 诱饵。对照清单见 `docs/art/actor-pixels.md`。
 
+### 地图生成（`?lesson=map`）
+
+侧栏选风格锚、种子、邻域抖动、污染年龄、残破度，点「生成新地图」。默认三项按种子抽、抖动开，调用与出击相同的 `generateRiftLayout(seed)`。锁参数时走同一函数的可选 `RiftLayoutOptions`，不换生成器。
+
+可见层是出击那套程序化地表（地面烤死，天空影循环）。不开视野迷雾。相机默认框住整岛；拖动画布平移，滚轮缩放。色块标出生 / 撤离 / 薪柴 / 污染物 / 巡逻出生，不是可交互实体。
+
 ---
 
 ## 以后加课
 
-在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。
+在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player` 与 `?lesson=map`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。

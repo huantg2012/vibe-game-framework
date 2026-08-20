@@ -14,7 +14,7 @@
 | CLAUDE.md 标记 "Polish" | → **Polish** | 用 `qa` agent 做全面验收 |
 | 准备发布 | → **Launch** | 用 `code` agent 配置部署 |
 
-开发练习场（看敌人怎么走、比玩家外形、测基本功能，不进主菜单）：`docs/dev/gym.md`。`npm run gym` 或 `npm run dev` 后，用 Cursor Simple Browser 打开 `http://localhost:3000/gym.html`（敌人）或 `http://localhost:3000/gym.html?lesson=player`（玩家外形）。角色外形对照：`docs/art/actor-pixels.md`。玩家加厚像素已接出击。
+开发练习场（看敌人怎么走、比玩家外形、看生成地图、测基本功能，不进主菜单）：`docs/dev/gym.md`。`npm run gym` 或 `npm run dev` 后，用 Cursor Simple Browser 打开 `http://localhost:3000/gym.html`（敌人）、`http://localhost:3000/gym.html?lesson=player`（玩家外形）或 `http://localhost:3000/gym.html?lesson=map`（地图生成）。角色外形对照：`docs/art/actor-pixels.md`。玩家加厚像素已接出击。
 
 ---
 

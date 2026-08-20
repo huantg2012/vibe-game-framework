@@ -11,9 +11,14 @@ import { ENABLED_RIFT_FRAGMENTS } from '@/generated/rift-fragment-data';
 import { generateRecipeDraft } from '@/generation/draft-pipeline';
 import { evaluateDualPath } from '@/generation/dual-path';
 import { rollFragmentAxes } from '@/generation/fragment-roll';
-import { PREVIEW_RECIPES, jitterRecipe, type MapRecipe } from '@/generation/recipes';
+import { PREVIEW_RECIPES, jitterRecipe, recipeById, type MapRecipe } from '@/generation/recipes';
 import { mix32 } from '@/generation/seed-fork';
-import type { GeneratedRiftLayout, WalkableMask } from '@/generation/types';
+import type {
+  ContaminationAge,
+  GeneratedRiftLayout,
+  RuinSeverity,
+  WalkableMask,
+} from '@/generation/types';
 import { RIFT_MAP } from '@/scenes/rift-map-data';
 import { TileGrid } from '@/systems/tile-grid';
 import { TileType, type Vector2 } from '@/types/game-types';
@@ -75,7 +80,17 @@ function rowOf(cols: number, i: number): number {
   return (i / cols) | 0;
 }
 
-function pickRecipe(seed: number, islandAttempt: number): MapRecipe {
+/** Optional locks for the gym / tools. Omit = live sortie (`pickRecipe` + FragmentRoll). */
+export interface RiftLayoutOptions {
+  /** Lock a `PREVIEW_RECIPES` id. Omit = pick from enabled fragments like a sortie. */
+  readonly recipeId?: string;
+  /** Neighborhood jitter. Default true. */
+  readonly jitter?: boolean;
+  readonly contaminationAge?: ContaminationAge;
+  readonly ruinSeverity?: RuinSeverity;
+}
+
+function pickRecipeAnchor(seed: number, islandAttempt: number): MapRecipe {
   const enabledIds = new Set(ENABLED_RIFT_FRAGMENTS.map((row) => row.id));
   const live = PREVIEW_RECIPES.filter((recipe) => enabledIds.has(recipe.fragmentTypeId));
   if (live.length === 0) throw new Error('pickRecipe: no enabled fragment recipes');
@@ -87,7 +102,18 @@ function pickRecipe(seed: number, islandAttempt: number): MapRecipe {
   const typeId = types[new SeededRandom(mix32(seed, 'fragment-type')).nextInt(0, types.length - 1)]!;
   const ofType = live.filter((recipe) => recipe.fragmentTypeId === typeId);
   const pool = islandAttempt < 6 && ofType.length > 0 ? ofType : live;
-  const anchor = pool[new SeededRandom(mix32(seed, `recipe:${islandAttempt}`)).nextInt(0, pool.length - 1)]!;
+  return pool[new SeededRandom(mix32(seed, `recipe:${islandAttempt}`)).nextInt(0, pool.length - 1)]!;
+}
+
+function pickRecipe(seed: number, islandAttempt: number): MapRecipe {
+  return jitterRecipe(pickRecipeAnchor(seed, islandAttempt), islandSeed(seed, islandAttempt));
+}
+
+function resolveRecipe(seed: number, islandAttempt: number, options?: RiftLayoutOptions): MapRecipe {
+  const anchor = options?.recipeId
+    ? recipeById(options.recipeId)
+    : pickRecipeAnchor(seed, islandAttempt);
+  if (options?.jitter === false) return anchor;
   return jitterRecipe(anchor, islandSeed(seed, islandAttempt));
 }
 
@@ -621,13 +647,17 @@ function placeOnIsland(
   return { spawn, extract, kindling, contaminants, enemies, landmarks };
 }
 
-export function generateRiftLayout(seed: number): GeneratedRiftLayout {
+export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): GeneratedRiftLayout {
   const inputSeed = seed >>> 0;
-  const roll = rollFragmentAxes(inputSeed);
+  const rolled = rollFragmentAxes(inputSeed);
+  const roll = {
+    contaminationAge: options?.contaminationAge ?? rolled.contaminationAge,
+    ruinSeverity: options?.ruinSeverity ?? rolled.ruinSeverity,
+  };
   let lastWhy = 'no attempt';
 
   for (let island = 0; island < MAX_ISLAND_ATTEMPTS; island++) {
-    const recipe = pickRecipe(inputSeed, island);
+    const recipe = options ? resolveRecipe(inputSeed, island, options) : pickRecipe(inputSeed, island);
     const draftSeed = islandSeed(inputSeed, island);
     let draft;
     try {

@@ -10,14 +10,17 @@
       html, body {
         width: 100%;
         height: 100%;
-        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: auto;
         background: #080a0c;
         color: #c8cdd4;
         font-family: "Courier New", Courier, monospace;
       }
       #gym-shell {
         display: grid;
-        grid-template-columns: minmax(260px, 320px) 1fr;
+        grid-template-columns: minmax(260px, 320px) minmax(960px, 1fr);
+        min-width: calc(320px + 960px);
+        min-height: 100%;
         height: 100%;
       }
       #gym-doc {
@@ -46,12 +49,67 @@
         border-color: #1aad96;
         color: #b0fff5;
       }
+      #gym-map-controls label {
+        display: block;
+        margin: 10px 0 3px;
+        color: #8a8f96;
+        font-size: 12px;
+      }
+      #gym-map-controls select,
+      #gym-map-controls input[type="number"] {
+        width: 100%;
+        background: #0e1114;
+        color: #c8cdd4;
+        border: 1px solid #2a2d32;
+        padding: 4px 6px;
+        font: inherit;
+      }
+      #gym-map-controls .gym-check {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+        color: #c8cdd4;
+      }
+      #gym-map-controls .gym-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      #gym-map-controls button {
+        background: #12161a;
+        color: #e8eaed;
+        border: 1px solid #2a2d32;
+        padding: 6px 10px;
+        font: inherit;
+        cursor: pointer;
+      }
+      #gym-map-controls button:disabled {
+        color: #8a8f96;
+      }
+      #gym-map-legend span {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+      #gym-map-legend li {
+        list-style: none;
+        margin: 4px 0;
+      }
       #game-container {
         width: 100%;
         height: 100%;
+        min-width: 960px;
+        min-height: 640px;
+        overflow: auto;
         display: flex;
         align-items: center;
         justify-content: center;
+        justify-content: safe center;
+        align-items: safe center;
       }
     </style>
   </head>
@@ -62,12 +120,43 @@
         <nav id="gym-nav">
           <a id="gym-link-enemy" href="/gym.html">敌人移动</a>
           <a id="gym-link-player" href="/gym.html?lesson=player">玩家外形</a>
+          <a id="gym-link-map" href="/gym.html?lesson=map">地图生成</a>
         </nav>
-        <p>独立页，不进主菜单、不生成裂隙。Agent 入口：<code>docs/dev/gym.md</code>。</p>
+        <p>独立页，不进主菜单。Agent 入口：<code>docs/dev/gym.md</code>。</p>
 
         <h2>正在演示</h2>
         <p id="gym-roster">载入中</p>
         <p id="gym-status"></p>
+
+        <div id="gym-map-controls" hidden>
+          <h2>生成参数</h2>
+          <label for="gym-recipe">风格锚</label>
+          <select id="gym-recipe"></select>
+          <label for="gym-seed">种子</label>
+          <input id="gym-seed" type="number" min="0" step="1" />
+          <label class="gym-check" for="gym-jitter">
+            <input id="gym-jitter" type="checkbox" checked />
+            邻域抖动（与出击相同）
+          </label>
+          <label for="gym-age">污染年龄</label>
+          <select id="gym-age">
+            <option value="">按种子抽</option>
+            <option value="new">新</option>
+            <option value="standard">常</option>
+            <option value="ancient">古</option>
+          </select>
+          <label for="gym-ruin">残破度</label>
+          <select id="gym-ruin">
+            <option value="">按种子抽</option>
+            <option value="intact">完整</option>
+            <option value="broken">残破</option>
+            <option value="eaten">啃蚀</option>
+          </select>
+          <div class="gym-actions">
+            <button id="gym-map-generate" type="button">生成新地图</button>
+            <button id="gym-map-random" type="button">随机种子并生成</button>
+          </div>
+        </div>
 
         <div id="gym-dirs-block">
         <h2>已走过的朝向</h2>
@@ -94,6 +183,20 @@
           <li>方案 1：加厚工业像素 + 灯尘。侧影加厚、配色略暖。</li>
           <li>出击 <code>Player</code> 已接同一套外形（DEC-068）。</li>
           <li>北墙渗透体 / 改写体是出击同一套像素，只站住对照尺寸。</li>
+        </ul>
+        <ul id="gym-rules-map" hidden>
+          <li>布局走出击同一套 <code>generateRiftLayout</code>，禁止另写生成器。</li>
+          <li>地表走 <code>RiftSurfacePainter</code>。不开 <code>VisibilitySystem</code>。</li>
+          <li>色块是布点标记，不是实体。拖动画布平移，滚轮缩放。</li>
+        </ul>
+        <ul id="gym-map-legend" hidden>
+          <li><span style="background:#1aad96;"></span>出生</li>
+          <li><span style="background:#e0a848;"></span>撤离</li>
+          <li><span style="background:#c4873a;"></span>薪柴</li>
+          <li><span style="background:#7fffee;"></span>污染物</li>
+          <li><span style="background:#8a8f96;"></span>渗透体出生</li>
+          <li><span style="background:#b0fff5;"></span>改写体出生</li>
+          <li><span style="background:#5a4030;"></span>地标</li>
         </ul>
         <h2>打开</h2>
         <p><code>npm run dev</code> 后本页，或 <code>npm run gym</code>。</p>

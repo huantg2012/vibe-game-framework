@@ -151,8 +151,10 @@ export class BoundaryBreath {
     let slot = this.impacts.find(i => !i.active);
     if (!slot) {
       if (this.impacts.length >= MAX_IMPACTS) {
-        // Replace oldest
         slot = this.impacts[0]!;
+        for (const imp of this.impacts) {
+          if (imp.elapsed > slot.elapsed) slot = imp;
+        }
       } else {
         slot = { angle: 0, arcHalf: 0, spawnDist: 0, duration: 0, elapsed: 0, active: false };
         this.impacts.push(slot);
