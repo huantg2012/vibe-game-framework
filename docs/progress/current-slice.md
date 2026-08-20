@@ -3,10 +3,12 @@ status: COMPLETE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-20
-note: Slice 9「音乐 / 音效」COMPLETE。QA PASS。DEC-064 的 7/8/9 已完。Slice 10 不做。Slice 9 之后表现收口：DEC-069 崩坏簇接到出击烤漆；DEC-070 练习场整团胀缩人眼 PASS；DEC-071 出击已挂同一套活层。迷雾下亮度仍等人终审（不是新 Slice）。
+note: 本文件是最后完成的 Slice 档案（Slice 9 COMPLETE）。按需游戏迭代（DEC-072）：当前迭代见 `docs/progress/current-iteration.md`（迭代 1 敌人系统；DEC-073 词法已锁、未实现）。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071，不改编号成迭代。迷雾下亮度仍等人终审。
 ---
 
 # Slice 9: 音乐 / 音效【COMPLETE】
+
+> **按需游戏迭代（DEC-072）。** 活状态只看 `docs/progress/current-iteration.md`。本文件不再当进行中工作台。
 
 类型：**系统 Slice**
 日期：2026-08-19 开工
@@ -88,3 +90,15 @@ DEC-064 锁的 Slice 7/8/9 均 COMPLETE。Slice 10 不做。
 2. **spec 判断**：不新建 spec。规则写进 `docs/art/rift-fragment-surfaces.md`；`docs/specs/system-map-generation.md` 规则 27 写污染怎么画 + 出击/练习场同一套活层。
 3. **交付范围**：本段。出击与练习场崩坏簇都只烤内核、叠整团胀缩活层。晶结 / 溶蚀 / 平涂只留练习场对照。
 4. **UI 清单**：无新 HUD，不适用。
+
+---
+
+## 按需游戏迭代协议（DEC-072）
+
+Slice 1–9 历史不动。Slice 10 不做。不规划 Slice 11。不把整盘标成 Polish / Launch。
+
+之后层 B 完善按人点名的模块走，工作单元是「游戏迭代」（下面称：迭代），不是新 Slice。触发：人点名模块并说开始 → Director 在 `current-iteration.md` 登记一次（序号、模块、范围一句话、派谁）。显示名 `迭代 1`、`迭代 2`…，从下一手人点名起算。Slice 9 之后表现收口（上表 DEC-066～071）不改编号。
+
+打磨 / 表现仍走轻量路径收尾四项；单批上下文预算仍有效。审美与「读作游戏」仍人终审。不要和层 A 框架迭代混名。
+
+**当前迭代不写在本文件。** 见 `docs/progress/current-iteration.md`。

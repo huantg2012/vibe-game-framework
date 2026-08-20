@@ -17,12 +17,13 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8+9 已完成。`docs/specs/` 含 8 份系统 spec + `ui-detection-pulse`；`src/` 含裂隙出击环 + 两种敌人剖面 + 净化点三模块 + 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙 + AudioManager。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8+9 已完成。自 DEC-072 起按需游戏迭代。**当前：迭代 1（敌人系统）** — 污染词法已落文档、未实现（DEC-073）。`docs/specs/` 含系统 spec + `ui-detection-pulse` + 污染词法草案；`src/` 含裂隙出击环 + 两种敌人剖面 + 净化点三模块 + 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙 + AudioManager。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
 | 移动 + 有限视野 | **已实现** (Slice 1) | `docs/specs/system-movement-vision.md` | 俯视角 WASD 移动 + 60 射线 Raycasting 视野遮罩；速度 80px/s，视野半径 180px |
 | 敌人 AI | **已实现** (Slice 1；8 扩) | `docs/specs/system-enemy-ai.md` | 一份五态 FSM + 两种感知剖面（渗透体视锥 / 改写体听觉为主）；每图恰好 1 改写体 |
+| 污染词法 | **设计锁，未实现** (迭代 1 / DEC-073) | `docs/specs/system-contamination-lexicon.md` | 底材 + 孔谱 + 词素生成可落地形态；成句少数具名。背景 `docs/design-notes/contamination-lexicon.md` |
 | 战斗系统 | **已实现** (Slice 1) | `docs/specs/system-combat.md` | 前向扇形挥击、三刀击杀、敌人反击 token 机制；定位为止损工具非主要手段 |
 | 混乱值 + 搜刮 + 撤离 | **已实现** (Slice 1) | `docs/specs/system-chaos-scavenge-extract.md` | 混乱值匀速上涨(0.5/s) + 阈值惩罚；薪柴搜刮点散布；撤离点按 E 确认 |
 | 净化点 + 冲击系统 | **已实现** (Slice 2；7 扩) | `docs/specs/system-purification-impact.md` | 三模块（核心/储藏/净化器）+ 加厚抬血池 + 冲击结算；净化器写入出击起始混乱 |
@@ -97,7 +98,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 出击工具 | 18 全部实现（主动 15 + 被动 3：scatter/muffle/siphon） | data/contaminants.csv 工具列 |
 | 防御效果 | 18 型全部接线（含副作用），Slice 5 起无未接线机制 | src/systems/defense-engine.ts |
 | 永久改造 | 6（出击效率/资源效率/生存韧性/出击扩展/防御扩展/信息优势） | data/upgrades.csv → src/generated/upgrade-data.ts |
-| 敌人 / 关卡 | 2 种剖面共用一份五态（渗透体 + 改写体）；每图恰好 1 改写体 | `data/enemies.csv` → `src/generated/enemy-data.ts` |
+| 敌人 / 关卡 | 2 种剖面共用一份五态（渗透体 + 改写体）；每图恰好 1 改写体。污染词法已锁未实现 | `data/enemies.csv` → `src/generated/enemy-data.ts`；词法见 `docs/specs/system-contamination-lexicon.md` |
 
 ## 设计历史（仅决策，不含详情）
 
@@ -114,4 +115,6 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 7「净化点扩张」(2026-08-19, COMPLETE)：第三模块净化器写入出击起始混乱（满完整度 0）；祭坛旁加厚三档抬全部模块 maxHp；效果仍按对基准 100。下一手 Slice 8 第二敌人。
 - Slice 8「第二敌人」(2026-08-19, COMPLETE)：改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv` + 一份五态。审美待人终审。下一手 Slice 9 音乐/音效。
 - Slice 9「音乐 / 音效」(2026-08-19, COMPLETE)：AudioManager 落地；39 个占位 key 双格式进仓库；裂隙分层混音；同时 8 轨。听感待人终审。Slice 10 不做（DEC-064）。
-- 表现收口（2026-08-20，非 Slice）：渗透体 / 改写体密像素已接出击（DEC-066）。玩家方案 1 加厚像素 + 灯尘已接出击 `Player`（DEC-068）。裂隙地面污染锁定为崩坏簇并接到出击烤漆（DEC-069）；整团胀缩呼吸已锁（DEC-070）并接到出击（DEC-071）。迷雾下亮度等人终审。角色 HOW：`docs/art/actor-pixels.md`。地表合同：`docs/art/rift-fragment-surfaces.md`。
+- 表现收口（2026-08-20，非 Slice、非游戏迭代）：渗透体 / 改写体密像素已接出击（DEC-066）。玩家方案 1 加厚像素 + 灯尘已接出击 `Player`（DEC-068）。裂隙地面污染锁定为崩坏簇并接到出击烤漆（DEC-069）；整团胀缩呼吸已锁（DEC-070）并接到出击（DEC-071）。迷雾下亮度等人终审。角色 HOW：`docs/art/actor-pixels.md`。地表合同：`docs/art/rift-fragment-surfaces.md`。
+- 按需游戏迭代制度（DEC-072，2026-08-20）：Slice 1–9 已完，不规划 Slice 11，不标 Polish / Launch。工作单元改为人点名模块后的「游戏迭代」。活指针：`docs/progress/current-iteration.md`。
+- 迭代 1「敌人系统」（2026-08-20，进行中）：污染词法设计锁（DEC-073），未实现。正文 `docs/design-notes/contamination-lexicon.md`。覆盖体不以第三种人形出场。出击仍是两种剖面。

@@ -1,12 +1,12 @@
 ---
 status: ACTIVE
 purpose: 轻量 issue 收集——playtest 反馈中产生的临时待办、发现的 bug、未即时修复的体验问题。
-rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追加到此文件。每个 Slice 规划时消费此列表。
+rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追加到此文件。每个 Slice 规划时、或每次游戏迭代开工时，review 此列表。
 ---
 
 # Backlog Issues
 
-> 格式：`- [ ] 描述 (来源/日期)`。完成后打勾。每 Slice 规划时 review 此列表决定纳入哪些。
+> 格式：`- [ ] 描述 (来源/日期)`。完成后打勾。每 Slice 规划时、或每次游戏迭代开工时 review 此列表决定纳入哪些。
 
 ## 待处理
 

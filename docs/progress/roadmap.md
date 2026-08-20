@@ -4,13 +4,13 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-08-20
 last-closed-slice: 9
-note: Slice 9「音乐 / 音效」COMPLETE（2026-08-19）。DEC-064 的 7/8/9 已完。Slice 10 不做。Slice 9 之后表现收口：DEC-069 崩坏簇接到出击烤漆；DEC-070 整团胀缩 PASS；DEC-071 出击已挂同一套活层。迷雾下亮度仍等人终审（不是新 Slice）。
+note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 1 敌人系统（污染词法 DEC-073 已锁文档、未实现）。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071。迷雾下亮度仍等人终审。
 ---
 
 # Roadmap
 
 > Foundation 已完成（2026-07-24）。Foundation 不是 Slice，故"已完成的 Slices"从 Slice 1 开始。
-> 只有当前 Slice 与下一个 Slice 是明确的；其余为粗略方向，随每次 Slice 回顾调整。
+> 自 DEC-072 起：本游戏不再规划下一个 Slice。完善按需走「游戏迭代」（活状态 `docs/progress/current-iteration.md`）。已完成 Slices 表不动。
 
 ## 已完成的 Slices
 
@@ -29,19 +29,21 @@ note: Slice 9「音乐 / 音效」COMPLETE（2026-08-19）。DEC-064 的 7/8/9 �
 | Slice 8 | 第二敌人（潜行轴） | 2026-08-19 | **COMPLETE** — 改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv` + 一份五态。机器闸门 PASS。审美待人终审。 |
 | Slice 9 | 音乐 / 音效 | 2026-08-19 | **COMPLETE** — AudioManager 已实现；39 个 key 非空 OGG+MP3 占位；五条氛围 + 裂隙四层；同时 8 轨；无 jump scare 契约。听感待人终审。 |
 
-## 当前 Slice
+## 当前工作单元（DEC-072）
 
-**无进行中 Slice。** DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。撤离多样性不做。
+**无进行中 Slice。当前：迭代 1（敌人系统）。** 污染词法已锁文档、未实现（DEC-073）。活指针：`docs/progress/current-iteration.md`。正文：`docs/design-notes/contamination-lexicon.md`。Slice 9 COMPLETE 档案：`docs/progress/current-slice.md`。
 
-Slice 9 之后表现收口（不是新 Slice）：DEC-069 把裂隙地面污染从矩形平涂改成崩坏簇，并接到出击烤漆。DEC-070：练习场已锁整团胀缩呼吸（人眼 PASS）。DEC-071：出击已挂同一套活层。迷雾下亮度仍等人终审。
+DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。撤离多样性不做。
 
-## 计划中的 Slices（近期方向，DEC-064 已锁 7/8/9）
+Slice 9 之后表现收口（不是迭代、不改编号）：DEC-069 把裂隙地面污染从矩形平涂改成崩坏簇，并接到出击烤漆。DEC-070：练习场已锁整团胀缩呼吸（人眼 PASS）。DEC-071：出击已挂同一套活层。迷雾下亮度仍等人终审。
+
+## 已锁死、不再开新编号的 Slice（DEC-064）
 
 | 序号 | 方向 | 说明 |
 | ---- | ---- | ---- |
 | Slice 8 | 第二敌人（潜行轴） | **COMPLETE**（2026-08-19）。 |
 | Slice 9 | 音乐 / 音效 | **COMPLETE**（2026-08-19）。 |
-| Slice 10 | NPC | **不做**（DEC-064）。 |
+| Slice 10 | NPC | **不做**（DEC-064）。不因此改成一次游戏迭代，除非人另行点名。 |
 
 > **编号顺移**（人拍板，2026-08-12）：原 Slice 5 计划把工具、第二敌人、新改造放进一个 Slice。两块验证的是不同的轴，混在一起试玩反馈无法归因。第二敌人独立成 Slice，其后整体顺移。**当时第二敌人编号为 6；DEC-053 后为 8。**
 > **数字订正**：原写「9 种 Fine/Rare 工具」，`contaminants.csv` 实际为 Fine 6 + Rare 5 = **11 种**，本 Slice 全量落地。
@@ -112,7 +114,7 @@ CSV 构建期管线 + 防御效果引擎（7 种 Common 副作用）+ 被动工�
 - ~~第二种敌人类型~~ → Slice 8 COMPLETE（2026-08-19）
 - ~~净化点视觉状态变化（模块健康/受损）~~ → Slice 5 T6（已交付 2026-08-12）
 - ~~音效接入 / 完整音乐·音景~~ → Slice 9 COMPLETE（2026-08-19）
-- ~~NPC 互动~~ → Slice 10（启动时再具体设计）
+- ~~NPC 互动~~ → Slice 10 **不做**（DEC-064）。不自动改成游戏迭代。
 
 **中期（MVP 补全，vision Must-have 中较独立的项）：**
 - 1-2 种功能物品（干扰物 / 回复品）
@@ -128,4 +130,4 @@ CSV 构建期管线 + 防御效果引擎（7 种 Common 副作用）+ 被动工�
 - 多存档
 - 成就系统
 
-> 原列在 Out-of-scope 的「NPC 互动」「完整音乐 / 音景设计」已于 2026-08-12 升格为 Slice 10 / Slice 9 占位；细则仍待对应 Slice 启动时设计，不等于现在开做。
+> 原列在 Out-of-scope 的「NPC 互动」「完整音乐 / 音景设计」已于 2026-08-12 升格为 Slice 10 / Slice 9 占位。Slice 9 已 COMPLETE。Slice 10 不做（DEC-064）。后续完善按 DEC-072 游戏迭代，等人点名模块，不规划 Slice 11。

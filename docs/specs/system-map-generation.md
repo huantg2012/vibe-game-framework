@@ -4,7 +4,7 @@ created-by: design agent
 created-when: 2026-08-16
 last-modified-by: director agent
 last-modified-date: 2026-08-20
-note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。
+note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染词法（DEC-073）将改出生配额与钉层，未实现前本 spec 仍是 3–4 巡逻 + 恰好 1 个改写体。
 interface-changed: true
 slice: 6
 interfaces-with:

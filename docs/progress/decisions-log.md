@@ -9,6 +9,36 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-073: 锁定污染词法作为敌人形态组合制度（未实现）
+- Date: 2026-08-20
+- Phase: Iterative Development（迭代 1：敌人系统）
+- Type: Design
+- Context: 两种敌人、每种一个形态，与程序生成裂隙不相称。人要求用有限维度组合海量形态，并以《暗黑破坏神 2》符文之语为启发（不是抄装备词缀）。爆炸思考后，人点名保留：基体/覆盖深度；连续性/占位（底层逻辑）；运动/感知/节律/接触作为衍生槽。硬约束：每个合法个体必须有外观、生命期、移动、感知、攻击、死亡。人要求先落文档并提交。
+- Decision:
+  1. 正式名「污染词法」。底材 = 基体 × 覆盖深度；孔谱 = 连续性 × 占位；词素四槽从孔谱字母表抽取；成句 = 少数具名遭遇。
+  2. 渗透体 / 改写体解释为孔谱甲（单核 × 占地）的两种填法。一份五态，禁止按填法复制 AI。
+  3. 覆盖体不以第三种人形出场；第一版成句以非人形孔谱（占墙 / 占漆 / 占空）出现。
+  4. 第一版四张主孔谱：甲占地、乙占墙、丙占漆、丁占空。占声不进主课。占相位并入节律。诱饵体不是自由连续性。
+  5. 菌落与场不得加墙（连通 FATAL）。战斗成功标准不变：绕应通常更划算。
+  6. 设计正文 `docs/design-notes/contamination-lexicon.md`（含背景）。规则合同 `docs/specs/system-contamination-lexicon.md`（DRAFT）。**代码未接。**
+- Impact: 迭代 1 范围从「对话收范围」推进为「词法已锁、未实现」。实现须另点名。CSV 形态表实现时再加，禁止现在手写进代码。
+
+## DEC-072: 本游戏工作单元改为按需「游戏迭代」，不再开新 Slice
+- Date: 2026-08-20
+- Phase: Iterative Development
+- Type: Process
+- Context: Slice 1–9 已 COMPLETE。Slice 10（NPC）仍不做（DEC-064）。人宣布之后层 B 的完善按点名的模块任务走，脱离 Slice 编号。本次只宣布制度，尚未点名第一个模块。不要把整盘标成 Polish / Launch。不要开 Slice 11。不要把 Slice 9 之后表现收口（DEC-066～071）事后改编号成迭代 1。
+- Decision:
+  1. **工作单元**：按需「游戏迭代」（对人说话用这个全称；需要时可写「下面称：迭代」）。不是新 Slice。一次迭代 = 人这一次点名的那包工作；禁止把多个无关模块塞进同一迭代。
+  2. **触发**：人点名模块并说开始（或 `/director` 带具体任务）→ Director 登记一次迭代（序号、模块、范围一句话、派谁）。无人点名则当前无进行中的迭代。
+  3. **编号**：显示名 `迭代 1`、`迭代 2`…（阿拉伯数字，从 1 起算）。从**下一手人点名的任务**开始。Slice 9 之后表现收口仍用原 DEC，放在「Slice 9 之后表现收口」账上，不改成迭代序号。
+  4. **登记字段最少**：序号、日期、模块名（人的叫法）、一句话范围、状态（进行中 / 已交）、相关 DEC（若有）。活状态只写在 `docs/progress/current-iteration.md`。
+  5. **已完成 Slice 历史不动**。Slice 10 仍不做。不规划 Slice 11。阶段仍是 Iterative Development，不升 Polish / Launch。
+  6. **打磨 / 表现**：仍走轻量路径收尾四项（架构登记 / spec 判断 / 交付范围 / UI 清单若适用）。单批上下文预算仍有效。
+  7. **审美 / 「读作游戏」**仍人终审。Agent 不代写好看、不代勾 PASS。
+  8. **不要和层 A「框架迭代协议」混名**（`guides/98-field-notes.md` / `CLAUDE.md` 框架段）。框架那套仍叫框架迭代。本决策不改 `.claude/agents/*`、`.cursor/agents/*`。Slice 生命周期仍是框架能力；本游戏当前不用它开新 Slice。
+- Impact: `docs/progress/current-iteration.md`（当前迭代：无）。`current-slice.md` / `roadmap.md` / `CLAUDE.md` 层 B 当前阶段 / `gdd-core.md` / `AGENTS.md` 对齐。下次 `/director` 先看 `current-iteration.md`。
+
 ## DEC-071: 练习场已锁的崩坏簇胀缩接到出击
 - Date: 2026-08-20
 - Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）
