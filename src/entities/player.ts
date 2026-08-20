@@ -14,13 +14,16 @@
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { FacingLagGhost, pingPongFrame } from '@/entities/actor-motion';
+import { PlayerLampAura } from '@/entities/player-lamp-aura';
+import { DENSE_PLAYER_LAMP_LOCAL, densePlayerMotionTexture } from '@/entities/player-sprite-dense';
 import type { Facing4, Vector2 } from '@/types/game-types';
 import { degToRad, FACING4_ANGLES, quantizeFacing4, stepAngleToward } from '@/utils/math';
 
 export interface PlayerConfig {
   /** World position (px) to spawn at. */
   readonly spawn: Vector2;
-  /** Texture keys; defaults are the Slice 1 placeholders generated in BootScene. */
+  /** Texture keys; defaults are the dense pixels generated in BootScene. */
   readonly bodyTexture?: string;
   readonly facingTexture?: string;
   readonly depth?: number;
@@ -52,6 +55,11 @@ export class Player {
   private facing4: Facing4 = 'right';
   private moving = false;
   private inputEnabled = true;
+  private lastDeltaMs = 16;
+  private motionElapsedMs = 0;
+  private shownFacing: Facing4 = 'right';
+  private lag!: FacingLagGhost;
+  private aura!: PlayerLampAura;
 
   create(scene: Phaser.Scene, config: PlayerConfig): void {
     this.scene = scene;
@@ -64,10 +72,11 @@ export class Player {
     this.facingAngle = FACING4_ANGLES[this.facing4];
 
     const depth = config.depth ?? 30;
+    const idleKey = densePlayerMotionTexture(this.facing4, 'idle', 0);
     this.image = scene.physics.add.image(
       config.spawn.x,
       config.spawn.y,
-      config.bodyTexture ?? 'player-body'
+      config.bodyTexture ?? idleKey
     );
     this.image.setDepth(depth);
     // Direction is indicated by texture swap, not rotation
@@ -76,8 +85,12 @@ export class Player {
     body.setSize(GAME_CONSTANTS.PLAYER.BODY_SIZE, GAME_CONSTANTS.PLAYER.BODY_SIZE, false);
     body.setOffset(GAME_CONSTANTS.PLAYER.BODY_OFFSET.x, GAME_CONSTANTS.PLAYER.BODY_OFFSET.y);
     body.setCollideWorldBounds(true);
+    body.allowRotation = false;
 
-    // Lamp is baked into the directional textures — no separate sprite needed
+    this.lag = new FacingLagGhost(scene, idleKey, depth - 1, 0.5, 0.5);
+    this.aura = new PlayerLampAura(scene, depth, DENSE_PLAYER_LAMP_LOCAL);
+    this.shownFacing = this.facing4;
+
     this.bindKeys(scene);
     this.position.x = config.spawn.x;
     this.position.y = config.spawn.y;
@@ -86,6 +99,7 @@ export class Player {
 
   /** Reads input, updates facing and drives the body velocity. Call from `Scene.update`. */
   update(deltaMs: number): void {
+    this.lastDeltaMs = deltaMs;
     const dt = deltaMs / 1000;
     this.readInput();
 
@@ -167,6 +181,8 @@ export class Player {
     this.keyLeft.length = 0;
     this.keyRight.length = 0;
     this.speedModifiers.clear();
+    this.aura?.destroy();
+    this.lag?.destroy();
     this.image?.destroy();
   }
 
@@ -274,21 +290,34 @@ export class Player {
     this.speedMultiplier = Math.max(GAME_CONSTANTS.PLAYER.SPEED_MOD_MIN, product);
   }
 
-  /** Texture key mapping for each facing direction. */
-  private static readonly FACING_TEXTURES: Record<Facing4, string> = {
-    down: 'player-down',
-    left: 'player-left',
-    right: 'player-right',
-    up: 'player-up',
-  };
-
   private syncVisuals(): void {
-    // Switch texture based on facing4 direction (no rotation)
-    const textureKey = Player.FACING_TEXTURES[this.facing4];
+    this.motionElapsedMs += this.lastDeltaMs;
+    if (this.facing4 !== this.shownFacing) {
+      this.lag.trigger(this.shownFacing, this.image.texture.key);
+      this.shownFacing = this.facing4;
+    }
+
+    const turning = this.lag.isTurning;
+    const gait = this.moving || turning ? 'walk' : 'idle';
+    const fps =
+      gait === 'walk'
+        ? GAME_CONSTANTS.ACTOR_MOTION.PLAYER_WALK_FPS
+        : GAME_CONSTANTS.ACTOR_MOTION.PLAYER_IDLE_FPS;
+    let frame = pingPongFrame(this.motionElapsedMs, fps);
+    if (turning) frame = GAME_CONSTANTS.ACTOR_MOTION.FRAME_COUNT - 1;
+    const textureKey = densePlayerMotionTexture(this.facing4, gait, frame);
     if (this.image.texture.key !== textureKey) {
       this.image.setTexture(textureKey);
     }
     this.image.setRotation(0);
+    this.lag.sync(this.image.x, this.image.y, true, this.lastDeltaMs);
+    this.aura.sync(
+      this.image.x,
+      this.image.y,
+      this.facing4,
+      this.moving || turning,
+      this.lastDeltaMs
+    );
   }
 }
 

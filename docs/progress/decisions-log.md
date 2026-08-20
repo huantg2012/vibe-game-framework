@@ -9,6 +9,52 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-068: 玩家加厚像素 + 灯尘接到出击 Player
+- Date: 2026-08-20
+- Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）
+- Type: Art
+- Context: DEC-067 把外形锁在练习场。人要求放进关卡。
+- Decision:
+  1. 裂隙 / 净化点的 `Player` 使用 `player-sprite-dense.ts` + `player-lamp-aura.ts`（与 `gym.html?lesson=player` 同一套）。
+  2. 碰撞仍 `BODY_SIZE` 20、`BODY_OFFSET` `{6,6}`。不改移速、朝向、视野。
+  3. `player-sprite.ts` 旧方块人不再驱动 `Player`；boot 仍可画别名贴图。AI 精灵表路径仍不关闭，除非人改口。
+- Impact: `player.ts`；`art-direction.md` §5.1；`docs/art/actor-pixels.md`；架构登记表。
+
+## DEC-067: 玩家外形锁定为加厚程序像素 + 灯尘，未接出击 Player
+- Date: 2026-08-20
+- Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）
+- Type: Art
+- Context: 旧方块人并排已加厚的敌人显得太简单。人在练习场方案 1（加厚程序像素）与方案 3（方块人 + 灯尘）里选了 1，并收下 3 的灯尘。明确不接到出击，直到另说。
+- Decision:
+  1. 练习场玩家外形 = 方案 1 加厚工业像素（侧影加厚、混凝土灰略暖、灯是唯一高亮）+ 方案 3 的灯尘。不要青绿、不要把身体裂开当签名。
+  2. **出击 `Player` 仍用 `src/entities/player-sprite.ts`。** 禁止 agent 自行把 `player-sprite-dense.ts` / `player-lamp-aura.ts` 接到 `Player`。
+  3. 本决策不宣布「玩家精灵表已死」。DEC-066 仍不含玩家；生产路径等人说接线时再定。
+- Impact: `art-direction.md` §5.1；`docs/art/actor-pixels.md`；练习场玩家课；架构登记表。出击碰撞与手感不变。
+
+## DEC-066: 渗透体 / 改写体画面锁定为程序像素，不再走精灵表管线
+- Date: 2026-08-20
+- Phase: Iterative Development（Slice 9 之后的表现锁定，不是新 Slice）
+- Type: Art
+- Context: 人在练习场确认程序绘制的敌人（含步态伸缩、改写体行走时身体裂开）已经够好，不需要再为这两种敌人做 Midjourney / `art:postprocess` / `spr-rift-enemy-*` 精灵表。
+- Decision:
+  1. **渗透体与改写体的成品画面**是启动时用像素缓冲 / Graphics 画出来的角色（四向直立、待机/行走帧、转向滞后剪影）。运行时 Phaser 纹理只是把这些像素送上屏幕，不是「占位、等正式贴图替换」。
+  2. 禁止为这两种敌人再开外部生图、再喂 `tools/art-pipeline/`、再做水平精灵条。概念图（`docs/art/demos/entity-*`）只作方向档案，不进游戏。
+  3. 本决策**不含玩家**（玩家仍可以走精灵表）。**不含覆盖体**（未做；若做再另议来源）。
+  4. 现有纹理名（`placeholder-enemy-*` / `placeholder-rewriter-*`）可保留，以免无意义大改名；语义上它们就是成品。
+- Impact: `art-direction.md` §5.2 / §8；`docs/art/rewriter-sprite.md`；`docs/art/asset-specs.md`；`system-enemy-ai` R2/R6；架构登记表。
+
+## DEC-065: 独立 HTML 开发练习场（敌人移动课）
+- Date: 2026-08-20
+- Phase: Iterative Development（Slice 9 之后的开发工具，不是新 Slice）
+- Type: Technical + Process
+- Context: 人要一个游戏开发里常见的 gym：可单独打开的 HTML，先用来看所有敌人的寻路移动（含斜向），渲染/动画/移动必须与出击一致，并且写进仓库让后续 agent 能立刻捡起来。
+- Decision:
+  1. 练习场是 `gym.html` + `src/gym/`，不进主菜单、不用 `#gym` 深链挂在正式 Boot 上。
+  2. 敌人必须走 `AISystem` + `Enemy` + `GridPathfinder`；贴图走与 `BootScene` 共用的 `generatePlaceholderTextures`；Phaser 视图配置走 `gameConfigWithScenes`。禁止另写一套移动或 Canvas 假巡逻。
+  3. 当前课：封闭院子 + 每种现行角色一只 + 八向路点环。视野恒亮、玩家诱饵在场外，只为看清巡逻，不改出击规则。
+  4. Agent 入口：`docs/dev/gym.md`。新角色必须补 `GYM_LOOPS`。侧栏是开发说明，不是游戏内界面。
+- Impact: `architecture.md` 登记 Gym；`CLAUDE.md` / `AGENTS.md` 加入口。
+
 ## Slice 9 C1：AudioManager + 占位音进仓库（code，2026-08-19）
 - Date: 2026-08-19
 - Phase: Slice 9

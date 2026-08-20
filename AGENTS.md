@@ -13,4 +13,4 @@
 5. **框架内路由不用 Cursor Auto**；按具名 agent 派发。Cursor 侧模型试验见 `CLAUDE.md`（当前六个 agent 临时固定 `cursor-grok-4.6-xhigh-fast`）。
 6. 改 agent 定义后跑 `node tools/agent-parity/check.mjs`。
 
-当前游戏进度以 `CLAUDE.md`「当前阶段」和 `docs/progress/roadmap.md` 为准。裂隙地图活策略：`docs/design-notes/slice-6-layered-generation.md`（扩空间读该文「Agent 入口」）。
+当前游戏进度以 `CLAUDE.md`「当前阶段」和 `docs/progress/roadmap.md` 为准。裂隙地图活策略：`docs/design-notes/slice-6-layered-generation.md`（扩空间读该文「Agent 入口」）。开发练习场：`docs/dev/gym.md`（`gym.html`，必须复用出击的敌人系统）。角色外形 HOW：`docs/art/actor-pixels.md`。

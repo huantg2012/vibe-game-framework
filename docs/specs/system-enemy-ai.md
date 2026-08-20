@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: design agent
-last-modified-date: 2026-08-19
+last-modified-date: 2026-08-20
 interface-changed: false
 slice: 8
 interfaces-with:
@@ -96,7 +96,7 @@ interface EnemyAIState {
   position: Vector2;             // 世界坐标（px）
   velocity: Vector2;
   facingAngle: number;           // 弧度，连续值。感知锥使用它
-  facing4: Facing4;              // 量化四方向，sprite 使用它（与 T1 同一套量化规则）
+  facing4: Facing4;              // 量化四方向，sprite 换贴图用它（与 T1 同一套量化规则）。GameObject.rotation 恒为 0
 
   // —— 感知 ——
   detection: number;             // 察觉度 0..1。1.0 = 确信「那是玩家」
@@ -390,7 +390,7 @@ detection = clamp(detection, 0, 1)
 | CHASE | 全速直线朝我，不停顿 | 它看见我了 |
 | RETURN | 中速，背对我往回走 | 我暂时安全了 |
 
-**R2｜占位期的状态指示物**（art §12 占位阶段）。渗透体占位 = **暗红 `#cc4444` 的五边形**，一端为尖角指向 `facingAngle`（朝向必须在占位期就能读——不能用圆形）。状态**不改本体颜色**（`#cc4444` 在 art §12 中编码的是"低度敌人"这一**等级**，后续还有中度 `#ee5555`/高度 `#ff6666`，借用会造成语义冲突），改为在本体上方叠加 teal（`#2ae6c8`，污染侧色，与暗红高对比且符合 §13.1 色温纪律）指示物：
+**R2｜状态指示物**（程序像素成品，DEC-066）。渗透体 = 密像素前倾人形（32×32 画布、碰撞仍 20、`BODY_OFFSET` `{6,6}`；过长一臂、肩不对称、轮廓缺损、家族散点），**四向独立绘制**（`placeholder-enemy-down/left/right/up` 等键名可保留），剪影始终直立（头在上），朝向用该侧的伸出/散点，不把剪影转到运动方向。GameObject.rotation 恒为 0。待机/行走各 4 帧；巡逻/搜寻走木偶步（顿一下再突然迈），追击恢复连续。迈步时多爆几粒青绿脱落尘。空间用脱落尘和脚下污斑吃光，禁止再给渗透体面积光。`facing4` 切换时用压缩帧 + 旧朝向滞后剪影，不改感知锥。感知锥仍用连续 `facingAngle`。改写体脚下另有极淡青绿污斑（不是灯）。外形对照与过程闸门见 `docs/art/actor-pixels.md`。状态**不改本体颜色**（旧等级红 `#cc4444` / `#ee5555` / `#ff6666` 不得借来当本体，借用会造成语义冲突），改为在本体上方叠加 teal（`#2ae6c8`，污染侧色，与基体高对比且符合 §13.1 色温纪律）指示物：
 
 | 状态 | 指示物 | 动效 |
 | ---- | ------ | ---- |
@@ -408,7 +408,7 @@ detection = clamp(detection, 0, 1)
 **R5｜感知锥默认不可视**：不向玩家绘制敌人视锥。默认关闭 `DEBUG_SHOW_VISION_CONE`（QA / A-G2 期间打开）。理由：画出视锥会把潜行从"读行为、赌判断"变成"看几何、解谜题"，与 vision.md「核心决策是还敢不敢再多拿一点」的赌博定位不符。
 > 若试玩证明玩家无法预判敌人视野从而产生挫败，**备选方案**（不是默认方案）：给敌人加一块极低 alpha（≤ 0.06）的 teal 地面光斑表示其感知区。它有叙事合理性——渗透体的感知区在地面留下渲染残留（art §5.2「渲染崩坏」母题）。这条列为待验证假设，不在 T7 首版实现。
 
-**R6｜正式资产期的继承**：换成正式 sprite 后，状态区分仍**必须由动效与行为承载**，不得依赖颜色（art §13.2：渗透体基体色与地面对比度低是设计意图）。指示物可替换为 art §5.2 的"感知区亮点"，但"闪 = 搜索 / 常亮 = 锁定"的语义必须保留。
+**R6｜画面来源（DEC-066）**：渗透体与改写体**就是**程序像素成品，不再换成外部精灵表。状态区分仍必须由动效与行为承载，不得靠换本体颜色。指示物「闪 = 搜索 / 常亮 = 锁定」必须保留。覆盖体未做，来源另议。
 
 **R7｜音频钩子**：每次状态转换向场景层提供一个 cue id（`ai.cue.suspicious` / `ai.cue.alert` / `ai.cue.chase` / `ai.cue.lost`）。**本 spec 不设计音频内容**（归 audio-direction；Slice 9）。由于 R4，被追击时的听觉可能是玩家唯一的追兵信息源——Slice 8 的屏缘干涉是视觉补通道，不替代 `ai.cue.chase`。
 
@@ -469,7 +469,7 @@ detection = clamp(detection, 0, 1)
 
 ### 共享（留在 `GAME_CONSTANTS.AI`，不进 CSV）
 
-移动与体型：`TURN_RATE` 360、`BODY_SIZE` 20、排斥/接敌带——两种共用。
+移动与体型：`TURN_RATE` 360、`BODY_SIZE` 20、`BODY_OFFSET`（32×32 画布为 `{6,6}`）、排斥/接敌带——两种共用。画布边长变了只改偏移：`(画布边长 − BODY_SIZE) / 2`。禁止改 `BODY_SIZE` 来「匹配」更大的贴图。渗透体曾从 24×24 改到 32×32，偏移从 `{2,2}` 改到 `{6,6}`。改写体画布保持 32×48，只加横向质量。
 
 感知共享：
 
@@ -489,12 +489,12 @@ detection = clamp(detection, 0, 1)
 
 计时器、寻路、占位指示物参数维持现行 `constants.ts`（`LOS_GRACE_MS` 400、`LOST_PLAYER_DURATION` 5000、`ALERT_DURATION` 3000、`CHASE_ABANDON_RANGE` 320 等）。不在本 Slice 重调。
 
-### 占位期 / 正式期表现
+### 现行画面（DEC-066；不是待换精灵表）
 
-| 参数 | 初值 | 说明 |
+| 参数 | 现行 | 说明 |
 | ---- | ---- | ---- |
-| 渗透体本体 | 现行暗红 + 正式 4 向 | 等级色不编码状态 |
-| 改写体本体 | Art A1：不对称、teal 成簇、俯视 4 向；不要紫粉史莱姆 | `VERDICT.md` |
+| 渗透体本体 | 32×32 密像素前倾猎食；碰撞 20；偏移 `{6,6}` | `infiltrator-sprite.ts`。HOW：`docs/art/actor-pixels.md` |
+| 改写体本体 | 32×48 程序像素，右侧崩坏，teal 簇 17 | `docs/art/rewriter-sprite.md` |
 | 头上指示物 | 与 R2 相同语义（闪=搜索 / 常亮=锁定） | 两种共用 |
 | 屏缘干涉 | 见 `ui-detection-pulse` | 无数字 |
 
@@ -528,7 +528,7 @@ detection = clamp(detection, 0, 1)
 | `MAX_ACTIVE_ENEMIES` | 同屏敌人上限 | 8（Slice 1 实际 3–5） | 超出则地图数据有问题，开发模式告警 | 技术定 |
 | `AI_DT_CLAMP_MS` | 单帧 dt 钳制上限 | 100 ms | 防止切标签页回来后敌人瞬移 | 技术定 |
 
-指示物色与频率仍以现行 `constants.ts` 占位段为准（teal `#2ae6c8`；呼吸 1.5–3 Hz；警戒闪 3 Hz）。改写体本体不借用渗透体暗红当等级色——正式贴图走 Art A1。
+指示物色与频率仍以现行 `constants.ts` 为准（teal `#2ae6c8`；呼吸 1.5–3 Hz；警戒闪 3 Hz）。改写体本体不借用渗透体旧等级红。画面合同见 `docs/art/rewriter-sprite.md` 与 `docs/art/actor-pixels.md`。不要再换「正式精灵表」。
 
 ---
 

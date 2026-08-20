@@ -2,10 +2,10 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-19
+last-modified: 2026-08-20
 approved-date: 2026-07-22
 changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**Slice 9 C1（2026-08-19）**：AudioManager 已实现。目录树 ASCII 过期项仍在 backlog。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。
 ---
 
 # 技术架构
@@ -62,8 +62,14 @@ src/
 │   └── pathfinding.ts          # A* 寻路
 ├── entities/
 │   ├── player.ts               # 玩家实体（移动/输入/状态）
+│   ├── player-sprite.ts        # 旧方块人（boot 别名；不再驱动 Player）
+│   ├── player-sprite-dense.ts  # 玩家加厚程序像素（出击成品，DEC-068）
+│   ├── player-lamp-aura.ts     # 玩家灯尘/脚底暖斑（叠在加厚像素上）
+│   ├── actor-motion.ts         # 步态帧选取 + 转向滞后剪影（不改玩法朝向）
 │   ├── enemy-factory.ts        # 敌人工厂（渗透体 / 改写体，同一实体）
-│   ├── rewriter-sprite.ts      # 改写体 32×48 四向程序化占位
+│   ├── infiltrator-sprite.ts   # 渗透体 32×32 密像素（成品，DEC-066；碰撞仍 20）
+│   ├── contam-flakes.ts        # 敌人青绿脱落尘（往外/下飘，非暖灯尘）
+│   ├── rewriter-sprite.ts      # 改写体 32×48 程序像素（成品，DEC-066）
 │   └── interactables.ts        # 可交互物（薪柴/物品/撤离点）
 ├── generation/
 │   ├── outline-mask.ts         # C1：生长+腐蚀陆地掩膜（VOID / FLOOR）
@@ -180,7 +186,11 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
 | SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | hasSave(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/分层混音/空间衰减 | playBGM(), stopBGM(), playSFX(), playAmbient(), stopAmbient(), setLayerVolume(), playSpatialSFX(), pauseAll(), resumeAll(), unlock() | 已实现（Slice 9） |
-| Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用） | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5） |
+| Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用）。贴图为加厚程序像素 + 灯尘（DEC-068）。转向滞后剪影不改玩法朝向 | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5；2026-08-20 步态帧；DEC-068 接线） |
+| PlayerSprite | src/entities/player-sprite.ts | 旧 32×32 方块人。boot 仍画别名贴图；不再驱动 Player | generatePlayerPlaceholders(scene), playerMotionTexture(facing, gait, frame) | 已实现（档案） |
+| PlayerSpriteDense | src/entities/player-sprite-dense.ts | 玩家加厚工业像素（面罩/背包/分腿/灯壳体；侧影加厚、暖灰）。出击成品（DEC-068） | generateDensePlayerPlaceholders, densePlayerMotionTexture | 已实现（2026-08-20） |
+| PlayerLampAura | src/entities/player-lamp-aura.ts | 灯尘、脚底暖斑。叠在加厚玩家上（出击与练习场） | generatePlayerLampAuraTextures, PlayerLampAura | 已实现（2026-08-20） |
+| ActorMotion | src/entities/actor-motion.ts | 步态帧选取与转向滞后剪影。不写 facingAngle、不转 GameObject | pingPongFrame, FacingLagGhost, isActorWalking | 已实现（2026-08-20） |
 | VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 三级遮罩渲染 + 混乱值调制（Rift+Purification 共用） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5） |
 | GridRaycast | src/utils/grid-raycast.ts | 网格 DDA 射线（含对角缝隙规则）；无状态纯函数，视野与敌人 AI 共用同一套遮挡判定。`hasClearPath()` 是同一射线的双侧偏移版，回答"这么宽的身体过不过得去"（DEC-021），**不是视线判定，禁止用于感知** | castRay(), castRayDirection(), hasLineOfSight(), hasClearPath(), createRayHit() | 已实现（T5，T7 增 hasClearPath） |
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
@@ -189,8 +199,11 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
-| EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 按 role 分支的占位（渗透体 24×24 旋转五边形 / 改写体 32×48 四向独立纹理）+ teal 指示物 + 残影 + AI 状态块 | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection | 已实现（T7；Slice 8 C1 rewriter） |
-| RewriterSprite | src/entities/rewriter-sprite.ts | 改写体程序化 32×48 四向占位（右侧崩坏、teal 簇 17、无眼睛、无紫粉）。搜寻/追击为独立纹理，禁止单图旋转 | generateRewriterPlaceholders(scene), rewriterTextureFor(facing, variant) | 已实现（Slice 8 C1） |
+| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：敌人巡逻（默认）；玩家外形 `?lesson=player`（加厚像素 + 灯尘假人绕圈，与出击同一套）。敌人课必须复用 AISystem / Enemy / 与出击同一套敌人像素。Agent 入口 `docs/dev/gym.md`。角色外形 HOW：`docs/art/actor-pixels.md` | `npm run gym` 或 `/gym.html`；玩家课 `/gym.html?lesson=player` | 已实现（2026-08-20） |
+| EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 程序像素（渗透体 32×32 / 改写体 32×48；GameObject 不旋转）+ teal 指示物 + 残影 + 脱落尘 + 木偶步态 + AI 状态块 | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection | 已实现（T7；Slice 8 C1 rewriter；DEC-066 锁定程序像素） |
+| InfiltratorSprite | src/entities/infiltrator-sprite.ts | 渗透体密像素 32×32 四向 + 步态帧（前倾猎食）。碰撞仍 20。成品，不换精灵表 | generateInfiltratorPlaceholders(scene), infiltratorMotionTexture | 已实现（DEC-066） |
+| ContamFlakes | src/entities/contam-flakes.ts | 敌人青绿 1px 脱落尘 + 改写体脚下污斑。迈步可爆发 | generateContamFlakeTextures, ContamFlakes, ContamStain | 已实现（2026-08-20） |
+| RewriterSprite | src/entities/rewriter-sprite.ts | 改写体程序绘制 32×48 四向 + 步态帧（右侧崩坏、teal 簇 17）。成品，不换精灵表 | generateRewriterPlaceholders(scene), rewriterTextureFor | 已实现（DEC-066） |
 | DetectionPulse | src/ui/dom/detection-pulse.ts | 裂隙屏缘干涉：`#rift-detection-rim` 挂 `#dom-ui-root`。16px 边带矩形齿，最多 2 方位，无数字。场景层翻译察觉度/方位，不 import AI | create(), update(dt, view, player, threats), destroy() | 已实现（Slice 8 C1） |
 | ContaminantSystem | src/systems/contaminant-system.ts | 污染物库存管理与生命周期（防御 slot 承伤 → 冲击点数满 3 转化为工具 → 出击使用 → 耗尽破碎），module-level singleton | getAll(), getDefenseSlotted(), getSortieLoadout(), acquire(type, rarity), slotDefense(id, slotIndex), unslotDefense(slotIndex), slotSortie(id, slotIndex), unslotSortie(slotIndex), applyImpactCharge(isHighTide), useTool(id), getState(), loadState(), reset() | 已实现（Slice 3） |
 | ContaminantNodeSystem | src/systems/contaminant-node-system.ts | 裂隙地图中污染物拾取节点的放置、脉冲/旋转表现与拾取（紫色球体，与 LootSystem 同模式但独立实现） | create(scene, nodeDefs, playerSprite, config), update(delta), getCollectedPositions(), reset(), destroy() | 已实现（Slice 3） |
@@ -235,7 +248,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 > - `src/types/ai-types.ts`（T7 新增）持有敌人 AI 契约：`EnemyView`（含 `getRole` / `getDetection`，T3/T4/屏缘脉冲/渲染层消费）/ `EnemyAIState`（可变运行时状态，仅 AI 系统写）/ `EnemyTypeConfig` / `Perception` / `AlertLevel` / `SightZone` / `AICueId`。剖面类型从 `src/generated/enemy-data.ts` 再导出。放在 `types/` 而非 `systems/ai/` 是为了打断循环依赖。
 > - `src/config/invariants.ts`（T7 新增）把设计所依赖的常量关系写成可执行断言，dev 构建在 `main.ts` 启动时校验（DEC-020）。Slice 1 覆盖敌人 AI 的 I1–I6 + 一条跨 spec 补充检查。T8/T9 的 spec 不变量应追加进同一文件。
 > - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**夹具**（ASCII tile 网格 + 布点），导出 `RIFT_MAP` 与 `validateRiftMap()`。运行时裂隙走 `generateRiftLayout`；夹具给对照 / 测试。
-> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 加厚桩 + 七点安全区钳制 + 全部 DOM 面板编排。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
+> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成（`src/scenes/placeholder-textures.ts`，练习场共用）；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 加厚桩 + 七点安全区钳制 + 全部 DOM 面板编排。另有开发练习场 `gym.html`（`GymBootScene` / `GymScene` / `GymPlayerScene`，见 `docs/dev/gym.md`）。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
 
 ## 关键架构决策
 

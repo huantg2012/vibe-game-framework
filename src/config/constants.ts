@@ -27,6 +27,24 @@ export const GAME_CONSTANTS = {
     SPEED_MOD_MIN: 0.5,       // floor on the multiplied speed modifier stack
   },
 
+  /**
+   * Presentation-only gait (art-direction §3.3). Does not change facingAngle,
+   * facing4 snap timing, speeds, or colliders.
+   */
+  ACTOR_MOTION: {
+    FRAME_COUNT: 4,
+    TURN_MS: 180,
+    LAG_PX: 3,
+    LAG_ALPHA: 0.38,
+    MOVE_SPEED_FLOOR: 6,      // px/s; below this the idle cycle plays
+    PLAYER_IDLE_FPS: 4,
+    PLAYER_WALK_FPS: 8,
+    INFILTRATOR_IDLE_FPS: 4,
+    INFILTRATOR_WALK_FPS: 4,  // puppet hitch supplies the step; keep the sheet slow
+    REWRITER_IDLE_FPS: 4,
+    REWRITER_WALK_FPS: 6,
+  },
+
   /** Chaos system (docs/specs/system-chaos-scavenge-extract.md) */
   CHAOS: {
     START_VALUE: 0,
@@ -146,7 +164,7 @@ export const GAME_CONSTANTS = {
     // --- movement and body (shared; per-role speeds live in data/enemies.csv) ---
     TURN_RATE: 360,           // deg/s; a third of the player's, which is what makes flanking work (I6)
     BODY_SIZE: 20,            // px collider edge; < TILE_SIZE so 1-tile gaps stay passable
-    BODY_OFFSET: { x: 2, y: 2 }, // centres the collider inside the 24x24 placeholder sprite
+    BODY_OFFSET: { x: 6, y: 6 }, // centres the collider inside the 32x32 infiltrator sprite
     SEPARATION_RADIUS: 24,    // px; soft repulsion instead of enemy-vs-enemy physics
     SEPARATION_WEIGHT: 0.35,  // how strongly separation bends the movement direction
     STANDOFF_DISTANCE: 30,    // px; where a chaser stops. Must stay under COMBAT.ATTACK_RANGE

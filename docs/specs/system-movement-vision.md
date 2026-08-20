@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: design agent
-last-modified-date: 2026-08-19
+last-modified-date: 2026-08-20
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -44,6 +44,8 @@ exposes:
 | Player 的位置/速度/朝向/碰撞体/移速调制栈/输入开关 | Player 的生命值、攻击、受击白闪（`system-combat`） |
 | 玩家视野的形状/渲染/调制接口 | 混乱值本身与调制的**具体数值**（`system-chaos-scavenge-extract`） |
 | 共享射线工具 `utils/grid-raycast` | 敌人自身的感知锥与判定阈值（`system-enemy-ai`） |
+
+玩家出击贴图不归本 spec（现行 `player-sprite-dense.ts` + 灯尘，DEC-068）。HOW：`docs/art/actor-pixels.md`。
 
 ---
 
@@ -205,9 +207,9 @@ art-direction 两处给出的分级不一致，本 spec 的取舍如下（同时
 - **反馈**：
   | 玩家状态 | 系统响应 |
   | -------- | -------- |
-  | 移动 | sprite 播放对应 `facing4` 的 4 帧行走动画；视野锥随朝向平滑转动 |
+  | 移动 | sprite 播放对应 `facing4` 的 4 帧行走循环（身体伸缩；玩家灯微晃；敌人崩坏像素错位）。视野锥随朝向平滑转动 |
   | 撞墙 | 沿墙滑动，无停顿无抖动（不做撞击特效） |
-  | 转身 | 原本可见的区域在 ≤0.2s 内被黑暗吞掉；新方向逐步点亮 |
+  | 转身 | 玩法朝向（视野锥 / `facing4` 切入时机）不变。贴图切向时播压缩帧，并留一层旧朝向剪影短滞后（约 180ms），不旋转 GameObject |
   | 混乱值升高 | 视野边缘出现 teal 偏移 → 半径收缩 → 噪点向内渗透（连续变化，不是突然跳档） |
   | 贴近发光的撤离点 | 即使在视野外也能看到一个微弱光点（方向锚） |
 
@@ -228,7 +230,7 @@ art-direction 两处给出的分级不一致，本 spec 的取舍如下（同时
 | `FACING_TURN_RATE` | 朝向插值角速度 | 1080 °/s（180° ≈ 0.17s） | 540–99999 | 越低转身越"重"、视野扫过感越强，但会迟滞观察；设极大值即瞬时 | 建议值 |
 | `FACING_QUANT_HYSTERESIS` | 四方向量化迟滞 | 5° | 0–10 | 防止 45° 附近 sprite 高频抖帧 | 技术定 |
 | `BODY_SIZE` | 碰撞体边长 | 20 px | 16–24 | 必须 < 32；越小越不卡角但会有"穿进墙里"的观感 | 技术定 |
-| `BODY_OFFSET` | 碰撞体在 32×32 sprite 内的偏移 | (6, 6)（居中） | — | 纯俯视角用居中，不用"脚底"偏移 | 技术定 |
+| `BODY_OFFSET` | 碰撞体在 32×32 sprite 内的偏移 | (6, 6)（居中） | — | 公式 `(画布边长 − BODY_SIZE) / 2`。画布变了只改这项，不要改 `BODY_SIZE`。敌人渗透体同样 32×32 / `{6,6}`，见 `system-enemy-ai` | 技术定 |
 | `SPEED_MOD_MIN` | 移速调制乘积下限 | 0.5 | 0.4–0.7 | 防止混乱值叠加把玩家钉死 | 建议值 |
 
 ### 视野（裂隙 / cone 模式）

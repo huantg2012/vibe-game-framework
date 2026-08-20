@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-08-19
+last-modified: 2026-08-20
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -114,3 +114,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 7「净化点扩张」(2026-08-19, COMPLETE)：第三模块净化器写入出击起始混乱（满完整度 0）；祭坛旁加厚三档抬全部模块 maxHp；效果仍按对基准 100。下一手 Slice 8 第二敌人。
 - Slice 8「第二敌人」(2026-08-19, COMPLETE)：改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv` + 一份五态。审美待人终审。下一手 Slice 9 音乐/音效。
 - Slice 9「音乐 / 音效」(2026-08-19, COMPLETE)：AudioManager 落地；39 个占位 key 双格式进仓库；裂隙分层混音；同时 8 轨。听感待人终审。Slice 10 不做（DEC-064）。
+- 表现收口（2026-08-20，非 Slice）：渗透体 / 改写体密像素已接出击（DEC-066）。玩家方案 1 加厚像素 + 灯尘已接出击 `Player`（DEC-068）。HOW：`docs/art/actor-pixels.md`。

@@ -28,10 +28,17 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
-import { ENEMY_BODY_TEXTURE } from '@/entities/enemy-factory';
+import { INFILTRATOR_TEXTURE } from '@/entities/infiltrator-sprite';
+import {
+  REWRITER_CANVAS_H,
+  REWRITER_CANVAS_W,
+  REWRITER_ORIGIN_X,
+  REWRITER_ORIGIN_Y,
+  rewriterTextureFor,
+} from '@/entities/rewriter-sprite';
 import type { EnemyView } from '@/types/ai-types';
 import { GameEvent } from '@/types/events';
-import type { Vector2 } from '@/types/game-types';
+import { AIState, type Vector2 } from '@/types/game-types';
 import type { OccluderGrid } from '@/types/map-types';
 import { hasLineOfSight } from '@/utils/grid-raycast';
 import { clamp, degToRad, lerp, shortestArc } from '@/utils/math';
@@ -252,7 +259,7 @@ export class CombatSystem implements CombatSystemAPI {
     this.graphics = scene.add.graphics().setDepth(COMBAT_FX_DEPTH);
     for (let i = 0; i < GAME_CONSTANTS.COMBAT.FX_POOL_SIZE; i++) {
       const image = scene.add
-        .image(0, 0, ENEMY_BODY_TEXTURE)
+        .image(0, 0, INFILTRATOR_TEXTURE.down)
         .setDepth(COMBAT_FX_DEPTH)
         .setVisible(false);
       image.setTintFill(GAME_CONSTANTS.COMBAT.FX_COLOR);
@@ -386,7 +393,7 @@ export class CombatSystem implements CombatSystemAPI {
 
     state.health -= amount;
     const pos = state.view.getPosition();
-    this.spawnFx(pos, state.view.getFacingAngle(), GAME_CONSTANTS.COMBAT.ENEMY_HIT_FLASH_MS, false);
+    this.spawnFx(pos, state.view, GAME_CONSTANTS.COMBAT.ENEMY_HIT_FLASH_MS, false);
 
     eventBus.emit(GameEvent.ENEMY_DAMAGED, { enemyId: state.id, amount, source: 'tool' });
 
@@ -498,7 +505,7 @@ export class CombatSystem implements CombatSystemAPI {
     state.health -= combat.PLAYER_DAMAGE;
     // The flash is a pooled sprite rather than state on the enemy: the death version has
     // to outlive the entity, so one mechanism owns both and there is nothing write-only.
-    this.spawnFx(enemyPos, state.view.getFacingAngle(), combat.ENEMY_HIT_FLASH_MS, false);
+    this.spawnFx(enemyPos, state.view, combat.ENEMY_HIT_FLASH_MS, false);
     this.cue('combat.cue.hit', enemyPos);
 
     if (!this.hitNoiseSent) {
@@ -535,7 +542,7 @@ export class CombatSystem implements CombatSystemAPI {
     state.strikeFxFrames = 0;
 
     // Copied before the entity goes away: `despawn` lands inside the emit below.
-    const facing = state.view.getFacingAngle();
+    const flash = captureEnemyFlash(state.view);
     this.deathPos.x = enemyPos.x;
     this.deathPos.y = enemyPos.y;
     this.enemies.delete(state.id);
@@ -548,7 +555,7 @@ export class CombatSystem implements CombatSystemAPI {
 
     this.noise(this.deathPos, combat.NOISE_KILL_RADIUS, 'alert');
     this.cue('combat.cue.enemyDeath', this.deathPos);
-    this.spawnFx(this.deathPos, facing, combat.ENEMY_DEATH_FX_MS, true);
+    this.spawnFx(this.deathPos, flash, combat.ENEMY_DEATH_FX_MS, true);
   }
 
   /** Ends a swing from any cause and always releases the slow. */
@@ -781,9 +788,8 @@ export class CombatSystem implements CombatSystemAPI {
     }
 
     if (this.flashRemainingMs > 0) {
-      // The player placeholder is already solid white, so a plain overlay would be
-      // invisible; the flash reads as the body briefly growing. Provisional - see the
-      // outstanding art question about white meaning both "player" and "attack".
+      // White rect over the body. Kept as a growing square (not a sprite tint) so the
+      // flash still reads when the dense player is dark grey. Provisional.
       const position = this.player.getPosition();
       const size = GAME_CONSTANTS.PLAYER.BODY_SIZE + combat.PLAYER_FLASH_PAD;
       graphics.fillStyle(combat.FX_COLOR, 1);
@@ -840,7 +846,7 @@ export class CombatSystem implements CombatSystemAPI {
   /** Takes a free pooled flash, or steals the one closest to finishing. */
   private spawnFx(
     position: Readonly<Vector2>,
-    rotation: number,
+    source: EnemyView | EnemyFlashCopy,
     durationMs: number,
     fade: boolean
   ): void {
@@ -854,12 +860,15 @@ export class CombatSystem implements CombatSystemAPI {
     }
     if (!slot) return;
 
+    const flash = 'textureKey' in source ? source : captureEnemyFlash(source);
     slot.remainingMs = durationMs;
     slot.durationMs = durationMs;
     slot.fade = fade;
     slot.image
+      .setTexture(flash.textureKey)
+      .setOrigin(flash.originX, flash.originY)
       .setPosition(position.x, position.y)
-      .setRotation(rotation)
+      .setRotation(0)
       .setAlpha(1)
       .setVisible(true);
   }
@@ -903,4 +912,30 @@ export class CombatSystem implements CombatSystemAPI {
     this.lastNoise = `${level} r${radius}`;
     this.hooks.onNoise(position, radius, level);
   }
+}
+
+interface EnemyFlashCopy {
+  readonly textureKey: string;
+  readonly originX: number;
+  readonly originY: number;
+}
+
+function captureEnemyFlash(view: EnemyView): EnemyFlashCopy {
+  const rewriter = view.getRole() === 'rewriter';
+  return {
+    textureKey: rewriter
+      ? rewriterTextureFor(view.getFacing4(), rewriterFlashVariant(view.getState()))
+      : INFILTRATOR_TEXTURE[view.getFacing4()],
+    originX: rewriter ? REWRITER_ORIGIN_X / REWRITER_CANVAS_W : 0.5,
+    originY: rewriter ? REWRITER_ORIGIN_Y / REWRITER_CANVAS_H : 0.5,
+  };
+}
+
+function rewriterFlashVariant(
+  state: AIState
+): 'patrol' | 'suspicious' | 'search' | 'chase' {
+  if (state === AIState.CHASE) return 'chase';
+  if (state === AIState.ALERT) return 'search';
+  if (state === AIState.SUSPICIOUS) return 'suspicious';
+  return 'patrol';
 }

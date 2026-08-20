@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>COH 练习场</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #080a0c;
+        color: #c8cdd4;
+        font-family: "Courier New", Courier, monospace;
+      }
+      #gym-shell {
+        display: grid;
+        grid-template-columns: minmax(260px, 320px) 1fr;
+        height: 100%;
+      }
+      #gym-doc {
+        padding: 16px 18px 24px;
+        border-right: 1px solid #1a1e24;
+        overflow: auto;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+      #gym-doc h1 { font-size: 15px; font-weight: normal; color: #e8eaed; margin-bottom: 10px; }
+      #gym-doc h2 { font-size: 12px; font-weight: normal; color: #8a8f96; margin: 16px 0 6px; letter-spacing: 0.04em; }
+      #gym-doc p, #gym-doc li { color: #c8cdd4; }
+      #gym-doc a { color: #1aad96; }
+      #gym-doc a[aria-current="page"] { color: #e0a848; }
+      #gym-nav { display: flex; flex-direction: column; gap: 4px; margin: 0 0 12px; }
+      #gym-doc code { color: #7fffee; }
+      #gym-roster { white-space: pre-wrap; color: #b0fff5; }
+      #gym-status { color: #8a8f96; }
+      #gym-dirs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+      #gym-dirs span {
+        border: 1px solid #2a2d32;
+        padding: 2px 7px;
+        color: #8a8f96;
+      }
+      #gym-dirs span[data-seen="1"] {
+        border-color: #1aad96;
+        color: #b0fff5;
+      }
+      #game-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gym-shell">
+      <aside id="gym-doc">
+        <h1 id="gym-title">练习场</h1>
+        <nav id="gym-nav">
+          <a id="gym-link-enemy" href="/gym.html">敌人移动</a>
+          <a id="gym-link-player" href="/gym.html?lesson=player">玩家外形</a>
+        </nav>
+        <p>独立页，不进主菜单、不生成裂隙。Agent 入口：<code>docs/dev/gym.md</code>。</p>
+
+        <h2>正在演示</h2>
+        <p id="gym-roster">载入中</p>
+        <p id="gym-status"></p>
+
+        <div id="gym-dirs-block">
+        <h2>已走过的朝向</h2>
+        <p>八向路点环。亮起 = 物理速度已落入该 45° 扇区。</p>
+        <div id="gym-dirs">
+          <span id="gym-dir-E">东</span>
+          <span id="gym-dir-SE">东南</span>
+          <span id="gym-dir-S">南</span>
+          <span id="gym-dir-SW">西南</span>
+          <span id="gym-dir-W">西</span>
+          <span id="gym-dir-NW">西北</span>
+          <span id="gym-dir-N">北</span>
+          <span id="gym-dir-NE">东北</span>
+        </div>
+        </div>
+
+        <h2>必须成立</h2>
+        <ul id="gym-rules-enemy">
+          <li>实体 / 寻路 / 巡逻速度走 <code>AISystem</code>，禁止另写一套移动。</li>
+          <li>贴图与出击共用 <code>generatePlaceholderTextures</code>。</li>
+          <li>新敌人角色：<code>data/enemies.csv</code> → 给 <code>GYM_LOOPS</code> 补环。</li>
+        </ul>
+        <ul id="gym-rules-player" hidden>
+          <li>方案 1：加厚工业像素 + 灯尘。侧影加厚、配色略暖。</li>
+          <li>出击 <code>Player</code> 已接同一套外形（DEC-068）。</li>
+          <li>北墙渗透体 / 改写体是出击同一套像素，只站住对照尺寸。</li>
+        </ul>
+        <h2>打开</h2>
+        <p><code>npm run dev</code> 后本页，或 <code>npm run gym</code>。</p>
+        <p><a href="/">回主游戏</a></p>
+      </aside>
+      <div id="game-container"></div>
+    </div>
+    <script type="module" src="/src/gym/main.ts"></script>
+  </body>
+</html>

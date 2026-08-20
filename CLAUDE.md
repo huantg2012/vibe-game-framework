@@ -93,8 +93,13 @@ docs/
 ├── progress/              ← 进度管理（roadmap/current-slice/decisions-log）
 ├── tasks/                 ← Task Briefs（per-Slice 文件：slice-01.md, slice-02.md...）
 ├── qa/                    ← 验收报告
-└── art/                   ← 资产规格 + 生成 prompt 记录
+├── art/                   ← 资产规格 + 角色程序像素 HOW（`actor-pixels.md`）+ 生成 prompt 记录
+└── dev/                   ← 开发练习场（gym）入口；当前 `gym.md`
 ```
+
+## 开发练习场
+
+独立 HTML，用来体验/测试与出击同一套代码的基本功能，不进主菜单、不生成裂隙。**Agent 入口：** `docs/dev/gym.md`。打开：`npm run gym` 或 `npm run dev`，再用 Cursor Simple Browser 访问 `http://localhost:3000/gym.html`。禁止为练习场另写敌人移动或另画一套敌人外形。渗透体与改写体的成品画面是程序像素（DEC-066），不换精灵表。角色怎么画、怎么对照：`docs/art/actor-pixels.md`。**玩家加厚像素已接出击 `Player`（DEC-068）。**
 
 ## 开发模型
 

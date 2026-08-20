@@ -287,6 +287,7 @@ export class AISystem implements AISystemAPI {
     this.raysThisFrame = 0;
 
     for (const enemy of this.enemies) {
+      enemy.tickGait(dtMs);
       this.advanceTimers(enemy, dtMs);
       this.runPerceptionTick(enemy, dtMs);
       updateBehavior(enemy, this.context);

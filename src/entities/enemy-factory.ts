@@ -2,8 +2,9 @@
  * Enemy entity and factory. One class, two perception profiles.
  *
  * The entity owns what the player sees and carries the mutable `ai` state block.
- * Role is frozen from the CSV row at spawn. Rewriter uses four independently
- * painted 32×48 textures (docs/art/rewriter-sprite.md) — never a rotated sheet.
+ * Role is frozen from the CSV row at spawn. Both roles paint upright
+ * procedural pixels (DEC-066 — not a temporary sheet). facingAngle is for
+ * perception only; the GameObject never rotates.
  */
 
 import Phaser from 'phaser';
@@ -13,12 +14,26 @@ import { AIState, type Facing4, type Vector2 } from '@/types/game-types';
 import type { EnemySpawnData } from '@/types/map-types';
 import type { EnemyAIState, EnemyTypeConfig, EnemyView } from '@/types/ai-types';
 import {
+  INFILTRATOR_TEXTURE,
+  INFILTRATOR_TEXTURE_DEFAULT,
+  infiltratorMotionTexture,
+} from '@/entities/infiltrator-sprite';
+import { FacingLagGhost, isActorWalking, pingPongFrame } from '@/entities/actor-motion';
+import {
+  ContamFlakes,
+  ContamStain,
+  INFILTRATOR_FLAKE_TUNE,
+  REWRITER_FLAKE_TUNE,
+} from '@/entities/contam-flakes';
+import { INFILTRATOR_FLAKE_LOCAL } from '@/entities/infiltrator-sprite';
+import {
   REWRITER_CANVAS_H,
   REWRITER_CANVAS_W,
   REWRITER_ORIGIN_X,
   REWRITER_ORIGIN_Y,
   REWRITER_RIGHT,
   rewriterTextureFor,
+  rewriterFlakeLocals,
 } from '@/entities/rewriter-sprite';
 import { clamp, degToRad, lerp, quantizeFacing4 } from '@/utils/math';
 
@@ -27,13 +42,12 @@ import { clamp, degToRad, lerp, quantizeFacing4 } from '@/utils/math';
  * tint-filled copies of this same sprite, which is the only way the flash covers exactly
  * the shape the player is looking at.
  */
-export const ENEMY_BODY_TEXTURE = 'placeholder-enemy';
+export const ENEMY_BODY_TEXTURE = INFILTRATOR_TEXTURE_DEFAULT;
 
-const TEXTURE_BODY = ENEMY_BODY_TEXTURE;
 const TEXTURE_DOT = 'placeholder-enemy-dot';
 const TEXTURE_LOCK = 'placeholder-enemy-lock';
 
-const INFILTRATOR_INDICATOR_Y = -18;
+const INFILTRATOR_INDICATOR_Y = -22;
 const REWRITER_INDICATOR_Y = -24;
 const INDICATOR_DOT_SPREAD = 5;
 
@@ -44,6 +58,12 @@ const REWRITER_AFTERIMAGE_SLOTS = 5;
 const REWRITER_PATROL_PULSE_MS = 2000;
 const REWRITER_SEARCH_BLINK_HZ = 3;
 const REWRITER_CHASE_JITTER_FRAMES = 8;
+const INFILTRATOR_HITCH_PLANT_MS = 220;
+const INFILTRATOR_HITCH_LUNGE_MS = 220;
+const REWRITER_HITCH_PLANT_MS = 280;
+const REWRITER_HITCH_LUNGE_MS = 240;
+const HITCH_PLANT_MULT = 0.2;
+const HITCH_LUNGE_MULT = 1.8;
 
 export interface EnemyFactoryConfig {
   /** Render depth of the body. Indicators sit one above, afterimages one below. */
@@ -100,6 +120,15 @@ export class Enemy implements EnemyView {
   private indicatorPhase = 0;
   private rewriterPulseMs = 0;
   private chaseFrame = 0;
+  private motionElapsedMs = 0;
+  private hitchMs = 0;
+  private hitchDeltaMs = 16;
+  private hitchWasLunge = false;
+  private pendingFlakeBurst = false;
+  private shownFacing: Facing4 = 'right';
+  private readonly lag: FacingLagGhost;
+  private readonly flakes: ContamFlakes;
+  private readonly stain: ContamStain | null;
 
   constructor(
     scene: Phaser.Scene,
@@ -118,17 +147,29 @@ export class Enemy implements EnemyView {
     const rewriter = config.role === 'rewriter';
     const startKey = rewriter
       ? rewriterTextureFor(this.ai.facing4, 'patrol')
-      : TEXTURE_BODY;
+      : INFILTRATOR_TEXTURE[this.ai.facing4];
 
     this.body = scene.physics.add.image(spawnPosition.x, spawnPosition.y, startKey);
     this.body.setDepth(depth);
     this.body.setName(spawnData.id);
     if (rewriter) {
       this.body.setOrigin(REWRITER_ORIGIN_X / REWRITER_CANVAS_W, REWRITER_ORIGIN_Y / REWRITER_CANVAS_H);
-      this.body.setRotation(0);
-    } else {
-      this.body.setRotation(this.ai.facingAngle);
     }
+    freezeActorRotation(this.body);
+
+    const originX = rewriter ? REWRITER_ORIGIN_X / REWRITER_CANVAS_W : 0.5;
+    const originY = rewriter ? REWRITER_ORIGIN_Y / REWRITER_CANVAS_H : 0.5;
+    this.shownFacing = this.ai.facing4;
+    this.lag = new FacingLagGhost(scene, startKey, depth - 1, originX, originY);
+    this.flakes = new ContamFlakes(
+      scene,
+      (facing) => (rewriter ? rewriterFlakeLocals(facing) : INFILTRATOR_FLAKE_LOCAL[facing]!),
+      {
+        ...(rewriter ? REWRITER_FLAKE_TUNE : INFILTRATOR_FLAKE_TUNE),
+        depth: depth + 2,
+      }
+    );
+    this.stain = rewriter ? new ContamStain(scene, depth - 2) : null;
 
     const physicsBody = this.body.body as Phaser.Physics.Arcade.Body;
     physicsBody.setSize(config.bodySize, config.bodySize, false);
@@ -151,8 +192,8 @@ export class Enemy implements EnemyView {
       trail.setDepth(depth - 1).setVisible(false);
       if (rewriter) {
         trail.setOrigin(REWRITER_ORIGIN_X / REWRITER_CANVAS_W, REWRITER_ORIGIN_Y / REWRITER_CANVAS_H);
-        trail.setRotation(0);
       }
+      trail.setRotation(0);
       this.afterimages.push(trail);
       this.afterimageLifeMs.push(0);
     }
@@ -205,10 +246,29 @@ export class Enemy implements EnemyView {
     this.ai.position.y = this.body.y;
   }
 
+  /** Call once per AI tick before setVelocity so puppet hitch uses this frame's delta. */
+  tickGait(deltaMs: number): void {
+    this.hitchDeltaMs = deltaMs;
+  }
+
   setVelocity(x: number, y: number): void {
     this.ai.velocity.x = x;
     this.ai.velocity.y = y;
-    (this.body.body as Phaser.Physics.Arcade.Body).velocity.set(x, y);
+    const moving = Math.hypot(x, y) >= GAME_CONSTANTS.ACTOR_MOTION.MOVE_SPEED_FLOOR;
+    const chase = this.ai.state === AIState.CHASE;
+    if (!moving || chase) {
+      this.hitchMs = 0;
+      this.hitchWasLunge = false;
+      (this.body.body as Phaser.Physics.Arcade.Body).velocity.set(x, y);
+      return;
+    }
+
+    this.hitchMs += this.hitchDeltaMs;
+    const lunge = this.hitchIsLunge();
+    if (lunge && !this.hitchWasLunge) this.pendingFlakeBurst = true;
+    this.hitchWasLunge = lunge;
+    const mult = lunge ? HITCH_LUNGE_MULT : HITCH_PLANT_MULT;
+    (this.body.body as Phaser.Physics.Arcade.Body).velocity.set(x * mult, y * mult);
   }
 
   measureDisplacement(): number {
@@ -223,14 +283,35 @@ export class Enemy implements EnemyView {
     const rewriter = this.config.role === 'rewriter';
 
     this.body.setPosition(this.ai.position.x, this.ai.position.y);
+    this.stepGait(deltaMs);
     if (rewriter) {
       this.applyRewriterBody(deltaMs, visibility);
     } else {
-      this.body.setRotation(this.ai.facingAngle);
-      if (this.body.texture.key !== TEXTURE_BODY) this.body.setTexture(TEXTURE_BODY);
+      this.applyInfiltratorBody();
     }
+    freezeActorRotation(this.body);
+    this.lag.sync(this.body.x, this.body.y, visibility > 0, deltaMs);
 
     this.stepAfterimages(deltaMs, visibility);
+    this.flakes.sync(
+      this.body.x,
+      this.body.y,
+      this.ai.facing4,
+      this.ai.state,
+      visibility,
+      deltaMs
+    );
+    if (this.pendingFlakeBurst) {
+      this.pendingFlakeBurst = false;
+      this.flakes.burst(
+        this.body.x,
+        this.body.y,
+        this.ai.facing4,
+        visibility,
+        rewriter ? 2 : 3
+      );
+    }
+    this.stain?.sync(this.body.x, this.body.y, visibility, deltaMs);
 
     if (visibility <= 0) {
       this.body.setVisible(false);
@@ -284,25 +365,72 @@ export class Enemy implements EnemyView {
     this.dots[0].destroy();
     this.dots[1].destroy();
     this.lock.destroy();
+    this.lag.destroy();
+    this.flakes.destroy();
+    this.stain?.destroy();
     this.body.destroy();
+  }
+
+  private stepGait(deltaMs: number): void {
+    this.motionElapsedMs += deltaMs;
+    if (this.ai.facing4 !== this.shownFacing) {
+      this.lag.trigger(this.shownFacing, this.body.texture.key);
+      this.shownFacing = this.ai.facing4;
+    }
+  }
+
+  private currentGait(): { gait: 'idle' | 'walk'; frame: number } {
+    const speed = Math.hypot(this.ai.velocity.x, this.ai.velocity.y);
+    const walking = isActorWalking(speed);
+    const turning = this.lag.isTurning;
+    const gait = walking || turning ? 'walk' : 'idle';
+    const rewriter = this.config.role === 'rewriter';
+    const fps = rewriter
+      ? gait === 'walk'
+        ? GAME_CONSTANTS.ACTOR_MOTION.REWRITER_WALK_FPS
+        : GAME_CONSTANTS.ACTOR_MOTION.REWRITER_IDLE_FPS
+      : gait === 'walk'
+        ? GAME_CONSTANTS.ACTOR_MOTION.INFILTRATOR_WALK_FPS
+        : GAME_CONSTANTS.ACTOR_MOTION.INFILTRATOR_IDLE_FPS;
+    let frame = pingPongFrame(this.motionElapsedMs, fps);
+    if (turning) frame = GAME_CONSTANTS.ACTOR_MOTION.FRAME_COUNT - 1;
+    else if (walking && this.ai.state !== AIState.CHASE) {
+      frame = this.hitchIsLunge() ? 1 : 3;
+    }
+    return { gait, frame };
+  }
+
+  private hitchIsLunge(): boolean {
+    const rewriter = this.config.role === 'rewriter';
+    const plant = rewriter ? REWRITER_HITCH_PLANT_MS : INFILTRATOR_HITCH_PLANT_MS;
+    const lunge = rewriter ? REWRITER_HITCH_LUNGE_MS : INFILTRATOR_HITCH_LUNGE_MS;
+    const cycle = plant + lunge;
+    if (cycle <= 0) return false;
+    return this.hitchMs % cycle >= plant;
+  }
+
+  private applyInfiltratorBody(): void {
+    const { gait, frame } = this.currentGait();
+    const key = infiltratorMotionTexture(this.ai.facing4, gait, frame);
+    if (this.body.texture.key !== key) this.body.setTexture(key);
   }
 
   private applyRewriterBody(deltaMs: number, visibility: number): void {
     const facing = this.ai.facing4;
+    const { gait, frame } = this.currentGait();
     let variant: 'patrol' | 'suspicious' | 'search' | 'chase' = 'patrol';
     if (this.ai.state === AIState.CHASE) variant = 'chase';
     else if (this.ai.state === AIState.ALERT) variant = 'search';
     else if (this.ai.state === AIState.SUSPICIOUS) variant = 'suspicious';
 
-    let key = rewriterTextureFor(facing, variant);
+    let key = rewriterTextureFor(facing, variant, gait, frame);
     if (variant === 'search') {
       this.indicatorPhase += REWRITER_SEARCH_BLINK_HZ * (deltaMs / 1000);
       const bright = this.indicatorPhase % 1 < 0.5;
-      if (!bright) key = rewriterTextureFor(facing, 'patrol');
+      if (!bright) key = rewriterTextureFor(facing, 'patrol', gait, frame);
     }
 
     if (this.body.texture.key !== key) this.body.setTexture(key);
-    this.body.setRotation(0);
 
     let alpha = visibility;
     if (this.ai.state === AIState.PATROL || this.ai.state === AIState.RETURN) {
@@ -375,11 +503,13 @@ export class Enemy implements EnemyView {
     const slot = this.afterimageSlot;
     this.afterimageSlot = (slot + 1) % this.afterimages.length;
     const trail = this.afterimages[slot]!;
-    const key = rewriter ? rewriterTextureFor(this.ai.facing4, 'chase') : TEXTURE_BODY;
+    const key = rewriter
+      ? rewriterTextureFor(this.ai.facing4, 'chase')
+      : INFILTRATOR_TEXTURE[this.ai.facing4];
     if (trail.texture.key !== key) trail.setTexture(key);
     trail
       .setPosition(this.ai.position.x, this.ai.position.y)
-      .setRotation(rewriter ? 0 : this.ai.facingAngle)
+      .setRotation(0)
       .setAlpha(trailAlpha * visibility)
       .setVisible(true);
     this.afterimageLifeMs[slot] = lifetime;
@@ -485,4 +615,11 @@ function createEnemyAIState(
 
     targetingDecoy: false,
   };
+}
+
+/** Facing is texture-only. Perception still uses the continuous facingAngle. */
+function freezeActorRotation(image: Phaser.Physics.Arcade.Image): void {
+  image.setRotation(0);
+  const body = image.body as Phaser.Physics.Arcade.Body | null;
+  if (body) body.allowRotation = false;
 }

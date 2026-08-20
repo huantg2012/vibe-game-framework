@@ -15,5 +15,11 @@ export default defineConfig({
     target: 'es2020',
     outDir: 'dist',
     assetsInlineLimit: 0,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        gym: path.resolve(__dirname, 'gym.html'),
+      },
+    },
   },
 });

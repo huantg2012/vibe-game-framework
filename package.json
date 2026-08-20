@@ -6,6 +6,8 @@
   "scripts": {
     "predev": "node tools/ensure-deps.mjs",
     "dev": "vite",
+    "pregym": "node tools/ensure-deps.mjs",
+    "gym": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",

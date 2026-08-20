@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: art agent
 created-date: 2026-07-22
-last-modified: 2026-08-19
+last-modified: 2026-08-20
 ---
 
 # 资产规格
@@ -20,7 +20,6 @@ last-modified: 2026-08-19
   tile-pp-floor-concrete-01.png
   tile-rift-wall-crystal-straight.png
   spr-shared-player-idle-down.png
-  spr-rift-enemy-infiltrator-patrol-01.png
   spr-pp-module-core-healthy.png
   ui-hud-chaos-bar-bg.png
   fx-rift-contam-pulse-01.png
@@ -45,10 +44,10 @@ last-modified: 2026-08-19
 | 类型 | 前缀 | 尺寸 | 格式 | 背景 | 说明 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 | 环境 Tile | tile- | 32x32 px | PNG-8/24 | 不透明 | 排列为 512px 宽 tileset |
-| 玩家 Sprite | spr-shared-player- | 32x32 px | PNG-24 | 透明 | 含 padding，实际内容约 20x28 |
-| 敌人（低度） | spr-rift-enemy- | 32x32 px | PNG-24 | 透明 | 人形轮廓 |
-| 敌人（中度） | spr-rift-enemy- | 32x48 / 48x48 px | PNG-24 | 透明 | 超人形比例。Slice 8 占位：程序化 `placeholder-rewriter-{facing}` 32×48，见 `docs/art/rewriter-sprite.md` |
-| 敌人（高度） | spr-rift-enemy- | 48x48 / 64x64 px | PNG-24 | 透明 | 非人形几何体 |
+| 玩家 Sprite | （无 PNG） | 32×32 | 启动时绘制 | 透明 | 出击成品：`player-sprite-dense.ts` + `player-lamp-aura.ts`（DEC-068） |
+| 敌人（渗透体） | （无 PNG） | 32×32 | 启动时绘制 | 透明 | **成品**（DEC-066）。碰撞仍 20。`src/entities/infiltrator-sprite.ts` |
+| 敌人（改写体） | （无 PNG） | 32×48 | 启动时绘制 | 透明 | **成品**（DEC-066）。`docs/art/rewriter-sprite.md` |
+| 敌人（覆盖体） | spr-rift-enemy- | 48x48 / 64x64 px | PNG-24 | 透明 | 未做；来源另议 |
 | 可交互物（小） | spr- | 16x16 px | PNG-24 | 透明 | 薪柴、消耗品 |
 | 可交互物（中） | spr- | 32x32 px | PNG-24 | 透明 | 撤离点标记 |
 | 净化点模块 | spr-pp-module- | 64x64 / 96x96 px | PNG-24 | 透明 | 多状态（健康/受损/严重受损） |
@@ -73,7 +72,7 @@ last-modified: 2026-08-19
 ### Spritesheet 规格
 
 - Tileset 宽度固定 512px（每行 16 个 32x32 tile）
-- 角色/敌人 spritesheet 为水平条带（horizontal strip），一行排列所有帧
+- 角色 spritesheet 为水平条带（horizontal strip），一行排列所有帧。**渗透体 / 改写体没有 spritesheet**（DEC-066）。玩家出击是程序加厚像素 + 灯尘（DEC-068），不是方块人。角色 HOW：`docs/art/actor-pixels.md`。
 - 帧间无间距（或固定 0px spacing, 0px margin）
 - 文件尾部不留多余空白行
 
@@ -112,9 +111,9 @@ assets/
 │   ├── pp-tileset.png
 │   └── rift-tileset.png
 ├── sprites/
-│   ├── player.png
-│   ├── enemy-infiltrator.png
-│   ├── enemy-rewriter.png
+│   ├── player.png              ← 出击玩家现行是程序像素，不是这张 PNG
+│   ├── enemy-infiltrator.png   ← 不存在；成品是程序像素（DEC-066）
+│   ├── enemy-rewriter.png      ← 不存在；成品是程序像素（DEC-066）
 │   ├── enemy-overwriter.png
 │   ├── interactables.png
 │   └── pp-modules.png
