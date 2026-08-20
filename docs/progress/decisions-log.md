@@ -9,6 +9,30 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-075: 遭遇识别旁白并入污染词法体系；设计正文为叙述家
+- Date: 2026-08-20
+- Phase: Iterative Development（迭代 1：敌人系统）
+- Type: Documentation structure
+- Context: DEC-074 已锁遭遇识别旁白的规则与表面。文档入口上旁白曾像独立 UI 产品漂着。人要求把形态生成与认出遭遇当作同一套体系处理。
+- Decision:
+  1. 污染词法与遭遇识别旁白是同一套形态体系的生成面与识别面。正式名仍用全称。DEC-074 仍有效，历史正文不改。
+  2. 叙述家 = `docs/design-notes/contamination-lexicon.md`（§7）。唯一逻辑 spec = `docs/specs/system-contamination-lexicon.md`（身份键、触发、限频、上屏节点、成句标记映射）。`docs/specs/ui-encounter-narration.md` 保留为识别表面合同（载体 / 参考锚点 / 视觉 / U1–U12），不是独立玩法系统。
+  3. 体系入口顺序：设计正文 → 规则 spec → UI 表面。
+- Impact: 设计正文 §7；词法 spec「遭遇识别旁白（逻辑）」节；UI spec 归属声明。入口：AGENTS.md、CLAUDE.md 层 B 进度句、gdd-core、architecture、world、current-iteration、roadmap。未实现。
+
+## DEC-074: 遭遇识别用随身罩旁白，禁止头上名字
+- Date: 2026-08-20
+- Phase: Iterative Development（迭代 1：敌人系统）
+- Type: Display / UX
+- Context: 污染词法（DEC-073）会生成海量形态。人要求强化「遭遇了什么」的感知，但不要在每个个体头上挂怪物名 HUD。提出旁白：遭遇后用文字报名字（关键组合项合理拼接；成句可用特别颜色或字体）。文案与呈现须契世界观。短时间遭遇相同形态不得连刷。
+- Decision:
+  1. 新表面「遭遇识别旁白」，载体 **A 世界内装置**（裂隙随身罩现场记录行）。挂 `#dom-ui-root`，贴底栏上方。不钉敌人世界坐标。
+  2. 禁止：头上名字、图鉴弹窗、OS toast 壳、抄混乱阈值全屏居中文学旁白。Darkest Dungeon 叙事旁白框明确不学。
+  3. 上屏结构：无人称骨架「识别。」+ 覆盖深度 / 基体 / 占位分节点（占地加主感知）。成句另加短行为标记（开合 / 缝视 / 呼吸 / 反视），用已锁污染侧 teal + 同一 12px + 1px 错位。内部配方名不上屏。
+  4. 限频：身份键见 ui spec。同键本趟 60s；行间隔 ≥2.5s；同时 1 行；与混乱阈值重叠则阈值优先且不补打。
+  5. 世界可读仍是第一课。旁白是强化不是替代。HOW 已走 in-game UX 闸门。审美待人终审。
+- Impact: `docs/specs/ui-encounter-narration.md`（新）。`system-contamination-lexicon.md` 玩家交互 / 规则 19–21。设计正文 §6 / §9。未实现。设计叙述并入 `contamination-lexicon.md`（见 DEC-075）；本条历史正文不改。
+
 ## DEC-073: 锁定污染词法作为敌人形态组合制度（未实现）
 - Date: 2026-08-20
 - Phase: Iterative Development（迭代 1：敌人系统）

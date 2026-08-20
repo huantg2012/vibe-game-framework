@@ -3,19 +3,18 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-08-20
-note: DEC-072 / DEC-073。本游戏活工作单元。当前：迭代 1 敌人系统（污染词法已落文档，未实现）。Slice 9 COMPLETE 档案见 current-slice.md。不要与层 A 框架迭代混名。
+note: DEC-072 / DEC-073 / DEC-074 / DEC-075。本游戏活工作单元。当前：迭代 1 敌人系统（污染词法已落文档，未实现；遭遇识别旁白并入同一套体系）。Slice 9 COMPLETE 档案见 current-slice.md。不要与层 A 框架迭代混名。
 ---
 
 # 按需游戏迭代（DEC-072）
 
-**当前：迭代 1（敌人系统）。** 污染词法已锁文档（DEC-073），代码未接。活实现仍是一份五态 + 两种感知剖面。
+**当前：迭代 1（敌人系统）。** 污染词法已锁文档（DEC-073），遭遇识别旁白并入同一套体系（DEC-074 / DEC-075），代码未接。活实现仍是一份五态 + 两种感知剖面。
 
 阶段仍是 Iterative Development。Slice 1–9 历史不动。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。
 
 Slice 9 之后表现收口（DEC-066～071）仍记在 `current-slice.md` 该账上，**不改编号成迭代 1**。迷雾下亮度仍等人终审。
 
-正文：`docs/design-notes/contamination-lexicon.md`  
-规则：`docs/specs/system-contamination-lexicon.md`
+体系入口：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。
 
 ---
 
@@ -40,4 +39,4 @@ Slice 9 之后表现收口（DEC-066～071）仍记在 `current-slice.md` 该账
 
 | 序号 | 日期 | 模块名 | 一句话范围 | 状态 | 相关 DEC |
 | ---- | ---- | ------ | ---------- | ---- | -------- |
-| 1 | 2026-08-20 | 敌人系统 | 污染词法：底材 + 孔谱 + 词素生成可落地形态；成句少数具名 | 设计已锁，未实现 | DEC-073 |
+| 1 | 2026-08-20 | 敌人系统 | 污染词法（含遭遇识别旁白为识别面）；代码未接 | 设计已锁，未实现 | DEC-073 / DEC-074 / DEC-075 |
