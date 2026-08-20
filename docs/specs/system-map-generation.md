@@ -4,7 +4,7 @@ created-by: design agent
 created-when: 2026-08-16
 last-modified-by: director agent
 last-modified-date: 2026-08-20
-note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。练习场整团胀缩已锁（DEC-070）；出击暂不挂活层。
+note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。
 interface-changed: true
 slice: 6
 interfaces-with:
@@ -239,7 +239,7 @@ interface FragmentTypeDef {
 24a. 每一次踏入抽 `FragmentRoll`：`contaminationAge` ∈ {new, standard, ancient} 与 `ruinSeverity` ∈ {intact, broken, eaten}（`typeId` 即本次 `fragmentTypeId`）。两轴必须实际抽取（同种子可复现），禁止跳过抽取、把所有图写成 `standard` + `broken`。允许某次抽中该组合。旋钮只走 `docs/art/rift-fragment-surfaces.md`「组合轴」；禁止新 hex。一张图一个 `typeId`。
 25. 本 Slice 做有限种碎片氛围。种类与是否一张图只抽一种 L1：**未锁**。见约束 3。
 26. 碎片类型的策划字段进 `data/*.csv`（建议 `data/rift-fragments.csv`），构建期进 `src/generated/`。禁止在代码里手写主题表再反向导出。
-27. 色值只引用 art-direction 已锁 L1 / L2。禁止为了「不一样」发明未论证新色。地面 L2 污染的成品画面是崩坏簇（DEC-069）：从该岛碎片 bias 公式推色再量化到已锁色板；四档互不相同且离开地板色。练习场活层（DEC-070）：内核烤死；中间层与外层同一相位、几乎不透明，沿簇不规则外沿整团胀缩，幅度为休息大小的 5–20%。出击烤完整团，暂不挂活层。不是矩形平涂错误块。画法合同 `docs/art/rift-fragment-surfaces.md`。晶结 / 溶蚀只留练习场对照，不进出击。
+27. 色值只引用 art-direction 已锁 L1 / L2。禁止为了「不一样」发明未论证新色。地面 L2 污染的成品画面是崩坏簇（DEC-069）：从该岛碎片 bias 公式推色再量化到已锁色板；四档互不相同且离开地板色。活层（DEC-070 / DEC-071）：内核烤死；中间层与外层同一相位、几乎不透明，沿簇不规则外沿整团胀缩，幅度为休息大小的 5–20%。出击与练习场同一套活层。呼吸层须低于裂隙视野黑暗蒙层。迷雾下亮度等人终审。不是矩形平涂错误块。画法合同 `docs/art/rift-fragment-surfaces.md`。晶结 / 溶蚀只留练习场对照，不进出击。
 28. L1 色值差只有 5–10，叠 32px 和视野遮罩后可能看不出。**只换雾 / 亮度 / 污染密度，标为可能不够。** 要分清「另一块碎片」，地表材质残影和障碍语法必须一起变，不能只改一张滤镜。预览栈的氛围场（天空胶囊遮挡 + 地雾池 + 尘点 + 渗光）是层 7–9，让同一块岛活起来；它不替代本条的碎片身份。裂隙：地面烤一次，天空低分辨率叠层改 `phase`。禁止用极坐标膜抄净化点边界。禁止在游戏循环里对整张地图跑 `compositePaint`。
 
 ### U — 界面（本系统几乎不碰）

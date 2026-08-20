@@ -144,7 +144,9 @@ export class RiftScene extends Phaser.Scene {
     });
     layer.setVisible(false);
 
-    this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface);
+    this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface, {
+      liveClusterBreath: true,
+    });
 
     this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
 

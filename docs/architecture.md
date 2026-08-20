@@ -5,7 +5,7 @@ created-date: 2026-07-22
 last-modified: 2026-08-20
 approved-date: 2026-07-22
 changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。练习场活层整团胀缩已锁（DEC-070）；出击暂不挂。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。
 ---
 
 # 技术架构
@@ -51,7 +51,7 @@ src/
 │   ├── boundary-breath.ts      # 边界局部压力冲击与膜变形（纯视觉叠加层）
 │   ├── boundary-atmosphere.ts  # 净化点边界外黑暗+模糊内容周期渲染（跟随 boundary-shape）
 │   ├── procedural-surface.ts             # 裂隙地表逐像素程序化生成（DEC-018）；污染缺省崩坏簇
-│   ├── cluster-pulse.ts          # 崩坏簇活层：内核烤死，中间层/外层整团胀缩（练习场；出击先不挂）
+│   ├── cluster-pulse.ts          # 崩坏簇活层：内核烤死，中间层/外层整团胀缩（出击与练习场同一套）
 │   ├── procedural-purification-surface.ts # 净化点地表逐像素程序化生成 + 边界 vignette
 │   ├── interaction-trigger.ts  # 接近触发交互（overlap检测+提示+面板激活）
 │   ├── ai/
@@ -201,7 +201,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
-| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：敌人巡逻（默认）；玩家外形 `?lesson=player`（加厚像素 + 灯尘假人绕圈，与出击同一套）；地图生成 `?lesson=map`（`generateRiftLayout` + `RiftSurfacePainter`，无视野迷雾）。地图课侧栏可切四种污染烤漆；生产缺省与出击同为崩坏簇；崩坏簇时练习场传 `liveClusterBreath: true`（DEC-070），出击不传。接缝晶结 / 坏格溶蚀 / 平涂只对照。敌人课必须复用 AISystem / Enemy / 与出击同一套敌人像素。Agent 入口 `docs/dev/gym.md`。角色外形 HOW：`docs/art/actor-pixels.md` | `npm run gym` 或 `/gym.html`；玩家课 `/gym.html?lesson=player`；地图课 `/gym.html?lesson=map` | 已实现（2026-08-20） |
+| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：敌人巡逻（默认）；玩家外形 `?lesson=player`（加厚像素 + 灯尘假人绕圈，与出击同一套）；地图生成 `?lesson=map`（`generateRiftLayout` + `RiftSurfacePainter`，无视野迷雾）。地图课侧栏可切四种污染烤漆；生产缺省与出击同为崩坏簇；崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 / DEC-071）。接缝晶结 / 坏格溶蚀 / 平涂只对照。敌人课必须复用 AISystem / Enemy / 与出击同一套敌人像素。Agent 入口 `docs/dev/gym.md`。角色外形 HOW：`docs/art/actor-pixels.md` | `npm run gym` 或 `/gym.html`；玩家课 `/gym.html?lesson=player`；地图课 `/gym.html?lesson=map` | 已实现（2026-08-20） |
 | EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 程序像素（渗透体 32×32 / 改写体 32×48；GameObject 不旋转）+ teal 指示物 + 残影 + 脱落尘 + 木偶步态 + AI 状态块 | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection | 已实现（T7；Slice 8 C1 rewriter；DEC-066 锁定程序像素） |
 | InfiltratorSprite | src/entities/infiltrator-sprite.ts | 渗透体密像素 32×32 四向 + 步态帧（前倾猎食）。碰撞仍 20。成品，不换精灵表 | generateInfiltratorPlaceholders(scene), infiltratorMotionTexture | 已实现（DEC-066） |
 | ContamFlakes | src/entities/contam-flakes.ts | 敌人青绿 1px 脱落尘 + 改写体脚下污斑。迈步可爆发 | generateContamFlakeTextures, ContamFlakes, ContamStain | 已实现（2026-08-20） |
@@ -222,8 +222,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | BoundaryShape | src/systems/boundary-shape.ts | 净化点边界几何的唯一真相：潮汐驱动的极坐标压力 blob（椭圆 × 潮汐缩放 × 方向压力叶 × 交互点安全钳制）。每次 scene create 构建一次，构建后为无状态廉价查询 | `createBoundaryShape(config)`：radiusAt(angle), normalizedDist(x,y), isInside(x,y), pressureAt(angle), pressureDirection, tideScale, centerX/centerY | 已实现（Slice 4.5） |
 | BoundaryBreath | src/systems/boundary-breath.ts | 边界局部压力冲击与膜变形的纯视觉叠加层（并发短弧向内扫入 + 虚空侵入楔形 + 膜线内凹）。不参与碰撞/可见性/gameplay | create(scene, shape, tidePhase), update(dt), destroy() | 已实现（Slice 4.5） |
 | BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外粒子与 apparition 氛围渲染；生成/消亡半径跟随 BoundaryShape 而非固定圆 | create(scene, shape), update(dt), destroy() | 已实现（Slice 2，Slice 4.5 改为跟随 blob） |
-| ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表（含雾；尘点不烤死）；天空+尘点低分辨率叠层只改 phase，沿本趟 windX/Y。地面污染生产默认崩坏簇（`cluster`）；练习场传 `liveClusterBreath: true` 画中间层/外层整团胀缩，出击不传 | RiftSurfacePainter.mount(scene, ruins, key, depth, opts?) / update / destroy | 已实现（Slice 6；尘点跟天空同一份 AtmosphereField；DEC-069 缺省 cluster；DEC-070 活层只开练习场） |
-| ClusterPulse | src/systems/cluster-pulse.ts | 崩坏簇活层：内核烤死；中间层与外层同一相位、几乎不透明，沿簇外沿整团胀缩（`breathAmp` 5–20%）。练习场开启；出击暂不挂 | paintClusterBreath(out, width, height, field, elapsedMs) | 已实现（练习场人眼 PASS；出击烤完整团） |
+| ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表（含雾；尘点不烤死）；天空+尘点低分辨率叠层只改 phase，沿本趟 windX/Y。地面污染生产默认崩坏簇（`cluster`）；出击与练习场传 `liveClusterBreath: true` 画中间层/外层整团胀缩（呼吸层 depth+0.05，低于视野蒙层 50） | RiftSurfacePainter.mount(scene, ruins, key, depth, opts?) / update / destroy | 已实现（Slice 6；尘点跟天空同一份 AtmosphereField；DEC-069 缺省 cluster；DEC-070 活层画面锁；DEC-071 出击同挂） |
+| ClusterPulse | src/systems/cluster-pulse.ts | 崩坏簇活层：内核烤死；中间层与外层同一相位、几乎不透明，沿簇外沿整团胀缩（`breathAmp` 5–20%）。出击与练习场同一套 | paintClusterBreath(out, width, height, field, elapsedMs) | 已实现（练习场人眼 PASS；出击已挂；迷雾下亮度等人终审） |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
 | PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等）。`.game-panel` 默认是净化点墙机 CRT（680×468 磷光屏，无金属/无外框，8px 凹槽暗边）；六块墙机另加 `.crt-stack`（固定子项 + 库存 `.scroll-area`）。Esc 记录菜单与裂隙结算用内联尺寸覆盖（5px 凹槽），不加 crt-stack。`.device-plate` 是裂隙随身罩。Channel B toast 挂 `#toast-inline-queue`（同时最多 2 条）；`skipQueue` 贴源短闪仍挂 `#dom-ui-root`。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles(), createCrtPanel(id), getDomUiRoot(), bindDomUiRootToGame(game), showToastInline(html, opts), showToastStamp(text, opts?) | 已实现（Slice 4.5；Slice 5.5 CRT + createCrtPanel；C6 toast；R9 凹槽；R10 crt-stack / 队列 / device-effect） |
 | SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移。混乱增速可见写法也从这里出（相对 1.0 的 ±N%） | describeSideEffectBody(e), describeSideEffectWithSource(e), formatChaosRateDelta(rate), formatChaosMultDelta(mult) | 已实现（Slice 5.5 C5 引入，本轮补登记；R9 收口混乱增速） |

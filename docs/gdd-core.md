@@ -45,7 +45,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | Minimap | **已实现** (Slice 1) | - (无独立 spec) | 角落小地图显示已探索区域与关键点位 |
 | HUD | **已实现** (Slice 1；5.5 迁 DOM) | `docs/specs/system-chaos-scavenge-extract.md` | 裂隙完整度 / 混乱 / 薪柴 / 工具槽 / 生效中；挂 `#dom-ui-root` |
 | 被发现屏缘干涉 | **已实现** (Slice 8) | `docs/specs/ui-detection-pulse.md` | 屏缘方向齿带，强度跟察觉度；无数字条；最多 2 方位 |
-| 程序化地图生成 | **已实现** (Slice 6；DEC-069 / DEC-070 污染画法) | `docs/specs/system-map-generation.md` | 每一次踏入抽锚+种子+邻域抖动生成并烤图；地面污染成品是崩坏簇（非矩形平涂）；练习场整团胀缩、出击暂不挂活层；一个撤离点；换路硬保证；尘点沿风；年龄×残破。撤离多样性延后（DEC-055） |
+| 程序化地图生成 | **已实现** (Slice 6；DEC-069 / DEC-070 / DEC-071 污染画法) | `docs/specs/system-map-generation.md` | 每一次踏入抽锚+种子+邻域抖动生成并烤图；地面污染成品是崩坏簇（非矩形平涂）；出击与练习场同一套整团胀缩活层；一个撤离点；换路硬保证；尘点沿风；年龄×残破。撤离多样性延后（DEC-055） |
 | 角色属性/能力成长 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 永久改造+污染物循环+潮汐经济，出击正向积累 |
 | 音频（AudioManager） | **已实现** (Slice 9) | `docs/specs/system-audio.md` | 5 条氛围床 + 裂隙四层混音 + §4.2 短音；39 key 非空 OGG+MP3；同时 8 轨 |
 | CSV 数据管线 | **已实现** (Slice 4) | - (构建期工具) | 构建期将 data/*.csv 编译为 src/generated/*.ts，类型安全、tree-shakeable |
@@ -114,4 +114,4 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - Slice 7「净化点扩张」(2026-08-19, COMPLETE)：第三模块净化器写入出击起始混乱（满完整度 0）；祭坛旁加厚三档抬全部模块 maxHp；效果仍按对基准 100。下一手 Slice 8 第二敌人。
 - Slice 8「第二敌人」(2026-08-19, COMPLETE)：改写体听觉为主、视锥更窄；每图恰好 1 个；屏缘被发现脉冲无数字条；`data/enemies.csv` + 一份五态。审美待人终审。下一手 Slice 9 音乐/音效。
 - Slice 9「音乐 / 音效」(2026-08-19, COMPLETE)：AudioManager 落地；39 个占位 key 双格式进仓库；裂隙分层混音；同时 8 轨。听感待人终审。Slice 10 不做（DEC-064）。
-- 表现收口（2026-08-20，非 Slice）：渗透体 / 改写体密像素已接出击（DEC-066）。玩家方案 1 加厚像素 + 灯尘已接出击 `Player`（DEC-068）。裂隙地面污染锁定为崩坏簇并接到出击烤漆（DEC-069）；练习场已锁整团胀缩呼吸、出击暂不挂活层（DEC-070）。角色 HOW：`docs/art/actor-pixels.md`。地表合同：`docs/art/rift-fragment-surfaces.md`。
+- 表现收口（2026-08-20，非 Slice）：渗透体 / 改写体密像素已接出击（DEC-066）。玩家方案 1 加厚像素 + 灯尘已接出击 `Player`（DEC-068）。裂隙地面污染锁定为崩坏簇并接到出击烤漆（DEC-069）；整团胀缩呼吸已锁（DEC-070）并接到出击（DEC-071）。迷雾下亮度等人终审。角色 HOW：`docs/art/actor-pixels.md`。地表合同：`docs/art/rift-fragment-surfaces.md`。

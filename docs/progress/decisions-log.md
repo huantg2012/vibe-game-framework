@@ -9,6 +9,19 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-071: 练习场已锁的崩坏簇胀缩接到出击
+- Date: 2026-08-20
+- Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）
+- Type: Art
+- Context: DEC-070 把整团胀缩锁在练习场，出击暂不挂活层。人已确认练习场效果很好，并明确要求接到正式裂隙关卡后提交。DEC-069 / DEC-070 旧正文不改写。
+- Decision:
+  1. 出击 `RiftScene` 与练习场地图课同一套活层：`liveClusterBreath: true`。污染画法缺省已是崩坏簇。
+  2. `bakeGround(..., clusterLive=true)` 只烤内核；中间层与外层由 `paintClusterBreath` 画。禁止完整团再叠一层。
+  3. 呼吸精灵深度为地表 `DEPTH.surface + 0.05`。裂隙视野是 `DEPTH.visionMask`（约 50）的黑暗蒙层挖洞。活层必须仍在蒙层之下；禁止抬到迷雾之上。
+  4. 只漆可走地板（`isClusterFloor` / `putFloorRgb`）。不改墙、不改碰撞。
+  5. 无新 HUD。迷雾下亮度等人终审，不把审美勾成通过。
+- Impact: `src/scenes/rift-scene.ts` `mount(..., { liveClusterBreath: true })`。活文档去掉「出击暂不挂」。画面锁仍是 DEC-070。
+
 ## DEC-070: 崩坏簇呼吸锁定为练习场整团胀缩，出击暂不挂活层
 - Date: 2026-08-20
 - Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）
