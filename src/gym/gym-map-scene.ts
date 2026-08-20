@@ -7,6 +7,10 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import { isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
+import {
+  isContaminationDrawStyle,
+  type ContaminationDrawStyle,
+} from '@/generation/preview-paint';
 import { PREVIEW_RECIPES } from '@/generation/recipes';
 import {
   generateRiftLayout,
@@ -36,6 +40,13 @@ const RUIN_LABEL: Record<string, string> = {
   eaten: '啃蚀',
 };
 
+const DRAW_LABEL: Record<ContaminationDrawStyle, string> = {
+  blocks: '对照平涂',
+  cluster: '方案一 崩坏簇',
+  crystal: '方案二 接缝晶结',
+  dissolve: '方案三 坏格溶蚀',
+};
+
 export class GymMapScene extends Phaser.Scene {
   private readonly tiles = new TilemapRenderer();
   private readonly riftSurface = new RiftSurfacePainter();
@@ -43,6 +54,7 @@ export class GymMapScene extends Phaser.Scene {
   private dragging = false;
   private generating = false;
   private formBound = false;
+  private lastLayout: GeneratedRiftLayout | null = null;
 
   constructor() {
     super({ key: 'GymMapScene' });
@@ -80,13 +92,17 @@ export class GymMapScene extends Phaser.Scene {
       if (!seed.value) seed.value = String(Date.now() >>> 0);
       generate.addEventListener('click', this.onGenerateClick);
       random.addEventListener('click', this.onRandomClick);
+      const draw = document.getElementById('gym-contam-draw');
+      if (draw instanceof HTMLSelectElement) {
+        draw.addEventListener('change', this.onDrawChange);
+      }
       this.formBound = true;
     }
 
     const title = document.getElementById('gym-title');
     if (title) title.textContent = '练习场 · 地图生成';
     const status = document.getElementById('gym-status');
-    if (status) status.textContent = '拖动画布平移，滚轮缩放。无视野迷雾。';
+    if (status) status.textContent = '拖动画布平移，滚轮缩放。无视野迷雾。崩坏簇：内核烤死，支撑区/外围区在胀缩。出击这层先关掉。改污染画法会重烤同一张图。';
   }
 
   private readonly onGenerateClick = (): void => {
@@ -95,6 +111,14 @@ export class GymMapScene extends Phaser.Scene {
 
   private readonly onRandomClick = (): void => {
     this.queueRebuild(true);
+  };
+
+  private readonly onDrawChange = (): void => {
+    if (!this.lastLayout) {
+      this.queueRebuild(false);
+      return;
+    }
+    this.mountLayout(this.lastLayout, false);
   };
 
   private queueRebuild(randomSeed: boolean): void {
@@ -118,10 +142,11 @@ export class GymMapScene extends Phaser.Scene {
       const layout = request.options
         ? generateRiftLayout(request.seed, request.options)
         : generateRiftLayout(request.seed);
-      this.mountLayout(layout);
+      this.lastLayout = layout;
+      this.mountLayout(layout, true);
       const status = document.getElementById('gym-status');
       if (status) {
-        status.textContent = '拖动画布平移，滚轮缩放。无视野迷雾。地表与出击同一套烤图。';
+        status.textContent = '拖动画布平移，滚轮缩放。无视野迷雾。崩坏簇：内核烤死，支撑区/外围区在胀缩。出击这层先关掉。改污染画法会重烤同一张图。';
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -135,26 +160,32 @@ export class GymMapScene extends Phaser.Scene {
     }
   }
 
-  private mountLayout(layout: GeneratedRiftLayout): void {
-    this.markers?.destroy();
-    this.markers = null;
-    this.tiles.destroy();
+  private mountLayout(layout: GeneratedRiftLayout, resetView: boolean): void {
+    const draw = readDrawStyle();
+    if (resetView) {
+      this.markers?.destroy();
+      this.markers = null;
+      this.tiles.destroy();
 
-    const tileMap = layout.tileMap;
-    const grid = new TileGrid(tileMap);
-    const layer = this.tiles.create(this, tileMap, {
-      tilesetKey: 'placeholder-rift-tileset',
-      collidingIndices: [TileType.WALL, TileType.VOID],
-      depth: 0,
+      const tileMap = layout.tileMap;
+      const grid = new TileGrid(tileMap);
+      const layer = this.tiles.create(this, tileMap, {
+        tilesetKey: 'placeholder-rift-tileset',
+        collidingIndices: [TileType.WALL, TileType.VOID],
+        depth: 0,
+      });
+      layer.setVisible(false);
+
+      this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
+      fitCamera(this.cameras.main, grid.widthPx, grid.heightPx);
+      this.paintMarkers(layout, tileMap.tileSize);
+    }
+
+    this.riftSurface.mount(this, layout.ruins, SURFACE_KEY, 0, {
+      contaminationDraw: draw,
+      liveClusterBreath: draw === 'cluster',
     });
-    layer.setVisible(false);
-
-    this.riftSurface.mount(this, layout.ruins, SURFACE_KEY, 0);
-
-    this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
-    fitCamera(this.cameras.main, grid.widthPx, grid.heightPx);
-    this.paintMarkers(layout, tileMap.tileSize);
-    fillMapRoster(layout);
+    fillMapRoster(layout, draw);
   }
 
   private paintMarkers(layout: GeneratedRiftLayout, tileSize: number): void {
@@ -263,9 +294,12 @@ export class GymMapScene extends Phaser.Scene {
     this.input.off('wheel', this.onWheel, this);
     const generate = document.getElementById('gym-map-generate');
     const random = document.getElementById('gym-map-random');
+    const draw = document.getElementById('gym-contam-draw');
     generate?.removeEventListener('click', this.onGenerateClick);
     random?.removeEventListener('click', this.onRandomClick);
+    draw?.removeEventListener('change', this.onDrawChange);
     this.formBound = false;
+    this.lastLayout = null;
     this.markers?.destroy();
     this.markers = null;
     this.tiles.destroy();
@@ -335,7 +369,13 @@ function readMapRequest(): { seed: number; options?: RiftLayoutOptions } {
   return { seed, options: locked ? options : undefined };
 }
 
-function fillMapRoster(layout: GeneratedRiftLayout): void {
+function readDrawStyle(): ContaminationDrawStyle {
+  const el = document.getElementById('gym-contam-draw');
+  const value = el instanceof HTMLSelectElement ? el.value : '';
+  return isContaminationDrawStyle(value) ? value : 'cluster';
+}
+
+function fillMapRoster(layout: GeneratedRiftLayout, draw: ContaminationDrawStyle): void {
   const roster = document.getElementById('gym-roster');
   if (!roster) return;
   const frag = RIFT_FRAGMENT_DATA[layout.fragmentTypeId];
@@ -346,6 +386,7 @@ function fillMapRoster(layout: GeneratedRiftLayout): void {
     `风格锚 ${recipe?.label ?? layout.recipeId}（${layout.recipeId}）`,
     `碎片 ${frag?.displayName ?? layout.fragmentTypeId}`,
     `污染年龄 ${AGE_LABEL[layout.contaminationAge] ?? layout.contaminationAge} · 残破度 ${RUIN_LABEL[layout.ruinSeverity] ?? layout.ruinSeverity}`,
+    `污染画法 ${DRAW_LABEL[draw]}`,
     `出生 / 撤离 / 薪柴 ${layout.kindlingNodes.length} / 污染物 ${layout.contaminantNodes.length}`,
     `巡逻 ${layout.enemySpawns.length}（改写体 ${rewriter}）`,
   ].join('\n');

@@ -12,6 +12,8 @@ palette: docs/art/palette.json
 
 # A-G3 合成测试：裂隙 Tile / Decal Prompt 文件
 
+现行出击地面污染已改为崩坏簇（DEC-069），下列 E1/E2 是历史小样。
+
 > **⚠️ 第 3 步（外部模型生图）需要人执行**
 > 本文件完成了 A-G3 的步骤 1（清单）和步骤 2（prompt）。
 > 步骤 3 由人在外部工具（SD / Flux / Midjourney）完成，详见文末"**操作指南（人执行）**"。

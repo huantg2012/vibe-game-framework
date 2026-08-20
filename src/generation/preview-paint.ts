@@ -3,7 +3,7 @@
  * Live sorties call the same functions on a freshly generated island.
  */
 
-import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
+import { RIFT_FRAGMENT_DATA, type RiftFragmentDef } from '@/generated/rift-fragment-data';
 import { moteSlide, shadeAt } from '@/generation/atmosphere';
 import { isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
 import { mix32 } from '@/generation/seed-fork';
@@ -666,11 +666,29 @@ function applyOverlays(
 
 const TEAL_PER_100K_PX2 = 1.6;
 const CONTAM_COLD = [0x1a, 0x7a, 0x9a] as const;
+const CONTAM_DEEP = [0x0e, 0x4a, 0x3f] as const;
 const CONTAM_MID = [0x1a, 0x6b, 0x5c] as const;
 const CONTAM_CORE = [0x1a, 0xad, 0x96] as const;
+const CONTAM_GLOW = [0x2a, 0xe6, 0xc8] as const;
 const CONTAM_ANCIENT = [0x4a, 0xdf, 0x8a] as const;
 const SHADOW_GREY = [0x15, 0x1a, 0x1e] as const;
 const BONE_GREY = [0x3a, 0x38, 0x38] as const;
+
+export const CONTAMINATION_DRAW_STYLES = ['blocks', 'cluster', 'crystal', 'dissolve'] as const;
+export type ContaminationDrawStyle = (typeof CONTAMINATION_DRAW_STYLES)[number];
+
+export function isContaminationDrawStyle(value: unknown): value is ContaminationDrawStyle {
+  return (
+    value === 'blocks' || value === 'cluster' || value === 'crystal' || value === 'dissolve'
+  );
+}
+
+const SEAM_DIRS: ReadonlyArray<readonly [number, number]> = [
+  [1, 0],
+  [-1, 0],
+  [0, 1],
+  [0, -1],
+];
 
 function resolveAge(mask: RuinedMask): ContaminationAge {
   return isContaminationAge(mask.contaminationAge) ? mask.contaminationAge : 'standard';
@@ -842,6 +860,684 @@ function stampWear(
   }
 }
 
+function collectFloors(
+  land: Uint8Array,
+  walls: Uint8Array,
+  roles: Array<RuinPaintRole | ''>,
+): { floors: number[]; glitches: number[] } {
+  const floors: number[] = [];
+  const glitches: number[] = [];
+  for (let i = 0; i < land.length; i++) {
+    if (!land[i] || walls[i]) continue;
+    floors.push(i);
+    if (roles[i] === 'glitch') glitches.push(i);
+  }
+  return { floors, glitches };
+}
+
+function layerRgb(
+  age: ContaminationAge,
+  layer: 0 | 1 | 2,
+): readonly [number, number, number] {
+  if (age === 'new') {
+    if (layer === 2) return CONTAM_CORE;
+    if (layer === 1) return CONTAM_COLD;
+    return CONTAM_DEEP;
+  }
+  if (age === 'ancient') {
+    if (layer === 2) return CONTAM_CORE;
+    if (layer === 1) return desatAncient();
+    return CONTAM_DEEP;
+  }
+  if (layer === 2) return CONTAM_CORE;
+  if (layer === 1) return CONTAM_MID;
+  return CONTAM_DEEP;
+}
+
+function clamp01(n: number): number {
+  return n < 0 ? 0 : n > 1 ? 1 : n;
+}
+
+function rgbToHsv(r: number, g: number, b: number): { h: number; s: number; v: number } {
+  const rn = r / 255;
+  const gn = g / 255;
+  const bn = b / 255;
+  const max = Math.max(rn, gn, bn);
+  const min = Math.min(rn, gn, bn);
+  const d = max - min;
+  let h = 0;
+  if (d > 1e-6) {
+    if (max === rn) h = ((gn - bn) / d) % 6;
+    else if (max === gn) h = (bn - rn) / d + 2;
+    else h = (rn - gn) / d + 4;
+    h /= 6;
+    if (h < 0) h += 1;
+  }
+  return { h, s: max < 1e-6 ? 0 : d / max, v: max };
+}
+
+function hsvToRgb(h: number, s: number, v: number): [number, number, number] {
+  const hh = ((h % 1) + 1) % 1;
+  const c = v * s;
+  const x = c * (1 - Math.abs(((hh * 6) % 2) - 1));
+  const m = v - c;
+  const i = (hh * 6) | 0;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  if (i === 0) {
+    r = c;
+    g = x;
+  } else if (i === 1) {
+    r = x;
+    g = c;
+  } else if (i === 2) {
+    g = c;
+    b = x;
+  } else if (i === 3) {
+    g = x;
+    b = c;
+  } else if (i === 4) {
+    r = x;
+    b = c;
+  } else {
+    r = c;
+    b = x;
+  }
+  return [(r + m) * 255, (g + m) * 255, (b + m) * 255];
+}
+
+interface ContamRamp {
+  readonly deep: readonly [number, number, number];
+  readonly mid: readonly [number, number, number];
+  readonly core: readonly [number, number, number];
+  readonly glow: readonly [number, number, number];
+}
+
+function rampLayer(ramp: ContamRamp, layer: 0 | 1 | 2): readonly [number, number, number] {
+  if (layer === 2) return ramp.core;
+  if (layer === 1) return ramp.mid;
+  return ramp.deep;
+}
+
+function rgbDist2(
+  a: readonly [number, number, number],
+  b: readonly [number, number, number],
+): number {
+  return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+}
+
+function sameRgb(
+  a: readonly [number, number, number],
+  b: readonly [number, number, number],
+): boolean {
+  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
+}
+
+function quantDistinct(
+  r: number,
+  g: number,
+  b: number,
+  used: ReadonlyArray<readonly [number, number, number]>,
+  floorRgb: readonly [number, number, number],
+): readonly [number, number, number] {
+  const target: [number, number, number] = [clamp255(r), clamp255(g), clamp255(b)];
+  let best: readonly [number, number, number] | null = null;
+  let bestScore = Infinity;
+  for (const p of PALETTE) {
+    if (used.some((u) => sameRgb(u, p))) continue;
+    const toTarget = rgbDist2(p, target);
+    const toFloor = rgbDist2(p, floorRgb);
+    const floorPenalty = toFloor < 2800 ? (2800 - toFloor) * 2.4 : 0;
+    const score = toTarget + floorPenalty;
+    if (score < bestScore) {
+      bestScore = score;
+      best = p;
+    }
+  }
+  return best ?? nearestPalette(target[0], target[1], target[2]);
+}
+
+/**
+ * Contamination colours follow this island's floor/wall biases, then snap to the
+ * locked palette. Hue stays on the teal axis, pulled toward the map's chroma;
+ * age slides blue (new) or green (ancient). Layers stay distinct from each other
+ * and from the floor, so a dark island still reads as contamination.
+ */
+function deriveContamRamp(
+  def: RiftFragmentDef,
+  age: ContaminationAge,
+  seed: number,
+): ContamRamp {
+  const floorRgb: [number, number, number] = [
+    clamp255(def.floorBv * def.floorBiasR),
+    clamp255(def.floorBv * def.floorBiasG),
+    clamp255(def.floorBv * def.floorBiasB),
+  ];
+  const fh = rgbToHsv(floorRgb[0], floorRgb[1], floorRgb[2]);
+  const wh = rgbToHsv(def.wallBv * def.wallBiasR, def.wallBv * def.wallBiasG, def.wallBv * def.wallBiasB);
+  const mapHue = fh.s < 0.06 && wh.s < 0.06 ? 0.48 : fh.s >= wh.s ? fh.h : wh.h;
+  const mapV = fh.v * 0.6 + wh.v * 0.4;
+  const mapS = fh.s > wh.s ? fh.s : wh.s;
+  const rng = new SeededRandom(mix32(seed, 'contam-ramp'));
+  const tealHue = 0.48;
+  const ageShift = age === 'new' ? -0.07 : age === 'ancient' ? 0.08 : 0;
+  const hue = (((tealHue + (mapHue - tealHue) * 0.52 + ageShift + (rng.next() - 0.5) * 0.05) % 1) + 1) % 1;
+  const sat = clamp01(0.5 + mapS * 0.38 + (age === 'ancient' ? 0.08 : 0) + (rng.next() - 0.5) * 0.05);
+  const val = clamp01(Math.max(0.36, mapV + 0.18) + (rng.next() - 0.5) * 0.04);
+  const deepHsv = hsvToRgb(hue, sat * 0.82, val * 0.68);
+  const midHsv = hsvToRgb(hue, sat, val * 0.95);
+  const coreHsv = hsvToRgb(hue, sat * 0.78, clamp01(val * 1.2));
+  const glowHsv = hsvToRgb(hue, sat * 0.46, clamp01(val * 1.42));
+  const core = quantDistinct(coreHsv[0], coreHsv[1], coreHsv[2], [], floorRgb);
+  const mid = quantDistinct(midHsv[0], midHsv[1], midHsv[2], [core], floorRgb);
+  const deep = quantDistinct(deepHsv[0], deepHsv[1], deepHsv[2], [core, mid], floorRgb);
+  const glow = quantDistinct(glowHsv[0], glowHsv[1], glowHsv[2], [core, mid, deep], floorRgb);
+  return { deep, mid, core, glow };
+}
+
+export const CLUSTER_PULSE_SAMPLES = 48;
+const CLUSTER_CORE_T = 0.5;
+
+export interface ClusterOrganism {
+  readonly cx: number;
+  readonly cy: number;
+  readonly phase: number;
+  readonly breathAmp: number;
+  readonly coreRest: Float32Array;
+  readonly shapeRest: Float32Array;
+}
+
+export interface ClusterPulseField {
+  readonly organisms: ClusterOrganism[];
+  readonly deep: [number, number, number];
+  readonly mid: [number, number, number];
+  readonly glow: [number, number, number];
+  readonly land: Uint8Array;
+  readonly walls: Uint8Array;
+  readonly cols: number;
+  readonly rows: number;
+  readonly tile: number;
+}
+
+function fillMissingRadii(radii: Float32Array): void {
+  const n = radii.length;
+  for (let i = 0; i < n; i++) {
+    if (radii[i]! >= 1) continue;
+    let prev = -1;
+    let next = -1;
+    for (let k = 1; k < n; k++) {
+      if (radii[(i - k + n) % n]! >= 1) {
+        prev = (i - k + n) % n;
+        break;
+      }
+    }
+    for (let k = 1; k < n; k++) {
+      if (radii[(i + k) % n]! >= 1) {
+        next = (i + k) % n;
+        break;
+      }
+    }
+    if (prev >= 0 && next >= 0) radii[i] = 0.5 * (radii[prev]! + radii[next]!);
+    else if (prev >= 0) radii[i] = radii[prev]!;
+    else if (next >= 0) radii[i] = radii[next]!;
+    else radii[i] = 2;
+  }
+}
+
+export function isClusterFloor(
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  tile: number,
+  px: number,
+  py: number,
+): boolean {
+  return cellAt(land, walls, cols, rows, (px / tile) | 0, (py / tile) | 0) === 'floor';
+}
+
+function powerRadius(rng: SeededRandom, min: number, max: number): number {
+  const roll = rng.next();
+  if (roll < 0.16) return max * (0.85 + rng.next() * 0.28);
+  if (roll < 0.28) return min + (max - min) * (0.14 + rng.next() * 0.18);
+  return min + (max - min) * (0.38 + Math.pow(rng.next(), 1.7) * 0.62);
+}
+
+function stampClusterBlob(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  cx: number,
+  cy: number,
+  radius: number,
+  ramp: ContamRamp,
+  rng: SeededRandom,
+  pulse: ClusterPulseField | null,
+  coreOnly: boolean,
+): void {
+  const r = Math.max(3.2, radius);
+  let rx = r;
+  let ry = r * (0.28 + rng.next() * 1.25);
+  if (rng.next() < 0.5) {
+    const swap = rx;
+    rx = ry;
+    ry = swap;
+  }
+  if (rng.next() < 0.22) ry = Math.max(1.2, rx * (0.18 + rng.next() * 0.22));
+  const rot = rng.next() * Math.PI;
+  const warp = 0.18 + rng.next() * 0.55;
+  const lobes = rng.next() < 0.38 ? 0 : rng.nextInt(2, 4);
+  const lobeAmp = lobes === 0 ? 0 : 0.14 + rng.next() * 0.4;
+  const lobePhi = rng.next() * Math.PI * 2;
+  const notch = rng.next() < 0.42;
+  const notch0 = rng.next() * Math.PI * 2;
+  const notchW = 0.35 + rng.next() * 0.9;
+  const smear = rng.next() < 0.5 ? ([1, 0] as const) : ([0, 1] as const);
+  const cosR = Math.cos(rot);
+  const sinR = Math.sin(rot);
+  const reach = Math.ceil(Math.max(rx, ry) * (1 + warp + lobeAmp) + 3);
+  const noiseSeed = (rng.next() * 0x7fffffff) | 0;
+
+  const radialT = (dx: number, dy: number): number | null => {
+    const lx = dx * cosR + dy * sinR;
+    const ly = -dx * sinR + dy * cosR;
+    const nx = lx / Math.max(0.8, rx);
+    const ny = ly / Math.max(0.8, ry);
+    const d = Math.hypot(nx, ny);
+    if (d < 1e-4) return 0;
+    const ang = Math.atan2(ny, nx);
+    if (notch) {
+      let delta = ang - notch0;
+      while (delta > Math.PI) delta -= Math.PI * 2;
+      while (delta < -Math.PI) delta += Math.PI * 2;
+      if (Math.abs(delta) < notchW * 0.5) return null;
+    }
+    const n = vnoise(cx + dx, cy + dy, 0.22, noiseSeed) * 2 - 1;
+    const bound = 1 + warp * n + (lobes === 0 ? 0 : lobeAmp * Math.cos(lobes * ang + lobePhi));
+    if (d > bound) return null;
+    return d / Math.max(0.2, bound);
+  };
+
+  const profile = (dx: number, dy: number): number | null => {
+    const t = radialT(dx, dy);
+    if (t === null) return null;
+    const x = cx + dx;
+    const y = cy + dy;
+    if (t > 0.42 && hash2(Math.round(x), Math.round(y), noiseSeed) < 0.16) return null;
+    return t;
+  };
+
+  for (let dy = -reach; dy <= reach; dy++) {
+    for (let dx = -reach; dx <= reach; dx++) {
+      const t = profile(dx, dy);
+      if (t === null) continue;
+      if (coreOnly && t >= CLUSTER_CORE_T) continue;
+      const layer: 0 | 1 | 2 = t < 0.26 ? 2 : t < 0.62 ? 1 : 0;
+      const rgb = rampLayer(ramp, layer);
+      const x = cx + dx;
+      const y = cy + dy;
+      if (!putFloorRgb(raw, W, H, T, land, walls, cols, rows, x, y, rgb)) continue;
+      if (hash2(x + 17, y - 9, noiseSeed) < 0.12) {
+        putFloorRgb(raw, W, H, T, land, walls, cols, rows, x + smear[0], y + smear[1], rgb);
+      }
+    }
+  }
+
+  if (!coreOnly) {
+    const specks = 2 + rng.nextInt(0, 5);
+    for (let n = 0; n < specks; n++) {
+      const ang = rng.next() * Math.PI * 2;
+      const dist = Math.max(rx, ry) + 1 + rng.nextInt(0, 4);
+      const x = cx + Math.round(Math.cos(ang) * dist);
+      const y = cy + Math.round(Math.sin(ang) * dist);
+      const layer: 0 | 1 | 2 = rng.next() < 0.3 ? 2 : 0;
+      putFloorRgb(raw, W, H, T, land, walls, cols, rows, x, y, rampLayer(ramp, layer));
+    }
+    return;
+  }
+
+  if (!pulse) return;
+  const shapeRest = new Float32Array(CLUSTER_PULSE_SAMPLES);
+  const coreRest = new Float32Array(CLUSTER_PULSE_SAMPLES);
+  for (let i = 0; i < CLUSTER_PULSE_SAMPLES; i++) {
+    const ang = (i / CLUSTER_PULSE_SAMPLES) * Math.PI * 2;
+    const dx = Math.cos(ang);
+    const dy = Math.sin(ang);
+    let lastShape = 0;
+    let lastCore = 0;
+    let seen = false;
+    for (let s = 0; s <= reach; s += 0.5) {
+      const t = radialT(dx * s, dy * s);
+      if (t === null) {
+        if (seen) break;
+        continue;
+      }
+      seen = true;
+      lastShape = s;
+      if (t < CLUSTER_CORE_T) lastCore = s;
+    }
+    shapeRest[i] = lastShape;
+    coreRest[i] = lastCore;
+  }
+  fillMissingRadii(shapeRest);
+  fillMissingRadii(coreRest);
+  for (let i = 0; i < CLUSTER_PULSE_SAMPLES; i++) {
+    if (coreRest[i]! > shapeRest[i]!) coreRest[i] = shapeRest[i]!;
+    if (coreRest[i]! < 1) coreRest[i] = Math.min(2, shapeRest[i]! * CLUSTER_CORE_T);
+  }
+  pulse.organisms.push({
+    cx,
+    cy,
+    phase: rng.next() * Math.PI * 2,
+    breathAmp: 0.05 + rng.next() * 0.15,
+    coreRest,
+    shapeRest,
+  });
+}
+
+function stampClusterContamination(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  floors: number[],
+  glitches: number[],
+  mask: RuinedMask,
+  age: ContaminationAge,
+  pulse: ClusterPulseField,
+  coreOnly: boolean,
+): void {
+  const rng = new SeededRandom(mix32(mask.seed, 'contam-cluster'));
+  const def = RIFT_FRAGMENT_DATA[mask.fragmentTypeId];
+  if (!def) return;
+  const ramp = deriveContamRamp(def, age, mask.seed);
+  pulse.deep[0] = ramp.deep[0];
+  pulse.deep[1] = ramp.deep[1];
+  pulse.deep[2] = ramp.deep[2];
+  pulse.mid[0] = ramp.mid[0];
+  pulse.mid[1] = ramp.mid[1];
+  pulse.mid[2] = ramp.mid[2];
+  pulse.glow[0] = ramp.glow[0];
+  pulse.glow[1] = ramp.glow[1];
+  pulse.glow[2] = ramp.glow[2];
+  const pick = (): number => floors[rng.nextInt(0, floors.length - 1)]!;
+  const rMax = age === 'new' ? 12 : age === 'standard' ? 23 : 40;
+  const count =
+    age === 'new' ? rng.nextInt(4, 9) : age === 'standard' ? rng.nextInt(4, 12) : rng.nextInt(7, 20);
+  const specks = coreOnly ? 0 : age === 'new' ? rng.nextInt(6, 12) : rng.nextInt(0, 4);
+  for (let n = 0; n < specks; n++) {
+    const cell = pick();
+    const x = (cell % cols) * T + rng.nextInt(0, Math.max(0, T - 1));
+    const y = ((cell / cols) | 0) * T + rng.nextInt(0, Math.max(0, T - 1));
+    const layer: 0 | 1 | 2 = rng.next() < 0.25 ? 2 : 1;
+    putFloorRgb(raw, W, H, T, land, walls, cols, rows, x, y, rampLayer(ramp, layer));
+  }
+  for (let n = 0; n < count; n++) {
+    const cell = (n < glitches.length ? glitches[n] : pick())!;
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    const cx = col * T + (T / 2 | 0) + rng.nextInt(-T, T);
+    const cy = row * T + (T / 2 | 0) + rng.nextInt(-T, T);
+    const radius = powerRadius(rng, 3.2, rMax);
+    stampClusterBlob(
+      raw,
+      W,
+      H,
+      T,
+      land,
+      walls,
+      cols,
+      rows,
+      cx,
+      cy,
+      radius,
+      ramp,
+      rng,
+      pulse,
+      coreOnly,
+    );
+    if (rng.next() < 0.38) {
+      const ang = rng.next() * Math.PI * 2;
+      const dist = 2 + rng.next() * (radius * 0.95 + 5);
+      stampClusterBlob(
+        raw,
+        W,
+        H,
+        T,
+        land,
+        walls,
+        cols,
+        rows,
+        cx + Math.round(Math.cos(ang) * dist),
+        cy + Math.round(Math.sin(ang) * dist),
+        powerRadius(rng, 3.2, Math.max(5, radius * 0.6)),
+        ramp,
+        rng,
+        pulse,
+        coreOnly,
+      );
+    }
+  }
+}
+
+function stampCrystalNode(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  x: number,
+  y: number,
+  age: ContaminationAge,
+  large: boolean,
+): void {
+  const mid: ReadonlyArray<readonly [number, number]> = [
+    [-1, 0],
+    [1, 0],
+    [0, -1],
+    [0, 1],
+  ];
+  const deep: ReadonlyArray<readonly [number, number]> = large
+    ? [
+        [-1, -1],
+        [1, -1],
+        [-1, 1],
+        [1, 1],
+        [-2, 0],
+        [2, 0],
+        [0, -2],
+        [0, 2],
+      ]
+    : [
+        [-1, -1],
+        [1, -1],
+        [-1, 1],
+        [1, 1],
+      ];
+  for (const [dx, dy] of deep) {
+    putFloorRgb(raw, W, H, T, land, walls, cols, rows, x + dx, y + dy, layerRgb(age, 0));
+  }
+  for (const [dx, dy] of mid) {
+    putFloorRgb(raw, W, H, T, land, walls, cols, rows, x + dx, y + dy, layerRgb(age, 1));
+  }
+  putFloorRgb(raw, W, H, T, land, walls, cols, rows, x, y, age === 'new' ? CONTAM_COLD : CONTAM_GLOW);
+}
+
+function stampCrystalContamination(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  floors: number[],
+  glitches: number[],
+  mask: RuinedMask,
+  age: ContaminationAge,
+): void {
+  const rng = new SeededRandom(mix32(mask.seed, 'contam-crystal'));
+  const seamSkip = age === 'new' ? 0.45 : age === 'standard' ? 0.22 : 0.08;
+  const paint = agePaint(age);
+  for (const cell of floors) {
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    for (const [dx, dy] of SEAM_DIRS) {
+      const kind = cellAt(land, walls, cols, rows, col + dx, row + dy);
+      if (kind === 'floor') continue;
+      for (let s = 0; s < T; s++) {
+        if (rng.next() < seamSkip) continue;
+        let x = col * T;
+        let y = row * T;
+        if (dx === 1) {
+          x = (col + 1) * T - 1;
+          y = row * T + s;
+        } else if (dx === -1) {
+          x = col * T;
+          y = row * T + s;
+        } else if (dy === 1) {
+          x = col * T + s;
+          y = (row + 1) * T - 1;
+        } else {
+          x = col * T + s;
+          y = row * T;
+        }
+        putFloorRgb(raw, W, H, T, land, walls, cols, rows, x, y, paint.body);
+        if (paint.seamW >= 2 && rng.next() < 0.55) {
+          putFloorRgb(raw, W, H, T, land, walls, cols, rows, x - dx, y - dy, layerRgb(age, 0));
+        }
+      }
+    }
+  }
+  const pick = (): number => floors[rng.nextInt(0, floors.length - 1)]!;
+  const nodes = age === 'new' ? rng.nextInt(3, 6) : age === 'standard' ? rng.nextInt(6, 10) : rng.nextInt(12, 18);
+  for (let n = 0; n < nodes; n++) {
+    const cell = (n < glitches.length ? glitches[n] : pick())!;
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    stampCrystalNode(
+      raw,
+      W,
+      H,
+      T,
+      land,
+      walls,
+      cols,
+      rows,
+      col * T + rng.nextInt(2, Math.max(2, T - 3)),
+      row * T + rng.nextInt(2, Math.max(2, T - 3)),
+      age,
+      age === 'ancient' && rng.next() < 0.45,
+    );
+  }
+}
+
+function stampDissolveContamination(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  floors: number[],
+  glitches: number[],
+  mask: RuinedMask,
+  age: ContaminationAge,
+): void {
+  const rng = new SeededRandom(mix32(mask.seed, 'contam-dissolve'));
+  const pick = (): number => floors[rng.nextInt(0, floors.length - 1)]!;
+  const count = age === 'new' ? rng.nextInt(5, 9) : age === 'standard' ? rng.nextInt(9, 14) : rng.nextInt(16, 24);
+  const thresh = age === 'new' ? 0.42 : age === 'standard' ? 0.68 : 0.98;
+  const corners: ReadonlyArray<readonly [number, number]> = [
+    [0, 0],
+    [1, 0],
+    [0, 1],
+    [1, 1],
+  ];
+  for (let n = 0; n < count; n++) {
+    const cell = (n < glitches.length ? glitches[n] : pick())!;
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    const corner = corners[rng.nextInt(0, corners.length - 1)]!;
+    const smear = rng.next() < 0.5 ? 1 : 0;
+    for (let py = 0; py < T; py++) {
+      for (let px = 0; px < T; px++) {
+        const u = T <= 1 ? 0 : px / (T - 1);
+        const v = T <= 1 ? 0 : py / (T - 1);
+        const dist = Math.hypot(u - corner[0], v - corner[1]);
+        const dither = ((px + py) & 1) === 0 ? 0.07 : -0.07;
+        if (dist > thresh + dither) continue;
+        if (hash2(col * T + px, row * T + py, mask.seed) < 0.14) continue;
+        const t = dist / Math.max(0.01, thresh);
+        const layer: 0 | 1 | 2 = t < 0.28 ? 2 : t < 0.62 ? 1 : 0;
+        const rgb = layerRgb(age, layer);
+        const x = col * T + px;
+        const y = row * T + py;
+        putFloorRgb(raw, W, H, T, land, walls, cols, rows, x, y, rgb);
+        if (hash2(x, y, mask.seed + 17) < 0.18) {
+          putFloorRgb(raw, W, H, T, land, walls, cols, rows, x + smear, y + (1 - smear), rgb);
+        }
+      }
+    }
+  }
+}
+
+function stampBlockSeams(
+  raw: Float32Array,
+  W: number,
+  H: number,
+  T: number,
+  land: Uint8Array,
+  walls: Uint8Array,
+  cols: number,
+  rows: number,
+  floors: number[],
+  glitches: number[],
+  mask: RuinedMask,
+  age: ContaminationAge,
+): void {
+  const paint = agePaint(age);
+  const rng = new SeededRandom(mix32(mask.seed, 'contam-blocks'));
+  const pickFloor = (): number => floors[rng.nextInt(0, floors.length - 1)]!;
+  const budget = Math.max(0, Math.round((TEAL_PER_100K_PX2 * paint.tealMul * W * H) / 100000));
+  if (budget <= 0 || paint.seamW <= 0) return;
+  let painted = 0;
+  let guard = 0;
+  while (painted < budget && guard++ < budget * 24) {
+    const origin = glitches.length > 0 && rng.next() < 0.7 ? glitches[rng.nextInt(0, glitches.length - 1)]! : pickFloor();
+    let x = (origin % cols) * T + (T / 2) | 0;
+    let y = ((origin / cols) | 0) * T + (T / 2) | 0;
+    let [dx, dy] = SEAM_DIRS[rng.nextInt(0, 3)]!;
+    const len = 6 + rng.nextInt(0, 10);
+    for (let s = 0; s < len && painted < budget; s++) {
+      if (rng.next() < 0.28) [dx, dy] = SEAM_DIRS[rng.nextInt(0, 3)]!;
+      x += dx;
+      y += dy;
+      for (let t = 0; t < paint.seamW; t++) {
+        const px = x + (dx === 0 ? t : 0);
+        const py = y + (dy === 0 ? t : 0);
+        if (putFloorRgb(raw, W, H, T, land, walls, cols, rows, px, py, paint.body)) painted++;
+      }
+    }
+  }
+}
+
 function stampContamination(
   raw: Float32Array,
   W: number,
@@ -854,18 +1550,45 @@ function stampContamination(
   roles: Array<RuinPaintRole | ''>,
   mask: RuinedMask,
   age: ContaminationAge,
+  style: ContaminationDrawStyle,
+  pulse: ClusterPulseField | null,
+  clusterLive: boolean,
 ): void {
-  const paint = agePaint(age);
-  const rng = new SeededRandom(mix32(mask.seed, 'contam-blocks'));
-  const floors: number[] = [];
-  const glitches: number[] = [];
-  for (let i = 0; i < land.length; i++) {
-    if (!land[i] || walls[i]) continue;
-    floors.push(i);
-    if (roles[i] === 'glitch') glitches.push(i);
-  }
+  const { floors, glitches } = collectFloors(land, walls, roles);
   if (floors.length === 0) return;
 
+  if (style === 'cluster') {
+    if (pulse) {
+      stampClusterContamination(
+        raw,
+        W,
+        H,
+        T,
+        land,
+        walls,
+        cols,
+        rows,
+        floors,
+        glitches,
+        mask,
+        age,
+        pulse,
+        clusterLive,
+      );
+    }
+    return;
+  }
+  if (style === 'crystal') {
+    stampCrystalContamination(raw, W, H, T, land, walls, cols, rows, floors, glitches, mask, age);
+    return;
+  }
+  if (style === 'dissolve') {
+    stampDissolveContamination(raw, W, H, T, land, walls, cols, rows, floors, glitches, mask, age);
+    return;
+  }
+
+  const paint = agePaint(age);
+  const rng = new SeededRandom(mix32(mask.seed, 'contam-blocks'));
   const pickFloor = (): number => floors[rng.nextInt(0, floors.length - 1)]!;
 
   if (age === 'new') {
@@ -922,33 +1645,7 @@ function stampContamination(
     }
   }
 
-  const budget = Math.max(0, Math.round((TEAL_PER_100K_PX2 * paint.tealMul * W * H) / 100000));
-  if (budget <= 0 || paint.seamW <= 0) return;
-  const dirs: ReadonlyArray<readonly [number, number]> = [
-    [1, 0],
-    [-1, 0],
-    [0, 1],
-    [0, -1],
-  ];
-  let painted = 0;
-  let guard = 0;
-  while (painted < budget && guard++ < budget * 24) {
-    const origin = glitches.length > 0 && rng.next() < 0.7 ? glitches[rng.nextInt(0, glitches.length - 1)]! : pickFloor();
-    let x = (origin % cols) * T + (T / 2) | 0;
-    let y = ((origin / cols) | 0) * T + (T / 2) | 0;
-    let [dx, dy] = dirs[rng.nextInt(0, 3)]!;
-    const len = 6 + rng.nextInt(0, 10);
-    for (let s = 0; s < len && painted < budget; s++) {
-      if (rng.next() < 0.28) [dx, dy] = dirs[rng.nextInt(0, 3)]!;
-      x += dx;
-      y += dy;
-      for (let t = 0; t < paint.seamW; t++) {
-        const px = x + (dx === 0 ? t : 0);
-        const py = y + (dy === 0 ? t : 0);
-        if (putFloorRgb(raw, W, H, T, land, walls, cols, rows, px, py, paint.body)) painted++;
-      }
-    }
-  }
+  stampBlockSeams(raw, W, H, T, land, walls, cols, rows, floors, glitches, mask, age);
 }
 
 function stampAncientDots(
@@ -987,9 +1684,15 @@ export interface BakedGround {
   readonly tileSize: number;
   readonly mask: RuinedMask;
   readonly roles: Array<RuinPaintRole | ''>;
+  readonly clusterPulse: ClusterPulseField | null;
 }
 
-export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
+export function bakeGround(
+  mask: RuinedMask,
+  pxPerTile = 16,
+  contaminationDraw: ContaminationDrawStyle = 'cluster',
+  clusterLive = false,
+): BakedGround {
   const def = RIFT_FRAGMENT_DATA[mask.fragmentTypeId];
   if (!def) throw new Error(`paintRuinedMask: unknown type ${mask.fragmentTypeId}`);
 
@@ -1175,9 +1878,38 @@ export function bakeGround(mask: RuinedMask, pxPerTile = 16): BakedGround {
   }
 
   stampWear(raw, W, H, T, land, walls, cols, rows, mask, knobs.scratchMul, knobs.fleckMul, def.scratchAngle);
-  stampContamination(raw, W, H, T, land, walls, cols, rows, roles, mask, age);
+  const clusterPulse: ClusterPulseField | null =
+    contaminationDraw === 'cluster'
+      ? {
+          organisms: [],
+          deep: [0, 0, 0],
+          mid: [0, 0, 0],
+          glow: [0, 0, 0],
+          land,
+          walls,
+          cols,
+          rows,
+          tile: T,
+        }
+      : null;
+  stampContamination(
+    raw,
+    W,
+    H,
+    T,
+    land,
+    walls,
+    cols,
+    rows,
+    roles,
+    mask,
+    age,
+    contaminationDraw,
+    clusterPulse,
+    clusterLive && contaminationDraw === 'cluster',
+  );
 
-  return { raw, width: W, height: H, tileSize: T, mask, roles };
+  return { raw, width: W, height: H, tileSize: T, mask, roles, clusterPulse };
 }
 
 /** Gallery stills: fog + sky + overlays + exact palette. Do not call from the live update loop. */

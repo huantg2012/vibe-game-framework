@@ -26,7 +26,9 @@ export {
   compositeStaticPaint,
   paintSkyShade,
   skyOverlaySize,
+  isContaminationDrawStyle,
 } from '@/generation/preview-paint';
+export type { ContaminationDrawStyle } from '@/generation/preview-paint';
 export { jitterRecipe } from '@/generation/recipes';
 export { generateRiftLayout, type RiftLayoutOptions } from '@/generation/rift-layout';
 export { evaluateDualPath, DUAL_PATH_MIN_LENGTH_RATIO } from '@/generation/dual-path';

@@ -29,6 +29,8 @@ purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §
 
 木偶顿步在 `enemy-factory.ts`。碰撞偏移见下文「画布变了只改偏移」。
 
+裂隙**地面**污染与改写体崩坏簇同源（青绿团落到可走地板，不是矩形平涂错误块）。地面画法合同见 `docs/art/rift-fragment-surfaces.md`（DEC-069）。本文只管角色；改写体身上的矩形 teal 簇不要改没。
+
 ---
 
 ## 家族对照

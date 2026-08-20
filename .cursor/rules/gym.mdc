@@ -14,9 +14,11 @@ globs: gym.html,src/gym/**,docs/dev/gym.md
 - 敌人移动 / 寻路 / 外形 / 朝向动画复用出击：`AISystem`、`Enemy`、`generatePlaceholderTextures`、`gameConfigWithScenes`。渗透体与改写体是程序像素成品，不是待换的精灵表。
 - 新敌人角色：`data/enemies.csv` → codegen → 给 `GYM_LOOPS` 补 8 点环。
 - 玩家外形课：`gym.html?lesson=player`。与出击 `Player` 同一套加厚像素 + 灯尘（DEC-068）。角色外形怎么验：`docs/art/actor-pixels.md`。
+- 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter`；污染生产缺省崩坏簇（DEC-069）。活层整团胀缩只开练习场（DEC-070）；禁止自行接到出击 `RiftScene`。侧栏另三种烤漆只对照。
 
 ## 禁止
 
 - 在 `RiftScene` 里塞调试房间当练习场
 - 为练习场另写一套移动或另画一套敌人外形
 - 把练习场侧栏当成游戏内界面去做 UX 翻修
+- 把练习场活层接到出击 `RiftScene`（除非人另说）

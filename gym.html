@@ -138,12 +138,19 @@
             <input id="gym-jitter" type="checkbox" checked />
             邻域抖动（与出击相同）
           </label>
+          <label for="gym-contam-draw">污染画法</label>
+          <select id="gym-contam-draw">
+            <option value="cluster">方案一：崩坏簇</option>
+            <option value="crystal">方案二：接缝晶结</option>
+            <option value="dissolve">方案三：坏格溶蚀</option>
+            <option value="blocks">对照：平涂错误块</option>
+          </select>
           <label for="gym-age">污染年龄</label>
           <select id="gym-age">
             <option value="">按种子抽</option>
             <option value="new">新</option>
             <option value="standard">常</option>
-            <option value="ancient">古</option>
+            <option value="ancient">古（对照画法请锁这一档）</option>
           </select>
           <label for="gym-ruin">残破度</label>
           <select id="gym-ruin">

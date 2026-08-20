@@ -2,8 +2,8 @@
 status: COMPLETE
 created-by: director agent
 created-when: 2026-08-19
-last-modified: 2026-08-19
-note: Slice 9「音乐 / 音效」COMPLETE。QA PASS。DEC-064 的 7/8/9 已完。Slice 10 不做。
+last-modified: 2026-08-20
+note: Slice 9「音乐 / 音效」COMPLETE。QA PASS。DEC-064 的 7/8/9 已完。Slice 10 不做。Slice 9 之后表现收口：DEC-069 崩坏簇接到出击烤漆；DEC-070 练习场整团胀缩呼吸人眼 PASS，出击暂不挂活层（不是新 Slice）。
 ---
 
 # Slice 9: 音乐 / 音效【COMPLETE】
@@ -70,3 +70,20 @@ note: Slice 9「音乐 / 音效」COMPLETE。QA PASS。DEC-064 的 7/8/9 已完�
 4. **UI 清单**：本 Slice 无新游戏内界面。未走 in-game-ux 翻修。U1–U12 不逐条勾。
 
 DEC-064 锁的 Slice 7/8/9 均 COMPLETE。Slice 10 不做。
+
+---
+
+## Slice 9 之后表现收口（不是新 Slice）
+
+| 决策 | 内容 | 状态 |
+| ---- | ---- | ---- |
+| DEC-066 / 068 | 敌人程序像素；玩家加厚像素 + 灯尘接到出击 | 已交 |
+| **DEC-069** | 裂隙地面污染 = 崩坏簇；生产默认 `cluster`；出击与练习场同一套烤漆 | 画面锁仍有效。晶结 / 溶蚀 / 平涂仅练习场对照 |
+| **DEC-070** | 练习场活层：内核烤死；中间层与外层同一相位、几乎不透明，沿簇不规则外沿整团胀缩（幅度 5–20%） | **练习场人眼 PASS**（「非常棒」「呼吸的效果有了」）。出击不挂活层。迷雾下亮度待看出击，未完成 |
+
+轻量路径收尾四项（DEC-069 / DEC-070，已做）：
+
+1. **架构登记**：`docs/architecture.md` 已登记 `cluster-pulse.ts` 与 `RiftSurfacePainter` 默认 `cluster`；活层只开练习场。
+2. **spec 判断**：不新建 spec。规则写进 `docs/art/rift-fragment-surfaces.md`；`docs/specs/system-map-generation.md` 规则 27 写污染怎么画 + 练习场活层。
+3. **交付范围**：本段。出击烤完整团；练习场崩坏簇叠活层。晶结 / 溶蚀 / 平涂只留练习场对照。
+4. **UI 清单**：无新 HUD，不适用。

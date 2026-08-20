@@ -9,6 +9,34 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-070: 崩坏簇呼吸锁定为练习场整团胀缩，出击暂不挂活层
+- Date: 2026-08-20
+- Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）
+- Type: Art
+- Context: DEC-069 把可走地面污染成品锁为崩坏簇并接到出击烤漆。其第 4 条当时写「覆盖场着色器每帧扩收缩」——那是当时的决策原文，本条不改写那份历史。后续练习场验证否决了多条呼吸路径。2026-08-20 人在 `gym.html?lesson=map` 确认整团胀缩「非常棒」「呼吸的效果有了」，本轮三处优化后整体很好。人未说接到出击。失败路径（不要再做）：(1) CPU 整张 ImageData 改加法亮度；(2) 覆盖场片元着色器整团阈值/透明度（演示文稿味）；(3) 极坐标 Graphics 折线（灰尖刺星，盖住烤死像素）；(4) 已烤轮廓外长 1–2 像素（冻住的团 + 跳点）；(5) 沿圆周走鼓包抄裂隙视野边缘（读成旋转的花）。
+- Decision:
+  1. **成品**：可走地面污染 = 崩坏簇（DEC-069 画面锁仍有效）。生产默认 `cluster`。晶结 / 溶蚀 / 平涂仅练习场对照。
+  2. **练习场活层**（`liveClusterBreath`）：内核烤死；中间层与外层同一呼吸相位、几乎不透明，沿簇自己的不规则外沿**整团胀缩**。幅度 = 该团休息大小的 **5–20%**（每团随机 `breathAmp`）。中间层向内核叠一点，禁止核心与外层之间漏地板。
+  3. **禁止**：整团透明度；统一圆球缩放当唯一手段；沿圆周走鼓包；描轮廓星形；只长 1–2 像素；每帧重画整张地面 `compositePaint`。
+  4. **配色**：从该岛地板 / 墙 bias 推 HSV，往青绿轴拉，按年龄偏蓝 / 绿，量化到已锁色板；四档互不相同且离开地板色。禁止给 `palette.json` 加色。禁止一组 `CONTAM_*` 冒充所有岛。
+  5. **连通**：只 `putFloorRgb` 可走地板。
+  6. **出击**：烤完整团，暂不挂活层。下一步若人要接裂隙，另开一小刀（迷雾下亮度待看）。
+- Impact: 活合同 `docs/art/rift-fragment-surfaces.md`；`art-direction.md` 污染脉动 / 簇活膜；`architecture.md` ClusterPulse；`system-map-generation.md` 规则 27。代码：`src/generation/preview-paint.ts`（`bakeGround(..., clusterLive)`、`ClusterOrganism.breathAmp`、`deriveContamRamp` 四档互异 + 离地板）；`src/systems/cluster-pulse.ts` `paintClusterBreath`；`src/systems/procedural-surface.ts` `opts.liveClusterBreath`（练习场传 true，出击不传）；`src/gym/gym-map-scene.ts` 崩坏簇时 `liveClusterBreath: true`。禁止自行接到 `RiftScene`。
+
+## DEC-069: 裂隙地面污染锁定为崩坏簇，接到出击烤漆
+- Date: 2026-08-20
+- Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）
+- Type: Art
+- Context: 练习场地图课对照了三种新烤漆 + 现行矩形平涂。人判定方案一「崩坏簇」整体更好（大小 / 形状 / 配色通过）。呼吸第一版（CPU 每隔约 140ms 改加法亮度）不合格；人选方向二：覆盖场片元着色器每帧扩收缩，并在练习场确认「很好」。指令：记录方案并接到出击裂隙，不只留在练习场。
+- Decision:
+  1. **成品画面**：裂隙可走地面的环境污染 = 崩坏簇（改写体身上那种青绿团落到地板），不是矩形平涂错误块。签名仍是「渲染规则崩坏 / 与实体同一种现象」；环境不再要求网格对齐的矩形平涂。接缝漏光可以仍在，簇是主签名。
+  2. **形状**：大小方差拉开（`powerRadius`）；边界随机（椭圆、缺角、噪声轮廓、条状抹痕、卫星瓣）。禁止统一圆球。
+  3. **配色**：从该岛 `RIFT_FRAGMENT_DATA` 地板 / 墙 bias 推导 HSV，往青绿轴拉，再按 `contaminationAge` 偏蓝或偏绿，最后 `nearestPalette` 量化到 `docs/art/palette.json`。禁止再写死一组 `CONTAM_*` 当所有岛的污染色。禁止给色板加新色。
+  4. **呼吸**：覆盖场着色器每帧扩收缩轮廓；纹理只烤一次（R=覆盖、G=相位）。禁止回到 CPU 整张 ImageData 重画。无 WebGL 则不加呼吸叠层。
+  5. **接线**：出击与练习场地图课走同一套 `generateRiftLayout` + `bakeGround` cluster + `RiftSurfacePainter`。生产默认是 `cluster`。练习场可保留晶结 / 溶蚀 / 平涂作对照，**不得进出击**。
+  6. **连通**：簇是 `putFloorRgb` 漆，只画在已连通的可走地板上。不改墙、不改碰撞。装饰层不得拆连通（已有 FATAL 规则）。
+- Impact: `art-direction.md` §4.2；`docs/art/rift-fragment-surfaces.md`；`bakeGround` / `RiftSurfacePainter` 默认；`contam-breath-pipeline.ts`；练习场对照仍在。出击请人看一眼迷雾下呼吸是否过亮。
+
 ## DEC-068: 玩家加厚像素 + 灯尘接到出击 Player
 - Date: 2026-08-20
 - Phase: Iterative Development（Slice 9 之后的表现收口，不是新 Slice）

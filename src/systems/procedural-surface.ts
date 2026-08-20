@@ -20,7 +20,10 @@ import {
   compositeStaticPaint,
   paintSkyShade,
   skyOverlaySize,
+  type ClusterPulseField,
+  type ContaminationDrawStyle,
 } from '@/generation/preview-paint';
+import { paintClusterBreath } from '@/systems/cluster-pulse';
 import type { AtmosphereField, RuinedMask } from '@/generation/types';
 
 export class RiftSurfacePainter {
@@ -42,11 +45,20 @@ export class RiftSurfacePainter {
 
   private sprites: Phaser.GameObjects.Image[] = [];
   private textureKeys: string[] = [];
-
   private lastPaintAt = Number.NEGATIVE_INFINITY;
   private elapsedMs = 0;
 
-  mount(scene: Phaser.Scene, ruins: RuinedMask, key: string, depth: number): void {
+  private clusterBreathCanvas: Phaser.Textures.CanvasTexture | null = null;
+  private clusterBreathImage: ImageData | null = null;
+  private pulseField: ClusterPulseField | null = null;
+
+  mount(
+    scene: Phaser.Scene,
+    ruins: RuinedMask,
+    key: string,
+    depth: number,
+    opts?: { contaminationDraw?: ContaminationDrawStyle; liveClusterBreath?: boolean },
+  ): void {
     this.release();
     this.scene = scene;
 
@@ -56,7 +68,9 @@ export class RiftSurfacePainter {
     this.field = ruins.atmosphere ?? null;
     this.paintTile = LIVE_PAINT_PX_PER_TILE;
 
-    const ground = bakeGround(ruins, this.paintTile);
+    const draw = opts?.contaminationDraw ?? 'cluster';
+    const liveBreath = opts?.liveClusterBreath === true && draw === 'cluster';
+    const ground = bakeGround(ruins, this.paintTile, draw, liveBreath);
     this.paintWidth = ground.width;
     this.paintHeight = ground.height;
     const work = new Float32Array(ground.raw.length);
@@ -75,6 +89,22 @@ export class RiftSurfacePainter {
 
     this.elapsedMs = 0;
     this.lastPaintAt = Number.NEGATIVE_INFINITY;
+    this.pulseField = null;
+    this.clusterBreathCanvas = null;
+    this.clusterBreathImage = null;
+
+    if (liveBreath && ground.clusterPulse && ground.clusterPulse.organisms.length > 0) {
+      this.pulseField = ground.clusterPulse;
+      const breathKey = `${key}-cluster-breath`;
+      this.clusterBreathCanvas = this.makeCanvas(scene, breathKey, ground.width, ground.height);
+      this.clusterBreathCanvas.setFilter(Phaser.Textures.FilterMode.NEAREST);
+      this.clusterBreathImage = this.clusterBreathCanvas
+        .getContext()
+        .createImageData(ground.width, ground.height);
+      const breathSprite = scene.add.image(0, 0, breathKey).setOrigin(0, 0).setDepth(depth + 0.05);
+      breathSprite.setDisplaySize(this.worldWidth, this.worldHeight);
+      this.sprites.push(breathSprite);
+    }
 
     if (this.field) {
       this.elapsedMs = (((this.field.phase % 1) + 1) % 1) * SKY_SLIDE_PERIOD_MS;
@@ -102,10 +132,12 @@ export class RiftSurfacePainter {
 
       this.paintSky(this.field.phase ?? 0.5, true);
     }
+    this.paintPulse();
   }
 
   update(deltaMs: number): void {
     this.elapsedMs += deltaMs;
+    this.paintPulse();
     if (!this.field) return;
     const phase = (this.elapsedMs / SKY_SLIDE_PERIOD_MS) % 1;
     this.paintSky(phase, false);
@@ -113,6 +145,19 @@ export class RiftSurfacePainter {
 
   destroy(): void {
     this.release();
+  }
+
+  private paintPulse(): void {
+    if (!this.clusterBreathCanvas || !this.clusterBreathImage || !this.pulseField) return;
+    paintClusterBreath(
+      this.clusterBreathImage.data,
+      this.clusterBreathImage.width,
+      this.clusterBreathImage.height,
+      this.pulseField,
+      this.elapsedMs,
+    );
+    this.clusterBreathCanvas.getContext().putImageData(this.clusterBreathImage, 0, 0);
+    this.clusterBreathCanvas.refresh();
   }
 
   private paintSky(phase: number, force: boolean): void {
@@ -167,6 +212,9 @@ export class RiftSurfacePainter {
     this.textureKeys = [];
     this.scene = null;
     this.field = null;
+    this.pulseField = null;
+    this.clusterBreathCanvas = null;
+    this.clusterBreathImage = null;
     this.groundCanvas = null;
     this.dimCanvas = null;
     this.rimCanvas = null;

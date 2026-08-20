@@ -2,9 +2,9 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-08-19
+last-modified: 2026-08-20
 last-closed-slice: 9
-note: Slice 9「音乐 / 音效」COMPLETE（2026-08-19）。DEC-064 的 7/8/9 已完。Slice 10 不做。
+note: Slice 9「音乐 / 音效」COMPLETE（2026-08-19）。DEC-064 的 7/8/9 已完。Slice 10 不做。Slice 9 之后表现收口：DEC-069 崩坏簇接到出击烤漆；DEC-070 练习场整团胀缩 PASS、出击暂不挂活层（不是新 Slice）。
 ---
 
 # Roadmap
@@ -32,6 +32,8 @@ note: Slice 9「音乐 / 音效」COMPLETE（2026-08-19）。DEC-064 的 7/8/9 �
 ## 当前 Slice
 
 **无进行中 Slice。** DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。撤离多样性不做。
+
+Slice 9 之后表现收口（不是新 Slice）：DEC-069 把裂隙地面污染从矩形平涂改成崩坏簇，并接到出击烤漆。DEC-070：练习场已锁整团胀缩呼吸（人眼 PASS）；出击暂不挂活层。
 
 ## 计划中的 Slices（近期方向，DEC-064 已锁 7/8/9）
 
