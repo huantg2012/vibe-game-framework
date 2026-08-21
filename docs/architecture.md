@@ -2,10 +2,10 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-21
+last-modified: 2026-08-22
 approved-date: 2026-07-22
 changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），逻辑为实现完成、体验未验证；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2（DEC-079）：** gym 句法课三方案渲染抽卡，出击不接；合同 `docs/tasks/iteration-2.md`。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），逻辑为实现完成、体验未验证；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2（DEC-079 / DEC-080）：** gym 句法课第一轮三方案对照已冻结；第二轮默认方案 D 混装。出击不接；合同 `docs/tasks/iteration-2.md`。
 ---
 
 # 技术架构
@@ -81,7 +81,8 @@ src/
 │   ├── fragment-roll.ts        # 每次踏入抽 contaminationAge × ruinSeverity
 │   ├── rift-layout.ts          # 出击布局：锚+抖动+换路硬保证+FragmentRoll
 │   ├── contamination-draw.ts   # 污染句法抽卡纯函数
-│   ├── contamination-pins.ts   # 墙缘 / 簇核 / 走廊盒钉层（只读格子）
+│   ├── contamination-pins.ts   # 墙缘 / 簇核 / 走廊盒钉层（只读格子；禁止改 collectWallEdges 集合）
+│   ├── wall-edge-path.ts       # 墙缘格集合 → 有序墙皮路径（gymLiveMotion；不改出击钉层）
 │   ├── types.ts                # OutlineMask / RuinedMask / GeneratedRiftLayout 契约
 │   └── index.ts                # 生成器出口（布点后续批次追加）
 ├── managers/
@@ -202,14 +203,14 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
 | TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线，依赖 Phaser 视锥裁剪） | create(scene, map, config): TilemapLayer, getLayer(), getWorldSize(), destroy() | 已实现（T6） |
 | AISystem | src/systems/ai/ | 两种感知剖面共用一份五态 FSM（10Hz tick / 单射线）+ 移动/巡逻 + 寻路预算调度；拥有敌人实体的生命周期。剖面来自 EnemyData，禁止第二份 FSM | create(scene, spawns, occluders, walk), update(dt, playerPos, playerIsMoving), postUpdate(dt), getEnemies(), getEnemyById(), reportNoise(pos, radius, level), reportDamage(enemyId, sourcePos), despawn(enemyId), onPlayerLost(), setVisibilityProvider(), setCueListener(), addWallCollider(layer), getSprites(), getStats(), destroy() | 已实现（T7；Slice 8 C1 剖面泛化） |
-| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染句法：底材 × 孔谱 × 词素。出击已接甲填法 + 乙丙丁宿主 + 抽卡 CSV。迭代 2：形态渲染仍探索中（gym only） | `drawSortie` / 钉层 / `encounter:identified` | 迭代 1 逻辑已接（体验未验证）；渲染见迭代 2 |
-| ContaminationHostSystem | src/systems/contamination-host-system.ts | 乙缝核邻格抽打、丙簇踩踏混乱、丁体积场。无走廊碰撞，无第二 FSM。`create` 的 combat / chaos 可缺（传 `null`）：练习场可只画、不结算伤害/混乱。迭代 2 gym 可 `setSkipPaint`（默认 false，出击不调）给候选视觉层让路 | create(scene, layout, combat, chaos, getVisibilityAt)（combat / chaos 可为 null）, update, getSubjects, getLastDraw, getVolumeSightMult, setSkipPaint, getVisualPin, getVisualSignal, destroy | 进行中（迭代 1 逻辑；迭代 2 视觉探索） |
+| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染句法：底材 × 孔谱 × 词素。出击已接甲填法 + 乙丙丁宿主 + 抽卡 CSV。迭代 2：形态渲染仍探索中（gym only；第二轮方案 D） | `drawSortie` / 钉层 / `encounter:identified` | 迭代 1 逻辑已接（体验未验证）；渲染见迭代 2 |
+| ContaminationHostSystem | src/systems/contamination-host-system.ts | 乙缝核邻格抽打、丙簇踩踏混乱、丁体积场。无走廊碰撞，无第二 FSM。`create` 的 combat / chaos 可缺（传 `null`）。迭代 2 gym 可 `setSkipPaint`。`gymLiveMotion` 默认 false（出击不传）；句法课传 true 时乙核钉缝并填 `pin.attach`，游荡/盒移仍是后续任务 | create(scene, layout, combat, chaos, getVisibilityAt, options?)（combat / chaos 可为 null；`options.gymLiveMotion` 默认 false）, bindPractice(..., options?), update, getSubjects, getLastDraw, getVolumeSightMult, setSkipPaint, getVisualPin, getVisualSignal, destroy | 进行中（迭代 1 逻辑；迭代 2 视觉探索） |
 | EncounterNarration | src/ui/dom/encounter-narration.ts | 污染句法识别表面：随身罩一行记录，分节点，限频。禁止头上名字 | create / tick / destroy；挂 `#dom-ui-root` / `#rift-encounter-log` | 进行中（迭代 1，审美待人终审） |
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
-| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：污染句法 `?lesson=lexicon`（固定观察院子、无敌玩家、配置表点生成、击杀按当前配置再刷；甲 / 乙丙丁走出击同一套 AI / 战斗 / 宿主；**迭代 2** 侧栏 `#gym-lex-renderer` 切 `src/gym/form-renderers/` 候选，出击不接）；敌人巡逻（默认院子，仍走出击像素）；玩家外形 `?lesson=player`；地图生成 `?lesson=map`（框住整岛，甲只是色块，仍物化宿主）。地图课侧栏可切四种污染烤漆；生产缺省与出击同为崩坏簇；崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 / DEC-071）。接缝晶结 / 坏格溶蚀 / 平涂只对照。敌人课必须复用 AISystem / Enemy / 与出击同一套敌人像素。Agent 入口 `docs/dev/gym.md`。角色外形 HOW：`docs/art/actor-pixels.md`。渲染探索合同：`docs/tasks/iteration-2.md` | `npm run gym` 或 `/gym.html`；污染句法 `/gym.html?lesson=lexicon`；玩家课 `/gym.html?lesson=player`；地图课 `/gym.html?lesson=map` | 已实现（2026-08-20）；迭代 2 T0 脚手架已交 |
-| GymFormRenderers | src/gym/form-renderers/ | 迭代 2 gym-only 污染体视觉层。接口 `ContaminationFormRenderer.attach`；三方案分文件，T0 空壳 `ready: false`。禁止 `RiftScene` import | `getFormRenderer` / `attach` / `FormVisual.update` | T0 脚手架已交（DEC-079，等人选） |
+| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：污染句法 `?lesson=lexicon`（固定观察院子、默认无敌可开「感受伤害」、配置表点生成；**迭代 2 第二轮** 默认 `#gym-lex-renderer` = 方案 D，A/B/C 冻结对照；`#gym-lex-fragment` 五选一偏色院子；出击不接）；敌人巡逻（默认院子，仍走出击像素）；玩家外形 `?lesson=player`；地图生成 `?lesson=map`。Agent 入口 `docs/dev/gym.md`。合同：`docs/tasks/iteration-2.md` | `npm run gym` 或 `/gym.html`；污染句法 `/gym.html?lesson=lexicon` | 已实现（2026-08-20）；迭代 2 第二轮进行中 |
+| GymFormRenderers | src/gym/form-renderers/ | 迭代 2 gym-only 污染体视觉层。接口 `ContaminationFormRenderer.attach`。A/B/C 冻结对照。第二轮方案 D（`d-mixed` + `d/**`）是唯一可写实现。`pin.attach` 表达墙法线。禁止 `RiftScene` import | `getFormRenderer` / `attach` / `FormVisual.update` | 第二轮进行中（DEC-080） |
 | EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 程序像素（渗透体 32×32 / 改写体 32×48；GameObject 不旋转）+ teal 指示物 + 残影 + 脱落尘 + 木偶步态 + AI 状态块 + 句法形态（T2 甲两种填法）。`setVisualSuppressed` 默认 false，仅 gym 句法课在候选 `ready` 时调用 | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getForm/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection/setVisualSuppressed | 已实现（T7；Slice 8 C1 rewriter；DEC-066 锁定程序像素；迭代 1 T2 getForm；迭代 2 T0 可藏默认身体） |
 | InfiltratorSprite | src/entities/infiltrator-sprite.ts | 渗透体密像素 32×32 四向 + 步态帧（前倾猎食）。碰撞仍 20。成品，不换精灵表 | generateInfiltratorPlaceholders(scene), infiltratorMotionTexture | 已实现（DEC-066） |
 | ContamFlakes | src/entities/contam-flakes.ts | 敌人青绿 1px 脱落尘 + 改写体脚下污斑。迈步可爆发 | generateContamFlakeTextures, ContamFlakes, ContamStain | 已实现（2026-08-20） |

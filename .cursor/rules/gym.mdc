@@ -15,7 +15,7 @@ globs: gym.html,src/gym/**,docs/dev/gym.md
 - 新敌人角色：`data/enemies.csv` → codegen → 给 `GYM_LOOPS` 补 8 点环。
 - 玩家外形课：`gym.html?lesson=player`。与出击 `Player` 同一套加厚像素 + 灯尘（DEC-068）。角色外形怎么验：`docs/art/actor-pixels.md`。
 - 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter` + `ContaminationHostSystem`（乙/丙/丁只画；不刷会走的甲）；污染生产缺省崩坏簇（DEC-069）。崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 画面锁，DEC-071 接到出击）。侧栏另三种烤漆只对照。
-- 污染句法课：`gym.html?lesson=lexicon`。固定观察院子 + 无敌玩家 + 配置表点生成。甲 / 乙 / 丙 / 丁走出击同一套 `AISystem` / `CombatSystem` / `ContaminationHostSystem`。击杀后按当前配置再刷。不开迷雾。**迭代 2（DEC-079）：** 仅本课可切 `#gym-lex-renderer`（`src/gym/form-renderers/`），出击不接。合同：`docs/tasks/iteration-2.md`。
+- 污染句法课：`gym.html?lesson=lexicon`。固定观察院子 + 默认无敌玩家 + 配置表点生成。甲 / 乙 / 丙 / 丁走出击同一套 `AISystem` / `CombatSystem` / `ContaminationHostSystem`。击杀后按当前配置再刷。不开迷雾。**迭代 2（DEC-079 / DEC-080）：** 仅本课可切 `#gym-lex-renderer`（`src/gym/form-renderers/`）。A/B/C 冻结对照；第二轮默认方案 D。`#gym-lex-fragment` 给院子碎片身份；「感受伤害」默认关。出击不接。合同：`docs/tasks/iteration-2.md`。
 
 ## 禁止
 
@@ -24,3 +24,4 @@ globs: gym.html,src/gym/**,docs/dev/gym.md
 - 把练习场侧栏当成游戏内界面去做 UX 翻修
 - 为出击另写一套崩坏簇呼吸（已与练习场共用 `liveClusterBreath`）
 - 把候选渲染器接到 `RiftScene`（人选之前）
+- 改 `collectWallEdges` 的墙格集合来「顺便」给乙做路径（有序路径必须是新纯函数；出击钉层集合不变）

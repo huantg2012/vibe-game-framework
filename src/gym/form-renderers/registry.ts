@@ -1,6 +1,7 @@
 import { schemeAPixelGrammar } from '@/gym/form-renderers/scheme-a-pixel-grammar';
 import { schemeBSurfaceOrganism } from '@/gym/form-renderers/scheme-b-surface-organism';
 import { schemeCStampCompositor } from '@/gym/form-renderers/scheme-c-stamp-compositor';
+import { schemeDMixed } from '@/gym/form-renderers/scheme-d-mixed';
 import {
   FORM_RENDERER_IDS,
   type ContaminationFormRenderer,
@@ -11,6 +12,7 @@ const SCHEMES: Record<Exclude<FormRendererId, 'placeholder'>, ContaminationFormR
   'a-pixel-grammar': schemeAPixelGrammar,
   'b-surface-organism': schemeBSurfaceOrganism,
   'c-stamp-compositor': schemeCStampCompositor,
+  'd-mixed': schemeDMixed,
 };
 
 /** `placeholder` and unknown ids return null: gym keeps the current stand-in. */

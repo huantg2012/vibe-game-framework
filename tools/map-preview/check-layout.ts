@@ -14,6 +14,7 @@ import {
   skyOverlaySize,
 } from '../../src/generation/preview-paint.ts';
 import { generateRiftLayout } from '../../src/generation/rift-layout.ts';
+import { selfCheckWallEdgePath, orderWallEdgeTiles, sameWallEdgeTileSet } from '../../src/generation/wall-edge-path.ts';
 import { RIFT_MAP } from '../../src/scenes/rift-map-data.ts';
 import { TileType } from '../../src/types/game-types.ts';
 import type { GeneratedRiftLayout } from '../../src/generation/types.ts';
@@ -110,6 +111,16 @@ const forbidden = RIFT_MAP.layout.extractionPoint.position;
 const ages = new Set<string>();
 const ruins = new Set<string>();
 
+{
+  try {
+    selfCheckWallEdgePath();
+    console.log('ok wall-edge-path self-check (set-eq, walks)');
+  } catch (err) {
+    failed++;
+    console.error(`FAIL wall-edge-path self-check: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
+
 for (const seed of SEEDS) {
   const layout = generateRiftLayout(seed);
   const { land, walls } = landWalls(layout.tileMap);
@@ -196,6 +207,14 @@ for (const seed of SEEDS) {
     layout.contaminationPins.wallEdges.every((e) => e.strikeFloors.length > 0),
     `seed ${seed}: wall edge with no strike floors`,
   );
+  for (let i = 0; i < layout.contaminationPins.wallEdges.length; i++) {
+    const edge = layout.contaminationPins.wallEdges[i]!;
+    const ordered = orderWallEdgeTiles(edge.tiles);
+    assert(
+      sameWallEdgeTileSet(edge.tiles, ordered),
+      `seed ${seed}: wall-edge[${i}] orderWallEdgeTiles changed the tile set`,
+    );
+  }
   assert(layout.contaminationPins.corridorAabbs.length >= 0, `seed ${seed}: corridor field missing`);
 
   console.log(

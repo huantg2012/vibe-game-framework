@@ -11,6 +11,8 @@ import { Enemy } from '@/entities/enemy-factory';
 import { Player } from '@/entities/player';
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import { mix32 } from '@/generation/seed-fork';
+import { orderWallEdgeTiles, sameWallEdgeTileSet } from '@/generation/wall-edge-path';
+import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import type { EnemyRole } from '@/generated/enemy-data';
 import { DISPLAY_TOKEN_DATA } from '@/generated/contamination-lexicon-data';
 import {
@@ -18,6 +20,7 @@ import {
   lexiconJiaSpawn,
   lexiconPlayerSpawn,
   lexiconPracticePins,
+  LEXICON_DEFAULT_FRAGMENT,
   LEXICON_JIA_WAYPOINTS,
 } from '@/gym/gym-lexicon-arena';
 import {
@@ -35,6 +38,12 @@ import {
 } from '@/gym/gym-lexicon-form';
 import type { FormVisual } from '@/gym/form-renderers/form-renderer';
 import { getFormRenderer } from '@/gym/form-renderers/registry';
+import {
+  isLexiconFragmentId,
+  LEXICON_FRAGMENT_IDS,
+  rgbToHex,
+  yardSurfaceColors,
+} from '@/gym/form-renderers/d/fragment-ramp';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem } from '@/systems/chaos-system';
 import { CombatSystem } from '@/systems/combat-system';
@@ -43,12 +52,13 @@ import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
 import { GameEvent } from '@/types/events';
 import { TileType, type Vector2 } from '@/types/game-types';
-import type { EnemySpawnData } from '@/types/map-types';
+import type { EnemySpawnData, TileMapData } from '@/types/map-types';
 
 const RESPAWN_MS = 800;
-const DEPTH = { surface: 0, bing: 1, yi: 20, player: 30 } as const;
+const DEPTH = { surface: 0, yardBias: 0.05, bing: 1, yi: 20, player: 30 } as const;
+const GYM_HOST_OPTS = { gymLiveMotion: true } as const;
 const INTRO_STATUS =
-  '玩家无敌。WASD 移动，空格挥击。点生成后刷当前配置；击杀后按当前配置再刷。不开迷雾。';
+  '玩家默认无敌。侧栏可开「感受伤害」。WASD 移动，空格挥击。点生成后刷当前配置；击杀后按当前配置再刷。不开迷雾。';
 
 function gymVisible(_p: Readonly<Vector2>): number {
   return 1;
@@ -70,13 +80,17 @@ export class GymLexiconScene extends Phaser.Scene {
   private spawnSerial = 0;
   private respawnTimer: Phaser.Time.TimerEvent | null = null;
   private readonly visuals = new Map<string, FormVisual>();
+  private tileMap: TileMapData | null = null;
+  private yardBias: Phaser.GameObjects.Graphics | null = null;
 
   constructor() {
     super({ key: 'GymLexiconScene' });
   }
 
   create(): void {
-    const tileMap = createLexiconObserveMap();
+    const fragmentTypeId = LEXICON_DEFAULT_FRAGMENT;
+    const tileMap = createLexiconObserveMap(fragmentTypeId);
+    this.tileMap = tileMap;
     const grid = new TileGrid(tileMap);
     const layer = this.tiles.create(this, tileMap, {
       tilesetKey: 'placeholder-rift-tileset',
@@ -93,7 +107,10 @@ export class GymLexiconScene extends Phaser.Scene {
     this.player.create(this, { spawn: lexiconPlayerSpawn(), depth: DEPTH.player, facing: 'right' });
     this.physics.add.collider(this.player.getSprite(), layer);
     camera.startFollow(this.player.getSprite(), true);
+    this.yardBias = this.add.graphics().setDepth(DEPTH.yardBias);
+    this.paintYardBias(fragmentTypeId);
     this.paintSeats();
+    this.logWallEdgePathCheck();
 
     this.ai.create(this, [], grid, grid, { requireExactlyOneRewriter: false });
     this.ai.setVisibilityProvider(gymVisible);
@@ -105,7 +122,7 @@ export class GymLexiconScene extends Phaser.Scene {
     this.combat.setGodMode(true);
 
     this.chaos = new ChaosSystem({ startingValue: 0 });
-    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible);
+    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible, GYM_HOST_OPTS);
 
     this.bindAttackKey();
     this.bindForm();
@@ -161,6 +178,34 @@ export class GymLexiconScene extends Phaser.Scene {
     }
   }
 
+  private paintYardBias(fragmentTypeId: string): void {
+    const map = this.tileMap;
+    const gfx = this.yardBias;
+    if (!map || !gfx) return;
+    const colors = yardSurfaceColors(fragmentTypeId);
+    const tile = map.tileSize;
+    gfx.clear();
+    for (let row = 0; row < map.rows; row++) {
+      for (let col = 0; col < map.cols; col++) {
+        const kind = map.tiles[row]![col];
+        if (kind === TileType.WALL) gfx.fillStyle(rgbToHex(colors.wall), 1);
+        else if (kind === TileType.FLOOR) gfx.fillStyle(rgbToHex(colors.floor), 1);
+        else continue;
+        gfx.fillRect(col * tile, row * tile, tile, tile);
+      }
+    }
+  }
+
+  private logWallEdgePathCheck(): void {
+    const edge = lexiconPracticePins().wallEdges[0];
+    if (!edge) return;
+    const ordered = orderWallEdgeTiles(edge.tiles);
+    const ok = sameWallEdgeTileSet(edge.tiles, ordered);
+    console.info(
+      `[gym lexicon] wall-edge path set-eq ${ok ? 'ok' : 'FAIL'} in=${edge.tiles.length} out=${ordered.length}`,
+    );
+  }
+
   private bindAttackKey(): void {
     const keyboard = this.input.keyboard;
     if (!keyboard) return;
@@ -177,6 +222,14 @@ export class GymLexiconScene extends Phaser.Scene {
     if (renderer instanceof HTMLSelectElement) {
       renderer.addEventListener('change', this.onRendererChange);
     }
+    const fragment = document.getElementById('gym-lex-fragment');
+    if (fragment instanceof HTMLSelectElement) {
+      fragment.addEventListener('change', this.onFragmentChange);
+    }
+    const feelHit = document.getElementById('gym-lex-feel-hit');
+    if (feelHit instanceof HTMLInputElement) {
+      feelHit.addEventListener('change', this.onFeelHitChange);
+    }
     for (const id of [
       'gym-lex-portfolio',
       'gym-lex-coverage',
@@ -192,6 +245,8 @@ export class GymLexiconScene extends Phaser.Scene {
       document.getElementById(id)?.addEventListener('change', this.onFieldChange);
     }
     this.refillSelects(defaultConfig());
+    this.fillFragmentSelect(LEXICON_DEFAULT_FRAGMENT);
+    this.applyFeelHit();
   }
 
   private readonly onFieldChange = (event: Event): void => {
@@ -280,12 +335,40 @@ export class GymLexiconScene extends Phaser.Scene {
     this.noteRendererStatus(this.lastForm ? '已按当前配置生成。击杀后按侧栏现有选项再刷。' : INTRO_STATUS);
   };
 
+  private readonly onFragmentChange = (): void => {
+    this.paintYardBias(this.readFragmentId());
+    this.syncCandidateVisuals();
+  };
+
+  private readonly onFeelHitChange = (): void => {
+    this.applyFeelHit();
+  };
+
+  private applyFeelHit(): void {
+    const feel = document.getElementById('gym-lex-feel-hit');
+    const on = feel instanceof HTMLInputElement && feel.checked;
+    this.combat.setGodMode(!on);
+  }
+
+  private fillFragmentSelect(selected: string): void {
+    const options = LEXICON_FRAGMENT_IDS.map((id) => ({
+      id,
+      label: RIFT_FRAGMENT_DATA[id]?.displayName ?? id,
+    }));
+    fillSelect('gym-lex-fragment', options, selected);
+  }
+
+  private readFragmentId(): string {
+    const raw = selectValue('gym-lex-fragment');
+    return isLexiconFragmentId(raw) ? raw : LEXICON_DEFAULT_FRAGMENT;
+  }
+
   private clearPopulation(): void {
     this.cancelRespawn();
     this.destroyVisuals();
     for (const enemy of [...this.ai.getEnemies()]) this.ai.despawn(enemy.getId());
     this.hosts.clearHosts();
-    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible);
+    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible, GYM_HOST_OPTS);
     this.combat.noteRosterChanged();
     this.spawnSerial = 0;
   }
@@ -356,7 +439,7 @@ export class GymLexiconScene extends Phaser.Scene {
     const lines = [
       form ? describeForm(form) : '尚未生成。选维度后点生成。',
       `在场 甲 ${jia} · 宿主 ${hosts} / 目标 ${form ? this.lastCount : 0}`,
-      `混乱 ${chaos.toFixed(1)}（丙踩踏 / 丁体积会加；玩家无敌）`,
+      `混乱 ${chaos.toFixed(1)}（丙踩踏 / 丁体积会加；${feelHitOn() ? '可受伤' : '玩家无敌'}）`,
     ];
     el.textContent = lines.join('\n');
   }
@@ -371,6 +454,7 @@ export class GymLexiconScene extends Phaser.Scene {
     }
     if (!ready || !renderer || !this.lastForm) return;
     const form = this.lastForm;
+    const fragmentTypeId = this.readFragmentId();
     if (form.portfolio === 'jia') {
       for (const view of this.ai.getEnemies()) {
         const visual = renderer.attach({
@@ -378,6 +462,7 @@ export class GymLexiconScene extends Phaser.Scene {
           form,
           seed: mix32(0, view.getId()),
           depth: ENEMY_DEPTH,
+          fragmentTypeId,
         });
         this.visuals.set(view.getId(), visual);
       }
@@ -390,6 +475,7 @@ export class GymLexiconScene extends Phaser.Scene {
         form,
         seed: mix32(0, subject.id),
         depth: depthForPortfolio(form.portfolio),
+        fragmentTypeId,
         pin,
       });
       this.visuals.set(subject.id, visual);
@@ -464,6 +550,10 @@ export class GymLexiconScene extends Phaser.Scene {
     generate?.removeEventListener('click', this.onGenerateClick);
     const renderer = document.getElementById('gym-lex-renderer');
     renderer?.removeEventListener('change', this.onRendererChange);
+    const fragment = document.getElementById('gym-lex-fragment');
+    fragment?.removeEventListener('change', this.onFragmentChange);
+    const feelHit = document.getElementById('gym-lex-feel-hit');
+    feelHit?.removeEventListener('change', this.onFeelHitChange);
     this.formBound = false;
     if (this.attackKey) {
       this.input.keyboard?.removeKey(this.attackKey, true);
@@ -475,6 +565,9 @@ export class GymLexiconScene extends Phaser.Scene {
     this.player.destroy();
     this.chaos?.destroy();
     this.chaos = null;
+    this.yardBias?.destroy();
+    this.yardBias = null;
+    this.tileMap = null;
     this.tiles.destroy();
   }
 }
@@ -495,6 +588,11 @@ function depthForPortfolio(portfolio: ContaminationForm['portfolio']): number {
 function selectValue(id: string): string {
   const el = document.getElementById(id);
   return el instanceof HTMLSelectElement ? el.value : '';
+}
+
+function feelHitOn(): boolean {
+  const el = document.getElementById('gym-lex-feel-hit');
+  return el instanceof HTMLInputElement && el.checked;
 }
 
 function fillSelect(

@@ -11,6 +11,9 @@ import type { TileMapData } from '@/types/map-types';
 export const LEXICON_ARENA_COLS = 20;
 export const LEXICON_ARENA_ROWS = 14;
 
+/** Default matches a common map-lesson fragment (clinic). Geometry ignores the id. */
+export const LEXICON_DEFAULT_FRAGMENT = 'frag-clinic';
+
 const TILE = GAME_CONSTANTS.TILE_SIZE;
 
 function isCover(col: number, row: number): boolean {
@@ -21,7 +24,10 @@ function isBorder(col: number, row: number): boolean {
   return col === 0 || row === 0 || col === LEXICON_ARENA_COLS - 1 || row === LEXICON_ARENA_ROWS - 1;
 }
 
-export function createLexiconObserveMap(): TileMapData {
+export function createLexiconObserveMap(
+  fragmentTypeId: string = LEXICON_DEFAULT_FRAGMENT,
+): TileMapData {
+  void fragmentTypeId;
   const tiles: number[][] = [];
   for (let row = 0; row < LEXICON_ARENA_ROWS; row++) {
     const line: number[] = [];

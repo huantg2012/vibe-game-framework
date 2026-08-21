@@ -66,7 +66,8 @@
         padding: 4px 6px;
         font: inherit;
       }
-      #gym-map-controls .gym-check {
+      #gym-map-controls .gym-check,
+      #gym-lexicon-controls .gym-check {
         display: flex;
         align-items: center;
         gap: 8px;
@@ -137,11 +138,14 @@
           <h2>配置表</h2>
           <label for="gym-lex-renderer">渲染方案</label>
           <select id="gym-lex-renderer">
+            <option value="d-mixed" selected>方案 D：混装</option>
             <option value="placeholder">现行占位</option>
-            <option value="a-pixel-grammar">方案 A：程序像素词法</option>
-            <option value="b-surface-organism">方案 B：地表方言活体</option>
-            <option value="c-stamp-compositor">方案 C：词素层叠</option>
+            <option value="a-pixel-grammar">方案 A：程序像素词法 · 对照（已冻结）</option>
+            <option value="b-surface-organism">方案 B：地表方言活体 · 对照（已冻结）</option>
+            <option value="c-stamp-compositor">方案 C：词素层叠 · 对照（已冻结）</option>
           </select>
+          <label for="gym-lex-fragment">碎片身份</label>
+          <select id="gym-lex-fragment"></select>
           <label for="gym-lex-portfolio">孔谱</label>
           <select id="gym-lex-portfolio"></select>
           <label for="gym-lex-coverage">覆盖深度</label>
@@ -162,6 +166,10 @@
           <select id="gym-lex-utterance"></select>
           <label for="gym-lex-count">数量</label>
           <select id="gym-lex-count"></select>
+          <label class="gym-check" for="gym-lex-feel-hit">
+            <input id="gym-lex-feel-hit" type="checkbox" />
+            感受伤害（默认关＝无敌）
+          </label>
           <div class="gym-actions">
             <button id="gym-lexicon-generate" type="button">生成</button>
           </div>

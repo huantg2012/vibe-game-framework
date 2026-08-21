@@ -1,6 +1,12 @@
 /**
  * Non-human contamination hosts: 乙缝核 / 丙簇核 / 丁体积 (DEC-076).
  * Not a second FSM. No corridor collision. Depth stays below the vision mask.
+ *
+ * `gymLiveMotion` (default false): practice lexicon only. `RiftScene.create` does
+ * not pass it, so a sortie keeps 乙 at wall-tile centre, `tickYi` / `tickDing`
+ * unmoved, damage still by host kind. When true, spawn 乙 core at the wall-floor
+ * seam and `getVisualPin` fills `attach`. Walking / box drift is R2-C2 — this
+ * file must not start roaming on its own.
  */
 
 import Phaser from 'phaser';
@@ -9,6 +15,7 @@ import { eventBus } from '@/core/event-bus';
 import { drawSortie, type ContaminationForm, type SortieDraw } from '@/generation/contamination-draw';
 import { mix32 } from '@/generation/seed-fork';
 import type { ClusterCorePin, ContaminationPins, CorridorAabb, GeneratedRiftLayout, WallEdgePolyline } from '@/generation/types';
+import { wallAttachForTile, type FormWallAttach } from '@/generation/wall-edge-path';
 import type { CombatSystem } from '@/systems/combat-system';
 import type { ChaosSystem } from '@/systems/chaos-system';
 import { GameEvent } from '@/types/events';
@@ -36,9 +43,18 @@ interface HostBase {
 
 interface YiHost extends HostBase {
   kind: 'yi';
+  tile: { col: number; row: number };
   strikeFloors: readonly { col: number; row: number }[];
   windupMs: number;
   telegraph: Phaser.GameObjects.Graphics;
+}
+
+export interface HostSystemOptions {
+  /**
+   * Practice-field only. Default false.
+   * Argument: RiftScene does not pass this, so sortie spawn stays tile-centre.
+   */
+  readonly gymLiveMotion?: boolean;
 }
 
 interface BingHost extends HostBase {
@@ -62,6 +78,7 @@ export interface HostVisualPin {
   readonly y: number;
   readonly width?: number;
   readonly height?: number;
+  readonly attach?: FormWallAttach;
 }
 
 export type HostVisualSignal = 'idle' | 'strike' | 'inflated' | 'awake';
@@ -80,6 +97,8 @@ export class ContaminationHostSystem {
   private spawnSeq = 0;
   /** Gym lexicon candidate layer. Default false: still paint stand-in geometry. */
   private skipPaint = false;
+  /** Gym lexicon only. Default false: sortie-identical cores and ticks. */
+  private gymLiveMotion = false;
 
   /**
    * Materialize 乙/丙/丁 from the same `drawSortie` as a sortie.
@@ -91,12 +110,14 @@ export class ContaminationHostSystem {
     combat: CombatSystem | null,
     chaos: ChaosSystem | null,
     getVisibilityAt: (p: Readonly<Vector2>) => number,
+    options?: HostSystemOptions,
   ): void {
     this.destroy();
     this.hosts = [];
     this.combat = combat;
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
+    this.gymLiveMotion = options?.gymLiveMotion === true;
 
     const pins = layout.contaminationPins;
     const rng = new SeededRandom(mix32(layout.seed, 'lexicon-hosts'));
@@ -133,6 +154,7 @@ export class ContaminationHostSystem {
     this.pins = null;
     this.spawnSeq = 0;
     this.skipPaint = false;
+    this.gymLiveMotion = false;
   }
 
   /**
@@ -145,6 +167,7 @@ export class ContaminationHostSystem {
     combat: CombatSystem | null,
     chaos: ChaosSystem | null,
     getVisibilityAt: (p: Readonly<Vector2>) => number,
+    options?: HostSystemOptions,
   ): void {
     this.clearHosts();
     this.scene = scene;
@@ -153,6 +176,7 @@ export class ContaminationHostSystem {
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
     this.spawnSeq = 0;
+    this.gymLiveMotion = options?.gymLiveMotion === true;
   }
 
   clearHosts(): void {
@@ -213,7 +237,11 @@ export class ContaminationHostSystem {
   getVisualPin(hostId: string): HostVisualPin | null {
     const host = this.hosts.find((h) => h.id === hostId && h.alive);
     if (!host) return null;
-    if (host.kind === 'yi') return { kind: 'wall', x: host.core.x, y: host.core.y };
+    if (host.kind === 'yi') {
+      if (!this.gymLiveMotion) return { kind: 'wall', x: host.core.x, y: host.core.y };
+      const attach = wallAttachForTile(host.tile, host.strikeFloors, TILE);
+      return { kind: 'wall', x: attach.seamX, y: attach.seamY, attach };
+    }
     if (host.kind === 'bing') return { kind: 'cluster', x: host.core.x, y: host.core.y };
     return {
       kind: 'volume',
@@ -289,7 +317,12 @@ export class ContaminationHostSystem {
       return;
     }
     const tile = edge.tiles[Math.min(slot, edge.tiles.length - 1)]!;
-    const core = { x: tile.col * TILE + TILE / 2, y: tile.row * TILE + TILE / 2 };
+    // Tile identity is the original collectWallEdges / practice-pin array slot.
+    // Do not substitute orderWallEdgeTiles here — that would change which cell
+    // 乙 occupies. gymLiveMotion only moves that same cell's core to the seam.
+    const center = { x: tile.col * TILE + TILE / 2, y: tile.row * TILE + TILE / 2 };
+    const attach = wallAttachForTile(tile, edge.strikeFloors, TILE);
+    const core = this.gymLiveMotion ? { x: attach.seamX, y: attach.seamY } : center;
     const gfx = scene.add.graphics().setDepth(20);
     const telegraph = scene.add.graphics().setDepth(21);
     this.paintYi(gfx, core, false);
@@ -301,6 +334,7 @@ export class ContaminationHostSystem {
       alive: true,
       gfx,
       core,
+      tile: { col: tile.col, row: tile.row },
       strikeFloors: edge.strikeFloors,
       windupMs: -1,
       telegraph,
