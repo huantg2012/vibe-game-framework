@@ -128,7 +128,11 @@ export function formFromConfig(config: LexiconGymConfig): ContaminationForm | st
     if (!row || row.slot !== slot) return `${slot} 词素不在表里`;
     if (!row.legalPortfolios.includes(config.portfolio)) return `${row.displayToken} 不能填这个孔谱`;
   }
-  if (config.count < 1 || config.count > 3) return '数量须为 1–3';
+  if (config.portfolio === 'jia') {
+    if (config.count !== 2 && config.count !== 4 && config.count !== 5) return '甲的数量须为 2 / 4 / 5';
+  } else if (config.count !== 1) {
+    return '乙丙丁数量为 1';
+  }
   return {
     substrate: config.substrate,
     coverage: config.coverage,
@@ -155,6 +159,26 @@ export function defaultConfig(): LexiconGymConfig {
     rhythm: 'rhythm_open',
     contact: 'contact_melee_three',
     utteranceId: '',
-    count: 1,
+    count: 4,
   };
+}
+
+/** 甲：侧栏 2 / 4 / 5，硬顶 5。乙丙丁：1。 */
+export function clampLexiconCount(n: number, portfolio: PortfolioId): number {
+  if (portfolio !== 'jia') return 1;
+  if (!Number.isFinite(n)) return 4;
+  if (n >= 5) return 5;
+  if (n >= 4) return 4;
+  return 2;
+}
+
+export function lexiconCountOptions(portfolio: PortfolioId): readonly { id: string; label: string }[] {
+  if (portfolio === 'jia') {
+    return [
+      { id: '2', label: '2' },
+      { id: '4', label: '4' },
+      { id: '5', label: '5' },
+    ];
+  }
+  return [{ id: '1', label: '1' }];
 }

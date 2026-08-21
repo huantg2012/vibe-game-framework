@@ -17,7 +17,6 @@ import type { EnemyRole } from '@/generated/enemy-data';
 import { DISPLAY_TOKEN_DATA } from '@/generated/contamination-lexicon-data';
 import {
   createLexiconObserveMap,
-  lexiconJiaSpawn,
   lexiconPlayerSpawn,
   lexiconPracticePins,
   LEXICON_DEFAULT_FRAGMENT,
@@ -27,16 +26,18 @@ import {
   applyUtterance,
   continuityOptions,
   coverageOptions,
+  clampLexiconCount,
   defaultConfig,
   formFromConfig,
   jiaRoleFor,
   lexemeOptions,
+  lexiconCountOptions,
   portfolioOptions,
   substrateOptions,
   utteranceOptions,
   type LexiconGymConfig,
 } from '@/gym/gym-lexicon-form';
-import type { FormVisual } from '@/gym/form-renderers/form-renderer';
+import type { FormVisual, FormVisualSignal } from '@/gym/form-renderers/form-renderer';
 import { getFormRenderer } from '@/gym/form-renderers/registry';
 import {
   isLexiconFragmentId,
@@ -52,7 +53,7 @@ import { ContaminationHostSystem } from '@/systems/contamination-host-system';
 import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
 import { GameEvent } from '@/types/events';
-import { TileType, type Vector2 } from '@/types/game-types';
+import { AIState, TileType, type TileCoord, type Vector2 } from '@/types/game-types';
 import type { EnemySpawnData, TileMapData } from '@/types/map-types';
 
 const RESPAWN_MS = 800;
@@ -77,7 +78,7 @@ export class GymLexiconScene extends Phaser.Scene {
   private formBound = false;
   private filling = false;
   private lastForm: ContaminationForm | null = null;
-  private lastCount = 1;
+  private lastCount = 4;
   private spawnSerial = 0;
   private respawnTimer: Phaser.Time.TimerEvent | null = null;
   private readonly visuals = new Map<string, FormVisual>();
@@ -260,7 +261,10 @@ export class GymLexiconScene extends Phaser.Scene {
       if (utterance) {
         const applied = applyUtterance(utterance);
         if (applied) {
-          this.refillSelects({ ...applied, count: clampCount(Number(selectValue('gym-lex-count'))) });
+          this.refillSelects({
+            ...applied,
+            count: clampLexiconCount(Number(selectValue('gym-lex-count')), applied.portfolio),
+          });
           return;
         }
       }
@@ -290,22 +294,15 @@ export class GymLexiconScene extends Phaser.Scene {
       [{ id: '', label: '无' }, ...utteranceOptions(portfolio)],
       config.utteranceId,
     );
-    fillSelect(
-      'gym-lex-count',
-      [
-        { id: '1', label: '1' },
-        { id: '2', label: '2' },
-        { id: '3', label: '3' },
-      ],
-      String(config.count),
-    );
+    fillSelect('gym-lex-count', lexiconCountOptions(portfolio), String(clampLexiconCount(config.count, portfolio)));
     this.filling = false;
   }
 
   private readConfig(): LexiconGymConfig {
     const fallback = defaultConfig();
+    const portfolio = (selectValue('gym-lex-portfolio') || fallback.portfolio) as LexiconGymConfig['portfolio'];
     return {
-      portfolio: (selectValue('gym-lex-portfolio') || fallback.portfolio) as LexiconGymConfig['portfolio'],
+      portfolio,
       coverage: (selectValue('gym-lex-coverage') || fallback.coverage) as LexiconGymConfig['coverage'],
       substrate: selectValue('gym-lex-substrate') || fallback.substrate,
       continuity: (selectValue('gym-lex-continuity') || fallback.continuity) as LexiconGymConfig['continuity'],
@@ -314,7 +311,7 @@ export class GymLexiconScene extends Phaser.Scene {
       rhythm: selectValue('gym-lex-rhythm') || fallback.rhythm,
       contact: selectValue('gym-lex-contact') || fallback.contact,
       utteranceId: selectValue('gym-lex-utterance'),
-      count: clampCount(Number(selectValue('gym-lex-count'))),
+      count: clampLexiconCount(Number(selectValue('gym-lex-count')), portfolio),
     };
   }
 
@@ -325,7 +322,7 @@ export class GymLexiconScene extends Phaser.Scene {
       return;
     }
     this.lastForm = parsed;
-    this.lastCount = clampCount(Number(selectValue('gym-lex-count')));
+    this.lastCount = clampLexiconCount(Number(selectValue('gym-lex-count')), parsed.portfolio);
     this.clearPopulation();
     this.chaos?.reset(0);
     this.spawnMissing();
@@ -395,7 +392,7 @@ export class GymLexiconScene extends Phaser.Scene {
   private spawnJia(form: ContaminationForm): void {
     const role: EnemyRole = jiaRoleFor(form);
     const index = this.spawnSerial++;
-    const start = lexiconJiaSpawn(index);
+    const start = jiaSpawnTile(index, this.lastCount);
     const spawn: EnemySpawnData = {
       id: `gym-jia-${index}`,
       type: role,
@@ -451,12 +448,15 @@ export class GymLexiconScene extends Phaser.Scene {
     this.destroyVisuals();
     const renderer = getFormRenderer(selectValue('gym-lex-renderer'));
     const ready = renderer?.ready === true;
-    this.hosts.setSkipPaint(ready);
-    for (const view of this.ai.getEnemies()) {
-      if (view instanceof Enemy) view.setVisualSuppressed(ready);
-    }
-    if (!ready || !renderer || !this.lastForm) return;
+    const dMixed = renderer?.id === 'd-mixed';
     const form = this.lastForm;
+    const hideJia = ready && (!dMixed || form?.portfolio === 'jia');
+    const skipHosts = ready && (!dMixed || form?.portfolio === 'bing');
+    this.hosts.setSkipPaint(skipHosts);
+    for (const view of this.ai.getEnemies()) {
+      if (view instanceof Enemy) view.setVisualSuppressed(hideJia);
+    }
+    if (!ready || !renderer || !form) return;
     const fragmentTypeId = this.readFragmentId();
     if (form.portfolio === 'jia') {
       for (const view of this.ai.getEnemies()) {
@@ -469,6 +469,10 @@ export class GymLexiconScene extends Phaser.Scene {
         });
         this.visuals.set(view.getId(), visual);
       }
+      return;
+    }
+    if (dMixed && form.portfolio !== 'bing') {
+      // 乙/丁仍空壳：保留默认宿主漆，等 R2-C5 / R2-C6 填实后再藏。
       return;
     }
     for (const subject of this.hosts.getSubjects()) {
@@ -497,7 +501,7 @@ export class GymLexiconScene extends Phaser.Scene {
           facing4: view.getFacing4(),
           moving: isActorWalking(Math.hypot(vel.x, vel.y)),
           visibility: gymVisible(pos),
-          signal: 'idle',
+          signal: view instanceof Enemy ? jiaSignal(view) : 'idle',
           deltaMs,
         });
         continue;
@@ -611,9 +615,20 @@ function fillSelect(
   el.value = keep;
 }
 
-function clampCount(n: number): number {
-  if (!Number.isFinite(n)) return 1;
-  return Math.min(3, Math.max(1, n | 0));
+function jiaSpawnTile(index: number, count: number): TileCoord {
+  const slot = ((index % Math.max(1, count)) + Math.max(1, count)) % Math.max(1, count);
+  const ring = LEXICON_JIA_WAYPOINTS;
+  if (slot < ring.length) return ring[slot]!;
+  const corner = ring[0]!;
+  return { col: corner.col + 1, row: corner.row };
+}
+
+function jiaSignal(view: Enemy): FormVisualSignal {
+  if (view.isEngaged()) return 'strike';
+  const state = view.getState();
+  if (state === AIState.CHASE) return 'awake';
+  if (state === AIState.ALERT || state === AIState.SUSPICIOUS) return 'inflated';
+  return 'idle';
 }
 
 function describeForm(form: ContaminationForm): string {
