@@ -47,6 +47,7 @@ import {
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem } from '@/systems/chaos-system';
 import { CombatSystem } from '@/systems/combat-system';
+import { selfCheckHostLive } from '@/systems/contamination-host-live';
 import { ContaminationHostSystem } from '@/systems/contamination-host-system';
 import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
@@ -111,6 +112,7 @@ export class GymLexiconScene extends Phaser.Scene {
     this.paintYardBias(fragmentTypeId);
     this.paintSeats();
     this.logWallEdgePathCheck();
+    selfCheckHostLive();
 
     this.ai.create(this, [], grid, grid, { requireExactlyOneRewriter: false });
     this.ai.setVisibilityProvider(gymVisible);
@@ -439,7 +441,8 @@ export class GymLexiconScene extends Phaser.Scene {
     const lines = [
       form ? describeForm(form) : '尚未生成。选维度后点生成。',
       `在场 甲 ${jia} · 宿主 ${hosts} / 目标 ${form ? this.lastCount : 0}`,
-      `混乱 ${chaos.toFixed(1)}（丙踩踏 / 丁体积会加；${feelHitOn() ? '可受伤' : '玩家无敌'}）`,
+      `混乱 ${chaos.toFixed(1)}（丙踩踏 / 丁体积会加）`,
+      `生命 ${this.combat.getHealth()}/${this.combat.getMaxHealth()}（${feelHitOn() ? '可受伤' : '玩家无敌'}）`,
     ];
     el.textContent = lines.join('\n');
   }
@@ -504,8 +507,8 @@ export class GymLexiconScene extends Phaser.Scene {
       visual.update({
         x: host.position.x,
         y: host.position.y,
-        facing4: 'down',
-        moving: false,
+        facing4: this.hosts.getVisualFacing(id),
+        moving: this.hosts.getVisualMoving(id),
         visibility: gymVisible(host.position),
         signal: this.hosts.getVisualSignal(id),
         deltaMs,

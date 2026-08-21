@@ -612,14 +612,14 @@ Title: gym 开关下的乙游荡 / 丁飘移 / 危险区跟随 / 接触词素 | 
 
 ### 具体要求
 
-- [ ] `ContaminationHostSystem.create` 增加选项 `gymLiveMotion?: boolean`（默认 `false`）。**论证：** `RiftScene` 现有调用不传此参数，出击 `tickYi` / `tickDing` 行为与本任务之前逐帧一致（乙核不移动、丁盒不移动、伤害仍按宿主 kind）。把论证写进该文件头注释。
-- [ ] `gymLiveMotion === true` 时：
+- [x] `ContaminationHostSystem.create` 增加选项 `gymLiveMotion?: boolean`（默认 `false`）。**论证：** `RiftScene` 现有调用不传此参数，出击 `tickYi` / `tickDing` 行为与本任务之前逐帧一致（乙核不移动、丁盒不移动、伤害仍按宿主 kind）。把论证写进该文件头注释。
+- [x] `gymLiveMotion === true` 时：
   - **乙：** `tickYi` 沿 `orderWallEdgeTiles` 路径缓慢游荡（速度跟 `lexemes.motion`：沿壁走、固着则停、转面可掉头）。`host.core` 更新为缝坐标。`strikeFloors` 每帧按核的当前邻接可走格重算。前摇/伤害仍走 `combat.applyHazardHit`，价目不变（15 / 350ms）。
   - **丁：** `tickDing` 移动并微变形体积盒（跟 `motion_wind` / `trail` / `anchor`；固着则形变不位移）。`VOLUME_SIGHT_MULT` 与 `VOLUME_CHAOS_PER_SEC` 用**当前盒**，不是出生盒。
   - **接触：** 读 `form.lexemes.contact`（`src/systems/` 内必须真正读取）。按 R2-D1 对照表选通道。非法组合走既有 `rewrite_to`。禁止新 DPS。丙仍不打血。
-- [ ] 抽打提示数据要能被方案 D 读到（`getVisualSignal()==='strike'` + 当前 `strikeFloors` 查询）。方案 B 的 `skipPaint` 仍可藏默认 4×4 telegraph，但 gym 默认方案 D 必须能画地格点（画在 R2-C5）。
-- [ ] 受击：不要改 `combat-system.ts` 去加震屏/顿帧。练习场「感受伤害」打开时，既有白闪 + 音效必须能发生（修掉「无敌导致 `applyHazardHit` 直接 false」这条观察路径）。若要补敌人出手相，只加在 gym 或 `FormVisualSignal`，不要推翻 V3。
-- [ ] `npx tsc --noEmit`；`npm run check:lexicon`。若动生成器：`npm run check:layout`。
+- [x] 抽打提示数据要能被方案 D 读到（`getVisualSignal()==='strike'` + 当前 `strikeFloors` 查询）。方案 B 的 `skipPaint` 仍可藏默认 4×4 telegraph，但 gym 默认方案 D 必须能画地格点（画在 R2-C5）。
+- [x] 受击：不要改 `combat-system.ts` 去加震屏/顿帧。练习场「感受伤害」打开时，既有白闪 + 音效必须能发生（修掉「无敌导致 `applyHazardHit` 直接 false」这条观察路径）。若要补敌人出手相，只加在 gym 或 `FormVisualSignal`，不要推翻 V3。
+- [x] `npx tsc --noEmit`；`npm run check:lexicon`。若动生成器：`npm run check:layout`。
 
 ### 禁止
 

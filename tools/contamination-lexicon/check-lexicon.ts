@@ -20,6 +20,7 @@ import {
   type ContaminationForm,
 } from '../../src/generation/contamination-draw.ts';
 import { substrateOptions } from '../../src/gym/gym-lexicon-form.ts';
+import { selfCheckHostLive } from '../../src/systems/contamination-host-live.ts';
 import {
   CONCEPTUAL_SUBSTRATE_IDS,
   LEXEME_DATA,
@@ -248,6 +249,30 @@ assert(
   taken.forms.every((f) => f.lexemes.sense !== 'sense_hear'),
   'hearingAxisTaken forbids 听噪 on hosts',
 );
+
+selfCheckHostLive();
+
+const riftSrc = readFileSync(resolve(ROOT, 'src/scenes/rift-scene.ts'), 'utf8');
+assert(!riftSrc.includes('gymLiveMotion'), 'RiftScene must not mention gymLiveMotion');
+assert(
+  /this\.hosts\.create\(\s*this,\s*layout,\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*\)/.test(
+    riftSrc,
+  ),
+  'RiftScene hosts.create stays 5-arg (no gymLiveMotion)',
+);
+const mapSrc = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
+assert(
+  /this\.hosts\.create\(\s*this,\s*layout,\s*null,\s*null,\s*gymFullVisibility\s*\)/.test(mapSrc),
+  'gym map lesson hosts.create stays 5-arg',
+);
+const hostSrc = readFileSync(resolve(ROOT, 'src/systems/contamination-host-system.ts'), 'utf8');
+const sortieYi = hostSrc.split('private tickYiSortie')[1]?.split('private tickYiLive')[0] ?? '';
+assert(!sortieYi.includes('resolveContactChannel'), 'tickYiSortie must not read contact');
+assert(!sortieYi.includes('stepYiWalk'), 'tickYiSortie must not walk');
+const sortieDing = hostSrc.split('private tickDingSortie')[1]?.split('private tickDingLive')[0] ?? '';
+assert(!sortieDing.includes('dingLiveRect'), 'tickDingSortie must not morph');
+assert(!sortieDing.includes('resolveContactChannel'), 'tickDingSortie must not read contact');
+assert(hostSrc.includes('host.form.lexemes.contact'), 'gym path reads lexemes.contact');
 
 if (failed) {
   console.error(`check:lexicon ${failed} failure(s)`);
