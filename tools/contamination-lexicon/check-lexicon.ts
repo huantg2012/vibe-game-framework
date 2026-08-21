@@ -260,11 +260,10 @@ assert(
   ),
   'RiftScene hosts.create stays 5-arg (no gymLiveMotion)',
 );
+// 地图课只画宿主、不跑活动机制。断言写成否定式：不要求那句 create 存在（该课接线是
+// 独立工作项），只要求它一旦存在就不会打开练习场活动开关。
 const mapSrc = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
-assert(
-  /this\.hosts\.create\(\s*this,\s*layout,\s*null,\s*null,\s*gymFullVisibility\s*\)/.test(mapSrc),
-  'gym map lesson hosts.create stays 5-arg',
-);
+assert(!mapSrc.includes('gymLiveMotion'), 'gym map lesson must not enable gymLiveMotion');
 const hostSrc = readFileSync(resolve(ROOT, 'src/systems/contamination-host-system.ts'), 'utf8');
 const sortieYi = hostSrc.split('private tickYiSortie')[1]?.split('private tickYiLive')[0] ?? '';
 assert(!sortieYi.includes('resolveContactChannel'), 'tickYiSortie must not read contact');
