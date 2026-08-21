@@ -42,6 +42,10 @@ code 不得再猜。CSV 列、字母表、方言、战斗数字、钉层形状�
 
 Depends: T0。CSV + codegen + 形态生成器纯函数（抽卡、非法丢弃、自动改写、成句命中）+ 单测。不改出击生成物。闸门：`node tools/csv-codegen/generate.mjs`、现有 test/tsc。完成后提交。
 
+- [x] 五张 `data/contamination-*.csv` + codegen `src/generated/contamination-lexicon-data.ts`
+- [x] `src/generation/contamination-draw.ts` + `npm run check:lexicon`
+- [x] `GAME_CONSTANTS.CONTAMINATION` 系统常量
+
 ---
 
 ## Task: T2 | assignee: code（art 核旁白接线）

@@ -500,9 +500,279 @@ function generateEnemies() {
   console.log(`  enemy-data.ts (${entries.length} entries)`);
 }
 
+// ---------------------------------------------------------------------------
+// Generate contamination-lexicon-data.ts
+// ---------------------------------------------------------------------------
+
+function splitBar(s) {
+  return (s ?? '')
+    .split('|')
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+}
+
+function parseBool(s, col, id) {
+  if (s === 'true') return true;
+  if (s === 'false') return false;
+  throw new Error(`[codegen] contamination ${id}: ${col} must be true|false (got '${s}')`);
+}
+
+function parseRewrites(s) {
+  if (!s) return [];
+  return s.split(';').filter(Boolean).map((pair) => {
+    const [portfolio, lexeme] = pair.split(':');
+    if (!portfolio || !lexeme) {
+      throw new Error(`[codegen] rewrite_to must be portfolio:lexeme (; separated), got '${s}'`);
+    }
+    return { portfolio, lexeme };
+  });
+}
+
+function generateContaminationLexicon() {
+  const substratesCsv = readCsv('contamination-substrates.csv');
+  const portfoliosCsv = readCsv('contamination-portfolios.csv');
+  const lexemesCsv = readCsv('contamination-lexemes.csv');
+  const utterancesCsv = readCsv('contamination-utterances.csv');
+  const tokensCsv = readCsv('contamination-display-tokens.csv');
+
+  const sIdx = Object.fromEntries(substratesCsv.header.map((h, i) => [h, i]));
+  const pIdx = Object.fromEntries(portfoliosCsv.header.map((h, i) => [h, i]));
+  const lIdx = Object.fromEntries(lexemesCsv.header.map((h, i) => [h, i]));
+  const uIdx = Object.fromEntries(utterancesCsv.header.map((h, i) => [h, i]));
+  const tIdx = Object.fromEntries(tokensCsv.header.map((h, i) => [h, i]));
+
+  const requiredSub = ['id', 'display_token', 'residual_verb', 'legal_occupancies', 'legal_continuities'];
+  for (const col of requiredSub) {
+    if (sIdx[col] === undefined) throw new Error(`[codegen] contamination-substrates.csv missing '${col}'`);
+  }
+
+  const substrates = substratesCsv.rows.map((cols) => ({
+    id: cols[sIdx.id],
+    displayToken: cols[sIdx.display_token],
+    residualVerb: cols[sIdx.residual_verb],
+    legalOccupancies: splitBar(cols[sIdx.legal_occupancies]),
+    legalContinuities: splitBar(cols[sIdx.legal_continuities]),
+  }));
+  const subIds = new Set(substrates.map((s) => s.id));
+  for (const required of ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film']) {
+    if (!subIds.has(required)) throw new Error(`[codegen] contamination-substrates.csv missing '${required}'`);
+  }
+
+  const portfolios = portfoliosCsv.rows.map((cols) => {
+    const id = cols[pIdx.id];
+    return {
+      id,
+      displayToken: cols[pIdx.display_token],
+      continuity: cols[pIdx.continuity],
+      occupancy: cols[pIdx.occupancy],
+      legalContinuities: splitBar(cols[pIdx.legal_continuities]),
+      pinLayer: cols[pIdx.pin_layer],
+      canChase: parseBool(cols[pIdx.can_chase], 'can_chase', id),
+      blockWalk: parseBool(cols[pIdx.block_walk], 'block_walk', id),
+      defaultContact: cols[pIdx.default_contact],
+      detectionPulse: parseBool(cols[pIdx.detection_pulse], 'detection_pulse', id),
+    };
+  });
+  const portIds = new Set(portfolios.map((p) => p.id));
+  for (const required of ['jia', 'yi', 'bing', 'ding']) {
+    if (!portIds.has(required)) throw new Error(`[codegen] contamination-portfolios.csv missing '${required}'`);
+  }
+
+  const lexemes = lexemesCsv.rows.map((cols) => {
+    const slot = cols[lIdx.slot];
+    if (!['motion', 'sense', 'rhythm', 'contact'].includes(slot)) {
+      throw new Error(`[codegen] lexeme ${cols[lIdx.id]} slot must be motion|sense|rhythm|contact`);
+    }
+    return {
+      id: cols[lIdx.id],
+      slot,
+      displayToken: cols[lIdx.display_token],
+      legalPortfolios: splitBar(cols[lIdx.legal_portfolios]),
+      rewrites: parseRewrites(cols[lIdx.rewrite_to] ?? ''),
+    };
+  });
+
+  const utterances = utterancesCsv.rows.map((cols) => ({
+    id: cols[uIdx.id],
+    internalLabel: cols[uIdx.internal_label],
+    onScreenMark: cols[uIdx.on_screen_mark],
+    coverage: cols[uIdx.coverage],
+    substrate: cols[uIdx.substrate],
+    portfolio: cols[uIdx.portfolio],
+    continuity: cols[uIdx.continuity],
+    occupancy: cols[uIdx.occupancy],
+    motion: cols[uIdx.motion],
+    sense: cols[uIdx.sense],
+    rhythm: cols[uIdx.rhythm],
+    contact: cols[uIdx.contact],
+  }));
+  const uttIds = new Set(utterances.map((u) => u.id));
+  for (const required of ['door_still_closing', 'eye_in_the_seam', 'cluster_lung', 'corridor_watching']) {
+    if (!uttIds.has(required)) throw new Error(`[codegen] contamination-utterances.csv missing '${required}'`);
+  }
+
+  const displayTokens = tokensCsv.rows.map((cols) => ({
+    id: cols[tIdx.id],
+    kind: cols[tIdx.kind],
+    displayToken: cols[tIdx.display_token],
+  }));
+
+  const lines = [
+    '// AUTO-GENERATED by tools/csv-codegen/generate.mjs — DO NOT EDIT',
+    '',
+    "export type CoverageId = 'infiltrate' | 'rewrite' | 'overwrite';",
+    "export type OccupancyId = 'floor' | 'wall' | 'paint' | 'volume';",
+    "export type ContinuityId = 'monolith' | 'shards' | 'colony' | 'field';",
+    "export type PortfolioId = 'jia' | 'yi' | 'bing' | 'ding';",
+    "export type LexemeSlot = 'motion' | 'sense' | 'rhythm' | 'contact';",
+    "export type PinLayerId = 'waypoints' | 'wall_edge' | 'cluster_core' | 'corridor_aabb';",
+    '',
+    'export interface SubstrateDef {',
+    '  id: string;',
+    '  displayToken: string;',
+    '  residualVerb: string;',
+    '  legalOccupancies: readonly OccupancyId[];',
+    '  legalContinuities: readonly ContinuityId[];',
+    '}',
+    '',
+    'export interface PortfolioDef {',
+    '  id: PortfolioId;',
+    '  displayToken: string;',
+    '  continuity: ContinuityId;',
+    '  occupancy: OccupancyId;',
+    '  legalContinuities: readonly ContinuityId[];',
+    '  pinLayer: PinLayerId;',
+    '  canChase: boolean;',
+    '  blockWalk: boolean;',
+    '  defaultContact: string;',
+    '  detectionPulse: boolean;',
+    '}',
+    '',
+    'export interface LexemeRewrite {',
+    '  portfolio: PortfolioId;',
+    '  lexeme: string;',
+    '}',
+    '',
+    'export interface LexemeDef {',
+    '  id: string;',
+    '  slot: LexemeSlot;',
+    '  displayToken: string;',
+    '  legalPortfolios: readonly PortfolioId[];',
+    '  rewrites: readonly LexemeRewrite[];',
+    '}',
+    '',
+    'export interface UtteranceDef {',
+    '  id: string;',
+    '  internalLabel: string;',
+    '  onScreenMark: string;',
+    '  coverage: CoverageId;',
+    '  substrate: string;',
+    '  portfolio: PortfolioId;',
+    '  continuity: ContinuityId;',
+    '  occupancy: OccupancyId;',
+    '  motion: string;',
+    '  sense: string;',
+    '  rhythm: string;',
+    '  contact: string;',
+    '}',
+    '',
+    'export interface DisplayTokenDef {',
+    '  id: string;',
+    '  kind: string;',
+    '  displayToken: string;',
+    '}',
+    '',
+    'export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {',
+  ];
+
+  for (const s of substrates) {
+    lines.push(`  ${s.id}: {`);
+    lines.push(`    id: '${s.id}',`);
+    lines.push(`    displayToken: '${escapeStr(s.displayToken)}',`);
+    lines.push(`    residualVerb: '${escapeStr(s.residualVerb)}',`);
+    lines.push(`    legalOccupancies: [${s.legalOccupancies.map((v) => `'${v}'`).join(', ')}],`);
+    lines.push(`    legalContinuities: [${s.legalContinuities.map((v) => `'${v}'`).join(', ')}],`);
+    lines.push('  },');
+  }
+  lines.push('};');
+  lines.push('');
+  lines.push('export const PORTFOLIO_DATA: Record<PortfolioId, PortfolioDef> = {');
+  for (const p of portfolios) {
+    lines.push(`  ${p.id}: {`);
+    lines.push(`    id: '${p.id}',`);
+    lines.push(`    displayToken: '${escapeStr(p.displayToken)}',`);
+    lines.push(`    continuity: '${p.continuity}',`);
+    lines.push(`    occupancy: '${p.occupancy}',`);
+    lines.push(`    legalContinuities: [${p.legalContinuities.map((v) => `'${v}'`).join(', ')}],`);
+    lines.push(`    pinLayer: '${p.pinLayer}',`);
+    lines.push(`    canChase: ${p.canChase},`);
+    lines.push(`    blockWalk: ${p.blockWalk},`);
+    lines.push(`    defaultContact: '${p.defaultContact}',`);
+    lines.push(`    detectionPulse: ${p.detectionPulse},`);
+    lines.push('  },');
+  }
+  lines.push('};');
+  lines.push('');
+  lines.push('export const LEXEME_DATA: Record<string, LexemeDef> = {');
+  for (const l of lexemes) {
+    const rewrites = l.rewrites
+      .map((r) => `{ portfolio: '${r.portfolio}', lexeme: '${r.lexeme}' }`)
+      .join(', ');
+    lines.push(`  ${l.id}: {`);
+    lines.push(`    id: '${l.id}',`);
+    lines.push(`    slot: '${l.slot}',`);
+    lines.push(`    displayToken: '${escapeStr(l.displayToken)}',`);
+    lines.push(`    legalPortfolios: [${l.legalPortfolios.map((v) => `'${v}'`).join(', ')}],`);
+    lines.push(`    rewrites: [${rewrites}],`);
+    lines.push('  },');
+  }
+  lines.push('};');
+  lines.push('');
+  lines.push('export const UTTERANCE_DATA: Record<string, UtteranceDef> = {');
+  for (const u of utterances) {
+    lines.push(`  ${u.id}: {`);
+    lines.push(`    id: '${u.id}',`);
+    lines.push(`    internalLabel: '${escapeStr(u.internalLabel)}',`);
+    lines.push(`    onScreenMark: '${escapeStr(u.onScreenMark)}',`);
+    lines.push(`    coverage: '${u.coverage}',`);
+    lines.push(`    substrate: '${u.substrate}',`);
+    lines.push(`    portfolio: '${u.portfolio}',`);
+    lines.push(`    continuity: '${u.continuity}',`);
+    lines.push(`    occupancy: '${u.occupancy}',`);
+    lines.push(`    motion: '${u.motion}',`);
+    lines.push(`    sense: '${u.sense}',`);
+    lines.push(`    rhythm: '${u.rhythm}',`);
+    lines.push(`    contact: '${u.contact}',`);
+    lines.push('  },');
+  }
+  lines.push('};');
+  lines.push('');
+  lines.push('export const DISPLAY_TOKEN_DATA: Record<string, DisplayTokenDef> = {');
+  for (const t of displayTokens) {
+    lines.push(`  ${t.id}: {`);
+    lines.push(`    id: '${t.id}',`);
+    lines.push(`    kind: '${t.kind}',`);
+    lines.push(`    displayToken: '${escapeStr(t.displayToken)}',`);
+    lines.push('  },');
+  }
+  lines.push('};');
+  lines.push('');
+  lines.push(`export const SUBSTRATE_IDS: readonly string[] = [${substrates.map((s) => `'${s.id}'`).join(', ')}];`);
+  lines.push("export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];");
+  lines.push(`export const LEXEME_IDS: readonly string[] = [${lexemes.map((l) => `'${l.id}'`).join(', ')}];`);
+  lines.push(
+    `export const UTTERANCE_IDS: readonly string[] = [${utterances.map((u) => `'${u.id}'`).join(', ')}];`,
+  );
+  lines.push('');
+
+  writeFileSync(resolve(OUT_DIR, 'contamination-lexicon-data.ts'), lines.join('\n'), 'utf-8');
+  console.log(`  contamination-lexicon-data.ts (${substrates.length} substrates, ${lexemes.length} lexemes)`);
+}
+
 console.log('[codegen] Generating typed data from CSV...');
 generateContaminants();
 generateUpgrades();
 generateRiftFragments();
 generateEnemies();
+generateContaminationLexicon();
 console.log('[codegen] Done.');

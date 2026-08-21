@@ -447,6 +447,25 @@ export const GAME_CONSTANTS = {
     FX_POOL_SIZE: 12,           // preallocated flash/death sprites: 8 enemies + headroom
   },
 
+  /**
+   * Contamination lexicon (DEC-076). Morph tables stay in CSV.
+   * These are system constants: core HP, chaos prices, draw retry, encounter timing.
+   */
+  CONTAMINATION: {
+    CORE_MAX_HEALTH: 50,
+    ADJACENT_STRIKE_DAMAGE: 15,
+    ADJACENT_STRIKE_WINDUP_MS: 350,
+    PAINT_STEP_CHAOS_REST: 2,
+    PAINT_STEP_CHAOS_INFLATED: 4,
+    VOLUME_CHAOS_PER_SEC: 1.0,
+    VOLUME_SIGHT_MULT: 0.7,
+    DRAW_RETRY_LIMIT: 12,
+    ENCOUNTER_COOLDOWN_MS: 60_000,
+    ENCOUNTER_GAP_MS: 2_500,
+    ENCOUNTER_HOLD_MS: 2_500,
+    VOLUME_DEPTH: 40,
+  },
+
   /** Audio */
   AUDIO: {
     MAX_SIMULTANEOUS_SFX: 8,
