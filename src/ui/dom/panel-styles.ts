@@ -641,6 +641,46 @@ const CSS = `
   image-rendering: pixelated;
 }
 
+/* Encounter identification log (DEC-074): rift wearable recorder, not a toast. */
+#rift-encounter-log {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+  width: 480px;
+  max-width: 480px;
+  pointer-events: none;
+  display: none;
+  font: 12px 'Courier New', monospace;
+  color: #c8cdd4;
+  text-shadow: 0 0 2px #080a0c;
+  text-align: center;
+  letter-spacing: 0.5px;
+  z-index: 40;
+}
+#rift-encounter-log.is-recording {
+  display: block;
+}
+#rift-encounter-log .encounter-log {
+  display: inline-block;
+  max-width: 480px;
+  padding: 2px 8px;
+  background: rgba(8, 10, 12, 0.35);
+}
+#rift-encounter-log .encounter-prefix,
+#rift-encounter-log .encounter-node {
+  display: inline;
+  margin-right: 0.55em;
+}
+#rift-encounter-log .encounter-node:last-child {
+  margin-right: 0;
+}
+#rift-encounter-log .encounter-mark {
+  color: #2ae6c8;
+  display: inline-block;
+  transform: translateY(1px);
+}
+
 /* === Toast primitives (ui-art-overhaul.md A4/A6) ===
    Two variants for the unified feedback layer: "inline" (brief, non-blocking,
    appears at the source of the event) and "stamp" (rare, one-shot, full-screen,

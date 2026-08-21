@@ -51,6 +51,9 @@ export enum GameEvent {
   TIDE_PHASE_CHANGED = 'tide:phase-changed',
   STABILITY_CHANGED = 'stability:changed',
   TOOL_USED = 'tool:used',
+
+  // Contamination lexicon (DEC-074 / DEC-076)
+  ENCOUNTER_IDENTIFIED = 'encounter:identified',
 }
 
 /**
@@ -105,4 +108,12 @@ export interface EventPayloads {
   [GameEvent.TIDE_PHASE_CHANGED]: { tide: number; phase: 'rise' | 'crest' | 'ebb'; intensity: number };
   [GameEvent.STABILITY_CHANGED]: { progress: number; delta: number };
   [GameEvent.TOOL_USED]: { contaminantId: string; toolType: ContaminantType; usesLeft: number };
+  [GameEvent.ENCOUNTER_IDENTIFIED]: {
+    identityKey: string;
+    nodes: readonly {
+      kind: 'coverage' | 'substrate' | 'occupancy' | 'sense' | 'utterance_mark';
+      tokenId: string;
+    }[];
+    utteranceId?: string;
+  };
 }

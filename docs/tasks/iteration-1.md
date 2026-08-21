@@ -52,6 +52,10 @@ Depends: T0。CSV + codegen + 形态生成器纯函数（抽卡、非法丢弃�
 
 Depends: T1。甲走词法物化现有两种填法；出生仍用地板路点；`rewriterCount === 1` 迁移为听觉主轴 === 1；遭遇识别旁白接到甲。先 Read in-game-ux skill。`#rift-encounter-log` 进 `panel-styles.ts`。练习场旁白关。U1–U12 机械层自检，不代勾好看。提交。
 
+- [x] 甲：渗透体/改写体 `getForm()` 对照夹具；生成器契约本批仍是 rewriter === 1（听觉主轴随 T3/T4 钉层一起迁）
+- [x] `#rift-encounter-log` + `EncounterNarration` 挂 `#dom-ui-root`；练习场不创建
+- [x] 事件 `encounter:identified`；同身份 60s / 行间隔 2.5s / 阈值优先作废
+
 ---
 
 ## Task: T3 | assignee: code

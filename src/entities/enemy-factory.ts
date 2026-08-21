@@ -10,6 +10,7 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { ENEMY_DATA, type EnemyRole } from '@/generated/enemy-data';
+import { INFILTRATOR_FORM, REWRITER_FORM, type ContaminationForm } from '@/generation/contamination-draw';
 import { AIState, type Facing4, type Vector2 } from '@/types/game-types';
 import type { EnemySpawnData } from '@/types/map-types';
 import type { EnemyAIState, EnemyTypeConfig, EnemyView } from '@/types/ai-types';
@@ -108,6 +109,7 @@ export class Enemy implements EnemyView {
   readonly spawnData: EnemySpawnData;
   readonly config: EnemyTypeConfig;
   readonly ai: EnemyAIState;
+  private readonly form: ContaminationForm;
 
   private readonly body: Phaser.Physics.Arcade.Image;
   private readonly dots: [Phaser.GameObjects.Image, Phaser.GameObjects.Image];
@@ -139,6 +141,7 @@ export class Enemy implements EnemyView {
     this.id = spawnData.id;
     this.spawnData = spawnData;
     this.config = config;
+    this.form = config.role === 'rewriter' ? REWRITER_FORM : INFILTRATOR_FORM;
     this.ai = createEnemyAIState(spawnPosition, degToRad(spawnData.facing), config.role);
 
     const ai = GAME_CONSTANTS.AI;
@@ -230,6 +233,10 @@ export class Enemy implements EnemyView {
 
   getDetection(): number {
     return this.ai.detection;
+  }
+
+  getForm(): ContaminationForm {
+    return this.form;
   }
 
   isTargetingDecoy(): boolean {

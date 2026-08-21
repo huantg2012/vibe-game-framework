@@ -11,6 +11,7 @@
  * `reportDamage()` instead.
  */
 
+import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { EnemyRole, PerceptionProfile } from '@/generated/enemy-data';
 import type { AIState, Facing4, Vector2 } from '@/types/game-types';
 import type { PatrolMode } from '@/types/map-types';
@@ -38,6 +39,8 @@ export interface EnemyView {
   isEngaged(): boolean;
   /** 0..1. Play input for the rim pulse; debug overlay may also read it. */
   getDetection(): number;
+  /** Contamination lexicon form (DEC-076). T2: infiltrator/rewriter fixtures. */
+  getForm(): ContaminationForm;
   /**
    * mirror (Slice 5 T4 gap-fill): true on exactly the frames this enemy's most recent
    * sighting was redirected to the decoy instead of the real player position (see

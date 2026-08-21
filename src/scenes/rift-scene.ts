@@ -34,6 +34,7 @@ import { TrailSystem } from '@/systems/trail-system';
 import { RiftSurfacePainter } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { DetectionPulse } from '@/ui/dom/detection-pulse';
+import { EncounterNarration } from '@/ui/dom/encounter-narration';
 import { RiftHud, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/dom/rift-hud';
 import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
@@ -76,6 +77,8 @@ export class RiftScene extends Phaser.Scene {
   private readonly extraction = new ExtractionSystem();
   private readonly runController = new RunController();
   private readonly hud = new RiftHud();
+  private readonly encounter = new EncounterNarration();
+  private thresholdUntilMs = 0;
   private readonly detectionPulse = new DetectionPulse();
   private readonly minimap = new Minimap();
   private readonly riftSurface = new RiftSurfacePainter();
@@ -300,6 +303,7 @@ export class RiftScene extends Phaser.Scene {
       isRunEnded: () => this.runController.isRunEnded(),
       toolSlots: toolSlots.length > 0 ? toolSlots : undefined,
     });
+    this.encounter.create();
     this.detectionPulse.create();
 
     this.sortieKillCount = 0;
@@ -350,6 +354,13 @@ export class RiftScene extends Phaser.Scene {
     // state; one frame of lag on that at 30 px reads as "it is right there and doing
     // nothing".
     this.combat.update(delta);
+
+    this.encounter.tick(
+      this.time.now,
+      this.ai.getEnemies(),
+      (point) => this.visibility.getVisibilityAt(point),
+      this.time.now < this.thresholdUntilMs,
+    );
 
     // T9 systems
     this.chaos.update(delta);
@@ -583,6 +594,7 @@ export class RiftScene extends Phaser.Scene {
    * Phaser vision mask and won't block gameplay input.
    */
   private readonly onChaosThreshold = ({ level }: { level: 1 | 2 | 3 }): void => {
+    this.thresholdUntilMs = this.time.now + 3000;
     audioManager.playSFX('sfx-shared-chaos-threshold');
     const config: Record<1 | 2 | 3, { color: string; alpha: number; text: string }> = {
       1: { color: '0, 180, 160', alpha: 0.08, text: '边界在渗透。' },
@@ -1109,6 +1121,7 @@ export class RiftScene extends Phaser.Scene {
     // Before the player is destroyed: this is what releases the swing speed modifier.
     this.combat.destroy();
     this.detectionPulse.destroy();
+    this.encounter.destroy();
     this.hud.destroy();
     this.runController.destroy();
     this.extraction.destroy();
