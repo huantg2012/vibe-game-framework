@@ -228,6 +228,7 @@ export class CombatSystem implements CombatSystemAPI {
   private readonly attackStateView = { phase: 'idle' as AttackPhase, cooldownRemainingMs: 0 };
   private lastCue = '-';
   private lastNoise = '-';
+  private godMode = false;
 
   // ------------------------------------------------------------------ lifecycle
 
@@ -246,6 +247,7 @@ export class CombatSystem implements CombatSystemAPI {
     // Reset all combat state (critical for scene re-entry via scene.start)
     this.enabled = true;
     this.dead = false;
+    this.godMode = false;
     this.health = this.maxHealth;
     this.invulnRemainingMs = 0;
     this.flashRemainingMs = 0;
@@ -368,8 +370,18 @@ export class CombatSystem implements CombatSystemAPI {
     return this.dead;
   }
 
+  /** Practice-field only: attacks still wind up, player health never drops. */
+  setGodMode(enabled: boolean): void {
+    this.godMode = enabled;
+  }
+
   isInvulnerable(): boolean {
-    return this.invulnRemainingMs > 0;
+    return this.godMode || this.invulnRemainingMs > 0;
+  }
+
+  /** Call after AI spawn/despawn outside create/reset so melee roster stays in step. */
+  noteRosterChanged(): void {
+    this.syncRoster();
   }
 
   getAttackState(): Readonly<{ phase: AttackPhase; cooldownRemainingMs: number }> {

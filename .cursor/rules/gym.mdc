@@ -11,14 +11,16 @@ globs: gym.html,src/gym/**,docs/dev/gym.md
 
 ## 必须成立
 
-- 敌人移动 / 寻路 / 外形 / 朝向动画复用出击：`AISystem`、`Enemy`、`generatePlaceholderTextures`、`gameConfigWithScenes`。渗透体与改写体是程序像素成品，不是待换的精灵表。
+- 敌人移动 / 寻路 / 朝向动画复用出击：`AISystem`、`Enemy`、`generatePlaceholderTextures`、`gameConfigWithScenes`。渗透体与改写体是程序像素成品，不是待换的精灵表。外形默认与出击同一套；仅污染句法课可切候选渲染器（见下条迭代 2）。
 - 新敌人角色：`data/enemies.csv` → codegen → 给 `GYM_LOOPS` 补 8 点环。
 - 玩家外形课：`gym.html?lesson=player`。与出击 `Player` 同一套加厚像素 + 灯尘（DEC-068）。角色外形怎么验：`docs/art/actor-pixels.md`。
-- 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter`；污染生产缺省崩坏簇（DEC-069）。崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 画面锁，DEC-071 接到出击）。侧栏另三种烤漆只对照。
+- 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter` + `ContaminationHostSystem`（乙/丙/丁只画；不刷会走的甲）；污染生产缺省崩坏簇（DEC-069）。崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 画面锁，DEC-071 接到出击）。侧栏另三种烤漆只对照。
+- 污染句法课：`gym.html?lesson=lexicon`。固定观察院子 + 无敌玩家 + 配置表点生成。甲 / 乙 / 丙 / 丁走出击同一套 `AISystem` / `CombatSystem` / `ContaminationHostSystem`。击杀后按当前配置再刷。不开迷雾。**迭代 2（DEC-079）：** 仅本课可切 `#gym-lex-renderer`（`src/gym/form-renderers/`），出击不接。合同：`docs/tasks/iteration-2.md`。
 
 ## 禁止
 
 - 在 `RiftScene` 里塞调试房间当练习场
-- 为练习场另写一套移动或另画一套敌人外形
+- 为练习场另写一套移动；除污染句法课的候选渲染器外另画一套敌人外形
 - 把练习场侧栏当成游戏内界面去做 UX 翻修
 - 为出击另写一套崩坏簇呼吸（已与练习场共用 `liveClusterBreath`）
+- 把候选渲染器接到 `RiftScene`（人选之前）

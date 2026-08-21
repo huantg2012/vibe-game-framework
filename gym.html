@@ -49,14 +49,16 @@
         border-color: #1aad96;
         color: #b0fff5;
       }
-      #gym-map-controls label {
+      #gym-map-controls label,
+      #gym-lexicon-controls label {
         display: block;
         margin: 10px 0 3px;
         color: #8a8f96;
         font-size: 12px;
       }
       #gym-map-controls select,
-      #gym-map-controls input[type="number"] {
+      #gym-map-controls input[type="number"],
+      #gym-lexicon-controls select {
         width: 100%;
         background: #0e1114;
         color: #c8cdd4;
@@ -71,13 +73,15 @@
         margin-top: 10px;
         color: #c8cdd4;
       }
-      #gym-map-controls .gym-actions {
+      #gym-map-controls .gym-actions,
+      #gym-lexicon-controls .gym-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         margin-top: 12px;
       }
-      #gym-map-controls button {
+      #gym-map-controls button,
+      #gym-lexicon-controls button {
         background: #12161a;
         color: #e8eaed;
         border: 1px solid #2a2d32;
@@ -118,6 +122,7 @@
       <aside id="gym-doc">
         <h1 id="gym-title">练习场</h1>
         <nav id="gym-nav">
+          <a id="gym-link-lexicon" href="/gym.html?lesson=lexicon">污染句法</a>
           <a id="gym-link-enemy" href="/gym.html">敌人移动</a>
           <a id="gym-link-player" href="/gym.html?lesson=player">玩家外形</a>
           <a id="gym-link-map" href="/gym.html?lesson=map">地图生成</a>
@@ -127,6 +132,40 @@
         <h2>正在演示</h2>
         <p id="gym-roster">载入中</p>
         <p id="gym-status"></p>
+
+        <div id="gym-lexicon-controls" hidden>
+          <h2>配置表</h2>
+          <label for="gym-lex-renderer">渲染方案</label>
+          <select id="gym-lex-renderer">
+            <option value="placeholder">现行占位</option>
+            <option value="a-pixel-grammar">方案 A：程序像素词法</option>
+            <option value="b-surface-organism">方案 B：地表方言活体</option>
+            <option value="c-stamp-compositor">方案 C：词素层叠</option>
+          </select>
+          <label for="gym-lex-portfolio">孔谱</label>
+          <select id="gym-lex-portfolio"></select>
+          <label for="gym-lex-coverage">覆盖深度</label>
+          <select id="gym-lex-coverage"></select>
+          <label for="gym-lex-substrate">基体</label>
+          <select id="gym-lex-substrate"></select>
+          <label for="gym-lex-continuity">连续性</label>
+          <select id="gym-lex-continuity"></select>
+          <label for="gym-lex-motion">运动</label>
+          <select id="gym-lex-motion"></select>
+          <label for="gym-lex-sense">感知</label>
+          <select id="gym-lex-sense"></select>
+          <label for="gym-lex-rhythm">节律</label>
+          <select id="gym-lex-rhythm"></select>
+          <label for="gym-lex-contact">接触</label>
+          <select id="gym-lex-contact"></select>
+          <label for="gym-lex-utterance">成句</label>
+          <select id="gym-lex-utterance"></select>
+          <label for="gym-lex-count">数量</label>
+          <select id="gym-lex-count"></select>
+          <div class="gym-actions">
+            <button id="gym-lexicon-generate" type="button">生成</button>
+          </div>
+        </div>
 
         <div id="gym-map-controls" hidden>
           <h2>生成参数</h2>
@@ -191,9 +230,20 @@
           <li>出击 <code>Player</code> 已接同一套外形（DEC-068）。</li>
           <li>北墙渗透体 / 改写体是出击同一套像素，只站住对照尺寸。</li>
         </ul>
+        <ul id="gym-rules-lexicon" hidden>
+          <li>固定观察院子，不是裂隙生成岛。</li>
+          <li>玩家走出击 <code>Player</code>，无敌。WASD 移动，空格挥击。</li>
+          <li>甲走出击 <code>AISystem</code> / <code>CombatSystem</code>。乙丙丁走出击 <code>ContaminationHostSystem</code>（含伤害与混乱）。</li>
+          <li>侧栏按污染句法维度配表，点生成刷当前配置。</li>
+          <li>击杀后约 0.8 秒按<strong>当前</strong>侧栏配置再刷。</li>
+          <li>不开视野迷雾。不接遭遇识别旁白。</li>
+        </ul>
         <ul id="gym-rules-map" hidden>
           <li>布局走出击同一套 <code>generateRiftLayout</code>，禁止另写生成器。</li>
           <li>地表走 <code>RiftSurfacePainter</code>。不开 <code>VisibilitySystem</code>。</li>
+          <li>乙 / 丙 / 丁走出击同一套 <code>ContaminationHostSystem</code>。</li>
+          <li>不接遭遇识别旁白。</li>
+          <li>不刷会走的甲。色块只标甲路点。</li>
           <li>色块是布点标记，不是实体。拖动画布平移，滚轮缩放。</li>
         </ul>
         <ul id="gym-map-legend" hidden>
@@ -201,8 +251,10 @@
           <li><span style="background:#e0a848;"></span>撤离</li>
           <li><span style="background:#c4873a;"></span>薪柴</li>
           <li><span style="background:#7fffee;"></span>污染物</li>
-          <li><span style="background:#8a8f96;"></span>渗透体出生</li>
-          <li><span style="background:#b0fff5;"></span>改写体出生</li>
+          <li><span style="background:#8a8f96;"></span>渗透体路点（甲标记，不会走）</li>
+          <li><span style="background:#b0fff5;"></span>改写体路点（甲标记，不会走）</li>
+          <li><span style="background:#2ae6c8;"></span>乙缝核 / 丙簇核（出击同一套宿主；青绿方框是练习场叫号）</li>
+          <li><span style="background:#0e4a3f;"></span>丁走廊体积（半透明）</li>
           <li><span style="background:#5a4030;"></span>地标</li>
         </ul>
         <h2>打开</h2>

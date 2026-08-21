@@ -130,6 +130,8 @@ export class Enemy implements EnemyView {
   private readonly lag: FacingLagGhost;
   private readonly flakes: ContamFlakes;
   private readonly stain: ContamStain | null;
+  /** Gym lexicon candidate visuals only. Default false; RiftScene never calls this. */
+  private visualSuppressed = false;
 
   constructor(
     scene: Phaser.Scene,
@@ -239,6 +241,16 @@ export class Enemy implements EnemyView {
     return this.form;
   }
 
+  /**
+   * Hide the stand-in body (image / afterimages / flakes / stain).
+   * Keeps Arcade collision, AI, and teal state indicators.
+   */
+  setVisualSuppressed(suppressed: boolean): void {
+    this.visualSuppressed = suppressed;
+    if (!suppressed) return;
+    this.hideStandInBody();
+  }
+
   isTargetingDecoy(): boolean {
     return this.ai.targetingDecoy;
   }
@@ -290,43 +302,50 @@ export class Enemy implements EnemyView {
 
     this.body.setPosition(this.ai.position.x, this.ai.position.y);
     this.stepGait(deltaMs);
-    if (rewriter) {
-      this.applyRewriterBody(deltaMs, visibility);
-    } else {
-      this.applyInfiltratorBody();
-    }
     freezeActorRotation(this.body);
-    this.lag.sync(this.body.x, this.body.y, visibility > 0, deltaMs);
 
-    this.stepAfterimages(deltaMs, visibility);
-    this.flakes.sync(
-      this.body.x,
-      this.body.y,
-      this.ai.facing4,
-      this.ai.state,
-      visibility,
-      deltaMs
-    );
-    if (this.pendingFlakeBurst) {
-      this.pendingFlakeBurst = false;
-      this.flakes.burst(
+    if (this.visualSuppressed) {
+      this.hideStandInBody();
+    } else {
+      if (rewriter) {
+        this.applyRewriterBody(deltaMs, visibility);
+      } else {
+        this.applyInfiltratorBody();
+      }
+      this.lag.sync(this.body.x, this.body.y, visibility > 0, deltaMs);
+
+      this.stepAfterimages(deltaMs, visibility);
+      this.flakes.sync(
         this.body.x,
         this.body.y,
         this.ai.facing4,
+        this.ai.state,
         visibility,
-        rewriter ? 2 : 3
+        deltaMs
       );
+      if (this.pendingFlakeBurst) {
+        this.pendingFlakeBurst = false;
+        this.flakes.burst(
+          this.body.x,
+          this.body.y,
+          this.ai.facing4,
+          visibility,
+          rewriter ? 2 : 3
+        );
+      }
+      this.stain?.sync(this.body.x, this.body.y, visibility, deltaMs);
     }
-    this.stain?.sync(this.body.x, this.body.y, visibility, deltaMs);
 
     if (visibility <= 0) {
-      this.body.setVisible(false);
+      if (!this.visualSuppressed) this.body.setVisible(false);
       this.hideIndicators();
       return;
     }
 
-    this.body.setVisible(true);
-    if (!rewriter) this.body.setAlpha(visibility);
+    if (!this.visualSuppressed) {
+      this.body.setVisible(true);
+      if (!rewriter) this.body.setAlpha(visibility);
+    }
 
     const indicatorY = this.ai.position.y + (rewriter ? REWRITER_INDICATOR_Y : INFILTRATOR_INDICATOR_Y);
     switch (this.ai.state) {
@@ -474,6 +493,18 @@ export class Enemy implements EnemyView {
     this.dots[0].setVisible(false);
     this.dots[1].setVisible(false);
     this.lock.setVisible(false);
+  }
+
+  private hideStandInBody(): void {
+    this.body.setVisible(false);
+    this.lag.sync(this.body.x, this.body.y, false, 0);
+    this.pendingFlakeBurst = false;
+    this.flakes.sync(this.body.x, this.body.y, this.ai.facing4, this.ai.state, 0, 0);
+    this.stain?.sync(this.body.x, this.body.y, 0, 0);
+    for (let i = 0; i < this.afterimages.length; i++) {
+      this.afterimages[i]!.setVisible(false);
+      this.afterimageLifeMs[i] = 0;
+    }
   }
 
   private stepAfterimages(deltaMs: number, visibility: number): void {

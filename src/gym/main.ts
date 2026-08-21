@@ -7,6 +7,7 @@ import Phaser from 'phaser';
 import { gameConfigWithScenes } from '@/config/game-config';
 import { assertBalanceInvariants } from '@/config/invariants';
 import { GymBootScene } from '@/gym/gym-boot-scene';
+import { GymLexiconScene } from '@/gym/gym-lexicon-scene';
 import { GymMapScene } from '@/gym/gym-map-scene';
 import { GymPlayerScene } from '@/gym/gym-player-scene';
 import { GymScene } from '@/gym/gym-scene';
@@ -14,7 +15,7 @@ import { GymScene } from '@/gym/gym-scene';
 if (import.meta.env.DEV) assertBalanceInvariants();
 
 const game = new Phaser.Game(
-  gameConfigWithScenes([GymBootScene, GymScene, GymPlayerScene, GymMapScene]),
+  gameConfigWithScenes([GymBootScene, GymScene, GymPlayerScene, GymMapScene, GymLexiconScene]),
 );
 
 if (import.meta.env.DEV) {

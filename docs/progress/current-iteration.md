@@ -3,18 +3,20 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-08-21
-note: DEC-072 / DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077。本游戏活工作单元。当前：迭代 1 敌人系统（实现完成，体验未验证）。Slice 9 COMPLETE 档案见 current-slice.md。不要与层 A 框架迭代混名。
+note: DEC-072 / DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077 / DEC-078 / DEC-079。本游戏活工作单元。当前：迭代 2（污染体渲染，gym 三方案抽卡，出击不接）。迭代 1 敌人系统仍为「实现完成，体验未验证」。Slice 9 COMPLETE 档案见 current-slice.md。不要与层 A 框架迭代混名。
 ---
 
 # 按需游戏迭代（DEC-072）
 
-**当前：迭代 1（敌人系统）。** 污染词法已接到出击（DEC-073 / DEC-076）：甲两种填法 + 乙缝核 / 丙簇核 / 丁体积 + 遭遇识别旁白。状态：**实现完成，体验未验证**。活实现仍是一份五态；乙丙丁不是第二份状态机。
+**当前：迭代 2（污染体渲染）。** 人点名：句法生成空间的外观 / 动作 / 渲染仍是占位（甲只跟 role 走；乙丙丁是几何块）。本迭代在污染句法课里抽卡三个可切换渲染方案，出击不接。收尾合法态：**三个方案已可浏览，等人选**。不要标 COMPLETE。
+
+迭代 1（敌人系统）句法逻辑仍为**实现完成，体验未验证**。不重开迭代 1：甲「外观已完成」的隐含前提不成立，该缺口转到本迭代；体验验证请等选出渲染方案，或明确知道自己看的是占位。
 
 阶段仍是 Iterative Development。Slice 1–9 历史不动。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。
 
-Slice 9 之后表现收口（DEC-066～071）仍记在 `current-slice.md` 该账上，**不改编号成迭代 1**。迷雾下亮度仍等人终审。
+Slice 9 之后表现收口（DEC-066～071）仍记在 `current-slice.md` 该账上，**不改编号成迭代**。迷雾下亮度仍等人终审。出击敌人像素仍是 DEC-066 那两套，直到人选后再接。
 
-体系入口：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。
+体系入口：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。渲染探索合同：`docs/tasks/iteration-2.md`。
 
 ---
 
@@ -39,4 +41,5 @@ Slice 9 之后表现收口（DEC-066～071）仍记在 `current-slice.md` 该账
 
 | 序号 | 日期 | 模块名 | 一句话范围 | 状态 | 相关 DEC |
 | ---- | ---- | ------ | ---------- | ---- | -------- |
-| 1 | 2026-08-20 | 敌人系统 | 污染词法（含遭遇识别旁白为识别面） | 实现完成，体验未验证 | DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077 |
+| 1 | 2026-08-20 | 敌人系统 | 污染句法（含遭遇识别旁白为识别面） | 实现完成，体验未验证（甲外观/乙丙丁几何占位缺口已转到迭代 2） | DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077 / DEC-078 |
+| 2 | 2026-08-21 | 污染体渲染 | gym 污染句法课三方案抽卡（外观/动作/渲染）；出击不接 | 进行中（T0 脚手架已交；方案探索，等人选） | DEC-079 |

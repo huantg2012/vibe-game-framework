@@ -80,7 +80,8 @@ export interface AISystemAPI {
     scene: Phaser.Scene,
     spawns: readonly EnemySpawnData[],
     occluders: OccluderGrid,
-    walk: WalkGrid
+    walk: WalkGrid,
+    options?: { requireExactlyOneRewriter?: boolean },
   ): void;
   update(deltaMs: number, playerPos: Readonly<Vector2>, playerIsMoving: boolean): void;
   getEnemies(): readonly EnemyView[];
@@ -140,6 +141,7 @@ export class AISystem implements AISystemAPI {
   private readonly enemies: Enemy[] = [];
   /** Live array handed to the scene's wall collider; despawn splices it. */
   private readonly sprites: Phaser.Physics.Arcade.Image[] = [];
+  private wallLayer: Phaser.Tilemaps.TilemapLayer | null = null;
 
   private visibilityProvider: VisibilityProvider | null = null;
   private cueListener: CueListener | null = null;
@@ -188,7 +190,8 @@ export class AISystem implements AISystemAPI {
     scene: Phaser.Scene,
     spawns: readonly EnemySpawnData[],
     occluders: OccluderGrid,
-    walk: WalkGrid
+    walk: WalkGrid,
+    options?: { requireExactlyOneRewriter?: boolean },
   ): void {
     this.scene = scene;
     this.occluders = occluders;
@@ -214,11 +217,13 @@ export class AISystem implements AISystemAPI {
       }
       if (spawn.type === 'rewriter') rewriterCount += 1;
     }
-    if (rewriterCount !== 1) {
-      throw new Error(
-        `[AISystem] spawn table must contain exactly 1 rewriter (got ${rewriterCount}); ` +
-          'refusing to silently treat every patrol as an infiltrator'
-      );
+    if (options?.requireExactlyOneRewriter !== false) {
+      if (rewriterCount !== 1) {
+        throw new Error(
+          `[AISystem] spawn table must contain exactly 1 rewriter (got ${rewriterCount}); ` +
+            'refusing to silently treat every patrol as an infiltrator'
+        );
+      }
     }
 
     for (let i = 0; i < spawns.length; i++) {
@@ -251,7 +256,24 @@ export class AISystem implements AISystemAPI {
    * collider without anything outside holding a stale reference.
    */
   addWallCollider(layer: Phaser.Tilemaps.TilemapLayer): Phaser.Physics.Arcade.Collider {
+    this.wallLayer = layer;
     return this.scene.physics.add.collider(this.sprites, layer);
+  }
+
+  /**
+   * Practice-field spawn after `create`. Does not re-check the sortie rewriter quota.
+   * Caller must `CombatSystem.noteRosterChanged()` afterwards.
+   */
+  spawnOne(spawn: EnemySpawnData): string {
+    if (!(spawn.type in ENEMY_DATA)) {
+      throw new Error(`[AISystem] unknown enemy type '${spawn.type}' on ${spawn.id}`);
+    }
+    const enemy = this.spawnEnemy(spawn, this.enemies.length, this.enemies.length + 1);
+    this.enemies.push(enemy);
+    const sprite = enemy.getSprite();
+    this.sprites.push(sprite);
+    if (this.wallLayer) this.scene.physics.add.collider(sprite, this.wallLayer);
+    return enemy.getId();
   }
 
   /** Enemy bodies, for combat's hit tests. Never mutate the returned array. */
@@ -263,6 +285,7 @@ export class AISystem implements AISystemAPI {
     for (const enemy of this.enemies) enemy.destroy();
     this.enemies.length = 0;
     this.sprites.length = 0;
+    this.wallLayer = null;
     this.visibilityProvider = null;
     this.cueListener = null;
     this.hearingAvoidedListener = null;
