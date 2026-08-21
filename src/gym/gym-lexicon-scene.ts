@@ -451,7 +451,12 @@ export class GymLexiconScene extends Phaser.Scene {
     const dMixed = renderer?.id === 'd-mixed';
     const form = this.lastForm;
     const hideJia = ready && (!dMixed || form?.portfolio === 'jia');
-    const skipHosts = ready && (!dMixed || form?.portfolio === 'bing');
+    const skipHosts =
+      ready &&
+      (!dMixed ||
+        form?.portfolio === 'bing' ||
+        form?.portfolio === 'yi' ||
+        form?.portfolio === 'ding');
     this.hosts.setSkipPaint(skipHosts);
     for (const view of this.ai.getEnemies()) {
       if (view instanceof Enemy) view.setVisualSuppressed(hideJia);
@@ -469,10 +474,6 @@ export class GymLexiconScene extends Phaser.Scene {
         });
         this.visuals.set(view.getId(), visual);
       }
-      return;
-    }
-    if (dMixed && form.portfolio !== 'bing') {
-      // 乙/丁仍空壳：保留默认宿主漆，等 R2-C5 / R2-C6 填实后再藏。
       return;
     }
     for (const subject of this.hosts.getSubjects()) {
