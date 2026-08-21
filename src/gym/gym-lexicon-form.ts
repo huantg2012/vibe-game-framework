@@ -50,6 +50,7 @@ export function coverageOptions(): readonly { id: CoverageId; label: string }[] 
   return COVERAGES;
 }
 
+/** Full CSV table (gym + sortie). Filter by this portfolio's occupancy so 甲 never sees volume-only rows. */
 export function substrateOptions(portfolio: PortfolioId): readonly { id: string; label: string }[] {
   const occ = PORTFOLIO_DATA[portfolio].occupancy;
   return Object.values(SUBSTRATE_DATA)

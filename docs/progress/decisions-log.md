@@ -5,9 +5,17 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
-# Decisions Log
-
-<!-- Entries in reverse chronological order (newest first) -->
+## DEC-082: 出击油膜占空覆盖 — 概念基体未开放前裂隙抽卡不得变
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 2 第二轮）
+- Type: Implementation
+- Context: R2-D1 / DEC-081 把油膜 CSV 收回只占漆，并接受「出击丁改抽乙、户外乙/丁比例会变」。人的 FATAL 是变更先到练习场、不要进裂隙。油膜是出击唯一合法占空基体，收回后 `drawSortie` 抽到丁会没有合法基体。
+- Decision:
+  1. CSV / 练习场视图：油膜只占漆；丁下拉是概念三类。
+  2. 出击视图：codegen 派生 `oil_film.sortieLegalOccupancies`。概念基体仍为 `gym` 时油膜仍占 `paint|volume`，丁继续抽油膜占空。
+  3. 配对不变量由 `check:lexicon` 断言：概念基体任一行 `scope=sortie` ⟺ 油膜出击视图不占 volume。翻开关必须同一次提交。
+  4. 修正 DEC-081 第 4 条的「本轮接受乙/丁比例变化」：在概念基体接入出击之前，该副作用不成立。钉层空的乙↔丁回退仍在。
+- Impact: `tools/csv-codegen/generate.mjs`；`contamination-draw.ts` 出击过滤；`check:lexicon`；句法 spec Schema 合同 9。不出击画面、不改 `RiftScene`。
 
 ## DEC-081: R2-D1 基底表落地 — 范围列、概念三类 id、成句改绑
 - Date: 2026-08-22

@@ -5,6 +5,7 @@
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import {
+  CONCEPTUAL_SUBSTRATE_IDS,
   DISPLAY_TOKEN_DATA,
   LEXEME_DATA,
   PORTFOLIO_DATA,
@@ -15,6 +16,8 @@ import {
   type LexemeSlot,
   type OccupancyId,
   type PortfolioId,
+  type SubstrateDef,
+  type SubstrateEnabledScope,
 } from '@/generated/contamination-lexicon-data';
 import { SeededRandom } from '@/utils/random';
 
@@ -66,9 +69,15 @@ const DIALECT: Record<string, Dialect> = {
   'frag-outdoor': {
     substrates: [
       ['fungal_mat', 3],
+      ['ash_veil', 3],
       ['oil_film', 3],
+      ['space_interval', 3],
       ['organic_remnant', 2],
+      ['stalk_clump', 2],
+      ['sound_echo', 2],
+      ['light_scatter', 2],
       ['wall_rust', 1],
+      ['railing_post', 1],
     ],
     preferYiDing: 'ding',
   },
@@ -77,7 +86,13 @@ const DIALECT: Record<string, Dialect> = {
       ['lamp_pillar', 3],
       ['doorframe', 3],
       ['wall_rust', 2],
+      ['railing_post', 2],
+      ['light_scatter', 2],
       ['organic_remnant', 1],
+      ['stalk_clump', 1],
+      ['ash_veil', 1],
+      ['space_interval', 1],
+      ['sound_echo', 1],
     ],
     preferYiDing: 'yi',
   },
@@ -87,6 +102,11 @@ const DIALECT: Record<string, Dialect> = {
       ['oil_film', 2],
       ['lamp_pillar', 2],
       ['doorframe', 2],
+      ['railing_post', 2],
+      ['ash_veil', 2],
+      ['sound_echo', 2],
+      ['space_interval', 2],
+      ['light_scatter', 1],
     ],
     preferYiDing: 'either',
   },
@@ -95,14 +115,25 @@ const DIALECT: Record<string, Dialect> = {
       ['doorframe', 3],
       ['wall_rust', 2],
       ['organic_remnant', 2],
+      ['railing_post', 2],
+      ['sound_echo', 2],
+      ['stalk_clump', 1],
+      ['light_scatter', 1],
+      ['space_interval', 1],
     ],
     preferYiDing: 'yi',
   },
   'frag-residential': {
     substrates: [
       ['organic_remnant', 3],
+      ['stalk_clump', 3],
       ['doorframe', 2],
       ['oil_film', 2],
+      ['railing_post', 1],
+      ['ash_veil', 1],
+      ['space_interval', 1],
+      ['sound_echo', 1],
+      ['light_scatter', 1],
     ],
     preferYiDing: 'yi',
   },
@@ -178,6 +209,24 @@ export function devicePrefix(): string {
   return DISPLAY_TOKEN_DATA.device_prefix?.displayToken ?? '识别。';
 }
 
+export type LexiconDrawScope = SubstrateEnabledScope;
+
+/**
+ * Occupancy view for a substrate. Gym follows CSV.
+ * Sortie uses codegen's pairing overlay: while conceptual substrates stay gym,
+ * oil_film still occupies volume so ding draws do not collapse to yi.
+ */
+export function occupanciesForScope(
+  sub: SubstrateDef,
+  scope: LexiconDrawScope,
+): readonly OccupancyId[] {
+  return scope === 'sortie' ? sub.sortieLegalOccupancies : sub.legalOccupancies;
+}
+
+export function conceptualSubstratesOnSortie(): boolean {
+  return CONCEPTUAL_SUBSTRATE_IDS.some((id) => SUBSTRATE_DATA[id]?.enabledScope === 'sortie');
+}
+
 function dialectOf(fragmentTypeId: string): Dialect {
   return DIALECT[fragmentTypeId] ?? DEFAULT_DIALECT;
 }
@@ -207,32 +256,43 @@ function rewriteLexeme(id: string, portfolio: PortfolioId): string {
   return hit?.lexeme ?? id;
 }
 
+/** Spec residual-motion lock. Ids not in the spec table have no lock. */
+const RESIDUAL_MOTION: Readonly<Record<string, string>> = {
+  doorframe: 'motion_anchor',
+  lamp_pillar: 'motion_anchor',
+  railing_post: 'motion_anchor',
+  organic_remnant: 'motion_patrol',
+  stalk_clump: 'motion_turn',
+  wall_rust: 'motion_wall',
+  fungal_mat: 'motion_cluster',
+  oil_film: 'motion_wind',
+  ash_veil: 'motion_cluster',
+  sound_echo: 'motion_anchor',
+  light_scatter: 'motion_trail',
+  space_interval: 'motion_anchor',
+};
+
 function residualMotion(substrate: string): string | null {
-  switch (substrate) {
-    case 'doorframe':
-    case 'lamp_pillar':
-      return 'motion_anchor';
-    case 'organic_remnant':
-      return 'motion_patrol';
-    case 'wall_rust':
-      return 'motion_wall';
-    case 'fungal_mat':
-      return 'motion_cluster';
-    case 'oil_film':
-      return 'motion_wind';
-    default:
-      return null;
-  }
+  return RESIDUAL_MOTION[substrate] ?? null;
 }
 
-function legalSubstrates(portfolio: PortfolioId, fragmentTypeId: string): (readonly [string, number])[] {
+function inScope(sub: SubstrateDef, scope: LexiconDrawScope): boolean {
+  return scope === 'gym' || sub.enabledScope === 'sortie';
+}
+
+function legalSubstrates(
+  portfolio: PortfolioId,
+  fragmentTypeId: string,
+  scope: LexiconDrawScope,
+): (readonly [string, number])[] {
   const occupancy = PORTFOLIO_DATA[portfolio].occupancy;
   const dialect = dialectOf(fragmentTypeId);
   const out: (readonly [string, number])[] = [];
   for (const [id, w] of dialect.substrates) {
     const sub = SUBSTRATE_DATA[id];
     if (!sub) continue;
-    if (!sub.legalOccupancies.includes(occupancy)) continue;
+    if (!inScope(sub, scope)) continue;
+    if (!occupanciesForScope(sub, scope).includes(occupancy)) continue;
     const contOk = sub.legalContinuities.some((c) =>
       PORTFOLIO_DATA[portfolio].legalContinuities.includes(c),
     );
@@ -241,7 +301,8 @@ function legalSubstrates(portfolio: PortfolioId, fragmentTypeId: string): (reado
   }
   if (out.length > 0) return out;
   for (const sub of Object.values(SUBSTRATE_DATA)) {
-    if (!sub.legalOccupancies.includes(occupancy)) continue;
+    if (!inScope(sub, scope)) continue;
+    if (!occupanciesForScope(sub, scope).includes(occupancy)) continue;
     if (!sub.legalContinuities.some((c) => PORTFOLIO_DATA[portfolio].legalContinuities.includes(c))) {
       continue;
     }
@@ -279,6 +340,8 @@ export interface DrawOneOpts {
   readonly sense?: string;
   readonly forbidSense?: readonly string[];
   readonly preferUtterance?: boolean;
+  /** Default sortie: never leak gym-only rows into the rift. */
+  readonly scope?: LexiconDrawScope;
 }
 
 function formFromUtterance(id: string): ContaminationForm | null {
@@ -295,8 +358,32 @@ function formFromUtterance(id: string): ContaminationForm | null {
   };
 }
 
+function utteranceAllowed(form: ContaminationForm, scope: LexiconDrawScope): boolean {
+  if (scope === 'gym') return true;
+  const sub = SUBSTRATE_DATA[form.substrate];
+  return sub?.enabledScope === 'sortie';
+}
+
+/**
+ * Gym-only utterances (corridor_watching → space_interval) must not spawn in the rift.
+ * Returning a sortie-legal body with the same occupancy / lexemes consumes no extra RNG,
+ * so later jia/bing draws stay aligned with the pre-rebind sequence.
+ */
+function shadowGymUtteranceForSortie(form: ContaminationForm): ContaminationForm | null {
+  const sub = SUBSTRATE_DATA[form.substrate];
+  if (!sub || sub.enabledScope === 'sortie') return null;
+  const replacements = Object.values(SUBSTRATE_DATA).filter(
+    (row) =>
+      row.enabledScope === 'sortie' && occupanciesForScope(row, 'sortie').includes(form.occupancy),
+  );
+  const chosen = replacements[0];
+  if (!chosen) return null;
+  return { ...form, substrate: chosen.id, utteranceId: undefined };
+}
+
 function tryDrawOne(rng: SeededRandom, opts: DrawOneOpts): ContaminationForm | null {
   const port = PORTFOLIO_DATA[opts.portfolio];
+  const scope: LexiconDrawScope = opts.scope ?? 'sortie';
   if (opts.preferUtterance) {
     const matching = Object.values(UTTERANCE_DATA).filter((u) => u.portfolio === opts.portfolio);
     if (matching.length > 0 && rng.next() < 0.35) {
@@ -304,14 +391,21 @@ function tryDrawOne(rng: SeededRandom, opts: DrawOneOpts): ContaminationForm | n
       if (!opts.forbidSense || !opts.forbidSense.includes(u.sense)) {
         if (!opts.sense || opts.sense === u.sense) {
           const form = formFromUtterance(u.id);
-          if (form) return form;
+          if (!form) {
+            /* keep going */
+          } else if (utteranceAllowed(form, scope)) {
+            return form;
+          } else if (scope === 'sortie') {
+            const shadowed = shadowGymUtteranceForSortie(form);
+            if (shadowed) return shadowed;
+          }
         }
       }
     }
   }
 
   const coverage = opts.coverage ?? pickCoverage(rng);
-  const subPool = legalSubstrates(opts.portfolio, opts.fragmentTypeId);
+  const subPool = legalSubstrates(opts.portfolio, opts.fragmentTypeId, scope);
   const substrate = opts.substrate ?? pickWeighted(rng, subPool);
   if (!substrate) return null;
   const continuity = pickContinuity(rng, opts.portfolio, substrate);

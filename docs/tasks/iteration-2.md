@@ -559,12 +559,12 @@ CSV 成为代码真相。出击抽卡仍只抽旧六种，练习场句法课能�
 
 ### 具体要求
 
-- [ ] `npm run codegen`（或项目既有 lexicon codegen）。禁止手写 `src/generated/contamination-lexicon-data.ts`。
-- [ ] 修 `tools/contamination-lexicon/check-lexicon.ts`：废止「oil_film 必须能占空」；改为断言三个概念基体仅 `volume`、油膜仅 `paint`、新占地/占漆行合法。
-- [ ] `src/generation/contamination-draw.ts`（及任何硬编码 `organic_remnant` 联合类型的 gym 侧栏）：出击 `drawSortie` **白名单旧六种**。新行只出现在句法课配置表。TypeScript 联合类型若从 generated 来，出击路径要显式过滤，不能让新丁在裂隙里以旧几何盒出生。
-- [ ] 方言权重按 R2-D1 spec 表改；没有写入 spec 的 id 禁止出现。
-- [ ] gym 句法课基体下拉读全表，并按当前孔谱过滤 `legal_occupancies`（甲看不到仅占空的概念基体）。
-- [ ] `npx tsc --noEmit` 与 `npm run check:lexicon`。
+- [x] `npm run codegen`（或项目既有 lexicon codegen）。禁止手写 `src/generated/contamination-lexicon-data.ts`。
+- [x] 修 `tools/contamination-lexicon/check-lexicon.ts`：废止「oil_film 必须能占空」；改为断言三个概念基体仅 `volume`、油膜仅 `paint`、新占地/占漆行合法。
+- [x] `src/generation/contamination-draw.ts`（及任何硬编码 `organic_remnant` 联合类型的 gym 侧栏）：出击 `drawSortie` **白名单旧六种**。新行只出现在句法课配置表。TypeScript 联合类型若从 generated 来，出击路径要显式过滤，不能让新丁在裂隙里以旧几何盒出生。
+- [x] 方言权重按 R2-D1 spec 表改；没有写入 spec 的 id 禁止出现。
+- [x] gym 句法课基体下拉读全表，并按当前孔谱过滤 `legal_occupancies`（甲看不到仅占空的概念基体）。
+- [x] `npx tsc --noEmit` 与 `npm run check:lexicon`。
 
 ### 禁止
 

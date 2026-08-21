@@ -6,13 +6,18 @@ export type ContinuityId = 'monolith' | 'shards' | 'colony' | 'field';
 export type PortfolioId = 'jia' | 'yi' | 'bing' | 'ding';
 export type LexemeSlot = 'motion' | 'sense' | 'rhythm' | 'contact';
 export type PinLayerId = 'waypoints' | 'wall_edge' | 'cluster_core' | 'corridor_aabb';
+export type SubstrateEnabledScope = 'sortie' | 'gym';
 
 export interface SubstrateDef {
   id: string;
   displayToken: string;
   residualVerb: string;
+  /** CSV / gym view. */
   legalOccupancies: readonly OccupancyId[];
+  /** Sortie view (oil_film volume overlay while conceptual substrates stay gym). */
+  sortieLegalOccupancies: readonly OccupancyId[];
   legalContinuities: readonly ContinuityId[];
+  enabledScope: SubstrateEnabledScope;
 }
 
 export interface PortfolioDef {
@@ -68,42 +73,108 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     displayToken: '有机残影',
     residualVerb: '走',
     legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith', 'shards'],
+    enabledScope: 'sortie',
   },
   lamp_pillar: {
     id: 'lamp_pillar',
     displayToken: '灯柱',
     residualVerb: '亮',
     legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith'],
+    enabledScope: 'sortie',
   },
   doorframe: {
     id: 'doorframe',
     displayToken: '门框',
     residualVerb: '开合',
     legalOccupancies: ['wall', 'floor'],
+    sortieLegalOccupancies: ['wall', 'floor'],
     legalContinuities: ['monolith'],
+    enabledScope: 'sortie',
   },
   wall_rust: {
     id: 'wall_rust',
     displayToken: '墙锈',
     residualVerb: '渗',
     legalOccupancies: ['wall'],
+    sortieLegalOccupancies: ['wall'],
     legalContinuities: ['monolith', 'colony'],
+    enabledScope: 'sortie',
   },
   fungal_mat: {
     id: 'fungal_mat',
     displayToken: '菌毯',
     residualVerb: '铺',
     legalOccupancies: ['paint'],
+    sortieLegalOccupancies: ['paint'],
     legalContinuities: ['colony', 'field'],
+    enabledScope: 'sortie',
   },
   oil_film: {
     id: 'oil_film',
     displayToken: '油膜',
     residualVerb: '沾',
-    legalOccupancies: ['paint', 'volume'],
+    legalOccupancies: ['paint'],
+    sortieLegalOccupancies: ['paint', 'volume'],
     legalContinuities: ['monolith', 'colony', 'field'],
+    enabledScope: 'sortie',
+  },
+  stalk_clump: {
+    id: 'stalk_clump',
+    displayToken: '残茎',
+    residualVerb: '摇',
+    legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
+    legalContinuities: ['monolith', 'shards'],
+    enabledScope: 'gym',
+  },
+  railing_post: {
+    id: 'railing_post',
+    displayToken: '栏柱',
+    residualVerb: '拦',
+    legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
+    legalContinuities: ['monolith'],
+    enabledScope: 'gym',
+  },
+  ash_veil: {
+    id: 'ash_veil',
+    displayToken: '灰幕',
+    residualVerb: '覆',
+    legalOccupancies: ['paint'],
+    sortieLegalOccupancies: ['paint'],
+    legalContinuities: ['monolith', 'colony', 'field'],
+    enabledScope: 'gym',
+  },
+  sound_echo: {
+    id: 'sound_echo',
+    displayToken: '余响',
+    residualVerb: '响',
+    legalOccupancies: ['volume'],
+    sortieLegalOccupancies: ['volume'],
+    legalContinuities: ['monolith', 'field'],
+    enabledScope: 'gym',
+  },
+  light_scatter: {
+    id: 'light_scatter',
+    displayToken: '散光',
+    residualVerb: '折',
+    legalOccupancies: ['volume'],
+    sortieLegalOccupancies: ['volume'],
+    legalContinuities: ['monolith', 'field'],
+    enabledScope: 'gym',
+  },
+  space_interval: {
+    id: 'space_interval',
+    displayToken: '间距',
+    residualVerb: '挤',
+    legalOccupancies: ['volume'],
+    sortieLegalOccupancies: ['volume'],
+    legalContinuities: ['monolith', 'field'],
+    enabledScope: 'gym',
   },
 };
 
@@ -347,8 +418,8 @@ export const UTTERANCE_DATA: Record<string, UtteranceDef> = {
     continuity: 'monolith',
     occupancy: 'wall',
     motion: 'motion_anchor',
-    rhythm: 'rhythm_pulse',
     sense: 'sense_touch',
+    rhythm: 'rhythm_pulse',
     contact: 'contact_adjacent_strike',
   },
   eye_in_the_seam: {
@@ -361,8 +432,8 @@ export const UTTERANCE_DATA: Record<string, UtteranceDef> = {
     continuity: 'monolith',
     occupancy: 'wall',
     motion: 'motion_anchor',
-    rhythm: 'rhythm_open',
     sense: 'sense_narrow',
+    rhythm: 'rhythm_open',
     contact: 'contact_adjacent_strike',
   },
   cluster_lung: {
@@ -375,8 +446,8 @@ export const UTTERANCE_DATA: Record<string, UtteranceDef> = {
     continuity: 'field',
     occupancy: 'paint',
     motion: 'motion_cluster',
-    rhythm: 'rhythm_cluster',
     sense: 'sense_touch',
+    rhythm: 'rhythm_cluster',
     contact: 'contact_step_chaos',
   },
   corridor_watching: {
@@ -384,13 +455,13 @@ export const UTTERANCE_DATA: Record<string, UtteranceDef> = {
     internalLabel: '走廊在看你',
     onScreenMark: '反视',
     coverage: 'overwrite',
-    substrate: 'oil_film',
+    substrate: 'space_interval',
     portfolio: 'ding',
     continuity: 'field',
     occupancy: 'volume',
     motion: 'motion_anchor',
-    rhythm: 'rhythm_sky',
     sense: 'sense_reverse',
+    rhythm: 'rhythm_sky',
     contact: 'contact_volume_chaos',
   },
 };
@@ -438,7 +509,9 @@ export const DISPLAY_TOKEN_DATA: Record<string, DisplayTokenDef> = {
   },
 };
 
-export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film'];
+export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval'];
+export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film'];
+export const CONCEPTUAL_SUBSTRATE_IDS: readonly string[] = ['sound_echo', 'light_scatter', 'space_interval'];
 export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];
 export const LEXEME_IDS: readonly string[] = ['motion_patrol', 'motion_turn', 'motion_coalesce', 'motion_wall', 'motion_anchor', 'motion_cluster', 'motion_wind', 'motion_trail', 'sense_cone', 'sense_hear', 'sense_narrow', 'sense_touch', 'sense_scent', 'sense_domain', 'sense_reverse', 'rhythm_open', 'rhythm_sleep', 'rhythm_pulse', 'rhythm_cluster', 'rhythm_sky', 'contact_melee_three', 'contact_adjacent_strike', 'contact_step_chaos', 'contact_volume_chaos', 'contact_disperse_core'];
 export const UTTERANCE_IDS: readonly string[] = ['door_still_closing', 'eye_in_the_seam', 'cluster_lung', 'corridor_watching'];

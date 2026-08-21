@@ -541,22 +541,76 @@ function generateContaminationLexicon() {
   const uIdx = Object.fromEntries(utterancesCsv.header.map((h, i) => [h, i]));
   const tIdx = Object.fromEntries(tokensCsv.header.map((h, i) => [h, i]));
 
-  const requiredSub = ['id', 'display_token', 'residual_verb', 'legal_occupancies', 'legal_continuities'];
+  const requiredSub = [
+    'id',
+    'display_token',
+    'residual_verb',
+    'legal_occupancies',
+    'legal_continuities',
+    'enabled_scope',
+  ];
   for (const col of requiredSub) {
     if (sIdx[col] === undefined) throw new Error(`[codegen] contamination-substrates.csv missing '${col}'`);
   }
 
-  const substrates = substratesCsv.rows.map((cols) => ({
-    id: cols[sIdx.id],
-    displayToken: cols[sIdx.display_token],
-    residualVerb: cols[sIdx.residual_verb],
-    legalOccupancies: splitBar(cols[sIdx.legal_occupancies]),
-    legalContinuities: splitBar(cols[sIdx.legal_continuities]),
-  }));
+  const OCC_OK = new Set(['floor', 'wall', 'paint', 'volume']);
+  const CONT_OK = new Set(['monolith', 'shards', 'colony', 'field']);
+  const SCOPE_OK = new Set(['sortie', 'gym']);
+  /** Spec conceptual substrates (volume-only). Pairing: sortie-open ↔ oil_film drops volume. */
+  const CONCEPTUAL_SUBSTRATE_IDS = ['sound_echo', 'light_scatter', 'space_interval'];
+
+  const substrates = substratesCsv.rows.map((cols) => {
+    if (cols.length !== substratesCsv.header.length) {
+      throw new Error(
+        `[codegen] contamination-substrates.csv row '${cols[sIdx.id]}' has ${cols.length} fields, expected ${substratesCsv.header.length}`,
+      );
+    }
+    const id = cols[sIdx.id];
+    const enabledScope = cols[sIdx.enabled_scope];
+    if (!SCOPE_OK.has(enabledScope)) {
+      throw new Error(`[codegen] contamination-substrates.csv ${id}: enabled_scope must be sortie|gym (got '${enabledScope}')`);
+    }
+    const legalOccupancies = splitBar(cols[sIdx.legal_occupancies]);
+    const legalContinuities = splitBar(cols[sIdx.legal_continuities]);
+    for (const occ of legalOccupancies) {
+      if (!OCC_OK.has(occ)) throw new Error(`[codegen] contamination-substrates.csv ${id}: illegal occupancy '${occ}'`);
+    }
+    for (const cont of legalContinuities) {
+      if (!CONT_OK.has(cont)) throw new Error(`[codegen] contamination-substrates.csv ${id}: illegal continuity '${cont}'`);
+    }
+    return {
+      id,
+      displayToken: cols[sIdx.display_token],
+      residualVerb: cols[sIdx.residual_verb],
+      legalOccupancies,
+      legalContinuities,
+      enabledScope,
+    };
+  });
   const subIds = new Set(substrates.map((s) => s.id));
-  for (const required of ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film']) {
+  for (const required of [
+    'organic_remnant',
+    'lamp_pillar',
+    'doorframe',
+    'wall_rust',
+    'fungal_mat',
+    'oil_film',
+    ...CONCEPTUAL_SUBSTRATE_IDS,
+  ]) {
     if (!subIds.has(required)) throw new Error(`[codegen] contamination-substrates.csv missing '${required}'`);
   }
+
+  const conceptualOnSortie = CONCEPTUAL_SUBSTRATE_IDS.some((id) => {
+    const row = substrates.find((s) => s.id === id);
+    return row?.enabledScope === 'sortie';
+  });
+  for (const s of substrates) {
+    s.sortieLegalOccupancies =
+      s.id === 'oil_film' && !conceptualOnSortie && !s.legalOccupancies.includes('volume')
+        ? [...s.legalOccupancies, 'volume']
+        : s.legalOccupancies;
+  }
+  const sortieSubstrates = substrates.filter((s) => s.enabledScope === 'sortie');
 
   const portfolios = portfoliosCsv.rows.map((cols) => {
     const id = cols[pIdx.id];
@@ -626,13 +680,18 @@ function generateContaminationLexicon() {
     "export type PortfolioId = 'jia' | 'yi' | 'bing' | 'ding';",
     "export type LexemeSlot = 'motion' | 'sense' | 'rhythm' | 'contact';",
     "export type PinLayerId = 'waypoints' | 'wall_edge' | 'cluster_core' | 'corridor_aabb';",
+    "export type SubstrateEnabledScope = 'sortie' | 'gym';",
     '',
     'export interface SubstrateDef {',
     '  id: string;',
     '  displayToken: string;',
     '  residualVerb: string;',
+    '  /** CSV / gym view. */',
     '  legalOccupancies: readonly OccupancyId[];',
+    '  /** Sortie view (oil_film volume overlay while conceptual substrates stay gym). */',
+    '  sortieLegalOccupancies: readonly OccupancyId[];',
     '  legalContinuities: readonly ContinuityId[];',
+    '  enabledScope: SubstrateEnabledScope;',
     '}',
     '',
     'export interface PortfolioDef {',
@@ -691,7 +750,9 @@ function generateContaminationLexicon() {
     lines.push(`    displayToken: '${escapeStr(s.displayToken)}',`);
     lines.push(`    residualVerb: '${escapeStr(s.residualVerb)}',`);
     lines.push(`    legalOccupancies: [${s.legalOccupancies.map((v) => `'${v}'`).join(', ')}],`);
+    lines.push(`    sortieLegalOccupancies: [${s.sortieLegalOccupancies.map((v) => `'${v}'`).join(', ')}],`);
     lines.push(`    legalContinuities: [${s.legalContinuities.map((v) => `'${v}'`).join(', ')}],`);
+    lines.push(`    enabledScope: '${s.enabledScope}',`);
     lines.push('  },');
   }
   lines.push('};');
@@ -758,6 +819,12 @@ function generateContaminationLexicon() {
   lines.push('};');
   lines.push('');
   lines.push(`export const SUBSTRATE_IDS: readonly string[] = [${substrates.map((s) => `'${s.id}'`).join(', ')}];`);
+  lines.push(
+    `export const SORTIE_SUBSTRATE_IDS: readonly string[] = [${sortieSubstrates.map((s) => `'${s.id}'`).join(', ')}];`,
+  );
+  lines.push(
+    `export const CONCEPTUAL_SUBSTRATE_IDS: readonly string[] = [${CONCEPTUAL_SUBSTRATE_IDS.map((id) => `'${id}'`).join(', ')}];`,
+  );
   lines.push("export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];");
   lines.push(`export const LEXEME_IDS: readonly string[] = [${lexemes.map((l) => `'${l.id}'`).join(', ')}];`);
   lines.push(

@@ -2,7 +2,7 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: design agent（迭代 2 第二轮 R2-D1）
+last-modified-by: code agent（迭代 2 第二轮 R2-C-data；配对不变量）
 last-modified-date: 2026-08-22
 interface-changed: true
 interfaces-with:
@@ -96,8 +96,9 @@ interface ContaminationForm {
 24. **遭遇限频**：同身份键本趟 60s；任意身份行间隔 ≥ 2.5s；同时 1 行；与混乱阈值重叠则阈值优先、这次作废不补打；出击结束清空冷却表。
 25. **事件**：通过限频的一次识别发出 `encounter:identified`。载荷见下文「实现规格 · 事件」。遭遇识别旁白消费此事件，不回写 AI。
 26. **听觉主轴**：实现后每图恰好一个主感知为听噪的个体（甲的听噪填法，或乙的听缝）。取代活代码「恰好 1 个 `rewriter`」。撤离门仍必须是甲 + 视锥，不得担任听觉主轴。0 个或 ≥2 个 = 坏图，重试；禁止把全部甲改成视锥糊过去。
-27. **油膜只占漆**：`oil_film.legal_occupancies` 仅为 `paint`。废止 DEC-076 第 8 条「否则丁无基体」的占空扩权。孔谱丁的合法基体是概念三类：`sound_echo` / `light_scatter` / `space_interval`（仅 `volume`）。
+27. **油膜只占漆（练习场 / CSV）**：`oil_film.legal_occupancies` 仅为 `paint`。废止 DEC-076 第 8 条「否则丁无基体」的占空扩权。孔谱丁在练习场的合法基体是概念三类：`sound_echo` / `light_scatter` / `space_interval`（仅 `volume`）。出击视图另见配对不变量：概念基体未对出击开放时，油膜仍占 `paint|volume`，丁继续抽油膜占空。
 28. **出击范围**：CSV 列 `enabled_scope` 为 `sortie` 或 `gym`。出击 `drawSortie` 只抽 `sortie` 行。练习场句法课读全表，并按当前孔谱过滤 `legal_occupancies`。禁止把 `gym` 行抽进裂隙。
+29. **配对不变量**：概念基体任一行 `enabled_scope=sortie` ⟺ 油膜出击视图不占 `volume`。翻其中一半开关必须同一次提交翻另一半。禁止只收回油膜占空、却让概念基体仍停在 `gym`（裂隙丁会改抽乙）。
 
 ## 玩家交互
 
@@ -210,13 +211,14 @@ interface ContaminationForm {
 1. CSV 与 `src/generated/contamination-lexicon-data.ts` 的 id 集合一致（只许 codegen 生成，禁止手写 generated）。
 2. 缺列、缺必填、`enabled_scope` 不是 `sortie`/`gym`、字段内 ASCII 逗号 → codegen 失败。
 3. 出击白名单 = 所有 `enabled_scope=sortie` 的 id。本轮必须恰好是旧六种：`organic_remnant` / `lamp_pillar` / `doorframe` / `wall_rust` / `fungal_mat` / `oil_film`。
-4. `oil_film.legalOccupancies` 深等于 `['paint']`（废止「油膜必须能占空」）。
+4. `oil_film.legalOccupancies`（CSV / 练习场视图）深等于 `['paint']`。废止「CSV 油膜必须能占空」。
 5. `sound_echo` / `light_scatter` / `space_interval`：仅 `volume`，`enabled_scope=gym`，连续性只含 `monolith` 与/或 `field`。
 6. `stalk_clump`（有机）与 `railing_post`（无机）合法占位含 `floor`、不含 `volume`；`ash_veil` 合法占位含 `paint`、不含 `volume`；三者 `enabled_scope=gym`。
-7. `drawSortie` 产出不得含 `enabled_scope=gym` 的基体。
-8. `UTTERANCE_DATA.corridor_watching.substrate === 'space_interval'`。
+7. `drawSortie` 产出不得含 `enabled_scope=gym` 的基体。丁在概念基体仍为 `gym` 时必须仍能抽到，且基体为油膜、占位为 `volume`。
+8. `UTTERANCE_DATA.corridor_watching.substrate === 'space_interval'`。出击路径该成句不命中（不带 `utteranceId`）。为不打乱后续甲/丙的随机数，同一次抽卡用油膜占空的无名体占住（覆盖 / 词素与旧成句体相同）。
+9. **配对不变量（`check:lexicon` 必断言）：** 概念三类任一行 `enabled_scope=sortie` ⟺ `oil_film.sortieLegalOccupancies` 不含 `volume`。当前概念三类均为 `gym`，codegen 派生 `oil_film.sortieLegalOccupancies = ['paint','volume']`。概念基体一旦对出击开放，必须在同一次提交里让油膜出击视图收回只占漆。
 
-codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`。出击过滤读这一列，不要另维护一份与 CSV 脱节的六 id 常量当唯一真相（可以派生 `SORTIE_SUBSTRATE_IDS`，但必须等于该列）。
+codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出派生字段 `sortieLegalOccupancies`（配对不变量；禁止手写 generated）。出击过滤读 `enabledScope` 列，不要另维护一份与 CSV 脱节的六 id 常量当唯一真相（可以派生 `SORTIE_SUBSTRATE_IDS`，但必须等于该列）。
 
 **本轮行（与 CSV 同步；类不进 CSV，只供阅读）：**
 
@@ -237,7 +239,7 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`。出击过
 
 门框占地时运动必须固着，且不得永久封死出生→撤离的唯一通道。灯柱 / 栏柱占地默认固着。禁止把概念基体给甲。
 
-**出击丁的过渡：** 旧六种里不再有占空合法基体。`drawSortie` 抽到丁时，若过滤后无合法基体，则**改抽乙**（与钉层空回退同一条：乙空则丁、丁空则乙；两者都失败才本图只有甲并打日志）。听觉主轴规则不变。这会改变出击「乙或丁」的比例（户外原先偏丁）——本轮接受此副作用，禁止为了保住出击丁而把油膜占空留作例外。练习场句法课不受此回退约束，直接抽概念三类。
+**出击丁与油膜占空：** 练习场 / CSV 油膜只占漆。出击视图在配对不变量下仍让油膜占空，因此 `drawSortie` 抽到丁时基体仍是油膜——与概念基体写入 CSV 之前一致。禁止在概念基体仍为 `gym` 时把丁改抽乙（户外原先偏丁，比例一变就是变更进了裂隙）。钉层空的乙↔丁回退仍在（乙空则丁、丁空则乙；两者都失败才本图只有甲并打日志）。练习场句法课下拉直接抽概念三类，看不到油膜占空。
 
 ### `data/contamination-portfolios.csv`
 
@@ -369,7 +371,7 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`。出击过
 
 风格锚先抽碎片类型，再给字母表权重。禁止一图动物园。未启用的碎片类型仍写权重，启用后直接用。权重是抽卡偏置，不是禁令（除基体亲和非法交仍丢弃）。覆盖深度不按碎片改写「覆盖体变第三种人形」。碎片 bias 不是新时空。
 
-出击抽卡：先按本表加权，再丢掉 `enabled_scope !== sortie` 的行。练习场句法课配表下拉读全表（仍按孔谱过滤占位）；若练习场走方言抽卡，不过滤 `gym` 行。
+出击抽卡：按本表取加权行，**加权前**丢掉 `enabled_scope !== sortie` 的行（出击视图）。禁止先加权再丢掉——会多消耗随机数并改变出击抽卡。练习场句法课配表下拉读全表（仍按孔谱过滤占位）；若练习场走方言抽卡，不过滤 `gym` 行。
 
 R2-C-data 必须按下面数字改 `contamination-draw.ts` 的 `DIALECT`（禁止出现未写入本表的 id）。未列出的旧基体对该碎片视为降权（不进加权表）。
 
@@ -384,12 +386,12 @@ R2-C-data 必须按下面数字改 `contamination-draw.ts` 的 `DIALECT`（禁�
 ### 抽卡顺序
 
 1. 读本图 `fragmentTypeId` 与 `ClusterOrganism[]`（烤地之后）。无簇则丙配额 = 0。
-2. 掷乙或丁（1 只）。户外偏丁，临床偏乙，地铁按种子。出击若丁无 `sortie` 合法基体，改抽乙。
+2. 掷乙或丁（1 只）。户外偏丁，临床偏乙，地铁按种子。出击在配对不变量下油膜仍占空，丁有合法基体；禁止因 CSV 油膜只占漆就把丁改抽乙。钉层空才乙↔丁回退。
 3. 掷甲 2–3。撤离门那条必须是甲 + `sense_cone`。
 4. 掷丙 0–1，钉最显眼簇（`breathAmp` 最大者；并列取核更靠近贪婪薪柴的）。
 5. 听觉主轴：若乙的感知抽中听噪，则所有甲不得再抽听噪。若乙不是听噪（或本图是丁），则甲里恰好一只听噪（改写体对照），其余甲不得听噪。
 6. 每只：底材 ∩ 孔谱 ∩ 方言 ∩ 覆盖开孔 ∩ 本路径允许的 `enabled_scope` → 四槽。交空重抽，上限 12。失败则少生该只并 `console.warn`，禁止用占地小人顶替漆/缝/体积。出击路径的 `enabled_scope` 必须是 `sortie`。
-7. 成句：本图孔谱匹配时，若钉层允许，优先用配方行替换无名抽卡（每句每图最多 1 次）。出击路径若成句基体不在 `sortie` 白名单（如 `corridor_watching` 已改绑 `space_interval`），则该成句本图不命中，走无名变体或按丁无基体规则改抽乙。
+7. 成句：本图孔谱匹配时，若钉层允许，优先用配方行替换无名抽卡（每句每图最多 1 次）。出击路径若成句基体不在 `sortie` 白名单（如 `corridor_watching` 已改绑 `space_interval`），则该成句本图不命中：用出击合法基体（当前为油膜占空）占住同一次抽卡、去掉 `utteranceId`，禁止因此多消耗随机数把后面的甲/丙打乱。
 
 ### 钉层（地图生成必须交出）
 
@@ -485,7 +487,7 @@ CONTAMINATION: {
 - 占空与迷雾：体积不得抬到视野蒙层之上。亮度不在本文终审。
 - 打散重组：第一版字母表不含「打散重组」接触；若成句外抽到，改写为打核驱散。重组体若日后开放，仍须可走可达，且不得封死出生→撤离。
 - 门框占地固着挡门洞：不得把唯一通道永久封死；脉冲必须有开相。
-- 钉层为空（无墙缘 / 无够窄走廊）：该孔谱本图抽空，改抽另一张允许的（乙空则改丁，丁空则改乙；仍空则本图只有甲，并打日志）。出击若丁无 `sortie` 合法基体，视同丁空，改抽乙。听觉主轴仍必须恰好 1。
+- 钉层为空（无墙缘 / 无够窄走廊）：该孔谱本图抽空，改抽另一张允许的（乙空则改丁，丁空则改乙；仍空则本图只有甲，并打日志）。概念基体仍为 `gym` 时，出击丁不算「无合法基体」。听觉主轴仍必须恰好 1。
 - 乙或丁与甲路点重叠：乙/丁让路，改钉下一候选。甲路点契约优先。
 
 ## 与已有系统的接口
