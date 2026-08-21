@@ -480,11 +480,11 @@ Title: 概念基体进 MVP + 新基底 CSV + 接触攻击对照表 | Priority: P
 
 ### 具体要求
 
-- [ ] `world.md`：概念基体开放问题标为已决（DEC-080 已翻；核对本轮 director 改过的句子，补任何遗漏）。术语表若缺「概念基体 / 有机基体 / 无机基体」则补。MVP「一种时空风格」那句不要改成五种世界观——碎片 bias 不是新时空。
-- [ ] `docs/design-notes/contamination-lexicon.md`：§2 写清「概念基体 ≠ 概念生物」（仍必须有占位与六件套；三类新基体走占空）。§3.1 不再写「封闭六种」；补新行（id / 残余动词 / 合法占位 / 合法连续性）。§4.2 矩阵：不新开占声主孔谱。§4.3 丁：基底改为概念三类，外观写成云状体积。油膜只占漆。
-- [ ] `docs/specs/system-contamination-lexicon.md`：就地扩写实现规格（`last-modified-date` 今天；`interface-changed: true`）。废止「油膜必须能占空」。Schema 增加出击/练习场范围约定（见下）。方言表纳入新基体权重。`check:lexicon` 合同从「六行必须都在」改为「CSV 与 generated 一致；出击白名单锁旧六种直到人选后接线」。
-- [ ] `docs/specs/system-combat.md`：就地加一小节「接触词素 → 伤害通道」（指向句法 spec 数字，不复制第二份价目表）。写明 **gym 先兑现、出击默认仍按宿主 kind 硬编码**。重申成功标准与 V3 不推翻。`interface-changed: true`。
-- [ ] **你写 CSV，禁止让 code 编基底：**
+- [x] `world.md`：概念基体开放问题标为已决（DEC-080 已翻；核对本轮 director 改过的句子，补任何遗漏）。术语表若缺「概念基体 / 有机基体 / 无机基体」则补。MVP「一种时空风格」那句不要改成五种世界观——碎片 bias 不是新时空。
+- [x] `docs/design-notes/contamination-lexicon.md`：§2 写清「概念基体 ≠ 概念生物」（仍必须有占位与六件套；三类新基体走占空）。§3.1 不再写「封闭六种」；补新行（id / 残余动词 / 合法占位 / 合法连续性）。§4.2 矩阵：不新开占声主孔谱。§4.3 丁：基底改为概念三类，外观写成云状体积。油膜只占漆。
+- [x] `docs/specs/system-contamination-lexicon.md`：就地扩写实现规格（`last-modified-date` 今天；`interface-changed: true`）。废止「油膜必须能占空」。Schema 增加出击/练习场范围约定（见下）。方言表纳入新基体权重。`check:lexicon` 合同从「六行必须都在」改为「CSV 与 generated 一致；出击白名单锁旧六种直到人选后接线」。
+- [x] `docs/specs/system-combat.md`：就地加一小节「接触词素 → 伤害通道」（指向句法 spec 数字，不复制第二份价目表）。写明 **gym 先兑现、出击默认仍按宿主 kind 硬编码**。重申成功标准与 V3 不推翻。`interface-changed: true`。
+- [x] **你写 CSV，禁止让 code 编基底：**
   1. `data/contamination-substrates.csv` 新行（配额锁死，id 你定，须稳定英文蛇形）：
      - 甲：至少 **2** 种新的占地合法基体（有机 / 无机各至少 1）。禁止概念基体给甲。
      - 丙：至少 **1** 种新的占漆合法基体（当前合法只有菌毯、油膜）。
@@ -495,14 +495,14 @@ Title: 概念基体进 MVP + 新基底 CSV + 接触攻击对照表 | Priority: P
   4. 方言：更新生成器权重所在处（若权重在 `contamination-draw.ts` 而不是 CSV，在 spec 里写出新权重表，交给 R2-C-data 改代码——**仍不要在代码里发明未写入 spec 的 id**）。
   5. 成句 `corridor_watching`：基体从油膜改绑一个概念基体。
   6. 若 checker / codegen 需要新列 `enabled_scope`（建议取值 `sortie|gym`；旧六种 `sortie`，本轮新行 `gym`），你定列并写进 spec。没有新列则 R2-C-data 用代码白名单，你必须在 spec 列出白名单那六种 id。
-- [ ] **接触词素对照表**（写入句法 spec，code 不得另猜）：
+- [x] **接触词素对照表**（写入句法 spec，code 不得另猜）：
 
   | contact id | 甲 | 乙 | 丙 | 丁 |
   | ---------- | -- | -- | -- | -- |
   | （现有五词） | 写清通道：打血 / 混乱 / 视野 / 仅驱散核 | 同上 | 同上 | 同上 |
 
   人要求「与核心要素匹配」。概念基体的丁：声音/光线/空间关系都仍走体积场（混乱+视野），**不要**发明精神攻击空包，**不要**新开打血通道把丁变成近战。若某词素在某孔谱非法，沿用既有 `rewrite_to`，不要加 DPS 词缀。
-- [ ] 甲「同一种类内部多种形态」**不要**写成 CSV 行。在设计正文写一句：变体由渲染种子 × 覆盖深度生产，配额 ≥3 种剪影/族内变体（R2-A1 / R2-C3）。
+- [x] 甲「同一种类内部多种形态」**不要**写成 CSV 行。在设计正文写一句：变体由渲染种子 × 覆盖深度生产，配额 ≥3 种剪影/族内变体（R2-A1 / R2-C3）。
 
 ### 禁止
 
@@ -511,6 +511,13 @@ Title: 概念基体进 MVP + 新基底 CSV + 接触攻击对照表 | Priority: P
 ### 闸门
 
 产出能让下一手 R2-C-data 直接 codegen：CSV 合法、spec 数字与第一版价目不打架（乙抽打 15 / 前摇 350 ms；丁 +1.0 混乱/秒、视野 ×0.7；甲三刀账不变）。到顶未交表 → 停，升级给人。
+
+### R2-C-data 交接（R2-D1 写下，禁止改 `src/` 的 design 已停在这里）
+
+1. `npm run codegen` 必须认 `enabled_scope` 列并写入 `SubstrateDef.enabledScope`。当前 `tools/csv-codegen/generate.mjs` 会忽略该列。
+2. 修 `tools/contamination-lexicon/check-lexicon.ts`：废止「oil_film 必须能占空」。按句法 spec Schema 合同 1–8 断言（CSV 与 generated 一致、sortie 白名单旧六种、油膜仅 paint、三个概念仅 volume、`corridor_watching` 绑 `space_interval`、`drawSortie` 不含 gym 行）。
+3. `drawSortie` 过滤 `enabledScope !== 'sortie'`。丁无 sortie 合法基体则改抽乙。`DIALECT` 与 `residualMotion` 按句法 spec 表改；禁止出现未写入 spec 的 id。
+4. gym 句法课下拉读全表，按孔谱过滤 `legal_occupancies`。不要手写 `src/generated/`。不要改 `RiftScene`。
 
 ---
 

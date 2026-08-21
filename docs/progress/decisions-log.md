@@ -9,6 +9,59 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-081: R2-D1 基底表落地 — 范围列、概念三类 id、成句改绑
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 2 第二轮）
+- Type: Design
+- Context: DEC-080 已拍板启用概念基体并废止油膜占空。R2-D1 要写出能喂 codegen 的行，并在「CSV 加 enabled_scope 列」与「代码白名单六 id」之间选一条出击安全阀。
+- Decision:
+  1. 出击范围用 CSV 列 `enabled_scope`（`sortie` / `gym`）。旧六种 `sortie`，本轮新行 `gym`。codegen 写入 `SubstrateDef.enabledScope`；出击过滤读这一列。
+  2. 新基体 id 锁死：`stalk_clump`（残茎，有机占地）、`railing_post`（栏柱，无机占地）、`ash_veil`（灰幕，占漆）、`sound_echo`（余响）、`light_scatter`（散光）、`space_interval`（间距）。后三类仅 `volume`。
+  3. 成句 `corridor_watching` 改绑 `space_interval`（这段路本身在工作）。出击路径该成句本轮不命中。
+  4. 油膜不再占空后，出击抽丁若无 `sortie` 合法基体则改抽乙。禁止把油膜占空留作出击例外。
+- Impact: `data/contamination-substrates.csv`；`data/contamination-utterances.csv`；句法 spec Schema / 方言 / 接触对照表；战斗 spec 指针。R2-C-data 必须 codegen + 改 checker + 过滤 `drawSortie`。出击乙/丁比例会变（户外原先偏丁），等人在接线前看是否接受。
+
+## DEC-080: 迭代 2 第二轮 — 方案 D 混装；概念基体进 MVP；出击画面仍零改动
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 2 第二轮：形态系统，仍不另立迭代）
+- Type: Design / Process
+- Context: 人在 gym 试完三方案并逐条差评后拍板：混装成方案 D；甲基底两头加；危险区跟着视觉动；启用概念基体（声音 / 光线 / 空间关系）给丁。范围已溢出纯渲染（CSV、宿主机制、共享钉接口），但工作单元仍是迭代 2。FATAL：变更先到污染句法课，不进 `RiftScene`。
+- Decision:
+  1. **不另立迭代。** 登记表仍是迭代 2；对人说话用「迭代 2 第二轮」。收尾合法态改为：方案 D 可在 `gym.html?lesson=lexicon` 浏览并覆盖人点名的四孔谱差评；**不要标 COMPLETE**；**不要接到出击**。
+  2. **方案 D 混装**：甲走第一轮方案 A 的程序像素词法；丙走方案 B 的地表方言活体；乙、丁在 B 的方向上重做（乙贴墙面游荡；丁是缓慢形变的云，基底不是油膜）。A/B/C 源码冻结为对照，本轮禁止再改；下拉保留「对照（已冻结）」，默认方案 D。
+  3. **概念基体纳入 MVP**（翻转 `world.md` 开放问题）。三类新基体只合法占空，给丁。不是无占位的「概念生物」（设计正文 §2 仍成立）。**占声不升为第五张主孔谱。** 油膜合法占位退回只占漆（废止 DEC-076 第 8 条「否则丁无基体」的占空扩权；丁改走概念基体）。
+  4. **新基体走 CSV → codegen**。出击 `drawSortie` 在人选并接线之前仍只抽旧六种（白名单）；练习场句法课读全表。禁止代码手写基底再反向导出。
+  5. **甲基底两头都加**：新种类 = 新 CSV 行（占地合法）；同一种类内部形态变体 = 渲染种子 / 覆盖深度，不每变体一行。
+  6. **危险区跟着视觉**：机制拥有世界位置（乙核沿有序墙面路径走；丁盒飘并形变）；渲染器只画钉点。禁止再用画布内 `seamSlidePx` 假装在动。乙可抽打地板格、丁减视野+加混乱的范围必须跟钉走。
+  7. **共享接口加法线（T0 签名作废，仅允许加可选字段）**：`FormAttachContext.pin` 增加墙附着（朝向可走地板的面、法线、缝世界坐标）。A/B/C 不消费。有序墙面路径是新纯函数，**禁止改** `collectWallEdges` 的产出集合；出击钉层集合不变。
+  8. **接触词素驱动攻击**只在练习场句法课打开（宿主 `gymLiveMotion` 一类开关，出击默认关）。战斗成功标准仍是「如果试玩者开始享受战斗，本系统就失败了」。不推翻战斗 spec V3（无震屏、无命中停顿、无伤害数字）。攻击发生时的表现 = 危险区可见 + 敌人出手相 + 玩家既有白闪；练习场可关无敌才能看见掉血。
+  9. **配色跟碎片**：练习场观察院子必须有 `fragmentTypeId`；敌人像素从该碎片 `wallBias*` / `floorBias*` 推到青绿轴再量化。禁止改 `bakeGround` / `preview-paint.ts` 出击地面管线；可抄 `deriveContamRamp` 语义进 `form-renderers/d/`。
+- Impact: `docs/tasks/iteration-2.md` 第二轮；`world.md`；设计正文 §2 / §3.1；句法 spec；战斗 spec 指针；`gym.md` / `gym.mdc`；`architecture.md` gym 渲染器行。出击画面本轮零改动。
+
+## DEC-079: 迭代 2 污染体渲染探索（gym 抽卡，出击不接）
+- Date: 2026-08-21
+- Phase: Iterative Development（迭代 2：污染体渲染）
+- Type: Process / Rendering exploration
+- Context: 迭代 1 把污染句法接到出击（逻辑 / AI / 旁白）。渲染层只消费 `portfolio`（练习场另用 `sense` 二选一刷渗透体或改写体）；甲外观只跟 `role` 走；乙丙丁是 `Graphics.fillRect`。生成空间 1053+4，像素 2 人形 + 3 几何块。人点名抽卡三个能覆盖整个生成空间的渲染方案，放练习场可浏览。
+- Decision:
+  1. 开 **迭代 2（污染体渲染）**，不重开迭代 1。迭代 1 句法逻辑仍为「实现完成，体验未验证」。甲「外观已完成」的隐含前提作废，缺口归本迭代。
+  2. 收尾合法态：三个方案可在 `gym.html?lesson=lexicon` 下拉切换，等人选。不要标 COMPLETE。不要接到 `RiftScene`。
+  3. 共享合同：`src/gym/form-renderers/` 一接口三实现；侧栏 `#gym-lex-renderer` 照抄地图课污染画法下拉。T0 脚手架先于三方案。任务书 `docs/tasks/iteration-2.md`。
+  4. 三方案必须是不同解题思路（程序像素词法 / 地表方言活体 / 词素层叠），不是同一想法的三个色调。
+  5. 默认敌人课、玩家课、地图课、出击仍走现行像素。污染句法课可临时另画候选外形——这是对「练习场必须与出击同一套外形」的**有期限例外**，人选后收回。
+- Impact: `current-iteration.md`；`docs/dev/gym.md`；`.cursor/rules/gym.mdc`；`architecture.md` gym 注册；句法 spec 加探索指针。字段→像素映射等人选后再锁进外观 HOW。
+
+## DEC-078: 正式名由「污染词法」改为「污染句法」
+- Date: 2026-08-21
+- Phase: Iterative Development（迭代 1：敌人系统）
+- Type: Terminology
+- Context: 人要求给敌人形态组合制度一个更响亮、也更准确的名字。词法指构词；这套制度管的是组合规则（孔谱 + 词素 → 成句），对应句法。
+- Decision:
+  1. 对人说话的正式全称改为「污染句法」。需要时可写「下面称：句法」。
+  2. DEC-073 锁定的制度本身不变（底材 / 孔谱 / 词素 / 成句）。旧称「污染词法」仍指向同一套体系，不再当正式名。
+  3. 英文文件名、代码标识与练习场 URL（`contamination-lexicon`、`?lesson=lexicon`）不改，避免断链。
+- Impact: 活文档与练习场可见文案。本日志历史条目不改写。
+
 ## DEC-077: 污染词法接到出击（实现完成，体验未验证）
 - Date: 2026-08-21
 - Phase: Iterative Development（迭代 1：敌人系统）

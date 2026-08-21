@@ -2,14 +2,14 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
-last-modified-by: design agent
-last-modified-date: 2026-08-21
-interface-changed: false
+last-modified-by: design agent（迭代 2 第二轮 R2-D1）
+last-modified-date: 2026-08-22
+interface-changed: true
 slice: 1
 interfaces-with:
   - system-movement-vision         # T1：共享 Player 实体（本 spec 只拥有 HP/攻击/受击/死亡触发）；复用 utils/grid-raycast 做隔墙判定；用 setSpeedModifier('attack') 做出手僵直
   - system-enemy-ai                # T2：消费 isEngaged()/getPosition()/getFacingAngle()/getEnemies()；经场景层调用 reportDamage/reportNoise/despawn，不改 FSM
-  - system-contamination-lexicon   # 迭代 1：乙邻格抽打 / 打核 / 丙丁不打血；核 HP 50。出击已接（DEC-077）
+  - system-contamination-lexicon   # 迭代 1：乙邻格抽打 / 打核 / 丙丁不打血；核 HP 50。出击已接（DEC-077）。迭代 2 第二轮：接触词素对照表由 R2-D1 写入句法 spec；gym 先读词素，出击默认仍按宿主 kind
   - system-chaos-scavenge-extract  # T3：emit ENEMY_DAMAGED/PLAYER_DIED/PLAYER_HEALTH_CHANGED 供其消费；本 spec 不自行修改混乱值
   - tilemap-renderer               # T6：提供 OccluderGrid（攻击不穿墙判定）
 exposes:
@@ -418,14 +418,29 @@ t=500 ms       冷却结束，可再次挥击
 | `ENEMY_HIT_FLASH_MS` | 敌人受击白闪 | 80 ms | 50–150 | "我打中了"的唯一反馈。<50 ms 在 60 Hz 下容易被完全错过 | 建议值 |
 | `ENEMY_DEATH_FX_MS` | 死亡消散时长 | 180 ms | 100–400 | 纯表现，逻辑上敌人已在第 0 ms 移除 | 建议值 |
 
-### 污染词法核与非血条接触（DEC-076 / DEC-077）
+### 污染句法核与非血条接触（DEC-076 / DEC-077）
 
-甲继续用上表。乙 / 丙 / 丁的核与混乱价只锁在词法 spec 数值结构；本 spec 拥有 HP 事件与挥击命中核。`GAME_CONSTANTS.CONTAMINATION` 已接：
+甲继续用上表。乙 / 丙 / 丁的核与混乱价只锁在句法 spec 数值结构；本 spec 拥有 HP 事件与挥击命中核。`GAME_CONSTANTS.CONTAMINATION` 已接：
 
 - 核 HP 50（两刀，K1 仍成立）。
 - 乙邻格抽打：伤害 15、前摇 350 ms；玩家必须站在 `strikeFloors` 才付血；挥击必须打到缝核。
 - 丙踩踏、丁体积：不打玩家血，走 `ChaosSystem.addChaos`。清核仍 emit `ENEMY_DAMAGED`（source `'player'`）从而付战斗混乱 5。
 - 打核驱散 = 核 HP 到 0，走既有 `ENEMY_KILLED`。漆/体积残骸不挡路。
+
+### 接触词素 → 伤害通道（DEC-080 / R2-D1，指针）
+
+通道定义以句法 spec「接触词素对照表」为准。本 spec **不复制**第二份价目表。乙抽打 15 / 前摇 350 ms、丁 +1.0 混乱/秒与视野 ×0.7、甲三刀账，仍只锁在句法 spec 数值结构与本 spec 甲表。
+
+| 兑现处 | 怎么读接触 |
+| ------ | ---------- |
+| 练习场句法课，`gymLiveMotion === true` | 读 `lexemes.contact`，按句法对照表走打血 / 混乱 / 视野 / 仅驱散核 |
+| 出击（本轮） | 仍按宿主 kind 硬编码：甲扇形打血、乙邻格打血、丙踩踏混乱、丁体积混乱+视野。不因新基体改出击通道 |
+
+概念基体三类在丁上仍走体积场，不发明精神攻击，不给丁开打血。非法词素沿用既有 `rewrite_to`，不加 DPS 词缀。
+
+**成功标准不推翻：** 如果试玩者开始享受战斗，本系统就失败了。绕仍应比打更划算。
+
+**V3 不推翻：** 无震屏、无命中停顿、无伤害数字。攻击发生时可见 = 危险区可见 + 敌人出手相 + 玩家既有白闪。练习场可关无敌才能看见掉血。
 
 ### 玩家生命值与受击
 
