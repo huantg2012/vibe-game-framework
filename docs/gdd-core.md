@@ -23,7 +23,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | ---- | ---- | --------- | ---------- |
 | 移动 + 有限视野 | **已实现** (Slice 1) | `docs/specs/system-movement-vision.md` | 俯视角 WASD 移动 + 60 射线 Raycasting 视野遮罩；速度 80px/s，视野半径 180px |
 | 敌人 AI | **已实现** (Slice 1；8 扩) | `docs/specs/system-enemy-ai.md` | 一份五态 FSM + 两种感知剖面（渗透体视锥 / 改写体听觉为主）；每图恰好 1 改写体 |
-| 污染词法 | **设计锁，未实现** (迭代 1 / DEC-073 / DEC-075) | `docs/specs/system-contamination-lexicon.md` | 底材 + 孔谱 + 词素生成可落地形态；成句少数具名。叙述家 `docs/design-notes/contamination-lexicon.md`；遭遇识别旁白是本体系识别面 |
+| 污染词法 | **设计锁，未实现** (迭代 1 / DEC-073 / DEC-075 / DEC-076) | `docs/specs/system-contamination-lexicon.md` | 底材 + 孔谱 + 词素生成可落地形态；成句少数具名。叙述家 `docs/design-notes/contamination-lexicon.md`；遭遇识别旁白是本体系识别面。实现规格已锁 |
 | 遭遇识别旁白 | **设计锁，未实现** (迭代 1 / DEC-074；归属污染词法) | `docs/specs/ui-encounter-narration.md` | 污染词法的识别表面合同（不是独立玩法）：随身罩一行记录；成句短标记；同身份限频；无头上名字 |
 | 战斗系统 | **已实现** (Slice 1) | `docs/specs/system-combat.md` | 前向扇形挥击、三刀击杀、敌人反击 token 机制；定位为止损工具非主要手段 |
 | 混乱值 + 搜刮 + 撤离 | **已实现** (Slice 1) | `docs/specs/system-chaos-scavenge-extract.md` | 混乱值匀速上涨(0.5/s) + 阈值惩罚；薪柴搜刮点散布；撤离点按 E 确认 |

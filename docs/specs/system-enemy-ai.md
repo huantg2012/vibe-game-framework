@@ -3,15 +3,16 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: design agent
-last-modified-date: 2026-08-20
-interface-changed: false
+last-modified-date: 2026-08-21
+interface-changed: true
 slice: 8
 interfaces-with:
   - system-movement-vision         # 复用 utils/grid-raycast 做视线遮挡；敌人渲染可见性由 VisibilitySystem 决定；平衡不变量来源（玩家视距/移速）
   - system-chaos-scavenge-extract  # ENEMY_ALERT 经场景层驱动混乱值累加；被看守的薪柴点位依赖巡逻路线
   - system-combat                  # 敌人 HP/受击/攻击归 T4，本 spec 只提供接敌站位与朝向
-  - system-map-generation          # 每张裂隙 3–4 巡逻，恰好 1 个改写体；路点可走且从出生可达
-  - ui-detection-pulse             # 屏缘干涉读 getDetection / getState / getPosition / getRole；无新事件
+  - system-map-generation          # 每张裂隙甲 2–3 巡逻；实现后恰好 1 个听觉主轴（DEC-076），未实现前仍是恰好 1 个改写体
+  - system-contamination-lexicon   # 迭代 1：孔谱决定哪些五态可达；禁止第二份 FSM。未实现前本文件仍是出击真相
+  - ui-detection-pulse             # 屏缘干涉读 getDetection / getState / getPosition / getRole；无新事件；丙丁第一版不接
 exposes:
   - AIState 枚举（patrol | suspicious | alert | chase | return，沿用 src/types/game-types.ts 既有定义）
   - EnemyRole（infiltrator | rewriter）与 PerceptionProfile（感知剖面，禁止复制第二份 FSM）
@@ -37,7 +38,7 @@ exposes:
 1. **渗透体（低度覆盖）**：绕视锥。视觉填充察觉度；听觉只是一次警觉点名。
 2. **改写体（中度覆盖）**：停步、贴墙消声。听觉是主通道，视锥更窄；移动噪声权重大。视觉仍能锁定追击，但不是这条判断的主轴。
 
-两条判断走**同一套五态**。玩家读懂的是「它在巡逻 / 怀疑 / 搜索 / 追我」，不是「这个类型另有一套状态名」。`world.md` 写改写体「新旧模式混合」——机制上落实为**感官权重混合**，不是随机切态。覆盖体（高度）本 spec 的活实现不做。迭代 1 的污染词法（DEC-073，未实现）把本两种剖面收成孔谱甲的两种填法，并规定覆盖体不以第三种人形出场；见 `docs/specs/system-contamination-lexicon.md`。在词法接到代码之前，本文件仍是出击真相。
+两条判断走**同一套五态**。玩家读懂的是「它在巡逻 / 怀疑 / 搜索 / 追我」，不是「这个类型另有一套状态名」。`world.md` 写改写体「新旧模式混合」——机制上落实为**感官权重混合**，不是随机切态。覆盖体（高度）本 spec 的活实现不做。迭代 1 的污染词法（DEC-073 / DEC-076，未实现）把本两种剖面收成孔谱甲的两种填法，并规定覆盖体不以第三种人形出场；五态可达性与听觉主轴迁移见 `docs/specs/system-contamination-lexicon.md` 实现规格。在词法接到代码之前，本文件仍是出击真相。
 
 设计目标仍是可读、可预测、可被学习。概念图：`docs/art/demos/entity-rewriter/VERDICT.md`（不对称、teal 成簇；视觉归 Art A1）。
 
@@ -552,16 +553,17 @@ interface EnemyView {
 
 **CSV 行 → codegen**（`data/enemies.csv` → `src/generated/enemy-data.ts`，由 code 接 `tools/csv-codegen`）：字段即上表 snake_case 列。两种角色必须都在表里。缺行或 `role` ≠ `id` = 构建失败。
 
-### 生成器契约（每张裂隙恰好 1 个改写体）
+### 生成器契约（每张裂隙恰好 1 个听觉主轴）
 
-由 `system-map-generation` 执行，本 spec 拥有语义：
+由 `system-map-generation` 执行，本 spec 拥有语义。**未实现污染词法前**，活代码与验收仍按旧文：`type === 'rewriter'` 恰好 1。**实现后**改为：
 
-1. `enemySpawns.length` ∈ {3, 4}（沿用巡逻数量）。
-2. 其中 **`type === 'rewriter'` 的条目数恰好为 1**，其余 `'infiltrator'`。0 个或 ≥2 个 = 坏图，重试，禁止用「全换成渗透体」糊过去。
-3. 规则 19 的撤离最后一道关必须是渗透体。改写体不站撤离门。
-4. 改写体优先落在 contested/deep 薪柴附近或侧路，让第二条判断出现在贪婪路线上。
-5. 改写体 id 建议 `ENM_RWR_01`；渗透体保持 `ENM_INF_*`。
-6. 路点可走、从出生可达——与现行连通 FATAL 相同。
+1. 甲（占地可追击）`length` ∈ {2, 3}。另加乙或丁 1、丙 0–1。不再要求总巡逻数为 3–4。
+2. 全图主感知为听噪的个体数恰好为 1（甲的听噪填法或乙的听缝）。0 个或 ≥2 个 = 坏图，重试，禁止用「全换成视锥」糊过去。
+3. 规则 19 的撤离最后一道关必须是甲 + 视锥。听觉主轴不站撤离门。
+4. 甲的听噪填法优先落在 contested/deep 薪柴附近或侧路（与现行改写体落点相同）。
+5. 甲视锥 id 建议 `ENM_INF_*`；甲听噪 `ENM_RWR_01`；乙/丙/丁另编 `ENM_YI_*` / `ENM_BING_*` / `ENM_DING_*`。
+6. 路点 / 墙缘 / 簇核 / 走廊盒可走或按词法 spec 钉层可达——与现行连通 FATAL 相同。
+7. 丙、丁不接屏缘干涉。乙可接（邻格察觉）。
 
 ### 事件契约
 

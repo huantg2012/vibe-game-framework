@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: design conversation
-last-modified-date: 2026-08-20
+last-modified-by: director agent（迭代 1 T0）
+last-modified-date: 2026-08-21
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；词法只决定孔谱与填词，禁止第二份 FSM
@@ -18,16 +18,20 @@ exposes:
   - 第一版四张主孔谱（甲占地 / 乙占墙 / 丙占漆 / 丁占空）
   - 抽卡配额与非法组合丢弃规则
   - 遭遇识别旁白：身份键、触发、限频、上屏节点、成句短标记映射
-  - 事件建议 `encounter:identified`（旁白消费、不回写 AI；实现规格步骤 3 会扩）
+  - 事件 `encounter:identified`（载荷见实现规格；旁白消费、不回写 AI）
+  - CSV：substrates / portfolios / lexemes / utterances / display-tokens → `src/generated/contamination-lexicon-data.ts`
+  - 钉层：墙缘折线 / 簇核 / 走廊包围盒（由地图生成交出）
 note: |
   迭代 1 设计锁（DEC-073）。遭遇识别旁白 DEC-074 仍有效。DEC-075：叙述并入设计正文。
+  DEC-076：实现规格锁（字母表、CSV、钉层、乙丙丁数字、听觉主轴）。
   叙述家是 docs/design-notes/contamination-lexicon.md；本文是规则合同；
-  docs/specs/ui-encounter-narration.md 是识别表面，不是独立玩法。未实现。
+  docs/specs/ui-encounter-narration.md 是识别表面，不是独立玩法。
+  外观 HOW：docs/art/contamination-forms.md。未实现。
 ---
 
 # 系统设计：污染词法
 
-> **TL;DR**: 用底材 + 孔谱 + 词素生成海量可落地的污染体形态；成句是少数具名遭遇。叙述家是设计正文 `contamination-lexicon.md`；本文是规则合同（含遭遇识别旁白的身份键、触发、限频、上屏节点、成句标记映射）；`ui-encounter-narration.md` 是识别表面（载体 / U1–U12），不是独立玩法。当前代码未接；出击仍是渗透体 / 改写体两种剖面。
+> **TL;DR**: 用底材 + 孔谱 + 词素生成海量可落地的污染体形态；成句是少数具名遭遇。叙述家是设计正文 `contamination-lexicon.md`；本文是规则合同（含遭遇识别旁白的身份键、触发、限频、上屏节点、成句标记映射，以及 DEC-076 实现规格：CSV、字母表、方言、钉层、乙丙丁数字）；`ui-encounter-narration.md` 是识别表面（载体 / U1–U12），不是独立玩法。当前代码未接；出击仍是渗透体 / 改写体两种剖面。
 
 ## 概述
 
@@ -87,7 +91,9 @@ interface ContaminationForm {
 22. **遭遇身份键**（限频用，不上屏）：成句用 `utteranceId`。无名变体用 `coverage + substrate + occupancy + continuity`；占地再加主感知词素。不把运动 / 节律 / 接触四槽编进键。
 23. **遭遇触发**：甲占地 / 乙占墙 = 看见该个体身体（`getVisibilityAt` > 0）。丙占漆 = 踩该漆或视野扫到该簇核。丁占空 = 进入体积或视野扫到核。持续留在可识别里 = 同一次遭遇，不重复触发。
 24. **遭遇限频**：同身份键本趟 60s；任意身份行间隔 ≥ 2.5s；同时 1 行；与混乱阈值重叠则阈值优先、这次作废不补打；出击结束清空冷却表。
-25. **事件建议**：通过限频的一次识别发出 `encounter:identified`。遭遇识别旁白消费此事件，不回写 AI。实现规格步骤 3 会扩载荷字段；本步只声明方向。
+25. **事件**：通过限频的一次识别发出 `encounter:identified`。载荷见下文「实现规格 · 事件」。遭遇识别旁白消费此事件，不回写 AI。
+26. **听觉主轴**：实现后每图恰好一个主感知为听噪的个体（甲的听噪填法，或乙的听缝）。取代活代码「恰好 1 个 `rewriter`」。撤离门仍必须是甲 + 视锥，不得担任听觉主轴。0 个或 ≥2 个 = 坏图，重试；禁止把全部甲改成视锥糊过去。
+27. **油膜占空**：基体「油膜」合法占位为占漆或占空（否则孔谱丁没有合法基体）。连续性：占漆为菌落或场或单核；占空为场或单核。设计正文 §3.1 同步此扩。
 
 ## 玩家交互
 
@@ -152,49 +158,292 @@ interface ContaminationForm {
 
 ### 事件
 
-通过限频的一次识别发出 `encounter:identified`。遭遇识别旁白消费此事件，不回写 AI（看旁白不会被发现）。实现规格步骤 3 会扩载荷；本步只声明方向。
+通过限频的一次识别发出 `encounter:identified`。遭遇识别旁白消费此事件，不回写 AI（看旁白不会被发现）。载荷见「实现规格 · 事件」。
 
 练习场 / 净化点不创建本表面。
 
 ## 数值结构
 
-第一版不锁新战斗数字。可追击剖面继续服从 `system-enemy-ai` 的 I1–I6 与 `data/enemies.csv`。占漆踩踏 / 占空加速混乱的具体点数实现时再定，须让「绕开斑 / 等相」仍通常更便宜。
+甲的可追击剖面继续服从 `system-enemy-ai` 的 I1–I6 与 `data/enemies.csv`（75 HP = 三刀）。乙 / 丙 / 丁的核与混乱价如下；绕开通常为 0 价。数字实现进 `GAME_CONSTANTS.CONTAMINATION`（系统常量，不是策划形态表）。形态组合仍走 CSV。
 
-| 参数 | 含义 | 调节目的 |
-| ---- | ---- | -------- |
-| 每图甲数量 | 会走路的对照压力 | 太少则潜行课消失 |
-| 每图乙或丁 | 改一条路的走法 | 太多则看不懂 |
-| 丙有无 | 是否把本图最显眼的簇变成有价的地 | 无簇则 0 |
-| 踩踏混乱 / 场内加速 | 冲的价 | 须低于「我干脆清核」时的总账，除非人另锁 |
-| 遭遇识别旁白同身份冷却 | 短时间再遇相同形态不刷 | 现值 60s / 趟；太短会刷，太长会忘 |
+| 参数 | 值 | 调节目的 |
+| ---- | -- | -------- |
+| 每图甲 | 2–3 | 会走路的对照压力；太少则潜行课消失 |
+| 每图乙或丁 | 恰好 1（互斥） | 改一条路的走法；太多则看不懂 |
+| 每图丙 | 0–1（无簇则 0） | 最显眼的簇变成有价的地 |
+| 乙/丙/丁核 HP | 50（= 两刀，K1：25 的整数倍） | 清核比绕贵，但不是甲那种三刀交手 |
+| 乙邻格抽打伤害 | 15（与甲同刀） | 贴墙才付血；走廊中央 0 |
+| 乙邻格抽打前摇 | 350 ms | 与甲同一躲避窗 |
+| 丙踩踏混乱（休息相） | +2 / 步 | 低于侦测 +3；冲斑有价、仍通常不如绕 |
+| 丙踩踏混乱（胀满相） | +4 / 步 | 仍低于清核账单（战斗 +5 + 噪声 + 两刀） |
+| 丁体积内额外混乱 | +1.0 / 秒 | 叠在 `CHAOS.BASE_RATE` 0.5 上；绕开整段 = 0 |
+| 丁体积内视野距离乘 | 0.7 | 只在体积内；冲 = 盲穿 |
+| 遭遇识别旁白同身份冷却 | 60 s / 趟 | 太短会刷，太长会忘 |
+| 行间隔 | ≥ 2.5 s | 含上一条淡出 |
+| 抽卡重试上限 | 12 次 / 只 | 上限内失败则本图少生该只并打日志 |
 
-## Schema
+清核仍走既有 `CHAOS.COMBAT_BONUS`(5) 与挥击噪声。接触词素禁止变成 DPS 词缀。
 
-实现时新增或扩展 CSV（建议独立形态表，不把 324 填法手写进 `enemies.csv`）。`enemies.csv` 可继续描述剖面数值；形态是生成结果。成句是具名配方行，不是随机种子碰巧撞上。
+## Schema（CSV 合同）
+
+禁止把 324 填法手写进 `enemies.csv`。`enemies.csv` 只描述可追击剖面数值（渗透体 / 改写体）。形态是生成结果。成句是具名配方行，不是随机种子碰巧撞上。
+
+源：`data/contamination-*.csv` → `src/generated/contamination-lexicon-data.ts`（扩展 `tools/csv-codegen/generate.mjs`）。字段内禁止 ASCII 逗号（与现有 codegen 一致）；多值用 `|`。
+
+### `data/contamination-substrates.csv`
+
+| 列 | 含义 |
+| -- | ---- |
+| id | `organic_remnant` / `lamp_pillar` / `doorframe` / `wall_rust` / `fungal_mat` / `oil_film` |
+| display_token | 上屏：有机残影 / 灯柱 / 门框 / 墙锈 / 菌毯 / 油膜 |
+| residual_verb | 渗透深度必须可读的残余动词 |
+| legal_occupancies | `floor\|wall\|paint\|volume` 子集 |
+| legal_continuities | `monolith\|shards\|colony\|field` 子集 |
+
+六行必须都在。缺行 = 构建失败。
+
+基体亲和（生成器丢弃非法交）：
+
+| id | 合法占位 | 合法连续性 |
+| -- | -------- | ---------- |
+| organic_remnant | floor | monolith, shards |
+| lamp_pillar | floor | monolith |
+| doorframe | wall, floor | monolith |
+| wall_rust | wall | monolith, colony |
+| fungal_mat | paint | colony, field |
+| oil_film | paint, volume | monolith, colony, field |
+
+门框占地时运动必须固着，且不得永久封死出生→撤离的唯一通道。
+
+### `data/contamination-portfolios.csv`
+
+| 列 | 含义 |
+| -- | ---- |
+| id | `jia` / `yi` / `bing` / `ding` |
+| display_token | 占地 / 占墙 / 占漆 / 占空 |
+| continuity | 默认连续性 |
+| occupancy | floor / wall / paint / volume |
+| legal_continuities | 该主课允许的连续性 |
+| pin_layer | waypoints / wall_edge / cluster_core / corridor_aabb |
+| can_chase | true 仅甲 |
+| block_walk | true 仅甲（单核占地） |
+| default_contact | 接触词素 id |
+| detection_pulse | true = 甲、乙可接屏缘干涉；丙、丁第一版 false |
+
+### `data/contamination-lexemes.csv`
+
+| 列 | 含义 |
+| -- | ---- |
+| id | 稳定英文键 |
+| slot | motion / sense / rhythm / contact |
+| display_token | 上屏短词 |
+| legal_portfolios | `jia\|yi\|bing\|ding` |
+| rewrite_to | 可空。格式 `yi:contact_adjacent_strike;bing:contact_disperse_core;ding:contact_disperse_core` |
+
+广播不进第一版字母表。
+
+### `data/contamination-utterances.csv`
+
+四行，id 稳定英文；`internal_label` 禁止上屏。
+
+| id | 内部名（禁上屏） | on_screen_mark | 底材 / 孔谱 / 词素 |
+| -- | ---------------- | -------------- | ------------------ |
+| door_still_closing | 门还想关 | 开合 | 渗透 · 门框 · yi 单核占墙 · 固着 · 触地 · 脉冲 · 邻格抽打 |
+| eye_in_the_seam | 缝里的眼 | 缝视 | 覆盖 · 墙锈 · yi 单核占墙 · 固着 · 窄视 · 常开 · 邻格抽打 |
+| cluster_lung | 簇的肺 | 呼吸 | 改写 · 菌毯 · bing 场占漆 · 簇栖 · 触地 · 随簇呼吸 · 踩踏混乱 |
+| corridor_watching | 走廊在看你 | 反视 | 覆盖 · 油膜 · ding 场占空 · 固着 · 反视 · 随天空相 · 场内加速混乱 |
+
+成句命中优先于无名抽卡：本图若抽中该孔谱，按配额与方言先检查成句配方是否可钉；不能钉则走无名变体。
+
+### `data/contamination-display-tokens.csv`
+
+覆盖深度、占位、设备骨架。基体与词素的上屏词住在各自表的 `display_token`，本表不重复。
+
+| id | kind | display_token |
+| -- | ---- | ------------- |
+| coverage_infiltrate | coverage | 渗透 |
+| coverage_rewrite | coverage | 改写 |
+| coverage_overwrite | coverage | 覆盖 |
+| occupancy_floor | occupancy | 占地 |
+| occupancy_wall | occupancy | 占墙 |
+| occupancy_paint | occupancy | 占漆 |
+| occupancy_volume | occupancy | 占空 |
+| device_prefix | device | 识别。 |
+
+代码禁止写死整句中文。骨架「识别。」只来自 `device_prefix`。
+
+## 实现规格（DEC-076，code 不得再猜）
+
+数字只锁在本文「数值结构」与将落地的 `GAME_CONSTANTS.CONTAMINATION`。设计正文只指向本文，禁止第二份数字表。外观 HOW：`docs/art/contamination-forms.md`。
+
+### 字母表（每孔每槽 3 个；交空则重抽）
+
+孔谱甲 `jia`（占地）：
+- 运动：`motion_patrol` 巡路、`motion_turn` 转面、`motion_coalesce` 凝聚
+- 感知：`sense_cone` 视锥、`sense_hear` 听噪、`sense_narrow` 窄视
+- 节律：`rhythm_open` 常开、`rhythm_sleep` 睡眠、`rhythm_pulse` 脉冲
+- 接触：`contact_melee_three` 三刀近战
+
+孔谱乙 `yi`（占墙）：
+- 运动：`motion_wall` 沿壁、`motion_anchor` 固着、`motion_turn` 转面
+- 感知：`sense_narrow` 窄视、`sense_hear` 听噪、`sense_touch` 触地
+- 节律：`rhythm_open` 常开、`rhythm_pulse` 脉冲、`rhythm_sleep` 睡眠
+- 接触：`contact_adjacent_strike` 邻格抽打（抽到三刀则改写为此）
+
+孔谱丙 `bing`（占漆）：
+- 运动：`motion_cluster` 簇栖、`motion_anchor` 固着、`motion_wind` 随风
+- 感知：`sense_touch` 触地、`sense_scent` 嗅混乱、`sense_domain` 领域
+- 节律：`rhythm_cluster` 随簇呼吸、`rhythm_open` 常开、`rhythm_pulse` 脉冲
+- 接触：`contact_step_chaos` 踩踏混乱（抽到三刀改写为 `contact_disperse_core`）
+
+孔谱丁 `ding`（占空）：
+- 运动：`motion_anchor` 固着、`motion_wind` 随风、`motion_trail` 拖尾
+- 感知：`sense_reverse` 反视、`sense_domain` 领域、`sense_scent` 嗅混乱
+- 节律：`rhythm_sky` 随天空相、`rhythm_pulse` 脉冲、`rhythm_open` 常开
+- 接触：`contact_volume_chaos` 场内加速混乱（抽到三刀改写为 `contact_disperse_core`）
+
+现有对照必须能被生成器表示（测试夹具，不是手写第二套表）：
+- 渗透体 = 有机残影 × 渗透 × 甲 × 视锥 × 常开 × 三刀
+- 改写体 = 有机残影 × 改写 × 甲 × 听噪 × 常开 × 三刀
+
+覆盖深度开孔：渗透 = 一条主感知，运动被残余动词锁一半。改写 = 可双通道。覆盖 = 残余关闭。实现：渗透时若基体有残余运动锁（门框→固着、灯柱→固着），覆盖运动槽。
+
+### 方言（按 `fragmentTypeId`，同一趟一种方言）
+
+风格锚先抽碎片类型，再给字母表权重。禁止一图动物园。未启用的碎片类型仍写权重，启用后直接用。
+
+| fragmentTypeId | 基体权重（高→低） | 孔谱权重 | 禁用或降权词素 |
+| -------------- | ----------------- | -------- | -------------- |
+| frag-outdoor | fungal_mat, oil_film, organic_remnant | 丙常见；乙或丁偏丁 | 灯柱 / 门框降权 |
+| frag-clinic | lamp_pillar, doorframe, wall_rust | 乙常见；丙较少 | 菌毯降权；随风降权 |
+| frag-metro | wall_rust, oil_film, lamp_pillar, doorframe | 乙与丁均可 | 菌毯中权；簇栖中权 |
+| frag-library | doorframe, wall_rust, organic_remnant | 乙常见 | 随风降权（未启用） |
+| frag-residential | organic_remnant, doorframe, oil_film | 甲对照为主 | 未启用；启用前禁止当生产路径 |
+
+权重是抽卡偏置，不是禁令（除基体亲和非法交仍丢弃）。覆盖深度不按碎片改写「覆盖体变第三种人形」。
+
+### 抽卡顺序
+
+1. 读本图 `fragmentTypeId` 与 `ClusterOrganism[]`（烤地之后）。无簇则丙配额 = 0。
+2. 掷乙或丁（1 只）。户外偏丁，临床偏乙，地铁按种子。
+3. 掷甲 2–3。撤离门那条必须是甲 + `sense_cone`。
+4. 掷丙 0–1，钉最显眼簇（`breathAmp` 最大者；并列取核更靠近贪婪薪柴的）。
+5. 听觉主轴：若乙的感知抽中听噪，则所有甲不得再抽听噪。若乙不是听噪（或本图是丁），则甲里恰好一只听噪（改写体对照），其余甲不得听噪。
+6. 每只：底材 ∩ 孔谱 ∩ 方言 ∩ 覆盖开孔 → 四槽。交空重抽，上限 12。失败则少生该只并 `console.warn`，禁止用占地小人顶替漆/缝/体积。
+7. 成句：本图孔谱匹配时，若钉层允许，优先用配方行替换无名抽卡（每句每图最多 1 次）。
+
+### 钉层（地图生成必须交出）
+
+实现后扩 `GeneratedRiftLayout`（或并列结构由同一 `generateRiftLayout` 返回）。墙后可走格四连通分量必须仍为 1。
+
+```typescript
+interface WallEdgePolyline {
+  readonly tiles: readonly { col: number; row: number }[]; // 墙格且四邻有地板
+  readonly strikeFloors: readonly { col: number; row: number }[]; // 抽打只进这些地板
+}
+
+interface ClusterCorePin {
+  readonly organismIndex: number;
+  readonly cx: number; // px
+  readonly cy: number;
+  readonly floorCol: number;
+  readonly floorRow: number; // 必须可走；禁墙/虚空
+}
+
+interface CorridorAabb {
+  readonly minCol: number;
+  readonly minRow: number;
+  readonly maxCol: number;
+  readonly maxRow: number;
+  readonly coreCol: number;
+  readonly coreRow: number; // 可打核，可走
+}
+```
+
+- 占地：现有巡逻路点（可走、出生可达）。甲挡走，碰撞约 20。
+- 占墙：墙缘折线。抽打只进 `strikeFloors`。核画在墙格，不占走廊碰撞。
+- 占漆：`bakeGround` 的 `ClusterOrganism` 核。无核则丙不生。
+- 占空：一段窄可走带的包围盒（宽度 ≤ 4 格的通道优先）。体积深度必须 `< DEPTH.visionMask`（约 50）；建议世界层 depth 40。
+
+钉失败：本图少生该只并打日志。
+
+### 五态可达性（禁止新 FSM）
+
+| 孔谱 | PATROL | SUSPICIOUS / ALERT | CHASE | RETURN |
+| ---- | ------ | ------------------ | ----- | ------ |
+| 甲 | 路点 | 现有 | 地板寻路；看见才锁定 | 现有 |
+| 乙 | 沿墙折线或固着 | 邻格刺激可升 | 禁止穿开阔地。所谓追 = 沿墙滑到最近邻接缝 | 沿墙回钉点 |
+| 丙 | 无路点 | 无 | 无追击锁定 | 无 |
+| 丁 | 无 | 反视：玩家视野扫核才从睡眠/固着进入警觉类 | 无地板追击 | 核失视则休眠 |
+
+屏缘干涉：仅 `detection_pulse === true`（甲、乙）。丙、丁第一版不接屏缘，避免读成「地上也有一只人」。
+
+甲仍守 I1–I6。乙/丙/丁不追击，不把 I3 理解成「核必须比玩家慢走路」——它们多数固着。
+
+### 事件载荷
+
+```typescript
+// GameEvent.ENCOUNTER_IDENTIFIED = 'encounter:identified'
+{
+  identityKey: string;
+  nodes: readonly {
+    kind: 'coverage' | 'substrate' | 'occupancy' | 'sense' | 'utterance_mark';
+    tokenId: string; // CSV id；上屏用 display_token
+  }[];
+  utteranceId?: string;
+}
+```
+
+身份键：成句 = `utteranceId`；无名 = `coverage|substrate|occupancy|continuity`，占地再拼 `|sense`。
+
+### 系统常量形状
+
+```typescript
+CONTAMINATION: {
+  CORE_MAX_HEALTH: 50,
+  ADJACENT_STRIKE_DAMAGE: 15,
+  ADJACENT_STRIKE_WINDUP_MS: 350,
+  PAINT_STEP_CHAOS_REST: 2,
+  PAINT_STEP_CHAOS_INFLATED: 4,
+  VOLUME_CHAOS_PER_SEC: 1.0,
+  VOLUME_SIGHT_MULT: 0.7,
+  DRAW_RETRY_LIMIT: 12,
+  ENCOUNTER_COOLDOWN_MS: 60_000,
+  ENCOUNTER_GAP_MS: 2_500,
+  ENCOUNTER_HOLD_MS: 2_500,
+  VOLUME_DEPTH: 40, // < visionMask 50
+}
+```
+
+### 练习场
+
+敌人课必须复用出击实体、AI、词法生成物。遭遇识别旁白默认不创建。地图课仍可不开敌人。禁止为词法另写一套移动或外形。
 
 ## 边界情况
 
-- 抽到非法基体×占位：丢弃重抽，有上限，上限内失败则本图少生一只并打日志，禁止用占地小人顶替「本该是漆」。
+- 抽到非法基体×占位：丢弃重抽，上限 12，失败则本图少生该只并打日志，禁止用占地小人顶替「本该是漆 / 缝 / 体积」。
 - 本图无簇：丙配额变 0，不把丙改画到墙上凑数。
 - 占空与迷雾：体积不得抬到视野蒙层之上。亮度不在本文终审。
-- 打散重组：重组体仍须可走可达，且不得封死出生→撤离。
+- 打散重组：第一版字母表不含「打散重组」接触；若成句外抽到，改写为打核驱散。重组体若日后开放，仍须可走可达，且不得封死出生→撤离。
 - 门框占地固着挡门洞：不得把唯一通道永久封死；脉冲必须有开相。
+- 钉层为空（无墙缘 / 无够窄走廊）：该孔谱本图抽空，改抽另一张允许的（乙空则改丁，丁空则改乙；仍空则本图只有甲，并打日志）。听觉主轴仍必须恰好 1。
+- 乙或丁与甲路点重叠：乙/丁让路，改钉下一候选。甲路点契约优先。
 
 ## 与已有系统的接口
 
-- 从地图生成接收：可走路点、墙缘、簇核、走廊几何、风格锚（方言字母表）。
-- 从地表接收：崩坏簇活层相位（孔谱丙）。
-- 向 AI 发送：孔谱决定哪些五态转换可达、感知刺激钉在哪、能否 chase。
-- 向战斗发送：接触通道（扇形 / 邻格 / 混乱价 / 打核）。HP 事件仍归战斗。
-- 向混乱值发送：踩踏与场内加速走既有累加，不另开隐蔽条。
-- 向遭遇识别旁白发送：`encounter:identified`（身份键、上屏节点、是否成句）。旁白消费此事件，不回写 AI。表面合同见 `ui-encounter-narration`。
+- 从地图生成接收：可走路点、`WallEdgePolyline[]`、`ClusterCorePin[]`、`CorridorAabb[]`、`fragmentTypeId`（方言）。
+- 从地表接收：崩坏簇活层相位（孔谱丙踩踏胀满相）。
+- 向 AI 发送：孔谱决定哪些五态转换可达、感知刺激钉在哪、能否 chase。甲的 `EnemySpawnData.type` 在过渡期仍可用 infiltrator/rewriter 表示视锥/听噪；实现后应带 `form` 描述。
+- 向战斗发送：接触通道（扇形 / 邻格 / 混乱价 / 打核）。HP 事件仍归战斗。乙丙丁核 HP = 50。
+- 向混乱值发送：踩踏与场内加速走既有 `addChaos`，source 建议 `'paint_step'` / `'volume_field'`，不另开隐蔽条。
+- 向遭遇识别旁白发送：`encounter:identified`。旁白消费此事件，不回写 AI。表面合同见 `ui-encounter-narration`。
 
 ## 对已有系统的影响
 
-- `system-enemy-ai`：实现后 `EnemyRole` 两种枚举不够描述孔谱。须扩生成契约；五态本体保留。未实现前本条不改活代码。
-- `system-combat`：实现后增加邻格抽打、打核驱散、非血条死亡。未实现前三刀账不变。
-- `system-map-generation`：实现后生成器除路点外要交出墙缘 / 簇核 / 走廊盒给词法抽卡。
-- 练习场：敌人课必须仍复用出击的实体与 AI。新孔谱若做，练习场与出击同一套，禁止另写一套。遭遇识别旁白默认不开。
+- `system-enemy-ai`：生成契约从「恰好 1 个 rewriter」改为「恰好 1 个听觉主轴」。五态本体保留。丙丁关掉追击。未接到代码前活断言仍是 rewriter === 1。
+- `system-combat`：增加邻格抽打、打核驱散、踩踏/体积不打血。甲三刀账不变。核 50 HP 仍守 K1。
+- `system-map-generation`：除路点外交出墙缘 / 簇核 / 走廊盒。规则 22「恰好 1 个 rewriter」实现时改为听觉主轴。
+- 练习场：敌人课必须仍复用出击的实体与 AI。遭遇识别旁白默认不开。
 
 ## 验证标准
 

@@ -2,7 +2,7 @@
 status: LOCKED
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified: 2026-08-20
+last-modified: 2026-08-21
 note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DEC-075 旁白叙述并入本文件。未实现。规则合同 `docs/specs/system-contamination-lexicon.md`。识别表面 `docs/specs/ui-encounter-narration.md`。不要与层 A 框架迭代混名。
 ---
 
@@ -33,7 +33,8 @@ note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DE
 | 战斗价目表 | `docs/specs/system-combat.md` |
 | 裂隙生成（出生钉在哪一层） | `docs/specs/system-map-generation.md`、`docs/design-notes/slice-6-layered-generation.md` |
 | 崩坏簇活层（孔谱丙要咬合） | `docs/art/rift-fragment-surfaces.md` |
-| 角色像素 HOW | `docs/art/actor-pixels.md` |
+| 角色像素 HOW（孔谱甲） | `docs/art/actor-pixels.md` |
+| 四张孔谱外观 HOW（乙/丙/丁一次画完；甲仍走角色像素） | `docs/art/contamination-forms.md` |
 | 世界：覆盖深度 × 基体 | `docs/world.md`「污染体分类方向」 |
 
 **未实现。** 改代码前须人点名开工。连通 FATAL 仍有效：菌落与场不得变成额外的墙。
@@ -153,7 +154,7 @@ note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DE
 | 门框 | 开、合、夹 | 占墙，或占地但固着挡门洞 | 单核 |
 | 墙锈 | 渗、刮 | 占墙 | 单核、菌落 |
 | 菌毯 | 铺、胀 | 占漆 | 菌落、场 |
-| 油膜 | 流、沾 | 占漆 | 单核、菌落 |
+| 油膜 | 流、沾 | 占漆，或占空（DEC-076：否则孔谱丁没有合法基体） | 单核、菌落、场 |
 
 同一裂隙仍遵守世界规则：差异来自基体，污染方言来自这张图的风格锚。青绿量化、年龄滑动跟地表合同走，不另发明色板。
 
@@ -412,10 +413,13 @@ note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DE
 
 ---
 
-## 10. 实现边界（本文锁定设计，不锁定工期）
+## 10. 实现边界（本文锁定设计；数字只在 spec）
 
-未实现。实现时：
+未实现。CSV 列、字母表、方言、钉层形状、乙丙丁战斗数字、听觉主轴迁移、事件载荷：**只以** `docs/specs/system-contamination-lexicon.md`「实现规格（DEC-076）」为准。本文不复制那张数字表。
 
-- 策划取向数据仍走 `data/*.csv` → codegen，禁止在代码里手写形态表再反向导出。
-- 世界可读仍是第一课。遭遇识别旁白是同一套体系的识别面，不是独立产品：叙述见 **§7**；身份键 / 触发 / 限频 / 上屏节点 / 成句标记映射见规则 spec `docs/specs/system-contamination-lexicon.md`；载体 / 参考锚点 / 视觉 / U1–U12 见识别表面合同 `docs/specs/ui-encounter-narration.md`。禁止头上名字。禁止把词法画成后台配装板或图鉴弹窗。
+实现时：
+
+- 策划取向数据仍走 `data/*.csv` → codegen，禁止在代码里手写形态表再反向导出。系统常量（核 HP、踩踏混乱）进 `GAME_CONSTANTS.CONTAMINATION`。
+- 世界可读仍是第一课。遭遇识别旁白是同一套体系的识别面，不是独立产品：叙述见 **§7**；规则见 spec；载体 / 参考锚点 / 视觉 / U1–U12 见 `docs/specs/ui-encounter-narration.md`。禁止头上名字。禁止把词法画成后台配装板或图鉴弹窗。
+- 外观 HOW：`docs/art/contamination-forms.md`（甲仍见 `docs/art/actor-pixels.md`）。
 - 审美与「读作游戏」人终审。Agent 不代写好看、不代勾 PASS。

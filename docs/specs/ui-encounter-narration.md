@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified: 2026-08-20
-last-modified-by: design conversation
+last-modified: 2026-08-21
+last-modified-by: director agent（迭代 1 T0）；art agent（T0 视觉最短核对）
 interface-changed: true
 interfaces-with:
   - system-contamination-lexicon   # 身份键、触发、限频、上屏节点、成句标记；逻辑真相在词法 spec。本文件是识别表面，不拥有形态生成
@@ -180,6 +180,8 @@ note: |
 
 ## 视觉规格（机械层约束；审美待人终审）
 
+**Art 核对（T0）。** 最短核对，不重发明方案。机械层；审美待人终审。不写好看、不勾 PASS。载体仍为 **A**；屏幕空间复用 `#dom-ui-root`。字 `12px 'Courier New'`、`#c8cdd4`；成句 `#2ae6c8` / `#1aad96`。禁止 14px。禁止 `.game-panel`。`#rift-encounter-log` 必须进 `panel-styles.ts`。与 Kit：12px 落 Label（提示行），不是墙机正文 13px；「`.device-plate` 同族」= 极淡底语法，不是再挂一块小地图壳。参考锚点与 U1 / U3 / U4 / U6 / U11 / U12 未被本规格破坏。无信息架构改动。
+
 未走独立出图。实现须复用共享样式层，禁止面板内联第二套皮。
 
 | 组件 | 状态 | 样式描述 | 世界观关联 |
@@ -199,8 +201,8 @@ note: |
 
 ## 与已有系统的接口
 
-- 从词法接收：`encounter:identified`（身份键、上屏节点、是否成句）。逻辑真相在 `system-contamination-lexicon`。
-- 从视野 / AI 接收：该个体是否可识别。
+- 从词法接收：`encounter:identified`。载荷见词法 spec 实现规格（`identityKey`、`nodes[]`、`utteranceId?`）。本表面只负责排版与限频呈现，不发明节点。
+- 从视野 / AI 接收：该个体是否可识别（甲乙 `getVisibilityAt`；丙丁按词法触发表）。
 - 不向 AI 发送刺激（看旁白不会被发现）。
 - 不改混乱值、不改五态。
 

@@ -4,7 +4,7 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-08-20
 last-closed-slice: 9
-note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 1 敌人系统（污染词法 DEC-073 已锁文档、未实现；遭遇识别旁白并入同一套体系，DEC-074 / DEC-075）。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071。迷雾下亮度仍等人终审。
+note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 1 敌人系统（污染词法 DEC-073 已锁文档、未实现；遭遇识别旁白并入同一套体系，DEC-074 / DEC-075；实现规格 DEC-076）。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071。迷雾下亮度仍等人终审。
 ---
 
 # Roadmap
@@ -31,7 +31,7 @@ note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 1 �
 
 ## 当前工作单元（DEC-072）
 
-**无进行中 Slice。当前：迭代 1（敌人系统）。** 污染词法已锁文档、未实现（DEC-073 / DEC-074 / DEC-075）。活指针：`docs/progress/current-iteration.md`。体系入口：`docs/design-notes/contamination-lexicon.md` → `docs/specs/system-contamination-lexicon.md` → `docs/specs/ui-encounter-narration.md`。Slice 9 COMPLETE 档案：`docs/progress/current-slice.md`。
+**无进行中 Slice。当前：迭代 1（敌人系统）。** 污染词法已锁文档、未实现（DEC-073 / DEC-074 / DEC-075 / DEC-076）。活指针：`docs/progress/current-iteration.md`。体系入口：`docs/design-notes/contamination-lexicon.md` → `docs/specs/system-contamination-lexicon.md` → `docs/specs/ui-encounter-narration.md`。外观 HOW：`docs/art/contamination-forms.md`。Slice 9 COMPLETE 档案：`docs/progress/current-slice.md`。
 
 DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。撤离多样性不做。
 

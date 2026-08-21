@@ -9,6 +9,24 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-076: 污染词法实现规格锁（字母表、CSV、钉层、乙丙丁数字、听觉主轴）
+- Date: 2026-08-21
+- Phase: Iterative Development（迭代 1：敌人系统）
+- Type: Design / Implementation spec
+- Context: DEC-073/074/075 已锁方向与识别面。人点名补全实现规格并放权最佳方案，避免 code 猜 CSV、字母表、方言、乙丙丁数字、地图钉层。孔谱丁在原基体表里没有合法占空基体。
+- Decision:
+  1. 实现合同只写在 `docs/specs/system-contamination-lexicon.md`「实现规格」。设计正文不复制数字表。
+  2. 五张 CSV：`contamination-substrates/portfolios/lexemes/utterances/display-tokens.csv` → codegen。`enemies.csv` 只保留可追击剖面数值。
+  3. 每孔每槽 3 个合法词素；自动改写与抽卡顺序见 spec。广播不进第一版。
+  4. 方言按 `fragmentTypeId` 加权，同一趟一种方言。
+  5. 乙/丙/丁核 HP 50（两刀）。丙踩踏休息 +2 / 胀满 +4。丁体积内额外混乱 +1.0/秒、视野×0.7。甲三刀账与 I1–I6 不变。
+  6. 地图必须交出墙缘折线、簇核、走廊包围盒。钉失败少生该只，禁止用占地小人顶替。
+  7. 活断言「恰好 1 个 rewriter」实现时改为「恰好 1 个听觉主轴」。撤离门仍是甲+视锥。
+  8. 油膜合法占位扩为占漆或占空（否则丁无基体）。
+  9. 事件 `encounter:identified` 载荷锁在 spec。丙丁第一版不接屏缘干涉。
+  10. 外观 HOW 归 `docs/art/contamination-forms.md`。审美仍人终审。
+- Impact: 词法 spec；设计正文 §3.1 油膜与 §10；`system-enemy-ai` / `system-combat` / `system-map-generation` 接口段。代码未接。
+
 ## DEC-075: 遭遇识别旁白并入污染词法体系；设计正文为叙述家
 - Date: 2026-08-20
 - Phase: Iterative Development（迭代 1：敌人系统）
