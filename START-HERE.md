@@ -56,6 +56,8 @@
 
 > 每 3 个 Slice，Director 触发框架 Retrospective（分析积累的摩擦 → 提出修改建议）。
 
+> **规划前先定探索策略（宽抽窄迭）**：验收句还写不出来 = 还在找方向 → 让 Director 派并行低保真候选，你一次挑一个；已经能写出可否证的验收句 → 走正式迭代。判据是"一次评估要多久"，原理见 `guides/15-explore-vs-iterate.md`。
+
 **日常操作**：
 - 开 `director` agent → 它告诉你当前 Slice 进度和待做任务
 - 开对应 agent 窗口执行任务

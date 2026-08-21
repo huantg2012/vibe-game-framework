@@ -12,4 +12,5 @@ alwaysApply: true
 - 双层不混：框架（层 A）与游戏（层 B）分开改。
 - 游戏内 UI：审美过关 + 读作游戏（人终审）；HOW 在 `.cursor/skills/in-game-ux/SKILL.md`（按本游戏文档填写；自定义 agent 须显式 Read）；必经 art 路径 + U1–U12；不是后台管理系统。
 - 策划数据：`data/*.csv` → code。
+- 探索策略：宽抽窄迭。按「一次评估要多久」选抽/迭；写不出可否证验收句 = 该抽；先验偏斜维度先钉参考再采样；有效结果落成耐用件；禁止 agent 自评已收敛。
 - 框架内不用 Cursor Auto 路由。
