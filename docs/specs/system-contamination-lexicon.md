@@ -2,9 +2,9 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: director agent（迭代 1 T0）
+last-modified-by: director agent（迭代 1 T9）
 last-modified-date: 2026-08-21
-interface-changed: true
+interface-changed: false
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；词法只决定孔谱与填词，禁止第二份 FSM
   - system-combat                   # HP / 近战扇形 / 死亡事件仍归战斗；接触词素改价目表与伤害通道，不改「绕应更划算」
@@ -26,12 +26,12 @@ note: |
   DEC-076：实现规格锁（字母表、CSV、钉层、乙丙丁数字、听觉主轴）。
   叙述家是 docs/design-notes/contamination-lexicon.md；本文是规则合同；
   docs/specs/ui-encounter-narration.md 是识别表面，不是独立玩法。
-  外观 HOW：docs/art/contamination-forms.md。未实现。
+  外观 HOW：docs/art/contamination-forms.md。出击已接（体验未验证）。
 ---
 
 # 系统设计：污染词法
 
-> **TL;DR**: 用底材 + 孔谱 + 词素生成海量可落地的污染体形态；成句是少数具名遭遇。叙述家是设计正文 `contamination-lexicon.md`；本文是规则合同（含遭遇识别旁白的身份键、触发、限频、上屏节点、成句标记映射，以及 DEC-076 实现规格：CSV、字母表、方言、钉层、乙丙丁数字）；`ui-encounter-narration.md` 是识别表面（载体 / U1–U12），不是独立玩法。当前代码未接；出击仍是渗透体 / 改写体两种剖面。
+> **TL;DR**: 用底材 + 孔谱 + 词素生成海量可落地的污染体形态；成句是少数具名遭遇。叙述家是设计正文 `contamination-lexicon.md`；本文是规则合同（含遭遇识别旁白的身份键、触发、限频、上屏节点、成句标记映射，以及 DEC-076 实现规格：CSV、字母表、方言、钉层、乙丙丁数字）；`ui-encounter-narration.md` 是识别表面（载体 / U1–U12），不是独立玩法。出击已接甲填法 + 乙丙丁宿主 + 旁白；体验未验证。
 
 ## 概述
 
@@ -39,7 +39,7 @@ note: |
 
 服务体验支柱 2（贪婪与撤退：绕 / 冲 / 杀都要算得清）与支柱 1（持续低频压力，不是随机怪物）。世界观：污染是改写不是破坏；同一时空差异来自基体，污染方言来自风格锚。`world.md` 的渗透 / 改写 / 覆盖仍是覆盖深度，不是三种职业。
 
-**未实现。** 活 AI 合同仍是 `system-enemy-ai.md`。叙述家（问题、符文之语启发、维度爆炸、人点名的轴、遭遇识别旁白为什么存在）见 `docs/design-notes/contamination-lexicon.md`，本文不重复聊天记录。识别表面（载体 / 参考锚点 / 视觉 / U1–U12）见 `docs/specs/ui-encounter-narration.md`。
+**出击已接（体验未验证）。** 甲的五态仍归 `system-enemy-ai.md`。乙丙丁无第二份状态机。叙述家（问题、符文之语启发、维度爆炸、人点名的轴、遭遇识别旁白为什么存在）见 `docs/design-notes/contamination-lexicon.md`，本文不重复聊天记录。识别表面（载体 / 参考锚点 / 视觉 / U1–U12）见 `docs/specs/ui-encounter-narration.md`。
 
 渗透体 / 改写体 = 孔谱甲的两种填法。覆盖体不以第三种人形出场。遭遇识别旁白是本体系的识别面，不是独立玩法。
 
@@ -440,9 +440,9 @@ CONTAMINATION: {
 
 ## 对已有系统的影响
 
-- `system-enemy-ai`：生成契约从「恰好 1 个 rewriter」改为「恰好 1 个听觉主轴」。五态本体保留。丙丁关掉追击。未接到代码前活断言仍是 rewriter === 1。
+- `system-enemy-ai`：生成契约目标是「恰好 1 个听觉主轴」。五态本体保留。丙丁关掉追击。过渡期（DEC-077）活断言仍是 rewriter === 1；乙听缝不另占该名额。
 - `system-combat`：增加邻格抽打、打核驱散、踩踏/体积不打血。甲三刀账不变。核 50 HP 仍守 K1。
-- `system-map-generation`：除路点外交出墙缘 / 簇核 / 走廊盒。规则 22「恰好 1 个 rewriter」实现时改为听觉主轴。
+- `system-map-generation`：除路点外交出墙缘 / 簇核 / 走廊盒。规则 22 过渡期仍是恰好 1 个 rewriter。
 - 练习场：敌人课必须仍复用出击的实体与 AI。遭遇识别旁白默认不开。
 
 ## 验证标准
@@ -453,7 +453,7 @@ CONTAMINATION: {
 
 ## 待验证假设
 
-- [ ] 四张孔谱足够匹配程序关卡的丰富感（人终审，未实现）
+- [ ] 四张孔谱足够匹配程序关卡的丰富感（人终审）
 - [ ] 占漆踩踏价能让「冲过去多拿一点」成立且不比绕更蠢
 - [ ] 覆盖体以缝 / 体积出场仍能读成威胁，而不是风景
 - [ ] 无新 HUD 也能分清甲乙丙丁

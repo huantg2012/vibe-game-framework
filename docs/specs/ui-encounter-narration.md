@@ -3,8 +3,8 @@ status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
 last-modified: 2026-08-21
-last-modified-by: director agent（迭代 1 T0）；art agent（T0 视觉最短核对）
-interface-changed: true
+last-modified-by: director agent（迭代 1 T9）
+interface-changed: false
 interfaces-with:
   - system-contamination-lexicon   # 身份键、触发、限频、上屏节点、成句标记；逻辑真相在词法 spec。本文件是识别表面，不拥有形态生成
   - system-enemy-ai                # 占地/占墙：可见度与察觉度同一套显隐；不读血条
@@ -14,13 +14,13 @@ note: |
   归属污染词法，不是独立玩法系统。DEC-074 仍有效。DEC-075：设计叙述见
   docs/design-notes/contamination-lexicon.md §7。
   身份键 / 触发 / 限频的逻辑真相以 docs/specs/system-contamination-lexicon.md 为准。
-  本文件保留载体、参考锚点、视觉规格、U1–U12。未实现。HOW：`.cursor/skills/in-game-ux/SKILL.md`。
+  本文件保留载体、参考锚点、视觉规格、U1–U12。出击已接（体验未验证）。HOW：`.cursor/skills/in-game-ux/SKILL.md`。
   禁止头上名字、禁止图鉴弹窗、禁止复用混乱阈值全屏文学旁白。
 ---
 
 # UI/UX：遭遇识别旁白（污染词法的识别表面）
 
-> **TL;DR**: 污染词法的识别表面，不是独立玩法系统。裂隙里第一次识别到某形态时，随身罩打出一行无人称现场记录：关键组合项分开展示。成句用已锁污染侧强调。同身份短时间不刷。无头上名字。设计叙述见 `docs/design-notes/contamination-lexicon.md` §7。身份键 / 触发 / 限频以 `docs/specs/system-contamination-lexicon.md` 为准。本文件保留载体、参考锚点、视觉规格、U1–U12。未实现。
+> **TL;DR**: 污染词法的识别表面，不是独立玩法系统。裂隙里第一次识别到某形态时，随身罩打出一行无人称现场记录：关键组合项分开展示。成句用已锁污染侧强调。同身份短时间不刷。无头上名字。设计叙述见 `docs/design-notes/contamination-lexicon.md` §7。身份键 / 触发 / 限频以 `docs/specs/system-contamination-lexicon.md` 为准。本文件保留载体、参考锚点、视觉规格、U1–U12。出击已接（体验未验证）。
 
 ## 概述
 
@@ -233,7 +233,7 @@ note: |
 
 ## 游戏内 UI 验收清单
 
-未实现，下列在实现验收时勾。过清单 ≠ 好看。
+机械层已接（见 `docs/qa/iteration-1-lexicon.md`）。下列勾选待人终审审美与「读作游戏」；过清单 ≠ 好看。
 
 - [ ] **U1** 载体 A；挂 `#dom-ui-root`；无头上世界坐标名
 - [ ] **U2** 无圆角卡片/投影/OS toast 壳

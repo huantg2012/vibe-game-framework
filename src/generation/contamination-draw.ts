@@ -43,6 +43,8 @@ export interface SortiePinAvailability {
   readonly hasClusters: boolean;
   readonly hasWallEdges: boolean;
   readonly hasCorridors: boolean;
+  /** When 甲 already owns the hearing axis, yi must not take 听噪. */
+  readonly hearingAxisTaken?: boolean;
 }
 
 export interface SortieDraw {
@@ -380,19 +382,21 @@ function pickYiOrDing(rng: SeededRandom, pins: SortiePinAvailability): Portfolio
 export function drawSortie(rng: SeededRandom, pins: SortiePinAvailability): SortieDraw {
   const warnings: string[] = [];
   const forms: ContaminationForm[] = [];
-  const jiaCount = rng.nextInt(2, 3);
+  const jiaCount = pins.hearingAxisTaken ? 0 : rng.nextInt(2, 3);
 
   const alt = pickYiOrDing(rng, pins);
   if (!alt) warnings.push('no wall edge or corridor pin; skipped yi/ding');
 
   let hearingOnAlt = false;
   if (alt === 'yi') {
-    const withHear = drawOne(rng, {
-      portfolio: 'yi',
+    const yiOpts = {
+      portfolio: 'yi' as const,
       fragmentTypeId: pins.fragmentTypeId,
-      sense: 'sense_hear',
       preferUtterance: true,
-    });
+      forbidSense: pins.hearingAxisTaken ? (['sense_hear'] as const) : undefined,
+      sense: pins.hearingAxisTaken ? undefined : ('sense_hear' as const),
+    };
+    const withHear = pins.hearingAxisTaken ? null : drawOne(rng, yiOpts);
     if (withHear) {
       forms.push(withHear);
       hearingOnAlt = true;
@@ -454,7 +458,9 @@ export function drawSortie(rng: SeededRandom, pins: SortiePinAvailability): Sort
   }
 
   const hearCount = forms.filter((f) => f.lexemes.sense === 'sense_hear').length;
-  if (hearCount !== 1) {
+  if (pins.hearingAxisTaken) {
+    if (hearCount !== 0) warnings.push(`hearing axis already taken but draw produced ${hearCount}`);
+  } else if (hearCount !== 1) {
     const jiaIdx = forms.findIndex((f) => f.portfolio === 'jia' && f.lexemes.sense !== 'sense_cone');
     if (hearCount === 0 && jiaIdx >= 0) {
       const patched = drawOne(rng, {

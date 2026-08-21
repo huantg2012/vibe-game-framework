@@ -21,6 +21,7 @@ import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems
 import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { CombatSystem, COMBAT_FX_DEPTH, type CombatCueId, type NoiseLevel } from '@/systems/combat-system';
+import { ContaminationHostSystem } from '@/systems/contamination-host-system';
 import { ContaminantNodeSystem } from '@/systems/contaminant-node-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { ExtractionSystem } from '@/systems/extraction-system';
@@ -71,6 +72,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly trail = new TrailSystem();
   private readonly ai = new AISystem();
   private readonly combat = new CombatSystem();
+  private readonly hosts = new ContaminationHostSystem();
   private readonly loot = new LootSystem();
   private readonly contaminantNodes = new ContaminantNodeSystem();
   private readonly toolSystem = new ToolSystem();
@@ -205,6 +207,7 @@ export class RiftScene extends Phaser.Scene {
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
     });
+    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt);
 
     this.loot.create(this, layout.kindlingNodes, this.player.getSprite(), {
       getVisibilityAt: this.visibilityAt,
@@ -354,11 +357,26 @@ export class RiftScene extends Phaser.Scene {
     // state; one frame of lag on that at 30 px reads as "it is right there and doing
     // nothing".
     this.combat.update(delta);
+    this.hosts.update(delta, this.player.getPosition());
 
+    const tileSize = GAME_CONSTANTS.TILE_SIZE;
+    const p = this.player.getPosition();
+    const pCol = Math.floor(p.x / tileSize);
+    const pRow = Math.floor(p.y / tileSize);
     this.encounter.tick(
       this.time.now,
-      this.ai.getEnemies(),
-      (point) => this.visibility.getVisibilityAt(point),
+      [
+        ...this.ai.getEnemies().map((enemy) => ({
+          id: enemy.getId(),
+          form: enemy.getForm(),
+          identifiable: this.visibility.getVisibilityAt(enemy.getPosition()) > 0,
+        })),
+        ...this.hosts.getSubjects().map((subject) => ({
+          id: subject.id,
+          form: subject.form,
+          identifiable: this.hosts.isIdentifiable(subject.id, pCol, pRow),
+        })),
+      ],
       this.time.now < this.thresholdUntilMs,
     );
 
@@ -811,7 +829,7 @@ export class RiftScene extends Phaser.Scene {
 
   /** Wired as the chaos system's onModulate callback. */
   private readonly applyChaosModulators = (mods: ChaosModulators): void => {
-    this.visibility.setRadiusScale(mods.radiusScale);
+    this.visibility.setRadiusScale(mods.radiusScale * this.hosts.getVolumeSightMult());
     this.visibility.setEdgeCorruption(mods.edgeCorruption);
     this.visibility.setScreenFlicker(mods.screenFlicker);
     this.player.setSpeedModifier('chaos', mods.speedMult);
@@ -1120,6 +1138,7 @@ export class RiftScene extends Phaser.Scene {
     this.toolKeys = [];
     // Before the player is destroyed: this is what releases the swing speed modifier.
     this.combat.destroy();
+    this.hosts.destroy();
     this.detectionPulse.destroy();
     this.encounter.destroy();
     this.hud.destroy();

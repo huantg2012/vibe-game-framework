@@ -378,12 +378,33 @@ export class CombatSystem implements CombatSystemAPI {
     return this.attackStateView;
   }
 
+  getLockedAttackAngle(): number {
+    return this.attackAngle;
+  }
+
   getEnemyHealth(enemyId: string): number | undefined {
     return this.enemies.get(enemyId)?.health;
   }
 
   isEnemyAlive(enemyId: string): boolean {
     return this.enemies.get(enemyId)?.alive === true;
+  }
+
+  /**
+   * Adjacent-strike / environmental hits from contamination hosts (DEC-076).
+   * Same invulnerability and death path as a melee enemy; source is the host id.
+   */
+  applyHazardHit(sourceId: string, amount: number): boolean {
+    if (!this.enabled || this.dead || amount <= 0) return false;
+    if (this.isInvulnerable()) return false;
+    this.health = Math.max(0, this.health - amount);
+    this.invulnRemainingMs = GAME_CONSTANTS.COMBAT.PLAYER_IFRAME_MS;
+    this.flashRemainingMs = GAME_CONSTANTS.COMBAT.PLAYER_HIT_FLASH_MS;
+    this.cue('combat.cue.playerHurt', this.player.getPosition());
+    eventBus.emit(GameEvent.PLAYER_DAMAGED, { amount, source: sourceId });
+    this.emitHealth();
+    if (this.health <= 0) this.killPlayer();
+    return true;
   }
 
   applyToolDamage(enemyId: string, amount: number): boolean {

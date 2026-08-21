@@ -15,14 +15,18 @@ import {
   identityKey,
   type ContaminationForm,
 } from '@/generation/contamination-draw';
-import type { EnemyView } from '@/types/ai-types';
 import { GameEvent } from '@/types/events';
-import type { Vector2 } from '@/types/game-types';
 import { getDomUiRoot, injectPanelStyles } from '@/ui/dom/panel-styles';
 
 const C = GAME_CONSTANTS.CONTAMINATION;
 const FADE_IN_MS = 200;
 const FADE_OUT_MS = 300;
+
+export interface EncounterSubject {
+  readonly id: string;
+  readonly form: ContaminationForm;
+  readonly identifiable: boolean;
+}
 
 export class EncounterNarration {
   private root: HTMLDivElement | null = null;
@@ -64,22 +68,17 @@ export class EncounterNarration {
    * Edge-trigger identification for currently spawned enemies.
    * `thresholdActive`: chaos-threshold overlay still up → this attempt is voided, not queued.
    */
-  tick(
-    nowMs: number,
-    enemies: readonly EnemyView[],
-    getVisibilityAt: (point: Readonly<Vector2>) => number,
-    thresholdActive: boolean,
-  ): void {
+  tick(nowMs: number, subjects: readonly EncounterSubject[], thresholdActive: boolean): void {
     if (!this.root) return;
     const live = new Set<string>();
-    for (const enemy of enemies) {
-      live.add(enemy.getId());
-      const seen = getVisibilityAt(enemy.getPosition()) > 0;
-      const was = this.identifiable.get(enemy.getId()) === true;
+    for (const subject of subjects) {
+      live.add(subject.id);
+      const seen = subject.identifiable;
+      const was = this.identifiable.get(subject.id) === true;
       if (seen && !was) {
-        this.tryIdentify(nowMs, enemy.getForm(), thresholdActive);
+        this.tryIdentify(nowMs, subject.form, thresholdActive);
       }
-      this.identifiable.set(enemy.getId(), seen);
+      this.identifiable.set(subject.id, seen);
     }
     for (const id of [...this.identifiable.keys()]) {
       if (!live.has(id)) this.identifiable.delete(id);

@@ -9,6 +9,19 @@ note: Append-only. Do not modify historical entries.
 
 <!-- Entries in reverse chronological order (newest first) -->
 
+## DEC-077: 污染词法接到出击（实现完成，体验未验证）
+- Date: 2026-08-21
+- Phase: Iterative Development（迭代 1：敌人系统）
+- Type: Implementation
+- Context: DEC-076 已锁实现规格。人点名实施完整方案。不得标迭代 COMPLETE。审美 / 读作游戏 / 迷雾下亮度仍人终审。
+- Decision:
+  1. 出击接上 CSV 抽卡、地图钉层、甲两种填法、乙缝核 / 丙簇核 / 丁体积、遭遇识别旁白。
+  2. 乙丙丁不进五态、不占走廊碰撞。丙外观 = 已有崩坏簇。练习场旁白默认关；地图课不刷宿主。
+  3. 过渡期听觉主轴仍由恰好 1 个改写体占名额；乙丙丁抽卡 `hearingAxisTaken: true`，禁止再抽听噪。乙听缝不另占该名额。
+  4. 簇核钉层用与烤地相同种子的格心，不是活簇像素中心；丙可能与最显眼活簇差一格。
+  5. 活状态写「实现完成，体验未验证」。不要标迭代 COMPLETE。
+- Impact: `current-iteration.md`；`ContaminationHostSystem` / `EncounterNarration` 登记 `architecture.md`。词法 / 旁白 / 战斗 / 地图 / 敌人 AI spec 的 `interface-changed` 复位为 false。
+
 ## DEC-076: 污染词法实现规格锁（字母表、CSV、钉层、乙丙丁数字、听觉主轴）
 - Date: 2026-08-21
 - Phase: Iterative Development（迭代 1：敌人系统）

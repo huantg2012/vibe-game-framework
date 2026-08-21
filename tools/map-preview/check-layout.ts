@@ -191,6 +191,12 @@ for (const seed of SEEDS) {
   assert(wallCount(again.tileMap) === wallCount(layout.tileMap), `seed ${seed}: wall count drifted`);
   assert(again.contaminationAge === layout.contaminationAge, `seed ${seed}: contaminationAge drifted`);
   assert(again.ruinSeverity === layout.ruinSeverity, `seed ${seed}: ruinSeverity drifted`);
+  assert(layout.contaminationPins.wallEdges.length > 0, `seed ${seed}: no wall-edge pins`);
+  assert(
+    layout.contaminationPins.wallEdges.every((e) => e.strikeFloors.length > 0),
+    `seed ${seed}: wall edge with no strike floors`,
+  );
+  assert(layout.contaminationPins.corridorAabbs.length >= 0, `seed ${seed}: corridor field missing`);
 
   console.log(
     `ok seed ${seed} frag=${layout.fragmentTypeId} recipe=${layout.recipeId} age=${layout.contaminationAge} ruin=${layout.ruinSeverity} dual ${dual.mainSteps}/${dual.altSteps} patrols=${layout.enemySpawns.length} walls=${wallCount(layout.tileMap)}`,

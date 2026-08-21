@@ -19,6 +19,7 @@ import type {
   RuinSeverity,
   WalkableMask,
 } from '@/generation/types';
+import { collectContaminationPins } from '@/generation/contamination-pins';
 import { RIFT_MAP } from '@/scenes/rift-map-data';
 import { TileGrid } from '@/systems/tile-grid';
 import { TileType, type Vector2 } from '@/types/game-types';
@@ -715,6 +716,11 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
         contaminantNodes: placed.contaminants,
         enemySpawns: placed.enemies,
         landmarks: placed.landmarks,
+        contaminationPins: collectContaminationPins(draft.tileMap, {
+          ...draft,
+          contaminationAge: roll.contaminationAge,
+          ruinSeverity: roll.ruinSeverity,
+        }),
       };
     }
   }

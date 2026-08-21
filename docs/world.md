@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-22
-last-modified: 2026-08-20
+last-modified: 2026-08-21
 note: Foundation 阶段 Step 1。已审核确认。
 ---
 
@@ -89,7 +89,7 @@ note: Foundation 阶段 Step 1。已审核确认。
 - 每个具体时空的污染体应有统一的视觉"模式"（该时空的污染源特征）。
 - 同一时空内不同污染体的差异来自"基体"不同，不是"污染"不同。
 - MVP 阶段只需一种时空风格的污染体（程序化地图共用一套视觉主题）。
-- 形态组合制度是「污染词法」（DEC-073，设计锁、未实现）：底材 = 基体 × 覆盖深度；孔谱 = 连续性 × 占位；词素从孔谱衍生。覆盖体不以第三种人形出场。遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075），不是独立玩法。体系入口：`docs/design-notes/contamination-lexicon.md` → `docs/specs/system-contamination-lexicon.md` → `docs/specs/ui-encounter-narration.md`。
+- 形态组合制度是「污染词法」（DEC-073 / DEC-076 / DEC-077，出击已接，体验未验证）：底材 = 基体 × 覆盖深度；孔谱 = 连续性 × 占位；词素从孔谱衍生。覆盖体不以第三种人形出场。遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075），不是独立玩法。体系入口：`docs/design-notes/contamination-lexicon.md` → `docs/specs/system-contamination-lexicon.md` → `docs/specs/ui-encounter-narration.md`。
 
 ## 空间结构
 

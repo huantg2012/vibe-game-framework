@@ -3,12 +3,12 @@ status: LOCKED
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
 last-modified: 2026-08-21
-note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DEC-075 旁白叙述并入本文件。未实现。规则合同 `docs/specs/system-contamination-lexicon.md`。识别表面 `docs/specs/ui-encounter-narration.md`。不要与层 A 框架迭代混名。
+note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DEC-075 旁白叙述并入本文件。DEC-076 实现规格。DEC-077 出击已接（体验未验证）。规则合同 `docs/specs/system-contamination-lexicon.md`。识别表面 `docs/specs/ui-encounter-narration.md`。不要与层 A 框架迭代混名。
 ---
 
 # 污染词法（形态组合制度）
 
-**地位：** 迭代 1「敌人系统」的设计正文。人要求先落文档；代码未接。活实现仍是一份五态 + 两种感知剖面（渗透体 / 改写体），见 `docs/specs/system-enemy-ai.md`。
+**地位：** 迭代 1「敌人系统」的设计正文。出击已接甲两种填法 + 乙缝 / 丙簇 / 丁体积 + 遭遇识别旁白。状态：**实现完成，体验未验证**。活实现仍是一份五态 + 两种感知剖面（渗透体 / 改写体），见 `docs/specs/system-enemy-ai.md`；乙丙丁不是第二份状态机。
 
 对人说话用全称「污染词法」「遭遇识别旁白」；需要时可写「下面称：词法」。禁止把遭遇识别旁白说成独立玩法。
 
@@ -37,7 +37,7 @@ note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DE
 | 四张孔谱外观 HOW（乙/丙/丁一次画完；甲仍走角色像素） | `docs/art/contamination-forms.md` |
 | 世界：覆盖深度 × 基体 | `docs/world.md`「污染体分类方向」 |
 
-**未实现。** 改代码前须人点名开工。连通 FATAL 仍有效：菌落与场不得变成额外的墙。
+**出击已接（体验未验证）。** 连通 FATAL 仍有效：菌落与场不得变成额外的墙。
 
 ---
 
@@ -415,7 +415,7 @@ note: DEC-073。污染词法设计锁。DEC-074 遭遇识别旁白仍有效。DE
 
 ## 10. 实现边界（本文锁定设计；数字只在 spec）
 
-未实现。CSV 列、字母表、方言、钉层形状、乙丙丁战斗数字、听觉主轴迁移、事件载荷：**只以** `docs/specs/system-contamination-lexicon.md`「实现规格（DEC-076）」为准。本文不复制那张数字表。
+数字只以 spec 为准。出击已接（体验未验证）。CSV 列、字母表、方言、钉层形状、乙丙丁战斗数字、听觉主轴迁移、事件载荷：**只以** `docs/specs/system-contamination-lexicon.md`「实现规格（DEC-076）」为准。本文不复制那张数字表。
 
 实现时：
 

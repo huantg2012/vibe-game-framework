@@ -125,7 +125,23 @@ const forced = drawOne(new SeededRandom(1), {
 assert(forced?.lexemes.sense === 'sense_cone', 'forced cone draw');
 assert(forced?.lexemes.contact === 'contact_melee_three', 'jia keeps melee');
 
-if (failed > 0) {
+const taken = drawSortie(new SeededRandom(21), {
+  fragmentTypeId: 'frag-clinic',
+  hasClusters: true,
+  hasWallEdges: true,
+  hasCorridors: true,
+  hearingAxisTaken: true,
+});
+assert(
+  taken.forms.every((f) => f.portfolio !== 'jia'),
+  'hearingAxisTaken skips jia',
+);
+assert(
+  taken.forms.every((f) => f.lexemes.sense !== 'sense_hear'),
+  'hearingAxisTaken forbids 听噪 on hosts',
+);
+
+if (failed) {
   console.error(`check:lexicon ${failed} failure(s)`);
   process.exit(1);
 }

@@ -4,12 +4,12 @@ created-by: design agent
 created-date: 2026-07-27
 last-modified-by: design agent
 last-modified-date: 2026-08-21
-interface-changed: true
+interface-changed: false
 slice: 1
 interfaces-with:
   - system-movement-vision         # T1：共享 Player 实体（本 spec 只拥有 HP/攻击/受击/死亡触发）；复用 utils/grid-raycast 做隔墙判定；用 setSpeedModifier('attack') 做出手僵直
   - system-enemy-ai                # T2：消费 isEngaged()/getPosition()/getFacingAngle()/getEnemies()；经场景层调用 reportDamage/reportNoise/despawn，不改 FSM
-  - system-contamination-lexicon   # 迭代 1：乙邻格抽打 / 打核 / 丙丁不打血；核 HP 50。未实现前本文件仍是出击三刀账
+  - system-contamination-lexicon   # 迭代 1：乙邻格抽打 / 打核 / 丙丁不打血；核 HP 50。出击已接（DEC-077）
   - system-chaos-scavenge-extract  # T3：emit ENEMY_DAMAGED/PLAYER_DIED/PLAYER_HEALTH_CHANGED 供其消费；本 spec 不自行修改混乱值
   - tilemap-renderer               # T6：提供 OccluderGrid（攻击不穿墙判定）
 exposes:
@@ -418,9 +418,9 @@ t=500 ms       冷却结束，可再次挥击
 | `ENEMY_HIT_FLASH_MS` | 敌人受击白闪 | 80 ms | 50–150 | "我打中了"的唯一反馈。<50 ms 在 60 Hz 下容易被完全错过 | 建议值 |
 | `ENEMY_DEATH_FX_MS` | 死亡消散时长 | 180 ms | 100–400 | 纯表现，逻辑上敌人已在第 0 ms 移除 | 建议值 |
 
-### 污染词法核与非血条接触（DEC-076，未实现）
+### 污染词法核与非血条接触（DEC-076 / DEC-077）
 
-甲继续用上表。乙 / 丙 / 丁的核与混乱价只锁在词法 spec 数值结构；本 spec 拥有 HP 事件与挥击命中核。实现时 `GAME_CONSTANTS.CONTAMINATION`：
+甲继续用上表。乙 / 丙 / 丁的核与混乱价只锁在词法 spec 数值结构；本 spec 拥有 HP 事件与挥击命中核。`GAME_CONSTANTS.CONTAMINATION` 已接：
 
 - 核 HP 50（两刀，K1 仍成立）。
 - 乙邻格抽打：伤害 15、前摇 350 ms；玩家必须站在 `strikeFloors` 才付血；挥击必须打到缝核。

@@ -2,10 +2,10 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-20
+last-modified: 2026-08-21
 approved-date: 2026-07-22
 changed-this-slice: false
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染词法（DEC-073）设计锁、未实现；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染词法已接到出击（DEC-073 / DEC-076 / DEC-077），状态为实现完成、体验未验证；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。
 ---
 
 # 技术架构
@@ -59,6 +59,7 @@ src/
 │   │   └── behaviors.ts        # 具体行为（巡逻/警觉/追击）
 │   ├── chaos-system.ts         # 混乱值计算与惩罚
 │   ├── combat-system.ts        # 战斗逻辑
+│   ├── contamination-host-system.ts # 乙缝核 / 丙簇核 / 丁体积（无第二 FSM）
 │   ├── loot-system.ts          # 搜刮/物品拾取
 │   └── pathfinding.ts          # A* 寻路
 ├── entities/
@@ -79,6 +80,8 @@ src/
 │   ├── dual-path.ts            # 规格 21 换路机器判定（生成器与 check:layout 共用）
 │   ├── fragment-roll.ts        # 每次踏入抽 contaminationAge × ruinSeverity
 │   ├── rift-layout.ts          # 出击布局：锚+抖动+换路硬保证+FragmentRoll
+│   ├── contamination-draw.ts   # 污染词法抽卡纯函数
+│   ├── contamination-pins.ts   # 墙缘 / 簇核 / 走廊盒钉层（只读格子）
 │   ├── types.ts                # OutlineMask / RuinedMask / GeneratedRiftLayout 契约
 │   └── index.ts                # 生成器出口（布点后续批次追加）
 ├── managers/
@@ -92,6 +95,7 @@ src/
 │       ├── panel-styles.ts     # 共享面板样式层：全部 DOM 面板的单一 <style> 注入点
 │       ├── rift-hud.ts         # 裂隙读数（DOM，非 Phaser hud.ts）
 │       ├── detection-pulse.ts  # 裂隙屏缘被发现干涉（#rift-detection-rim）
+│       ├── encounter-narration.ts # 遭遇识别旁白（#rift-encounter-log）
 │       ├── purification-hud.ts # 净化点贴顶装置读数
 │       ├── allocation-panel.ts # 净化点薪柴分配界面（DOM）
 │       └── status-panel.ts     # 存续报告
@@ -198,8 +202,9 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
 | TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线，依赖 Phaser 视锥裁剪） | create(scene, map, config): TilemapLayer, getLayer(), getWorldSize(), destroy() | 已实现（T6） |
 | AISystem | src/systems/ai/ | 两种感知剖面共用一份五态 FSM（10Hz tick / 单射线）+ 移动/巡逻 + 寻路预算调度；拥有敌人实体的生命周期。剖面来自 EnemyData，禁止第二份 FSM | create(scene, spawns, occluders, walk), update(dt, playerPos, playerIsMoving), postUpdate(dt), getEnemies(), getEnemyById(), reportNoise(pos, radius, level), reportDamage(enemyId, sourcePos), despawn(enemyId), onPlayerLost(), setVisibilityProvider(), setCueListener(), addWallCollider(layer), getSprites(), getStats(), destroy() | 已实现（T7；Slice 8 C1 剖面泛化） |
-| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染词法：底材 × 孔谱 × 词素。T1 抽卡纯函数已接；出击仍用甲的两种填法物化渗透体/改写体 | `drawSortie` / `identityKey`；CSV → generated | 进行中（迭代 1 / T1 抽卡已接，乙丙丁未钉） |
-| EncounterNarration | src/ui/dom/encounter-narration.ts | 污染词法识别表面：随身罩一行记录，分节点，限频。禁止头上名字 | create / tick / destroy；挂 `#dom-ui-root` / `#rift-encounter-log` | 进行中（迭代 1 T2，甲已接；审美待人终审） |
+| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染词法：底材 × 孔谱 × 词素。出击已接甲填法 + 乙丙丁宿主 + 抽卡 CSV | `drawSortie` / 钉层 / `encounter:identified` | 进行中（迭代 1，体验未验证） |
+| ContaminationHostSystem | src/systems/contamination-host-system.ts | 乙缝核邻格抽打、丙簇踩踏混乱、丁体积场。无走廊碰撞，无第二 FSM | create(scene, layout, combat, chaos, getVisibilityAt), update, getSubjects, getVolumeSightMult, destroy | 进行中（迭代 1，体验未验证） |
+| EncounterNarration | src/ui/dom/encounter-narration.ts | 污染词法识别表面：随身罩一行记录，分节点，限频。禁止头上名字 | create / tick / destroy；挂 `#dom-ui-root` / `#rift-encounter-log` | 进行中（迭代 1，审美待人终审） |
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
@@ -253,7 +258,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 > - `src/types/ai-types.ts`（T7 新增）持有敌人 AI 契约：`EnemyView`（含 `getRole` / `getDetection`，T3/T4/屏缘脉冲/渲染层消费）/ `EnemyAIState`（可变运行时状态，仅 AI 系统写）/ `EnemyTypeConfig` / `Perception` / `AlertLevel` / `SightZone` / `AICueId`。剖面类型从 `src/generated/enemy-data.ts` 再导出。放在 `types/` 而非 `systems/ai/` 是为了打断循环依赖。
 > - `src/config/invariants.ts`（T7 新增）把设计所依赖的常量关系写成可执行断言，dev 构建在 `main.ts` 启动时校验（DEC-020）。Slice 1 覆盖敌人 AI 的 I1–I6 + 一条跨 spec 补充检查。T8/T9 的 spec 不变量应追加进同一文件。
 > - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**夹具**（ASCII tile 网格 + 布点），导出 `RIFT_MAP` 与 `validateRiftMap()`。运行时裂隙走 `generateRiftLayout`；夹具给对照 / 测试。
-> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成（`src/scenes/placeholder-textures.ts`，练习场共用）；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 加厚桩 + 七点安全区钳制 + 全部 DOM 面板编排。另有开发练习场 `gym.html`（`GymBootScene` / `GymScene` / `GymPlayerScene` / `GymMapScene`，见 `docs/dev/gym.md`）。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
+> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成（`src/scenes/placeholder-textures.ts`，练习场共用）；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/ContaminationHostSystem/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse / EncounterNarration 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 加厚桩 + 七点安全区钳制 + 全部 DOM 面板编排。另有开发练习场 `gym.html`（`GymBootScene` / `GymScene` / `GymPlayerScene` / `GymMapScene`，见 `docs/dev/gym.md`）。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
 
 ## 关键架构决策
 

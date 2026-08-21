@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
-note: 迭代 1（敌人系统）。不要开新 Slice。不要写成 slice-10。DEC-073 / DEC-074 / DEC-075 / DEC-076。
+note: 迭代 1（敌人系统）。不要开新 Slice。不要写成 slice-10。DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077。T0–T9 已勾。状态：实现完成，体验未验证。不要标 COMPLETE。
 ---
 
 # Tasks: 迭代 1 — 敌人系统（污染词法）
@@ -62,11 +62,15 @@ Depends: T1。甲走词法物化现有两种填法；出生仍用地板路点；
 
 Depends: T2。地图钉层（墙缘折线、簇核、走廊包围盒）从 layout / bakeGround 交出，单测墙后可走格四连通分量仍为 1。钉失败：本图少生该只并打日志，禁止用占地小人顶替。提交。
 
+- [x] `GeneratedRiftLayout.contaminationPins` + `check:layout`
+
 ---
 
 ## Task: T4 | assignee: code + art HOW
 
 Depends: T3。乙 缝核实体 + 邻格抽打 + 不穿开阔地 + 外观按 contamination-forms。配额乙或丁先实现乙路径。不占走廊碰撞。提交。
+
+- [x] `ContaminationHostSystem` 乙路径
 
 ---
 
@@ -74,11 +78,15 @@ Depends: T3。乙 缝核实体 + 邻格抽打 + 不穿开阔地 + 外观按 cont
 
 Depends: T3。丙 绑最显眼簇 + 踩踏混乱 + 胀满加价 + 打核；外观=已有活层，不另做小人。无簇则丙配额 0。提交。
 
+- [x] 丙踩踏 + 打核（钉层格心近似簇核）
+
 ---
 
 ## Task: T6 | assignee: code + art HOW
 
 Depends: T3。丁 体积 + 反视/领域 + 场内混乱/缩视野 + 低于 `DEPTH.visionMask`。乙或丁的「或」按抽卡。提交。
+
+- [x] 丁体积 depth 40 + 反视亮核
 
 ---
 
@@ -86,14 +94,20 @@ Depends: T3。丁 体积 + 反视/领域 + 场内混乱/缩视野 + 低于 `DEPT
 
 Depends: T4+T5+T6。练习场敌人课复用新实体；旁白仍默认关。`docs/dev/gym.md` 更新。提交。
 
+- [x] 敌人课仍用出击 `Enemy`（含形态）；旁白不开；地图课不刷宿主
+
 ---
 
 ## Task: T8 | assignee: qa
 
 Depends: T7。对照 spec 机械比对（含 U1–U12 结构，不代勾好看）。出 `docs/qa/` 短报告。连通、无第二 FSM、无头上名字、CSV 方向。
 
+- [x] `docs/qa/iteration-1-lexicon.md`
+
 ---
 
 ## Task: T9 | assignee: director
 
 Depends: T8。`current-iteration.md` 改为「实现完成，体验未验证」；gdd / architecture 模块登记；CLAUDE.md / AGENTS.md 层 B 句；roadmap 指向迭代而非 Slice 10；`interface-changed` 该复位的复位。不要标迭代 COMPLETE。
+
+- [x] 状态改为实现完成、体验未验证。不标 COMPLETE

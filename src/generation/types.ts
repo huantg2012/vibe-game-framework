@@ -14,6 +14,34 @@ import type {
   TileMapData,
 } from '@/types/map-types';
 
+export interface WallEdgePolyline {
+  readonly tiles: readonly { col: number; row: number }[];
+  readonly strikeFloors: readonly { col: number; row: number }[];
+}
+
+export interface ClusterCorePin {
+  readonly organismIndex: number;
+  readonly cx: number;
+  readonly cy: number;
+  readonly floorCol: number;
+  readonly floorRow: number;
+}
+
+export interface CorridorAabb {
+  readonly minCol: number;
+  readonly minRow: number;
+  readonly maxCol: number;
+  readonly maxRow: number;
+  readonly coreCol: number;
+  readonly coreRow: number;
+}
+
+export interface ContaminationPins {
+  readonly wallEdges: readonly WallEdgePolyline[];
+  readonly clusterCores: readonly ClusterCorePin[];
+  readonly corridorAabbs: readonly CorridorAabb[];
+}
+
 export interface OutlineBBox {
   readonly minCol: number;
   readonly minRow: number;
@@ -186,4 +214,5 @@ export interface GeneratedRiftLayout {
   readonly contaminantNodes: readonly ContaminantNodeDef[];
   readonly enemySpawns: readonly EnemySpawnData[];
   readonly landmarks: readonly LandmarkDef[];
+  readonly contaminationPins: ContaminationPins;
 }
