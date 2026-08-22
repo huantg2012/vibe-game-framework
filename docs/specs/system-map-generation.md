@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: code agent (I3-A)
+last-modified-by: code agent (I3-A) + design agent (I3-D 对齐：一份抽卡、字段名消歧)
 last-modified-date: 2026-08-22
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。
 interface-changed: true
@@ -129,7 +129,7 @@ interface GeneratedRiftLayout {
   enemySpawns: readonly EnemySpawnData[]
   landmarks: readonly LandmarkDef[]
   contaminationPins: ContaminationPins
-  contaminationDraw: SortieDraw   // 一次抽卡；同时喂甲 spawn.form 与乙丙丁宿主
+  contaminationDraw: SortieDraw   // 句法抽卡结果，一次出击一份。不是地表烤漆风格枚举
 }
 
 interface WalkableMask {
@@ -139,7 +139,7 @@ interface WalkableMask {
 }
 ```
 
-`ExtractionPointDef` / `KindlingNodeDef` / `EnemySpawnData` / `LandmarkDef` 沿用 `src/types/map-types.ts`。本系统**新增**的是：种子、碎片类型 id、可走掩膜、虚空格、以及「这些坐标从生成器来」。出击甲的 `EnemySpawnData.form` 与整份 `contaminationDraw` 也由本生成器交出（I3-A）：同一份抽卡喂巡逻与宿主，种子 `mix32(layout.seed, 'lexicon')`，禁止吃 `placeOnIsland` 的 rng。
+`ExtractionPointDef` / `KindlingNodeDef` / `EnemySpawnData` / `LandmarkDef` 沿用 `src/types/map-types.ts`。本系统**新增**的是：种子、碎片类型 id、可走掩膜、虚空格、以及「这些坐标从生成器来」。出击甲的 `EnemySpawnData.form` 与整份 `contaminationDraw` 也由本生成器交出（I3-A / I3-D）：同一份抽卡喂巡逻与宿主，种子 `mix32(layout.seed, 'lexicon')`，禁止吃 `placeOnIsland` 的 rng。`contaminationDraw` 的类型是句法 `SortieDraw`，**不是** `RiftSurfacePainter` 那个烤漆风格参数（同名、不同字段；禁止合成联合类型）。
 
 地标（`LandmarkDef`）是地板上的视觉锚，**不是**情景障碍本身。情景障碍必须写进墙 / 不可走格，让玩家绕、让视线断。只贴纸不够。
 

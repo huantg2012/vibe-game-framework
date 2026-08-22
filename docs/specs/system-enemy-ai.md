@@ -547,26 +547,29 @@ interface EnemyView {
   isEngaged(): boolean;
   /** 0..1。玩法输入：屏缘干涉强度。debug overlay 也可读 */
   getDetection(): number;
+  /** 句法 form。出击甲来自抽卡；默认敌人课回退夹具 */
+  getForm(): ContaminationForm;
 }
 ```
 
-`AISystemAPI` 不变（`create` 仍吃 `EnemySpawnData[]`；每条 spawn 的 `type` 必须是 CSV `id`）。`findPath` 不变。
+`AISystemAPI` 不变（`create` 仍吃 `EnemySpawnData[]`；每条 spawn 的 `type` 必须是 CSV `id`）。出击路径每条还必须带 `form`。`findPath` 不变。
 
 **CSV 行 → codegen**（`data/enemies.csv` → `src/generated/enemy-data.ts`，由 code 接 `tools/csv-codegen`）：字段即上表 snake_case 列。两种角色必须都在表里。缺行或 `role` ≠ `id` = 构建失败。
 
 ### 生成器契约（每张裂隙恰好 1 个听觉主轴）
 
-由 `system-map-generation` 执行，本 spec 拥有语义。**过渡期（DEC-077 / I3-A）** 活代码与验收仍按：`type === 'rewriter'` 恰好 1。乙听缝未接为听觉主轴。出击甲每条 spawn **带** `form: ContaminationForm`。`type` 由 `form.lexemes.sense === 'sense_hear'` 派生为 rewriter，否则 infiltrator。撤离门 form 必须是有机残影 + 渗透 + 视锥，来自抽卡（`drawOne` 强制参数合法），不是 `Enemy` 工厂里 `role === 'rewriter' ?` 三元。练习场默认敌人课可以不带 form，工厂回退 `INFILTRATOR_FORM` / `REWRITER_FORM`。句法课侧栏 spawn 已自带 form，不得冲掉。
+由 `system-map-generation` 执行，本 spec 拥有语义。本段与 I3-A 同一合同：保留 A 已写的 form / type 派生 / 工厂禁三元；I3-D 删掉与 FATAL「巡逻 3–4 不砍」打架的「甲 2–3、不再要求 3–4」。
 
-目标契约（尚未迁完）为：
+**过渡期（DEC-077 / I3-A）** 活代码与验收仍按：`type === 'rewriter'` 恰好 1。乙听缝不另占该名额。`type` 仍表示听轴名额，不是第三套 FSM。出击甲每条 spawn **带** `form: ContaminationForm`。`type` 由 `form.lexemes.sense === 'sense_hear'` 派生为 rewriter，否则 infiltrator。撤离门 form 必须是有机残影 + 渗透 + 视锥，来自抽卡（`drawOne` 强制参数合法），不是 `Enemy` 工厂里 `role === 'rewriter' ?` 三元。练习场默认敌人课可以不带 form，工厂回退 `INFILTRATOR_FORM` / `REWRITER_FORM`。句法课侧栏 spawn 已自带 form，不得冲掉。
 
-1. 甲（占地可追击）`length` ∈ {2, 3}。另加乙或丁 1、丙 0–1。不再要求总巡逻数为 3–4。
-2. 全图主感知为听噪的个体数恰好为 1（甲的听噪填法或乙的听缝）。0 个或 ≥2 个 = 坏图，重试，禁止用「全换成视锥」糊过去。
+1. 占地可追击（甲）条数仍由地图生成：**3–4**。禁止用句法历史数字「甲 2–3」砍掉一条巡逻。乙或丁 1、丙 0–1 不进 `enemySpawns`，来自同一份 `layout.contaminationDraw`。
+2. 全图主感知为听噪的个体数恰好为 1（甲的听噪填法或乙的听缝）。0 个或 ≥2 个 = 坏图，重试，禁止用「全换成视锥」糊过去。过渡期落实为 rewriter === 1。
 3. 规则 19 的撤离最后一道关必须是甲 + 视锥。听觉主轴不站撤离门。
 4. 甲的听噪填法优先落在 contested/deep 薪柴附近或侧路（与现行改写体落点相同）。
 5. 甲视锥 id 建议 `ENM_INF_*`；甲听噪 `ENM_RWR_01`；乙/丙/丁另编 `ENM_YI_*` / `ENM_BING_*` / `ENM_DING_*`。
 6. 路点 / 墙缘 / 簇核 / 走廊盒可走或按句法 spec 钉层可达——与现行连通 FATAL 相同。
 7. 丙、丁不接屏缘干涉。乙可接（邻格察觉）。
+8. form 来自布局上那一份 `contaminationDraw`，不是第二份抽卡。宿主禁止再调 `drawSortie`。
 
 ### 事件契约
 
@@ -660,7 +663,7 @@ interface EnemyView {
 | `EnemyView` / `InfiltratorConfig` | 泛化为 `getRole()` + `PerceptionProfile`。禁止第二份 FSM 文件 |
 | `EnemySpawnData.type` | 从字面量 `'infiltrator'` 扩为 `EnemyRole`；出击甲带 `form`（I3-A） |
 | `src/types/events.ts` | **无变更** |
-| `system-map-generation` | 规则 22：恰好 1 改写体 |
+| `system-map-generation` | 规则 22：3–4 巡逻、恰好 1 改写体、每条带 form、一份 contaminationDraw |
 | `ui-detection-pulse` | 新表面。本 spec 提供察觉度/状态/位置 |
 | `system-combat` | 本 Slice **不**改 HP/伤害。改写体沿用渗透体战斗切面 |
 | `system-movement-vision` | 不变量按剖面断言视距 < 224 |

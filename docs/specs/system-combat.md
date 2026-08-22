@@ -2,14 +2,14 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
-last-modified-by: design agent（DEC-083 止损 / 接触提纯）
+last-modified-by: design agent（I3-D 出击同读接触/止损，DEC-084）
 last-modified-date: 2026-08-22
 interface-changed: true
 slice: 1
 interfaces-with:
   - system-movement-vision         # T1：共享 Player 实体（本 spec 只拥有 HP/攻击/受击/死亡触发）；复用 utils/grid-raycast 做隔墙判定；用 setSpeedModifier('attack') 做出手僵直
   - system-enemy-ai                # T2：消费 isEngaged()/getPosition()/getFacingAngle()/getEnemies()；经场景层调用 reportDamage/reportNoise/despawn，不改 FSM
-  - system-contamination-lexicon   # 迭代 1：乙邻格抽打 / 打核 / 丙丁不打血；核 HP 50。出击已接（DEC-077）。迭代 2 第二轮：接触词素对照表由 R2-D1 写入句法 spec。DEC-083：接触只管它怎么伤你；止损查表决定能不能扣核。gym 先兑现，出击默认仍按宿主 kind
+  - system-contamination-lexicon   # 乙邻格抽打 / 打核 / 丙丁不打血；核 HP 50。接触只管它怎么伤你；止损查表决定能不能扣核。出击与练习场同一套读取（I3-F）
   - system-chaos-scavenge-extract  # T3：emit ENEMY_DAMAGED/PLAYER_DIED/PLAYER_HEALTH_CHANGED 供其消费；本 spec 不自行修改混乱值
   - tilemap-renderer               # T6：提供 OccluderGrid（攻击不穿墙判定）
 exposes:
@@ -435,14 +435,15 @@ t=500 ms       冷却结束，可再次挥击
 
 | 兑现处 | 怎么读接触 / 止损 |
 | ------ | ----------------- |
-| 练习场句法课，`gymLiveMotion === true` | 读 `lexemes.contact` 走打血 / 混乱 / 视野。读 `resolveStopLoss` 决定扣不扣核。没有「仅驱散核」通道 |
-| 出击（本轮） | 仍按宿主 kind 硬编码：甲扇形打血、乙邻格打血、丙踩踏混乱、丁体积混乱+视野。乙丙丁核仍可打 50 HP。不因 DEC-083 改出击可杀性 |
+| 练习场句法课，`liveMotion === true` | 读 `lexemes.contact` 走打血 / 混乱 / 视野。读 `resolveStopLoss` 决定扣不扣核。没有「仅驱散核」通道。gym 调用方内部可留旧字段别名，禁止 `RiftScene` 出现 `gymLiveMotion` |
+| 出击（目标合同；落地 I3-F） | **同一套**：读 `form.lexemes.contact` 与 `resolveStopLoss`。`hittable === false` 不扣核、不白闪、不发 `ENEMY_DAMAGED`（不收战斗混乱）。挥击噪声仍按 A8。非法词素走既有 `rewrite_to`。废止「出击按宿主 kind 硬编码」 |
+| 出击（I3-F 前实现） | 仍按宿主 kind：甲扇形打血、乙邻格打血、丙踩踏混乱、丁体积混乱+视野。乙丙丁核仍可打 50 HP。过渡，不是合同 |
 
 概念基体三类在丁上仍走体积场，不发明精神攻击，不给丁开打血。非法词素沿用既有 `rewrite_to`（三刀→该孔默认攻击通道），不加 DPS 词缀。
 
-**成功标准不推翻：** 如果试玩者开始享受战斗，本系统就失败了。绕仍应比打更划算。打不死是加分项。更脆禁止变成少打一刀。
+**成功标准不推翻：** 如果试玩者开始享受战斗，本系统就失败了。绕仍应比打更划算。打不死挥击不扣核是**加分项**（正面支撑「绕比杀便宜」），不是新打法、不是「很爽的无敌怪」。更脆禁止变成少打一刀。
 
-**V3 不推翻：** 无震屏、无命中停顿、无伤害数字。打不死被扫到时也不做「免疫」飘字。攻击发生时可见 = 危险区可见 + 敌人出手相 + 玩家既有白闪。练习场可关无敌才能看见掉血。
+**V3 不推翻：** 无震屏、无命中停顿、无伤害数字。打不死被扫到时也不做「免疫」飘字。攻击发生时可见 = 危险区可见 + 敌人出手相 + 玩家既有白闪。练习场可关无敌才能看见掉血。价目数字不涨。
 
 ### 玩家生命值与受击
 
