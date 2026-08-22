@@ -5,7 +5,7 @@ created-date: 2026-07-22
 last-modified: 2026-08-22
 approved-date: 2026-07-22
 changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），逻辑为实现完成、体验未验证；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）：** 方案 D 已接出击，体验未验证。**迭代 4（DEC-085）：** 练习场污染句法陈列馆。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-4.md`。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），逻辑为实现完成、体验未验证；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）：** 方案 D 已接出击，体验未验证。**迭代 4（DEC-085 / DEC-086）：** 练习场污染句法陈列馆。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-4.md`。
 ---
 
 # 技术架构
@@ -213,7 +213,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：污染句法 `?lesson=lexicon`（固定观察院子、默认无敌可开「感受伤害」、配置表点生成；默认 `#gym-lex-renderer` = 方案 D，A/B/C 冻结对照；`#gym-lex-fragment` 五选一偏色院子）；污染句法陈列馆 `?lesson=lexicon-gallery`（一次一厅、只 attach 方案 D、无玩家/Enemy/宿主；合同 `docs/tasks/iteration-4.md`）；敌人巡逻（默认院子，仍走现行像素直到与出击对齐）；玩家外形 `?lesson=player`；地图生成 `?lesson=map`（不打开 `liveMotion`）。Agent 入口 `docs/dev/gym.md`。 | `npm run gym` 或 `/gym.html`；污染句法 `/gym.html?lesson=lexicon`；陈列馆 `/gym.html?lesson=lexicon-gallery` | 已实现；陈列馆课迭代 4 进行中 |
 | GymFormRenderers | src/gym/form-renderers/ | A/B/C 冻结对照，仅句法课。gym registry 从生产路径 re-export 方案 D。禁止 `RiftScene` import 本目录 | `getFormRenderer`（A/B/C 本地 + D 来自 entities） | 已实现（对照保留，DEC-084） |
 | GymLexiconGalleryCatalog | src/gym/lexicon-gallery-catalog.ts | 陈列馆视觉身份目录：合法填法 → 去重后的标本列表。无 Phaser attach。I4-B/C 只消费，不自己做笛卡尔 | `enumerateGallerySpecimens` / `visualKeyOf` / `GALLERY_AXES` / `galleryDedupeCopy` | 已实现（I4-A） |
-| GymLexiconGallery | src/gym/gym-lexicon-gallery-scene.ts | 陈列馆课：厅导航 + 视口虚拟化 + 开发标签 + 检视全速活。只 attach 生产 `d-mixed`。 | `GymLexiconGalleryScene`；`?lesson=lexicon-gallery` | I4-C 检视态已落地 |
+| GymLexiconGallery | src/gym/gym-lexicon-gallery-scene.ts | 陈列馆课：厅导航 + 视口虚拟化 + 开发标签 + 检视全速活。只 attach 生产 `d-mixed`。与视野相交的格子必须挂上（DEC-086）。 | `GymLexiconGalleryScene`；`?lesson=lexicon-gallery` | I4-C 已落地；I4-D 虚拟化修订未交 |
 | ContaminationFormRenderer | src/entities/form-renderers/ | 生产视觉层（方案 D：`d-mixed` + `d/**`）。接口只此一份。`RiftScene` 只允许 import 这里（I3-E 已接） | `getFormRenderer('d-mixed')` / `attach` / `FormVisual.update` | 已实现（I3-E 已接裂隙；A/B/C 对照仍在 gym） |
 | EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 程序像素回退（渗透体 32×32 / 改写体 32×48；GameObject 不旋转）+ teal 指示物 + 残影 + 脱落尘 + 木偶步态 + AI 状态块 + `spawnData.form`（I3-A；禁止再按 role 三元硬编码出击 form）。`setVisualSuppressed` 默认 false；I3-E 出击在方案 D ready 时调用（藏默认身体，保留 Arcade / AI / 既有 AI 态指示物） | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getForm/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection/setVisualSuppressed | 已实现（I3-A form 管线；I3-E suppress） |
 | InfiltratorSprite | src/entities/infiltrator-sprite.ts | 渗透体密像素 32×32 四向 + 步态帧（前倾猎食）。碰撞仍 20。成品，不换精灵表 | generateInfiltratorPlaceholders(scene), infiltratorMotionTexture | 已实现（DEC-066） |
