@@ -5,6 +5,20 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+## DEC-083: 接触槽提纯为「它怎么伤你」；止损从连续性 × 覆盖深度查表
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 2 第二轮）
+- Type: Design
+- Context: 人发现接触槽把「它伤你」和「你终结它」压成一个互斥枚举。`contact_disperse_core` 占了一个词素位却不区分任何东西（乙丙丁核 HP 本就 50），丙丁抽到它会变成无害敌人，违反六件套必须写完攻击。人拍板：(1) 打核驱散退出接触字母表，接触只管它怎么伤你；(2) 止损要当真正的设计轴，而且是组合（打不死 / 更硬 / 更脆 / 打散重组）。张力：四张孔谱本身不够表达那组差异，但再开第五骰子又违反「衍生槽不是独立骰子」。
+- Decision:
+  1. 接触字母表删除 `contact_disperse_core`。三刀改写：乙→邻格抽打，丙→踩踏混乱，丁→场内加速混乱。任意合法个体攻击通道必须非空。
+  2. 止损**不是**第五词素槽。闭表 `data/contamination-stop-loss.csv` 由 `continuity × coverage` 查出 `family` + `core_policy`。单核=打核，菌落=打散重组（多核、杀一留余、本趟死核不回来），场=打不死。覆盖深度只调核好不好认（更脆/更硬），禁止改刀数、禁止改核 HP。
+  3. 打不死只允许占漆/占空，禁止占地挡走。挥击不扣核、不发 `ENEMY_DAMAGED`。正面支撑战斗成功标准。
+  4. 裂片「更硬-多段」、死核原地无限复活、更脆=少打一刀：本轮不做。
+  5. 止损不另进身份键（连续性×覆盖深度已在键里）。旁白不上屏止损术语。世界用核的有无/个数教。
+  6. 先在 gym `gymLiveMotion` 兑现。出击本轮仍按宿主 kind（乙丙丁核仍可打）。
+- Impact: 设计正文 §1/2/4/5/7/9；句法 spec 规则 13–15/18/22/30–32、接触对照表、止损表、交接清单；战斗 spec 指针；识别表面结构层；`contamination-lexemes.csv`；新表 `contamination-stop-loss.csv`。下一手 code：codegen + `resolveContactChannel` / `resolveStopLoss` / `selfCheckHostLive` / `check:lexicon`。不改 `src/` 于本提交。
+
 ## DEC-082: 出击油膜占空覆盖 — 概念基体未开放前裂隙抽卡不得变
 - Date: 2026-08-22
 - Phase: Iterative Development（迭代 2 第二轮）
