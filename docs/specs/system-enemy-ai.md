@@ -2,27 +2,27 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: design agent
-last-modified-date: 2026-08-21
-interface-changed: false
+last-modified-by: code agent (I3-A) + design agent (I3-D 对齐生成器契约)
+last-modified-date: 2026-08-22
+interface-changed: true
 slice: 8
 interfaces-with:
   - system-movement-vision         # 复用 utils/grid-raycast 做视线遮挡；敌人渲染可见性由 VisibilitySystem 决定；平衡不变量来源（玩家视距/移速）
   - system-chaos-scavenge-extract  # ENEMY_ALERT 经场景层驱动混乱值累加；被看守的薪柴点位依赖巡逻路线
   - system-combat                  # 敌人 HP/受击/攻击归 T4，本 spec 只提供接敌站位与朝向
-  - system-map-generation          # 每张裂隙甲仍 3–4 巡逻；过渡期恰好 1 个改写体占听觉主轴（DEC-077）
+  - system-map-generation          # 每张裂隙甲仍 3–4 巡逻；过渡期恰好 1 个改写体占听觉主轴（DEC-077）。I3-A：EnemySpawnData 带 ContaminationForm
   - system-contamination-lexicon   # 迭代 1：孔谱决定哪些五态可达；禁止第二份 FSM。乙丙丁走宿主，不进本 FSM
   - ui-detection-pulse             # 屏缘干涉读 getDetection / getState / getPosition / getRole；无新事件；丙丁第一版不接
 exposes:
   - AIState 枚举（patrol | suspicious | alert | chase | return，沿用 src/types/game-types.ts 既有定义）
   - EnemyRole（infiltrator | rewriter）与 PerceptionProfile（感知剖面，禁止复制第二份 FSM）
-  - EnemyView.getId() / getRole() / getPosition() / getFacingAngle() / getFacing4() / getState() / isEngaged() / getDetection()
+  - EnemyView.getId() / getRole() / getPosition() / getFacingAngle() / getFacing4() / getState() / isEngaged() / getDetection() / getForm()
   - AISystem.update(dt, playerPos, playerIsMoving) / getEnemies() / getEnemyById(id)
   - AISystem.reportNoise(pos, radius, level)
   - AISystem.reportDamage(enemyId, sourcePos)
   - AISystem.despawn(enemyId) / onPlayerLost()
   - Pathfinding.findPath(from, to) 的使用契约与调度策略
-  - EnemySpawnData / PatrolRouteData（type = CSV id；生成器契约见「生成器」）
+  - EnemySpawnData / PatrolRouteData（type = CSV id；出击甲带 ContaminationForm；生成器契约见「生成器」）
   - data/enemies.csv → codegen 契约（渗透体策划字段迁出 constants）
   - 事件：ENEMY_ALERT、ENEMY_LOST_PLAYER。本 spec 仍不新增事件
 ---
@@ -38,7 +38,7 @@ exposes:
 1. **渗透体（低度覆盖）**：绕视锥。视觉填充察觉度；听觉只是一次警觉点名。
 2. **改写体（中度覆盖）**：停步、贴墙消声。听觉是主通道，视锥更窄；移动噪声权重大。视觉仍能锁定追击，但不是这条判断的主轴。
 
-两条判断走**同一套五态**。玩家读懂的是「它在巡逻 / 怀疑 / 搜索 / 追我」，不是「这个类型另有一套状态名」。`world.md` 写改写体「新旧模式混合」——机制上落实为**感官权重混合**，不是随机切态。覆盖体（高度）本 spec 的活实现不做。迭代 1 的污染词法（DEC-073 / DEC-076 / DEC-077）把本两种剖面收成孔谱甲的两种填法，并规定覆盖体不以第三种人形出场。乙丙丁是非人形宿主，不进本 FSM。生成器过渡期仍是每图恰好 1 个改写体占听觉主轴（乙听缝不另占该名额）。
+两条判断走**同一套五态**。玩家读懂的是「它在巡逻 / 怀疑 / 搜索 / 追我」，不是「这个类型另有一套状态名」。`world.md` 写改写体「新旧模式混合」——机制上落实为**感官权重混合**，不是随机切态。覆盖体（高度）本 spec 的活实现不做。迭代 1 的污染句法（DEC-073 / DEC-076 / DEC-077）把本两种剖面收成孔谱甲的两种填法，并规定覆盖体不以第三种人形出场。乙丙丁是非人形宿主，不进本 FSM。生成器过渡期仍是每图恰好 1 个改写体占听觉主轴（乙听缝不另占该名额）。
 
 设计目标仍是可读、可预测、可被学习。概念图：`docs/art/demos/entity-rewriter/VERDICT.md`（不对称、teal 成簇；视觉归 Art A1）。
 
@@ -49,7 +49,7 @@ exposes:
 | 敌人的位置 / 速度 / 朝向 / 碰撞体 / 移动 | 敌人的 HP、受击、死亡、尸体清理（`system-combat`） |
 | FSM 状态、全部转换条件与计时器 | 敌人的攻击判定、伤害值、攻击冷却、出手时机（`system-combat`） |
 | 感知（视觉锥、听觉、察觉度累积、视线遮挡的调用方） | 视线遮挡**规则本身**与射线实现（`utils/grid-raycast`，T1 拥有） |
-| 巡逻路点数据契约、寻路调度策略、生成器对 `EnemySpawnData.type` 的约束 | 路点/出生点的**具体坐标**（`system-map-generation`） |
+| 巡逻路点数据契约、寻路调度策略、生成器对 `EnemySpawnData.type` 与 `form` 的约束 | 路点/出生点的**具体坐标**（`system-map-generation`）；`form` 由同一份 `contaminationDraw` 写入 |
 | 状态的可读性：行为 + 本体指示物 + 屏缘干涉的**数据**（察觉度/状态/方位） | 改写体 sprite（Art A1）；屏缘干涉的视觉（`ui-detection-pulse`）；受击白闪（`system-combat`） |
 | `ENEMY_ALERT` / `ENEMY_LOST_PLAYER` 的发出时机 | 混乱值对这些事件的**响应权重**（`system-chaos-scavenge-extract`） |
 
@@ -170,10 +170,11 @@ interface EnemyTypeConfig {
 /** 地图生成器必须提供 —— 本 spec 定义契约，system-map-generation 填值 */
 interface EnemySpawnData {
   id: string;                    // 'ENM_INF_01' / 'ENM_RWR_01'，本趟唯一
-  type: EnemyRole;               // CSV id。每趟恰好一个 'rewriter'
+  type: EnemyRole;               // CSV id。由 form.lexemes.sense 派生；每趟恰好一个 'rewriter'
   spawn: TileCoord;
   facing: number;
   patrol: PatrolRouteData;
+  form?: ContaminationForm;      // 出击甲必填。练习场默认课可缺，工厂回退两种夹具 form。出击路径缺 form = 坏 spawn，禁止静默用 role 三元填
 }
 
 interface PatrolRouteData {
@@ -555,14 +556,16 @@ interface EnemyView {
 
 ### 生成器契约（每张裂隙恰好 1 个听觉主轴）
 
-由 `system-map-generation` 执行，本 spec 拥有语义。**过渡期（DEC-077）** 活代码与验收仍按：`type === 'rewriter'` 恰好 1。乙听缝未接为听觉主轴。目标契约（尚未迁完）为：
+由 `system-map-generation` 执行，本 spec 拥有语义。**过渡期（DEC-077 / I3-A）** 活代码与验收仍按：`type === 'rewriter'` 恰好 1。乙听缝未接为听觉主轴。出击甲每条 spawn **带** `form: ContaminationForm`。`type` 由 `form.lexemes.sense === 'sense_hear'` 派生为 rewriter，否则 infiltrator。撤离门 form 必须是有机残影 + 渗透 + 视锥，来自抽卡（`drawOne` 强制参数合法），不是 `Enemy` 工厂里 `role === 'rewriter' ?` 三元。练习场默认敌人课可以不带 form，工厂回退 `INFILTRATOR_FORM` / `REWRITER_FORM`。句法课侧栏 spawn 已自带 form，不得冲掉。
+
+目标契约（尚未迁完）为：
 
 1. 甲（占地可追击）`length` ∈ {2, 3}。另加乙或丁 1、丙 0–1。不再要求总巡逻数为 3–4。
 2. 全图主感知为听噪的个体数恰好为 1（甲的听噪填法或乙的听缝）。0 个或 ≥2 个 = 坏图，重试，禁止用「全换成视锥」糊过去。
 3. 规则 19 的撤离最后一道关必须是甲 + 视锥。听觉主轴不站撤离门。
 4. 甲的听噪填法优先落在 contested/deep 薪柴附近或侧路（与现行改写体落点相同）。
 5. 甲视锥 id 建议 `ENM_INF_*`；甲听噪 `ENM_RWR_01`；乙/丙/丁另编 `ENM_YI_*` / `ENM_BING_*` / `ENM_DING_*`。
-6. 路点 / 墙缘 / 簇核 / 走廊盒可走或按词法 spec 钉层可达——与现行连通 FATAL 相同。
+6. 路点 / 墙缘 / 簇核 / 走廊盒可走或按句法 spec 钉层可达——与现行连通 FATAL 相同。
 7. 丙、丁不接屏缘干涉。乙可接（邻格察觉）。
 
 ### 事件契约
@@ -655,7 +658,7 @@ interface EnemyView {
 | `data/enemies.csv` + codegen | **本 Slice 新增**。渗透体策划字段从 `GAME_CONSTANTS.AI` 迁出 |
 | `src/config/constants.ts` 的 `AI` 段 | 删除已迁出的视距/半角/听觉半径/五种速度。新增 `HEAR_FILL_TIME` / `HEARING_STILL_CAP` / `HEAR_ALERT_THRESHOLD`。`TURN_RATE`、计时器、寻路键保留。由 code 执行 |
 | `EnemyView` / `InfiltratorConfig` | 泛化为 `getRole()` + `PerceptionProfile`。禁止第二份 FSM 文件 |
-| `EnemySpawnData.type` | 从字面量 `'infiltrator'` 扩为 `EnemyRole` |
+| `EnemySpawnData.type` | 从字面量 `'infiltrator'` 扩为 `EnemyRole`；出击甲带 `form`（I3-A） |
 | `src/types/events.ts` | **无变更** |
 | `system-map-generation` | 规则 22：恰好 1 改写体 |
 | `ui-detection-pulse` | 新表面。本 spec 提供察觉度/状态/位置 |

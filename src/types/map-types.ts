@@ -11,6 +11,7 @@
  */
 
 import type { EnemyRole } from '@/generated/enemy-data';
+import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { TileCoord, Vector2 } from '@/types/game-types';
 
 /** Raw tile index grid. Values are `TileType` members and double as tileset frame indices. */
@@ -61,6 +62,11 @@ export interface EnemySpawnData {
   /** Initial heading in degrees, 0 = right, clockwise. */
   readonly facing: number;
   readonly patrol: PatrolRouteData;
+  /**
+   * Sortie 甲 must set this from the layout draw.
+   * Gym default lesson may omit it; Enemy falls back to the two fixture forms.
+   */
+  readonly form?: ContaminationForm;
 }
 
 /** Kindling value tier. Price grows super-linearly with the cost of reaching it. */

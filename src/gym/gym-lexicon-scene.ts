@@ -400,6 +400,7 @@ export class GymLexiconScene extends Phaser.Scene {
       spawn: start,
       facing: 0,
       patrol: { waypoints: LEXICON_JIA_WAYPOINTS, mode: 'loop' },
+      form,
     };
     this.ai.spawnOne(spawn);
   }

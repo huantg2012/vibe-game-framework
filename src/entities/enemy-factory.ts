@@ -143,7 +143,8 @@ export class Enemy implements EnemyView {
     this.id = spawnData.id;
     this.spawnData = spawnData;
     this.config = config;
-    this.form = config.role === 'rewriter' ? REWRITER_FORM : INFILTRATOR_FORM;
+    this.form =
+      spawnData.form ?? (config.role === 'rewriter' ? REWRITER_FORM : INFILTRATOR_FORM);
     this.ai = createEnemyAIState(spawnPosition, degToRad(spawnData.facing), config.role);
 
     const ai = GAME_CONSTANTS.AI;

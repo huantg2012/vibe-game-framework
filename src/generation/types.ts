@@ -4,6 +4,7 @@
  * a generated field on the ruined mask (preview-baked; C5 paints it in-game).
  */
 
+import type { SortieDraw } from '@/generation/contamination-draw';
 import type { Vector2 } from '@/types/game-types';
 import type {
   ContaminantNodeDef,
@@ -215,4 +216,6 @@ export interface GeneratedRiftLayout {
   readonly enemySpawns: readonly EnemySpawnData[];
   readonly landmarks: readonly LandmarkDef[];
   readonly contaminationPins: ContaminationPins;
+  /** One draw per sortie. Feeds 甲 spawns and 乙/丙/丁 hosts. */
+  readonly contaminationDraw: SortieDraw;
 }

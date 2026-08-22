@@ -326,6 +326,35 @@ assert(!sortieDing.includes('resolveStopLoss'), 'tickDingSortie must not read st
 assert(hostSrc.includes('host.form.lexemes.contact'), 'gym path reads lexemes.contact');
 assert(hostSrc.includes('resolveStopLoss'), 'gym path reads resolveStopLoss');
 
+const factorySrc = readFileSync(resolve(ROOT, 'src/entities/enemy-factory.ts'), 'utf8');
+assert(
+  factorySrc.includes('spawnData.form ??'),
+  'sortie Enemy.getForm comes from spawnData.form, not a role ternary',
+);
+assert(
+  !/this\.form = config\.role === 'rewriter' \? REWRITER_FORM : INFILTRATOR_FORM/.test(factorySrc),
+  'Enemy.getForm is not a role ternary on the sortie path',
+);
+
+const layoutSrc = readFileSync(resolve(ROOT, 'src/generation/rift-layout.ts'), 'utf8');
+const placeBody = layoutSrc.split('function placeOnIsland')[1]?.split('function isExtractGateForm')[0] ?? '';
+assert(!placeBody.includes('drawSortie'), 'placeOnIsland must not draw lexicon (would consume placement rng)');
+assert(
+  layoutSrc.includes("mix32(inputSeed, 'lexicon')"),
+  'lexicon seed is mix32(layout.seed, lexicon)',
+);
+
+const createBody = hostSrc.split('\n  create(')[1]?.split('\n  destroy():')[0] ?? '';
+assert(!createBody.includes('drawSortie'), 'ContaminationHostSystem.create must not call drawSortie');
+assert(
+  createBody.includes('layout.contaminationDraw'),
+  'one layout draw: create materializes layout.contaminationDraw',
+);
+assert(
+  !hostSrc.includes("mix32(layout.seed, 'lexicon-hosts')"),
+  'hosts.create must not fork a second lexicon seed',
+);
+
 if (failed) {
   console.error(`check:lexicon ${failed} failure(s)`);
   process.exit(1);

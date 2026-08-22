@@ -2,16 +2,16 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director agent
-last-modified-date: 2026-08-21
-note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染词法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。
-interface-changed: false
+last-modified-by: code agent (I3-A)
+last-modified-date: 2026-08-22
+note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。
+interface-changed: true
 slice: 6
 interfaces-with:
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出
   - system-movement-vision         # 输出 OccluderGrid / 出生点；虚空格不可走、默认不挡视线
-  - system-enemy-ai                # 输出 WalkGrid + 巡逻；过渡期恰好 1 个改写体占听觉主轴（DEC-077）
-  - system-contamination-lexicon   # 交出墙缘折线 / 簇核 / 走廊包围盒；菌落与场不得加墙
+  - system-enemy-ai                # 输出 WalkGrid + 巡逻；过渡期恰好 1 个改写体占听觉主轴（DEC-077）；出击甲带 ContaminationForm
+  - system-contamination-lexicon   # 交出墙缘折线 / 簇核 / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
   - OutlineMask（矩形缓冲 + 陆地/虚空掩膜 + 质量指标）
@@ -19,8 +19,8 @@ exposes:
   - evaluateOutline(land) → 矩形/啃边/贴框则丢
   - RuinedMask（陆地 + 墙 + 具名残块）
   - generateRuins(seed, fragmentTypeId?) → RuinedMask
-  - GeneratedRiftLayout（C3 交齐出生/撤离/薪柴/污染物/巡逻 + contaminationPins）
-  - generateRiftLayout(seed, options?) → GeneratedRiftLayout | 坏图重试到顶则抛错。options 可锁风格锚、关闭邻域抖动、覆盖污染年龄与残破度（练习场）；缺省与出击相同
+  - GeneratedRiftLayout（C3 交齐出生/撤离/薪柴/污染物/巡逻 + contaminationPins + contaminationDraw）
+  - generateRiftLayout(seed, options?) → GeneratedRiftLayout | 坏图重试到顶则抛错。options 可锁风格锚、关闭邻域抖动、覆盖污染年龄与残破度（练习场）；缺省与出击相同。抽卡种子独立 fork `mix32(layout.seed, 'lexicon')`，不吃 placeOnIsland 的 rng
 ---
 
 # 系统设计：裂隙地图生成
@@ -128,6 +128,8 @@ interface GeneratedRiftLayout {
   contaminantNodes: readonly ContaminantNodeDef[]
   enemySpawns: readonly EnemySpawnData[]
   landmarks: readonly LandmarkDef[]
+  contaminationPins: ContaminationPins
+  contaminationDraw: SortieDraw   // 一次抽卡；同时喂甲 spawn.form 与乙丙丁宿主
 }
 
 interface WalkableMask {
@@ -137,7 +139,7 @@ interface WalkableMask {
 }
 ```
 
-`ExtractionPointDef` / `KindlingNodeDef` / `EnemySpawnData` / `LandmarkDef` 沿用 `src/types/map-types.ts`。本系统**新增**的是：种子、碎片类型 id、可走掩膜、虚空格、以及「这些坐标从生成器来」。
+`ExtractionPointDef` / `KindlingNodeDef` / `EnemySpawnData` / `LandmarkDef` 沿用 `src/types/map-types.ts`。本系统**新增**的是：种子、碎片类型 id、可走掩膜、虚空格、以及「这些坐标从生成器来」。出击甲的 `EnemySpawnData.form` 与整份 `contaminationDraw` 也由本生成器交出（I3-A）：同一份抽卡喂巡逻与宿主，种子 `mix32(layout.seed, 'lexicon')`，禁止吃 `placeOnIsland` 的 rng。
 
 地标（`LandmarkDef`）是地板上的视觉锚，**不是**情景障碍本身。情景障碍必须写进墙 / 不可走格，让玩家绕、让视线断。只贴纸不够。
 
@@ -231,7 +233,7 @@ interface FragmentTypeDef {
     4. **开阔格**：可走格满足「四邻（上右下左）墙格数 ≤ 1」**或**「到最近墙格的四连通格距（曼哈顿，格为单位）≥ 2」。墙 = 墙格，不含虚空。四连通距墙 ≥ 2 蕴含四邻墙数 = 0，故本 OR 的有效判定是 **四邻墙数 ≤ 1**（贴着一面墙走仍算开阔；夹在两面墙之间的 1 宽缝不算）。
     5. 一条路的**开阔格占比** = 该路路径格中开阔格数 / 该路路径格数（含出生与撤离）。两条路里**较短者**（格子步数更小；若步数并列则主路视为较短）必须开阔格占比**严格更高**（= 更暴露）。较短者不够暴露 = 坏图。
     6. 以上任一步失败：丢弃本岛，重试整岛。禁止用加细墙、拆形状闸门、切开地板连通来「做出第二条路」。
-22. 巡逻（过渡期，DEC-077）：仍是 3–4 个占地可追击，其中**恰好 1 个** `type: 'rewriter'`（听觉主轴仍由改写体占名额）。乙 / 丙 / 丁不进 `enemySpawns`，由钉层 + 宿主系统抽卡物化；抽卡带 `hearingAxisTaken: true`，禁止再抽听噪。钉层（墙缘折线、簇核、走廊包围盒）必须交出。路点可走、从出生可达。撤离门仍是视锥甲，不担任听觉主轴。全图听噪 === 1 的最终迁移未做。契约细节在 `system-enemy-ai`「生成器契约」与词法 spec 实现规格。
+22. 巡逻（过渡期，DEC-077 / I3-A）：仍是 3–4 个占地可追击，其中**恰好 1 个** `type: 'rewriter'`（听觉主轴仍由改写体占名额）。不要用句法甲配额 2–3 去砍巡逻人数；为**每条** spawn 配一个 `form`。`type` 由该 form 的感知词素派生（`sense_hear` → rewriter，否则 infiltrator）。撤离门仍是视锥甲：form 锁有机残影 + 渗透 + 视锥，写入 `spawn.form`，不是工厂按 role 三元覆盖。乙 / 丙 / 丁不进 `enemySpawns`。一次出击一份 `contaminationDraw`（种子独立 fork `mix32(layout.seed, 'lexicon')`）；宿主只物化这份抽卡里的非甲 form，禁止再调 `drawSortie`。钉层空的乙↔丁回退仍在。钉层（墙缘折线、簇核、走廊包围盒）必须交出。路点可走、从出生可达。全图听噪 === 1 的最终迁移未做。契约细节在 `system-enemy-ai`「生成器契约」与句法 spec 实现规格。
 23. 污染物节点放在可走格，从出生可达。数量沿用现图量级（现为 3），本 Slice 不新开节点规则。
 
 ### A — 氛围
@@ -486,7 +488,7 @@ interface FragmentRoll {
 - 从 **净化点场景流转** 接收：踏入裂隙这一下（触发生成）。不读净化点力场形状当裂隙陆地。
 - 从 **system-chaos-scavenge-extract** 接收：薪柴分档原则、一个撤离、走近按 E、主干 40–60 秒、换路体验（短暴露 / 长隐蔽）。换路机器判定在本文件规则 21。**坐标不再向固定图要。**
 - 从 **system-movement-vision** 接收：OccluderGrid / 出生点契约。向它提供网格与出生。撤离点仍注册 glow source，位置改读生成器。
-- 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走、过渡期 `EnemySpawnData.type` ∈ {infiltrator, rewriter}。向它提供本次 `enemySpawns`（过渡期恰好 1 个改写体）。另交墙缘折线 / 簇核 / 走廊包围盒给污染词法。
+- 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走、过渡期 `EnemySpawnData.type` ∈ {infiltrator, rewriter}。向它提供本次 `enemySpawns`（每条带 `form`；过渡期恰好 1 个改写体）。另交墙缘折线 / 簇核 / 走廊包围盒，以及一份 `contaminationDraw` 给污染句法（宿主禁止二次抽卡）。
 - 从 **system-growth-tide** 接收：污染物节点契约。向它提供本次节点。工具 abyss 改读本次薪柴坐标，禁止 `import { RIFT_MAP }`。
 - 向 **RiftScene** 发送：整份 `GeneratedRiftLayout`。场景不再在 create 时写死 `RIFT_MAP`。
 - 向 **ExtractionSystem** 发送：恰好一个 `ExtractionPointDef`。规则仍是走近按 E。

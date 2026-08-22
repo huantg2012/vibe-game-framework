@@ -159,6 +159,27 @@ for (const seed of SEEDS) {
   const gate = layout.enemySpawns[0];
   assert(gate?.type === 'infiltrator', `seed ${seed}: extract gate ${gate?.id} is ${gate?.type}`);
   assert(gate?.id === 'ENM_INF_01', `seed ${seed}: gate id ${gate?.id}`);
+  assert(gate?.form, `seed ${seed}: extract gate missing form`);
+  assert(
+    gate?.form?.substrate === 'organic_remnant' &&
+      gate?.form?.coverage === 'infiltrate' &&
+      gate?.form?.lexemes.sense === 'sense_cone',
+    `seed ${seed}: extract gate form not remnant+infiltrate+cone`,
+  );
+  for (const enemy of layout.enemySpawns) {
+    assert(enemy.form, `seed ${seed}: ${enemy.id} missing form`);
+    const fromSense = enemy.form?.lexemes.sense === 'sense_hear' ? 'rewriter' : 'infiltrator';
+    assert(enemy.type === fromSense, `seed ${seed}: ${enemy.id} type ${enemy.type} != form sense`);
+  }
+  const rewriter = layout.enemySpawns.find((e) => e.type === 'rewriter');
+  assert(rewriter?.form?.lexemes.sense === 'sense_hear', `seed ${seed}: rewriter form is not hear`);
+  const drawJia = layout.contaminationDraw.forms.filter((f) => f.portfolio === 'jia');
+  assert(
+    drawJia.length === layout.enemySpawns.length,
+    `seed ${seed}: contaminationDraw jia ${drawJia.length} != patrols ${layout.enemySpawns.length}`,
+  );
+  const drawHear = layout.contaminationDraw.forms.filter((f) => f.lexemes.sense === 'sense_hear').length;
+  assert(drawHear === 1, `seed ${seed}: contaminationDraw hear ${drawHear} (want 1)`);
 
   const checkReach = (label: string, pos: { x: number; y: number }): void => {
     const t = tileOf(layout, pos);

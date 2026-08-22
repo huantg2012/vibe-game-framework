@@ -19,6 +19,14 @@ import type {
   RuinSeverity,
   WalkableMask,
 } from '@/generation/types';
+import {
+  drawOne,
+  drawSortie,
+  INFILTRATOR_FORM,
+  REWRITER_FORM,
+  type ContaminationForm,
+  type SortieDraw,
+} from '@/generation/contamination-draw';
 import { collectContaminationPins } from '@/generation/contamination-pins';
 import { RIFT_MAP } from '@/scenes/rift-map-data';
 import { TileGrid } from '@/systems/tile-grid';
@@ -648,6 +656,126 @@ function placeOnIsland(
   return { spawn, extract, kindling, contaminants, enemies, landmarks };
 }
 
+function isExtractGateForm(form: ContaminationForm): boolean {
+  return (
+    form.portfolio === 'jia' &&
+    form.substrate === 'organic_remnant' &&
+    form.coverage === 'infiltrate' &&
+    form.lexemes.sense === 'sense_cone'
+  );
+}
+
+function jiaRoleFromForm(form: ContaminationForm): EnemySpawnData['type'] {
+  return form.lexemes.sense === 'sense_hear' ? 'rewriter' : 'infiltrator';
+}
+
+function stripHostHear(
+  rng: SeededRandom,
+  form: ContaminationForm,
+  fragmentTypeId: string,
+): ContaminationForm | null {
+  if (form.lexemes.sense !== 'sense_hear') return form;
+  return drawOne(rng, {
+    portfolio: form.portfolio,
+    fragmentTypeId,
+    forbidSense: ['sense_hear'],
+    preferUtterance: true,
+  });
+}
+
+/**
+ * Map patrol count stays 3–4. DrawSortie's 2–3 甲 quota is only a form pool.
+ * Extra patrols get extra `drawOne` forms; leftover pool forms are dropped.
+ */
+function attachLexiconForms(
+  rng: SeededRandom,
+  fragmentTypeId: string,
+  placed: readonly EnemySpawnData[],
+  drawn: SortieDraw,
+): { enemySpawns: EnemySpawnData[]; contaminationDraw: SortieDraw } {
+  const warnings = [...drawn.warnings];
+  const hostForms: ContaminationForm[] = [];
+  for (const form of drawn.forms) {
+    if (form.portfolio === 'jia') continue;
+    if (form.lexemes.sense === 'sense_hear') {
+      const redrawn = stripHostHear(rng, form, fragmentTypeId);
+      if (redrawn) hostForms.push(redrawn);
+      else warnings.push(`${form.portfolio} hear-strip failed after retries`);
+    } else {
+      hostForms.push(form);
+    }
+  }
+
+  const jiaPool = drawn.forms.filter((f) => f.portfolio === 'jia');
+  const used = new Set<ContaminationForm>();
+
+  const takeGate = (): ContaminationForm => {
+    const fromPool = jiaPool.find((f) => isExtractGateForm(f) && !used.has(f));
+    if (fromPool) {
+      used.add(fromPool);
+      return fromPool;
+    }
+    return (
+      drawOne(rng, {
+        portfolio: 'jia',
+        fragmentTypeId,
+        coverage: 'infiltrate',
+        substrate: 'organic_remnant',
+        sense: 'sense_cone',
+      }) ?? INFILTRATOR_FORM
+    );
+  };
+
+  const takeHear = (): ContaminationForm => {
+    const fromPool = jiaPool.find((f) => f.lexemes.sense === 'sense_hear' && !used.has(f));
+    if (fromPool) {
+      used.add(fromPool);
+      return fromPool;
+    }
+    return (
+      drawOne(rng, {
+        portfolio: 'jia',
+        fragmentTypeId,
+        sense: 'sense_hear',
+        substrate: 'organic_remnant',
+        coverage: 'rewrite',
+      }) ?? REWRITER_FORM
+    );
+  };
+
+  const takeOther = (): ContaminationForm => {
+    const fromPool = jiaPool.find((f) => !used.has(f) && f.lexemes.sense !== 'sense_hear');
+    if (fromPool) {
+      used.add(fromPool);
+      return fromPool;
+    }
+    return (
+      drawOne(rng, {
+        portfolio: 'jia',
+        fragmentTypeId,
+        forbidSense: ['sense_hear'],
+      }) ?? INFILTRATOR_FORM
+    );
+  };
+
+  const enemySpawns = placed.map((spawn, index) => {
+    const form = index === 0 ? takeGate() : spawn.type === 'rewriter' ? takeHear() : takeOther();
+    return { ...spawn, form, type: jiaRoleFromForm(form) };
+  });
+
+  const rewriterCount = enemySpawns.filter((e) => e.type === 'rewriter').length;
+  if (rewriterCount !== 1) warnings.push(`jia rewriter count ${rewriterCount} (want 1)`);
+
+  const jiaForms = enemySpawns.map((e) => e.form).filter((f): f is ContaminationForm => f !== undefined);
+  return {
+    enemySpawns,
+    contaminationDraw: {
+      forms: [...jiaForms, ...hostForms],
+      warnings,
+    },
+  };
+}
+
 export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): GeneratedRiftLayout {
   const inputSeed = seed >>> 0;
   const rolled = rollFragmentAxes(inputSeed);
@@ -697,6 +825,25 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
         continue;
       }
 
+      const contaminationPins = collectContaminationPins(draft.tileMap, {
+        ...draft,
+        contaminationAge: roll.contaminationAge,
+        ruinSeverity: roll.ruinSeverity,
+      });
+      const lexiconRng = new SeededRandom(mix32(inputSeed, 'lexicon'));
+      const drawn = drawSortie(lexiconRng, {
+        fragmentTypeId: recipe.fragmentTypeId,
+        hasClusters: contaminationPins.clusterCores.length > 0,
+        hasWallEdges: contaminationPins.wallEdges.length > 0,
+        hasCorridors: contaminationPins.corridorAabbs.length > 0,
+      });
+      const bound = attachLexiconForms(
+        lexiconRng,
+        recipe.fragmentTypeId,
+        placed.enemies,
+        drawn,
+      );
+
       return {
         seed: inputSeed,
         fragmentTypeId: recipe.fragmentTypeId,
@@ -714,13 +861,10 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
         extractionPoint,
         kindlingNodes: placed.kindling,
         contaminantNodes: placed.contaminants,
-        enemySpawns: placed.enemies,
+        enemySpawns: bound.enemySpawns,
         landmarks: placed.landmarks,
-        contaminationPins: collectContaminationPins(draft.tileMap, {
-          ...draft,
-          contaminationAge: roll.contaminationAge,
-          ruinSeverity: roll.ruinSeverity,
-        }),
+        contaminationPins,
+        contaminationDraw: bound.contaminationDraw,
       };
     }
   }

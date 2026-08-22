@@ -8,6 +8,9 @@
  * with **no 6th argument**. `gymLiveMotion` becomes true only when
  * `options?.gymLiveMotion === true`. The gym map lesson also omits the option.
  *
+ * I3-A: `create` materializes 乙/丙/丁 from `layout.contaminationDraw` and does
+ * **not** call `drawSortie`. Jia forms on that draw feed `EnemySpawnData.form`.
+ *
  * When `gymLiveMotion === false` (default, every sortie):
  * - Birth 乙 is still `edge.tiles[slot]` (collectWallEdges visit order), core at
  *   **tile centre**. `orderWallEdgeTiles` is not used for spawn or ticks.
@@ -34,8 +37,7 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
-import { drawSortie, type ContaminationForm, type SortieDraw } from '@/generation/contamination-draw';
-import { mix32 } from '@/generation/seed-fork';
+import type { ContaminationForm, SortieDraw } from '@/generation/contamination-draw';
 import type { ClusterCorePin, ContaminationPins, CorridorAabb, GeneratedRiftLayout, WallEdgePolyline } from '@/generation/types';
 import { orderWallEdgeTiles, wallAttachForTile, type FormWallAttach } from '@/generation/wall-edge-path';
 import type { CombatSystem } from '@/systems/combat-system';
@@ -61,7 +63,6 @@ import {
 } from '@/systems/contamination-host-live';
 import { GameEvent } from '@/types/events';
 import type { Vector2 } from '@/types/game-types';
-import { SeededRandom } from '@/utils/random';
 import { degToRad, shortestArc } from '@/utils/math';
 
 const C = GAME_CONSTANTS.CONTAMINATION;
@@ -163,7 +164,7 @@ export class ContaminationHostSystem {
   private gymLiveMotion = false;
 
   /**
-   * Materialize 乙/丙/丁 from the same `drawSortie` as a sortie.
+   * Materialize 乙/丙/丁 from `layout.contaminationDraw`. Does not call `drawSortie`.
    * `combat` / `chaos` may be null: paint and tick visuals only (no swing hits / chaos).
    */
   create(
@@ -182,14 +183,7 @@ export class ContaminationHostSystem {
     this.gymLiveMotion = options?.gymLiveMotion === true;
 
     const pins = layout.contaminationPins;
-    const rng = new SeededRandom(mix32(layout.seed, 'lexicon-hosts'));
-    const drawn = drawSortie(rng, {
-      fragmentTypeId: layout.fragmentTypeId,
-      hasClusters: pins.clusterCores.length > 0,
-      hasWallEdges: pins.wallEdges.length > 0,
-      hasCorridors: pins.corridorAabbs.length > 0,
-      hearingAxisTaken: true,
-    });
+    const drawn = layout.contaminationDraw;
     this.lastDraw = drawn;
     for (const w of drawn.warnings) console.warn(`[contamination-hosts] ${w}`);
 
