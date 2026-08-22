@@ -4,7 +4,7 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-08-22
 last-closed-slice: 9
-note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 3（方案 D 接入出击，DEC-084）。迭代 2 练习场探索 COMPLETE。迭代 1 敌人系统仍为实现完成、体验未验证。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071。迷雾下亮度仍等人终审。
+note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 4（污染句法陈列馆，DEC-085）。迭代 3（方案 D 接入出击，DEC-084）三层已落地，等人试玩裂隙。迭代 2 练习场探索 COMPLETE。迭代 1 敌人系统仍为实现完成、体验未验证。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071。迷雾下亮度仍等人终审。
 ---
 
 # Roadmap
@@ -31,7 +31,7 @@ note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 3�
 
 ## 当前工作单元（DEC-072）
 
-**无进行中 Slice。当前：迭代 3（方案 D 接入出击）。** 人已选 D 并批准进裂隙（DEC-084）。三层分批：视觉 / 机制 / 内容。迭代 2 练习场探索 COMPLETE。迭代 1（敌人系统）句法逻辑仍为**实现完成，体验未验证**。活指针：`docs/progress/current-iteration.md`。任务书：`docs/tasks/iteration-3.md`。体系入口：`docs/design-notes/contamination-lexicon.md` → `docs/specs/system-contamination-lexicon.md` → `docs/specs/ui-encounter-narration.md`。外观 HOW：`docs/art/contamination-forms.md`（I3-C 升为生产）。Slice 9 COMPLETE 档案：`docs/progress/current-slice.md`。
+**无进行中 Slice。当前：迭代 4（污染句法陈列馆）。** 练习场新课，视觉去重后的方案 D 外形馆藏（DEC-085）。合同：`docs/tasks/iteration-4.md`。迭代 3（方案 D 接入出击）三层已落地，等人试玩裂隙，不要标 COMPLETE（DEC-084；合同 `docs/tasks/iteration-3.md`）。迭代 2 练习场探索 COMPLETE。迭代 1（敌人系统）句法逻辑仍为**实现完成，体验未验证**。活指针：`docs/progress/current-iteration.md`。体系入口：`docs/design-notes/contamination-lexicon.md` → `docs/specs/system-contamination-lexicon.md` → `docs/specs/ui-encounter-narration.md`。外观 HOW：`docs/art/contamination-forms.md`。Slice 9 COMPLETE 档案：`docs/progress/current-slice.md`。
 
 DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。撤离多样性不做。
 

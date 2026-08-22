@@ -5,6 +5,35 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+## DEC-085: 开迭代 4 — 练习场「污染句法陈列馆」
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 4）
+- Type: Process / Design lock
+- Context: 迭代 3 已把方案 D 接到裂隙，人尚未试玩出击。人另点名：在 gym 增加一课，把污染句法生成的所有**长得不一样**的渲染表现陈列出来，并写明句法参数；要求 UX 上下功夫，禁止无脑铺对象。规模约 550（一种碎片）/ 2700（碎片当轴）。这包不改玩法、不改出击、不动 CSV。
+- Decision:
+  1. **另开迭代 4**，不塞进迭代 3。迭代 3 仍等人试玩裂隙，不要标 COMPLETE。活指针转到本迭代。
+  2. **课名 / 地址：** 污染句法陈列馆；`gym.html?lesson=lexicon-gallery`。只挂生产方案 D。不创建 `Enemy` / 宿主 / 玩家。
+  3. **UX 锁：** 博物馆导航（一次一厅 = 孔谱 × 基体）；碎片是全局开关不是网格轴；甲 3 个族内变体占格，乙丙丁网格只用规范种子；视口虚拟化 + attach 硬顶；网格静、检视活；标签 DOM、表名/档位分开、头上无字；去重说明必须上屏。合同正文：`docs/tasks/iteration-4.md`。
+  4. **非法止损默认排除。** 渗透残余动词锁、非甲禁止 `contact_melee_three` 与 `drawOne` 对齐。
+  5. **渲染器只允许两条管道：** `textureNamespace`（防丙丁同键互删）、`stainWorldPoint`（防丁把相机中心当玩家）。禁止改绘制语法。出击不传这两个字段。
+  6. 侧栏是开发工具 UI，不走 in-game UX 清单。标本仍禁新色 / 精灵表 / 第三种人形 / 另写渲染。
+- Impact: `current-iteration.md`；`docs/tasks/iteration-4.md`；`docs/dev/gym.md`；`.cursor/rules/gym.mdc`；`architecture.md` DEC-ARCH-012；`CLAUDE.md` / `AGENTS.md` / `START-HERE.md` / `gdd-core.md` / `roadmap.md`。
+- 验证：人浏览陈列馆。机器闸门：`tsc` / `check:gallery-catalog` / `check:lexicon`。裂隙试玩仍算迭代 3，不算本迭代。
+
+## I4-A: 陈列馆视觉身份目录（实现记录）
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 4）
+- Type: Implementation
+- Context: 陈列馆必须先有一份「长得不一样」的标本列表，场景不得自己做笛卡尔积。
+- Decision:
+  1. `visualKey` 只含该孔谱静帧占格字段（甲含族内变体；丙含止损是否画核；丁含盒尺寸）。碎片、乙丙丁连续种子、朝向不进键。
+  2. 无名填法只乘占格槽。成句事后挂键：已有键则把成句 id 挂上，不占第二格。
+  3. `includeIllegal` 只补 `resolveStopLoss === 'illegal'` 的填法（当前是甲基体表里的碎裂）。孔谱字母表外但止损合法的连续性（乙的菌落、丙的整块）不进目录。
+  4. 甲族内变体种子由 `jiaSeedForVariant` 反查 `mix32 % 3`；乙丙丁网格用 `CANONICAL_SEED = 20260822`。
+- Impact: `src/gym/lexicon-gallery-catalog.ts`；`tools/gym/check-gallery-catalog.ts`；`package.json` 的 `check:gallery-catalog`。
+- 回退：删上述两文件并去掉 npm 脚本。无运行时副作用。
+- 验证：`npx tsc --noEmit`；`npm run check:gallery-catalog`；`npm run check:lexicon`。
+
 ## I3-E: 方案 D 接进 RiftScene（实现记录）
 - Date: 2026-08-22
 - Phase: Iterative Development（迭代 3）

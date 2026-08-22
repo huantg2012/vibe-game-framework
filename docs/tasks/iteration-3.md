@@ -3,10 +3,12 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-22
 last-modified: 2026-08-22
-note: 迭代 3（方案 D 接入出击，DEC-084）。人已选定方案 D 并批准接入裂隙。分批提交、独立闸门、可单独回退。不要标 COMPLETE。不要开新 Slice。
+note: 迭代 3（方案 D 接入出击，DEC-084）。三层已落地、QA 机械对照已过。不要标 COMPLETE，除非人试玩过出击。活指针已转到迭代 4（陈列馆，DEC-085）；本文仍是出击接线合同。
 ---
 
 # Tasks: 迭代 3 — 方案 D 接入出击
+
+**活指针：** 已转到迭代 4（污染句法陈列馆，`docs/tasks/iteration-4.md`）。本文仍是出击接线合同。三层已落地；不要标本文 COMPLETE，除非人试玩过裂隙。
 
 权威：`docs/progress/current-iteration.md`。体系仍是污染句法（DEC-078）：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。生产 HOW：`docs/art/contamination-forms.md`（I3-C：方案 D 已升为出击生产标准；句法课对照同一份）+ 甲的 `docs/art/actor-pixels.md`。
 

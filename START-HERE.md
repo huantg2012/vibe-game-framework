@@ -14,9 +14,9 @@
 | CLAUDE.md 标记 "Polish" | → **Polish** | 用 `qa` agent 做全面验收 |
 | 准备发布 | → **Launch** | 用 `code` agent 配置部署 |
 
-**本仓库层 B（进行中的游戏）**：Slice 1–9 已完，Slice 10 不做。自 DEC-072 起按需「游戏迭代」，不规划 Slice 11，不标 Polish / Launch。活状态见 `docs/progress/current-iteration.md`（当前：迭代 3 方案 D 接入出击，DEC-084；迭代 2 练习场探索 COMPLETE；迭代 1 敌人系统句法逻辑仍为**实现完成，体验未验证**，DEC-073 / DEC-076 / DEC-077；遭遇识别旁白并入同一套体系，DEC-075）。体系入口：`docs/design-notes/contamination-lexicon.md`。
+**本仓库层 B（进行中的游戏）**：Slice 1–9 已完，Slice 10 不做。自 DEC-072 起按需「游戏迭代」，不规划 Slice 11，不标 Polish / Launch。活状态见 `docs/progress/current-iteration.md`（当前：迭代 4 污染句法陈列馆，DEC-085；迭代 3 方案 D 接入出击三层已落地、等人试玩裂隙，DEC-084；迭代 2 练习场探索 COMPLETE；迭代 1 敌人系统句法逻辑仍为**实现完成，体验未验证**，DEC-073 / DEC-076 / DEC-077；遭遇识别旁白并入同一套体系，DEC-075）。体系入口：`docs/design-notes/contamination-lexicon.md`。
 
-开发练习场（看敌人怎么走、比玩家外形、看生成地图、测基本功能，不进主菜单）：`docs/dev/gym.md`。`npm run gym` 或 `npm run dev` 后，用 Cursor Simple Browser 打开 `http://localhost:3000/gym.html`（敌人）、`http://localhost:3000/gym.html?lesson=player`（玩家外形）或 `http://localhost:3000/gym.html?lesson=map`（地图生成）。角色外形对照：`docs/art/actor-pixels.md`。玩家加厚像素已接出击。
+开发练习场（看敌人怎么走、比玩家外形、看生成地图、测基本功能、浏览污染句法外形馆藏，不进主菜单）：`docs/dev/gym.md`。`npm run gym` 或 `npm run dev` 后，用 Cursor Simple Browser 打开 `http://localhost:3000/gym.html`（敌人）、`http://localhost:3000/gym.html?lesson=player`（玩家外形）、`http://localhost:3000/gym.html?lesson=map`（地图生成）、`http://localhost:3000/gym.html?lesson=lexicon`（污染句法）或 `http://localhost:3000/gym.html?lesson=lexicon-gallery`（污染句法陈列馆）。角色外形对照：`docs/art/actor-pixels.md`。玩家加厚像素已接出击。
 
 ---
 
@@ -96,7 +96,7 @@
 
 ### "今天有 2 小时，怎么推进？"
 
-**本仓库层 B（DEC-072）**：先看 `docs/progress/current-iteration.md`。当前为迭代 3（方案 D 接入出击，DEC-084；合同 `docs/tasks/iteration-3.md`）。迭代 2 练习场探索已结。迭代 1（敌人系统）句法已接到出击，状态为实现完成、体验未验证。不要自己开 Slice。不要标迭代 3 COMPLETE，除非人试玩过出击。
+**本仓库层 B（DEC-072）**：先看 `docs/progress/current-iteration.md`。当前为迭代 4（污染句法陈列馆，DEC-085；合同 `docs/tasks/iteration-4.md`）。迭代 3（方案 D 接入出击，DEC-084）三层已落地，等人试玩裂隙，不要标 COMPLETE。迭代 2 练习场探索已结。迭代 1（敌人系统）句法已接到出击，状态为实现完成、体验未验证。不要自己开 Slice。
 
 通用 Slice 日常（给仍走 Slice 的项目）：
 

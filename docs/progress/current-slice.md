@@ -3,7 +3,7 @@ status: COMPLETE
 created-by: director agent
 created-when: 2026-08-19
 last-modified: 2026-08-22
-note: 本文件是最后完成的 Slice 档案（Slice 9 COMPLETE）。按需游戏迭代（DEC-072）：当前迭代见 `docs/progress/current-iteration.md`（迭代 3 方案 D 接入出击；迭代 2 练习场 COMPLETE；迭代 1 敌人系统仍为实现完成、体验未验证）。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071，不改编号成迭代。迷雾下亮度仍等人终审。
+note: 本文件是最后完成的 Slice 档案（Slice 9 COMPLETE）。按需游戏迭代（DEC-072）：当前迭代见 `docs/progress/current-iteration.md`（迭代 4 污染句法陈列馆；迭代 3 方案 D 接入出击三层已落地、等人试玩；迭代 2 练习场 COMPLETE；迭代 1 敌人系统仍为实现完成、体验未验证）。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071，不改编号成迭代。迷雾下亮度仍等人终审。
 ---
 
 # Slice 9: 音乐 / 音效【COMPLETE】
