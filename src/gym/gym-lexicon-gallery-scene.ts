@@ -1,7 +1,7 @@
 /**
  * Contamination-lexicon gallery: one hall at a time (portfolio × substrate),
  * viewport virtualization, DOM labels, inspect live specimen.
- * Production scheme D only. Contract: docs/tasks/iteration-4.md (I4-B / I4-C).
+ * Production scheme D only. Contract: docs/tasks/iteration-4.md (I4-B / I4-C / I4-D).
  */
 
 import Phaser from 'phaser';
@@ -31,6 +31,15 @@ import { mix32 } from '@/generation/seed-fork';
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import { bindGymCamera, type GymCameraHandle } from '@/gym/gym-camera';
 import {
+  GALLERY_START_ZOOM,
+  GALLERY_ZOOM_MIN,
+  galleryViewFromScroll,
+  layoutGalleryHall,
+  selectGalleryKeep,
+  type GalleryHallBand,
+  type GalleryLayoutCell,
+} from '@/gym/gallery-virtualize';
+import {
   coverageOptions,
   portfolioOptions,
   substrateOptions,
@@ -44,9 +53,6 @@ import {
 
 const TILE = GAME_CONSTANTS.TILE_SIZE;
 const STAIN_SINK = { x: -100000, y: -100000 };
-const CELL_SIZE: Record<PortfolioId, number> = { jia: 96, yi: 96, bing: 120, ding: 192 };
-const ATTACH_CAP: Record<PortfolioId, number> = { jia: 8, yi: 12, bing: 12, ding: 8 };
-const COVERAGES: readonly CoverageId[] = ['infiltrate', 'rewrite', 'overwrite'];
 const PORTFOLIO_NAME: Record<PortfolioId, string> = { jia: '甲', yi: '乙', bing: '丙', ding: '丁' };
 const CONTINUITY_LABEL: Record<string, string> = {
   monolith: '整块',
@@ -65,7 +71,6 @@ const DEPTH: Record<PortfolioId, number> = {
   bing: 1,
   ding: GAME_CONSTANTS.CONTAMINATION.VOLUME_DEPTH,
 };
-const START_ZOOM: Record<PortfolioId, number> = { jia: 1.25, yi: 1.25, bing: 1, ding: 0.7 };
 const GALLERY_BROWSE_STATUS =
   '拖动画布平移。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。';
 const GRID_DEPTH = 0.4;
@@ -85,26 +90,13 @@ const CORE_POLICY_LABEL: Record<string, string> = {
   none: '无核',
 };
 
-interface HallCell {
-  readonly specimen: GallerySpecimen;
-  readonly x: number;
-  readonly y: number;
-  readonly size: number;
-}
-
-interface HallBand {
-  readonly coverage: CoverageId;
-  readonly x: number;
-  readonly y: number;
-}
-
 interface AttachedCell {
-  readonly cell: HallCell;
+  readonly cell: GalleryLayoutCell;
   readonly visual: FormVisual;
 }
 
 interface InspectState {
-  readonly cell: HallCell;
+  readonly cell: GalleryLayoutCell;
   visual: FormVisual;
   facing: FormVisualPose['facing4'];
   signal: FormVisualSignal;
@@ -118,8 +110,8 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   private specimens: readonly GallerySpecimen[] = [];
   private hallPortfolio: PortfolioId = 'jia';
   private hallSubstrate = 'organic_remnant';
-  private cells: HallCell[] = [];
-  private bands: HallBand[] = [];
+  private cells: GalleryLayoutCell[] = [];
+  private bands: GalleryHallBand[] = [];
   private readonly attached = new Map<string, AttachedCell>();
   private selectedKey: string | null = null;
   private hoveredKey: string | null = null;
@@ -152,7 +144,11 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.reloadCatalog();
     this.enterFirstHall();
 
-    this.cameraHandle = bindGymCamera(this, { wheelMode: 'pan', onClick: this.onCanvasClick });
+    this.cameraHandle = bindGymCamera(this, {
+      wheelMode: 'pan',
+      onClick: this.onCanvasClick,
+      zoomMin: GALLERY_ZOOM_MIN[this.hallPortfolio],
+    });
     this.input.on('pointermove', this.onPointerHover, this);
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
@@ -307,18 +303,19 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.hallSubstrate = substrate;
     this.selectedKey = null;
     this.hoveredKey = null;
-    const laid = layoutHall(
+    const laid = layoutGalleryHall(
       this.specimens.filter((row) => row.portfolio === portfolio && row.substrate === substrate),
-      CELL_SIZE[portfolio],
+      portfolio,
     );
-    this.cells = laid.cells;
-    this.bands = laid.bands;
+    this.cells = [...laid.cells];
+    this.bands = [...laid.bands];
     this.paintHallChrome();
     this.paintNav();
     this.paintDedupe();
     this.paintHover();
     this.paintInspect();
     this.paintRoster();
+    this.cameraHandle?.setZoomMin(GALLERY_ZOOM_MIN[portfolio]);
     this.fitCamera(laid.bounds, portfolio);
     this.viewStamp = '';
     this.reconcile();
@@ -334,7 +331,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     const lastBottom = last ? last.y + last.size * 0.5 : bounds.y + bounds.h;
     const height = Math.max(bounds.h, lastBottom - bounds.y, 64);
     camera.setBounds(bounds.x, bounds.y, Math.max(bounds.w, 64), height);
-    camera.setZoom(START_ZOOM[portfolio]);
+    camera.setZoom(GALLERY_START_ZOOM[portfolio]);
     const first = this.cells[0];
     if (first) camera.centerOn(first.x, first.y);
     else camera.centerOn(bounds.x + bounds.w * 0.5, bounds.y + height * 0.5);
@@ -362,36 +359,27 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
 
   private reconcile(): void {
     const camera = this.cameras.main;
-    const view = camera.worldView;
-    const cellSize = CELL_SIZE[this.hallPortfolio];
-    const pad = cellSize;
-    const left = view.x - pad;
-    const top = view.y - pad;
-    const right = view.x + view.width + pad;
-    const bottom = view.y + view.height + pad;
-    const visible = this.cells.filter((cell) => {
-      const half = cell.size * 0.5;
-      return cell.x + half >= left && cell.x - half <= right && cell.y + half >= top && cell.y - half <= bottom;
+    const selected = selectGalleryKeep({
+      cells: this.cells,
+      view: galleryViewFromScroll(camera.scrollX, camera.scrollY, camera.zoom),
+      portfolio: this.hallPortfolio,
+      prevKeepKeys: new Set(this.attached.keys()),
+      inspectKey: this.inspect?.cell.specimen.visualKey,
     });
-    const midX = camera.midPoint.x;
-    const midY = camera.midPoint.y;
-    visible.sort((a, b) => dist2(a.x, a.y, midX, midY) - dist2(b.x, b.y, midX, midY));
-    const inspectKey = this.inspect?.cell.specimen.visualKey;
-    const cap = ATTACH_CAP[this.hallPortfolio];
-    const keep = visible.filter((cell) => cell.specimen.visualKey !== inspectKey).slice(0, cap);
-    const keepKeys = new Set(keep.map((cell) => cell.specimen.visualKey));
+    const keepKeys = new Set(selected.keepKeys);
     for (const [key, row] of this.attached) {
       if (keepKeys.has(key)) continue;
       row.visual.destroy();
       this.attached.delete(key);
     }
-    for (const cell of keep) {
+    for (const cell of this.cells) {
+      if (!keepKeys.has(cell.specimen.visualKey)) continue;
       if (this.attached.has(cell.specimen.visualKey)) continue;
       this.attachCell(cell);
     }
   }
 
-  private attachCell(cell: HallCell): void {
+  private attachCell(cell: GalleryLayoutCell): void {
     const renderer = getFormRenderer('d-mixed');
     if (renderer?.ready !== true) return;
     const visual = renderer.attach(this.attachContext(cell));
@@ -399,7 +387,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.attached.set(cell.specimen.visualKey, { cell, visual });
   }
 
-  private attachContext(cell: HallCell): FormAttachContext {
+  private attachContext(cell: GalleryLayoutCell): FormAttachContext {
     const { specimen, x, y } = cell;
     const field = specimen.form.continuity === 'field';
     const pinW = specimen.portfolio === 'ding' ? (field ? TILE * 8 : TILE * 6) : undefined;
@@ -442,7 +430,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.attached.clear();
   }
 
-  private openInspect(cell: HallCell): void {
+  private openInspect(cell: GalleryLayoutCell): void {
     if (this.inspect?.cell.specimen.visualKey === cell.specimen.visualKey) {
       this.paintInspect();
       return;
@@ -499,7 +487,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.paintInspect();
   }
 
-  private attachInspectVisual(cell: HallCell, seed: number): FormVisual | null {
+  private attachInspectVisual(cell: GalleryLayoutCell, seed: number): FormVisual | null {
     const renderer = getFormRenderer('d-mixed');
     if (renderer?.ready !== true) return null;
     const stain =
@@ -557,7 +545,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.paintInspect();
   }
 
-  private hitCell(wx: number, wy: number): HallCell | null {
+  private hitCell(wx: number, wy: number): GalleryLayoutCell | null {
     for (const cell of this.cells) {
       const half = cell.size * 0.5;
       if (Math.abs(wx - cell.x) <= half && Math.abs(wy - cell.y) <= half) return cell;
@@ -777,7 +765,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   }
 }
 
-function browsePose(cell: HallCell): FormVisualPose {
+function browsePose(cell: GalleryLayoutCell): FormVisualPose {
   return {
     x: cell.x,
     y: cell.y,
@@ -907,53 +895,8 @@ function inspectRows(
   return rows;
 }
 
-function layoutHall(
-  specimens: readonly GallerySpecimen[],
-  cellSize: number,
-): { cells: HallCell[]; bands: HallBand[]; bounds: { x: number; y: number; w: number; h: number } } {
-  const cols = Math.max(4, Math.min(10, Math.round(960 / cellSize)));
-  const rowGap = cellSize * 0.85;
-  const bandGap = cellSize * 1.45;
-  const originX = cellSize;
-  const originY = cellSize * 0.7;
-  const cells: HallCell[] = [];
-  const bands: HallBand[] = [];
-  let y = originY;
-  let maxX = originX + cellSize;
-  let maxY = originY + cellSize;
-  for (const coverage of COVERAGES) {
-    const rows = specimens.filter((row) => row.form.coverage === coverage);
-    if (rows.length === 0) continue;
-    bands.push({ coverage, x: originX, y: y - cellSize * 0.42 });
-    let col = 0;
-    let x = originX;
-    for (const specimen of rows) {
-      if (col >= cols) {
-        col = 0;
-        x = originX;
-        y += cellSize + rowGap;
-      }
-      const cx = x + cellSize * 0.5;
-      const cy = y + cellSize * 0.5;
-      cells.push({ specimen, x: cx, y: cy, size: cellSize });
-      maxX = Math.max(maxX, x + cellSize);
-      maxY = Math.max(maxY, y + cellSize);
-      x += cellSize;
-      col += 1;
-    }
-    y += cellSize + bandGap;
-  }
-  const pad = cellSize * 1.5;
-  const captionPad = cellSize * 0.95;
-  return {
-    cells,
-    bands,
-    bounds: { x: 0, y: 0, w: maxX + pad, h: maxY + pad + captionPad },
-  };
-}
-
 function captionEl(
-  cell: HallCell,
+  cell: GalleryLayoutCell,
   pos: { x: number; y: number },
   zoom: number,
   scaleX: number,
@@ -979,7 +922,7 @@ function captionEl(
   return cap;
 }
 
-function captionFields(cell: HallCell, zoom: number): readonly { item: string; value: string }[] {
+function captionFields(cell: GalleryLayoutCell, zoom: number): readonly { item: string; value: string }[] {
   const form = cell.specimen.form;
   const substrate = SUBSTRATE_DATA[form.substrate]?.displayToken ?? form.substrate;
   const coverage = coverageLabel(form.coverage);
@@ -1103,12 +1046,6 @@ function worldToOverlay(
 
 function inOverlay(overlay: HTMLElement, x: number, y: number): boolean {
   return x >= -40 && y >= -40 && x <= overlay.clientWidth + 40 && y <= overlay.clientHeight + 40;
-}
-
-function dist2(ax: number, ay: number, bx: number, by: number): number {
-  const dx = ax - bx;
-  const dy = ay - by;
-  return dx * dx + dy * dy;
 }
 
 function selectValue(id: string): string {

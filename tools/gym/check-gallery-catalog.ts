@@ -6,7 +6,24 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import type { PortfolioId } from '../../src/generated/contamination-lexicon-data.ts';
 import { mix32 } from '../../src/generation/seed-fork.ts';
+import {
+  GALLERY_ATTACH_CAP,
+  GALLERY_CELL_SIZE,
+  GALLERY_START_ZOOM,
+  GALLERY_VIEW_HEIGHT,
+  GALLERY_VIEW_WIDTH,
+  GALLERY_ZOOM_MIN,
+  clampGalleryScroll,
+  galleryViewFromCenter,
+  galleryViewFromScroll,
+  layoutGalleryHall,
+  selectGalleryKeep,
+  shiftGalleryView,
+  type GalleryHallLayout,
+  type GalleryRect,
+} from '../../src/gym/gallery-virtualize.ts';
 import { portfolioOptions, substrateOptions } from '../../src/gym/gym-lexicon-form.ts';
 import {
   CANONICAL_SEED,
@@ -98,6 +115,7 @@ const ding = byPortfolio.ding ?? 0;
 const total = listed.length;
 
 assert(inRange(total, 400, 800), `total ${total} in [400, 800]`);
+assert(total === 522, `default catalog size must stay 522 (got ${total})`);
 assert(inRange(jia, 200, 400), `jia ${jia} in [200, 400]`);
 assert(inRange(yi, 15, 80), `yi ${yi} in [15, 80]`);
 assert(inRange(bing, 80, 350), `bing ${bing} in [80, 350]`);
@@ -162,6 +180,213 @@ assert(
   !/\bevent\.preventDefault\(\)/.test(CAMERA_SRC),
   'gym camera must not call preventDefault on the non-existent emitted event',
 );
+assert(
+  /export const GYM_CAMERA_ZOOM_MIN = 0\.12/.test(CAMERA_SRC),
+  'GYM_CAMERA_ZOOM_MIN must remain 0.12',
+);
+
+const MAP_SRC = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
+assert(
+  /this\.cameraHandle = bindGymCamera\(this\);/.test(MAP_SRC),
+  'map lesson must call bindGymCamera(this) with no opts',
+);
+assert(!/bindGymCamera\(\s*this\s*,/.test(MAP_SRC), 'map lesson must not pass zoomMin into bindGymCamera');
+assert(!MAP_SRC.includes('setZoomMin'), 'map lesson must not call setZoomMin');
+
+const GAME_CFG_SRC = readFileSync(resolve(ROOT, 'src/config/game-config.ts'), 'utf8');
+assert(/width:\s*960/.test(GAME_CFG_SRC), 'game-config width must stay 960');
+assert(/height:\s*640/.test(GAME_CFG_SRC), 'game-config height must stay 640');
+assert(GALLERY_VIEW_WIDTH === 960 && GALLERY_VIEW_HEIGHT === 640, 'gallery view size matches logical resolution');
+
+const VIRT_SRC = readFileSync(resolve(ROOT, 'src/gym/gallery-virtualize.ts'), 'utf8');
+assert(!/from ['"]phaser['"]/.test(VIRT_SRC), 'gallery-virtualize must not import phaser');
+assert(!/\.attach\(/.test(VIRT_SRC), 'gallery-virtualize must not call attach');
+assert(
+  GALLERY_ATTACH_CAP.jia === 48 &&
+    GALLERY_ATTACH_CAP.yi === 48 &&
+    GALLERY_ATTACH_CAP.bing === 40 &&
+    GALLERY_ATTACH_CAP.ding === 24,
+  'attach cap is 48/48/40/24 (sole copy)',
+);
+assert(
+  GALLERY_ZOOM_MIN.jia === 1.1 &&
+    GALLERY_ZOOM_MIN.yi === 0.12 &&
+    GALLERY_ZOOM_MIN.bing === 0.7 &&
+    GALLERY_ZOOM_MIN.ding === 0.55,
+  'per-hall zoom floors',
+);
+assert(
+  !/jia:\s*8,\s*yi:\s*12,\s*bing:\s*12,\s*ding:\s*8/.test(VIRT_SRC),
+  'virtualize must not keep the retired 8/12/12/8 caps',
+);
+
+const SCENE_SRC = readFileSync(resolve(ROOT, 'src/gym/gym-lexicon-gallery-scene.ts'), 'utf8');
+assert(SCENE_SRC.includes('selectGalleryKeep'), 'gallery scene must call selectGalleryKeep');
+assert(SCENE_SRC.includes('layoutGalleryHall'), 'gallery scene must call layoutGalleryHall');
+assert(!SCENE_SRC.includes('function layoutHall'), 'gallery scene must not keep a second layoutHall');
+assert(!SCENE_SRC.includes('ATTACH_CAP'), 'gallery scene must not keep a second ATTACH_CAP');
+assert(!/slice\(\s*0\s*,/.test(SCENE_SRC), 'gallery scene must not slice keep by cap');
+assert(
+  !/jia:\s*8,\s*yi:\s*12,\s*bing:\s*12,\s*ding:\s*8/.test(SCENE_SRC),
+  'gallery scene must not keep the retired 8/12/12/8 caps',
+);
+assert(SCENE_SRC.includes('GALLERY_ZOOM_MIN'), 'gallery scene must apply per-hall zoomMin');
+assert(SCENE_SRC.includes('setZoomMin'), 'gallery scene must switch zoomMin on hall change');
+
+function shiftedClampedView(
+  view: GalleryRect,
+  dx: number,
+  dy: number,
+  zoom: number,
+  bounds: GalleryHallLayout['bounds'],
+): GalleryRect {
+  const shifted = shiftGalleryView(view, dx, dy);
+  const clamped = clampGalleryScroll(shifted.x, shifted.y, zoom, bounds);
+  return galleryViewFromScroll(clamped.scrollX, clamped.scrollY, zoom);
+}
+
+function hallSlideViews(layout: GalleryHallLayout, portfolio: PortfolioId, zoom: number): GalleryRect[] {
+  const first = layout.cells[0];
+  const last = layout.cells[layout.cells.length - 1];
+  if (!first || !last) return [];
+  const cell = GALLERY_CELL_SIZE[portfolio];
+  const bounds = layout.bounds;
+  const onFirst = galleryViewFromCenter(first.x, first.y, zoom, bounds);
+  return [
+    galleryViewFromCenter(bounds.x + bounds.w * 0.5, bounds.y + bounds.h * 0.5, zoom, bounds),
+    onFirst,
+    galleryViewFromCenter(last.x, last.y, zoom, bounds),
+    shiftedClampedView(onFirst, cell * 0.5, 0, zoom, bounds),
+    shiftedClampedView(onFirst, cell, 0, zoom, bounds),
+    shiftedClampedView(onFirst, cell * 1.5, 0, zoom, bounds),
+    shiftedClampedView(onFirst, 0, cell, zoom, bounds),
+  ];
+}
+
+function assertKeepCoversView(
+  label: string,
+  layout: GalleryHallLayout,
+  view: GalleryRect,
+  portfolio: PortfolioId,
+  prevKeep: ReadonlySet<string>,
+  inspectKey?: string | null,
+): ReturnType<typeof selectGalleryKeep> {
+  const result = selectGalleryKeep({
+    cells: layout.cells,
+    view,
+    portfolio,
+    prevKeepKeys: prevKeep,
+    inspectKey,
+  });
+  const keep = new Set(result.keepKeys);
+  for (const key of result.intersectingKeys) {
+    const covered = keep.has(key) || key === inspectKey;
+    assert(covered, `${label}: intersecting ${key} missing from keep`);
+  }
+  if (inspectKey) {
+    assert(!keep.has(inspectKey), `${label}: inspect key must not occupy a hall slot`);
+  }
+  const cap = GALLERY_ATTACH_CAP[portfolio];
+  assert(
+    result.intersectingKeys.length <= cap,
+    `${label}: |intersecting|=${result.intersectingKeys.length} > cap ${cap}`,
+  );
+  assert(!result.overCap, `${label}: overCap (intersecting exceeded cap; raise zoom floor or cap)`);
+  return result;
+}
+
+function sweepHalls(specimens: readonly GallerySpecimen[], tag: string): void {
+  for (const port of portfolioOptions()) {
+    for (const sub of substrateOptions(port.id)) {
+      const rows = specimens.filter((row) => row.portfolio === port.id && row.substrate === sub.id);
+      if (rows.length === 0) continue;
+      const layout = layoutGalleryHall(rows, port.id);
+      const zooms = [GALLERY_START_ZOOM[port.id], GALLERY_ZOOM_MIN[port.id]];
+      for (const zoom of zooms) {
+        let prev: Set<string> = new Set();
+        const views = hallSlideViews(layout, port.id, zoom);
+        for (let i = 0; i < views.length; i += 1) {
+          const view = views[i];
+          if (!view) continue;
+          const label = `${tag} ${port.id}/${sub.id} z=${zoom} view=${i}`;
+          assertKeepCoversView(`${label} emptyPrev`, layout, view, port.id, new Set());
+          const chained = assertKeepCoversView(label, layout, view, port.id, prev);
+          prev = new Set(chained.keepKeys);
+        }
+      }
+    }
+  }
+}
+
+sweepHalls(listed, 'default');
+sweepHalls(withIllegal.specimens, 'illegal');
+
+let biggestJia: { substrate: string; layout: GalleryHallLayout } | null = null;
+for (const sub of substrateOptions('jia')) {
+  const rows = listed.filter((row) => row.portfolio === 'jia' && row.substrate === sub.id);
+  if (rows.length === 0) continue;
+  const layout = layoutGalleryHall(rows, 'jia');
+  if (!biggestJia || layout.cells.length > biggestJia.layout.cells.length) {
+    biggestJia = { substrate: sub.id, layout };
+  }
+}
+assert(biggestJia !== null && biggestJia.layout.cells.length > 0, 'jia has a hall to reproduce the scroll bug');
+if (biggestJia) {
+  const layout = biggestJia.layout;
+  const first = layout.cells[0];
+  assert(first !== undefined, 'jia largest hall has a first cell');
+  if (first) {
+    const zoom = 1.25;
+    assert(zoom === GALLERY_START_ZOOM.jia, 'repro zoom is jia start zoom 1.25');
+    const beforeView = galleryViewFromCenter(first.x, first.y, zoom, layout.bounds);
+    const afterView = shiftedClampedView(beforeView, GALLERY_CELL_SIZE.jia, 0, zoom, layout.bounds);
+    assert(
+      afterView.x > beforeView.x + 1,
+      `jia repro view must move right (before x=${beforeView.x} after x=${afterView.x})`,
+    );
+    const before = assertKeepCoversView(
+      `jia-repro ${biggestJia.substrate} before`,
+      layout,
+      beforeView,
+      'jia',
+      new Set(),
+    );
+    const after = assertKeepCoversView(
+      `jia-repro ${biggestJia.substrate} after`,
+      layout,
+      afterView,
+      'jia',
+      new Set(before.keepKeys),
+    );
+    const beforeKeep = new Set(before.keepKeys);
+    const afterKeep = new Set(after.keepKeys);
+    const afterIntersecting = new Set(after.intersectingKeys);
+    for (const key of before.intersectingKeys) {
+      if (!afterIntersecting.has(key)) continue;
+      assert(beforeKeep.has(key), `jia-repro: still-intersecting ${key} was not in before keep`);
+      assert(afterKeep.has(key), `jia-repro: still-intersecting ${key} dropped after one-cell pan — screenshot bug`);
+    }
+    const mid = layout.cells[Math.floor(layout.cells.length / 2)];
+    if (mid) {
+      const inspectView = galleryViewFromCenter(mid.x, mid.y, zoom, layout.bounds);
+      assertKeepCoversView(
+        `jia-repro inspect ${mid.specimen.visualKey}`,
+        layout,
+        inspectView,
+        'jia',
+        new Set(),
+        mid.specimen.visualKey,
+      );
+    }
+    console.log(
+      [
+        `jia-repro hall=${biggestJia.substrate} cells=${layout.cells.length} zoom=1.25`,
+        `  before scrollX=${beforeView.x.toFixed(1)} intersecting=${before.intersectingKeys.length} keep=${before.keepKeys.length}`,
+        `  after  scrollX=${afterView.x.toFixed(1)} intersecting=${after.intersectingKeys.length} keep=${after.keepKeys.length}`,
+      ].join('\n'),
+    );
+  }
+}
 
 function countByPortfolio(rows: readonly GallerySpecimen[]): Record<string, number> {
   const out: Record<string, number> = { jia: 0, yi: 0, bing: 0, ding: 0 };

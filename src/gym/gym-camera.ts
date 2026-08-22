@@ -13,6 +13,8 @@ const CLICK_PX = 6;
 export interface GymCameraHandle {
   destroy(): void;
   isDragging(): boolean;
+  /** Gallery halls switch this per portfolio. Map lesson never calls it. */
+  setZoomMin(min: number): void;
 }
 
 export type GymCameraWheelMode = 'zoom' | 'pan';
@@ -26,7 +28,7 @@ export interface GymCameraOpts {
 }
 
 export function bindGymCamera(scene: Phaser.Scene, opts: GymCameraOpts = {}): GymCameraHandle {
-  const zoomMin = opts.zoomMin ?? GYM_CAMERA_ZOOM_MIN;
+  let zoomMin = opts.zoomMin ?? GYM_CAMERA_ZOOM_MIN;
   const zoomMax = opts.zoomMax ?? GYM_CAMERA_ZOOM_MAX;
   const wheelMode: GymCameraWheelMode = opts.wheelMode ?? 'zoom';
   let dragging = false;
@@ -92,6 +94,11 @@ export function bindGymCamera(scene: Phaser.Scene, opts: GymCameraOpts = {}): Gy
 
   return {
     isDragging: () => dragging,
+    setZoomMin(min: number): void {
+      zoomMin = min;
+      const camera = scene.cameras.main;
+      if (camera.zoom < zoomMin) camera.setZoom(zoomMin);
+    },
     destroy(): void {
       scene.input.off('pointerdown', onPointerDown);
       scene.input.off('pointerup', onPointerUp);
