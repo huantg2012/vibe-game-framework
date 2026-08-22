@@ -26,7 +26,7 @@ import type {
   ContaminationFormRenderer,
   FormAttachContext,
   FormVisual,
-} from '@/gym/form-renderers/form-renderer';
+} from '@/entities/form-renderers/form-renderer';
 import { ensureCStamps } from '@/gym/form-renderers/c/stamps';
 import { createStampVisual } from '@/gym/form-renderers/c/visual';
 

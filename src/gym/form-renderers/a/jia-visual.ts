@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import type { FormAttachContext, FormVisual, FormVisualPose } from '@/gym/form-renderers/form-renderer';
+import type { FormAttachContext, FormVisual, FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import { FacingLagGhost, pingPongFrame } from '@/entities/actor-motion';
 import type { Facing4 } from '@/types/game-types';
 import { bakeJiaSheet } from '@/gym/form-renderers/a/jia-paint';

@@ -5,7 +5,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
-独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。**污染句法课**是观察院子：玩家在场且默认无敌（可开「感受伤害」），侧栏按维度配表后点生成，敌人与出击同一套移动 / 感知 / 攻击；击杀后按当前配置再刷。**迭代 2（DEC-079 / DEC-080）：** 该课侧栏切渲染方案。第一轮 A/B/C 冻结为对照；第二轮默认方案 D。仅此课可与出击外形分叉；出击与默认敌人课仍走现行像素。地图课框住整岛，甲只是色块。练习场敌人课（默认院子）复用出击 `Enemy`（含 `getForm`），不另写移动或外形。遭遇识别旁白默认不开。
+独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。**污染句法课**是观察院子：玩家在场且默认无敌（可开「感受伤害」），侧栏按维度配表后点生成，敌人与出击同一套移动 / 感知 / 攻击；击杀后按当前配置再刷。**迭代 3（DEC-084）：** 生产方案 D 将接到裂隙；本课仍可切渲染方案。A/B/C 冻结为对照；默认方案 D。合同：`docs/tasks/iteration-3.md`。地图课框住整岛，甲只是色块，且不得打开出击活机制。练习场敌人课（默认院子）复用出击 `Enemy`（含 `getForm`），不另写移动或外形。遭遇识别旁白默认不开。
 
 **打开：** `npm run gym` 或 `npm run dev`，再用 Cursor 的 Simple Browser 打开对应地址。不要用系统浏览器。
 
@@ -16,14 +16,14 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | 玩家外形 | `http://localhost:3000/gym.html?lesson=player` |
 | 地图生成 | `http://localhost:3000/gym.html?lesson=map` |
 
-**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。迭代 2 候选渲染器：`src/gym/form-renderers/`（仅句法课；出击禁止 import）。
+**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。
 
 ---
 
 ## Agent 入口（加演示 / 修练习场）
 
 1. 先读本文，再改 `src/gym/**`。不要在 `RiftScene` 里塞调试房间。
-2. **禁止**为练习场另写敌人移动、用 DOM/Canvas 2D 冒充巡逻。敌人画面默认就是出击那套程序像素。**例外（DEC-079 / DEC-080，迭代 2）：** 仅 `?lesson=lexicon` 可挂 `src/gym/form-renderers/`。A/B/C 冻结对照；第二轮写方案 D。禁止改 `RiftScene`、禁止改默认敌人课。人选后此例外收回。合同：`docs/tasks/iteration-2.md`。
+2. **禁止**为练习场另写敌人移动、用 DOM/Canvas 2D 冒充巡逻。敌人画面默认就是出击那套。**例外（DEC-079，人选后由 DEC-084 收回）：** 仅 `?lesson=lexicon` 可挂对照渲染器 A/B/C。生产方案 D 住 `src/entities/form-renderers/`（I3-B）。禁止 `RiftScene` import `src/gym/**`。合同：`docs/tasks/iteration-3.md`。
 3. 练习场必须调用正式模块：
    - 敌人课：`AISystem`（巡逻预计算腿 + `GridPathfinder` 8 邻接 A*）、`Enemy` / `createEnemyTypeConfig`（`enemy-factory.ts`）
    - 地图课：`generateRiftLayout`、`RiftSurfacePainter`（与 `RiftScene` 同一份）、`ContaminationHostSystem`（乙/丙/丁；combat / chaos 可缺，只画）。
@@ -34,7 +34,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 6. 玩家外形：出击与练习场同一套（DEC-068）——方案 1 加厚像素 + 方案 3 灯尘。本课用假人绕圈对照体量，不接 WASD。贴图在 `player-sprite-dense.ts`；灯尘在 `player-lamp-aura.ts`。
 7. **角色外形怎么验：** Cursor Simple Browser 打开上表地址，对照 `docs/art/actor-pixels.md`（朝向不转 GameObject、家族密度、压迫感、禁忌）。不要用系统浏览器。
 8. 地图生成（`?lesson=map`）：必须调用 `generateRiftLayout`、`RiftSurfacePainter` 与 `ContaminationHostSystem`。禁止为练习场另写生成器或拷画廊 PNG。默认（风格锚按种子抽、邻域抖动开、污染年龄/残破度按种子抽）与出击路径相同。侧栏可锁锚 / 关抖动 / 覆盖两轴。不开 `VisibilitySystem`。不接 `EncounterNarration`。不刷玩家、不刷会走的甲（色块标巡逻路点）。乙/丙/丁走出击同一套宿主（只画）。换种子 / 锁锚 / 点生成必须 destroy 再 create 宿主；只改污染画法时宿主钉在同一张岛上。
-9. 污染句法（`?lesson=lexicon`）：固定观察院子，不是生成岛。玩家走出击 `Player`，默认无敌（「感受伤害」可关无敌）。侧栏按**渲染方案** / **碎片身份** / 孔谱 / 覆盖深度 / 基体 / 连续性 / 词素 / 成句 / 数量配表，点生成清场再刷。甲走出击 `AISystem` / `Enemy` / `CombatSystem`（感知为听噪时刷改写体剖面，否则刷渗透体剖面——碰撞与 AI 仍如此；候选渲染器按完整 `ContaminationForm` 画皮）。乙丙丁走出击同一套宿主，接战斗与混乱。击杀后约 0.8 秒按**当前**侧栏配置再刷。不开迷雾、不接遭遇识别旁白。`AISystem.create` 对本课关闭「恰好 1 个改写体」出击配额。渲染方案下拉合同：`docs/tasks/iteration-2.md`。第二轮宿主游荡 / 体积盒移动只在本课 `gymLiveMotion` 打开；出击不传该开关。
+9. 污染句法（`?lesson=lexicon`）：固定观察院子，不是生成岛。玩家走出击 `Player`，默认无敌（「感受伤害」可关无敌）。侧栏按**渲染方案** / **碎片身份** / 孔谱 / 覆盖深度 / 基体 / 连续性 / 词素 / 成句 / 数量配表，点生成清场再刷。甲走出击 `AISystem` / `Enemy` / `CombatSystem`（感知为听噪时刷改写体剖面，否则刷渗透体剖面——碰撞与 AI 仍如此；候选渲染器按完整 `ContaminationForm` 画皮）。乙丙丁走出击同一套宿主，接战斗与混乱。击杀后约 0.8 秒按**当前**侧栏配置再刷。不开迷雾、不接遭遇识别旁白。`AISystem.create` 对本课关闭「恰好 1 个改写体」出击配额。渲染方案下拉：A/B/C 冻结对照，默认 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。宿主游荡只在本课打开活机制；地图课与（I3-F 前的）出击不传该开关。合同：`docs/tasks/iteration-3.md`。
 
 ---
 
@@ -60,7 +60,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 侧栏是开发配置表（不是游戏内界面）：**渲染方案**（`#gym-lex-renderer`，默认方案 D；A/B/C 文案带「对照（已冻结）」）、**碎片身份**（`#gym-lex-fragment`，五选一，默认医院实验室 `frag-clinic`；换选项只重铺院子墙/地 bias 着色，不换成生成岛）、孔谱、覆盖深度、基体、连续性、运动 / 感知 / 节律 / 接触、成句、数量、**感受伤害**（`#gym-lex-feel-hit`，默认关＝`setGodMode(true)`）。选项来自污染句法 CSV；渲染方案下拉照抄地图课 `#gym-contam-draw`。点「生成」按表单组 `ContaminationForm`，清掉场上实体再 spawn。甲走巡逻环；乙钉墙缘（`gymLiveMotion` 时核在墙-地缝上，沿有序墙皮游荡，抽打格跟着核走）；丙钉簇核格；丁钉走廊盒（随风/拖尾会缓慢飘并微形变，固着只形变；危险区用当前盒）。接触词素在本课按对照表兑现。击杀后按侧栏**此刻**的配置再刷，不是按第一次生成的快照。
 
-**渲染方案（迭代 2）：** `现行占位` = 出击那套（甲两种程序像素，乙丙丁几何块）。`方案 A/B/C` = 第一轮对照（已冻结，禁止再改）。`方案 D` = 混装（甲走 A、丙走 B、乙丁在 B 方向重做），默认选项。出击不接。切换方案只换视觉层，不改碰撞；第二轮机制开关与视觉分文件，出击默认关。
+**渲染方案：** `现行占位` = 两种程序像素 + 乙丙丁几何块（默认敌人课仍用）。`方案 A/B/C` = 第一轮对照（已冻结，禁止再改）。`方案 D` = 混装生产语法（甲走 A、丙走 B、乙丁在 B 方向重做），默认选项；出击接线见迭代 3。切换方案只换视觉层，不改碰撞。句法课活机制走 `liveMotion`（I3-F 前代码里仍可能叫 `gymLiveMotion`）。地图课不得打开该开关。
 
 移动、视锥 / 听噪、挥击、邻格抽打、踩踏混乱、体积场与出击同一套系统。接触词素按对照表兑现「它怎么伤你」；止损（能不能扣核）从连续性 × 覆盖深度查表，只在本课 `gymLiveMotion` 兑现。接触下拉不再有打核驱散。不开视野迷雾（为了观察），但遮挡墙仍挡敌人视线。不接遭遇识别旁白。
 
@@ -68,7 +68,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 侧栏选风格锚、种子、邻域抖动、污染年龄、残破度，点「生成新地图」。默认三项按种子抽、抖动开，调用与出击相同的 `generateRiftLayout(seed)`。锁参数时走同一函数的可选 `RiftLayoutOptions`，不换生成器。
 
-每次烤完新岛（换种子 / 锁锚 / 点生成）会 destroy 再 create 出击同一套 `ContaminationHostSystem`：乙缝核、丙簇核、丁走廊体积。`create` 不传战斗与混乱系统，可见性恒为 1，只画不结算。甲不刷会走的敌人，色块标 `layout.enemySpawns` 巡逻出生与路点。侧栏抽卡一行列孔谱只数：甲走色块计数，乙丙丁走 `hosts.getLastDraw().forms`（禁止再跑一遍 `drawSortie`）。不开 `VisibilitySystem`，不接 `EncounterNarration`，不刷玩家。只改污染画法会重烤同一张图，宿主钉在该岛上。
+每次烤完新岛（换种子 / 锁锚 / 点生成）会 destroy 再 create 出击同一套 `ContaminationHostSystem`：乙缝核、丙簇核、丁走廊体积。`create` 不传战斗与混乱系统，**不传 `liveMotion`**，可见性恒为 1，只画不结算。甲不刷会走的敌人，色块标 `layout.enemySpawns` 巡逻出生与路点。侧栏抽卡一行列孔谱只数：甲走色块计数，乙丙丁走 `hosts.getLastDraw().forms`（禁止再跑一遍 `drawSortie`）。不开 `VisibilitySystem`，不接 `EncounterNarration`，不刷玩家。只改污染画法会重烤同一张图，宿主钉在该岛上。
 
 **污染画法：** 出击与练习场生产缺省都是崩坏簇（`cluster`），并叠同一套活层（DEC-070 画面锁，DEC-071 接到出击）：内核烤死，中间层与外层同一相位、几乎不透明，沿簇外沿整团胀缩（幅度为团大小的 5–20%）。侧栏另三种（接缝晶结、坏格溶蚀、平涂错误块）只是对照，不接出击。改选项会重烤**同一张图**，不重新生成岛。对照请把污染年龄锁成「古」。换风格锚看配色是否跟着地图走。四档污染色须互不相同且离开该岛地板色。
 

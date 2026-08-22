@@ -3,15 +3,15 @@ import type {
   FormAttachContext,
   FormVisual,
   FormVisualPose,
-} from '@/gym/form-renderers/form-renderer';
-import { bingRecipeFromForm, type BingRecipe } from '@/gym/form-renderers/d/bing-dialect';
+} from '@/entities/form-renderers/form-renderer';
+import { bingRecipeFromForm, type BingRecipe } from '@/entities/form-renderers/d/bing-dialect';
 import {
   deformBingOrganisms,
   makeBingPulseField,
   paintBingFrame,
-} from '@/gym/form-renderers/d/bing-paint';
-import { layoutBingOrganisms, type LiveOrganism } from '@/gym/form-renderers/d/bing-shape';
-import { LEXICON_DEFAULT_FRAGMENT } from '@/gym/form-renderers/d/fragment-ramp';
+} from '@/entities/form-renderers/d/bing-paint';
+import { layoutBingOrganisms, type LiveOrganism } from '@/entities/form-renderers/d/bing-shape';
+import { LEXICON_DEFAULT_FRAGMENT } from '@/entities/form-renderers/d/fragment-ramp';
 
 interface BingState {
   scene: Phaser.Scene;

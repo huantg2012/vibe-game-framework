@@ -19,15 +19,15 @@
  * 配色：deriveFragmentContamRamp(fragmentTypeId)；亮核钳回 #1aad96 / #2ae6c8 / #3cffd4。
  */
 import Phaser from 'phaser';
-import type { FormAttachContext, FormVisual, FormVisualPose } from '@/gym/form-renderers/form-renderer';
-import { LEXICON_DEFAULT_FRAGMENT } from '@/gym/form-renderers/d/fragment-ramp';
+import type { FormAttachContext, FormVisual, FormVisualPose } from '@/entities/form-renderers/form-renderer';
+import { LEXICON_DEFAULT_FRAGMENT } from '@/entities/form-renderers/d/fragment-ramp';
 import {
   paintYiSkin,
   paintYiStrikeFloors,
   strikeFloorsFromPose,
   type StrikeFloor,
-} from '@/gym/form-renderers/d/yi-paint';
-import { faceNormal, yiRecipeFromForm } from '@/gym/form-renderers/d/yi-recipe';
+} from '@/entities/form-renderers/d/yi-paint';
+import { faceNormal, yiRecipeFromForm } from '@/entities/form-renderers/d/yi-recipe';
 
 const TICK_DEPTH = 0.2;
 

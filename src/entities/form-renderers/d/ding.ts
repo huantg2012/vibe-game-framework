@@ -20,16 +20,15 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { CorridorAabb } from '@/generation/types';
 import { dingLiveRect, aabbPixelRect, DING_MORPH_PX, type PixelRect } from '@/systems/contamination-host-live';
-import { lexiconPracticePins } from '@/gym/gym-lexicon-arena';
 import type {
   FormAttachContext,
   FormVisual,
   FormVisualPose,
-} from '@/gym/form-renderers/form-renderer';
-import { breathScale, type CloudPose } from '@/gym/form-renderers/d/ding-cloud';
-import { paintDingFrame } from '@/gym/form-renderers/d/ding-paint';
-import { dingRecipeFromForm, type DingRecipe } from '@/gym/form-renderers/d/ding-recipe';
-import { LEXICON_DEFAULT_FRAGMENT } from '@/gym/form-renderers/d/fragment-ramp';
+} from '@/entities/form-renderers/form-renderer';
+import { breathScale, type CloudPose } from '@/entities/form-renderers/d/ding-cloud';
+import { paintDingFrame } from '@/entities/form-renderers/d/ding-paint';
+import { dingRecipeFromForm, type DingRecipe } from '@/entities/form-renderers/d/ding-recipe';
+import { LEXICON_DEFAULT_FRAGMENT } from '@/entities/form-renderers/d/fragment-ramp';
 
 const TILE = GAME_CONSTANTS.TILE_SIZE;
 const BODY = GAME_CONSTANTS.PLAYER.BODY_SIZE;
@@ -64,8 +63,18 @@ function homeFromPin(pin: FormAttachContext['pin']): CorridorAabb {
   };
 }
 
+/** Same box as gym `lexiconPracticePins().corridorAabbs[0]`. Inlined so production D does not import gym. */
+const OBSERVE_YARD_CORRIDOR: CorridorAabb = {
+  minCol: 12,
+  minRow: 3,
+  maxCol: 17,
+  maxRow: 8,
+  coreCol: 14,
+  coreRow: 5,
+};
+
 function homeAabb(pin: FormAttachContext['pin']): CorridorAabb {
-  const yard = lexiconPracticePins().corridorAabbs[0];
+  const yard = OBSERVE_YARD_CORRIDOR;
   if (yard) return yard;
   return homeFromPin(pin);
 }

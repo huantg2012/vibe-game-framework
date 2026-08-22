@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
-import type { FormAttachContext, FormVisual, FormVisualPose } from '@/gym/form-renderers/form-renderer';
+import type { FormAttachContext, FormVisual, FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import {
   BRICK,
   CONCRETE,

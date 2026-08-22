@@ -1,5 +1,5 @@
 /**
- * Gym-only fragment colours for scheme D and the observation yard.
+ * Fragment colours for scheme D (and the lexicon observation yard).
  * Copies `deriveContamRamp` *semantics* from preview-paint.ts (bias → teal hue
  * pull → palette quantize). Does not import that module, does not call
  * `generateRiftLayout` / `bakeGround`, and must not become the sortie ground path.

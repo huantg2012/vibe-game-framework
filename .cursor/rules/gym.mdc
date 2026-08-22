@@ -11,11 +11,11 @@ globs: gym.html,src/gym/**,docs/dev/gym.md
 
 ## 必须成立
 
-- 敌人移动 / 寻路 / 朝向动画复用出击：`AISystem`、`Enemy`、`generatePlaceholderTextures`、`gameConfigWithScenes`。渗透体与改写体是程序像素成品，不是待换的精灵表。外形默认与出击同一套；仅污染句法课可切候选渲染器（见下条迭代 2）。
+- 敌人移动 / 寻路 / 朝向动画复用出击：`AISystem`、`Enemy`、`generatePlaceholderTextures`、`gameConfigWithScenes`。渗透体与改写体程序像素仍是默认课回退，不是待换的精灵表。外形默认与出击对齐；仅污染句法课可切对照渲染器 A/B/C（见下条）。
 - 新敌人角色：`data/enemies.csv` → codegen → 给 `GYM_LOOPS` 补 8 点环。
 - 玩家外形课：`gym.html?lesson=player`。与出击 `Player` 同一套加厚像素 + 灯尘（DEC-068）。角色外形怎么验：`docs/art/actor-pixels.md`。
-- 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter` + `ContaminationHostSystem`（乙/丙/丁只画；不刷会走的甲）；污染生产缺省崩坏簇（DEC-069）。崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 画面锁，DEC-071 接到出击）。侧栏另三种烤漆只对照。
-- 污染句法课：`gym.html?lesson=lexicon`。固定观察院子 + 默认无敌玩家 + 配置表点生成。甲 / 乙 / 丙 / 丁走出击同一套 `AISystem` / `CombatSystem` / `ContaminationHostSystem`。击杀后按当前配置再刷。不开迷雾。**迭代 2（DEC-079 / DEC-080）：** 仅本课可切 `#gym-lex-renderer`（`src/gym/form-renderers/`）。A/B/C 冻结对照；第二轮默认方案 D。`#gym-lex-fragment` 给院子碎片身份；「感受伤害」默认关。出击不接。合同：`docs/tasks/iteration-2.md`。
+- 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter` + `ContaminationHostSystem`（乙/丙/丁只画；不刷会走的甲）；污染生产缺省崩坏簇（DEC-069）。崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 画面锁，DEC-071 接到出击）。侧栏另三种烤漆只对照。**禁止**打开 `liveMotion` / `gymLiveMotion`。
+- 污染句法课：`gym.html?lesson=lexicon`。固定观察院子 + 默认无敌玩家 + 配置表点生成。甲 / 乙 / 丙 / 丁走出击同一套 `AISystem` / `CombatSystem` / `ContaminationHostSystem`。击杀后按当前配置再刷。不开迷雾。可切 `#gym-lex-renderer`。A/B/C 冻结对照；默认方案 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。`#gym-lex-fragment` 给院子碎片身份；「感受伤害」默认关。合同：`docs/tasks/iteration-3.md`。
 
 ## 禁止
 
@@ -23,5 +23,6 @@ globs: gym.html,src/gym/**,docs/dev/gym.md
 - 为练习场另写一套移动；除污染句法课的候选渲染器外另画一套敌人外形
 - 把练习场侧栏当成游戏内界面去做 UX 翻修
 - 为出击另写一套崩坏簇呼吸（已与练习场共用 `liveClusterBreath`）
-- 把候选渲染器接到 `RiftScene`（人选之前）
-- 改 `collectWallEdges` 的墙格集合来「顺便」给乙做路径（有序路径必须是新纯函数；出击钉层集合不变）
+- 把生产方案 D 放回 `src/gym/**` 再让 `RiftScene` import gym
+- 改 `collectWallEdges` 的墙格集合来「顺便」给乙做路径（有序路径必须是新纯函数；钉层集合不变）
+- 地图课打开 `liveMotion` / `gymLiveMotion`

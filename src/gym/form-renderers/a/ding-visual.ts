@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
-import type { FormAttachContext, FormVisual, FormVisualPose } from '@/gym/form-renderers/form-renderer';
+import type { FormAttachContext, FormVisual, FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import { BRIGHT_HEX, CORE_HEX, DEEP_HEX, EARTH_HEX, GLOW_HEX, MID_HEX, SHADOW_HEX } from '@/gym/form-renderers/a/colors';
 import { recipeFromForm, rhythmPeriodMs, type FamilyId, type PixelRecipe } from '@/gym/form-renderers/a/recipe';
 

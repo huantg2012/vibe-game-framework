@@ -1,6 +1,6 @@
 import type { Facing4 } from '@/types/game-types';
-import type { JiaBodyColors, JiaFamily, JiaVariant } from '@/gym/form-renderers/d/jia-recipe';
-import { px, type PaintBuf, type Rgba } from '@/gym/form-renderers/d/jia-pixels';
+import type { JiaBodyColors, JiaFamily, JiaVariant } from '@/entities/form-renderers/d/jia-recipe';
+import { px, type PaintBuf, type Rgba } from '@/entities/form-renderers/d/jia-pixels';
 
 export interface JiaDeform {
   readonly dx: number;

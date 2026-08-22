@@ -2,7 +2,7 @@
  * Soft cloud silhouette for scheme D 丁.
  * Outline is a warped ellipse (harmonics + slow phase), not per-pixel hash fill.
  */
-import type { CloudHarmonics } from '@/gym/form-renderers/d/ding-recipe';
+import type { CloudHarmonics } from '@/entities/form-renderers/d/ding-recipe';
 
 export interface CloudPose {
   readonly cx: number;

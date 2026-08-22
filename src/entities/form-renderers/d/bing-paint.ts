@@ -1,9 +1,9 @@
 import { paintClusterBreath } from '@/systems/cluster-pulse';
-import type { FormVisualPose } from '@/gym/form-renderers/form-renderer';
-import type { BingRecipe, CoreShiftMode } from '@/gym/form-renderers/d/bing-dialect';
-import { BING_PULSE_SAMPLES, CLUSTER_BREATH, hash2 } from '@/gym/form-renderers/d/bing-hash';
-import type { LiveOrganism } from '@/gym/form-renderers/d/bing-shape';
-import type { Rgb } from '@/gym/form-renderers/d/fragment-ramp';
+import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
+import type { BingRecipe, CoreShiftMode } from '@/entities/form-renderers/d/bing-dialect';
+import { BING_PULSE_SAMPLES, CLUSTER_BREATH, hash2 } from '@/entities/form-renderers/d/bing-hash';
+import type { LiveOrganism } from '@/entities/form-renderers/d/bing-shape';
+import type { Rgb } from '@/entities/form-renderers/d/fragment-ramp';
 
 const STEP = (Math.PI * 2) / BING_PULSE_SAMPLES;
 const CORE_OVERLAP = 0.68;

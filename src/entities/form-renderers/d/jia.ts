@@ -26,11 +26,11 @@ import {
 } from '@/entities/contam-flakes';
 import { FacingLagGhost, facingUnit, pingPongFrame } from '@/entities/actor-motion';
 import { AIState, type Facing4 } from '@/types/game-types';
-import type { FormAttachContext, FormVisual, FormVisualPose } from '@/gym/form-renderers/form-renderer';
-import { LEXICON_DEFAULT_FRAGMENT } from '@/gym/form-renderers/d/fragment-ramp';
-import { bakeJiaSheet, resolveJiaKey } from '@/gym/form-renderers/d/jia-paint';
-import { clusterModeOf, jiaGaitFps, jiaRecipeFromForm, jiaRecipeTag, type ClusterMode } from '@/gym/form-renderers/d/jia-recipe';
-import { removeKeys } from '@/gym/form-renderers/d/jia-pixels';
+import type { FormAttachContext, FormVisual, FormVisualPose } from '@/entities/form-renderers/form-renderer';
+import { LEXICON_DEFAULT_FRAGMENT } from '@/entities/form-renderers/d/fragment-ramp';
+import { bakeJiaSheet, resolveJiaKey } from '@/entities/form-renderers/d/jia-paint';
+import { clusterModeOf, jiaGaitFps, jiaRecipeFromForm, jiaRecipeTag, type ClusterMode } from '@/entities/form-renderers/d/jia-recipe';
+import { removeKeys } from '@/entities/form-renderers/d/jia-pixels';
 
 class JiaVisualD implements FormVisual {
   private readonly scene: Phaser.Scene;

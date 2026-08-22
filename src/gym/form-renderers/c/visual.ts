@@ -5,7 +5,7 @@ import type {
   FormAttachContext,
   FormVisual,
   FormVisualPose,
-} from '@/gym/form-renderers/form-renderer';
+} from '@/entities/form-renderers/form-renderer';
 import {
   occupancyStamp,
   rhythmPeriodMs,

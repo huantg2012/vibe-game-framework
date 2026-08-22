@@ -4,9 +4,9 @@
  */
 import type Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
-import type { FormVisualPose } from '@/gym/form-renderers/form-renderer';
-import { hash32, unit } from '@/gym/form-renderers/d/jia-pixels';
-import { faceNormal, yiPeriodMs, type YiRecipe } from '@/gym/form-renderers/d/yi-recipe';
+import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
+import { hash32, unit } from '@/entities/form-renderers/d/jia-pixels';
+import { faceNormal, yiPeriodMs, type YiRecipe } from '@/entities/form-renderers/d/yi-recipe';
 
 const TILE = GAME_CONSTANTS.TILE_SIZE;
 

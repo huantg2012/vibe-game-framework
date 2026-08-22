@@ -8,8 +8,8 @@ import {
   type FragmentContamRamp,
   type Rgb,
   yardSurfaceColors,
-} from '@/gym/form-renderers/d/fragment-ramp';
-import { toRgba, type Rgba } from '@/gym/form-renderers/d/jia-pixels';
+} from '@/entities/form-renderers/d/fragment-ramp';
+import { toRgba, type Rgba } from '@/entities/form-renderers/d/jia-pixels';
 
 export const JIA_FAMILIES = [
   'organic_remnant',

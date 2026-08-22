@@ -14,8 +14,9 @@
  * Contract:
  * - **Do not call this from `collectWallEdges`.** Sortie keeps reading the
  *   original array. Birth-tile selection stays bit-identical to before this file.
- * - This function is for `gymLiveMotion` (practice lexicon lesson). Default
- *   host path does not import a reordered array into spawn.
+ * - Live motion and visual pins share this ordered walk. Spawn still reads
+ *   the original `collectWallEdges` array — do not feed the reordered path
+ *   into birth-tile selection.
  * - Tile **set** is unchanged: no cells added or removed. Only stringing.
  * - Connectivity FATAL still holds: we never write walls or floors.
  *

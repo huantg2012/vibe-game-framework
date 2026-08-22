@@ -1,7 +1,7 @@
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId } from '@/generated/contamination-lexicon-data';
 import { mix32 } from '@/generation/seed-fork';
-import type { FormAttachContext } from '@/gym/form-renderers/form-renderer';
+import type { FormAttachContext } from '@/entities/form-renderers/form-renderer';
 import { resolveStopLoss } from '@/systems/contamination-host-live';
 import {
   deriveFragmentContamRamp,
@@ -10,7 +10,7 @@ import {
   type FragmentContamRamp,
   type Rgb,
   yardSurfaceColors,
-} from '@/gym/form-renderers/d/fragment-ramp';
+} from '@/entities/form-renderers/d/fragment-ramp';
 
 export interface ShapeKnobs {
   readonly rxMul: number;

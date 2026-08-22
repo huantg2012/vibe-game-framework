@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import type { FormAttachContext, FormVisual, FormVisualPose } from '@/gym/form-renderers/form-renderer';
+import type { FormAttachContext, FormVisual, FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import { CORE, DEEP, EARTH, GLOW, MID, CONCRETE, type Rgba } from '@/gym/form-renderers/a/colors';
 import { applyCoverageFail, makeBuf, px, rect, removeKeys, uploadPixels, unit } from '@/gym/form-renderers/a/pixels';
 import { corePx, recipeFromForm, recipeTag, rhythmPeriodMs, type FamilyId, type PixelRecipe } from '@/gym/form-renderers/a/recipe';

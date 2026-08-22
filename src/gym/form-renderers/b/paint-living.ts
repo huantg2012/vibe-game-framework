@@ -1,6 +1,6 @@
 import { CLUSTER_PULSE_SAMPLES, type ClusterPulseField } from '@/generation/preview-paint';
 import { paintClusterBreath } from '@/systems/cluster-pulse';
-import type { FormVisualPose } from '@/gym/form-renderers/form-renderer';
+import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import type { LiveOrganism } from '@/gym/form-renderers/b/cluster-shape';
 import type { DialectRecipe, SenseKind } from '@/gym/form-renderers/b/dialect';
 import { CORE_TEAL, GREY_SHADOW, hash2, type Rgb } from '@/gym/form-renderers/b/palette';

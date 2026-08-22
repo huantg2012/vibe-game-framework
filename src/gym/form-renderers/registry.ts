@@ -1,12 +1,14 @@
 import { schemeAPixelGrammar } from '@/gym/form-renderers/scheme-a-pixel-grammar';
 import { schemeBSurfaceOrganism } from '@/gym/form-renderers/scheme-b-surface-organism';
 import { schemeCStampCompositor } from '@/gym/form-renderers/scheme-c-stamp-compositor';
-import { schemeDMixed } from '@/gym/form-renderers/scheme-d-mixed';
+import { schemeDMixed } from '@/entities/form-renderers/scheme-d-mixed';
 import {
   FORM_RENDERER_IDS,
   type ContaminationFormRenderer,
   type FormRendererId,
-} from '@/gym/form-renderers/form-renderer';
+} from '@/entities/form-renderers/form-renderer';
+
+export { schemeDMixed };
 
 const SCHEMES: Record<Exclude<FormRendererId, 'placeholder'>, ContaminationFormRenderer> = {
   'a-pixel-grammar': schemeAPixelGrammar,

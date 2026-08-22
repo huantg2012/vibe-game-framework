@@ -3,7 +3,7 @@ import type {
   FormAttachContext,
   FormVisual,
   FormVisualPose,
-} from '@/gym/form-renderers/form-renderer';
+} from '@/entities/form-renderers/form-renderer';
 import { layoutOrganisms, type LiveOrganism } from '@/gym/form-renderers/b/cluster-shape';
 import { dialectFromForm, type DialectRecipe } from '@/gym/form-renderers/b/dialect';
 import { deformOrganisms, makePulseField, paintLivingFrame } from '@/gym/form-renderers/b/paint-living';

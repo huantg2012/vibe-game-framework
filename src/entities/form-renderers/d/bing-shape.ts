@@ -1,7 +1,7 @@
 import { mix32 } from '@/generation/seed-fork';
 import { SeededRandom } from '@/utils/random';
-import type { BingRecipe, ShapeKnobs } from '@/gym/form-renderers/d/bing-dialect';
-import { BING_PULSE_SAMPLES, hash2 } from '@/gym/form-renderers/d/bing-hash';
+import type { BingRecipe, ShapeKnobs } from '@/entities/form-renderers/d/bing-dialect';
+import { BING_PULSE_SAMPLES, hash2 } from '@/entities/form-renderers/d/bing-hash';
 
 const CORE_T = 0.5;
 

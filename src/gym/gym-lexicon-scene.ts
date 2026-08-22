@@ -38,14 +38,14 @@ import {
   utteranceOptions,
   type LexiconGymConfig,
 } from '@/gym/gym-lexicon-form';
-import type { FormVisual, FormVisualSignal } from '@/gym/form-renderers/form-renderer';
-import { getFormRenderer } from '@/gym/form-renderers/registry';
+import type { FormVisual, FormVisualSignal } from '@/entities/form-renderers/form-renderer';
 import {
   isLexiconFragmentId,
   LEXICON_FRAGMENT_IDS,
   rgbToHex,
   yardSurfaceColors,
-} from '@/gym/form-renderers/d/fragment-ramp';
+} from '@/entities/form-renderers/d/fragment-ramp';
+import { getFormRenderer } from '@/gym/form-renderers/registry';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem } from '@/systems/chaos-system';
 import { CombatSystem } from '@/systems/combat-system';

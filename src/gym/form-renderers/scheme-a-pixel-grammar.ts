@@ -19,7 +19,7 @@
  * 参考动作：现行渗透体 Canvas 烘焙四向不转 GameObject；污染体形态 HOW 的缝核/簇核/体积带世界可读；Signalis 低保真失败表征。
  * 不学：头上名、图鉴卡、科幻全息。
  */
-import type { ContaminationFormRenderer, FormVisual } from '@/gym/form-renderers/form-renderer';
+import type { ContaminationFormRenderer, FormVisual } from '@/entities/form-renderers/form-renderer';
 import { attachBing } from '@/gym/form-renderers/a/bing-visual';
 import { attachDing } from '@/gym/form-renderers/a/ding-visual';
 import { attachJia } from '@/gym/form-renderers/a/jia-visual';

@@ -5,14 +5,14 @@
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId } from '@/generated/contamination-lexicon-data';
 import { mix32 } from '@/generation/seed-fork';
-import type { FormAttachContext } from '@/gym/form-renderers/form-renderer';
+import type { FormAttachContext } from '@/entities/form-renderers/form-renderer';
 import { coreMarkPx, resolveStopLoss } from '@/systems/contamination-host-live';
 import {
   deriveFragmentContamRamp,
   LEXICON_DEFAULT_FRAGMENT,
   type FragmentContamRamp,
   type Rgb,
-} from '@/gym/form-renderers/d/fragment-ramp';
+} from '@/entities/form-renderers/d/fragment-ramp';
 
 export const DING_FAMILIES = ['sound_echo', 'light_scatter', 'space_interval'] as const;
 export type DingFamily = (typeof DING_FAMILIES)[number];

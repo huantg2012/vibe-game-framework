@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import type { Facing4 } from '@/types/game-types';
-import type { Rgb } from '@/gym/form-renderers/d/fragment-ramp';
+import type { Rgb } from '@/entities/form-renderers/d/fragment-ramp';
 
 export interface PaintBuf {
   readonly data: Uint8ClampedArray;

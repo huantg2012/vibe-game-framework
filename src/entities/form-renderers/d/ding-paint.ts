@@ -2,16 +2,16 @@
  * Scheme D 丁 painters. Soft SDF / 1px contours / kinked veins.
  * Forbidden: per-pixel hash fill, checkerboard skip, oil-film tiling.
  */
-import type { FormVisualPose } from '@/gym/form-renderers/form-renderer';
-import type { DingRecipe, ScatterVein } from '@/gym/form-renderers/d/ding-recipe';
+import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
+import type { DingRecipe, ScatterVein } from '@/entities/form-renderers/d/ding-recipe';
 import {
   breathScale,
   contourPoint,
   contourSteps,
   rimDistance,
   type CloudPose,
-} from '@/gym/form-renderers/d/ding-cloud';
-import type { Rgb } from '@/gym/form-renderers/d/fragment-ramp';
+} from '@/entities/form-renderers/d/ding-cloud';
+import type { Rgb } from '@/entities/form-renderers/d/fragment-ramp';
 
 function put(out: Uint8ClampedArray, w: number, h: number, x: number, y: number, rgb: Rgb, a: number): void {
   const ix = Math.round(x);

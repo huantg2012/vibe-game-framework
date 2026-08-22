@@ -298,6 +298,10 @@ selfCheckHostLive();
 const riftSrc = readFileSync(resolve(ROOT, 'src/scenes/rift-scene.ts'), 'utf8');
 assert(!riftSrc.includes('gymLiveMotion'), 'RiftScene must not mention gymLiveMotion');
 assert(
+  !riftSrc.includes("from '@/gym/") && !riftSrc.includes("from '../gym/"),
+  'RiftScene must not import src/gym',
+);
+assert(
   /this\.hosts\.create\(\s*this,\s*layout,\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*\)/.test(
     riftSrc,
   ),

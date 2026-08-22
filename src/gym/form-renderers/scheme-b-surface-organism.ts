@@ -19,7 +19,7 @@
  *
  * 动作：甲 hitch-滑；乙缝开合；丙整团呼吸；丁觉醒相。共用失败表征在呼吸。
  */
-import type { ContaminationFormRenderer } from '@/gym/form-renderers/form-renderer';
+import type { ContaminationFormRenderer } from '@/entities/form-renderers/form-renderer';
 import { createSurfaceVisual } from '@/gym/form-renderers/b/surface-visual';
 
 export const schemeBSurfaceOrganism: ContaminationFormRenderer = {

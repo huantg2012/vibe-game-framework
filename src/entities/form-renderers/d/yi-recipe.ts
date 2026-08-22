@@ -5,7 +5,7 @@ import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId } from '@/generated/contamination-lexicon-data';
 import { mix32 } from '@/generation/seed-fork';
 import { coreMarkPx, resolveStopLoss } from '@/systems/contamination-host-live';
-import type { FormVisualPose } from '@/gym/form-renderers/form-renderer';
+import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import {
   deriveFragmentContamRamp,
   LEXICON_DEFAULT_FRAGMENT,
@@ -14,7 +14,7 @@ import {
   yardSurfaceColors,
   type FragmentContamRamp,
   type Rgb,
-} from '@/gym/form-renderers/d/fragment-ramp';
+} from '@/entities/form-renderers/d/fragment-ramp';
 
 export const YI_FAMILIES = ['doorframe', 'wall_rust'] as const;
 export type YiFamily = (typeof YI_FAMILIES)[number];

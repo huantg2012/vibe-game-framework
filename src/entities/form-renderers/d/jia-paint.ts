@@ -1,7 +1,7 @@
 import type Phaser from 'phaser';
 import type { Facing4 } from '@/types/game-types';
 import type { FlakeLocal } from '@/entities/contam-flakes';
-import type { ClusterMode, JiaRecipe } from '@/gym/form-renderers/d/jia-recipe';
+import type { ClusterMode, JiaRecipe } from '@/entities/form-renderers/d/jia-recipe';
 import {
   alphaAt,
   clearPx,
@@ -13,8 +13,8 @@ import {
   warpMotion,
   type PaintBuf,
   type Rgba,
-} from '@/gym/form-renderers/d/jia-pixels';
-import { jiaDeform, paintJiaSilhouette, ZERO_DEFORM } from '@/gym/form-renderers/d/jia-silhouette';
+} from '@/entities/form-renderers/d/jia-pixels';
+import { jiaDeform, paintJiaSilhouette, ZERO_DEFORM } from '@/entities/form-renderers/d/jia-silhouette';
 
 interface Pt {
   readonly x: number;

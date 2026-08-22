@@ -1,7 +1,7 @@
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId, PortfolioId } from '@/generated/contamination-lexicon-data';
 import { GAME_CONSTANTS } from '@/config/constants';
-import type { FormAttachContext } from '@/gym/form-renderers/form-renderer';
+import type { FormAttachContext } from '@/entities/form-renderers/form-renderer';
 import {
   CORE_TEAL,
   GREY_BONE,
