@@ -131,7 +131,8 @@
         margin: 2px 0;
       }
       #gym-gallery-dedupe dl,
-      #gym-gallery-hover dl {
+      #gym-gallery-hover dl,
+      #gym-gallery-inspect dl {
         display: grid;
         grid-template-columns: auto 1fr;
         gap: 2px 12px;
@@ -139,14 +140,44 @@
       }
       #gym-gallery-dedupe dt,
       #gym-gallery-hover dt,
+      #gym-gallery-inspect dt,
       .gym-gal-k {
         color: #8a8f96;
       }
       #gym-gallery-dedupe dd,
       #gym-gallery-hover dd,
+      #gym-gallery-inspect dd,
       .gym-gal-v {
         color: #c8cdd4;
         margin: 0;
+      }
+      #gym-gallery-inspect button {
+        background: #12161a;
+        color: #e8eaed;
+        border: 1px solid #2a2d32;
+        padding: 6px 10px;
+        font: inherit;
+        cursor: pointer;
+      }
+      #gym-gallery-inspect button[aria-pressed="true"] {
+        border-color: #1aad96;
+        color: #b0fff5;
+      }
+      #gym-gallery-inspect button:disabled {
+        color: #8a8f96;
+        cursor: not-allowed;
+      }
+      #gym-gallery-inspect .gym-gal-btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 4px 0 10px;
+      }
+      #gym-gallery-inspect .gym-gal-hint {
+        display: block;
+        color: #8a8f96;
+        font-size: 11px;
+        margin-top: 2px;
       }
       #gym-gallery-dedupe ul {
         margin: 0 0 8px 1.1em;
@@ -271,6 +302,8 @@
           <nav id="gym-gallery-nav"></nav>
           <h2>参数</h2>
           <div id="gym-gallery-hover"></div>
+          <h2>检视</h2>
+          <div id="gym-gallery-inspect"></div>
         </div>
 
         <div id="gym-map-controls" hidden>
@@ -349,6 +382,7 @@
           <li>一次只进一个厅（孔谱 × 基体）。拖动画布平移，滚轮缩放。</li>
           <li>只 attach 生产方案 D。不刷玩家、不创建 Enemy / 宿主。</li>
           <li>开发标签走 DOM，头上无字。表名与档位分行。</li>
+          <li>点格选中。双击或侧栏「检视」看活标本、四朝向与信号相。关闭回到厅。</li>
         </ul>
         <ul id="gym-rules-map" hidden>
           <li>布局走出击同一套 <code>generateRiftLayout</code>，禁止另写生成器。</li>

@@ -1,13 +1,18 @@
 /**
  * Contamination-lexicon gallery: one hall at a time (portfolio × substrate),
- * viewport virtualization, DOM labels. Production scheme D only.
- * Contract: docs/tasks/iteration-4.md (I4-B).
+ * viewport virtualization, DOM labels, inspect live specimen.
+ * Production scheme D only. Contract: docs/tasks/iteration-4.md (I4-B / I4-C).
  */
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { getFormRenderer } from '@/entities/form-renderers/registry';
-import type { FormAttachContext, FormVisual, FormVisualPose } from '@/entities/form-renderers/form-renderer';
+import type {
+  FormAttachContext,
+  FormVisual,
+  FormVisualPose,
+  FormVisualSignal,
+} from '@/entities/form-renderers/form-renderer';
 import {
   isLexiconFragmentId,
   LEXICON_DEFAULT_FRAGMENT,
@@ -16,11 +21,13 @@ import {
 import {
   DISPLAY_TOKEN_DATA,
   LEXEME_DATA,
+  PORTFOLIO_DATA,
   SUBSTRATE_DATA,
   UTTERANCE_DATA,
   type CoverageId,
   type PortfolioId,
 } from '@/generated/contamination-lexicon-data';
+import { mix32 } from '@/generation/seed-fork';
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import { bindGymCamera, type GymCameraHandle } from '@/gym/gym-camera';
 import {
@@ -61,6 +68,20 @@ const DEPTH: Record<PortfolioId, number> = {
 const START_ZOOM: Record<PortfolioId, number> = { jia: 1.25, yi: 1.25, bing: 1, ding: 0.7 };
 const GRID_DEPTH = 0.4;
 const SELECT_DEPTH = 46;
+const INSPECT_DBL_MS = 400;
+const FACINGS: readonly { id: FormVisualPose['facing4']; label: string }[] = [
+  { id: 'up', label: '北' },
+  { id: 'right', label: '东' },
+  { id: 'down', label: '南' },
+  { id: 'left', label: '西' },
+];
+const SIGNALS: readonly FormVisualSignal[] = ['idle', 'awake', 'strike', 'inflated'];
+const CORE_POLICY_LABEL: Record<string, string> = {
+  exposed: '核露',
+  standard: '核常规',
+  obscured: '核埋',
+  none: '无核',
+};
 
 interface HallCell {
   readonly specimen: GallerySpecimen;
@@ -80,6 +101,14 @@ interface AttachedCell {
   readonly visual: FormVisual;
 }
 
+interface InspectState {
+  readonly cell: HallCell;
+  visual: FormVisual;
+  facing: FormVisualPose['facing4'];
+  signal: FormVisualSignal;
+  seed: number;
+}
+
 export class GymLexiconGalleryScene extends Phaser.Scene {
   private cameraHandle: GymCameraHandle | null = null;
   private includeIllegal = false;
@@ -92,6 +121,9 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   private readonly attached = new Map<string, AttachedCell>();
   private selectedKey: string | null = null;
   private hoveredKey: string | null = null;
+  private inspect: InspectState | null = null;
+  private lastClickAt = 0;
+  private lastClickKey: string | null = null;
   private viewStamp = '';
   private grid: Phaser.GameObjects.Graphics | null = null;
   private selectMark: Phaser.GameObjects.Graphics | null = null;
@@ -108,7 +140,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
 
     const title = document.getElementById('gym-title');
     if (title) title.textContent = '练习场 · 污染句法陈列馆';
-    this.setStatus('拖动画布平移，滚轮缩放。点格选中。浏览态静帧。');
+    this.setStatus('拖动画布平移，滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。');
 
     this.grid = this.add.graphics().setDepth(GRID_DEPTH);
     this.selectMark = this.add.graphics().setDepth(SELECT_DEPTH);
@@ -125,13 +157,14 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
   }
 
-  update(): void {
+  update(_time: number, delta: number): void {
     const camera = this.cameras.main;
     const stamp = `${Math.round(camera.scrollX)},${Math.round(camera.scrollY)},${Math.round(camera.zoom * 200)}`;
     if (stamp !== this.viewStamp) {
       this.viewStamp = stamp;
       this.reconcile();
     }
+    if (this.inspect) this.inspect.visual.update(inspectPose(this.inspect, delta));
     this.syncCaptions();
     this.paintSelect();
   }
@@ -142,6 +175,8 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     document.getElementById('gym-gallery-fragment')?.addEventListener('change', this.onFragmentChange);
     document.getElementById('gym-gallery-illegal')?.addEventListener('change', this.onIllegalChange);
     document.getElementById('gym-gallery-nav')?.addEventListener('click', this.onNavClick);
+    document.getElementById('gym-gallery-inspect')?.addEventListener('click', this.onInspectClick);
+    document.addEventListener('keydown', this.onDocKey);
   }
 
   private unbindDom(): void {
@@ -150,12 +185,15 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     document.getElementById('gym-gallery-fragment')?.removeEventListener('change', this.onFragmentChange);
     document.getElementById('gym-gallery-illegal')?.removeEventListener('change', this.onIllegalChange);
     document.getElementById('gym-gallery-nav')?.removeEventListener('click', this.onNavClick);
+    document.getElementById('gym-gallery-inspect')?.removeEventListener('click', this.onInspectClick);
+    document.removeEventListener('keydown', this.onDocKey);
   }
 
   private readonly onFragmentChange = (): void => {
     const raw = selectValue('gym-gallery-fragment');
     this.fragmentTypeId = isLexiconFragmentId(raw) ? raw : LEXICON_DEFAULT_FRAGMENT;
     this.reattachVisible();
+    this.reattachInspect();
   };
 
   private readonly onIllegalChange = (): void => {
@@ -183,9 +221,20 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   private readonly onCanvasClick = (pointer: Phaser.Input.Pointer): void => {
     const world = this.cameras.main.getWorldPoint(pointer.x, pointer.y);
     const cell = this.hitCell(world.x, world.y);
-    this.selectedKey = cell?.specimen.visualKey ?? null;
+    const now = this.time.now;
+    const key = cell?.specimen.visualKey ?? null;
+    const doubled = Boolean(cell && key && key === this.lastClickKey && now - this.lastClickAt <= INSPECT_DBL_MS);
+    this.lastClickAt = now;
+    this.lastClickKey = key;
+    if (doubled && cell) {
+      this.openInspect(cell);
+      return;
+    }
+    if (this.inspect) return;
+    this.selectedKey = key;
     this.paintHover();
     this.paintSelect();
+    this.paintInspect();
   };
 
   private readonly onPointerHover = (pointer: Phaser.Input.Pointer): void => {
@@ -196,6 +245,40 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     if (next === this.hoveredKey) return;
     this.hoveredKey = next;
     this.paintHover();
+  };
+
+  private readonly onInspectClick = (event: Event): void => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const button = target.closest('button');
+    if (!(button instanceof HTMLButtonElement) || button.disabled) return;
+    if (button.dataset.inspectOpen !== undefined) {
+      const cell = this.cells.find((row) => row.specimen.visualKey === this.selectedKey);
+      if (cell) this.openInspect(cell);
+      return;
+    }
+    if (button.dataset.inspectClose !== undefined) {
+      this.closeInspect(true);
+      return;
+    }
+    const facing = button.dataset.facing;
+    if (isFacing4(facing)) {
+      this.setInspectFacing(facing);
+      return;
+    }
+    const signal = button.dataset.signal;
+    if (isSignal(signal)) {
+      this.setInspectSignal(signal);
+      return;
+    }
+    if (button.dataset.reroll !== undefined) this.rerollInspectSeed();
+  };
+
+  private readonly onDocKey = (event: KeyboardEvent): void => {
+    if (event.key !== 'Escape') return;
+    if (!this.inspect) return;
+    event.preventDefault();
+    this.closeInspect(true);
   };
 
   private reloadCatalog(): void {
@@ -216,6 +299,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   }
 
   private enterHall(portfolio: PortfolioId, substrate: string): void {
+    this.closeInspect(false);
     this.destroyAttached();
     this.hallPortfolio = portfolio;
     this.hallSubstrate = substrate;
@@ -231,6 +315,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.paintNav();
     this.paintDedupe();
     this.paintHover();
+    this.paintInspect();
     this.paintRoster();
     this.fitCamera(laid.bounds, portfolio);
     this.viewStamp = '';
@@ -286,8 +371,9 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     const midX = camera.midPoint.x;
     const midY = camera.midPoint.y;
     visible.sort((a, b) => dist2(a.x, a.y, midX, midY) - dist2(b.x, b.y, midX, midY));
+    const inspectKey = this.inspect?.cell.specimen.visualKey;
     const cap = ATTACH_CAP[this.hallPortfolio];
-    const keep = visible.slice(0, cap);
+    const keep = visible.filter((cell) => cell.specimen.visualKey !== inspectKey).slice(0, cap);
     const keepKeys = new Set(keep.map((cell) => cell.specimen.visualKey));
     for (const [key, row] of this.attached) {
       if (keepKeys.has(key)) continue;
@@ -349,6 +435,121 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   private destroyAttached(): void {
     for (const row of this.attached.values()) row.visual.destroy();
     this.attached.clear();
+  }
+
+  private openInspect(cell: HallCell): void {
+    if (this.inspect?.cell.specimen.visualKey === cell.specimen.visualKey) {
+      this.paintInspect();
+      return;
+    }
+    this.closeInspect(false);
+    this.selectedKey = cell.specimen.visualKey;
+    const hall = this.attached.get(cell.specimen.visualKey);
+    if (hall) {
+      hall.visual.destroy();
+      this.attached.delete(cell.specimen.visualKey);
+    }
+    const visual = this.attachInspectVisual(cell, cell.specimen.seed);
+    if (!visual) return;
+    this.inspect = {
+      cell,
+      visual,
+      facing: 'down',
+      signal: 'idle',
+      seed: cell.specimen.seed,
+    };
+    this.cameras.main.centerOn(cell.x, cell.y);
+    this.viewStamp = '';
+    this.reconcile();
+    this.paintHover();
+    this.paintInspect();
+    this.setStatus('检视：四朝向与信号相。Esc 或关闭回到厅。浏览格仍是静帧。');
+  }
+
+  private closeInspect(reattachHall: boolean): void {
+    if (!this.inspect) {
+      this.paintInspect();
+      return;
+    }
+    this.inspect.visual.destroy();
+    this.inspect = null;
+    this.paintInspect();
+    this.setStatus('拖动画布平移，滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。');
+    if (reattachHall) {
+      this.viewStamp = '';
+      this.reconcile();
+    }
+  }
+
+  private reattachInspect(): void {
+    if (!this.inspect) return;
+    this.inspect.visual.destroy();
+    const visual = this.attachInspectVisual(this.inspect.cell, this.inspect.seed);
+    if (!visual) {
+      this.inspect = null;
+      this.paintInspect();
+      return;
+    }
+    this.inspect.visual = visual;
+    this.paintInspect();
+  }
+
+  private attachInspectVisual(cell: HallCell, seed: number): FormVisual | null {
+    const renderer = getFormRenderer('d-mixed');
+    if (renderer?.ready !== true) return null;
+    const stain =
+      cell.specimen.portfolio === 'ding' ? { x: cell.x, y: cell.y } : STAIN_SINK;
+    const visual = renderer.attach({
+      ...this.attachContext(cell),
+      seed,
+      textureNamespace: inspectTextureNamespace(cell.specimen.visualKey),
+      stainWorldPoint: stain,
+    });
+    visual.update(
+      inspectPose(
+        {
+          cell,
+          visual,
+          facing: this.inspect?.facing ?? 'down',
+          signal: this.inspect?.signal ?? 'idle',
+          seed,
+        },
+        0,
+      ),
+    );
+    return visual;
+  }
+
+  private setInspectFacing(facing: FormVisualPose['facing4']): void {
+    if (!this.inspect) return;
+    this.inspect.facing = facing;
+    this.inspect.visual.update(inspectPose(this.inspect, 0));
+    this.paintInspect();
+  }
+
+  private setInspectSignal(signal: FormVisualSignal): void {
+    if (!this.inspect) return;
+    if (!signalsOf(this.inspect.cell.specimen.portfolio).has(signal)) return;
+    this.inspect.signal = signal;
+    this.inspect.visual.update(inspectPose(this.inspect, 0));
+    this.paintInspect();
+  }
+
+  private rerollInspectSeed(): void {
+    if (!this.inspect) return;
+    const portfolio = this.inspect.cell.specimen.portfolio;
+    if (portfolio === 'jia') return;
+    const next = mix32(this.inspect.seed, `gallery-inspect:${portfolio}`);
+    this.inspect.visual.destroy();
+    this.inspect.seed = next;
+    const visual = this.attachInspectVisual(this.inspect.cell, next);
+    if (!visual) {
+      this.inspect = null;
+      this.paintInspect();
+      return;
+    }
+    this.inspect.visual = visual;
+    this.paintInspect();
   }
 
   private hitCell(wx: number, wy: number): HallCell | null {
@@ -458,6 +659,62 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     host.append(dl);
   }
 
+  private paintInspect(): void {
+    const host = document.getElementById('gym-gallery-inspect');
+    if (!host) return;
+    host.replaceChildren();
+    const inspect = this.inspect;
+    if (!inspect) {
+      const selected = this.cells.find((row) => row.specimen.visualKey === this.selectedKey);
+      if (!selected) {
+        const p = document.createElement('p');
+        p.textContent = '点格选中，再点检视或双击。';
+        host.append(p);
+        return;
+      }
+      const open = document.createElement('button');
+      open.type = 'button';
+      open.dataset.inspectOpen = '';
+      open.textContent = '检视';
+      host.append(open);
+      return;
+    }
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.dataset.inspectClose = '';
+    close.textContent = '关闭检视';
+    host.append(close);
+
+    const faceLabel = document.createElement('p');
+    faceLabel.className = 'gym-gal-k';
+    faceLabel.textContent = '朝向';
+    host.append(faceLabel, facingButtons(inspect.facing));
+
+    const signalLabel = document.createElement('p');
+    signalLabel.className = 'gym-gal-k';
+    signalLabel.textContent = '信号相';
+    host.append(signalLabel, signalButtons(inspect.cell.specimen.portfolio, inspect.signal));
+
+    const portfolio = inspect.cell.specimen.portfolio;
+    if (portfolio !== 'jia') {
+      const reroll = document.createElement('button');
+      reroll.type = 'button';
+      reroll.dataset.reroll = '';
+      reroll.textContent = portfolio === 'yi' ? '换锈斑' : '换种子';
+      host.append(reroll);
+    }
+
+    const dl = document.createElement('dl');
+    for (const row of inspectRows(inspect, this.fragmentTypeId)) {
+      const dt = document.createElement('dt');
+      dt.textContent = row.item;
+      const dd = document.createElement('dd');
+      dd.textContent = row.value;
+      dl.append(dt, dd);
+    }
+    host.append(dl);
+  }
+
   private paintRoster(): void {
     const el = document.getElementById('gym-roster');
     if (!el) return;
@@ -497,6 +754,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
+    this.closeInspect(false);
     this.destroyAttached();
     this.cameraHandle?.destroy();
     this.cameraHandle = null;
@@ -510,6 +768,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     document.getElementById('gym-gallery-nav')?.replaceChildren();
     document.getElementById('gym-gallery-dedupe')?.replaceChildren();
     document.getElementById('gym-gallery-hover')?.replaceChildren();
+    document.getElementById('gym-gallery-inspect')?.replaceChildren();
   }
 }
 
@@ -527,6 +786,120 @@ function browsePose(cell: HallCell): FormVisualPose {
 
 function galleryTextureNamespace(visualKey: string): string {
   return `gal_${visualKey.replace(/\|/g, '~')}`;
+}
+
+function inspectTextureNamespace(visualKey: string): string {
+  return `gal_ins_${visualKey.replace(/\|/g, '~')}`;
+}
+
+function inspectPose(state: InspectState, deltaMs: number): FormVisualPose {
+  return {
+    x: state.cell.x,
+    y: state.cell.y,
+    facing4: state.facing,
+    moving: state.cell.specimen.portfolio === 'jia',
+    visibility: 1,
+    signal: state.signal,
+    deltaMs,
+  };
+}
+
+function signalsOf(portfolio: PortfolioId): ReadonlySet<FormVisualSignal> {
+  if (portfolio === 'jia') return new Set<FormVisualSignal>(SIGNALS);
+  if (portfolio === 'yi') return new Set<FormVisualSignal>(['idle', 'strike']);
+  if (portfolio === 'bing') return new Set<FormVisualSignal>(['idle', 'inflated']);
+  return new Set<FormVisualSignal>(['idle', 'awake']);
+}
+
+function facingButtons(current: FormVisualPose['facing4']): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.className = 'gym-gal-btns';
+  for (const face of FACINGS) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.facing = face.id;
+    button.textContent = face.label;
+    button.setAttribute('aria-pressed', face.id === current ? 'true' : 'false');
+    wrap.append(button);
+  }
+  return wrap;
+}
+
+function signalButtons(portfolio: PortfolioId, current: FormVisualSignal): HTMLElement {
+  const wrap = document.createElement('div');
+  wrap.className = 'gym-gal-btns';
+  const allowed = signalsOf(portfolio);
+  for (const id of SIGNALS) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.signal = id;
+    button.textContent = id;
+    const ok = allowed.has(id);
+    button.disabled = !ok;
+    if (ok) button.setAttribute('aria-pressed', id === current ? 'true' : 'false');
+    else {
+      const hint = document.createElement('span');
+      hint.className = 'gym-gal-hint';
+      hint.textContent = '此孔谱无此相';
+      button.append(hint);
+    }
+    wrap.append(button);
+  }
+  return wrap;
+}
+
+function inspectRows(
+  state: InspectState,
+  fragmentTypeId: string,
+): readonly { item: string; value: string }[] {
+  const specimen = state.cell.specimen;
+  const form = specimen.form;
+  const lex = form.lexemes;
+  const rows: { item: string; value: string }[] = [
+    { item: '孔谱', value: PORTFOLIO_NAME[form.portfolio] },
+    { item: '占位', value: PORTFOLIO_DATA[form.portfolio].displayToken },
+    { item: '基体', value: SUBSTRATE_DATA[form.substrate]?.displayToken ?? form.substrate },
+    { item: '覆盖深度', value: coverageLabel(form.coverage) },
+    { item: '连续性', value: CONTINUITY_LABEL[form.continuity] ?? form.continuity },
+    { item: '运动', value: tokenOf(lex.motion) },
+    { item: '感知', value: tokenOf(lex.sense) },
+    { item: '节律', value: tokenOf(lex.rhythm) },
+    { item: '接触', value: tokenOf(lex.contact) },
+  ];
+  if (specimen.utteranceIds.length === 0) {
+    rows.push({ item: '成句', value: '无名填法' });
+  } else {
+    for (const id of specimen.utteranceIds) {
+      rows.push({ item: '成句', value: UTTERANCE_DATA[id]?.onScreenMark ?? id });
+    }
+  }
+  if (specimen.stopLoss === 'illegal') {
+    rows.push({ item: '止损族', value: '非法组合' }, { item: '核策略', value: '无' });
+  } else {
+    rows.push(
+      { item: '止损族', value: STOP_FAMILY_LABEL[specimen.stopLoss.family] ?? specimen.stopLoss.family },
+      { item: '核策略', value: CORE_POLICY_LABEL[specimen.stopLoss.corePolicy] ?? specimen.stopLoss.corePolicy },
+    );
+  }
+  rows.push(
+    {
+      item: '碎片身份',
+      value: RIFT_FRAGMENT_DATA[fragmentTypeId]?.displayName ?? fragmentTypeId,
+    },
+    {
+      item: '范围',
+      value: specimen.enabledScope === 'sortie' ? '出击抽卡会抽到' : '仅练习场',
+    },
+  );
+  if (form.portfolio === 'jia') {
+    rows.push({ item: '族内变体', value: String(specimen.seedBucket + 1) });
+  } else {
+    rows.push(
+      { item: '规范种子', value: String(CANONICAL_SEED) },
+      { item: '检视种子', value: String(state.seed) },
+    );
+  }
+  return rows;
 }
 
 function layoutHall(
@@ -709,4 +1082,12 @@ function selectValue(id: string): string {
 
 function isPortfolioId(value: string | undefined): value is PortfolioId {
   return value === 'jia' || value === 'yi' || value === 'bing' || value === 'ding';
+}
+
+function isFacing4(value: string | undefined): value is FormVisualPose['facing4'] {
+  return value === 'up' || value === 'down' || value === 'left' || value === 'right';
+}
+
+function isSignal(value: string | undefined): value is FormVisualSignal {
+  return value === 'idle' || value === 'awake' || value === 'strike' || value === 'inflated';
 }
