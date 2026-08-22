@@ -5,7 +5,7 @@ created-when: 2026-08-21
 note: 机械对照 spec。不代勾审美 / 读作游戏 / PASS。
 ---
 
-# QA：迭代 1 污染词法（机械层）
+# QA：迭代 1 污染句法（机械层）
 
 对照：`docs/specs/system-contamination-lexicon.md`、`docs/specs/ui-encounter-narration.md`、`docs/tasks/iteration-1.md`。
 

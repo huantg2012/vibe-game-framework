@@ -1,14 +1,16 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-21
 last-modified: 2026-08-22
-note: 迭代 2（污染体渲染）。第一轮三方案抽卡已交。第二轮方案 D（DEC-080）。出击不接。不要开新 Slice。不要标 COMPLETE。
+note: 迭代 2（污染体渲染）练习场探索 COMPLETE（2026-08-22）。人已选方案 D。出击接线是迭代 3（DEC-084），合同 `docs/tasks/iteration-3.md`。本文件冻结，不要再派 T1–T3 / R2-*。
 ---
 
 # Tasks: 迭代 2 — 污染体渲染
 
-权威：`docs/progress/current-iteration.md`。体系仍是污染句法（DEC-078）：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。外观 HOW：`docs/art/contamination-forms.md` + 甲的 `docs/art/actor-pixels.md`。**不改出击画面**（`src/scenes/rift-scene.ts` 本迭代谁都不许动）。
+> **已结（练习场）。** 人已选定方案 D，并对方案 D + 止损闭表表示满意。把胜者接到出击 = **迭代 3**，见 `docs/tasks/iteration-3.md`。下面全文是档案，禁止再按本文件改 `RiftScene` 或重开三方案。
+
+权威：`docs/progress/current-iteration.md`。体系仍是污染句法（DEC-078）：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。外观 HOW：`docs/art/contamination-forms.md` + 甲的 `docs/art/actor-pixels.md`。**本迭代不改出击画面**（已由迭代 3 接手）。
 
 **第二轮从这里读：** 文末「第二轮（方案 D，DEC-080）」（人已试玩并拍板）。下面「第一轮」是已交历史合同，A/B/C **冻结**，禁止再按 T1/T2/T3 改那些文件。
 

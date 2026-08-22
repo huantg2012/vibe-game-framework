@@ -2,10 +2,10 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
-note: 迭代 1（敌人系统）。不要开新 Slice。不要写成 slice-10。DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077。T0–T9 已勾。状态：实现完成，体验未验证。不要标 COMPLETE。
+note: 迭代 1（敌人系统）。不要开新 Slice。不要写成 slice-10。DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077 / DEC-078。T0–T9 已勾。状态：实现完成，体验未验证。不要标 COMPLETE。甲外观 / 乙丙丁几何占位缺口在迭代 2（`docs/tasks/iteration-2.md`，DEC-079 / DEC-080 第二轮方案 D）。
 ---
 
-# Tasks: 迭代 1 — 敌人系统（污染词法）
+# Tasks: 迭代 1 — 敌人系统（污染句法）
 
 权威：`docs/progress/current-iteration.md`。体系入口：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。禁止再问人。人已放权最佳方案并点名实施。
 
@@ -50,7 +50,7 @@ Depends: T0。CSV + codegen + 形态生成器纯函数（抽卡、非法丢弃�
 
 ## Task: T2 | assignee: code（art 核旁白接线）
 
-Depends: T1。甲走词法物化现有两种填法；出生仍用地板路点；`rewriterCount === 1` 迁移为听觉主轴 === 1；遭遇识别旁白接到甲。先 Read in-game-ux skill。`#rift-encounter-log` 进 `panel-styles.ts`。练习场旁白关。U1–U12 机械层自检，不代勾好看。提交。
+Depends: T1。甲走句法物化现有两种填法；出生仍用地板路点；`rewriterCount === 1` 迁移为听觉主轴 === 1；遭遇识别旁白接到甲。先 Read in-game-ux skill。`#rift-encounter-log` 进 `panel-styles.ts`。练习场旁白关。U1–U12 机械层自检，不代勾好看。提交。
 
 - [x] 甲：渗透体/改写体 `getForm()` 对照夹具；生成器契约本批仍是 rewriter === 1（听觉主轴随 T3/T4 钉层一起迁）
 - [x] `#rift-encounter-log` + `EncounterNarration` 挂 `#dom-ui-root`；练习场不创建
