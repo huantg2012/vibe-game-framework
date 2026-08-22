@@ -1,5 +1,5 @@
 /**
- * 方案 D：混装（生产视觉层；I3-E 才接到 RiftScene）。
+ * 方案 D：混装（生产视觉层；I3-E 已接 RiftScene）。
  * 甲 → d/jia（抄 A）；丙 → d/bing（抄 B）；乙/丁 → d/yi、d/ding（在 B 方向重做）。
  * 本文件只分发。像素写在 d/*。ready 为 true。
  */

@@ -30,6 +30,20 @@ export interface FormVisual {
   destroy(): void;
 }
 
+/** Sortie fog: `visibility === 0` hides. Visible bands (1 / 0.6 / 0.2) pass through. Never floor at 0.2. */
+export function applyFormVisibility(
+  obj: { setAlpha(value: number): unknown; setVisible(value: boolean): unknown },
+  visibility: number,
+): void {
+  if (visibility <= 0) {
+    obj.setAlpha(0);
+    obj.setVisible(false);
+    return;
+  }
+  obj.setVisible(true);
+  obj.setAlpha(visibility);
+}
+
 export interface FormAttachContext {
   scene: Phaser.Scene;
   form: ContaminationForm;

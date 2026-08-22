@@ -312,12 +312,13 @@ export function bakeJiaSheet(
   scene: Phaser.Scene,
   recipe: JiaRecipe,
   keyFor: (facing: Facing4, gait: 'idle' | 'walk', frame: number, mode: ClusterMode) => string,
-): { keys: string[]; flakes: Record<Facing4, readonly FlakeLocal[]> } {
+  facings: readonly Facing4[] = FACINGS,
+): { keys: string[]; flakes: Partial<Record<Facing4, readonly FlakeLocal[]>> } {
   const keys: string[] = [];
-  const flakes = {} as Record<Facing4, readonly FlakeLocal[]>;
+  const flakes: Partial<Record<Facing4, readonly FlakeLocal[]>> = {};
   const modes: readonly ClusterMode[] =
     recipe.coverage === 'infiltrate' ? ['patrol', 'strike'] : MODES;
-  for (const facing of FACINGS) {
+  for (const facing of facings) {
     let flakeSrc: PaintBuf | null = null;
     for (const gait of GAITS) {
       for (let frame = 0; frame < 4; frame++) {

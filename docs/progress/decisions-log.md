@@ -5,6 +5,35 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+## I3-E: 方案 D 接进 RiftScene（实现记录）
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 3）
+- Type: Implementation
+- Context: DEC-084 视觉层。生产 HOW 与出击视觉合同已锁。本批把 `d-mixed` 接到裂隙，不重画 `d/` 像素配方。
+- Decision:
+  1. `RiftScene` 只从 `src/entities/form-renderers/` 取 `d-mixed`。`ready === true` 时甲 `setVisualSuppressed(true)`，宿主 `setSkipPaint(true)`（含练习场调试核 `paintMarks`）。Arcade / AI / 既有出击 AI 态指示物保留。头上无字。
+  2. `FormVisualPose.visibility` 读 `VisibilitySystem.getVisibilityAt` 原值。`visibility === 0` 隐藏。禁止 `Math.max(0.2, visibility)`。乙采样点沿 `attach` 法线走进走廊 1px（西/北缝否则落在墙格内，视线为 0）。
+  3. 乙 pose 用 `pin.attach.seamX/Y`；丁云跟 `getVisualPin` 当前盒，不再写死练习场观察院子。
+  4. 纹理复用键：occupancy × substrate × coverage × seed × facing。甲按朝向在 attach / 转向时 bake；丙/丁画布按种子各一张，雾外不 refresh。
+- Impact: 回退视觉 = 停 attach D、停 suppress / skipPaint。机制层（I3-F）若还在，核仍会走。迷雾下亮度不写入机器 PASS。
+- 验证：人试玩裂隙。机器闸门：`tsc` / `check:lexicon` / `check:layout`。
+
+## DEC-084: 方案 D 接入出击 — 开迭代 3；三层分批；断言反转不是删除
+- Date: 2026-08-22
+- Phase: Iterative Development（迭代 3）
+- Type: Process / Design lock
+- Context: 人在练习场对方案 D + 止损闭表表示满意（「很好」），并点名放入裂隙场景。迭代 2 合同与句法 spec「渲染探索」节都把接线写成另一次任务。人要求三层都上，但分批提交、每批独立过闸门且可单独回退。内容层不开则出击丁仍是油膜——正是人否决过的基底。
+- Decision:
+  1. **开迭代 3「方案 D 接入出击」。** 迭代 2 练习场探索标 COMPLETE（人已选 D 且 gym 过关）。不要标迭代 3 COMPLETE，除非人试玩过出击。合法中间态：实现完成，体验未验证。
+  2. **解除「不要进 `RiftScene`」。** 新红线：每批可独立回退；不得降低闸门强度；连通 FATAL；听觉主轴恰好 1；战斗成功标准与 V3 不推翻；审美与迷雾下亮度人终审；丁低于视野蒙层；`RiftScene` 禁止 import `src/gym/**`；地图课不得打开活机制。
+  3. **三层分批**（合同 `docs/tasks/iteration-3.md`）：I3-A 甲 form 管线；I3-B 方案 D 搬到 `src/entities/form-renderers/`（A/B/C 冻结对照留 gym）；I3-C 生产 HOW；I3-D spec 合同；I3-F 机制；I3-G 内容（`enabled_scope` + 油膜配对同提交）；I3-E 视觉（依赖 F+G，避免丁仍是油膜或乙钉在格心）。
+  4. **断言反转协议：** 每删一条拦出击的负向断言，必须加一条等价强度的正向断言。禁止顺手清空 `check:lexicon`。
+  5. **配对不变量（DEC-082）维持。** 概念基体对出击开放 ⟺ 油膜出击视图不占空。视觉与内容不得形成可玩的「出击丁仍是油膜」窗口。
+  6. **甲人数不砍。** 巡逻仍由地图生成（3–4）；为每条甲 spawn 配 `form`；听轴仍恰好 1。一份 `contaminationDraw` 喂甲与宿主，禁止宿主二次 `drawSortie`。
+  7. 出击活机制选项公有名 `liveMotion`，禁止 `RiftScene` 出现 `gymLiveMotion`。
+- Impact: `current-iteration.md`；`docs/tasks/iteration-3.md`；迭代 2 任务书冻结；`CLAUDE.md` / `AGENTS.md` / `START-HERE.md` / `gdd-core.md` / `roadmap.md`；architecture 模块登记由 I3-B 落地；句法 / 战斗 / 地图 / AI / 旁白 spec 由 I3-D 与对应 code 批就地改。
+- 验证问题（人试玩裂隙）：迷雾下四孔谱是否可读；新基体旁白是否读成复合名词；打不死是否让人选择绕；危险区是否跟随且不挡路；首次踏入是否卡顿。
+
 ## DEC-083: 接触槽提纯为「它怎么伤你」；止损从连续性 × 覆盖深度查表
 - Date: 2026-08-22
 - Phase: Iterative Development（迭代 2 第二轮）

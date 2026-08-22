@@ -2,7 +2,7 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: code agent（I3-G 内容层翻列；I3-F 出击活路径兑现接触/止损）
+last-modified-by: code agent（I3-E 方案 D 接进 RiftScene；I3-G 内容层翻列；I3-F 出击活路径兑现接触/止损）
 last-modified-date: 2026-08-22
 interface-changed: true
 interfaces-with:
@@ -648,9 +648,8 @@ CONTAMINATION: {
 | I3-A | 一份 `contaminationDraw`；甲 `EnemySpawnData.form` 来自抽卡，不是工厂 role 三元；宿主不再二次 `drawSortie` |
 | I3-B | 生产 D 住 entities；`RiftScene` 不得 import gym |
 | I3-C | 生产 HOW 就位（本文不复制） |
-| I3-E | `RiftScene` attach 方案 D；消费上表字段；丁 depth < 50 |
 
-I3-E 落地前，出击画面仍可以是甲两种程序像素 + 乙丙丁几何漆——机制层已接（`liveMotion`）；不要请人评价出击丁的外形。I3-E 落地前，不要请人评价出击的丁。
+I3-E 已接：`RiftScene` attach 方案 D，消费上表字段；丁 depth 40 `< DEPTH.visionMask`（50）。审美与迷雾下亮度仍人终审，本文不代勾。
 
 `resolveStopLoss` / `resolveContactChannel` 签名与通道映射已锁在上文对照表与止损表。不要把 family 写进 `ContaminationForm`。`contact_disperse_core` 已删除，生成代码不得再引用。
 

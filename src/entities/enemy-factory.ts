@@ -130,7 +130,7 @@ export class Enemy implements EnemyView {
   private readonly lag: FacingLagGhost;
   private readonly flakes: ContamFlakes;
   private readonly stain: ContamStain | null;
-  /** Gym lexicon candidate visuals only. Default false; RiftScene never calls this. */
+  /** Hide stand-in body when scheme D (or a gym candidate) is attached. Arcade + AI stay. */
   private visualSuppressed = false;
 
   constructor(

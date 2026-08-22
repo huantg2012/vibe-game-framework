@@ -1,5 +1,5 @@
 /**
- * 方案 D 丁：缓慢形变的体积云 + 三类概念基体（gym 句法课，出击不接）。
+ * 方案 D 丁：缓慢形变的体积云 + 三类概念基体（生产；句法课对照同一份）。
  *
  * 云罩住 R2-C2 当前盒（dingLiveRect）。软边是翘曲椭圆的密度衰减，
  * 不是方案 B paintVolume 的逐像素 hash + 棋盘跳采样。
@@ -19,7 +19,7 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { CorridorAabb } from '@/generation/types';
-import { dingLiveRect, aabbPixelRect, DING_MORPH_PX, type PixelRect } from '@/systems/contamination-host-live';
+import { dingLiveRect, DING_MORPH_PX, type PixelRect } from '@/systems/contamination-host-live';
 import type {
   FormAttachContext,
   FormVisual,
@@ -35,9 +35,10 @@ const BODY = GAME_CONSTANTS.PLAYER.BODY_SIZE;
 const STAIN_DEPTH = 35;
 const PAD = 40;
 
+/** Reuse key: occupancy × substrate × coverage × seed (+ fragment / continuity). Facing does not flip 丁. */
 function textureKey(ctx: FormAttachContext): string {
   const fragment = ctx.fragmentTypeId ?? LEXICON_DEFAULT_FRAGMENT;
-  return `gym-d-ding-${fragment}-${ctx.form.substrate}-${ctx.form.coverage}-${ctx.form.continuity}-${(ctx.seed >>> 0).toString(16)}`;
+  return `d_volume_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}`;
 }
 
 function makeTexture(scene: Phaser.Scene, key: string, w: number, h: number): Phaser.Textures.CanvasTexture {
@@ -63,48 +64,44 @@ function homeFromPin(pin: FormAttachContext['pin']): CorridorAabb {
   };
 }
 
-/** Same box as gym `lexiconPracticePins().corridorAabbs[0]`. Inlined so production D does not import gym. */
-const OBSERVE_YARD_CORRIDOR: CorridorAabb = {
-  minCol: 12,
-  minRow: 3,
-  maxCol: 17,
-  maxRow: 8,
-  coreCol: 14,
-  coreRow: 5,
-};
-
-function homeAabb(pin: FormAttachContext['pin']): CorridorAabb {
-  const yard = OBSERVE_YARD_CORRIDOR;
-  if (yard) return yard;
-  return homeFromPin(pin);
+interface HostQuery {
+  getVisualPin(id: string): {
+    x: number;
+    y: number;
+    width?: number;
+    height?: number;
+  } | null;
+  getSubjects(): readonly { id: string; position: { x: number; y: number } }[];
 }
 
-function inferElapsed(home: CorridorAabb, motion: string, pin: FormAttachContext['pin']): number {
-  if (!pin || pin.width == null || pin.height == null) return 0;
-  const base = aabbPixelRect(home, TILE);
-  if (
-    Math.abs(pin.x - base.x) < 1.5 &&
-    Math.abs(pin.y - base.y) < 1.5 &&
-    Math.abs(pin.width - base.w) < 1.5 &&
-    Math.abs(pin.height - base.h) < 1.5
-  ) {
-    return 0;
-  }
-  let bestT = 0;
-  let bestD = Infinity;
-  for (let t = 0; t <= 24000; t += 40) {
-    const live = dingLiveRect(home, motion, t, TILE);
-    const d =
-      Math.abs(live.x - pin.x) +
-      Math.abs(live.y - pin.y) +
-      Math.abs(live.w - pin.width) +
-      Math.abs(live.h - pin.height);
+function hostsOn(scene: Phaser.Scene): HostQuery | null {
+  const hosts = (scene as unknown as { hosts?: HostQuery }).hosts;
+  if (!hosts || typeof hosts.getVisualPin !== 'function') return null;
+  return hosts;
+}
+
+function hostIdAtPin(ctx: FormAttachContext): string | null {
+  const hosts = hostsOn(ctx.scene);
+  const pin = ctx.pin;
+  if (!hosts || !pin) return null;
+  let best: string | null = null;
+  let bestD = 40;
+  for (const row of hosts.getSubjects()) {
+    const d = Math.hypot(row.position.x - pin.x, row.position.y - pin.y);
     if (d < bestD) {
       bestD = d;
-      bestT = t;
+      best = row.id;
     }
   }
-  return bestT;
+  return best;
+}
+
+function liveFromPin(
+  pin: { x: number; y: number; width?: number; height?: number } | null | undefined,
+  fallback: PixelRect,
+): PixelRect {
+  if (!pin || pin.width == null || pin.height == null) return fallback;
+  return { x: pin.x, y: pin.y, w: pin.width, h: pin.height };
 }
 
 function canvasSize(pin: FormAttachContext['pin']): number {
@@ -165,6 +162,7 @@ interface DingState {
   elapsedMs: number;
   canvasW: number;
   canvasH: number;
+  hostId: string | null;
 }
 
 export function attachDingD(ctx: FormAttachContext): FormVisual {
@@ -182,7 +180,7 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
   image.setOrigin(0.5, 0.5);
   const stains = ctx.scene.add.graphics();
   stains.setDepth(STAIN_DEPTH);
-  const home = homeAabb(ctx.pin);
+  const home = homeFromPin(ctx.pin);
   const state: DingState = {
     scene: ctx.scene,
     image,
@@ -193,21 +191,29 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
     recipe,
     home,
     motion: ctx.form.lexemes.motion,
-    elapsedMs: inferElapsed(home, ctx.form.lexemes.motion, ctx.pin),
+    elapsedMs: 0,
     canvasW,
     canvasH,
+    hostId: hostIdAtPin(ctx),
   };
 
   return {
     update(pose: FormVisualPose): void {
       state.elapsedMs += pose.deltaMs;
-      const live = dingLiveRect(state.home, state.motion, state.elapsedMs, TILE);
+      const pin = state.hostId ? hostsOn(state.scene)?.getVisualPin(state.hostId) : null;
+      const live = liveFromPin(pin, dingLiveRect(state.home, state.motion, state.elapsedMs, TILE));
+      image.setPosition(pose.x, pose.y);
+      image.setRotation(0);
+      if (pose.visibility <= 0) {
+        image.setVisible(false);
+        image.setAlpha(0);
+        state.stains.clear();
+        return;
+      }
       const cloud = cloudForLive(recipe, live, canvasW, canvasH, state.elapsedMs);
       paintDingFrame(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud);
       canvasCtx.putImageData(state.pixels, 0, 0);
       texture.refresh();
-      image.setPosition(pose.x, pose.y);
-      image.setRotation(0);
       image.setVisible(true);
       image.setAlpha(pose.visibility);
       paintStains(state, pose, live);

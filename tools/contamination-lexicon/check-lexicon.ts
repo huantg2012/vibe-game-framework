@@ -343,6 +343,27 @@ assert(
   ),
   'RiftScene hosts.create passes { liveMotion: true }',
 );
+assert(riftSrc.includes("getFormRenderer('d-mixed')"), 'RiftScene attaches production d-mixed');
+assert(riftSrc.includes('setVisualSuppressed(true)'), 'scheme D ready hides jia stand-in body');
+assert(riftSrc.includes('setSkipPaint(true)'), 'scheme D ready skips host geometric paint');
+assert(riftSrc.includes('ready !== true'), 'scheme D attach is gated on renderer.ready');
+assert(riftSrc.includes('VOLUME_DEPTH'), 'ding visual depth uses VOLUME_DEPTH');
+assert(/visionMask:\s*50/.test(riftSrc), 'vision mask depth is 50');
+assert(riftSrc.includes('getVisualPin'), 'host attach passes getVisualPin');
+assert(riftSrc.includes('attach.seamX'), 'yi pose uses seamX, not tile centre');
+assert(!riftSrc.includes('Math.max(0.2'), 'RiftScene must not floor visibility at 0.2');
+
+const constantsSrc = readFileSync(resolve(ROOT, 'src/config/constants.ts'), 'utf8');
+const volumeDepth = /VOLUME_DEPTH:\s*(\d+)/.exec(constantsSrc);
+assert(volumeDepth?.[1] === '40', `VOLUME_DEPTH is 40 (got ${volumeDepth?.[1] ?? 'missing'})`);
+assert(Number(volumeDepth![1]) < 50, 'ding visual depth < visionMask 50');
+
+const jiaSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/d/jia.ts'), 'utf8');
+const yiSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/d/yi.ts'), 'utf8');
+assert(!jiaSrc.includes('Math.max(0.2, pose.visibility)'), 'jia must not floor visibility at 0.2');
+assert(!yiSrc.includes('Math.max(0.2, pose.visibility)'), 'yi must not floor visibility at 0.2');
+assert(jiaSrc.includes('applyFormVisibility'), 'jia consumes visibility via applyFormVisibility');
+assert(yiSrc.includes('applyFormVisibility'), 'yi consumes visibility via applyFormVisibility');
 const mapSrc = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
 assert(!mapSrc.includes('gymLiveMotion'), 'gym map lesson must not mention gymLiveMotion');
 assert(!mapSrc.includes('liveMotion'), 'gym map lesson must not enable liveMotion');
@@ -427,6 +448,9 @@ assert(
   !hostSrc.includes("mix32(layout.seed, 'lexicon-hosts')"),
   'hosts.create must not fork a second lexicon seed',
 );
+
+const marksBody = hostSrc.split('private paintMarks')[1]?.split('private coreInSwing')[0] ?? '';
+assert(marksBody.includes('this.skipPaint'), 'paintMarks hides gym debug cores when skipPaint');
 
 if (failed) {
   console.error(`check:lexicon ${failed} failure(s)`);

@@ -194,8 +194,9 @@ export function jiaGaitFps(rhythm: string, moving: boolean): number {
   return fps;
 }
 
+/** Reuse key stem: occupancy × substrate × coverage × seed (+ fragment / variant / facing in the frame key). */
 export function jiaRecipeTag(recipe: JiaRecipe): string {
-  return `djia_${(recipe.seed >>> 0).toString(16)}_${recipe.fragmentTypeId}_${recipe.family}_v${recipe.variant}_${recipe.coverage}_${recipe.continuity}_${recipe.sense}_${recipe.motion}`;
+  return `d_floor_${(recipe.seed >>> 0).toString(16)}_${recipe.fragmentTypeId}_${recipe.family}_v${recipe.variant}_${recipe.coverage}_${recipe.continuity}_${recipe.sense}_${recipe.motion}`;
 }
 
 export function clusterModeOf(signal: 'idle' | 'strike' | 'inflated' | 'awake'): ClusterMode {

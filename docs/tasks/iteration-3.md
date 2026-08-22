@@ -333,14 +333,14 @@ Title: 视觉层 — 方案 D 接进 RiftScene | Priority: P0 | Depends: I3-A, I
 
 ### 必须成立
 
-- [ ] Read in-game-ux（实体套用）+ I3-C 生产 HOW。
-- [ ] `RiftScene` import **仅** `src/entities/form-renderers/`（生产 registry 的 `d-mixed`）。禁止 `src/gym/**`。
-- [ ] 方案 D `ready` 时：甲 `setVisualSuppressed(true)`（藏 Image / 残影 / 脱落尘 / 脚下污斑——与句法课候选 ready 时同一语义）；宿主 `setSkipPaint(true)`。Arcade 碰撞与 AI 保留。teal 状态指示物：**出击不要用练习场那颗调试核**；头上无字。若指示物是 AI 态点，保持既有出击指示物，不要加名牌。
-- [ ] `attach` 传入：真 `form`、布局 `fragmentTypeId`、乙 `getVisualPin`（必须含 `attach.seam*`，不得格心）、丁盒世界像素、depth 按合同（丁 40）、`FormVisualPose.visibility` 读 `VisibilitySystem.getVisibilityAt`。
-- [ ] 纹理：attach / 朝向变化时 bake，不要每帧重烤整只。提交说明写复用键（至少 occupancy × substrate × coverage × seed × facing）。
-- [ ] 地图课：宿主若仍画几何，保持；**不要**为了对齐而打开 `liveMotion`。可选：地图课只读 D 静帧（仍不游荡）。不要改默认敌人课生产外观（无 form 的 spawn 仍两种老像素）。
-- [ ] checker：D 已接的正向（depth、无 gym import、skipPaint / suppress）。迷雾可读性**不要**写成机器 PASS。
-- [ ] `npx tsc --noEmit`；`npm run check:lexicon`；`npm run check:layout`。
+- [x] Read in-game-ux（实体套用）+ I3-C 生产 HOW。
+- [x] `RiftScene` import **仅** `src/entities/form-renderers/`（生产 registry 的 `d-mixed`）。禁止 `src/gym/**`。
+- [x] 方案 D `ready` 时：甲 `setVisualSuppressed(true)`（藏 Image / 残影 / 脱落尘 / 脚下污斑——与句法课候选 ready 时同一语义）；宿主 `setSkipPaint(true)`。Arcade 碰撞与 AI 保留。teal 状态指示物：**出击不要用练习场那颗调试核**；头上无字。若指示物是 AI 态点，保持既有出击指示物，不要加名牌。
+- [x] `attach` 传入：真 `form`、布局 `fragmentTypeId`、乙 `getVisualPin`（必须含 `attach.seam*`，不得格心）、丁盒世界像素、depth 按合同（丁 40）、`FormVisualPose.visibility` 读 `VisibilitySystem.getVisibilityAt`。
+- [x] 纹理：attach / 朝向变化时 bake，不要每帧重烤整只。提交说明写复用键（至少 occupancy × substrate × coverage × seed × facing）。
+- [x] 地图课：宿主若仍画几何，保持；**不要**为了对齐而打开 `liveMotion`。可选：地图课只读 D 静帧（仍不游荡）。不要改默认敌人课生产外观（无 form 的 spawn 仍两种老像素）。
+- [x] checker：D 已接的正向（depth、无 gym import、skipPaint / suppress）。迷雾可读性**不要**写成机器 PASS。
+- [x] `npx tsc --noEmit`；`npm run check:lexicon`；`npm run check:layout`。
 
 ### 禁止
 

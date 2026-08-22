@@ -24,9 +24,10 @@ interface BingState {
   elapsedMs: number;
 }
 
+/** Reuse key: occupancy × substrate × coverage × seed (+ fragment / continuity). Facing does not flip 丙. */
 function textureKey(ctx: FormAttachContext): string {
   const fragment = ctx.fragmentTypeId ?? LEXICON_DEFAULT_FRAGMENT;
-  return `gym-d-bing-${fragment}-${ctx.form.substrate}-${ctx.form.coverage}-${ctx.form.continuity}-${(ctx.seed >>> 0).toString(16)}`;
+  return `d_paint_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}`;
 }
 
 function makeTexture(scene: Phaser.Scene, key: string, w: number, h: number): Phaser.Textures.CanvasTexture {
@@ -65,6 +66,13 @@ export function attachBingD(ctx: FormAttachContext): FormVisual {
   const visual: FormVisual = {
     update(pose: FormVisualPose): void {
       state.elapsedMs += pose.deltaMs;
+      image.setPosition(pose.x, pose.y);
+      image.setRotation(0);
+      if (pose.visibility <= 0) {
+        image.setVisible(false);
+        image.setAlpha(0);
+        return;
+      }
       const cx = recipe.canvasW * 0.5;
       const cy = recipe.canvasH * 0.5;
       deformBingOrganisms(state.organisms, recipe, pose, state.elapsedMs, cx, cy);
@@ -81,8 +89,6 @@ export function attachBingD(ctx: FormAttachContext): FormVisual {
       );
       canvasCtx.putImageData(state.pixels, 0, 0);
       texture.refresh();
-      image.setPosition(pose.x, pose.y);
-      image.setRotation(0);
       image.setVisible(true);
       image.setAlpha(pose.visibility);
     },

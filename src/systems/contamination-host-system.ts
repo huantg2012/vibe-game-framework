@@ -782,6 +782,10 @@ export class ContaminationHostSystem {
     const gfx = host.marks;
     if (!gfx || !this.liveMotion) return;
     gfx.clear();
+    if (this.skipPaint) {
+      gfx.setVisible(false);
+      return;
+    }
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal' || !stop.hittable) {
       gfx.setVisible(false);
@@ -910,6 +914,10 @@ export class ContaminationHostSystem {
     for (const host of this.hosts) {
       host.gfx.clear();
       host.gfx.setVisible(false);
+      if (host.marks) {
+        host.marks.clear();
+        host.marks.setVisible(false);
+      }
       if (host.kind === 'yi') {
         host.telegraph.clear();
         host.telegraph.setVisible(false);

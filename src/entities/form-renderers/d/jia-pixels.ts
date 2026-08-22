@@ -128,7 +128,7 @@ export function warpMotion(
 }
 
 export function uploadPixels(scene: Phaser.Scene, key: string, buf: PaintBuf): void {
-  if (scene.textures.exists(key)) scene.textures.remove(key);
+  if (scene.textures.exists(key)) return;
   const tex = scene.textures.createCanvas(key, buf.w, buf.h);
   if (!tex) return;
   tex.setFilter(Phaser.Textures.FilterMode.NEAREST);

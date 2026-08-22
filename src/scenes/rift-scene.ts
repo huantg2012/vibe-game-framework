@@ -14,8 +14,12 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
+import { isActorWalking } from '@/entities/actor-motion';
+import { Enemy } from '@/entities/enemy-factory';
+import { getFormRenderer, type FormVisual, type FormVisualSignal } from '@/entities/form-renderers/registry';
 import { Player } from '@/entities/player';
 import { generateRiftLayout } from '@/generation/rift-layout';
+import { mix32 } from '@/generation/seed-fork';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
 import { gameState, type SortieModifiers } from '@/managers/game-state';
@@ -55,9 +59,15 @@ import { clamp } from '@/utils/math';
 /** Render depths. The gaps leave room for decals, entities and the HUD. */
 const DEPTH = {
   surface: 0,
-  /** Owned by the AI system, which creates the enemy sprites. */
+  /** 丙 visual ≤ surface+1; must stay under the player (30). */
+  bing: 1,
+  /** 乙 seam core. */
+  yi: 20,
+  /** Owned by the AI system, which creates the enemy sprites. 甲 ≈ 25. */
   enemy: ENEMY_DEPTH,
   player: 30,
+  /** 丁 cloud. Must stay below visionMask (~50). */
+  ding: GAME_CONSTANTS.CONTAMINATION.VOLUME_DEPTH,
   /** Owned by the combat system: telegraphs and flashes, under the darkness mask. */
   combatFx: COMBAT_FX_DEPTH,
   visionMask: 50,
@@ -115,6 +125,9 @@ export class RiftScene extends Phaser.Scene {
   private defenseHudEffects: ActiveEffectInfo[] = [];
   /** Reused each post-update so the minimap visibility scan does not allocate. */
   private readonly minimapVisibilityQuery: Vector2 = { x: 0, y: 0 };
+  /** Reused for scheme D visibility samples (乙 seam is offset 1px into the floor). */
+  private readonly formVisQuery: Vector2 = { x: 0, y: 0 };
+  private readonly formVisuals = new Map<string, FormVisual>();
 
   constructor() {
     super({ key: 'RiftScene' });
@@ -331,6 +344,8 @@ export class RiftScene extends Phaser.Scene {
     this.bindExtractionKeys();
     this.bindToolKeys();
 
+    this.attachSchemeD();
+
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
@@ -421,6 +436,7 @@ export class RiftScene extends Phaser.Scene {
     // Enemies are drawn last of the three: their visibility is looked up against the mask
     // this frame produced, so an enemy is never drawn into darkness (rule R4).
     this.ai.postUpdate(delta);
+    this.syncSchemeDPoses(delta);
     // Minimap after visibility so explored tiles match this frame's cone + occlusion.
     this.syncMinimapExploration();
     this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
@@ -568,6 +584,7 @@ export class RiftScene extends Phaser.Scene {
   };
 
   private readonly onEnemyKilled = ({ enemyId }: { enemyId: string }): void => {
+    this.destroySchemeDVisual(enemyId);
     this.ai.despawn(enemyId);
     this.sortieKillCount++;
   };
@@ -1097,6 +1114,116 @@ export class RiftScene extends Phaser.Scene {
     pauseMenu.open(this);
   }
 
+  /**
+   * Scheme D production visuals (I3-E). Import is `src/entities/form-renderers/` only.
+   * Texture reuse: occupancy × substrate × coverage × seed × facing (jia bakes per facing
+   * at attach / facing change; bing/ding canvases are unique per seed and deform in place).
+   */
+  private attachSchemeD(): void {
+    this.destroySchemeDVisuals();
+    const renderer = getFormRenderer('d-mixed');
+    if (renderer?.ready !== true) return;
+    this.hosts.setSkipPaint(true);
+    const fragmentTypeId = this.layoutDebug.fragmentTypeId;
+    const seedRoot = this.layoutDebug.seed;
+    for (const view of this.ai.getEnemies()) {
+      if (!(view instanceof Enemy)) continue;
+      view.setVisualSuppressed(true);
+      const visual = renderer.attach({
+        scene: this,
+        form: view.getForm(),
+        seed: mix32(seedRoot, view.getId()),
+        depth: DEPTH.enemy,
+        fragmentTypeId,
+      });
+      this.formVisuals.set(view.getId(), visual);
+    }
+    for (const subject of this.hosts.getSubjects()) {
+      const pin = this.hosts.getVisualPin(subject.id) ?? undefined;
+      const visual = renderer.attach({
+        scene: this,
+        form: subject.form,
+        seed: mix32(seedRoot, subject.id),
+        depth: this.depthForHostPin(pin?.kind),
+        fragmentTypeId,
+        pin,
+      });
+      this.formVisuals.set(subject.id, visual);
+    }
+  }
+
+  private syncSchemeDPoses(deltaMs: number): void {
+    if (this.formVisuals.size === 0) return;
+    for (const [id, visual] of this.formVisuals) {
+      const view = this.ai.getEnemyById(id);
+      if (view) {
+        const pos = view.getPosition();
+        const vel = view instanceof Enemy ? view.ai.velocity : { x: 0, y: 0 };
+        visual.update({
+          x: pos.x,
+          y: pos.y,
+          facing4: view.getFacing4(),
+          moving: isActorWalking(Math.hypot(vel.x, vel.y)),
+          visibility: this.visibility.getVisibilityAt(pos),
+          signal: this.jiaSchemeSignal(view),
+          deltaMs,
+        });
+        continue;
+      }
+      const host = this.hosts.getSubjects().find((row) => row.id === id);
+      if (!host) continue;
+      const pin = this.hosts.getVisualPin(id);
+      visual.update({
+        x: pin?.attach ? pin.attach.seamX : host.position.x,
+        y: pin?.attach ? pin.attach.seamY : host.position.y,
+        facing4: this.hosts.getVisualFacing(id),
+        moving: this.hosts.getVisualMoving(id),
+        visibility: this.hostSchemeVisibility(id, host.position),
+        signal: this.hosts.getVisualSignal(id),
+        deltaMs,
+      });
+    }
+  }
+
+  private jiaSchemeSignal(view: { isEngaged(): boolean; getState(): AIState }): FormVisualSignal {
+    if (view.isEngaged()) return 'strike';
+    const state = view.getState();
+    if (state === AIState.CHASE) return 'awake';
+    if (state === AIState.ALERT || state === AIState.SUSPICIOUS) return 'inflated';
+    return 'idle';
+  }
+
+  private depthForHostPin(kind: 'wall' | 'cluster' | 'volume' | undefined): number {
+    if (kind === 'wall') return DEPTH.yi;
+    if (kind === 'cluster') return DEPTH.bing;
+    return DEPTH.ding;
+  }
+
+  private hostSchemeVisibility(hostId: string, fallback: Readonly<Vector2>): number {
+    const pin = this.hosts.getVisualPin(hostId);
+    const q = this.formVisQuery;
+    if (pin?.attach) {
+      q.x = pin.attach.seamX + pin.attach.nx;
+      q.y = pin.attach.seamY + pin.attach.ny;
+    } else {
+      q.x = fallback.x;
+      q.y = fallback.y;
+    }
+    return this.visibility.getVisibilityAt(q);
+  }
+
+  private destroySchemeDVisual(id: string): void {
+    const visual = this.formVisuals.get(id);
+    if (!visual) return;
+    visual.destroy();
+    this.formVisuals.delete(id);
+  }
+
+  private destroySchemeDVisuals(): void {
+    for (const visual of this.formVisuals.values()) visual.destroy();
+    this.formVisuals.clear();
+  }
+
   private onShutdown(): void {
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
@@ -1137,6 +1264,7 @@ export class RiftScene extends Phaser.Scene {
     }
     this.toolKeys = [];
     // Before the player is destroyed: this is what releases the swing speed modifier.
+    this.destroySchemeDVisuals();
     this.combat.destroy();
     this.hosts.destroy();
     this.detectionPulse.destroy();
