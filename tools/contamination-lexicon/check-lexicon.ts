@@ -352,6 +352,8 @@ assert(/visionMask:\s*50/.test(riftSrc), 'vision mask depth is 50');
 assert(riftSrc.includes('getVisualPin'), 'host attach passes getVisualPin');
 assert(riftSrc.includes('attach.seamX'), 'yi pose uses seamX, not tile centre');
 assert(!riftSrc.includes('Math.max(0.2'), 'RiftScene must not floor visibility at 0.2');
+assert(!riftSrc.includes('textureNamespace'), 'RiftScene must not pass textureNamespace');
+assert(!riftSrc.includes('stainWorldPoint'), 'RiftScene must not pass stainWorldPoint');
 
 const constantsSrc = readFileSync(resolve(ROOT, 'src/config/constants.ts'), 'utf8');
 const volumeDepth = /VOLUME_DEPTH:\s*(\d+)/.exec(constantsSrc);
@@ -360,10 +362,16 @@ assert(Number(volumeDepth![1]) < 50, 'ding visual depth < visionMask 50');
 
 const jiaSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/d/jia.ts'), 'utf8');
 const yiSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/d/yi.ts'), 'utf8');
+const bingSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/d/bing.ts'), 'utf8');
+const dingSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/d/ding.ts'), 'utf8');
 assert(!jiaSrc.includes('Math.max(0.2, pose.visibility)'), 'jia must not floor visibility at 0.2');
 assert(!yiSrc.includes('Math.max(0.2, pose.visibility)'), 'yi must not floor visibility at 0.2');
 assert(jiaSrc.includes('applyFormVisibility'), 'jia consumes visibility via applyFormVisibility');
 assert(yiSrc.includes('applyFormVisibility'), 'yi consumes visibility via applyFormVisibility');
+assert(jiaSrc.includes('textureNamespace'), 'jia keys honor optional textureNamespace');
+assert(bingSrc.includes('textureNamespace'), 'bing keys honor optional textureNamespace');
+assert(dingSrc.includes('textureNamespace'), 'ding keys honor optional textureNamespace');
+assert(dingSrc.includes('stainWorldPoint'), 'ding stains honor optional stainWorldPoint');
 const mapSrc = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
 assert(!mapSrc.includes('gymLiveMotion'), 'gym map lesson must not mention gymLiveMotion');
 assert(!mapSrc.includes('liveMotion'), 'gym map lesson must not enable liveMotion');

@@ -50,7 +50,8 @@
         color: #b0fff5;
       }
       #gym-map-controls label,
-      #gym-lexicon-controls label {
+      #gym-lexicon-controls label,
+      #gym-gallery-controls label {
         display: block;
         margin: 10px 0 3px;
         color: #8a8f96;
@@ -58,7 +59,8 @@
       }
       #gym-map-controls select,
       #gym-map-controls input[type="number"],
-      #gym-lexicon-controls select {
+      #gym-lexicon-controls select,
+      #gym-gallery-controls select {
         width: 100%;
         background: #0e1114;
         color: #c8cdd4;
@@ -67,7 +69,8 @@
         font: inherit;
       }
       #gym-map-controls .gym-check,
-      #gym-lexicon-controls .gym-check {
+      #gym-lexicon-controls .gym-check,
+      #gym-gallery-controls .gym-check {
         display: flex;
         align-items: center;
         gap: 8px;
@@ -82,7 +85,8 @@
         margin-top: 12px;
       }
       #gym-map-controls button,
-      #gym-lexicon-controls button {
+      #gym-lexicon-controls button,
+      #gym-gallery-nav button {
         background: #12161a;
         color: #e8eaed;
         border: 1px solid #2a2d32;
@@ -92,6 +96,95 @@
       }
       #gym-map-controls button:disabled {
         color: #8a8f96;
+      }
+      #gym-gallery-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      #gym-gallery-nav h3 {
+        font-size: 12px;
+        font-weight: normal;
+        color: #8a8f96;
+        margin: 12px 0 4px;
+        letter-spacing: 0.04em;
+      }
+      #gym-gallery-nav button {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        width: 100%;
+        text-align: left;
+        padding: 4px 6px;
+        background: transparent;
+      }
+      #gym-gallery-nav button[aria-current="true"] {
+        color: #e0a848;
+        border-color: #2a2d32;
+      }
+      #gym-gallery-nav .gym-gal-n { color: #8a8f96; }
+      #gym-gallery-dedupe .gym-gal-kv,
+      #gym-roster .gym-gal-kv {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 2px 0;
+      }
+      #gym-gallery-dedupe dl,
+      #gym-gallery-hover dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2px 12px;
+        margin: 8px 0;
+      }
+      #gym-gallery-dedupe dt,
+      #gym-gallery-hover dt,
+      .gym-gal-k {
+        color: #8a8f96;
+      }
+      #gym-gallery-dedupe dd,
+      #gym-gallery-hover dd,
+      .gym-gal-v {
+        color: #c8cdd4;
+        margin: 0;
+      }
+      #gym-gallery-dedupe ul {
+        margin: 0 0 8px 1.1em;
+      }
+      #game-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-width: 960px;
+        min-height: 640px;
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-content: safe center;
+        align-items: safe center;
+      }
+      #gym-gallery-captions {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .gym-gal-cap,
+      .gym-gal-band {
+        position: absolute;
+        font-size: 11px;
+        line-height: 1.3;
+        white-space: nowrap;
+        color: #c8cdd4;
+      }
+      .gym-gal-cap { text-align: center; }
+      .gym-gal-pair { margin-right: 10px; }
+      .gym-gal-badge {
+        display: block;
+        color: #e0a848;
+        margin-top: 2px;
       }
       #gym-map-legend span {
         display: inline-block;
@@ -104,18 +197,6 @@
         list-style: none;
         margin: 4px 0;
       }
-      #game-container {
-        width: 100%;
-        height: 100%;
-        min-width: 960px;
-        min-height: 640px;
-        overflow: auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        justify-content: safe center;
-        align-items: safe center;
-      }
     </style>
   </head>
   <body>
@@ -124,6 +205,7 @@
         <h1 id="gym-title">练习场</h1>
         <nav id="gym-nav">
           <a id="gym-link-lexicon" href="/gym.html?lesson=lexicon">污染句法</a>
+          <a id="gym-link-lexicon-gallery" href="/gym.html?lesson=lexicon-gallery">污染句法陈列馆</a>
           <a id="gym-link-enemy" href="/gym.html">敌人移动</a>
           <a id="gym-link-player" href="/gym.html?lesson=player">玩家外形</a>
           <a id="gym-link-map" href="/gym.html?lesson=map">地图生成</a>
@@ -131,7 +213,7 @@
         <p>独立页，不进主菜单。Agent 入口：<code>docs/dev/gym.md</code>。</p>
 
         <h2>正在演示</h2>
-        <p id="gym-roster">载入中</p>
+        <div id="gym-roster">载入中</div>
         <p id="gym-status"></p>
 
         <div id="gym-lexicon-controls" hidden>
@@ -173,6 +255,22 @@
           <div class="gym-actions">
             <button id="gym-lexicon-generate" type="button">生成</button>
           </div>
+        </div>
+
+        <div id="gym-gallery-controls" hidden>
+          <h2>碎片</h2>
+          <label for="gym-gallery-fragment">碎片身份</label>
+          <select id="gym-gallery-fragment"></select>
+          <label class="gym-check" for="gym-gallery-illegal">
+            <input id="gym-gallery-illegal" type="checkbox" />
+            含抽卡会丢的非法组合
+          </label>
+          <h2>去重说明</h2>
+          <div id="gym-gallery-dedupe"></div>
+          <h2>馆藏目录</h2>
+          <nav id="gym-gallery-nav"></nav>
+          <h2>参数</h2>
+          <div id="gym-gallery-hover"></div>
         </div>
 
         <div id="gym-map-controls" hidden>
@@ -247,6 +345,11 @@
           <li>止损从连续性 × 覆盖深度查表，不是接触词素。场=挥击打不动但仍踩踏/进体积吃混乱；菌落=多颗核，打一颗其余还在；渗透核露、覆盖核埋。</li>
           <li>不开视野迷雾。不接遭遇识别旁白。侧栏止损行是开发说明，不是头上名字。</li>
         </ul>
+        <ul id="gym-rules-gallery" hidden>
+          <li>一次只进一个厅（孔谱 × 基体）。拖动画布平移，滚轮缩放。</li>
+          <li>只 attach 生产方案 D。不刷玩家、不创建 Enemy / 宿主。</li>
+          <li>开发标签走 DOM，头上无字。表名与档位分行。</li>
+        </ul>
         <ul id="gym-rules-map" hidden>
           <li>布局走出击同一套 <code>generateRiftLayout</code>，禁止另写生成器。</li>
           <li>地表走 <code>RiftSurfacePainter</code>。不开 <code>VisibilitySystem</code>。</li>
@@ -270,7 +373,9 @@
         <p><code>npm run dev</code> 后本页，或 <code>npm run gym</code>。</p>
         <p><a href="/">回主游戏</a></p>
       </aside>
-      <div id="game-container"></div>
+      <div id="game-container">
+        <div id="gym-gallery-captions" hidden></div>
+      </div>
     </div>
     <script type="module" src="/src/gym/main.ts"></script>
   </body>

@@ -45,7 +45,8 @@ class JiaVisualD implements FormVisual {
     this.recipe = recipe;
     this.scene = ctx.scene;
     const tag = jiaRecipeTag(recipe);
-    this.keyFor = (facing, gait, frame, mode) => `${tag}_${facing}_${gait}_${frame}_${mode}`;
+    const prefix = ctx.textureNamespace ? `${ctx.textureNamespace}_` : '';
+    this.keyFor = (facing, gait, frame, mode) => `${prefix}${tag}_${facing}_${gait}_${frame}_${mode}`;
     this.ensureFacing('down');
     const start = this.keyFor('down', 'idle', 0, 'patrol');
     this.image = ctx.scene.add.image(0, 0, start);

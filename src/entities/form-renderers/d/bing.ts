@@ -27,7 +27,8 @@ interface BingState {
 /** Reuse key: occupancy × substrate × coverage × seed (+ fragment / continuity). Facing does not flip 丙. */
 function textureKey(ctx: FormAttachContext): string {
   const fragment = ctx.fragmentTypeId ?? LEXICON_DEFAULT_FRAGMENT;
-  return `d_paint_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}`;
+  const stem = `d_paint_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}`;
+  return ctx.textureNamespace ? `${ctx.textureNamespace}_${stem}` : stem;
 }
 
 function makeTexture(scene: Phaser.Scene, key: string, w: number, h: number): Phaser.Textures.CanvasTexture {

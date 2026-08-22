@@ -21,13 +21,12 @@ import type { GeneratedRiftLayout } from '@/generation/types';
 import { ContaminationHostSystem } from '@/systems/contamination-host-system';
 import { RiftSurfacePainter } from '@/systems/procedural-surface';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
+import { bindGymCamera, GYM_CAMERA_ZOOM_MAX, GYM_CAMERA_ZOOM_MIN, type GymCameraHandle } from '@/gym/gym-camera';
 import { TileType, type Vector2 } from '@/types/game-types';
 
 const SURFACE_KEY = 'gym-map-surface';
 const MARKER_DEPTH = 20;
 const HOST_CALLOUT_DEPTH = 27;
-const ZOOM_MIN = 0.12;
-const ZOOM_MAX = 3;
 const MARKER = 12;
 const HOST_CALLOUT = 22;
 /** Off-island dummy so host ticks still paint 丙/丁 without a player. */
@@ -62,7 +61,7 @@ export class GymMapScene extends Phaser.Scene {
   private readonly hosts = new ContaminationHostSystem();
   private markers: Phaser.GameObjects.Graphics | null = null;
   private hostCallouts: Phaser.GameObjects.Graphics | null = null;
-  private dragging = false;
+  private cameraHandle: GymCameraHandle | null = null;
   private generating = false;
   private formBound = false;
   private lastLayout: GeneratedRiftLayout | null = null;
@@ -77,7 +76,7 @@ export class GymMapScene extends Phaser.Scene {
     this.input.mouse?.disableContextMenu();
 
     this.bindForm();
-    this.bindCamera();
+    this.cameraHandle = bindGymCamera(this);
     this.queueRebuild(false);
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
@@ -277,51 +276,6 @@ export class GymMapScene extends Phaser.Scene {
     }
   }
 
-  private bindCamera(): void {
-    this.input.on('pointerdown', this.onPointerDown, this);
-    this.input.on('pointerup', this.onPointerUp, this);
-    this.input.on('pointerupoutside', this.onPointerUp, this);
-    this.input.on('pointermove', this.onPointerMove, this);
-    this.input.on('wheel', this.onWheel, this);
-  }
-
-  private onPointerDown(): void {
-    this.dragging = true;
-  }
-
-  private onPointerUp(): void {
-    this.dragging = false;
-  }
-
-  private onPointerMove(pointer: Phaser.Input.Pointer): void {
-    if (!this.dragging || !pointer.isDown) return;
-    const camera = this.cameras.main;
-    camera.scrollX -= (pointer.x - pointer.prevPosition.x) / camera.zoom;
-    camera.scrollY -= (pointer.y - pointer.prevPosition.y) / camera.zoom;
-  }
-
-  private onWheel(
-    pointer: Phaser.Input.Pointer,
-    _currentlyOver: Phaser.GameObjects.GameObject[],
-    _dx: number,
-    dy: number,
-    _dz: number,
-    event: WheelEvent,
-  ): void {
-    event.preventDefault();
-    const camera = this.cameras.main;
-    const before = camera.getWorldPoint(pointer.x, pointer.y);
-    const next = Phaser.Math.Clamp(
-      camera.zoom * (dy > 0 ? 0.9 : 1.1),
-      ZOOM_MIN,
-      ZOOM_MAX,
-    );
-    camera.setZoom(next);
-    const after = camera.getWorldPoint(pointer.x, pointer.y);
-    camera.scrollX += before.x - after.x;
-    camera.scrollY += before.y - after.y;
-  }
-
   private setButtonsDisabled(disabled: boolean): void {
     for (const id of ['gym-map-generate', 'gym-map-random']) {
       const el = document.getElementById(id);
@@ -330,11 +284,8 @@ export class GymMapScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
-    this.input.off('pointerdown', this.onPointerDown, this);
-    this.input.off('pointerup', this.onPointerUp, this);
-    this.input.off('pointerupoutside', this.onPointerUp, this);
-    this.input.off('pointermove', this.onPointerMove, this);
-    this.input.off('wheel', this.onWheel, this);
+    this.cameraHandle?.destroy();
+    this.cameraHandle = null;
     const generate = document.getElementById('gym-map-generate');
     const random = document.getElementById('gym-map-random');
     const draw = document.getElementById('gym-contam-draw');
@@ -380,7 +331,7 @@ function fitCamera(
 ): void {
   camera.setBounds(0, 0, worldW, worldH);
   const zoom = Math.min(camera.width / worldW, camera.height / worldH) * 0.92;
-  camera.setZoom(Phaser.Math.Clamp(zoom, ZOOM_MIN, ZOOM_MAX));
+  camera.setZoom(Phaser.Math.Clamp(zoom, GYM_CAMERA_ZOOM_MIN, GYM_CAMERA_ZOOM_MAX));
   camera.centerOn(worldW / 2, worldH / 2);
 }
 

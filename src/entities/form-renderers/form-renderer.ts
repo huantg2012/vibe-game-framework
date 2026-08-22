@@ -51,6 +51,17 @@ export interface FormAttachContext {
   depth: number;
   /** 观察院子当前碎片。方案 D 用来推配色。 */
   fragmentTypeId?: string;
+  /**
+   * Optional texture-key prefix (gallery). Sortie must omit.
+   * When set, 甲 / 丙 / 丁 keys become `${textureNamespace}_` + the production stem.
+   * `destroy()` must remove the prefixed keys.
+   */
+  textureNamespace?: string;
+  /**
+   * 丁脚底浊点锚点。有则用它；无则读相机中心（出击不变）。
+   * 陈列馆浏览态传场地外沉点。
+   */
+  stainWorldPoint?: { x: number; y: number };
   /** 甲可省略。乙=核世界坐标（liveMotion 时为缝）；丙=簇核世界坐标；丁=走廊盒世界像素。 */
   pin?: {
     kind: 'wall' | 'cluster' | 'volume';

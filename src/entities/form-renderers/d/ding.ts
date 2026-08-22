@@ -38,7 +38,8 @@ const PAD = 40;
 /** Reuse key: occupancy × substrate × coverage × seed (+ fragment / continuity). Facing does not flip 丁. */
 function textureKey(ctx: FormAttachContext): string {
   const fragment = ctx.fragmentTypeId ?? LEXICON_DEFAULT_FRAGMENT;
-  return `d_volume_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}`;
+  const stem = `d_volume_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}`;
+  return ctx.textureNamespace ? `${ctx.textureNamespace}_${stem}` : stem;
 }
 
 function makeTexture(scene: Phaser.Scene, key: string, w: number, h: number): Phaser.Textures.CanvasTexture {
@@ -111,7 +112,11 @@ function canvasSize(pin: FormAttachContext['pin']): number {
   return Math.max(160, Math.min(384, Math.ceil(side / 16) * 16));
 }
 
-function followPos(scene: Phaser.Scene): { x: number; y: number } | null {
+function followPos(
+  scene: Phaser.Scene,
+  stainWorldPoint?: { x: number; y: number },
+): { x: number; y: number } | null {
+  if (stainWorldPoint) return stainWorldPoint;
   const mid = scene.cameras.main.midPoint;
   if (!mid) return null;
   return { x: mid.x, y: mid.y };
@@ -163,6 +168,7 @@ interface DingState {
   canvasW: number;
   canvasH: number;
   hostId: string | null;
+  stainWorldPoint?: { x: number; y: number };
 }
 
 export function attachDingD(ctx: FormAttachContext): FormVisual {
@@ -195,6 +201,7 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
     canvasW,
     canvasH,
     hostId: hostIdAtPin(ctx),
+    stainWorldPoint: ctx.stainWorldPoint,
   };
 
   return {
@@ -230,7 +237,7 @@ function paintStains(state: DingState, pose: FormVisualPose, live: PixelRect): v
   const gfx = state.stains;
   gfx.clear();
   if (pose.visibility <= 0) return;
-  const player = followPos(state.scene);
+  const player = followPos(state.scene, state.stainWorldPoint);
   if (!player || !aabbHits(player.x, player.y, live)) return;
   const mid = state.recipe.mid;
   const core = state.recipe.core;
