@@ -207,7 +207,7 @@ export class RiftScene extends Phaser.Scene {
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
     });
-    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt);
+    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true });
 
     this.loot.create(this, layout.kindlingNodes, this.player.getSprite(), {
       getVisibilityAt: this.visibilityAt,

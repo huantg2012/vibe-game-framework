@@ -59,7 +59,9 @@ import type { EnemySpawnData, TileMapData } from '@/types/map-types';
 
 const RESPAWN_MS = 800;
 const DEPTH = { surface: 0, yardBias: 0.05, bing: 1, yi: 20, player: 30 } as const;
-const GYM_HOST_OPTS = { gymLiveMotion: true } as const;
+/** Internal alias of host option `liveMotion`. Must not appear in rift-scene.ts. */
+const gymLiveMotion = true;
+const GYM_HOST_OPTS = { liveMotion: gymLiveMotion } as const;
 const INTRO_STATUS =
   '玩家默认无敌。侧栏可开「感受伤害」。WASD 移动，空格挥击。点生成后刷当前配置；击杀后按当前配置再刷。不开迷雾。';
 

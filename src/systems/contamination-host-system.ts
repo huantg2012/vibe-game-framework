@@ -2,36 +2,36 @@
  * Non-human contamination hosts: 乙缝核 / 丙簇核 / 丁体积 (DEC-076).
  * Not a second FSM. No corridor collision. Depth stays below the vision mask.
  *
- * ## Sortie frame identity (R2-C2 / DEC-080) — required argument
+ * ## Live motion (I3-F / DEC-084)
  *
- * `RiftScene` calls `hosts.create(scene, layout, combat, chaos, visibilityAt)`
- * with **no 6th argument**. `gymLiveMotion` becomes true only when
- * `options?.gymLiveMotion === true`. The gym map lesson also omits the option.
+ * Public option is `liveMotion?: boolean` (default false). `RiftScene` passes
+ * `{ liveMotion: true }`. The gym lexicon lesson does too. The gym map lesson
+ * omits the 6th argument so hosts stay a still frame.
  *
  * I3-A: `create` materializes 乙/丙/丁 from `layout.contaminationDraw` and does
  * **not** call `drawSortie`. Jia forms on that draw feed `EnemySpawnData.form`.
  *
- * When `gymLiveMotion === false` (default, every sortie):
+ * When `liveMotion === false` (map lesson and rollback):
  * - Birth 乙 is still `edge.tiles[slot]` (collectWallEdges visit order), core at
  *   **tile centre**. `orderWallEdgeTiles` is not used for spawn or ticks.
- * - `tickYiSortie` / `tickBingSortie` / `tickDingSortie` are the pre-R2-C2
+ * - `tickYiSortie` / `tickBingSortie` / `tickDingSortie` stay the still-frame
  *   bodies: 乙 core does not move, 丁 box does not move, `lexemes.contact` is
- *   **not** read, damage stays by host kind (乙 always 15 / 350 ms adjacent
- *   strike, 丙 always step chaos, 丁 always volume chaos + sight).
- * - `strikeFloors` stays the birth polyline set. Hazard AABB stays the birth
- *   corridor. This file must not call `stepYiWalk` / `dingLiveRect` on that path.
+ *   **not** read, damage stays by host kind.
+ * - This file must not call `stepYiWalk` / `dingLiveRect` on that path.
  *
- * When `gymLiveMotion === true` (practice lexicon lesson only):
+ * When `liveMotion === true` (sortie + lexicon lesson):
  * - 乙 core on the wall-floor seam, walks `orderWallEdgeTiles` (segment breaks
  *   are not crossed), `strikeFloors` recomputed from the current tile.
  * - 丁 cloud translates / morphs; volume chaos + sight use the **current** rect.
  * - `resolveContactChannel(portfolio, form.lexemes.contact)` (rewrite_to, no
  *   new DPS). 丁 never becomes melee.
  * - `resolveStopLoss` decides hittable cores / colony nuclei. Unkillable still
- *   applies step chaos / volume field. Sortie ticks never call it.
+ *   applies step chaos / volume field (unkillable ≠ harmless).
  *
- * `src/scenes/rift-scene.ts` is not modified by R2-C2 / DEC-083. Combat V3 is not
- * modified: no screen shake, no hit-stop, no damage numbers. Prices do not rise.
+ * Combat V3 is not modified: no screen shake, no hit-stop, no damage numbers.
+ * Prices do not rise. If a fight starts to feel "satisfying to win," this
+ * wiring failed — unkillable exists so going around is cheaper, not as a new
+ * way to fight.
  */
 
 import Phaser from 'phaser';
@@ -81,7 +81,7 @@ interface HostBase {
   alive: boolean;
   gfx: Phaser.GameObjects.Graphics;
   core: Vector2;
-  /** Gym live hittable-core marks. Null on the sortie path. */
+  /** Live hittable-core marks. Null when `liveMotion` is false. */
   marks: Phaser.GameObjects.Graphics | null;
 }
 
@@ -100,7 +100,7 @@ interface YiHost extends HostBase {
   strikeFloors: { col: number; row: number }[];
   windupMs: number;
   telegraph: Phaser.GameObjects.Graphics;
-  /** Gym live only. Null on the sortie path so ticks cannot wander. */
+  /** Live walk only. Null when `liveMotion` is false so still-frame ticks cannot wander. */
   walk: YiWalkState | null;
   floorUniverse: readonly { col: number; row: number }[];
   moving: boolean;
@@ -108,18 +108,17 @@ interface YiHost extends HostBase {
 
 export interface HostSystemOptions {
   /**
-   * Practice-field only. Default false.
-   * RiftScene does not pass this, so sortie spawn stays tile-centre and
-   * tickYiSortie / tickDingSortie stay the pre-R2-C2 bodies.
+   * Default false. `RiftScene` and the lexicon lesson pass `{ liveMotion: true }`.
+   * The map lesson omits this so still-frame ticks stay in use.
    */
-  readonly gymLiveMotion?: boolean;
+  readonly liveMotion?: boolean;
 }
 
 interface BingHost extends HostBase {
   kind: 'bing';
   pin: ClusterCorePin;
   phase: number;
-  /** Gym live colony only. Empty on sortie and on unkillable field. */
+  /** Live colony only. Empty when `liveMotion` is false and on unkillable field. */
   nuclei: BingNucleus[];
 }
 
@@ -160,8 +159,8 @@ export class ContaminationHostSystem {
   private spawnSeq = 0;
   /** Gym lexicon candidate layer. Default false: still paint stand-in geometry. */
   private skipPaint = false;
-  /** Gym lexicon only. Default false: sortie-identical cores and ticks. */
-  private gymLiveMotion = false;
+  /** Default false: still-frame cores and ticks (map lesson / rollback). */
+  private liveMotion = false;
 
   /**
    * Materialize 乙/丙/丁 from `layout.contaminationDraw`. Does not call `drawSortie`.
@@ -180,7 +179,7 @@ export class ContaminationHostSystem {
     this.combat = combat;
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
-    this.gymLiveMotion = options?.gymLiveMotion === true;
+    this.liveMotion = options?.liveMotion === true;
 
     const pins = layout.contaminationPins;
     const drawn = layout.contaminationDraw;
@@ -211,7 +210,7 @@ export class ContaminationHostSystem {
     this.pins = null;
     this.spawnSeq = 0;
     this.skipPaint = false;
-    this.gymLiveMotion = false;
+    this.liveMotion = false;
   }
 
   /**
@@ -233,7 +232,7 @@ export class ContaminationHostSystem {
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
     this.spawnSeq = 0;
-    this.gymLiveMotion = options?.gymLiveMotion === true;
+    this.liveMotion = options?.liveMotion === true;
   }
 
   clearHosts(): void {
@@ -297,12 +296,12 @@ export class ContaminationHostSystem {
     const host = this.hosts.find((h) => h.id === hostId && h.alive);
     if (!host) return null;
     if (host.kind === 'yi') {
-      if (!this.gymLiveMotion) return { kind: 'wall', x: host.core.x, y: host.core.y };
+      if (!this.liveMotion) return { kind: 'wall', x: host.core.x, y: host.core.y };
       const attach = wallAttachForTile(host.tile, host.strikeFloors, TILE);
       return { kind: 'wall', x: host.core.x, y: host.core.y, attach };
     }
     if (host.kind === 'bing') return { kind: 'cluster', x: host.core.x, y: host.core.y };
-    if (this.gymLiveMotion) {
+    if (this.liveMotion) {
       return {
         kind: 'volume',
         x: host.live.x,
@@ -348,11 +347,11 @@ export class ContaminationHostSystem {
     return 'down';
   }
 
-  /** Gym live: remaining hittable cores. Sortie always 0 (caller should not use). */
+  /** Remaining hittable cores when `liveMotion`. Still-frame path returns 1. */
   getLiveNucleusCount(hostId: string): number {
     const host = this.hosts.find((h) => h.id === hostId && h.alive);
     if (!host) return 0;
-    if (!this.gymLiveMotion) return 1;
+    if (!this.liveMotion) return 1;
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal' || !stop.hittable) return 0;
     if (host.kind === 'bing' && host.nuclei.length > 0) {
@@ -377,7 +376,7 @@ export class ContaminationHostSystem {
         Math.abs(playerCol - host.pin.floorCol) <= 1 && Math.abs(playerRow - host.pin.floorRow) <= 1;
       return vis || onPaint;
     }
-    if (this.gymLiveMotion) {
+    if (this.liveMotion) {
       const px = playerCol * TILE + TILE / 2;
       const py = playerRow * TILE + TILE / 2;
       return vis || pointInRect({ x: px, y: py }, host.live);
@@ -407,7 +406,7 @@ export class ContaminationHostSystem {
         continue;
       }
       if (combat && swung && !this.swingHit) {
-        if (this.gymLiveMotion && host.kind === 'bing' && host.nuclei.length > 0) {
+        if (this.liveMotion && host.kind === 'bing' && host.nuclei.length > 0) {
           const hit = host.nuclei.find((n) => n.alive && this.coreInSwing(playerPos, combat.getLockedAttackAngle(), n.core));
           if (hit) {
             this.hitCore(host, hit);
@@ -435,21 +434,25 @@ export class ContaminationHostSystem {
       console.warn('[contamination-hosts] yi skipped: no wall edge');
       return;
     }
+    if (resolveStopLoss(form) === 'illegal') {
+      console.warn('[contamination-hosts] yi skipped: illegal stop-loss');
+      return;
+    }
     const tile = edge.tiles[Math.min(slot, edge.tiles.length - 1)]!;
     // Tile identity is the original collectWallEdges / practice-pin array slot.
     // Do not substitute orderWallEdgeTiles here — that would change which cell
-    // 乙 occupies on a sortie. gymLiveMotion only walks after that same birth cell.
+    // 乙 occupies on a sortie. liveMotion only walks after that same birth cell.
     const center = { x: tile.col * TILE + TILE / 2, y: tile.row * TILE + TILE / 2 };
     const attach = wallAttachForTile(tile, edge.strikeFloors, TILE);
-    const core = this.gymLiveMotion ? { x: attach.seamX, y: attach.seamY } : center;
+    const core = this.liveMotion ? { x: attach.seamX, y: attach.seamY } : center;
     const gfx = scene.add.graphics().setDepth(20);
     const telegraph = scene.add.graphics().setDepth(21);
-    const marks = this.gymLiveMotion ? scene.add.graphics().setDepth(22) : null;
+    const marks = this.liveMotion ? scene.add.graphics().setDepth(22) : null;
     this.paintYi(gfx, core, false);
     const floors = edge.strikeFloors.map((f) => ({ col: f.col, row: f.row }));
     let walk: YiWalkState | null = null;
     let strikeFloors = floors;
-    if (this.gymLiveMotion) {
+    if (this.liveMotion) {
       const ordered = orderWallEdgeTiles(edge.tiles);
       const segments = splitWalkSegments(ordered);
       const segment = segmentContaining(segments, tile) ?? segments[0] ?? [tile];
@@ -491,13 +494,17 @@ export class ContaminationHostSystem {
       console.warn('[contamination-hosts] bing skipped: no cluster core');
       return;
     }
+    if (resolveStopLoss(form) === 'illegal') {
+      console.warn('[contamination-hosts] bing skipped: illegal stop-loss');
+      return;
+    }
     const gfx = scene.add.graphics().setDepth(0.2);
     const ox = (slot % 3) * TILE;
     const oy = Math.floor(slot / 3) * TILE;
     const core = { x: pin.cx + ox, y: pin.cy + oy };
-    if (!this.gymLiveMotion) this.paintCore(gfx, core, 0x2ae6c8, 3);
-    const nuclei = this.gymLiveMotion ? this.spawnBingNuclei(form, pin, ox, oy) : [];
-    const marks = this.gymLiveMotion ? scene.add.graphics().setDepth(0.35) : null;
+    if (!this.liveMotion) this.paintCore(gfx, core, 0x2ae6c8, 3);
+    const nuclei = this.liveMotion ? this.spawnBingNuclei(form, pin, ox, oy) : [];
+    const marks = this.liveMotion ? scene.add.graphics().setDepth(0.35) : null;
     this.hosts.push({
       kind: 'bing',
       id: `ENM_BING_${String(slot + 1).padStart(2, '0')}`,
@@ -529,13 +536,17 @@ export class ContaminationHostSystem {
       console.warn('[contamination-hosts] ding skipped: no corridor');
       return;
     }
+    if (resolveStopLoss(form) === 'illegal') {
+      console.warn('[contamination-hosts] ding skipped: illegal stop-loss');
+      return;
+    }
     const gfx = scene.add.graphics().setDepth(C.VOLUME_DEPTH);
     const core = {
       x: box.coreCol * TILE + TILE / 2 + (slot % 2) * TILE,
       y: box.coreRow * TILE + TILE / 2,
     };
     this.paintDing(gfx, box, core, false);
-    const marks = this.gymLiveMotion ? scene.add.graphics().setDepth(C.VOLUME_DEPTH + 1) : null;
+    const marks = this.liveMotion ? scene.add.graphics().setDepth(C.VOLUME_DEPTH + 1) : null;
     this.hosts.push({
       kind: 'ding',
       id: `ENM_DING_${String(slot + 1).padStart(2, '0')}`,
@@ -554,7 +565,7 @@ export class ContaminationHostSystem {
   }
 
   private tickYi(host: YiHost, col: number, row: number, dtMs: number): void {
-    if (this.gymLiveMotion) this.tickYiLive(host, col, row, dtMs);
+    if (this.liveMotion) this.tickYiLive(host, col, row, dtMs);
     else this.tickYiSortie(host, col, row, dtMs);
   }
 
@@ -581,6 +592,8 @@ export class ContaminationHostSystem {
   }
 
   private tickYiLive(host: YiHost, col: number, row: number, dtMs: number): void {
+    const stop = resolveStopLoss(host.form);
+    if (stop === 'illegal') return;
     const walk = host.walk;
     if (walk) {
       const stepped = stepYiWalk(walk, host.form.lexemes.motion, dtMs, TILE, host.floorUniverse);
@@ -616,7 +629,7 @@ export class ContaminationHostSystem {
   }
 
   private tickBing(host: BingHost, col: number, row: number, dtMs: number): void {
-    if (this.gymLiveMotion) this.tickBingLive(host, col, row, dtMs);
+    if (this.liveMotion) this.tickBingLive(host, col, row, dtMs);
     else this.tickBingSortie(host, col, row, dtMs);
   }
 
@@ -634,6 +647,8 @@ export class ContaminationHostSystem {
   }
 
   private tickBingLive(host: BingHost, col: number, row: number, dtMs: number): void {
+    const stop = resolveStopLoss(host.form);
+    if (stop === 'illegal') return;
     host.phase += dtMs * 0.002;
     const inflated = Math.sin(host.phase) > 0.35;
     const stepped = col !== this.lastPlayerTile.col || row !== this.lastPlayerTile.row;
@@ -664,7 +679,7 @@ export class ContaminationHostSystem {
     playerPos: Readonly<Vector2>,
     dtMs: number,
   ): void {
-    if (this.gymLiveMotion) this.tickDingLive(host, playerPos, dtMs);
+    if (this.liveMotion) this.tickDingLive(host, playerPos, dtMs);
     else this.tickDingSortie(host, col, row, playerPos, dtMs);
   }
 
@@ -692,6 +707,8 @@ export class ContaminationHostSystem {
   }
 
   private tickDingLive(host: DingHost, playerPos: Readonly<Vector2>, dtMs: number): void {
+    const stop = resolveStopLoss(host.form);
+    if (stop === 'illegal') return;
     const prev = host.live;
     host.elapsedMs += dtMs;
     host.live = dingLiveRect(host.box, host.form.lexemes.motion, host.elapsedMs, TILE);
@@ -763,7 +780,7 @@ export class ContaminationHostSystem {
 
   private paintMarks(host: Host): void {
     const gfx = host.marks;
-    if (!gfx || !this.gymLiveMotion) return;
+    if (!gfx || !this.liveMotion) return;
     gfx.clear();
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal' || !stop.hittable) {
@@ -800,7 +817,7 @@ export class ContaminationHostSystem {
   }
 
   private hitCore(host: Host, nucleus?: BingNucleus): void {
-    if (this.gymLiveMotion) {
+    if (this.liveMotion) {
       const stop = resolveStopLoss(host.form);
       if (stop === 'illegal' || !stop.hittable) return;
       if (host.kind === 'bing' && stop.family === 'scatter_rejoin') {
@@ -842,7 +859,7 @@ export class ContaminationHostSystem {
     }
     gfx.setVisible(true);
     gfx.clear();
-    if (this.gymLiveMotion) return;
+    if (this.liveMotion) return;
     gfx.fillStyle(hot ? 0x3cffd4 : 0x2ae6c8, 1);
     gfx.fillRect(Math.round(core.x) - 1, Math.round(core.y) - 1, 3, 3);
   }
@@ -884,7 +901,7 @@ export class ContaminationHostSystem {
     gfx.fillStyle(0x0e4a3f, awake ? 0.55 : 0.32);
     const rect = live ?? aabbPixelRect(box, TILE);
     gfx.fillRect(rect.x, rect.y, rect.w, rect.h);
-    if (this.gymLiveMotion) return;
+    if (this.liveMotion) return;
     gfx.fillStyle(awake ? 0x2ae6c8 : 0x1a6b5c, 1);
     gfx.fillRect(Math.round(core.x) - 1, Math.round(core.y) - 1, 2, 2);
   }
@@ -913,7 +930,7 @@ export class ContaminationHostSystem {
         this.paintYi(host.gfx, host.core, host.windupMs >= 0);
       } else if (host.kind === 'bing') {
         const inflated = Math.sin(host.phase) > 0.35;
-        if (this.gymLiveMotion) this.paintBingLive(host, inflated);
+        if (this.liveMotion) this.paintBingLive(host, inflated);
         else this.paintCore(host.gfx, host.core, inflated ? 0x3cffd4 : 0x2ae6c8, inflated ? 4 : 3);
       } else {
         this.paintDing(
@@ -921,7 +938,7 @@ export class ContaminationHostSystem {
           host.box,
           host.core,
           host.awake,
-          this.gymLiveMotion ? host.live : undefined,
+          this.liveMotion ? host.live : undefined,
         );
       }
       this.paintMarks(host);

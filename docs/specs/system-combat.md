@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
-last-modified-by: design agent（I3-D 出击同读接触/止损，DEC-084）
+last-modified-by: code agent（I3-F 出击同读接触/止损）
 last-modified-date: 2026-08-22
 interface-changed: true
 slice: 1
@@ -436,8 +436,7 @@ t=500 ms       冷却结束，可再次挥击
 | 兑现处 | 怎么读接触 / 止损 |
 | ------ | ----------------- |
 | 练习场句法课，`liveMotion === true` | 读 `lexemes.contact` 走打血 / 混乱 / 视野。读 `resolveStopLoss` 决定扣不扣核。没有「仅驱散核」通道。gym 调用方内部可留旧字段别名，禁止 `RiftScene` 出现 `gymLiveMotion` |
-| 出击（目标合同；落地 I3-F） | **同一套**：读 `form.lexemes.contact` 与 `resolveStopLoss`。`hittable === false` 不扣核、不白闪、不发 `ENEMY_DAMAGED`（不收战斗混乱）。挥击噪声仍按 A8。非法词素走既有 `rewrite_to`。废止「出击按宿主 kind 硬编码」 |
-| 出击（I3-F 前实现） | 仍按宿主 kind：甲扇形打血、乙邻格打血、丙踩踏混乱、丁体积混乱+视野。乙丙丁核仍可打 50 HP。过渡，不是合同 |
+| 出击（`liveMotion === true`） | **同一套**：读 `form.lexemes.contact` 与 `resolveStopLoss`。`hittable === false` 不扣核、不白闪、不发 `ENEMY_DAMAGED`（不收战斗混乱）。挥击噪声仍按 A8。非法词素走既有 `rewrite_to`。废止「出击按宿主 kind 硬编码」。地图课不传该开关，静帧 tick 仍在 |
 
 概念基体三类在丁上仍走体积场，不发明精神攻击，不给丁开打血。非法词素沿用既有 `rewrite_to`（三刀→该孔默认攻击通道），不加 DPS 词缀。
 

@@ -2,8 +2,9 @@
  * Practice-field live motion + contact channels (R2-C2 / DEC-080).
  * Pure. No Phaser. No collision writes.
  *
- * Callers must gate on `gymLiveMotion === true`. Sortie ticks never import
- * these steppers — that is the frame-identity contract.
+ * Callers must gate on `liveMotion === true`. Still-frame ticks
+ * (`tickYiSortie` / `tickBingSortie` / `tickDingSortie`) stay for
+ * `liveMotion === false` (map lesson and rollback).
  */
 
 import type { ContaminationForm } from '@/generation/contamination-draw';
@@ -26,11 +27,11 @@ import {
 } from '@/generated/contamination-lexicon-data';
 import type { Vector2 } from '@/types/game-types';
 
-/** Slow crawl along the wall skin. Not a combat price. Gym only. */
+/** Slow crawl along the wall skin. Not a combat price. */
 export const YI_ROAM_PX_PER_SEC = 12;
 /** motion_turn extra reverse, so 转面 is not the same as 沿壁 ping-pong. */
 export const YI_TURN_REVERSE_MS = 4500;
-/** Cloud drift / morph. Gym only. Must stay too slow to read as a chase. */
+/** Cloud drift / morph. Must stay too slow to read as a chase. */
 export const DING_DRIFT_PX = 36;
 export const DING_MORPH_PX = 14;
 

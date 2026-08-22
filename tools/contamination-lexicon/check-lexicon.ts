@@ -338,29 +338,66 @@ assert(
   'RiftScene must not import src/gym',
 );
 assert(
-  /this\.hosts\.create\(\s*this,\s*layout,\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*\)/.test(
+  /this\.hosts\.create\(\s*this,\s*layout,\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*,\s*\{\s*liveMotion:\s*true\s*\}\s*\)/.test(
     riftSrc,
   ),
-  'RiftScene hosts.create stays 5-arg (no gymLiveMotion)',
+  'RiftScene hosts.create passes { liveMotion: true }',
 );
-// 地图课只画宿主、不跑活动机制。断言写成否定式：不要求那句 create 存在（该课接线是
-// 独立工作项），只要求它一旦存在就不会打开练习场活动开关。
 const mapSrc = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
-assert(!mapSrc.includes('gymLiveMotion'), 'gym map lesson must not enable gymLiveMotion');
+assert(!mapSrc.includes('gymLiveMotion'), 'gym map lesson must not mention gymLiveMotion');
+assert(!mapSrc.includes('liveMotion'), 'gym map lesson must not enable liveMotion');
 const hostSrc = readFileSync(resolve(ROOT, 'src/systems/contamination-host-system.ts'), 'utf8');
-const sortieYi = hostSrc.split('private tickYiSortie')[1]?.split('private tickYiLive')[0] ?? '';
-assert(!sortieYi.includes('resolveContactChannel'), 'tickYiSortie must not read contact');
-assert(!sortieYi.includes('stepYiWalk'), 'tickYiSortie must not walk');
-assert(!sortieYi.includes('resolveStopLoss'), 'tickYiSortie must not read stop-loss');
-const sortieBing = hostSrc.split('private tickBingSortie')[1]?.split('private tickBingLive')[0] ?? '';
-assert(!sortieBing.includes('resolveContactChannel'), 'tickBingSortie must not read contact');
-assert(!sortieBing.includes('resolveStopLoss'), 'tickBingSortie must not read stop-loss');
-const sortieDing = hostSrc.split('private tickDingSortie')[1]?.split('private tickDingLive')[0] ?? '';
-assert(!sortieDing.includes('dingLiveRect'), 'tickDingSortie must not morph');
-assert(!sortieDing.includes('resolveContactChannel'), 'tickDingSortie must not read contact');
-assert(!sortieDing.includes('resolveStopLoss'), 'tickDingSortie must not read stop-loss');
-assert(hostSrc.includes('host.form.lexemes.contact'), 'gym path reads lexemes.contact');
-assert(hostSrc.includes('resolveStopLoss'), 'gym path reads resolveStopLoss');
+assert(hostSrc.includes('readonly liveMotion?: boolean'), 'host option public name is liveMotion');
+assert(
+  hostSrc.includes('private tickYiSortie') &&
+    hostSrc.includes('private tickBingSortie') &&
+    hostSrc.includes('private tickDingSortie'),
+  'static ticks remain for liveMotion false',
+);
+assert(hostSrc.includes('else this.tickYiSortie'), 'liveMotion false still calls tickYiSortie');
+assert(hostSrc.includes('else this.tickBingSortie'), 'liveMotion false still calls tickBingSortie');
+assert(hostSrc.includes('else this.tickDingSortie'), 'liveMotion false still calls tickDingSortie');
+
+const liveYi = hostSrc.split('private tickYiLive')[1]?.split('private tickBing(')[0] ?? '';
+assert(liveYi.includes('resolveContactChannel'), 'tickYiLive reads contact');
+assert(liveYi.includes('host.form.lexemes.contact'), 'tickYiLive reads lexemes.contact');
+assert(liveYi.includes('stepYiWalk'), 'tickYiLive walks wall edge');
+assert(liveYi.includes('resolveStopLoss'), 'tickYiLive reads stop-loss');
+assert(liveYi.includes('ADJACENT_STRIKE_DAMAGE'), 'yi strike damage stays the constant');
+assert(liveYi.includes('ADJACENT_STRIKE_WINDUP_MS'), 'yi windup stays the constant');
+
+const liveBing = hostSrc.split('private tickBingLive')[1]?.split('private tickDing(')[0] ?? '';
+assert(liveBing.includes('resolveContactChannel'), 'tickBingLive reads contact');
+assert(liveBing.includes('host.form.lexemes.contact'), 'tickBingLive reads lexemes.contact');
+assert(liveBing.includes('resolveStopLoss'), 'tickBingLive reads stop-loss');
+assert(liveBing.includes('addChaos'), 'tickBingLive still applies step chaos');
+assert(!liveBing.includes('hittable'), 'tickBingLive must not gate step chaos on hittable');
+
+const liveDing = hostSrc.split('private tickDingLive')[1]?.split('private spawnBingNuclei')[0] ?? '';
+assert(liveDing.includes('dingLiveRect'), 'tickDingLive morphs current box');
+assert(liveDing.includes('resolveContactChannel'), 'tickDingLive reads contact');
+assert(liveDing.includes('host.form.lexemes.contact'), 'tickDingLive reads lexemes.contact');
+assert(liveDing.includes('resolveStopLoss'), 'tickDingLive reads stop-loss');
+assert(liveDing.includes('host.live'), 'tickDingLive chaos/sight follow current box');
+assert(liveDing.includes('VOLUME_SIGHT_MULT'), 'tickDingLive uses volume sight price');
+assert(liveDing.includes('VOLUME_CHAOS_PER_SEC'), 'tickDingLive uses volume chaos price');
+assert(!liveDing.includes('hittable'), 'tickDingLive must not gate volume field on hittable');
+
+const hitCore = hostSrc.split('private hitCore')[1]?.split('private paintYi')[0] ?? '';
+assert(hitCore.includes('resolveStopLoss'), 'hitCore reads stop-loss');
+assert(hitCore.includes('!stop.hittable'), 'unkillable skips HP');
+const liveHit = hitCore.split('if (this.liveMotion)')[1] ?? '';
+const unkillableIdx = liveHit.indexOf('!stop.hittable');
+const returnIdx = liveHit.indexOf('return');
+const dmgIdx = liveHit.indexOf('ENEMY_DAMAGED');
+assert(
+  unkillableIdx >= 0 && returnIdx > unkillableIdx && returnIdx < dmgIdx,
+  'unkillable returns before ENEMY_DAMAGED',
+);
+
+assert(hostSrc.includes("resolveStopLoss(form) === 'illegal'"), 'spawn discards illegal stop-loss');
+assert(hostSrc.includes('host.form.lexemes.contact'), 'live path reads lexemes.contact');
+assert(hostSrc.includes('resolveStopLoss'), 'live path reads resolveStopLoss');
 
 const factorySrc = readFileSync(resolve(ROOT, 'src/entities/enemy-factory.ts'), 'utf8');
 assert(

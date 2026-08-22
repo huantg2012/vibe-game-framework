@@ -37,7 +37,7 @@ export interface FormAttachContext {
   depth: number;
   /** 观察院子当前碎片。方案 D 用来推配色。 */
   fragmentTypeId?: string;
-  /** 甲可省略。乙=核世界坐标（gymLiveMotion 时为缝）；丙=簇核世界坐标；丁=走廊盒世界像素。 */
+  /** 甲可省略。乙=核世界坐标（liveMotion 时为缝）；丙=簇核世界坐标；丁=走廊盒世界像素。 */
   pin?: {
     kind: 'wall' | 'cluster' | 'volume';
     x: number;
