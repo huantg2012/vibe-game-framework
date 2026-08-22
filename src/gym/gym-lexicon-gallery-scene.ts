@@ -66,6 +66,8 @@ const DEPTH: Record<PortfolioId, number> = {
   ding: GAME_CONSTANTS.CONTAMINATION.VOLUME_DEPTH,
 };
 const START_ZOOM: Record<PortfolioId, number> = { jia: 1.25, yi: 1.25, bing: 1, ding: 0.7 };
+const GALLERY_BROWSE_STATUS =
+  '拖动画布平移。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。';
 const GRID_DEPTH = 0.4;
 const SELECT_DEPTH = 46;
 const INSPECT_DBL_MS = 400;
@@ -140,7 +142,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
 
     const title = document.getElementById('gym-title');
     if (title) title.textContent = '练习场 · 污染句法陈列馆';
-    this.setStatus('拖动画布平移，滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。');
+    this.setStatus(GALLERY_BROWSE_STATUS);
 
     this.grid = this.add.graphics().setDepth(GRID_DEPTH);
     this.selectMark = this.add.graphics().setDepth(SELECT_DEPTH);
@@ -150,7 +152,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.reloadCatalog();
     this.enterFirstHall();
 
-    this.cameraHandle = bindGymCamera(this, { onClick: this.onCanvasClick });
+    this.cameraHandle = bindGymCamera(this, { wheelMode: 'pan', onClick: this.onCanvasClick });
     this.input.on('pointermove', this.onPointerHover, this);
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
@@ -328,11 +330,14 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     portfolio: PortfolioId,
   ): void {
     const camera = this.cameras.main;
-    camera.setBounds(bounds.x, bounds.y, Math.max(bounds.w, 64), Math.max(bounds.h, 64));
+    const last = this.cells[this.cells.length - 1];
+    const lastBottom = last ? last.y + last.size * 0.5 : bounds.y + bounds.h;
+    const height = Math.max(bounds.h, lastBottom - bounds.y, 64);
+    camera.setBounds(bounds.x, bounds.y, Math.max(bounds.w, 64), height);
     camera.setZoom(START_ZOOM[portfolio]);
     const first = this.cells[0];
     if (first) camera.centerOn(first.x, first.y);
-    else camera.centerOn(bounds.x + bounds.w * 0.5, bounds.y + bounds.h * 0.5);
+    else camera.centerOn(bounds.x + bounds.w * 0.5, bounds.y + height * 0.5);
   }
 
   private paintHallChrome(): void {
@@ -474,7 +479,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     this.inspect.visual.destroy();
     this.inspect = null;
     this.paintInspect();
-    this.setStatus('拖动画布平移，滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。');
+    this.setStatus(GALLERY_BROWSE_STATUS);
     if (reattachHall) {
       this.viewStamp = '';
       this.reconcile();
@@ -744,7 +749,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     for (const { cell } of this.attached.values()) {
       const pos = worldToOverlay(this, overlay, cell.x, cell.y + cell.size * 0.5);
       if (!pos || !inOverlay(overlay, pos.x, pos.y)) continue;
-      overlay.append(captionEl(cell, pos, camera.zoom));
+      overlay.append(captionEl(cell, pos, camera.zoom, overlayScaleX(this)));
     }
   }
 
@@ -907,8 +912,8 @@ function layoutHall(
   cellSize: number,
 ): { cells: HallCell[]; bands: HallBand[]; bounds: { x: number; y: number; w: number; h: number } } {
   const cols = Math.max(4, Math.min(10, Math.round(960 / cellSize)));
-  const rowGap = cellSize * 0.55;
-  const bandGap = cellSize * 1.15;
+  const rowGap = cellSize * 0.85;
+  const bandGap = cellSize * 1.45;
   const originX = cellSize;
   const originY = cellSize * 0.7;
   const cells: HallCell[] = [];
@@ -939,27 +944,31 @@ function layoutHall(
     y += cellSize + bandGap;
   }
   const pad = cellSize * 1.5;
+  const captionPad = cellSize * 0.95;
   return {
     cells,
     bands,
-    bounds: { x: 0, y: 0, w: maxX + pad, h: maxY + pad },
+    bounds: { x: 0, y: 0, w: maxX + pad, h: maxY + pad + captionPad },
   };
 }
 
-function captionEl(cell: HallCell, pos: { x: number; y: number }, zoom: number): HTMLElement {
+function captionEl(
+  cell: HallCell,
+  pos: { x: number; y: number },
+  zoom: number,
+  scaleX: number,
+): HTMLElement {
   const cap = document.createElement('div');
   cap.className = 'gym-gal-cap';
+  const cellPx = cell.size * zoom * scaleX;
   cap.style.left = `${pos.x}px`;
   cap.style.top = `${pos.y}px`;
+  cap.style.maxWidth = `${Math.max(8, cellPx - 6)}px`;
+  cap.style.width = `${Math.max(8, cellPx - 6)}px`;
+  cap.style.fontSize = cellPx < 72 ? '9px' : '11px';
   cap.style.transform = `translate(-50%, ${Math.max(4, 6 * zoom)}px)`;
-  const form = cell.specimen.form;
-  cap.append(
-    kvInline('孔谱', PORTFOLIO_NAME[form.portfolio]),
-    kvInline('基体', SUBSTRATE_DATA[form.substrate]?.displayToken ?? form.substrate),
-    kvInline('覆盖深度', coverageLabel(form.coverage)),
-  );
-  if (form.portfolio === 'jia') {
-    cap.append(kvInline('族内变体', String(cell.specimen.seedBucket + 1)));
+  for (const row of captionFields(cell, zoom)) {
+    cap.append(kvInline(row.item, row.value));
   }
   if (cell.specimen.stopLoss === 'illegal') {
     const badge = document.createElement('span');
@@ -968,6 +977,33 @@ function captionEl(cell: HallCell, pos: { x: number; y: number }, zoom: number):
     cap.append(badge);
   }
   return cap;
+}
+
+function captionFields(cell: HallCell, zoom: number): readonly { item: string; value: string }[] {
+  const form = cell.specimen.form;
+  const substrate = SUBSTRATE_DATA[form.substrate]?.displayToken ?? form.substrate;
+  const coverage = coverageLabel(form.coverage);
+  if (zoom < 0.6) {
+    return [
+      { item: '基体', value: substrate },
+      { item: '覆盖深度', value: coverage },
+    ];
+  }
+  const rows: { item: string; value: string }[] = [
+    { item: '孔谱', value: PORTFOLIO_NAME[form.portfolio] },
+    { item: '基体', value: substrate },
+    { item: '覆盖深度', value: coverage },
+  ];
+  if (zoom >= 1 && form.portfolio === 'jia') {
+    rows.push({ item: '族内变体', value: String(cell.specimen.seedBucket + 1) });
+  }
+  return rows;
+}
+
+function overlayScaleX(scene: Phaser.Scene): number {
+  const canvas = scene.game.canvas;
+  if (!canvas) return 1;
+  return canvas.getBoundingClientRect().width / scene.scale.width;
 }
 
 function hoverRows(specimen: GallerySpecimen): readonly { item: string; value: string }[] {

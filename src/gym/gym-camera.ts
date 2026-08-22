@@ -1,7 +1,6 @@
 /**
- * Shared gym camera: drag to pan, wheel to zoom.
- * Extracted from the map lesson so the gallery can reuse it without
- * changing map behaviour.
+ * Shared gym camera: drag to pan, wheel to zoom (map lesson default).
+ * Gallery may opt into wheel pan; map lesson must keep the zoom path.
  */
 
 import Phaser from 'phaser';
@@ -16,15 +15,20 @@ export interface GymCameraHandle {
   isDragging(): boolean;
 }
 
+export type GymCameraWheelMode = 'zoom' | 'pan';
+
 export interface GymCameraOpts {
   zoomMin?: number;
   zoomMax?: number;
+  /** Default `'zoom'` matches the map lesson. Gallery passes `'pan'`. */
+  wheelMode?: GymCameraWheelMode;
   onClick?: (pointer: Phaser.Input.Pointer) => void;
 }
 
 export function bindGymCamera(scene: Phaser.Scene, opts: GymCameraOpts = {}): GymCameraHandle {
   const zoomMin = opts.zoomMin ?? GYM_CAMERA_ZOOM_MIN;
   const zoomMax = opts.zoomMax ?? GYM_CAMERA_ZOOM_MAX;
+  const wheelMode: GymCameraWheelMode = opts.wheelMode ?? 'zoom';
   let dragging = false;
   let downX = 0;
   let downY = 0;
@@ -53,19 +57,29 @@ export function bindGymCamera(scene: Phaser.Scene, opts: GymCameraOpts = {}): Gy
   const onWheel = (
     pointer: Phaser.Input.Pointer,
     _currentlyOver: Phaser.GameObjects.GameObject[],
-    _dx: number,
+    dx: number,
     dy: number,
     _dz: number,
     event: WheelEvent,
   ): void => {
     event.preventDefault();
     const camera = scene.cameras.main;
-    const before = camera.getWorldPoint(pointer.x, pointer.y);
-    const next = Phaser.Math.Clamp(camera.zoom * (dy > 0 ? 0.9 : 1.1), zoomMin, zoomMax);
-    camera.setZoom(next);
-    const after = camera.getWorldPoint(pointer.x, pointer.y);
-    camera.scrollX += before.x - after.x;
-    camera.scrollY += before.y - after.y;
+    const wantZoom = wheelMode === 'zoom' || event.ctrlKey || event.metaKey;
+    if (wantZoom) {
+      const before = camera.getWorldPoint(pointer.x, pointer.y);
+      const next = Phaser.Math.Clamp(camera.zoom * (dy > 0 ? 0.9 : 1.1), zoomMin, zoomMax);
+      camera.setZoom(next);
+      const after = camera.getWorldPoint(pointer.x, pointer.y);
+      camera.scrollX += before.x - after.x;
+      camera.scrollY += before.y - after.y;
+      return;
+    }
+    if (event.shiftKey) {
+      camera.scrollX += (dx !== 0 ? dx : dy) / camera.zoom;
+      return;
+    }
+    camera.scrollX += dx / camera.zoom;
+    camera.scrollY += dy / camera.zoom;
   };
 
   scene.input.on('pointerdown', onPointerDown);
