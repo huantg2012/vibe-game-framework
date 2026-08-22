@@ -1,6 +1,7 @@
 /**
- * Map-generation gym. Same generateRiftLayout + RiftSurfacePainter as a sortie.
- * No VisibilitySystem. Contract: docs/dev/gym.md.
+ * Map-generation gym. Same generateRiftLayout + RiftSurfacePainter +
+ * ContaminationHostSystem (乙/丙/丁 paint-only) as a sortie.
+ * No VisibilitySystem, no walking 甲. Contract: docs/dev/gym.md.
  */
 
 import Phaser from 'phaser';
@@ -17,16 +18,24 @@ import {
   type RiftLayoutOptions,
 } from '@/generation/rift-layout';
 import type { GeneratedRiftLayout } from '@/generation/types';
-import { TileType } from '@/types/game-types';
+import { ContaminationHostSystem } from '@/systems/contamination-host-system';
 import { RiftSurfacePainter } from '@/systems/procedural-surface';
-import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
+import { TileType, type Vector2 } from '@/types/game-types';
 
 const SURFACE_KEY = 'gym-map-surface';
 const MARKER_DEPTH = 20;
+const HOST_CALLOUT_DEPTH = 27;
 const ZOOM_MIN = 0.12;
 const ZOOM_MAX = 3;
 const MARKER = 12;
+const HOST_CALLOUT = 22;
+/** Off-island dummy so host ticks still paint 丙/丁 without a player. */
+const OFFMAP_PLAYER = { x: -9999, y: -9999 };
+
+function gymFullVisibility(_p: Readonly<Vector2>): number {
+  return 1;
+}
 
 const AGE_LABEL: Record<string, string> = {
   new: '新',
@@ -50,7 +59,9 @@ const DRAW_LABEL: Record<ContaminationDrawStyle, string> = {
 export class GymMapScene extends Phaser.Scene {
   private readonly tiles = new TilemapRenderer();
   private readonly riftSurface = new RiftSurfacePainter();
+  private readonly hosts = new ContaminationHostSystem();
   private markers: Phaser.GameObjects.Graphics | null = null;
+  private hostCallouts: Phaser.GameObjects.Graphics | null = null;
   private dragging = false;
   private generating = false;
   private formBound = false;
@@ -75,6 +86,7 @@ export class GymMapScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     this.riftSurface.update(delta);
+    this.hosts.update(delta, OFFMAP_PLAYER);
   }
 
   private bindForm(): void {
@@ -102,7 +114,10 @@ export class GymMapScene extends Phaser.Scene {
     const title = document.getElementById('gym-title');
     if (title) title.textContent = '练习场 · 地图生成';
     const status = document.getElementById('gym-status');
-    if (status) status.textContent = '拖动画布平移，滚轮缩放。无视野迷雾。崩坏簇：内核烤死，支撑区/外围区在胀缩。出击这层先关掉。改污染画法会重烤同一张图。';
+    if (status) {
+      status.textContent =
+        '拖动画布平移，滚轮缩放。无视野迷雾。乙丙丁是出击同一套宿主；甲只是色块。崩坏簇：内核烤死，支撑区/外围区在胀缩。改污染画法会重烤同一张图。';
+    }
   }
 
   private readonly onGenerateClick = (): void => {
@@ -146,7 +161,8 @@ export class GymMapScene extends Phaser.Scene {
       this.mountLayout(layout, true);
       const status = document.getElementById('gym-status');
       if (status) {
-        status.textContent = '拖动画布平移，滚轮缩放。无视野迷雾。崩坏簇：内核烤死，支撑区/外围区在胀缩。出击这层先关掉。改污染画法会重烤同一张图。';
+        status.textContent =
+          '拖动画布平移，滚轮缩放。无视野迷雾。乙丙丁是出击同一套宿主；甲只是色块。崩坏簇：内核烤死，支撑区/外围区在胀缩。改污染画法会重烤同一张图。';
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -163,12 +179,14 @@ export class GymMapScene extends Phaser.Scene {
   private mountLayout(layout: GeneratedRiftLayout, resetView: boolean): void {
     const draw = readDrawStyle();
     if (resetView) {
+      this.hosts.destroy();
       this.markers?.destroy();
       this.markers = null;
+      this.hostCallouts?.destroy();
+      this.hostCallouts = null;
       this.tiles.destroy();
 
       const tileMap = layout.tileMap;
-      const grid = new TileGrid(tileMap);
       const layer = this.tiles.create(this, tileMap, {
         tilesetKey: 'placeholder-rift-tileset',
         collidingIndices: [TileType.WALL, TileType.VOID],
@@ -176,8 +194,7 @@ export class GymMapScene extends Phaser.Scene {
       });
       layer.setVisible(false);
 
-      this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
-      fitCamera(this.cameras.main, grid.widthPx, grid.heightPx);
+      this.physics.world.setBounds(0, 0, gridWidth(layout), gridHeight(layout));
       this.paintMarkers(layout, tileMap.tileSize);
     }
 
@@ -185,10 +202,18 @@ export class GymMapScene extends Phaser.Scene {
       contaminationDraw: draw,
       liveClusterBreath: draw === 'cluster',
     });
-    fillMapRoster(layout, draw);
+    if (resetView) {
+      this.hosts.create(this, layout, null, null, gymFullVisibility);
+      this.paintHostCallouts();
+      fitCamera(this.cameras.main, gridWidth(layout), gridHeight(layout));
+    }
+    fillMapRoster(layout, draw, this.hosts);
   }
 
-  private paintMarkers(layout: GeneratedRiftLayout, tileSize: number): void {
+  private paintMarkers(
+    layout: GeneratedRiftLayout,
+    tileSize: number,
+  ): void {
     const g = this.add.graphics();
     g.setDepth(MARKER_DEPTH);
     this.markers = g;
@@ -232,6 +257,24 @@ export class GymMapScene extends Phaser.Scene {
       layout.extractionPoint.position.y,
       0xe0a848,
     );
+  }
+
+  private paintHostCallouts(): void {
+    this.hostCallouts?.destroy();
+    const g = this.add.graphics();
+    g.setDepth(HOST_CALLOUT_DEPTH);
+    this.hostCallouts = g;
+    for (const subject of this.hosts.getSubjects()) {
+      const color =
+        subject.form.portfolio === 'yi'
+          ? 0x2ae6c8
+          : subject.form.portfolio === 'bing'
+            ? 0x3cffd4
+            : 0x1aad96;
+      const { x, y } = subject.position;
+      g.lineStyle(2, color, 0.95);
+      g.strokeRect(x - HOST_CALLOUT / 2, y - HOST_CALLOUT / 2, HOST_CALLOUT, HOST_CALLOUT);
+    }
   }
 
   private bindCamera(): void {
@@ -302,8 +345,11 @@ export class GymMapScene extends Phaser.Scene {
     this.lastLayout = null;
     this.markers?.destroy();
     this.markers = null;
+    this.hostCallouts?.destroy();
+    this.hostCallouts = null;
     this.tiles.destroy();
     this.riftSurface.destroy();
+    this.hosts.destroy();
   }
 }
 
@@ -317,6 +363,14 @@ function stamp(
   graphics.fillRect(x - MARKER / 2, y - MARKER / 2, MARKER, MARKER);
   graphics.lineStyle(1, 0x080a0c, 0.9);
   graphics.strokeRect(x - MARKER / 2, y - MARKER / 2, MARKER, MARKER);
+}
+
+function gridWidth(layout: GeneratedRiftLayout): number {
+  return layout.tileMap.cols * layout.tileMap.tileSize;
+}
+
+function gridHeight(layout: GeneratedRiftLayout): number {
+  return layout.tileMap.rows * layout.tileMap.tileSize;
 }
 
 function fitCamera(
@@ -375,19 +429,37 @@ function readDrawStyle(): ContaminationDrawStyle {
   return isContaminationDrawStyle(value) ? value : 'cluster';
 }
 
-function fillMapRoster(layout: GeneratedRiftLayout, draw: ContaminationDrawStyle): void {
+function fillMapRoster(
+  layout: GeneratedRiftLayout,
+  draw: ContaminationDrawStyle,
+  hosts: ContaminationHostSystem,
+): void {
   const roster = document.getElementById('gym-roster');
   if (!roster) return;
   const frag = RIFT_FRAGMENT_DATA[layout.fragmentTypeId];
   const recipe = PREVIEW_RECIPES.find((row) => row.id === layout.recipeId);
+  const infiltrator = layout.enemySpawns.filter((e) => e.type === 'infiltrator').length;
   const rewriter = layout.enemySpawns.filter((e) => e.type === 'rewriter').length;
-  roster.textContent = [
+  const forms = hosts.getLastDraw()?.forms ?? [];
+  const countPort = (id: 'yi' | 'bing' | 'ding'): number =>
+    forms.filter((f) => f.portfolio === id).length;
+  const uttered = forms.some((f) => Boolean(f.utteranceId));
+  const spawned = new Set(hosts.getSubjects().map((s) => s.form.portfolio));
+  const unpinned = [...new Set(
+    forms
+      .filter((f) => f.portfolio !== 'jia' && !spawned.has(f.portfolio))
+      .map((f) => (f.portfolio === 'yi' ? '乙' : f.portfolio === 'bing' ? '丙' : '丁')),
+  )];
+  const lines = [
     `种子 ${layout.seed}`,
     `风格锚 ${recipe?.label ?? layout.recipeId}（${layout.recipeId}）`,
     `碎片 ${frag?.displayName ?? layout.fragmentTypeId}`,
     `污染年龄 ${AGE_LABEL[layout.contaminationAge] ?? layout.contaminationAge} · 残破度 ${RUIN_LABEL[layout.ruinSeverity] ?? layout.ruinSeverity}`,
     `污染画法 ${DRAW_LABEL[draw]}`,
     `出生 / 撤离 / 薪柴 ${layout.kindlingNodes.length} / 污染物 ${layout.contaminantNodes.length}`,
-    `巡逻 ${layout.enemySpawns.length}（改写体 ${rewriter}）`,
-  ].join('\n');
+    `巡逻色块 ${layout.enemySpawns.length}（改写体 ${rewriter} / 渗透体 ${infiltrator}）`,
+    `抽卡 甲 ${layout.enemySpawns.length} 乙 ${countPort('yi')} 丙 ${countPort('bing')} 丁 ${countPort('ding')} · 成句 ${uttered ? '有' : '无'}`,
+  ];
+  if (unpinned.length > 0) lines.push(`未钉上 ${unpinned.join(' ')}`);
+  roster.textContent = lines.join('\n');
 }
