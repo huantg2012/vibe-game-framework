@@ -54,17 +54,19 @@ export function bindGymCamera(scene: Phaser.Scene, opts: GymCameraOpts = {}): Gy
     camera.scrollY -= (pointer.y - pointer.prevPosition.y) / camera.zoom;
   };
 
+  // Phaser 3.80 emits POINTER_WHEEL with (pointer, currentlyOver, dx, dy, dz) — there is
+  // no sixth DOM-event argument. Reading modifiers off `pointer.event` instead; Phaser's
+  // MouseManager already handles preventDefault via `inputMousePreventDefaultWheel`.
   const onWheel = (
     pointer: Phaser.Input.Pointer,
     _currentlyOver: Phaser.GameObjects.GameObject[],
     dx: number,
     dy: number,
     _dz: number,
-    event: WheelEvent,
   ): void => {
-    event.preventDefault();
+    const event = pointer.event as WheelEvent | undefined;
     const camera = scene.cameras.main;
-    const wantZoom = wheelMode === 'zoom' || event.ctrlKey || event.metaKey;
+    const wantZoom = wheelMode === 'zoom' || event?.ctrlKey === true || event?.metaKey === true;
     if (wantZoom) {
       const before = camera.getWorldPoint(pointer.x, pointer.y);
       const next = Phaser.Math.Clamp(camera.zoom * (dy > 0 ? 0.9 : 1.1), zoomMin, zoomMax);
@@ -74,7 +76,7 @@ export function bindGymCamera(scene: Phaser.Scene, opts: GymCameraOpts = {}): Gy
       camera.scrollY += before.y - after.y;
       return;
     }
-    if (event.shiftKey) {
+    if (event?.shiftKey === true) {
       camera.scrollX += (dx !== 0 ? dx : dy) / camera.zoom;
       return;
     }

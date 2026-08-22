@@ -145,6 +145,24 @@ for (const sub of substrateOptions('jia')) {
   }
 }
 
+// 滚轮回归网。Phaser 3.80 的 POINTER_WHEEL 只 emit (pointer, currentlyOver, dx, dy, dz)；
+// 曾经有人按第六个 DOM 事件参数写，`event.preventDefault()` 首行即抛，整个滚轮处理静默失效。
+// EventEmitter 是松类型，tsc 抓不到这类 arity 错误，只能在源码层拦。
+const CAMERA_SRC = readFileSync(resolve(ROOT, 'src/gym/gym-camera.ts'), 'utf8');
+const wheelSig = CAMERA_SRC.split('const onWheel = (')[1]?.split(')')[0] ?? '';
+assert(
+  !/WheelEvent/.test(wheelSig),
+  'gym camera wheel handler must not declare a 6th WheelEvent arg (Phaser emits 5)',
+);
+assert(
+  CAMERA_SRC.includes('pointer.event as WheelEvent'),
+  'gym camera must read wheel modifiers from pointer.event',
+);
+assert(
+  !/\bevent\.preventDefault\(\)/.test(CAMERA_SRC),
+  'gym camera must not call preventDefault on the non-existent emitted event',
+);
+
 function countByPortfolio(rows: readonly GallerySpecimen[]): Record<string, number> {
   const out: Record<string, number> = { jia: 0, yi: 0, bing: 0, ding: 0 };
   for (const row of rows) out[row.portfolio] = (out[row.portfolio] ?? 0) + 1;
