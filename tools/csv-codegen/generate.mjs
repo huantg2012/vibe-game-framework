@@ -556,7 +556,7 @@ function generateContaminationLexicon() {
   const OCC_OK = new Set(['floor', 'wall', 'paint', 'volume']);
   const CONT_OK = new Set(['monolith', 'shards', 'colony', 'field']);
   const SCOPE_OK = new Set(['sortie', 'gym']);
-  /** Spec conceptual substrates (volume-only). Pairing: sortie-open ↔ oil_film drops volume. */
+  /** Spec conceptual substrates (volume-only). Pairing: any conceptual row scope=sortie ↔ oil_film drops volume. */
   const CONCEPTUAL_SUBSTRATE_IDS = ['sound_echo', 'light_scatter', 'space_interval'];
 
   const substrates = substratesCsv.rows.map((cols) => {
@@ -784,7 +784,7 @@ function generateContaminationLexicon() {
     '  residualVerb: string;',
     '  /** CSV / gym view. */',
     '  legalOccupancies: readonly OccupancyId[];',
-    '  /** Sortie view (oil_film volume overlay while conceptual substrates stay gym). */',
+    '  /** Sortie view. Pairing: conceptual substrates on sortie ↔ oil_film drops volume. */',
     '  sortieLegalOccupancies: readonly OccupancyId[];',
     '  legalContinuities: readonly ContinuityId[];',
     '  enabledScope: SubstrateEnabledScope;',

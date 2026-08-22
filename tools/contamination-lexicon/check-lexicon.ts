@@ -113,12 +113,12 @@ assert(
 
 const csvIds = csvSubstrateIds();
 assert(sameSet(csvIds, SUBSTRATE_IDS), `CSV ids vs generated: csv=${csvIds.join(',')} gen=${SUBSTRATE_IDS.join(',')}`);
+const sortieFromScope = Object.values(SUBSTRATE_DATA)
+  .filter((s) => s.enabledScope === 'sortie')
+  .map((s) => s.id);
 assert(
-  sameSet(
-    SORTIE_SUBSTRATE_IDS,
-    ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film'],
-  ),
-  `sortie whitelist ${SORTIE_SUBSTRATE_IDS.join(',')}`,
+  sameSet(SORTIE_SUBSTRATE_IDS, sortieFromScope),
+  `SORTIE_SUBSTRATE_IDS ${SORTIE_SUBSTRATE_IDS.join(',')} vs enabledScope=sortie ${sortieFromScope.join(',')}`,
 );
 assert(
   SORTIE_SUBSTRATE_IDS.every((id) => SUBSTRATE_DATA[id]?.enabledScope === 'sortie'),
@@ -128,6 +128,9 @@ assert(
   Object.values(SUBSTRATE_DATA).filter((s) => s.enabledScope === 'sortie').length === SORTIE_SUBSTRATE_IDS.length,
   'no extra sortie rows outside SORTIE_SUBSTRATE_IDS',
 );
+for (const id of ['stalk_clump', 'railing_post', 'ash_veil', ...CONCEPTUAL_SUBSTRATE_IDS]) {
+  assert(SORTIE_SUBSTRATE_IDS.includes(id), `SORTIE_SUBSTRATE_IDS includes ${id}`);
+}
 
 const oil = SUBSTRATE_DATA.oil_film;
 assert(!!oil, 'oil_film row exists');
@@ -141,12 +144,14 @@ assert(
   conceptualOnSortie === !oilSortieHasVolume,
   `pairing: conceptual scope=sortie (${conceptualOnSortie}) iff oil_film sortie view has no volume (${!oilSortieHasVolume})`,
 );
-if (!conceptualOnSortie) {
-  assert(
-    oil!.sortieLegalOccupancies.includes('paint') && oilSortieHasVolume,
-    `sortie oil_film still paint|volume [${oil!.sortieLegalOccupancies.join(',')}]`,
-  );
-}
+assert(
+  CONCEPTUAL_SUBSTRATE_IDS.every((id) => SUBSTRATE_DATA[id]?.enabledScope === 'sortie'),
+  'conceptual three enabled_scope=sortie',
+);
+assert(
+  oil!.sortieLegalOccupancies.length === 1 && oil!.sortieLegalOccupancies[0] === 'paint',
+  `open: oil_film sortie view paint-only [${oil!.sortieLegalOccupancies.join(',')}]`,
+);
 
 for (const id of CONCEPTUAL_SUBSTRATE_IDS) {
   const row = SUBSTRATE_DATA[id];
@@ -155,7 +160,7 @@ for (const id of CONCEPTUAL_SUBSTRATE_IDS) {
     row!.legalOccupancies.length === 1 && row!.legalOccupancies[0] === 'volume',
     `${id} gym occupancies [${row?.legalOccupancies.join(',')}] want [volume]`,
   );
-  assert(row!.enabledScope === 'gym', `${id} enabled_scope=gym`);
+  assert(row!.enabledScope === 'sortie', `${id} enabled_scope=sortie`);
   assert(
     row!.legalContinuities.every((c) => c === 'monolith' || c === 'field'),
     `${id} continuities only monolith|field`,
@@ -165,9 +170,9 @@ for (const id of CONCEPTUAL_SUBSTRATE_IDS) {
 const stalk = SUBSTRATE_DATA.stalk_clump;
 const rail = SUBSTRATE_DATA.railing_post;
 const ash = SUBSTRATE_DATA.ash_veil;
-assert(stalk?.enabledScope === 'gym' && stalk.legalOccupancies.includes('floor') && !stalk.legalOccupancies.includes('volume'), 'stalk_clump floor gym');
-assert(rail?.enabledScope === 'gym' && rail.legalOccupancies.includes('floor') && !rail.legalOccupancies.includes('volume'), 'railing_post floor gym');
-assert(ash?.enabledScope === 'gym' && ash.legalOccupancies.includes('paint') && !ash.legalOccupancies.includes('volume'), 'ash_veil paint gym');
+assert(stalk?.enabledScope === 'sortie' && stalk.legalOccupancies.includes('floor') && !stalk.legalOccupancies.includes('volume'), 'stalk_clump floor sortie');
+assert(rail?.enabledScope === 'sortie' && rail.legalOccupancies.includes('floor') && !rail.legalOccupancies.includes('volume'), 'railing_post floor sortie');
+assert(ash?.enabledScope === 'sortie' && ash.legalOccupancies.includes('paint') && !ash.legalOccupancies.includes('volume'), 'ash_veil paint sortie');
 
 assert(UTTERANCE_DATA.corridor_watching?.substrate === 'space_interval', 'corridor_watching binds space_interval');
 
@@ -187,6 +192,10 @@ assert(substrateOptions('bing').some((row) => row.id === 'ash_veil'), 'bing drop
 
 const seeds = [3, 11, 29, 47, 73, 101, 211, 409, 1024, 7777];
 const fragments = ['frag-outdoor', 'frag-clinic', 'frag-metro'] as const;
+const drawSrc = readFileSync(resolve(ROOT, 'src/generation/contamination-draw.ts'), 'utf8');
+assert(!drawSrc.includes('shadowGymUtteranceForSortie'), 'sortie must not shadow gym utterances with oil_film');
+
+let watchingHits = 0;
 
 for (const seed of seeds) {
   for (const fragmentTypeId of fragments) {
@@ -217,7 +226,16 @@ for (const seed of seeds) {
       );
       if (form.portfolio === 'ding') {
         assert(form.occupancy === 'volume', `${fragmentTypeId}/${seed} ding not volume`);
-        assert(form.substrate === 'oil_film', `${fragmentTypeId}/${seed} ding substrate ${form.substrate} want oil_film`);
+        assert(
+          (CONCEPTUAL_SUBSTRATE_IDS as readonly string[]).includes(form.substrate),
+          `${fragmentTypeId}/${seed} ding substrate ${form.substrate} want conceptual`,
+        );
+        assert(form.substrate !== 'oil_film', `${fragmentTypeId}/${seed} ding must not occupy as oil_film`);
+      }
+      if (form.utteranceId === 'corridor_watching') {
+        watchingHits++;
+        assert(form.substrate === 'space_interval', `${fragmentTypeId}/${seed} corridor_watching substrate ${form.substrate}`);
+        assert(form.occupancy === 'volume', `${fragmentTypeId}/${seed} corridor_watching occupancy ${form.occupancy}`);
       }
       for (const slot of ['motion', 'sense', 'rhythm', 'contact'] as const) {
         const id = form.lexemes[slot];
@@ -239,10 +257,28 @@ for (const seed of seeds) {
       const key = identityKey(form);
       assert(key.length > 0, 'empty identity key');
       if (form.utteranceId) assert(!key.includes('门'), 'internal utterance name leaked into key as 门');
-      assert(form.utteranceId !== 'corridor_watching', 'sortie must not hit corridor_watching');
     }
   }
 }
+
+if (watchingHits === 0) {
+  for (let seed = 0; seed < 80 && watchingHits === 0; seed++) {
+    const rng = new SeededRandom(seed ^ 'frag-outdoor'.length * 17);
+    const { forms } = drawSortie(rng, {
+      fragmentTypeId: 'frag-outdoor',
+      hasClusters: true,
+      hasWallEdges: true,
+      hasCorridors: true,
+    });
+    for (const form of forms) {
+      if (form.utteranceId !== 'corridor_watching') continue;
+      watchingHits++;
+      assert(form.substrate === 'space_interval', `probe corridor_watching substrate ${form.substrate}`);
+      assert(form.occupancy === 'volume', `probe corridor_watching occupancy ${form.occupancy}`);
+    }
+  }
+}
+assert(watchingHits > 0, 'sortie must be allowed to hit corridor_watching');
 
 const emptyPins = drawSortie(new SeededRandom(9), {
   fragmentTypeId: 'frag-clinic',

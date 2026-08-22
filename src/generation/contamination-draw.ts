@@ -213,8 +213,8 @@ export type LexiconDrawScope = SubstrateEnabledScope;
 
 /**
  * Occupancy view for a substrate. Gym follows CSV.
- * Sortie uses codegen's pairing overlay: while conceptual substrates stay gym,
- * oil_film still occupies volume so ding draws do not collapse to yi.
+ * Sortie reads codegen's `sortieLegalOccupancies` (pairing: conceptual
+ * substrates on sortie ↔ oil_film drops volume).
  */
 export function occupanciesForScope(
   sub: SubstrateDef,
@@ -364,23 +364,6 @@ function utteranceAllowed(form: ContaminationForm, scope: LexiconDrawScope): boo
   return sub?.enabledScope === 'sortie';
 }
 
-/**
- * Gym-only utterances (corridor_watching → space_interval) must not spawn in the rift.
- * Returning a sortie-legal body with the same occupancy / lexemes consumes no extra RNG,
- * so later jia/bing draws stay aligned with the pre-rebind sequence.
- */
-function shadowGymUtteranceForSortie(form: ContaminationForm): ContaminationForm | null {
-  const sub = SUBSTRATE_DATA[form.substrate];
-  if (!sub || sub.enabledScope === 'sortie') return null;
-  const replacements = Object.values(SUBSTRATE_DATA).filter(
-    (row) =>
-      row.enabledScope === 'sortie' && occupanciesForScope(row, 'sortie').includes(form.occupancy),
-  );
-  const chosen = replacements[0];
-  if (!chosen) return null;
-  return { ...form, substrate: chosen.id, utteranceId: undefined };
-}
-
 function tryDrawOne(rng: SeededRandom, opts: DrawOneOpts): ContaminationForm | null {
   const port = PORTFOLIO_DATA[opts.portfolio];
   const scope: LexiconDrawScope = opts.scope ?? 'sortie';
@@ -391,14 +374,11 @@ function tryDrawOne(rng: SeededRandom, opts: DrawOneOpts): ContaminationForm | n
       if (!opts.forbidSense || !opts.forbidSense.includes(u.sense)) {
         if (!opts.sense || opts.sense === u.sense) {
           const form = formFromUtterance(u.id);
-          if (!form) {
-            /* keep going */
-          } else if (utteranceAllowed(form, scope)) {
+          if (form && utteranceAllowed(form, scope)) {
             return form;
-          } else if (scope === 'sortie') {
-            const shadowed = shadowGymUtteranceForSortie(form);
-            if (shadowed) return shadowed;
           }
+          // Gym-only utterance on sortie: skip (do not occupy the draw with an
+          // oil_film volume shadow). Fall through to a nameless draw.
         }
       }
     }

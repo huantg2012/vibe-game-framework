@@ -14,7 +14,7 @@ export interface SubstrateDef {
   residualVerb: string;
   /** CSV / gym view. */
   legalOccupancies: readonly OccupancyId[];
-  /** Sortie view (oil_film volume overlay while conceptual substrates stay gym). */
+  /** Sortie view. Pairing: conceptual substrates on sortie ↔ oil_film drops volume. */
   sortieLegalOccupancies: readonly OccupancyId[];
   legalContinuities: readonly ContinuityId[];
   enabledScope: SubstrateEnabledScope;
@@ -130,7 +130,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     displayToken: '油膜',
     residualVerb: '沾',
     legalOccupancies: ['paint'],
-    sortieLegalOccupancies: ['paint', 'volume'],
+    sortieLegalOccupancies: ['paint'],
     legalContinuities: ['monolith', 'colony', 'field'],
     enabledScope: 'sortie',
   },
@@ -141,7 +141,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['floor'],
     sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith', 'shards'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
   railing_post: {
     id: 'railing_post',
@@ -150,7 +150,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['floor'],
     sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
   ash_veil: {
     id: 'ash_veil',
@@ -159,7 +159,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['paint'],
     sortieLegalOccupancies: ['paint'],
     legalContinuities: ['monolith', 'colony', 'field'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
   sound_echo: {
     id: 'sound_echo',
@@ -168,7 +168,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['volume'],
     sortieLegalOccupancies: ['volume'],
     legalContinuities: ['monolith', 'field'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
   light_scatter: {
     id: 'light_scatter',
@@ -177,7 +177,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['volume'],
     sortieLegalOccupancies: ['volume'],
     legalContinuities: ['monolith', 'field'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
   space_interval: {
     id: 'space_interval',
@@ -186,7 +186,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['volume'],
     sortieLegalOccupancies: ['volume'],
     legalContinuities: ['monolith', 'field'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
 };
 
@@ -590,7 +590,7 @@ export const STOP_LOSS_DATA: Record<string, StopLossDef> = {
 };
 
 export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval'];
-export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film'];
+export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval'];
 export const CONCEPTUAL_SUBSTRATE_IDS: readonly string[] = ['sound_echo', 'light_scatter', 'space_interval'];
 export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];
 export const LEXEME_IDS: readonly string[] = ['motion_patrol', 'motion_turn', 'motion_coalesce', 'motion_wall', 'motion_anchor', 'motion_cluster', 'motion_wind', 'motion_trail', 'sense_cone', 'sense_hear', 'sense_narrow', 'sense_touch', 'sense_scent', 'sense_domain', 'sense_reverse', 'rhythm_open', 'rhythm_sleep', 'rhythm_pulse', 'rhythm_cluster', 'rhythm_sky', 'contact_melee_three', 'contact_adjacent_strike', 'contact_step_chaos', 'contact_volume_chaos'];
