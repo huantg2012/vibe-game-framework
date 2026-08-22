@@ -15,6 +15,7 @@ import {
   type PortfolioId,
 } from '@/generated/contamination-lexicon-data';
 import type { EnemyRole } from '@/generated/enemy-data';
+import { resolveStopLoss } from '@/systems/contamination-host-live';
 
 export interface LexiconGymConfig {
   readonly portfolio: PortfolioId;
@@ -146,6 +147,23 @@ export function formFromConfig(config: LexiconGymConfig): ContaminationForm | st
 
 export function jiaRoleFor(form: ContaminationForm): EnemyRole {
   return form.lexemes.sense === 'sense_hear' ? 'rewriter' : 'infiltrator';
+}
+
+/** Practice sidebar only. Not an in-game nameplate. */
+export function stopLossSidebarLine(form: ContaminationForm): string {
+  const stop = resolveStopLoss(form);
+  if (stop === 'illegal') return '止损 非法组合';
+  const family =
+    stop.family === 'core_strike' ? '打核' : stop.family === 'scatter_rejoin' ? '打散重组' : '打不死';
+  const policy =
+    stop.corePolicy === 'exposed'
+      ? '核露'
+      : stop.corePolicy === 'obscured'
+        ? '核埋'
+        : stop.corePolicy === 'standard'
+          ? '核常规'
+          : '无核';
+  return `止损 ${family} · ${policy}`;
 }
 
 export function defaultConfig(): LexiconGymConfig {

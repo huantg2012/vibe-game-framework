@@ -243,8 +243,9 @@
           <li>玩家走出击 <code>Player</code>，无敌。WASD 移动，空格挥击。</li>
           <li>甲走出击 <code>AISystem</code> / <code>CombatSystem</code>。乙丙丁走出击 <code>ContaminationHostSystem</code>（含伤害与混乱）。</li>
           <li>侧栏按污染句法维度配表，点生成刷当前配置。</li>
-          <li>击杀后约 0.8 秒按<strong>当前</strong>侧栏配置再刷。</li>
-          <li>不开视野迷雾。不接遭遇识别旁白。</li>
+          <li>击杀后约 0.8 秒按<strong>当前</strong>侧栏配置再刷。打不死不会被击杀，需再点生成。</li>
+          <li>止损从连续性 × 覆盖深度查表，不是接触词素。场=挥击打不动但仍踩踏/进体积吃混乱；菌落=多颗核，打一颗其余还在；渗透核露、覆盖核埋。</li>
+          <li>不开视野迷雾。不接遭遇识别旁白。侧栏止损行是开发说明，不是头上名字。</li>
         </ul>
         <ul id="gym-rules-map" hidden>
           <li>布局走出击同一套 <code>generateRiftLayout</code>，禁止另写生成器。</li>

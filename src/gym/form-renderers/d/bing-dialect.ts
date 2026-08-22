@@ -2,6 +2,7 @@ import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId } from '@/generated/contamination-lexicon-data';
 import { mix32 } from '@/generation/seed-fork';
 import type { FormAttachContext } from '@/gym/form-renderers/form-renderer';
+import { resolveStopLoss } from '@/systems/contamination-host-live';
 import {
   deriveFragmentContamRamp,
   LEXICON_DEFAULT_FRAGMENT,
@@ -43,6 +44,8 @@ export interface BingRecipe {
   readonly coreShiftMode: CoreShiftMode;
   readonly rimOnInflated: boolean;
   readonly rimAlways: boolean;
+  /** DEC-083: only paint a strike core when stop-loss is core_strike. */
+  readonly paintStrikeCore: boolean;
 }
 
 const EARTH: Rgb = [0x1a, 0x1c, 0x1f];
@@ -215,6 +218,7 @@ export function bingRecipeFromForm(form: ContaminationForm, ctx: FormAttachConte
   const shift = coreShift(form.lexemes.sense);
   const mainRadius = baseRadius(continuity) * coverageScale * (lung ? 1.1 : 1);
   const holes = Math.min(0.42, coverageHoles(form.coverage) * holeMul(form.substrate));
+  const stop = resolveStopLoss(form);
   return {
     substrate: form.substrate,
     coverage: form.coverage,
@@ -236,5 +240,6 @@ export function bingRecipeFromForm(form: ContaminationForm, ctx: FormAttachConte
     coreShiftMode: shift.mode,
     rimOnInflated: form.lexemes.contact === 'contact_step_chaos',
     rimAlways: form.lexemes.sense === 'sense_scent',
+    paintStrikeCore: stop !== 'illegal' && stop.family === 'core_strike',
   };
 }

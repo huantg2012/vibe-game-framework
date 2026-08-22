@@ -6,6 +6,7 @@ import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId } from '@/generated/contamination-lexicon-data';
 import { mix32 } from '@/generation/seed-fork';
 import type { FormAttachContext } from '@/gym/form-renderers/form-renderer';
+import { coreMarkPx, resolveStopLoss } from '@/systems/contamination-host-live';
 import {
   deriveFragmentContamRamp,
   LEXICON_DEFAULT_FRAGMENT,
@@ -70,6 +71,8 @@ export interface DingRecipe {
   readonly squeeze: 'narrow' | 'offset';
   readonly squeezePx: number;
   readonly reverseCore: boolean;
+  readonly paintStrikeCore: boolean;
+  readonly strikeCorePx: number;
 }
 
 function unit(seed: number, label: string): number {
@@ -156,6 +159,8 @@ export function dingRecipeFromForm(form: ContaminationForm, ctx: FormAttachConte
   const veinCount = 3 + (mix32(seed, 'vein-n') % 6);
   const squeeze: 'narrow' | 'offset' = mix32(seed, 'squeeze') % 2 === 0 ? 'narrow' : 'offset';
   const watching = form.utteranceId === 'corridor_watching';
+  const stop = resolveStopLoss(form);
+  const paintStrikeCore = stop !== 'illegal' && stop.hittable;
   return {
     family,
     coverage: form.coverage,
@@ -184,5 +189,7 @@ export function dingRecipeFromForm(form: ContaminationForm, ctx: FormAttachConte
     squeeze,
     squeezePx: squeeze === 'narrow' ? 32 : 8 + (mix32(seed, 'sqpx') % 9),
     reverseCore: watching || form.lexemes.sense === 'sense_reverse',
+    paintStrikeCore,
+    strikeCorePx: stop === 'illegal' || !stop.hittable ? 0 : coreMarkPx(stop.corePolicy, 2),
   };
 }

@@ -67,6 +67,18 @@ export interface DisplayTokenDef {
   displayToken: string;
 }
 
+export type StopLossFamily = 'core_strike' | 'scatter_rejoin' | 'unkillable';
+export type StopLossCorePolicy = 'exposed' | 'standard' | 'obscured' | 'none';
+
+export interface StopLossDef {
+  id: string;
+  continuity: ContinuityId;
+  coverage: CoverageId;
+  family: StopLossFamily;
+  corePolicy: StopLossCorePolicy;
+  legalOccupancies: readonly OccupancyId[];
+}
+
 export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
   organic_remnant: {
     id: 'organic_remnant',
@@ -375,7 +387,7 @@ export const LEXEME_DATA: Record<string, LexemeDef> = {
     slot: 'contact',
     displayToken: '三刀近战',
     legalPortfolios: ['jia'],
-    rewrites: [{ portfolio: 'yi', lexeme: 'contact_adjacent_strike' }, { portfolio: 'bing', lexeme: 'contact_disperse_core' }, { portfolio: 'ding', lexeme: 'contact_disperse_core' }],
+    rewrites: [{ portfolio: 'yi', lexeme: 'contact_adjacent_strike' }, { portfolio: 'bing', lexeme: 'contact_step_chaos' }, { portfolio: 'ding', lexeme: 'contact_volume_chaos' }],
   },
   contact_adjacent_strike: {
     id: 'contact_adjacent_strike',
@@ -396,13 +408,6 @@ export const LEXEME_DATA: Record<string, LexemeDef> = {
     slot: 'contact',
     displayToken: '场内加速混乱',
     legalPortfolios: ['ding'],
-    rewrites: [],
-  },
-  contact_disperse_core: {
-    id: 'contact_disperse_core',
-    slot: 'contact',
-    displayToken: '打核驱散',
-    legalPortfolios: ['bing', 'ding'],
     rewrites: [],
   },
 };
@@ -509,9 +514,85 @@ export const DISPLAY_TOKEN_DATA: Record<string, DisplayTokenDef> = {
   },
 };
 
+export const STOP_LOSS_DATA: Record<string, StopLossDef> = {
+  monolith_infiltrate: {
+    id: 'monolith_infiltrate',
+    continuity: 'monolith',
+    coverage: 'infiltrate',
+    family: 'core_strike',
+    corePolicy: 'exposed',
+    legalOccupancies: ['floor', 'wall', 'paint', 'volume'],
+  },
+  monolith_rewrite: {
+    id: 'monolith_rewrite',
+    continuity: 'monolith',
+    coverage: 'rewrite',
+    family: 'core_strike',
+    corePolicy: 'standard',
+    legalOccupancies: ['floor', 'wall', 'paint', 'volume'],
+  },
+  monolith_overwrite: {
+    id: 'monolith_overwrite',
+    continuity: 'monolith',
+    coverage: 'overwrite',
+    family: 'core_strike',
+    corePolicy: 'obscured',
+    legalOccupancies: ['floor', 'wall', 'paint', 'volume'],
+  },
+  colony_infiltrate: {
+    id: 'colony_infiltrate',
+    continuity: 'colony',
+    coverage: 'infiltrate',
+    family: 'scatter_rejoin',
+    corePolicy: 'exposed',
+    legalOccupancies: ['paint', 'wall'],
+  },
+  colony_rewrite: {
+    id: 'colony_rewrite',
+    continuity: 'colony',
+    coverage: 'rewrite',
+    family: 'scatter_rejoin',
+    corePolicy: 'standard',
+    legalOccupancies: ['paint', 'wall'],
+  },
+  colony_overwrite: {
+    id: 'colony_overwrite',
+    continuity: 'colony',
+    coverage: 'overwrite',
+    family: 'scatter_rejoin',
+    corePolicy: 'obscured',
+    legalOccupancies: ['paint', 'wall'],
+  },
+  field_infiltrate: {
+    id: 'field_infiltrate',
+    continuity: 'field',
+    coverage: 'infiltrate',
+    family: 'unkillable',
+    corePolicy: 'none',
+    legalOccupancies: ['paint', 'volume'],
+  },
+  field_rewrite: {
+    id: 'field_rewrite',
+    continuity: 'field',
+    coverage: 'rewrite',
+    family: 'unkillable',
+    corePolicy: 'none',
+    legalOccupancies: ['paint', 'volume'],
+  },
+  field_overwrite: {
+    id: 'field_overwrite',
+    continuity: 'field',
+    coverage: 'overwrite',
+    family: 'unkillable',
+    corePolicy: 'none',
+    legalOccupancies: ['paint', 'volume'],
+  },
+};
+
 export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval'];
 export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film'];
 export const CONCEPTUAL_SUBSTRATE_IDS: readonly string[] = ['sound_echo', 'light_scatter', 'space_interval'];
 export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];
-export const LEXEME_IDS: readonly string[] = ['motion_patrol', 'motion_turn', 'motion_coalesce', 'motion_wall', 'motion_anchor', 'motion_cluster', 'motion_wind', 'motion_trail', 'sense_cone', 'sense_hear', 'sense_narrow', 'sense_touch', 'sense_scent', 'sense_domain', 'sense_reverse', 'rhythm_open', 'rhythm_sleep', 'rhythm_pulse', 'rhythm_cluster', 'rhythm_sky', 'contact_melee_three', 'contact_adjacent_strike', 'contact_step_chaos', 'contact_volume_chaos', 'contact_disperse_core'];
+export const LEXEME_IDS: readonly string[] = ['motion_patrol', 'motion_turn', 'motion_coalesce', 'motion_wall', 'motion_anchor', 'motion_cluster', 'motion_wind', 'motion_trail', 'sense_cone', 'sense_hear', 'sense_narrow', 'sense_touch', 'sense_scent', 'sense_domain', 'sense_reverse', 'rhythm_open', 'rhythm_sleep', 'rhythm_pulse', 'rhythm_cluster', 'rhythm_sky', 'contact_melee_three', 'contact_adjacent_strike', 'contact_step_chaos', 'contact_volume_chaos'];
 export const UTTERANCE_IDS: readonly string[] = ['door_still_closing', 'eye_in_the_seam', 'cluster_lung', 'corridor_watching'];
+export const STOP_LOSS_IDS: readonly string[] = ['monolith_infiltrate', 'monolith_rewrite', 'monolith_overwrite', 'colony_infiltrate', 'colony_rewrite', 'colony_overwrite', 'field_infiltrate', 'field_rewrite', 'field_overwrite'];

@@ -19,13 +19,15 @@ import {
   occupanciesForScope,
   type ContaminationForm,
 } from '../../src/generation/contamination-draw.ts';
-import { substrateOptions } from '../../src/gym/gym-lexicon-form.ts';
-import { selfCheckHostLive } from '../../src/systems/contamination-host-live.ts';
+import { substrateOptions, lexemeOptions } from '../../src/gym/gym-lexicon-form.ts';
+import { selfCheckHostLive, resolveContactChannel, resolveStopLoss } from '../../src/systems/contamination-host-live.ts';
 import {
   CONCEPTUAL_SUBSTRATE_IDS,
   LEXEME_DATA,
+  LEXEME_IDS,
   PORTFOLIO_DATA,
   SORTIE_SUBSTRATE_IDS,
+  STOP_LOSS_DATA,
   SUBSTRATE_DATA,
   SUBSTRATE_IDS,
   UTTERANCE_DATA,
@@ -77,6 +79,37 @@ const door = UTTERANCE_DATA.door_still_closing!;
 assert(door.onScreenMark === '开合', 'utterance mark 开合');
 assert(PORTFOLIO_DATA.jia.canChase && !PORTFOLIO_DATA.yi.canChase, 'only jia chases');
 assert(LEXEME_DATA.contact_melee_three?.rewrites.some((r) => r.portfolio === 'yi'), 'melee rewrites on yi');
+assert(
+  !LEXEME_IDS.includes('contact_disperse_core'),
+  'LEXEME_IDS must not contain contact_disperse_core',
+);
+const meleeRewrite = LEXEME_DATA.contact_melee_three?.rewrites ?? [];
+assert(
+  meleeRewrite.some((r) => r.portfolio === 'bing' && r.lexeme === 'contact_step_chaos'),
+  'melee rewrite bing → contact_step_chaos',
+);
+assert(
+  meleeRewrite.some((r) => r.portfolio === 'ding' && r.lexeme === 'contact_volume_chaos'),
+  'melee rewrite ding → contact_volume_chaos',
+);
+assert(
+  meleeRewrite.every((r) => r.lexeme !== 'contact_disperse_core'),
+  'melee rewrite must not point at contact_disperse_core',
+);
+const stopKeys = Object.keys(STOP_LOSS_DATA);
+assert(stopKeys.length === 9, `STOP_LOSS_DATA keys ${stopKeys.length} want 9`);
+assert(
+  stopKeys.every((id) => !id.includes('shards') && STOP_LOSS_DATA[id]?.continuity !== 'shards'),
+  'stop-loss must not include shards',
+);
+assert(
+  !lexemeOptions('contact', 'bing').some((row) => row.id === 'contact_disperse_core'),
+  'gym bing contact dropdown has no disperse',
+);
+assert(
+  !lexemeOptions('contact', 'ding').some((row) => row.id === 'contact_disperse_core'),
+  'gym ding contact dropdown has no disperse',
+);
 
 const csvIds = csvSubstrateIds();
 assert(sameSet(csvIds, SUBSTRATE_IDS), `CSV ids vs generated: csv=${csvIds.join(',')} gen=${SUBSTRATE_IDS.join(',')}`);
@@ -193,6 +226,16 @@ for (const seed of seeds) {
         assert(lex!.slot === slot, `${id} slot ${lex!.slot} != ${slot}`);
         assert(lex!.legalPortfolios.includes(form.portfolio), `${id} illegal on ${form.portfolio}`);
       }
+      assert(
+        resolveContactChannel(form.portfolio, form.lexemes.contact) !== 'none',
+        `${fragmentTypeId}/${seed} ${form.portfolio} contact channel none`,
+      );
+      const stop = resolveStopLoss(form);
+      assert(stop !== 'illegal', `${fragmentTypeId}/${seed} ${form.portfolio} stop-loss illegal`);
+      assert(
+        !(PORTFOLIO_DATA[form.portfolio].blockWalk && stop !== 'illegal' && stop.family === 'unkillable'),
+        `${fragmentTypeId}/${seed} ${form.portfolio} blockWalk unkillable`,
+      );
       const key = identityKey(form);
       assert(key.length > 0, 'empty identity key');
       if (form.utteranceId) assert(!key.includes('门'), 'internal utterance name leaked into key as 门');
@@ -268,10 +311,16 @@ const hostSrc = readFileSync(resolve(ROOT, 'src/systems/contamination-host-syste
 const sortieYi = hostSrc.split('private tickYiSortie')[1]?.split('private tickYiLive')[0] ?? '';
 assert(!sortieYi.includes('resolveContactChannel'), 'tickYiSortie must not read contact');
 assert(!sortieYi.includes('stepYiWalk'), 'tickYiSortie must not walk');
+assert(!sortieYi.includes('resolveStopLoss'), 'tickYiSortie must not read stop-loss');
+const sortieBing = hostSrc.split('private tickBingSortie')[1]?.split('private tickBingLive')[0] ?? '';
+assert(!sortieBing.includes('resolveContactChannel'), 'tickBingSortie must not read contact');
+assert(!sortieBing.includes('resolveStopLoss'), 'tickBingSortie must not read stop-loss');
 const sortieDing = hostSrc.split('private tickDingSortie')[1]?.split('private tickDingLive')[0] ?? '';
 assert(!sortieDing.includes('dingLiveRect'), 'tickDingSortie must not morph');
 assert(!sortieDing.includes('resolveContactChannel'), 'tickDingSortie must not read contact');
+assert(!sortieDing.includes('resolveStopLoss'), 'tickDingSortie must not read stop-loss');
 assert(hostSrc.includes('host.form.lexemes.contact'), 'gym path reads lexemes.contact');
+assert(hostSrc.includes('resolveStopLoss'), 'gym path reads resolveStopLoss');
 
 if (failed) {
   console.error(`check:lexicon ${failed} failure(s)`);

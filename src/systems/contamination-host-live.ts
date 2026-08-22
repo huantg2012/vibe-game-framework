@@ -13,7 +13,17 @@ import {
   type FormWallAttach,
   type WallTile,
 } from '@/generation/wall-edge-path';
-import { LEXEME_DATA, type PortfolioId } from '@/generated/contamination-lexicon-data';
+import {
+  LEXEME_DATA,
+  PORTFOLIO_DATA,
+  STOP_LOSS_DATA,
+  type ContinuityId,
+  type CoverageId,
+  type OccupancyId,
+  type PortfolioId,
+  type StopLossCorePolicy,
+  type StopLossFamily,
+} from '@/generated/contamination-lexicon-data';
 import type { Vector2 } from '@/types/game-types';
 
 /** Slow crawl along the wall skin. Not a combat price. Gym only. */
@@ -29,8 +39,13 @@ export type ContactChannel =
   | 'adjacent_hp'
   | 'step_chaos'
   | 'volume_chaos_sight'
-  | 'disperse_core'
   | 'none';
+
+export interface StopLossProfile {
+  readonly family: StopLossFamily;
+  readonly corePolicy: StopLossCorePolicy;
+  readonly hittable: boolean;
+}
 
 export type Facing4 = 'up' | 'down' | 'left' | 'right';
 
@@ -298,10 +313,59 @@ export function resolveContactChannel(
   if (id === 'contact_adjacent_strike') return portfolio === 'yi' ? 'adjacent_hp' : 'none';
   if (id === 'contact_step_chaos') return portfolio === 'bing' ? 'step_chaos' : 'none';
   if (id === 'contact_volume_chaos') return portfolio === 'ding' ? 'volume_chaos_sight' : 'none';
-  if (id === 'contact_disperse_core') {
-    return portfolio === 'bing' || portfolio === 'ding' ? 'disperse_core' : 'none';
-  }
   return 'none';
+}
+
+/**
+ * Stop-loss is derived from continuity × coverage (DEC-083). Not a fifth lexeme.
+ * Leftovers follow the spec remnant table (occupancy × family); do not invent extras.
+ */
+export function resolveStopLoss(form: {
+  continuity: ContinuityId;
+  coverage: CoverageId;
+  occupancy: OccupancyId;
+  portfolio: PortfolioId;
+}): StopLossProfile | 'illegal' {
+  const row = STOP_LOSS_DATA[`${form.continuity}_${form.coverage}`];
+  if (!row) return 'illegal';
+  if (!row.legalOccupancies.includes(form.occupancy)) return 'illegal';
+  if (PORTFOLIO_DATA[form.portfolio].blockWalk && row.family === 'unkillable') return 'illegal';
+  return {
+    family: row.family,
+    corePolicy: row.corePolicy,
+    hittable: row.family !== 'unkillable',
+  };
+}
+
+/** Strike-core size. `none` → 0 (do not paint a hittable core). */
+export function coreMarkPx(policy: StopLossCorePolicy, standard: number): number {
+  if (policy === 'none') return 0;
+  if (policy === 'exposed') return standard + 1;
+  if (policy === 'obscured') return Math.max(1, standard - 1);
+  return standard;
+}
+
+export function chebyshevTiles(
+  a: { readonly col: number; readonly row: number },
+  b: { readonly col: number; readonly row: number },
+): number {
+  return Math.max(Math.abs(a.col - b.col), Math.abs(a.row - b.row));
+}
+
+/** 2–3 seats, gap ≥ minGap (fallback 2). Gym one-blob uses count=2. */
+export function colonyNucleusSeats(
+  origin: { readonly col: number; readonly row: number },
+  count: number,
+  minGap: number,
+): { col: number; row: number }[] {
+  const n = Math.max(2, Math.min(3, count));
+  const gap = Math.max(2, minGap);
+  const offsets = [
+    { col: 0, row: 0 },
+    { col: gap, row: 0 },
+    { col: 0, row: -gap },
+  ];
+  return offsets.slice(0, n).map((o) => ({ col: origin.col + o.col, row: origin.row + o.row }));
 }
 
 function assert(cond: unknown, msg: string): void {
@@ -311,13 +375,22 @@ function assert(cond: unknown, msg: string): void {
 function stubForm(
   portfolio: PortfolioId,
   contact: string,
+  extras?: {
+    continuity?: ContinuityId;
+    coverage?: CoverageId;
+    occupancy?: OccupancyId;
+  },
 ): ContaminationForm {
   const occupancy =
-    portfolio === 'jia' ? 'floor' : portfolio === 'yi' ? 'wall' : portfolio === 'bing' ? 'paint' : 'volume';
+    extras?.occupancy ??
+    (portfolio === 'jia' ? 'floor' : portfolio === 'yi' ? 'wall' : portfolio === 'bing' ? 'paint' : 'volume');
+  const continuity =
+    extras?.continuity ??
+    (portfolio === 'jia' || portfolio === 'yi' ? 'monolith' : portfolio === 'bing' ? 'colony' : 'field');
   return {
     substrate: 'wall_rust',
-    coverage: 'infiltrate',
-    continuity: 'monolith',
+    coverage: extras?.coverage ?? 'infiltrate',
+    continuity,
     occupancy,
     portfolio,
     lexemes: {
@@ -336,12 +409,11 @@ export function selfCheckHostLive(): void {
     ['yi', 'contact_adjacent_strike', 'adjacent_hp'],
     ['yi', 'contact_melee_three', 'adjacent_hp'],
     ['bing', 'contact_step_chaos', 'step_chaos'],
-    ['bing', 'contact_melee_three', 'disperse_core'],
+    ['bing', 'contact_melee_three', 'step_chaos'],
     ['ding', 'contact_volume_chaos', 'volume_chaos_sight'],
-    ['ding', 'contact_melee_three', 'disperse_core'],
+    ['ding', 'contact_melee_three', 'volume_chaos_sight'],
     ['ding', 'contact_adjacent_strike', 'none'],
     ['yi', 'contact_step_chaos', 'none'],
-    ['bing', 'contact_disperse_core', 'disperse_core'],
   ];
   for (const [portfolio, contact, channel] of cases) {
     const form = stubForm(portfolio, contact);
@@ -350,6 +422,37 @@ export function selfCheckHostLive(): void {
       `${portfolio} ${contact} → ${channel}`,
     );
   }
+
+  const jiaStop = resolveStopLoss(
+    stubForm('jia', 'contact_melee_three', { continuity: 'monolith', coverage: 'infiltrate' }),
+  );
+  assert(
+    jiaStop !== 'illegal' && jiaStop.family === 'core_strike' && jiaStop.corePolicy === 'exposed' && jiaStop.hittable,
+    'jia monolith infiltrate',
+  );
+  const bingColony = resolveStopLoss(
+    stubForm('bing', 'contact_step_chaos', { continuity: 'colony', coverage: 'rewrite' }),
+  );
+  assert(bingColony !== 'illegal' && bingColony.family === 'scatter_rejoin', 'bing colony rewrite');
+  for (const coverage of ['infiltrate', 'rewrite', 'overwrite'] as const) {
+    const field = resolveStopLoss(stubForm('bing', 'contact_step_chaos', { continuity: 'field', coverage }));
+    assert(field !== 'illegal' && field.family === 'unkillable' && !field.hittable, `bing field ${coverage}`);
+  }
+  const dingField = resolveStopLoss(stubForm('ding', 'contact_volume_chaos', { continuity: 'field' }));
+  assert(dingField !== 'illegal' && dingField.family === 'unkillable' && !dingField.hittable, 'ding field');
+  const dingMono = resolveStopLoss(stubForm('ding', 'contact_volume_chaos', { continuity: 'monolith' }));
+  assert(dingMono !== 'illegal' && dingMono.family === 'core_strike' && dingMono.hittable, 'ding monolith');
+  assert(
+    resolveStopLoss(stubForm('jia', 'contact_melee_three', { continuity: 'field', occupancy: 'floor' })) === 'illegal',
+    'jia must not be unkillable',
+  );
+  assert(
+    resolveStopLoss(stubForm('jia', 'contact_melee_three', { continuity: 'shards' })) === 'illegal',
+    'shards has no stop-loss row',
+  );
+  const seats = colonyNucleusSeats({ col: 12, row: 11 }, 2, 3);
+  assert(seats.length === 2, 'colony seats 2');
+  assert(chebyshevTiles(seats[0]!, seats[1]!) >= 3, 'colony gap ≥ 3');
 
   const two = [
     { col: 0, row: 0 },

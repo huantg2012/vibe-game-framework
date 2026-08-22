@@ -184,7 +184,9 @@ export function paintBingFrame(
   const rim = recipe.rimAlways || (recipe.rimOnInflated && inflated);
   for (let i = 0; i < organisms.length; i++) {
     const org = organisms[i]!;
-    paintCore(out, width, height, org, recipe, pose, seed + i * 13);
+    if (recipe.paintStrikeCore) {
+      paintCore(out, width, height, org, recipe, pose, seed + i * 13);
+    }
     if (rim) paintRim(out, width, height, org, recipe.ramp.glow);
   }
 }

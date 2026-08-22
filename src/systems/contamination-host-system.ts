@@ -24,8 +24,10 @@
  * - 丁 cloud translates / morphs; volume chaos + sight use the **current** rect.
  * - `resolveContactChannel(portfolio, form.lexemes.contact)` (rewrite_to, no
  *   new DPS). 丁 never becomes melee.
+ * - `resolveStopLoss` decides hittable cores / colony nuclei. Unkillable still
+ *   applies step chaos / volume field. Sortie ticks never call it.
  *
- * `src/scenes/rift-scene.ts` is not modified by R2-C2. Combat V3 is not
+ * `src/scenes/rift-scene.ts` is not modified by R2-C2 / DEC-083. Combat V3 is not
  * modified: no screen shake, no hit-stop, no damage numbers. Prices do not rise.
  */
 
@@ -40,11 +42,15 @@ import type { CombatSystem } from '@/systems/combat-system';
 import type { ChaosSystem } from '@/systems/chaos-system';
 import {
   aabbPixelRect,
+  chebyshevTiles,
+  colonyNucleusSeats,
+  coreMarkPx,
   dingLiveRect,
   facingFromAttach,
   pointInRect,
   rectCenter,
   resolveContactChannel,
+  resolveStopLoss,
   segmentContaining,
   splitWalkSegments,
   stepYiWalk,
@@ -74,6 +80,17 @@ interface HostBase {
   alive: boolean;
   gfx: Phaser.GameObjects.Graphics;
   core: Vector2;
+  /** Gym live hittable-core marks. Null on the sortie path. */
+  marks: Phaser.GameObjects.Graphics | null;
+}
+
+interface BingNucleus {
+  core: Vector2;
+  hp: number;
+  alive: boolean;
+  floorCol: number;
+  floorRow: number;
+  flashMs: number;
 }
 
 interface YiHost extends HostBase {
@@ -101,6 +118,8 @@ interface BingHost extends HostBase {
   kind: 'bing';
   pin: ClusterCorePin;
   phase: number;
+  /** Gym live colony only. Empty on sortie and on unkillable field. */
+  nuclei: BingNucleus[];
 }
 
 interface DingHost extends HostBase {
@@ -185,6 +204,7 @@ export class ContaminationHostSystem {
   destroy(): void {
     for (const host of this.hosts) {
       host.gfx.destroy();
+      host.marks?.destroy();
       if (host.kind === 'yi') host.telegraph.destroy();
     }
     this.hosts = [];
@@ -225,6 +245,7 @@ export class ContaminationHostSystem {
   clearHosts(): void {
     for (const host of this.hosts) {
       host.gfx.destroy();
+      host.marks?.destroy();
       if (host.kind === 'yi') host.telegraph.destroy();
     }
     this.hosts = [];
@@ -238,6 +259,7 @@ export class ContaminationHostSystem {
         continue;
       }
       host.gfx.destroy();
+      host.marks?.destroy();
       if (host.kind === 'yi') host.telegraph.destroy();
     }
     this.hosts = keep;
@@ -332,12 +354,31 @@ export class ContaminationHostSystem {
     return 'down';
   }
 
+  /** Gym live: remaining hittable cores. Sortie always 0 (caller should not use). */
+  getLiveNucleusCount(hostId: string): number {
+    const host = this.hosts.find((h) => h.id === hostId && h.alive);
+    if (!host) return 0;
+    if (!this.gymLiveMotion) return 1;
+    const stop = resolveStopLoss(host.form);
+    if (stop === 'illegal' || !stop.hittable) return 0;
+    if (host.kind === 'bing' && host.nuclei.length > 0) {
+      return host.nuclei.filter((n) => n.alive).length;
+    }
+    return 1;
+  }
+
   isIdentifiable(hostId: string, playerCol: number, playerRow: number): boolean {
     const host = this.hosts.find((h) => h.id === hostId && h.alive);
     if (!host) return false;
     const vis = (this.getVisibility?.(host.core) ?? 0) > 0;
     if (host.kind === 'yi') return vis;
     if (host.kind === 'bing') {
+      if (host.nuclei.length > 0) {
+        const onPaint = host.nuclei.some(
+          (n) => n.alive && Math.abs(playerCol - n.floorCol) <= 1 && Math.abs(playerRow - n.floorRow) <= 1,
+        );
+        return vis || onPaint;
+      }
       const onPaint =
         Math.abs(playerCol - host.pin.floorCol) <= 1 && Math.abs(playerRow - host.pin.floorRow) <= 1;
       return vis || onPaint;
@@ -367,11 +408,18 @@ export class ContaminationHostSystem {
     for (const host of this.hosts) {
       if (!host.alive) {
         host.gfx.setVisible(false);
+        host.marks?.setVisible(false);
         if (host.kind === 'yi') host.telegraph.setVisible(false);
         continue;
       }
       if (combat && swung && !this.swingHit) {
-        if (this.coreInSwing(playerPos, combat.getLockedAttackAngle(), host.core)) {
+        if (this.gymLiveMotion && host.kind === 'bing' && host.nuclei.length > 0) {
+          const hit = host.nuclei.find((n) => n.alive && this.coreInSwing(playerPos, combat.getLockedAttackAngle(), n.core));
+          if (hit) {
+            this.hitCore(host, hit);
+            this.swingHit = true;
+          }
+        } else if (this.coreInSwing(playerPos, combat.getLockedAttackAngle(), host.core)) {
           this.hitCore(host);
           this.swingHit = true;
         }
@@ -402,6 +450,7 @@ export class ContaminationHostSystem {
     const core = this.gymLiveMotion ? { x: attach.seamX, y: attach.seamY } : center;
     const gfx = scene.add.graphics().setDepth(20);
     const telegraph = scene.add.graphics().setDepth(21);
+    const marks = this.gymLiveMotion ? scene.add.graphics().setDepth(22) : null;
     this.paintYi(gfx, core, false);
     const floors = edge.strikeFloors.map((f) => ({ col: f.col, row: f.row }));
     let walk: YiWalkState | null = null;
@@ -433,6 +482,7 @@ export class ContaminationHostSystem {
       walk,
       floorUniverse: floors,
       moving: false,
+      marks,
     });
     if (this.skipPaint) telegraph.setVisible(false);
   }
@@ -451,7 +501,9 @@ export class ContaminationHostSystem {
     const ox = (slot % 3) * TILE;
     const oy = Math.floor(slot / 3) * TILE;
     const core = { x: pin.cx + ox, y: pin.cy + oy };
-    this.paintCore(gfx, core, 0x2ae6c8, 3);
+    if (!this.gymLiveMotion) this.paintCore(gfx, core, 0x2ae6c8, 3);
+    const nuclei = this.gymLiveMotion ? this.spawnBingNuclei(form, pin, ox, oy) : [];
+    const marks = this.gymLiveMotion ? scene.add.graphics().setDepth(0.35) : null;
     this.hosts.push({
       kind: 'bing',
       id: `ENM_BING_${String(slot + 1).padStart(2, '0')}`,
@@ -459,7 +511,7 @@ export class ContaminationHostSystem {
       hp: C.CORE_MAX_HEALTH,
       alive: true,
       gfx,
-      core,
+      core: nuclei[0]?.core ?? core,
       pin: {
         ...pin,
         cx: core.x,
@@ -468,6 +520,8 @@ export class ContaminationHostSystem {
         floorRow: pin.floorRow + Math.floor(slot / 3),
       },
       phase: 0,
+      nuclei,
+      marks,
     });
   }
 
@@ -487,6 +541,7 @@ export class ContaminationHostSystem {
       y: box.coreRow * TILE + TILE / 2,
     };
     this.paintDing(gfx, box, core, false);
+    const marks = this.gymLiveMotion ? scene.add.graphics().setDepth(C.VOLUME_DEPTH + 1) : null;
     this.hosts.push({
       kind: 'ding',
       id: `ENM_DING_${String(slot + 1).padStart(2, '0')}`,
@@ -500,6 +555,7 @@ export class ContaminationHostSystem {
       live: aabbPixelRect(box, TILE),
       elapsedMs: 0,
       moving: false,
+      marks,
     });
   }
 
@@ -562,6 +618,7 @@ export class ContaminationHostSystem {
       host.windupMs = -1;
     }
     this.paintYi(host.gfx, host.core, onStrike);
+    this.paintMarks(host);
   }
 
   private tickBing(host: BingHost, col: number, row: number, dtMs: number): void {
@@ -585,14 +642,25 @@ export class ContaminationHostSystem {
   private tickBingLive(host: BingHost, col: number, row: number, dtMs: number): void {
     host.phase += dtMs * 0.002;
     const inflated = Math.sin(host.phase) > 0.35;
-    const onPaint = Math.abs(col - host.pin.floorCol) <= 1 && Math.abs(row - host.pin.floorRow) <= 1;
     const stepped = col !== this.lastPlayerTile.col || row !== this.lastPlayerTile.row;
     const channel = resolveContactChannel(host.form.portfolio, host.form.lexemes.contact);
-    if (channel === 'step_chaos' && onPaint && stepped) {
-      const amount = inflated ? C.PAINT_STEP_CHAOS_INFLATED : C.PAINT_STEP_CHAOS_REST;
-      this.chaos?.addChaos('paint_step', amount);
+    if (channel === 'step_chaos' && stepped) {
+      const onPaint =
+        host.nuclei.length > 0
+          ? host.nuclei.some(
+              (n) => n.alive && chebyshevTiles({ col, row }, { col: n.floorCol, row: n.floorRow }) <= 1,
+            )
+          : Math.abs(col - host.pin.floorCol) <= 1 && Math.abs(row - host.pin.floorRow) <= 1;
+      if (onPaint) {
+        const amount = inflated ? C.PAINT_STEP_CHAOS_INFLATED : C.PAINT_STEP_CHAOS_REST;
+        this.chaos?.addChaos('paint_step', amount);
+      }
     }
-    this.paintCore(host.gfx, host.core, inflated ? 0x3cffd4 : 0x2ae6c8, inflated ? 4 : 3);
+    for (const nucleus of host.nuclei) {
+      if (nucleus.flashMs > 0) nucleus.flashMs = Math.max(0, nucleus.flashMs - dtMs);
+    }
+    this.paintBingLive(host, inflated);
+    this.paintMarks(host);
   }
 
   private tickDing(
@@ -648,6 +716,82 @@ export class ContaminationHostSystem {
       this.chaos?.addChaos('volume_field', C.VOLUME_CHAOS_PER_SEC * (dtMs / 1000));
     }
     this.paintDing(host.gfx, host.box, host.core, host.awake, host.live);
+    this.paintMarks(host);
+  }
+
+  private spawnBingNuclei(
+    form: ContaminationForm,
+    pin: ClusterCorePin,
+    ox: number,
+    oy: number,
+  ): BingNucleus[] {
+    const stop = resolveStopLoss(form);
+    if (stop === 'illegal' || stop.family !== 'scatter_rejoin') return [];
+    const seats = colonyNucleusSeats(
+      { col: pin.floorCol, row: pin.floorRow },
+      C.COLONY_NUCLEUS_COUNT_MIN,
+      C.COLONY_NUCLEUS_MIN_TILE_GAP,
+    );
+    return seats.map((seat) => ({
+      core: { x: seat.col * TILE + TILE / 2 + ox, y: seat.row * TILE + TILE / 2 + oy },
+      hp: C.CORE_MAX_HEALTH,
+      alive: true,
+      floorCol: seat.col,
+      floorRow: seat.row,
+      flashMs: 0,
+    }));
+  }
+
+  private paintBingLive(host: BingHost, inflated: boolean): void {
+    if (this.skipPaint) {
+      host.gfx.clear();
+      host.gfx.setVisible(false);
+      return;
+    }
+    host.gfx.setVisible(true);
+    host.gfx.clear();
+    const stop = resolveStopLoss(host.form);
+    if (stop === 'illegal' || !stop.hittable) {
+      host.gfx.fillStyle(0x1a6b5c, inflated ? 0.4 : 0.28);
+      host.gfx.fillRect(host.pin.floorCol * TILE + 6, host.pin.floorRow * TILE + 6, TILE - 12, TILE - 12);
+      return;
+    }
+    const stain = inflated ? 0.32 : 0.2;
+    const floors =
+      host.nuclei.length > 0
+        ? host.nuclei.filter((n) => n.alive).map((n) => ({ col: n.floorCol, row: n.floorRow }))
+        : [{ col: host.pin.floorCol, row: host.pin.floorRow }];
+    host.gfx.fillStyle(0x1a6b5c, stain);
+    for (const floor of floors) {
+      host.gfx.fillRect(floor.col * TILE + 6, floor.row * TILE + 6, TILE - 12, TILE - 12);
+    }
+  }
+
+  private paintMarks(host: Host): void {
+    const gfx = host.marks;
+    if (!gfx || !this.gymLiveMotion) return;
+    gfx.clear();
+    const stop = resolveStopLoss(host.form);
+    if (stop === 'illegal' || !stop.hittable) {
+      gfx.setVisible(false);
+      return;
+    }
+    gfx.setVisible(true);
+    const standard = host.kind === 'ding' ? 2 : 3;
+    const size = coreMarkPx(stop.corePolicy, standard);
+    if (size <= 0) {
+      gfx.setVisible(false);
+      return;
+    }
+    if (host.kind === 'bing' && host.nuclei.length > 0) {
+      for (const nucleus of host.nuclei) {
+        if (!nucleus.alive) continue;
+        const flash = nucleus.flashMs > 0;
+        this.paintCore(gfx, nucleus.core, flash ? 0x3cffd4 : 0x2ae6c8, size, true, true);
+      }
+      return;
+    }
+    this.paintCore(gfx, host.core, 0x2ae6c8, size, true, true);
   }
 
   private coreInSwing(origin: Readonly<Vector2>, angle: number, core: Vector2): boolean {
@@ -661,13 +805,37 @@ export class ContaminationHostSystem {
     return Math.abs(shortestArc(bearing - angle)) <= degToRad(combat.ATTACK_HALF_ANGLE);
   }
 
-  private hitCore(host: Host): void {
+  private hitCore(host: Host, nucleus?: BingNucleus): void {
+    if (this.gymLiveMotion) {
+      const stop = resolveStopLoss(host.form);
+      if (stop === 'illegal' || !stop.hittable) return;
+      if (host.kind === 'bing' && stop.family === 'scatter_rejoin') {
+        if (!nucleus || !nucleus.alive) return;
+        const amount = GAME_CONSTANTS.COMBAT.PLAYER_DAMAGE;
+        nucleus.hp -= amount;
+        nucleus.flashMs = 80;
+        eventBus.emit(GameEvent.ENEMY_DAMAGED, { enemyId: host.id, amount, source: 'player' });
+        if (nucleus.hp > 0) return;
+        nucleus.alive = false;
+        if (host.nuclei.some((n) => n.alive)) return;
+        host.alive = false;
+        host.hp = 0;
+        host.gfx.clear();
+        host.marks?.clear();
+        eventBus.emit(GameEvent.ENEMY_KILLED, {
+          enemyId: host.id,
+          position: { x: host.core.x, y: host.core.y },
+        });
+        return;
+      }
+    }
     const amount = GAME_CONSTANTS.COMBAT.PLAYER_DAMAGE;
     host.hp -= amount;
     eventBus.emit(GameEvent.ENEMY_DAMAGED, { enemyId: host.id, amount, source: 'player' });
     if (host.hp > 0) return;
     host.alive = false;
     host.gfx.clear();
+    host.marks?.clear();
     if (host.kind === 'yi') host.telegraph.clear();
     eventBus.emit(GameEvent.ENEMY_KILLED, { enemyId: host.id, position: { x: host.core.x, y: host.core.y } });
   }
@@ -680,18 +848,26 @@ export class ContaminationHostSystem {
     }
     gfx.setVisible(true);
     gfx.clear();
+    if (this.gymLiveMotion) return;
     gfx.fillStyle(hot ? 0x3cffd4 : 0x2ae6c8, 1);
     gfx.fillRect(Math.round(core.x) - 1, Math.round(core.y) - 1, 3, 3);
   }
 
-  private paintCore(gfx: Phaser.GameObjects.Graphics, core: Vector2, color: number, size: number): void {
-    if (this.skipPaint) {
+  private paintCore(
+    gfx: Phaser.GameObjects.Graphics,
+    core: Vector2,
+    color: number,
+    size: number,
+    append = false,
+    ignoreSkip = false,
+  ): void {
+    if (this.skipPaint && !ignoreSkip) {
       gfx.clear();
       gfx.setVisible(false);
       return;
     }
     gfx.setVisible(true);
-    gfx.clear();
+    if (!append) gfx.clear();
     gfx.fillStyle(color, 1);
     const half = (size / 2) | 0;
     gfx.fillRect(Math.round(core.x) - half, Math.round(core.y) - half, size, size);
@@ -714,6 +890,7 @@ export class ContaminationHostSystem {
     gfx.fillStyle(0x0e4a3f, awake ? 0.55 : 0.32);
     const rect = live ?? aabbPixelRect(box, TILE);
     gfx.fillRect(rect.x, rect.y, rect.w, rect.h);
+    if (this.gymLiveMotion) return;
     gfx.fillStyle(awake ? 0x2ae6c8 : 0x1a6b5c, 1);
     gfx.fillRect(Math.round(core.x) - 1, Math.round(core.y) - 1, 2, 2);
   }
@@ -733,6 +910,7 @@ export class ContaminationHostSystem {
     for (const host of this.hosts) {
       if (!host.alive) {
         host.gfx.setVisible(false);
+        host.marks?.setVisible(false);
         if (host.kind === 'yi') host.telegraph.setVisible(false);
         continue;
       }
@@ -741,7 +919,8 @@ export class ContaminationHostSystem {
         this.paintYi(host.gfx, host.core, host.windupMs >= 0);
       } else if (host.kind === 'bing') {
         const inflated = Math.sin(host.phase) > 0.35;
-        this.paintCore(host.gfx, host.core, inflated ? 0x3cffd4 : 0x2ae6c8, inflated ? 4 : 3);
+        if (this.gymLiveMotion) this.paintBingLive(host, inflated);
+        else this.paintCore(host.gfx, host.core, inflated ? 0x3cffd4 : 0x2ae6c8, inflated ? 4 : 3);
       } else {
         this.paintDing(
           host.gfx,
@@ -751,6 +930,7 @@ export class ContaminationHostSystem {
           this.gymLiveMotion ? host.live : undefined,
         );
       }
+      this.paintMarks(host);
     }
   }
 }

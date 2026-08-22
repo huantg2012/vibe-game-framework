@@ -4,6 +4,7 @@
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId } from '@/generated/contamination-lexicon-data';
 import { mix32 } from '@/generation/seed-fork';
+import { coreMarkPx, resolveStopLoss } from '@/systems/contamination-host-live';
 import type { FormVisualPose } from '@/gym/form-renderers/form-renderer';
 import {
   deriveFragmentContamRamp,
@@ -96,7 +97,9 @@ export function yiRecipeFromForm(
   const remnant =
     family === 'doorframe' ? mixTint(METAL, surface.wall, t) : mixTint(surface.wall, BRICK, t);
   const filmPx: 1 | 2 | 3 = form.coverage === 'infiltrate' ? 1 : form.coverage === 'rewrite' ? 2 : 3;
-  const corePx: 2 | 3 | 4 = form.coverage === 'infiltrate' ? 2 : form.coverage === 'rewrite' ? 3 : 4;
+  const stop = resolveStopLoss(form);
+  const sized = stop === 'illegal' ? 3 : coreMarkPx(stop.corePolicy, 3);
+  const corePx: 2 | 3 | 4 = sized <= 2 ? 2 : sized >= 4 ? 4 : 3;
   return {
     family,
     coverage: form.coverage,

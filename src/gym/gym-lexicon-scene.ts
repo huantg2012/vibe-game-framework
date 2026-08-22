@@ -33,6 +33,7 @@ import {
   lexemeOptions,
   lexiconCountOptions,
   portfolioOptions,
+  stopLossSidebarLine,
   substrateOptions,
   utteranceOptions,
   type LexiconGymConfig,
@@ -434,13 +435,20 @@ export class GymLexiconScene extends Phaser.Scene {
     const form = this.lastForm;
     const chaos = this.chaos?.getValue() ?? 0;
     const jia = this.ai.getEnemies().length;
-    const hosts = this.hosts.getSubjects().length;
+    const hosts = this.hosts.getSubjects();
+    const nucleus =
+      form && form.portfolio !== 'jia' && hosts[0]
+        ? this.hosts.getLiveNucleusCount(hosts[0].id)
+        : form?.portfolio === 'jia'
+          ? 1
+          : 0;
     const lines = [
       form ? describeForm(form) : '尚未生成。选维度后点生成。',
-      `在场 甲 ${jia} · 宿主 ${hosts} / 目标 ${form ? this.lastCount : 0}`,
-      `混乱 ${chaos.toFixed(1)}（丙踩踏 / 丁体积会加）`,
+      form ? stopLossSidebarLine(form) + ` · 可打核 ${nucleus}` : '',
+      `在场 甲 ${jia} · 宿主 ${hosts.length} / 目标 ${form ? this.lastCount : 0}`,
+      `混乱 ${chaos.toFixed(1)}（丙踩踏 / 丁体积会加；打不死不会因击杀再刷）`,
       `生命 ${this.combat.getHealth()}/${this.combat.getMaxHealth()}（${feelHitOn() ? '可受伤' : '玩家无敌'}）`,
-    ];
+    ].filter((line) => line.length > 0);
     el.textContent = lines.join('\n');
   }
 

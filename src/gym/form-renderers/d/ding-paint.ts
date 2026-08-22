@@ -197,13 +197,21 @@ export function paintDingFrame(
   else if (recipe.family === 'light_scatter') paintScatter(out, width, height, cloud, recipe, elapsedMs);
   else paintSqueeze(out, width, height, cloud, recipe, edgeA, coreA);
 
-  const coreLit = !recipe.reverseCore || awake;
-  const coreA2 = coreLit ? (awake ? 255 : 180) : 36;
-  const coreRgb = coreLit ? (awake ? recipe.glow : recipe.core) : recipe.deep;
   const cx = Math.round(cloud.cx);
   const cy = Math.round(cloud.cy);
-  put(out, width, height, cx, cy, coreRgb, coreA2);
-  put(out, width, height, cx + 1, cy, coreRgb, coreA2);
-  put(out, width, height, cx, cy + 1, coreRgb, coreA2);
-  put(out, width, height, cx + 1, cy + 1, awake ? recipe.glow : coreRgb, coreA2);
+  if (recipe.paintStrikeCore) {
+    const coreLit = !recipe.reverseCore || awake;
+    const coreA2 = coreLit ? (awake ? 255 : 180) : 36;
+    const coreRgb = coreLit ? (awake ? recipe.glow : recipe.core) : recipe.deep;
+    const span = Math.max(1, recipe.strikeCorePx);
+    for (let dy = 0; dy < span; dy++) {
+      for (let dx = 0; dx < span; dx++) {
+        put(out, width, height, cx + dx, cy + dy, dx + dy === span * 2 - 2 && awake ? recipe.glow : coreRgb, coreA2);
+      }
+    }
+    return;
+  }
+  if (recipe.reverseCore) {
+    put(out, width, height, cx, cy, recipe.deep, awake ? 160 : 48);
+  }
 }
