@@ -170,10 +170,10 @@ note: 十锚是风格样例不是地图库。裂隙每次抽锚+新种子+邻域
 | `shear-clinic` | 瓷面错位 | 轴对齐断层 | clinic |
 | `shear-metro` | 锈板撕缝 | 加厚断层 | metro |
 | `hunks-metro` | 嵌板残体 | 平行板列 | metro |
-| `ridge-library` | 断梁残脊 | 平行断梁 | library（预览填表，`enabled` 仍 false） |
+| `ridge-library` | 断梁残脊 | 平行断梁 | library（Slice 6 预览填表，`enabled` 当时 false） |
 | `hunks-residential` | 宅基残体 | 缺边矩形垫 | residential（同上） |
 
-`frag-library` / `frag-residential` 视觉列本批填满，正式抽取仍只开三行。
+Slice 6 正式抽取只开三行（DEC-062）。**DEC-090：** 迭代 6 只开旧图书馆，四张一起标定；策划表旧图书馆一行 `enabled` 待 I6-G 翻，本轮不改该文件。居民区公寓簇状语法未实现，不进迭代 6。
 
 ---
 

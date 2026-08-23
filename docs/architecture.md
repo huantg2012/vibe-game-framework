@@ -2,10 +2,10 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-22
+last-modified: 2026-08-23
 approved-date: 2026-07-22
 changed-this-slice: true
-note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），逻辑为实现完成、体验未验证；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）：** 方案 D 已接出击，体验未验证。**迭代 4（DEC-085 / DEC-086）：** 练习场污染句法陈列馆。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-4.md`。
+note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染缺省崩坏簇（DEC-069）。整团胀缩活层已锁（DEC-070）；出击与练习场同一套（DEC-071）。迷雾下亮度等人终审。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），逻辑为实现完成、体验未验证；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）：** 方案 D 已接出击，体验未验证。**迭代 4（DEC-085 / DEC-086）：** 练习场污染句法陈列馆。**迭代 5（DEC-087 / DEC-088）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 不升生产 ramp）。**迭代 6（DEC-088 / DEC-089 / DEC-090）：** 碎片配色 / 世界美术；拍板已全部收口（色温分组量化；四张可生成，只开旧图书馆）；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
@@ -119,7 +119,10 @@ src/
     └── save-data.ts            # 存档数据 schema
 
 tools/
-└── art-pipeline/               # 构建期离线美术资源后处理与机器验收工具
+├── art-pipeline/               # 构建期离线美术资源后处理与机器验收工具
+├── csv-codegen/                # data/*.csv → src/generated/*.ts
+├── gym/                        # 陈列馆目录等练习场机器闸门
+└── contam-preview/             # 论证一次性预览/量化（迭代 5）；不进 src/**，不进游戏包
 ```
 
 ## 构建期美术资源后处理工具
@@ -130,6 +133,10 @@ tools/
 - `npm run art:verify -- --config <配置路径>`：执行机器验收；退出码为 0 表示通过，非 0 表示不通过。
 
 具体游戏的尺寸、色板、处理阶段和验收阈值存放于 `docs/art/pipeline.*.config.json` 与 `docs/art/palette.json`，不写入通用工具代码。正式视觉资产的职责约定为：美术 Agent 维护配置与验收标准，程序 Agent 运行命令，人执行外部生图并完成最终审美判断。
+
+## 外形基因谱论证工具（不进游戏）
+
+`tools/contam-preview/` 是迭代 5 的一次性论证预览（现状甲/丙、原型骨架、方言对照、粗占格测量）。用 Phaser 桩在 node 里跑，**不进 `src/**`，不会被游戏打包**。生产实现必须另写；生产闸门是 I5-H 的 `check:contam-distinct`（测基因谱模块，禁止 IoU）。L1 可达与地面青绿测量（`measure:l1-reach` / `measure:ground-teal`）升为迭代 6 闸门或被 `check:contam-floor-contrast` 吸收。样本在 `docs/art/samples/`。原型第三栏整只发光不采纳（DEC-088）。
 
 ## 模块通信方式
 
@@ -204,17 +211,18 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
 | TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线，依赖 Phaser 视锥裁剪） | create(scene, map, config): TilemapLayer, getLayer(), getWorldSize(), destroy() | 已实现（T6） |
 | AISystem | src/systems/ai/ | 两种感知剖面共用一份五态 FSM（10Hz tick / 单射线）+ 移动/巡逻 + 寻路预算调度；拥有敌人实体的生命周期。剖面来自 EnemyData，禁止第二份 FSM | create(scene, spawns, occluders, walk), update(dt, playerPos, playerIsMoving), postUpdate(dt), getEnemies(), getEnemyById(), reportNoise(pos, radius, level), reportDamage(enemyId, sourcePos), despawn(enemyId), onPlayerLost(), setVisibilityProvider(), setCueListener(), addWallCollider(layer), getSprites(), getStats(), destroy() | 已实现（T7；Slice 8 C1 剖面泛化） |
-| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染句法：底材 × 孔谱 × 词素。出击已接甲填法 + 乙丙丁宿主 + 抽卡 CSV。迭代 3：方案 D 接入出击（DEC-084）。迭代 4：练习场陈列馆按视觉身份去重（DEC-085），不是玩法 | `drawSortie` / 钉层 / `encounter:identified` / `EnemySpawnData.form` | 迭代 1 逻辑已接（体验未验证）；渲染已接出击；陈列馆进行中 |
+| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染句法：底材 × 孔谱 × 词素。出击已接甲填法 + 乙丙丁宿主 + 抽卡 CSV。迭代 3：方案 D 接入出击（DEC-084）。迭代 4：练习场陈列馆按视觉身份去重（DEC-085），不是玩法。迭代 5：甲外形基因谱（DEC-087 / DEC-088），练习场先行 | `drawSortie` / 钉层 / `encounter:identified` / `EnemySpawnData.form` | 迭代 1 逻辑已接（体验未验证）；渲染已接出击；陈列馆 I4-D 未交；基因谱进行中；碎片配色迭代 6 已开 |
 | ContaminationHostSystem | src/systems/contamination-host-system.ts | 乙缝核邻格抽打、丙簇踩踏混乱、丁体积场。无走廊碰撞，无第二 FSM。`create` 的 combat / chaos 可缺（传 `null`）。迭代 3：出击传 `liveMotion: true`（I3-F 已接）；一份 `layout.contaminationDraw` 物化乙丙丁，禁止二次 `drawSortie`（I3-A）。地图课不传活开关，走静帧 tick | create(scene, layout, combat, chaos, getVisibilityAt, options?)（`options.liveMotion` 默认 false；旧名 `gymLiveMotion` 仅 gym 内部兼容）, bindPractice(..., options?), update, getSubjects, getLastDraw, getVolumeSightMult, setSkipPaint, getVisualPin, getVisualSignal, getStrikeFloors, getVisualMoving, getVisualFacing, getLiveNucleusCount, destroy | 已实现（I3-F 出击活机制；地图课静帧） |
 | EncounterNarration | src/ui/dom/encounter-narration.ts | 污染句法识别表面：随身罩一行记录，分节点，限频。禁止头上名字 | create / tick / destroy；挂 `#dom-ui-root` / `#rift-encounter-log` | 进行中（迭代 1，审美待人终审；迭代 3 新基体将上屏） |
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
-| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：污染句法 `?lesson=lexicon`（固定观察院子、默认无敌可开「感受伤害」、配置表点生成；默认 `#gym-lex-renderer` = 方案 D，A/B/C 冻结对照；`#gym-lex-fragment` 五选一偏色院子）；污染句法陈列馆 `?lesson=lexicon-gallery`（一次一厅、只 attach 方案 D、无玩家/Enemy/宿主；合同 `docs/tasks/iteration-4.md`）；敌人巡逻（默认院子，仍走现行像素直到与出击对齐）；玩家外形 `?lesson=player`；地图生成 `?lesson=map`（不打开 `liveMotion`）。Agent 入口 `docs/dev/gym.md`。 | `npm run gym` 或 `/gym.html`；污染句法 `/gym.html?lesson=lexicon`；陈列馆 `/gym.html?lesson=lexicon-gallery` | 已实现；陈列馆课迭代 4 进行中 |
+| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：污染句法 `?lesson=lexicon`（固定观察院子、默认无敌可开「感受伤害」、配置表点生成；默认 `#gym-lex-renderer` = 方案 D，A/B/C 冻结对照；`#gym-lex-fragment` 五选一偏色院子）；污染句法陈列馆 `?lesson=lexicon-gallery`（一次一厅、只 attach 方案 D、无玩家/Enemy/宿主；合同 `docs/tasks/iteration-4.md`；迭代 5 甲在 I5-J 前挂基因谱模块）；敌人巡逻（默认院子，仍走现行像素直到与出击对齐）；玩家外形 `?lesson=player`；地图生成 `?lesson=map`（不打开 `liveMotion`；迭代 6 地面配色验证面）。Agent 入口 `docs/dev/gym.md`。 | `npm run gym` 或 `/gym.html`；污染句法 `/gym.html?lesson=lexicon`；陈列馆 `/gym.html?lesson=lexicon-gallery` | 已实现；陈列馆课迭代 4 进行中（I4-D 未交）；甲基因谱迭代 5 进行中；碎片配色迭代 6 已开 |
 | GymFormRenderers | src/gym/form-renderers/ | A/B/C 冻结对照，仅句法课。gym registry 从生产路径 re-export 方案 D。禁止 `RiftScene` import 本目录 | `getFormRenderer`（A/B/C 本地 + D 来自 entities） | 已实现（对照保留，DEC-084） |
 | GymLexiconGalleryCatalog | src/gym/lexicon-gallery-catalog.ts | 陈列馆视觉身份目录：合法填法 → 去重后的标本列表。无 Phaser attach。I4-B/C 只消费，不自己做笛卡尔 | `enumerateGallerySpecimens` / `visualKeyOf` / `GALLERY_AXES` / `galleryDedupeCopy` | 已实现（I4-A） |
 | GymLexiconGallery | src/gym/gym-lexicon-gallery-scene.ts | 陈列馆课：厅导航 + 视口虚拟化 + 开发标签 + 检视全速活。只 attach 生产 `d-mixed`。与视野相交的格子必须挂上（DEC-086）。 | `GymLexiconGalleryScene`；`?lesson=lexicon-gallery` | I4-C 已落地；I4-D 虚拟化修订未交 |
-| ContaminationFormRenderer | src/entities/form-renderers/ | 生产视觉层（方案 D：`d-mixed` + `d/**`）。接口只此一份。`RiftScene` 只允许 import 这里（I3-E 已接） | `getFormRenderer('d-mixed')` / `attach` / `FormVisual.update` | 已实现（I3-E 已接裂隙；A/B/C 对照仍在 gym） |
+| ContaminationFormRenderer | src/entities/form-renderers/ | 生产视觉层（方案 D：`d-mixed` + `d/**`）。接口只此一份。`RiftScene` 只允许 import 这里（I3-E 已接）。迭代 5：甲基因谱新建模块，I5-J 前仅练习场挂；出击默认甲仍走旧 `jia-*` | `getFormRenderer('d-mixed')` / `attach` / `FormVisual.update` | 已实现（I3-E 已接裂隙；基因谱进行中） |
+| ContamPreviewTools | tools/contam-preview/ | 外形基因谱论证预览与粗占格测量；L1 / 地面青绿诊断。Phaser 桩离线跑。不进 `src/**`，不进游戏 | `npm run preview:contam-current` / `preview:contam-proto` / `measure:contam-distinct` / `measure:l1-reach` / `measure:ground-teal` | 论证用（DEC-087）；生产闸门另写 `check:contam-distinct`（I5-H）与 `check:contam-floor-contrast`（I6-E） |
 | EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 程序像素回退（渗透体 32×32 / 改写体 32×48；GameObject 不旋转）+ teal 指示物 + 残影 + 脱落尘 + 木偶步态 + AI 状态块 + `spawnData.form`（I3-A；禁止再按 role 三元硬编码出击 form）。`setVisualSuppressed` 默认 false；I3-E 出击在方案 D ready 时调用（藏默认身体，保留 Arcade / AI / 既有 AI 态指示物） | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getForm/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection/setVisualSuppressed | 已实现（I3-A form 管线；I3-E suppress） |
 | InfiltratorSprite | src/entities/infiltrator-sprite.ts | 渗透体密像素 32×32 四向 + 步态帧（前倾猎食）。碰撞仍 20。成品，不换精灵表 | generateInfiltratorPlaceholders(scene), infiltratorMotionTexture | 已实现（DEC-066） |
 | ContamFlakes | src/entities/contam-flakes.ts | 敌人青绿 1px 脱落尘 + 改写体脚下污斑。迈步可爆发 | generateContamFlakeTextures, ContamFlakes, ContamStain | 已实现（2026-08-20） |
@@ -235,7 +243,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | BoundaryShape | src/systems/boundary-shape.ts | 净化点边界几何的唯一真相：潮汐驱动的极坐标压力 blob（椭圆 × 潮汐缩放 × 方向压力叶 × 交互点安全钳制）。每次 scene create 构建一次，构建后为无状态廉价查询 | `createBoundaryShape(config)`：radiusAt(angle), normalizedDist(x,y), isInside(x,y), pressureAt(angle), pressureDirection, tideScale, centerX/centerY | 已实现（Slice 4.5） |
 | BoundaryBreath | src/systems/boundary-breath.ts | 边界局部压力冲击与膜变形的纯视觉叠加层（并发短弧向内扫入 + 虚空侵入楔形 + 膜线内凹）。不参与碰撞/可见性/gameplay | create(scene, shape, tidePhase), update(dt), destroy() | 已实现（Slice 4.5） |
 | BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外粒子与 apparition 氛围渲染；生成/消亡半径跟随 BoundaryShape 而非固定圆 | create(scene, shape), update(dt), destroy() | 已实现（Slice 2，Slice 4.5 改为跟随 blob） |
-| ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表（含雾；尘点不烤死）；天空+尘点低分辨率叠层只改 phase，沿本趟 windX/Y。地面污染生产默认崩坏簇（`cluster`）；出击与练习场传 `liveClusterBreath: true` 画中间层/外层整团胀缩（呼吸层 depth+0.05，低于视野蒙层 50） | RiftSurfacePainter.mount(scene, ruins, key, depth, opts?) / update / destroy | 已实现（Slice 6；尘点跟天空同一份 AtmosphereField；DEC-069 缺省 cluster；DEC-070 活层画面锁；DEC-071 出击同挂） |
+| ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表（含雾；尘点不烤死）；天空+尘点低分辨率叠层只改 phase，沿本趟 windX/Y。地面污染生产默认崩坏簇（`cluster`）；出击与练习场传 `liveClusterBreath: true` 画中间层/外层整团胀缩（呼吸层 depth+0.05，低于视野蒙层 50）。迭代 6：第一层量化与 `preview-paint.ts` 的地面渐变待修（DEC-088 / DEC-089 / DEC-ARCH-014；修法已锁为色温分组量化） | RiftSurfacePainter.mount(scene, ruins, key, depth, opts?) / update / destroy | 已实现（Slice 6；尘点跟天空同一份 AtmosphereField；DEC-069 缺省 cluster；DEC-070 活层画面锁；DEC-071 出击同挂；配色缺陷待迭代 6） |
 | ClusterPulse | src/systems/cluster-pulse.ts | 崩坏簇活层：内核烤死；中间层与外层同一相位、几乎不透明，沿簇外沿整团胀缩（`breathAmp` 5–20%）。出击与练习场同一套 | paintClusterBreath(out, width, height, field, elapsedMs) | 已实现（练习场人眼 PASS；出击已挂；迷雾下亮度等人终审） |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
 | PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等）。`.game-panel` 默认是净化点墙机 CRT（680×468 磷光屏，无金属/无外框，8px 凹槽暗边）；六块墙机另加 `.crt-stack`（固定子项 + 库存 `.scroll-area`）。Esc 记录菜单与裂隙结算用内联尺寸覆盖（5px 凹槽），不加 crt-stack。`.device-plate` 是裂隙随身罩。Channel B toast 挂 `#toast-inline-queue`（同时最多 2 条）；`skipQueue` 贴源短闪仍挂 `#dom-ui-root`。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles(), createCrtPanel(id), getDomUiRoot(), bindDomUiRootToGame(game), showToastInline(html, opts), showToastStamp(text, opts?) | 已实现（Slice 4.5；Slice 5.5 CRT + createCrtPanel；C6 toast；R9 凹槽；R10 crt-stack / 队列 / device-effect） |
@@ -324,7 +332,21 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 - **选择：** 练习场新课 `?lesson=lexicon-gallery` 只 attach 生产方案 D。不创建 `Enemy` / 宿主 / 玩家。`FormAttachContext` 增加可选 `textureNamespace`（丙/丁/甲纹理键前缀，防同键互删）与 `stainWorldPoint`（丁浊点锚点；缺省仍读相机中心）。出击不传这两个字段。
 - **理由：** 陈列馆同一厅会并排 attach 键碰撞的丙/丁；丁浏览时相机中心会误触发浊点。改绘制语法会让目录不再等于出击外观。
 - **不改：** `d/**` 像素配方、色板、帧、剪影。`RiftScene` 行为。CSV。
-- **影响：** 陈列馆必须传唯一 namespace 并在浏览态把丁浊点钉到场地外。模块登记 `GymLexiconGallery` / `GymLexiconGalleryCatalog`。合同 `docs/tasks/iteration-4.md`。
+- **影响：** 陈列馆必须传唯一 namespace 并在浏览态把丁浊点钉到场地外。模块登记 `GymLexiconGallery` / `GymLexiconGalleryCatalog`。合同 `docs/tasks/iteration-4.md`。迭代 5 修订：切生产前陈列馆甲可挂基因谱模块（DEC-087 / DEC-ARCH-013），不是第三套方案。
+
+### DEC-ARCH-013: 甲基因谱练习场先行，出击默认路径后切（迭代 5）
+
+- **选择：** 甲组合式外形（骨架语法 + 共享构件 + 违规预算）新建模块，不原地改现行 `jia-silhouette` / `jia-paint` 让裂隙静默换皮。句法课与陈列馆甲先挂新模块。`RiftScene` 与默认 `deriveFragmentContamRamp` 在 I5-J 之前不动。`tools/contam-preview/` 只作论证，生产闸门 `check:contam-distinct` 测 `src/` 实现。**DEC-088 修订：** I5-J 只升甲绘制 + 街具残骸内容翻列，**不**把方言函数升为生产 ramp（生产量化归迭代 6 / DEC-ARCH-014）。
+- **理由：** 生产甲已被裂隙消费。迭代 2→3 的先例是练习场点头再接线。覆盖档画布 48×64 会改变出击观感，必须先给人在无迷雾的馆里看。污染方言列当碎片身份已撤回。
+- **不改（I5-J 前）：** `src/scenes/rift-scene.ts`；出击默认甲绘制；乙丙丁形；A/B/C；色板；碰撞 20；`preview-paint.ts` 生产量化。
+- **影响：** 模块登记 ContamPreviewTools；I5-B 落基因谱空壳；I5-S 落基体表 gym 行；I5-H 落 npm 闸门；I5-J 收口为生产默认绘制。合同 `docs/tasks/iteration-5.md`。
+
+### DEC-ARCH-014: 碎片配色走共享地面量化，敌人与地面同一份函数（迭代 6）
+
+- **选择：** L1 地板量化与 L2 `deriveContamRamp` / `deriveFragmentContamRamp` 抽成一份选色函数。`preview-paint.ts` 与敌人 ramp 禁止再各写一份无约束 nearest。地图课与出击同时变（DEC-071，无第二套地面 ramp）。对比度闸门 `check:contam-floor-contrast`（名以迭代 6 合同为准）由迭代 5 基因谱甲与本迭代地面/敌人共用。
+- **理由：** 暖碎片 L1 塌到橄榄、地面簇零着色与敌人灰 ramp 是同一量化错误的三个后果。分叉会再制造一份同语义缺陷。
+- **不改：** 地图连通算法；墙数组；每帧重烤地面；`art-direction.md` 调性；色板；地板亮度整体上调；迭代 5 出击默认甲绘制路径。I6-0 已选色温分组量化（DEC-089），两条否决备选不再重开。
+- **影响：** I6-G 先让四张可生成（只开旧图书馆）；I6-B 抽函数并对四张量化；I6-C 改地面；I6-D 接敌人；I6-E 对四张落闸门。居民区公寓不进本迭代。合同 `docs/tasks/iteration-6.md`。模块 `ProceduralSurface` / `ContamPreviewTools`。
 
 ### DEC-ARCH-004: 自实现 Raycasting 做视野
 

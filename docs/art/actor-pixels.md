@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director
 created-when: 2026-08-20
-last-modified: 2026-08-22
-purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §5.2；改写体格点合同在 rewriter-sprite.md。裂隙甲出击指针在 contamination-forms.md 方案 D。
+last-modified: 2026-08-23
+purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §5.2；改写体格点合同在 rewriter-sprite.md。裂隙甲出击指针在 contamination-forms.md 方案 D（迭代 5 甲画布待含 48×64，I5-A / I5-J；甲基体轴待 I5-A 按 DEC-088 改写）。
 ---
 
 # 角色程序像素（玩家 · 渗透体 · 改写体）
@@ -35,7 +35,7 @@ purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §
 | 玩家 | 32×32 | 20 | 已接 | `?lesson=player`（同外形） | `player-sprite-dense.ts` + `player-lamp-aura.ts` |
 | 渗透体（默认课 / 回退） | 32×32 | 20 | 仅无 form 回退；有 form 的甲走方案 D | 默认课；句法课 placeholder | `infiltrator-sprite.ts` + `contam-flakes.ts` |
 | 改写体（默认课 / 回退） | 32×48 | 20 | 仅无 form 回退；有 form 的甲走方案 D | 默认课；句法课 placeholder | `rewriter-sprite.ts` + `contam-flakes.ts`（含脚下污斑） |
-| 裂隙甲（方案 D） | 32×32 或 32×48 | 20 | 生产路径（I3-E 接线） | 句法课切方案 D 时同一份 | `form-renderers/d/jia-*` |
+| 裂隙甲（方案 D） | 32×32 或 32×48（覆盖档待 48×64，DEC-087 / I5-J 前出击仍现行） | 20 | 生产路径（I3-E 接线）；基因谱练习场先行 | 句法课切方案 D 时同一份；迭代 5 甲可先挂基因谱模块 | `form-renderers/d/jia-*`（基因谱另模块，I5-J 升默认） |
 
 木偶顿步在 `enemy-factory.ts`。碰撞偏移见下文「画布变了只改偏移」。方案 D 甲同样：画布变了只改偏移，碰撞边长仍 20。
 

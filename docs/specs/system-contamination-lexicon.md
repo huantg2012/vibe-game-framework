@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: code agent（I3-E 方案 D 接进 RiftScene；I3-G 内容层翻列；I3-F 出击活路径兑现接触/止损）
-last-modified-date: 2026-08-22
+last-modified-by: director（DEC-090：旧图书馆方言行待 I6-G 改成生产路径；居民区公寓不进迭代 6）
+last-modified-date: 2026-08-23
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -21,7 +21,7 @@ exposes:
   - 遭遇识别旁白：身份键、触发、限频、上屏节点、成句短标记映射
   - 事件 `encounter:identified`（载荷见实现规格；旁白消费、不回写 AI）
   - CSV：substrates / portfolios / lexemes / stop-loss / utterances / display-tokens → `src/generated/contamination-lexicon-data.ts`
-  - CSV `enabled_scope`（sortie / gym）；出击白名单 = 全部 sortie 行，含残茎 / 栏柱 / 灰幕 + 概念三类
+  - CSV `enabled_scope`（sortie / gym）；出击白名单 = 全部 sortie 行，含残茎 / 栏柱 / 灰幕 + 概念三类。**待更新（DEC-088）：** I5-S 加街具残骸 + 三种生物为 gym；I5-J 翻列后街具残骸进 sortie、灯柱/栏柱退出。现行表仍是出击真相。
   - 接触词素对照表（打血 / 混乱 / 视野）；出击与练习场同一套读取 contact + resolveStopLoss
   - 钉层：墙缘折线 / 簇核 / 走廊包围盒；布局另交一份 SortieDraw
   - 出击视觉（方案 D）消费字段（与 I3-C 对齐，不复制像素配方）
@@ -32,8 +32,10 @@ note: |
   DEC-084：方案 D 接入出击。本文是接线后的目标合同；落地分批见「出击视觉」节与 docs/tasks/iteration-3.md。
   叙述家是 docs/design-notes/contamination-lexicon.md；本文是规则合同；
   docs/specs/ui-encounter-narration.md 是识别表面，不是独立玩法。
-  外观 HOW：docs/art/contamination-forms.md（I3-C 生产规格）。出击逻辑已接（体验未验证）。
+  外观 HOW：docs/art/contamination-forms.md（I3-C 生产规格；迭代 5 甲待改写；配色按 DEC-088 协同但不提亮；地面 L1/L2 迭代 6）。出击逻辑已接（体验未验证）。
   迭代 2 练习场探索 COMPLETE。迭代 3（DEC-084）合同 docs/tasks/iteration-3.md。
+  迭代 5（DEC-087 / DEC-088）合同 docs/tasks/iteration-5.md：甲外形基因谱；街具残骸 + 生物 gym 先行；I5-J 前出击默认甲绘制不变。
+  迭代 6（DEC-088）合同 docs/tasks/iteration-6.md：碎片配色 / 世界美术。
 ---
 
 # 系统设计：污染句法
@@ -230,6 +232,8 @@ interface ContaminationForm {
 codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出派生字段 `sortieLegalOccupancies`（配对不变量；禁止手写 generated）。出击过滤读 `enabledScope` 列。
 
 **行表（与 CSV 同步；类不进 CSV，只供阅读）：**
+
+> **待更新（DEC-088 / 迭代 5）：** I5-S 将新增 `street_wreckage`（街具残骸）与三种生物基底（`insect_remnant` / `mammal_remnant` / `worm_remnant`），均为 `gym`。I5-J 翻列：街具残骸 → `sortie`，`lamp_pillar` / `railing_post` 退出出击。三种生物默认仍 gym。下表在那两批落地前仍是**现行出击真相**，禁止把目标表写成已经上线。
 
 | id | 上屏 | 类 | 残余动词 | 合法占位 | 合法连续性 | enabled_scope |
 | -- | ---- | -- | -------- | -------- | ---------- | ------------- |
@@ -472,8 +476,8 @@ R2-C-data 必须按下面数字改 `contamination-draw.ts` 的 `DIALECT`（禁�
 | frag-outdoor | fungal_mat 3, ash_veil 3, oil_film 3, space_interval 3, organic_remnant 2, stalk_clump 2, sound_echo 2, light_scatter 2, wall_rust 1, railing_post 1 | ding | 灯柱 / 门框不进表 |
 | frag-clinic | lamp_pillar 3, doorframe 3, wall_rust 2, railing_post 2, light_scatter 2, organic_remnant 1, stalk_clump 1, ash_veil 1, space_interval 1, sound_echo 1 | yi | 菌毯不进表；随风降权 |
 | frag-metro | wall_rust 3, oil_film 2, lamp_pillar 2, doorframe 2, railing_post 2, ash_veil 2, sound_echo 2, space_interval 2, light_scatter 1 | either | 菌毯中权（不进表=中低）；簇栖中权 |
-| frag-library | doorframe 3, wall_rust 2, organic_remnant 2, railing_post 2, sound_echo 2, stalk_clump 1, light_scatter 1, space_interval 1 | yi | 随风降权（未启用） |
-| frag-residential | organic_remnant 3, stalk_clump 3, doorframe 2, oil_film 2, railing_post 1, ash_veil 1, space_interval 1, sound_echo 1, light_scatter 1 | yi | 未启用；启用前禁止当生产路径 |
+| frag-library | doorframe 3, wall_rust 2, organic_remnant 2, railing_post 2, sound_echo 2, stalk_clump 1, light_scatter 1, space_interval 1 | yi | 随风降权（**DEC-090 将启用**；`enabled` 待 I6-G 翻，翻之前仍禁止当生产路径） |
+| frag-residential | organic_remnant 3, stalk_clump 3, doorframe 2, oil_film 2, railing_post 1, ash_veil 1, space_interval 1, sound_echo 1, light_scatter 1 | yi | **不进迭代 6**（DEC-090；簇状语法未实现）。启用前禁止当生产路径。见活指针「待开：居民区公寓碎片」 |
 
 ### 抽卡顺序
 
@@ -624,7 +628,7 @@ CONTAMINATION: {
 | 字段 | 谁读 | 做什么（语义，不是像素） |
 | ---- | ---- | ------------------------ |
 | `form.substrate` | 方案 D | 剪影族 / 云种 / 漆种。概念三类禁止给甲 |
-| `form.coverage` | 方案 D | 覆盖深度改叠层浓度，不换孔谱通道 |
+| `form.coverage` | 方案 D | 覆盖深度。**现行（出击）：** 甲改叠层浓度，不换孔谱通道。**待更新（DEC-087 / DEC-088）：** 甲改为骨架违规预算（1/3/5）；I5-J 前出击仍走现行。不换孔谱通道这条保持。 |
 | `form.continuity` | 方案 D | 单核 / 多核 / 场的尺度。旁白不上屏本字段 |
 | `form.occupancy` | 方案 D | 占地走者 / 墙皮 / 已烤簇 / 体积云，四选一 |
 | `form.lexemes.motion` | 方案 D + 活宿主 | 步态 / 沿缝 / 簇栖 / 盒移或只形变 |

@@ -3,8 +3,8 @@ status: ACTIVE
 created-by: art / director（迭代 1 T0）
 created-when: 2026-08-21
 purpose: 污染句法四张主孔谱的外观 HOW。出击生产 = 方案 D 混装。甲沿用程序像素家族；乙丙丁禁止「待美术决定」。审美人终审。
-last-modified: 2026-08-22
-note: DEC-073 / DEC-076 / DEC-079 / DEC-080 / DEC-084。I3-C：方案 D 升为出击生产 HOW。色只能量化到 docs/art/palette.json。禁止精灵表。禁止第三种人形覆盖体。A/B/C 冻结对照，不是出击标准。迷雾下亮度等人终审，本文不代勾。
+last-modified: 2026-08-23
+note: DEC-073 / DEC-076 / DEC-079 / DEC-080 / DEC-084 / DEC-087 / DEC-088。I3-C：方案 D 升为出击生产 HOW。迭代 5：甲节、「共享：配色」、丙节标待更新（甲由 I5-A 改写：七个甲基体语法 + 禁忌边界定稿；配色节按 DEC-088 写协同但不提亮，不写污染色承担碎片身份；丙不进本迭代）。地面 L1/L2 由迭代 6 补实现。色只能量化到 docs/art/palette.json。禁止精灵表。禁止第三种人形覆盖体。A/B/C 冻结对照，不是出击标准。迷雾下亮度等人终审，本文不代勾。
 ---
 
 # 污染体形态外观（方案 D 生产；甲程序像素 / 乙缝核 / 丙簇 / 丁云）
@@ -13,13 +13,15 @@ note: DEC-073 / DEC-076 / DEC-079 / DEC-080 / DEC-084。I3-C：方案 D 升为�
 
 审美由人终审。本文不宣称视觉过关。
 
+> **待更新（DEC-087 / DEC-088 / 迭代 5）：** 「方案 D · 甲」将按 `docs/design-notes/contamination-form-genome.md` 改写（骨架语法 + 共享构件 + 违规预算；灯柱+栏柱合并为街具残骸；加虫 / 哺乳动物 / 大号蠕虫；禁忌：基体是原物残余）。「共享：配色」按 DEC-088 改为协同但不提亮（读得出是污染 + 与该碎片底色的对比度下限），**删除**「方言选择器按碎片分工色相」。地面 L1 塌陷与簇零着色由**迭代 6**修，不在 I5-A 发明第三套 ramp。「方案 D · 丙」同样过期（基体目前只选长宽比），**不进迭代 5**。实现合同：`docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。在 I5-A 落地前，下面甲 / 配色两节仍是现行生产 HOW，不要当基因谱已经上线。
+
 ---
 
 ## Agent 入口
 
 | 谁 | 管什么 |
 | -- | ------ |
-| 甲（会走路） | 本文「方案 D（生产）· 甲」+ `actor-pixels.md` 出击指针。代码：`src/entities/form-renderers/d/jia-*`（I3-B 搬家后；搬家前在 gym `d/`）。**不是** `infiltrator-sprite.ts` / `rewriter-sprite.ts` |
+| 甲（会走路） | 本文「方案 D（生产）· 甲」（DEC-087 / DEC-088 待 I5-A 改写：七个甲基体）+ `actor-pixels.md` 出击指针。代码：现行 `d/jia-*`；基因谱另模块，合同 `docs/tasks/iteration-5.md`。**不是** `infiltrator-sprite.ts` / `rewriter-sprite.ts` |
 | 乙（缝核） | 本文「方案 D（生产）· 乙」。墙缝核，钉 `pin.attach` 缝坐标 |
 | 丙（占漆） | 本文「方案 D（生产）· 丙」；**不另做小人** |
 | 丁（占空） | 本文「方案 D（生产）· 丁」。形变云；depth **40**，必须低于 `DEPTH.visionMask`（约 50） |
@@ -55,7 +57,7 @@ I3-E 接线时，`attach` / 每帧 `FormVisualPose` 必须让下列字段进画�
 
 | 字段 | 从哪来 | 画面怎么用 |
 | ---- | ------ | ---------- |
-| `form.substrate` | 抽卡 `ContaminationForm` | 甲：族剪影（有机/残茎/灯柱/栏柱/门框）；概念基体禁止给甲。乙：墙锈 vs 门框残余与开合。丙：菌毯多瓣 / 油膜薄带 / 灰幕覆层。丁：余响带 / 散光脉 / 间距暗云，三类必须可分 |
+| `form.substrate` | 抽卡 `ContaminationForm` | 甲：族剪影（现行有机/残茎/灯柱/栏柱/门框；**待更新 DEC-088：** I5-A 起为街具残骸 + 门框 + 残茎 + 有机残影 + 虫 + 哺乳动物 + 大号蠕虫）。概念基体禁止给甲。乙：墙锈 vs 门框残余与开合。丙：菌毯多瓣 / 油膜薄带 / 灰幕覆层。丁：余响带 / 散光脉 / 间距暗云，三类必须可分 |
 | `form.coverage` | 同上 | 甲：渗透散点 → 改写成簇 → 覆盖溶散，禁止百分比挖洞。乙：缝厚 1/2/3px、核 2/3/4px（核不超过 4px）。丙：破洞少→多、呼吸 5→20%。丁：云更实、核更亮 |
 | `form.continuity` | 同上 | 甲：裂片=躯干 1px 缝，仍一个碰撞。乙：菌落=邻缝第二核，仍不挡路。丙：卫星团数；场=本团最大。丁：单核一小朵；场=走廊段 |
 | `form.occupancy` | 同上 | 占地只画会走的甲；墙皮只画乙；已烤簇只画丙；体积只画丁云。不要一张皮跨孔谱 |
@@ -64,7 +66,7 @@ I3-E 接线时，`attach` / 每帧 `FormVisualPose` 必须让下列字段进画�
 | `form.lexemes.rhythm` | 词素 | 甲：自有步态钟，禁止 3100ms 簇钟。乙：开合/脉冲。丙：接到簇呼吸或其倍数。丁：2–4s 外沿呼吸 |
 | `form.lexemes.contact` | 词素 | 甲：出手相。乙：地格 1px 抽打点。丙：胀满外沿。丁：脚底浊点 |
 | `form.utteranceId` | 可选成句 | 可加一笔（门还想关 ≠ 另做小人；缝视加长 1px；簇相位对齐；`corridor_watching` = 间距云 + 反视核）。不成句不得发明第五张孔谱 |
-| `fragmentTypeId` | 布局碎片 | `deriveFragmentContamRamp`。五种碎片切同一只时污染层必须换 ramp。禁止写死一组 `CONTAM_*` |
+| `fragmentTypeId` | 布局碎片 | `deriveFragmentContamRamp`。**待更新（DEC-088）：** 碎片身份是 L1 底色，不是污染色相分工。现行缺陷是四张 ramp 相同且不含青绿，由迭代 6 修量化，不是改成户外绿青 / 医院白青 / 地铁蓝青。禁止写死一组 `CONTAM_*` |
 | 乙 `pin.attach` | `FormWallAttach`：`face` / `nx` / `ny` / `seamX` / `seamY` | 核钉 `(seamX, seamY)`。厚度沿法线走进可走格 1–3px。禁止格心 `(col*32+16, row*32+16)`。出击活路径必须带 `attach`，不得只给墙格心 |
 | 丁当前盒 | `pin.kind==='volume'` 的 `x/y/width/height`（活机制下跟 `dingLiveRect` / 当前盒，不是出生静帧盒） | 云外沿跟盒走；位移跟盒；固着只形变不位移。视野 ×0.7 与混乱跟当前盒（机制层）。视觉不要画回出生盒 |
 | `FormVisualPose.visibility` | 出击：`VisibilitySystem.getVisibilityAt`（0 / 0.2 / 0.6 / 1.0）。句法课：恒 1 | 见下一节。乘在实体 alpha / 显隐上，不要另做一层雾 |
@@ -151,6 +153,8 @@ A/B/C 源码冻结为对照，禁止改、禁止当出击标准。D 的实现在
 
 ### 共享：配色
 
+> **待更新（DEC-087 / DEC-088）：** 现行 `deriveFragmentContamRamp` 把 `floor_bv` / `wall_bv` 当 0–255 用，四张碎片 ramp 逐字节相同且不含青绿。**已撤回**「CSV 污染方言列作色板选择器、按碎片分工色相」。改由迭代 5 I5-A 写协同但不提亮原则、迭代 6 修 L1 可达与共用 ramp / 对比度闸门。在那之前本节仍描述现行（有缺陷的）行为。禁止本文件读者把「五种碎片切同一只必须换 ramp」读成「污染色承担碎片身份」——碎片身份是 L1 底色色温。
+
 一律 `deriveFragmentContamRamp(fragmentTypeId)`（`d/fragment-ramp.ts`）。语义：碎片 `wallBias*` / `floorBias*` → 往青绿轴 0.48 拉 → `nearestPalette`。禁止写死一组 `CONTAM_*` 当所有院子的污染色。禁止给 `palette.json` 加色。禁止改 `bakeGround` / `preview-paint.ts`。
 
 | 层 | 色从哪来 |
@@ -184,6 +188,8 @@ A/B/C 源码冻结为对照，禁止改、禁止当出击标准。D 的实现在
 
 ### 甲（R2-C3 → 出击生产）
 
+> **待更新（DEC-087 / DEC-088）：** 本节的 `% 3` 族内变体、覆盖档只叠簇、画布止于 32×48、灯柱/栏柱分两族，正是基因谱要替换的管线。I5-A 按 `contamination-form-genome.md` 五之二改写本节（街具残骸一条语法；三种生物；禁忌边界定稿）。改写完成前，下列仍是出击现行甲 HOW。
+
 路子：方案 A 的程序像素词法。画布渗透 32×32、改写/覆盖 32×48（听噪无论覆盖深度都 32×48）。碰撞边长 20；偏移 `(画布边长 − 20) / 2`。四向直立换贴图。禁止精灵表。禁止第三种人形。
 
 **不要改** `infiltrator-sprite.ts` / `rewriter-sprite.ts` 来做本节。那两份仍给默认敌人课与 `placeholder`。裂隙甲走 `d/jia-*`。手法对照可以读那两份（密像素前倾、叠簇、melt），不要把整数 CLUSTER 表原样盖到灯柱上。
@@ -215,6 +221,8 @@ A/B/C 源码冻结为对照，禁止改、禁止当出击标准。D 的实现在
 ---
 
 ### 丙（R2-C4 → 出击生产）
+
+> **待更新（DEC-087）：** 基体目前只选长宽比，油膜与灰幕是同一扁带。拓扑方案（团 / 树 / 环）已锁在基因谱正文，**不进迭代 5**。本节保持现行 HOW，禁止本迭代改写。
 
 路子：方案 B 的地表方言活体。外观 = 已烤簇语义 + DEC-070/071 整团胀缩。**不另做小人。** 不要第二套呼吸算法。不要走 infiltrator walk cycle。
 

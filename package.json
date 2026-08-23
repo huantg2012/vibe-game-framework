@@ -23,6 +23,12 @@
     "check:layout": "tsx --tsconfig tsconfig.json tools/map-preview/check-layout.ts",
     "check:lexicon": "tsx --tsconfig tsconfig.json tools/contamination-lexicon/check-lexicon.ts",
     "check:gallery-catalog": "tsx --tsconfig tsconfig.json tools/gym/check-gallery-catalog.ts",
+    "preview:contam-current": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-current-jia.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-current-bing.ts",
+    "preview:contam-proto": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-proto-jia.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-proto-bing.ts",
+    "measure:contam-distinct": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/measure-distinctness.ts",
+    "measure:ground-teal": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/measure-ground-teal.ts",
+    "measure:l1-reach": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/measure-l1-reach.ts",
+    "preview:contam-world": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-world-grounds.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-world-coordination.ts",
     "preview:probes": "tsx --tsconfig tsconfig.json tools/map-preview/render-density-probes.ts",
     "audio:placeholders": "node tools/audio-placeholders/generate.mjs"
   },

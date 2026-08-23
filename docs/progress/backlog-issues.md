@@ -10,6 +10,7 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 
 ## 待处理
 
+- [ ] 居民区公寓碎片：簇状质量语法从未实现。内存翻启用 0/5，四十次尝试全部 `wrong-grammar` 后抛错（`placeMasses` 把 `cluster` 映射成围合体，残墟验收 `kind === massGrammar` 恒为假）。外加灰泥脚步落到默认水晶、无灰泥表面绘制路径。不进迭代 6。活指针正文：`docs/progress/current-iteration.md`「待开：居民区公寓碎片」。DEC-090 / 2026-08-23
 - [x] `minimap.ts` 挂 `#dom-ui-root`（Slice 5.5 R9；收尾划掉 2026-08-16）
 - [x] UX Kit §A1 Phaser ×1.5 换算——5.5 收尾回写为 DOM ≥12px（2026-08-16）
 - [x] `abyss` 65% / `stitch` 三模块 — Slice 7 已把 PURIFIER 列入 DefenseContext；不改 CSV (2026-08-19)

@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-22
-last-modified: 2026-08-22
-note: Foundation 阶段 Step 1。已审核确认。
+last-modified: 2026-08-23
+note: Foundation 阶段 Step 1。已审核确认。DEC-088：碎片 = 不同世界；L1 承担身份。画面缺口走迭代 6，不改本文方向。
 ---
 
 # 世界观设定
@@ -89,6 +89,8 @@ note: Foundation 阶段 Step 1。已审核确认。
 - 每个具体时空的污染体应有统一的视觉"模式"（该时空的污染源特征）。
 - 同一时空内不同污染体的差异来自"基体"不同，不是"污染"不同。
 - MVP 阶段只需一种时空风格的污染体（程序化地图共用一套视觉主题）。
+
+> **澄清（DEC-088，不改方向）：** 每一张碎片来自一个不同的世界（见上文「每个时空碎片是独立的被改写区域」）。「一种时空风格」指污染表达统一（L2 只在 teal 光谱内），不是五张碎片塌成同一块底色。碎片身份由 L1 底色色温承担。画面层缺口走迭代 6。禁止把「该时空的污染源特征」读成给污染层分工色相。
 - 形态组合制度是「污染句法」（DEC-073 / DEC-076 / DEC-077 / DEC-078 / DEC-080，出击逻辑已接，体验未验证）：底材 = 基体 × 覆盖深度；孔谱 = 连续性 × 占位；词素从孔谱衍生。覆盖体不以第三种人形出场。遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075），不是独立玩法。体系入口：`docs/design-notes/contamination-lexicon.md` → `docs/specs/system-contamination-lexicon.md` → `docs/specs/ui-encounter-narration.md`。概念基体进 MVP 的基底表已由 R2-D1 写入 CSV。迭代 3（DEC-084）目标把残茎 / 栏柱 / 灰幕与概念三类翻成出击可抽（I3-G）；翻列前出击抽卡仍只抽旧六种。
 
 ## 空间结构

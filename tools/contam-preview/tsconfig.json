@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../..",
+    "paths": {
+      "@/*": ["src/*"],
+      "phaser": ["tools/contam-preview/phaser-stub.ts"]
+    }
+  },
+  "include": ["../../src", "."]
+}
