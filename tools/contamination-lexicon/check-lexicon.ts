@@ -132,6 +132,54 @@ for (const id of ['stalk_clump', 'railing_post', 'ash_veil', ...CONCEPTUAL_SUBST
   assert(SORTIE_SUBSTRATE_IDS.includes(id), `SORTIE_SUBSTRATE_IDS includes ${id}`);
 }
 
+/** Pre-I5-J closed set. Flip (street_wreckage→sortie, lamp/railing out) is I5-J only. */
+const PRE_FLIP_SORTIE_SUBSTRATE_IDS = [
+  'organic_remnant',
+  'lamp_pillar',
+  'doorframe',
+  'wall_rust',
+  'fungal_mat',
+  'oil_film',
+  'stalk_clump',
+  'railing_post',
+  'ash_veil',
+  'sound_echo',
+  'light_scatter',
+  'space_interval',
+] as const;
+assert(
+  sameSet(SORTIE_SUBSTRATE_IDS, PRE_FLIP_SORTIE_SUBSTRATE_IDS),
+  `SORTIE_SUBSTRATE_IDS must stay pre-I5-J [${SORTIE_SUBSTRATE_IDS.join(',')}]`,
+);
+assert(SORTIE_SUBSTRATE_IDS.includes('lamp_pillar'), 'pre-I5-J SORTIE still includes lamp_pillar');
+assert(SORTIE_SUBSTRATE_IDS.includes('railing_post'), 'pre-I5-J SORTIE still includes railing_post');
+
+const I5S_GYM: Readonly<
+  Record<string, { token: string; verb: string; lock: string }>
+> = {
+  street_wreckage: { token: '街具残骸', verb: '立', lock: 'motion_anchor' },
+  insect_remnant: { token: '虫', verb: '爬', lock: 'motion_turn' },
+  mammal_remnant: { token: '哺乳动物', verb: '走', lock: 'motion_patrol' },
+  worm_remnant: { token: '大号蠕虫', verb: '拱', lock: 'motion_turn' },
+};
+for (const [id, fields] of Object.entries(I5S_GYM)) {
+  const row = SUBSTRATE_DATA[id];
+  assert(!!row, `missing I5-S gym substrate ${id}`);
+  assert(row!.enabledScope === 'gym', `${id} enabled_scope=gym`);
+  assert(row!.displayToken === fields.token, `${id} display_token ${row?.displayToken} want ${fields.token}`);
+  assert(row!.residualVerb === fields.verb, `${id} residual_verb ${row?.residualVerb} want ${fields.verb}`);
+  assert(
+    row!.legalOccupancies.length === 1 && row!.legalOccupancies[0] === 'floor',
+    `${id} occupancies [${row?.legalOccupancies.join(',')}] want [floor]`,
+  );
+  assert(!row!.legalOccupancies.includes('volume'), `${id} must not occupy volume`);
+  assert(
+    row!.legalContinuities.length === 1 && row!.legalContinuities[0] === 'monolith',
+    `${id} continuities [${row?.legalContinuities.join(',')}] want [monolith]`,
+  );
+  assert(!SORTIE_SUBSTRATE_IDS.includes(id), `${id} must not enter SORTIE_SUBSTRATE_IDS`);
+}
+
 const oil = SUBSTRATE_DATA.oil_film;
 assert(!!oil, 'oil_film row exists');
 assert(
@@ -188,12 +236,41 @@ assert(
   'jia dropdown excludes volume-only conceptual substrates',
 );
 assert(jiaGym.includes('stalk_clump') && jiaGym.includes('railing_post'), 'jia dropdown includes new floor rows');
+for (const id of Object.keys(I5S_GYM)) {
+  assert(jiaGym.includes(id), `jia dropdown includes I5-S gym row ${id}`);
+  assert(!dingGym.includes(id), `ding dropdown excludes I5-S gym row ${id}`);
+}
 assert(substrateOptions('bing').some((row) => row.id === 'ash_veil'), 'bing dropdown includes ash_veil');
 
 const seeds = [3, 11, 29, 47, 73, 101, 211, 409, 1024, 7777];
 const fragments = ['frag-outdoor', 'frag-clinic', 'frag-metro'] as const;
 const drawSrc = readFileSync(resolve(ROOT, 'src/generation/contamination-draw.ts'), 'utf8');
 assert(!drawSrc.includes('shadowGymUtteranceForSortie'), 'sortie must not shadow gym utterances with oil_film');
+const catalogSrc = readFileSync(resolve(ROOT, 'src/gym/lexicon-gallery-catalog.ts'), 'utf8');
+for (const [id, fields] of Object.entries(I5S_GYM)) {
+  const lockRe = new RegExp(`${id}:\\s*'${fields.lock}'`);
+  assert(lockRe.test(drawSrc), `contamination-draw residual lock ${id} → ${fields.lock}`);
+  assert(lockRe.test(catalogSrc), `gallery catalog residual lock ${id} → ${fields.lock}`);
+}
+
+for (const [id, fields] of Object.entries(I5S_GYM)) {
+  const gymForm = drawOne(new SeededRandom(id.length * 17), {
+    portfolio: 'jia',
+    fragmentTypeId: 'frag-clinic',
+    coverage: 'infiltrate',
+    substrate: id,
+    scope: 'gym',
+  });
+  assert(!!gymForm, `gym drawOne ${id} must succeed`);
+  assert(gymForm!.substrate === id, `gym drawOne ${id} substrate`);
+  const jiaMotions = lexemeOptions('motion', 'jia').map((row) => row.id);
+  if (jiaMotions.includes(fields.lock)) {
+    assert(
+      gymForm!.lexemes.motion === fields.lock,
+      `gym infiltrate ${id} motion ${gymForm?.lexemes.motion} want residual lock ${fields.lock}`,
+    );
+  }
+}
 
 let watchingHits = 0;
 

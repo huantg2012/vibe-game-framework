@@ -29,6 +29,17 @@ export {
   isContaminationDrawStyle,
 } from '@/generation/preview-paint';
 export type { ContaminationDrawStyle } from '@/generation/preview-paint';
+export {
+  contrastFloorCell,
+  l1Pool,
+  nearestPalette,
+  quantizeInGroup,
+  quantizeL1,
+  temperatureGroup,
+  TEAL_FAMILY,
+  TEAL_FAMILY_HEX,
+} from '@/generation/palette-quantize';
+export type { Rgb as PaletteRgb, TemperatureGroup } from '@/generation/palette-quantize';
 export { jitterRecipe } from '@/generation/recipes';
 export { generateRiftLayout, type RiftLayoutOptions } from '@/generation/rift-layout';
 export { evaluateDualPath, DUAL_PATH_MIN_LENGTH_RATIO } from '@/generation/dual-path';

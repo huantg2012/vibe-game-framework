@@ -2,9 +2,9 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director（DEC-090：四张碎片将可生成，只开旧图书馆；簇状质量语法未实现。约束 27 仍未实现）
-last-modified-date: 2026-08-23
-note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090：第一层/第二层量化未兑现，修法已锁为色温分组量化；旧图书馆待 I6-G 翻启用；居民区公寓不进迭代 6（簇状语法未实现，翻启用会抛错）。策划表本轮不改。
+last-modified-by: code（I6-G：旧图书馆已启用为生产路径。居民区公寓仍未启用）
+last-modified-date: 2026-08-24
+note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: true
 slice: 6
 interfaces-with:
@@ -165,12 +165,12 @@ interface MapGenerationState {
 interface FragmentTypeDef {
   id: string                    // frag-library | frag-clinic | frag-metro | frag-residential | frag-outdoor
   displayName: string           // 用 world 地点命名，不写诗。不是主题关卡名
-  l1Key: string                 // 只引用 art-direction 已锁名
-  sourceDomain: string          // mundane | virtual | alien
+  l1Key: string                 // 零消费；I6-F 删列
+  sourceDomain: string          // 零消费；I6-F 删列
   coverage: string              // remnant | half | unnamed
-  massGrammar: string           // enclosure | ridge | cluster | slab | lattice | growth
+  massGrammar: string           // 参数向量预设名（ridge/slab/enclosure/cluster）；I6-Q 已放开向量。cluster = 参数点，不是未实现生成器
   join: string                  // single | shear（本 Slice 只开 single）
-  surfaceMaterial: string       // wood | tile | metal | plaster | soil
+  surfaceMaterial: string       // 只选出击脚步音，不驱动烤地。wood | tile | metal | plaster | soil
   enabled: boolean
 }
 ```
@@ -242,7 +242,7 @@ interface FragmentTypeDef {
 24a. 每一次踏入抽 `FragmentRoll`：`contaminationAge` ∈ {new, standard, ancient} 与 `ruinSeverity` ∈ {intact, broken, eaten}（`typeId` 即本次 `fragmentTypeId`）。两轴必须实际抽取（同种子可复现），禁止跳过抽取、把所有图写成 `standard` + `broken`。允许某次抽中该组合。旋钮只走 `docs/art/rift-fragment-surfaces.md`「组合轴」；禁止新 hex。一张图一个 `typeId`。
 25. 本 Slice 做有限种碎片氛围。种类与是否一张图只抽一种 L1：**未锁**。见约束 3。
 26. 碎片类型的策划字段进 `data/*.csv`（建议 `data/rift-fragments.csv`），构建期进 `src/generated/`。禁止在代码里手写主题表再反向导出。
-27. 色值只引用 art-direction 已锁 L1 / L2。禁止为了「不一样」发明未论证新色。地面 L2 污染的成品画面是崩坏簇（DEC-069）：从该岛碎片 bias 公式推色再量化到已锁色板；四档互不相同且离开地板色。活层（DEC-070 / DEC-071）：内核烤死；中间层与外层同一相位、几乎不透明，沿簇不规则外沿整团胀缩，幅度为休息大小的 5–20%。出击与练习场同一套活层。呼吸层须低于裂隙视野黑暗蒙层。迷雾下亮度等人终审。不是矩形平涂错误块。画法合同 `docs/art/rift-fragment-surfaces.md`。晶结 / 溶蚀只留练习场对照，不进出击。**已锁但未实现（DEC-088 / DEC-089 / 迭代 6）：** 生产量化使暖碎片第一层塌到橄榄、地面簇在部分世界/年龄档青绿占比为 0。修法已锁：先按偏置定色温组，再在组内取最近色；不动色板、不整体提高地板亮度。补实现见 `docs/tasks/iteration-6.md`。禁止用第二层色相分工冒充本条的碎片身份。
+27. 色值只引用 art-direction 已锁 L1 / L2。禁止为了「不一样」发明未论证新色。地面 L2 污染的成品画面是崩坏簇（DEC-069）：从该岛碎片 bias 公式推色再量化到已锁色板；四档互不相同且离开地板色。活层（DEC-070 / DEC-071）：内核烤死；中间层与外层同一相位、几乎不透明，沿簇不规则外沿整团胀缩，幅度为休息大小的 5–20%。出击与练习场同一套活层。呼吸层须低于裂隙视野黑暗蒙层。迷雾下亮度等人终审。不是矩形平涂错误块。画法合同 `docs/art/rift-fragment-surfaces.md`。晶结 / 溶蚀只留练习场对照，不进出击。**已锁但未实现（DEC-088 / DEC-089 / DEC-093 / DEC-094 / 迭代 6）：** 地面簇在部分世界/年龄档青绿占比为 0。底色色温不能承担碎片身份：色板亮度 <32 无暖格，烤地众数塌到 `#1a1e18`（`probe-bias-baked.ts`）。修法已锁：第二层仍先按偏置定色温组再组内最近；身份由渍色 / 纹理 / 划痕 / 脏污 / 结构承担。质量语法 / 渍色键 / 划痕先 I6-P 等价再 I6-Q 拆档，再 I6-F 按美术**新**配方填列。不动色板、不整体提高地板亮度；不要求第一层落格互不相同。补实现见 `docs/tasks/iteration-6.md`。禁止用第二层色相分工冒充本条的碎片身份。禁止再写「簇状语法未实现」。
 28. L1 色值差只有 5–10，叠 32px 和视野遮罩后可能看不出。**只换雾 / 亮度 / 污染密度，标为可能不够。** 要分清「另一块碎片」，地表材质残影和障碍语法必须一起变，不能只改一张滤镜。预览栈的氛围场（天空胶囊遮挡 + 地雾池 + 尘点 + 渗光）是层 7–9，让同一块岛活起来；它不替代本条的碎片身份。裂隙：地面烤一次，天空低分辨率叠层改 `phase`。禁止用极坐标膜抄净化点边界。禁止在游戏循环里对整张地图跑 `compositePaint`。
 
 ### U — 界面（本系统几乎不碰）
@@ -430,7 +430,7 @@ DEC-005 反的是地牢房间，不是「这段墙曾是房子」。CA 可以风
 | 薪柴 | 分档与数量 | 3 / 3 / 2 | 沿用旧规格，只改坐标来源 |
 | 巡逻 | 单位数 | 3–4，其中恰好 1 个改写体 | Slice 8 / DEC-064 |
 | 污染物节点 | 拾取点 | 现图量级（3） | 本 Slice 不新开规则 |
-| 碎片类型 | 开放词表 | 起点 5 个已锁第一层；Slice 6 先接通 3 个；**DEC-090：迭代 6 开到四张**（只翻旧图书馆；策划表该行 `enabled` 待 I6-G，本轮不改 `data/rift-fragments.csv`）。居民区公寓的 `cluster` **未实现**：映射成围合体后验收失败，生成抛错，不进本迭代 | 成品靠扩展+组合，不是写死枚举 |
+| 碎片类型 | 开放词表 | 起点 5 个已锁第一层；Slice 6 先接通 3 个；**DEC-090 / I6-G：迭代 6 开到四张**（只翻旧图书馆；该行 `enabled` 已为真，生产路径）。居民区公寓本迭代不启用。~~`cluster` 未实现~~ **DEC-094：** 簇是参数点（I6-P / I6-Q），不是缺生成器 | 成品靠扩展+组合，不是写死枚举 |
 | 换路加长比 | 第二路步数 / 主路步数 | ≥ 1.15 | 长路必须明显更长，不是贴着主路的平行线 |
 | 开阔格 | 四邻墙数 ≤ 1（见规则 21） | 较短路占比必须严格更高 | 短路更暴露、长路更隐蔽 |
 | 坏图重试 | 同路线再试 | 有上限 | 失败有界，不换算法 |
@@ -465,7 +465,15 @@ interface FragmentRoll {
 
 面向玩家的名字用术语表地点规则：`[状态/特征] + [原有空间类型]`。本 Slice 默认**不上屏**碎片名；种类先服务生成和地表。要上屏另走界面做法。
 
-**扩展纪律**：加新「曾经是什么」= 策划表新行 + 美术论证。加组合 = 生成器抽 `FragmentRoll`，不新开系统。Slice 6 先接通户外 / 医院 / 地铁三种。**DEC-090：** 迭代 6 把旧图书馆纳入可生成范围（四张一起标定色温组与对比度闸门）。`data/rift-fragments.csv` 旧图书馆一行 `enabled` **待 I6-G 改为真**，本轮不改该文件。居民区公寓保持假：簇状质量语法未实现，翻启用会让残墟生成抛错（0/5，`wrong-grammar`）。抽卡已启用行等权；三张变四张后旧世界从约三分之一降到四分之一，不加权重列。每一次踏入抽齐污染年龄与残破度（规则 24a），禁止永远标准 + 残破。
+**策划表列说明（DEC-094；禁止再误判）：**
+
+| 列 | 现行消费 | 处置 |
+| -- | -------- | ---- |
+| `surface_material` | **只选出击脚步音**（`rift-scene.ts` 的 `stepKey`）。烤地不读。禁止再读成「木地板看起来像木头」 | **保留。** `plaster` 未进脚步映射；启用居民区公寓那一行时补 `stepKey`，不补绘制、不另开迭代 |
+| `wall_body_key` / `wall_rim_key` | 零消费。墙读 `wall_bv × wall_bias_*` | **I6-F 删列**，不接线 |
+| `l1_key` / `source_domain` | 零消费 | **I6-F 删列**，不接线 |
+
+**扩展纪律**：加新「曾经是什么」= 策划表新行 + 美术论证。加组合 = 生成器抽 `FragmentRoll`，不新开系统。Slice 6 先接通户外 / 医院 / 地铁三种。**DEC-090 / I6-G：** 迭代 6 已把旧图书馆纳入可生成范围（四张一起标定）。`data/rift-fragments.csv` 旧图书馆一行 `enabled` 已为真，生产路径。居民区公寓保持假（抽卡四张）。~~簇状质量语法未实现~~ **DEC-094：** 簇是参数点，禁止再当独立待开。抽卡已启用行等权；三张变四张后旧世界从约三分之一降到四分之一，不加权重列。每一次踏入抽齐污染年龄与残破度（规则 24a），禁止永远标准 + 残破。遇到「档位不够 / 只有 N 种」先看那个 N 是不是一段手写 if。
 
 ---
 

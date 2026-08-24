@@ -6,10 +6,26 @@
  */
 
 import { RIFT_FRAGMENT_DATA, type RiftFragmentDef } from '@/generated/rift-fragment-data';
+import {
+  PALETTE,
+  nearestPalette,
+  type Rgb,
+} from '@/generation/palette-quantize';
 import { mix32 } from '@/generation/seed-fork';
 import { SeededRandom } from '@/utils/random';
 
-export type Rgb = readonly [number, number, number];
+export type { Rgb };
+export {
+  contrastFloorCell,
+  l1Pool,
+  nearestPalette,
+  quantizeInGroup,
+  quantizeL1,
+  temperatureGroup,
+  TEAL_FAMILY,
+  TEAL_FAMILY_HEX,
+} from '@/generation/palette-quantize';
+export type { TemperatureGroup } from '@/generation/palette-quantize';
 
 export const LEXICON_FRAGMENT_IDS = [
   'frag-outdoor',
@@ -22,20 +38,6 @@ export const LEXICON_FRAGMENT_IDS = [
 export type LexiconFragmentId = (typeof LEXICON_FRAGMENT_IDS)[number];
 
 export const LEXICON_DEFAULT_FRAGMENT: LexiconFragmentId = 'frag-clinic';
-
-const PALETTE_HEX = [
-  '#080a0c', '#0a0b0d', '#0d1114', '#151a1e', '#2a2420', '#1e2228', '#2a2018', '#24221e',
-  '#1a1e18', '#2c2e33', '#3a3d42', '#4a4e55', '#5a5f66', '#8a5c2a', '#c4873a', '#1a7a9a',
-  '#0e4a3f', '#1a6b5c', '#1aad96', '#2ae6c8', '#3cffd4', '#7fffee', '#4adf8a', '#b0fff5',
-  '#e0a848', '#2e2d30', '#2a2a2e', '#3a3838', '#1a1c1f', '#2a1f1c', '#8a8f96', '#c8cdd4',
-  '#cc3333', '#b89040', '#2a2d32', '#0f1114',
-] as const;
-
-const PALETTE: readonly Rgb[] = PALETTE_HEX.map((h) => [
-  parseInt(h.slice(1, 3), 16),
-  parseInt(h.slice(3, 5), 16),
-  parseInt(h.slice(5, 7), 16),
-]);
 
 export interface FragmentContamRamp {
   readonly deep: Rgb;
@@ -55,19 +57,6 @@ function clamp255(n: number): number {
 
 function clamp01(n: number): number {
   return n < 0 ? 0 : n > 1 ? 1 : n;
-}
-
-export function nearestPalette(r: number, g: number, b: number): Rgb {
-  let best = PALETTE[0]!;
-  let bestD = Infinity;
-  for (const p of PALETTE) {
-    const d = (p[0] - r) ** 2 + (p[1] - g) ** 2 + (p[2] - b) ** 2;
-    if (d < bestD) {
-      bestD = d;
-      best = p;
-    }
-  }
-  return best;
 }
 
 function rgbToHsv(r: number, g: number, b: number): { h: number; s: number; v: number } {

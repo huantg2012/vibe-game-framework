@@ -595,6 +595,10 @@ function generateContaminationLexicon() {
     'wall_rust',
     'fungal_mat',
     'oil_film',
+    'street_wreckage',
+    'insect_remnant',
+    'mammal_remnant',
+    'worm_remnant',
     ...CONCEPTUAL_SUBSTRATE_IDS,
   ]) {
     if (!subIds.has(required)) throw new Error(`[codegen] contamination-substrates.csv missing '${required}'`);

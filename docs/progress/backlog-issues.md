@@ -10,7 +10,8 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 
 ## 待处理
 
-- [ ] 居民区公寓碎片：簇状质量语法从未实现。内存翻启用 0/5，四十次尝试全部 `wrong-grammar` 后抛错（`placeMasses` 把 `cluster` 映射成围合体，残墟验收 `kind === massGrammar` 恒为假）。外加灰泥脚步落到默认水晶、无灰泥表面绘制路径。不进迭代 6。活指针正文：`docs/progress/current-iteration.md`「待开：居民区公寓碎片」。DEC-090 / 2026-08-23
+> **DEC-094 盘点（2026-08-23）：** 未勾从 6 条减到 3 条（净 −3）。吸收：簇语法（改写为 I6-P / I6-Q 参数点，不再独立待开）；表面材质上画面（只接脚步，写入地图 spec，取消 I6-H）。删除双记：陈列馆空展位（只留 I4-D）。保留三条见下。
+
 - [x] `minimap.ts` 挂 `#dom-ui-root`（Slice 5.5 R9；收尾划掉 2026-08-16）
 - [x] UX Kit §A1 Phaser ×1.5 换算——5.5 收尾回写为 DOM ≥12px（2026-08-16）
 - [x] `abyss` 65% / `stitch` 三模块 — Slice 7 已把 PURIFIER 列入 DefenseContext；不改 CSV (2026-08-19)
@@ -25,14 +26,18 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 - [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除。**Slice 5 收尾时未处理**——这是框架层判断（文档体系是否该有这一层）而非本 Slice 交付物，转下次 retro 拍板 (Slice 5 一致性检查 / 2026-08-12)
 - [x] 敌人属性进 `data/enemies.csv`，渗透体一并迁移（Slice 8 / 2026-08-19）
 - [x] 改写体搜寻身体闪与头上指示物共用相位却各加 3 Hz，合计约 6 Hz（QA Slice 8 O1）(2026-08-19) → 2026-08-20 身体只读 `ALERT_BLINK_HZ` 一次
-- [ ] 陈列馆滚动时视野内空展位（甲帽 8、距离驱逐）；合同已修（DEC-086），代码走 I4-D (人试玩 2026-08-22)
 - [x] BoundaryBreath 槽位满时"替换最旧"实际总是替换 `impacts[0]` (design 补写边界 spec / 2026-08-12) → 2026-08-20 按 `elapsed` 最大替换
 - [x] loadout / 裂隙结算档位色 `#1a6b5c` 作字对比度约 3:1，低于 Kit ≥4.5:1 (QA Q3 / Slice 5.5 收尾登记) → 代码已是 `#8a8f96`；2026-08-20 核对划掉
 - [x] 上屏仍可能混用「污染物」与术语表「污染体」(QA Q4 / Slice 5.5 收尾登记) → 面板已用「残渣」；2026-08-20 改 CSV `erode` 防御长描述
 
 ## 已处理/已归档
 
-## 已处理/已归档
+### DEC-094 吸收 / 去双记（2026-08-23）
+
+- [x] 表面材质上画面 / I6-H — 取消。`surface_material` 只接脚步，列说明写入 `docs/specs/system-map-generation.md`。不补绘制。
+- [x] 居民区公寓簇语法未实现 — 吸收进 I6-P / I6-Q（簇是参数点）。本迭代仍不启用该行。灰泥脚步：启用时补 `stepKey`，不另开迭代、不补绘制。
+- [x] 「地物段数不可用」— 判断错，未单独建条；`gridWant` 并入 I6-P。
+- [x] 陈列馆滚动时空展位 — 从本表删除（避免与 I4-D 双记）。归属仍是迭代 4 合同。
 
 ### Slice 5 消费（2026-08-12，已交付；Slice 5 收尾见 DEC-043）
 

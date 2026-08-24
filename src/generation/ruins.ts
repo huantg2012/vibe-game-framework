@@ -12,7 +12,7 @@ import {
 } from '@/generated/rift-fragment-data';
 import { leftoverDisconnectedCount, openSealedFloors } from '@/generation/connectivity';
 import { generateOutline } from '@/generation/outline-mask';
-import { maxOpenYard, placeMasses } from '@/generation/masses';
+import { massGrammarVecEqual, maxOpenYard, placeMasses, resolveMassGrammar } from '@/generation/masses';
 import type { OutlineMask, RuinFeature, RuinMetrics, RuinedMask } from '@/generation/types';
 import { TileType } from '@/types/game-types';
 import type { TileMapData } from '@/types/map-types';
@@ -135,7 +135,18 @@ export function evaluateRuins(
     }
   }
 
-  if (!features.every((f) => f.kind === def.massGrammar)) reasons.push('wrong-grammar');
+  const expectedVec = resolveMassGrammar(def.massGrammar);
+  if (
+    !features.every((f) => {
+      try {
+        return massGrammarVecEqual(resolveMassGrammar(f.kind), expectedVec);
+      } catch {
+        return false;
+      }
+    })
+  ) {
+    reasons.push('wrong-grammar');
+  }
 
   return { ok: reasons.length === 0, reasons, metrics };
 }

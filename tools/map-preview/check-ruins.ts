@@ -5,6 +5,11 @@
  */
 import { TileType } from '../../src/types/game-types.ts';
 import { RIFT_FRAGMENT_DATA } from '../../src/generated/rift-fragment-data.ts';
+import {
+  MASS_GRAMMAR_PRESETS,
+  massGrammarVecEqual,
+  resolveMassGrammar,
+} from '../../src/generation/masses.ts';
 import { generateOutline } from '../../src/generation/outline-mask.ts';
 import { evaluateRuins, generateRuins, openSealedFloors } from '../../src/generation/ruins.ts';
 
@@ -16,8 +21,12 @@ function assert(cond: boolean, msg: string): void {
   console.error(`FAIL ${msg}`);
 }
 
-const types = ['frag-outdoor', 'frag-clinic', 'frag-metro'] as const;
+/** I6-G：四张可生成。居民区公寓保持未启用，禁止进入残墟生成器枚举。 */
+const types = ['frag-outdoor', 'frag-clinic', 'frag-metro', 'frag-library'] as const;
 const seeds = [101, 202, 303, 404, 505, 606];
+
+assert(RIFT_FRAGMENT_DATA['frag-library']?.enabled === true, 'frag-library must be enabled');
+assert(RIFT_FRAGMENT_DATA['frag-residential']?.enabled === false, 'frag-residential must stay disabled');
 
 for (const type of types) {
   for (const seed of seeds) {
@@ -58,9 +67,12 @@ for (const seed of seeds) {
   const outdoor = generateRuins(seed, 'frag-outdoor');
   const clinic = generateRuins(seed, 'frag-clinic');
   const metro = generateRuins(seed, 'frag-metro');
+  const library = generateRuins(seed, 'frag-library');
   let landSame = true;
   for (let i = 0; i < outdoor.outline.land.length; i++) {
     if (outdoor.outline.land[i] !== clinic.outline.land[i]) landSame = false;
+    if (outdoor.outline.land[i] !== metro.outline.land[i]) landSame = false;
+    if (outdoor.outline.land[i] !== library.outline.land[i]) landSame = false;
   }
   assert(landSame, `seed ${seed} land shared across types`);
 
@@ -74,17 +86,41 @@ for (const seed of seeds) {
   }
   assert(oc && om && cm, `seed ${seed} three grammars must differ`);
 
+  const outdoorVec = resolveMassGrammar(RIFT_FRAGMENT_DATA['frag-outdoor']!.massGrammar);
+  const clinicVec = resolveMassGrammar(RIFT_FRAGMENT_DATA['frag-clinic']!.massGrammar);
+  const metroVec = resolveMassGrammar(RIFT_FRAGMENT_DATA['frag-metro']!.massGrammar);
+  const libraryVec = resolveMassGrammar(RIFT_FRAGMENT_DATA['frag-library']!.massGrammar);
   assert(
-    outdoor.features.every((f) => f.kind === 'ridge'),
-    `seed ${seed} outdoor is ridges`,
+    massGrammarVecEqual(outdoorVec, MASS_GRAMMAR_PRESETS.ridge),
+    `seed ${seed} outdoor resolves to ridge preset`,
   );
   assert(
-    clinic.features.every((f) => f.kind === 'enclosure'),
-    `seed ${seed} clinic is enclosures`,
+    massGrammarVecEqual(clinicVec, MASS_GRAMMAR_PRESETS.enclosure),
+    `seed ${seed} clinic resolves to enclosure preset`,
   );
   assert(
-    metro.features.every((f) => f.kind === 'slab'),
-    `seed ${seed} metro is slabs`,
+    massGrammarVecEqual(metroVec, MASS_GRAMMAR_PRESETS.slab),
+    `seed ${seed} metro resolves to slab preset`,
+  );
+  assert(
+    massGrammarVecEqual(libraryVec, MASS_GRAMMAR_PRESETS.ridge),
+    `seed ${seed} library still resolves to ridge preset`,
+  );
+  assert(
+    outdoor.features.every((f) => massGrammarVecEqual(resolveMassGrammar(f.kind), outdoorVec)),
+    `seed ${seed} outdoor features match resolved ridge vector`,
+  );
+  assert(
+    clinic.features.every((f) => massGrammarVecEqual(resolveMassGrammar(f.kind), clinicVec)),
+    `seed ${seed} clinic features match resolved enclosure vector`,
+  );
+  assert(
+    metro.features.every((f) => massGrammarVecEqual(resolveMassGrammar(f.kind), metroVec)),
+    `seed ${seed} metro features match resolved slab vector`,
+  );
+  assert(
+    library.features.every((f) => massGrammarVecEqual(resolveMassGrammar(f.kind), libraryVec)),
+    `seed ${seed} library features match resolved ridge vector`,
   );
 }
 

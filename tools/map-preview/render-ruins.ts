@@ -11,7 +11,8 @@ import { paintRuinedMask } from '../../src/generation/preview-paint.ts';
 import { writePng } from './png.ts';
 
 const DIR = join(dirname(fileURLToPath(import.meta.url)), '../../docs/art/demos/slice-6-outline');
-const TYPES = ['frag-outdoor', 'frag-clinic', 'frag-metro'] as const;
+/** I6-G：四张可生成。居民区公寓保持未启用，禁止进入残墟生成器枚举。 */
+const TYPES = ['frag-outdoor', 'frag-clinic', 'frag-metro', 'frag-library'] as const;
 const SEEDS = [101, 202, 303, 404, 505, 606];
 
 mkdirSync(DIR, { recursive: true });

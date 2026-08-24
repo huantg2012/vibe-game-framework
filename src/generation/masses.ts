@@ -73,22 +73,96 @@ function landBBox(land: Uint8Array, cols: number, rows: number) {
 /** 0 = open east, 1 = open west, 2 = open south, 3 = open north. */
 type Facing = 0 | 1 | 2 | 3;
 
-function enclosureCells(ox: number, oy: number, facing: Facing, longLen: number, shortLen: number): RuinCell[] {
-  const cells: RuinCell[] = [];
-  if (facing === 0) {
-    for (let i = 0; i < longLen; i++) cells.push({ col: ox, row: oy + i });
-    for (let j = 1; j < shortLen; j++) cells.push({ col: ox + j, row: oy });
-  } else if (facing === 1) {
-    for (let i = 0; i < longLen; i++) cells.push({ col: ox, row: oy + i });
-    for (let j = 1; j < shortLen; j++) cells.push({ col: ox - j, row: oy });
-  } else if (facing === 2) {
-    for (let i = 0; i < longLen; i++) cells.push({ col: ox + i, row: oy });
-    for (let j = 1; j < shortLen; j++) cells.push({ col: ox, row: oy + j });
-  } else {
-    for (let i = 0; i < longLen; i++) cells.push({ col: ox + i, row: oy });
-    for (let j = 1; j < shortLen; j++) cells.push({ col: ox, row: oy - j });
+export type MassGapPlacement = 'center' | 'mid' | 'end' | 'random';
+export type MassCap = 'none' | 'stub' | 'pier' | 'widen';
+export type MassCorner = 'right' | 'fold';
+export type MassFacingPolicy = 'random' | 'axis' | 'alternate';
+
+/** Shared grammar vector. Three old presets stay byte-identical; cluster is one more point. */
+export type MassGrammarVec = {
+  readonly turns: 0 | 1 | 2;
+  readonly jogPeriod: 0 | 2 | 3 | 4 | 6;
+  readonly jogAmp: 0 | 1 | 2;
+  readonly gaps: 0 | 1 | 2 | 3;
+  readonly gapPlacement?: MassGapPlacement;
+  readonly cap: MassCap;
+  readonly corner?: MassCorner;
+  readonly facingPolicy?: MassFacingPolicy;
+};
+
+export const MASS_GRAMMAR_PRESETS = {
+  ridge: { turns: 0, jogPeriod: 4, jogAmp: 1, gaps: 0, cap: 'stub' },
+  slab: { turns: 0, jogPeriod: 0, jogAmp: 0, gaps: 1, gapPlacement: 'center', cap: 'pier' },
+  enclosure: { turns: 1, jogPeriod: 0, jogAmp: 0, gaps: 1, gapPlacement: 'mid', cap: 'none' },
+  cluster: { turns: 0, jogPeriod: 0, jogAmp: 0, gaps: 3, gapPlacement: 'random', cap: 'none' },
+} as const satisfies Record<'ridge' | 'slab' | 'enclosure' | 'cluster', MassGrammarVec>;
+
+export function resolveMassGrammar(grammar: string): MassGrammarVec {
+  if (grammar === 'ridge') return MASS_GRAMMAR_PRESETS.ridge;
+  if (grammar === 'slab') return MASS_GRAMMAR_PRESETS.slab;
+  if (grammar === 'enclosure') return MASS_GRAMMAR_PRESETS.enclosure;
+  if (grammar === 'cluster') return MASS_GRAMMAR_PRESETS.cluster;
+  throw new Error(`unknown mass grammar: ${grammar}`);
+}
+
+export function massGrammarVecEqual(a: MassGrammarVec, b: MassGrammarVec): boolean {
+  return (
+    a.turns === b.turns &&
+    a.jogPeriod === b.jogPeriod &&
+    a.jogAmp === b.jogAmp &&
+    a.gaps === b.gaps &&
+    a.gapPlacement === b.gapPlacement &&
+    a.cap === b.cap &&
+    a.corner === b.corner &&
+    a.facingPolicy === b.facingPolicy
+  );
+}
+
+function shaftSkips(vec: MassGrammarVec, longLen: number, rng: SeededRandom): ReadonlySet<number> {
+  const skips = new Set<number>();
+  if (vec.gaps <= 0 || vec.gapPlacement === 'mid') return skips;
+  const n = vec.gaps;
+  if (vec.gapPlacement === 'random') {
+    const pool: number[] = [];
+    for (let i = 0; i < longLen; i++) pool.push(i);
+    for (let k = 0; k < n && pool.length > 0; k++) {
+      const idx = rng.nextInt(0, pool.length - 1);
+      skips.add(pool.splice(idx, 1)[0]!);
+    }
+    return skips;
   }
-  return unique(cells);
+  if (vec.gapPlacement === 'end') {
+    if (n >= 1) skips.add(longLen - 1);
+    if (n >= 2) skips.add(0);
+    if (n >= 3) skips.add(Math.max(0, longLen - 2));
+    return skips;
+  }
+  const mid = (longLen / 2) | 0;
+  if (n === 1) {
+    skips.add(mid);
+    return skips;
+  }
+  const start = Math.max(0, mid - ((n / 2) | 0));
+  for (let k = 0; k < n && start + k < longLen; k++) skips.add(start + k);
+  return skips;
+}
+
+function pickFacing(
+  vec: MassGrammarVec,
+  rng: SeededRandom,
+  massIndex: number,
+  island: { width: number; height: number },
+): Facing {
+  const policy = vec.facingPolicy ?? 'random';
+  if (policy === 'axis') {
+    const vertical = island.height >= island.width;
+    return (vertical ? rng.nextInt(0, 1) : rng.nextInt(2, 3)) as Facing;
+  }
+  if (policy === 'alternate') {
+    const vertical = massIndex % 2 === 0;
+    return (vertical ? rng.nextInt(0, 1) : rng.nextInt(2, 3)) as Facing;
+  }
+  return rng.nextInt(0, 3) as Facing;
 }
 
 function biteGap(cells: RuinCell[], facing: Facing, gapAt: number, gap = 2): RuinCell[] {
@@ -105,52 +179,100 @@ function biteGap(cells: RuinCell[], facing: Facing, gapAt: number, gap = 2): Rui
   return cells.filter((cell) => !drop.has(`${cell.col},${cell.row}`));
 }
 
-function ridgeCells(ox: number, oy: number, facing: Facing, length: number, width: number): RuinCell[] {
+function massCells(
+  vec: MassGrammarVec,
+  ox: number,
+  oy: number,
+  facing: Facing,
+  longLen: number,
+  width: number,
+  shortLen: number,
+  skip: ReadonlySet<number>,
+): RuinCell[] {
   const vertical = facing === 0 || facing === 1;
+  const shaftWidth = vec.turns >= 1 ? 1 : width;
   const cells: RuinCell[] = [];
-  for (let i = 0; i < length; i++) {
-    const shift = ((i / 4) | 0) % 2 === 1 ? 1 : 0;
-    for (let w = 0; w < width; w++) {
+  for (let i = 0; i < longLen; i++) {
+    if (skip.has(i)) continue;
+    const shift =
+      vec.jogPeriod > 0 && vec.jogAmp > 0 && ((i / vec.jogPeriod) | 0) % 2 === 1 ? vec.jogAmp : 0;
+    for (let w = 0; w < shaftWidth; w++) {
       if (vertical) cells.push({ col: ox + shift + w, row: oy + i });
       else cells.push({ col: ox + i, row: oy + shift + w });
     }
   }
-  const stub = 2;
-  if (facing === 0) {
-    for (let j = 1; j < stub; j++) cells.push({ col: ox + width + j - 1, row: oy });
-  } else if (facing === 1) {
-    for (let j = 1; j < stub; j++) cells.push({ col: ox - j, row: oy });
-  } else if (facing === 2) {
-    for (let j = 1; j < stub; j++) cells.push({ col: ox, row: oy + width + j - 1 });
-  } else {
-    for (let j = 1; j < stub; j++) cells.push({ col: ox, row: oy - j });
-  }
-  return unique(cells);
-}
-
-function slabCells(ox: number, oy: number, facing: Facing, length: number, width: number): RuinCell[] {
-  const cells: RuinCell[] = [];
-  const vertical = facing === 0 || facing === 1;
-  const gapAt = (length / 2) | 0;
-  for (let i = 0; i < length; i++) {
-    if (i === gapAt) continue;
-    for (let w = 0; w < width; w++) {
-      if (vertical) cells.push({ col: ox + w, row: oy + i });
-      else cells.push({ col: ox + i, row: oy + w });
+  if (vec.turns >= 1) {
+    if (facing === 0) {
+      for (let j = 1; j < shortLen; j++) cells.push({ col: ox + j, row: oy });
+    } else if (facing === 1) {
+      for (let j = 1; j < shortLen; j++) cells.push({ col: ox - j, row: oy });
+    } else if (facing === 2) {
+      for (let j = 1; j < shortLen; j++) cells.push({ col: ox, row: oy + j });
+    } else {
+      for (let j = 1; j < shortLen; j++) cells.push({ col: ox, row: oy - j });
     }
   }
-  if (facing === 0) {
-    cells.push({ col: ox + width, row: oy }, { col: ox + width + 1, row: oy });
-    cells.push({ col: ox + width, row: oy + 1 }, { col: ox + width + 1, row: oy + 1 });
-  } else if (facing === 1) {
-    cells.push({ col: ox - 1, row: oy }, { col: ox - 2, row: oy });
-    cells.push({ col: ox - 1, row: oy + 1 }, { col: ox - 2, row: oy + 1 });
-  } else if (facing === 2) {
-    cells.push({ col: ox, row: oy + width }, { col: ox + 1, row: oy + width });
-    cells.push({ col: ox, row: oy + width + 1 }, { col: ox + 1, row: oy + width + 1 });
-  } else {
-    cells.push({ col: ox, row: oy - 1 }, { col: ox + 1, row: oy - 1 });
-    cells.push({ col: ox, row: oy - 2 }, { col: ox + 1, row: oy - 2 });
+  if (vec.turns >= 2) {
+    const fold = vec.corner === 'fold';
+    const end = longLen - 1;
+    if (fold) {
+      if (facing === 0) {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox + 1, row: oy + end - j });
+      } else if (facing === 1) {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox - 1, row: oy + end - j });
+      } else if (facing === 2) {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox + end - j, row: oy + 1 });
+      } else {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox + end - j, row: oy - 1 });
+      }
+    } else {
+      if (facing === 0) {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox - j, row: oy + end });
+      } else if (facing === 1) {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox + j, row: oy + end });
+      } else if (facing === 2) {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox + end, row: oy - j });
+      } else {
+        for (let j = 1; j < shortLen; j++) cells.push({ col: ox + end, row: oy + j });
+      }
+    }
+  }
+  if (vec.cap === 'stub') {
+    const stub = 2;
+    if (facing === 0) {
+      for (let j = 1; j < stub; j++) cells.push({ col: ox + width + j - 1, row: oy });
+    } else if (facing === 1) {
+      for (let j = 1; j < stub; j++) cells.push({ col: ox - j, row: oy });
+    } else if (facing === 2) {
+      for (let j = 1; j < stub; j++) cells.push({ col: ox, row: oy + width + j - 1 });
+    } else {
+      for (let j = 1; j < stub; j++) cells.push({ col: ox, row: oy - j });
+    }
+  } else if (vec.cap === 'pier') {
+    if (facing === 0) {
+      cells.push({ col: ox + width, row: oy }, { col: ox + width + 1, row: oy });
+      cells.push({ col: ox + width, row: oy + 1 }, { col: ox + width + 1, row: oy + 1 });
+    } else if (facing === 1) {
+      cells.push({ col: ox - 1, row: oy }, { col: ox - 2, row: oy });
+      cells.push({ col: ox - 1, row: oy + 1 }, { col: ox - 2, row: oy + 1 });
+    } else if (facing === 2) {
+      cells.push({ col: ox, row: oy + width }, { col: ox + 1, row: oy + width });
+      cells.push({ col: ox, row: oy + width + 1 }, { col: ox + 1, row: oy + width + 1 });
+    } else {
+      cells.push({ col: ox, row: oy - 1 }, { col: ox + 1, row: oy - 1 });
+      cells.push({ col: ox, row: oy - 2 }, { col: ox + 1, row: oy - 2 });
+    }
+  } else if (vec.cap === 'widen') {
+    const extra = 1;
+    if (facing === 0) {
+      for (let w = 0; w < width + extra; w++) cells.push({ col: ox + w, row: oy + longLen - 1 });
+    } else if (facing === 1) {
+      for (let w = 0; w < width + extra; w++) cells.push({ col: ox - extra + w, row: oy + longLen - 1 });
+    } else if (facing === 2) {
+      for (let w = 0; w < width + extra; w++) cells.push({ col: ox + longLen - 1, row: oy + w });
+    } else {
+      for (let w = 0; w < width + extra; w++) cells.push({ col: ox + longLen - 1, row: oy - extra + w });
+    }
   }
   return unique(cells);
 }
@@ -204,11 +326,19 @@ function buildMass(
   rng: SeededRandom,
   longLen: number,
 ): RuinCell[] {
-  const width = Math.max(1, Math.min(2, def.featureWidthTiles || 1));
+  const width = Math.max(1, def.featureWidthTiles || 1);
   const shortLen = rng.nextInt(3, 4);
-  if (grammar === 'ridge') return ridgeCells(ox, oy, facing, longLen, width);
-  if (grammar === 'slab') return slabCells(ox, oy, facing, longLen, width);
-  return biteGap(enclosureCells(ox, oy, facing, longLen, shortLen), facing, rng.nextInt(1, 3), 2);
+  const vec = resolveMassGrammar(grammar);
+  const skip = shaftSkips(vec, longLen, rng);
+  const cells = massCells(vec, ox, oy, facing, longLen, width, shortLen, skip);
+  if (vec.gaps > 0 && vec.gapPlacement === 'mid') {
+    let out = cells;
+    for (let g = 0; g < vec.gaps; g++) {
+      out = biteGap(out, facing, rng.nextInt(1, 3), 2);
+    }
+    return out;
+  }
+  return cells;
 }
 
 function axisSpan(cells: readonly RuinCell[]): number {
@@ -349,10 +479,13 @@ function tryPlaceAt(
   cols: number,
   rows: number,
   rng: SeededRandom,
+  massIndex: number,
+  island: { width: number; height: number },
 ): RuinCell[] | null {
   const longLen = Math.max(5, Math.min(6, def.featureLengthTiles || 6));
+  const vec = resolveMassGrammar(grammar);
   for (let attempt = 0; attempt < 6; attempt++) {
-    const facing = rng.nextInt(0, 3) as Facing;
+    const facing = pickFacing(vec, rng, massIndex, island);
     const cells = clip(
       buildMass(grammar, ox + rng.nextInt(-1, 1), oy + rng.nextInt(-1, 1), facing, def, rng, longLen),
       land,
@@ -430,7 +563,16 @@ export function placeMasses(
   const box = landBBox(land, cols, rows);
   if (box.width < 16 || box.height < 14) return null;
   const grammar = def.massGrammar;
-  const kind = grammar === 'ridge' || grammar === 'slab' || grammar === 'enclosure' ? grammar : 'enclosure';
+  resolveMassGrammar(grammar);
+  if (
+    grammar !== 'ridge' &&
+    grammar !== 'slab' &&
+    grammar !== 'enclosure' &&
+    grammar !== 'cluster'
+  ) {
+    throw new Error(`unknown mass grammar: ${grammar}`);
+  }
+  const kind = grammar;
   const yardMax = GAME_CONSTANTS.GENERATION.YARD_AREA_MAX;
   const min = def.featureCountMin;
   const cap = def.featureCountMax;
@@ -442,14 +584,28 @@ export function placeMasses(
     const masses: RuinCell[][] = [];
     let used = 0;
     const allSites = packSites(box, rng).filter((site) => land[at(cols, site.col, site.row)]);
-    const gridWant = Math.min(Math.max(min, cap - 4), Math.max(min, (wallBudget / 8) | 0));
+    // Old: min(max(min, cap-4), …) collapsed to min when cap-4 ≤ min.
+    // min+1 keeps one extra site on tight ranges; for 12–24 this still equals cap-4.
+    const gridWant = Math.min(cap, Math.max(min + 1, cap - 4), Math.max(min, (wallBudget / 8) | 0));
     const sites = evenPick(allSites, gridWant);
     for (const site of sites) {
       if (masses.length >= cap || used >= wallBudget) break;
       const walls = stampAll(masses, cols, rows);
       if (masses.length >= min && maxOpenYard(land, walls, cols, rows) <= yardMax) break;
       if (!land[at(cols, site.col, site.row)]) continue;
-      const cells = tryPlaceAt(site.col, site.row, grammar, def, land, masses, cols, rows, rng);
+      const cells = tryPlaceAt(
+        site.col,
+        site.row,
+        grammar,
+        def,
+        land,
+        masses,
+        cols,
+        rows,
+        rng,
+        masses.length,
+        box,
+      );
       if (!cells || used + cells.length > wallBudget) continue;
       masses.push(cells);
       used += cells.length;

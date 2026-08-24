@@ -159,7 +159,7 @@ export const RIFT_FRAGMENT_DATA: Record<string, RiftFragmentDef> = {
     massGrammar: 'ridge',
     join: 'single',
     surfaceMaterial: 'wood',
-    enabled: false,
+    enabled: true,
     floorBv: 26,
     floorBiasR: 1.08,
     floorBiasG: 0.86,

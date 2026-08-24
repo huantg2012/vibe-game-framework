@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified: 2026-08-23
-last-modified-by: director（DEC-088：街具残骸上屏待 I5-J）
+last-modified: 2026-08-24
+last-modified-by: code（I5-S：新短名标待上屏，本批不上裂隙）
 interface-changed: false
 interfaces-with:
   - system-contamination-lexicon   # 身份键、触发、限频、上屏节点、成句标记；逻辑真相在句法 spec。本文件是识别表面，不拥有形态生成
@@ -190,6 +190,17 @@ note: |
 **朗读验收（U9）：** 玩家必须能把节点念成并列短词（覆盖、余响、占空），不能念成一个复合名词（「覆盖余响占空」「余响占空体」「间距占空」）。「间距」是基体残余名，「占空」是占位；两维分开。禁止把「余响占空」合成一个 span。本行没有表名+数值粘连的问题，但短词粘连同样不合格。
 
 I3-A 落地、I3-G 未翻列时：旁白只会上旧六种基体（有机残影 / 灯柱 / 门框 / 墙锈 / 菌毯 / 油膜）。那是 form 管线在工作，不是内容层开放。限频、同时 1 行、60s / 2.5s、与混乱阈值冲突时阈值优先：均不改。
+
+### 迭代 5 新短名（I5-S 已落表；待上屏）
+
+本批不上裂隙。I5-J 翻列前旁白不得报这些节点。短名已锁（I5-P / 甲基体轴）；节点纪律与上表相同，禁止粘成复合传奇名。
+
+| id | 上屏短名 | 裂隙 |
+| -- | -------- | ---- |
+| street_wreckage | 街具残骸 | **待上屏**（I5-J 翻列后按分节点上屏） |
+| insect_remnant | 虫 | **待上屏**（三种生物默认不翻出击） |
+| mammal_remnant | 哺乳动物 | **待上屏** |
+| worm_remnant | 大号蠕虫 | **待上屏** |
 
 ## 止损怎么被读到（结构层；DEC-083）
 

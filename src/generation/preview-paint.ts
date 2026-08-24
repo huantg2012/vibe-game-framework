@@ -41,6 +41,88 @@ const PALETTE: ReadonlyArray<readonly [number, number, number]> = PALETTE_HEX.ma
   parseInt(h.slice(5, 7), 16),
 ]);
 
+/** art-direction.md §2.2 name → hex. Membership is PALETTE_HEX (= docs/art/palette.json). */
+const ART_DIRECTION_HEX: Readonly<Record<string, string>> = {
+  'void-black': '#080a0c',
+  'deep-black': '#0a0b0d',
+  'ambient-black': '#0d1114',
+  'shadow-grey': '#151a1e',
+  'frag-library': '#2a2420',
+  'frag-clinic': '#1e2228',
+  'frag-metro': '#2a2018',
+  'frag-residential': '#24221e',
+  'frag-outdoor': '#1a1e18',
+  'concrete-dark': '#2c2e33',
+  'concrete-mid': '#3a3d42',
+  'metal-grey': '#4a4e55',
+  'metal-light': '#5a5f66',
+  'warm-dim': '#8a5c2a',
+  'warm-glow': '#c4873a',
+  'contam-cold': '#1a7a9a',
+  'contam-deep': '#0e4a3f',
+  'contam-mid': '#1a6b5c',
+  'contam-core': '#1aad96',
+  'contam-glow': '#2ae6c8',
+  'contam-bright': '#3cffd4',
+  'contam-peak': '#7fffee',
+  'contam-ancient': '#4adf8a',
+  'contam-white': '#b0fff5',
+  'warm-bright': '#e0a848',
+  'flesh-dead': '#2e2d30',
+  'cloth-dark': '#2a2a2e',
+  'bone-grey': '#3a3838',
+  'earth-dark': '#1a1c1f',
+  'brick-dark': '#2a1f1c',
+  'ui-text': '#8a8f96',
+  'ui-text-bright': '#c8cdd4',
+  'ui-danger': '#cc3333',
+  'ui-warning': '#b89040',
+  'ui-border': '#2a2d32',
+  'ui-bg': '#0f1114',
+};
+
+const PALETTE_HEX_SET = new Set(PALETTE_HEX.map((h) => h.toLowerCase()));
+
+function hexToRgb(hex: string): readonly [number, number, number] {
+  const h = hex.startsWith('#') ? hex.slice(1) : hex;
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+
+function paletteRgbByName(name: string): readonly [number, number, number] | null {
+  const hex = ART_DIRECTION_HEX[name];
+  if (!hex) return null;
+  if (!PALETTE_HEX_SET.has(hex.toLowerCase())) return null;
+  return hexToRgb(hex);
+}
+
+/** Sample scratch angle. σ≤0 is a Dirac at μ (no extra rng). μ=null is uniform on [0, 2π). */
+function sampleScratchAngle(rng: SeededRandom, mu: number | null, sigma: number): number {
+  if (mu === null) return rng.next() * Math.PI * 2;
+  if (sigma <= 0) return mu;
+  const u1 = Math.max(1e-12, rng.next());
+  const u2 = rng.next();
+  const n = Math.sqrt(-2 * Math.log(u1)) * Math.cos(Math.PI * 2 * u2);
+  const tau = Math.PI * 2;
+  let a = mu + n * sigma;
+  a = ((a % tau) + tau) % tau;
+  return a;
+}
+
+function csvScratchToMuSigma(
+  scratchAngle: string,
+  W: number,
+  H: number,
+  rng: SeededRandom,
+): { mu: number | null; sigma: number } {
+  if (scratchAngle === 'orthogonal') {
+    return { mu: rng.next() < 0.5 ? 0 : Math.PI / 2, sigma: 0 };
+  }
+  if (scratchAngle === 'longitudinal') {
+    return { mu: W >= H ? 0 : Math.PI / 2, sigma: 0 };
+  }
+  return { mu: null, sigma: 0 };
+}
+
 function hash2(ix: number, iy: number, seed: number): number {
   let h = (ix * 374761393 + iy * 668265263 + seed * 2147483647) | 0;
   h = Math.imul(h ^ (h >> 13), 1274126177) | 0;
@@ -149,10 +231,7 @@ function writeQuantizedRgba(
 }
 
 function stainRgb(key: string): readonly [number, number, number] {
-  if (key === 'shadow-grey') return [0x15, 0x1a, 0x1e];
-  if (key === 'brick-dark') return [0x2a, 0x1f, 0x1c];
-  if (key === 'frag-library') return [0x2a, 0x24, 0x20];
-  return [0x1a, 0x1e, 0x18];
+  return paletteRgbByName(key) ?? paletteRgbByName('frag-outdoor')!;
 }
 
 function cellAt(
@@ -817,9 +896,8 @@ function stampWear(
   const scratchN = Math.round(def.scratchPer1000px2 * scratchMul * (area / 1000));
   const fleckN = Math.round(def.fleckPer1000px2 * fleckMul * (area / 1000));
   const angleOf = (): number => {
-    if (scratchAngle === 'orthogonal') return rng.next() < 0.5 ? 0 : Math.PI / 2;
-    if (scratchAngle === 'longitudinal') return W >= H ? 0 : Math.PI / 2;
-    return rng.next() * Math.PI * 2;
+    const dist = csvScratchToMuSigma(scratchAngle, W, H, rng);
+    return sampleScratchAngle(rng, dist.mu, dist.sigma);
   };
   for (let n = 0; n < scratchN; n++) {
     const cell = floors[rng.nextInt(0, floors.length - 1)]!;

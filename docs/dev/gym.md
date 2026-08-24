@@ -5,7 +5,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
-独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。**污染句法课**是观察院子：玩家在场且默认无敌（可开「感受伤害」），侧栏按维度配表后点生成，敌人与出击同一套移动 / 感知 / 攻击；击杀后按当前配置再刷。**迭代 3（DEC-084）：** 生产方案 D 已接到裂隙（体验未验证）；句法课仍可切渲染方案。A/B/C 冻结为对照；默认方案 D。合同：`docs/tasks/iteration-3.md`。**迭代 4（DEC-085）：** 陈列馆课 `?lesson=lexicon-gallery`，只挂方案 D，合同 `docs/tasks/iteration-4.md`。**迭代 5（DEC-087 / DEC-088）：** 甲外形基因谱先在练习场挂新模块，I5-J 之前不改出击默认甲；街具残骸 + 三种生物先 gym。合同 `docs/tasks/iteration-5.md`。设计正文 `docs/design-notes/contamination-form-genome.md`。**迭代 6（DEC-088 / DEC-089 / DEC-090）：** 碎片配色 / 世界美术验地面走地图课（与出击同一套烤地；拍板已全部收口，四张一起标定）。合同 `docs/tasks/iteration-6.md`。地图课框住整岛，甲只是色块，且不得打开出击活机制。练习场敌人课（默认院子）复用出击 `Enemy`（含 `getForm`），不另写移动或外形。遭遇识别旁白默认不开。
+独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。**污染句法课**是观察院子：玩家在场且默认无敌（可开「感受伤害」），侧栏按维度配表后点生成，敌人与出击同一套移动 / 感知 / 攻击；击杀后按当前配置再刷。**迭代 3（DEC-084）：** 生产方案 D 已接到裂隙（体验未验证）；句法课仍可切渲染方案。A/B/C 冻结为对照；默认方案 D。合同：`docs/tasks/iteration-3.md`。**迭代 4（DEC-085）：** 陈列馆课 `?lesson=lexicon-gallery`，只挂方案 D，合同 `docs/tasks/iteration-4.md`。**迭代 5（DEC-087 / DEC-088）：** 甲外形基因谱先在练习场挂新模块，I5-J 之前不改出击默认甲；街具残骸 + 三种生物先 gym。合同 `docs/tasks/iteration-5.md`。设计正文 `docs/design-notes/contamination-form-genome.md`。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术验地面走地图课（与出击同一套烤地；I6-A 已交，四张一起标定；身份靠渍/纹理/结构，不靠底色落格；先等价再拆档）。合同 `docs/tasks/iteration-6.md`。地图课框住整岛，甲只是色块，且不得打开出击活机制。练习场敌人课（默认院子）复用出击 `Enemy`（含 `getForm`），不另写移动或外形。遭遇识别旁白默认不开。
 
 **打开：** `npm run gym` 或 `npm run dev`，再用 Cursor 的 Simple Browser 打开对应地址。不要用系统浏览器。
 

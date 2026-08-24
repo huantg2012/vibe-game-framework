@@ -188,6 +188,42 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalContinuities: ['monolith', 'field'],
     enabledScope: 'sortie',
   },
+  street_wreckage: {
+    id: 'street_wreckage',
+    displayToken: '街具残骸',
+    residualVerb: '立',
+    legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
+    legalContinuities: ['monolith'],
+    enabledScope: 'gym',
+  },
+  insect_remnant: {
+    id: 'insect_remnant',
+    displayToken: '虫',
+    residualVerb: '爬',
+    legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
+    legalContinuities: ['monolith'],
+    enabledScope: 'gym',
+  },
+  mammal_remnant: {
+    id: 'mammal_remnant',
+    displayToken: '哺乳动物',
+    residualVerb: '走',
+    legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
+    legalContinuities: ['monolith'],
+    enabledScope: 'gym',
+  },
+  worm_remnant: {
+    id: 'worm_remnant',
+    displayToken: '大号蠕虫',
+    residualVerb: '拱',
+    legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
+    legalContinuities: ['monolith'],
+    enabledScope: 'gym',
+  },
 };
 
 export const PORTFOLIO_DATA: Record<PortfolioId, PortfolioDef> = {
@@ -589,7 +625,7 @@ export const STOP_LOSS_DATA: Record<string, StopLossDef> = {
   },
 };
 
-export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval'];
+export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval', 'street_wreckage', 'insect_remnant', 'mammal_remnant', 'worm_remnant'];
 export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval'];
 export const CONCEPTUAL_SUBSTRATE_IDS: readonly string[] = ['sound_echo', 'light_scatter', 'space_interval'];
 export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];

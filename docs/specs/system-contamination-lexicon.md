@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: director（DEC-090：旧图书馆方言行待 I6-G 改成生产路径；居民区公寓不进迭代 6）
-last-modified-date: 2026-08-23
+last-modified-by: code（I5-S：基体表新四行 gym；出击 12 行在 I5-J 翻列前仍是出击真相）
+last-modified-date: 2026-08-24
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -21,7 +21,7 @@ exposes:
   - 遭遇识别旁白：身份键、触发、限频、上屏节点、成句短标记映射
   - 事件 `encounter:identified`（载荷见实现规格；旁白消费、不回写 AI）
   - CSV：substrates / portfolios / lexemes / stop-loss / utterances / display-tokens → `src/generated/contamination-lexicon-data.ts`
-  - CSV `enabled_scope`（sortie / gym）；出击白名单 = 全部 sortie 行，含残茎 / 栏柱 / 灰幕 + 概念三类。**待更新（DEC-088）：** I5-S 加街具残骸 + 三种生物为 gym；I5-J 翻列后街具残骸进 sortie、灯柱/栏柱退出。现行表仍是出击真相。
+  - CSV `enabled_scope`（sortie / gym）；出击白名单 = 全部 sortie 行，含残茎 / 栏柱 / 灰幕 + 概念三类。**I5-S 已落：** 街具残骸 + 三种生物为 gym，不进 `SORTIE_SUBSTRATE_IDS`。**待 I5-J 翻列：** 街具残骸进 sortie、灯柱/栏柱退出。翻列前出击 12 行仍是出击真相。
   - 接触词素对照表（打血 / 混乱 / 视野）；出击与练习场同一套读取 contact + resolveStopLoss
   - 钉层：墙缘折线 / 簇核 / 走廊包围盒；布局另交一份 SortieDraw
   - 出击视觉（方案 D）消费字段（与 I3-C 对齐，不复制像素配方）
@@ -233,22 +233,57 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 
 **行表（与 CSV 同步；类不进 CSV，只供阅读）：**
 
-> **待更新（DEC-088 / 迭代 5）：** I5-S 将新增 `street_wreckage`（街具残骸）与三种生物基底（`insect_remnant` / `mammal_remnant` / `worm_remnant`），均为 `gym`。I5-J 翻列：街具残骸 → `sortie`，`lamp_pillar` / `railing_post` 退出出击。三种生物默认仍 gym。下表在那两批落地前仍是**现行出击真相**，禁止把目标表写成已经上线。
+> **I5-S 已落策划表（DEC-088 / 迭代 5）：** CSV 已有 `street_wreckage`（街具残骸）与三种生物基底（`insect_remnant` / `mammal_remnant` / `worm_remnant`），均为 `gym`，不进 `SORTIE_SUBSTRATE_IDS`。**待 I5-J 翻列：** 街具残骸 → `sortie`，`lamp_pillar` / `railing_post` 退出出击。三种生物默认仍 gym。下表出击 12 行在翻列前仍是**现行出击真相**，禁止把目标表写成已经上线。四行字段以 I5-P 定值为准（已进 CSV）。
+
+**I5-S 已落策划表（I5-P 定值；CSV `enabled_scope=gym`。上屏短名未微调。待 I5-J 翻列。）:**
+
+| id | 上屏短名（已锁；微调须写理由） | 残余动词 | 合法占位 | 合法连续性 |
+| -- | ---- | -------- | -------- | ---------- |
+| `street_wreckage` | 街具残骸 | 立 | floor | monolith |
+| `insect_remnant` | 虫 | 爬 | floor | monolith |
+| `mammal_remnant` | 哺乳动物 | 走 | floor | monolith |
+| `worm_remnant` | 大号蠕虫 | 拱 | floor | monolith |
+
+残余动词理由（原物残余还在做的事，不是污染的动作）：
+
+- `street_wreckage` **立**：灯柱「亮」、栏柱「拦」都只覆盖变体的一种功能；竖杆 + 底座这条语法（灯柱 / 栏柱 / 标牌杆）全体还在做的事是立在街上。不沿用「亮」（栏柱与标牌杆不发光），不沿用「拦」（灯柱与标牌杆的原职不是拦路）。
+- `insect_remnant` **爬**：多足、横向对称的原物残余还在爬。不是黏液蠕动。
+- `mammal_remnant` **走**：四足、纵向的原物残余还在走。与 `organic_remnant` 同动词、不同基体节点；有机残影是无定形残余在走，本行是四足骸在走。
+- `worm_remnant` **拱**：无足、分节长条的原物残余还在拱着前进。不用「蠕」（旁白会读成「蠕虫蠕」；也太像污染自己在扭）。
+
+合法占位：四行都是 `floor`。街具残骸与三种生物都是孔谱甲的占地身体；不发明第三种占位。现行唯一例外仍是门框 `wall\|floor`，本批不扩。
+
+合法连续性：四行都是 `monolith`。菌落 × 占地、场 × 占地仍非法（会挡走、切开连通）。裂片 × 占地矩阵合法但第一版延后；分节是一条身体的骨架语法，不是多核共享注意。有机残影 / 残茎已有的裂片不自动传给三种生物。
+
+对抽卡与陈列馆展区数：多一个合法连续性，该厅会按覆盖 × 感知 × 运动 × 种子再乘一倍。本批不给裂片 / 菌落 / 场，连续性轴不膨胀。出击：I5-S 四行均为 gym，不进抽卡；I5-J 街具残骸替换灯柱 + 栏柱后，出击甲仍只抽单核。陈列馆格子变多只来自 I5-H 甲基体厅 5→7（灯柱厅与栏柱厅合成街具残骸一厅，加三个生物厅），不来自本批连续性。
+
+旁白读感检查（骨架 `识别。[覆盖深度] [基体] [占位]`，占地加主感知；残余动词按成句短标记那种另开节点。斜杠处必须能停顿。不合格已改动词，未改旁白骨架。不上屏新界面。审美待人终审）：
+
+| 行 | 拼法 | 结论 |
+| -- | ---- | ---- |
+| `street_wreckage` | 识别。 / 渗透 / 街具残骸 / 占地 / 立 | 「街具残骸立」是主谓，不是复合名词。不读成「残骸立占地」。 |
+| `insect_remnant` | 识别。 / 渗透 / 虫 / 占地 / 爬 | 「虫爬」是主谓，词序不是「爬虫」。节点须分开；「虫占地」不得合成一词。短名「虫」与「渗透」相邻、朗读不停顿时有「渗透虫」风险——短名已锁，本批不改。 |
+| `mammal_remnant` | 识别。 / 渗透 / 哺乳动物 / 占地 / 走 | 「哺乳动物走」是主谓。与有机残影同动词、不同基体节点，不粘成「动物走占地」。 |
+| `worm_remnant` | 识别。 / 渗透 / 大号蠕虫 / 占地 / 拱 | 不用「蠕」。「大号蠕虫拱」是主谓，不读成「蠕虫拱占地」。 |
 
 | id | 上屏 | 类 | 残余动词 | 合法占位 | 合法连续性 | enabled_scope |
 | -- | ---- | -- | -------- | -------- | ---------- | ------------- |
 | organic_remnant | 有机残影 | 有机 | 走 | floor | monolith, shards | sortie |
-| lamp_pillar | 灯柱 | 无机 | 亮 | floor | monolith | sortie |
+| lamp_pillar | 灯柱 | 无机 | 亮 | floor | monolith | sortie（待 I5-J 退出出击） |
 | doorframe | 门框 | 无机 | 开合 | wall, floor | monolith | sortie |
 | wall_rust | 墙锈 | 无机 | 渗 | wall | monolith, colony | sortie |
 | fungal_mat | 菌毯 | 有机 | 铺 | paint | colony, field | sortie |
 | oil_film | 油膜 | 无机 | 沾 | paint | monolith, colony, field | sortie（出击视图只占漆） |
 | stalk_clump | 残茎 | 有机 | 摇 | floor | monolith, shards | sortie |
-| railing_post | 栏柱 | 无机 | 拦 | floor | monolith | sortie |
+| railing_post | 栏柱 | 无机 | 拦 | floor | monolith | sortie（待 I5-J 退出出击） |
 | ash_veil | 灰幕 | 无机 | 覆 | paint | monolith, colony, field | sortie |
 | sound_echo | 余响 | 概念（声音） | 响 | volume | monolith, field | sortie |
 | light_scatter | 散光 | 概念（光线） | 折 | volume | monolith, field | sortie |
 | space_interval | 间距 | 概念（空间关系） | 挤 | volume | monolith, field | sortie |
+| street_wreckage | 街具残骸 | 无机 | 立 | floor | monolith | gym（待 I5-J 翻列出击，替换灯柱 / 栏柱） |
+| insect_remnant | 虫 | 有机 | 爬 | floor | monolith | gym（本迭代默认不翻出击） |
+| mammal_remnant | 哺乳动物 | 有机 | 走 | floor | monolith | gym（本迭代默认不翻出击） |
+| worm_remnant | 大号蠕虫 | 有机 | 拱 | floor | monolith | gym（本迭代默认不翻出击） |
 
 门框占地时运动必须固着，且不得永久封死出生→撤离的唯一通道。灯柱 / 栏柱占地默认固着。禁止把概念基体给甲。
 
@@ -377,8 +412,12 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 | doorframe | motion_anchor |
 | lamp_pillar | motion_anchor |
 | railing_post | motion_anchor |
+| street_wreckage | motion_anchor（与灯柱 / 栏柱同类：立着的街具） |
 | organic_remnant | motion_patrol |
+| mammal_remnant | motion_patrol（走；与有机残影同锁、不同基体） |
 | stalk_clump | motion_turn |
+| insect_remnant | motion_turn（爬；字母表无「爬」专用词素，禁止新开词素） |
+| worm_remnant | motion_turn（拱 / 分节；禁止新开词素） |
 | wall_rust | motion_wall |
 | fungal_mat | motion_cluster |
 | oil_film | motion_wind |
@@ -476,8 +515,8 @@ R2-C-data 必须按下面数字改 `contamination-draw.ts` 的 `DIALECT`（禁�
 | frag-outdoor | fungal_mat 3, ash_veil 3, oil_film 3, space_interval 3, organic_remnant 2, stalk_clump 2, sound_echo 2, light_scatter 2, wall_rust 1, railing_post 1 | ding | 灯柱 / 门框不进表 |
 | frag-clinic | lamp_pillar 3, doorframe 3, wall_rust 2, railing_post 2, light_scatter 2, organic_remnant 1, stalk_clump 1, ash_veil 1, space_interval 1, sound_echo 1 | yi | 菌毯不进表；随风降权 |
 | frag-metro | wall_rust 3, oil_film 2, lamp_pillar 2, doorframe 2, railing_post 2, ash_veil 2, sound_echo 2, space_interval 2, light_scatter 1 | either | 菌毯中权（不进表=中低）；簇栖中权 |
-| frag-library | doorframe 3, wall_rust 2, organic_remnant 2, railing_post 2, sound_echo 2, stalk_clump 1, light_scatter 1, space_interval 1 | yi | 随风降权（**DEC-090 将启用**；`enabled` 待 I6-G 翻，翻之前仍禁止当生产路径） |
-| frag-residential | organic_remnant 3, stalk_clump 3, doorframe 2, oil_film 2, railing_post 1, ash_veil 1, space_interval 1, sound_echo 1, light_scatter 1 | yi | **不进迭代 6**（DEC-090；簇状语法未实现）。启用前禁止当生产路径。见活指针「待开：居民区公寓碎片」 |
+| frag-library | doorframe 3, wall_rust 2, organic_remnant 2, railing_post 2, sound_echo 2, stalk_clump 1, light_scatter 1, space_interval 1 | yi | 随风降权（**DEC-090 / I6-G：** 已启用，生产路径） |
+| frag-residential | organic_remnant 3, stalk_clump 3, doorframe 2, oil_film 2, railing_post 1, ash_veil 1, space_interval 1, sound_echo 1, light_scatter 1 | yi | 本迭代不启用（DEC-090 抽卡四张；DEC-094：簇是参数点，不再当未实现生成器）。启用前禁止当生产路径 |
 
 ### 抽卡顺序
 

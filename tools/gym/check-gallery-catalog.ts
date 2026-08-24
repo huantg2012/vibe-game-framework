@@ -15,6 +15,7 @@ import {
   GALLERY_VIEW_HEIGHT,
   GALLERY_VIEW_WIDTH,
   GALLERY_ZOOM_MIN,
+  cellIntersectsView,
   clampGalleryScroll,
   galleryViewFromCenter,
   galleryViewFromScroll,
@@ -22,6 +23,7 @@ import {
   selectGalleryKeep,
   shiftGalleryView,
   type GalleryHallLayout,
+  type GalleryLayoutCell,
   type GalleryRect,
 } from '../../src/gym/gallery-virtualize.ts';
 import { portfolioOptions, substrateOptions } from '../../src/gym/gym-lexicon-form.ts';
@@ -115,8 +117,8 @@ const ding = byPortfolio.ding ?? 0;
 const total = listed.length;
 
 assert(inRange(total, 400, 800), `total ${total} in [400, 800]`);
-assert(total === 522, `default catalog size must stay 522 (got ${total})`);
-assert(inRange(jia, 200, 400), `jia ${jia} in [200, 400]`);
+assert(total === 765, `default catalog size must stay 765 (got ${total})`);
+assert(inRange(jia, 400, 650), `jia ${jia} in [400, 650]`);
 assert(inRange(yi, 15, 80), `yi ${yi} in [15, 80]`);
 assert(inRange(bing, 80, 350), `bing ${bing} in [80, 350]`);
 assert(inRange(ding, 20, 120), `ding ${ding} in [20, 120]`);
@@ -263,6 +265,15 @@ function hallSlideViews(layout: GalleryHallLayout, portfolio: PortfolioId, zoom:
   ];
 }
 
+/** AABB scan on the hall cells. Do not reuse `selectGalleryKeep.intersectingKeys` — a sliced keep that also shrinks that list would still look green. */
+function intersectingKeysOfView(cells: readonly GalleryLayoutCell[], view: GalleryRect): string[] {
+  const keys: string[] = [];
+  for (const cell of cells) {
+    if (cellIntersectsView(cell, view)) keys.push(cell.specimen.visualKey);
+  }
+  return keys;
+}
+
 function assertKeepCoversView(
   label: string,
   layout: GalleryHallLayout,
@@ -279,17 +290,24 @@ function assertKeepCoversView(
     inspectKey,
   });
   const keep = new Set(result.keepKeys);
-  for (const key of result.intersectingKeys) {
+  const independent = intersectingKeysOfView(layout.cells, view);
+  for (const key of independent) {
     const covered = keep.has(key) || key === inspectKey;
     assert(covered, `${label}: intersecting ${key} missing from keep`);
   }
+  const reported = new Set(result.intersectingKeys);
+  assert(
+    independent.length === reported.size && independent.every((key) => reported.has(key)),
+    `${label}: intersectingKeys must match AABB scan (${independent.length} vs ${reported.size})`,
+  );
   if (inspectKey) {
     assert(!keep.has(inspectKey), `${label}: inspect key must not occupy a hall slot`);
   }
   const cap = GALLERY_ATTACH_CAP[portfolio];
+  const intersectingForCap = independent.filter((key) => key !== inspectKey);
   assert(
-    result.intersectingKeys.length <= cap,
-    `${label}: |intersecting|=${result.intersectingKeys.length} > cap ${cap}`,
+    intersectingForCap.length <= cap,
+    `${label}: |intersecting|=${intersectingForCap.length} > cap ${cap}`,
   );
   assert(!result.overCap, `${label}: overCap (intersecting exceeded cap; raise zoom floor or cap)`);
   return result;
@@ -384,6 +402,36 @@ if (biggestJia) {
         `  before scrollX=${beforeView.x.toFixed(1)} intersecting=${before.intersectingKeys.length} keep=${before.keepKeys.length}`,
         `  after  scrollX=${afterView.x.toFixed(1)} intersecting=${after.intersectingKeys.length} keep=${after.keepKeys.length}`,
       ].join('\n'),
+    );
+
+    // Runtime fallback lock: illegal zoom (below hall floor) may put intersecting > cap.
+    // Keep must still contain every intersecting cell; the legal-zoom sweep above must stay !overCap.
+    const illegalZoom = 0.12;
+    const overflowView = galleryViewFromCenter(
+      layout.bounds.x + layout.bounds.w * 0.5,
+      layout.bounds.y + layout.bounds.h * 0.5,
+      illegalZoom,
+      layout.bounds,
+    );
+    const overflowIntersecting = intersectingKeysOfView(layout.cells, overflowView);
+    const overflow = selectGalleryKeep({
+      cells: layout.cells,
+      view: overflowView,
+      portfolio: 'jia',
+      prevKeepKeys: new Set(),
+    });
+    assert(
+      overflowIntersecting.length > GALLERY_ATTACH_CAP.jia,
+      `overCap fallback setup: intersecting ${overflowIntersecting.length} should exceed cap ${GALLERY_ATTACH_CAP.jia}`,
+    );
+    assert(overflow.overCap, 'overCap fallback: flag must be true when intersecting exceeds cap');
+    const overflowKeep = new Set(overflow.keepKeys);
+    for (const key of overflowIntersecting) {
+      assert(overflowKeep.has(key), `overCap fallback: intersecting ${key} must stay in keep`);
+    }
+    assert(
+      overflow.keepKeys.length >= overflowIntersecting.length,
+      `overCap fallback: keep ${overflow.keepKeys.length} must not shrink intersecting ${overflowIntersecting.length}`,
     );
   }
 }
