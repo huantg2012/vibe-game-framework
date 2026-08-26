@@ -21,7 +21,9 @@ export const GALLERY_CELL_SIZE: Record<PortfolioId, number> = {
   ding: 192,
 };
 
-/** Browse-state attach cap. Sole copy — do not duplicate 8/12/12/8. */
+/** Browse-state attach cap. Sole copy — do not duplicate 8/12/12/8.
+ * I5-H 重算：甲厅改为 8 采样种子后，合法缩放下最大相交约 35，48 仍盖住；乙丙丁不动。
+ */
 export const GALLERY_ATTACH_CAP: Record<PortfolioId, number> = {
   jia: 48,
   yi: 48,

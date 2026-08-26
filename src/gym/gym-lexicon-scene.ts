@@ -38,7 +38,8 @@ import {
   utteranceOptions,
   type LexiconGymConfig,
 } from '@/gym/gym-lexicon-form';
-import type { FormVisual, FormVisualSignal } from '@/entities/form-renderers/form-renderer';
+import type { FormAttachContext, FormVisual, FormVisualSignal } from '@/entities/form-renderers/form-renderer';
+import { attachGymFormVisual } from '@/entities/form-renderers/d/genome';
 import {
   isLexiconFragmentId,
   LEXICON_FRAGMENT_IDS,
@@ -474,9 +475,11 @@ export class GymLexiconScene extends Phaser.Scene {
     }
     if (!ready || !renderer || !form) return;
     const fragmentTypeId = this.readFragmentId();
+    const attach = (ctx: FormAttachContext) =>
+      renderer.id === 'd-mixed' ? attachGymFormVisual(renderer, ctx) : renderer.attach(ctx);
     if (form.portfolio === 'jia') {
       for (const view of this.ai.getEnemies()) {
-        const visual = renderer.attach({
+        const visual = attach({
           scene: this,
           form,
           seed: mix32(0, view.getId()),
@@ -489,7 +492,7 @@ export class GymLexiconScene extends Phaser.Scene {
     }
     for (const subject of this.hosts.getSubjects()) {
       const pin = this.hosts.getVisualPin(subject.id) ?? undefined;
-      const visual = renderer.attach({
+      const visual = attach({
         scene: this,
         form,
         seed: mix32(0, subject.id),

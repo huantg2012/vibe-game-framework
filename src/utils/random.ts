@@ -22,6 +22,15 @@ export class SeededRandom {
   }
 
   /**
+   * Standard normal N(0, 1) via Box-Muller. Consumes two next() samples.
+   */
+  nextGaussian(): number {
+    const u1 = Math.max(1e-12, this.next());
+    const u2 = this.next();
+    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(Math.PI * 2 * u2);
+  }
+
+  /**
    * Get random integer in [min, max] (inclusive).
    */
   nextInt(min: number, max: number): number {

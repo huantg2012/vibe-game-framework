@@ -1,7 +1,8 @@
 /**
- * Contamination-lexicon gallery: one hall at a time (portfolio × substrate),
+ * Contamination-lexicon gallery: one hall at a time (portfolio × hallId),
  * viewport virtualization, DOM labels, inspect live specimen.
  * Production scheme D only. Contract: docs/tasks/iteration-4.md (I4-B / I4-C / I4-D).
+ * I5-L：甲导航哺乳动物拆成四个邻域厅（猫科 / 鹿科 / 爬行 / 类人）。
  */
 
 import Phaser from 'phaser';
@@ -13,6 +14,7 @@ import type {
   FormVisualPose,
   FormVisualSignal,
 } from '@/entities/form-renderers/form-renderer';
+import { attachGymFormVisual } from '@/entities/form-renderers/d/genome';
 import {
   isLexiconFragmentId,
   LEXICON_DEFAULT_FRAGMENT,
@@ -22,7 +24,6 @@ import {
   DISPLAY_TOKEN_DATA,
   LEXEME_DATA,
   PORTFOLIO_DATA,
-  SUBSTRATE_DATA,
   UTTERANCE_DATA,
   type CoverageId,
   type PortfolioId,
@@ -42,12 +43,13 @@ import {
 import {
   coverageOptions,
   portfolioOptions,
-  substrateOptions,
 } from '@/gym/gym-lexicon-form';
 import {
   CANONICAL_SEED,
   enumerateGallerySpecimens,
   galleryDedupeCopy,
+  galleryHallLabelOf,
+  galleryHallsOf,
   type GallerySpecimen,
 } from '@/gym/lexicon-gallery-catalog';
 
@@ -109,7 +111,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   private fragmentTypeId = LEXICON_DEFAULT_FRAGMENT;
   private specimens: readonly GallerySpecimen[] = [];
   private hallPortfolio: PortfolioId = 'jia';
-  private hallSubstrate = 'organic_remnant';
+  private hallId = 'organic_remnant';
   private cells: GalleryLayoutCell[] = [];
   private bands: GalleryHallBand[] = [];
   private readonly attached = new Map<string, AttachedCell>();
@@ -198,22 +200,22 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     const el = document.getElementById('gym-gallery-illegal');
     this.includeIllegal = el instanceof HTMLInputElement && el.checked;
     const keepPortfolio = this.hallPortfolio;
-    const keepSubstrate = this.hallSubstrate;
+    const keepHall = this.hallId;
     this.reloadCatalog();
-    const still = this.specimens.some((row) => row.portfolio === keepPortfolio && row.substrate === keepSubstrate);
-    if (still) this.enterHall(keepPortfolio, keepSubstrate);
+    const still = this.specimens.some((row) => row.portfolio === keepPortfolio && row.hallId === keepHall);
+    if (still) this.enterHall(keepPortfolio, keepHall);
     else this.enterFirstHall();
   };
 
   private readonly onNavClick = (event: Event): void => {
     const target = event.target;
     if (!(target instanceof Element)) return;
-    const button = target.closest('button[data-portfolio][data-substrate]');
+    const button = target.closest('button[data-portfolio][data-hall-id]');
     if (!(button instanceof HTMLButtonElement)) return;
     const portfolio = button.dataset.portfolio;
-    const substrate = button.dataset.substrate;
-    if (!isPortfolioId(portfolio) || !substrate) return;
-    this.enterHall(portfolio, substrate);
+    const hallId = button.dataset.hallId;
+    if (!isPortfolioId(portfolio) || !hallId) return;
+    this.enterHall(portfolio, hallId);
   };
 
   private readonly onCanvasClick = (pointer: Phaser.Input.Pointer): void => {
@@ -293,18 +295,18 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
       this.enterHall('jia', 'organic_remnant');
       return;
     }
-    this.enterHall(first.portfolio, first.substrate);
+    this.enterHall(first.portfolio, first.hallId);
   }
 
-  private enterHall(portfolio: PortfolioId, substrate: string): void {
+  private enterHall(portfolio: PortfolioId, hallId: string): void {
     this.closeInspect(false);
     this.destroyAttached();
     this.hallPortfolio = portfolio;
-    this.hallSubstrate = substrate;
+    this.hallId = hallId;
     this.selectedKey = null;
     this.hoveredKey = null;
     const laid = layoutGalleryHall(
-      this.specimens.filter((row) => row.portfolio === portfolio && row.substrate === substrate),
+      this.specimens.filter((row) => row.portfolio === portfolio && row.hallId === hallId),
       portfolio,
     );
     this.cells = [...laid.cells];
@@ -380,11 +382,16 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   }
 
   private attachCell(cell: GalleryLayoutCell): void {
-    const renderer = getFormRenderer('d-mixed');
-    if (renderer?.ready !== true) return;
-    const visual = renderer.attach(this.attachContext(cell));
+    const visual = this.attachSchemeD(this.attachContext(cell));
+    if (!visual) return;
     visual.update(browsePose(cell));
     this.attached.set(cell.specimen.visualKey, { cell, visual });
+  }
+
+  private attachSchemeD(ctx: FormAttachContext): FormVisual | null {
+    const renderer = getFormRenderer('d-mixed');
+    if (renderer?.ready !== true) return null;
+    return attachGymFormVisual(renderer, ctx);
   }
 
   private attachContext(cell: GalleryLayoutCell): FormAttachContext {
@@ -488,16 +495,15 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
   }
 
   private attachInspectVisual(cell: GalleryLayoutCell, seed: number): FormVisual | null {
-    const renderer = getFormRenderer('d-mixed');
-    if (renderer?.ready !== true) return null;
     const stain =
       cell.specimen.portfolio === 'ding' ? { x: cell.x, y: cell.y } : STAIN_SINK;
-    const visual = renderer.attach({
+    const visual = this.attachSchemeD({
       ...this.attachContext(cell),
       seed,
       textureNamespace: inspectTextureNamespace(cell.specimen.visualKey),
       stainWorldPoint: stain,
     });
+    if (!visual) return null;
     visual.update(
       inspectPose(
         {
@@ -569,31 +575,29 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     if (!nav) return;
     nav.replaceChildren();
     for (const port of portfolioOptions()) {
-      const halls: { id: string; label: string; count: number }[] = [];
-      for (const sub of substrateOptions(port.id)) {
-        const count = this.specimens.filter((row) => row.portfolio === port.id && row.substrate === sub.id).length;
-        if (count === 0) continue;
-        halls.push({ id: sub.id, label: sub.label, count });
-      }
+      const halls = galleryHallsOf(port.id, this.specimens);
       if (halls.length === 0) continue;
       const heading = document.createElement('h3');
       heading.textContent = port.label;
       nav.append(heading);
       for (const hall of halls) {
+        const count = this.specimens.filter(
+          (row) => row.portfolio === port.id && row.hallId === hall.hallId,
+        ).length;
         const button = document.createElement('button');
         button.type = 'button';
         button.dataset.portfolio = port.id;
-        button.dataset.substrate = hall.id;
-        if (port.id === this.hallPortfolio && hall.id === this.hallSubstrate) {
+        button.dataset.hallId = hall.hallId;
+        if (port.id === this.hallPortfolio && hall.hallId === this.hallId) {
           button.setAttribute('aria-current', 'true');
         }
         const name = document.createElement('span');
         name.className = 'gym-gal-sub';
         name.textContent = hall.label;
-        const count = document.createElement('span');
-        count.className = 'gym-gal-n';
-        count.textContent = String(hall.count);
-        button.append(name, count);
+        const n = document.createElement('span');
+        n.className = 'gym-gal-n';
+        n.textContent = String(count);
+        button.append(name, n);
         nav.append(button);
       }
     }
@@ -714,7 +718,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     el.replaceChildren();
     el.append(
       kvLine('孔谱', PORTFOLIO_NAME[this.hallPortfolio]),
-      kvLine('基体', SUBSTRATE_DATA[this.hallSubstrate]?.displayToken ?? this.hallSubstrate),
+      kvLine('基体', galleryHallLabelOf(this.hallId, this.cells[0]?.specimen.substrate ?? this.hallId)),
       kvLine('本厅', String(this.cells.length)),
     );
   }
@@ -851,7 +855,7 @@ function inspectRows(
   const rows: { item: string; value: string }[] = [
     { item: '孔谱', value: PORTFOLIO_NAME[form.portfolio] },
     { item: '占位', value: PORTFOLIO_DATA[form.portfolio].displayToken },
-    { item: '基体', value: SUBSTRATE_DATA[form.substrate]?.displayToken ?? form.substrate },
+    { item: '基体', value: galleryHallLabelOf(specimen.hallId, form.substrate) },
     { item: '覆盖深度', value: coverageLabel(form.coverage) },
     { item: '连续性', value: CONTINUITY_LABEL[form.continuity] ?? form.continuity },
     { item: '运动', value: tokenOf(lex.motion) },
@@ -885,7 +889,7 @@ function inspectRows(
     },
   );
   if (form.portfolio === 'jia') {
-    rows.push({ item: '族内变体', value: String(specimen.seedBucket + 1) });
+    rows.push({ item: '采样种子', value: String(specimen.seedBucket + 1) });
   } else {
     rows.push(
       { item: '规范种子', value: String(CANONICAL_SEED) },
@@ -924,7 +928,7 @@ function captionEl(
 
 function captionFields(cell: GalleryLayoutCell, zoom: number): readonly { item: string; value: string }[] {
   const form = cell.specimen.form;
-  const substrate = SUBSTRATE_DATA[form.substrate]?.displayToken ?? form.substrate;
+  const substrate = galleryHallLabelOf(cell.specimen.hallId, form.substrate);
   const coverage = coverageLabel(form.coverage);
   if (zoom < 0.6) {
     return [
@@ -938,7 +942,7 @@ function captionFields(cell: GalleryLayoutCell, zoom: number): readonly { item: 
     { item: '覆盖深度', value: coverage },
   ];
   if (zoom >= 1 && form.portfolio === 'jia') {
-    rows.push({ item: '族内变体', value: String(cell.specimen.seedBucket + 1) });
+    rows.push({ item: '采样种子', value: String(cell.specimen.seedBucket + 1) });
   }
   return rows;
 }
@@ -957,7 +961,7 @@ function hoverRows(specimen: GallerySpecimen): readonly { item: string; value: s
       ? '非法组合'
       : STOP_FAMILY_LABEL[specimen.stopLoss.family] ?? specimen.stopLoss.family;
   return [
-    { item: '基体', value: SUBSTRATE_DATA[form.substrate]?.displayToken ?? form.substrate },
+    { item: '基体', value: galleryHallLabelOf(specimen.hallId, form.substrate) },
     { item: '覆盖深度', value: coverageLabel(form.coverage) },
     { item: '连续性', value: CONTINUITY_LABEL[form.continuity] ?? form.continuity },
     { item: '运动', value: tokenOf(lex.motion) },

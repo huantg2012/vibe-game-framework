@@ -6,6 +6,21 @@
  * Do not re-derive “does this field change pixels?” here.
  */
 
+import {
+  MAMMAL_NEIGHBORHOODS,
+  MAMMAL_NEIGHBORHOOD_LABEL,
+  MAMMAL_REMNANT_ID,
+  mammalHallId,
+  mammalNeighborhoodFromHallId,
+  mammalNeighborhoodOf,
+  type MammalNeighborhoodId,
+} from '@/entities/form-renderers/d/genome/mammal-remnant';
+import {
+  STREET_WRECKAGE_ID,
+  STREET_WRECKAGE_NEIGHBORHOODS,
+  streetNeighborhoodsOf,
+  type StreetWreckageNeighborhoodId,
+} from '@/entities/form-renderers/d/genome/street-wreckage';
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import { mix32 } from '@/generation/seed-fork';
 import {
@@ -33,7 +48,15 @@ import { resolveStopLoss, type StopLossProfile } from '@/systems/contamination-h
 /** Grid seed for 乙 / 丙 / 丁. Named so the sidebar can point at it. */
 export const CANONICAL_SEED = 20260822;
 
-export type GallerySeedBucket = 0 | 1 | 2;
+export const GALLERY_JIA_SEED_COUNT = 8;
+export const GALLERY_JIA_SEED_BUCKETS = [0, 1, 2, 3, 4, 5, 6, 7] as const;
+export type GallerySeedBucket = (typeof GALLERY_JIA_SEED_BUCKETS)[number];
+
+/** 翻列前灯柱 / 栏柱仍在策划表，陈列馆不另开厅。 */
+export const GALLERY_JIA_HIDDEN_SUBSTRATES: ReadonlySet<string> = new Set([
+  'lamp_pillar',
+  'railing_post',
+]);
 
 export interface GallerySpecimen {
   readonly visualKey: string;
@@ -45,6 +68,16 @@ export interface GallerySpecimen {
   readonly enabledScope: SubstrateEnabledScope;
   readonly portfolio: PortfolioId;
   readonly substrate: string;
+  /** 导航厅。哺乳动物是 `mammal_remnant:cat` 等四条，不是策划表一行。 */
+  readonly hallId: string;
+  /** 哺乳动物邻域；其它基体为 null。 */
+  readonly mammalHood: MammalNeighborhoodId | null;
+}
+
+export interface GalleryHallNav {
+  readonly hallId: string;
+  readonly substrate: string;
+  readonly label: string;
 }
 
 export interface GalleryEnumerateOpts {
@@ -106,7 +139,7 @@ const COVERAGES: readonly CoverageId[] = coverageOptions().map((row) => row.id);
 /** Occupying / non-occupying field names for humans. Not internal ids. */
 export const GALLERY_AXES: Record<PortfolioId, GalleryAxes> = {
   jia: {
-    occupying: ['基体', '覆盖深度', '连续性', '感知', '运动', '族内变体', '成句'],
+    occupying: ['基体', '覆盖深度', '连续性', '感知', '运动', '采样种子', '成句'],
     nonOccupying: ['节律', 'moving', 'signal', '接触', '孔谱（厅已定）', '碎片'],
   },
   yi: {
@@ -128,14 +161,151 @@ export function infiltrateResidualMotion(substrate: string): string | null {
 }
 
 export function jiaVariantOf(seed: number, substrate: string): GallerySeedBucket {
-  return (mix32(seed, substrate) % 3) as GallerySeedBucket;
+  return (mix32(seed, substrate) % GALLERY_JIA_SEED_COUNT) as GallerySeedBucket;
 }
 
 export function jiaSeedForVariant(substrate: string, variant: GallerySeedBucket): number {
-  for (let seed = 0; seed < 4096; seed++) {
+  for (let seed = 0; seed < 8192; seed++) {
     if (jiaVariantOf(seed, substrate) === variant) return seed;
   }
   throw new Error(`jiaSeedForVariant: no seed for ${substrate} variant ${variant}`);
+}
+
+function jiaOccupyingLeaves(substrate: string): number {
+  return substrate === MAMMAL_REMNANT_ID
+    ? GALLERY_JIA_SEED_COUNT * MAMMAL_NEIGHBORHOODS.length
+    : GALLERY_JIA_SEED_COUNT;
+}
+
+const MAMMAL_SEED_SEARCH = 65536;
+const STREET_SEED_SEARCH = 65536;
+const mammalSeedByHall = new Map<string, number>();
+const streetSeedByBucket = new Map<GallerySeedBucket, number>();
+
+/** 桶内搜邻域。禁止 `% 4` 切身份。 */
+export function jiaSeedForMammalNeighborhood(
+  variant: GallerySeedBucket,
+  hood: MammalNeighborhoodId,
+): number {
+  const key = `${variant}:${hood}`;
+  const cached = mammalSeedByHall.get(key);
+  if (cached !== undefined) return cached;
+  for (let seed = 0; seed < MAMMAL_SEED_SEARCH; seed++) {
+    if (jiaVariantOf(seed, MAMMAL_REMNANT_ID) !== variant) continue;
+    if (mammalNeighborhoodOf(seed) === hood) {
+      mammalSeedByHall.set(key, seed);
+      return seed;
+    }
+  }
+  throw new Error(`jiaSeedForMammalNeighborhood: no seed for ${hood} variant ${variant}`);
+}
+
+function findStreetSeed(
+  variant: GallerySeedBucket,
+  pred: (seed: number) => boolean,
+): number | null {
+  for (let seed = 0; seed < STREET_SEED_SEARCH; seed++) {
+    if (jiaVariantOf(seed, STREET_WRECKAGE_ID) !== variant) continue;
+    if (pred(seed)) return seed;
+  }
+  return null;
+}
+
+function pickStreetGallerySeeds(): readonly number[] {
+  const picked: number[] = Array.from({ length: GALLERY_JIA_SEED_COUNT }, () => -1);
+  const covered = new Set<StreetWreckageNeighborhoodId>();
+  for (const hood of STREET_WRECKAGE_NEIGHBORHOODS) {
+    if (covered.has(hood)) continue;
+    for (const variant of GALLERY_JIA_SEED_BUCKETS) {
+      if (picked[variant]! >= 0) continue;
+      const seed = findStreetSeed(variant, (s) => streetNeighborhoodsOf(s).has(hood));
+      if (seed === null) continue;
+      picked[variant] = seed;
+      for (const hit of streetNeighborhoodsOf(seed)) covered.add(hit);
+      break;
+    }
+  }
+  for (const variant of GALLERY_JIA_SEED_BUCKETS) {
+    if (picked[variant]! >= 0) continue;
+    picked[variant] = jiaSeedForVariant(STREET_WRECKAGE_ID, variant);
+  }
+  const unionOf = (): Set<StreetWreckageNeighborhoodId> => {
+    const u = new Set<StreetWreckageNeighborhoodId>();
+    for (const seed of picked) {
+      for (const hood of streetNeighborhoodsOf(seed)) u.add(hood);
+    }
+    return u;
+  };
+  for (const hood of STREET_WRECKAGE_NEIGHBORHOODS) {
+    if (unionOf().has(hood)) continue;
+    let replaced = false;
+    for (let i = GALLERY_JIA_SEED_BUCKETS.length - 1; i >= 0 && !replaced; i -= 1) {
+      const variant = GALLERY_JIA_SEED_BUCKETS[i]!;
+      const seed = findStreetSeed(variant, (s) => streetNeighborhoodsOf(s).has(hood));
+      if (seed === null) continue;
+      picked[variant] = seed;
+      replaced = true;
+    }
+    if (!unionOf().has(hood)) {
+      throw new Error(`jiaSeedForStreetWreckage: cannot cover neighborhood ${hood}`);
+    }
+  }
+  return picked;
+}
+
+/** 街具残骸一厅：8 个桶的并集须看见灯柱 / 栏柱 / 标牌杆邻域。 */
+export function jiaSeedForStreetWreckage(variant: GallerySeedBucket): number {
+  if (streetSeedByBucket.size === 0) {
+    const seeds = pickStreetGallerySeeds();
+    for (const bucket of GALLERY_JIA_SEED_BUCKETS) {
+      streetSeedByBucket.set(bucket, seeds[bucket]!);
+    }
+  }
+  const seed = streetSeedByBucket.get(variant);
+  if (seed === undefined) {
+    throw new Error(`jiaSeedForStreetWreckage: missing bucket ${variant}`);
+  }
+  return seed;
+}
+
+export function galleryHallIdOf(substrate: string, seed: number): string {
+  if (substrate !== MAMMAL_REMNANT_ID) return substrate;
+  return mammalHallId(mammalNeighborhoodOf(seed));
+}
+
+export function galleryHallLabelOf(hallId: string, substrate: string): string {
+  const hood = mammalNeighborhoodFromHallId(hallId);
+  if (hood) return MAMMAL_NEIGHBORHOOD_LABEL[hood];
+  return SUBSTRATE_DATA[substrate]?.displayToken ?? substrate;
+}
+
+export function galleryHallsOf(
+  portfolio: PortfolioId,
+  specimens: readonly GallerySpecimen[],
+): readonly GalleryHallNav[] {
+  const halls: GalleryHallNav[] = [];
+  for (const sub of substrateOptions(portfolio)) {
+    if (portfolio === 'jia' && GALLERY_JIA_HIDDEN_SUBSTRATES.has(sub.id)) continue;
+    if (portfolio === 'jia' && sub.id === MAMMAL_REMNANT_ID) {
+      for (const hood of MAMMAL_NEIGHBORHOODS) {
+        const hallId = mammalHallId(hood);
+        const count = specimens.filter((row) => row.portfolio === portfolio && row.hallId === hallId)
+          .length;
+        if (count === 0) continue;
+        halls.push({
+          hallId,
+          substrate: MAMMAL_REMNANT_ID,
+          label: MAMMAL_NEIGHBORHOOD_LABEL[hood],
+        });
+      }
+      continue;
+    }
+    const count = specimens.filter((row) => row.portfolio === portfolio && row.hallId === sub.id)
+      .length;
+    if (count === 0) continue;
+    halls.push({ hallId: sub.id, substrate: sub.id, label: sub.label });
+  }
+  return halls;
 }
 
 function canonicalLexeme(slot: LexemeSlot, portfolio: PortfolioId): string {
@@ -221,11 +391,19 @@ function dingBoxToken(form: ContaminationForm): string {
   return form.continuity === 'field' ? 'box_field' : 'box_compact';
 }
 
-export function visualKeyOf(form: ContaminationForm, seedBucket: number): string {
-  const bucket: GallerySeedBucket = form.portfolio === 'jia' ? ((seedBucket % 3) as GallerySeedBucket) : 0;
+export function visualKeyOf(
+  form: ContaminationForm,
+  seedBucket: number,
+  hallId?: string,
+): string {
+  const bucket: GallerySeedBucket =
+    form.portfolio === 'jia' ? ((seedBucket % GALLERY_JIA_SEED_COUNT) as GallerySeedBucket) : 0;
+  const hall = hallId ?? form.substrate;
   const base = `${form.portfolio}|${form.substrate}|${form.coverage}|${form.continuity}|${form.lexemes.sense}`;
   if (form.portfolio === 'jia') {
-    return `${base}|${form.lexemes.motion}|v${bucket}`;
+    const hood = mammalNeighborhoodFromHallId(hall);
+    const hoodToken = hood ? `|${hood}` : '';
+    return `${base}|${form.lexemes.motion}|v${bucket}${hoodToken}`;
   }
   if (form.portfolio === 'yi') {
     return `${base}|v0`;
@@ -245,9 +423,11 @@ function specimenOf(
   seed: number,
   seedBucket: GallerySeedBucket,
   utteranceIds: readonly string[],
+  hallId?: string,
 ): GallerySpecimen {
+  const resolvedHall = hallId ?? galleryHallIdOf(form.substrate, seed);
   return {
-    visualKey: visualKeyOf(form, seedBucket),
+    visualKey: visualKeyOf(form, seedBucket, resolvedHall),
     form,
     seed,
     seedBucket,
@@ -256,6 +436,8 @@ function specimenOf(
     enabledScope: enabledScopeOf(form.substrate),
     portfolio: form.portfolio,
     substrate: form.substrate,
+    hallId: resolvedHall,
+    mammalHood: mammalNeighborhoodFromHallId(resolvedHall),
   };
 }
 
@@ -290,6 +472,7 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
 
     for (const subRow of substrateOptions(portfolio)) {
       const substrate = subRow.id;
+      if (portfolio === 'jia' && GALLERY_JIA_HIDDEN_SUBSTRATES.has(substrate)) continue;
       for (const coverage of COVERAGES) {
         const continuities = continuitiesFor(portfolio, substrate);
         for (const continuity of continuities) {
@@ -297,7 +480,7 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
           if (portfolio === 'jia') {
             const motions = motionAlphabetOrLock(portfolio, substrate, coverage);
             if (!motions) {
-              residualMotionLock += senses.length * 3;
+              residualMotionLock += senses.length * jiaOccupyingLeaves(substrate);
               continue;
             }
             for (const sense of senses) {
@@ -318,14 +501,24 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
                 if (typeof form === 'string') continue;
                 const stop = resolveStopLoss(form);
                 if (stop === 'illegal') {
-                  illegalStopLoss += 3;
+                  illegalStopLoss += jiaOccupyingLeaves(substrate);
                   if (!includeIllegal) continue;
                 } else if (!inAlphabet) {
                   continue;
                 }
-                for (const variant of [0, 1, 2] as const) {
-                  const seed = jiaSeedForVariant(substrate, variant);
-                  put(specimenOf(form, seed, variant, []));
+                for (const variant of GALLERY_JIA_SEED_BUCKETS) {
+                  if (substrate === MAMMAL_REMNANT_ID) {
+                    for (const hood of MAMMAL_NEIGHBORHOODS) {
+                      const seed = jiaSeedForMammalNeighborhood(variant, hood);
+                      put(specimenOf(form, seed, variant, [], mammalHallId(hood)));
+                    }
+                    continue;
+                  }
+                  const seed =
+                    substrate === STREET_WRECKAGE_ID
+                      ? jiaSeedForStreetWreckage(variant)
+                      : jiaSeedForVariant(substrate, variant);
+                  put(specimenOf(form, seed, variant, [], substrate));
                 }
               }
             }
@@ -374,7 +567,7 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
               } else if (!inAlphabet) {
                 continue;
               }
-              put(specimenOf(form, CANONICAL_SEED, 0, []));
+              put(specimenOf(form, CANONICAL_SEED, 0, [], form.substrate));
             }
           }
         }
@@ -388,6 +581,7 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
       if (!cfg) continue;
       const form = formFromSlots(cfg);
       if (typeof form === 'string') continue;
+      if (form.portfolio === 'jia' && GALLERY_JIA_HIDDEN_SUBSTRATES.has(form.substrate)) continue;
       if (form.portfolio !== 'jia' && form.lexemes.contact === 'contact_melee_three') {
         contactMeleeThree += 1;
         continue;
@@ -398,8 +592,19 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
         if (!includeIllegal) continue;
       }
       const seedBucket: GallerySeedBucket = form.portfolio === 'jia' ? jiaVariantOf(CANONICAL_SEED, form.substrate) : 0;
-      const seed = form.portfolio === 'jia' ? jiaSeedForVariant(form.substrate, seedBucket) : CANONICAL_SEED;
-      const key = visualKeyOf(form, seedBucket);
+      const seed =
+        form.portfolio === 'jia' && form.substrate === MAMMAL_REMNANT_ID
+          ? jiaSeedForMammalNeighborhood(
+              seedBucket,
+              mammalNeighborhoodOf(jiaSeedForVariant(form.substrate, seedBucket)),
+            )
+          : form.portfolio === 'jia' && form.substrate === STREET_WRECKAGE_ID
+            ? jiaSeedForStreetWreckage(seedBucket)
+            : form.portfolio === 'jia'
+              ? jiaSeedForVariant(form.substrate, seedBucket)
+              : CANONICAL_SEED;
+      const hallId = galleryHallIdOf(form.substrate, seed);
+      const key = visualKeyOf(form, seedBucket, hallId);
       const prev = byKey.get(key);
       if (prev) {
         byKey.set(key, {
@@ -410,7 +615,7 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
         continue;
       }
       const withMark: ContaminationForm = { ...form, utteranceId: uRow.id };
-      put(specimenOf(withMark, seed, seedBucket, [uRow.id]));
+      put(specimenOf(withMark, seed, seedBucket, [uRow.id], hallId));
       utterancesNewCell += 1;
     }
   }
@@ -421,6 +626,8 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
     if (pd !== 0) return pd;
     const sd = a.substrate.localeCompare(b.substrate);
     if (sd !== 0) return sd;
+    const hd = a.hallId.localeCompare(b.hallId);
+    if (hd !== 0) return hd;
     return a.visualKey.localeCompare(b.visualKey);
   });
 
@@ -448,7 +655,7 @@ export function galleryDedupeCopy(portfolio: PortfolioId): GalleryDedupeCopy {
     { item: '非甲接触', value: '禁止三刀近战' },
   ];
   if (portfolio === 'jia') {
-    rules.push({ item: '族内变体', value: '3' });
+    rules.push({ item: '采样种子', value: String(GALLERY_JIA_SEED_COUNT) });
   } else {
     rules.push({ item: '规范种子', value: String(CANONICAL_SEED) });
   }

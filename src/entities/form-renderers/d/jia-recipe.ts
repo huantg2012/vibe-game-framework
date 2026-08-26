@@ -21,7 +21,8 @@ export const JIA_FAMILIES = [
 
 export type JiaFamily = (typeof JIA_FAMILIES)[number];
 export type JiaVariant = 0 | 1 | 2;
-export type ClusterMode = 'patrol' | 'search' | 'chase' | 'strike';
+export type { ClusterMode } from '@/entities/form-renderers/d/jia-cluster-mode';
+export { clusterModeOf } from '@/entities/form-renderers/d/jia-cluster-mode';
 
 export const CORE_TEALS: readonly Rgb[] = [
   [0x1a, 0xad, 0x96],
@@ -197,11 +198,4 @@ export function jiaGaitFps(rhythm: string, moving: boolean): number {
 /** Reuse key stem: occupancy × substrate × coverage × seed (+ fragment / variant / facing in the frame key). */
 export function jiaRecipeTag(recipe: JiaRecipe): string {
   return `d_floor_${(recipe.seed >>> 0).toString(16)}_${recipe.fragmentTypeId}_${recipe.family}_v${recipe.variant}_${recipe.coverage}_${recipe.continuity}_${recipe.sense}_${recipe.motion}`;
-}
-
-export function clusterModeOf(signal: 'idle' | 'strike' | 'inflated' | 'awake'): ClusterMode {
-  if (signal === 'strike') return 'strike';
-  if (signal === 'inflated') return 'search';
-  if (signal === 'awake') return 'chase';
-  return 'patrol';
 }

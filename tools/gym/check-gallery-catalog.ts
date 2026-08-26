@@ -30,15 +30,34 @@ import { portfolioOptions, substrateOptions } from '../../src/gym/gym-lexicon-fo
 import {
   CANONICAL_SEED,
   GALLERY_AXES,
+  GALLERY_JIA_HIDDEN_SUBSTRATES,
+  GALLERY_JIA_SEED_BUCKETS,
+  GALLERY_JIA_SEED_COUNT,
   collectGalleryCatalog,
   enumerateGallerySpecimens,
   galleryDedupeCopy,
+  galleryHallsOf,
   infiltrateResidualMotion,
+  jiaSeedForMammalNeighborhood,
+  jiaSeedForStreetWreckage,
   jiaSeedForVariant,
   jiaVariantOf,
   visualKeyOf,
   type GallerySpecimen,
 } from '../../src/gym/lexicon-gallery-catalog.ts';
+import {
+  MAMMAL_NEIGHBORHOODS,
+  MAMMAL_NEIGHBORHOOD_LABEL,
+  MAMMAL_REMNANT_ID,
+  mammalHallId,
+  mammalNeighborhoodFromHallId,
+  mammalNeighborhoodOf,
+} from '../../src/entities/form-renderers/d/genome/mammal-remnant.ts';
+import {
+  STREET_WRECKAGE_ID,
+  STREET_WRECKAGE_NEIGHBORHOODS,
+  streetNeighborhoodsOf,
+} from '../../src/entities/form-renderers/d/genome/street-wreckage.ts';
 import { resolveStopLoss } from '../../src/systems/contamination-host-live.ts';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -69,6 +88,13 @@ assert(!/from ['"]phaser['"]/.test(src), 'catalog must not import phaser');
 assert(!/ContaminationHostSystem/.test(src), 'catalog must not name ContaminationHostSystem');
 assert(!/\bfrom ['"][^'"]*\/enemy['"]/.test(src), 'catalog must not import Enemy');
 assert(!/\.attach\(/.test(src), 'catalog must not call attach');
+assert(src.includes('mammalNeighborhoodOf'), 'catalog must use production mammal neighborhood axes');
+assert(src.includes('jiaSeedForMammalNeighborhood'), 'catalog must search mammal neighborhood inside the seed bucket');
+assert(src.includes('jiaSeedForStreetWreckage'), 'catalog must pick street wreckage seeds by neighborhood union');
+assert(src.includes('采样种子'), 'catalog occupying copy must name 采样种子');
+assert(!src.includes('族内变体'), 'catalog must not keep 族内变体 occupying copy');
+assert(!/jiaVariantOf\([^)]*\)\s*%\s*4/.test(src), 'catalog must not cut mammal identity with % 4');
+assert(!/mix32\([^)]*substrate[^)]*\)\s*%\s*3/.test(src), 'catalog jiaVariantOf must not stay on % 3');
 
 const listed = enumerateGallerySpecimens();
 const collected = collectGalleryCatalog();
@@ -85,9 +111,29 @@ for (const spec of listed) {
   byPortfolio[spec.portfolio] = (byPortfolio[spec.portfolio] ?? 0) + 1;
   if (keys.has(spec.visualKey)) keyCollision = true;
   keys.add(spec.visualKey);
-  assert(spec.visualKey === visualKeyOf(spec.form, spec.seedBucket), `visualKeyOf matches stored key ${spec.visualKey}`);
+  assert(
+    spec.visualKey === visualKeyOf(spec.form, spec.seedBucket, spec.hallId),
+    `visualKeyOf matches stored key ${spec.visualKey}`,
+  );
   assert(spec.portfolio === spec.form.portfolio, `portfolio field ${spec.visualKey}`);
   assert(spec.substrate === spec.form.substrate, `substrate field ${spec.visualKey}`);
+  assert(typeof spec.hallId === 'string' && spec.hallId.length > 0, `hallId field ${spec.visualKey}`);
+  if (spec.substrate === MAMMAL_REMNANT_ID) {
+    const hood = mammalNeighborhoodFromHallId(spec.hallId);
+    assert(hood !== null, `mammal hallId ${spec.hallId} must carry a neighborhood`);
+    assert(
+      spec.visualKey.includes(`|${hood}`),
+      `mammal visualKey must include neighborhood ${hood} (${spec.visualKey})`,
+    );
+    assert(
+      mammalNeighborhoodOf(spec.seed) === hood,
+      `mammal seed ${spec.seed} hall ${spec.hallId} must match layout neighborhood`,
+    );
+    assert(spec.mammalHood === hood, `mammalHood field ${spec.visualKey}`);
+  } else {
+    assert(spec.hallId === spec.substrate, `non-mammal hallId equals substrate ${spec.visualKey}`);
+    assert(spec.mammalHood === null, `non-mammal mammalHood is null ${spec.visualKey}`);
+  }
     assert(sameStopLoss(spec.stopLoss, resolveStopLoss(spec.form)), `stopLoss field ${spec.visualKey}`);
   assert(spec.stopLoss !== 'illegal', `default list excludes illegal stop-loss ${spec.visualKey}`);
   if (spec.portfolio !== 'jia') {
@@ -95,7 +141,8 @@ for (const spec of listed) {
     assert(spec.seedBucket === 0, `non-jia seedBucket is 0 ${spec.visualKey}`);
     assert(spec.seed === CANONICAL_SEED, `non-jia uses CANONICAL_SEED ${spec.visualKey}`);
   } else {
-    assert(spec.seedBucket === 0 || spec.seedBucket === 1 || spec.seedBucket === 2, `jia seedBucket ${spec.visualKey}`);
+    assert(spec.seedBucket >= 0 && spec.seedBucket < GALLERY_JIA_SEED_COUNT, `jia seedBucket ${spec.visualKey}`);
+    assert(GALLERY_JIA_SEED_BUCKETS.includes(spec.seedBucket), `jia seedBucket 0-7 ${spec.visualKey}`);
     assert(jiaVariantOf(spec.seed, spec.substrate) === spec.seedBucket, `jia seed matches bucket ${spec.visualKey}`);
     if (spec.form.coverage === 'infiltrate') {
       const lock = infiltrateResidualMotion(spec.substrate);
@@ -116,9 +163,130 @@ const bing = byPortfolio.bing ?? 0;
 const ding = byPortfolio.ding ?? 0;
 const total = listed.length;
 
-assert(inRange(total, 400, 800), `total ${total} in [400, 800]`);
-assert(total === 765, `default catalog size must stay 765 (got ${total})`);
-assert(inRange(jia, 400, 650), `jia ${jia} in [400, 650]`);
+const jiaHalls = galleryHallsOf('jia', listed);
+const jiaHallIds = jiaHalls.map((row) => row.hallId);
+const jiaHallLabels = jiaHalls.map((row) => row.label);
+const mammalHalls = MAMMAL_NEIGHBORHOODS.map((hood) => ({
+  hood,
+  hallId: mammalHallId(hood),
+  label: MAMMAL_NEIGHBORHOOD_LABEL[hood],
+}));
+assert(
+  mammalHalls.every((row) => jiaHallIds.includes(row.hallId)),
+  `jia nav must list four mammal neighborhood halls (${jiaHallIds.join(',')})`,
+);
+assert(
+  mammalHalls.every((row) => jiaHallLabels.includes(row.label)),
+  `jia nav labels must be 猫科 / 鹿科 / 爬行 / 类人 (${jiaHallLabels.join(',')})`,
+);
+assert(
+  !jiaHallIds.includes(MAMMAL_REMNANT_ID),
+  'default catalog must not keep a standalone 哺乳动物 hall button',
+);
+assert(
+  !jiaHallLabels.includes('哺乳动物'),
+  'default catalog nav must not show a 哺乳动物 hall (replaced by four neighborhoods)',
+);
+assert(
+  !jiaHallIds.includes('lamp_pillar') && !jiaHallIds.includes('railing_post'),
+  'default catalog must not keep lamp_pillar / railing_post halls',
+);
+assert(
+  jiaHalls.length === substrateOptions('jia').length - GALLERY_JIA_HIDDEN_SUBSTRATES.size + 3,
+  `jia halls ${jiaHalls.length} want substrateOptions - hidden + 3 (mammal split into four)`,
+);
+assert(jiaHalls.length === 10, `jia nav is about 10 buttons (got ${jiaHalls.length})`);
+assert(
+  jiaHalls.filter((row) => row.hallId === 'street_wreckage').length === 1,
+  'street_wreckage stays one hall',
+);
+{
+  const expectedOrder = mammalHalls.map((row) => row.hallId);
+  const listedOrder = jiaHallIds.filter((id) => id.startsWith(`${MAMMAL_REMNANT_ID}:`));
+  assert(
+    listedOrder.join('|') === expectedOrder.join('|'),
+    `mammal hall order ${listedOrder.join(',')} want ${expectedOrder.join(',')}`,
+  );
+}
+
+for (const row of mammalHalls) {
+  const specs = listed.filter((spec) => spec.hallId === row.hallId);
+  assert(specs.length > 0, `mammal hall ${row.hallId} has specimens`);
+  for (const spec of specs) {
+    assert(spec.form.substrate === MAMMAL_REMNANT_ID, `${row.hallId} substrate stays mammal_remnant`);
+    assert(
+      mammalNeighborhoodOf(spec.seed) === row.hood,
+      `${row.hallId} seed ${spec.seed} must be ${row.hood}`,
+    );
+    assert(spec.mammalHood === row.hood, `${row.hallId} mammalHood field`);
+    assert(
+      jiaVariantOf(spec.seed, MAMMAL_REMNANT_ID) === spec.seedBucket,
+      `${row.hallId} seed ${spec.seed} must stay in bucket ${spec.seedBucket}`,
+    );
+    if (row.hood === 'humanoid') {
+      assert(
+        mammalNeighborhoodOf(spec.seed) === 'humanoid',
+        `humanoid hall seed ${spec.seed} must classify as 类人`,
+      );
+    }
+  }
+  const mammalBuckets = new Set(specs.map((spec) => spec.seedBucket));
+  const mammalSeeds = new Set(specs.map((spec) => spec.seed));
+  assert(
+    mammalBuckets.size === GALLERY_JIA_SEED_COUNT,
+    `${row.hallId} seedBuckets ${mammalBuckets.size} want ${GALLERY_JIA_SEED_COUNT}`,
+  );
+  assert(
+    mammalSeeds.size === GALLERY_JIA_SEED_COUNT,
+    `${row.hallId} unique seeds ${mammalSeeds.size} want ${GALLERY_JIA_SEED_COUNT} (not the same individual eight times)`,
+  );
+  for (const variant of GALLERY_JIA_SEED_BUCKETS) {
+    const seed = jiaSeedForMammalNeighborhood(variant, row.hood);
+    assert(jiaVariantOf(seed, MAMMAL_REMNANT_ID) === variant, `mammal ${row.hood} v${variant} bucket`);
+    assert(mammalNeighborhoodOf(seed) === row.hood, `mammal ${row.hood} v${variant} neighborhood`);
+  }
+}
+
+for (const hall of jiaHalls) {
+  const specs = listed.filter((spec) => spec.hallId === hall.hallId);
+  const buckets = new Set(specs.map((spec) => spec.seedBucket));
+  assert(
+    buckets.size === GALLERY_JIA_SEED_COUNT,
+    `jia hall ${hall.hallId} seedBuckets ${[...buckets].join(',')} want ${GALLERY_JIA_SEED_COUNT}`,
+  );
+  for (const variant of GALLERY_JIA_SEED_BUCKETS) {
+    assert(buckets.has(variant), `jia hall ${hall.hallId} missing seedBucket ${variant}`);
+  }
+}
+
+{
+  const streetSpecs = listed.filter((spec) => spec.hallId === STREET_WRECKAGE_ID);
+  const byBucket = new Map<number, number>();
+  for (const spec of streetSpecs) {
+    const prev = byBucket.get(spec.seedBucket);
+    if (prev !== undefined) {
+      assert(prev === spec.seed, `street wreckage bucket ${spec.seedBucket} mixed seeds ${prev} vs ${spec.seed}`);
+    }
+    byBucket.set(spec.seedBucket, spec.seed);
+  }
+  assert(byBucket.size === GALLERY_JIA_SEED_COUNT, `street wreckage ${byBucket.size} buckets want 8`);
+  const union = new Set<string>();
+  for (const variant of GALLERY_JIA_SEED_BUCKETS) {
+    const seed = jiaSeedForStreetWreckage(variant);
+    assert(byBucket.get(variant) === seed, `street wreckage bucket ${variant} catalog seed`);
+    assert(jiaVariantOf(seed, STREET_WRECKAGE_ID) === variant, `street wreckage v${variant} bucket`);
+    for (const hood of streetNeighborhoodsOf(seed)) union.add(hood);
+  }
+  for (const hood of STREET_WRECKAGE_NEIGHBORHOODS) {
+    assert(union.has(hood), `street wreckage 8 seeds must include ${hood}`);
+  }
+  assert(union.size === STREET_WRECKAGE_NEIGHBORHOODS.length, 'street wreckage union is lamp/rail/sign');
+}
+
+assert(inRange(total, 400, 2800), `total ${total} in [400, 2800]`);
+assert(total === 1866, `default catalog size must stay 1866 (got ${total})`);
+assert(inRange(jia, 400, 2400), `jia ${jia} in [400, 2400]`);
+assert(jia === 1632, `jia catalog size must stay 1632 (got ${jia})`);
 assert(inRange(yi, 15, 80), `yi ${yi} in [15, 80]`);
 assert(inRange(bing, 80, 350), `bing ${bing} in [80, 350]`);
 assert(inRange(ding, 20, 120), `ding ${ding} in [20, 120]`);
@@ -156,12 +324,18 @@ for (const port of portfolioOptions()) {
   assert(copy.canonicalSeed === CANONICAL_SEED, `${port.id} canonical seed`);
   const axes = GALLERY_AXES[port.id];
   assert(axes.occupying.includes('基体'), `${port.id} occupying names include 基体`);
+  if (port.id === 'jia') {
+    assert(axes.occupying.includes('采样种子'), 'jia occupying names include 采样种子');
+    assert(!axes.occupying.includes('族内变体'), 'jia occupying names must not keep 族内变体');
+    assert(copy.rules.some((row) => row.item === '采样种子' && row.value === '8'), 'jia dedupe rule is 采样种子 8');
+    assert(!copy.rules.some((row) => row.item === '族内变体'), 'jia dedupe must not keep 族内变体');
+  }
 }
 
 for (const sub of substrateOptions('jia')) {
-  for (const variant of [0, 1, 2] as const) {
+  for (const variant of GALLERY_JIA_SEED_BUCKETS) {
     const seed = jiaSeedForVariant(sub.id, variant);
-    assert((mix32(seed, sub.id) % 3) === variant, `jiaSeedForVariant ${sub.id} ${variant}`);
+    assert((mix32(seed, sub.id) % GALLERY_JIA_SEED_COUNT) === variant, `jiaSeedForVariant ${sub.id} ${variant}`);
   }
 }
 
@@ -225,6 +399,13 @@ assert(
 const SCENE_SRC = readFileSync(resolve(ROOT, 'src/gym/gym-lexicon-gallery-scene.ts'), 'utf8');
 assert(SCENE_SRC.includes('selectGalleryKeep'), 'gallery scene must call selectGalleryKeep');
 assert(SCENE_SRC.includes('layoutGalleryHall'), 'gallery scene must call layoutGalleryHall');
+assert(SCENE_SRC.includes('galleryHallsOf'), 'gallery scene must list halls via galleryHallsOf');
+assert(SCENE_SRC.includes('data-hall-id'), 'gallery nav buttons must carry hallId');
+assert(SCENE_SRC.includes('row.hallId === hallId'), 'enterHall must filter specimens by hallId');
+assert(
+  !SCENE_SRC.includes('row.substrate === substrate'),
+  'enterHall must not merge mammal halls by substrate',
+);
 assert(!SCENE_SRC.includes('function layoutHall'), 'gallery scene must not keep a second layoutHall');
 assert(!SCENE_SRC.includes('ATTACH_CAP'), 'gallery scene must not keep a second ATTACH_CAP');
 assert(!/slice\(\s*0\s*,/.test(SCENE_SRC), 'gallery scene must not slice keep by cap');
@@ -234,6 +415,8 @@ assert(
 );
 assert(SCENE_SRC.includes('GALLERY_ZOOM_MIN'), 'gallery scene must apply per-hall zoomMin');
 assert(SCENE_SRC.includes('setZoomMin'), 'gallery scene must switch zoomMin on hall change');
+assert(SCENE_SRC.includes("'采样种子'"), 'gallery labels must name 采样种子');
+assert(!SCENE_SRC.includes('族内变体'), 'gallery labels must not keep 族内变体');
 
 function shiftedClampedView(
   view: GalleryRect,
@@ -315,8 +498,8 @@ function assertKeepCoversView(
 
 function sweepHalls(specimens: readonly GallerySpecimen[], tag: string): void {
   for (const port of portfolioOptions()) {
-    for (const sub of substrateOptions(port.id)) {
-      const rows = specimens.filter((row) => row.portfolio === port.id && row.substrate === sub.id);
+    for (const hall of galleryHallsOf(port.id, specimens)) {
+      const rows = specimens.filter((row) => row.portfolio === port.id && row.hallId === hall.hallId);
       if (rows.length === 0) continue;
       const layout = layoutGalleryHall(rows, port.id);
       const zooms = [GALLERY_START_ZOOM[port.id], GALLERY_ZOOM_MIN[port.id]];
@@ -326,7 +509,7 @@ function sweepHalls(specimens: readonly GallerySpecimen[], tag: string): void {
         for (let i = 0; i < views.length; i += 1) {
           const view = views[i];
           if (!view) continue;
-          const label = `${tag} ${port.id}/${sub.id} z=${zoom} view=${i}`;
+          const label = `${tag} ${port.id}/${hall.hallId} z=${zoom} view=${i}`;
           assertKeepCoversView(`${label} emptyPrev`, layout, view, port.id, new Set());
           const chained = assertKeepCoversView(label, layout, view, port.id, prev);
           prev = new Set(chained.keepKeys);
@@ -339,13 +522,13 @@ function sweepHalls(specimens: readonly GallerySpecimen[], tag: string): void {
 sweepHalls(listed, 'default');
 sweepHalls(withIllegal.specimens, 'illegal');
 
-let biggestJia: { substrate: string; layout: GalleryHallLayout } | null = null;
-for (const sub of substrateOptions('jia')) {
-  const rows = listed.filter((row) => row.portfolio === 'jia' && row.substrate === sub.id);
+let biggestJia: { hallId: string; layout: GalleryHallLayout } | null = null;
+for (const hall of galleryHallsOf('jia', listed)) {
+  const rows = listed.filter((row) => row.portfolio === 'jia' && row.hallId === hall.hallId);
   if (rows.length === 0) continue;
   const layout = layoutGalleryHall(rows, 'jia');
   if (!biggestJia || layout.cells.length > biggestJia.layout.cells.length) {
-    biggestJia = { substrate: sub.id, layout };
+    biggestJia = { hallId: hall.hallId, layout };
   }
 }
 assert(biggestJia !== null && biggestJia.layout.cells.length > 0, 'jia has a hall to reproduce the scroll bug');
@@ -363,14 +546,14 @@ if (biggestJia) {
       `jia repro view must move right (before x=${beforeView.x} after x=${afterView.x})`,
     );
     const before = assertKeepCoversView(
-      `jia-repro ${biggestJia.substrate} before`,
+      `jia-repro ${biggestJia.hallId} before`,
       layout,
       beforeView,
       'jia',
       new Set(),
     );
     const after = assertKeepCoversView(
-      `jia-repro ${biggestJia.substrate} after`,
+      `jia-repro ${biggestJia.hallId} after`,
       layout,
       afterView,
       'jia',
@@ -398,7 +581,7 @@ if (biggestJia) {
     }
     console.log(
       [
-        `jia-repro hall=${biggestJia.substrate} cells=${layout.cells.length} zoom=1.25`,
+        `jia-repro hall=${biggestJia.hallId} cells=${layout.cells.length} zoom=1.25`,
         `  before scrollX=${beforeView.x.toFixed(1)} intersecting=${before.intersectingKeys.length} keep=${before.keepKeys.length}`,
         `  after  scrollX=${afterView.x.toFixed(1)} intersecting=${after.intersectingKeys.length} keep=${after.keepKeys.length}`,
       ].join('\n'),
