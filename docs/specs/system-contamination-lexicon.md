@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: code（I5-S：基体表新四行 gym；出击 12 行在 I5-J 翻列前仍是出击真相）
-last-modified-date: 2026-08-24
+last-modified-by: design agent（CH-HUD-1：向混乱值发送补条上强调）
+last-modified-date: 2026-08-26
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -34,7 +34,7 @@ note: |
   docs/specs/ui-encounter-narration.md 是识别表面，不是独立玩法。
   外观 HOW：docs/art/contamination-forms.md（I3-C 生产规格；迭代 5 甲待改写；配色按 DEC-088 协同但不提亮；地面 L1/L2 迭代 6）。出击逻辑已接（体验未验证）。
   迭代 2 练习场探索 COMPLETE。迭代 3（DEC-084）合同 docs/tasks/iteration-3.md。
-  迭代 5（DEC-087 / DEC-088）合同 docs/tasks/iteration-5.md：甲外形基因谱；街具残骸 + 生物 gym 先行；I5-J 前出击默认甲绘制不变。
+  迭代 5（DEC-087 / DEC-088 / DEC-098）合同 docs/tasks/iteration-5.md：甲外形基因谱；街具残骸 + 生物 gym 先行；I5-J 前出击默认甲绘制不变。I5-N：基因谱甲必须消费朝向与信号相。
   迭代 6（DEC-088）合同 docs/tasks/iteration-6.md：碎片配色 / 世界美术。
 ---
 
@@ -639,7 +639,7 @@ CONTAMINATION: {
 - 从地表接收：崩坏簇活层相位（孔谱丙踩踏胀满相）。
 - 向 AI 发送：孔谱决定哪些五态转换可达、感知刺激钉在哪、能否 chase。甲的 `EnemySpawnData` 出击必带 `form`；`type` 在过渡期仍用 infiltrator/rewriter 表示视锥/听噪，由该 form 的感知词素派生。
 - 向战斗发送：接触通道（扇形 / 邻格 / 混乱价）与止损剖面（能不能扣核、几个核）。通道以本文对照表为准；止损以查表为准。HP 事件仍归战斗。乙丙丁核 HP = 50。出击与练习场同一套读取（`liveMotion === true`）。地图课不传该开关。
-- 向混乱值发送：踩踏与场内加速走既有 `addChaos`，source 建议 `'paint_step'` / `'volume_field'`，不另开隐蔽条。
+- 向混乱值发送：踩踏与场内加速走既有 `addChaos`，source 建议 `'paint_step'` / `'volume_field'`，不另开隐蔽条。入账后走既有混乱条（填充长度随新 `value` 立刻更新 + 本批条上一次短促强调，见混乱 spec 规则 32a），不另开来源提示、不按 `source` 分色分词。
 - 向遭遇识别旁白发送：`encounter:identified`。旁白消费此事件，不回写 AI。表面合同见 `ui-encounter-narration`。
 - 向方案 D 渲染器发送：见「出击视觉」消费字段。不向 gym 路径发送。
 
@@ -655,6 +655,8 @@ CONTAMINATION: {
 人选已拍板方案 D，并批准接入裂隙。合同：`docs/tasks/iteration-3.md`。像素配方住 `docs/art/contamination-forms.md`（I3-C）与甲的 `docs/art/actor-pixels.md`；本文只锁**消费哪些字段**，不复制剪影 / 簇数 / 色值。
 
 生产渲染器住 `src/entities/form-renderers/`（I3-B）。**禁止** `RiftScene` import `src/gym/**`。A/B/C 冻结为句法课对照，不是出击标准。`infiltrator-sprite.ts` / `rewriter-sprite.ts` 是默认敌人课 / placeholder 回退，不是裂隙甲的生产路径。
+
+**双路径（I5-B / I5-D / I5-E / I5-F / I5-N / DEC-ARCH-013）：** 句法课与陈列馆甲走基因谱模块（`d/genome/`：节点、共享构件、违规算子、`weld`、按覆盖档选画布）。`street_wreckage` 走街具残骸语法骨架；`doorframe` 走门框语法骨架（中空开口，不是单杆+座）；其它占地基体仍走夹具。算子作用在骨架上（预算渗透 1 / 改写 3 / 覆盖 5；放射只在覆盖档），然后 `weld`，然后才刷漆。**陈列馆检视会切四朝向与四个信号相。基因谱甲消费 `FormVisualPose.facing4` / `signal`（I5-N code 已交 / DEC-098）。** `attachJiaGenomeD` / `JiaGenomeVisual` 走共用 `bakeJiaGenome`（骨架 → 算子 → weld → 朝向/信号相）；浏览默认朝下 + idle，检视按需烤。画面等人检视，不要写成画面 PASS。旧生产甲 `d/jia.ts` 仍消费。I5-N 未交齐人看之前不要开 I5-G。出击默认甲仍走旧 `jia-*`；I5-J 前不升生产 ramp、不改 `RiftScene`。墙皮门框残余仍是乙，不走本条占地语法。
 
 废止过期 FATAL：「禁止 RiftScene import 候选渲染器」「人选后再接线」「出击画面零改动」。新红线见迭代 3 任务书（每批可回退、连通、听轴恰好 1、战斗 V3、丁 depth < 50、配对不变量、地图课不得打开 `liveMotion`）。
 
@@ -679,6 +681,8 @@ CONTAMINATION: {
 | 乙 `pin.attach` | 方案 D | `face` / 法线 / `seamX` / `seamY`。核钉缝坐标，禁止墙格几何中心 |
 | 丁盒（`pin` volume 世界像素） | 方案 D + 活宿主 | 云跟当前盒；混乱/视野跟盒走 |
 | `FormVisualPose.visibility` | 方案 D | 读 `VisibilitySystem.getVisibilityAt`。可见区内核/缝/簇/云须仍能读成「那里有一口」。亮度不在本文终审 |
+| `FormVisualPose.facing4` | 方案 D 甲 | 四向直立换贴图，`GameObject.rotation === 0`。**现行（出击旧皮）：** `d/jia.ts` 已消费。**基因谱甲（I5-N code 已交）：** `JiaGenomeVisual` 消费；浏览态只烤当前朝向（DEC-086），检视才按需烤。画面等人检视。 |
+| `FormVisualPose.signal` | 方案 D 甲 | `idle` / `awake` / `strike` / `inflated`。**现行（出击旧皮）：** `clusterModeOf`。**基因谱甲（I5-N code 已交）：** 已消费；`idle` 与 `strike` 至少要分；禁止四键同一套呼吸且剪影全同。固着基体不巡路滑步。画面等人检视。 |
 
 丁视觉 depth 40，必须 `< DEPTH.visionMask`（约 50）。方案 D `ready === true` 时：甲藏默认身体（与句法课候选 ready 同一语义）；宿主 `setSkipPaint`。Arcade 碰撞与 AI 保留。出击不要用练习场那颗调试核。
 
