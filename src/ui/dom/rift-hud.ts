@@ -43,6 +43,10 @@ const LABEL_MIN_WIDTH = 56;
 
 const CHAOS_COLOR = '#1aad96';
 const CHAOS_OVERFLOW_COLOR = '#2ae6c8';
+const CHAOS_GAIN_PEAK = '#2ae6c8';
+const CHAOS_OVERFLOW_GAIN_PEAK = '#3cffd4';
+const CHAOS_GAIN_HOLD_MS = 80;
+const CHAOS_GAIN_TOTAL_MS = 180;
 const HEALTH_COLOR = '#8a8f96';
 const HEALTH_LOW_COLOR = '#cc3333';
 const HEALTH_LOW_THRESHOLD = 0.25;
@@ -88,6 +92,23 @@ function chaosTierLabel(value: number): string {
   if (value < C.THRESHOLD_2) return '渗透';
   if (value < C.THRESHOLD_3) return '侵蚀';
   return '临界';
+}
+
+/** Mix two locked teal hexes for the 80–180ms ease-out. No white. */
+function lerpChaosHex(from: string, to: string, t: number): string {
+  const u = t < 0 ? 0 : t > 1 ? 1 : t;
+  const a = parseInt(from.slice(1), 16);
+  const b = parseInt(to.slice(1), 16);
+  const ar = (a >> 16) & 255;
+  const ag = (a >> 8) & 255;
+  const ab = a & 255;
+  const br = (b >> 16) & 255;
+  const bg = (b >> 8) & 255;
+  const bb = b & 255;
+  const r = Math.round(ar + (br - ar) * u);
+  const g = Math.round(ag + (bg - ag) * u);
+  const bl = Math.round(ab + (bb - ab) * u);
+  return `#${((1 << 24) + (r << 16) + (g << 8) + bl).toString(16).slice(1)}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -150,6 +171,8 @@ export class RiftHud {
   // State
   private chaosValue = 0;
   private chaosOverflowing = false;
+  private chaosGainGen = 0;
+  private chaosGainRaf = 0;
   private healthCurrent = 0;
   private healthMax = 1;
   private healthFrac = 1;
@@ -157,9 +180,10 @@ export class RiftHud {
   private activeEffects: ActiveEffectInfo[] = [];
 
   // Event references for cleanup
-  private readonly onChaosChanged = (payload: { value: number; rate: number }): void => {
+  private readonly onChaosChanged = (payload: { value: number; delta: number; rate: number }): void => {
     this.chaosValue = payload.value;
     this.updateChaosBar();
+    if (payload.delta > 0) this.playChaosGainAccent();
   };
   private readonly onHealthChanged = (payload: { current: number; max: number }): void => {
     this.healthCurrent = payload.current;
@@ -183,6 +207,7 @@ export class RiftHud {
   };
 
   create(config: HUDConfig): void {
+    this.stopChaosGainAccent(false);
     ensurePulseKeyframes();
     this.config = config;
     this.active = true;
@@ -245,10 +270,12 @@ export class RiftHud {
     this.renderEffectsText();
     this.extractPromptVisible = false;
     this.extractPromptEl.style.display = 'none';
+    this.stopChaosGainAccent(true);
   }
 
   destroy(): void {
     this.active = false;
+    this.stopChaosGainAccent(false);
     eventBus.off(GameEvent.CHAOS_CHANGED, this.onChaosChanged);
     eventBus.off(GameEvent.PLAYER_HEALTH_CHANGED, this.onHealthChanged);
     eventBus.off(GameEvent.KINDLING_COLLECTED, this.onKindlingCollected);
@@ -427,6 +454,61 @@ export class RiftHud {
         ? `rift-overflow-jump ${GAME_CONSTANTS.VISIBILITY.FLICKER_JUMP_PERIOD_MS}ms ease-in-out infinite`
         : 'none';
       if (!overflowing) this.overflowJump.style.opacity = '0';
+    }
+  }
+
+  /**
+   * Discrete positive-delta readout (chaos spec 32a / CH-HUD-2): only the bar-head
+   * fill background, 180ms, no rift-hud-pulse, no animation restart on overflow.
+   * Re-entry interrupts and restarts; does not stack a second brightness layer.
+   */
+  private playChaosGainAccent(): void {
+    this.chaosGainGen += 1;
+    const gen = this.chaosGainGen;
+    if (this.chaosGainRaf !== 0) {
+      cancelAnimationFrame(this.chaosGainRaf);
+      this.chaosGainRaf = 0;
+    }
+    this.chaosFill.style.background = CHAOS_COLOR;
+    this.chaosOverflowFill.style.background = CHAOS_OVERFLOW_COLOR;
+
+    const overflowing = this.chaosValue > GAME_CONSTANTS.CHAOS.MAX_VALUE;
+    const fill = overflowing ? this.chaosOverflowFill : this.chaosFill;
+    const rest = overflowing ? CHAOS_OVERFLOW_COLOR : CHAOS_COLOR;
+    const peak = overflowing ? CHAOS_OVERFLOW_GAIN_PEAK : CHAOS_GAIN_PEAK;
+    fill.style.background = peak;
+
+    const startedAt = performance.now();
+    const tick = (now: number): void => {
+      if (gen !== this.chaosGainGen || !this.active) return;
+      const elapsed = now - startedAt;
+      if (elapsed >= CHAOS_GAIN_TOTAL_MS) {
+        fill.style.background = rest;
+        this.chaosGainRaf = 0;
+        return;
+      }
+      if (elapsed < CHAOS_GAIN_HOLD_MS) {
+        fill.style.background = peak;
+        this.chaosGainRaf = requestAnimationFrame(tick);
+        return;
+      }
+      const t = (elapsed - CHAOS_GAIN_HOLD_MS) / (CHAOS_GAIN_TOTAL_MS - CHAOS_GAIN_HOLD_MS);
+      const eased = 1 - (1 - t) ** 3;
+      fill.style.background = lerpChaosHex(peak, rest, eased);
+      this.chaosGainRaf = requestAnimationFrame(tick);
+    };
+    this.chaosGainRaf = requestAnimationFrame(tick);
+  }
+
+  private stopChaosGainAccent(restore: boolean): void {
+    this.chaosGainGen += 1;
+    if (this.chaosGainRaf !== 0) {
+      cancelAnimationFrame(this.chaosGainRaf);
+      this.chaosGainRaf = 0;
+    }
+    if (restore) {
+      this.chaosFill.style.background = CHAOS_COLOR;
+      this.chaosOverflowFill.style.background = CHAOS_OVERFLOW_COLOR;
     }
   }
 

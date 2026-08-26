@@ -21,6 +21,7 @@ rule: Director 在每次 playtest 反馈处理后，将未即时修复的项追�
 - [x] Slice 5 装配纠结观察到 5.5：机制上不是二选一，UX 已讲清。若要真实犹豫回 design（DEC-054） (2026-08-16)
 - [x] `GameState.incrementIntensity()` 的 +0.15 残留仍在每次冲击末尾被调用 (Slice 5 / 2026-08-12) → 2026-08-20 删除调用与方法
 - [ ] `DefenseContext.stabilityProgress` 恒为 0（字段无消费方；接 `stabilityTracker` 而不改防御公式等于白接） (Slice 5 / 2026-08-12)
+- [x] 裂隙混乱条缺一次可见跳变：占漆踩踏 / 占空体积 / 战斗 +5 / 侦测 +3 都会入账，左上条和整数会涨，但没有 spec 已要求的条跳变（无跳字、无来源提示）。练习场句法课没有玩家 HUD，侧栏调试数字不算。合同 `docs/tasks/chaos-hud-jump.md`。不要塞进迭代 5。 (迭代 3 感知缺口 / 2026-08-26) → 2026-08-26 CH-HUD-1/2/3 已交：条头填充 180ms 提亮。人验裂隙左上条；好看不代勾。追击 `▲` / 跨阈整条闪白两次本批未做。
 - [x] `architecture.md` 的「项目结构」ASCII 列了不存在的文件（`entities/interactables.ts`、`ui/components/status-bar.ts`、`ui/hud.ts`）(Slice 5 T0 / 2026-08-12) → 2026-08-20 按现行树改；`generation/` 早在 Slice 6 已落地
 
 - [ ] `docs/content/progression.md` 至今是空 `status: TEMPLATE`——内容条目的真相实际在 `data/*.csv`，该目录无人写也无人读（"产出无人消费"信号）。二选一：填充为 CSV 的人读索引 / 删除并从 CLAUDE.md 文档体系移除。**Slice 5 收尾时未处理**——这是框架层判断（文档体系是否该有这一层）而非本 Slice 交付物，转下次 retro 拍板 (Slice 5 一致性检查 / 2026-08-12)

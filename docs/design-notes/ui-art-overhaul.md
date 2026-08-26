@@ -400,6 +400,7 @@ DOM 面板与裂隙 HUD 的字号都是 CSS px。屏幕空间 overlay 挂 `#dom-
 | 数值变化（下降） | 生命/稳定度减少 | 文字 flash `#cc3333` 然后回常规色, 300ms | 不变 |
 | 条形填充变化 | 数值条变动 | 宽度 tween, 200ms ease-out | 不变 |
 | 临界脉动 | 完整度<25% / 混乱>75% / 冲击 extreme severity | alpha 0.6-1.0 循环, 300ms 周期 | 不变,已扩展到冲击预告行（`purification-hud.ts` 已实现,v2 确认沿用） |
+| 混乱条正增量强调 | `CHAOS_CHANGED` 且 `delta > 0` | 只打条头填充：`#1aad96`→`#2ae6c8` 或溢出段 `#2ae6c8`→`#3cffd4`；0ms 切峰、hold 80ms、80–180ms ease-out 回静默。不闪白、不改数字色、不套 `rift-hud-pulse`、不加宽度 tween | 污染侧离散入账。与人类侧暖闪、跨阈整条闪白两次分通道。正文：混乱 spec 规则 32a |
 | toast-inline | 拾取/被动工具触发/工具槽身份短闪 | 文字/图标右对齐或贴源出现, 800ms alpha fade-out | 统一原有 3 处零散实现（§A4） |
 | toast-stamp | 一次性里程碑 | 遮罩 fade-in 200ms + 文字停留 1.5s 或任意键/点击提前关闭 | 统一原有实现 |
 | 检视信息层内容切换 | 焦点移动 | 内容替换 ≤ 100ms,**不做淡入淡出**（延迟本身就是要消灭的问题） | 新增 |
