@@ -6,6 +6,13 @@
 import { RIFT_FRAGMENT_DATA, type RiftFragmentDef } from '@/generated/rift-fragment-data';
 import { moteSlide, shadeAt } from '@/generation/atmosphere';
 import { isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
+import {
+  quantizeInGroup,
+  TEAL_SUBSET_CORE,
+  TEAL_SUBSET_DEEP_MID,
+  TEAL_SUBSET_GLOW,
+  type Rgb,
+} from '@/generation/palette-quantize';
 import { mix32 } from '@/generation/seed-fork';
 import type {
   AtmosphereField,
@@ -163,10 +170,15 @@ function clamp255(n: number): number {
   return n < 0 ? 0 : n > 255 ? 255 : n | 0;
 }
 
-function nearestPalette(r: number, g: number, b: number): readonly [number, number, number] {
-  let best = PALETTE[0]!;
+function nearestIn(
+  r: number,
+  g: number,
+  b: number,
+  set: readonly (readonly [number, number, number])[],
+): readonly [number, number, number] {
+  let best = set[0]!;
   let bestD = Infinity;
-  for (const p of PALETTE) {
+  for (const p of set) {
     const d = (p[0] - r) ** 2 + (p[1] - g) ** 2 + (p[2] - b) ** 2;
     if (d < bestD) {
       bestD = d;
@@ -176,17 +188,59 @@ function nearestPalette(r: number, g: number, b: number): readonly [number, numb
   return best;
 }
 
+function nearestPalette(r: number, g: number, b: number): readonly [number, number, number] {
+  return nearestIn(r, g, b, PALETTE);
+}
+
+/** Hue window ≈ 144°–209°. Fog-dimmed cluster pixels stay in the legal cluster five. */
+function isTealChroma(r: number, g: number, b: number): boolean {
+  const hsv = rgbToHsv(r, g, b);
+  return hsv.s >= 0.12 && hsv.h >= 0.4 && hsv.h <= 0.58;
+}
+
+/** Void-black three: void-black / deep-black / ambient-black. */
+const VOID_BLACKS: readonly (readonly [number, number, number])[] = [
+  [0x08, 0x0a, 0x0c],
+  [0x0a, 0x0b, 0x0d],
+  [0x0d, 0x11, 0x14],
+];
+
+/** Legal cluster five. Not the banned bright four (#3cffd4 / #7fffee / #4adf8a / #b0fff5). */
+const CLUSTER_TEAL_RGB: readonly Rgb[] = [
+  ...TEAL_SUBSET_DEEP_MID,
+  ...TEAL_SUBSET_CORE,
+  ...TEAL_SUBSET_GLOW,
+];
+
+const TEAL_GROUP_MIN_MAX = 48;
+
+/**
+ * DEC-097: do not hue-direction-brighten void / dark pixels into the teal family.
+ * Bright teal-chroma pixels snap by RGB distance to the legal cluster five only.
+ */
+function quantizePaintPixel(r: number, g: number, b: number): readonly [number, number, number] {
+  if (Math.max(r, g, b) < TEAL_GROUP_MIN_MAX) {
+    return nearestPalette(r, g, b);
+  }
+  if (isTealChroma(r, g, b)) {
+    return nearestIn(r, g, b, CLUSTER_TEAL_RGB);
+  }
+  return nearestPalette(r, g, b);
+}
+
 /** 5-bit RGB cube. Live static bake uses this; gallery stills stay exact. */
 const LUT_RES = 32;
+const PALETTE_LUT_RULE = 'dec-097-void-dark';
 let paletteLut: Uint8Array | null = null;
+let paletteLutRule: string | null = null;
 
 function ensurePaletteLut(): Uint8Array {
-  if (paletteLut) return paletteLut;
+  if (paletteLut && paletteLutRule === PALETTE_LUT_RULE) return paletteLut;
   const lut = new Uint8Array(LUT_RES * LUT_RES * LUT_RES * 3);
   for (let r = 0; r < LUT_RES; r++) {
     for (let g = 0; g < LUT_RES; g++) {
       for (let b = 0; b < LUT_RES; b++) {
-        const q = nearestPalette((r << 3) + 4, (g << 3) + 4, (b << 3) + 4);
+        const q = quantizePaintPixel((r << 3) + 4, (g << 3) + 4, (b << 3) + 4);
         const i = ((r << 10) | (g << 5) | b) * 3;
         lut[i] = q[0];
         lut[i + 1] = q[1];
@@ -195,6 +249,7 @@ function ensurePaletteLut(): Uint8Array {
     }
   }
   paletteLut = lut;
+  paletteLutRule = PALETTE_LUT_RULE;
   return lut;
 }
 
@@ -204,6 +259,10 @@ function writeQuantizedRgba(
   W: number,
   H: number,
   mode: 'exact' | 'lut',
+  land: Uint8Array,
+  cols: number,
+  rows: number,
+  tile: number,
 ): void {
   const lut = mode === 'lut' ? ensurePaletteLut() : null;
   for (let y = 0; y < H; y++) {
@@ -213,14 +272,23 @@ function writeQuantizedRgba(
       const r = clamp255(work[s]! + d);
       const g = clamp255(work[s + 1]! + d);
       const b = clamp255(work[s + 2]! + d);
+      const col = (x / tile) | 0;
+      const row = (y / tile) | 0;
+      const onLand =
+        col >= 0 && row >= 0 && col < cols && row < rows && land[row * cols + col] !== 0;
       const o = (y * W + x) * 4;
-      if (lut) {
+      if (!onLand) {
+        const q = nearestIn(r, g, b, VOID_BLACKS);
+        rgba[o] = q[0];
+        rgba[o + 1] = q[1];
+        rgba[o + 2] = q[2];
+      } else if (lut) {
         const i = (((r >> 3) << 10) | ((g >> 3) << 5) | (b >> 3)) * 3;
         rgba[o] = lut[i]!;
         rgba[o + 1] = lut[i + 1]!;
         rgba[o + 2] = lut[i + 2]!;
       } else {
-        const q = nearestPalette(r, g, b);
+        const q = quantizePaintPixel(r, g, b);
         rgba[o] = q[0];
         rgba[o + 1] = q[1];
         rgba[o + 2] = q[2];
@@ -228,6 +296,38 @@ function writeQuantizedRgba(
       rgba[o + 3] = 255;
     }
   }
+}
+
+/** Pre-quantize work buffer. Used by production composites and the DEC-097 fixture. */
+export function fillCompositeWork(
+  ground: BakedGround,
+  work: Float32Array,
+  mode: 'exact' | 'lut',
+  opts?: { phase?: number; travelScale?: number },
+): void {
+  const { raw, width: W, height: H, tileSize: T, mask, roles } = ground;
+  work.set(raw);
+  if (mode === 'exact') {
+    applyAtmosphere(
+      work,
+      W,
+      H,
+      T,
+      mask.outline.cols,
+      mask.outline.rows,
+      mask.atmosphere,
+      opts?.phase ?? mask.atmosphere?.phase ?? 0.5,
+      opts?.travelScale ?? 1,
+    );
+    applyOverlays(work, W, H, T, mask.overlays ?? [], {
+      phase: opts?.phase ?? mask.atmosphere?.phase ?? 0.5,
+      field: mask.atmosphere,
+    });
+  } else {
+    applyFog(work, W, H, T, mask.outline.cols, mask.outline.rows, mask.atmosphere);
+    applyOverlays(work, W, H, T, mask.overlays ?? [], { skipMotes: true });
+  }
+  stampStumps(work, roles, mask.outline.land, mask.outline.cols, mask.outline.rows, W, H, T);
 }
 
 function stainRgb(key: string): readonly [number, number, number] {
@@ -1025,7 +1125,7 @@ function hsvToRgb(h: number, s: number, v: number): [number, number, number] {
   return [(r + m) * 255, (g + m) * 255, (b + m) * 255];
 }
 
-interface ContamRamp {
+export interface ContamRamp {
   readonly deep: readonly [number, number, number];
   readonly mid: readonly [number, number, number];
   readonly core: readonly [number, number, number];
@@ -1038,56 +1138,24 @@ function rampLayer(ramp: ContamRamp, layer: 0 | 1 | 2): readonly [number, number
   return ramp.deep;
 }
 
-function rgbDist2(
-  a: readonly [number, number, number],
-  b: readonly [number, number, number],
-): number {
-  return (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+function toRgb(t: readonly [number, number, number]): Rgb {
+  return [clamp255(t[0]), clamp255(t[1]), clamp255(t[2])];
 }
 
-function sameRgb(
-  a: readonly [number, number, number],
-  b: readonly [number, number, number],
-): boolean {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
-}
-
-function quantDistinct(
-  r: number,
-  g: number,
-  b: number,
-  used: ReadonlyArray<readonly [number, number, number]>,
-  floorRgb: readonly [number, number, number],
-): readonly [number, number, number] {
-  const target: [number, number, number] = [clamp255(r), clamp255(g), clamp255(b)];
-  let best: readonly [number, number, number] | null = null;
-  let bestScore = Infinity;
-  for (const p of PALETTE) {
-    if (used.some((u) => sameRgb(u, p))) continue;
-    const toTarget = rgbDist2(p, target);
-    const toFloor = rgbDist2(p, floorRgb);
-    const floorPenalty = toFloor < 2800 ? (2800 - toFloor) * 2.4 : 0;
-    const score = toTarget + floorPenalty;
-    if (score < bestScore) {
-      bestScore = score;
-      best = p;
-    }
-  }
-  return best ?? nearestPalette(target[0], target[1], target[2]);
+function clampHueWindow(h: number): number {
+  return h < 0.42 ? 0.42 : h > 0.56 ? 0.56 : h;
 }
 
 /**
- * Contamination colours follow this island's floor/wall biases, then snap to the
- * locked palette. Hue stays on the teal axis, pulled toward the map's chroma;
- * age slides blue (new) or green (ancient). Layers stay distinct from each other
- * and from the floor, so a dark island still reads as contamination.
+ * L2 cluster ramp: I6-A formula, quantized with I6-B `quantizeInGroup` into teal subsets.
+ * Age slides blue/green inside the hue window; fragments do not get a hue split.
  */
-function deriveContamRamp(
+export function deriveContamRamp(
   def: RiftFragmentDef,
   age: ContaminationAge,
   seed: number,
 ): ContamRamp {
-  const floorRgb: [number, number, number] = [
+  const floorRgb: Rgb = [
     clamp255(def.floorBv * def.floorBiasR),
     clamp255(def.floorBv * def.floorBiasG),
     clamp255(def.floorBv * def.floorBiasB),
@@ -1098,19 +1166,18 @@ function deriveContamRamp(
   const mapV = fh.v * 0.6 + wh.v * 0.4;
   const mapS = fh.s > wh.s ? fh.s : wh.s;
   const rng = new SeededRandom(mix32(seed, 'contam-ramp'));
-  const tealHue = 0.48;
   const ageShift = age === 'new' ? -0.07 : age === 'ancient' ? 0.08 : 0;
-  const hue = (((tealHue + (mapHue - tealHue) * 0.52 + ageShift + (rng.next() - 0.5) * 0.05) % 1) + 1) % 1;
+  const hue = clampHueWindow(0.48 + (mapHue - 0.48) * 0.52 + ageShift + (rng.next() - 0.5) * 0.05);
   const sat = clamp01(0.5 + mapS * 0.38 + (age === 'ancient' ? 0.08 : 0) + (rng.next() - 0.5) * 0.05);
   const val = clamp01(Math.max(0.36, mapV + 0.18) + (rng.next() - 0.5) * 0.04);
-  const deepHsv = hsvToRgb(hue, sat * 0.82, val * 0.68);
-  const midHsv = hsvToRgb(hue, sat, val * 0.95);
-  const coreHsv = hsvToRgb(hue, sat * 0.78, clamp01(val * 1.2));
-  const glowHsv = hsvToRgb(hue, sat * 0.46, clamp01(val * 1.42));
-  const core = quantDistinct(coreHsv[0], coreHsv[1], coreHsv[2], [], floorRgb);
-  const mid = quantDistinct(midHsv[0], midHsv[1], midHsv[2], [core], floorRgb);
-  const deep = quantDistinct(deepHsv[0], deepHsv[1], deepHsv[2], [core, mid], floorRgb);
-  const glow = quantDistinct(glowHsv[0], glowHsv[1], glowHsv[2], [core, mid, deep], floorRgb);
+  const deepRgb = toRgb(hsvToRgb(hue, sat * 0.82, val * 0.68));
+  const midRgb = toRgb(hsvToRgb(hue, sat, val * 0.95));
+  const coreRgb = toRgb(hsvToRgb(hue, sat * 0.78, clamp01(val * 1.2)));
+  const glowRgb = toRgb(hsvToRgb(hue, sat * 0.46, clamp01(val * 1.42)));
+  const deep = quantizeInGroup(deepRgb, TEAL_SUBSET_DEEP_MID, []);
+  const mid = quantizeInGroup(midRgb, TEAL_SUBSET_DEEP_MID, [deep]);
+  const core = quantizeInGroup(coreRgb, TEAL_SUBSET_CORE, [deep, mid]);
+  const glow = quantizeInGroup(glowRgb, TEAL_SUBSET_GLOW, [deep, mid, core]);
   return { deep, mid, core, glow };
 }
 
@@ -1997,36 +2064,37 @@ export function compositePaint(
   rgba: Uint8Array,
   opts?: { phase?: number; travelScale?: number },
 ): void {
-  const { raw, width: W, height: H, tileSize: T, mask, roles } = ground;
-  work.set(raw);
-  applyAtmosphere(
+  const { width: W, height: H, tileSize: T, mask } = ground;
+  fillCompositeWork(ground, work, 'exact', opts);
+  writeQuantizedRgba(
     work,
+    rgba,
     W,
     H,
-    T,
+    'exact',
+    mask.outline.land,
     mask.outline.cols,
     mask.outline.rows,
-    mask.atmosphere,
-    opts?.phase ?? mask.atmosphere?.phase ?? 0.5,
-    opts?.travelScale ?? 1,
+    T,
   );
-  applyOverlays(work, W, H, T, mask.overlays ?? [], {
-    phase: opts?.phase ?? mask.atmosphere?.phase ?? 0.5,
-    field: mask.atmosphere,
-  });
-  stampStumps(work, roles, mask.outline.land, mask.outline.cols, mask.outline.rows, W, H, T);
-  writeQuantizedRgba(work, rgba, W, H, 'exact');
   stampAncientDots(rgba, W, H, T, mask);
 }
 
 /** Live rift: fog + non-mote overlays baked once. Sky and motes are `paintSkyShade`. */
 export function compositeStaticPaint(ground: BakedGround, work: Float32Array, rgba: Uint8Array): void {
-  const { raw, width: W, height: H, tileSize: T, mask, roles } = ground;
-  work.set(raw);
-  applyFog(work, W, H, T, mask.outline.cols, mask.outline.rows, mask.atmosphere);
-  applyOverlays(work, W, H, T, mask.overlays ?? [], { skipMotes: true });
-  stampStumps(work, roles, mask.outline.land, mask.outline.cols, mask.outline.rows, W, H, T);
-  writeQuantizedRgba(work, rgba, W, H, 'lut');
+  const { width: W, height: H, tileSize: T, mask } = ground;
+  fillCompositeWork(ground, work, 'lut');
+  writeQuantizedRgba(
+    work,
+    rgba,
+    W,
+    H,
+    'lut',
+    mask.outline.land,
+    mask.outline.cols,
+    mask.outline.rows,
+    T,
+  );
   stampAncientDots(rgba, W, H, T, mask);
 }
 

@@ -42,7 +42,15 @@ for (const type of types) {
     }
     assert(same, `${type} ${seed} must be deterministic`);
     assert(a.fragmentTypeId === type, `${type} ${seed} id`);
-    assert(a.features.length >= 12, `${type} ${seed} masses ${a.features.length}`);
+    const def = RIFT_FRAGMENT_DATA[type]!;
+    assert(
+      a.features.length >= def.featureCountMin,
+      `${type} ${seed} masses ${a.features.length} (min ${def.featureCountMin})`,
+    );
+    assert(
+      a.features.length <= def.featureCountMax,
+      `${type} ${seed} masses ${a.features.length} (max ${def.featureCountMax})`,
+    );
     assert(a.metrics.leftoverConnected, `${type} ${seed} leftover walkable`);
 
     let walls = 0;

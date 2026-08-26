@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: code（I6-G：旧图书馆已启用为生产路径。居民区公寓仍未启用）
+last-modified-by: code（I6-F：按身份配方填参数化列；删 l1_key / source_domain / wall_body_key / wall_rim_key。居民区公寓仍未启用）
 last-modified-date: 2026-08-24
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: true
@@ -165,17 +165,26 @@ interface MapGenerationState {
 interface FragmentTypeDef {
   id: string                    // frag-library | frag-clinic | frag-metro | frag-residential | frag-outdoor
   displayName: string           // 用 world 地点命名，不写诗。不是主题关卡名
-  l1Key: string                 // 零消费；I6-F 删列
-  sourceDomain: string          // 零消费；I6-F 删列
   coverage: string              // remnant | half | unnamed
-  massGrammar: string           // 参数向量预设名（ridge/slab/enclosure/cluster）；I6-Q 已放开向量。cluster = 参数点，不是未实现生成器
+  massGrammar: string           // 参数向量预设名（ridge/slab/enclosure/cluster）；身份数字在同行向量列。cluster = 参数点，不是未实现生成器
+  jogPeriod: number             // 错位周期 ∈ {0,2,3,4,6}
+  jogAmp: number                // 错位幅度 ∈ {0,1,2}
+  gapCount: number              // 缺口数 ∈ 0..3
+  gapPlacement: string          // center | mid | end | random | 空（缺口为 0）
+  turnCount: number             // 转折 ∈ 0..2
+  turnCorner: string            // right | fold | 空（转折为 0）
+  capKind: string               // none | stub | pier | widen
+  facingPolicy: string          // random | axis | alternate
   join: string                  // single | shear（本 Slice 只开 single）
   surfaceMaterial: string       // 只选出击脚步音，不驱动烤地。wood | tile | metal | plaster | soil
+  stainKey: string              // 色板条目名（art-direction.md §2.2）
+  scratchAngle: string          // free | orthogonal | longitudinal（主角度策略）
+  scratchDispersion: number     // 划痕角离散度（弧度）；free 行的均匀 0–2π 不吃这一列
   enabled: boolean
 }
 ```
 
-`l1Key` 只准指向已锁五套：`frag-library` / `frag-clinic` / `frag-metro` / `frag-residential` / `frag-outdoor`。新色必须走美术方向已有论证，本 Slice 禁止发明。
+渍色键只准指向已锁色板名（五套 `frag-*` 与 `shadow-grey` / `brick-dark` 等）。新色必须走美术方向已有论证，本 Slice 禁止发明。`l1_key` / `source_domain` / `wall_body_key` / `wall_rim_key` 已删，禁止再写回。
 
 ---
 
@@ -446,12 +455,21 @@ DEC-005 反的是地牢房间，不是「这段墙曾是房子」。CA 可以风
 interface FragmentTypeDef {
   id: string
   displayName: string
-  l1Key: string
-  sourceDomain: string
   coverage: string
   massGrammar: string
+  jogPeriod: number
+  jogAmp: number
+  gapCount: number
+  gapPlacement: string
+  turnCount: number
+  turnCorner: string
+  capKind: string
+  facingPolicy: string
   join: string
   surfaceMaterial: string
+  stainKey: string
+  scratchAngle: string
+  scratchDispersion: number
   enabled: boolean
 }
 
@@ -470,8 +488,10 @@ interface FragmentRoll {
 | 列 | 现行消费 | 处置 |
 | -- | -------- | ---- |
 | `surface_material` | **只选出击脚步音**（`rift-scene.ts` 的 `stepKey`）。烤地不读。禁止再读成「木地板看起来像木头」 | **保留。** `plaster` 未进脚步映射；启用居民区公寓那一行时补 `stepKey`，不补绘制、不另开迭代 |
-| `wall_body_key` / `wall_rim_key` | 零消费。墙读 `wall_bv × wall_bias_*` | **I6-F 删列**，不接线 |
-| `l1_key` / `source_domain` | 零消费 | **I6-F 删列**，不接线 |
+| `jog_period` / `jog_amp` / `gap_count` / `gap_placement` / `turn_count` / `turn_corner` / `cap_kind` / `facing_policy` | 质量语法向量数字（I6-Q 已放开取值；I6-F 按身份配方填入）。`mass_grammar` 仍是最近预设名 | **活列。** 禁止靠已删列或第一层落格表达身份 |
+| `scratch_dispersion` | 划痕角离散度（弧度）。`scratch_angle` 仍是 free / orthogonal / longitudinal 策略 | **活列。** 本批不改烤地划痕接线 |
+| `wall_body_key` / `wall_rim_key` | 已删。墙读 `wall_bv × wall_bias_*` | **已删**，不接线 |
+| `l1_key` / `source_domain` | 已删 | **已删**，不接线 |
 
 **扩展纪律**：加新「曾经是什么」= 策划表新行 + 美术论证。加组合 = 生成器抽 `FragmentRoll`，不新开系统。Slice 6 先接通户外 / 医院 / 地铁三种。**DEC-090 / I6-G：** 迭代 6 已把旧图书馆纳入可生成范围（四张一起标定）。`data/rift-fragments.csv` 旧图书馆一行 `enabled` 已为真，生产路径。居民区公寓保持假（抽卡四张）。~~簇状质量语法未实现~~ **DEC-094：** 簇是参数点，禁止再当独立待开。抽卡已启用行等权；三张变四张后旧世界从约三分之一降到四分之一，不加权重列。每一次踏入抽齐污染年龄与残破度（规则 24a），禁止永远标准 + 残破。遇到「档位不够 / 只有 N 种」先看那个 N 是不是一段手写 if。
 
@@ -502,7 +522,7 @@ interface FragmentRoll {
 - 向 **ExtractionSystem** 发送：恰好一个 `ExtractionPointDef`。规则仍是走近按 E。
 - 向 **Minimap** 发送：本次 tile 与撤离世界坐标。标记形状不新造。
 - 向 **VisibilitySystem** 发送：`setExtractionPosition` + glow source。虚空默认不挡视线。
-- 向 **procedural-surface** 发送：`fragmentTypeId` / `l1Key` / 材质。禁止继续写死 `frag-outdoor`。
+- 向 **procedural-surface** 发送：`fragmentTypeId` / 材质。禁止继续写死 `frag-outdoor`。禁止再发送已删的 `l1Key`。
 - 不与净化点分配 / 潮汐公式 / 战斗伤害直接交互。
 
 ---
