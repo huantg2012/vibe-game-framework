@@ -69,7 +69,9 @@ guides/*.md                              = 人的参考资料（设计原理记�
 
 ```
 .claude/agents/ 与 .cursor/agents/ → ideation, director, design, code, art, qa（两份正文一致）
-.cursor/skills/        → 项目 skill（in-game UX HOW；自定义 agent 须显式 Read）
+.cursor/skills/        → 项目 skill（自定义 agent 须显式 Read）
+                         ├── in-game-ux/        → in-game UI 的 HOW（开工闸门 + 写完自检）
+                         └── pixel-art-schools/ → 像素风格六轴坐标与被锁死的技术栈
 guides/                → 人的参考手册（00-overview ~ 15-explore-vs-iterate, 98-field-notes, 99-review）
 docs/**/_template-*.md → 游戏活文档的模板（实例在游戏分支开发时生成）
 tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）

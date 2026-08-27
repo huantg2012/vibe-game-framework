@@ -146,6 +146,7 @@ concept: [概念名]
 
 1. 读取 `docs/art-direction.md` 确认视觉风格规范
    - 如果不存在：说明你处于 Foundation，你的任务就是**创建**这份文档。问人游戏调性和视觉偏好后开始定义风格方向。
+   - **像素项目**：创建或审查美术方向时先 Read `.cursor/skills/pixel-art-schools/SKILL.md`，按六轴写出风格坐标并过十二项技术栈清单。六条轴里任何一条指不出位置 = 方向还没定完，不要开始画。自定义 agent 不会自动加载 skill。
 2. 读取 `docs/world.md` 中"对美术的约束"段落（如果存在）
    - 这些约束和 art-direction 同等权威：材质/色彩/禁忌项必须遵守
 3. 了解本次任务需要什么资产或 UI 设计
