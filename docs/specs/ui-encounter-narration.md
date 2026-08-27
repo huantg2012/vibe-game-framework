@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified: 2026-08-24
-last-modified-by: code（I5-S：新短名标待上屏，本批不上裂隙）
+last-modified: 2026-08-26
+last-modified-by: code（I5-J：街具残骸按分节点上屏；三种生物仍不上裂隙）
 interface-changed: false
 interfaces-with:
   - system-contamination-lexicon   # 身份键、触发、限频、上屏节点、成句标记；逻辑真相在句法 spec。本文件是识别表面，不拥有形态生成
@@ -16,7 +16,7 @@ note: |
   身份键 / 触发 / 限频的逻辑真相以 docs/specs/system-contamination-lexicon.md 为准。
   本文件保留载体、参考锚点、视觉规格、U1–U12。出击已接（体验未验证）。HOW：`.cursor/skills/in-game-ux/SKILL.md`。
   迭代 3（DEC-084）：新基体 display_token（残茎 / 栏柱 / 灰幕 / 余响 / 散光 / 间距）将在 I3-G 后第一次上屏。分节点 / 限频 / 成句短标记仍成立。禁止读成复合名词一句。I3-G 前新词不应上屏（CSV 仍 gym）；I3-A 后旁白可报抽到的旧六种基体。
-  迭代 5（DEC-088）：I5-J 翻列后旁白会上「街具残骸」；三种生物短名在翻出击前不应上裂隙。I5-A 锁 display_token。
+  迭代 5（DEC-088）：I5-J 已翻列，旁白按分节点上「街具残骸」；三种生物短名仍不应上裂隙。I5-A 锁 display_token。
   禁止头上名字、禁止图鉴弹窗、禁止复用混乱阈值全屏文学旁白。
 ---
 
@@ -191,16 +191,16 @@ note: |
 
 I3-A 落地、I3-G 未翻列时：旁白只会上旧六种基体（有机残影 / 灯柱 / 门框 / 墙锈 / 菌毯 / 油膜）。那是 form 管线在工作，不是内容层开放。限频、同时 1 行、60s / 2.5s、与混乱阈值冲突时阈值优先：均不改。
 
-### 迭代 5 新短名（I5-S 已落表；待上屏）
+### 迭代 5 新短名（I5-J 已翻列街具残骸）
 
-本批不上裂隙。I5-J 翻列前旁白不得报这些节点。短名已锁（I5-P / 甲基体轴）；节点纪律与上表相同，禁止粘成复合传奇名。
+「街具残骸」按分节点上屏，纪律与上表相同，禁止粘成复合传奇名。三种生物短名仍不应上裂隙。短名已锁（I5-P / 甲基体轴）。
 
 | id | 上屏短名 | 裂隙 |
 | -- | -------- | ---- |
-| street_wreckage | 街具残骸 | **待上屏**（I5-J 翻列后按分节点上屏） |
-| insect_remnant | 虫 | **待上屏**（三种生物默认不翻出击） |
-| mammal_remnant | 哺乳动物 | **待上屏** |
-| worm_remnant | 大号蠕虫 | **待上屏** |
+| street_wreckage | 街具残骸 | 识别。 / 渗透 / 街具残骸 / 占地 / 视锥（斜杠处必须能停顿；不读成「残骸立占地」） |
+| insect_remnant | 虫 | **不上裂隙**（三种生物仍 gym） |
+| mammal_remnant | 哺乳动物 | **不上裂隙** |
+| worm_remnant | 大号蠕虫 | **不上裂隙** |
 
 ## 止损怎么被读到（结构层；DEC-083）
 

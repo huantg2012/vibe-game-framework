@@ -1,6 +1,6 @@
 /**
  * I5-B machine gate: weld 后可见身体四连通分量必须为 1。
- * 同时断言默认 d-mixed 出击路径仍走旧 attachJiaD（字节级）。
+ * 同时断言默认 d-mixed 出击占地走 attachJiaGenomeD（I5-J）。
  *
  *   npm run check:jia-genome-weld
  */
@@ -67,10 +67,10 @@ for (const kind of GENOME_PART_KINDS) {
 }
 
 const mixedSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/scheme-d-mixed.ts'), 'utf8');
-assert(mixedSrc.includes("from '@/entities/form-renderers/d/jia'"), 'd-mixed imports attachJiaD module');
-assert(/case 'floor':\s*return attachJiaD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is attachJiaD');
-assert(!mixedSrc.includes('genome'), 'd-mixed does not mention genome');
-assert(!mixedSrc.includes('attachJiaGenomeD'), 'd-mixed does not call attachJiaGenomeD');
+assert(mixedSrc.includes("from '@/entities/form-renderers/d/genome/attach'"), 'd-mixed imports attachJiaGenomeD');
+assert(/case 'floor':\s*return attachJiaGenomeD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is attachJiaGenomeD');
+assert(!mixedSrc.includes("from '@/entities/form-renderers/d/jia'"), 'd-mixed no longer imports old jia attach');
+assert(!mixedSrc.includes('attachJiaD'), 'd-mixed no longer calls attachJiaD');
 
 const riftSrc = readFileSync(resolve(ROOT, 'src/scenes/rift-scene.ts'), 'utf8');
 assert(!riftSrc.includes('form-renderers/d/genome'), 'RiftScene does not import genome');

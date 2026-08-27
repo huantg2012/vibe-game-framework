@@ -253,8 +253,8 @@ assert(!/Math\.sin/.test(gaitSrc), 'gait must not use sine mucus waves');
 assert(!/from ['"][^'"]*jia-pixels/.test(gaitSrc), 'gait must not import jia-pixels');
 
 const mixedSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/scheme-d-mixed.ts'), 'utf8');
-assert(/case 'floor':\s*return attachJiaD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is still attachJiaD');
-assert(!mixedSrc.includes('attachJiaGenomeD'), 'd-mixed does not call attachJiaGenomeD');
+assert(/case 'floor':\s*return attachJiaGenomeD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is attachJiaGenomeD');
+assert(!mixedSrc.includes('attachJiaD'), 'd-mixed no longer calls attachJiaD');
 
 const riftSrc = readFileSync(resolve(ROOT, 'src/scenes/rift-scene.ts'), 'utf8');
 assert(!riftSrc.includes('form-renderers/d/genome'), 'RiftScene does not import genome');

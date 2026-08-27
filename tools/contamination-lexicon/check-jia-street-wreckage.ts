@@ -114,15 +114,15 @@ assert(
 );
 
 const mixedSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/scheme-d-mixed.ts'), 'utf8');
-assert(/case 'floor':\s*return attachJiaD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is still attachJiaD');
-assert(!mixedSrc.includes('attachJiaGenomeD'), 'd-mixed does not call attachJiaGenomeD');
+assert(/case 'floor':\s*return attachJiaGenomeD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is attachJiaGenomeD');
+assert(!mixedSrc.includes('attachJiaD'), 'd-mixed no longer calls attachJiaD');
 
 const riftSrc = readFileSync(resolve(ROOT, 'src/scenes/rift-scene.ts'), 'utf8');
 assert(!riftSrc.includes('form-renderers/d/genome'), 'RiftScene does not import genome');
 
-assert(SORTIE_SUBSTRATE_IDS.includes('lamp_pillar'), 'CSV flip: lamp_pillar still sortie');
-assert(SORTIE_SUBSTRATE_IDS.includes('railing_post'), 'CSV flip: railing_post still sortie');
-assert(!SORTIE_SUBSTRATE_IDS.includes(STREET_WRECKAGE_ID), 'CSV flip: street_wreckage not yet sortie');
+assert(!SORTIE_SUBSTRATE_IDS.includes('lamp_pillar'), 'CSV flip: lamp_pillar left sortie');
+assert(!SORTIE_SUBSTRATE_IDS.includes('railing_post'), 'CSV flip: railing_post left sortie');
+assert(SORTIE_SUBSTRATE_IDS.includes(STREET_WRECKAGE_ID), 'CSV flip: street_wreckage is sortie');
 
 const seedList = Array.from({ length: SEEDS }, (_, i) => 1000 + i * 977);
 

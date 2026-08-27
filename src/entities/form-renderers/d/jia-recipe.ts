@@ -87,6 +87,7 @@ export function jiaFamilyOf(substrate: string): JiaFamily {
   return FAMILIES.has(substrate) ? (substrate as JiaFamily) : 'organic_remnant';
 }
 
+/** Frozen A/B/C / old `jia-paint` silhouette bucket. Not the sortie default after I5-J. */
 export function jiaVariantOf(seed: number, substrate: string): JiaVariant {
   return (mix32(seed, substrate) % 3) as JiaVariant;
 }

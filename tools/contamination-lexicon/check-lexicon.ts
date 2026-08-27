@@ -128,41 +128,56 @@ assert(
   Object.values(SUBSTRATE_DATA).filter((s) => s.enabledScope === 'sortie').length === SORTIE_SUBSTRATE_IDS.length,
   'no extra sortie rows outside SORTIE_SUBSTRATE_IDS',
 );
-for (const id of ['stalk_clump', 'railing_post', 'ash_veil', ...CONCEPTUAL_SUBSTRATE_IDS]) {
+for (const id of ['stalk_clump', 'street_wreckage', 'ash_veil', ...CONCEPTUAL_SUBSTRATE_IDS]) {
   assert(SORTIE_SUBSTRATE_IDS.includes(id), `SORTIE_SUBSTRATE_IDS includes ${id}`);
 }
 
-/** Pre-I5-J closed set. Flip (street_wreckage→sortie, lamp/railing out) is I5-J only. */
-const PRE_FLIP_SORTIE_SUBSTRATE_IDS = [
+/** I5-J closed set. street_wreckage in; lamp_pillar / railing_post / three biologicals out. */
+const POST_FLIP_SORTIE_SUBSTRATE_IDS = [
   'organic_remnant',
-  'lamp_pillar',
   'doorframe',
   'wall_rust',
   'fungal_mat',
   'oil_film',
   'stalk_clump',
-  'railing_post',
   'ash_veil',
   'sound_echo',
   'light_scatter',
   'space_interval',
+  'street_wreckage',
 ] as const;
 assert(
-  sameSet(SORTIE_SUBSTRATE_IDS, PRE_FLIP_SORTIE_SUBSTRATE_IDS),
-  `SORTIE_SUBSTRATE_IDS must stay pre-I5-J [${SORTIE_SUBSTRATE_IDS.join(',')}]`,
+  sameSet(SORTIE_SUBSTRATE_IDS, POST_FLIP_SORTIE_SUBSTRATE_IDS),
+  `SORTIE_SUBSTRATE_IDS must stay post-I5-J [${SORTIE_SUBSTRATE_IDS.join(',')}]`,
 );
-assert(SORTIE_SUBSTRATE_IDS.includes('lamp_pillar'), 'pre-I5-J SORTIE still includes lamp_pillar');
-assert(SORTIE_SUBSTRATE_IDS.includes('railing_post'), 'pre-I5-J SORTIE still includes railing_post');
+assert(SORTIE_SUBSTRATE_IDS.includes('street_wreckage'), 'I5-J SORTIE includes street_wreckage');
+assert(!SORTIE_SUBSTRATE_IDS.includes('lamp_pillar'), 'I5-J SORTIE excludes lamp_pillar');
+assert(!SORTIE_SUBSTRATE_IDS.includes('railing_post'), 'I5-J SORTIE excludes railing_post');
 
-const I5S_GYM: Readonly<
+const STREET_WRECKAGE_FIELDS = { token: '街具残骸', verb: '立', lock: 'motion_anchor' } as const;
+const streetWreckage = SUBSTRATE_DATA.street_wreckage;
+assert(!!streetWreckage, 'missing street_wreckage');
+assert(streetWreckage!.enabledScope === 'sortie', 'street_wreckage enabled_scope=sortie');
+assert(streetWreckage!.displayToken === STREET_WRECKAGE_FIELDS.token, 'street_wreckage display_token');
+assert(streetWreckage!.residualVerb === STREET_WRECKAGE_FIELDS.verb, 'street_wreckage residual_verb');
+assert(
+  streetWreckage!.legalOccupancies.length === 1 && streetWreckage!.legalOccupancies[0] === 'floor',
+  `street_wreckage occupancies [${streetWreckage?.legalOccupancies.join(',')}] want [floor]`,
+);
+assert(!streetWreckage!.legalOccupancies.includes('volume'), 'street_wreckage must not occupy volume');
+assert(
+  streetWreckage!.legalContinuities.length === 1 && streetWreckage!.legalContinuities[0] === 'monolith',
+  `street_wreckage continuities [${streetWreckage?.legalContinuities.join(',')}] want [monolith]`,
+);
+
+const I5S_BIO_GYM: Readonly<
   Record<string, { token: string; verb: string; lock: string }>
 > = {
-  street_wreckage: { token: '街具残骸', verb: '立', lock: 'motion_anchor' },
   insect_remnant: { token: '虫', verb: '爬', lock: 'motion_turn' },
   mammal_remnant: { token: '哺乳动物', verb: '走', lock: 'motion_patrol' },
   worm_remnant: { token: '大号蠕虫', verb: '拱', lock: 'motion_turn' },
 };
-for (const [id, fields] of Object.entries(I5S_GYM)) {
+for (const [id, fields] of Object.entries(I5S_BIO_GYM)) {
   const row = SUBSTRATE_DATA[id];
   assert(!!row, `missing I5-S gym substrate ${id}`);
   assert(row!.enabledScope === 'gym', `${id} enabled_scope=gym`);
@@ -217,9 +232,11 @@ for (const id of CONCEPTUAL_SUBSTRATE_IDS) {
 
 const stalk = SUBSTRATE_DATA.stalk_clump;
 const rail = SUBSTRATE_DATA.railing_post;
+const lamp = SUBSTRATE_DATA.lamp_pillar;
 const ash = SUBSTRATE_DATA.ash_veil;
 assert(stalk?.enabledScope === 'sortie' && stalk.legalOccupancies.includes('floor') && !stalk.legalOccupancies.includes('volume'), 'stalk_clump floor sortie');
-assert(rail?.enabledScope === 'sortie' && rail.legalOccupancies.includes('floor') && !rail.legalOccupancies.includes('volume'), 'railing_post floor sortie');
+assert(rail?.enabledScope === 'gym' && rail.legalOccupancies.includes('floor') && !rail.legalOccupancies.includes('volume'), 'railing_post floor gym');
+assert(lamp?.enabledScope === 'gym' && lamp.legalOccupancies.includes('floor') && !lamp.legalOccupancies.includes('volume'), 'lamp_pillar floor gym');
 assert(ash?.enabledScope === 'sortie' && ash.legalOccupancies.includes('paint') && !ash.legalOccupancies.includes('volume'), 'ash_veil paint sortie');
 
 assert(UTTERANCE_DATA.corridor_watching?.substrate === 'space_interval', 'corridor_watching binds space_interval');
@@ -236,7 +253,9 @@ assert(
   'jia dropdown excludes volume-only conceptual substrates',
 );
 assert(jiaGym.includes('stalk_clump') && jiaGym.includes('railing_post'), 'jia dropdown includes new floor rows');
-for (const id of Object.keys(I5S_GYM)) {
+assert(jiaGym.includes('street_wreckage'), 'jia dropdown includes street_wreckage');
+assert(!dingGym.includes('street_wreckage'), 'ding dropdown excludes street_wreckage');
+for (const id of Object.keys(I5S_BIO_GYM)) {
   assert(jiaGym.includes(id), `jia dropdown includes I5-S gym row ${id}`);
   assert(!dingGym.includes(id), `ding dropdown excludes I5-S gym row ${id}`);
 }
@@ -247,13 +266,27 @@ const fragments = ['frag-outdoor', 'frag-clinic', 'frag-metro'] as const;
 const drawSrc = readFileSync(resolve(ROOT, 'src/generation/contamination-draw.ts'), 'utf8');
 assert(!drawSrc.includes('shadowGymUtteranceForSortie'), 'sortie must not shadow gym utterances with oil_film');
 const catalogSrc = readFileSync(resolve(ROOT, 'src/gym/lexicon-gallery-catalog.ts'), 'utf8');
-for (const [id, fields] of Object.entries(I5S_GYM)) {
-  const lockRe = new RegExp(`${id}:\\s*'${fields.lock}'`);
-  assert(lockRe.test(drawSrc), `contamination-draw residual lock ${id} → ${fields.lock}`);
-  assert(lockRe.test(catalogSrc), `gallery catalog residual lock ${id} → ${fields.lock}`);
+const residualLocks: Readonly<Record<string, string>> = {
+  street_wreckage: STREET_WRECKAGE_FIELDS.lock,
+  ...Object.fromEntries(Object.entries(I5S_BIO_GYM).map(([id, fields]) => [id, fields.lock])),
+};
+for (const [id, lock] of Object.entries(residualLocks)) {
+  const lockRe = new RegExp(`${id}:\\s*'${lock}'`);
+  assert(lockRe.test(drawSrc), `contamination-draw residual lock ${id} → ${lock}`);
+  assert(lockRe.test(catalogSrc), `gallery catalog residual lock ${id} → ${lock}`);
 }
+assert(!drawSrc.includes("['lamp_pillar'"), 'DIALECT must not weight lamp_pillar after I5-J');
+assert(!drawSrc.includes("['railing_post'"), 'DIALECT must not weight railing_post after I5-J');
+assert(drawSrc.includes("['street_wreckage'"), 'DIALECT must weight street_wreckage after I5-J');
 
-for (const [id, fields] of Object.entries(I5S_GYM)) {
+const mixedSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/scheme-d-mixed.ts'), 'utf8');
+assert(/case 'floor':\s*return attachJiaGenomeD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is attachJiaGenomeD');
+assert(!mixedSrc.includes('attachJiaD'), 'd-mixed no longer calls attachJiaD');
+
+for (const [id, fields] of Object.entries({
+  street_wreckage: STREET_WRECKAGE_FIELDS,
+  ...I5S_BIO_GYM,
+})) {
   const gymForm = drawOne(new SeededRandom(id.length * 17), {
     portfolio: 'jia',
     fragmentTypeId: 'frag-clinic',

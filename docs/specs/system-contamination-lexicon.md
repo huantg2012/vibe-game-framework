@@ -2,7 +2,7 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: design agent（CH-HUD-1：向混乱值发送补条上强调）
+last-modified-by: code agent（I5-J：基因谱甲升出击默认；街具残骸翻列）
 last-modified-date: 2026-08-26
 interface-changed: true
 interfaces-with:
@@ -21,7 +21,7 @@ exposes:
   - 遭遇识别旁白：身份键、触发、限频、上屏节点、成句短标记映射
   - 事件 `encounter:identified`（载荷见实现规格；旁白消费、不回写 AI）
   - CSV：substrates / portfolios / lexemes / stop-loss / utterances / display-tokens → `src/generated/contamination-lexicon-data.ts`
-  - CSV `enabled_scope`（sortie / gym）；出击白名单 = 全部 sortie 行，含残茎 / 栏柱 / 灰幕 + 概念三类。**I5-S 已落：** 街具残骸 + 三种生物为 gym，不进 `SORTIE_SUBSTRATE_IDS`。**待 I5-J 翻列：** 街具残骸进 sortie、灯柱/栏柱退出。翻列前出击 12 行仍是出击真相。
+  - CSV `enabled_scope`（sortie / gym）；出击白名单 = 全部 sortie 行，含残茎 / 街具残骸 / 灰幕 + 概念三类。**I5-J 已翻列：** `street_wreckage` 进 `SORTIE_SUBSTRATE_IDS`；`lamp_pillar` / `railing_post` 收回 gym。三种生物仍 gym。
   - 接触词素对照表（打血 / 混乱 / 视野）；出击与练习场同一套读取 contact + resolveStopLoss
   - 钉层：墙缘折线 / 簇核 / 走廊包围盒；布局另交一份 SortieDraw
   - 出击视觉（方案 D）消费字段（与 I3-C 对齐，不复制像素配方）
@@ -34,7 +34,7 @@ note: |
   docs/specs/ui-encounter-narration.md 是识别表面，不是独立玩法。
   外观 HOW：docs/art/contamination-forms.md（I3-C 生产规格；迭代 5 甲待改写；配色按 DEC-088 协同但不提亮；地面 L1/L2 迭代 6）。出击逻辑已接（体验未验证）。
   迭代 2 练习场探索 COMPLETE。迭代 3（DEC-084）合同 docs/tasks/iteration-3.md。
-  迭代 5（DEC-087 / DEC-088 / DEC-098）合同 docs/tasks/iteration-5.md：甲外形基因谱；街具残骸 + 生物 gym 先行；I5-J 前出击默认甲绘制不变。I5-N：基因谱甲必须消费朝向与信号相。
+  迭代 5（DEC-087 / DEC-088 / DEC-098）合同 docs/tasks/iteration-5.md：甲外形基因谱；I5-J 已把出击 `d-mixed` 占地升为 `attachJiaGenomeD`，街具残骸翻列出击。三种生物仍 gym。I5-N：基因谱甲必须消费朝向与信号相。
   迭代 6（DEC-088）合同 docs/tasks/iteration-6.md：碎片配色 / 世界美术。
 ---
 
@@ -222,10 +222,10 @@ interface ContaminationForm {
 1. CSV 与 `src/generated/contamination-lexicon-data.ts` 的 id 集合一致（只许 codegen 生成，禁止手写 generated）。
 2. 缺列、缺必填、`enabled_scope` 不是 `sortie`/`gym`、字段内 ASCII 逗号 → codegen 失败。
 3. 出击白名单 `SORTIE_SUBSTRATE_IDS` = 全部 `enabledScope==='sortie'` 的 id，必须等于该列派生，禁止另维护一份与 CSV 脱节的封闭六 id 当唯一真相。
-4. sortie 集合 = 旧六种 **加上** `stalk_clump` / `railing_post` / `ash_veil` / `sound_echo` / `light_scatter` / `space_interval`。`drawSortie` 不得含 `enabledScope==='gym'` 的行。废止「恰好旧六种」。
+4. sortie 集合 = 旧六种 **去掉** `lamp_pillar` **加上** `stalk_clump` / `street_wreckage` / `ash_veil` / `sound_echo` / `light_scatter` / `space_interval`。`railing_post` / `lamp_pillar` 已收回 gym。`drawSortie` 不得含 `enabledScope==='gym'` 的行。废止「恰好旧六种」。
 5. `oil_film.legalOccupancies`（CSV / 练习场视图）深等于 `['paint']`。废止「CSV 油膜必须能占空」。
 6. `sound_echo` / `light_scatter` / `space_interval`：仅 `volume`，连续性只含 `monolith` 与/或 `field`。禁止给甲。`enabled_scope=sortie`。
-7. `stalk_clump`（有机）与 `railing_post`（无机）合法占位含 `floor`、不含 `volume`；`ash_veil` 合法占位含 `paint`、不含 `volume`。`enabled_scope=sortie`。
+7. `stalk_clump`（有机）与 `street_wreckage`（无机）合法占位含 `floor`、不含 `volume`，`enabled_scope=sortie`。`railing_post` / `lamp_pillar` 合法占位仍是 `floor`、不含 `volume`，`enabled_scope=gym`。`ash_veil` 合法占位含 `paint`、不含 `volume`，`enabled_scope=sortie`。
 8. `UTTERANCE_DATA.corridor_watching.substrate === 'space_interval'`。出击抽卡**允许**命中该成句；若命中则 `substrate === 'space_interval'` 且 `occupancy === 'volume'`。废止「用油膜占空影子占住抽卡」。
 9. **配对不变量（`check:lexicon` 必断言，保留双条件）：** 概念三类任一行 `enabled_scope=sortie` ⟺ `oil_film.sortieLegalOccupancies` 不含 `volume`。开放后两边都真：三类均为 `sortie` **且** `oil_film.sortieLegalOccupancies === ['paint']`。禁止只翻一半。
 
@@ -233,9 +233,9 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 
 **行表（与 CSV 同步；类不进 CSV，只供阅读）：**
 
-> **I5-S 已落策划表（DEC-088 / 迭代 5）：** CSV 已有 `street_wreckage`（街具残骸）与三种生物基底（`insect_remnant` / `mammal_remnant` / `worm_remnant`），均为 `gym`，不进 `SORTIE_SUBSTRATE_IDS`。**待 I5-J 翻列：** 街具残骸 → `sortie`，`lamp_pillar` / `railing_post` 退出出击。三种生物默认仍 gym。下表出击 12 行在翻列前仍是**现行出击真相**，禁止把目标表写成已经上线。四行字段以 I5-P 定值为准（已进 CSV）。
+> **I5-J 已翻列（DEC-088 / 迭代 5）：** `street_wreckage`（街具残骸）为 `sortie`，进 `SORTIE_SUBSTRATE_IDS`。`lamp_pillar` / `railing_post` 收回 `gym`，不进出击抽卡。三种生物基底（`insect_remnant` / `mammal_remnant` / `worm_remnant`）仍 `gym`。四行字段以 I5-P 定值为准（已进 CSV）。
 
-**I5-S 已落策划表（I5-P 定值；CSV `enabled_scope=gym`。上屏短名未微调。待 I5-J 翻列。）:**
+**I5-P 定值（街具残骸已 sortie；三种生物仍 gym。上屏短名未微调。）:**
 
 | id | 上屏短名（已锁；微调须写理由） | 残余动词 | 合法占位 | 合法连续性 |
 | -- | ---- | -------- | -------- | ---------- |
@@ -255,7 +255,7 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 
 合法连续性：四行都是 `monolith`。菌落 × 占地、场 × 占地仍非法（会挡走、切开连通）。裂片 × 占地矩阵合法但第一版延后；分节是一条身体的骨架语法，不是多核共享注意。有机残影 / 残茎已有的裂片不自动传给三种生物。
 
-对抽卡与陈列馆展区数：多一个合法连续性，该厅会按覆盖 × 感知 × 运动 × 种子再乘一倍。本批不给裂片 / 菌落 / 场，连续性轴不膨胀。出击：I5-S 四行均为 gym，不进抽卡；I5-J 街具残骸替换灯柱 + 栏柱后，出击甲仍只抽单核。陈列馆格子变多只来自 I5-H 甲基体厅 5→7（灯柱厅与栏柱厅合成街具残骸一厅，加三个生物厅），不来自本批连续性。
+对抽卡与陈列馆展区数：多一个合法连续性，该厅会按覆盖 × 感知 × 运动 × 种子再乘一倍。本批不给裂片 / 菌落 / 场，连续性轴不膨胀。出击：街具残骸已替换灯柱 + 栏柱，出击甲仍只抽单核。三种生物不进抽卡。陈列馆格子变多只来自 I5-H 甲基体厅 5→7（灯柱厅与栏柱厅合成街具残骸一厅，加三个生物厅），不来自本批连续性。
 
 旁白读感检查（骨架 `识别。[覆盖深度] [基体] [占位]`，占地加主感知；残余动词按成句短标记那种另开节点。斜杠处必须能停顿。不合格已改动词，未改旁白骨架。不上屏新界面。审美待人终审）：
 
@@ -269,23 +269,23 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 | id | 上屏 | 类 | 残余动词 | 合法占位 | 合法连续性 | enabled_scope |
 | -- | ---- | -- | -------- | -------- | ---------- | ------------- |
 | organic_remnant | 有机残影 | 有机 | 走 | floor | monolith, shards | sortie |
-| lamp_pillar | 灯柱 | 无机 | 亮 | floor | monolith | sortie（待 I5-J 退出出击） |
+| lamp_pillar | 灯柱 | 无机 | 亮 | floor | monolith | gym（I5-J 已退出出击） |
 | doorframe | 门框 | 无机 | 开合 | wall, floor | monolith | sortie |
 | wall_rust | 墙锈 | 无机 | 渗 | wall | monolith, colony | sortie |
 | fungal_mat | 菌毯 | 有机 | 铺 | paint | colony, field | sortie |
 | oil_film | 油膜 | 无机 | 沾 | paint | monolith, colony, field | sortie（出击视图只占漆） |
 | stalk_clump | 残茎 | 有机 | 摇 | floor | monolith, shards | sortie |
-| railing_post | 栏柱 | 无机 | 拦 | floor | monolith | sortie（待 I5-J 退出出击） |
+| railing_post | 栏柱 | 无机 | 拦 | floor | monolith | gym（I5-J 已退出出击） |
 | ash_veil | 灰幕 | 无机 | 覆 | paint | monolith, colony, field | sortie |
 | sound_echo | 余响 | 概念（声音） | 响 | volume | monolith, field | sortie |
 | light_scatter | 散光 | 概念（光线） | 折 | volume | monolith, field | sortie |
 | space_interval | 间距 | 概念（空间关系） | 挤 | volume | monolith, field | sortie |
-| street_wreckage | 街具残骸 | 无机 | 立 | floor | monolith | gym（待 I5-J 翻列出击，替换灯柱 / 栏柱） |
+| street_wreckage | 街具残骸 | 无机 | 立 | floor | monolith | sortie（I5-J 已翻列，替换灯柱 / 栏柱） |
 | insect_remnant | 虫 | 有机 | 爬 | floor | monolith | gym（本迭代默认不翻出击） |
 | mammal_remnant | 哺乳动物 | 有机 | 走 | floor | monolith | gym（本迭代默认不翻出击） |
 | worm_remnant | 大号蠕虫 | 有机 | 拱 | floor | monolith | gym（本迭代默认不翻出击） |
 
-门框占地时运动必须固着，且不得永久封死出生→撤离的唯一通道。灯柱 / 栏柱占地默认固着。禁止把概念基体给甲。
+门框占地时运动必须固着，且不得永久封死出生→撤离的唯一通道。街具残骸占地默认固着。禁止把概念基体给甲。
 
 **出击丁与油膜占空：** 练习场 / CSV 油膜只占漆。丁必须能抽到概念三类之一，**禁止**再抽油膜占空，**禁止**因无基体改抽乙。钉层空的乙↔丁回退仍在（乙空则丁、丁空则乙；两者都失败才本图只有甲并打日志）。练习场句法课下拉直接抽概念三类，看不到油膜占空。
 
@@ -512,11 +512,11 @@ R2-C-data 必须按下面数字改 `contamination-draw.ts` 的 `DIALECT`（禁�
 
 | fragmentTypeId | substrates 加权（id × 权重） | preferYiDing | 词素侧 |
 | -------------- | ---------------------------- | ------------ | ------ |
-| frag-outdoor | fungal_mat 3, ash_veil 3, oil_film 3, space_interval 3, organic_remnant 2, stalk_clump 2, sound_echo 2, light_scatter 2, wall_rust 1, railing_post 1 | ding | 灯柱 / 门框不进表 |
-| frag-clinic | lamp_pillar 3, doorframe 3, wall_rust 2, railing_post 2, light_scatter 2, organic_remnant 1, stalk_clump 1, ash_veil 1, space_interval 1, sound_echo 1 | yi | 菌毯不进表；随风降权 |
-| frag-metro | wall_rust 3, oil_film 2, lamp_pillar 2, doorframe 2, railing_post 2, ash_veil 2, sound_echo 2, space_interval 2, light_scatter 1 | either | 菌毯中权（不进表=中低）；簇栖中权 |
-| frag-library | doorframe 3, wall_rust 2, organic_remnant 2, railing_post 2, sound_echo 2, stalk_clump 1, light_scatter 1, space_interval 1 | yi | 随风降权（**DEC-090 / I6-G：** 已启用，生产路径） |
-| frag-residential | organic_remnant 3, stalk_clump 3, doorframe 2, oil_film 2, railing_post 1, ash_veil 1, space_interval 1, sound_echo 1, light_scatter 1 | yi | 本迭代不启用（DEC-090 抽卡四张；DEC-094：簇是参数点，不再当未实现生成器）。启用前禁止当生产路径 |
+| frag-outdoor | fungal_mat 3, ash_veil 3, oil_film 3, space_interval 3, organic_remnant 2, stalk_clump 2, sound_echo 2, light_scatter 2, wall_rust 1, street_wreckage 1 | ding | 门框不进表（原栏柱 1 并入街具残骸） |
+| frag-clinic | street_wreckage 5, doorframe 3, wall_rust 2, light_scatter 2, organic_remnant 1, stalk_clump 1, ash_veil 1, space_interval 1, sound_echo 1 | yi | 菌毯不进表；随风降权（原灯柱 3 + 栏柱 2 并入街具残骸） |
+| frag-metro | wall_rust 3, oil_film 2, street_wreckage 4, doorframe 2, ash_veil 2, sound_echo 2, space_interval 2, light_scatter 1 | either | 菌毯中权（不进表=中低）；簇栖中权（原灯柱 2 + 栏柱 2 并入街具残骸） |
+| frag-library | doorframe 3, wall_rust 2, organic_remnant 2, street_wreckage 2, sound_echo 2, stalk_clump 1, light_scatter 1, space_interval 1 | yi | 随风降权（**DEC-090 / I6-G：** 已启用，生产路径；原栏柱 2 并入街具残骸） |
+| frag-residential | organic_remnant 3, stalk_clump 3, doorframe 2, oil_film 2, street_wreckage 1, ash_veil 1, space_interval 1, sound_echo 1, light_scatter 1 | yi | 本迭代不启用（DEC-090 抽卡四张；DEC-094：簇是参数点，不再当未实现生成器）。启用前禁止当生产路径（原栏柱 1 并入街具残骸） |
 
 ### 抽卡顺序
 
@@ -656,7 +656,7 @@ CONTAMINATION: {
 
 生产渲染器住 `src/entities/form-renderers/`（I3-B）。**禁止** `RiftScene` import `src/gym/**`。A/B/C 冻结为句法课对照，不是出击标准。`infiltrator-sprite.ts` / `rewriter-sprite.ts` 是默认敌人课 / placeholder 回退，不是裂隙甲的生产路径。
 
-**双路径（I5-B / I5-D / I5-E / I5-F / I5-N / DEC-ARCH-013）：** 句法课与陈列馆甲走基因谱模块（`d/genome/`：节点、共享构件、违规算子、`weld`、按覆盖档选画布）。`street_wreckage` 走街具残骸语法骨架；`doorframe` 走门框语法骨架（中空开口，不是单杆+座）；其它占地基体仍走夹具。算子作用在骨架上（预算渗透 1 / 改写 3 / 覆盖 5；放射只在覆盖档），然后 `weld`，然后才刷漆。**陈列馆检视会切四朝向与四个信号相。基因谱甲消费 `FormVisualPose.facing4` / `signal`（I5-N code 已交 / DEC-098）。** `attachJiaGenomeD` / `JiaGenomeVisual` 走共用 `bakeJiaGenome`（骨架 → 算子 → weld → 朝向/信号相）；浏览默认朝下 + idle，检视按需烤。画面等人检视，不要写成画面 PASS。旧生产甲 `d/jia.ts` 仍消费。I5-N 未交齐人看之前不要开 I5-G。出击默认甲仍走旧 `jia-*`；I5-J 前不升生产 ramp、不改 `RiftScene`。墙皮门框残余仍是乙，不走本条占地语法。
+**双路径收口（I5-J / DEC-ARCH-013）：** 出击 `d-mixed` 占地与句法课 / 陈列馆甲走同一份基因谱模块（`d/genome/`：节点、共享构件、违规算子、`weld`、按覆盖档选画布）。`street_wreckage` 走街具残骸语法骨架；`doorframe` 走门框语法骨架（中空开口，不是单杆+座）；残茎 / 有机残影 / 虫 / 哺乳动物 / 大号蠕虫走各自语法。算子作用在骨架上（预算渗透 1 / 改写 3 / 覆盖 5；放射只在覆盖档），然后 `weld`，然后才刷漆。**陈列馆检视会切四朝向与四个信号相。基因谱甲消费 `FormVisualPose.facing4` / `signal` / `pose.moving`（I5-N / I5-G / DEC-098）。** `attachJiaGenomeD` / `JiaGenomeVisual` 走共用 `bakeJiaGenome`（骨架 → 算子 → weld → 朝向/信号相）；浏览默认朝下 + idle，检视按需烤。画面等人检视，不要写成画面 PASS。旧 `d/jia.ts` / `jia-paint` 只留给 A/B/C 冻结对照，不是出击默认。I5-J **不**升生产 ramp、尽量不改 `RiftScene`。墙皮门框残余仍是乙，不走本条占地语法。三种生物仍 gym，不进出击抽卡。
 
 废止过期 FATAL：「禁止 RiftScene import 候选渲染器」「人选后再接线」「出击画面零改动」。新红线见迭代 3 任务书（每批可回退、连通、听轴恰好 1、战斗 V3、丁 depth < 50、配对不变量、地图课不得打开 `liveMotion`）。
 
@@ -669,7 +669,7 @@ CONTAMINATION: {
 | 字段 | 谁读 | 做什么（语义，不是像素） |
 | ---- | ---- | ------------------------ |
 | `form.substrate` | 方案 D | 剪影族 / 云种 / 漆种。概念三类禁止给甲 |
-| `form.coverage` | 方案 D | 覆盖深度。**现行（出击）：** 甲改叠层浓度，不换孔谱通道。**待更新（DEC-087 / DEC-088）：** 甲改为骨架违规预算（1/3/5）；I5-J 前出击仍走现行。不换孔谱通道这条保持。 |
+| `form.coverage` | 方案 D | 覆盖深度。甲改骨架违规预算（渗透 1 / 改写 3 / 覆盖 5），不换孔谱通道。 |
 | `form.continuity` | 方案 D | 单核 / 多核 / 场的尺度。旁白不上屏本字段 |
 | `form.occupancy` | 方案 D | 占地走者 / 墙皮 / 已烤簇 / 体积云，四选一 |
 | `form.lexemes.motion` | 方案 D + 活宿主 | 步态 / 沿缝 / 簇栖 / 盒移或只形变 |
@@ -681,8 +681,8 @@ CONTAMINATION: {
 | 乙 `pin.attach` | 方案 D | `face` / 法线 / `seamX` / `seamY`。核钉缝坐标，禁止墙格几何中心 |
 | 丁盒（`pin` volume 世界像素） | 方案 D + 活宿主 | 云跟当前盒；混乱/视野跟盒走 |
 | `FormVisualPose.visibility` | 方案 D | 读 `VisibilitySystem.getVisibilityAt`。可见区内核/缝/簇/云须仍能读成「那里有一口」。亮度不在本文终审 |
-| `FormVisualPose.facing4` | 方案 D 甲 | 四向直立换贴图，`GameObject.rotation === 0`。**现行（出击旧皮）：** `d/jia.ts` 已消费。**基因谱甲（I5-N code 已交）：** `JiaGenomeVisual` 消费；浏览态只烤当前朝向（DEC-086），检视才按需烤。画面等人检视。 |
-| `FormVisualPose.signal` | 方案 D 甲 | `idle` / `awake` / `strike` / `inflated`。**现行（出击旧皮）：** `clusterModeOf`。**基因谱甲（I5-N code 已交）：** 已消费；`idle` 与 `strike` 至少要分；禁止四键同一套呼吸且剪影全同。固着基体不巡路滑步。画面等人检视。 |
+| `FormVisualPose.facing4` | 方案 D 甲 | 四向直立换贴图，`GameObject.rotation === 0`。出击默认与练习场基因谱甲：`JiaGenomeVisual` 消费；浏览态只烤当前朝向（DEC-086），检视才按需烤。旧 `d/jia.ts` 只留给 A/B/C。画面等人检视。 |
+| `FormVisualPose.signal` | 方案 D 甲 | `idle` / `awake` / `strike` / `inflated`。出击默认：基因谱甲已消费；`idle` 与 `strike` 至少要分；禁止四键同一套呼吸且剪影全同。固着基体不巡路滑步。旧 `clusterModeOf` 只留给 A/B/C。画面等人检视。 |
 
 丁视觉 depth 40，必须 `< DEPTH.visionMask`（约 50）。方案 D `ready === true` 时：甲藏默认身体（与句法课候选 ready 同一语义）；宿主 `setSkipPaint`。Arcade 碰撞与 AI 保留。出击不要用练习场那颗调试核。
 

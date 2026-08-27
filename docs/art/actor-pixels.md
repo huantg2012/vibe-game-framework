@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director
 created-when: 2026-08-20
 last-modified: 2026-08-23
-purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §5.2；改写体格点合同在 rewriter-sprite.md。裂隙甲出击指针在 contamination-forms.md 方案 D（迭代 5 甲画布待含 48×64，I5-A / I5-J；甲基体轴待 I5-A 按 DEC-088 改写）。
+purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §5.2；改写体格点合同在 rewriter-sprite.md。裂隙甲出击指针在 contamination-forms.md 方案 D（I5-J 生产路径为基因谱模块；画布含 48×64，碰撞仍 20）。
 ---
 
 # 角色程序像素（玩家 · 渗透体 · 改写体）
@@ -20,7 +20,7 @@ purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §
 
 **玩家已接出击（DEC-068）。** 裂隙 / 净化点的 `Player` 与练习场玩家课同一套：加厚工业像素 + 灯尘上飘。旧方块人 `player-sprite.ts` 只剩 boot 别名，不要再接到 `Player`。
 
-**裂隙甲生产路径是方案 D**（DEC-084 / I3-C）。配方在 `docs/art/contamination-forms.md`「方案 D · 甲」：程序像素词法（Canvas 烘焙、四向、不转 `GameObject`），覆盖深度叠簇，族剪影随 `substrate` 变。代码：`src/entities/form-renderers/d/jia-*`（I3-B 迁入生产目录后）。乙 / 丙 / 丁不走本文。
+**裂隙甲生产路径是方案 D 基因谱**（DEC-084 / I3-C / I5-J）。配方在 `docs/art/contamination-forms.md`「方案 D · 甲」与基因谱 HOW：程序像素词法（Canvas 烘焙、四向、不转 `GameObject`），覆盖深度改骨架违规预算，不换孔谱通道。代码：`src/entities/form-renderers/d/genome/`（`attachJiaGenomeD`）。旧 `d/jia-*` 只留给 A/B/C 冻结对照。乙 / 丙 / 丁不走本文。
 
 **`infiltrator-sprite.ts` / `rewriter-sprite.ts` 没有废弃。** 它们仍是：
 
@@ -35,7 +35,7 @@ purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §
 | 玩家 | 32×32 | 20 | 已接 | `?lesson=player`（同外形） | `player-sprite-dense.ts` + `player-lamp-aura.ts` |
 | 渗透体（默认课 / 回退） | 32×32 | 20 | 仅无 form 回退；有 form 的甲走方案 D | 默认课；句法课 placeholder | `infiltrator-sprite.ts` + `contam-flakes.ts` |
 | 改写体（默认课 / 回退） | 32×48 | 20 | 仅无 form 回退；有 form 的甲走方案 D | 默认课；句法课 placeholder | `rewriter-sprite.ts` + `contam-flakes.ts`（含脚下污斑） |
-| 裂隙甲（方案 D） | 32×32 或 32×48（覆盖档待 48×64，DEC-087 / I5-J 前出击仍现行） | 20 | 生产路径（I3-E 接线）；基因谱练习场先行 | 句法课切方案 D 时同一份；迭代 5 甲可先挂基因谱模块 | `form-renderers/d/jia-*`（基因谱另模块，I5-J 升默认） |
+| 裂隙甲（方案 D / 基因谱） | 32×32 / 32×48 / 48×64（按覆盖档） | 20 | 生产路径 `attachJiaGenomeD`（I5-J） | 句法课 / 陈列馆同一份 | `form-renderers/d/genome/` |
 
 木偶顿步在 `enemy-factory.ts`。碰撞偏移见下文「画布变了只改偏移」。方案 D 甲同样：画布变了只改偏移，碰撞边长仍 20。
 
@@ -88,6 +88,6 @@ purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §
 只读指针，配方正文在 `docs/art/contamination-forms.md`「方案 D · 甲」。
 
 - 词法：方案 A（逐像素烘焙 → Image；四向直立；`rotation === 0`）。覆盖深度走改写体叠簇，禁止 `applyCoverageFail`。
-- 字段：`substrate` 换族剪影；`coverage` 换叠簇档；`lexemes.sense` 视锥/听噪/窄视；`fragmentTypeId` 换 ramp；`FormVisualPose.visibility` 出击读迷雾（0 隐藏，>0 可见区内仍须能看成一口）。细节见 contamination-forms「出击视觉消费字段」「迷雾」。
-- 画布 / 碰撞与本文闸门 5–6 相同。禁忌与本文闸门 4 相同（触手、成对眼睛、渗透体面积光、污染侧暖色）。
-- 不要把本节扩写成第二份像素整数表。需要格点时：默认课读 `rewriter-sprite.md` / 渗透体源码；裂隙甲读 `d/jia-recipe` 与 contamination-forms 族变体表。
+- 字段：`substrate` 换骨架语法；`coverage` 改骨架违规预算（1/3/5），不换孔谱通道；`lexemes.sense` 视锥/听噪/窄视；`fragmentTypeId` 换 ramp；`FormVisualPose.visibility` 出击读迷雾（0 隐藏，>0 可见区内仍须能看成一口）。细节见 contamination-forms「出击视觉消费字段」「迷雾」。
+- 画布 / 碰撞与本文闸门 5–6 相同（覆盖档 48×64，碰撞仍 20）。禁忌与本文闸门 4 相同（触手、成对眼睛、渗透体面积光、污染侧暖色）。
+- 不要把本节扩写成第二份像素整数表。需要格点时：默认课读 `rewriter-sprite.md` / 渗透体源码；裂隙甲读 `d/genome/` 与 contamination-forms。

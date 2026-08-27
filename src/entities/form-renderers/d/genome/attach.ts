@@ -1,5 +1,6 @@
 /**
- * 练习场甲基因谱挂载（I5-B / I5-D / I5-E / I5-F / I5-N / I5-G）。出击默认路径禁止走这里，仍走 `attachJiaD`。
+ * 甲基因谱挂载（I5-B / I5-D / I5-E / I5-F / I5-N / I5-G / I5-J）。
+ * 出击 `d-mixed` 占地与练习场句法课 / 陈列馆走同一份 `attachJiaGenomeD`。
  * 街具残骸 / 门框走语法骨架并固着呼吸；残茎 / 有机残影 / 虫 / 哺乳动物 / 大号蠕虫可走，不进固着名单。未填语法的占地仍走夹具。
  * 烘焙走 `bakeJiaGenome`（骨架 → 算子 → weld → 朝向/信号相 → 可走步态）。
  * 可走甲消费 `pose.moving`：检视 walk 帧钉在 `pose.x/y`，禁止巡路滑步冒充步态。
@@ -201,7 +202,7 @@ export function attachJiaGenomeD(ctx: FormAttachContext): FormVisual {
   return new JiaGenomeVisual(ctx);
 }
 
-/** 句法课 / 陈列馆：甲走基因谱，乙丙丁仍走 `d-mixed`。 */
+/** 句法课 / 陈列馆：甲走基因谱（与出击 `d-mixed` 占地同一份），乙丙丁仍走 `d-mixed`。 */
 export function attachGymFormVisual(
   renderer: ContaminationFormRenderer,
   ctx: FormAttachContext,
