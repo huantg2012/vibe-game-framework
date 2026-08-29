@@ -25,7 +25,24 @@
 
   h2{font-size:17px;font-weight:600;color:#fff;margin:0 0 14px;padding-left:12px;border-left:3px solid var(--teal);}
   h3{font-size:14px;font-weight:600;color:var(--teal);margin:18px 0 10px;}
-  section{margin-bottom:44px;}
+  section{margin-bottom:44px;scroll-margin-top:78px;}
+  html{scroll-behavior:smooth;}
+
+  /* 顶部粘性导航 */
+  .topnav{position:sticky;top:12px;z-index:60;background:rgba(10,11,13,0.95);border:1px solid var(--border);border-radius:4px;margin:0 0 22px;box-shadow:0 4px 18px rgba(0,0,0,0.45);}
+  .topnav-inner{display:flex;align-items:stretch;gap:1px;overflow-x:auto;scrollbar-width:thin;padding:0 4px;}
+  .topnav a{flex:0 0 auto;padding:9px 12px;font-size:12px;color:var(--text-dim2);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s,background .15s;}
+  .topnav a:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+  .topnav a.active{color:var(--teal);border-bottom-color:var(--teal);background:rgba(42,230,200,0.06);}
+  .toc-drop{margin-left:auto;position:relative;flex:0 0 auto;}
+  .toc-drop summary{list-style:none;padding:9px 14px;font-size:12px;color:var(--text-dim);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;user-select:none;}
+  .toc-drop summary::-webkit-details-marker{display:none;}
+  .toc-drop summary:hover{color:var(--teal);}
+  .toc-drop[open] summary{color:var(--teal);border-bottom-color:var(--teal);}
+  .toc-drop-body{position:absolute;right:0;top:calc(100% + 4px);width:340px;max-height:68vh;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:7px;box-shadow:0 14px 36px rgba(0,0,0,0.65);z-index:70;}
+  .toc-drop-body a{display:block;padding:6px 9px;font-size:11.5px;color:var(--text-dim);text-decoration:none;border-radius:3px;border-bottom:none;white-space:normal;line-height:1.55;}
+  .toc-drop-body a:hover{color:var(--teal);background:rgba(42,230,200,0.07);}
+  @media(max-width:760px){.toc-drop-body{width:min(78vw,340px);}}
 
   /* 统领原则 */
   .principle{background:linear-gradient(135deg,rgba(204,51,51,0.07),rgba(184,144,64,0.05));border:1px solid rgba(204,51,51,0.25);border-radius:4px;padding:18px 22px;margin-bottom:32px;}
@@ -55,6 +72,33 @@
   .obs.why{background:var(--fail-bg);border-left:3px solid var(--danger);}
   .obs.how{background:var(--pass-bg);border-left:3px solid var(--ok);}
   .obs.strong{background:var(--info-bg);border-left:3px solid var(--teal);}
+  .obs.conflict{background:var(--fail-bg);border:1px solid rgba(204,51,51,0.3);border-left:4px solid var(--danger);border-radius:0 4px 4px 0;}
+
+  /* 三方案抽卡（实际绘制的像素方案，1:1 尺寸放大显示） */
+  .card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 4px;}
+  .card-opt{border:1px solid var(--border);border-radius:4px;padding:10px;background:var(--surface2);display:flex;flex-direction:column;}
+  .card-shot{background:#0d1114;border:1px solid #23262b;border-radius:3px;padding:10px;display:flex;align-items:center;justify-content:center;min-height:120px;margin-bottom:9px;}
+  .card-shot img{image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;max-height:136px;max-width:100%;height:auto;}
+  .card-label{font-size:12px;font-weight:700;color:var(--teal);margin-bottom:5px;}
+  .card-desc{font-size:11.5px;color:var(--text-dim);line-height:1.6;margin-bottom:7px;}
+  .card-trade{font-size:11px;color:var(--text-dim2);line-height:1.6;border-top:1px dashed rgba(255,255,255,0.08);padding-top:7px;margin-top:auto;}
+  .card-trade b{color:var(--warning);}
+  .card-note{font-size:11px;color:var(--text-dim2);margin:8px 0 0;font-style:italic;line-height:1.6;}
+  @media(max-width:900px){.card-row{grid-template-columns:1fr;}}
+
+  /* 地面 tile 变体 */
+  .tile-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:14px 0 4px;}
+  .tile-opt{border:1px solid var(--border);border-radius:4px;padding:8px;background:var(--surface2);}
+  .tile-shot{background:#0d1114;border:1px solid #23262b;border-radius:3px;padding:6px;display:flex;align-items:center;justify-content:center;margin-bottom:7px;}
+  .tile-shot img{image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;width:100%;max-width:88px;height:auto;}
+  .tile-label{font-size:11px;font-weight:700;color:var(--teal);margin-bottom:3px;}
+  .tile-desc{font-size:10.5px;color:var(--text-dim);line-height:1.55;}
+  @media(max-width:900px){.tile-row{grid-template-columns:repeat(3,1fr);}}
+
+  /* 宽幅实例图（地面组合 / 外部 / UI）按 1:1 显示，不拉伸 */
+  .shot-wide{display:block;margin:14px 0 4px;border:1px solid var(--border);border-radius:4px;overflow:hidden;background:#0d1114;line-height:0;}
+  .shot-wide img{display:block;max-width:100%;height:auto;image-rendering:pixelated;image-rendering:-moz-crisp-edges;image-rendering:crisp-edges;}
+  .shot-cap{font-size:11px;color:var(--text-dim2);margin:6px 0 0;font-style:italic;line-height:1.6;}
   .obs .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim2);margin-bottom:5px;display:block;font-weight:600;}
   .obs.why .lbl{color:var(--danger);}
   .obs.how .lbl{color:var(--ok);}
@@ -100,9 +144,27 @@
   <h1>COH 净化点 · 美术表现审核 <span class="sub">v2 · 2026-08-28</span></h1>
   <div class="meta">
     视角：纯美术审美 + 游戏体验 · 不做文档合规检查 · 每条意见配截图证据<br>
-    v2 修订：强化「几何体＝占位」原则 · 裂隙入口重做为空间裂缝 · 补地面自然感方法论 · 外部脑爆 · 面板信息架构重构
+    v2 修订：强化「几何体＝占位」原则 · 裂隙入口重做为空间裂缝 · 补地面自然感方法论 · 外部脑爆 · 面板信息架构重构<br>
+    v2.1 修订：§7 加「与迭代 9 撞车」执行前警告 · §8 加「梯队 ↔ B1–B5 派工批次」映射表
   </div>
 </header>
+
+<nav class="topnav" id="topnav" aria-label="章节导航">
+  <div class="topnav-inner">
+    <a href="#modules" data-sec="modules">1 模块实体</a>
+    <a href="#interaction-points" data-sec="interaction-points">2 交互点</a>
+    <a href="#ground" data-sec="ground">3 地面</a>
+    <a href="#exterior" data-sec="exterior">4 外部</a>
+    <a href="#hud" data-sec="hud">5 HUD</a>
+    <a href="#panels" data-sec="panels">6 交互面板</a>
+    <a href="#player" data-sec="player">7 角色与灯光</a>
+    <a href="#priority" data-sec="priority">8 优先级</a>
+    <details class="toc-drop" id="tocWrap">
+      <summary>小节 ▾</summary>
+      <div class="toc-drop-body" id="tocDrop"></div>
+    </details>
+  </div>
+</nav>
 
 <!-- ================= 统领原则 ================= -->
 <div class="principle">
@@ -135,10 +197,39 @@
     保留各自的几何轮廓（身份识别已经建立），但要在轮廓内建立<strong>可读的物体结构</strong>。
   </p>
 
+  <div class="review-card" style="border-left:3px solid var(--teal);margin-bottom:18px;">
+    <div class="rc-body">
+      <div class="obs strong"><span class="lbl">全场景统一视角公约：45° 伪 3D</span>
+        <strong>为什么不是纯俯视</strong>：纯俯视（正上方看下去）只能看到顶面，
+        物体的"高度"完全丢失——一个反应炉和一个井盖在俯视下是一样的。
+        表现力上限太低，玩家读不出"这是一台立着的机器"。
+        <br>
+        <strong>为什么不是纯侧视</strong>：纯侧视（正前方平视）适合横版游戏，
+        但本作是俯视操作，玩家需要在地图上判断物体的<strong>占地位置</strong>与<strong>相对关系</strong>，
+        侧视会让占地范围失真，也无法表达"绕到它背后"。
+        <br><br>
+        <strong>45° 伪 3D 的落地约定</strong>（本节全部方案图都遵循）：
+        <table class="t" style="margin-top:10px;">
+          <tr><th style="width:20%;">要素</th><th style="width:32%;">规则</th><th>作用</th></tr>
+          <tr><td><b>顶面</b></td><td>俯视可见，但按 y × 0.55 透视压缩</td><td>既保留占地信息，又给出"从上往下看一点"的角度</td></tr>
+          <tr><td><b>侧面</b></td><td>自顶面向下拉出高度，前侧亮 / 后侧暗</td><td>体积感的主要来源——明暗差要拉到 30+ 才读得出来</td></tr>
+          <tr><td><b>高度轴</b></td><td>竖直向上，物体"立"在地上</td><td>区分"设备"与"地面标记"</td></tr>
+          <tr><td><b>接地</b></td><td>底部一道椭圆投影</td><td>唯一且最低成本的"落地"证据，缺了就浮空</td></tr>
+          <tr><td><b>尺度</b></td><td>按重要性分配画布（40×56 / 32×44 / 32×40 / 32×36 / 32×32）</td><td>画布尺寸差异本身就是层级，不只是画得大小不同</td></tr>
+        </table>
+        <p class="card-note">
+          这条公约同时约束<strong>三个模块 + 三个交互点 + 玩家角色</strong>。
+          它是"所有这些东西属于同一个世界"的技术保证——
+          违反它的那个物件，会立刻显得像从别的游戏里抠出来的。
+        </p>
+      </div>
+    </div>
+  </div>
+
   <!-- CORE -->
   <div class="review-card">
     <div class="rc-head">
-      <span class="title">1.1 核心（CORE）— 蓝六边形 → 主反应装置</span>
+      <span class="title">1.1 核心（CORE）— 蓝六边形 → 燃烧薪柴的反应装置</span>
       <span class="grade bad">占位</span>
     </div>
     <div class="rc-body">
@@ -155,46 +246,67 @@
         更糟的是，它缺少<strong>"正在运转"的证据</strong>：没有发光核心、没有能量流动、
         没有散热、没有振动。一台静止的色块无法传达"勉强维持"这个核心氛围。</div>
 
-      <div class="obs how"><span class="lbl">方案：六边形基座 + 中央柱体 + 顶部核心</span>
-        <strong>思路</strong>：把"平面六边形"变成"俯视的立体装置"——底盘 + 主体 + 发光核心三层结构。
-        <ul class="spec-list">
-          <li><b>底盘</b>（保留身份）：六边形，直径 ≈ 32px，<span style="color:#2a4a66">#2a4a66</span>（比当前暗两级，让它退为"基座"而非主体）</li>
-          <li><b>六角加固块</b>：六个角各一个 4×4px 方块，<span style="color:#3a5a76">#3a5a76</span>，暗示安装螺栓/配重块</li>
-          <li><b>主体柱</b>：底盘内一圈的小六边形或圆柱，直径 ≈ 18px，<span style="color:#4488cc">#4488cc</span>（原主色），
-            比底盘亮，形成<strong>从边缘向中心凸起</strong>的体积感</li>
-          <li><b>散热槽</b>：主体上 2-3 条横向暗线（1px，<span style="color:#1a3a56">#1a3a56</span>，间距 5px），
-            这是"工业感"最廉价也最有效的信号</li>
-          <li><b>发光核心</b>：顶面中心 3×3px，<span style="color:#aaddff">#aaddff</span>，
-            alpha 在 0.6↔1.0 之间缓慢脉动（周期 2.5s）— <strong>这是整个场景的"心跳"</strong></li>
-          <li><b>能量传导</b>：从核心向六个方向各 1 条极细亮线（<span style="color:#6699dd">#6699dd</span>，alpha 0.12），
-            到主体边缘为止。暗示"能量从中心流向底盘"</li>
-          <li><b>外接管线</b>：从底盘向 1 个方向（朝向储藏模块）延伸一条 2px 暗灰管线（<span style="color:#3a3d42">#3a3d42</span>），
-            长度 12-16px。暗示"这些设备是互相连接的系统"，而不是三个孤立的符号</li>
-          <li><b>HP 受损</b>：核心发光减弱 + 闪烁频率加快；主体出现从边缘向中心的裂纹（用现有的 <code>CRACK_LINE_OFFSETS</code> 逻辑，但加粗到 2px 并延长）</li>
-        </ul>
+      <div class="obs how"><span class="lbl">三个候选方案 —— 均保留六边形轮廓做身份，差异在内部体量语言</span>
+        同一形状的三种"存在方式"：<strong>A 凸起</strong>（设备凸出地面）/
+        <strong>B 塔式</strong>（高瘦炉体，火焰自顶部烟囱溢出）/
+        <strong>C 开放式</strong>（炉口敞开，火焰直接冒出来）。
+        <br><br>
+        <strong>设定纠正（本轮最重要的一处）</strong>：核心的真相是<strong>燃烧薪柴</strong>，
+        而薪柴取自裂隙——也就是<strong>污染物本身</strong>。所以它必须是
+        <strong>炉 / 反应装置</strong>，不是"能量柱"或"控制台"；
+        光也必须与污染源同源，用 <span style="color:#2ae6c8">teal</span> 而非原来的蓝色。
         <br>
-        <strong>参考信号</strong>：Dishonored 的工业科技（几何骨架 + 少量内部线条）·
-        Return of the Obra Dinn 的仪表盘（功能极简但有细节密度）·
-        Alien Isolation 的终端设备（旧、有使用痕迹、在工作）
+        <strong>一束诡异的 teal 色火焰，本身就是叙事</strong>：
+        玩家一眼就知道烧的不是普通柴火——"我们在用污染维持自己不被污染"，
+        这句话不用一个字就说清楚了。
       </div>
 
-      <pre class="diagram">俯视结构示意（非等比，示意层级关系）：
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/core-a-furnace.png" alt="核心方案 A 炉膛式" loading="lazy"></div>
+          <div class="card-label">A · 炉膛式</div>
+          <div class="card-desc">六边形底座 + 六棱炉体 + <strong>正面大观察窗（能直接看见里面在烧）</strong> + 顶部排气口 + 侧面燃料输入管。</div>
+          <div class="card-trade"><b>取</b>：观察窗把"燃烧"这个核心真相直接展示出来，信息最直白；45° 下炉体高度清晰可读。<br><b>舍</b>：窗口占了正面大半，结构细节被压缩；火焰是静态帧，动效依赖观察窗内的循环动画。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/core-b-tower.png" alt="核心方案 B 塔式" loading="lazy"></div>
+          <div class="card-label">B · 塔式</div>
+          <div class="card-desc">高瘦炉体 + 三道箍环 + 顶部烟囱（<strong>teal 火焰自顶部溢出</strong>）+ 底部观察窗 + 侧面燃料管。</div>
+          <div class="card-trade"><b>取</b>：轮廓最高，"塔"的识别度最强；<strong>烟囱火舌是最强的"运转中"信号</strong>，远处也看得见。<br><b>舍</b>：底部细节被自身遮挡，利用率低；瘦高轮廓在网格中占地小，存在感依赖高度。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/core-c-open.png" alt="核心方案 C 开放式" loading="lazy"></div>
+          <div class="card-label">C · 开放式</div>
+          <div class="card-desc">六边形底座 + <strong>敞开的燃烧池</strong> + 三束 teal 火焰 + 顶沿六个固定卡榫 + 燃料输入。</div>
+          <div class="card-trade"><b>取</b>：<strong>最能读"在烧东西"</strong>，火焰完全可见；敞开式最贴"勉强维持"的粗粝感，像临时搭的。<br><b>舍</b>：火焰最抢眼，可能压过另两个模块；缺少"密封容器"的安全感，与"精密设备"的调性有冲突。</div>
+        </div>
+      </div>
 
-        <span class="hl">    ╱╲        </span>  ← 六角加固块（4×4，6个）
-      <span class="hl">  ╱    ╲      </span>
-     <span class="hl">│  ┌──┐  │  </span>  ← 主体柱（直径18，#4488cc）
-    <span class="hl">│  │<span class="wt">◉</span> │  │ </span>  ← <span class="wt">◉</span> 发光核心 3×3 #aaddff 脉动
-     <span class="hl">│  └──┘  │  </span>      散热槽：主体上2-3条横暗线
-      <span class="hl">  ╲    ╱      </span>
-        <span class="hl">    ╲╱  ──    </span>  ← 外接管线（2px，朝向储藏）
-        <span class="wn">▬▬▬▬▬▬</span>        ← HP 条（模块正下方 4px）</pre>
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">绘制说明</span>
+        三张均为 <strong>32×40 实际像素</strong>（比另两模块高——它是"塔"，不是"箱"）、
+        1:1、透明底、硬边，<strong>可直接进游戏</strong>；页面按 ~4× 放大显示（pixelated，不插值）。
+        <br><br>
+        <strong>配色已按设定改为污染源同源</strong>：
+        <table class="t" style="margin-top:8px;">
+          <tr><th style="width:26%;">部位</th><th style="width:26%;">颜色</th><th>说明</th></tr>
+          <tr><td>炉体结构</td><td><span style="color:#3a3d42">#3a3d42</span> / <span style="color:#2c2e33">#2c2e33</span></td><td>金属灰，保持工业感，让火焰成为唯一光源</td></tr>
+          <tr><td>火焰外焰</td><td><span style="color:#1a6b5c">#1a6b5c</span> → <span style="color:#2ae6c8">#2ae6c8</span></td><td>与污染同源的 teal，替代原蓝色 #4488cc</td></tr>
+          <tr><td>火焰内焰</td><td><span style="color:#7fffee">#7fffee</span> → <span style="color:#dffff8">#dffff8</span></td><td>白热，只占 1–2px，是"高温"的读数</td></tr>
+          <tr><td>观察窗玻璃</td><td><span style="color:#0e202a">#0e202a</span></td><td>极暗衬托，让火焰成为窗内唯一亮点</td></tr>
+        </table>
+        <p class="card-note">
+          <strong>本轮踩的坑</strong>：第一版想用 <code>alpha=0</code> 的矩形当占位，
+          结果 PIL 的 <code>Draw.rectangle</code> 是<strong>直接替换像素</strong>而非 alpha 混合，
+          把刚画好的火焰整个抹成了透明。教训：在 PIL 里"不画"就是别调用，不要用透明矩形占位。
+        </p>
+      </div>
     </div>
   </div>
 
   <!-- STORAGE -->
   <div class="review-card">
     <div class="rc-head">
-      <span class="title">1.2 储藏（STORAGE）— 橙正方形 → 储物集装箱</span>
+      <span class="title">1.2 储藏（STORAGE）— 橙正方形 → SCP 式薪柴收容单元</span>
       <span class="grade bad">占位</span>
     </div>
     <div class="rc-body">
@@ -216,44 +328,67 @@
         净化器的 teal 可以解释为污染处理——储藏的橙光来自哪里？
         如果是"指示灯"，那灯在哪里？没有光源的发光会破坏画面的物理可信度。</div>
 
-      <div class="obs how"><span class="lbl">方案：等轴透视的箱体顶视（顶面 + 正面错位）</span>
-        <strong>思路</strong>：用两个错位矩形模拟箱体的<strong>顶面 + 正面</strong>，建立体积感。这是 2D 顶视游戏表达"容器"最经典的手段。
-        <ul class="spec-list">
-          <li><b>顶面</b>：正方形 24×24，<span style="color:#cc8844">#cc8844</span>（原主色），位于偏上</li>
-          <li><b>正面</b>：矩形 24×10，<span style="color:#aa6622">#aa6622</span>（比顶面暗两级），位于顶面下方，<strong>向右错位 4px</strong> — 这个错位就是"厚度"的视觉信号</li>
-          <li><b>分层线</b>：正面画 1-2 条横线（1px，<span style="color:#883f11">#883f11</span>），暗示"抽屉 / 隔层 / 堆叠的物品"</li>
-          <li><b>锁扣/把手</b>：顶面中央一个 5×5px 方块，<span style="color:#ddaa66">#ddaa66</span>，
-            内部可以有一个更暗的 2×2 点（<span style="color:#553311">#553311</span>）作为"锁孔"</li>
-          <li><b>指示灯（关键）</b>：顶面右上角一个 3×3px 方块，<span style="color:#e0a848">#e0a848</span>，
-            慢速闪烁（周期 3s，亮 0.3s）。<strong>这是橙色光的物理来源</strong> — 给暖色一个解释</li>
-          <li><b>容量可视化</b>：正面可以画一条竖直的"液位线"（1px，<span style="color:#ddaa66">#ddaa66</span>），
-            其高度绑定当前存储的薪柴量。这让储藏成为唯一一个<strong>用视觉反映游戏状态</strong>的模块</li>
-          <li><b>HP 受损</b>：箱体角部出现凹陷（用暗色三角切角）；正面分层线断裂</li>
-        </ul>
+      <div class="obs how"><span class="lbl">三个候选方案 —— 储藏的语义核心是"容积"，三种截然不同的容器语言</span>
+        <strong>A 封闭箱体</strong>（东西藏起来，靠错位表达厚度）/
+        <strong>B 开放货架</strong>（东西露出来，物资即信息）/
+        <strong>C 立式收容舱</strong>（高舱体，大面积观察窗）。
+        <br><br>
+        <strong>设定纠正</strong>：这里存的<strong>不是玩家的装备</strong>，
+        是<strong>薪柴</strong>——也就是从裂隙带回的污染物。
+        所以它不该是暗黑like 的宝箱/装备箱，而应该是
+        <strong>SCP 基金会式的收容单元</strong>：
+        厚重、密封、带编号、有警示标识、能透过观察窗看见里面那东西还在。
         <br>
-        <strong>为什么这样有效</strong>：错位矩形 → 立刻读作"有厚度的物体"；
-        分层线 → 读作"容器"；指示灯 → 给暖色一个理由；液位线 → 让物体参与游戏状态反馈。
-        四个元素叠加，一个正方形就变成了一个箱子。
+        <strong>关键词</strong>：收容（containment），不是收纳（storage）。
+        玩家对它的情绪应该是"这玩意儿被关在里面"，而不是"我的东西放在这里"。
       </div>
 
-      <pre class="diagram">俯视结构示意：
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/storage-a-canister.png" alt="储藏方案 A 密封罐" loading="lazy"></div>
+          <div class="card-label">A · 密封罐（横卧）</div>
+          <div class="card-desc">圆柱罐体 + <strong>正面观察窗（里面是薪柴）</strong> + 警示环带 + 顶阀 + 两侧加固肋 + 铆钉。</div>
+          <div class="card-trade"><b>取</b>：圆润罐体最像"压力容器"，收容感最强；观察窗让内部可见但保持密封。<br><b>舍</b>：丢失了方形身份编码；罐体弧面在像素下需要靠箍环破形，否则像色块。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/storage-b-containment.png" alt="储藏方案 B 收容箱" loading="lazy"></div>
+          <div class="card-label">B · 收容箱（方正）</div>
+          <div class="card-desc">厚重金属箱 + <strong>双侧多重锁扣</strong> + 编号铭牌 + 观察窗 + 底部警示斜纹 + 四角铆钉。</div>
+          <div class="card-trade"><b>取</b>：<strong>最贴 SCP 收容单元</strong>——编号、多重锁、警示带三件套齐了；保留方形轮廓，既有编码不用动。<br><b>舍</b>：方形与"容器"的读感偏弱，容易看成普通货箱；细节多，依赖描边才不糊。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/storage-c-vault.png" alt="储藏方案 C 立式收容舱" loading="lazy"></div>
+          <div class="card-label">C · 立式收容舱</div>
+          <div class="card-desc">高舱体 + <strong>大面积观察窗（分两格）</strong> + 顶部六螺栓密封盖 + 侧面加强柱 + 警示带。</div>
+          <div class="card-trade"><b>取</b>：观察窗最大，<strong>内部薪柴的存量变化在世界内直接可读</strong>；立式轮廓在三个模块里最独特。<br><b>舍</b>：最高，可能压过核心的体量感；密封盖螺栓在 32px 下偏碎。</div>
+        </div>
+      </div>
 
-    <span class="wn">┌──────────┐</span>   ← 顶面 24×24 #cc8844（偏上）
-    <span class="wn">│        <span class="wt">◉</span>│</span>   ← <span class="wt">◉</span> 指示灯 3×3 #e0a848（右上角，慢闪）
-    <span class="wn">│   ┌──┐   │</span>   ← 锁扣 5×5 #ddaa66（顶面中央）
-    <span class="wn">└───┼──┼───┘</span>
-        <span class="wn">└──────────┘</span>  ← 正面 24×10 #aa6622（向右错位4px = 厚度）
-        <span class="wn">────────────</span>  ← 分层线 ×1-2
-        <span class="wn">▬▬▬▬▬▬▬▬▬▬</span>  ← HP 条
-        
-    容量可视化：正面左侧画一条竖直"液位线"，高度 = 当前薪柴/容量</pre>
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">绘制说明</span>
+        三张均为 <strong>32×36 实际像素</strong>、1:1、透明底、硬边，可直接进游戏。
+        <br><br>
+        <strong>收容感是怎么做出来的</strong>（四个信号，缺一不可）：
+        <table class="t" style="margin-top:8px;">
+          <tr><th style="width:24%;">信号</th><th style="width:30%;">实现</th><th>心理作用</th></tr>
+          <tr><td><b>密封</b></td><td>多重锁扣 / 六螺栓顶盖 / 加固肋</td><td>"打不开"——它是被关住的</td></tr>
+          <tr><td><b>编号</b></td><td>铭牌上的刻痕（抽象为短竖线）</td><td>被登记在册，是"项目"不是"箱子"</td></tr>
+          <tr><td><b>警示</b></td><td>暗黄斜纹 <span style="color:#8a7a3a">#8a7a3a</span>（不用亮黄）</td><td>危险，但压得住暗色调</td></tr>
+          <tr><td><b>可见</b></td><td>观察窗内的 teal 微光</td><td>看得到里面那东西还在——恐怖感来源</td></tr>
+        </table>
+        <p class="card-note">
+          <strong>关键取舍</strong>：观察窗内的光必须<strong>克制</strong>。
+          第一版我画了满窗的 teal，看起来像"整个箱子都在发光"，收容感全失，
+          变成了能量罐。改小到只透一点之后，"里面有东西被关着"的感觉才出来——
+          <strong>收容的恐怖在于克制，不在于展示</strong>。
+        </p>
+      </div>
     </div>
   </div>
 
   <!-- PURIFIER -->
   <div class="review-card">
     <div class="rc-head">
-      <span class="title">1.3 净化器（PURIFIER）— 三角锥台 → 污染处理装置</span>
+      <span class="title">1.3 净化器（PURIFIER）— 三角锥台 → 神秘学空气净化器</span>
       <span class="grade meh">方向对，需深化</span>
     </div>
     <div class="rc-body">
@@ -279,9 +414,9 @@
         一个净化装置应该有<strong>流动感</strong>——有什么东西被吸入、被处理、被排出。
         当前是完全静态的。</div>
 
-      <div class="obs how"><span class="lbl">方案：控制体量 + 增强双层 + 加入"工作中"的动效</span>
+      <div class="obs how"><span class="lbl">三方案共享的技术规格 —— 三个形态候选见下</span>
         <ul class="spec-list">
-          <li><b>缩小 15%</b>：让视觉重量低于核心。三角形是强势形状，需要主动压制</li>
+          <li><b>控制体量</b>：让视觉重量低于核心。三角形是强势形状，需要主动压制</li>
           <li><b>内层提亮</b>：从 <span style="color:#0e4a3f">#0e4a3f</span> → <span style="color:#1a6b5c">#1a6b5c</span> 或更亮。
             "双层"必须在任何距离都可辨，否则这个设计就白做了</li>
           <li><b>三角锚点</b>：外层三角三个角各一个 2×2px 圆点，<span style="color:#2ae6c8">#2ae6c8</span>。
@@ -295,6 +430,51 @@
             下落 8-12px 后 alpha 渐隐。<strong>极克制</strong>——同时最多 2-3 个粒子存在</li>
           <li><b>HP 受损</b>：液面移动变得不规则（速度忽快忽慢 + 偶尔停顿）；粒子变得断断续续</li>
         </ul>
+      </div>
+
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/purifier-a-crystal.png" alt="净化器方案 A 晶体塔" loading="lazy"></div>
+          <div class="card-label">A · 晶体塔（立式过滤）</div>
+          <div class="card-desc">六边形基座 + 立柱 + <strong>三层悬浮晶体环（由大到小）</strong> + 顶部核心 + 环绕的空气微粒。</div>
+          <div class="card-trade"><b>取</b>：<strong>悬浮环天然带"过滤层"的读感</strong>，空气自下吸入、自上排出一眼就懂；动效接口最多（环的转速/亮度＝负载）。<br><b>舍</b>：完全丢失三角轮廓，身份编码要重做；悬浮元素需要动画才成立，静帧下略散。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/purifier-b-rings.png" alt="净化器方案 B 悬浮环装置" loading="lazy"></div>
+          <div class="card-label">B · 悬浮环装置（同心旋转）</div>
+          <div class="card-desc">中心轴 + <strong>三道同心悬浮环（断续描边＝旋转虚影）</strong> + 三枚悬浮符石 + 被吸入的微粒。</div>
+          <div class="card-trade"><b>取</b>：<strong>最神秘学</strong>——同心环＋符石，完全不是工业设备；旋转虚影用静帧就表达了"在转"。<br><b>舍</b>：最不像"机器"，与场景的工业基调有张力；圆形与裂隙 C 方案、成长祭坛有轻微撞形。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/purifier-c-rune.png" alt="净化器方案 C 符文柱" loading="lazy"></div>
+          <div class="card-label">C · 符文柱（古老石柱）</div>
+          <div class="card-desc">六边形基座 + 方柱 + <strong>三圈符文带</strong> + 顶部气流口 + 向上排出的气流 + 吸入的微粒。</div>
+          <div class="card-trade"><b>取</b>：最"古老"，与"神秘学"最贴；<strong>方形柱体是唯一保留三角锥台体量感的方案</strong>，改动最小。<br><b>舍</b>：符文笔画在 32px 下需要简化到抽象符号，细节靠脑补；石质与另两模块的金属感不统一。</div>
+        </div>
+      </div>
+
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">绘制说明 · 设定纠正</span>
+        三张均为 <strong>32×44 实际像素</strong>（三个模块里最高——它是"塔"）、1:1、透明底、硬边，可直接进游戏。
+        <br><br>
+        <strong>上一版错在哪</strong>：把净化器画成了<strong>污水过滤器</strong>
+        （漏斗 / 喷淋 / 液面 / 排放口）。
+        但它净化的其实是<strong>渗透进净化点的微量污染</strong>——是<strong>气态的、弥漫的</strong>东西，
+        不是一管子污水。正确的比喻是<strong>神秘学空气净化器</strong>：
+        吸入空气 → 过滤 → 排出，全程没有"液体"参与。
+        <br><br>
+        <strong>改对之后的三个共同特征</strong>：
+        <table class="t" style="margin-top:8px;">
+          <tr><th style="width:24%;">特征</th><th style="width:34%;">实现</th><th>为什么</th></tr>
+          <tr><td><b>立式</b></td><td>高瘦，不再是"宽底座＋锥台"</td><td>空气处理是垂直流：下进上出</td></tr>
+          <tr><td><b>悬浮/旋转</b></td><td>晶体环、同心环、断续描边</td><td>替代风扇叶片——不用机械语言也能表达"在吸"</td></tr>
+          <tr><td><b>微粒</b></td><td>周围散布的 teal 小点</td><td>"空气在流动"的唯一视觉证据，成本极低</td></tr>
+        </table>
+        <p class="card-note">
+          <strong>微粒是关键</strong>：悬浮环本身是静止的（静帧），
+          真正让人读出"在换气"的是那些被吸入的小点。
+          这也是三个方案里<strong>最便宜、最有效的一笔</strong>——
+          十几个像素就把"它在工作"说清楚了。
+        </p>
       </div>
     </div>
   </div>
@@ -364,7 +544,7 @@
   <!-- 裂隙入口 -->
   <div class="review-card">
     <div class="rc-head">
-      <span class="title">2.1 裂隙入口 — 重做为「空间裂缝 / 传送门」</span>
+      <span class="title">2.1 裂隙入口 — 空间裂缝（强化：撕裂感 + 空间异常）</span>
       <span class="grade bad">原方案欠考虑，重做</span>
     </div>
     <div class="rc-body">
@@ -385,15 +565,16 @@
         它应该是整个净化点<strong>视觉上最引人注目、最超自然、最有分量的东西</strong>——
         因为它是通往游戏主体内容（裂隙探索）的门。</div>
 
-      <div class="obs how"><span class="lbl">方案：垂直空间裂缝（Rift / Portal）</span>
-        <strong>核心视觉概念</strong>：一道<strong>竖直的、不稳定的现实裂口</strong>，
+      <div class="obs how"><span class="lbl">三个形态候选共用的技术规格（形态见下）</span>
+        <strong>核心视觉概念</strong>：一道<strong>不稳定的现实裂口</strong>，
         边缘不是平滑椭圆而是"撕裂"的不规则锯齿；
         内部不是黑色而是<strong>缓慢流动/闪烁的异质色块</strong>（透出裂隙世界的一角）；
         周围有<strong>溢出的光照亮地面</strong>。
 
         <ul class="spec-list">
-          <li><b>整体形态</b>：竖直纺锤形 /  elongated diamond，宽 ≈ 18-22px，高 ≈ 32-36px。
-            <strong>明显大于现在的小圆点</strong>（现在 ≈ 14px 直径）— 它是门，不是标记</li>
+          <li><b>尺度（关键）</b>：画布 40×56，裂口本体宽 ≈ 18-22px、高 ≈ 36-42px。
+            <strong>明显大于现在的小圆点</strong>（现在 ≈ 14px 直径）— 它是门，不是标记。
+            光这一个尺寸，就把"裂隙 ≫ 其他交互点"的层级立住了</li>
           <li><b>撕裂边缘</b>：不是平滑曲线。用 <strong>8-12 段短线段</strong>拼成不规则轮廓，
             左右两侧不对称，有几处"尖刺"向外突出 2-4px。
             读作"现实被暴力撕开"，而非"设计好的椭圆门"</li>
@@ -424,42 +605,123 @@
         Stranger Things 的逆世界裂缝（撕裂边缘 + 内部异质）
       </div>
 
-      <pre class="diagram">正视结构示意：
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/rift-a-tear.png" alt="裂隙方案 A 垂直撕裂" loading="lazy"></div>
+          <div class="card-label">A · 垂直撕裂</div>
+          <div class="card-desc">12 段锯齿边（左右完全不对称）+ <strong>径向深度渐变</strong>（边缘暗→中心亮）+ 灼热的撕裂边缘 + <strong>空间拉扯</strong>（周围地面被拽向裂缝）+ 剥落碎片 + 地面溢出光。</div>
+          <div class="card-trade"><b>取</b>：最像"撕开"而非"打开"；<strong>边缘是画面最亮处</strong>，远处也一眼可辨；空间拉扯让"靠近它空间就不正常"成立。<br><b>舍</b>：竖向长条可能被误读为柱子/障碍，需靠辉光与地面光斑强调"可进入"。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/rift-b-layers.png" alt="裂隙方案 B 多层裂口" loading="lazy"></div>
+          <div class="card-label">B · 多层裂口</div>
+          <div class="card-desc">现实被撕开<strong>三层</strong>，由外到内逐层收窄、逐层变亮，每层露出不同的东西；层与层之间有悬浮的剥落薄片。</div>
+          <div class="card-trade"><b>取</b>：<strong>"层"是表达"这是空间而非平面"最有效的手法</strong>——三层嵌套让厚度一眼可读；信息层次最丰富。<br><b>舍</b>：三层轮廓在小尺寸下容易糊成一团；元素最多，需最克制地用色。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/rift-c-collapse.png" alt="裂隙方案 C 空间崩塌" loading="lazy"></div>
+          <div class="card-label">C · 空间崩塌</div>
+          <div class="card-desc">不是"门"，而是<strong>这里的空间正在塌进去</strong>：不规则核心 + 周围地面碎裂成块 + <strong>碎块正被吸入的坠落轨迹</strong>。</div>
+          <div class="card-trade"><b>取</b>：动态感最强——<strong>坠落轨迹让静帧也读作"正在发生"</strong>；最不像"设计出来的门"，危险感最足。<br><b>舍</b>：形态最"散"，没有明确的轮廓，识别度依赖碎块的排布；不适合做"入口"的隐喻（更像灾害现场）。</div>
+        </div>
+      </div>
 
-         <span class="hl">╱╲</span>            ← 撕裂顶（不规则尖刺）
-       <span class="hl">╱<span class="wt">·</span> ╲</span>           ← <span class="wt">·</span> 内部亮点 #7fffee 随机闪烁
-      <span class="hl">│ <span class="wn">▓▒</span> │</span>          ← <span class="wn">▓▒</span> 异质色块 #1a6b5c 缓慢流动
-      <span class="hl">│<span class="wt">·</span><span class="wn">▒▓</span> │</span>          ← 边缘辉光 #2ae6c8 呼吸
-       <span class="hl">╲<span class="wn">▒</span> ╱</span>           ← 撕裂边缘：8-12段不规则短线段
-        <span class="hl">╲╱</span>            ← 撕裂底
-      <span class="hl">≈≈≈≈≈≈≈≈</span>        ← <span class="hl">≈</span> 地面溢出光斑（椭圆 24×10，alpha 0.15）
-     <span class="hl">～～～～～～～～</span>      ← <span class="hl">～</span> 空间扭曲：周围地面 1-2px 偏移
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">这一组重做了两次，值得记下迭代过程</span>
+        <table class="t" style="margin-top:8px;">
+          <tr><th style="width:14%;">版本</th><th style="width:38%;">内部做法</th><th>结果</th></tr>
+          <tr><td><b>v1</b></td><td>随机 teal 斑块</td><td>✗ 读作<strong>噪点</strong>，不读作异界</td></tr>
+          <tr><td><b>v2</b></td><td>径向渐变 + 5 根纵向"柱" + 6 处亮点</td><td>✗ 柱子<strong>打断了渐变</strong>，整体读作"花"</td></tr>
+          <tr><td><b>v3</b></td><td>11 层平滑渐变 + 3 道极淡竖向纹理（alpha 22–48）+ 2 处亮点</td><td>✓ 读作<strong>有厚度的空间</strong></td></tr>
+        </table>
+        <p class="card-note">
+          <strong>最关键的一处修正</strong>：撕裂边缘原本用暗色，结果裂口"消失"在画面里。
+          改成<strong>亮 teal 之后才对</strong>——
+          裂缝是光透出来的地方，它应该是画面最亮处，不是最暗处。
+        </p>
+      </div>
 
-   尺度层级：裂隙 ≫ 防御 ≈ 成长 > 加厚
-   当前实现：四者等大 — 这是需要修正的核心问题</pre>
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">绘制说明 · 这一组踩的坑最多</span>
+        三张均为 <strong>40×56 实际像素</strong>、1:1、透明底，可直接进游戏 ——
+        注意它们是<strong>四个交互点里唯一用 40×56 画布的</strong>，
+        尺寸差异本身就是"这里最重要"的信号。
+        <br><br>
+        <strong>坑 1 — 内部比背景还黑</strong>：第一版内部填充用
+        <span style="color:#0a1a18">#0a1a18</span>（明度 26），而场景背景是
+        <span style="color:#0d1114">#0d1114</span>（明度 20）。结果裂缝内部<strong>完全消失，
+        变成一个透明的洞</strong>，彻底违背"内部要透出另一个空间"的意图。
+        修正：内部底色提到 <span style="color:#102620">#102620</span>（明度 38），
+        再叠 15 块斑块 + 6 个亮点。
+        <br>
+        <strong>坑 2 — 斑块溢出形状</strong>：第二版内部填满了，但斑块是用<strong>圆盘</strong>画的，
+        半径远大于纺锤形宽度，直接糊到了轮廓外面，整张图变成一块 teal 色块。
+        修正：改用 <strong>mask 裁剪</strong>，斑块只在裂缝轮廓内生效。
+        <br>
+        <strong>坑 3 — 溢出光喧宾夺主</strong>：第一版底部光斑又大又亮，比裂缝本体还显眼。
+        修正：alpha 压到 26/38，面积缩小 —— <strong>光斑是"接地"的证据，不是主体</strong>。
+      </div>
     </div>
   </div>
 
   <!-- 防御 -->
   <div class="review-card">
     <div class="rc-head">
-      <span class="title">2.2 防御配置点 — 操作台 / 武器架</span>
-      <span class="grade good">方向确认 ✓</span>
+      <span class="title">2.2 供奉台（原「防御配置点」）— 供奉自裂隙取得的污染物</span>
+      <span class="grade danger">设定纠正 ⚠ 方向错了，重做</span>
     </div>
     <div class="rc-body">
-      <div class="obs how"><span class="lbl">方案（v1 方向正确，细化执行）</span>
+      <div class="obs why"><span class="lbl">上一版错在哪</span>
+        我把它当成了<strong>「武器架 / 操作台」</strong>去设计，画了槽位、弹药箱、炮塔基座。
+        但在这个游戏里，这里供奉的是<strong>从裂隙带回的污染物</strong>——
+        它是<strong>献祭与转化的场所</strong>，不是军械库。
+        <br><br>
+        方向错了，整组方案作废重画。武器、槽位、支臂这些元素全部拿掉。
+      </div>
+      <div class="obs how"><span class="lbl">新方向 —— 三个形态候选，共用规则先说</span>
         <ul class="spec-list">
-          <li><b>基础形态</b>：扁平梯形台面（上宽 18px / 下宽 14px / 高 8px），俯视角。读作"操作台"</li>
-          <li><b>槽位凹槽</b>：台面上 3 个小矩形凹槽（每个 4×3px，<span style="color:#151a1e">#151a1e</span>），
-            代表武器/残骸槽位。<strong>当前为空时显示为暗坑，装满后显示对应物品的小图标</strong>——
-            这让防御状态在世界内就可读，不必打开面板</li>
-          <li><b>配色</b>：主体金属灰 <span style="color:#2a2d32">#2a2d32</span>（保持不变的工业感），
-            边缘线紫色 <span style="color:#8866cc">#8866cc</span> — <strong>仅在玩家进入交互半径时亮起</strong>
-            （平时 alpha 0.15，靠近时 0.7）。这样紫色的出现本身就成为一个信号</li>
-          <li><b>指示灯</b>：台面一侧 2 个微小指示灯（2×2px，<span style="color:#8866cc">#8866cc</span>），慢闪（周期 2.5s，错相）</li>
-          <li><b>接地</b>：台面下方一条 1px 的暗色投影线（宽 20px，alpha 0.25）</li>
-          <li><b>有内容时</b>：槽位凹槽内出现小色块（对应装备的残骸），并且台面下方的投影加深</li>
+          <li><b>尺度</b>：32×32 画布，明显小于裂隙（40×56）、与成长祭坛相当</li>
+          <li><b>核心元素</b>：<strong>台面/托盘 + 供品 + 符文</strong>三件套。
+            其中<strong>供品必须是污染物</strong>（teal 发光的晶体／团块），
+            这是它区别于"普通桌子"的唯一特征</li>
+          <li><b>供品的表现</b>：可悬浮（＝仪式进行中）或置于凹槽（＝已供奉）。
+            <strong>供奉数量直接可见</strong>——玩家在世界内就能知道还差几份</li>
+          <li><b>符文</b>：刻在台面/基座上，用 teal 或暖色，是"仪式场所"的识别信号</li>
+          <li><b>交互高亮</b>：靠近时符文亮起（平时 alpha 0.15），而不是整个台子发光</li>
+          <li><b>接地</b>：底部投影。有供品时投影加深</li>
         </ul>
+      </div>
+
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/offering-a-stone.png" alt="供奉台方案 A 石制供台" loading="lazy"></div>
+          <div class="card-label">A · 石制供台</div>
+          <div class="card-desc">六边形厚石台 + 中央供奉凹槽 + <strong>悬浮的供品晶体（teal）</strong> + 台面六道放射符文 + 四支脚。</div>
+          <div class="card-trade"><b>取</b>：<strong>悬浮供品＝"仪式正在进行"</strong>，动效接口最自然（悬浮高度/辉光＝进度）；六边形与核心的底座语言呼应，像同一批造的。<br><b>舍</b>：与核心的六边形有撞形风险，需靠尺寸和供品区分；石头材质与场景工业感略冲突。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/offering-b-tray.png" alt="供奉台方案 B 金属托盘" loading="lazy"></div>
+          <div class="card-label">B · 金属托盘</div>
+          <div class="card-desc">浅盘 + <strong>三个供奉位（已供 2 / 空 1）</strong> + 两侧把手 + 三支脚。</div>
+          <div class="card-trade"><b>取</b>：<strong>供奉进度在世界内直接可读</strong>——一眼看出"还差一份"，这是三个方案里信息最实用的；金属材质与工业基调统一。<br><b>舍</b>：最像"普通托盘"，仪式感最弱；空位容易被读成"破损"而非"待供奉"。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/offering-c-pillar.png" alt="供奉台方案 C 立柱祭坛" loading="lazy"></div>
+          <div class="card-label">C · 立柱祭坛</div>
+          <div class="card-desc">六边形基座 + <strong>断柱</strong>（柱身有裂纹与刻痕）+ 顶部供盘 + 悬浮供品 + 上升的光尘 + 柱侧挂饰。</div>
+          <div class="card-trade"><b>取</b>：<strong>废墟感最强</strong>——断柱天然讲述"这里曾经是别的东西"，最贴"勉强维持"；供品悬于断口之上，视觉焦点最集中。<br><b>舍</b>：叙事性强但功能性弱，供奉数量不易表达；断柱形态与"可交互"的暗示有冲突（看起来像废墟而非可用的设施）。</div>
+        </div>
+      </div>
+
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">绘制说明</span>
+        三张均为 <strong>32×32 实际像素</strong>、1:1、透明底、硬边，可直接进游戏。
+        石材/金属走 concrete / metal 系列，<strong>供品统一用污染源同源的 teal</strong>
+        （<span style="color:#2ae6c8">#2ae6c8</span> / <span style="color:#7fffee">#7fffee</span>）——
+        与核心的火焰、储藏的收容物、净化器的过滤环是<strong>同一族颜色</strong>，
+        这就把"污染物是这个世界的核心资源"这条设定在视觉上闭环了。
+        <br><br>
+        <strong>三个方案的真正分歧</strong>：供奉是<strong>进行中</strong>（A 悬浮）、
+        <strong>按份数计</strong>（B 三格）还是<strong>纪念性的</strong>（C 断柱）。
+        这会决定供奉系统的玩法表达——
+        选 A 就做持续型仪式，选 B 就做收集型进度，选 C 就做一次性献祭。
       </div>
     </div>
   </div>
@@ -467,29 +729,69 @@
   <!-- 成长 -->
   <div class="review-card">
     <div class="rc-head">
-      <span class="title">2.3 成长祭坛 — 仪式装置</span>
-      <span class="grade good">方向确认 ✓ 强化执行</span>
+      <span class="title">2.3 成长祭坛 → 操作台（复古，非科技）</span>
+      <span class="grade warn">方向调整 ↻ 从"祭坛"改为"操作台"</span>
     </div>
     <div class="rc-body">
-      <div class="obs how"><span class="lbl">方案（v1 方向正确，强化"仪式感"）</span>
-        成长祭坛的语义是<strong>永久改变</strong>——玩家在这里投入资源，获得不可逆的提升。
-        这个语义非常适合用<strong>仪式/祭坛</strong>的视觉语言：古老、庄重、有代价感。
+      <div class="obs why"><span class="lbl">方向调整</span>
+        上一版走的是<strong>「石阵 / 骨祭坛 / 机械改造台」</strong>，偏"献祭场所"。
+        但成长的实际操作是<strong>玩家在这里做选择、调参数、投入资源</strong>——
+        它的本质是<strong>操作台</strong>，不是祭坛。
+        <br>
+        <strong>红线</strong>：往操作台靠，但<strong>不能太科技、太现代</strong>。
+        不要屏幕、不要机械臂、不要发光面板——那些会让它像"科幻飞船的控制台"，
+        与本作的粗粝工业＋神秘学调性脱节。
+      </div>
+      <div class="obs how"><span class="lbl">新方向 —— 三个形态候选，共用规则先说</span>
         <ul class="spec-list">
-          <li><b>基座</b>：圆形，半径 ≈ 10px，<span style="color:#2a1f1c">#2a1f1c</span>（暗红棕，暗示"旧材料/有机物"）</li>
-          <li><b>仪式纹路</b>：基座表面有同心圆或放射线纹路（1px，<span style="color:#cc8844">#cc8844</span>，
-            alpha 0.10）。<strong>这是祭坛最重要的识别信号</strong>——圆 + 纹路 = 仪式场所</li>
-          <li><b>中央柱</b>：短柱 4×6px，<span style="color:#cc8844">#cc8844</span>，
-            从基座中心升起。读作"某种被供奉/被改造的东西"</li>
-          <li><b>柱顶核心</b>：一个小三角（4×4px），<span style="color:#e0a848">#e0a848</span>，
-            有<strong>极慢的自转</strong>（每 20-25 秒一圈）。慢到几乎察觉不到在动——
-            但"在动"这件事会被潜意识捕捉到，制造不安感</li>
-          <li><b>接地光晕</b>：基座外一圈暖色辉光（半径 14px，<span style="color:#cc8844">#cc8844</span>，alpha 0.08），
-            缓慢呼吸。读作"这台装置有自己的能量"</li>
-          <li><b>可升级时</b>：柱顶三角亮度提高 + 自转加速到 8s/圈。
-            <strong>让玩家在世界内就能看到"我现在可以升级了"</strong>，不必打开面板才发现</li>
-          <li><b>升级成功后</b>：一次性动效 — 基座纹路从中心向外亮一遍（0.8s 扫过），
-            柱顶三角闪一下白。<strong>给不可逆的操作一个仪式性的反馈</strong></li>
+          <li><b>尺度</b>：32×36 画布（比另两个交互点高一点——台面需要高度）</li>
+          <li><b>核心元素</b>：<strong>可操作的元件</strong>——旋钮、拉杆、滑块、齿轮、曲柄。
+            <strong>玩家一眼要看出"这东西能动"</strong>，这是它区别于其他台面的唯一特征</li>
+          <li><b>材质（关键）</b>：黄铜 / 石头 / 木头 / 暗金属。
+            <strong>禁止</strong>：屏幕、发光面板、机械臂、LED 灯条——任何"现代"的东西</li>
+          <li><b>可升级时</b>：操作元件的位置/亮度变化（如滑块推到顶、旋钮转到头），
+            <strong>让"我可以升级了"在世界内可读</strong></li>
+          <li><b>升级成功后</b>：一次性动效 — 元件弹回初始位 + 一道暖光扫过台面</li>
         </ul>
+      </div>
+
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/growth-a-brass.png" alt="成长方案 A 黄铜控制台" loading="lazy"></div>
+          <div class="card-label">A · 黄铜控制台</div>
+          <div class="card-desc">黄铜台面 + 内嵌板 + <strong>台面三旋钮（带指针）</strong> + 正面拉杆滑槽与手柄 + 刻度 + 加固角。</div>
+          <div class="card-trade"><b>取</b>：<strong>操作感最强</strong>——旋钮+拉杆+刻度三件套，一眼就知道"这东西是给人拧的"；黄铜是场上唯一的暖色，识别度极高。<br><b>舍</b>：蒸汽/炼金调性偏强，可能与其他模块的冷灰调性有点跳；元件多，需靠明度分层才不糊。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/growth-b-stone.png" alt="成长方案 B 石刻操作台" loading="lazy"></div>
+          <div class="card-label">B · 石刻操作台</div>
+          <div class="card-desc">六边形石台 + 内凹台面 + <strong>三条刻痕滑槽（各带一枚滑块）</strong> + 台面六道放射符文 + 石基座。</div>
+          <div class="card-trade"><b>取</b>：<strong>最古老、最"神秘学"</strong>——石头＋符文，完全不是工业设备；与供奉台的石质语言呼应，像同一套仪式设施。<br><b>舍</b>：石刻滑块的操作感弱于旋钮，需要动画辅助才读得出"能推"；与供奉台的石材有撞材质风险。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/growth-c-wood.png" alt="成长方案 C 木质工作台" loading="lazy"></div>
+          <div class="card-label">C · 木质工作台</div>
+          <div class="card-desc">木台面 + 内嵌板 + <strong>两枚黄铜齿轮</strong> + 正面曲柄（带把手）+ 木纹刻度。</div>
+          <div class="card-trade"><b>取</b>：<strong>手工感最强</strong>——木头+齿轮+曲柄，读作"有人在这里手工改造东西"，最贴"成长"的养成语义；材质与场景的破败调性最合。<br><b>舍</b>：木头在废墟场景里略显"温暖"，需做旧处理；齿轮在 32px 下只有 8 个齿点，远看会糊。</div>
+        </div>
+      </div>
+
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">绘制说明 · 怎么做到"操作台但不科技"</span>
+        三张均为 <strong>32×36 实际像素</strong>、1:1、透明底、硬边，可直接进游戏。
+        <table class="t" style="margin-top:8px;">
+          <tr><th style="width:26%;">手法</th><th>说明</th></tr>
+          <tr><td><b>用机械，不用电子</b></td><td>旋钮/拉杆/齿轮/曲柄＝机械传动；不画屏幕、不画发光面板、不画线路</td></tr>
+          <tr><td><b>用旧材质</b></td><td>黄铜 <span style="color:#8a6a3a">#8a6a3a</span> / 木 <span style="color:#4a3828">#4a3828</span> / 石，全部做旧，不反光、不崭新</td></tr>
+          <tr><td><b>明度分层</b></td><td>台面亮 → 前侧中 → 后侧暗 → 内嵌板最暗，拉开 40+ 的差值，体积才出得来</td></tr>
+          <tr><td><b>元件对比</b></td><td>旋钮用亮黄铜 <span style="color:#c09a5a">#c09a5a</span>、指针用极暗 <span style="color:#2a2018">#2a2018</span>，指针是"能转"的读数</td></tr>
+        </table>
+        <p class="card-note">
+          <strong>本轮踩的坑</strong>：第一版黄铜台面的明度挤在同一档（顶面 66 / 前侧 51 / 后侧 44），
+          结果整个台子糊成一块橙色，读不出体积。
+          把层次拉到 <strong>43 / 62 / 90 / 99 / 168 / 192</strong> 六档之后，
+          "台面—侧面—内嵌板"的关系才立起来。
+          <strong>复古材质尤其需要明度分层</strong>，因为它们本来就缺少强对比的固有色。
+        </p>
       </div>
     </div>
   </div>
@@ -497,22 +799,37 @@
   <!-- 加厚桩 -->
   <div class="review-card">
     <div class="rc-head">
-      <span class="title">2.4 加厚桩 — 最小、最低调</span>
-      <span class="grade meh">需统一语言</span>
+      <span class="title">2.4 加厚桩 — 并入成长祭坛，暂不单独设计</span>
+      <span class="grade meh">已合并 ↘</span>
     </div>
     <div class="rc-body">
-      <div class="obs why"><span class="lbl">现状问题</span>
-        当前显示为<strong>绿色三角形</strong>——既打破了"圆点"的统一语言，
-        又与净化器（也是三角形）产生<strong>形状混淆</strong>。
-        两个不同的东西用同一个形状，这是识别系统的事故。</div>
-      <div class="obs how"><span class="lbl">方案</span>
+      <div class="obs why"><span class="lbl">处理决定</span>
+        加厚桩<strong>不再作为独立交互点存在</strong>，功能并入成长祭坛（现为操作台）。
+        <br>
+        原本的推理是"它应该最小、最低调，用 24×24 画布表达层级"。
+        但现在回看，<strong>一个只做"加厚"这一件事的物件，不值得占用一个独立的视觉身份</strong>——
+        它既加重了玩家的识别负担，又让交互点从四个变成三个时显得突兀。
+      </div>
+      <div class="obs how"><span class="lbl">合并后的落地方式</span>
         <ul class="spec-list">
-          <li><b>形态</b>：短粗圆柱俯视 — 椭圆 10×8px + 顶部十字槽（2px 线，<span style="color:#151a1e">#151a1e</span>）。读作"地桩 / 锚栓"</li>
-          <li><b>配色</b>：骨灰 <span style="color:#3a3838">#3a3838</span>，暗示"原材料 / 基础构件"，不带任何功能色</li>
-          <li><b>尺度</b>：<strong>明显小于其他三个交互点</strong>（视觉层级：裂隙 ≫ 防御 ≈ 成长 &gt; 加厚）</li>
-          <li><b>状态</b>：可加厚时，十字槽内出现微弱的暖色光（<span style="color:#e0a848">#e0a848</span>，alpha 0.4）。
-            不可加厚时完全是暗的。<strong>用"有没有光"表达"能不能用"</strong></li>
+          <li><b>入口</b>：成长祭坛（操作台）的面板里增加「结构加厚」一项，
+            与成长升级并列，玩家在同一个地方完成两类投入</li>
+          <li><b>世界内反馈</b>：加厚生效后，
+            <strong>净化点边界与模块底座出现"加固"的视觉变化</strong>——
+            例如底座多出铆钉/支撑件、边界膜变厚。
+            反馈落在<strong>被加厚的那个东西上</strong>，而不是新增一个小物件</li>
+          <li><b>状态表达</b>：可加厚时，操作台上对应的<strong>拉杆推到顶 / 旋钮转到头</strong>，
+            沿用操作台已有的语言，不引入新语汇</li>
+          <li><b>好处</b>：识别系统少一个成员（三个交互点 vs 四个），
+            玩家的记忆负担下降；同时"加厚"从"去一个地方做一件事"变成"在操作台上多一个选项"，
+            决策更集中</li>
         </ul>
+      </div>
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">如果日后要恢复它</span>
+        需要给它一个<strong>独立于成长祭坛的语义</strong>——
+        例如"临时加固某一段边界"（有位置属性、有持续时间），
+        那样它就值得拥有自己的形态与身份了。
+        在此之前，作为操作台的一个选项存在即可。
       </div>
     </div>
   </div>
@@ -646,6 +963,85 @@
 
   裂缝起源点必须是：模块底座 / 边界 / 动线转折 / 已有裂缝分叉
   <span class="hl">禁止</span>：均匀网格分布 · 等间距重复 · 完美对称 · 无源污渍 · 空地中央起步</pre>
+
+      <div class="obs strong" style="margin-top:16px;"><span class="lbl">先看整体：净化点地面全貌（480×320）</span>
+        tile 只是零件，真正要判断的是<strong>铺开之后像不像一个被使用了很久的地方</strong>。
+        上一版只给了 tile 级，缺少整体观感，这里补上——
+        请<strong>优先用这一张判断"自然感"是否成立</strong>，再往下看 tile 细节。
+      </div>
+      <div class="shot-wide"><img src="cards/ground-overview.png" alt="净化点地面全貌" loading="lazy"></div>
+      <p class="shot-cap">
+        六边形安全区内：① 各模块<strong>底座边缘</strong>派生应力裂缝，底部漏液沿重力淌成污渍；
+        ② 核心 ↔ 储藏 ↔ 净化器 ↔ 裂隙 ↔ 两个交互点的<strong>动线</strong>磨出带宽状痕迹；
+        ③ <strong>边界内侧</strong>密度陡增并长出苔藓；
+        ④ 裂隙（下方）向四周<strong>辐射</strong>污渍与苔藓，并把地面拽向自己；
+        ⑤ 三条大裂缝各自<strong>从应力点起源</strong>，而非空地中央。
+        <br>
+        <strong>自检办法</strong>：把图缩到 25%。若仍看得出"有的区域脏、有的区域干净"，
+        说明低频密度调制成功——实测区块标准差 <strong>6.75</strong>（均匀分布会低于 2）；
+        若变成一片均匀的灰，说明细节是平均撒的，要重做。
+      </p>
+
+      <div class="obs strong" style="margin-top:18px;"><span class="lbl">再拆零件：实际绘制的地面 tile（32×32，1:1，可直接进游戏）</span>
+        下面是六张实际画出来的 tile，每张对应上面表格里的一条规则。
+        <strong>痕迹一律比地面暗 1–2 级，不用纯黑、不加亮边</strong>——
+        它们应该"被看见"，但不应该"跳出来"。
+      </div>
+
+      <div class="tile-row">
+        <div class="tile-opt">
+          <div class="tile-shot"><img src="cards/tile-clean.png" alt="干净地面 tile" loading="lazy"></div>
+          <div class="tile-label">干净（对照）</div>
+          <div class="tile-desc">只有颗粒、无痕迹。用来反衬：其他 tile 上每一处痕迹都该有理由。</div>
+        </div>
+        <div class="tile-opt">
+          <div class="tile-shot"><img src="cards/tile-crack.png" alt="裂缝 tile" loading="lazy"></div>
+          <div class="tile-label">裂缝</div>
+          <div class="tile-desc">自左上应力点起源，向末端<strong>收窄到 0</strong>，中段分叉一条（更细更斜）。</div>
+        </div>
+        <div class="tile-opt">
+          <div class="tile-shot"><img src="cards/tile-stain.png" alt="污渍 tile" loading="lazy"></div>
+          <div class="tile-label">污渍</div>
+          <div class="tile-desc">源头在上（模块漏液），<strong>沿重力向下流淌</strong>，中心浓、边缘淡、纵向拉伸。</div>
+        </div>
+        <div class="tile-opt">
+          <div class="tile-shot"><img src="cards/tile-wear.png" alt="磨损 tile" loading="lazy"></div>
+          <div class="tile-label">足迹 / 磨损</div>
+          <div class="tile-desc">沿动线的<strong>路径带宽</strong>：中线最深，向两侧渐隐，路径不是笔直的。</div>
+        </div>
+        <div class="tile-opt">
+          <div class="tile-shot"><img src="cards/tile-debris.png" alt="碎石 tile" loading="lazy"></div>
+          <div class="tile-label">碎石</div>
+          <div class="tile-desc">五块石头 + 各自<strong>方向一致的投影</strong>（光来自左上）+ 细碎砂砾。</div>
+        </div>
+        <div class="tile-opt">
+          <div class="tile-shot"><img src="cards/tile-edge.png" alt="边界 tile" loading="lazy"></div>
+          <div class="tile-label">边界过渡</div>
+          <div class="tile-desc">密度是内部的 <strong>2–3 倍</strong>：多条裂缝 + 不规则暗斑 + 苔藓（潮湿）。</div>
+        </div>
+      </div>
+
+      <div class="obs strong" style="margin-top:18px;"><span class="lbl">组合起来看：每处痕迹都能回答"为什么在这里"</span>
+        这一张是上面六类元素按因果规则铺在一起的<strong>实际绘制结果</strong>（128×80）。
+        请对照检查：能不能给图中每一处痕迹指出来历？
+      </div>
+      <div class="shot-wide"><img src="cards/ground-causality.png" alt="地面因果分布组合图" loading="lazy"></div>
+      <p class="shot-cap">
+        ① 左上六角核心的<strong>底座边缘</strong>产生应力裂缝，底部漏液沿重力向下扩散成污渍；
+        ② 核心 → 储藏 → 净化器的<strong>动线</strong>形成带宽状磨损（中线最深）；
+        ③ 右侧<strong>边界 20px</strong> 内密度陡增、出现暗斑；
+        ④ 右下<strong>裂隙</strong>向外辐射污渍与苔藓；
+        ⑤ 两条大裂缝均<strong>自应力点起源</strong>（底座、边界），而非空地中央。
+      </p>
+      <div class="obs strong" style="margin-top:12px;"><span class="lbl">绘制说明</span>
+        地面基色 <span style="color:#15181c">#15181c</span>，
+        痕迹用 <span style="color:#101214">#101214</span>（暗 1 级）与
+        <span style="color:#0a0b0c">#0a0b0c</span>（暗 2 级），
+        苔藓用极暗 teal <span style="color:#14241e">#14241e</span>。
+        <br>
+        <strong>检测办法</strong>：把图缩到 25% 看——如果还能看出"有的地方脏、有的地方干净"，
+        说明低频密度调制成功了；如果变成均匀的灰，说明细节是平均撒的，要重做。
+      </div>
     </div>
   </div>
 </section>
@@ -803,6 +1199,95 @@
         它们的价值来自<strong> rarity </strong>——如果外部光点每 3 秒出现一次，
         它就从"不安"变成了"装饰"。
       </div>
+
+      <div class="obs why"><span class="lbl">方向纠正 —— 我上一版理解偏了</span>
+        上一版把力气全花在了<strong>膜与边界的雕琢</strong>上（张力膜、侵蚀痕、旧世界残留）。
+        但<strong>边界现在已经做得不错了，它不是重点</strong>。
+        <br><br>
+        <strong>真正的重点是外面那片黑</strong>：里面有东西，
+        但<strong>绝对不是任何我们熟悉的东西</strong>。
+        上一版的「旧世界残留」（断裂的墙、管道、警示牌）恰恰是最不该做的方向——
+        它把"不可名状"降格成了"废墟"，玩家一看就懂，也就<strong>一点都不吓人了</strong>。已作废。
+        <br><br>
+        <strong>正确的参照系是克苏鲁</strong>：不是"画一个怪物出来"，
+        而是让玩家<strong>确信那里有东西，却永远看不清它是什么</strong>。
+        恐惧来自两件事——<strong>巨大的尺度</strong>与<strong>看不清</strong>，
+        而不是造型有多精巧。
+      </div>
+
+      <div class="obs strong" style="margin-top:14px;"><span class="lbl">一、边界处理（已够用，本轮不再加码）</span>
+        A 张力膜 / B 侵蚀痕 保留即可。它们解决的是"安全区如何被撑住、如何被吃掉"，
+        <strong>这部分已经足够，不需要再加方案</strong>——继续雕琢属于把力气花错地方。
+      </div>
+
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/ext-a-membrane.png" alt="外部方案 A 张力膜" loading="lazy"></div>
+          <div class="card-label">A · 张力膜</div>
+          <div class="card-desc">边界不是线，而是<strong>一层有张力的膜</strong>：正弦波动 + 每隔 7px 一个张力节点；中段有一处<strong>向外鼓出的凸起</strong>（"有什么顶了一下"）。</div>
+          <div class="card-trade"><b>取</b>：直接传达"这个安全区是撑起来的，不是天然的"——最贴"勉强维持"；波动幅度仅 2–3px，实现成本极低。<br><b>舍</b>：静帧下几乎看不出在动，必须靠动画；形态仍容易被读成"墙"而非"膜"。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/ext-b-erosion.png" alt="外部方案 B 侵蚀痕" loading="lazy"></div>
+          <div class="card-label">B · 侵蚀痕</div>
+          <div class="card-desc">边界被<strong>啃出缺口</strong>（不规则、非均匀），内部有侵蚀推进的暗斑，还有几块<strong>已剥离的孤岛</strong>（曾经的边界）；前沿渗出微弱 teal。</div>
+          <div class="card-trade"><b>取</b>：让"安全区在缩小"<strong>在空间上可读</strong>，而不只是 HUD 上的数字；剥离的孤岛是最强的叙事元素。<br><b>舍</b>：需要随稳定度动态变化才成立，做成静态贴图会失去意义；暗斑容易被误读为污渍。</div>
+        </div>
+        <div class="card-opt" style="border-style:dashed;opacity:0.72;">
+          <div class="card-shot" style="position:relative;">
+            <img src="cards/ext-e-remnant.png" alt="已作废的旧世界残留" loading="lazy" style="opacity:0.3;">
+          </div>
+          <div class="card-label" style="color:var(--danger);">E · 旧世界残留（已作废）</div>
+          <div class="card-desc">断裂的砖墙 + 伸进雾里的管道 + 警示牌 + 碎石。</div>
+          <div class="card-trade"><b>为什么作废</b>：这些都是<strong>玩家熟悉的人造物</strong>。
+            一看到管道和警示牌，未知就变成了"废弃工地"，恐惧感归零。
+            <strong>违反"绝对不是任何我们熟悉的东西"这条定论。</strong></div>
+        </div>
+      </div>
+
+      <div class="obs strong" style="margin-top:18px;"><span class="lbl">二、外部空间：那片黑里有什么（本轮重点 · 160×96）</span>
+        三个方向共用同一套手法：
+        <strong>极暗（形体只比背景亮 2–8）+ 断续落笔（若隐若现）+ 绝不给细节</strong>。
+        <br>
+        注意它们的共同点：都<strong>不画完整</strong>——
+        只给一段弧、一个轮廓、几圈涟漪，剩下的交给玩家的想象。
+      </div>
+
+      <div class="card-row">
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/ext-eye.png" alt="外部 · 巨大眼睛" loading="lazy"></div>
+          <div class="card-label">甲 · 巨眼</div>
+          <div class="card-desc">一道横跨画面的弧——某个<strong>巨大到看不出全貌</strong>的东西的上缘。眼球半径 132px，画面只有 96px 高，<strong>玩家永远看不到它的边界</strong>；弧线断续、带一点湿润反光，虹膜只是几道几乎不可辨的同心弧。</div>
+          <div class="card-trade"><b>取</b>：<strong>巨物感是最强的氛围杠杆</strong>。尺度越大、露得越少，压迫感越强；不画瞳孔、不画睫毛，避免了"一只眼睛"的具象，反而更像"某个器官的一部分"。<br><b>舍</b>：含蓄到可能被忽略——需要配合极缓慢的开合/位移才立得住。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/ext-shape.png" alt="外部 · 类人影" loading="lazy"></div>
+          <div class="card-label">乙 · 类人影</div>
+          <div class="card-desc">一个站立轮廓，但<strong>比例是错的</strong>：双臂过膝、躯干细长、头部过扁、关节位置不对。无五官、边缘抖动模糊、脚下与地面没有明确接触。</div>
+          <div class="card-trade"><b>取</b>：<strong>"像人"这件事本身就是恐怖来源</strong>——大脑会先识别成人，再发现哪里不对，这个延迟最不舒服；比例失真比奇形怪状更有效。<br><b>舍</b>：过犹不及——如果失真太夸张就变成怪物设计，反而落回"熟悉的东西"。</div>
+        </div>
+        <div class="card-opt">
+          <div class="card-shot"><img src="cards/ext-call.png" alt="外部 · 呼喊" loading="lazy"></div>
+          <div class="card-label">丙 · 呼喊</div>
+          <div class="card-desc">六圈向外扩散的声波，但<strong>每一圈都被扰动</strong>（三重噪声叠加，不是同心圆）；中心是一团边界全糊的暗影，<strong>看不出声源是什么</strong>；声波之间有几处被"撕开"的裂口。</div>
+          <div class="card-trade"><b>取</b>：<strong>声音的视觉化最省成本也最不安</strong>——它暗示"有东西在叫"，却不给出任何形体；不规则波形让"声源非人"这个信息被直觉接收。<br><b>舍</b>：需要动画（扩散/淡出）才完整，静帧只能表达一半；波纹太规整会像 UI 特效。</div>
+        </div>
+      </div>
+
+      <p class="card-note">
+        <strong>做法说明</strong>：全部用"极暗 + 少量形体暗示"实现。
+        这比<strong>纯黑</strong>或<strong>画清晰的怪物</strong>都更有效——
+        纯黑等于没做，画清楚反而不吓人。
+        <br>
+        <strong>技术要点</strong>：当形体与背景的明度差只有 2–3 时，
+        <strong>靠明度区分会完全失效</strong>。巨眼那一版就踩了这个坑：
+        眼球内部与虚无只差 3，等于隐形。
+        改用<strong>色相</strong>区分（眼球偏 teal、虚无偏中性）并加一层体积渐变之后，
+        "那里有个球体"才读得出来。
+        <br>
+        <strong>最后</strong>：外部的价值恰恰在于那个"看不清"的距离——
+        玩家会用自己的想象填满它，而想象永远比画出来的更可怕。
+      </p>
     </div>
   </div>
 </section>
@@ -810,6 +1295,29 @@
 <!-- ================================================================= -->
 <section id="hud">
   <h2>五、HUD 与底部提示条</h2>
+  <div class="obs strong" style="margin-bottom:16px;border-left:4px solid var(--ok);">
+    <span class="lbl" style="color:var(--ok);">★ 重点采纳 —— 本章与第六章的 UX 重构</span>
+    已确认为<strong>优先执行项</strong>。本轮在此基础上做了两处修正：
+    <br><br>
+    <strong>修正 1 — 导航改为顶部 Tab</strong>。
+    第一版把分类导航放在<strong>左侧</strong>，那是网页管理后台的布局，不是游戏菜单的布局。
+    游戏 UX 的惯例是 <strong>Tab 条在顶部</strong>——
+    手柄/键盘的左右键天然对应水平切换，且顶部 Tab 不挤压内容宽度。
+    状态面板已按此重做：详情区从 620px <strong>加宽到整宽 880px</strong>，
+    卡片网格随之从 2×2 扩到 3×2，多容纳了「结构加厚」「数据状态」两块。
+    <br><br>
+    <strong>修正 2 — 找回"显示器感"，压掉 AI 味</strong>。
+    第一版是<strong>纯白文字 + 近黑底 + 高饱和强调色</strong>、对比拉满，
+    这正是典型的"AI 生成界面"观感，与本作旧终端的调性不符。
+    本轮做了两件事：
+    <br>
+    · <strong>整体压低对比度</strong>：文字从纯白改为
+    <span style="color:#bfc6ce">#bfc6ce</span>，背景不用纯黑，强调色略去饱和，
+    明度跨度收窄。实测画面<strong>最亮值从 232 降到 179</strong>。
+    <br>
+    · <strong>加 CRT 后处理</strong>：扫描线（每 3 行，alpha 26）+ 噪点 + 暗角。
+    让界面读作"一台旧显示器"，而不是"刚生成的网页"。
+  </div>
   <p style="color:var(--text-dim);font-size:13px;margin-bottom:14px;">
     <span style="color:var(--ok);font-weight:600;">✓ v1 判断已确认</span> —
     以下是执行细化，方向不变。
@@ -838,6 +1346,19 @@
             <strong>仅当玩家靠近裂隙入口时</strong>才完全显示 — 它是"出发前才需要看"的信息</li>
         </ul>
       </div>
+
+      <div class="obs strong" style="margin-top:14px;"><span class="lbl">实际绘制：改造前 vs 改造后</span>
+        下面是<strong>按实际比例画出来的对比</strong>——上是当前的裸文本，下是建议的状态栏（190×88）。
+        差别不在信息量，而在<strong>容器、分组与层级</strong>：
+        同样几个数，装进框里、分好主次之后，扫描成本从"逐行读完"降到"瞄一眼"。
+      </div>
+      <div class="shot-wide" style="max-width:320px;"><img src="cards/ui-hud.png" alt="HUD 改造前后对比" loading="lazy"></div>
+      <p class="shot-cap">
+        改造后每项都是<strong>图标 + 迷你进度条 + 数值</strong>三件套：
+        完整度（teal，最重要）／薪柴（暖橙）／污染（红）。
+        进度条让"还剩多少"无需读数字即可判断——
+        <strong>长度是可以被余光捕获的，数字不行</strong>。
+      </p>
     </div>
   </div>
 
@@ -867,6 +1388,19 @@
         </ul>
         <em>技术工作量极小（纯 CSS + scene.update() 一行逻辑），但它是世界层和 UI 层之间唯一的桥梁。</em>
       </div>
+
+      <div class="obs strong" style="margin-top:14px;"><span class="lbl">实际绘制：提示条与世界对象的关系</span>
+        下面这张按实际比例画出了提示条（300×46）与它所指的交互点之间的<strong>引导线</strong>。
+        这条线就是"世界层 → UI 层"的翻译：
+        玩家看到的不是一行字，而是"<strong>那个东西可以按 E</strong>"。
+      </div>
+      <div class="shot-wide" style="max-width:540px;"><img src="cards/ui-hint.png" alt="底部提示条实例" loading="lazy"></div>
+      <p class="shot-cap">
+        按键 <code>[E]</code> 用亮色 + 方括号（读作实体按键），动作名 14px 为主；
+        副行 10px 给出「消耗 3 · 完整度 +8」——
+        <strong>让玩家在移动中就能决定要不要交互</strong>，不必先打开面板。
+        右端标出作用对象（⬢ 核心），避免"这个 E 是按给谁的"的歧义。
+      </p>
     </div>
   </div>
 </section>
@@ -959,6 +1493,22 @@
         <br>• 空白消失——详情区总是被当前分类的内容填满
         <br>• 符合"操作一台设备"的心理模型（选频道 → 看读数）
       </div>
+
+      <div class="obs strong" style="margin-top:14px;"><span class="lbl">实际绘制：按上面这张布局图做出来的成品（920×560）</span>
+        不是示意图，是<strong>按 1:1 比例画出来的界面</strong>，文字、进度条、卡片都是真实渲染的。
+        四个分段在图上清晰可见：<strong>顶部模块条 → 顶部 Tab 导航 → 整宽详情 → 底部键印</strong>。
+        <br>
+        <strong>本轮改动</strong>：导航从左侧移到了顶部（游戏惯例），
+        详情区因此从 620px 加宽到 880px，卡片从 2×2 扩为 3×2。
+      </div>
+      <div class="shot-wide"><img src="cards/ui-status.png" alt="状态总览面板成品" loading="lazy"></div>
+      <p class="shot-cap">
+        ① <strong>顶部模块条固定不动</strong>——核心/储藏/净化器的完整度一眼扫完，且不随导航变化；
+        ② <strong>左导航一次只激活一项</strong>（当前是"全局状态"，带 teal 竖条 + 高亮底色）；
+        ③ <strong>右详情被填满</strong>——5 行读数 + 2×2 卡片网格，
+        实测<strong>最大连续空白从 144px 压到 37px</strong>（余下的是正常内容间距）；
+        ④ 底部键印常驻，告诉玩家"这里可以用键盘操作"。
+      </p>
     </div>
   </div>
 
@@ -1004,6 +1554,24 @@
         把"<strong>局部数值</strong>"翻译成"<strong>全局后果</strong>"。
         这是从"数据界面"到"决策界面"的跃迁。
       </div>
+
+      <div class="obs strong" style="margin-top:14px;"><span class="lbl">实际绘制：按上面这张布局图做出来的成品（760×520）</span>
+        同样是按 1:1 画出来的界面。三个关键改变都落到了实处：
+        <strong>Tab 式切换</strong>、<strong>「投入」作为唯一操作控件被框起来</strong>、
+        以及底部新增的<strong>「出击预估」</strong>。
+      </div>
+      <div class="shot-wide"><img src="cards/ui-alloc.png" alt="分配面板成品" loading="lazy"></div>
+      <p class="shot-cap">
+        ① <strong>Tab 切换</strong>替代三个平铺信息块，一次只处理一个决策对象（当前是核心，带 teal 下划线）；
+        ② <strong>完整度与混乱增速</strong>并排，用 <code>-21% → -27%</code> 表达"如果投入会变成什么"；
+        ③ <strong>「投入薪柴」是唯一控件</strong>，用 teal 边框 + 深色底把它框成视觉焦点，
+        步进器 <code>◀ 12 ▶</code> 直接可操作；
+        ④ <strong>中段补了分配概览与最近投入 sparkline</strong>——
+        第一版这里留了 162px 空白（正是本文批评的"网页平铺"），
+        补上之后<strong>最大连续空白降到 10px</strong>；
+        ⑤ 底部<strong>出击预估</strong>给出"混乱抑制 27% · 生存 中 · 较上次 +6%"，
+        让每一次 +/- 都有即时反馈。
+      </p>
     </div>
   </div>
 
@@ -1031,6 +1599,21 @@
             当前所有卡片看起来都可交互，但实际一个都买不起——这是误导</li>
         </ul>
       </div>
+
+      <div class="obs strong" style="margin-top:14px;"><span class="lbl">实际绘制：空状态该长什么样（520×260）</span>
+        空状态是<strong>最容易被做成"渲染错误"的地方</strong>——
+        一块纯黑或一句"无数据"，玩家的第一反应是"是不是坏了"。
+        下面这张是可直接照抄的模板。
+      </div>
+      <div class="shot-wide" style="max-width:540px;"><img src="cards/ui-empty.png" alt="空状态模板" loading="lazy"></div>
+      <p class="shot-cap">
+        三件套缺一不可：
+        ① <strong>这是什么</strong>（"暂无污染物"）——斜线填充的占位框表示"这里将来会有东西"；
+        ② <strong>为什么空</strong>（"污染物来自裂隙入口，取得战利品后会显示在这里"）——
+        把空的原因翻译成下一步的线索；
+        ③ <strong>现在该做什么</strong>（"前往裂隙入口"按钮 + 快捷键）——
+        给一个可点击的出口，而不是让玩家自己去找。
+      </p>
     </div>
   </div>
 </section>
@@ -1041,6 +1624,24 @@
   <p style="color:var(--text-dim);font-size:13px;margin-bottom:14px;">
     <span style="color:var(--ok);font-weight:600;">✓ v1 判断已确认</span> — 以下是执行细化。
   </p>
+
+  <div class="obs conflict">
+    <span class="lbl" style="color:var(--danger);">⚠ 执行前必读 · 与进行中的迭代 9 撞车</span>
+    本章全部内容（暖光存在感、脚底反射、灯尘参数）属于<strong>「玩家暖光光池读法」</strong>，
+    而<strong>迭代 9（rift 视野表现打磨，DEC-105）正在做同一块</strong>——
+    其范围明列「手电光束与<strong>玩家暖光光池</strong>读法」。
+    <br><br>
+    <strong>处置：</strong>本章<strong>不单独派工</strong>，并入迭代 9 一并处理；
+    或等迭代 9 光池读法落地后，看实际表现再决定要不要补第二刀。
+    <br><br>
+    <strong>禁止</strong>：在不知会迭代 9 的情况下另派一批改玩家光池——
+    会与迭代 9 的处方打架，或产生两套互相矛盾的暖光读法。
+    <br><br>
+    <span style="color:var(--text-dim);font-size:12px;">
+    迭代 9 红线（本包同样适用）：不动射程 / 锥角 / 三档数值 / 规则 4 朝向 / 薪柴不发光 / 混乱缩放；
+    不动相机；不加迷雾外信息。<strong>本章建议均在「光池读法」层面，不触碰上述红线。</strong>
+    </span>
+  </div>
 
   <div class="review-card">
     <div class="rc-head">
@@ -1079,6 +1680,44 @@
             但能让地面痕迹从"背景装饰"变成"被探索的对象"</li>
         </ul>
       </div>
+
+      <div class="obs strong" style="margin-top:14px;"><span class="lbl">实际绘制：暖光的"存在感"差在哪（480×240 对照）</span>
+        左＝当前（几乎看不出有光），右＝建议（5 层衰减的光圈，并照亮地面纹理）。
+        两张图用的是同一个角色、同一片地面，<strong>唯一的差别就是光</strong>。
+      </div>
+      <div class="shot-wide" style="max-width:500px;"><img src="cards/ui-light.png" alt="玩家暖光对照" loading="lazy"></div>
+      <p class="shot-cap">
+        建议版本用 <strong>70 / 56 / 42 / 30 / 18 五层半径</strong>做径向衰减
+        （alpha 分别 10 / 18 / 28 / 42 / 60），
+        边缘用 <code>(1-d/r)^0.6</code> 的曲线让它自然过渡而非生硬圆环。
+        <br>
+        <strong>关键不是"更亮"，而是"照亮了东西"</strong>——
+        光圈范围内刻意点了地面颗粒，让暖光<strong>有东西可照</strong>。
+        光打在纯色地面上是没有存在感的，只有照出纹理，玩家才会意识到"这里有个光源"。
+        <br>
+        另：与 3.2 节地面裂缝联动后，玩家走过时裂缝会被侧光"显影"，
+        地面就从背景变成了<strong>被探索的对象</strong>——这是本章性价比最高的一笔。
+      </p>
+
+      <div class="obs strong" style="margin-top:16px;"><span class="lbl">放到场景里看：暖光渲染图（480×320）</span>
+        上面那张是<strong>对照示意</strong>，说明"差在哪"；这一张是<strong>放进实际场景后的效果</strong>——
+        玩家站在一片废墟地面上，光圈是他唯一的领地，之外全是不知道有什么的黑暗。
+      </div>
+      <div class="shot-wide"><img src="cards/light-render.png" alt="角色暖光渲染图" loading="lazy"></div>
+      <p class="shot-cap">
+        ① 暖光半径 ≈108px，<strong>5 层径向衰减</strong>（alpha 26/44/70/104/150，
+        曲线 <code>(1-d/r)^0.6</code>）避免生硬圆环；
+        ② <strong>光圈内才生成地表细节</strong>——颗粒、裂缝、石子。
+        光打在纯色地面上是<strong>没有存在感的</strong>，只有照出纹理，
+        玩家才会意识到"这里有个光源"；
+        ③ 石子的投影方向一致（光来自玩家），这是"光有方向"的读数；
+        ④ <strong>暗角</strong>压低画面外围，强化"光是有限的、外面是危险的"；
+        ⑤ 远处模块只被照亮一侧边缘，给出空间纵深。
+        <br>
+        <strong>角色的处理</strong>：身体刻意压暗、光源核心提到近白（<code>#fff8e8</code>）。
+        否则角色会被自己的光池<strong>淹没</strong>——第一版就犯了这个错，
+        整个中心糊成一团暖色，分不清哪是角色、哪是光。
+      </p>
     </div>
   </div>
 </section>
@@ -1117,7 +1756,8 @@
           <li><strong>面板信息架构重构</strong>（§6）— 状态面板改主-从三段式；
             分配面板改单焦点 + 出击预估。这是从"网页"到"游戏菜单"的转变</li>
           <li><strong>提示条包装</strong>（§5.2）— 加容器 + 状态切换动画 + 第二行预览</li>
-          <li><strong>玩家脚底反射</strong>（§7.1）— 一个渐变就能大幅提升光的存在感</li>
+          <li><strong>玩家脚底反射</strong>（§7.1）— 一个渐变就能大幅提升光的存在感。
+            <span style="color:var(--danger);font-weight:600;">⚠ 并入迭代 9，不单独派工（见 §7 顶部警告）</span></li>
         </ol>
       </div>
 
@@ -1131,11 +1771,47 @@
           <li>面板 CRT 噪声（偶尔像素抖动/scanline 闪烁，需极度克制）</li>
         </ol>
       </div>
+
+      <div style="margin-top:18px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;">
+        <strong style="color:var(--teal);font-size:13px;">◆ 与派工批次的对应（供 Director 排期用）</strong>
+        <p style="color:var(--text-dim);font-size:12.5px;margin:8px 0 12px;line-height:1.75;">
+          上面的「梯队」是<strong>体验视角</strong>（按对玩家第一印象的影响排序）。
+          派工时用另一套口径——<strong>B1–B5 批次</strong>（按「单次 agent 会话能否独立完成、独立可看、独立过闸门」拆分）。
+          两者排序逻辑不同，<strong>不需要强行统一</strong>，但必须对得上号：
+        </p>
+        <table class="t">
+          <tr><th style="width:26%;">本报告梯队</th><th style="width:10%;">批次</th><th style="width:28%;">范围</th><th>独立性 / 共享产物</th></tr>
+          <tr>
+            <td>第一梯队 1</td><td><b>B1</b></td><td>四个交互点（§2）</td>
+            <td class="g">✅ 独立。裂隙入口建议单独一审（最贵，也是记忆点）</td>
+          </tr>
+          <tr>
+            <td>第一梯队 2</td><td><b>B2</b></td><td>三个模块实体（§1）</td>
+            <td class="g">✅ 独立，独占 <code>purification-module.ts</code></td>
+          </tr>
+          <tr>
+            <td>第一梯队 3 + 第二梯队 4</td><td><b>B3</b></td><td>HUD + 底部提示条（§5）</td>
+            <td class="r">⚠ 与 B1 共享 <code>purification-scene.ts</code> → 建议串行，先 B1 后 B3</td>
+          </tr>
+          <tr>
+            <td>第二梯队 3</td><td><b>B4</b></td><td>面板信息架构（§6）</td>
+            <td class="r">⚠ <code>panel-styles.ts</code> 全局共享 → 只改消费方，禁改基元</td>
+          </tr>
+          <tr>
+            <td>第二梯队 1 / 2 + 第三梯队 1 / 4</td><td><b>B5</b></td><td>地面 + 外部（§3 / §4）</td>
+            <td class="g">✅ 独立。与迭代 5 / 9 无共享产物</td>
+          </tr>
+          <tr>
+            <td class="r">第二梯队 5 + 第三梯队 5</td><td class="r">—</td><td>玩家灯光（§7）+ 面板 CRT 噪声</td>
+            <td class="r"><b>并入迭代 9，不进本包批次</b></td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 
   <div class="principle" style="margin-top:22px;border-color:rgba(42,230,200,0.3);background:var(--info-bg);">
-    <div class="t" style="color:var(--teal);">◆ 一句话总结（v2）</div>
+    <div class="t" style="color:var(--teal);">◆ 一句话总结（v2.1）</div>
     <p>
       净化点的问题<strong>不是缺功能，是缺"完成度"</strong>。
       所有系统都在正确的地方——交互逻辑通了、颜色编码通了、面板功能通了、程序化渲染通了。
@@ -1154,12 +1830,53 @@
 </section>
 
 <footer>
-  <p>COH 净化点 · 美术表现审核 v2 · 2026-08-28</p>
+  <p>COH 净化点 · 美术表现审核 v2.1 · 2026-08-28</p>
   <p>视角：纯美术审美 + 游戏体验 · 不做文档合规检查 · 每条意见基于实际截图的视觉判断</p>
   <p>v2 修订要点：确立「简单几何体＝占位符」统领原则 · 裂隙入口重做为空间裂缝（修正 v1 的物理化方向）·
      补地面「自然感＝因果可追溯」方法论 · 外部脑爆 7 方案 · 面板聚焦信息架构（游戏菜单 vs 网页）</p>
+  <p style="color:var(--teal);">v2.1 修订要点（2026-08-29）：§7 顶部加「与迭代 9 撞车」执行前警告（玩家暖光光池属迭代 9 范围，禁止重复派工）·
+     §8 加「梯队 ↔ B1–B5 派工批次」映射表，标注共享产物与串行要求</p>
+  <p>配套文档：<code>purification-presentation-findings-for-director.md</code>（同目录，给 Director 的决策输入，<strong>不含实现处方</strong>，
+     处方由 art agent 出）· 待办登记见 <code>docs/progress/backlog-issues.md</code></p>
 </footer>
 
 </div>
+<script>
+(function () {
+  // 1) 给每个小节卡片生成锚点 id（编号取自标题前缀，如 "1.1" → sec-1-1）
+  var cards = [].slice.call(document.querySelectorAll('.review-card'));
+  cards.forEach(function (c, i) {
+    if (c.id) return;
+    var t = c.querySelector('.title');
+    var m = t ? t.textContent.trim().match(/^(\d+\.\d+)/) : null;
+    c.id = m ? ('sec-' + m[1].replace('.', '-')) : ('card-' + i);
+  });
+  // 2) 填充「小节」下拉
+  var drop = document.getElementById('tocDrop');
+  if (drop) {
+    cards.forEach(function (c) {
+      var t = c.querySelector('.title');
+      if (!t) return;
+      var a = document.createElement('a');
+      a.href = '#' + c.id;
+      a.textContent = t.textContent.trim();
+      drop.appendChild(a);
+    });
+  }
+  // 3) 主章节滚动高亮
+  var links = [].slice.call(document.querySelectorAll('.topnav a[data-sec]'));
+  var secs = links.map(function (a) { return document.getElementById(a.getAttribute('data-sec')); });
+  function sync() {
+    var y = window.scrollY + 100, cur = 0;
+    for (var i = 0; i < secs.length; i++) {
+      if (secs[i] && secs[i].getBoundingClientRect().top + window.scrollY <= y) cur = i;
+    }
+    links.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+  }
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+})();
+</script>
 </body>
 </html>
