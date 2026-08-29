@@ -17,9 +17,8 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | 敌人移动 | `http://localhost:3000/gym.html` |
 | 玩家外形 | `http://localhost:3000/gym.html?lesson=player` |
 | 地图生成 | `http://localhost:3000/gym.html?lesson=map` |
-| 视野渲染对比 | `http://localhost:3000/gym.html?lesson=vision-lab` |
 
-**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene` / `GymVisionLabScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。
+**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。
 
 ---
 
@@ -39,8 +38,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 8. 地图生成（`?lesson=map`）：必须调用 `generateRiftLayout`、`RiftSurfacePainter` 与 `ContaminationHostSystem`。禁止为练习场另写生成器或拷画廊 PNG。默认（风格锚按种子抽、邻域抖动开、污染年龄/残破度按种子抽）与出击路径相同。侧栏可锁锚 / 关抖动 / 覆盖两轴。不开 `VisibilitySystem`。不接 `EncounterNarration`。不刷玩家、不刷会走的甲（色块标巡逻路点）。乙/丙/丁走出击同一套宿主（只画）。换种子 / 锁锚 / 点生成必须 destroy 再 create 宿主；只改污染画法时宿主钉在同一张岛上。**DEC-104：** 生产地面不再铺氛围崩坏簇；占漆钉贪婪薪柴路径；不传整图 `liveClusterBreath`。**迭代 6：** 本课是碎片配色 / 世界美术的验证面（无迷雾、与出击同一套烤地）。禁止为练习场另写第二套 `deriveContamRamp`。合同 `docs/tasks/iteration-6.md`。
 9. 污染句法（`?lesson=lexicon`）：固定观察院子，不是生成岛。玩家走出击 `Player`，默认无敌（「感受伤害」可关无敌）。侧栏按**渲染方案** / **碎片身份** / 孔谱 / 覆盖深度 / 基体 / 连续性 / 词素 / 成句 / 数量配表，点生成清场再刷。甲走出击 `AISystem` / `Enemy` / `CombatSystem`（感知为听噪时刷改写体剖面，否则刷渗透体剖面——碰撞与 AI 仍如此；候选渲染器按完整 `ContaminationForm` 画皮）。乙丙丁走出击同一套宿主，接战斗与混乱。击杀后约 0.8 秒按**当前**侧栏配置再刷。不开迷雾、不接遭遇识别旁白。`AISystem.create` 对本课关闭「恰好 1 个改写体」出击配额。渲染方案下拉：A/B/C 冻结对照，默认 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。宿主游荡只在本课打开活机制；地图课不得打开该开关。**油膜默认 = 按种子采样生产三变体**（下拉仍可钉 A–F 做对照）。六格静帧历史对照走 `?lesson=paint-vein-card`，不要走句法课侧栏交差。合同：`docs/tasks/iteration-3.md`；油膜身份 DEC-101 / `docs/tasks/iteration-7.md`。
 10. 污染句法陈列馆（`?lesson=lexicon-gallery`）：目录课，不是观察院子。一次只进一个厅（孔谱 × 基体），陈列方案 D 下视觉不同的标本。不刷玩家、不创建 `Enemy` / `ContaminationHostSystem`。碎片是全局开关，不是网格轴。必须复用生产 `d-mixed` 的乙丙丁；**甲在迭代 5 I5-J 前走基因谱模块**（仍登记为方案 D 甲章，禁止新开渲染方案下拉）。视口虚拟化；与视野相交的格子必须挂上（DEC-086）。点开检视才切四朝向与四个信号相。**基因谱甲必须消费 `pose.facing4` / `pose.signal`**（I5-N / DEC-098）：切北/东/南/西身子要变；idle 与 strike 至少要分。陈列馆控件已通；截至 I5-F，基因谱挂载不消费这两字段（只烤一张静剪影 + 固着同一套呼吸）。I5-N 未交之前不要开 I5-G。**油膜按三变体分入口钉读法**（聚珠成滩 / 沾抹拖尾 / 薄滩收边；策划表仍一行 `oil_film`；对照哺乳动物邻域四入口）。开发标签走 DOM，头上无字。合同：`docs/tasks/iteration-4.md`；甲基因谱合同 `docs/tasks/iteration-5.md`；油膜三入口 DEC-101 / `docs/tasks/iteration-7.md`。
-11. 视野渲染对比（`?lesson=vision-lab`）：迭代 9（DEC-105）的抽卡对照课。布局 / 地表 / 玩家 / 相机 / `VisibilitySystem` 全是出击同一套；只有遮罩渲染模式活在 `VisibilitySystem` 的 spike 分支里（`setMaskStyle` / `setCorruptionEdge`），**出击默认仍是 `bands` + 硬内缘**，人没拍板前不得把 spike 模式设为出击默认。数字键 1–5 切模式（1 现状 / 2 细分带 / 3 光场 v3 弱灯×强手电、360° 墙截模板 / 4 抖动坡 v2 时序颗粒 / 5 光场 v3′ 灯再弱一档对照），T 切 teal 渗透三态（关 / 硬内缘 / 软内缘 v5 光场联动等亮度线前锋 + 尾巴不过墙 / 多边形裁剪 / 前锋平滑，强度固定 0.6 供对照），R 换种子重生成且模式保持。支持深链 `&mode=bands|subdiv|field|bayer|field-dim&teal=off|hard|soft`。纯表现层对照：不动射程 / 锥角 / 三档数值 / 规则 4 朝向 / 薪柴不发光 / 混乱缩放，不动相机。合同 `docs/tasks/iteration-9.md`（第一轮波 3.5，第二轮波 3.6，第三轮波 3.7，第四轮波 3.8，第五轮波 3.9 I9-LAB5）。
-12. 油膜脉络抽卡（`?lesson=paint-vein-card`）：**历史对照课。** A/B/C 是树参数 tweak；D/E/F 是已被 DEC-101 锁定为生产的三支原形。打开必须六格都在画面上（两行三列），挂 `attachBingPaintGenome`（`paintVeinVariant` 0–5，`displayScale` 2），同一颗种子、同一改写档、油膜。第一轮 A/B/C 抽卡模型 cursor-grok-4.6-xhigh-fast；第二轮 D/E/F 抽卡模型 kimi-k3；模型名标在每格卡片上。不要走句法课侧栏。课本身不删。生产油膜不采样 0/1/2。禁止 import `d/genome`。本课画布列可随窗口变窄；滚轮缩放抽卡区域，拖动平移。合同：`docs/tasks/iteration-7.md`。
+11. 油膜脉络抽卡（`?lesson=paint-vein-card`）：**历史对照课。** A/B/C 是树参数 tweak；D/E/F 是已被 DEC-101 锁定为生产的三支原形。打开必须六格都在画面上（两行三列），挂 `attachBingPaintGenome`（`paintVeinVariant` 0–5，`displayScale` 2），同一颗种子、同一改写档、油膜。第一轮 A/B/C 抽卡模型 cursor-grok-4.6-xhigh-fast；第二轮 D/E/F 抽卡模型 kimi-k3；模型名标在每格卡片上。不要走句法课侧栏。课本身不删。生产油膜不采样 0/1/2。禁止 import `d/genome`。本课画布列可随窗口变窄；滚轮缩放抽卡区域，拖动平移。合同：`docs/tasks/iteration-7.md`。
 
 ---
 
@@ -92,16 +90,6 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | 平涂错误块 | 仅练习场对照用。不是出击现行 |
 
 可见层是出击那套程序化地表（地面烤死，天空影循环）。不开视野迷雾。相机默认框住整岛；拖动画布平移，滚轮缩放。色块标出生 / 撤离 / 薪柴 / 污染物 / 甲巡逻路点，不是可交互实体，也不是会走的甲。青绿缝核/占漆与走廊半透明块是出击同一套宿主。
-
-### 视野渲染对比（`?lesson=vision-lab`）
-
-迭代 9（DEC-105）的抽卡对照课：人要回答「视野边界做成哪种平滑」时走这一课。真实裂隙布局（`generateRiftLayout` + `RiftSurfacePainter` + 出击 `Player` + 跟随相机 + `VisibilitySystem`），WASD 走动，迷雾 / 光池 / teal 渗透全是活帧率。
-
-- **数字键 1–5 切遮罩渲染模式**：1 现状（三档阶梯 + 2px 棋盘）/ 2 细分带（8 层插值，形状不变，径向变平滑）/ 3 光场 v3（弱灯 × 强手电强度分层；v3 起模板改为 360° 全量程射线只负墙截断，形状全由预烤光场的衰减定义，远处不再有旧锥+环轮廓切出的黑色硬边；墙切仍硬）/ 4 抖动坡 v2（三档不动，8px 有序抖动渐变坡 + 时序相位：4 相 90° 旋转 Bayer 矩阵 120ms 步进，站着不动边界也活）/ 5 光场 v3′（灯再弱一档的强度抽卡对照）。
-- **T 切 teal 渗透**：关 → 硬内缘（现状）→ 软内缘 v5（光场模式下前锋钉光场等亮度线：手电强光把侵蚀顶在远处、暖灯弱光让它渗到脚边，混乱越高阈值越高、前锋越逼近；24 环双端归零剖面 + 降浓降亮的 soft 专用灰化色；v5：尾巴按墙距夹住、侵蚀层用 360° 墙截模板多边形裁剪、前锋环形盒式模糊后再夹墙；非光场模式仍走 v3 几何环）。强度固定 0.6（混乱 50+ 的样子），保证硬 / 软同强度对照。
-- **R 换种子重生成**，当前模式保持；侧栏可手输种子。深链 `&mode=…&teal=…` 可直接进指定组合（`mode` 含 `field-dim`）。
-
-模式只活在 `VisibilitySystem` 的 spike 分支（`VisionMaskStyle` / `CorruptionEdgeStyle`），出击默认仍是现状；人终审拍板后才把选中模式翻成出击默认并下线其余分支。能量等价闸门 `npm run check:vision-energy` 对现状基线负责。
 
 ### 污染句法陈列馆（`?lesson=lexicon-gallery`）
 

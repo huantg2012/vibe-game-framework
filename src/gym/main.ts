@@ -13,7 +13,6 @@ import { GymMapScene } from '@/gym/gym-map-scene';
 import { GymPaintVeinCardScene } from '@/gym/gym-paint-vein-card-scene';
 import { GymPlayerScene } from '@/gym/gym-player-scene';
 import { GymScene } from '@/gym/gym-scene';
-import { GymVisionLabScene } from '@/gym/gym-vision-lab-scene';
 
 if (import.meta.env.DEV) assertBalanceInvariants();
 
@@ -26,7 +25,6 @@ const game = new Phaser.Game(
     GymLexiconScene,
     GymLexiconGalleryScene,
     GymPaintVeinCardScene,
-    GymVisionLabScene,
   ]),
 );
 

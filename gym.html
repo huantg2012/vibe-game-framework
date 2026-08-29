@@ -53,8 +53,7 @@
       }
       #gym-map-controls label,
       #gym-lexicon-controls label,
-      #gym-gallery-controls label,
-      #gym-vision-controls label {
+      #gym-gallery-controls label {
         display: block;
         margin: 10px 0 3px;
         color: #8a8f96;
@@ -63,8 +62,7 @@
       #gym-map-controls select,
       #gym-map-controls input[type="number"],
       #gym-lexicon-controls select,
-      #gym-gallery-controls select,
-      #gym-vision-controls input[type="number"] {
+      #gym-gallery-controls select {
         width: 100%;
         background: #0e1114;
         color: #c8cdd4;
@@ -82,8 +80,7 @@
         color: #c8cdd4;
       }
       #gym-map-controls .gym-actions,
-      #gym-lexicon-controls .gym-actions,
-      #gym-vision-controls .gym-actions {
+      #gym-lexicon-controls .gym-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
@@ -91,8 +88,7 @@
       }
       #gym-map-controls button,
       #gym-lexicon-controls button,
-      #gym-gallery-nav button,
-      #gym-vision-controls button {
+      #gym-gallery-nav button {
         background: #12161a;
         color: #e8eaed;
         border: 1px solid #2a2d32;
@@ -319,18 +315,6 @@
         list-style: none;
         margin: 4px 0;
       }
-      #gym-vision-caption {
-        position: absolute;
-        top: 10px;
-        left: 12px;
-        z-index: 2;
-        pointer-events: none;
-        font-size: 12px;
-        color: #b0fff5;
-        background: rgba(8, 10, 12, 0.72);
-        border: 1px solid #1a1e24;
-        padding: 4px 8px;
-      }
     </style>
   </head>
   <body>
@@ -344,7 +328,6 @@
           <a id="gym-link-enemy" href="/gym.html">敌人移动</a>
           <a id="gym-link-player" href="/gym.html?lesson=player">玩家外形</a>
           <a id="gym-link-map" href="/gym.html?lesson=map">地图生成</a>
-          <a id="gym-link-vision-lab" href="/gym.html?lesson=vision-lab">视野渲染对比</a>
         </nav>
         <p>独立页，不进主菜单。Agent 入口：<code>docs/dev/gym.md</code>。</p>
 
@@ -531,21 +514,6 @@
           <li>不刷会走的甲。色块只标甲路点。</li>
           <li>色块是布点标记，不是实体。拖动画布平移，滚轮缩放。</li>
         </ul>
-        <ul id="gym-rules-vision-lab" hidden>
-          <li>布局 / 地表 / 玩家 / 相机 / 视野全是出击同一套；只有遮罩渲染模式可切。</li>
-          <li>数字键 1–4 切模式：1 现状（三档+棋盘）/ 2 细分带 / 3 光场 / 4 抖动坡。</li>
-          <li>T 切 teal 渗透：关 → 硬内缘（现状）→ 软内缘。强度固定 0.6 供对照。</li>
-          <li>R 换种子重生成，当前模式保持。WASD 移动，边走边看肩膀与边界。</li>
-          <li>这是抽卡对照课：模式只活在 <code>VisibilitySystem</code> 的 spike 分支里，出击默认仍是 1。</li>
-        </ul>
-        <div id="gym-vision-controls" hidden>
-          <h2>生成参数</h2>
-          <label for="gym-vision-seed">种子</label>
-          <input id="gym-vision-seed" type="number" min="0" step="1" />
-          <div class="gym-actions">
-            <button id="gym-vision-generate" type="button">按种子重生成</button>
-          </div>
-        </div>
         <ul id="gym-map-legend" hidden>
           <li><span style="background:#1aad96;"></span>出生</li>
           <li><span style="background:#e0a848;"></span>撤离</li>
@@ -563,7 +531,6 @@
       </aside>
       <div id="game-container">
         <div id="gym-gallery-captions" hidden></div>
-        <div id="gym-vision-caption" hidden></div>
       </div>
     </div>
     <script type="module" src="/src/gym/main.ts"></script>

@@ -1,5 +1,5 @@
 ---
-status: DRAFT
+status: APPROVED
 created-by: art agent
 created-when: 2026-08-28
 last-modified: 2026-08-29
@@ -195,7 +195,11 @@ spec「待验证假设」已挂：三级硬分层带状感若过重，最小代�
 
 ---
 
-## spike 分支语义登记（2026-08-29，I9-LAB7；练习场 field+soft 分支，非生产默认）
+## 最终态（2026-08-29 晚，DEC-107）
+
+人终审拍板：subdiv2（32 层等照线带）+ teal 软内缘成为生产。field 路线否决根因（阴影不贴墙三层机制：墙脚 AO 楔形亮刺 / 拐角溢光不查遮挡 / 纹理拥有形状导致背光阴影偏移碎裂）留档。**背光脚下偏暗（灯曲线峰值 0.62 起）是有意的「弱灯」读法，查询的 48px / 1.0 不动；回退旋钮 = `SUBDIV2_BAND_FLOOR_PX` 换成 `minSolidRadius`（留档不启用）。** field / field-dim / bayer / subdiv v1 / bands 与 vision-lab 课下线。
+
+## spike 分支语义登记（2026-08-29，I9-LAB7；已随 DEC-107 下线）
 
 人 2026-08-29 就 director 根因分析（v11 探针实证）拍板方向 1+2+5a+5b，**侵蚀环带的空间语义改口**（人已接受读法变化；生产 bands + 硬内缘不受影响，`system-movement-vision.md` 规则与数值不动）：
 

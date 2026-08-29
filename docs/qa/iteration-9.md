@@ -191,4 +191,155 @@ I9-A 红线对照写「预期无新增模块（全部在 `visibility-system.ts` 
 
 I9-G 相对 I9-A / 合同红线：**机械对照通过**。constants 零 diff；处方参数落地；能量平价在带内；查询 / 射线 / 缓存 / 降级 / 陆地掩膜相对 HEAD 未改；练习场未误接视野系统。
 
-**不要标迭代 9 COMPLETE。** 画面未验证。四问归人。agent-parity 既有红不挡本包。
+**（I9-QA 当时）不要标迭代 9 COMPLETE。** 画面未验证。四问归人。agent-parity 既有红不挡本包。
+
+---
+
+## I9-FINAL 结案闸门（2026-08-29，code 追加）
+
+结案批：32 层等照线带 + teal 软内缘翻为出击默认；spike 分支与 vision-lab 课下线（DEC-107）。完整 qa 结案对照留给 qa agent。本表只记结案批机器证据。
+
+| 命令 / 证据 | 结果 |
+| ----------- | ---- |
+| `npx tsc --noEmit` | 绿 |
+| package.json 全部 `check:*` | 绿（无 `lint` script） |
+| `npm run check:vision-energy` | 绿。结构断言 32 层过；全量程扇区 subdiv2=0.674 / baseline=0.674 / ratio=1.000×（钉住带 [0.85, 1.15]） |
+| 出击 / 净化点冒烟截图 `docs/art/review-2026-08-28/vision-lab/v15-*` | 进图正常；无 pageerror / console error |
+| 人终审四问 | 合同已按 C3.5 登记 **COMPLETE（2026-08-29，人终审 PASS）**；qa 不代勾画面 |
+
+**迭代 9 合同已标 COMPLETE。** 活指针仍在迭代 5。不要开 I5-C。
+
+---
+
+## I9-FINAL 机械对照（2026-08-30，qa）
+
+日期：2026-08-30  
+合同：`docs/tasks/iteration-9.md` Task I9-FINAL / 「不做什么」  
+施工清单：`docs/tasks/iteration-9-subdiv2-impl.md` 「结案实施计划」C2–C4  
+规则：`docs/specs/system-movement-vision.md`（规则 15 渲染段已改；查询三档不动）  
+代码：HEAD `b1b13b3` + 工作区未提交结案批。核工作区磁盘。好看 / 读作游戏不代勾（人 2026-08-29 晚已终审 PASS）。
+
+**结论：机械对照 PASS。** 无 Bug。无 High / Medium 偏差。下面逐项。
+
+---
+
+### 闸门实测（工作区，2026-08-30）
+
+`npx tsc --noEmit` 退出码 **0**。package.json 全部 `check:*`（含 `check:contrast` 别名）退出码 **0**。无 `lint` script。
+
+| 命令 | 退出码 | 关键数值 |
+| ---- | ------ | -------- |
+| `npx tsc --noEmit` | 0 | 零错误 |
+| `npm run check:vision-energy` | 0 | 噪点 0.931×（带 0.90–1.10）、暖光 0.870× / 手电 0.872×（带 0.85–1.05）；孤立亮点 0。结构断言 32 层过。全量程扇区 subdiv2=0.674 / baseline=0.674 / **ratio=1.000×**（钉住带 [0.85, 1.15]）。omni 90 射线 range=400 过 |
+| `npm run check:outline` | 0 | 48/48 种子可用 |
+| `npm run check:ruins` | 0 | 24/24 种子可用 |
+| `npm run check:recipes` | 0 | 10 recipes 连通 |
+| `npm run check:layout` | 0 | 8 种子墙后可走过 |
+| `npm run check:lexicon` / `check:observe-lines` / `check:paint-quota` | 0 | — |
+| `npm run check:jia-genome-weld` / `operators` / `street-wreckage` / `doorframe` / `genome-pose` / `stalk-clump` / `organic-remnant` / `insect-remnant` / `mammal-remnant` / `worm-remnant` | 0 | 全 PASS |
+| `npm run check:gallery-catalog` | 0 | `default total=1974` |
+| `npm run check:contam-distinct` | 0 | — |
+| `npm run check:paint-genome-topology` | 0 | — |
+| `npm run check:contam-floor-contrast` / `check:contrast` | 0 | 四张 CIE76 ≥ 18；墙后可走分量 = 1 |
+
+---
+
+### 1. 红线逐条
+
+合同路径写 `src/constants.ts`；仓库实际文件是 `src/config/constants.ts`。对照 HEAD `b1b13b3`。
+
+| # | 红线 | 证据 | 结论 |
+| - | ---- | ---- | ---- |
+| 1.1 | VISIBILITY / CHAOS 段 `git diff` 为空 | `git diff HEAD -- src/config/constants.ts` 长度为 0。`src/systems/chaos-system.ts` 同样无 diff | **PASS** |
+| 1.2 | 射程 224 / 80 | `constants.ts:89–90` `RADIUS_FORWARD: 224`、`RADIUS_AMBIENT: 80` | **PASS** |
+| 1.3 | 锥角 50° + 30° | `constants.ts:91–92` `CONE_HALF_ANGLE: 50`、`CONE_FALLOFF_ANGLE: 30` | **PASS** |
+| 1.4 | 三档 1.0 / 0.6 / 0.2；`ERASE_ALPHAS`；带宽 32 | `constants.ts:94–96` `EDGE_BAND_WIDTH: 32`、`BAND_ALPHAS: [1.0, 0.6, 0.2]`、`ERASE_ALPHAS: [1.0, 0.5, 0.2]`。渲染不再消费 `eraseAlphas`（见 §5） | **PASS** |
+| 1.5 | `getVisibilityAt` 仍返回 0 / 0.2 / 0.6 / 1.0 | 工作区 `visibility-system.ts:437–456` 与 HEAD 同名函数体 **IDENTICAL**。贴身 → `bandAlphas[0]`（1.0）或 0；射程外 / 无视线 → 0；`coreEdge` → `[0]`；中带 → `[1]`（0.6）；外带 → `[2]`（0.2） | **PASS** |
+| 1.6 | 规则 4 朝向 = 最近一次非零键盘输入 | `player.ts:238–240` `resolveFacingTarget`：不在移动则 `null`，否则 `atan2(inputVector)`。出击 `visibility.update(..., player.getFacingAngle(), ...)`（`rift-scene.ts:433`）。无鼠标瞄准 | **PASS** |
+| 1.7 | 薪柴不发光 | `registerGlowSource` 调用点仍只在 `extraction-system.ts:69–70`，经 `rift-scene.ts:282` 注入。无新 glow 注册 | **PASS** |
+| 1.8 | 混乱缩放取值映射 | `getChaosModulators`（`chaos-system.ts:37–64`）相对 HEAD 零 diff。`≤75 → 1.0`、`75–100 → 1.0–0.90`、溢出到 130 落到 0.40 地板；`edgeCorruption` / `screenFlicker` 分段未改 | **PASS** |
+| 1.9 | 相机 zoom 1.5 | `constants.ts:13` `CAMERA.ZOOM: 1.5`。`rift-scene.ts:172` `camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM)` | **PASS** |
+| 1.10 | 静止缓存（规则 20） | `update`：位移 / 转角 / 网格 version 未超才 `needsRaycast`；命中则 `lastMs = 0`、`usedCacheLastFrame = true`（`visibility-system.ts:356–380`）。HEAD 的 field 重建块（`castFieldStencil` / `scanFieldCorners` / `scanCorruptionAnchors`）已删；缓存谓词本身保留 | **PASS** |
+| 1.11 | 2ms 降级（规则 21） | `trackBudget`（688–713）与 HEAD 同逻辑。超 `BUDGET_MS` → `degradeLevel++` → `setRayCounts(28, 12)`；`degradeLevel >= 2` 时奇数帧跳过射线（364–366） | **PASS** |
+| 1.12 | DEC-106：`TileGrid.isOpaque` 对 VOID 仍 true | `tile-grid.ts:58–61` `WALL \|\| VOID`。相对 HEAD 零 diff。`grid-raycast.ts` 只问 `isOpaque`。净化点自带遮挡网格仍只认 WALL（`purification-scene.ts:172–174`，DEC-106 声明不动） | **PASS** |
+
+---
+
+### 2. 删除完整性
+
+在 `src/` 与 `gym.html` 对下列符号 grep，**零命中**：
+
+`VisionMaskStyle` / `CorruptionEdgeStyle` / `setMaskStyle` / `setCorruptionEdge` / `drawFieldMask` / `drawCorruptionIsolux` / `fillVisionField` / `fieldIsoluxRadius` / `fillBayerPunch` / `gym-vision-lab-scene` / `GymVisionLabScene` / `vision-lab` / `isFieldStyle` / `drawBayerBands` / `drawSubdivBands` / `fillDitherPunch` / `scanFieldIsoluxPair` / `computeNestedEraseAlphas` / `SUBDIV_BAND_COUNT` / `SUBDIV_PROFILE_STOPS` / `FIELD_STENCIL` / `FIELD_LAMP_DIM` / `VISION_FIELD_SIZE` / `BAYER_`
+
+- `src/gym/gym-vision-lab-scene.ts`：**文件不存在**
+- `src/gym/main.ts`：场景表无 VisionLab；课：enemy / player / map / lexicon / lexicon-gallery / paint-vein-card
+- `src/gym/gym-lesson.ts`：联合类型无 `'vision-lab'`
+- `src/gym/gym-boot-scene.ts`：无 vision-lab 条目 / setHidden / nav
+- `gym.html`：无 `gym-vision` / `vision-lab` 控件或 CSS
+- `docs/dev/gym.md`：课表无 vision-lab 行
+
+参考光场族 **保留**（`src/systems/vision-textures.ts`）：`fieldVisibilityAt`（334）、`FIELD_FLASH_STOPS`（300）、`FIELD_LAMP_STOPS`（313）、`smoothLanding`（285）。`SUBDIV2_BAND_COUNT = 32`（236）；`SUBDIV2_LEVELS` 32 值、`levels[0]=1`、`levels[31]=0.015`。
+
+docs 历史档案（合同、DEC、侧记）仍出现已删符号名，属结案计划允许的档案引用，不计入残留。
+
+---
+
+### 3. 每帧分配
+
+| 路径 | 证据 | 结论 |
+| ---- | ---- | ---- |
+| `update` | 无 `new`、无数组字面量。只改标量 / 缓存谓词 / 调 `castRays` / `render` | **PASS** |
+| `drawMask` | 无 `new`。噪点滚动写已有 TileSprite；然后 `drawSubdiv2Bands()` | **PASS** |
+| `drawSubdiv2Bands` | 首次 `computeLevelEraseAlphas` 写入 `subdiv2Alphas` 后短路（841–844）。`drawBandStack` 只 `clear` / `fillPoints` / `erase` 已有 Graphics | **PASS**（首次绘制一次分配，非每帧） |
+| `drawCorruption` | 无 `new`、无数组字面量。软环唯一路径；`rings = CORRUPTION_SOFT_RINGS` | **PASS** |
+| `subdiv2RadiiDirty` 置位 | 全文件两处：`setRadiusScale`（402）与 `allocatePolygonBuffers`（609，由 `setRayCounts`：create / 降级）。`ensureSubdiv2Radii`（826）脏时才跑 `computeFieldBandRadii`；该函数内 `new Float64Array(bandCount)`（`vision-textures.ts:389`）只在脏帧。移动 / 转向 / 普通重建帧不置 dirty | **PASS**（重建帧允许） |
+| `bandGraphics` | `create()` 预分配 `SUBDIV2_BAND_COUNT`（295–297）。`bandGraphicsAt` 的 while 增长只在缺槽时（降级改射线数不改带数，正常帧不进） | **PASS** |
+
+---
+
+### 4. 接线
+
+| # | 调用方 | 证据 | 结论 |
+| - | ------ | ---- | ---- |
+| 4.1 | 裂隙 | `rift-scene.ts:40,81,179` `create(this, createRiftVisionConfig(...), grid)`；`clipLightsToIsland`（180）；`setExtractionPosition`（181）；`update`（433）；`applyChaosModulators` 三个 setter（847–849）。无已删方法调用 | **PASS** |
+| 4.2 | 净化点 | `purification-scene.ts:36,236,415–446` `createPurificationVisionConfig` + `rayDistanceOverride`；`update`（832）。无已删方法 | **PASS** |
+| 4.3 | `eraseAlphas` 保留不消费 | `VisionConfig` 字段 + 注释「红线镜像」（116–121）；`createRiftVisionConfig` 写入 `v.ERASE_ALPHAS`（167）。全 `src/` 无 `config.eraseAlphas` / `this.config.eraseAlphas` 读取。`drawMask` 只走 `drawSubdiv2Bands` | **PASS** |
+
+---
+
+### 5. 文档一致性抽查
+
+抽查范围：合同状态与波段表、`current-iteration.md`、DEC-107。活指针。
+
+| 文件 | 结案陈述 | 活指针 |
+| ---- | -------- | ------ |
+| `docs/tasks/iteration-9.md` | frontmatter `status: COMPLETE`；note = 32 层等照线带 + teal 软内缘、其余 spike 与对比课下线（DEC-107）；波段表 **I9-FINAL** 行「code 已交 2026-08-29，画面随人终审拍板收口」；验证问题按 C3.5 登记 COMPLETE | 「活指针仍在迭代 5。不要开 I5-C。」 |
+| `docs/progress/current-iteration.md` | 文首 / 工作性质 / 迭代 9 表 / 新红线 / 登记表第 9 行均为 **COMPLETE（2026-08-29，人终审 PASS）**；选中分支 = subdiv2 + teal；DEC-105 / DEC-106 / DEC-107 | 多处「活指针仍在迭代 5」；「不要标迭代 5 COMPLETE」 |
+| `docs/progress/decisions-log.md` DEC-107 | 生产遮罩 = 32 层等照线带；生产侵蚀 = 软内缘 v3；机制整支删除；红线清单与合同一致；Phase 写「迭代 9 结案；活指针仍在迭代 5」 | 与上两份一致 |
+
+三者对「COMPLETE / 32 层 subdiv2 + teal 软内缘 / 分支与课下线 / 活指针仍在迭代 5」的陈述互相一致。**PASS。**
+
+合同正文「实现事实（I9-G 后当前真相）」节仍写三次 erase + dither，那是 I9-G 快照标题，不是 frontmatter / 波段表的结案句。不升 FAIL。
+
+---
+
+### 发现的问题
+
+| ID | 类型 | 严重度 | 描述 | 位置 | Spec 依据 |
+| -- | ---- | ------ | ---- | ---- | --------- |
+| — | — | — | 无 Bug。无 High / Medium 偏差。无删除残留。 | — | — |
+
+---
+
+### 通过的检查（摘要）
+
+- constants VISIBILITY / CHAOS 相对 HEAD 零 diff；射程、锥角、三档、zoom、混乱映射、2ms 预算现值与合同一致。
+- `getVisibilityAt` 相对 HEAD 逐字相同，仍返回 0 / 0.2 / 0.6 / 1.0。
+- DEC-106 `isOpaque(VOID)` 仍 true；规则 4 朝向、薪柴 glow、静止缓存、降级路径在。
+- 点名删除符号在 `src/` 与 `gym.html` 零残留；vision-lab 课文件与接线已删；参考光场族保留。
+- update / drawMask / drawSubdiv2Bands / drawCorruption 无每帧 `new`；`subdiv2RadiiDirty` 只在缩放与射线缓冲重建时置位。
+- 裂隙 / 净化点只调结案后 API；`eraseAlphas` 写入 config 但不被遮罩消费。
+- tsc 0；全部 `check:*` 0；能量平价 full-range **1.000×**。
+- 合同状态 / 波段表、current-iteration、DEC-107 结案陈述一致；活指针仍在迭代 5。
+
+好看不代勾。画面人已终审。不要开 I5-C。不要标迭代 5 COMPLETE。

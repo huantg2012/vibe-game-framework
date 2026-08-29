@@ -5,6 +5,23 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+## DEC-107: 视野渲染翻为 32 层等照线带 + teal 软内缘；field / subdiv v1 / bayer / bands 分支与视野对比课下线
+- Date: 2026-08-29（人终审拍板；Director 本条登记）
+- Phase: Iterative Development（迭代 9 结案；活指针仍在迭代 5）
+- Type: Design（表现层终审定版）
+- Context: 迭代 9 抽卡对照课（?lesson=vision-lab，合同 42 行例外）多轮比较后，人 2026-08-29 晚终审：「很不错，不过 16 层还略有分层感，搞成 32 层吧，然后直接结案+提交。」选中组合 = subdiv2 等照线带遮罩 + teal 软内缘（v3 几何环）。field 光场路线因结构性缺陷（阴影不贴墙：墙脚 AO 楔形亮刺 / 拐角溢光不查遮挡 / 纹理拥有形状导致背光阴影偏移碎裂；director 根因报告 2026-08-29）已在设计层放弃。
+- Decision:
+  1. 生产遮罩 = 32 层等照线带（subdiv2）：每层带 = 射线裁剪多边形，带半径 = 参考光场（手电强曲线 × 暖灯弱曲线）等照线被射程曲线夹取，末层强制 = 射程曲线。背光脚下偏暗（灯曲线峰值 0.62 起）是有意的「弱灯」读法；getVisibilityAt 的 48px / 1.0 查询保证不动。
+  2. 生产侵蚀内缘 = 软（v3 几何环：20 环双端零斜率剖面 + 44px 黑中长尾 + 灰化色 ×0.7 峰值）；触发 / 深度 / 上限 / 混乱缩放映射不动。硬内缘下线。
+  3. VisionMaskStyle / CorruptionEdgeStyle 机制整个移除；bands 三擦除 + 棋盘 dither、subdiv v1、field、field-dim、bayer、field 专属机器（360° 模板 / 墙脚 AO / 拐角溢光 / 光场纹理 / isolux 侵蚀）全部删除；vision-lab 课整课删除。
+  4. 红线不动：射程 224/80、锥角 50+30、三档数值与 ERASE_ALPHAS（constants 段 diff 为空）、规则 4、薪柴不发光、混乱缩放、相机、getVisibilityAt、DEC-106 虚空吞光。
+- 已考虑的替代方案（否决）：
+  1. 保留单成员 VisionMaskStyle 联合类型 — 无 alternatives 的间接层；课删后无调用方。
+  2. vision-lab 课留单模式 demo — 抽卡使命已完成；生产画面直接在出击看；留课就留不住机制删除。
+  3. field 分支修补后保留 — 根因是结构性的（纹理拥有形状），修补等于重造 subdiv2。
+- Impact: src/systems/visibility-system.ts 与 vision-textures.ts 净删 spike 面；src/gym/ 三文件 + gym.html 删课；check:vision-energy 带栈节改写为结构断言 + 钉住亮度；system-movement-vision 规则 15 渲染段原地更新（数值表不动）；architecture.md 登记行更新；iteration-9 合同标 COMPLETE。
+- Verification: tsc 零错误；全部 check:* 绿；带栈闸门（结构断言 + 全量程扇区 ±15% 钉住亮度）；出击 + 净化点冒烟截图；人终审结论（2026-08-29 晚，gym 同代码路径）登记合同四问。
+
 ## DEC-106: VOID 改为挡光（虚空吞光），翻转 Slice 6 的「VOID 不是墙、不挡视线」默认
 - Date: 2026-08-29（人拍板；code 本条登记）
 - Phase: Iterative Development（迭代 9 进行中）
