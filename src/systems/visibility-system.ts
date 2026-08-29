@@ -36,8 +36,9 @@ import {
   FIELD_LAMP_DIM_STOPS,
   FIELD_LAMP_STOPS,
   FIELD_STENCIL_RAY_COUNT,
-  fieldIsoluxRadius,
+  fieldVisibilityAt,
   fillBayerPunch,
+  scanFieldIsoluxPair,
   fillDitherPunch,
   fillVisionField,
   fillVoidNoise,
@@ -97,22 +98,42 @@ const CORRUPTION_SOFT_PEAK_T = 0.25;
  */
 /** v4: ring count - denser than v3, the inner falloff gets ~11 rings. */
 const CORRUPTION_ISO_RINGS = 24;
-/** v4: band geometry around the contour - soft rise toward the player, long tail into the void. */
-const CORRUPTION_ISO_INNER_PX = 40;
-const CORRUPTION_ISO_TAIL_PX = 48;
 /**
  * v5 (I9-LAB5 F3): circular box-blur of the isolux front, in rays. Radius 1–2,
  * 1–2 passes; both at the upper end so a 51/182 wall-corner jump is rounded
  * before the ring quads are built. After blur the front is re-clamped to the
- * stencil so smoothing cannot push it through a wall.
+ * dark edge so smoothing cannot push it through a wall.
  */
 const CORRUPTION_ISO_FRONT_BLUR_RADIUS = 2;
 const CORRUPTION_ISO_FRONT_BLUR_PASSES = 2;
 /**
- * I9-LAB6: last pixels before a wall/land edge. Ring alpha smoothsteps to 0
- * across this window so teal does not pile up on the occluder face.
+ * I9-LAB7 F5: isolux scan floor for the soft-field front. Play-facing
+ * `minSolidRadius` (48) is untouched — this is spike-only.
  */
-const CORRUPTION_ISO_WALL_FADE_PX = 24;
+const CORRUPTION_ISO_FRONT_FLOOR_PX = 16;
+/** I9-LAB7: field visibility at the true dark edge (isolux 2%). */
+const CORRUPTION_ISO_DARK_THRESHOLD = 0.02;
+/** I9-LAB7: ring overshoots the dark edge, then fades across the last ~6px. */
+const CORRUPTION_ISO_OUTER_OVERSHOOT_PX = 8;
+const CORRUPTION_ISO_OUTER_FADE_PX = 6;
+/** I9-LAB7: if the ring is thinner than this, pull the inner edge toward the player. */
+const CORRUPTION_ISO_MIN_BAND_PX = 20;
+/**
+ * I9-LAB7 5a: wall-foot AO. Two inset steps along the field stencil, restoring
+ * ~0.22 darkness at the face and ~0.10 in the next 9px. Field mask only.
+ */
+const FIELD_WALL_AO_FACE_PX = 10;
+const FIELD_WALL_AO_INSET_PX = 19;
+const FIELD_WALL_AO_FACE_ALPHA = 0.25;
+const FIELD_WALL_AO_INNER_ALPHA = 0.16;
+/**
+ * I9-LAB7 5b: convex-corner bleed. Radius 12px (~1/3 tile), peak erase 0.4,
+ * at most 48 nearest corners. Baked once, one Image reused.
+ */
+const FIELD_CORNER_BLEED_RADIUS_PX = 12;
+const FIELD_CORNER_BLEED_PEAK_ALPHA = 0.4;
+const FIELD_CORNER_BLEED_MAX = 48;
+const FIELD_CORNER_BLEED_TEX_SIZE = 32;
 /** v4: chaos -> isolux threshold. t = SCALE x corruption (x flicker boost), clamped. */
 const CORRUPTION_ISO_THRESHOLD_SCALE = 0.9;
 const CORRUPTION_ISO_THRESHOLD_MAX = 0.95;
@@ -133,17 +154,6 @@ const CORRUPTION_SOFT_PEAK_SCALE = 0.7;
 function smoothstep01(t: number): number {
   const x = t <= 0 ? 0 : t >= 1 ? 1 : t;
   return x * x * (3 - 2 * x);
-}
-
-/**
- * 1 when `radius` is at least `fadePx` inside the wall distance, 0 when it
- * has reached the wall. Isolux rings use this so teal dies in front of a face.
- */
-function wallProximityFade(radius: number, wallDist: number, fadePx: number): number {
-  const remaining = wallDist - radius;
-  if (remaining >= fadePx) return 1;
-  if (remaining <= 0) return 0;
-  return smoothstep01(remaining / fadePx);
 }
 
 function corruptionSoftProfile(t: number, peakT: number): number {
@@ -320,10 +330,20 @@ export class VisibilitySystem {
    */
   private stencilDist = new Float32Array(0);
   private stencilRange = 0;
-  /** Teal v4: per-fan-ray isolux front radius (wall-clamped), refreshed per frame. */
+  /** Teal v4/v7: per-fan-ray pressure-front radius, refreshed on rebuild frames. */
   private corruptionFront = new Float32Array(0);
+  /** I9-LAB7: per-fan-ray dark-edge radius (2% isolux ∩ stencil). No angular blur. */
+  private corruptionDarkEdge = new Float32Array(0);
   /** v5 F3: preallocated scratch for the circular box-blur of `corruptionFront`. */
   private corruptionFrontScratch = new Float32Array(0);
+  /** Soft switched on while the ray cache is still valid — scan once on next draw. */
+  private isoluxNeedsScan = true;
+  /** I9-LAB7 5b: baked soft blob, one Image stamped at convex corners. */
+  private cornerBleedImage: Phaser.GameObjects.Image | null = null;
+  private readonly fieldCornerX = new Float32Array(FIELD_CORNER_BLEED_MAX);
+  private readonly fieldCornerY = new Float32Array(FIELD_CORNER_BLEED_MAX);
+  private readonly fieldCornerD2 = new Float32Array(FIELD_CORNER_BLEED_MAX);
+  private fieldCornerCount = 0;
 
   private maskWidth = 0;
   private maskHeight = 0;
@@ -376,6 +396,8 @@ export class VisibilitySystem {
     this.edgeCorruption = 0;
     this.screenFlicker = 0;
     this.cacheValid = false;
+    this.isoluxNeedsScan = true;
+    this.fieldCornerCount = 0;
     this.glowSources.clear();
 
     const camera = scene.cameras.main;
@@ -490,6 +512,11 @@ export class VisibilitySystem {
       if (isFieldStyle(this.maskStyle)) {
         const stencilStart = performance.now();
         this.castFieldStencil(origin, facingAngle);
+        this.scanFieldCorners();
+        if (this.corruptionEdge === 'soft' && this.edgeCorruption > 0) {
+          this.scanCorruptionAnchors();
+          this.isoluxNeedsScan = false;
+        }
         this.lastMs += performance.now() - stencilStart;
       }
       this.originCache.x = origin.x;
@@ -528,7 +555,10 @@ export class VisibilitySystem {
 
   /** Teal creeping in from the edge: hue shift, inward bleed and edge jitter, one knob. */
   setEdgeCorruption(level: number): void {
-    this.edgeCorruption = clamp(level, 0, 1);
+    const next = clamp(level, 0, 1);
+    if (next === this.edgeCorruption) return;
+    this.edgeCorruption = next;
+    this.isoluxNeedsScan = true;
   }
 
   /** Periodic full-screen shimmer at the highest chaos stage. */
@@ -549,11 +579,14 @@ export class VisibilitySystem {
     if (style === 'bayer') this.ensureBayerPunches();
     // Force a recast: the field stencil fan must exist even if the player never moves.
     this.cacheValid = false;
+    this.isoluxNeedsScan = true;
   }
 
   /** Spike hook (gym vision-lab): hard vs soft teal corruption inner edge. */
   setCorruptionEdge(style: CorruptionEdgeStyle): void {
+    if (style === this.corruptionEdge) return;
     this.corruptionEdge = style;
+    this.isoluxNeedsScan = true;
   }
 
   getMaskStyle(): VisionMaskStyle {
@@ -708,6 +741,8 @@ export class VisibilitySystem {
     this.fieldScratch = null;
     this.stencilScratch?.destroy();
     this.stencilScratch = null;
+    this.cornerBleedImage?.destroy();
+    this.cornerBleedImage = null;
     for (let k = 0; k < this.bayerPunches.length; k++) {
       this.bayerPunches[k]?.destroy();
       this.bayerPunches[k] = null;
@@ -754,14 +789,14 @@ export class VisibilitySystem {
     this.cacheValid = false;
   }
 
-  /** Polygon bands the current mask style needs: 3 stepped, N subdiv, or 1 stencil. */
+  /** Polygon bands the current mask style needs: 3 stepped, N subdiv, or 2 field (stencil + AO inset). */
   private bandCountForStyle(): number {
     switch (this.maskStyle) {
       case 'subdiv':
         return SUBDIV_BAND_COUNT;
       case 'field':
       case 'field-dim':
-        return 1;
+        return 2;
       default:
         return 3;
     }
@@ -987,10 +1022,29 @@ export class VisibilitySystem {
       const count = FIELD_STENCIL_RAY_COUNT;
       const range = this.stencilRange;
       const polygon = this.polygons[0]!;
+      const faceInset = this.shrunkPolygons[0]!;
+      const footInset = this.polygons[1]!;
       for (let i = 0; i < count; i++) {
         const angle = facingAngle - Math.PI + (TAU * i) / count;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
         const dist = Math.min(this.stencilDist[i] ?? range, range);
-        this.writePoint(polygon, i, Math.cos(angle), Math.sin(angle), dist);
+        this.writePoint(polygon, i, cos, sin, dist);
+        const wallHit = dist < range - 8;
+        this.writePoint(
+          faceInset,
+          i,
+          cos,
+          sin,
+          wallHit ? Math.max(dist - FIELD_WALL_AO_FACE_PX, MIN_HIT_DIST) : dist
+        );
+        this.writePoint(
+          footInset,
+          i,
+          cos,
+          sin,
+          wallHit ? Math.max(dist - FIELD_WALL_AO_INSET_PX, MIN_HIT_DIST) : dist
+        );
       }
       return;
     }
@@ -1153,7 +1207,9 @@ export class VisibilitySystem {
     const outline = this.bandGraphicsAt(0);
     outline.clear();
     outline.fillStyle(0xffffff, 1);
-    outline.fillPoints(this.polygons[0]!, true);
+    // Clip the field punch to the wall-foot inset so the 19px strip stays
+    // on the mask; range-edge rays are not inset (texture already at 0).
+    outline.fillPoints(this.polygons[1] ?? this.polygons[0]!, true);
 
     stencil.clear();
     stencil.fill(0xffffff, 1);
@@ -1167,6 +1223,140 @@ export class VisibilitySystem {
     scratch.draw(field);
     scratch.erase(stencil);
     this.mask.erase(scratch);
+    this.drawFieldWallAo();
+    this.stampFieldCornerBleed();
+  }
+
+  /**
+   * I9-LAB7 5a: the field punch used the 19px-inset clip, leaving the wall-foot
+   * strip fully dark. Punch that strip back at 0.75 / 0.84 so residual darkness
+   * is ~0.25 at the face and ~0.16 in the next step. `mask.erase(graphics)` is
+   * the production bands path. Only wall-hit rays have a gap (range-edge
+   * hybrid == stencil).
+   */
+  private drawFieldWallAo(): void {
+    const graphics = this.ditherRingGraphics;
+    const outer = this.polygons[0];
+    const face = this.shrunkPolygons[0];
+    const foot = this.polygons[1];
+    if (!graphics || !outer || !face || !foot) return;
+    const count = FIELD_STENCIL_RAY_COUNT;
+
+    const stamp = (innerPts: Vector2[], outerPts: Vector2[], eraseAlpha: number): void => {
+      graphics.clear();
+      graphics.fillStyle(0xffffff, eraseAlpha);
+      let any = false;
+      for (let i = 0; i < count; i++) {
+        const next = (i + 1) % count;
+        const a = innerPts[i]!;
+        const b = outerPts[i]!;
+        const c = outerPts[next]!;
+        const d = innerPts[next]!;
+        if (Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5) continue;
+        any = true;
+        graphics.fillTriangle(a.x, a.y, b.x, b.y, c.x, c.y);
+        graphics.fillTriangle(a.x, a.y, c.x, c.y, d.x, d.y);
+      }
+      if (any) this.mask.erase(graphics);
+    };
+
+    stamp(foot, face, 1 - FIELD_WALL_AO_INNER_ALPHA);
+    stamp(face, outer, 1 - FIELD_WALL_AO_FACE_ALPHA);
+  }
+
+  /** I9-LAB7 5b: stamp the baked 12px blob at cached convex corners. */
+  private stampFieldCornerBleed(): void {
+    const img = this.cornerBleedImage;
+    if (!img || this.fieldCornerCount === 0) return;
+    for (let i = 0; i < this.fieldCornerCount; i++) {
+      img.setPosition(
+        this.fieldCornerX[i]! - this.maskOriginX,
+        this.fieldCornerY[i]! - this.maskOriginY
+      );
+      this.mask.erase(img);
+    }
+  }
+
+  /**
+   * Rebuild-frame convex-corner scan. A vertex is convex when exactly one of
+   * the four surrounding cells is wall, or two edge-adjacent walls (L). VOID
+   * and out-of-bounds vertices are skipped so the blob cannot punch the void.
+   * Keeps the nearest FIELD_CORNER_BLEED_MAX; zero allocation.
+   */
+  private scanFieldCorners(): void {
+    const grid = this.occluders;
+    const ts = grid.tileSize;
+    const ox = this.origin.x;
+    const oy = this.origin.y;
+    const reach = this.stencilRange + FIELD_CORNER_BLEED_RADIUS_PX;
+    const col0 = Math.floor((ox - reach) / ts);
+    const col1 = Math.floor((ox + reach) / ts);
+    const row0 = Math.floor((oy - reach) / ts);
+    const row1 = Math.floor((oy + reach) / ts);
+    const max = FIELD_CORNER_BLEED_MAX;
+
+    this.fieldCornerCount = 0;
+    for (let row = row0; row <= row1 + 1; row++) {
+      for (let col = col0; col <= col1 + 1; col++) {
+        if (!this.isFieldConvexCorner(col, row)) continue;
+        const vx = col * ts;
+        const vy = row * ts;
+        const dx = vx - ox;
+        const dy = vy - oy;
+        const d2 = dx * dx + dy * dy;
+        const n = this.fieldCornerCount;
+        if (n < max) {
+          this.fieldCornerX[n] = vx;
+          this.fieldCornerY[n] = vy;
+          this.fieldCornerD2[n] = d2;
+          this.fieldCornerCount = n + 1;
+          continue;
+        }
+        let far = 0;
+        for (let k = 1; k < max; k++) {
+          if (this.fieldCornerD2[k]! > this.fieldCornerD2[far]!) far = k;
+        }
+        if (d2 < this.fieldCornerD2[far]!) {
+          this.fieldCornerX[far] = vx;
+          this.fieldCornerY[far] = vy;
+          this.fieldCornerD2[far] = d2;
+        }
+      }
+    }
+  }
+
+  /**
+   * Vertex at the NW corner of tile (col, row). 0 = floor, 1 = wall, 2 = void/OOB.
+   */
+  private fieldCellKind(col: number, row: number): number {
+    const grid = this.occluders;
+    if (col < 0 || row < 0 || col >= grid.cols || row >= grid.rows) return 2;
+    const tiled = grid as OccluderGrid & { getTile?: (c: number, r: number) => number };
+    if (tiled.getTile) {
+      const tile = tiled.getTile(col, row);
+      if (tile === TileType.VOID) return 2;
+      if (tile === TileType.WALL) return 1;
+      return 0;
+    }
+    return grid.isOpaque(col, row) ? 1 : 0;
+  }
+
+  private isFieldConvexCorner(col: number, row: number): boolean {
+    const nw = this.fieldCellKind(col - 1, row - 1);
+    const ne = this.fieldCellKind(col, row - 1);
+    const sw = this.fieldCellKind(col - 1, row);
+    const se = this.fieldCellKind(col, row);
+    if (nw === 2 || ne === 2 || sw === 2 || se === 2) return false;
+    const walls =
+      (nw === 1 ? 1 : 0) + (ne === 1 ? 1 : 0) + (sw === 1 ? 1 : 0) + (se === 1 ? 1 : 0);
+    if (walls === 1) return true;
+    if (walls !== 2) return false;
+    const edge =
+      (nw === 1 && ne === 1) ||
+      (nw === 1 && sw === 1) ||
+      (ne === 1 && se === 1) ||
+      (sw === 1 && se === 1);
+    return edge;
   }
 
   /**
@@ -1290,6 +1480,27 @@ export class VisibilitySystem {
         false
       );
       this.stencilScratch.setOrigin(0, 0);
+    }
+    this.ensureCornerBleedImage();
+  }
+
+  /** Bake the 12px soft blob once; reuse one unlisted Image for every stamp. */
+  private ensureCornerBleedImage(): void {
+    const key = FIELD_CORNER_BLEED_TEXTURE_KEY;
+    if (!this.scene.textures.exists(key)) {
+      const size = FIELD_CORNER_BLEED_TEX_SIZE;
+      const canvas = this.scene.textures.createCanvas(key, size, size);
+      if (canvas) {
+        const context = canvas.getContext();
+        const image = context.createImageData(size, size);
+        fillCornerBleed(image.data, size, FIELD_CORNER_BLEED_RADIUS_PX, FIELD_CORNER_BLEED_PEAK_ALPHA);
+        context.putImageData(image, 0, 0);
+        canvas.refresh();
+      }
+    }
+    if (!this.cornerBleedImage) {
+      this.cornerBleedImage = this.scene.make.image({ key }, false);
+      this.cornerBleedImage.setOrigin(0.5, 0.5);
     }
   }
 
@@ -1478,27 +1689,13 @@ export class VisibilitySystem {
   }
 
   /**
-   * Soft v4 (field modes only) + v5 wall/clip/smoothing (I9-LAB5):
-   * the corruption front pins to the light field's isolux contour - the radius
-   * per direction where the field decays to a chaos-driven threshold. Strong
-   * light (flashlight cone) holds the front far out; weak light (lamp side/rear)
-   * lets it seep toward the player. The band is fixed-width around the contour:
-   * a zero-slope rise on the player side and a long tail past the contour into
-   * the void. Walls still truncate the front (a wall face is a vision edge).
-   * Chaos mapping preserved: higher corruption raises the threshold, pushing
-   * the front toward brighter radii (the player).
-   *
-   * v5 F1: tail outer edge is min(front + TAIL, stencilDist) so the band cannot
-   * walk through a wall brick. v5 F2: the layer is clipped to the same 360°
-   * wall-truncated stencil polygon the field mask uses, so quads interpolating
-   * across a wall corner cannot paint behind the wall. v5 F3: 1–2 passes of
-   * circular box-blur on the 128-ray front, then re-clamp to the stencil, so a
-   * door-gap 51/182 jump does not smear into a diagonal teal wedge.
-   *
-   * I9-LAB6: each ring's alpha is also multiplied by a wall-proximity fade —
-   * within CORRUPTION_ISO_WALL_FADE_PX of stencilDist the band smoothsteps to 0
-   * so teal dissipates in front of a wall face instead of stacking into a
-   * specular rim. Isolux/soft only; hard and bands/subdiv/bayer stay untouched.
+   * I9-LAB7: soft field ring anchors to the true dark edge, not a tent around
+   * the pressure isolux. Front (inner) = chaos-threshold isolux, F5-unpinned
+   * (floor 16, per-direction peak-normalized threshold) and F3-blurred.
+   * Dark edge (outer) = 2% isolux ∩ stencil, no angular blur. Profile rises
+   * from the inner edge with zero slope, peaks at the dark edge, then fades
+   * ~6px. 24px wall-front dissipation is gone. Color / peak / trigger / depth
+   * / chaos mix unchanged. F2 GeometryMask kept.
    */
   private drawCorruptionIsolux(facingAngle: number): void {
     const graphics = this.corruptionGraphics;
@@ -1506,11 +1703,97 @@ export class VisibilitySystem {
     const config = this.config;
     const count = FIELD_STENCIL_RAY_COUNT;
 
+    if (
+      this.isoluxNeedsScan ||
+      this.corruptionFront.length !== count ||
+      this.corruptionDarkEdge.length !== count
+    ) {
+      this.scanCorruptionAnchors();
+      this.isoluxNeedsScan = false;
+    }
+
+    this.ensureCorruptionClipMask();
+    this.redrawCorruptionClip(facingAngle);
+    if (this.corruptionClipMask) graphics.setMask(this.corruptionClipMask);
+
+    const color = mixRgb(v.CORRUPTION_COLOR, config.voidColor, CORRUPTION_SOFT_VOID_MIX);
+    const capAlpha = v.CORRUPTION_MAX_MIX * this.edgeCorruption * CORRUPTION_SOFT_PEAK_SCALE;
+    const fadePx = CORRUPTION_ISO_OUTER_FADE_PX;
+    const overshoot = CORRUPTION_ISO_OUTER_OVERSHOOT_PX;
+    const minBand = CORRUPTION_ISO_MIN_BAND_PX;
+    const floor = CORRUPTION_ISO_FRONT_FLOOR_PX;
+
+    for (let ring = 0; ring < CORRUPTION_ISO_RINGS; ring++) {
+      const f0 = ring / CORRUPTION_ISO_RINGS;
+      const f1 = (ring + 1) / CORRUPTION_ISO_RINGS;
+      const tMid = (ring + 0.5) / CORRUPTION_ISO_RINGS;
+
+      for (let i = 0; i < count; i++) {
+        const next = (i + 1) % count;
+        const wallA = this.stencilDist[i] ?? this.stencilRange;
+        const wallB = this.stencilDist[next] ?? this.stencilRange;
+        const darkA = this.corruptionDarkEdge[i] ?? wallA;
+        const darkB = this.corruptionDarkEdge[next] ?? wallB;
+
+        let innerA = this.corruptionFront[i]!;
+        let innerB = this.corruptionFront[next]!;
+        let outerA = Math.min(darkA + overshoot, wallA);
+        let outerB = Math.min(darkB + overshoot, wallB);
+        if (outerA - innerA < minBand) innerA = Math.max(outerA - minBand, floor);
+        if (outerB - innerB < minBand) innerB = Math.max(outerB - minBand, floor);
+        if (outerA <= innerA && outerB <= innerB) continue;
+
+        const spanA = Math.max(outerA - innerA, 0);
+        const spanB = Math.max(outerB - innerB, 0);
+        const peakA = spanA > fadePx ? 1 - fadePx / spanA : 0.5;
+        const peakB = spanB > fadePx ? 1 - fadePx / spanB : 0.5;
+        const alphaScale =
+          0.5 * corruptionSoftProfile(tMid, peakA) + 0.5 * corruptionSoftProfile(tMid, peakB);
+        if (alphaScale <= 0) continue;
+
+        const angleA = facingAngle - Math.PI + (TAU * i) / count;
+        const angleB = facingAngle - Math.PI + (TAU * next) / count;
+        const cosA = Math.cos(angleA);
+        const sinA = Math.sin(angleA);
+        const cosB = Math.cos(angleB);
+        const sinB = Math.sin(angleB);
+
+        const a0 = innerA + spanA * f0;
+        const a1 = innerA + spanA * f1;
+        const b0 = innerB + spanB * f0;
+        const b1 = innerB + spanB * f1;
+
+        graphics.fillStyle(color, capAlpha * alphaScale);
+        graphics.beginPath();
+        graphics.moveTo(this.origin.x + cosA * a0, this.origin.y + sinA * a0);
+        graphics.lineTo(this.origin.x + cosA * a1, this.origin.y + sinA * a1);
+        graphics.lineTo(this.origin.x + cosB * b1, this.origin.y + sinB * b1);
+        graphics.lineTo(this.origin.x + cosB * b0, this.origin.y + sinB * b0);
+        graphics.closePath();
+        graphics.fillPath();
+      }
+    }
+  }
+
+  /**
+   * I9-LAB7: one outward isolux walk per fan ray yields both the pressure
+   * front and the 2% dark edge. Threshold is scaled by the direction's peak
+   * so the lamp side unpins from the old 48px floor. F3 blur then re-clamp
+   * to darkEdge. Rebuild frames only (plus a one-shot if soft was toggled
+   * while the cache was still valid).
+   */
+  private scanCorruptionAnchors(): void {
+    const count = FIELD_STENCIL_RAY_COUNT;
     if (this.corruptionFront.length !== count) {
       this.corruptionFront = new Float32Array(count);
       this.corruptionFrontScratch = new Float32Array(count);
     }
+    if (this.corruptionDarkEdge.length !== count) {
+      this.corruptionDarkEdge = new Float32Array(count);
+    }
 
+    const v = GAME_CONSTANTS.VISIBILITY;
+    const config = this.config;
     const threshold = Math.min(
       CORRUPTION_ISO_THRESHOLD_SCALE *
         this.edgeCorruption *
@@ -1524,80 +1807,34 @@ export class VisibilitySystem {
       coneFalloffAngleDeg: config.coneFalloffAngleDeg,
       lampStops: this.maskStyle === 'field-dim' ? FIELD_LAMP_DIM_STOPS : FIELD_LAMP_STOPS,
     };
+    const floor = CORRUPTION_ISO_FRONT_FLOOR_PX;
+
     for (let i = 0; i < count; i++) {
       const theta = -Math.PI + (TAU * i) / count;
-      const contour = fieldIsoluxRadius(theta, threshold, fieldParams, config.minSolidRadius);
+      const peak = fieldVisibilityAt(theta, 0, fieldParams);
+      const thresholdEff = threshold * peak;
+      scanFieldIsoluxPair(
+        theta,
+        thresholdEff,
+        CORRUPTION_ISO_DARK_THRESHOLD,
+        fieldParams,
+        floor,
+        this.corruptionFront,
+        this.corruptionDarkEdge,
+        i
+      );
       const wall = this.stencilDist[i] ?? fieldParams.radiusForward;
-      this.corruptionFront[i] = Math.min(contour, wall);
+      const dark = Math.min(this.corruptionDarkEdge[i]!, wall);
+      this.corruptionDarkEdge[i] = dark;
+      this.corruptionFront[i] = Math.min(this.corruptionFront[i]!, dark);
     }
 
     this.smoothCorruptionFront(count);
-
-    this.ensureCorruptionClipMask();
-    this.redrawCorruptionClip(facingAngle);
-    if (this.corruptionClipMask) graphics.setMask(this.corruptionClipMask);
-
-    const peakT = CORRUPTION_ISO_INNER_PX / (CORRUPTION_ISO_INNER_PX + CORRUPTION_ISO_TAIL_PX);
-    const color = mixRgb(v.CORRUPTION_COLOR, config.voidColor, CORRUPTION_SOFT_VOID_MIX);
-    const capAlpha =
-      v.CORRUPTION_MAX_MIX * this.edgeCorruption * CORRUPTION_SOFT_PEAK_SCALE;
-
-    for (let ring = 0; ring < CORRUPTION_ISO_RINGS; ring++) {
-      const f0 = ring / CORRUPTION_ISO_RINGS;
-      const f1 = (ring + 1) / CORRUPTION_ISO_RINGS;
-      const alphaScale = corruptionSoftProfile((ring + 0.5) / CORRUPTION_ISO_RINGS, peakT);
-
-      for (let i = 0; i < count; i++) {
-        const next = (i + 1) % count;
-        const frontA = this.corruptionFront[i]!;
-        const frontB = this.corruptionFront[next]!;
-        const wallA = this.stencilDist[i] ?? fieldParams.radiusForward;
-        const wallB = this.stencilDist[next] ?? fieldParams.radiusForward;
-        const innerA = Math.max(frontA - CORRUPTION_ISO_INNER_PX, 0);
-        const innerB = Math.max(frontB - CORRUPTION_ISO_INNER_PX, 0);
-        // F1: clamp the dark-side tail to the same-ray wall distance. Inner
-        // stays unclamped: front ≤ wall already, so inner is inside the stencil.
-        const outerA = Math.min(frontA + CORRUPTION_ISO_TAIL_PX, wallA);
-        const outerB = Math.min(frontB + CORRUPTION_ISO_TAIL_PX, wallB);
-        if (outerA <= innerA && outerB <= innerB) continue;
-
-        const angleA = facingAngle - Math.PI + (TAU * i) / count;
-        const angleB = facingAngle - Math.PI + (TAU * next) / count;
-        const cosA = Math.cos(angleA);
-        const sinA = Math.sin(angleA);
-        const cosB = Math.cos(angleB);
-        const sinB = Math.sin(angleB);
-
-        const a0 = innerA + (outerA - innerA) * f0;
-        const a1 = innerA + (outerA - innerA) * f1;
-        const b0 = innerB + (outerB - innerB) * f0;
-        const b1 = innerB + (outerB - innerB) * f1;
-
-        // I9-LAB6: fade the ring's outer edge out over the last
-        // CORRUPTION_ISO_WALL_FADE_PX before the wall so teal dissipates in
-        // front of the face instead of stacking into a specular rim. A quad
-        // gets one fillStyle, so the dimmer of the two rays wins.
-        const fade = Math.min(
-          wallProximityFade(a1, wallA, CORRUPTION_ISO_WALL_FADE_PX),
-          wallProximityFade(b1, wallB, CORRUPTION_ISO_WALL_FADE_PX)
-        );
-        if (fade <= 0) continue;
-        graphics.fillStyle(color, capAlpha * alphaScale * fade);
-
-        graphics.beginPath();
-        graphics.moveTo(this.origin.x + cosA * a0, this.origin.y + sinA * a0);
-        graphics.lineTo(this.origin.x + cosA * a1, this.origin.y + sinA * a1);
-        graphics.lineTo(this.origin.x + cosB * b1, this.origin.y + sinB * b1);
-        graphics.lineTo(this.origin.x + cosB * b0, this.origin.y + sinB * b0);
-        graphics.closePath();
-        graphics.fillPath();
-      }
-    }
   }
 
   /**
    * F3: circular box-blur of the 128-ray isolux front, then re-clamp to the
-   * wall stencil. Preallocated scratch; O(rays × kernel × passes).
+   * dark edge. Preallocated scratch; O(rays × kernel × passes).
    */
   private smoothCorruptionFront(count: number): void {
     const src = this.corruptionFront;
@@ -1626,8 +1863,8 @@ export class VisibilitySystem {
     if (read !== src) src.set(read);
 
     for (let i = 0; i < count; i++) {
-      const wall = this.stencilDist[i] ?? this.stencilRange;
-      src[i] = Math.min(src[i]!, wall);
+      const dark = this.corruptionDarkEdge[i] ?? this.stencilDist[i] ?? this.stencilRange;
+      src[i] = Math.min(src[i]!, dark);
     }
   }
 
@@ -1699,6 +1936,7 @@ const LAMP_TEXTURE_KEY = 'vision-player-lamp';
 const FLASHLIGHT_TEXTURE_KEY = 'vision-flashlight';
 const DITHER_PUNCH_TEXTURE_KEY = 'vision-band-dither-punch';
 const FIELD_TEXTURE_KEY = 'vision-light-field';
+const FIELD_CORNER_BLEED_TEXTURE_KEY = 'vision-field-corner-bleed';
 const BAYER_PUNCH_TEXTURE_KEY = 'vision-bayer-punch';
 
 function isFieldStyle(style: VisionMaskStyle): style is 'field' | 'field-dim' {
@@ -1711,6 +1949,31 @@ function fieldTextureKey(style: 'field' | 'field-dim'): string {
 
 function bayerPunchKey(keeps: number, phase: number): string {
   return `${BAYER_PUNCH_TEXTURE_KEY}-${keeps}-p${phase}`;
+}
+
+/** I9-LAB7 5b: white disc, smoothstep alpha from peak at centre to 0 at `radius`. */
+function fillCornerBleed(
+  pixels: Uint8ClampedArray,
+  size: number,
+  radius: number,
+  peakAlpha: number
+): void {
+  const cx = size / 2;
+  const cy = size / 2;
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const i = (y * size + x) * 4;
+      const dx = x + 0.5 - cx;
+      const dy = y + 0.5 - cy;
+      const dist = Math.hypot(dx, dy);
+      const t = dist >= radius ? 1 : dist / radius;
+      const alpha = peakAlpha * (1 - smoothstep01(t));
+      pixels[i] = 255;
+      pixels[i + 1] = 255;
+      pixels[i + 2] = 255;
+      pixels[i + 3] = Math.round(clamp(alpha, 0, 1) * 255);
+    }
+  }
 }
 
 /**

@@ -459,6 +459,42 @@ export function fieldIsoluxRadius(
 }
 
 /**
+ * I9-LAB7: one outward walk finds both isolux crossings. The field falls
+ * monotonically, so the pressure front (higher threshold) is always closer
+ * than the dark edge (2% isolux). Writes `frontOut[index]` / `darkOut[index]`;
+ * zero allocation.
+ */
+export function scanFieldIsoluxPair(
+  thetaFromFacing: number,
+  frontThreshold: number,
+  darkThreshold: number,
+  params: VisionFieldParams,
+  floorRadius: number,
+  frontOut: Float32Array,
+  darkOut: Float32Array,
+  index: number,
+  stepPx = 2
+): void {
+  let front = params.radiusForward;
+  let dark = params.radiusForward;
+  let foundFront = false;
+  const cap = params.radiusForward;
+  for (let r = floorRadius; r <= cap; r += stepPx) {
+    const vis = fieldVisibilityAt(thetaFromFacing, r, params);
+    if (!foundFront && vis < frontThreshold) {
+      front = r;
+      foundFront = true;
+    }
+    if (vis < darkThreshold) {
+      dark = r;
+      break;
+    }
+  }
+  frontOut[index] = front;
+  darkOut[index] = dark;
+}
+
+/**
  * Field mode: bake the smooth visibility field - lamp and flashlight as separable
  * angular × radial falloffs, screen-blended so the cone shoulder rounds itself the
  * way two physical light sources would. Texture space faces +x; alpha = visibility.

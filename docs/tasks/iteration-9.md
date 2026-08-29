@@ -71,6 +71,7 @@ note: 迭代 9（rift 视野表现打磨）**进行中**（2026-08-28 立项，D
 | **3.8** | code | **I9-LAB4** 第四轮抽卡（2026-08-28 深夜人下令）：只修 teal v4，光场 v3 本体不动——① 主峰太浓太绿太亮 → soft 分支派生专用色（生产 `CORRUPTION_COLOR` 向虚空色混 40%）+ 峰值 ×0.7，constants 零改动；② 内层渐变不够平滑 → 24 环 + 内层 40px 零斜率缓升（分段 smoothstep 剖面峰位 40/88）；③ 与键 3 光场结合违反物理直觉（核心）→ 前锋不再钉几何锥+环，改钉光场等亮度线（`fieldIsoluxRadius`：每方向求光场衰减到阈值 t 的半径，与烤纹理共用同一 `fieldVisibilityAt`；手电强光顶住 182px、暖灯弱光渗到 48px 脚边，墙截断保留；混乱升高 → 阈值调高 → 前锋压向更亮处更逼近玩家，「越高越近」行为保留；阈值含既有 flicker boost）。bands / subdiv / bayer 的 teal 保持 v3 几何环不动 | `npx tsc --noEmit`；`check:vision-energy` / `check:layout` 绿；出击 `bands`+硬内缘路径 diff 42px ≤ 同代码噪声底 602px（呼吸相位）；行走射线预算 0.067ms/帧（含 128 扇形模板 + 每帧等亮度线扫描）远低于 2ms；各向异性探针数据与 v6-* 截图存 `docs/art/review-2026-08-28/vision-lab/` | 人第三轮反馈（问 1 / 问 2 已过；teal 三条）；**code 已交** 2026-08-28，等人抽 |
 | **3.9** | code | **I9-LAB5** 侵蚀层 F1+F2+F3（2026-08-29，director 根因：代码无 bug，是 v4 侵蚀设计的三个缝隙）——只动 field+soft 的 `drawCorruptionIsolux`：① F1 尾巴不过墙：外缘 = `min(front + TAIL, stencilDist)`，内缘不动；② F2 侵蚀层按视野多边形裁剪：`corruptionGraphics` 挂 GeometryMask，形状 = 同一份 128 射线 360° 墙截模板（半径上限 radiusForward，比光照区大，黑中渗出尾巴读法保留）；③ F3 前锋角度平滑：128 项环形盒式模糊（半径 2、2 次）后再逐射线 `min(smoothed, stencilDist)`。F4/F5 不做（留人拍板）。根因：弱光侧前锋钉死 48px、尾巴穿墙、逐射线吸附跳变 | `npx tsc --noEmit`；`check:vision-energy` 绿；视觉：种子 777、`mode=field&teal=soft` 三类点位（开阔地 / 内部墙角 / 光束正面贴墙）侵蚀开/关差分，墙内绿像素占比 → 0；截图 `docs/art/review-2026-08-28/vision-lab/v8-*` | director 根因分析；**code 已交** 2026-08-29，F4/F5 留人拍板 |
 | **3.10** | code | **I9-LAB6** VOID 挡光（虚空吞光，DEC-106）+ 侵蚀层墙面绿圈衰减（2026-08-29 人拍板）——① VOID 从「不挡光」翻转为「挡光」：`TileGrid.isOpaque` 对 WALL / VOID 均 true（唯一实现点；`grid-raycast` 只问 `isOpaque` 不动；purification-scene 自带遮挡网格不动），修「手电光场穿过地图边界墙」核心体验问题，生产 bands 与练习场 field 共用同一套射线一起修好；根因 = Slice 6 把 VOID 设计为不挡光导致边界漏光。② 侵蚀层墙面衰减（只动 spike 分支）：`drawCorruptionIsolux` 环带 alpha 逐射线乘墙面接近度衰减（`wallProximityFade`，距 `stencilDist` 最后 24px 内 smoothstep 到 0），绿在墙面前消散而不是堆成反光；只动 isolux/soft 路径，hard 与 bands/subdiv/bayer 不动，无每帧分配。红线不动：射程 / 锥角 / 三档数值 / 规则 4 朝向 / 薪柴不发光 / 混乱缩放 / 相机 / `getVisibilityAt` / `castRay` | `npx tsc --noEmit`；全部 check:* 绿；视觉回归：种子 1754827715 玩家 (1224,560) 朝东 field / bands 双模式边界漏光消失（虚空保持黑暗、边缘墙块不再背光）、teal=soft 陆缘绿圈裁到边缘不堆积、内部墙群前绿圈消散、内陆零回归、边界天空巨影 / 边界氛围（depth 60 在遮罩之上）仍可见；截图 `docs/art/review-2026-08-28/vision-lab/v10-*`；出击场景冒烟进图正常、贴边界漏光消失 | 人拍板 DEC-106；**code 已交** 2026-08-29，画面等人终审 |
+| **3.11** | code | **I9-LAB7** 侵蚀锚黑暗边界 + F5 解钉 + 墙脚 AO + 拐角溢光（2026-08-29 人拍板方向 1+2+5a+5b，方向 3 被 1 吸收、方向 4 暂缓；语义变更人已知悉接受）——只动 field/soft spike 分支与 field mask 路径：① 环带外缘从「前锋+48 夹墙」改为「从压力前锋延伸到真实黑暗边界（min(灯缘 2% 等亮度线 + 8px 超出, stencilDist)）」，峰贴黑暗边界 + ~6px 收边，最小带宽 ~20px 向玩家侧兜底，24px 墙前消散语义废止；② F5 解钉：前锋扫描 floor 48→~16 + 阈值按方向峰归一（锥侧不变、灯侧 0.54→0.54×0.62），77/128 射线钉死解除；③ 墙脚 AO：field mask 沿墙截多边形内缩 ~18-20px 恢复 ~0.2-0.25 暗度，零新增 RT / 零每帧分配；④ 拐角溢光 12px（director 定的克制值：约 1/3 格，读作「光绕过拐角」且不泄露玩法可读信息）：凸角顶点 erase 半径 12 软光斑（峰值 ~0.4，烘焙一次复用，上限 48 个最近角），墙后 12px 不再绝对黑。生产 bands / hard 零变化 | `npx tsc --noEmit`；全部 check:* 绿；行走射线预算仍远低于 2ms；视觉自检：种子 1754827715 迷宫三点 A(400,528) / B(1232,880) / C(1712,624) 绿贴墙 / 从黑暗渗出、东西不对称消除，边界点 (1224,560) 朝东 DEC-106 虚空吞光不回退，内陆开阔点零回归；截图 `docs/art/review-2026-08-28/vision-lab/v12-*` | 人拍板四方向 + director v11 根因数据 + art 最短核（2026-08-29，有条件过：8 条读法判据）；**code 已交** 2026-08-29（闸门全绿、行走射线 0.24ms、8 条判据自核过），画面等人终审 |
 | **4** | 人 | 裂隙试玩终审画面（验证问题见下）+ 对比课抽卡（选遮罩模式与 teal 内缘） | 人终审 PASS / 指名下一版问题 | 波 3 已交 |
 
 ---
@@ -110,6 +111,58 @@ Title: 按 I9-A 处方实现，constants 数值 diff 为空 | Priority: P0 | Dep
 Title: 红线逐条 + 数值 diff 为空 + 性能预算 | Priority: P0 | Depends: I9-G 已交 | Dispatch: 🟢
 
 对照本合同「不做什么」逐条核；constants 的 VISIBILITY / CHAOS 段 diff 应为空（或恰等于人拍板清单）；`getVisibilityAt` 行为不变；报告写 `docs/qa/iteration-9.md`。好看不代勾，画面等波 4。
+
+---
+
+# Task: I9-LAB7 | 侵蚀锚黑暗边界 + F5 解钉 + 墙脚 AO + 拐角溢光 | assignee: code
+
+Title: 方向 1+2+5a+5b 落地（人 2026-08-29 拍板，语义变更已知悉接受）| Priority: P0 | Depends: director v11 根因分析 + art 最短核 | Dispatch: 🔴
+
+**背景（根因，已实证）：** 复杂地形里绿圈是光滑圆环不贴墙。量化（种子 1754827715，三个迷宫点位 128 射线 dump）：弱光侧 77/128 条射线前锋被阈值钉死在 48px（F5）；可见环带面积 82% 由光滑数学形状构成、仅 17% 由墙体塑形；前锋是「光强衰减轮廓」不是「黑暗边界」——真实黑暗边界（场强 <2%）弱光侧恒为 74px 且随墙影走形，环却钉在 48px 浮在亮区。证据 `docs/art/review-2026-08-28/vision-lab/v11-*`。
+
+**人拍板的设计语义变化（已知悉接受）：**
+
+- 侵蚀语义从「光等亮度线轮廓」改为「黑暗边界轮廓」：绿从墙面 / 黑暗里长出来，峰贴黑暗边界收边，不再墙前 24px 消散。
+- F5 解钉：高混乱下弱光侧亮核视觉上缩到灯圈（~74px 真实灯缘）。
+- 拐角溢光 12px：墙后不再是绝对黑（N=12 为 director 定的克制值：约 1/3 格，足以读作「光绕过拐角」，小到不泄露玩法可读信息、不破坏墙影形状）。
+
+**改什么（全部只动 field/soft spike 分支与 field mask 路径；生产 bands + hard 零变化）：**
+
+1. **方向 1 — 环带锚黑暗边界**（`drawCorruptionIsolux` 环带几何重写）：
+   - 每射线两个锚：`front`（压力前沿，内缘）与 `darkEdge`（真实黑暗边界，外缘）。
+   - `darkEdge[i] = min(fieldIsoluxRadius(theta, 0.02, params, FLOOR), stencilDist[i])`。**不做角度模糊**（地形形状保持脆）。F2 的 360° 墙截 GeometryMask 保留。
+   - 环带 = [front, min(darkEdge + 8, stencilDist)]；峰贴黑暗边界，最后 ~6px smoothstep 收边到 0（取代并删除 24px `CORRUPTION_ISO_WALL_FADE_PX` 墙前消散语义）。
+   - 剖面从「峰在前锋的对称帐篷」改为「向内零斜率升起 → 贴外缘达峰 → 6px 收边」。
+   - 最小带宽：outer − inner < ~20px 时把 inner 向玩家侧拉到 max(outer − 20, FLOOR)——窄过道侵蚀压向玩家，不被压没。
+   - F3 环形模糊只作用于 front（内缘光滑可以）；模糊后 front 重新 clamp 到 ≤ darkEdge。
+   - 色 / 峰值 / 触发 / 深度 / 混乱强度映射全不动（`CORRUPTION_SOFT_VOID_MIX` / `PEAK_SCALE` / `MAX_MIX × edgeCorruption` / flicker boost 保留）。
+2. **方向 2 — F5 解钉**（前锋求值）：
+   - 扫描 floor 从 `config.minSolidRadius`(48) 改为 spike 常量 ~16（新常量声明在 `visibility-system.ts` 顶部，模式同既有 `CORRUPTION_ISO_*`；`minSolidRadius` 的玩法语义不动）。
+   - 阈值按方向峰归一：`thresholdEff(θ) = threshold × fieldVisibilityAt(θ, 0, params)`。锥轴峰 1.0 → 不变（前锋仍 ~182px）；灯侧峰 0.62 → 0.54×0.62 ≈ 0.335 → 前锋 ~61px（demo 混乱 0.6）；锥肩光滑过渡。混乱升高 → 前锋仍压向玩家（0.3→~70，0.6→~61，1.0→~39），「越高越近」行为保留。
+   - 性能：front 与 darkEdge 两趟扫描合并成一趟外扫（一次循环找两个穿越点）；仍只在重建帧跑。
+3. **5a — 墙脚 AO**（`drawFieldMask` 路径）：
+   - 沿 128 射线墙截多边形边向内 ~18–20px 恢复约 0.2–0.25 暗度（一步或两步内缩多边形；顶点沿射线内缩，预分配数组，复用 fieldScratch / stencilScratch，零新增 RT、零每帧分配）。
+   - 只暗化墙脚亮区；射程边（模板 = 全量程处）纹理已衰减到 0，天然无效果；虚空缘（DEC-106）同样收暗，读作「光死在虚空唇上」，一致。
+   - 生产 bands 路径不动。
+4. **5b — 拐角溢光 12px**（field mask 路径）：
+   - 重建帧扫描玩家周围（模板量程 + 12px 包围盒，约 15×15 格）凸角：一个顶点周围 4 格中恰好 1 格墙、或 2 格边相邻墙（L 角）；取最近 ≤48 个。
+   - 每个凸角在遮罩上 erase 一个半径 12px 软光斑（峰值 alpha ~0.4，smoothstep 衰减；create 时烘焙一次的小纹理，复用同一 Image，零每帧分配）。
+   - 只动 field 模式；生产 bands 不动；`getVisibilityAt` / `castRay` / 生产射线不动（规则 23 不破：溢光是纯表现，实体 alpha 仍走查询——12px 小于敌人 20px 体宽，不构成可读信息泄露；登记为观察项）。
+   - 侵蚀环带仍夹 stencilDist 不变（溢光斑在墙后，环带在墙前，不重叠）。
+
+**红线（不变）：** 射程 224/80、锥角 50+30、三档数值、`getVisibilityAt`、`castRay`、规则 4 朝向、薪柴不发光、混乱缩放（阈值映射方向 / 单调性不变，归一化是 spike 内手感曲线）、相机、性能预算（静止缓存 / 2ms 降级；重建帧新增工作 ≤ 现有 128 射线扫描量级）。每帧零分配。生产 bands/hard 路径行为 diff 为空。
+
+**闸门：** `npx tsc --noEmit` 零错误；package.json 全部 check:* 绿；行走射线预算实测仍远低于 2ms。
+
+**视觉自检（code 自己做，截图存 `docs/art/review-2026-08-28/vision-lab/v12-*`）：** 复用 /tmp/vision-lab 探针模式（chromium headless shell 路径见 /tmp/vision-lab/probe70.cjs；dev server localhost:3000，没起则 `npm run dev`）：
+
+- 种子 1754827715 三个迷宫点位 A(400,528) / B(1232,880) / C(1712,624) 朝东，field+soft：绿必须从墙面 / 黑暗里长出、贴墙；「东贴西飘」不对称消除；teal-off 一张看墙脚 AO 与拐角溢光。
+- 边界点 (1224,560) 朝东：DEC-106 虚空吞光不回退。
+- 内陆开阔点（自选低密度点并验证地板开阔）：正常视野零回归，侵蚀不把画面吃没。
+
+**循环预算：** 最多 3 轮视觉自检迭代；到顶未收敛升级给人。连续 2 次不过机器闸门 → 停，升档 T1。
+
+**禁止：** 动生产 bands / subdiv / bayer / hard 路径；动 constants 的 VISIBILITY / CHAOS 段数值；动 `getVisibilityAt` / `castRay` / `TileGrid.isOpaque`；每帧分配；拆静止缓存与降级路径；给任何实体注册 glow source；动相机；代勾好看。
 
 ---
 
