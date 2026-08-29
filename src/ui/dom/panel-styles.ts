@@ -624,8 +624,8 @@ const CSS = `
   background-image: radial-gradient(
     circle at 50% 50%,
     transparent 0px,
-    transparent 48px,
-    #080a0c 53px
+    transparent 32px,
+    #080a0c 35px
   );
   clip-path: circle(50% at 50% 50%);
 }
@@ -634,8 +634,8 @@ const CSS = `
 }
 #rift-minimap canvas {
   display: block;
-  width: 99px;
-  height: 99px;
+  width: 66px;
+  height: 66px;
   border: none;
   clip-path: circle(50% at 50% 50%);
   image-rendering: pixelated;

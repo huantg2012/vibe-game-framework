@@ -1,7 +1,7 @@
 /**
  * Minimap - circular local fog-of-war window.
  *
- * 33-tile (99px) window follows the player's current tile. Explored tiles are
+ * 33-tile (66px) window follows the player's current tile. Explored tiles are
  * accumulated by the scene from real visibility queries; this module does not
  * import VisibilitySystem. Player / extract / abyss marks use distinct shapes.
  *
@@ -15,7 +15,7 @@ import { getDomUiRoot, injectPanelStyles } from '@/ui/dom/panel-styles';
 // Config (docs/art/ux-visual-pass-slice-55.md §4)
 // ---------------------------------------------------------------------------
 
-const MINIMAP_SCALE = 3;
+const MINIMAP_SCALE = 2;
 /** 25 × 1.3 = 32.5, kept odd so the player stays on the center tile. */
 const WINDOW_TILES = 33;
 const WINDOW_RADIUS_TILES = (WINDOW_TILES - 1) / 2;
