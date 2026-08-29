@@ -14,7 +14,8 @@ import type {
   FormVisualPose,
   FormVisualSignal,
 } from '@/entities/form-renderers/form-renderer';
-import { attachGymFormVisual } from '@/entities/form-renderers/d/genome';
+import { attachGymFormVisual } from '@/entities/form-renderers/d/gym-attach';
+import { oilFilmPaintVeinOf } from '@/entities/form-renderers/d/paint-genome/topology';
 import {
   isLexiconFragmentId,
   LEXICON_DEFAULT_FRAGMENT,
@@ -74,7 +75,7 @@ const DEPTH: Record<PortfolioId, number> = {
   ding: GAME_CONSTANTS.CONTAMINATION.VOLUME_DEPTH,
 };
 const GALLERY_BROWSE_STATUS =
-  '拖动画布平移。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。';
+  '拖动画布或外侧空白平移。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放。点格选中。双击或侧栏检视看动作。浏览态静帧。';
 const GRID_DEPTH = 0.4;
 const SELECT_DEPTH = 46;
 const INSPECT_DBL_MS = 400;
@@ -133,6 +134,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     const camera = this.cameras.main;
     camera.setBackgroundColor(GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
     this.input.mouse?.disableContextMenu();
+    this.lockGalleryStage();
 
     const title = document.getElementById('gym-title');
     if (title) title.textContent = '练习场 · 污染句法陈列馆';
@@ -150,6 +152,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
       wheelMode: 'pan',
       onClick: this.onCanvasClick,
       zoomMin: GALLERY_ZOOM_MIN[this.hallPortfolio],
+      panHost: document.getElementById('game-container'),
     });
     this.input.on('pointermove', this.onPointerHover, this);
 
@@ -422,6 +425,7 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
       textureNamespace: galleryTextureNamespace(specimen.visualKey),
       stainWorldPoint: STAIN_SINK,
       pin,
+      paintVeinVariant: specimen.oilFilmHood ? oilFilmPaintVeinOf(specimen.oilFilmHood) : undefined,
     };
   }
 
@@ -750,11 +754,24 @@ export class GymLexiconGalleryScene extends Phaser.Scene {
     if (status) status.textContent = text;
   }
 
+  private lockGalleryStage(): void {
+    const stage = document.getElementById('game-container');
+    if (!stage) return;
+    stage.classList.add('gym-gallery-stage');
+    stage.scrollLeft = 0;
+    stage.scrollTop = 0;
+  }
+
+  private unlockGalleryStage(): void {
+    document.getElementById('game-container')?.classList.remove('gym-gallery-stage');
+  }
+
   private onShutdown(): void {
     this.closeInspect(false);
     this.destroyAttached();
     this.cameraHandle?.destroy();
     this.cameraHandle = null;
+    this.unlockGalleryStage();
     this.input.off('pointermove', this.onPointerHover, this);
     this.unbindDom();
     this.grid?.destroy();

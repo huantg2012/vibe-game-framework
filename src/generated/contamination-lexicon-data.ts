@@ -67,6 +67,18 @@ export interface DisplayTokenDef {
   displayToken: string;
 }
 
+export type ObserveSenseId = 'cone' | 'hear' | 'narrow' | '';
+export type ObserveCoverageBucket = 'infiltrate' | 'overwrite' | '';
+
+export interface ObserveLineDef {
+  id: string;
+  occupancy: OccupancyId | '';
+  sense: ObserveSenseId;
+  coverageBucket: ObserveCoverageBucket;
+  utteranceId: string;
+  displayToken: string;
+}
+
 export type StopLossFamily = 'core_strike' | 'scatter_rejoin' | 'unkillable';
 export type StopLossCorePolicy = 'exposed' | 'standard' | 'obscured' | 'none';
 
@@ -204,7 +216,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['floor'],
     sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
   mammal_remnant: {
     id: 'mammal_remnant',
@@ -213,7 +225,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['floor'],
     sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
   worm_remnant: {
     id: 'worm_remnant',
@@ -222,7 +234,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['floor'],
     sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith'],
-    enabledScope: 'gym',
+    enabledScope: 'sortie',
   },
 };
 
@@ -466,7 +478,7 @@ export const UTTERANCE_DATA: Record<string, UtteranceDef> = {
   eye_in_the_seam: {
     id: 'eye_in_the_seam',
     internalLabel: '缝里的眼',
-    onScreenMark: '缝视',
+    onScreenMark: '缝亮',
     coverage: 'overwrite',
     substrate: 'wall_rust',
     portfolio: 'yi',
@@ -480,7 +492,7 @@ export const UTTERANCE_DATA: Record<string, UtteranceDef> = {
   cluster_lung: {
     id: 'cluster_lung',
     internalLabel: '簇的肺',
-    onScreenMark: '呼吸',
+    onScreenMark: '在涨',
     coverage: 'rewrite',
     substrate: 'fungal_mat',
     portfolio: 'bing',
@@ -494,7 +506,7 @@ export const UTTERANCE_DATA: Record<string, UtteranceDef> = {
   corridor_watching: {
     id: 'corridor_watching',
     internalLabel: '走廊在看你',
-    onScreenMark: '反视',
+    onScreenMark: '回头',
     coverage: 'overwrite',
     substrate: 'space_interval',
     portfolio: 'ding',
@@ -547,6 +559,169 @@ export const DISPLAY_TOKEN_DATA: Record<string, DisplayTokenDef> = {
     id: 'device_prefix',
     kind: 'device',
     displayToken: '识别。',
+  },
+};
+
+export const OBSERVE_LINE_DATA: Record<string, ObserveLineDef> = {
+  observe_jia_look_1: {
+    id: 'observe_jia_look_1',
+    occupancy: 'floor',
+    sense: 'cone',
+    coverageBucket: '',
+    utteranceId: '',
+    displayToken: '慢一点，慢一点，别被他看见。',
+  },
+  observe_jia_look_2: {
+    id: 'observe_jia_look_2',
+    occupancy: 'floor',
+    sense: 'cone',
+    coverageBucket: '',
+    utteranceId: '',
+    displayToken: '别动……他就在那儿看着路。',
+  },
+  observe_jia_hear_1: {
+    id: 'observe_jia_hear_1',
+    occupancy: 'floor',
+    sense: 'hear',
+    coverageBucket: '',
+    utteranceId: '',
+    displayToken: '轻一点，轻一点，别让他听见。',
+  },
+  observe_jia_hear_2: {
+    id: 'observe_jia_hear_2',
+    occupancy: 'floor',
+    sense: 'hear',
+    coverageBucket: '',
+    utteranceId: '',
+    displayToken: '别出声……他那边醒着。',
+  },
+  observe_yi_infiltrate_1: {
+    id: 'observe_yi_infiltrate_1',
+    occupancy: 'wall',
+    sense: '',
+    coverageBucket: 'infiltrate',
+    utteranceId: '',
+    displayToken: '那道缝还在张着，贴过去会……',
+  },
+  observe_yi_infiltrate_2: {
+    id: 'observe_yi_infiltrate_2',
+    occupancy: 'wall',
+    sense: '',
+    coverageBucket: 'infiltrate',
+    utteranceId: '',
+    displayToken: '别靠墙，别靠墙，那道缝还开着。',
+  },
+  observe_yi_overwrite_1: {
+    id: 'observe_yi_overwrite_1',
+    occupancy: 'wall',
+    sense: '',
+    coverageBucket: 'overwrite',
+    utteranceId: '',
+    displayToken: '缝里那点亮令人发麻，我走中间。',
+  },
+  observe_yi_overwrite_2: {
+    id: 'observe_yi_overwrite_2',
+    occupancy: 'wall',
+    sense: '',
+    coverageBucket: 'overwrite',
+    utteranceId: '',
+    displayToken: '别贴墙，别贴墙，那里已经不是墙了。',
+  },
+  observe_bing_infiltrate_1: {
+    id: 'observe_bing_infiltrate_1',
+    occupancy: 'paint',
+    sense: '',
+    coverageBucket: 'infiltrate',
+    utteranceId: '',
+    displayToken: '这层膜令人发麻，我还是不要……',
+  },
+  observe_bing_infiltrate_2: {
+    id: 'observe_bing_infiltrate_2',
+    occupancy: 'paint',
+    sense: '',
+    coverageBucket: 'infiltrate',
+    utteranceId: '',
+    displayToken: '地是潮的，绕着走吧。',
+  },
+  observe_bing_overwrite_1: {
+    id: 'observe_bing_overwrite_1',
+    occupancy: 'paint',
+    sense: '',
+    coverageBucket: 'overwrite',
+    utteranceId: '',
+    displayToken: '那滩在涨，我还是不要从那儿过……',
+  },
+  observe_bing_overwrite_2: {
+    id: 'observe_bing_overwrite_2',
+    occupancy: 'paint',
+    sense: '',
+    coverageBucket: 'overwrite',
+    utteranceId: '',
+    displayToken: '别过去，别过去，它在呼吸。',
+  },
+  observe_ding_infiltrate_1: {
+    id: 'observe_ding_infiltrate_1',
+    occupancy: 'volume',
+    sense: '',
+    coverageBucket: 'infiltrate',
+    utteranceId: '',
+    displayToken: '这段路窄得不对，换一条吧。',
+  },
+  observe_ding_infiltrate_2: {
+    id: 'observe_ding_infiltrate_2',
+    occupancy: 'volume',
+    sense: '',
+    coverageBucket: 'infiltrate',
+    utteranceId: '',
+    displayToken: '别走进去……边上那条还通着。',
+  },
+  observe_ding_overwrite_1: {
+    id: 'observe_ding_overwrite_1',
+    occupancy: 'volume',
+    sense: '',
+    coverageBucket: 'overwrite',
+    utteranceId: '',
+    displayToken: '那段雾令人发麻，我还是绕开……',
+  },
+  observe_ding_overwrite_2: {
+    id: 'observe_ding_overwrite_2',
+    occupancy: 'volume',
+    sense: '',
+    coverageBucket: 'overwrite',
+    utteranceId: '',
+    displayToken: '别穿过去，别穿过去，那已经不是路了。',
+  },
+  observe_utt_door: {
+    id: 'observe_utt_door',
+    occupancy: '',
+    sense: '',
+    coverageBucket: '',
+    utteranceId: 'door_still_closing',
+    displayToken: '门还在自己关，别站在当中。',
+  },
+  observe_utt_eye: {
+    id: 'observe_utt_eye',
+    occupancy: '',
+    sense: '',
+    coverageBucket: '',
+    utteranceId: 'eye_in_the_seam',
+    displayToken: '别贴边，别贴边，缝里有东西在看。',
+  },
+  observe_utt_lung: {
+    id: 'observe_utt_lung',
+    occupancy: '',
+    sense: '',
+    coverageBucket: '',
+    utteranceId: 'cluster_lung',
+    displayToken: '这滩令人发麻，等一等，等一等。',
+  },
+  observe_utt_corridor: {
+    id: 'observe_utt_corridor',
+    occupancy: '',
+    sense: '',
+    coverageBucket: '',
+    utteranceId: 'corridor_watching',
+    displayToken: '别往里走，别往里走，走廊看着我。',
   },
 };
 
@@ -626,9 +801,10 @@ export const STOP_LOSS_DATA: Record<string, StopLossDef> = {
 };
 
 export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval', 'street_wreckage', 'insect_remnant', 'mammal_remnant', 'worm_remnant'];
-export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval', 'street_wreckage'];
+export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval', 'street_wreckage', 'insect_remnant', 'mammal_remnant', 'worm_remnant'];
 export const CONCEPTUAL_SUBSTRATE_IDS: readonly string[] = ['sound_echo', 'light_scatter', 'space_interval'];
 export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];
 export const LEXEME_IDS: readonly string[] = ['motion_patrol', 'motion_turn', 'motion_coalesce', 'motion_wall', 'motion_anchor', 'motion_cluster', 'motion_wind', 'motion_trail', 'sense_cone', 'sense_hear', 'sense_narrow', 'sense_touch', 'sense_scent', 'sense_domain', 'sense_reverse', 'rhythm_open', 'rhythm_sleep', 'rhythm_pulse', 'rhythm_cluster', 'rhythm_sky', 'contact_melee_three', 'contact_adjacent_strike', 'contact_step_chaos', 'contact_volume_chaos'];
 export const UTTERANCE_IDS: readonly string[] = ['door_still_closing', 'eye_in_the_seam', 'cluster_lung', 'corridor_watching'];
 export const STOP_LOSS_IDS: readonly string[] = ['monolith_infiltrate', 'monolith_rewrite', 'monolith_overwrite', 'colony_infiltrate', 'colony_rewrite', 'colony_overwrite', 'field_infiltrate', 'field_rewrite', 'field_overwrite'];
+export const OBSERVE_LINE_IDS: readonly string[] = ['observe_jia_look_1', 'observe_jia_look_2', 'observe_jia_hear_1', 'observe_jia_hear_2', 'observe_yi_infiltrate_1', 'observe_yi_infiltrate_2', 'observe_yi_overwrite_1', 'observe_yi_overwrite_2', 'observe_bing_infiltrate_1', 'observe_bing_infiltrate_2', 'observe_bing_overwrite_1', 'observe_bing_overwrite_2', 'observe_ding_infiltrate_1', 'observe_ding_infiltrate_2', 'observe_ding_overwrite_1', 'observe_ding_overwrite_2', 'observe_utt_door', 'observe_utt_eye', 'observe_utt_lung', 'observe_utt_corridor'];

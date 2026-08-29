@@ -3,14 +3,16 @@
  * Wall-after-floor four-connected count must stay 1; these only read the grid.
  */
 
-import { GAME_CONSTANTS } from '@/config/constants';
-import { mix32 } from '@/generation/seed-fork';
-import type { ContaminationPins, RuinedMask, WallEdgePolyline, ClusterCorePin, CorridorAabb } from '@/generation/types';
+import type {
+  ContaminationPins,
+  PaintFloorPin,
+  WallEdgePolyline,
+  CorridorAabb,
+} from '@/generation/types';
 import { TileType } from '@/types/game-types';
-import type { TileMapData } from '@/types/map-types';
-import { SeededRandom } from '@/utils/random';
+import type { KindlingTier, TileMapData } from '@/types/map-types';
 
-export type { ClusterCorePin, ContaminationPins, CorridorAabb, WallEdgePolyline } from '@/generation/types';
+export type { ContaminationPins, CorridorAabb, PaintFloorPin, WallEdgePolyline } from '@/generation/types';
 
 const DIRS4: ReadonlyArray<readonly [number, number]> = [
   [1, 0],
@@ -192,45 +194,297 @@ function collectCorridors(map: TileMapData): CorridorAabb[] {
   return boxes.slice(0, 8);
 }
 
-function collectClusterCores(ruins: RuinedMask, tileSize: number): ClusterCorePin[] {
-  const land = ruins.outline.land;
-  const walls = ruins.walls;
-  const cols = ruins.outline.cols;
-  const rows = ruins.outline.rows;
-  const floors: number[] = [];
-  for (let i = 0; i < land.length; i++) {
-    if (land[i] && !walls[i]) floors.push(i);
-  }
-  if (floors.length === 0) return [];
-  const age = ruins.contaminationAge ?? 'standard';
-  const rng = new SeededRandom(mix32(ruins.seed, 'contam-cluster'));
-  const count =
-    age === 'new' ? rng.nextInt(4, 9) : age === 'standard' ? rng.nextInt(4, 12) : rng.nextInt(7, 20);
-  const pins: ClusterCorePin[] = [];
-  const used = new Set<number>();
-  for (let n = 0; n < count; n++) {
-    const cell = floors[rng.nextInt(0, floors.length - 1)]!;
-    if (used.has(cell)) continue;
-    used.add(cell);
-    const col = cell % cols;
-    const row = (cell / cols) | 0;
-    if (col < 0 || row < 0 || col >= cols || row >= rows) continue;
-    pins.push({
-      organismIndex: pins.length,
-      cx: col * tileSize + tileSize / 2,
-      cy: row * tileSize + tileSize / 2,
-      floorCol: col,
-      floorRow: row,
-    });
-  }
-  return pins;
+export interface PaintHostPinInput {
+  readonly spawnCol: number;
+  readonly spawnRow: number;
+  readonly extractCol: number;
+  readonly extractRow: number;
+  readonly kindling: readonly { col: number; row: number; tier: KindlingTier }[];
+  readonly paintCount: number;
 }
 
-export function collectContaminationPins(map: TileMapData, ruins: RuinedMask): ContaminationPins {
-  const tile = map.tileSize || GAME_CONSTANTS.TILE_SIZE;
+export const PAINT_PINS_SHORT = 'paint pins short';
+
+/** Chebyshev ≥6, or ≥5 when N≥9; then 4, then 3. Never clamp N. */
+export function paintHostSpacingLadder(paintCount: number): readonly number[] {
+  return paintCount >= 9 ? [5, 4, 3] : [6, 4, 3];
+}
+
+export function chebyshevCells(
+  aCol: number,
+  aRow: number,
+  bCol: number,
+  bRow: number,
+): number {
+  return Math.max(Math.abs(aCol - bCol), Math.abs(aRow - bRow));
+}
+
+function walkBits(map: TileMapData): Uint8Array {
+  const { cols, rows } = map;
+  const walk = new Uint8Array(cols * rows);
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      if (isFloor(map, col, row)) walk[at(cols, col, row)] = 1;
+    }
+  }
+  return walk;
+}
+
+function neighborWalkCount(walk: Uint8Array, cols: number, rows: number, col: number, row: number): number {
+  let n = 0;
+  for (const [dx, dy] of DIRS4) {
+    const nc = col + dx;
+    const nr = row + dy;
+    if (!inBounds(cols, rows, nc, nr)) continue;
+    if (walk[at(cols, nc, nr)]) n++;
+  }
+  return n;
+}
+
+function bfsFrom(
+  walk: Uint8Array,
+  cols: number,
+  rows: number,
+  start: number,
+): { dist: Int16Array; parent: Int32Array } {
+  const dist = new Int16Array(walk.length);
+  const parent = new Int32Array(walk.length);
+  dist.fill(-1);
+  parent.fill(-1);
+  if (start < 0 || start >= walk.length || !walk[start]) return { dist, parent };
+  const queue = [start];
+  dist[start] = 0;
+  let head = 0;
+  while (head < queue.length) {
+    const cur = queue[head++]!;
+    const col = cur % cols;
+    const row = (cur / cols) | 0;
+    const d = dist[cur]!;
+    for (const [dx, dy] of DIRS4) {
+      const nc = col + dx;
+      const nr = row + dy;
+      if (!inBounds(cols, rows, nc, nr)) continue;
+      const ni = at(cols, nc, nr);
+      if (!walk[ni] || dist[ni] !== -1) continue;
+      dist[ni] = d + 1;
+      parent[ni] = cur;
+      queue.push(ni);
+    }
+  }
+  return { dist, parent };
+}
+
+function reconstructPath(parent: Int32Array, start: number, goal: number): number[] {
+  if (goal < 0 || parent[goal] === undefined) return [];
+  if (goal !== start && parent[goal] < 0) return [];
+  const path: number[] = [];
+  let cur = goal;
+  while (cur >= 0) {
+    path.push(cur);
+    if (cur === start) break;
+    cur = parent[cur]!;
+  }
+  if (path[path.length - 1] !== start) return [];
+  path.reverse();
+  return path;
+}
+
+function greedyKindlingCells(
+  walk: Uint8Array,
+  cols: number,
+  rows: number,
+  spawn: number,
+  extract: number,
+  kindling: readonly { col: number; row: number; tier: KindlingTier }[],
+): Set<number> {
+  const { parent } = bfsFrom(walk, cols, rows, spawn);
+  const cells = new Set<number>();
+  const take = (goal: number): void => {
+    for (const cell of reconstructPath(parent, spawn, goal)) cells.add(cell);
+  };
+  take(extract);
+  for (const node of kindling) {
+    if (node.tier !== 'contested' && node.tier !== 'deep') continue;
+    if (!inBounds(cols, rows, node.col, node.row)) continue;
+    take(at(cols, node.col, node.row));
+  }
+  return cells;
+}
+
+function isBannedPaintSeat(
+  col: number,
+  row: number,
+  spawnCol: number,
+  spawnRow: number,
+  extractCol: number,
+  extractRow: number,
+  kindlingCells: ReadonlySet<number>,
+  cols: number,
+): boolean {
+  if (chebyshevCells(col, row, spawnCol, spawnRow) <= 3) return true;
+  if (chebyshevCells(col, row, extractCol, extractRow) <= 3) return true;
+  return kindlingCells.has(at(cols, col, row));
+}
+
+interface RankedSeat {
+  readonly cell: number;
+  readonly col: number;
+  readonly row: number;
+  readonly onGreedy: boolean;
+  readonly throatScore: number;
+  readonly neighbors: number;
+  readonly dist: number;
+}
+
+function rankSeats(
+  cells: Iterable<number>,
+  walk: Uint8Array,
+  cols: number,
+  rows: number,
+  greedy: ReadonlySet<number>,
+  dist: Int16Array,
+  banned: (col: number, row: number) => boolean,
+): RankedSeat[] {
+  const seats: RankedSeat[] = [];
+  const seen = new Set<number>();
+  for (const cell of cells) {
+    if (seen.has(cell) || !walk[cell]) continue;
+    seen.add(cell);
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    if (banned(col, row)) continue;
+    const neighbors = neighborWalkCount(walk, cols, rows, col, row);
+    seats.push({
+      cell,
+      col,
+      row,
+      onGreedy: greedy.has(cell),
+      throatScore: 4 - neighbors,
+      neighbors,
+      dist: dist[cell]!,
+    });
+  }
+  seats.sort((a, b) => {
+    const throatA = a.neighbors === 2 ? 1 : 0;
+    const throatB = b.neighbors === 2 ? 1 : 0;
+    if (throatB !== throatA) return throatB - throatA;
+    if (a.dist !== b.dist) return a.dist - b.dist;
+    if (b.throatScore !== a.throatScore) return b.throatScore - a.throatScore;
+    if (a.row !== b.row) return a.row - b.row;
+    return a.col - b.col;
+  });
+  return seats;
+}
+
+function pickSpaced(seats: readonly RankedSeat[], count: number, minChebyshev: number): RankedSeat[] | null {
+  const picked: RankedSeat[] = [];
+  for (const seat of seats) {
+    let ok = true;
+    for (const other of picked) {
+      if (chebyshevCells(seat.col, seat.row, other.col, other.row) < minChebyshev) {
+        ok = false;
+        break;
+      }
+    }
+    if (!ok) continue;
+    picked.push(seat);
+    if (picked.length === count) return picked;
+  }
+  return null;
+}
+
+function ringAround(cells: ReadonlySet<number>, walk: Uint8Array, cols: number, rows: number, radius: number): Set<number> {
+  const out = new Set<number>();
+  for (const cell of cells) {
+    const col = cell % cols;
+    const row = (cell / cols) | 0;
+    for (let dr = -radius; dr <= radius; dr++) {
+      for (let dc = -radius; dc <= radius; dc++) {
+        if (Math.max(Math.abs(dc), Math.abs(dr)) > radius) continue;
+        const nc = col + dc;
+        const nr = row + dr;
+        if (!inBounds(cols, rows, nc, nr)) continue;
+        const ni = at(cols, nc, nr);
+        if (walk[ni]) out.add(ni);
+      }
+    }
+  }
+  return out;
+}
+
+function reachableFloors(dist: Int16Array): number[] {
+  const out: number[] = [];
+  for (let i = 0; i < dist.length; i++) if (dist[i]! >= 0) out.push(i);
+  return out;
+}
+
+function toPins(seats: readonly RankedSeat[]): PaintFloorPin[] {
+  return seats.map((seat) => ({
+    floorCol: seat.col,
+    floorRow: seat.row,
+    onGreedy: seat.onGreedy,
+    throatScore: seat.throatScore,
+  }));
+}
+
+/**
+ * Greedy kindling-path paint seats. Returns a fail string when the rolled N
+ * cannot be placed; callers must retry the layout. Never clamps N down.
+ */
+export function placePaintFloorPins(
+  map: TileMapData,
+  input: PaintHostPinInput,
+): PaintFloorPin[] | string {
+  const n = input.paintCount;
+  if (n <= 0) return [];
+  const { cols, rows } = map;
+  if (!inBounds(cols, rows, input.spawnCol, input.spawnRow)) {
+    return `${PAINT_PINS_SHORT} (need ${n}, spawn out of bounds)`;
+  }
+  const walk = walkBits(map);
+  const spawn = at(cols, input.spawnCol, input.spawnRow);
+  const extract = at(cols, input.extractCol, input.extractRow);
+  const { dist } = bfsFrom(walk, cols, rows, spawn);
+  const greedy = greedyKindlingCells(walk, cols, rows, spawn, extract, input.kindling);
+  const kindlingCells = new Set<number>();
+  for (const node of input.kindling) {
+    if (!inBounds(cols, rows, node.col, node.row)) continue;
+    kindlingCells.add(at(cols, node.col, node.row));
+  }
+  const banned = (col: number, row: number): boolean =>
+    isBannedPaintSeat(col, row, input.spawnCol, input.spawnRow, input.extractCol, input.extractRow, kindlingCells, cols);
+
+  const pathSeats = rankSeats(greedy, walk, cols, rows, greedy, dist, banned);
+  const ringSeats = rankSeats(ringAround(greedy, walk, cols, rows, 2), walk, cols, rows, greedy, dist, banned);
+  const islandSeats = rankSeats(reachableFloors(dist), walk, cols, rows, greedy, dist, banned);
+  const stages = [pathSeats, ringSeats, islandSeats];
+  const spacings = paintHostSpacingLadder(n);
+
+  for (const seats of stages) {
+    for (const spacing of spacings) {
+      const picked = pickSpaced(seats, n, spacing);
+      if (picked) return toPins(picked);
+    }
+  }
+
+  let best = 0;
+  for (const seats of stages) {
+    const trial = pickSpaced(seats, n, 3);
+    if (trial) best = Math.max(best, trial.length);
+    best = Math.max(best, Math.min(seats.length, n));
+  }
+  return `${PAINT_PINS_SHORT} (need ${n}, max placed ${best})`;
+}
+
+export function collectContaminationPins(
+  map: TileMapData,
+  paint: PaintHostPinInput,
+): ContaminationPins | string {
+  const paintFloors = placePaintFloorPins(map, paint);
+  if (typeof paintFloors === 'string') return paintFloors;
   return {
     wallEdges: collectWallEdges(map),
-    clusterCores: collectClusterCores(ruins, tile),
+    paintFloors,
     corridorAabbs: collectCorridors(map),
   };
 }

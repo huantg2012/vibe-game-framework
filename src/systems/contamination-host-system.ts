@@ -37,8 +37,9 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
+import { isPaintInflated, PAINT_BREATH } from '@/entities/form-renderers/d/paint-genome/live';
 import type { ContaminationForm, SortieDraw } from '@/generation/contamination-draw';
-import type { ClusterCorePin, ContaminationPins, CorridorAabb, GeneratedRiftLayout, WallEdgePolyline } from '@/generation/types';
+import type { ContaminationPins, CorridorAabb, GeneratedRiftLayout, PaintFloorPin, WallEdgePolyline } from '@/generation/types';
 import { orderWallEdgeTiles, wallAttachForTile, type FormWallAttach } from '@/generation/wall-edge-path';
 import type { CombatSystem } from '@/systems/combat-system';
 import type { ChaosSystem } from '@/systems/chaos-system';
@@ -46,6 +47,7 @@ import {
   aabbPixelRect,
   chebyshevTiles,
   colonyNucleusSeats,
+  colonyNucleusSeatsInFloors,
   coreMarkPx,
   dingLiveRect,
   facingFromAttach,
@@ -62,11 +64,13 @@ import {
   type YiWalkState,
 } from '@/systems/contamination-host-live';
 import { GameEvent } from '@/types/events';
-import type { Vector2 } from '@/types/game-types';
+import { TileType, type Vector2 } from '@/types/game-types';
 import { degToRad, shortestArc } from '@/utils/math';
 
 const C = GAME_CONSTANTS.CONTAMINATION;
 const TILE = GAME_CONSTANTS.TILE_SIZE;
+/** Oil-film sprites attach at depth 1 (rift + lexicon). Colony marks sit above that. */
+const BING_MARK_DEPTH = 2;
 
 export interface HostSubject {
   readonly id: string;
@@ -114,9 +118,25 @@ export interface HostSystemOptions {
   readonly liveMotion?: boolean;
 }
 
+interface BingSeat {
+  floorCol: number;
+  floorRow: number;
+  cx: number;
+  cy: number;
+}
+
+function seatFromPaint(pin: PaintFloorPin): BingSeat {
+  return {
+    floorCol: pin.floorCol,
+    floorRow: pin.floorRow,
+    cx: pin.floorCol * TILE + TILE / 2,
+    cy: pin.floorRow * TILE + TILE / 2,
+  };
+}
+
 interface BingHost extends HostBase {
   kind: 'bing';
-  pin: ClusterCorePin;
+  pin: BingSeat;
   phase: number;
   /** Live colony only. Empty when `liveMotion` is false and on unkillable field. */
   nuclei: BingNucleus[];
@@ -161,6 +181,10 @@ export class ContaminationHostSystem {
   private skipPaint = false;
   /** Default false: still-frame cores and ticks (map lesson / rollback). */
   private liveMotion = false;
+  /** Oil-film genome paint tiles. Empty = fall back to nucleus / pin Chebyshev. */
+  private readonly paintFloors = new Map<string, ReadonlySet<string>>();
+  private walkableFloors: ReadonlySet<string> | null = null;
+  private readonly visQuery = { x: 0, y: 0 };
 
   /**
    * Materialize 乙/丙/丁 from `layout.contaminationDraw`. Does not call `drawSortie`.
@@ -180,17 +204,21 @@ export class ContaminationHostSystem {
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
     this.liveMotion = options?.liveMotion === true;
+    this.walkableFloors = walkableFloorKeys(layout.tileMap.tiles);
 
     const pins = layout.contaminationPins;
     const drawn = layout.contaminationDraw;
     this.lastDraw = drawn;
     for (const w of drawn.warnings) console.warn(`[contamination-hosts] ${w}`);
 
+    let bingSlot = 0;
     for (const form of drawn.forms) {
       if (form.portfolio === 'jia') continue;
       if (form.portfolio === 'yi') this.spawnYi(scene, form, pins.wallEdges[0]);
-      else if (form.portfolio === 'bing') this.spawnBing(scene, form, pins.clusterCores[0]);
-      else if (form.portfolio === 'ding') this.spawnDing(scene, form, pins.corridorAabbs[0]);
+      else if (form.portfolio === 'bing') {
+        this.spawnBing(scene, form, pins.paintFloors[bingSlot], bingSlot, false);
+        bingSlot++;
+      } else if (form.portfolio === 'ding') this.spawnDing(scene, form, pins.corridorAabbs[0]);
     }
   }
 
@@ -211,6 +239,8 @@ export class ContaminationHostSystem {
     this.spawnSeq = 0;
     this.skipPaint = false;
     this.liveMotion = false;
+    this.paintFloors.clear();
+    this.walkableFloors = null;
   }
 
   /**
@@ -265,7 +295,7 @@ export class ContaminationHostSystem {
     const before = this.hosts.length;
     const slot = this.spawnSeq++;
     if (form.portfolio === 'yi') this.spawnYi(scene, form, pins.wallEdges[0], slot);
-    else if (form.portfolio === 'bing') this.spawnBing(scene, form, pins.clusterCores[0], slot);
+    else if (form.portfolio === 'bing') this.spawnBing(scene, form, pins.paintFloors[0], slot, true);
     else if (form.portfolio === 'ding') this.spawnDing(scene, form, pins.corridorAabbs[0], slot);
     else return null;
     return this.hosts[before]?.id ?? null;
@@ -285,7 +315,22 @@ export class ContaminationHostSystem {
       .map((h) => ({ id: h.id, form: h.form, position: h.core }));
   }
 
-  /** Hide stand-in Graphics. Combat / chaos / occupancy ticks stay on. */
+  /**
+   * Register world floor tiles that currently show this host's paint genome.
+   * Empty clears the row so ticks fall back to nucleus / pin Chebyshev.
+   * Paint never writes collision.
+   */
+  setStepFloors(hostId: string, floors: readonly { readonly col: number; readonly row: number }[]): void {
+    if (floors.length === 0) {
+      this.paintFloors.delete(hostId);
+      return;
+    }
+    this.paintFloors.set(hostId, new Set(floors.map((floor) => `${floor.col},${floor.row}`)));
+    this.relocateBingColonyNuclei(hostId);
+  }
+
+  /** Hide stand-in Graphics. Combat / chaos / occupancy ticks stay on.
+   * Colony hittable marks stay visible so scheme D oil film still reads as killable. */
   setSkipPaint(skip: boolean): void {
     this.skipPaint = skip;
     if (skip) this.hideDefaultPaint();
@@ -323,7 +368,7 @@ export class ContaminationHostSystem {
     const host = this.hosts.find((h) => h.id === hostId && h.alive);
     if (!host) return 'idle';
     if (host.kind === 'yi') return host.windupMs >= 0 ? 'strike' : 'idle';
-    if (host.kind === 'bing') return Math.sin(host.phase) > 0.35 ? 'inflated' : 'idle';
+    if (host.kind === 'bing') return isPaintInflated(host.phase) ? 'inflated' : 'idle';
     return host.awake ? 'awake' : 'idle';
   }
 
@@ -366,15 +411,7 @@ export class ContaminationHostSystem {
     const vis = (this.getVisibility?.(host.core) ?? 0) > 0;
     if (host.kind === 'yi') return vis;
     if (host.kind === 'bing') {
-      if (host.nuclei.length > 0) {
-        const onPaint = host.nuclei.some(
-          (n) => n.alive && Math.abs(playerCol - n.floorCol) <= 1 && Math.abs(playerRow - n.floorRow) <= 1,
-        );
-        return vis || onPaint;
-      }
-      const onPaint =
-        Math.abs(playerCol - host.pin.floorCol) <= 1 && Math.abs(playerRow - host.pin.floorRow) <= 1;
-      return vis || onPaint;
+      return this.bingPaintVisible(host) || this.bingOnPaint(host, playerCol, playerRow);
     }
     if (this.liveMotion) {
       const px = playerCol * TILE + TILE / 2;
@@ -487,24 +524,29 @@ export class ContaminationHostSystem {
   private spawnBing(
     scene: Phaser.Scene,
     form: ContaminationForm,
-    pin: ClusterCorePin | undefined,
+    pin: PaintFloorPin | undefined,
     slot = 0,
+    stagger = false,
   ): void {
     if (!pin) {
-      console.warn('[contamination-hosts] bing skipped: no cluster core');
+      console.warn('[contamination-hosts] bing skipped: no paint seat');
       return;
     }
     if (resolveStopLoss(form) === 'illegal') {
       console.warn('[contamination-hosts] bing skipped: illegal stop-loss');
       return;
     }
+    const seat = seatFromPaint(pin);
     const gfx = scene.add.graphics().setDepth(0.2);
-    const ox = (slot % 3) * TILE;
-    const oy = Math.floor(slot / 3) * TILE;
-    const core = { x: pin.cx + ox, y: pin.cy + oy };
+    const ox = stagger ? (slot % 3) * TILE : 0;
+    const oy = stagger ? Math.floor(slot / 3) * TILE : 0;
+    const core = { x: seat.cx + ox, y: seat.cy + oy };
+    const floorCol = seat.floorCol + (stagger ? slot % 3 : 0);
+    const floorRow = seat.floorRow + (stagger ? Math.floor(slot / 3) : 0);
+    const placed: BingSeat = { floorCol, floorRow, cx: core.x, cy: core.y };
     if (!this.liveMotion) this.paintCore(gfx, core, 0x2ae6c8, 3);
-    const nuclei = this.liveMotion ? this.spawnBingNuclei(form, pin, ox, oy) : [];
-    const marks = this.liveMotion ? scene.add.graphics().setDepth(0.35) : null;
+    const nuclei = this.liveMotion ? this.spawnBingNuclei(form, placed, ox, oy) : [];
+    const marks = this.liveMotion ? scene.add.graphics().setDepth(BING_MARK_DEPTH) : null;
     this.hosts.push({
       kind: 'bing',
       id: `ENM_BING_${String(slot + 1).padStart(2, '0')}`,
@@ -513,14 +555,8 @@ export class ContaminationHostSystem {
       alive: true,
       gfx,
       core: nuclei[0]?.core ?? core,
-      pin: {
-        ...pin,
-        cx: core.x,
-        cy: core.y,
-        floorCol: pin.floorCol + (slot % 3),
-        floorRow: pin.floorRow + Math.floor(slot / 3),
-      },
-      phase: 0,
+      pin: placed,
+      phase: slot * 2.1,
       nuclei,
       marks,
     });
@@ -635,9 +671,9 @@ export class ContaminationHostSystem {
 
   /** Pre-R2-C2 body. Always step-chaos. Does not read lexemes.contact. */
   private tickBingSortie(host: BingHost, col: number, row: number, dtMs: number): void {
-    host.phase += dtMs * 0.002;
-    const inflated = Math.sin(host.phase) > 0.35;
-    const onPaint = Math.abs(col - host.pin.floorCol) <= 1 && Math.abs(row - host.pin.floorRow) <= 1;
+    host.phase += dtMs * PAINT_BREATH;
+    const inflated = isPaintInflated(host.phase);
+    const onPaint = this.bingOnPaint(host, col, row);
     const stepped = col !== this.lastPlayerTile.col || row !== this.lastPlayerTile.row;
     if (onPaint && stepped) {
       const amount = inflated ? C.PAINT_STEP_CHAOS_INFLATED : C.PAINT_STEP_CHAOS_REST;
@@ -649,18 +685,12 @@ export class ContaminationHostSystem {
   private tickBingLive(host: BingHost, col: number, row: number, dtMs: number): void {
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal') return;
-    host.phase += dtMs * 0.002;
-    const inflated = Math.sin(host.phase) > 0.35;
+    host.phase += dtMs * PAINT_BREATH;
+    const inflated = isPaintInflated(host.phase);
     const stepped = col !== this.lastPlayerTile.col || row !== this.lastPlayerTile.row;
     const channel = resolveContactChannel(host.form.portfolio, host.form.lexemes.contact);
     if (channel === 'step_chaos' && stepped) {
-      const onPaint =
-        host.nuclei.length > 0
-          ? host.nuclei.some(
-              (n) => n.alive && chebyshevTiles({ col, row }, { col: n.floorCol, row: n.floorRow }) <= 1,
-            )
-          : Math.abs(col - host.pin.floorCol) <= 1 && Math.abs(row - host.pin.floorRow) <= 1;
-      if (onPaint) {
+      if (this.bingOnPaint(host, col, row)) {
         const amount = inflated ? C.PAINT_STEP_CHAOS_INFLATED : C.PAINT_STEP_CHAOS_REST;
         this.chaos?.addChaos('paint_step', amount);
       }
@@ -670,6 +700,38 @@ export class ContaminationHostSystem {
     }
     this.paintBingLive(host, inflated);
     this.paintMarks(host);
+  }
+
+  private bingPaintVisible(host: BingHost): boolean {
+    const floors = this.paintFloors.get(host.id);
+    if (floors && floors.size > 0) {
+      for (const key of floors) {
+        const comma = key.indexOf(',');
+        const col = Number(key.slice(0, comma));
+        const row = Number(key.slice(comma + 1));
+        this.visQuery.x = col * TILE + TILE / 2;
+        this.visQuery.y = row * TILE + TILE / 2;
+        if ((this.getVisibility?.(this.visQuery) ?? 0) > 0) return true;
+      }
+      return false;
+    }
+    return (this.getVisibility?.(host.core) ?? 0) > 0;
+  }
+
+  /**
+   * Colony: each alive nucleus Chebyshev ≤ 1 (spec: dead nucleus drops its 3×3).
+   * Field oil film: genome paint tiles. No row → pin Chebyshev ≤ 1.
+   */
+  private bingOnPaint(host: BingHost, col: number, row: number): boolean {
+    if (host.nuclei.length > 0) {
+      return host.nuclei.some(
+        (nucleus) =>
+          nucleus.alive && chebyshevTiles({ col, row }, { col: nucleus.floorCol, row: nucleus.floorRow }) <= 1,
+      );
+    }
+    const floors = this.paintFloors.get(host.id);
+    if (floors && floors.size > 0) return floors.has(`${col},${row}`);
+    return Math.abs(col - host.pin.floorCol) <= 1 && Math.abs(row - host.pin.floorRow) <= 1;
   }
 
   private tickDing(
@@ -732,7 +794,7 @@ export class ContaminationHostSystem {
 
   private spawnBingNuclei(
     form: ContaminationForm,
-    pin: ClusterCorePin,
+    pin: BingSeat,
     ox: number,
     oy: number,
   ): BingNucleus[] {
@@ -751,6 +813,42 @@ export class ContaminationHostSystem {
       floorRow: seat.row,
       flashMs: 0,
     }));
+  }
+
+  private relocateBingColonyNuclei(hostId: string): void {
+    const host = this.hosts.find((row) => row.id === hostId && row.alive);
+    if (!host || host.kind !== 'bing' || !this.liveMotion) return;
+    const stop = resolveStopLoss(host.form);
+    if (stop === 'illegal' || stop.family !== 'scatter_rejoin') return;
+    const keys = this.paintFloors.get(hostId);
+    if (!keys || keys.size === 0) return;
+    const tiles: { col: number; row: number }[] = [];
+    for (const key of keys) {
+      const comma = key.indexOf(',');
+      const col = Number(key.slice(0, comma));
+      const row = Number(key.slice(comma + 1));
+      if (this.walkableFloors && !this.walkableFloors.has(key)) continue;
+      tiles.push({ col, row });
+    }
+    if (tiles.length === 0) return;
+    const seats = colonyNucleusSeatsInFloors(
+      tiles,
+      C.COLONY_NUCLEUS_COUNT_MIN,
+      C.COLONY_NUCLEUS_COUNT_MAX,
+      C.COLONY_NUCLEUS_MIN_TILE_GAP,
+      2,
+    );
+    if (seats.length === 0) return;
+    host.nuclei = seats.map((seat) => ({
+      core: { x: seat.col * TILE + TILE / 2, y: seat.row * TILE + TILE / 2 },
+      hp: C.CORE_MAX_HEALTH,
+      alive: true,
+      floorCol: seat.col,
+      floorRow: seat.row,
+      flashMs: 0,
+    }));
+    host.core = host.nuclei[0]!.core;
+    this.paintMarks(host);
   }
 
   private paintBingLive(host: BingHost, inflated: boolean): void {
@@ -782,23 +880,25 @@ export class ContaminationHostSystem {
     const gfx = host.marks;
     if (!gfx || !this.liveMotion) return;
     gfx.clear();
-    if (this.skipPaint) {
-      gfx.setVisible(false);
-      return;
-    }
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal' || !stop.hittable) {
       gfx.setVisible(false);
       return;
     }
-    gfx.setVisible(true);
+    const colonyCores = host.kind === 'bing' && host.nuclei.length > 0;
+    if (this.skipPaint && !colonyCores) {
+      gfx.setVisible(false);
+      return;
+    }
     const standard = host.kind === 'ding' ? 2 : 3;
     const size = coreMarkPx(stop.corePolicy, standard);
     if (size <= 0) {
       gfx.setVisible(false);
       return;
     }
-    if (host.kind === 'bing' && host.nuclei.length > 0) {
+    gfx.setVisible(true);
+    if (colonyCores) {
+      gfx.setDepth(BING_MARK_DEPTH);
       for (const nucleus of host.nuclei) {
         if (!nucleus.alive) continue;
         const flash = nucleus.flashMs > 0;
@@ -914,14 +1014,11 @@ export class ContaminationHostSystem {
     for (const host of this.hosts) {
       host.gfx.clear();
       host.gfx.setVisible(false);
-      if (host.marks) {
-        host.marks.clear();
-        host.marks.setVisible(false);
-      }
       if (host.kind === 'yi') {
         host.telegraph.clear();
         host.telegraph.setVisible(false);
       }
+      this.paintMarks(host);
     }
   }
 
@@ -937,7 +1034,7 @@ export class ContaminationHostSystem {
         host.telegraph.setVisible(true);
         this.paintYi(host.gfx, host.core, host.windupMs >= 0);
       } else if (host.kind === 'bing') {
-        const inflated = Math.sin(host.phase) > 0.35;
+        const inflated = isPaintInflated(host.phase);
         if (this.liveMotion) this.paintBingLive(host, inflated);
         else this.paintCore(host.gfx, host.core, inflated ? 0x3cffd4 : 0x2ae6c8, inflated ? 4 : 3);
       } else {
@@ -952,4 +1049,16 @@ export class ContaminationHostSystem {
       this.paintMarks(host);
     }
   }
+}
+
+function walkableFloorKeys(tiles: readonly number[][]): Set<string> {
+  const keys = new Set<string>();
+  for (let row = 0; row < tiles.length; row++) {
+    const line = tiles[row];
+    if (!line) continue;
+    for (let col = 0; col < line.length; col++) {
+      if (line[col] === TileType.FLOOR) keys.add(`${col},${row}`);
+    }
+  }
+  return keys;
 }

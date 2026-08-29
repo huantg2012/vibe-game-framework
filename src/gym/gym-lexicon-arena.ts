@@ -1,6 +1,7 @@
 /**
  * Observation yard for the contamination-lexicon practice lesson.
  * Not a generated rift island. Pins are baked so 乙/丙/丁 have a legal seat.
+ * 丙座是可走地板，不是氛围簇核。
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -72,13 +73,12 @@ export function lexiconPracticePins(): ContaminationPins {
   const clusterRow = 11;
   return {
     wallEdges: [{ tiles: wallTiles, strikeFloors }],
-    clusterCores: [
+    paintFloors: [
       {
-        organismIndex: 0,
-        cx: (clusterCol + 0.5) * TILE,
-        cy: (clusterRow + 0.5) * TILE,
         floorCol: clusterCol,
         floorRow: clusterRow,
+        onGreedy: false,
+        throatScore: 2,
       },
     ],
     corridorAabbs: [

@@ -1,15 +1,16 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-20
-note: 迭代 1（敌人系统）。不要开新 Slice。不要写成 slice-10。DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077 / DEC-078。T0–T9 已勾。状态：实现完成，体验未验证。不要标 COMPLETE。甲外观 / 乙丙丁几何占位缺口在迭代 2（`docs/tasks/iteration-2.md`，DEC-079 / DEC-080 第二轮方案 D）。
+last-modified: 2026-08-28
+note: 迭代 1（敌人系统）**COMPLETE（2026-08-28，人终审 PASS）**。体验已验证。摘掉「实现完成，体验未验证」。DEC-073 / DEC-074 / DEC-075 / DEC-076 / DEC-077 / DEC-078。T0–T9 已勾。甲外观 / 乙丙丁几何占位缺口已由迭代 2 / 迭代 3 覆盖。
 ---
 
 # Tasks: 迭代 1 — 敌人系统（污染句法）
 
 权威：`docs/progress/current-iteration.md`。体系入口：设计正文 `docs/design-notes/contamination-lexicon.md` → 规则 `docs/specs/system-contamination-lexicon.md` → 识别表面 `docs/specs/ui-encounter-narration.md`。禁止再问人。人已放权最佳方案并点名实施。
 
-验证问题（人试玩，agent 不代勾 PASS）：四张孔谱是否可读；遭遇识别旁白是否刷 / 是否像头上名字；绕是否仍更便宜。收尾合法态：「实现完成，体验未验证」。不要标迭代 COMPLETE。
+验证问题（人试玩，agent 不代勾 PASS）：四张孔谱是否可读；遭遇识别旁白是否刷 / 是否像头上名字；绕是否仍更便宜。**人 2026-08-28 终审 PASS。体验已验证。COMPLETE。**
 
 硬禁止：为填法复制状态机；装饰/漆/体积拆连通；头上名字、图鉴、OS toast、混乱阈值文学旁白腔；代码手写形态表再反向导出 CSV；把画廊 PNG 当地图；覆盖体第三种人形；声称审美 PASS；改 `.claude/agents` / `.cursor/agents`。
 
@@ -108,6 +109,6 @@ Depends: T7。对照 spec 机械比对（含 U1–U12 结构，不代勾好看�
 
 ## Task: T9 | assignee: director
 
-Depends: T8。`current-iteration.md` 改为「实现完成，体验未验证」；gdd / architecture 模块登记；CLAUDE.md / AGENTS.md 层 B 句；roadmap 指向迭代而非 Slice 10；`interface-changed` 该复位的复位。不要标迭代 COMPLETE。
+Depends: T8。当时收口为「实现完成，体验未验证」。**已被 2026-08-28 人终审 PASS 覆盖：体验已验证，标 COMPLETE。**
 
-- [x] 状态改为实现完成、体验未验证。不标 COMPLETE
+- [x] 当时改为实现完成、体验未验证。2026-08-28 人终审 PASS，标 COMPLETE

@@ -353,7 +353,7 @@ export function chebyshevTiles(
   return Math.max(Math.abs(a.col - b.col), Math.abs(a.row - b.row));
 }
 
-/** 2–3 seats, gap ≥ minGap (fallback 2). Gym one-blob uses count=2. */
+/** 2–3 seats, gap ≥ minGap (fallback 2). Gym one-blob uses count=2. Pin fallback only. */
 export function colonyNucleusSeats(
   origin: { readonly col: number; readonly row: number },
   count: number,
@@ -367,6 +367,65 @@ export function colonyNucleusSeats(
     { col: 0, row: -gap },
   ];
   return offsets.slice(0, n).map((o) => ({ col: origin.col + o.col, row: origin.row + o.row }));
+}
+
+function pickSpreadSeats(
+  floors: readonly { readonly col: number; readonly row: number }[],
+  want: number,
+  gap: number,
+): { col: number; row: number }[] {
+  if (floors.length === 0 || want <= 0) return [];
+  let start = floors[0]!;
+  for (const floor of floors) {
+    if (floor.col + floor.row < start.col + start.row) start = floor;
+  }
+  const out: { col: number; row: number }[] = [{ col: start.col, row: start.row }];
+  while (out.length < want) {
+    let best: { col: number; row: number } | null = null;
+    let bestD = -1;
+    for (const floor of floors) {
+      if (out.some((seat) => seat.col === floor.col && seat.row === floor.row)) continue;
+      let nearest = Infinity;
+      for (const seat of out) {
+        const d = chebyshevTiles(seat, floor);
+        if (d < nearest) nearest = d;
+      }
+      if (nearest < gap) continue;
+      if (nearest > bestD) {
+        bestD = nearest;
+        best = { col: floor.col, row: floor.row };
+      }
+    }
+    if (!best) break;
+    out.push(best);
+  }
+  return out;
+}
+
+/**
+ * 2–3 nuclei inside the host's own billing-paint tiles.
+ * Prefer Chebyshev ≥ 3; if that cannot seat 2, retry ≥ 2.
+ */
+export function colonyNucleusSeatsInFloors(
+  floors: readonly { readonly col: number; readonly row: number }[],
+  countMin: number,
+  countMax: number,
+  preferGap: number,
+  fallbackGap: number,
+): { col: number; row: number }[] {
+  const seen = new Set<string>();
+  const unique: { col: number; row: number }[] = [];
+  for (const floor of floors) {
+    const key = `${floor.col},${floor.row}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    unique.push({ col: floor.col, row: floor.row });
+  }
+  if (unique.length === 0) return [];
+  const want = Math.max(countMin, Math.min(countMax, 3));
+  const preferred = pickSpreadSeats(unique, want, preferGap);
+  if (preferred.length >= countMin) return preferred;
+  return pickSpreadSeats(unique, want, fallbackGap);
 }
 
 function assert(cond: unknown, msg: string): void {
@@ -454,6 +513,23 @@ export function selfCheckHostLive(): void {
   const seats = colonyNucleusSeats({ col: 12, row: 11 }, 2, 3);
   assert(seats.length === 2, 'colony seats 2');
   assert(chebyshevTiles(seats[0]!, seats[1]!) >= 3, 'colony gap ≥ 3');
+  const box: { col: number; row: number }[] = [];
+  for (let col = 8; col <= 14; col++) {
+    for (let row = 6; row <= 12; row++) box.push({ col, row });
+  }
+  const boxed = colonyNucleusSeatsInFloors(box, 2, 3, 3, 2);
+  assert(boxed.length >= 2 && boxed.length <= 3, 'bbox seats 2–3');
+  assert(
+    boxed.every((a, i) => boxed.every((b, j) => i >= j || chebyshevTiles(a, b) >= 3)),
+    'bbox gap ≥ 3',
+  );
+  const tight: { col: number; row: number }[] = [];
+  for (let col = 4; col <= 6; col++) {
+    for (let row = 4; row <= 6; row++) tight.push({ col, row });
+  }
+  const tightSeats = colonyNucleusSeatsInFloors(tight, 2, 3, 3, 2);
+  assert(tightSeats.length >= 2, 'tight bbox still seats 2 at gap ≥ 2');
+  assert(chebyshevTiles(tightSeats[0]!, tightSeats[1]!) >= 2, 'tight gap ≥ 2');
 
   const two = [
     { col: 0, row: 0 },

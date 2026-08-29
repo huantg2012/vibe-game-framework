@@ -110,7 +110,7 @@ Depends: D1 人过 +（若需要）A1
 **C1** 可走掩膜：不规则外轮廓 + 矩形缓冲里的虚空。能看图、能丢掉坏图。不布内容。
 - [x] `src/generation/outline-mask.ts`：生长+腐蚀+最大连通块
 - [x] 坏图丢弃（填满缓冲 / 啃边矩形 / 贴框）
-- [x] `TileType.VOID`；`TileGrid` 虚空不可走、不挡视线
+- [x] `TileType.VOID`；`TileGrid` 虚空不可走、不挡视线（**注：DEC-106（2026-08-29）已翻转为挡视线**，虚空吞光；本条是 Slice 6 当时的历史记录）
 - [x] 预览 `docs/art/demos/slice-6-outline/c1-*.png`；闸门 `npm run check:outline`
 - [x] **不**布墙、出生、撤离；**不**改 RiftScene 读固定图
 

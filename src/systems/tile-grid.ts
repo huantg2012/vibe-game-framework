@@ -3,8 +3,9 @@
  *
  * Implements both `OccluderGrid` (line of sight) and `WalkGrid` (pathfinding) so the
  * visibility system, the AI and the renderer all read the same data. Walls block
- * sight and movement. VOID (Slice 6) is unwalkable and not opaque. Out-of-bounds
- * still reads as WALL so existing maps keep an opaque edge.
+ * sight and movement. VOID is unwalkable and opaque (DEC-106: void swallows light;
+ * Slice 6 originally left VOID transparent). Out-of-bounds still reads as WALL so
+ * existing maps keep an opaque edge.
  *
  * Pure data + math, no Phaser dependency, so it can be reused and unit-tested.
  */
@@ -45,14 +46,18 @@ export class TileGrid implements OccluderGrid, WalkGrid {
     return this._version;
   }
 
-  /** Returns `TileType.WALL` for out-of-bounds so callers never need bounds checks. */
+  /**
+   * Returns `TileType.WALL` for out-of-bounds so callers never need bounds checks.
+   * In-bounds VOID stays VOID (unwalkable; opaque via `isOpaque`).
+   */
   getTile(col: number, row: number): number {
     if (col < 0 || col >= this.cols || row < 0 || row >= this.rows) return TileType.WALL;
     return this.data[row * this.cols + col]!;
   }
 
   isOpaque(col: number, row: number): boolean {
-    return this.getTile(col, row) === TileType.WALL;
+    const tile = this.getTile(col, row);
+    return tile === TileType.WALL || tile === TileType.VOID;
   }
 
   isWalkable(col: number, row: number): boolean {

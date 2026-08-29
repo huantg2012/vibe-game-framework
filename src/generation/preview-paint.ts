@@ -1147,8 +1147,9 @@ function clampHueWindow(h: number): number {
 }
 
 /**
- * L2 cluster ramp: I6-A formula, quantized with I6-B `quantizeInGroup` into teal subsets.
+ * L2 teal ramp: I6-A formula, quantized with I6-B `quantizeInGroup` into teal subsets.
  * Age slides blue/green inside the hue window; fragments do not get a hue split.
+ * Feeds enemy four-stops and paint-host colour. Does not stamp ground clusters (DEC-104).
  */
 export function deriveContamRamp(
   def: RiftFragmentDef,
@@ -1697,7 +1698,6 @@ function stampContamination(
   age: ContaminationAge,
   style: ContaminationDrawStyle,
   pulse: ClusterPulseField | null,
-  clusterLive: boolean,
 ): void {
   const { floors, glitches } = collectFloors(land, walls, roles);
   if (floors.length === 0) return;
@@ -1718,7 +1718,7 @@ function stampContamination(
         mask,
         age,
         pulse,
-        clusterLive,
+        false,
       );
     }
     return;
@@ -1835,8 +1835,7 @@ export interface BakedGround {
 export function bakeGround(
   mask: RuinedMask,
   pxPerTile = 16,
-  contaminationDraw: ContaminationDrawStyle = 'cluster',
-  clusterLive = false,
+  contaminationDraw?: ContaminationDrawStyle,
 ): BakedGround {
   const def = RIFT_FRAGMENT_DATA[mask.fragmentTypeId];
   if (!def) throw new Error(`paintRuinedMask: unknown type ${mask.fragmentTypeId}`);
@@ -2037,22 +2036,23 @@ export function bakeGround(
           tile: T,
         }
       : null;
-  stampContamination(
-    raw,
-    W,
-    H,
-    T,
-    land,
-    walls,
-    cols,
-    rows,
-    roles,
-    mask,
-    age,
-    contaminationDraw,
-    clusterPulse,
-    clusterLive && contaminationDraw === 'cluster',
-  );
+  if (contaminationDraw) {
+    stampContamination(
+      raw,
+      W,
+      H,
+      T,
+      land,
+      walls,
+      cols,
+      rows,
+      roles,
+      mask,
+      age,
+      contaminationDraw,
+      clusterPulse,
+    );
+  }
 
   return { raw, width: W, height: H, tileSize: T, mask, roles, clusterPulse };
 }

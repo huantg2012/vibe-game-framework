@@ -1,8 +1,8 @@
 /**
  * Fragment colours for scheme D (and the lexicon observation yard).
  * L2 four-stop ramp calls the same `deriveContamRamp` as sortie / map-lesson
- * ground clusters (I6-D). Does not call `generateRiftLayout` / `bakeGround`,
- * and must not become the sortie ground path.
+ * paint-host colour (I6-D / DEC-104). Does not call `generateRiftLayout` /
+ * `bakeGround`, and must not become the sortie ground path.
  */
 
 import { RIFT_FRAGMENT_DATA, type RiftFragmentDef } from '@/generated/rift-fragment-data';

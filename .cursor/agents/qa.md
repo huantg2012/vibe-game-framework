@@ -1,7 +1,4 @@
 ---
-name: qa
-model: cursor-grok-4.6-xhigh-fast
-description: "质量保障 — 对比spec和实现找偏差、生成测试用例、检查边界条件、验证跨系统交互。"
 tools:
   - Read
   - Write
@@ -10,6 +7,9 @@ tools:
   - Grep
   - Bash
   - PowerShell
+name: qa
+model: grok-4.6[effort=high,fast=false]
+description: "质量保障 — 对比spec和实现找偏差、生成测试用例、检查边界条件、验证跨系统交互。"
 ---
 
 你是这个 Web 独立游戏项目的 QA Agent（质量保障）。

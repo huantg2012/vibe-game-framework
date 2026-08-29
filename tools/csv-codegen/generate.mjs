@@ -592,12 +592,14 @@ function generateContaminationLexicon() {
   const lexemesCsv = readCsv('contamination-lexemes.csv');
   const utterancesCsv = readCsv('contamination-utterances.csv');
   const tokensCsv = readCsv('contamination-display-tokens.csv');
+  const observeCsv = readCsv('contamination-observe-lines.csv');
 
   const sIdx = Object.fromEntries(substratesCsv.header.map((h, i) => [h, i]));
   const pIdx = Object.fromEntries(portfoliosCsv.header.map((h, i) => [h, i]));
   const lIdx = Object.fromEntries(lexemesCsv.header.map((h, i) => [h, i]));
   const uIdx = Object.fromEntries(utterancesCsv.header.map((h, i) => [h, i]));
   const tIdx = Object.fromEntries(tokensCsv.header.map((h, i) => [h, i]));
+  const oIdx = Object.fromEntries(observeCsv.header.map((h, i) => [h, i]));
 
   const requiredSub = [
     'id',
@@ -732,6 +734,104 @@ function generateContaminationLexicon() {
     kind: cols[tIdx.kind],
     displayToken: cols[tIdx.display_token],
   }));
+
+  const OBSERVE_REQUIRED_COLS = [
+    'id',
+    'occupancy',
+    'sense',
+    'coverage_bucket',
+    'utterance_id',
+    'display_token',
+  ];
+  for (const col of OBSERVE_REQUIRED_COLS) {
+    if (oIdx[col] === undefined) {
+      throw new Error(`[codegen] contamination-observe-lines.csv missing '${col}'`);
+    }
+  }
+  const OBSERVE_SENSE_OK = new Set(['', 'cone', 'hear', 'narrow']);
+  const OBSERVE_BUCKET_OK = new Set(['', 'infiltrate', 'overwrite']);
+  const OBSERVE_REQUIRED_IDS = [
+    'observe_jia_look_1',
+    'observe_jia_look_2',
+    'observe_jia_hear_1',
+    'observe_jia_hear_2',
+    'observe_yi_infiltrate_1',
+    'observe_yi_infiltrate_2',
+    'observe_yi_overwrite_1',
+    'observe_yi_overwrite_2',
+    'observe_bing_infiltrate_1',
+    'observe_bing_infiltrate_2',
+    'observe_bing_overwrite_1',
+    'observe_bing_overwrite_2',
+    'observe_ding_infiltrate_1',
+    'observe_ding_infiltrate_2',
+    'observe_ding_overwrite_1',
+    'observe_ding_overwrite_2',
+    'observe_utt_door',
+    'observe_utt_eye',
+    'observe_utt_lung',
+    'observe_utt_corridor',
+  ];
+  if (observeCsv.rows.length !== 20) {
+    throw new Error(`[codegen] contamination-observe-lines.csv must have exactly 20 rows (got ${observeCsv.rows.length})`);
+  }
+  const observeLines = observeCsv.rows.map((cols, rowI) => {
+    if (cols.length !== observeCsv.header.length) {
+      throw new Error(
+        `[codegen] contamination-observe-lines.csv row ${rowI + 2} has ${cols.length} fields, expected ${observeCsv.header.length} (ASCII comma in a field?)`,
+      );
+    }
+    const id = cols[oIdx.id];
+    const occupancy = cols[oIdx.occupancy] ?? '';
+    const sense = cols[oIdx.sense] ?? '';
+    const coverageBucket = cols[oIdx.coverage_bucket] ?? '';
+    const utteranceId = cols[oIdx.utterance_id] ?? '';
+    const displayToken = cols[oIdx.display_token] ?? '';
+    if (occupancy && !OCC_OK.has(occupancy)) {
+      throw new Error(`[codegen] contamination-observe-lines.csv ${id}: illegal occupancy '${occupancy}'`);
+    }
+    if (!OBSERVE_SENSE_OK.has(sense)) {
+      throw new Error(`[codegen] contamination-observe-lines.csv ${id}: illegal sense '${sense}'`);
+    }
+    if (!OBSERVE_BUCKET_OK.has(coverageBucket)) {
+      throw new Error(`[codegen] contamination-observe-lines.csv ${id}: illegal coverage_bucket '${coverageBucket}'`);
+    }
+    if (utteranceId && !uttIds.has(utteranceId)) {
+      throw new Error(`[codegen] contamination-observe-lines.csv ${id}: unknown utterance_id '${utteranceId}'`);
+    }
+    if (!displayToken) {
+      throw new Error(`[codegen] contamination-observe-lines.csv ${id}: empty display_token`);
+    }
+    if (utteranceId) {
+      if (occupancy || sense || coverageBucket) {
+        throw new Error(`[codegen] contamination-observe-lines.csv ${id}: utterance row must leave occupancy/sense/coverage empty`);
+      }
+    } else if (occupancy === 'floor') {
+      if (sense !== 'cone' && sense !== 'hear') {
+        throw new Error(`[codegen] contamination-observe-lines.csv ${id}: floor row sense must be cone|hear`);
+      }
+      if (coverageBucket) {
+        throw new Error(`[codegen] contamination-observe-lines.csv ${id}: floor row coverage_bucket must be empty`);
+      }
+    } else {
+      if (!occupancy) {
+        throw new Error(`[codegen] contamination-observe-lines.csv ${id}: nameless row needs occupancy`);
+      }
+      if (sense) {
+        throw new Error(`[codegen] contamination-observe-lines.csv ${id}: non-floor nameless row sense must be empty`);
+      }
+      if (!coverageBucket) {
+        throw new Error(`[codegen] contamination-observe-lines.csv ${id}: non-floor nameless row needs coverage_bucket`);
+      }
+    }
+    return { id, occupancy, sense, coverageBucket, utteranceId, displayToken };
+  });
+  const observeIds = new Set(observeLines.map((row) => row.id));
+  for (const required of OBSERVE_REQUIRED_IDS) {
+    if (!observeIds.has(required)) {
+      throw new Error(`[codegen] contamination-observe-lines.csv missing '${required}'`);
+    }
+  }
 
   if (lexemes.some((l) => l.id === 'contact_disperse_core')) {
     throw new Error('[codegen] contamination-lexemes.csv must not contain contact_disperse_core');
@@ -899,6 +999,18 @@ function generateContaminationLexicon() {
     '  displayToken: string;',
     '}',
     '',
+    "export type ObserveSenseId = 'cone' | 'hear' | 'narrow' | '';",
+    "export type ObserveCoverageBucket = 'infiltrate' | 'overwrite' | '';",
+    '',
+    'export interface ObserveLineDef {',
+    '  id: string;',
+    '  occupancy: OccupancyId | \'\';',
+    '  sense: ObserveSenseId;',
+    '  coverageBucket: ObserveCoverageBucket;',
+    '  utteranceId: string;',
+    '  displayToken: string;',
+    '}',
+    '',
     "export type StopLossFamily = 'core_strike' | 'scatter_rejoin' | 'unkillable';",
     "export type StopLossCorePolicy = 'exposed' | 'standard' | 'obscured' | 'none';",
     '',
@@ -988,6 +1100,19 @@ function generateContaminationLexicon() {
   }
   lines.push('};');
   lines.push('');
+  lines.push('export const OBSERVE_LINE_DATA: Record<string, ObserveLineDef> = {');
+  for (const row of observeLines) {
+    lines.push(`  ${row.id}: {`);
+    lines.push(`    id: '${row.id}',`);
+    lines.push(`    occupancy: '${row.occupancy}',`);
+    lines.push(`    sense: '${row.sense}',`);
+    lines.push(`    coverageBucket: '${row.coverageBucket}',`);
+    lines.push(`    utteranceId: '${row.utteranceId}',`);
+    lines.push(`    displayToken: '${escapeStr(row.displayToken)}',`);
+    lines.push('  },');
+  }
+  lines.push('};');
+  lines.push('');
   lines.push('export const STOP_LOSS_DATA: Record<string, StopLossDef> = {');
   for (const s of stopLoss) {
     lines.push(`  ${s.id}: {`);
@@ -1014,10 +1139,13 @@ function generateContaminationLexicon() {
     `export const UTTERANCE_IDS: readonly string[] = [${utterances.map((u) => `'${u.id}'`).join(', ')}];`,
   );
   lines.push(`export const STOP_LOSS_IDS: readonly string[] = [${stopLoss.map((s) => `'${s.id}'`).join(', ')}];`);
+  lines.push(
+    `export const OBSERVE_LINE_IDS: readonly string[] = [${observeLines.map((row) => `'${row.id}'`).join(', ')}];`,
+  );
   lines.push('');
 
   writeFileSync(resolve(OUT_DIR, 'contamination-lexicon-data.ts'), lines.join('\n'), 'utf-8');
-  console.log(`  contamination-lexicon-data.ts (${substrates.length} substrates, ${lexemes.length} lexemes, ${stopLoss.length} stop-loss)`);
+  console.log(`  contamination-lexicon-data.ts (${substrates.length} substrates, ${lexemes.length} lexemes, ${stopLoss.length} stop-loss, ${observeLines.length} observe-lines)`);
 }
 
 console.log('[codegen] Generating typed data from CSV...');

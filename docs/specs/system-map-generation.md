@@ -2,16 +2,16 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: code（I6-F：按身份配方填参数化列；删 l1_key / source_domain / wall_body_key / wall_rim_key。居民区公寓仍未启用）
-last-modified-date: 2026-08-24
-note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。地面污染成品画面是崩坏簇（DEC-069），不是矩形平涂。整团胀缩已锁（DEC-070）；出击与练习场同一套活层（DEC-071）。迷雾下亮度等人终审。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
-interface-changed: true
+last-modified-by: code（DEC-106：虚空改为挡光，翻转 Slice 6 不挡视线默认）
+last-modified-date: 2026-08-29
+note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
+interface-changed: false
 slice: 6
 interfaces-with:
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出
-  - system-movement-vision         # 输出 OccluderGrid / 出生点；虚空格不可走、默认不挡视线
+  - system-movement-vision         # 输出 OccluderGrid / 出生点；虚空格不可走、挡视线（DEC-106 虚空吞光）
   - system-enemy-ai                # 输出 WalkGrid + 巡逻；过渡期恰好 1 个改写体占听觉主轴（DEC-077）；出击甲带 ContaminationForm
-  - system-contamination-lexicon   # 交出墙缘折线 / 簇核 / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
+  - system-contamination-lexicon   # 交出墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
   - OutlineMask（矩形缓冲 + 陆地/虚空掩膜 + 质量指标）
@@ -98,11 +98,11 @@ exposes:
 | ---- | ---- | -------- | ------ |
 | 地板 | 是 | 地表（L1 底色 + 材质残影 + L2 污染） | 否 |
 | 墙 / 障碍 | 否 | 可读残块（砖 / 木 / 土 / 金属仍可辨） | 是 |
-| 虚空 | 否 | void-black，不是墙皮 | **否**（默认） |
+| 虚空 | 否 | void-black，不是墙皮 | **是**（DEC-106） |
 
-虚空不挡视线，陆地轮廓才能被看见。对岸若超出视野半径，照旧看不见。若试玩证明 C 形陆地隔虚空对射太狠，再收，不在本轮改默认。
+虚空挡视线（DEC-106 虚空吞光，2026-08-29 人拍板，翻转 Slice 6 的「不挡」默认）：射线打进虚空即停，手电光场不再穿过地图边界，虚空海湾两侧不可互见（玩家 / 敌人对称，同一套 `hasLineOfSight`）。对岸本来就在虚空之后，照旧看不见。虚空仍不是墙：不画墙皮、不参与墙体情景语法。
 
-`TileType` 有墙 / 地板 / 裂口 / 虚空。虚空不可走、默认不挡视线，着色走 `void-black`，禁止铺成地板。`src/types/game-types.ts` 里 Foundation 草案 `MapData.exitPoints: Position[]` 是复数出口——**本 Slice 不实现那份草案的多出口**。生成器输出以本节契约为准。
+`TileType` 有墙 / 地板 / 裂口 / 虚空。虚空不可走、挡视线（DEC-106），着色走 `void-black`，禁止铺成地板。`src/types/game-types.ts` 里 Foundation 草案 `MapData.exitPoints: Position[]` 是复数出口——**本 Slice 不实现那份草案的多出口**。生成器输出以本节契约为准。
 
 ### 缓冲多大
 
@@ -242,7 +242,7 @@ interface FragmentTypeDef {
     4. **开阔格**：可走格满足「四邻（上右下左）墙格数 ≤ 1」**或**「到最近墙格的四连通格距（曼哈顿，格为单位）≥ 2」。墙 = 墙格，不含虚空。四连通距墙 ≥ 2 蕴含四邻墙数 = 0，故本 OR 的有效判定是 **四邻墙数 ≤ 1**（贴着一面墙走仍算开阔；夹在两面墙之间的 1 宽缝不算）。
     5. 一条路的**开阔格占比** = 该路路径格中开阔格数 / 该路路径格数（含出生与撤离）。两条路里**较短者**（格子步数更小；若步数并列则主路视为较短）必须开阔格占比**严格更高**（= 更暴露）。较短者不够暴露 = 坏图。
     6. 以上任一步失败：丢弃本岛，重试整岛。禁止用加细墙、拆形状闸门、切开地板连通来「做出第二条路」。
-22. 巡逻（过渡期，DEC-077 / I3-A）：仍是 3–4 个占地可追击，其中**恰好 1 个** `type: 'rewriter'`（听觉主轴仍由改写体占名额）。不要用句法甲配额 2–3 去砍巡逻人数；为**每条** spawn 配一个 `form`。`type` 由该 form 的感知词素派生（`sense_hear` → rewriter，否则 infiltrator）。撤离门仍是视锥甲：form 锁有机残影 + 渗透 + 视锥，写入 `spawn.form`，不是工厂按 role 三元覆盖。乙 / 丙 / 丁不进 `enemySpawns`。一次出击一份 `contaminationDraw`（种子独立 fork `mix32(layout.seed, 'lexicon')`）；宿主只物化这份抽卡里的非甲 form，禁止再调 `drawSortie`。钉层空的乙↔丁回退仍在。钉层（墙缘折线、簇核、走廊包围盒）必须交出。路点可走、从出生可达。全图听噪 === 1 的最终迁移未做。契约细节在 `system-enemy-ai`「生成器契约」与句法 spec 实现规格。
+22. 巡逻（过渡期，DEC-077 / I3-A）：仍是 3–4 个占地可追击，其中**恰好 1 个** `type: 'rewriter'`（听觉主轴仍由改写体占名额）。不要用句法甲配额 2–3 去砍巡逻人数；为**每条** spawn 配一个 `form`。`type` 由该 form 的感知词素派生（`sense_hear` → rewriter，否则 infiltrator）。撤离门仍是视锥甲：form 锁有机残影 + 渗透 + 视锥，写入 `spawn.form`，不是工厂按 role 三元覆盖。乙 / 丙 / 丁不进 `enemySpawns`。一次出击一份 `contaminationDraw`（种子独立 fork `mix32(layout.seed, 'lexicon')`）；宿主只物化这份抽卡里的非甲 form，禁止再调 `drawSortie`。钉层空的乙↔丁回退仍在。钉层（墙缘折线、占漆地板格、走廊包围盒）必须交出。路点可走、从出生可达。全图听噪 === 1 的最终迁移未做。契约细节在 `system-enemy-ai`「生成器契约」与句法 spec 实现规格。
 23. 污染物节点放在可走格，从出生可达。数量沿用现图量级（现为 3），本 Slice 不新开节点规则。
 
 ### A — 氛围
@@ -251,7 +251,7 @@ interface FragmentTypeDef {
 24a. 每一次踏入抽 `FragmentRoll`：`contaminationAge` ∈ {new, standard, ancient} 与 `ruinSeverity` ∈ {intact, broken, eaten}（`typeId` 即本次 `fragmentTypeId`）。两轴必须实际抽取（同种子可复现），禁止跳过抽取、把所有图写成 `standard` + `broken`。允许某次抽中该组合。旋钮只走 `docs/art/rift-fragment-surfaces.md`「组合轴」；禁止新 hex。一张图一个 `typeId`。
 25. 本 Slice 做有限种碎片氛围。种类与是否一张图只抽一种 L1：**未锁**。见约束 3。
 26. 碎片类型的策划字段进 `data/*.csv`（建议 `data/rift-fragments.csv`），构建期进 `src/generated/`。禁止在代码里手写主题表再反向导出。
-27. 色值只引用 art-direction 已锁 L1 / L2。禁止为了「不一样」发明未论证新色。地面 L2 污染的成品画面是崩坏簇（DEC-069）：从该岛碎片 bias 公式推色再量化到已锁色板；四档互不相同且离开地板色。活层（DEC-070 / DEC-071）：内核烤死；中间层与外层同一相位、几乎不透明，沿簇不规则外沿整团胀缩，幅度为休息大小的 5–20%。出击与练习场同一套活层。呼吸层须低于裂隙视野黑暗蒙层。迷雾下亮度等人终审。不是矩形平涂错误块。画法合同 `docs/art/rift-fragment-surfaces.md`。晶结 / 溶蚀只留练习场对照，不进出击。**已锁但未实现（DEC-088 / DEC-089 / DEC-093 / DEC-094 / 迭代 6）：** 地面簇在部分世界/年龄档青绿占比为 0。底色色温不能承担碎片身份：色板亮度 <32 无暖格，烤地众数塌到 `#1a1e18`（`probe-bias-baked.ts`）。修法已锁：第二层仍先按偏置定色温组再组内最近；身份由渍色 / 纹理 / 划痕 / 脏污 / 结构承担。质量语法 / 渍色键 / 划痕先 I6-P 等价再 I6-Q 拆档，再 I6-F 按美术**新**配方填列。不动色板、不整体提高地板亮度；不要求第一层落格互不相同。补实现见 `docs/tasks/iteration-6.md`。禁止用第二层色相分工冒充本条的碎片身份。禁止再写「簇状语法未实现」。
+27. 色值只引用 art-direction 已锁 L1 / L2。禁止为了「不一样」发明未论证新色。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名。`bakeGround` 不下氛围簇层。看得见的成片青绿是有主占漆。禁止用矩形平涂错误块填回。活层技术（DEC-070 / DEC-071）保留：幅度 5–20%、每帧连续场、禁止 4 张静帧；应用改为占漆宿主呼吸，整图 `liveClusterBreath` 关。呼吸层须低于裂隙视野黑暗蒙层。迷雾下亮度人终审 PASS（2026-08-28）。画法合同 `docs/art/rift-fragment-surfaces.md`。晶结 / 溶蚀只留练习场对照，不进出击。身份由渍色 / 纹理 / 划痕 / 脏污 / 结构承担（DEC-093）。不动色板、不整体提高地板亮度。禁止用第二层色相分工冒充碎片身份。禁止再写「簇状语法未实现」。`check:contam-floor-contrast` 地面青绿改测上限（防簇偷跑），CIE76 / 形状指纹 / 虚空 / 亮格 / 连通保留。
 28. L1 色值差只有 5–10，叠 32px 和视野遮罩后可能看不出。**只换雾 / 亮度 / 污染密度，标为可能不够。** 要分清「另一块碎片」，地表材质残影和障碍语法必须一起变，不能只改一张滤镜。预览栈的氛围场（天空胶囊遮挡 + 地雾池 + 尘点 + 渗光）是层 7–9，让同一块岛活起来；它不替代本条的碎片身份。裂隙：地面烤一次，天空低分辨率叠层改 `phase`。禁止用极坐标膜抄净化点边界。禁止在游戏循环里对整张地图跑 `compositePaint`。
 
 ### U — 界面（本系统几乎不碰）
@@ -336,7 +336,7 @@ DEC-005 反的是地牢房间，不是「这段墙曾是房子」。CA 可以风
 图书馆 / 医院 / 地铁 / 居民区 / 户外是表上的身份样本，不是五种换皮。墙形跟 `massGrammar` 走，走法骨架共用。
 
 - **后果**：最能读出「这曾是什么」。和约束 3 绑在一起：氛围种类一少，语法种类也少。
-- **和世界观**：基体不同、污染同一套（L2 崩坏簇，与改写体同源；DEC-069）。最贴设定。
+- **和世界观**：基体不同、污染同一套青绿（有主占漆与敌人 ramp 同源；氛围簇已下线）。最贴设定。
 - **和已有管线**：`procedural-surface` 必须吃碎片类型，不能写死 `frag-outdoor`。每种语法要 art A1 写墙 / 地表怎么画。五种全做，本 Slice 批次会爆。
 - **风险**：语法只换贴图、不换形状，人仍读成同一堆石头。
 
@@ -516,12 +516,12 @@ interface FragmentRoll {
 - 从 **净化点场景流转** 接收：踏入裂隙这一下（触发生成）。不读净化点力场形状当裂隙陆地。
 - 从 **system-chaos-scavenge-extract** 接收：薪柴分档原则、一个撤离、走近按 E、主干 40–60 秒、换路体验（短暴露 / 长隐蔽）。换路机器判定在本文件规则 21。**坐标不再向固定图要。**
 - 从 **system-movement-vision** 接收：OccluderGrid / 出生点契约。向它提供网格与出生。撤离点仍注册 glow source，位置改读生成器。
-- 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走、过渡期 `EnemySpawnData.type` ∈ {infiltrator, rewriter}。向它提供本次 `enemySpawns`（每条带 `form`；过渡期恰好 1 个改写体）。另交墙缘折线 / 簇核 / 走廊包围盒，以及一份 `contaminationDraw` 给污染句法（宿主禁止二次抽卡）。
+- 从 **system-enemy-ai** 接收：WalkGrid、路点必须可走、过渡期 `EnemySpawnData.type` ∈ {infiltrator, rewriter}。向它提供本次 `enemySpawns`（每条带 `form`；过渡期恰好 1 个改写体）。另交墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒，以及一份 `contaminationDraw` 给污染句法（宿主禁止二次抽卡）。
 - 从 **system-growth-tide** 接收：污染物节点契约。向它提供本次节点。工具 abyss 改读本次薪柴坐标，禁止 `import { RIFT_MAP }`。
 - 向 **RiftScene** 发送：整份 `GeneratedRiftLayout`。场景不再在 create 时写死 `RIFT_MAP`。
 - 向 **ExtractionSystem** 发送：恰好一个 `ExtractionPointDef`。规则仍是走近按 E。
 - 向 **Minimap** 发送：本次 tile 与撤离世界坐标。标记形状不新造。
-- 向 **VisibilitySystem** 发送：`setExtractionPosition` + glow source。虚空默认不挡视线。
+- 向 **VisibilitySystem** 发送：`setExtractionPosition` + glow source。虚空挡视线（DEC-106）。
 - 向 **procedural-surface** 发送：`fragmentTypeId` / 材质。禁止继续写死 `frag-outdoor`。禁止再发送已删的 `l1Key`。
 - 不与净化点分配 / 潮汐公式 / 战斗伤害直接交互。
 
@@ -556,7 +556,7 @@ interface FragmentRoll {
 
 ## 待验证假设
 
-- [ ] 虚空不挡视线会不会让 C 形陆地隔空对射太狠（技术默认先不挡）。
+- [x] ~~虚空不挡视线会不会让 C 形陆地隔空对射太狠（技术默认先不挡）~~ → DEC-106（2026-08-29）结题：虚空改为挡视线（虚空吞光），隔空互见不再可能；动因是边界透光核心体验问题。
 - [ ] L1 只有 5–10 色差，不换材质和语法时，32px + 视野遮罩下人是否根本分不清。
 - [ ] 有限种下连抽同一类型，人会不会觉得「没换图」（分清应靠种类差，不靠禁止连抽）。
 - [ ] 主干 40–60 秒在不规则陆地上，会不会变成迷路而不是改路。

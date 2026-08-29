@@ -9,12 +9,12 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import {
-  devicePrefix,
   displayTokenFor,
   encounterNodes,
   identityKey,
   type ContaminationForm,
 } from '@/generation/contamination-draw';
+import { mix32 } from '@/generation/seed-fork';
 import { GameEvent } from '@/types/events';
 import { getDomUiRoot, injectPanelStyles } from '@/ui/dom/panel-styles';
 
@@ -76,7 +76,7 @@ export class EncounterNarration {
       const seen = subject.identifiable;
       const was = this.identifiable.get(subject.id) === true;
       if (seen && !was) {
-        this.tryIdentify(nowMs, subject.form, thresholdActive);
+        this.tryIdentify(nowMs, subject.id, subject.form, thresholdActive);
       }
       this.identifiable.set(subject.id, seen);
     }
@@ -85,7 +85,12 @@ export class EncounterNarration {
     }
   }
 
-  private tryIdentify(nowMs: number, form: ContaminationForm, thresholdActive: boolean): void {
+  private tryIdentify(
+    nowMs: number,
+    hostId: string,
+    form: ContaminationForm,
+    thresholdActive: boolean,
+  ): void {
     if (thresholdActive) return;
     if (nowMs < this.visibleUntil) return;
     if (nowMs - this.lastLineAt < C.ENCOUNTER_GAP_MS) return;
@@ -93,7 +98,7 @@ export class EncounterNarration {
     const cooled = this.cooldownUntil.get(key) ?? 0;
     if (nowMs < cooled) return;
 
-    const nodes = encounterNodes(form);
+    const nodes = encounterNodes(form, mix32(0, hostId));
     this.render(nodes);
     this.cooldownUntil.set(key, nowMs + C.ENCOUNTER_COOLDOWN_MS);
     this.lastLineAt = nowMs;
@@ -115,10 +120,6 @@ export class EncounterNarration {
     const line = this.line;
     if (!root || !line) return;
     line.replaceChildren();
-    const prefix = document.createElement('span');
-    prefix.className = 'encounter-prefix';
-    prefix.textContent = devicePrefix();
-    line.appendChild(prefix);
     for (const node of nodes) {
       const span = document.createElement('span');
       span.className = node.kind === 'utterance_mark' ? 'encounter-node encounter-mark' : 'encounter-node';

@@ -6,19 +6,23 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import {
   CONCEPTUAL_SUBSTRATE_IDS,
-  DISPLAY_TOKEN_DATA,
   LEXEME_DATA,
+  OBSERVE_LINE_DATA,
   PORTFOLIO_DATA,
   SUBSTRATE_DATA,
   UTTERANCE_DATA,
   type ContinuityId,
   type CoverageId,
   type LexemeSlot,
+  type ObserveCoverageBucket,
+  type ObserveLineDef,
   type OccupancyId,
   type PortfolioId,
   type SubstrateDef,
   type SubstrateEnabledScope,
 } from '@/generated/contamination-lexicon-data';
+import { mix32 } from '@/generation/seed-fork';
+import type { ContaminationAge } from '@/generation/types';
 import { SeededRandom } from '@/utils/random';
 
 export interface ContaminationForm {
@@ -37,17 +41,34 @@ export interface ContaminationForm {
 }
 
 export interface EncounterNode {
-  readonly kind: 'coverage' | 'substrate' | 'occupancy' | 'sense' | 'utterance_mark';
+  readonly kind: 'observe' | 'utterance_mark';
   readonly tokenId: string;
 }
 
 export interface SortiePinAvailability {
   readonly fragmentTypeId: string;
-  readonly hasClusters: boolean;
+  /** Occupancy-paint copies this sortie. 0 = skip 丙 (tests / empty pin layers). */
+  readonly paintCount: number;
   readonly hasWallEdges: boolean;
   readonly hasCorridors: boolean;
   /** When 甲 already owns the hearing axis, yi must not take 听噪. */
   readonly hearingAxisTaken?: boolean;
+}
+
+/** Closed integer ranges by `contaminationAge`. Do not multiply by area or path length. */
+export const PAINT_HOST_COUNT_RANGE: Record<ContaminationAge, readonly [number, number]> = {
+  new: [3, 5],
+  standard: [6, 8],
+  ancient: [9, 12],
+};
+
+/** `N = lo + floor(rng × (hi − lo + 1))` with `mix32(layout.seed, 'paint-count')`. */
+export function rollPaintHostCount(layoutSeed: number, age: ContaminationAge): number {
+  const range = PAINT_HOST_COUNT_RANGE[age];
+  const lo = range[0];
+  const hi = range[1];
+  const rng = new SeededRandom(mix32(layoutSeed, 'paint-count'));
+  return lo + Math.floor(rng.next() * (hi - lo + 1));
 }
 
 export interface SortieDraw {
@@ -78,6 +99,9 @@ const DIALECT: Record<string, Dialect> = {
       ['light_scatter', 2],
       ['wall_rust', 1],
       ['street_wreckage', 1],
+      ['insect_remnant', 1],
+      ['mammal_remnant', 1],
+      ['worm_remnant', 1],
     ],
     preferYiDing: 'ding',
   },
@@ -92,6 +116,9 @@ const DIALECT: Record<string, Dialect> = {
       ['ash_veil', 1],
       ['space_interval', 1],
       ['sound_echo', 1],
+      ['insect_remnant', 1],
+      ['mammal_remnant', 1],
+      ['worm_remnant', 1],
     ],
     preferYiDing: 'yi',
   },
@@ -105,6 +132,9 @@ const DIALECT: Record<string, Dialect> = {
       ['sound_echo', 2],
       ['space_interval', 2],
       ['light_scatter', 1],
+      ['insect_remnant', 1],
+      ['mammal_remnant', 1],
+      ['worm_remnant', 1],
     ],
     preferYiDing: 'either',
   },
@@ -118,6 +148,9 @@ const DIALECT: Record<string, Dialect> = {
       ['stalk_clump', 1],
       ['light_scatter', 1],
       ['space_interval', 1],
+      ['insect_remnant', 1],
+      ['mammal_remnant', 1],
+      ['worm_remnant', 1],
     ],
     preferYiDing: 'yi',
   },
@@ -132,6 +165,9 @@ const DIALECT: Record<string, Dialect> = {
       ['space_interval', 1],
       ['sound_echo', 1],
       ['light_scatter', 1],
+      ['insect_remnant', 1],
+      ['mammal_remnant', 1],
+      ['worm_remnant', 1],
     ],
     preferYiDing: 'yi',
   },
@@ -174,15 +210,40 @@ export function identityKey(form: ContaminationForm): string {
   return base;
 }
 
-export function encounterNodes(form: ContaminationForm): readonly EncounterNode[] {
-  const nodes: EncounterNode[] = [
-    { kind: 'coverage', tokenId: `coverage_${form.coverage}` },
-    { kind: 'substrate', tokenId: form.substrate },
-    { kind: 'occupancy', tokenId: `occupancy_${form.occupancy}` },
-  ];
-  if (form.occupancy === 'floor') {
-    nodes.push({ kind: 'sense', tokenId: form.lexemes.sense });
+function coverageBucketOf(coverage: CoverageId): ObserveCoverageBucket {
+  return coverage === 'infiltrate' ? 'infiltrate' : 'overwrite';
+}
+
+function floorSenseBucket(senseId: string): 'cone' | 'hear' {
+  return senseId === 'sense_hear' ? 'hear' : 'cone';
+}
+
+/** Nameless / utterance observe-line pool for one form. Utterance rows win. */
+export function observePoolFor(form: ContaminationForm): readonly ObserveLineDef[] {
+  const rows = Object.values(OBSERVE_LINE_DATA);
+  if (form.utteranceId) {
+    return rows.filter((row) => row.utteranceId === form.utteranceId);
   }
+  if (form.occupancy === 'floor') {
+    const sense = floorSenseBucket(form.lexemes.sense);
+    return rows.filter((row) => row.occupancy === 'floor' && row.sense === sense && !row.utteranceId);
+  }
+  const bucket = coverageBucketOf(form.coverage);
+  return rows.filter(
+    (row) => row.occupancy === form.occupancy && row.coverageBucket === bucket && !row.utteranceId,
+  );
+}
+
+export function pickObserveLine(form: ContaminationForm, hostSeed = 0): ObserveLineDef | null {
+  const pool = observePoolFor(form);
+  if (pool.length === 0) return null;
+  return new SeededRandom(mix32(hostSeed, 'observe-line')).pick(pool);
+}
+
+export function encounterNodes(form: ContaminationForm, hostSeed = 0): readonly EncounterNode[] {
+  const line = pickObserveLine(form, hostSeed);
+  if (!line) return [];
+  const nodes: EncounterNode[] = [{ kind: 'observe', tokenId: line.id }];
   if (form.utteranceId) {
     nodes.push({ kind: 'utterance_mark', tokenId: form.utteranceId });
   }
@@ -191,20 +252,10 @@ export function encounterNodes(form: ContaminationForm): readonly EncounterNode[
 
 /** Resolve an encounter node to the on-screen fragment. Never invents a whole sentence. */
 export function displayTokenFor(node: EncounterNode): string {
-  if (node.kind === 'coverage' || node.kind === 'occupancy') {
-    return DISPLAY_TOKEN_DATA[node.tokenId]?.displayToken ?? node.tokenId;
-  }
-  if (node.kind === 'substrate') {
-    return SUBSTRATE_DATA[node.tokenId]?.displayToken ?? node.tokenId;
-  }
-  if (node.kind === 'sense') {
-    return LEXEME_DATA[node.tokenId]?.displayToken ?? node.tokenId;
+  if (node.kind === 'observe') {
+    return OBSERVE_LINE_DATA[node.tokenId]?.displayToken ?? node.tokenId;
   }
   return UTTERANCE_DATA[node.tokenId]?.onScreenMark ?? node.tokenId;
-}
-
-export function devicePrefix(): string {
-  return DISPLAY_TOKEN_DATA.device_prefix?.displayToken ?? '识别。';
 }
 
 export type LexiconDrawScope = SubstrateEnabledScope;
@@ -523,14 +574,17 @@ export function drawSortie(rng: SeededRandom, pins: SortiePinAvailability): Sort
     else forms.push(form);
   }
 
-  if (pins.hasClusters && rng.next() < 0.7) {
+  if (pins.paintCount > 0) {
     const bing = drawOne(rng, {
       portfolio: 'bing',
       fragmentTypeId: pins.fragmentTypeId,
       preferUtterance: true,
     });
-    if (bing) forms.push(bing);
-    else warnings.push('bing draw failed after retries');
+    if (bing) {
+      for (let i = 0; i < pins.paintCount; i++) forms.push(bing);
+    } else {
+      warnings.push('bing draw failed after retries');
+    }
   }
 
   const hearCount = forms.filter((f) => f.lexemes.sense === 'sense_hear').length;

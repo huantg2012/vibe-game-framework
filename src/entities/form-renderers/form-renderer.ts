@@ -28,6 +28,11 @@ export interface FormVisualPose {
 export interface FormVisual {
   update(pose: FormVisualPose): void;
   destroy(): void;
+  /**
+   * World floor tiles that currently show this visual's paint.
+   * 丙油膜踩踏读这个；缺省则宿主仍走核旁 Chebyshev。漆不挡路。
+   */
+  readonly stepFloors?: readonly { readonly col: number; readonly row: number }[];
 }
 
 /** Sortie fog: `visibility === 0` hides. Visible bands (1 / 0.6 / 0.2) pass through. Never floor at 0.2. */
@@ -57,6 +62,14 @@ export interface FormAttachContext {
    * `destroy()` must remove the prefixed keys.
    */
   textureNamespace?: string;
+  /**
+   * 油膜脉络。0/1/2 = 抽卡课树 tweak；3/4/5 = 生产三变体（聚珠 / 沾抹 / 薄滩）。
+   * 出击与地图课省略 = 按该个体种子 `mix32(seed, 'oil_film_variant') % 3` 采样 3/4/5。
+   * 练习场可钉变体做对照。
+   */
+  paintVeinVariant?: 0 | 1 | 2 | 3 | 4 | 5;
+  /** 练习场抽卡课放大显示倍数（NEAREST 不失真）。缺省 1。出击不传。 */
+  displayScale?: number;
   /**
    * 丁脚底浊点锚点。有则用它；无则读相机中心（出击不变）。
    * 陈列馆浏览态传场地外沉点。

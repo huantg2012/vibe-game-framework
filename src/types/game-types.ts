@@ -122,7 +122,7 @@ export enum TileType {
   WALL = 0,
   FLOOR = 1,
   FRACTURE = 2,
-  /** Unwalkable, not opaque, painted void-black. Not a wall. */
+  /** Unwalkable, opaque (void swallows light), painted void-black. */
   VOID = 3,
 }
 

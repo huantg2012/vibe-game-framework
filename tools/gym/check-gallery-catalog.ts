@@ -54,6 +54,14 @@ import {
   mammalNeighborhoodOf,
 } from '../../src/entities/form-renderers/d/genome/mammal-remnant.ts';
 import {
+  OIL_FILM_ID,
+  OIL_FILM_VARIANTS,
+  OIL_FILM_VARIANT_LABEL,
+  oilFilmHallId,
+  oilFilmPaintVeinOf,
+  oilFilmVariantFromHallId,
+} from '../../src/entities/form-renderers/d/paint-genome/topology.ts';
+import {
   STREET_WRECKAGE_ID,
   STREET_WRECKAGE_NEIGHBORHOODS,
   streetNeighborhoodsOf,
@@ -91,6 +99,8 @@ assert(!/\.attach\(/.test(src), 'catalog must not call attach');
 assert(src.includes('mammalNeighborhoodOf'), 'catalog must use production mammal neighborhood axes');
 assert(src.includes('jiaSeedForMammalNeighborhood'), 'catalog must search mammal neighborhood inside the seed bucket');
 assert(src.includes('jiaSeedForStreetWreckage'), 'catalog must pick street wreckage seeds by neighborhood union');
+assert(src.includes('oilFilmHallId'), 'catalog must split oil film halls like mammal neighborhoods');
+assert(src.includes('oilFilmVariantOf'), 'catalog oil-film halls must use production variant ids');
 assert(src.includes('采样种子'), 'catalog occupying copy must name 采样种子');
 assert(!src.includes('族内变体'), 'catalog must not keep 族内变体 occupying copy');
 assert(!/jiaVariantOf\([^)]*\)\s*%\s*4/.test(src), 'catalog must not cut mammal identity with % 4');
@@ -130,9 +140,21 @@ for (const spec of listed) {
       `mammal seed ${spec.seed} hall ${spec.hallId} must match layout neighborhood`,
     );
     assert(spec.mammalHood === hood, `mammalHood field ${spec.visualKey}`);
+    assert(spec.oilFilmHood === null, `mammal oilFilmHood is null ${spec.visualKey}`);
+  } else if (spec.substrate === OIL_FILM_ID) {
+    const hood = oilFilmVariantFromHallId(spec.hallId);
+    assert(hood !== null, `oil film hallId ${spec.hallId} must carry a variant`);
+    assert(
+      spec.visualKey.includes(`|${hood}`),
+      `oil film visualKey must include variant ${hood} (${spec.visualKey})`,
+    );
+    assert(spec.oilFilmHood === hood, `oilFilmHood field ${spec.visualKey}`);
+    assert(spec.mammalHood === null, `oil film mammalHood is null ${spec.visualKey}`);
+    assert(spec.hallId === oilFilmHallId(hood), `oil film hallId ${spec.hallId}`);
   } else {
-    assert(spec.hallId === spec.substrate, `non-mammal hallId equals substrate ${spec.visualKey}`);
-    assert(spec.mammalHood === null, `non-mammal mammalHood is null ${spec.visualKey}`);
+    assert(spec.hallId === spec.substrate, `plain hallId equals substrate ${spec.visualKey}`);
+    assert(spec.mammalHood === null, `plain mammalHood is null ${spec.visualKey}`);
+    assert(spec.oilFilmHood === null, `plain oilFilmHood is null ${spec.visualKey}`);
   }
     assert(sameStopLoss(spec.stopLoss, resolveStopLoss(spec.form)), `stopLoss field ${spec.visualKey}`);
   assert(spec.stopLoss !== 'illegal', `default list excludes illegal stop-loss ${spec.visualKey}`);
@@ -283,12 +305,63 @@ for (const hall of jiaHalls) {
   assert(union.size === STREET_WRECKAGE_NEIGHBORHOODS.length, 'street wreckage union is lamp/rail/sign');
 }
 
+{
+  const bingHalls = galleryHallsOf('bing', listed);
+  const bingHallIds = bingHalls.map((row) => row.hallId);
+  const oilHalls = OIL_FILM_VARIANTS.map((hood) => ({
+    hood,
+    hallId: oilFilmHallId(hood),
+    label: OIL_FILM_VARIANT_LABEL[hood],
+  }));
+  assert(oilFilmPaintVeinOf('beads') === 3, 'beads pins paintVeinVariant 3');
+  assert(oilFilmPaintVeinOf('smear') === 4, 'smear pins paintVeinVariant 4');
+  assert(oilFilmPaintVeinOf('rim_pool') === 5, 'rim_pool pins paintVeinVariant 5');
+  assert(
+    oilHalls.every((row) => bingHallIds.includes(row.hallId)),
+    `bing nav must list three oil film halls (${bingHallIds.join(',')})`,
+  );
+  assert(
+    oilHalls.every((row) => bingHalls.some((hall) => hall.label === row.label)),
+    `bing nav labels must be 聚珠成滩 / 沾抹拖尾 / 薄滩收边 (${bingHalls.map((row) => row.label).join(',')})`,
+  );
+  assert(!bingHallIds.includes(OIL_FILM_ID), 'default catalog must not keep a standalone 油膜 hall button');
+  assert(
+    bingHalls.length === substrateOptions('bing').length + 2,
+    `bing halls ${bingHalls.length} want substrateOptions + 2 (oil film split into three)`,
+  );
+  {
+    const expectedOrder = oilHalls.map((row) => row.hallId);
+    const listedOrder = bingHallIds.filter((id) => id.startsWith(`${OIL_FILM_ID}:`));
+    assert(
+      listedOrder.join('|') === expectedOrder.join('|'),
+      `oil film hall order ${listedOrder.join(',')} want ${expectedOrder.join(',')}`,
+    );
+  }
+  const oilCounts: number[] = [];
+  for (const row of oilHalls) {
+    const specs = listed.filter((spec) => spec.hallId === row.hallId);
+    assert(specs.length > 0, `oil film hall ${row.hallId} has specimens`);
+    oilCounts.push(specs.length);
+    for (const spec of specs) {
+      assert(spec.form.substrate === OIL_FILM_ID, `${row.hallId} substrate stays oil_film`);
+      assert(spec.oilFilmHood === row.hood, `${row.hallId} oilFilmHood field`);
+      assert(spec.seed === CANONICAL_SEED, `${row.hallId} keeps CANONICAL_SEED (no 8-seed paint axis)`);
+      assert(spec.seedBucket === 0, `${row.hallId} seedBucket stays 0`);
+    }
+  }
+  assert(
+    oilCounts.every((n) => n === oilCounts[0]),
+    `oil film halls same occupying count (${oilCounts.join(',')})`,
+  );
+}
+
 assert(inRange(total, 400, 2800), `total ${total} in [400, 2800]`);
-assert(total === 1866, `default catalog size must stay 1866 (got ${total})`);
+assert(total === 1974, `default catalog size must stay 1974 (got ${total})`);
 assert(inRange(jia, 400, 2400), `jia ${jia} in [400, 2400]`);
 assert(jia === 1632, `jia catalog size must stay 1632 (got ${jia})`);
 assert(inRange(yi, 15, 80), `yi ${yi} in [15, 80]`);
 assert(inRange(bing, 80, 350), `bing ${bing} in [80, 350]`);
+assert(bing === 270, `bing catalog size must stay 270 (got ${bing})`);
 assert(inRange(ding, 20, 120), `ding ${ding} in [20, 120]`);
 
 const withIllegal = collectGalleryCatalog({ includeIllegal: true });
@@ -329,6 +402,16 @@ for (const port of portfolioOptions()) {
     assert(!axes.occupying.includes('族内变体'), 'jia occupying names must not keep 族内变体');
     assert(copy.rules.some((row) => row.item === '采样种子' && row.value === '8'), 'jia dedupe rule is 采样种子 8');
     assert(!copy.rules.some((row) => row.item === '族内变体'), 'jia dedupe must not keep 族内变体');
+  }
+  if (port.id === 'bing') {
+    assert(axes.occupying.includes('感知'), 'bing occupying names include 感知');
+    assert(axes.occupying.includes('节律'), 'bing occupying names include 节律');
+    assert(axes.occupying.includes('连续性'), 'bing occupying names include 连续性');
+    assert(!axes.occupying.includes('止损是否画核'), 'bing must not occupy 止损是否画核');
+    assert(!axes.occupying.includes('成句'), 'bing must not occupy 成句');
+    assert(!axes.occupying.includes('采样种子'), 'bing must not add 采样种子 occupying axis');
+    assert(axes.nonOccupying.includes('止损是否画核'), 'bing nonOccupying includes 止损是否画核');
+    assert(axes.nonOccupying.includes('成句'), 'bing nonOccupying includes 成句');
   }
 }
 
@@ -413,6 +496,8 @@ assert(
   !/jia:\s*8,\s*yi:\s*12,\s*bing:\s*12,\s*ding:\s*8/.test(SCENE_SRC),
   'gallery scene must not keep the retired 8/12/12/8 caps',
 );
+assert(SCENE_SRC.includes('oilFilmPaintVeinOf'), 'gallery attach must pin oil film paintVeinVariant from hall');
+assert(SCENE_SRC.includes('paintVeinVariant'), 'gallery attach context must pass paintVeinVariant');
 assert(SCENE_SRC.includes('GALLERY_ZOOM_MIN'), 'gallery scene must apply per-hall zoomMin');
 assert(SCENE_SRC.includes('setZoomMin'), 'gallery scene must switch zoomMin on hall change');
 assert(SCENE_SRC.includes("'采样种子'"), 'gallery labels must name 采样种子');

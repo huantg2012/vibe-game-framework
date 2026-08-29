@@ -10,8 +10,10 @@ import { GymBootScene } from '@/gym/gym-boot-scene';
 import { GymLexiconGalleryScene } from '@/gym/gym-lexicon-gallery-scene';
 import { GymLexiconScene } from '@/gym/gym-lexicon-scene';
 import { GymMapScene } from '@/gym/gym-map-scene';
+import { GymPaintVeinCardScene } from '@/gym/gym-paint-vein-card-scene';
 import { GymPlayerScene } from '@/gym/gym-player-scene';
 import { GymScene } from '@/gym/gym-scene';
+import { GymVisionLabScene } from '@/gym/gym-vision-lab-scene';
 
 if (import.meta.env.DEV) assertBalanceInvariants();
 
@@ -23,6 +25,8 @@ const game = new Phaser.Game(
     GymMapScene,
     GymLexiconScene,
     GymLexiconGalleryScene,
+    GymPaintVeinCardScene,
+    GymVisionLabScene,
   ]),
 );
 

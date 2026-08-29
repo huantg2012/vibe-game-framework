@@ -9,7 +9,6 @@ import Phaser from 'phaser';
 import { pingPongFrame } from '@/entities/actor-motion';
 import {
   applyFormVisibility,
-  type ContaminationFormRenderer,
   type FormAttachContext,
   type FormVisual,
   type FormVisualPose,
@@ -200,13 +199,4 @@ class JiaGenomeVisual implements FormVisual {
 
 export function attachJiaGenomeD(ctx: FormAttachContext): FormVisual {
   return new JiaGenomeVisual(ctx);
-}
-
-/** 句法课 / 陈列馆：甲走基因谱（与出击 `d-mixed` 占地同一份），乙丙丁仍走 `d-mixed`。 */
-export function attachGymFormVisual(
-  renderer: ContaminationFormRenderer,
-  ctx: FormAttachContext,
-): FormVisual {
-  if (ctx.form.occupancy === 'floor') return attachJiaGenomeD(ctx);
-  return renderer.attach(ctx);
 }

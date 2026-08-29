@@ -27,7 +27,7 @@ note: 十锚是风格样例不是地图库。裂隙每次抽锚+新种子+邻域
 | 出击抽锚生成 | `src/generation/rift-layout.ts` → `pickRecipe`、`generateRiftLayout` |
 | 分层栈 | `outline-mask.ts` → `structure-grammars.ts` → `cover.ts` → `stealth-density.ts` → `atmosphere.ts` → `draft-pipeline.ts` |
 | 「曾经是什么」底色 | `data/rift-fragments.csv`（正式抽取只开 `enabled: true`） |
-| 漆 | `src/generation/preview-paint.ts`；裂隙地面烤一次，天空走低分辨率叠层（`RiftSurfacePainter`） |
+| 漆 | `src/generation/preview-paint.ts`；裂隙地面烤一次，天空走低分辨率叠层（`RiftSurfacePainter`）。**DEC-104 / I8-R：** 生产不再铺氛围崩坏簇；看得见的成片青绿是有主占漆。活层技术保留，应用改为占漆宿主 |
 | 样例画廊 | `docs/art/demos/slice-6-outline/spatial-drafts/index.html` |
 | 再生样例 / 闸门 | `npm run preview:recipes`；`npm run check:recipes`；`npm run check:layout` |
 
@@ -138,7 +138,7 @@ note: 十锚是风格样例不是地图库。裂隙每次抽锚+新种子+邻域
 
 本批预览的机器刹车是形状闸门 + 连通 + 掩护距离（DEC-060：P90≤8，远块≤48）。禁止把 `sight≤14` / 空矩形 48 当生产循环。波动（`ripple`/`band`）未做。
 
-出生 / 撤离 / 薪柴是以后的层 10。墙后地板 == 1。空洞不挡视线。木格不得与石墙四邻相接。`trees ≥ 1` 必须至少 1 个 2×2 桩。形状闸门见「墙剪影 / 反迷宫」。
+出生 / 撤离 / 薪柴是以后的层 10。墙后地板 == 1。空洞原不挡视线；**DEC-106（2026-08-29）起虚空挡视线（虚空吞光）**。木格不得与石墙四邻相接。`trees ≥ 1` 必须至少 1 个 2×2 桩。形状闸门见「墙剪影 / 反迷宫」。
 
 父本是 `wilderness-draft` 的三种走法。`masses.ts` 的围院语言不进这条栈。
 

@@ -24,6 +24,7 @@ import {
   drawSortie,
   INFILTRATOR_FORM,
   REWRITER_FORM,
+  rollPaintHostCount,
   type ContaminationForm,
   type SortieDraw,
 } from '@/generation/contamination-draw';
@@ -825,15 +826,32 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
         continue;
       }
 
+      const paintCount = rollPaintHostCount(inputSeed, roll.contaminationAge);
+      const spawnCol = colOf(grid.cols, placed.spawn);
+      const spawnRow = rowOf(grid.cols, placed.spawn);
+      const extractCol = colOf(grid.cols, placed.extract);
+      const extractRow = rowOf(grid.cols, placed.extract);
       const contaminationPins = collectContaminationPins(draft.tileMap, {
-        ...draft,
-        contaminationAge: roll.contaminationAge,
-        ruinSeverity: roll.ruinSeverity,
+        spawnCol,
+        spawnRow,
+        extractCol,
+        extractRow,
+        kindling: placed.kindling.map((node) => {
+          const col = Math.floor(node.position.x / TILE);
+          const row = Math.floor(node.position.y / TILE);
+          return { col, row, tier: node.tier };
+        }),
+        paintCount,
       });
+      if (typeof contaminationPins === 'string') {
+        console.warn(`[contamination-pins] seed ${inputSeed} retry: ${contaminationPins}`);
+        lastWhy = contaminationPins;
+        continue;
+      }
       const lexiconRng = new SeededRandom(mix32(inputSeed, 'lexicon'));
       const drawn = drawSortie(lexiconRng, {
         fragmentTypeId: recipe.fragmentTypeId,
-        hasClusters: contaminationPins.clusterCores.length > 0,
+        paintCount,
         hasWallEdges: contaminationPins.wallEdges.length > 0,
         hasCorridors: contaminationPins.corridorAabbs.length > 0,
       });

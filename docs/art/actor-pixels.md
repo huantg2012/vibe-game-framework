@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director
 created-when: 2026-08-20
-last-modified: 2026-08-23
+last-modified: 2026-08-28
 purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §5.2；改写体格点合同在 rewriter-sprite.md。裂隙甲出击指针在 contamination-forms.md 方案 D（I5-J 生产路径为基因谱模块；画布含 48×64，碰撞仍 20）。
 ---
 
@@ -39,7 +39,7 @@ purpose: 角色程序像素的经验 HOW。活外观在 art-direction §5.1 / §
 
 木偶顿步在 `enemy-factory.ts`。碰撞偏移见下文「画布变了只改偏移」。方案 D 甲同样：画布变了只改偏移，碰撞边长仍 20。
 
-裂隙**地面**污染与改写体崩坏簇同源（青绿团落到可走地板，不是矩形平涂错误块）。地面画法合同见 `docs/art/rift-fragment-surfaces.md`（DEC-069）。墙缝 / 有生命的簇 / 走廊云见 `contamination-forms.md`。迷雾下甲身上的簇是否被地面簇淹没、亮不亮，等人在裂隙里看；本文不代勾。
+裂隙**地面**身份靠渍 / 纹理 / 结构；成片青绿是有主占漆，与敌人四档同一份 ramp，不是矩形平涂，也不是氛围崩坏簇。地面画法合同见 `docs/art/rift-fragment-surfaces.md`（DEC-104 覆盖 DEC-069 的氛围簇生产签名）。墙缝 / 占漆宿主 / 走廊云见 `contamination-forms.md`。迷雾下甲身上的青绿是否被地面占漆淹没、亮不亮，等人在裂隙里看；本文不代勾。
 
 ---
 

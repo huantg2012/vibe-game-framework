@@ -20,12 +20,13 @@ export interface WallEdgePolyline {
   readonly strikeFloors: readonly { col: number; row: number }[];
 }
 
-export interface ClusterCorePin {
-  readonly organismIndex: number;
-  readonly cx: number;
-  readonly cy: number;
+export interface PaintFloorPin {
   readonly floorCol: number;
   readonly floorRow: number;
+  /** True when the seat sits on the greedy kindling path (not a ring / island fallback). */
+  readonly onGreedy: boolean;
+  /** Higher when fewer of the four orthogonal neighbors are walkable. */
+  readonly throatScore: number;
 }
 
 export interface CorridorAabb {
@@ -39,7 +40,7 @@ export interface CorridorAabb {
 
 export interface ContaminationPins {
   readonly wallEdges: readonly WallEdgePolyline[];
-  readonly clusterCores: readonly ClusterCorePin[];
+  readonly paintFloors: readonly PaintFloorPin[];
   readonly corridorAabbs: readonly CorridorAabb[];
 }
 

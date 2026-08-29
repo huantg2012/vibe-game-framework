@@ -11,7 +11,7 @@
         width: 100%;
         height: 100%;
         overflow-x: auto;
-        overflow-y: auto;
+        overflow-y: hidden;
         background: #080a0c;
         color: #c8cdd4;
         font-family: "Courier New", Courier, monospace;
@@ -19,13 +19,15 @@
       #gym-shell {
         display: grid;
         grid-template-columns: minmax(260px, 320px) minmax(960px, 1fr);
+        grid-template-rows: minmax(0, 1fr);
         min-width: calc(320px + 960px);
-        min-height: 100%;
+        min-height: 0;
         height: 100%;
       }
       #gym-doc {
         padding: 16px 18px 24px;
         border-right: 1px solid #1a1e24;
+        min-height: 0;
         overflow: auto;
         font-size: 13px;
         line-height: 1.45;
@@ -51,7 +53,8 @@
       }
       #gym-map-controls label,
       #gym-lexicon-controls label,
-      #gym-gallery-controls label {
+      #gym-gallery-controls label,
+      #gym-vision-controls label {
         display: block;
         margin: 10px 0 3px;
         color: #8a8f96;
@@ -60,7 +63,8 @@
       #gym-map-controls select,
       #gym-map-controls input[type="number"],
       #gym-lexicon-controls select,
-      #gym-gallery-controls select {
+      #gym-gallery-controls select,
+      #gym-vision-controls input[type="number"] {
         width: 100%;
         background: #0e1114;
         color: #c8cdd4;
@@ -78,7 +82,8 @@
         color: #c8cdd4;
       }
       #gym-map-controls .gym-actions,
-      #gym-lexicon-controls .gym-actions {
+      #gym-lexicon-controls .gym-actions,
+      #gym-vision-controls .gym-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
@@ -86,7 +91,8 @@
       }
       #gym-map-controls button,
       #gym-lexicon-controls button,
-      #gym-gallery-nav button {
+      #gym-gallery-nav button,
+      #gym-vision-controls button {
         background: #12161a;
         color: #e8eaed;
         border: 1px solid #2a2d32;
@@ -94,8 +100,47 @@
         font: inherit;
         cursor: pointer;
       }
-      #gym-map-controls button:disabled {
+      #gym-map-controls button:disabled,
+      #gym-lexicon-controls select:disabled {
         color: #8a8f96;
+      }
+      #gym-lex-paint-vein-previews {
+        margin-top: 10px;
+      }
+      #gym-lex-paint-vein-previews p {
+        color: #8a8f96;
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+      .gym-lex-vein-row {
+        display: flex;
+        gap: 6px;
+      }
+      .gym-lex-vein-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 4px;
+        background: #0e1114;
+        color: #c8cdd4;
+        border: 1px solid #2a2d32;
+        font: inherit;
+        cursor: pointer;
+      }
+      .gym-lex-vein-card[data-on="1"] {
+        border-color: #1aad96;
+        color: #b0fff5;
+      }
+      .gym-lex-vein-card span {
+        font-size: 11px;
+        line-height: 1.3;
+      }
+      .gym-lex-vein-card canvas {
+        width: 100%;
+        height: auto;
+        image-rendering: pixelated;
+        background: #080a0c;
       }
       #gym-gallery-nav {
         display: flex;
@@ -187,13 +232,32 @@
         width: 100%;
         height: 100%;
         min-width: 960px;
-        min-height: 640px;
-        overflow: auto;
+        min-height: 0;
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
         justify-content: safe center;
         align-items: safe center;
+      }
+      /* FIT canvas is letterboxed inside this flex host. A tall sidebar used to
+         stretch the grid row; overflow:auto + justify-content:center then
+         scrolled the canvas away and could not scroll it back. All gym lessons
+         pan with the Phaser camera (or follow a locked viewport). */
+      #game-container.gym-gallery-stage,
+      #game-container.gym-phaser-stage {
+        overflow: hidden;
+        overscroll-behavior: none;
+      }
+      /* Vein-card stamps A/B/C must fit the visible column. Default
+         minmax(960px) + shell min-width 1280 clips C on a narrow window;
+         Phaser then eats the wheel as zoom. Shrink only this lesson. */
+      #gym-shell:has(#game-container.gym-paint-vein-card-stage) {
+        grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+        min-width: 0;
+      }
+      #game-container.gym-paint-vein-card-stage {
+        min-width: 0;
       }
       #gym-gallery-captions {
         position: absolute;
@@ -255,6 +319,18 @@
         list-style: none;
         margin: 4px 0;
       }
+      #gym-vision-caption {
+        position: absolute;
+        top: 10px;
+        left: 12px;
+        z-index: 2;
+        pointer-events: none;
+        font-size: 12px;
+        color: #b0fff5;
+        background: rgba(8, 10, 12, 0.72);
+        border: 1px solid #1a1e24;
+        padding: 4px 8px;
+      }
     </style>
   </head>
   <body>
@@ -263,10 +339,12 @@
         <h1 id="gym-title">练习场</h1>
         <nav id="gym-nav">
           <a id="gym-link-lexicon" href="/gym.html?lesson=lexicon">污染句法</a>
+          <a id="gym-link-paint-vein-card" href="/gym.html?lesson=paint-vein-card">油膜脉络抽卡</a>
           <a id="gym-link-lexicon-gallery" href="/gym.html?lesson=lexicon-gallery">污染句法陈列馆</a>
           <a id="gym-link-enemy" href="/gym.html">敌人移动</a>
           <a id="gym-link-player" href="/gym.html?lesson=player">玩家外形</a>
           <a id="gym-link-map" href="/gym.html?lesson=map">地图生成</a>
+          <a id="gym-link-vision-lab" href="/gym.html?lesson=vision-lab">视野渲染对比</a>
         </nav>
         <p>独立页，不进主菜单。Agent 入口：<code>docs/dev/gym.md</code>。</p>
 
@@ -306,6 +384,33 @@
           <select id="gym-lex-utterance"></select>
           <label for="gym-lex-count">数量</label>
           <select id="gym-lex-count"></select>
+          <label for="gym-lex-paint-vein">油膜脉络（开发）</label>
+          <select id="gym-lex-paint-vein">
+            <option value="" selected>按种子采样（生产）</option>
+            <option value="0">A 更扁更贴地</option>
+            <option value="1">B 更亮膜感</option>
+            <option value="2">C 更汇流</option>
+            <option value="3">D 聚珠成滩</option>
+            <option value="4">E 沾抹拖尾</option>
+            <option value="5">F 薄滩收边</option>
+          </select>
+          <div id="gym-lex-paint-vein-previews" hidden>
+            <p>三格同种子并排。点格或按 1 / 2 / 3。不是游戏内界面。</p>
+            <div class="gym-lex-vein-row">
+              <button type="button" class="gym-lex-vein-card" data-vein="0">
+                <span>A 更扁更贴地</span>
+                <canvas id="gym-lex-paint-vein-0" width="88" height="88"></canvas>
+              </button>
+              <button type="button" class="gym-lex-vein-card" data-vein="1">
+                <span>B 更亮膜感</span>
+                <canvas id="gym-lex-paint-vein-1" width="88" height="88"></canvas>
+              </button>
+              <button type="button" class="gym-lex-vein-card" data-vein="2">
+                <span>C 更汇流</span>
+                <canvas id="gym-lex-paint-vein-2" width="88" height="88"></canvas>
+              </button>
+            </div>
+          </div>
           <label class="gym-check" for="gym-lex-feel-hit">
             <input id="gym-lex-feel-hit" type="checkbox" />
             感受伤害（默认关＝无敌）
@@ -345,9 +450,10 @@
           </label>
           <label for="gym-contam-draw">污染画法</label>
           <select id="gym-contam-draw">
-            <option value="cluster">方案一：崩坏簇</option>
-            <option value="crystal">方案二：接缝晶结</option>
-            <option value="dissolve">方案三：坏格溶蚀</option>
+            <option value="" selected>生产：无氛围簇</option>
+            <option value="cluster">对照：崩坏簇（已下线）</option>
+            <option value="crystal">对照：接缝晶结</option>
+            <option value="dissolve">对照：坏格溶蚀</option>
             <option value="blocks">对照：平涂错误块</option>
           </select>
           <label for="gym-age">污染年龄</label>
@@ -401,15 +507,21 @@
           <li>玩家走出击 <code>Player</code>，无敌。WASD 移动，空格挥击。</li>
           <li>甲走出击 <code>AISystem</code> / <code>CombatSystem</code>。乙丙丁走出击 <code>ContaminationHostSystem</code>（含伤害与混乱）。</li>
           <li>侧栏按污染句法维度配表，点生成刷当前配置。</li>
+          <li>拖动画布平移，滚轮缩放。画布钉在右侧窗格，不跟侧栏一起被撑走。</li>
           <li>击杀后约 0.8 秒按<strong>当前</strong>侧栏配置再刷。打不死不会被击杀，需再点生成。</li>
           <li>止损从连续性 × 覆盖深度查表，不是接触词素。场=挥击打不动但仍踩踏/进体积吃混乱；菌落=多颗核，打一颗其余还在；渗透核露、覆盖核埋。</li>
           <li>不开视野迷雾。不接遭遇识别旁白。侧栏止损行是开发说明，不是头上名字。</li>
         </ul>
         <ul id="gym-rules-gallery" hidden>
-          <li>一次只进一个厅（孔谱 × 基体）。拖动画布平移，滚轮缩放。</li>
+          <li>一次只进一个厅（孔谱 × 基体）。拖动画布或画布外侧空白平移。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放。</li>
           <li>只 attach 生产方案 D。不刷玩家、不创建 Enemy / 宿主。</li>
           <li>开发标签走 DOM，头上无字。表名与档位分行。</li>
           <li>点格选中。双击或侧栏「检视」看活标本、四朝向与信号相。关闭回到厅。</li>
+        </ul>
+        <ul id="gym-rules-paint-vein-card" hidden>
+          <li>打开就是三格并排：A 更扁更贴地 / B 更亮膜感 / C 更汇流。</li>
+          <li>同一颗种子、同一改写档、油膜。不要点生成，不要翻句法课侧栏。</li>
+          <li>拖动画布平移，滚轮缩放。开发课，不是陈列馆目录。</li>
         </ul>
         <ul id="gym-rules-map" hidden>
           <li>布局走出击同一套 <code>generateRiftLayout</code>，禁止另写生成器。</li>
@@ -419,6 +531,21 @@
           <li>不刷会走的甲。色块只标甲路点。</li>
           <li>色块是布点标记，不是实体。拖动画布平移，滚轮缩放。</li>
         </ul>
+        <ul id="gym-rules-vision-lab" hidden>
+          <li>布局 / 地表 / 玩家 / 相机 / 视野全是出击同一套；只有遮罩渲染模式可切。</li>
+          <li>数字键 1–4 切模式：1 现状（三档+棋盘）/ 2 细分带 / 3 光场 / 4 抖动坡。</li>
+          <li>T 切 teal 渗透：关 → 硬内缘（现状）→ 软内缘。强度固定 0.6 供对照。</li>
+          <li>R 换种子重生成，当前模式保持。WASD 移动，边走边看肩膀与边界。</li>
+          <li>这是抽卡对照课：模式只活在 <code>VisibilitySystem</code> 的 spike 分支里，出击默认仍是 1。</li>
+        </ul>
+        <div id="gym-vision-controls" hidden>
+          <h2>生成参数</h2>
+          <label for="gym-vision-seed">种子</label>
+          <input id="gym-vision-seed" type="number" min="0" step="1" />
+          <div class="gym-actions">
+            <button id="gym-vision-generate" type="button">按种子重生成</button>
+          </div>
+        </div>
         <ul id="gym-map-legend" hidden>
           <li><span style="background:#1aad96;"></span>出生</li>
           <li><span style="background:#e0a848;"></span>撤离</li>
@@ -436,6 +563,7 @@
       </aside>
       <div id="game-container">
         <div id="gym-gallery-captions" hidden></div>
+        <div id="gym-vision-caption" hidden></div>
       </div>
     </div>
     <script type="module" src="/src/gym/main.ts"></script>

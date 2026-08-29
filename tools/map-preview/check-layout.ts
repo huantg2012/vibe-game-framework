@@ -237,6 +237,27 @@ for (const seed of SEEDS) {
     );
   }
   assert(layout.contaminationPins.corridorAabbs.length >= 0, `seed ${seed}: corridor field missing`);
+  const paintFloors = layout.contaminationPins.paintFloors;
+  assert(paintFloors.length >= 3, `seed ${seed}: paint floors ${paintFloors.length} (want ≥3)`);
+  const bingForms = layout.contaminationDraw.forms.filter((f) => f.portfolio === 'bing');
+  assert(
+    bingForms.length === paintFloors.length,
+    `seed ${seed}: bing forms ${bingForms.length} vs paint floors ${paintFloors.length}`,
+  );
+  for (const pin of paintFloors) {
+    assert(
+      layout.tileMap.tiles[pin.floorRow]?.[pin.floorCol] === TileType.FLOOR,
+      `seed ${seed}: paint pin ${pin.floorCol},${pin.floorRow} not floor`,
+    );
+    assert(
+      layout.walkableMask.isWalkable(pin.floorCol, pin.floorRow),
+      `seed ${seed}: paint pin ${pin.floorCol},${pin.floorRow} not walkable`,
+    );
+    assert(
+      reach[pin.floorRow * layout.walkableMask.cols + pin.floorCol] === 1,
+      `seed ${seed}: paint pin ${pin.floorCol},${pin.floorRow} unreachable from spawn`,
+    );
+  }
 
   console.log(
     `ok seed ${seed} frag=${layout.fragmentTypeId} recipe=${layout.recipeId} age=${layout.contaminationAge} ruin=${layout.ruinSeverity} dual ${dual.mainSteps}/${dual.altSteps} patrols=${layout.enemySpawns.length} walls=${wallCount(layout.tileMap)}`,

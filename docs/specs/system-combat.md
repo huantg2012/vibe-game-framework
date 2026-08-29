@@ -2,9 +2,9 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
-last-modified-by: code agent（I3-F 出击同读接触/止损）
-last-modified-date: 2026-08-22
-interface-changed: true
+last-modified-by: director（迭代 3 收口：interface-changed 改回 false）
+last-modified-date: 2026-08-28
+interface-changed: false
 slice: 1
 interfaces-with:
   - system-movement-vision         # T1：共享 Player 实体（本 spec 只拥有 HP/攻击/受击/死亡触发）；复用 utils/grid-raycast 做隔墙判定；用 setSpeedModifier('attack') 做出手僵直

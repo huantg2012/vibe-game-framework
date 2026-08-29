@@ -6,13 +6,14 @@
  *
  * Asserts, on the four enabled calibration fragments (not residential):
  *   1. contamination four stops vs contrast floor cell, CIE76 ≥ 18
- *   2. baked teal-family pixel share (same metric as measure:ground-teal)
+ *   2. baked teal-family pixel share is an **upper** bound (DEC-104: catch cluster sneak-back)
+ *      new ≤ 0.20% / standard ≤ 0.35% / ancient ≤ 0.50%
  *   3. baked shape fingerprints from generateRuins → paintRuinedMask are 4-way distinct
  *   4. void (!land) teal-family pixel share < 0.05%
  *   5. no walkable floor cell ≥ 50% banned-bright four (#3cffd4 / #7fffee / #4adf8a / #b0fff5)
  *   6. post-wall walkable four-connected component count === 1
  *
- * Pre-fix fixture (must fail): outdoor/metro 0.00% teal on new+standard;
+ * Pre-fix fixture (must fail): outdoor/metro teal above the age cap;
  * library shape copied from outdoor;
  * DEC-097 broken whole-image teal-group quantize (void teal / bright tiles).
  */
@@ -51,10 +52,10 @@ const SHAPE_SEEDS = [101, 202, 303, 404, 505, 606, 707, 808];
 const CONTRAST_SEEDS = [0, 101];
 const PX = 16;
 
-const TEAL_MIN: Record<ContaminationAge, number> = {
-  new: 0.1,
-  standard: 0.3,
-  ancient: 1.0,
+const TEAL_MAX: Record<ContaminationAge, number> = {
+  new: 0.2,
+  standard: 0.35,
+  ancient: 0.5,
 };
 
 const CIE76_MIN = 18;
@@ -905,9 +906,9 @@ export function failTeal(table: TealTable): string[] {
   for (const id of GATE_FRAGMENTS) {
     for (const age of AGES) {
       const v = table[id][age];
-      const min = TEAL_MIN[age];
-      if (!Number.isFinite(v) || v < min) {
-        fails.push(`${id} ${age} ${Number.isFinite(v) ? v.toFixed(2) : 'n/a'}% < ${min.toFixed(2)}%`);
+      const max = TEAL_MAX[age];
+      if (!Number.isFinite(v) || v > max) {
+        fails.push(`${id} ${age} ${Number.isFinite(v) ? v.toFixed(2) : 'n/a'}% > ${max.toFixed(2)}%`);
       }
     }
   }
@@ -1000,7 +1001,7 @@ function printContrast(rows: readonly ContrastRow[]): void {
 }
 
 function printTeal(table: TealTable): void {
-  console.log('地面青绿家族像素占比（%）门限：新生 ≥ 0.10%，标准 ≥ 0.30%，古老 ≥ 1.00%');
+  console.log('地面青绿家族像素占比（%）门限：新生 ≤ 0.20%，标准 ≤ 0.35%，古老 ≤ 0.50%');
   console.log('fragment'.padEnd(18), AGES.map((a) => a.padStart(10)).join(''));
   for (const id of GATE_FRAGMENTS) {
     console.log(
@@ -1117,7 +1118,7 @@ export function runFloorContrastCli(argv: readonly string[] = process.argv.slice
     failed += tf.length;
     for (const f of tf) console.error(`FAIL ${f}`);
   } else {
-    console.log('PASS: 四张新生 ≥ 0.10%，标准 ≥ 0.30%，古老 ≥ 1.00%\n');
+    console.log('PASS: 四张新生 ≤ 0.20%，标准 ≤ 0.35%，古老 ≤ 0.50%\n');
   }
 
   if (tealOnly) {
@@ -1166,9 +1167,9 @@ export function runFloorContrastCli(argv: readonly string[] = process.argv.slice
   if (!skipFixture) {
     console.log('修前夹具（必须失败才说明闸门有牙）');
     const fakeTeal: TealTable = {
-      'frag-outdoor': { new: 0, standard: 0, ancient: table['frag-outdoor'].ancient },
+      'frag-outdoor': { new: 0.5, standard: 0.8, ancient: table['frag-outdoor'].ancient },
       'frag-clinic': { ...table['frag-clinic'] },
-      'frag-metro': { new: 0, standard: 0, ancient: table['frag-metro'].ancient },
+      'frag-metro': { new: 0.5, standard: 0.8, ancient: table['frag-metro'].ancient },
       'frag-library': { ...table['frag-library'] },
     };
     const tealHits = failTeal(fakeTeal);
@@ -1181,7 +1182,7 @@ export function runFloorContrastCli(argv: readonly string[] = process.argv.slice
     const copyOk = shapeHits.some((s) => s.includes('frag-library') || s.includes('collide') || s.includes('|'));
     if (!tealOk || !metroOk) {
       failed += 1;
-      console.error('FAIL 夹具：户外/地铁 0.00% 青绿没有被闸门抓住');
+      console.error('FAIL 夹具：户外/地铁超上限青绿没有被闸门抓住');
     } else {
       console.log(`  青绿夹具红：${tealHits[0]}; ${tealHits.find((s) => s.includes('metro'))}`);
     }
@@ -1213,7 +1214,7 @@ export function runFloorContrastCli(argv: readonly string[] = process.argv.slice
     }
 
     if (tealOk && metroOk && copyOk && broken && failVoidTeal(broken.voidRows).length > 0 && failBrightTiles(broken.brightRows).length > 0) {
-      console.log('PASS: 修前夹具会红（户外/地铁 0% 青绿；图书馆 shape = 户外；DEC-097 错误量化）\n');
+      console.log('PASS: 修前夹具会红（户外/地铁超上限青绿；图书馆 shape = 户外；DEC-097 错误量化）\n');
     }
   }
 

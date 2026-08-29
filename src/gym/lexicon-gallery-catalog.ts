@@ -16,6 +16,15 @@ import {
   type MammalNeighborhoodId,
 } from '@/entities/form-renderers/d/genome/mammal-remnant';
 import {
+  OIL_FILM_ID,
+  OIL_FILM_VARIANTS,
+  OIL_FILM_VARIANT_LABEL,
+  oilFilmHallId,
+  oilFilmVariantFromHallId,
+  oilFilmVariantOf,
+  type OilFilmVariantId,
+} from '@/entities/form-renderers/d/paint-genome/topology';
+import {
   STREET_WRECKAGE_ID,
   STREET_WRECKAGE_NEIGHBORHOODS,
   streetNeighborhoodsOf,
@@ -68,10 +77,12 @@ export interface GallerySpecimen {
   readonly enabledScope: SubstrateEnabledScope;
   readonly portfolio: PortfolioId;
   readonly substrate: string;
-  /** 导航厅。哺乳动物是 `mammal_remnant:cat` 等四条，不是策划表一行。 */
+  /** 导航厅。哺乳动物是 `mammal_remnant:cat` 等四条；油膜是 `oil_film:beads` 等三支。策划表仍各一行。 */
   readonly hallId: string;
   /** 哺乳动物邻域；其它基体为 null。 */
   readonly mammalHood: MammalNeighborhoodId | null;
+  /** 油膜三变体入口；其它基体为 null。 */
+  readonly oilFilmHood: OilFilmVariantId | null;
 }
 
 export interface GalleryHallNav {
@@ -147,8 +158,8 @@ export const GALLERY_AXES: Record<PortfolioId, GalleryAxes> = {
     nonOccupying: ['节律', '运动', '接触', '朝向', '连续种子', '碎片'],
   },
   bing: {
-    occupying: ['基体', '覆盖深度', '连续性', '感知', '节律', '成句', '止损是否画核'],
-    nonOccupying: ['运动', 'signal', 'visibility', '朝向', '连续种子', '碎片'],
+    occupying: ['基体', '覆盖深度', '连续性', '感知', '节律'],
+    nonOccupying: ['成句', '止损是否画核', '运动', 'signal', 'visibility', '朝向', '连续种子', '碎片'],
   },
   ding: {
     occupying: ['基体', '覆盖深度', '连续性', '感知', '成句', '盒尺寸'],
@@ -269,13 +280,16 @@ export function jiaSeedForStreetWreckage(variant: GallerySeedBucket): number {
 }
 
 export function galleryHallIdOf(substrate: string, seed: number): string {
-  if (substrate !== MAMMAL_REMNANT_ID) return substrate;
-  return mammalHallId(mammalNeighborhoodOf(seed));
+  if (substrate === MAMMAL_REMNANT_ID) return mammalHallId(mammalNeighborhoodOf(seed));
+  if (substrate === OIL_FILM_ID) return oilFilmHallId(oilFilmVariantOf(seed));
+  return substrate;
 }
 
 export function galleryHallLabelOf(hallId: string, substrate: string): string {
-  const hood = mammalNeighborhoodFromHallId(hallId);
-  if (hood) return MAMMAL_NEIGHBORHOOD_LABEL[hood];
+  const mammal = mammalNeighborhoodFromHallId(hallId);
+  if (mammal) return MAMMAL_NEIGHBORHOOD_LABEL[mammal];
+  const oil = oilFilmVariantFromHallId(hallId);
+  if (oil) return OIL_FILM_VARIANT_LABEL[oil];
   return SUBSTRATE_DATA[substrate]?.displayToken ?? substrate;
 }
 
@@ -296,6 +310,20 @@ export function galleryHallsOf(
           hallId,
           substrate: MAMMAL_REMNANT_ID,
           label: MAMMAL_NEIGHBORHOOD_LABEL[hood],
+        });
+      }
+      continue;
+    }
+    if (portfolio === 'bing' && sub.id === OIL_FILM_ID) {
+      for (const hood of OIL_FILM_VARIANTS) {
+        const hallId = oilFilmHallId(hood);
+        const count = specimens.filter((row) => row.portfolio === portfolio && row.hallId === hallId)
+          .length;
+        if (count === 0) continue;
+        halls.push({
+          hallId,
+          substrate: OIL_FILM_ID,
+          label: OIL_FILM_VARIANT_LABEL[hood],
         });
       }
       continue;
@@ -381,12 +409,6 @@ function formFromSlots(config: LexiconGymConfig): ContaminationForm | string {
   };
 }
 
-function stopLossVisualToken(form: ContaminationForm): string {
-  const stop = resolveStopLoss(form);
-  if (stop === 'illegal') return 'illegal';
-  return stop.hittable ? 'paints_core' : 'no_core';
-}
-
 function dingBoxToken(form: ContaminationForm): string {
   return form.continuity === 'field' ? 'box_field' : 'box_compact';
 }
@@ -409,7 +431,9 @@ export function visualKeyOf(
     return `${base}|v0`;
   }
   if (form.portfolio === 'bing') {
-    return `${base}|${form.lexemes.rhythm}|${stopLossVisualToken(form)}`;
+    const oil = oilFilmVariantFromHallId(hall);
+    const oilToken = oil ? `|${oil}` : '';
+    return `${base}|${form.lexemes.rhythm}${oilToken}`;
   }
   return `${base}|${dingBoxToken(form)}`;
 }
@@ -438,6 +462,7 @@ function specimenOf(
     substrate: form.substrate,
     hallId: resolvedHall,
     mammalHood: mammalNeighborhoodFromHallId(resolvedHall),
+    oilFilmHood: oilFilmVariantFromHallId(resolvedHall),
   };
 }
 
@@ -526,15 +551,16 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
           }
 
           const motion = motionForNonOccupying(portfolio, substrate, coverage);
+          const oilLeaves = substrate === OIL_FILM_ID ? OIL_FILM_VARIANTS.length : 1;
           if (motion === null) {
             const occupyingLeaves =
-              portfolio === 'bing' ? senses.length * rhythms.length : senses.length;
+              (portfolio === 'bing' ? senses.length * rhythms.length : senses.length) * oilLeaves;
             residualMotionLock += occupyingLeaves;
             continue;
           }
           if (contactCanon === 'contact_melee_three') {
             const occupyingLeaves =
-              portfolio === 'bing' ? senses.length * rhythms.length : senses.length;
+              (portfolio === 'bing' ? senses.length * rhythms.length : senses.length) * oilLeaves;
             contactMeleeThree += occupyingLeaves;
             continue;
           }
@@ -556,18 +582,24 @@ export function collectGalleryCatalog(opts: GalleryEnumerateOpts = {}): GalleryC
               };
               const form = formFromSlots(config);
               if (typeof form === 'string') continue;
+              const hallIds =
+                form.substrate === OIL_FILM_ID
+                  ? OIL_FILM_VARIANTS.map((hood) => oilFilmHallId(hood))
+                  : [form.substrate];
               if (form.portfolio !== 'jia' && form.lexemes.contact === 'contact_melee_three') {
-                contactMeleeThree += 1;
+                contactMeleeThree += hallIds.length;
                 continue;
               }
               const stop = resolveStopLoss(form);
               if (stop === 'illegal') {
-                illegalStopLoss += 1;
+                illegalStopLoss += hallIds.length;
                 if (!includeIllegal) continue;
               } else if (!inAlphabet) {
                 continue;
               }
-              put(specimenOf(form, CANONICAL_SEED, 0, [], form.substrate));
+              for (const hallId of hallIds) {
+                put(specimenOf(form, CANONICAL_SEED, 0, [], hallId));
+              }
             }
           }
         }

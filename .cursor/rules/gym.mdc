@@ -14,16 +14,17 @@ globs: gym.html,src/gym/**,docs/dev/gym.md
 - 敌人移动 / 寻路 / 朝向动画复用出击：`AISystem`、`Enemy`、`generatePlaceholderTextures`、`gameConfigWithScenes`。渗透体与改写体程序像素仍是默认课回退，不是待换的精灵表。外形默认与出击对齐；仅污染句法课可切对照渲染器 A/B/C（见下条）。
 - 新敌人角色：`data/enemies.csv` → codegen → 给 `GYM_LOOPS` 补 8 点环。
 - 玩家外形课：`gym.html?lesson=player`。与出击 `Player` 同一套加厚像素 + 灯尘（DEC-068）。角色外形怎么验：`docs/art/actor-pixels.md`。
-- 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter` + `ContaminationHostSystem`（乙/丙/丁只画；不刷会走的甲）；污染生产缺省崩坏簇（DEC-069）。崩坏簇时练习场与出击都传 `liveClusterBreath: true`（DEC-070 画面锁，DEC-071 接到出击）。侧栏另三种烤漆只对照。**禁止**打开 `liveMotion` / `gymLiveMotion`。迭代 6：本课是碎片配色验证面，禁止另写第二套 ramp。
-- 污染句法课：`gym.html?lesson=lexicon`。固定观察院子 + 默认无敌玩家 + 配置表点生成。甲 / 乙 / 丙 / 丁走出击同一套 `AISystem` / `CombatSystem` / `ContaminationHostSystem`。击杀后按当前配置再刷。不开迷雾。可切 `#gym-lex-renderer`。A/B/C 冻结对照；默认方案 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。`#gym-lex-fragment` 给院子碎片身份；「感受伤害」默认关。合同：`docs/tasks/iteration-3.md`。
-- 污染句法陈列馆：`gym.html?lesson=lexicon-gallery`。一次一厅（孔谱 × 基体），只 attach 方案 D。不刷玩家、不创建 `Enemy` / 宿主。碎片是全局开关。视口虚拟化。开发标签走 DOM，头上无字。合同：`docs/tasks/iteration-4.md`。迭代 5（DEC-087 / DEC-088）：甲在升出击前可挂基因谱模块（仍是方案 D 甲章，不是第三套画法）；乙丙丁仍走现行生产路径。合同：`docs/tasks/iteration-5.md`。迭代 6（DEC-088 / DEC-089 / DEC-090）：碎片配色验地面走地图课（拍板已全部收口，四张一起标定），禁止另写第二套 ramp。合同：`docs/tasks/iteration-6.md`。
+- 地图课：`gym.html?lesson=map`。与出击同一套 `generateRiftLayout` + `RiftSurfacePainter` + `ContaminationHostSystem`（乙/丙/丁只画；不刷会走的甲）；生产地面不再铺氛围崩坏簇（DEC-104）。占漆宿主钉贪婪薪柴路径；活层跟宿主走，不传整图 `liveClusterBreath`。侧栏另三种烤漆只对照。**禁止**打开 `liveMotion` / `gymLiveMotion`。迭代 6：本课是碎片配色验证面，禁止另写第二套 ramp。
+- 污染句法课：`gym.html?lesson=lexicon`。固定观察院子 + 默认无敌玩家 + 配置表点生成。甲 / 乙 / 丙 / 丁走出击同一套 `AISystem` / `CombatSystem` / `ContaminationHostSystem`。击杀后按当前配置再刷。不开迷雾。可切 `#gym-lex-renderer`。A/B/C 冻结对照；默认方案 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。`#gym-lex-fragment` 给院子碎片身份；「感受伤害」默认关。画布钉在右侧窗格；拖移平移、滚轮缩放。**油膜默认按种子采样生产三变体**；下拉仍可钉 A–F。合同：`docs/tasks/iteration-3.md`。
+- 油膜脉络抽卡：`gym.html?lesson=paint-vein-card`。**历史对照课：A/B/C 树 tweak + 已被 DEC-101 锁定为生产的三支原形。** 打开即六格都在画面上。同一种子、改写档、油膜。课不删。生产油膜不采样 0/1/2。不要在句法课侧栏里翻静帧交差。禁止 import `d/genome`。
+- 污染句法陈列馆：`gym.html?lesson=lexicon-gallery`。一次一厅（孔谱 × 基体），只 attach 方案 D。不刷玩家、不创建 `Enemy` / 宿主。碎片是全局开关。视口虚拟化。开发标签走 DOM，头上无字。合同：`docs/tasks/iteration-4.md`。迭代 5（DEC-087 / DEC-088）：甲在升出击前可挂基因谱模块（仍是方案 D 甲章，不是第三套画法）；乙丙丁仍走现行生产路径。**油膜按三变体分入口钉读法**（策划表仍一行）。合同：`docs/tasks/iteration-5.md`。迭代 6（DEC-088 / DEC-089 / DEC-090）：碎片配色验地面走地图课（拍板已全部收口，四张一起标定），禁止另写第二套 ramp。合同：`docs/tasks/iteration-6.md`。油膜生产身份 DEC-101 / `docs/tasks/iteration-7.md`。
 
 ## 禁止
 
 - 在 `RiftScene` 里塞调试房间当练习场
 - 为练习场另写一套移动；除污染句法课的候选渲染器外另画一套敌人外形。陈列馆乙丙丁必须复用现行生产方案 D。甲在迭代 5 切生产前走基因谱模块（方案 D 甲章），禁止再开方案 E 下拉
 - 把练习场侧栏当成游戏内界面去做 UX 翻修。陈列馆的网格 / 标签 / 筛选同属开发工具 UI；禁止把开发标签做成头上名牌或裂隙 HUD
-- 为出击另写一套崩坏簇呼吸（已与练习场共用 `liveClusterBreath`）
+- 为出击另写一套氛围簇呼吸（生产已下线）；占漆呼吸跟宿主走，禁止再给整图传 `liveClusterBreath`
 - 把生产方案 D 放回 `src/gym/**` 再让 `RiftScene` import gym
 - 改 `collectWallEdges` 的墙格集合来「顺便」给乙做路径（有序路径必须是新纯函数；钉层集合不变）
 - 地图课打开 `liveMotion` / `gymLiveMotion`

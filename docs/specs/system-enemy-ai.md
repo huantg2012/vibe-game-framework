@@ -2,9 +2,9 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code agent (I3-A) + design agent (I3-D 对齐生成器契约)
-last-modified-date: 2026-08-22
-interface-changed: true
+last-modified-by: director（迭代 3 收口：interface-changed 改回 false）
+last-modified-date: 2026-08-28
+interface-changed: false
 slice: 8
 interfaces-with:
   - system-movement-vision         # 复用 utils/grid-raycast 做视线遮挡；敌人渲染可见性由 VisibilitySystem 决定；平衡不变量来源（玩家视距/移速）
@@ -196,7 +196,7 @@ interface WalkGrid {
 }
 ```
 
-**`OccluderGrid` 与 `WalkGrid` 的关系**：Slice 1 中两者由同一份 tile 数据派生，且**墙体 = 既不可通行也不透视**。本 spec 不假设两者永远等价（后续可能出现"矮墙：可挡视线不挡路"或"深渊：可透视不可走"），所以接口分开。
+**`OccluderGrid` 与 `WalkGrid` 的关系**：Slice 1 中两者由同一份 tile 数据派生，且**墙体 = 既不可通行也不透视**。本 spec 不假设两者永远等价（后续可能出现"矮墙：可挡视线不挡路"一类不对称格子），所以接口分开。注：裂隙虚空（VOID）自 DEC-106（2026-08-29）起不可走**且**挡视线（虚空吞光），敌人视线与玩家视野走同一套 `hasLineOfSight`，虚空海湾两侧不可互见。
 
 ---
 

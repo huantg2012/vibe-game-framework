@@ -1,9 +1,9 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created-by: director agent
 created-when: 2026-08-22
-last-modified: 2026-08-23
-note: 迭代 4（污染句法陈列馆，DEC-085 / DEC-086）。练习场新课。不改玩法、不改出击、不动 CSV。§4 虚拟化已按人试玩缺陷修订。不要标 COMPLETE，除非人能顺畅浏览并看懂参数。迭代 5（DEC-087 / DEC-088）修订甲占格轴（族内变体 3 → 采样种子 8）且甲基体轴 5 厅 → 7 厅（灯柱+栏柱合并为街具残骸，加三种生物），见 `docs/tasks/iteration-5.md` I5-H；本档案 §3 甲行保持历史口径。目录 522 将在 I5-H 重算。
+last-modified: 2026-08-28
+note: 迭代 4（污染句法陈列馆，DEC-085 / DEC-086）**COMPLETE（2026-08-28，人再滚甲大厅 PASS）**。练习场新课。不改玩法、不改出击、不动 CSV。§4 虚拟化已按人试玩缺陷修订。迭代 5（DEC-087 / DEC-088）修订甲占格轴（族内变体 3 → 采样种子 8）且甲基体轴 5 厅 → 7 厅，见 `docs/tasks/iteration-5.md` I5-H；本档案 §3 甲行保持历史口径。
 ---
 
 # Tasks: 迭代 4 — 污染句法陈列馆
@@ -12,9 +12,9 @@ note: 迭代 4（污染句法陈列馆，DEC-085 / DEC-086）。练习场新课�
 
 **派发：** 上层负责 spawn 子代理。Director 本轮不调用 Agent 工具。禁止把枚举与场景 UX 塞进一次 code 会话。
 
-**收尾合法态：** 人打开 `gym.html?lesson=lexicon-gallery` 能按厅浏览视觉不同的标本、读懂参数、浏览器不卡死、画面不互删。审美终审的对象是「好不好浏览」，不是出击迷雾。不要标迭代 COMPLETE，除非人点过头。
+**收尾合法态：** 人打开 `gym.html?lesson=lexicon-gallery` 能按厅浏览视觉不同的标本、读懂参数、浏览器不卡死、画面不互删。审美终审的对象是「好不好浏览」，不是出击迷雾。**人已再滚甲大厅。COMPLETE（2026-08-28，人终审 PASS）。**
 
-迭代 3（方案 D 接入出击）三层已落地，等人试玩裂隙。**不要把本课的完成当成迭代 3 的完成。** 合同仍见 `docs/tasks/iteration-3.md`。
+迭代 3（方案 D 接入出击）已另标 COMPLETE（同日人试玩裂隙）。**不要把本课的完成当成迭代 3 的完成。** 合同仍见 `docs/tasks/iteration-3.md`。
 
 ---
 

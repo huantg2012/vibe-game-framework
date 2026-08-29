@@ -1,6 +1,6 @@
 /**
- * Gym-only live cluster body. Baked core stays put. Middle and outer bands
- * inflate and deflate together along the cluster's own silhouette.
+ * Old paint-skin live body (fungal mat / ash veil). Atmosphere ground breath
+ * is off (DEC-104). Do not hang this on sortie / map-lesson floors.
  */
 import {
   CLUSTER_PULSE_SAMPLES,

@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-23
-last-modified: 2026-08-26
-note: 迭代 5（污染外形基因谱，DEC-087；合同修订 DEC-088 / DEC-091 / DEC-092 / **DEC-098**）。第一批只做甲。I5-P / I5-S / I5-A / I5-B / I5-D 已交。波 4：I5-E **整批已交**（2026-08-24：code + art 最短核；四条合规过；街具残骸人过）。波 5：热修画面人 PASS。波 6：I5-F **code 已交**（2026-08-24）。**波 7：I5-N 人过（2026-08-25）。波 8：I5-G 人未过 / 热修 code 已交（2026-08-25）；人下令先这样继续。波 9：I5-K 人过（2026-08-26）。波 10：I5-L 暂过（2026-08-26）。波 11：I5-M 暂过（2026-08-26）。波 12：I5-H code 已交（2026-08-26）。不要写成整批已交。不要开 I5-C / I5-J。** 不要开 I5-C。不要标 COMPLETE，除非人回答过验证问题（或明确要求按「实现完成，体验未验证」收尾）。不要代勾画面 PASS。
+last-modified: 2026-08-28
+note: 迭代 5（污染外形基因谱，DEC-087；合同修订 DEC-088 / DEC-091 / DEC-092 / **DEC-098**）。第一批只做甲。I5-P / I5-S / I5-A / I5-B / I5-D 已交。波 4：I5-E **整批已交**（2026-08-24：code + art 最短核；四条合规过；街具残骸人过）。波 5：热修画面人 PASS。波 6：I5-F **code 已交**（2026-08-24）。**波 7：I5-N 人过（2026-08-25）。波 8：I5-G 人未过 / 热修 code 已交（2026-08-25）；人下令先这样继续。波 9：I5-K 人过（2026-08-26）。波 10：I5-L 暂过（2026-08-26）。波 11：I5-M 暂过（2026-08-26）。波 12：I5-H code 已交（2026-08-26）。波 14：I5-J code 已交（2026-08-26）。波 16：I5-T 三种生物翻出击（**code 已交**（2026-08-28），画面等人终审）。** 不要开 I5-C。不要标 COMPLETE，除非人回答过验证问题（或明确要求按「实现完成，体验未验证」收尾）。不要代勾画面 PASS。
 ---
 
 # Tasks: 迭代 5 — 污染外形基因谱
@@ -92,14 +92,14 @@ I5-L 热修（2026-08-26）：`mammal_remnant` 仍一行、短名仍「哺乳动
 
 1. I5-S：新增四行 `enabled_scope=gym`（街具残骸 + 三种生物）。**暂时保留** `lamp_pillar` / `railing_post` 为 `sortie`，以免本批静默改出击抽卡。
 2. 练习场基因谱甲厅挂七个新轴；旧灯柱厅 / 栏柱厅在 I5-H 从目录撤掉（改挂街具残骸一厅）。
-3. I5-J（升出击默认甲绘制）才做内容翻列：`street_wreckage` → `sortie`；删除或收回 `lamp_pillar` / `railing_post`；三种生物**仍 gym**，除非人书面要求一并翻出击。抽卡权重表（`system-contamination-lexicon.md` 碎片加权）随翻列就地改：原灯柱 / 栏柱权重并入街具残骸。
+3. I5-J（升出击默认甲绘制）才做内容翻列：`street_wreckage` → `sortie`；删除或收回 `lamp_pillar` / `railing_post`；三种生物**仍 gym**，除非人书面要求一并翻出击。**人 2026-08-28 16:0x 已书面点名翻出击 → I5-T。** 抽卡权重表（`system-contamination-lexicon.md` 碎片加权）随翻列就地改：原灯柱 / 栏柱权重并入街具残骸；三种生物权重见 I5-T。
 4. I5-J 之前禁止改变裂隙消费的默认甲绘制路径。禁止为「省事」改 `jia-silhouette.ts` / `jia-paint.ts`。禁止改 `src/scenes/rift-scene.ts`。
 
 `check:lexicon`：I5-S 必须改断言，使新 gym 行合法（占地、不含占空、禁止给丁、不进 `SORTIE_SUBSTRATE_IDS`），且出击白名单在翻列前仍含灯柱 / 栏柱。翻列后断言改为街具残骸在 sortie、灯柱 / 栏柱不在。禁止手写 `src/generated/`。
 
 陈列馆：主轴仍是基体（迭代 4 §1）。甲基体厅数 5→7；标本总数不再是 522。I5-H 重导出目录。迭代 4 档案 §3 甲「族内变体 3」保持历史口径，不改写该档案正文。
 
-残茎的 `enabled_scope` 现行已是出击；本迭代不收回。三种生物本迭代默认不翻出击。
+残茎的 `enabled_scope` 现行已是出击；本迭代不收回。三种生物本迭代默认不翻出击；**人 2026-08-28 16:0x 已书面点名，由 I5-T 翻列。I5-T code 已交（2026-08-28），画面等人终审。**
 
 ---
 
@@ -1080,9 +1080,33 @@ Title: 基因谱甲升为出击默认；街具残骸内容翻列 | Priority: P0 
 
 ---
 
+## Task: I5-T | assignee: code
+
+Title: 三种生物（虫 / 哺乳动物 / 大号蠕虫）翻出击 | Priority: P0 | Depends: I5-J（**已交**）；人 2026-08-28 16:0x 书面点名 | Dispatch: 🔴人驱动 code | 收敛：最多 2 轮过 `tsc` / `codegen` / `check:lexicon` / `check:gallery-catalog` / 三条 `check:jia-*-remnant`；到顶升给人。不要开 I5-C。不要标 COMPLETE。不要代勾画面 PASS。
+
+**状态：code 已交（2026-08-28），画面等人终审。** 合同 I5-J「除非人书面要求一并翻出击」已满足。CSV 三行 `gym`→`sortie`；五张碎片方言权重各 1；闸门全绿；21 种子 × 5 碎片抽卡证据齐。翻列是放行，不是新画。不要代勾画面 PASS。
+
+**输入：** I5-K/L/M 基因谱语法已交；I5-N 朝向/信号相已挂；I5-J 出击 `d-mixed` 占地已走 `attachJiaGenomeD`。Director 裁定见 `docs/progress/decisions-log.md` 本条（人可再调）。
+
+**产出：**
+
+1. `data/contamination-substrates.csv`：`insect_remnant` / `mammal_remnant` / `worm_remnant` 的 `enabled_scope` → `sortie`。其它列不动（仍 `floor` / `monolith`；哺乳动物仍一行）。灯柱 / 栏柱仍 gym。
+2. `npm run codegen`（CSV→code）。禁止手写 `src/generated/`。
+3. `src/generation/contamination-draw.ts` 的 `DIALECT`：五张碎片都写入三 id，权重各 **1**。未进加权表 = 出击抽不到（fallback 只在加权交空时才等权，本图占地加权不会交空）。禁止先加权再丢 gym 行。
+4. `tools/contamination-lexicon/check-lexicon.ts`：废止「三行必须 gym / 不进 `SORTIE_SUBSTRATE_IDS`」；闭表 `POST_FLIP_SORTIE_SUBSTRATE_IDS` 加上三 id；`drawOne` 出击范围钉这三行必须成功；`DIALECT` 源码含三 id。灯柱 / 栏柱仍排除。
+5. `check-jia-insect-remnant.ts` / `check-jia-mammal-remnant.ts` / `check-jia-worm-remnant.ts`：把「仍 gym」改成「已 sortie」。骨架 / 足数 / 横躺断言不动。
+6. spec 就地改口：`docs/specs/system-contamination-lexicon.md` Schema / 方言加权表 / 「三种生物仍 gym」句。设计正文 §8 配额表不改条数。`docs/dev/gym.md` / `docs/architecture.md` 活指针改真相。旁白 spec 不新写文案（I8 按孔谱选行已覆盖占地）。
+7. I5-QA 第 12 问改为：翻列后三行 sortie、灯柱 / 栏柱仍 gym。
+
+**不改：** 基因谱骨架文件、`operators.ts`、`RiftScene`、`preview-paint.ts`、陈列馆目录锁定数、抽卡课、观察句 CSV、巡逻人数、撤离门强制有机残影、听觉主轴恰好 1、油膜配对不变量。句法课 / 陈列馆已挂这三行，不必为「能看见」改课。地图课走同一份 `drawSortie`，不必另接线。
+
+**闸门：** `npx tsc --noEmit`；`npm run codegen`；`npm run check:lexicon`；`npm run check:gallery-catalog`（目录总数不应因 `enabled_scope` 变）；`npm run check:jia-insect-remnant` / `check:jia-mammal-remnant` / `check:jia-worm-remnant`；动了 `src/generation/` 则 `npm run check:layout`。`RiftScene` 仍不 import `src/gym/**`。不跑 `art:verify`。不代勾迷雾下好看。
+
+---
+
 ## Task: I5-QA | assignee: qa
 
-Title: 基因谱机械对照（好看不代勾） | Priority: P1 | Depends: I5-J（若人要求先验练习场，可在 I5-H 后先出练习场半份报告） | Dispatch: 🟢可自动派 qa | 收敛：1 轮报告。
+Title: 基因谱机械对照（好看不代勾） | Priority: P1 | Depends: I5-T（若人要求先验练习场，可在 I5-H 后先出练习场半份报告） | Dispatch: 🟢可自动派 qa | 收敛：1 轮报告。
 
 报告写入 `docs/qa/iteration-5.md`。必须回答：
 
@@ -1097,7 +1121,7 @@ Title: 基因谱机械对照（好看不代勾） | Priority: P1 | Depends: I5-J
 9. I5-J 前（若查历史）`RiftScene` 是否未被提前改默认甲路径。
 10. 有无新色 / 精灵表 / 第三种人形 / 改 A/B/C / 改渗透体与改写体 sprite 文件。
 11. 丙丁乙绘制语法是否被本迭代改形（应为否）。
-12. 基体表：翻列前灯柱 / 栏柱是否仍 sortie；翻列后街具残骸是否 sortie、三种生物是否仍 gym（除非人书面翻列）。
+12. 基体表：I5-J 后街具残骸是否 sortie、灯柱 / 栏柱是否 gym；**I5-T 后**三种生物是否 sortie（人已书面翻列）。
 13. 是否改过 `preview-paint.ts` 生产量化（应为否）。
 
 「丰富度 / 逐渐疯狂 / 好看」标「等人终审」，禁止 PASS。禁忌边界像素层标「等人 / art 核」，qa 只核 HOW 是否已定稿、code 是否声称遵守。
@@ -1118,7 +1142,7 @@ I6-A 已交（身份配方已复核）
                 └──► I5-D code（算子；依赖 B；**已交** 2026-08-24）
                        └──► I5-E code（街具残骸；**整批已交** 2026-08-24：code + art 最短核；**人过**）→ **F（波 6 code 已交）** → **N（波 7 人过 2026-08-25）** → **G（波 8 人未过 / 热修 code 已交 2026-08-25；人下令先这样继续）** → **K（波 9：人过 2026-08-26）** → **L（波 10：人未过 / 二级邻域热修第 2 轮已交，待人看）** → M
                               └──► I4-D 必须已交
-                                     └──► I5-H → 人看练习场 → I5-J（**code 已交**） → I5-QA
+                                     └──► I5-H → 人看练习场 → I5-J（**code 已交**） → I5-T（**code 已交**（2026-08-28），画面等人终审） → I5-QA
 ```
 
 循环预算：I5-N 与 I5-E/F/G/K/L/M 每批最多 2 轮过机器闸门；连续 2 次不过 → 停，升档重做，记入 `guides/98-field-notes.md`。到顶未收敛 → 升级给人，不许无声续跑。I5-N 人过（2026-08-25）。**I5-G 人未过 / 热修 code 已交（2026-08-25）；人下令先这样继续。波 9：I5-K 人过（2026-08-26）。波 10：I5-L 暂过（2026-08-26）。波 11：I5-M code + art 最短核已交，待人看。不要写成整批已交。不要开 I5-H / I5-C。** 不要代勾画面 PASS。压缩项 2 人否决，维持串行。
@@ -1135,9 +1159,9 @@ I6-A 已交（身份配方已复核）
 - 不把 `tools/contam-preview/` 合并进 `src/**`。
 - 不用 IoU 当闸门。
 - 不继续加手写变体分支、不只改配色交差、不上精灵表。
-- 不改战斗 V3、不改抽卡玩法（除基体表合同写明的 gym 行与 I5-J 翻列）、不改地图连通算法、不加新色。
+- 不改战斗 V3、不改抽卡玩法（除基体表合同写明的 gym 行、I5-J 街具翻列、**I5-T 三种生物翻列**）、不改地图连通算法、不加新色。
 - 不新增 `contam_dialect` 列，不让污染色承担碎片身份。
 - I5-J 已交后不回头改骨架语法、不替换生产 ramp、不改 `preview-paint.ts`。
-- 三种生物默认不翻出击。
+- 三种生物默认不翻出击；**人 2026-08-28 16:0x 已书面点名，由 I5-T 翻列。I5-T code 已交（2026-08-28），画面等人终审。**
 - 不采纳色板亮端整只发光。
 - **I5-G 人未过 / 热修 code 已交（2026-08-25）；人下令先这样继续。波 9：I5-K 人过（2026-08-26）。波 10：I5-L 暂过（2026-08-26）。波 11：I5-M code + art 最短核已交，待人看。不要写成整批已交。不要开 I5-H / I5-C。** 不要开 I5-C。不要代勾画面 PASS。不对人对「朝向和信号相接到基因谱甲」说成未解释的切口。

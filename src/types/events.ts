@@ -111,7 +111,7 @@ export interface EventPayloads {
   [GameEvent.ENCOUNTER_IDENTIFIED]: {
     identityKey: string;
     nodes: readonly {
-      kind: 'coverage' | 'substrate' | 'occupancy' | 'sense' | 'utterance_mark';
+      kind: 'observe' | 'utterance_mark';
       tokenId: string;
     }[];
     utteranceId?: string;

@@ -2,9 +2,9 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-08-23
+last-modified: 2026-08-28
 last-closed-slice: 9
-note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）。迭代 4（污染句法陈列馆，DEC-085）滚动时空展位已交、等人浏览。迭代 3（方案 D 接入出击，DEC-084）三层已落地，等人试玩裂隙。迭代 2 练习场探索 COMPLETE。迭代 1 敌人系统仍为实现完成、体验未验证。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071。迷雾下亮度仍等人终审。
+note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）。迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。占漆已上线；占墙 / 占空基因谱 deferred。站着不计仍挂起。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 不要塞进迭代 7。**迭代 9（rift 视野表现打磨）进行中（2026-08-28 立项，DEC-105）：** 纯表现层，不动规则数值；合同 `docs/tasks/iteration-9.md`。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。迷雾下亮度人终审 PASS（2026-08-28）。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。Slice 9 之后表现收口仍用 DEC-066～071。
 ---
 
 # Roadmap
@@ -31,11 +31,11 @@ note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5�
 
 ## 当前工作单元（DEC-072）
 
-**无进行中 Slice。当前：迭代 5（污染外形基因谱）。** 三层管线重做甲外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。活指针仍在迭代 5。迭代 4（污染句法陈列馆）I4-D 已交，等人再滚甲大厅，不要标 COMPLETE。迭代 3（方案 D 接入出击）三层已落地，等人试玩裂隙，不要标 COMPLETE。迭代 2 练习场探索 COMPLETE。迭代 1（敌人系统）句法逻辑仍为**实现完成，体验未验证**。活指针：`docs/progress/current-iteration.md`。
+**无进行中 Slice。当前：迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）进行中（2026-08-28 立项，DEC-105）：** 纯表现层——迷雾质感 / 渐变带 / 光池读法；不动规则与数值，art 路径，人终审画面。合同：`docs/tasks/iteration-9.md`。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
 
 DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。撤离多样性不做。
 
-Slice 9 之后表现收口（不是迭代、不改编号）：DEC-069 把裂隙地面污染从矩形平涂改成崩坏簇，并接到出击烤漆。DEC-070：练习场已锁整团胀缩呼吸（人眼 PASS）。DEC-071：出击已挂同一套活层。迷雾下亮度仍等人终审。
+Slice 9 之后表现收口（不是迭代、不改编号）：DEC-069 把裂隙地面污染从矩形平涂改成崩坏簇，并接到出击烤漆。**DEC-104 / I8-G 已下线其氛围簇生产签名。** DEC-070：整团胀缩呼吸技术已锁（人眼 PASS）。DEC-071：出击已挂同一套活层；应用改为丙漆活层。迷雾下亮度人终审 PASS（2026-08-28）。
 
 ## 已锁死、不再开新编号的 Slice（DEC-064）
 

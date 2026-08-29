@@ -71,7 +71,7 @@ export {
   radiateAllowed,
   type OperatorId,
 } from '@/entities/form-renderers/d/genome/operators';
-export { attachGymFormVisual, attachJiaGenomeD } from '@/entities/form-renderers/d/genome/attach';
+export { attachJiaGenomeD } from '@/entities/form-renderers/d/genome/attach';
 export {
   bakeJiaGenome,
   type JiaGenomeBakeRequest,

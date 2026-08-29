@@ -5,19 +5,21 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
-独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。**污染句法课**是观察院子：玩家在场且默认无敌（可开「感受伤害」），侧栏按维度配表后点生成，敌人与出击同一套移动 / 感知 / 攻击；击杀后按当前配置再刷。**迭代 3（DEC-084）：** 生产方案 D 已接到裂隙（体验未验证）；句法课仍可切渲染方案。A/B/C 冻结为对照；默认方案 D。合同：`docs/tasks/iteration-3.md`。**迭代 4（DEC-085）：** 陈列馆课 `?lesson=lexicon-gallery`，只挂方案 D，合同 `docs/tasks/iteration-4.md`。**迭代 5（DEC-087 / DEC-088）：** 甲外形基因谱先在练习场挂新模块，I5-J 之前不改出击默认甲；街具残骸 + 三种生物先 gym。合同 `docs/tasks/iteration-5.md`。设计正文 `docs/design-notes/contamination-form-genome.md`。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术验地面走地图课（与出击同一套烤地；I6-A 已交，四张一起标定；身份靠渍/纹理/结构，不靠底色落格；先等价再拆档）。合同 `docs/tasks/iteration-6.md`。地图课框住整岛，甲只是色块，且不得打开出击活机制。练习场敌人课（默认院子）复用出击 `Enemy`（含 `getForm`），不另写移动或外形。遭遇识别旁白默认不开。
+独立 HTML，用来体验和测试**与出击同一套代码**的基本功能。不是裂隙关卡，不进主菜单。**污染句法课**是观察院子：玩家在场且默认无敌（可开「感受伤害」），侧栏按维度配表后点生成，敌人与出击同一套移动 / 感知 / 攻击；击杀后按当前配置再刷。**迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）：** 生产方案 D 已接到裂隙；句法课仍可切渲染方案。A/B/C 冻结为对照；默认方案 D。合同：`docs/tasks/iteration-3.md`。**迭代 4（DEC-085）COMPLETE（2026-08-28，人再滚甲大厅 PASS）：** 陈列馆课 `?lesson=lexicon-gallery`，只挂方案 D，合同 `docs/tasks/iteration-4.md`。**迭代 5（DEC-087 / DEC-088）：** 甲外形基因谱先在练习场挂新模块，I5-J 已升出击默认占地绘制；街具残骸已翻出击；**I5-T 三种生物（虫 / 哺乳动物 / 大号蠕虫）已翻出击**；灯柱 / 栏柱仍 gym。合同 `docs/tasks/iteration-5.md`。设计正文 `docs/design-notes/contamination-form-genome.md`。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术验地面走地图课（与出击同一套烤地；I6-A 已交，四张一起标定；身份靠渍/纹理/结构，不靠底色落格；先等价再拆档）。合同 `docs/tasks/iteration-6.md`。地图课框住整岛，甲只是色块，且不得打开出击活机制。练习场敌人课（默认院子）复用出击 `Enemy`（含 `getForm`），不另写移动或外形。遭遇识别旁白默认不开。
 
 **打开：** `npm run gym` 或 `npm run dev`，再用 Cursor 的 Simple Browser 打开对应地址。不要用系统浏览器。
 
 | 课 | 地址 |
 | -- | -- |
 | 污染句法 | `http://localhost:3000/gym.html?lesson=lexicon` |
+| 油膜脉络抽卡 | `http://localhost:3000/gym.html?lesson=paint-vein-card`（历史对照课） |
 | 污染句法陈列馆 | `http://localhost:3000/gym.html?lesson=lexicon-gallery` |
 | 敌人移动 | `http://localhost:3000/gym.html` |
 | 玩家外形 | `http://localhost:3000/gym.html?lesson=player` |
 | 地图生成 | `http://localhost:3000/gym.html?lesson=map` |
+| 视野渲染对比 | `http://localhost:3000/gym.html?lesson=vision-lab` |
 
-**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（**I5-B / I5-D / I5-E / I5-F 已挂**：句法课 / 陈列馆甲走 `d/genome/`；`street_wreckage` 走街具残骸语法骨架、占地 `doorframe` 走门框语法骨架 + 违规算子 + `weld`，其它占地仍夹具；仍是方案 D 甲章，不是第三套方案；出击仍旧 `jia-*`。**I5-N code 已交：** 基因谱甲消费检视的朝向与信号相；未交齐人看之前不要开 I5-G）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。
+**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene` / `GymVisionLabScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。
 
 ---
 
@@ -34,9 +36,11 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 5. 练习场侧栏是开发说明，不是游戏内界面。不要走 in-game UX 清单，也不要把它做成墙机/随身罩。陈列馆的网格 / 标签 / 筛选 / 计数同属开发工具 UI；标本头上禁止游戏内名牌，开发标签走 DOM。
 6. 玩家外形：出击与练习场同一套（DEC-068）——方案 1 加厚像素 + 方案 3 灯尘。本课用假人绕圈对照体量，不接 WASD。贴图在 `player-sprite-dense.ts`；灯尘在 `player-lamp-aura.ts`。
 7. **角色外形怎么验：** Cursor Simple Browser 打开上表地址，对照 `docs/art/actor-pixels.md`（朝向不转 GameObject、家族密度、压迫感、禁忌）。不要用系统浏览器。
-8. 地图生成（`?lesson=map`）：必须调用 `generateRiftLayout`、`RiftSurfacePainter` 与 `ContaminationHostSystem`。禁止为练习场另写生成器或拷画廊 PNG。默认（风格锚按种子抽、邻域抖动开、污染年龄/残破度按种子抽）与出击路径相同。侧栏可锁锚 / 关抖动 / 覆盖两轴。不开 `VisibilitySystem`。不接 `EncounterNarration`。不刷玩家、不刷会走的甲（色块标巡逻路点）。乙/丙/丁走出击同一套宿主（只画）。换种子 / 锁锚 / 点生成必须 destroy 再 create 宿主；只改污染画法时宿主钉在同一张岛上。**迭代 6：** 本课是碎片配色 / 世界美术的验证面（无迷雾、与出击同一套烤漆）。禁止为练习场另写第二套 `deriveContamRamp`。合同 `docs/tasks/iteration-6.md`。
-9. 污染句法（`?lesson=lexicon`）：固定观察院子，不是生成岛。玩家走出击 `Player`，默认无敌（「感受伤害」可关无敌）。侧栏按**渲染方案** / **碎片身份** / 孔谱 / 覆盖深度 / 基体 / 连续性 / 词素 / 成句 / 数量配表，点生成清场再刷。甲走出击 `AISystem` / `Enemy` / `CombatSystem`（感知为听噪时刷改写体剖面，否则刷渗透体剖面——碰撞与 AI 仍如此；候选渲染器按完整 `ContaminationForm` 画皮）。乙丙丁走出击同一套宿主，接战斗与混乱。击杀后约 0.8 秒按**当前**侧栏配置再刷。不开迷雾、不接遭遇识别旁白。`AISystem.create` 对本课关闭「恰好 1 个改写体」出击配额。渲染方案下拉：A/B/C 冻结对照，默认 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。宿主游荡只在本课打开活机制；地图课不得打开该开关。合同：`docs/tasks/iteration-3.md`。
-10. 污染句法陈列馆（`?lesson=lexicon-gallery`）：目录课，不是观察院子。一次只进一个厅（孔谱 × 基体），陈列方案 D 下视觉不同的标本。不刷玩家、不创建 `Enemy` / `ContaminationHostSystem`。碎片是全局开关，不是网格轴。必须复用生产 `d-mixed` 的乙丙丁；**甲在迭代 5 I5-J 前走基因谱模块**（仍登记为方案 D 甲章，禁止新开渲染方案下拉）。视口虚拟化；与视野相交的格子必须挂上（DEC-086）。点开检视才切四朝向与四个信号相。**基因谱甲必须消费 `pose.facing4` / `pose.signal`**（I5-N / DEC-098）：切北/东/南/西身子要变；idle 与 strike 至少要分。陈列馆控件已通；截至 I5-F，基因谱挂载不消费这两字段（只烤一张静剪影 + 固着同一套呼吸）。I5-N 未交之前不要开 I5-G。开发标签走 DOM，头上无字。合同：`docs/tasks/iteration-4.md`；甲基因谱合同 `docs/tasks/iteration-5.md`。
+8. 地图生成（`?lesson=map`）：必须调用 `generateRiftLayout`、`RiftSurfacePainter` 与 `ContaminationHostSystem`。禁止为练习场另写生成器或拷画廊 PNG。默认（风格锚按种子抽、邻域抖动开、污染年龄/残破度按种子抽）与出击路径相同。侧栏可锁锚 / 关抖动 / 覆盖两轴。不开 `VisibilitySystem`。不接 `EncounterNarration`。不刷玩家、不刷会走的甲（色块标巡逻路点）。乙/丙/丁走出击同一套宿主（只画）。换种子 / 锁锚 / 点生成必须 destroy 再 create 宿主；只改污染画法时宿主钉在同一张岛上。**DEC-104：** 生产地面不再铺氛围崩坏簇；占漆钉贪婪薪柴路径；不传整图 `liveClusterBreath`。**迭代 6：** 本课是碎片配色 / 世界美术的验证面（无迷雾、与出击同一套烤地）。禁止为练习场另写第二套 `deriveContamRamp`。合同 `docs/tasks/iteration-6.md`。
+9. 污染句法（`?lesson=lexicon`）：固定观察院子，不是生成岛。玩家走出击 `Player`，默认无敌（「感受伤害」可关无敌）。侧栏按**渲染方案** / **碎片身份** / 孔谱 / 覆盖深度 / 基体 / 连续性 / 词素 / 成句 / 数量配表，点生成清场再刷。甲走出击 `AISystem` / `Enemy` / `CombatSystem`（感知为听噪时刷改写体剖面，否则刷渗透体剖面——碰撞与 AI 仍如此；候选渲染器按完整 `ContaminationForm` 画皮）。乙丙丁走出击同一套宿主，接战斗与混乱。击杀后约 0.8 秒按**当前**侧栏配置再刷。不开迷雾、不接遭遇识别旁白。`AISystem.create` 对本课关闭「恰好 1 个改写体」出击配额。渲染方案下拉：A/B/C 冻结对照，默认 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。宿主游荡只在本课打开活机制；地图课不得打开该开关。**油膜默认 = 按种子采样生产三变体**（下拉仍可钉 A–F 做对照）。六格静帧历史对照走 `?lesson=paint-vein-card`，不要走句法课侧栏交差。合同：`docs/tasks/iteration-3.md`；油膜身份 DEC-101 / `docs/tasks/iteration-7.md`。
+10. 污染句法陈列馆（`?lesson=lexicon-gallery`）：目录课，不是观察院子。一次只进一个厅（孔谱 × 基体），陈列方案 D 下视觉不同的标本。不刷玩家、不创建 `Enemy` / `ContaminationHostSystem`。碎片是全局开关，不是网格轴。必须复用生产 `d-mixed` 的乙丙丁；**甲在迭代 5 I5-J 前走基因谱模块**（仍登记为方案 D 甲章，禁止新开渲染方案下拉）。视口虚拟化；与视野相交的格子必须挂上（DEC-086）。点开检视才切四朝向与四个信号相。**基因谱甲必须消费 `pose.facing4` / `pose.signal`**（I5-N / DEC-098）：切北/东/南/西身子要变；idle 与 strike 至少要分。陈列馆控件已通；截至 I5-F，基因谱挂载不消费这两字段（只烤一张静剪影 + 固着同一套呼吸）。I5-N 未交之前不要开 I5-G。**油膜按三变体分入口钉读法**（聚珠成滩 / 沾抹拖尾 / 薄滩收边；策划表仍一行 `oil_film`；对照哺乳动物邻域四入口）。开发标签走 DOM，头上无字。合同：`docs/tasks/iteration-4.md`；甲基因谱合同 `docs/tasks/iteration-5.md`；油膜三入口 DEC-101 / `docs/tasks/iteration-7.md`。
+11. 视野渲染对比（`?lesson=vision-lab`）：迭代 9（DEC-105）的抽卡对照课。布局 / 地表 / 玩家 / 相机 / `VisibilitySystem` 全是出击同一套；只有遮罩渲染模式活在 `VisibilitySystem` 的 spike 分支里（`setMaskStyle` / `setCorruptionEdge`），**出击默认仍是 `bands` + 硬内缘**，人没拍板前不得把 spike 模式设为出击默认。数字键 1–5 切模式（1 现状 / 2 细分带 / 3 光场 v3 弱灯×强手电、360° 墙截模板 / 4 抖动坡 v2 时序颗粒 / 5 光场 v3′ 灯再弱一档对照），T 切 teal 渗透三态（关 / 硬内缘 / 软内缘 v5 光场联动等亮度线前锋 + 尾巴不过墙 / 多边形裁剪 / 前锋平滑，强度固定 0.6 供对照），R 换种子重生成且模式保持。支持深链 `&mode=bands|subdiv|field|bayer|field-dim&teal=off|hard|soft`。纯表现层对照：不动射程 / 锥角 / 三档数值 / 规则 4 朝向 / 薪柴不发光 / 混乱缩放，不动相机。合同 `docs/tasks/iteration-9.md`（第一轮波 3.5，第二轮波 3.6，第三轮波 3.7，第四轮波 3.8，第五轮波 3.9 I9-LAB5）。
+12. 油膜脉络抽卡（`?lesson=paint-vein-card`）：**历史对照课。** A/B/C 是树参数 tweak；D/E/F 是已被 DEC-101 锁定为生产的三支原形。打开必须六格都在画面上（两行三列），挂 `attachBingPaintGenome`（`paintVeinVariant` 0–5，`displayScale` 2），同一颗种子、同一改写档、油膜。第一轮 A/B/C 抽卡模型 cursor-grok-4.6-xhigh-fast；第二轮 D/E/F 抽卡模型 kimi-k3；模型名标在每格卡片上。不要走句法课侧栏。课本身不删。生产油膜不采样 0/1/2。禁止 import `d/genome`。本课画布列可随窗口变窄；滚轮缩放抽卡区域，拖动平移。合同：`docs/tasks/iteration-7.md`。
 
 ---
 
@@ -58,41 +62,57 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 ### 污染句法（`?lesson=lexicon`）
 
-人要试这次实现的敌人生成系统时走这一课，不要走默认院子，也不要走地图课。场地是一张固定观察院子（有遮挡墙、乙的墙缘、丙的簇核格、丁的走廊盒），玩家角色在场，无敌。相机跟随玩家，按出击缩放。
+人要试这次实现的敌人生成系统时走这一课，不要走默认院子，也不要走地图课。场地是一张固定观察院子（有遮挡墙、乙的墙缘、丙的占漆钉格、丁的走廊盒），玩家角色在场，无敌。相机默认框住院子；拖动画布平移，滚轮缩放（`bindGymCamera`）。点生成后把相机框到刚刷的实体。**油膜默认按种子采样生产三变体**；下拉仍可钉 A–F。六格静帧历史对照走 `?lesson=paint-vein-card`。
 
-侧栏是开发配置表（不是游戏内界面）：**渲染方案**（`#gym-lex-renderer`，默认方案 D；A/B/C 文案带「对照（已冻结）」）、**碎片身份**（`#gym-lex-fragment`，五选一，默认医院实验室 `frag-clinic`；换选项只重铺院子墙/地 bias 着色，不换成生成岛）、孔谱、覆盖深度、基体、连续性、运动 / 感知 / 节律 / 接触、成句、数量、**感受伤害**（`#gym-lex-feel-hit`，默认关＝`setGodMode(true)`）。选项来自污染句法 CSV；渲染方案下拉照抄地图课 `#gym-contam-draw`。点「生成」按表单组 `ContaminationForm`，清掉场上实体再 spawn。甲走巡逻环；乙钉墙缘（`liveMotion` 时核在墙-地缝上，沿有序墙皮游荡，抽打格跟着核走）；丙钉簇核格；丁钉走廊盒（随风/拖尾会缓慢飘并微形变，固着只形变；危险区用当前盒）。接触词素在本课按对照表兑现。击杀后按侧栏**此刻**的配置再刷，不是按第一次生成的快照。
+**2026-08-27 滚动 / 生成不可见：** 侧栏控件把栅格行撑高后，右侧 `#game-container` 的 `overflow: auto` + flex 居中会把 FIT 画布挤到视野外，滚轮又被容器抢走，看起来像「不能滚动、点生成后画面空」。已把练习场两栏锁在视口高度内（侧栏自己滚），句法课绑定练习场相机，生成后框到刚刷的实体。
+
+侧栏是开发配置表（不是游戏内界面）：**渲染方案**（`#gym-lex-renderer`，默认方案 D；A/B/C 文案带「对照（已冻结）」）、**碎片身份**（`#gym-lex-fragment`，五选一，默认医院实验室 `frag-clinic`；换选项只重铺院子墙/地 bias 着色，不换成生成岛）、孔谱、覆盖深度、基体、连续性、运动 / 感知 / 节律 / 接触、成句、数量、**油膜脉络（开发）**下拉（`#gym-lex-paint-vein`，仅占漆+油膜；**默认「按种子采样（生产）」**；仍可钉 A–F，含 D 聚珠 / E 沾抹 / F 薄滩）、**感受伤害**（`#gym-lex-feel-hit`，默认关＝`setGodMode(true)`）。选项来自污染句法 CSV；渲染方案下拉照抄地图课 `#gym-contam-draw`。点「生成」按表单组 `ContaminationForm`，清掉场上实体再 spawn。甲走巡逻环；乙钉墙缘（`liveMotion` 时核在墙-地缝上，沿有序墙皮游荡，抽打格跟着核走）；丙钉占漆格（实现旧名簇核格，I8-G 改口；院子不垫氛围簇烤地）；丁钉走廊盒（随风/拖尾会缓慢飘并微形变，固着只形变；危险区用当前盒）。接触词素在本课按对照表兑现。击杀后按侧栏**此刻**的配置再刷，不是按第一次生成的快照。
 
 **渲染方案：** `现行占位` = 两种程序像素 + 乙丙丁几何块（默认敌人课仍用）。`方案 A/B/C` = 第一轮对照（已冻结，禁止再改）。`方案 D` = 混装生产语法（甲走 A、丙走 B、乙丁在 B 方向重做），默认选项；出击接线见迭代 3。切换方案只换视觉层，不改碰撞。句法课与出击活机制走 `liveMotion`。地图课不得打开该开关。
 
 移动、视锥 / 听噪、挥击、邻格抽打、踩踏混乱、体积场与出击同一套系统。接触词素按对照表兑现「它怎么伤你」；止损（能不能扣核）从连续性 × 覆盖深度查表，句法课与出击 `liveMotion` 同一套读取。接触下拉不再有打核驱散。不开视野迷雾（为了观察），但遮挡墙仍挡敌人视线。不接遭遇识别旁白。
 
+### 油膜脉络抽卡（`?lesson=paint-vein-card`）
+
+**历史对照课：A/B/C 树 tweak + 已被 DEC-101 锁定为生产的三支原形（D 聚珠成滩 / E 沾抹拖尾 / F 薄滩收边）。课不删。** 不要走句法观察院子，也不要当陈列馆目录用。打开 `http://localhost:3000/gym.html?lesson=paint-vein-card` **必须六格都在画面上**，两行三列：第一轮 A 更扁更贴地 / B 更亮膜感 / C 更汇流（抽卡模型 cursor-grok-4.6-xhigh-fast，树参数 tweak），第二轮 D/E/F（抽卡模型 kimi-k3，从「油膜做污染体基底」原初 idea 重推，不是树 tweak），模型名标在每格卡片下。同一颗种子（1000）、同一覆盖档（改写）、基体油膜、连续性菌落。不刷玩家、不创建 `Enemy` / 宿主。本课右侧窗格可随窗口变窄，Phaser FIT 把整幅 960 缩进可见列；**滚轮缩放抽卡区域**，拖动画布平移。生产油膜不采样 0/1/2。开发 UI，不是游戏内界面。合同：`docs/tasks/iteration-7.md`。
+
 ### 地图生成（`?lesson=map`）
 
 侧栏选风格锚、种子、邻域抖动、污染年龄、残破度，点「生成新地图」。默认三项按种子抽、抖动开，调用与出击相同的 `generateRiftLayout(seed)`。锁参数时走同一函数的可选 `RiftLayoutOptions`，不换生成器。
 
-每次烤完新岛（换种子 / 锁锚 / 点生成）会 destroy 再 create 出击同一套 `ContaminationHostSystem`：乙缝核、丙簇核、丁走廊体积。`create` 不传战斗与混乱系统，**不传 `liveMotion`**，可见性恒为 1，只画不结算。甲不刷会走的敌人，色块标 `layout.enemySpawns` 巡逻出生与路点。侧栏抽卡一行列孔谱只数：甲走色块计数，乙丙丁走 `hosts.getLastDraw().forms`（禁止再跑一遍 `drawSortie`）。不开 `VisibilitySystem`，不接 `EncounterNarration`，不刷玩家。只改污染画法会重烤同一张图，宿主钉在该岛上。
+每次烤完新岛（换种子 / 锁锚 / 点生成）会 destroy 再 create 出击同一套 `ContaminationHostSystem`：乙缝核、丙占漆、丁走廊体积。`create` 不传战斗与混乱系统，**不传 `liveMotion`**，可见性恒为 1，只画不结算。甲不刷会走的敌人，色块标 `layout.enemySpawns` 巡逻出生与路点。侧栏抽卡一行列孔谱只数：甲走色块计数，乙丙丁走 `hosts.getLastDraw().forms`（禁止再跑一遍 `drawSortie`）。不开 `VisibilitySystem`，不接 `EncounterNarration`，不刷玩家。只改污染画法会重烤同一张图，宿主钉在该岛上。
 
-**污染画法：** 出击与练习场生产缺省都是崩坏簇（`cluster`），并叠同一套活层（DEC-070 画面锁，DEC-071 接到出击）：内核烤死，中间层与外层同一相位、几乎不透明，沿簇外沿整团胀缩（幅度为团大小的 5–20%）。侧栏另三种（接缝晶结、坏格溶蚀、平涂错误块）只是对照，不接出击。改选项会重烤**同一张图**，不重新生成岛。对照请把污染年龄锁成「古」。换风格锚看配色是否跟着地图走。四档污染色须互不相同且离开该岛地板色。
+**污染画法：** 出击与练习场生产地面**不再**铺氛围崩坏簇（DEC-104）。看得见的成片青绿是有主占漆。活层技术保留，应用改为占漆宿主呼吸。侧栏另三种（接缝晶结、坏格溶蚀、平涂错误块）只是对照，不接出击，也不得填回生产。改选项会重烤**同一张图**，不重新生成岛。对照请把污染年龄锁成「古」。换风格锚看配色是否跟着地图走。四档污染色须互不相同且离开该岛地板色。
 
 | 值 | 读成 |
 | -- | -- |
-| 方案一 崩坏簇 | 出击与练习场默认。椭圆/缺角/条状抹痕的活团；色相从该岛地板/墙 bias 公式推到青绿轴，再量化到已锁色板。练习场看整团胀缩，不是旋转的花，也不是整团淡入淡出 |
+| （生产）无氛围簇 | 出击与练习场默认。地面是 L1 渍/纹理/残破；青绿来自钉在贪婪薪柴路径上的占漆宿主 |
 | 方案二 接缝晶结 | 仅练习场对照。沿墙/虚空接缝漏一线，交点结成小十字晶 |
 | 方案三 坏格溶蚀 | 仅练习场对照。整格地砖从一角表征失败，棋盘抖动，半边还留着地面 |
 | 平涂错误块 | 仅练习场对照用。不是出击现行 |
 
-可见层是出击那套程序化地表（地面烤死，天空影循环）。不开视野迷雾。相机默认框住整岛；拖动画布平移，滚轮缩放。色块标出生 / 撤离 / 薪柴 / 污染物 / 甲巡逻路点，不是可交互实体，也不是会走的甲。青绿缝核/簇核与走廊半透明块是出击同一套宿主。
+可见层是出击那套程序化地表（地面烤死，天空影循环）。不开视野迷雾。相机默认框住整岛；拖动画布平移，滚轮缩放。色块标出生 / 撤离 / 薪柴 / 污染物 / 甲巡逻路点，不是可交互实体，也不是会走的甲。青绿缝核/占漆与走廊半透明块是出击同一套宿主。
+
+### 视野渲染对比（`?lesson=vision-lab`）
+
+迭代 9（DEC-105）的抽卡对照课：人要回答「视野边界做成哪种平滑」时走这一课。真实裂隙布局（`generateRiftLayout` + `RiftSurfacePainter` + 出击 `Player` + 跟随相机 + `VisibilitySystem`），WASD 走动，迷雾 / 光池 / teal 渗透全是活帧率。
+
+- **数字键 1–5 切遮罩渲染模式**：1 现状（三档阶梯 + 2px 棋盘）/ 2 细分带（8 层插值，形状不变，径向变平滑）/ 3 光场 v3（弱灯 × 强手电强度分层；v3 起模板改为 360° 全量程射线只负墙截断，形状全由预烤光场的衰减定义，远处不再有旧锥+环轮廓切出的黑色硬边；墙切仍硬）/ 4 抖动坡 v2（三档不动，8px 有序抖动渐变坡 + 时序相位：4 相 90° 旋转 Bayer 矩阵 120ms 步进，站着不动边界也活）/ 5 光场 v3′（灯再弱一档的强度抽卡对照）。
+- **T 切 teal 渗透**：关 → 硬内缘（现状）→ 软内缘 v5（光场模式下前锋钉光场等亮度线：手电强光把侵蚀顶在远处、暖灯弱光让它渗到脚边，混乱越高阈值越高、前锋越逼近；24 环双端归零剖面 + 降浓降亮的 soft 专用灰化色；v5：尾巴按墙距夹住、侵蚀层用 360° 墙截模板多边形裁剪、前锋环形盒式模糊后再夹墙；非光场模式仍走 v3 几何环）。强度固定 0.6（混乱 50+ 的样子），保证硬 / 软同强度对照。
+- **R 换种子重生成**，当前模式保持；侧栏可手输种子。深链 `&mode=…&teal=…` 可直接进指定组合（`mode` 含 `field-dim`）。
+
+模式只活在 `VisibilitySystem` 的 spike 分支（`VisionMaskStyle` / `CorruptionEdgeStyle`），出击默认仍是现状；人终审拍板后才把选中模式翻成出击默认并下线其余分支。能量等价闸门 `npm run check:vision-energy` 对现状基线负责。
 
 ### 污染句法陈列馆（`?lesson=lexicon-gallery`）
 
 人要对照「方案 D 究竟能长成多少种不一样」时走这一课，不要走句法观察院子，也不要走地图课。这是开发目录，不是关卡。
 
-侧栏是馆藏目录（开发说明，不是游戏内界面）：碎片身份全局开关、去重说明（本厅 N / 占格字段 / 不占格字段）、按孔谱列出基体。一次只打开一个厅（一张孔谱 × 一种基体）。厅内按覆盖深度分排。拖动画布平移。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放（地图课仍是滚轮缩放，行为未改）。点格看参数（表名与档位分行）；点开检视才让那一只活起来（四朝向、信号相）。**基因谱甲必须消费这些字段**（`pose.facing4` / `pose.signal`；I5-N / DEC-098）。陈列馆控件已通；截至 I5-F 基因谱挂载不消费，切朝向身子不变、四个信号相同一套动画。I5-N 未交之前不要开 I5-G。
+侧栏是馆藏目录（开发说明，不是游戏内界面）：碎片身份全局开关、去重说明（本厅 N / 占格字段 / 不占格字段）、按孔谱列出基体。一次只打开一个厅（一张孔谱 × 一种基体）。厅内按覆盖深度分排。拖动画布或画布外侧空白平移；本课不让右侧容器自己出滚动条。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放（地图课仍是滚轮缩放，行为未改）。点格看参数（表名与档位分行）；点开检视才让那一只活起来（四朝向、信号相）。**基因谱甲必须消费这些字段**（`pose.facing4` / `pose.signal`；I5-N / DEC-098）。陈列馆控件已通；截至 I5-F 基因谱挂载不消费，切朝向身子不变、四个信号相同一套动画。I5-N 未交之前不要开 I5-G。
 
-标本走生产方案 D（`src/entities/form-renderers/`），手工合成 pose，不创建 `Enemy`、不创建宿主、不刷玩家。不开迷雾，不接旁白。头上无字；开发标签是 DOM。禁止为陈列馆另写第三套方案。迭代 5：甲在 I5-J 前挂基因谱模块（仍是方案 D 甲章）；乙丙丁仍走现行 `d-mixed`。与视野相交的格子必须挂上（DEC-086）。合同：`docs/tasks/iteration-4.md`；甲基因谱 `docs/tasks/iteration-5.md`。
+标本走生产方案 D（`src/entities/form-renderers/`），手工合成 pose，不创建 `Enemy`、不创建宿主、不刷玩家。不开迷雾，不接旁白。头上无字；开发标签是 DOM。禁止为陈列馆另写第三套方案。迭代 5：占地挂基因谱模块（仍是方案 D 占地章）。**看占漆拓扑：** 陈列馆看菌毯实心多瓣团、**油膜三入口（聚珠成滩 / 沾抹拖尾 / 薄滩收边）**、灰幕环/薄覆层；同厅格子再看覆盖违规、感知主轴、节律忙静、连续性单团对菌落卫星（不要指望成句/止损改剪影）；点开检视看沿生长方向有节奏地缓慢扩散、收缩（油膜按变体呼吸），不是整张画布拉伸，也不是切预烤帧，厅内浏览仍静帧。句法课方案 D、孔谱占漆，切覆盖 / 感知 / 节律 / 连续性必须看见差。油膜默认按种子采样；钉变体走句法课下拉。**六格静帧历史对照走 `?lesson=paint-vein-card`。** 练习场侧栏仍是开发 UI。与视野相交的格子必须挂上（DEC-086）。合同：`docs/tasks/iteration-4.md`；占地基因谱 `docs/tasks/iteration-5.md`；油膜 DEC-101 / `docs/tasks/iteration-7.md`。
 
 ---
 
 ## 以后加课
 
-在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`、`?lesson=map`、`?lesson=lexicon`、`?lesson=lexicon-gallery`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。
+在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`、`?lesson=map`、`?lesson=lexicon`、`?lesson=lexicon-gallery`、`?lesson=paint-vein-card`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。

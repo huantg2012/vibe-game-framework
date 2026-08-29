@@ -667,7 +667,6 @@ const CSS = `
   padding: 2px 8px;
   background: rgba(8, 10, 12, 0.35);
 }
-#rift-encounter-log .encounter-prefix,
 #rift-encounter-log .encounter-node {
   display: inline;
   margin-right: 0.55em;

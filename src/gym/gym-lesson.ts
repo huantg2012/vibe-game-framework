@@ -2,7 +2,14 @@
  * Gym lesson from the URL query. Contract: docs/dev/gym.md.
  */
 
-export type GymLesson = 'enemy' | 'player' | 'map' | 'lexicon' | 'lexicon-gallery';
+export type GymLesson =
+  | 'enemy'
+  | 'player'
+  | 'map'
+  | 'lexicon'
+  | 'lexicon-gallery'
+  | 'paint-vein-card'
+  | 'vision-lab';
 
 export function readGymLesson(): GymLesson {
   const value = new URLSearchParams(window.location.search).get('lesson');
@@ -10,6 +17,8 @@ export function readGymLesson(): GymLesson {
   if (value === 'map') return 'map';
   if (value === 'lexicon') return 'lexicon';
   if (value === 'lexicon-gallery') return 'lexicon-gallery';
+  if (value === 'paint-vein-card') return 'paint-vein-card';
+  if (value === 'vision-lab') return 'vision-lab';
   return 'enemy';
 }
 

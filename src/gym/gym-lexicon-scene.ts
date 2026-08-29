@@ -39,13 +39,21 @@ import {
   type LexiconGymConfig,
 } from '@/gym/gym-lexicon-form';
 import type { FormAttachContext, FormVisual, FormVisualSignal } from '@/entities/form-renderers/form-renderer';
-import { attachGymFormVisual } from '@/entities/form-renderers/d/genome';
+import { attachGymFormVisual } from '@/entities/form-renderers/d/gym-attach';
+import { bakePaintGenome } from '@/entities/form-renderers/d/paint-genome/bake';
+import type { PaintVeinVariant } from '@/entities/form-renderers/d/paint-genome/topology';
 import {
   isLexiconFragmentId,
   LEXICON_FRAGMENT_IDS,
   rgbToHex,
   yardSurfaceColors,
 } from '@/entities/form-renderers/d/fragment-ramp';
+import {
+  bindGymCamera,
+  lockGymPhaserHost,
+  unlockGymPhaserHost,
+  type GymCameraHandle,
+} from '@/gym/gym-camera';
 import { getFormRenderer } from '@/gym/form-renderers/registry';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem } from '@/systems/chaos-system';
@@ -64,7 +72,7 @@ const DEPTH = { surface: 0, yardBias: 0.05, bing: 1, yi: 20, player: 30 } as con
 const gymLiveMotion = true;
 const GYM_HOST_OPTS = { liveMotion: gymLiveMotion } as const;
 const INTRO_STATUS =
-  '玩家默认无敌。侧栏可开「感受伤害」。WASD 移动，空格挥击。点生成后刷当前配置；击杀后按当前配置再刷。不开迷雾。';
+  '玩家默认无敌。侧栏可开「感受伤害」。WASD 移动，空格挥击。拖动画布平移，滚轮缩放。点生成后刷当前配置；击杀后按当前配置再刷。不开迷雾。';
 
 function gymVisible(_p: Readonly<Vector2>): number {
   return 1;
@@ -88,6 +96,7 @@ export class GymLexiconScene extends Phaser.Scene {
   private readonly visuals = new Map<string, FormVisual>();
   private tileMap: TileMapData | null = null;
   private yardBias: Phaser.GameObjects.Graphics | null = null;
+  private cameraHandle: GymCameraHandle | null = null;
 
   constructor() {
     super({ key: 'GymLexiconScene' });
@@ -105,14 +114,16 @@ export class GymLexiconScene extends Phaser.Scene {
     });
 
     this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
+    this.input.mouse?.disableContextMenu();
     const camera = this.cameras.main;
     camera.setBounds(0, 0, grid.widthPx, grid.heightPx);
     camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM);
     camera.setBackgroundColor(GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
+    camera.centerOn(grid.widthPx / 2, grid.heightPx / 2);
+    this.cameraHandle = bindGymCamera(this, { panHost: lockGymPhaserHost() });
 
     this.player.create(this, { spawn: lexiconPlayerSpawn(), depth: DEPTH.player, facing: 'right' });
     this.physics.add.collider(this.player.getSprite(), layer);
-    camera.startFollow(this.player.getSprite(), true);
     this.yardBias = this.add.graphics().setDepth(DEPTH.yardBias);
     this.paintYardBias(fragmentTypeId);
     this.paintSeats();
@@ -168,11 +179,6 @@ export class GymLexiconScene extends Phaser.Scene {
     const pins = lexiconPracticePins();
     const tile = GAME_CONSTANTS.TILE_SIZE;
     const g = this.add.graphics().setDepth(1);
-    const cluster = pins.clusterCores[0];
-    if (cluster) {
-      g.fillStyle(0x1a6b5c, 0.28);
-      g.fillRect(cluster.floorCol * tile + 4, cluster.floorRow * tile + 4, tile - 8, tile - 8);
-    }
     const box = pins.corridorAabbs[0];
     if (box) {
       g.fillStyle(0x0e4a3f, 0.12);
@@ -237,6 +243,12 @@ export class GymLexiconScene extends Phaser.Scene {
     if (feelHit instanceof HTMLInputElement) {
       feelHit.addEventListener('change', this.onFeelHitChange);
     }
+    const vein = document.getElementById('gym-lex-paint-vein');
+    if (vein instanceof HTMLSelectElement) {
+      vein.addEventListener('change', this.onPaintVeinChange);
+    }
+    document.getElementById('gym-lex-paint-vein-previews')?.addEventListener('click', this.onPaintVeinPreviewClick);
+    window.addEventListener('keydown', this.onPaintVeinKey);
     for (const id of [
       'gym-lex-portfolio',
       'gym-lex-coverage',
@@ -300,6 +312,7 @@ export class GymLexiconScene extends Phaser.Scene {
     );
     fillSelect('gym-lex-count', lexiconCountOptions(portfolio), String(clampLexiconCount(config.count, portfolio)));
     this.filling = false;
+    this.refreshPaintVeinPreviews();
   }
 
   private readConfig(): LexiconGymConfig {
@@ -319,6 +332,74 @@ export class GymLexiconScene extends Phaser.Scene {
     };
   }
 
+  private readonly onPaintVeinChange = (): void => {
+    this.refreshPaintVeinPreviews();
+    this.syncCandidateVisuals();
+  };
+
+  private readonly onPaintVeinPreviewClick = (event: Event): void => {
+    const target = event.target;
+    const card =
+      target instanceof Element ? target.closest('.gym-lex-vein-card') : null;
+    if (!(card instanceof HTMLElement)) return;
+    const raw = card.getAttribute('data-vein');
+    const variant = parsePaintVeinVariant(raw);
+    if (variant === undefined) return;
+    const sel = document.getElementById('gym-lex-paint-vein');
+    if (sel instanceof HTMLSelectElement) sel.value = String(variant);
+    this.refreshPaintVeinPreviews();
+    this.syncCandidateVisuals();
+  };
+
+  private readonly onPaintVeinKey = (event: KeyboardEvent): void => {
+    if (event.key !== '1' && event.key !== '2' && event.key !== '3') return;
+    const sel = document.getElementById('gym-lex-paint-vein');
+    if (!(sel instanceof HTMLSelectElement) || sel.disabled) return;
+    const focus = event.target;
+    if (focus instanceof HTMLSelectElement || focus instanceof HTMLInputElement || focus instanceof HTMLTextAreaElement) {
+      return;
+    }
+    sel.value = String(Number(event.key) - 1);
+    this.refreshPaintVeinPreviews();
+    this.syncCandidateVisuals();
+  };
+
+  private refreshPaintVeinPreviews(): void {
+    const parsed = formFromConfig(this.readConfig());
+    const oil = typeof parsed !== 'string' && parsed.portfolio === 'bing' && parsed.substrate === 'oil_film';
+    const row = document.getElementById('gym-lex-paint-vein-previews');
+    const sel = document.getElementById('gym-lex-paint-vein');
+    if (row instanceof HTMLElement) row.hidden = !oil;
+    if (sel instanceof HTMLSelectElement) sel.disabled = !oil;
+    if (!oil || typeof parsed === 'string') return;
+    const selected = readPaintVeinVariant();
+    const fragmentTypeId = this.readFragmentId();
+    for (const variant of PAINT_VEIN_VARIANTS) {
+      const canvas = document.getElementById(`gym-lex-paint-vein-${variant}`);
+      if (!(canvas instanceof HTMLCanvasElement)) continue;
+      const baked = bakePaintGenome({
+        substrate: parsed.substrate,
+        coverage: parsed.coverage,
+        seed: PAINT_VEIN_PREVIEW_SEED,
+        continuity: parsed.continuity,
+        sense: parsed.lexemes.sense,
+        rhythm: parsed.lexemes.rhythm,
+        fragmentTypeId,
+        veinVariant: variant,
+      });
+      canvas.width = baked.canvasW;
+      canvas.height = baked.canvasH;
+      const ctx2d = canvas.getContext('2d');
+      if (ctx2d) {
+        const img = ctx2d.createImageData(baked.canvasW, baked.canvasH);
+        img.data.set(baked.buf.data);
+        ctx2d.putImageData(img, 0, 0);
+      }
+      const card = canvas.closest('.gym-lex-vein-card');
+      if (card instanceof HTMLElement) card.setAttribute('data-on', selected === variant ? '1' : '0');
+    }
+  }
+
   private readonly onGenerateClick = (): void => {
     const parsed = formFromConfig(this.readConfig());
     if (typeof parsed === 'string') {
@@ -330,6 +411,7 @@ export class GymLexiconScene extends Phaser.Scene {
     this.clearPopulation();
     this.chaos?.reset(0);
     this.spawnMissing();
+    this.frameSpawned();
     this.noteRendererStatus('已按当前配置生成。击杀后按侧栏现有选项再刷。');
   };
 
@@ -340,6 +422,7 @@ export class GymLexiconScene extends Phaser.Scene {
 
   private readonly onFragmentChange = (): void => {
     this.paintYardBias(this.readFragmentId());
+    this.refreshPaintVeinPreviews();
     this.syncCandidateVisuals();
   };
 
@@ -391,6 +474,22 @@ export class GymLexiconScene extends Phaser.Scene {
       if (!id) break;
     }
     this.syncCandidateVisuals();
+  }
+
+  private frameSpawned(): void {
+    const form = this.lastForm;
+    if (!form) return;
+    const camera = this.cameras.main;
+    if (form.portfolio === 'jia') {
+      const view = this.ai.getEnemies()[0];
+      if (view) {
+        const pos = view.getPosition();
+        camera.centerOn(pos.x, pos.y);
+      }
+      return;
+    }
+    const host = this.hosts.getSubjects()[0];
+    if (host) camera.centerOn(host.position.x, host.position.y);
   }
 
   private spawnJia(form: ContaminationForm): void {
@@ -452,6 +551,9 @@ export class GymLexiconScene extends Phaser.Scene {
       `在场 甲 ${jia} · 宿主 ${hosts.length} / 目标 ${form ? this.lastCount : 0}`,
       `混乱 ${chaos.toFixed(1)}（丙踩踏 / 丁体积会加；打不死不会因击杀再刷）`,
       `生命 ${this.combat.getHealth()}/${this.combat.getMaxHealth()}（${feelHitOn() ? '可受伤' : '玩家无敌'}）`,
+      form?.portfolio === 'bing' && form.substrate === 'oil_film'
+        ? `油膜（开发）${paintVeinRosterLabel(readPaintVeinVariant())} · 侧栏可钉 A–F / 1 2 3`
+        : '',
     ].filter((line) => line.length > 0);
     el.textContent = lines.join('\n');
   }
@@ -477,6 +579,8 @@ export class GymLexiconScene extends Phaser.Scene {
     const fragmentTypeId = this.readFragmentId();
     const attach = (ctx: FormAttachContext) =>
       renderer.id === 'd-mixed' ? attachGymFormVisual(renderer, ctx) : renderer.attach(ctx);
+    const paintVeinVariant =
+      form.portfolio === 'bing' && form.substrate === 'oil_film' ? readPaintVeinVariant() : undefined;
     if (form.portfolio === 'jia') {
       for (const view of this.ai.getEnemies()) {
         const visual = attach({
@@ -495,12 +599,15 @@ export class GymLexiconScene extends Phaser.Scene {
       const visual = attach({
         scene: this,
         form,
-        seed: mix32(0, subject.id),
+        seed:
+          paintVeinVariant === undefined ? mix32(0, subject.id) : PAINT_VEIN_PREVIEW_SEED,
         depth: depthForPortfolio(form.portfolio),
         fragmentTypeId,
         pin,
+        paintVeinVariant,
       });
       this.visuals.set(subject.id, visual);
+      this.hosts.setStepFloors(subject.id, visual.stepFloors ?? []);
     }
   }
 
@@ -565,6 +672,9 @@ export class GymLexiconScene extends Phaser.Scene {
   private onShutdown(): void {
     this.cancelRespawn();
     this.destroyVisuals();
+    this.cameraHandle?.destroy();
+    this.cameraHandle = null;
+    unlockGymPhaserHost();
     eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
     eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
@@ -576,6 +686,10 @@ export class GymLexiconScene extends Phaser.Scene {
     fragment?.removeEventListener('change', this.onFragmentChange);
     const feelHit = document.getElementById('gym-lex-feel-hit');
     feelHit?.removeEventListener('change', this.onFeelHitChange);
+    const vein = document.getElementById('gym-lex-paint-vein');
+    vein?.removeEventListener('change', this.onPaintVeinChange);
+    document.getElementById('gym-lex-paint-vein-previews')?.removeEventListener('click', this.onPaintVeinPreviewClick);
+    window.removeEventListener('keydown', this.onPaintVeinKey);
     this.formBound = false;
     if (this.attackKey) {
       this.input.keyboard?.removeKey(this.attackKey, true);
@@ -605,6 +719,33 @@ function depthForPortfolio(portfolio: ContaminationForm['portfolio']): number {
     case 'ding':
       return GAME_CONSTANTS.CONTAMINATION.VOLUME_DEPTH;
   }
+}
+
+const PAINT_VEIN_VARIANTS: readonly PaintVeinVariant[] = [0, 1, 2];
+const PAINT_VEIN_PREVIEW_SEED = 1000;
+
+function parsePaintVeinVariant(raw: string | null): PaintVeinVariant | undefined {
+  if (raw === '0') return 0;
+  if (raw === '1') return 1;
+  if (raw === '2') return 2;
+  if (raw === '3') return 3;
+  if (raw === '4') return 4;
+  if (raw === '5') return 5;
+  return undefined;
+}
+
+function readPaintVeinVariant(): PaintVeinVariant | undefined {
+  return parsePaintVeinVariant(selectValue('gym-lex-paint-vein'));
+}
+
+function paintVeinRosterLabel(variant: PaintVeinVariant | undefined): string {
+  if (variant === 0) return '钉 A 更扁更贴地';
+  if (variant === 1) return '钉 B 更亮膜感';
+  if (variant === 2) return '钉 C 更汇流';
+  if (variant === 3) return '钉 D 聚珠成滩';
+  if (variant === 4) return '钉 E 沾抹拖尾';
+  if (variant === 5) return '钉 F 薄滩收边';
+  return '按种子采样';
 }
 
 function selectValue(id: string): string {

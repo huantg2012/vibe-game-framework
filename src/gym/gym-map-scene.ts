@@ -6,6 +6,7 @@
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { getFormRenderer, type FormVisual } from '@/entities/form-renderers/registry';
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import { isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
 import {
@@ -17,6 +18,7 @@ import {
   generateRiftLayout,
   type RiftLayoutOptions,
 } from '@/generation/rift-layout';
+import { mix32 } from '@/generation/seed-fork';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import { ContaminationHostSystem } from '@/systems/contamination-host-system';
 import { RiftSurfacePainter } from '@/systems/procedural-surface';
@@ -29,6 +31,11 @@ const MARKER_DEPTH = 20;
 const HOST_CALLOUT_DEPTH = 27;
 const MARKER = 12;
 const HOST_CALLOUT = 22;
+const DEPTH = {
+  bing: 1,
+  yi: 20,
+  ding: GAME_CONSTANTS.CONTAMINATION.VOLUME_DEPTH,
+} as const;
 /** Off-island dummy so host ticks still paint 丙/丁 without a player. */
 const OFFMAP_PLAYER = { x: -9999, y: -9999 };
 
@@ -50,10 +57,14 @@ const RUIN_LABEL: Record<string, string> = {
 
 const DRAW_LABEL: Record<ContaminationDrawStyle, string> = {
   blocks: '对照平涂',
-  cluster: '方案一 崩坏簇',
-  crystal: '方案二 接缝晶结',
-  dissolve: '方案三 坏格溶蚀',
+  cluster: '对照 崩坏簇（已下线）',
+  crystal: '对照 接缝晶结',
+  dissolve: '对照 坏格溶蚀',
 };
+
+function drawLabel(draw: ContaminationDrawStyle | undefined): string {
+  return draw ? DRAW_LABEL[draw] : '生产（无氛围簇）';
+}
 
 export class GymMapScene extends Phaser.Scene {
   private readonly tiles = new TilemapRenderer();
@@ -65,6 +76,7 @@ export class GymMapScene extends Phaser.Scene {
   private generating = false;
   private formBound = false;
   private lastLayout: GeneratedRiftLayout | null = null;
+  private readonly formVisuals = new Map<string, FormVisual>();
 
   constructor() {
     super({ key: 'GymMapScene' });
@@ -86,6 +98,7 @@ export class GymMapScene extends Phaser.Scene {
   update(_time: number, delta: number): void {
     this.riftSurface.update(delta);
     this.hosts.update(delta, OFFMAP_PLAYER);
+    this.syncSchemeDPoses(delta);
   }
 
   private bindForm(): void {
@@ -115,7 +128,7 @@ export class GymMapScene extends Phaser.Scene {
     const status = document.getElementById('gym-status');
     if (status) {
       status.textContent =
-        '拖动画布平移，滚轮缩放。无视野迷雾。乙丙丁是出击同一套宿主；甲只是色块。崩坏簇：内核烤死，支撑区/外围区在胀缩。改污染画法会重烤同一张图。';
+        '拖动画布平移，滚轮缩放。无视野迷雾。乙丙丁是出击同一套宿主；甲只是色块。地面不铺氛围簇。侧栏三种烤漆只对照。';
     }
   }
 
@@ -161,7 +174,7 @@ export class GymMapScene extends Phaser.Scene {
       const status = document.getElementById('gym-status');
       if (status) {
         status.textContent =
-          '拖动画布平移，滚轮缩放。无视野迷雾。乙丙丁是出击同一套宿主；甲只是色块。崩坏簇：内核烤死，支撑区/外围区在胀缩。改污染画法会重烤同一张图。';
+          '拖动画布平移，滚轮缩放。无视野迷雾。乙丙丁是出击同一套宿主；甲只是色块。地面不铺氛围簇。侧栏三种烤漆只对照。';
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -178,6 +191,7 @@ export class GymMapScene extends Phaser.Scene {
   private mountLayout(layout: GeneratedRiftLayout, resetView: boolean): void {
     const draw = readDrawStyle();
     if (resetView) {
+      this.destroySchemeDVisuals();
       this.hosts.destroy();
       this.markers?.destroy();
       this.markers = null;
@@ -199,10 +213,11 @@ export class GymMapScene extends Phaser.Scene {
 
     this.riftSurface.mount(this, layout.ruins, SURFACE_KEY, 0, {
       contaminationDraw: draw,
-      liveClusterBreath: draw === 'cluster',
     });
     if (resetView) {
       this.hosts.create(this, layout, null, null, gymFullVisibility);
+      this.hosts.setSkipPaint(true);
+      this.attachSchemeD(layout);
       this.paintHostCallouts();
       fitCamera(this.cameras.main, gridWidth(layout), gridHeight(layout));
     }
@@ -258,6 +273,49 @@ export class GymMapScene extends Phaser.Scene {
     );
   }
 
+  private attachSchemeD(layout: GeneratedRiftLayout): void {
+    this.destroySchemeDVisuals();
+    const renderer = getFormRenderer('d-mixed');
+    if (renderer?.ready !== true) return;
+    this.hosts.setSkipPaint(true);
+    for (const subject of this.hosts.getSubjects()) {
+      const pin = this.hosts.getVisualPin(subject.id) ?? undefined;
+      const visual = renderer.attach({
+        scene: this,
+        form: subject.form,
+        seed: mix32(layout.seed, subject.id),
+        depth: depthForHostPin(pin?.kind),
+        fragmentTypeId: layout.fragmentTypeId,
+        pin,
+      });
+      this.formVisuals.set(subject.id, visual);
+      this.hosts.setStepFloors(subject.id, visual.stepFloors ?? []);
+    }
+  }
+
+  private syncSchemeDPoses(deltaMs: number): void {
+    if (this.formVisuals.size === 0) return;
+    for (const [id, visual] of this.formVisuals) {
+      const host = this.hosts.getSubjects().find((row) => row.id === id);
+      if (!host) continue;
+      const pin = this.hosts.getVisualPin(id);
+      visual.update({
+        x: pin?.attach ? pin.attach.seamX : host.position.x,
+        y: pin?.attach ? pin.attach.seamY : host.position.y,
+        facing4: this.hosts.getVisualFacing(id),
+        moving: this.hosts.getVisualMoving(id),
+        visibility: gymFullVisibility(host.position),
+        signal: this.hosts.getVisualSignal(id),
+        deltaMs,
+      });
+    }
+  }
+
+  private destroySchemeDVisuals(): void {
+    for (const visual of this.formVisuals.values()) visual.destroy();
+    this.formVisuals.clear();
+  }
+
   private paintHostCallouts(): void {
     this.hostCallouts?.destroy();
     const g = this.add.graphics();
@@ -294,6 +352,7 @@ export class GymMapScene extends Phaser.Scene {
     draw?.removeEventListener('change', this.onDrawChange);
     this.formBound = false;
     this.lastLayout = null;
+    this.destroySchemeDVisuals();
     this.markers?.destroy();
     this.markers = null;
     this.hostCallouts?.destroy();
@@ -302,6 +361,12 @@ export class GymMapScene extends Phaser.Scene {
     this.riftSurface.destroy();
     this.hosts.destroy();
   }
+}
+
+function depthForHostPin(kind: 'wall' | 'cluster' | 'volume' | undefined): number {
+  if (kind === 'wall') return DEPTH.yi;
+  if (kind === 'cluster') return DEPTH.bing;
+  return DEPTH.ding;
 }
 
 function stamp(
@@ -374,15 +439,15 @@ function readMapRequest(): { seed: number; options?: RiftLayoutOptions } {
   return { seed, options: locked ? options : undefined };
 }
 
-function readDrawStyle(): ContaminationDrawStyle {
+function readDrawStyle(): ContaminationDrawStyle | undefined {
   const el = document.getElementById('gym-contam-draw');
   const value = el instanceof HTMLSelectElement ? el.value : '';
-  return isContaminationDrawStyle(value) ? value : 'cluster';
+  return isContaminationDrawStyle(value) ? value : undefined;
 }
 
 function fillMapRoster(
   layout: GeneratedRiftLayout,
-  draw: ContaminationDrawStyle,
+  draw: ContaminationDrawStyle | undefined,
   hosts: ContaminationHostSystem,
 ): void {
   const roster = document.getElementById('gym-roster');
@@ -406,7 +471,7 @@ function fillMapRoster(
     `风格锚 ${recipe?.label ?? layout.recipeId}（${layout.recipeId}）`,
     `碎片 ${frag?.displayName ?? layout.fragmentTypeId}`,
     `污染年龄 ${AGE_LABEL[layout.contaminationAge] ?? layout.contaminationAge} · 残破度 ${RUIN_LABEL[layout.ruinSeverity] ?? layout.ruinSeverity}`,
-    `污染画法 ${DRAW_LABEL[draw]}`,
+    `污染画法 ${drawLabel(draw)}`,
     `出生 / 撤离 / 薪柴 ${layout.kindlingNodes.length} / 污染物 ${layout.contaminantNodes.length}`,
     `巡逻色块 ${layout.enemySpawns.length}（改写体 ${rewriter} / 渗透体 ${infiltrator}）`,
     `抽卡 甲 ${layout.enemySpawns.length} 乙 ${countPort('yi')} 丙 ${countPort('bing')} 丁 ${countPort('ding')} · 成句 ${uttered ? '有' : '无'}`,

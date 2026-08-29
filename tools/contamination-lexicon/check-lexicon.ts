@@ -10,15 +10,13 @@ import {
   REWRITER_FORM,
   INFILTRATOR_FORM,
   conceptualSubstratesOnSortie,
-  devicePrefix,
-  displayTokenFor,
   drawOne,
   drawSortie,
-  encounterNodes,
   identityKey,
   occupanciesForScope,
   type ContaminationForm,
 } from '../../src/generation/contamination-draw.ts';
+import { checkObserveLines } from './check-observe-lines.ts';
 import { substrateOptions, lexemeOptions } from '../../src/gym/gym-lexicon-form.ts';
 import { selfCheckHostLive, resolveContactChannel, resolveStopLoss } from '../../src/systems/contamination-host-live.ts';
 import {
@@ -66,17 +64,13 @@ function hearCount(forms: readonly ContaminationForm[]): number {
 assert(INFILTRATOR_FORM.lexemes.sense === 'sense_cone', 'infiltrator fixture is cone');
 assert(REWRITER_FORM.lexemes.sense === 'sense_hear', 'rewriter fixture is hear');
 assert(identityKey(INFILTRATOR_FORM) !== identityKey(REWRITER_FORM), 'jia cone/hear identity keys differ');
-assert(devicePrefix() === '识别。', 'device prefix from CSV');
-
-const infNodes = encounterNodes(INFILTRATOR_FORM);
-assert(infNodes.length === 4, `infiltrator nodes 4 (got ${infNodes.length})`);
-assert(
-  infNodes.map(displayTokenFor).join(' ') === '渗透 有机残影 占地 视锥',
-  `infiltrator tokens: ${infNodes.map(displayTokenFor).join(' ')}`,
-);
+checkObserveLines(assert);
 
 const door = UTTERANCE_DATA.door_still_closing!;
 assert(door.onScreenMark === '开合', 'utterance mark 开合');
+assert(UTTERANCE_DATA.eye_in_the_seam?.onScreenMark === '缝亮', 'utterance mark 缝亮');
+assert(UTTERANCE_DATA.cluster_lung?.onScreenMark === '在涨', 'utterance mark 在涨');
+assert(UTTERANCE_DATA.corridor_watching?.onScreenMark === '回头', 'utterance mark 回头');
 assert(PORTFOLIO_DATA.jia.canChase && !PORTFOLIO_DATA.yi.canChase, 'only jia chases');
 assert(LEXEME_DATA.contact_melee_three?.rewrites.some((r) => r.portfolio === 'yi'), 'melee rewrites on yi');
 assert(
@@ -132,7 +126,7 @@ for (const id of ['stalk_clump', 'street_wreckage', 'ash_veil', ...CONCEPTUAL_SU
   assert(SORTIE_SUBSTRATE_IDS.includes(id), `SORTIE_SUBSTRATE_IDS includes ${id}`);
 }
 
-/** I5-J closed set. street_wreckage in; lamp_pillar / railing_post / three biologicals out. */
+/** I5-T closed set. street_wreckage + three biologicals in; lamp_pillar / railing_post still gym. */
 const POST_FLIP_SORTIE_SUBSTRATE_IDS = [
   'organic_remnant',
   'doorframe',
@@ -145,12 +139,18 @@ const POST_FLIP_SORTIE_SUBSTRATE_IDS = [
   'light_scatter',
   'space_interval',
   'street_wreckage',
+  'insect_remnant',
+  'mammal_remnant',
+  'worm_remnant',
 ] as const;
 assert(
   sameSet(SORTIE_SUBSTRATE_IDS, POST_FLIP_SORTIE_SUBSTRATE_IDS),
-  `SORTIE_SUBSTRATE_IDS must stay post-I5-J [${SORTIE_SUBSTRATE_IDS.join(',')}]`,
+  `SORTIE_SUBSTRATE_IDS must stay post-I5-T [${SORTIE_SUBSTRATE_IDS.join(',')}]`,
 );
 assert(SORTIE_SUBSTRATE_IDS.includes('street_wreckage'), 'I5-J SORTIE includes street_wreckage');
+assert(SORTIE_SUBSTRATE_IDS.includes('insect_remnant'), 'I5-T SORTIE includes insect_remnant');
+assert(SORTIE_SUBSTRATE_IDS.includes('mammal_remnant'), 'I5-T SORTIE includes mammal_remnant');
+assert(SORTIE_SUBSTRATE_IDS.includes('worm_remnant'), 'I5-T SORTIE includes worm_remnant');
 assert(!SORTIE_SUBSTRATE_IDS.includes('lamp_pillar'), 'I5-J SORTIE excludes lamp_pillar');
 assert(!SORTIE_SUBSTRATE_IDS.includes('railing_post'), 'I5-J SORTIE excludes railing_post');
 
@@ -170,17 +170,17 @@ assert(
   `street_wreckage continuities [${streetWreckage?.legalContinuities.join(',')}] want [monolith]`,
 );
 
-const I5S_BIO_GYM: Readonly<
+const I5T_BIO_SORTIE: Readonly<
   Record<string, { token: string; verb: string; lock: string }>
 > = {
   insect_remnant: { token: '虫', verb: '爬', lock: 'motion_turn' },
   mammal_remnant: { token: '哺乳动物', verb: '走', lock: 'motion_patrol' },
   worm_remnant: { token: '大号蠕虫', verb: '拱', lock: 'motion_turn' },
 };
-for (const [id, fields] of Object.entries(I5S_BIO_GYM)) {
+for (const [id, fields] of Object.entries(I5T_BIO_SORTIE)) {
   const row = SUBSTRATE_DATA[id];
-  assert(!!row, `missing I5-S gym substrate ${id}`);
-  assert(row!.enabledScope === 'gym', `${id} enabled_scope=gym`);
+  assert(!!row, `missing I5-T sortie substrate ${id}`);
+  assert(row!.enabledScope === 'sortie', `${id} enabled_scope=sortie`);
   assert(row!.displayToken === fields.token, `${id} display_token ${row?.displayToken} want ${fields.token}`);
   assert(row!.residualVerb === fields.verb, `${id} residual_verb ${row?.residualVerb} want ${fields.verb}`);
   assert(
@@ -192,7 +192,7 @@ for (const [id, fields] of Object.entries(I5S_BIO_GYM)) {
     row!.legalContinuities.length === 1 && row!.legalContinuities[0] === 'monolith',
     `${id} continuities [${row?.legalContinuities.join(',')}] want [monolith]`,
   );
-  assert(!SORTIE_SUBSTRATE_IDS.includes(id), `${id} must not enter SORTIE_SUBSTRATE_IDS`);
+  assert(SORTIE_SUBSTRATE_IDS.includes(id), `${id} must enter SORTIE_SUBSTRATE_IDS`);
 }
 
 const oil = SUBSTRATE_DATA.oil_film;
@@ -255,9 +255,9 @@ assert(
 assert(jiaGym.includes('stalk_clump') && jiaGym.includes('railing_post'), 'jia dropdown includes new floor rows');
 assert(jiaGym.includes('street_wreckage'), 'jia dropdown includes street_wreckage');
 assert(!dingGym.includes('street_wreckage'), 'ding dropdown excludes street_wreckage');
-for (const id of Object.keys(I5S_BIO_GYM)) {
-  assert(jiaGym.includes(id), `jia dropdown includes I5-S gym row ${id}`);
-  assert(!dingGym.includes(id), `ding dropdown excludes I5-S gym row ${id}`);
+for (const id of Object.keys(I5T_BIO_SORTIE)) {
+  assert(jiaGym.includes(id), `jia dropdown includes I5-T bio row ${id}`);
+  assert(!dingGym.includes(id), `ding dropdown excludes I5-T bio row ${id}`);
 }
 assert(substrateOptions('bing').some((row) => row.id === 'ash_veil'), 'bing dropdown includes ash_veil');
 
@@ -268,7 +268,7 @@ assert(!drawSrc.includes('shadowGymUtteranceForSortie'), 'sortie must not shadow
 const catalogSrc = readFileSync(resolve(ROOT, 'src/gym/lexicon-gallery-catalog.ts'), 'utf8');
 const residualLocks: Readonly<Record<string, string>> = {
   street_wreckage: STREET_WRECKAGE_FIELDS.lock,
-  ...Object.fromEntries(Object.entries(I5S_BIO_GYM).map(([id, fields]) => [id, fields.lock])),
+  ...Object.fromEntries(Object.entries(I5T_BIO_SORTIE).map(([id, fields]) => [id, fields.lock])),
 };
 for (const [id, lock] of Object.entries(residualLocks)) {
   const lockRe = new RegExp(`${id}:\\s*'${lock}'`);
@@ -278,6 +278,10 @@ for (const [id, lock] of Object.entries(residualLocks)) {
 assert(!drawSrc.includes("['lamp_pillar'"), 'DIALECT must not weight lamp_pillar after I5-J');
 assert(!drawSrc.includes("['railing_post'"), 'DIALECT must not weight railing_post after I5-J');
 assert(drawSrc.includes("['street_wreckage'"), 'DIALECT must weight street_wreckage after I5-J');
+for (const id of Object.keys(I5T_BIO_SORTIE)) {
+  const hits = drawSrc.match(new RegExp(`\\['${id}', 1\\]`, 'g')) ?? [];
+  assert(hits.length === 5, `DIALECT must weight ${id} 1 on all five fragments (got ${hits.length})`);
+}
 
 const mixedSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/scheme-d-mixed.ts'), 'utf8');
 assert(/case 'floor':\s*return attachJiaGenomeD\(ctx\);/.test(mixedSrc), 'd-mixed floor path is attachJiaGenomeD');
@@ -285,7 +289,7 @@ assert(!mixedSrc.includes('attachJiaD'), 'd-mixed no longer calls attachJiaD');
 
 for (const [id, fields] of Object.entries({
   street_wreckage: STREET_WRECKAGE_FIELDS,
-  ...I5S_BIO_GYM,
+  ...I5T_BIO_SORTIE,
 })) {
   const gymForm = drawOne(new SeededRandom(id.length * 17), {
     portfolio: 'jia',
@@ -305,6 +309,18 @@ for (const [id, fields] of Object.entries({
   }
 }
 
+for (const id of Object.keys(I5T_BIO_SORTIE)) {
+  const sortieForm = drawOne(new SeededRandom(id.length * 31), {
+    portfolio: 'jia',
+    fragmentTypeId: 'frag-clinic',
+    coverage: 'infiltrate',
+    substrate: id,
+  });
+  assert(!!sortieForm, `sortie drawOne ${id} must succeed`);
+  assert(sortieForm!.substrate === id, `sortie drawOne ${id} substrate`);
+  assert(SUBSTRATE_DATA[id]?.enabledScope === 'sortie', `sortie drawOne ${id} row is sortie`);
+}
+
 let watchingHits = 0;
 
 for (const seed of seeds) {
@@ -312,7 +328,7 @@ for (const seed of seeds) {
     const rng = new SeededRandom(seed ^ fragmentTypeId.length * 17);
     const { forms, warnings } = drawSortie(rng, {
       fragmentTypeId,
-      hasClusters: true,
+      paintCount: 4,
       hasWallEdges: true,
       hasCorridors: true,
     });
@@ -322,7 +338,12 @@ for (const seed of seeds) {
     const bing = forms.filter((f) => f.portfolio === 'bing');
     assert(jia.length >= 2 && jia.length <= 3, `${fragmentTypeId}/${seed} jia ${jia.length}`);
     assert(yi.length + ding.length === 1, `${fragmentTypeId}/${seed} yi+ding ${yi.length}+${ding.length}`);
-    assert(bing.length <= 1, `${fragmentTypeId}/${seed} bing ${bing.length}`);
+    assert(bing.length === 4, `${fragmentTypeId}/${seed} bing ${bing.length}`);
+    const bingKey = bing[0] ? identityKey(bing[0]) : '';
+    assert(
+      bing.every((form) => identityKey(form) === bingKey),
+      `${fragmentTypeId}/${seed} bing copies must share one identity`,
+    );
     assert(hearCount(forms) === 1, `${fragmentTypeId}/${seed} hear ${hearCount(forms)} warnings=${warnings.join(';')}`);
     const gate = jia[0];
     assert(gate?.lexemes.sense === 'sense_cone', `${fragmentTypeId}/${seed} extract gate not cone`);
@@ -376,7 +397,7 @@ if (watchingHits === 0) {
     const rng = new SeededRandom(seed ^ 'frag-outdoor'.length * 17);
     const { forms } = drawSortie(rng, {
       fragmentTypeId: 'frag-outdoor',
-      hasClusters: true,
+      paintCount: 4,
       hasWallEdges: true,
       hasCorridors: true,
     });
@@ -392,7 +413,7 @@ assert(watchingHits > 0, 'sortie must be allowed to hit corridor_watching');
 
 const emptyPins = drawSortie(new SeededRandom(9), {
   fragmentTypeId: 'frag-clinic',
-  hasClusters: false,
+  paintCount: 0,
   hasWallEdges: false,
   hasCorridors: false,
 });
@@ -402,15 +423,28 @@ assert(
 );
 assert(emptyPins.warnings.some((w) => w.includes('skipped yi/ding')), 'warn when yi/ding skipped');
 
-const noCluster = drawSortie(new SeededRandom(13), {
+const noPaint = drawSortie(new SeededRandom(13), {
   fragmentTypeId: 'frag-outdoor',
-  hasClusters: false,
+  paintCount: 0,
   hasWallEdges: true,
   hasCorridors: true,
 });
 assert(
-  noCluster.forms.every((f) => f.portfolio !== 'bing'),
-  'no clusters → no bing',
+  noPaint.forms.every((f) => f.portfolio !== 'bing'),
+  'paintCount 0 → no bing',
+);
+
+const sixPaint = drawSortie(new SeededRandom(17), {
+  fragmentTypeId: 'frag-metro',
+  paintCount: 6,
+  hasWallEdges: true,
+  hasCorridors: true,
+});
+const sixBing = sixPaint.forms.filter((f) => f.portfolio === 'bing');
+assert(sixBing.length === 6, `paintCount 6 → bing ${sixBing.length}`);
+assert(
+  sixBing.every((form) => identityKey(form) === identityKey(sixBing[0]!)),
+  'paint copies share identity',
 );
 
 const forced = drawOne(new SeededRandom(1), {
@@ -425,7 +459,7 @@ assert(forced?.lexemes.contact === 'contact_melee_three', 'jia keeps melee');
 
 const taken = drawSortie(new SeededRandom(21), {
   fragmentTypeId: 'frag-clinic',
-  hasClusters: true,
+  paintCount: 4,
   hasWallEdges: true,
   hasCorridors: true,
   hearingAxisTaken: true,
@@ -464,6 +498,7 @@ assert(riftSrc.includes('attach.seamX'), 'yi pose uses seamX, not tile centre');
 assert(!riftSrc.includes('Math.max(0.2'), 'RiftScene must not floor visibility at 0.2');
 assert(!riftSrc.includes('textureNamespace'), 'RiftScene must not pass textureNamespace');
 assert(!riftSrc.includes('stainWorldPoint'), 'RiftScene must not pass stainWorldPoint');
+assert(!riftSrc.includes('liveClusterBreath'), 'RiftScene must not apply whole-map cluster breath');
 
 const constantsSrc = readFileSync(resolve(ROOT, 'src/config/constants.ts'), 'utf8');
 const volumeDepth = /VOLUME_DEPTH:\s*(\d+)/.exec(constantsSrc);
@@ -485,6 +520,7 @@ assert(dingSrc.includes('stainWorldPoint'), 'ding stains honor optional stainWor
 const mapSrc = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
 assert(!mapSrc.includes('gymLiveMotion'), 'gym map lesson must not mention gymLiveMotion');
 assert(!mapSrc.includes('liveMotion'), 'gym map lesson must not enable liveMotion');
+assert(!mapSrc.includes('liveClusterBreath'), 'gym map lesson must not apply whole-map cluster breath');
 const hostSrc = readFileSync(resolve(ROOT, 'src/systems/contamination-host-system.ts'), 'utf8');
 assert(hostSrc.includes('readonly liveMotion?: boolean'), 'host option public name is liveMotion');
 assert(
@@ -510,7 +546,13 @@ assert(liveBing.includes('resolveContactChannel'), 'tickBingLive reads contact')
 assert(liveBing.includes('host.form.lexemes.contact'), 'tickBingLive reads lexemes.contact');
 assert(liveBing.includes('resolveStopLoss'), 'tickBingLive reads stop-loss');
 assert(liveBing.includes('addChaos'), 'tickBingLive still applies step chaos');
+assert(liveBing.includes('bingOnPaint'), 'tickBingLive uses shared paint occupancy');
 assert(!liveBing.includes('hittable'), 'tickBingLive must not gate step chaos on hittable');
+assert(hostSrc.includes('setStepFloors'), 'host registers genome paint step floors');
+assert(hostSrc.includes('isPaintInflated'), 'bing inflate follows paint-genome live phase');
+assert(!hostSrc.includes('clusterPulse'), 'hosts must not read whole-map clusterPulse');
+assert(hostSrc.includes('colonyNucleusSeatsInFloors'), 'colony nuclei sit in host paint tiles');
+assert(hostSrc.includes('bingPaintVisible'), 'bing narration sees any billing paint tile');
 
 const liveDing = hostSrc.split('private tickDingLive')[1]?.split('private spawnBingNuclei')[0] ?? '';
 assert(liveDing.includes('dingLiveRect'), 'tickDingLive morphs current box');
@@ -555,6 +597,27 @@ assert(
   layoutSrc.includes("mix32(inputSeed, 'lexicon')"),
   'lexicon seed is mix32(layout.seed, lexicon)',
 );
+assert(layoutSrc.includes('rollPaintHostCount'), 'layout rolls paint count from contaminationAge');
+assert(
+  layoutSrc.includes("typeof contaminationPins === 'string'"),
+  'short paint pins retry the layout',
+);
+assert(layoutSrc.includes('console.warn'), 'paint pin shortage warns before retry');
+assert(!layoutSrc.includes('hasClusters'), 'layout must not pass hasClusters into drawSortie');
+
+const drawSrcAgain = readFileSync(resolve(ROOT, 'src/generation/contamination-draw.ts'), 'utf8');
+assert(!drawSrcAgain.includes('hasClusters'), 'drawSortie must not read hasClusters');
+assert(
+  drawSrcAgain.includes('for (let i = 0; i < pins.paintCount; i++) forms.push(bing)'),
+  'drawSortie copies one bing N times',
+);
+assert(drawSrcAgain.includes("'paint-count'"), 'paint count uses mix32(layout.seed, paint-count)');
+assert(drawSrcAgain.includes('pins.paintCount'), 'drawSortie copies paintCount bing forms');
+
+const pinSrc = readFileSync(resolve(ROOT, 'src/generation/contamination-pins.ts'), 'utf8');
+assert(!pinSrc.includes('bing-host-seat'), 'I8-G temporary bing-host-seat must be gone');
+assert(pinSrc.includes('paintFloors'), 'pins hand out paintFloors');
+assert(!pinSrc.includes('clusterCores'), 'pins must not hand out clusterCores');
 
 const createBody = hostSrc.split('\n  create(')[1]?.split('\n  destroy():')[0] ?? '';
 assert(!createBody.includes('drawSortie'), 'ContaminationHostSystem.create must not call drawSortie');
@@ -568,7 +631,20 @@ assert(
 );
 
 const marksBody = hostSrc.split('private paintMarks')[1]?.split('private coreInSwing')[0] ?? '';
-assert(marksBody.includes('this.skipPaint'), 'paintMarks hides gym debug cores when skipPaint');
+assert(marksBody.includes('this.skipPaint'), 'paintMarks still gates stand-in cores on skipPaint');
+assert(
+  marksBody.includes("host.kind === 'bing'") && marksBody.includes('nuclei.length > 0'),
+  'paintMarks keeps colony nuclei when skipPaint',
+);
+assert(
+  !/if \(this\.skipPaint\) \{\s*gfx\.setVisible\(false\);\s*return;/.test(marksBody),
+  'paintMarks must not hide all marks on skipPaint',
+);
+assert(hostSrc.includes('const BING_MARK_DEPTH = 2'), 'colony marks sit above oil-film depth 1');
+assert(hostSrc.includes('setDepth(BING_MARK_DEPTH)'), 'bing marks use BING_MARK_DEPTH');
+const hidePaint = hostSrc.split('private hideDefaultPaint')[1]?.split('private refreshDefaultPaint')[0] ?? '';
+assert(hidePaint.includes('this.paintMarks(host)'), 'hideDefaultPaint reroutes marks through paintMarks');
+assert(!hidePaint.includes('marks.setVisible(false)'), 'hideDefaultPaint must not blindly hide marks');
 
 if (failed) {
   console.error(`check:lexicon ${failed} failure(s)`);

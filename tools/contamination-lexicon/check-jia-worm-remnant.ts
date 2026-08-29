@@ -259,8 +259,8 @@ assert(!mixedSrc.includes('attachJiaD'), 'd-mixed no longer calls attachJiaD');
 const riftSrc = readFileSync(resolve(ROOT, 'src/scenes/rift-scene.ts'), 'utf8');
 assert(!riftSrc.includes('form-renderers/d/genome'), 'RiftScene does not import genome');
 
-assert(!SORTIE_SUBSTRATE_IDS.includes(WORM_REMNANT_ID), 'worm_remnant stays gym, not sortie');
-assert(SUBSTRATE_DATA[WORM_REMNANT_ID]?.enabledScope === 'gym', 'CSV enabled_scope still gym');
+assert(SORTIE_SUBSTRATE_IDS.includes(WORM_REMNANT_ID), 'worm_remnant is sortie');
+assert(SUBSTRATE_DATA[WORM_REMNANT_ID]?.enabledScope === 'sortie', 'CSV enabled_scope is sortie');
 
 const seedList = Array.from({ length: SEEDS }, (_, i) => 1000 + i * 977);
 const segCounts: number[] = [];
