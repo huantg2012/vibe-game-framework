@@ -45,6 +45,8 @@
     "measure:ground-teal": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/measure-ground-teal.ts",
     "check:contam-floor-contrast": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/check-contam-floor-contrast.ts",
     "check:contrast": "npm run check:contam-floor-contrast",
+    "check:palette-quantize": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/check-palette-quantize.ts",
+    "check:loot-pile-contrast": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/check-loot-pile-contrast.ts",
     "measure:l1-reach": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/measure-l1-reach.ts",
     "preview:contam-world": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-world-grounds.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-world-coordination.ts",
     "preview:probes": "tsx --tsconfig tsconfig.json tools/map-preview/render-density-probes.ts",

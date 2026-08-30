@@ -64,11 +64,16 @@ export const GAME_CONSTANTS = {
 
   /** Loot / kindling nodes (docs/specs/system-chaos-scavenge-extract.md) */
   LOOT: {
+    /** 迭代 10 起退役，见 spec 规则 14。名义参数，代码无引用；由 SEARCH_RADIUS 取代。 */
     PICKUP_RADIUS: 16,
     NODE_COUNT: 8,
     VALUE_SAFE: 1,
     VALUE_CONTESTED: 2,
     VALUE_DEEP: 4,
+    SEARCH_CHANNEL_MS: 1200,
+    SEARCH_RADIUS: 48,
+    SEARCH_NOISE_RADIUS: 96,
+    SEARCH_NOISE_LEVEL: 'suspicious' as const,
   },
 
   /** Extraction point (docs/specs/system-chaos-scavenge-extract.md) */

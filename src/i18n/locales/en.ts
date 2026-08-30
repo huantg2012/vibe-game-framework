@@ -53,6 +53,13 @@ export const en: LocaleSchema = {
     kindling: {
       label: 'Kindling',
     },
+    prompt: {
+      extract: 'Extract',
+      search: 'Search',
+    },
+    residue: {
+      label: 'Residue',
+    },
   },
 
   // Rift scene

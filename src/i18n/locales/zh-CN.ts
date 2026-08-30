@@ -53,6 +53,13 @@ export const zhCN: LocaleSchema = {
     kindling: {
       label: '薪柴',
     },
+    prompt: {
+      extract: '撤离',
+      search: '翻找',
+    },
+    residue: {
+      label: '残渣',
+    },
   },
 
   // Rift scene

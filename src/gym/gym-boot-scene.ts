@@ -1,8 +1,10 @@
 /**
- * Gym boot: same placeholder textures as the sortie, no audio, no main menu.
+ * Gym boot: same placeholder textures as the sortie, plus audio preload.
  */
 
 import Phaser from 'phaser';
+import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
+import { audioManager } from '@/managers/audio-manager';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
 import { readGymLesson, type GymLesson } from '@/gym/gym-lesson';
 
@@ -20,8 +22,16 @@ export class GymBootScene extends Phaser.Scene {
     super({ key: 'GymBootScene' });
   }
 
+  preload(): void {
+    for (const asset of AUDIO_ASSETS) {
+      this.load.audio(asset.key, audioUrlsFor(asset));
+    }
+  }
+
   create(): void {
     generatePlaceholderTextures(this);
+    audioManager.bind(this.game);
+    audioManager.unlock();
     const lesson = readGymLesson();
 
     setCurrentNav(lesson);

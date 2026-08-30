@@ -53,7 +53,8 @@
       }
       #gym-map-controls label,
       #gym-lexicon-controls label,
-      #gym-gallery-controls label {
+      #gym-gallery-controls label,
+      #gym-loot-controls label {
         display: block;
         margin: 10px 0 3px;
         color: #8a8f96;
@@ -62,7 +63,8 @@
       #gym-map-controls select,
       #gym-map-controls input[type="number"],
       #gym-lexicon-controls select,
-      #gym-gallery-controls select {
+      #gym-gallery-controls select,
+      #gym-loot-controls input[type="number"] {
         width: 100%;
         background: #0e1114;
         color: #c8cdd4;
@@ -80,7 +82,8 @@
         color: #c8cdd4;
       }
       #gym-map-controls .gym-actions,
-      #gym-lexicon-controls .gym-actions {
+      #gym-lexicon-controls .gym-actions,
+      #gym-loot-controls .gym-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
@@ -88,7 +91,8 @@
       }
       #gym-map-controls button,
       #gym-lexicon-controls button,
-      #gym-gallery-nav button {
+      #gym-gallery-nav button,
+      #gym-loot-controls button {
         background: #12161a;
         color: #e8eaed;
         border: 1px solid #2a2d32;
@@ -303,6 +307,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+      #gym-loot-controls button[aria-pressed="true"] {
+        border-color: #1aad96;
+        color: #b0fff5;
       }
       #gym-map-legend span {
         display: inline-block;

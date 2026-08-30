@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-08-19
-last-modified-by: design agent
+last-modified-date: 2026-08-30
+last-modified-by: design agent（2026-08-30 迭代 10：CN8/CN9 改口——污染物节点与薪柴统一为可翻找对象，读条拾取）
 interface-changed: false
 interfaces-with:
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
@@ -109,8 +109,8 @@ interface SaveData {
 
 ### CN — 污染物系统
 
-8. **获取方式**：裂隙地图中新增"污染物节点"（区别于薪柴节点）。每张地图固定 2-3 个。拾取后获得一件随机污染物（rarity 权重：common 60% / fine 30% / rare 10%）。
-9. **污染物节点视觉**：深紫色脉冲方块（区别于薪柴的 teal），拾取条件同薪柴（走过即拾取）。
+8. **获取方式**：裂隙地图中新增"污染物节点"（区别于薪柴节点）。每张地图固定 2-3 个。**迭代 10 起（DEC-108）**：污染物节点与薪柴节点统一为**可翻找对象**——外观不泄露内容物，走近按住 E 读条（`LOOT.SEARCH_CHANNEL_MS`，建议 1200 ms）完成才结算；读条规则、打断、发声、可见性门槛与上下文优先级全部归 `system-chaos-scavenge-extract` 规则 14/14a/14b/15/16。读条完成后获得一件随机污染物（rarity 权重：common 60% / fine 30% / rare 10%）。
+9. **污染物节点视觉（迭代 10 改口）**：不再是深紫色脉冲方块，也不再「走过即拾取」。与薪柴节点统一为可翻找对象：同一套外观，玩家不能通过外观区分内容物（薪柴 / 残渣）；对象不是 glow source，alpha 乘可见性（规则归 `system-chaos-scavenge-extract` 规则 16/17）。内容物在翻找完成时由揭晓动画告知：残渣揭晓用 teal ramp（common 暗 / fine contam-core / rare contam-bright，与 UI 稀有度色谱 `RARITY_COLORS` 同一份；禁止紫谱——紫色在 art-direction 无登记，UI 层已锁无独立紫色类），并走 toast-inline `残渣` + 稀有度星等，不给具体类型名。机制论述见 `docs/design-notes/loot-search.md`。
 10. **库存**：玩家的污染物库存无上限。所有已获取的污染物存在 `contaminants[]` 中。
 
 11. **防御阶段**：
@@ -201,9 +201,9 @@ interface SaveData {
 ### F — 场景流修改
 
 29. **裂隙场景新增**：
-    - 2-3 个污染物节点（紫色，与薪柴共存但独立）
+    - 2-3 个污染物节点（迭代 10 起：与薪柴统一为可翻找对象，外观不泄露内容物，规则 CN8/CN9）
     - 出击工具的使用键位绑定。**Slice 5 起为动态绑定**：键位序列是 `GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS`（Q / F / G），按 `contaminantSystem.getSortieActiveSlotCount()` 绑定前 N 个；被动工具无键位，其槽位下标由 `getSortiePassiveSlotIndex()` 给出，不得硬编码
-    - 改造效果应用到 Player/ChaosSystem/LootSystem
+    - 改造效果应用到 Player/ChaosSystem/LootSearchSystem（迭代 10 前为 LootSystem）
 
 30. **净化点场景新增**：
     - 防御 slot 管理 UI（走到边界区域按 E 打开）

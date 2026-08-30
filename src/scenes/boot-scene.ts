@@ -56,7 +56,7 @@ export class BootScene extends Phaser.Scene {
     // Dev deep link: `#rift` or `#purif` boots straight into the target scene.
     if (import.meta.env.DEV) {
       const hash = window.location.hash;
-      if (hash === '#rift') {
+      if (hash === '#rift' || hash.startsWith('#rift=')) {
         this.scene.start('RiftScene');
         return;
       }

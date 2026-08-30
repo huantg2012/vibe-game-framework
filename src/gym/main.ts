@@ -13,6 +13,7 @@ import { GymMapScene } from '@/gym/gym-map-scene';
 import { GymPaintVeinCardScene } from '@/gym/gym-paint-vein-card-scene';
 import { GymPlayerScene } from '@/gym/gym-player-scene';
 import { GymScene } from '@/gym/gym-scene';
+import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
 
 if (import.meta.env.DEV) assertBalanceInvariants();
 
@@ -27,6 +28,7 @@ const game = new Phaser.Game(
     GymPaintVeinCardScene,
   ]),
 );
+bindDomUiRootToGame(game);
 
 if (import.meta.env.DEV) {
   (window as unknown as { __game: Phaser.Game }).__game = game;

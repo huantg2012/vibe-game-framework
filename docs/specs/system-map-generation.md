@@ -534,7 +534,7 @@ interface FragmentRoll {
 - **Minimap / Visibility**：已按位置工作，换坐标即可。
 - **procedural-surface**：必须参数化 L1，读策划表。
 - **tool-system**：解开对固定图薪柴坐标的直读。
-- **LootSystem / ContaminantNodeSystem / AISystem**：改吃本次 layout，不改拾取 / FSM 规则。
+- **LootSearchSystem（迭代 10 前为 LootSystem / ContaminantNodeSystem）/ AISystem**：改吃本次 layout，不改翻找 / FSM 规则。
 - **system-chaos-scavenge-extract**：换路体验句仍在其规则 21；机器判定归属本文件规则 21。已就地补句。
 - **净化点 / BoundaryShape**：不受影响。极坐标团不拿来当裂隙陆地的唯一算法。
 - **Foundation `MapData.exitPoints[]`**：本 Slice 不实现多出口。类型以后对齐到「一个撤离」。

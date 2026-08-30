@@ -17,6 +17,7 @@
  * library shape copied from outdoor;
  * DEC-097 broken whole-image teal-group quantize (void teal / bright tiles).
  */
+import { deltaE76 } from '@/generation/cie76';
 import { ENABLED_RIFT_FRAGMENTS, RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import { deriveFragmentContamRamp } from '@/entities/form-renderers/d/fragment-ramp';
 import { countWalkableComponents } from '@/generation/connectivity';
@@ -435,30 +436,7 @@ export function shapeKeyOf(t: ShapeTuple): string {
   return `${t.jogPeriod}|${t.gapCount}|${t.turnCount}|${t.capClass}|${t.widthMed}|${t.facingBand}`;
 }
 
-function srgbLinear(c: number): number {
-  const v = c / 255;
-  return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
-}
-
-function labOf(rgb: Rgb): [number, number, number] {
-  const r = srgbLinear(rgb[0]);
-  const g = srgbLinear(rgb[1]);
-  const b = srgbLinear(rgb[2]);
-  const x = (r * 0.4124564 + g * 0.3575761 + b * 0.1804375) / 0.95047;
-  const y = (r * 0.2126729 + g * 0.7151522 + b * 0.072175) / 1.0;
-  const z = (r * 0.0193339 + g * 0.119192 + b * 0.9503041) / 1.08883;
-  const f = (t: number): number => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
-  const fx = f(x);
-  const fy = f(y);
-  const fz = f(z);
-  return [116 * fy - 16, 500 * (fx - fy), 200 * (fy - fz)];
-}
-
-export function deltaE76(a: Rgb, b: Rgb): number {
-  const la = labOf(a);
-  const lb = labOf(b);
-  return Math.hypot(la[0] - lb[0], la[1] - lb[1], la[2] - lb[2]);
-}
+export { deltaE76 } from '@/generation/cie76';
 
 function groundMain(id: string): Rgb {
   const def = RIFT_FRAGMENT_DATA[id]!;

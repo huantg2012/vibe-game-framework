@@ -18,7 +18,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | 玩家外形 | `http://localhost:3000/gym.html?lesson=player` |
 | 地图生成 | `http://localhost:3000/gym.html?lesson=map` |
 
-**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。
+**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。迭代 10 翻找抽卡课已随人终审 PASS 删课（2026-08-31，迭代 9 先例）；翻找机制与表现是生产默认，住 `src/systems/loot-search-system.ts` / `loot-search-presentation.ts` / `src/ui/dom/loot-search-hud.ts`。
 
 ---
 
@@ -98,6 +98,10 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 侧栏是馆藏目录（开发说明，不是游戏内界面）：碎片身份全局开关、去重说明（本厅 N / 占格字段 / 不占格字段）、按孔谱列出基体。一次只打开一个厅（一张孔谱 × 一种基体）。厅内按覆盖深度分排。拖动画布或画布外侧空白平移；本课不让右侧容器自己出滚动条。滚轮上下看，Shift+滚轮左右看，Ctrl 或 Cmd+滚轮缩放（地图课仍是滚轮缩放，行为未改）。点格看参数（表名与档位分行）；点开检视才让那一只活起来（四朝向、信号相）。**基因谱甲必须消费这些字段**（`pose.facing4` / `pose.signal`；I5-N / DEC-098）。陈列馆控件已通；截至 I5-F 基因谱挂载不消费，切朝向身子不变、四个信号相同一套动画。I5-N 未交之前不要开 I5-G。
 
 标本走生产方案 D（`src/entities/form-renderers/`），手工合成 pose，不创建 `Enemy`、不创建宿主、不刷玩家。不开迷雾，不接旁白。头上无字；开发标签是 DOM。禁止为陈列馆另写第三套方案。迭代 5：占地挂基因谱模块（仍是方案 D 占地章）。**看占漆拓扑：** 陈列馆看菌毯实心多瓣团、**油膜三入口（聚珠成滩 / 沾抹拖尾 / 薄滩收边）**、灰幕环/薄覆层；同厅格子再看覆盖违规、感知主轴、节律忙静、连续性单团对菌落卫星（不要指望成句/止损改剪影）；点开检视看沿生长方向有节奏地缓慢扩散、收缩（油膜按变体呼吸），不是整张画布拉伸，也不是切预烤帧，厅内浏览仍静帧。句法课方案 D、孔谱占漆，切覆盖 / 感知 / 节律 / 连续性必须看见差。油膜默认按种子采样；钉变体走句法课下拉。**六格静帧历史对照走 `?lesson=paint-vein-card`。** 练习场侧栏仍是开发 UI。与视野相交的格子必须挂上（DEC-086）。合同：`docs/tasks/iteration-4.md`；占地基因谱 `docs/tasks/iteration-5.md`；油膜 DEC-101 / `docs/tasks/iteration-7.md`。
+
+### 翻找（`?lesson=loot-card`）
+
+**已删课（2026-08-31，人终审 PASS，迭代 9 先例）。** 翻找机制与表现是出击生产默认：翻堆对象（外观不泄露内容物，配色 v2 随碎片身份）+ 按住 E 读条 1200ms（底部装置条）+ 打断清零 + 揭晓（薪柴右上 +N / 残渣 toast-inline 星等）+ 音效四键。生产实现住 `src/systems/loot-search-system.ts` / `src/systems/loot-search-presentation.ts` / `src/ui/dom/loot-search-hud.ts`。合同与终审记录：`docs/tasks/iteration-10.md`。
 
 ---
 

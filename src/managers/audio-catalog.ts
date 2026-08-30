@@ -45,6 +45,10 @@ export const AUDIO_ASSETS: readonly AudioAssetDef[] = [
   { key: 'sfx-shared-player-attack', dir: 'sfx/player', group: 'SFX', loop: false, spatial: 'none' },
   { key: 'sfx-shared-player-pickup', dir: 'sfx/player', group: 'SFX', loop: false, spatial: 'none' },
   { key: 'sfx-shared-player-use-item', dir: 'sfx/player', group: 'SFX', loop: false, spatial: 'none' },
+  { key: 'sfx-shared-player-search-loop', dir: 'sfx/player', group: 'SFX', loop: true, spatial: 'none' },
+  { key: 'sfx-shared-player-search-interrupt', dir: 'sfx/player', group: 'SFX', loop: false, spatial: 'none' },
+  { key: 'sfx-shared-player-search-reveal-kindling', dir: 'sfx/player', group: 'SFX', loop: false, spatial: 'none' },
+  { key: 'sfx-shared-player-search-reveal-residue', dir: 'sfx/player', group: 'SFX', loop: false, spatial: 'none' },
 
   { key: 'sfx-rift-enemy-idle', dir: 'sfx/enemy', group: 'SFX', loop: true, spatial: 'enemy' },
   { key: 'sfx-rift-enemy-alert', dir: 'sfx/enemy', group: 'SFX', loop: false, spatial: 'enemy' },
@@ -64,6 +68,10 @@ export const AUDIO_ASSETS: readonly AudioAssetDef[] = [
   { key: 'sfx-shared-module-repair', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'none' },
   { key: 'sfx-pp-boundary-pulse', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'boundary' },
 ] as const;
+
+if (AUDIO_ASSETS.length !== 43) {
+  throw new Error(`Expected 43 audio assets, got ${AUDIO_ASSETS.length}`);
+}
 
 export const LAYER_ASSET_KEY: Record<RiftLayer, string> = {
   base: 'bgm-rift-base-drone',

@@ -1,5 +1,5 @@
 /**
- * Slice 9 A1/C1: synthesize 39 placeholder keys as non-empty OGG + MP3.
+ * Slice 9 A1/C1: synthesize placeholder keys as non-empty OGG + MP3.
  *
  * Prefers sox (if on PATH) is not required: Homebrew is broken on this macOS,
  * so synthesis uses ffmpeg lavfi (sine / anoisesrc) then libvorbis + libmp3lame.
@@ -54,6 +54,10 @@ const KEYS = [
   { key: 'sfx-shared-player-attack', dir: 'sfx/player', seconds: 0.25, peak: -4, bitrate: 128, kind: 'player-attack' },
   { key: 'sfx-shared-player-pickup', dir: 'sfx/player', seconds: 0.15, peak: -4, bitrate: 128, kind: 'player-pickup' },
   { key: 'sfx-shared-player-use-item', dir: 'sfx/player', seconds: 0.30, peak: -4, bitrate: 128, kind: 'player-use' },
+  { key: 'sfx-shared-player-search-loop', dir: 'sfx/player', seconds: 1.20, peak: -8, bitrate: 128, kind: 'search-loop' },
+  { key: 'sfx-shared-player-search-interrupt', dir: 'sfx/player', seconds: 0.18, peak: -6, bitrate: 128, kind: 'search-interrupt' },
+  { key: 'sfx-shared-player-search-reveal-kindling', dir: 'sfx/player', seconds: 0.28, peak: -4, bitrate: 128, kind: 'search-reveal-kindling' },
+  { key: 'sfx-shared-player-search-reveal-residue', dir: 'sfx/player', seconds: 0.32, peak: -5, bitrate: 128, kind: 'search-reveal-residue' },
 
   { key: 'sfx-rift-enemy-idle', dir: 'sfx/enemy', seconds: 1.5, peak: -6, bitrate: 128, kind: 'enemy-idle' },
   { key: 'sfx-rift-enemy-overwriter-hum', dir: 'sfx/enemy', seconds: 2.0, peak: -6, bitrate: 128, kind: 'enemy-hum' },
@@ -74,8 +78,8 @@ const KEYS = [
   { key: 'sfx-pp-boundary-pulse', dir: 'sfx/system', seconds: 1.50, peak: -4, bitrate: 128, kind: 'boundary-pulse' },
 ];
 
-if (KEYS.length !== 39) {
-  throw new Error(`Expected 39 keys, got ${KEYS.length}`);
+if (KEYS.length !== 43) {
+  throw new Error(`Expected 43 keys, got ${KEYS.length}`);
 }
 
 function which(name) {
@@ -388,6 +392,25 @@ function synthesize(entry, wavPath) {
     case 'player-use':
       writeWav(wavPath, [lavfi(noiseSrc('pink', d))], `[0]highpass=f=400,afade=t=in:d=0.015:curve=tri,afade=t=out:st=0.12:d=0.18:curve=tri,${chainHpLp()}[out]`);
       break;
+    case 'search-loop':
+      writeWav(wavPath, [lavfi(noiseSrc('brown', d)), lavfi(noiseSrc('pink', d))], `[0]lowpass=f=700,volume=0.55[a];[1]${band(400, 1400)},volume=0.22[b];[a][b]${mixFilter(2)},afade=t=in:d=0.025:curve=tri,afade=t=out:st=1.05:d=0.15:curve=tri,${chainHpLp()}[out]`);
+      break;
+    case 'search-interrupt':
+      writeWav(wavPath, [lavfi(noiseSrc('brown', d))], `[0]lowpass=f=500,afade=t=in:d=0.02:curve=tri,afade=t=out:st=0.05:d=0.13:curve=tri,${chainHpLp()}[out]`);
+      break;
+    case 'search-reveal-kindling': {
+      const click = `${wavPath}.c.wav`;
+      const ping = `${wavPath}.p.wav`;
+      makeClick(click, 0.12, 1800, 4200, 0.012, 0.04);
+      writeWav(ping, [lavfi(sineSrc(1760, d))], `[0]volume=0.18,afade=t=in:d=0.02:curve=tri,afade=t=out:st=0.08:d=0.20:curve=tri[out]`);
+      writeWav(wavPath, [['-i', click], ['-i', ping]], `[0]volume=0.7[a];[1]volume=0.55[b];[a][b]${mixFilter(2)},${chainHpLp()}[out]`);
+      rmSync(click, { force: true });
+      rmSync(ping, { force: true });
+      break;
+    }
+    case 'search-reveal-residue':
+      writeWav(wavPath, [lavfi(noiseSrc('brown', d)), lavfi(sineSrc(220, d))], `[0]lowpass=f=380,volume=0.7[a];[1]volume=0.12,afade=t=in:d=0.02:curve=tri[b];[a][b]${mixFilter(2)},afade=t=in:d=0.02:curve=tri,afade=t=out:st=0.14:d=0.18:curve=tri,${chainHpLp()}[out]`);
+      break;
     case 'enemy-idle':
       renderSineStack(wavPath, d, [
         { f: 72, amp: 0.20 },
@@ -520,6 +543,15 @@ function generateAll() {
   console.log(`Generating ${KEYS.length} keys…`);
 
   for (const entry of KEYS) {
+    const existingOgg = join(ASSET_ROOT, entry.dir, `${entry.key}.ogg`);
+    const existingMp3 = join(ASSET_ROOT, entry.dir, `${entry.key}.mp3`);
+    if (
+      existsSync(existingOgg) && statSync(existingOgg).size > 0
+      && existsSync(existingMp3) && statSync(existingMp3).size > 0
+    ) {
+      process.stdout.write(`  ${entry.key} skip existing\n`);
+      continue;
+    }
     const wavPath = join(TMP, `${entry.key}.wav`);
     process.stdout.write(`  ${entry.key} (${entry.seconds}s)… `);
     synthesize(entry, wavPath);

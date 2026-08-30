@@ -33,7 +33,7 @@ const ABYSS_ENEMY_COLOR = '#7fffee';
 const ABYSS_NODE_COLOR = '#1aad96';
 
 /**
- * abyss tool (`docs/art/tool-vfx-spec.md` A5 族群H): "地图上所有敌人和薪柴节点位置以标记
+ * abyss tool (`docs/art/tool-vfx-spec.md` A5 族群H): "地图上所有敌人与可翻找物位置以标记
  * 显示(含视野外)". Enemies stay 3×3 squares; nodes are a 3px diamond in a darker
  * same-family teal so the two marks are not the same shape.
  */
@@ -147,7 +147,7 @@ export class Minimap {
     this.drawFrame(originTileX, originTileY, facing);
   }
 
-  /** abyss: "10秒内地图上所有敌人和薪柴节点位置以标记显示(含视野外)". */
+  /** abyss: "10秒内地图上所有敌人与可翻找物位置以标记显示(含视野外)". */
   showAbyssReveal(
     enemyPositions: readonly Vector2[],
     nodePositions: readonly Vector2[],

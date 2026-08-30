@@ -140,6 +140,8 @@ export interface HUDConfig {
   isRunEnded: () => boolean;
   /** Sortie loadout slots (max 4: Q, F, G, Passive). Undefined if no loadout. */
   toolSlots?: ToolSlotInfo[];
+  /** When true, [E] prompt is owned by LootSearchHud (search / extract). */
+  suppressExtractPrompt?: boolean;
 }
 
 export class RiftHud {
@@ -163,6 +165,7 @@ export class RiftHud {
   private kindlingEl!: HTMLDivElement;
   private extractPromptEl!: HTMLDivElement;
   private extractPromptVisible = false;
+  private extractPromptSuppressed = false;
 
   // Tool slot display (bottom left)
   private toolSlotEl: HTMLDivElement | null = null;
@@ -219,6 +222,7 @@ export class RiftHud {
     this.activeEffects = [];
     this.lastEffectsString = '';
     this.extractPromptVisible = false;
+    this.extractPromptSuppressed = config.suppressExtractPrompt === true;
     this.toolSlotData = config.toolSlots ? config.toolSlots.map((s) => ({ ...s })) : [];
 
     injectPanelStyles();
@@ -249,6 +253,13 @@ export class RiftHud {
    *  (rift-scene merges defense residue + tool-system remaining). Do not tick
    *  remaining here — that would double-count against per-frame set. */
   update(_deltaMs: number): void {
+    if (this.extractPromptSuppressed) {
+      if (this.extractPromptVisible) {
+        this.extractPromptVisible = false;
+        this.extractPromptEl.style.display = 'none';
+      }
+      return;
+    }
     const shouldShow = !this.config.isRunEnded() && this.config.canExtract();
     if (shouldShow !== this.extractPromptVisible) {
       this.extractPromptVisible = shouldShow;

@@ -222,7 +222,7 @@ interface SortieModifiers {
 28. **效果计算时机**：在场景切换到裂隙前计算一次，作为 `SortieModifiers` 传递给 RiftScene。`GameState.getModuleEffect(type)` 仍是 CORE/STORAGE 效果的**唯一入口**——`overwrite` 的互换（规则 55）与 `resonate` 的上限提升（规则 59）都必须改在这里，不允许在消费方各自修正。PURIFIER 不走 `getModuleEffect`；走 `getStartingChaos()`。`getSortieModifiers()` 必须带上 `startingChaos`。
 29. **裂隙侧应用**：
     - ChaosSystem 的实际 rate = `BASE_RATE * chaosRateModifier`（在现有 rateMultiplier 之前相乘）
-    - LootSystem 的实际 pickup value = `nodeValue * kindlingValueModifier`（向下取整，最低 1）
+    - LootSearchSystem（迭代 10 前为 LootSystem）的实际拾取价值 = `nodeValue * kindlingValueModifier`（向下取整，最低 1；翻找完成结算时应用）
     - ChaosSystem 开局 `value` = `SortieModifiers.startingChaos` 再叠加防御残留（规则 31a）。**不改**基础上涨曲线、阈值、惩罚映射。
 
 ### F — 场景切换
@@ -723,7 +723,7 @@ interface SortieModifiers {
 | ------ | ---- | ---- |
 | RiftScene | `SortieModifiers { chaosRateModifier, kindlingValueModifier, startingChaos }` | scene data 传参 |
 | ChaosSystem | `chaosRateModifier`；开局 `value = startingChaos`（再叠加 `initial_chaos`） | 乘在 BASE_RATE 上；初值一次写入 |
-| LootSystem | `kindlingValueModifier` | 乘在 node.value 上 |
+| LootSearchSystem（迭代 10 前为 LootSystem） | `kindlingValueModifier` | 乘在 node.value 上 |
 | HUD / 结果面板 | `GameState.getKindlingReserve()` / `getModules()` / `getStartingChaos()` | 查询 |
 | PurificationScene | `GameState.raiseModuleMaxHp()` / `getModuleMaxHpTier()` | 加厚交互 |
 | PurificationScene | `ImpactSystem.run(defenseSlots): ImpactResult` | 方法调用（槽位由场景传入，避免系统互相 import） |
@@ -776,7 +776,7 @@ interface SortieModifiers {
 | T6 | `src/entities/purification-module.ts`（模块实体+交互） | code |
 | T7 | `src/ui/dom/allocation-panel.ts` | code |
 | T8 | `src/systems/impact-system.ts` + 结果面板 | code |
-| T9 | RiftScene 接收 modifiers、ChaosSystem/LootSystem 应用 | code |
+| T9 | RiftScene 接收 modifiers、ChaosSystem/LootSearchSystem（迭代 10 前为 LootSystem）应用 | code |
 
 ### Slice 4.5 追加（动态边界，spec 事后补写）
 

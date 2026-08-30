@@ -3,8 +3,8 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-08-19
 created-when: Slice 9 设计阶段
-last-modified-by: design agent
-last-modified-date: 2026-08-19
+last-modified-by: code agent
+last-modified-date: 2026-08-30
 interface-changed: false
 slice: 9
 interfaces-with:
@@ -20,7 +20,7 @@ exposes:
   - AudioManager.playSFX(key, config?) / playAmbient(key, fadeIn?) / stopAmbient(key, fadeOut?)
   - AudioManager.setLayerVolume(layer, volume, duration?) / playSpatialSFX(key, sourcePos, listenerPos, config?)
   - AudioManager.pauseAll() / resumeAll() / unlock()
-  - 资产 key 注册表（39 个 key；每个非空 .ogg + .mp3）
+  - 资产 key 注册表（43 个 key；每个非空 .ogg + .mp3）
   - 分组默认音量 Master 1.0 / BGM 0.6 / Ambient 0.5 / SFX 0.8（本 Slice 不暴露调节面板）
   - 同时 8 轨、溢出与 UI 不被踢
   - 距离衰减（tile）：敌人 5–8、点声源 3–6、改写体 hum 10–15、边界脉冲 0–2
@@ -75,7 +75,7 @@ interface PlayBgmOpts {
 
 ### A. 资产合同
 
-1. **注册表即清单**：下文「资产表」39 个 key 是本 Slice 的全部交付。每个 key = 文件名不含扩展名。BootScene 预加载全部 key 的 `.ogg` 与 `.mp3`。
+1. **注册表即清单**：下文「资产表」43 个 key 是现行交付（Slice 9 的 39 + 迭代 10 翻找四键）。每个 key = 文件名不含扩展名。BootScene 预加载全部 key 的 `.ogg` 与 `.mp3`。
 2. **非空双格式**：`assets/audio/.../{key}.ogg` 与 `{key}.mp3` 都必须存在，字节数 > 0，解码时长 > 0。禁止 0 字节、禁止只有头没有声。
 3. **禁止振荡器冒充交付**：方向文档 §9 的运行时 `OscillatorNode` / 白噪声 / 正弦 beep **作废**。占位必须是仓库里的文件（ffmpeg/sox/脚本合成）。运行时只允许用 WebAudio 做增益、声像、淡入淡出、距离衰减。
 4. **码率与采样率**（方向文档 5.1）：BGM 与短音效 128 kbps / 44.1 kHz；循环环境 96 kbps / 44.1 kHz。OGG 与 MP3 各一份。
@@ -229,7 +229,7 @@ interface PlayBgmOpts {
 | `tile` / `plaster` | `sfx-shared-player-step-crystal` |
 | 净化点地面 | `sfx-shared-player-step-metal` |
 
-42. **拾取**：`KINDLING_COLLECTED` 与 `ITEM_COLLECTED` → `sfx-shared-player-pickup`。100 ms 内同 key 只播一次。
+42. **拾取 / 翻找**：`ITEM_COLLECTED` → `sfx-shared-player-pickup`（100 ms 内同 key 只播一次）。`KINDLING_COLLECTED` 不再走 pickup——翻找揭晓由 `LootSearchSystem` 直接播 `sfx-shared-player-search-reveal-kindling` / `sfx-shared-player-search-reveal-residue`。读条开始播循环 `sfx-shared-player-search-loop`（instanceId `loot-search-loop`）；打断停循环并播 `sfx-shared-player-search-interrupt`。
 43. **使用**：`ITEM_USED` 与 `TOOL_USED` → `sfx-shared-player-use-item`。
 44. **混乱滴答**：`CHAOS_CHANGED` 且 `delta > 0` → `sfx-shared-chaos-tick`，额外乘子 0.15，优先级 `low`。同 key 仍在播则跳过。
 45. **混乱阈值**：`CHAOS_THRESHOLD_REACHED` → `sfx-shared-chaos-threshold`（一次出击每 level 一次，事件本身已保证）。
@@ -303,7 +303,7 @@ assets/audio/
 | 长 | 0.80–2.0 | 进出裂隙、冲击起声、循环单元、边界 |
 | 床 | 60–180 | 场景 / 层；冲击床 60–90 且不循环 |
 
-### 资产表（39 key）
+### 资产表（43 key）
 
 #### 场景氛围 5 + 裂隙层 4（唯一文件 7：Base=裂隙基准，Tension=裂隙高混乱）
 
@@ -336,7 +336,7 @@ assets/audio/
 | `sfx-ui-warning` | 中 0.4s | 否 | 冲击开始（与 impact-start 同时） | 无 |
 | `sfx-ui-error` | 短 0.1s | 否 | 操作失败 / 薪柴不足 | 无 |
 
-#### §4.2 玩家（7）
+#### §4.2 玩家（11）
 
 | key | 档 | 循环 | 触发 | 空间 |
 | --- | -- | ---- | ---- | ---- |
@@ -345,8 +345,12 @@ assets/audio/
 | `sfx-shared-player-step-crystal` | 短 0.15s | 否 | tile/plaster 行走 | 无 |
 | `sfx-shared-player-hurt` | 中 0.3s | 否 | `combat.cue.playerHurt` | 无 |
 | `sfx-shared-player-attack` | 短 0.2–0.3s | 否 | `combat.cue.swing` | 无 |
-| `sfx-shared-player-pickup` | 短 0.15s | 否 | 薪柴/物品拾取 | 无 |
+| `sfx-shared-player-pickup` | 短 0.15s | 否 | 物品拾取（`ITEM_COLLECTED`）。迭代 10 起不再用于薪柴触碰拾取 | 无 |
 | `sfx-shared-player-use-item` | 中 0.3s | 否 | 消耗品 / 工具使用 | 无 |
+| `sfx-shared-player-search-loop` | 长 1.2s 单元 | 是 | 翻找读条开始；打断/完成时停 | 无 |
+| `sfx-shared-player-search-interrupt` | 短 0.18s | 否 | 翻找读条打断 | 无 |
+| `sfx-shared-player-search-reveal-kindling` | 短 0.28s | 否 | 翻找揭晓·薪柴 | 无 |
+| `sfx-shared-player-search-reveal-residue` | 中 0.32s | 否 | 翻找揭晓·残渣 | 无 |
 
 #### §4.2 敌人（6）
 
@@ -374,7 +378,7 @@ assets/audio/
 | `sfx-shared-module-repair` | 中 0.5s | 否 | 薪柴分配确认且有花费 | 无 |
 | `sfx-pp-boundary-pulse` | 长 1–2s | 否 | 净化点边界 2 tile 内，10 秒一次 | 边界 0–2 |
 
-**唯一 key 合计 39**（氛围/层 7 + 环境循环 2 + SFX 30）。
+**唯一 key 合计 43**（氛围/层 7 + 环境循环 2 + SFX 34）。
 
 ## 有意不做
 

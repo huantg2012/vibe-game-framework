@@ -42,6 +42,9 @@ export const PALETTE_HEX = [
   '#3a3838',
   '#1a1c1f',
   '#2a1f1c',
+  '#50463c',
+  '#5d483e',
+  '#4f4835',
   '#8a8f96',
   '#c8cdd4',
   '#cc3333',
@@ -84,7 +87,11 @@ const UI_HEX = ['#8a8f96', '#c8cdd4', '#2a2d32', '#0f1114'] as const;
 const DANGER_HEX = ['#cc3333'] as const;
 const WARNING_HEX = ['#b89040'] as const;
 
-const L1_EXCLUDED_HEX: ReadonlySet<string> = new Set<string>([
+/** DEC-110 wreckage-body cells. Mean >55 so they skip L1; nearestPalette also skips them. */
+export const DEBRIS_HEX = ['#50463c', '#5d483e', '#4f4835'] as const;
+export const DEBRIS_HEX_SET: ReadonlySet<string> = new Set(DEBRIS_HEX);
+
+export const L1_EXCLUDED_HEX: ReadonlySet<string> = new Set<string>([
   ...TEAL_FAMILY_HEX,
   ...L3_WARM_HEX,
   ...L4_GLOW_HEX,
@@ -180,7 +187,10 @@ export function nearestPalette(r: number, g: number, b: number): Rgb {
   const target: Rgb = [r, g, b];
   let best = PALETTE[0]!;
   let bestD = Infinity;
-  for (const p of PALETTE) {
+  for (let i = 0; i < PALETTE.length; i++) {
+    const hex = PALETTE_HEX[i]!;
+    if (DEBRIS_HEX_SET.has(hex)) continue;
+    const p = PALETTE[i]!;
     const d = rgbDist2(p, target);
     if (d < bestD) {
       bestD = d;

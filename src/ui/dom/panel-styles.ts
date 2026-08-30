@@ -632,6 +632,74 @@ const CSS = `
 #rift-minimap.device-plate::after {
   z-index: 1; /* 暗扫描压在圆画布上，与左上同一条 repeating 暗线，不要另写 teal */
 }
+/* 迭代 10 翻找：交互提示 + 装置读数。挂调用方 overlay 根，不写死 body。
+   载体 A 随身罩；与撤离提示同区（底中），避开 S10 中心禁区。 */
+#loot-search-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%);
+  display: none;
+  font: 13px 'Courier New', Courier, monospace;
+  color: #c8cdd4;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 1100;
+}
+#loot-search-prompt .prompt-key,
+#loot-search-prompt .prompt-action {
+  display: inline;
+}
+#loot-search-prompt .prompt-key {
+  color: #c8cdd4;
+  margin-right: 6px;
+}
+#loot-search-prompt .prompt-action {
+  color: #c8cdd4;
+}
+#loot-search-channel.device-plate {
+  left: 50%;
+  bottom: 58px;
+  transform: translateX(-50%);
+  width: 96px;
+  padding: 4px 6px;
+  display: none;
+  z-index: 1100;
+}
+#loot-search-channel .channel-track {
+  position: relative;
+  z-index: 1;
+  height: 3px;
+  background: #080a0c;
+  border: 1px solid #151a1e;
+  overflow: hidden;
+}
+#loot-search-channel .channel-fill {
+  height: 100%;
+  width: 0%;
+  background: #1aad96;
+}
+#loot-search-kindling {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font: 13px 'Courier New', Courier, monospace;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  z-index: 1100;
+}
+#loot-search-kindling .kindling-label {
+  font-size: 12px;
+  color: #8a8f96;
+}
+#loot-search-kindling .kindling-value {
+  font-size: 13px;
+  color: #c4873a;
+}
+
 #rift-minimap canvas {
   display: block;
   width: 66px;
@@ -876,6 +944,8 @@ export interface ToastInlineOptions {
   /** Pickup `+N` / passive short flash: mount on `#dom-ui-root` at `position`,
    *  do not occupy the 2-slot Channel B queue. */
   skipQueue?: boolean;
+  /** Override mount for skipQueue flashes. Gym passes the lesson overlay root. */
+  host?: HTMLElement;
 }
 
 const TOAST_INLINE_FADE_STYLE_ID = 'toast-inline-fade-style';
@@ -961,7 +1031,7 @@ export function showToastInline(html: string, opts: ToastInlineOptions): void {
       extraStyle,
     ].join(';');
     toast.innerHTML = html;
-    getDomUiRoot().appendChild(toast);
+    (opts.host ?? getDomUiRoot()).appendChild(toast);
     setTimeout(() => toast.remove(), durationMs);
     return;
   }

@@ -7,6 +7,7 @@ import { RIFT_FRAGMENT_DATA, type RiftFragmentDef } from '@/generated/rift-fragm
 import { moteSlide, shadeAt } from '@/generation/atmosphere';
 import { isContaminationAge, isRuinSeverity } from '@/generation/fragment-roll';
 import {
+  DEBRIS_HEX_SET,
   quantizeInGroup,
   TEAL_SUBSET_CORE,
   TEAL_SUBSET_DEEP_MID,
@@ -39,7 +40,8 @@ const PALETTE_HEX = [
   '#080a0c', '#0a0b0d', '#0d1114', '#151a1e', '#2a2420', '#1e2228', '#2a2018', '#24221e',
   '#1a1e18', '#2c2e33', '#3a3d42', '#4a4e55', '#5a5f66', '#8a5c2a', '#c4873a', '#1a7a9a',
   '#0e4a3f', '#1a6b5c', '#1aad96', '#2ae6c8', '#3cffd4', '#7fffee', '#4adf8a', '#b0fff5',
-  '#e0a848', '#2e2d30', '#2a2a2e', '#3a3838', '#1a1c1f', '#2a1f1c', '#8a8f96', '#c8cdd4',
+  '#e0a848', '#2e2d30', '#2a2a2e', '#3a3838', '#1a1c1f', '#2a1f1c', '#50463c', '#5d483e',
+  '#4f4835', '#8a8f96', '#c8cdd4',
   '#cc3333', '#b89040', '#2a2d32', '#0f1114',
 ];
 const PALETTE: ReadonlyArray<readonly [number, number, number]> = PALETTE_HEX.map((h) => [
@@ -47,6 +49,9 @@ const PALETTE: ReadonlyArray<readonly [number, number, number]> = PALETTE_HEX.ma
   parseInt(h.slice(3, 5), 16),
   parseInt(h.slice(5, 7), 16),
 ]);
+const PALETTE_WITHOUT_DEBRIS: ReadonlyArray<readonly [number, number, number]> = PALETTE.filter(
+  (_rgb, i) => !DEBRIS_HEX_SET.has(PALETTE_HEX[i]!),
+);
 
 /** art-direction.md §2.2 name → hex. Membership is PALETTE_HEX (= docs/art/palette.json). */
 const ART_DIRECTION_HEX: Readonly<Record<string, string>> = {
@@ -80,6 +85,9 @@ const ART_DIRECTION_HEX: Readonly<Record<string, string>> = {
   'bone-grey': '#3a3838',
   'earth-dark': '#1a1c1f',
   'brick-dark': '#2a1f1c',
+  'debris-earth': '#50463c',
+  'debris-rust': '#5d483e',
+  'debris-wood': '#4f4835',
   'ui-text': '#8a8f96',
   'ui-text-bright': '#c8cdd4',
   'ui-danger': '#cc3333',
@@ -189,7 +197,7 @@ function nearestIn(
 }
 
 function nearestPalette(r: number, g: number, b: number): readonly [number, number, number] {
-  return nearestIn(r, g, b, PALETTE);
+  return nearestIn(r, g, b, PALETTE_WITHOUT_DEBRIS);
 }
 
 /** Hue window ≈ 144°–209°. Fog-dimmed cluster pixels stay in the legal cluster five. */

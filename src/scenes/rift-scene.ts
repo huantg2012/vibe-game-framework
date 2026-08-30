@@ -26,11 +26,10 @@ import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { CombatSystem, COMBAT_FX_DEPTH, type CombatCueId, type NoiseLevel } from '@/systems/combat-system';
 import { ContaminationHostSystem } from '@/systems/contamination-host-system';
-import { ContaminantNodeSystem } from '@/systems/contaminant-node-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { ExtractionSystem } from '@/systems/extraction-system';
 import { growthSystem } from '@/systems/growth-system';
-import { LootSystem } from '@/systems/loot-system';
+import { LootSearchSystem } from '@/systems/loot-search-system';
 import { RunController } from '@/systems/run-controller';
 import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
@@ -83,8 +82,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly ai = new AISystem();
   private readonly combat = new CombatSystem();
   private readonly hosts = new ContaminationHostSystem();
-  private readonly loot = new LootSystem();
-  private readonly contaminantNodes = new ContaminantNodeSystem();
+  private readonly search = new LootSearchSystem();
   private readonly toolSystem = new ToolSystem();
   private readonly extraction = new ExtractionSystem();
   private readonly runController = new RunController();
@@ -112,6 +110,8 @@ export class RiftScene extends Phaser.Scene {
   private debugAccumulatorMs = Number.POSITIVE_INFINITY;
   private layoutDebug = { seed: 0, fragmentTypeId: '', recipeId: '' };
   private lastStepAt = -1000;
+  private hitThisFrame = false;
+  private probeSearchHeld = false;
   private wasSpotted = false;
   private atmosphereHeldOff = false;
   private atmosphereRestoreAt = 0;
@@ -136,10 +136,11 @@ export class RiftScene extends Phaser.Scene {
   create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[] }): void {
     const sortieModifiers = data?.modifiers;
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
-    const seed = Date.now() >>> 0;
+    const seed = readRiftSeed();
+    const recipeId = readRiftRecipeId();
     let generated;
     try {
-      generated = generateRiftLayout(seed);
+      generated = generateRiftLayout(seed, recipeId ? { recipeId } : undefined);
     } catch (err) {
       console.error(`[RiftScene] generateRiftLayout(${seed}) failed`, err);
       throw err;
@@ -203,7 +204,7 @@ export class RiftScene extends Phaser.Scene {
     // Apply growth modifiers on top of module modifiers
     const growthMods = growthSystem.getModifiers();
     const effectiveChaosRate = (sortieModifiers?.chaosRateModifier ?? 1.0) * (1 - growthMods.chaosResist);
-    // growthMods.kindlingAffinity (+N per pickup) applied through LootSystem config below
+    // growthMods.kindlingAffinity (+N per pickup) applied through LootSearchSystem config below
     // growthMods.vitalityBonus (+HP) applied through combat system max health
 
     const startingChaos = sortieModifiers?.startingChaos ?? gameState.getStartingChaos();
@@ -220,14 +221,16 @@ export class RiftScene extends Phaser.Scene {
     });
     this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true });
 
-    this.loot.create(this, layout.kindlingNodes, this.player.getSprite(), {
+    this.search.create(this, layout.kindlingNodes, layout.contaminantNodes, {
+      overlayRoot: getDomUiRoot(),
       getVisibilityAt: this.visibilityAt,
+      fragmentTypeId: generated.fragmentTypeId,
+      extraction: {
+        position: layout.extractionPoint.position,
+        radius: layout.extractionPoint.triggerRadius,
+      },
+      onNoise: this.reportNoise,
       kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
-    });
-
-    // Contaminant pickup nodes (Slice 3)
-    this.contaminantNodes.create(this, layout.contaminantNodes, this.player.getSprite(), {
-      getVisibilityAt: this.visibilityAt,
     });
 
     // Tool system (Slice 4/5): sortie loadout with expanded options. The Slice 5 (T1/T2)
@@ -248,8 +251,8 @@ export class RiftScene extends Phaser.Scene {
           if (body) body.enable = enabled;
         },
         setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
-        getCollectedNodes: () => this.contaminantNodes.getCollectedPositions(),
-        addKindling: (n) => this.loot.addBonusKindling(n),
+        getCollectedNodes: () => this.search.getCollectedContaminantPositions(),
+        addKindling: (n) => this.search.addBonusKindling(n),
         setEnemySpeedMultiplier: (id, mult) => this.ai.setEnemySpeedMultiplier(id, mult),
         setEnemyMovementLocked: (id, locked) => this.ai.setEnemyMovementLocked(id, locked),
         setEnemyPerceptionMultiplier: (id, mult) => this.ai.setEnemyPerceptionMultiplier(id, mult),
@@ -259,7 +262,7 @@ export class RiftScene extends Phaser.Scene {
         setDecoyPosition: (pos) => this.ai.setDecoyPosition(pos),
         damageEnemy: (id, amount) => this.combat.applyToolDamage(id, amount),
         showAbyssReveal: (enemies, nodes, durationMs) => this.minimap.showAbyssReveal(enemies, nodes, durationMs),
-        getKindlingPositions: () => layout.kindlingNodes.map((n) => ({ ...n.position })),
+        getKindlingPositions: () => this.search.getUncollectedSearchPositions(),
         boostChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateMult(mult, durationMs),
         reduceChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateReduction(mult, durationMs),
         // T7 rewire: the 8 Slice 4 tools' enemy-facing overrides, wired the same way.
@@ -285,7 +288,7 @@ export class RiftScene extends Phaser.Scene {
     this.runController.create(this, {
       pauseChaos: (paused) => this.chaos.setPaused(paused),
       setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
-      getCarriedKindling: () => this.loot.getCarriedKindling(),
+      getCarriedKindling: () => this.search.getCarriedKindling(),
     });
 
     // Build tool slot info for HUD display. The passive slot is always the last unlocked
@@ -316,6 +319,7 @@ export class RiftScene extends Phaser.Scene {
       canExtract: () => this.extraction.canExtract(),
       isRunEnded: () => this.runController.isRunEnded(),
       toolSlots: toolSlots.length > 0 ? toolSlots : undefined,
+      suppressExtractPrompt: true,
     });
     this.encounter.create();
     this.detectionPulse.create();
@@ -395,8 +399,21 @@ export class RiftScene extends Phaser.Scene {
 
     // T9 systems
     this.chaos.update(delta);
-    this.loot.update(delta);
-    this.contaminantNodes.update(delta);
+    const toolJustDown: boolean[] = [];
+    for (let i = 0; i < this.toolKeys.length; i++) {
+      toolJustDown[i] = Phaser.Input.Keyboard.JustDown(this.toolKeys[i]!);
+    }
+    this.search.update(delta, {
+      playerPos: this.player.getPosition(),
+      searchHeld: this.probeSearchHeld || Boolean(this.extractKey?.isDown),
+      moving: this.player.isMoving(),
+      attacking: Boolean(this.attackKey?.isDown),
+      toolPressed: toolJustDown.some(Boolean),
+      hitThisFrame: this.hitThisFrame,
+      paused: false,
+      runEnded: this.runController.isRunEnded(),
+    });
+    this.hitThisFrame = false;
     this.toolSystem.update(delta);
     this.tickDefenseHudEffects(delta);
     this.syncHudActiveEffects();
@@ -406,7 +423,7 @@ export class RiftScene extends Phaser.Scene {
 
     // Tool key input (edge-triggered), one entry per active sortie slot.
     for (let i = 0; i < this.toolKeys.length; i++) {
-      if (Phaser.Input.Keyboard.JustDown(this.toolKeys[i]!)) {
+      if (toolJustDown[i]) {
         this.toolSystem.useSlot(i);
       }
     }
@@ -421,8 +438,13 @@ export class RiftScene extends Phaser.Scene {
       delta
     );
 
-    // Extraction key (edge-triggered)
-    if (this.extractKey && Phaser.Input.Keyboard.JustDown(this.extractKey)) {
+    // Extraction key (edge-triggered). Search holds E; extract wins on same-frame JustDown
+    // only when the shared prompt is extract (nearer / same-dist extraction).
+    if (
+      this.extractKey
+      && Phaser.Input.Keyboard.JustDown(this.extractKey)
+      && this.search.getPrompt() === 'extract'
+    ) {
       this.extraction.requestExtract();
     }
     // Restart key handled via event listener (see bindExtractionKeys)
@@ -519,12 +541,12 @@ export class RiftScene extends Phaser.Scene {
     eventBus.on(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
     eventBus.on(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
     eventBus.on(GameEvent.PLAYER_DIED, this.onRunEnded);
+    eventBus.on(GameEvent.PLAYER_DAMAGED, this.onPlayerDamaged);
     eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
     eventBus.on(GameEvent.RIFT_EXITED, this.onRunEnded);
     eventBus.on(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
     eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
     eventBus.on(GameEvent.CHAOS_CHANGED, this.onChaosChangedAudio);
-    eventBus.on(GameEvent.KINDLING_COLLECTED, this.onPickupAudio);
     eventBus.on(GameEvent.ITEM_COLLECTED, this.onPickupAudio);
     eventBus.on(GameEvent.ITEM_USED, this.onUseAudio);
     eventBus.on(GameEvent.TOOL_USED, this.onUseAudio);
@@ -576,6 +598,10 @@ export class RiftScene extends Phaser.Scene {
       this.toolKeys.push(keyboard.addKey(codes[keyName], true, false));
     }
   }
+
+  private readonly onPlayerDamaged = (): void => {
+    this.hitThisFrame = true;
+  };
 
   private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {
     this.ai.reportDamage(enemyId, this.player.getPosition());
@@ -726,7 +752,7 @@ export class RiftScene extends Phaser.Scene {
     const threat = spotted ? Math.max(0.5, chaosThreat) : chaosThreat;
 
     let prox = 0;
-    const nodes = this.contaminantNodes.getRemainingPositions();
+    const nodes = this.search.getRemainingContaminantPositions();
     if (nodes.length > 0) {
       let best = Infinity;
       for (const node of nodes) {
@@ -1230,12 +1256,12 @@ export class RiftScene extends Phaser.Scene {
     eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
     eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
     eventBus.off(GameEvent.PLAYER_DIED, this.onRunEnded);
+    eventBus.off(GameEvent.PLAYER_DAMAGED, this.onPlayerDamaged);
     eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRunEnded);
     eventBus.off(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
     eventBus.off(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
     eventBus.off(GameEvent.CHAOS_CHANGED, this.onChaosChangedAudio);
-    eventBus.off(GameEvent.KINDLING_COLLECTED, this.onPickupAudio);
     eventBus.off(GameEvent.ITEM_COLLECTED, this.onPickupAudio);
     eventBus.off(GameEvent.ITEM_USED, this.onUseAudio);
     eventBus.off(GameEvent.TOOL_USED, this.onUseAudio);
@@ -1272,8 +1298,7 @@ export class RiftScene extends Phaser.Scene {
     this.runController.destroy();
     this.extraction.destroy();
     this.toolSystem.destroy();
-    this.contaminantNodes.destroy();
-    this.loot.destroy();
+    this.search.destroy();
     this.chaos.destroy();
     this.ai.destroy();
     this.trail.destroy();
@@ -1367,7 +1392,7 @@ export class RiftScene extends Phaser.Scene {
       `combat cue ${combat.lastCue}  noise ${combat.lastNoise}`,
       `chaos ${this.chaos.getValue().toFixed(1)} [${this.chaos.getStage()}] ` +
         `rate ${this.chaos.getRate().toFixed(2)}/s  peak ${this.chaos.getPeak().toFixed(0)}`,
-      `loot ${this.loot.getCarriedKindling()} carried  ${this.loot.getRemainingNodes()} remaining`,
+      `loot ${this.search.getCarriedKindling()} carried  ${this.search.getRemainingCount()} remaining`,
     ];
 
     // Per-enemy line: the fastest way to check a downgrade chain actually walks itself
@@ -1386,4 +1411,61 @@ export class RiftScene extends Phaser.Scene {
     lines.push('F1 overlay   ESC menu');
     this.debugPanel.textContent = lines.join('\n');
   }
+
+  probePlacePlayer(x: number, y: number): void {
+    const sprite = this.player.getSprite();
+    sprite.setPosition(x, y);
+    const body = sprite.body as Phaser.Physics.Arcade.Body | null;
+    body?.reset(x, y);
+    this.player.postUpdate();
+  }
+
+  probeSetSearchHeld(held: boolean): void {
+    this.probeSearchHeld = held;
+  }
+
+  probeGetSearchState(): {
+    prompt: string | null;
+    progress: number | null;
+    remaining: number;
+    kindling: number;
+    fragmentTypeId: string;
+    seed: number;
+    player: { x: number; y: number };
+    nodes: ReadonlyArray<{
+      id: string;
+      kind: 'kindling' | 'contaminant';
+      x: number;
+      y: number;
+      collected: boolean;
+    }>;
+  } {
+    const pos = this.player.getPosition();
+    return {
+      prompt: this.search.getPrompt(),
+      progress: this.search.getChannelProgress01(),
+      remaining: this.search.getRemainingCount(),
+      kindling: this.search.getCarriedKindling(),
+      fragmentTypeId: this.layoutDebug.fragmentTypeId,
+      seed: this.layoutDebug.seed,
+      player: { x: pos.x, y: pos.y },
+      nodes: this.search.getNodesProbe(),
+    };
+  }
+}
+
+function readRiftSeed(): number {
+  const query = new URLSearchParams(window.location.search).get('riftSeed');
+  if (query && Number.isFinite(Number(query))) return Number(query) >>> 0;
+  const hash = window.location.hash;
+  const tagged = /^#rift=(\d+)$/.exec(hash);
+  if (tagged) return Number(tagged[1]) >>> 0;
+  return Date.now() >>> 0;
+}
+
+/** Dev-only recipe lock for review screenshots. Omit = live pickRecipe. */
+function readRiftRecipeId(): string | undefined {
+  if (!import.meta.env.DEV) return undefined;
+  const query = new URLSearchParams(window.location.search).get('riftRecipe');
+  return query && query.length > 0 ? query : undefined;
 }

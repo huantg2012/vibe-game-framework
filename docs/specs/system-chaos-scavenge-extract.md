@@ -2,9 +2,9 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: director agent（2026-08-28 回填 Slice 1 试玩结论到待验证假设）
-last-modified-date: 2026-08-28
-slice: 1 (extended in 5.5, 6, 7)
+last-modified-by: design agent（2026-08-30 迭代 10：拾取改读条翻找，规则 14/15/16/17/18/30g 改口）
+last-modified-date: 2026-08-30
+slice: 1 (extended in 5.5, 6, 7, 迭代 10)
 interface-changed: false
 interfaces-with:
   - system-movement-vision     # T1：经场景层消费其三个视野调制器 + Player.setSpeedModifier('chaos')；撤离点注册为 glow source
@@ -15,7 +15,7 @@ interfaces-with:
 exposes:
   - ChaosSystem.getValue() / getRate() / getStage() / addChaos(source, amount) / setPaused(b)
   - getChaosModulators(value)  # 纯函数：混乱值 → { radiusScale, edgeCorruption, screenFlicker, speedMult }
-  - LootSystem.getCarriedKindling() / getRemainingNodes()
+  - LootSearchSystem.getCarriedKindling() / getRemainingCount() / getUncollectedSearchPositions()  # 迭代 10：触碰拾取（LootSystem）退役，读条翻找上线（DEC-108 / DEC-109）
   - ExtractionSystem.canExtract() / requestExtract()
   - RunController.endRun(reason)  # 出击结束的唯一出口（撤离 / 死亡）
   - 事件 CHAOS_CHANGED { value, delta, max, rate? }（`rate` 为建议新增字段）
@@ -29,7 +29,7 @@ exposes:
 
 # 系统设计：混乱值 + 搜刮 + 撤离
 
-> **TL;DR**: 定义驱动"贪婪 vs 撤退"的三件套——混乱值（随时间单调上涨、可溢出 100 的压力钟，惩罚经 T1 的三个视野调制器 + 移速调制表达）、薪柴搜刮（按"离撤离点的路程 × 巡逻覆盖度"分档定价的固定地图散布物）、撤离（按 E 确认，结算带出薪柴）；对外暴露混乱值/薪柴/出击结束的事件与查询，以及供 T6 消费的地图布局约束。
+> **TL;DR**: 定义驱动"贪婪 vs 撤退"的三件套——混乱值（随时间单调上涨、可溢出 100 的压力钟，惩罚经 T1 的三个视野调制器 + 移速调制表达）、薪柴搜刮（按"离撤离点的路程 × 巡逻覆盖度"分档定价的散布物；迭代 10 起与污染物节点统一为可翻找对象——外观不泄露内容物，按住 E 读条拾取，读条发声，完成才揭晓）、撤离（按 E 确认，结算带出薪柴）；对外暴露混乱值/薪柴/出击结束的事件与查询，以及供 T6 消费的地图布局约束。
 
 ## 概述
 
@@ -237,12 +237,17 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
 ### L — 搜刮
 
-14. **拾取方式：走上去即自动拾取，无需按键**。玩家碰撞体与节点距离 ≤ `LOOT.PICKUP_RADIUS`（建议 16 px）时立即拾取。
-    - 为什么不加确认键：**决策发生在"要不要走过去"，不在"要不要弯腰"**。在决策已经完成的地方加一次按键只是操作噪音。与撤离形成刻意对比——撤离是不可逆的，所以要按键；拾取是纯收益的，所以不要。
-15. **拾取即结算**：`carried += node.value`，节点 `collected = true`、禁用碰撞体、隐藏 sprite，emit `KINDLING_COLLECTED { amount: node.value, total: carried }`。节点不重生。
-16. **拾取不依赖可见性**：即使节点当前不在视野内（例如玩家从黑暗中撞上它），仍然拾取。逻辑与渲染分离——"我明明踩上去了却没捡到"是纯粹的挫败，没有任何设计价值。
-17. **薪柴不是发光泄露源**（T1 规则 19）。节点 sprite 的 alpha = `VisibilitySystem.getVisibilityAt(node.position)`，视野外即完全不可见。搜刮必须靠视野推进，否则退化为"看着光点跑过去"。
-18. **没有记忆标记（只约束薪柴节点）**：离开当前视野的已发现薪柴节点，不在主画面或 HUD 上留独立方位标记。玩家自己记「那个节点在哪」仍是信息不足的一部分。本条**不**禁止小地图记住已探索格子——战争迷雾是规则 30 的另一条规则。深渊之眼时限内画在小地图上的节点菱形是工具揭示，不是本条所说的记忆标记。→ 列为待验证假设；若试玩证明这造成的是烦躁而非紧张，最小补丁是给**已被看见过**的节点加极弱 glow，而不是给全部节点加。
+14. **拾取方式：持续按键读条翻找（迭代 10，DEC-108）**。薪柴节点与污染物节点统一为**可翻找对象**：外观不泄露内容物类型与 tier（渲染层规则；数据层仍分 `kindlingNodes` / `contaminantNodes` 两个数组，见 `docs/design-notes/loot-search.md` 决策 6）。玩家进入对象交互半径 `LOOT.SEARCH_RADIUS`（48 px，与撤离触发半径同值）且对象当前可见时，HUD 交互提示显示 `[E] 翻找`；**按住 E 读条 `LOOT.SEARCH_CHANNEL_MS`（建议 1200 ms，统一不分档）**，读条完成才结算。
+    - 本规则取代原「走上去即自动拾取，无需按键」及其设计理由（「决策发生在要不要走过去，不在要不要弯腰」）——该理由被人 2026-08-30 新方向明确取代（DEC-108）。读条制下拾取的决策发生在「要不要停下来翻」：停步承诺 + 一次可疑声响 + 时间消费，见规则 14a/14b。
+    - **键位与上下文**：翻找复用 E（撤离、净化点模块、改造祭坛同键，全项目唯一交互动词键）。同一时刻只存在一个交互上下文：撤离点触发半径与翻找交互半径同时覆盖玩家时，取距玩家更近者；同距撤离优先。提示文案随上下文切换（`[E] 撤离` / `[E] 翻找`），同一时刻只显示一条。撤离上下文内按 E 仍是按下即撤离（规则 22/23 不动）；翻找上下文内按住 E 才读条。
+    - **打断规则**：读条期间，松开 E / 任何移动输入 / 攻击输入 / 主动工具键（Q/F/G）/ 受击——任一发生即打断，**进度清零**。不锁移动、不锁攻击：玩家「想做别的」即读作放弃翻找。Esc 暂停菜单 = 场景暂停，读条冻结保进度，恢复后继续（元层操作不惩罚）。
+    - 为什么不按内容物 / tier 分时长：时长随内容物变化 = 时长泄露内容物，违反「翻前不可分」；tier 的成本已由位置定价（规则 20），统一时长与混乱值「匀速、可预测」同纪律——玩家必须能脑内估算「翻一个 = 多少秒」。完整论述见 `docs/design-notes/loot-search.md` 决策 1。
+14a. **翻找发声**：读条**开始时**经场景层调一次 `AISystem.reportNoise`（与战斗噪音同一钩子）：半径 `LOOT.SEARCH_NOISE_RADIUS`（96 px，与挥击噪音同级）、级别 `'suspicious'`。读条期间不持续发声；完成与打断不发声。理由：不发声则读条 = 强制停步，而停步对改写体几乎隐形（`system-enemy-ai` 停步听觉 ≤40 px 且察觉度封顶 0.20），翻找反而比走路更安全，「读条 = 风险决策」不成立；suspicious（非 alert）是因为翻找是搜刮基本动作（约 11 次/局），alert 会让听觉敌人成为搜刮的硬禁止而非风险权衡。读条期间玩家移动状态 = 停步（听觉连续填充按停步处理；视觉通道照常——在视锥内翻找照样被看见）。
+14b. **读条期间混乱值照常累积**：读条不暂停混乱值，也**不**加额外脉冲——翻找的混乱成本就是时间流逝本身（1200 ms × 0.5/s ≈ 0.6 点/次），与「混乱让时间变货币」一致，不加第二笔税。
+15. **读条完成即结算**：薪柴节点 `carried += node.value`，节点 `collected = true`、禁用碰撞体、隐藏 sprite，emit `KINDLING_COLLECTED { amount: node.value, total: carried }`；污染物节点按权重 roll 稀有度与类型，调 `contaminantSystem.acquire`（内部 emit `CONTAMINANT_ACQUIRED`）。节点不重生。**完成才揭晓内容物**：薪柴走既有 HUD 通道（右上计数 + `showPickupFlash` +N）；残渣走新增 toast-inline（`残渣` + 稀有度星等，不给具体类型名——类型名留结算面板与库存检视）。揭晓色谱：薪柴世界内 teal 余晖谱 / HUD warm-dim；残渣 teal ramp（common 暗 / fine contam-core / rare contam-bright，与 UI 稀有度色谱同一份），**禁止紫谱**（理由见 `docs/design-notes/loot-search.md` 决策 8）。揭晓动画不阻断输入。
+16. **可见才能翻**：交互提示只在对象当前可见（`VisibilitySystem.getVisibilityAt(node.position) > 0`）时显示，读条只能在对象可见时开始——提示若无视可见性，提示本身变成扫黑暗找节点的探测器，违反规则 17。黑暗中的对象不可见 = 玩家不知道它存在，无「踩上去没捡到」的挫败（原规则 16 的顾虑在读条制下不成立）。**读条期间对象离开视野（如混乱收缩）不打断**已开始的读条——翻找是手部动作，开始后不需要持续视觉。
+17. **可翻找对象不是发光泄露源**（T1 规则 19）。对象 sprite 的 alpha = `VisibilitySystem.getVisibilityAt(node.position)` × 活层系数（呼吸 / 脉冲形式归表现层），视野外即完全不可见。搜刮必须靠视野推进，否则退化为"看着光点跑过去"。
+18. **没有记忆标记（约束全部可翻找对象）**：离开当前视野的已发现可翻找对象（薪柴与污染物节点），不在主画面或 HUD 上留独立方位标记。玩家自己记「那个对象在哪」仍是信息不足的一部分。本条**不**禁止小地图记住已探索格子——战争迷雾是规则 30 的另一条规则。深渊之眼时限内画在小地图上的对象菱形是工具揭示（规则 30g），不是本条所说的记忆标记。→ 列为待验证假设；若试玩证明这造成的是烦躁而非紧张，最小补丁是给**已被看见过**的对象加极弱 glow，而不是给全部对象加。
 19. **无携带上限**（`carried` 无上限）。`vision.md` 的储藏模块容量属于净化点元循环（Slice 2+）。本 Slice 只验证"时间压力 vs 贪婪"这一条轴；加入容量上限会引入第二条约束轴，两者的信号会互相污染，人将无法判断纠结感来自哪一个。
 20. **价值分档与分布原则**（这是本系统真正的关卡设计工具，供 T6 消费）：
 
@@ -308,7 +313,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
     | 工具槽 | 左下 | `[Q]/[F]/[G]` + 工具中文名 + 余量 | 使用/装载变化 |
     | 薪柴计数 | 右上 | 表名 `薪柴` + 数字（warm-dim，无条形） | `KINDLING_COLLECTED` |
     | 小地图 | 右下 `#rift-minimap.device-plate` | 跟随玩家的圆形局部窗口：覆盖范围内同时显示已探索与未探索迷雾；玩家标记带朝向；覆盖范围内只标一个撤离竖缝；深渊之眼时限内在同一窗口画敌方方与节点菱形。挂 `#dom-ui-root`。见下方 30a–30k | 每帧（场景层翻译可见性与朝向） |
-    | 交互提示 | 屏幕中下 | `[E] 撤离`（仅可撤离时） | 进入/离开撤离点触发半径 |
+    | 交互提示 | 屏幕中下 | `[E] 撤离`（仅可撤离时）/ `[E] 翻找`（仅可翻找时，迭代 10）；同一时刻只显示一条，上下文取距玩家更近者、同距撤离优先；读条期间转为进度状态 | 进入/离开撤离点触发半径或可翻找对象交互半径（48 px，对象须可见） |
     | 结算面板 | 居中小读出（宽 360，DEC-049） | 见规则 33 | `RIFT_EXITED` |
 
     挂载：屏幕空间一律 `#dom-ui-root`。禁止用 Phaser `scrollFactor(0)` 画角锚 HUD。禁止把小地图挂到 `document.body` 再用 `position:fixed`。
@@ -330,7 +335,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
     本屏不像：战术 Dashboard 鹰眼全图、通用雷达细框、设置页缩略图。
 
-    **玩家必须回答的问题**：我在哪、探过哪儿？撤离点在不在这块窗口里、离我哪一侧？（深渊之眼生效时）敌人和薪柴在哪？
+    **玩家必须回答的问题**：我在哪、探过哪儿？撤离点在不在这块窗口里、离我哪一侧？（深渊之眼生效时）敌人和可翻找对象在哪？
 
     | 优先级 | 信息 | 说明 |
     | ------ | ---- | ---- |
@@ -339,7 +344,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
     | P0 | 带朝向的玩家标记 | 与主画面朝向同一真相 |
     | P0 | 覆盖范围内的那一个撤离竖缝 | 仍只标一个撤离点；竖缝可保留 |
     | P1 | （无） | 小地图不另设按键打开或放大 |
-    | P2 | 深渊之眼时限内的敌方方、节点菱形 | 接到同一圆形窗口，不另起一层 |
+    | P2 | 深渊之眼时限内的敌方方、可翻找对象菱形（不区分内容物，规则 30g） | 接到同一圆形窗口，不另起一层 |
 
     **打开方式**：踏入裂隙后右下常驻，无需按键。不居中、不阻断。净化点不出现。出击结束随 HUD 卸下。禁止占用区仍是信息架构 S10：画面中心 ±120×80 逻辑像素与玩家朝向前方。
 
@@ -357,7 +362,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
     30f. **玩家标记带朝向。** 标记朝向与主画面 `Player.getFacingAngle()` / `getFacing4()` 同一真相，由场景层每帧传入。禁止再做成无朝向十字作为终态。像素画法由 art 在既有暖色玩家标记上补朝向，不新造第二种玩家色。
 
-    30g. **深渊之眼接到同一圆形窗口。** 保留现有工具语义：时限、衰减、闪、敌方方、节点菱形。工具仍揭示所有敌人与未拾取薪柴节点的位置（含当前视野外）；小地图只在圆形覆盖范围内画出这些标记。不另起一层界面，不新造符号。
+    30g. **深渊之眼接到同一圆形窗口。** 保留现有工具语义：时限、衰减、闪、敌方方、对象菱形。迭代 10 改口（DEC-108）：工具揭示所有敌人与**全部未拾取可翻找对象**（薪柴 + 污染物节点，含当前视野外），**同一菱形标记，不区分内容物类型**——「翻前不可分」不被工具穿透，工具的特权是「知道哪里有东西」，不是「知道里面是什么」。小地图只在圆形覆盖范围内画出这些标记。不另起一层界面，不新造符号。
 
     30h. **仍只标一个撤离点。** 标记形状不新造第二种撤离符号；竖缝可保留。撤离点落在当前圆形窗口外时不画；落在窗口内时画那一条竖缝。
 
@@ -367,7 +372,7 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
     30k. **净化点没有小地图。** 本条只约束裂隙。不改生成器缓冲尺寸。不写撤离多样性、不写第二种敌人。
 
-    **结构层自检（机械层；审美待人终审）**：U1 载体 A、挂 `#dom-ui-root`。U5 可见词只用术语表已有项（撤离点 / 薪柴 / 裂隙）；本表面无新句子。U6 右下常驻，不占画面中心。U7 无按键、无悬停才可得的信息。U8 状态用已探索 / 未探索迷雾 / 深渊之眼生效中，不用 hover/disabled。U9 玩家带朝向、撤离用竖缝、深渊敌人用方、节点用菱形，不靠同形只靠色。U12 上表三款参考。
+    **结构层自检（机械层；审美待人终审）**：U1 载体 A、挂 `#dom-ui-root`。U5 可见词只用术语表已有项（撤离点 / 薪柴 / 裂隙）；本表面无新句子。U6 右下常驻，不占画面中心。U7 无按键、无悬停才可得的信息。U8 状态用已探索 / 未探索迷雾 / 深渊之眼生效中，不用 hover/disabled。U9 玩家带朝向、撤离用竖缝、深渊敌人用方、可翻找对象用菱形，不靠同形只靠色。U12 上表三款参考。
 
     **视觉规格部分由 Art agent 补充。**
 
@@ -470,8 +475,8 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
   | 操作 | 键位 | 效果 |
   | ---- | ---- | ---- |
-  | 拾取薪柴 | 无（走上去自动） | 立即入账，HUD 右上数字跳动 |
-  | 撤离 | `E`（仅在撤离点触发半径内有效） | 结束本次出击 |
+  | 翻找（薪柴 / 残渣节点，迭代 10） | `E` 按住（对象交互半径 48 px 内且对象可见时） | 读条 1200 ms，完成即结算入账；读条开始发一次 suspicious 噪音（96 px）；松开 / 移动 / 攻击 / 主动工具键 / 受击即打断，进度清零 |
+  | 撤离 | `E`（仅在撤离点触发半径内有效；与翻找上下文同存时近者胜、同距撤离优先） | 结束本次出击 |
   | 返回净化点 | `R`（仅在结算面板显示时有效） | 撤离成功与阵亡都回净化点。阵亡禁止原地重开 |
 
   `E` / `R` 的按键读取归 RiftScene，不进 Player（Player 的输入只负责移动，见 T1 所有权边界）。
@@ -483,7 +488,10 @@ speedMult(t)      = 1.00                                   , t ≤ 75
   | 混乱值持续上涨 | 顶部条缓慢填充；50 起视野最外圈出现 teal 偏移；75 起视野开始收缩、脚步变沉；100 起全屏周期性微闪 |
   | 离散正增量入账（任何 `CHAOS_CHANGED` 且 `delta > 0`：占漆踩踏 +2/+4、占空体积过发射步长约 +1、战斗 +5、侦测 +3） | 既有左上混乱条走同一场两层反馈，不按来源分色分词。① 填充长度随新 `value` 立刻变长（已实现）。② 条头填充一次短促提亮（本批要补）：静默 teal 提到同谱下一档，hold 80ms + 回落 100ms，合计 180ms；不闪白、不改数字色、不套 `rift-hud-pulse`。使 +2 这种约 1～2 像素的变长仍能在 400ms 内被看见。战斗 +5 仍读作「这一刀花了钱」，但不单独开通道。不是头上跳字，不是薪柴右上 `+N` 闪。详见规则 32a。 |
   | 被敌人锁定为追击目标 | 混乱值条提亮 + `▲`，填充速度肉眼可见地翻倍 |
-  | 拾取薪柴 | 右上数字变化；节点 sprite 消失 |
+  | 翻找读条中 | 提示元素转为进度状态（进行中可辨）；读条开始时 96 px 内敌人起疑 |
+  | 翻找完成：薪柴 | 世界内揭晓动画（teal 余晖谱）；右上薪柴计数更新 + `+N` 闪（warm-dim）；节点 sprite 消失 |
+  | 翻找完成：残渣 | 世界内揭晓动画（teal ramp）；toast-inline `残渣` + 稀有度星等（右上资产区）；节点 sprite 消失；不给具体类型名 |
+  | 翻找被打断 | 进度清零，提示回到 `[E] 翻找` 或消失；对象保持未拾取 |
   | 走近撤离点 | 视野外就能看到它的微弱光点（glow source）；进入触发半径显示 `按 E 撤离` |
   | 撤离 | 输入冻结 0.6 s → 结算面板 |
   | 死亡 | 输入冻结 → 结算面板（标题为失败、带出 0） |
@@ -530,7 +538,11 @@ speedMult(t)      = 1.00                                   , t ≤ 75
 
 | 参数 | 含义 | 建议初值 | 合理范围 | 对博弈手感的影响 | 状态 |
 | ---- | ---- | -------- | -------- | ---------------- | ---- |
-| `LOOT.PICKUP_RADIUS` | 拾取判定半径 | 16 px | 12–24 | 太小会出现"擦边没捡到" | 技术定 · 新增 |
+| ~~`LOOT.PICKUP_RADIUS`~~ | ~~拾取判定半径~~ | ~~16 px~~ | — | **迭代 10 退役**（名义参数，代码无引用；读条制后由 `SEARCH_RADIUS` 取代） | 已退役（迭代 10） |
+| `LOOT.SEARCH_CHANNEL_MS` | 翻找读条时长（统一，不分档不分内容物） | 1200 ms | 800–2000 | 一次读条 = 0.6 点混乱（@0.5/s）；全翻 11 个 ≈ 6.6 点 ≈ 13 s 等效，占全清预算约 6%。太短读作「点一下」失去停步承诺；太长 11 次/局变拖沓。若 deep 档翻找显得太便宜，先调布点环境（巡逻密度），不是时长分档 | 建议值（待校准）· 新增（迭代 10） |
+| `LOOT.SEARCH_RADIUS` | 翻找交互半径 | 48 px（1.5 tile） | 32–64 | 与 `EXTRACTION.TRIGGER_RADIUS` 同值，全项目交互手感一致；太小会出现「擦边不能翻」 | 技术定 · 新增（迭代 10） |
+| `LOOT.SEARCH_NOISE_RADIUS` | 翻找发声半径（读条开始一次） | 96 px（3 tile） | 64–128 | 与挥击噪音同级：「翻找的动静 ≈ 挥一下武器」。决定翻找的暴露面——太大则听觉敌人成为搜刮硬禁止；太小则读条无潜行代价 | 建议值（待校准）· 新增（迭代 10） |
+| `LOOT.SEARCH_NOISE_LEVEL` | 翻找发声档位 | `'suspicious'` | — | suspicious = 「那边有什么在动」（模糊位置查看）；alert 会让每次翻找都成战斗级暴露 | 技术定 · 新增（迭代 10） |
 | `LOOT.NODE_COUNT` | 地图节点总数 | 8 | 6–12 | 决定决策次数。<6 则一局只有两三个抉择，样本不足；>12 则每个决策的分量被稀释 | 建议值（待校准）· 新增 |
 | `LOOT.VALUE_SAFE` | safe 档单价 | 1 | 1 | 作为价值单位，固定 | 技术定 · 新增 |
 | `LOOT.VALUE_CONTESTED` | contested 档单价 | 2 | 2–3 | 与等待成本的兑换率。调高会鼓励玩家去蹲安全窗口 | 建议值（待校准）· 新增 |
@@ -586,10 +598,12 @@ interface ChaosSystemAPI {
 /** 纯函数，无状态。由场景层 import 并把结果转发给 T1 的调制器 */
 declare function getChaosModulators(value: number): ChaosModulators;
 
-interface LootSystemAPI {
+interface LootSearchSystemAPI {             // 迭代 10：LootSystem 退役，读条翻找上线（DEC-108 / DEC-109）
   getCarriedKindling(): number;
-  getRemainingNodes(): number;              // 未拾取节点数，调试/结算用
-  getRemainingValue(): number;              // 未拾取总价值 → RunResult.kindlingLeftBehind
+  getRemainingCount(): number;              // 未拾取节点数，调试/结算用
+  getChannelProgress01(): number | null;    // 读条进行中返回 0–1，否则 null（场景层每帧查询驱动渲染）
+  getPrompt(): LootSearchPromptKind;        // 当前交互上下文提示（翻找 / 撤离 / 无）
+  getUncollectedSearchPositions(): readonly Vector2[];  // 深渊之眼：全部未拾取翻找对象，不区分类型
   reset(): void;
   destroy(): void;
 }
@@ -637,14 +651,20 @@ interface RunControllerAPI {
 | 同一敌人反复 alert→lost→alert | 侦测脉冲受 `DETECTION_BONUS_COOLDOWN` 去抖；速率倍率跟随集合，进出无副作用 |
 | 追击中的敌人被杀死 | `ENEMY_KILLED` 必须从 `chasingEnemies` 移除，否则倍率永久卡在 2.0。这是本系统最容易漏的一个 bug，QA 应专项检查 |
 | 追击中的敌人在场景销毁时仍在集合内 | `destroy()` 清空集合 |
-| 玩家踩到不可见的薪柴节点 | 正常拾取（规则 16） |
-| 同一帧踩到两个节点 | 各自独立结算，emit 两次 `KINDLING_COLLECTED` |
-| 已拾取节点被再次 overlap | `collected` 标志 + 禁用碰撞体双重保护 |
+| 玩家走到不可见的可翻找对象旁（迭代 10 改口） | 不显示提示、不能开始读条（规则 16：可见才能翻）。玩家不知道它存在，无挫败 |
+| 同一帧两个可翻找对象在交互半径内 | 上下文取距玩家更近者；同距按节点 id 排序稳定取一（避免提示抖动）。读条完成只结算当前上下文那一个 |
+| 已拾取节点被再次进入半径 | `collected` 标志 + 禁用碰撞体双重保护；不显示提示 |
+| 读条期间松开 E / 移动 / 攻击 / 主动工具键 / 受击 | 打断，进度清零（规则 14）；对象保持未拾取，可重新靠近再翻 |
+| 读条期间打开暂停菜单（Esc） | 场景暂停，读条冻结保进度，恢复后继续——元层操作不惩罚 |
+| 读条期间对象离开视野（混乱收缩） | 不打断（规则 16：开始后不需要持续视觉） |
+| 撤离点与可翻找对象同时在范围内 | 上下文取距玩家更近者，同距撤离优先；提示同一时刻只显示一条（`[E] 撤离` / `[E] 翻找`），玩家按键前看得见当前上下文 |
+| 读条完成同帧死亡 | `runEnded` 守卫不变。薪柴：完成帧入账后死亡仍全丢（规则 25/26）；残渣：`acquire` 直接进库存，死亡路径不回滚（现状真相，记录在 `docs/design-notes/loot-search.md`） |
+| 读条期间被追击 / 敌人接近 | 系统不干预、不自动打断——玩家自行选择打断逃跑或赌读完（这是读条风险决策的核心时刻） |
 | 空手撤离 | 允许，结算显示 0（规则 28） |
 | 玩家站在撤离点上但未按 E | 什么也不发生。提示常驻显示，直到离开半径 |
 | 撤离结算期间敌人仍在攻击 | 结算序列第 ② 步已 `setInputEnabled(false)`；同时 `RunController` 应在 `runEnded` 后忽略 `PLAYER_DIED`。撤离一旦确认就不可撤销（规则 23） |
 | `getChaosModulators` 收到 NaN / 负值 / 超界值 | 输入先 `clamp(0, HARD_CAP)`；输出在 setter 侧再钳一次（见映射节说明） |
-| 场景切换 / shutdown | ChaosSystem / LootSystem / ExtractionSystem 各自 `destroy()`：解绑全部事件监听、清空集合、`unregisterGlowSource('EXIT_01')`。（架构风险表：Phaser 场景切换内存泄漏） |
+| 场景切换 / shutdown | ChaosSystem / LootSearchSystem / ExtractionSystem 各自 `destroy()`：解绑全部事件监听、清空集合、`unregisterGlowSource('EXIT_01')`。（架构风险表：Phaser 场景切换内存泄漏） |
 | 重新出击（按 R） | Slice 6 起阵亡/撤离都回净化点，不再原地重开。若仍调用 `ChaosSystem.reset()` 再开新裂隙：初值读本次 `startingChaos`，不是写死 0。其余：`carried=0`、节点重置、`thresholdsFired` 按初值已越过的阈记为已触发 |
 
 ---
@@ -656,6 +676,7 @@ interface RunControllerAPI {
 | 来源 | 接收什么 | 形式 | 用途 |
 | ---- | -------- | ---- | ---- |
 | `system-enemy-ai`（T2/T7） | `ENEMY_ALERT { enemyId, alertLevel }` | 事件 | `alert`/`chase` → 侦测脉冲；`chase` → 加入追击集合 |
+| `system-enemy-ai` | `AISystem.reportNoise(pos, SEARCH_NOISE_RADIUS, 'suspicious')` | 经场景层调用（非事件；读条开始时一次，规则 14a） | 翻找发声——与战斗噪音同一钩子，不新造机制 |
 | `system-enemy-ai` | `ENEMY_LOST_PLAYER { enemyId }` | 事件 | 移出追击集合 |
 | `system-combat`（T4/T8） | `ENEMY_DAMAGED { enemyId, amount }` | 事件 | 玩家攻击命中 → 战斗脉冲 |
 | `system-combat` | `ENEMY_KILLED { enemyId, position }` | 事件 | 移出追击集合（关键，见边界情况） |
@@ -678,6 +699,8 @@ interface RunControllerAPI {
 
 ### 事件契约变更
 
+**迭代 10（读条翻找）无事件契约变更**：无新事件、无 payload 变更。读条开始 / 进行 / 打断不进事件总线——事件只代表「已发生的事实」，读条是进行中的过程，进度由场景层每帧查询驱动渲染（读条载体是三张抽卡的表现层差异点，渲染路径不能钉死在事件上）；读条完成 = 既有 `KINDLING_COLLECTED` / `CONTAMINANT_ACQUIRED`；打断无事实发生（无事件）。`interface-changed` 保持 false。
+
 以 `src/types/events.ts` 现状为准。本 spec 需要的全部事件均已存在，**仅一处建议新增字段**：
 
 | 事件 | 变更 | 理由 |
@@ -693,13 +716,13 @@ interface RunControllerAPI {
 
 | 对象 | 影响 |
 | ---- | ---- |
-| `src/config/constants.ts` | `CHAOS` 段需按"溢出决策"的变更表改写：`MAX_VALUE` 语义变更 + 新增 6 个字段 + `BASE_RATE` 建议下调 + `PENALTIES` 两档离散值**替换**为四锚点连续曲线（不允许两套并存）。新增 `LOOT` 与 `EXTRACTION` 段。由 code agent 在 T9 执行 |
+| `src/config/constants.ts` | `CHAOS` 段需按"溢出决策"的变更表改写：`MAX_VALUE` 语义变更 + 新增 6 个字段 + `BASE_RATE` 建议下调 + `PENALTIES` 两档离散值**替换**为四锚点连续曲线（不允许两套并存）。新增 `LOOT` 与 `EXTRACTION` 段。由 code agent 在 T9 执行。**迭代 10 追加**：`LOOT` 段 `PICKUP_RADIUS` 退役（名义参数，代码无引用），新增 `SEARCH_CHANNEL_MS: 1200` / `SEARCH_RADIUS: 48` / `SEARCH_NOISE_RADIUS: 96` / `SEARCH_NOISE_LEVEL: 'suspicious'`（见 L 节搜刮表） |
 | `src/types/events.ts` | 建议给 `CHAOS_CHANGED` payload 加可选 `rate` 字段 + 两条语义注释。由 code agent 在 T9 执行 |
 | `system-movement-vision`（T1） | **不新增「已见格子」只读接口。** 小地图已探索集合由场景层每帧用既有 `isPointVisible` / `getVisibilityAt` 累积。调制器取值仍由本 spec 填写。实现提醒：`setRadiusScale()` 必须让视野静止缓存失效（T1 规则 20）。见 escalate ⑤ |
 | `system-enemy-ai`（T2） | 无需修改设计，但本系统依赖其 `ENEMY_ALERT` 的 `alertLevel` 语义（`suspicious` = 怀疑、`alert` = 已确认发现、`chase` = 正在追击）与 `ENEMY_LOST_PLAYER` 的发出时机。若 T2 的语义与此不同，以 T2 为准并回改本 spec 规则 5/7 |
 | `system-combat`（T4） | 需要 emit `ENEMY_DAMAGED`（命中时）与 `PLAYER_DIED`（死亡时）。T4 的"战斗有代价"在混乱值侧已由本 spec 规则 6 落地，T4 无需自行修改混乱值 |
 | T6 固定地图 | 必须满足规则 21 的布局约束并提供 `RiftLayoutData`。这是本 spec 对地图提出的**硬要求**，不是建议——分布原则失效则整个博弈失效 |
-| `architecture.md` 模块注册表 | T9 完成后需登记 `ChaosSystem` / `LootSystem` 状态与接口，并新增 `ExtractionSystem`（或并入 `InteractionTrigger`）、`RunController`（`src/scenes/` 或 `src/managers/`，路径由 code agent 定）、`HUD`。**登记由 code agent 执行**，本 spec 不修改 architecture.md |
+| `architecture.md` 模块注册表 | T9 完成后需登记 `ChaosSystem` / `LootSearchSystem`（迭代 10 前为 `LootSystem`）状态与接口，并新增 `ExtractionSystem`（或并入 `InteractionTrigger`）、`RunController`（`src/scenes/` 或 `src/managers/`，路径由 code agent 定）、`HUD`。**登记由 code agent 执行**，本 spec 不修改 architecture.md |
 | `docs/progress/decisions-log.md` | 有两条设计取舍待 Director 记入：混乱值溢出（建议 DEC-010）、撤离改为按 E 确认（建议 DEC-011）。本 spec 不自行追加 |
 
 ---

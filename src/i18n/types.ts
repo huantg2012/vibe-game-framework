@@ -46,6 +46,13 @@ export interface LocaleSchema {
     kindling: {
       label: string;
     };
+    prompt: {
+      extract: string;
+      search: string;
+    };
+    residue: {
+      label: string;
+    };
   };
   rift: {
     exitHint: string;
