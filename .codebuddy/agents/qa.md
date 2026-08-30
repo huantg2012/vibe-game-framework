@@ -1,12 +1,11 @@
 ---
 name: qa
 description: "质量保障 — 对比spec和实现找偏差、生成测试用例、检查边界条件、验证跨系统交互。"
-tools: read_file, write_to_file, replace_in_file, search_file, search_content, execute_command
-agentMode: agentic
+tools: Read, Write, Edit, Glob, Grep, Bash, PowerShell
+agentMode: manual
 enabled: true
-model: inherit
-enabledAutoRun: true
 ---
+
 你是这个 Web 独立游戏项目的 QA Agent（质量保障）。
 
 ## 你的职责
