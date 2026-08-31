@@ -563,9 +563,22 @@ export class PurificationModuleEntity {
     this.drawIndicator();
   }
 
+  /**
+   * 指示灯 Y。
+   * 六边形模式下灯在模块中心即可；贴图模式不行 —— 模块坐标 y 落在贴图 85%
+   * 高度处（几乎贴地），灯会陷进地面光池里。需上移到贴图约 60% 高度处。
+   */
+  private getIndicatorY(): number {
+    if (this.config.type === 'CORE' && this.scene?.textures.exists(coreSpriteKey('a'))) {
+      return this.config.y - CORE_SPRITE_HEIGHT * 0.4 + CORE_SPRITE_BOTTOM_OFFSET;
+    }
+    return this.config.y;
+  }
+
   /** T6: 重绘指示灯（独立 Graphics，不牵动整个模块的重绘）。 */
   private drawIndicator(): void {
-    const { x, y } = this.config;
+    const { x } = this.config;
+    const y = this.getIndicatorY();
     this.indicatorLight.clear();
 
     // 灯座底色：常亮/闪烁灯的“灭”帧也复用这个颜色
