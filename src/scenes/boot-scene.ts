@@ -6,6 +6,11 @@
 import Phaser from 'phaser';
 import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
 import { audioManager } from '@/managers/audio-manager';
+import {
+  CORE_SPRITE_VARIANTS,
+  coreSpriteKey,
+  coreSpriteUrl,
+} from '@/entities/purification-module';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
 
 export class BootScene extends Phaser.Scene {
@@ -44,6 +49,12 @@ export class BootScene extends Phaser.Scene {
 
     for (const asset of AUDIO_ASSETS) {
       this.load.audio(asset.key, audioUrlsFor(asset));
+    }
+
+    // 核心模块抽卡贴图 v6（a=敬畏 b=仪式 c=封印）
+    // 来源 docs/art/review-2026-08-28/cards/，用 URL ?core=a|b|c 切换实测
+    for (const v of CORE_SPRITE_VARIANTS) {
+      this.load.image(coreSpriteKey(v), coreSpriteUrl(v));
     }
   }
 
