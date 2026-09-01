@@ -17,7 +17,10 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
-import { PurificationModuleEntity } from '@/entities/purification-module';
+import {
+  CORE_SPRITE_VARIANTS,
+  PurificationModuleEntity,
+} from '@/entities/purification-module';
 import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
@@ -261,6 +264,8 @@ export class PurificationScene extends Phaser.Scene {
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
+  // 核心抽卡方案切换（实测用）：1/2/3 -> A 敬畏 / B 仪式 / C 封印
+  private coreVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
   private panelClosedAt = 0;
   private lastStepAt = -1000;
@@ -490,6 +495,12 @@ export class PurificationScene extends Phaser.Scene {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
       this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
+      // 1/2/3 切换核心抽卡方案（实测对比用）
+      this.coreVariantKeys = [
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false),
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false),
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false),
+      ];
     }
 
     // C2: Listen for allocation confirmed to flash modules
@@ -655,6 +666,15 @@ export class PurificationScene extends Phaser.Scene {
           break;
         default:
           break;
+      }
+    }
+
+    // 核心抽卡方案切换（实测用）：1 -> A 敬畏，2 -> B 仪式，3 -> C 封印
+    for (let i = 0; i < this.coreVariantKeys.length; i++) {
+      const key = this.coreVariantKeys[i];
+      const variant = CORE_SPRITE_VARIANTS[i];
+      if (key && variant && Phaser.Input.Keyboard.JustDown(key)) {
+        this.coreModule?.setCoreVariant(variant);
       }
     }
 
@@ -1155,6 +1175,10 @@ export class PurificationScene extends Phaser.Scene {
       this.input.keyboard?.removeKey(this.tabKey, true);
       this.tabKey = null;
     }
+    for (const k of this.coreVariantKeys) {
+      this.input.keyboard?.removeKey(k, true);
+    }
+    this.coreVariantKeys = [];
 
     // Destroy systems
     this.atmosphere.destroy();

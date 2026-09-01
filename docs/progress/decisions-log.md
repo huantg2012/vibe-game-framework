@@ -5,6 +5,21 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+## DEC-111: 净化点模块视觉翻生产——核心 = v6-B 仪式贴图；净化器 = B1 横卧过滤罐图集；储藏仍几何回落（抽卡未定稿）
+- Date: 2026-09-01（人在 `purif-visual-pass` 分支完成并下令合入 `coh`；Director 本条登记）
+- Phase: Iterative Development（净化点视觉表现优化进行中；**不开独立迭代编号**——人未点名开迭代 11；活指针仍在迭代 5）
+- Type: Art + Architecture（世界实体首次走图片资源管线；规则 / 数值不动）
+- Context: 2026-08-28 审核认定净化点三模块是基本几何体，只完成「标识」、没完成「存在」（Findings P1，分批 B2）。人在独立分支上按抽卡制做核心 / 净化器 / 储藏。核心 v6 修正 45° 为真等距投影，三方案 A 敬畏 / B 仪式 / C 封印（差异 = 人对内核的三种态度，内核可见度梯度）；人选定 B 仪式为基础并接入关卡。净化器选定 B1 横卧过滤罐（8 帧，过滤器必须有动效）。储藏手写结构路线验证失败，改走生图→像素化管线，**未定稿、未接入生产**。
+- Decision:
+  1. **核心生产默认 = `core-v6-b`**（32×40，真等距，石构神龛，内核外露）。A/C 保留为对照：URL `?core=a|b|c` 与净化点内键 1/2/3 运行时切换，不翻生产默认。
+  2. **净化器生产默认 = B1 横卧过滤罐**（32×44 × 8 帧图集）。光影弱于核心（辅助设备）。Slice 7「竖立三棱锥台 / 不要新 sprite 图集」对净化器不再是生产真相，几何体改回落。
+  3. **储藏不翻生产**——仍橙色方块。抽卡未定稿，禁止把探索稿当成品接入。
+  4. **加载：** BootScene 预加载 `public/assets/sprites/modules/`（DEC-ARCH-018）。贴图缺失回落几何体。
+  5. **范围：** 只动两台装置的世界形体与光影。不动模块规则 / 数值 / HP 三态阈值 / 交互半径 / HUD / 面板 / 地面 / 外部 / 四个交互点（Findings P2–P7 仍挂起）。
+  6. **不开迭代 11。** 本包是 backlog「净化点表现层未收口」的 B2 部分交付。其余批次等人点名。
+- Impact: `purification-module.ts` / `boot-scene.ts` / `purification-scene.ts`；`docs/specs/system-purification-impact.md` 视觉规格节原地改口；`architecture.md` 模块登记 + DEC-ARCH-018；`docs/progress/backlog-issues.md` 该条改「部分交付」。
+- Verification: `npx tsc --noEmit`；净化点 `#purif` 冒烟（核心贴图 + 净化器动画 + 储藏仍方块）。审美待人在合入后的 `coh` 上终审，不代勾好看。
+
 ## DEC-110: 色板新增三格「残骸材质色」（debris-earth / debris-rust / debris-wood）——堆配色 v2 的结构性缺口补板；§2.3 规则 8 加注「世界材料色」豁免口径
 - Date: 2026-08-30（人拍板；Director 本条登记）
 - Phase: Iterative Development（迭代 10 终审热修 I10-HOTFIX-1；活指针仍在迭代 5）

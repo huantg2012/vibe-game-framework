@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-08-30
+last-modified: 2026-09-01
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -74,7 +74,7 @@ src/
 │   ├── contam-flakes.ts        # 敌人青绿脱落尘（往外/下飘，非暖灯尘）
 │   ├── rewriter-sprite.ts      # 改写体 32×48 程序像素（成品，DEC-066；I3-E 后为默认课回退）
 │   ├── form-renderers/         # 污染体生产视觉层（方案 D；d-mixed + d/**；d/genome 占地基因谱；d/paint-genome 占漆拓扑；d/gym-attach.ts 练习场跨层分发；I5-J 出击占地 = attachJiaGenomeD；I7-S 出击油膜 = attachBingPaintGenome）
-│   └── purification-module.ts  # 净化点三模块世界实体
+│   └── purification-module.ts  # 净化点三模块世界实体（核心/净化器走贴图；储藏仍几何回落）
 ├── generation/
 │   ├── outline-mask.ts         # C1：生长+腐蚀陆地掩膜（VOID / FLOOR）
 │   ├── ruins.ts                # C2：按碎片语法落情景墙
@@ -261,7 +261,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移。混乱增速可见写法也从这里出（相对 1.0 的 ±N%） | describeSideEffectBody(e), describeSideEffectWithSource(e), formatChaosRateDelta(rate), formatChaosMultDelta(mult) | 已实现（Slice 5.5 C5 引入，本轮补登记；R9 收口混乱增速） |
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
 | InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
-| PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块视觉（CORE=蓝六边形 / STORAGE=橙方块 / PURIFIER=竖立三棱锥台，HP 三态 + 灯 + 脚下完整度条）。净化器色只引用 contam / metal 板 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+；Slice 7 第三模块形体） |
+| PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块视觉。**CORE** = 32×40 v6 贴图（默认 B 仪式；`?core=a\|b\|c` 与键 1/2/3 切对照）；**PURIFIER** = B1 横卧过滤罐 8 帧图集（观察窗介质翻滚 + 进排气微粒）；**STORAGE** = 橙色方块几何回落（储藏抽卡未定稿）。HP 三态 + 灯 + 脚下完整度条仍在。贴图由 BootScene 预加载 `public/assets/sprites/modules/`（DEC-ARCH-018） | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), setCoreVariant(v), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+；Slice 7 第三模块；purif-visual-pass 核心/净化器翻贴图） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」。I3-A：一份 `contaminationDraw`（`mix32(seed, 'lexicon')`）喂甲 spawn.form 与宿主。**I8-Q：** 占漆钉 `paintFloors`（贪婪薪柴路径，偏咽喉）；不足掷出的 N 则本图重试，禁止钳小 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout；rollPaintHostCount；collectContaminationPins | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图。I8-Q 占漆配额已接 |
@@ -381,6 +381,13 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 - **理由：** DEC-104 / I8-R2。有主的漆要压在还敢不敢再拿薪柴的路上，且污染度跨度可感。
 - **不改：** 甲巡逻条数；乙/丁互斥 1；油膜三变体仍按个体种子采样；漆不挡路；同身份 60s 旁白冷却。
 - **影响：** `contamination-draw.ts` / `contamination-pins.ts` / `ContaminationHostSystem.create` 按 `paintFloors[i]` 物化。闸门 `check:paint-quota`。
+
+### DEC-ARCH-018: 净化点世界模块走贴图管线（purif-visual-pass）
+
+- **选择：** 核心与净化器不再以程序化几何体为生产默认。贴图住 `public/assets/sprites/modules/`，由 `BootScene.preload` 加载（核心三张静帧 + 净化器 8 帧图集）。`PurificationModuleEntity` 贴图缺失时回落到 Slice 7 几何体。储藏仍走橙色方块，等抽卡定稿。
+- **理由：** 几何体只完成「标识」、没完成「存在」（`docs/art/review-2026-08-28/purification-presentation-findings-for-director.md` P1）。这是游戏首条世界实体图片资源管线——角色仍是程序像素，污染体仍是程序像素，只有净化点这两台装置改贴图。
+- **不改：** 模块规则 / 数值 / HP 三态阈值 / 脚下完整度条 / 交互半径；裂隙实体不改加载策略。
+- **影响：** `purification-module.ts` 公开 `coreSpriteKey` / `PURIFIER_SHEET_KEY` / `setCoreVariant`；场景键 1/2/3 只切核心对照，生产默认 B。DEC-111。
 
 ### DEC-ARCH-004: 自实现 Raycasting 做视野
 
@@ -651,11 +658,11 @@ Slice 4.5 前，净化点的边界是"tile 判定出的固定圆 + 边界外粒�
 
 ## 资产加载策略
 
-- **Boot 阶段**：加载 loading bar 所需最小资源
-- **Preload 阶段**：按场景按需加载（Rift 资源 / Purification 资源分开）
+- **Boot 阶段**：加载 loading bar 所需最小资源；并预加载净化点模块贴图（DEC-ARCH-018：`assets/sprites/modules/core-v6-{a,b,c}.png` + `purifier-b1-sheet.png`）
+- **Preload 阶段**：按场景按需加载（Rift 资源 / Purification 资源分开）。模块贴图因体积小、场景必用，放在 Boot 而不是 PurificationScene 内再拉
 - **格式要求**：
   - 图片：PNG（像素风，不需 WebP 压缩）
-  - Spritesheet：统一 tile 尺寸（建议 16x16 或 32x32，Foundation 美术方向确定后固定）
+  - Spritesheet：模块图集按实体画布（净化器 32×44 × 8 帧）；角色 / 敌人仍是程序像素，不走本目录
   - 音频：MP3 + OGG 双格式（覆盖所有浏览器）
   - 字体：系统字体优先；如需自定义使用 WOFF2
 

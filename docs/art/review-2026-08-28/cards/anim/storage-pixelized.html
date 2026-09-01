@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>储藏 STORAGE · 生图→像素化管线（48×48）</title>
+<style>
+  :root{--bg:#0d1114;--panel:#151a1e;--line:#2a2d32;--text:#c8cdd2;--dim:#7d858c;--teal:#2f968f;--warn:#c4703a}
+  *{box-sizing:border-box}
+  body{margin:0;padding:24px 28px 60px;background:var(--bg);color:var(--text);
+    font:13px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+  h1{font-size:17px;margin:0 0 6px}
+  h2{font-size:13px;color:var(--dim);font-weight:600;letter-spacing:.06em;margin:26px 0 12px;
+     padding-bottom:6px;border-bottom:1px solid var(--line)}
+  .lead{color:var(--dim);font-size:12.5px;margin:0 0 16px}
+  .lead code{color:var(--teal)}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px 16px;
+    margin-bottom:16px;font-size:12.5px;line-height:1.9}
+  .box.info{border-left:3px solid var(--teal)}
+  .box.warn{border-left:3px solid var(--warn)}
+  .box b{color:var(--text)}
+  .bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--panel);
+    border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin-bottom:18px}
+  .bar button{background:#22282d;color:var(--text);border:1px solid var(--line);border-radius:4px;
+    padding:5px 13px;font-size:12.5px;cursor:pointer}
+  .bar label{color:var(--dim);font-size:12.5px;display:flex;align-items:center;gap:7px}
+  .bar .sp{flex:1}
+  .row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px;width:220px}
+  .card.locked{border-color:#3d4a44;background:#121a18}
+  .card h3{margin:0 0 2px;font-size:13.5px}
+  .card .sub{color:var(--dim);font-size:11px;margin:0 0 8px}
+  .card .desc{color:var(--dim);font-size:11.5px;margin:8px 0 0}
+  .stage{margin:0 auto;background:var(--bg);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .sprite{background-repeat:no-repeat;image-rendering:pixelated;animation:play 1s steps(8) infinite}
+  .static{background-repeat:no-repeat;image-rendering:pixelated}
+  @keyframes play{from{background-position:0 0}to{background-position:var(--endx) 0}}
+  .paused .sprite{animation-play-state:paused}
+  .meta{font-size:11px;color:var(--dim);border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
+  .meta b{color:var(--text)}
+  .badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;background:#22282d;color:var(--dim);margin-left:4px}
+  .badge.done{background:#1d3a33;color:var(--teal)}
+  .refimg{width:196px;border:1px solid var(--line);border-radius:3px;display:block}
+</style>
+</head>
+<body>
+
+<h1>储藏 STORAGE · 生图 → 像素化</h1>
+<p class="lead">
+  画布 <code>48×48</code>（已放大）· 8 帧 teal 点缀弱动效 · 背景 <code>#0d1114</code>
+</p>
+
+<div class="box info">
+  <b>本轮改走「生图 → 像素化」管线</b>（不再手写结构、也不再从素材反推经验改旧稿）<br>
+  流程：生成 2D 素材 → 自动抠底 → 等比降采样 → 量化到项目调色板（冷灰 7 阶 + 主题色 ramp）→ 棱线提亮 → 接地投影 → teal 点缀动效。<br>
+  <b>已应用你放开的三项约束</b>：<br>
+  · <b>放大画布</b> 32×36 → <b>48×48</b>：实体像素从约 400 增到 1400+，方盒子终于有足够预算交代结构<br>
+  · <b>靠特征物辨识</b>：门缝渗漏、锁具旁状态点作为高辨识特征<br>
+  · <b>可提亮</b>：暗部目标从 50%+ 降到 <b>45~47%</b>（此前压到 92% 时形体被吞掉）
+</div>
+
+<div class="box warn">
+  <b>管线中修掉的两个坑</b><br>
+  1. <b>生图偏亮</b> → 直接按明度映射会全落亮阶（实测暗部仅 0~3%）。加了直方图重映射 + 幂函数压暗。<br>
+  2. <b>背景色不能假设</b> → 军用箱那张生图背景是<b>纯白</b>而非黑，按黑底阈值抠会把整张当实体（满屏填充）。改为四角采样自动判定底色。
+</div>
+
+<div class="bar">
+  <button id="toggle">暂停</button>
+  <label>倍率 <select id="zoom"><option value="3">3×</option><option value="4" selected>4×</option><option value="6">6×</option></select></label>
+  <span class="sp"></span>
+  <span style="color:var(--dim);font-size:12px">spritesheet + CSS steps</span>
+</div>
+
+<h2>本轮成品（48×48）</h2>
+<div class="row" id="rowNew"></div>
+
+<h2>对应的生图素材（像素化之源）</h2>
+<div class="row">
+  <div class="card" style="width:226px">
+    <h3>加固储藏柜 · 源</h3>
+    <p class="sub">强调加固与可靠：厚壁 / 外框 / 四角护角 / 大螺栓阵 / 加强肋 / 粗锁杆</p>
+    <img class="refimg" src="ref3/src-v1.png" alt="加固储藏柜生图">
+  </div>
+  <div class="card" style="width:226px">
+    <h3>军用箱阵 · 源</h3>
+    <p class="sub">三只箱金字塔码放，箱间深色间隙确保各自可辨</p>
+    <img class="refimg" src="ref3/src-v2.png" alt="军用箱阵生图">
+  </div>
+</div>
+
+<h2>已确定模型（视觉参考）</h2>
+<div class="row" id="rowLocked"></div>
+
+<script>
+const NEW=[
+ {k:'storage-v1',n:'加固储藏柜',w:48,h:48,
+  d:'厚壁 + 外钢框 + 四角护角 + 大螺栓阵 + 横向加强肋 + 中央粗锁杆。门缝与锁具旁有 teal 渗漏点缀。',
+  dark:'47%',cols:8,fr:'4~12'},
+ {k:'storage-v2',n:'军用箱阵',w:48,h:48,
+  d:'三只箱金字塔码放（上一下二），箱间暗带分隔清晰；每只箱有锁扣与提手，三处 teal 点缀依次明灭。',
+  dark:'45%',cols:7,fr:'4~8'},
+];
+const LOCKED=[
+ {k:'core-v6-b',n:'核心 CORE',sub:'B 仪式 · 32×40',w:32,h:40,st:true},
+ {k:'purifier-b1',n:'净化器 PURIFIER',sub:'B1 卧罐 · 32×44',w:32,h:44},
+];
+let Z=4;
+function card(o,locked){
+  const w=o.w*Z, h=o.h*Z;
+  const inner=o.st
+    ? `<div class="static" style="width:${w}px;height:${h}px;background-image:url('${o.k}.png');background-size:${w}px ${h}px"></div>`
+    : `<div class="sprite" style="width:${w}px;height:${h}px;background-image:url('${o.k}-sheet.png');background-size:${o.w*8*Z}px ${h}px;--endx:${-(o.w*8*Z)}px"></div>`;
+  return `<div class="card${locked?' locked':''}" style="width:${Math.max(200,w+28)}px">
+    <h3>${o.n}<span class="badge${locked?' done':''}">${locked?'已确定':'本轮'}</span></h3>
+    <p class="sub">${o.sub||(o.w+'×'+o.h)}</p>
+    <div class="stage" style="width:${w}px;height:${h}px">${inner}</div>
+    ${o.d?`<p class="desc">${o.d}</p>`:''}
+    ${o.dark?`<div class="meta">暗部 <b>${o.dark}</b> · ${o.cols} 色 · 帧间 ${o.fr}px</div>`:''}
+  </div>`;
+}
+function render(){
+  document.getElementById('rowNew').innerHTML=NEW.map(o=>card(o,false)).join('');
+  document.getElementById('rowLocked').innerHTML=LOCKED.map(o=>card(o,true)).join('');
+}
+document.getElementById('toggle').onclick=e=>{document.body.classList.toggle('paused');
+  e.target.textContent=document.body.classList.contains('paused')?'播放':'暂停';};
+document.getElementById('zoom').onchange=e=>{Z=parseInt(e.target.value,10);render();};
+render();
+</script>
+</body>
+</html>

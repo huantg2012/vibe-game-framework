@@ -6,6 +6,14 @@
 import Phaser from 'phaser';
 import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
 import { audioManager } from '@/managers/audio-manager';
+import {
+  CORE_SPRITE_VARIANTS,
+  PURIFIER_FRAME_H,
+  PURIFIER_FRAME_W,
+  PURIFIER_SHEET_KEY,
+  coreSpriteKey,
+  coreSpriteUrl,
+} from '@/entities/purification-module';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
 
 export class BootScene extends Phaser.Scene {
@@ -45,6 +53,19 @@ export class BootScene extends Phaser.Scene {
     for (const asset of AUDIO_ASSETS) {
       this.load.audio(asset.key, audioUrlsFor(asset));
     }
+
+    // 核心模块抽卡贴图 v6（a=敬畏 b=仪式 c=封印）
+    // 来源 docs/art/review-2026-08-28/cards/，用 URL ?core=a|b|c 切换实测
+    for (const v of CORE_SPRITE_VARIANTS) {
+      this.load.image(coreSpriteKey(v), coreSpriteUrl(v));
+    }
+
+    // 净化器模块抽卡（B1 横卧过滤罐）——8 帧序列，过滤器必须有动效
+    this.load.spritesheet(
+      PURIFIER_SHEET_KEY,
+      'assets/sprites/modules/purifier-b1-sheet.png',
+      { frameWidth: PURIFIER_FRAME_W, frameHeight: PURIFIER_FRAME_H },
+    );
   }
 
   create(): void {

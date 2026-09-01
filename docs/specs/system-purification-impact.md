@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: code agent
-last-modified-date: 2026-08-20
+last-modified-by: director agent
+last-modified-date: 2026-09-01
 interface-changed: false
 interfaces-with:
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier
@@ -420,7 +420,7 @@ interface SortieModifiers {
 
 本段是本表面的视觉真相（权威链：本段 > Kit `ui-art-overhaul.md` > `art-direction.md` §6）。色只引用已锁板 / Kit 已映射名。禁止新 hex。禁止新墙机皮。禁止新 HUD 根。机械层已扫；审美待人终审。不许自称好看 / 像游戏 / PASS。
 
-本 Slice **不重画**核心蓝六边形、储藏橙方块的已落地形体。墙机读数里核心仍用结构色 `ui-text-bright` `#c8cdd4`，储藏仍用 `warm-glow` `#c4873a`（Kit A2）。
+**DEC-111 / DEC-ARCH-018 覆盖（2026-09-01）：** 核心与净化器的生产默认已从程序化几何体翻为贴图。Slice 7 写下的「不重画蓝六边形 / 竖立三棱锥台 / 不要新 sprite 图集」对这两台装置不再是生产真相；几何体保留为**贴图缺失时的回落**，以及储藏（抽卡未定稿）的现行形体。墙机读数里核心仍用结构色 `ui-text-bright` `#c8cdd4`，储藏仍用 `warm-glow` `#c4873a`（Kit A2）。HP 三态阈值 / 灯 / 脚下完整度条 / 交互半径不动。
 
 ##### 开工闸门（art：步骤 2 / 4 / 5）
 
@@ -441,9 +441,9 @@ interface SortieModifiers {
 
 ##### 1. 净化器世界实体（载体 A）
 
-同族：程序化几何装置 + 三态，走 `purification-module.ts` 现有状态机（阈值 >60% 健康 / 30%–60% 受损 / <30% 严重受损；主体只在跨阈值重绘；灯独立层 + 500ms 闪）。**不要新 sprite 图集。** 64×64 量级，与核心（外接圆半径 16）/ 储藏（半边 14）同尺度。
+同族：世界内装置 + 三态，走 `purification-module.ts` 现有状态机（阈值 >60% 健康 / 30%–60% 受损 / <30% 严重受损；灯独立层 + 500ms 闪）。**生产默认 = B1 横卧过滤罐**（32×44 × 8 帧图集，`public/assets/sprites/modules/purifier-b1-sheet.png`）：观察窗介质翻滚 + 进排气微粒；仅保留横向暖色警示断带，不画圆球灯。贴图缺失时回落到下方 Slice 7 几何体。
 
-**锁定形体：竖立三棱锥台**（俯视 = 外大内小两层朝下等边三角形。尖朝世界 +Y / 画面下方。一眼不是六边形、不是方块、不是交互点同心圆）。
+**Slice 7 几何回落（贴图缺失）：竖立三棱锥台**（俯视 = 外大内小两层朝下等边三角形。尖朝世界 +Y / 画面下方。一眼不是六边形、不是方块、不是交互点同心圆）。
 
 以装置中心 `(x, y)` 为原点的整数顶点（世界像素）：
 
