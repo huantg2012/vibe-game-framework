@@ -82,6 +82,19 @@ export function resolveCoreVariant(): CoreSpriteVariant {
 const CORE_GLOW_KEY = 'fx-core-glow';
 const CORE_POOL_KEY = 'fx-core-light-pool';
 
+// ---------------------------------------------------------------------------
+// 净化器贴图（抽卡 B1 横卧过滤罐）
+// 32x44 8 帧序列 —— 过滤器必须有动效（帧动画），所以是 spritesheet 不是单张。
+// 接地点（支腿底部）约在贴图 y=37.9/44 => originY 取 0.86。
+// ---------------------------------------------------------------------------
+
+export const PURIFIER_SHEET_KEY = 'module-purifier-b1';
+export const PURIFIER_ANIM_KEY = 'module-purifier-b1-run';
+export const PURIFIER_FRAME_W = 32;
+export const PURIFIER_FRAME_H = 44;
+export const PURIFIER_FRAMES = 8;
+export const PURIFIER_ORIGIN_Y = 37.9 / PURIFIER_FRAME_H;
+
 const PURIFIER_OUTER: ReadonlyArray<{ x: number; y: number }> = [
   { x: 0, y: 18 },
   { x: -16, y: -9 },
@@ -191,6 +204,11 @@ export class PurificationModuleEntity {
   private coreLightPool?: Phaser.GameObjects.Image;
   private coreFlickerTimer?: Phaser.Time.TimerEvent;
 
+  // 净化器贴图与光影（仅 PURIFIER 使用）
+  private purifierSprite?: Phaser.GameObjects.Sprite;
+  private purifierGlow?: Phaser.GameObjects.Image;
+  private purifierPool?: Phaser.GameObjects.Image;
+
   private readonly config: ModuleEntityConfig;
   private inRange = false;
   private proximityGlow = false;
@@ -200,6 +218,8 @@ export class PurificationModuleEntity {
   private healthState: ModuleHealthState = 'healthy';
   // 核心光影强度系数（随 HP 变化；用于重建呼吸 tween）
   private coreHpFactor = 1;
+  // 净化器光影强度系数（同上）
+  private purifierHpFactor = 1;
   private blinkOn = true;
   private blinkTimer?: Phaser.Time.TimerEvent;
 
@@ -293,6 +313,53 @@ export class PurificationModuleEntity {
             ease: 'Quad.easeOut',
           });
         },
+      });
+    }
+
+    // 净化器：改用抽卡贴图（8 帧序列动画）。贴图缺失时回落几何三角。
+    if (this.config.type === 'PURIFIER' && scene.textures.exists(PURIFIER_SHEET_KEY)) {
+      ensureCoreLightTextures(scene);
+
+      // 帧动画（全局注册一次）
+      if (!scene.anims.exists(PURIFIER_ANIM_KEY)) {
+        scene.anims.create({
+          key: PURIFIER_ANIM_KEY,
+          frames: scene.anims.generateFrameNumbers(PURIFIER_SHEET_KEY,
+            { start: 0, end: PURIFIER_FRAMES - 1 }),
+          frameRate: 8,
+          repeat: -1,
+        });
+      }
+
+      // 地面光池：压扁成椭圆 —— 45° 地面上光斑本就是椭圆
+      this.purifierPool = scene.add.image(this.config.x, this.config.y + 4, CORE_POOL_KEY);
+      this.purifierPool.setDepth(depth - 1);
+      this.purifierPool.setBlendMode(Phaser.BlendModes.ADD);
+      this.purifierPool.setScale(1.05, 0.44);
+      this.purifierPool.setAlpha(0.44);
+
+      // 本体（播放序列动画）
+      this.purifierSprite = scene.add.sprite(this.config.x, this.config.y, PURIFIER_SHEET_KEY);
+      this.purifierSprite.setOrigin(0.5, PURIFIER_ORIGIN_Y);
+      this.purifierSprite.setDepth(depth);
+      this.purifierSprite.play(PURIFIER_ANIM_KEY);
+
+      // 自发光：比核心弱（净化器是辅助设备，不是主光源）
+      this.purifierGlow = scene.add.image(this.config.x, this.config.y - 8, CORE_GLOW_KEY);
+      this.purifierGlow.setDepth(depth + 3);
+      this.purifierGlow.setBlendMode(Phaser.BlendModes.ADD);
+      this.purifierGlow.setScale(0.95);
+      this.purifierGlow.setAlpha(0.34);
+
+      scene.tweens.add({
+        targets: this.purifierGlow,
+        alpha: { from: 0.26, to: 0.44 },
+        duration: 3000, yoyo: true, repeat: -1, ease: 'Sine.easeInOut',
+      });
+      scene.tweens.add({
+        targets: this.purifierPool,
+        alpha: { from: 0.36, to: 0.54 },
+        duration: 3000, yoyo: true, repeat: -1, ease: 'Sine.easeInOut',
       });
     }
 
@@ -402,6 +469,24 @@ export class PurificationModuleEntity {
     });
   }
 
+  /** 重建净化器光影的呼吸 tween（同核心：setAlpha 会被 tween 每帧覆盖）。 */
+  private applyPurifierGlowTweens(): void {
+    if (!this.scene || !this.purifierGlow || !this.purifierPool) return;
+    const f = this.purifierHpFactor;
+    this.scene.tweens.killTweensOf(this.purifierGlow);
+    this.scene.tweens.killTweensOf(this.purifierPool);
+    this.scene.tweens.add({
+      targets: this.purifierGlow,
+      alpha: { from: 0.26 * f, to: 0.44 * f },
+      duration: 3000, yoyo: true, repeat: -1, ease: 'Sine.easeInOut',
+    });
+    this.scene.tweens.add({
+      targets: this.purifierPool,
+      alpha: { from: 0.36 * f, to: 0.54 * f },
+      duration: 3000, yoyo: true, repeat: -1, ease: 'Sine.easeInOut',
+    });
+  }
+
   /** 运行时切换核心贴图方案（抽卡实测用）。仅 CORE 生效，其他类型静默忽略。 */
   setCoreVariant(v: CoreSpriteVariant): void {
     if (this.config.type !== 'CORE' || !this.coreSprite) return;
@@ -429,6 +514,14 @@ export class PurificationModuleEntity {
     this.coreGlow = undefined;
     this.coreFlicker = undefined;
     this.coreLightPool = undefined;
+    if (this.purifierGlow) this.scene?.tweens.killTweensOf(this.purifierGlow);
+    if (this.purifierPool) this.scene?.tweens.killTweensOf(this.purifierPool);
+    this.purifierSprite?.destroy();
+    this.purifierGlow?.destroy();
+    this.purifierPool?.destroy();
+    this.purifierSprite = undefined;
+    this.purifierGlow = undefined;
+    this.purifierPool = undefined;
   }
 
   // ------------------------------------------------------------------ internal
@@ -497,6 +590,19 @@ export class PurificationModuleEntity {
       this.graphics.lineStyle(2, STORAGE_EDGE, edgeAlpha);
       this.graphics.strokeRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
       this.drawDamageDecoration(STORAGE_HALF);
+    } else if (this.purifierSprite) {
+      // 贴图模式（B1 横卧过滤罐）：HP 越低越黯淡，受损装饰仍走 graphics
+      this.purifierSprite.setAlpha(
+        Math.min(1, 0.45 + 0.5 * hpRatio + (this.proximityGlow ? 0.1 : 0)),
+      );
+      // 光随 HP 变弱：不能直接 setAlpha（会被呼吸 tween 覆盖），改为重建 tween
+      const pf = 0.45 + 0.55 * hpRatio;
+      if (Math.abs(pf - this.purifierHpFactor) > 0.05) {
+        this.purifierHpFactor = pf;
+        this.applyPurifierGlowTweens();
+      }
+      this.graphics.clear();
+      this.drawDamageDecoration(PURIFIER_RADIUS);
     } else {
       const outer = PURIFIER_OUTER.map((p) => new Phaser.Geom.Point(x + p.x, y + p.y));
       const inner = PURIFIER_INNER.map((p) => new Phaser.Geom.Point(x + p.x, y + p.y));
@@ -571,6 +677,11 @@ export class PurificationModuleEntity {
   private getIndicatorY(): number {
     if (this.config.type === 'CORE' && this.scene?.textures.exists(coreSpriteKey('a'))) {
       return this.config.y - CORE_SPRITE_HEIGHT * 0.4 + CORE_SPRITE_BOTTOM_OFFSET;
+    }
+    // 净化器贴图 44 高、originY 0.86 => 模块坐标 y 落在贴图下部，需上移
+    if (this.config.type === 'PURIFIER' && this.scene?.textures.exists(PURIFIER_SHEET_KEY)) {
+      return this.config.y - PURIFIER_FRAME_H * 0.4
+        + PURIFIER_FRAME_H * (1 - PURIFIER_ORIGIN_Y);
     }
     return this.config.y;
   }
@@ -647,7 +758,14 @@ export class PurificationModuleEntity {
       }
       return y + CORE_RADIUS + HP_BAR_GAP;
     }
-    if (type === 'PURIFIER') return y + PURIFIER_RADIUS + HP_BAR_GAP;
+    if (type === 'PURIFIER') {
+      // 贴图模式：底部（支腿）约在 y + 44*(1-0.86) = y+6.2，
+      // 用几何三角的 PURIFIER_RADIUS(18) 会让血条掉到物体下方十几像素处。
+      if (this.scene?.textures.exists(PURIFIER_SHEET_KEY)) {
+        return y + PURIFIER_FRAME_H * (1 - PURIFIER_ORIGIN_Y) + HP_BAR_GAP;
+      }
+      return y + PURIFIER_RADIUS + HP_BAR_GAP;
+    }
     return y + STORAGE_HALF + HP_BAR_GAP;
   }
 }

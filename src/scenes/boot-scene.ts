@@ -8,6 +8,9 @@ import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
 import { audioManager } from '@/managers/audio-manager';
 import {
   CORE_SPRITE_VARIANTS,
+  PURIFIER_FRAME_H,
+  PURIFIER_FRAME_W,
+  PURIFIER_SHEET_KEY,
   coreSpriteKey,
   coreSpriteUrl,
 } from '@/entities/purification-module';
@@ -56,6 +59,13 @@ export class BootScene extends Phaser.Scene {
     for (const v of CORE_SPRITE_VARIANTS) {
       this.load.image(coreSpriteKey(v), coreSpriteUrl(v));
     }
+
+    // 净化器模块抽卡（B1 横卧过滤罐）——8 帧序列，过滤器必须有动效
+    this.load.spritesheet(
+      PURIFIER_SHEET_KEY,
+      'assets/sprites/modules/purifier-b1-sheet.png',
+      { frameWidth: PURIFIER_FRAME_W, frameHeight: PURIFIER_FRAME_H },
+    );
   }
 
   create(): void {
