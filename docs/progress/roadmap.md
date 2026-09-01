@@ -4,7 +4,7 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-09-01
 last-closed-slice: 9
-note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**净化点模块视觉部分交付（DEC-111，2026-09-01）**：核心 v6-B + 净化器 B1 已翻生产；储藏与 Findings P2–P7 仍挂起。不开迭代 11。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
+note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**净化点模块视觉部分交付（DEC-111，2026-09-01）**：核心 v6-B + 净化器 B1 + 储藏 C1 已翻生产；Findings P2–P7 仍挂起。不开迭代 11。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
 ---
 
 # Roadmap
@@ -31,7 +31,7 @@ note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5�
 
 ## 当前工作单元（DEC-072）
 
-**无进行中 Slice。当前：迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同：`docs/tasks/iteration-9.md`。**迭代 10 COMPLETE（2026-08-31）。** **净化点模块视觉部分交付（DEC-111，2026-09-01）**：核心 v6-B + 净化器 B1 已翻生产；储藏与 Findings P2–P7 仍挂起。不开迭代 11。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
+**无进行中 Slice。当前：迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同：`docs/tasks/iteration-9.md`。**迭代 10 COMPLETE（2026-08-31）。** **净化点模块视觉部分交付（DEC-111，2026-09-01）**：核心 v6-B + 净化器 B1 + 储藏 C1 已翻生产；Findings P2–P7 仍挂起。不开迭代 11。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
 
 DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。撤离多样性不做。
 

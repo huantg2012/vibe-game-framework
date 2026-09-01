@@ -74,7 +74,7 @@ src/
 │   ├── contam-flakes.ts        # 敌人青绿脱落尘（往外/下飘，非暖灯尘）
 │   ├── rewriter-sprite.ts      # 改写体 32×48 程序像素（成品，DEC-066；I3-E 后为默认课回退）
 │   ├── form-renderers/         # 污染体生产视觉层（方案 D；d-mixed + d/**；d/genome 占地基因谱；d/paint-genome 占漆拓扑；d/gym-attach.ts 练习场跨层分发；I5-J 出击占地 = attachJiaGenomeD；I7-S 出击油膜 = attachBingPaintGenome）
-│   └── purification-module.ts  # 净化点三模块世界实体（核心/净化器走贴图；储藏仍几何回落）
+│   └── purification-module.ts  # 净化点三模块世界实体（核心 / 净化器 / 储藏走贴图；缺失回落几何体）
 ├── generation/
 │   ├── outline-mask.ts         # C1：生长+腐蚀陆地掩膜（VOID / FLOOR）
 │   ├── ruins.ts                # C2：按碎片语法落情景墙
@@ -261,7 +261,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移。混乱增速可见写法也从这里出（相对 1.0 的 ±N%） | describeSideEffectBody(e), describeSideEffectWithSource(e), formatChaosRateDelta(rate), formatChaosMultDelta(mult) | 已实现（Slice 5.5 C5 引入，本轮补登记；R9 收口混乱增速） |
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
 | InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
-| PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块视觉。**CORE** = 32×40 v6 贴图（默认 B 仪式；`?core=a\|b\|c` 与键 1/2/3 切对照）；**PURIFIER** = B1 横卧过滤罐 8 帧图集（观察窗介质翻滚 + 进排气微粒）；**STORAGE** = 橙色方块几何回落（储藏抽卡未定稿）。HP 三态 + 灯 + 脚下完整度条仍在。贴图由 BootScene 预加载 `public/assets/sprites/modules/`（DEC-ARCH-018） | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), setCoreVariant(v), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+；Slice 7 第三模块；purif-visual-pass 核心/净化器翻贴图） |
+| PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块视觉。**CORE** = 32×40 v6 贴图（默认 B 仪式；`?core=a\|b\|c` 与键 1/2/3 切对照）；**PURIFIER** = B1 横卧过滤罐 8 帧图集（观察窗介质翻滚 + 进排气微粒）；**STORAGE** = C1 顶压观察井 8 帧图集（DEC-112）。HP 三态 + 灯 + 脚下完整度条仍在。贴图由 BootScene 预加载 `public/assets/sprites/modules/`（DEC-ARCH-018） | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), setCoreVariant(v), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+；Slice 7 第三模块；purif-visual-pass 三模块翻贴图） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」。I3-A：一份 `contaminationDraw`（`mix32(seed, 'lexicon')`）喂甲 spawn.form 与宿主。**I8-Q：** 占漆钉 `paintFloors`（贪婪薪柴路径，偏咽喉）；不足掷出的 N 则本图重试，禁止钳小 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout；rollPaintHostCount；collectContaminationPins | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图。I8-Q 占漆配额已接 |
@@ -384,10 +384,10 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 
 ### DEC-ARCH-018: 净化点世界模块走贴图管线（purif-visual-pass）
 
-- **选择：** 核心与净化器不再以程序化几何体为生产默认。贴图住 `public/assets/sprites/modules/`，由 `BootScene.preload` 加载（核心三张静帧 + 净化器 8 帧图集）。`PurificationModuleEntity` 贴图缺失时回落到 Slice 7 几何体。储藏仍走橙色方块，等抽卡定稿。
-- **理由：** 几何体只完成「标识」、没完成「存在」（`docs/art/review-2026-08-28/purification-presentation-findings-for-director.md` P1）。这是游戏首条世界实体图片资源管线——角色仍是程序像素，污染体仍是程序像素，只有净化点这两台装置改贴图。
+- **选择：** 核心、净化器、储藏不再以程序化几何体为生产默认。贴图住 `public/assets/sprites/modules/`，由 `BootScene.preload` 加载（核心三张静帧 + 净化器 8 帧图集 + 储藏 C1 8 帧图集）。`PurificationModuleEntity` 贴图缺失时回落到 Slice 7 几何体。
+- **理由：** 几何体只完成「标识」、没完成「存在」（`docs/art/review-2026-08-28/purification-presentation-findings-for-director.md` P1）。这是游戏首条世界实体图片资源管线——角色仍是程序像素，污染体仍是程序像素，只有净化点这三台装置改贴图。
 - **不改：** 模块规则 / 数值 / HP 三态阈值 / 脚下完整度条 / 交互半径；裂隙实体不改加载策略。
-- **影响：** `purification-module.ts` 公开 `coreSpriteKey` / `PURIFIER_SHEET_KEY` / `setCoreVariant`；场景键 1/2/3 只切核心对照，生产默认 B。DEC-111。
+- **影响：** `purification-module.ts` 公开 `coreSpriteKey` / `PURIFIER_SHEET_KEY` / `STORAGE_SHEET_KEY` / `setCoreVariant`；场景键 1/2/3 只切核心对照，生产默认 B。DEC-111 / DEC-112。
 
 ### DEC-ARCH-004: 自实现 Raycasting 做视野
 

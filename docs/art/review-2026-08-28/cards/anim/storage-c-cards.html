@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>储藏收容三卡</title>
+<style>
+  body{margin:0;padding:24px;background:#0d1114;color:#c8cdd4;
+    font:13px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+  h1{font-size:17px;margin:0 0 8px}
+  .lead{color:#8a8f96;margin:0 0 18px}
+  .row{display:flex;gap:18px;flex-wrap:wrap}
+  .card{background:#151a1e;border:1px solid #2a2d32;padding:14px;width:200px}
+  .card h3{margin:0 0 4px;font-size:14px}
+  .desc{color:#8a8f96;font-size:12px;min-height:48px}
+  .stage{width:96px;height:108px;margin:10px auto;background:#0d1114;border:1px solid #2a2d32}
+  .sprite{width:96px;height:108px;image-rendering:pixelated;background-repeat:no-repeat;
+    background-size:768px 108px;animation:play 1s steps(8) infinite}
+  @keyframes play{from{background-position:0 0}to{background-position:-768px 0}}
+  code{color:#1aad96}
+</style>
+</head>
+<body>
+<h1>储藏 · 收容三卡</h1>
+<p class="lead">32×36 · 8 帧 · 8fps · 放大 3×。机制已锁：收容越完整，溢散越少，折算越高。生产默认仍是橙色方块。</p>
+<div class="row" id="row"></div>
+<script>
+const CARDS = [{"id": "c1", "name": "顶压观察井", "read": "关着，但你看得见它在顶缝里顶玻璃", "sheet": "storage-c1-sheet.png", "delta": 42, "frameWidth": 32, "frameHeight": 36, "frames": 8, "fps": 8}, {"id": "c2", "name": "加压封舱", "read": "用箍把东西按死，只从缝里漏一点光", "sheet": "storage-c2-sheet.png", "delta": 54, "frameWidth": 32, "frameHeight": 36, "frames": 8, "fps": 8}, {"id": "c3", "name": "分匣封存", "read": "一份一份关，互不混，才折算得干净", "sheet": "storage-c3-sheet.png", "delta": 50, "frameWidth": 32, "frameHeight": 36, "frames": 8, "fps": 8}, {"id": "c4", "name": "沉口封井", "read": "东西在地底下顶篦子，盖子几乎贴地", "sheet": "storage-c4-sheet.png", "delta": 35, "frameWidth": 32, "frameHeight": 36, "frames": 8, "fps": 8}, {"id": "c5", "name": "辐条锁核", "read": "从四面把核按住，它胀也出不来", "sheet": "storage-c5-sheet.png", "delta": 91, "frameWidth": 32, "frameHeight": 36, "frames": 8, "fps": 8}, {"id": "c6", "name": "铅封石匣", "read": "盖子压着，只从咬口渗一点", "sheet": "storage-c6-sheet.png", "delta": 114, "frameWidth": 32, "frameHeight": 36, "frames": 8, "fps": 8}];
+const row = document.getElementById('row');
+for (const c of CARDS) {
+  const el = document.createElement('div');
+  el.className = 'card';
+  el.innerHTML = `<h3>${c.id.toUpperCase()} ${c.name}</h3>
+    <p class="desc">${c.read}</p>
+    <div class="stage"><div class="sprite" style="background-image:url('${c.sheet}')"></div></div>
+    <div style="color:#8a8f96;font-size:11px">帧差 ${c.delta} px · <code>${c.sheet}</code></div>`;
+  row.appendChild(el);
+}
+</script>
+</body>
+</html>

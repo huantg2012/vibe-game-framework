@@ -3,7 +3,7 @@
  *
  * CORE = 32×40 v6 贴图（默认 B 仪式；`?core=a|b|c` 与键 1/2/3 可切对照）。
  * PURIFIER = B1 横卧过滤罐 8 帧图集（观察窗介质翻滚）。
- * STORAGE = 仍为橙色方块几何回落（储藏抽卡未定稿）。
+ * STORAGE = C1 顶压观察井 8 帧图集（DEC-112）；贴图缺失回落橙色方块。
  * HP bar lives in the world; all readable copy lives in DOM overlays.
  */
 
@@ -95,6 +95,18 @@ export const PURIFIER_FRAME_W = 32;
 export const PURIFIER_FRAME_H = 44;
 export const PURIFIER_FRAMES = 8;
 export const PURIFIER_ORIGIN_Y = 37.9 / PURIFIER_FRAME_H;
+
+// ---------------------------------------------------------------------------
+// 储藏贴图（抽卡 C1 顶压观察井，DEC-112）
+// 32×36 8 帧序列。接地点约在贴图 y=32/36。
+// ---------------------------------------------------------------------------
+
+export const STORAGE_SHEET_KEY = 'module-storage-c1';
+export const STORAGE_ANIM_KEY = 'module-storage-c1-run';
+export const STORAGE_FRAME_W = 32;
+export const STORAGE_FRAME_H = 36;
+export const STORAGE_FRAMES = 8;
+export const STORAGE_ORIGIN_Y = 32 / STORAGE_FRAME_H;
 
 const PURIFIER_OUTER: ReadonlyArray<{ x: number; y: number }> = [
   { x: 0, y: 18 },
@@ -209,6 +221,12 @@ export class PurificationModuleEntity {
   private purifierSprite?: Phaser.GameObjects.Sprite;
   private purifierGlow?: Phaser.GameObjects.Image;
   private purifierPool?: Phaser.GameObjects.Image;
+
+  // 储藏贴图与光影（仅 STORAGE 使用）
+  private storageSprite?: Phaser.GameObjects.Sprite;
+  private storageGlow?: Phaser.GameObjects.Image;
+  private storagePool?: Phaser.GameObjects.Image;
+  private storageHpFactor = 1;
 
   private readonly config: ModuleEntityConfig;
   private inRange = false;
@@ -364,6 +382,12 @@ export class PurificationModuleEntity {
       });
     }
 
+    // 储藏：图集已加载则挂 C1；否则回落橙色方块。
+    if (this.config.type === 'STORAGE' && scene.textures.exists(STORAGE_SHEET_KEY)) {
+      ensureCoreLightTextures(scene);
+      this.mountStorageSprite(scene, depth);
+    }
+
     // Initial draw
     const mod = gameState.getModule(this.config.id);
     this.healthState = classifyModuleHealth(mod ? mod.hp / mod.maxHp : 1);
@@ -496,6 +520,59 @@ export class PurificationModuleEntity {
     this.coreSprite.setTexture(key);
   }
 
+  private mountStorageSprite(scene: Phaser.Scene, depth: number): void {
+    this.ensureStorageAnim(scene);
+
+    this.storagePool = scene.add.image(this.config.x, this.config.y + 4, CORE_POOL_KEY);
+    this.storagePool.setDepth(depth - 1);
+    this.storagePool.setBlendMode(Phaser.BlendModes.ADD);
+    this.storagePool.setScale(0.95, 0.40);
+    this.storagePool.setAlpha(0.36);
+
+    this.storageSprite = scene.add.sprite(this.config.x, this.config.y, STORAGE_SHEET_KEY);
+    this.storageSprite.setOrigin(0.5, STORAGE_ORIGIN_Y);
+    this.storageSprite.setDepth(depth);
+    this.storageSprite.play(STORAGE_ANIM_KEY);
+
+    this.storageGlow = scene.add.image(this.config.x, this.config.y - 8, CORE_GLOW_KEY);
+    this.storageGlow.setDepth(depth + 3);
+    this.storageGlow.setBlendMode(Phaser.BlendModes.ADD);
+    this.storageGlow.setScale(0.88);
+    this.storageGlow.setAlpha(0.28);
+
+    this.applyStorageGlowTweens();
+  }
+
+  private ensureStorageAnim(scene: Phaser.Scene): void {
+    if (scene.anims.exists(STORAGE_ANIM_KEY)) return;
+    scene.anims.create({
+      key: STORAGE_ANIM_KEY,
+      frames: scene.anims.generateFrameNumbers(STORAGE_SHEET_KEY, {
+        start: 0,
+        end: STORAGE_FRAMES - 1,
+      }),
+      frameRate: 8,
+      repeat: -1,
+    });
+  }
+
+  private applyStorageGlowTweens(): void {
+    if (!this.scene || !this.storageGlow || !this.storagePool) return;
+    const f = this.storageHpFactor;
+    this.scene.tweens.killTweensOf(this.storageGlow);
+    this.scene.tweens.killTweensOf(this.storagePool);
+    this.scene.tweens.add({
+      targets: this.storageGlow,
+      alpha: { from: 0.22 * f, to: 0.38 * f },
+      duration: 2800, yoyo: true, repeat: -1, ease: 'Sine.easeInOut',
+    });
+    this.scene.tweens.add({
+      targets: this.storagePool,
+      alpha: { from: 0.28 * f, to: 0.44 * f },
+      duration: 2800, yoyo: true, repeat: -1, ease: 'Sine.easeInOut',
+    });
+  }
+
   destroy(): void {
     this.blinkTimer?.remove();
     this.blinkTimer = undefined;
@@ -523,6 +600,14 @@ export class PurificationModuleEntity {
     this.purifierSprite = undefined;
     this.purifierGlow = undefined;
     this.purifierPool = undefined;
+    if (this.storageGlow) this.scene?.tweens.killTweensOf(this.storageGlow);
+    if (this.storagePool) this.scene?.tweens.killTweensOf(this.storagePool);
+    this.storageSprite?.destroy();
+    this.storageGlow?.destroy();
+    this.storagePool?.destroy();
+    this.storageSprite = undefined;
+    this.storageGlow = undefined;
+    this.storagePool = undefined;
   }
 
   // ------------------------------------------------------------------ internal
@@ -586,11 +671,24 @@ export class PurificationModuleEntity {
         this.drawDamageDecoration(CORE_RADIUS);
       }
     } else if (type === 'STORAGE') {
-      this.graphics.fillStyle(STORAGE_MAIN, fillAlpha);
-      this.graphics.fillRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
-      this.graphics.lineStyle(2, STORAGE_EDGE, edgeAlpha);
-      this.graphics.strokeRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
-      this.drawDamageDecoration(STORAGE_HALF);
+      if (this.storageSprite) {
+        this.storageSprite.setAlpha(
+          Math.min(1, 0.45 + 0.5 * hpRatio + (this.proximityGlow ? 0.1 : 0)),
+        );
+        const sf = 0.45 + 0.55 * hpRatio;
+        if (Math.abs(sf - this.storageHpFactor) > 0.05) {
+          this.storageHpFactor = sf;
+          this.applyStorageGlowTweens();
+        }
+        this.graphics.clear();
+        this.drawDamageDecoration(STORAGE_HALF);
+      } else {
+        this.graphics.fillStyle(STORAGE_MAIN, fillAlpha);
+        this.graphics.fillRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
+        this.graphics.lineStyle(2, STORAGE_EDGE, edgeAlpha);
+        this.graphics.strokeRect(x - STORAGE_HALF, y - STORAGE_HALF, STORAGE_HALF * 2, STORAGE_HALF * 2);
+        this.drawDamageDecoration(STORAGE_HALF);
+      }
     } else if (this.purifierSprite) {
       // 贴图模式（B1 横卧过滤罐）：HP 越低越黯淡，受损装饰仍走 graphics
       this.purifierSprite.setAlpha(
@@ -684,6 +782,10 @@ export class PurificationModuleEntity {
       return this.config.y - PURIFIER_FRAME_H * 0.4
         + PURIFIER_FRAME_H * (1 - PURIFIER_ORIGIN_Y);
     }
+    if (this.config.type === 'STORAGE' && this.storageSprite) {
+      return this.config.y - STORAGE_FRAME_H * 0.4
+        + STORAGE_FRAME_H * (1 - STORAGE_ORIGIN_Y);
+    }
     return this.config.y;
   }
 
@@ -766,6 +868,9 @@ export class PurificationModuleEntity {
         return y + PURIFIER_FRAME_H * (1 - PURIFIER_ORIGIN_Y) + HP_BAR_GAP;
       }
       return y + PURIFIER_RADIUS + HP_BAR_GAP;
+    }
+    if (this.storageSprite) {
+      return y + STORAGE_FRAME_H * (1 - STORAGE_ORIGIN_Y) + HP_BAR_GAP;
     }
     return y + STORAGE_HALF + HP_BAR_GAP;
   }

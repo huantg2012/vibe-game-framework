@@ -11,6 +11,9 @@ import {
   PURIFIER_FRAME_H,
   PURIFIER_FRAME_W,
   PURIFIER_SHEET_KEY,
+  STORAGE_FRAME_H,
+  STORAGE_FRAME_W,
+  STORAGE_SHEET_KEY,
   coreSpriteKey,
   coreSpriteUrl,
 } from '@/entities/purification-module';
@@ -65,6 +68,13 @@ export class BootScene extends Phaser.Scene {
       PURIFIER_SHEET_KEY,
       'assets/sprites/modules/purifier-b1-sheet.png',
       { frameWidth: PURIFIER_FRAME_W, frameHeight: PURIFIER_FRAME_H },
+    );
+
+    // 储藏模块（C1 顶压观察井，DEC-112）
+    this.load.spritesheet(
+      STORAGE_SHEET_KEY,
+      'assets/sprites/modules/storage-c1-sheet.png',
+      { frameWidth: STORAGE_FRAME_W, frameHeight: STORAGE_FRAME_H },
     );
   }
 

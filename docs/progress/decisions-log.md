@@ -5,6 +5,20 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+## DEC-112: 储藏生产默认 = C1 顶压观察井；收容抽卡结案
+- Date: 2026-09-01（人在六卡里点选卡 1，下令放入净化点并提交）
+- Phase: Iterative Development（净化点视觉表现优化进行中；**不开独立迭代编号**；活指针仍在迭代 5）
+- Type: Art + Architecture（世界实体贴图；规则 / 数值不动）
+- Context: 储藏身份已锁为收容体（收容越完整，溢散越少，折算越高）。两轮抽卡共六张完整组合。人选定卡 1「顶压观察井」。DEC-111 第 3 条「储藏不翻生产」被本条覆盖。
+- Decision:
+  1. **储藏生产默认 = C1 顶压观察井**（32×36 × 8 帧图集 `storage-c1-sheet.png`）。读法：关着，但看得见它在顶缝里顶玻璃。贴图缺失回落橙色方块。
+  2. **落选整支删除：** C2 加压封舱 / C3 分匣封存 / C4 沉口封井 / C5 辐条锁核 / C6 铅封石匣 的生产加载、URL `?storage=` spike、运行时切卡。审核档案可留在 `docs/art/review-2026-08-28/`。
+  3. **对比课下线：** `?lesson=storage-card` 整课删除（迭代 9 / 10 先例）。键 1/2/3 只切核心对照。
+  4. **范围：** 只动储藏世界形体与光影。不动模块规则 / 数值 / HP 三态 / 交互半径 / HUD / 面板。Findings P2–P7 仍挂起。
+  5. **不开迭代 11。** 审美待人在 `#purif` 上终审，不代勾好看。
+- Impact: `purification-module.ts` / `boot-scene.ts` / `purification-scene.ts`；`docs/specs/system-purification-impact.md` 视觉规格节；`architecture.md` DEC-ARCH-018；练习场课表。
+- Verification: `npx tsc --noEmit`；净化点 `#purif` 冒烟（储藏默认是观察井，不再是橙色方块）。
+
 ## DEC-111: 净化点模块视觉翻生产——核心 = v6-B 仪式贴图；净化器 = B1 横卧过滤罐图集；储藏仍几何回落（抽卡未定稿）
 - Date: 2026-09-01（人在 `purif-visual-pass` 分支完成并下令合入 `coh`；Director 本条登记）
 - Phase: Iterative Development（净化点视觉表现优化进行中；**不开独立迭代编号**——人未点名开迭代 11；活指针仍在迭代 5）

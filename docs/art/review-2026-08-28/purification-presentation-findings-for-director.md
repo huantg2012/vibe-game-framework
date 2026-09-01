@@ -4,7 +4,7 @@ created-by: art review（AI 视觉审核）
 created-when: 2026-08-28
 purpose: 净化点表现层审核的 Findings，作为 Director 的决策输入。只给诊断 / 方向 / 路由 / 分批，不含实现方案。
 rule: 实现处方（像素尺寸 / 色值 / ASCII 结构图 / 具体画法）见同目录 `report-purification.html`（给人看）。本文件不给处方——派发时由 art agent 出规格，不由本文档代写。
-note: 待办登记见 `docs/progress/backlog-issues.md`。是否开独立迭代由人点名决定。**2026-09-01：** B2 部分交付（核心 v6-B + 净化器 B1 已翻生产，DEC-111）；储藏与 P2–P7 仍挂起。迭代 10 编号已被拾取物占用；未开迭代 11。
+note: 待办登记见 `docs/progress/backlog-issues.md`。是否开独立迭代由人点名决定。**2026-09-01：** B2 三模块已翻生产（核心 v6-B + 净化器 B1 + 储藏 C1，DEC-111 / DEC-112）；P2–P7 仍挂起。迭代 10 编号已被拾取物占用；未开迭代 11。
 ---
 
 # 净化点表现层审核 Findings（给 Director）

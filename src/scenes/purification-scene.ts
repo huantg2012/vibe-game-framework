@@ -495,7 +495,7 @@ export class PurificationScene extends Phaser.Scene {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
       this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
-      // 1/2/3 切换核心抽卡方案（实测对比用）
+      // 1/2/3 切核心对照（A 敬畏 / B 仪式 / C 封印）
       this.coreVariantKeys = [
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false),
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false),
@@ -669,13 +669,12 @@ export class PurificationScene extends Phaser.Scene {
       }
     }
 
-    // 核心抽卡方案切换（实测用）：1 -> A 敬畏，2 -> B 仪式，3 -> C 封印
+    // 1/2/3 切核心对照
     for (let i = 0; i < this.coreVariantKeys.length; i++) {
       const key = this.coreVariantKeys[i];
+      if (!key || !Phaser.Input.Keyboard.JustDown(key)) continue;
       const variant = CORE_SPRITE_VARIANTS[i];
-      if (key && variant && Phaser.Input.Keyboard.JustDown(key)) {
-        this.coreModule?.setCoreVariant(variant);
-      }
+      if (variant) this.coreModule?.setCoreVariant(variant);
     }
 
     // ESC
