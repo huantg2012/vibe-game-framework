@@ -12,6 +12,7 @@ import { GymLexiconScene } from '@/gym/gym-lexicon-scene';
 import { GymMapScene } from '@/gym/gym-map-scene';
 import { GymPaintVeinCardScene } from '@/gym/gym-paint-vein-card-scene';
 import { GymPlayerScene } from '@/gym/gym-player-scene';
+import { GymRiftEntranceCardScene } from '@/gym/gym-rift-entrance-card-scene';
 import { GymScene } from '@/gym/gym-scene';
 import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
 
@@ -26,6 +27,7 @@ const game = new Phaser.Game(
     GymLexiconScene,
     GymLexiconGalleryScene,
     GymPaintVeinCardScene,
+    GymRiftEntranceCardScene,
   ]),
 );
 bindDomUiRootToGame(game);

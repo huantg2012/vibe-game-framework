@@ -17,6 +17,7 @@ import {
   coreSpriteKey,
   coreSpriteUrl,
 } from '@/entities/purification-module';
+import { enqueueEntranceSheets } from '@/scenes/rift-entrance-visual';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
 
 export class BootScene extends Phaser.Scene {
@@ -76,6 +77,9 @@ export class BootScene extends Phaser.Scene {
       'assets/sprites/modules/storage-c1-sheet.png',
       { frameWidth: STORAGE_FRAME_W, frameHeight: STORAGE_FRAME_H },
     );
+
+    // 裂隙入口抽卡 spike：三张都预载。缺文件不得打断启动，场景回落圆点。
+    enqueueEntranceSheets(this.load);
   }
 
   create(): void {

@@ -5,6 +5,22 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+## DEC-113: 裂隙入口在地面上——生产默认 = 卡 4 地缝（地面裂缝贴花）；卡 5 击裂留对照；墙上那一整路作废
+- Date: 2026-09-04（人在两轮六张里推翻「墙上的伤」整条路线，点名三个地面方向，再从三张里留下卡 4 / 卡 5，并下令把卡 4 放进正式关卡）
+- Phase: Iterative Development（净化点视觉表现优化；**不开独立迭代编号**；活指针仍在迭代 5）
+- Type: Art + Architecture（世界实体贴图 + 载体平面；规则 / 数值不动）
+- Context: 身份早已锁「伤口渗漏，不是门」（`rift-entrance-identity.md`）。但连续两轮共六张（壁裂幕 / 错层剪 / 膜破回缩，再加挤入 / 蚀腔 / 层叠）都被人否掉，共同病根是**载体平面选错**：把「时空的伤」画成「一段墙被弄坏」。而入口所在的位置（中心正北 4.0 tile，压在椭圆北沿）根本没有墙——净化点的边界是变暗带 → 力场膜 → 虚空，凭空造一段内壁等于发明场景里不存在的建筑。人给出方向：入口在**地面上**，且**不需要显式呈现裂隙那边是什么**。
+- Decision:
+  1. **生产默认 = 卡 4 地缝**：地面上一道中间粗两边细的裂缝（另有四条支缝），缝深处一条青绿的丝在慢慢走。40×56 × 8 帧、6fps 图集 `rift-e4-sheet.png`。取代北侧呼吸圆点。
+  2. **卡 5 击裂留作对照**：由受击点向外辐射的裂缝，像钢化玻璃受击；青绿从中心往外淡出，可达半径随帧呼吸。`?entrance=5` 与净化点内键 4/5 切换，**不改生产默认**。
+  3. **载体平面（本条最重要的结论）：** 两张都画在**地面平面内**（与净化点混凝土同一平面，顶视），所以是**地面贴花**：锚点取中心、`ENTRANCE_DEPTH = 1`（地板 0 / 读数桩 20 / 玩家 30），玩家能踩过去。地面上的缝按「正对 + 向下俯视 10°」画会被压成几乎看不见——那套相机只适用于立着的东西。已锁三台装置仍是 45° 等距，本条不动它们。
+  4. **落选整支删除：** 墙上三张（卡 1 壁裂幕 / 2 错层剪 / 3 膜破回缩）与卡 6 囚笼的图集、生成器 `gen/rift_e_cards.py`、审核 HTML 全部删除；`gen/rift_entrance_ground.py` 只留卡 4 / 卡 5。
+  5. **模块改名：** `src/scenes/rift-entrance-spike.ts` → `rift-entrance-visual.ts`。它不再是 spike，是生产路径（DEC-ARCH-019）。
+  6. **不显式呈现那边是什么**（人明令）。缝里只有深度三档与青绿的丝，不画别处的地板 / 砖 / 木——画出具体的别处等于承诺目的地，与「去向不可选」冲突。
+  7. **范围：** 只动入口的世界形体。不动规则 / 数值 / 交互半径 32px / 按 E 开出击装配 / 提示条优先级 / 安全区钳制 / 永不高亮。Findings P3–P7 仍挂起。**不开迭代 11。**
+- Impact: `rift-entrance-visual.ts`（改名 + 翻生产）/ `purification-scene.ts`（默认挂贴花，圆点降为回落；键 4/5 切对照）/ `boot-scene.ts` / `gym-rift-entrance-card-scene.ts`（六卡 → 两卡）；`docs/specs/system-purification-impact.md` 规则 2 位置表与规则 3（入口不再走同心圆呼吸函数）；`architecture.md` 模块登记 + 目录树 + DEC-ARCH-018 影响行 + 新增 DEC-ARCH-019；`docs/design-notes/rift-entrance-cards.md`；`docs/dev/gym.md` / `.cursor/rules/gym.mdc`；`PLAN-visual-pass.md` 节点 4；`.agents/skills/pixel-models/` 与 `.cursor/skills/pixel-models/`（本轮经验沉淀）。
+- Verification: 生成器自带闸门全绿（色板 / 活层 / 单一色 / 材质层 / 对混凝土有黑有亮 / 青绿只在缝里 / 躺在地面平面里 / 亮断口断续 / 缝有三档深度）；`npx tsc --noEmit`；`npm run build`；净化点 `#purif` 冒烟。审美人已在练习场点选，实地终审仍由人做。
+
 ## DEC-112: 储藏生产默认 = C1 顶压观察井；收容抽卡结案
 - Date: 2026-09-01（人在六卡里点选卡 1，下令放入净化点并提交）
 - Phase: Iterative Development（净化点视觉表现优化进行中；**不开独立迭代编号**；活指针仍在迭代 5）

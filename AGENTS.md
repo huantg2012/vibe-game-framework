@@ -2,7 +2,7 @@
 
 **项目执行标准的唯一正文是 `CLAUDE.md`。** 本文件是 Cursor 侧钩子，不复制那份全文。开工先读 `CLAUDE.md`（阶段、硬约束、路由），细节按 L1/L2 再读 spec。
 
-自定义 agent 定义：`.cursor/agents/`（与 `.claude/agents/` 正文逐字一致，仅 `model` 可不同）。人的操作入口：`START-HERE.md`。
+自定义 agent 定义：`.cursor/agents/`（与 `.claude/agents/` 正文逐字一致，仅 `model` 可不同）。人的操作入口：`START-HERE.md`。项目 skill 在 `.cursor/skills/`（与 `.agents/skills/` 正文相同）：HUD / DOM 走 `in-game-ux`；世界内像素模型 / 像素抽卡走 `pixel-models`（抽卡流程另读 `visual-card-draw`）；自定义 agent 必须显式 Read。
 
 ## 硬约束（不读 CLAUDE.md 也必须遵守）
 

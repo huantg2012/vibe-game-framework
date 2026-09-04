@@ -13,12 +13,13 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | -- | -- |
 | 污染句法 | `http://localhost:3000/gym.html?lesson=lexicon` |
 | 油膜脉络抽卡 | `http://localhost:3000/gym.html?lesson=paint-vein-card`（历史对照课） |
+| 裂隙入口对照 | `http://localhost:3001/gym.html?lesson=rift-entrance-card`（两卡并排：卡 4 地缝 = 生产默认，卡 5 击裂 = 对照；键 4 / 5 高亮；都画在地面平面内、是贴花；6fps；**底是出击同一份净化点混凝土，不是纯黑**。`npm run gym` 常见端口 3001，3000 常被 `npm run dev` 占用） |
 | 污染句法陈列馆 | `http://localhost:3000/gym.html?lesson=lexicon-gallery` |
 | 敌人移动 | `http://localhost:3000/gym.html` |
 | 玩家外形 | `http://localhost:3000/gym.html?lesson=player` |
 | 地图生成 | `http://localhost:3000/gym.html?lesson=map` |
 
-**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。迭代 10 翻找抽卡课已随人终审 PASS 删课（2026-08-31，迭代 9 先例）；翻找机制与表现是生产默认，住 `src/systems/loot-search-system.ts` / `loot-search-presentation.ts` / `src/ui/dom/loot-search-hud.ts`。储藏收容抽卡课已随 DEC-112 删课；生产默认 = C1 顶压观察井，住 `purification-module.ts`。
+**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene` / `GymRiftEntranceCardScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。裂隙入口对照课不走院子、不刷玩家，两卡并排播生产同一份入口图集（`src/scenes/rift-entrance-visual.ts`）；生产默认 = 卡 4 地缝地面贴花（DEC-113）。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。迭代 10 翻找抽卡课已随人终审 PASS 删课（2026-08-31，迭代 9 先例）；翻找机制与表现是生产默认，住 `src/systems/loot-search-system.ts` / `loot-search-presentation.ts` / `src/ui/dom/loot-search-hud.ts`。储藏收容抽卡课已随 DEC-112 删课；生产默认 = C1 顶压观察井，住 `purification-module.ts`。
 
 ---
 
@@ -39,6 +40,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 9. 污染句法（`?lesson=lexicon`）：固定观察院子，不是生成岛。玩家走出击 `Player`，默认无敌（「感受伤害」可关无敌）。侧栏按**渲染方案** / **碎片身份** / 孔谱 / 覆盖深度 / 基体 / 连续性 / 词素 / 成句 / 数量配表，点生成清场再刷。甲走出击 `AISystem` / `Enemy` / `CombatSystem`（感知为听噪时刷改写体剖面，否则刷渗透体剖面——碰撞与 AI 仍如此；候选渲染器按完整 `ContaminationForm` 画皮）。乙丙丁走出击同一套宿主，接战斗与混乱。击杀后约 0.8 秒按**当前**侧栏配置再刷。不开迷雾、不接遭遇识别旁白。`AISystem.create` 对本课关闭「恰好 1 个改写体」出击配额。渲染方案下拉：A/B/C 冻结对照，默认 D。生产 D 住 `src/entities/form-renderers/`（I3-B）。宿主游荡只在本课打开活机制；地图课不得打开该开关。**油膜默认 = 按种子采样生产三变体**（下拉仍可钉 A–F 做对照）。六格静帧历史对照走 `?lesson=paint-vein-card`，不要走句法课侧栏交差。合同：`docs/tasks/iteration-3.md`；油膜身份 DEC-101 / `docs/tasks/iteration-7.md`。
 10. 污染句法陈列馆（`?lesson=lexicon-gallery`）：目录课，不是观察院子。一次只进一个厅（孔谱 × 基体），陈列方案 D 下视觉不同的标本。不刷玩家、不创建 `Enemy` / `ContaminationHostSystem`。碎片是全局开关，不是网格轴。必须复用生产 `d-mixed` 的乙丙丁；**甲在迭代 5 I5-J 前走基因谱模块**（仍登记为方案 D 甲章，禁止新开渲染方案下拉）。视口虚拟化；与视野相交的格子必须挂上（DEC-086）。点开检视才切四朝向与四个信号相。**基因谱甲必须消费 `pose.facing4` / `pose.signal`**（I5-N / DEC-098）：切北/东/南/西身子要变；idle 与 strike 至少要分。陈列馆控件已通；截至 I5-F，基因谱挂载不消费这两字段（只烤一张静剪影 + 固着同一套呼吸）。I5-N 未交之前不要开 I5-G。**油膜按三变体分入口钉读法**（聚珠成滩 / 沾抹拖尾 / 薄滩收边；策划表仍一行 `oil_film`；对照哺乳动物邻域四入口）。开发标签走 DOM，头上无字。合同：`docs/tasks/iteration-4.md`；甲基因谱合同 `docs/tasks/iteration-5.md`；油膜三入口 DEC-101 / `docs/tasks/iteration-7.md`。
 11. 油膜脉络抽卡（`?lesson=paint-vein-card`）：**历史对照课。** A/B/C 是树参数 tweak；D/E/F 是已被 DEC-101 锁定为生产的三支原形。打开必须六格都在画面上（两行三列），挂 `attachBingPaintGenome`（`paintVeinVariant` 0–5，`displayScale` 2），同一颗种子、同一改写档、油膜。第一轮 A/B/C 抽卡模型 cursor-grok-4.6-xhigh-fast；第二轮 D/E/F 抽卡模型 kimi-k3；模型名标在每格卡片上。不要走句法课侧栏。课本身不删。生产油膜不采样 0/1/2。禁止 import `d/genome`。本课画布列可随窗口变窄；滚轮缩放抽卡区域，拖动平移。合同：`docs/tasks/iteration-7.md`。
+12. 裂隙入口对照（`?lesson=rift-entrance-card`）：外形对照课，不是机制抽卡。**抽卡已结案（DEC-113）**：入口在地面上，生产默认 = 卡 4 地缝；卡 5 击裂留作对照。落选的墙上三张与卡 6 囚笼已整支删除。两卡并排、6fps 八帧循环、放大约 4×，键 4 / 5 高亮。两张都画在地面平面内，是贴花（锚点中心、depth 1，玩家能踩过去）。底是出击同一份净化点混凝土（`createPurificationFloorTexture`），不是纯黑——纯黑会把任何不透明外沿看成描边。复用 `src/scenes/rift-entrance-visual.ts` 的图集常量与加载。不刷玩家、不走出击、不进主菜单。这里换卡不改生产默认。贴图未到时写「图未到」，禁止用占位方块冒充卡面。不开迭代 11。
 
 ---
 
@@ -69,6 +71,20 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 **渲染方案：** `现行占位` = 两种程序像素 + 乙丙丁几何块（默认敌人课仍用）。`方案 A/B/C` = 第一轮对照（已冻结，禁止再改）。`方案 D` = 混装生产语法（甲走 A、丙走 B、乙丁在 B 方向重做），默认选项；出击接线见迭代 3。切换方案只换视觉层，不改碰撞。句法课与出击活机制走 `liveMotion`。地图课不得打开该开关。
 
 移动、视锥 / 听噪、挥击、邻格抽打、踩踏混乱、体积场与出击同一套系统。接触词素按对照表兑现「它怎么伤你」；止损（能不能扣核）从连续性 × 覆盖深度查表，句法课与出击 `liveMotion` 同一套读取。接触下拉不再有打核驱散。不开视野迷雾（为了观察），但遮挡墙仍挡敌人视线。不接遭遇识别旁白。
+
+### 裂隙入口对照（`?lesson=rift-entrance-card`）
+
+外形对照课。身份已锁「伤口渗漏，不是门」；**入口在地面上，不在墙上**，且不显式呈现那边是什么。
+
+**抽卡已结案（DEC-113）：** 生产默认 = **卡 4 地缝**（地面上一道中间粗两边细的裂缝，缝深处一条丝在走）。**卡 5 击裂**（由受击点向外辐射，像钢化玻璃）留作对照。落选的墙上三张与卡 6 囚笼已整支删除，生成器只留 `gen/rift_entrance_ground.py`。
+
+打开 `http://localhost:3001/gym.html?lesson=rift-entrance-card`（`npm run gym` 常见端口 3001；3000 常被 `npm run dev` 占用）即播八帧循环、每秒六帧，放大约 4×，键 4 / 5 高亮对应卡。
+
+**两张都画在地面平面内**（与净化点混凝土同一平面，顶视），所以是贴花：锚点取中心、depth 1（地板 0 / 读数桩 20 / 玩家 30），玩家能踩过去。地面上的缝按向下俯视 10° 画会被压成几乎看不见，所以不能用那套相机。已锁三台装置仍是 45° 等距，本课不动它们。
+
+**底是出击同一份净化点混凝土**（`createPurificationFloorTexture`，与卡面同样放大 4×），不是纯黑——纯黑会把任何不透明外沿都看成描边。声明见 `.cursor/skills/pixel-models/SKILL.md` 画法定律第 9 条。
+
+不刷玩家、不走出击、不进主菜单。这里换卡不改生产默认。实地看走净化点 `#purif`（默认就是卡 4；`?entrance=5` 或场景内键 4/5 切对照）。贴图未到时该格写「图未到」，不要用占位方块冒充卡面。开发 UI，不是游戏内界面。不开迭代 11。
 
 ### 油膜脉络抽卡（`?lesson=paint-vein-card`）
 
@@ -107,4 +123,4 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 ## 以后加课
 
-在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`、`?lesson=map`、`?lesson=lexicon`、`?lesson=lexicon-gallery`、`?lesson=paint-vein-card`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。
+在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`、`?lesson=map`、`?lesson=lexicon`、`?lesson=lexicon-gallery`、`?lesson=paint-vein-card`、`?lesson=rift-entrance-card`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。

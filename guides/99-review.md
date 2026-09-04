@@ -705,7 +705,7 @@ rounds: 3
 
 **已落地的对策（2026-08-13，同日拆层）**：
 
-1. **Framework skill** `.cursor/skills/in-game-ux/`：`SKILL.md` = 通用开工闸门 + 写完自检 + Bootstrap（无 Kit 时从 vision/world 发明第一版）；`like-a-game.md` / `aesthetics.md` = 判断动作与可否决句。**不内嵌**某款游戏的色板、组件类、参考名单、引擎 API。
+1. **Framework skill** `.cursor/skills/in-game-ux/`：`SKILL.md` = 通用开工闸门 + 写完自检 + Bootstrap（无 Kit 时从 vision/world 发明第一版）；`like-a-game.md` / `aesthetics.md` = 判断动作与可否决句。**不内嵌**某款游戏的色板、组件类、参考名单、引擎 API。世界内像素模型的 HOW 是后来另立的 `.cursor/skills/pixel-models/`（不是本条 UI skill 的扩写）。
 2. **游戏填充物**留在项目文档：参考研究、UI Kit、palette、architecture 的 overlay 挂载根。skill 按路径加载，找不到则 Bootstrap，禁止套用别的游戏的皮。
 3. **强制接线**：art / design / code / director / qa 写明触碰 in-game UI 必须显式 Read 该 SKILL.md。Director 派 UI 任务时 Task Brief 必须写这一步——自定义 agent 不会自动加载 skill。
 4. **CLAUDE.md / AGENTS.md / `_template-ui.md`**：清单是闸门；HOW 在 skill。只写「要过关」而不走 HOW = 不合格。agent 不许自称好看/像游戏。

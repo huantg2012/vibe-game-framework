@@ -54,6 +54,7 @@
 .claude/agents/*.md 与 .cursor/agents/*.md = AI 的执行标准（最高权威；两份正文逐字一致，
                                             frontmatter 仅 model 允许按运行时差异）
 .cursor/skills/in-game-ux/               = in-game UI 的 HOW（开工闸门+自检；自定义 agent 必须显式 Read）
+.cursor/skills/pixel-models/             = 世界内像素模型的 HOW（自定义 agent 必须显式 Read）
 CLAUDE.md                                = 项目执行标准正文（阶段、硬约束、路由）
 AGENTS.md                                = Cursor 侧钩子（指向 CLAUDE.md + 硬约束摘要，不复制全文）
 START-HERE.md                            = 人的操作入口
@@ -69,6 +70,7 @@ guides/*.md                              = 人的参考资料（设计原理记�
 ```
 .claude/agents/ 与 .cursor/agents/ → ideation, director, design, code, art, qa（两份正文一致）
 .cursor/skills/in-game-ux/ → in-game UI 的 HOW（自定义 agent 不会自动加载，必须显式 Read）
+.cursor/skills/pixel-models/ → 世界内像素模型的 HOW（自定义 agent 不会自动加载，必须显式 Read）
 guides/                → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
 docs/                  → 游戏项目活文档（AI读写、人审核）
 tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）

@@ -71,6 +71,8 @@ Design agent 先输出 UI spec 的结构层（载体决策、参考锚点、屏�
 
 **抽卡任务必经 `.cursor/skills/visual-card-draw/SKILL.md`**：卡设计（完整组合 + 一句话读法 + 载体 + 具名参考 + 声明可分维度）与逐卡最短核的 HOW 住在该 skill，被派到抽卡任务时先 Read 再动手。
 
+**像素模型 / 像素抽卡必经 `.cursor/skills/pixel-models/SKILL.md`**（与 visual-card-draw 并列）：世界内像素实体、图集、程序像素、对比课里的物体怎么画。像素抽卡先 Read 流程 skill，再 Read 本画法 skill。自定义 agent 不会自动加载。被派到像素模型或像素抽卡时必须显式 Read。
+
 ## 核心认知
 
 你不直接生成图片/音频。你的工作是：

@@ -11,7 +11,7 @@ description: >-
 
 口号「要过关」不够。本 skill 是 **HOW**：教 agent 根据**本游戏**的 vision / world / art-direction 发明符合该世界的界面，而不是套用别的项目的皮。
 
-触碰任何 in-game UI（HUD / 面板 / 蒙层 / CSS / 菜单 / 检视 / toast）必须走完开工闸门再画；画完必须答自检。过反模式清单 ≠ 好看 ≠ 像游戏。审美与「读作游戏」由**人终审**——agent 不许自称过关。
+触碰任何 in-game UI（HUD / 面板 / 蒙层 / CSS / 菜单 / 检视 / toast）必须走完开工闸门再画；画完必须答自检。过反模式清单 ≠ 好看 ≠ 像游戏。审美与「读作游戏」由**人终审**——agent 不许自称过关。世界内像素实体、图集、程序像素走 `.cursor/skills/pixel-models/SKILL.md`，不要用本文件发明描边和色板。
 
 自定义 agent **不会**自动加载 skill。被派到 UI 任务时必须显式 Read 本文件；Director 的 Task Brief 必须写明这一步。
 

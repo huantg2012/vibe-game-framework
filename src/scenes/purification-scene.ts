@@ -21,6 +21,13 @@ import {
   CORE_SPRITE_VARIANTS,
   PurificationModuleEntity,
 } from '@/entities/purification-module';
+import {
+  ENTRANCE_DEFAULT_VARIANT,
+  ENTRANCE_VARIANTS,
+  RiftEntranceVisual,
+  readEntranceVariantQuery,
+  writeEntranceVariantQuery,
+} from '@/scenes/rift-entrance-visual';
 import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
@@ -75,8 +82,8 @@ const ELLIPSE_RY = 5.0; // tiles
 const CORE_POS = { x: CENTER_X, y: CENTER_Y };
 const STORAGE_POS = { x: CENTER_X + 3.5 * TILE, y: CENTER_Y };
 const PURIFIER_POS = { x: CENTER_X, y: CENTER_Y + 3.5 * TILE };
-// Rift entrance (north edge)
-const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 3.5 * TILE };
+// 裂隙入口嵌在北侧内壁上。4.0 tile + 1.0 安全区 = 椭圆北沿，不把膜顶出一包。
+const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 4.0 * TILE };
 // Defense management point (south-west)
 const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 2.5 * TILE };
 // Growth altar (west)
@@ -107,6 +114,29 @@ const BREATH_SPEED_HIGHLIGHT = (2 * Math.PI) / 800;
  * Tiles are FLOOR if their center is inside the boundary at 98% radius.
  * Used for visibility occluder grid only -- physics uses the smooth blob collider.
  */
+/**
+ * 练习场对照课用的落地底：与出击同一份边界 → 瓦片 → 地面纹理。
+ * 潮汐取常态（强度 1.0 / 满潮）以免对照图随存档变。只读，不改生产路径。
+ */
+export function createPurificationFloorTexture(scene: Phaser.Scene, key: string): string {
+  const interactionPts = [
+    CORE_POS, STORAGE_POS, PURIFIER_POS,
+    RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS, THICKEN_POS,
+  ];
+  const shape = createBoundaryShape({
+    ellipseRx: ELLIPSE_RX,
+    ellipseRy: ELLIPSE_RY,
+    tideIntensity: 1.0,
+    tidePhase: 'crest',
+    pressureSeed: 7919,
+    interactionPoints: interactionPts,
+    centerX: CENTER_X,
+    centerY: CENTER_Y,
+  });
+  const tileMap = buildPurificationTileMap(shape);
+  return createPurificationSurfaceTexture(scene, tileMap, key, shape, interactionPts);
+}
+
 function buildPurificationTileMap(shape: BoundaryShape): TileMapData {
   const tiles: number[][] = [];
 
@@ -246,8 +276,10 @@ export class PurificationScene extends Phaser.Scene {
   private storageModule!: PurificationModuleEntity;
   private purifierModule!: PurificationModuleEntity;
 
+  /** 贴图缺失时的回落：旧的呼吸圆点。生产外形是地面裂缝贴花（DEC-113）。 */
   private riftEntranceGraphics!: Phaser.GameObjects.Graphics;
   private riftEntrancePulse = 0;
+  private riftEntrance: RiftEntranceVisual | null = null;
 
   // Defense management interaction point
   private defenseGraphics!: Phaser.GameObjects.Graphics;
@@ -266,6 +298,8 @@ export class PurificationScene extends Phaser.Scene {
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
   // 核心抽卡方案切换（实测用）：1/2/3 -> A 敬畏 / B 仪式 / C 封印
   private coreVariantKeys: Phaser.Input.Keyboard.Key[] = [];
+  // 裂隙入口外形对照（实测用）：4/5 -> 卡 4 地缝（生产默认）/ 卡 5 击裂
+  private entranceVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
   private panelClosedAt = 0;
   private lastStepAt = -1000;
@@ -477,6 +511,10 @@ export class PurificationScene extends Phaser.Scene {
 
     // Interaction point graphics (unified circles, spec B3)
     this.riftEntranceGraphics = this.add.graphics().setDepth(20);
+    // 裂隙入口 = 地面裂缝贴花（DEC-113，生产默认卡 4 地缝）。
+    // `?entrance=5` 只用来看卡 5 击裂那张对照，不改生产默认。
+    this.riftEntrance = new RiftEntranceVisual(this, RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y);
+    this.riftEntrance.mount(readEntranceVariantQuery() ?? ENTRANCE_DEFAULT_VARIANT);
     this.defenseGraphics = this.add.graphics().setDepth(20);
     this.growthGraphics = this.add.graphics().setDepth(20);
     this.thickenGraphics = this.add.graphics().setDepth(20);
@@ -495,11 +533,15 @@ export class PurificationScene extends Phaser.Scene {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
       this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
-      // 1/2/3 切核心对照（A 敬畏 / B 仪式 / C 封印）
+      // 1/2/3 切核心对照（生产默认 B）；4/5 切裂隙入口两张（生产默认卡 4）
       this.coreVariantKeys = [
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false),
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false),
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false),
+      ];
+      this.entranceVariantKeys = [
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR, true, false),
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE, true, false),
       ];
     }
 
@@ -579,19 +621,25 @@ export class PurificationScene extends Phaser.Scene {
 
     // --- Draw interaction points (unified breathing circles) ---
 
-    // Rift entrance
+    // Rift entrance：生产外形是地面裂缝贴花。只有贴图缺失才回落呼吸圆点。
     const riftHighlight = false; // rift always available
     const riftSpeed = nearRift ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL;
     this.riftEntrancePulse += delta * riftSpeed;
-    drawInteractionPoint(
-      this.riftEntranceGraphics,
-      RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y,
-      RIFT_CENTER, RIFT_RING,
-      8, 14,
-      this.riftEntrancePulse,
-      riftHighlight,
-      nearRift,
-    );
+    if (this.riftEntrance?.isShowing()) {
+      this.riftEntranceGraphics.setVisible(false);
+      this.riftEntranceGraphics.clear();
+    } else {
+      this.riftEntranceGraphics.setVisible(true);
+      drawInteractionPoint(
+        this.riftEntranceGraphics,
+        RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y,
+        RIFT_CENTER, RIFT_RING,
+        8, 14,
+        this.riftEntrancePulse,
+        riftHighlight,
+        nearRift,
+      );
+    }
 
     // Defense point
     const defHighlight = this.shouldHighlight('defense');
@@ -673,8 +721,18 @@ export class PurificationScene extends Phaser.Scene {
     for (let i = 0; i < this.coreVariantKeys.length; i++) {
       const key = this.coreVariantKeys[i];
       if (!key || !Phaser.Input.Keyboard.JustDown(key)) continue;
-      const variant = CORE_SPRITE_VARIANTS[i];
-      if (variant) this.coreModule?.setCoreVariant(variant);
+      const coreVariant = CORE_SPRITE_VARIANTS[i];
+      if (coreVariant) this.coreModule?.setCoreVariant(coreVariant);
+    }
+
+    // 4/5 切裂隙入口外形对照（生产默认仍是卡 4，只改本次观看）
+    for (let i = 0; i < this.entranceVariantKeys.length; i++) {
+      const key = this.entranceVariantKeys[i];
+      const variant = ENTRANCE_VARIANTS[i];
+      if (!key || !variant || !this.riftEntrance) continue;
+      if (!Phaser.Input.Keyboard.JustDown(key)) continue;
+      this.riftEntrance.mount(variant);
+      writeEntranceVariantQuery(variant);
     }
 
     // ESC
@@ -1174,10 +1232,11 @@ export class PurificationScene extends Phaser.Scene {
       this.input.keyboard?.removeKey(this.tabKey, true);
       this.tabKey = null;
     }
-    for (const k of this.coreVariantKeys) {
+    for (const k of [...this.coreVariantKeys, ...this.entranceVariantKeys]) {
       this.input.keyboard?.removeKey(k, true);
     }
     this.coreVariantKeys = [];
+    this.entranceVariantKeys = [];
 
     // Destroy systems
     this.atmosphere.destroy();
@@ -1188,6 +1247,8 @@ export class PurificationScene extends Phaser.Scene {
     this.purifierModule.destroy();
     this.player.destroy();
     this.tilemapRenderer.destroy();
+    this.riftEntrance?.destroy();
+    this.riftEntrance = null;
     this.riftEntranceGraphics?.destroy();
     this.defenseGraphics?.destroy();
     this.growthGraphics?.destroy();

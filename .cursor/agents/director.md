@@ -346,6 +346,8 @@ description: "项目总监 — 全流程编排：判断阶段、规划Slice、�
 
 视觉/体验方向有多个合理方案、对错只能由人眼拍板时，走抽卡决策循环。**HOW 住在 `.cursor/skills/visual-card-draw/SKILL.md`**（机制先锁 → 完整组合卡 → 真实上下文对比课 → art 逐卡核 → 人抽 → DEC → 翻生产 → 删落选删课）。派抽卡任务时 Task Brief 必须写明「先 Read 该 SKILL.md」。自定义 agent 不会自动加载 skill。
 
+派**像素模型**或**像素抽卡**时，Task Brief 还必须写明先 Read `.cursor/skills/pixel-models/SKILL.md`（世界内像素怎么画）。像素抽卡两份都要 Read：先流程，再画法。HUD / DOM 仍走 `in-game-ux`，不要把世界内精灵塞进 UI skill。
+
 你的硬性职责：
 
 1. **机制没锁不开抽**：design 的机制约束表交付前，禁止派对比课实现。抽卡只抽表现，不抽机制。
