@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-裂隙入口 —— 地面两卡（卡 4 地缝 / 卡 5 击裂）
+裂隙入口 —— 地面贴花
 
 人 2026-09-04 推翻了「墙上的伤」那一整路：入口在**地面上**，不在墙上。
-人点名三个地面方向，出了三张，人留下卡 4 与卡 5（卡 6 囚笼落选，已整支删除）：
+人留下卡 4 与卡 5（卡 6 囚笼落选，已整支删除），并定生产默认 = 卡 4（DEC-113）。
+
+本批额外抽三个**占场地方式不同**的地面伤口，只进对照课，不翻生产默认：
 
   卡 4 地缝   地面上一道中间粗两边细的裂缝  → **生产默认（DEC-113）**
-  卡 5 击裂   由中心点向周围辐射的裂缝，像钢化玻璃受击  → 留作对照 `?entrance=5`
+  卡 5 击裂   由中心点向周围辐射的裂缝，像钢化玻璃受击  → 留作对照
+  卡 7 错位   两块混凝土板滑开，伤口是中间一条台阶状暗缝
+  卡 8 掀皮   一块混凝土被掀起，伤口是新月形暗口
+  卡 9 网裂   一片场地龟裂成网，没有主缝、没有受击点
+
+编号跳过 6，不复活囚笼。人未抽不结案、不改 DEC-113。
 
 人另已明令：**不需要显式呈现「裂隙那边是什么」。** 所以缝里只有深与青绿的丝，
 不画别处的地板、砖、木——那等于承诺目的地，与「去向不可选」冲突。
@@ -17,12 +24,12 @@
 
 相机：**地面平面内**（与净化点混凝土地面同一平面，顶视）。地面上的缝只能画在
 地面平面里；按向下俯视 10° 画会被压成几乎看不见。已锁三台装置仍是 45° 等距，
-本批不动它们。接线上这两张是地面贴花：锚点取中心，层压在地板之上、玩家之下。
+本批不动它们。接线上这些都是地面贴花：锚点取中心，层压在地板之上、玩家之下。
 
 画布 40×56、8 帧、6fps。落地底 = 净化点混凝土（主色明度 60.7 / 暗部 46.0），
 所以缝要够黑、断口要够亮。
 
-活层只有缝里的青绿；缝、断口、崩渣逐帧钉死。变化只许落在声明的活层区域里。
+活层只有缝里的青绿；缝、断口、崩渣、板块逐帧钉死。变化只许落在声明的活层区域里。
 """
 from __future__ import annotations
 
@@ -129,6 +136,75 @@ def gap_color(t):
     if t < 0.68:
         return INK
     return SHADOW
+
+
+def _dist_seg(px, py, ax, ay, bx, by):
+    vx, vy = bx - ax, by - ay
+    l2 = vx * vx + vy * vy
+    if l2 < 1e-9:
+        return math.hypot(px - ax, py - ay), 0.0, 0.0
+    t = max(0.0, min(1.0, ((px - ax) * vx + (py - ay) * vy) / l2))
+    qx, qy = ax + t * vx, ay + t * vy
+    cross = vx * (py - ay) - vy * (px - ax)
+    sign = 1.0 if cross >= 0 else -1.0
+    return math.hypot(px - qx, py - qy), t, sign
+
+
+def _dist_poly(px, py, poly):
+    best = 1e9
+    best_s = 1.0
+    best_t = 0.0
+    total = 0.0
+    segs = []
+    for i in range(len(poly) - 1):
+        ax, ay = poly[i]
+        bx, by = poly[i + 1]
+        length = math.hypot(bx - ax, by - ay) or 1e-9
+        segs.append((ax, ay, bx, by, length, total))
+        total += length
+    for ax, ay, bx, by, length, start in segs:
+        d, t, s = _dist_seg(px, py, ax, ay, bx, by)
+        if d < best:
+            best = d
+            best_s = s
+            best_t = (start + t * length) / total if total > 0 else 0.0
+    return best, best_t, best_s
+
+
+def _point_in_poly(px, py, poly):
+    n = len(poly)
+    inside = False
+    j = n - 1
+    for i in range(n):
+        xi, yi = poly[i]
+        xj, yj = poly[j]
+        if (yi > py) != (yj > py):
+            xint = (xj - xi) * (py - yi) / (yj - yi + 1e-12) + xi
+            if px < xint:
+                inside = not inside
+        j = i
+    return inside
+
+
+def _flood_count(cells):
+    s = set(cells)
+    seen = set()
+    n = 0
+    nbr = ((1, 0), (-1, 0), (0, 1), (0, -1))
+    for start in s:
+        if start in seen:
+            continue
+        n += 1
+        stack = [start]
+        seen.add(start)
+        while stack:
+            cx, cy = stack.pop()
+            for dx, dy in nbr:
+                q = (cx + dx, cy + dy)
+                if q in s and q not in seen:
+                    seen.add(q)
+                    stack.append(q)
+    return n
 
 
 # =====================================================================
@@ -402,6 +478,315 @@ def card5(frame):
 
 
 # =====================================================================
+# 卡 7 错位 —— 两块混凝土板沿一条台阶状暗缝滑开
+# 不是一道画在地板上的线：伤口是两块场地之间的那条缝。明度差表示错开，
+# 不画成立着的台阶体积。缝宽几乎均匀（地质断层，不是钟形的地缝）。
+# REF 同卡 4。不学：立着的台阶、精密切割的伸缩缝、门框。
+# =====================================================================
+_C7_FAULT = ((4, 17), (13, 21), (17, 27), (23, 30), (36, 40))
+_C7_GAP_HW = 1.55
+
+
+def _c7_gap_cells():
+    cells = {}
+    for y in range(12, 50):
+        for x in range(1, 39):
+            d, _t, _s = _dist_poly(x, y, _C7_FAULT)
+            if d <= _C7_GAP_HW + 0.35:
+                cells[(x, y)] = min(1.0, d / (_C7_GAP_HW + 0.35))
+    return cells
+
+
+_C7_GAP = _c7_gap_cells()
+
+
+def card7(frame):
+    im = new()
+    rnd = random.Random(7007)
+
+    for y in range(12, 50):
+        for x in range(1, 39):
+            if (x, y) in _C7_GAP:
+                continue
+            d, t, s = _dist_poly(x, y, _C7_FAULT)
+            jag = 0.85 * math.sin(x * 1.63 + y * 0.41) + 0.4 * math.sin(y * 0.9)
+            if t < 0.07 or t > 0.93:
+                continue
+            if s > 0 and 1.7 < d < 8.0 + jag and t <= 0.78:
+                if d < 2.7:
+                    r = rnd.random()
+                    if r < 0.62:
+                        put(im, x, y, METAL_L)
+                    elif r < 0.90:
+                        put(im, x, y, METAL)
+                    else:
+                        put(im, x, y, CONC_M)
+                elif rnd.random() < 0.18:
+                    put(im, x, y, CONC_D)
+                else:
+                    put(im, x, y, CONC_M)
+            elif s < 0 and 1.7 < d < 8.6 + jag and t >= 0.22:
+                if d < 2.7:
+                    put(im, x, y, CONC_D if rnd.random() < 0.55 else CLINIC)
+                elif rnd.random() < 0.22:
+                    put(im, x, y, CLINIC)
+                else:
+                    put(im, x, y, CONC_D)
+
+    for x, y in (
+        (12, 20), (16, 23), (21, 27), (25, 30), (29, 33), (33, 36), (19, 25), (23, 29),
+    ):
+        if get(im, x, y)[3] >= 32 and (x, y) not in _C7_GAP:
+            put(im, x, y, METAL_L)
+
+    for (x, y), t in _C7_GAP.items():
+        put(im, x, y, gap_color(t))
+
+    for _ in range(10):
+        x = rnd.randint(8, 32)
+        y = rnd.randint(20, 38)
+        if (x, y) in _C7_GAP and get(im, x, y)[:3] in DARK_SET:
+            put(im, x, y, EARTH if rnd.random() < 0.6 else BONE)
+    put(im, 15, 24, RUST)
+    put(im, 28, 33, EARTH)
+
+    inner = {
+        c
+        for c in _C7_GAP
+        if all(
+            get(im, c[0] + dx, c[1] + dy)[3] >= 32
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))
+        )
+    }
+    core = []
+    samples = sorted(inner, key=lambda c: _dist_poly(c[0], c[1], _C7_FAULT)[1])
+    step = max(1, len(samples) // 18)
+    core = samples[::step][:16]
+    for i, (x, y) in enumerate(core):
+        put(im, x, y, C4_THREAD[(i - frame * 2) % len(C4_THREAD)])
+    return im
+
+
+# =====================================================================
+# 卡 8 掀皮 —— 一块混凝土被掀起，伤口是新月形暗口
+# C / J 形开口 + 掀起的板块。用明度表示掀起，仍落在地面平面内。
+# 不学：对称纺锤（眼）、绕口一圈亮棱（传送门）。
+# =====================================================================
+_C8_FLAKE = (
+    (8, 22), (22, 18), (36, 21), (37, 30), (22, 36), (7, 34),
+)
+# 开口在左下：边 4→5（底）和 5→0（左）。右边是还连着的铰。
+_C8_OPEN = (4, 5)
+
+
+def _c8_edge_dist(x, y, edges):
+    best = 1e9
+    n = len(_C8_FLAKE)
+    for i in edges:
+        ax, ay = _C8_FLAKE[i]
+        bx, by = _C8_FLAKE[(i + 1) % n]
+        d, _t, _s = _dist_seg(x, y, ax, ay, bx, by)
+        if d < best:
+            best = d
+    return best
+
+
+def _c8_gap_cells():
+    cells = {}
+    for y in range(16, 44):
+        for x in range(2, 32):
+            if _point_in_poly(x + 0.5, y + 0.5, _C8_FLAKE):
+                continue
+            d_open = _c8_edge_dist(x, y, _C8_OPEN)
+            d_hinge = _c8_edge_dist(x, y, (0, 1, 2, 3))
+            if d_hinge + 0.5 < d_open:
+                continue
+            hw = 2.6
+            if d_open <= hw:
+                cells[(x, y)] = min(1.0, d_open / hw)
+    return cells
+
+
+_C8_GAP = _c8_gap_cells()
+
+
+def card8(frame):
+    im = new()
+    rnd = random.Random(8008)
+
+    for y in range(16, 38):
+        for x in range(6, 39):
+            if not _point_in_poly(x + 0.5, y + 0.5, _C8_FLAKE):
+                continue
+            on_open = False
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                nx, ny = x + dx, y + dy
+                if (nx, ny) in _C8_GAP:
+                    on_open = True
+                    break
+            if on_open:
+                put(im, x, y, METAL_L if rnd.random() < 0.55 else METAL)
+            else:
+                r = rnd.random()
+                if r < 0.28:
+                    put(im, x, y, CONC_D)
+                elif r < 0.42:
+                    put(im, x, y, BONE)
+                elif r < 0.50:
+                    put(im, x, y, CLINIC)
+                else:
+                    put(im, x, y, CONC_M)
+
+    for (x, y) in _C8_GAP:
+        for ox, oy in ((0, -1), (1, 0), (-1, 0), (0, 1)):
+            nx, ny = x + ox, y + oy
+            if (nx, ny) in _C8_GAP or _point_in_poly(nx + 0.5, ny + 0.5, _C8_FLAKE):
+                continue
+            if get(im, nx, ny)[3] >= 32:
+                continue
+            r = rnd.random()
+            if r < 0.18:
+                put(im, nx, ny, CONC_D)
+            elif r < 0.24:
+                put(im, nx, ny, EARTH)
+
+    for (x, y), t in _C8_GAP.items():
+        put(im, x, y, gap_color(t))
+
+    put(im, 14, 30, EARTH)
+    put(im, 20, 35, BONE)
+    put(im, 33, 33, RUST)
+
+    inner = {
+        c
+        for c in _C8_GAP
+        if all(
+            get(im, c[0] + dx, c[1] + dy)[3] >= 32
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))
+        )
+    }
+    deep = sorted(inner, key=lambda c: _C8_GAP[c])[:16]
+    if deep:
+        reach = 9 + (frame % 4)
+        for i, (x, y) in enumerate(deep[:reach]):
+            t = i / max(1, reach - 1)
+            if t < 0.3:
+                c = TEAL_M
+            elif t < 0.65:
+                c = TEAL_D
+            else:
+                c = TEAL_X
+            put(im, x, y, c)
+    return im
+
+
+# =====================================================================
+# 卡 9 网裂 —— 一片场地龟裂成网，没有主缝、没有受击点
+# 伤口占住一片，不是一条也不是一个点。结散开，格子大小不等。
+# 不学：蜘蛛（中心等长放射）、车轮辐条、中心墨点。
+# =====================================================================
+_C9_V = (
+    (11, 20), (19, 17), (28, 19), (35, 25),
+    (9, 27), (17, 25), (26, 27), (33, 32),
+    (13, 35), (22, 34), (30, 38),
+    (23, 22),
+)
+_C9_E = (
+    (0, 1), (1, 2), (2, 3),
+    (0, 4), (1, 5), (2, 6), (3, 7),
+    (4, 5), (5, 6), (6, 7),
+    (4, 8), (5, 9), (6, 10),
+    (8, 9), (9, 10),
+    (1, 11), (5, 11), (2, 11), (6, 11),
+)
+_C9_DEEP = ((17, 25), (26, 27), (13, 35), (30, 38))
+
+
+def _c9_gap_cells():
+    cells = {}
+
+    def stroke(x0, y0, x1, y1, w0):
+        n = int(max(abs(x1 - x0), abs(y1 - y0)) * 3) or 1
+        for i in range(n + 1):
+            t = i / n
+            cx = x0 + (x1 - x0) * t
+            cy = y0 + (y1 - y0) * t
+            span = int(math.ceil(w0))
+            for oy in range(-span - 1, span + 2):
+                for ox in range(-span - 1, span + 2):
+                    d = math.hypot(ox, oy * 1.2)
+                    if d <= w0 + 0.32:
+                        key = (int(round(cx + ox)), int(round(cy + oy)))
+                        val = min(1.0, d / max(0.5, w0 + 0.32))
+                        cells[key] = min(cells.get(key, 1.0), val)
+
+    for a, b in _C9_E:
+        x0, y0 = _C9_V[a]
+        x1, y1 = _C9_V[b]
+        stroke(x0, y0, x1, y1, 0.48)
+    for key, t in list(cells.items()):
+        dmin = min(math.hypot(key[0] - nx, key[1] - ny) for nx, ny in _C9_DEEP)
+        cells[key] = min(1.0, 0.22 + 0.75 * min(1.0, dmin / 7.5))
+    for nx, ny in _C9_DEEP:
+        for ox, oy in ((0, 0), (1, 0), (0, 1)):
+            key = (nx + ox, ny + oy)
+            cells[key] = min(cells.get(key, 1.0), 0.08)
+    return cells
+
+
+_C9_GAP = _c9_gap_cells()
+
+
+def card9(frame):
+    im = new()
+    rnd = random.Random(9009)
+
+    for (x, y) in sorted(_C9_GAP):
+        for ox, oy in ((0, -1), (1, 0)):
+            nx, ny = x + ox, y + oy
+            if (nx, ny) in _C9_GAP or get(im, nx, ny)[3] >= 32:
+                continue
+            r = rnd.random()
+            if r < 0.34:
+                put(im, nx, ny, METAL_L if r < 0.12 else (METAL if r < 0.26 else CONC_M))
+            elif r < 0.44:
+                put(im, nx, ny, CONC_D)
+
+    for (x, y), t in _C9_GAP.items():
+        put(im, x, y, gap_color(t))
+
+    for _ in range(14):
+        x = rnd.randint(8, 34)
+        y = rnd.randint(16, 40)
+        if get(im, x, y)[3] >= 32:
+            continue
+        put(im, x, y, rnd.choice((CONC_D, CONC_D, EARTH, BONE)))
+    put(im, 15, 22, EARTH)
+    put(im, 29, 30, RUST)
+
+    inner = {
+        c
+        for c in _C9_GAP
+        if all(
+            get(im, c[0] + dx, c[1] + dy)[3] >= 32
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))
+        )
+    }
+    path = []
+    for a, b in ((5, 11), (11, 6), (6, 9)):
+        x0, y0 = _C9_V[a]
+        x1, y1 = _C9_V[b]
+        n = int(max(abs(x1 - x0), abs(y1 - y0))) or 1
+        for i in range(n + 1):
+            p = (int(round(x0 + (x1 - x0) * i / n)), int(round(y0 + (y1 - y0) * i / n)))
+            if p in inner and _C9_GAP.get(p, 1.0) > 0.30:
+                path.append(p)
+    for i, (x, y) in enumerate(path):
+        put(im, x, y, C4_THREAD[(i - frame) % len(C4_THREAD)])
+    return im
+
+
+# =====================================================================
 # 闸门
 # =====================================================================
 def analyse(frames, live_region):
@@ -488,6 +873,181 @@ def audit(name, frames, live_region):
     return ok
 
 
+# =====================================================================
+# 地面伤口形体指纹（先写判据再画。量的是缝的几何，不是整张贴花的包围盒。）
+#
+# 本质锁「伤口渗漏」排除立着的体积与门框，但成立范围内还有好几种占场地方式。
+# 卡 4 地缝 / 卡 5 击裂已经是其中两个；本批再抽三个，禁止塌回那两个。
+#
+#   elong     = 缝格 PCA 第一特征值占比。1 = 一条线，0.5 = 各向同性。
+#   sol       = 缝格数 / 缝凸包面积。实心缝贴近凸包（高）；星形 / 新月会空一大块（低）。
+#   wcv       = 沿主轴分箱后缝宽的变异系数。钟形缝高，等宽断层低。
+#   mean_deg  = 缝格四连通平均度数。填实的厚缝内部都是 4，细线网大约 2。
+#   hub       = 离缝重心 ≤ 4 格的缝格占比。辐射的受击点会堆在这里；网裂不会。
+#   n_large   = 面积 ≥ 20 的材质连通块数（非暗、非青绿、不在缝里）。
+#   blob      = 最大那块材质的格数。
+#   slab_min  = 缝两侧材质的较小侧格数。两块板都在时两侧都大。
+# =====================================================================
+def _pca(cells):
+    pts = list(cells)
+    n = len(pts)
+    mx = sum(p[0] for p in pts) / n
+    my = sum(p[1] for p in pts) / n
+    cxx = sum((p[0] - mx) ** 2 for p in pts) / n
+    cyy = sum((p[1] - my) ** 2 for p in pts) / n
+    cxy = sum((p[0] - mx) * (p[1] - my) for p in pts) / n
+    tr = cxx + cyy
+    det = cxx * cyy - cxy * cxy
+    disc = max(0.0, tr * tr - 4 * det)
+    l1 = (tr + math.sqrt(disc)) / 2
+    l2 = (tr - math.sqrt(disc)) / 2
+    elong = l1 / (l1 + l2) if (l1 + l2) > 1e-9 else 0.5
+    ang = 0.5 * math.atan2(2 * cxy, cxx - cyy)
+    return elong, mx, my, ang
+
+
+def _convex_hull(pts):
+    pts = sorted(set(pts))
+    if len(pts) <= 2:
+        return pts
+
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+    lower = []
+    for p in pts:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    upper = []
+    for p in reversed(pts):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    return lower[:-1] + upper[:-1]
+
+
+def _poly_area(poly):
+    n = len(poly)
+    if n < 3:
+        return float(max(1, n))
+    a = 0.0
+    for i in range(n):
+        x0, y0 = poly[i]
+        x1, y1 = poly[(i + 1) % n]
+        a += x0 * y1 - x1 * y0
+    return abs(a) / 2.0
+
+
+def form_fingerprint(im, gap_cells):
+    gap = list(gap_cells)
+    elong, mx, my, ang = _pca(gap)
+    occ = set()
+    for x, y in gap:
+        dx, dy = x - mx, y - my
+        if dx * dx + dy * dy < 0.25:
+            continue
+        a = math.atan2(dy, dx)
+        occ.add(int((a + math.pi) / (2 * math.pi) * 12) % 12)
+    s = set(gap)
+    junc = 0
+    djunc = 0
+    for x, y in s:
+        deg = sum(
+            (x + dx, y + dy) in s for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))
+        )
+        if deg < 3:
+            continue
+        junc += 1
+        if math.hypot(x - mx, y - my) >= 3.5:
+            djunc += 1
+    ca, sa = math.cos(ang), math.sin(ang)
+    bins = {}
+    for x, y in gap:
+        t = int(round((x - mx) * ca + (y - my) * sa))
+        p = -(x - mx) * sa + (y - my) * ca
+        bins.setdefault(t, []).append(p)
+    widths = [max(ps) - min(ps) + 1 for ps in bins.values() if len(ps) >= 2]
+    if len(widths) < 4:
+        wcv = 9.0
+    else:
+        mean = sum(widths) / len(widths)
+        var = sum((w - mean) ** 2 for w in widths) / len(widths)
+        wcv = math.sqrt(var) / mean if mean > 0 else 9.0
+    side_a = side_b = 0
+    blob_seen = set()
+    blobs = []
+    nbr = ((1, 0), (-1, 0), (0, 1), (0, -1))
+    for y in range(H):
+        for x in range(W):
+            p = im.getpixel((x, y))
+            if p[3] < 32 or is_teal(p[:3]) or p[:3] in DARK_SET:
+                continue
+            if (x, y) in s:
+                continue
+            signed = -(x - mx) * sa + (y - my) * ca
+            if signed >= 0:
+                side_a += 1
+            else:
+                side_b += 1
+            if (x, y) in blob_seen:
+                continue
+            stack = [(x, y)]
+            blob_seen.add((x, y))
+            size = 0
+            while stack:
+                cx, cy = stack.pop()
+                size += 1
+                for dx, dy in nbr:
+                    nx, ny = cx + dx, cy + dy
+                    if (nx, ny) in blob_seen or not (0 <= nx < W and 0 <= ny < H):
+                        continue
+                    q = im.getpixel((nx, ny))
+                    if q[3] < 32 or is_teal(q[:3]) or q[:3] in DARK_SET:
+                        continue
+                    if (nx, ny) in s:
+                        continue
+                    blob_seen.add((nx, ny))
+                    stack.append((nx, ny))
+            blobs.append(size)
+    total = side_a + side_b
+    slab = (min(side_a, side_b) / total) if total else 0.0
+    hull = _convex_hull(gap)
+    sol = len(gap) / _poly_area(hull)
+    blob = max(blobs) if blobs else 0
+    n_large = sum(1 for b in blobs if b >= 20)
+    degs = [
+        sum((x + dx, y + dy) in s for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+        for x, y in s
+    ]
+    mean_deg = (sum(degs) / len(degs)) if degs else 0.0
+    hub = sum(1 for x, y in s if math.hypot(x - mx, y - my) <= 4.0)
+    hub_share = hub / len(s)
+    voids = [
+        (x, y)
+        for y in range(H)
+        for x in range(W)
+        if im.getpixel((x, y))[3] >= 32 and im.getpixel((x, y))[:3] == VOID[:3]
+    ]
+    n_void = _flood_count(voids)
+    return {
+        "elong": elong,
+        "sol": sol,
+        "wcv": wcv,
+        "mean_deg": mean_deg,
+        "hub": hub_share,
+        "n_large": n_large,
+        "blob": blob,
+        "slab": slab,
+        "slab_min": min(side_a, side_b),
+        "mat": total,
+        "djunc": djunc,
+        "bins": len(occ),
+        "gap": len(s),
+        "n_void": n_void,
+    }
+
+
 def ascii_art(im):
     rows = []
     for y in range(H):
@@ -513,14 +1073,44 @@ def ascii_art(im):
 
 
 CARDS = (
-    (4, "地缝", card4, set(_C4_GAP)),
-    (5, "击裂", card5, set(_C5_GAP)),
+    (4, "地缝", card4, set(_C4_GAP), "线缝"),
+    (5, "击裂", card5, set(_C5_GAP), "辐射"),
+    (7, "错位", card7, set(_C7_GAP), "错位"),
+    (8, "掀皮", card8, set(_C8_GAP), "掀皮"),
+    (9, "网裂", card9, set(_C9_GAP), "网裂"),
 )
 
+FORM_BANDS = {
+    "线缝": lambda fp: (
+        fp["n_large"] == 0 and fp["elong"] >= 0.86 and fp["mean_deg"] >= 2.80
+    ),
+    "辐射": lambda fp: (
+        fp["n_large"] == 0
+        and fp["elong"] >= 0.78
+        and fp["sol"] <= 0.42
+        and fp["mean_deg"] <= 2.55
+    ),
+    "错位": lambda fp: (
+        fp["n_large"] >= 2 and fp["slab_min"] >= 60 and fp["mat"] >= 160
+    ),
+    "掀皮": lambda fp: (
+        fp["n_large"] == 1 and fp["blob"] >= 35 and fp["sol"] <= 0.50
+    ),
+    "网裂": lambda fp: (
+        fp["n_large"] == 0
+        and fp["elong"] <= 0.76
+        and fp["mean_deg"] <= 2.55
+        and fp["n_void"] >= 3
+    ),
+}
+
 all_ok = True
-for variant, label, fn, live in CARDS:
+FINGERPRINTS = []
+for variant, label, fn, live, form in CARDS:
     frames = [fn(f) for f in range(FRAMES)]
     name = f"rift-e{variant}"
+    fp = form_fingerprint(frames[0], live)
+    FINGERPRINTS.append((variant, label, form, fp))
     frames[0].save(os.path.join(ANIM, f"{name}.png"))
     sheet = Image.new("RGBA", (W * FRAMES, H), (0, 0, 0, 0))
     for i, f in enumerate(frames):
@@ -557,6 +1147,31 @@ for variant, label, fn, live in CARDS:
         )
     shutil.copyfile(sheet_path, os.path.join(PUBLIC, f"{name}-sheet.png"))
     all_ok &= audit(f"卡 {variant} {label}", frames, live)
+    print(
+        "   fingerprint: "
+        + " ".join(
+            f"{k}={v:.2f}" if isinstance(v, float) else f"{k}={v}"
+            for k, v in fp.items()
+        )
+    )
+
+print("\n[形体类] 声明的方向必须在数值上真的成立，且不得落进别的类")
+for variant, label, declared, fp in FINGERPRINTS:
+    hits = [name for name, pred in FORM_BANDS.items() if pred(fp)]
+    own = declared in hits
+    extra = [h for h in hits if h != declared]
+    all_ok &= own and not extra
+    print(
+        f"   {'OK ' if own and not extra else 'BAD'} 卡 {variant} {label} 声明「{declared}」"
+        f" 命中={hits or '无'}"
+    )
+    if not own:
+        print(f"      自己的类没进去：{fp}")
+
+fp7 = next(fp for v, _l, _d, fp in FINGERPRINTS if v == 7)
+lie = FORM_BANDS["线缝"](fp7)
+all_ok &= not lie
+print(f"   {'OK ' if not lie else 'BAD'} 谎称测试：卡 7 当成线缝必须红")
 
 # 对照图：三卡 4× 贴在混凝土色块上。速看用，真底是练习场与净化点
 K = 4
@@ -568,13 +1183,13 @@ for y in range(ch):
     for x in range(cw):
         if ((x // (K * 4)) + (y // (K * 4))) % 2 == 0:
             board.putpixel((x, y), CONC_D[:3])
-for i, (variant, label, fn, live) in enumerate(CARDS):
+for i, (variant, label, fn, live, _form) in enumerate(CARDS):
     card = fn(0).resize((W * K, H * K), Image.NEAREST)
     board.paste(card, (PAD + i * (W * K + PAD), PAD), card)
 board.save(os.path.join(ANIM, "rift-ground-contact.png"))
 
 if os.environ.get("SHOW_ASCII"):
-    for variant, label, fn, _live in CARDS:
+    for variant, label, fn, _live, _form in CARDS:
         print(f"\n=== 卡 {variant} {label} ===")
         print(ascii_art(fn(0)))
 

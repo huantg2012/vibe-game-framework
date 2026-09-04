@@ -3,10 +3,11 @@
  *
  * 身份锁：伤口渗漏，不是门（`docs/design-notes/rift-entrance-identity.md`）。
  * 人 2026-09-04 抽卡定案：入口在**地面上**，画成地面裂缝贴花，不再是呼吸圆点。
- *   · 卡 4 地缝（生产默认）：一道中间粗两边细的裂缝，缝深处一条丝在走
- *   · 卡 5 击裂（留作对照，`?entrance=5`）：由受击点向外辐射，像钢化玻璃
+ *   · 卡 5 击裂（生产默认，DEC-114）：由受击点向外辐射，像钢化玻璃
+ *   · 卡 4 地缝（对照，`?entrance=4`）：一道中间粗两边细的裂缝，缝深处一条丝在走
+ *   · 卡 7 错位 / 8 掀皮 / 9 网裂：额外三种占场地方式，只进对照课，人未抽不翻默认
  *
- * 两张都画在**地面平面内**，所以锚点取中心、层压在地板之上玩家之下，玩家能踩过去。
+ * 五张都画在**地面平面内**，所以锚点取中心、层压在地板之上玩家之下，玩家能踩过去。
  * 贴图缺失才回落到旧的呼吸圆点。交互（32 像素半径 → 按 E 开出击装配）不因外形改变。
  * 像素生成器：`docs/art/review-2026-08-28/gen/rift_entrance_ground.py`。
  */
@@ -22,18 +23,18 @@ export const ENTRANCE_ORIGIN_Y = 0.5;
 /** 层：地板是 0，交互点读数桩是 20，玩家是 30。贴花要能被玩家踩过去。 */
 export const ENTRANCE_DEPTH = 1;
 
-export const ENTRANCE_VARIANTS = [4, 5] as const;
+export const ENTRANCE_VARIANTS = [4, 5, 7, 8, 9] as const;
 export type EntranceVariant = (typeof ENTRANCE_VARIANTS)[number];
 
-/** 生产默认 = 卡 4 地缝（DEC-113）。卡 5 击裂只在 `?entrance=5` 下看。 */
-export const ENTRANCE_DEFAULT_VARIANT: EntranceVariant = 4;
+/** 生产默认 = 卡 5 击裂（DEC-114）。其余只在对照课 / `?entrance=` 下看。 */
+export const ENTRANCE_DEFAULT_VARIANT: EntranceVariant = 5;
 
 export function entranceSheetKey(variant: EntranceVariant): string {
   return `module-rift-e${variant}`;
 }
 
 export function entranceSheetUrl(variant: EntranceVariant): string {
-  return `assets/sprites/modules/rift-e${variant}-sheet.png?v=ground01`;
+  return `assets/sprites/modules/rift-e${variant}-sheet.png?v=ground03`;
 }
 
 export function entranceAnimKey(variant: EntranceVariant): string {
@@ -44,7 +45,7 @@ export function isEntranceSheetKey(key: string): boolean {
   return ENTRANCE_VARIANTS.some((variant) => entranceSheetKey(variant) === key);
 }
 
-/** URL `?entrance=4|5` 只用来看对照。无查询 = 生产默认卡 4。 */
+/** URL `?entrance=4|5|7|8|9` 只用来看对照。无查询 = 生产默认卡 5。 */
 export function readEntranceVariantQuery(): EntranceVariant | null {
   if (typeof window === 'undefined') return null;
   const raw = new URLSearchParams(window.location.search).get('entrance');
@@ -63,7 +64,7 @@ export function writeEntranceVariantQuery(variant: EntranceVariant): void {
 }
 
 /**
- * 两张都排队。缺文件不得打断启动：Phaser 仍会 complete，场景用 exists 回落。
+ * 五张都排队。缺文件不得打断启动：Phaser 仍会 complete，场景用 exists 回落。
  */
 export function enqueueEntranceSheets(load: Phaser.Loader.LoaderPlugin): void {
   load.on('loaderror', (file: { key?: string }) => {

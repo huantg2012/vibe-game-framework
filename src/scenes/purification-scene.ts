@@ -28,6 +28,10 @@ import {
   readEntranceVariantQuery,
   writeEntranceVariantQuery,
 } from '@/scenes/rift-entrance-visual';
+import {
+  OfferingStandVisual,
+  offeringStandChargeFromSlots,
+} from '@/scenes/offering-stand-visual';
 import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
@@ -281,9 +285,10 @@ export class PurificationScene extends Phaser.Scene {
   private riftEntrancePulse = 0;
   private riftEntrance: RiftEntranceVisual | null = null;
 
-  // Defense management interaction point
+  // Defense management interaction point（生产外形 = 卡 I 环，DEC-115）
   private defenseGraphics!: Phaser.GameObjects.Graphics;
   private defensePulse = 0;
+  private offeringStand: OfferingStandVisual | null = null;
 
   // Growth altar interaction point
   private growthGraphics!: Phaser.GameObjects.Graphics;
@@ -298,7 +303,7 @@ export class PurificationScene extends Phaser.Scene {
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
   // 核心抽卡方案切换（实测用）：1/2/3 -> A 敬畏 / B 仪式 / C 封印
   private coreVariantKeys: Phaser.Input.Keyboard.Key[] = [];
-  // 裂隙入口外形对照（实测用）：4/5 -> 卡 4 地缝（生产默认）/ 卡 5 击裂
+  // 裂隙入口外形对照（实测用）：4/5/7/8/9 -> 卡 4 地缝（对照）/ 5 击裂（生产默认）/ 7 错位 / 8 掀皮 / 9 网裂
   private entranceVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
   private panelClosedAt = 0;
@@ -511,11 +516,15 @@ export class PurificationScene extends Phaser.Scene {
 
     // Interaction point graphics (unified circles, spec B3)
     this.riftEntranceGraphics = this.add.graphics().setDepth(20);
-    // 裂隙入口 = 地面裂缝贴花（DEC-113，生产默认卡 4 地缝）。
-    // `?entrance=5` 只用来看卡 5 击裂那张对照，不改生产默认。
+    // 裂隙入口 = 地面裂缝贴花（DEC-114，生产默认卡 5 击裂）。
+    // `?entrance=4|7|8|9` 只用来看对照，不改生产默认。
     this.riftEntrance = new RiftEntranceVisual(this, RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y);
     this.riftEntrance.mount(readEntranceVariantQuery() ?? ENTRANCE_DEFAULT_VARIANT);
     this.defenseGraphics = this.add.graphics().setDepth(20);
+    this.offeringStand = new OfferingStandVisual(this, DEFENSE_POS.x, DEFENSE_POS.y);
+    this.offeringStand.mount(
+      offeringStandChargeFromSlots(contaminantSystem.getDefenseSlotted()),
+    );
     this.growthGraphics = this.add.graphics().setDepth(20);
     this.thickenGraphics = this.add.graphics().setDepth(20);
 
@@ -533,7 +542,7 @@ export class PurificationScene extends Phaser.Scene {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
       this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
-      // 1/2/3 切核心对照（生产默认 B）；4/5 切裂隙入口两张（生产默认卡 4）
+      // 1/2/3 切核心对照（生产默认 B）；4/5/7/8/9 切裂隙入口（生产默认卡 5）
       this.coreVariantKeys = [
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false),
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false),
@@ -542,6 +551,9 @@ export class PurificationScene extends Phaser.Scene {
       this.entranceVariantKeys = [
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR, true, false),
         keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE, true, false),
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SEVEN, true, false),
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.EIGHT, true, false),
+        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NINE, true, false),
       ];
     }
 
@@ -641,19 +653,28 @@ export class PurificationScene extends Phaser.Scene {
       );
     }
 
-    // Defense point
+    // Defense point：生产外形是卡 I 环。只有贴图缺失才回落呼吸圆点。
     const defHighlight = this.shouldHighlight('defense');
     const defSpeed = defHighlight ? BREATH_SPEED_HIGHLIGHT : (nearDefense ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
     this.defensePulse += delta * defSpeed;
-    drawInteractionPoint(
-      this.defenseGraphics,
-      DEFENSE_POS.x, DEFENSE_POS.y,
-      DEFENSE_CENTER, DEFENSE_RING,
-      7, 12,
-      this.defensePulse,
-      defHighlight,
-      nearDefense,
+    this.offeringStand?.setCharge(
+      offeringStandChargeFromSlots(contaminantSystem.getDefenseSlotted()),
     );
+    if (this.offeringStand?.isShowing()) {
+      this.defenseGraphics.setVisible(false);
+      this.defenseGraphics.clear();
+    } else {
+      this.defenseGraphics.setVisible(true);
+      drawInteractionPoint(
+        this.defenseGraphics,
+        DEFENSE_POS.x, DEFENSE_POS.y,
+        DEFENSE_CENTER, DEFENSE_RING,
+        7, 12,
+        this.defensePulse,
+        defHighlight,
+        nearDefense,
+      );
+    }
 
     // Growth altar (unified to circle instead of square)
     const groHighlight = this.shouldHighlight('growth');
@@ -725,7 +746,7 @@ export class PurificationScene extends Phaser.Scene {
       if (coreVariant) this.coreModule?.setCoreVariant(coreVariant);
     }
 
-    // 4/5 切裂隙入口外形对照（生产默认仍是卡 4，只改本次观看）
+    // 4/5/7/8/9 切裂隙入口外形对照（生产默认仍是卡 4，只改本次观看）
     for (let i = 0; i < this.entranceVariantKeys.length; i++) {
       const key = this.entranceVariantKeys[i];
       const variant = ENTRANCE_VARIANTS[i];
@@ -1250,6 +1271,8 @@ export class PurificationScene extends Phaser.Scene {
     this.riftEntrance?.destroy();
     this.riftEntrance = null;
     this.riftEntranceGraphics?.destroy();
+    this.offeringStand?.destroy();
+    this.offeringStand = null;
     this.defenseGraphics?.destroy();
     this.growthGraphics?.destroy();
     this.thickenGraphics?.destroy();

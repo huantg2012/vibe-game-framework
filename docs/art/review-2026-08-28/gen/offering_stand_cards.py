@@ -9,7 +9,7 @@
 
 人另已拍板：
   · 相机 = **45° 等距**（顶面旋转 45° + 压缩 0.55），与已锁三台同一套。
-  · **外观不显槽数**——不画可数槽位；里面那点 teal 是活层，不对应具体槽位。
+  · **外观不显槽数**——不画可数槽位。H / I 的青绿是装填光点（空 / 一 / 二 / 三档 = 0 / 1 / 2 / 3+ 个残渣；第 4 槽不另开一档），贴在夹持面上浮动，不对应具体槽位。
 
 三张 = 三种人造收容手段，每张都朝外开一面：
   卡 A 压钳   夹：四面合围的压钳，只前左那面敞开
@@ -32,7 +32,7 @@ import math
 import os
 import random
 import shutil
-from collections import Counter
+from collections import Counter, deque, deque
 
 from PIL import Image
 
@@ -363,6 +363,59 @@ def breathe(cells, frame, seed):
         v = 0.5 + 0.5 * math.sin(frame / FRAMES * math.tau + phases[c] * math.tau)
         out[c] = teal_ramp(0.18 + v * 0.72)
     return out
+
+
+# 装填档（H / I）：空 / 一 / 二 / 三。三档 = 装填 1 / 2 / 3+ 个残渣，
+# 第 4 槽不另开一档——外观不显槽数。
+# 光点贴在夹持面上浮动，不悬在透明里（否则「青绿碰背景」闸门红，
+# 也读成荧光涂鸦）。空档不画青绿。
+CHARGE_OFFSETS = {
+    1: ((0, 0), (1, 0)),
+    2: ((0, 0), (1, 0), (-1, 0), (0, 1), (1, 1), (0, -1)),
+    3: (
+        (0, 0), (1, 0), (-1, 0), (0, 1), (0, -1),
+        (1, 1), (-1, 1), (1, -1), (-1, -1), (2, 0), (-2, 0), (0, 2),
+    ),
+}
+
+
+def charge_breathe_range(charge):
+    if charge <= 1:
+        return 0.04, 0.40
+    if charge == 2:
+        return 0.22, 0.78
+    return 0.42, 1.00
+
+
+def charge_light(im, pocket, origin, charge, frame, seed):
+    """在已有实体上盖一团青绿光点。charge=0 不画。"""
+    live = set()
+    if charge <= 0 or not pocket:
+        return live
+    ox, oy = origin
+    bob = int(round(math.sin(frame / FRAMES * math.tau) * (0.55 + 0.22 * charge)))
+    cy = oy + bob
+    cx, cy = min(pocket, key=lambda p: abs(p[0] - ox) + abs(p[1] - cy))
+    for dx, dy in CHARGE_OFFSETS[charge]:
+        x, y = cx + dx, cy + dy
+        if (x, y) not in pocket:
+            continue
+        if get(im, x, y)[3] < 32:
+            continue
+        if any(get(im, x + ax, y + ay)[3] < 32
+               for ax, ay in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+            continue
+        put(im, x, y, TEAL_X)
+        live.add((x, y))
+    if not live:
+        return live
+    lo, hi = charge_breathe_range(charge)
+    rnd = random.Random(seed)
+    phases = {c: rnd.random() for c in live}
+    for c in live:
+        v = 0.5 + 0.5 * math.sin(frame / FRAMES * math.tau + phases[c] * math.tau)
+        put(im, c[0], c[1], teal_ramp(lo + v * (hi - lo)))
+    return live
 
 
 # =====================================================================
@@ -776,6 +829,205 @@ def cardF(frame):
 
 
 # =====================================================================
+# 第三轮：再换可分维度。第二轮把体积分布拆成方块 / 横伸 / 竖高 / 贴地，
+# 人看到差异了但还没抽。这一轮不再落回那四类——再拆一次体积的
+# **开口怎么占空间**：从当中看过去 / 顶上两座峰 / 整件就是圈。
+# 三张仍同时起收容、控制、暴露，仍站在开阔混凝土地上，仍 45° 等距。
+#
+# 判据先写再画（量已在 A–F 上探过：它们 mid_runs 全是 1，apex_two 至多 1，
+# 封闭内孔要么 0 要么是卡 C 格栅那 9 格，且卡 C 的 mid_runs 仍是 1）：
+#   拱  mid_runs >= 2 且 enclosed == 0 且 arch_open 且 apex_two == 0
+#   钳  apex_two >= 2 且 enclosed == 0
+#   环  enclosed >= 20 且 mid_runs >= 2
+# 方块加一条排除：mid_runs == 1 且 apex_two < 2（否则新卡会落回方块）。
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# 卡 G 拱 —— 开口占空间。两根不等高的墩，顶上一条压梁把它们拧在一起，
+#              当中是通的；残渣卡在梁下那一口里，压力从喉里穿过去。
+# 收容 = 卡在咬口里 · 控制 = 压梁 + 偏心螺栓 · 暴露 = 整条喉是敞的
+# 主导分量：暴露（从当中看过去）。
+# 破「门框 / 神龛」：墩不等高、梁是压条不是横楣、喉里挂的是一团残渣不是一扇门。
+# 破「传送门」：青绿只在梁下那一团，不绕喉走一圈。
+# ---------------------------------------------------------------------
+def cardG(frame):
+    im = new()
+
+    # 两墩用各自的屏幕锚点画，避免同一份 footprint 在 45° 下叠成一根。
+    # 左矮右高：长短不齐。
+    iso_prism(im, [(-3.4, -2.6), (3.4, -2.6), (3.4, 2.8), (-3.4, 2.8)], 11,
+              top_c=CONC_M, side_cs=[CONC_D, CLINIC, CONC_D, CONC_D], cx=10)
+    iso_prism(im, [(-2.8, -2.4), (3.0, -2.4), (3.0, 2.6), (-2.8, 2.6)], 14,
+              top_c=METAL, side_cs=[METAL, CLINIC, METAL_L, METAL], cx=22)
+
+    # 压梁：屏幕空间填面。iso_prism 跨两墩会把喉填实，剪影回到方块。
+    beam(im, 10, 11, 22, 8, core=METAL, up=METAL_L, down=CONC_D, half=1.6)
+    # 偏心螺栓钉在梁上，2 像素粗
+    put(im, 14, 9, METAL_L)
+    put(im, 15, 9, METAL)
+    put(im, 14, 10, CONC_D)
+    put(im, 15, 10, RUST)
+
+    # 咬口挂在梁下正中，金属包一圈再填青绿——不许用近黑去描喉沿。
+    live = set()
+    catch = [
+        (15, 11), (16, 11), (17, 11),
+        (14, 12), (15, 12), (16, 12), (17, 12), (18, 12),
+        (15, 13), (16, 13), (17, 13),
+    ]
+    for x, y in catch:
+        put(im, x, y, METAL)
+    for x, y in ((15, 12), (16, 12), (17, 12), (16, 13)):
+        if all(get(im, x + dx, y + dy)[3] >= 32
+               for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1))):
+            put(im, x, y, TEAL_X)
+            live.add((x, y))
+
+    stain(im, 10, 21, RUST)
+    stain(im, 22, 10, WARM_D)
+
+    for (x, y), c in breathe(live, frame, 0x677).items():
+        put(im, x, y, c)
+
+    # 两只脚必须用同一条接地行。后画的那只如果按「当前最底像素」算，
+    # 会把先画的那圈近黑当成底，第二圈更靠下，短墩脚上的墨会爬出接地 3 行。
+    feet = [y for y in range(H) for x in range(W) if get(im, x, y)[3] >= 32]
+    foot = max(feet) if feet else GROUND
+    contact(im, rx=4, cx=10, base=foot)
+    contact(im, rx=4, cx=22, base=foot)
+    return im, live
+
+
+# ---------------------------------------------------------------------
+# 卡 H 钳 —— 顶上两座峰。一只浇死的脚墩，两臂朝上岔开，残渣夹在丫口；
+#              剪影是 Y，不是单柱，也不是往旁边伸的长臂。
+# 收容 = 夹在丫口的蹼里 · 控制 = 两臂 + 横栓 · 暴露 = 丫口朝外
+# 主导分量：控制（钳住）。
+# 破「横伸」：臂往上岔，不往旁边送。破「四条腿 / 虫」：只有两臂，至少 2 像素宽。
+# 破「机器脸」：齿越过残渣；青绿不是两块等大矩形。
+# 装填：空档丫口是空的；有残渣时一团光点贴在蹼上浮动（1/2/3 档变大变亮）。
+# ---------------------------------------------------------------------
+def cardH(frame, charge=2):
+    im = new()
+
+    iso_prism(im, [(-5.2, -3.8), (5.4, -3.8), (5.4, 4.0), (-5.2, 4.0)], 5,
+              top_c=CONC_M, side_cs=[CONC_D, CLINIC, CONC_D, CONC_D])
+
+    # 两臂：顶端各 2 像素，几乎同高。3 像素顶会让顶行宽到 6，菱形闸门红。
+    fill_poly(im, [(10, 17), (13, 18), (9, 4), (6, 2)], METAL)
+    fill_poly(im, [(13, 18), (14, 16), (10, 4), (9, 4)], CONC_D)
+    line(im, 6, 2, 8, 3, METAL_L)
+    fill_poly(im, [(18, 18), (21, 17), (24, 4), (22, 2)], CONC_M)
+    fill_poly(im, [(16, 17), (18, 18), (22, 2), (20, 4)], CONC_D)
+    line(im, 22, 2, 24, 4, METAL)
+    stain(im, 21, 8, RUST)
+    stain(im, 8, 10, RUST)
+
+    # 丫口的蹼要盖过半高，否则 mid_runs 仍是 2，跟拱撞。
+    fill_poly(im, [(11, 13), (21, 13), (20, 19), (12, 20)], METAL)
+    hline(im, 11, 21, 19, METAL_L)
+    stain(im, 12, 19, RUST)
+
+    pocket = [
+        (14, 16), (15, 16), (16, 16), (17, 16),
+        (14, 17), (15, 17), (16, 17), (17, 17),
+        (15, 18), (16, 18),
+        (13, 16), (18, 16), (13, 17), (18, 17),
+        (14, 15), (15, 15), (16, 15), (17, 15),
+        (15, 14), (16, 14),
+    ]
+    for x, y in pocket:
+        if get(im, x, y)[3] >= 32:
+            put(im, x, y, CONC_D)
+    hold = {
+        (x, y) for x, y in pocket
+        if get(im, x, y)[3] >= 32
+        and all(get(im, x + dx, y + dy)[3] >= 32
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+    }
+
+    stain(im, 14, 22, RUST)
+    stain(im, 20, 13, WARM_D)
+
+    live = charge_light(im, hold, (16, 16), charge, frame, 0x788)
+    contact(im, 9)
+    return im, live
+
+
+# ---------------------------------------------------------------------
+# 卡 I 环 —— 整件就是圈。一段回收的管立在脚座上，销钉把它钉进混凝土；
+#              残渣贴在圈心下沿，压力从圈孔穿过去。
+# 收容 = 圈住 · 控制 = 底销 · 暴露 = 圈孔朝观者
+# 主导分量：收容（围成一圈）但仍故意留孔。
+# 破「门框」：不是两柱一楣，是一段弯管。破「传送门」：孔偏心、亮断口只留一段弧。
+# 破「车轮」：没有等分辐条。销钉只钉在底弧上，不穿过圈心。
+# 装填：空档圈孔是空的；有残渣时一团光点贴在圈心下沿浮动（1/2/3 档变大变亮）。
+# ---------------------------------------------------------------------
+def cardI(frame, charge=2):
+    im = new()
+
+    iso_prism(im, [(-5.6, -4.0), (5.6, -4.0), (5.6, 4.0), (-5.6, 4.0)], 2.6,
+              top_c=CONC_M, side_cs=[CONC_D, CLINIC, CONC_D, CONC_D])
+
+    cx, cy, rx, ry = 16.0, 13.0, 9.2, 10.0
+    hcx, hcy, irx, iry = 16.7, 13.5, 4.5, 5.2  # 孔偏心，破满圈门环
+    shell, hole = set(), set()
+    for y in range(H):
+        for x in range(W):
+            on = ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1.0
+            inn = ((x - hcx) / irx) ** 2 + ((y - hcy) / iry) ** 2 <= 1.0
+            if on and not inn:
+                shell.add((x, y))
+            elif inn and 0 <= x < W:
+                hole.add((x, y))
+    for x, y in shell:
+        if y < cy - 4:
+            c = METAL_L
+        elif x < cx:
+            c = METAL
+        elif y > cy + 4:
+            c = CONC_M
+        else:
+            c = CONC_M
+        put(im, x, y, c)
+
+    lip = {
+        (x, y) for x, y in shell
+        if any((x + dx, y + dy) in hole for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+    }
+    # 内沿是剪影（对着孔），不许落近黑，否则就是换色描边。
+    for x, y in lip:
+        put(im, x, y, METAL)
+    for x, y in lip:
+        if y < cy - 1 and (x + y) % 2 == 0 and x <= cx + 1:
+            put(im, x, y, METAL_L)
+
+    hold = {
+        (x, y) for x, y in shell
+        if y >= cy - 1
+        and (x, y) not in lip
+        and (x, y) not in hole
+        and all(get(im, x + dx, y + dy)[3] >= 32
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+    }
+
+    # 底销：只钉在圈的底弧上，往下进脚座。不穿过圈心。
+    bot = max((y for _, y in shell), default=22)
+    pins = [(x, y) for x, y in shell if y >= bot - 1 and 14 <= x <= 18]
+    for x, y in pins:
+        put(im, x, y, RUST)
+        if get(im, x, y + 1)[3] >= 32 or y + 1 >= GROUND:
+            stain(im, x, y + 1, CONC_D)
+
+    stain(im, 11, 18, RUST)
+    stain(im, 20, 16, WARM_D)
+
+    live = charge_light(im, hold, (16, 18), charge, frame, 0x899)
+    contact(im, 8)
+    return im, live
+
+
+# =====================================================================
 # 闸门
 # =====================================================================
 def audit(name, frames, live, exempt=frozenset()):
@@ -896,19 +1148,44 @@ def audit(name, frames, live, exempt=frozenset()):
 # 那不是像素问题，是**可分维度选错**——三张都声明了不同的收容手段，但画出来是
 # 同一句形体。手段（夹 / 围 / 浇）在 32×32 的剪影上只值几像素纹理差。
 #
-# 所以每张卡必须声明形体类，机器验证数值真的落在那一类里。两个量：
-#   aspect = 材质包围盒宽 / 高（去接地两行、去近黑地裂）
-#   shear  = (上半重心 x − 下半重心 x) / 宽 —— 描述「斜的 / 伸出去的」形体。
-#            光看整件重心抓不到卡 D：长臂往左上伸，底座与配重把它配平了，
-#            整件重心仍居中（实测 +0.022），只有上下两半错开才看得出（−0.311）。
-# 四个类的区间互斥，所以「换了名字没换形体」一定红。
+# 所以每张卡必须声明形体类，机器验证数值真的落在那一类里。
+# 前四类量 aspect / shear（体积分布）。第三轮三张量开口拓扑：
+#   mid_runs  = 材质包围盒半高那一行的不透明 x 段数（去接地、去近黑）
+#   apex_two  = 顶上 3 行里有几行是 2 段及以上（两座峰）
+#   enclosed  = 不与画布边 4 连通的透明格（真正的内孔）
+#   arch_open = 半高处两段之间的缝一直通到包围盒底
+# 判据先写再画。A–F 探过：mid_runs 全 1，apex_two 至多 1（卡 D 叉头），
+# 卡 C 格栅有 9 格假内孔但 mid_runs 仍是 1，所以 enclosed 门槛放在 20。
 # =====================================================================
 FORM_BANDS = {
-    "方块": lambda a, s: 0.58 <= a <= 0.90 and abs(s) <= 0.12,
-    "横伸": lambda a, s: abs(s) >= 0.20,
-    "竖高": lambda a, s: a <= 0.56,
-    "贴地": lambda a, s: a >= 1.05,
+    "方块": lambda fp: (
+        0.58 <= fp["aspect"] <= 0.90 and abs(fp["shear"]) <= 0.12
+        and fp["mid_runs"] == 1 and fp["apex_two"] < 2
+    ),
+    "横伸": lambda fp: abs(fp["shear"]) >= 0.20,
+    "竖高": lambda fp: fp["aspect"] <= 0.56,
+    "贴地": lambda fp: fp["aspect"] >= 1.05,
+    "拱": lambda fp: (
+        fp["mid_runs"] >= 2 and fp["enclosed"] == 0
+        and fp["arch_open"] and fp["apex_two"] == 0
+    ),
+    "钳": lambda fp: fp["apex_two"] >= 2 and fp["enclosed"] == 0,
+    "环": lambda fp: fp["enclosed"] >= 20 and fp["mid_runs"] >= 2,
 }
+
+
+def _x_runs(occ, y, x0, x1):
+    xs = sorted(x for x, yy in occ if yy == y and x0 <= x <= x1)
+    if not xs:
+        return 0, []
+    segs, a, prev = [], xs[0], xs[0]
+    for x in xs[1:]:
+        if x > prev + 1:
+            segs.append((a, prev))
+            a = x
+        prev = x
+    segs.append((a, prev))
+    return len(segs), segs
 
 
 def form_fingerprint(im):
@@ -916,14 +1193,63 @@ def form_fingerprint(im):
           if im.getpixel((x, y))[3] >= 32]
     maxy = max(y for _, y, _ in px)
     body = [(x, y) for x, y, c in px if y < maxy - 1 and lum(c[:3]) > 18]
+    occ = set(body)
     xs = [x for x, _ in body]
     ys = [y for _, y in body]
-    w = max(xs) - min(xs) + 1
-    h = max(ys) - min(ys) + 1
-    mid = (min(ys) + max(ys)) / 2
+    x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+    w, h = x1 - x0 + 1, y1 - y0 + 1
+    mid = (y0 + y1) / 2
     up = [x for x, y in body if y < mid]
     lo = [x for x, y in body if y >= mid]
-    return w / h, (sum(up) / len(up) - sum(lo) / len(lo)) / w
+    aspect = w / h
+    shear = (sum(up) / len(up) - sum(lo) / len(lo)) / w
+
+    y_mid = y0 + h // 2
+    mid_runs, mid_segs = _x_runs(occ, y_mid, x0, x1)
+    top3 = [_x_runs(occ, y, x0, x1)[0] for y in range(y0, min(y1, y0 + 2) + 1)]
+    apex_two = sum(1 for r in top3 if r >= 2)
+
+    trans = {(x, y) for y in range(H) for x in range(W)
+             if im.getpixel((x, y))[3] < 32}
+    seen = set()
+    q = deque()
+    for x in range(W):
+        for y in (0, H - 1):
+            if (x, y) in trans:
+                q.append((x, y))
+                seen.add((x, y))
+    for y in range(H):
+        for x in (0, W - 1):
+            if (x, y) in trans and (x, y) not in seen:
+                q.append((x, y))
+                seen.add((x, y))
+    while q:
+        x, y = q.popleft()
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            n = (x + dx, y + dy)
+            if n in trans and n not in seen:
+                seen.add(n)
+                q.append(n)
+    enclosed = sum(1 for x, y in (trans - seen) if x0 <= x <= x1 and y0 <= y <= y1)
+
+    arch_open = False
+    if mid_runs >= 2:
+        gx0, gx1 = mid_segs[0][1] + 1, mid_segs[1][0] - 1
+        if gx0 <= gx1:
+            gap_ok = True
+            for y in range(y_mid, y1 + 1):
+                if not any((x, y) not in occ for x in range(gx0, gx1 + 1)):
+                    gap_ok = False
+                    break
+            yb = min(H - 1, y1 + 1)
+            below = any((x, yb) not in occ for x in range(gx0, gx1 + 1))
+            arch_open = gap_ok and below
+
+    return {
+        "aspect": aspect, "shear": shear,
+        "mid_runs": mid_runs, "apex_two": apex_two,
+        "enclosed": enclosed, "arch_open": arch_open,
+    }
 
 
 def ascii_art(im):
@@ -955,51 +1281,147 @@ CARDS = (("a", "压钳", cardA, frozenset(), "方块"),
          ("c", "浇墩", cardC, _C_FLOOR, "方块"),
          ("d", "举出", cardD, frozenset(), "横伸"),
          ("e", "抱箍", cardE, frozenset(), "竖高"),
-         ("f", "压槽", cardF, _F_FLOOR, "贴地"))
+         ("f", "压槽", cardF, _F_FLOOR, "贴地"),
+         ("g", "拱", cardG, frozenset(), "拱"),
+         ("h", "钳", cardH, frozenset(), "钳"),
+         ("i", "环", cardI, frozenset(), "环"))
 
 all_ok = True
 FINGERPRINTS = []
-for key, label, fn, exempt, form in CARDS:
-    pairs = [fn(f) for f in range(FRAMES)]
-    frames = [p[0] for p in pairs]
-    live = set()
-    for _, lv in pairs:
-        live |= lv
+CHARGE_KEYS = {"h", "i"}
+CHARGE_TIERS = 4  # 0 空 + 1/2/3 档
+
+
+def _teal_count(im):
+    return sum(
+        1 for y in range(H) for x in range(W)
+        if im.getpixel((x, y))[3] >= 32 and is_teal(im.getpixel((x, y))[:3])
+    )
+
+
+def _teal_mean_lum(im):
+    cells = [
+        lum(im.getpixel((x, y))[:3])
+        for y in range(H) for x in range(W)
+        if im.getpixel((x, y))[3] >= 32 and is_teal(im.getpixel((x, y))[:3])
+    ]
+    return sum(cells) / len(cells) if cells else 0.0
+
+
+def _occ_mask(im):
+    return tuple(
+        (x, y)
+        for y in range(H) for x in range(W)
+        if im.getpixel((x, y))[3] >= 32
+    )
+
+
+def emit_card(key, label, fn, exempt, form):
+    global all_ok
     name = f"offering-{key}"
-    frames[0].save(os.path.join(ANIM, f"{name}.png"))
-    sheet = Image.new("RGBA", (W * FRAMES, H), (0, 0, 0, 0))
-    for i, f in enumerate(frames):
-        sheet.paste(f, (i * W, 0))
+    if key in CHARGE_KEYS:
+        bands = []
+        for charge in range(CHARGE_TIERS):
+            pairs = [fn(f, charge) for f in range(FRAMES)]
+            frames = [p[0] for p in pairs]
+            live = set()
+            for _, lv in pairs:
+                live |= lv
+            bands.append((charge, frames, live))
+            all_ok &= audit(f"卡 {key.upper()} {label} 装填{charge}", frames, live, exempt)
+        counts = [_teal_count(bands[c][1][0]) for c in range(CHARGE_TIERS)]
+        lums = [_teal_mean_lum(bands[c][1][0]) for c in range(CHARGE_TIERS)]
+        occs = [_occ_mask(bands[c][1][0]) for c in range(CHARGE_TIERS)]
+        charge_ok = (
+            counts[0] == 0
+            and counts[1] < counts[2] < counts[3]
+            and lums[1] < lums[2] < lums[3]
+            and all(o == occs[0] for o in occs[1:])
+        )
+        all_ok &= charge_ok
+        print(
+            f"   {'OK ' if charge_ok else 'BAD'} 装填三档（空=0、个数升、亮度升、剪影钉死）: "
+            f"n={counts} lum={['%.1f' % v for v in lums]} "
+            f"occ_lock={all(o == occs[0] for o in occs[1:])}"
+        )
+        sheet = Image.new("RGBA", (W * FRAMES * CHARGE_TIERS, H), (0, 0, 0, 0))
+        for charge, frames, _ in bands:
+            for i, f in enumerate(frames):
+                sheet.paste(f, ((charge * FRAMES + i) * W, 0))
+        preview_frames = bands[2][1]
+        fp_im = bands[0][1][0]
+    else:
+        pairs = [fn(f) for f in range(FRAMES)]
+        preview_frames = [p[0] for p in pairs]
+        live = set()
+        for _, lv in pairs:
+            live |= lv
+        all_ok &= audit(f"卡 {key.upper()} {label}", preview_frames, live, exempt)
+        sheet = Image.new("RGBA", (W * FRAMES, H), (0, 0, 0, 0))
+        for i, f in enumerate(preview_frames):
+            sheet.paste(f, (i * W, 0))
+        fp_im = preview_frames[0]
+
+    preview_frames[0].save(os.path.join(ANIM, f"{name}.png"))
     sheet_path = os.path.join(ANIM, f"{name}-sheet.png")
     sheet.save(sheet_path)
-    frames[0].resize((W * 3, H * 3), Image.NEAREST).save(
+    preview_frames[0].resize((W * 3, H * 3), Image.NEAREST).save(
         os.path.join(PREVIEW, f"{name}-3x.png"))
-    frames[0].convert("RGB").save(
+    preview_frames[0].convert("RGB").save(
         os.path.join(ANIM, f"{name}.gif"), save_all=True,
-        append_images=[f.convert("RGB") for f in frames[1:]],
+        append_images=[f.convert("RGB") for f in preview_frames[1:]],
         duration=int(1000 / FPS), loop=0)
     with open(os.path.join(ANIM, f"{name}.json"), "w", encoding="utf-8") as fh:
         json.dump({"name": name, "label": label, "frameWidth": W, "frameHeight": H,
-                   "frames": FRAMES, "fps": FPS, "camera": "45deg isometric"},
+                   "frames": FRAMES * (CHARGE_TIERS if key in CHARGE_KEYS else 1),
+                   "fps": FPS, "camera": "45deg isometric",
+                   "form": form,
+                   **({"chargeTiers": CHARGE_TIERS} if key in CHARGE_KEYS else {})},
                   fh, ensure_ascii=False, indent=2)
     shutil.copyfile(sheet_path, os.path.join(PUBLIC, f"{name}-sheet.png"))
-    all_ok &= audit(f"卡 {key.upper()} {label}", frames, live, exempt)
-    FINGERPRINTS.append((key, label, form) + form_fingerprint(frames[0]))
+    FINGERPRINTS.append((key, label, form, form_fingerprint(fp_im)))
+
+
+for key, label, fn, exempt, form in CARDS:
+    emit_card(key, label, fn, exempt, form)
 
 print("\n[形体类] 声明的方向必须在数值上真的成立")
-for key, label, form, aspect, shear in FINGERPRINTS:
-    good = FORM_BANDS[form](aspect, shear)
+for key, label, form, fp in FINGERPRINTS:
+    good = FORM_BANDS[form](fp)
     all_ok &= good
-    print(f"   {'OK ' if good else 'BAD'} 卡 {key.upper()} {label} 声明「{form}」: "
-          f"aspect={aspect:.2f} 上下半错开={shear:+.3f}")
-_forms = {f for _, _, f, _, _ in FINGERPRINTS}
+    print(
+        f"   {'OK ' if good else 'BAD'} 卡 {key.upper()} {label} 声明「{form}」: "
+        f"aspect={fp['aspect']:.2f} shear={fp['shear']:+.3f} "
+        f"mid_runs={fp['mid_runs']} apex_two={fp['apex_two']} "
+        f"enclosed={fp['enclosed']} arch_open={fp['arch_open']}"
+    )
+    if form in ("拱", "钳", "环") and FORM_BANDS["方块"](fp):
+        all_ok = False
+        print(f"   BAD 卡 {key.upper()} 谎称成方块居然绿了")
+_forms = {f for _, _, f, _ in FINGERPRINTS}
 print(f"   覆盖到的形体类：{len(_forms)} / {len(FORM_BANDS)} —— {'、'.join(sorted(_forms))}")
+if FORM_BANDS["方块"](next(fp for k, _, f, fp in FINGERPRINTS if k == "d")):
+    all_ok = False
+    print("   BAD 卡 D 谎称成方块居然绿了")
+else:
+    print("   OK  谎称测试：卡 D 当成方块是红的")
+_ghi_ok = True
+for key in ("g", "h", "i"):
+    fp = next(fp for k, _, f, fp in FINGERPRINTS if k == key)
+    if FORM_BANDS["方块"](fp):
+        all_ok = False
+        _ghi_ok = False
+        print(f"   BAD 谎称测试：卡 {key.upper()} 当成方块居然绿了")
+if _ghi_ok:
+    print("   OK  谎称测试：卡 G / H / I 当成方块都是红的")
 
-# 对照图：六卡 6× 贴在混凝土色块上。速看用，真底是练习场与净化点
+# 对照图：九卡 3×3，6× 贴在混凝土色块上。速看用，真底是练习场与净化点
 S = 6
 PAD = 10
-cw = (W * S + PAD) * len(CARDS) + PAD
-ch = H * S + PAD * 2
+COLS = 3
+ROWS = (len(CARDS) + COLS - 1) // COLS
+cw = (W * S + PAD) * COLS + PAD
+ch = (H * S + PAD) * ROWS + PAD
 board = Image.new("RGB", (cw, ch), CONC_M[:3])
 for y in range(ch):
     for x in range(cw):
@@ -1007,7 +1429,8 @@ for y in range(ch):
             board.putpixel((x, y), CONC_D[:3])
 for i, (key, label, fn, _ex, _fm) in enumerate(CARDS):
     card = fn(0)[0].resize((W * S, H * S), Image.NEAREST)
-    board.paste(card, (PAD + i * (W * S + PAD), PAD), card)
+    col, row = i % COLS, i // COLS
+    board.paste(card, (PAD + col * (W * S + PAD), PAD + row * (H * S + PAD)), card)
 board.save(os.path.join(ANIM, "offering-contact.png"))
 
 if os.environ.get("SHOW_ASCII"):

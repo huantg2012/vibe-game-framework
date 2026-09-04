@@ -18,6 +18,7 @@ import {
   coreSpriteUrl,
 } from '@/entities/purification-module';
 import { enqueueEntranceSheets } from '@/scenes/rift-entrance-visual';
+import { enqueueOfferingSheet } from '@/scenes/offering-stand-visual';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
 
 export class BootScene extends Phaser.Scene {
@@ -80,6 +81,9 @@ export class BootScene extends Phaser.Scene {
 
     // 裂隙入口抽卡 spike：三张都预载。缺文件不得打断启动，场景回落圆点。
     enqueueEntranceSheets(this.load);
+
+    // 供奉台（DEC-115）：卡 I 环。缺文件不得打断启动，场景回落圆点。
+    enqueueOfferingSheet(this.load);
   }
 
   create(): void {

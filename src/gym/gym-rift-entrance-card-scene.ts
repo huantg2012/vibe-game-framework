@@ -1,7 +1,9 @@
 /**
- * 裂隙入口外形对照课。两卡并排，打开即播，放大 4×。
- * 抽卡已结案（DEC-113）：卡 4 地缝 = 生产默认，卡 5 击裂 = 留作对照。
- * 落选的墙上三张与卡 6 囚笼已整支删除。
+ * 裂隙入口外形对照课。五卡两行：上排 DEC-113 已锁的两张，下排本批新抽的三张。
+ * 打开即播，放大 4×。
+ * 抽卡已结案：DEC-113 留下卡 4 / 卡 5；DEC-114 生产默认 = 卡 5 击裂，卡 4 地缝 = 对照。
+ * 卡 7 错位 / 8 掀皮 / 9 网裂只进对照课，人未抽，不翻生产默认。
+ * 落选的墙上三张与卡 6 囚笼已整支删除，不复活。
  * 底是与出击同一份净化点混凝土（`createPurificationFloorTexture`），不是纯黑——
  * 纯黑会把任何不透明外沿看成描边（`.cursor/skills/pixel-models/SKILL.md` 第 9 条）。
  * 不刷玩家、不走出击、不进主菜单。这里换卡不改生产默认。
@@ -22,14 +24,30 @@ import {
 } from '@/scenes/rift-entrance-visual';
 
 const CARD_SCALE = 4;
-const CARD_XS = [320, 640] as const;
-const CARD_Y = 380;
+/** 上排 = 已锁两张；下排 = 本批新抽的三种占场地方式。 */
+const LAYOUT: Record<EntranceVariant, { readonly x: number; readonly y: number }> = {
+  4: { x: 280, y: 200 },
+  5: { x: 680, y: 200 },
+  7: { x: 180, y: 500 },
+  8: { x: 480, y: 500 },
+  9: { x: 780, y: 500 },
+};
+const LABELS: Record<EntranceVariant, string> = {
+  4: '卡 4 地缝 · 对照',
+  5: '卡 5 击裂 · 生产',
+  7: '卡 7 错位',
+  8: '卡 8 掀皮',
+  9: '卡 9 网裂',
+};
 const FLOOR_KEY = 'gym-entrance-floor';
 const HIGHLIGHT = 0x2ae6c8;
 
 const DIGIT_KEYCODES = [
   Phaser.Input.Keyboard.KeyCodes.FOUR,
   Phaser.Input.Keyboard.KeyCodes.FIVE,
+  Phaser.Input.Keyboard.KeyCodes.SEVEN,
+  Phaser.Input.Keyboard.KeyCodes.EIGHT,
+  Phaser.Input.Keyboard.KeyCodes.NINE,
 ] as const;
 
 interface CardSlot {
@@ -43,7 +61,7 @@ interface CardSlot {
 export class GymRiftEntranceCardScene extends Phaser.Scene {
   private slots: CardSlot[] = [];
   private highlight: Phaser.GameObjects.Graphics | null = null;
-  private selected: EntranceVariant = 4;
+  private selected: EntranceVariant = 5;
   private digitKeys: Phaser.Input.Keyboard.Key[] = [];
 
   constructor() {
@@ -70,11 +88,10 @@ export class GymRiftEntranceCardScene extends Phaser.Scene {
 
     this.highlight = this.add.graphics().setDepth(0);
 
-    this.slots = ENTRANCE_VARIANTS.map((variant, index) => {
-      const x = CARD_XS[index]!;
-      const y = CARD_Y;
+    this.slots = ENTRANCE_VARIANTS.map((variant) => {
+      const { x, y } = LAYOUT[variant];
       this.add
-        .text(x, y - ENTRANCE_FRAME_H * CARD_SCALE * ENTRANCE_ORIGIN_Y - 16, `卡 ${variant}`, {
+        .text(x, y - ENTRANCE_FRAME_H * CARD_SCALE * ENTRANCE_ORIGIN_Y - 16, LABELS[variant], {
           fontFamily: '"Courier New", Courier, monospace',
           fontSize: '16px',
           color: '#c8cdd4',
@@ -116,15 +133,15 @@ export class GymRiftEntranceCardScene extends Phaser.Scene {
     if (roster) {
       roster.textContent = [
         '身份已锁：伤口渗漏，不是门。入口在地面上，不显式呈现那边是什么。',
-        '卡 4 地缝 = 地面上一道中间粗两边细的裂缝，缝深处一条丝在走。生产默认（DEC-113）。',
-        '卡 5 击裂 = 由受击点向外辐射的裂缝，像钢化玻璃；青绿从中心往外淡出。留作对照。',
-        '两张都画在地面平面内，是贴花，玩家能踩过去。',
+        '上排已锁：卡 5 击裂 = 生产默认（DEC-114）；卡 4 地缝 = 对照（DEC-113 留下的另一张）。',
+        '下排三种占场地方式：卡 7 错位 / 卡 8 掀皮 / 卡 9 网裂。人未抽，不翻生产默认。',
+        '五张都画在地面平面内，是贴花，玩家能踩过去。编号跳过 6，不复活囚笼。',
       ].join('\n');
     }
     const status = document.getElementById('gym-status');
     if (status) {
       status.textContent =
-        '打开即播八帧循环、每秒六帧。键 4 / 5 高亮对应卡。底是出击同一份净化点混凝土，同样放大 4×。开发课，不是游戏内界面。';
+        '打开即播八帧循环、每秒六帧。键 4 / 5 / 7 / 8 / 9 高亮对应卡。底是出击同一份净化点混凝土，同样放大 4×。开发课，不是游戏内界面。';
     }
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);

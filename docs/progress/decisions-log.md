@@ -5,6 +5,35 @@ created-when: Foundation 阶段
 note: Append-only. Do not modify historical entries.
 ---
 
+---
+
+## DEC-115: 供奉台生产默认 = 卡 I 环；装填光点三档接槽里残渣个数
+- Date: 2026-09-04（人下令把卡 I 放入正式关卡；措辞与 DEC-113 / DEC-114「放入正式关卡」同一句）
+- Phase: Iterative Development（净化点视觉表现优化；**不开独立迭代编号**；活指针仍在迭代 5）
+- Type: Art + Architecture（世界实体贴图默认；规则 / 数值不动）
+- Context: 供奉台身份已锁「一台同时起收容、控制、暴露三种作用的装置」。三轮抽卡后九张在对照课。人点名卡 I 环进净化点。H 的装填光点读法（空档不亮；一 / 二 / 三档 = 1 / 2 / 3+ 个残渣，不显第四槽）一并落到 I 上。
+- Decision:
+  1. **生产默认 = 卡 I 环**：立着的 32×32 × 32 帧图集（4 档 × 8 帧、6fps）`offering-i-sheet.png`。45° 等距，锚点脚底（26/32），depth 与读数桩同层。空档圈孔不亮；装填后一团光点贴在圈心下沿浮动。
+  2. **装填档跟 `contaminantSystem.getDefenseSlotted()` 里非空个数走**，映射 `offeringChargeTier`：0 → 空；1 → 一档；2 → 二档；3 或 4 → 三档。外观不显槽数。
+  3. **对照课留下**：`?lesson=offering-card` 九卡仍在。A–H 不删、不翻默认。净化点内不设切卡键（1–9 已给核心与裂隙入口）。
+  4. **贴图缺失回落**旧的呼吸圆点。交互半径 / 按 E 开防御槽 / 提示条 / 安全区钳制不动。待处理高亮在贴图在时走提示条，不在装置外再画圈。
+  5. **范围：** 只改供奉台世界形体的生产默认。Findings P2–P7 仍挂起。**不开迭代 11。**
+- Impact: `offering-stand-visual.ts` / `offering-charge.ts` / `boot-scene.ts` / `purification-scene.ts` / `system-purification-impact.md` 规则 2 / 3 / `architecture.md` / `offering-stand-identity.md` / `offering-stand-cards.md` / `docs/dev/gym.md` / `.cursor/rules/gym.mdc` / 对照课文案。
+- Verification: 无查询打开 `#purif` 西南为卡 I；槽空则圈心不亮；装残渣后光点变大变亮。审美待人在实地终审，不代勾好看。
+
+## DEC-114: 裂隙入口生产默认改到卡 5 击裂；卡 4 地缝降为对照
+- Date: 2026-09-04（人下令把卡 5 放进正式关卡；措辞与 DEC-113「把卡 4 放进正式关卡」同一句）
+- Phase: Iterative Development（净化点视觉表现优化；**不开独立迭代编号**；活指针仍在迭代 5）
+- Type: Art + Architecture（世界实体贴图默认；规则 / 数值不动）
+- Context: DEC-113 结案时人留下卡 4 地缝与卡 5 击裂两张，当时默认卡 4。同一本质「伤口渗漏，不是门」、同一载体平面（地面贴花）下两个都成立的形体。本条只改生产默认，不改身份、不删对照、不重开抽卡。
+- Decision:
+  1. **生产默认 = 卡 5 击裂**：由受击点向外辐射的地面裂缝，像钢化玻璃受击；青绿从中心往外淡出，可达半径随帧呼吸。40×56 × 8 帧、6fps 图集 `rift-e5-sheet.png`。
+  2. **卡 4 地缝降为对照**：人当初两张都留了，本条不删。`?entrance=4` 与净化点内键 4 仍可看。
+  3. **卡 7 错位 / 8 掀皮 / 9 网裂仍只进对照课**，人未抽，不翻默认、不结案。
+  4. **范围：** 只改入口世界形体的生产默认。不动规则 / 数值 / 交互半径 / 按 E 开出击装配 / 提示条 / 安全区钳制 / 永不高亮。Findings P3–P7 仍挂起。**不开迭代 11。**
+- Impact: `rift-entrance-visual.ts`（`ENTRANCE_DEFAULT_VARIANT = 5`）/ `purification-scene.ts` / `system-purification-impact.md` 规则 2 位置表 / `architecture.md` / `rift-entrance-cards.md` / `docs/dev/gym.md` / `.cursor/rules/gym.mdc` / 对照课文案；DEC-113 历史正文不动。
+- Verification: 无查询打开 `#purif` 即为卡 5；键 4 仍切到卡 4。审美待人在实地终审，不代勾好看。
+
 ## DEC-113: 裂隙入口在地面上——生产默认 = 卡 4 地缝（地面裂缝贴花）；卡 5 击裂留对照；墙上那一整路作废
 - Date: 2026-09-04（人在两轮六张里推翻「墙上的伤」整条路线，点名三个地面方向，再从三张里留下卡 4 / 卡 5，并下令把卡 4 放进正式关卡）
 - Phase: Iterative Development（净化点视觉表现优化；**不开独立迭代编号**；活指针仍在迭代 5）
