@@ -13,6 +13,7 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | -- | -- |
 | 污染句法 | `http://localhost:3000/gym.html?lesson=lexicon` |
 | 油膜脉络抽卡 | `http://localhost:3000/gym.html?lesson=paint-vein-card`（历史对照课） |
+| 供奉台抽卡 | `http://localhost:3001/gym.html?lesson=offering-card`（六卡两行三列，键 1–6 高亮；45° 等距，放大 6×；**底是出击同一份净化点混凝土**；生产默认仍呼吸圆点）。上排 = 第一轮，按收容手段拆：A 压钳 / B 笼斗 / C 浇墩——人否掉，三张是同一句形体（实心方块 + 前左面开洞），区分度低。下排 = 第二轮，按**形体类**拆：D 举出（横向外伸）/ E 抱箍（竖向细高）/ F 压槽（贴地矮宽）。轴为什么换见 `docs/design-notes/offering-stand-identity.md` 第 3 节 |
 | 裂隙入口对照 | `http://localhost:3001/gym.html?lesson=rift-entrance-card`（两卡并排：卡 4 地缝 = 生产默认，卡 5 击裂 = 对照；键 4 / 5 高亮；都画在地面平面内、是贴花；6fps；**底是出击同一份净化点混凝土，不是纯黑**。`npm run gym` 常见端口 3001，3000 常被 `npm run dev` 占用） |
 | 污染句法陈列馆 | `http://localhost:3000/gym.html?lesson=lexicon-gallery` |
 | 敌人移动 | `http://localhost:3000/gym.html` |

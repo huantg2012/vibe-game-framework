@@ -332,7 +332,8 @@
         <nav id="gym-nav">
           <a id="gym-link-lexicon" href="/gym.html?lesson=lexicon">污染句法</a>
           <a id="gym-link-paint-vein-card" href="/gym.html?lesson=paint-vein-card">油膜脉络抽卡</a>
-          <a id="gym-link-rift-entrance-card" href="/gym.html?lesson=rift-entrance-card">裂隙入口抽卡</a>
+          <a id="gym-link-rift-entrance-card" href="/gym.html?lesson=rift-entrance-card">裂隙入口对照</a>
+          <a id="gym-link-offering-card" href="/gym.html?lesson=offering-card">供奉台抽卡</a>
           <a id="gym-link-lexicon-gallery" href="/gym.html?lesson=lexicon-gallery">污染句法陈列馆</a>
           <a id="gym-link-enemy" href="/gym.html">敌人移动</a>
           <a id="gym-link-player" href="/gym.html?lesson=player">玩家外形</a>
@@ -516,9 +517,15 @@
           <li>拖动画布平移，滚轮缩放。开发课，不是陈列馆目录。</li>
         </ul>
         <ul id="gym-rules-rift-entrance-card" hidden>
-          <li>本回合只看练习场。E1 是要看的外形：壁裂幕，光幕慢转 6fps。打开即播八帧循环。</li>
-          <li>键 1 看 E1。键 2 / 3 是旧对照。三卡并排，放大约 4×。生产默认仍是呼吸圆点。</li>
-          <li>不刷玩家、不走出击、不进主菜单。开发课，不是游戏内界面。</li>
+          <li>抽卡已结案（DEC-113）：卡 4 地缝 = 生产默认，卡 5 击裂 = 对照。两卡并排。</li>
+          <li>两张都画在地面平面内，是贴花（锚点中心、层在地板之上玩家之下）。键 4 / 5 高亮。</li>
+          <li>底是出击同一份净化点混凝土，不是纯黑。这里换卡不改生产默认。</li>
+        </ul>
+        <ul id="gym-rules-offering-card" hidden>
+          <li>身份已锁：一台同时起收容、控制、暴露三种作用的装置。不是架子、不是祭坛。</li>
+          <li>相机 45° 等距，与已锁三台同一套。外观不显槽数；里面那点青绿是活层。</li>
+          <li>键 1 / 2 / 3 高亮：卡 A 压钳 / 卡 B 笼斗 / 卡 C 浇墩。打开即播，放大 6×。</li>
+          <li>底是出击同一份净化点混凝土。生产默认仍是呼吸圆点，人没抽卡不翻默认。</li>
         </ul>
         <ul id="gym-rules-map" hidden>
           <li>布局走出击同一套 <code>generateRiftLayout</code>，禁止另写生成器。</li>

@@ -9,7 +9,8 @@ export type GymLesson =
   | 'lexicon'
   | 'lexicon-gallery'
   | 'paint-vein-card'
-  | 'rift-entrance-card';
+  | 'rift-entrance-card'
+  | 'offering-card';
 
 export function readGymLesson(): GymLesson {
   const value = new URLSearchParams(window.location.search).get('lesson');
@@ -19,6 +20,7 @@ export function readGymLesson(): GymLesson {
   if (value === 'lexicon-gallery') return 'lexicon-gallery';
   if (value === 'paint-vein-card') return 'paint-vein-card';
   if (value === 'rift-entrance-card') return 'rift-entrance-card';
+  if (value === 'offering-card') return 'offering-card';
   return 'enemy';
 }
 

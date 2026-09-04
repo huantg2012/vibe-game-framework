@@ -16,6 +16,7 @@ const SCENE_BY_LESSON: Record<GymLesson, string> = {
   'lexicon-gallery': 'GymLexiconGalleryScene',
   'paint-vein-card': 'GymPaintVeinCardScene',
   'rift-entrance-card': 'GymRiftEntranceCardScene',
+  'offering-card': 'GymOfferingCardScene',
 };
 
 export class GymBootScene extends Phaser.Scene {
@@ -48,6 +49,7 @@ export class GymBootScene extends Phaser.Scene {
     setHidden('gym-rules-gallery', lesson !== 'lexicon-gallery');
     setHidden('gym-rules-paint-vein-card', lesson !== 'paint-vein-card');
     setHidden('gym-rules-rift-entrance-card', lesson !== 'rift-entrance-card');
+    setHidden('gym-rules-offering-card', lesson !== 'offering-card');
     setHidden('gym-map-legend', lesson !== 'map');
 
     this.scene.start(SCENE_BY_LESSON[lesson]);
@@ -63,6 +65,7 @@ function setCurrentNav(lesson: GymLesson): void {
     'lexicon-gallery': 'gym-link-lexicon-gallery',
     'paint-vein-card': 'gym-link-paint-vein-card',
     'rift-entrance-card': 'gym-link-rift-entrance-card',
+    'offering-card': 'gym-link-offering-card',
   };
   for (const [key, id] of Object.entries(ids)) {
     const el = document.getElementById(id);
