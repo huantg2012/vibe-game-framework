@@ -156,7 +156,7 @@ tools:
 1. **架构登记**：本 Slice 新增/删除的 `src/` 模块必须登记进 `architecture.md`（模块注册表 + 必要时补一条 DEC-ARCH）
 2. **spec 判断**：判断是否新增了"有规则的东西"——判据是"这块代码里有没有数值 / 条件 / 状态转移，是别人必须知道才能不改坏的？"有 → 必须补 spec（**默认就地扩写归属系统的 spec，不新建文件**）；纯配色描边类视觉 → 不需要
 3. **交付范围记录**：`current-slice.md` 写清逐轮迭代与实际交付范围（可事后按 git 溯源补记）
-4. **UI 清单**：若触碰 UI，先要求执行 `.cursor/skills/in-game-ux/SKILL.md`（HOW），再过 `docs/specs/_template-ui.md` 的 U1-U12。只写「过清单 / 审美过关」而不指向该 skill = 收尾不合格
+4. **UI 清单**：若触碰 UI，先要求执行 `.cursor/skills/in-game-ux/SKILL.md`（HOW = 三问结果），再过 `docs/specs/_template-ui.md` 的 U1-U12。只写「过清单 / 审美过关」而不指向该 skill = 收尾不合格。禁止把「机械层已扫」当收尾标题。
 
 **硬约束**：轻量路径免掉的是"预先规划的仪式"，不是"收尾的登记"。**收尾四项未完成，本 Slice 不得标 COMPLETE。** 这条规则的来源是实测代价——一个走了完全裸奔路径的表现层 Slice 交付了两个无 spec 承接的新系统，架构文档也没登记，事后才被补回（见 `guides/98-field-notes.md` Slice 4.5）。
 
@@ -185,7 +185,7 @@ tools:
 
 **关键规则**：
 - 结构性循环问题**不能**通过直接改 constants 来"修"——那只是把表象推迟了。必须回到 design agent 从循环层面重新设计。
-- 游戏内 UI 风格问题**不能**只派 code agent 或只派 design agent。风格是视觉规格层的产出，归 art agent；跳过 art agent 直接让 code 写样式，实测会稳定产出后台管理系统外观（见 `guides/99-review.md` FV-01）。派发时必须要求执行 `.cursor/skills/in-game-ux/SKILL.md`（HOW：开工闸门 + 写完自检）。自定义 agent **不会**自动加载 skill，Task Brief 必须写明「先 Read 该 SKILL.md」。只写「过 U1–U12 / 审美过关」而不指向该 HOW = 派发不合格。收尾仍用 `_template-ui.md` 的 U1-U12 做闸门。
+- 游戏内 UI 风格问题**不能**只派 code agent 或只派 design agent。风格是视觉规格层的产出，归 art agent；跳过 art agent 直接让 code 写样式，实测会稳定产出后台管理系统外观（见 `guides/99-review.md` FV-01）。派发时必须要求执行 `.cursor/skills/in-game-ux/SKILL.md`（HOW：三问结果——审美 / 读作游戏 UI / 与已锁装置同一世界）。自定义 agent **不会**自动加载 skill，Task Brief 必须写明「先 Read 该 SKILL.md 与 exemplars.md」。只写「过 U1–U12 / 审美过关」而不指向该 HOW = 派发不合格。收尾仍用 `_template-ui.md` 的 U1-U12 做闸门。禁止用「机械层已扫」当交付标题。
 - **人否决审美或「不像游戏」= UI 不合格**，即使 U1–U12 全勾。清单排除已知坑，不能替代这两件北星。HOW 在 skill 里；记口号而不走 skill = 框架没起作用。
 - **即使人已给出视觉处方**，动 in-game 样式/蒙层/HUD 布局仍须 art 合规核对（最短路径可以是「人已点名方案，art 只核载体+参考+U 项」）。禁止 code 独自发明新视觉语言。
 - **UX 只讲清机制里已有的事实。** 纠结不成立 = 结构性问题，回 design 重审收益结构，禁止用面板假装有选择。

@@ -44,7 +44,7 @@ Design agent 先输出 UI spec 的结构层（载体决策、参考锚点、屏�
 
 ### 硬约束：in-game UI ≠ admin panel
 
-**HOW（强制）**：触碰 in-game UI 时，先 Read 并执行 `.cursor/skills/in-game-ux/SKILL.md`。自定义 agent 不会自动加载 skill。只写「要审美过关 / 要像游戏」而不走该 skill 的开工闸门 = 不合格。项目填充物（色板、参考、组件、挂载根）从 art-direction / UI Kit / architecture 读，不要把别的游戏的皮写进 spec。产出后按该 skill 的写完自检逐条书面作答；机械层可以扫，不许自称好看/像游戏。
+**HOW（强制）**：触碰 in-game UI 时，先 Read 并执行 `.cursor/skills/in-game-ux/SKILL.md`。自定义 agent 不会自动加载 skill。只写「要审美过关 / 要像游戏」而不走该 skill 的三问 = 不合格。项目填充物（色板、参考、组件、挂载根）从 art-direction / UI Kit / architecture 读，不要把别的游戏的皮写进 spec。产出后按该 skill 的三问书面作答；不许自称好看/像游戏。不许用「机械层已扫」当交付标题。
 
 这是本框架实测中最容易翻车的地方（见 `guides/99-review.md` FV-01）。默认失败模式是：把游戏界面做成一个配色深色的管理后台——卡片堆砌、圆角、投影、渐变按钮、通用图标、居中弹窗挡住战场、标签写着"设置/提交/确认"。**载体错误会稳定产出不像游戏；载体对了仍可能丑。** 两件都要过：审美由人一票否决；「像游戏」靠载体 + 参考锚点拉住。禁止把「不是审美问题」当成可以交差。
 
@@ -59,7 +59,7 @@ Design agent 先输出 UI spec 的结构层（载体决策、参考锚点、屏�
 
 **反模式清单（出现任一条即为不合格，除非 art-direction 明文授权为世界材质）**：圆角卡片堆与投影/发光 · 渐变按钮 · 通用图标字体或 emoji · Material/Bootstrap 味配色 · 自造字号与色值 · 游戏进行中把面板放在画面中心 · 依赖鼠标 hover 才能获得信息 · 用 `hover/active/disabled` 当设计语言 · 文本使用通用软件词而非 `world.md` 术语表 · 把表名与档位拼成一句复合名词 · 角锚 HUD 绑在会随 zoom 漂移的实现上 · 拿过期 Kit 换算当验收基准。
 
-产出后按 `.cursor/skills/in-game-ux/SKILL.md` 的写完自检逐条书面作答，并过 `docs/specs/_template-ui.md` 末尾的 U1-U12——那是全项目权威闸门，QA 会用同一份清单验收你。自检答不全不要送审；不许写「好看 / 像游戏 / PASS」。
+产出后按 `.cursor/skills/in-game-ux/SKILL.md` 的三问书面作答，并过 `docs/specs/_template-ui.md` 末尾的 U1-U12——那是全项目权威闸门，QA 会用同一份清单验收你。三问答不全不要送审；不许写「好看 / 像游戏 / PASS」。
 
 **试玩热修的最短合规路径**：人已点名样式/蒙层/HUD 布局方案时，你不重新设计，只核三件事——载体是否仍成立、是否仍落在参考锚点内、相关 U 项是否被破坏。核完才能让 code 落地。**禁止缺席**；人已经说了怎么改 ≠ 可以跳过你。
 

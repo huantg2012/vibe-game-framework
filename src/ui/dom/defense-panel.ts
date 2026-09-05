@@ -1,13 +1,8 @@
 /**
- * DefensePanel - DOM overlay for managing the defense slots at the purification point.
+ * DefensePanel — 供奉墙机（载体 B）。
  *
- * Game-style slot grid: one visual container cell per unlocked defense slot (3 base,
- * +1 via growth_defense_slot), dashed empty borders, equipped items displayed as
- * colored tiles within cells. Inventory shown as compact clickable tiles below.
- *
- * Slice 5.5 C3: keyboard cursor navigation (slots ↔ inventory ↔ actions) +
- * selected-即-检视 inspect dock, replacing the mouse-only / `title`-tooltip-only
- * interaction this panel had before (IA §0.4, U7).
+ * I11-B4c：钉顶三格身份带（三格都暗）+ 上槽下库 + 底键印。无顶 Tab、无出击预估。
+ * 键鼠同一通道：无 hoverTarget。库存无未入槽残渣时库存区走空状态三件套。挂 #dom-ui-root。
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -17,6 +12,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { getDefenseName, getRarityStars, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
+import { identityBandHtml } from './module-identity-strip';
 import type { Contaminant } from '@/types/game-types';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 
@@ -49,9 +45,6 @@ let cursorRegion: CursorRegion = 'slots';
 let cursorSlot = 0;
 let cursorInv = 0;
 let cursorAction = 0;
-// Mouse hover is a secondary, non-persistent way to feed the inspect dock — it
-// never moves the keyboard cursor, only what the dock displays while hovered.
-let hoverTarget: { kind: 'slot' | 'inventory'; index: number } | null = null;
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -69,7 +62,6 @@ export const defensePanel = {
     cursorSlot = 0;
     cursorInv = 0;
     cursorAction = 0;
-    hoverTarget = null;
     createPanel();
     audioManager.playSFX('sfx-ui-open');
   },
@@ -129,7 +121,6 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     cycleRegion(e.shiftKey ? -1 : 1, slots.length, inventory.length);
-    hoverTarget = null;
     render();
     return;
   }
@@ -139,7 +130,6 @@ function onKeyDown(e: KeyboardEvent): void {
     e.preventDefault();
     const dir = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
     moveCursor(dir, slots.length, inventory.length);
-    hoverTarget = null;
     render();
     return;
   }
@@ -225,6 +215,7 @@ function render(): void {
   // tone: that fails the 4.5:1 text floor (A1), so it's reserved for the charge bar
   // fill below (a decorative fill, not text).
   let html = `<div class="panel-title">供奉</div>`;
+  html += identityBandHtml({ activeId: null });
 
   html += `<div class="panel-fixed">`;
   html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
@@ -259,7 +250,7 @@ function render(): void {
 
   html += `<div class="scroll-area">`;
   if (inventory.length === 0) {
-    html += `<div style="font-size:13px;color:#8a8f96;padding:8px 0;">无可用残渣</div>`;
+    html += inventoryEmptyHtml(slots);
   } else {
     const canEquip = slots.some((s) => s === null);
     inventory.forEach((c, idx) => {
@@ -283,7 +274,23 @@ function render(): void {
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);
-  wireEvents(slots, inventory);
+  wireEvents();
+}
+
+function inventoryEmptyHtml(slots: (Contaminant | null)[]): string {
+  const filled = slots.filter((s) => s !== null).length;
+  const total = slots.length;
+  const next = filled === 0
+    ? `<div class="crt-empty-next"><span class="empty-key">[E]</span> <span>踏入裂隙</span></div>`
+    : '';
+  return `<div class="crt-empty">
+    <div class="crt-empty-mark"></div>
+    <div>
+      <div class="crt-empty-why"><span>残渣</span><span>0</span></div>
+      <div class="crt-empty-why"><span>供奉</span><span>${filled}</span><span>/</span><span>${total}</span></div>
+      ${next}
+    </div>
+  </div>`;
 }
 
 function buildKeyHintBar(slots: (Contaminant | null)[], inventory: Contaminant[]): string {
@@ -309,7 +316,7 @@ function buildKeyHintBar(slots: (Contaminant | null)[], inventory: Contaminant[]
   </div>`;
 }
 
-function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): void {
+function wireEvents(): void {
   if (!panel) return;
 
   panel.querySelector('#defense-close-btn')?.addEventListener('click', () => {
@@ -326,26 +333,16 @@ function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): vo
       saveManager.save();
       render();
     });
-    btn.addEventListener('mouseenter', () => {
-      hoverTarget = { kind: 'slot', index: parseInt(el.dataset.index!, 10) };
-      refreshInspectDock(slots, inventory);
-    });
-    btn.addEventListener('mouseleave', () => {
-      hoverTarget = null;
-      refreshInspectDock(slots, inventory);
-    });
   });
 
-  // Empty slot cells still feed the inspect dock on hover.
-  panel.querySelectorAll('.slot-cell:not(.slot-filled)').forEach((cell) => {
-    const el = cell as HTMLElement;
-    cell.addEventListener('mouseenter', () => {
-      hoverTarget = { kind: 'slot', index: parseInt(el.dataset.index!, 10) };
-      refreshInspectDock(slots, inventory);
-    });
-    cell.addEventListener('mouseleave', () => {
-      hoverTarget = null;
-      refreshInspectDock(slots, inventory);
+  panel.querySelectorAll<HTMLElement>('.slot-cell[data-index]').forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      const index = parseInt(el.dataset.index!, 10);
+      if (Number.isNaN(index)) return;
+      if (cursorRegion === 'slots' && cursorSlot === index) return;
+      cursorRegion = 'slots';
+      cursorSlot = index;
+      render();
     });
   });
 
@@ -358,13 +355,13 @@ function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): vo
       const c = contaminantSystem.getAll().find((item) => item.id === id);
       if (c) equipDefense(c, contaminantSystem.getDefenseSlotted());
     });
-    btn.addEventListener('mouseenter', () => {
-      hoverTarget = { kind: 'inventory', index: parseInt(el.dataset.invIndex!, 10) };
-      refreshInspectDock(slots, inventory);
-    });
-    btn.addEventListener('mouseleave', () => {
-      hoverTarget = null;
-      refreshInspectDock(slots, inventory);
+    el.addEventListener('mouseenter', () => {
+      const idx = parseInt(el.dataset.invIndex!, 10);
+      if (Number.isNaN(idx)) return;
+      if (cursorRegion === 'inventory' && cursorInv === idx) return;
+      cursorRegion = 'inventory';
+      cursorInv = idx;
+      render();
     });
   });
 }
@@ -378,26 +375,14 @@ function equipDefense(c: Contaminant, currentSlots: (Contaminant | null)[]): voi
   }
 }
 
-function refreshInspectDock(slots: (Contaminant | null)[], inventory: Contaminant[]): void {
-  const dock = panel?.querySelector('#defense-inspect-dock');
-  if (!dock) return;
-  const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
-  dock.innerHTML = computeInspectHtml(slots, inventory, threshold);
-}
-
-// ---------------------------------------------------------------------------
-// Inspect dock content
-// ---------------------------------------------------------------------------
-
 function computeInspectHtml(
   slots: (Contaminant | null)[],
   inventory: Contaminant[],
   threshold: number,
 ): string {
-  const target = hoverTarget
-    ?? (cursorRegion === 'slots' ? { kind: 'slot' as const, index: cursorSlot }
-      : cursorRegion === 'inventory' ? { kind: 'inventory' as const, index: cursorInv }
-        : null);
+  const target = cursorRegion === 'slots' ? { kind: 'slot' as const, index: cursorSlot }
+    : cursorRegion === 'inventory' ? { kind: 'inventory' as const, index: cursorInv }
+      : null;
   if (!target) return INSPECT_EMPTY_HTML;
 
   if (target.kind === 'slot') {

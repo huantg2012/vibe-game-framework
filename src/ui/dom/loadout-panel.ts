@@ -1,13 +1,9 @@
 /**
- * LoadoutPanel - DOM overlay for selecting sortie tools before entering the rift.
+ * LoadoutPanel — 出击装配墙机（载体 B）。
  *
- * Game-style layout: one slot cell per unlocked sortie slot (2 active + 1 passive
- * base, +1 active via growth_sortie_slot) at top, compact tile inventory below,
- * sortie attribute preview as stat bars, prominent action button.
- *
- * Slice 5.5 C3: keyboard cursor navigation (slots ↔ inventory ↔ actions) +
- * selected-即-检视 inspect dock, replacing the mouse-only / `title`-tooltip-only
- * interaction this panel had before (IA §0.4, U7).
+ * I11-B4c：钉顶三格身份带（三格都暗）+ 槽/库主-从 + 只读出击预估三节点 + 底键印。
+ * 无顶 Tab。键鼠同一通道：无 hoverTarget。库存无未入槽工具时库存区走空状态三件套。
+ * 挂 #dom-ui-root。
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -19,6 +15,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
+import { identityBandHtml } from './module-identity-strip';
 import type { Contaminant } from '@/types/game-types';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 import { describeSideEffectBody, formatChaosRateDelta } from '@/ui/side-effect-labels';
@@ -59,10 +56,6 @@ let cursorRegion: CursorRegion = 'slots';
 let cursorSlot = 0;
 let cursorInv = 0;
 let cursorAction = 0;
-// Mouse hover is a secondary, non-persistent way to feed the inspect dock
-// (IA §S13 "鼠标悬停填充同一区域（鼠标是二等公民，但不禁止）") — it never moves the
-// keyboard cursor itself, only what the dock displays while the pointer is over it.
-let hoverTarget: { kind: 'slot' | 'inventory'; index: number } | null = null;
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -81,7 +74,6 @@ export const loadoutPanel = {
     cursorSlot = 0;
     cursorInv = 0;
     cursorAction = 0;
-    hoverTarget = null;
     createPanel();
     audioManager.playSFX('sfx-ui-open');
   },
@@ -142,7 +134,6 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     cycleRegion(e.shiftKey ? -1 : 1, slots.length, inventory.length);
-    hoverTarget = null;
     render();
     return;
   }
@@ -152,7 +143,6 @@ function onKeyDown(e: KeyboardEvent): void {
     e.preventDefault();
     const dir = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
     moveCursor(dir, slots.length, inventory.length);
-    hoverTarget = null;
     render();
     return;
   }
@@ -237,6 +227,7 @@ function render(): void {
   const activeCount = contaminantSystem.getSortieActiveSlotCount();
 
   let html = `<div class="panel-title">踏入裂隙</div>`;
+  html += identityBandHtml({ activeId: null });
 
   html += `<div class="panel-fixed">`;
   html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
@@ -271,7 +262,7 @@ function render(): void {
 
   html += `<div class="scroll-area">`;
   if (inventory.length === 0) {
-    html += `<div style="font-size:13px;color:#8a8f96;padding:8px 0;">无可用工具</div>`;
+    html += inventoryEmptyHtml();
   } else {
     inventory.forEach((c, idx) => {
       const name = getToolName(c.type);
@@ -296,7 +287,7 @@ function render(): void {
 
   panel.innerHTML = html;
   scrollFocusedIntoView(panel);
-  wireEvents(slots, inventory);
+  wireEvents();
 }
 
 function buildKeyHintBar(
@@ -341,7 +332,19 @@ function buildKeyHintBar(
   </div>`;
 }
 
-function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): void {
+function inventoryEmptyHtml(): string {
+  const defenseCount = contaminantSystem.getAll().filter((c) => c.stage === 'defense').length;
+  return `<div class="crt-empty">
+    <div class="crt-empty-mark"></div>
+    <div>
+      <div class="crt-empty-why"><span>工具</span><span>0</span></div>
+      <div class="crt-empty-why"><span>残渣</span><span>${defenseCount}</span></div>
+      <div class="crt-empty-next"><span class="empty-key">[Enter]</span> <span>踏入</span></div>
+    </div>
+  </div>`;
+}
+
+function wireEvents(): void {
   if (!panel) return;
 
   // Remove from slot by clicking filled cell (mouse = equal-citizen shortcut for
@@ -352,26 +355,16 @@ function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): vo
       contaminantSystem.unslotSortie(index);
       render();
     });
-    btn.addEventListener('mouseenter', () => {
-      hoverTarget = { kind: 'slot', index: parseInt((btn as HTMLElement).dataset.index!, 10) };
-      refreshInspectDock(slots, inventory);
-    });
-    btn.addEventListener('mouseleave', () => {
-      hoverTarget = null;
-      refreshInspectDock(slots, inventory);
-    });
   });
 
-  // Empty slot cells still feed the inspect dock on hover (nothing to equip there,
-  // but keyboard cursor can also rest there so hover should behave consistently).
-  panel.querySelectorAll('.slot-cell:not(.slot-filled)').forEach((cell) => {
-    cell.addEventListener('mouseenter', () => {
-      hoverTarget = { kind: 'slot', index: parseInt((cell as HTMLElement).dataset.index!, 10) };
-      refreshInspectDock(slots, inventory);
-    });
-    cell.addEventListener('mouseleave', () => {
-      hoverTarget = null;
-      refreshInspectDock(slots, inventory);
+  panel.querySelectorAll<HTMLElement>('.slot-cell[data-index]').forEach((el) => {
+    el.addEventListener('mouseenter', () => {
+      const index = parseInt(el.dataset.index!, 10);
+      if (Number.isNaN(index)) return;
+      if (cursorRegion === 'slots' && cursorSlot === index) return;
+      cursorRegion = 'slots';
+      cursorSlot = index;
+      render();
     });
   });
 
@@ -384,13 +377,13 @@ function wireEvents(slots: (Contaminant | null)[], inventory: Contaminant[]): vo
       const c = contaminantSystem.getAll().find((item) => item.id === id);
       if (c) equipTool(c, contaminantSystem.getSortieLoadout());
     });
-    btn.addEventListener('mouseenter', () => {
-      hoverTarget = { kind: 'inventory', index: parseInt(el.dataset.invIndex!, 10) };
-      refreshInspectDock(slots, inventory);
-    });
-    btn.addEventListener('mouseleave', () => {
-      hoverTarget = null;
-      refreshInspectDock(slots, inventory);
+    el.addEventListener('mouseenter', () => {
+      const idx = parseInt(el.dataset.invIndex!, 10);
+      if (Number.isNaN(idx)) return;
+      if (cursorRegion === 'inventory' && cursorInv === idx) return;
+      cursorRegion = 'inventory';
+      cursorInv = idx;
+      render();
     });
   });
 
@@ -422,28 +415,15 @@ function equipTool(c: Contaminant, currentSlots: (Contaminant | null)[]): void {
   }
 }
 
-function refreshInspectDock(slots: (Contaminant | null)[], inventory: Contaminant[]): void {
-  const dock = panel?.querySelector('#loadout-inspect-dock');
-  if (!dock) return;
-  const passiveIndex = contaminantSystem.getSortiePassiveSlotIndex();
-  const activeCount = contaminantSystem.getSortieActiveSlotCount();
-  dock.innerHTML = computeInspectHtml(slots, inventory, activeCount, passiveIndex);
-}
-
-// ---------------------------------------------------------------------------
-// Inspect dock content
-// ---------------------------------------------------------------------------
-
 function computeInspectHtml(
   slots: (Contaminant | null)[],
   inventory: Contaminant[],
   activeCount: number,
   passiveIndex: number,
 ): string {
-  const target = hoverTarget
-    ?? (cursorRegion === 'slots' ? { kind: 'slot' as const, index: cursorSlot }
-      : cursorRegion === 'inventory' ? { kind: 'inventory' as const, index: cursorInv }
-        : null);
+  const target = cursorRegion === 'slots' ? { kind: 'slot' as const, index: cursorSlot }
+    : cursorRegion === 'inventory' ? { kind: 'inventory' as const, index: cursorInv }
+      : null;
   if (!target) return INSPECT_EMPTY_HTML;
 
   if (target.kind === 'slot') {
@@ -495,47 +475,38 @@ function buildResidueRow(): string {
       const body = describeSideEffectBody(e);
       if (!body) return null;
       const src = e.source ? getDefenseName(e.source as Contaminant['type']) : '';
-      return `<span style="color:#8a8f96;">${body.split(' ')[0] ?? ''}</span>
-        <span style="font-size:16px;font-weight:bold;color:#1aad96;margin:0 8px;">${body.includes('+') ? body.slice(body.indexOf('+')) : body}</span>
+      return `<span class="stat-label">${body.split(' ')[0] ?? ''}</span>
+        <span class="stat-value" style="color:#1aad96;">${body.includes('+') ? body.slice(body.indexOf('+')) : body}</span>
         ${src ? `<span>← ${src}</span>` : ''}`;
     })
     .filter((x): x is string => x !== null);
   if (parts.length === 0) return '';
   return `<div class="separator"></div>
-    <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
-      <span style="font-size:12px;color:#8a8f96;">既有残留</span>
+    <div class="stat-row">
+      <span class="stat-label">既有残留</span>
       ${parts.join('')}
     </div>`;
 }
 function buildSortiePreview(): string {
-  const baseHp = GAME_CONSTANTS.PLAYER.MAX_HEALTH;
-  const mods = growthSystem.getModifiers();
+  const playerHp = GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus;
+  const mods = gameState.getSortieModifiers();
 
-  const hpBonus = mods.vitalityBonus;
-  const totalHp = baseHp + hpBonus;
-
-  const coreEffect = gameState.getModuleEffect('CORE');
-  const totalChaosRate = Math.max(0, coreEffect - mods.chaosResist);
-  const storageEffect = gameState.getModuleEffect('STORAGE');
-
-  return `<div class="separator"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;">
-      <div>
-        <div style="font-size:12px;color:#8a8f96;">完整度</div>
-        <div style="font-size:16px;color:#c8cdd4;font-weight:bold;">${totalHp}</div>
-      </div>
-      <div>
-        <div style="font-size:12px;color:#8a8f96;">混乱增速</div>
-        <div style="font-size:16px;color:#1aad96;font-weight:bold;">${formatChaosRateDelta(totalChaosRate)}</div>
-      </div>
-      <div>
-        <div style="font-size:12px;color:#8a8f96;">薪柴值</div>
-        <div style="font-size:16px;color:#c4873a;font-weight:bold;">x${storageEffect.toFixed(2)}</div>
-      </div>
-      <div>
-        <div style="font-size:12px;color:#8a8f96;">起始混乱</div>
-        <div style="font-size:16px;color:#1aad96;font-weight:bold;">${gameState.getStartingChaos()}</div>
-      </div>
+  return `<div class="stat-row">
+      <span class="stat-label">完整度</span>
+      <span class="stat-value">${playerHp}</span>
+    </div>
+    <div class="stat-row"><span class="stat-label">出击预估</span></div>
+    <div class="stat-row">
+      <span class="stat-label">混乱增速</span>
+      <span class="stat-value" style="color:#1aad96;font-size:13px;">${formatChaosRateDelta(mods.chaosRateModifier)}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">薪柴价值</span>
+      <span class="stat-value" style="color:#c4873a;font-size:13px;">x${mods.kindlingValueModifier.toFixed(2)}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">起始混乱</span>
+      <span class="stat-value" style="color:#1aad96;font-size:13px;">${mods.startingChaos}</span>
     </div>`;
 }
 

@@ -7,6 +7,50 @@ note: Append-only. Do not modify historical entries.
 
 ---
 
+## DEC-118: 开迭代 11「净化点 UX 收口」；in-game-ux 改口为三问结果
+- Date: 2026-09-05（人点名：交互点模型已优化完，下一步做游戏 UX，开新迭代；并根据 `f3d2f93` 审查重写 UI skill）
+- Phase: Iterative Development（**迭代 11**；活指针仍在迭代 5）
+- Type: Design + Art HOW（立项 + skill；本 DEC 不改生产 HUD/面板代码）
+- Context: 合入 `f3d2f93` 的审查认定净化点功能到位、完成度停在可运行原型。P1 / P2 世界模型已翻生产（DEC-111–117）。剩下的是 UX：HUD 是 debug 字（P5）、提示条无容器（P6）、面板是网页平铺（P7）。旧 `in-game-ux` 把 HOW 写成 U1–U12 开工仪式，agent 勾完仍交 CRT 管理后台。人只要结果三问：审美、作为游戏 UI、与整体风格同一世界。
+- Decision:
+  1. **开迭代 11「净化点 UX 收口」**。合同 `docs/tasks/iteration-11.md`。不要说成 Slice 11。不塞进迭代 5。不进迭代 5 波次表。
+  2. **范围 = P5 / P6 / P7**（审查 B3 + B4）。P3 地面 / P4 外部默认不进本包。P8 不另派（迭代 9 / DEC-107）。已锁世界贴图不重画。规则 / 数值 / CSV 不动。
+  3. **Q2 走 (b)**：面板做主-从 + 渐进披露 + 单一焦点，不是只加框。HUD / 提示条按审查 §5 做容器与层级。
+  4. **原地更新 `in-game-ux`**（不改名）。HOW = 三问结果 + 审查构造法。禁止再用「机械层已扫」当交付标题。`.cursor/skills/in-game-ux/` 与 `.agents/skills/in-game-ux/` 正文一致。
+  5. **Slice 5.5 D3 例外对净化点 HUD 作废**：无容器不再算 A 类装置读数的合法形态。容器语言由 I11-S 定。
+  6. **出击预估只译已有修正**（混乱增速 / 薪柴价值 / 起始混乱）。禁止发明机制里没有的生存评分。
+  7. **默认不改** `panel-styles.ts` CRT 基元；若必须压对比则单独立批 I11-K + 全面板回归。
+- Impact: skill；`docs/tasks/iteration-11.md`；`current-iteration.md` / roadmap / backlog / Findings / PLAN 节点 9；CLAUDE.md / AGENTS.md / director·art·code·design·qa 定义里的 UI HOW 指向；`system-purification-impact.md` UX 节将由 I11-IA 扩写。
+- Verification: I11-A 本会话交 skill + 合同。画面等人在 `#purif` 按合同四问终审。不代勾好看。
+
+## DEC-117: 加厚并进蜕变面板；移除世界交互点；安全区六点
+- Date: 2026-09-05（人下令把加厚功能迁移到蜕变里，并移除加厚交互点）
+- Phase: Iterative Development（净化点视觉表现优化；**不开独立迭代编号**；活指针仍在迭代 5）
+- Type: Design + Architecture（交互点搬家；规则数值 / 存档 / CSV 纪律不动）
+- Context: Slice 7 把加厚做成祭坛北 2.2 tile 的世界桩（当场按 E 抬上限）。培养藏外形翻进关卡后，人要求功能进蜕变、拆掉该桩。加厚仍不是蜕变刻入项。
+- Decision:
+  1. **加厚出现在蜕变面板第七张**，卡名与动作都叫「加厚」。哨兵 id `thicken`，**不**进 `upgrades.csv`，**不**进 `GrowthUpgradeId`，**不**吃 `upgradeDiscount`，**不计**稳定度 +3。
+  2. **数值不动**：三档 +15（100→115→130→145），费用仍是系统常量 `MODULE_MAX_HP_COST = [12, 20, 32]`。存档仍是 `moduleMaxHpTier`。购买仍走 `GameState.raiseModuleMaxHp()`。
+  3. **移除世界交互点**：祭坛北 2.2 tile 的桩、底栏专用加厚提示、提示条优先级里的加厚档，全部删除。走近培养藏仍提示「✦ 蜕变」，按 E 开同一块面板。
+  4. **安全区钳制改为六点**：CORE / STORAGE / PURIFIER / 裂隙入口 / 防御点 / 改造祭坛。提示条优先级：CORE → STORAGE → PURIFIER → 防御点 → 改造祭坛 → 裂隙入口。
+  5. **选中加厚卡时底键是「Enter 加厚」**，不是「刻入」。禁止另开第二套确认窗。缺口仍用「还差 N」/「已至上限」。
+  6. **范围：** 只搬家。Findings P2–P7 仍挂起。**不开迭代 11。**
+- Impact: `growth-panel.ts` / `purification-scene.ts` / `purification-hud.ts` / `system-purification-impact.md` 规则 2 / 3 / 40 / U 组 / UX / `system-growth-tide.md` 规则 16 / `architecture.md`（DEC-ARCH-020）/ 身份锁「七点」各处。
+- Verification: `#purif` 北 2.2 tile 不再有桩；E 开蜕变能买加厚；三档加尽后「已至上限」且不扣薪柴。审美待人终审，不代勾好看。
+
+## DEC-116: 培养藏生产默认 = 卡 A 立缸
+- Date: 2026-09-05（人评卡 A「很好」，下令放入正式关卡；措辞与 DEC-113 / DEC-114 / DEC-115「放入正式关卡」同一句）
+- Phase: Iterative Development（净化点视觉表现优化；**不开独立迭代编号**；活指针仍在迭代 5）
+- Type: Art + Architecture（世界实体贴图默认；规则 / 数值不动）
+- Context: 培养藏身份已锁「一具能装下人体的圆柱培养藏，舱里是冒泡的半透明液体」。三张对照课后人取 A 立缸热修（40×42，加粗压矮，中段舱液约全高 70%，贴地，主光源=核心从东打）。人评「很好」后下令入净化点关卡。
+- Decision:
+  1. **生产默认 = 卡 A 立缸**：40×42 × 8 帧、6fps 图集 `growth-a-sheet.png`。45° 等距，锚点脚底（40/42），depth 与读数桩同层。
+  2. **对照课留下**：`?lesson=growth-card` 三卡仍在。B / C 不删、不翻默认。净化点内不设切培养藏的数字键（1–3 已给核心对照）。
+  3. **贴图缺失回落**旧的呼吸圆点。交互半径 / 按 E 开蜕变面板 / 提示条 / 安全区钳制不因外形改变。
+  4. **范围：** 只改培养藏世界形体的生产默认。Findings P2–P7 仍挂起。**不开迭代 11。**
+- Impact: `growth-console-visual.ts` / `boot-scene.ts` / `purification-scene.ts` / `system-purification-impact.md` 规则 2 / 3 / `architecture.md` / `growth-console-identity.md` / `growth-console-cards.md` / `docs/dev/gym.md` / `.cursor/rules/gym.mdc` / 对照课文案。
+- Verification: 无查询打开 `#purif` 西侧为卡 A 立缸，不是圆点。审美待人在实地终审，不代勾好看。
+
 ## DEC-115: 供奉台生产默认 = 卡 I 环；装填光点三档接槽里残渣个数
 - Date: 2026-09-04（人下令把卡 I 放入正式关卡；措辞与 DEC-113 / DEC-114「放入正式关卡」同一句）
 - Phase: Iterative Development（净化点视觉表现优化；**不开独立迭代编号**；活指针仍在迭代 5）

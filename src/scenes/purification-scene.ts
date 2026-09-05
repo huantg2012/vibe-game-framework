@@ -3,9 +3,9 @@
  *
  * A small tilemap (~14x12 tiles) with a circular safe area. The player walks around,
  * interacts with three modules (CORE center, STORAGE right, PURIFIER south) via
- * allocation panels, thickens maxHp at the altar-north stake, and enters the rift
- * via the north entrance. The boundary features particle atmosphere and periodic
- * apparitions.
+ * allocation panels, inscribes upgrades and thickens maxHp at the west growth
+ * console, and enters the rift via the north entrance. The boundary features
+ * particle atmosphere and periodic apparitions.
  *
  * Reuses Player entity + VisibilitySystem (omni mode). Does NOT use: AI, combat, chaos.
  *
@@ -32,6 +32,7 @@ import {
   OfferingStandVisual,
   offeringStandChargeFromSlots,
 } from '@/scenes/offering-stand-visual';
+import { GrowthConsoleVisual } from '@/scenes/growth-console-visual';
 import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
@@ -92,8 +93,11 @@ const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 4.0 * TILE };
 const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 2.5 * TILE };
 // Growth altar (west)
 const GROWTH_POS = { x: CENTER_X - 3.5 * TILE, y: CENTER_Y };
-// Thicken stake: 2.2 tiles north of the altar, same west axis (rule 2 / U)
-const THICKEN_POS = { x: GROWTH_POS.x, y: GROWTH_POS.y - 2.2 * TILE };
+
+const INTERACTION_POINTS = [
+  CORE_POS, STORAGE_POS, PURIFIER_POS,
+  RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS,
+] as const;
 
 const RIFT_CENTER = 0x1aad96;
 const RIFT_RING = 0x2ae6c8;
@@ -101,8 +105,6 @@ const DEFENSE_CENTER = 0x6644aa;
 const DEFENSE_RING = 0x8866cc;
 const GROWTH_CENTER = 0xaa6622;
 const GROWTH_RING = 0xcc8844;
-const THICKEN_CENTER = 0x5a5f66;
-const THICKEN_RING = 0xc8cdd4;
 
 // Breathing animation speeds (radians per ms)
 const BREATH_SPEED_NORMAL = (2 * Math.PI) / 2500;
@@ -123,10 +125,7 @@ const BREATH_SPEED_HIGHLIGHT = (2 * Math.PI) / 800;
  * 潮汐取常态（强度 1.0 / 满潮）以免对照图随存档变。只读，不改生产路径。
  */
 export function createPurificationFloorTexture(scene: Phaser.Scene, key: string): string {
-  const interactionPts = [
-    CORE_POS, STORAGE_POS, PURIFIER_POS,
-    RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS, THICKEN_POS,
-  ];
+  const interactionPts = [...INTERACTION_POINTS];
   const shape = createBoundaryShape({
     ellipseRx: ELLIPSE_RX,
     ellipseRy: ELLIPSE_RY,
@@ -290,13 +289,10 @@ export class PurificationScene extends Phaser.Scene {
   private defensePulse = 0;
   private offeringStand: OfferingStandVisual | null = null;
 
-  // Growth altar interaction point
+  // Growth altar interaction point（生产外形 = 卡 A 立缸，DEC-116）
   private growthGraphics!: Phaser.GameObjects.Graphics;
   private growthPulse = 0;
-
-  // Thicken stake (not a fourth module)
-  private thickenGraphics!: Phaser.GameObjects.Graphics;
-  private thickenPulse = 0;
+  private growthConsole: GrowthConsoleVisual | null = null;
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
@@ -309,6 +305,8 @@ export class PurificationScene extends Phaser.Scene {
   private panelClosedAt = 0;
   private lastStepAt = -1000;
   private lastBoundaryPulseAt = -10000;
+  /** Same nearest overlap as the prompt bar; passed into 存续报告身份带. */
+  private lastOverlapType: InteractionTarget['type'] | null = null;
 
   // E3: Track stability milestones already shown
   private lastStabilityMilestone = 0;
@@ -395,10 +393,7 @@ export class PurificationScene extends Phaser.Scene {
 
     // Build dynamic boundary shape from current tide state
     const tideState = tideSystem.getState();
-    const interactionPts = [
-      CORE_POS, STORAGE_POS, PURIFIER_POS,
-      RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS, THICKEN_POS,
-    ];
+    const interactionPts = [...INTERACTION_POINTS];
     this.boundaryShape = createBoundaryShape({
       ellipseRx: ELLIPSE_RX,
       ellipseRy: ELLIPSE_RY,
@@ -526,7 +521,8 @@ export class PurificationScene extends Phaser.Scene {
       offeringStandChargeFromSlots(contaminantSystem.getDefenseSlotted()),
     );
     this.growthGraphics = this.add.graphics().setDepth(20);
-    this.thickenGraphics = this.add.graphics().setDepth(20);
+    this.growthConsole = new GrowthConsoleVisual(this, GROWTH_POS.x, GROWTH_POS.y);
+    this.growthConsole.mount();
 
     // Purification HUD (DOM overlay)
     purificationHud.create();
@@ -614,18 +610,17 @@ export class PurificationScene extends Phaser.Scene {
     const riftDist = this.distTo(pos, RIFT_ENTRANCE_POS);
     const defDist = this.distTo(pos, DEFENSE_POS);
     const groDist = this.distTo(pos, GROWTH_POS);
-    const thickenDist = this.distTo(pos, THICKEN_POS);
     const radius = GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
 
     const nearRift = riftDist <= radius;
     const nearDefense = defDist <= radius;
     const nearGrowth = groDist <= radius;
-    const nearThicken = thickenDist <= radius;
 
     const target = this.findNearestTarget(
-      nearRift, nearDefense, nearGrowth, nearThicken,
-      riftDist, defDist, groDist, thickenDist,
+      nearRift, nearDefense, nearGrowth,
+      riftDist, defDist, groDist,
     );
+    this.lastOverlapType = target?.type ?? null;
     purificationHud.updatePrompt(target);
 
     // Hide prompt when a panel is open
@@ -676,32 +671,25 @@ export class PurificationScene extends Phaser.Scene {
       );
     }
 
-    // Growth altar (unified to circle instead of square)
+    // Growth altar：生产外形是卡 A 立缸。只有贴图缺失才回落呼吸圆点。
     const groHighlight = this.shouldHighlight('growth');
     const groSpeed = groHighlight ? BREATH_SPEED_HIGHLIGHT : (nearGrowth ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
     this.growthPulse += delta * groSpeed;
-    drawInteractionPoint(
-      this.growthGraphics,
-      GROWTH_POS.x, GROWTH_POS.y,
-      GROWTH_CENTER, GROWTH_RING,
-      7, 12,
-      this.growthPulse,
-      groHighlight,
-      nearGrowth,
-    );
-
-    const thickenHighlight = this.shouldHighlight('thicken');
-    const thickenSpeed = thickenHighlight ? BREATH_SPEED_HIGHLIGHT : (nearThicken ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
-    this.thickenPulse += delta * thickenSpeed;
-    drawInteractionPoint(
-      this.thickenGraphics,
-      THICKEN_POS.x, THICKEN_POS.y,
-      THICKEN_CENTER, THICKEN_RING,
-      7, 12,
-      this.thickenPulse,
-      thickenHighlight,
-      nearThicken,
-    );
+    if (this.growthConsole?.isShowing()) {
+      this.growthGraphics.setVisible(false);
+      this.growthGraphics.clear();
+    } else {
+      this.growthGraphics.setVisible(true);
+      drawInteractionPoint(
+        this.growthGraphics,
+        GROWTH_POS.x, GROWTH_POS.y,
+        GROWTH_CENTER, GROWTH_RING,
+        7, 12,
+        this.growthPulse,
+        groHighlight,
+        nearGrowth,
+      );
+    }
 
     // Atmosphere + breathing overlay
     this.atmosphere.update(delta);
@@ -726,9 +714,6 @@ export class PurificationScene extends Phaser.Scene {
           break;
         case 'growth':
           this.openGrowthPanel();
-          break;
-        case 'thicken':
-          this.tryRaiseModuleMaxHp();
           break;
         case 'rift':
           this.enterRift();
@@ -801,8 +786,8 @@ export class PurificationScene extends Phaser.Scene {
 
   /** Find the nearest in-range interaction target for the prompt bar. */
   private findNearestTarget(
-    nearRift: boolean, nearDefense: boolean, nearGrowth: boolean, nearThicken: boolean,
-    riftDist: number, defDist: number, groDist: number, thickenDist: number,
+    nearRift: boolean, nearDefense: boolean, nearGrowth: boolean,
+    riftDist: number, defDist: number, groDist: number,
   ): InteractionTarget | null {
     const candidates: InteractionTarget[] = [];
 
@@ -836,9 +821,6 @@ export class PurificationScene extends Phaser.Scene {
     if (nearGrowth) {
       candidates.push({ type: 'growth', distance: groDist });
     }
-    if (nearThicken) {
-      candidates.push({ type: 'thicken', distance: thickenDist, thickenData: this.readThickenPrompt() });
-    }
     if (nearRift) {
       candidates.push({ type: 'rift', distance: riftDist });
     }
@@ -846,38 +828,10 @@ export class PurificationScene extends Phaser.Scene {
     if (candidates.length === 0) return null;
 
     const order: InteractionTarget['type'][] = [
-      'core', 'storage', 'purifier', 'defense', 'growth', 'thicken', 'rift',
+      'core', 'storage', 'purifier', 'defense', 'growth', 'rift',
     ];
     candidates.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
     return candidates[0]!;
-  }
-
-  private readThickenPrompt(): NonNullable<InteractionTarget['thickenData']> {
-    const tier = gameState.getModuleMaxHpTier();
-    const currentMax = gameState.getModuleMaxHp();
-    const cost = gameState.getNextModuleMaxHpCost();
-    const nextMax = cost === null ? null : currentMax + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER;
-    const reserve = gameState.getKindlingReserve();
-    let status: 'affordable' | 'short' | 'capped';
-    let shortfall = 0;
-    if (cost === null) {
-      status = 'capped';
-    } else if (reserve >= cost) {
-      status = 'affordable';
-    } else {
-      status = 'short';
-      shortfall = cost - reserve;
-    }
-    return { currentMax, nextMax, tier, cost, shortfall, status };
-  }
-
-  private tryRaiseModuleMaxHp(): void {
-    if (!gameState.raiseModuleMaxHp()) {
-      audioManager.playSFX('sfx-ui-error');
-      return;
-    }
-    purificationHud.flashThickenSuccess();
-    purificationHud.refresh();
   }
 
   private startIsolationBed(): void {
@@ -963,7 +917,7 @@ export class PurificationScene extends Phaser.Scene {
     this.player.setInputEnabled(false);
     statusPanel.open(() => {
       this.player.setInputEnabled(true);
-    });
+    }, this.lastOverlapType);
   }
 
   private enterRift(): void {
@@ -1063,7 +1017,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   /** D1: Check whether an interaction point should pulse faster (has actionable content). */
-  private shouldHighlight(point: 'defense' | 'growth' | 'core' | 'storage' | 'thicken'): boolean {
+  private shouldHighlight(point: 'defense' | 'growth' | 'core' | 'storage'): boolean {
     const reserve = gameState.getKindlingReserve();
     switch (point) {
       case 'core': {
@@ -1080,11 +1034,8 @@ export class PurificationScene extends Phaser.Scene {
         return all.some((c) => c.stage === 'defense' && !slotted.some((s) => s?.id === c.id));
       }
       case 'growth': {
-        return growthSystem.getAllUpgradeIds().some((id) => growthSystem.canAfford(id, reserve));
-      }
-      case 'thicken': {
-        const cost = gameState.getNextModuleMaxHpCost();
-        return cost !== null && cost <= reserve;
+        const canInscribe = growthSystem.getAllUpgradeIds().some((id) => growthSystem.canAfford(id, reserve));
+        return canInscribe || gameState.canRaiseModuleMaxHp();
       }
     }
   }
@@ -1274,8 +1225,9 @@ export class PurificationScene extends Phaser.Scene {
     this.offeringStand?.destroy();
     this.offeringStand = null;
     this.defenseGraphics?.destroy();
+    this.growthConsole?.destroy();
+    this.growthConsole = null;
     this.growthGraphics?.destroy();
-    this.thickenGraphics?.destroy();
 
     // Destroy DOM HUD
     purificationHud.destroy();

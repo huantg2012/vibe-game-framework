@@ -1,15 +1,8 @@
 /**
- * ImpactResultPanel - DOM overlay showing impact damage results.
+ * ImpactResultPanel — 冲击结算墙机（载体 B）。
  *
- * Game-style compact damage report: colored bars per module showing damage,
- * inline charge progress mini-bars, and (Slice 5.5 D5) a full disclosure of what
- * the defense engine actually did this impact — previously `defense-engine.ts`
- * computed ten distinct outputs per impact and this panel showed none of them,
- * so the defense slots' investment was invisible to the player (IA §S8).
- *
- * D5 also merges the tide-phase-change and stability-milestone notifications into
- * this panel (as a trailing section) instead of chaining two more "知道了"-style
- * dismissals after it closes — IA §S14's "one blocking notification per return".
+ * I11-B4c：保持结果屏骨架（标题 + 逐模块基础/实际 + 逐槽归因 + 潮汐/稳定度并入）。
+ * 不要身份带、顶 Tab、`.crt-focus`、空状态三件套、出击预估。挂 #dom-ui-root。
  */
 
 import type { ImpactDamageEntry, ForecastSeverity } from '@/systems/impact-system';
@@ -151,15 +144,13 @@ function buildHtml(
 ): string {
   const severity = options.actualSeverity;
   let html = `<div class="panel-title" style="color:#cc3333;">冲击结算</div>`;
-  html += `<div class="panel-fixed" style="display:flex;align-items:baseline;gap:8px;margin:4px 0 8px;">
-    <span style="font-size:12px;color:#8a8f96;">冲击</span>
-    <span style="font-size:16px;font-weight:bold;color:#cc3333;">x${intensity.toFixed(2)}</span>
-    ${severity ? `<span style="font-size:12px;color:${severityColor(severity)};">${SEVERITY_LABEL[severity]}</span>` : ''}
+  html += `<div class="scroll-area">`;
+  html += `<div class="stat-row">
+    <span class="stat-label">冲击</span>
+    <span class="stat-value" style="color:#cc3333;">x${intensity.toFixed(2)}</span>
+    ${severity ? `<span style="color:${severityColor(severity)};">${SEVERITY_LABEL[severity]}</span>` : ''}
   </div>`;
 
-  html += `<div class="panel-fixed">`;
-
-  // 表名 / 基础 / 数值 / 实际 / 数值 分节点（禁止 32 → -11 粘一句）
   const base = options.baseDamagePerModule;
   const maxDmg = Math.max(
     ...damages.map((d) => Math.max(d.damage, base?.[d.moduleId] ?? d.damage)),
@@ -170,62 +161,55 @@ function buildHtml(
     const label = MODULE_LABELS[d.moduleId] ?? d.moduleId;
     const barPct = Math.round((d.damage / maxDmg) * 100);
     const baseDmg = base?.[d.moduleId] ?? d.damage;
+    const actualColor = d.moduleId === 'STORAGE' ? '#c4873a' : d.moduleId === 'PURIFIER' ? '#1aad96' : '#cc3333';
     html += `<div class="dmg-row">
-      <span class="dmg-label" style="color:${color};">${label}</span>
-      <span style="font-size:12px;color:#8a8f96;">基础</span>
-      <span style="font-size:16px;font-weight:bold;color:#c8cdd4;">${baseDmg}</span>
-      <span style="font-size:12px;color:#8a8f96;">→</span>
-      <span style="font-size:12px;color:#8a8f96;">实际</span>
-      <span style="font-size:16px;font-weight:bold;color:${d.moduleId === 'STORAGE' ? '#c4873a' : d.moduleId === 'PURIFIER' ? '#1aad96' : '#cc3333'};">${d.damage}</span>
+      <span class="stat-label" style="color:${color};">${label}</span>
+      <span class="stat-label">基础</span>
+      <span class="stat-value">${baseDmg}</span>
+      <span>→</span>
+      <span class="stat-label">实际</span>
+      <span class="stat-value" style="color:${actualColor};">${d.damage}</span>
       <div class="dmg-bar-wrap">
         <div class="dmg-bar-fill" style="width:${barPct}%;background:#cc3333;"></div>
       </div>
     </div>`;
   }
-  html += `</div>`;
 
   const defenseResult = options.defenseResult;
 
-  // 逐槽：残渣名 + 挡下 N（分节点）。预留 4 行槽位高度，空槽留空行高。
   const DEFENSE_SLOT_ROWS = 4;
-  html += `<div class="panel-fixed">`;
   const disclosures = defenseResult?.slotDisclosures ?? [];
   for (let i = 0; i < DEFENSE_SLOT_ROWS; i++) {
     const sd = disclosures[i];
     if (!sd) {
-      html += `<div style="padding:3px 0;min-height:1.3em;"></div>`;
+      html += `<div class="stat-row" style="min-height:1.3em;"></div>`;
       continue;
     }
     const name = getDefenseName(sd.type);
     const facts = buildSlotFacts(sd);
-    html += `<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:3px 0;">
-      <span style="font-size:13px;font-weight:bold;color:#1aad96;">${name}</span>
-      ${facts.map((f) => `<span style="font-size:12px;color:#8a8f96;">${f.label}</span><span style="font-size:16px;font-weight:bold;color:${f.color};">${f.value}</span>${f.unit ? `<span style="font-size:12px;color:#8a8f96;">${f.unit}</span>` : ''}`).join('')}
+    html += `<div class="stat-row">
+      <span class="stat-label">${name}</span>
+      ${facts.map((f) => `<span class="stat-label">${f.label}</span><span class="stat-value" style="color:${f.color};">${f.value}</span>${f.unit ? `<span>${f.unit}</span>` : ''}`).join('')}
     </div>`;
   }
-  html += `</div>`;
 
-  // 充能 / 转化
   const chargeChanges = options.chargeChanges;
   if (chargeChanges && chargeChanges.length > 0) {
-    html += `<div class="panel-fixed">`;
     html += `<div class="separator"></div>`;
     for (const c of chargeChanges) {
       const name = getDefenseName(c.type);
-      html += `<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:3px 0;">
-        <span style="font-size:13px;font-weight:bold;color:${c.transformed ? '#3cffd4' : '#1aad96'};">${name}</span>
-        <span style="font-size:13px;color:#c8cdd4;">${c.before}</span>
-        <span style="font-size:12px;color:#8a8f96;">→</span>
-        <span style="font-size:13px;color:#c8cdd4;">${c.after}</span>
-        <span style="font-size:12px;color:#8a8f96;">/</span>
-        <span style="font-size:13px;color:#c8cdd4;">${c.threshold}</span>
-        ${c.transformed ? `<span style="font-size:12px;color:#1aad96;">转化</span><span style="font-size:13px;font-weight:bold;color:#1aad96;">${getToolName(c.type)}</span>` : ''}
+      html += `<div class="stat-row">
+        <span class="stat-label">${name}</span>
+        <span class="stat-value">${c.before}</span>
+        <span>→</span>
+        <span class="stat-value">${c.after}</span>
+        <span>/</span>
+        <span class="stat-value">${c.threshold}</span>
+        ${c.transformed ? `<span>转化</span><span class="stat-value" style="color:#1aad96;">${getToolName(c.type)}</span>` : ''}
       </div>`;
     }
-    html += `</div>`;
   }
 
-  // 本次残留（表名 / 事实 / 数值 / 来源 分节点）
   if (defenseResult && defenseResult.sideEffects.length > 0) {
     const rows = defenseResult.sideEffects
       .map((e) => {
@@ -240,41 +224,34 @@ function buildHtml(
       })
       .filter((x): x is { fact: string; value: string; src: string; duration: string } => x !== null);
     if (rows.length > 0) {
-      html += `<div class="panel-fixed">`;
       html += `<div class="separator"></div>`;
       for (const row of rows) {
-        html += `<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:3px 0;">
-          <span style="font-size:12px;color:#8a8f96;">本次残留</span>
-          <span style="font-size:13px;color:#c8cdd4;">${row.fact}</span>
-          ${row.value ? `<span style="font-size:16px;font-weight:bold;color:#1aad96;">${row.value}</span>` : ''}
-          ${row.duration ? `<span style="font-size:12px;color:#8a8f96;">${row.duration}</span>` : ''}
-          ${row.src ? `<span style="font-size:12px;color:#8a8f96;">←</span><span style="font-size:13px;color:#3cffd4;">${row.src}</span>` : ''}
+        html += `<div class="stat-row">
+          <span class="stat-label">本次残留</span>
+          <span>${row.fact}</span>
+          ${row.value ? `<span class="stat-value" style="color:#1aad96;">${row.value}</span>` : ''}
+          ${row.duration ? `<span>${row.duration}</span>` : ''}
+          ${row.src ? `<span>←</span><span>${row.src}</span>` : ''}
         </div>`;
       }
-      html += `</div>`;
     }
   }
 
   const forecastHtml = buildForecastHtml(options);
-  const mergedNotices: { text: string; color: string }[] = [];
-  if (options.phaseChange) mergedNotices.push(buildPhaseChangeNotice(options.phaseChange));
+  if (forecastHtml) {
+    html += `<div class="separator"></div>`;
+    html += forecastHtml;
+  }
+  if (options.phaseChange) {
+    const notice = buildPhaseChangeNotice(options.phaseChange);
+    html += `<div class="separator"></div>`;
+    html += `<div class="stat-row"><span class="stat-label">潮汐</span><span style="color:${notice.color};">${notice.text}</span></div>`;
+  }
   if (options.stabilityMilestoneMessage) {
-    mergedNotices.push({ text: options.stabilityMilestoneMessage, color: '#8a5c2a' });
+    html += `<div class="stat-row"><span class="stat-label">稳定度</span><span>${options.stabilityMilestoneMessage}</span></div>`;
   }
-  if (forecastHtml || mergedNotices.length > 0) {
-    html += `<div class="panel-fixed">`;
-    if (forecastHtml) {
-      html += `<div class="separator"></div>`;
-      html += forecastHtml;
-    }
-    if (mergedNotices.length > 0) {
-      html += `<div class="separator"></div>`;
-      for (const n of mergedNotices) {
-        html += `<div style="font-size:13px;color:${n.color};text-align:center;padding:3px 0;">${n.text}</div>`;
-      }
-    }
-    html += `</div>`;
-  }
+
+  html += `</div>`;
 
   html += `<div class="key-hint-bar">
     <span id="impact-close-btn"><span class="key">Enter</span> / <span class="key">Esc</span> 合上</span>
@@ -358,8 +335,8 @@ function buildForecastHtml(options: ImpactPanelOptions): string | null {
       <span style="font-size:12px;color:${severityColor(options.actualSeverity)};">${SEVERITY_LABEL[options.actualSeverity]}</span>`;
   }
 
-  return `<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding:3px 0;">
-    <span style="font-size:12px;color:#8a8f96;">预告</span>
+  return `<div class="stat-row">
+    <span class="stat-label">预告</span>
     ${rest}
   </div>`;
 }

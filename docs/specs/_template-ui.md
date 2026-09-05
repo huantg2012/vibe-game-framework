@@ -7,7 +7,7 @@ note: |
   UI 设计由 design 和 art 协作完成。Design 定义载体+结构+交互，Art 定义视觉+布局。
   原模板是 web 表单模板（响应式断点 / hover-active-disabled 组件表），
   实测会把游戏内界面推向后台管理系统外观（见 guides/99-review.md FV-01）。
-  HOW 在 `.cursor/skills/in-game-ux/SKILL.md`。本模板的「游戏内 UI 验收清单」是闸门，
+  HOW 在 `.cursor/skills/in-game-ux/SKILL.md`（三问结果）。本模板的「游戏内 UI 验收清单」是闸门，
   不是「怎样像游戏 / 怎样好看」。具体色板、组件类、挂载根见项目 art-direction / UI Kit / architecture。
 ---
 

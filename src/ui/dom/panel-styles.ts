@@ -812,6 +812,75 @@ const CSS = `
   scrollbar-width: none; /* Firefox */
 }
 .game-panel .scroll-area::-webkit-scrollbar { display: none; width: 0; height: 0; } /* Chrome/Safari/Edge */
+
+/* I11-B4a 追加：顶 Tab / 分配焦点框 / 空状态三件套。不改玻璃、扫描线、字色。 */
+.game-panel .crt-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 16px;
+  line-height: 20px;
+  margin: 0 0 8px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+/* 静默 */
+.game-panel .crt-tab {
+  font-size: 12px;
+  line-height: 20px;
+  color: #8a8f96;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+/* 已选中 */
+.game-panel .crt-tab.is-selected {
+  font-size: 13px;
+  color: #c8cdd4;
+  border-bottom: 1px solid #5a5f66;
+}
+.game-panel .crt-focus {
+  padding: 8px 12px;
+  border: 1px solid #3a3d44;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+.game-panel .crt-empty {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.game-panel .crt-empty-mark {
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  flex: 0 0 40px;
+  border: 1px dashed #2a2d32;
+  border-radius: 0;
+  background: transparent;
+}
+.game-panel .crt-empty-why {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  font-size: 12px;
+  color: #8a8f96;
+  text-align: left;
+}
+.game-panel .crt-empty-next {
+  font-size: 12px;
+  color: #8a8f96;
+}
+.game-panel .crt-empty-next .empty-key {
+  font-size: 13px;
+  color: #c8cdd4;
+}
 `;
 
 let injected = false;

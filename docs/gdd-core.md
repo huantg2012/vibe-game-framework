@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-08-28
+last-modified: 2026-09-05
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8+9 已完成。自 DEC-072 起按需游戏迭代。**当前进行中：迭代 5（污染外形基因谱，DEC-087 / DEC-088）** — 三层管线重做占地外形；街具残骸合并灯柱/栏柱；加三种生物基底；粗占格闸门；练习场先行。活指针仍在迭代 5。不要标迭代 5 COMPLETE。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线；占墙 / 占空基因谱 deferred。站着不计仍挂起。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同 `docs/tasks/iteration-9.md`。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。迷雾下亮度人终审 PASS（2026-08-28）。遭遇识别旁白是同一套体系的识别面，不是独立玩法。`docs/specs/` 含系统 spec + `ui-detection-pulse` + 污染句法规则；`src/` 含裂隙出击环 + 两种敌人剖面 + 占墙 / 占漆 / 占空宿主 + 净化点三模块 + 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙 + AudioManager。下表标注各系统当前状态。
+> **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8+9 已完成。自 DEC-072 起按需游戏迭代。**当前进行中：迭代 5（污染外形基因谱，DEC-087 / DEC-088）** — 三层管线重做占地外形；街具残骸合并灯柱/栏柱；加三种生物基底；粗占格闸门；练习场先行。活指针仍在迭代 5。不要标迭代 5 COMPLETE。**迭代 11（净化点 UX 收口，DEC-118）进行中** — HUD / 提示条 / 面板主-从机械层已交，等人在 `#purif` 终审；不代勾好看。合同 `docs/tasks/iteration-11.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线；占墙 / 占空基因谱 deferred。站着不计仍挂起。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同 `docs/tasks/iteration-9.md`。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。迷雾下亮度人终审 PASS（2026-08-28）。遭遇识别旁白是同一套体系的识别面，不是独立玩法。`docs/specs/` 含系统 spec + `ui-detection-pulse` + 污染句法规则；`src/` 含裂隙出击环 + 两种敌人剖面 + 占墙 / 占漆 / 占空宿主 + 净化点三模块 + 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙 + AudioManager。下表标注各系统当前状态。
 
 | 系统 | 状态 | Spec 路径 | 一句话摘要 |
 | ---- | ---- | --------- | ---------- |
@@ -38,7 +38,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 防御slot管理面板 | **已实现** (Slice 3) | - (无独立 spec) | DOM面板：装备污染物到防御slot减伤 |
 | Loadout选择面板 | **已实现** (Slice 3) | - (无独立 spec) | 出击前选择携带的工具 |
 | 改造祭坛面板 (GrowthPanel) | **已实现** (Slice 3) | - (无独立 spec) | DOM面板：永久改造购买界面 |
-| 潮汐+稳定度 HUD | **已实现** (Slice 3；5.5 改展示) | `docs/specs/system-growth-tide.md` | 净化点贴顶：薪柴 / 潮汐 / 冲击预告。稳定度改存续报告陈述，不在常驻 HUD |
+| 潮汐+稳定度 HUD | **已实现** (Slice 3；5.5 改展示；迭代 11 容器化等人终审) | `docs/specs/system-growth-tide.md`；净化点 UX 节 `system-purification-impact.md` | 净化点贴顶装置读数：薪柴 / 潮汐 / 冲击预告。稳定度改存续报告陈述，不在常驻 HUD。迭代 11 收容器与分组，审美待人终审 |
 | GameState 管理器 | **已实现** (Slice 2) | - (无独立 spec) | session-only 内存状态管理，跨场景持久（薪柴/模块HP/冲击强度/sortie计数） |
 | 场景流转 | **已实现** (Slice 2) | - (无独立 spec) | Menu → PurificationScene ↔ RiftScene 双向切换 + 状态传递 |
 | 边界氛围（BoundaryAtmosphere） | **已实现** (Slice 2) | `docs/specs/system-purification-impact.md`（净化点场景规则组） | 净化点边界外黑暗 + 周期性模糊幽影（粒子 + apparition）；Slice 4.5 起半径跟随 BoundaryShape |

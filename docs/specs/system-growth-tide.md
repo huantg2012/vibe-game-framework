@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-08-30
-last-modified-by: design agent（2026-08-30 迭代 10：CN8/CN9 改口——污染物节点与薪柴统一为可翻找对象，读条拾取）
+last-modified-date: 2026-09-05
+last-modified-by: code agent（2026-09-05 DEC-117：加厚并进蜕变面板）
 interface-changed: false
 interfaces-with:
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
@@ -145,7 +145,7 @@ interface SaveData {
 
 ### G — 永久改造
 
-16. **改造交互**：净化点中"改造祭坛"交互点（走近按 E 打开蜕变面板）。**Slice 7 加厚**（全局抬模块 `maxHp`）是祭坛**旁**的另一处世界内装置，规则归 `system-purification-impact` U 组。加厚不是蜕变项：不进 `upgrades.csv`、不出现在蜕变六卡、不吃改造折扣。
+16. **改造交互**：净化点中"改造祭坛"交互点（走近按 E 打开蜕变面板）。**加厚**（全局抬模块 `maxHp`）并进该面板第七张，规则归 `system-purification-impact` U 组（DEC-117）。加厚不是蜕变刻入项：不进 `upgrades.csv`、不吃改造折扣、不计稳定度 +3。
 17. **改造项**：
 
 **Slice 3 实现（3 个，每轴 1 个）**：

@@ -13,14 +13,15 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 | -- | -- |
 | 污染句法 | `http://localhost:3000/gym.html?lesson=lexicon` |
 | 油膜脉络抽卡 | `http://localhost:3000/gym.html?lesson=paint-vein-card`（历史对照课） |
-| 供奉台抽卡 | `http://localhost:3000/gym.html?lesson=offering-card`（九卡三行三列，键 1–9 高亮；45° 等距，放大 5×；**底是出击同一份净化点混凝土**；**生产默认 = 卡 I 环**，DEC-115）。上排第一轮方块：A 压钳 / B 笼斗 / C 浇墩。中排第二轮体积分布：D 举出（横伸）/ E 抱箍（竖高）/ F 压槽（贴地）。下排第三轮开口占空间：G 拱 / H 钳 / I 环（生产）。H/I 键 [ ] 切装填档（空 / 一 / 二 / 三 = 0 / 1 / 2 / 3+ 残渣）。课不删。`npm run gym` 若 3000 被占用则常见 3001。 |
+| 供奉台抽卡 | `http://localhost:3000/gym.html?lesson=offering-card`（九卡三行三列，键 1–9 高亮；45° 等距，放大 5×；**底是出击同一份净化点混凝土**；**生产默认 = 卡 I 环**，DEC-115；**人终审 PASS 2026-09-04**）。课不删。H/I 键 [ ] 切装填档。`npm run gym` 若 3000 被占用则常见 3001。 |
+| 培养藏抽卡 | `http://localhost:3000/gym.html?lesson=growth-card`（三卡一行，键 1–3；45° 等距。**A 立缸 40×42 放大 4×**（生产默认，DEC-116）；B / C 仍 32×36 放大 5×。**底是出击同一份净化点混凝土**）。上一轮九张作废。 |
 | 裂隙入口对照 | `http://localhost:3001/gym.html?lesson=rift-entrance-card`（五卡两行：上排卡 5 击裂 = 生产默认、卡 4 地缝 = 对照；下排卡 7 错位 / 8 掀皮 / 9 网裂；键 4 / 5 / 7 / 8 / 9 高亮；都画在地面平面内、是贴花；6fps；**底是出击同一份净化点混凝土，不是纯黑**。`npm run gym` 常见端口 3001，3000 常被 `npm run dev` 占用） |
 | 污染句法陈列馆 | `http://localhost:3000/gym.html?lesson=lexicon-gallery` |
 | 敌人移动 | `http://localhost:3000/gym.html` |
 | 玩家外形 | `http://localhost:3000/gym.html?lesson=player` |
 | 地图生成 | `http://localhost:3000/gym.html?lesson=map` |
 
-**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene` / `GymRiftEntranceCardScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。裂隙入口对照课不走院子、不刷玩家，五卡两行播生产同一份入口图集（`src/scenes/rift-entrance-visual.ts`）；生产默认 = 卡 5 击裂地面贴花（DEC-114）。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。迭代 10 翻找抽卡课已随人终审 PASS 删课（2026-08-31，迭代 9 先例）；翻找机制与表现是生产默认，住 `src/systems/loot-search-system.ts` / `loot-search-presentation.ts` / `src/ui/dom/loot-search-hud.ts`。储藏收容抽卡课已随 DEC-112 删课；生产默认 = C1 顶压观察井，住 `purification-module.ts`。
+**代码：** `gym.html` → `src/gym/main.ts` → `GymBootScene` → `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene` / `GymRiftEntranceCardScene` / `GymOfferingCardScene` / `GymGrowthCardScene`。场地：`src/gym/arena.ts`（敌人 / 玩家课）、`src/gym/gym-lexicon-arena.ts`（污染句法观察院子）。地图课走出击 `generateRiftLayout`。污染句法课不走生成岛。陈列馆不走院子、不刷玩家与敌人，只 attach 生产方案 D。油膜脉络抽卡课不走院子、不刷玩家与敌人，六格打开即挂 `attachBingPaintGenome`。裂隙入口对照课不走院子、不刷玩家，五卡两行播生产同一份入口图集（`src/scenes/rift-entrance-visual.ts`）；生产默认 = 卡 5 击裂地面贴花（DEC-114）。句法课对照 A/B/C 仍在 `src/gym/form-renderers/`；生产方案 D 住 `src/entities/form-renderers/`。禁止 `RiftScene` import `src/gym/**`。合同：迭代 4 陈列馆见 `docs/tasks/iteration-4.md`；迭代 5 甲基因谱见 `docs/tasks/iteration-5.md`（句法课 / 陈列馆甲走 `d/genome/`；出击 `d-mixed` 占地走同一份 `attachJiaGenomeD`。**I5-J：** 街具残骸已翻出击。**I5-T：** 虫 / 哺乳动物 / 大号蠕虫已翻出击。灯柱 / 栏柱仍 gym。地图课走同一份 `drawSortie`，侧栏会看见。句法课 / 陈列馆厅与下拉本批不改。）；迭代 6 地面配色见 `docs/tasks/iteration-6.md`（地图课即验证面，禁止另写第二套 ramp）。迭代 10 翻找抽卡课已随人终审 PASS 删课（2026-08-31，迭代 9 先例）；翻找机制与表现是生产默认，住 `src/systems/loot-search-system.ts` / `loot-search-presentation.ts` / `src/ui/dom/loot-search-hud.ts`。储藏收容抽卡课已随 DEC-112 删课；生产默认 = C1 顶压观察井，住 `purification-module.ts`。
 
 ---
 
@@ -42,7 +43,8 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 10. 污染句法陈列馆（`?lesson=lexicon-gallery`）：目录课，不是观察院子。一次只进一个厅（孔谱 × 基体），陈列方案 D 下视觉不同的标本。不刷玩家、不创建 `Enemy` / `ContaminationHostSystem`。碎片是全局开关，不是网格轴。必须复用生产 `d-mixed` 的乙丙丁；**甲在迭代 5 I5-J 前走基因谱模块**（仍登记为方案 D 甲章，禁止新开渲染方案下拉）。视口虚拟化；与视野相交的格子必须挂上（DEC-086）。点开检视才切四朝向与四个信号相。**基因谱甲必须消费 `pose.facing4` / `pose.signal`**（I5-N / DEC-098）：切北/东/南/西身子要变；idle 与 strike 至少要分。陈列馆控件已通；截至 I5-F，基因谱挂载不消费这两字段（只烤一张静剪影 + 固着同一套呼吸）。I5-N 未交之前不要开 I5-G。**油膜按三变体分入口钉读法**（聚珠成滩 / 沾抹拖尾 / 薄滩收边；策划表仍一行 `oil_film`；对照哺乳动物邻域四入口）。开发标签走 DOM，头上无字。合同：`docs/tasks/iteration-4.md`；甲基因谱合同 `docs/tasks/iteration-5.md`；油膜三入口 DEC-101 / `docs/tasks/iteration-7.md`。
 11. 油膜脉络抽卡（`?lesson=paint-vein-card`）：**历史对照课。** A/B/C 是树参数 tweak；D/E/F 是已被 DEC-101 锁定为生产的三支原形。打开必须六格都在画面上（两行三列），挂 `attachBingPaintGenome`（`paintVeinVariant` 0–5，`displayScale` 2），同一颗种子、同一改写档、油膜。第一轮 A/B/C 抽卡模型 cursor-grok-4.6-xhigh-fast；第二轮 D/E/F 抽卡模型 kimi-k3；模型名标在每格卡片上。不要走句法课侧栏。课本身不删。生产油膜不采样 0/1/2。禁止 import `d/genome`。本课画布列可随窗口变窄；滚轮缩放抽卡区域，拖动平移。合同：`docs/tasks/iteration-7.md`。
 12. 裂隙入口对照（`?lesson=rift-entrance-card`）：外形对照课，不是机制抽卡。**抽卡已结案（DEC-113 / DEC-114）**：入口在地面上，生产默认 = 卡 5 击裂；卡 4 地缝留作对照。卡 7 错位 / 8 掀皮 / 9 网裂人未抽，不翻生产默认。落选的墙上三张与卡 6 囚笼已整支删除。五卡两行、6fps 八帧循环、放大约 4×，键 4 / 5 / 7 / 8 / 9 高亮。五张都画在地面平面内，是贴花（锚点中心、depth 1，玩家能踩过去）。底是出击同一份净化点混凝土（`createPurificationFloorTexture`），不是纯黑——纯黑会把任何不透明外沿看成描边。复用 `src/scenes/rift-entrance-visual.ts` 的图集常量与加载。不刷玩家、不走出击、不进主菜单。这里换卡不改生产默认。贴图未到时写「图未到」，禁止用占位方块冒充卡面。不开迭代 11。
-13. 供奉台抽卡（`?lesson=offering-card`）：外形对照课。身份已锁「收容 + 控制 + 暴露」。九卡三行三列、6fps、放大 5×，键 1–9。第三轮 G 拱 / H 钳 / I 环按开口占空间拆。**生产默认 = 卡 I 环（DEC-115）**；课不删。H/I 键 [ ] 切装填档（空 / 一 / 二 / 三 = 0 / 1 / 2 / 3+ 残渣，不显第四槽）。底是出击同一份净化点混凝土。不开迭代 11。
+13. 供奉台抽卡（`?lesson=offering-card`）：外形对照课。身份已锁「收容 + 控制 + 暴露」。九卡三行三列、6fps、放大 5×，键 1–9。第三轮 G 拱 / H 钳 / I 环按开口占空间拆。**生产默认 = 卡 I 环（DEC-115）**；**人终审 PASS（2026-09-04）**；课不删。H/I 键 [ ] 切装填档（空 / 一 / 二 / 三 = 0 / 1 / 2 / 3+ 残渣，不显第四槽）。底是出击同一份净化点混凝土。不开迭代 11。
+14. 培养藏抽卡（`?lesson=growth-card`）：外形对照课。身份已锁「一具能装下人体的圆柱培养藏，舱里是冒泡的半透明液体」。**生产默认 = 卡 A 立缸（DEC-116）**。B / C 仍对照。三卡一行、6fps，键 1–3。底是出击同一份净化点混凝土。不开迭代 11。
 
 ---
 
@@ -117,6 +119,10 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 标本走生产方案 D（`src/entities/form-renderers/`），手工合成 pose，不创建 `Enemy`、不创建宿主、不刷玩家。不开迷雾，不接旁白。头上无字；开发标签是 DOM。禁止为陈列馆另写第三套方案。迭代 5：占地挂基因谱模块（仍是方案 D 占地章）。**看占漆拓扑：** 陈列馆看菌毯实心多瓣团、**油膜三入口（聚珠成滩 / 沾抹拖尾 / 薄滩收边）**、灰幕环/薄覆层；同厅格子再看覆盖违规、感知主轴、节律忙静、连续性单团对菌落卫星（不要指望成句/止损改剪影）；点开检视看沿生长方向有节奏地缓慢扩散、收缩（油膜按变体呼吸），不是整张画布拉伸，也不是切预烤帧，厅内浏览仍静帧。句法课方案 D、孔谱占漆，切覆盖 / 感知 / 节律 / 连续性必须看见差。油膜默认按种子采样；钉变体走句法课下拉。**六格静帧历史对照走 `?lesson=paint-vein-card`。** 练习场侧栏仍是开发 UI。与视野相交的格子必须挂上（DEC-086）。合同：`docs/tasks/iteration-4.md`；占地基因谱 `docs/tasks/iteration-5.md`；油膜 DEC-101 / `docs/tasks/iteration-7.md`。
 
+### 培养藏抽卡（`?lesson=growth-card`）
+
+外形对照课。身份已锁「一具能装下人体的圆柱培养藏，舱里是冒泡的半透明液体」；不是祭坛，不是电脑，不是供奉台。三卡一行、6fps，键 1–3。A 立缸 40×42 放大 4×（生产默认，DEC-116）；B / C 仍 32×36 放大 5×。第一轴 = 圆柱腔怎么占空间。上一轮九张作废。底是出击同一份净化点混凝土。这里换卡不改生产默认。不刷玩家。不开迭代 11。
+
 ### 翻找（`?lesson=loot-card`）
 
 **已删课（2026-08-31，人终审 PASS，迭代 9 先例）。** 翻找机制与表现是出击生产默认：翻堆对象（外观不泄露内容物，配色 v2 随碎片身份）+ 按住 E 读条 1200ms（底部装置条）+ 打断清零 + 揭晓（薪柴右上 +N / 残渣 toast-inline 星等）+ 音效四键。生产实现住 `src/systems/loot-search-system.ts` / `src/systems/loot-search-presentation.ts` / `src/ui/dom/loot-search-hud.ts`。合同与终审记录：`docs/tasks/iteration-10.md`。
@@ -125,4 +131,4 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 ## 以后加课
 
-在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`、`?lesson=map`、`?lesson=lexicon`、`?lesson=lexicon-gallery`、`?lesson=paint-vein-card`、`?lesson=rift-entrance-card`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。
+在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`、`?lesson=map`、`?lesson=lexicon`、`?lesson=lexicon-gallery`、`?lesson=paint-vein-card`、`?lesson=rift-entrance-card`、`?lesson=offering-card`、`?lesson=growth-card`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。

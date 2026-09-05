@@ -30,7 +30,7 @@ UI/UX 是你和 Art agent 的协作产出。分工：
 | 什么条件下 UI 状态变化 | 状态变化的视觉表现 |
 
 **工作流**：
-1. **先 Read 并执行** `.cursor/skills/in-game-ux/SKILL.md` 的步骤 1–3、6（载体 / 具名参考 / P0–P2 / 打开方式）。自定义 agent 不会自动加载 skill。只写「要像游戏」而不走该 HOW = 不合格。
+1. **先 Read 并执行** `.cursor/skills/in-game-ux/SKILL.md` 的三问（结构层：载体、游戏菜单 vs 网页、主-从/焦点、打开方式）。自定义 agent 不会自动加载 skill。只写「要像游戏」而不走该 HOW = 不合格。
 2. **先做载体决策**（见下），再谈结构
 3. 你输出 UI spec 的结构层（载体、参考锚点、屏幕流、信息层级、画面占用、交互模式、状态条件）
 4. 标注"视觉规格部分由 Art agent 补充"
@@ -57,7 +57,7 @@ UI/UX 是你和 Art agent 的协作产出。分工：
 - `docs/art-direction.md`：配色、字体风格、动效规范
 - 项目 UI Kit 活文档（若有）：已验证基线（优先复用既有组件与信息层级，不另起一套）
 
-**自查**：交付前过一遍 `.cursor/skills/in-game-ux/SKILL.md` 画完自检中与结构层有关的条目，以及 `docs/specs/_template-ui.md` 末尾 U1–U12 中的 U1、U5、U6、U7、U8、U9 组合展示、U12。
+**自查**：交付前过一遍 `.cursor/skills/in-game-ux/SKILL.md` 三问里与结构层有关的条目，以及 `docs/specs/_template-ui.md` 末尾 U1–U12 中的 U1、U5、U6、U7、U8、U9 组合展示、U12。
 
 你不是从零设计整个游戏。游戏已有若干已实现的系统。你的工作是：**在已有基础上，设计下一层。**
 
