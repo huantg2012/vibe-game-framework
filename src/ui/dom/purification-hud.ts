@@ -1,15 +1,6 @@
-/**
- * Purification HUD — purification-point monitor readout (carrier A, edge-anchored).
- *
- * DEC-118 / Kit §A8：装置读数板。`#purif-hud` / `#purif-prompt` 用 `.device-plate`
- *（直角暗边、无圆角、无投影），不套 `.game-panel`。Slice 5.5「不套容器」已由
- * DEC-118 收回。
- *
- * 分组：上行只薪柴；下行潮汐 + 下次归来（+ 可选再下一轮）。「下次归来」默认弱，
- * 仅 `InteractionTarget.type === 'rift'` 时满显。底栏无目标半透明一行，靠近两行
- * 预览。表名 / 数值 / 档位分节点。不画条、不画 ◇◈▣、不加回稳定度。
- *
- * Copy (DEC-047)：无菱形、无波形、无 pip、无 `·`。挂 `#dom-ui-root`。
+/** Net purification readout, anchored to the shared 960×640 DOM overlay.
+ * Resource, tide and forecast remain separate rows. The prompt presents the
+ * nearby action and its current consequence without reducing text opacity.
  */
 
 import { gameState } from '@/managers/game-state';
@@ -36,11 +27,11 @@ export interface InteractionTarget {
 // ---------------------------------------------------------------------------
 
 const COL = {
-  kindlingOrange: '#c4873a',
+  kindlingOrange: '#b29a73',
   dangerRed: '#cc3333',
-  tideCyan: '#1aad96',
+  tideCyan: '#729887',
   dimText: '#8a8f96',
-  brightText: '#c8cdd4',
+  brightText: '#b5bbaf',
   plateEdge: '#2a2d32',
 } as const;
 
@@ -62,15 +53,6 @@ const ACTION_LABEL: Record<InteractionTargetType, string> = {
   growth: '蜕变',
 };
 
-const SLOT =
-  'display:flex;flex-direction:row;flex:0 0 auto;align-items:baseline;gap:4px;white-space:nowrap;';
-
-const HUD_INNER =
-  'position:relative;z-index:1;display:flex;flex-direction:column;flex-wrap:nowrap;';
-
-const PROMPT_INNER =
-  'position:relative;z-index:1;display:flex;flex-direction:column;flex-wrap:nowrap;gap:2px;';
-
 // ---------------------------------------------------------------------------
 // Implementation
 // ---------------------------------------------------------------------------
@@ -85,7 +67,6 @@ export class PurificationHud {
 
   create(): void {
     injectPanelStyles();
-    this.injectForecastStyles();
     this.createHudPanel();
     this.createPromptBar();
   }
@@ -122,13 +103,12 @@ export class PurificationHud {
     const tideState = tideSystem.getState();
 
     const html =
-      `<div style="${HUD_INNER}">` +
-        this.wrapSlot(this.name('薪柴') + this.span(String(reserve), COL.kindlingOrange, 16)) +
-        `<div style="height:1px;background:${COL.plateEdge};margin:6px 0;flex:none;"></div>` +
-        `<div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;gap:24px;">` +
-          this.buildLookaheadSlot() +
+      `<div class="purif-hud-inner">` +
+        `<div class="purif-hud-kindling">${this.name('薪柴')}${this.span(String(reserve), COL.kindlingOrange, 11, 'font-family:var(--ui-mono);')}</div>` +
+        `<div class="purif-hud-details">` +
           this.buildTideSlot(tideState.tideNumber, tideState.phase) +
           this.buildForecastSlot() +
+          this.buildLookaheadSlot() +
         `</div>` +
       `</div>`;
 
@@ -162,7 +142,7 @@ export class PurificationHud {
       this.promptEl.style.opacity = '0';
       return;
     }
-    this.promptEl.style.opacity = this.nearestTarget ? '1' : '0.5';
+    this.promptEl.style.opacity = '1';
   }
 
   private createHudPanel(): void {
@@ -171,19 +151,6 @@ export class PurificationHud {
     this.hudEl = document.createElement('div');
     this.hudEl.id = 'purif-hud';
     this.hudEl.className = 'device-plate';
-    this.hudEl.style.cssText = [
-      'position:absolute', 'top:10px', 'right:12px', 'z-index:999',
-      'pointer-events:none',
-      'display:flex', 'flex-direction:column', 'flex-wrap:nowrap',
-      'padding:8px 12px',
-      'background:rgba(15,17,20,0.82)',
-      'border:1px solid #2a2d32',
-      'border-radius:0',
-      'box-shadow:none',
-      'box-sizing:border-box',
-      'font-family:"Courier New",monospace',
-      'text-shadow:0 0 2px rgba(0,0,0,0.8)',
-    ].join(';');
     getDomUiRoot().appendChild(this.hudEl);
     this.refresh();
   }
@@ -194,49 +161,33 @@ export class PurificationHud {
     this.promptEl = document.createElement('div');
     this.promptEl.id = 'purif-prompt';
     this.promptEl.className = 'device-plate';
-    this.promptEl.style.cssText = [
-      'position:absolute', 'bottom:16px', 'left:50%', 'transform:translateX(-50%)',
-      'z-index:999', 'pointer-events:none',
-      'max-width:420px',
-      'padding:5px 16px',
-      'background:rgba(15,17,20,0.88)',
-      'border:1px solid #2a2d32',
-      'border-radius:0',
-      'box-shadow:none',
-      'box-sizing:border-box',
-      'font-family:"Courier New",monospace',
-      'color:' + COL.dimText,
-      'transition:opacity 150ms ease-out',
-      'opacity:0.5',
-      'text-shadow:0 0 2px rgba(0,0,0,0.8)',
-    ].join(';');
     this.promptEl.innerHTML = this.buildIdlePrompt();
     this.lastPromptHtml = this.promptEl.innerHTML;
     getDomUiRoot().appendChild(this.promptEl);
   }
 
   private span(text: string, color: string, sizePx: number, extra = ''): string {
-    return `<span style="color:${color};font-size:${sizePx}px;line-height:1.2;${extra}">${text}</span>`;
+    return `<span style="color:${color};font-size:${sizePx}px;line-height:16px;${extra}">${text}</span>`;
   }
 
   private name(text: string): string {
-    return this.span(text, COL.dimText, 12);
+    return this.span(text, COL.dimText, 11);
   }
 
   private qty(text: string, color: string): string {
-    return this.span(text, color, 13);
+    return this.span(text, color, 11, 'font-family:var(--ui-mono);');
   }
 
   private grade(text: string, color: string): string {
-    return this.span(text, color, 12);
+    return this.span(text, color, 11);
   }
 
   private wrapSlot(inner: string, extra = ''): string {
-    return `<div style="${SLOT}${extra}">${inner}</div>`;
+    return `<div class="purif-readout-slot" style="${extra}">${inner}</div>`;
   }
 
   private sep(): string {
-    return this.span('│', COL.plateEdge, 12, 'margin:0 6px;');
+    return this.span('│', COL.plateEdge, 11, 'margin:0 8px;');
   }
 
   /** 轻微/中等 stay dim so they don't steal kindling orange. 剧烈/极端 use danger. */
@@ -273,21 +224,17 @@ export class PurificationHud {
 
     if (!nearRift) {
       return this.wrapSlot(
-        this.span('下次归来', COL.dimText, 12) +
-        this.span(targetName, COL.dimText, 12) +
-        this.span(SEVERITY_LABEL[forecast.severity], COL.dimText, 12),
+        this.name('下次归来') +
+        this.span(targetName, COL.dimText, 11) +
+        this.span(SEVERITY_LABEL[forecast.severity], COL.dimText, 11),
       );
     }
-
-    const pulse = forecast.severity === 'extreme'
-      ? 'animation:hud-critical-pulse 0.3s ease-in-out infinite;'
-      : '';
 
     return this.wrapSlot(
       this.name('下次归来') +
       this.qty(targetName, this.targetColor(forecast.targetId)) +
       this.grade(SEVERITY_LABEL[forecast.severity], this.gradeColor(forecast.severity)),
-      pulse,
+      forecast.severity === 'extreme' ? 'border-left:2px solid #cc3333;padding-left:6px;' : '',
     );
   }
 
@@ -297,49 +244,33 @@ export class PurificationHud {
 
     const targetName = MODULE_LABEL[lookahead.targetId] ?? '?';
     return this.wrapSlot(
-      this.span('再下一轮', COL.dimText, 12) +
-      this.span(targetName, COL.dimText, 12) +
-      this.span(SEVERITY_LABEL[lookahead.severity], COL.dimText, 12),
-      'opacity:0.85;',
+      this.name('再下一轮') +
+      this.span(targetName, COL.dimText, 11) +
+      this.span(SEVERITY_LABEL[lookahead.severity], COL.dimText, 11),
+
     );
   }
 
-  /** Inject the critical-pulse keyframe (idempotent) — Kit §A5-3 / A6: alpha 0.6-1.0, 300ms. */
-  private injectForecastStyles(): void {
-    if (document.getElementById('hud-forecast-pulse-style')) return;
-    const style = document.createElement('style');
-    style.id = 'hud-forecast-pulse-style';
-    style.textContent = `@keyframes hud-critical-pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }`;
-    document.head.appendChild(style);
-  }
-
   private buildChromeHints(): string {
-    return this.span('Tab:存续报告', COL.dimText, 12) +
-      this.sep() +
-      this.span('Esc:记录', COL.dimText, 12);
+    return this.span('Tab', COL.brightText, 11, 'font-family:var(--ui-mono);') +
+      this.name('存续报告') + this.sep() +
+      this.span('Esc', COL.brightText, 11, 'font-family:var(--ui-mono);') +
+      this.name('纪录');
   }
 
   private buildIdlePrompt(): string {
-    return `<div style="${PROMPT_INNER}">` +
-      `<div style="${SLOT}">${this.buildChromeHints()}</div>` +
-      `</div>`;
+    return `<div class="purif-prompt-hints">${this.buildChromeHints()}</div>`;
   }
 
   private buildNearPrompt(target: InteractionTarget): string {
-    const row1 =
-      `<div style="${SLOT}gap:6px;">` +
-        this.span('[E]', COL.brightText, 13) +
-        this.span(ACTION_LABEL[target.type], COL.dimText, 13) +
-      `</div>`;
-
     const preview = this.buildPromptPreview(target);
-    const row2 =
-      `<div style="display:flex;flex-direction:row;flex-wrap:nowrap;align-items:baseline;justify-content:space-between;gap:16px;width:100%;">` +
-        `<div style="${SLOT}">${preview ?? ''}</div>` +
-        `<div style="${SLOT}flex:0 0 auto;">${this.buildChromeHints()}</div>` +
+    return `<div class="purif-prompt-inner">` +
+      `<div class="purif-readout-slot">` +
+        this.span('[E]', COL.brightText, 11, 'font-family:var(--ui-mono);') +
+        this.span(ACTION_LABEL[target.type], COL.brightText, 11) +
+      `</div>` +
+      (preview ? `<div class="purif-readout-slot">${preview}</div>` : '') +
       `</div>`;
-
-    return `<div style="${PROMPT_INNER}">${row1}${row2}</div>`;
   }
 
   /**
@@ -364,7 +295,7 @@ export class PurificationHud {
     const hpBlock =
       this.name('完整度') +
       this.qty(String(data.hp), valueColor) +
-      this.span('/', COL.dimText, 12) +
+      this.span('/', COL.dimText, 11) +
       this.qty(String(data.maxHp), valueColor);
 
     if (target.type === 'core') {

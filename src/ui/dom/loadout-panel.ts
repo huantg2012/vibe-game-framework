@@ -1,9 +1,6 @@
 /**
- * LoadoutPanel — 出击装配墙机（载体 B）。
- *
- * I11-B4c：钉顶三格身份带（三格都暗）+ 槽/库主-从 + 只读出击预估三节点 + 底键印。
- * 无顶 Tab。键鼠同一通道：无 hoverTarget。库存无未入槽工具时库存区走空状态三件套。
- * 挂 #dom-ui-root。
+ * 踏入准备：工具槽和库存、选中详情及已有出击条件；空槽不阻止出击。
+ * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -15,8 +12,9 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
-import { identityBandHtml } from './module-identity-strip';
 import type { Contaminant } from '@/types/game-types';
+import { renderPanelContent } from './panel-render-state';
+import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 import { describeSideEffectBody, formatChaosRateDelta } from '@/ui/side-effect-labels';
 
@@ -24,8 +22,8 @@ import { describeSideEffectBody, formatChaosRateDelta } from '@/ui/side-effect-l
 // (ui-art-overhaul.md A2) instead of unrelated hues per tier.
 const RARITY_COLORS: Record<string, string> = {
   common: '#8a8f96',
-  fine: '#1aad96',
-  rare: '#3cffd4',
+  fine: '#729887',
+  rare: '#9bb3a2',
 };
 
 /**
@@ -44,6 +42,7 @@ function getSlotLabel(index: number, passiveIndex: number): string {
 // ---------------------------------------------------------------------------
 
 let panel: HTMLDivElement | null = null;
+let cleanupWorldInteraction: (() => void) | null = null;
 let onConfirmCallback: (() => void) | null = null;
 let onCloseCallback: (() => void) | null = null;
 
@@ -66,7 +65,7 @@ export const loadoutPanel = {
     return panel !== null;
   },
 
-  open(onConfirm: () => void, onClose?: () => void): void {
+  open(onConfirm: () => void, onClose?: () => void, context?: WorldInteractionContext): void {
     if (panel) return;
     onConfirmCallback = onConfirm;
     onCloseCallback = onClose ?? null;
@@ -74,7 +73,7 @@ export const loadoutPanel = {
     cursorSlot = 0;
     cursorInv = 0;
     cursorAction = 0;
-    createPanel();
+    createPanel(context);
     audioManager.playSFX('sfx-ui-open');
   },
 
@@ -92,7 +91,7 @@ export const loadoutPanel = {
 // Panel creation
 // ---------------------------------------------------------------------------
 
-function createPanel(): void {
+function createPanel(context?: WorldInteractionContext): void {
   panel = createCrtPanel('loadout-panel');
 
   const root = getDomUiRoot();
@@ -103,10 +102,15 @@ function createPanel(): void {
 
   render();
   root.appendChild(panel);
+  if (context) {
+    cleanupWorldInteraction = bindWorldInteraction(panel, backdrop, context, '裂隙', 'inventory');
+  }
   document.addEventListener('keydown', onKeyDown);
 }
 
 function destroyPanel(): void {
+  cleanupWorldInteraction?.();
+  cleanupWorldInteraction = null;
   document.removeEventListener('keydown', onKeyDown);
   if (panel) {
     panel.remove();
@@ -127,6 +131,13 @@ function onKeyDown(e: KeyboardEvent): void {
     return;
   }
 
+  if (e.key === 'Enter' && e.shiftKey) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (!e.repeat) confirmSortie();
+    return;
+  }
+
   const slots = contaminantSystem.getSortieLoadout();
   const inventory = getInventory();
 
@@ -134,7 +145,7 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     cycleRegion(e.shiftKey ? -1 : 1, slots.length, inventory.length);
-    render();
+    render(true, true);
     return;
   }
 
@@ -142,8 +153,8 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     const dir = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
-    moveCursor(dir, slots.length, inventory.length);
-    render();
+    moveCursor(dir, slots.length, inventory.length, e.key === 'ArrowUp' || e.key === 'ArrowDown');
+    render(true, true);
     return;
   }
 
@@ -177,11 +188,11 @@ function cycleRegion(dir: 1 | -1, slotCount: number, invCount: number): void {
   }
 }
 
-function moveCursor(dir: 1 | -1, slotCount: number, invCount: number): void {
+function moveCursor(dir: 1 | -1, slotCount: number, invCount: number, vertical: boolean): void {
   if (cursorRegion === 'slots' && slotCount > 0) {
     cursorSlot = (cursorSlot + dir + slotCount) % slotCount;
   } else if (cursorRegion === 'inventory' && invCount > 0) {
-    cursorInv = (cursorInv + dir + invCount) % invCount;
+    cursorInv = Math.max(0, Math.min(invCount - 1, cursorInv + dir * (vertical ? 2 : 1)));
   } else if (cursorRegion === 'actions') {
     cursorAction = (cursorAction + dir + ACTION_COUNT) % ACTION_COUNT;
   }
@@ -199,7 +210,7 @@ function activateFocused(slots: (Contaminant | null)[], inventory: Contaminant[]
     if (c) equipTool(c, slots);
   } else if (cursorRegion === 'actions') {
     if (cursorAction === 0) {
-      panel?.querySelector<HTMLElement>('#loadout-confirm-btn')?.click();
+      confirmSortie();
     } else {
       loadoutPanel.close();
     }
@@ -216,7 +227,7 @@ function getInventory(): Contaminant[] {
   );
 }
 
-function render(): void {
+function render(selectionOnly = false, revealSelection = false): void {
   if (!panel) return;
 
   const slots = contaminantSystem.getSortieLoadout();
@@ -226,41 +237,35 @@ function render(): void {
   const passiveIndex = contaminantSystem.getSortiePassiveSlotIndex();
   const activeCount = contaminantSystem.getSortieActiveSlotCount();
 
-  let html = `<div class="panel-title">踏入裂隙</div>`;
-  html += identityBandHtml({ activeId: null });
+  let html = `<div class="panel-heading"><div class="panel-title">踏入裂隙</div><div class="panel-reserve"><span>薪柴</span><strong>${gameState.getKindlingReserve()}</strong></div></div>`;
 
-  html += `<div class="panel-fixed">`;
-  html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
+  html += `<div class="decision-layout"><div class="decision-main scroll-area"><div class="panel-fixed">`;
+  html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},minmax(0,1fr));">`;
   for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
     const label = getSlotLabel(i, passiveIndex);
     const selected = cursorRegion === 'slots' && cursorSlot === i;
-    const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
+    const cursor = '';
     if (c) {
       const name = getToolName(c.type);
       const color = RARITY_COLORS[c.rarity];
-      const summary = toolSummary(c.type);
       html += `<div class="slot-cell slot-filled loadout-remove-btn${selected ? ' slot-selected' : ''}" data-index="${i}">
         <div>${cursor}<span class="slot-label">${label}</span></div>
         <span class="slot-name" style="color:${color};">${name}</span>
-        <div><span class="slot-info">余量</span> <span style="font-weight:bold;color:#c8cdd4;">${c.usesRemaining}</span></div>
-        <span class="slot-info">${summary}</span>
+        <div><span class="slot-info">余量</span> <span style="font-weight:400;color:#b5bbaf;">${c.usesRemaining}</span></div>
       </div>`;
     } else {
       html += `<div class="slot-cell${selected ? ' slot-selected' : ''}" data-index="${i}">
         <div>${cursor}<span class="slot-label">${label}</span></div>
-        <span class="slot-info">空</span>
-        <span class="slot-info">可装填</span>
+        <span class="slot-info">空槽</span>
       </div>`;
     }
   }
   html += `</div>`;
   html += `</div>`;
 
-  html += `<div class="panel-fixed">${buildSortiePreview()}</div>`;
-  html += `<div class="panel-fixed">${buildResidueRow()}</div>`;
 
-  html += `<div class="scroll-area">`;
+  html += `<div class="readout-section">库存</div><div class="tile-grid">`;
   if (inventory.length === 0) {
     html += inventoryEmptyHtml();
   } else {
@@ -272,22 +277,22 @@ function render(): void {
       const typeLabel = toolType === 'passive' ? '被动' : '主动';
       const hasSlot = tileHasCompatibleSlot(slots, activeCount, passiveIndex, toolType);
       const selected = cursorRegion === 'inventory' && cursorInv === idx;
-      const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
-      html += `<div class="item-tile loadout-equip-tile${hasSlot ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${c.id}" data-tool-type="${toolType}" data-inv-index="${idx}" style="display:flex;width:100%;gap:12px;">
+      const cursor = '';
+      html += `<div class="item-tile loadout-equip-tile${hasSlot ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${c.id}" data-tool-type="${toolType}" data-inv-index="${idx}" style="display:flex;align-items:baseline;gap:5px;">
         <span>${cursor}<span style="color:${color};">${name}</span></span>
-        <span style="color:${color};">${stars}</span>
-        <span>${typeLabel}</span>
-        <span style="margin-left:auto;font-weight:bold;color:#c8cdd4;">${c.usesRemaining}</span>
+        <span class="inventory-stars">${stars}</span>
+        <span class="inventory-kind">${typeLabel}</span>
+        <span style="margin-left:auto;font-weight:400;color:#b5bbaf;">${c.usesRemaining}</span>
       </div>`;
     });
   }
   html += `</div>`;
-  html += `<div class="inspect-dock" id="loadout-inspect-dock">${computeInspectHtml(slots, inventory, activeCount, passiveIndex)}</div>`;
+  html += `</div><div class="decision-aside readout-detail inspect-dock" id="loadout-inspect-dock">${computeInspectHtml(slots, inventory, activeCount, passiveIndex)}<div class="sortie-conditions">${buildSortiePreview()}${buildResidueRow()}</div></div></div>`;
   html += buildKeyHintBar(slots, inventory, activeCount, passiveIndex);
 
-  panel.innerHTML = html;
-  scrollFocusedIntoView(panel);
-  wireEvents();
+  renderPanelContent(panel, html, selectionOnly);
+  if (revealSelection) scrollFocusedIntoView(panel);
+  wireEvents(selectionOnly);
 }
 
 function buildKeyHintBar(
@@ -296,75 +301,67 @@ function buildKeyHintBar(
   activeCount: number,
   passiveIndex: number,
 ): string {
-  const parts: string[] = [
-    `<span><span class="key">Tab</span> 切区</span>`,
-    `<span><span class="key">↑↓←→</span> 移动</span>`,
-  ];
-
-  const enterIsStepIn = cursorRegion === 'actions' && cursorAction === 0;
-  const enterIsLeave = cursorRegion === 'actions' && cursorAction === 1;
-
+  let contextAction = '';
   if (cursorRegion === 'slots' && slots[cursorSlot]) {
-    parts.push(`<span><span class="key">Enter</span> 取下</span>`);
+    contextAction = '<span><span class="key">Enter</span> 取下</span>';
   } else if (cursorRegion === 'inventory') {
     const c = inventory[cursorInv];
     if (c) {
-      const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
-      if (tileHasCompatibleSlot(slots, activeCount, passiveIndex, toolType)) {
-        parts.push(`<span><span class="key">Enter</span> 装填</span>`);
+      const type = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+      if (tileHasCompatibleSlot(slots, activeCount, passiveIndex, type)) {
+        contextAction = '<span><span class="key">Enter</span> 装填</span>';
       }
     }
-  } else if (enterIsStepIn) {
-    parts.push(`<span id="loadout-confirm-btn"><span class="key">Enter</span> 踏入</span>`);
-  } else if (enterIsLeave) {
-    parts.push(`<span id="loadout-cancel-btn"><span class="key">Enter</span> / <span class="key">Esc</span> 离开</span>`);
+  } else if (cursorRegion === 'actions') {
+    contextAction = `<span><span class="key">Enter</span> ${cursorAction === 0 ? '踏入' : '离开'}</span>`;
   }
-
-  if (!enterIsLeave) {
-    parts.push(`<span id="loadout-cancel-btn"><span class="key">Esc</span> 离开</span>`);
-  }
-  if (!enterIsStepIn) {
-    parts.push(`<span id="loadout-confirm-btn">踏入</span>`);
-  }
-
-  return `<div class="key-hint-bar">
-    ${parts.join('\n    ')}
+  return `<div class="key-hint-bar loadout-action-bar">
+    <button type="button" id="loadout-confirm-btn" class="action-btn loadout-launch-action${cursorRegion === 'actions' && cursorAction === 0 ? ' is-selected' : ''}"><span class="key">Shift+Enter</span> 踏入裂隙</button>
+    <span id="loadout-cancel-btn"><span class="key">Esc</span> 离开</span>
+    <div class="loadout-navigation-hints"><span><span class="key">Tab</span> 切区</span><span><span class="key">↑↓←→</span> 浏览</span>${contextAction}</div>
   </div>`;
 }
 
 function inventoryEmptyHtml(): string {
+  const hasTools = contaminantSystem.getSortieLoadout().some((c) => c !== null);
   const defenseCount = contaminantSystem.getAll().filter((c) => c.stage === 'defense').length;
-  return `<div class="crt-empty">
-    <div class="crt-empty-mark"></div>
-    <div>
-      <div class="crt-empty-why"><span>工具</span><span>0</span></div>
-      <div class="crt-empty-why"><span>残渣</span><span>${defenseCount}</span></div>
-      <div class="crt-empty-next"><span class="empty-key">[Enter]</span> <span>踏入</span></div>
-    </div>
-  </div>`;
+  return `<div class="readout-empty"><div class="readout-section">${hasTools ? '工具已全部装填' : '尚无可用工具'}</div>
+    <p class="readout-copy">${hasTools ? '已装填工具随本次出击携带。' : '残渣供奉后承受冲击，充能完成会转化为工具。'}</p>
+    ${!hasTools && defenseCount > 0 ? `<p class="readout-note">现有 ${defenseCount} 件残渣，可在供奉台管理。</p>` : ''}
+    <p class="readout-note">无需工具也可踏入裂隙。点击底部“踏入裂隙”或按 Shift+Enter 继续。</p></div>`;
 }
 
-function wireEvents(): void {
+function wireEvents(selectionOnly = false): void {
   if (!panel) return;
+
+  panel.querySelector('#loadout-confirm-btn')?.addEventListener('click', confirmSortie);
+
+  panel.querySelector('#loadout-cancel-btn')?.addEventListener('click', () => {
+    loadoutPanel.close();
+  });
+
+  if (selectionOnly) return;
 
   // Remove from slot by clicking filled cell (mouse = equal-citizen shortcut for
   // the same action Enter performs on a keyboard-focused slot).
   panel.querySelectorAll('.loadout-remove-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const index = parseInt((btn as HTMLElement).dataset.index!, 10);
+      cursorRegion = 'slots';
+      cursorSlot = index;
       contaminantSystem.unslotSortie(index);
       render();
     });
   });
 
   panel.querySelectorAll<HTMLElement>('.slot-cell[data-index]').forEach((el) => {
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener('pointermove', () => {
       const index = parseInt(el.dataset.index!, 10);
       if (Number.isNaN(index)) return;
       if (cursorRegion === 'slots' && cursorSlot === index) return;
       cursorRegion = 'slots';
       cursorSlot = index;
-      render();
+      render(true);
     });
   });
 
@@ -372,33 +369,37 @@ function wireEvents(): void {
   panel.querySelectorAll('.loadout-equip-tile').forEach((btn) => {
     const el = btn as HTMLElement;
     btn.addEventListener('click', () => {
-      if (el.classList.contains('tile-disabled')) return;
+      cursorRegion = 'inventory';
+      cursorInv = Number(el.dataset.invIndex);
+      if (el.classList.contains('tile-disabled')) {
+        render(true);
+        return;
+      }
       const id = el.dataset.id!;
       const c = contaminantSystem.getAll().find((item) => item.id === id);
       if (c) equipTool(c, contaminantSystem.getSortieLoadout());
     });
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener('pointermove', () => {
       const idx = parseInt(el.dataset.invIndex!, 10);
       if (Number.isNaN(idx)) return;
       if (cursorRegion === 'inventory' && cursorInv === idx) return;
       cursorRegion = 'inventory';
       cursorInv = idx;
-      render();
+      render(true);
     });
   });
 
-  panel.querySelector('#loadout-confirm-btn')?.addEventListener('click', () => {
-    saveManager.save();
-    const cb = onConfirmCallback;
-    destroyPanel();
-    onConfirmCallback = null;
-    onCloseCallback = null;
-    cb?.();
-  });
+}
 
-  panel.querySelector('#loadout-cancel-btn')?.addEventListener('click', () => {
-    loadoutPanel.close();
-  });
+/** All launch inputs share one callback and close before invoking it. */
+function confirmSortie(): void {
+  if (!panel) return;
+  saveManager.save();
+  const cb = onConfirmCallback;
+  destroyPanel();
+  onConfirmCallback = null;
+  onCloseCallback = null;
+  cb?.();
 }
 
 function equipTool(c: Contaminant, currentSlots: (Contaminant | null)[]): void {
@@ -428,7 +429,7 @@ function computeInspectHtml(
 
   if (target.kind === 'slot') {
     const c = slots[target.index];
-    if (!c) return INSPECT_EMPTY_HTML;
+    if (!c) return `<div class="readout-section">${getSlotLabel(target.index, passiveIndex)} 工具槽</div><p class="readout-copy">空槽。</p><p class="readout-note">${inventory.length > 0 ? "用 Tab 切到库存，选择相符的工具装填。" : "空槽不会阻止出击。"}</p>`;
     const label = getSlotLabel(target.index, passiveIndex);
     return buildToolInspectHtml(c, {
       slotState: 'slotted',
@@ -464,10 +465,6 @@ function tileHasCompatibleSlot(
 // Sortie preview
 // ---------------------------------------------------------------------------
 
-function toolSummary(type: Contaminant['type']): string {
-  return CONTAMINANT_DATA[type]?.summaryTool ?? '';
-}
-
 function buildResidueRow(): string {
   const pending = gameState.getPendingSideEffects();
   const parts = pending
@@ -476,7 +473,7 @@ function buildResidueRow(): string {
       if (!body) return null;
       const src = e.source ? getDefenseName(e.source as Contaminant['type']) : '';
       return `<span class="stat-label">${body.split(' ')[0] ?? ''}</span>
-        <span class="stat-value" style="color:#1aad96;">${body.includes('+') ? body.slice(body.indexOf('+')) : body}</span>
+        <span class="stat-value" style="color:#729887;">${body.includes('+') ? body.slice(body.indexOf('+')) : body}</span>
         ${src ? `<span>← ${src}</span>` : ''}`;
     })
     .filter((x): x is string => x !== null);
@@ -491,22 +488,11 @@ function buildSortiePreview(): string {
   const playerHp = GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus;
   const mods = gameState.getSortieModifiers();
 
-  return `<div class="stat-row">
-      <span class="stat-label">完整度</span>
-      <span class="stat-value">${playerHp}</span>
-    </div>
-    <div class="stat-row"><span class="stat-label">出击预估</span></div>
-    <div class="stat-row">
-      <span class="stat-label">混乱增速</span>
-      <span class="stat-value" style="color:#1aad96;font-size:13px;">${formatChaosRateDelta(mods.chaosRateModifier)}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">薪柴价值</span>
-      <span class="stat-value" style="color:#c4873a;font-size:13px;">x${mods.kindlingValueModifier.toFixed(2)}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">起始混乱</span>
-      <span class="stat-value" style="color:#1aad96;font-size:13px;">${mods.startingChaos}</span>
+  return `<div class="readout-section">下次踏入</div><div class="stat-row"><span class="readout-label">自身完整度</span><span>${playerHp}</span></div>
+    <div class="readout-metrics">
+      <div class="readout-metric"><span class="readout-label">混乱增速</span><span>${formatChaosRateDelta(mods.chaosRateModifier)}</span></div>
+      <div class="readout-metric"><span class="readout-label">薪柴价值</span><span>x${mods.kindlingValueModifier.toFixed(2)}</span></div>
+      <div class="readout-metric"><span class="readout-label">起始混乱</span><span>${mods.startingChaos}</span></div>
     </div>`;
 }
 

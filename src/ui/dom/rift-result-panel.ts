@@ -39,8 +39,8 @@ const RARITY_STARS: Record<ContaminantRarity, string> = {
 };
 const RARITY_COLORS: Record<ContaminantRarity, string> = {
   common: '#8a8f96',
-  fine: '#1aad96',
-  rare: '#3cffd4',
+  fine: '#729887',
+  rare: '#9bb3a2',
 };
 
 // ---------------------------------------------------------------------------
@@ -48,6 +48,7 @@ const RARITY_COLORS: Record<ContaminantRarity, string> = {
 // ---------------------------------------------------------------------------
 
 let panel: HTMLDivElement | null = null;
+let continueCallback: (() => void) | null = null;
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -58,42 +59,34 @@ export const riftResultPanel = {
     return panel !== null;
   },
 
-  show(data: RiftResultData): void {
+  show(data: RiftResultData, onContinue?: () => void): void {
     if (panel) destroyPanel();
     injectPanelStyles();
 
     panel = document.createElement('div');
     panel.id = 'rift-result-panel';
-    panel.className = 'game-panel';
-    panel.style.cssText = [
-      'position:absolute',
-      'top:50%',
-      'left:50%',
-      'transform:translate(-50%,-50%)',
-      'width:360px',
-      'height:auto',
-      'z-index:1001',
-      'pointer-events:auto',
-    ].join(';');
+    panel.className = 'game-panel crt-stack scene-menu scene-menu-result';
+    panel.style.zIndex = '1001';
+    continueCallback = onContinue ?? null;
 
     const root = getDomUiRoot();
     const backdrop = document.createElement('div');
-    backdrop.className = 'game-panel-backdrop';
+    backdrop.className = 'game-panel-backdrop scene-menu-backdrop scene-menu-compact-backdrop';
     backdrop.id = 'rift-result-backdrop';
     root.appendChild(backdrop);
 
-    const titleColor = data.survived ? '#c8cdd4' : '#cc3333';
     const titleText = data.survived ? '撤离成功' : '阵亡';
     const elapsedS = Math.round(data.elapsedMs / 1000);
     const peak = Math.round(data.peakChaos);
 
-    let html = `<div style="text-align:center;margin-bottom:10px;">
-      <div style="font-size:18px;font-weight:bold;color:${titleColor};">${titleText}</div>
-    </div>`;
+    let html = `<div class="panel-title">${titleText}</div><div class="scroll-area">
+      <div class="readout-note">${data.survived ? '这一趟带回的存续。' : '本次出击结束。薪柴未能带回。'}</div>
+      <div class="readout-hero"><span class="readout-label">带回薪柴</span>
+        <strong style="color:#b29a73">${data.kindlingGained}</strong>
+      </div>`;
 
     html += `<div class="stat-grid" style="margin-bottom:8px;">
-      <div class="stat-row"><span class="stat-label">薪柴</span><span class="stat-value" style="color:#c4873a;">${data.kindlingGained}</span></div>
-      <div class="stat-row"><span class="stat-label">残渣</span><span class="stat-value">${data.acquired.length}</span></div>
+      <div class="stat-row"><span class="stat-label">拾获残渣</span><span class="stat-value">${data.acquired.length}</span></div>
       <div class="stat-row"><span class="stat-label">击杀</span><span class="stat-value">${data.killCount}</span></div>
       <div class="stat-row"><span class="stat-label">峰值混乱</span><span class="stat-value">${peak}</span></div>
       <div class="stat-row"><span class="stat-label">用时</span><span class="stat-value">${elapsedS}s</span></div>
@@ -101,13 +94,13 @@ export const riftResultPanel = {
 
     if (data.acquired.length > 0) {
       html += `<div class="separator"></div>`;
-      html += `<div class="section-title">拾取</div>`;
+      html += `<div class="section-title">沿途拾获</div>`;
       html += `<div class="tile-grid">`;
       for (const c of data.acquired) {
         const name = getDefenseName(c.type);
         const color = RARITY_COLORS[c.rarity];
         const stars = RARITY_STARS[c.rarity];
-        html += `<span class="pill" style="border-color:${color};color:${color};">${name} ${stars}</span>`;
+        html += `<span class="pill" style="color:${color};">${name} ${stars}</span>`;
       }
       html += `</div>`;
     }
@@ -121,11 +114,18 @@ export const riftResultPanel = {
       html += `</div>`;
     }
 
-    html += `<div class="key-hint-bar">
-      <span><span class="key">R</span> ${data.survived ? '返回净化点' : '重新出击'}</span>
+    html += `</div><div class="key-hint-bar">
+      ${continueCallback ? '<button class="action-btn" id="rift-result-continue">' : '<span>'}
+      <span class="key">R</span> 返回净化点
+      ${continueCallback ? '</button>' : '</span>'}
     </div>`;
 
     panel.innerHTML = html;
+    panel.querySelector('#rift-result-continue')?.addEventListener('click', () => {
+      const callback = continueCallback;
+      destroyPanel();
+      callback?.();
+    });
     root.appendChild(panel);
   },
 
@@ -143,6 +143,7 @@ export const riftResultPanel = {
 // ---------------------------------------------------------------------------
 
 function destroyPanel(): void {
+  continueCallback = null;
   if (panel) {
     panel.remove();
     panel = null;

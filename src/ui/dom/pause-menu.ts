@@ -6,8 +6,8 @@
  *   - 沿旧路返回 — load the stored record (same: exits the rift)
  *   - 合上 — dismiss; the current scene resumes, nothing happened
  *
- * Carrier: B-class world-in-terminal overlay (same `.game-panel` as other blocking
- * readouts). Esc on the root list closes; Esc on the overwrite guard returns to
+ * A frameless menu over the current scene. Esc on the root list closes;
+ * Esc on the overwrite guard returns to
  * the list without applying anything.
  */
 
@@ -104,20 +104,21 @@ function paint(): void {
 
   const rows = items.map((item, i) => {
     const selected = i === selectedIndex;
-    const glyph = selected ? '\u25b8' : '>';
-    return `<div class="pause-menu-row${selected ? ' is-selected' : ''}" data-index="${i}">${glyph} ${item.label}</div>`;
+    return `<div class="pause-menu-row${selected ? ' is-selected' : ''}" data-index="${i}" role="button" tabindex="-1">${item.label}</div>`;
   }).join('');
 
   panel.innerHTML =
     `<div class="panel-title">${t('menu.pauseTitle')}</div>` +
+    `<div class="readout-note">${mode === 'root' ? '当前行动已暂停。' : '此操作将替换已保存的纪录。'}</div>` +
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
     buildKeyHintBar();
 
   panel.querySelectorAll<HTMLElement>('.pause-menu-row').forEach((row) => {
-    row.addEventListener('pointerover', () => {
+    row.addEventListener('pointermove', () => {
       const next = Number(row.dataset.index);
-      if (next !== selectedIndex) audioManager.playSFX('sfx-ui-hover');
+      if (next === selectedIndex) return;
+      audioManager.playSFX('sfx-ui-hover');
       selectedIndex = next;
       paint();
     });
@@ -138,7 +139,7 @@ function buildKeyHintBar(): string {
     return `<div class="key-hint-bar">
     <span><span class="key">↑↓</span> 选中</span>
     <span><span class="key">Enter</span> ${selectedLabel}</span>
-    <span><span class="key">Esc</span></span>
+    <span><span class="key">Esc</span> 返回</span>
   </div>`;
   }
 
@@ -215,20 +216,16 @@ export const pauseMenu = {
 
     const root = getDomUiRoot();
     backdrop = document.createElement('div');
-    backdrop.className = 'game-panel-backdrop pause-menu-backdrop';
+    backdrop.className = 'game-panel-backdrop pause-menu-backdrop scene-menu-backdrop scene-menu-compact-backdrop';
     backdrop.style.cssText = 'position:absolute;inset:0;pointer-events:auto;z-index:1000;';
     backdrop.addEventListener('pointerdown', (e) => {
       if (e.target === backdrop) pauseMenu.close();
     });
 
     panel = document.createElement('div');
-    panel.className = 'game-panel pause-menu-panel';
+    panel.className = 'game-panel pause-menu-panel scene-menu scene-menu-pause';
     panel.style.cssText = [
       'position:absolute',
-      'top:50%',
-      'left:50%',
-      'transform:translate(-50%,-50%)',
-      'width:320px',
       'height:auto',
       'z-index:1001',
       'pointer-events:auto',

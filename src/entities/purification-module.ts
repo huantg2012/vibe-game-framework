@@ -437,6 +437,12 @@ export class PurificationModuleEntity {
     return this.inRange;
   }
 
+  /** The focused interaction supplies its own readout; leave world drawing intact. */
+  setInteractionReadoutActive(active: boolean): void {
+    this.hpBarBg.setVisible(!active);
+    this.hpBarFill.setVisible(!active);
+  }
+
   /** Set proximity glow state (called by scene for edge glow boost). */
   setProximityGlow(inRange: boolean): void {
     if (inRange !== this.proximityGlow) {

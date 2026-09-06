@@ -1,886 +1,356 @@
-/**
- * Panel Styles — 净化点墙机 CRT（载体 B）。
- *
- * `.game-panel` 默认是 680×468 磷光屏：无金属面框、无 1px 外框，边缘靠扫描线与发暗。
- * 挂 `#dom-ui-root`。Esc 记录菜单 / 裂隙结算用内联尺寸覆盖，不走这套占位。
- *
- * 参考：Signalis 设备读出（不学曲面畸变）/ FTL 名+条+量（不学供电格）/
- * Barotrauma 键印在屏上（不学指针仪表）。
- * 色：docs/design-notes/ui-art-overhaul.md §A2。
+/** Shared UI primitives for fixed 960×640 device readouts.
+ * Panels and HUDs mount under #dom-ui-root. Fonts, spacing and selection states
+ * are defined here so individual surfaces can concentrate on information order.
  */
 
 const STYLE_ID = 'game-panel-styles';
 
 const CSS = `
-/* === CRT 磷光屏（Slice 5.5 · 人锁方案 1，无金属圈、无 1px 外框） === */
+/* Quiet marginalia: the world carries the image; interface carries only decisions. */
+#dom-ui-root {
+  --ui-font: "PingFang SC", "Microsoft YaHei", sans-serif;
+  --ui-title: "Songti SC", "Noto Serif CJK SC", "SimSun", serif;
+  --ui-mono: "SFMono-Regular", Consolas, monospace;
+  --ui-body: 12px; --ui-label: 11px;
+  --ui-text: #afb3ad; --ui-muted: #78847d; --ui-edge: rgba(147,160,146,.19);
+  font-family: var(--ui-font); font-synthesis: none; color: var(--ui-text);
+}
 .game-panel {
-  position: absolute;
-  top: 52px;
-  left: 140px;
-  width: 680px;
-  height: 468px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background-color: rgba(15, 17, 20, 0.88);
-  background-image:
-    linear-gradient(to bottom, #080a0c 0%, transparent 8px),
-    linear-gradient(to top,    #080a0c 0%, transparent 8px),
-    linear-gradient(to right,  #080a0c 0%, transparent 8px),
-    linear-gradient(to left,   #080a0c 0%, transparent 8px);
-  background-repeat: no-repeat;
-  border: none;
-  padding: 14px 16px 4px;
-  font: 13px 'Courier New', Courier, monospace;
-  color: #8a8f96;
-  line-height: 1.3;
-  image-rendering: pixelated;
-  pointer-events: auto;
-  z-index: 1000;
+  position: absolute; top: 104px; left: 256px; width: 680px; height: 468px;
+  box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden;
+  --ui-title: var(--ui-font);
+  padding: 24px 26px 0;
+  background:
+    radial-gradient(ellipse at 17% 22%, rgba(94,95,69,.08), transparent 62%),
+    radial-gradient(ellipse at 92% 86%, rgba(4,13,12,.22), transparent 66%),
+    linear-gradient(112deg, rgba(15,20,18,.91), rgba(12,17,16,.86) 58%, rgba(8,13,12,.94));
+  border: 0; border-top: 1px solid transparent; border-bottom: 1px solid transparent;
+  box-shadow: 0 8px 28px rgba(0,5,4,.14);
+  font: 12px/20px var(--ui-font); color: var(--ui-text); pointer-events: auto; z-index: 1000;
 }
-.game-panel > * {
-  position: relative;
-  z-index: 1;
-}
-.game-panel.crt-stack > *:not(.scroll-area) {
-  flex: 0 0 auto;
-}
-.game-panel.crt-stack > .scroll-area {
-  flex: 1 1 auto;
-  min-height: 0;
-}
-.game-panel .panel-fixed {
-  flex: 0 0 auto;
-}
+/* A static grain image is composited below the content; it never dims text or
+ * catches input. No animated filter, scan lines, or per-frame texture work. */
 .game-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 86% 82% at 50% 46%, transparent 28%, #080a0c 100%);
-  opacity: 0.58;
-  pointer-events: none;
-  z-index: 2;
+  content: ''; position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.065;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Cfilter id='grain' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch' seed='19'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23grain)' d='M0 0h192v192H0z'/%3E%3C/svg%3E");
+  background-size:192px 192px;
 }
 .game-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 2px,
-    rgba(26, 173, 150, 0.08) 2px,
-    rgba(8, 10, 12, 0.34) 3px
-  );
-  pointer-events: none;
-  z-index: 3;
+  content: ''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:linear-gradient(90deg, transparent, rgba(147,156,137,.18) 19%, rgba(147,156,137,.05) 62%, transparent) top / 100% 1px no-repeat,
+    linear-gradient(90deg, transparent 5%, rgba(147,156,137,.09) 57%, transparent) bottom / 100% 1px no-repeat;
 }
-.game-panel .panel-title {
-  font-size: 12px;
-  font-weight: normal;
-  margin: 0 0 4px;
-  letter-spacing: 0;
-  text-transform: none;
-  color: #8a8f96;
+.game-panel > * { position:relative; z-index:1; }
+.game-panel button { font: inherit; }
+.game-panel strong { font-weight:400; }
+.game-panel :focus-visible { outline:1px solid #7d8c7f; outline-offset:2px; }
+.game-panel.crt-stack > *:not(.scroll-area):not(.decision-layout):not(.module-report-layout) { flex:0 0 auto; }
+.game-panel.crt-stack > .scroll-area, .game-panel.crt-stack > .decision-layout,
+.game-panel.crt-stack > .module-report-layout { flex:1 1 auto; min-height:0; }
+.panel-fixed { flex:0 0 auto; }
+.panel-heading { display:flex; align-items:baseline; justify-content:space-between; gap:20px; padding-bottom:12px; margin-bottom:14px; border-bottom:1px solid var(--ui-edge); }
+.game-panel .panel-title { font:20px/28px var(--ui-title); font-weight:400; letter-spacing:1px; color:#b5b9ae; margin:0 0 14px; }
+.panel-heading .panel-title { margin:0; }
+.panel-reserve { display:flex; align-items:baseline; gap:8px; font-size:11px; color:#78847d; white-space:nowrap; }
+.panel-reserve strong { font:13px/20px var(--ui-mono); color:#b39b75; }
+.game-panel .section-title, .readout-section { font-size:12px; font-weight:400; line-height:20px; color:#a7afa3; margin:14px 0 6px; }
+.game-panel .separator { border:0; border-top:1px solid var(--ui-edge); margin:10px 0; }
+.game-panel .hint { font-size:11px; color:#78847d; margin:8px 0; }
+.game-panel .key-hint-bar { display:flex; flex:0 0 auto; align-items:center; flex-wrap:wrap; gap:4px 14px; min-height:44px; padding:8px 0; margin:12px 0 0; border-top:1px solid var(--ui-edge); font-size:10px; color:#78847d; box-sizing:border-box; }
+.game-panel .key-hint-bar .key { display:inline-block; color:#9aa59a; font:10px/16px var(--ui-mono); border-bottom:1px solid #465047; padding:0 2px; margin-right:3px; }
+.game-panel .key-hint-bar [id] { display:inline-flex; align-items:center; gap:5px; min-height:26px; cursor:pointer; }
+.game-panel .action-btn { display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:4px 10px; min-height:28px; background:rgba(129,148,123,.055); border:1px solid #384439; border-radius:0; color:#b6bfaf; font:12px/18px var(--ui-font); cursor:pointer; }
+.game-panel .action-btn:hover, .game-panel .action-btn:focus-visible, .game-panel .action-btn.is-selected { background:rgba(129,148,123,.15); border-color:#687561; }
+.game-panel .action-btn:disabled { color:#59675e; cursor:default; }
+.game-panel .action-bar { display:none; }
+.game-panel .stat-row { display:flex; align-items:baseline; flex-wrap:wrap; gap:6px; padding:3px 0; font-size:12px; }
+.game-panel .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:4px 16px; }
+.game-panel .stat-label { color:#78847d; min-width:42px; }
+.game-panel .stat-value { color:#adb6aa; font-weight:400; font-family:var(--ui-mono); }
+.game-panel .stat-bar { flex:1; height:3px; min-width:40px; background:#19221c; overflow:hidden; }
+.game-panel .stat-bar-fill { height:100%; }
+.readout-copy { font-size:12px; line-height:21px; color:#969f93; }
+.readout-note, .readout-label { font-size:11px; line-height:18px; color:#7e8a7e; }
+.readout-note { margin:5px 0; }
+.readout-value { font:16px/24px var(--ui-mono); color:#b3baae; }
+.readout-hero { display:flex; align-items:baseline; flex-wrap:wrap; gap:6px 12px; padding:8px 0; border-bottom:1px solid var(--ui-edge); }
+.readout-hero strong { font:18px/26px var(--ui-mono); color:#b9baaa; }
+.readout-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding:10px 0; }
+.readout-metric { display:flex; flex-direction:column; gap:3px; min-width:0; }
+.readout-metric .readout-value { font-size:13px; line-height:20px; }
+.readout-empty { display:block; padding:16px 0; color:#929e90; }
+.readout-list { display:flex; flex-direction:column; gap:3px; }
+.readout-row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; min-height:28px; }
+.game-panel .scroll-area, .readout-detail { min-height:0; overflow-y:auto; overflow-x:hidden; overscroll-behavior:contain; scrollbar-width:thin; scrollbar-color:#344238 transparent; }
+.game-panel .scroll-area { flex:1; }
+.game-panel .scroll-area::-webkit-scrollbar, .readout-detail::-webkit-scrollbar { width:3px; }
+.game-panel .scroll-area::-webkit-scrollbar-thumb, .readout-detail::-webkit-scrollbar-thumb { background:#344238; }
+.decision-layout { display:grid; grid-template-columns:minmax(0,1fr) 210px; gap:22px; min-height:0; flex:1; overflow:hidden; }
+.decision-main, .decision-aside { min-width:0; min-height:0; }
+.decision-aside { border-left:1px solid var(--ui-edge); padding-left:20px; }
+.decision-main > .readout-section:first-child { margin-top:0; }
+.game-panel .inspect-dock { font:12px/21px var(--ui-font); color:#879484; }
+.game-panel .decision-aside.inspect-dock { overflow-y:auto; scrollbar-width:thin; scrollbar-color:#344238 transparent; }
+.inspect-dock > div { margin-bottom:12px; }
+.inspect-l1 { color:#b2bcab; font-family:var(--ui-title); font-size:14px; line-height:23px; }
+.inspect-l2, .inspect-l3 { color:#8d9c8b; }
+.inspect-l4 { color:#ab9676; }
+.inspect-l5 { color:#6f9988; }
+.game-panel .slot-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; margin:0 0 4px; }
+.game-panel .slot-cell { box-sizing:border-box; border:0; border-bottom:1px solid #29372b; padding:6px 7px; min-width:0; min-height:52px; display:flex; flex-direction:column; align-items:flex-start; gap:2px; cursor:pointer; position:relative; }
+.game-panel .slot-cell.slot-selected { background:rgba(138,155,119,.08); border-bottom-color:#86937b; }
+.slot-label, .slot-info { font-size:10px; color:#6e806f; }
+.slot-name { font-size:12px; line-height:18px; font-weight:400; }
+.decision-main > .readout-section { margin:6px 0 4px; }
+.game-panel .tile-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:2px 6px; margin:4px 0; }
+.game-panel .item-tile { min-width:0; min-height:24px; box-sizing:border-box; border:1px solid transparent; border-bottom-color:rgba(137,158,129,.1); padding:2px 6px; font-size:11px; line-height:18px; cursor:pointer; }
+.game-panel .item-tile.tile-selected { background:rgba(138,155,119,.085); border-color:rgba(151,164,145,.25); }
+.game-panel .item-tile.tile-disabled { color:#647363; cursor:default; }
+.sortie-conditions { border-top:1px solid var(--ui-edge); margin-top:20px; padding-top:3px; }
+.sortie-conditions .readout-section { margin:8px 0 4px; }
+.sortie-conditions .readout-metrics { gap:8px; }
+.sortie-conditions .readout-label { font-size:10px; }
+.sortie-conditions .readout-value { font-size:11px; }
+.loadout-navigation-hints { display:flex; gap:10px; }
+.inventory-kind, .inventory-stars { color:#718574; font-size:10px; }
+.inventory-name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.inventory-count { margin-left:auto; font:10px/18px var(--ui-mono); color:#899582; }
+.game-panel .card-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
+.game-panel .upgrade-card { display:flex; align-items:center; justify-content:space-between; min-height:40px; padding:5px 9px; border:0; border-bottom:1px solid rgba(137,158,129,.1); cursor:pointer; }
+.game-panel .upgrade-card.card-selected { background:linear-gradient(90deg,rgba(138,155,119,.12),transparent); }
+.card-body { flex:1; min-width:0; }
+.card-name { font-size:12px; line-height:18px; color:#a7b49f; }
+.card-body .readout-note { display:inline; font:10px/16px var(--ui-mono); }
+.card-cost { font-size:11px; color:#8e927c; }
+.game-panel .upgrade-card.card-locked, .game-panel .upgrade-card.card-maxed { cursor:default; }
+#growth-panel .readout-list { gap:0; }
+#growth-panel .readout-section { margin-top:0; }
+#growth-panel .readout-hero { margin:12px 0; }
+#growth-panel .readout-value { font-size:15px; }
+.game-panel .pill { display:inline-block; padding:1px 5px; margin:2px; font-size:11px; border-bottom:1px solid #354238; }
+.game-panel .dmg-row { display:flex; align-items:center; gap:8px; padding:8px 0; }
+.game-panel .dmg-bar-wrap { flex:1; max-width:130px; height:3px; margin-left:auto; background:#24241e; overflow:hidden; }
+.game-panel .dmg-bar-fill { height:100%; opacity:.6; transition:width .4s ease-out; }
+.game-panel .crt-tabs { display:flex; gap:22px; margin:0 0 16px; border-bottom:1px solid var(--ui-edge); }
+.game-panel .crt-tab { padding:5px 0 9px; border:0; border-bottom:1px solid transparent; background:transparent; font:12px/18px var(--ui-font); color:#748473; cursor:pointer; }
+.game-panel .crt-tab.is-selected { color:#b1bda6; border-bottom-color:#a4af98; }
+.module-report-layout { display:grid; grid-template-columns:130px minmax(0,1fr); gap:26px; min-height:0; flex:1; overflow:hidden; }
+.module-report-list { display:flex; flex-direction:column; gap:10px; }
+.module-report-row { position:relative; padding:8px 10px; min-height:52px; border:0; border-left:1px solid transparent; background:transparent; font:12px/20px var(--ui-font); color:#94a28e; text-align:left; cursor:pointer; }
+.module-report-row.is-selected { border-left-color:#92a282; background:linear-gradient(90deg,rgba(138,155,119,.07),transparent); }
+.module-report-row .readout-value { font-size:11px; line-height:18px; }
+.module-identity-band { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-bottom:12px; }
+.module-identity-cell { background:transparent; border:0; border-bottom:1px solid #29382a; color:#81977f; padding:4px; text-align:left; font:11px/18px var(--ui-font); cursor:pointer; }
+.module-identity-cell.is-selected, .module-identity-cell.is-active { border-bottom-color:#93a67f; }
+.module-identity-top { display:flex; align-items:baseline; justify-content:space-between; gap:5px; }
+.module-identity-name, .module-identity-number { font-size:11px; white-space:nowrap; }
+.module-identity-track { height:2px; background:#19221a; margin-top:3px; }
+.module-identity-fill { height:100%; }
+.module-identity-affordance { color:#7f947b; margin-left:4px; }
+#allocation-panel { top:108px; left:466px; width:450px; height:452px; }
+.allocation-input { display:flex; align-items:center; gap:10px; margin:16px 0 4px; padding:10px 0; min-height:46px; border-bottom:1px solid var(--ui-edge); }
+.allocation-input .readout-value { flex:1; font:20px/28px var(--ui-mono); color:#b39b75; text-align:center; }
+.allocation-step { display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; flex:0 0 26px; padding:0; border:1px solid #354438; background:transparent; color:#9eae96; font:16px/20px var(--ui-mono); cursor:pointer; }
+.allocation-step:disabled { color:#405142; border-color:#203024; cursor:default; }
+#allocation-panel .readout-hero { border:0; }
+#allocation-panel .readout-value { font-size:15px; }
+#allocation-panel .allocation-input .readout-value { font-size:20px; }
+.game-panel .pbar-wrap { position:relative; width:100%; height:3px; background:#1d2820; overflow:hidden; }
+.game-panel .pbar-fill { height:100%; position:absolute; top:0; left:0; opacity:.7; }
+.game-panel .pbar-preview { position:absolute; top:0; height:100%; background:#748b6d; opacity:.45; }
+.game-panel .pbar-label { display:flex; justify-content:space-between; font-size:10px; color:#6d816b; }
+.game-panel-backdrop { position:absolute; inset:0; background:rgba(2,6,5,.16); z-index:998; pointer-events:auto; }
+.game-panel.pause-menu-panel, #rift-result-panel.game-panel { top:50%; left:50%; height:auto; max-height:450px; transform:translate(-50%,-50%); }
+.game-panel.pause-menu-panel { width:330px; }
+#rift-result-panel.game-panel { width:450px; }
+#rift-result-panel .tile-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+#rift-result-panel .pill { margin:0; padding:1px 0; line-height:18px; }
+#impact-result-panel.game-panel { width:520px; left:360px; height:440px; }
+.pause-menu-list { display:flex; flex-direction:column; gap:4px; margin:10px 0; }
+.pause-menu-row { min-height:30px; padding:6px 10px; font-size:12px; cursor:pointer; color:#82917d; }
+.pause-menu-row.is-selected { color:#b4bda7; background:linear-gradient(90deg,rgba(138,155,119,.1),transparent); }
+.crt-empty { display:flex; align-items:center; gap:12px; min-height:80px; }
+.crt-empty-why, .crt-empty-next { font-size:12px; line-height:21px; color:#82927c; }
+.crt-empty-next { margin-top:8px; }
+.option { min-height:28px; padding:5px 8px; cursor:pointer; }
+.option.selected { background:rgba(138,155,119,.08); }
+/* Core-only interaction sample: real device at left, decision in adjacent dark.
+ * Other allocations and all approved HUD surfaces retain their existing rules. */
+#allocation-panel.core-allocation {
+  inset:0; width:960px; height:640px; padding:0; border:0; background:none; box-shadow:none;
+  overflow:hidden; --core-x:480px; --core-y:320px;
 }
-.game-panel .section-title {
-  color: #8a8f96;
-  margin: 10px 0 6px;
-  font-size: 12px;
-  letter-spacing: 1px;
+#allocation-panel.core-allocation::before, #allocation-panel.core-allocation::after { display:none; }
+.core-allocation-backdrop {
+  position:absolute; inset:0; z-index:998; pointer-events:auto; --core-x:480px; --core-y:320px;
+  background:
+    linear-gradient(90deg, transparent calc(var(--core-x) + 50px), rgba(3,7,6,.7) calc(var(--core-x) + 180px), rgba(3,7,6,.88)),
+    radial-gradient(ellipse 260px 255px at var(--core-x) calc(var(--core-y) - 28px), transparent 26%, rgba(3,7,6,.26) 65%, rgba(3,7,6,.68) 100%);
+  animation:core-surround-in 260ms ease-out both;
 }
-.game-panel .section-title::before { content: '\\2500\\2500 '; color: #2a2d32; }
-.game-panel .section-title::after { content: ' \\2500\\2500'; color: #2a2d32; }
-.game-panel .separator {
-  border: none;
-  border-top: 1px solid #2a2d32;
-  margin: 10px 0;
+#allocation-panel.core-allocation > * { position:absolute; opacity:0; transition:opacity 220ms ease-out; }
+#allocation-panel.core-present > * { opacity:1; }
+.core-identity { left:calc(var(--core-x) - 56px); top:calc(var(--core-y) - 144px); width:112px; text-align:center; font:16px/24px var(--ui-font); letter-spacing:4px; color:#aeb3a5; text-shadow:0 1px 5px #050907; }
+.core-integrity { left:calc(var(--core-x) - 62px); top:calc(var(--core-y) + 34px); width:124px; font:11px/18px var(--ui-font); text-shadow:0 1px 4px #050907; }
+.core-integrity-label { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; color:#788b7d; }
+.core-integrity-label > span { font:13px/18px var(--ui-mono); color:#a7b19e; }
+.core-integrity-label small { font-size:10px; color:#758072; }
+.core-repair-preview { min-height:20px; margin-top:8px; font:11px/18px var(--ui-font); color:#9ba38c; }
+.core-repair-preview span { float:right; font-family:var(--ui-mono); color:#b19c76; }
+#allocation-panel .core-integrity .pbar-wrap { height:2px; background:rgba(92,113,91,.24); }
+.core-work { left:clamp(400px, calc(var(--core-x) + 200px), 700px); top:calc(var(--core-y) - 118px); width:260px; color:#a0aa9c; text-shadow:0 1px 4px #050907; }
+.core-work-heading { display:flex; justify-content:space-between; align-items:baseline; font:16px/24px var(--ui-font); color:#b2b5a6; }
+.core-reserve { font:10px/18px var(--ui-font); color:#7c8677; }
+.core-amount { display:flex; align-items:center; gap:12px; margin:26px 0 10px; padding:0 0 12px; border-bottom:1px solid rgba(157,163,136,.16); }
+.core-amount strong { flex:1; font:22px/30px var(--ui-mono); text-align:right; color:#b9a580; }
+.core-unit { flex:1; font:11px/18px var(--ui-font); color:#8b927f; }
+.core-amount .allocation-step { border:0; background:transparent; color:#a0aa94; }
+.core-amount .allocation-step:hover:not(:disabled) { color:#d0c3a6; background:rgba(139,145,117,.06); }
+.core-efficiency { font:10px/18px var(--ui-font); color:#727f71; margin-bottom:24px; }
+.core-outcome { display:flex; justify-content:space-between; align-items:baseline; padding:4px 0; font:12px/20px var(--ui-font); }
+.core-outcome > span:first-child { color:#7e8c7e; }
+.core-outcome > span:last-child { font-family:var(--ui-mono); }
+.core-outcome i { font-style:normal; color:#647765; padding:0 5px; }
+.core-outcome strong { color:#b1b99f; }
+.core-remaining { font-size:11px; }
+.core-remaining > span:last-child { color:#a69473; }
+.core-reason { min-height:36px; margin-top:10px; font:10px/18px var(--ui-font); color:#7c8979; }
+.core-actions { display:flex; align-items:center; gap:28px; margin-top:14px; }
+.core-actions button { border:0; border-bottom:1px solid rgba(139,153,128,.26); padding:5px 0; background:transparent; color:#b4bba8; cursor:pointer; font:12px/18px var(--ui-font); }
+.core-actions button span { margin-right:6px; font:10px/18px var(--ui-mono); color:#7b8878; }
+.core-actions button:disabled { color:#4c5c4e; border-color:rgba(139,153,128,.1); cursor:default; }
+.core-actions button:hover:not(:disabled) { color:#d0c3a6; border-color:#8e9b7f; }
+.core-controls { margin-top:18px; font:10px/18px var(--ui-font); color:#667664; }
+.core-committed .core-work { opacity:.45 !important; transition:opacity 400ms ease-out !important; }
+.core-committed .core-repair-preview { color:#c1b38d; }
+@keyframes core-surround-in { from {opacity:0;} to {opacity:1;} }
+/* The purifier sits directly below the player's arrival position. Put its name
+ * alongside the tank, and keep the figure above outside the local focus pool. */
+.core-allocation-backdrop.allocation-purifier {
+  background:linear-gradient(90deg, transparent calc(var(--core-x) + 50px), rgba(3,7,6,.7) calc(var(--core-x) + 180px), rgba(3,7,6,.88)),
+    radial-gradient(ellipse 190px 148px at var(--core-x) calc(var(--core-y) - 38px), transparent 28%, rgba(3,7,6,.3) 60%, rgba(3,7,6,.86) 100%);
 }
-.game-panel .hint {
-  /* V1 (ui-art-overhaul.md A1): was #5a5f66 on #0f1114 (~2.9:1). #5a5f66 is now
-     reserved for borders/dividers only — never text. */
-  font-size: 12px;
-  color: #8a8f96;
-  text-align: center;
-  margin-top: 10px;
+.allocation-purifier .core-identity { left:calc(var(--core-x) - 174px); top:calc(var(--core-y) - 78px); width:112px; text-align:right; letter-spacing:2px; }
+/* Inventory decisions retain their tested information order, beside the device. */
+.game-panel.world-interaction {
+  left:344px; top:124px; width:584px; height:464px; padding:0;
+  border:0; background:none; box-shadow:none; overflow:visible;
+  animation:world-decision-in 260ms ease-out both;
 }
+.game-panel.world-interaction::before, .game-panel.world-interaction::after { display:none; }
+.world-object-name {
+  position:absolute; z-index:1000; left:calc(var(--core-x) - 64px); top:calc(var(--core-y) - 144px);
+  width:128px; font:16px/24px var(--ui-font); text-align:center; letter-spacing:3px;
+  color:#aeb3a5; text-shadow:0 1px 5px #050907; pointer-events:none;
+  animation:world-decision-in 260ms ease-out both;
+}
+.world-interaction .panel-heading { border:0; padding:0; margin-bottom:20px; }
+.world-interaction .panel-heading .panel-title { font-size:16px; line-height:24px; }
+.world-interaction .panel-reserve { font-size:10px; color:#7c8677; }
+.world-interaction .panel-reserve strong { font-size:11px; }
+.world-interaction .decision-layout { grid-template-columns:minmax(0,1fr) 192px; gap:22px; }
+.world-interaction .decision-aside { border-left-color:rgba(147,160,146,.09); padding-left:16px; }
+.world-interaction .key-hint-bar { border:0; margin-top:16px; }
+.world-interaction .action-btn { background:none; border:0; border-bottom:1px solid rgba(139,153,128,.26); padding:4px 0; }
+.world-interaction .action-btn:hover, .world-interaction .action-btn:focus-visible { background:none; border-bottom-color:#8e9b7f; }
+.world-interaction .slot-cell { border-bottom-color:rgba(147,160,146,.18); }
+.world-interaction .slot-cell.slot-selected { border-bottom-color:#86937b; }
+@keyframes world-decision-in { from {opacity:0;} to {opacity:1;} }
+/* Scene menus share the device decisions' open composition, without a camera target. */
+.scene-menu-backdrop {
+  background:
+    linear-gradient(90deg, rgba(3,7,6,.08), rgba(3,7,6,.32) 23%, rgba(3,7,6,.86) 45%, rgba(3,7,6,.94)),
+    radial-gradient(ellipse at 23% 48%, transparent 12%, rgba(3,7,6,.48) 76%);
+  animation:world-decision-in 220ms ease-out both;
+}
+.scene-menu-backdrop.scene-menu-compact-backdrop {
+  background:
+    linear-gradient(90deg, rgba(3,7,6,.12), rgba(3,7,6,.25) 32%, rgba(3,7,6,.86) 61%, rgba(3,7,6,.94)),
+    radial-gradient(ellipse at 28% 48%, transparent 12%, rgba(3,7,6,.48) 76%);
+}
+.game-panel.scene-menu {
+  padding:0; border:0; background:none; box-shadow:none;
+  text-shadow:0 1px 4px #050907; animation:world-decision-in 220ms ease-out both;
+}
+.game-panel.scene-menu::before, .game-panel.scene-menu::after { display:none; }
+.scene-menu .panel-heading { border:0; padding:0; margin-bottom:20px; }
+.game-panel.scene-menu .panel-title { font:16px/24px var(--ui-font); letter-spacing:1px; color:#b2b5a6; }
+.scene-menu .panel-heading .panel-title { margin:0; }
+.scene-menu .panel-reserve { font-size:10px; color:#7c8677; }
+.scene-menu .panel-reserve strong { font-size:11px; }
+.scene-menu .key-hint-bar { border:0; margin-top:18px; }
+.scene-menu .action-btn { background:none; border:0; border-bottom:1px solid rgba(139,153,128,.26); padding:4px 0; }
+.scene-menu .action-btn:hover, .scene-menu .action-btn:focus-visible { background:none; border-bottom-color:#8e9b7f; color:#d0c3a6; }
+.game-panel.scene-menu-report { left:344px; top:124px; width:584px; height:464px; }
+.scene-menu-report .crt-tabs { border:0; gap:28px; margin-bottom:22px; }
+.scene-menu-report .crt-tab { padding:3px 0 6px; }
+.scene-menu-report .module-report-row { padding-left:12px; background:none; }
+.scene-menu-report .module-report-row.is-selected { border-left-color:#7e8c70; background:none; color:#b1b99f; }
+.game-panel.scene-menu-pause { left:536px; top:220px; width:304px; height:auto; max-height:368px; transform:none; }
+.scene-menu-pause .pause-menu-list { gap:8px; margin:20px 0 12px; }
+.scene-menu-pause .pause-menu-row { position:relative; padding:5px 0 5px 16px; min-height:28px; background:none; }
+.scene-menu-pause .pause-menu-row::before { content:''; position:absolute; left:0; top:14px; width:5px; height:1px; background:transparent; }
+.scene-menu-pause .pause-menu-row.is-selected { color:#b9bca9; background:none; }
+.scene-menu-pause .pause-menu-row.is-selected::before { background:#a69e7d; }
+#rift-result-panel.game-panel.scene-menu-result { left:504px; top:138px; width:392px; height:auto; max-height:464px; transform:none; }
+.scene-menu-result .readout-hero { margin:10px 0; border-bottom-color:rgba(147,160,146,.12); }
+.scene-menu-result .pill { border-bottom-color:rgba(147,160,146,.12); }
+#impact-result-panel.game-panel.scene-menu-impact { left:400px; top:124px; width:496px; height:464px; }
+.focus-pause-copy { position:absolute; left:536px; top:244px; width:304px; font:16px/24px var(--ui-font); color:#b2b5a6; letter-spacing:1px; text-shadow:0 1px 4px #050907; }
+.focus-pause-copy span { display:block; margin-top:14px; font:11px/18px var(--ui-font); color:#7e8a7e; letter-spacing:0; }
+/* HUD has no solid plate. Small stable readings sit in the margins. */
+.device-plate { position:absolute; box-sizing:border-box; padding:0; border:0; background:transparent; font:11px/16px var(--ui-font); color:#8a9a88; pointer-events:none; text-shadow:0 1px 3px #000; }
+#purif-hud { top:22px; right:24px; width:auto; min-width:162px; z-index:999; opacity:.68; }
+.purif-hud-inner { display:flex; flex-direction:column; gap:5px; }
+.purif-hud-kindling { display:flex; justify-content:flex-end; align-items:baseline; gap:8px; }
+.purif-hud-details { display:flex; flex-direction:column; gap:2px; }
+.purif-readout-slot { display:flex; align-items:baseline; gap:7px; white-space:nowrap; }
+#purif-hud .purif-readout-slot { justify-content:flex-end; }
+#purif-prompt { bottom:22px; left:50%; transform:translateX(-50%); max-width:480px; min-height:0; opacity:.8; z-index:999; transition:opacity .2s; }
+.purif-prompt-hints { display:flex; align-items:baseline; gap:6px; opacity:.5; }
+.purif-prompt-inner { text-align:center; }
+.purif-prompt-inner .purif-readout-slot { justify-content:center; }
+.purif-prompt-inner .purif-readout-slot + .purif-readout-slot { opacity:.6; margin-top:3px; }
+#rift-hud { position:absolute; inset:0; pointer-events:none; font:11px/16px var(--ui-font); }
+#rift-hud-status { top:24px; left:24px; width:144px; opacity:.8; }
+#rift-hud-chaos { top:66px; left:24px; width:144px; opacity:.75; }
+.rift-readout-header { display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:5px; }
+.rift-hud-label { font-size:10px; line-height:14px; color:#71816e; }
+.rift-hud-value { font:11px/16px var(--ui-mono); color:#a5b09a; }
+.rift-hud-state { display:block; margin-top:4px; font-size:10px; line-height:14px; color:#8e9b83; }
+.rift-hud-state[hidden] { display:none; }
+#rift-hud-kindling { top:24px; right:24px; display:flex; align-items:baseline; gap:8px; opacity:.7; }
+#rift-hud-kindling .rift-hud-value { color:#b39b75; }
+#rift-hud-effects { top:116px; left:24px; max-width:190px; display:flex; flex-direction:column; gap:3px; opacity:.7; }
+.device-effect { display:flex; align-items:baseline; gap:8px; }
+.device-effect-name, .device-effect-time { font-size:10px; line-height:15px; }
+#rift-hud-effects:empty { display:none; }
+#rift-hud-tools { left:24px; bottom:24px; width:180px; display:flex; flex-direction:column; gap:6px; opacity:.75; }
+.rift-tool-row { display:grid; grid-template-columns:24px minmax(0,1fr) 20px; gap:6px; font-size:11px; line-height:16px; }
+.rift-tool-key, .rift-tool-uses { font:10px/16px var(--ui-mono); color:#879a80; }
+.rift-tool-uses { text-align:right; }
+#rift-extract-prompt, #loot-search-prompt { left:50%; bottom:22px; transform:translateX(-50%); display:none; font:12px/18px var(--ui-font); z-index:1100; }
+.prompt-key { color:#a7b19c; margin-right:8px; }
+.prompt-action { color:#99a48d; }
+#loot-search-channel { left:50%; bottom:49px; transform:translateX(-50%); width:120px; display:none; z-index:1100; }
+.channel-track { height:2px; background:#29362a; overflow:hidden; }
+.channel-fill { height:100%; width:0; background:#88a188; }
+#loot-search-kindling { right:24px; top:24px; display:flex; align-items:baseline; gap:8px; font-size:11px; opacity:.7; z-index:1100; }
+.kindling-label, .kindling-value { font-size:11px; }
+.kindling-value { color:#b39b75; }
+#rift-minimap.device-plate { right:20px; bottom:20px; padding:0; border:0; outline:none; border-radius:50%; overflow:hidden; opacity:.55; z-index:999; }
+#rift-minimap canvas { display:block; width:54px; height:54px; border:0; clip-path:circle(50%); }
+#rift-encounter-log { position:absolute; left:50%; bottom:90px; transform:translateX(-50%); width:520px; max-width:520px; display:none; font:13px/23px var(--ui-title); letter-spacing:1px; color:#a1ac97; text-align:center; pointer-events:none; text-shadow:0 2px 5px #000; z-index:40; }
+#rift-encounter-log.is-recording { display:block; }
+.encounter-log { display:inline-block; max-width:100%; padding:3px 12px; }
+.encounter-node { display:inline; margin-right:.5em; }
+.encounter-mark { color:#8eaa94; }
+.toast-inline { position:fixed; font:11px/18px var(--ui-font); color:#b2bca7; pointer-events:none; white-space:nowrap; text-shadow:0 1px 3px #000; z-index:1500; }
+#toast-inline-queue { position:absolute; top:114px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:4px; align-items:center; pointer-events:none; z-index:1500; }
+#toast-inline-queue .toast-inline { position:static; }
+.toast-stamp { position:fixed; inset:0; background:rgba(4,9,7,.7); display:flex; align-items:center; justify-content:center; font:20px/32px var(--ui-title); letter-spacing:2px; color:#b2aa90; text-align:center; cursor:pointer; z-index:2000; }
+#dom-ui-root:has(.game-panel) #purif-hud, #dom-ui-root:has(.game-panel) #purif-prompt { visibility:hidden; }
 
-/* === Key hint bar (IA §0.4 — reserved primitive, wired starting C4) === */
-.game-panel .key-hint-bar {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 12px;
-  font-size: 12px;
-  color: #8a8f96;
-  text-align: left;
-  border-top: 1px solid #2a2d32;
-  padding: 6px 0 8px;
-  margin: 4px 0 0;
-}
-.game-panel .key-hint-bar .key {
-  display: inline-block;
-  border: 1px solid #2a2d32;
-  padding: 0 4px;
-  color: #c8cdd4;
-  font-size: 12px;
-  line-height: 16px;
-}
-.game-panel .key-hint-bar [id] {
-  cursor: pointer;
-}
-
-/* === Legacy compat (for any leftover uses) === */
-.game-panel .panel-section {
-  margin-bottom: 8px;
-  padding: 4px 8px;
-}
-.game-panel .option {
-  padding: 3px 0;
-  cursor: pointer;
-  color: #8a8f96;
-  transition: color 0.1s ease-out;
-}
-.game-panel .option:hover,
-.game-panel .option.selected {
-  color: #c8cdd4;
-  background: rgba(42, 45, 50, 0.3);
-}
-.game-panel .option:active { color: #c8cdd4; }
-.game-panel .option.disabled {
-  color: #2a2d32;
-  cursor: default;
-}
-.game-panel .option.disabled:hover {
-  color: #2a2d32;
-  background: transparent;
-}
-.game-panel .info-line {
-  font-size: 13px;
-  color: #8a8f96;
-  padding: 3px 0;
-}
-
-/* === Card grid (growth/upgrade panels) === */
-.game-panel .card-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 6px;
-}
-.game-panel .upgrade-card {
-  border: 1px solid #2a2d32;
-  padding: 6px 8px;
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
-  cursor: pointer;
-  position: relative;
-  min-height: 0;
-}
-.game-panel .upgrade-card:hover,
-.game-panel .upgrade-card.card-selected {
-  border-color: #c4873a;
-  background: transparent;
-}
-.game-panel .upgrade-card.card-maxed {
-  border-color: #8a5c2a;
-  cursor: default;
-}
-.game-panel .upgrade-card.card-maxed::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(138, 92, 42, 0.3);
-  pointer-events: none;
-}
-.game-panel .upgrade-card.card-locked {
-  opacity: 0.4;
-  cursor: default;
-}
-.game-panel .upgrade-card.card-locked:hover {
-  border-color: #2a2d32;
-  background: transparent;
-}
-.game-panel .card-icon {
-  width: 34px;
-  height: 34px;
-  border: 1px solid #5a5f66;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-.game-panel .card-body {
-  flex: 1;
-  min-width: 0;
-}
-.game-panel .card-name {
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 3px;
-}
-.game-panel .card-dots {
-  font-size: 13px;
-  letter-spacing: 2px;
-}
-.game-panel .card-dots .dot-filled { color: #c4873a; }
-.game-panel .card-dots .dot-empty { color: #2a2d32; }
-.game-panel .card-cost {
-  font-size: 12px;
-  color: #8a8f96;
-  margin-top: 2px;
-}
-.game-panel .card-cost .affordable { color: #c4873a; }
-
-/* === Progress bars ===
-   Shared visual language across three size variants (compact HUD bar / standard
-   panel bar / damage-report bar) — Degree not Kind. Every instance MUST render its
-   numeric value beside the bar (V5, ui-art-overhaul.md A1 "第二重编码"); that text
-   lives in each caller's markup, not here. */
-.game-panel .pbar-wrap {
-  width: 100%;
-  height: 6px;
-  background: #080a0c;
-  border: 1px solid #2a2d32;
-  position: relative;
-  overflow: hidden;
-}
-.game-panel .pbar-fill {
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.game-panel .pbar-preview {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  background: repeating-linear-gradient(-45deg, #c8cdd4 0 2px, #080a0c 2px 5px);
-}
-.game-panel .pbar-label {
-  font-size: 12px;
-  color: #8a8f96;
-  margin-top: 2px;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* === Slot grid (defense / loadout) === */
-.game-panel .slot-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  margin: 4px 0;
-  border: 1px solid #2a2d32;
-}
-.game-panel .slot-cell {
-  border: none;
-  border-right: 1px solid #2a2d32;
-  padding: 6px 6px 6px 4px;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  text-align: left;
-  gap: 2px;
-  cursor: pointer;
-  position: relative;
-}
-.game-panel .slot-cell:last-child { border-right: 0; }
-.game-panel .slot-cell:hover {
-  background: transparent;
-}
-.game-panel .slot-cell.slot-filled {
-  border-style: none;
-  border-right: 1px solid #2a2d32;
-}
-.game-panel .slot-cell.slot-selected {
-  border-left: 2px solid #c4873a;
-  background: transparent;
-}
-.game-panel .slot-cell .slot-label {
-  font-size: 12px;
-  color: #8a8f96;
-  position: static;
-}
-.game-panel .slot-cell .slot-name {
-  font-size: 13px;
-  font-weight: normal;
-  margin: 0;
-}
-.game-panel .slot-cell .slot-info {
-  font-size: 12px;
-  color: #8a8f96;
-}
-
-/* === Tile inventory (compact items) === */
-.game-panel .tile-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin: 6px 0;
-}
-.game-panel .item-tile {
-  border: 1px solid #2a2d32;
-  padding: 4px 8px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-  white-space: nowrap;
-}
-.game-panel .item-tile:hover {
-  border-color: #5a5f66;
-  background: rgba(42, 45, 50, 0.3);
-}
-.game-panel .item-tile.tile-selected {
-  border-color: #c4873a;
-  background: transparent;
-}
-.game-panel .item-tile.tile-disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-.game-panel .item-tile.tile-disabled:hover {
-  border-color: #2a2d32;
-  background: transparent;
-}
-
-/* === Compact action button === */
-.game-panel .action-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 14px;
-  border: 1px solid #2a2d32;
-  font: 13px 'Courier New', monospace;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.game-panel .action-btn:hover,
-.game-panel .action-btn:focus-visible,
-.game-panel .action-btn.btn-focused {
-  background: rgba(42, 45, 50, 0.4);
-  outline: none;
-}
-.game-panel .action-btn:active { color: #c8cdd4; }
-.game-panel .action-btn.btn-primary {
-  border-color: #1aad96;
-  color: #1aad96;
-}
-.game-panel .action-btn.btn-primary:hover,
-.game-panel .action-btn.btn-primary:focus-visible,
-.game-panel .action-btn.btn-primary.btn-focused {
-  background: rgba(26, 173, 150, 0.12);
-}
-.game-panel .action-btn.btn-danger {
-  border-color: #cc3333;
-  color: #cc3333;
-}
-.game-panel .action-btn.btn-muted {
-  border-color: #2a2d32;
-  color: #8a8f96;
-}
-.game-panel .action-btn.btn-muted:hover,
-.game-panel .action-btn.btn-muted:focus-visible,
-.game-panel .action-btn.btn-muted.btn-focused {
-  color: #c8cdd4;
-}
-
-/* === Stat row (multi-col status) === */
-.game-panel .stat-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px 12px;
-}
-.game-panel .stat-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 0;
-  font-size: 13px;
-}
-.game-panel .stat-label {
-  color: #8a8f96;
-  min-width: 50px;
-}
-.game-panel .stat-value {
-  color: #c8cdd4;
-  font-weight: bold;
-}
-.game-panel .stat-bar {
-  flex: 1;
-  height: 6px;
-  background: #0a0c0e;
-  border: 1px solid #2a2d32;
-  position: relative;
-  overflow: hidden;
-  min-width: 40px;
-}
-.game-panel .stat-bar-fill {
-  height: 100%;
-}
-
-/* === Pill badge (compact tags) === */
-.game-panel .pill {
-  display: inline-block;
-  padding: 2px 6px;
-  border: 1px solid #2a2d32;
-  font-size: 12px;
-  margin: 1px;
-}
-
-/* === Damage bar (impact reports) === */
-.game-panel .dmg-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-}
-.game-panel .dmg-label {
-  min-width: 36px;
-  font-size: 13px;
-  font-weight: bold;
-}
-.game-panel .dmg-bar-wrap {
-  flex: 1;
-  height: 12px;
-  background: #0a0c0e;
-  border: 1px solid #2a2d32;
-  position: relative;
-  overflow: hidden;
-}
-.game-panel .dmg-bar-fill {
-  height: 100%;
-  transition: width 0.4s ease-out;
-}
-.game-panel .dmg-value {
-  font-size: 13px;
-  min-width: 32px;
-  text-align: right;
-}
-
-/* === Inspect dock (ui-art-overhaul.md A5-13) ===
-   Fixed-height detail strip fed by keyboard/mouse focus on a list/grid item.
-   Content swap must be instant (no fade-in) per A6 — the delay is the bug being
-   fixed, not an effect to reproduce. C3 wires focus tracking + the five-layer
-   content (IA §S13 L1-L5); layout is block (not the C0 flex-centered placeholder)
-   because five stacked lines don't fit a single centered row. */
-.game-panel .inspect-dock {
-  border: none;
-  border-top: 1px solid #2a2d32;
-  padding: 6px 0 4px;
-  min-height: 110px;
-  margin: 4px 0 0;
-  font-size: 13px;
-  color: #8a8f96;
-  line-height: 1.3;
-  flex: 0 0 auto;
-}
-.game-panel .inspect-dock .inspect-empty {
-  color: #8a8f96;
-}
-.game-panel .inspect-dock .inspect-l1 {
-  color: #c8cdd4;
-  font-weight: bold;
-}
-.game-panel .inspect-dock .inspect-l2,
-.game-panel .inspect-dock .inspect-l3 {
-  color: #8a8f96;
-}
-.game-panel .inspect-dock .inspect-l4 {
-  color: #b89040;
-}
-.game-panel .inspect-dock .inspect-l5 {
-  color: #1aad96;
-}
-
-/* === Action bar (bottom of panel) === */
-.game-panel .action-bar {
-  display: none;
-}
-/* Equal-width buttons (Slice 5.5 playtest fix #3): width used to follow label
-   length ("算了" vs "踏入"), reading as unfinished. flex:1 makes every direct
-   .action-btn child of an .action-bar share the row equally; :only-child reverts
-   to the natural compact/centered width for single-button bars (defense/growth/
-   status/impact-result "离开"/"…不了"/"合上"/"知道了"), where there is nothing to
-   be unequal with and stretching to the full row width would be a regression, not
-   a fix. Direct-child selector only, so this never reaches the allocation panel's
-   separate +/- stepper row, which is not an .action-bar. */
-.game-panel .action-bar > .action-btn {
-  flex: 1 1 0;
-  min-width: 0;
-}
-.game-panel .action-bar > .action-btn:only-child {
-  flex: 0 1 auto;
-}
-
-/* === Backdrop overlay === */
-.game-panel-backdrop {
-  position: absolute;
-  inset: 0;
-  background: transparent;
-  z-index: 998;
-  pointer-events: auto;
-}
-
-/* === In-game Esc record menu (pause-menu.ts) === */
-.game-panel.pause-menu-panel .pause-menu-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 4px 0 8px;
-}
-.game-panel.pause-menu-panel .pause-menu-row {
-  font-size: 13px;
-  color: #8a8f96;
-  padding: 4px 6px;
-  cursor: pointer;
-}
-.game-panel.pause-menu-panel .pause-menu-row.is-selected {
-  color: #c8cdd4;
-}
-
-/* Esc 记录菜单 / 裂隙结算：覆盖 CRT 默认 680×468 占位，居中小读出。 */
-.game-panel.pause-menu-panel,
-#rift-result-panel.game-panel {
-  top: 50%;
-  left: 50%;
-  height: auto;
-  transform: translate(-50%, -50%);
-  background-image:
-    linear-gradient(to bottom, #080a0c 0%, transparent 5px),
-    linear-gradient(to top,    #080a0c 0%, transparent 5px),
-    linear-gradient(to right,  #080a0c 0%, transparent 5px),
-    linear-gradient(to left,   #080a0c 0%, transparent 5px);
-  padding: 12px 14px 8px;
-}
-.game-panel.pause-menu-panel { width: 320px; }
-#rift-result-panel.game-panel { width: 360px; }
-
-/* 裂隙随身读出 / 小地图：同一族更薄的罩，暗扫描、无金属线。 */
-.device-plate {
-  position: absolute;
-  background: rgba(15, 17, 20, 0.72);
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 6px 8px;
-  pointer-events: none;
-}
-.device-plate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 2px,
-    rgba(8, 10, 12, 0.14) 2px,
-    rgba(8, 10, 12, 0.14) 3px
-  );
-  z-index: 0;
-}
-.device-plate .device-effect {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 8px;
-}
-.device-plate .device-effect-name {
-  font-size: 12px;
-  color: #8a8f96;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
-}
-.device-plate .device-effect-time {
-  font-size: 13px;
-  color: #c8cdd4;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
-}
-
-#rift-minimap.device-plate {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  z-index: 1000;
-  pointer-events: none;
-  box-sizing: content-box;
-  padding: 4px;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  outline: none;
-  overflow: hidden;
-  background-color: rgba(15, 17, 20, 0.72);
-  /* 凹槽暗边：径向，色与墙机凹槽相同 #080a0c，宽约 5px（暂停小窗那一档，不是墙机 8px） */
-  background-image: radial-gradient(
-    circle at 50% 50%,
-    transparent 0px,
-    transparent 32px,
-    #080a0c 35px
-  );
-  clip-path: circle(50% at 50% 50%);
-}
-#rift-minimap.device-plate::after {
-  z-index: 1; /* 暗扫描压在圆画布上，与左上同一条 repeating 暗线，不要另写 teal */
-}
-/* 迭代 10 翻找：交互提示 + 装置读数。挂调用方 overlay 根，不写死 body。
-   载体 A 随身罩；与撤离提示同区（底中），避开 S10 中心禁区。 */
-#loot-search-prompt {
-  position: absolute;
-  left: 50%;
-  bottom: 36px;
-  transform: translateX(-50%);
-  display: none;
-  font: 13px 'Courier New', Courier, monospace;
-  color: #c8cdd4;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
-  pointer-events: none;
-  z-index: 1100;
-}
-#loot-search-prompt .prompt-key,
-#loot-search-prompt .prompt-action {
-  display: inline;
-}
-#loot-search-prompt .prompt-key {
-  color: #c8cdd4;
-  margin-right: 6px;
-}
-#loot-search-prompt .prompt-action {
-  color: #c8cdd4;
-}
-#loot-search-channel.device-plate {
-  left: 50%;
-  bottom: 58px;
-  transform: translateX(-50%);
-  width: 96px;
-  padding: 4px 6px;
-  display: none;
-  z-index: 1100;
-}
-#loot-search-channel .channel-track {
-  position: relative;
-  z-index: 1;
-  height: 3px;
-  background: #080a0c;
-  border: 1px solid #151a1e;
-  overflow: hidden;
-}
-#loot-search-channel .channel-fill {
-  height: 100%;
-  width: 0%;
-  background: #1aad96;
-}
-#loot-search-kindling {
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font: 13px 'Courier New', Courier, monospace;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
-  pointer-events: none;
-  z-index: 1100;
-}
-#loot-search-kindling .kindling-label {
-  font-size: 12px;
-  color: #8a8f96;
-}
-#loot-search-kindling .kindling-value {
-  font-size: 13px;
-  color: #c4873a;
-}
-
-#rift-minimap canvas {
-  display: block;
-  width: 66px;
-  height: 66px;
-  border: none;
-  clip-path: circle(50% at 50% 50%);
-  image-rendering: pixelated;
-}
-
-/* Encounter identification log (DEC-074): rift wearable recorder, not a toast. */
-#rift-encounter-log {
-  position: absolute;
-  left: 50%;
-  bottom: 56px;
-  transform: translateX(-50%);
-  width: 480px;
-  max-width: 480px;
-  pointer-events: none;
-  display: none;
-  font: 12px 'Courier New', monospace;
-  color: #c8cdd4;
-  text-shadow: 0 0 2px #080a0c;
-  text-align: center;
-  letter-spacing: 0.5px;
-  z-index: 40;
-}
-#rift-encounter-log.is-recording {
-  display: block;
-}
-#rift-encounter-log .encounter-log {
-  display: inline-block;
-  max-width: 480px;
-  padding: 2px 8px;
-  background: rgba(8, 10, 12, 0.35);
-}
-#rift-encounter-log .encounter-node {
-  display: inline;
-  margin-right: 0.55em;
-}
-#rift-encounter-log .encounter-node:last-child {
-  margin-right: 0;
-}
-#rift-encounter-log .encounter-mark {
-  color: #2ae6c8;
-  display: inline-block;
-  transform: translateY(1px);
-}
-
-/* === Toast primitives (ui-art-overhaul.md A4/A6) ===
-   Two variants for the unified feedback layer: "inline" (brief, non-blocking,
-   appears at the source of the event) and "stamp" (rare, one-shot, full-screen,
-   dismiss on key/click/timeout). Established here as shared primitives; the
-   scattered existing implementations (hud.ts pickup flash, growth-panel purchase
-   flash / first-milestone overlay, rift-scene side-effect toast, purification-scene
-   toasts) get migrated onto these in C6 — not rewritten in this batch. */
-.toast-inline {
-  position: fixed;
-  font: 12px 'Courier New', monospace;
-  color: #c8cdd4;
-  pointer-events: none;
-  white-space: nowrap;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
-  z-index: 1500;
-}
-#toast-inline-queue {
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  z-index: 1500;
-}
-#toast-inline-queue .toast-inline {
-  position: static;
-}
-.toast-stamp {
-  position: fixed;
-  inset: 0;
-  background: rgba(13, 17, 20, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font: 16px 'Courier New', monospace;
-  color: #c4873a;
-  text-align: center;
-  cursor: pointer;
-  z-index: 2000;
-}
-
-/* === Scroll area (Slice 5.5 playtest fix #2) ===
-   Single primitive for every panel's internal scrolling content region, replacing
-   the 6 files that each hand-rolled their own inline "flex:1;overflow-y:auto;" div
-   with zero scrollbar styling — that inline div (not the .game-panel root, which
-   never actually overflows once its flex:1 middle absorbs the extra height) is
-   where the un-skinned native browser scrollbar was showing through. Scrollbar is
-   hidden (not just re-skinned) in both engines — scroll capability is unaffected,
-   only the browser-native chrome is removed. Top/bottom 1px borders (existing
-   .separator colour) mark the scrollable region using a primitive already in the
-   vocabulary rather than inventing a new affordance (fade/▲▼ etc. were considered
-   and explicitly not used — see director's brief). */
-.game-panel .scroll-area {
-  flex: 1;
-  overflow-y: auto;
-  border-top: 1px solid #2a2d32;
-  border-bottom: 1px solid #2a2d32;
-  scrollbar-width: none; /* Firefox */
-}
-.game-panel .scroll-area::-webkit-scrollbar { display: none; width: 0; height: 0; } /* Chrome/Safari/Edge */
-
-/* I11-B4a 追加：顶 Tab / 分配焦点框 / 空状态三件套。不改玻璃、扫描线、字色。 */
-.game-panel .crt-tabs {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 16px;
-  line-height: 20px;
-  margin: 0 0 8px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-}
-/* 静默 */
-.game-panel .crt-tab {
-  font-size: 12px;
-  line-height: 20px;
-  color: #8a8f96;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
-}
-/* 已选中 */
-.game-panel .crt-tab.is-selected {
-  font-size: 13px;
-  color: #c8cdd4;
-  border-bottom: 1px solid #5a5f66;
-}
-.game-panel .crt-focus {
-  padding: 8px 12px;
-  border: 1px solid #3a3d44;
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-}
-.game-panel .crt-empty {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-}
-.game-panel .crt-empty-mark {
-  width: 40px;
-  height: 40px;
-  box-sizing: border-box;
-  flex: 0 0 40px;
-  border: 1px dashed #2a2d32;
-  border-radius: 0;
-  background: transparent;
-}
-.game-panel .crt-empty-why {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  font-size: 12px;
-  color: #8a8f96;
-  text-align: left;
-}
-.game-panel .crt-empty-next {
-  font-size: 12px;
-  color: #8a8f96;
-}
-.game-panel .crt-empty-next .empty-key {
-  font-size: 13px;
-  color: #c8cdd4;
-}
 `;
 
 let injected = false;
@@ -900,7 +370,7 @@ export function injectPanelStyles(): void {
   injected = true;
 }
 
-/** Shared CRT shell: 680×468 phosphor, position from `.game-panel` CSS. */
+/** Shared device shell: fixed 720×548, positioned by `.game-panel` CSS. */
 export function createCrtPanel(id: string): HTMLDivElement {
   injectPanelStyles();
   const el = document.createElement('div');
@@ -910,17 +380,7 @@ export function createCrtPanel(id: string): HTMLDivElement {
   return el;
 }
 
-/**
- * Scrolls the panel's current keyboard-cursor element into view (Slice 5.5 playtest
- * fix #2, second half): hiding the native scrollbar via `.scroll-area` above removes
- * the one browser-native affordance keyboard-only navigation used to lean on for
- * "scroll me there yourself". Every panel's re-render call site should call this
- * right after setting `panel.innerHTML`, so the keyboard cursor's own "已选中" class
- * (shared across all panels — `.slot-selected` / `.tile-selected` / `.card-selected`)
- * is the single source of truth this reads, rather than each panel tracking its own
- * scroll offset. `{ block: 'nearest' }` means it only moves the scroll position when
- * the element is actually out of view - already-visible selections don't jump.
- */
+/** Reveal keyboard navigation only; pointer selection preserves the viewport. */
 export function scrollFocusedIntoView(panel: HTMLElement): void {
   const area = panel.querySelector('.scroll-area');
   if (!area) return;

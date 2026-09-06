@@ -32,6 +32,9 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 屏幕空间读数与 DOM 面板一律挂 `#dom-ui-root`（`getDomUiRoot()` / `bindDomUiRootToGame()`），与画布 letterbox/缩放对齐。钉世界坐标的标记才走 Phaser 世界层。禁止用 `scrollFactor(0)` 在 `camera.zoom ≠ 1` 下画角锚 HUD。新 overlay 不要挂 `document.body`（小地图 / 场景过渡 / 失焦层已迁到 `#dom-ui-root`；debug 可仍挂 game-container）。共享样式入口：`src/ui/dom/panel-styles.ts`（`.game-panel` 墙机 + `.device-plate` 裂隙随身罩）。视觉基线：`docs/design-notes/ui-art-overhaul.md`。
 
+DEC-119 新增开发验收入口 `ui-review.html` / `src/dev/ui-review.ts`：只在 DEV 实例化，复用生产场景和面板，内存示例状态覆盖空库与完整库存；该文档内隔离 SaveManager 的读写/删除，不访问正式存档。场景切换直接调用 SceneManager，避免 ScenePlugin 的延迟 stop 关闭刚重启的场景。入口不加入生产构建，也不挂主菜单。主菜单宣传图 `public/assets/art/menu-last-light.png` 经 BootScene 加载，由 MainMenuScene 按 960×640 构图显示；生成记录见 `docs/art/prompts/menu-last-light.md`。
+
+
 ## 项目结构
 
 ```
@@ -263,7 +266,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表（含雾；尘点不烤死）；天空+尘点低分辨率叠层只改 phase，沿本趟 windX/Y。**氛围簇应用已下线（DEC-104 / I8-G）：** `bakeGround` 缺省不铺无主簇；出击与地图课不传整图呼吸。晶结 / 溶蚀 / 平涂只练习场对照。L1 渍/纹理/划痕仍在。`deriveContamRamp` 仍服务敌人四档与占漆配色。DEC-097：最终量化不再把虚空/暗地吸进青绿亮端 | RiftSurfacePainter.mount(scene, ruins, key, depth, opts?) / update / destroy | 已实现（Slice 6；尘点跟天空同一份 AtmosphereField；DEC-104 氛围簇下线；DEC-070/071 活层技术转占漆宿主；I6-C / I6-D / DEC-097 仍在） |
 | ClusterPulse | src/systems/cluster-pulse.ts | **对照用。** 菌毯 / 灰幕旧皮仍可走 `paintClusterBreath`。出击地面不再挂整图呼吸（DEC-104） | paintClusterBreath(out, width, height, field, elapsedMs) | 已实现（氛围应用已下线；旧皮对照保留；迷雾下亮度人终审 PASS） |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
-| PanelStyles | src/ui/dom/panel-styles.ts | 共享面板样式层：全部 DOM 面板的单一 `<style>` 注入点（幂等）。`.game-panel` 默认是净化点墙机 CRT（680×468 磷光屏，无金属/无外框，8px 凹槽暗边）；六块墙机另加 `.crt-stack`（固定子项 + 库存 `.scroll-area`）。Esc 记录菜单与裂隙结算用内联尺寸覆盖（5px 凹槽），不加 crt-stack。`.device-plate` 是裂隙随身罩（净化点 HUD / 提示条复用）。I11 追加 `.crt-tabs` / `.crt-tab` / `.crt-focus` / `.crt-empty-*`，未改玻璃 / 扫描线 / 字色。Channel B toast 挂 `#toast-inline-queue`（同时最多 2 条）；`skipQueue` 贴源短闪仍挂 `#dom-ui-root`。规范来源 `docs/design-notes/ui-art-overhaul.md` | injectPanelStyles(), createCrtPanel(id), getDomUiRoot(), bindDomUiRootToGame(game), showToastInline(html, opts), showToastStamp(text, opts?) | 已实现（Slice 4.5；Slice 5.5 CRT + createCrtPanel；C6 toast；R9 凹槽；R10 crt-stack / 队列 / device-effect；I11 追加类） |
+| PanelStyles | src/ui/dom/panel-styles.ts | 固定逻辑画布上的轻量界面共享样式：正文12px、标题20px、无实体罩HUD10–11px；主面板680×468，分配450×452；面板局部无衬线标题，静态SVG颗粒位于文字下方，半透明多层底色。视觉记录见当前UI Kit A节 | injectPanelStyles(), createCrtPanel(), getDomUiRoot(), bindDomUiRootToGame(), showToastInline(), showToastStamp() | 迭代11 R3；HUD已人PASS，面板材质待复评 |
+| PanelRenderState | src/ui/dom/panel-render-state.ts | 供奉/装配/蜕变/报告共享的稳定渲染：选择更新只替换详情和底栏，保留列表DOM；全量更新恢复滚动位置；切页显式重置 | renderPanelContent(panel, html, selectionOnly, resetScroll?) | 迭代11 R2，滚轮回顶修复 |
 | SideEffectLabels | src/ui/side-effect-labels.ts | 防御副作用（`PendingSideEffect`）的唯一人类可读文案来源，供裂隙开局 toast 与冲击结算面板的"本次产生的残留"披露共用，避免两处映射各自维护而漂移。混乱增速可见写法也从这里出（相对 1.0 的 ±N%） | describeSideEffectBody(e), describeSideEffectWithSource(e), formatChaosRateDelta(rate), formatChaosMultDelta(mult) | 已实现（Slice 5.5 C5 引入，本轮补登记；R9 收口混乱增速） |
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
 | InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
@@ -276,12 +280,12 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」。I3-A：一份 `contaminationDraw`（`mix32(seed, 'lexicon')`）喂甲 spawn.form 与宿主。**I8-Q：** 占漆钉 `paintFloors`（贪婪薪柴路径，偏咽喉）；不足掷出的 N 则本图重试，禁止钳小 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout；rollPaintHostCount；collectContaminationPins | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图。I8-Q 占漆配额已接 |
 | PaletteQuantize | src/generation/palette-quantize.ts | 色温分组 + 组内色相方向量化（I6-B）。L1 候选池与青绿家族供地面/敌人共用。禁止全色板 nearest 当 L1/L2 生产成功路径。地面 L2 已接（I6-C code）；敌人四档经 `deriveFragmentContamRamp` → `deriveContamRamp`（I6-D）。DEC-097：最终像素量化禁止对虚空/低亮走青绿组内色相方向提亮；虚空只落虚空黑三格。**DEC-110：** 残骸三格（debris-earth / debris-rust / debris-wood）均值 >55 不进 L1；`nearestPalette` 也跳过它们，避免地面 / 墙 / 污染再量化吸进堆主体色 | temperatureGroup；quantizeInGroup；quantizeL1；l1Pool；TEAL_FAMILY；DEBRIS_HEX；nearestPalette | 已实现（I6-B；地面接线 I6-C 整批已交，art 最短核合规过、好看不代勾；敌人接线 I6-D 已交；I6-C 热修 DEC-097 量化收口已交，**热修画面人 PASS**；DEC-110 残骸格已登记） |
 | RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（完整度条/混乱条/薪柴数/工具槽/撤离提示/生效中行），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel。生效行用 `.device-effect` 名+秒分节点；remainingMs 由场景每帧权威 set，HUD 不再自减。`CHAOS_CHANGED` 且 `delta > 0` 时条头填充一次 180ms 短促提亮（不按来源分色；挂载根仍是 `#dom-ui-root`） | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 迁 DOM；R10 工具剩余秒；CH-HUD-3 正增量强调） |
-| RiftResultPanel | src/ui/dom/rift-result-panel.ts | 裂隙撤离/阵亡结算 DOM 面板，与冲击结算面板视觉同源（本轮补登记，模块本身为 Slice 5.5 C2 交付） | isOpen(), show(data), close(), destroy() | 已实现（Slice 5.5） |
+| RiftResultPanel | src/ui/dom/rift-result-panel.ts | 撤离/阵亡结果优先显示带回薪柴，次级战果和拾获可滚动；鼠标返回与 R 键汇入 RunController.restart() | isOpen(), show(data, onContinue?), close(), destroy() | DEC-119；继续回调新增，旧调用兼容 |
 | Minimap | src/ui/minimap.ts | 裂隙圆形局部窗口：直径 33 格、画布 99 像素，跟随玩家当前格。已探索由场景层用真实视野累积后写入；玩家十字带朝向短臂；覆盖内撤离竖缝 / 深渊方点 / 节点菱形。`#rift-minimap.device-plate` 挂 `#dom-ui-root` | create(mapTiles, mapWidth, mapHeight, tileSize, extractionPos), markExplored(tileX, tileY), update(playerWorldPos, facing, deltaMs), reset(), destroy() | 已实现（Slice 5.5 迁挂载根、改标记形状；Slice 6 C6 圆窗 + 真实视野 + 朝向） |
-| AllocationPanel | src/ui/dom/allocation-panel.ts | 分配墙机：只读身份带（打开的台亮）+ 投入 `.crt-focus` + 详情底出击预估预览。无顶 Tab。`open(moduleId)` | isOpen(), open(moduleId, onClose?), close() | 已实现（Slice 2+；I11-B4b 主-从） |
+| AllocationPanel | src/ui/dom/allocation-panel.ts | 模块投入、实际效果预览。三装置场景交互接收真实投影锚点，贴近实体读数与右侧操作；提交650ms反馈并防重复，清理rAF/计时器。其他分配仍用普通面板 | isOpen(), open(moduleId, onClose?, CoreAllocationContext), close() | R4核心人PASS，R5六点推广；旧调用兼容 |
 | DefensePanel | src/ui/dom/defense-panel.ts | 供奉墙机：只读身份带（三格都暗）+ 上槽下库。无顶 Tab。库存空走空状态三件套 | isOpen(), open(onClose?), close() | 已实现（Slice 3+；I11-B4c 同族） |
 | GrowthPanel | src/ui/dom/growth-panel.ts | 蜕变墙机：只读身份带（三格都暗）+ 六张刻入 + 第七张加厚。无顶 Tab | isOpen(), open(onClose?), close() | 已实现（Slice 3+；DEC-117 并进加厚；I11-B4c 同族） |
-| ImpactResultPanel | src/ui/dom/impact-result-panel.ts | 冲击结算结果屏（不套走近身份带 / 顶 Tab）。归来必须按键消解 | isOpen(), show(damages, intensity, onDone, chargeChanges?), close(), destroy() | 已实现（Slice 2+；I11-B4c 保持结果骨架） |
+| ImpactResultPanel | src/ui/dom/impact-result-panel.ts | 冲击结果先显示最大损伤，再展示装置前后完整度、供奉与转化事实；Enter / Esc / 合上按钮共用消解出口 | isOpen(), show(damages, intensity, onDone, options?), close(), destroy() | DEC-119 结果层级与鼠标出口 |
 | LoadoutPanel | src/ui/dom/loadout-panel.ts | 出击装配墙机：只读身份带 + 工具槽 + 只读出击预估三项（表名薪柴价值）。无顶 Tab | isOpen(), open(onConfirm, onClose?), close() | 已实现（Slice 3+；I11-B4c 同族） |
 | StatusPanel | src/ui/dom/status-panel.ts | 存续报告墙机：身份带 + 顶 Tab（装置/残渣/潮汐/蜕变）+ 详情主-从。`open` 第二参是净化点最近 overlap 类型，用来亮走近的台 | isOpen(), open(onClose?, nearestOverlap?), close() | 已实现（Slice 3+；I11-B4a 主-从） |
 | ModuleIdentityStrip | src/ui/dom/module-identity-strip.ts | 三模块身份带 HTML helper（名 + 条 + hp/maxHp）。效果百分比不进带。供存续报告 / 分配 / 蜕变 / 供奉 / 出击装配同族 | identityBandHtml(opts) | 已实现（I11-B4c 抽出，不是新系统） |
@@ -690,7 +694,7 @@ Slice 4.5 前，净化点的边界是"tile 判定出的固定圆 + 边界外粒�
   - 图片：PNG（像素风，不需 WebP 压缩）
   - Spritesheet：模块图集按实体画布（净化器 32×44 × 8 帧）；角色 / 敌人仍是程序像素，不走本目录
   - 音频：MP3 + OGG 双格式（覆盖所有浏览器）
-  - 字体：系统字体优先；如需自定义使用 WOFF2
+  - 字体：交互面板正文/标题同用系统中文无衬线，数字等宽；主菜单及低语沿用R2字体；不再加载COH Pixel或等待该字体文件。
 
 ## 音频技术规范
 
@@ -801,3 +805,23 @@ setLocale('en');
 - `t()` 函数是纯同步查找（对象属性访问），不涉及异步/IO
 - 游戏循环中可安全调用 `t()`（无 GC 压力，返回已存在的字符串引用）
 - 带插值的调用会创建新字符串——HUD 中频繁更新的数值文本应缓存结果，仅在值变化时重新调用
+
+
+### 迭代11 R4核心样板接线
+
+`PurificationScene`负责核心聚焦/恢复镜头与真实投影；`openCoreAllocationSample()`供开发页调用生产路径，`cancelCoreAllocationSample()`在开发切屏时即时取消。`PurificationModuleEntity.setInteractionReadoutActive()`仅在核心交互期隐藏世界HP条，退出恢复。核心确认用既有柔光纹理响应。`panel-styles.ts`只增加core-allocation作用域，不改已锁HUD。`ui-review.html?sample=core`为内存示例直达入口。
+
+
+### 迭代11 R5：六点场景交互
+
+`WorldInteractionContext` / `bindWorldInteraction` 位于 `src/ui/dom/world-interaction.ts`，只提供实际相机投影、面板局部class、独立实体名节点及rAF清理；列表重建不会移除实体名。三个分配复用实体读数；defense/growth的open可选第二参数context，loadout的open可选第三参数context。无context的旧调用仍兼容。
+
+`PurificationScene.openWorldInteraction(target)`是六点开发入口，也调用正式E路径。焦点状态持有world point和可选Module，退出守卫共用；`cancelWorldInteraction()`支持开发切屏。scene shutdown时相机已经销毁，丢弃快照而非setScroll。入口确认沿用原出击回调，不先恢复镜头；转场归scene Clock，shutdown取消计时器与过渡DOM。
+
+`ui-review.html?sample=world`自动内存示例，支持六点切换/重置/零库存；普通开发页另有长库存。开发页运行时异常以可见文本显示，不向正式构建添加调试入口。
+
+### 迭代11 R6：场景菜单
+
+`panel-styles.ts`以`.scene-menu`和`.scene-menu-backdrop`为报告、暂停/覆盖确认、撤离/阵亡及冲击结算提供无框排字与全屏渐隐暗场，均挂既有`#dom-ui-root`。各菜单添加专属定位类，无新增相机聚焦、数值或系统API。结果正文滚动、底部动作固定。失焦遮蔽在`main.ts`复用同一暗场；主菜单只统一字体。暂停悬停改为pointermove且仅选项变化才刷新，避免pointerover与DOM重建互相触发。
+
+开发审查页增加`?record=saved`内存摘要，供暂停覆盖确认和主菜单继续态审查；所有save/load/delete仍隔离，正式构建不包含该页面。

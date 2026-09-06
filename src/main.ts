@@ -28,17 +28,13 @@ bindDomUiRootToGame(game);
 
 let paused = false;
 
-// C6: colours were #ccc/#888 - neither is a locked palette value (ui-art-overhaul.md
-// §A2). Swapped for the standard bright/dim text pair; font family aligned to the
-// same 'Courier New' the rest of the game's DOM overlays use (U11).
 const overlay = document.createElement('div');
 overlay.id = 'pause-overlay';
+overlay.className = 'scene-menu-backdrop scene-menu-compact-backdrop';
 overlay.style.cssText =
-  'position:absolute;inset:0;background:rgba(0,0,0,0.7);display:none;' +
-  'align-items:center;justify-content:center;z-index:9999;pointer-events:auto;';
+  'position:absolute;inset:0;display:none;z-index:9999;pointer-events:auto;';
 overlay.innerHTML =
-  '<div style="color:#c8cdd4;font-family:\'Courier New\',monospace;font-size:20px;text-align:center;">' +
-  '已暂停<br><span style="font-size:13px;color:#8a8f96;">按任意键</span></div>';
+  '<div class="focus-pause-copy">已暂停<span>点击画面或按任意键继续</span></div>';
 getDomUiRoot().appendChild(overlay);
 
 function pauseGame(): void {

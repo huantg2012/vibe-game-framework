@@ -1,28 +1,20 @@
 /**
- * AllocationPanel — 分配墙机（载体 B）。
- *
- * I11-B4b：钉顶三格身份带（只读）+ 整宽详情 + 底键印。无顶 Tab。
- * 唯一 `.crt-focus` 套「投入」。出击预估是注入后预览，不改 getSortieModifiers()。
- * 挂 #dom-ui-root。
+ * 薪柴分配：投入 → 修复与效果预览 → 剩余薪柴；键鼠共用投入状态。
+ * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
  */
 
+import type { WorldInteractionContext } from './world-interaction';
 import { eventBus } from '@/core/event-bus';
 import { computeStartingChaos, gameState } from '@/managers/game-state';
 import type { EffectModuleType, ModuleType, SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
-import { growthSystem } from '@/systems/growth-system';
-import { impactSystem } from '@/systems/impact-system';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { formatChaosRateDelta } from '@/ui/side-effect-labels';
 import {
   BAR_COLOR,
-  DIM,
   MODULE_LABEL,
-  MODULE_ORDER,
-  NAME_ACTIVE,
   NUM_ACTIVE,
-  identityBandHtml,
 } from './module-identity-strip';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 
@@ -30,6 +22,13 @@ import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-sty
 // State
 // ---------------------------------------------------------------------------
 
+// Compatible alias for the accepted core sample; all three modules now share it.
+export type CoreAllocationContext = WorldInteractionContext;
+
+let coreContext: CoreAllocationContext | null = null;
+let anchorFrame = 0;
+let commitTimer: ReturnType<typeof setTimeout> | null = null;
+let committing = false;
 let panel: HTMLDivElement | null = null;
 let currentModuleId: string | null = null;
 let selectedAmount = 0;
@@ -48,9 +47,9 @@ const EFFECT_LABEL: Record<ModuleType, string> = {
   PURIFIER: '起始混乱',
 };
 const EFFECT_NUM: Record<ModuleType, string> = {
-  CORE: '#1aad96',
-  STORAGE: '#c4873a',
-  PURIFIER: '#1aad96',
+  CORE: '#729887',
+  STORAGE: '#b29a73',
+  PURIFIER: '#729887',
 };
 
 // ---------------------------------------------------------------------------
@@ -62,9 +61,10 @@ export const allocationPanel = {
     return panel !== null;
   },
 
-  open(moduleId: string, onClose?: () => void): void {
+  open(moduleId: string, onClose?: () => void, context?: CoreAllocationContext): void {
     if (panel) return; // already open
     currentModuleId = moduleId;
+    coreContext = context ?? null;
     selectedAmount = 0;
     onCloseCallback = onClose ?? null;
     createPanel();
@@ -89,20 +89,39 @@ function createPanel(): void {
   if (!mod) return;
 
   panel = createCrtPanel('allocation-panel');
+  if (coreContext) panel.classList.add('core-allocation', `allocation-${mod.type.toLowerCase()}`);
 
   const root = getDomUiRoot();
   const backdrop = document.createElement('div');
-  backdrop.className = 'game-panel-backdrop';
+  backdrop.className = coreContext ? `core-allocation-backdrop allocation-${mod.type.toLowerCase()}` : 'game-panel-backdrop';
   backdrop.id = 'allocation-backdrop';
   root.appendChild(backdrop);
 
   render(mod.type, mod.hp, mod.maxHp);
   root.appendChild(panel);
+  if (coreContext) {
+    const followCore = (): void => {
+      if (!panel || !coreContext) return;
+      const anchor = coreContext.getAnchor();
+      for (const element of [panel, backdrop]) {
+        element.style.setProperty('--core-x', `${anchor.x}px`);
+        element.style.setProperty('--core-y', `${anchor.y}px`);
+      }
+      panel.classList.add('core-present');
+      anchorFrame = requestAnimationFrame(followCore);
+    };
+    anchorFrame = requestAnimationFrame(followCore);
+  }
 
   document.addEventListener('keydown', onKeyDown);
 }
 
 function destroyPanel(): void {
+  cancelAnimationFrame(anchorFrame);
+  if (commitTimer) clearTimeout(commitTimer);
+  commitTimer = null;
+  committing = false;
+  coreContext = null;
   document.removeEventListener('keydown', onKeyDown);
   if (panel) {
     panel.remove();
@@ -125,6 +144,7 @@ function onKeyDown(e: KeyboardEvent): void {
     return;
   }
 
+  if (committing) { e.preventDefault(); e.stopPropagation(); return; }
   const mod = currentModuleId ? gameState.getModule(currentModuleId) : null;
   if (!mod) return;
   const maxAllocatable = getMaxAllocatable(mod.hp, mod.maxHp);
@@ -163,6 +183,7 @@ function onKeyDown(e: KeyboardEvent): void {
 }
 
 function confirmAllocation(): void {
+  if (committing) return;
   if (selectedAmount > 0 && currentModuleId) {
     const spent = gameState.allocateToModule(currentModuleId, selectedAmount);
     if (spent > 0) {
@@ -170,7 +191,15 @@ function confirmAllocation(): void {
         allocations: { [currentModuleId]: spent },
       });
     }
-    allocationPanel.close();
+    if (spent > 0 && coreContext) {
+      committing = true;
+      selectedAmount = 0;
+      rerender();
+      panel?.classList.add('core-committed');
+      commitTimer = setTimeout(() => allocationPanel.close(), 650);
+    } else {
+      allocationPanel.close();
+    }
   } else {
     audioManager.playSFX('sfx-ui-error');
   }
@@ -245,75 +274,6 @@ function getMaxAllocatable(hp: number, maxHp: number): number {
   return Math.min(reserve, maxUseful);
 }
 
-/** Cost of the single cheapest not-yet-maxed upgrade, or null if every axis is
- *  maxed. Used by the opportunity-cost row below (IA §S3). */
-function getCheapestUpgradeCost(): number | null {
-  let min: number | null = null;
-  for (const id of growthSystem.getAllUpgradeIds()) {
-    if (growthSystem.getLevel(id) >= growthSystem.getMaxLevel(id)) continue;
-    const cost = growthSystem.getCost(id);
-    if (min === null || cost < min) min = cost;
-  }
-  return min;
-}
-
-function opportunityCostHtml(openType: ModuleType): string {
-  const others = MODULE_ORDER.filter((t) => t !== openType);
-  const cheapestCost = getCheapestUpgradeCost();
-  const forecast = impactSystem.getForecastDisplay();
-  const forecastType = (forecast?.targetId ?? null) as ModuleType | null;
-  const forecastName = forecastType ? MODULE_LABEL[forecastType] : '—';
-  const isThisTarget = forecastType === openType;
-
-  const otherCells = others.map((otherType) => {
-    const other = hpNow(otherType);
-    const numColor = NUM_ACTIVE[otherType];
-    return `<div style="flex:1;min-width:0;">
-        <div style="font-size:12px;color:${DIM};">${MODULE_HP_LABEL[otherType]}</div>
-        <div>
-          <span style="font-size:13px;color:${numColor};">${other.hp}</span>
-          <span style="color:${DIM};"> / </span>
-          <span style="font-size:13px;color:${numColor};">${other.maxHp}</span>
-        </div>
-      </div>`;
-  }).join('');
-
-  const cheapestText = cheapestCost !== null ? String(cheapestCost) : '已全部购满';
-  const cheapestColor = cheapestCost !== null ? '#c4873a' : DIM;
-  const targetText = isThisTarget ? '本模块' : forecastName;
-  const targetColor = forecastType ? NAME_ACTIVE[forecastType] : DIM;
-
-  return `<div style="display:flex;gap:8px;padding:4px 0;">
-      ${otherCells}
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:12px;color:${DIM};">蜕变最低</div>
-        <div style="font-size:13px;color:${cheapestColor};">${cheapestText}</div>
-      </div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:12px;color:${DIM};">下次冲击目标</div>
-        <div style="font-size:13px;color:${targetColor};">${targetText}</div>
-      </div>
-    </div>`;
-}
-
-function sortiePreviewHtml(mods: SortieModifiers): string {
-  return `<div style="margin-top:auto;padding-top:8px;">
-    <div class="stat-row"><span class="stat-label" style="font-size:12px;">出击预估</span></div>
-    <div class="stat-row">
-      <span class="stat-label" style="font-size:12px;">混乱增速</span>
-      <span class="stat-value" style="color:#1aad96;font-size:13px;">${formatChaosRateDelta(mods.chaosRateModifier)}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label" style="font-size:12px;">薪柴价值</span>
-      <span class="stat-value" style="color:#c4873a;font-size:13px;">x${mods.kindlingValueModifier.toFixed(2)}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label" style="font-size:12px;">起始混乱</span>
-      <span class="stat-value" style="color:#1aad96;font-size:13px;">${mods.startingChaos}</span>
-    </div>
-  </div>`;
-}
-
 // ---------------------------------------------------------------------------
 // Rendering
 // ---------------------------------------------------------------------------
@@ -342,55 +302,58 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const barColor = BAR_COLOR[type];
   const siphonNote = siphonBoosted ? ' 虹吸增效' : '';
 
-  let html = `<div class="panel-title">分配</div>`;
-  html += identityBandHtml({ activeId: type });
-
-  html += `<div class="scroll-area" style="display:flex;flex-direction:column;">
-    <div style="margin-bottom:8px;">
-      <div style="display:flex;gap:12px;align-items:baseline;margin:0 0 4px;">
-        <span style="font-size:12px;color:${DIM};">${MODULE_HP_LABEL[type]}</span>
-        <span style="font-size:13px;color:${numColor};">${hp}</span>
-        <span style="color:${DIM};">/</span>
-        <span style="font-size:13px;color:${numColor};">${maxHp}</span>
+  const reason = hp >= maxHp ? '装置已完整，无需注入。' : reserve <= 0
+    ? '暂无薪柴。翻找裂隙中的翻堆并撤离后可带回薪柴。'
+    : selectedAmount === 0 ? '尚未选择投入数量。用加号或 → 调整。' : '';
+  if (coreContext) {
+    // The device supplies the image and identity. Only the current decision is
+    // drawn beside it; the readout remains anchored to its real ground contact.
+    panel.innerHTML = `
+      <div class="core-identity"><span>${MODULE_LABEL[type]}</span></div>
+      <div class="core-integrity" aria-live="polite">
+        <div class="core-integrity-label">完整度 <span>${hp}<small> / ${maxHp}</small></span></div>
+        <div class="pbar-wrap"><div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div><div class="pbar-fill" style="width:${hpPct}%;background:${barColor};"></div></div>
+        <div class="core-repair-preview">${committing ? '修复已生效' : selectedAmount > 0 ? `修复至 ${repairedHp} <span>+${repairedHp - hp}</span>` : ' '}</div>
       </div>
-      <div class="pbar-wrap">
-        <div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div>
-        <div class="pbar-fill" style="width:${hpPct}%;background:${barColor};"></div>
-      </div>
-    </div>
-    <div style="display:flex;gap:12px;align-items:baseline;margin-bottom:8px;">
-      <span style="font-size:12px;color:${DIM};">${EFFECT_LABEL[type]}</span>
-      <span style="font-size:13px;color:${effectColor};">${currentEffect}</span>
-      <span style="color:${DIM};">→</span>
-      <span style="font-size:13px;color:${effectColor};">${afterEffect}</span>
-    </div>
-    <div class="crt-focus" style="display:flex;gap:12px;align-items:baseline;margin-bottom:8px;">
-      <span style="font-size:12px;color:${DIM};">投入</span>
-      <span style="font-size:16px;font-weight:bold;color:#c4873a;">${selectedAmount}</span>
-      <span class="key" id="alloc-minus" style="display:inline-block;border:1px solid #2a2d32;padding:0 4px;color:#c8cdd4;font-size:12px;line-height:16px;">←</span>
-      <span class="key" id="alloc-plus" style="display:inline-block;border:1px solid #2a2d32;padding:0 4px;color:#c8cdd4;font-size:12px;line-height:16px;">→</span>
-    </div>
-    <div style="margin-bottom:8px;">
-      <div style="display:flex;gap:12px;align-items:baseline;margin:0 0 4px;">
-        <span style="font-size:12px;color:${DIM};">储备</span>
-        <span style="font-size:13px;color:#c4873a;">${reserve}</span>
-      </div>
-      <div style="display:flex;gap:12px;align-items:baseline;">
-        <span style="font-size:12px;color:${DIM};">注入后剩余</span>
-        <span style="font-size:13px;color:#c4873a;">${remaining}</span>
-        <span style="margin-left:auto;font-size:12px;color:${DIM};">1薪柴=${repairPer}完整度${siphonNote}</span>
-      </div>
-    </div>
-    <div style="margin-bottom:8px;">${opportunityCostHtml(type)}</div>
-    ${sortiePreviewHtml(previewMods)}
+      <div class="core-work">
+        <div class="core-work-heading"><span>${committing ? '已投入' : '投入薪柴'}</span><span class="core-reserve">储备 ${reserve}</span></div>
+        <div class="core-amount">
+          <button class="allocation-step" id="alloc-minus" aria-label="减少一份薪柴" ${selectedAmount <= 0 || committing ? 'disabled' : ''}>−</button>
+          <strong>${committing ? '—' : selectedAmount}</strong><span class="core-unit">份</span>
+          <button class="allocation-step" id="alloc-plus" aria-label="增加一份薪柴" ${selectedAmount >= maxAllocatable || committing ? 'disabled' : ''}>+</button>
+        </div>
+        <div class="core-efficiency">每份修复 ${repairPer} 完整度${siphonNote}</div>
+        <div class="core-outcome"><span>${EFFECT_LABEL[type]}</span><span>${currentEffect}${selectedAmount > 0 ? ` <i>→</i> <strong>${afterEffect}</strong>` : ''}</span></div>
+        <div class="core-outcome core-remaining"><span>余下薪柴</span><span>${remaining}</span></div>
+        <div class="core-reason" role="status">${committing ? '修复已生效。' : selectedAmount > 0 && currentEffect === afterEffect ? `本次修复不改变${EFFECT_LABEL[type]}。` : hp >= maxHp ? `${MODULE_LABEL[type]}已完整。` : reserve <= 0 ? '暂无薪柴。撤离裂隙可带回薪柴。' : selectedAmount === 0 ? '选择这次投入的份数。' : ''}</div>
+        <div class="core-actions">
+          <button id="alloc-confirm" ${selectedAmount <= 0 || committing ? 'disabled' : ''}><span>Enter</span> 投入</button>
+          <button id="alloc-close"><span>Esc</span> 离开</button>
+        </div>
+        <div class="core-controls">← → 调整 · Shift ×5<br>Home 归零 · End 拉满</div>
+      </div>`;
+    bindEvents(maxAllocatable);
+    return;
+  }
+  let html = `<div class="panel-heading"><div class="panel-title">分配 · ${MODULE_LABEL[type]}</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>`;
+  html += `<div class="scroll-area">
+    <div class="readout-hero"><span class="readout-label">${MODULE_HP_LABEL[type]}</span><span class="readout-value" style="color:${numColor};">${hp} / ${maxHp}</span></div>
+    <div class="pbar-wrap"><div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div><div class="pbar-fill" style="width:${hpPct}%;background:${barColor};"></div></div>
+    <div class="allocation-input"><span>投入</span><strong class="readout-value">${selectedAmount}</strong><span class="readout-label">薪柴</span>
+      <button class="allocation-step" id="alloc-minus" aria-label="减少一份薪柴" ${selectedAmount <= 0 ? 'disabled' : ''}>−</button>
+      <button class="allocation-step" id="alloc-plus" aria-label="增加一份薪柴" ${selectedAmount >= maxAllocatable ? 'disabled' : ''}>+</button></div>
+    <div class="readout-note">← → ±1 · Shift+←→ ±5 · Home 归零 · End 拉满</div>
+    <div class="readout-section">注入结果</div>
+    <div class="stat-row"><span class="readout-label">装置完整度</span><span>${hp}</span><span>→</span><span>${repairedHp} / ${maxHp}</span></div>
+    <div class="stat-row"><span class="readout-label">${EFFECT_LABEL[type]}</span><span style="color:${effectColor};">${currentEffect}</span><span>→</span><span style="color:${effectColor};">${afterEffect}</span></div>
+    ${selectedAmount > 0 && currentEffect === afterEffect ? '<div class="readout-note">本次修复不改变该项出击效果。</div>' : ''}
+    <div class="stat-row"><span class="readout-label">注入后剩余薪柴</span><span class="readout-value">${remaining}</span><span class="readout-note">/ 储备 ${reserve}</span></div>
+    <div class="readout-note">1 薪柴 = ${repairPer} 完整度${siphonNote}</div>
+    ${reason ? `<p class="readout-note" role="status">${reason}</p>` : ''}
   </div>`;
-
   html += `<div class="key-hint-bar">
-    <span><span class="key">←</span> <span class="key">→</span> ±1</span>
-    <span><span class="key">Shift+←→</span> ±5</span>
-    <span><span class="key">Home</span> <span class="key">End</span> 归零 / 拉满</span>
-    <span id="alloc-confirm"><span class="key">Enter</span> 注入</span>
-    <span><span class="key">Esc</span> 离开</span>
+    ${selectedAmount > 0 ? '<button class="action-btn" id="alloc-confirm"><span class="key">Enter</span> 注入</button>' : `<span class="readout-note">${hp >= maxHp ? '无需修复' : reserve <= 0 ? '暂无薪柴' : '等待投入'}</span>`}
+    <button class="action-btn" id="alloc-close"><span class="key">Esc</span> 离开</button>
   </div>`;
 
   panel.innerHTML = html;
@@ -416,6 +379,7 @@ function bindEvents(maxAllocatable: number): void {
   });
 
   panel.querySelector('#alloc-confirm')?.addEventListener('click', confirmAllocation);
+  panel.querySelector('#alloc-close')?.addEventListener('click', allocationPanel.close);
 }
 
 function rerender(): void {

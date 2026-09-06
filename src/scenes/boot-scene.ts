@@ -21,6 +21,7 @@ import { enqueueEntranceSheets } from '@/scenes/rift-entrance-visual';
 import { enqueueOfferingSheet } from '@/scenes/offering-stand-visual';
 import { enqueueGrowthSheet } from '@/scenes/growth-console-visual';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
+import { injectPanelStyles } from '@/ui/dom/panel-styles';
 
 export class BootScene extends Phaser.Scene {
   constructor() {
@@ -28,6 +29,8 @@ export class BootScene extends Phaser.Scene {
   }
 
   preload(): void {
+    injectPanelStyles();
+    this.load.image('menu-last-light', 'assets/art/menu-last-light.png');
     // Create loading bar
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
@@ -95,6 +98,11 @@ export class BootScene extends Phaser.Scene {
     audioManager.unlock();
 
     generatePlaceholderTextures(this);
+
+    this.startFirstScene();
+  }
+
+  private startFirstScene(): void {
 
     // Dev deep link: `#rift` or `#purif` boots straight into the target scene.
     if (import.meta.env.DEV) {

@@ -1,19 +1,19 @@
 /**
- * DefensePanel — 供奉墙机（载体 B）。
- *
- * I11-B4c：钉顶三格身份带（三格都暗）+ 上槽下库 + 底键印。无顶 Tab、无出击预估。
- * 键鼠同一通道：无 hoverTarget。库存无未入槽残渣时库存区走空状态三件套。挂 #dom-ui-root。
+ * 供奉：已装填槽和库存为主区、单项检视为从区；键鼠共享选择状态。
+ * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
  */
 
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { audioManager } from '@/managers/audio-manager';
+import { gameState } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { getDefenseName, getRarityStars, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
-import { identityBandHtml } from './module-identity-strip';
 import type { Contaminant } from '@/types/game-types';
+import { renderPanelContent } from './panel-render-state';
+import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 
 // Rarity is "Degree not Kind": escalating contam brightness instead of unrelated hues
@@ -25,8 +25,8 @@ import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-sty
 // at every tier (unaffected by this).
 const RARITY_COLORS: Record<string, string> = {
   common: '#8a8f96',
-  fine: '#1aad96',
-  rare: '#3cffd4',
+  fine: '#729887',
+  rare: '#9bb3a2',
 };
 
 // ---------------------------------------------------------------------------
@@ -34,6 +34,7 @@ const RARITY_COLORS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 
 let panel: HTMLDivElement | null = null;
+let cleanupWorldInteraction: (() => void) | null = null;
 let onCloseCallback: (() => void) | null = null;
 
 // Keyboard cursor (IA §0.4 "键盘是第一公民"): three focus regions, cycled with Tab.
@@ -55,14 +56,14 @@ export const defensePanel = {
     return panel !== null;
   },
 
-  open(onClose?: () => void): void {
+  open(onClose?: () => void, context?: WorldInteractionContext): void {
     if (panel) return;
     onCloseCallback = onClose ?? null;
     cursorRegion = 'slots';
     cursorSlot = 0;
     cursorInv = 0;
     cursorAction = 0;
-    createPanel();
+    createPanel(context);
     audioManager.playSFX('sfx-ui-open');
   },
 
@@ -79,7 +80,7 @@ export const defensePanel = {
 // Panel creation
 // ---------------------------------------------------------------------------
 
-function createPanel(): void {
+function createPanel(context?: WorldInteractionContext): void {
   panel = createCrtPanel('defense-panel');
 
   const root = getDomUiRoot();
@@ -90,10 +91,15 @@ function createPanel(): void {
 
   render();
   root.appendChild(panel);
+  if (context) {
+    cleanupWorldInteraction = bindWorldInteraction(panel, backdrop, context, '供奉台', 'inventory');
+  }
   document.addEventListener('keydown', onKeyDown);
 }
 
 function destroyPanel(): void {
+  cleanupWorldInteraction?.();
+  cleanupWorldInteraction = null;
   document.removeEventListener('keydown', onKeyDown);
   if (panel) {
     panel.remove();
@@ -121,7 +127,7 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     cycleRegion(e.shiftKey ? -1 : 1, slots.length, inventory.length);
-    render();
+    render(true, true);
     return;
   }
 
@@ -129,8 +135,8 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     const dir = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
-    moveCursor(dir, slots.length, inventory.length);
-    render();
+    moveCursor(dir, slots.length, inventory.length, e.key === 'ArrowUp' || e.key === 'ArrowDown');
+    render(true, true);
     return;
   }
 
@@ -164,11 +170,11 @@ function cycleRegion(dir: 1 | -1, slotCount: number, invCount: number): void {
   }
 }
 
-function moveCursor(dir: 1 | -1, slotCount: number, invCount: number): void {
+function moveCursor(dir: 1 | -1, slotCount: number, invCount: number, vertical: boolean): void {
   if (cursorRegion === 'slots' && slotCount > 0) {
     cursorSlot = (cursorSlot + dir + slotCount) % slotCount;
   } else if (cursorRegion === 'inventory' && invCount > 0) {
-    cursorInv = (cursorInv + dir + invCount) % invCount;
+    cursorInv = Math.max(0, Math.min(invCount - 1, cursorInv + dir * (vertical ? 2 : 1)));
   } else if (cursorRegion === 'actions') {
     cursorAction = (cursorAction + dir + ACTION_COUNT) % ACTION_COUNT;
   }
@@ -200,7 +206,7 @@ function getInventory(): Contaminant[] {
   );
 }
 
-function render(): void {
+function render(selectionOnly = false, revealSelection = false): void {
   if (!panel) return;
 
   const slots = contaminantSystem.getDefenseSlotted();
@@ -214,41 +220,32 @@ function render(): void {
   // (ui-art-overhaul.md A2's "no separate purple class"), not the darker contam-deep
   // tone: that fails the 4.5:1 text floor (A1), so it's reserved for the charge bar
   // fill below (a decorative fill, not text).
-  let html = `<div class="panel-title">供奉</div>`;
-  html += identityBandHtml({ activeId: null });
+  let html = `<div class="panel-heading"><div class="panel-title">供奉</div><div class="panel-reserve"><span>薪柴</span><strong>${gameState.getKindlingReserve()}</strong></div></div>`;
 
-  html += `<div class="panel-fixed">`;
-  html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},1fr);">`;
+  html += `<div class="decision-layout"><div class="decision-main scroll-area"><div class="panel-fixed">`;
+  html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},minmax(0,1fr));">`;
   for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
     const selected = cursorRegion === 'slots' && cursorSlot === i;
-    const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
+    const cursor = '';
     if (c) {
-      const def = CONTAMINANT_DATA[c.type];
       const name = getDefenseName(c.type);
       const stars = getRarityStars(c.rarity);
       const color = RARITY_COLORS[c.rarity];
-      const reductionPct = Math.round(def.defenseReduction * 100);
-      const remain = Math.max(0, threshold - c.impactCharges);
       html += `<div class="slot-cell slot-filled defense-unslot-btn${selected ? ' slot-selected' : ''}" data-index="${i}">
-        <div>${cursor}<span class="slot-name" style="color:${color};">${name}</span> <span style="color:${color};">${stars}</span></div>
-        <div><span style="font-size:12px;color:#8a8f96;">减伤</span> <span style="font-size:16px;font-weight:bold;color:#1aad96;">${reductionPct}%</span></div>
-        <div class="slot-info">${c.impactCharges} / ${threshold}</div>
-        <div><span>→</span> <span style="color:#1aad96;">${def.displayNameTool}</span></div>
-        <div class="slot-info">还需 ${remain} 次</div>
-        <div class="slot-info">${def.defenseSideEffect}</div>
+        <div>${cursor}<span class="slot-name" style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></div>
+        <div class="slot-info">充能 ${c.impactCharges} / ${threshold}</div>
       </div>`;
     } else {
       html += `<div class="slot-cell${selected ? ' slot-selected' : ''}" data-index="${i}">
-        <div>${cursor}<span class="slot-info">空</span></div>
-        <span class="slot-info">可装填</span>
+        <div><span class="slot-label">供奉槽 ${i + 1}</span></div><span class="slot-info">未供奉</span>
       </div>`;
     }
   }
   html += `</div>`;
   html += `</div>`;
 
-  html += `<div class="scroll-area">`;
+  html += `<div class="readout-section">库存</div><div class="tile-grid">`;
   if (inventory.length === 0) {
     html += inventoryEmptyHtml(slots);
   } else {
@@ -260,37 +257,27 @@ function render(): void {
       const def = CONTAMINANT_DATA[c.type];
       const reductionPct = Math.round(def.defenseReduction * 100);
       const selected = cursorRegion === 'inventory' && cursorInv === idx;
-      const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
-      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${c.id}" data-inv-index="${idx}" style="display:flex;width:100%;justify-content:space-between;gap:8px;">
-        <span>${cursor}<span style="color:${color};">${name}</span> <span style="color:${color};">${stars}</span></span>
-        <span style="color:#8a8f96;">${def.defenseCategory}</span>
-        <span style="color:#1aad96;font-weight:bold;">${reductionPct}%</span>
+      const cursor = '';
+      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${c.id}" data-inv-index="${idx}" style="display:flex;justify-content:space-between;gap:5px;">
+        <span>${cursor}<span style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></span>
+        <span style="color:#729887;font-weight:400;">${reductionPct}%</span>
       </div>`;
     });
   }
   html += `</div>`;
-  html += `<div class="inspect-dock" id="defense-inspect-dock">${computeInspectHtml(slots, inventory, threshold)}</div>`;
+  html += `</div><div class="decision-aside readout-detail inspect-dock" id="defense-inspect-dock">${computeInspectHtml(slots, inventory, threshold)}</div></div>`;
   html += buildKeyHintBar(slots, inventory);
 
-  panel.innerHTML = html;
-  scrollFocusedIntoView(panel);
-  wireEvents();
+  renderPanelContent(panel, html, selectionOnly);
+  if (revealSelection) scrollFocusedIntoView(panel);
+  wireEvents(selectionOnly);
 }
 
 function inventoryEmptyHtml(slots: (Contaminant | null)[]): string {
-  const filled = slots.filter((s) => s !== null).length;
-  const total = slots.length;
-  const next = filled === 0
-    ? `<div class="crt-empty-next"><span class="empty-key">[E]</span> <span>踏入裂隙</span></div>`
-    : '';
-  return `<div class="crt-empty">
-    <div class="crt-empty-mark"></div>
-    <div>
-      <div class="crt-empty-why"><span>残渣</span><span>0</span></div>
-      <div class="crt-empty-why"><span>供奉</span><span>${filled}</span><span>/</span><span>${total}</span></div>
-      ${next}
-    </div>
-  </div>`;
+  const hasSlotted = slots.some((s) => s !== null);
+  return `<div class="readout-empty"><div class="readout-section">${hasSlotted ? '残渣已全部供奉' : '尚无可供奉残渣'}</div>
+    <p class="readout-copy">${hasSlotted ? '已装填的残渣在归来冲击时生效。选择槽位可取下。' : '裂隙中的翻堆可能留下残渣。'}</p>
+    ${hasSlotted ? '' : '<p class="readout-note">关闭供奉，前往裂隙入口。</p>'}</div>`;
 }
 
 function buildKeyHintBar(slots: (Contaminant | null)[], inventory: Contaminant[]): string {
@@ -316,12 +303,14 @@ function buildKeyHintBar(slots: (Contaminant | null)[], inventory: Contaminant[]
   </div>`;
 }
 
-function wireEvents(): void {
+function wireEvents(selectionOnly = false): void {
   if (!panel) return;
 
   panel.querySelector('#defense-close-btn')?.addEventListener('click', () => {
     defensePanel.close();
   });
+
+  if (selectionOnly) return;
 
   // Unslot by clicking filled slots (mouse = equal-citizen shortcut for the same
   // action Enter performs on a keyboard-focused slot).
@@ -329,6 +318,8 @@ function wireEvents(): void {
     const el = btn as HTMLElement;
     btn.addEventListener('click', () => {
       const index = parseInt(el.dataset.index!, 10);
+      cursorRegion = 'slots';
+      cursorSlot = index;
       contaminantSystem.unslotDefense(index);
       saveManager.save();
       render();
@@ -336,13 +327,13 @@ function wireEvents(): void {
   });
 
   panel.querySelectorAll<HTMLElement>('.slot-cell[data-index]').forEach((el) => {
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener('pointermove', () => {
       const index = parseInt(el.dataset.index!, 10);
       if (Number.isNaN(index)) return;
       if (cursorRegion === 'slots' && cursorSlot === index) return;
       cursorRegion = 'slots';
       cursorSlot = index;
-      render();
+      render(true);
     });
   });
 
@@ -350,18 +341,23 @@ function wireEvents(): void {
   panel.querySelectorAll('.defense-equip-tile').forEach((btn) => {
     const el = btn as HTMLElement;
     btn.addEventListener('click', () => {
-      if (el.classList.contains('tile-disabled')) return;
+      cursorRegion = 'inventory';
+      cursorInv = Number(el.dataset.invIndex);
+      if (el.classList.contains('tile-disabled')) {
+        render(true);
+        return;
+      }
       const id = el.dataset.id!;
       const c = contaminantSystem.getAll().find((item) => item.id === id);
       if (c) equipDefense(c, contaminantSystem.getDefenseSlotted());
     });
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener('pointermove', () => {
       const idx = parseInt(el.dataset.invIndex!, 10);
       if (Number.isNaN(idx)) return;
       if (cursorRegion === 'inventory' && cursorInv === idx) return;
       cursorRegion = 'inventory';
       cursorInv = idx;
-      render();
+      render(true);
     });
   });
 }
@@ -387,7 +383,7 @@ function computeInspectHtml(
 
   if (target.kind === 'slot') {
     const c = slots[target.index];
-    if (!c) return INSPECT_EMPTY_HTML;
+    if (!c) return `<div class="readout-section">供奉槽 ${target.index + 1}</div><p class="readout-copy">未供奉。</p><p class="readout-note">${inventory.length > 0 ? "用 Tab 切到库存，选择残渣后装填。" : "取得残渣后，可在此抵挡归来冲击。"}</p>`;
     return buildDefenseInspectHtml(c, { chargeThreshold: threshold, slotState: 'slotted', canEquip: true });
   }
 

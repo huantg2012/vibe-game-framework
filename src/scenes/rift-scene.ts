@@ -633,6 +633,8 @@ export class RiftScene extends Phaser.Scene {
       elapsedMs: this.runController.getElapsedMs(),
       acquired: this.sortieAcquired,
       passiveTriggers: this.sortiePassiveTriggers,
+    }, () => {
+      if (this.runController.isRunEnded()) this.runController.restart();
     });
   };
 

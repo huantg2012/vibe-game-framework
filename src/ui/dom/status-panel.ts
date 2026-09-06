@@ -1,9 +1,6 @@
 /**
- * StatusPanel — 存续报告墙机（载体 B）。
- *
- * I11-B4a：顶三格身份带 + 4 个顶 Tab + 整宽详情 + 底键印。
- * 主-从：详情只讲当前选中项。出击预估只读 getSortieModifiers() 三项。
- * 键鼠同一通道：无 hoverIndex。挂 #dom-ui-root。
+ * 存续报告：四分页、模块列表与单项详情；出击条件与自身完整度明确归属。
+ * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -15,19 +12,20 @@ import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { contaminantSystem } from '@/systems/contaminant-system';
-import { impactSystem } from '@/systems/impact-system';
+import { impactSystem, SEVERITY_LABEL } from '@/systems/impact-system';
 import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
-import { DIM, MODULE_ORDER, identityBandHtml } from './module-identity-strip';
+import { BAR_COLOR, DIM, MODULE_LABEL, MODULE_ORDER } from './module-identity-strip';
 import { formatChaosRateDelta } from '@/ui/side-effect-labels';
 import type { InteractionTargetType } from './purification-hud';
 import type { Contaminant, GrowthUpgradeId, TidePhase } from '@/types/game-types';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
+import { renderPanelContent } from './panel-render-state';
 
 const RARITY_COLORS: Record<string, string> = {
   common: '#8a8f96',
-  fine: '#1aad96',
-  rare: '#3cffd4',
+  fine: '#729887',
+  rare: '#9bb3a2',
 };
 
 const TABS = ['装置', '残渣', '潮汐', '蜕变'] as const;
@@ -99,10 +97,11 @@ function overlapToModule(overlap: InteractionTargetType | null | undefined): Mod
 
 function createPanel(): void {
   panel = createCrtPanel('status-panel');
+  panel.classList.add('scene-menu', 'scene-menu-report');
 
   const root = getDomUiRoot();
   const backdrop = document.createElement('div');
-  backdrop.className = 'game-panel-backdrop';
+  backdrop.className = 'game-panel-backdrop scene-menu-backdrop';
   backdrop.id = 'status-backdrop';
   root.appendChild(backdrop);
 
@@ -149,7 +148,7 @@ function onKeyDown(e: KeyboardEvent): void {
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         const idx = MODULE_ORDER.indexOf(selectedModule);
         selectedModule = MODULE_ORDER[(idx + dir + MODULE_ORDER.length) % MODULE_ORDER.length]!;
-        render();
+        render(true, true);
       }
       return;
     }
@@ -157,14 +156,14 @@ function onKeyDown(e: KeyboardEvent): void {
     const count = getInspectableCount();
     if (count === 0) return;
     cursorIndex = (cursorIndex + dir + count) % count;
-    render();
+    render(true, true);
   }
 }
 
 function setTab(next: TabIndex): void {
   activeTab = next;
   cursorIndex = 0;
-  render();
+  render(false, false, true);
 }
 
 function getInspectableCount(): number {
@@ -195,15 +194,10 @@ function integrityWord(hp: number, maxHp: number): string {
 // Rendering
 // ---------------------------------------------------------------------------
 
-function render(): void {
+function render(selectionOnly = false, revealSelection = false, resetScroll = false): void {
   if (!panel) return;
 
-  let html = `<div class="panel-title">存续报告</div>`;
-  html += identityBandHtml({
-    activeId: approachedModule,
-    selectedId: selectedModule,
-    clickable: true,
-  });
+  let html = `<div class="panel-heading"><div class="panel-title">存续报告</div><div class="panel-reserve"><span>薪柴</span><strong>${gameState.getKindlingReserve()}</strong></div></div>`;
   html += tabsHtml();
   html += detailHtml();
   html += `<div class="key-hint-bar">
@@ -212,9 +206,9 @@ function render(): void {
     <span id="status-close-btn"><span class="key">Tab</span> / <span class="key">Esc</span> 合上</span>
   </div>`;
 
-  panel.innerHTML = html;
-  scrollFocusedIntoView(panel);
-  bindEvents();
+  renderPanelContent(panel, html, selectionOnly, resetScroll);
+  if (revealSelection) scrollFocusedIntoView(panel);
+  bindEvents(selectionOnly);
 }
 
 function tabsHtml(): string {
@@ -237,72 +231,28 @@ function deviceDetailHtml(): string {
   const mods = gameState.getSortieModifiers();
   const playerHp = GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus;
   const forecast = impactSystem.getForecastDisplay();
-  const swapActive = gameState.isModuleSwapActive();
-
-  let body = '';
-  if (mod) {
-    body += `<div class="stat-row">
-      <span class="stat-label">${MODULE_HP_LABEL[selectedModule]}</span>
-      <span class="stat-value">${mod.hp}</span>
-      <span style="color:${DIM};">/</span>
-      <span class="stat-value">${mod.maxHp}</span>
+  const list = MODULE_ORDER.map((id) => {
+    const item = gameState.getModule(id);
+    if (!item) return '';
+    return `<div class="module-report-row${id === selectedModule ? ' is-selected' : ''}" data-module-id="${id}">
+      <div class="readout-label">${MODULE_LABEL[id]}</div><div>${item.hp} / ${item.maxHp}</div>
+      <div class="pbar-wrap"><div class="pbar-fill" style="width:${item.hp / item.maxHp * 100}%;background:${BAR_COLOR[id]};"></div></div>
     </div>`;
-    body += `<div class="stat-row"><span>${integrityWord(mod.hp, mod.maxHp)}</span></div>`;
-    body += moduleEffectRow(selectedModule, mods);
-  }
-  body += `<div class="stat-row">
-    <span class="stat-label">完整度</span>
-    <span class="stat-value">${playerHp}</span>
-  </div>`;
-  if (forecast?.targetId === selectedModule) {
-    body += `<div class="stat-row"><span class="stat-label">下次冲击目标</span></div>`;
-  }
-  if (swapActive) {
-    body += `<div class="stat-row">
-      <span class="stat-label">功能互换</span>
-      <span>生效中</span>
-    </div>`;
-  }
-
-  body += `<div style="margin-top:auto;padding-top:8px;">
-    <div class="stat-row"><span class="stat-label">出击预估</span></div>
-    <div class="stat-row">
-      <span class="stat-label">混乱增速</span>
-      <span class="stat-value" style="color:#1aad96;font-size:13px;">${formatChaosRateDelta(mods.chaosRateModifier)}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">薪柴价值</span>
-      <span class="stat-value" style="color:#c4873a;font-size:13px;">x${mods.kindlingValueModifier.toFixed(2)}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">起始混乱</span>
-      <span class="stat-value" style="color:#1aad96;font-size:13px;">${mods.startingChaos}</span>
-    </div>
-  </div>`;
-
-  return `<div class="scroll-area" style="display:flex;flex-direction:column;">${body}</div>`;
-}
-
-function moduleEffectRow(
-  id: ModuleType,
-  mods: { chaosRateModifier: number; kindlingValueModifier: number; startingChaos: number },
-): string {
-  if (id === 'CORE') {
-    return `<div class="stat-row">
-      <span class="stat-label">混乱增速</span>
-      <span class="stat-value" style="color:#1aad96;font-size:13px;">${formatChaosRateDelta(mods.chaosRateModifier)}</span>
-    </div>`;
-  }
-  if (id === 'STORAGE') {
-    return `<div class="stat-row">
-      <span class="stat-label">薪柴价值</span>
-      <span class="stat-value" style="color:#c4873a;font-size:13px;">x${mods.kindlingValueModifier.toFixed(2)}</span>
-    </div>`;
-  }
-  return `<div class="stat-row">
-    <span class="stat-label">起始混乱</span>
-    <span class="stat-value" style="color:#1aad96;font-size:13px;">${mods.startingChaos}</span>
-  </div>`;
+  }).join('');
+  const effectCopy = selectedModule === 'CORE' ? '核心抑制裂隙中的混乱增长。'
+    : selectedModule === 'STORAGE' ? '储藏提高带回薪柴的价值。' : '净化器降低踏入裂隙时的起始混乱。';
+  const body = mod ? `<div class="readout-hero"><span class="readout-label">${MODULE_HP_LABEL[selectedModule]}</span><span class="readout-value">${mod.hp} / ${mod.maxHp}</span></div>
+    <div class="readout-note">${integrityWord(mod.hp, mod.maxHp)}${forecast?.targetId === selectedModule ? ' · 下次冲击预告目标' : ''}</div>
+    <p class="readout-copy">${effectCopy}</p>
+    ${gameState.isModuleSwapActive() ? '<p class="readout-note">功能互换生效中：核心与储藏互用完整度计算效果。</p>' : ''}
+    <div class="readout-section">下次踏入</div>
+    <div class="stat-row"><span class="readout-label">自身完整度</span><span class="readout-value">${playerHp}</span></div>
+    <div class="readout-metrics">
+      <div class="readout-metric"><span class="readout-label">混乱增速</span><span class="readout-value">${formatChaosRateDelta(mods.chaosRateModifier)}</span></div>
+      <div class="readout-metric"><span class="readout-label">薪柴价值</span><span class="readout-value">x${mods.kindlingValueModifier.toFixed(2)}</span></div>
+      <div class="readout-metric"><span class="readout-label">起始混乱</span><span class="readout-value">${mods.startingChaos}</span></div>
+    </div>` : '';
+  return `<div class="module-report-layout"><div class="module-report-list">${list}</div><div class="readout-detail">${body}</div></div>`;
 }
 
 function residueDetailHtml(): string {
@@ -317,11 +267,11 @@ function residueDetailHtml(): string {
 
   let body = '';
   if (empty) {
-    body += emptyStateHtml('残渣', '0', '工具', '0', '踏入裂隙');
+    body += emptyStateHtml('尚无残渣', '裂隙中的翻堆可能留下残渣。', '关闭报告，前往裂隙入口。');
   } else {
     if (defenseItems.length > 0) {
       body += groupLabelHtml('残渣');
-      body += `<div class="tile-grid">`;
+      body += `<div class="readout-list">`;
       defenseItems.forEach((c, i) => {
         body += residueTileHtml(c, i, inspectable, 'defense', threshold);
       });
@@ -329,7 +279,7 @@ function residueDetailHtml(): string {
     }
     if (toolItems.length > 0) {
       body += groupLabelHtml('工具');
-      body += `<div class="tile-grid">`;
+      body += `<div class="readout-list">`;
       toolItems.forEach((c, i) => {
         body += residueTileHtml(c, defenseItems.length + i, inspectable, 'tool', 0);
       });
@@ -337,7 +287,7 @@ function residueDetailHtml(): string {
     }
     if (brokenItems.length > 0) {
       body += groupLabelHtml('破碎');
-      body += `<div class="tile-grid">`;
+      body += `<div class="readout-list">`;
       for (const c of brokenItems) {
         const name = getDefenseName(c.type);
         body += `<div class="item-tile"><span>${name}</span></div>`;
@@ -348,7 +298,7 @@ function residueDetailHtml(): string {
 
   let html = `<div class="scroll-area">${body}</div>`;
   if (inspectable.length > 0) {
-    html += `<div class="inspect-dock" id="status-inspect-dock">${computeResidueInspectHtml(inspectable, threshold)}</div>`;
+    html = `<div class="decision-layout"><div class="decision-main scroll-area">${body}</div><div class="decision-aside readout-detail inspect-dock" id="status-inspect-dock">${computeResidueInspectHtml(inspectable, threshold)}</div></div>`;
   }
   return html;
 }
@@ -374,22 +324,16 @@ function residueTileHtml(
 }
 
 function tideDetailHtml(): string {
-  const tideState = tideSystem.getState();
-  const phase = PHASE_LABEL[tideState.phase];
-  const reached = stabilityTracker.isReached();
-  const stabilityPct = `${Math.round(stabilityTracker.getProgress())}%`;
-  const reachedWord = reached ? '已完成' : '未完成';
-  const body = `<div class="stat-row">
-      <span class="stat-label">潮汐</span>
-      <span>第 ${tideState.tideNumber} 潮</span>
-      <span>${phase}</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label">稳定度</span>
-      <span class="stat-value">${stabilityPct}</span>
-      <span>${reachedWord}</span>
-    </div>`;
-  return `<div class="scroll-area">${body}</div>`;
+  const state = tideSystem.getState();
+  const forecast = impactSystem.getForecastDisplay();
+  const target = forecast ? MODULE_LABEL[forecast.targetId as ModuleType] : null;
+  return `<div class="scroll-area">
+    <div class="readout-section">下次归来</div>
+    ${forecast ? `<div class="readout-hero"><span class="readout-label">冲击预告目标</span><span class="readout-value">${target}</span><span>${SEVERITY_LABEL[forecast.severity]}</span></div>` : '<p class="readout-note">暂无冲击预告。</p>'}
+    <div class="stat-row"><span class="readout-label">潮汐</span><span>第 ${state.tideNumber} 潮</span><span>${PHASE_LABEL[state.phase]}</span></div>
+    <div class="separator"></div><div class="readout-section">净化稳定度</div>
+    <div class="readout-hero"><span class="readout-value">${Math.round(stabilityTracker.getProgress())}%</span><span>${stabilityTracker.isReached() ? '已完成' : '未完成'}</span></div>
+  </div>`;
 }
 
 function growthDetailHtml(): string {
@@ -408,9 +352,9 @@ function growthDetailHtml(): string {
     </div>`;
 
   if (inscribed.length === 0) {
-    body += emptyStateHtml('刻入', '0', '全部上限', String(maxHp), '蜕变');
+    body += emptyStateHtml('尚未刻入改造', '培养藏可消耗薪柴刻入永久改造。', '关闭报告，前往培养藏查看蜕变。');
   } else {
-    body += `<div class="tile-grid">`;
+    body += `<div class="readout-list">`;
     inscribed.forEach((id, i) => {
       const selected = i === cursorIndex;
       const level = growthSystem.getLevel(id);
@@ -424,7 +368,7 @@ function growthDetailHtml(): string {
 
   let html = `<div class="scroll-area">${body}</div>`;
   if (inscribed.length > 0) {
-    html += `<div class="inspect-dock" id="status-inspect-dock">${computeUpgradeInspectHtml(inscribed)}</div>`;
+    html = `<div class="decision-layout"><div class="decision-main scroll-area">${body}</div><div class="decision-aside readout-detail inspect-dock" id="status-inspect-dock">${computeUpgradeInspectHtml(inscribed)}</div></div>`;
   }
   return html;
 }
@@ -433,29 +377,18 @@ function groupLabelHtml(label: string): string {
   return `<div style="font-size:12px;color:${DIM};margin:6px 0 4px;">${label}</div>`;
 }
 
-function emptyStateHtml(
-  why1Label: string,
-  why1Value: string,
-  why2Label: string,
-  why2Value: string,
-  nextAction: string,
-): string {
-  return `<div class="crt-empty">
-    <div class="crt-empty-mark"></div>
-    <div>
-      <div class="crt-empty-why"><span>${why1Label}</span><span>${why1Value}</span></div>
-      <div class="crt-empty-why"><span>${why2Label}</span><span>${why2Value}</span></div>
-      <div class="crt-empty-next"><span class="empty-key">[E]</span> <span>${nextAction}</span></div>
-    </div>
-  </div>`;
+function emptyStateHtml(title: string, reason: string, nextAction: string): string {
+  return `<div class="readout-empty"><div class="readout-section">${title}</div><p class="readout-copy">${reason}</p><p class="readout-note">${nextAction}</p></div>`;
 }
 
-function bindEvents(): void {
+function bindEvents(selectionOnly = false): void {
   if (!panel) return;
 
   panel.querySelector('#status-close-btn')?.addEventListener('click', () => {
     statusPanel.close();
   });
+
+  if (selectionOnly) return;
 
   panel.querySelectorAll<HTMLElement>('.crt-tab[data-tab]').forEach((el) => {
     el.addEventListener('click', () => {
@@ -472,22 +405,22 @@ function bindEvents(): void {
       selectedModule = id;
       activeTab = 0;
       cursorIndex = 0;
-      render();
+      render(true);
     });
   });
 
   panel.querySelectorAll<HTMLElement>('.item-tile[data-inspect-index]').forEach((el) => {
-    el.addEventListener('mouseenter', () => {
+    el.addEventListener('pointermove', () => {
       const idx = parseInt(el.dataset.inspectIndex!, 10);
       if (Number.isNaN(idx) || idx === cursorIndex) return;
       cursorIndex = idx;
-      render();
+      render(true);
     });
     el.addEventListener('click', () => {
       const idx = parseInt(el.dataset.inspectIndex!, 10);
       if (Number.isNaN(idx) || idx === cursorIndex) return;
       cursorIndex = idx;
-      render();
+      render(true);
     });
   });
 }
@@ -506,6 +439,7 @@ function computeResidueInspectHtml(inspectable: Contaminant[], threshold: number
       chargeThreshold: threshold,
       slotState: slotted ? 'slotted' : 'unslotted',
       canEquip: true,
+      readOnly: true,
     });
   }
 
@@ -515,9 +449,9 @@ function computeResidueInspectHtml(inspectable: Contaminant[], threshold: number
     const passiveIndex = contaminantSystem.getSortiePassiveSlotIndex();
     const isPassiveSlot = slotIndex === passiveIndex;
     const hotkeyLabel = isPassiveSlot ? undefined : GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[slotIndex];
-    return buildToolInspectHtml(c, { slotState: 'slotted', hotkeyLabel, canEquip: true });
+    return buildToolInspectHtml(c, { slotState: 'slotted', hotkeyLabel, canEquip: true, readOnly: true });
   }
-  return buildToolInspectHtml(c, { slotState: 'unslotted', canEquip: true });
+  return buildToolInspectHtml(c, { slotState: 'unslotted', canEquip: true, readOnly: true });
 }
 
 function computeUpgradeInspectHtml(inscribed: GrowthUpgradeId[]): string {

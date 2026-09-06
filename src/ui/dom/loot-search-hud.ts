@@ -1,25 +1,6 @@
-/**
- * 翻找交互 HUD（迭代 10 / DEC-109）。
- *
- * in-game-ux 开工闸门（写样式前）：
- * 1. 载体：[E] 提示 = A 世界内装置（随身罩上下文读数，与既有撤离提示同元素位）；
- *    读条 = A 世界内装置（device-plate 族，底中细条）；toast-inline = A 贴源短闪。
- *    屏幕空间挂调用方传入的 overlay 根（练习场 = 课覆盖层；出击 = #dom-ui-root）。
- * 2. 具名参考：[E] Signalis 装置读数 / FTL 贴边决策 / Darkest Dungeon 对照一眼可辨
- *    （不学确认对话框链、OS toast、教程气泡）。
- *    读条 Signalis 随身设备读数 / Barotrauma 按住读条节奏（不学显像管畸变、潜艇仪表密度）。
- *    本屏不像：OS 进度条、居中弹窗、设置页滑块。
- * 3. P0 读条进行中：进度几何 400ms 内可辨。P1 走近即现 `[E] 翻找`。
- *    玩家必须回答：按 E 会做什么（撤离或翻找，同一时刻一条）。
- *    表名/数值/档位分开：键印与动作名两个节点；残渣标签与星等分开。
- * 4. 哪台机器：裂隙随身罩磷光字 / 磷光填充。强调原因 = 装置在报上下文，不是网页高亮。
- * 5. 复用 Kit：`.device-plate`、`.toast-inline`、Courier 12/13、teal 谱、warm-dim 薪柴。
- *    禁止圆角卡片、投影、紫谱、通用软件词。
- * 6. 打开：进入 48px 且对象可见 → 提示；按住 E → 装置读数；完成 → toast。不居中、不阻断。
- *
- * 画完自检见文件末。机械层已扫；审美待人终审。
+/** Shared bottom-edge search/extraction readout. Timing and eligibility belong
+ * to the caller; this component only displays the supplied prompt and progress.
  */
-
 import type { ContaminantRarity } from '@/types/game-types';
 import { t } from '@/i18n';
 import {
@@ -64,6 +45,7 @@ export class LootSearchHud {
     if (options?.showKindling) {
       const kindling = document.createElement('div');
       kindling.id = 'loot-search-kindling';
+      kindling.className = 'device-plate';
       const kindlingLabel = document.createElement('span');
       kindlingLabel.className = 'kindling-label';
       kindlingLabel.textContent = t('hud.kindling.label');
@@ -78,6 +60,7 @@ export class LootSearchHud {
 
     const prompt = document.createElement('div');
     prompt.id = 'loot-search-prompt';
+    prompt.className = 'device-plate';
     const key = document.createElement('span');
     key.className = 'prompt-key';
     const action = document.createElement('span');
@@ -148,9 +131,9 @@ export class LootSearchHud {
     showToastInline(`+${amount}`, {
       host: this.root,
       skipQueue: true,
-      position: 'top:12px;right:70px;',
+      position: 'top:66px;right:12px;',
       color: KINDLING_COLOR,
-      extraStyle: 'font-size:13px;font-weight:bold;',
+      extraStyle: 'font-size:12px;background:#0f1114;padding:4px 8px;',
       durationMs: 800,
     });
   }
@@ -163,9 +146,9 @@ export class LootSearchHud {
       {
         host: this.root,
         skipQueue: true,
-        position: 'top:32px;right:12px;',
+        position: 'top:98px;right:12px;',
         color,
-        extraStyle: 'font-size:13px;',
+        extraStyle: 'font-size:12px;background:#0f1114;padding:4px 8px;',
         durationMs: 1200,
       },
     );
@@ -186,16 +169,3 @@ export class LootSearchHud {
     this.channelVisible = false;
   }
 }
-
-/*
- * 画完自检（skill）：
- * 1. 载体 A；挂调用方 overlay 根，不挂 body、不随 camera zoom 角锚。
- * 2. 参考见文件头；本屏不像 OS 进度条 / 居中弹窗 / 设置页滑块。
- * 3. P0 读条：装置细条；P1 提示 `[E]` + 动作名分节点。
- * 4. 随身罩磷光。无投影/圆角「好看」。
- * 5. 无不可用变灰态（不可见 = 无提示）。
- * 6. 薪柴 vs 残渣靠通道 + 星等，不靠紫谱。表名数值档位分开。
- * 7. 走近打开；无阻断确认。
- * 8. 词来自术语表；键印 = 绑定键 E。
- * 机械层已扫；审美待人终审。
- */

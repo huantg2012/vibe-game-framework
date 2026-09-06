@@ -2,12 +2,14 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-09-05
+last-modified: 2026-09-07
 last-closed-slice: 9
-note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（净化点 UX 收口）进行中（DEC-118，2026-09-05）**：P5 / P6 / P7。机械层已交，波 8 等人 `#purif` 终审。P3 / P4 仍挂起。不标 COMPLETE。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
+note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
 ---
 
 # Roadmap
+
+**2026-09-07：迭代 11 COMPLETE（用户验收结单，DEC-119）。** 用户明确要求“这个问题结单，更新进度，提交”。已锁定轻量HUD、真实装置参与的六点交互、无框存续报告/暂停/确认/结算、同族小字号及主菜单宣传图。R6菜单补齐后本次UX/UI问题结单；构建、实景审查和已执行的输入回归见 `docs/qa/iteration-11.md`，保留其中未实测项的说明。P3/P4世界表现仍挂起；迭代5活指针与I5-T人审状态不变，不开I5-C。
 
 > Foundation 已完成（2026-07-24）。Foundation 不是 Slice，故"已完成的 Slices"从 Slice 1 开始。
 > 自 DEC-072 起：本游戏不再规划下一个 Slice。完善按需走「游戏迭代」（活状态 `docs/progress/current-iteration.md`）。已完成 Slices 表不动。
@@ -31,11 +33,17 @@ note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5�
 
 ## 当前工作单元（DEC-072）
 
-**无进行中 Slice。当前：迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同：`docs/tasks/iteration-9.md`。**迭代 10 COMPLETE（2026-08-31）。** **迭代 11（净化点 UX 收口）进行中（DEC-118）。** 机械层已交，波 8 等人 `#purif` 终审。不代勾好看。不标 COMPLETE。净化点世界内交互物已翻生产（DEC-111–117）。P3 / P4 仍挂起。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
+**无进行中 Slice。当前：迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同：`docs/tasks/iteration-9.md`。**迭代 10 COMPLETE（2026-08-31）。** **迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）。** 净化点世界内交互物已翻生产（DEC-111–117）。P3 / P4 仍挂起。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
 
 DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。撤离多样性不做。
 
 Slice 9 之后表现收口（不是迭代、不改编号）：DEC-069 把裂隙地面污染从矩形平涂改成崩坏簇，并接到出击烤漆。**DEC-104 / I8-G 已下线其氛围簇生产签名。** DEC-070：整团胀缩呼吸技术已锁（人眼 PASS）。DEC-071：出击已挂同一套活层；应用改为丙漆活层。迷雾下亮度人终审 PASS（2026-08-28）。
+
+## 迭代 11 当前分批（DEC-119）
+
+用户已授权全游戏 UX/UI 及必要重构。本轮禁用 `in-game-ux` skill；旧净化点限定与 CRT 共享基元冻结由本次授权覆盖。R0 视觉定向进行中，随后 R1 共享基元、R2a/b 净化点决策与库存、R3 裂隙行动、R4a/b 结算与元菜单、R5 全循环回归。每子批独立可看、可回归，最多 2 轮内审修正；详细责任见 `docs/tasks/iteration-11.md`。
+
+阅读与沉浸效果必须在同批实际运行画面检验；若不成立，回该批 art 规格修改，不改玩法收益来掩盖问题。**迭代 11 保持 ACTIVE，尚未获本轮人 PASS。** 不重排迭代 5，不开 I5-C；P3/P4 世界表现仍独立挂起。
 
 ## 已锁死、不再开新编号的 Slice（DEC-064）
 

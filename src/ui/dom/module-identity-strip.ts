@@ -1,8 +1,7 @@
 /**
  * Shared 三模块身份带 (Kit §A8.3 / I11-B4a).
  *
- * Visual must match the live status/allocation strip: name + bar + hp / maxHp.
- * No effect percentages. No new skin.
+ * Shared name, hp / maxHp and bar with explicit selected and actionable states.
  */
 
 import { gameState } from '@/managers/game-state';
@@ -18,22 +17,22 @@ export const MODULE_LABEL: Record<ModuleType, string> = {
 
 /** 走近亮：名。净化器名走结构亮字，不跟条色抢 teal。 */
 export const NAME_ACTIVE: Record<ModuleType, string> = {
-  CORE: '#c8cdd4',
-  STORAGE: '#c4873a',
-  PURIFIER: '#c8cdd4',
+  CORE: '#b5bbaf',
+  STORAGE: '#b29a73',
+  PURIFIER: '#b5bbaf',
 };
 
 /** A5-5 条旁数字。 */
 export const NUM_ACTIVE: Record<ModuleType, string> = {
-  CORE: '#c8cdd4',
-  STORAGE: '#c4873a',
-  PURIFIER: '#1aad96',
+  CORE: '#b5bbaf',
+  STORAGE: '#b29a73',
+  PURIFIER: '#729887',
 };
 
 export const BAR_COLOR: Record<ModuleType, string> = {
-  CORE: '#c8cdd4',
-  STORAGE: '#c4873a',
-  PURIFIER: '#1aad96',
+  CORE: '#b5bbaf',
+  STORAGE: '#b29a73',
+  PURIFIER: '#729887',
 };
 
 export const DIM = '#8a8f96';
@@ -49,7 +48,7 @@ export interface IdentityStripOpts {
 
 export function identityBandHtml(opts: IdentityStripOpts): string {
   const cells = MODULE_ORDER.map((id) => identityCellHtml(id, opts)).join('');
-  return `<div class="panel-fixed"><div style="display:flex;flex-direction:row;gap:8px;margin-bottom:8px;">${cells}</div></div>`;
+  return `<div class="panel-fixed module-identity-band">${cells}</div>`;
 }
 
 function identityCellHtml(id: ModuleType, opts: IdentityStripOpts): string {
@@ -59,24 +58,17 @@ function identityCellHtml(id: ModuleType, opts: IdentityStripOpts): string {
   const active = opts.activeId === id;
   const selected = opts.selectedId === id;
   const nameColor = active ? NAME_ACTIVE[id] : DIM;
-  const nameSize = active ? '13px' : '12px';
   const numColor = active ? NUM_ACTIVE[id] : DIM;
-  const barAlpha = active ? '1' : '0.45';
-  const underline = selected && !active
-    ? 'border-bottom:1px solid #5a5f66;'
-    : 'border-bottom:1px solid transparent;';
-  const dataAttr = opts.clickable ? ` data-module-id="${id}"` : '';
-  return `<div${dataAttr} style="flex:1;min-width:0;">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-      <span style="font-size:${nameSize};color:${nameColor};${underline}">${MODULE_LABEL[id]}</span>
-      <span style="font-size:12px;">
-        <span style="color:${numColor};">${mod.hp}</span>
-        <span style="color:${DIM};"> / </span>
-        <span style="color:${numColor};">${mod.maxHp}</span>
-      </span>
+  const tag = opts.clickable ? 'button' : 'div';
+  const dataAttr = opts.clickable ? ` type="button" data-module-id="${id}" aria-pressed="${selected}"` : '';
+  const stateClass = active ? ' is-active' : selected ? ' is-selected' : '';
+  return `<${tag}${dataAttr} class="module-identity-cell${stateClass}" style="--module-color:${BAR_COLOR[id]};">
+    <div class="module-identity-heading">
+      <span class="module-identity-name" style="color:${nameColor};">${MODULE_LABEL[id]}${opts.clickable ? '<span class="module-identity-affordance" aria-hidden="true">›</span>' : ''}</span>
+      <span class="module-identity-number" style="color:${numColor};">${mod.hp}<span style="color:${DIM};"> / </span>${mod.maxHp}</span>
     </div>
     <div class="stat-bar" style="width:100%;">
-      <div class="stat-bar-fill" style="width:${pct}%;background:${BAR_COLOR[id]};opacity:${barAlpha};"></div>
+      <div class="stat-bar-fill" style="width:${pct}%;background:${BAR_COLOR[id]};"></div>
     </div>
-  </div>`;
+  </${tag}>`;
 }

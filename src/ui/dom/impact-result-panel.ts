@@ -59,7 +59,7 @@ let timer: ReturnType<typeof setTimeout> | null = null;
 let onDoneCallback: (() => void) | null = null;
 
 const MODULE_LABELS: Record<string, string> = { CORE: '核心', STORAGE: '储藏', PURIFIER: '净化器' };
-const MODULE_COLORS: Record<string, string> = { CORE: '#c8cdd4', STORAGE: '#c4873a', PURIFIER: '#1aad96' };
+const MODULE_COLORS: Record<string, string> = { CORE: '#b5bbaf', STORAGE: '#b29a73', PURIFIER: '#729887' };
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -81,27 +81,11 @@ export const impactResultPanel = {
 
     onDoneCallback = onDone;
     panel = createCrtPanel('impact-result-panel');
-    panel.style.animation = 'impact-shake 0.3s ease-out';
-
-    // Inject keyframe if not already present
-    if (!document.getElementById('impact-shake-style')) {
-      const style = document.createElement('style');
-      style.id = 'impact-shake-style';
-      style.textContent = `
-        @keyframes impact-shake {
-          0%, 100% { transform: translateX(0); }
-          20% { transform: translateX(-4px); }
-          40% { transform: translateX(4px); }
-          60% { transform: translateX(-2px); }
-          80% { transform: translateX(2px); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
+    panel.classList.add('scene-menu', 'scene-menu-impact');
 
     const root = getDomUiRoot();
     const backdrop = document.createElement('div');
-    backdrop.className = 'game-panel-backdrop';
+    backdrop.className = 'game-panel-backdrop scene-menu-backdrop';
     backdrop.id = 'impact-backdrop';
     root.appendChild(backdrop);
 
@@ -143,13 +127,14 @@ function buildHtml(
   options: ImpactPanelOptions,
 ): string {
   const severity = options.actualSeverity;
-  let html = `<div class="panel-title" style="color:#cc3333;">冲击结算</div>`;
+  let html = `<div class="panel-title">冲击之后</div>`;
   html += `<div class="scroll-area">`;
-  html += `<div class="stat-row">
-    <span class="stat-label">冲击</span>
-    <span class="stat-value" style="color:#cc3333;">x${intensity.toFixed(2)}</span>
-    ${severity ? `<span style="color:${severityColor(severity)};">${SEVERITY_LABEL[severity]}</span>` : ''}
-  </div>`;
+  const worst = damages.reduce<ImpactDamageEntry | undefined>((current, entry) =>
+    !current || entry.damage > current.damage ? entry : current, undefined);
+  html += `<div class="readout-hero"><span class="readout-label">${worst ? MODULE_LABELS[worst.moduleId] ?? worst.moduleId : '装置'} · 最大损伤</span>
+    <strong>${worst ? `−${worst.damage}` : '0'}</strong></div>
+    <div class="readout-note">冲击强度 x${intensity.toFixed(2)}${severity ? ` / ${SEVERITY_LABEL[severity]}` : ''}</div>
+    <div class="section-title">装置完整度</div>`;
 
   const base = options.baseDamagePerModule;
   const maxDmg = Math.max(
@@ -157,34 +142,27 @@ function buildHtml(
     1,
   );
   for (const d of damages) {
-    const color = MODULE_COLORS[d.moduleId] ?? '#c8cdd4';
+    const color = MODULE_COLORS[d.moduleId] ?? '#b5bbaf';
     const label = MODULE_LABELS[d.moduleId] ?? d.moduleId;
     const barPct = Math.round((d.damage / maxDmg) * 100);
     const baseDmg = base?.[d.moduleId] ?? d.damage;
-    const actualColor = d.moduleId === 'STORAGE' ? '#c4873a' : d.moduleId === 'PURIFIER' ? '#1aad96' : '#cc3333';
     html += `<div class="dmg-row">
       <span class="stat-label" style="color:${color};">${label}</span>
-      <span class="stat-label">基础</span>
-      <span class="stat-value">${baseDmg}</span>
+      <span class="stat-value">${d.newHp + d.damage}</span>
       <span>→</span>
-      <span class="stat-label">实际</span>
-      <span class="stat-value" style="color:${actualColor};">${d.damage}</span>
+      <span class="stat-value">${d.newHp}</span>
+      <span class="readout-note">损伤</span><span class="stat-value">−${d.damage}</span>
       <div class="dmg-bar-wrap">
-        <div class="dmg-bar-fill" style="width:${barPct}%;background:#cc3333;"></div>
+        <div class="dmg-bar-fill" style="width:${barPct}%;background:#9b6b5b;"></div>
       </div>
-    </div>`;
+    </div>${baseDmg !== d.damage ? `<div class="readout-note">${label}：基础损伤 ${baseDmg} → 实际损伤 ${d.damage}</div>` : ''}`;
   }
 
   const defenseResult = options.defenseResult;
 
-  const DEFENSE_SLOT_ROWS = 4;
   const disclosures = defenseResult?.slotDisclosures ?? [];
-  for (let i = 0; i < DEFENSE_SLOT_ROWS; i++) {
-    const sd = disclosures[i];
-    if (!sd) {
-      html += `<div class="stat-row" style="min-height:1.3em;"></div>`;
-      continue;
-    }
+  if (disclosures.length > 0) html += '<div class="section-title">供奉作用</div>';
+  for (const sd of disclosures) {
     const name = getDefenseName(sd.type);
     const facts = buildSlotFacts(sd);
     html += `<div class="stat-row">
@@ -205,7 +183,7 @@ function buildHtml(
         <span class="stat-value">${c.after}</span>
         <span>/</span>
         <span class="stat-value">${c.threshold}</span>
-        ${c.transformed ? `<span>转化</span><span class="stat-value" style="color:#1aad96;">${getToolName(c.type)}</span>` : ''}
+        ${c.transformed ? `<span>转化</span><span class="stat-value" style="color:#729887;">${getToolName(c.type)}</span>` : ''}
       </div>`;
     }
   }
@@ -229,7 +207,7 @@ function buildHtml(
         html += `<div class="stat-row">
           <span class="stat-label">本次残留</span>
           <span>${row.fact}</span>
-          ${row.value ? `<span class="stat-value" style="color:#1aad96;">${row.value}</span>` : ''}
+          ${row.value ? `<span class="stat-value" style="color:#729887;">${row.value}</span>` : ''}
           ${row.duration ? `<span>${row.duration}</span>` : ''}
           ${row.src ? `<span>←</span><span>${row.src}</span>` : ''}
         </div>`;
@@ -254,7 +232,7 @@ function buildHtml(
   html += `</div>`;
 
   html += `<div class="key-hint-bar">
-    <span id="impact-close-btn"><span class="key">Enter</span> / <span class="key">Esc</span> 合上</span>
+    <button class="action-btn" id="impact-close-btn"><span class="key">Enter</span> / <span class="key">Esc</span> 合上</button>
   </div>`;
 
   return html;
@@ -269,8 +247,8 @@ interface SlotFact {
 
 function buildSlotFacts(sd: SlotDisclosure): SlotFact[] {
   const facts: SlotFact[] = [];
-  const teal = '#1aad96';
-  const warm = '#c4873a';
+  const teal = '#729887';
+  const warm = '#b29a73';
   const mid = '#8a8f96';
   const warn = '#b89040';
 
@@ -322,16 +300,16 @@ function buildForecastHtml(options: ImpactPanelOptions): string | null {
   const matched = predicted.targetId === options.actualPrimaryModuleId
     && predicted.severity === options.actualSeverity;
 
-  const predictedColor = MODULE_COLORS[predicted.targetId] ?? '#c8cdd4';
-  const actualColor = MODULE_COLORS[options.actualPrimaryModuleId] ?? '#c8cdd4';
+  const predictedColor = MODULE_COLORS[predicted.targetId] ?? '#b5bbaf';
+  const actualColor = MODULE_COLORS[options.actualPrimaryModuleId] ?? '#b5bbaf';
 
-  let rest = `<span style="font-size:13px;color:${predictedColor};">${predictedModule}</span>
+  let rest = `<span style="font-size:12px;color:${predictedColor};">${predictedModule}</span>
     <span style="font-size:12px;color:${severityColor(predicted.severity)};">${SEVERITY_LABEL[predicted.severity]}</span>`;
   if (matched) {
     rest += `<span style="font-size:12px;color:#8a8f96;">与实际一致</span>`;
   } else {
     rest += `<span style="font-size:12px;color:#8a8f96;">实际</span>
-      <span style="font-size:13px;color:${actualColor};">${actualModule}</span>
+      <span style="font-size:12px;color:${actualColor};">${actualModule}</span>
       <span style="font-size:12px;color:${severityColor(options.actualSeverity)};">${SEVERITY_LABEL[options.actualSeverity]}</span>`;
   }
 
@@ -349,7 +327,7 @@ function buildPhaseChangeNotice(info: PhaseChangeInfo): { text: string; color: s
   // (pressure easing is "fading to neutral", not "turning green" — A2).
   if (info.to === 'crest') return { text: '潮峰期。冲击强度维持峰值。', color: '#cc3333' };
   if (info.to === 'ebb') return { text: '退潮期。压力暂缓。', color: '#8a8f96' };
-  return { text: `第${info.newTideNumber}潮汐。边界压力上升。`, color: '#1aad96' };
+  return { text: `第${info.newTideNumber}潮汐。边界压力上升。`, color: '#729887' };
 }
 
 // ---------------------------------------------------------------------------

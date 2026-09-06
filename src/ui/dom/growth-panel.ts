@@ -1,8 +1,6 @@
 /**
- * GrowthPanel — 蜕变墙机（载体 B）。
- *
- * I11-B4c：钉顶三格身份带（三格都暗，overlap 是培养藏）+ 七张卡为主 + 底键印。
- * 无顶 Tab、无出击预估、卡栅不走空状态三件套。挂 #dom-ui-root。
+ * 蜕变：改造与加厚列表、选中详情及消耗；保留既有购买与存档流程。
+ * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -15,7 +13,8 @@ import { saveManager } from '@/managers/save-manager';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { GameEvent } from '@/types/events';
 import type { GrowthUpgradeId } from '@/types/game-types';
-import { identityBandHtml } from './module-identity-strip';
+import { renderPanelContent } from './panel-render-state';
+import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView, showToastStamp } from './panel-styles';
 
 // Upgrade display config (name/icon/effect label) is CSV-id-driven and shared with
@@ -32,6 +31,7 @@ const PANEL_CARD_COUNT = UPGRADES.length + 1;
 // ---------------------------------------------------------------------------
 
 let panel: HTMLDivElement | null = null;
+let cleanupWorldInteraction: (() => void) | null = null;
 let onCloseCallback: (() => void) | null = null;
 
 // Keyboard cursor (IA §0.4 / §S7: ↑↓ 选卡 · Enter 刻入或加厚 · Esc 离开).
@@ -47,11 +47,11 @@ export const growthPanel = {
     return panel !== null;
   },
 
-  open(onClose?: () => void): void {
+  open(onClose?: () => void, context?: WorldInteractionContext): void {
     if (panel) return;
     onCloseCallback = onClose ?? null;
     cursorCard = 0;
-    createPanel();
+    createPanel(context);
     audioManager.playSFX('sfx-ui-open');
   },
 
@@ -68,7 +68,7 @@ export const growthPanel = {
 // Panel creation
 // ---------------------------------------------------------------------------
 
-function createPanel(): void {
+function createPanel(context?: WorldInteractionContext): void {
   panel = createCrtPanel('growth-panel');
 
   const root = getDomUiRoot();
@@ -79,10 +79,15 @@ function createPanel(): void {
 
   render();
   root.appendChild(panel);
+  if (context) {
+    cleanupWorldInteraction = bindWorldInteraction(panel, backdrop, context, '培养藏', 'growth');
+  }
   document.addEventListener('keydown', onKeyDown);
 }
 
 function destroyPanel(): void {
+  cleanupWorldInteraction?.();
+  cleanupWorldInteraction = null;
   document.removeEventListener('keydown', onKeyDown);
   if (panel) {
     panel.remove();
@@ -110,7 +115,7 @@ function onKeyDown(e: KeyboardEvent): void {
     e.preventDefault();
     const dir = e.key === 'ArrowDown' ? 1 : -1;
     cursorCard = (cursorCard + dir + PANEL_CARD_COUNT) % PANEL_CARD_COUNT;
-    render();
+    render(true, true);
     return;
   }
 
@@ -140,161 +145,69 @@ function thickenSelected(): boolean {
 
 function thickenEffectHtml(currentMax: number, nextMax: number | null, isMaxed: boolean): string {
   const name = '<span>全部上限</span>';
-  const cur = `<span style="color:#c8cdd4;margin-left:6px;">${currentMax}</span>`;
+  const cur = `<span style="color:#b5bbaf;margin-left:6px;">${currentMax}</span>`;
   if (isMaxed || nextMax === null) return `${name}${cur}`;
-  return `${name}${cur}<span style="color:#8a8f96;margin:0 4px;">→</span><span style="color:#c8cdd4;">${nextMax}</span>`;
+  return `${name}${cur}<span style="color:#8a8f96;margin:0 4px;">→</span><span style="color:#b5bbaf;">${nextMax}</span>`;
 }
 
-function renderCard(opts: {
-  id: string;
-  index: number;
-  name: string;
-  icon: string;
-  level: number;
-  maxLevel: number;
-  cost: number | null;
-  canAfford: boolean;
-  isMaxed: boolean;
-  effectHtml: string;
-  reserve: number;
-}): string {
-  const { id, index, name, icon, level, maxLevel, cost, canAfford, isMaxed, effectHtml, reserve } = opts;
-
-  let dots = '';
-  for (let d = 0; d < maxLevel; d++) {
-    if (d < level) {
-      dots += '<span class="dot-filled">●</span>';
-    } else {
-      dots += '<span class="dot-empty">○</span>';
-    }
-  }
-
-  let cardClass = 'upgrade-card';
-  if (isMaxed) {
-    cardClass += ' card-maxed';
-  } else if (!canAfford) {
-    cardClass += ' card-locked';
-  }
-  const selected = cursorCard === index;
-  if (selected) cardClass += ' card-selected';
-  const cursor = selected ? '<span style="color:#c4873a;font-weight:bold;margin-right:4px;">&gt;</span>' : '';
-
-  const iconBorder = isMaxed ? '#8a5c2a' : (canAfford ? '#c4873a' : '#2a2d32');
-  const iconColor = isMaxed ? '#8a5c2a' : (canAfford ? '#c4873a' : '#8a8f96');
-  const nameColor = isMaxed ? '#8a5c2a' : '#c8cdd4';
-  const shortfall = !isMaxed && cost !== null && !canAfford ? cost - reserve : 0;
-
-  let html = `<div class="${cardClass}" data-id="${id}">
-      <div class="card-icon" style="border-color:${iconBorder};color:${iconColor};">${icon}</div>
-      <div class="card-body">
-        <div class="card-name" style="color:${nameColor};">${cursor}${name}</div>
-        <div class="card-dots">${dots}</div>
-        <div style="font-size:12px;color:#8a8f96;margin-top:1px;">${effectHtml}</div>
-      </div>`;
-
-  if (isMaxed) {
-    html += `<div style="font-size:13px;color:#8a5c2a;align-self:flex-end;">已至上限</div>`;
-  } else if (shortfall > 0) {
-    html += `<div class="card-cost" style="align-self:flex-end;">
-        <span style="color:#c4873a;font-weight:bold;">${cost}</span>
-        <span style="color:#8a8f96;"> 还差 </span>
-        <span style="color:#c4873a;font-weight:bold;">${shortfall}</span>
-      </div>`;
-  } else {
-    html += `<div class="card-cost" style="align-self:flex-end;"><span class="affordable">${cost}</span></div>`;
-  }
-
-  html += `</div>`;
-  return html;
-}
-
-function render(): void {
+function render(selectionOnly = false, revealSelection = false): void {
   if (!panel) return;
-
   const reserve = gameState.getKindlingReserve();
-  const commitLabel = thickenSelected() ? '加厚' : '刻入';
-
-  let html = `<div class="panel-title">蜕变</div>`;
-  html += identityBandHtml({ activeId: null });
-  html += `<div class="panel-fixed">
-    <div style="display:flex;align-items:baseline;gap:12px;margin:4px 0 8px;">
-      <span style="font-size:12px;color:#8a8f96;">储备</span>
-      <span style="font-size:16px;color:#c4873a;font-weight:bold;">${reserve}</span>
-    </div>
-  </div>`;
-
-  html += `<div class="scroll-area">`;
-  html += `<div class="card-grid">`;
-
-  for (let i = 0; i < UPGRADES.length; i++) {
-    const upgrade = UPGRADES[i]!;
+  const entries = UPGRADES.map((upgrade) => {
     const level = growthSystem.getLevel(upgrade.id);
     const maxLevel = growthSystem.getMaxLevel(upgrade.id);
-    const isMaxed = level >= maxLevel;
-    const cost = growthSystem.getCost(upgrade.id);
-    const canAfford = growthSystem.canAfford(upgrade.id, reserve);
-    html += renderCard({
-      id: upgrade.id,
-      index: i,
-      name: upgrade.name,
-      icon: upgrade.icon,
-      level,
-      maxLevel,
-      cost,
-      canAfford,
-      isMaxed,
-      effectHtml: upgrade.effectLabel(level, maxLevel),
-      reserve,
-    });
-  }
-
-  const tier = gameState.getModuleMaxHpTier();
-  const maxTier = GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_TIERS;
-  const currentMax = gameState.getModuleMaxHp();
-  const thickenCost = gameState.getNextModuleMaxHpCost();
-  const nextMax = thickenCost === null
-    ? null
-    : currentMax + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER;
-  const thickenMaxed = thickenCost === null;
-  html += renderCard({
-    id: THICKEN_ID,
-    index: UPGRADES.length,
-    name: '加厚',
-    icon: '◆',
-    level: tier,
-    maxLevel: maxTier,
-    cost: thickenCost,
-    canAfford: gameState.canRaiseModuleMaxHp(),
-    isMaxed: thickenMaxed,
-    effectHtml: thickenEffectHtml(currentMax, nextMax, thickenMaxed),
-    reserve,
+    return { id: upgrade.id as string, name: upgrade.name, level, maxLevel,
+      cost: level >= maxLevel ? null : growthSystem.getCost(upgrade.id),
+      effect: upgrade.effectLabel(level, maxLevel) };
   });
-
-  html += `</div>`; // end card-grid
-  html += `</div>`; // end scroll-area
-  html += `<div class="key-hint-bar">
-    <span><span class="key">↑</span> <span class="key">↓</span> 选卡</span>
-    <span><span class="key">Enter</span> ${commitLabel}</span>
-    <span id="growth-close-btn"><span class="key">Esc</span> 离开</span>
-  </div>`;
-
-  panel.innerHTML = html;
-  scrollFocusedIntoView(panel);
-  wireEvents();
+  const tier = gameState.getModuleMaxHpTier();
+  const maxHp = gameState.getModuleMaxHp();
+  const cost = gameState.getNextModuleMaxHpCost();
+  entries.push({ id: THICKEN_ID, name: '加厚', level: tier,
+    maxLevel: GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_TIERS, cost,
+    effect: thickenEffectHtml(maxHp, cost === null ? null : maxHp + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER, cost === null) });
+  const selected = entries[cursorCard]!;
+  const available = selected.cost !== null && reserve >= selected.cost;
+  const reason = selected.cost === null ? '已至上限。' : available ? '消耗薪柴后永久生效。'
+    : `薪柴不足，还差 ${selected.cost - reserve}。`;
+  const list = entries.map((entry, index) => `<div class="upgrade-card${index === cursorCard ? ' card-selected' : ''}${entry.cost === null ? ' card-maxed' : entry.cost > reserve ? ' card-locked' : ''}" data-id="${entry.id}">
+    <div class="card-body"><div class="card-name">${entry.name}</div><div class="readout-note">${entry.level} / ${entry.maxLevel}${entry.cost === null ? ' · 已至上限' : ''}</div></div>
+    ${entry.cost !== null ? `<div class="card-cost">${entry.cost}<span class="readout-label"> 薪柴</span></div>` : ''}
+  </div>`).join('');
+  const html = `<div class="panel-heading"><div class="panel-title">蜕变</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>
+    <div class="decision-layout"><div class="decision-main scroll-area readout-list">${list}</div>
+      <div class="decision-aside readout-detail"><div class="readout-section">${selected.name}</div>
+        <div class="readout-hero"><span class="readout-label">${thickenSelected() ? '已加厚档位' : '已刻入等级'}</span><span class="readout-value">${selected.level} / ${selected.maxLevel}</span></div>
+        <div class="readout-copy">${selected.effect}</div><div class="separator"></div>
+        ${selected.cost === null ? '' : `<div class="stat-row"><span class="readout-label">本次消耗</span><span class="readout-value">${selected.cost}</span><span>薪柴</span></div>`}
+        ${available ? `<div class="readout-note">完成后剩余 ${reserve - selected.cost!} 薪柴</div>` : ''}
+        <p class="readout-note">${reason}</p>
+        ${thickenSelected() ? '<p class="readout-note">提高全部装置的完整度上限。</p>' : ''}
+      </div></div>
+    <div class="key-hint-bar"><span><span class="key">↑ ↓</span> 选择</span>
+      ${available ? `<span id="growth-confirm-btn"><span class="key">Enter</span> ${thickenSelected() ? '加厚' : '刻入'}</span>` : `<span>${selected.cost === null ? '已至上限' : '薪柴不足'}</span>`}
+      <span id="growth-close-btn"><span class="key">Esc</span> 离开</span></div>`;
+  renderPanelContent(panel, html, selectionOnly);
+  if (revealSelection) scrollFocusedIntoView(panel);
+  wireEvents(selectionOnly);
 }
 
-function wireEvents(): void {
+function wireEvents(selectionOnly = false): void {
   if (!panel) return;
+
+  panel.querySelector('#growth-confirm-btn')?.addEventListener('click', commitSelectedCard);
 
   panel.querySelector('#growth-close-btn')?.addEventListener('click', () => {
     growthPanel.close();
   });
 
+  if (selectionOnly) return;
+
   panel.querySelectorAll('.upgrade-card').forEach((card, index) => {
-    card.addEventListener('mouseenter', () => {
+    card.addEventListener('pointermove', () => {
       if (cursorCard === index) return;
       cursorCard = index;
-      render();
+      render(true);
     });
     card.addEventListener('click', () => {
       const el = card as HTMLElement;
@@ -359,12 +272,12 @@ function showPurchaseFlash(name: string, newLevel: number, unit: '级' | '档'):
   }
 
   const flash = document.createElement('div');
-  flash.style.cssText = 'font-size:13px;color:#e0a848;text-align:center;padding:4px;animation:growth-flash 2s ease-out forwards;';
+  flash.style.cssText = 'font-size:12px;color:#b29a73;text-align:center;padding:4px;animation:growth-flash 2s ease-out forwards;';
   flash.textContent = `${name} → 第${newLevel}${unit}`;
 
-  const title = panel.querySelector('.panel-title');
-  if (title && title.nextSibling) {
-    panel.insertBefore(flash, title.nextSibling);
+  const heading = panel.querySelector('.panel-heading');
+  if (heading) {
+    heading.after(flash);
   } else {
     panel.prepend(flash);
   }

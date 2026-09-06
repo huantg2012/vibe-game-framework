@@ -266,6 +266,8 @@ function drawInteractionPoint(
 // Scene
 // ---------------------------------------------------------------------------
 
+export type WorldInteractionTarget = 'CORE' | 'STORAGE' | 'PURIFIER' | 'defense' | 'growth' | 'rift';
+
 export class PurificationScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
@@ -302,6 +304,15 @@ export class PurificationScene extends Phaser.Scene {
   // 裂隙入口外形对照（实测用）：4/5/7/8/9 -> 卡 4 地缝（对照）/ 5 击裂（生产默认）/ 7 错位 / 8 掀皮 / 9 网裂
   private entranceVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
+  private transitionDelay: Phaser.Time.TimerEvent | null = null;
+  private transitionOverlay: HTMLDivElement | null = null;
+  private interactionFocusReturn: { scrollX: number; scrollY: number; zoom: number } | null = null;
+  private interactionFocusTween: Phaser.Tweens.Tween | null = null;
+  private readonly interactionWorldPoint = { x: 0, y: 0 };
+  private interactionModule: PurificationModuleEntity | null = null;
+  private coreRepairGlow: Phaser.GameObjects.Image | null = null;
+  private readonly interactionScreenAnchor = { x: 0, y: 0 };
+  private shuttingDown = false;
   private panelClosedAt = 0;
   private lastStepAt = -1000;
   private lastBoundaryPulseAt = -10000;
@@ -316,6 +327,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean }): void {
+    this.shuttingDown = false;
     // Determine if this is a return from rift (vs. menu/load entry)
     const isReturnFromRift = !data?.fromMenu && data?.kindlingGained !== undefined;
 
@@ -761,7 +773,7 @@ export class PurificationScene extends Phaser.Scene {
       } else if (statusPanel.isOpen()) {
         statusPanel.close();
         this.panelClosedAt = this.time.now;
-      } else if (!pauseMenu.isOpen() && this.time.now - this.panelClosedAt > 150) {
+      } else if (!this.interactionFocusReturn && !pauseMenu.isOpen() && this.time.now - this.panelClosedAt > 150) {
         pauseMenu.open(this);
       }
     }
@@ -885,31 +897,118 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private isAnyPanelOpen(): boolean {
-    return allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen() || statusPanel.isOpen() || impactResultPanel.isOpen();
+    return this.interactionFocusReturn !== null || allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen() || statusPanel.isOpen() || impactResultPanel.isOpen();
   }
 
-  private openAllocationPanel(moduleId: string): void {
+  private openAllocationPanel(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER'): void {
+    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    const mod = moduleId === 'CORE' ? this.coreModule : moduleId === 'STORAGE' ? this.storageModule : this.purifierModule;
+    this.focusWorldInteraction(mod, 320, mod);
+    allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
+  }
+
+  /** Review controls and proximity interaction share the same production paths. */
+  public openWorldInteraction(target: WorldInteractionTarget): void {
+    switch (target) {
+      case 'CORE': case 'STORAGE': case 'PURIFIER': this.openAllocationPanel(target); break;
+      case 'defense': this.openDefensePanel(); break;
+      case 'growth': this.openGrowthPanel(); break;
+      case 'rift': this.enterRift(); break;
+    }
+  }
+
+  /** A review screen switch must not leave a restore tween in a paused scene. */
+  public cancelWorldInteraction(): void {
+    this.restoreInteractionFocus(true);
+  }
+
+  public openCoreAllocationSample(): void {
+    this.openWorldInteraction('CORE');
+  }
+
+  public cancelCoreAllocationSample(): void {
+    this.cancelWorldInteraction();
+  }
+
+  private readonly getInteractionScreenAnchor = (): { x: number; y: number } => {
+    const camera = this.cameras.main;
+    const originX = camera.width * camera.originX;
+    const originY = camera.height * camera.originY;
+    // Phaser zooms around the viewport origin, not its top-left corner.
+    this.interactionScreenAnchor.x = camera.x + originX + (this.interactionWorldPoint.x - camera.scrollX - originX) * camera.zoom;
+    this.interactionScreenAnchor.y = camera.y + originY + (this.interactionWorldPoint.y - camera.scrollY - originY) * camera.zoom;
+    return this.interactionScreenAnchor;
+  };
+
+  private focusWorldInteraction(point: Readonly<{ x: number; y: number }>, screenX: number, mod: PurificationModuleEntity | null = null): void {
     this.player.setInputEnabled(false);
-    allocationPanel.open(moduleId, () => {
-      this.player.setInputEnabled(true);
+    this.interactionWorldPoint.x = point.x;
+    this.interactionWorldPoint.y = point.y;
+    this.interactionModule = mod;
+    mod?.setInteractionReadoutActive(true);
+    const camera = this.cameras.main;
+    this.interactionFocusReturn = { scrollX: camera.scrollX, scrollY: camera.scrollY, zoom: camera.zoom };
+    const zoom = 3;
+    const originX = camera.width * camera.originX;
+    const originY = camera.height * camera.originY;
+    this.interactionFocusTween = this.tweens.add({
+      targets: camera,
+      zoom,
+      scrollX: point.x - originX - (screenX - camera.x - originX) / zoom,
+      scrollY: point.y - originY - (330 - camera.y - originY) / zoom,
+      duration: 260,
+      ease: 'Sine.easeInOut',
+      onComplete: () => { this.interactionFocusTween = null; },
+    });
+  }
+
+  private restoreInteractionFocus(immediate = false): void {
+    // CameraManager handles SHUTDOWN before this scene listener. Its main camera
+    // has already been removed; discard our snapshot instead of touching it.
+    if (this.shuttingDown) {
+      this.interactionFocusReturn = null;
+      this.interactionFocusTween = null;
+      this.interactionModule = null;
+      return;
+    }
+    const previous = this.interactionFocusReturn;
+    if (!previous) return;
+    this.interactionFocusTween?.stop();
+    this.interactionFocusTween = null;
+    const finish = (): void => {
+      this.interactionModule?.setInteractionReadoutActive(false);
+      this.interactionModule = null;
+      this.interactionFocusReturn = null;
+      this.interactionFocusTween = null;
+      if (this.shuttingDown) return;
+      this.panelClosedAt = this.time.now;
+      this.player.setInputEnabled(!this.isAnyPanelOpen());
       purificationHud.refresh();
+    };
+    if (immediate || this.shuttingDown) {
+      this.cameras.main.setScroll(previous.scrollX, previous.scrollY).setZoom(previous.zoom);
+      finish();
+      return;
+    }
+    this.interactionFocusTween = this.tweens.add({
+      targets: this.cameras.main,
+      ...previous,
+      duration: 180,
+      ease: 'Sine.easeInOut',
+      onComplete: finish,
     });
   }
 
   private openDefensePanel(): void {
-    this.player.setInputEnabled(false);
-    defensePanel.open(() => {
-      this.player.setInputEnabled(true);
-      purificationHud.refresh();
-    });
+    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    this.focusWorldInteraction(DEFENSE_POS, 184);
+    defensePanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
 
   private openGrowthPanel(): void {
-    this.player.setInputEnabled(false);
-    growthPanel.open(() => {
-      this.player.setInputEnabled(true);
-      purificationHud.refresh();
-    });
+    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    this.focusWorldInteraction(GROWTH_POS, 184);
+    growthPanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
 
   /** A1 + B1: Open the combined status & inventory panel. */
@@ -921,19 +1020,16 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private enterRift(): void {
-    if (this.transitioning) return;
-    // Show loadout panel first, then transition on confirm
-    this.player.setInputEnabled(false);
+    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    this.focusWorldInteraction(RIFT_ENTRANCE_POS, 184);
     loadoutPanel.open(
       () => {
         // Confirm callback: trigger rift entry
         this.transitioning = true;
         this.transitionToRift();
       },
-      () => {
-        // Cancel callback: re-enable player
-        this.player.setInputEnabled(true);
-      },
+      () => this.restoreInteractionFocus(),
+      { getAnchor: this.getInteractionScreenAnchor },
     );
   }
 
@@ -963,9 +1059,10 @@ export class PurificationScene extends Phaser.Scene {
       'animation:rift-enter-glow 0.3s ease-in forwards',
     ].join(';');
     getDomUiRoot().appendChild(glowOverlay);
+    this.transitionOverlay = glowOverlay;
 
     // Phase 2: After 0.3s, show black screen with text
-    setTimeout(() => {
+    this.transitionDelay = this.time.delayedCall(300, () => {
       glowOverlay.remove();
 
       const overlay = document.createElement('div');
@@ -980,12 +1077,15 @@ export class PurificationScene extends Phaser.Scene {
       ].join(';');
       overlay.textContent = '进入裂隙。';
       getDomUiRoot().appendChild(overlay);
+      this.transitionOverlay = overlay;
 
-      setTimeout(() => {
+      this.transitionDelay = this.time.delayedCall(500, () => {
+        this.transitionDelay = null;
         overlay.remove();
+        this.transitionOverlay = null;
         this.scene.start('RiftScene', { modifiers, cycle, loadout });
-      }, 500);
-    }, 300);
+      });
+    });
   }
 
   /** Inject CSS keyframes for scene transition animations (idempotent). */
@@ -1064,24 +1164,40 @@ export class PurificationScene extends Phaser.Scene {
     }
     for (const moduleId of Object.keys(payload.allocations)) {
       if (moduleId === 'CORE') {
-        this.flashModule(this.coreModule);
+        if ((payload.allocations[moduleId] ?? 0) > 0) this.pulseModuleRepair(this.coreModule);
       } else if (moduleId === 'STORAGE') {
-        this.flashModule(this.storageModule);
+        this.pulseModuleRepair(this.storageModule);
       } else if (moduleId === 'PURIFIER') {
-        this.flashModule(this.purifierModule);
+        this.pulseModuleRepair(this.purifierModule, 0x80b39e);
       }
     }
   };
 
-  private flashModule(mod: PurificationModuleEntity): void {
-    const flash = this.add.rectangle(mod.x, mod.y, 30, 30, 0xffffff, 0.7).setDepth(25);
+  private pulseModuleRepair(mod: PurificationModuleEntity, tint = 0xc5a47a): void {
+    // Reuse the module's existing soft light texture; never redraw the device.
+    if (!this.textures.exists('fx-core-glow')) return;
+    if (this.coreRepairGlow) {
+      this.tweens.killTweensOf(this.coreRepairGlow);
+      this.coreRepairGlow.destroy();
+    }
+    const glow = this.add.image(mod.x, mod.y - 11, 'fx-core-glow')
+      .setDepth(25).setBlendMode(Phaser.BlendModes.ADD).setTintFill(tint).setScale(0.45).setAlpha(0);
+    this.coreRepairGlow = glow;
     this.tweens.add({
-      targets: flash,
-      alpha: 0,
-      duration: 300,
-      onComplete: () => flash.destroy(),
+      targets: glow,
+      alpha: 0.38,
+      scale: 0.7,
+      duration: 250,
+      yoyo: true,
+      hold: 60,
+      ease: 'Sine.easeInOut',
+      onComplete: () => {
+        glow.destroy();
+        if (this.coreRepairGlow === glow) this.coreRepairGlow = null;
+      },
     });
   }
+
 
   /** E3: Show stability milestone notifications for changes NOT already folded into
    *  the merged impact-result panel (Slice 5.5 D5) — e.g. buying an upgrade at the
@@ -1174,6 +1290,17 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
+    this.shuttingDown = true;
+    this.transitionDelay?.remove(false);
+    this.transitionDelay = null;
+    this.transitionOverlay?.remove();
+    this.transitionOverlay = null;
+    this.restoreInteractionFocus(true);
+    if (this.coreRepairGlow) {
+      this.tweens.killTweensOf(this.coreRepairGlow);
+      this.coreRepairGlow.destroy();
+      this.coreRepairGlow = null;
+    }
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
 
     // Clean up event listeners

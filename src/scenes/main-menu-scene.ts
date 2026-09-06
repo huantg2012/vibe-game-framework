@@ -22,12 +22,12 @@ import { beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/
 
 const COLOR_TEXT_BRIGHT = '#c8cdd4';
 const COLOR_TEXT = '#8a8f96';
-const FONT_FAMILY = '"Courier New", monospace';
+const FONT_FAMILY = '"PingFang SC", "Microsoft YaHei", sans-serif';
 
 /** Center-to-center Y steps (origin.y = 0.5). From ux-menu-structure-visual-slice-55. */
-const ID_INTRA = 34;
-const READ_INTRA = 20;
-const ACT_INTRA = 28;
+const ID_INTRA = 48;
+const READ_INTRA = 28;
+const ACT_INTRA = 44;
 const GAP_ID_READ = 48;
 const GAP_READ_ACT = 52;
 const GAP_ID_ACT = 60;
@@ -37,10 +37,10 @@ const READ_NODE_GAP = 12;
 /** CJK ascent exceeds Courier canvas metrics. Top-only; sizes from clip + visual contracts. */
 function padMenuText(
   text: Phaser.GameObjects.Text,
-  fontSizePx: 28 | 16 | 13 | 12,
+  fontSizePx: number,
   paddingLeft = 0,
 ): Phaser.GameObjects.Text {
-  const top = fontSizePx === 28 ? 6 : 4;
+  const top = fontSizePx >= 28 ? 8 : 4;
   return text.setPadding({ top, right: 0, bottom: 0, left: paddingLeft });
 }
 
@@ -76,28 +76,31 @@ export class MainMenuScene extends Phaser.Scene {
   create(): void {
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
-    this.titleY = Math.round(height / 3);
+    this.titleY = Math.round(height * 0.23);
+
+    // Authored key art: one last industrial refuge against rewritten space.
+    this.add.image(0, 0, 'menu-last-light').setOrigin(0).setDisplaySize(width, height);
 
     this.canContinue = hasReadableSave();
 
-    padMenuText(this.add.text(width / 2, this.titleY, t('menu.title'), {
-      fontSize: '28px',
-      fontStyle: 'bold',
+    padMenuText(this.add.text(192, this.titleY, t('menu.title'), {
+      fontSize: '36px',
+      fontStyle: 'normal',
       color: COLOR_TEXT_BRIGHT,
       fontFamily: FONT_FAMILY,
-    }).setOrigin(0.5), 28);
+    }).setOrigin(0, 0.5), 36);
 
-    padMenuText(this.add.text(width / 2, this.titleY + ID_INTRA, t('menu.subtitle'), {
+    padMenuText(this.add.text(192, this.titleY + ID_INTRA, t('menu.subtitle'), {
       fontSize: '13px',
       color: COLOR_TEXT,
       fontFamily: FONT_FAMILY,
-    }).setOrigin(0.5), 13);
+    }).setOrigin(0, 0.5), 16);
 
-    this.warningText = padMenuText(this.add.text(width / 2, this.readGroupY(), '', {
-      fontSize: '12px',
+    this.warningText = padMenuText(this.add.text(192, this.readGroupY(), '', {
+      fontSize: '13px',
       color: COLOR_TEXT,
       fontFamily: FONT_FAMILY,
-    }).setOrigin(0.5).setVisible(false), 12);
+    }).setOrigin(0, 0.5).setVisible(false), 16);
 
     this.renderRoot();
 
@@ -152,7 +155,7 @@ export class MainMenuScene extends Phaser.Scene {
     const summary = saveManager.peekRecordSummary();
     if (!summary) return;
 
-    const centerX = this.cameras.main.width / 2;
+    const centerX = 284;
     const rows: { label: string; value: string; extra?: string }[] = [
       {
         label: t('menu.summaryTide'),
@@ -174,18 +177,18 @@ export class MainMenuScene extends Phaser.Scene {
     rows.forEach((row, index) => {
       const y = startY + index * READ_INTRA;
       const label = padMenuText(this.add.text(0, y, row.label, {
-        fontSize: '12px',
+        fontSize: '13px',
         color: COLOR_TEXT,
         fontFamily: FONT_FAMILY,
-      }).setOrigin(0, 0.5), 12);
+      }).setOrigin(0, 0.5), 16);
       const value = padMenuText(this.add.text(0, y, row.value, {
-        fontSize: '12px',
+        fontSize: '13px',
         color: COLOR_TEXT,
         fontFamily: FONT_FAMILY,
-      }).setOrigin(0, 0.5), 12);
+      }).setOrigin(0, 0.5), 16);
       const extra = row.extra
         ? padMenuText(this.add.text(0, y, row.extra, {
-          fontSize: '12px',
+          fontSize: '13px',
           color: COLOR_TEXT,
           fontFamily: FONT_FAMILY,
         }).setOrigin(0, 0.5), 12)
@@ -247,7 +250,7 @@ export class MainMenuScene extends Phaser.Scene {
 
   private measureActionLabelWidth(label: string): number {
     const probe = padMenuText(this.add.text(0, 0, label, {
-      fontSize: '16px',
+      fontSize: '13px',
       fontFamily: FONT_FAMILY,
     }).setVisible(false), 16);
     const width = probe.width;
@@ -263,11 +266,11 @@ export class MainMenuScene extends Phaser.Scene {
       (max, item) => Math.max(max, this.measureActionLabelWidth(item.label)),
       0,
     );
-    const actionLeftX = this.cameras.main.width / 2 - (PREFIX_SLOT_PX + maxLabelWidth) / 2;
+    const actionLeftX = 284 - (PREFIX_SLOT_PX + maxLabelWidth) / 2;
 
     this.items.forEach((item, index) => {
       const itemText = padMenuText(this.add.text(actionLeftX, startY + index * ACT_INTRA, '', {
-        fontSize: '16px',
+        fontSize: '13px',
         color: COLOR_TEXT,
         fontFamily: FONT_FAMILY,
       }).setOrigin(0, 0.5).setInteractive({ useHandCursor: true }), 16);

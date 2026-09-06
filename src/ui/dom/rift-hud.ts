@@ -36,10 +36,9 @@ import { getDomUiRoot, injectPanelStyles, showToastInline } from './panel-styles
 // ---------------------------------------------------------------------------
 
 const MARGIN = 12; // was BAR_MARGIN 8
-const HEALTH_BAR_WIDTH = 75; // was 50
-const CHAOS_BAR_WIDTH = 135; // was 90
-const BAR_HEIGHT = 6; // was 4
-const LABEL_MIN_WIDTH = 56;
+const HEALTH_BAR_WIDTH = 144;
+const CHAOS_BAR_WIDTH = 144;
+const BAR_HEIGHT = 2; // was 4
 
 const CHAOS_COLOR = '#1aad96';
 const CHAOS_OVERFLOW_COLOR = '#2ae6c8';
@@ -53,9 +52,6 @@ const HEALTH_LOW_THRESHOLD = 0.25;
 const KINDLING_COLOR = '#c4873a';
 const TEXT_BRIGHT = '#c8cdd4';
 const TEXT_DIM = '#8a8f96';
-const TEXT_EXHAUSTED = '#5a5f66'; // A1: exhausted-state is the one text use this colour permits
-const TEXT_SHADOW = '0 0 2px rgba(0,0,0,0.8)';
-const FONT = "'Courier New', monospace";
 const NOISE_SVG =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.68  0 0 0 0 0.59  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")";
 
@@ -152,6 +148,7 @@ export class RiftHud {
   private root: HTMLDivElement | null = null;
   private hpFill!: HTMLDivElement;
   private hpValue!: HTMLSpanElement;
+  private hpStateEl!: HTMLSpanElement;
   private chaosFill!: HTMLDivElement;
   private chaosOverflowFill!: HTMLDivElement;
   private chaosValueEl!: HTMLSpanElement;
@@ -304,49 +301,40 @@ export class RiftHud {
 
     const root = document.createElement('div');
     root.id = 'rift-hud';
-    root.style.cssText = [
-      'position:absolute', 'top:0', 'left:0', 'width:960px', 'height:640px',
-      'pointer-events:none',
-      `font-family:${FONT}`,
-    ].join(';');
-
     const statusPlate = document.createElement('div');
     statusPlate.id = 'rift-hud-status';
     statusPlate.className = 'device-plate';
-    statusPlate.style.cssText = `left:${MARGIN}px;top:${MARGIN}px;display:flex;flex-direction:column;gap:2px;`;
-
     const hpRow = document.createElement('div');
-    hpRow.style.cssText = 'display:flex;align-items:center;gap:4px;';
-
+    hpRow.className = 'rift-readout-header';
     const hpLabel = document.createElement('span');
     hpLabel.textContent = t('hud.health.label');
-    hpLabel.style.cssText = `font-size:12px;color:${TEXT_DIM};text-shadow:${TEXT_SHADOW};min-width:${LABEL_MIN_WIDTH}px;flex-shrink:0;`;
+    hpLabel.className = 'rift-hud-label';
 
     const hpBarWrap = document.createElement('div');
-    hpBarWrap.style.cssText = `width:${HEALTH_BAR_WIDTH}px;height:${BAR_HEIGHT}px;background:#080a0c;border:1px solid #151a1e;position:relative;overflow:hidden;`;
+    hpBarWrap.style.cssText = `width:${HEALTH_BAR_WIDTH}px;height:${BAR_HEIGHT}px;background:#080a0c;border:0;position:relative;overflow:hidden;`;
     this.hpFill = document.createElement('div');
     this.hpFill.style.cssText = `height:100%;width:100%;background:${HEALTH_COLOR};`;
     hpBarWrap.appendChild(this.hpFill);
 
     this.hpValue = document.createElement('span');
-    this.hpValue.style.cssText = `font-size:13px;color:${TEXT_BRIGHT};text-shadow:${TEXT_SHADOW};`;
+    this.hpValue.className = 'rift-hud-value';
 
     hpRow.appendChild(hpLabel);
-    hpRow.appendChild(hpBarWrap);
     hpRow.appendChild(this.hpValue);
 
+    this.hpStateEl = document.createElement('span');
+    this.hpStateEl.className = 'rift-hud-state';
     const chaosCluster = document.createElement('div');
-    chaosCluster.style.cssText = 'display:flex;flex-direction:column;gap:2px;';
-
+    chaosCluster.id = 'rift-hud-chaos';
+    chaosCluster.className = 'device-plate';
     const chaosRow = document.createElement('div');
-    chaosRow.style.cssText = 'display:flex;align-items:center;gap:4px;';
-
+    chaosRow.className = 'rift-readout-header';
     const chaosLabel = document.createElement('span');
     chaosLabel.textContent = '混乱';
-    chaosLabel.style.cssText = `font-size:12px;color:${TEXT_DIM};text-shadow:${TEXT_SHADOW};min-width:${LABEL_MIN_WIDTH}px;flex-shrink:0;`;
+    chaosLabel.className = 'rift-hud-label';
 
     const chaosBarWrap = document.createElement('div');
-    chaosBarWrap.style.cssText = `width:${CHAOS_BAR_WIDTH}px;height:${BAR_HEIGHT}px;background:#080a0c;border:1px solid #151a1e;position:relative;overflow:hidden;`;
+    chaosBarWrap.style.cssText = `width:${CHAOS_BAR_WIDTH}px;height:${BAR_HEIGHT}px;background:#080a0c;border:0;position:relative;overflow:hidden;`;
     this.chaosFill = document.createElement('div');
     this.chaosFill.style.cssText = `position:absolute;left:0;top:0;height:100%;width:0;background:${CHAOS_COLOR};`;
     this.chaosOverflowFill = document.createElement('div');
@@ -367,38 +355,38 @@ export class RiftHud {
     }
 
     this.chaosValueEl = document.createElement('span');
-    this.chaosValueEl.style.cssText = `font-size:13px;color:${TEXT_BRIGHT};text-shadow:${TEXT_SHADOW};`;
+    this.chaosValueEl.className = 'rift-hud-value';
 
     chaosRow.appendChild(chaosLabel);
-    chaosRow.appendChild(chaosBarWrap);
     chaosRow.appendChild(this.chaosValueEl);
 
     this.chaosStageEl = document.createElement('span');
-    this.chaosStageEl.style.cssText = `font-size:12px;color:${TEXT_DIM};text-shadow:${TEXT_SHADOW};padding-left:${LABEL_MIN_WIDTH + 4}px;`;
+    this.chaosStageEl.className = 'rift-hud-state';
     chaosCluster.appendChild(chaosRow);
+    chaosCluster.appendChild(chaosBarWrap);
     chaosCluster.appendChild(this.chaosStageEl);
-
     this.effectsEl = document.createElement('div');
-    this.effectsEl.style.cssText = 'display:flex;flex-direction:column;gap:2px;';
-
+    this.effectsEl.id = 'rift-hud-effects';
+    this.effectsEl.className = 'device-plate';
     statusPlate.appendChild(hpRow);
-    statusPlate.appendChild(chaosCluster);
-    statusPlate.appendChild(this.effectsEl);
+    statusPlate.appendChild(hpBarWrap);
+    statusPlate.appendChild(this.hpStateEl);
 
     this.kindlingEl = document.createElement('div');
-    this.kindlingEl.style.cssText = `position:absolute;right:${MARGIN}px;top:${MARGIN}px;display:flex;align-items:baseline;gap:6px;text-shadow:${TEXT_SHADOW};`;
+    this.kindlingEl.id = 'rift-hud-kindling';
+    this.kindlingEl.className = 'device-plate';
     const kindlingLabel = document.createElement('span');
     kindlingLabel.textContent = t('hud.kindling.label');
-    kindlingLabel.style.cssText = `font-size:12px;color:${TEXT_DIM};`;
+    kindlingLabel.className = 'rift-hud-label';
     const kindlingValue = document.createElement('span');
-    kindlingValue.style.cssText = `font-size:13px;color:${KINDLING_COLOR};`;
+    kindlingValue.className = 'rift-hud-value';
     this.kindlingEl.appendChild(kindlingLabel);
     this.kindlingEl.appendChild(kindlingValue);
 
-    // --- Extract prompt (bottom-center) ---
     this.extractPromptEl = document.createElement('div');
+    this.extractPromptEl.id = 'rift-extract-prompt';
+    this.extractPromptEl.className = 'device-plate';
     this.extractPromptEl.textContent = '[E] 撤离';
-    this.extractPromptEl.style.cssText = `position:absolute;left:50%;bottom:36px;transform:translateX(-50%);font-size:13px;color:${TEXT_BRIGHT};text-shadow:${TEXT_SHADOW};display:none;`;
 
     this.overflowVeil = document.createElement('div');
     this.overflowVeil.style.cssText = [
@@ -421,13 +409,16 @@ export class RiftHud {
     root.appendChild(this.overflowGrain);
     root.appendChild(this.overflowJump);
     root.appendChild(statusPlate);
+    root.appendChild(chaosCluster);
+    root.appendChild(this.effectsEl);
     root.appendChild(this.kindlingEl);
     root.appendChild(this.extractPromptEl);
 
     // --- Tool slot display (bottom-left) ---
     if (this.toolSlotData.length > 0) {
       this.toolSlotEl = document.createElement('div');
-      this.toolSlotEl.style.cssText = `position:absolute;left:${MARGIN}px;bottom:${MARGIN}px;font-size:13px;color:${TEXT_BRIGHT};white-space:pre;text-shadow:${TEXT_SHADOW};`;
+      this.toolSlotEl.id = 'rift-hud-tools';
+      this.toolSlotEl.className = 'device-plate';
       root.appendChild(this.toolSlotEl);
     } else {
       this.toolSlotEl = null;
@@ -450,10 +441,10 @@ export class RiftHud {
     this.chaosOverflowFill.style.width = `${CHAOS_BAR_WIDTH * Math.max(0, Math.min(value, cap) - gate) / cap}px`;
 
     this.chaosValueEl.textContent = `${Math.round(value)}`;
-    this.chaosValueEl.style.color = overflowing ? HEALTH_LOW_COLOR : TEXT_BRIGHT;
+    this.chaosValueEl.style.color = TEXT_BRIGHT;
 
     this.chaosStageEl.textContent = chaosTierLabel(value);
-    this.chaosStageEl.style.color = overflowing ? HEALTH_LOW_COLOR : TEXT_DIM;
+    this.chaosStageEl.style.color = overflowing ? TEXT_BRIGHT : TEXT_DIM;
 
     this.overflowVeil.style.opacity = overflowing ? String(0.10 + overflowFrac * 0.22) : '0';
     this.overflowGrain.style.opacity = overflowing ? String(0.12 + overflowFrac * 0.28) : '0';
@@ -530,7 +521,9 @@ export class RiftHud {
     const low = this.healthFrac < HEALTH_LOW_THRESHOLD;
     this.hpFill.style.background = low ? HEALTH_LOW_COLOR : HEALTH_COLOR;
     this.hpFill.style.animation = low ? 'rift-hud-pulse 300ms ease-in-out infinite' : '';
-    this.hpValue.style.color = low ? HEALTH_LOW_COLOR : TEXT_BRIGHT;
+    this.hpValue.style.color = TEXT_BRIGHT;
+    this.hpStateEl.textContent = low ? '危急' : '';
+    this.hpStateEl.hidden = !low;
   }
 
   private updateKindlingText(): void {
@@ -566,9 +559,9 @@ export class RiftHud {
   private showPickupFlash(amount: number): void {
     if (!this.active) return;
     showToastInline(`+${amount}`, {
-      position: `top:${MARGIN}px;right:70px;`,
+      position: 'top:66px;right:12px;',
       color: KINDLING_COLOR,
-      extraStyle: 'font-size:13px;font-weight:bold;',
+      extraStyle: 'font-size:11px;padding:2px 4px;',
       durationMs: 800,
       skipQueue: true,
     });
@@ -582,9 +575,9 @@ export class RiftHud {
   private showPassiveFlash(name: string): void {
     if (!this.active || !this.toolSlotEl) return;
     showToastInline(`<span>${name}</span> <span>生效</span>`, {
-      position: `left:${MARGIN}px;bottom:30px;`,
+      position: `left:${MARGIN}px;bottom:146px;`,
       color: CHAOS_COLOR,
-      extraStyle: 'font-size:13px;',
+      extraStyle: 'font-size:11px;padding:2px 4px;',
       durationMs: 800,
       skipQueue: true,
     });
@@ -593,15 +586,20 @@ export class RiftHud {
   private updateToolSlotText(): void {
     if (!this.toolSlotEl) return;
 
-    const parts: string[] = [];
+    this.toolSlotEl.replaceChildren();
     for (const slot of this.toolSlotData) {
-      const dots = '●'.repeat(slot.usesRemaining);
-      const key = slot.isPassive ? '被动' : slot.label;
-      parts.push(`[${key}] ${slot.name}${dots || '—'}`);
+      const row = document.createElement('div');
+      row.className = 'rift-tool-row';
+      const key = document.createElement('span');
+      key.className = 'rift-tool-key';
+      key.textContent = slot.isPassive ? '被动' : `[${slot.label}]`;
+      const name = document.createElement('span');
+      name.textContent = slot.name;
+      const uses = document.createElement('span');
+      uses.className = 'rift-tool-uses';
+      uses.textContent = slot.usesRemaining > 0 ? String(slot.usesRemaining) : '耗尽';
+      row.append(key, name, uses);
+      this.toolSlotEl.appendChild(row);
     }
-    this.toolSlotEl.textContent = parts.join('  ');
-
-    const anyActive = this.toolSlotData.some((s) => s.usesRemaining > 0);
-    this.toolSlotEl.style.color = anyActive ? TEXT_BRIGHT : TEXT_EXHAUSTED;
   }
 }

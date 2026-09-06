@@ -25,7 +25,7 @@ import type { Contaminant } from '@/types/game-types';
 import { GAME_CONSTANTS } from '@/config/constants';
 
 /** Shown when no item currently has keyboard/mouse focus (A5-13's default state). */
-export const INSPECT_EMPTY_HTML = '<div class="inspect-empty">空</div>';
+export const INSPECT_EMPTY_HTML = '<div class="inspect-empty">选择已装填物或库存，查看效果与使用条件。</div>';
 
 const LINE_CLASSES = ['inspect-l1', 'inspect-l2', 'inspect-l3', 'inspect-l4', 'inspect-l5'];
 
@@ -39,6 +39,7 @@ export interface DefenseInspectContext {
   slotState: 'slotted' | 'unslotted';
   /** Only consulted when `slotState === 'unslotted'`. */
   canEquip: boolean;
+  readOnly?: boolean;
 }
 
 /** Build the five-layer inspect content for an item read as its **defense** form. */
@@ -55,7 +56,7 @@ export function buildDefenseInspectHtml(c: Contaminant, ctx: DefenseInspectConte
     : `减伤 ${reductionPct}%`;
   const l4 = ctx.slotState === 'slotted'
     ? `副作用：${def.defenseSideEffect}（${def.sideEffectDuration}）`
-    : (ctx.canEquip ? '可装填 · 空槽待选' : '槽位已满 · 先取下一件');
+    : (ctx.readOnly ? '未供奉 · 前往供奉台装填' : ctx.canEquip ? '可装填 · 自动放入空槽' : '槽位已满 · 先取下一件');
   const remaining = Math.max(0, ctx.chargeThreshold - c.impactCharges);
   const l5 = remaining > 0
     ? `还需 ${remaining} 次冲击 → 【${def.displayNameTool}】：${def.summaryTool}`
@@ -70,6 +71,7 @@ export interface ToolInspectContext {
   hotkeyLabel?: string;
   /** Only consulted when `slotState === 'unslotted'`. */
   canEquip: boolean;
+  readOnly?: boolean;
   unavailableReason?: string;
 }
 
@@ -90,8 +92,10 @@ export function buildToolInspectHtml(c: Contaminant, ctx: ToolInspectContext): s
   let l4: string;
   if (ctx.slotState === 'slotted') {
     l4 = isPassive ? '被动 · 无按键 · 已装填' : `触发键 [${ctx.hotkeyLabel ?? '?'}] · 已装填`;
+  } else if (ctx.readOnly) {
+    l4 = '未装填 · 前往裂隙入口准备出击';
   } else if (ctx.canEquip) {
-    l4 = isPassive ? '被动 · 无按键 · 可装填' : '可装填 · 空槽待选';
+    l4 = isPassive ? '被动 · 无按键 · 可装填' : '可装填 · 自动放入空槽';
   } else {
     l4 = ctx.unavailableReason ?? '槽位已满 · 先取下一件';
   }
