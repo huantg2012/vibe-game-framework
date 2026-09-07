@@ -1,3 +1,4 @@
+import { DENSE_PLAYER_GROUND_OFFSET_Y } from '@/entities/player-sprite-dense';
 /** Developer-only review surface. Every screen is its production module.
  * Fixtures are memory-only and this entry never reads, writes or deletes a save.
  * Deliberately excluded from Vite production inputs.
@@ -214,6 +215,82 @@ if (import.meta.env.DEV) {
         button.textContent = text; button.onclick = action; controls.appendChild(button);
       }
       return;
+    }
+    if (sample === 'spatial') {
+      const row = document.createElement('div');
+      for (const [label, texture] of [
+        ['核心', 'module-core-v6-b'], ['储藏', 'module-storage-c1'],
+        ['净化器', 'module-purifier-b1'], ['供奉', 'module-offering-i'], ['培养藏', 'module-growth-a'],
+      ]) {
+        for (const [side, offset] of [['后方', -24], ['前方', 24]] as const) {
+          const button = document.createElement('button');
+          button.textContent = `${label}${side}`;
+          button.onclick = () => {
+            closeScreens();
+            const scene = activeScene();
+            if (!(scene instanceof PurificationScene)) return;
+            const actor = scene.children.list.find((item): item is Phaser.Physics.Arcade.Image =>
+              item instanceof Phaser.Physics.Arcade.Image && item.texture.key.startsWith('player-dense'));
+            const device = scene.children.list.find((item): item is Phaser.GameObjects.Image | Phaser.GameObjects.Sprite =>
+              (item instanceof Phaser.GameObjects.Image || item instanceof Phaser.GameObjects.Sprite) && item.texture.key === texture);
+            if (!actor || !device) return;
+            scene.cameras.main.setZoom(3).centerOn(device.x, device.y - 8);
+            (actor.body as Phaser.Physics.Arcade.Body).reset(device.x, device.y - DENSE_PLAYER_GROUND_OFFSET_Y + offset);
+            const note = document.getElementById('review-note');
+            scene.time.delayedCall(80, () => {
+              if (note) note.textContent = `${label}${side} · 角色层 ${actor.depth.toFixed(1)} / 装置层 ${device.depth.toFixed(1)} · 示例不读写存档`;
+            });
+          };
+          row.appendChild(button);
+        }
+      }
+      for (const [label, names] of [
+        ['走上', ['UP']], ['走下', ['DOWN']], ['走左', ['LEFT']], ['走右', ['RIGHT']],
+        ['走左上', ['LEFT', 'UP']], ['走右上', ['RIGHT', 'UP']],
+        ['走左下', ['LEFT', 'DOWN']], ['走右下', ['RIGHT', 'DOWN']],
+      ] as const) {
+        const button = document.createElement('button');
+        button.textContent = label;
+        button.onclick = () => {
+          closeScreens();
+          const scene = activeScene();
+          if (!(scene instanceof PurificationScene) || !scene.input.keyboard) return;
+          const heldKeys = names.map(name => {
+            const key = scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes[name]);
+            key.onDown(new KeyboardEvent('keydown', { key: name }));
+            return key;
+          });
+          scene.time.delayedCall(350, () => {
+            heldKeys.forEach(key => key.onUp(new KeyboardEvent('keyup')));
+            scene.time.delayedCall(180, () => {
+              const actor = scene.children.list.find((item): item is Phaser.Physics.Arcade.Image =>
+                item instanceof Phaser.Physics.Arcade.Image && item.texture.key.startsWith('player-dense'));
+              const note = document.getElementById('review-note');
+              if (actor && note) note.textContent = `${label} · ${actor.texture.key} · 角色层 ${actor.depth.toFixed(1)} · x${actor.x.toFixed(1)} y${actor.y.toFixed(1)}`;
+            });
+          });
+        };
+        row.appendChild(button);
+      }
+      const interact = document.createElement('button');
+      interact.textContent = '按E交互';
+      interact.onclick = () => {
+        const scene = activeScene();
+        if (!(scene instanceof PurificationScene) || !scene.input.keyboard) return;
+        const key = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        key.onDown(new KeyboardEvent('keydown', { key: 'e' }));
+        scene.time.delayedCall(80, () => key.onUp(new KeyboardEvent('keyup', { key: 'e' })));
+      };
+      row.appendChild(interact);
+      const highTide = document.createElement('button');
+      highTide.textContent = '最高潮汐';
+      highTide.onclick = () => {
+        closeScreens();
+        tideSystem.loadState({ tideNumber: 5, phase: 'crest', cycleInPhase: 0, currentIntensity: 3 });
+        switchScene('PurificationScene');
+      };
+      row.appendChild(highTide);
+      controls.appendChild(row);
     }
     const fixtureRow = document.createElement('div');
     for (const [label, withItems] of [['空库存 / 零薪柴', false], ['完整库存 / 85薪柴', true]] as const) {

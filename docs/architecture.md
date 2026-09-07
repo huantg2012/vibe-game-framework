@@ -2,9 +2,9 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-05
+last-modified: 2026-09-07
 approved-date: 2026-07-22
-changed-this-slice: true
+changed-this-slice: false
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
@@ -35,6 +35,16 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 DEC-119 新增开发验收入口 `ui-review.html` / `src/dev/ui-review.ts`：只在 DEV 实例化，复用生产场景和面板，内存示例状态覆盖空库与完整库存；该文档内隔离 SaveManager 的读写/删除，不访问正式存档。场景切换直接调用 SceneManager，避免 ScenePlugin 的延迟 stop 关闭刚重启的场景。入口不加入生产构建，也不挂主菜单。主菜单宣传图 `public/assets/art/menu-last-light.png` 经 BootScene 加载，由 MainMenuScene 按 960×640 构图显示；生成记录见 `docs/art/prompts/menu-last-light.md`。
 
 
+### 净化点地面深度排序（DEC-120）
+
+新增src/systems/ground-depth.ts：GroundDepthSorter(targets).update()按groundY回调及稳定id排序，向各applyDepth回调分配[20,38)内的实体基准层；每组附属层偏移小于1，最多18组，拒绝重复id。只在名次变化时写depth。此模块不依赖Phaser，也不接管场景生命周期。
+
+PurificationScene拥有排序器，注册五台直立装置和Player，在Player.postUpdate之后同步，shutdown释放。Player.getGroundY()取固定中立脚底；Player.setGroundDepth()同时调整FacingLagGhost、主体和PlayerLampAura。PurificationModuleEntity.setGroundDepth(base,floorDepth,readoutDepth)统一主体/发光/读数，getBodyDepth()供短时修复闪光跟随；OfferingStandVisual/GrowthConsoleVisual.setDepth()接入同一排序。地面光池5、裂隙贴花1、世界生命读数40、遮罩50独立。RiftScene/Gym不调用新排序接口，原默认层级保留。
+
+I12-C新增src/systems/purification-collision.ts：物理底座参数与五台装置位置同源，PurificationCollision管理静态组/collider；PlayerConfig.body可选矩形覆盖，净化点使用脚底12×8，裂隙保留默认体。装置碰撞和边界组的销毁须兼容Phaser先完成场景清理的顺序。BoundaryShape保留原角向cos钳制，追加真实局部安全圆盘极射线约束，补偿脚底体、8px边界方块、0.98内缩和1°角查表误差，地表/视野/碰撞仍共用唯一形状。
+
+开发验证使用ui-review.html?sample=spatial：十个前后定位按钮、八向短时行走、真实E交互与最高潮汐按钮，驱动生产对象/输入与postUpdate；只读实际depth作诊断。沿用开发页存档隔离，不进入生产构建。
+
 ## 项目结构
 
 ```
@@ -51,6 +61,8 @@ src/
 │   ├── rift-entrance-visual.ts # 裂隙入口世界内外形（地面裂缝贴花；生产默认卡 5）
 │   └── offering-stand-visual.ts # 供奉台世界内外形（卡 I 环；生产默认 DEC-115）
 ├── systems/
+│   ├── purification-collision.ts # 净化点薄底座、脚底配置及场景物理生命周期
+│   ├── ground-depth.ts         # 净化点按地面接触点排序；附属光效归组
 │   ├── visibility-system.ts    # 视野/光照 raycasting（RiftScene + PurificationScene 共用）
 │   ├── boundary-shape.ts       # 净化点边界几何：潮汐驱动的极坐标压力 blob（形状唯一真相）
 │   ├── boundary-breath.ts      # 边界局部压力冲击与膜变形（纯视觉叠加层）
@@ -211,11 +223,13 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
 | SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | hasSave(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/分层混音/空间衰减 | playBGM(), stopBGM(), playSFX(), playAmbient(), stopAmbient(), setLayerVolume(), playSpatialSFX(), pauseAll(), resumeAll(), unlock() | 已实现（Slice 9） |
-| Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用）。贴图为加厚程序像素 + 灯尘（DEC-068）。转向滞后剪影不改玩法朝向 | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getSprite(), destroy() | 已实现（T5；2026-08-20 步态帧；DEC-068 接线） |
+| Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用）。贴图为加厚程序像素 + 灯尘（DEC-068）。转向滞后剪影不改玩法朝向 | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getGroundY(), setGroundDepth(base, floorDepth), getSprite(), destroy() | 已实现（T5；2026-08-20 步态帧；DEC-068 接线） |
 | PlayerSprite | src/entities/player-sprite.ts | 旧 32×32 方块人。boot 仍画别名贴图；不再驱动 Player | generatePlayerPlaceholders(scene), playerMotionTexture(facing, gait, frame) | 已实现（档案） |
 | PlayerSpriteDense | src/entities/player-sprite-dense.ts | 玩家加厚工业像素（面罩/背包/分腿/灯壳体；侧影加厚、暖灰）。出击成品（DEC-068） | generateDensePlayerPlaceholders, densePlayerMotionTexture | 已实现（2026-08-20） |
 | PlayerLampAura | src/entities/player-lamp-aura.ts | 灯尘、脚底暖斑。叠在加厚玩家上（出击与练习场） | generatePlayerLampAuraTextures, PlayerLampAura | 已实现（2026-08-20） |
 | ActorMotion | src/entities/actor-motion.ts | 步态帧选取与转向滞后剪影。不写 facingAngle、不转 GameObject | pingPongFrame, FacingLagGhost, isActorWalking | 已实现（2026-08-20） |
+| GroundDepthSorter | src/systems/ground-depth.ts | 净化点地面接触点排序，受限层段及稳定同y次序 | constructor(targets), update() | 已实现（DEC-120） |
+| PurificationCollision | src/systems/purification-collision.ts | 五台装置薄底座、共享物理锚点和净化点脚底体；场景生命周期清理 | PURIFICATION_PLAYER_BODY / DEVICE_FOOTPRINTS / DEVICE_ANCHORS / SPAWN_POINT, constructor(scene,player,anchors), destroy() | 已实现（I12-C） |
 | VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 32 层等照线带遮罩（带半径 = 参考光场等照线 ∩ 射程曲线，逐射线墙截断）+ teal 软内缘（v3 几何环）+ 双八度迷雾颗粒 + 热核光池曲线 + 混乱值调制（Rift+Purification 共用）。纹理与曲线纯函数 `src/systems/vision-textures.ts`（闸门共用，不是新运行时系统） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5；I9-FINAL / DEC-107 表现层终审定版 2026-08-29） |
 | GridRaycast | src/utils/grid-raycast.ts | 网格 DDA 射线（含对角缝隙规则）；无状态纯函数，视野与敌人 AI 共用同一套遮挡判定。`hasClearPath()` 是同一射线的双侧偏移版，回答"这么宽的身体过不过得去"（DEC-021），**不是视线判定，禁止用于感知** | castRay(), castRayDirection(), hasLineOfSight(), hasClearPath(), createRayHit() | 已实现（T5，T7 增 hasClearPath） |
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
@@ -272,9 +286,9 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
 | InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
 | PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块视觉。**CORE** = 32×40 v6 贴图（默认 B 仪式；`?core=a\|b\|c` 与键 1/2/3 切对照）；**PURIFIER** = B1 横卧过滤罐 8 帧图集（观察窗介质翻滚 + 进排气微粒）；**STORAGE** = C1 顶压观察井 8 帧图集（DEC-112）。HP 三态 + 灯 + 脚下完整度条仍在。贴图由 BootScene 预加载 `public/assets/sprites/modules/`（DEC-ARCH-018）。裂隙入口不在本实体 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), setCoreVariant(v), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+；Slice 7 第三模块；purif-visual-pass 三模块翻贴图） |
-| RiftEntranceVisual | src/scenes/rift-entrance-visual.ts | 净化点北侧裂隙入口的世界内外形。**生产默认 = 卡 5 击裂**（DEC-114）：40×56 × 8 帧、6fps 的**地面裂缝贴花**，画在地面平面内，锚点中心、depth 1（地板 0 / 读数桩 20 / 玩家 30），玩家能踩过去。`?entrance=4|7|8|9` 与场景内键 4/5/7/8/9 切对照（卡 4 地缝是 DEC-113 留下的另一张）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开出击装配）不因外形改变 | `ENTRANCE_FRAME_W/H` / `ENTRANCE_FRAMES` / `ENTRANCE_FPS` / `ENTRANCE_ORIGIN_Y` / `ENTRANCE_DEPTH` / `ENTRANCE_DEFAULT_VARIANT` / `entranceSheetKey` / `entranceSheetUrl` / `enqueueEntranceSheets` / `readEntranceVariantQuery` / `RiftEntranceVisual` | 已实现（DEC-113 / DEC-114） |
-| OfferingStandVisual | src/scenes/offering-stand-visual.ts | 净化点西南供奉台的世界内外形。**生产默认 = 卡 I 环**（DEC-115）：32×32 × 32 帧（4 档 × 8 帧、6fps），立着 45° 等距，锚点脚底、depth 20。装填档跟槽里残渣个数走（空 / 一 / 二 / 三 = 0 / 1 / 2 / 3+）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开防御槽）不因外形改变 | `OFFERING_FRAME_W/H` / `OFFERING_FRAMES` / `OFFERING_FPS` / `OFFERING_ORIGIN_Y` / `OFFERING_DEPTH` / `OFFERING_SHEET_KEY` / `enqueueOfferingSheet` / `OfferingStandVisual` / `offeringStandChargeFromSlots` | 已实现（DEC-115） |
-| GrowthConsoleVisual | src/scenes/growth-console-visual.ts | 净化点西侧培养藏的世界内外形。**生产默认 = 卡 A 立缸**（DEC-116）：40×42 × 8 帧、6fps，立着 45° 等距，锚点脚底、depth 20。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开蜕变）不因外形改变 | `GROWTH_FRAME_W/H` / `GROWTH_FRAMES` / `GROWTH_FPS` / `GROWTH_ORIGIN_Y` / `GROWTH_DEPTH` / `GROWTH_SHEET_KEY` / `enqueueGrowthSheet` / `GrowthConsoleVisual` | 已实现（DEC-116） |
+| RiftEntranceVisual | src/scenes/rift-entrance-visual.ts | 净化点北侧裂隙入口的世界内外形。**生产默认 = 卡 5 击裂**（DEC-114）：40×56 × 8 帧、6fps 的**地面裂缝贴花**，画在地面平面内，锚点中心、depth 1（地板0 / 动态实体[20,38)（DEC-120）），玩家能踩过去。`?entrance=4|7|8|9` 与场景内键 4/5/7/8/9 切对照（卡 4 地缝是 DEC-113 留下的另一张）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开出击装配）不因外形改变 | `ENTRANCE_FRAME_W/H` / `ENTRANCE_FRAMES` / `ENTRANCE_FPS` / `ENTRANCE_ORIGIN_Y` / `ENTRANCE_DEPTH` / `ENTRANCE_DEFAULT_VARIANT` / `entranceSheetKey` / `entranceSheetUrl` / `enqueueEntranceSheets` / `readEntranceVariantQuery` / `RiftEntranceVisual` | 已实现（DEC-113 / DEC-114） |
+| OfferingStandVisual | src/scenes/offering-stand-visual.ts | 净化点西南供奉台的世界内外形。**生产默认 = 卡 I 环**（DEC-115）：32×32 × 32 帧（4 档 × 8 帧、6fps），立着 45° 等距，锚点脚底；默认depth20，净化点由GroundDepthSorter覆盖（DEC-120）。装填档跟槽里残渣个数走（空 / 一 / 二 / 三 = 0 / 1 / 2 / 3+）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开防御槽）不因外形改变 | `OFFERING_FRAME_W/H` / `OFFERING_FRAMES` / `OFFERING_FPS` / `OFFERING_ORIGIN_Y` / `OFFERING_DEPTH` / `OFFERING_SHEET_KEY` / `enqueueOfferingSheet` / `OfferingStandVisual` / `offeringStandChargeFromSlots` | 已实现（DEC-115） |
+| GrowthConsoleVisual | src/scenes/growth-console-visual.ts | 净化点西侧培养藏的世界内外形。**生产默认 = 卡 A 立缸**（DEC-116）：40×42 × 8 帧、6fps，立着 45° 等距，锚点脚底；默认depth20，净化点由GroundDepthSorter覆盖（DEC-120）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开蜕变）不因外形改变 | `GROWTH_FRAME_W/H` / `GROWTH_FRAMES` / `GROWTH_FPS` / `GROWTH_ORIGIN_Y` / `GROWTH_DEPTH` / `GROWTH_SHEET_KEY` / `enqueueGrowthSheet` / `GrowthConsoleVisual` | 已实现（DEC-116） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」。I3-A：一份 `contaminationDraw`（`mix32(seed, 'lexicon')`）喂甲 spawn.form 与宿主。**I8-Q：** 占漆钉 `paintFloors`（贪婪薪柴路径，偏咽喉）；不足掷出的 N 则本图重试，禁止钳小 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout；rollPaintHostCount；collectContaminationPins | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图。I8-Q 占漆配额已接 |
@@ -468,8 +482,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 ### DEC-ARCH-019: 世界内交互点的外形分「地面贴花」与「立着的对象」两类挂法（裂隙入口，DEC-113）
 
 - **决策：** 净化点的世界内交互点外形按**载体平面**分两类挂：
-  - **地面贴花**（裂隙入口，`rift-entrance-visual.ts`）：像素画在地面平面内（与混凝土地面同一平面，顶视），Sprite 锚点取**中心**、depth **1**（地板 0 之上、读数桩 20 与玩家 30 之下），玩家可以踩过去。
-  - **立着的对象**（核心 / 净化器 / 储藏 / **供奉台卡 I 环** / **培养藏卡 A 立缸**，前三台在 `purification-module.ts`，供奉台在 `offering-stand-visual.ts`，培养藏在 `growth-console-visual.ts`）：像素画成伪 3D（45° 等距），锚点取**脚底**、depth 与读数桩同层。
+  - **地面贴花**（裂隙入口，`rift-entrance-visual.ts`）：像素画在地面平面内（与混凝土地面同一平面，顶视），Sprite 锚点取**中心**、depth **1**（地板0之上、动态实体[20,38)之下（DEC-120）），玩家可以踩过去。
+  - **立着的对象**（核心 / 净化器 / 储藏 / **供奉台卡 I 环** / **培养藏卡 A 立缸**，前三台在 `purification-module.ts`，供奉台在 `offering-stand-visual.ts`，培养藏在 `growth-console-visual.ts`）：像素画成伪 3D（45° 等距），锚点取**脚底**，净化点按地面接触点动态排序（DEC-120）；默认depth20仅为创建初值。
 - **理由：** 本作地面是顶视烘焙纹理，立着的对象是伪 3D 精灵——两者是两套投影。把地面上的东西按立着的相机画会被压成几乎看不见（裂隙入口那一版下俯 10° 就是这个问题）；把立着的东西按地面平面画会失去体积。载体平面选错，像素画得再好也不成立。
 - **影响：** 新增世界内交互点外形时，先在身份锁里声明载体平面，再选锚点与 depth。`rift-entrance-visual.ts` 导出 `ENTRANCE_ORIGIN_Y = 0.5` 与 `ENTRANCE_DEPTH = 1` 作为地面贴花的基线。`offering-stand-visual.ts` 导出 `OFFERING_ORIGIN_Y = 26/32` 与 `OFFERING_DEPTH = 20` 作为立着供奉台的基线（DEC-115）。`growth-console-visual.ts` 导出 `GROWTH_ORIGIN_Y = 40/42` 与 `GROWTH_DEPTH = 20` 作为立着培养藏的基线（DEC-116）。Boot 预加载 `rift-e{4,5,7,8,9}-sheet.png` 与 `offering-i-sheet.png` 与 `growth-a-sheet.png`。画法纪律住 `.cursor/skills/pixel-models/SKILL.md`。
 

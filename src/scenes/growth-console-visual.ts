@@ -17,7 +17,7 @@ export const GROWTH_FRAMES = 8;
 export const GROWTH_FPS = 6;
 /** 立着的对象，锚点取脚底。与对照课同一份 40/42。 */
 export const GROWTH_ORIGIN_Y = 40 / GROWTH_FRAME_H;
-/** 层与读数桩同层（地板 0 / 读数桩 20 / 玩家 30）。 */
+/** 默认层；净化点由地面接触点排序覆盖，对照课保留默认。 */
 export const GROWTH_DEPTH = 20;
 
 export const GROWTH_PRODUCTION_VARIANT = 'a' as const;
@@ -101,6 +101,10 @@ export class GrowthConsoleVisual {
     }
     this.sprite.play(growthConsoleAnimKey());
     return true;
+  }
+
+  setDepth(depth: number): void {
+    this.sprite?.setDepth(depth);
   }
 
   isShowing(): boolean {

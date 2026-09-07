@@ -110,6 +110,9 @@ export function densePlayerMotionTexture(facing: Facing4, gait: MotionGait, fram
   return table[facing][frame] ?? table[facing][0]!;
 }
 
+/** Neutral soles end at texture y=26; keep this contact fixed during gait. */
+export const DENSE_PLAYER_GROUND_OFFSET_Y = 10;
+
 /** Lamp housing centre relative to the 32×32 origin, for lamp-dust sync. */
 export const DENSE_PLAYER_LAMP_LOCAL: Record<Facing4, { x: number; y: number }> = {
   down: { x: 10, y: -4 },

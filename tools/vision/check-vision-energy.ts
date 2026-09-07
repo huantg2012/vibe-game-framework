@@ -33,6 +33,8 @@ import {
   SUBDIV2_LEVELS,
   computeFieldBandRadii,
   computeLevelEraseAlphas,
+  fieldVisibilityAt,
+  type VisionFieldParams,
   VOID_NOISE_COVERAGE,
 } from '../../src/systems/vision-textures.ts';
 
@@ -276,18 +278,77 @@ const subdiv2Out = computeRadii(offsets, ranges, {
 assertRadii(subdiv2Out, ranges, 'cone');
 
 const purifyRadius = V.PURIFY_RADIUS;
+const omniParams: VisionFieldParams = {
+  radiusForward: purifyRadius,
+  radiusAmbient: purifyRadius,
+  coneHalfAngleDeg: 180,
+  coneFalloffAngleDeg: 0,
+};
+
+// I12-A: an omni field must have no seam, including the Float32 ±π values
+// produced by the runtime ray buffer. Check the light field itself as well
+// as every isolux band; monotonic/range checks alone accepted the 4px notch.
+const seamAngles = [
+  -Math.PI, Math.PI, Math.fround(-Math.PI), Math.fround(Math.PI),
+  Math.fround(-Math.PI + 1e-6), Math.fround(-Math.PI - 1e-6),
+  Math.fround(Math.PI - 1e-6), Math.fround(Math.PI + 1e-6),
+];
+const facingAngles = Array.from({ length: 8 }, (_, i) => (TAU * i) / 8);
+for (const distance of [SUBDIV2_BAND_FLOOR_PX, purifyRadius * 0.5, purifyRadius * 0.8, purifyRadius]) {
+  const expected = fieldVisibilityAt(0, distance, omniParams);
+  for (const angle of [...seamAngles, ...facingAngles]) {
+    for (const facing of facingAngles) {
+      const actual = fieldVisibilityAt(Math.fround(angle - facing), distance, omniParams);
+      if (Math.abs(actual - expected) > TELESCOPE_EPS) {
+        fail(`omni angular seam at angle=${angle}, facing=${facing}, distance=${distance}: ${actual} !== ${expected}`);
+      }
+    }
+  }
+}
+
+const degradedOmniCount = V.RAY_SPLIT_FORWARD_DEGRADED + V.RAY_SPLIT_AMBIENT_DEGRADED;
+for (const count of [V.PURIFY_RAY_COUNT, degradedOmniCount]) {
+  const sampleOffsets = new Float32Array(count);
+  const sampleRanges = new Float32Array(count).fill(purifyRadius);
+  for (let i = 0; i < count; i++) sampleOffsets[i] = -Math.PI + (TAU * i) / count;
+  const sampleOut = computeRadii(sampleOffsets, sampleRanges, omniParams);
+  const reference = computeRadii(new Float32Array([0]), new Float32Array([purifyRadius]), omniParams);
+  assertRadii(sampleOut, sampleRanges, `omni ${count} rays`);
+  for (let band = 0; band < SUBDIV2_BAND_COUNT; band++) {
+    for (let ray = 0; ray < count; ray++) {
+      if (Math.abs(sampleOut[band]![ray]! - reference[band]![0]!) > RADIUS_EPS) {
+        fail(`omni ${count} rays: band ${band}, ray ${ray} differs from forward radius`);
+      }
+    }
+  }
+  if (sampleOut[0]![0]! <= purifyRadius * 0.5) {
+    fail(`omni ${count} rays: full-bright core collapsed to ${sampleOut[0]![0]}px`);
+  }
+}
+
+// The omni repair must not turn the rift's forward cone into a full circle.
+const coneParams: VisionFieldParams = {
+  radiusForward: RADIUS_FORWARD,
+  radiusAmbient: RADIUS_AMBIENT,
+  coneHalfAngleDeg: CONE_HALF,
+  coneFalloffAngleDeg: CONE_FALLOFF,
+};
+const coneDistance = RADIUS_AMBIENT * 0.5;
+const coneForward = fieldVisibilityAt(0, coneDistance, coneParams);
+const coneRear = fieldVisibilityAt(Math.fround(Math.PI), coneDistance, coneParams);
+const coneShoulder = fieldVisibilityAt((CONE_HALF + CONE_FALLOFF * 0.5) * DEG, coneDistance, coneParams);
+if (!(coneForward > coneShoulder && coneShoulder > coneRear)) {
+  fail(`cone lost angular falloff: front=${coneForward}, shoulder=${coneShoulder}, rear=${coneRear}`);
+}
+console.log(`I12-A omni seam PASS: Float32 ±π, 8 facings, ${V.PURIFY_RAY_COUNT}/${degradedOmniCount} rays; cone directional falloff retained`);
+
 const omniOffsets = new Float32Array(V.PURIFY_RAY_COUNT);
 const omniRanges = new Float32Array(V.PURIFY_RAY_COUNT);
 for (let i = 0; i < V.PURIFY_RAY_COUNT; i++) {
   omniOffsets[i] = -Math.PI + (TAU * i) / V.PURIFY_RAY_COUNT;
   omniRanges[i] = purifyRadius;
 }
-const omniOut = computeRadii(omniOffsets, omniRanges, {
-  radiusForward: purifyRadius,
-  radiusAmbient: purifyRadius,
-  coneHalfAngleDeg: 180,
-  coneFalloffAngleDeg: 0,
-});
+const omniOut = computeRadii(omniOffsets, omniRanges, omniParams);
 assertRadii(omniOut, omniRanges, 'omni');
 
 type SectorMeans = { subdiv2: number; n: number };

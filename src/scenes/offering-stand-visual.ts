@@ -22,7 +22,7 @@ export const OFFERING_FRAMES = 8;
 export const OFFERING_FPS = 6;
 /** 立着的对象，锚点取脚底。与对照课同一份 26/32。 */
 export const OFFERING_ORIGIN_Y = 26 / OFFERING_FRAME_H;
-/** 层与读数桩同层（地板 0 / 读数桩 20 / 玩家 30）。 */
+/** 默认层；净化点由地面接触点排序覆盖，对照课保留默认。 */
 export const OFFERING_DEPTH = 20;
 
 export const OFFERING_PRODUCTION_VARIANT = 'i' as const;
@@ -132,6 +132,10 @@ export class OfferingStandVisual {
     if (this.tier === tier && this.sprite.anims.isPlaying) return;
     this.tier = tier;
     this.sprite.play(offeringStandAnimKey(tier));
+  }
+
+  setDepth(depth: number): void {
+    this.sprite?.setDepth(depth);
   }
 
   isShowing(): boolean {

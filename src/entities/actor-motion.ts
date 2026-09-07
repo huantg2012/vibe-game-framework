@@ -74,6 +74,10 @@ export class FacingLagGhost {
     this.image.setVisible(false);
   }
 
+  setDepth(depth: number): void {
+    this.image.setDepth(depth);
+  }
+
   get isTurning(): boolean {
     return this.remainingMs > 0;
   }

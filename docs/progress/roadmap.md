@@ -4,10 +4,12 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-09-07
 last-closed-slice: 9
-note: 无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
+note: 迭代12 COMPLETE（DEC-120，2026-09-07用户验收结单）；合同docs/tasks/iteration-12.md。无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
 ---
 
 # Roadmap
+
+**2026-09-07：迭代12「净化点角色空间表现」COMPLETE（DEC-120，用户验收结单）。** 用户分析后以「很好，做吧」授权实施。全向Float32角界限接缝已修；净化点按脚底排序角色与五台装置，附属光效随实体。构建、边界/排序检查与实机核对已交，用户确认层级符合预期；追加I12-C底座碰撞已交：脚底体+五台底座+局部边界通行余量，300条联合碰撞路线与最高潮汐实机绕行、裂隙往返通过；用户明确结单并授权推送。合同 `docs/tasks/iteration-12.md`。迭代11保持COMPLETE，迭代5与P3/P4独立保留。
 
 **2026-09-07：迭代 11 COMPLETE（用户验收结单，DEC-119）。** 用户明确要求“这个问题结单，更新进度，提交”。已锁定轻量HUD、真实装置参与的六点交互、无框存续报告/暂停/确认/结算、同族小字号及主菜单宣传图。R6菜单补齐后本次UX/UI问题结单；构建、实景审查和已执行的输入回归见 `docs/qa/iteration-11.md`，保留其中未实测项的说明。P3/P4世界表现仍挂起；迭代5活指针与I5-T人审状态不变，不开I5-C。
 

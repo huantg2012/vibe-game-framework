@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code（DEC-107：规则 15 渲染段改 32 层等照线带；查询三档不动）
-last-modified-date: 2026-08-29
+last-modified-by: code / director（DEC-120：全向边界与地面接触接口）
+last-modified-date: 2026-09-07
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -15,6 +15,7 @@ exposes:
   - Player.getPosition() / getFacingAngle() / getFacing4() / isMoving()
   - Player.setSpeedModifier(source, mult) / clearSpeedModifier(source)
   - Player.setInputEnabled(enabled)
+  - Player.getGroundY() / setGroundDepth(base, floorDepth) # DEC-120：净化点显式接入
   - VisibilitySystem.setRadiusScale(scale)        # 混乱值钩子：视野半径缩小
   - VisibilitySystem.setEdgeCorruption(level)     # 混乱值钩子：teal 噪点渗入 + 边缘抖动
   - VisibilitySystem.setScreenFlicker(intensity)  # 混乱值钩子：全屏微闪
@@ -28,6 +29,12 @@ exposes:
 # 系统设计：移动 + 有限视野
 
 > **TL;DR**: 定义玩家在裂隙/净化点内的俯视角移动（Arcade AABB、四方向朝向、可叠加移速调制）与 Raycasting 有限视野（前向锥 + 环身暖光、3 级边缘 alpha、视野外 void-black+噪点）；对外暴露玩家位姿查询、视野可见性查询、以及供混乱值系统调用的三个视野调制接口，不新增事件。
+
+## 迭代12：全向边界与地面接触（DEC-120）
+
+全向参考光场使用半角180°，角向权重必须恒为1；不能以绝对角度恰好小于等于π作为全向判据。Float32保存的±π略越过双精度π仍属全向有效射线。90条与降档40条射线的同半径采样应方向一致，等照线首尾不塌缩。裂隙锥形角衰减与DEC-107的32层等照线、teal软内缘、查询三档保持原语义。
+
+Player新增getGroundY()返回中立脚底世界y（图像中心y+10），不随步态帧透明边缘变化；setGroundDepth(base, floorDepth)是可选显示接口，统一调整主体、转身剪影和灯光/灯尘，地面光池独立。由净化点在postUpdate后调用，未调用的裂隙/练习场沿用创建时层级。初轮未改碰撞体；追加I12-C允许净化点脚底体覆盖，朝向、速度、视野查询及事件协议不变。净化点排序规则归system-purification-impact。
 
 ## 概述
 
@@ -125,7 +132,7 @@ interface OccluderGrid {
 4. **朝向**：`facingAngle` 由**最近一次非零输入方向**决定，静止时保持不变（松开按键不会重置朝向）。玩家无法在不改变朝向的前提下改变移动方向——**朝哪走就朝哪看**。
 5. **转向不瞬移**：`facingAngle` 以 `FACING_TURN_RATE`（度/秒）向目标角度插值，走最短弧。这只影响视野锥的转动平滑度，不影响移动方向（移动立即响应输入）。
 6. **四方向量化**：`facing4` 取 `facingAngle` 最近的正交方向（边界按 45° 划分，量化带 ±5° 迟滞防止斜向抖动切帧）。sprite 只用 `facing4`，视野只用 `facingAngle`。
-7. **碰撞**：Arcade Physics AABB。玩家碰撞体为居中的正方形（`BODY_SIZE`），小于 tile 宽度，保证 1 tile 宽通道可通行且不卡角。开启 `collideWorldBounds`。
+7. **碰撞**：Arcade Physics AABB。玩家碰撞体为居中的正方形（`BODY_SIZE`），小于 tile 宽度，保证 1 tile 宽通道可通行且不卡角。开启 `collideWorldBounds`。**I12-C例外**：净化点通过PlayerConfig的可选矩形碰撞配置使用12×8、offset(10,22)，中心等于groundY，既用于五台底座也用于场地边界；裂隙/练习场默认20×20、offset(6,6)不变。
 8. **沿墙滑动**：斜向撞墙时，被阻挡的轴清零、另一轴保留 —— 即 Arcade 的默认分轴解算行为，必须保留。贴墙绕行是潜行的基本操作，不允许因碰撞而"粘住"。
 9. **输入开关**：`inputEnabled = false` 时立即清零输入向量（速度按规则 2 正常减速到 0），朝向冻结。用于净化点 DOM 面板打开、出击结算等状态。
 10. **移动不产生噪音语义**：本 slice 不做"潜行/疾跑"双速。敌人听觉（若 T2 采用）以距离而非玩家速度为准。移速调制栈已为未来的潜行速度预留位置。

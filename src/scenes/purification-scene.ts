@@ -1,3 +1,4 @@
+import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH } from '@/systems/ground-depth';
 /**
  * Purification Scene - the base management walkable space.
  *
@@ -17,6 +18,10 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
+import {
+  PurificationCollision, PURIFICATION_PLAYER_BODY,
+  PURIFICATION_DEVICE_ANCHORS, PURIFICATION_SPAWN_POINT, destroyStaticCollision,
+} from '@/systems/purification-collision';
 import {
   CORE_SPRITE_VARIANTS,
   PurificationModuleEntity,
@@ -42,7 +47,10 @@ import { contaminantSystem } from '@/systems/contaminant-system';
 import { growthSystem } from '@/systems/growth-system';
 import { impactSystem } from '@/systems/impact-system';
 import type { ForecastDisplay, ImpactResult } from '@/systems/impact-system';
-import { createBoundaryShape } from '@/systems/boundary-shape';
+import {
+  createBoundaryShape, BOUNDARY_COLLISION_INNER_SCALE,
+  BOUNDARY_COLLISION_SEGMENT_SIZE, BOUNDARY_COLLISION_SAMPLES,
+} from '@/systems/boundary-shape';
 import type { BoundaryShape } from '@/systems/boundary-shape';
 import { createPurificationSurfaceTexture } from '@/systems/procedural-purification-surface';
 import { stabilityTracker } from '@/systems/stability-tracker';
@@ -84,15 +92,15 @@ const ELLIPSE_RX = 5.2; // tiles
 const ELLIPSE_RY = 5.0; // tiles
 
 // Module positions (world px) — CORE at center, others radially around it
-const CORE_POS = { x: CENTER_X, y: CENTER_Y };
-const STORAGE_POS = { x: CENTER_X + 3.5 * TILE, y: CENTER_Y };
-const PURIFIER_POS = { x: CENTER_X, y: CENTER_Y + 3.5 * TILE };
+const CORE_POS = PURIFICATION_DEVICE_ANCHORS.core;
+const STORAGE_POS = PURIFICATION_DEVICE_ANCHORS.storage;
+const PURIFIER_POS = PURIFICATION_DEVICE_ANCHORS.purifier;
 // 裂隙入口嵌在北侧内壁上。4.0 tile + 1.0 安全区 = 椭圆北沿，不把膜顶出一包。
 const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 4.0 * TILE };
 // Defense management point (south-west)
-const DEFENSE_POS = { x: CENTER_X - 3 * TILE, y: CENTER_Y + 2.5 * TILE };
+const DEFENSE_POS = PURIFICATION_DEVICE_ANCHORS.offering;
 // Growth altar (west)
-const GROWTH_POS = { x: CENTER_X - 3.5 * TILE, y: CENTER_Y };
+const GROWTH_POS = PURIFICATION_DEVICE_ANCHORS.growth;
 
 const INTERACTION_POINTS = [
   CORE_POS, STORAGE_POS, PURIFIER_POS,
@@ -161,9 +169,6 @@ function buildPurificationTileMap(shape: BoundaryShape): TileMapData {
 // Smooth blob collider (replaces tile-based collision)
 // ---------------------------------------------------------------------------
 
-const COLLIDER_SEGMENT_SIZE = 8; // px per collider block
-const COLLIDER_SAMPLES = 90;     // angular samples (4° each)
-
 /**
  * Creates a ring of small static bodies along the blob boundary at 98% radius.
  * Returns the static group so the scene can set up a collider with the player.
@@ -179,19 +184,19 @@ function createBlobCollider(
   // Also add world-bounds collider bodies along outer edges
   // (in case blob doesn't cover corners)
 
-  for (let i = 0; i < COLLIDER_SAMPLES; i++) {
-    const angle = (i / COLLIDER_SAMPLES) * Math.PI * 2;
-    const r = shape.radiusAt(angle) * 0.98;
+  for (let i = 0; i < BOUNDARY_COLLISION_SAMPLES; i++) {
+    const angle = (i / BOUNDARY_COLLISION_SAMPLES) * Math.PI * 2;
+    const r = shape.radiusAt(angle) * BOUNDARY_COLLISION_INNER_SCALE;
 
     // Place collider blocks outward from the boundary point to form a wall
     // We place 2 blocks deep (8px + 8px = 16px wall thickness) for reliability
     for (let depth = 0; depth < 2; depth++) {
-      const rr = r + depth * COLLIDER_SEGMENT_SIZE;
+      const rr = r + depth * BOUNDARY_COLLISION_SEGMENT_SIZE;
       const bx = cx + Math.cos(angle) * rr;
       const by = cy + Math.sin(angle) * rr;
 
       // Create an invisible static rectangle
-      const block = scene.add.rectangle(bx, by, COLLIDER_SEGMENT_SIZE, COLLIDER_SEGMENT_SIZE);
+      const block = scene.add.rectangle(bx, by, BOUNDARY_COLLISION_SEGMENT_SIZE, BOUNDARY_COLLISION_SEGMENT_SIZE);
       block.setVisible(false);
       group.add(block);
     }
@@ -272,6 +277,11 @@ export class PurificationScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private readonly visibility = new VisibilitySystem();
+  private groundDepthSorter: GroundDepthSorter | null = null;
+  private deviceCollision: PurificationCollision | null = null;
+  private boundaryBodies: Phaser.Physics.Arcade.StaticGroup | null = null;
+  private boundaryCollider: Phaser.Physics.Arcade.Collider | null = null;
+  private repairGlowModule: PurificationModuleEntity | null = null;
   private readonly atmosphere = new BoundaryAtmosphere();
   private readonly breath = new BoundaryBreath();
 
@@ -444,7 +454,7 @@ export class PurificationScene extends Phaser.Scene {
     layer.setVisible(false);
 
     // Smooth blob collider (replaces tile-based collision for curved boundary)
-    const blobCollider = createBlobCollider(this, this.boundaryShape);
+    this.boundaryBodies = createBlobCollider(this, this.boundaryShape);
 
     this.physics.world.setBounds(0, 0, WIDTH_PX, HEIGHT_PX);
 
@@ -455,9 +465,12 @@ export class PurificationScene extends Phaser.Scene {
     camera.setBackgroundColor(0x0a0a0a);
 
     // Player
-    const spawnPoint = { x: CENTER_X, y: CENTER_Y + 2 * TILE };
-    this.player.create(this, { spawn: spawnPoint, depth: 30, facing: 'up' });
-    this.physics.add.collider(this.player.getSprite(), blobCollider);
+    this.player.create(this, { spawn: PURIFICATION_SPAWN_POINT, depth: 30, facing: 'up', body: PURIFICATION_PLAYER_BODY });
+    this.boundaryCollider = this.physics.add.collider(this.player.getSprite(), this.boundaryBodies);
+    this.deviceCollision = new PurificationCollision(this, this.player.getSprite(), {
+      core: CORE_POS, storage: STORAGE_POS, purifier: PURIFIER_POS,
+      offering: DEFENSE_POS, growth: GROWTH_POS,
+    });
     camera.centerOn(CENTER_X, CENTER_Y);
 
     // Visibility (omni mode - smooth blob boundary instead of tile-based raycast)
@@ -535,6 +548,22 @@ export class PurificationScene extends Phaser.Scene {
     this.growthGraphics = this.add.graphics().setDepth(20);
     this.growthConsole = new GrowthConsoleVisual(this, GROWTH_POS.x, GROWTH_POS.y);
     this.growthConsole.mount();
+    this.riftEntranceGraphics.setDepth(1);
+    this.groundDepthSorter = new GroundDepthSorter([
+      ...[this.coreModule, this.storageModule, this.purifierModule].map(mod => ({
+        id: mod.id, groundY: () => mod.y,
+        applyDepth: (depth: number) => mod.setGroundDepth(depth, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH),
+      })),
+      { id: 'offering', groundY: () => DEFENSE_POS.y, applyDepth: depth => {
+        this.offeringStand?.setDepth(depth); this.defenseGraphics.setDepth(depth);
+      } },
+      { id: 'growth', groundY: () => GROWTH_POS.y, applyDepth: depth => {
+        this.growthConsole?.setDepth(depth); this.growthGraphics.setDepth(depth);
+      } },
+      { id: 'player', groundY: () => this.player.getGroundY(),
+        applyDepth: depth => this.player.setGroundDepth(depth, GROUND_LIGHT_DEPTH) },
+    ]);
+    this.groundDepthSorter.update();
 
     // Purification HUD (DOM overlay)
     purificationHud.create();
@@ -893,6 +922,10 @@ export class PurificationScene extends Phaser.Scene {
 
   private onPostUpdate(_time: number, delta: number): void {
     this.player.postUpdate();
+    this.groundDepthSorter?.update();
+    if (this.coreRepairGlow && this.repairGlowModule) {
+      this.coreRepairGlow.setDepth(this.repairGlowModule.getBodyDepth() + 0.4);
+    }
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
   }
 
@@ -1181,8 +1214,9 @@ export class PurificationScene extends Phaser.Scene {
       this.coreRepairGlow.destroy();
     }
     const glow = this.add.image(mod.x, mod.y - 11, 'fx-core-glow')
-      .setDepth(25).setBlendMode(Phaser.BlendModes.ADD).setTintFill(tint).setScale(0.45).setAlpha(0);
+      .setDepth(mod.getBodyDepth() + 0.4).setBlendMode(Phaser.BlendModes.ADD).setTintFill(tint).setScale(0.45).setAlpha(0);
     this.coreRepairGlow = glow;
+    this.repairGlowModule = mod;
     this.tweens.add({
       targets: glow,
       alpha: 0.38,
@@ -1336,6 +1370,15 @@ export class PurificationScene extends Phaser.Scene {
     }
     this.coreVariantKeys = [];
     this.entranceVariantKeys = [];
+
+    this.groundDepthSorter = null;
+    this.repairGlowModule = null;
+
+    this.deviceCollision?.destroy();
+    this.deviceCollision = null;
+    destroyStaticCollision(this.boundaryCollider, this.boundaryBodies);
+    this.boundaryCollider = null;
+    this.boundaryBodies = null;
 
     // Destroy systems
     this.atmosphere.destroy();

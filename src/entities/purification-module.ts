@@ -262,6 +262,22 @@ export class PurificationModuleEntity {
     return this.config.y;
   }
 
+  getBodyDepth(): number {
+    return this.graphics.depth;
+  }
+
+  /** All surface light stays with this body; ground pools and readouts have separate bands. */
+  setGroundDepth(base: number, floorDepth: number, readoutDepth: number): void {
+    this.graphics.setDepth(base);
+    for (const sprite of [this.coreSprite, this.purifierSprite, this.storageSprite]) sprite?.setDepth(base);
+    this.indicatorLight.setDepth(base + 0.1);
+    for (const glow of [this.coreGlow, this.purifierGlow, this.storageGlow]) glow?.setDepth(base + 0.2);
+    this.coreFlicker?.setDepth(base + 0.3);
+    for (const pool of [this.coreLightPool, this.purifierPool, this.storagePool]) pool?.setDepth(floorDepth);
+    this.hpBarBg.setDepth(readoutDepth);
+    this.hpBarFill.setDepth(readoutDepth + 0.1);
+  }
+
   create(scene: Phaser.Scene): void {
     this.scene = scene;
     const depth = 20;

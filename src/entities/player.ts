@@ -16,9 +16,17 @@ import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { FacingLagGhost, pingPongFrame } from '@/entities/actor-motion';
 import { PlayerLampAura } from '@/entities/player-lamp-aura';
-import { DENSE_PLAYER_LAMP_LOCAL, densePlayerMotionTexture } from '@/entities/player-sprite-dense';
+import { DENSE_PLAYER_LAMP_LOCAL, DENSE_PLAYER_GROUND_OFFSET_Y, densePlayerMotionTexture } from '@/entities/player-sprite-dense';
 import type { Facing4, Vector2 } from '@/types/game-types';
 import { degToRad, FACING4_ANGLES, quantizeFacing4, stepAngleToward } from '@/utils/math';
+
+export interface PlayerBodyConfig {
+  readonly width: number;
+  readonly height: number;
+  /** Unscaled offset from the texture's top-left corner. */
+  readonly offsetX: number;
+  readonly offsetY: number;
+}
 
 export interface PlayerConfig {
   /** World position (px) to spawn at. */
@@ -31,6 +39,8 @@ export interface PlayerConfig {
   readonly baseSpeed?: number;
   /** Initial facing. Defaults to 'right'. */
   readonly facing?: Facing4;
+  /** Optional scene footprint. Omitted: the shared centered 20px rift body. */
+  readonly body?: PlayerBodyConfig;
 }
 
 export class Player {
@@ -82,8 +92,15 @@ export class Player {
     // Direction is indicated by texture swap, not rotation
 
     const body = this.image.body as Phaser.Physics.Arcade.Body;
-    body.setSize(GAME_CONSTANTS.PLAYER.BODY_SIZE, GAME_CONSTANTS.PLAYER.BODY_SIZE, false);
-    body.setOffset(GAME_CONSTANTS.PLAYER.BODY_OFFSET.x, GAME_CONSTANTS.PLAYER.BODY_OFFSET.y);
+    body.setSize(
+      config.body?.width ?? GAME_CONSTANTS.PLAYER.BODY_SIZE,
+      config.body?.height ?? GAME_CONSTANTS.PLAYER.BODY_SIZE,
+      false,
+    );
+    body.setOffset(
+      config.body?.offsetX ?? GAME_CONSTANTS.PLAYER.BODY_OFFSET.x,
+      config.body?.offsetY ?? GAME_CONSTANTS.PLAYER.BODY_OFFSET.y,
+    );
     body.setCollideWorldBounds(true);
     body.allowRotation = false;
 
@@ -141,6 +158,18 @@ export class Player {
   /** Current speed in px/s after the modifier stack. */
   getEffectiveSpeed(): number {
     return this.baseSpeed * this.speedMultiplier;
+  }
+
+  /** Stable sole position in the 32px model, independent of walking/breathing frames. */
+  getGroundY(): number {
+    return this.image.y + DENSE_PLAYER_GROUND_OFFSET_Y;
+  }
+
+  /** Opt-in painter order; rift retains its existing fixed layer configuration. */
+  setGroundDepth(base: number, floorDepth: number): void {
+    this.lag.setDepth(base);
+    this.image.setDepth(base + 0.1);
+    this.aura.setGroundDepth(base, floorDepth);
   }
 
   /** The physics image, for colliders and camera follow. */

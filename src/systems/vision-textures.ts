@@ -343,7 +343,10 @@ export function fieldVisibilityAt(
   const flashStops = params.flashStops ?? FIELD_FLASH_STOPS;
   const theta = Math.abs(thetaFromFacing);
   let angular = 0;
-  if (theta <= coneHalf) {
+  // A full circle has no angular edge. In particular, Float32 ray offsets
+  // round ±π just outside double-precision π; treating that as a cone edge
+  // collapses the rear isolux contours and cuts a dark wedge into omni light.
+  if (params.coneHalfAngleDeg >= 180 || theta <= coneHalf) {
     angular = 1;
   } else if (theta < coneEdge && coneEdge > coneHalf) {
     const t = (theta - coneHalf) / (coneEdge - coneHalf);
@@ -422,4 +425,3 @@ export function computeFieldBandRadii(
     }
   }
 }
-

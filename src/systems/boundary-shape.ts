@@ -15,6 +15,7 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { PURIFICATION_PLAYER_BODY } from '@/systems/purification-collision';
 import type { TidePhase } from '@/types/game-types';
 
 // ---------------------------------------------------------------------------
@@ -107,6 +108,11 @@ const CLAMP_SAMPLES = 360;
 /** Half-arc in degrees over which a safe-zone constraint is spread with cosine falloff. */
 const CLAMP_HALF_ARC_DEG = 30;
 
+/** Shared with the sampled static wall; safety margins include its inward extent. */
+export const BOUNDARY_COLLISION_INNER_SCALE = 0.98;
+export const BOUNDARY_COLLISION_SEGMENT_SIZE = 8;
+export const BOUNDARY_COLLISION_SAMPLES = 90;
+
 // ---------------------------------------------------------------------------
 // Factory
 // ---------------------------------------------------------------------------
@@ -189,6 +195,32 @@ export function createBoundaryShape(config: BoundaryShapeConfig): BoundaryShape 
       if (clampedRequired > minRadius[idx]!) {
         minRadius[idx] = clampedRequired;
       }
+    }
+
+    // The cosine lobe only protected a spoke, not the disk around an interaction.
+    // Preserve it, then protect the actual disk from the inward edge of square
+    // boundary bodies. Their half-diagonal is the worst inward reach at any angle.
+    // SAFE_MARGIN is traversable space for the feet's center, not just a point
+    // visible on the ground. Reserve the full actor before the sampled wall too.
+    const feetRadius = Math.hypot(PURIFICATION_PLAYER_BODY.width, PURIFICATION_PLAYER_BODY.height) / 2;
+    const protectedRadius = safeMarginPx + feetRadius + BOUNDARY_COLLISION_SEGMENT_SIZE / Math.SQRT2;
+    const protectedRadiusSq = protectedRadius * protectedRadius;
+    const pointAngle = Math.atan2(dy, dx);
+    const halfBin = Math.PI / CLAMP_SAMPLES;
+    for (let idx = 0; idx < CLAMP_SAMPLES; idx++) {
+      const sampleAngle = idx * Math.PI * 2 / CLAMP_SAMPLES;
+      // radiusAt rounds to this bin: take the largest far intersection anywhere
+      // within its half-degree extent, rather than under-protecting between samples.
+      const delta = Math.max(0, Math.abs(angleDist(sampleAngle, pointAngle)) - halfBin);
+      const projection = dist * Math.cos(delta);
+      const perpendicular = dist * Math.sin(delta);
+      const discriminant = protectedRadiusSq - perpendicular * perpendicular;
+      if (discriminant < 0) continue;
+      const farIntersection = projection + Math.sqrt(discriminant);
+      if (farIntersection <= 0) continue;
+      // 0.001px covers Float32 rounding; all consumers still share this one shape.
+      const diskRequired = farIntersection / BOUNDARY_COLLISION_INNER_SCALE + 0.001;
+      if (diskRequired > minRadius[idx]!) minRadius[idx] = diskRequired;
     }
   }
 

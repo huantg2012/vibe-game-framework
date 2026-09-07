@@ -70,6 +70,13 @@ export class PlayerLampAura {
     }
   }
 
+  /** Ground light stays below all bodies; lamp and dust belong to the actor. */
+  setGroundDepth(base: number, floorDepth: number): void {
+    this.pool.setDepth(floorDepth);
+    this.glow.setDepth(base + 0.2);
+    for (const mote of this.motes) mote.setDepth(base + 0.3);
+  }
+
   sync(x: number, y: number, facing: Facing4, walking: boolean, deltaMs: number): void {
     this.elapsedMs += deltaMs;
     const lamp = this.lampLocal[facing];
