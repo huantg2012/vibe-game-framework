@@ -16,12 +16,22 @@ import { impactSystem } from '@/systems/impact-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 
+export type ExpeditionEntryMode = 'new' | 'continue';
+
+/** Optional title-screen presentation; in-game callers retain immediate entry. */
+export type ExpeditionEntry = (mode: ExpeditionEntryMode) => void;
+
+function enterPurification(host: Phaser.Scene, mode: ExpeditionEntryMode, enter?: ExpeditionEntry): void {
+  if (enter) enter(mode);
+  else host.scene.start('PurificationScene', { fromMenu: true });
+}
+
 export function hasReadableSave(): boolean {
   return saveManager.peekRecordSummary() !== null;
 }
 
 /** Wipe runtime + save, then enter the purification point as a new record. */
-export function beginNewExpedition(host: Phaser.Scene): void {
+export function beginNewExpedition(host: Phaser.Scene, enter?: ExpeditionEntry): void {
   saveManager.deleteSave();
   gameState.reset();
   tideSystem.reset();
@@ -30,15 +40,15 @@ export function beginNewExpedition(host: Phaser.Scene): void {
   stabilityTracker.reset();
   resetDefenseEngine();
   impactSystem.resetForecastState();
-  host.scene.start('PurificationScene', { fromMenu: true });
+  enterPurification(host, 'new', enter);
 }
 
 /** Load the stored record. Falls back to a new expedition if the file is unreadable. */
-export function loadExpedition(host: Phaser.Scene): void {
+export function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry): void {
   const loaded = saveManager.load();
   if (loaded) {
-    host.scene.start('PurificationScene', { fromMenu: true });
+    enterPurification(host, 'continue', enter);
   } else {
-    beginNewExpedition(host);
+    beginNewExpedition(host, enter);
   }
 }

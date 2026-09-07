@@ -23,8 +23,13 @@ import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import { riftResultPanel } from '@/ui/dom/rift-result-panel';
 import { pauseMenu } from '@/ui/dom/pause-menu';
 import type { ContaminantType } from '@/types/game-types';
+import { audioManager } from '@/managers/audio-manager';
 
 if (import.meta.env.DEV) {
+  const sample = new URLSearchParams(window.location.search).get('sample');
+  const entrySample = sample === 'entry';
+  let unreadableRecordFixture = false;
+  const saveCalls = { load: 0, remove: 0 };
   // Keep runtime failures visible in this isolated review surface.
   const reportError = (message: string): void => {
     let output = document.getElementById('review-runtime-error');
@@ -53,8 +58,15 @@ if (import.meta.env.DEV) {
 
   // Isolation belongs to this development entry, never to the save system.
   saveManager.save = () => {};
-  saveManager.load = () => false;
-  saveManager.deleteSave = () => {};
+  saveManager.load = () => {
+    saveCalls.load++;
+    if (!entrySample || !savedRecordFixture || unreadableRecordFixture) return false;
+    // A successful in-memory load, distinct from the zero-resource new game.
+    gameState.reset();
+    gameState.addKindling(37);
+    return true;
+  };
+  saveManager.deleteSave = () => { saveCalls.remove++; };
   saveManager.hasSave = () => false;
   let savedRecordFixture = new URLSearchParams(window.location.search).get('record') === 'saved';
   saveManager.peekRecordSummary = () => savedRecordFixture
@@ -63,7 +75,6 @@ if (import.meta.env.DEV) {
   window.location.hash = 'purif';
   const game = new Phaser.Game(gameConfig);
   bindDomUiRootToGame(game);
-  const sample = new URLSearchParams(window.location.search).get('sample');
   const coreSampleOnly = sample === 'core';
   const worldSampleOnly = sample === 'world';
   if (coreSampleOnly || worldSampleOnly) document.body.classList.add('core-sample');
@@ -193,6 +204,107 @@ if (import.meta.env.DEV) {
   function paintControls(): void {
     const controls = document.getElementById('review-controls')!;
     controls.replaceChildren();
+    if (entrySample) {
+      document.body.classList.add('core-sample');
+      const note = document.createElement('span');
+      note.id = 'entry-review-note';
+      note.style.cssText = 'display:block;font:10px/16px monospace;white-space:nowrap;overflow:hidden';
+      const trace = document.createElement('pre');
+      trace.id = 'entry-review-trace';
+      trace.style.cssText = 'display:none';
+      // Report is developer-visible on demand; browser automation reads this DOM
+      // output instead of reaching into hidden Phaser or audio-manager state.
+      const button = (label: string, action: () => void) => {
+        const el = document.createElement('button'); el.textContent = label; el.onclick = action; controls.appendChild(el);
+      };
+      let recording = false;
+      let stress = false;
+      let paused = false;
+      const soundIds = new WeakMap<object, number>();
+      let nextSoundId = 1;
+      const effectiveOpacity = (id: string): number => {
+        let el = document.getElementById(id);
+        if (!el) return 0;
+        let opacity = 1;
+        while (el && el.id !== 'dom-ui-root') {
+          const css = getComputedStyle(el);
+          if (css.display === 'none' || css.visibility === 'hidden') return 0;
+          opacity *= Number(css.opacity);
+          el = el.parentElement;
+        }
+        return opacity;
+      };
+      for (const [label, saved, broken] of [['新游戏首页', false, false], ['继续游戏首页', true, false], ['坏档首页', true, true]] as const) {
+        button(label, () => {
+          if (recording) return;
+          savedRecordFixture = saved; unreadableRecordFixture = broken;
+          saveCalls.load = 0; saveCalls.remove = 0;
+          switchScene('MainMenuScene'); note.textContent = label;
+        });
+      }
+      button('记录并进入', () => {
+        const scene = activeScene();
+        if (recording || scene?.scene.key !== 'MainMenuScene') return;
+        const rows: Record<string, unknown>[] = [];
+        const started = performance.now();
+        let finishedAt = 0;
+        let sawOverlay = false;
+        recording = true;
+        trace.textContent = '';
+        const record = () => {
+          const current = activeScene();
+          const overlay = document.getElementById('menu-entry-transition');
+          const body = current?.physics?.world?.bodies?.entries[0];
+          sawOverlay ||= !!overlay;
+          const row = {
+            ms: Math.round(performance.now() - started), scene: current?.scene.key,
+            phase: overlay?.dataset.phase ?? 'none', mode: overlay?.dataset.mode ?? null,
+            alpha: overlay ? getComputedStyle(overlay).opacity : '0',
+            zoom: current?.cameras.main.zoom, input: current?.input.enabled,
+            keyboard: current?.input.keyboard?.enabled, hud: effectiveOpacity('purif-hud'),
+            position: body ? [body.x, body.y] : null,
+            audio: audioManager.getState(), calls: { ...saveCalls }, kindling: gameState.getKindlingReserve(),
+            voices: game.sound.getAllPlaying().map(sound => {
+              if (!soundIds.has(sound)) soundIds.set(sound, nextSoundId++);
+              return { id: soundIds.get(sound), key: sound.key, playing: sound.isPlaying,
+                volume: 'volume' in sound ? sound.volume : null };
+            }),
+          };
+          rows.push(row);
+          note.textContent = `${row.ms}ms · ${row.scene} · ${row.phase} · 罩${row.alpha} · HUD${row.hud.toFixed(2)} · zoom${row.zoom?.toFixed(3)}`;
+          if (stress && overlay && current) {
+            if (current.scene.key === 'MainMenuScene') current.input.keyboard?.emit('keydown-ENTER', new KeyboardEvent('keydown', {key:'Enter'}));
+            else for (const keyCode of [Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.E, Phaser.Input.Keyboard.KeyCodes.TAB, Phaser.Input.Keyboard.KeyCodes.ESC]) {
+              current.input.keyboard?.addKey(keyCode).onDown(new KeyboardEvent('keydown', {keyCode}));
+            }
+          }
+          if (sawOverlay && !overlay && !finishedAt) finishedAt = performance.now();
+          if ((finishedAt && performance.now() - finishedAt > 250) || row.ms > 15000) {
+            recording = false; trace.textContent = JSON.stringify(rows);
+            note.textContent += ` · 已记录${rows.length}帧 · 载入${saveCalls.load}/清除${saveCalls.remove}`;
+            return;
+          }
+          requestAnimationFrame(record);
+        };
+        scene.input.keyboard?.emit('keydown-ENTER', new KeyboardEvent('keydown', { key: 'Enter' }));
+        requestAnimationFrame(record);
+      });
+      button('连点与按键压力 开/关', () => { stress = !stress; note.textContent = `压力=${stress}`; });
+      button('暂停/恢复过渡', () => {
+        const scene = activeScene(); if (!scene) return;
+        paused = !paused;
+        if (paused) { game.scene.pause(scene.scene.key); audioManager.pauseAll(); }
+        else { game.scene.resume(scene.scene.key); audioManager.resumeAll(); }
+      });
+      button('中止并返回首页', () => {
+        paused = false;
+        audioManager.resumeAll();
+        switchScene('MainMenuScene');
+      });
+      button('显示记录', () => { trace.style.display = trace.style.display === 'none' ? 'block' : 'none'; });
+      controls.append(note, trace);
+      return;
+    }
     if (sample === 'menu') {
       document.body.classList.add('core-sample');
       const note = document.createElement('span');
@@ -399,7 +511,7 @@ if (import.meta.env.DEV) {
     if (game.scene.scenes.some((scene) => scene.scene.key !== 'BootScene' && scene.scene.isActive())) {
       if (coreSampleOnly) startCoreSample(true);
       else if (worldSampleOnly) startWorldSample(true);
-      else { paintControls(); if (sample === 'menu') switchScene('MainMenuScene'); }
+      else { paintControls(); if (sample === 'menu' || entrySample) switchScene('MainMenuScene'); }
     } else {
       requestAnimationFrame(showControlsWhenReady);
     }

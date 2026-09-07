@@ -15,6 +15,7 @@ import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH } from '@/sy
  */
 
 import Phaser from 'phaser';
+import { MenuEntryTransition } from './menu-entry-transition';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
@@ -314,6 +315,7 @@ export class PurificationScene extends Phaser.Scene {
   // 裂隙入口外形对照（实测用）：4/5/7/8/9 -> 卡 4 地缝（对照）/ 5 击裂（生产默认）/ 7 错位 / 8 掀皮 / 9 网裂
   private entranceVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
+  private menuEntry: MenuEntryTransition | null = null;
   private transitionDelay: Phaser.Time.TimerEvent | null = null;
   private transitionOverlay: HTMLDivElement | null = null;
   private interactionFocusReturn: { scrollX: number; scrollY: number; zoom: number } | null = null;
@@ -336,8 +338,9 @@ export class PurificationScene extends Phaser.Scene {
     super({ key: 'PurificationScene' });
   }
 
-  create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean }): void {
+  create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean; menuEntry?: MenuEntryTransition }): void {
     this.shuttingDown = false;
+    this.menuEntry = data?.menuEntry ?? null;
     // Determine if this is a return from rift (vs. menu/load entry)
     const isReturnFromRift = !data?.fromMenu && data?.kindlingGained !== undefined;
 
@@ -568,6 +571,11 @@ export class PurificationScene extends Phaser.Scene {
     // Purification HUD (DOM overlay)
     purificationHud.create();
     purificationHud.refresh();
+    if (this.menuEntry) {
+      purificationHud.setEntryVisible(false);
+      this.player.setInputEnabled(false);
+      this.player.getSprite().setVelocity(0, 0);
+    }
 
     // Boundary atmosphere + breathing overlay
     this.atmosphere.create(this, this.boundaryShape);
@@ -633,6 +641,22 @@ export class PurificationScene extends Phaser.Scene {
     } else {
       this.startIsolationBed();
     }
+    this.menuEntry?.arrive(this,
+      () => purificationHud.setEntryVisible(true),
+      () => {
+        this.consumeEntryKeys();
+        this.menuEntry = null;
+        this.player.setInputEnabled(true);
+      },
+    );
+  }
+
+  private consumeEntryKeys(): void {
+    if (this.interactKey) Phaser.Input.Keyboard.JustDown(this.interactKey);
+    if (this.escKey) Phaser.Input.Keyboard.JustDown(this.escKey);
+    if (this.tabKey) Phaser.Input.Keyboard.JustDown(this.tabKey);
+    for (const key of this.coreVariantKeys) Phaser.Input.Keyboard.JustDown(key);
+    for (const key of this.entranceVariantKeys) Phaser.Input.Keyboard.JustDown(key);
   }
 
   update(time: number, delta: number): void {
@@ -735,6 +759,13 @@ export class PurificationScene extends Phaser.Scene {
     // Atmosphere + breathing overlay
     this.atmosphere.update(delta);
     this.breath.update(delta);
+
+    // Keep the world alive while discarding button edges during the entry.
+    // Retain held-key state so OS repeat cannot become a fresh E/Esc/Tab press.
+    if (this.menuEntry) {
+      this.consumeEntryKeys();
+      return;
+    }
 
     // Interaction key (edge-triggered)
     if (this.interactKey && Phaser.Input.Keyboard.JustDown(this.interactKey)) {
@@ -934,7 +965,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private openAllocationPanel(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER'): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     const mod = moduleId === 'CORE' ? this.coreModule : moduleId === 'STORAGE' ? this.storageModule : this.purifierModule;
     this.focusWorldInteraction(mod, 320, mod);
     allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
@@ -1033,13 +1064,13 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private openDefensePanel(): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(DEFENSE_POS, 184);
     defensePanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
 
   private openGrowthPanel(): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(GROWTH_POS, 184);
     growthPanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
@@ -1053,7 +1084,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private enterRift(): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.shuttingDown) return;
+    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(RIFT_ENTRANCE_POS, 184);
     loadoutPanel.open(
       () => {
@@ -1325,6 +1356,8 @@ export class PurificationScene extends Phaser.Scene {
 
   private onShutdown(): void {
     this.shuttingDown = true;
+    this.menuEntry?.destroy();
+    this.menuEntry = null;
     this.transitionDelay?.remove(false);
     this.transitionDelay = null;
     this.transitionOverlay?.remove();

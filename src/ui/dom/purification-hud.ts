@@ -67,6 +67,7 @@ export class PurificationHud {
 
   create(): void {
     injectPanelStyles();
+    this.promptVisible = true;
     this.createHudPanel();
     this.createPromptBar();
   }
@@ -122,6 +123,17 @@ export class PurificationHud {
   setPromptVisible(visible: boolean): void {
     this.promptVisible = visible;
     this.applyPromptOpacity();
+  }
+
+  /** Entry veil owns the fade; visibility keeps both readouts out of the reveal. */
+  setEntryVisible(visible: boolean): readonly HTMLElement[] {
+    const elements: HTMLElement[] = [];
+    for (const element of [this.hudEl, this.promptEl]) {
+      if (!element) continue;
+      element.style.visibility = visible ? '' : 'hidden';
+      elements.push(element);
+    }
+    return elements;
   }
 
   destroy(): void {

@@ -8,6 +8,8 @@
 import Phaser from 'phaser';
 import { MainMenuAtmosphere } from './main-menu-atmosphere';
 import { MainMenuActor } from './main-menu-actor';
+import { MenuEntryTransition } from './menu-entry-transition';
+import type { ExpeditionEntryMode } from '@/managers/session';
 import { t } from '@/i18n';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
@@ -56,6 +58,8 @@ export class MainMenuScene extends Phaser.Scene {
   private atmosphere: MainMenuAtmosphere | null = null;
   private actor: MainMenuActor | null = null;
   private warningText!: Phaser.GameObjects.Text;
+  private entryTransition: MenuEntryTransition | null = null;
+  private entryHandoff = false;
 
   constructor() {
     super({ key: 'MainMenuScene' });
@@ -66,10 +70,13 @@ export class MainMenuScene extends Phaser.Scene {
       this.renderConfirmOverwrite();
       return;
     }
-    beginNewExpedition(this);
+    beginNewExpedition(this, this.startEntry);
   }
 
   create(): void {
+    this.entryTransition = null;
+    this.entryHandoff = false;
+    this.input.enabled = true;
     // The title illustration has subpixel idle motion. World cameras retain
     // their pixel snapping; rounding here quantizes a 2px breath into jumps.
     this.cameras.main.setRoundPixels(false);
@@ -129,7 +136,11 @@ export class MainMenuScene extends Phaser.Scene {
       this.atmosphere = null;
       this.actor?.destroy();
       this.actor = null;
-      audioManager.haltNonBgm();
+      if (!this.entryHandoff) {
+        this.entryTransition?.destroy();
+        audioManager.haltNonBgm();
+      }
+      this.entryTransition = null;
     });
   }
 
@@ -139,7 +150,21 @@ export class MainMenuScene extends Phaser.Scene {
     this.atmosphere?.update(delta);
   }
 
+  private readonly startEntry = (mode: ExpeditionEntryMode): void => {
+    if (this.entryTransition) return;
+    this.input.enabled = false;
+    const transition = new MenuEntryTransition(mode);
+    this.entryTransition = transition;
+    const text: Phaser.GameObjects.GameObject[] = this.children.list.filter(child => child instanceof Phaser.GameObjects.Text);
+    text.push(this.focusMark);
+    transition.depart(this, text, () => {
+      this.entryHandoff = true;
+      this.scene.start('PurificationScene', { fromMenu: true, menuEntry: transition });
+    });
+  };
+
   private moveCursor(delta: number): void {
+    if (this.entryTransition) return;
     if (this.items.length === 0) return;
     this.selectedIndex = (this.selectedIndex + delta + this.items.length) % this.items.length;
     audioManager.playSFX('sfx-ui-hover');
@@ -147,11 +172,13 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   private activateSelection(): void {
+    if (this.entryTransition) return;
     audioManager.playSFX('sfx-ui-click');
     this.items[this.selectedIndex]?.action();
   }
 
   private handleEscape(): void {
+    if (this.entryTransition) return;
     if (this.mode === 'confirmOverwrite') this.renderRoot();
   }
 
@@ -214,7 +241,7 @@ export class MainMenuScene extends Phaser.Scene {
 
     if (this.canContinue) {
       this.renderSummary();
-      items.push({ label: t('menu.continue'), action: () => loadExpedition(this) });
+      items.push({ label: t('menu.continue'), action: () => loadExpedition(this, this.startEntry) });
       items.push({ label: t('menu.newSave'), action: () => this.onSelectNewSave() });
       defaultIndex = 0;
     } else {
@@ -238,8 +265,8 @@ export class MainMenuScene extends Phaser.Scene {
     this.warningText.setVisible(true);
 
     this.items = [
-      { label: t('menu.continue'), action: () => loadExpedition(this) },
-      { label: t('menu.overwriteClear'), action: () => beginNewExpedition(this) },
+      { label: t('menu.continue'), action: () => loadExpedition(this, this.startEntry) },
+      { label: t('menu.overwriteClear'), action: () => beginNewExpedition(this, this.startEntry) },
     ];
     this.selectedIndex = 0;
     this.layoutItems();
@@ -264,11 +291,13 @@ export class MainMenuScene extends Phaser.Scene {
       // A confirmation can replace the row under a stationary pointer; only
       // deliberate movement may override its safe default keyboard selection.
       itemText.on('pointermove', () => {
+        if (this.entryTransition) return;
         if (this.selectedIndex !== index) audioManager.playSFX('sfx-ui-hover');
         this.selectedIndex = index;
         this.refreshItemVisuals();
       });
       itemText.on('pointerdown', () => {
+        if (this.entryTransition) return;
         this.selectedIndex = index;
         audioManager.playSFX('sfx-ui-click');
         item.action();

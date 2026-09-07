@@ -56,6 +56,7 @@ src/
 ├── scenes/
 │   ├── boot-scene.ts           # 资源预加载
 │   ├── main-menu-scene.ts      # 标题画面
+│   ├── menu-entry-transition.ts # 首页入场音画交接；new/continue两种节奏
 │   ├── main-menu-atmosphere.ts # 首页炉火、肩灯、裂纹发光与尘，随场景释放
 │   ├── main-menu-actor.ts      # 原图人物轮廓mesh待机与局部补底
 │   ├── rift-scene.ts           # 裂隙探索（核心玩法场景）
@@ -288,6 +289,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ContaminantNames | src/ui/contaminant-names.ts | 污染物中文名 + 库存排序的单一权威入口，替代各面板各自维护的本地名表（CLAUDE.md 策划数据源规则 + IA §S13/§S15 V8） | getToolName(type), getDefenseName(type), getRarityStars(rarity), sortContaminants(list) | 已实现（Slice 5.5 C2 引入，本轮补登记；C3 新增 getRarityStars/sortContaminants） |
 | InspectDock | src/ui/dom/inspect-dock.ts | 检视层五层内容构建（L1 身份/L2 CSV `summaryDefense`/`summaryTool`/L3 数值/L4 与我的关系/L5 转化去向），替代原生 `title` tooltip（`.inspect-dock` 容器与样式在 PanelStyles） | buildDefenseInspectHtml(c, ctx), buildToolInspectHtml(c, ctx), INSPECT_EMPTY_HTML | 已实现（Slice 5.5 C3；R10 L2 读 CSV 摘要列） |
 | PurificationModuleEntity | src/entities/purification-module.ts | 净化点模块视觉。**CORE** = 32×40 v6 贴图（默认 B 仪式；`?core=a\|b\|c` 与键 1/2/3 切对照）；**PURIFIER** = B1 横卧过滤罐 8 帧图集（观察窗介质翻滚 + 进排气微粒）；**STORAGE** = C1 顶压观察井 8 帧图集（DEC-112）。HP 三态 + 灯 + 脚下完整度条仍在。贴图由 BootScene 预加载 `public/assets/sprites/modules/`（DEC-ARCH-018）。裂隙入口不在本实体 | `new PurificationModuleEntity(config)`：id/type/x/y（getter）, create(scene), update(playerX, playerY), isInRange(), setProximityGlow(inRange), setCoreVariant(v), getEffectPct(), getHpData(), destroy() | 已实现（Slice 2+；Slice 7 第三模块；purif-visual-pass 三模块翻贴图） |
+| MenuEntryTransition | src/scenes/menu-entry-transition.ts | 首页独占的跨场景黑罩，先声后画、微zoom落位、HUD与输入交还；Phaser时钟定里程碑，DOM compositor动画跟随scene暂停/恢复；shutdown释放 | new MenuEntryTransition(mode), depart(scene,text,onCovered), arrive(scene,revealHud,onReady), destroy() | 迭代14 COMPLETE，用户验收结案；ui-menu-entry-transition.md |
 | MainMenuActor | src/scenes/main-menu-actor.ts | 原人物轮廓mesh，脚底固定的呼吸/重心变化；imagegen clean plate仅露出人物背后小区域，减少动态恢复原图，shutdown释放mesh/动态纹理/监听。由MainMenuScene创建在Atmosphere之前；首页相机不取整，人物cutout单独LINEAR采样以消除低幅动作跳步 | new MainMenuActor(scene), update(delta), lampOffset, destroy() | 迭代13 COMPLETE，含人物平滑热修，人终审PASS |
 | MainMenuAtmosphere | src/scenes/main-menu-atmosphere.ts | 首页已锁原图上的炉光、双层肩灯、3片纹理裂纹发光、4条炉口火芯与20粒尘；减少动态时关闭、后台暂停、shutdown释放对象/纹理/监听；只由MainMenuScene持有，不进入世界照明系统 | new MainMenuAtmosphere(scene), setActorOffset(x,y), update(delta), destroy() | 迭代13 COMPLETE，人终审PASS |
 | RiftEntranceVisual | src/scenes/rift-entrance-visual.ts | 净化点北侧裂隙入口的世界内外形。**生产默认 = 卡 5 击裂**（DEC-114）：40×56 × 8 帧、6fps 的**地面裂缝贴花**，画在地面平面内，锚点中心、depth 1（地板0 / 动态实体[20,38)（DEC-120）），玩家能踩过去。`?entrance=4|7|8|9` 与场景内键 4/5/7/8/9 切对照（卡 4 地缝是 DEC-113 留下的另一张）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开出击装配）不因外形改变 | `ENTRANCE_FRAME_W/H` / `ENTRANCE_FRAMES` / `ENTRANCE_FPS` / `ENTRANCE_ORIGIN_Y` / `ENTRANCE_DEPTH` / `ENTRANCE_DEFAULT_VARIANT` / `entranceSheetKey` / `entranceSheetUrl` / `enqueueEntranceSheets` / `readEntranceVariantQuery` / `RiftEntranceVisual` | 已实现（DEC-113 / DEC-114） |
@@ -308,7 +310,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | StatusPanel | src/ui/dom/status-panel.ts | 存续报告墙机：身份带 + 顶 Tab（装置/残渣/潮汐/蜕变）+ 详情主-从。`open` 第二参是净化点最近 overlap 类型，用来亮走近的台 | isOpen(), open(onClose?, nearestOverlap?), close() | 已实现（Slice 3+；I11-B4a 主-从） |
 | ModuleIdentityStrip | src/ui/dom/module-identity-strip.ts | 三模块身份带 HTML helper（名 + 条 + hp/maxHp）。效果百分比不进带。供存续报告 / 分配 / 蜕变 / 供奉 / 出击装配同族 | identityBandHtml(opts) | 已实现（I11-B4c 抽出，不是新系统） |
 | PauseMenu | src/ui/dom/pause-menu.ts | 局内 Esc 记录菜单：新的纪录 / 沿旧路返回 / 合上。关闭=场景原样恢复；在裂隙内选新的纪录或沿旧路返回会结束当前出击 | isOpen(), open(scene), close(), discard() | 已实现 |
-| Session | src/managers/session.ts | 新档/读档的共享启动序列（主菜单与记录菜单共用，避免漏 reset） | hasReadableSave(), beginNewExpedition(scene), loadExpedition(scene) | 已实现 |
+| Session | src/managers/session.ts | 新档/读档的共享启动序列（主菜单与记录菜单共用，避免漏 reset） | hasReadableSave(), beginNewExpedition(scene, enter?), loadExpedition(scene, enter?)；可选ExpeditionEntry回调接new/continue，只有首页传入 | 已实现 |
 | PurificationHud | src/ui/dom/purification-hud.ts | 净化点贴顶 `.device-plate` 读数（薪柴上行 / 潮汐与下次归来下行）+ 底栏 `#purif-prompt`（无目标弱 / 靠近两行），挂 `#dom-ui-root`。不套 `.game-panel` | create(), updatePrompt(target), refresh(), setPromptVisible(visible), destroy() | 已实现（Slice 2+；Slice 7 净化器目标名；DEC-117 去掉加厚底栏；I11-B3 容器化） |
 
 > 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`/`map-types.ts`）、`src/scenes/` 已真实存在，但属于基础设施/类型/场景，不在本"系统模块"注册表内单列。其中：
@@ -843,3 +845,7 @@ setLocale('en');
 `panel-styles.ts`以`.scene-menu`和`.scene-menu-backdrop`为报告、暂停/覆盖确认、撤离/阵亡及冲击结算提供无框排字与全屏渐隐暗场，均挂既有`#dom-ui-root`。各菜单添加专属定位类，无新增相机聚焦、数值或系统API。结果正文滚动、底部动作固定。失焦遮蔽在`main.ts`复用同一暗场；主菜单只统一字体。暂停悬停改为pointermove且仅选项变化才刷新，避免pointerover与DOM重建互相触发。
 
 开发审查页增加`?record=saved`内存摘要，供暂停覆盖确认和主菜单继续态审查；所有save/load/delete仍隔离，正式构建不包含该页面。
+
+### 迭代14验收入口
+
+`ui-review.html?sample=entry` 增加新档、继续、坏档内存夹具与生产键盘启动、逐帧可见DOM报告、输入压力、暂停/恢复和中止重入。`motion=off` 仅在该开发文档模拟减少动态。记录音轨实例ID/实际音量、场景/罩/HUD/镜头、角色位置与save调用次数；不读取正式存档，也不注册生产菜单选项。证据与边界见 `docs/qa/iteration-14.md`。

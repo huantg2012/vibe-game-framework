@@ -267,6 +267,11 @@ export class AudioManager {
     if (this.paused) return;
     const existing = this.voices.find((v) => v.key === key && v.group === 'Ambient' && !v.layer);
     if (existing) {
+      // A fast scene re-entry can reclaim a bed that is still fading out.
+      // Preserve the voice and reverse its fade instead of accepting a doomed loop.
+      if (existing.fade?.stopOnEnd) {
+        this.startFade(existing, existing.fadeGain, 1, fadeIn ?? DEFAULT_FADE, false);
+      }
       this.activeAmbients.add(key);
       return;
     }
@@ -442,6 +447,7 @@ export class AudioManager {
   }
 
   private tick(delta: number): void {
+    if (this.paused) return;
     const dt = Math.max(0, delta);
     this.tickDuck(dt);
     this.tickLayers(dt);
@@ -593,8 +599,16 @@ export class AudioManager {
       startedAt: performance.now(),
     };
     this.voices.push(voice);
+    // Initialize the WebAudio parameter's intrinsic value before the source
+    // starts, as well as Phaser's playback config. setVolume alone schedules an
+    // automation event and may still expose the new GainNode's default of 1
+    // until the audio thread consumes it (especially during context unlock).
+    const initialVolume = this.volumeFor(voice);
+    if ('volumeNode' in sound) {
+      (sound as Phaser.Sound.WebAudioSound).volumeNode.gain.value = initialVolume;
+    }
+    sound.play({ volume: initialVolume, loop: init.loop });
     this.applyVolume(voice);
-    sound.play();
     if (!init.loop) {
       sound.once('complete', () => this.release(voice));
     }
@@ -612,9 +626,9 @@ export class AudioManager {
     voice.fade = { from, to, elapsed: 0, duration, stopOnEnd };
   }
 
-  private applyVolume(voice: Voice): void {
+  private volumeFor(voice: Voice): number {
     const duck = voice.duckable ? this.ambientDuck : 1;
-    const volume = clamp01(
+    return clamp01(
       voice.extraVolume
       * voice.layerMul
       * groupGain(voice.group)
@@ -623,7 +637,10 @@ export class AudioManager {
       * voice.fadeGain
       * duck,
     );
-    setSoundVolume(voice.sound, volume);
+  }
+
+  private applyVolume(voice: Voice): void {
+    setSoundVolume(voice.sound, this.volumeFor(voice));
   }
 
   private release(voice: Voice): void {

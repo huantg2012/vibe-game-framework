@@ -7,6 +7,15 @@ note: Append-only. Do not modify historical entries.
 
 ---
 
+## DEC-122: 迭代14首页到净化点的音画过渡
+
+- Date: 2026-09-07
+- User decision: 选择黑暗逐渐显现+轻微镜头落位，声音先行、自然交还控制；新游戏完整、继续短版，并明确“搞吧”。
+- Scope: 只首页发起的入场，无新玩法或传送设定，保存/载入仍共享session；其他入口保持。
+- Status: ACTIVE / IMPLEMENTED-REVIEW-PENDING。2100ms新档/1100ms继续已实现，实景时序、输入、暂停恢复与退出清理验证已交，等待用户体验。合同docs/tasks/iteration-14.md，规格docs/specs/ui-menu-entry-transition.md，验证docs/qa/iteration-14.md。
+
+- Closure (2026-09-07): 用户体验后明确“结案，提交”。迭代14 COMPLETE / HUMAN-ACCEPTED；新游戏完整入场、继续短版、声音先行、镜头落位与HUD/控制交还均纳入结案。上文ACTIVE为实施期间状态，由本结案记录取代。
+
 ## DEC-121: 迭代13首页构图、背景微动效与命名
 
 - Date: 2026-09-07
