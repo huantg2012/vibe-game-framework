@@ -132,3 +132,12 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 ## 以后加课
 
 在 `GymScene` 旁加新场景，用 URL 查询串切换课（已有 `gym.html?lesson=player`、`?lesson=map`、`?lesson=lexicon`、`?lesson=lexicon-gallery`、`?lesson=paint-vein-card`、`?lesson=rift-entrance-card`、`?lesson=offering-card`、`?lesson=growth-card`）。新课同样必须复用正式系统。把课名写进本文件「当前课」。
+
+
+## 迭代16：虫样板与正式裂隙验收
+
+当前虫体由独立`d/insect-model.ts`生成，`attachJiaGenomeD`的虫分支转`attachInsectVisual`，陈列馆与出击共用新模型。旧虫构件/造型闸门不作为本轮审美依据；用户明确要求独立建模（DEC-124）。练习场仍显示完整合法字母表，出击另外过滤未实现行为组合，二者用途不同。
+
+开发期可用`pollution-review.html?riftSeed=7`（旧图书馆渗透虫）或`?riftSeed=11`（改写虫）。该入口隔离存档，使用真实RiftScene；默认选虫，点击接近观察，WASD/空格使用正常输入。可明确切换观察保护、暂停、触发生产受击/死亡管线，12秒记录可显示为页面JSON。观察保护不属于生产玩法，也不能作为玩家存活难度验证。入口不加入生产构建。
+
+R2验收：外观下拉可在同一实体上对照渗透/改写/覆盖，暂停时亦立即刷新。该选择仅覆盖渲染输入，不改变生成coverage、AI、伤害或位置；“按生成”还原，换样本/死亡/重进清除。长时间观察可先开启观察保护。

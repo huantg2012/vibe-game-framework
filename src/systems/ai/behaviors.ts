@@ -14,6 +14,7 @@
  * every enemy in the frame.
  */
 
+import { floorMotionFor } from '@/generation/contamination-draw';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { AIState, type Vector2 } from '@/types/game-types';
 import type { EnemyAIState } from '@/types/ai-types';
@@ -147,6 +148,13 @@ export function updateBehavior(enemy: Enemy, ctx: AIContext): void {
   intent.speed = 0;
   intent.hasLook = false;
 
+  if (floorMotionFor(enemy.getForm()) !== 'motion_patrol') {
+    updateStationary(enemy, ctx);
+    applyFacing(enemy, ctx);
+    enemy.setVelocity(0, 0);
+    return;
+  }
+
   switch (enemy.ai.state) {
     case AIState.PATROL:
       updatePatrol(enemy, ctx);
@@ -168,6 +176,41 @@ export function updateBehavior(enemy: Enemy, ctx: AIContext): void {
   applySeparation(enemy, ctx);
   applyFacing(enemy, ctx);
   applyVelocity(enemy);
+}
+
+/** Same perception/FSM and combat contract; stationary forms never navigate or separate. */
+function updateStationary(enemy: Enemy, ctx: AIContext): void {
+  const ai = enemy.ai;
+  clearPath(enemy);
+  ai.pathRequestPending = false;
+  ai.engaged = false;
+  switch (ai.state) {
+    case AIState.PATROL:
+      if (floorMotionFor(enemy.getForm()) === 'motion_turn') scanInPlace(enemy, ctx);
+      break;
+    case AIState.SUSPICIOUS:
+      ai.suspicionTimerMs += ctx.dtMs;
+      ai.suspiciousTurnHoldMs = Math.max(0, ai.suspiciousTurnHoldMs - ctx.dtMs);
+      if (ai.investigatePos) lookAt(ai, ai.investigatePos.x, ai.investigatePos.y);
+      else scanInPlace(enemy, ctx);
+      break;
+    case AIState.ALERT:
+      ai.searchTimerMs += ctx.dtMs;
+      scanInPlace(enemy, ctx);
+      break;
+    case AIState.CHASE: {
+      const decoy = ai.targetingDecoy ? ctx.decoyPos : null;
+      const target = ai.losGraceMs === 0 ? (decoy ?? ctx.playerPos) : ai.lastSeenPlayerPos;
+      if (target) lookAt(ai, target.x, target.y);
+      ai.engaged = !decoy && ai.losGraceMs === 0 &&
+        distanceTo(ai, ctx.playerPos) <= GAME_CONSTANTS.AI.STANDOFF_DISTANCE;
+      break;
+    }
+    case AIState.RETURN:
+      // It never left home. Closing the episode still goes through the shared FSM.
+      ctx.requestState(enemy, AIState.PATROL);
+      break;
+  }
 }
 
 // ------------------------------------------------------------------ states

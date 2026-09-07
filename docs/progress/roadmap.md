@@ -4,10 +4,14 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-09-07
 last-closed-slice: 9
-note: 迭代14首页入场过渡COMPLETE（DEC-122，2026-09-07用户验收结案），合同docs/tasks/iteration-14.md。迭代13首页优化COMPLETE（DEC-121，2026-09-07用户验收结案）；命名提案、构图与背景微动效，合同docs/tasks/iteration-13.md。迭代12 COMPLETE（DEC-120，2026-09-07用户验收结单）；合同docs/tasks/iteration-12.md。无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
+note: 迭代16行为对应与虫样板COMPLETE（DEC-124，R3用户PASS），迭代15审查已获接受并转实施。迭代15裂隙污染体生成系统审查ACTIVE / AUDIT-DELIVERED（DEC-123，2026-09-07）；报告docs/qa/iteration-15.md，合同docs/tasks/iteration-15.md。迭代14首页入场过渡COMPLETE（DEC-122，2026-09-07用户验收结案），合同docs/tasks/iteration-14.md。迭代13首页优化COMPLETE（DEC-121，2026-09-07用户验收结案）；命名提案、构图与背景微动效，合同docs/tasks/iteration-13.md。迭代12 COMPLETE（DEC-120，2026-09-07用户验收结单）；合同docs/tasks/iteration-12.md。无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
 ---
 
 # Roadmap
+
+**2026-09-07：迭代16「行为对应与虫的完整样板」COMPLETE / HUMAN-PASS（DEC-124）。** 用户接受迭代15建议并授权实施；迭代15审查结单。模型审美禁止沿用既有审美skill/HOW/经验/历史PASS，以世界、实际场景和独立设计为依据。合同 [iteration-16.md](../tasks/iteration-16.md)。行为修复、新虫及战斗反馈已接入，构建与内部验证已交；[验证](../qa/iteration-16.md)。本轮不重做玩家与其他家族模型，不重排迭代5旧波次。 **R2：用户认可动作，要求污染越高越脱离虫基底；三档结构重做已接入；R3按用户反馈降低中档污染程度，保留连续虫体和单侧改写，2026-09-07用户明确PASS，验收结案，尚未提交。**
+
+**2026-09-07：迭代15「裂隙污染体生成系统审查」（DEC-123），COMPLETE / ACCEPTED-FOR-FOLLOWUP。** 已完成生产生成链、模型画面与行为消费审查；优先发现固着模型仍巡逻、部分运动/节律词素未兑现、旧受击闪白贴图与模型识别问题。报告 [iteration-15.md](../qa/iteration-15.md)，合同 [iteration-15.md](../tasks/iteration-15.md)。仅分析与证据交付，迭代15未改生产代码；用户现已接受建议，实施转迭代16。迭代14保持COMPLETE；迭代5旧未决项独立保留，不开I5-C。下方旧“活指针仍在迭代5”描述其历史工作与未决项，当前任务以文首迭代16为准。
 
 **2026-09-07：迭代14「首页进入净化点过渡」COMPLETE（DEC-122，用户验收结案）。** 黑暗显现、声音先行、轻微镜头落位、HUD末段交控制已接入；新游戏约2.1秒、继续约1.1秒。隔离实景的新/继续/坏档、输入压力、暂停恢复、减少动态及中途退出重入已检查，内部美术复核已交，用户明确“结案，提交”。规格 docs/specs/ui-menu-entry-transition.md，合同 docs/tasks/iteration-14.md，验证 docs/qa/iteration-14.md。
 

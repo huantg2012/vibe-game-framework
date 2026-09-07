@@ -322,7 +322,7 @@ export const LEXEME_DATA: Record<string, LexemeDef> = {
     id: 'motion_anchor',
     slot: 'motion',
     displayToken: '固着',
-    legalPortfolios: ['yi', 'bing', 'ding'],
+    legalPortfolios: ['jia', 'yi', 'bing', 'ding'],
     rewrites: [],
   },
   motion_cluster: {

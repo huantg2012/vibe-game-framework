@@ -297,6 +297,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | GrowthConsoleVisual | src/scenes/growth-console-visual.ts | 净化点西侧培养藏的世界内外形。**生产默认 = 卡 A 立缸**（DEC-116）：40×42 × 8 帧、6fps，立着 45° 等距，锚点脚底；默认depth20，净化点由GroundDepthSorter覆盖（DEC-120）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开蜕变）不因外形改变 | `GROWTH_FRAME_W/H` / `GROWTH_FRAMES` / `GROWTH_FPS` / `GROWTH_ORIGIN_Y` / `GROWTH_DEPTH` / `GROWTH_SHEET_KEY` / `enqueueGrowthSheet` / `GrowthConsoleVisual` | 已实现（DEC-116） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
+| InsectModel / InsectVisual | src/entities/form-renderers/d/insect-model.ts；insect-visual.ts | 迭代16独立虫模型、四向与动作投影；单实体单CanvasTexture，真实战斗相位驱动；生产与练习场共用，旧虫骨架不再驱动当前显示 | bakeInsectModel；attachInsectVisual；FormVisual.getFlashSource | R3用户PASS（2026-09-07） |
+| PollutionReview | src/dev/pollution-review.ts；pollution-review.html | DEV隔离存档入口，调用正式RiftScene、可见输入按钮与只读轨迹；不进入生产构建 | probeEnemyReview；probeInspectEnemy；probeReviewHit | 迭代16验证入口 |
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」。I3-A：一份 `contaminationDraw`（`mix32(seed, 'lexicon')`）喂甲 spawn.form 与宿主。**I8-Q：** 占漆钉 `paintFloors`（贪婪薪柴路径，偏咽喉）；不足掷出的 N 则本图重试，禁止钳小 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout；rollPaintHostCount；collectContaminationPins | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图。I8-Q 占漆配额已接 |
 | PaletteQuantize | src/generation/palette-quantize.ts | 色温分组 + 组内色相方向量化（I6-B）。L1 候选池与青绿家族供地面/敌人共用。禁止全色板 nearest 当 L1/L2 生产成功路径。地面 L2 已接（I6-C code）；敌人四档经 `deriveFragmentContamRamp` → `deriveContamRamp`（I6-D）。DEC-097：最终像素量化禁止对虚空/低亮走青绿组内色相方向提亮；虚空只落虚空黑三格。**DEC-110：** 残骸三格（debris-earth / debris-rust / debris-wood）均值 >55 不进 L1；`nearestPalette` 也跳过它们，避免地面 / 墙 / 污染再量化吸进堆主体色 | temperatureGroup；quantizeInGroup；quantizeL1；l1Pool；TEAL_FAMILY；DEBRIS_HEX；nearestPalette | 已实现（I6-B；地面接线 I6-C 整批已交，art 最短核合规过、好看不代勾；敌人接线 I6-D 已交；I6-C 热修 DEC-097 量化收口已交，**热修画面人 PASS**；DEC-110 残骸格已登记） |
 | RiftHud | src/ui/dom/rift-hud.ts | 裂隙内游戏状态显示（完整度条/混乱条/薪柴数/工具槽/撤离提示/生效中行），`class RiftHud` 由 RiftScene 持有实例；结算面板已拆到 RiftResultPanel。生效行用 `.device-effect` 名+秒分节点；remainingMs 由场景每帧权威 set，HUD 不再自减。`CHAOS_CHANGED` 且 `delta > 0` 时条头填充一次 180ms 短促提亮（不按来源分色；挂载根仍是 `#dom-ui-root`） | create(config), update(deltaMs), setActiveEffects(effects), reset(), destroy() | 已实现（Slice 1+；Slice 5.5 迁 DOM；R10 工具剩余秒；CH-HUD-3 正增量强调） |
@@ -849,3 +851,12 @@ setLocale('en');
 ### 迭代14验收入口
 
 `ui-review.html?sample=entry` 增加新档、继续、坏档内存夹具与生产键盘启动、逐帧可见DOM报告、输入压力、暂停/恢复和中止重入。`motion=off` 仅在该开发文档模拟减少动态。记录音轨实例ID/实际音量、场景/罩/HUD/镜头、角色位置与save调用次数；不读取正式存档，也不注册生产菜单选项。证据与边界见 `docs/qa/iteration-14.md`。
+
+
+### 迭代16接线补充（DEC-124）
+
+`attachJiaGenomeD`在虫分支委派`attachInsectVisual`；离线`bakeJiaGenome`同一虫分支委派`bakeInsectModel`。其他家族保持原渲染器。`FormVisual`可提供当前形体闪白源，`CombatSystem`同步复制到自有池纹理以跨越实体销毁。`RiftScene`将真实攻击时钟写入可选`FormVisualPose.attack`；练习场没有战斗时钟时使用预览信号。
+
+出击组合通过`supportsRuntimeForm`能力筛选，`floorMotionFor`统一固着/转面/巡游规则；完整字母表仍由CSV生成、陈列馆保留，生产池只抽有行为消费的部分。旧虫构件、帧数、色板与审美闸门属于历史实现，不约束迭代16新样板（用户FATAL）；此处仅记录技术路由，不将旧审美经验传播进新设计。
+
+R2 DEV对照：`FormVisual.setReviewCoverage`为可选接口，仅虫实现且DEV守卫；`RiftScene.probeReviewCoverage`转发给当前visual。暂停刷新复用最后pose并传deltaMs=0，覆盖档进入帧缓存键；正式渲染默认仍读form.coverage，未新增纹理或机制状态。

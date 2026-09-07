@@ -6,6 +6,7 @@
  * 可走甲消费 `pose.moving`：检视 walk 帧钉在 `pose.x/y`，禁止巡路滑步冒充步态。
  */
 import Phaser from 'phaser';
+import { attachInsectVisual } from '@/entities/form-renderers/d/insect-visual';
 import { pingPongFrame } from '@/entities/actor-motion';
 import {
   applyFormVisibility,
@@ -116,6 +117,10 @@ class JiaGenomeVisual implements FormVisual {
     applyFormVisibility(this.image, pose.visibility);
   }
 
+  getFlashSource() {
+    return { textureKey: this.image.texture.key, originX: this.image.originX, originY: this.image.originY, scaleX: this.image.scaleX, scaleY: this.image.scaleY };
+  }
+
   destroy(): void {
     this.image.destroy();
     removeKeys(this.scene, this.keys);
@@ -198,5 +203,5 @@ class JiaGenomeVisual implements FormVisual {
 }
 
 export function attachJiaGenomeD(ctx: FormAttachContext): FormVisual {
-  return new JiaGenomeVisual(ctx);
+  return ctx.form.substrate === 'insect_remnant' ? attachInsectVisual(ctx) : new JiaGenomeVisual(ctx);
 }

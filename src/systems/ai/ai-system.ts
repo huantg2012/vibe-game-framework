@@ -19,6 +19,7 @@
  */
 
 import Phaser from 'phaser';
+import { floorMotionFor } from '@/generation/contamination-draw';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { AIState, type Vector2 } from '@/types/game-types';
@@ -423,7 +424,7 @@ export class AISystem implements AISystemAPI {
 
   knockbackEnemy(enemyId: string, dx: number, dy: number): void {
     const enemy = this.findEnemy(enemyId);
-    if (!enemy) return;
+    if (!enemy || floorMotionFor(enemy.getForm()) === 'motion_anchor') return;
     const ai = enemy.ai;
     const newX = ai.position.x + dx;
     const newY = ai.position.y + dy;
@@ -864,6 +865,11 @@ export class AISystem implements AISystemAPI {
 
     // Stagger the perception phase so several enemies never raycast on the same frame.
     enemy.ai.perceptionAccumMs = total > 0 ? (index * GAME_CONSTANTS.AI.PERCEPTION_TICK_MS) / total : 0;
+    if (floorMotionFor(enemy.getForm()) !== 'motion_patrol') {
+      enemy.ai.patrolMode = 'static';
+      enemy.ai.patrolWaypoints.push({ x: this.scratch.x, y: this.scratch.y });
+      return enemy;
+    }
     enemy.ai.patrolMode = spawn.patrol.mode;
 
     for (const waypoint of spawn.patrol.waypoints) {

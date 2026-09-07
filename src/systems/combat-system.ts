@@ -26,6 +26,7 @@
  */
 
 import Phaser from 'phaser';
+import type { FormAttackPose, FormFlashSource } from '@/entities/form-renderers/form-renderer';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { INFILTRATOR_TEXTURE } from '@/entities/infiltrator-sprite';
@@ -74,6 +75,8 @@ export type CombatCueId =
  * broadcast twice.
  */
 export interface CombatHooks {
+  /** Actual model texture, copied synchronously before entity destruction. */
+  captureEnemyVisual?(enemyId: string): FormFlashSource | undefined;
   onNoise(pos: Readonly<Vector2>, radius: number, level: NoiseLevel): void;
   /** Optional until an audio manager exists. */
   onCue?(cue: CombatCueId, pos: Readonly<Vector2>): void;
@@ -123,6 +126,7 @@ export interface CombatSystemAPI extends PlayerCombatAPI {
   update(deltaMs: number): void;
   requestPlayerAttack(): void;
   getEnemyHealth(enemyId: string): number | undefined;
+  getEnemyAttackVisualState(enemyId: string): FormAttackPose;
   isEnemyAlive(enemyId: string): boolean;
   setEnabled(enabled: boolean): void;
   reset(): void;
@@ -183,7 +187,10 @@ interface EnemyCombatState {
 }
 
 /** One pooled white flash. Death effects outlive the enemy entity, hence the pool. */
+let flashPoolSerial = 0;
+
 interface FxSlot {
+  readonly texture: Phaser.Textures.CanvasTexture;
   readonly image: Phaser.GameObjects.Image;
   remainingMs: number;
   durationMs: number;
@@ -191,6 +198,7 @@ interface FxSlot {
 }
 
 export class CombatSystem implements CombatSystemAPI {
+  private scene!: Phaser.Scene;
   private occluders!: OccluderGrid;
   private player!: PlayerCombatTarget;
   private ai!: AISystemReadView;
@@ -239,6 +247,7 @@ export class CombatSystem implements CombatSystemAPI {
     ai: AISystemReadView,
     hooks: CombatHooks
   ): void {
+    this.scene = scene;
     this.occluders = occluders;
     this.player = player;
     this.ai = ai;
@@ -260,12 +269,14 @@ export class CombatSystem implements CombatSystemAPI {
 
     this.graphics = scene.add.graphics().setDepth(COMBAT_FX_DEPTH);
     for (let i = 0; i < GAME_CONSTANTS.COMBAT.FX_POOL_SIZE; i++) {
+      const texture = scene.textures.createCanvas(`combat-flash-${flashPoolSerial++}`, 1, 1);
+      if (!texture) throw new Error('Could not allocate combat flash texture');
       const image = scene.add
-        .image(0, 0, INFILTRATOR_TEXTURE.down)
+        .image(0, 0, texture.key)
         .setDepth(COMBAT_FX_DEPTH)
         .setVisible(false);
       image.setTintFill(GAME_CONSTANTS.COMBAT.FX_COLOR);
-      this.fx.push({ image, remainingMs: 0, durationMs: 0, fade: false });
+      this.fx.push({ image, texture, remainingMs: 0, durationMs: 0, fade: false });
     }
 
     this.syncRoster();
@@ -278,7 +289,10 @@ export class CombatSystem implements CombatSystemAPI {
     this.enemies.clear();
     this.hitSet.clear();
 
-    for (const slot of this.fx) slot.image.destroy();
+    for (const slot of this.fx) {
+      slot.image.destroy();
+      this.scene.textures.remove(slot.texture.key);
+    }
     this.fx.length = 0;
     this.graphics?.destroy();
   }
@@ -392,6 +406,22 @@ export class CombatSystem implements CombatSystemAPI {
 
   getLockedAttackAngle(): number {
     return this.attackAngle;
+  }
+
+  getEnemyAttackVisualState(enemyId: string): FormAttackPose {
+    const state = this.enemies.get(enemyId);
+    if (!this.enabled || !state) return { phase: 'idle', progress: 0 };
+    if (state.attackPhase === 'windup') return {
+      phase: 'windup', progress: clamp(state.attackTimerMs / GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_WINDUP_MS, 0, 1),
+      facingAngle: state.attackAngle,
+    };
+    if (state.attackPhase === 'cooldown') {
+      const elapsed = GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_COOLDOWN_MS - state.cooldownRemainingMs;
+      // These windows animate an already-resolved hit; damage/cooldown are unchanged.
+      if (elapsed < 80) return { phase: 'strike', progress: elapsed / 80, facingAngle: state.attackAngle };
+      if (elapsed < 320) return { phase: 'recover', progress: (elapsed - 80) / 240, facingAngle: state.attackAngle };
+    }
+    return { phase: 'idle', progress: 0 };
   }
 
   getEnemyHealth(enemyId: string): number | undefined {
@@ -575,7 +605,8 @@ export class CombatSystem implements CombatSystemAPI {
     state.strikeFxFrames = 0;
 
     // Copied before the entity goes away: `despawn` lands inside the emit below.
-    const flash = captureEnemyFlash(state.view);
+    // Copy while the form renderer and its dynamic texture are still alive.
+    this.spawnFx(enemyPos, state.view, combat.ENEMY_DEATH_FX_MS, true);
     this.deathPos.x = enemyPos.x;
     this.deathPos.y = enemyPos.y;
     this.enemies.delete(state.id);
@@ -588,7 +619,7 @@ export class CombatSystem implements CombatSystemAPI {
 
     this.noise(this.deathPos, combat.NOISE_KILL_RADIUS, 'alert');
     this.cue('combat.cue.enemyDeath', this.deathPos);
-    this.spawnFx(this.deathPos, flash, combat.ENEMY_DEATH_FX_MS, true);
+
   }
 
   /** Ends a swing from any cause and always releases the slow. */
@@ -893,12 +924,23 @@ export class CombatSystem implements CombatSystemAPI {
     }
     if (!slot) return;
 
-    const flash = 'textureKey' in source ? source : captureEnemyFlash(source);
+    const flash = 'textureKey' in source ? source
+      : this.hooks.captureEnemyVisual?.(source.getId()) ?? captureEnemyFlash(source);
+    const frame = this.scene.textures.getFrame(flash.textureKey);
+    if (!frame) return;
+    // Pool-owned pixel copies survive renderer destruction and future animated frames.
+    slot.texture.setSize(frame.cutWidth, frame.cutHeight);
+    const ctx = slot.texture.getContext();
+    ctx.clearRect(0, 0, frame.cutWidth, frame.cutHeight);
+    ctx.drawImage(frame.source.image as CanvasImageSource, frame.cutX, frame.cutY,
+      frame.cutWidth, frame.cutHeight, 0, 0, frame.cutWidth, frame.cutHeight);
+    slot.texture.refresh();
     slot.remainingMs = durationMs;
     slot.durationMs = durationMs;
     slot.fade = fade;
     slot.image
-      .setTexture(flash.textureKey)
+      .setTexture(slot.texture.key)
+      .setScale(flash.scaleX ?? 1, flash.scaleY ?? 1)
       .setOrigin(flash.originX, flash.originY)
       .setPosition(position.x, position.y)
       .setRotation(0)
@@ -947,7 +989,7 @@ export class CombatSystem implements CombatSystemAPI {
   }
 }
 
-interface EnemyFlashCopy {
+interface EnemyFlashCopy extends FormFlashSource {
   readonly textureKey: string;
   readonly originX: number;
   readonly originY: number;

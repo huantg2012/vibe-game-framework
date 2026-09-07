@@ -1,4 +1,5 @@
 import type Phaser from 'phaser';
+import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { FormWallAttach } from '@/generation/wall-edge-path';
 
@@ -15,6 +16,21 @@ export type FormRendererId = (typeof FORM_RENDERER_IDS)[number];
 
 export type FormVisualSignal = 'idle' | 'strike' | 'inflated' | 'awake';
 
+export interface FormFlashSource {
+  readonly textureKey: string;
+  readonly originX: number;
+  readonly originY: number;
+  readonly scaleX?: number;
+  readonly scaleY?: number;
+}
+
+/** Presentation reads the authoritative combat clock; it never resolves damage. */
+export interface FormAttackPose {
+  readonly phase: 'idle' | 'windup' | 'strike' | 'recover';
+  readonly progress: number;
+  readonly facingAngle?: number;
+}
+
 export interface FormVisualPose {
   x: number;
   y: number;
@@ -23,11 +39,16 @@ export interface FormVisualPose {
   visibility: number;
   signal: FormVisualSignal;
   deltaMs: number;
+  attack?: FormAttackPose;
 }
 
 export interface FormVisual {
   update(pose: FormVisualPose): void;
   destroy(): void;
+  /** Snapshot source must be copied before this visual is destroyed. */
+  getFlashSource?(): FormFlashSource;
+  /** DEV-only material/shape comparison; never changes the generated form or behavior. */
+  setReviewCoverage?(coverage: CoverageId | null): void;
   /**
    * World floor tiles that currently show this visual's paint.
    * 丙油膜踩踏读这个；缺省则宿主仍走核旁 Chebyshev。漆不挡路。

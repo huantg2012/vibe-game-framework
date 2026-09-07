@@ -1,3 +1,4 @@
+import type { CoverageId } from '@/generated/contamination-lexicon-data';
 /**
  * Rift Scene - core gameplay.
  *
@@ -18,6 +19,7 @@ import { isActorWalking } from '@/entities/actor-motion';
 import { Enemy } from '@/entities/enemy-factory';
 import { getFormRenderer, type FormVisual, type FormVisualSignal } from '@/entities/form-renderers/registry';
 import { Player } from '@/entities/player';
+import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import { generateRiftLayout } from '@/generation/rift-layout';
 import { mix32 } from '@/generation/seed-fork';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
@@ -197,6 +199,7 @@ export class RiftScene extends Phaser.Scene {
     this.combat.create(this, grid, this.player, this.ai, {
       onNoise: this.reportNoise,
       onCue: this.onCombatCue,
+      captureEnemyVisual: (id) => this.formVisuals.get(id)?.getFlashSource?.(),
     });
 
     // --- T9 systems: chaos, loot, extraction, run controller, HUD ---
@@ -1186,13 +1189,15 @@ export class RiftScene extends Phaser.Scene {
       if (view) {
         const pos = view.getPosition();
         const vel = view instanceof Enemy ? view.ai.velocity : { x: 0, y: 0 };
+        const attack = this.combat.getEnemyAttackVisualState(id);
         visual.update({
           x: pos.x,
           y: pos.y,
           facing4: view.getFacing4(),
           moving: isActorWalking(Math.hypot(vel.x, vel.y)),
           visibility: this.visibility.getVisibilityAt(pos),
-          signal: this.jiaSchemeSignal(view),
+          signal: this.jiaSchemeSignal(view, attack),
+          attack,
           deltaMs,
         });
         continue;
@@ -1212,8 +1217,10 @@ export class RiftScene extends Phaser.Scene {
     }
   }
 
-  private jiaSchemeSignal(view: { isEngaged(): boolean; getState(): AIState }): FormVisualSignal {
-    if (view.isEngaged()) return 'strike';
+  private jiaSchemeSignal(view: { getState(): AIState }, attack: FormAttackPose): FormVisualSignal {
+    if (attack.phase === 'windup') return 'inflated';
+    if (attack.phase === 'strike') return 'strike';
+    if (attack.phase === 'recover') return 'awake';
     const state = view.getState();
     if (state === AIState.CHASE) return 'awake';
     if (state === AIState.ALERT || state === AIState.SUSPICIOUS) return 'inflated';
@@ -1412,6 +1419,56 @@ export class RiftScene extends Phaser.Scene {
 
     lines.push('F1 overlay   ESC menu');
     this.debugPanel.textContent = lines.join('\n');
+  }
+
+  /** Development review only: exposes production state without a second simulation. */
+  probeEnemyReview() {
+    if (!import.meta.env.DEV) return null;
+    return {
+      seed: this.layoutDebug.seed, hp: this.combat.getHealth(),
+      player: { ...this.player.getPosition() },
+      enemies: this.ai.getEnemies().map((view) => ({
+        id: view.getId(), substrate: view.getForm().substrate, coverage: view.getForm().coverage,
+        motion: view.getForm().lexemes.motion, state: view.getState(),
+        position: { ...view.getPosition() }, facing: view.getFacing4(),
+        attack: this.combat.getEnemyAttackVisualState(view.getId()),
+        hp: this.combat.getEnemyHealth(view.getId()),
+        texture: this.formVisuals.get(view.getId())?.getFlashSource?.().textureKey,
+      })),
+      textures: this.textures.getTextureKeys().filter((key) => key.includes('insect16') || key.startsWith('combat-flash-')),
+    };
+  }
+
+  probeInspectEnemy(id: string, distance: number): boolean {
+    if (!import.meta.env.DEV) return false;
+    const enemy = this.ai.getEnemyById(id);
+    const layer = this.tilemapRenderer.getLayer();
+    if (!enemy || !layer) return false;
+    const p = enemy.getPosition();
+    for (const angle of [Math.PI, 0, Math.PI / 2, -Math.PI / 2]) {
+      const x = p.x + Math.cos(angle) * distance;
+      const y = p.y + Math.sin(angle) * distance;
+      const clear = [-10, 10].every((dx) => [-10, 10].every((dy) => {
+        const tile = layer.getTileAtWorldXY(x + dx, y + dy);
+        return tile && !tile.collides;
+      }));
+      if (!clear) continue;
+      this.probePlacePlayer(x, y);
+      return true;
+    }
+    return false;
+  }
+
+  probeReviewCoverage(id: string, coverage: CoverageId | null): void {
+    if (import.meta.env.DEV) this.formVisuals.get(id)?.setReviewCoverage?.(coverage);
+  }
+
+  probeReviewProtection(enabled: boolean): void {
+    if (import.meta.env.DEV) this.combat.setGodMode(enabled);
+  }
+
+  probeReviewHit(id: string, lethal: boolean): void {
+    if (import.meta.env.DEV) this.combat.applyToolDamage(id, lethal ? 999 : 1);
   }
 
   probePlacePlayer(x: number, y: number): void {

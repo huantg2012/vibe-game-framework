@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
-last-modified-by: director（迭代 3 收口：interface-changed 改回 false）
-last-modified-date: 2026-08-28
+last-modified-by: director（迭代16模型反馈与攻击时钟）
+last-modified-date: 2026-09-07
 interface-changed: false
 slice: 1
 interfaces-with:
@@ -761,3 +761,12 @@ RiftScene.update(dt):
 8. **【裁定 T1 遗留项，需 T1 知悉】玩家死亡时不做视野收黑。**
    T1 边界情况表写「玩家死亡：视野是否收黑由 T4 死亡表现定义」。本 spec 裁定**不收黑**：T3 规则 13 要求出击结束时画面停在"最糟糕的那一刻"，收黑会夺走玩家看清自己死在哪里的最后一眼，也削弱结算面板前的那一秒沉默。
    → 无需改 T1 spec（它把决定权交给了本 spec），此处仅作记录供 code agent 在 T8 遵循。
+
+
+## 迭代16：当前模型反馈与攻击时钟（DEC-124）
+
+- `CombatHooks.captureEnemyVisual?(id)` 由场景提供当前生产模型的纹理key、归一化origin及scale。未提供时仅旧/占位场景使用原角色贴图。
+- 命中与死亡统一复制当前帧像素到战斗池自有CanvasTexture；复制发生在`ENEMY_KILLED`事件销毁模型之前。池slot不依赖被销毁纹理，也不会随存活模型的后续帧改变。scene销毁时删除池纹理，重复进入不会累计。
+- `getEnemyAttackVisualState(id)`只读真实攻击时钟，返回`idle / windup / strike / recover`、0–1进度及承诺攻击方向。windup使用现有350ms；结算后80ms为strike，再240ms为recover，剩余冷却为idle。伤害、攻击令牌与1200ms冷却不变；战斗禁用后返回idle，避免冻结冷却被读成持续出手。
+- `RiftScene`向`FormVisualPose.attack`传入该状态。虫按它表现蓄势/出手/收势，不能把`isEngaged`常亮当成重复攻击。身体四向朝向由同一承诺角量化，攻击后的表现不另结算伤害。
+- 新虫的外形设计见`docs/art/iteration-16-insect.md`；审美由本轮独立设计与实际场景判断，不沿用旧造型经验。

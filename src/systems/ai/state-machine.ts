@@ -11,6 +11,7 @@
  * question as "when does the state change".
  */
 
+import { floorMotionFor } from '@/generation/contamination-draw';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { AIState, type Vector2 } from '@/types/game-types';
 import type { AlertLevel, Perception } from '@/types/ai-types';
@@ -348,6 +349,11 @@ export function buildSearchPoints(
   const ai = enemy.ai;
   const config = GAME_CONSTANTS.AI;
   const points = ai.searchPoints;
+  if (floorMotionFor(enemy.getForm()) !== 'motion_patrol') {
+    ai.searchPointCount = 0;
+    ai.searchIndex = 0;
+    return;
+  }
   let count = 0;
 
   if (ctx.pathfinder.findNearestWalkable(originX, originY, points[count]!)) count++;

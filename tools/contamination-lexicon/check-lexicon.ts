@@ -173,7 +173,7 @@ assert(
 const I5T_BIO_SORTIE: Readonly<
   Record<string, { token: string; verb: string; lock: string }>
 > = {
-  insect_remnant: { token: '虫', verb: '爬', lock: 'motion_turn' },
+  insect_remnant: { token: '虫', verb: '爬', lock: 'motion_patrol' },
   mammal_remnant: { token: '哺乳动物', verb: '走', lock: 'motion_patrol' },
   worm_remnant: { token: '大号蠕虫', verb: '拱', lock: 'motion_turn' },
 };
@@ -392,24 +392,9 @@ for (const seed of seeds) {
   }
 }
 
-if (watchingHits === 0) {
-  for (let seed = 0; seed < 80 && watchingHits === 0; seed++) {
-    const rng = new SeededRandom(seed ^ 'frag-outdoor'.length * 17);
-    const { forms } = drawSortie(rng, {
-      fragmentTypeId: 'frag-outdoor',
-      paintCount: 4,
-      hasWallEdges: true,
-      hasCorridors: true,
-    });
-    for (const form of forms) {
-      if (form.utteranceId !== 'corridor_watching') continue;
-      watchingHits++;
-      assert(form.substrate === 'space_interval', `probe corridor_watching substrate ${form.substrate}`);
-      assert(form.occupancy === 'volume', `probe corridor_watching occupancy ${form.occupancy}`);
-    }
-  }
-}
-assert(watchingHits > 0, 'sortie must be allowed to hit corridor_watching');
+assert(watchingHits === 0, 'unsupported reverse/sky recipe must not enter production');
+assert(UTTERANCE_DATA.corridor_watching.sense === 'sense_reverse', 'gallery keeps authored reverse recipe');
+assert(UTTERANCE_DATA.corridor_watching.rhythm === 'rhythm_sky', 'gallery keeps authored sky recipe');
 
 const emptyPins = drawSortie(new SeededRandom(9), {
   fragmentTypeId: 'frag-clinic',

@@ -6,7 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { PortfolioId } from '../../src/generated/contamination-lexicon-data.ts';
+import { UTTERANCE_DATA, type PortfolioId } from '../../src/generated/contamination-lexicon-data.ts';
 import { mix32 } from '../../src/generation/seed-fork.ts';
 import {
   GALLERY_ATTACH_CAP,
@@ -356,9 +356,22 @@ for (const hall of jiaHalls) {
 }
 
 assert(inRange(total, 400, 2800), `total ${total} in [400, 2800]`);
-assert(total === 1974, `default catalog size must stay 1974 (got ${total})`);
+
 assert(inRange(jia, 400, 2400), `jia ${jia} in [400, 2400]`);
-assert(jia === 1632, `jia catalog size must stay 1632 (got ${jia})`);
+// I16 adds anchor to the legal jia alphabet. Verify semantics, not a stale Cartesian count.
+for (const substrate of ['doorframe', 'street_wreckage']) {
+  for (const coverage of ['infiltrate', 'rewrite', 'overwrite']) {
+    assert(listed.some(spec => spec.substrate === substrate && spec.form.coverage === coverage &&
+      spec.form.lexemes.motion === 'motion_anchor'), `${substrate}/${coverage} anchor is inspectable`);
+  }
+}
+assert(listed.some(spec => spec.portfolio === 'jia' && spec.form.lexemes.motion === 'motion_coalesce'),
+  'gallery retains unsupported motion alphabet; production capability filter must not erase it');
+assert(listed.some(spec => spec.portfolio === 'jia' && spec.form.lexemes.sense === 'sense_narrow'),
+  'gallery retains narrow-sight inspection independently of production');
+for (const id of Object.keys(UTTERANCE_DATA)) {
+  assert(listed.some(spec => spec.utteranceIds.includes(id)), `gallery keeps exact named recipe ${id}`);
+}
 assert(inRange(yi, 15, 80), `yi ${yi} in [15, 80]`);
 assert(inRange(bing, 80, 350), `bing ${bing} in [80, 350]`);
 assert(bing === 270, `bing catalog size must stay 270 (got ${bing})`);

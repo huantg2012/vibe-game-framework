@@ -50,7 +50,9 @@
     "measure:l1-reach": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/measure-l1-reach.ts",
     "preview:contam-world": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-world-grounds.ts && tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-world-coordination.ts",
     "preview:probes": "tsx --tsconfig tsconfig.json tools/map-preview/render-density-probes.ts",
-    "audio:placeholders": "node tools/audio-placeholders/generate.mjs"
+    "audio:placeholders": "node tools/audio-placeholders/generate.mjs",
+    "check:runtime-behavior": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-runtime-behavior.ts",
+    "check:combat-visual-state": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-combat-visual-state.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1"

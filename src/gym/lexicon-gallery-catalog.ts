@@ -134,7 +134,7 @@ const INFILTRATE_RESIDUAL_MOTION: Readonly<Record<string, string>> = {
   organic_remnant: 'motion_patrol',
   mammal_remnant: 'motion_patrol',
   stalk_clump: 'motion_turn',
-  insect_remnant: 'motion_turn',
+  insect_remnant: 'motion_patrol',
   worm_remnant: 'motion_turn',
   wall_rust: 'motion_wall',
   fungal_mat: 'motion_cluster',

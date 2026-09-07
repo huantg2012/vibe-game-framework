@@ -298,6 +298,50 @@ function lexemesFor(slot: LexemeSlot, portfolio: PortfolioId): string[] {
     .map((row) => row.id);
 }
 
+/** Runtime capability filter, not another source of shape data. CSV remains the legal alphabet. */
+const RUNTIME_LEXEMES: Readonly<Record<PortfolioId, Readonly<Record<LexemeSlot, readonly string[]>>>> = {
+  jia: {
+    motion: ['motion_patrol', 'motion_turn', 'motion_anchor'],
+    sense: ['sense_cone', 'sense_hear'],
+    rhythm: ['rhythm_open'],
+    contact: ['contact_melee_three'],
+  },
+  yi: {
+    motion: ['motion_wall', 'motion_turn', 'motion_anchor'],
+    sense: ['sense_touch'],
+    rhythm: ['rhythm_open'],
+    contact: ['contact_adjacent_strike'],
+  },
+  bing: {
+    motion: ['motion_cluster'],
+    sense: ['sense_touch'],
+    rhythm: ['rhythm_cluster'],
+    contact: ['contact_step_chaos'],
+  },
+  ding: {
+    motion: ['motion_anchor', 'motion_wind', 'motion_trail'],
+    sense: ['sense_domain'],
+    rhythm: ['rhythm_open'],
+    contact: ['contact_volume_chaos'],
+  },
+};
+
+export type FloorMotion = 'motion_patrol' | 'motion_turn' | 'motion_anchor';
+
+/** An anchored substrate cannot acquire translation through a stale or manually authored form. */
+export function floorMotionFor(form: ContaminationForm): FloorMotion {
+  if (form.substrate === 'doorframe' || form.substrate === 'street_wreckage' ||
+      form.substrate === 'lamp_pillar' || form.substrate === 'railing_post' ||
+      form.lexemes.motion === 'motion_anchor') return 'motion_anchor';
+  return form.lexemes.motion === 'motion_turn' ? 'motion_turn' : 'motion_patrol';
+}
+
+/** Exact named recipes are admitted only when every promised axis has a runtime consumer. */
+export function supportsRuntimeForm(form: ContaminationForm): boolean {
+  return SLOTS.every((slot) => RUNTIME_LEXEMES[form.portfolio][slot].includes(form.lexemes[slot])) &&
+    (form.occupancy !== 'floor' || floorMotionFor(form) === form.lexemes.motion);
+}
+
 function rewriteLexeme(id: string, portfolio: PortfolioId): string {
   const row = LEXEME_DATA[id];
   if (!row) return id;
@@ -314,7 +358,7 @@ const RESIDUAL_MOTION: Readonly<Record<string, string>> = {
   organic_remnant: 'motion_patrol',
   mammal_remnant: 'motion_patrol',
   stalk_clump: 'motion_turn',
-  insect_remnant: 'motion_turn',
+  insect_remnant: 'motion_patrol',
   worm_remnant: 'motion_turn',
   wall_rust: 'motion_wall',
   fungal_mat: 'motion_cluster',
@@ -414,7 +458,7 @@ function formFromUtterance(id: string): ContaminationForm | null {
 function utteranceAllowed(form: ContaminationForm, scope: LexiconDrawScope): boolean {
   if (scope === 'gym') return true;
   const sub = SUBSTRATE_DATA[form.substrate];
-  return sub?.enabledScope === 'sortie';
+  return sub?.enabledScope === 'sortie' && supportsRuntimeForm(form);
 }
 
 function tryDrawOne(rng: SeededRandom, opts: DrawOneOpts): ContaminationForm | null {
@@ -453,10 +497,16 @@ function tryDrawOne(rng: SeededRandom, opts: DrawOneOpts): ContaminationForm | n
 
   for (const slot of SLOTS) {
     let pool = lexemesFor(slot, opts.portfolio);
+    if (scope === 'sortie') {
+      pool = pool.filter((id) => RUNTIME_LEXEMES[opts.portfolio][slot].includes(id));
+    }
     if (slot === 'sense' && opts.sense) {
       pool = pool.filter((id) => id === opts.sense);
     } else if (slot === 'sense' && opts.forbidSense) {
       pool = pool.filter((id) => !opts.forbidSense!.includes(id));
+    }
+    if (slot === 'motion' && opts.portfolio === 'jia' && residualMotion(substrate) === 'motion_anchor') {
+      pool = pool.filter((id) => id === 'motion_anchor');
     }
     if (slot === 'motion' && coverage === 'infiltrate') {
       const lock = residualMotion(substrate);
