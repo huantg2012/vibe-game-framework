@@ -20,7 +20,7 @@ export const zhCN: LocaleSchema = {
 
   // Main Menu
   menu: {
-    title: '存续',
+    title: '那天之后',
     subtitle: '边界仍在，光尚未熄',
     newGame: '进入净化点',
     continue: '沿旧路返回',
@@ -29,6 +29,7 @@ export const zhCN: LocaleSchema = {
     resume: '合上',
     pauseTitle: '记录',
     language: '语言',
+    backHint: 'Esc 返回',
     overwriteWarning: '将清除第 {tideNumber} 潮的全部记录',
     overwriteClear: '清除后进入',
     summaryTide: '潮汐',

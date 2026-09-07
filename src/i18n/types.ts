@@ -24,6 +24,7 @@ export interface LocaleSchema {
     resume: string;
     pauseTitle: string;
     language: string;
+    backHint: string;
     overwriteWarning: string;
     overwriteClear: string;
     summaryTide: string;

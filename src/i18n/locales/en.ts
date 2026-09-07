@@ -20,7 +20,7 @@ export const en: LocaleSchema = {
 
   // Main Menu
   menu: {
-    title: 'Enduring',
+    title: 'After That Day',
     subtitle: 'The boundary holds. The light has not gone out.',
     newGame: 'Enter the Purification Point',
     continue: 'Return by the old path',
@@ -29,6 +29,7 @@ export const en: LocaleSchema = {
     resume: 'Remain',
     pauseTitle: 'Records',
     language: 'Language',
+    backHint: 'Esc Back',
     overwriteWarning: 'This will erase all records of Tide {tideNumber}.',
     overwriteClear: 'Enter after erasure',
     summaryTide: 'Tide',

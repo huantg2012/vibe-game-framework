@@ -39,12 +39,24 @@ if (import.meta.env.DEV) {
   window.addEventListener('error', (event) => reportError(event.error?.stack ?? event.message));
   window.addEventListener('unhandledrejection', (event) => reportError(String(event.reason?.stack ?? event.reason)));
 
+  // Emulate this one media preference inside the isolated review document only.
+  if (new URLSearchParams(window.location.search).get('motion') === 'off') {
+    const matchMedia = window.matchMedia.bind(window);
+    window.matchMedia = (query) => {
+      const result = matchMedia(query);
+      if (query === '(prefers-reduced-motion: reduce)') {
+        Object.defineProperty(result, 'matches', { value: true });
+      }
+      return result;
+    };
+  }
+
   // Isolation belongs to this development entry, never to the save system.
   saveManager.save = () => {};
   saveManager.load = () => false;
   saveManager.deleteSave = () => {};
   saveManager.hasSave = () => false;
-  const savedRecordFixture = new URLSearchParams(window.location.search).get('record') === 'saved';
+  let savedRecordFixture = new URLSearchParams(window.location.search).get('record') === 'saved';
   saveManager.peekRecordSummary = () => savedRecordFixture
     ? { tideNumber: 3, phase: 'ebb', cycle: 2, progress: 4, reached: false } : null;
   saveManager.peekTideNumber = () => savedRecordFixture ? 3 : null;
@@ -181,6 +193,40 @@ if (import.meta.env.DEV) {
   function paintControls(): void {
     const controls = document.getElementById('review-controls')!;
     controls.replaceChildren();
+    if (sample === 'menu') {
+      document.body.classList.add('core-sample');
+      const note = document.createElement('span');
+      note.id = 'review-note';
+      note.style.cssText = 'display:block;font-size:9px;line-height:14px;white-space:nowrap;overflow:hidden';
+      const inspect = () => {
+        const scene = activeScene();
+        note.textContent = scene?.scene.key === 'MainMenuScene'
+          ? scene.children.list.filter((item): item is Phaser.GameObjects.Text => item instanceof Phaser.GameObjects.Text)
+            .filter(item => item.visible).map(item => item.text.replace(/\n/g, ' ') + ' @' + item.x + ',' + item.y).join(' · ')
+          : scene?.scene.key ?? '场景切换中';
+      };
+      for (const [label, hasRecord] of [['无存档首页', false], ['有存档首页', true]] as const) {
+        const button = document.createElement('button');
+        button.textContent = label;
+        button.onclick = () => { savedRecordFixture = hasRecord; switchScene('MainMenuScene'); inspect(); };
+        controls.appendChild(button);
+      }
+      for (const [label, key] of [['菜单↑', 'UP'], ['菜单↓', 'DOWN'], ['确认选项', 'ENTER'], ['Space确认', 'SPACE'], ['Esc返回', 'ESC']] as const) {
+        const button = document.createElement('button');
+        button.textContent = label;
+        button.onclick = () => {
+          activeScene()?.input.keyboard?.emit('keydown-' + key, new KeyboardEvent('keydown', { key }));
+          inspect();
+        };
+        controls.appendChild(button);
+      }
+      const inspectButton = document.createElement('button');
+      inspectButton.textContent = '检查首页';
+      inspectButton.onclick = inspect;
+      controls.appendChild(inspectButton);
+      controls.appendChild(note);
+      return;
+    }
     if (worldSampleOnly) {
       const label = document.createElement('span');
       label.textContent = '场景交互 · ';
@@ -321,7 +367,7 @@ if (import.meta.env.DEV) {
     if (game.scene.scenes.some((scene) => scene.scene.key !== 'BootScene' && scene.scene.isActive())) {
       if (coreSampleOnly) startCoreSample(true);
       else if (worldSampleOnly) startWorldSample(true);
-      else paintControls();
+      else { paintControls(); if (sample === 'menu') switchScene('MainMenuScene'); }
     } else {
       requestAnimationFrame(showControlsWhenReady);
     }

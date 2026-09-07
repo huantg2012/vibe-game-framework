@@ -6,7 +6,9 @@ last-modified: 2026-07-22
 note: Ideation 阶段完成，已确认进入 Foundation。
 ---
 
-# [代号待定]
+# 那天之后 / After That Day
+
+暂定游戏名（2026-09-07，用户指定中文名，英文采用 After That Day）。名称留下事件的悬念，不据此新增“那天”的具体日期或灾变机制；既有世界设定仍以 world.md 为准。
 
 ## Elevator Pitch
 
