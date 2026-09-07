@@ -224,6 +224,38 @@ if (import.meta.env.DEV) {
       inspectButton.textContent = '检查首页';
       inspectButton.onclick = inspect;
       controls.appendChild(inspectButton);
+      const sampleButton = document.createElement('button');
+      sampleButton.textContent = '采样角色60帧';
+      sampleButton.onclick = () => {
+        const scene = activeScene();
+        const mesh = scene?.children.list.flatMap(item => item instanceof Phaser.GameObjects.Container ? item.list : [])
+          .find((item): item is Phaser.GameObjects.Mesh => item instanceof Phaser.GameObjects.Mesh);
+        if (!scene || !mesh) { note.textContent = '请先进入首页'; return; }
+        const head = mesh.vertices.find(vertex => vertex.v === 0)!;
+        const foot = mesh.vertices.find(vertex => vertex.v === 1)!;
+        const poses = new Set<string>();
+        const feet = new Set<string>();
+        let frames = 0;
+        const started = performance.now();
+        sampleButton.disabled = true;
+        note.textContent = '采样实际渲染后的顶点位置…';
+        const stop = () => {
+          game.events.off(Phaser.Core.Events.POST_RENDER, record);
+          scene.events.off(Phaser.Scenes.Events.SHUTDOWN, stop);
+          window.clearTimeout(timeout);
+          sampleButton.disabled = false;
+          note.textContent = `渲染${frames}帧 / ${Math.round(performance.now() - started)}ms · 头部不同位置${poses.size} · 脚底不同位置${feet.size} · roundPixels=${scene.cameras.main.roundPixels}`;
+        };
+        const record = () => {
+          poses.add(`${head.tx.toFixed(4)},${head.ty.toFixed(4)}`);
+          feet.add(`${foot.tx.toFixed(4)},${foot.ty.toFixed(4)}`);
+          if (++frames === 60) stop();
+        };
+        const timeout = window.setTimeout(stop, 5000);
+        game.events.on(Phaser.Core.Events.POST_RENDER, record);
+        scene.events.once(Phaser.Scenes.Events.SHUTDOWN, stop);
+      };
+      controls.appendChild(sampleButton);
       controls.appendChild(note);
       return;
     }

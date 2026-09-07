@@ -16,6 +16,8 @@ note: Append-only. Do not modify historical entries.
 - Implementation: 三种首页状态共轴、主操作固定；R3保留用户认可炉火，肩灯双层跟随人物、裂纹沿原纹理发光、20粒明显飘尘；用户授权人物待机，采用原人物mesh呼吸与局部补底，减少动态退回原图静态。键鼠确认默认保留旧纪录；覆盖确认重建时静止鼠标不抢焦点。
 - Status: ACTIVE / IMPLEMENTED-REVIEW-PENDING。构建和针对性实机验证已交，暂定名已接入，画面待用户。合同 docs/tasks/iteration-13.md；验证 docs/qa/iteration-13.md。
 
+- Closure (2026-09-07): 人物待机亚像素平滑热修后，用户明确“结案，提交吧”。迭代13 COMPLETE / HUMAN-ACCEPTED；暂定名、首页构图、动态光影/飘尘与人物待机均纳入结案。上文ACTIVE为实施期间状态，由本结案记录取代。
+
 ## DEC-120: 迭代12净化点角色空间表现；分析后获准实施
 
 - Date: 2026-09-07

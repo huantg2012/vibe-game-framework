@@ -1,10 +1,12 @@
 ---
-status: IMPLEMENTED-REVIEW-PENDING
+status: COMPLETE
 iteration: 13
 last-modified: 2026-09-07
 ---
 
 # 迭代13：首页验证
+
+2026-09-07，人物平滑热修后用户明确“结案，提交吧”，本迭代人终审PASS、COMPLETE。下文保留各轮实际检查与当时的反馈；历史“待审”不再是当前状态。
 
 ## 范围与入口
 
@@ -50,3 +52,10 @@ last-modified: 2026-09-07
 - 最终npm run build（含TypeScript）与git diff --check通过；既有大包提示，未做跨设备帧率/长时内存压力测试。
 
 本轮已实现，等待用户实机体验，不记迭代COMPLETE。
+
+## 人物平滑热修
+
+- 根因：原动作已按delta连续更新；Phaser MeshWebGLRenderer使用camera.roundPixels，Vertex.update对每个最终屏幕顶点Math.round。慢速2.1px位移由此量化，加上人物纹理NEAREST采样，读成低帧率。
+- 首页相机单独setRoundPixels(false)，人物cutout单独LINEAR采样；世界gameConfig的roundPixels/pixelArt及原图滤波保持，动作周期/幅度保持。
+- 开发隔离页“采样角色60帧”监听真实POST_RENDER并读取Mesh顶点的tx/ty：60帧/497ms，头部60个不同位置，脚底1个位置，roundPixels=false。证明已不再整像素量化；不承诺其他设备120fps。actor-smooth.png和actor-smooth-sampling.txt留证。
+- 正常尺寸实景核人物轮廓、无横向分段和双影。空档Space开始→净化点→重入首页后再次采样60帧/499ms，头部60个位置/脚底1个位置，日志无error。最终npm run build（含TypeScript）、git diff --check通过，仅既有大包提示；用户随后明确结案，人终审PASS。

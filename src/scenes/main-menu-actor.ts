@@ -62,6 +62,10 @@ export class MainMenuActor {
       ctx.globalCompositeOperation = 'source-over';
       texture.refresh();
     }
+    // Only the deforming cutout interpolates texels; the original illustration
+    // and world sprites keep their authored pixel sampling. Without this, the
+    // slow subpixel pose still crawls between nearest-neighbour texels.
+    actor.setFilter(Phaser.Textures.FilterMode.LINEAR);
     this.container.add(scene.add.image(X * SCALE, Y * SCALE, patchKey).setOrigin(0).setScale(SCALE));
     // A shared mesh avoids independently rounded image strips (which leave
     // horizontal seams when the pixel-art camera rounds each image position).

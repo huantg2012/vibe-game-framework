@@ -70,6 +70,9 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   create(): void {
+    // The title illustration has subpixel idle motion. World cameras retain
+    // their pixel snapping; rounding here quantizes a 2px breath into jumps.
+    this.cameras.main.setRoundPixels(false);
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
 

@@ -4,12 +4,12 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-09-07
 last-closed-slice: 9
-note: 迭代13首页优化ACTIVE（DEC-121）；命名提案、构图与背景微动效，合同docs/tasks/iteration-13.md。迭代12 COMPLETE（DEC-120，2026-09-07用户验收结单）；合同docs/tasks/iteration-12.md。无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
+note: 迭代13首页优化COMPLETE（DEC-121，2026-09-07用户验收结案）；命名提案、构图与背景微动效，合同docs/tasks/iteration-13.md。迭代12 COMPLETE（DEC-120，2026-09-07用户验收结单）；合同docs/tasks/iteration-12.md。无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
 ---
 
 # Roadmap
 
-**2026-09-07：迭代13「游戏首页优化」ACTIVE（DEC-121）。** 用户授权命名提案、菜单视觉重心修正、获赞背景图的轻动态光影。共轴布局、R3可辨动态光影/飘尘与人物呼吸待机已实现，构建和隔离实机验证通过；画面待用户审查，暂定名“那天之后 / After That Day”已接入首页和浏览器标题；迭代12保持COMPLETE。合同 docs/tasks/iteration-13.md。
+**2026-09-07：迭代13「游戏首页优化」COMPLETE（DEC-121，用户验收结案）。** 用户授权命名提案、菜单视觉重心修正、获赞背景图的轻动态光影。共轴布局、R3可辨动态光影/飘尘与人物呼吸待机已实现，人物亚像素平滑热修、构建和隔离实机验证通过；用户明确“结案，提交吧”，暂定名“那天之后 / After That Day”已接入首页和浏览器标题；迭代12保持COMPLETE。合同 docs/tasks/iteration-13.md。
 
 **2026-09-07：迭代12「净化点角色空间表现」COMPLETE（DEC-120，用户验收结单）。** 用户分析后以「很好，做吧」授权实施。全向Float32角界限接缝已修；净化点按脚底排序角色与五台装置，附属光效随实体。构建、边界/排序检查与实机核对已交，用户确认层级符合预期；追加I12-C底座碰撞已交：脚底体+五台底座+局部边界通行余量，300条联合碰撞路线与最高潮汐实机绕行、裂隙往返通过；用户明确结单并授权推送。合同 `docs/tasks/iteration-12.md`。迭代11保持COMPLETE，迭代5与P3/P4独立保留。
 

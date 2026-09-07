@@ -1,6 +1,6 @@
 ---
-status: ACTIVE
-phase: IMPLEMENTED-REVIEW-PENDING
+status: COMPLETE
+phase: HUMAN-ACCEPTED
 created-by: director
 created-when: 2026-09-07
 last-modified: 2026-09-07
@@ -38,13 +38,13 @@ note: DEC-121。用户授权首页优化与命名提案；背景原图保留。�
 
 三问：共轴和稳定主操作改善整体重心；单一纵向菜单保留游戏入口识别；光效来自画中实体而不是额外装饰。此为art书面核对，非人终审PASS。
 
-## 本轮交付与待审
+## 本轮交付与结案
 
 I13-A/B/C已交实现与针对性验证。现行Kit A节更新；架构登记MainMenuAtmosphere。属于首页表现打磨，不新增机制系统spec，存档规则仍由共享session管理。菜单词条新增中英Esc返回提示，正式入口title已接入暂定名“那天之后 / After That Day”。
 
 构建及TypeScript通过。实机核对空档/有档/覆盖确认、Esc、鼠标后Enter、Space开始及场景重入；减少动态连续画面完全相同，正常动态变化限定背景局部。art看过三状态实景，共轴、灯位与文字区域关系通过内部核对；不代替人终审。记录见docs/qa/iteration-13.md。
 
-等待用户审查新版首页；名称已按用户指定暂定名接入。迭代13保持ACTIVE，不提交为COMPLETE。
+2026-09-07，人物平滑热修后用户明确“结案，提交吧”。迭代13 COMPLETE / HUMAN-ACCEPTED。首页构图、动态、人物待机和平滑处理整轮验收完成；游戏名称仍为暂定名。后文保留各轮反馈与当时的验证边界，以此结案状态为准。
 
 ## I13-R2：动态可见性修正
 
@@ -55,3 +55,11 @@ I13-A/B/C已交实现与针对性验证。现行Kit A节更新；架构登记Mai
 用户认可R2炉火，要求飘尘/肩灯/裂纹明显增强，新增首页人物待机。炉火保留；其余参数按Kit R3。人物身后用imagegen补底，生产只显示剪影附近局部，原人物像素通过连续mesh呼吸与重心变化，靴底固定，肩灯跟随。不是世界内Player动画，不改净化点/Rift角色。
 
 初联调细条image方案出现roundPixels横纹，已替换连续mesh。art四帧复核无双影、明显轮廓破损、矩形补底或脚漂，肩灯/裂纹变化可辨；待用户连续体验，不代验收。新增模块已登记架构，资产生成记录住docs/art/prompts/menu-last-light.md。
+
+## I13-R3平滑热修
+
+用户反馈人物待机像低帧率。实际动画每帧更新，但MeshWebGLRenderer按camera.roundPixels取整顶点，配合最近邻采样，2.1px呼吸变成几档跳动。只在MainMenuScene关闭相机取整，人物独立cutout纹理设LINEAR；幅度/周期和世界像素渲染配置保持。开发验收新增60个postrender实际顶点采样，头部每帧不同、脚底唯一位置。用户已在平滑热修后明确结案，体验验收完成。
+
+## 结案范围
+
+交付：暂定名“那天之后 / After That Day”、三状态共轴首页、保留原图的炉火/肩灯/裂纹/飘尘、原人物分层待机、亚像素平滑修正。Kit、架构、任务、QA、活进度与决策均已同步。构建与针对性实机核对已交，用户最终结案。迭代5未决项与其他迭代状态不因本次改变。
