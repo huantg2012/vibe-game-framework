@@ -1,12 +1,12 @@
 /**
- * 甲基因谱挂载（I5-B / I5-D / I5-E / I5-F / I5-N / I5-G / I5-J）。
- * 出击 `d-mixed` 占地与练习场句法课 / 陈列馆走同一份 `attachJiaGenomeD`。
- * 街具残骸 / 门框走语法骨架并固着呼吸；残茎 / 有机残影 / 虫 / 哺乳动物 / 大号蠕虫可走，不进固着名单。未填语法的占地仍走夹具。
- * 烘焙走 `bakeJiaGenome`（骨架 → 算子 → weld → 朝向/信号相 → 可走步态）。
- * 可走甲消费 `pose.moving`：检视 walk 帧钉在 `pose.x/y`，禁止巡路滑步冒充步态。
+ * Occupancy-floor dispatch, shared by sortie and gym.
+ * I18: every enabled floor family uses production-models + the shared actual-
+ * movement/attack/activity adapter. The historical genome visual below is only
+ * a fallback for unregistered gym substrates; it is not a production family.
  */
 import Phaser from 'phaser';
-import { attachInsectVisual } from '@/entities/form-renderers/d/insect-visual';
+import { attachAnimatedModel } from '../model-visual';
+import { productionModelFor } from '../production-models';
 import { pingPongFrame } from '@/entities/actor-motion';
 import {
   applyFormVisibility,
@@ -203,5 +203,6 @@ class JiaGenomeVisual implements FormVisual {
 }
 
 export function attachJiaGenomeD(ctx: FormAttachContext): FormVisual {
-  return ctx.form.substrate === 'insect_remnant' ? attachInsectVisual(ctx) : new JiaGenomeVisual(ctx);
+  const model = productionModelFor(ctx.form.substrate);
+  return model ? attachAnimatedModel(ctx, model) : new JiaGenomeVisual(ctx);
 }

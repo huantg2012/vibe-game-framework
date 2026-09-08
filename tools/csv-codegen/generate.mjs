@@ -1148,10 +1148,152 @@ function generateContaminationLexicon() {
   console.log(`  contamination-lexicon-data.ts (${substrates.length} substrates, ${lexemes.length} lexemes, ${stopLoss.length} stop-loss, ${observeLines.length} observe-lines)`);
 }
 
+function generateContaminationFamilies() {
+  const readRows = (name, columns) => {
+    const csv = readCsv(name);
+    for (const col of columns) if (!csv.header.includes(col)) throw new Error(`[codegen] ${name}: missing ${col}`);
+    return csv.rows.map((row) => {
+      if (row.length !== csv.header.length) throw new Error(`[codegen] ${name}: field count mismatch`);
+      return Object.fromEntries(csv.header.map((key, i) => [key, row[i]]));
+    });
+  };
+  const substrates = new Map(readRows('contamination-substrates.csv', ['id']).map((row) => [row.id, row]));
+  const portfolios = new Map(readRows('contamination-portfolios.csv', ['id']).map((row) => [row.id, row]));
+  const lexemes = new Map(readRows('contamination-lexemes.csv', ['id']).map((row) => [row.id, row]));
+  const fragments = new Set(readRows('rift-fragments.csv', ['id']).map((row) => row.id));
+  const familyKeys = new Set();
+  const familyIds = new Set();
+  const families = readRows('contamination-families.csv', ['id', 'substrate', 'portfolio', 'motion_ids', 'sense_ids', 'rhythm_ids', 'contact_ids', 'infiltrate_motion']).map((row) => {
+    const key = `${row.substrate}|${row.portfolio}`;
+    const sub = substrates.get(row.substrate), port = portfolios.get(row.portfolio);
+    if (!row.id || familyIds.has(row.id) || familyKeys.has(key) || !sub || !port) throw new Error(`[codegen] invalid/duplicate family ${key}`);
+    familyKeys.add(key);
+    familyIds.add(row.id);
+    if (!splitBar(sub.legal_occupancies).includes(port.occupancy)) throw new Error(`[codegen] ${key}: illegal occupancy`);
+    const slots = {};
+    for (const slot of ['motion', 'sense', 'rhythm', 'contact']) {
+      const ids = splitBar(row[`${slot}_ids`]);
+      if (!ids.length || new Set(ids).size !== ids.length) throw new Error(`[codegen] ${key}: empty/duplicate ${slot}`);
+      for (const id of ids) {
+        const lexeme = lexemes.get(id);
+        if (!lexeme || lexeme.slot !== slot || !splitBar(lexeme.legal_portfolios).includes(row.portfolio)) throw new Error(`[codegen] ${key}: illegal ${slot} ${id}`);
+      }
+      slots[slot] = ids;
+    }
+    if (!slots.motion.includes(row.infiltrate_motion)) throw new Error(`[codegen] ${key}: unsupported infiltrate motion`);
+    return { id: row.id, substrate: row.substrate, portfolio: row.portfolio, ...slots, infiltrateMotion: row.infiltrate_motion };
+  });
+  const dialects = {};
+  for (const row of readRows('contamination-dialects.csv', ['fragment_type_id', 'substrate', 'weight', 'wall_host_weight', 'volume_host_weight'])) {
+    if (!fragments.has(row.fragment_type_id) || !substrates.has(row.substrate)) throw new Error('[codegen] unknown dialect fragment/substrate');
+    const values = ['weight', 'wall_host_weight', 'volume_host_weight'].map((key) => row[key].trim() ? Number(row[key]) : NaN);
+    if (values.some((n) => !Number.isFinite(n) || n < 0)) throw new Error('[codegen] dialect weights must be finite and nonnegative');
+    const [weight, wallHostWeight, volumeHostWeight] = values;
+    const dialect = dialects[row.fragment_type_id] ??= { substrates: [], wallHostWeight, volumeHostWeight };
+    if (dialect.wallHostWeight !== wallHostWeight || dialect.volumeHostWeight !== volumeHostWeight || dialect.substrates.some(([id]) => id === row.substrate)) throw new Error('[codegen] inconsistent or duplicate dialect row');
+    dialect.substrates.push([row.substrate, weight]);
+  }
+  const encounters = {};
+  for (const row of readRows('contamination-encounters.csv', ['fragment_type_id', 'hearing_wall_weight', 'hearing_floor_weight'])) {
+    const wall = row.hearing_wall_weight.trim() ? Number(row.hearing_wall_weight) : NaN;
+    const floor = row.hearing_floor_weight.trim() ? Number(row.hearing_floor_weight) : NaN;
+    if (!fragments.has(row.fragment_type_id) || encounters[row.fragment_type_id] || !Number.isFinite(wall) || !Number.isFinite(floor) || wall < 0 || floor <= 0) throw new Error('[codegen] invalid encounter weights (floor fallback requires positive weight)');
+    encounters[row.fragment_type_id] = { hearingWallWeight: wall, hearingFloorWeight: floor };
+  }
+  for (const fragment of Object.keys(dialects)) if (!encounters[fragment]) throw new Error(`[codegen] missing encounter profile ${fragment}`);
+  const lines = [
+    '// Generated from contamination-families.csv, contamination-dialects.csv and contamination-encounters.csv. Do not edit.',
+    "import type { PortfolioId, LexemeSlot } from './contamination-lexicon-data';",
+    'export interface FamilyCapability extends Readonly<Record<LexemeSlot, readonly string[]>> { readonly id: string; readonly substrate: string; readonly portfolio: PortfolioId; readonly infiltrateMotion: string; }',
+    'export interface ContaminationDialect { readonly substrates: readonly (readonly [string, number])[]; readonly wallHostWeight: number; readonly volumeHostWeight: number; }',
+    'export interface ContaminationEncounter { readonly hearingWallWeight: number; readonly hearingFloorWeight: number; }',
+    `export const CONTAMINATION_ENCOUNTER_DATA: Readonly<Record<string, ContaminationEncounter>> = ${JSON.stringify(encounters, null, 2)};`,
+    `export const FAMILY_CAPABILITY_DATA: readonly FamilyCapability[] = ${JSON.stringify(families, null, 2)};`,
+    `export const CONTAMINATION_DIALECT_DATA: Readonly<Record<string, ContaminationDialect>> = ${JSON.stringify(dialects, null, 2)};`,
+    '',
+  ];
+  writeFileSync(resolve(OUT_DIR, 'contamination-family-data.ts'), lines.join('\n'));
+  console.log(`  contamination-family-data.ts (${families.length} families, ${Object.keys(dialects).length} dialects)`);
+}
+
+function generateContaminationBehaviorProfiles() {
+  const csv = readCsv('contamination-behavior-profiles.csv');
+  const expected = ['id', 'rest_ms', 'wake_ms', 'active_ms', 'release_ms', 'range_scale', 'cone_deg'];
+  if (csv.header.join('|') !== expected.join('|')) throw new Error('[codegen] invalid behavior profile columns');
+  const profiles = {};
+  for (const row of csv.rows) {
+    if (row.length !== expected.length || profiles[row[0]]) throw new Error('[codegen] invalid/duplicate behavior profile');
+    const profile = {};
+    for (let i = 1; i < expected.length; i++) {
+      const value = row[i].trim() ? Number(row[i]) : NaN;
+      if (!Number.isFinite(value) || value < 0) throw new Error('[codegen] invalid behavior profile value');
+      profile[toCamel(expected[i])] = value;
+    }
+    profiles[row[0]] = profile;
+  }
+  writeFileSync(resolve(OUT_DIR, 'contamination-capability-data.ts'), [
+    '// Generated from contamination-behavior-profiles.csv. Do not edit.',
+    'export interface BehaviorProfile { readonly restMs: number; readonly wakeMs: number; readonly activeMs: number; readonly releaseMs: number; readonly rangeScale: number; readonly coneDeg: number; }',
+    `export const BEHAVIOR_PROFILE_DATA: Readonly<Record<string, BehaviorProfile>> = ${JSON.stringify(profiles, null, 2)};`, '',
+  ].join('\n'));
+}
+
+function generateContaminationBodies() {
+  const csv = readCsv('contamination-body-profiles.csv');
+  const columns = ['substrate', 'move_scale', 'windup_ms', 'cooldown_ms', 'range_px', 'half_angle_deg'];
+  if (csv.header.join('|') !== columns.join('|')) throw new Error('[codegen] invalid body profile columns');
+  const substrates = new Set(readCsv('contamination-substrates.csv').rows.map((row) => row[0]));
+  const profiles = {};
+  for (const row of csv.rows) {
+    if (row.length !== columns.length || !substrates.has(row[0]) || profiles[row[0]]) throw new Error('[codegen] invalid/duplicate body substrate');
+    const profile = {};
+    for (let i = 1; i < columns.length; i++) {
+      const value = row[i].trim() ? Number(row[i]) : NaN;
+      if (!Number.isFinite(value) || value < 0) throw new Error('[codegen] invalid body profile number');
+      profile[toCamel(columns[i])] = value;
+    }
+    if (profile.windupMs <= 0 || profile.cooldownMs <= 0 || profile.rangePx <= 0 || profile.halfAngleDeg <= 0 || profile.halfAngleDeg > 180) throw new Error('[codegen] body timing/range/angle out of bounds');
+    profiles[row[0]] = profile;
+  }
+  writeFileSync(resolve(OUT_DIR, 'contamination-body-data.ts'), [
+    '// Generated from contamination-body-profiles.csv. Do not edit.',
+    'export interface ContaminationBodyProfile { readonly moveScale: number; readonly windupMs: number; readonly cooldownMs: number; readonly rangePx: number; readonly halfAngleDeg: number; }',
+    `export const BODY_PROFILE_DATA: Readonly<Record<string, ContaminationBodyProfile>> = ${JSON.stringify(profiles, null, 2)};`, '',
+  ].join('\n'));
+}
+
+function generateVolumeProfiles() {
+  const csv = readCsv('contamination-volume-profiles.csv');
+  const columns = ['substrate', 'rest_ms', 'gather_ms', 'release_ms', 'disperse_ms', 'radius_scale', 'travel_scale', 'gap_px', 'danger_threshold'];
+  if (csv.header.join('|') !== columns.join('|')) throw new Error('[codegen] invalid volume profile columns');
+  const substrates = new Set(readCsv('contamination-substrates.csv').rows.map(row => row[0]));
+  const profiles = {};
+  for (const row of csv.rows) {
+    if (row.length !== columns.length || !substrates.has(row[0]) || profiles[row[0]]) throw new Error('[codegen] invalid volume substrate');
+    const profile = {};
+    for (let i = 1; i < columns.length; i++) {
+      const v = row[i].trim() ? Number(row[i]) : NaN;
+      if (!Number.isFinite(v) || v < 0) throw new Error('[codegen] invalid volume parameter');
+      profile[toCamel(columns[i])] = v;
+    }
+    if (profile.restMs <= 0 || profile.gatherMs <= 0 || profile.releaseMs <= 0 || profile.disperseMs <= 0 || profile.radiusScale <= 0 || profile.radiusScale > 1 || profile.travelScale > .5 || profile.dangerThreshold <= 0 || profile.dangerThreshold >= 1) throw new Error('[codegen] volume parameter out of range');
+    profiles[row[0]] = profile;
+  }
+  writeFileSync(resolve(OUT_DIR, 'contamination-volume-data.ts'), [
+    '// Generated from contamination-volume-profiles.csv. Do not edit.',
+    'export interface VolumeProfile { readonly restMs: number; readonly gatherMs: number; readonly releaseMs: number; readonly disperseMs: number; readonly radiusScale: number; readonly travelScale: number; readonly gapPx: number; readonly dangerThreshold: number; }',
+    `export const VOLUME_PROFILE_DATA: Readonly<Record<string, VolumeProfile>> = ${JSON.stringify(profiles, null, 2)};`, '',
+  ].join('\n'));
+}
+
 console.log('[codegen] Generating typed data from CSV...');
 generateContaminants();
 generateUpgrades();
 generateRiftFragments();
 generateEnemies();
 generateContaminationLexicon();
+generateContaminationFamilies();
+generateContaminationBehaviorProfiles();
+generateContaminationBodies();
+generateVolumeProfiles();
 console.log('[codegen] Done.');

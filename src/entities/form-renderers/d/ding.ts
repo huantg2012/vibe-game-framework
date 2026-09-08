@@ -1,22 +1,7 @@
-/**
- * 方案 D 丁：缓慢形变的体积云 + 三类概念基体（生产；句法课对照同一份）。
- *
- * 云罩住 R2-C2 当前盒（dingLiveRect）。软边是翘曲椭圆的密度衰减，
- * 不是方案 B paintVolume 的逐像素 hash + 棋盘跳采样。
- *
- * 字段 → 画面：
- * - substrate → 余响=错相 1px 回声带；散光=折裂亮脉；间距=错位/收窄暗体积
- * - coverage → 外沿更实、核更亮
- * - continuity → 单核一小朵仍罩住当前盒；场=沿走廊盒拉长
- * - occupancy → 只画体积云，不改碰撞
- * - motion → 位移跟当前盒；固着只形变
- * - sense / 成句走廊在看你 → 反视核：扫到前暗、扫到后亮，同色
- * - rhythm → 2–4s 外沿呼吸（休息大小的 8–15%）
- * - contact → 脚底 2–4 个浊点（depth 31–39）
- *
- * 配色：deriveFragmentContamRamp；亮核钳回 #1aad96 / #2ae6c8 / #3cffd4。
- */
+/** Occupied space: R4 materials share authoritative presence; echo retains its original field. */
 import Phaser from 'phaser';
+import { createVolumePresenceFrame,updateVolumePresenceFrame,isVolumeDangerousAt,type VolumePresenceFrame } from '@/systems/volume-presence';
+import { isMaterialVolume,paintVolumePresence } from './volume-paint';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { CorridorAabb } from '@/generation/types';
 import { dingLiveRect, DING_MORPH_PX, type PixelRect } from '@/systems/contamination-host-live';
@@ -25,7 +10,7 @@ import type {
   FormVisual,
   FormVisualPose,
 } from '@/entities/form-renderers/form-renderer';
-import { breathScale, type CloudPose } from '@/entities/form-renderers/d/ding-cloud';
+import { type CloudPose } from '@/entities/form-renderers/d/ding-cloud';
 import { paintDingFrame } from '@/entities/form-renderers/d/ding-paint';
 import { dingRecipeFromForm, type DingRecipe } from '@/entities/form-renderers/d/ding-recipe';
 import { LEXICON_DEFAULT_FRAGMENT } from '@/entities/form-renderers/d/fragment-ramp';
@@ -38,7 +23,7 @@ const PAD = 40;
 /** Reuse key: occupancy × substrate × coverage × seed (+ fragment / continuity). Facing does not flip 丁. */
 function textureKey(ctx: FormAttachContext): string {
   const fragment = ctx.fragmentTypeId ?? LEXICON_DEFAULT_FRAGMENT;
-  const stem = `d_volume_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}`;
+  const stem = `d_volume_${fragment}_${ctx.form.substrate}_${ctx.form.coverage}_${ctx.form.continuity}_${(ctx.seed >>> 0).toString(16)}_${ctx.subjectId??'standalone'}`;
   return ctx.textureNamespace ? `${ctx.textureNamespace}_${stem}` : stem;
 }
 
@@ -66,6 +51,7 @@ function homeFromPin(pin: FormAttachContext['pin']): CorridorAabb {
 }
 
 interface HostQuery {
+  getVolumePresenceFrame?(id:string):Readonly<VolumePresenceFrame>|undefined;
   getVisualPin(id: string): {
     x: number;
     y: number;
@@ -82,6 +68,7 @@ function hostsOn(scene: Phaser.Scene): HostQuery | null {
 }
 
 function hostIdAtPin(ctx: FormAttachContext): string | null {
+  if (ctx.subjectId) return ctx.subjectId;
   const hosts = hostsOn(ctx.scene);
   const pin = ctx.pin;
   if (!hosts || !pin) return null;
@@ -132,26 +119,15 @@ function aabbHits(px: number, py: number, box: PixelRect): boolean {
 }
 
 function cloudForLive(
-  recipe: DingRecipe,
+  _recipe: DingRecipe,
   live: PixelRect,
   canvasW: number,
   canvasH: number,
   elapsedMs: number,
 ): CloudPose {
-  const breath = breathScale(elapsedMs, recipe.breathPeriodMs, recipe.breathAmp);
-  const field = recipe.continuity === 'field';
-  let cx = canvasW * 0.5;
-  let cy = canvasH * 0.5;
-  let rx = Math.max(12, live.w * 0.5 * (field ? 1.08 : 1.06));
-  let ry = Math.max(12, live.h * 0.5 * (field ? 1.08 : 1.04));
-  if (recipe.family === 'space_interval') {
-    if (recipe.squeeze === 'narrow') {
-      if (live.w >= live.h) rx = Math.max(10, rx - recipe.squeezePx * 0.5);
-      else ry = Math.max(10, ry - recipe.squeezePx * 0.5);
-    } else if (live.w >= live.h) cx += recipe.squeezePx;
-    else cy += recipe.squeezePx;
-  }
-  return { cx, cy, rx, ry, breath, morphMs: elapsedMs };
+  // Exact live hazard dimensions; animation lives inside this box.
+  return { cx:canvasW*.5,cy:canvasH*.5,rx:live.w*.5,ry:live.h*.5,breath:1,morphMs:elapsedMs };
+
 }
 
 interface DingState {
@@ -163,12 +139,18 @@ interface DingState {
   key: string;
   recipe: DingRecipe;
   home: CorridorAabb;
+  fixedRect:{x:number;y:number;w:number;h:number};
+  pinned:boolean;
   motion: string;
   elapsedMs: number;
   canvasW: number;
   canvasH: number;
   hostId: string | null;
   stainWorldPoint?: { x: number; y: number };
+  lastPaintKey?: string;
+  presence:VolumePresenceFrame;
+  isWalkableFloor?:FormAttachContext['isWalkableFloor'];
+  seed:number;
 }
 
 export function attachDingD(ctx: FormAttachContext): FormVisual {
@@ -196,20 +178,31 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
     key,
     recipe,
     home,
+    fixedRect:{x:ctx.pin?.x??0,y:ctx.pin?.y??0,w:ctx.pin?.width??TILE*6,h:ctx.pin?.height??TILE*6},
+    pinned:ctx.pin!==undefined,
     motion: ctx.form.lexemes.motion,
     elapsedMs: 0,
     canvasW,
     canvasH,
     hostId: hostIdAtPin(ctx),
     stainWorldPoint: ctx.stainWorldPoint,
+    presence:createVolumePresenceFrame(),isWalkableFloor:ctx.isWalkableFloor,seed:ctx.seed,
   };
 
   return {
     update(pose: FormVisualPose): void {
       state.elapsedMs += pose.deltaMs;
+      const explicitTime=pose.volumeTimeMs;
+      if(explicitTime!==undefined)state.elapsedMs=explicitTime;
+      const hostPresence=state.hostId?hostsOn(state.scene)?.getVolumePresenceFrame?.(state.hostId):undefined;
       const pin = state.hostId ? hostsOn(state.scene)?.getVisualPin(state.hostId) : null;
-      const live = liveFromPin(pin, dingLiveRect(state.home, state.motion, state.elapsedMs, TILE));
-      image.setPosition(pose.x, pose.y);
+      if(!state.pinned){state.fixedRect.x=pose.x-state.fixedRect.w*.5;state.fixedRect.y=pose.y-state.fixedRect.h*.5;}
+      const live = liveFromPin(pin, isMaterialVolume(recipe.family)?state.fixedRect:dingLiveRect(state.home, state.motion, state.elapsedMs, TILE));
+      const presence=isMaterialVolume(recipe.family)?hostPresence??updateVolumePresenceFrame(state.presence,{
+        substrate:recipe.family,coverage:recipe.coverage,elapsedMs:state.elapsedMs,rect:live,
+        active:pose.activity?.phase!=='rest',isWalkableFloor:state.isWalkableFloor,
+      }):undefined;
+      image.setPosition(presence?presence.rect.x+presence.rect.w*.5:pose.x,presence?presence.rect.y+presence.rect.h*.5:pose.y);
       image.setRotation(0);
       if (pose.visibility <= 0) {
         image.setVisible(false);
@@ -217,13 +210,18 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
         state.stains.clear();
         return;
       }
-      const cloud = cloudForLive(recipe, live, canvasW, canvasH, state.elapsedMs);
-      paintDingFrame(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud);
-      canvasCtx.putImageData(state.pixels, 0, 0);
-      texture.refresh();
+      const paintKey = `${Math.floor((presence?.elapsedMs??state.elapsedMs) / (1000/60))}:${pose.signal}:${pose.activity?.phase}:${pose.activity?.progress}:${presence?.active}:${presence?.rect.x}:${presence?.rect.y}:${presence?.rect.w}:${presence?.rect.h}:${presence?.phase}:${presence?.progress}:${explicitTime}:${presence?.coreX}:${presence?.coreY}`;
+      if (state.lastPaintKey !== paintKey) {
+        const cloud = cloudForLive(recipe, live, canvasW, canvasH, state.elapsedMs);
+        if(presence)paintVolumePresence(state.pixels.data,canvasW,canvasH,presence,state.seed,recipe.paintStrikeCore?recipe.strikeCorePx:0,pose.activity?.phase==='rest'?.5:pose.activity?.phase==='waking'?.5+.5*pose.activity.progress:1);
+        else paintDingFrame(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud);
+        canvasCtx.putImageData(state.pixels, 0, 0);
+        texture.refresh();
+        state.lastPaintKey = paintKey;
+      }
       image.setVisible(true);
       image.setAlpha(pose.visibility);
-      paintStains(state, pose, live);
+      paintStains(state, pose, live,presence);
     },
     destroy(): void {
       image.destroy();
@@ -233,12 +231,14 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
   };
 }
 
-function paintStains(state: DingState, pose: FormVisualPose, live: PixelRect): void {
+function paintStains(state: DingState, pose: FormVisualPose, live: PixelRect,presence?:Readonly<VolumePresenceFrame>): void {
   const gfx = state.stains;
   gfx.clear();
   if (pose.visibility <= 0) return;
+  const activity = pose.activity?.phase === 'rest' ? 0 : pose.activity?.phase === 'waking' ? pose.activity.progress : 1;
+  if (activity <= 0) return;
   const player = followPos(state.scene, state.stainWorldPoint);
-  if (!player || !aabbHits(player.x, player.y, live)) return;
+  if (!player || (presence?!isVolumeDangerousAt(presence,player.x,player.y):!aabbHits(player.x, player.y, live))) return;
   const mid = state.recipe.mid;
   const core = state.recipe.core;
   const footY = player.y + BODY * 0.5 - 2;
@@ -247,7 +247,7 @@ function paintStains(state: DingState, pose: FormVisualPose, live: PixelRect): v
     const ox = ((i * 7 + Math.round(player.x)) % 7) - 3;
     const oy = ((i * 5 + Math.round(player.y)) % 5) - 2;
     const rgb = i % 2 === 0 ? mid : core;
-    gfx.fillStyle((rgb[0] << 16) | (rgb[1] << 8) | rgb[2], 1);
+    gfx.fillStyle((rgb[0] << 16) | (rgb[1] << 8) | rgb[2], activity);
     gfx.fillRect(Math.round(player.x + ox), Math.round(footY + oy), 1, 1);
   }
 }

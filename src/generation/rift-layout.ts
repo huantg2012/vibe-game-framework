@@ -1,3 +1,5 @@
+import { findTerrainSafeVolumeSeat, isMaterialVolume } from './terrain-safe-volume-seat';
+import { doorwayWallSeats } from '@/generation/wall-host-placement';
 /**
  * C3: place spawn, one extract, kindling, contaminants and patrols on a
  * recipe-stack island. Does not switch generators. Does not punch walls to
@@ -12,6 +14,7 @@ import { generateRecipeDraft } from '@/generation/draft-pipeline';
 import { evaluateDualPath } from '@/generation/dual-path';
 import { rollFragmentAxes } from '@/generation/fragment-roll';
 import { PREVIEW_RECIPES, jitterRecipe, recipeById, type MapRecipe } from '@/generation/recipes';
+import { ensureStaticBodyAccess } from '@/generation/static-body-access';
 import { mix32 } from '@/generation/seed-fork';
 import type {
   ContaminationAge,
@@ -22,8 +25,6 @@ import type {
 import {
   drawOne,
   drawSortie,
-  INFILTRATOR_FORM,
-  REWRITER_FORM,
   rollPaintHostCount,
   type ContaminationForm,
   type SortieDraw,
@@ -657,31 +658,8 @@ function placeOnIsland(
   return { spawn, extract, kindling, contaminants, enemies, landmarks };
 }
 
-function isExtractGateForm(form: ContaminationForm): boolean {
-  return (
-    form.portfolio === 'jia' &&
-    form.substrate === 'organic_remnant' &&
-    form.coverage === 'infiltrate' &&
-    form.lexemes.sense === 'sense_cone'
-  );
-}
-
 function jiaRoleFromForm(form: ContaminationForm): EnemySpawnData['type'] {
   return form.lexemes.sense === 'sense_hear' ? 'rewriter' : 'infiltrator';
-}
-
-function stripHostHear(
-  rng: SeededRandom,
-  form: ContaminationForm,
-  fragmentTypeId: string,
-): ContaminationForm | null {
-  if (form.lexemes.sense !== 'sense_hear') return form;
-  return drawOne(rng, {
-    portfolio: form.portfolio,
-    fragmentTypeId,
-    forbidSense: ['sense_hear'],
-    preferUtterance: true,
-  });
 }
 
 /**
@@ -695,77 +673,37 @@ function attachLexiconForms(
   drawn: SortieDraw,
 ): { enemySpawns: EnemySpawnData[]; contaminationDraw: SortieDraw } {
   const warnings = [...drawn.warnings];
-  const hostForms: ContaminationForm[] = [];
-  for (const form of drawn.forms) {
-    if (form.portfolio === 'jia') continue;
-    if (form.lexemes.sense === 'sense_hear') {
-      const redrawn = stripHostHear(rng, form, fragmentTypeId);
-      if (redrawn) hostForms.push(redrawn);
-      else warnings.push(`${form.portfolio} hear-strip failed after retries`);
-    } else {
-      hostForms.push(form);
-    }
-  }
-
-  const jiaPool = drawn.forms.filter((f) => f.portfolio === 'jia');
-  const used = new Set<ContaminationForm>();
-
-  const takeGate = (): ContaminationForm => {
-    const fromPool = jiaPool.find((f) => isExtractGateForm(f) && !used.has(f));
-    if (fromPool) {
-      used.add(fromPool);
-      return fromPool;
-    }
-    return (
-      drawOne(rng, {
-        portfolio: 'jia',
-        fragmentTypeId,
-        coverage: 'infiltrate',
-        substrate: 'organic_remnant',
-        sense: 'sense_cone',
-      }) ?? INFILTRATOR_FORM
-    );
+  const hostForms = drawn.forms.filter((form) => form.portfolio !== 'jia');
+  const hearingOnWall = hostForms.some((form) => form.lexemes.sense === 'sense_hear');
+  const requirePatrol = (hearing: boolean, gate = false): ContaminationForm => {
+    const form = drawOne(rng, {
+      portfolio: 'jia', fragmentTypeId, motion: 'motion_patrol',
+      sense: gate ? 'sense_cone' : hearing ? 'sense_hear' : undefined,
+      forbidSense: hearing ? undefined : ['sense_hear'],
+      coverage: gate ? 'infiltrate' : undefined,
+      rhythm: gate ? 'rhythm_open' : undefined,
+    });
+    if (!form) throw new Error(`No legal patrol for ${fragmentTypeId}/${hearing ? 'hear' : 'visual'}/${gate ? 'gate' : 'any'}`);
+    return form;
   };
-
-  const takeHear = (): ContaminationForm => {
-    const fromPool = jiaPool.find((f) => f.lexemes.sense === 'sense_hear' && !used.has(f));
-    if (fromPool) {
-      used.add(fromPool);
-      return fromPool;
-    }
-    return (
-      drawOne(rng, {
-        portfolio: 'jia',
-        fragmentTypeId,
-        sense: 'sense_hear',
-        substrate: 'organic_remnant',
-        coverage: 'rewrite',
-      }) ?? REWRITER_FORM
-    );
-  };
-
-  const takeOther = (): ContaminationForm => {
-    const fromPool = jiaPool.find((f) => !used.has(f) && f.lexemes.sense !== 'sense_hear');
-    if (fromPool) {
-      used.add(fromPool);
-      return fromPool;
-    }
-    return (
-      drawOne(rng, {
-        portfolio: 'jia',
-        fragmentTypeId,
-        forbidSense: ['sense_hear'],
-      }) ?? INFILTRATOR_FORM
-    );
-  };
-
+  let sentryTaken = false;
   const enemySpawns = placed.map((spawn, index) => {
-    const form = index === 0 ? takeGate() : spawn.type === 'rewriter' ? takeHear() : takeOther();
+    let form: ContaminationForm;
+    if (index === 0) form = requirePatrol(false, true);
+    else if (spawn.type === 'rewriter') form = requirePatrol(!hearingOnWall);
+    else {
+      const sentry = sentryTaken ? null : drawOne(rng, {
+        portfolio: 'jia', fragmentTypeId, forbidSense: ['sense_hear'], forbidMotion: ['motion_patrol'],
+      });
+      if (sentry) { form = sentry; sentryTaken = true; }
+      else form = requirePatrol(false);
+    }
     return { ...spawn, form, type: jiaRoleFromForm(form) };
   });
 
   const rewriterCount = enemySpawns.filter((e) => e.type === 'rewriter').length;
-  if (rewriterCount !== 1) warnings.push(`jia rewriter count ${rewriterCount} (want 1)`);
+  const expectedRewriters = hearingOnWall ? 0 : 1;
+  if (rewriterCount !== expectedRewriters) warnings.push(`jia rewriter count ${rewriterCount} (want ${expectedRewriters})`);
 
   const jiaForms = enemySpawns.map((e) => e.form).filter((f): f is ContaminationForm => f !== undefined);
   return {
@@ -831,7 +769,7 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
       const spawnRow = rowOf(grid.cols, placed.spawn);
       const extractCol = colOf(grid.cols, placed.extract);
       const extractRow = rowOf(grid.cols, placed.extract);
-      const contaminationPins = collectContaminationPins(draft.tileMap, {
+      let contaminationPins = collectContaminationPins(draft.tileMap, {
         spawnCol,
         spawnRow,
         extractCol,
@@ -853,14 +791,34 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
         fragmentTypeId: recipe.fragmentTypeId,
         paintCount,
         hasWallEdges: contaminationPins.wallEdges.length > 0,
+        hasWallOpenings: doorwayWallSeats(contaminationPins.wallEdges, grid).length > 0,
         hasCorridors: contaminationPins.corridorAabbs.length > 0,
       });
+      if (drawn.forms.some(form => form.portfolio === 'ding' && isMaterialVolume(form.substrate))) {
+        const seat = findTerrainSafeVolumeSeat(contaminationPins.corridorAabbs, (col, row) => grid.isWalkable(col, row));
+        if (!seat) { lastWhy = 'material volume has no legal 2x2 local corridor seat'; continue; }
+        contaminationPins = { ...contaminationPins, corridorAabbs: [seat] };
+      }
       const bound = attachLexiconForms(
         lexiconRng,
         recipe.fragmentTypeId,
         placed.enemies,
         drawn,
       );
+
+      const safeEnemySpawns = ensureStaticBodyAccess({
+        grid, spawnPoint, enemySpawns: bound.enemySpawns,
+        targets: [
+          { id: extractionPoint.id, position: extractionPoint.position, radius: extractionPoint.triggerRadius },
+          ...placed.kindling.map((node) => ({ id: node.id, position: node.position, radius: GAME_CONSTANTS.LOOT.SEARCH_RADIUS })),
+          ...placed.contaminants.map((node) => ({ id: node.id, position: node.position, radius: GAME_CONSTANTS.LOOT.SEARCH_RADIUS })),
+        ],
+      }, lexiconRng, recipe.fragmentTypeId);
+      if (!safeEnemySpawns) { lastWhy = 'static bodies block player access after legal redraw'; continue; }
+      const safeDraw = safeEnemySpawns === bound.enemySpawns ? bound.contaminationDraw : {
+        forms: [...safeEnemySpawns.map((enemy) => enemy.form!), ...bound.contaminationDraw.forms.filter((form) => form.portfolio !== 'jia')],
+        warnings: bound.contaminationDraw.warnings,
+      };
 
       return {
         seed: inputSeed,
@@ -879,10 +837,10 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
         extractionPoint,
         kindlingNodes: placed.kindling,
         contaminantNodes: placed.contaminants,
-        enemySpawns: bound.enemySpawns,
+        enemySpawns: safeEnemySpawns,
         landmarks: placed.landmarks,
         contaminationPins,
-        contaminationDraw: bound.contaminationDraw,
+        contaminationDraw: safeDraw,
       };
     }
   }

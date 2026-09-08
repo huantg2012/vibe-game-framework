@@ -7,6 +7,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  motionChoicesFor,
   REWRITER_FORM,
   INFILTRATOR_FORM,
   conceptualSubstratesOnSortie,
@@ -30,6 +31,7 @@ import {
   SUBSTRATE_IDS,
   UTTERANCE_DATA,
 } from '../../src/generated/contamination-lexicon-data.ts';
+import { CONTAMINATION_DIALECT_DATA } from '../../src/generated/contamination-family-data.ts';
 import { SeededRandom } from '../../src/utils/random.ts';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -122,32 +124,30 @@ assert(
   Object.values(SUBSTRATE_DATA).filter((s) => s.enabledScope === 'sortie').length === SORTIE_SUBSTRATE_IDS.length,
   'no extra sortie rows outside SORTIE_SUBSTRATE_IDS',
 );
-for (const id of ['stalk_clump', 'street_wreckage', 'ash_veil', ...CONCEPTUAL_SUBSTRATE_IDS]) {
+for (const id of ['stalk_clump', 'ash_veil', 'sound_echo']) {
   assert(SORTIE_SUBSTRATE_IDS.includes(id), `SORTIE_SUBSTRATE_IDS includes ${id}`);
 }
 
-/** I5-T closed set. street_wreckage + three biologicals in; lamp_pillar / railing_post still gym. */
-const POST_FLIP_SORTIE_SUBSTRATE_IDS = [
+/** Current R4 scope: six floor, three paint, one echo; retired environment remains gym-only. */
+const CURRENT_SORTIE_SUBSTRATE_IDS = [
   'organic_remnant',
-  'doorframe',
-  'wall_rust',
+  'human_remnant',
   'fungal_mat',
   'oil_film',
   'stalk_clump',
   'ash_veil',
   'sound_echo',
-  'light_scatter',
-  'space_interval',
-  'street_wreckage',
+  'gas_mass', 'mist_bank', 'dust_swarm',
   'insect_remnant',
   'mammal_remnant',
   'worm_remnant',
 ] as const;
 assert(
-  sameSet(SORTIE_SUBSTRATE_IDS, POST_FLIP_SORTIE_SUBSTRATE_IDS),
-  `SORTIE_SUBSTRATE_IDS must stay post-I5-T [${SORTIE_SUBSTRATE_IDS.join(',')}]`,
+  sameSet(SORTIE_SUBSTRATE_IDS, CURRENT_SORTIE_SUBSTRATE_IDS),
+  `SORTIE_SUBSTRATE_IDS must match approved I17 scope [${SORTIE_SUBSTRATE_IDS.join(',')}]`,
 );
-assert(SORTIE_SUBSTRATE_IDS.includes('street_wreckage'), 'I5-J SORTIE includes street_wreckage');
+assert(!SORTIE_SUBSTRATE_IDS.includes('street_wreckage'), 'R3 retired street wreckage stays outside production');
+assert(SUBSTRATE_DATA.doorframe!.legalOccupancies.join('|') === 'wall', 'R3 frame is exclusively architectural wall host');
 assert(SORTIE_SUBSTRATE_IDS.includes('insect_remnant'), 'I5-T SORTIE includes insect_remnant');
 assert(SORTIE_SUBSTRATE_IDS.includes('mammal_remnant'), 'I5-T SORTIE includes mammal_remnant');
 assert(SORTIE_SUBSTRATE_IDS.includes('worm_remnant'), 'I5-T SORTIE includes worm_remnant');
@@ -157,7 +157,7 @@ assert(!SORTIE_SUBSTRATE_IDS.includes('railing_post'), 'I5-J SORTIE excludes rai
 const STREET_WRECKAGE_FIELDS = { token: '街具残骸', verb: '立', lock: 'motion_anchor' } as const;
 const streetWreckage = SUBSTRATE_DATA.street_wreckage;
 assert(!!streetWreckage, 'missing street_wreckage');
-assert(streetWreckage!.enabledScope === 'sortie', 'street_wreckage enabled_scope=sortie');
+assert(streetWreckage!.enabledScope === 'gym', 'street_wreckage enabled_scope=gym');
 assert(streetWreckage!.displayToken === STREET_WRECKAGE_FIELDS.token, 'street_wreckage display_token');
 assert(streetWreckage!.residualVerb === STREET_WRECKAGE_FIELDS.verb, 'street_wreckage residual_verb');
 assert(
@@ -170,17 +170,18 @@ assert(
   `street_wreckage continuities [${streetWreckage?.legalContinuities.join(',')}] want [monolith]`,
 );
 
-const I5T_BIO_SORTIE: Readonly<
+const BIO_SORTIE: Readonly<
   Record<string, { token: string; verb: string; lock: string }>
 > = {
+  human_remnant: { token: '人形残余', verb: '走', lock: 'motion_patrol' },
   insect_remnant: { token: '虫', verb: '爬', lock: 'motion_patrol' },
   mammal_remnant: { token: '哺乳动物', verb: '走', lock: 'motion_patrol' },
   worm_remnant: { token: '大号蠕虫', verb: '拱', lock: 'motion_turn' },
 };
-for (const [id, fields] of Object.entries(I5T_BIO_SORTIE)) {
+for (const [id, fields] of Object.entries(BIO_SORTIE)) {
   const row = SUBSTRATE_DATA[id];
-  assert(!!row, `missing I5-T sortie substrate ${id}`);
-  assert(row!.enabledScope === 'sortie', `${id} enabled_scope=sortie`);
+  assert(!!row, `missing biological sortie substrate ${id}`);
+  assert(row!.enabledScope === 'sortie', `${id} remains a biological sortie substrate`);
   assert(row!.displayToken === fields.token, `${id} display_token ${row?.displayToken} want ${fields.token}`);
   assert(row!.residualVerb === fields.verb, `${id} residual_verb ${row?.residualVerb} want ${fields.verb}`);
   assert(
@@ -208,8 +209,8 @@ assert(
   `pairing: conceptual scope=sortie (${conceptualOnSortie}) iff oil_film sortie view has no volume (${!oilSortieHasVolume})`,
 );
 assert(
-  CONCEPTUAL_SUBSTRATE_IDS.every((id) => SUBSTRATE_DATA[id]?.enabledScope === 'sortie'),
-  'conceptual three enabled_scope=sortie',
+  CONCEPTUAL_SUBSTRATE_IDS.filter(id => SUBSTRATE_DATA[id]?.enabledScope === 'sortie').join('|') === 'sound_echo',
+  'R4 only echo remains in production volume scope',
 );
 assert(
   oil!.sortieLegalOccupancies.length === 1 && oil!.sortieLegalOccupancies[0] === 'paint',
@@ -223,7 +224,7 @@ for (const id of CONCEPTUAL_SUBSTRATE_IDS) {
     row!.legalOccupancies.length === 1 && row!.legalOccupancies[0] === 'volume',
     `${id} gym occupancies [${row?.legalOccupancies.join(',')}] want [volume]`,
   );
-  assert(row!.enabledScope === 'sortie', `${id} enabled_scope=sortie`);
+  assert(row!.enabledScope === (id === 'sound_echo' ? 'sortie' : 'gym'), `${id} R4 scope`);
   assert(
     row!.legalContinuities.every((c) => c === 'monolith' || c === 'field'),
     `${id} continuities only monolith|field`,
@@ -243,8 +244,8 @@ assert(UTTERANCE_DATA.corridor_watching?.substrate === 'space_interval', 'corrid
 
 const dingGym = substrateOptions('ding').map((row) => row.id);
 assert(
-  sameSet(dingGym, [...CONCEPTUAL_SUBSTRATE_IDS]),
-  `gym ding dropdown [${dingGym.join(',')}] want conceptual three`,
+  sameSet(dingGym, [...CONCEPTUAL_SUBSTRATE_IDS, 'gas_mass', 'mist_bank', 'dust_swarm']),
+  `gym ding dropdown [${dingGym.join(',')}] want three historical conceptual and three material volumes`,
 );
 assert(!dingGym.includes('oil_film'), 'gym ding dropdown excludes oil_film');
 const jiaGym = substrateOptions('jia').map((row) => row.id);
@@ -255,7 +256,7 @@ assert(
 assert(jiaGym.includes('stalk_clump') && jiaGym.includes('railing_post'), 'jia dropdown includes new floor rows');
 assert(jiaGym.includes('street_wreckage'), 'jia dropdown includes street_wreckage');
 assert(!dingGym.includes('street_wreckage'), 'ding dropdown excludes street_wreckage');
-for (const id of Object.keys(I5T_BIO_SORTIE)) {
+for (const id of Object.keys(BIO_SORTIE)) {
   assert(jiaGym.includes(id), `jia dropdown includes I5-T bio row ${id}`);
   assert(!dingGym.includes(id), `ding dropdown excludes I5-T bio row ${id}`);
 }
@@ -268,19 +269,17 @@ assert(!drawSrc.includes('shadowGymUtteranceForSortie'), 'sortie must not shadow
 const catalogSrc = readFileSync(resolve(ROOT, 'src/gym/lexicon-gallery-catalog.ts'), 'utf8');
 const residualLocks: Readonly<Record<string, string>> = {
   street_wreckage: STREET_WRECKAGE_FIELDS.lock,
-  ...Object.fromEntries(Object.entries(I5T_BIO_SORTIE).map(([id, fields]) => [id, fields.lock])),
+  ...Object.fromEntries(Object.entries(BIO_SORTIE).map(([id, fields]) => [id, fields.lock])),
 };
 for (const [id, lock] of Object.entries(residualLocks)) {
   const lockRe = new RegExp(`${id}:\\s*'${lock}'`);
-  assert(lockRe.test(drawSrc), `contamination-draw residual lock ${id} → ${lock}`);
+  assert(motionChoicesFor(id, 'jia', 'infiltrate').join('|') === lock, `generated residual lock ${id} → ${lock}`);
   assert(lockRe.test(catalogSrc), `gallery catalog residual lock ${id} → ${lock}`);
 }
-assert(!drawSrc.includes("['lamp_pillar'"), 'DIALECT must not weight lamp_pillar after I5-J');
-assert(!drawSrc.includes("['railing_post'"), 'DIALECT must not weight railing_post after I5-J');
-assert(drawSrc.includes("['street_wreckage'"), 'DIALECT must weight street_wreckage after I5-J');
-for (const id of Object.keys(I5T_BIO_SORTIE)) {
-  const hits = drawSrc.match(new RegExp(`\\['${id}', 1\\]`, 'g')) ?? [];
-  assert(hits.length === 5, `DIALECT must weight ${id} 1 on all five fragments (got ${hits.length})`);
+for (const dialect of Object.values(CONTAMINATION_DIALECT_DATA)) {
+  assert(!dialect.substrates.some(([id, weight]) => weight > 0 && (id === 'lamp_pillar' || id === 'railing_post')), 'gym-only columns cannot receive sortie weight');
+  assert(!dialect.substrates.some(([id, weight]) => id === 'street_wreckage' && weight > 0), 'retired street wreckage has no map weight');
+  for (const id of Object.keys(BIO_SORTIE)) assert(dialect.substrates.some(([sub, weight]) => sub === id && weight === 1), `dialect bio weight ${id}`);
 }
 
 const mixedSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/scheme-d-mixed.ts'), 'utf8');
@@ -289,7 +288,7 @@ assert(!mixedSrc.includes('attachJiaD'), 'd-mixed no longer calls attachJiaD');
 
 for (const [id, fields] of Object.entries({
   street_wreckage: STREET_WRECKAGE_FIELDS,
-  ...I5T_BIO_SORTIE,
+  ...BIO_SORTIE,
 })) {
   const gymForm = drawOne(new SeededRandom(id.length * 17), {
     portfolio: 'jia',
@@ -309,7 +308,7 @@ for (const [id, fields] of Object.entries({
   }
 }
 
-for (const id of Object.keys(I5T_BIO_SORTIE)) {
+for (const id of Object.keys(BIO_SORTIE)) {
   const sortieForm = drawOne(new SeededRandom(id.length * 31), {
     portfolio: 'jia',
     fragmentTypeId: 'frag-clinic',
@@ -358,8 +357,8 @@ for (const seed of seeds) {
       if (form.portfolio === 'ding') {
         assert(form.occupancy === 'volume', `${fragmentTypeId}/${seed} ding not volume`);
         assert(
-          (CONCEPTUAL_SUBSTRATE_IDS as readonly string[]).includes(form.substrate),
-          `${fragmentTypeId}/${seed} ding substrate ${form.substrate} want conceptual`,
+          ['sound_echo', 'gas_mass', 'mist_bank', 'dust_swarm'].includes(form.substrate),
+          `${fragmentTypeId}/${seed} ding substrate ${form.substrate} want current production volume`,
         );
         assert(form.substrate !== 'oil_film', `${fragmentTypeId}/${seed} ding must not occupy as oil_film`);
       }
@@ -467,7 +466,7 @@ assert(
   'RiftScene must not import src/gym',
 );
 assert(
-  /this\.hosts\.create\(\s*this,\s*layout,\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*,\s*\{\s*liveMotion:\s*true\s*\}\s*\)/.test(
+  /this\.hosts\.create\(\s*this,\s*layout,\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*,\s*\{[^}]*\bliveMotion:\s*true\b/.test(
     riftSrc,
   ),
   'RiftScene hosts.create passes { liveMotion: true }',
@@ -499,7 +498,9 @@ assert(!yiSrc.includes('Math.max(0.2, pose.visibility)'), 'yi must not floor vis
 assert(jiaSrc.includes('applyFormVisibility'), 'jia consumes visibility via applyFormVisibility');
 assert(yiSrc.includes('applyFormVisibility'), 'yi consumes visibility via applyFormVisibility');
 assert(jiaSrc.includes('textureNamespace'), 'jia keys honor optional textureNamespace');
-assert(bingSrc.includes('textureNamespace'), 'bing keys honor optional textureNamespace');
+const paintAttachSrc = readFileSync(resolve(ROOT, 'src/entities/form-renderers/d/paint-genome/attach.ts'), 'utf8');
+assert(bingSrc.includes('return attachBingPaintGenome(ctx)') && paintAttachSrc.includes('ctx.textureNamespace'),
+  'all bing delegates retain the original context and shared paint keys honor optional textureNamespace');
 assert(dingSrc.includes('textureNamespace'), 'ding keys honor optional textureNamespace');
 assert(dingSrc.includes('stainWorldPoint'), 'ding stains honor optional stainWorldPoint');
 const mapSrc = readFileSync(resolve(ROOT, 'src/gym/gym-map-scene.ts'), 'utf8');
@@ -576,7 +577,7 @@ assert(
 );
 
 const layoutSrc = readFileSync(resolve(ROOT, 'src/generation/rift-layout.ts'), 'utf8');
-const placeBody = layoutSrc.split('function placeOnIsland')[1]?.split('function isExtractGateForm')[0] ?? '';
+const placeBody = layoutSrc.split('function placeOnIsland')[1]?.split('function jiaRoleFromForm')[0] ?? '';
 assert(!placeBody.includes('drawSortie'), 'placeOnIsland must not draw lexicon (would consume placement rng)');
 assert(
   layoutSrc.includes("mix32(inputSeed, 'lexicon')"),

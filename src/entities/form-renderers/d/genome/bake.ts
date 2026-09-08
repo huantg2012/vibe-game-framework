@@ -1,4 +1,4 @@
-import { bakeInsectModel } from '@/entities/form-renderers/d/insect-model';
+import { productionModelFor } from '../production-models';
 /**
  * 基因谱甲共用烘焙（I5-N / I5-G 热修）。挂载与 `check:jia-genome-pose` 必须走这一条。
  * 顺序：骨架 → 算子 → weld/漆 → 朝向可读与信号相 → 可走步态（默认 idle 静帧）。
@@ -313,14 +313,11 @@ function applyFacingAndSignal(
 }
 
 export function bakeJiaGenome(req: JiaGenomeBakeRequest): JiaGenomeBakeResult {
-  if (req.substrate === 'insect_remnant') {
-    return bakeInsectModel({
-      seed: req.seed, coverage: req.coverage, facing4: req.facing4,
-      phase: req.signal === 'strike' ? 'strike' : req.signal === 'inflated' ? 'windup'
-        : req.gait === 'walk' ? 'walk' : req.signal === 'awake' ? 'alert' : 'idle',
-      phase01: (req.frame ?? 0) / 4,
-    });
-  }
+  const model = productionModelFor(req.substrate);
+  if (model) return model.bake({ seed: req.seed, coverage: req.coverage, facing4: req.facing4,
+    phase: req.signal === 'strike' ? 'strike' : req.signal === 'inflated' ? 'windup'
+      : req.gait === 'walk' ? 'walk' : req.signal === 'awake' ? 'alert' : 'idle',
+    phase01: (req.frame ?? 0) / 4 });
   const sk = buildJiaGenomeSkeleton(req);
   applyOperators(sk, req.coverage, req.seed);
   const welded = paintWeldedBody(sk);

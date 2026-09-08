@@ -2,9 +2,9 @@
 import assert from 'node:assert/strict';
 import { GAME_CONSTANTS } from '../../src/config/constants.ts';
 import { ENEMY_DATA } from '../../src/generated/enemy-data.ts';
-import { UTTERANCE_DATA } from '../../src/generated/contamination-lexicon-data.ts';
+import { SUBSTRATE_DATA, UTTERANCE_DATA } from '../../src/generated/contamination-lexicon-data.ts';
 import {
-  drawOne, drawSortie, floorMotionFor, supportsRuntimeForm, INFILTRATOR_FORM,
+  drawOne, drawSortie, floorMotionFor, supportsRuntimeForm, familyCapabilityFor, motionChoicesFor, INFILTRATOR_FORM,
   type ContaminationForm,
 } from '../../src/generation/contamination-draw.ts';
 import { generateRiftLayout } from '../../src/generation/rift-layout.ts';
@@ -34,38 +34,66 @@ for (let seed = 1; seed <= 64; seed++) {
     }
   }
 }
-assert.deepEqual([...occupancies].sort(), ['floor', 'paint', 'volume', 'wall']);
+assert.deepEqual([...occupancies].sort(), ['floor', 'paint', 'volume']);
 for (const coverage of ['infiltrate', 'rewrite', 'overwrite'] as const) {
   for (const substrate of ['doorframe', 'street_wreckage']) {
     const form = drawOne(new SeededRandom(1), { portfolio: 'jia', fragmentTypeId: 'frag-library', coverage, substrate });
-    assert(form);
-    assert.equal(form.lexemes.motion, 'motion_anchor');
+    assert.equal(form, null, 'retired ground relics cannot be drawn in production');
   }
 }
 const insect = drawOne(new SeededRandom(9), {
   portfolio: 'jia', fragmentTypeId: 'frag-library', substrate: 'insect_remnant', coverage: 'infiltrate',
 });
 assert.equal(insect?.lexemes.motion, 'motion_patrol');
+// I17 human is a new biological source row, never an alias replacing organic_remnant.
+assert.equal(SUBSTRATE_DATA.human_remnant.displayToken, '人形残余');
+assert.equal(SUBSTRATE_DATA.human_remnant.residualVerb, '走');
+assert.equal(SUBSTRATE_DATA.human_remnant.enabledScope, 'sortie');
+assert.deepEqual(SUBSTRATE_DATA.human_remnant.legalOccupancies, ['floor']);
+assert.deepEqual(SUBSTRATE_DATA.human_remnant.legalContinuities, ['monolith']);
+assert.equal(SUBSTRATE_DATA.organic_remnant.enabledScope, 'sortie');
+assert.equal(INFILTRATOR_FORM.substrate, 'organic_remnant');
+for (const coverage of ['infiltrate', 'rewrite', 'overwrite'] as const) {
+  const human = drawOne(new SeededRandom(17), {
+    portfolio: 'jia', fragmentTypeId: 'frag-library', substrate: 'human_remnant', coverage,
+  });
+  assert(human && supportsRuntimeForm(human));
+  assert.equal(human.substrate, 'human_remnant');
+  assert.equal(human.coverage, coverage);
+  if (coverage === 'infiltrate') assert.equal(human.lexemes.motion, 'motion_patrol');
+}
 for (const recipe of Object.values(UTTERANCE_DATA)) {
   const form: ContaminationForm = { ...recipe, lexemes: {
     motion: recipe.motion, sense: recipe.sense, rhythm: recipe.rhythm, contact: recipe.contact,
   } };
-  assert.equal(supportsRuntimeForm(form), recipe.id === 'cluster_lung', recipe.id);
+  const capability = familyCapabilityFor(form.substrate, form.portfolio);
+  const expected = SUBSTRATE_DATA[form.substrate]?.enabledScope === 'sortie' && !!capability && (['motion', 'sense', 'rhythm', 'contact'] as const).every((slot) => capability[slot].includes(form.lexemes[slot])) && motionChoicesFor(form.substrate, form.portfolio, form.coverage).includes(form.lexemes.motion);
+  assert.equal(supportsRuntimeForm(form), expected, recipe.id);
 }
 
 // Exercise placed forms, not only the pre-placement draw pool. Includes F01 seeds 1 and 3.
-for (let seed = 1; seed <= 16; seed++) {
+const humanCoverages = new Set<string>();
+let humanAndInsectTogether = false;
+for (let seed = 1; seed <= 32; seed++) {
   const layout = generateRiftLayout(seed);
   const forms = layout.contaminationDraw.forms;
+  for (const form of forms) if (form.substrate === 'human_remnant') humanCoverages.add(form.coverage);
+  if (forms.some(form => form.substrate === 'human_remnant') &&
+      forms.some(form => form.substrate === 'insect_remnant')) humanAndInsectTogether = true;
   assert(forms.every(supportsRuntimeForm));
   assert.equal(forms.filter(f => f.lexemes.sense === 'sense_hear').length, 1);
-  assert(forms.filter(f => f.lexemes.sense === 'sense_hear').every(f => f.occupancy === 'floor'));
+  assert(forms.filter(f => f.lexemes.sense === 'sense_hear').every(f => f.occupancy === 'floor' || f.occupancy === 'wall'));
+  assert.equal(layout.enemySpawns.filter(e => e.type === 'rewriter').length, forms.some(f => f.occupancy === 'wall' && f.lexemes.sense === 'sense_hear') ? 0 : 1);
   const floorCount = forms.filter(f => f.occupancy === 'floor').length;
   assert(floorCount >= 3 && floorCount <= 4);
   assert.equal(forms.filter(f => f.occupancy === 'wall' || f.occupancy === 'volume').length, 1);
   assert.equal(forms.filter(f => f.occupancy === 'paint').length,
     rollPaintHostCount(layout.seed, layout.contaminationAge));
 }
+
+assert.deepEqual([...humanCoverages].sort(), ['infiltrate', 'overwrite', 'rewrite'],
+  'production draws all three human coverage tiers');
+assert(humanAndInsectTogether, 'distinct human and insect bases can coexist on a real layout');
 
 function fixture(form: ContaminationForm): { enemy: Enemy; ctx: AIContext } {
   // Only engine-independent fields used by the real behavior/FSM are needed here.
@@ -168,7 +196,7 @@ for (const substrate of ['doorframe', 'street_wreckage', 'organic_remnant']) {
   assert.equal(resets, anchored ? 0 : 1, substrate);
   assert.deepEqual(enemy.ai.position, anchored ? { x: 100, y: 100 } : { x: 130, y: 120 });
 }
-const turning = fixture({ ...INFILTRATOR_FORM, lexemes: { ...INFILTRATOR_FORM.lexemes, motion: 'motion_turn' } });
+const turning = fixture({ ...INFILTRATOR_FORM, coverage: 'rewrite', lexemes: { ...INFILTRATOR_FORM.lexemes, motion: 'motion_turn' } });
 updateBehavior(turning.enemy, turning.ctx);
 assert.notEqual(turning.enemy.ai.facingAngle, 0, 'turn-face rotates perception heading at rest');
 const patrol = fixture(INFILTRATOR_FORM);
@@ -177,4 +205,4 @@ patrol.enemy.ai.pathPoints = null;
 updateBehavior(patrol.enemy, patrol.ctx);
 assert(Math.hypot(patrol.enemy.ai.velocity.x, patrol.enemy.ai.velocity.y) > 0, 'supported patrol still moves');
 assert.equal(floorMotionFor(INFILTRATOR_FORM), 'motion_patrol');
-console.log('check:runtime-behavior ok (320 draws, 16 layouts, all five AI states + noise/damage/combat/decoy/knockback/turn/patrol)');
+console.log('check:runtime-behavior ok (320 draws, 32 layouts + human coverage/coexistence, all five AI states + noise/damage/combat/decoy/knockback/turn/patrol)');

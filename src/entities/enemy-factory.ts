@@ -10,6 +10,9 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { ENEMY_DATA, type EnemyRole } from '@/generated/enemy-data';
+import { BEHAVIOR_PROFILE_DATA } from '@/generated/contamination-capability-data';
+import { BODY_PROFILE_DATA } from '@/generated/contamination-body-data';
+import { ActivityClock, type ActivityVisualState } from '@/systems/ai/activity-state';
 import { INFILTRATOR_FORM, REWRITER_FORM, type ContaminationForm } from '@/generation/contamination-draw';
 import { AIState, type Facing4, type Vector2 } from '@/types/game-types';
 import type { EnemySpawnData } from '@/types/map-types';
@@ -50,6 +53,8 @@ const TEXTURE_LOCK = 'placeholder-enemy-lock';
 
 const INFILTRATOR_INDICATOR_Y = -22;
 const REWRITER_INDICATOR_Y = -24;
+// I17's upright sprite extends 37px above its foot anchor; leave clear space above it.
+const HUMAN_INDICATOR_Y = -44;
 const INDICATOR_DOT_SPREAD = 5;
 
 const REWRITER_AFTERIMAGE_INTERVAL_MS = 55;
@@ -70,26 +75,28 @@ export interface EnemyFactoryConfig {
   readonly depth: number;
 }
 
-export function createEnemyTypeConfig(role: EnemyRole): EnemyTypeConfig {
+export function createEnemyTypeConfig(role: EnemyRole, form?: ContaminationForm): EnemyTypeConfig {
   const profile = ENEMY_DATA[role];
+  const narrow = form?.lexemes.sense === 'sense_narrow' ? BEHAVIOR_PROFILE_DATA.sense_narrow : undefined;
+  const moveScale = form ? BODY_PROFILE_DATA[form.substrate]?.moveScale ?? 1 : 1;
   const ai = GAME_CONSTANTS.AI;
   return {
     role,
     profile,
     bodySize: ai.BODY_SIZE,
     speeds: {
-      [AIState.PATROL]: profile.patrolSpeed,
-      [AIState.SUSPICIOUS]: profile.suspiciousSpeed,
-      [AIState.ALERT]: profile.alertSpeed,
-      [AIState.CHASE]: profile.chaseSpeed,
-      [AIState.RETURN]: profile.returnSpeed,
+      [AIState.PATROL]: profile.patrolSpeed * moveScale,
+      [AIState.SUSPICIOUS]: profile.suspiciousSpeed * moveScale,
+      [AIState.ALERT]: profile.alertSpeed * moveScale,
+      [AIState.CHASE]: profile.chaseSpeed * moveScale,
+      [AIState.RETURN]: profile.returnSpeed * moveScale,
     },
     sight: {
-      rangeCore: profile.sightRange,
-      halfAngleCore: degToRad(profile.sightHalfAngleCore),
-      rangePeripheral: profile.sightRangePeriph,
-      halfAnglePeripheral: degToRad(profile.sightHalfAnglePeriph),
-      chaseRange: profile.chaseSightRange,
+      rangeCore: profile.sightRange * (narrow?.rangeScale ?? 1),
+      halfAngleCore: degToRad(narrow ? narrow.coneDeg / 2 : profile.sightHalfAngleCore),
+      rangePeripheral: narrow ? 0 : profile.sightRangePeriph,
+      halfAnglePeripheral: narrow ? 0 : degToRad(profile.sightHalfAnglePeriph),
+      chaseRange: profile.chaseSightRange * (narrow?.rangeScale ?? 1),
     },
     hearing: {
       range: profile.hearingRange,
@@ -132,6 +139,37 @@ export class Enemy implements EnemyView {
   private readonly stain: ContamStain | null;
   /** Hide stand-in body when scheme D (or a gym candidate) is attached. Arcade + AI stay. */
   private visualSuppressed = false;
+  private locomotionMode: 'legacy-hitch' | 'continuous' = 'legacy-hitch';
+  private readonly actualVelocity: Vector2 = { x: 0, y: 0 };
+  private readonly activity: ActivityClock;
+  private attackCommitted = false;
+  activityHearingAccumMs = 0;
+
+  getActivityVisualState(): Readonly<ActivityVisualState> { return this.activity.visual; }
+  isAttackAvailable(): boolean { return this.activity.visual.phase === 'active'; }
+  setAttackCommitted(committed: boolean): void { this.attackCommitted = committed; }
+  canAct(): boolean { return this.isAttackAvailable() || this.attackCommitted; }
+  tickActivity(deltaMs: number, stimulus: boolean): void {
+    this.activity.tick(deltaMs, stimulus, this.ai.state === AIState.PATROL);
+  }
+
+  /** Renderer attachment selects whether its gait still depends on the old stop/lunge carrier. */
+  setLocomotionMode(mode: 'legacy-hitch' | 'continuous'): void {
+    this.locomotionMode = mode;
+    this.hitchMs = 0;
+    this.hitchWasLunge = false;
+  }
+
+  /** Achieved physics motion; excludes contact correction and blocked movement intent. */
+  getActualVelocity(): Readonly<Vector2> {
+    return this.actualVelocity;
+  }
+
+  measureActualVelocity(deltaMs: number): void {
+    const scale = deltaMs > 0 ? 1000 / deltaMs : 0;
+    this.actualVelocity.x = (this.body.x - this.ai.position.x) * scale;
+    this.actualVelocity.y = (this.body.y - this.ai.position.y) * scale;
+  }
 
   constructor(
     scene: Phaser.Scene,
@@ -145,6 +183,7 @@ export class Enemy implements EnemyView {
     this.config = config;
     this.form =
       spawnData.form ?? (config.role === 'rewriter' ? REWRITER_FORM : INFILTRATOR_FORM);
+    this.activity = new ActivityClock(this.form.lexemes.rhythm, `${spawnData.id}:${spawnPosition.x}:${spawnPosition.y}`);
     this.ai = createEnemyAIState(spawnPosition, degToRad(spawnData.facing), config.role);
 
     const ai = GAME_CONSTANTS.AI;
@@ -184,6 +223,7 @@ export class Enemy implements EnemyView {
       physicsBody.setOffset(ai.BODY_OFFSET.x, ai.BODY_OFFSET.y);
     }
     physicsBody.setCollideWorldBounds(true);
+    physicsBody.setImmovable(this.isStaticObstacle());
 
     this.dots = [
       scene.add.image(spawnPosition.x, spawnPosition.y, TEXTURE_DOT).setDepth(depth + 1),
@@ -238,6 +278,17 @@ export class Enemy implements EnemyView {
     return this.ai.detection;
   }
 
+  /** Only zero-speed physical substrates block the player; mobile enemies remain soft contacts. */
+  isStaticObstacle(): boolean {
+    return this.form.occupancy === 'floor' && BODY_PROFILE_DATA[this.form.substrate]?.moveScale === 0;
+  }
+
+  /** Detection indicators remain above ground-sorted bodies and below fog. */
+  setReadoutDepth(depth: number): void {
+    for (const dot of this.dots) dot.setDepth(depth);
+    this.lock.setDepth(depth);
+  }
+
   getForm(): ContaminationForm {
     return this.form;
   }
@@ -275,7 +326,7 @@ export class Enemy implements EnemyView {
     this.ai.velocity.y = y;
     const moving = Math.hypot(x, y) >= GAME_CONSTANTS.ACTOR_MOTION.MOVE_SPEED_FLOOR;
     const chase = this.ai.state === AIState.CHASE;
-    if (!moving || chase) {
+    if (!moving || chase || this.locomotionMode === 'continuous') {
       this.hitchMs = 0;
       this.hitchWasLunge = false;
       (this.body.body as Phaser.Physics.Arcade.Body).velocity.set(x, y);
@@ -348,7 +399,8 @@ export class Enemy implements EnemyView {
       if (!rewriter) this.body.setAlpha(visibility);
     }
 
-    const indicatorY = this.ai.position.y + (rewriter ? REWRITER_INDICATOR_Y : INFILTRATOR_INDICATOR_Y);
+    const indicatorY = this.ai.position.y + (this.visualSuppressed && this.form.substrate === 'human_remnant'
+      ? HUMAN_INDICATOR_Y : rewriter ? REWRITER_INDICATOR_Y : INFILTRATOR_INDICATOR_Y);
     switch (this.ai.state) {
       case AIState.SUSPICIOUS: {
         const certainty = clamp(

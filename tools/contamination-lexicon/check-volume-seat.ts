@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import { findTerrainSafeVolumeSeat } from '../../src/generation/terrain-safe-volume-seat';
+const box = {minCol:0,minRow:0,maxCol:7,maxRow:7,coreCol:3,coreRow:3};
+assert.equal(findTerrainSafeVolumeSeat([box],(c,r)=>c===0||r===0),undefined,'one-cell L corridor must not manufacture a two-cell material seat');
+const seat=findTerrainSafeVolumeSeat([box],(c,r)=>(c>=1&&c<=4&&r>=2&&r<=4)||(c>=6&&r>=6));
+assert.deepEqual(seat,{minCol:1,minRow:2,maxCol:4,maxRow:4,coreCol:2,coreRow:3},'maximum full-floor area wins');
+const bad={minCol:0,minRow:0,maxCol:1,maxRow:1,coreCol:0,coreRow:0};
+assert.deepEqual(findTerrainSafeVolumeSeat([bad,box],(c,r)=>c>=4&&c<=5&&r>=4&&r<=5),{minCol:4,minRow:4,maxCol:5,maxRow:5,coreCol:4,coreRow:4},'invalid first corridor must not hide a later legal seat');
+assert.deepEqual(findTerrainSafeVolumeSeat([box],(c,r)=>(c<2&&r<2)||(c>=6&&r>=6)),bad,'equal area uses stable row then column');
+console.log('check:volume-seat PASS');

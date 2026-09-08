@@ -37,6 +37,8 @@ export interface EnemyView {
   getState(): AIState;
   /** Chasing and already standing at attack distance. Combat uses it to decide to swing. */
   isEngaged(): boolean;
+  isAttackAvailable?(): boolean;
+  setAttackCommitted?(committed: boolean): void;
   /** 0..1. Play input for the rim pulse; debug overlay may also read it. */
   getDetection(): number;
   /** Contamination lexicon form (DEC-076). T2: infiltrator/rewriter fixtures. */

@@ -30,7 +30,7 @@ import {
   streetNeighborhoodsOf,
   type StreetWreckageNeighborhoodId,
 } from '@/entities/form-renderers/d/genome/street-wreckage';
-import type { ContaminationForm } from '@/generation/contamination-draw';
+import { familyCapabilityFor, type ContaminationForm } from '@/generation/contamination-draw';
 import { mix32 } from '@/generation/seed-fork';
 import {
   PORTFOLIO_DATA,
@@ -132,6 +132,7 @@ const INFILTRATE_RESIDUAL_MOTION: Readonly<Record<string, string>> = {
   railing_post: 'motion_anchor',
   street_wreckage: 'motion_anchor',
   organic_remnant: 'motion_patrol',
+  human_remnant: 'motion_patrol',
   mammal_remnant: 'motion_patrol',
   stalk_clump: 'motion_turn',
   insect_remnant: 'motion_patrol',
@@ -378,6 +379,11 @@ function motionForNonOccupying(
   substrate: string,
   coverage: CoverageId,
 ): string | null {
+  // A fixed architectural host must remain attached in every gallery tier.
+  // Full floor alphabet experiments remain available; this is only the
+  // non-occupying motion selected as the representative environmental pose.
+  const family = familyCapabilityFor(substrate, portfolio);
+  if (family?.motion.length === 1) return family.motion[0]!;
   const locked = motionAlphabetOrLock(portfolio, substrate, coverage);
   if (!locked) return null;
   if (coverage === 'infiltrate') {

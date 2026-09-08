@@ -1,7 +1,4 @@
-/**
- * Scheme D 丁：概念基体配方。gym only。
- * 油膜不是丁的主外形；未知基体落到余响，不落到棋盘填盒。
- */
+/** Volume identity/material recipe. Old light/interval forms are replay-only. */
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContinuityId, CoverageId } from '@/generated/contamination-lexicon-data';
 import { mix32 } from '@/generation/seed-fork';
@@ -14,8 +11,8 @@ import {
   type Rgb,
 } from '@/entities/form-renderers/d/fragment-ramp';
 
-export const DING_FAMILIES = ['sound_echo', 'light_scatter', 'space_interval'] as const;
-export type DingFamily = (typeof DING_FAMILIES)[number];
+export const DING_FAMILIES = ['sound_echo', 'gas_mass', 'mist_bank', 'dust_swarm'] as const;
+export type DingFamily = (typeof DING_FAMILIES)[number] | 'light_scatter' | 'space_interval';
 
 const CORE_TEALS: readonly Rgb[] = [
   [0x1a, 0xad, 0x96],
@@ -93,6 +90,7 @@ function clampCoreTeal(rgb: Rgb): Rgb {
 }
 
 export function dingFamilyOf(substrate: string): DingFamily {
+  if(substrate==='gas_mass'||substrate==='mist_bank'||substrate==='dust_swarm')return substrate;
   if (substrate === 'light_scatter') return 'light_scatter';
   if (substrate === 'space_interval') return 'space_interval';
   return 'sound_echo';

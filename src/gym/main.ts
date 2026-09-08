@@ -8,7 +8,6 @@ import { gameConfigWithScenes } from '@/config/game-config';
 import { assertBalanceInvariants } from '@/config/invariants';
 import { GymBootScene } from '@/gym/gym-boot-scene';
 import { GymLexiconGalleryScene } from '@/gym/gym-lexicon-gallery-scene';
-import { GymLexiconScene } from '@/gym/gym-lexicon-scene';
 import { GymMapScene } from '@/gym/gym-map-scene';
 import { GymPaintVeinCardScene } from '@/gym/gym-paint-vein-card-scene';
 import { GymPlayerScene } from '@/gym/gym-player-scene';
@@ -20,13 +19,16 @@ import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
 
 if (import.meta.env.DEV) assertBalanceInvariants();
 
+// The old configuration yard is replaced by the focused inspector.
+if (new URLSearchParams(location.search).get('lesson') === 'lexicon') {
+  location.replace('/enemy-inspector.html');
+} else {
 const game = new Phaser.Game(
   gameConfigWithScenes([
     GymBootScene,
     GymScene,
     GymPlayerScene,
     GymMapScene,
-    GymLexiconScene,
     GymLexiconGalleryScene,
     GymPaintVeinCardScene,
     GymRiftEntranceCardScene,
@@ -38,4 +40,6 @@ bindDomUiRootToGame(game);
 
 if (import.meta.env.DEV) {
   (window as unknown as { __game: Phaser.Game }).__game = game;
+}
+
 }

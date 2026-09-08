@@ -2,13 +2,42 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-07
+last-modified: 2026-09-08
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
+
+## R4-C 当前实体占空合同
+
+R4-D尘絮返工：`dust-flow.ts`只负责可绝对时间重建的独立絮簇位置/尺度/朝向；`volume-presence.ts`缓存朝向基向量并采样同一破碎密度场；`volume-paint.ts`在絮簇局部坐标绘制稳定身份的纤维/卷片。没有额外粒子碰撞系统或装饰层的无形危区。
+
+用户已批准 `gas_mass` 气团、`mist_bank` 雾团、`dust_swarm` 尘絮群进入敌人检视室和正式裂隙；余响保留原行为及画法。当前生产13基底（6地面、3漆、4空），所有占墙、散光、间距及街具继续仅历史gym。每图占空仍1名额；听觉主轴仍恰好1个占地巡游。
+
+128正式种子当前结果：197个去别名形态行为组合、27个行为键、460个理论候选、382个职责可分配组合。占空实抽气团40、雾团27、尘絮群44、余响17；全量局部宿主审计7680个相位样本无空部署。计数不等于独立物种，美术品质由人审。
+
+三实体的家族能力与地图权重由CSV生成；`contamination-volume-profiles.csv` → `contamination-volume-data.ts`拥有休整/聚合/释放/散开时长、半径、扫动范围、通行间隙及危险阈值。气团向内压缩后短促外胀；雾团以不同长短与漂移频率的非镜像薄层分流重聚，保留24px穿行通道；尘絮群旋聚、短扫、散开。新三者固定空间宿主并由自有周期变形，不叠加旧`dingLiveRect`微变形；余响沿旧路径。
+
+`src/generation/terrain-safe-volume-seat.ts`在候选走廊内部求完整可走的轴对齐矩形，至少2×2格，优先面积大、同行列稳定决胜。可尝试所有走廊；没有合法座位则生成器重试该图，不能静默丢弃占空名额。Host/实际关卡/检视复用同一个纯选座函数；新presence的局部矩形全周期固定。额外保留尘絮扫动限幅，只在建立场时确定全轨迹范围，不在失败帧瞬移到上一位置。
+
+`src/systems/volume-presence.ts`提供预分配`VolumePresenceFrame`、`createVolumePresenceFrame`、`updateVolumePresenceFrame`、`sampleVolumeDensity`和`isVolumeDangerousAt`。纯场包含世界坐标分量、相位/进度、活动门、危险门、实际可走核心位置；低/中/高覆盖仅影响材质和内部运动，不改变命中几何，不依赖另一个随机种子。所有实体密度先裁去墙/VOID；伤害、视野惩罚和脚下污染反馈读取同一危险采样，不能以外接AABB整盒收费。气/雾/尘只有release相位且实际节律/反视门打开时启用原`volume_field`混乱与视野通道；其他相位提供清晰安全节奏，不新增HP伤害或第二套计费。
+
+Host `getVolumePresenceFrame(id)`返回新三者权威帧；余响返回undefined、保持旧合同。反视在实体外沿视线采样实际密度，在实体内部保留看向实际核心的角度条件；空隙和背墙不触发唤醒，转头可以休眠。可打核只能在可走且有实体密度处，雾层通行空隙中不凭空放核。
+
+检视 `setVolumePreviewTime(id,timeMs,activeOverride?)`仅用于演示定格，null恢复正式时钟；`volumeTimeAtPhase`与`getVolumeProfile`提供同一周期的绝对时刻。离线renderer使用`FormVisualPose.volumeTimeMs`，真实Host存在时始终以权威帧为准。context可显式演示活动形体，arena和正式裂隙不传override。模型形态和污染三档仍待用户审美判断，机器检查不代替美术PASS。
+
+## 历史 R4-A 移除阶段（DEC-129）
+
+R4-A移除阶段当时只保留10个生产基底：6占地（虫、人形、兽、蠕虫、有机残影、残茎）、3占漆（菌毯、油膜、灰幕）、1占空（余响）。占墙整体退出生产；门框、墙锈、散光、间距与街具均仅保留历史gym兼容，敌人检视室不得展示。该阶段未实现新增项；当前已按上节R4-C批准新增三种实体占空。
+
+R4-A移除阶段128正式种子结果：181个去别名形态行为组合、28行为键、424候选、346职责可分配；听觉全在地面（128图/128只），无墙宿主，当时所有占空皆余响。6地面家族/14主形/42覆盖配置不变。组合数不是物种数。
+
+`contamination-substrates.csv`的scope是生产与检视目录共同来源；`contamination-dialects.csv`清除退休权重，`contamination-encounters.csv`墙听觉为0。`pickYiOrDing`同时检查生产family、权重和钉点，缺走廊不会回退墙；`supportsRuntimeForm`拒绝gym-only基底，成句也不能复活退休项。旧Host墙/散光/间距渲染与建筑选座模块仅兼容历史gallery，不删保留机制，也不冒充生产。检视室退休query回到虫，R4-A同场景环境当时仅3漆与余响，无墙座位前提。R4-C新增占空已注册，见上节。
+
+下文I3–R3进度记录是历史，当前集合与分配以本节为准；未被R4改变的漆裁切、核选座和动作机制继续有效。
+
 
 ## 技术选型
 
@@ -238,13 +267,13 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
 | TilemapRenderer | src/systems/tilemap-renderer.ts | tile 数据 → Phaser Tilemap 图层（共享场景管线，依赖 Phaser 视锥裁剪） | create(scene, map, config): TilemapLayer, getLayer(), getWorldSize(), destroy() | 已实现（T6） |
 | AISystem | src/systems/ai/ | 两种感知剖面共用一份五态 FSM（10Hz tick / 单射线）+ 移动/巡逻 + 寻路预算调度；拥有敌人实体的生命周期。剖面来自 EnemyData，禁止第二份 FSM | create(scene, spawns, occluders, walk), update(dt, playerPos, playerIsMoving), postUpdate(dt), getEnemies(), getEnemyById(), reportNoise(pos, radius, level), reportDamage(enemyId, sourcePos), despawn(enemyId), onPlayerLost(), setVisibilityProvider(), setCueListener(), addWallCollider(layer), getSprites(), getStats(), destroy() | 已实现（T7；Slice 8 C1 剖面泛化） |
-| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染句法：底材 × 孔谱 × 词素。出击已接甲填法 + 乙丙丁宿主 + 抽卡 CSV。迭代 3：方案 D 接入出击（DEC-084）。迭代 4：练习场陈列馆按视觉身份去重（DEC-085），不是玩法。迭代 5：甲外形基因谱（DEC-087 / DEC-088）。**I5-J：** `street_wreckage` 进 `SORTIE_SUBSTRATE_IDS`；`lamp_pillar` / `railing_post` 收回 gym。**I5-T：** `insect_remnant` / `mammal_remnant` / `worm_remnant` 进 `SORTIE_SUBSTRATE_IDS`（灯柱 / 栏柱仍 gym）。**I8-Q：** 占漆只数按 `contaminationAge` 闭区间掷（新生 3–5 / 标准 6–8 / 古老 9–12，`mix32(seed, 'paint-count')`）；一份 form 复制 N 只；钉层 `paintFloors` | `drawSortie` / `rollPaintHostCount` / `paintFloors` / `encounter:identified` / `EnemySpawnData.form` | 迭代 1 逻辑已接（体验未验证）；渲染已接出击；陈列馆 I4-D 已交（迭代 4 仍等人浏览）；I5-J 已升出击默认甲；碎片配色迭代 6 COMPLETE；I8-Q 配额与贪婪钉点已交 |
-| ContaminationHostSystem | src/systems/contamination-host-system.ts | 乙缝核邻格抽打、丙簇踩踏混乱、丁体积场。无走廊碰撞，无第二 FSM。`create` 的 combat / chaos 可缺（传 `null`）。迭代 3：出击传 `liveMotion: true`（I3-F 已接）；一份 `layout.contaminationDraw` 物化乙丙丁，禁止二次 `drawSortie`（I3-A）。地图课不传活开关，走静帧 tick。丙场油膜：`setStepFloors` 登记基因谱漆格，踩踏走漆面不是只核旁 3×3。**I8-Q：** 出击按 `paintFloors[i]` 物化 N 只占漆，不再读 `clusterCores`。**I8-V：** `setSkipPaint` 藏默认方点，不藏菌落可打核；核图层深度 2（高于油膜 1）；场仍不画方点 | create(scene, layout, combat, chaos, getVisibilityAt, options?)（`options.liveMotion` 默认 false；旧名 `gymLiveMotion` 仅 gym 内部兼容）, bindPractice(..., options?), update, getSubjects, getLastDraw, getVolumeSightMult, setSkipPaint, setStepFloors, getVisualPin, getVisualSignal, getStrikeFloors, getVisualMoving, getVisualFacing, getLiveNucleusCount, destroy | 已实现（I3-F 出击活机制；地图课静帧；油膜场漆格踩踏；I8-Q 多宿主钉 `paintFloors`；I8-V 菌落核可见性） |
+| ContaminationLexicon | docs/specs/system-contamination-lexicon.md | 污染句法：底材 × 孔谱 × 词素。出击已接甲填法 + 乙丙丁宿主 + 抽卡 CSV。迭代 3：方案 D 接入出击（DEC-084）。迭代 4：练习场陈列馆按视觉身份去重（DEC-085），不是玩法。迭代 5：甲外形基因谱（DEC-087 / DEC-088）。**I18 R3：** `street_wreckage` 退gym；门框仅wall；`lamp_pillar` / `railing_post` 收回 gym。**I5-T：** `insect_remnant` / `mammal_remnant` / `worm_remnant` 进 `SORTIE_SUBSTRATE_IDS`（灯柱 / 栏柱仍 gym）。**I8-Q：** 占漆只数按 `contaminationAge` 闭区间掷（新生 3–5 / 标准 6–8 / 古老 9–12，`mix32(seed, 'paint-count')`）；一份 form 复制 N 只；钉层 `paintFloors` | `drawSortie` / `rollPaintHostCount` / `paintFloors` / `encounter:identified` / `EnemySpawnData.form` | 迭代 1 逻辑已接（体验未验证）；渲染已接出击；陈列馆 I4-D 已交（迭代 4 仍等人浏览）；I5-J 已升出击默认甲；碎片配色迭代 6 COMPLETE；I8-Q 配额与贪婪钉点已交 |
+| ContaminationHostSystem | src/systems/contamination-host-system.ts | 乙缝核邻格抽打、丙簇踩踏混乱、丁体积场。无走廊碰撞，无第二 FSM。`create` 的 combat / chaos 可缺（传 `null`）。迭代 3：出击传 `liveMotion: true`（I3-F 已接）；一份 `layout.contaminationDraw` 物化乙丙丁，禁止二次 `drawSortie`（I3-A）。地图课不传活开关，走静帧 tick。R3全部占漆：`setStepFloors`登记实际漆格，菌落危险取活核交集；`isPaintFloorActive`与材质同源。**I8-Q：** 出击按 `paintFloors[i]` 物化 N 只占漆，不再读 `clusterCores`。**I8-V：** `setSkipPaint` 藏默认方点，不藏菌落可打核；核图层深度 2（高于油膜 1）；场仍不画方点 | create(scene, layout, combat, chaos, getVisibilityAt, options?)（`options.liveMotion` 默认 false；旧名 `gymLiveMotion` 仅 gym 内部兼容）, bindPractice(..., options?), update, getSubjects, getLastDraw, getVolumeSightMult, setSkipPaint, setStepFloors, isPaintFloorActive, getVisualPin, getVisualSignal, getStrikeFloors, getVisualMoving, getVisualFacing, getLiveNucleusCount, destroy | 已实现（I3-F 出击活机制；地图课静帧；油膜场漆格踩踏；I8-Q 多宿主钉 `paintFloors`；I8-V 菌落核可见性） |
 | EncounterNarration | src/ui/dom/encounter-narration.ts | 污染句法识别表面：随身罩一行角色低语，限频。无「识别。」前缀。节点仅 `observe` / `utterance_mark`。文案来自 `data/contamination-observe-lines.csv`。禁止头上名字。覆盖 / 基体 / 占位不上裂隙；三种生物短名仍不上裂隙 | create / tick / destroy；挂 `#dom-ui-root` / `#rift-encounter-log` | 进行中（迭代 1，审美待人终审；I8-N 低语已接） |
 | ChaosSystem | src/systems/chaos-system.ts | 混乱值累积、阶段判定（safe/warning/danger/overflow）与惩罚调制器计算；`class ChaosSystem`（非模块级单例，RiftScene 持有实例）。出击初值一次写入（净化器 startingChaos + Σ initial_chaos），已越阈不播跨阈演出 | `new ChaosSystem(config?)`：update(deltaMs), getValue(), getRate(), getStage(), getPeak(), addChaos(source, amount), addImmediate(amount), setTemporaryRateMult(mult, durationMs), setPaused(paused), reset(startingValue?), destroy()；config.startingValue；模块函数 getChaosModulators(value) | 已实现（Slice 1-2；Slice 7 开局初值） |
 | CombatSystem | src/systems/combat-system.ts | 玩家挥击/敌人反击/生命值/无敌帧/死亡触发 + 战斗占位表现（白色扇形、前摇细线、白闪、死亡淡出）。不改 AI FSM、不改混乱值，只 emit 事件 + 经注入回调转发噪声 | create(scene, occluders, player, ai, hooks), update(dt), requestPlayerAttack(), getHealth(), getMaxHealth(), isDead(), isInvulnerable(), getAttackState(), getEnemyHealth(id), isEnemyAlive(id), getStats(), setEnabled(), reset(), destroy() | 已实现（T8） |
 | Pathfinding | src/systems/pathfinding.ts | 网格 A*（8 邻接 / octile / 禁止切角）+ 宽度感知的 string-pulling 平滑；共享服务模块（与 grid-raycast 同级，可被直接 import），预分配缓冲、结果写入调用方数组 | `GridPathfinder(walk, occluders, clearance)`：findPath(from, to, out, maxNodes), findNearestWalkable(x, y, out, maxRadius?), getStats() | 已实现（T7） |
-| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：污染句法 `?lesson=lexicon`（固定观察院子、默认无敌可开「感受伤害」、配置表点生成；默认 `#gym-lex-renderer` = 方案 D，A/B/C 冻结对照；`#gym-lex-fragment` 五选一偏色院子；相机拖移/滚轮，画布钉在右侧窗格）；油膜脉络抽卡 `?lesson=paint-vein-card`（历史对照课：A/B/C 树 tweak + 已被 DEC-101 锁定为生产的三支原形，六格打开即挂；不走句法课侧栏）；裂隙入口抽卡 `?lesson=rift-entrance-card`（外形对照，生产默认卡 5 击裂）；供奉台抽卡 `?lesson=offering-card`（生产默认卡 I 环，人终审 PASS，课不删）；培养藏抽卡 `?lesson=growth-card`（三卡，生产默认卡 A 立缸，DEC-116）；污染句法陈列馆 `?lesson=lexicon-gallery`（一次一厅、只 attach 方案 D、无玩家/Enemy/宿主；合同 `docs/tasks/iteration-4.md`；I5-J 后占地与裂隙同一份 `attachJiaGenomeD`；占漆练习场走 `d/paint-genome`）；敌人巡逻（默认院子，仍走现行像素直到与出击对齐）；玩家外形 `?lesson=player`；地图生成 `?lesson=map`（不打开 `liveMotion`；迭代 6 地面配色验证面；**I7-S** 乙丙丁宿主走出击同一份 `d-mixed` attach，油膜省略变体 = 种子采样）。Agent 入口 `docs/dev/gym.md`。 | `npm run gym` 或 `/gym.html`；污染句法 `/gym.html?lesson=lexicon`；油膜脉络抽卡 `/gym.html?lesson=paint-vein-card`；裂隙入口抽卡 `/gym.html?lesson=rift-entrance-card`；陈列馆 `/gym.html?lesson=lexicon-gallery` | 已实现；陈列馆课迭代 4 进行中（I4-D 已交，等人浏览）；占地基因谱已挂练习场与出击；I7-S 油膜三变体已接句法课 / 陈列馆 / 地图课 / 出击；菌毯 / 灰幕裂隙默认仍旧皮；碎片配色迭代 6 COMPLETE |
+| Gym | gym.html + src/gym/ | 开发练习场：独立 HTML，不进主菜单。课：历史污染句法 `?lesson=lexicon`（I18已重定向敌人检视室；以下为旧课说明：固定观察院子、默认无敌可开「感受伤害」、配置表点生成；默认 `#gym-lex-renderer` = 方案 D，A/B/C 冻结对照；`#gym-lex-fragment` 五选一偏色院子；相机拖移/滚轮，画布钉在右侧窗格）；油膜脉络抽卡 `?lesson=paint-vein-card`（历史对照课：A/B/C 树 tweak + 已被 DEC-101 锁定为生产的三支原形，六格打开即挂；不走句法课侧栏）；裂隙入口抽卡 `?lesson=rift-entrance-card`（外形对照，生产默认卡 5 击裂）；供奉台抽卡 `?lesson=offering-card`（生产默认卡 I 环，人终审 PASS，课不删）；培养藏抽卡 `?lesson=growth-card`（三卡，生产默认卡 A 立缸，DEC-116）；污染句法陈列馆 `?lesson=lexicon-gallery`（一次一厅、只 attach 方案 D、无玩家/Enemy/宿主；合同 `docs/tasks/iteration-4.md`；I5-J 后占地与裂隙同一份 `attachJiaGenomeD`；占漆练习场走 `d/paint-genome`）；敌人巡逻（默认院子，仍走现行像素直到与出击对齐）；玩家外形 `?lesson=player`；地图生成 `?lesson=map`（不打开 `liveMotion`；迭代 6 地面配色验证面；**I7-S** 乙丙丁宿主走出击同一份 `d-mixed` attach，油膜省略变体 = 种子采样）。Agent 入口 `docs/dev/gym.md`。 | `npm run gym` 或 `/gym.html`；污染句法 `/gym.html?lesson=lexicon`；油膜脉络抽卡 `/gym.html?lesson=paint-vein-card`；裂隙入口抽卡 `/gym.html?lesson=rift-entrance-card`；陈列馆 `/gym.html?lesson=lexicon-gallery` | 已实现；陈列馆课迭代 4 进行中（I4-D 已交，等人浏览）；占地基因谱已挂练习场与出击；I7-S 油膜三变体已接句法课 / 陈列馆 / 地图课 / 出击；R3菌毯 / 灰幕与油膜共用新paint-genome表面材质；碎片配色迭代 6 COMPLETE |
 | GymFormRenderers | src/gym/form-renderers/ | A/B/C 冻结对照，仅句法课。gym registry 从生产路径 re-export 方案 D。禁止 `RiftScene` import 本目录 | `getFormRenderer`（A/B/C 本地 + D 来自 entities） | 已实现（对照保留，DEC-084） |
 | GymLexiconGalleryCatalog | src/gym/lexicon-gallery-catalog.ts | 陈列馆视觉身份目录：合法填法 → 去重后的标本列表。无 Phaser attach。I4-B/C 只消费，不自己做笛卡尔。I5-S 占地 gym 行自动进甲下拉。街具残骸一厅。**I5-L：** 甲导航把哺乳动物拆成四个邻域入口（猫科 / 鹿科 / 爬行 / 类人）；`form.substrate` 仍是 `mammal_remnant`。**I5-H（波 12 code 已交）：** 甲占格「采样种子 8」；灯柱 / 栏柱不进目录。**I7-S：** 丙导航把油膜拆成三个变体入口（聚珠成滩 / 沾抹拖尾 / 薄滩收边）；`form.substrate` 仍是 `oil_film`；锁定数 `total=1974`（甲 1632 / 乙 18 / 丙 270 / 丁 54）。 | `enumerateGallerySpecimens` / `visualKeyOf` / `GALLERY_AXES` / `galleryDedupeCopy` / `galleryHallsOf` / `jiaSeedForMammalNeighborhood` / `jiaSeedForStreetWreckage` / `GALLERY_JIA_SEED_BUCKETS` / `oilFilmHallId` | 已实现（I4-A）；I5-S 目录随 gym 行膨胀；I5-L 甲哺乳动物四入口；I5-H 采样种子 8 已交；I7-S 油膜三入口已交 |
 | GymGalleryVirtualize | src/gym/gallery-virtualize.ts | 陈列馆厅排法与挂载选集。无 Phaser。场景与 `check:gallery-catalog` 共用同一份上限 / 格距 / 厅最小缩放 / 逻辑分辨率。相交格必须进 keep；驱逐只在视野外。**I5-H：** 甲厅 8 采样种子后重算，甲 `GALLERY_ATTACH_CAP=48` / `GALLERY_ZOOM_MIN=1.1` 仍盖住（合法缩放最大相交 35）；乙丙丁未改 | `layoutGalleryHall` / `selectGalleryKeep` / `GALLERY_ATTACH_CAP` / `GALLERY_ZOOM_MIN` | 已实现（I4-D）；I5-H 重算甲浏览态纹理顶 |
@@ -254,9 +283,9 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | GymOfferingCard | src/gym/gym-offering-card-scene.ts | 供奉台外形抽卡课。九卡三行三列、6fps、5×。键 1–9。H/I 键 [ ] 切装填档。底是出击同一份净化点混凝土。生产默认 = 卡 I 环（DEC-115）；**人终审 PASS（2026-09-04）**；课不删 | `GymOfferingCardScene`；`?lesson=offering-card` | 生产已翻；对照课仍开 |
 | GymGrowthCard | src/gym/gym-growth-card-scene.ts | 培养藏外形对照课。三卡一行、6fps。键 1–3。A 立缸 40×42 放大 4×（生产默认，DEC-116）；B / C 仍 32×36 放大 5×。底是出击同一份净化点混凝土。上一轮九张作废 | `GymGrowthCardScene`；`?lesson=growth-card` | 生产已翻；对照课仍开 |
 | ContaminationFormRenderer | src/entities/form-renderers/ | 生产视觉层（方案 D：`d-mixed` + `d/**`）。接口只此一份。`RiftScene` 只允许 import 这里（I3-E 已接）。迭代 5：占地基因谱模块 `d/genome/`；**I5-J：** 出击 `d-mixed` 占地 = `attachJiaGenomeD`。**I7-S：** 出击 `d-mixed` 占漆：油膜 = `attachBingPaintGenome`（省略变体 = 种子采样）；菌毯 / 灰幕仍 `attachBingD` | `getFormRenderer('d-mixed')` / `attach` / `FormVisual.update` | 已实现（I3-E 已接裂隙；I5-J 出击占地走基因谱；I7-S 出击油膜走三变体） |
-| JiaGenome | src/entities/form-renderers/d/genome/ | 甲基因谱（I5-B 空壳 + I5-D 算子 + **I5-E 街具残骸** + **I5-F 门框语法** + **I5-N 朝向/信号相** + **I5-G 残茎 / 有机残影** + **I5-K 虫** + **I5-L 哺乳动物** + **I5-M 大号蠕虫**）：节点、共享构件（杆/梁/团/座/丝/碎/核）、七个违规算子（预算渗透 1 / 改写 3 / 覆盖 5；放射只在覆盖档）、`weld`、按覆盖档选画布（32×32 / 32×48 / 48×64，碰撞仍 20）。出击 `d-mixed` 占地与句法课 / 陈列馆甲走同一份 `attachJiaGenomeD`（`street_wreckage` / `doorframe` / `stalk_clump` / `organic_remnant` / `insect_remnant` / `mammal_remnant` / `worm_remnant` 走语法骨架；街具残骸与门框固着呼吸，残茎 / 有机残影 / 虫 / 哺乳动物 / 大号蠕虫可走）。I5-J **不**升生产 ramp。**当前真相（I5-L 暂过 / I5-M 暂过 2026-08-26 / DEC-098）：** `JiaGenomeVisual` 消费 `facing4` / `signal` / `pose.moving`（可走基体检视 walk 帧，固着仍呼吸；浏览 `moving: false` 静帧）。大号蠕虫永远横躺（朝向换头端与贴地高低，禁止竖排图腾）。挂载与闸门共用 `bakeJiaGenome`（默认 idle 静帧；walk 按需烤）。**I5-H 已交**陈列馆采样种子 8 + `check:contam-distinct`。不要代勾画面 PASS。闸门名 `check:jia-genome-pose` / `check:jia-stalk-clump` / `check:jia-organic-remnant` / `check:jia-insect-remnant` / `check:jia-mammal-remnant` / `check:jia-worm-remnant` / **`check:contam-distinct`**。占地仍走本模块；占漆改走 `d/paint-genome`，不改本目录算子 / weld / 画布。 | `attachJiaGenomeD` / `bakeJiaGenome` / `applyJiaGenomeGait` / `buildStreetWreckageSkeleton` / `buildDoorframeSkeleton` / `buildStalkClumpSkeleton` / `buildOrganicRemnantSkeleton` / `buildInsectRemnantSkeleton` / `buildMammalRemnantSkeleton` / `buildWormRemnantSkeleton` / `applyOperators` / `weld` / `paintWeldedBody` / `genomeCanvasOf` | 已实现（I5-B / I5-D / **I5-E 整批已交**；**I5-F code 已交** 2026-08-24；**I5-N 人过** 2026-08-25；**I5-G 人未过 / 热修 code 已交** 2026-08-25；**I5-K 人过** 2026-08-26：虫语法；**I5-L 暂过** 2026-08-26：哺乳动物；**I5-M 人未过 / 永远横躺热修 code 已交** 2026-08-26：大号蠕虫永远横躺；**I5-J code 已交** 2026-08-26：出击 `d-mixed` 占地 = `attachJiaGenomeD`；**I5-T code 已交** 2026-08-28：三种生物已 sortie） |
+| JiaGenome | src/entities/form-renderers/d/genome/ | R3生产占地入口：attach/bake委派production-models六家族；共享body-pixel-material统一材质，家族独立解剖与动作。旧节点/算子/weld及街具/门框骨架仅留历史gym回退，不构成生产目录。 | attachJiaGenomeD / bakeJiaGenome / productionModelFor | I18 R3已实现，六家族14主形三档；美术终审待 |
 | GymFormAttach | src/entities/form-renderers/d/gym-attach.ts | 练习场跨层分发器：占地 → `attachJiaGenomeD`；占漆 → `attachBingPaintGenome`；占墙 / 占空 → 生产 `d-mixed`。不属于任何基体目录。句法课 / 陈列馆从此 import。I7-S QA 偏差处置：从 `d/genome/attach.ts` 迁出。 | `attachGymFormVisual` | 已实现（I7-S 后迁出；闸门源码断言指向本文件） |
-| PaintGenome | src/entities/form-renderers/d/paint-genome/ | 占漆拓扑基因谱：菌毯=实心多瓣团、油膜生产=聚珠/沾抹/薄滩三变体（DEC-101，省略 `paintVeinVariant` 时 `mix32(seed, 'oil_film_variant') % 3` 采样 3/4/5）、灰幕=环/薄覆层；`veinTree` 缺省仍是树（闸门对照 / 抽卡 A/B/C）。覆盖档=拓扑违规。烘焙消费感知 / 节律 / 连续性。句法课 / 陈列馆 occupancy `paint` 走 `attachBingPaintGenome`。出击 `d-mixed` 仅油膜走同一份；菌毯 / 灰幕仍 `attachBingD`。呼吸 DEC-070：每帧场形变（`live.ts`），禁止 4 帧切图。传了 `veinVariant` 3/4/5 时活层分模式；菌毯 / 灰幕 / 缺省树导向不变。陈列馆油膜三入口钉读法。练习场油膜可钉 0–5 或按种子采样。闸门 `check:paint-genome-topology`。不要代勾画面 PASS。 | `bakePaintGenome` / `attachBingPaintGenome` / `paintPaintGenomeLive` / `oilFilmProductionVeinVariant` / `resolvePaintVeinVariant` / `topologyOf` | 已实现（I7-S 油膜已升出击；菌毯 / 灰幕裂隙默认仍旧皮；I7-R 三变体活层已交） |
+| PaintGenome | src/entities/form-renderers/d/paint-genome/ | 占漆拓扑基因谱：菌毯=实心多瓣团、油膜生产=聚珠/沾抹/薄滩三变体（DEC-101，省略 `paintVeinVariant` 时 `mix32(seed, 'oil_film_variant') % 3` 采样 3/4/5）、灰幕=环/薄覆层；`veinTree` 缺省仍是树（闸门对照 / 抽卡 A/B/C）。覆盖档=拓扑违规。烘焙消费感知 / 节律 / 连续性。句法课 / 陈列馆 occupancy `paint` 走 `attachBingPaintGenome`。出击 `d-mixed` 仅油膜走同一份；菌毯 / 灰幕仍 `attachBingD`。呼吸 DEC-070：每帧场形变（`live.ts`），禁止 4 帧切图。传了 `veinVariant` 3/4/5 时活层分模式；菌毯 / 灰幕 / 缺省树导向不变。陈列馆油膜三入口钉读法。练习场油膜可钉 0–5 或按种子采样。闸门 `check:paint-genome-topology`。不要代勾画面 PASS。 | `bakePaintGenome` / `attachBingPaintGenome` / `paintPaintGenomeLive` / `oilFilmProductionVeinVariant` / `resolvePaintVeinVariant` / `topologyOf` | 已实现（I7-S 油膜已升出击；R3菌毯 / 灰幕与油膜共用新paint-genome表面材质；I7-R 三变体活层已交） |
 | ContamPreviewTools | tools/contam-preview/ | 外形基因谱论证预览与粗占格测量；L1 诊断；I6-E 对比度 / 青绿 / 烤图身份指纹闸门；I10-HOTFIX-1 堆 vs 地面对比度闸门。Phaser 桩离线跑。不进 `src/**`，不进游戏 | `npm run preview:contam-current` / `preview:contam-proto` / `measure:contam-distinct` / `measure:l1-reach` / `measure:ground-teal` / **`check:contam-floor-contrast`** / **`check:palette-quantize`** / **`check:loot-pile-contrast`** | 论证用（DEC-087）；`measure:contam-distinct` 仍测旧原型。生产闸门 `check:contam-distinct`（I5-H 已交：`tools/contamination-lexicon/check-contam-distinct.ts`，测 `bakeJiaGenome`，禁止 IoU）与 `check:contam-floor-contrast`（I6-E 已交）；堆对比度 `check:loot-pile-contrast`（I10-HOTFIX-1 / DEC-110） |
 | EnemyFactory | src/entities/enemy-factory.ts | 敌人实体：碰撞体 + 程序像素回退（渗透体 32×32 / 改写体 32×48；GameObject 不旋转）+ teal 指示物 + 残影 + 脱落尘 + 木偶步态 + AI 状态块 + `spawnData.form`（I3-A；禁止再按 role 三元硬编码出击 form）。`setVisualSuppressed` 默认 false；I3-E 出击在方案 D ready 时调用（藏默认身体，保留 Arcade / AI / 既有 AI 态指示物） | createEnemy(scene, spawn, config, position, factoryConfig), createEnemyTypeConfig(role)；`Enemy`：getId/getRole/getForm/getPosition/getFacingAngle/getFacing4/getState/isEngaged/getDetection/setVisualSuppressed | 已实现（I3-A form 管线；I3-E suppress） |
 | InfiltratorSprite | src/entities/infiltrator-sprite.ts | 渗透体密像素 32×32 四向 + 步态帧（前倾猎食）。碰撞仍 20。成品，不换精灵表 | generateInfiltratorPlaceholders(scene), infiltratorMotionTexture | 已实现（DEC-066） |
@@ -298,6 +327,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | InsectModel / InsectVisual | src/entities/form-renderers/d/insect-model.ts；insect-visual.ts | 迭代16独立虫模型、四向与动作投影；单实体单CanvasTexture，真实战斗相位驱动；生产与练习场共用，旧虫骨架不再驱动当前显示 | bakeInsectModel；attachInsectVisual；FormVisual.getFlashSource | R3用户PASS（2026-09-07） |
+| HumanModel / HumanVisual | src/entities/form-renderers/d/human-model.ts；human-visual.ts | I17独立人形残余三档四向六动作，64×64脚底锚(32,42)，单实体动态纹理；真实攻击时钟与当前轮廓闪白 | bakeHumanModel；attachHumanVisual；FormVisual.getFlashSource | 内部验证已交，待人审 |
 | PollutionReview | src/dev/pollution-review.ts；pollution-review.html | DEV隔离存档入口，调用正式RiftScene、可见输入按钮与只读轨迹；不进入生产构建 | probeEnemyReview；probeInspectEnemy；probeReviewHit | 迭代16验证入口 |
 | MapGenerator | src/generation/ | 裂隙程序化布局。抽风格锚 + 新种子 + 邻域抖动；每次踏入抽 FragmentRoll（contaminationAge × ruinSeverity）。换路硬保证（规格 21：`evaluateDualPath`）。手写图仅夹具。扩空间见 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」。I3-A：一份 `contaminationDraw`（`mix32(seed, 'lexicon')`）喂甲 spawn.form 与宿主。**I8-Q：** 占漆钉 `paintFloors`（贪婪薪柴路径，偏咽喉）；不足掷出的 N 则本图重试，禁止钳小 | generateOutline；generateRecipeDraft；jitterRecipe；rollFragmentAxes；evaluateDualPath；generateRiftLayout；rollPaintHostCount；collectContaminationPins | 已实现（Slice 6 COMPLETE）。裂隙吃生成结果。画廊是样例。天空+尘点 phase 循环。无换路 = 坏图。I8-Q 占漆配额已接 |
 | PaletteQuantize | src/generation/palette-quantize.ts | 色温分组 + 组内色相方向量化（I6-B）。L1 候选池与青绿家族供地面/敌人共用。禁止全色板 nearest 当 L1/L2 生产成功路径。地面 L2 已接（I6-C code）；敌人四档经 `deriveFragmentContamRamp` → `deriveContamRamp`（I6-D）。DEC-097：最终像素量化禁止对虚空/低亮走青绿组内色相方向提亮；虚空只落虚空黑三格。**DEC-110：** 残骸三格（debris-earth / debris-rust / debris-wood）均值 >55 不进 L1；`nearestPalette` 也跳过它们，避免地面 / 墙 / 污染再量化吸进堆主体色 | temperatureGroup；quantizeInGroup；quantizeL1；l1Pool；TEAL_FAMILY；DEBRIS_HEX；nearestPalette | 已实现（I6-B；地面接线 I6-C 整批已交，art 最短核合规过、好看不代勾；敌人接线 I6-D 已交；I6-C 热修 DEC-097 量化收口已交，**热修画面人 PASS**；DEC-110 残骸格已登记） |
@@ -860,3 +890,53 @@ setLocale('en');
 出击组合通过`supportsRuntimeForm`能力筛选，`floorMotionFor`统一固着/转面/巡游规则；完整字母表仍由CSV生成、陈列馆保留，生产池只抽有行为消费的部分。旧虫构件、帧数、色板与审美闸门属于历史实现，不约束迭代16新样板（用户FATAL）；此处仅记录技术路由，不将旧审美经验传播进新设计。
 
 R2 DEV对照：`FormVisual.setReviewCoverage`为可选接口，仅虫实现且DEV守卫；`RiftScene.probeReviewCoverage`转发给当前visual。暂停刷新复用最后pose并传deltaMs=0，覆盖档进入帧缓存键；正式渲染默认仍读form.coverage，未新增纹理或机制状态。
+
+### 迭代17接线（DEC-125）
+
+新增CSV基底human_remnant，不复用organic_remnant身份。`attachJiaGenomeD`与`bakeJiaGenome`在人形分支直接转独立模型，与虫相同的战斗输入协议，但造型实现相互独立。GenomeCanvas支持64宽；HumanVisual使用64×64纹理、(32,42)原点、960ms步行周期。覆盖预览只改外观输入；真实CombatSystem保持伤害/射程/350+80+240ms阶段。池按源尺寸复制，64像素人形可沿用当前轮廓死亡反馈。
+
+I17人形脚底以上高度增大，Enemy的状态点在人形方案D显示时提升至脚底y−44，避免原y−22/24的点落到胸部；状态含义、颜色与时序不变，其他模型偏移保持。
+
+
+### 迭代18 R3生产合同（DEC-126，取代上文I3–I17与I18首版临时分支说明）
+
+生成层读取五份 CSV：`contamination-families`（家族可实现能力）、`contamination-dialects`（地图权重与禁止）、`contamination-encounters`（听觉职责分配）、`contamination-behavior-profiles`（节律/感官时钟）、`contamination-body-profiles`（身体运动与攻击）。codegen 输出 family/capability/body 三份 typed data。抽样前执行交集过滤，成句不得绕过条件。R4全场恰好一个听觉职责，仅在占地；空间钉点、出生、朝向、路径和配额保持原合同。
+
+`production-models.ts` 注册六个正式占地家族。虫、人各1主形；兽、蠕虫、有机残影、残茎各3主形，共14主形、三档42配置。门框在R3曾仅wall/anchor，R4连同墙锈整体退gym；街具仍gym，二者不再注册地面生产模型。`genome/attach` 和 `genome/bake` 均委派同一注册表，历史骨架只保留未注册gym底材的回退。`gym-attach` 直接沿用所选正式渲染器的分发，菌毯/油膜/灰幕全部共用paint-genome并有独立材质，练习场、检视室与出击不另选一套皮。
+
+`model-animation` 以真实位移驱动步态，以 Combat 的 phase/progress/facingAngle 驱动攻击。`model-visual` 每体一张动态纹理（虫48×48，其余64×64），最多64个CPU帧，隐藏时不烤图或上传；销毁移除缓存与纹理。可选 `activity` 驱动休止、醒转、活动姿态；首次按当前状态初始化，后续240ms平滑过渡；收势接静止零相位。模型不改位置、碰撞或判伤。
+
+AI 的 `activity-state` 在既有五态前设节律门，`contact-separation` 对包括同心/静止在内的身体做地形合法分离。Combat 从身体profile统一读取速度以外的攻击字段，真实扇区、预告与动画使用同一个时钟。Host 与 AI 共用格子LOS；新增墙窄视、墙听觉、反视体积，且经 `hearingPolicy` 共用消声倍率和扣次入口。墙预告直接读危险格与350ms实际预备，体积形体与透明度读真实活动门状态；余响/散光/间距已各有结构，不再生产同云换色。体积材质烤图限20Hz，位置与活动透明度仍逐帧更新。
+
+`pollution-review.html` 仍只使用真实 RiftScene，隔离正式存档。可选占地或环境宿主，显示生成词素、真实activity/velocity/attack、帧率与纹理数，采集12秒轨迹，重进/伤害/死亡使用生产路径。覆盖下拉仅改变模型对照外观，不伪造机制或生成统计。页面不进入正式构建。
+
+
+I18接地点排序：Rift/Gym复用`GroundDepthSorter`，通过可选`FormVisual.setGroundDepth`排列玩家与正式占地身体；POST_UPDATE读取真实接地点，生成、死亡与换模型重建列表。同Y按身份稳定排序。侦测标记与战斗闪白40、迷雾50保持独立，墙/漆/体积不参与身体排序；净化点实现未改。
+
+
+I18物理收口：`AISystem`注册Arcade `worldstep`，累积实际物理时间后测量已完成位移；无物理步的渲染帧保留最近实际速度，避免120Hz画面/60Hz物理交替walk/idle。销毁移除监听。R3没有生产静态底座；门框仅Host，街具仅gym。`moveScale=0`底座碰撞及街具20×20历史body保留为gym回归，不代表退休角色仍上线；移动敌人保留原站距逻辑。`generation/static-body-access.ts` 以完整玩家体积和4px导航检查出口/拾取可达性，零静态快路；阻塞时原槽预先排除静态候选重抽，保留其他职责与几何，仍无解拒绝布局。新增验证`check:physics-runtime`与`check:static-body-access`。
+
+
+### I18 敌人检视室：替代污染体练习场
+
+`enemy-inspector.html` → `src/gym/enemy-inspector.ts`（开发DOM目录与模式控制）→ `EnemyInspectorPreview` / `EnemyInspectorArena`。模块分别住 `enemy-inspector-catalog.ts`、`enemy-inspector-preview.ts`、`enemy-inspector-arena.ts`，以及R3同场景校准`enemy-inspector-context.ts`。目录消费生成后的家族能力表及生产主形函数；预览消费生产 bake/renderer；实战消费生产 AI/Combat/Hosts，控制台样本不创建存档流程。两种模式传递同一 form/seed，退出销毁场景资源。旧 `?lesson=lexicon` 重定向且 GymLexiconScene 不再注册；其地图/表单 helpers 保持复用。其他 gym 课与真实 RiftScene 验收页不变。独立检视入口随 gym 构建，不挂正式主菜单。说明与验收入口见 docs/dev/gym.md。
+
+
+### I18 R3 新模块与跨层合同
+
+- `src/entities/form-renderers/d/body-pixel-material.ts`：六生物baker共享有限材质阶、部件坐标上的折痕与选择性像素内缘；解剖与动作仍由各家族拥有。不上移到屏幕空间，不修改碰撞/脚底或判伤。
+- `src/entities/form-renderers/d/environment-pixels.ts`：墙、漆、空共享像素簇工具、材质墨色和真实activity读取。环境主体各自定义结构；不依赖旧云模板换色。
+- `src/entities/form-renderers/d/paint-genome/material.ts`：菌毯/油膜/灰幕的材质与内部动作。`bake.field`仍是唯一表面足迹源；`bing.ts`代理`attachBingPaintGenome`，三个基底全部提供`stepFloors`。
+- `src/generation/wall-host-placement.ts`（R4仅历史兼容）：纯`doorwayWallSeats(edges,grid)`返回建筑合法墙面座位与朝向地板。历史抽样将其存在性传入`hasWallOpenings`；Host复用同一选择。R4正式抽样无墙权重或合法墙基底，不走门框/墙锈fallback。
+- `src/gym/enemy-inspector-context.ts`：`EnemyInspectorContext`使用`generateRiftLayout`真实地图及`RiftSurfacePainter`地面，摆放六个生产地面家族、所选环境宿主和生产Player做尺度/材质同场景比较。属于视觉校准，不伪称AI实战；实战仍由`EnemyInspectorArena`承担。场景按实际地图设物理world bounds，shutdown释放所有visual、Player、Host及surface。
+
+`FormAttachContext.isWalkableFloor?(col,row)`由RiftScene、EnemyInspectorArena、EnemyInspectorContext显式传入，renderer按其裁切像素、危险沉积和`stepFloors`。Host独立使用`isWalkable`优先、`!isOpaque`兜底并拒绝越界；无网格的历史外部调用保留兼容。过滤后没有合法表面时禁用Host并清核，不发玩家击杀事件；核座位只能来自过滤后的footprint。菌落核按确定性完整二点/三点搜索选座，先争取Chebyshev间距≥3格，再退≥2格；裁切后的紧凑patch若确实放不下，允许最后使用两个不同的相邻合法格（≥1格，即32px），仍保持独立核心、命中和计费，不降成单核或重叠同格。若仅余1合法格则禁用部署；128正式种子审计必须证明没有此类配额蒸发。实现由`colonyNucleusSeatsInFloors`完整搜索小型footprint二点/三点组合，避免旧贪心起点漏解；先按坐标排序确保输入枚举顺序不影响结果。
+
+`getVisualPin(bing)`固定返回`host.pin.cx/cy`。`relocateBingColonyNuclei`更新可打核心位置而不移动地表锚；RiftScene与检视室两个场景的cluster pose取visual pin，renderer沿固定ctx.pin做世界地形裁切与登记。`host.core`不能再次用于整张漆面原点，否则核重座会令图像和危险格错位。
+
+Host `setStepFloors(id,floors)`与`isPaintFloorActive(id,col,row)`组成表面合同：已登记空表面禁用该Host且无危险；菌落使用表面与活核范围交集；无核场使用完整登记面。材质层消费同一活跃格判定，死核释放区衰暗。清空、purge、重建释放登记；practice不继承旧地图可走格缓存。墙动画读取`getAttackVisualState/getActivityVisualState/getStrikeFloors`，丁读取实时pin AABB与活动门，视觉不自行决定危险时刻。
+
+R3历史范围为14生产基底（6占地/2墙/3漆/3空），当时128种子证据为232个去别名形态行为组合、47行为键、570候选/492职责可分配；R4现值见页首。不是物种计数，也不代替美术终审。旧模块表中的I5上线记录、历史抽卡厅和已锁定描述仅表示当时状态，若与当前范围冲突均已由R4取代。
+
+
+R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实面法线向地侧投影10px（渲染仍在迷雾之下），核保持原seam 0–2px、危险格不动。真实单帧strike触发140ms纯表现收势，后续windup即时显示，不延长伤害或延后预告；四向外伸限制在相邻32px格内。

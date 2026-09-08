@@ -2,8 +2,8 @@
 status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
-last-modified-by: code（I16：生产行为事实对齐）
-last-modified-date: 2026-09-07
+last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
+last-modified-date: 2026-09-08
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -21,7 +21,7 @@ exposes:
   - 遭遇识别旁白：身份键、触发、限频、观察句选行、成句短标记映射
   - 事件 `encounter:identified`（载荷见实现规格；旁白消费、不回写 AI）
   - CSV：substrates / portfolios / lexemes / stop-loss / utterances / display-tokens / **observe-lines（I8-N 新建）** → `src/generated/contamination-lexicon-data.ts`
-  - CSV `enabled_scope`（sortie / gym）；出击白名单 = 全部 sortie 行，含残茎 / 街具残骸 / 三种生物 / 灰幕 + 概念三类。**I5-J：** `street_wreckage` 进 `SORTIE_SUBSTRATE_IDS`；`lamp_pillar` / `railing_post` 收回 gym。**I5-T：** `insect_remnant` / `mammal_remnant` / `worm_remnant` 进 `SORTIE_SUBSTRATE_IDS`（灯柱 / 栏柱仍 gym）。
+  - CSV `enabled_scope`（sortie / gym）；I18 R4生产10基底：6占地、3漆、1空；门框/墙锈/散光/间距/街具/灯柱/栏柱仅gym。
   - 接触词素对照表（打血 / 混乱 / 视野）；出击与练习场同一套读取 contact + resolveStopLoss
   - 钉层：墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒；布局另交一份 SortieDraw
   - 出击视觉（方案 D）消费字段（与 I3-C 对齐，不复制像素配方）
@@ -43,7 +43,44 @@ note: |
 
 # 系统设计：污染句法
 
-> **TL;DR**: 用底材 + 孔谱 + 词素生成海量可落地的污染体形态；成句是少数具名遭遇。接触词素只表达「它怎么伤你」；止损从连续性 × 覆盖深度查表，不是第五骰子。叙述家是设计正文 `contamination-lexicon.md`；本文是规则合同；`ui-encounter-narration.md` 是识别表面。出击视觉走方案 D（DEC-084）。接触与止损：出击与练习场同一套读取。生产抽样只允许已兑现行为（见「生产行为能力边界」）；`corridor_watching` 暂留练习场。新基体（残茎 / 栏柱 / 灰幕 + 余响 / 散光 / 间距）已翻成 `sortie`；油膜出击视图只占漆。落地分批：I3-A 一份抽卡+甲 form；I3-F 活机制；I3-E 画面。未落地的实现事实标在对应节，不是过期 FATAL。体验未验证。
+## R4-C 当前实体占空合同
+
+用户已批准 `gas_mass` 气团、`mist_bank` 雾团、`dust_swarm` 尘絮群进入敌人检视室和正式裂隙；余响保留原行为及画法。当前生产13基底（6地面、3漆、4空），所有占墙、散光、间距及街具继续仅历史gym。每图占空仍1名额；听觉主轴仍恰好1个占地巡游。
+
+128正式种子当前结果：197个去别名形态行为组合、27个行为键、460个理论候选、382个职责可分配组合。占空实抽气团40、雾团27、尘絮群44、余响17；全量局部宿主审计7680个相位样本无空部署。计数不等于独立物种，美术品质由人审。
+
+三实体的家族能力与地图权重由CSV生成；`contamination-volume-profiles.csv` → `contamination-volume-data.ts`拥有休整/聚合/释放/散开时长、半径、扫动范围、通行间隙及危险阈值。气团向内压缩后短促外胀；雾团以不同长短与漂移频率的非镜像薄层分流重聚，保留24px穿行通道；尘絮群旋聚、短扫、散开。R4-D将其六等大圆瓣公转改为5个宽厚、异尺寸/朝向、独立连续噪声漂移的小絮簇，各自迟滞响应主周期；局部破碎边缘、核位置、接触均来自同一密度采样。危险阶段保持原CSV时长，不按新材质改变计费。新三者固定空间宿主并由自有周期变形，不叠加旧`dingLiveRect`微变形；余响沿旧路径。
+
+`src/generation/terrain-safe-volume-seat.ts`在候选走廊内部求完整可走的轴对齐矩形，至少2×2格，优先面积大、同行列稳定决胜。可尝试所有走廊；没有合法座位则生成器重试该图，不能静默丢弃占空名额。Host/实际关卡/检视复用同一个纯选座函数；新presence的局部矩形全周期固定。尘絮的各絮簇轨迹在固定矩形内部平滑有界，不在失败帧瞬移到上一位置。
+
+`src/systems/volume-presence.ts`提供预分配`VolumePresenceFrame`、`createVolumePresenceFrame`、`updateVolumePresenceFrame`、`sampleVolumeDensity`和`isVolumeDangerousAt`。纯场包含世界坐标分量、相位/进度、活动门、危险门、实际可走核心位置；低/中/高覆盖仅影响材质和内部运动，不改变命中几何，不依赖另一个随机种子。所有实体密度先裁去墙/VOID；伤害、视野惩罚和脚下污染反馈读取同一危险采样，不能以外接AABB整盒收费。气/雾/尘只有release相位且实际节律/反视门打开时启用原`volume_field`混乱与视野通道；其他相位提供清晰安全节奏，不新增HP伤害或第二套计费。
+
+Host `getVolumePresenceFrame(id)`返回新三者权威帧；余响返回undefined、保持旧合同。反视在实体外沿视线采样实际密度，在实体内部保留看向实际核心的角度条件；空隙和背墙不触发唤醒，转头可以休眠。可打核只能在可走且有实体密度处，雾层通行空隙中不凭空放核。
+
+检视 `setVolumePreviewTime(id,timeMs,activeOverride?)`仅用于演示定格，null恢复正式时钟；`volumeTimeAtPhase`与`getVolumeProfile`提供同一周期的绝对时刻。离线renderer使用`FormVisualPose.volumeTimeMs`，真实Host存在时始终以权威帧为准。context可显式演示活动形体，arena和正式裂隙不传override。模型形态和污染三档仍待用户审美判断，机器检查不代替美术PASS。
+
+## 历史 R4-A 移除阶段（DEC-129）
+
+R4-A移除阶段当时只保留10个生产基底：6占地（虫、人形、兽、蠕虫、有机残影、残茎）、3占漆（菌毯、油膜、灰幕）、1占空（余响）。占墙整体退出生产；门框、墙锈、散光、间距与街具均仅保留历史gym兼容，敌人检视室不得展示。该阶段未实现新增项；当前已按上节R4-C批准新增三种实体占空。
+
+R4-A移除阶段128正式种子结果：181个去别名形态行为组合、28行为键、424候选、346职责可分配；听觉全在地面（128图/128只），无墙宿主，当时所有占空皆余响。6地面家族/14主形/42覆盖配置不变。组合数不是物种数。
+
+生产抽样先检查enabledScope、地图正权重与实际可用孔谱。墙权重为0、无生产墙基底；无走廊也不得回退到墙。成句同样不能复活退休基底。地图仍保持3–4只占地、至少一只低档常开巡游体，以及恰好一只巡路听觉体。历史gallery可检视旧字母表，但不代表生产名单；检视室目录由当前scope派生，退休URL回退到虫。
+
+后文R3建筑座位、墙战斗与三种占空外观段落保留为历史实现说明，已由本节退生产决定覆盖；不会据此重新上线。
+
+
+> **TL;DR**: 用底材 + 孔谱 + 词素生成海量可落地的污染体形态；成句是少数具名遭遇。接触词素只表达「它怎么伤你」；止损从连续性 × 覆盖深度查表，不是第五骰子。叙述家是设计正文 `contamination-lexicon.md`；本文是规则合同；`ui-encounter-narration.md` 是识别表面。出击视觉走方案 D（DEC-084）。接触与止损：出击与练习场同一套读取。生产抽样只允许已兑现行为（见「生产行为能力边界」）；反视成句按当前能力过滤。当前13基底及退生产项见R4-C活合同；油膜出击视图只占漆。落地分批：I3-A 一份抽卡+甲 form；I3-F 活机制；I3-E 画面。未落地的实现事实标在对应节，不是过期 FATAL。体验未验证。
+
+## 历史I18 R3范围与保留机制（生产集合已由R4取代）
+
+本节记录R3当时范围；当前生产名单以R4节为准，仍保留未被R4改变的动作、裁切和核选座合同。下文明确标为I3–I17的上线记录、旧抽样和视觉语法只保留历史解释；不能据其恢复地面门框、街具生产或旧环境外观，也不能据旧PASS替代本轮验收。美术验收仍待用户，不声称发行就绪。
+
+R3当时14个生产基底：占地虫、人形、兽、蠕虫、有机残影、残茎；占墙门框、墙锈；占漆菌毯、油膜、灰幕；占空余响、散光、间距。占地共14种主形（虫/人各1，其余四家族各3），每种有渗透/改写/覆盖三档，共42种主形×覆盖配置，不含朝向、动作帧或seed充数。`doorframe`仅wall、所有档`motion_anchor`；`street_wreckage`仅gym，生产无权重、无地面模型注册。保留街具body行只供历史gym和阻路回归；门框地面body行已删。
+
+128真实种子采样：232个去别名的形态行为组合、47个行为键；当前候选570、职责可分配492。去别名键包含基底/孔谱/占位/覆盖/连续性/四词素，不含seed、主形种子与utterance别名；行为键不含基底、覆盖、连续性。这些均不是独立物种数量。证据由`check:generation-contract`写入`docs/qa/iteration-18-evidence/generation-after.json`。
+
+环境三类已进入本轮重制：墙的门梃/锈壳沿真实建筑缝附着，动作读350ms实际前摇；菌毯/油膜/灰幕全部由同一paint-genome表面与危险格管线提供独立材质和动画；余响/散光/间距分别表达声音、光线、空间异常，生产不再使用同云换色。当前视觉不引用旧HOW作本轮验收依据。
 
 ## 概述
 
@@ -92,11 +129,11 @@ interface ContaminationForm {
 9. **第一版只教四张主孔谱**：甲单核占地、乙单核占墙、丙菌落或场占漆、丁场或单核占空。占声不进主课。裂片占地可延后（因此「更硬-多段」延后，第一版「更硬」只走覆盖深度的 obscured）。
 10. **孔谱甲**保留现有对照：地板寻路、视或听写入察觉度、看见才锁定追击、贴身扇形默认三刀。I1–I6 适用于可追击剖面。止损族永远是打核（尸体清理，不是驱散）。
 11. **孔谱乙**禁止穿开阔地追击。攻击默认邻格抽打。挥击必须打到缝核。不占走廊碰撞。止损族永远是打核。
-12. **孔谱丙**钉可走地板上有主的漆（生产外观 = 油膜三变体）；主感知是触地；无追击锁定；踩踏或该宿主胀满相位收混乱；漆不改碰撞。氛围崩坏簇已下线（DEC-104）。活层技术（DEC-070 / DEC-071）跟该宿主自己走。不另做小人精灵当默认外观。菌落 = 打散重组；场 = 打不死。接触槽只有踩踏混乱。
+12. **孔谱丙**钉可走地板上有主的漆（生产外观 = 菌毯/油膜/灰幕，共用paint-genome危险面）；主感知是触地；无追击锁定；踩踏或该宿主胀满相位收混乱；漆不改碰撞。氛围崩坏簇已下线（DEC-104）。活层技术（DEC-070 / DEC-071）跟该宿主自己走。不另做小人精灵当默认外观。菌落 = 打散重组；场 = 打不死。接触槽只有踩踏混乱。
 13. **孔谱丁**体积深度必须低于视野黑暗蒙层。可反视或领域察觉。攻击通道永远是体积场（混乱 + 视野）。不默认同款近战。禁止精神攻击空包，禁止给丁开打血。单核 = 止损族打核（核 HP 50）；场 = 打不死（挥击不扣核、不发 `ENEMY_DAMAGED`）。打不死时反视读「视野扫进体积 / 扫到相点」，相点不是可打核。
 14. **自动改写**：三刀 + 占墙 → 邻格抽打。三刀 + 占漆 → 踩踏混乱。三刀 + 占空 → 场内加速混乱。巡路 + 占墙 → 巡墙图。视锥 + 占漆 → 触地主通道。禁止改写成打核驱散。
 15. **词素必须改六件套至少一件**，否则逐出字母表。接触词素必须改攻击件，禁止再改死亡。交为空则重抽，禁止用最近非法值凑。止损不是词素，不走本条；死亡件由规则 30 的查表填写。
-16. **抽卡配额**（每图）：乙或丁 1。占漆按本图 `contaminationAge` 掷闭区间整数：**新生 3–5 / 标准 6–8 / 古老 9–12**（`N = lo + floor(rng × (hi − lo + 1))`，种子 `mix32(layout.seed, 'paint-count')`）。最小 3。档间不重叠。N 不乘图面积、不乘薪柴路径长度。禁止再读 `ClusterOrganism` 只数 C，禁止再掷 0–1 硬币，禁止落地 I8-D 的 0/1/2/3，禁止落地 I8-R 钉死的 3/5/8。抽一份 form，复制 N 只（同基体 / 覆盖 / 连续性 / 词素 / 成句）。油膜三变体按个体种子采样。钉点：贪婪薪柴路径上的可走地板，偏咽喉（四邻可走格数为 2 优先），依次取。宿主钉点 Chebyshev ≥ 6；**N ≥ 9 时第一步从 ≥ 5 起**；不够 ≥ 4，再不够 ≥ 3。禁止钉墙 / 虚空 / 出生与撤离 Chebyshev ≤ 3 / 薪柴所在格。禁止 N 只都钉同一格。放不下先降间距、再扩到路径 Chebyshev 2、再扩到出生可达可走地板；**仍不足掷出的 N** 则本图重试，禁止交出击图，禁止把 N 钳小交差。出击甲条数由地图巡逻给出（3–4），**每条** `enemySpawns` 配一个占地 form；禁止用历史数字「甲 2–3」砍掉一条巡逻。练习场句法课甲数量由侧栏观察，不进出击配额。每图恰好一个听觉主轴；I16 生产限定甲的听觉填法，乙听缝待行为实现后再开放。
+16. **抽卡配额**（每图）：丁1（余响/气团/雾团/尘絮群）；无合法占空宿主时不回退占墙。占漆按本图 `contaminationAge` 掷闭区间整数：**新生 3–5 / 标准 6–8 / 古老 9–12**（`N = lo + floor(rng × (hi − lo + 1))`，种子 `mix32(layout.seed, 'paint-count')`）。最小 3。档间不重叠。N 不乘图面积、不乘薪柴路径长度。禁止再读 `ClusterOrganism` 只数 C，禁止再掷 0–1 硬币，禁止落地 I8-D 的 0/1/2/3，禁止落地 I8-R 钉死的 3/5/8。抽一份 form，复制 N 只（同基体 / 覆盖 / 连续性 / 词素 / 成句）。油膜三变体按个体种子采样。钉点：贪婪薪柴路径上的可走地板，偏咽喉（四邻可走格数为 2 优先），依次取。宿主钉点 Chebyshev ≥ 6；**N ≥ 9 时第一步从 ≥ 5 起**；不够 ≥ 4，再不够 ≥ 3。禁止钉墙 / 虚空 / 出生与撤离 Chebyshev ≤ 3 / 薪柴所在格。禁止 N 只都钉同一格。放不下先降间距、再扩到路径 Chebyshev 2、再扩到出生可达可走地板；**仍不足掷出的 N** 则本图重试，禁止交出击图，禁止把 N 钳小交差。出击甲条数由地图巡逻给出（3–4），**每条** `enemySpawns` 配一个占地 form；禁止用历史数字「甲 2–3」砍掉一条巡逻。练习场句法课甲数量由侧栏观察，不进出击配额。每图恰好一个听觉主轴；I18由`contamination-encounters.csv`分配给占地；R4墙听觉权重为0。
 17. **出生钉层**：占地 → 现有路点契约；占墙 → 墙缘折线；占漆 → `paintFloors`（贪婪路径可走格）；占空 → 走廊包围盒。不再交出 `clusterCores` 当生产钉点。
 18. **战斗成功标准不变**：绕应通常比杀便宜。接触词素改代价种类，禁止做成词缀 DPS。打不死正面支撑本条。更脆禁止变成「杀了更划算」（不得减刀数、不得降核 HP）。
 19. **成句第一版四句**：门还想关、缝里的眼、簇的肺、走廊在看你。配方见设计正文 §6。内部配方名禁止印上屏。游戏内名称走遭遇识别旁白的观察句，成句另加短行为标记。禁止传奇口吻、禁止头上名字。双占位成句第二批。标记映射见下文「遭遇识别旁白」。簇的肺与走廊在看你都是场，止损 = 打不死。
@@ -106,13 +143,13 @@ interface ContaminationForm {
 23. **遭遇触发**：甲占地 / 乙占墙 = 看见该个体身体（`getVisibilityAt` > 0）。丙占漆 = 踩该漆，或视野扫到该宿主的任一计费漆格（场无核时不得再要求扫簇核）。丁占空 = 进入体积或视野扫到核（打不死时「核」读相点，不是可打核）。持续留在可识别里 = 同一次遭遇，不重复触发。
 24. **遭遇限频**：同身份键本趟 60s；任意身份行间隔 ≥ 2.5s；同时 1 行；与混乱阈值重叠则阈值优先、这次作废不补打；出击结束清空冷却表。同图多只占漆若身份键相同，共享 60s（I8-D 特性，禁止为此拆键或改秒数）。
 25. **事件**：通过限频的一次识别发出 `encounter:identified`。载荷见下文「实现规格 · 事件」。遭遇识别旁白消费此事件，不回写 AI。
-26. **听觉主轴**：每图恰好一个主感知为听噪的个体；I16 当前生产为甲的听噪填法（`rewriter === 1`）。乙的听缝尚未兑现，暂不开放。撤离门仍必须是甲 + 视锥，不得担任听觉主轴。0 个或 ≥2 个 = 坏图，重试；禁止把全部甲改成视锥糊过去。
-27. **油膜只占漆**：`oil_film.legal_occupancies` 仅为 `paint`。废止 DEC-076 第 8 条「否则丁无基体」的占空扩权。孔谱丁的合法基体是概念三类：`sound_echo` / `light_scatter` / `space_interval`（仅 `volume`）。出击视图见规则 29：油膜出击只占漆。
-28. **出击范围**：CSV 列 `enabled_scope` 为 `sortie` 或 `gym`。出击 `drawSortie` 只抽 `sortie` 行。练习场句法课读全表，并按当前孔谱过滤 `legal_occupancies`。禁止把 `gym` 行抽进裂隙。sortie 集合见 Schema（旧六种 + 残茎 / 栏柱 / 灰幕 + 概念三类）。
-29. **配对不变量**：概念基体任一行 `enabled_scope=sortie` ⟺ 油膜出击视图不占 `volume`。翻其中一半开关必须同一次提交翻另一半。禁止只收回油膜占空、却让概念基体仍停在 `gym`（裂隙丁会改抽乙）。**开放后：** 概念三类均为 `sortie` **且** `oil_film.sortieLegalOccupancies === ['paint']`。丁抽概念三类之一，禁止再抽油膜占空，禁止因无基体改抽乙（钉层空的乙↔丁回退仍在）。
+26. **听觉主轴**：每图恰好一个主感知为听噪的个体；I18当前生产仅由地面承担，`rewriter === 1`。撤离门仍必须是甲 + 视锥，不得担任听觉主轴。0 个或 ≥2 个 = 坏图，重试；禁止把全部甲改成视锥糊过去。
+27. **油膜只占漆**：`oil_film.legal_occupancies` 仅为 `paint`。废止 DEC-076 第 8 条「否则丁无基体」的占空扩权。孔谱丁当前生产基体为 `sound_echo` / `gas_mass` / `mist_bank` / `dust_swarm`（仅 `volume`）；散光与间距只保留历史gym。出击视图见规则 29：油膜出击只占漆。
+28. **出击范围**：CSV 列 `enabled_scope` 为 `sortie` 或 `gym`。出击 `drawSortie` 只抽 `sortie` 行。练习场句法课读全表，并按当前孔谱过滤 `legal_occupancies`。禁止把 `gym` 行抽进裂隙。sortie集合见R4活合同与CSV，当前13基底；所有占墙及散光/间距不在生产集合。
+29. **占空配额不变量**：油膜生产只占漆；丁只抽当前scope与地图权重允许的四类占空。缺合法走廊时重试地图，禁止回退已退休占墙，也禁止用油膜临时代替占空。
 30. **止损衍生（DEC-083）**：止损不是词素、不抽卡、不进身份键。查 `data/contamination-stop-loss.csv`：键 = `continuity + coverage`，得到 `family`（`core_strike` / `scatter_rejoin` / `unkillable`）与 `core_policy`（`exposed` / `standard` / `obscured` / `none`）。occupancy 必须落在该行 `legal_occupancies`。`block_walk === true` 禁止 `unkillable`。裂片行不进本表（延后）。接触槽不得再表达止损。
 31. **无害禁止**：任意合法个体 `resolveContactChannel` 不得为 `'none'`。丙即使 `family=unkillable` 仍走踩踏混乱；丁即使 `family=unkillable` 仍走体积混乱 + 视野。gym 侧栏不得再提供 `contact_disperse_core`。
-32. **打不死连通**：`unkillable` 只允许占漆或占空。禁止占地挡走、禁止占墙整面当打不死。门框占地固着挡门洞：仍必须可打核，若以后开放脉冲则必须有开相；不得把唯一通道永久封死。墙后可走格四连通分量必须仍为 1。
+32. **打不死连通**：`unkillable` 只允许占漆或占空。禁止占地挡走、禁止占墙整面当打不死。历史门框附墙能力不新增走廊碰撞；R4门框所有占位均已退出生产。墙后可走格四连通分量必须仍为 1。
 
 ## 玩家交互
 
@@ -205,7 +242,7 @@ interface ContaminationForm {
 | 参数 | 值 | 调节目的 |
 | ---- | -- | -------- |
 | 每图甲 | 地图巡逻 3–4（每条一个 form） | 占地压力（含巡路、转面与固着）；禁止用句法 2–3 砍路点 |
-| 每图乙或丁 | 恰好 1（互斥） | 改一条路的走法；太多则看不懂 |
+| 每图丁（4种生产基底共享名额） | 合法通道宿主 1；无宿主不回退占墙 | 改一条路的走法；太多则看不懂 |
 | 每图丙 | 新生 3–5 / 标准 6–8 / 古老 9–12（读 `contaminationAge` 掷闭区间；最小 3；不乘面积/路径长） | 有主的漆够形成绕/冲；污染度跨度可感且每趟有抖动；档间不重叠；不砍甲；不读簇只数 |
 | 乙/丙/丁核 HP | 50（= 两刀，K1：25 的整数倍） | 清核比绕贵，但不是甲那种三刀交手 |
 | 乙邻格抽打伤害 | 15（与甲同刀） | 贴墙才付血；走廊中央 0 |
@@ -242,10 +279,10 @@ interface ContaminationForm {
 1. CSV 与 `src/generated/contamination-lexicon-data.ts` 的 id 集合一致（只许 codegen 生成，禁止手写 generated）。
 2. 缺列、缺必填、`enabled_scope` 不是 `sortie`/`gym`、字段内 ASCII 逗号 → codegen 失败。
 3. 出击白名单 `SORTIE_SUBSTRATE_IDS` = 全部 `enabledScope==='sortie'` 的 id，必须等于该列派生，禁止另维护一份与 CSV 脱节的封闭六 id 当唯一真相。
-4. sortie 集合 = 旧六种 **去掉** `lamp_pillar` **加上** `stalk_clump` / `street_wreckage` / `insect_remnant` / `mammal_remnant` / `worm_remnant` / `ash_veil` / `sound_echo` / `light_scatter` / `space_interval`。`railing_post` / `lamp_pillar` 已收回 gym。`drawSortie` 不得含 `enabledScope==='gym'` 的行。废止「恰好旧六种」。
+4. sortie集合按`enabled_scope=sortie`生成，当前13基底；`railing_post` / `lamp_pillar` / `street_wreckage` / `doorframe` / `wall_rust` / `light_scatter` / `space_interval`为gym。门框只有wall合法占位。`drawSortie`不得含gym行。
 5. `oil_film.legalOccupancies`（CSV / 练习场视图）深等于 `['paint']`。废止「CSV 油膜必须能占空」。
-6. `sound_echo` / `light_scatter` / `space_interval`：仅 `volume`，连续性只含 `monolith` 与/或 `field`。禁止给甲。`enabled_scope=sortie`。
-7. `stalk_clump`（有机）与 `street_wreckage`（无机）合法占位含 `floor`、不含 `volume`，`enabled_scope=sortie`。三种生物（`insect_remnant` / `mammal_remnant` / `worm_remnant`）合法占位含 `floor`、不含 `volume`，`enabled_scope=sortie`（I5-T）。`railing_post` / `lamp_pillar` 合法占位仍是 `floor`、不含 `volume`，`enabled_scope=gym`。`ash_veil` 合法占位含 `paint`、不含 `volume`，`enabled_scope=sortie`。
+6. `sound_echo` / `gas_mass` / `mist_bank` / `dust_swarm`：仅 `volume`，连续性只含 `monolith` 与/或 `field`，`enabled_scope=sortie`。`light_scatter` / `space_interval` 保留相同孔谱约束但 `enabled_scope=gym`。禁止给甲。
+7. `stalk_clump`（有机）与 `street_wreckage`（无机）合法占位含 `floor`、不含 `volume`；前者 `enabled_scope=sortie`，后者已退为 `gym`。三种生物（`insect_remnant` / `mammal_remnant` / `worm_remnant`）合法占位含 `floor`、不含 `volume`，`enabled_scope=sortie`（I5-T）。`railing_post` / `lamp_pillar` 合法占位仍是 `floor`、不含 `volume`，`enabled_scope=gym`。`ash_veil` 合法占位含 `paint`、不含 `volume`，`enabled_scope=sortie`。
 8. `UTTERANCE_DATA.corridor_watching.substrate === 'space_interval'`。该成句保留于 CSV / 练习场，反视与天空相未兑现前不得进生产；其固定配方为 `substrate === 'space_interval'` 且 `occupancy === 'volume'`。废止「用油膜占空影子占住抽卡」。
 9. **配对不变量（`check:lexicon` 必断言，保留双条件）：** 概念三类任一行 `enabled_scope=sortie` ⟺ `oil_film.sortieLegalOccupancies` 不含 `volume`。开放后两边都真：三类均为 `sortie` **且** `oil_film.sortieLegalOccupancies === ['paint']`。禁止只翻一半。
 
@@ -253,9 +290,9 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 
 **行表（与 CSV 同步；类不进 CSV，只供阅读）：**
 
-> **I5-J / I5-T 已翻列（DEC-088 / 迭代 5）：** `street_wreckage`（街具残骸）为 `sortie`，进 `SORTIE_SUBSTRATE_IDS`。`lamp_pillar` / `railing_post` 收回 `gym`，不进出击抽卡。三种生物基底（`insect_remnant` / `mammal_remnant` / `worm_remnant`）为 `sortie`（I5-T；进甲现有 3–4 巡逻加权池，不另给名额）。四行字段以 I5-P 定值为准（已进 CSV）。
+> **历史I5-J / I5-T 翻列记录（街具上线已被I18 R3退生产取代）：** `street_wreckage`（街具残骸）为 `sortie`，进 `SORTIE_SUBSTRATE_IDS`。`lamp_pillar` / `railing_post` 收回 `gym`，不进出击抽卡。三种生物基底（`insect_remnant` / `mammal_remnant` / `worm_remnant`）为 `sortie`（I5-T；进甲现有 3–4 巡逻加权池，不另给名额）。四行字段以 I5-P 定值为准（已进 CSV）。
 
-**I5-P 定值（街具残骸与三种生物均 sortie。）I8-R：裂隙不再上屏基体短名。下表短名仅作内部 / 练习场标签，CSV 仍由 I8-N 决定是否改列：**
+**历史I5-P定值（当时均sortie；R3街具已改gym。）I8-R：裂隙不再上屏基体短名。下表短名仅作内部 / 练习场标签，CSV 仍由 I8-N 决定是否改列：**
 
 | id | 上屏短名（I8-D；CSV 待 I8-N） | 残余动词 | 合法占位 | 合法连续性 |
 | -- | ---- | -------- | -------- | ---------- |
@@ -290,22 +327,26 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 | -- | ---- | -- | -------- | -------- | ---------- | ------------- |
 | organic_remnant | 残影 | 有机 | 走 | floor | monolith, shards | sortie |
 | lamp_pillar | 灯柱 | 无机 | 亮 | floor | monolith | gym（I5-J 已退出出击） |
-| doorframe | 门框 | 无机 | 开合 | wall, floor | monolith | sortie |
-| wall_rust | 墙锈 | 无机 | 渗 | wall | monolith, colony | sortie |
+| doorframe | 门框 | 无机 | 开合 | wall | monolith | gym（R4占墙整体退生产） |
+| wall_rust | 墙锈 | 无机 | 渗 | wall | monolith, colony | gym（R4退生产） |
 | fungal_mat | 菌毯 | 有机 | 铺 | paint | colony, field | sortie |
 | oil_film | 油膜 | 无机 | 沾 | paint | monolith, colony, field | sortie（出击视图只占漆） |
 | stalk_clump | 残茎 | 有机 | 摇 | floor | monolith, shards | sortie |
 | railing_post | 栏柱 | 无机 | 拦 | floor | monolith | gym（I5-J 已退出出击） |
 | ash_veil | 灰幕 | 无机 | 覆 | paint | monolith, colony, field | sortie |
 | sound_echo | 余响 | 概念（声音） | 响 | volume | monolith, field | sortie |
-| light_scatter | 散光 | 概念（光线） | 折 | volume | monolith, field | sortie |
-| space_interval | 间距 | 概念（空间关系） | 挤 | volume | monolith, field | sortie |
-| street_wreckage | 街具 | 无机 | 立 | floor | monolith | sortie（I5-J 已翻列，替换灯柱 / 栏柱） |
+| gas_mass | 气团 | 实体 | 涌 | volume | monolith / field | sortie（R4-C） |
+| mist_bank | 雾团 | 实体 | 漫 | volume | monolith / field | sortie（R4-C） |
+| dust_swarm | 尘絮群 | 实体 | 旋 | volume | monolith / field | sortie（R4-C） |
+| light_scatter | 散光 | 概念（光线） | 折 | volume | monolith, field | gym（R4退生产） |
+| space_interval | 间距 | 概念（空间关系） | 挤 | volume | monolith, field | gym（R4退生产） |
+| street_wreckage | 街具 | 无机 | 立 | floor | monolith | gym（I18 R3退生产） |
 | insect_remnant | 虫 | 有机 | 爬 | floor | monolith | sortie（I5-T 已翻列） |
+| human_remnant | 人形残余 | 有机 | 走 | floor | monolith | sortie（I17 独立基底） |
 | mammal_remnant | 兽骸 | 有机 | 走 | floor | monolith | sortie（I5-T 已翻列） |
 | worm_remnant | 长虫 | 有机 | 拱 | floor | monolith | sortie（I5-T 已翻列） |
 
-门框占地时运动必须固着，且不得永久封死出生→撤离的唯一通道。街具残骸占地所有覆盖度固着。禁止把概念基体给甲。
+门框不再合法占地；街具仅保留历史gym身份。门框必须附着真实墙端、开口或1–3格宽通道侧边，固定面对可走地面。`doorwayWallSeats`先筛合法座位；无座位时排除门框，改抽墙锈，不改墙格、不封路。禁止把概念基体给甲。
 
 **出击丁与油膜占空：** 练习场 / CSV 油膜只占漆。丁必须能抽到概念三类之一，**禁止**再抽油膜占空，**禁止**因无基体改抽乙。钉层空的乙↔丁回退仍在（乙空则丁、丁空则乙；两者都失败才本图只有甲并打日志）。练习场句法课下拉直接抽概念三类，看不到油膜占空。
 
@@ -408,18 +449,52 @@ codegen 必须把 `enabled_scope` 写进 `SubstrateDef.enabledScope`，并写出
 
 数字只锁在本文「数值结构」与将落地的 `GAME_CONSTANTS.CONTAMINATION`。设计正文只指向本文，禁止第二份数字表。外观 HOW：`docs/art/contamination-forms.md`。
 
-### 生产行为能力边界（I16）
+### 能力与完整身体合同（R3机制保留，生产范围读R4）
 
-CSV 是合法字母表；生产还须与当前运行时能力求交。`supportsRuntimeForm` 校验整张配方，`floorMotionFor` 是 AI / 生产表现共用的占地运动解释。这里记录已兑现范围，不把展示课的词素排列宣称为不同玩法。四类占据方式、甲 3–4 只、乙或丁恰好 1 只、年龄占漆配额和恰好一个听觉主轴不变。
+CSV字母表仅定义语法。实际生产还须通过 `contamination-families.csv` 的基底×孔谱能力、低档运动锁、`contamination-dialects.csv` 的地图正权重，以及占位/连续性/止损规则。`familyCapabilityFor` / `motionChoicesFor` / `supportsRuntimeForm` 是抽样和AI共同入口。先筛符合指定/排除词素的完整候选，再按权重抽取；不许抽完硬换一个非法词素来保住名字。
 
-- 甲：巡路 / 转面 / 固着 × 视锥或听噪 × 常开 × 三刀近战。凝聚、窄视、睡眠、脉冲均未有独立行为，退出生产池。门框、街具（以及练习场灯柱、栏柱）所有覆盖度都固着，优先于旧 form 中的错误运动值。转面原地扫描；固着平时守住当前朝向。两者受刺激会转向、保持同一五态感知与退警流程，近身且未丢失视线时仍可反击；镜像被选为视线目标时朝向镜像，不授予对真人的反击许可，巡逻 / 怀疑 / 搜索 / 追击 / 返回均不产生位移，不加入寻路与分离。固着免疫位移击退；转面仍允许既有工具击退后在新位置驻留。虫渗透档锁巡路，兑现爬行；蠕虫与残茎渗透档继续锁转面。
-- 乙：保留已实现的沿壁 / 转面 / 固着；感知只抽触地，节律只抽常开，接触仍为邻格前摇后抽打。听缝 / 窄视 / 睡眠 / 脉冲尚未兑现，暂不进生产。听觉主轴明确分配给甲，不声称墙面听觉变体已交付。
-- 丙：只抽簇栖 × 触地 × 随漆呼吸 × 踩踏混乱。原有宿主呼吸相驱动 +2 / +4 步价，不存在额外睡眠安全窗。固着 / 随风运动、嗅混乱 / 领域感知、常开 / 脉冲节律没有独立实现，暂不用于生产配方；基体、覆盖、连续性和几何种子仍可变化。
-- 丁：保留实际活动盒的固着形变 / 随风 / 拖尾；只抽领域 × 常开，玩家在当前活动盒内持续支付原有混乱与视野价。反视 / 嗅混乱 / 天空相 / 脉冲无危险开关实现，暂不进生产。
+- 占地：巡路/转面/固着，视锥/听噪/窄视，常开/睡眠/脉冲，近战通道。当前仅六个生物家族，渗透运动锁由家族CSV给出；凝聚尚未实现，不入池。固着与转面不被接触分离推走，移动体绕开其完整身体；转面仍保留原工具击退许可。
+- 历史占墙（R4已全部退生产）：门框仅固着，墙锈可沿壁/转面/固着；触地/窄视/听噪，常开/睡眠/脉冲，邻格预备后抽打。窄视需墙面方向与视线成立；听噪需实际噪声成立，不用动画假装听觉。
+- 占漆：本轮仍为簇栖×触地×随漆呼吸×踩踏混乱，同图配方保留；菌毯、油膜、灰幕均有生产表面，油膜保留三个拓扑入口。宿主原有呼吸相驱动步价，不宣称有额外安全相。没有实际消费者的随风/嗅混乱/天空相等不因表里存在便进入生产。
+- 余响（其余三种实体占空读R4-C共享场合同）：固着形变/随风/拖尾，领域或反视，常开，场内混乱通道。反视读取真实玩家朝向与遮挡：盒外视线进入其范围；盒内朝向核心±60°；300ms激活，移开视线600ms退相，完全退去后不施加该场影响。相位同时控制云体与脚下污染迹的显隐。
 
-成句按完整配方原样验能力：只有 `cluster_lung` 当前可进生产。`door_still_closing`、`eye_in_the_seam`、`corridor_watching` 保留 CSV / 练习场配方供检视，禁止静默替换词素后仍沿用成句身份或专用低语。`scope: gym` 可显示全字母表，不能作为这些行为已兑现的证据。
+节律数字的唯一策划源是 `data/contamination-behavior-profiles.csv`。睡眠体平静时不巡游，近距移动噪声/挥击/受伤唤醒，完整600ms醒转后才允许感知升级、自主移动和新攻击；本次遭遇保活，完整退警再复睡。脉冲周期为2400ms休止、600ms醒转、3600ms活动，每个实体错相；休止不能新开攻击，但已承诺的攻击完整完成。窄视总角70°、距离为原视锥的1.15（207px，小于玩家224px视距），关闭额外宽周边视野。
 
-机器验证：`tools/contamination-lexicon/check-runtime-behavior.ts` 运行真实 `updateBehavior` / 五态刺激、抽卡与正式布局；覆盖全状态固着、原地转面、近身反击许可、失去视线解除、虫巡路、四占据与配额 / 听轴。视觉和实战节奏仍需人终审。
+身体动作/攻击参数源是 `data/contamination-body-profiles.csv`。六个生产生物家族按承重方式调整五态移动速度，窄直扑咬与宽摆攻击使用各自蓄势、扇角、距离、冷却；起手、命中、地面预告、`FormAttackPose`读取同一参数。虫与人形原有攻击参数保留。伤害值、玩家射程、两枚并发攻击名额不变；最小敌人攻击距离36px仍覆盖30±4px停距。
+
+成句必须以整张配方通过当前能力表；不许替换掉未实现词素后仍沿用其成句身份。练习场可显示完整字母表，但展示不等于该行为已兑现。
+
+### 地图职责与内容数量
+
+占地名额仍3–4，环境宿主为丁1个（4种生产基底共享名额），占漆仍按地图年龄配额。撤离守卫固定低污染、常开、视锥、巡路，身体按地图抽；原听觉槽及其他巡路职责选能巡路的身体，余位最多一个静止哨点。保留地图原出生格、朝向、路径与资源位置。地图方言weight=0是明确禁配，正值才是权重，不再把缺项称作“仅偏好”。
+
+全场（占地+占墙）恰好一个听觉主轴。有墙宿主时按 `contamination-encounters.csv` 决定听觉归墙还是占地；没有合法听墙则归占地。墙听觉时原占地听觉名额换非听觉可巡路体，数量与位置不变。AI创建根据实际占地听觉数处理0/1，生成结果仍检查全场唯一。
+
+计量分为主要体形配置、有效行为配方、真实地图实遇分布；不以随机seed/色差/理论笛卡尔积代替敌人数量。原128图基线见I18证据，职责修复会改变实际移动压力；名额不变不代表难度不变。
+
+### 环境危险面与视觉合同（R3）
+
+门框座位由`generation/wall-host-placement.ts`计算，生成与`ContaminationHostSystem`共用；`SortiePinAvailability.hasWallOpenings === false`在抽样前排除门框，不能生出来再临时换身份。Host固定核心于可达墙缝，`getStrikeFloors`、`getAttackVisualState`、`getActivityVisualState`供生产墙动画；从可走面挥击核时LOS终点向该面偏0.5px，避免自己的墙格遮住暴露核。
+
+`FormAttachContext.isWalkableFloor?(col,row)`是显式可选地形接口，由RiftScene、EnemyInspectorArena及EnemyInspectorContext传入。菌毯/油膜/灰幕绘制像素、危险沉积与`stepFloors`都受同一地形裁切，不能覆盖墙或VOID。Host登记再独立校验：有`isWalkable`时优先读取，否则读取`!isOpaque`，同时拒绝越界；没有网格的外部历史gym调用保持兼容。核只在过滤后的footprint上重座；菌落核按确定性完整二点/三点搜索选座，先争取Chebyshev间距≥3格，再退≥2格；裁切后的紧凑patch若确实放不下，允许最后使用两个不同的相邻合法格（≥1格，即32px），仍保持独立核心、命中和计费，不降成单核或重叠同格。若仅余1合法格则禁用部署；128正式种子审计必须证明没有此类配额蒸发。全非法/空表面禁用该Host并清活核，不发玩家击杀、奖励或噪声事件。`bingOnPaint`也检查地形，不能靠旧登记绕过不可走格。
+
+漆面的世界原点固定为出生地表锚`host.pin.cx/cy`，`getVisualPin(bing)`始终返回该锚。菌落第一核重定位可以改变`host.core`与可打目标，不能平移整张材质、改变烤图原点或让注册的危险格脱离实际图像。三个场景更新cluster位置使用visual pin；renderer保持相同ctx.pin作裁切与世界格映射。
+
+菌毯/油膜/灰幕均从`bake.field`生成`stepFloors`。`setStepFloors`登记模型实际表面；菌落危险是登记表面与存活核各3×3范围的交集；无核场直接使用登记表面。空表面是无危险，不删除登记后偷偷回退旧核邻域。仅从未登记表面的历史调用者允许旧fallback。`isPaintFloorActive(hostId,col,row)`供材质层显示同一危险面，死核区域衰暗；真实步价仍随Host呼吸相，不伪造呼吸安全相。重建、清空、死亡purge释放登记。
+
+丁的形体沿当前`getVisualPin` AABB布置，分别以余响断续回返、散光偏折、间距挤合呈现；活动状态与反视蓄势/释放仍来自Host。伤害使用同一实时AABB与活动门，视觉不能单独计时开启危险。
+
+### 动作、接触与验证
+
+生产与练习场共用 `productionModelFor` / `attachAnimatedModel`，家族独立baker；待机、步行、警觉、预备、命中、收势均有定义。步态按物理实际位移推进，被墙挡住时不原地跑腿；战斗时钟优先于装饰动画。休止通过 `restAmount` 收拢离地承重结构，接地点固定；非休止原图不变。
+
+R3已移除地面门框/街具，当前生产没有不可移动底座；移动敌人不新增硬碰撞以免夹杀。以下静态碰撞能力仅保留给历史gym及防御性回归：生成接受前将静态底座与墙/虚空一起按玩家半宽扩张，在4px导航上验证撤离/拾取可达性。失败仅在原槽预先排除静态底材后重抽合法组合，不挪地图或巡逻；无候选则拒绝布局。物理速度按Arcade worldstep时间测量，无物理步的渲染帧保持最近速度；接触纠正仍不算走路。
+
+每实体一张动态GPU纹理，CPU最多64帧缓存；隐藏时更新时钟但不烤图/上传，销毁清空；受击/死亡复制当前身体图后再销毁。宿主表现通过稳定subjectId绑定真实危险实体，禁止靠相邻核心距离误绑定。
+
+接触分离包含静止及完全同心移动体，固定体不被推；每一步检查完整身体与沿途可走格，不能穿墙/虚空或越过速度预算。Host/AI/Combat统一限制单步delta，墙体新危险格至少显示一帧预备才计时；核挥击必须满足实际LOS，不可打核不吞掉可打目标的命中机会。
+
+验证入口：`check-generation-contract`（真实128图职责/配额/空间/CSV合同）、`check:contact-runtime`（真实AI/Combat/Host规则）、`check:model-animation`（实际位移/相位/缓存与生命周期）、模型烤图帧扫描、正式 `pollution-review.html`。自动检查不代替用户审美与实战终审。
 
 ### 完整字母表（CSV / 练习场；生产须再过上述能力边界）
 
@@ -455,14 +530,15 @@ CSV 是合法字母表；生产还须与当前运行时能力求交。`supportsR
 
 | substrate | 渗透时运动锁（须在该孔谱字母表内才生效） |
 | --------- | ---------------------------------------- |
-| doorframe | motion_anchor |
+| doorframe | 不属于甲；乙仅motion_anchor |
 | lamp_pillar | motion_anchor |
 | railing_post | motion_anchor |
-| street_wreckage | motion_anchor（与灯柱 / 栏柱同类：立着的街具） |
+| street_wreckage | gym历史motion_anchor；生产不可抽 |
 | organic_remnant | motion_patrol |
 | mammal_remnant | motion_patrol（走；与有机残影同锁、不同基体） |
 | stalk_clump | motion_turn |
 | insect_remnant | motion_patrol（爬行，I16 完整移动样本） |
+| human_remnant | motion_patrol（人的步行残余，I17） |
 | worm_remnant | motion_turn（拱 / 分节；禁止新开词素） |
 | wall_rust | motion_wall |
 | fungal_mat | motion_cluster |
@@ -523,7 +599,7 @@ CSV 是合法字母表；生产还须与当前运行时能力求交。`supportsR
 **打散重组（第一版，干净落地的那一截）：**
 
 - 一个 form，2–3 个可打核，各 50 HP。
-- 优先钉在该宿主自己的漆格包围盒内不同位置；练习场只有一团漆时，在该团可走格上放 2 个核，间距优先 ≥ 3 格，空间不够则 ≥ 2 格。禁止钉到另一只宿主的漆上。禁止再读相邻 `ClusterOrganism`。
+- 优先钉在该宿主自己的漆格包围盒内不同位置；练习场只有一团漆时，在该团可走格上放 2 个核，间距优先≥3格，再退≥2格；R3紧凑例外允许两个不同相邻合法格（≥1格/32px），仍为独立核。禁止钉到另一只宿主的漆上。禁止再读相邻 `ClusterOrganism`。
 - 打灭一个核：该核 Chebyshev 距离 ≤ 1 的漆不再收踩踏；其余核的漆仍收。form 仍活。发 `ENEMY_DAMAGED`，不发 `ENEMY_KILLED`。
 - 最后一个核归零才 `ENEMY_KILLED`，整只回收。
 - **本趟死核不回来。** 「重组」读作「整体还在（别的团还在）」，不是死核原地复活。
@@ -559,27 +635,27 @@ CSV 是合法字母表；生产还须与当前运行时能力求交。`supportsR
 
 风格锚先抽碎片类型，再给字母表权重。禁止一图动物园。未启用的碎片类型仍写权重，启用后直接用。权重是抽卡偏置，不是禁令（除基体亲和非法交仍丢弃）。覆盖深度不按碎片改写「覆盖体变第三种人形」。碎片 bias 不是新时空。
 
-出击抽卡：按本表取加权行，**加权前**丢掉 `enabled_scope !== sortie` 的行（出击视图）。禁止先加权再丢掉——会多消耗随机数并改变出击抽卡。练习场句法课配表下拉读全表（仍按孔谱过滤占位）；若练习场走方言抽卡，不过滤 `gym` 行。新六行已进出击池。
+出击抽卡：按本表取加权行，**加权前**丢掉 `enabled_scope !== sortie` 的行（出击视图）。禁止先加权再丢掉——会多消耗随机数并改变出击抽卡。练习场句法课配表下拉读全表（仍按孔谱过滤占位）；若练习场走方言抽卡，不过滤 `gym` 行。现行白名单按R4活合同，不使用历史新增行数。
 
 R2-C-data 必须按下面数字改 `contamination-draw.ts` 的 `DIALECT`（禁止出现未写入本表的 id）。未列出的旧基体对该碎片视为降权（不进加权表）。
 
 | fragmentTypeId | substrates 加权（id × 权重） | preferYiDing | 词素侧 |
 | -------------- | ---------------------------- | ------------ | ------ |
-| frag-outdoor | fungal_mat 3, ash_veil 3, oil_film 3, space_interval 3, organic_remnant 2, stalk_clump 2, sound_echo 2, light_scatter 2, wall_rust 1, street_wreckage 1, insect_remnant 1, mammal_remnant 1, worm_remnant 1 | ding | 门框不进表（原栏柱 1 并入街具残骸；I5-T 三种生物各 1） |
-| frag-clinic | street_wreckage 5, doorframe 3, wall_rust 2, light_scatter 2, organic_remnant 1, stalk_clump 1, ash_veil 1, space_interval 1, sound_echo 1, insect_remnant 1, mammal_remnant 1, worm_remnant 1 | yi | 菌毯不进表；随风降权（原灯柱 3 + 栏柱 2 并入街具残骸；I5-T 三种生物各 1） |
-| frag-metro | wall_rust 3, oil_film 2, street_wreckage 4, doorframe 2, ash_veil 2, sound_echo 2, space_interval 2, light_scatter 1, insect_remnant 1, mammal_remnant 1, worm_remnant 1 | either | 菌毯中权（不进表=中低）；簇栖中权（原灯柱 2 + 栏柱 2 并入街具残骸；I5-T 地铁首次出现有机家族占地，街具+门框仍 6 对生物 3） |
-| frag-library | doorframe 3, wall_rust 2, organic_remnant 2, street_wreckage 2, sound_echo 2, stalk_clump 1, light_scatter 1, space_interval 1, insect_remnant 1, mammal_remnant 1, worm_remnant 1 | yi | 随风降权（**DEC-090 / I6-G：** 已启用，生产路径；原栏柱 2 并入街具残骸；I5-T 三种生物各 1） |
-| frag-residential | organic_remnant 3, stalk_clump 3, doorframe 2, oil_film 2, street_wreckage 1, ash_veil 1, space_interval 1, sound_echo 1, light_scatter 1, insect_remnant 1, mammal_remnant 1, worm_remnant 1 | yi | 本迭代不启用（DEC-090 抽卡四张；DEC-094：簇是参数点，不再当未实现生成器）。启用前禁止当生产路径（原栏柱 1 并入街具残骸；I5-T 三种生物各 1） |
+| frag-outdoor | fungal_mat 3, ash_veil 3, oil_film 3, organic_remnant 2, stalk_clump 2, sound_echo 2, insect_remnant 1, human_remnant 1, mammal_remnant 1, worm_remnant 1 | ding | 已启用；仅余响占空，听觉在地面 |
+| frag-clinic | organic_remnant 1, stalk_clump 1, ash_veil 1, sound_echo 1, insect_remnant 1, human_remnant 1, mammal_remnant 1, worm_remnant 1 | ding | 已启用；仅余响占空，听觉在地面 |
+| frag-metro | oil_film 2, ash_veil 2, sound_echo 2, insect_remnant 1, human_remnant 1, mammal_remnant 1, worm_remnant 1 | ding | 已启用；仅余响占空，听觉在地面 |
+| frag-library | organic_remnant 2, sound_echo 2, stalk_clump 1, insect_remnant 1, human_remnant 1, mammal_remnant 1, worm_remnant 1, fungal_mat 1, oil_film 1, ash_veil 1 | ding | 已启用；仅余响占空，听觉在地面 |
+| frag-residential | organic_remnant 3, stalk_clump 3, oil_film 2, ash_veil 1, sound_echo 1, insect_remnant 1, human_remnant 1, mammal_remnant 1, worm_remnant 1 | ding | 未启用数据 |
 
 ### 抽卡顺序
 
 1. 读本图 `fragmentTypeId` 与 `contaminationAge`。不读 `ClusterOrganism[]`。
-2. 掷乙或丁（1 只）。户外偏丁，临床偏乙，地铁按种子。丁有概念基体，禁止因无合法基体改抽乙。钉层空才乙↔丁回退。
+2. R4-C掷丁四种生产基底（有合法宿主时1只）；乙生产权重为0且无生产基底，无走廊时记录缺位，不得回退乙。新三者必须拥有完整可走的至少2×2局部矩形，找不到时重试图；128正式图均有合法占空座位。
 3. 掷甲，条数 = 本趟 `enemySpawns.length`（3 或 4）。撤离门那条必须是甲 + `sense_cone`（有机残影 + 渗透 + 视锥可走强制参数，结果必须写进 `spawn.form`）。禁止先抽 2–3 再丢掉一条路点。
 4. 掷丙：按 `contaminationAge` 在闭区间内均匀取整（`new` → 3–5，`standard` → 6–8，`ancient` → 9–12）。抽一份占漆 form（`preferUtterance` 仍每图最多 1 次成句），复制 N 只。钉 `paintFloors`：贪婪薪柴路径，偏咽喉。Chebyshev ≥ 6；N ≥ 9 时第一步从 ≥ 5 起；不够 ≥ 4、再不够 ≥ 3。禁止全部钉同一格。不足掷出的 N 则本图重试，`console.warn`。N 不乘面积、不乘路径长。
-5. 听觉主轴：I16 生产乙不抽听噪；甲里恰好一只听噪（改写体对照），其余甲不得听噪。墙面听觉替换待行为实现与验证后再开放。
+5. 听觉主轴：全场恰好1只。按R4数据分配给地面；该只必须巡路，墙不再生产。
 6. 每只：底材 ∩ 孔谱 ∩ 方言 ∩ 覆盖开孔 ∩ 本路径允许的 `enabled_scope` → 四槽。交空重抽，上限 12。失败则少生该只并 `console.warn`，禁止用占地小人顶替漆/缝/体积。出击路径的 `enabled_scope` 必须是 `sortie`。
-7. 成句：本图孔谱匹配时，若钉层允许，优先用配方行替换无名抽卡（每句每图最多 1 次）。I16 仅允许整套行为已兑现的 `cluster_lung` 命中；`corridor_watching` 暂留练习场，基体仍必须是间距、占位必须是占空。废止「用油膜占空影子占住抽卡」。
+7. 成句：本图孔谱匹配时，若钉层允许，优先用配方行替换无名抽卡（每句每图最多 1 次）。I18成句须通过当前完整能力过滤；反视`corridor_watching`保留历史活动门实现但因间距退gym不再生产，基体仍必须是间距、占位必须是占空。废止「用油膜占空影子占住抽卡」。
 
 一次出击**一份**抽卡：`GeneratedRiftLayout.contaminationDraw`（类型 `SortieDraw`）。种子独立 fork（`mix32(layout.seed, 'lexicon')`），禁止吃 `placeOnIsland` 的 rng。`ContaminationHostSystem.create` **禁止再调** `drawSortie`；乙丙丁只物化该份里的非甲 form。落地：I3-A。
 
@@ -664,7 +740,7 @@ CONTAMINATION: {
   VOLUME_DEPTH: 40, // < visionMask 50
   COLONY_NUCLEUS_COUNT_MIN: 2,
   COLONY_NUCLEUS_COUNT_MAX: 3,
-  COLONY_NUCLEUS_MIN_TILE_GAP: 3, // fallback 2 if paint AABB too small
+  COLONY_NUCLEUS_MIN_TILE_GAP: 3, // fallback 2; R3 compact exception 1 on distinct legal tiles
 }
 ```
 
@@ -672,7 +748,7 @@ CONTAMINATION: {
 
 ### 练习场
 
-练习场污染句法课是固定观察院子：玩家在场；侧栏按维度配表后点生成。甲 / 乙 / 丙 / 丁走出击同一套实体、AI、战斗与宿主；击杀后按当前配置再刷。遭遇识别旁白默认不创建。地图课仍可不开会走的敌人，**不得**传 `liveMotion`。禁止为句法另写一套移动。句法课可挂方案 D（与出击生产同一份语法；A/B/C 冻结对照）。基体下拉读 CSV 全表，按当前孔谱过滤 `legal_occupancies`（甲看不到仅占空的概念基体）。接触词素与止损在 `liveMotion` 为真时按对照表兑现。接触下拉不得再出现打核驱散。默认仍无敌；「感受伤害」打开后才能看见乙抽打掉血。打不死个体不会被击杀，因此不会走「击杀后 0.8s 再刷」——玩家点生成才换。`RiftScene` 禁止 import `src/gym/**`。
+历史污染句法课（I18已由enemy-inspector替代，下述侧栏流程仅保留历史解释）是固定观察院子：玩家在场；侧栏按维度配表后点生成。甲 / 乙 / 丙 / 丁走出击同一套实体、AI、战斗与宿主；击杀后按当前配置再刷。遭遇识别旁白默认不创建。地图课仍可不开会走的敌人，**不得**传 `liveMotion`。禁止为句法另写一套移动。句法课可挂方案 D（与出击生产同一份语法；A/B/C 冻结对照）。基体下拉读 CSV 全表，按当前孔谱过滤 `legal_occupancies`（甲看不到仅占空的概念基体）。接触词素与止损在 `liveMotion` 为真时按对照表兑现。接触下拉不得再出现打核驱散。默认仍无敌；「感受伤害」打开后才能看见乙抽打掉血。打不死个体不会被击杀，因此不会走「击杀后 0.8s 再刷」——玩家点生成才换。`RiftScene` 禁止 import `src/gym/**`。
 
 ## 边界情况
 
@@ -680,7 +756,7 @@ CONTAMINATION: {
 - 占漆放不下第 N 只：先降间距再扩候选；仍不足掷出的 N 则本图重试，禁止交不足额的出击图，禁止改画到墙上凑数，禁止把 N 钳小交差。
 - 占空与迷雾：体积不得抬到视野蒙层之上。亮度不在本文终审。
 - 打散重组：接触字母表不含「打散重组」。连续性 `colony` 走止损族 `scatter_rejoin`。本趟死核不回来。重组体不得改碰撞、不得封死出生→撤离。死核原地无限复活延后。
-- 打不死：只允许占漆 / 占空。挥击不扣核。禁止占地挡走的打不死。门框占地固着挡门洞：不得把唯一通道永久封死；未来开放脉冲时必须有开相。
+- 打不死：只允许占漆 / 占空。挥击不扣核。禁止占地挡走的打不死。R4所有占墙及街具已退生产；历史门框能力不占地堵门。
 - 无害敌人：`resolveContactChannel === 'none'` 的活宿主 = 坏个体，不得刷出。
 - 钉层为空（无墙缘 / 无够窄走廊）：该孔谱本图抽空，改抽另一张允许的（乙空则改丁，丁空则改乙；仍空则本图只有甲，并打日志）。I3-G 前概念基体仍为 `gym` 时，出击丁不算「无合法基体」（油膜出击占空过渡）。I3-G 后丁无概念基体可抽才算钉失败，禁止改抽乙来凑。听觉主轴仍必须恰好 1。
 - 乙或丁与甲路点重叠：乙/丁让路，改钉下一候选。甲路点契约优先。
@@ -697,7 +773,7 @@ CONTAMINATION: {
 
 ## 对已有系统的影响
 
-- `system-enemy-ai`：生成契约目标是「恰好 1 个听觉主轴」。五态本体保留。丙丁关掉追击。I16 生产活断言是 rewriter === 1；乙听缝尚未兑现，不进入抽样。出击甲 spawn 带 form（I3-A）。
+- `system-enemy-ai`：生成契约目标是「恰好 1 个听觉主轴」。五态本体保留。丙丁关掉追击。R4活断言是全场sense_hear === 1且地面rewriter === 1，无乙。出击甲 spawn 带 form（I3-A）。
 - `system-combat`：邻格抽打、踩踏/体积不打血、按止损决定能不能扣核。甲三刀账不变。核 50 HP 仍守 K1。接触对照表与止损表在本文；战斗 spec 只指针。V3 不推翻。出击与练习场同读（I3-F）。
 - `system-map-generation`：除路点外交出墙缘 / 占漆地板格 / 走廊盒，以及一份 `contaminationDraw`。规则 22 过渡期仍是恰好 1 个 rewriter；巡逻 3–4 不砍。氛围簇钉层不再交出。
 - 练习场：敌人课必须仍复用出击的实体与 AI。遭遇识别旁白默认不开。句法课可挂对照渲染器 A/B/C；生产 D 住 `src/entities/form-renderers/`（I3-B）。地图课不得打开 `liveMotion`。迭代 3 接线合同 `docs/tasks/iteration-3.md`。
@@ -708,7 +784,7 @@ CONTAMINATION: {
 
 生产渲染器住 `src/entities/form-renderers/`（I3-B）。**禁止** `RiftScene` import `src/gym/**`。A/B/C 冻结为句法课对照，不是出击标准。`infiltrator-sprite.ts` / `rewriter-sprite.ts` 是默认敌人课 / placeholder 回退，不是裂隙甲的生产路径。
 
-**双路径收口（I5-J / DEC-ARCH-013）：** 出击 `d-mixed` 占地与句法课 / 陈列馆甲走同一份基因谱模块（`d/genome/`：节点、共享构件、违规算子、`weld`、按覆盖档选画布）。`street_wreckage` 走街具残骸语法骨架；`doorframe` 走门框语法骨架（中空开口，不是单杆+座）；残茎 / 有机残影 / 虫 / 哺乳动物 / 大号蠕虫走各自语法。算子作用在骨架上（预算渗透 1 / 改写 3 / 覆盖 5；放射只在覆盖档），然后 `weld`，然后才刷漆。**陈列馆检视会切四朝向与四个信号相。基因谱甲消费 `FormVisualPose.facing4` / `signal` / `pose.moving`（I5-N / I5-G / DEC-098）。** `attachJiaGenomeD` / `JiaGenomeVisual` 走共用 `bakeJiaGenome`（骨架 → 算子 → weld → 朝向/信号相）；浏览默认朝下 + idle，检视按需烤。画面等人检视，不要写成画面 PASS。旧 `d/jia.ts` / `jia-paint` 只留给 A/B/C 冻结对照，不是出击默认。I5-J **不**升生产 ramp、尽量不改 `RiftScene`。墙皮门框残余仍是乙，不走本条占地语法。I5-T：三种生物已进出击抽卡（灯柱 / 栏柱仍 gym）。
+**历史双路径收口（I5-J / DEC-ARCH-013，已被I18 R3生产注册与材质管线取代）：** 出击 `d-mixed` 占地与句法课 / 陈列馆甲走同一份基因谱模块（`d/genome/`：节点、共享构件、违规算子、`weld`、按覆盖档选画布）。`street_wreckage` 走街具残骸语法骨架；`doorframe` 走门框语法骨架（中空开口，不是单杆+座）；残茎 / 有机残影 / 虫 / 哺乳动物 / 大号蠕虫走各自语法。算子作用在骨架上（预算渗透 1 / 改写 3 / 覆盖 5；放射只在覆盖档），然后 `weld`，然后才刷漆。**陈列馆检视会切四朝向与四个信号相。基因谱甲消费 `FormVisualPose.facing4` / `signal` / `pose.moving`（I5-N / I5-G / DEC-098）。** `attachJiaGenomeD` / `JiaGenomeVisual` 走共用 `bakeJiaGenome`（骨架 → 算子 → weld → 朝向/信号相）；浏览默认朝下 + idle，检视按需烤。画面等人检视，不要写成画面 PASS。旧 `d/jia.ts` / `jia-paint` 只留给 A/B/C 冻结对照，不是出击默认。I5-J **不**升生产 ramp、尽量不改 `RiftScene`。墙皮门框残余仍是乙，不走本条占地语法。I5-T：三种生物已进出击抽卡（灯柱 / 栏柱仍 gym）。
 
 废止过期 FATAL：「禁止 RiftScene import 候选渲染器」「人选后再接线」「出击画面零改动」。新红线见迭代 3 任务书（每批可回退、连通、听轴恰好 1、战斗 V3、丁 depth < 50、配对不变量、地图课不得打开 `liveMotion`）。
 
@@ -771,3 +847,12 @@ I3-E 已接：`RiftScene` attach 方案 D，消费上表字段；丁 depth 40 `<
 - [ ] 丁默认连续性是场（打不死）在 gym 是否读得懂；若人觉得默认该能杀，再把丁默认连续性改成单核（那是另一次设计，本表已支持）
 
 **人需要拍板（I8-R2）：** 占漆区间新生 3–5 / 标准 6–8 / 古老 9–12 **已过**，可开 I8-Q。旁白 20 行 **文案已过（我们→自语）**，可开 I8-N。
+
+### 迭代17：人形残余接入（DEC-125）
+
+`human_remnant`由CSV新增独立行：人形残余 / 走 / floor / monolith / sortie，保留`organic_remnant`。五种碎片方言各加入权重1，与虫等低权重基底同池，不增加敌人名额。渗透档残余运动锁`motion_patrol`；改写/覆盖依既有支持能力池，不新增人形专属感知、伤害或攻击方式。完整目录按CSV扩展独立厅。
+
+覆盖是结构退场程度，不是人类敌人职业。低/中档可保留人体身份，高档由异质承重结构主导。此项不改变其他基底或将所有有机残影画成人。新增权重会改变旧种子的具体抽样结果；I16旧种子截图保留为其提交版本证据。当前seed7/11/9为人形三档，seed26同时含人形与虫。
+
+
+R3附墙可见投影补充：门框/墙锈主体沿真实面法线向地侧投影10px（渲染仍在迷雾之下），核保持原seam 0–2px、危险格不动。真实单帧strike触发140ms纯表现收势，后续windup即时显示，不延长伤害或延后预告；四向外伸限制在相邻32px格内。

@@ -940,6 +940,27 @@ function drawUnit(
   else holedVeil(f, rng, stage, p.cx, p.cy, p.scale, senseAng, knobs);
 }
 
+/** R3: growing shelf colonies / torn ash deposits, each with its own mass. */
+function materialColony(f: PaintField, p: Placement, seed: number, stage: number, ash: boolean): void {
+  const span=Math.min(f.w,f.h)*p.scale;
+  const count=ash?4+stage:5+stage*2;
+  const rng=new PaintRng(seed,ash?'ash-lamina':'fungal-shelves');
+  for(let k=0;k<count;k++) {
+    const angle=rng.next()*Math.PI*2;
+    const cx=p.cx+Math.cos(angle)*span*.16,cy=p.cy+Math.sin(angle)*span*.12;
+    const rx=span*(ash?.25:.17)*(1+rng.next()*.3),ry=span*(ash?.055:.12)*(1+rng.next()*.3);
+    for(let y=Math.floor(cy-ry*1.5);y<=cy+ry*1.5;y++) for(let x=Math.floor(cx-rx*1.3);x<=cx+rx*1.3;x++) {
+      const dx=(x-cx)/rx,dy=(y-cy)/ry;
+      const warp=Math.sin(dx*7+k)*(.08+stage*.05)+Math.sin(dy*5+k)*.05;
+      if(dx*dx+dy*dy>1+warp)continue;
+      // Higher coverage splits the native shelves into interleaving folds,
+      // retaining sizeable masses rather than a mathematically perfect ring.
+      if(stage>0&&Math.sin(dx*5+dy*2+k)>.91&&Math.abs(dx)>.4)continue;
+      add(f,x,y,.55+Math.max(0,1-dx*dx-dy*dy)*.4);
+    }
+  }
+}
+
 /** Fill a topology field. Coverage stage 0/1/2 = 渗透 / 改写 / 覆盖. */
 export function fillPaintTopology(field: PaintField, opts: PaintFillOpts): PaintTopology {
   const topo = topologyOf(opts.substrate);
@@ -959,7 +980,9 @@ export function fillPaintTopology(field: PaintField, opts: PaintFillOpts): Paint
       mix32(opts.seed, `u:${i}`),
       `paint-unit:${topo}:${coverage}:${sense}:${rhythm}${veinTag}`,
     );
-    drawUnit(field, topo, unitRng, stage, p, senseAng, knobs, opts.veinVariant);
+    if(opts.substrate==='fungal_mat'||opts.substrate==='ash_veil')
+      materialColony(field,p,mix32(opts.seed,`material:${i}`),stage,opts.substrate==='ash_veil');
+    else drawUnit(field, topo, unitRng, stage, p, senseAng, knobs, opts.veinVariant);
   }
   return topo;
 }

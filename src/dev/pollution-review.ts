@@ -43,6 +43,9 @@ if (import.meta.env.DEV) {
     if (previewId) scene().probeReviewCoverage(previewId, null);
     previewId = ''; coverage.value = '';
   };
+  const sampleQuery = new URLSearchParams(location.search).get('sample') ?? 'insect';
+  const sampleAliases: Record<string, string> = { human: 'human_remnant', insect: 'insect_remnant', beast: 'mammal_remnant', worm: 'worm_remnant', gas: 'gas_mass', mist: 'mist_bank', dust: 'dust_swarm' };
+  const preferredSubstrate = sampleAliases[sampleQuery] ?? sampleQuery;
   let roster = '';
   let recording = false;
   const trace: unknown[] = [];
@@ -79,17 +82,18 @@ if (import.meta.env.DEV) {
     if (!game.scene.isActive('RiftScene') && !game.scene.isPaused('RiftScene')) return;
     const state = scene().probeEnemyReview();
     if (!state) return;
-    const nextRoster = state.enemies.map((enemy) => enemy.id).join(',');
+    const subjects = [...state.enemies, ...state.hosts];
+    const nextRoster = subjects.map((enemy) => enemy.id).join(',');
     if (roster !== nextRoster) {
       const previous = select.value;
-      select.replaceChildren(...state.enemies.map((enemy) => {
+      select.replaceChildren(...subjects.map((enemy) => {
         const option = document.createElement('option');
         option.value = enemy.id;
-        option.textContent = `${enemy.id} · ${enemy.substrate} · ${enemy.motion}`;
+        option.textContent = `${enemy.id} · ${enemy.substrate} · ${enemy.motion} · ${enemy.sense}`;
         return option;
       }));
-      select.value = state.enemies.some((enemy) => enemy.id === previous) ? previous
-        : state.enemies.find((enemy) => enemy.substrate === 'insect_remnant')?.id ?? state.enemies[0]?.id ?? '';
+      select.value = subjects.some((enemy) => enemy.id === previous) ? previous
+        : subjects.find((enemy) => enemy.substrate === preferredSubstrate)?.id ?? subjects[0]?.id ?? '';
       if (previewId && select.value !== previewId) {
         scene().probeReviewCoverage(previewId, null);
         previewId = ''; coverage.value = '';
@@ -97,12 +101,15 @@ if (import.meta.env.DEV) {
       roster = nextRoster;
     }
     if (recording) {
-      trace.push({ ms: Math.round(performance.now() - traceStart), ...state });
+      // Activity clocks expose stable mutable objects; record values at this
+      // sample, otherwise older frames would silently become the latest phase.
+      trace.push(structuredClone({ ms: Math.round(performance.now() - traceStart), ...state }));
       if (performance.now() - traceStart >= 12000) recording = false;
     }
     if (!output.dataset.frozen) output.textContent = JSON.stringify({
-      seed: state.seed, hp: state.hp, player: state.player,
-      sample: state.enemies.find((enemy) => enemy.id === select.value),
+      seed: state.seed, hp: state.hp, chaos: state.chaos, player: state.player,
+      fps: state.fps, floorCount: state.enemies.length, hostCount: state.hosts.length,
+      sample: subjects.find((enemy) => enemy.id === select.value),
       textureCount: state.textures.length, coveragePreview: coverage.value || null, protectedReview, recording, samples: trace.length,
     }, null, 2);
   }, 50);

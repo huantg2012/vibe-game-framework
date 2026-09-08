@@ -41,6 +41,7 @@ import {
 import { closeAlertEpisode, stepFsm, transitionTo } from '@/systems/ai/state-machine';
 import { hasLineOfSight } from '@/utils/grid-raycast';
 import { clamp, lerp, shortestArc } from '@/utils/math';
+import { separateContacts, type ContactBody } from '@/systems/ai/contact-separation';
 
 /** How the player's field of view rates a world position: 0 means "not drawn" (rule R4). */
 export type VisibilityProvider = (point: Readonly<Vector2>) => number;
@@ -142,7 +143,25 @@ export class AISystem implements AISystemAPI {
   private readonly enemies: Enemy[] = [];
   /** Live array handed to the scene's wall collider; despawn splices it. */
   private readonly sprites: Phaser.Physics.Arcade.Image[] = [];
+  private readonly contacts: ContactBody[] = [];
   private wallLayer: Phaser.Tilemaps.TilemapLayer | null = null;
+  private staticPlayerCollider: Phaser.Physics.Arcade.Collider | null = null;
+  private physicsElapsedMs = 0;
+  /** Plugin shutdown can null scene.physics.world before Scene.SHUTDOWN reaches us. */
+  private observedWorld: Phaser.Physics.Arcade.World | null = null;
+
+  private detachPhysicsHandles(): void {
+    this.observedWorld?.off('worldstep', this.onWorldStep, this);
+    this.observedWorld = null;
+    // Collider.destroy is not idempotent: Phaser sets its world to null on destruction.
+    if (this.staticPlayerCollider?.world) this.staticPlayerCollider.destroy();
+    this.staticPlayerCollider = null;
+    this.physicsElapsedMs = 0;
+  }
+
+  private onWorldStep(deltaSeconds: number): void {
+    if (Number.isFinite(deltaSeconds) && deltaSeconds > 0) this.physicsElapsedMs += deltaSeconds * 1000;
+  }
 
   private visibilityProvider: VisibilityProvider | null = null;
   private cueListener: CueListener | null = null;
@@ -194,7 +213,10 @@ export class AISystem implements AISystemAPI {
     walk: WalkGrid,
     options?: { requireExactlyOneRewriter?: boolean },
   ): void {
+    this.detachPhysicsHandles();
     this.scene = scene;
+    this.observedWorld = scene.physics.world;
+    this.observedWorld.on('worldstep', this.onWorldStep, this);
     this.occluders = occluders;
     this.walk = walk;
     this.hasPreviousPlayerPos = false;
@@ -204,7 +226,7 @@ export class AISystem implements AISystemAPI {
     this.pathfinder = new GridPathfinder(walk, occluders, GAME_CONSTANTS.AI.BODY_SIZE);
     this.context = this.createContext();
 
-    if (import.meta.env.DEV && spawns.length > GAME_CONSTANTS.AI.MAX_ACTIVE_ENEMIES) {
+    if (import.meta.env?.DEV && spawns.length > GAME_CONSTANTS.AI.MAX_ACTIVE_ENEMIES) {
       console.warn(
         `[AISystem] ${spawns.length} spawns exceeds MAX_ACTIVE_ENEMIES ` +
           `(${GAME_CONSTANTS.AI.MAX_ACTIVE_ENEMIES}); the map data is probably wrong`
@@ -231,6 +253,7 @@ export class AISystem implements AISystemAPI {
       const enemy = this.spawnEnemy(spawns[i]!, i, spawns.length);
       this.enemies.push(enemy);
       this.sprites.push(enemy.getSprite());
+      this.registerContact(enemy);
     }
   }
 
@@ -249,7 +272,7 @@ export class AISystem implements AISystemAPI {
 
   /**
    * Makes the enemies collide with the wall layer - the only physics collision they take
-   * part in (rule B6). They do not push the player (that would wedge them into corners
+   * part in while mobile (rule B6). They do not push the player (that would wedge them into corners
    * and fight combat's own contact test) and they do not collide with each other (two
    * bodies jam a corridor); separation steers them apart instead.
    *
@@ -259,6 +282,13 @@ export class AISystem implements AISystemAPI {
   addWallCollider(layer: Phaser.Tilemaps.TilemapLayer): Phaser.Physics.Arcade.Collider {
     this.wallLayer = layer;
     return this.scene.physics.add.collider(this.sprites, layer);
+  }
+
+  /** The live roster also includes later gym spawns; only static 20px bases collide. */
+  addStaticPlayerCollider(player: Phaser.Physics.Arcade.Image): void {
+    if (this.staticPlayerCollider?.world) this.staticPlayerCollider.destroy();
+    this.staticPlayerCollider = this.scene.physics.add.collider(player, this.sprites, undefined,
+      (_player, candidate) => this.findEnemy((candidate as Phaser.GameObjects.GameObject).name)?.isStaticObstacle() === true);
   }
 
   /**
@@ -273,6 +303,7 @@ export class AISystem implements AISystemAPI {
     this.enemies.push(enemy);
     const sprite = enemy.getSprite();
     this.sprites.push(sprite);
+    this.registerContact(enemy);
     if (this.wallLayer) this.scene.physics.add.collider(sprite, this.wallLayer);
     return enemy.getId();
   }
@@ -283,9 +314,11 @@ export class AISystem implements AISystemAPI {
   }
 
   destroy(): void {
+    this.detachPhysicsHandles();
     for (const enemy of this.enemies) enemy.destroy();
     this.enemies.length = 0;
     this.sprites.length = 0;
+    this.contacts.length = 0;
     this.wallLayer = null;
     this.visibilityProvider = null;
     this.cueListener = null;
@@ -311,9 +344,17 @@ export class AISystem implements AISystemAPI {
     this.raysThisFrame = 0;
 
     for (const enemy of this.enemies) {
+      this.updateActivity(enemy, dtMs);
       enemy.tickGait(dtMs);
+      if (!enemy.canAct()) {
+        enemy.setVelocity(0, 0);
+        enemy.ai.engaged = false;
+        enemy.ai.pathRequestPending = false;
+        enemy.ai.perceptionAccumMs = 0;
+        continue;
+      }
       this.advanceTimers(enemy, dtMs);
-      this.runPerceptionTick(enemy, dtMs);
+      if (enemy.isAttackAvailable()) this.runPerceptionTick(enemy, dtMs);
       updateBehavior(enemy, this.context);
     }
 
@@ -326,6 +367,32 @@ export class AISystem implements AISystemAPI {
     this.frames++;
   }
 
+  private updateActivity(enemy: Enemy, dtMs: number): void {
+    const ai = enemy.ai;
+    const asleep = enemy.getForm().lexemes.rhythm === 'rhythm_sleep' &&
+      enemy.getActivityVisualState().phase === 'rest';
+    enemy.activityHearingAccumMs = asleep ? enemy.activityHearingAccumMs + dtMs : 0;
+    if (asleep && enemy.activityHearingAccumMs >= GAME_CONSTANTS.AI.PERCEPTION_TICK_MS) {
+      enemy.activityHearingAccumMs = 0;
+      // Explicit noise and damage are already authoritative stimuli, never muffle charges.
+      if (this.playerIsMoving && !ai.pendingDamage && ai.pendingNoiseLevel === null) {
+        const range = enemy.config.profile.hearingRange * ai.perceptionRangeMult * this.context.hearingRangeMult;
+        const distance = Math.hypot(this.playerPos.x - ai.position.x, this.playerPos.y - ai.position.y);
+        if (distance <= range) {
+          const clear = hasLineOfSight(this.occluders, ai.position, this.playerPos);
+          this.raysThisFrame++;
+          if (distance <= range * (clear ? 1 : enemy.config.hearing.wallFactor) &&
+              !this.trySuppressHearingDiscovery(enemy.id)) {
+            ai.pendingNoiseLevel = 'suspicious';
+            ai.pendingNoisePos.x = this.playerPos.x;
+            ai.pendingNoisePos.y = this.playerPos.y;
+          }
+        }
+      }
+    }
+    enemy.tickActivity(dtMs, ai.pendingDamage || ai.pendingNoiseLevel !== null);
+  }
+
   /**
    * Syncs sprites and indicators, and measures what the physics step actually achieved.
    *
@@ -336,6 +403,14 @@ export class AISystem implements AISystemAPI {
    */
   postUpdate(deltaMs: number): void {
     const dtMs = Math.min(deltaMs, GAME_CONSTANTS.AI.DT_CLAMP_MS);
+    // WORLD_STEP runs at Arcade's fixed cadence, often half the display rate. Sprite
+    // positions have now been resolved by Arcade POST_UPDATE. Frames with no physics
+    // step retain the last resolved speed instead of alternating walk/idle at 120Hz.
+    if (this.physicsElapsedMs > 0) {
+      for (const enemy of this.enemies) enemy.measureActualVelocity(this.physicsElapsedMs);
+      this.physicsElapsedMs = 0;
+    }
+    separateContacts(this.contacts, this.walk, dtMs);
     for (const enemy of this.enemies) {
       this.updateStuckWatchdog(enemy, dtMs);
       enemy.syncPositionFromBody();
@@ -344,6 +419,21 @@ export class AISystem implements AISystemAPI {
         : 1;
       enemy.syncVisuals(dtMs, visibility);
     }
+  }
+
+  private registerContact(enemy: Enemy): void {
+    const sprite = enemy.getSprite();
+    this.contacts.push({
+      id: enemy.id, position: sprite, size: enemy.config.bodySize,
+      immovable: floorMotionFor(enemy.getForm()) !== 'motion_patrol', remaining: 0,
+      moveTo(x, y) {
+        const body = sprite.body as Phaser.Physics.Arcade.Body;
+        const vx = body.velocity.x;
+        const vy = body.velocity.y;
+        body.reset(x, y);
+        body.velocity.set(vx, vy);
+      },
+    });
   }
 
   // ------------------------------------------------------------------ queries
@@ -486,6 +576,15 @@ export class AISystem implements AISystemAPI {
     this.context.hearingRangeMult = mult;
   }
 
+  getHearingRangeMultiplier(): number { return this.context.hearingRangeMult; }
+
+  /** Shared proximity-only muffle policy for sleeping bodies and wall hosts. */
+  trySuppressHearingDiscovery(id: string): boolean {
+    if (!this.context.hearingSuppressed) return false;
+    this.hearingAvoidedListener?.(id);
+    return true;
+  }
+
   getStats(): AIStats {
     const pathStats = this.pathfinder?.getStats();
     let pending = 0;
@@ -558,6 +657,8 @@ export class AISystem implements AISystemAPI {
     const spriteIndex = this.sprites.indexOf(enemy.getSprite());
     if (spriteIndex >= 0) this.sprites.splice(spriteIndex, 1);
     this.enemies.splice(index, 1);
+    const contactIndex = this.contacts.findIndex((contact) => contact.id === enemyId);
+    if (contactIndex >= 0) this.contacts.splice(contactIndex, 1);
     enemy.destroy();
   }
 
@@ -859,7 +960,7 @@ export class AISystem implements AISystemAPI {
       );
     }
 
-    const enemy = createEnemy(this.scene, spawn, createEnemyTypeConfig(spawn.type), this.scratch, {
+    const enemy = createEnemy(this.scene, spawn, createEnemyTypeConfig(spawn.type, spawn.form), this.scratch, {
       depth: ENEMY_DEPTH,
     });
 

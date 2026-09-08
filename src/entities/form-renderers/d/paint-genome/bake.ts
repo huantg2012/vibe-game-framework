@@ -1,3 +1,4 @@
+import { paintSurfaceMaterial } from './material';
 /**
  * 占漆拓扑烘焙。挂载与 `check:paint-genome-topology` 共用这一条。
  * 画布数字对齐 `bingRecipeFromForm`（场 144，否则 88），不用占地 32/48/64。
@@ -533,7 +534,7 @@ export function bakePaintGenome(req: PaintGenomeBakeRequest): PaintGenomeBakeRes
   const growth =
     beadGrowth ?? buildPaintGrowthGuide(field.v, w, h, topology, sense, rhythm, req.veinVariant);
   const out = new Uint8ClampedArray(w * h * 4);
-  colorPaintField(out, field.v, w, h, ramp);
+  paintSurfaceMaterial(out, field.v, w, h, req.substrate,req.coverage,req.seed);
   return { buf: { data: out, w, h }, field: field.v, ramp, topology, growth, canvasW: w, canvasH: h };
 }
 

@@ -165,7 +165,7 @@ export class Player {
     return this.image.y + DENSE_PLAYER_GROUND_OFFSET_Y;
   }
 
-  /** Opt-in painter order; rift retains its existing fixed layer configuration. */
+  /** Opt-in painter order shared by purification and ground-sorted rift bodies. */
   setGroundDepth(base: number, floorDepth: number): void {
     this.lag.setDepth(base);
     this.image.setDepth(base + 0.1);

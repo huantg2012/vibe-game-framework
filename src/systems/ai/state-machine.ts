@@ -18,7 +18,8 @@ import type { AlertLevel, Perception } from '@/types/ai-types';
 import type { Enemy } from '@/entities/enemy-factory';
 import type { AIContext } from '@/systems/ai/context';
 import { clearPath, nearestWaypointIndex } from '@/systems/ai/behaviors';
-import { clamp, degToRad, lerp } from '@/utils/math';
+import { clamp, degToRad, lerp, shortestArc } from '@/utils/math';
+import { hasLineOfSight } from '@/utils/grid-raycast';
 
 /** How escalated a state reads to the outside world (contract E1). */
 export function alertLevelOf(state: AIState): AlertLevel {
@@ -59,6 +60,7 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
   // --- priority 1: it was hit. Being attacked needs no confidence. ---
   if (ai.pendingDamage) {
     ai.pendingDamage = false;
+    ai.targetingDecoy = false;
     ai.detection = 1;
     setLastSeen(enemy, ai.pendingDamagePos.x, ai.pendingDamagePos.y, ctx.playerVel);
     ai.losGraceMs = 0;
@@ -420,10 +422,11 @@ function setLastSeen(enemy: Enemy, x: number, y: number, velocity: Readonly<Vect
 function sightTargetPos(enemy: Enemy, ctx: AIContext): Readonly<Vector2> {
   const decoy = ctx.decoyPos;
   if (decoy) {
-    const range = enemy.config.profile.sightRange;
+    const range = enemy.config.sight.rangeCore;
     const dx = decoy.x - enemy.ai.position.x;
     const dy = decoy.y - enemy.ai.position.y;
-    if (dx * dx + dy * dy <= range * range) {
+    const insideCone = Math.abs(shortestArc(Math.atan2(dy, dx) - enemy.ai.facingAngle)) <= enemy.config.sight.halfAngleCore;
+    if (dx * dx + dy * dy <= range * range && insideCone && hasLineOfSight(ctx.occluders, enemy.ai.position, decoy)) {
       enemy.ai.targetingDecoy = true;
       return decoy;
     }

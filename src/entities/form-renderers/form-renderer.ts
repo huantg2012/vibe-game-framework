@@ -36,15 +36,22 @@ export interface FormVisualPose {
   y: number;
   facing4: 'up' | 'down' | 'left' | 'right';
   moving: boolean;
+  /** Resolved world displacement speed, not the AI's requested velocity. */
+  movementSpeed?: number;
   visibility: number;
   signal: FormVisualSignal;
   deltaMs: number;
+  /** Absolute cycle time for isolated volume inspection. Live hosts remain authoritative. */
+  volumeTimeMs?: number;
   attack?: FormAttackPose;
+  activity?: { readonly phase: 'rest' | 'waking' | 'active'; readonly progress: number };
 }
 
 export interface FormVisual {
   update(pose: FormVisualPose): void;
   destroy(): void;
+  /** Floor bodies opt in to scene-owned ground sorting; environmental layers stay fixed. */
+  setGroundDepth?(depth: number): void;
   /** Snapshot source must be copied before this visual is destroyed. */
   getFlashSource?(): FormFlashSource;
   /** DEV-only material/shape comparison; never changes the generated form or behavior. */
@@ -75,6 +82,11 @@ export interface FormAttachContext {
   form: ContaminationForm;
   seed: number;
   depth: number;
+  /** Stable runtime owner for environmental visuals; avoids nearest-core ambiguity. */
+  subjectId?: string;
+  /** Explicit world-floor constraint for surface-bound models. Omit in isolated
+   * model inspection. False covers walls, void and out-of-map coordinates. */
+  isWalkableFloor?: (col: number, row: number) => boolean;
   /** 观察院子当前碎片。方案 D 用来推配色。 */
   fragmentTypeId?: string;
   /**

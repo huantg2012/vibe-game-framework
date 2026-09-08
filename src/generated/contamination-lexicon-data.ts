@@ -114,10 +114,10 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     id: 'doorframe',
     displayToken: '门框',
     residualVerb: '开合',
-    legalOccupancies: ['wall', 'floor'],
-    sortieLegalOccupancies: ['wall', 'floor'],
+    legalOccupancies: ['wall'],
+    sortieLegalOccupancies: ['wall'],
     legalContinuities: ['monolith'],
-    enabledScope: 'sortie',
+    enabledScope: 'gym',
   },
   wall_rust: {
     id: 'wall_rust',
@@ -126,7 +126,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['wall'],
     sortieLegalOccupancies: ['wall'],
     legalContinuities: ['monolith', 'colony'],
-    enabledScope: 'sortie',
+    enabledScope: 'gym',
   },
   fungal_mat: {
     id: 'fungal_mat',
@@ -189,7 +189,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['volume'],
     sortieLegalOccupancies: ['volume'],
     legalContinuities: ['monolith', 'field'],
-    enabledScope: 'sortie',
+    enabledScope: 'gym',
   },
   space_interval: {
     id: 'space_interval',
@@ -198,7 +198,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['volume'],
     sortieLegalOccupancies: ['volume'],
     legalContinuities: ['monolith', 'field'],
-    enabledScope: 'sortie',
+    enabledScope: 'gym',
   },
   street_wreckage: {
     id: 'street_wreckage',
@@ -207,7 +207,7 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['floor'],
     sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith'],
-    enabledScope: 'sortie',
+    enabledScope: 'gym',
   },
   insect_remnant: {
     id: 'insect_remnant',
@@ -234,6 +234,42 @@ export const SUBSTRATE_DATA: Record<string, SubstrateDef> = {
     legalOccupancies: ['floor'],
     sortieLegalOccupancies: ['floor'],
     legalContinuities: ['monolith'],
+    enabledScope: 'sortie',
+  },
+  human_remnant: {
+    id: 'human_remnant',
+    displayToken: '人形残余',
+    residualVerb: '走',
+    legalOccupancies: ['floor'],
+    sortieLegalOccupancies: ['floor'],
+    legalContinuities: ['monolith'],
+    enabledScope: 'sortie',
+  },
+  gas_mass: {
+    id: 'gas_mass',
+    displayToken: '气团',
+    residualVerb: '涌',
+    legalOccupancies: ['volume'],
+    sortieLegalOccupancies: ['volume'],
+    legalContinuities: ['monolith', 'field'],
+    enabledScope: 'sortie',
+  },
+  mist_bank: {
+    id: 'mist_bank',
+    displayToken: '雾团',
+    residualVerb: '漫',
+    legalOccupancies: ['volume'],
+    sortieLegalOccupancies: ['volume'],
+    legalContinuities: ['monolith', 'field'],
+    enabledScope: 'sortie',
+  },
+  dust_swarm: {
+    id: 'dust_swarm',
+    displayToken: '尘絮群',
+    residualVerb: '旋',
+    legalOccupancies: ['volume'],
+    sortieLegalOccupancies: ['volume'],
+    legalContinuities: ['monolith', 'field'],
     enabledScope: 'sortie',
   },
 };
@@ -800,8 +836,8 @@ export const STOP_LOSS_DATA: Record<string, StopLossDef> = {
   },
 };
 
-export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval', 'street_wreckage', 'insect_remnant', 'mammal_remnant', 'worm_remnant'];
-export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval', 'street_wreckage', 'insect_remnant', 'mammal_remnant', 'worm_remnant'];
+export const SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'lamp_pillar', 'doorframe', 'wall_rust', 'fungal_mat', 'oil_film', 'stalk_clump', 'railing_post', 'ash_veil', 'sound_echo', 'light_scatter', 'space_interval', 'street_wreckage', 'insect_remnant', 'mammal_remnant', 'worm_remnant', 'human_remnant', 'gas_mass', 'mist_bank', 'dust_swarm'];
+export const SORTIE_SUBSTRATE_IDS: readonly string[] = ['organic_remnant', 'fungal_mat', 'oil_film', 'stalk_clump', 'ash_veil', 'sound_echo', 'insect_remnant', 'mammal_remnant', 'worm_remnant', 'human_remnant', 'gas_mass', 'mist_bank', 'dust_swarm'];
 export const CONCEPTUAL_SUBSTRATE_IDS: readonly string[] = ['sound_echo', 'light_scatter', 'space_interval'];
 export const PORTFOLIO_IDS: readonly PortfolioId[] = ['jia', 'yi', 'bing', 'ding'];
 export const LEXEME_IDS: readonly string[] = ['motion_patrol', 'motion_turn', 'motion_coalesce', 'motion_wall', 'motion_anchor', 'motion_cluster', 'motion_wind', 'motion_trail', 'sense_cone', 'sense_hear', 'sense_narrow', 'sense_touch', 'sense_scent', 'sense_domain', 'sense_reverse', 'rhythm_open', 'rhythm_sleep', 'rhythm_pulse', 'rhythm_cluster', 'rhythm_sky', 'contact_melee_three', 'contact_adjacent_strike', 'contact_step_chaos', 'contact_volume_chaos'];

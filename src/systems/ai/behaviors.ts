@@ -332,8 +332,17 @@ function updateChase(enemy: Enemy, ctx: AIContext): void {
   const config = GAME_CONSTANTS.AI;
 
   const sees = ai.losGraceMs === 0;
-  const target = sees || !ai.lastSeenPlayerPos ? ctx.playerPos : ai.lastSeenPlayerPos;
-  const distance = distanceTo(ai, ctx.playerPos);
+  const decoy = ai.targetingDecoy ? ctx.decoyPos : null;
+  const seenTarget = decoy ?? ctx.playerPos;
+  const target = sees || !ai.lastSeenPlayerPos ? seenTarget : ai.lastSeenPlayerPos;
+  const distance = distanceTo(ai, seenTarget);
+
+  if (decoy) {
+    ai.engaged = false;
+    if (sees && distance <= config.STANDOFF_DISTANCE) lookAt(ai, decoy.x, decoy.y);
+    else navigateTo(enemy, ctx, target.x, target.y, enemy.config.speeds[AIState.CHASE]);
+    return;
+  }
 
   if (sees && distance <= config.STANDOFF_DISTANCE) ai.engaged = true;
   else if (!sees || distance > config.STANDOFF_DISTANCE + config.STANDOFF_BAND) ai.engaged = false;

@@ -375,36 +375,34 @@ function pickSpreadSeats(
   gap: number,
 ): { col: number; row: number }[] {
   if (floors.length === 0 || want <= 0) return [];
-  let start = floors[0]!;
-  for (const floor of floors) {
-    if (floor.col + floor.row < start.col + start.row) start = floor;
-  }
-  const out: { col: number; row: number }[] = [{ col: start.col, row: start.row }];
-  while (out.length < want) {
-    let best: { col: number; row: number } | null = null;
-    let bestD = -1;
-    for (const floor of floors) {
-      if (out.some((seat) => seat.col === floor.col && seat.row === floor.row)) continue;
-      let nearest = Infinity;
-      for (const seat of out) {
-        const d = chebyshevTiles(seat, floor);
-        if (d < nearest) nearest = d;
-      }
-      if (nearest < gap) continue;
-      if (nearest > bestD) {
-        bestD = nearest;
-        best = { col: floor.col, row: floor.row };
+  if (want === 1) return [{ ...floors[0]! }];
+  // Surface footprints are small (at most a few dozen tiles). Evaluate every
+  // pair/triple so an unfortunate greedy first seat cannot erase a nucleus.
+  let pair: readonly [number, number] | null = null;
+  let pairDistance = -1;
+  let triple: readonly [number, number, number] | null = null;
+  let tripleGap = -1, tripleSpread = -1;
+  for (let a = 0; a < floors.length; a++) for (let b = a + 1; b < floors.length; b++) {
+    const ab = chebyshevTiles(floors[a]!, floors[b]!);
+    if (ab < gap) continue;
+    if (ab > pairDistance) { pairDistance = ab; pair = [a, b]; }
+    if (want < 3) continue;
+    for (let c = b + 1; c < floors.length; c++) {
+      const ac = chebyshevTiles(floors[a]!, floors[c]!), bc = chebyshevTiles(floors[b]!, floors[c]!);
+      const minimum = Math.min(ab, ac, bc), spread = ab + ac + bc;
+      if (minimum < gap) continue;
+      if (minimum > tripleGap || minimum === tripleGap && spread > tripleSpread) {
+        tripleGap = minimum; tripleSpread = spread; triple = [a, b, c];
       }
     }
-    if (!best) break;
-    out.push(best);
   }
-  return out;
+  const selected = triple ?? pair;
+  return selected ? selected.map(i => ({ ...floors[i]! })) : [{ ...floors[0]! }];
 }
 
 /**
  * 2–3 nuclei inside the host's own billing-paint tiles.
- * Prefer Chebyshev ≥ 3; if that cannot seat 2, retry ≥ 2.
+ * Prefer Chebyshev ≥ 3, then ≥ 2. Compact cropped surfaces may use distinct adjacent tiles (≥ 1).
  */
 export function colonyNucleusSeatsInFloors(
   floors: readonly { readonly col: number; readonly row: number }[],
@@ -423,9 +421,13 @@ export function colonyNucleusSeatsInFloors(
   }
   if (unique.length === 0) return [];
   const want = Math.max(countMin, Math.min(countMax, 3));
-  const preferred = pickSpreadSeats(unique, want, preferGap);
-  if (preferred.length >= countMin) return preferred;
-  return pickSpreadSeats(unique, want, fallbackGap);
+  unique.sort((a, b) => a.row - b.row || a.col - b.col);
+  for (const gap of [preferGap, fallbackGap, 1]) {
+    const seats = pickSpreadSeats(unique, want, gap);
+    if (seats.length >= countMin) return seats;
+  }
+  // An invalid one-tile colony is rejected by the host, never duplicated.
+  return [];
 }
 
 function assert(cond: unknown, msg: string): void {

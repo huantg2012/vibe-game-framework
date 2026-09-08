@@ -1,3 +1,6 @@
+import { findTerrainSafeVolumeSeat, isMaterialVolume } from '@/generation/terrain-safe-volume-seat';
+import { createVolumePresenceFrame, updateVolumePresenceFrame, isVolumeDangerousAt, sampleVolumeDensity, type VolumePresenceFrame } from './volume-presence';
+import { doorwayWallSeats } from '@/generation/wall-host-placement';
 /**
  * Non-human contamination hosts: 乙缝核 / 丙簇核 / 丁体积 (DEC-076).
  * Not a second FSM. No corridor collision. Depth stays below the vision mask.
@@ -66,6 +69,13 @@ import {
 import { GameEvent } from '@/types/events';
 import { TileType, type Vector2 } from '@/types/game-types';
 import { degToRad, shortestArc } from '@/utils/math';
+import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
+import type { OccluderGrid } from '@/types/map-types';
+import { TileGrid } from '@/systems/tile-grid';
+import { hasLineOfSight } from '@/utils/grid-raycast';
+import { ActivityClock, ReverseActivityClock, type ActivityVisualState } from '@/systems/ai/activity-state';
+import { BEHAVIOR_PROFILE_DATA } from '@/generated/contamination-capability-data';
+import { ENEMY_DATA } from '@/generated/enemy-data';
 
 const C = GAME_CONSTANTS.CONTAMINATION;
 const TILE = GAME_CONSTANTS.TILE_SIZE;
@@ -82,6 +92,9 @@ interface HostBase {
   id: string;
   form: ContaminationForm;
   hp: number;
+  activity: ActivityClock;
+  noiseRemainingMs: number;
+  hearingAccumMs: number;
   alive: boolean;
   gfx: Phaser.GameObjects.Graphics;
   core: Vector2;
@@ -103,6 +116,9 @@ interface YiHost extends HostBase {
   tile: { col: number; row: number };
   strikeFloors: { col: number; row: number }[];
   windupMs: number;
+  strikeThisFrame: boolean;
+  windupCol: number;
+  windupRow: number;
   telegraph: Phaser.GameObjects.Graphics;
   /** Live walk only. Null when `liveMotion` is false so still-frame ticks cannot wander. */
   walk: YiWalkState | null;
@@ -116,6 +132,11 @@ export interface HostSystemOptions {
    * The map lesson omits this so still-frame ticks stay in use.
    */
   readonly liveMotion?: boolean;
+  readonly occluders?: OccluderGrid;
+  readonly hearingPolicy?: {
+    getRangeMultiplier(): number;
+    suppressDiscovery(id: string): boolean;
+  };
 }
 
 interface BingSeat {
@@ -143,12 +164,15 @@ interface BingHost extends HostBase {
 }
 
 interface DingHost extends HostBase {
+  presence: VolumePresenceFrame | null;
+  previewTimeMs: number | null;
   kind: 'ding';
   box: CorridorAabb;
   awake: boolean;
   live: PixelRect;
   elapsedMs: number;
   moving: boolean;
+  reverseActivity: ReverseActivityClock;
 }
 
 type Host = YiHost | BingHost | DingHost;
@@ -185,6 +209,11 @@ export class ContaminationHostSystem {
   private readonly paintFloors = new Map<string, ReadonlySet<string>>();
   private walkableFloors: ReadonlySet<string> | null = null;
   private readonly visQuery = { x: 0, y: 0 };
+  private occluders: OccluderGrid | null = null;
+  private hearingPolicy: HostSystemOptions['hearingPolicy'];
+  private readonly swingTarget = { x: 0, y: 0 };
+  private playerFacingAngle = 0;
+  private readonly playerPosition = { x: 0, y: 0 };
 
   /**
    * Materialize 乙/丙/丁 from `layout.contaminationDraw`. Does not call `drawSortie`.
@@ -204,6 +233,8 @@ export class ContaminationHostSystem {
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
     this.liveMotion = options?.liveMotion === true;
+    this.hearingPolicy = options?.hearingPolicy;
+    this.occluders = options?.occluders ?? new TileGrid(layout.tileMap);
     this.walkableFloors = walkableFloorKeys(layout.tileMap.tiles);
 
     const pins = layout.contaminationPins;
@@ -214,11 +245,11 @@ export class ContaminationHostSystem {
     let bingSlot = 0;
     for (const form of drawn.forms) {
       if (form.portfolio === 'jia') continue;
-      if (form.portfolio === 'yi') this.spawnYi(scene, form, pins.wallEdges[0]);
+      if (form.portfolio === 'yi') this.spawnYi(scene, form, this.wallSeat(form, pins));
       else if (form.portfolio === 'bing') {
         this.spawnBing(scene, form, pins.paintFloors[bingSlot], bingSlot, false);
         bingSlot++;
-      } else if (form.portfolio === 'ding') this.spawnDing(scene, form, pins.corridorAabbs[0]);
+      } else if (form.portfolio === 'ding') this.spawnDing(scene, form, this.volumeSeat(form, pins));
     }
   }
 
@@ -241,6 +272,8 @@ export class ContaminationHostSystem {
     this.liveMotion = false;
     this.paintFloors.clear();
     this.walkableFloors = null;
+    this.occluders = null;
+    this.hearingPolicy = undefined;
   }
 
   /**
@@ -263,9 +296,13 @@ export class ContaminationHostSystem {
     this.getVisibility = getVisibilityAt;
     this.spawnSeq = 0;
     this.liveMotion = options?.liveMotion === true;
+    this.hearingPolicy = options?.hearingPolicy;
+    this.occluders = options?.occluders ?? null;
+    this.walkableFloors = null;
   }
 
   clearHosts(): void {
+    this.paintFloors.clear();
     for (const host of this.hosts) {
       host.gfx.destroy();
       host.marks?.destroy();
@@ -281,6 +318,7 @@ export class ContaminationHostSystem {
         keep.push(host);
         continue;
       }
+      this.paintFloors.delete(host.id);
       host.gfx.destroy();
       host.marks?.destroy();
       if (host.kind === 'yi') host.telegraph.destroy();
@@ -294,9 +332,9 @@ export class ContaminationHostSystem {
     if (!scene || !pins) return null;
     const before = this.hosts.length;
     const slot = this.spawnSeq++;
-    if (form.portfolio === 'yi') this.spawnYi(scene, form, pins.wallEdges[0], slot);
+    if (form.portfolio === 'yi') this.spawnYi(scene, form, this.wallSeat(form, pins, slot), slot);
     else if (form.portfolio === 'bing') this.spawnBing(scene, form, pins.paintFloors[0], slot, true);
-    else if (form.portfolio === 'ding') this.spawnDing(scene, form, pins.corridorAabbs[0], slot);
+    else if (form.portfolio === 'ding') this.spawnDing(scene, form, this.volumeSeat(form, pins), slot);
     else return null;
     return this.hosts[before]?.id ?? null;
   }
@@ -317,16 +355,46 @@ export class ContaminationHostSystem {
 
   /**
    * Register world floor tiles that currently show this host's paint genome.
-   * Empty clears the row so ticks fall back to nucleus / pin Chebyshev.
+   * An empty registered surface has no danger; only never-registered hosts use the legacy fallback.
    * Paint never writes collision.
    */
   setStepFloors(hostId: string, floors: readonly { readonly col: number; readonly row: number }[]): void {
-    if (floors.length === 0) {
-      this.paintFloors.delete(hostId);
+    const legal = new Set<string>();
+    for (const floor of floors) {
+      if (this.isLegalPaintFloor(floor.col, floor.row)) legal.add(`${floor.col},${floor.row}`);
+    }
+    this.paintFloors.set(hostId, legal);
+    if (legal.size === 0) {
+      this.disablePaintDeployment(hostId);
       return;
     }
-    this.paintFloors.set(hostId, new Set(floors.map((floor) => `${floor.col},${floor.row}`)));
     this.relocateBingColonyNuclei(hostId);
+  }
+
+  private disablePaintDeployment(hostId: string): void {
+    // Invalid deployment is not a player kill; do not emit rewards/death noise.
+    const host = this.hosts.find(h => h.id === hostId && h.kind === 'bing');
+    if (host?.kind !== 'bing') return;
+    host.alive = false;
+    host.hp = 0;
+    for (const nucleus of host.nuclei) nucleus.alive = false;
+    host.gfx.clear();
+    host.marks?.clear();
+  }
+
+  private isLegalPaintFloor(col: number, row: number): boolean {
+    if (!Number.isInteger(col) || !Number.isInteger(row)) return false;
+    if (this.walkableFloors && !this.walkableFloors.has(`${col},${row}`)) return false;
+    if (!this.occluders) return true; // External legacy gym callers may lack terrain.
+    const grid = this.occluders as OccluderGrid & { isWalkable?: (col: number, row: number) => boolean };
+    if (col < 0 || row < 0 || col >= grid.cols || row >= grid.rows) return false;
+    return grid.isWalkable ? grid.isWalkable(col, row) : !grid.isOpaque(col, row);
+  }
+
+  /** Query the same live tile gate used by chaos; renderers may dim dead colony regions. */
+  isPaintFloorActive(hostId: string, col: number, row: number): boolean {
+    const host = this.hosts.find(h => h.id === hostId && h.alive);
+    return !!host && host.kind === 'bing' && this.bingOnPaint(host, col, row);
   }
 
   /** Hide stand-in Graphics. Combat / chaos / occupancy ticks stay on.
@@ -345,7 +413,9 @@ export class ContaminationHostSystem {
       const attach = wallAttachForTile(host.tile, host.strikeFloors, TILE);
       return { kind: 'wall', x: host.core.x, y: host.core.y, attach };
     }
-    if (host.kind === 'bing') return { kind: 'cluster', x: host.core.x, y: host.core.y };
+    // A colony's first reachable nucleus may move inside its surface; the
+    // surface texture and registered world footprint must keep their birth anchor.
+    if (host.kind === 'bing') return { kind: 'cluster', x: host.pin.cx, y: host.pin.cy };
     if (this.liveMotion) {
       return {
         kind: 'volume',
@@ -367,9 +437,67 @@ export class ContaminationHostSystem {
   getVisualSignal(hostId: string): HostVisualSignal {
     const host = this.hosts.find((h) => h.id === hostId && h.alive);
     if (!host) return 'idle';
-    if (host.kind === 'yi') return host.windupMs >= 0 ? 'strike' : 'idle';
+    if (host.kind === 'yi') return host.windupMs >= 0 || host.strikeThisFrame ? 'strike' : 'idle';
     if (host.kind === 'bing') return isPaintInflated(host.phase) ? 'inflated' : 'idle';
     return host.awake ? 'awake' : 'idle';
+  }
+
+  /** The wall host's real hazard clock. It must not be replaced by a decorative pulse. */
+  getAttackVisualState(hostId: string): FormAttackPose | undefined {
+    const host = this.hosts.find((h) => h.id === hostId && h.alive);
+    if (!host || host.kind !== 'yi') return undefined;
+    if (host.strikeThisFrame) return { phase: 'strike', progress: 0 };
+    if (host.windupMs >= 0) return {
+      phase: 'windup', progress: Math.min(1, host.windupMs / C.ADJACENT_STRIKE_WINDUP_MS),
+    };
+    return { phase: 'idle', progress: 0 };
+  }
+
+  /** Shared by actual contact, renderer and inspection. Echo retains its prior contract. */
+  getVolumePresenceFrame(hostId: string): Readonly<VolumePresenceFrame> | undefined {
+    const host = this.hosts.find(h => h.id === hostId && h.alive);
+    return host?.kind === 'ding' ? host.presence ?? undefined : undefined;
+  }
+
+  setVolumePreviewTime(hostId: string, timeMs: number | null, activeOverride?: boolean): void {
+    const host = this.hosts.find(h => h.id === hostId && h.alive);
+    if (!host || host.kind !== 'ding' || !host.presence) return;
+    host.previewTimeMs = timeMs === null ? null : Math.max(0, timeMs);
+    this.refreshVolumePresence(host, host.previewTimeMs ?? host.elapsedMs, timeMs === null ? this.volumeActive(host) : activeOverride ?? this.volumeActive(host));
+  }
+
+  private readonly volumeFloorAllowed = (col: number, row: number): boolean => this.isLegalPaintFloor(col, row);
+
+  private volumeActive(host: DingHost): boolean {
+    return host.activity.visual.phase === 'active' &&
+      (host.form.lexemes.sense !== 'sense_reverse' || host.reverseActivity.active);
+  }
+
+  private refreshVolumePresence(host: DingHost, elapsedMs: number, active: boolean): void {
+    if (!host.presence) return;
+    updateVolumePresenceFrame(host.presence, { substrate: host.form.substrate, coverage: host.form.coverage,
+      elapsedMs, rect: host.live, active, isWalkableFloor: this.volumeFloorAllowed });
+    if (host.presence.hasPresence) { host.core.x = host.presence.coreX; host.core.y = host.presence.coreY; }
+  }
+
+  getActivityVisualState(hostId: string): Readonly<ActivityVisualState> | undefined {
+    const host = this.hosts.find((h) => h.id === hostId && h.alive);
+    if (!host) return undefined;
+    const rhythm = host.activity.visual;
+    if (host.kind !== 'ding' || host.form.lexemes.sense !== 'sense_reverse') return rhythm;
+    const sense = host.reverseActivity.visual;
+    // An observation gate and a pulse gate can coexist. Show the tighter opening;
+    // neither one's active phase may visually override the other's closed state.
+    if (rhythm.phase === 'active') return sense;
+    if (sense.phase === 'active') return rhythm;
+    return rhythm.progress <= sense.progress ? rhythm : sense;
+  }
+
+  reportNoise(pos: Readonly<Vector2>, radius: number): void {
+    for (const host of this.hosts) {
+      if (!host.alive || Math.hypot(pos.x - host.core.x, pos.y - host.core.y) > radius) continue;
+      host.noiseRemainingMs = BEHAVIOR_PROFILE_DATA.rhythm_sleep!.wakeMs + C.ADJACENT_STRIKE_WINDUP_MS;
+    }
   }
 
   /** Current 乙 telegraph cells. Empty for 丙/丁. Scheme D reads this while signal==='strike'. */
@@ -416,7 +544,7 @@ export class ContaminationHostSystem {
     if (this.liveMotion) {
       const px = playerCol * TILE + TILE / 2;
       const py = playerRow * TILE + TILE / 2;
-      return vis || pointInRect({ x: px, y: py }, host.live);
+      return vis || (host.presence ? sampleVolumeDensity(host.presence, px, py) >= host.presence.dangerThreshold : pointInRect({ x: px, y: py }, host.live));
     }
     const inside =
       playerCol >= host.box.minCol &&
@@ -426,10 +554,13 @@ export class ContaminationHostSystem {
     return vis || inside;
   }
 
-  update(dt: number, playerPos: Readonly<Vector2>): void {
+  update(dt: number, playerPos: Readonly<Vector2>, playerIsMoving = false, playerFacingAngle = 0): void {
     const combat = this.combat;
-    const dtMs = dt;
+    const dtMs = Number.isFinite(dt) ? Math.max(0, Math.min(dt, GAME_CONSTANTS.AI.DT_CLAMP_MS)) : 0;
     this.volumeSight = 1;
+    this.playerFacingAngle = playerFacingAngle;
+    this.playerPosition.x = playerPos.x;
+    this.playerPosition.y = playerPos.y;
     const col = Math.floor(playerPos.x / TILE);
     const row = Math.floor(playerPos.y / TILE);
     const swung = combat?.getAttackState().phase === 'active';
@@ -442,23 +573,52 @@ export class ContaminationHostSystem {
         if (host.kind === 'yi') host.telegraph.setVisible(false);
         continue;
       }
-      if (combat && swung && !this.swingHit) {
+      host.noiseRemainingMs = Math.max(0, host.noiseRemainingMs - dtMs);
+      host.hearingAccumMs += dtMs;
+      if (host.hearingAccumMs >= GAME_CONSTANTS.AI.PERCEPTION_TICK_MS) {
+        host.hearingAccumMs = 0;
+        const asleep = host.form.lexemes.rhythm === 'rhythm_sleep' && host.activity.visual.phase === 'rest';
+        const activeHearing = host.form.lexemes.sense === 'sense_hear' && host.activity.visual.phase === 'active';
+        if (playerIsMoving && (asleep || activeHearing)) {
+          const hear = ENEMY_DATA.rewriter;
+          const clear = !this.occluders || hasLineOfSight(this.occluders, playerPos, host.core);
+          const range = hear.hearingRange * (clear ? 1 : hear.hearingWallFactor) *
+            (this.hearingPolicy?.getRangeMultiplier() ?? 1);
+          if (Math.hypot(playerPos.x - host.core.x, playerPos.y - host.core.y) <= range) {
+            // No repeated charge for a host already alerted by a real report/footstep.
+            const suppressed = host.noiseRemainingMs === 0 && this.hearingPolicy?.suppressDiscovery(host.id);
+            if (!suppressed) host.noiseRemainingMs = BEHAVIOR_PROFILE_DATA.rhythm_sleep!.wakeMs + C.ADJACENT_STRIKE_WINDUP_MS;
+          }
+        }
+      }
+      const touching = host.kind === 'yi' && host.strikeFloors.some(f => f.col === col && f.row === row);
+      host.activity.tick(dtMs, host.noiseRemainingMs > 0, !touching && host.noiseRemainingMs === 0);
+      const stop = this.liveMotion ? resolveStopLoss(host.form) : null;
+      const hittable = !this.liveMotion || (stop !== null && stop !== 'illegal' && stop.hittable);
+      if (combat && swung && !this.swingHit && hittable) {
         if (this.liveMotion && host.kind === 'bing' && host.nuclei.length > 0) {
           const hit = host.nuclei.find((n) => n.alive && this.coreInSwing(playerPos, combat.getLockedAttackAngle(), n.core));
           if (hit) {
             this.hitCore(host, hit);
             this.swingHit = true;
           }
-        } else if (this.coreInSwing(playerPos, combat.getLockedAttackAngle(), host.core)) {
+        } else if (this.coreInSwing(playerPos, combat.getLockedAttackAngle(), host.core, host)) {
           this.hitCore(host);
           this.swingHit = true;
         }
       }
+      if (!host.alive) continue;
       if (host.kind === 'yi') this.tickYi(host, col, row, dtMs);
       else if (host.kind === 'bing') this.tickBing(host, col, row, dtMs);
       else this.tickDing(host, col, row, playerPos, dtMs);
     }
     this.lastPlayerTile = { col, row };
+  }
+
+  private wallSeat(form: ContaminationForm, pins: ContaminationPins, slot = 0): WallEdgePolyline | undefined {
+    if (form.substrate !== 'doorframe' || !this.occluders) return pins.wallEdges[0];
+    const seats = doorwayWallSeats(pins.wallEdges, this.occluders);
+    return seats.length ? seats[slot % seats.length] : undefined;
   }
 
   private spawnYi(
@@ -505,6 +665,8 @@ export class ContaminationHostSystem {
       kind: 'yi',
       id: `ENM_YI_${String(slot + 1).padStart(2, '0')}`,
       form,
+      activity: new ActivityClock(form.lexemes.rhythm, `yi:${slot}:${core.x}:${core.y}`),
+      noiseRemainingMs: 0, hearingAccumMs: 0,
       hp: C.CORE_MAX_HEALTH,
       alive: true,
       gfx,
@@ -512,6 +674,9 @@ export class ContaminationHostSystem {
       tile: { col: tile.col, row: tile.row },
       strikeFloors,
       windupMs: -1,
+      strikeThisFrame: false,
+      windupCol: -1,
+      windupRow: -1,
       telegraph,
       walk,
       floorUniverse: floors,
@@ -551,6 +716,8 @@ export class ContaminationHostSystem {
       kind: 'bing',
       id: `ENM_BING_${String(slot + 1).padStart(2, '0')}`,
       form,
+      activity: new ActivityClock(form.lexemes.rhythm, `bing:${slot}:${core.x}:${core.y}`),
+      noiseRemainingMs: 0, hearingAccumMs: 0,
       hp: C.CORE_MAX_HEALTH,
       alive: true,
       gfx,
@@ -560,6 +727,12 @@ export class ContaminationHostSystem {
       nuclei,
       marks,
     });
+  }
+
+  private volumeSeat(form: ContaminationForm, pins: ContaminationPins): CorridorAabb | undefined {
+    return isMaterialVolume(form.substrate)
+      ? findTerrainSafeVolumeSeat(pins.corridorAabbs, this.volumeFloorAllowed)
+      : pins.corridorAabbs[0];
   }
 
   private spawnDing(
@@ -585,8 +758,13 @@ export class ContaminationHostSystem {
     const marks = this.liveMotion ? scene.add.graphics().setDepth(C.VOLUME_DEPTH + 1) : null;
     this.hosts.push({
       kind: 'ding',
+      presence: isMaterialVolume(form.substrate) ? createVolumePresenceFrame() : null,
+      previewTimeMs: null,
       id: `ENM_DING_${String(slot + 1).padStart(2, '0')}`,
       form,
+      activity: new ActivityClock(form.lexemes.rhythm, `ding:${slot}:${core.x}:${core.y}`),
+      noiseRemainingMs: 0, hearingAccumMs: 0,
+      reverseActivity: new ReverseActivityClock(),
       hp: C.CORE_MAX_HEALTH,
       alive: true,
       gfx,
@@ -598,6 +776,8 @@ export class ContaminationHostSystem {
       moving: false,
       marks,
     });
+    const host = this.hosts[this.hosts.length - 1] as DingHost;
+    this.refreshVolumePresence(host, 0, this.volumeActive(host));
   }
 
   private tickYi(host: YiHost, col: number, row: number, dtMs: number): void {
@@ -628,10 +808,11 @@ export class ContaminationHostSystem {
   }
 
   private tickYiLive(host: YiHost, col: number, row: number, dtMs: number): void {
+    host.strikeThisFrame = false;
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal') return;
     const walk = host.walk;
-    if (walk) {
+    if (walk && host.activity.visual.phase === 'active') {
       const stepped = stepYiWalk(walk, host.form.lexemes.motion, dtMs, TILE, host.floorUniverse);
       walk.along = stepped.along;
       walk.dir = stepped.dir;
@@ -640,14 +821,27 @@ export class ContaminationHostSystem {
       host.core = stepped.core;
       host.strikeFloors = stepped.strikeFloors.map((f) => ({ col: f.col, row: f.row }));
       host.moving = stepped.moving;
+    } else {
+      host.moving = false;
     }
     const channel = resolveContactChannel(host.form.portfolio, host.form.lexemes.contact);
     const canStrike = channel === 'adjacent_hp';
-    const onStrike = canStrike && host.strikeFloors.some((f) => f.col === col && f.row === row);
+    const adjacent = host.strikeFloors.some((f) => f.col === col && f.row === row);
+    const committed = host.windupMs >= 0 && host.windupCol === col && host.windupRow === row;
+    const hears = host.form.lexemes.sense !== 'sense_hear' || host.noiseRemainingMs > 0;
+    const sees = host.form.lexemes.sense !== 'sense_narrow' || this.wallSeesPlayer(host);
+    const onStrike = canStrike && adjacent && (committed || (host.activity.visual.phase === 'active' && hears && sees));
     host.telegraph.clear();
     if (onStrike) {
-      if (host.windupMs < 0) host.windupMs = 0;
-      host.windupMs += dtMs;
+      // A new threatened cell is shown for a frame before its timer advances. A large
+      // delta or stepping between adjacent cells cannot bypass the visible warning.
+      if (host.windupMs < 0 || host.windupCol !== col || host.windupRow !== row) {
+        host.windupMs = 0;
+        host.windupCol = col;
+        host.windupRow = row;
+      } else {
+        host.windupMs += dtMs;
+      }
       const cell = host.strikeFloors.find((f) => f.col === col && f.row === row)!;
       if (!this.skipPaint) {
         host.telegraph.fillStyle(0x1aad96, 0.55);
@@ -655,13 +849,27 @@ export class ContaminationHostSystem {
       }
       if (host.windupMs >= C.ADJACENT_STRIKE_WINDUP_MS) {
         this.combat?.applyHazardHit(host.id, C.ADJACENT_STRIKE_DAMAGE);
-        host.windupMs = 0;
+        host.strikeThisFrame = true;
+        host.windupMs = -1;
       }
     } else {
       host.windupMs = -1;
     }
     this.paintYi(host.gfx, host.core, onStrike);
     this.paintMarks(host);
+  }
+
+  private wallSeesPlayer(host: YiHost): boolean {
+    const attach = wallAttachForTile(host.tile, host.strikeFloors, TILE);
+    const x = this.playerPosition.x;
+    const y = this.playerPosition.y;
+    const facing = Math.atan2(attach.ny, attach.nx);
+    const bearing = Math.atan2(y - host.core.y, x - host.core.x);
+    if (Math.abs(shortestArc(bearing - facing)) > degToRad(BEHAVIOR_PROFILE_DATA.sense_narrow!.coneDeg / 2)) return false;
+    this.visQuery.x = host.core.x + attach.nx * .5;
+    this.visQuery.y = host.core.y + attach.ny * .5;
+    this.swingTarget.x = x; this.swingTarget.y = y;
+    return !this.occluders || hasLineOfSight(this.occluders, this.visQuery, this.swingTarget);
   }
 
   private tickBing(host: BingHost, col: number, row: number, dtMs: number): void {
@@ -723,14 +931,17 @@ export class ContaminationHostSystem {
    * Field oil film: genome paint tiles. No row → pin Chebyshev ≤ 1.
    */
   private bingOnPaint(host: BingHost, col: number, row: number): boolean {
+    if (!this.isLegalPaintFloor(col, row)) return false;
+    const floors = this.paintFloors.get(host.id);
+    // Registered visual coverage is authoritative even when it is empty.
+    if (floors && !floors.has(`${col},${row}`)) return false;
     if (host.nuclei.length > 0) {
       return host.nuclei.some(
         (nucleus) =>
           nucleus.alive && chebyshevTiles({ col, row }, { col: nucleus.floorCol, row: nucleus.floorRow }) <= 1,
       );
     }
-    const floors = this.paintFloors.get(host.id);
-    if (floors && floors.size > 0) return floors.has(`${col},${row}`);
+    if (floors) return floors.has(`${col},${row}`);
     return Math.abs(col - host.pin.floorCol) <= 1 && Math.abs(row - host.pin.floorRow) <= 1;
   }
 
@@ -741,7 +952,7 @@ export class ContaminationHostSystem {
     playerPos: Readonly<Vector2>,
     dtMs: number,
   ): void {
-    if (this.liveMotion) this.tickDingLive(host, playerPos, dtMs);
+    if (this.liveMotion || host.presence) this.tickDingLive(host, playerPos, dtMs);
     else this.tickDingSortie(host, col, row, playerPos, dtMs);
   }
 
@@ -772,9 +983,12 @@ export class ContaminationHostSystem {
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal') return;
     const prev = host.live;
-    host.elapsedMs += dtMs;
-    host.live = dingLiveRect(host.box, host.form.lexemes.motion, host.elapsedMs, TILE);
-    host.core = rectCenter(host.live);
+    if (host.activity.visual.phase === 'active') host.elapsedMs += dtMs;
+    // New material volumes own their complete shape cycle; do not compound it
+    // with the legacy echo box morph (which can flip a near-square mist axis).
+    if (!host.presence) host.live = dingLiveRect(host.box, host.form.lexemes.motion, host.elapsedMs, TILE);
+    if (!host.presence) host.core = rectCenter(host.live);
+    else this.refreshVolumePresence(host, host.previewTimeMs ?? host.elapsedMs, this.volumeActive(host));
     host.moving =
       Math.abs(host.live.x - prev.x) > 0.05 ||
       Math.abs(host.live.y - prev.y) > 0.05 ||
@@ -782,14 +996,69 @@ export class ContaminationHostSystem {
       Math.abs(host.live.h - prev.h) > 0.05;
     const vis = this.getVisibility?.(host.core) ?? 0;
     host.awake = vis > 0;
+    if (host.form.lexemes.sense === 'sense_reverse') {
+      host.reverseActivity.tick(dtMs, this.watchingVolume(host, playerPos));
+      host.awake = host.reverseActivity.active;
+    }
+    host.awake = host.awake && host.activity.visual.phase === 'active';
     const channel = resolveContactChannel(host.form.portfolio, host.form.lexemes.contact);
-    const inside = pointInRect(playerPos, host.live);
-    if (channel === 'volume_chaos_sight' && inside) {
+    const active = this.volumeActive(host);
+    this.refreshVolumePresence(host, host.previewTimeMs ?? host.elapsedMs, active);
+    const inside = host.presence ? isVolumeDangerousAt(host.presence, playerPos.x, playerPos.y) : pointInRect(playerPos, host.live);
+    if (channel === 'volume_chaos_sight' && inside && active) {
       this.volumeSight = C.VOLUME_SIGHT_MULT;
       this.chaos?.addChaos('volume_field', C.VOLUME_CHAOS_PER_SEC * (dtMs / 1000));
     }
     this.paintDing(host.gfx, host.box, host.core, host.awake, host.live);
     this.paintMarks(host);
+  }
+
+  private watchingVolume(host: DingHost, playerPos: Readonly<Vector2>): boolean {
+    if (host.presence) {
+      const f = host.presence, dx = Math.cos(this.playerFacingAngle), dy = Math.sin(this.playerFacingAngle);
+      if (sampleVolumeDensity(f, playerPos.x, playerPos.y) >= f.dangerThreshold) {
+        const bearing = Math.atan2(host.core.y - playerPos.y, host.core.x - playerPos.x);
+        if (Math.abs(shortestArc(bearing - this.playerFacingAngle)) > Math.PI / 3) return false;
+        return (!this.getVisibility || this.getVisibility(host.core) > 0) &&
+          (!this.occluders || hasLineOfSight(this.occluders, playerPos, host.core));
+      }
+      const limit = Math.hypot(playerPos.x - (f.rect.x + f.rect.w / 2), playerPos.y - (f.rect.y + f.rect.h / 2)) + Math.hypot(f.rect.w, f.rect.h);
+      for (let d = 0; d <= limit; d += 4) {
+        this.visQuery.x = playerPos.x + dx * d; this.visQuery.y = playerPos.y + dy * d;
+        if (sampleVolumeDensity(f, this.visQuery.x, this.visQuery.y) < f.dangerThreshold) continue;
+        if (this.getVisibility && this.getVisibility(this.visQuery) <= 0) continue;
+        return !this.occluders || hasLineOfSight(this.occluders, playerPos, this.visQuery);
+      }
+      return false;
+    }
+    const rect = host.live;
+    if (pointInRect(playerPos, rect)) {
+      const bearing = Math.atan2(host.core.y - playerPos.y, host.core.x - playerPos.x);
+      if (Math.abs(shortestArc(bearing - this.playerFacingAngle)) > Math.PI / 3) return false;
+      this.visQuery.x = host.core.x; this.visQuery.y = host.core.y;
+    } else {
+      const dx = Math.cos(this.playerFacingAngle);
+      const dy = Math.sin(this.playerFacingAngle);
+      let near = 0; let far = Infinity;
+      for (let axis = 0; axis < 2; axis++) {
+        const start = axis === 0 ? playerPos.x : playerPos.y;
+        const direction = axis === 0 ? dx : dy;
+        const min = axis === 0 ? rect.x : rect.y;
+        const max = min + (axis === 0 ? rect.w : rect.h);
+        if (Math.abs(direction) < .00001) {
+          if (start < min || start > max) return false;
+        } else {
+          const a = (min - start) / direction;
+          const b = (max - start) / direction;
+          near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
+          if (far < near) return false;
+        }
+      }
+      this.visQuery.x = playerPos.x + dx * (near + .01);
+      this.visQuery.y = playerPos.y + dy * (near + .01);
+      if (this.getVisibility && this.getVisibility(this.visQuery) <= 0) return false;
+    }
+    return !this.occluders || hasLineOfSight(this.occluders, playerPos, this.visQuery);
   }
 
   private spawnBingNuclei(
@@ -827,7 +1096,7 @@ export class ContaminationHostSystem {
       const comma = key.indexOf(',');
       const col = Number(key.slice(0, comma));
       const row = Number(key.slice(comma + 1));
-      if (this.walkableFloors && !this.walkableFloors.has(key)) continue;
+      if (!this.isLegalPaintFloor(col, row)) continue;
       tiles.push({ col, row });
     }
     if (tiles.length === 0) return;
@@ -838,7 +1107,10 @@ export class ContaminationHostSystem {
       C.COLONY_NUCLEUS_MIN_TILE_GAP,
       2,
     );
-    if (seats.length === 0) return;
+    if (seats.length < C.COLONY_NUCLEUS_COUNT_MIN) {
+      this.disablePaintDeployment(hostId);
+      return;
+    }
     host.nuclei = seats.map((seat) => ({
       core: { x: seat.col * TILE + TILE / 2, y: seat.row * TILE + TILE / 2 },
       hp: C.CORE_MAX_HEALTH,
@@ -909,18 +1181,28 @@ export class ContaminationHostSystem {
     this.paintCore(gfx, host.core, 0x2ae6c8, size, true, true);
   }
 
-  private coreInSwing(origin: Readonly<Vector2>, angle: number, core: Vector2): boolean {
+  private coreInSwing(origin: Readonly<Vector2>, angle: number, core: Vector2, host?: Host): boolean {
     const combat = GAME_CONSTANTS.COMBAT;
     const dx = core.x - origin.x;
     const dy = core.y - origin.y;
     const dist = Math.hypot(dx, dy);
     if (dist > combat.ATTACK_RANGE) return false;
-    if (dist < combat.ATTACK_MIN_ANGLE_BYPASS) return true;
     const bearing = Math.atan2(dy, dx);
-    return Math.abs(shortestArc(bearing - angle)) <= degToRad(combat.ATTACK_HALF_ANGLE);
+    if (dist >= combat.ATTACK_MIN_ANGLE_BYPASS &&
+        Math.abs(shortestArc(bearing - angle)) > degToRad(combat.ATTACK_HALF_ANGLE)) return false;
+    if (!this.occluders) return true; // Older external practice callers may have no terrain.
+    this.swingTarget.x = core.x;
+    this.swingTarget.y = core.y;
+    if (host?.kind === 'yi') {
+      const attach = wallAttachForTile(host.tile, host.strikeFloors, TILE);
+      this.swingTarget.x += attach.nx * .5;
+      this.swingTarget.y += attach.ny * .5;
+    }
+    return hasLineOfSight(this.occluders, origin, this.swingTarget);
   }
 
   private hitCore(host: Host, nucleus?: BingNucleus): void {
+    host.noiseRemainingMs = BEHAVIOR_PROFILE_DATA.rhythm_sleep!.wakeMs + C.ADJACENT_STRIKE_WINDUP_MS;
     if (this.liveMotion) {
       const stop = resolveStopLoss(host.form);
       if (stop === 'illegal' || !stop.hittable) return;

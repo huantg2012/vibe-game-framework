@@ -1,3 +1,5 @@
+import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH, type GroundDepthTarget } from '@/systems/ground-depth';
+import { productionModelFor } from '@/entities/form-renderers/d/production-models';
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
 /**
  * Rift Scene - core gameplay.
@@ -129,7 +131,9 @@ export class RiftScene extends Phaser.Scene {
   private readonly minimapVisibilityQuery: Vector2 = { x: 0, y: 0 };
   /** Reused for scheme D visibility samples (乙 seam is offset 1px into the floor). */
   private readonly formVisQuery: Vector2 = { x: 0, y: 0 };
+  private groundDepthSorter: GroundDepthSorter | null = null;
   private readonly formVisuals = new Map<string, FormVisual>();
+  private formFloorGrid: TileGrid | null = null;
 
   constructor() {
     super({ key: 'RiftScene' });
@@ -149,6 +153,7 @@ export class RiftScene extends Phaser.Scene {
     }
     const tileMap = generated.tileMap;
     const grid = new TileGrid(tileMap);
+    this.formFloorGrid = grid;
     const layout = generated;
     this.layoutDebug = {
       seed: generated.seed,
@@ -189,9 +194,13 @@ export class RiftScene extends Phaser.Scene {
     // The AI reads the same grid twice through two different contracts: as an occluder
     // grid for line of sight, as a walk grid for pathfinding. Slice 1 derives both from
     // one tile array, but low walls or chasms would break that equivalence later.
-    this.ai.create(this, layout.enemySpawns, grid, grid);
+    const hearingCount = layout.contaminationDraw.forms.filter(form => form.lexemes.sense === 'sense_hear').length;
+    if (hearingCount !== 1) throw new Error(`Rift hearing budget invalid: ${hearingCount}`);
+    const floorHearingCount = layout.enemySpawns.filter(spawn => spawn.form?.lexemes.sense === 'sense_hear').length;
+    this.ai.create(this, layout.enemySpawns, grid, grid, { requireExactlyOneRewriter: floorHearingCount === 1 });
     this.ai.setVisibilityProvider(this.visibilityAt);
     this.ai.addWallCollider(layer);
+    this.ai.addStaticPlayerCollider(this.player.getSprite());
 
     // Combat gets a read-only view of the AI (`getEnemies` / `getEnemyById`) plus one
     // callback. Noise is the only cross-system output that does not go through the bus: a
@@ -222,7 +231,12 @@ export class RiftScene extends Phaser.Scene {
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
     });
-    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true });
+    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: grid,
+      hearingPolicy: {
+        getRangeMultiplier: () => this.ai.getHearingRangeMultiplier(),
+        suppressDiscovery: (id) => this.ai.trySuppressHearingDiscovery(id),
+      },
+    });
 
     this.search.create(this, layout.kindlingNodes, layout.contaminantNodes, {
       overlayRoot: getDomUiRoot(),
@@ -377,7 +391,7 @@ export class RiftScene extends Phaser.Scene {
     // state; one frame of lag on that at 30 px reads as "it is right there and doing
     // nothing".
     this.combat.update(delta);
-    this.hosts.update(delta, this.player.getPosition());
+    this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
 
     const tileSize = GAME_CONSTANTS.TILE_SIZE;
     const p = this.player.getPosition();
@@ -460,6 +474,7 @@ export class RiftScene extends Phaser.Scene {
     // this frame produced, so an enemy is never drawn into darkness (rule R4).
     this.ai.postUpdate(delta);
     this.syncSchemeDPoses(delta);
+    this.groundDepthSorter?.update();
     // Minimap after visibility so explored tiles match this frame's cone + occlusion.
     this.syncMinimapExploration();
     this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
@@ -720,6 +735,7 @@ export class RiftScene extends Phaser.Scene {
     level: NoiseLevel
   ): void => {
     this.ai.reportNoise(pos, radius, level);
+    this.hosts.reportNoise(pos, radius);
   };
 
   private startRiftAudio(): void {
@@ -1158,6 +1174,9 @@ export class RiftScene extends Phaser.Scene {
     for (const view of this.ai.getEnemies()) {
       if (!(view instanceof Enemy)) continue;
       view.setVisualSuppressed(true);
+      if (productionModelFor(view.getForm().substrate)) {
+        view.setLocomotionMode('continuous');
+      }
       const visual = renderer.attach({
         scene: this,
         form: view.getForm(),
@@ -1172,6 +1191,8 @@ export class RiftScene extends Phaser.Scene {
       const visual = renderer.attach({
         scene: this,
         form: subject.form,
+        subjectId: subject.id,
+        isWalkableFloor: (col, row) => this.formFloorGrid?.isWalkable(col, row) ?? false,
         seed: mix32(seedRoot, subject.id),
         depth: this.depthForHostPin(pin?.kind),
         fragmentTypeId,
@@ -1180,6 +1201,21 @@ export class RiftScene extends Phaser.Scene {
       this.formVisuals.set(subject.id, visual);
       this.hosts.setStepFloors(subject.id, visual.stepFloors ?? []);
     }
+    this.rebuildGroundDepth();
+  }
+
+  private rebuildGroundDepth(): void {
+    const targets: GroundDepthTarget[] = [{ id: 'player', groundY: () => this.player.getGroundY(),
+      applyDepth: depth => this.player.setGroundDepth(depth, GROUND_LIGHT_DEPTH) }];
+    for (const view of this.ai.getEnemies()) {
+      const visual = this.formVisuals.get(view.getId());
+      if (!(view instanceof Enemy) || !visual?.setGroundDepth) continue;
+      view.setReadoutDepth(WORLD_READOUT_DEPTH);
+      targets.push({ id: `enemy:${view.getId()}`, groundY: () => view.getPosition().y,
+        applyDepth: depth => visual.setGroundDepth!(depth) });
+    }
+    this.groundDepthSorter = new GroundDepthSorter(targets);
+    this.groundDepthSorter.update();
   }
 
   private syncSchemeDPoses(deltaMs: number): void {
@@ -1188,16 +1224,18 @@ export class RiftScene extends Phaser.Scene {
       const view = this.ai.getEnemyById(id);
       if (view) {
         const pos = view.getPosition();
-        const vel = view instanceof Enemy ? view.ai.velocity : { x: 0, y: 0 };
+        const vel = view instanceof Enemy ? view.getActualVelocity() : { x: 0, y: 0 };
         const attack = this.combat.getEnemyAttackVisualState(id);
         visual.update({
           x: pos.x,
           y: pos.y,
           facing4: view.getFacing4(),
           moving: isActorWalking(Math.hypot(vel.x, vel.y)),
+          movementSpeed: Math.hypot(vel.x, vel.y),
           visibility: this.visibility.getVisibilityAt(pos),
           signal: this.jiaSchemeSignal(view, attack),
           attack,
+          activity: view instanceof Enemy ? view.getActivityVisualState() : undefined,
           deltaMs,
         });
         continue;
@@ -1206,12 +1244,14 @@ export class RiftScene extends Phaser.Scene {
       if (!host) continue;
       const pin = this.hosts.getVisualPin(id);
       visual.update({
-        x: pin?.attach ? pin.attach.seamX : host.position.x,
-        y: pin?.attach ? pin.attach.seamY : host.position.y,
+        x: pin?.attach ? pin.attach.seamX : pin?.kind === 'cluster' ? pin.x : host.position.x,
+        y: pin?.attach ? pin.attach.seamY : pin?.kind === 'cluster' ? pin.y : host.position.y,
         facing4: this.hosts.getVisualFacing(id),
         moving: this.hosts.getVisualMoving(id),
         visibility: this.hostSchemeVisibility(id, host.position),
         signal: this.hosts.getVisualSignal(id),
+        attack: this.hosts.getAttackVisualState(id),
+        activity: this.hosts.getActivityVisualState(id),
         deltaMs,
       });
     }
@@ -1251,11 +1291,13 @@ export class RiftScene extends Phaser.Scene {
     if (!visual) return;
     visual.destroy();
     this.formVisuals.delete(id);
+    this.rebuildGroundDepth();
   }
 
   private destroySchemeDVisuals(): void {
     for (const visual of this.formVisuals.values()) visual.destroy();
     this.formVisuals.clear();
+    this.groundDepthSorter = null;
   }
 
   private onShutdown(): void {
@@ -1301,6 +1343,7 @@ export class RiftScene extends Phaser.Scene {
     this.destroySchemeDVisuals();
     this.combat.destroy();
     this.hosts.destroy();
+    this.formFloorGrid = null;
     this.detectionPulse.destroy();
     this.encounter.destroy();
     this.hud.destroy();
@@ -1425,17 +1468,34 @@ export class RiftScene extends Phaser.Scene {
   probeEnemyReview() {
     if (!import.meta.env.DEV) return null;
     return {
-      seed: this.layoutDebug.seed, hp: this.combat.getHealth(),
+      seed: this.layoutDebug.seed, hp: this.combat.getHealth(), chaos: this.chaos.getValue(),
+      fps: Math.round(this.game.loop.actualFps),
       player: { ...this.player.getPosition() },
       enemies: this.ai.getEnemies().map((view) => ({
         id: view.getId(), substrate: view.getForm().substrate, coverage: view.getForm().coverage,
         motion: view.getForm().lexemes.motion, state: view.getState(),
+        occupancy: view.getForm().occupancy, sense: view.getForm().lexemes.sense,
+        rhythm: view.getForm().lexemes.rhythm, activity: view instanceof Enemy ? view.getActivityVisualState() : undefined,
+        velocity: view instanceof Enemy ? { ...view.getActualVelocity() } : undefined,
         position: { ...view.getPosition() }, facing: view.getFacing4(),
         attack: this.combat.getEnemyAttackVisualState(view.getId()),
         hp: this.combat.getEnemyHealth(view.getId()),
         texture: this.formVisuals.get(view.getId())?.getFlashSource?.().textureKey,
       })),
-      textures: this.textures.getTextureKeys().filter((key) => key.includes('insect16') || key.startsWith('combat-flash-')),
+      hosts: this.hosts.getSubjects().map((host) => ({
+        id: host.id, substrate: host.form.substrate, coverage: host.form.coverage,
+        occupancy: host.form.occupancy, motion: host.form.lexemes.motion,
+        sense: host.form.lexemes.sense, rhythm: host.form.lexemes.rhythm,
+        position: { ...host.position }, pin: this.hosts.getVisualPin(host.id),
+        attack: this.hosts.getAttackVisualState(host.id), activity: this.hosts.getActivityVisualState(host.id),
+        signal: this.hosts.getVisualSignal(host.id),
+        volume: (() => {
+          const f = this.hosts.getVolumePresenceFrame(host.id);
+          return f ? { phase: f.phase, progress: f.progress, elapsedMs: f.elapsedMs,
+            active: f.active, hazardActive: f.hazardActive, rect: { ...f.rect } } : undefined;
+        })(),
+      })),
+      textures: this.textures.getTextureKeys().filter((key) => /insect16|human17|beast18|worm18|relic18|growth18|remnant18/.test(key) || key.startsWith('combat-flash-')),
     };
   }
 
@@ -1443,9 +1503,10 @@ export class RiftScene extends Phaser.Scene {
     if (!import.meta.env.DEV) return false;
     const enemy = this.ai.getEnemyById(id);
     const layer = this.tilemapRenderer.getLayer();
-    if (!enemy || !layer) return false;
-    const p = enemy.getPosition();
-    for (const angle of [Math.PI, 0, Math.PI / 2, -Math.PI / 2]) {
+    const host = this.hosts.getSubjects().find((subject) => subject.id === id);
+    if ((!enemy && !host) || !layer) return false;
+    const p = enemy?.getPosition() ?? host!.position;
+    for (const angle of [this.player.getFacingAngle() + Math.PI, Math.PI, 0, Math.PI / 2, -Math.PI / 2]) {
       const x = p.x + Math.cos(angle) * distance;
       const y = p.y + Math.sin(angle) * distance;
       const clear = [-10, 10].every((dx) => [-10, 10].every((dy) => {

@@ -128,11 +128,7 @@ export function yiRecipeFromForm(
   };
 }
 
-export function yiPeriodMs(rhythm: string): number {
-  if (rhythm === 'rhythm_pulse') return 1100;
-  if (rhythm === 'rhythm_sleep') return 3600;
-  return 2200;
-}
+export function yiPeriodMs(_rhythm: string): number { return 2400; }
 
 /**
  * 与 FormWallAttach.nx/ny 同一套：指向可走地板。

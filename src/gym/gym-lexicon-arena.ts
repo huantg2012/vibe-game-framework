@@ -69,6 +69,11 @@ export function lexiconPracticePins(): ContaminationPins {
     wallTiles.push({ col: 9, row });
     strikeFloors.push({ col: 10, row });
   }
+  // R3 doors require an architectural end/opening, including the walkable
+  // tangent around the end. These cells already exist in the shared yard map.
+  // Keep the actual wall-seat validator; do not bypass it for the inspector.
+  strikeFloors.push({ col: 9, row: 3 }, { col: 10, row: 3 },
+    { col: 9, row: 9 }, { col: 10, row: 9 });
   const clusterCol = 12;
   const clusterRow = 11;
   return {

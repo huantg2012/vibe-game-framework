@@ -59,7 +59,7 @@ export interface GenomeNode {
 }
 
 export interface GenomeCanvas {
-  readonly w: 32 | 48;
+  readonly w: 32 | 48 | 64;
   readonly h: 32 | 48 | 64;
   readonly originX: number;
   readonly originY: number;

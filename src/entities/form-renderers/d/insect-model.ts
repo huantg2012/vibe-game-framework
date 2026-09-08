@@ -1,6 +1,7 @@
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import { makeBuf, type PaintBuf } from './genome/buffer';
 import type { GenomeCanvas } from './genome/types';
+import { alignAuthoredBodyInks } from './body-pixel-material';
 
 export type InsectPhase = 'idle' | 'walk' | 'alert' | 'windup' | 'strike' | 'recover';
 
@@ -10,6 +11,7 @@ export interface InsectModelRequest {
   facing4: 'up' | 'down' | 'left' | 'right';
   phase: InsectPhase;
   phase01: number;
+  restAmount?: number;
 }
 
 type V = readonly [number, number, number];
@@ -61,7 +63,9 @@ export function bakeInsectModel(request: InsectModelRequest): { buf: PaintBuf; c
   };
   const project = (v: V): V => {
     const [x, y, z] = rotate(v);
-    return [24 + x, 25 + y * .82 - z, y + z * .82];
+    const resting = clamp01(request.restAmount ?? 0);
+    const height = resting > 0 && z > 1 ? 1 + (z - 1) * (1 - .5 * resting) : z;
+    return [24 + x, 25 + y * .82 - height, y + height * .82];
   };
   const pixel = (x: number, y: number, d: number, color: RGB): void => {
     if (x < 0 || y < 0 || x >= 48 || y >= 48) return;
@@ -282,5 +286,6 @@ export function bakeInsectModel(request: InsectModelRequest): { buf: PaintBuf; c
     if (original[i + 3]) continue;
     if (original[i - 4 + 3] || original[i + 4 + 3] || original[i - 192 + 3] || original[i + 192 + 3]) buf.data.set([...OUTLINE, 255], i);
   }
+  alignAuthoredBodyInks(buf);
   return { buf, canvas };
 }

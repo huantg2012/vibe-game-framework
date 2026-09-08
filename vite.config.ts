@@ -19,6 +19,7 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
         gym: path.resolve(__dirname, 'gym.html'),
+        inspector: path.resolve(__dirname, 'enemy-inspector.html'),
       },
     },
   },

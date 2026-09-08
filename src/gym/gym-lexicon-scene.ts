@@ -1,3 +1,5 @@
+import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH, type GroundDepthTarget } from '@/systems/ground-depth';
+import { productionModelFor } from '@/entities/form-renderers/d/production-models';
 /**
  * Contamination-lexicon practice: fixed observation yard, live player (god mode),
  * config table → spawn. Same AI / combat / hosts as a sortie. Contract: docs/dev/gym.md.
@@ -84,6 +86,7 @@ export class GymLexiconScene extends Phaser.Scene {
   private readonly ai = new AISystem();
   private readonly combat = new CombatSystem();
   private readonly hosts = new ContaminationHostSystem();
+  private hostOccluders?: TileGrid;
   private chaos: ChaosSystem | null = null;
   private attackKey: Phaser.Input.Keyboard.Key | null = null;
   private lastDelta = 16;
@@ -93,6 +96,7 @@ export class GymLexiconScene extends Phaser.Scene {
   private lastCount = 4;
   private spawnSerial = 0;
   private respawnTimer: Phaser.Time.TimerEvent | null = null;
+  private groundDepthSorter: GroundDepthSorter | null = null;
   private readonly visuals = new Map<string, FormVisual>();
   private tileMap: TileMapData | null = null;
   private yardBias: Phaser.GameObjects.Graphics | null = null;
@@ -107,6 +111,7 @@ export class GymLexiconScene extends Phaser.Scene {
     const tileMap = createLexiconObserveMap(fragmentTypeId);
     this.tileMap = tileMap;
     const grid = new TileGrid(tileMap);
+    this.hostOccluders = grid;
     const layer = this.tiles.create(this, tileMap, {
       tilesetKey: 'placeholder-rift-tileset',
       collidingIndices: [TileType.WALL, TileType.VOID],
@@ -133,14 +138,15 @@ export class GymLexiconScene extends Phaser.Scene {
     this.ai.create(this, [], grid, grid, { requireExactlyOneRewriter: false });
     this.ai.setVisibilityProvider(gymVisible);
     this.ai.addWallCollider(layer);
+    this.ai.addStaticPlayerCollider(this.player.getSprite());
 
     this.combat.create(this, grid, this.player, this.ai, {
-      onNoise: (pos, radius, level) => this.ai.reportNoise(pos, radius, level),
+      onNoise: (pos, radius, level) => { this.ai.reportNoise(pos, radius, level); this.hosts.reportNoise(pos, radius); },
     });
     this.combat.setGodMode(true);
 
     this.chaos = new ChaosSystem({ startingValue: 0 });
-    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible, GYM_HOST_OPTS);
+    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible, { ...GYM_HOST_OPTS, occluders: this.hostOccluders });
 
     this.bindAttackKey();
     this.bindForm();
@@ -164,7 +170,7 @@ export class GymLexiconScene extends Phaser.Scene {
       this.combat.requestPlayerAttack();
     }
     this.combat.update(delta);
-    this.hosts.update(delta, this.player.getPosition());
+    this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
     this.chaos?.update(delta);
     this.paintRoster();
   }
@@ -173,6 +179,7 @@ export class GymLexiconScene extends Phaser.Scene {
     this.player.postUpdate();
     this.ai.postUpdate(this.lastDelta);
     this.syncVisualPoses(this.lastDelta);
+    this.groundDepthSorter?.update();
   }
 
   private paintSeats(): void {
@@ -454,7 +461,7 @@ export class GymLexiconScene extends Phaser.Scene {
     this.destroyVisuals();
     for (const enemy of [...this.ai.getEnemies()]) this.ai.despawn(enemy.getId());
     this.hosts.clearHosts();
-    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible, GYM_HOST_OPTS);
+    this.hosts.bindPractice(this, lexiconPracticePins(), this.combat, this.chaos, gymVisible, { ...GYM_HOST_OPTS, occluders: this.hostOccluders });
     this.combat.noteRosterChanged();
     this.spawnSerial = 0;
   }
@@ -573,8 +580,13 @@ export class GymLexiconScene extends Phaser.Scene {
         form?.portfolio === 'ding');
     this.hosts.setSkipPaint(skipHosts);
     for (const view of this.ai.getEnemies()) {
-      if (view instanceof Enemy) view.setVisualSuppressed(hideJia);
+      if (view instanceof Enemy) {
+        view.setVisualSuppressed(hideJia);
+        view.setReadoutDepth(ENEMY_DEPTH + 1);
+        view.setLocomotionMode(dMixed && productionModelFor(view.getForm().substrate) ? 'continuous' : 'legacy-hitch');
+      }
     }
+    this.player.setGroundDepth(DEPTH.player, GROUND_LIGHT_DEPTH);
     if (!ready || !renderer || !form) return;
     const fragmentTypeId = this.readFragmentId();
     const attach = (ctx: FormAttachContext) =>
@@ -592,6 +604,7 @@ export class GymLexiconScene extends Phaser.Scene {
         });
         this.visuals.set(view.getId(), visual);
       }
+      this.rebuildGroundDepth();
       return;
     }
     for (const subject of this.hosts.getSubjects()) {
@@ -599,6 +612,7 @@ export class GymLexiconScene extends Phaser.Scene {
       const visual = attach({
         scene: this,
         form,
+        subjectId: subject.id,
         seed:
           paintVeinVariant === undefined ? mix32(0, subject.id) : PAINT_VEIN_PREVIEW_SEED,
         depth: depthForPortfolio(form.portfolio),
@@ -611,19 +625,37 @@ export class GymLexiconScene extends Phaser.Scene {
     }
   }
 
+  private rebuildGroundDepth(): void {
+    const targets: GroundDepthTarget[] = [{ id: 'player', groundY: () => this.player.getGroundY(),
+      applyDepth: depth => this.player.setGroundDepth(depth, GROUND_LIGHT_DEPTH) }];
+    for (const view of this.ai.getEnemies()) {
+      const visual = this.visuals.get(view.getId());
+      if (!(view instanceof Enemy) || !visual?.setGroundDepth) continue;
+      view.setReadoutDepth(WORLD_READOUT_DEPTH);
+      targets.push({ id: `enemy:${view.getId()}`, groundY: () => view.getPosition().y,
+        applyDepth: depth => visual.setGroundDepth!(depth) });
+    }
+    this.groundDepthSorter = targets.length > 1 ? new GroundDepthSorter(targets) : null;
+    if (this.groundDepthSorter) this.groundDepthSorter.update();
+    else this.player.setGroundDepth(DEPTH.player, GROUND_LIGHT_DEPTH);
+  }
+
   private syncVisualPoses(deltaMs: number): void {
     for (const [id, visual] of this.visuals) {
       const view = this.ai.getEnemyById(id);
       if (view) {
-        const vel = view instanceof Enemy ? view.ai.velocity : { x: 0, y: 0 };
+        const vel = view instanceof Enemy ? view.getActualVelocity() : { x: 0, y: 0 };
         const pos = view.getPosition();
         visual.update({
           x: pos.x,
           y: pos.y,
           facing4: view.getFacing4(),
           moving: isActorWalking(Math.hypot(vel.x, vel.y)),
+          movementSpeed: Math.hypot(vel.x, vel.y),
           visibility: gymVisible(pos),
           signal: view instanceof Enemy ? jiaSignal(view) : 'idle',
+          attack: this.combat.getEnemyAttackVisualState(id),
+          activity: view instanceof Enemy ? view.getActivityVisualState() : undefined,
           deltaMs,
         });
         continue;
@@ -637,6 +669,8 @@ export class GymLexiconScene extends Phaser.Scene {
         moving: this.hosts.getVisualMoving(id),
         visibility: gymVisible(host.position),
         signal: this.hosts.getVisualSignal(id),
+        attack: this.hosts.getAttackVisualState(id),
+        activity: this.hosts.getActivityVisualState(id),
         deltaMs,
       });
     }
@@ -647,11 +681,13 @@ export class GymLexiconScene extends Phaser.Scene {
     if (!visual) return;
     visual.destroy();
     this.visuals.delete(id);
+    this.rebuildGroundDepth();
   }
 
   private destroyVisuals(): void {
     for (const visual of this.visuals.values()) visual.destroy();
     this.visuals.clear();
+    this.groundDepthSorter = null;
   }
 
   private noteRendererStatus(base: string): void {

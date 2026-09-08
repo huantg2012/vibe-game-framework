@@ -1,0 +1,38 @@
+- text: 生产裂隙 · 隔离存档 · WASD移动 / 空格攻击
+- combobox "污染体样本":
+  - option "ENM_INF_01 · insect_remnant · motion_patrol · sense_cone" [selected]
+  - option "ENM_RWR_01 · mammal_remnant · motion_patrol · sense_hear"
+  - option "ENM_INF_03 · stalk_clump · motion_turn · sense_cone"
+  - option "ENM_DING_01 · sound_echo · motion_anchor · sense_reverse"
+  - option "ENM_BING_01 · oil_film · motion_cluster · sense_touch"
+  - option "ENM_BING_02 · oil_film · motion_cluster · sense_touch"
+  - option "ENM_BING_03 · oil_film · motion_cluster · sense_touch"
+- combobox "覆盖程度（仅外观对照）":
+  - option "外观：按生成" [selected]
+  - option "外观：渗透"
+  - option "外观：改写"
+  - option "外观：覆盖"
+- button "切换观察保护"
+- button "接近观察"
+- button "进入近战"
+- button "受击样本"
+- button "消亡样本"
+- button "暂停 / 继续"
+- button "重启本种子"
+- button "记录12秒"
+- button "显示记录"
+- button "实时状态"
+- button "向右走1秒"
+- button "向左走1秒"
+- button "向上走1秒"
+- button "向下走1秒"
+- button "挥击"
+- generic: "{ \"seed\": 1, \"hp\": 100, \"player\": { \"x\": 432, \"y\": 624 }, \"fps\": 120, \"floorCount\": 3, \"hostCount\": 4, \"sample\": { \"id\": \"ENM_INF_01\", \"substrate\": \"insect_remnant\", \"coverage\": \"infiltrate\", \"motion\": \"motion_patrol\", \"state\": \"patrol\", \"occupancy\": \"floor\", \"sense\": \"sense_cone\", \"rhythm\": \"rhythm_open\", \"activity\": { \"phase\": \"active\", \"progress\": 1 }, \"velocity\": { \"x\": 29.999999999999996, \"y\": 0 }, \"position\": { \"x\": 1294, \"y\": 240 }, \"facing\": \"right\", \"attack\": { \"phase\": \"idle\", \"progress\": 0 }, \"hp\": 75, \"texture\": \"rift-insect16-0\" }, \"textureCount\": 15, \"coveragePreview\": null, \"protectedReview\": false, \"recording\": false, \"samples\": 0 }"
+- generic: 完整度
+- generic: 100/100
+- generic: 混乱
+- generic: "23"
+- generic: 稳定
+- generic: 薪柴
+- generic: "0"
+- text: 解释

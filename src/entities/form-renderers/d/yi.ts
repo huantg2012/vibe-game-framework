@@ -1,23 +1,4 @@
-/**
- * 方案 D 乙：墙-地缝上的门框 / 墙锈（生产；句法课对照同一份）。
- *
- * 位置：Image/Graphics 钉 `pose.x/y`（宿主核 = 当前缝）。厚度沿 `facing4` 法线走进走廊 1–3px。
- * 运动：整只跟 host.core 走，不在画布里 seamSlidePx。
- * 抽打：`signal==='strike'` 时在 getStrikeFloors 各地格中心画 1px #1aad96。
- *
- * 字段 → 画面：
- * - substrate → 门框开合槽 / 墙锈渗斑
- * - coverage → 缝厚 1/2/3px + 核 2/3/4px
- * - continuity → 菌落邻缝第二核；碎裂=缝中缺口
- * - occupancy → 只画墙皮，不改碰撞
- * - motion → 跟 pose 走或停
- * - sense → 窄视 1px 缝亮，不成对瞳孔
- * - rhythm → 门框开合 / 核脉冲
- * - contact / strike → 地格 1px
- * - utteranceId → 缝视加长 1px；门还想关=槽内一笔
- *
- * 配色：deriveFragmentContamRamp(fragmentTypeId)；亮核钳回 #1aad96 / #2ae6c8 / #3cffd4。
- */
+/** R3 wall-attached shutter / mineral lamellae. Strike marks use actual floor cells. */
 import Phaser from 'phaser';
 import {
   applyFormVisibility,
@@ -35,6 +16,8 @@ import {
 import { faceNormal, yiRecipeFromForm } from '@/entities/form-renderers/d/yi-recipe';
 
 const TICK_DEPTH = 0.2;
+/** Presentation tail triggered only by a real strike; never extends danger. */
+export const WALL_RECOIL_MS = 140;
 
 interface HostQuery {
   getStrikeFloors(id: string): readonly StrikeFloor[];
@@ -48,6 +31,7 @@ function hostsOn(scene: Phaser.Scene): HostQuery | null {
 }
 
 function hostIdAtPin(ctx: FormAttachContext): string | null {
+  if (ctx.subjectId) return ctx.subjectId;
   const hosts = hostsOn(ctx.scene);
   const pin = ctx.pin;
   if (!hosts || !pin) return null;
@@ -78,6 +62,7 @@ class YiVisualD implements FormVisual {
   private readonly recipe: ReturnType<typeof yiRecipeFromForm>;
   private readonly hostId: string | null;
   private clock = 0;
+  private recoilMs = 0;
 
   constructor(ctx: FormAttachContext) {
     this.scene = ctx.scene;
@@ -117,15 +102,18 @@ class YiVisualD implements FormVisual {
 
   update(pose: FormVisualPose): void {
     this.clock += pose.deltaMs;
+    const actualStrike=pose.attack?pose.attack.phase==='strike':pose.signal==='strike';
+    this.recoilMs=actualStrike?WALL_RECOIL_MS:Math.max(0,this.recoilMs-Math.max(0,pose.deltaMs));
     const x = Math.round(pose.x);
     const y = Math.round(pose.y);
     this.skin.setPosition(x, y);
     this.skin.setRotation(0);
     applyFormVisibility(this.skin, pose.visibility);
     const { nx, ny } = faceNormal(pose.facing4);
-    paintYiSkin(this.skin, this.recipe, pose, this.clock, nx, ny);
-    if (pose.signal === 'strike' && pose.visibility > 0) {
-      paintYiStrikeFloors(this.ticks, readStrikeFloors(this.scene, this.hostId, pose), this.recipe.colors.strikeDot);
+    paintYiSkin(this.skin, this.recipe, pose, this.clock, nx, ny,this.recoilMs/WALL_RECOIL_MS);
+    const threatening = pose.attack ? pose.attack.phase === 'windup' || pose.attack.phase === 'strike' : pose.signal === 'strike';
+    if (threatening && pose.visibility > 0) {
+      paintYiStrikeFloors(this.ticks, readStrikeFloors(this.scene, this.hostId, pose), this.recipe.colors.strikeDot, pose);
       applyFormVisibility(this.ticks, pose.visibility);
     } else {
       this.ticks.clear();

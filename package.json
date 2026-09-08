@@ -52,7 +52,23 @@
     "preview:probes": "tsx --tsconfig tsconfig.json tools/map-preview/render-density-probes.ts",
     "audio:placeholders": "node tools/audio-placeholders/generate.mjs",
     "check:runtime-behavior": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-runtime-behavior.ts",
-    "check:combat-visual-state": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-combat-visual-state.ts"
+    "check:combat-visual-state": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-combat-visual-state.ts",
+    "check:model-animation": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-model-animation.ts",
+    "check:contact-runtime": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-contact-runtime.ts",
+    "check:body-runtime": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-body-runtime.ts",
+    "check:generation-contract": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-generation-contract.ts",
+    "check:creature-frames": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contam-preview/render-i18-creatures.ts",
+    "check:production-models": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-production-models.ts",
+    "check:ground-runtime": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-ground-runtime.ts",
+    "check:physics-runtime": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-physics-runtime.ts",
+    "check:static-body-access": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-static-body-access.ts",
+    "check:enemy-inspector": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/gym/check-enemy-inspector.ts",
+    "check:environment-runtime": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-r3-environment.ts",
+    "check:paint-deployment": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-paint-deployment.ts",
+    "check:volume-integration": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-volume-integration.ts",
+    "check:volume-seat": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-volume-seat.ts",
+    "check:volume-deployment": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-volume-deployment.ts",
+    "check:dust-motion": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-dust-motion.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1"

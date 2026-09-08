@@ -217,7 +217,10 @@ assert(
   jiaHalls.length === substrateOptions('jia').length - GALLERY_JIA_HIDDEN_SUBSTRATES.size + 3,
   `jia halls ${jiaHalls.length} want substrateOptions - hidden + 3 (mammal split into four)`,
 );
-assert(jiaHalls.length === 10, `jia nav is about 10 buttons (got ${jiaHalls.length})`);
+assert(jiaHallIds.includes('human_remnant') && jiaHallIds.includes('organic_remnant'),
+  'I17 human_remnant and organic_remnant each retain their own hall');
+assert(jiaHallIds.filter(id => id === 'human_remnant').length === 1,
+  'human_remnant has one independent hall');
 assert(
   jiaHalls.filter((row) => row.hallId === 'street_wreckage').length === 1,
   'street_wreckage stays one hall',
@@ -358,7 +361,8 @@ for (const hall of jiaHalls) {
 assert(inRange(total, 400, 2800), `total ${total} in [400, 2800]`);
 
 assert(inRange(jia, 400, 2400), `jia ${jia} in [400, 2400]`);
-// I16 adds anchor to the legal jia alphabet. Verify semantics, not a stale Cartesian count.
+// R3: wall-only frame cannot reappear on the floor; historical street stays inspectable.
+assert(!listed.some(spec => spec.substrate === 'doorframe' && spec.portfolio !== 'yi'), 'frame is wall-only even in historical gallery');
 for (const substrate of ['doorframe', 'street_wreckage']) {
   for (const coverage of ['infiltrate', 'rewrite', 'overwrite']) {
     assert(listed.some(spec => spec.substrate === substrate && spec.form.coverage === coverage &&

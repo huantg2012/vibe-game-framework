@@ -28,6 +28,7 @@
 import Phaser from 'phaser';
 import type { FormAttackPose, FormFlashSource } from '@/entities/form-renderers/form-renderer';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { BODY_PROFILE_DATA, type ContaminationBodyProfile } from '@/generated/contamination-body-data';
 import { eventBus } from '@/core/event-bus';
 import { INFILTRATOR_TEXTURE } from '@/entities/infiltrator-sprite';
 import {
@@ -184,6 +185,20 @@ interface EnemyCombatState {
   engagedSinceMs: number;
   /** Frames left of the single full-brightness frame at the strike instant (spec V2). */
   strikeFxFrames: number;
+}
+
+const LEGACY_BODY_PROFILE: ContaminationBodyProfile = {
+  moveScale: 1,
+  windupMs: GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_WINDUP_MS,
+  cooldownMs: GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_COOLDOWN_MS,
+  rangePx: GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_RANGE,
+  halfAngleDeg: GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_HALF_ANGLE,
+};
+
+/** A single lookup feeds attack eligibility, execution, animation and ground warning. */
+function bodyProfileFor(state: EnemyCombatState): ContaminationBodyProfile {
+  const form = state.view?.getForm?.();
+  return (form && BODY_PROFILE_DATA[form.substrate]) ?? LEGACY_BODY_PROFILE;
 }
 
 /** One pooled white flash. Death effects outlive the enemy entity, hence the pool. */
@@ -411,12 +426,13 @@ export class CombatSystem implements CombatSystemAPI {
   getEnemyAttackVisualState(enemyId: string): FormAttackPose {
     const state = this.enemies.get(enemyId);
     if (!this.enabled || !state) return { phase: 'idle', progress: 0 };
+    const profile = bodyProfileFor(state);
     if (state.attackPhase === 'windup') return {
-      phase: 'windup', progress: clamp(state.attackTimerMs / GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_WINDUP_MS, 0, 1),
+      phase: 'windup', progress: clamp(state.attackTimerMs / profile.windupMs, 0, 1),
       facingAngle: state.attackAngle,
     };
     if (state.attackPhase === 'cooldown') {
-      const elapsed = GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_COOLDOWN_MS - state.cooldownRemainingMs;
+      const elapsed = profile.cooldownMs - state.cooldownRemainingMs;
       // These windows animate an already-resolved hit; damage/cooldown are unchanged.
       if (elapsed < 80) return { phase: 'strike', progress: elapsed / 80, facingAngle: state.attackAngle };
       if (elapsed < 320) return { phase: 'recover', progress: (elapsed - 80) / 240, facingAngle: state.attackAngle };
@@ -600,6 +616,7 @@ export class CombatSystem implements CombatSystemAPI {
     state.alive = false;
     state.health = 0;
     if (state.attackPhase === 'windup') this.releaseToken();
+    state.view.setAttackCommitted?.(false);
     state.attackPhase = 'idle';
     state.attackTimerMs = 0;
     state.strikeFxFrames = 0;
@@ -633,7 +650,6 @@ export class CombatSystem implements CombatSystemAPI {
   // ------------------------------------------------------------------ enemy attack
 
   private updateEnemies(dtMs: number): void {
-    const combat = GAME_CONSTANTS.COMBAT;
     const playerPos = this.player.getPosition();
 
     for (const state of this.enemies.values()) {
@@ -655,7 +671,7 @@ export class CombatSystem implements CombatSystemAPI {
         // A windup cannot be interrupted (only cancelled by dying). Interruption would
         // make pre-emptive swinging dominant and turn "should I fight" into "fight well".
         state.attackTimerMs += dtMs;
-        if (state.attackTimerMs >= combat.ENEMY_ATTACK_WINDUP_MS) {
+        if (state.attackTimerMs >= bodyProfileFor(state).windupMs) {
           this.resolveEnemyAttack(state, playerPos);
           if (!this.enabled) return;
         }
@@ -672,7 +688,9 @@ export class CombatSystem implements CombatSystemAPI {
     playerPos: Readonly<Vector2>
   ): boolean {
     const combat = GAME_CONSTANTS.COMBAT;
+    const profile = bodyProfileFor(state);
     if (this.dead) return false;
+    if (state.view.isAttackAvailable?.() === false) return false;
     if (state.cooldownRemainingMs > 0) return false;
     if (state.engagedSinceMs < combat.ENEMY_FIRST_ATTACK_DELAY_MS) return false;
     if (this.attackTokensInUse >= combat.ENEMY_ATTACK_TOKENS) return false;
@@ -680,11 +698,11 @@ export class CombatSystem implements CombatSystemAPI {
     const enemyPos = state.view.getPosition();
     const deltaX = playerPos.x - enemyPos.x;
     const deltaY = playerPos.y - enemyPos.y;
-    if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) > combat.ENEMY_ATTACK_RANGE) return false;
+    if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) > profile.rangePx) return false;
 
     const bearing = Math.atan2(deltaY, deltaX);
     const facingOffset = Math.abs(shortestArc(bearing - state.view.getFacingAngle()));
-    if (facingOffset > degToRad(combat.ENEMY_ATTACK_HALF_ANGLE)) return false;
+    if (facingOffset > degToRad(profile.halfAngleDeg)) return false;
 
     return hasLineOfSight(this.occluders, enemyPos, playerPos);
   }
@@ -692,6 +710,7 @@ export class CombatSystem implements CombatSystemAPI {
   private startEnemyWindup(state: EnemyCombatState, playerPos: Readonly<Vector2>): void {
     const enemyPos = state.view.getPosition();
     state.attackPhase = 'windup';
+    state.view.setAttackCommitted?.(true);
     state.attackTimerMs = 0;
     state.attackAngle = Math.atan2(playerPos.y - enemyPos.y, playerPos.x - enemyPos.x);
     this.attackTokensInUse++;
@@ -704,12 +723,13 @@ export class CombatSystem implements CombatSystemAPI {
    * fear should come from having misjudged, never from a die roll.
    */
   private resolveEnemyAttack(state: EnemyCombatState, playerPos: Readonly<Vector2>): void {
-    const combat = GAME_CONSTANTS.COMBAT;
+    const profile = bodyProfileFor(state);
 
     this.releaseToken();
+    state.view.setAttackCommitted?.(false);
     state.attackPhase = 'cooldown';
     state.attackTimerMs = 0;
-    state.cooldownRemainingMs = combat.ENEMY_ATTACK_COOLDOWN_MS;
+    state.cooldownRemainingMs = profile.cooldownMs;
     state.strikeFxFrames = 1;
 
     if (this.dead) return;
@@ -717,10 +737,10 @@ export class CombatSystem implements CombatSystemAPI {
     const enemyPos = state.view.getPosition();
     const deltaX = playerPos.x - enemyPos.x;
     const deltaY = playerPos.y - enemyPos.y;
-    if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) > combat.ENEMY_ATTACK_RANGE) return;
+    if (Math.sqrt(deltaX * deltaX + deltaY * deltaY) > profile.rangePx) return;
 
     const bearing = Math.atan2(deltaY, deltaX);
-    if (Math.abs(shortestArc(bearing - state.attackAngle)) > degToRad(combat.ENEMY_ATTACK_HALF_ANGLE)) {
+    if (Math.abs(shortestArc(bearing - state.attackAngle)) > degToRad(profile.halfAngleDeg)) {
       return;
     }
     if (!hasLineOfSight(this.occluders, enemyPos, playerPos)) return;
@@ -772,6 +792,7 @@ export class CombatSystem implements CombatSystemAPI {
 
   private clearAllWindups(): void {
     for (const state of this.enemies.values()) {
+      state.view?.setAttackCommitted?.(false);
       if (state.attackPhase === 'windup') {
         state.attackPhase = 'idle';
         state.attackTimerMs = 0;
@@ -867,7 +888,7 @@ export class CombatSystem implements CombatSystemAPI {
         continue;
       }
       if (state.attackPhase !== 'windup') continue;
-      const progress = clamp(state.attackTimerMs / combat.ENEMY_ATTACK_WINDUP_MS, 0, 1);
+      const progress = clamp(state.attackTimerMs / bodyProfileFor(state).windupMs, 0, 1);
       this.drawTelegraph(state, lerp(0.2, 0.8, progress));
     }
   }
@@ -893,18 +914,27 @@ export class CombatSystem implements CombatSystemAPI {
     graphics.strokePath();
   }
 
-  /** The telegraph: a thin line from the enemy along the heading it committed to. */
+  /** Short ground scratches show the committed reach and both actual angular limits. */
   private drawTelegraph(state: EnemyCombatState, alpha: number): void {
     const combat = GAME_CONSTANTS.COMBAT;
+    const profile = bodyProfileFor(state);
     const position = state.view.getPosition();
     this.graphics.lineStyle(1, combat.FX_COLOR, alpha);
     this.graphics.beginPath();
     this.graphics.moveTo(position.x, position.y);
     this.graphics.lineTo(
-      position.x + Math.cos(state.attackAngle) * combat.ENEMY_ATTACK_RANGE,
-      position.y + Math.sin(state.attackAngle) * combat.ENEMY_ATTACK_RANGE
+      position.x + Math.cos(state.attackAngle) * profile.rangePx,
+      position.y + Math.sin(state.attackAngle) * profile.rangePx
     );
     this.graphics.strokePath();
+    for (let side = -1; side <= 1; side += 2) {
+      const angle = state.attackAngle + side * degToRad(profile.halfAngleDeg);
+      const start = Math.max(0, profile.rangePx - 6);
+      this.graphics.beginPath();
+      this.graphics.moveTo(position.x + Math.cos(angle) * start, position.y + Math.sin(angle) * start);
+      this.graphics.lineTo(position.x + Math.cos(angle) * profile.rangePx, position.y + Math.sin(angle) * profile.rangePx);
+      this.graphics.strokePath();
+    }
   }
 
   /** Takes a free pooled flash, or steals the one closest to finishing. */

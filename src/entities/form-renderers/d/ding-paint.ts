@@ -1,217 +1,120 @@
-/**
- * Scheme D 丁 painters. Soft SDF / 1px contours / kinked veins.
- * Forbidden: per-pixel hash fill, checkerboard skip, oil-film tiling.
- */
+/** R3: three non-material hazards, not three tints of the same cloud. */
 import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
-import type { DingRecipe, ScatterVein } from '@/entities/form-renderers/d/ding-recipe';
-import {
-  breathScale,
-  contourPoint,
-  contourSteps,
-  rimDistance,
-  type CloudPose,
-} from '@/entities/form-renderers/d/ding-cloud';
-import type { Rgb } from '@/entities/form-renderers/d/fragment-ramp';
-
-function put(out: Uint8ClampedArray, w: number, h: number, x: number, y: number, rgb: Rgb, a: number): void {
-  const ix = Math.round(x);
-  const iy = Math.round(y);
-  if (ix < 0 || iy < 0 || ix >= w || iy >= h || a <= 0) return;
-  const o = (iy * w + ix) * 4;
-  const prev = out[o + 3]!;
-  if (a < prev) return;
-  out[o] = rgb[0];
-  out[o + 1] = rgb[1];
-  out[o + 2] = rgb[2];
-  out[o + 3] = a > 255 ? 255 : a;
-}
-
-function lerp(a: number, b: number, t: number): number {
-  return a + (b - a) * t;
-}
-
-function smoothstep(e0: number, e1: number, x: number): number {
-  const t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0)));
-  return t * t * (3 - 2 * t);
-}
-
-function walkLine(
-  out: Uint8ClampedArray,
-  w: number,
-  h: number,
-  x0: number,
-  y0: number,
-  x1: number,
-  y1: number,
-  rgb: Rgb,
-  a: number,
-): void {
-  let ix = Math.round(x0);
-  let iy = Math.round(y0);
-  const tx = Math.round(x1);
-  const ty = Math.round(y1);
-  const dx = Math.abs(tx - ix);
-  const dy = Math.abs(ty - iy);
-  const sx = ix < tx ? 1 : -1;
-  const sy = iy < ty ? 1 : -1;
-  let err = dx - dy;
-  while (true) {
-    put(out, w, h, ix, iy, rgb, a);
-    if (ix === tx && iy === ty) break;
-    const e2 = err * 2;
-    if (e2 > -dy) {
-      err -= dy;
-      ix += sx;
-    }
-    if (e2 < dx) {
-      err += dx;
-      iy += sy;
-    }
-  }
-}
-
-function mapVein(v: ScatterVein, cloud: CloudPose, shiftX: number, shiftY: number): {
-  ax: number;
-  ay: number;
-  kx: number;
-  ky: number;
-  bx: number;
-  by: number;
-} {
-  return {
-    ax: cloud.cx + v.ax * cloud.rx * cloud.breath + shiftX,
-    ay: cloud.cy + v.ay * cloud.ry * cloud.breath + shiftY,
-    kx: cloud.cx + v.kx * cloud.rx * cloud.breath + shiftX,
-    ky: cloud.cy + v.ky * cloud.ry * cloud.breath + shiftY,
-    bx: cloud.cx + v.bx * cloud.rx * cloud.breath + shiftX,
-    by: cloud.cy + v.by * cloud.ry * cloud.breath + shiftY,
-  };
-}
-
-function paintContour(
-  out: Uint8ClampedArray,
-  w: number,
-  h: number,
-  cloud: CloudPose,
-  recipe: DingRecipe,
-  extraPx: number,
-  rgb: Rgb,
-  alpha: number,
-): void {
-  const steps = contourSteps(cloud.rx + extraPx, cloud.ry + extraPx);
-  const step = (Math.PI * 2) / steps;
-  for (let i = 0; i < steps; i++) {
-    const p = contourPoint(i * step, cloud, recipe.harmonics, extraPx);
-    put(out, w, h, p.x, p.y, rgb, alpha);
-  }
-}
-
-function paintSoftVolume(
-  out: Uint8ClampedArray,
-  w: number,
-  h: number,
-  cloud: CloudPose,
-  recipe: DingRecipe,
-  edgeA: number,
-  coreA: number,
-  hollow: boolean,
-): void {
-  const pad = 2;
-  const x0 = Math.max(0, Math.floor(cloud.cx - cloud.rx * 1.25) - pad);
-  const y0 = Math.max(0, Math.floor(cloud.cy - cloud.ry * 1.25) - pad);
-  const x1 = Math.min(w - 1, Math.ceil(cloud.cx + cloud.rx * 1.25) + pad);
-  const y1 = Math.min(h - 1, Math.ceil(cloud.cy + cloud.ry * 1.25) + pad);
-  const innerCut = hollow ? 0.78 : 0;
-  for (let y = y0; y <= y1; y++) {
-    for (let x = x0; x <= x1; x++) {
-      const d = rimDistance(x, y, cloud, recipe.harmonics);
-      if (d >= 1.04 || d < innerCut) continue;
-      const t = smoothstep(0.28, 1.04, d);
-      const a = Math.round(lerp(coreA, edgeA, t));
-      if (a < 8) continue;
-      const rgb = d < 0.42 ? recipe.mid : recipe.deep;
-      put(out, w, h, x, y, rgb, a);
-    }
-  }
-}
-
-function paintEcho(out: Uint8ClampedArray, w: number, h: number, cloud: CloudPose, recipe: DingRecipe, elapsedMs: number, edgeA: number): void {
-  paintSoftVolume(out, w, h, cloud, recipe, Math.round(edgeA * 0.35), Math.round(recipe.coreAlpha * 0.22), true);
-  const n = recipe.echoRings;
-  for (let i = 0; i < n; i++) {
-    const lag = recipe.echoLagMs[i] ?? 0;
-    const localBreath = breathScale(elapsedMs, recipe.breathPeriodMs, recipe.breathAmp, lag);
-    const ringCloud: CloudPose = { ...cloud, breath: localBreath };
-    const extra = i * recipe.echoSpacing;
-    const rgb = i === 0 ? recipe.mid : recipe.core;
-    const a = i === 0 ? edgeA : Math.max(70, edgeA - i * 18);
-    paintContour(out, w, h, ringCloud, recipe, extra, rgb, a);
-  }
-}
-
-function paintScatter(
-  out: Uint8ClampedArray,
-  w: number,
-  h: number,
-  cloud: CloudPose,
-  recipe: DingRecipe,
-  elapsedMs: number,
-): void {
-  paintSoftVolume(out, w, h, cloud, recipe, 28, 48, true);
-  const shift = Math.round(Math.sin((elapsedMs / recipe.breathPeriodMs) * Math.PI * 2) );
-  const veins = recipe.veins;
-  for (let i = 0; i < veins.length; i++) {
-    const mapped = mapVein(veins[i]!, cloud, shift, 0);
-    const rgb = i % 2 === 0 ? recipe.core : recipe.glow;
-    walkLine(out, w, h, mapped.ax, mapped.ay, mapped.kx, mapped.ky, rgb, 210);
-    walkLine(out, w, h, mapped.kx, mapped.ky, mapped.bx, mapped.by, rgb, 210);
-  }
-}
-
-function paintSqueeze(
-  out: Uint8ClampedArray,
-  w: number,
-  h: number,
-  cloud: CloudPose,
-  recipe: DingRecipe,
-  edgeA: number,
-  coreA: number,
-): void {
-  paintSoftVolume(out, w, h, cloud, recipe, edgeA, coreA, false);
-}
+import type { DingRecipe } from './ding-recipe';
+import type { CloudPose } from './ding-cloud';
+import { ENV_INK as C, activityOf, cluster, pixelLine, putPixel, stageOf, type Ink } from './environment-pixels';
 
 export function paintDingFrame(
-  out: Uint8ClampedArray,
-  width: number,
-  height: number,
-  recipe: DingRecipe,
-  pose: FormVisualPose,
-  elapsedMs: number,
-  cloud: CloudPose,
+  out: Uint8ClampedArray,w: number,h: number,recipe: DingRecipe,
+  pose: FormVisualPose,elapsedMs: number,box: CloudPose,
 ): void {
   out.fill(0);
-  const awake = pose.signal === 'awake';
-  const edgeA = awake ? Math.min(220, recipe.edgeAlpha + 28) : recipe.edgeAlpha;
-  const coreA = awake ? Math.min(230, recipe.coreAlpha + 16) : recipe.coreAlpha;
-  if (recipe.family === 'sound_echo') paintEcho(out, width, height, cloud, recipe, elapsedMs, edgeA);
-  else if (recipe.family === 'light_scatter') paintScatter(out, width, height, cloud, recipe, elapsedMs);
-  else paintSqueeze(out, width, height, cloud, recipe, edgeA, coreA);
-
-  const cx = Math.round(cloud.cx);
-  const cy = Math.round(cloud.cy);
-  if (recipe.paintStrikeCore) {
-    const coreLit = !recipe.reverseCore || awake;
-    const coreA2 = coreLit ? (awake ? 255 : 180) : 36;
-    const coreRgb = coreLit ? (awake ? recipe.glow : recipe.core) : recipe.deep;
-    const span = Math.max(1, recipe.strikeCorePx);
-    for (let dy = 0; dy < span; dy++) {
-      for (let dx = 0; dx < span; dx++) {
-        put(out, width, height, cx + dx, cy + dy, dx + dy === span * 2 - 2 && awake ? recipe.glow : coreRgb, coreA2);
+  const stage=stageOf(recipe.coverage), active=activityOf(pose);
+  const phase=elapsedMs*Math.PI*2/2400;
+  const x0=Math.round(box.cx-box.rx), x1=Math.round(box.cx+box.rx)-1;
+  const y0=Math.round(box.cy-box.ry), y1=Math.round(box.cy+box.ry)-1;
+  const width=x1-x0,height=y1-y0;
+  const p=(x:number,y:number,ink:Ink,a=255):void=>{
+    if(x<x0||x>x1||y<y0||y>y1) return; putPixel(out,w,h,x,y,ink,a);
+  };
+  const line=(ax:number,ay:number,bx:number,by:number,ink:Ink,a=255,thick=1):void=>{
+    // All internal geometry is designed within the live AABB; no fabricated
+    // ellipsoid danger zone extending beyond the host's actual occupied box.
+    pixelLine(out,w,h,Math.max(x0,Math.min(x1,ax)),Math.max(y0,Math.min(y1-thick+1,ay)),Math.max(x0,Math.min(x1,bx)),Math.max(y0,Math.min(y1-thick+1,by)),ink,a,thick);
+  };
+  // Deposit depth varies over a broad inward band. Nothing is drawn along
+  // the exact four bounding edges: they must not read as a selection box.
+  for(let y=y0;y<=y1;y++) for(let x=x0;x<=x1;x++) {
+    const edge=Math.min(x-x0,x1-x,y-y0,y1-y);
+    const grain=cluster(x+17,y-31,recipe.seed);
+    const inset=3+cluster(x-23,y+19,recipe.seed+7);
+    const interior=edge>13?1:Math.max(0,Math.min(1,(edge-1)/(8+grain*.6)));
+    const alpha=Math.round((28+active*20)*interior);
+    if(alpha>0)p(x,y,C.seam,alpha);
+    // Sparse small flakes at different distances from the perimeter, with
+    // larger missing groups. All stay within the live billed AABB.
+    if(edge>=3&&edge<15&&Math.abs(edge-inset)<2&&grain<4&&cluster(x+41,y+7,recipe.seed+31)<5)
+      p(x,y,grain===0?C.body:C.shadow,48+Math.round(active*24));
+  }
+  if(recipe.family==='sound_echo') {
+    // A phrase repeats as paired pressure scars. At higher coverage the
+    // repetitions lose their common origin and develop counter-flowing lobes.
+    const rings=3+stage*2;
+    for(let r=0;r<rings;r++) {
+      const travel=(.5+.5*Math.sin(phase-r*.72))*active;
+      const rad=(r+1)/(rings+1)*.8+travel*.08;
+      const ox=stage===2?Math.sin(r*2.3)*width*.12:0;
+      let last:{x:number;y:number}|null=null;
+      for(let k=0;k<=80;k++) {
+        const angle=k*Math.PI*2/80;
+        const broken=(k+Math.floor(r*3))%17;
+        const warp=1+Math.sin(angle*(2+stage)+r)*(.025+stage*.045);
+        const x=Math.round(box.cx+ox+Math.cos(angle)*width*.48*rad*warp);
+        const y=Math.round(box.cy+Math.sin(angle)*height*.46*rad*warp);
+        if(broken>12) {last=null;continue;}
+        if(last) line(last.x,last.y,x,y,k%7<3?C.body:C.shadow,150+Math.round(active*65),2);
+        if(last&&k%9<4) line(last.x,last.y-2,x,y-2,C.ridge,70+Math.round(active*100));
+        last={x,y};
       }
     }
-    return;
+    for(let k=0;k<4+stage;k++) {
+      const x=box.cx+(k-(3+stage)/2)*4,y=box.cy+Math.sin(phase-k)*active*3;
+      line(x,y-3,x,y+3,k%2?C.teal:C.body,180);
+    }
+  } else if(recipe.family==='light_scatter') {
+    // Parallel fractured shafts split at a displaced refraction joint. Short
+    // banded slivers imply light without a solid triangular prism body.
+    const shafts=3+stage*2;
+    for(let k=0;k<shafts;k++) {
+      const anchor=(k+1)/(shafts+1), x=x0+width*anchor;
+      const start=y0+5+(k*13+recipe.seed)%18;
+      const knee=y0+height*(.35+.15*Math.sin(k+recipe.seed));
+      const bend=(4+stage*7)*Math.sin(k*2.1+phase)*active;
+      const stop=y1-4-(k*7)%19;
+      const slant=Math.sin(k*1.7+recipe.seed)*.18;
+      for(let y=start;y<stop;y++) {
+        if(y>knee-2&&y<knee+3)continue;
+        const t=(y-knee)/Math.max(1,stop-knee);
+        const rayX=x+(y-start)*slant+(y>knee?bend*t:0);
+        const radius=1+((Math.floor((y-start)/13)+k)%3===0?1:0);
+        for(let dx=-radius;dx<=radius;dx++) {
+          if(cluster(rayX+dx,y,k+recipe.seed)===3&&Math.abs(dx)===radius)continue;
+          const ink=dx===0?C.ridge:dx<0?C.teal:C.shadow;
+          p(Math.round(rayX+dx),y,ink,dx===0?160+Math.round(active*60):95+Math.round(active*45));
+        }
+        if((y+k*3)%17<3) p(Math.round(rayX-3),y,C.body,110);
+      }
+      const joint=x+(knee-start)*slant;
+      line(joint-3,knee,joint+3,knee+1,C.lit,110+Math.round(active*80));
+      if(stage>0) line(joint+3,knee+4,joint+3+bend*.6,Math.min(y1-2,knee+14+stage*5),C.body,170,2);
+    }
+  } else {
+    // Space repeats fragments of a floor joint at contradictory offsets.
+    // The centre interval closes as activity rises; no fog-ball surrogate.
+    const ribs=3+stage;
+    const collapse=active*(3+stage*2)+Math.sin(phase)*active*2;
+    for(let k=0;k<ribs;k++) {
+      const y=y0+(k+1)*height/(ribs+1), offset=(k%2?1:-1)*(stage*3+collapse);
+      const gap=Math.max(3,11-stage*2-collapse*.45);
+      for(let side=-1;side<=1;side+=2) {
+        const inner=box.cx+side*gap+offset;
+        const outer=side<0?x0+4:x1-4;
+        for(let q=0;q<4;q++) {
+          const ink=q===0?C.ridge:q===3?C.seam:C.shadow;
+          line(outer,y+q,inner,y+q,ink,q===0?190:230);
+        }
+        line(inner,y,inner+side*2,y+6+stage*2,C.body,210,2);
+        // Broken two-pixel mortar edge rather than a smooth extruded face.
+        for(let x=Math.min(outer,inner)+3;x<Math.max(outer,inner);x+=9) p(Math.round(x),Math.round(y+2),C.seam,255);
+      }
+      if(stage===2) line(box.cx+offset-2,y-4,box.cx+offset+2,y+6,C.teal,130+Math.round(active*80));
+    }
   }
-  if (recipe.reverseCore) {
-    put(out, width, height, cx, cy, recipe.deep, awake ? 160 : 48);
+  if(recipe.paintStrikeCore) {
+    const span=Math.max(2,recipe.strikeCorePx);
+    for(let y=-span;y<=span;y++) for(let x=-span;x<=span;x++) {
+      if(Math.abs(x)+Math.abs(y)>span+1) continue;
+      p(Math.round(box.cx+x),Math.round(box.cy+y),Math.abs(x)+Math.abs(y)>span-1?C.seam:active>.3?C.teal:C.body);
+    }
   }
 }

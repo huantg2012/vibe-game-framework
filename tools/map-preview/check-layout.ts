@@ -5,6 +5,7 @@
  *
  * Dual path (spec 21) and walkable-component count are FATAL.
  */
+import { CONTAMINATION_DIALECT_DATA } from '../../src/generated/contamination-family-data.ts';
 import { countWalkableComponents } from '../../src/generation/connectivity.ts';
 import { evaluateDualPath } from '../../src/generation/dual-path.ts';
 import { isContaminationAge, isRuinSeverity } from '../../src/generation/fragment-roll.ts';
@@ -155,16 +156,18 @@ for (const seed of SEEDS) {
     `seed ${seed}: patrols ${layout.enemySpawns.length}`,
   );
   const rewriterCount = layout.enemySpawns.filter((e) => e.type === 'rewriter').length;
-  assert(rewriterCount === 1, `seed ${seed}: rewriter count ${rewriterCount} (must be exactly 1)`);
+  const wallHear = layout.contaminationDraw.forms.filter((f) => f.occupancy === 'wall' && f.lexemes.sense === 'sense_hear').length;
+  assert(rewriterCount + wallHear === 1, `seed ${seed}: global hearing count must be exactly 1`);
   const gate = layout.enemySpawns[0];
   assert(gate?.type === 'infiltrator', `seed ${seed}: extract gate ${gate?.id} is ${gate?.type}`);
   assert(gate?.id === 'ENM_INF_01', `seed ${seed}: gate id ${gate?.id}`);
   assert(gate?.form, `seed ${seed}: extract gate missing form`);
   assert(
-    gate?.form?.substrate === 'organic_remnant' &&
+    CONTAMINATION_DIALECT_DATA[layout.fragmentTypeId]?.substrates.some(([id, weight]) => id === gate?.form?.substrate && weight > 0) &&
+      gate?.form?.lexemes.motion === 'motion_patrol' &&
       gate?.form?.coverage === 'infiltrate' &&
       gate?.form?.lexemes.sense === 'sense_cone',
-    `seed ${seed}: extract gate form not remnant+infiltrate+cone`,
+    `seed ${seed}: extract gate form must be positive map-weight + infiltrate + cone + patrol`,
   );
   for (const enemy of layout.enemySpawns) {
     assert(enemy.form, `seed ${seed}: ${enemy.id} missing form`);
@@ -172,7 +175,7 @@ for (const seed of SEEDS) {
     assert(enemy.type === fromSense, `seed ${seed}: ${enemy.id} type ${enemy.type} != form sense`);
   }
   const rewriter = layout.enemySpawns.find((e) => e.type === 'rewriter');
-  assert(rewriter?.form?.lexemes.sense === 'sense_hear', `seed ${seed}: rewriter form is not hear`);
+  assert(!rewriter || rewriter.form?.lexemes.sense === 'sense_hear', `seed ${seed}: rewriter form is not hear`);
   const drawJia = layout.contaminationDraw.forms.filter((f) => f.portfolio === 'jia');
   assert(
     drawJia.length === layout.enemySpawns.length,
