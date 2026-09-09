@@ -1,3 +1,7 @@
+import { inventoryStore } from '@/systems/inventory-store';
+import { WEAPON_DATA } from '@/generated/weapon-data';
+import { inventoryPanel } from '@/ui/dom/inventory-panel';
+import { openInventory, inventoryError } from '@/ui/inventory-presenter';
 import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH } from '@/systems/ground-depth';
 /**
  * Purification Scene - the base management walkable space.
@@ -277,6 +281,7 @@ export type WorldInteractionTarget = 'CORE' | 'STORAGE' | 'PURIFIER' | 'defense'
 export class PurificationScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
+  private unsubscribeWeapon: (() => void) | null = null;
   private readonly visibility = new VisibilitySystem();
   private groundDepthSorter: GroundDepthSorter | null = null;
   private deviceCollision: PurificationCollision | null = null;
@@ -309,6 +314,8 @@ export class PurificationScene extends Phaser.Scene {
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
+  private bagKey: Phaser.Input.Keyboard.Key | null = null;
+  private saveRetryTimer: number | null = null;
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
   // 核心抽卡方案切换（实测用）：1/2/3 -> A 敬畏 / B 仪式 / C 封印
   private coreVariantKeys: Phaser.Input.Keyboard.Key[] = [];
@@ -342,7 +349,10 @@ export class PurificationScene extends Phaser.Scene {
     this.shuttingDown = false;
     this.menuEntry = data?.menuEntry ?? null;
     // Determine if this is a return from rift (vs. menu/load entry)
-    const isReturnFromRift = !data?.fromMenu && data?.kindlingGained !== undefined;
+    const ledger = inventoryStore.getRun();
+    const isReturnFromRift = ledger?.status === 'settled' ? !ledger.baseSettled : !data?.fromMenu && data?.kindlingGained !== undefined;
+    const survived = ledger?.status === 'settled' ? ledger.outcome === 'extract' : data?.survived;
+    const kindlingGained = ledger?.status === 'settled' ? ledger.kindlingGained ?? 0 : data?.kindlingGained ?? 0;
 
     // Stability milestone crossed by this visit's extraction bonus, if any (Slice 5.5
     // D5: this used to fire through the STABILITY_CHANGED event, but the listener is
@@ -353,16 +363,6 @@ export class PurificationScene extends Phaser.Scene {
     // exactly what changed on this return, no more/no less.
     let stabilityMilestoneMessage: string | null = null;
 
-    // Credit kindling from the rift run (spec rule 10)
-    if (data?.survived && data.kindlingGained !== undefined && data.kindlingGained > 0) {
-      gameState.addKindling(data.kindlingGained);
-      // Stability: successful extraction (spec S21)
-      const beforeProgress = stabilityTracker.getProgress();
-      stabilityTracker.addProgress('extraction', GAME_CONSTANTS.STABILITY.GAIN_EXTRACT);
-      const afterProgress = stabilityTracker.getProgress();
-      stabilityMilestoneMessage = this.findCrossedStabilityMilestone(beforeProgress, afterProgress);
-    }
-
     // Impact only triggers on return from rift, not on menu/load entry
     let impactResult: ReturnType<typeof impactSystem.run> = { skipped: true, damages: [], intensity: 0 };
     let chargeChanges: ChargeChangeEntry[] = [];
@@ -372,6 +372,17 @@ export class PurificationScene extends Phaser.Scene {
     // the player saw on their way out — the prediction this impact is judged against
     // (Slice 5.5 D5 "预告 vs 实际", IA §S8).
     let predictedForecast: ForecastDisplay | null = null;
+
+    const saved = saveManager.commitWorldTransaction(() => {
+    // Credit kindling from the rift run (spec rule 10)
+    if (isReturnFromRift && survived && kindlingGained > 0) {
+      gameState.addKindling(kindlingGained);
+      // Stability: successful extraction (spec S21)
+      const beforeProgress = stabilityTracker.getProgress();
+      stabilityTracker.addProgress('extraction', GAME_CONSTANTS.STABILITY.GAIN_EXTRACT);
+      const afterProgress = stabilityTracker.getProgress();
+      stabilityMilestoneMessage = this.findCrossedStabilityMilestone(beforeProgress, afterProgress);
+    }
 
     if (isReturnFromRift) {
       // Sync impact intensity from tide system
@@ -408,8 +419,10 @@ export class PurificationScene extends Phaser.Scene {
       tideSystem.peekNextIntensity(),
     );
 
-    // Save game state
-    saveManager.save();
+    if (isReturnFromRift && ledger?.status === 'settled') inventoryStore.markBaseSettled();
+    inventoryStore.ensureStarter();
+    });
+    if (!saved) this.requestSaveRetry();
 
     this.transitioning = false;
 
@@ -469,6 +482,14 @@ export class PurificationScene extends Phaser.Scene {
 
     // Player
     this.player.create(this, { spawn: PURIFICATION_SPAWN_POINT, depth: 30, facing: 'up', body: PURIFICATION_PLAYER_BODY });
+    const syncWeapon = (): void => {
+      const id = inventoryStore.getEquipment().weaponId;
+      const item = id ? inventoryStore.getItem(id) : undefined;
+      const weapon = item?.kind === 'weapon' ? WEAPON_DATA[item.weapon.definitionId] : undefined;
+      this.player.setWeaponVisual(weapon?.quality ?? null, weapon?.variant ?? 'standard');
+    };
+    syncWeapon();
+    this.unsubscribeWeapon = inventoryStore.subscribe(syncWeapon);
     this.boundaryCollider = this.physics.add.collider(this.player.getSprite(), this.boundaryBodies);
     this.deviceCollision = new PurificationCollision(this, this.player.getSprite(), {
       core: CORE_POS, storage: STORAGE_POS, purifier: PURIFIER_POS,
@@ -586,6 +607,7 @@ export class PurificationScene extends Phaser.Scene {
     if (keyboard) {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
+      this.bagKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false);
       this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
       // 1/2/3 切核心对照（生产默认 B）；4/5/7/8/9 切裂隙入口（生产默认卡 5）
       this.coreVariantKeys = [
@@ -813,6 +835,8 @@ export class PurificationScene extends Phaser.Scene {
       writeEntranceVariantQuery(variant);
     }
 
+    if (this.bagKey && Phaser.Input.Keyboard.JustDown(this.bagKey) && !this.isAnyPanelOpen()) this.openBag();
+
     // ESC
     if (this.escKey && Phaser.Input.Keyboard.JustDown(this.escKey)) {
       if (impactResultPanel.isOpen()) {
@@ -829,6 +853,7 @@ export class PurificationScene extends Phaser.Scene {
         this.panelClosedAt = this.time.now;
       } else if (loadoutPanel.isOpen()) {
         loadoutPanel.close();
+    inventoryPanel.close();
         this.panelClosedAt = this.time.now;
       } else if (statusPanel.isOpen()) {
         statusPanel.close();
@@ -961,7 +986,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private isAnyPanelOpen(): boolean {
-    return this.interactionFocusReturn !== null || allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen() || statusPanel.isOpen() || impactResultPanel.isOpen();
+    return inventoryPanel.isOpen() || saveManager.hasPendingSave() || this.interactionFocusReturn !== null || allocationPanel.isOpen() || defensePanel.isOpen() || growthPanel.isOpen() || loadoutPanel.isOpen() || statusPanel.isOpen() || impactResultPanel.isOpen();
   }
 
   private openAllocationPanel(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER'): void {
@@ -1086,29 +1111,61 @@ export class PurificationScene extends Phaser.Scene {
   private enterRift(): void {
     if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(RIFT_ENTRANCE_POS, 184);
-    loadoutPanel.open(
-      () => {
-        // Confirm callback: trigger rift entry
-        this.transitioning = true;
-        this.transitionToRift();
-      },
-      () => this.restoreInteractionFocus(),
-      { getAnchor: this.getInteractionScreenAnchor },
-    );
+    openInventory({ mode: 'prepare', onClose: () => this.restoreInteractionFocus(),
+      onDepart: () => this.transitionToRift(),
+      onOffering: () => this.openOfferingFromInventory(),
+    });
+  }
+
+  private openBag(): void {
+    this.player.setInputEnabled(false);
+    openInventory({ mode: 'base', onClose: () => {
+      this.panelClosedAt = this.time.now;
+      if (!this.shuttingDown) this.player.setInputEnabled(true);
+    }, onOffering: () => this.openOfferingFromInventory() });
+  }
+
+  private openOfferingFromInventory(): void {
+    // Finish the entrance camera's return before focusing the offering device.
+    this.time.delayedCall(220, () => {
+      if (!this.shuttingDown) this.openDefensePanel();
+    });
+  }
+
+  private requestSaveRetry(onSaved?: () => void): void {
+    if (this.saveRetryTimer !== null) return;
+    const retry = document.createElement('button');
+    retry.className = 'action-btn';
+    retry.textContent = '尚未保存 · 点击重试';
+    retry.style.cssText = 'position:absolute;left:360px;top:590px;z-index:3000';
+    getDomUiRoot().append(retry);
+    retry.onclick = () => { if (saveManager.trySave()) { retry.remove(); this.saveRetryTimer = null; onSaved?.(); } };
+    this.saveRetryTimer = 1;
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => { retry.remove(); this.saveRetryTimer = null; });
   }
 
   /** D4: Scene transition with narrative overlay + T10 radial glow. */
   private transitionToRift(): void {
-    // Increment cycle before entering
-    gameState.incrementCycle();
+    if (this.transitioning || saveManager.hasPendingSave()) return;
+    let error: string | null = null;
+    const saved = saveManager.commitWorldTransaction(() => {
+      const begun = inventoryStore.beginRun(crypto.randomUUID());
+      if (!begun.ok) { error = inventoryError(begun.error); return; }
+      gameState.incrementCycle();
+    });
+    if (error) { showToastInline(error, {}); return; }
+    if (!saved) { this.requestSaveRetry(() => this.finishRiftDeparture()); return; }
+    this.finishRiftDeparture();
+  }
 
+  private finishRiftDeparture(): void {
+    inventoryPanel.close();
+    this.transitioning = true;
     const modifiers = gameState.getSortieModifiers();
     const cycle = gameState.getCycle();
     const loadout = contaminantSystem.getSortieLoadout();
 
     // Save before entering rift (captures loadout selection)
-    saveManager.save();
-
     eventBus.emit(GameEvent.RIFT_ENTERED, { cycle });
 
     // Inject transition animation styles once
@@ -1355,6 +1412,8 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
+    this.unsubscribeWeapon?.();
+    this.unsubscribeWeapon = null;
     this.shuttingDown = true;
     this.menuEntry?.destroy();
     this.menuEntry = null;
@@ -1381,6 +1440,7 @@ export class PurificationScene extends Phaser.Scene {
     defensePanel.close();
     growthPanel.close();
     loadoutPanel.close();
+    inventoryPanel.close();
     statusPanel.close();
     impactResultPanel.destroy();
     pauseMenu.discard();
@@ -1394,6 +1454,7 @@ export class PurificationScene extends Phaser.Scene {
       this.input.keyboard?.removeKey(this.escKey, true);
       this.escKey = null;
     }
+    if (this.bagKey) { this.input.keyboard?.removeKey(this.bagKey, true); this.bagKey = null; }
     if (this.tabKey) {
       this.input.keyboard?.removeKey(this.tabKey, true);
       this.tabKey = null;

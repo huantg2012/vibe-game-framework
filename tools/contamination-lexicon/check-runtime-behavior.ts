@@ -131,6 +131,16 @@ function fixture(form: ContaminationForm): { enemy: Enemy; ctx: AIContext } {
   return { enemy, ctx };
 }
 
+// Inventory persistence may reject muffle consumption. Failed charges must leave
+// the ordinary hearing discovery intact, just like the sleeping-body entry point.
+for (const consumed of [false, true]) {
+  const { enemy, ctx } = fixture(INFILTRATOR_FORM);
+  ctx.hearingSuppressed = true;
+  ctx.onHearingAvoided = () => consumed;
+  stepFsm(enemy, { visible: false, hearingHit: true, hearingRate: 0, zone: 'none', distance: 10 } as Perception, 100, ctx);
+  assert.equal(enemy.ai.state, consumed ? AIState.PATROL : AIState.SUSPICIOUS, 'muffle cannot swallow discovery before a charge commits');
+}
+
 for (const substrate of ['doorframe', 'street_wreckage', 'stalk_clump']) {
   // Stale/malicious patrol lexeme cannot make an anchored base translate.
   const form = { ...INFILTRATOR_FORM, substrate, lexemes: {

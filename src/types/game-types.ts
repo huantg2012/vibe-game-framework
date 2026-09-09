@@ -223,3 +223,10 @@ export interface SaveDataV1 {
    */
   moduleMaxHpTier?: 0 | 1 | 2 | 3;
 }
+
+/** Inventory-backed save. V1 remains readable and is migrated without changing IDs. */
+export interface SaveDataV2 extends Omit<SaveDataV1, 'version' | 'contaminants' | 'defenseSlots' | 'sortieLoadout'> {
+  version: 2;
+  inventory: import('./inventory-types').InventoryState;
+}
+export type ExpeditionSaveData = SaveDataV1 | SaveDataV2;

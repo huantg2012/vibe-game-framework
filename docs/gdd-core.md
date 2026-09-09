@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-09-07
+last-modified: 2026-09-09
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -16,6 +16,13 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 后克苏鲁世界的单机搜打撤（俯视角 2D，Web 平台）。玩家守着唯一未被污染完全覆盖的据点"净化点"，穿越不稳定的"裂隙"进入其他被污染的时空，搜刮"薪柴"（异源污染残渣）带回加固据点边界。核心体验不是"变强翻盘"，而是"维持崩溃边缘的紧绷"——资源永远不够，威胁与成长同步升级。详见 `docs/vision.md`（体验支柱）与 `docs/world.md`（世界观约束）。
 
 ## 系统列表
+
+**2026-09-09当前：迭代19实施（DEC-138）**。DEC-138：四品质十撬棍、统一挥击与持武像素、库存整备、真实拾取、负重/抗性和死亡/撤离结算已接生产；内部验证见 docs/qa/iteration-19.md。中断出击政策待用户明确，完整恢复未交，体验与美术待人审；本批纳入阶段提交（DEC-139）。
+
+- 武器与共享攻击：`docs/specs/system-player-weapons.md`；品质成品库：`docs/content/player-crowbars.md`。旧八种功能款退出。
+- 库存/携带/拾取/结算：`docs/specs/system-field-inventory.md`；容量16.0、污染物2.0为实施基准，内部十分之一整数。
+- 污染抗性与负重行动：`docs/specs/system-survival-attributes.md`。未装配武器不叠抗性；界面预览与已提交实际属性分开显示。
+- 分波台账：`docs/tasks/iteration-19.md`。死亡全丢与开包不停已锁，退出/刷新尚待用户决定；本轮未结案。
 
 > **现状说明**：Slice 1+2+3+3.5+4+4.5+5+5.5+6+7+8+9 已完成。自 DEC-072 起按需游戏迭代。**当前进行中：迭代 5（污染外形基因谱，DEC-087 / DEC-088）** — 三层管线重做占地外形；街具残骸合并灯柱/栏柱；加三种生物基底；粗占格闸门；练习场先行。活指针仍在迭代 5。不要标迭代 5 COMPLETE。**迭代11（全游戏UX/UI重构，DEC-119）COMPLETE（2026-09-07用户验收）**；**迭代12（净化点角色空间表现，DEC-120）COMPLETE（2026-09-07用户验收）**：修复全向视野暗楔，角色与五台装置按脚底排序，补底座碰撞与局部边界绕行空间。详情见对应迭代合同及 system-movement-vision / system-purification-impact。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线；占墙 / 占空基因谱 deferred。站着不计仍挂起。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同 `docs/tasks/iteration-9.md`。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。迷雾下亮度人终审 PASS（2026-08-28）。遭遇识别旁白是同一套体系的识别面，不是独立玩法。`docs/specs/` 含系统 spec + `ui-detection-pulse` + 污染句法规则；`src/` 含裂隙出击环 + 两种敌人剖面 + 占墙 / 占漆 / 占空宿主 + 净化点三模块 + 成长潮汐 + 数据管线 + 防御引擎 + 18 型污染物 + 程序化裂隙 + AudioManager。下表标注各系统当前状态。
 

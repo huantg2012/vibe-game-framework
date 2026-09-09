@@ -68,7 +68,14 @@
     "check:volume-integration": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-volume-integration.ts",
     "check:volume-seat": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-volume-seat.ts",
     "check:volume-deployment": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-volume-deployment.ts",
-    "check:dust-motion": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-dust-motion.ts"
+    "check:dust-motion": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-dust-motion.ts",
+    "check:inventory": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-inventory.ts",
+    "check:inventory-tools": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-tool-consumption.ts",
+    "check:inventory-loot": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-field-loot.ts",
+    "check:inventory-save": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-save-migration.ts",
+    "check:survival-weapons": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-survival-weapons.ts",
+    "art:crowbars": "tsx tools/inventory/export-crowbar-pixels.ts",
+    "check:crowbar-combat": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-crowbar-combat.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1"

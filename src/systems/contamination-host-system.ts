@@ -45,6 +45,7 @@ import type { ContaminationForm, SortieDraw } from '@/generation/contamination-d
 import type { ContaminationPins, CorridorAabb, GeneratedRiftLayout, PaintFloorPin, WallEdgePolyline } from '@/generation/types';
 import { orderWallEdgeTiles, wallAttachForTile, type FormWallAttach } from '@/generation/wall-edge-path';
 import type { CombatSystem } from '@/systems/combat-system';
+import type { MeleeTarget } from '@/systems/weapon-swing';
 import type { ChaosSystem } from '@/systems/chaos-system';
 import {
   aabbPixelRect,
@@ -194,7 +195,8 @@ export class ContaminationHostSystem {
   private combat: CombatSystem | null = null;
   private chaos: ChaosSystem | null = null;
   private getVisibility: ((p: Readonly<Vector2>) => number) | null = null;
-  private swingHit = false;
+  private readonly meleeTargetCache = new WeakMap<object, MeleeTarget>();
+  private readonly coreFlashMs = new Map<string, number>();
   private volumeSight = 1;
   private lastPlayerTile = { col: -1, row: -1 };
   private lastDraw: SortieDraw | null = null;
@@ -229,7 +231,9 @@ export class ContaminationHostSystem {
   ): void {
     this.destroy();
     this.hosts = [];
+    this.combat?.unregisterMeleeTargets(this);
     this.combat = combat;
+    combat?.registerMeleeTargets(this);
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
     this.liveMotion = options?.liveMotion === true;
@@ -260,6 +264,7 @@ export class ContaminationHostSystem {
       if (host.kind === 'yi') host.telegraph.destroy();
     }
     this.hosts = [];
+    this.combat?.unregisterMeleeTargets(this);
     this.combat = null;
     this.chaos = null;
     this.getVisibility = null;
@@ -271,6 +276,7 @@ export class ContaminationHostSystem {
     this.skipPaint = false;
     this.liveMotion = false;
     this.paintFloors.clear();
+    this.coreFlashMs.clear();
     this.walkableFloors = null;
     this.occluders = null;
     this.hearingPolicy = undefined;
@@ -291,7 +297,9 @@ export class ContaminationHostSystem {
     this.clearHosts();
     this.scene = scene;
     this.pins = pins;
+    this.combat?.unregisterMeleeTargets(this);
     this.combat = combat;
+    combat?.registerMeleeTargets(this);
     this.chaos = chaos;
     this.getVisibility = getVisibilityAt;
     this.spawnSeq = 0;
@@ -303,6 +311,7 @@ export class ContaminationHostSystem {
 
   clearHosts(): void {
     this.paintFloors.clear();
+    this.coreFlashMs.clear();
     for (const host of this.hosts) {
       host.gfx.destroy();
       host.marks?.destroy();
@@ -555,7 +564,6 @@ export class ContaminationHostSystem {
   }
 
   update(dt: number, playerPos: Readonly<Vector2>, playerIsMoving = false, playerFacingAngle = 0): void {
-    const combat = this.combat;
     const dtMs = Number.isFinite(dt) ? Math.max(0, Math.min(dt, GAME_CONSTANTS.AI.DT_CLAMP_MS)) : 0;
     this.volumeSight = 1;
     this.playerFacingAngle = playerFacingAngle;
@@ -563,8 +571,6 @@ export class ContaminationHostSystem {
     this.playerPosition.y = playerPos.y;
     const col = Math.floor(playerPos.x / TILE);
     const row = Math.floor(playerPos.y / TILE);
-    const swung = combat?.getAttackState().phase === 'active';
-    if (!swung) this.swingHit = false;
 
     for (const host of this.hosts) {
       if (!host.alive) {
@@ -574,6 +580,8 @@ export class ContaminationHostSystem {
         continue;
       }
       host.noiseRemainingMs = Math.max(0, host.noiseRemainingMs - dtMs);
+      const flash = this.coreFlashMs.get(host.id) ?? 0;
+      if (flash > 0) this.coreFlashMs.set(host.id, Math.max(0, flash - dtMs));
       host.hearingAccumMs += dtMs;
       if (host.hearingAccumMs >= GAME_CONSTANTS.AI.PERCEPTION_TICK_MS) {
         host.hearingAccumMs = 0;
@@ -593,20 +601,6 @@ export class ContaminationHostSystem {
       }
       const touching = host.kind === 'yi' && host.strikeFloors.some(f => f.col === col && f.row === row);
       host.activity.tick(dtMs, host.noiseRemainingMs > 0, !touching && host.noiseRemainingMs === 0);
-      const stop = this.liveMotion ? resolveStopLoss(host.form) : null;
-      const hittable = !this.liveMotion || (stop !== null && stop !== 'illegal' && stop.hittable);
-      if (combat && swung && !this.swingHit && hittable) {
-        if (this.liveMotion && host.kind === 'bing' && host.nuclei.length > 0) {
-          const hit = host.nuclei.find((n) => n.alive && this.coreInSwing(playerPos, combat.getLockedAttackAngle(), n.core));
-          if (hit) {
-            this.hitCore(host, hit);
-            this.swingHit = true;
-          }
-        } else if (this.coreInSwing(playerPos, combat.getLockedAttackAngle(), host.core, host)) {
-          this.hitCore(host);
-          this.swingHit = true;
-        }
-      }
       if (!host.alive) continue;
       if (host.kind === 'yi') this.tickYi(host, col, row, dtMs);
       else if (host.kind === 'bing') this.tickBing(host, col, row, dtMs);
@@ -1174,41 +1168,60 @@ export class ContaminationHostSystem {
       for (const nucleus of host.nuclei) {
         if (!nucleus.alive) continue;
         const flash = nucleus.flashMs > 0;
-        this.paintCore(gfx, nucleus.core, flash ? 0x3cffd4 : 0x2ae6c8, size, true, true);
+        this.paintCore(gfx, nucleus.core, flash ? 0x90b9a3 : 0x2ae6c8, flash ? Math.max(1, size - 1) : size, true, true);
       }
       return;
     }
-    this.paintCore(gfx, host.core, 0x2ae6c8, size, true, true);
+    const flash = (this.coreFlashMs.get(host.id) ?? 0) > 0;
+    this.paintCore(gfx, host.core, flash ? 0x90b9a3 : 0x2ae6c8, flash ? Math.max(1, size - 1) : size, true, true);
   }
 
-  private coreInSwing(origin: Readonly<Vector2>, angle: number, core: Vector2, host?: Host): boolean {
-    const combat = GAME_CONSTANTS.COMBAT;
-    const dx = core.x - origin.x;
-    const dy = core.y - origin.y;
-    const dist = Math.hypot(dx, dy);
-    if (dist > combat.ATTACK_RANGE) return false;
-    const bearing = Math.atan2(dy, dx);
-    if (dist >= combat.ATTACK_MIN_ANGLE_BYPASS &&
-        Math.abs(shortestArc(bearing - angle)) > degToRad(combat.ATTACK_HALF_ANGLE)) return false;
-    if (!this.occluders) return true; // Older external practice callers may have no terrain.
-    this.swingTarget.x = core.x;
-    this.swingTarget.y = core.y;
-    if (host?.kind === 'yi') {
-      const attach = wallAttachForTile(host.tile, host.strikeFloors, TILE);
-      this.swingTarget.x += attach.nx * .5;
-      this.swingTarget.y += attach.ny * .5;
+  /** Combat owns timing, LOS, sorting and the combined body/core target budget. */
+  collectMeleeTargets(out: MeleeTarget[]): void {
+    for (const host of this.hosts) {
+      if (!host.alive) continue;
+      const stop = this.liveMotion ? resolveStopLoss(host.form) : null;
+      if (stop === 'illegal' || (stop && !stop.hittable)) continue;
+      if (this.liveMotion && host.kind === 'bing' && host.nuclei.length > 0) {
+        for (let i = 0; i < host.nuclei.length; i++) {
+          const nucleus = host.nuclei[i]!;
+          if (nucleus.alive) out.push(this.meleeTarget(host, nucleus, i));
+        }
+      } else out.push(this.meleeTarget(host));
     }
-    return hasLineOfSight(this.occluders, origin, this.swingTarget);
   }
 
-  private hitCore(host: Host, nucleus?: BingNucleus): void {
+  private meleeTarget(host: Host, nucleus?: BingNucleus, index = 0): MeleeTarget {
+    const key = nucleus ?? host;
+    let target = this.meleeTargetCache.get(key);
+    if (!target) {
+      const point = { x: 0, y: 0 };
+      target = {
+        id: `core:${host.id}:${index}`, hostId: host.id,
+        getPosition: () => {
+          const core = nucleus?.core ?? host.core;
+          point.x = core.x; point.y = core.y;
+          if (host.kind === 'yi') {
+            const attach = wallAttachForTile(host.tile, host.strikeFloors, TILE);
+            point.x += attach.nx * .5; point.y += attach.ny * .5;
+          }
+          return point;
+        },
+        isAlive: () => host.alive && (!nucleus || nucleus.alive),
+        applyHit: amount => this.hitCore(host, nucleus, amount),
+      };
+      this.meleeTargetCache.set(key, target);
+    }
+    return target;
+  }
+
+  private hitCore(host: Host, nucleus: BingNucleus | undefined, amount: number): void {
     host.noiseRemainingMs = BEHAVIOR_PROFILE_DATA.rhythm_sleep!.wakeMs + C.ADJACENT_STRIKE_WINDUP_MS;
     if (this.liveMotion) {
       const stop = resolveStopLoss(host.form);
       if (stop === 'illegal' || !stop.hittable) return;
       if (host.kind === 'bing' && stop.family === 'scatter_rejoin') {
         if (!nucleus || !nucleus.alive) return;
-        const amount = GAME_CONSTANTS.COMBAT.PLAYER_DAMAGE;
         nucleus.hp -= amount;
         nucleus.flashMs = 80;
         eventBus.emit(GameEvent.ENEMY_DAMAGED, { enemyId: host.id, amount, source: 'player' });
@@ -1226,8 +1239,8 @@ export class ContaminationHostSystem {
         return;
       }
     }
-    const amount = GAME_CONSTANTS.COMBAT.PLAYER_DAMAGE;
     host.hp -= amount;
+    this.coreFlashMs.set(host.id, 80);
     eventBus.emit(GameEvent.ENEMY_DAMAGED, { enemyId: host.id, amount, source: 'player' });
     if (host.hp > 0) return;
     host.alive = false;

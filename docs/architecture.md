@@ -10,6 +10,21 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+### 迭代19撬棍像素素材（待接入，DEC-137）
+
+`src/art/crowbar-pixels.ts`是无引擎依赖的RGBA美术源，输出32×32世界基型与48×48库存图标及各自握点。`tools/inventory/export-crowbar-pixels.ts`读取draft成品CSV并导出`public/assets/weapons/crowbars/`的PNG和清单；不生成战斗属性，也不在运行帧中重绘资产。`/tools/inventory/crowbar-review.html`复用真实玩家贴图作四向持握标定。当前生产Player和库存presenter尚未引用新品质模型；攻击动作与实景接线继续按W2/W3执行。
+
+
+## 迭代19库存实现边界（2026-09-09，尚未整链启用）
+
+`InventoryStore`（`src/systems/inventory-store.ts`）成为物品身份与位置的唯一所有者；`ContaminantSystem`保留污染物生命周期与既有事件的适配职责。重量以十分之一整数存储；装备仅引用实例ID。领域事务验证后先写入存档，再发布归属变化；工具消费成功才释放主动或被动效果。暂存的旧工具引用在最后一次使用或销毁后失效。
+
+`SaveManager`写入`SaveDataV2.inventory`，V1污染物、槽位与次数迁入统一物品结构，不再同时保存两套可写污染物数组。加载活动出击账本不会自行执行死亡或放弃；中断政策等待用户决定。新游戏/旧档迁移提供普通白板，`data/weapons.csv`经codegen只生成该已确认基线，R4四档伤害区间、同档抗性和生存属性候选仍留在`data/drafts/`。
+
+`inventory-panel.ts`与`inventory-panel-styles.ts`为基地、备行、裂隙共用的展示组件；`src/ui/inventory-presenter.ts`从领域查询生成视图、把动作回传领域，不另存物品。`FieldLootInventory`负责已揭晓地面物的世界投影、附近可见性及E拾取；`LootSearchSystem.inventoryEnabled`必须显式启用，当前默认关闭，正式裂隙仍走原搜寻路径。
+
+**未完成的生产接线**：场景B入口与备行替换、出发账本、死亡/撤离与基地冲击的持久化结算、中断恢复、结果实际携回列表。不能以领域测试或独立界面验收替代上述完整循环。当前合同见`system-field-inventory.md`与`iteration-19.md`；本节不改变已验收的敌人/场景美术。
+
 ## R4-C 当前实体占空合同
 
 R4-D尘絮返工：`dust-flow.ts`只负责可绝对时间重建的独立絮簇位置/尺度/朝向；`volume-presence.ts`缓存朝向基向量并采样同一破碎密度场；`volume-paint.ts`在絮簇局部坐标绘制稳定身份的纤维/卷片。没有额外粒子碰撞系统或装饰层的无形危区。
@@ -940,3 +955,16 @@ R3历史范围为14生产基底（6占地/2墙/3漆/3空），当时128种子证
 
 
 R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实面法线向地侧投影10px（渲染仍在迷雾之下），核保持原seam 0–2px、危险格不动。真实单帧strike触发140ms纯表现收势，后续windup即时显示，不延长伤害或延后预告；四向外伸限制在相邻32px格内。
+
+
+### I19 正式武器与库存接线（DEC-138）
+
+`data/weapons.csv`、`weapon-qualities.csv`、`weapon-attack-profiles.csv`、`weapon-loot.csv`、`weapon-first-discovery.csv` 经 codegen 生成 weapon-data；survival-attributes.csv 生成 survival-data。草案表不作为运行时源。
+
+`weapon-swing.ts`拥有每次挥击抽样、时间窗口与共享目标预算，Combat统合身体及Host登记的核；Host不再独立轮询武器有效帧。`player-weapon-rig.ts`读取同一攻击姿态，脚底固定，拆分上身/双臂与32px武器握点。`crowbar-pixels.ts`共用于持握、地面物，PNG图标由同源导出。
+
+`inventory-store.ts`是唯一实例/归属/装备/出击账本所有者；`inventory-presenter.ts`与DOM视图共享于基地B、入口整备及裂隙B。`field-loot-inventory.ts`提交揭晓/取得/交换/落地，`weapon-loot.ts`使用独立确定性随机流。`survival-attributes.ts`从已提交库存派生抗性及负重速度，场景订阅后更新玩家、Chaos及HUD；预览不更改运行时属性。
+
+出发先保存beginRun，再转换场景；RunController先保存死亡/撤离settleRun，结果只读实际returnedIds。基地收益/冲击/潮汐/baseSettled通过SaveManager.commitWorldTransaction保存一次；失败保留会话结果并锁下一次出发，重试只写快照。开发ui-review的此事务也隔离真实存档。
+
+未完成出击的刷新/退出政策尚未确定；当前session阻止active账本载入基地，保留原记录并说明无法继续。该保护不是裂隙快照恢复。

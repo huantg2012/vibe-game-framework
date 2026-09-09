@@ -1286,6 +1286,77 @@ function generateVolumeProfiles() {
   ].join('\n'));
 }
 
+function generateWeapons() {
+  const asRows = (name) => {
+    const {header, rows} = readCsv(name);
+    return rows.map(row => {
+      if (row.length !== header.length) throw new Error('[codegen] invalid columns in ' + name);
+      return Object.fromEntries(header.map((key, i) => [key, row[i]]));
+    });
+  };
+  const integer = (value, min, max) => {
+    const n = Number(value);
+    if (value === '' || !Number.isSafeInteger(n) || n < min || n > max) throw new Error('[codegen] invalid weapon value: ' + value);
+    return n;
+  };
+  const qualities = {};
+  for (const row of asRows('weapon-qualities.csv')) {
+    if (qualities[row.id]) throw new Error('[codegen] duplicate quality');
+    qualities[row.id] = { name: row.display_name, rank: integer(row.quality_rank, 1, 100), damageMin: integer(row.damage_min, 1, 9999), damageMax: integer(row.damage_max, 1, 9999) };
+    if (qualities[row.id].damageMin > qualities[row.id].damageMax) throw new Error('[codegen] inverted damage range');
+  }
+  const profiles = {};
+  const profileColumns = {
+    reach_px:'reachPx', arc_deg:'arcDeg', windup_ms:'windupMs', active_ms:'activeMs', recovery_ms:'recoveryMs', min_interval_ms:'minIntervalMs', target_limit:'targetLimit', chaos_per_target:'chaosPerTarget',
+    noise_whiff_px:'noiseWhiffPx', noise_hit_px:'noiseHitPx', noise_kill_px:'noiseKillPx', recoil_visual_px:'recoilVisualPx', contact_hold_ms:'contactHoldMs',
+  };
+  for (const row of asRows('weapon-attack-profiles.csv')) {
+    if (profiles[row.weapon_type]) throw new Error('[codegen] duplicate attack profile');
+    profiles[row.weapon_type] = Object.fromEntries(Object.entries(profileColumns).map(([column, field]) => [field, integer(row[column], 0, 9999)]));
+    const p = profiles[row.weapon_type];
+    if (!p.targetLimit || !p.activeMs || p.minIntervalMs < p.windupMs + p.activeMs + p.recoveryMs) throw new Error('[codegen] invalid attack clock');
+  }
+  const entries = {};
+  for (const row of asRows('weapons.csv')) {
+    const q = qualities[row.quality_id];
+    if (!row.id || entries[row.id] || !q || !profiles[row.weapon_type] || !['standard','light','resistant'].includes(row.variant_id)) throw new Error('[codegen] invalid weapon reference');
+    entries[row.id] = { id: row.id, name: row.name, type: row.weapon_type, profileId: row.weapon_type, quality: row.quality_id, qualityName: q.name, qualityRank: q.rank, variant: row.variant_id,
+      weight: integer(row.weight_tenths, 1, 9999), damageMin: q.damageMin, damageMax: q.damageMax, damage: (q.damageMin + q.damageMax) / 2,
+      pollutionResistance: integer(row.pollution_resistance, 0, 60), visualKey: row.visual_key };
+  }
+  if (!entries.crowbar_plain) throw new Error('[codegen] missing starter crowbar');
+  const loot = {};
+  for (const row of asRows('weapon-loot.csv')) {
+    if (!['safe','contested','deep'].includes(row.tier) || loot[row.tier]) throw new Error('[codegen] invalid loot tier');
+    const qualityWeights = ['ordinary','good','fine','excellent'].map(key => integer(row[key+'_weight'],0,10000));
+    const variantWeights = ['standard','light','resistant'].map(key => integer(row[key+'_weight'],0,10000));
+    if (!qualityWeights.some(Boolean) || !variantWeights.some(Boolean)) throw new Error('[codegen] empty loot pool');
+    loot[row.tier] = { chancePercent: integer(row.chance_percent,0,100), qualityWeights, variantWeights };
+  }
+  if (Object.keys(loot).length !== 3) throw new Error('[codegen] missing loot tiers');
+  const firstRows = asRows('weapon-first-discovery.csv');
+  if (firstRows.length !== 1 || !entries[firstRows[0].definition_id] || !['safe','contested','deep'].includes(firstRows[0].minimum_tier)) throw new Error('[codegen] invalid first weapon rule');
+  const firstDiscovery = { minimumTier: firstRows[0].minimum_tier, definitionId: firstRows[0].definition_id };
+  writeFileSync(resolve(OUT_DIR, 'weapon-data.ts'), [
+    '// Generated from data/weapons.csv, weapon-qualities.csv, weapon-attack-profiles.csv and weapon-loot.csv. Do not edit.',
+    'export type WeaponQuality = "ordinary" | "good" | "fine" | "excellent";',
+    'export type WeaponVariant = "standard" | "light" | "resistant";',
+    '/** Weight is integer tenths. damage is the mean for legacy summaries; combat uses damageMin/Max. */',
+    'export interface WeaponDefinition { readonly id: string; readonly name: string; readonly type: string; readonly profileId: string; readonly quality: WeaponQuality; readonly qualityName: string; readonly qualityRank: number; readonly variant: WeaponVariant; readonly weight: number; readonly damageMin: number; readonly damageMax: number; readonly damage: number; readonly pollutionResistance: number; readonly visualKey: string; }',
+    'export interface WeaponAttackProfile { '+Object.values(profileColumns).map(key => 'readonly '+key+': number;').join(' ')+' }',
+    'export interface WeaponLootProfile { readonly chancePercent: number; readonly qualityWeights: readonly number[]; readonly variantWeights: readonly number[]; }',
+    'export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = '+JSON.stringify(entries,null,2)+';',
+    'export const WEAPON_ATTACK_PROFILES: Readonly<Record<string, WeaponAttackProfile>> = '+JSON.stringify(profiles,null,2)+';',
+    'export const WEAPON_LOOT_PROFILES: Readonly<Record<"safe"|"contested"|"deep", WeaponLootProfile>> = '+JSON.stringify(loot,null,2)+';',
+    'export const WEAPON_FIRST_DISCOVERY = '+JSON.stringify(firstDiscovery)+' as const;', '',
+  ].join('\n'));
+  const survival = Object.fromEntries(asRows('survival-attributes.csv').map(row => [row.id, Number(row.value)]));
+  for (const [id, max] of [['resistance_cap_percent',100],['burden_slow_start_ratio',1],['burden_max_slow_ratio',1]]) {
+    if (!Number.isFinite(survival[id]) || survival[id] < 0 || survival[id] >= max) throw new Error('[codegen] invalid survival rule ' + id);
+  }
+  writeFileSync(resolve(OUT_DIR, 'survival-data.ts'), '// Generated from data/survival-attributes.csv. Do not edit.\nexport const SURVIVAL_RULES = '+JSON.stringify(survival,null,2)+' as const;\n');
+}
+
 console.log('[codegen] Generating typed data from CSV...');
 generateContaminants();
 generateUpgrades();
@@ -1296,4 +1367,5 @@ generateContaminationFamilies();
 generateContaminationBehaviorProfiles();
 generateContaminationBodies();
 generateVolumeProfiles();
+generateWeapons();
 console.log('[codegen] Done.');

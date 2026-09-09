@@ -1,3 +1,4 @@
+import { inventoryStore } from '@/systems/inventory-store';
 /**
  * In-game Esc record menu.
  *
@@ -63,6 +64,11 @@ function leaveForSession(apply: (scene: Phaser.Scene) => void): void {
 }
 
 function onNewSave(): void {
+  if (saveManager.hasPendingSave()) {
+    const note = panel?.querySelector('.readout-note');
+    if (note) note.textContent = '结算尚未保存。请合上菜单，重试保存。';
+    return;
+  }
   if (hasReadableSave()) {
     mode = 'confirmOverwrite';
     buildOverwriteItems();
@@ -73,6 +79,11 @@ function onNewSave(): void {
 }
 
 function onLoadSave(): void {
+  if (inventoryStore.getRun()?.status === 'active' || saveManager.hasPendingSave()) {
+    const note = panel?.querySelector('.readout-note');
+    if (note) note.textContent = saveManager.hasPendingSave() ? '结算尚未保存。请合上菜单，重试保存。' : '当前仍在裂隙中。请完成撤离后再载入纪录。';
+    return;
+  }
   leaveForSession(loadExpedition);
 }
 

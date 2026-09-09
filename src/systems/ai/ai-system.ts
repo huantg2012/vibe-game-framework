@@ -128,7 +128,7 @@ export interface AISystemAPI {
   setHearingSuppressed(active: boolean): void;
   /** Fires once per hearing signal muffle actually swallowed, so `ToolSystem` can spend
    * a charge. Pass `null` to stop listening (scene shutdown / reset). */
-  setHearingAvoidedListener(listener: ((enemyId: string) => void) | null): void;
+  setHearingAvoidedListener(listener: ((enemyId: string) => boolean) | null): void;
   /** muffle's defense-slot side effect: "下次出击敌人近距感知范围+15%". Global (every
    * enemy, for the whole sortie), unlike every per-enemy override above. 1 = no effect.
    * Distinct from `setHearingSuppressed()` - that one is muffle as an equipped tool. */
@@ -166,7 +166,7 @@ export class AISystem implements AISystemAPI {
   private visibilityProvider: VisibilityProvider | null = null;
   private cueListener: CueListener | null = null;
   /** muffle (T7 rewire): fires once per hearing signal actually swallowed. */
-  private hearingAvoidedListener: ((enemyId: string) => void) | null = null;
+  private hearingAvoidedListener: ((enemyId: string) => boolean) | null = null;
 
   // --- per-frame inputs, copied so nothing outside can mutate them mid-update ---
   private readonly playerPos: Vector2 = { x: 0, y: 0 };
@@ -568,7 +568,7 @@ export class AISystem implements AISystemAPI {
     this.context.hearingSuppressed = active;
   }
 
-  setHearingAvoidedListener(listener: ((enemyId: string) => void) | null): void {
+  setHearingAvoidedListener(listener: ((enemyId: string) => boolean) | null): void {
     this.hearingAvoidedListener = listener;
   }
 
@@ -581,8 +581,7 @@ export class AISystem implements AISystemAPI {
   /** Shared proximity-only muffle policy for sleeping bodies and wall hosts. */
   trySuppressHearingDiscovery(id: string): boolean {
     if (!this.context.hearingSuppressed) return false;
-    this.hearingAvoidedListener?.(id);
-    return true;
+    return this.hearingAvoidedListener?.(id) === true;
   }
 
   getStats(): AIStats {
@@ -932,7 +931,7 @@ export class AISystem implements AISystemAPI {
       decoyPos: null,
       hearingSuppressed: false,
       hearingRangeMult: 1.0,
-      onHearingAvoided: (enemy) => this.hearingAvoidedListener?.(enemy.id),
+      onHearingAvoided: (enemy) => this.hearingAvoidedListener?.(enemy.id) === true,
       requestState: (enemy, next) => transitionTo(enemy, next, this.context),
       emitAlert: (enemy, level) => this.emitAlert(enemy, level),
       emitLost: (enemy) => this.emitLost(enemy),

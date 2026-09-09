@@ -59,11 +59,11 @@ export interface AIContext {
    */
   hearingSuppressed: boolean;
   /**
-   * Fires exactly when `hearingSuppressed` swallowed a would-be discovery (rule above),
+   * Attempts to spend a charge before swallowing a would-be discovery; false leaves it intact,
    * so `ToolSystem.notifyProximityAvoid()` can spend one of muffle's charges. Never fires
    * for a sighting or a noise - only for the hearing-alone case muffle actually covers.
    */
-  onHearingAvoided(enemy: Enemy): void;
+  onHearingAvoided(enemy: Enemy): boolean;
 
   /**
    * muffle's *defense-slot* side effect (Slice 5 gap-fill, DEC-039), not to be confused

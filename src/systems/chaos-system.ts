@@ -14,6 +14,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
+import { sumPollutionResistance } from '@/systems/survival-attributes';
 
 // ---------------------------------------------------------------------------
 // Pure function: chaos modulators (no class state, importable anywhere)
@@ -81,6 +82,8 @@ export interface ChaosSystemAPI {
 }
 
 export interface ChaosSystemConfig {
+  /** Effective equipped resistance; evaluated on positive inflow only. */
+  getPollutionResistance?: () => number;
   /** Called when value moves far enough to warrant a modulator update. */
   onModulate?: (modulators: ChaosModulators) => void;
   /** Multiplier on BASE_RATE from the purification module (CORE effect). Default 1.0. */
@@ -96,6 +99,7 @@ export interface ChaosSystemConfig {
 const DT_CLAMP_MS = 100;
 
 export class ChaosSystem implements ChaosSystemAPI {
+  private readonly getPollutionResistance: () => number;
   private value = 0;
   private peak = 0;
   private paused = false;
@@ -126,6 +130,7 @@ export class ChaosSystem implements ChaosSystemAPI {
   private readonly onEnemyKilled: (payload: { enemyId: string; position: { x: number; y: number } }) => void;
 
   constructor(config?: ChaosSystemConfig) {
+    this.getPollutionResistance = config?.getPollutionResistance ?? (() => 0);
     this.chaosRateModifier = config?.chaosRateModifier ?? 1.0;
     this.onModulate = config?.onModulate ?? null;
     this.applyOpeningValue(config?.startingValue);
@@ -186,7 +191,7 @@ export class ChaosSystem implements ChaosSystemAPI {
     const effectiveRateMult = this.tempRateDeadlineMs > 0
       ? Math.max(this.rateMultiplier, this.tempRateMult)
       : this.rateMultiplier;
-    const increment = chaos.BASE_RATE * this.chaosRateModifier * effectiveRateMult * this.reductionMult * dtSec;
+    const increment = chaos.BASE_RATE * this.chaosRateModifier * effectiveRateMult * this.reductionMult * dtSec * this.resistanceFactor();
     this.value = Math.min(this.value + increment, chaos.HARD_CAP);
     if (this.value > this.peak) this.peak = this.value;
 
@@ -222,7 +227,8 @@ export class ChaosSystem implements ChaosSystemAPI {
   }
 
   getRate(): number {
-    return GAME_CONSTANTS.CHAOS.BASE_RATE * this.chaosRateModifier * this.rateMultiplier;
+    const rate = this.tempRateDeadlineMs > 0 ? Math.max(this.rateMultiplier, this.tempRateMult) : this.rateMultiplier;
+    return GAME_CONSTANTS.CHAOS.BASE_RATE * this.chaosRateModifier * rate * this.reductionMult * this.resistanceFactor();
   }
 
   getStage(): 'safe' | 'warning' | 'danger' | 'overflow' {
@@ -239,7 +245,8 @@ export class ChaosSystem implements ChaosSystemAPI {
   addChaos(source: string, amount: number): void {
     void source; // reserved for analytics
     const chaos = GAME_CONSTANTS.CHAOS;
-    this.value = Math.min(this.value + amount, chaos.HARD_CAP);
+    const incoming = amount > 0 ? amount * this.resistanceFactor() : amount;
+    this.value = clamp(this.value + incoming, 0, chaos.HARD_CAP);
     if (this.value > this.peak) this.peak = this.value;
     this.checkThresholds();
     this.checkEmit();
@@ -309,6 +316,10 @@ export class ChaosSystem implements ChaosSystemAPI {
     if (this.clockMs - lastTime < chaos.DETECTION_BONUS_COOLDOWN) return;
     this.detectionCooldowns.set(enemyId, this.clockMs);
     this.addChaos('detection', chaos.DETECTION_BONUS);
+  }
+
+  private resistanceFactor(): number {
+    return 1 - sumPollutionResistance([this.getPollutionResistance()]) / 100;
   }
 
   private updateRateMultiplier(): void {

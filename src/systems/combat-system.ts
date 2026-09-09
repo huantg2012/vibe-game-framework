@@ -1,31 +1,10 @@
-/**
- * CombatSystem - the whole of Slice 1's melee (docs/specs/system-combat.md).
- *
- * What this system is for is worth stating before any of the code makes sense: combat is
- * a *price list*, not a fight. The player has to be able to work out what a swing costs
- * before swinging, so damage carries no randomness anywhere (an infiltrator is exactly
- * three hits, forever), and the cost is charged on two axes that cannot substitute for
- * each other - chaos, via `ENEMY_DAMAGED`, and exposure, via the noise callback. If
- * playtesters start enjoying the fighting, this system has failed.
- *
- * Three structural commitments, all of them load-bearing:
- *
- * 1. **It cannot touch the AI's state machine.** It receives `AISystemReadView`, which
- *    exposes only `getEnemies` / `getEnemyById`. `reportDamage` and `despawn` are
- *    deliberately absent, so "combat drives the FSM" is not merely discouraged but
- *    unwriteable; the scene layer translates events into those calls instead.
- * 2. **It cannot touch the chaos meter.** It emits events and lets the chaos system price
- *    them. That keeps one place to change when the cost of a fight needs tuning.
- * 3. **Occlusion always goes through `utils/grid-raycast`.** Player and enemy are bound by
- *    the same rule, so neither can hit through a wall the other cannot see through.
- *
- * Ownership: this system owns player and enemy health, hits, attacks, invulnerability and
- * death. It owns none of their movement - positions, facing and the speed modifier stack
- * belong to `Player` and to the AI system, and the only thing written back is a single
- * `'attack'` speed modifier during a swing.
- */
+/** Shared crowbar swing authority. Bodies and host cores consume one damage sample,
+ * one swept arc and one target budget. AI, chaos and movement remain separately owned. */
 
 import Phaser from 'phaser';
+import { WEAPON_DATA, WEAPON_ATTACK_PROFILES } from '@/generated/weapon-data';
+import type { CrowbarQuality, CrowbarVariant } from '@/art/crowbar-pixels';
+import { swingDamage, swingContactProgress, type MeleeTarget, type WeaponAttackPose } from '@/systems/weapon-swing';
 import type { FormAttackPose, FormFlashSource } from '@/entities/form-renderers/form-renderer';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { BODY_PROFILE_DATA, type ContaminationBodyProfile } from '@/generated/contamination-body-data';
@@ -105,6 +84,8 @@ export interface PlayerCombatTarget {
   getFacingAngle(): number;
   setSpeedModifier(source: string, multiplier: number): void;
   clearSpeedModifier(source: string): void;
+  setWeaponVisual?(quality: CrowbarQuality | null, variant?: CrowbarVariant): void;
+  setWeaponAttackPose?(pose: Readonly<WeaponAttackPose>): void;
 }
 
 /** The player's combat facet, queried rather than evented (continuous, per-frame values). */
@@ -241,6 +222,23 @@ export class CombatSystem implements CombatSystemAPI {
   private readonly deathPos: Vector2 = { x: 0, y: 0 };
   /** Preallocated and cleared per swing, never rebuilt (one settlement per enemy per swing). */
   private readonly hitSet = new Set<string>();
+  private weaponId: string | null = 'crowbar_plain';
+  private runSeed = 0;
+  private attackSequence = 0;
+  private damageThisSwing = 0;
+  private bufferedMs = 0;
+  private contactRemainingMs = 0;
+  private contactElapsedMs = 0;
+  private readonly hitHosts = new Set<string>();
+  private readonly externalTargets = new Set<{ collectMeleeTargets(out: MeleeTarget[]): void }>();
+  private readonly meleeTargets: MeleeTarget[] = [];
+  private readonly bodyTargets = new Map<string, MeleeTarget>();
+  private readonly candidates: { target: MeleeTarget; progress: number; distance: number }[] = [];
+  private candidateCount = 0;
+  private readonly weaponPose: WeaponAttackPose = {
+    phase: 'idle', elapsedMs: 0, facing: 0, windupMs: 120, activeMs: 60,
+    recoveryMs: 220, contactHoldMs: 24, contactRemainingMs: 0,
+  };
   private swingNoiseSent = false;
   private hitNoiseSent = false;
 
@@ -278,6 +276,10 @@ export class CombatSystem implements CombatSystemAPI {
     this.cooldownRemainingMs = 0;
     this.phase = 'idle';
     this.swingElapsedMs = 0;
+    this.attackSequence = 0;
+    this.bufferedMs = 0;
+    this.bodyTargets.clear();
+    this.externalTargets.clear();
     this.attackTokensInUse = 0;
     this.enemies.clear();
     this.hitSet.clear();
@@ -295,10 +297,12 @@ export class CombatSystem implements CombatSystemAPI {
     }
 
     this.syncRoster();
+    this.configureWeapon(this.weaponId);
     this.emitHealth();
   }
 
   destroy(): void {
+    this.clearAttackBuffer();
     this.cancelSwing();
     this.clearAllWindups();
     this.enemies.clear();
@@ -310,6 +314,12 @@ export class CombatSystem implements CombatSystemAPI {
     }
     this.fx.length = 0;
     this.graphics?.destroy();
+    this.externalTargets.clear();
+    this.bodyTargets.clear();
+    this.meleeTargets.length = 0;
+    this.candidates.length = 0;
+    this.hitHosts.clear();
+    this.player?.setWeaponVisual?.(null);
   }
 
   /**
@@ -321,6 +331,7 @@ export class CombatSystem implements CombatSystemAPI {
   setEnabled(enabled: boolean): void {
     this.enabled = enabled;
     if (enabled) return;
+    this.clearAttackBuffer();
     this.cancelSwing();
     this.clearAllWindups();
   }
@@ -333,10 +344,12 @@ export class CombatSystem implements CombatSystemAPI {
     this.invulnRemainingMs = 0;
     this.flashRemainingMs = 0;
     this.cooldownRemainingMs = 0;
+    this.clearAttackBuffer();
     this.cancelSwing();
     this.clearAllWindups();
 
     this.enemies.clear();
+    this.bodyTargets.clear();
     this.syncRoster();
     this.clearAllFx();
     this.emitHealth();
@@ -363,26 +376,62 @@ export class CombatSystem implements CombatSystemAPI {
     this.stepFx(dtMs);
   }
 
-  /**
-   * Called by the scene on the frame the attack key goes down. No side effects while on
-   * cooldown, dead or disabled - and explicitly no input buffering: queueing the press
-   * would reward mashing, which is the opposite of asking the player to commit.
-   */
-  requestPlayerAttack(): void {
-    if (!this.enabled || this.dead) return;
-    if (this.cooldownRemainingMs > 0 || this.phase !== 'idle') return;
+  /** Equipment may change only between attacks; accepted swings own their damage snapshot. */
+  configureWeapon(weaponDefId: string | null, runSeed?: number): void {
+    if (weaponDefId !== null && !WEAPON_DATA[weaponDefId]) throw new Error(`Unknown weapon: ${weaponDefId}`);
+    this.weaponId = weaponDefId;
+    if (runSeed !== undefined && runSeed !== this.runSeed) {
+      this.runSeed = runSeed;
+      this.attackSequence = 0;
+    }
+    if (this.phase === 'idle') this.syncEquippedVisual();
+  }
 
-    // Locked here and nowhere else. Turning mid-swing must not redirect the blade, or
-    // "faced the wrong way" stops being a mistake the player can make.
+  private syncEquippedVisual(): void {
+    const weapon = this.weaponId ? WEAPON_DATA[this.weaponId] : undefined;
+    this.player?.setWeaponVisual?.(weapon?.quality ?? null, weapon?.variant ?? 'standard');
+  }
+
+  registerMeleeTargets(provider: { collectMeleeTargets(out: MeleeTarget[]): void }): void {
+    this.externalTargets.add(provider);
+  }
+
+  unregisterMeleeTargets(provider: { collectMeleeTargets(out: MeleeTarget[]): void }): void {
+    this.externalTargets.delete(provider);
+  }
+
+  clearAttackBuffer(): void { this.bufferedMs = 0; }
+
+  requestPlayerAttack(): void {
+    if (!this.enabled || this.dead || this.weaponId === null) return;
+    if (this.cooldownRemainingMs > 0 || this.phase !== 'idle') {
+      if (this.cooldownRemainingMs <= 100) this.bufferedMs = 100;
+      return;
+    }
+    this.beginSwing();
+  }
+
+  private beginSwing(): void {
+    const weapon = this.weaponId ? WEAPON_DATA[this.weaponId] : undefined;
+    if (!weapon) return;
+    const profile = WEAPON_ATTACK_PROFILES.crowbar!;
     this.attackAngle = this.player.getFacingAngle();
+    this.damageThisSwing = swingDamage(this.runSeed, ++this.attackSequence, weapon.damageMin, weapon.damageMax);
     this.phase = 'windup';
     this.swingElapsedMs = 0;
-    this.cooldownRemainingMs = GAME_CONSTANTS.COMBAT.ATTACK_COOLDOWN;
+    this.cooldownRemainingMs = profile.minIntervalMs;
+    this.bufferedMs = 0;
     this.hitSet.clear();
+    this.hitHosts.clear();
     this.swingNoiseSent = false;
     this.hitNoiseSent = false;
     this.player.setSpeedModifier(SLOW_SOURCE, GAME_CONSTANTS.COMBAT.ATTACK_SELF_SLOW);
     this.cue('combat.cue.swing', this.player.getPosition());
+    this.syncWeaponPose();
+  }
+
+  getSwingSnapshot(): Readonly<{ sequence: number; damage: number; runSeed: number }> {
+    return { sequence: this.attackSequence, damage: this.damageThisSwing, runSeed: this.runSeed };
   }
 
   // ------------------------------------------------------------------ queries
@@ -497,73 +546,91 @@ export class CombatSystem implements CombatSystemAPI {
   // ------------------------------------------------------------------ player attack
 
   private updateSwing(dtMs: number): void {
-    const combat = GAME_CONSTANTS.COMBAT;
-    if (this.cooldownRemainingMs > 0) {
-      this.cooldownRemainingMs = Math.max(0, this.cooldownRemainingMs - dtMs);
-    }
-    if (this.phase === 'idle') return;
-
-    const previous = this.swingElapsedMs;
-    this.swingElapsedMs += dtMs;
-
-    const activeStart = combat.ATTACK_WINDUP_MS;
-    const activeEnd = activeStart + combat.ATTACK_ACTIVE_MS;
-
-    // Overlap test rather than "phase === active": a long frame can step straight over a
-    // 50 ms window, and a swing that silently never tests for hits is unexplainable.
-    if (this.swingElapsedMs > activeStart && previous < activeEnd) this.resolveSwing();
-
-    this.phase =
-      this.swingElapsedMs < activeStart
-        ? 'windup'
-        : this.swingElapsedMs < activeEnd
-          ? 'active'
-          : 'recovery';
-
-    if (this.swingElapsedMs >= combat.ATTACK_SLOW_MS) this.cancelSwing();
+    // Split exactly at a queued legal start; a long frame never adds input latency.
+    let remaining = dtMs;
+    do {
+      const queued = this.bufferedMs > 0 && this.cooldownRemainingMs <= this.bufferedMs;
+      const step = queued ? Math.min(remaining, this.cooldownRemainingMs) : remaining;
+      const previous = this.swingElapsedMs;
+      const p = WEAPON_ATTACK_PROFILES.crowbar!;
+      this.cooldownRemainingMs = Math.max(0, this.cooldownRemainingMs - step);
+      this.contactRemainingMs = Math.max(0, this.contactRemainingMs - step);
+      if (this.phase !== 'idle') {
+        this.swingElapsedMs += step;
+        const start = p.windupMs, end = start + p.activeMs;
+        if (this.swingElapsedMs >= start && previous < end) {
+          this.resolveSwing(Math.max(0, (previous - start) / p.activeMs), Math.min(1, (this.swingElapsedMs - start) / p.activeMs));
+        }
+        this.phase = this.swingElapsedMs < start ? 'windup' : this.swingElapsedMs < end ? 'active' : 'recovery';
+        if (this.swingElapsedMs >= end + p.recoveryMs) this.cancelSwing();
+      }
+      remaining -= step;
+      if (queued && this.cooldownRemainingMs === 0 && this.phase === 'idle') this.beginSwing();
+      else this.bufferedMs = Math.max(0, this.bufferedMs - step);
+      if (step === 0 && remaining > 0 && this.cooldownRemainingMs === 0) break;
+    } while (remaining > 0);
+    this.syncWeaponPose();
   }
 
-  /**
-   * Forward-sector hit test. A sector rather than a rectangle because its tolerance
-   * narrows with distance the way the player already reads the vision cone and the
-   * perception cone - the same geometric language, so nothing new has to be learned.
-   */
-  private resolveSwing(): void {
-    const combat = GAME_CONSTANTS.COMBAT;
+  private syncWeaponPose(): void {
+    const p = WEAPON_ATTACK_PROFILES.crowbar!;
+    const pose = this.weaponPose;
+    pose.phase = this.phase; pose.elapsedMs = this.swingElapsedMs; pose.facing = this.attackAngle;
+    pose.windupMs = p.windupMs; pose.activeMs = p.activeMs; pose.recoveryMs = p.recoveryMs;
+    pose.contactHoldMs = p.contactHoldMs; pose.contactRemainingMs = this.contactRemainingMs;
+    pose.contactElapsedMs = this.contactElapsedMs;
+    this.player?.setWeaponAttackPose?.(pose);
+  }
+
+  private resolveSwing(fromProgress: number, toProgress: number): void {
+    const p = WEAPON_ATTACK_PROFILES.crowbar!;
     const origin = this.attackOrigin;
     const playerPos = this.player.getPosition();
-    origin.x = playerPos.x;
-    origin.y = playerPos.y;
-
+    origin.x = playerPos.x; origin.y = playerPos.y;
     if (!this.swingNoiseSent) {
       this.swingNoiseSent = true;
-      // A whiff costs no chaos but is still heard. "No cost" means no chaos, not that the
-      // world failed to notice - which is what makes exploratory swinging a bad habit.
-      // Sent before the hits so that the louder alert-grade noise, if any, is the last
-      // stimulus each enemy receives.
-      this.noise(origin, combat.NOISE_SWING_RADIUS, 'suspicious');
+      this.noise(origin, p.noiseWhiffPx, 'suspicious');
     }
-
-    const halfAngle = degToRad(combat.ATTACK_HALF_ANGLE);
-
-    for (const state of this.enemies.values()) {
-      if (!state.alive || this.hitSet.has(state.id)) continue;
-
-      const enemyPos = state.view.getPosition();
-      const deltaX = enemyPos.x - origin.x;
-      const deltaY = enemyPos.y - origin.y;
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-      // Cheap tests first; the ray is only paid for by a candidate that already passed.
-      if (distance > combat.ATTACK_RANGE) continue;
-      if (distance > combat.ATTACK_MIN_ANGLE_BYPASS) {
-        const bearing = Math.atan2(deltaY, deltaX);
-        if (Math.abs(shortestArc(bearing - this.attackAngle)) > halfAngle) continue;
+    if (this.hitSet.size >= p.targetLimit) return;
+    this.meleeTargets.length = 0;
+    for (const target of this.bodyTargets.values()) this.meleeTargets.push(target);
+    for (const provider of this.externalTargets) provider.collectMeleeTargets(this.meleeTargets);
+    this.candidateCount = 0;
+    for (const target of this.meleeTargets) {
+      if (!target.isAlive() || this.hitSet.has(target.id) || (target.hostId && this.hitHosts.has(target.hostId)) || target.canHit?.() === false) continue;
+      const pos = target.getPosition();
+      const dx = pos.x - origin.x, dy = pos.y - origin.y;
+      const progress = swingContactProgress(dx, dy, this.attackAngle, p.reachPx, degToRad(p.arcDeg));
+      if (progress === null || progress + 1e-9 < fromProgress || progress - 1e-9 > toProgress) continue;
+      if (!hasLineOfSight(this.occluders, origin, pos)) continue;
+      const index = this.candidateCount++;
+      const candidate = this.candidates[index] ?? (this.candidates[index] = { target, progress: 0, distance: 0 });
+      candidate.target = target; candidate.progress = progress; candidate.distance = dx * dx + dy * dy;
+    }
+    // Selection sort only the two budgeted contacts; stable ID resolves exact ties.
+    for (let i = 0; i < this.candidateCount && this.hitSet.size < p.targetLimit; i++) {
+      let first = i;
+      for (let j = i + 1; j < this.candidateCount; j++) {
+        const a = this.candidates[j]!, b = this.candidates[first]!;
+        if (a.progress < b.progress || (a.progress === b.progress && (a.distance < b.distance || (a.distance === b.distance && a.target.id < b.target.id)))) first = j;
       }
-      if (!hasLineOfSight(this.occluders, origin, enemyPos)) continue;
-
-      this.hitSet.add(state.id);
-      this.applyPlayerHit(state, enemyPos);
+      const selected = this.candidates[first]!;
+      this.candidates[first] = this.candidates[i]!; this.candidates[i] = selected;
+      const target = selected.target;
+      if (!target.isAlive() || (target.hostId && this.hitHosts.has(target.hostId))) continue;
+      this.hitSet.add(target.id);
+      if (target.hostId) this.hitHosts.add(target.hostId);
+      const pos = target.getPosition();
+      this.deathPos.x = pos.x; this.deathPos.y = pos.y;
+      target.applyHit(this.damageThisSwing);
+      this.contactRemainingMs = p.contactHoldMs;
+      this.contactElapsedMs = p.windupMs + selected.progress * p.activeMs;
+      this.cue('combat.cue.hit', this.deathPos);
+      if (!this.hitNoiseSent) { this.hitNoiseSent = true; this.noise(this.deathPos, p.noiseHitPx, 'alert'); }
+      if (target.hostId && !target.isAlive()) {
+        this.noise(this.deathPos, p.noiseKillPx, 'alert');
+        this.cue('combat.cue.enemyDeath', this.deathPos);
+      }
     }
   }
 
@@ -581,35 +648,20 @@ export class CombatSystem implements CombatSystemAPI {
   private applyPlayerHit(state: EnemyCombatState, enemyPos: Readonly<Vector2>): void {
     const combat = GAME_CONSTANTS.COMBAT;
 
-    state.health -= combat.PLAYER_DAMAGE;
+    state.health -= this.damageThisSwing;
     // The flash is a pooled sprite rather than state on the enemy: the death version has
     // to outlive the entity, so one mechanism owns both and there is nothing write-only.
     this.spawnFx(enemyPos, state.view, combat.ENEMY_HIT_FLASH_MS, false);
-    this.cue('combat.cue.hit', enemyPos);
-
-    if (!this.hitNoiseSent) {
-      this.hitNoiseSent = true;
-      // Broadcast once per swing from the first victim's position, not once per victim:
-      // `reportNoise` is a radius sweep, so repeating it only repeats the sweep.
-      this.noise(enemyPos, combat.NOISE_HIT_RADIUS, 'alert');
-    }
-
     eventBus.emit(GameEvent.ENEMY_DAMAGED, {
       enemyId: state.id,
-      amount: combat.PLAYER_DAMAGE,
+      amount: this.damageThisSwing,
       source: 'player',
     });
 
     if (state.health <= 0) this.killEnemy(state, enemyPos);
   }
 
-  /**
-   * Removal from the simulation is immediate; the dissolve is not. A corpse must never
-   * block a blade or keep chasing, and Slice 1 leaves nothing behind: no body, no drop.
-   * Kindling is the residue of two contamination modes colliding, not loot - making
-   * enemies drop it would turn combat from a way to cut losses into a way to make
-   * progress, which is the one thing this system must not become.
-   */
+  /** Remove combat eligibility immediately; death residue and drops follow the event. */
   private killEnemy(state: EnemyCombatState, enemyPos: Readonly<Vector2>): void {
     const combat = GAME_CONSTANTS.COMBAT;
 
@@ -641,10 +693,13 @@ export class CombatSystem implements CombatSystemAPI {
 
   /** Ends a swing from any cause and always releases the slow. */
   private cancelSwing(): void {
+    this.contactRemainingMs = 0;
     this.phase = 'idle';
     this.swingElapsedMs = 0;
     this.hitSet.clear();
     this.player?.clearSpeedModifier(SLOW_SOURCE);
+    this.syncEquippedVisual();
+    this.syncWeaponPose();
   }
 
   // ------------------------------------------------------------------ enemy attack
@@ -828,6 +883,12 @@ export class CombatSystem implements CombatSystemAPI {
     for (const view of views) {
       const id = view.getId();
       if (this.enemies.has(id)) continue;
+      this.bodyTargets.set(id, {
+        id: `body:${id}`,
+        getPosition: () => view.getPosition(),
+        isAlive: () => this.enemies.get(id)?.alive === true,
+        applyHit: () => { const state = this.enemies.get(id); if (state?.alive) this.applyPlayerHit(state, view.getPosition()); },
+      });
       this.enemies.set(id, {
         id,
         view,
@@ -843,34 +904,18 @@ export class CombatSystem implements CombatSystemAPI {
     }
 
     for (const id of this.enemies.keys()) {
-      if (!this.ai.getEnemyById(id)) this.enemies.delete(id);
+      if (!this.ai.getEnemyById(id)) { this.enemies.delete(id); this.bodyTargets.delete(id); }
     }
   }
 
   // ------------------------------------------------------------------ presentation
 
-  /**
-   * Everything the player sees of a fight, redrawn from scratch each frame into one
-   * Graphics object (no allocation, no per-entity objects to leak).
-   *
-   * Placeholder rules, all of them from the spec and none of them signed off by art yet:
-   * white, thin, and nothing else. No screen shake, no hit stop, no damage numbers, no
-   * knockback - those exist to make fighting feel good, and this system needs it to read
-   * as expensive.
-   */
+  /** World feedback stays under darkness. The held weapon supplies the swing silhouette;
+   * only enemy telegraphs and brief contact marks belong in this shared effects layer. */
   private drawVisuals(): void {
     const combat = GAME_CONSTANTS.COMBAT;
     const graphics = this.graphics;
     graphics.clear();
-
-    const activeStart = combat.ATTACK_WINDUP_MS;
-    if (
-      this.phase !== 'idle' &&
-      this.swingElapsedMs >= activeStart &&
-      this.swingElapsedMs <= activeStart + combat.ATTACK_FAN_FX_MS
-    ) {
-      this.drawSwingFan();
-    }
 
     if (this.flashRemainingMs > 0) {
       // White rect over the body. Kept as a growing square (not a sprite tint) so the
@@ -891,27 +936,6 @@ export class CombatSystem implements CombatSystemAPI {
       const progress = clamp(state.attackTimerMs / bodyProfileFor(state).windupMs, 0, 1);
       this.drawTelegraph(state, lerp(0.2, 0.8, progress));
     }
-  }
-
-  private drawSwingFan(): void {
-    const combat = GAME_CONSTANTS.COMBAT;
-    const graphics = this.graphics;
-    const position = this.player.getPosition();
-    const halfAngle = degToRad(combat.ATTACK_HALF_ANGLE);
-    const range = combat.ATTACK_RANGE;
-    const from = this.attackAngle - halfAngle;
-    const to = this.attackAngle + halfAngle;
-
-    graphics.lineStyle(1, combat.FX_COLOR, 1);
-    graphics.beginPath();
-    graphics.moveTo(position.x + Math.cos(from) * range, position.y + Math.sin(from) * range);
-    graphics.lineTo(position.x, position.y);
-    graphics.lineTo(position.x + Math.cos(to) * range, position.y + Math.sin(to) * range);
-    graphics.strokePath();
-
-    graphics.beginPath();
-    graphics.arc(position.x, position.y, range, from, to);
-    graphics.strokePath();
   }
 
   /** Short ground scratches show the committed reach and both actual angular limits. */
@@ -964,17 +988,32 @@ export class CombatSystem implements CombatSystemAPI {
     ctx.clearRect(0, 0, frame.cutWidth, frame.cutHeight);
     ctx.drawImage(frame.source.image as CanvasImageSource, frame.cutX, frame.cutY,
       frame.cutWidth, frame.cutHeight, 0, 0, frame.cutWidth, frame.cutHeight);
+    if (!fade) {
+      // A short contact patch follows the material's existing pixels, not a full-body white flash.
+      const player = this.player.getPosition();
+      const direction = Math.atan2(player.y - position.y, player.x - position.x);
+      const w = Math.max(4, Math.floor(frame.cutWidth * .4));
+      const h = Math.max(4, Math.floor(frame.cutHeight * .45));
+      const cx = frame.cutWidth * flash.originX + Math.cos(direction) * frame.cutWidth * .2;
+      const cy = frame.cutHeight * flash.originY + Math.sin(direction) * frame.cutHeight * .2;
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(Math.round(cx - w / 2), Math.round(cy - h / 2), w, h);
+      ctx.globalCompositeOperation = 'source-over';
+    }
     slot.texture.refresh();
     slot.remainingMs = durationMs;
     slot.durationMs = durationMs;
-    slot.fade = fade;
+    slot.fade = true;
+    if (fade) slot.image.clearTint();
+    else slot.image.setTintFill(0x9f8a6b);
     slot.image
       .setTexture(slot.texture.key)
       .setScale(flash.scaleX ?? 1, flash.scaleY ?? 1)
       .setOrigin(flash.originX, flash.originY)
       .setPosition(position.x, position.y)
       .setRotation(0)
-      .setAlpha(1)
+      .setAlpha(fade ? .8 : .65)
       .setVisible(true);
   }
 
@@ -987,7 +1026,7 @@ export class CombatSystem implements CombatSystemAPI {
         slot.image.setVisible(false);
         continue;
       }
-      if (slot.fade) slot.image.setAlpha(slot.remainingMs / slot.durationMs);
+      if (slot.fade) slot.image.setAlpha(.65 * slot.remainingMs / slot.durationMs);
     }
   }
 

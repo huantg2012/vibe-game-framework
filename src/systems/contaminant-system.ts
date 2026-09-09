@@ -11,8 +11,10 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { WEAPON_DATA } from '@/generated/weapon-data';
 import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
+import { inventoryStore } from '@/systems/inventory-store';
 import type { ContaminantRuntimeState } from '@/systems/defense-engine';
 import { GameEvent } from '@/types/events';
 import type { Contaminant, ContaminantRarity, ContaminantType } from '@/types/game-types';
@@ -41,13 +43,15 @@ interface ContaminantSystemState {
 // State
 // ---------------------------------------------------------------------------
 
-let contaminants: Contaminant[] = [];
-// Both arrays are always allocated at MAX capacity (Slice 5 T5: growth_defense_slot /
-// growth_sortie_slot unlock a 4th slot). Which slots are actually usable is gated by
-// computeDefenseSlotCount()/computeSortieSlotCount() below, not by array length — this
-// way a slot purchased mid-run "just appears" without any migration of existing state.
-let defenseSlots: (string | null)[] = new Array(CN.MAX_DEFENSE_SLOTS).fill(null);
-let sortieLoadout: (string | null)[] = new Array(CN.MAX_SORTIE_SLOTS).fill(null);
+// InventoryStore owns every payload and every slot reference.
+function slots() { return inventoryStore.getLegacySlots(); }
+inventoryStore.configure({
+  weaponDefinition: id => WEAPON_DATA[id],
+  starterDefinitionId: 'crowbar_plain',
+  isPassiveTool: c => CONTAMINANT_DATA[c.type]?.toolType === 'passive',
+  toolSlotCount: computeSortieSlotCount,
+  defenseSlotCount: computeDefenseSlotCount,
+});
 
 /**
  * echo (Slice 5 T3, DEC-033/D3): how many times each tool-stage contaminant has
@@ -62,7 +66,7 @@ const echoBonusGranted: Map<string, number> = new Map();
 // ---------------------------------------------------------------------------
 
 function findById(id: string): Contaminant | undefined {
-  return contaminants.find((c) => c.id === id);
+  return inventoryStore.getContaminants().find((c) => c.id === id);
 }
 
 /**
@@ -73,7 +77,7 @@ function findById(id: string): Contaminant | undefined {
  * transformed to a tool no longer counts - the CSV's "装备期间" is present tense.
  */
 function syncResonateBonus(): void {
-  const active = defenseSlots.some((id) => {
+  const active = slots().defenseSlots.some((id) => {
     if (!id) return false;
     const c = findById(id);
     return c !== undefined && c.type === 'resonate' && c.stage === 'defense';
@@ -92,7 +96,7 @@ function syncResonateBonus(): void {
  * compute".
  */
 function syncRepairEfficiencyMult(): void {
-  const active = defenseSlots.some((id) => {
+  const active = slots().defenseSlots.some((id) => {
     if (!id) return false;
     const c = findById(id);
     return c !== undefined && c.type === 'siphon' && c.stage === 'defense';
@@ -126,8 +130,14 @@ function normalizeSlotArray(saved: (string | null)[] | undefined, size: number):
 // ---------------------------------------------------------------------------
 
 export const contaminantSystem = {
+  syncInventoryDerivedState(): void {
+    const live = new Set(inventoryStore.getContaminants().map(c => c.id));
+    for (const id of echoBonusGranted.keys()) if (!live.has(id)) echoBonusGranted.delete(id);
+    syncResonateBonus();
+    syncRepairEfficiencyMult();
+  },
   getAll(): readonly Contaminant[] {
-    return contaminants;
+    return inventoryStore.getItems().flatMap(item => item.kind === 'contaminant' && item.location.kind !== 'ground' ? [item.contaminant] : []);
   },
 
   /** Effective number of defense slots (base 3 + growth_defense_slot bonus). */
@@ -151,30 +161,32 @@ export const contaminantSystem = {
   },
 
   getDefenseSlotted(): (Contaminant | null)[] {
-    return defenseSlots.slice(0, computeDefenseSlotCount()).map((id) => (id ? findById(id) ?? null : null));
+    return normalizeSlotArray(slots().defenseSlots, computeDefenseSlotCount()).map((id) => (id ? findById(id) ?? null : null));
   },
 
   getSortieLoadout(): (Contaminant | null)[] {
-    return sortieLoadout.slice(0, computeSortieSlotCount()).map((id) => (id ? findById(id) ?? null : null));
+    return normalizeSlotArray(slots().sortieLoadout, computeSortieSlotCount()).map((id) => (id ? findById(id) ?? null : null));
   },
 
   /**
    * Acquire a new contaminant (e.g. from a rift node pickup).
    * Starts in 'defense' stage with 0 impact charges.
    */
-  acquire(type: ContaminantType, rarity: ContaminantRarity): Contaminant {
-    const uses = CN.USES[rarity];
-    const contaminant: Contaminant = {
-      id: `CTM_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      type,
-      rarity,
-      stage: 'defense',
-      impactCharges: 0,
-      usesRemaining: uses,
+  /** Factory only: field reveal must decide ownership and burden before acquiring. */
+  createUnowned(type: ContaminantType, rarity: ContaminantRarity): Contaminant {
+    return {
+      id: `CTM_${crypto.randomUUID()}`,
+      type, rarity, stage: 'defense', impactCharges: 0, usesRemaining: CN.USES[rarity],
     };
-    contaminants.push(contaminant);
-    eventBus.emit(GameEvent.CONTAMINANT_ACQUIRED, { contaminant });
-    return contaminant;
+  },
+
+  acquire(type: ContaminantType, rarity: ContaminantRarity): Contaminant {
+    const contaminant = this.createUnowned(type, rarity);
+    const added = inventoryStore.addContaminant(contaminant);
+    if (!added.ok) throw new Error(`Contaminant acquisition failed: ${added.error}`);
+    const owned = findById(contaminant.id)!;
+    eventBus.emit(GameEvent.CONTAMINANT_ACQUIRED, { contaminant: owned });
+    return owned;
   },
 
   /**
@@ -183,15 +195,15 @@ export const contaminantSystem = {
    */
   slotDefense(contaminantId: string, slotIndex: number): boolean {
     if (slotIndex < 0 || slotIndex >= computeDefenseSlotCount()) return false;
-    if (defenseSlots[slotIndex] !== null) return false;
+    if (slots().defenseSlots[slotIndex] != null) return false;
 
     const c = findById(contaminantId);
     if (!c || c.stage !== 'defense') return false;
 
     // Ensure it's not already slotted elsewhere
-    if (defenseSlots.includes(contaminantId)) return false;
+    if (slots().defenseSlots.includes(contaminantId)) return false;
 
-    defenseSlots[slotIndex] = contaminantId;
+    if (!inventoryStore.slotDefense(contaminantId, slotIndex).ok) return false;
     syncResonateBonus();
     syncRepairEfficiencyMult();
     return true;
@@ -200,7 +212,7 @@ export const contaminantSystem = {
   /** Remove a contaminant from a defense slot (back to inventory). */
   unslotDefense(slotIndex: number): void {
     if (slotIndex < 0 || slotIndex >= computeDefenseSlotCount()) return;
-    defenseSlots[slotIndex] = null;
+    if (!inventoryStore.slotDefense(null, slotIndex).ok) return;
     syncResonateBonus();
     syncRepairEfficiencyMult();
   },
@@ -211,22 +223,22 @@ export const contaminantSystem = {
    */
   slotSortie(contaminantId: string, slotIndex: number): boolean {
     if (slotIndex < 0 || slotIndex >= computeSortieSlotCount()) return false;
-    if (sortieLoadout[slotIndex] !== null) return false;
+    if (slots().sortieLoadout[slotIndex] != null) return false;
 
     const c = findById(contaminantId);
     if (!c || c.stage !== 'tool') return false;
 
     // Ensure it's not already slotted elsewhere
-    if (sortieLoadout.includes(contaminantId)) return false;
+    if (slots().sortieLoadout.includes(contaminantId)) return false;
 
-    sortieLoadout[slotIndex] = contaminantId;
+    if (!inventoryStore.prepareTool(contaminantId, slotIndex).ok) return false;
     return true;
   },
 
   /** Remove a contaminant from a sortie loadout slot. */
   unslotSortie(slotIndex: number): void {
     if (slotIndex < 0 || slotIndex >= computeSortieSlotCount()) return;
-    sortieLoadout[slotIndex] = null;
+    inventoryStore.prepareTool(null, slotIndex);
   },
 
   /**
@@ -240,14 +252,14 @@ export const contaminantSystem = {
     const chargeCost = isHighTide ? TIDE.CREST_CHARGE_COST : TIDE.NORMAL_CHARGE_COST;
     const results: ContaminantTransformResult[] = [];
 
-    for (let i = 0; i < defenseSlots.length; i++) {
-      const id = defenseSlots[i];
+    for (let i = 0; i < slots().defenseSlots.length; i++) {
+      const id = slots().defenseSlots[i];
       if (!id) continue;
 
       const c = findById(id);
       if (!c) {
         // Orphaned reference — clear it
-        defenseSlots[i] = null;
+        slots().defenseSlots[i] = null;
         continue;
       }
 
@@ -258,8 +270,10 @@ export const contaminantSystem = {
       if (c.impactCharges >= TIDE.TRANSFORM_THRESHOLD) {
         // Transform: defense -> tool; reset uses to per-type value from CSV data
         c.stage = 'tool';
+        const item = inventoryStore.getItem(c.id);
+        if (item) item.location = { kind: 'stash' };
         c.usesRemaining = CONTAMINANT_DATA[c.type]?.toolUses ?? CN.USES[c.rarity];
-        defenseSlots[i] = null;
+        slots().defenseSlots[i] = null;
         results.push({ contaminantId: c.id, type: c.type, slotIndex: i });
         eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: c.id });
       }
@@ -275,29 +289,25 @@ export const contaminantSystem = {
    * Decrements usesRemaining. Returns true if the tool broke (usesRemaining hit 0).
    */
   useTool(contaminantId: string): boolean {
+    const result = this.tryConsumeTool(contaminantId);
+    return result.ok && result.value.broken;
+  },
+
+  /** Fallible consume entry point: callers must persist consumption before releasing effects. */
+  tryConsumeTool(contaminantId: string) {
     const c = findById(contaminantId);
-    if (!c || c.stage !== 'tool') return false;
-
-    c.usesRemaining--;
-
+    const result = inventoryStore.consumeTool(contaminantId);
+    if (!result.ok || !c) return result;
+    c.usesRemaining = result.value.usesLeft;
+    if (result.value.broken) c.stage = 'broken';
     eventBus.emit(GameEvent.TOOL_USED, {
-      contaminantId: c.id,
-      toolType: c.type,
-      usesLeft: c.usesRemaining,
+      contaminantId: c.id, toolType: c.type, usesLeft: result.value.usesLeft,
     });
-
-    if (c.usesRemaining <= 0) {
-      c.stage = 'broken';
-      // Remove from sortie loadout if slotted
-      const slotIdx = sortieLoadout.indexOf(contaminantId);
-      if (slotIdx !== -1) sortieLoadout[slotIdx] = null;
-      // Remove from inventory
-      contaminants = contaminants.filter((x) => x.id !== contaminantId);
+    if (result.value.broken) {
+      echoBonusGranted.delete(c.id);
       eventBus.emit(GameEvent.CONTAMINANT_BROKEN, { contaminantId: c.id });
-      return true;
     }
-
-    return false;
+    return result;
   },
 
   /**
@@ -318,9 +328,11 @@ export const contaminantSystem = {
 
       if (c.impactCharges >= TIDE.TRANSFORM_THRESHOLD) {
         c.stage = 'tool';
+        const item = inventoryStore.getItem(c.id);
+        if (item) item.location = { kind: 'stash' };
         c.usesRemaining = CONTAMINANT_DATA[c.type]?.toolUses ?? CN.USES[c.rarity];
-        const slotIdx = defenseSlots.indexOf(id);
-        if (slotIdx !== -1) defenseSlots[slotIdx] = null;
+        const slotIdx = slots().defenseSlots.indexOf(id);
+        if (slotIdx !== -1) slots().defenseSlots[slotIdx] = null;
         results.push({ contaminantId: c.id, type: c.type, slotIndex: slotIdx });
         eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: c.id });
       }
@@ -338,7 +350,7 @@ export const contaminantSystem = {
    */
   grantRandomToolUse(): boolean {
     const cap = CN.ECHO_MAX_TOOL_USE_BONUS;
-    const candidates = contaminants.filter(
+    const candidates = inventoryStore.getContaminants().filter(
       (c) => c.stage === 'tool' && (echoBonusGranted.get(c.id) ?? 0) < cap,
     );
     if (candidates.length === 0) return false;
@@ -353,6 +365,7 @@ export const contaminantSystem = {
   getEchoBonusState(): Record<string, ContaminantRuntimeState> {
     const out: Record<string, ContaminantRuntimeState> = {};
     for (const [id, count] of echoBonusGranted) {
+      if (!findById(id)) continue;
       out[id] = { echoBonusGranted: count };
     }
     return out;
@@ -369,9 +382,8 @@ export const contaminantSystem = {
 
   /** Reset to empty state (new game). */
   reset(): void {
-    contaminants = [];
-    defenseSlots = new Array(CN.MAX_DEFENSE_SLOTS).fill(null);
-    sortieLoadout = new Array(CN.MAX_SORTIE_SLOTS).fill(null);
+    inventoryStore.reset();
+    inventoryStore.ensureStarter();
     echoBonusGranted.clear();
     syncResonateBonus();
     syncRepairEfficiencyMult();
@@ -380,9 +392,9 @@ export const contaminantSystem = {
   /** Serialize current state for saving. */
   getState(): ContaminantSystemState {
     return {
-      contaminants: contaminants.map((c) => ({ ...c })),
-      defenseSlots: [...defenseSlots],
-      sortieLoadout: [...sortieLoadout],
+      contaminants: inventoryStore.getContaminants().map((c) => ({ ...c })),
+      defenseSlots: [...slots().defenseSlots],
+      sortieLoadout: [...slots().sortieLoadout],
     };
   },
 
@@ -392,9 +404,7 @@ export const contaminantSystem = {
    * unlocked 4th slot always starts empty rather than throwing on old saves.
    */
   loadState(saved: ContaminantSystemState): void {
-    contaminants = saved.contaminants.map((c) => ({ ...c }));
-    defenseSlots = normalizeSlotArray(saved.defenseSlots, CN.MAX_DEFENSE_SLOTS);
-    sortieLoadout = normalizeSlotArray(saved.sortieLoadout, CN.MAX_SORTIE_SLOTS);
+    inventoryStore.importLegacy(saved.contaminants, normalizeSlotArray(saved.defenseSlots, CN.MAX_DEFENSE_SLOTS), normalizeSlotArray(saved.sortieLoadout, CN.MAX_SORTIE_SLOTS));
     syncResonateBonus();
     syncRepairEfficiencyMult();
   },

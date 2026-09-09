@@ -2,12 +2,26 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-09-08
+last-modified: 2026-09-09
 last-closed-slice: 9
-note: 迭代18污染句法全系统完善ACTIVE（DEC-126）；迭代17人形残余ACTIVE（DEC-125）；迭代16已提交43b50c3。迭代16行为对应与虫样板COMPLETE（DEC-124，R3用户PASS），迭代15审查已获接受并转实施。迭代15裂隙污染体生成系统审查ACTIVE / AUDIT-DELIVERED（DEC-123，2026-09-07）；报告docs/qa/iteration-15.md，合同docs/tasks/iteration-15.md。迭代14首页入场过渡COMPLETE（DEC-122，2026-09-07用户验收结案），合同docs/tasks/iteration-14.md。迭代13首页优化COMPLETE（DEC-121，2026-09-07用户验收结案）；命名提案、构图与背景微动效，合同docs/tasks/iteration-13.md。迭代12 COMPLETE（DEC-120，2026-09-07用户验收结单）；合同docs/tasks/iteration-12.md。无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
+note: DEC-138：四品质十撬棍、统一挥击与持武像素、库存整备、真实拾取、负重/抗性和死亡/撤离结算已接生产；内部验证见 docs/qa/iteration-19.md。中断出击政策待用户明确，完整恢复未交，体验与美术待人审；本批纳入阶段提交（DEC-139）。 此前成果已提交eb9e153。迭代18污染句法全系统完善ACTIVE（DEC-126）；迭代17人形残余ACTIVE（DEC-125）；迭代16已提交43b50c3。迭代16行为对应与虫样板COMPLETE（DEC-124，R3用户PASS），迭代15审查已获接受并转实施。迭代15裂隙污染体生成系统审查ACTIVE / AUDIT-DELIVERED（DEC-123，2026-09-07）；报告docs/qa/iteration-15.md，合同docs/tasks/iteration-15.md。迭代14首页入场过渡COMPLETE（DEC-122，2026-09-07用户验收结案），合同docs/tasks/iteration-14.md。迭代13首页优化COMPLETE（DEC-121，2026-09-07用户验收结案）；命名提案、构图与背景微动效，合同docs/tasks/iteration-13.md。迭代12 COMPLETE（DEC-120，2026-09-07用户验收结单）；合同docs/tasks/iteration-12.md。无进行中 Slice。按需游戏迭代（DEC-072）。当前：迭代 5（污染外形基因谱，DEC-087 / DEC-088 / DEC-092；I5-P 已交）。迭代 6 COMPLETE。迭代 7 COMPLETE。迭代 8 COMPLETE。迭代 9 COMPLETE。迭代 10 COMPLETE（2026-08-31）。**迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）**。P3/P4世界表现仍挂起。合同 `docs/tasks/iteration-11.md`。活指针 current-iteration.md。Slice 10 不做。不规划 Slice 11。
 ---
 
 # Roadmap
+
+**当前迭代19 IMPLEMENTING（DEC-138）：** DEC-138：四品质十撬棍、统一挥击与持武像素、库存整备、真实拾取、负重/抗性和死亡/撤离结算已接生产；内部验证见 docs/qa/iteration-19.md。中断出击政策待用户明确，完整恢复未交，体验与美术待人审；本批纳入阶段提交（DEC-139）。
+
+已从正式 CSV 生成四档伤害区间与十成品定义，共用40px/120°、最多两目标的单一攻击。B打开同一库存，裂隙中不停世界；入口整备后出发，翻堆有实际武器，死亡全丢与撤离回库走持久化事务。像素握持、图标与地面掉落共用同一品质外形。
+
+主动退出/刷新不能沿用死亡规则：当前保护活动账本，拒绝把未完成出击错误载入基地；恢复能力尚未完成。此限制保留到用户明确处理政策，迭代不标 COMPLETE。
+
+**历史阶段（已由DEC-135继续授权取代）：2026-09-09迭代19暂停推进（DEC-134）。** 用户确认开包不暂停；此前死亡全丢已锁。仅同步决定，暂不继续设计、实现、提交或推送，等待用户审查反馈与继续指令。
+
+**历史记录：2026-09-09迭代19死亡规则已锁（DEC-133）。** 死亡丢失本趟全部随身武器/污染物，包括携入装备与途中收获；基地物品保留。用户询问“开包暂停”的含义，尚未选择暂停；生产未实施，中途退出语义不随死亡决定自动锁定。
+
+**历史R2（八功能库已由R3替换）：2026-09-08撬棍完整闭环进入准备/设计评审（DEC-132）。** 用户收敛为仅撬棍、不可升级、白板开局；差异化成品可拾取，武器/污染物统一库存、出击装配与裂隙单维度背包。八件候选库、统一归属/负重/揭晓交换、双方攻击反馈、风格延续概念图及六波实施台账已交；死亡与暂停已向用户发问，未实施生产。当前正文 [武器](../specs/system-player-weapons.md)、[库存](../specs/system-field-inventory.md)、[台账](../tasks/iteration-19.md)。首稿四家族/双武器/六件仓容量作废，仅保留图的风格参考。
+
+**迭代19首稿记录（DEC-131，已被R2取代）。** 按用户要求先做设计：现行战斗/工具/拾取/归属审查、四类候选武器及动作、环境来源与拾取交换、在手/背负与净化点收存、两张概念图已交。规格 [system-player-weapons.md](../specs/system-player-weapons.md)，合同 [iteration-19.md](../tasks/iteration-19.md)。新增规则、容量、死亡损失与图稿均待用户确认；无生产代码改动。此前敌人系统与尘絮成果已提交`eb9e153`；迭代18其他待审项保留。
 
 **2026-09-08：迭代18 R4 ACTIVE / IMPLEMENTED-REVIEW-PENDING（DEC-129）。** 用户要求移除全部占墙及占空的散光/间距，保留余响；气团/雾团/尘絮群已接入检视室与正式裂隙；三种独立周期、三档像素材质、真实密度危区及合法地形部署已完成并通过内部回归。R4-A移除、R4-B设计和R4-C实施均已交，等待用户体验终审，台账见 [iteration-18.md](../tasks/iteration-18.md)。迭代整体待审项保留，尘絮R4-E已由用户PASS；本次授权提交当前成果，不推送。
 
@@ -15,11 +29,11 @@ note: 迭代18污染句法全系统完善ACTIVE（DEC-126）；迭代17人形残
 
 R3曾完成六生物与八环境重制和内部验证，但当前用户取舍覆盖其保留范围。旧14目录/232组合、再早的16目录/242组合均为历史统计；R4-C现为13目录（6占地/3占漆/4占空），128种子197个去别名形态行为组合、27行为键，候选460/职责可分配382；听觉0墙/128地面，连通与配额保持。六生物14主形的工作保留，组合数不等于独立敌人数。
 
-**2026-09-07：迭代17「人形残余与混合遭遇」ACTIVE / IMPLEMENTED-REVIEW-PENDING（DEC-125）。** 用户批准继续：先提交迭代16（`43b50c3`），再做人形残余完整样板并验证与虫的混合遭遇。新增独立基底，保留有机残影；用户FATAL继续有效，独立造型，不复制虫结构或沿用旧审美经验。合同 [iteration-17.md](../tasks/iteration-17.md)。人形三档四向六动作、生成接入和真实场景验证已交；[QA](../qa/iteration-17.md)，R2按反馈增强中档肩腰错位和长短臂差异，2026-09-08用户PASS；本次记录模型调整验收，不扩展为混合遭遇全部问题已解决。未提交。
+**2026-09-07：迭代17「人形残余与混合遭遇」ACTIVE / IMPLEMENTED-REVIEW-PENDING（DEC-125）。** 用户批准继续：先提交迭代16（`43b50c3`），再做人形残余完整样板并验证与虫的混合遭遇。新增独立基底，保留有机残影；用户FATAL继续有效，独立造型，不复制虫结构或沿用旧审美经验。合同 [iteration-17.md](../tasks/iteration-17.md)。人形三档四向六动作、生成接入和真实场景验证已交；[QA](../qa/iteration-17.md)，R2按反馈增强中档肩腰错位和长短臂差异，2026-09-08用户PASS；本次记录模型调整验收，不扩展为混合遭遇全部问题已解决。成果已随eb9e153提交。
 
 **2026-09-07：迭代16「行为对应与虫的完整样板」COMPLETE / HUMAN-PASS（DEC-124）。** 用户接受迭代15建议并授权实施；迭代15审查结单。模型审美禁止沿用既有审美skill/HOW/经验/历史PASS，以世界、实际场景和独立设计为依据。合同 [iteration-16.md](../tasks/iteration-16.md)。行为修复、新虫及战斗反馈已接入，构建与内部验证已交；[验证](../qa/iteration-16.md)。本轮不重做玩家与其他家族模型，不重排迭代5旧波次。 **R2：用户认可动作，要求污染越高越脱离虫基底；三档结构重做已接入；R3按用户反馈降低中档污染程度，保留连续虫体和单侧改写，2026-09-07用户明确PASS，验收结案，已提交43b50c3。**
 
-**2026-09-07：迭代15「裂隙污染体生成系统审查」（DEC-123），COMPLETE / ACCEPTED-FOR-FOLLOWUP。** 已完成生产生成链、模型画面与行为消费审查；优先发现固着模型仍巡逻、部分运动/节律词素未兑现、旧受击闪白贴图与模型识别问题。报告 [iteration-15.md](../qa/iteration-15.md)，合同 [iteration-15.md](../tasks/iteration-15.md)。仅分析与证据交付，迭代15未改生产代码；用户现已接受建议，实施转迭代16。迭代14保持COMPLETE；迭代5旧未决项独立保留，不开I5-C。下方旧“活指针仍在迭代5”描述其历史工作与未决项，当前任务以文首迭代18为准。
+**2026-09-07：迭代15「裂隙污染体生成系统审查」（DEC-123），COMPLETE / ACCEPTED-FOR-FOLLOWUP。** 已完成生产生成链、模型画面与行为消费审查；优先发现固着模型仍巡逻、部分运动/节律词素未兑现、旧受击闪白贴图与模型识别问题。报告 [iteration-15.md](../qa/iteration-15.md)，合同 [iteration-15.md](../tasks/iteration-15.md)。仅分析与证据交付，迭代15未改生产代码；用户现已接受建议，实施转迭代16。迭代14保持COMPLETE；迭代5旧未决项独立保留，不开I5-C。下方旧“活指针仍在迭代5”描述其历史工作与未决项，当前任务以文首迭代19为准。
 
 **2026-09-07：迭代14「首页进入净化点过渡」COMPLETE（DEC-122，用户验收结案）。** 黑暗显现、声音先行、轻微镜头落位、HUD末段交控制已接入；新游戏约2.1秒、继续约1.1秒。隔离实景的新/继续/坏档、输入压力、暂停恢复、减少动态及中途退出重入已检查，内部美术复核已交，用户明确“结案，提交”。规格 docs/specs/ui-menu-entry-transition.md，合同 docs/tasks/iteration-14.md，验证 docs/qa/iteration-14.md。
 
@@ -51,7 +65,9 @@ R3曾完成六生物与八环境重制和内部验证，但当前用户取舍覆
 
 ## 当前工作单元（DEC-072）
 
-**无进行中 Slice。当前：迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同：`docs/tasks/iteration-9.md`。**迭代 10 COMPLETE（2026-08-31）。** **迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）。** 净化点世界内交互物已翻生产（DEC-111–117）。P3 / P4 仍挂起。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
+**当前主任务：迭代19（DEC-135）。** 库存领域/保存与共享view/presenter已有实现；场景未接生产，退出/刷新待用户决定。武器R3品质与生存属性仍待审，详见`docs/tasks/iteration-19.md`。下文迭代5–11段落为旧工作历史和未决项，不覆盖文首当前状态。
+
+**历史记录：无进行中 Slice；当时当前为迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同：`docs/tasks/iteration-9.md`。**迭代 10 COMPLETE（2026-08-31）。** **迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）。** 净化点世界内交互物已翻生产（DEC-111–117）。P3 / P4 仍挂起。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
 
 DEC-064 锁死的 7 / 8 / 9 均 COMPLETE。Slice 10（NPC）不做。不规划 Slice 11。不把整盘标成 Polish / Launch。撤离多样性不做。
 

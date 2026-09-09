@@ -573,6 +573,6 @@ export const GAME_CONSTANTS = {
   /** Persistent save (docs/specs/system-growth-tide.md, section P) */
   SAVE: {
     KEY: 'coh-save-v1',
-    VERSION: 1,
+    VERSION: 2,
   },
 } as const;

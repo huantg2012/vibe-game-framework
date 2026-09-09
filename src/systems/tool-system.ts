@@ -548,18 +548,23 @@ export class ToolSystem {
     const def = CONTAMINANT_DATA[contaminant.type];
     if (def && def.toolType === 'passive') return false;
 
-    const success = this.applyEffect(contaminant.type);
-    if (!success) return false;
+    // Each effect validates its target/placement first, then calls this gate exactly
+    // once before changing gameplay or creating its visible effect.
+    return this.applyEffect(contaminant.type, () => this.commitToolUse(slotIndex));
+  }
 
-    // Deduct a use (may break the tool)
-    contaminantSystem.useTool(contaminant.id);
-
-    // If broken, null out in loadout
-    if (contaminant.usesRemaining <= 0) {
-      this.loadout[slotIndex] = null;
-    }
-
+  private commitToolUse(slotIndex: number): boolean {
+    const contaminant = this.loadout[slotIndex];
+    if (!contaminant || contaminant.stage !== 'tool' || contaminant.usesRemaining <= 0) return false;
+    const result = contaminantSystem.tryConsumeTool(contaminant.id);
+    if (!result.ok) return false;
+    if (result.value.broken) this.loadout[slotIndex] = null;
     return true;
+  }
+
+  private commitPassiveUse(type: ContaminantType): boolean {
+    const slot = this.loadout.findIndex(item => item?.type === type && item.stage === 'tool' && item.usesRemaining > 0);
+    return slot >= 0 && this.commitToolUse(slot);
   }
 
   /** Per-frame update of active tool effects. */
@@ -641,46 +646,27 @@ export class ToolSystem {
 
   /** Notify tool system that an enemy entered suspicious (for scatter passive). */
   notifyEnemySuspicious(enemyId: string): void {
-    if (!this.scatterActive || this.scatterTriggersRemaining <= 0) return;
-    if (this.scatterCooldownMs > 0) return;
-
+    if (!this.scatterActive || this.scatterTriggersRemaining <= 0 || this.scatterCooldownMs > 0) return;
+    if (!this.commitPassiveUse('scatter')) return;
     this.scatterTriggersRemaining--;
+    this.scatterActive = this.scatterTriggersRemaining > 0;
     this.scatterCooldownMs = SCATTER_COOLDOWN_MS;
     this.scatterSuppressedEnemyIds.add(enemyId);
     this.setEnemyDetectionFillRateMult?.(enemyId, SCATTER_FILL_RATE_MULT);
-
-    // Consume a use from the scatter contaminant in loadout
-    for (const contaminant of this.loadout) {
-      if (contaminant && contaminant.type === 'scatter' && contaminant.stage === 'tool') {
-        contaminantSystem.useTool(contaminant.id);
-        if (contaminant.usesRemaining <= 0) {
-          this.scatterActive = false;
-          const idx = this.loadout.indexOf(contaminant);
-          if (idx !== -1) this.loadout[idx] = null;
-        }
-        break;
-      }
-    }
   }
 
-  /** Notify tool system that a proximity detection was about to trigger (for muffle passive). */
-  notifyProximityAvoid(): void {
-    if (!this.muffleEquipped || this.muffleTriggersRemaining <= 0) return;
-
-    this.muffleTriggersRemaining--;
-
-    // Consume a use from the muffle contaminant in loadout
-    for (const contaminant of this.loadout) {
-      if (contaminant && contaminant.type === 'muffle' && contaminant.stage === 'tool') {
-        contaminantSystem.useTool(contaminant.id);
-        if (contaminant.usesRemaining <= 0) {
-          this.muffleEquipped = false;
-          const idx = this.loadout.indexOf(contaminant);
-          if (idx !== -1) this.loadout[idx] = null;
-        }
-        break;
-      }
+  /** AI must suppress this discovery only if consumption succeeds. */
+  notifyProximityAvoid(): boolean {
+    if (!this.muffleEquipped || this.muffleTriggersRemaining <= 0) return false;
+    if (!this.commitPassiveUse('muffle')) {
+      this.setHearingSuppressed?.(false);
+      return false;
     }
+    this.muffleTriggersRemaining--;
+    this.muffleEquipped = this.muffleTriggersRemaining > 0;
+    // Clear immediately: another enemy can test discovery during this same AI update.
+    this.setHearingSuppressed?.(this.muffleEquipped);
+    return true;
   }
 
   reset(): void {
@@ -761,24 +747,24 @@ export class ToolSystem {
 
   // ------------------------------------------------------------------ internal
 
-  private applyEffect(type: ContaminantType): boolean {
+  private applyEffect(type: ContaminantType, commit: () => boolean): boolean {
     switch (type) {
-      case 'solidify': return this.applySolidify();
-      case 'delay': return this.applyDelay();
-      case 'erode': return this.applyErode();
-      case 'ruminate': return this.applyRuminate();
-      case 'retrograde': return this.applyRetrograde();
-      case 'kindle': return this.applyKindle();
-      case 'stitch': return this.applyStitch();
-      case 'expand': return this.applyExpand();
+      case 'solidify': return this.applySolidify(commit);
+      case 'delay': return this.applyDelay(commit);
+      case 'erode': return this.applyErode(commit);
+      case 'ruminate': return this.applyRuminate(commit);
+      case 'retrograde': return this.applyRetrograde(commit);
+      case 'kindle': return this.applyKindle(commit);
+      case 'stitch': return this.applyStitch(commit);
+      case 'expand': return this.applyExpand(commit);
       // Slice 5 (T1)
-      case 'compress': return this.applyCompress();
-      case 'mirror': return this.applyMirror();
-      case 'echo': return this.applyEcho();
-      case 'resonate': return this.applyResonate();
-      case 'overwrite': return this.applyOverwrite();
-      case 'abyss': return this.applyAbyss();
-      case 'combust': return this.applyCombust();
+      case 'compress': return this.applyCompress(commit);
+      case 'mirror': return this.applyMirror(commit);
+      case 'echo': return this.applyEcho(commit);
+      case 'resonate': return this.applyResonate(commit);
+      case 'overwrite': return this.applyOverwrite(commit);
+      case 'abyss': return this.applyAbyss(commit);
+      case 'combust': return this.applyCombust(commit);
       default: return false;
     }
   }
@@ -787,7 +773,7 @@ export class ToolSystem {
   // 族群 A — 定点凝滞 (solidify)
   // =========================================================================
 
-  private applySolidify(): boolean {
+  private applySolidify(commit: () => boolean): boolean {
     const playerPos = this.getPlayerPos();
     const enemies = this.getEnemies();
 
@@ -808,6 +794,7 @@ export class ToolSystem {
     }
 
     if (!nearest) return false;
+    if (!commit()) return false;
 
     const id = nearest.getId();
     // "无法移动或感知": speed 0 stops it, perception range 0 makes every raycast fail
@@ -885,7 +872,8 @@ export class ToolSystem {
   // 族群 C — 领域覆写 (delay / erode / kindle / combust) + compress
   // =========================================================================
 
-  private applyDelay(): boolean {
+  private applyDelay(commit: () => boolean): boolean {
+    if (!commit()) return false;
     const pos = { ...this.getPlayerPos() };
     const rng = mulberry32(hashSeed(`delay-${this.scene.time.now}`));
     const tier = RARITY_VFX.fine;
@@ -969,7 +957,8 @@ export class ToolSystem {
     }
   }
 
-  private applyErode(): boolean {
+  private applyErode(commit: () => boolean): boolean {
+    if (!commit()) return false;
     const pos = { ...this.getPlayerPos() };
     const rng = mulberry32(hashSeed(`erode-${this.scene.time.now}`));
     const tier = RARITY_VFX.rare;
@@ -1068,7 +1057,8 @@ export class ToolSystem {
     }
   }
 
-  private applyKindle(): boolean {
+  private applyKindle(commit: () => boolean): boolean {
+    if (!commit()) return false;
     const pos = { ...this.getPlayerPos() };
     const rng = mulberry32(hashSeed(`kindle-${this.scene.time.now}`));
     const tier = RARITY_VFX.common;
@@ -1139,7 +1129,8 @@ export class ToolSystem {
 
   // --- Compress (gravity anchor: speed -60% + movement direction locked in radius) ---
 
-  private applyCompress(): boolean {
+  private applyCompress(commit: () => boolean): boolean {
+    if (!commit()) return false;
     // CSV: "在指定位置放置重力锚" - no aim cursor exists yet, so (like kindle/erode/delay)
     // the anchor lands at the player's current position.
     const pos = { ...this.getPlayerPos() };
@@ -1249,7 +1240,7 @@ export class ToolSystem {
   // 族群 B — 单体标记 (retrograde / overwrite)
   // =========================================================================
 
-  private applyRetrograde(): boolean {
+  private applyRetrograde(commit: () => boolean): boolean {
     const playerPos = this.getPlayerPos();
     const enemies = this.getEnemies();
 
@@ -1270,6 +1261,7 @@ export class ToolSystem {
     }
 
     if (!nearest) return false;
+    if (!commit()) return false;
 
     const g = this.scene.add.graphics().setDepth(RETROGRADE_VISUAL_DEPTH);
 
@@ -1367,7 +1359,7 @@ export class ToolSystem {
     }
   }
 
-  private applyOverwrite(): boolean {
+  private applyOverwrite(commit: () => boolean): boolean {
     const playerPos = this.getPlayerPos();
     const enemies = this.getEnemies();
 
@@ -1384,6 +1376,7 @@ export class ToolSystem {
       }
     }
     if (!nearest) return false;
+    if (!commit()) return false;
 
     const id = nearest.getId();
     const def = CONTAMINANT_DATA.overwrite;
@@ -1449,7 +1442,7 @@ export class ToolSystem {
   // 族群 D — 连线贯穿 (stitch / resonate)
   // =========================================================================
 
-  private applyStitch(): boolean {
+  private applyStitch(commit: () => boolean): boolean {
     const pos = { ...this.getPlayerPos() };
 
     if (!this.stitchPendingPoint) {
@@ -1469,6 +1462,8 @@ export class ToolSystem {
       });
       return false; // Don't consume a use for the first click
     }
+
+    if (!commit()) return false;
 
     // Second click: set point B, create barrier
     const pointA = this.stitchPendingPoint;
@@ -1574,7 +1569,7 @@ export class ToolSystem {
     g.fillRect(b.x - 2, b.y - 2, 4, 4);
   }
 
-  private applyResonate(): boolean {
+  private applyResonate(commit: () => boolean): boolean {
     const pos = { ...this.getPlayerPos() };
     const def = CONTAMINANT_DATA.resonate;
 
@@ -1594,6 +1589,8 @@ export class ToolSystem {
       });
       return false; // Does not consume a use, same as stitch's first click.
     }
+
+    if (!commit()) return false;
 
     const pointA = this.resonatePendingPoint;
     const pointB = pos;
@@ -1707,7 +1704,8 @@ export class ToolSystem {
   // 族群 E — 即时脉冲 (echo)
   // =========================================================================
 
-  private applyEcho(): boolean {
+  private applyEcho(commit: () => boolean): boolean {
+    if (!commit()) return false;
     const pos = { ...this.getPlayerPos() };
     const def = CONTAMINANT_DATA.echo;
     const radius = def.toolRangePx;
@@ -1749,7 +1747,8 @@ export class ToolSystem {
   // 族群 F — 分身诱饵 (mirror)
   // =========================================================================
 
-  private applyMirror(): boolean {
+  private applyMirror(commit: () => boolean): boolean {
+    if (!commit()) return false;
     const pos = { ...this.getPlayerPos() };
     const def = CONTAMINANT_DATA.mirror;
 
@@ -1879,8 +1878,9 @@ export class ToolSystem {
   // 族群 G — 自身相变 (expand) - the one tool whose effect is on the player's own body.
   // =========================================================================
 
-  private applyExpand(): boolean {
+  private applyExpand(commit: () => boolean): boolean {
     if (this.expandEffect) return false; // Already active
+    if (!commit()) return false;
 
     const g = this.scene.add.graphics().setDepth(30);
     this.expandEffect = {
@@ -1967,7 +1967,7 @@ export class ToolSystem {
   // 族群 H — 资源/情报 (ruminate / abyss)
   // =========================================================================
 
-  private applyRuminate(): boolean {
+  private applyRuminate(commit: () => boolean): boolean {
     if (!this.getCollectedNodes || !this.addKindling) return false;
 
     const playerPos = this.getPlayerPos();
@@ -1989,6 +1989,7 @@ export class ToolSystem {
     }
 
     if (!nearest) return false;
+    if (!commit()) return false;
 
     // Grant 1 kindling
     this.addKindling(1);
@@ -2019,7 +2020,8 @@ export class ToolSystem {
     return true;
   }
 
-  private applyAbyss(): boolean {
+  private applyAbyss(commit: () => boolean): boolean {
+    if (!commit()) return false;
     const def = CONTAMINANT_DATA.abyss;
     const enemyPositions = this.getEnemies().map((e) => ({ ...e.getPosition() }));
     const nodePositions = (this.getKindlingPositions?.() ?? []).map((n) => ({ ...n }));
@@ -2076,7 +2078,8 @@ export class ToolSystem {
   // Combust (族群 C, rare): burn field: DOT + perception -50% for 8s, player immune.
   // =========================================================================
 
-  private applyCombust(): boolean {
+  private applyCombust(commit: () => boolean): boolean {
+    if (!commit()) return false;
     const pos = { ...this.getPlayerPos() };
     const def = CONTAMINANT_DATA.combust;
     const rng = mulberry32(hashSeed(`combust-${this.scene.time.now}`));
@@ -2238,27 +2241,15 @@ export class ToolSystem {
 
   private handleEnemyKilledForSiphon(_enemyId: string): void {
     if (!this.siphonEquipped || this.siphonTriggersRemaining <= 0) return;
-
+    if (!this.commitPassiveUse('siphon')) return;
     this.siphonTriggersRemaining--;
+    this.siphonEquipped = this.siphonTriggersRemaining > 0;
     this.addKindling?.(GAME_CONSTANTS.TOOLS.SIPHON_KINDLING_GAIN);
     this.reduceChaosRate?.(
       GAME_CONSTANTS.TOOLS.SIPHON_CHAOS_REDUCTION_MULT,
       CONTAMINANT_DATA.siphon.toolDurationMs,
     );
     this.siphonEffectRemainingMs = CONTAMINANT_DATA.siphon.toolDurationMs;
-
-    // Consume a use from the siphon contaminant in loadout (same pattern as scatter/muffle).
-    for (const contaminant of this.loadout) {
-      if (contaminant && contaminant.type === 'siphon' && contaminant.stage === 'tool') {
-        contaminantSystem.useTool(contaminant.id);
-        if (contaminant.usesRemaining <= 0) {
-          this.siphonEquipped = false;
-          const idx = this.loadout.indexOf(contaminant);
-          if (idx !== -1) this.loadout[idx] = null;
-        }
-        break;
-      }
-    }
   }
 
   /** Check if a point is within `threshold` px of a line segment. */

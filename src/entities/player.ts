@@ -13,6 +13,9 @@
  */
 
 import Phaser from 'phaser';
+import { PlayerWeaponRig } from '@/entities/player-weapon-rig';
+import type { CrowbarQuality, CrowbarVariant } from '@/art/crowbar-pixels';
+import type { WeaponAttackPose } from '@/systems/weapon-swing';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { FacingLagGhost, pingPongFrame } from '@/entities/actor-motion';
 import { PlayerLampAura } from '@/entities/player-lamp-aura';
@@ -60,6 +63,9 @@ export class Player {
   private baseSpeed: number = GAME_CONSTANTS.PLAYER.SPEED;
   private readonly speedModifiers = new Map<string, number>();
   private speedMultiplier = 1;
+  private burdenSpeedFactor = 1;
+  private weaponRig!: PlayerWeaponRig;
+  private weaponPose: Readonly<WeaponAttackPose> | null = null;
 
   private facingAngle = 0;
   private facing4: Facing4 = 'right';
@@ -70,6 +76,10 @@ export class Player {
   private shownFacing: Facing4 = 'right';
   private lag!: FacingLagGhost;
   private aura!: PlayerLampAura;
+  private readonly lampLocal = {
+    up: { ...DENSE_PLAYER_LAMP_LOCAL.up }, down: { ...DENSE_PLAYER_LAMP_LOCAL.down },
+    left: { ...DENSE_PLAYER_LAMP_LOCAL.left }, right: { ...DENSE_PLAYER_LAMP_LOCAL.right },
+  };
 
   create(scene: Phaser.Scene, config: PlayerConfig): void {
     this.scene = scene;
@@ -77,6 +87,8 @@ export class Player {
     this.moving = false;
     this.speedModifiers.clear();
     this.speedMultiplier = 1;
+    this.burdenSpeedFactor = 1;
+    this.weaponPose = null;
     this.baseSpeed = config.baseSpeed ?? GAME_CONSTANTS.PLAYER.SPEED;
     this.facing4 = config.facing ?? 'right';
     this.facingAngle = FACING4_ANGLES[this.facing4];
@@ -105,8 +117,9 @@ export class Player {
     body.allowRotation = false;
 
     this.lag = new FacingLagGhost(scene, idleKey, depth - 1, 0.5, 0.5);
-    this.aura = new PlayerLampAura(scene, depth, DENSE_PLAYER_LAMP_LOCAL);
+    this.aura = new PlayerLampAura(scene, depth, this.lampLocal);
     this.shownFacing = this.facing4;
+    this.weaponRig = new PlayerWeaponRig(scene, this.image);
 
     this.bindKeys(scene);
     this.position.x = config.spawn.x;
@@ -121,7 +134,8 @@ export class Player {
     this.readInput();
 
     const targetFacing = this.resolveFacingTarget();
-    if (targetFacing !== null) this.stepFacing(targetFacing, dt);
+    if (this.weaponPose && this.weaponPose.phase !== 'idle') this.facingAngle = this.weaponPose.facing;
+    else if (targetFacing !== null) this.stepFacing(targetFacing, dt);
     this.updateFacing4();
 
     this.stepVelocity(dt);
@@ -157,7 +171,7 @@ export class Player {
 
   /** Current speed in px/s after the modifier stack. */
   getEffectiveSpeed(): number {
-    return this.baseSpeed * this.speedMultiplier;
+    return this.baseSpeed * this.speedMultiplier * this.burdenSpeedFactor;
   }
 
   /** Stable sole position in the 32px model, independent of walking/breathing frames. */
@@ -178,6 +192,19 @@ export class Player {
   }
 
   // ------------------------------------------------------------------ setters
+
+  setWeaponVisual(quality: CrowbarQuality | null, variant: CrowbarVariant = 'standard'): void {
+    this.weaponRig?.equip(quality, variant);
+  }
+
+  setWeaponAttackPose(pose: Readonly<WeaponAttackPose>): void {
+    this.weaponPose = pose;
+    if (pose.phase !== 'idle') { this.facingAngle = pose.facing; this.updateFacing4(); }
+  }
+
+  setBurdenSpeedFactor(factor: number): void {
+    this.burdenSpeedFactor = Number.isFinite(factor) ? Math.max(.84, Math.min(1, factor)) : 1;
+  }
 
   /** Multiplicative speed modifier keyed by source ('chaos', 'debug', ...). */
   setSpeedModifier(source: string, multiplier: number): void {
@@ -210,6 +237,7 @@ export class Player {
     this.keyLeft.length = 0;
     this.keyRight.length = 0;
     this.speedModifiers.clear();
+    this.weaponRig?.destroy();
     this.aura?.destroy();
     this.lag?.destroy();
     this.image?.destroy();
@@ -339,7 +367,14 @@ export class Player {
       this.image.setTexture(textureKey);
     }
     this.image.setRotation(0);
+    this.weaponRig?.sync(this.facing4, this.facingAngle, this.weaponPose, this.motionElapsedMs, this.moving, this.lastDeltaMs);
     this.lag.sync(this.image.x, this.image.y, true, this.lastDeltaMs);
+    const torso = this.weaponRig?.getTorsoOffset();
+    const originalLamp = DENSE_PLAYER_LAMP_LOCAL[this.facing4];
+    const lamp = this.lampLocal[this.facing4];
+    const rotation = torso?.rotation ?? 0;
+    lamp.x = (torso?.x ?? 0) + originalLamp.x * Math.cos(rotation) - (originalLamp.y - 6) * Math.sin(rotation);
+    lamp.y = 6 + (torso?.y ?? 0) + originalLamp.x * Math.sin(rotation) + (originalLamp.y - 6) * Math.cos(rotation);
     this.aura.sync(
       this.image.x,
       this.image.y,

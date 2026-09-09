@@ -1,3 +1,9 @@
+import { getSurvivalAttributes } from '@/systems/survival-attributes';
+import { inventoryStore } from '@/systems/inventory-store';
+import { FieldLootInventory, notifyFieldAcquisition } from '@/systems/field-loot-inventory';
+import { openInventory } from '@/ui/inventory-presenter';
+import { inventoryPanel } from '@/ui/dom/inventory-panel';
+import { WEAPON_DATA } from '@/generated/weapon-data';
 import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH, type GroundDepthTarget } from '@/systems/ground-depth';
 import { productionModelFor } from '@/entities/form-renderers/d/production-models';
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
@@ -89,6 +95,10 @@ export class RiftScene extends Phaser.Scene {
   private readonly search = new LootSearchSystem();
   private readonly toolSystem = new ToolSystem();
   private readonly extraction = new ExtractionSystem();
+  private toolInputAllowed = true;
+  private unsubscribeInventory: (() => void) | null = null;
+  private readonly fieldInventory = new FieldLootInventory();
+  private inventoryClosedAt = -1000;
   private readonly runController = new RunController();
   private readonly hud = new RiftHud();
   private readonly encounter = new EncounterNarration();
@@ -140,6 +150,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[] }): void {
+    this.toolInputAllowed = true;
     const sortieModifiers = data?.modifiers;
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
     const seed = readRiftSeed();
@@ -210,6 +221,11 @@ export class RiftScene extends Phaser.Scene {
       onCue: this.onCombatCue,
       captureEnemyVisual: (id) => this.formVisuals.get(id)?.getFlashSource?.(),
     });
+    const weaponId = inventoryStore.getEquipment().weaponId;
+    const equippedWeapon = weaponId ? inventoryStore.getItem(weaponId) : undefined;
+    this.combat.configureWeapon(equippedWeapon?.kind === 'weapon'
+      ? equippedWeapon.weapon.definitionId
+      : import.meta.env.DEV && !inventoryStore.getRun() ? 'crowbar_plain' : null, seed);
 
     // --- T9 systems: chaos, loot, extraction, run controller, HUD ---
 
@@ -230,6 +246,7 @@ export class RiftScene extends Phaser.Scene {
       onModulate: this.applyChaosModulators,
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
+      getPollutionResistance: () => getSurvivalAttributes().resistancePercent,
     });
     this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: grid,
       hearingPolicy: {
@@ -239,6 +256,9 @@ export class RiftScene extends Phaser.Scene {
     });
 
     this.search.create(this, layout.kindlingNodes, layout.contaminantNodes, {
+      inventoryEnabled: true,
+      runSeed: seed,
+      onMessage: message => showToastInline(message, {}),
       overlayRoot: getDomUiRoot(),
       getVisibilityAt: this.visibilityAt,
       fragmentTypeId: generated.fragmentTypeId,
@@ -249,6 +269,10 @@ export class RiftScene extends Phaser.Scene {
       onNoise: this.reportNoise,
       kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
     });
+
+    this.fieldInventory.create(this, () => this.player.getPosition(), this.visibilityAt,
+      position => grid.isWalkableAt(position.x, position.y), () => this.openBag(),
+      message => showToastInline(message, {}));
 
     // Tool system (Slice 4/5): sortie loadout with expanded options. The Slice 5 (T1/T2)
     // entries route enemy-, combat- and chaos-facing tool effects into AISystem /
@@ -267,7 +291,7 @@ export class RiftScene extends Phaser.Scene {
           const body = sprite.body as Phaser.Physics.Arcade.Body | null;
           if (body) body.enable = enabled;
         },
-        setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
+        setPlayerInput: (enabled) => { this.toolInputAllowed = enabled; this.syncPlayerInput(); },
         getCollectedNodes: () => this.search.getCollectedContaminantPositions(),
         addKindling: (n) => this.search.addBonusKindling(n),
         setEnemySpeedMultiplier: (id, mult) => this.ai.setEnemySpeedMultiplier(id, mult),
@@ -304,8 +328,9 @@ export class RiftScene extends Phaser.Scene {
 
     this.runController.create(this, {
       pauseChaos: (paused) => this.chaos.setPaused(paused),
-      setPlayerInput: (enabled) => this.player.setInputEnabled(enabled),
+      setPlayerInput: () => this.syncPlayerInput(),
       getCarriedKindling: () => this.search.getCarriedKindling(),
+      onSettlementFailure: (message, retry) => this.showSettlementRetry(message, retry),
     });
 
     // Build tool slot info for HUD display. The passive slot is always the last unlocked
@@ -359,6 +384,13 @@ export class RiftScene extends Phaser.Scene {
       layout.extractionPoint.position,
     );
 
+    const updateBurden = (): void => {
+      const attributes = getSurvivalAttributes();
+      this.player.setBurdenSpeedFactor(attributes.burdenSpeedFactor);
+      this.hud.setBurden(attributes.weight, attributes.capacity);
+    };
+    updateBurden();
+    this.unsubscribeInventory = inventoryStore.subscribe(updateBurden);
     this.bindAttackKey();
     this.bindExtractionKeys();
     this.bindToolKeys();
@@ -374,6 +406,7 @@ export class RiftScene extends Phaser.Scene {
     this.ai.setCueListener(this.onAiCue);
     this.startRiftAudio();
     this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
+    this.input.keyboard?.on('keydown-B', this.openBag, this);
 
     if (import.meta.env.DEV) this.createDebugOverlay();
   }
@@ -384,7 +417,7 @@ export class RiftScene extends Phaser.Scene {
     this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
 
     // Edge-triggered: holding the key does not chain swings.
-    if (this.attackKey && Phaser.Input.Keyboard.JustDown(this.attackKey)) {
+    if (this.attackKey && Phaser.Input.Keyboard.JustDown(this.attackKey) && !inventoryPanel.isOpen() && !this.runController.isRunEnded()) {
       this.combat.requestPlayerAttack();
     }
     // After the AI, always. Whether an enemy may swing is read from this frame's engaged
@@ -428,7 +461,12 @@ export class RiftScene extends Phaser.Scene {
       toolPressed: toolJustDown.some(Boolean),
       hitThisFrame: this.hitThisFrame,
       paused: false,
+      interactionBlocked: inventoryPanel.isOpen() || this.fieldInventory.hasNearby(),
       runEnded: this.runController.isRunEnded(),
+    });
+    this.fieldInventory.update(delta, {
+      interactHeld: Boolean(this.extractKey?.isDown), extractPriority: this.search.getPrompt() === 'extract',
+      blocked: inventoryPanel.isOpen() || this.runController.isRunEnded() || this.hitThisFrame || this.player.isMoving() || Boolean(this.attackKey?.isDown) || toolJustDown.some(Boolean),
     });
     this.hitThisFrame = false;
     this.toolSystem.update(delta);
@@ -440,7 +478,7 @@ export class RiftScene extends Phaser.Scene {
 
     // Tool key input (edge-triggered), one entry per active sortie slot.
     for (let i = 0; i < this.toolKeys.length; i++) {
-      if (toolJustDown[i]) {
+      if (toolJustDown[i] && !inventoryPanel.isOpen() && !this.runController.isRunEnded()) {
         this.toolSystem.useSlot(i);
       }
     }
@@ -460,6 +498,7 @@ export class RiftScene extends Phaser.Scene {
     if (
       this.extractKey
       && Phaser.Input.Keyboard.JustDown(this.extractKey)
+      && !inventoryPanel.isOpen()
       && this.search.getPrompt() === 'extract'
     ) {
       this.extraction.requestExtract();
@@ -619,6 +658,7 @@ export class RiftScene extends Phaser.Scene {
 
   private readonly onPlayerDamaged = (): void => {
     this.hitThisFrame = true;
+    inventoryPanel.close();
   };
 
   private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {
@@ -649,7 +689,14 @@ export class RiftScene extends Phaser.Scene {
       killCount: this.sortieKillCount,
       peakChaos: this.chaos.getPeak(),
       elapsedMs: this.runController.getElapsedMs(),
-      acquired: this.sortieAcquired,
+      acquired: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
+        const item = inventoryStore.getItem(id);
+        return item?.kind === 'contaminant' ? [{ type: item.contaminant.type, rarity: item.contaminant.rarity }] : [];
+      }),
+      weapons: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
+        const item = inventoryStore.getItem(id);
+        return item?.kind === 'weapon' ? [WEAPON_DATA[item.weapon.definitionId]?.name ?? '撬棍'] : [];
+      }),
       passiveTriggers: this.sortiePassiveTriggers,
     }, () => {
       if (this.runController.isRunEnded()) this.runController.restart();
@@ -663,6 +710,7 @@ export class RiftScene extends Phaser.Scene {
    * the enemies mid-windup and the player's swing slow.
    */
   private readonly onRunEnded = (): void => {
+    inventoryPanel.close();
     this.ai.onPlayerLost();
     this.combat.setEnabled(false);
   };
@@ -1154,8 +1202,40 @@ export class RiftScene extends Phaser.Scene {
     }
   }
 
+  private syncPlayerInput(): void {
+    this.player.setInputEnabled(this.toolInputAllowed && !inventoryPanel.isOpen() && !this.runController.isRunEnded());
+  }
+
+  private openBag(): void {
+    if (inventoryPanel.isOpen() || this.runController.isRunEnded() || pauseMenu.isOpen() || this.time.now - this.inventoryClosedAt < 150) return;
+    this.combat.clearAttackBuffer();
+    this.attackKey?.reset();
+    this.extractKey?.reset();
+    for (const key of this.toolKeys) key.reset();
+    this.player.setInputEnabled(false);
+    openInventory({ mode: 'rift', onClose: () => {
+      this.inventoryClosedAt = this.time.now;
+      this.syncPlayerInput();
+    }, getNearby: () => this.fieldInventory.getNearby(),
+      getDropPosition: () => ({ ...this.player.getPosition() }),
+      canTake: this.fieldInventory.canTake, canDrop: this.fieldInventory.canDrop,
+      onTaken: notifyFieldAcquisition,
+    });
+  }
+
+  private showSettlementRetry(message: string, retry: () => void): void {
+    if (document.getElementById('inventory-settlement-retry')) return;
+    const button = document.createElement('button');
+    button.id = 'inventory-settlement-retry'; button.className = 'action-btn';
+    button.textContent = `${message} 点击重试保存`;
+    button.style.cssText = 'position:absolute;left:272px;top:560px;z-index:3000';
+    button.onclick = () => { button.remove(); retry(); };
+    getDomUiRoot().append(button);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => button.remove());
+  }
+
   private openPauseMenu(): void {
-    if (riftResultPanel.isOpen()) return;
+    if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150 || riftResultPanel.isOpen()) return;
     pauseMenu.open(this);
   }
 
@@ -1303,6 +1383,10 @@ export class RiftScene extends Phaser.Scene {
   private onShutdown(): void {
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
+    this.input.keyboard?.off('keydown-B', this.openBag, this);
+    inventoryPanel.close();
+    this.fieldInventory.destroy();
+    this.unsubscribeInventory?.(); this.unsubscribeInventory = null;
     this.input.keyboard?.off('keydown-F1');
     eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
     eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);

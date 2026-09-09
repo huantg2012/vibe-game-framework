@@ -1,0 +1,150 @@
+/** Real Chromium DOM integration; run against npm run dev. Isolated browser
+ * context and in-memory inventory only: never reads the user's saved game. */
+import assert from 'node:assert/strict';
+const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
+const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_PATH ? {executablePath:process.env.CHROME_PATH} : {}) });
+try {
+  const page = await browser.newPage({ viewport: { width: 960, height: 640 } });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(`${process.env.GAME_URL ?? 'http://127.0.0.1:3000'}/tools/inventory/view-review.html`);
+  await page.waitForSelector('#inventory-panel');
+  await page.evaluate(async () => {
+    const { inventoryPanel } = await import('/src/ui/dom/inventory-panel.ts');
+    const { inventoryStore } = await import('/src/systems/inventory-store.ts');
+    const { openInventory } = await import('/src/ui/inventory-presenter.ts');
+    const { WEAPON_DATA } = await import('/src/generated/weapon-data.ts');
+    inventoryStore.setPersistence(null);
+    inventoryStore.configure({weaponDefinition: id => WEAPON_DATA[id]});
+    const defs = Object.keys(WEAPON_DATA);
+    const items = Array.from({ length: 60 }, (_, i) => ({ id: `ui-${i}`, kind: 'weapon', weapon: { id: `ui-${i}`, definitionId: defs[i % defs.length] }, location: { kind: i ? 'stash' : 'carried' } }));
+    const loaded = inventoryStore.loadState({ version: 1, items, equipment: { weaponId: 'ui-0', toolIds: [null, null, null], defenseIds: [] }, run: null, starterGranted: true, firstWeaponDiscovered: false });
+    if(!loaded) throw Error('Fixture inventory load failed');
+    window.testInventory = { inventoryPanel, inventoryStore, openInventory, changes: 0, closed: 0, departed: 0 };
+    inventoryStore.subscribe(() => window.testInventory.changes++);
+    openInventory({ mode: 'prepare', onClose: () => window.testInventory.closed++, onDepart: () => window.testInventory.departed++ });
+  });
+  assert.equal(await page.locator('.inventory-item').count(), 60);
+  await page.locator('[data-item-id="ui-3"]').click();
+  const detail = await page.locator('.inventory-detail').innerText();
+  assert.ok(detail.includes('22–28 → 29–35') && detail.includes('0% → 4%'), detail);
+  assert.ok(detail.includes('装配后负重 3.3'), detail);
+  assert.equal(await page.locator('.inventory-detail img').getAttribute('src'), '/assets/weapons/crowbars/crowbar_good_resistant-icon.png');
+  assert.equal(await page.locator('.inventory-survival').innerText(), '移动 −0% · 抗性 0%');
+  await page.locator('.inventory-action:not(.inventory-discard)').first().click();
+  assert.equal(await page.locator('.inventory-survival').innerText(), '移动 −0% · 抗性 4%');
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getEquipment().weaponId), 'ui-3');
+  console.log('PASS actual CSV ranges, per-quality variants, PNG, comparison, preview and committed survival');
+
+  await page.locator('[data-item-id="ui-42"]').click();
+  const scroll = await page.locator('[data-lane="main"].inventory-list').evaluate(node => node.scrollTop);
+  const selected = await page.evaluate(() => document.activeElement.dataset.itemId);
+  await page.evaluate(() => window.testInventory.inventoryPanel.update());
+  assert.equal(await page.locator('[data-lane="main"].inventory-list').evaluate(node => node.scrollTop), scroll);
+  assert.equal(await page.evaluate(() => document.activeElement.dataset.itemId), selected);
+  await page.getByRole('button', { name: '污染物', exact: true }).click();
+  await page.getByRole('button', { name: '全部', exact: true }).click();
+  assert.equal(await page.locator('[data-lane="main"].inventory-list').evaluate(node => node.scrollTop), scroll);
+  assert.equal(await page.locator('.inventory-item.is-looking').getAttribute('data-item-id'), 'ui-42');
+  console.log('PASS 60-item keyed focus/scroll persistence and filter return');
+
+  await page.evaluate(() => window.testInventory.inventoryStore.setPersistence(() => { throw Error('quota'); }));
+  await page.locator('.inventory-action:not(.inventory-discard)').first().focus();
+  const before = await page.evaluate(() => window.testInventory.changes);
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(() => window.testInventory.changes), before);
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getEquipment().weaponId), 'ui-3');
+  assert.match(await page.locator('.inventory-message').innerText(), /未能保存/);
+  await page.evaluate(() => window.testInventory.inventoryStore.setPersistence(null));
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(() => window.testInventory.changes), before + 1);
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getEquipment().weaponId), 'ui-42');
+  assert.equal(await page.evaluate(() => window.testInventory.departed), 0);
+  await page.keyboard.press('Shift+Enter');
+  assert.equal(await page.evaluate(() => window.testInventory.departed), 1);
+  assert.equal(await page.locator('#inventory-panel').count(), 1);
+  console.log('PASS failed durable action unchanged; one Enter one commit; departure stays open until scene accepts');
+
+  await page.locator('[data-item-id="ui-43"]').click();
+  const discarded = page.locator('.inventory-discard');
+  const countBeforeDiscard = await page.evaluate(() => window.testInventory.inventoryStore.getItems().length);
+  await discarded.click();
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItems().length), countBeforeDiscard);
+  await discarded.focus();
+  await page.keyboard.down('Enter');
+  await page.waitForTimeout(150);
+  await page.keyboard.up('Enter');
+  await page.waitForTimeout(1550);
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItems().length), countBeforeDiscard);
+  await page.keyboard.down('Enter');
+  await page.keyboard.press('Escape');
+  await page.keyboard.up('Enter');
+  await page.waitForTimeout(1550);
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItems().length), countBeforeDiscard);
+  await page.evaluate(() => {
+    const t = window.testInventory;
+    t.openInventory({ mode: 'base', onClose: () => t.closed++ });
+  });
+  await page.locator('[data-item-id="ui-43"]').click();
+  await discarded.focus();
+  await page.evaluate(() => window.testInventory.inventoryStore.setPersistence(() => { throw Error('quota'); }));
+  await page.keyboard.down('Enter');
+  await page.waitForTimeout(1650);
+  await page.keyboard.up('Enter');
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItems().length), countBeforeDiscard);
+  assert.match(await page.locator('.inventory-message').innerText(), /未能保存/);
+  await page.evaluate(() => window.testInventory.inventoryStore.setPersistence(null));
+  await page.keyboard.down('Enter');
+  await page.waitForTimeout(1650);
+  await page.keyboard.up('Enter');
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItems().length), countBeforeDiscard - 1);
+  assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItem('ui-43')), undefined);
+  assert.match(await page.locator('.inventory-message').innerText(), /永久丢弃，没有返还/);
+  console.log('PASS permanent discard requires uninterrupted hold; release/close cancel; failed save preserves item; full hold commits once');
+
+  await page.evaluate(() => {
+    const t = window.testInventory;
+    t.inventoryStore.beginRun('ui-run');
+    t.inventoryStore.revealBatch('loot', [0, 1, 2, 3, 4].map(i => ({ id: `loot-${i}`, kind: 'weapon', weapon: { id: `loot-${i}`, definitionId: 'crowbar_plain' } })), { x: 0, y: 0 });
+    t.openInventory({ mode: 'rift', onClose: () => t.closed++, getNearby: () => t.inventoryStore.getItems().filter(item => item.location.kind === 'ground'), getDropPosition: () => ({ x: 0, y: 0 }), canTake: () => true, canDrop: () => true });
+  });
+  assert.equal(await page.locator('.inventory-list[data-lane="main"] .inventory-item').count(), 0);
+  await page.locator('[data-item-id="loot-0"]').click();
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('#inventory-panel').count(), 1);
+  assert.equal(await page.locator('.inventory-item.is-picked').count(), 0);
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('#inventory-panel').count(), 0);
+  await page.evaluate(() => {
+    const t = window.testInventory;
+    t.openInventory({ mode: 'rift', onClose: () => t.closed++ });
+    window.testMovementEvents = 0;
+    window.addEventListener('keydown', e => { if (e.key === 'w') window.testMovementEvents++; });
+  });
+  await page.keyboard.press('w');
+  assert.equal(await page.locator('#inventory-panel').count(), 0);
+  assert.equal(await page.evaluate(() => window.testMovementEvents), 1);
+  console.log('PASS equipped field items only on belt; Escape discards draft; movement closes and forwards intention');
+  await page.evaluate(() => {
+    const t = window.testInventory;
+    t.inventoryStore.settleRun('ui-run', 'extract');
+    t.inventoryStore.addContaminant({ id: 'offering-residue', type: 'freeze', rarity: 'common', stage: 'defense', impactCharges: 0, usesRemaining: 0 });
+    window.offeringTrace = [];
+    t.openInventory({ mode: 'base', onClose: () => window.offeringTrace.push('closed'), onOffering: () => window.offeringTrace.push('offering') });
+  });
+  await page.locator('[data-item-id="offering-residue"]').click();
+  const stateBeforeOffering = await page.evaluate(() => window.testInventory.inventoryStore.getState());
+  await page.getByRole('button', { name: '前往供奉台', exact: true }).evaluate(button => { button.click(); button.click(); });
+  assert.equal(await page.locator('#inventory-panel').count(), 0);
+  assert.deepEqual(await page.evaluate(() => window.offeringTrace), ['closed', 'offering']);
+  assert.deepEqual(await page.evaluate(() => window.testInventory.inventoryStore.getState()), stateBeforeOffering);
+  await page.evaluate(() => {
+    const t = window.testInventory;
+    t.openInventory({ mode: 'rift', onClose: () => {}, onOffering: () => window.offeringTrace.push('unexpected') });
+  });
+  assert.equal(await page.getByRole('button', { name: '前往供奉台', exact: true }).count(), 0);
+  await page.keyboard.press('Escape');
+  assert.deepEqual(await page.evaluate(() => window.offeringTrace), ['closed', 'offering']);
+  console.log('PASS residue offering navigation closes first, fires once, changes no inventory and is unavailable in rift');
+  assert.deepEqual(errors, []);
+} finally { await browser.close(); }

@@ -175,21 +175,35 @@ const killable = { ...host, kind: 'bing', id: 'core', hp: 75, nuclei: [], phase:
 const wallCore = { ...host, id: 'wall-core', hp: 75, core: { x: 100, y: 80 }, tile: { col: 3, row: 2 },
   strikeFloors: [{ col: 2, row: 2 }], windupMs: -1 };
 const field = { ...killable, id: 'field', core: { x: 95, y: 80 }, form: { ...killable.form, coverage: 'overwrite' } };
-const swingCombat = { getAttackState: () => ({ phase: 'active' }), getLockedAttackAngle: () => 0, applyHazardHit() {} };
-Object.assign(system, { hosts: [field, wallCore], combat: swingCombat, swingHit: false, occluders: null });
-system.update(16, { x: 80, y: 80 });
+// I19: exercise the real shared swing pipeline, rather than faking phase==='active'.
+function performCoreSwing(position: { x: number; y: number }, occluders?: { isOpaque(col: number, row: number): boolean }) {
+  const swingCombat = new CombatSystem();
+  Object.assign(swingCombat, {
+    player: { getPosition: () => position, getFacingAngle: () => 0, setSpeedModifier() {}, clearSpeedModifier() {} },
+    ai: { getEnemies: () => [], getEnemyById: () => undefined },
+    occluders: { cols: 20, rows: 20, tileSize: 32, version: 0, isOpaque: () => false, ...occluders },
+    hooks: { onNoise() {} }, drawVisuals() {}, stepFx() {},
+  });
+  swingCombat.configureWeapon('crowbar_plain', 7);
+  swingCombat.registerMeleeTargets(system);
+  Object.assign(system, { combat: swingCombat });
+  swingCombat.requestPlayerAttack(); swingCombat.update(100); swingCombat.update(100);
+  return swingCombat.getSwingSnapshot().damage;
+}
+Object.assign(system, { hosts: [field, wallCore], occluders: null });
+const coreDamage = performCoreSwing({ x: 80, y: 80 });
 assert.equal(field.hp, 75);
-assert.equal(wallCore.hp, 75 - GAME_CONSTANTS.COMBAT.PLAYER_DAMAGE, 'unkillable field does not consume the swing');
+assert.equal(wallCore.hp, 75 - coreDamage, 'unkillable field does not consume the swing');
 const behind = { ...wallCore, hp: 75, core: { x: 130, y: 48 }, tile: { col: 4, row: 1 }, strikeFloors: [{ col: 5, row: 1 }] };
-Object.assign(system, { hosts: [behind], swingHit: false,
-  occluders: { ...blocked, isOpaque: (col: number, row: number) => !blocked.isWalkable(col, row) } });
-system.update(16, { x: 90, y: 48 });
+const wallGrid = { ...blocked, isOpaque: (col: number, row: number) => !blocked.isWalkable(col, row) };
+Object.assign(system, { hosts: [behind], occluders: wallGrid });
+performCoreSwing({ x: 90, y: 48 }, wallGrid);
 assert.equal(behind.hp, 75, 'core cannot be hit through the intervening wall');
 // West-facing seam lies exactly on the wall boundary. Its exposed half remains hittable.
 const seam = { ...wallCore, hp: 75, core: { x: 96, y: 48 }, tile: { col: 3, row: 1 }, strikeFloors: [{ col: 2, row: 1 }] };
-Object.assign(system, { hosts: [seam], swingHit: false });
-system.update(16, { x: 80, y: 48 });
-assert.equal(seam.hp, 75 - GAME_CONSTANTS.COMBAT.PLAYER_DAMAGE, 'exposed wall seam is not occluded by its own tile');
+Object.assign(system, { hosts: [seam] });
+const seamDamage = performCoreSwing({ x: 80, y: 48 }, wallGrid);
+assert.equal(seam.hp, 75 - seamDamage, 'exposed wall seam is not occluded by its own tile');
 
 // R3: a painted colony cannot harm an unpainted tile, nor revive a removed surface.
 const colony = { ...killable, id: 'paint-contract', nuclei: [
@@ -364,11 +378,12 @@ const opaque = { ...arena, isOpaque: (col: number, row: number) => col === 1 || 
 Object.assign(system, { occluders: opaque });
 for (let i = 0; i < 10; i++) system.update(100, { x: 16, y: 64 }, false, 0);
 assert.equal(reverse.reverseActivity.active, false, 'facing the box through a wall cannot wake it');
-const dyingWall = { ...seam, hp: GAME_CONSTANTS.COMBAT.PLAYER_DAMAGE,
+const dyingWall = { ...seam, hp: 1,
   windupMs: 300, windupCol: 2, windupRow: 1, activity: new ActivityClock('rhythm_open', 'dying') };
 let postMortemHits = 0;
-Object.assign(system, { hosts: [dyingWall], occluders: null, swingHit: false,
-  combat: { ...swingCombat, applyHazardHit() { postMortemHits++; } } });
+Object.assign(system, { hosts: [dyingWall], occluders: null });
+performCoreSwing({ x: 80, y: 48 });
+Object.assign(system, { combat: { applyHazardHit() { postMortemHits++; } } });
 system.update(50, player);
 assert.equal(dyingWall.alive, false);
 assert.equal(postMortemHits, 0, 'a core destroyed this frame cannot finish its pending hazard afterward');
@@ -429,7 +444,7 @@ assert.equal(chaos, beforeCombined, 'composed sense/rhythm gate controls actual 
 let avoided = 0;
 const hearingContext = { hearingSuppressed: true, hearingRangeMult: 1 };
 const proximityAI = Object.create(AISystem.prototype) as AISystem;
-Object.assign(proximityAI, { context: hearingContext, hearingAvoidedListener: () => { avoided++; },
+Object.assign(proximityAI, { context: hearingContext, hearingAvoidedListener: () => { avoided++; return true; },
   playerIsMoving: true, playerPos: { x: 80, y: 48 }, raysThisFrame: 0,
   occluders: { cols: 100, rows: 100, tileSize: 32, version: 0, isOpaque: () => false } });
 const sleepingBody = Object.create(Enemy.prototype) as Enemy;

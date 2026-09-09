@@ -160,6 +160,8 @@ export class RiftHud {
   private lastEffectsString = '';
 
   private kindlingEl!: HTMLDivElement;
+  private burdenEl!: HTMLDivElement;
+  private lastBurden = "";
   private extractPromptEl!: HTMLDivElement;
   private extractPromptVisible = false;
   private extractPromptSuppressed = false;
@@ -240,6 +242,15 @@ export class RiftHud {
    * sortie). Renders as a persistent HUD line for as long as they are active, not a
    * transient notification.
    */
+  setBurden(weight: number, capacity: number): void {
+    if (!this.burdenEl) return;
+    const next = `B 随身 ${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
+    if (next === this.lastBurden) return;
+    this.lastBurden = next;
+    this.burdenEl.textContent = next;
+    this.burdenEl.style.opacity = weight >= capacity * .875 ? ".85" : ".55";
+  }
+
   setActiveEffects(effects: ActiveEffectInfo[]): void {
     this.activeEffects = effects.map((e) => ({ ...e }));
     this.renderEffectsText();
@@ -382,6 +393,11 @@ export class RiftHud {
     kindlingValue.className = 'rift-hud-value';
     this.kindlingEl.appendChild(kindlingLabel);
     this.kindlingEl.appendChild(kindlingValue);
+    this.burdenEl = document.createElement('div');
+    this.burdenEl.id = 'rift-hud-burden';
+    this.burdenEl.style.cssText = 'position:absolute;right:24px;top:48px;font-size:11px;line-height:18px;color:#a3ada5;opacity:.55;pointer-events:none';
+    this.lastBurden = "";
+    root.appendChild(this.burdenEl);
 
     this.extractPromptEl = document.createElement('div');
     this.extractPromptEl.id = 'rift-extract-prompt';

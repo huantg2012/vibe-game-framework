@@ -195,7 +195,7 @@ interface SaveData {
 24. **保存时机**：每次返回净化点时自动保存（包括分配/改造操作后）。
 25. **存储**：`localStorage` key = `'coh-save-v1'`。
 26. **加载**：主菜单"Continue"按钮读取存档恢复全部状态。
-27. **版本迁移**：`SaveData.version` 字段。当前 version=1。后续变更时加迁移函数。
+27. **版本迁移**：`SaveData.version` 字段。迭代19库存底座当前写入version=2（`SaveDataV2`）；旧version=1经统一库存导入保留污染物ID、阶段、次数、装配和成长，迁移增加普通白板。V2以`inventory`为唯一物品归属，旧污染物数组不重复写入。下文早期SaveData示意属于V1合同；实际字段以`src/types/game-types.ts`为准。新出击归属/恢复链尚未整链启用，未完成出击不得由load自行处罚，详见`system-field-inventory.md`。
 28. **重置**："New Expedition" 清除存档重新开始。
 
 ### F — 场景流修改

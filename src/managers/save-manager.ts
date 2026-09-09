@@ -17,16 +17,34 @@ import { growthSystem } from '@/systems/growth-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { GameEvent } from '@/types/events';
-import type { SaveDataV1 } from '@/types/game-types';
+import type { ExpeditionSaveData, SaveDataV2 } from '@/types/game-types';
+import type { InventoryState } from '@/types/inventory-types';
+import { InventoryStore, inventoryStore } from '@/systems/inventory-store';
 
 const SAVE = GAME_CONSTANTS.SAVE;
 
-function readSaveJson(): SaveDataV1 | null {
+/** Check the fields consumed by existing loaders before touching live systems. */
+function validSaveEnvelope(data: ExpeditionSaveData): boolean {
+  if (!data || (data.version !== 1 && data.version !== 2)) return false;
+  if (!Number.isFinite(data.kindlingReserve) || !Number.isFinite(data.cycle) || !Array.isArray(data.modules)) return false;
+  if (data.modules.some(module => !module || typeof module.id !== 'string' || typeof module.type !== 'string' || !Number.isFinite(module.hp) || !Number.isFinite(module.maxHp))) return false;
+  if (!data.tide || !Number.isFinite(data.tide.tideNumber) || !Number.isFinite(data.tide.cycleInPhase) || !Number.isFinite(data.tide.currentIntensity) || !['rise', 'crest', 'ebb'].includes(data.tide.phase)) return false;
+  if (!data.growth?.upgrades || typeof data.growth.upgrades !== 'object' || !data.stability || !Number.isFinite(data.stability.progress) || typeof data.stability.reached !== 'boolean') return false;
+  const probe = new InventoryStore();
+  if (data.version === 2) return probe.loadState(data.inventory);
+  if (!Array.isArray(data.contaminants) || !Array.isArray(data.defenseSlots) || !Array.isArray(data.sortieLoadout)) return false;
+  try {
+    probe.importLegacy(data.contaminants, data.defenseSlots, data.sortieLoadout);
+    return probe.loadState(probe.getState());
+  } catch { return false; }
+}
+
+function readSaveJson(): ExpeditionSaveData | null {
   const raw = localStorage.getItem(SAVE.KEY);
   if (!raw) return null;
   try {
-    const data = JSON.parse(raw) as SaveDataV1;
-    if (data.version !== SAVE.VERSION) return null;
+    const data = JSON.parse(raw) as ExpeditionSaveData;
+    if (data.version !== 1 && data.version !== 2) return null;
     return data;
   } catch {
     return null;
@@ -53,11 +71,49 @@ function mergeRuntimeState(
   return out;
 }
 
+function collectSave(inventory: InventoryState): SaveDataV2 {
+  const gs = gameState.getState();
+  return {
+    version: 2,
+    kindlingReserve: gs.kindlingReserve,
+    modules: gs.modules,
+    moduleMaxHpTier: gs.moduleMaxHpTier,
+    cycle: gs.cycle,
+    tide: tideSystem.getState(),
+    inventory,
+    growth: growthSystem.getState(),
+    stability: stabilityTracker.getState(),
+    contaminantRuntimeState: mergeRuntimeState(getDefenseRuntimeState(), contaminantSystem.getEchoBonusState()),
+  };
+}
+let worldTransaction = false;
+let pendingWorldSave = false;
+
+function enableInventoryPersistence(): void {
+  inventoryStore.setPersistence(inventory => {
+    if (worldTransaction) return;
+    if (pendingWorldSave) throw new Error("Previous settlement must be saved first");
+    localStorage.setItem(SAVE.KEY, JSON.stringify(collectSave(inventory)));
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
 
 export const saveManager = {
+  /** Combine a synchronous world/ownership change into one save; retry never replays effects. */
+  commitWorldTransaction(change: () => void): boolean {
+    if (pendingWorldSave) return false;
+    worldTransaction = true;
+    enableInventoryPersistence();
+    try { change(); } finally { worldTransaction = false; }
+    pendingWorldSave = true;
+    return this.trySave();
+  },
+
+  hasPendingSave(): boolean { return pendingWorldSave; },
+
   /** Check if a save file exists in localStorage. */
   hasSave(): boolean {
     return localStorage.getItem(SAVE.KEY) !== null;
@@ -68,32 +124,11 @@ export const saveManager = {
    * Emits GAME_SAVED on success.
    */
   save(): void {
-    const gs = gameState.getState();
-    const cs = contaminantSystem.getState();
-    const tide = tideSystem.getState();
-    const growth = growthSystem.getState();
-    const stability = stabilityTracker.getState();
-    const contaminantRuntimeState = mergeRuntimeState(
-      getDefenseRuntimeState(),
-      contaminantSystem.getEchoBonusState(),
-    );
-
-    const data: SaveDataV1 = {
-      version: SAVE.VERSION as 1,
-      kindlingReserve: gs.kindlingReserve,
-      modules: gs.modules,
-      moduleMaxHpTier: gs.moduleMaxHpTier,
-      cycle: gs.cycle,
-      tide,
-      contaminants: cs.contaminants,
-      defenseSlots: cs.defenseSlots,
-      sortieLoadout: cs.sortieLoadout,
-      growth,
-      stability,
-      contaminantRuntimeState,
-    };
+    const data = collectSave(inventoryStore.getState());
 
     localStorage.setItem(SAVE.KEY, JSON.stringify(data));
+    pendingWorldSave = false;
+    enableInventoryPersistence();
     eventBus.emit(GameEvent.GAME_SAVED, { timestamp: Date.now() });
   },
 
@@ -106,18 +141,22 @@ export const saveManager = {
     const raw = localStorage.getItem(SAVE.KEY);
     if (!raw) return false;
 
-    let data: SaveDataV1;
+    let data: ExpeditionSaveData;
     try {
-      data = JSON.parse(raw) as SaveDataV1;
+      data = JSON.parse(raw) as ExpeditionSaveData;
     } catch {
       return false;
     }
 
-    // Version check
-    if (data.version !== SAVE.VERSION) {
+    // Validate the complete loaded payload before distributing state.
+    if (!validSaveEnvelope(data)) {
       // Future: add migration functions here
       return false;
     }
+
+    // Validate inventory before mutating any other system. Never infer an interrupted-run policy.
+    inventoryStore.setPersistence(null);
+    if (data.version === 2) inventoryStore.loadState(data.inventory);
 
     // Distribute to systems
     gameState.loadState({
@@ -129,11 +168,16 @@ export const saveManager = {
 
     tideSystem.loadState(data.tide);
 
-    contaminantSystem.loadState({
-      contaminants: data.contaminants,
-      defenseSlots: data.defenseSlots,
-      sortieLoadout: data.sortieLoadout,
-    });
+    if (data.version === 1) {
+      contaminantSystem.loadState({
+        contaminants: data.contaminants,
+        defenseSlots: data.defenseSlots,
+        sortieLoadout: data.sortieLoadout,
+      });
+      inventoryStore.ensureStarter();
+    }
+    contaminantSystem.syncInventoryDerivedState();
+
 
     growthSystem.loadState(data.growth);
     stabilityTracker.loadState(data.stability);
@@ -143,17 +187,31 @@ export const saveManager = {
     // runs on the load path only, not on the new-game reset path.
     loadDefenseRuntimeState(data.contaminantRuntimeState);
     contaminantSystem.loadEchoBonusState(data.contaminantRuntimeState);
+    contaminantSystem.syncInventoryDerivedState();
 
     // Sync impact intensity from tide
     gameState.setImpactIntensity(data.tide.currentIntensity);
 
+    // Migration is durable immediately; failure leaves the readable V1 record intact.
+    if (data.version === 1) {
+      try { localStorage.setItem(SAVE.KEY, JSON.stringify(collectSave(inventoryStore.getState()))); } catch { /* trySave exposes retry; do not erase old save */ }
+    }
+    enableInventoryPersistence();
     eventBus.emit(GameEvent.GAME_LOADED, { cycle: data.cycle });
     return true;
+  },
+
+  /** Explicit fallible entry point for departure and settlement UI. */
+  trySave(): boolean {
+    try { this.save(); return true; } catch { return false; }
   },
 
   /** Delete the save from localStorage. */
   deleteSave(): void {
     localStorage.removeItem(SAVE.KEY);
+    // Starter creation happens before the other systems finish resetting.
+    // Do not let that transaction save a half-reset record.
+    inventoryStore.setPersistence(null);
   },
 
   /**

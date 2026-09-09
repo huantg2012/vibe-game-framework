@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>撬棍 · 像素素材检视</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101413;color:#b3b6aa;font:13px/1.7 "PingFang SC",sans-serif}main{width:1080px;margin:40px auto}h1{font-size:24px;font-weight:500;margin:0 0 6px}p{color:#87988f;margin:0 0 22px}nav{display:flex;gap:22px;align-items:center;padding:15px 0;border-block:1px solid #303b34;margin:24px 0}select,button{background:#1e2723;color:#bbc8bd;border:1px solid #48584c;padding:5px 10px;font:inherit}button{cursor:pointer}canvas,img{image-rendering:pixelated}#sheet{width:1080px;height:670px;display:block}a{color:#8eb7a5}#detail{margin:22px 0;color:#a4afa4}#engine{position:absolute;left:-1000px;top:-1000px;width:32px;height:32px;visibility:hidden}footer{margin-top:20px;padding:16px 0;border-top:1px solid #303b34;color:#7c8a82}.error{color:#d8a78b}
+</style></head><body><main>
+<h1>撬棍 · 像素素材检视</h1>
+<p>保留旧铁，污染进入裂缝。四档比较的是形体；同品质的小取舍藏在握布里。</p>
+<nav><label>构造 <select id="variant"><option value="standard">标准</option><option value="light">轻型</option><option value="resistant">抗污</option></select></label>
+<label>底色 <select id="surface"><option value="#252a28">裂隙灰地对照</option><option value="#101715">暗处对照</option><option value="#777c73">亮底检查</option></select></label>
+<label><input id="silhouette" type="checkbox"> 只看轮廓</label><button id="download">保存当前对照图</button></nav>
+<canvas id="sheet" width="1080" height="670" aria-label="四品质的库存图标、世界模型及四向持握对照"></canvas>
+<div id="detail" role="status">正在装载像素素材…</div>
+<footer>素材审查页 · 复用实际 32 × 32 玩家贴图，持握位置为接入标定。四向静态对照不代表正式攻击动画；本页不读写存档。<br>
+<a href="/assets/weapons/crowbars/manifest.json" target="_blank">PNG 素材清单</a> · <a href="/docs/art/iteration-19-concepts/crowbar-quality-v4.png" target="_blank">补色概念图</a></footer>
+</main><div id="engine" aria-hidden="true"></div><script type="module" src="./crowbar-review.ts"></script></body></html>

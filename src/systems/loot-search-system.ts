@@ -1,3 +1,5 @@
+import { rollWeaponDrop } from '@/systems/weapon-loot';
+import { WEAPON_DATA } from '@/generated/weapon-data';
 /**
  * Loot-search channel: hold E for SEARCH_CHANNEL_MS, then settle.
  * Production default for rift pickups (iteration 10 / DEC-109).
@@ -9,6 +11,8 @@ import { eventBus } from '@/core/event-bus';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { audioManager } from '@/managers/audio-manager';
 import { contaminantSystem } from '@/systems/contaminant-system';
+import { inventoryStore } from '@/systems/inventory-store';
+import { notifyFieldAcquisition } from '@/systems/field-loot-inventory';
 import {
   createSearchObjectVisual,
   ensureLootSearchTextures,
@@ -16,6 +20,7 @@ import {
 } from '@/systems/loot-search-presentation';
 import { GameEvent } from '@/types/events';
 import type { ContaminantRarity, ContaminantType, Vector2 } from '@/types/game-types';
+import type { NewInventoryItem } from '@/types/inventory-types';
 import type { ContaminantNodeDef, KindlingNodeDef, KindlingTier } from '@/types/map-types';
 import { LootSearchHud, type LootSearchPromptKind } from '@/ui/dom/loot-search-hud';
 
@@ -30,6 +35,8 @@ export interface LootSearchInput {
   readonly hitThisFrame: boolean;
   readonly paused: boolean;
   readonly runEnded?: boolean;
+  /** Scene arbitration: a nearby revealed item owns E instead of a hidden pile. */
+  readonly interactionBlocked?: boolean;
 }
 
 export interface LootSearchCreateConfig {
@@ -44,8 +51,12 @@ export interface LootSearchCreateConfig {
   ) => void;
   /** Gym preview: no inventory write, no production events. */
   readonly preview?: boolean;
+  /** Opt-in only after scene begin/settle/recovery ownership is connected. */
+  readonly inventoryEnabled?: boolean;
+  readonly runSeed?: number;
   readonly kindlingValueModifier?: number;
   readonly showKindling?: boolean;
+  readonly onMessage?: (message: string) => void;
 }
 
 interface SearchNode {
@@ -55,6 +66,10 @@ interface SearchNode {
   readonly value: number;
   collected: boolean;
   visual: SearchObjectVisual;
+  /** Generated once, retained even when durable inventory publication fails. */
+  revealedItem?: NewInventoryItem;
+  weaponDefinitionId?: string | null;
+  tier?: KindlingTier;
 }
 
 interface ChannelState {
@@ -110,6 +125,8 @@ export class LootSearchSystem {
   private extraction: LootSearchCreateConfig['extraction'];
   private onNoise: LootSearchCreateConfig['onNoise'];
   private preview = false;
+  private inventoryEnabled = false;
+  private runSeed = 0;
   private kindlingValueModifier = 1;
   private channel: ChannelState | null = null;
   private carried = 0;
@@ -119,6 +136,8 @@ export class LootSearchSystem {
   private nearestDist = 0;
   private prompt: LootSearchPromptKind = null;
   private loopPlaying = false;
+  private requiresRelease = false;
+  private onMessage: LootSearchCreateConfig['onMessage'];
 
   create(
     scene: Phaser.Scene,
@@ -131,6 +150,10 @@ export class LootSearchSystem {
     this.extraction = config.extraction;
     this.onNoise = config.onNoise;
     this.preview = config.preview === true;
+    this.inventoryEnabled = config.inventoryEnabled === true;
+    this.runSeed = config.runSeed ?? 0;
+    this.onMessage = config.onMessage;
+    this.requiresRelease = false;
     this.kindlingValueModifier = config.kindlingValueModifier ?? 1;
     this.carried = 0;
     this.channel = null;
@@ -147,6 +170,7 @@ export class LootSearchSystem {
       this.nodes.push({
         id: def.id,
         kind: 'kindling',
+        tier: def.tier,
         position: def.position,
         value,
         collected: false,
@@ -251,6 +275,7 @@ export class LootSearchSystem {
 
     this.refreshNearest(input.playerPos);
     this.refreshPrompt(input.playerPos, input.runEnded === true);
+    if (!input.searchHeld) this.requiresRelease = false;
 
     if (this.channel) {
       if (input.paused) {
@@ -260,6 +285,7 @@ export class LootSearchSystem {
       }
       if (
         input.runEnded
+        || input.interactionBlocked
         || !input.searchHeld
         || input.moving
         || input.attacking
@@ -277,6 +303,9 @@ export class LootSearchSystem {
       }
     } else if (
       !input.runEnded
+      && !input.paused
+      && !input.interactionBlocked
+      && !this.requiresRelease
       && input.searchHeld
       && !input.moving
       && !input.attacking
@@ -402,10 +431,33 @@ export class LootSearchSystem {
     this.channel = null;
     this.hud.setChannel(null);
     this.stopLoop();
-    node.collected = true;
     node.visual.setRummaging(false);
+    this.requiresRelease = this.inventoryEnabled;
 
     if (node.kind === 'kindling') {
+      if (this.inventoryEnabled && !this.preview) {
+        if (node.weaponDefinitionId === undefined) node.weaponDefinitionId = rollWeaponDrop({
+          runSeed: this.runSeed, nodeId: node.id, tier: node.tier ?? 'safe',
+          firstWeaponDiscovered: inventoryStore.getState().firstWeaponDiscovered,
+        });
+        if (node.weaponDefinitionId) {
+          if (!node.revealedItem) {
+            const id = `WPN_${crypto.randomUUID()}`;
+            node.revealedItem = { id, kind: 'weapon', weapon: { id, definitionId: node.weaponDefinitionId } };
+          }
+          const result = inventoryStore.revealBatch(node.id, [node.revealedItem], node.position);
+          if (!result.ok) { this.onMessage?.('未能记下所得。物件仍留在原处。'); return; }
+          const definition = WEAPON_DATA[node.weaponDefinitionId];
+          if (result.value.taken) {
+            notifyFieldAcquisition(result.value.ids);
+            this.onMessage?.(`${definition?.name ?? '撬棍'} 已收好 · 负重 ${inventoryStore.getCarryWeight() / 10} / ${inventoryStore.getCapacity() / 10}`);
+          } else {
+            const missing = inventoryStore.getCarryWeight() + (definition?.weight ?? 30) - inventoryStore.getCapacity();
+            this.onMessage?.(`${definition?.name ?? '撬棍'} · 还差 ${(missing / 10).toFixed(1)} 负重 · 释放 E 后整理`);
+          }
+        }
+      }
+      node.collected = true;
       const value = Math.max(1, Math.floor(node.value * this.kindlingValueModifier));
       this.carried += value;
       this.hud.setKindling(this.carried);
@@ -416,12 +468,46 @@ export class LootSearchSystem {
         eventBus.emit(GameEvent.KINDLING_COLLECTED, { amount: value, total: this.carried });
       }
     } else {
-      const rarity = rollRarity();
-      const type = rollType(rarity);
+      let rarity: ContaminantRarity;
+      if (this.preview) {
+        rarity = rollRarity();
+      } else {
+        if (!node.revealedItem) {
+          const rolledRarity = rollRarity();
+          const contaminant = contaminantSystem.createUnowned(rollType(rolledRarity), rolledRarity);
+          node.revealedItem = { id: contaminant.id, kind: 'contaminant', contaminant };
+        }
+        const item = node.revealedItem;
+        if (item.kind !== 'contaminant') return;
+        rarity = item.contaminant.rarity;
+        if (!this.inventoryEnabled) {
+          // The pre-W4 route still acquires directly, without a run/ground ledger.
+          // Persist before consuming the pile, and retain this exact roll on failure.
+          const added = inventoryStore.addContaminant(item.contaminant);
+          if (!added.ok) {
+            this.requiresRelease = true;
+            this.onMessage?.('未能记下所得。物件仍留在原处。');
+            return;
+          }
+          node.collected = true;
+          const owned = inventoryStore.getItem(added.value);
+          if (owned?.kind === 'contaminant') {
+            eventBus.emit(GameEvent.CONTAMINANT_ACQUIRED, { contaminant: owned.contaminant });
+          }
+        } else {
+          const result = inventoryStore.revealBatch(node.id, [item], node.position);
+          if (!result.ok) {
+            this.onMessage?.('未能记下所得。物件仍留在原处。');
+            return;
+          }
+          if (result.value.taken) notifyFieldAcquisition(result.value.ids);
+          else this.onMessage?.('负重不足。已揭开的物件留在脚边。');
+        }
+      }
+      node.collected = true;
       node.visual.playReveal({ kind: 'contaminant', rarity, playerPos: player });
       audioManager.playSFX('sfx-shared-player-search-reveal-residue');
       this.hud.flashResidue(rarity);
-      if (!this.preview) contaminantSystem.acquire(type, rarity);
     }
   }
 

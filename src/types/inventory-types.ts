@@ -1,0 +1,49 @@
+import type { Contaminant, Vector2 } from './game-types';
+
+export type ItemLocation =
+  | { kind: 'stash' }
+  | { kind: 'carried' }
+  | { kind: 'defense'; slot: number }
+  | { kind: 'ground'; runId: string; position: Vector2 };
+export interface ItemSource { nodeId?: string; runId?: string; fragmentId?: string }
+export interface WeaponInstance { id: string; definitionId: string }
+export type InventoryItem = (
+  | { kind: 'weapon'; weapon: WeaponInstance }
+  | { kind: 'contaminant'; contaminant: Contaminant }
+) & { id: string; location: ItemLocation; source?: ItemSource };
+export interface InventoryEquipment { weaponId: string | null; toolIds: (string | null)[]; defenseIds: (string | null)[] }
+export interface RunInventoryLedger {
+  id: string;
+  status: 'active' | 'settled';
+  carriedOutIds: string[];
+  revealedNodes: Record<string, string[]>;
+  destroyedIds: string[];
+  outcome?: 'extract' | 'death' | 'abandon-keep';
+  returnedIds?: string[];
+  kindlingGained?: number;
+  baseSettled?: boolean;
+}
+export interface InventoryState {
+  version: 1;
+  items: InventoryItem[];
+  equipment: InventoryEquipment;
+  run: RunInventoryLedger | null;
+  starterGranted: boolean;
+  firstWeaponDiscovered: boolean;
+}
+export type InventoryError = 'invalid-item' | 'duplicate-id' | 'wrong-location' | 'equipped' | 'incompatible' | 'overweight' | 'run-active' | 'no-active-run' | 'invalid-ground' | 'storage-failed' | 'missing-weapon';
+export type InventoryResult<T = undefined> = { ok: true; value: T } | { ok: false; error: InventoryError };
+export interface InventoryRules {
+  capacity: number;
+  contaminantWeight: number;
+  weaponDefinition: (id: string) => { id: string; weight: number } | undefined;
+  isPassiveTool: (contaminant: Contaminant) => boolean;
+  toolSlotCount: () => number;
+  defenseSlotCount: () => number;
+  starterDefinitionId?: string;
+}
+export type NewInventoryItem = Omit<Extract<InventoryItem, { kind: 'weapon' }>, 'location'> | Omit<Extract<InventoryItem, { kind: 'contaminant' }>, 'location'>;
+export interface InventoryGroundValidation {
+  canTake: (item: Readonly<InventoryItem>) => boolean;
+  canDrop: (position: Readonly<Vector2>) => boolean;
+}

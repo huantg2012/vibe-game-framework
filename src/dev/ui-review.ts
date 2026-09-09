@@ -58,6 +58,7 @@ if (import.meta.env.DEV) {
 
   // Isolation belongs to this development entry, never to the save system.
   saveManager.save = () => {};
+  saveManager.commitWorldTransaction = change => { change(); return true; };
   saveManager.load = () => {
     saveCalls.load++;
     if (!entrySample || !savedRecordFixture || unreadableRecordFixture) return false;

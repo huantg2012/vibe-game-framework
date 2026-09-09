@@ -26,6 +26,7 @@ export interface RiftResultData {
   /** Every contaminant picked up this sortie, in pickup order. */
   acquired: readonly { type: ContaminantType; rarity: ContaminantRarity }[];
   /** Passive tool trigger counts this sortie, keyed by contaminant type. */
+  weapons?: readonly string[];
   passiveTriggers: ReadonlyMap<ContaminantType, number>;
 }
 
@@ -80,13 +81,13 @@ export const riftResultPanel = {
     const peak = Math.round(data.peakChaos);
 
     let html = `<div class="panel-title">${titleText}</div><div class="scroll-area">
-      <div class="readout-note">${data.survived ? '这一趟带回的存续。' : '本次出击结束。薪柴未能带回。'}</div>
+      <div class="readout-note">${data.survived ? '这一趟带回的存续。' : '本次出击结束。带入的装备与沿途所得全部遗失。'}</div>
       <div class="readout-hero"><span class="readout-label">带回薪柴</span>
         <strong style="color:#b29a73">${data.kindlingGained}</strong>
       </div>`;
 
     html += `<div class="stat-grid" style="margin-bottom:8px;">
-      <div class="stat-row"><span class="stat-label">拾获残渣</span><span class="stat-value">${data.acquired.length}</span></div>
+      <div class="stat-row"><span class="stat-label">带回残渣</span><span class="stat-value">${data.acquired.length}</span></div>
       <div class="stat-row"><span class="stat-label">击杀</span><span class="stat-value">${data.killCount}</span></div>
       <div class="stat-row"><span class="stat-label">峰值混乱</span><span class="stat-value">${peak}</span></div>
       <div class="stat-row"><span class="stat-label">用时</span><span class="stat-value">${elapsedS}s</span></div>
@@ -94,7 +95,7 @@ export const riftResultPanel = {
 
     if (data.acquired.length > 0) {
       html += `<div class="separator"></div>`;
-      html += `<div class="section-title">沿途拾获</div>`;
+      html += `<div class="section-title">实际带回</div>`;
       html += `<div class="tile-grid">`;
       for (const c of data.acquired) {
         const name = getDefenseName(c.type);
@@ -105,6 +106,11 @@ export const riftResultPanel = {
       html += `</div>`;
     }
 
+    if (data.weapons?.length) {
+      html += `<div class="section-title">带回武器</div><div class="tile-grid">`;
+      for (const name of data.weapons) html += `<span class="pill">${name.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!))}</span>`;
+      html += `</div>`;
+    }
     if (data.passiveTriggers.size > 0) {
       html += `<div class="section-title">被动触发</div>`;
       html += `<div class="tile-grid">`;

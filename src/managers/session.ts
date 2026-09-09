@@ -1,3 +1,5 @@
+import { inventoryStore } from '@/systems/inventory-store';
+import { showToastInline } from '@/ui/dom/panel-styles';
 /**
  * Shared new-game / load-game bootstrap.
  *
@@ -45,7 +47,15 @@ export function beginNewExpedition(host: Phaser.Scene, enter?: ExpeditionEntry):
 
 /** Load the stored record. Falls back to a new expedition if the file is unreadable. */
 export function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry): void {
+  if (saveManager.hasPendingSave()) {
+    showToastInline('结算尚未保存，请先回到当前场景重试保存。', {});
+    return;
+  }
   const loaded = saveManager.load();
+  if (loaded && inventoryStore.getRun()?.status === 'active') {
+    showToastInline('上次出击尚未结束。物品记录已保留，暂不能载入。', {});
+    return;
+  }
   if (loaded) {
     enterPurification(host, 'continue', enter);
   } else {

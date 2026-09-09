@@ -128,8 +128,7 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
   // Sight and reported noises are never swallowed, only this.
   const hearingOnly = (p.hearingHit || hearingFill) && !p.visible && !noiseStimulus;
   const entering = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
-  if (hearingOnly && entering && ctx.hearingSuppressed) {
-    ctx.onHearingAvoided(enemy);
+  if (hearingOnly && entering && ctx.hearingSuppressed && ctx.onHearingAvoided(enemy)) {
     // Stays calm (PATROL/RETURN have no downgrade of their own) - the whole point of
     // muffle is that this tick looks exactly like nothing happened.
     return;

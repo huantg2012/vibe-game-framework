@@ -1,3 +1,5 @@
+import { inventoryStore } from '@/systems/inventory-store';
+import { inventoryError } from '@/ui/inventory-presenter';
 /**
  * RunController - the single `endRun` exit and restart logic.
  *
@@ -24,6 +26,7 @@ export interface RunControllerDeps {
   pauseChaos: (paused: boolean) => void;
   setPlayerInput: (enabled: boolean) => void;
   getCarriedKindling: () => number;
+  onSettlementFailure?: (message: string, retry: () => void) => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -41,6 +44,8 @@ export class RunController {
   private lastEndReason: EndRunReason | null = null;
   /** Kindling carried at end of run (captured before any reset). */
   private lastKindling = 0;
+  private settlementSaved = false;
+  private settlementEmitted = false;
 
   /** Stored for cleanup. */
   private readonly onPlayerDied: (payload: { cause: string }) => void;
@@ -63,6 +68,8 @@ export class RunController {
     this.restarted = false;
     this.lastEndReason = null;
     this.lastKindling = 0;
+    this.settlementSaved = false;
+    this.settlementEmitted = false;
 
     eventBus.on(GameEvent.PLAYER_DIED, this.onPlayerDied);
     eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onRiftExitReached);
@@ -81,7 +88,8 @@ export class RunController {
    * to purification (DEC-056). Survived is still decided by endRun reason.
    */
   restart(): void {
-    if (!this.runEnded) return;
+    if (!this.runEnded || this.restarted) return;
+    if (!this.saveSettlement()) return;
     this.transitionToPurification();
   }
 
@@ -102,18 +110,33 @@ export class RunController {
     this.deps.pauseChaos(true);
     this.deps.setPlayerInput(false);
 
-    const survived = reason === 'extract';
-
+    this.saveSettlement();
     this.scene.time.delayedCall(GAME_CONSTANTS.EXTRACTION.SETTLE_DELAY_MS, () => {
-      if (this.restarted) return;
-
-      eventBus.emit(GameEvent.RIFT_EXITED, {
-        kindlingGained: this.lastKindling,
-        survived,
-      });
-
-      // No auto-transition: wait for R key press (handled by restart())
+      if (this.restarted || !this.settlementSaved) return;
+      this.emitSettlement();
     });
+  }
+
+  private saveSettlement(): boolean {
+    if (this.settlementSaved) return true;
+    const run = inventoryStore.getRun();
+    if (run?.status === 'active') {
+      const result = inventoryStore.settleRun(run.id, this.lastEndReason === 'extract' ? 'extract' : 'death', this.lastKindling);
+      if (!result.ok) {
+        this.deps.onSettlementFailure?.(inventoryError(result.error), () => {
+          if (this.saveSettlement()) this.emitSettlement();
+        });
+        return false;
+      }
+    }
+    this.settlementSaved = true;
+    return true;
+  }
+
+  private emitSettlement(): void {
+    if (this.settlementEmitted) return;
+    this.settlementEmitted = true;
+    eventBus.emit(GameEvent.RIFT_EXITED, { kindlingGained: this.lastKindling, survived: this.lastEndReason === 'extract' });
   }
 
   private transitionToPurification(): void {
