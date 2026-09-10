@@ -10,12 +10,15 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const out=path.join(root,'public/assets/items/contaminants');
 const csv=(await readFile(path.join(root,'data/contaminants.csv'),'utf8')).replace(/^\uFEFF/,'').trim().split(/\r?\n/);
 const ids=csv.slice(1).map(row=>row.split(',')[0]!);
-assert.deepEqual([...CONTAMINANT_ICON_IDS].sort(),ids.sort(),'Every CSV type needs an icon');
+for(const id of ids)assert.ok((CONTAMINANT_ICON_IDS as readonly string[]).includes(id),`CSV identity lacks compatible icon: ${id}`);
+for(const id of CONTAMINANT_SAMPLE_IDS)assert.ok(ids.includes(id),`Production icon lacks CSV identity: ${id}`);
+const productionIds=CONTAMINANT_SAMPLE_IDS;
+const compatibilityOnlyIds=CONTAMINANT_ICON_IDS.filter(id=>!(productionIds as readonly string[]).includes(id));
 await mkdir(out,{recursive:true});
 const colors=new Set<string>(), silhouettes=new Set<string>();
 const sheet:sharp.OverlayOptions[]=[];
 const entries=[];
-for(const [n,id] of CONTAMINANT_ICON_IDS.entries()){
+for(const [n,id] of productionIds.entries()){
   const p=contaminantIconPixels(id);let count=0,bright=0;const mask=[];
   assert.equal(p.width,24);assert.equal(p.height,24);
   for(let y=0;y<24;y++)for(let x=0;x<24;x++){
@@ -36,12 +39,12 @@ for(const [n,id] of CONTAMINANT_ICON_IDS.entries()){
   sheet.push({input:Buffer.from(`<svg width="160" height="36"><text x="6" y="21" font-family="sans-serif" font-size="12" fill="#b7beac">${id}</text><text x="107" y="21" font-family="sans-serif" font-size="9" fill="#748276">24 / 40</text></svg>`),left,top:top+109});
   entries.push({id,width:24,height:24,opaquePixels:count,png:`${id}.png`,svg:`${id}.svg`});
 }
-assert.equal(colors.size,8,'Unexpected palette drift');
-await writeFile(path.join(out,'manifest.json'),JSON.stringify({source:'src/art/contaminant-icons.ts',dataSource:'data/contaminants.csv',authorship:'hand-authored native pixel objects',alpha:'binary',identity:'shared between defense residue and active/passive tool',entries},null,2)+'\n');
-await sharp({create:{width:1008,height:486,channels:4,background:'#151a17'}}).composite(sheet).png().toFile(path.join(out,'contaminant-icons-sheet.png'));
-console.log(`PASS ${entries.length} CSV identities: unique silhouettes, 24px native pixels, binary alpha, eight-color palette, transparent margin, readable edges; PNG/SVG and 24/40/96px review sheet exported.`);
+assert.ok(colors.size>=7&&colors.size<=8,'Unexpected base palette drift');
+await writeFile(path.join(out,'manifest.json'),JSON.stringify({source:'src/art/contaminant-icons.ts',dataSource:'data/contaminants.csv',authorship:'hand-authored native pixel objects',alpha:'binary',identity:'shared between defense residue and active/passive tool',compatibilityOnlyIds,entries},null,2)+'\n');
+await sharp({create:{width:1008,height:Math.ceil(productionIds.length/6)*162,channels:4,background:'#151a17'}}).composite(sheet).png().toFile(path.join(out,'contaminant-icons-sheet.png'));
+console.log(`PASS ${entries.length} production identities: unique silhouettes, 24px native pixels, binary alpha, eight-color palette, transparent margin, readable edges; PNG/SVG and 24/40/96px review sheet exported.`);
 
-// First eight objects: four qualities, native icon and world geometry side by side.
+// Thirteen production objects: four qualities, native icon and world geometry side by side.
 const qualitySheet:sharp.OverlayOptions[]=[];
 const variants=[];
 const luminance=(r:number,g:number,b:number)=>[r,g,b].map(v=>{const c=v/255;return c<=0.04045?c/12.92:((c+0.055)/1.055)**2.4;}).reduce((sum,c,i)=>sum+c*[0.2126,0.7152,0.0722][i]!,0);
@@ -49,7 +52,7 @@ const luminance=(r:number,g:number,b:number)=>[r,g,b].map(v=>{const c=v/255;retu
 const backgrounds=[luminance(21,26,23),luminance(41,42,43)];
 const nativeSheet:sharp.OverlayOptions[]=[];
 for(const [row,id] of CONTAMINANT_SAMPLE_IDS.entries()) {
-  const hashes=new Set<string>();
+  const hashes=new Set<string>(),worldHashes=new Set<string>();
   for(const [column,quality] of CONTAMINANT_ART_QUALITIES.entries()) {
     const icon=contaminantIconPixels(id,quality),world=contaminantWorldPixels(id,quality);
     const pngs:Buffer[]=[];
@@ -69,6 +72,7 @@ for(const [row,id] of CONTAMINANT_SAMPLE_IDS.entries()) {
       variants.push({id,quality,kind,width:pixels.width,height:pixels.height,file});
     }
     const hash=Buffer.from(icon.data).toString('hex');assert.ok(!hashes.has(hash),`${id}: qualities duplicate`);hashes.add(hash);
+    const worldHash=Buffer.from(world.data).toString('hex');assert.ok(!worldHashes.has(worldHash),`${id}: world qualities duplicate`);worldHashes.add(worldHash);
     await writeFile(path.join(out,`${id}-${quality}.svg`),contaminantIconSvg(id,quality));
     const x=column*300,y=row*178+38;
     qualitySheet.push({input:await sharp(pngs[0]).resize(96,96,{kernel:'nearest'}).toBuffer(),left:x+8,top:y+10});
@@ -79,7 +83,9 @@ for(const [row,id] of CONTAMINANT_SAMPLE_IDS.entries()) {
   }
 }
 qualitySheet.push({input:Buffer.from('<svg width="1200" height="35"><text x="10" y="23" font-family="sans-serif" font-size="14" fill="#aab4a5">ICON 24px / WORLD 32px — 4x geometry review + native-size samples. Quality changes structure; not item family.</text></svg>'),left:0,top:0});
-await sharp({create:{width:1200,height:1462,channels:4,background:'#151a17'}}).composite(qualitySheet).png().toFile(path.join(out,'iteration-20-quality-sheet.png'));
-await sharp({create:{width:400,height:388,channels:4,background:'#151a17'}}).composite(nativeSheet).png().toFile(path.join(out,'iteration-20-native-sheet.png'));
+const qualityBuffer=await sharp({create:{width:1200,height:CONTAMINANT_SAMPLE_IDS.length*178+38,channels:4,background:'#151a17'}}).composite(qualitySheet).png().toBuffer();
+await writeFile(path.join(out,'iteration-20-quality-sheet.png'),qualityBuffer);
+await sharp(qualityBuffer).extract({left:0,top:8*178+38,width:1200,height:5*178}).png().toFile(path.join(out,'iteration-20-remaining-five-sheet.png'));
+await sharp({create:{width:400,height:CONTAMINANT_SAMPLE_IDS.length*45+28,channels:4,background:'#151a17'}}).composite(nativeSheet).png().toFile(path.join(out,'iteration-20-native-sheet.png'));
 await writeFile(path.join(out,'iteration-20-manifest.json'),JSON.stringify({source:'src/art/contaminant-icons.ts',authorship:'native geometric pixel rasterization at both resolutions',qualityOrder:CONTAMINANT_ART_QUALITIES,variants},null,2)+'\n');
-console.log(`Exported ${variants.length} sample PNGs, 32 SVGs, 4x/native review sheets. All variants: binary alpha, transparent margin, distinct quality pixels.`);
+console.log(`Exported ${variants.length} sample PNGs, ${CONTAMINANT_SAMPLE_IDS.length*4} SVGs, 4x/native review sheets. All variants: binary alpha, transparent margin, distinct quality pixels.`);

@@ -40,6 +40,7 @@ export interface GameStateSnapshot {
   pendingSideEffects: PendingSideEffect[];
   upgradeDiscount: number;
   moduleSwapActive: boolean;
+  repairBonusHp: number;
 }
 
 export interface GameStateLoadInput {
@@ -50,6 +51,7 @@ export interface GameStateLoadInput {
   pendingSideEffects?: PendingSideEffect[];
   upgradeDiscount?: number;
   moduleSwapActive?: boolean;
+  repairBonusHp?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -63,12 +65,7 @@ let cycle = 0;
 let impactIntensity = 1.0;
 let pendingSideEffects: PendingSideEffect[] = [];
 let moduleMaxHpTier: ModuleMaxHpTier = 0;
-/**
- * siphon (Slice 5 gap-fill): "装备期间所有薪柴修复模块的效率翻倍" - same "装备期间"
- * derivation as `resonateBonusActive` below, kept in sync by
- * `ContaminantSystem.syncRepairEfficiencyMult()` on every defense-slot mutation.
- */
-let repairEfficiencyMult = 1.0;
+let repairBonusHp = 0;
 let upgradeDiscount = 0;
 /**
  * overwrite (Slice 5 T3, DEC-031): while active, getModuleEffect() reads the OTHER
@@ -181,15 +178,16 @@ export const gameState = {
    */
   allocateToModule(id: string, kindling: number): number {
     const mod = modules.find((m) => m.id === id);
-    if (!mod || kindling <= 0) return 0;
+    if (!mod || !Number.isFinite(kindling) || kindling <= 0) return 0;
 
     const perKindling = gameState.getEffectiveRepairPerKindling();
-    const maxUseful = Math.ceil((mod.maxHp - mod.hp) / perKindling);
-    const actual = Math.min(kindling, kindlingReserve, maxUseful);
+    const maxUseful = gameState.getMaxUsefulRepairKindling(mod.hp, mod.maxHp);
+    const actual = Math.min(Math.floor(kindling), kindlingReserve, maxUseful);
     if (actual <= 0) return 0;
 
     kindlingReserve -= actual;
-    mod.hp = Math.min(mod.hp + actual * perKindling, mod.maxHp);
+    mod.hp = Math.min(mod.hp + actual * perKindling + repairBonusHp, mod.maxHp);
+    repairBonusHp = 0;
     return actual;
   },
 
@@ -342,13 +340,7 @@ export const gameState = {
       pendingSideEffects: [...pendingSideEffects],
       upgradeDiscount,
       moduleSwapActive,
-      // resonateBonusActive/repairEfficiencyMult are deliberately NOT persisted here: they
-      // are not game-state facts, they are live derivations from ContaminantSystem's
-      // defense loadout (which IS saved separately). SaveManager.load() restores
-      // contaminants first, and ContaminantSystem.loadState() resyncs both flags from the
-      // restored defense slots - persisting a second copy here would just be a second
-      // source of truth to drift (siphon unslotted-but-still-2x-until-next-impact was
-      // exactly this kind of drift before the Slice 5 gap-fill).
+      repairBonusHp,
     };
   },
 
@@ -366,6 +358,7 @@ export const gameState = {
     pendingSideEffects = state.pendingSideEffects ?? [];
     upgradeDiscount = state.upgradeDiscount ?? 0;
     moduleSwapActive = state.moduleSwapActive ?? false;
+    repairBonusHp = Number.isFinite(state.repairBonusHp) ? Math.max(0, Math.floor(state.repairBonusHp!)) : 0;
   },
 
   /** Set impact intensity (called by TideSystem to sync). */
@@ -390,26 +383,24 @@ export const gameState = {
     return effects;
   },
 
-  // --- Repair efficiency (siphon defense effect) ---
+  // --- Finite repair allowance: earned by impact, spent by one useful injection ---
 
-  getRepairEfficiencyMult(): number {
-    return repairEfficiencyMult;
+  getRepairBonusHp(): number { return repairBonusHp; },
+
+  grantRepairBonus(amount: number): void {
+    if (Number.isFinite(amount)) repairBonusHp = Math.max(repairBonusHp, Math.max(0, Math.floor(amount)));
   },
 
-  /** siphon (Slice 5 gap-fill): set by `ContaminantSystem.syncRepairEfficiencyMult()`
-   * whenever the defense loadout changes - "装备期间", present tense, same lifecycle as
-   * `setResonateBonusActive()`. Not a per-impact one-shot: unslotting siphon resets this
-   * to 1.0 immediately, without waiting for the next impact to resolve. */
-  setRepairEfficiencyMult(value: number): void {
-    repairEfficiencyMult = value;
+  getEffectiveRepairPerKindling(): number { return P.REPAIR_PER_KINDLING; },
+
+  getMaxUsefulRepairKindling(hp: number, maxHp: number): number {
+    if (hp >= maxHp) return 0;
+    return Math.max(1, Math.ceil((maxHp - hp - repairBonusHp) / P.REPAIR_PER_KINDLING));
   },
 
-  /** Single source of truth for "how much module HP one kindling repairs right now" -
-   * `allocateToModule()` below and the allocation panel's preview both read this instead
-   * of `PURIFICATION.REPAIR_PER_KINDLING` directly, so siphon's doubling can never drift
-   * between the two. */
-  getEffectiveRepairPerKindling(): number {
-    return P.REPAIR_PER_KINDLING * repairEfficiencyMult;
+  previewModuleRepair(hp: number, maxHp: number, kindling: number): number {
+    if (kindling <= 0) return hp;
+    return Math.min(maxHp, hp + Math.floor(kindling) * P.REPAIR_PER_KINDLING + repairBonusHp);
   },
 
   // --- Upgrade discount (retrograde defense effect) ---
@@ -435,7 +426,7 @@ export const gameState = {
     cycle = 0;
     impactIntensity = 1.0;
     pendingSideEffects = [];
-    repairEfficiencyMult = 1.0;
+    repairBonusHp = 0;
     upgradeDiscount = 0;
     moduleSwapActive = false;
     resonateBonusActive = false;

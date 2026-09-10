@@ -185,3 +185,85 @@ export function findSoundLureLanding(
   }
   return travel >= minDistance && travel > 0 ? { x: origin.x + dx * travel, y: origin.y + dy * travel } : null;
 }
+
+export interface ToolLine { readonly pointA: Vector2; readonly pointB: Vector2 }
+export interface ToolRevealSnapshot { readonly enemyPositions: Vector2[]; readonly nodePositions: Vector2[] }
+
+/** Entire physical seam must lie on floor and be visible from its owner at placement. */
+export function findStitchPlacement(
+  origin: Readonly<Vector2>, direction: Readonly<Vector2>, distance: number, length: number,
+  grid: ToolWalkGrid, hasLineOfSight: (from: Readonly<Vector2>, to: Readonly<Vector2>) => boolean,
+): ToolLine | null {
+  const magnitude = Math.hypot(direction.x, direction.y);
+  if (!finitePoint(origin) || !finitePoint(direction) || !Number.isFinite(magnitude) || magnitude === 0
+    || !Number.isFinite(distance) || distance < 0 || !Number.isFinite(length) || length <= 0) return null;
+  const dx = direction.x / magnitude, dy = direction.y / magnitude;
+  const centre = { x: origin.x + dx * distance, y: origin.y + dy * distance };
+  const a = { x: centre.x - dy * length / 2, y: centre.y + dx * length / 2 };
+  const b = { x: centre.x + dy * length / 2, y: centre.y - dx * length / 2 };
+  // Exact segment/tile intersections catch sub-pixel corner cuts between samples.
+  const interval: RayInterval = { enter: 0, exit: 0 };
+  const rayX = (b.x - a.x) / length, rayY = (b.y - a.y) / length;
+  for (let r = Math.floor(Math.min(a.y, b.y) / grid.tileSize); r <= Math.floor(Math.max(a.y, b.y) / grid.tileSize); r++) {
+    for (let c = Math.floor(Math.min(a.x, b.x) / grid.tileSize); c <= Math.floor(Math.max(a.x, b.x) / grid.tileSize); c++) {
+      if (c >= 0 && r >= 0 && c < grid.cols && r < grid.rows && grid.isWalkable(c, r)) continue;
+      if (intersectRayBox(a, rayX, rayY, c * grid.tileSize, r * grid.tileSize,
+        (c + 1) * grid.tileSize, (r + 1) * grid.tileSize, interval)
+        && interval.enter <= length && interval.exit >= 0) return null;
+    }
+  }
+  // One-pixel samples include both endpoints; world tiles are much larger. LOS is
+  // tested for the whole seam, so a pillar cannot hide only its middle section.
+  const samples = Math.ceil(length);
+  for (let i = 0; i <= samples; i++) {
+    const p = { x: a.x + (b.x - a.x) * i / samples, y: a.y + (b.y - a.y) * i / samples };
+    const col = Math.floor(p.x / grid.tileSize), row = Math.floor(p.y / grid.tileSize);
+    if (col < 0 || row < 0 || col >= grid.cols || row >= grid.rows || !grid.isWalkable(col, row)
+      || !hasLineOfSight(origin, p)) return null;
+  }
+  return { pointA: a, pointB: b };
+}
+
+/** Swept point motion crossing a finite seam; proximity, standing on it and parallel motion do not count. */
+export function crossesToolLine(previous: Readonly<Vector2>, current: Readonly<Vector2>, line: ToolLine): boolean {
+  const { pointA: a, pointB: b } = line;
+  const lx = b.x - a.x, ly = b.y - a.y;
+  const before = lx * (previous.y - a.y) - ly * (previous.x - a.x);
+  const after = lx * (current.y - a.y) - ly * (current.x - a.x);
+  if (before === 0 || (before > 0 && after > 0) || (before < 0 && after < 0)) return false;
+  const moveX = current.x - previous.x, moveY = current.y - previous.y;
+  const denominator = moveX * ly - moveY * lx;
+  if (Math.abs(denominator) < 1e-9) return false;
+  const t = ((a.x - previous.x) * ly - (a.y - previous.y) * lx) / denominator;
+  const u = ((a.x - previous.x) * moveY - (a.y - previous.y) * moveX) / denominator;
+  return t >= 0 && t <= 1 && u >= 0 && u <= 1;
+}
+
+/** Snapshot admission follows local connected floor, with a bounded four-neighbour path budget. */
+export function collectToolRevealSnapshot(
+  origin: Readonly<Vector2>, range: number, grid: ToolWalkGrid,
+  enemyPositions: readonly Readonly<Vector2>[], nodePositions: readonly Readonly<Vector2>[],
+): ToolRevealSnapshot {
+  const empty: ToolRevealSnapshot = { enemyPositions: [], nodePositions: [] };
+  if (!finitePoint(origin) || !Number.isFinite(range) || range <= 0 || grid.tileSize <= 0) return empty;
+  const col = Math.floor(origin.x / grid.tileSize), row = Math.floor(origin.y / grid.tileSize);
+  if (col < 0 || row < 0 || col >= grid.cols || row >= grid.rows || !grid.isWalkable(col, row)) return empty;
+  const costs = new Map<number, number>();
+  const queue = [row * grid.cols + col]; costs.set(queue[0]!, 0);
+  for (let i = 0; i < queue.length; i++) {
+    const cell = queue[i]!, cost = costs.get(cell)!;
+    if (cost + grid.tileSize > range) continue;
+    const x = cell % grid.cols, y = Math.floor(cell / grid.cols);
+    for (const [nx, ny] of [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]]) {
+      if (nx! < 0 || ny! < 0 || nx! >= grid.cols || ny! >= grid.rows || !grid.isWalkable(nx!, ny!)) continue;
+      const next = ny! * grid.cols + nx!;
+      if (!costs.has(next)) { costs.set(next, cost + grid.tileSize); queue.push(next); }
+    }
+  }
+  const filter = (positions: readonly Readonly<Vector2>[]): Vector2[] => positions.filter(p => {
+    if (!finitePoint(p) || Math.hypot(p.x - origin.x, p.y - origin.y) > range) return false;
+    const x = Math.floor(p.x / grid.tileSize), y = Math.floor(p.y / grid.tileSize);
+    return x >= 0 && y >= 0 && x < grid.cols && y < grid.rows && costs.has(y * grid.cols + x);
+  }).map(p => ({ x: p.x, y: p.y }));
+  return { enemyPositions: filter(enemyPositions), nodePositions: filter(nodePositions) };
+}

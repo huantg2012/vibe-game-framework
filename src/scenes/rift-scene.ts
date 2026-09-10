@@ -1,6 +1,6 @@
 import { hasLineOfSight } from '@/utils/grid-raycast';
-import { findSingleWallLanding, findSoundLureLanding } from '@/systems/tool-targeting';
-import { getSurvivalAttributes } from '@/systems/survival-attributes';
+import { collectToolRevealSnapshot, findStitchPlacement, findSingleWallLanding, findSoundLureLanding } from '@/systems/tool-targeting';
+import { getSurvivalAttributes, sumPollutionResistance } from '@/systems/survival-attributes';
 import { inventoryStore } from '@/systems/inventory-store';
 import { FieldLootInventory, notifyFieldAcquisition } from '@/systems/field-loot-inventory';
 import { openInventory, projectInventoryItem } from '@/ui/inventory-presenter';
@@ -256,7 +256,7 @@ export class RiftScene extends Phaser.Scene {
       onModulate: this.applyChaosModulators,
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
-      getPollutionResistance: () => getSurvivalAttributes().resistancePercent,
+      getPollutionResistance: () => sumPollutionResistance([getSurvivalAttributes().resistancePercent, this.toolSystem.getPollutionResistanceBonus()]),
     });
     this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: grid,
       hearingPolicy: {
@@ -311,6 +311,15 @@ export class RiftScene extends Phaser.Scene {
           return findSoundLureLanding(body.center, { x: Math.cos(angle), y: Math.sin(angle) }, maxDistance,
             grid, Math.max(body.halfWidth, body.halfHeight) * 2);
         },
+        getStitchPlacement: (length, distance) => {
+          const angle = this.player.getFacingAngle();
+          return findStitchPlacement(this.player.getPosition(), { x: Math.cos(angle), y: Math.sin(angle) }, distance, length,
+            grid, (from, to) => hasLineOfSight(grid, from, to));
+        },
+        getRevealSnapshot: range => collectToolRevealSnapshot(this.player.getPosition(), range, grid,
+          [...this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
+            ...this.hosts.getToolTargets().map(host => host.position)], this.search.getUncollectedSearchPositions()),
+        delayEnvironmentHazard: (id, source, duration) => this.hosts.delayNextHazard(id, source, duration),
         getEnvironmentTargets: () => this.hosts.getToolTargets(),
         suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressReleasedHazard(id, source, duration),
         clearEnvironmentControl: (id, source) => this.hosts.clearToolControl(id, source),
@@ -1035,7 +1044,13 @@ export class RiftScene extends Phaser.Scene {
     );
   }
 
+  private lastToolResistanceBonus = 0;
   private syncHudActiveEffects(): void {
+    const resistanceBonus = this.toolSystem.getPollutionResistanceBonus();
+    if (resistanceBonus !== this.lastToolResistanceBonus) {
+      this.lastToolResistanceBonus = resistanceBonus;
+      if (inventoryPanel.isOpen()) inventoryPanel.update();
+    }
     const toolLines: ActiveEffectInfo[] = this.toolSystem.getActiveTimedEffects().map((e) => ({
       label: getToolName(e.type),
       remainingMs: e.remainingMs,
@@ -1246,7 +1261,7 @@ export class RiftScene extends Phaser.Scene {
     this.extractKey?.reset();
     for (const key of this.toolKeys) key.reset();
     this.player.setInputEnabled(false);
-    openInventory({ mode: 'rift', onClose: () => {
+    openInventory({ mode: 'rift', getPollutionResistanceBonus: () => this.toolSystem.getPollutionResistanceBonus(), onClose: () => {
       this.inventoryClosedAt = this.time.now;
       this.syncPlayerInput();
     }, getNearby: () => this.fieldInventory.getNearby(),

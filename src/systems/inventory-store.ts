@@ -1,3 +1,4 @@
+import { migrateContaminant } from './contaminant-migration';
 import { createWeaponInstance, equipmentLifecycleDefinition } from './equipment-lifecycle';
 import { getEquipmentLifecycle, type OfferingTransformResult } from '../types/inventory-types';
 import { CONTAMINANT_DATA } from '../generated/contaminant-data';
@@ -112,6 +113,7 @@ export class InventoryStore {
       } else if (item.kind === 'contaminant') {
         const c = item.contaminant;
         if (!validContaminant(c) || c.id !== item.id) return false;
+        item.contaminant = migrateContaminant(c);
       } else return false;
       if (item.location.kind === 'ground' && (!item.location.position || !Number.isFinite(item.location.position.x) || !Number.isFinite(item.location.position.y) || item.location.runId !== state.run?.id)) return false;
       if (item.location.kind === 'defense' && (!Number.isInteger(item.location.slot) || item.location.slot < 0)) return false;
@@ -154,7 +156,7 @@ export class InventoryStore {
     const valid = new Set(contaminants.map(c => c.id));
     state.equipment.defenseIds = defenseIds.map(id => id && valid.has(id) ? id : null);
     state.equipment.toolIds = toolIds.map(id => id && valid.has(id) ? id : null);
-    this.publish(state);
+    if (!this.loadState(state)) throw new Error('Invalid legacy inventory');
   }
   ensureStarter(): InventoryResult<string | null> {
     if (this.state.run?.status === 'active') return fail('run-active');
@@ -172,6 +174,7 @@ export class InventoryStore {
   }
   addContaminant(contaminant: Contaminant): InventoryResult<string> {
     if (!validContaminant(contaminant)) return fail('invalid-item');
+    contaminant = migrateContaminant(contaminant);
     return this.transaction(state => {
       if (state.items.some(item => item.id === contaminant.id)) return fail('duplicate-id');
       state.items.push({ kind: 'contaminant', id: contaminant.id, contaminant: { ...contaminant }, location: { kind: state.run?.status === 'active' ? 'carried' : 'stash' } });
@@ -258,6 +261,7 @@ export class InventoryStore {
         ids.add(item.id);
       }
       const revealed: InventoryItem[] = items.map(item => ({ ...copy(item), location: { kind: 'ground', runId: run.id, position: { ...position } }, source: { ...item.source, nodeId, runId: run.id } }));
+      for (const item of revealed) if (item.kind === 'contaminant') item.contaminant = migrateContaminant(item.contaminant);
       const taken = this.weight(state) + revealed.reduce((sum, item) => sum + this.getWeight(item), 0) <= this.rules.capacity;
       if (taken) for (const item of revealed) item.location = { kind: 'carried' };
       state.items.push(...revealed);

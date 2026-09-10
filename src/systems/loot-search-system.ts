@@ -8,7 +8,7 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
-import { rollContaminantDrop, getContaminantQualityName, supportsContaminantQuality } from '@/systems/contaminant-quality';
+import { rollContaminantDrop, rollContaminantNodeDrop, getContaminantQualityName, supportsContaminantQuality } from '@/systems/contaminant-quality';
 import { audioManager } from '@/managers/audio-manager';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
@@ -165,6 +165,7 @@ export class LootSearchSystem {
       this.nodes.push({
         id: def.id,
         kind: 'contaminant',
+        tier: def.tier ?? 'safe',
         position: def.position,
         value: 0,
         collected: false,
@@ -461,7 +462,7 @@ export class LootSearchSystem {
         if (supportsContaminantQuality(drop.type)) qualityLabel = getContaminantQualityName(drop);
       } else {
         if (!node.revealedItem) {
-          const drop = rollContaminantDrop();
+          const drop = rollContaminantNodeDrop(this.runSeed, node.id, node.tier ?? 'safe');
           const contaminant = contaminantSystem.createUnowned(drop.type, drop.rarity, drop.quality);
           node.revealedItem = { id: contaminant.id, kind: 'contaminant', contaminant };
         }

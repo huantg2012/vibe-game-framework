@@ -110,6 +110,8 @@ export interface LandmarkDef {
 /** Contaminant pickup node position (Slice 3, spec CN8-CN9). */
 export interface ContaminantNodeDef {
   readonly id: string;
+  /** Static route exposure from placement, never the player current chaos. */
+  readonly tier?: KindlingTier;
   /** World position (px), tile centre. */
   readonly position: Vector2;
 }

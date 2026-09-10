@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: director / code（迭代20首批供奉与预告）
+last-modified-by: code（迭代20完整供奉与有限收益）
 last-modified-date: 2026-09-10
 interface-changed: true
 interfaces-with:
@@ -18,9 +18,11 @@ exposes:
   - GameState.getStartingChaos()
   - GameState.getModuleMaxHpTier() / canRaiseModuleMaxHp() / raiseModuleMaxHp()
   - GameState.getKindlingReserve() / healModule(id, amount)
+  - GameState.getRepairBonusHp() / grantRepairBonus(hp) / getMaxUsefulRepairKindling(hp,maxHp) / previewModuleRepair(hp,maxHp,kindling)
+  - SaveManager.allocateToModule(id, amount) -> number（保存失败完整回滚）
   - GameState.isModuleSwapActive() / setModuleSwapActive(active)
   - ImpactSystem.run(defenseSlots, offeringIds?) -> ImpactResult （含 defenseResult；Slice 5.5 增 primaryModuleId / trueSeverity / baseDamagePerModule）
-  - ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus, nextNextIntensity, memorySlotted?) / getForecastDisplay() / getForecastLookahead() -> ForecastDisplay
+  - ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus, nextNextIntensity) / getForecastDisplay() / getForecastLookahead() -> ForecastDisplay
   - ImpactSystem.getForecastState() / loadForecastState(state?) / resetForecastState()
   - applyDefenseEffects(baseDamage, slots, context, offeringIds?) -> DefenseResult
     （Slice 5 新增出口 healOut / bonusCharges / toolUseGrants / moduleSwapTriggered；
@@ -40,7 +42,7 @@ exposes:
 
 > **Slice 5 变更摘要**（细则见 D/V 组）：预告去掉方向、只报目标+档位（DEC-034）；防御侧 6 处未接线机制全部落地（DEC-029~033）；污染物运行时状态进存档（DEC-032）；模块受损三态视觉阈值登记（DEC-035）；防御槽位数不再固定 3。
 
-> **Slice 7 变更摘要**（DEC-064）：第三模块 = 净化器（完整度 → 出击起始混乱；满完整度起始 0；不改出击起始生命）。加厚：花薪柴全局抬全部模块 `maxHp`，3 档每档 +15（100→115→130→145），效果公式分母仍是基准 100。`abyss` 65% 与 `stitch` 三模块文案随第三承血模块落地成立。**DEC-117：** 加厚并进蜕变面板第七张，不再是世界桩。
+> **Slice 7 变更摘要**（DEC-064）：第三模块 = 净化器（完整度 → 出击起始混乱；满完整度起始 0；不改出击起始生命）。加厚：花薪柴全局抬全部模块 `maxHp`，3 档每档 +15（100→115→130→145），效果公式分母仍是基准 100。三模块均参与当前防御合同。**DEC-117：** 加厚并进蜕变面板第七张，不再是世界桩。
 
 ## 迭代12：世界内前后遮挡（DEC-120）
 
@@ -82,7 +84,7 @@ interface GameState {
   cycle: number;
   impactIntensity: number;        // 由 TideSystem 同步写入，不自增（规则 12）
   pendingSideEffects: PendingSideEffect[];  // 防御副作用，出击开局消费
-  repairEfficiencyMult: number;   // siphon 的修复倍率（⚠ 见规则 15 的未接线标注）
+  repairBonusHp: number;          // 已挣得、未消费的一次修复额度；旧档默认0
   upgradeDiscount: number;        // overwrite 的改造折扣
   moduleSwapActive: boolean;      // overwrite 的模块功能互换是否生效（规则 55）
 }
@@ -121,11 +123,11 @@ interface DefenseResult {
   stitchEqualization: Record<string, number>;
   forecastCorrect: boolean;       // 用 ground truth 判定，不用显示值（规则 25）
   upgradeDiscount: number;
-  repairEfficiencyMult: number;
+  repairBonusHp: number;          // 本次承伤挣得的一次额度，取最高值不叠加
   healOut: Record<string, number>;        // combust 焚尽返还
-  bonusCharges: Record<string, number>;   // erode / resonate 跨槽冲击计数
-  toolUseGrants: number;                  // echo 的工具次数 +1
-  moduleSwapTriggered: boolean;           // overwrite 的模块功能互换
+  bonusCharges: Record<string, number>;   // 兼容字段，当前13族为空
+  toolUseGrants: number;                  // 兼容字段，当前13族为0
+  moduleSwapTriggered: boolean;           // 兼容字段，当前13族为false
   /** Slice 5.5：逐槽归因，供冲击结算面板披露「谁挡了多少 / 谁触发了什么」 */
   slotDisclosures: SlotDisclosure[];
 }
@@ -179,16 +181,16 @@ interface SortieModifiers {
 6. **视觉基调**：地面为冷蓝灰的程序化石板（中心略暖、向边缘转冷并逐级压暗），ambient 使用 omni 模式；玩家的肩灯是场景中唯一的暖色。
 7. **冲击预告是非空间的**（DEC-034，改写自旧的"粒子密度指向预告方向"）：预告只播报两件事——**下次冲击的重点目标模块** 与 **强度档位**（light / moderate / heavy / extreme 四档）。它不给方向。
     - **HUD 展示**（Slice 5.5 DEC-048 贴顶横槽，只改展示、不改结算/数值）：净化点常驻 HUD 用文字写明，三个独立可见节点——时机 `下次归来`、目标全称 `核心` / `储藏` / `净化器`（对应 CORE / STORAGE / PURIFIER；与底栏 / 结算已上屏用词一致）、档位中文读 `ImpactSystem` 导出的 `SEVERITY_LABEL`（light→轻微 / moderate→中等 / heavy→剧烈 / extreme→极端）。HUD **必须 import 这一份标签**，禁止另造「轻/中/重」平行表。常驻 HUD 不画 ◈/▣ 与 4 格 pip。
-    - **消声淡预告**（仅 `getForecastLookahead()` 非空）：同样三节点，但时机词必须是 `再下一轮`（不得再用 `下次归来`，以免读成第二份现在）。目标名与档位名同一套。可更淡、无临界脉动，文字节点不得省略。
+    - **旧档已承诺的第二轮预告**（仅 `getForecastLookahead()` 非空）：同样三节点，但时机词必须是 `再下一轮`（不得再用 `下次归来`，以免读成第二份现在）。目标名与档位名同一套。可更淡、无临界脉动，文字节点不得省略。
     - **为什么不给方向**：旧实现把 CORE 映射为"左"、STORAGE 映射为"右"，而 CORE 就在场地正中心——"左"是任选的，玩家无法据此做任何决策；同时它与边界压力主方向（规则 37/42/47）叠成两个互不相关的方向暗示。
     - **方向暗示的唯一合法来源是 BoundaryShape 的压力可视化**。那是全系统唯一有真实空间语义的方向源。预告不再与它争夺同一维度。
-    - 预告在**每次进入净化点时**（无论是从裂隙返回还是从菜单/读档进入）重算一次，用的是"下次冲击将要使用的强度"（即当前潮汐强度，在本次访问的 `advanceCycle()` 之后读取）。
+    - 预告仅在首次建立或实际冲击消费后生成，用潮汐推进后的真实下一轮强度；同轮菜单/读档/重复进入只恢复原读数，不重抽。
     - 档位分界按潮汐强度区间 [1.0, 3.0] 四等分：< 1.5 light / < 2.0 moderate / < 2.5 heavy / 其余 extreme。extreme 档的临界脉动（300ms）可留作第二编码，不能代替可见词「极端」。边界粒子恢复各角度均匀生成，不再做方向暗示。
 
 ### G — GameState
 
 8. **初始状态**：`kindlingReserve = 0`，`cycle = 0`，`impactIntensity = 1.0`，`moduleMaxHpTier = 0`，三个模块（CORE / STORAGE / PURIFIER）各自 `hp = MODULE_INITIAL_HP = 70`，`maxHp = MODULE_BASE_MAX_HP = 100`。老存档缺 PURIFIER 或缺 `moduleMaxHpTier` 时：补第三个模块为 `70 / 当前档位 maxHp`，档位缺省 0；不得把老档判损坏。
-9. **内存单例 + 持久化**：GameState 是模块级单例（DEC-ARCH-002），跨场景存活。它同时被 `SaveManager` 持久化到 localStorage——存档写入点为「进入净化点时」与「出击前」两处，读档由主菜单驱动。落存档的字段见状态模型；污染物运行时状态走同一通道（规则 60）。
+9. **内存单例 + 持久化**：GameState 是模块级单例（DEC-ARCH-002），跨场景存活。它同时被 `SaveManager` 持久化到 localStorage——存档写入点包括归来世界结算、有效注入、库存操作与出击前，读档由主菜单驱动。落存档的字段见状态模型；污染物运行时状态走同一通道（规则 60）。
 10. **薪柴入账**：从裂隙返回时（`RIFT_EXITED.survived === true`），`kindlingReserve += kindlingGained`。死亡时 `kindlingGained = 0`，不入账。
 11. **周期计数**：每次进入裂隙时 `cycle++`。
 12. **冲击强度由潮汐驱动，不自增**：`impactIntensity` 不再逐周期 +0.15。每次从裂隙返回、结算冲击之前，由场景层把 `tideSystem.getCurrentIntensity()` 同步写入 GameState，冲击读这个值。强度的涨退规则归 `system-growth-tide` 的 T 组（`INTENSITY_STEP` / `MAX_INTENSITY` 两个旧常量已从 `constants.ts` 移除）。`incrementIntensity()` 已删除。
@@ -197,9 +199,10 @@ interface SortieModifiers {
 
 13. **触发**：玩家走到模块交互点按 E → 打开 DOM overlay 分配面板。
 14. **面板内容**：显示当前 `kindlingReserve`、目标模块 `hp/maxHp`、滑块或 +/- 按钮选择分配数量。效果预览按模块类型分开展示表名与数值：核心 = 表名 `混乱增速` + 减免百分数；储藏 = 表名 `薪柴价值` + 倍率；净化器 = 表名 `起始混乱` + 整数（当前 → 注入后）。当前操作只展示该装置的修复与出击效果，其他装置现状保留在报告。
-15. **修复公式**：每 1 薪柴 = `REPAIR_PER_KINDLING` hp（= 4，为稀缺感调低）。不能超过 maxHp；面板提前 clamp 可分配量为 `ceil((maxHp - hp) / REPAIR_PER_KINDLING)`。
-    - ⚠ 未接线：`siphon` 的防御主效果"装备期间修复效率翻倍（1 薪柴 = 8hp）"通过 `GameState.setRepairEfficiencyMult(2.0)` 写入，但 `allocateToModule()` 从未读取它。该效果目前不发生。属需要接线的缺口，不是设计变更。
-16. **确认**：点击确认 → 扣除 reserve → 增加 hp → emit `ALLOCATION_CONFIRMED { allocations: { [moduleId]: kindlingSpent } }` → 关闭面板。核心场景样板即时结算，展示650ms已生效读数后退出；期间禁止重复投入。
+15. **修复公式与有限额度**：每1薪柴修复 `REPAIR_PER_KINDLING` 完整度（4）。附生壳在实际承伤后令 `repairBonusHp = max(已有额度, defense_repair_bonus_hp)`（6），下一次有效薪柴注入额外修复至多此额度；一笔注入后归零，多余修复不返还、不分次囤积，不能超过maxHp。未受伤、0薪柴、无库存或无效模块不消费额度，直接 `healModule` 不消费。放入/取下供奉本身不授予或撤回额度，没有常驻修复倍率。
+    - 当缺血时，最大有用薪柴为 `max(1, ceil((maxHp-hp-repairBonusHp)/4))`，再受库存限制；满血为0。预览和实算读同一GameState方法。
+    - `repairBonusHp`写入同一存档，旧档缺省0；非法负数或非整数拒绝整体加载。出击不凭空清除已挣得额度。
+16. **确认与持久化**：`SaveManager.allocateToModule`快照薪柴/模块/额度 → 计算注入 → 同步保存 → 成功后才发 `ALLOCATION_CONFIRMED`。保存失败完整恢复三个字段，面板显示失败可重试，不能播成功反馈。成功展示650ms已生效读数后退出；期间禁止重复投入。
 17. **取消**：点击取消或按 ESC → 关闭面板，不扣资源。
 18. **非强制**：玩家可以选择不分配任何薪柴就直接进入裂隙（风险策略）。
 
@@ -222,7 +225,7 @@ interface SortieModifiers {
 24. **hp 下限**：模块 hp 最低为 0，不进负数；`applyDamage()` 返回实际造成的伤害（用于 D 组的承伤类结算）。
 25. **普通预告与可信承诺**：
     - **普通预告**：生成时随机挑一个模块作为预测目标（`forecastTargetId`）。没有可信承诺时，实际重点目标有 `FORECAST_ACCURACY`（0.8）的概率等于它。目标显示不额外谎报，强度可能有基线模糊（规则52）。
-    - **返刻片承诺**：供奉返刻片立即将已显示的目标与准确强度锁定，并提前显示下一轮。冲击兑现已锁定目标，不再抽80%概率；已承诺目标即使返刻片撤下或成熟也必须兑现。
+    - **返刻片承诺**：返刻片实际在供奉槽承受一次非跳过冲击后，为下一轮生成准确目标与强度。单纯放入/查看/取出不升级当前预告、不获取免费前瞻；最后成熟的那次冲击同样记下一轮。已承诺内容即使物件撤下或成熟也必须兑现。
     - 普通目标命中率与强度模糊分别判断；可信承诺的目标和强度均准确。
 
 ### M — 模块效果
@@ -280,56 +283,47 @@ interface SortieModifiers {
 49. **呼吸层无玩法影响**：变形只作用于绘制，不改变半径查询的返回值，因此不影响碰撞、可见性、粒子生成与安全区保证。它是氛围，不是规则。
 50. **视觉权重下限**：呼吸层与粒子层的 alpha 上限刻意压低（膜线 ≤ 0.22，粒子 ≤ 0.25）。边界应在余光中被察觉，不与交互点争夺注意力。
 
-### D — 防御结算（Slice 5）
+### D — 防御结算（迭代20当前合同）
 
-防御槽里的污染物在冲击结算时修正伤害并产生额外出口。槽位内容与生命周期归 `system-growth-tide` 的 CN 组；下列规则只管"冲击这一刻发生了什么"。每种污染物的文案与基础减伤值来自 `data/contaminants.csv`（策划数据源，规则见 CLAUDE.md）。
+供奉槽位与成熟由统一库存拥有。下述只定义冲击时的完整效果。策划数值唯一来源 `data/contaminants.csv`；同族品质不改变供奉规则或阈值。
 
-51. **减伤叠加与结算顺序**：所有 `stage === 'defense'` 的槽位各自给出减伤比例，按乘法叠加（`totalReductionMult *= (1-r)`），不是加法。
-    1. 重影片在槽时，将减伤后的总伤害均分到全部模块，整数余数按模块稳定顺序分配；它本身不降低总伤害。
-    2. 否则，各模块基础伤害乘总减伤倍率并四舍五入。
-    3. 留影玻璃再降低非本轮主要目标承受的余波，每件逐次乘算。
-    4. `abyss` 的额外伤害（规则53）叠加，不吃减伤。
-    5. `stitch` 均衡按模拟扣血后的完整度计算，在真正扣血后执行。
-    6. 余烬核以实际承伤计算本轮修复（规则54），修复不能把模块推过上限。
-    7. 本轮所有供奉物先完整参与防御，再将普通冲击计数与 `bonusCharges` 一次汇总交给统一库存推进成熟。武器也参与跨槽加成；禁止先推进成熟或重复追加计数。
+51. **顺序与叠加**：只处理本次快照中 `stage === defense` 的物件；武器无额外减伤。
+    1. 各件基础减伤以 `(1-r)` 乘算。
+    2. 有重影片则将减伤后的总伤害四舍五入、均分至全部模块，余数按模块稳定顺序补齐；否则各模块保留浮点至局部减伤完毕。
+    3. 留影玻璃削弱非主要目标余波；坠手石只削弱主要目标；背光珠逐模块判定冲击前完整度并替换本件减伤倍率。局部倍率逐件乘算后四舍五入。逐槽挡下的整数总和必须等于基础总伤害减最终总伤害，最后一个有效减伤槽吸收舍入差，不能产生负贡献；伤害转移不算挡下。
+    4. 错结线从主要模块转移至多4点伤害，接收方为模拟扣血后余血最多的另一模块；不能将接收方降至0或以下。多件按槽顺序计算，后件看到前件转移后的伤害。总伤害守恒，不是事后均摊完整度。
+    5. 依据各模块实际可承受伤害的总和计算余烬核修复与附生壳有限修复额度。
+    6. 所有物件完整参与后才由同一供奉快照推进成熟。末轮效果有效；正常供奉不再产生退休族的随机跨槽计数或工具补次。
 
-51a. **首批八件供奉职责**（数值唯一来源 `data/contaminants.csv`）：冷结块减伤35%；重影片只均摊；返刻片减伤15%并锁定预告；缄口布减伤30%；缺口石稳定减伤40%，不抽概率或扣稳定度；留影玻璃减伤25%并削弱余波25%；复声壳减伤20%；余烬核减伤25%并将本次实际承伤20%转为修复。八件都不保留旧的碎裂、初始混乱、改造折扣或视野惩罚。其他十件沿现有规则，留待后批审查。
+51a. **八族延续**：冷结块35%；重影片只均摊；返刻片15%并在本轮承冲击后记下一轮；缄口布30%；缺口石40%；留影玻璃25%并额外削弱余波25%；复声壳20%；余烬核25%并返还本轮承伤20%为局部修复。无旧碎裂、初始混乱、改造折扣、视野惩罚。
 
-52. **预告可靠度与承诺**：
-    - 普通预告有20%概率将强度档位沿 light→extreme 上下移一格（各50%，端点钳制）；`growth_forecast_clarity` 每级降低5个百分点，最低5%。它不改变普通目标的80%命中率。
-    - 供奉返刻片立即修正当前强度为真值，锁定当前目标，并产生一个额外前瞻。当前与额外前瞻的目标、强度都可信；留影玻璃不再误导预告。
-    - 同轮 `generateForecast`、HUD刷新、重复进入净化点与出击时轮次增长都不得重抽。只有实际冲击 `run` 消费当前预告，下一次生成才推进队列一格。
-    - 撤下或成熟不撤回已经显示的承诺；只停止继续扩展新的前瞻。无返刻片后，队列中最后一个承诺兑现完才恢复普通预告。
-    - 预告目标、准确性标记、是否已消费、前瞻队列及两轮强度一起写入 `impactForecast` 存档。旧存档缺字段时首次建立稳定预告；非法字段在加载前整体拒绝。
-    - 供奉槽位变更与预告升级同一笔保存：保存失败时两者一起回滚；结算保存重试不能重抽承诺或重演冲击。不改变裂隙中断后的既有存档策略。
+52. **预告与信息成本**：
+    - 普通目标命中率80%；普通强度有20%模糊至相邻一档，成长每级降低5个百分点、最低5%。可信记录不走这两个随机分支。
+    - 返刻片必须实际占槽参加非跳过冲击，产生 `earnedPending`；潮汐推进后创建下一轮读数时将其转换为一个准确目标及强度并清除标志。多件不叠存多轮。最后成熟的一次同样授予。
+    - 插槽、刷新HUD、重复生成、菜单重入和出击cycle变化均不制造信息。仅真实冲击消费一次当前读数。
+    - 已发布承诺不可撤回。旧存档中已发布的双轮承诺按原当前/队列自然兑现；新规则不再生成第二轮前瞻。无新承冲击收入且旧队列耗完后恢复普通预告。
+    - `impactForecast`保存目标、显示、可信/消费标志、旧前瞻队列及 `earnedPending`。旧字段缺省兼容；非法快照在加载前拒绝。保存失败恢复生成前状态，重试只保存一次，不能重放冲击或重复授予。
+    - 这不定义裂隙刷新/退出/崩溃的恢复政策。
 
-53. **`abyss` 动态减伤**（DEC-029）：基础减伤 20%，**每有一个模块 hp 低于其 maxHp 的 50%** 则额外 +15%，上限 65%。低血判定用**本次伤害结算前**的 hp——把模块打到半血以下的那一击本身不吃这个加成（避免"减伤影响伤害、伤害又反过来影响减伤"的自我指涉）。
-    - 副作用：5% 概率对一个**满 hp** 模块造成其 maxHp 10% 的伤害，不吃任何减伤（规则 51 第 4 步）。
-    - **Slice 7 复核（闭合原张力）**：公式仍是 `min(0.65, 0.20 + n × 0.15)`，n = 结算前 hp/maxHp < 0.5 的承血模块数。三个模块都低于半血时 n=3 → **65% 可触到**。`DefenseContext.moduleHps` / `moduleMaxHps` 必须列入全部三个模块，禁止仍只传 CORE/STORAGE。CSV 文案「最高 65% 当 3 模块均低于半血」对照通过，**不改** `data/contaminants.csv`，**不改**深渊之眼工具机制。加厚后「半血」按新 maxHp 计（145 的一半是 72.5）。
-53a. **`stitch` 三模块复核（Slice 7）**：防御结算已按 `context.moduleHps` 的全部键做均值均衡（差值的 20%）。第三模块列入 context 后，均衡自然覆盖 3 个承血模块，与 CSV「3 个模块」一致。**不改**缝合线工具（两点感知屏障）机制，**不改** CSV。玩家可见摘要仍用「模块完整度均摊」；CSV 长文里的「HP」本 Slice 不动（术语债，不是本任务）。
+53. **背光珠（abyss）**：基础减伤20%；每个模块分别用冲击前 `hp/maxHp <= defense_low_hp_threshold`（40%）判断，符合者本件改为50%减伤，其他模块仍20%。不能因别的模块残血给全场额外防御；本次被打至阈值以下不追溯触发。无随机暗伤。
 
-54. **余烬核本轮承伤修复**：减伤25%，本轮实际承伤总量（各模块至多计算其当前完整度）乘CSV `defense_heal_ratio`（20%）并向下取整。修复扣血后完整度最低的模块，上限为该模块缺失量；0承伤不修复。多件各自结算，选目标时考虑前件已分配的修复。无跨轮阈值、无初始混乱副作用；旧累加字段只用于兼容读取，不再驱动效果。
+53a. **错结线（stitch）**：基础减伤20%，按规则51转移至多 `defense_transfer_cap`（4）点主要伤害。接收方扣血后至少留1点；没有安全接收方时不转移。`SlotDisclosure.transferredDamage/transferModuleId`披露实际转移，旧 `stitchEqualization`仅兼容为空。
 
-55. **`overwrite` 模块功能互换**（DEC-031）：减伤 40% + 无条件 30% 改造折扣；另有 **25% 概率**触发"模块功能互换"，持续**恰好一次出击**。
-    - 实现形式：`GameState.getModuleEffect(type)` 在互换生效期间改读**另一个模块的 hp**，但保留 `type` 自己的公式。（不是把两个输出值直接对调——那样必定对玩家不利，因为 `kindlingValueModifier` 恒 ≥ 1.0 而 `chaosRateModifier` 恒 ≤ 1.0，互相插进对方的消费方永远是净损失。）因此互换的实际后果取决于当时哪个模块更健康：**有相当概率反而帮到玩家**。
-    - 窗口边界：互换标记在**下一次冲击结算开始时**清除，即"本次冲击 → 下次出击"这一段。互换在冲击结算当时就写入 GameState，不能延后到出击开局消费副作用时才应用——因为场景层在裂隙场景启动之前就读了 `getSortieModifiers()`。
-    - **toast 播报是硬要求**：出击开局必须提示"模块功能已互换"。缺了这个提示，这个机制就不成立（玩家无从察觉）。互换范围仍是核心↔储藏，不含净化器。
-    - **确立的跨表原则：污染物的副作用不要求永远负面。** 后续污染物允许有随机有利面，不必逐个论证。可读性由 toast 承担。
+54. **余烬核（combust）**：基础25%；实际承伤总量乘20%向下取整，修复扣血后余血最低模块，考虑前件已修复量、上限缺血量。0承伤不产生修复，无阈值累积或副作用。
 
-56. **`erode` / `resonate` 的跨槽冲击计数**（DEC-033）：两者都返回一张"给谁 +几点冲击计数"的加成表，由污染物系统消费（加成是平的 +N，不吃 `defenseChargeMult`）。
-    - `erode`：**每次冲击无条件**给"其他所有槽位"各 +1。语义是"其他所有"，不是写死的 2 个——`growth_defense_slot` 解锁第 4 槽后自动覆盖 3 个。四槽下 `erode` 变强属预期；若试玩过强走数值调参，不回退语义。
-    - `resonate`：30% 概率给**全部槽位**（含自己）各 +1。
-    - 平衡备注：这两项加速的是污染物"防御 → 工具"的转化，所以它们的强度上限由槽位数决定。槽位数不得再被任何地方写死（规则 61）。
+55. **附生壳（siphon）**：基础15%；仅实际总承伤>0时授予一次最多6点修复额度，取已有/本次的最高值而非相加。兑现、保存、失败回滚见规则15/16。末轮照常，插入不授予。
 
-57. **`echo` 工具次数 +1**：减伤 20%，每次冲击无条件从工具池里随机挑一件已转化的工具，使用次数 +1。**同一件工具最多因此 +2**（`ECHO_MAX_TOOL_USE_BONUS`）。工具池里没有可加的目标时静默无效。计数按 contaminant id 存储并进存档（规则 60）。
+56. **迟落砂（delay）**：稳定减伤30%。不转化为后续混乱，也无隐藏偿还。
 
-58. **留影玻璃削弱余波**：减伤25%，再对本轮实际主要目标之外的每个模块乘 `(1-defense_secondary_reduction)`（CSV为25%），四舍五入。多件逐次乘算，额外减伤计入对应供奉槽结算归因。不返还薪柴，不谎报预告。
+57. **坠手石（compress）**：没有全体基础减伤；仅对本轮主要目标的剩余伤害额外减半。无出击腿软。
 
-59. ⚠ **`resonate` 的装备期被动尚未实现**：CSV 定义它"装备在防御槽期间 CORE 和 STORAGE 的效果上限各提升 10%，多件不叠加"——即 `MAX_CORE_REDUCTION` 0.30→0.33、`MAX_STORAGE_BONUS` 0.50→0.55。这是一条"装备期持续修正"；此项旧批状态待后续专项复核。规则登记在此以固定语义（多件不叠加、只改上限不改公式），实现待排期。
+58. **留影玻璃（mirror）**：基础25%，各非主要目标额外乘75%；多件乘算并披露，不返薪柴或谎报预告。
 
-60. **污染物运行时状态进存档**：`echo` 的单件上限计数继续按污染物id存入 `ContaminantRuntimeState`，旧档缺字段按空态读取。`solidifyCounter` / `combustAccumulator` 可兼容读取，但首批机制不再依赖它们。返刻片承诺属于全局预告，不绑定已撤下或成熟的物品实例，单独使用规则52的 `impactForecast` 存档。
+59. **退休机制**：反刍/共振/覆写/侵蚀/回响旧族由物件迁移合同映射至当前族，停止新掉落。防御引擎不再产出返薪、换模块、折扣、随机副作用、跨槽充能或工具补次。旧接口返回空值用于兼容，不能被当成仍可获取的效果。
 
-61. **防御槽位数是变量，不是 3**：基础 3 个，`growth_defense_slot` 改造（最高 1 级）解锁第 4 个，上限 4。槽位数由 `system-growth-tide` 拥有（`contaminantSystem.getDefenseSlotCount()`）。冲击结算遍历传入的槽位数组，不假设长度；任何"其他 2 个槽位"式的写死表述都是缺陷（见规则 56）。
+60. **持久化**：旧 `solidifyCounter` / `combustAccumulator` / `echoBonusGranted`仅兼容保留，不驱动当前防御。有限修复额度由GameState拥有，预告由ImpactSystem拥有，统一SaveManager落盘；不将额度绑在已成熟/撤下物件上。
+
+61. **槽数**：基础3、成长解锁第4，上限4。引擎遍历实际传入快照，不写死长度，不先成熟再算效果。
 
 ### V — 模块受损三态（Slice 5）
 
@@ -445,11 +439,6 @@ interface SortieModifiers {
 | 参数 | 值 | 范围 | 位置 | 说明 |
 | ---- | -- | ---- | ---- | ---- |
 | combust 修复比例 | 0.20 | -- | `contaminants.csv` `defense_heal_ratio` | 本轮实际承伤转为修复 |
-| `ECHO_MAX_TOOL_USE_BONUS` | 2 | 1-3 | `CONTAMINANT` | 单件工具因 echo 最多 +几次 |
-| abyss 基础减伤 / 每档 / 上限 | 0.20 / 0.15 / 0.65 | -- | defense-engine 内联 | 三模块均低于半血时可触到 65%（规则 53） |
-| abyss 副作用概率 / 伤害 | 0.05 / maxHp 10% | -- | defense-engine 内联 | 打满血模块，不吃减伤 |
-| overwrite 互换概率 | 0.25 | 0.15-0.35 | defense-engine 内联 | 持续一次出击 |
-| resonate 跨槽触发概率 | 0.30 | 0.2-0.4 | defense-engine 内联 | 全槽 +1 冲击计数 |
 | mirror 余波减伤 | 0.25 | -- | `contaminants.csv` `defense_secondary_reduction` | 非主要目标的额外减伤 |
 | 档位模糊概率（基线 / 地板） | 0.20 / 0.05 | -- | impact-system 内联 | 被 forecast_clarity 削减到地板为止 |
 | 档位分界 | 1.5 / 2.0 / 2.5 | -- | impact-system 内联 | 潮汐强度 [1.0, 3.0] 四等分 |
@@ -519,18 +508,13 @@ interface SortieModifiers {
 | 死亡返回净化点 | kindlingGained=0，但冲击照常结算（规则 19），可分配之前的 reserve |
 | reserve=0 且三模块 hp=0 | 不强制 game-over。玩家仍可出击：无核心/储藏加成，起始混乱 = 50（最难模式） |
 | 分配面板打开时冲击不会触发 | 冲击只在净化点场景 create 时结算一次，此时任何面板都还没打开 |
-| 两个模块低于半血、净化器仍高于半血时的 `abyss` | 减伤 50%（n=2）。三模块都低于半血才到 65% |
-| 三模块都低于半血时的 `abyss` | 减伤 65%，与 CSV 一致 |
 | 加厚后未注入、净化器 100/115 | 起始混乱 = round(50 × (1 − 100/115)) = 7。CORE/STORAGE 效果仍按 min(hp,100)/100 封顶，不降 |
 | 加厚时薪柴不足 | 不扣、不抬档；蜕变第七张写 `还差 N` |
 | 加厚已至第 3 档 | Enter 无效果；卡上写 `已至上限` |
 | 老存档只有两个模块 | 补 PURIFIER 70 / 当前档位 maxHp，`moduleMaxHpTier` 缺省 0 |
 | `combust` 释放时最低 hp 模块已满血 | 修复量按 clamp 到 maxHp 计，多余部分不转移给另一个模块，直接丢弃 |
-| `erode` 在只有它一件时 | "其他所有槽位"为空集，无任何加成产出（不给自己） |
-| `echo` 时工具池为空 | 静默无效，不消耗、不报错、不改上限计数 |
-| 模块互换生效期间某模块 hp=0 | 互换照常，效果读到 0 hp 的那一侧就没有加成。这是互换"有时帮玩家有时害玩家"的正常一面 |
 | 老存档没有污染物运行时状态字段 | 以空态载入（规则 60），不视为损坏存档 |
-| 同类污染物多件同时在防御槽 | 减伤各自乘算叠加；`stitch` 均衡只执行一件；`mirror` 余波逐件乘算；`combust` 逐件分配修复 |
+| 同类污染物多件同时在防御槽 | 减伤各自乘算叠加；`stitch` 逐件安全转移；`mirror` 余波逐件乘算；`combust` 逐件分配修复 |
 | 分配超过 reserve | UI 不允许输入超过 reserve 的值 |
 | 修复超过 maxHp | 多余部分不退回，clamp 到 maxHp（UI 应提前 clamp 可分配量） |
 | cycle=0 跳过冲击 | 第一次出击是"教学局"，让玩家先体验基线难度 |
@@ -554,7 +538,7 @@ interface SortieModifiers {
 | GrowthPanel | `GameState.raiseModuleMaxHp()` / `getModuleMaxHpTier()` | 加厚（蜕变第七张） |
 | PurificationScene | `ImpactSystem.run(defenseSlots): ImpactResult` | 方法调用（槽位由场景传入，避免系统互相 import） |
 | 净化点 HUD | `ImpactSystem.getForecastDisplay()` / `getForecastLookahead()` | 查询（时机词 + 模块全称 + `SEVERITY_LABEL`；图标/pip 最多第二编码） |
-| PurificationScene | `ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus, nextNextIntensity, memorySlotted?)` | 方法调用（强度与改造等级由场景读取后传入） |
+| PurificationScene | `ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus, nextNextIntensity)` | 方法调用（强度与改造等级由场景读取后传入） |
 | ContaminantSystem | `DefenseResult.bonusCharges` / `toolUseGrants` | 由 ImpactSystem 直接调用其 `applyBonusCharges()` / `grantRandomToolUse()` 消费 |
 | GameState | `DefenseResult.healOut` / `moduleSwapTriggered` | `healModule()` / `setModuleSwapActive()` |
 | 出击开局 toast | `PendingSideEffect{ type: 'module_swap' }` | 沿用 Slice 4 的防御副作用播报通道（规则 55 的硬要求） |
@@ -639,7 +623,7 @@ interface SortieModifiers {
 | `src/managers/game-state.ts` | `PURIFIER` 模块、`moduleMaxHpTier`、`getStartingChaos()`、`raiseModuleMaxHp()`；`getModuleEffect` 分子 `min(hp, 100)` |
 | `src/managers/save-manager.ts` | 持久化档位；老存档补第三模块 |
 | `src/systems/impact-system.ts` | 预告/重点目标在三个模块中抽；`DefenseContext` 列入三模块 hp |
-| `src/systems/defense-engine.ts` | 公式不改；context 有三键后 abyss 65% / stitch 三向均衡自动成立 |
+| `src/systems/defense-engine.ts` | context包含三个模块；按当前逐模块低血减伤与安全伤害转移 |
 | `src/systems/chaos-system.ts` | 构造/reset 接受出击初值（增长曲线不改） |
 | `src/scenes/purification-scene.ts` | 净化器实体；培养藏卡 A；安全区钳制六点 |
 | `src/ui/dom/growth-panel.ts` | 蜕变六卡 + 第七张加厚 |
@@ -655,13 +639,10 @@ interface SortieModifiers {
 
 | # | 项 | 性质 | 位置 |
 | - | -- | ---- | ---- |
-| 1 | `resonate` 的装备期被动（CORE/STORAGE 上限各 +10%） | 规则已定，无任何代码路径 | 规则 59 |
-| 3 | `siphon` 的修复效率翻倍 | 值已写入 GameState，分配时不读 | 规则 15 |
 | 4 | ~~`GameState.incrementIntensity()` 的 +0.15 残留~~ | **已删**（2026-08-20）。冲击只读潮汐同步值 | 规则 12 |
 | 5 | `IMPACT_STARTED` / `IMPACT_RESOLVED` / `MODULE_DAMAGED` / `RIFT_ENTERED` 只发不收 | 事件保留，演出走返回值 | 事件契约段 |
 | 6 | `BOUNDARY.BREATH_*` 五个死常量 | 旧方案残留（Slice 5 的 B4 负责清理） | 边界形态数值表下的注 |
 | 7 | `DefenseContext.stabilityProgress` 恒为 0 | `stabilityTracker` 未接入冲击结算 | `impact-system.ts` 内 TODO |
-| 8 | `abyss` / `stitch` 的 CSV 三模块文案 | **Slice 7 设计已闭合**。实现须把 PURIFIER 列入 `DefenseContext`；不改 CSV、不改工具机制 | 规则 53 / 53a |
 
 ---
 
@@ -672,16 +653,14 @@ interface SortieModifiers {
 - [ ] **CORE -30% 减免是否可感知？** BASE_RATE=0.5，减免后 0.35。0→100 从 200s 变为 286s——多出 86s 是否足够让人"想保住 CORE"？
 - [ ] **STORAGE +50% 是否改变决策？** 薪柴 1→1.5（取整=1），2→3，4→6。对 contested/deep 节点影响大，对 safe 节点影响小——是否让人倾向保 STORAGE？
 - [ ] **预告去掉方向后信息量是否够用？** "目标模块 + 四档强度"是否足以支撑出击前的分配决策，还是玩家会觉得预告可有可无？
-- [ ] **返刻片的可信承诺是否可感知？** 供奉后预告立即稳定，额外前瞻是否帮助安排下一轮供奉与修复？
+- [ ] **返刻片的可信承诺是否可感知？** 供奉承冲击后记录是否帮助安排下一轮供奉与修复，插拔不会免费获取信息？
 - [ ] **`growth_forecast_clarity` 三级投资是否可感知？** 普通预告强度模糊 20%→5%，在一局的样本量下玩家是否能察觉差别。
 - [ ] **三个模块都到 0 后是否真的"不可能但能继续"？** 还是玩家会觉得该重开了？
 - [ ] **intensity 3.0 时的 28% 收缩是否可感知？** 玩家是在两次出击之间对比时才发现，还是根本注意不到？若注意不到，收缩就没有传达"压力在增加"。
 - [ ] **高 intensity 下形状是否退化为花瓣状？** 安全区钳制以 ±30° 余弦摊开；当原始半径远小于交互点要求时，边界由七个钳制凸起主导，可能出现可见的尖角与凹谷。需要目视确认在 intensity 2.5-3.0 时形状是否仍像"被挤压的气泡"。
 - [ ] **膜的局部变形（≤8px、alpha ≤0.22）是否被注意到？** 如果完全无感，选择是删掉还是提高权重——而不是留着当摆设。
 - [ ] **压力主方向现在是否成为唯一被读取的方向信号？** DEC-034 之后预告不再给方向，边界压力可视化独占这一维度——玩家是否真的会去看它，还是方向暗示就此变成无人消费的表现层。
-- [ ] **`abyss` 的"逆风守护"在三模块下是否成立？** 三模块均低于半血时应读到 65%；玩家是否感受到"越危急防御越强"。
+- [ ] **`abyss` 的"逆风守护"在三模块下是否成立？** 各模块冲击前40%及以下时该模块应读到50%；玩家是否感受到"越危急防御越强"。
 - [ ] **净化器是否被读作"在干活"？** 修满后起始混乱 0、残血带入部分混乱——连续两趟能否不看文档感到差别。
 - [ ] **加厚 12/20/32 是否可负担但不白送？** 若没人买：费用过高或信号不足；若第一档出门就买：可能偏便宜。
 - [ ] **余烬核的承伤修复是否读得清？** 结算是否能解释本轮受损与随后回补，0承伤不会虚构收益。
-- [ ] **`overwrite` 的互换是否被读作"惩罚"？** 它有相当概率对玩家有利（规则 55）。玩家看到 toast 时的第一反应是"糟了"还是"赚了"？如果永远是"糟了"，说明 toast 文案没有传达它的双面性。
-- [ ] **四槽解锁后 `erode` 是否过强？** 每次冲击给 3 件污染物各 +1 计数，转化速度接近翻倍。若过强走数值调参（降低加成），不回退"其他所有槽位"的语义。

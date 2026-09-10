@@ -7,6 +7,7 @@ import type { WorldInteractionContext } from './world-interaction';
 import { eventBus } from '@/core/event-bus';
 import { computeStartingChaos, gameState } from '@/managers/game-state';
 import type { EffectModuleType, ModuleType, SortieModifiers } from '@/managers/game-state';
+import { saveManager } from '@/managers/save-manager';
 import { audioManager } from '@/managers/audio-manager';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
@@ -29,6 +30,7 @@ let coreContext: CoreAllocationContext | null = null;
 let anchorFrame = 0;
 let commitTimer: ReturnType<typeof setTimeout> | null = null;
 let committing = false;
+let saveFailed = false;
 let panel: HTMLDivElement | null = null;
 let currentModuleId: string | null = null;
 let selectedAmount = 0;
@@ -66,6 +68,7 @@ export const allocationPanel = {
     currentModuleId = moduleId;
     coreContext = context ?? null;
     selectedAmount = 0;
+    saveFailed = false;
     onCloseCallback = onClose ?? null;
     createPanel();
     audioManager.playSFX('sfx-ui-open');
@@ -185,7 +188,14 @@ function onKeyDown(e: KeyboardEvent): void {
 function confirmAllocation(): void {
   if (committing) return;
   if (selectedAmount > 0 && currentModuleId) {
-    const spent = gameState.allocateToModule(currentModuleId, selectedAmount);
+    const spent = saveManager.allocateToModule(currentModuleId, selectedAmount);
+    if (spent <= 0) {
+      saveFailed = true;
+      audioManager.playSFX('sfx-ui-error');
+      rerender();
+      return;
+    }
+    saveFailed = false;
     if (spent > 0) {
       eventBus.emit(GameEvent.ALLOCATION_CONFIRMED, {
         allocations: { [currentModuleId]: spent },
@@ -269,8 +279,7 @@ function formatEffectValue(type: ModuleType, mods: SortieModifiers): string {
  *  amount adjustment), so the two never compute the ceiling differently. */
 function getMaxAllocatable(hp: number, maxHp: number): number {
   const reserve = gameState.getKindlingReserve();
-  const repairPer = gameState.getEffectiveRepairPerKindling();
-  const maxUseful = Math.ceil((maxHp - hp) / repairPer);
+  const maxUseful = gameState.getMaxUsefulRepairKindling(hp, maxHp);
   return Math.min(reserve, maxUseful);
 }
 
@@ -283,12 +292,11 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
 
   const reserve = gameState.getKindlingReserve();
   const repairPer = gameState.getEffectiveRepairPerKindling();
-  const siphonBoosted = gameState.getRepairEfficiencyMult() > 1;
+  const repairBonus = gameState.getRepairBonusHp();
   const maxAllocatable = getMaxAllocatable(hp, maxHp);
 
   const hpPct = Math.round((hp / maxHp) * 100);
-  const repairAmount = selectedAmount * repairPer;
-  const repairedHp = Math.min(hp + repairAmount, maxHp);
+  const repairedHp = gameState.previewModuleRepair(hp, maxHp, selectedAmount);
   const repairedPct = Math.round((repairedHp / maxHp) * 100);
   const previewPct = Math.max(0, repairedPct - hpPct);
   const remaining = reserve - selectedAmount;
@@ -300,9 +308,9 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const effectColor = EFFECT_NUM[type];
   const numColor = NUM_ACTIVE[type];
   const barColor = BAR_COLOR[type];
-  const siphonNote = siphonBoosted ? ' 虹吸增效' : '';
+  const siphonNote = repairBonus > 0 ? ` · 下次注入另修复至多 ${repairBonus} 完整度（仅一次）` : '';
 
-  const reason = hp >= maxHp ? '装置已完整，无需注入。' : reserve <= 0
+  const reason = saveFailed ? '记录未能保存，注入未扣除。请重试。' : hp >= maxHp ? '装置已完整，无需注入。' : reserve <= 0
     ? '暂无薪柴。翻找裂隙中的翻堆并撤离后可带回薪柴。'
     : selectedAmount === 0 ? '尚未选择投入数量。用加号或 → 调整。' : '';
   if (coreContext) {
@@ -325,7 +333,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
         <div class="core-efficiency">每份修复 ${repairPer} 完整度${siphonNote}</div>
         <div class="core-outcome"><span>${EFFECT_LABEL[type]}</span><span>${currentEffect}${selectedAmount > 0 ? ` <i>→</i> <strong>${afterEffect}</strong>` : ''}</span></div>
         <div class="core-outcome core-remaining"><span>余下薪柴</span><span>${remaining}</span></div>
-        <div class="core-reason" role="status">${committing ? '修复已生效。' : selectedAmount > 0 && currentEffect === afterEffect ? `本次修复不改变${EFFECT_LABEL[type]}。` : hp >= maxHp ? `${MODULE_LABEL[type]}已完整。` : reserve <= 0 ? '暂无薪柴。撤离裂隙可带回薪柴。' : selectedAmount === 0 ? '选择这次投入的份数。' : ''}</div>
+        <div class="core-reason" role="status">${saveFailed ? reason : committing ? '修复已生效。' : selectedAmount > 0 && currentEffect === afterEffect ? `本次修复不改变${EFFECT_LABEL[type]}。` : hp >= maxHp ? `${MODULE_LABEL[type]}已完整。` : reserve <= 0 ? '暂无薪柴。撤离裂隙可带回薪柴。' : selectedAmount === 0 ? '选择这次投入的份数。' : ''}</div>
         <div class="core-actions">
           <button id="alloc-confirm" ${selectedAmount <= 0 || committing ? 'disabled' : ''}><span>Enter</span> 投入</button>
           <button id="alloc-close"><span>Esc</span> 离开</button>

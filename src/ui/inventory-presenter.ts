@@ -6,7 +6,7 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
 import { contaminantIconUrl } from '@/art/contaminant-icons';
-import { getSurvivalAttributes } from '@/systems/survival-attributes';
+import { getSurvivalAttributes, sumPollutionResistance } from '@/systems/survival-attributes';
 import type { InventoryError, InventoryItem, InventoryResult } from '@/types/inventory-types';
 import type { Vector2 } from '@/types/game-types';
 import { getDefenseName, getRarityStars, getToolName } from './contaminant-names';
@@ -32,6 +32,7 @@ export interface InventoryPresenterOptions {
   onOffering?: () => void;
   mount?: HTMLElement;
   portrait?: string;
+  getPollutionResistanceBonus?: () => number;
   getNearby?: () => readonly InventoryItem[];
   getDropPosition?: () => Vector2;
   canTake?: (item: InventoryItem) => boolean;
@@ -87,13 +88,16 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   const count = contaminantSystem.getSortieSlotCount();
   const weight = inventoryStore.getCarryWeight();
   const capacity = inventoryStore.getCapacity();
-  const misplaced = eq.toolIds.some((id, index) => {
+  const misplaced = eq.toolIds.flatMap((id, index) => {
     const item = id ? inventoryStore.getItem(id) : undefined;
-    return item?.kind === 'contaminant' && (CONTAMINANT_DATA[item.contaminant.type].toolType === 'passive') !== (index === count - 1);
+    if (item?.kind !== 'contaminant') return [];
+    const def = CONTAMINANT_DATA[item.contaminant.type];
+    return (def.toolType === 'passive') !== (index === count - 1) ? [`${def.displayNameTool}需放入${def.toolType === 'passive' ? '被动' : '主动'}挂位`] : [];
   });
   const reason = inventoryStore.getRun()?.status === 'active' ? '本次出击尚未结算。'
-    : !eq.weaponId ? '请先装上一把已成熟的撬棍。' : misplaced ? '物件槽位需要调整：返刻片现为被动，请移至被动挂位。' : '';
+    : !eq.weaponId ? '请先装上一把已成熟的撬棍。' : misplaced.length ? `${misplaced.join('；')}。` : '';
   const carriedOut = new Set(inventoryStore.getRun()?.carriedOutIds ?? []);
+  const survival = getSurvivalAttributes();
   return {
     items: inventoryStore.getItems().filter(item => options.mode === 'rift'
       ? (item.location.kind === 'carried' && !carriedOut.has(item.id) && !inventoryStore.isEquipped(item.id)) || nearby.has(item.id)
@@ -101,7 +105,7 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
     equipment: options.mode === 'rift' ? [] : [{ id: 'weapon', label: '在手', itemId: eq.weaponId, locked: false },
       ...Array.from({ length: count }, (_, i) => ({ id: String(i), label: i === count - 1 ? '被动' : `工具 ${GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[i] ?? i + 1}`, itemId: eq.toolIds[i], locked: false }))],
     equippedWeight: inventoryStore.getItems().reduce((sum, item) => sum + (item.location.kind === 'carried' && carriedOut.has(item.id) ? inventoryStore.getWeight(item) : 0), 0),
-    weight, capacity, survival: getSurvivalAttributes(), canDepart: !reason, departReason: reason,
+    weight, capacity, survival: { ...survival, resistancePercent: sumPollutionResistance([survival.resistancePercent, options.getPollutionResistanceBonus?.() ?? 0]) }, canDepart: !reason, departReason: reason,
   };
 }
 

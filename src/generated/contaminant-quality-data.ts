@@ -22,7 +22,12 @@ export const CONTAMINANT_QUALITY_DATA: Readonly<Record<ContaminantQuality, Conta
       "expand": 3,
       "mirror": 4,
       "kindle": 5,
-      "combust": 3
+      "combust": 3,
+      "delay": 4,
+      "siphon": 5,
+      "stitch": 4,
+      "compress": 4,
+      "abyss": 3
     }
   },
   "good": {
@@ -38,7 +43,12 @@ export const CONTAMINANT_QUALITY_DATA: Readonly<Record<ContaminantQuality, Conta
       "expand": 4,
       "mirror": 5,
       "kindle": 6,
-      "combust": 4
+      "combust": 4,
+      "delay": 5,
+      "siphon": 6,
+      "stitch": 5,
+      "compress": 5,
+      "abyss": 4
     }
   },
   "fine": {
@@ -54,7 +64,12 @@ export const CONTAMINANT_QUALITY_DATA: Readonly<Record<ContaminantQuality, Conta
       "expand": 5,
       "mirror": 6,
       "kindle": 7,
-      "combust": 5
+      "combust": 5,
+      "delay": 6,
+      "siphon": 7,
+      "stitch": 6,
+      "compress": 6,
+      "abyss": 5
     }
   },
   "excellent": {
@@ -70,7 +85,12 @@ export const CONTAMINANT_QUALITY_DATA: Readonly<Record<ContaminantQuality, Conta
       "expand": 6,
       "mirror": 7,
       "kindle": 8,
-      "combust": 6
+      "combust": 6,
+      "delay": 7,
+      "siphon": 8,
+      "stitch": 7,
+      "compress": 7,
+      "abyss": 6
     }
   }
 };

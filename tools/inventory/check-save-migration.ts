@@ -62,7 +62,7 @@ try {
     assert.equal('contaminants' in migrated, false, 'no second authoritative item array');
     for (const original of legacy.contaminants) {
       const item = inventoryStore.getItem(original.id); assert.equal(item?.kind, 'contaminant');
-      if (item?.kind === 'contaminant') assert.deepEqual(item.contaminant, original);
+      if (item?.kind === 'contaminant') assert.deepEqual(item.contaminant, original.type === 'delay' ? { ...original, quality: 'good' } : original);
     }
     assert.equal(inventoryStore.getItem('offered')?.location.kind, 'defense');
     assert.equal(inventoryStore.getItem('stored')?.location.kind, 'stash');

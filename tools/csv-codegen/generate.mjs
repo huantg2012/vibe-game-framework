@@ -62,6 +62,16 @@ function generateContaminants() {
 
   const entries = rows.map((cols) => ({
     id: cols[idx.id],
+    active: cols[idx.active] === 'true',
+    toolResistanceBonus: Number(cols[idx.tool_resistance_bonus]),
+    toolStopMs: Number(cols[idx.tool_stop_ms]),
+    toolPlacementDistancePx: Number(cols[idx.tool_placement_distance_px]),
+    toolMovementMult: Number(cols[idx.tool_movement_mult]),
+    defenseRepairBonusHp: Number(cols[idx.defense_repair_bonus_hp]),
+    defenseTransferCap: Number(cols[idx.defense_transfer_cap]),
+    defensePrimaryReduction: Number(cols[idx.defense_primary_reduction]),
+    defenseLowHpThreshold: Number(cols[idx.defense_low_hp_threshold]),
+    defenseLowHpReduction: Number(cols[idx.defense_low_hp_reduction]),
     rarity: cols[idx.rarity],
     displayNameDefense: cols[idx.display_name_defense],
     descriptionDefense: cols[idx.description_defense],
@@ -87,12 +97,12 @@ function generateContaminants() {
   }));
 
   for (const entry of entries) {
-    for (const key of ['defenseReduction', 'defenseSecondaryReduction', 'defenseHealRatio', 'toolDetectionFillMult']) {
+    for (const key of ['defensePrimaryReduction', 'defenseLowHpThreshold', 'defenseLowHpReduction', 'toolMovementMult', 'defenseReduction', 'defenseSecondaryReduction', 'defenseHealRatio', 'toolDetectionFillMult']) {
       if (!Number.isFinite(entry[key]) || entry[key] < 0 || entry[key] > 1) {
         throw new Error(`[codegen] invalid ${key} for contaminant ${entry.id}`);
       }
     }
-    for (const key of ['toolRangePx', 'toolDurationMs', 'toolThrowDistancePx', 'toolPulseIntervalMs']) {
+    for (const key of ['toolResistanceBonus', 'toolStopMs', 'toolPlacementDistancePx', 'defenseRepairBonusHp', 'defenseTransferCap', 'toolRangePx', 'toolDurationMs', 'toolThrowDistancePx', 'toolPulseIntervalMs']) {
       if (!Number.isSafeInteger(entry[key]) || entry[key] < 0) {
         throw new Error(`[codegen] invalid ${key} for contaminant ${entry.id}`);
       }
@@ -108,6 +118,17 @@ function generateContaminants() {
     '',
     'export interface ContaminantDef {',
     '  id: ContaminantType;',
+    '  active: boolean;',
+    '  toolResistanceBonus: number;',
+    '  toolStopMs: number;',
+    '  toolPlacementDistancePx: number;',
+    '  toolMovementMult: number;',
+    '  defenseRepairBonusHp: number;',
+    '  defenseTransferCap: number;',
+    '  defensePrimaryReduction: number;',
+    '  defenseLowHpThreshold: number;',
+    '  defenseLowHpReduction: number;',
+
     '  rarity: ContaminantRarity;',
     '  displayNameDefense: string;',
     '  descriptionDefense: string;',
@@ -137,6 +158,16 @@ function generateContaminants() {
 
   for (const e of entries) {
     lines.push(`  '${e.id}': {`);
+    lines.push(`    active: ${e.active},`);
+    lines.push(`    toolResistanceBonus: ${e.toolResistanceBonus},`);
+    lines.push(`    toolStopMs: ${e.toolStopMs},`);
+    lines.push(`    toolPlacementDistancePx: ${e.toolPlacementDistancePx},`);
+    lines.push(`    toolMovementMult: ${e.toolMovementMult},`);
+    lines.push(`    defenseRepairBonusHp: ${e.defenseRepairBonusHp},`);
+    lines.push(`    defenseTransferCap: ${e.defenseTransferCap},`);
+    lines.push(`    defensePrimaryReduction: ${e.defensePrimaryReduction},`);
+    lines.push(`    defenseLowHpThreshold: ${e.defenseLowHpThreshold},`);
+    lines.push(`    defenseLowHpReduction: ${e.defenseLowHpReduction},`);
     lines.push(`    id: '${e.id}',`);
     lines.push(`    rarity: '${e.rarity}',`);
     lines.push(`    displayNameDefense: '${escapeStr(e.displayNameDefense)}',`);
@@ -164,6 +195,8 @@ function generateContaminants() {
   }
 
   lines.push('};');
+  lines.push('export const ACTIVE_CONTAMINANT_TYPES: readonly ContaminantType[] = ' + JSON.stringify(entries.filter(e => e.active).map(e => e.id)) + ';');
+  lines.push('export const ACTIVE_CONTAMINANT_DATA = ACTIVE_CONTAMINANT_TYPES.map(id => CONTAMINANT_DATA[id]);');
   lines.push('');
 
   writeFileSync(resolve(OUT_DIR, 'contaminant-data.ts'), lines.join('\n'), 'utf-8');
@@ -1448,4 +1481,37 @@ generateContaminationBehaviorProfiles();
 generateContaminationBodies();
 generateVolumeProfiles();
 generateWeapons();
+// Migration records retain old capacities even after live definitions change.
+{
+  const catalog = readCsv('contaminants.csv');
+  const catalogRows = catalog.rows.map(row => Object.fromEntries(catalog.header.map((key, i) => [key, row[i]])));
+  const knownTypes = new Set(catalogRows.map(row => row.id));
+  const activeTypes = new Set(catalogRows.filter(row => row.active === 'true').map(row => row.id));
+  const records = readCsv('contaminant-migrations.csv');
+  const recordsById = {};
+  for (const row of records.rows) {
+    const value = Object.fromEntries(records.header.map((key, i) => [key, row[i]]));
+    const uses = Number(value.legacy_uses);
+    if (!knownTypes.has(value.source) || !activeTypes.has(value.target) || !Number.isSafeInteger(uses) || uses <= 0 || recordsById[value.source]) throw new Error('Invalid contaminant migration');
+    recordsById[value.source] = { target: value.target, legacyUses: uses };
+  }
+  const loot = readCsv('contaminant-loot.csv');
+  const profiles = {};
+  for (const row of loot.rows) {
+    const value = Object.fromEntries(loot.header.map((key, i) => [key, row[i]]));
+    const weights = Object.fromEntries(['ordinary','good','fine','excellent'].map(q => [q, Number(value[q+'_weight'])]));
+    if (Object.values(weights).some(n => !Number.isFinite(n) || n < 0) || Object.values(weights).reduce((a,b) => a+b,0) <= 0) throw new Error('Invalid contaminant loot weights');
+    if (!['safe','contested','deep'].includes(value.tier) || profiles[value.tier]) throw new Error('Invalid or duplicate contaminant loot tier');
+    profiles[value.tier] = weights;
+  }
+  if (Object.keys(profiles).length !== 3) throw new Error('Missing contaminant loot tier');
+  writeFileSync(resolve(OUT_DIR, 'contaminant-economy-data.ts'), [
+    '// AUTO-GENERATED from contaminant-migrations.csv and contaminant-loot.csv — DO NOT EDIT',
+    "import type { ContaminantType, ContaminantQuality } from '@/types/game-types';",
+    "import type { KindlingTier } from '@/types/map-types';",
+    'export const CONTAMINANT_MIGRATIONS: Readonly<Partial<Record<ContaminantType, { readonly target: ContaminantType; readonly legacyUses: number }>>> = '+JSON.stringify(recordsById,null,2)+';',
+    'export const CONTAMINANT_LOOT_PROFILES: Readonly<Record<KindlingTier, Readonly<Record<ContaminantQuality, number>>>> = '+JSON.stringify(profiles,null,2)+';', ''
+  ].join('\n'));
+}
+
 console.log('[codegen] Done.');

@@ -29,6 +29,7 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (!data || (data.version !== 1 && data.version !== 2)) return false;
   if (!Number.isFinite(data.kindlingReserve) || !Number.isFinite(data.cycle) || !Array.isArray(data.modules)) return false;
   if (data.modules.some(module => !module || typeof module.id !== 'string' || typeof module.type !== 'string' || !Number.isFinite(module.hp) || !Number.isFinite(module.maxHp))) return false;
+  if (data.repairBonusHp !== undefined && (!Number.isSafeInteger(data.repairBonusHp) || data.repairBonusHp < 0)) return false;
   if (data.impactForecast !== undefined && !validImpactForecastState(data.impactForecast, data.modules.map(module => module.id))) return false;
   if (!data.tide || !Number.isFinite(data.tide.tideNumber) || !Number.isFinite(data.tide.cycleInPhase) || !Number.isFinite(data.tide.currentIntensity) || !['rise', 'crest', 'ebb'].includes(data.tide.phase)) return false;
   if (!data.growth?.upgrades || typeof data.growth.upgrades !== 'object' || !data.stability || !Number.isFinite(data.stability.progress) || typeof data.stability.reached !== 'boolean') return false;
@@ -75,14 +76,12 @@ function mergeRuntimeState(
 
 function collectSave(inventory: InventoryState): SaveDataV2 {
   const gs = gameState.getState();
-  const memorySlotted = inventory.items.some(item => item.kind === 'contaminant'
-    && item.contaminant.type === 'retrograde' && item.contaminant.stage === 'defense'
-    && inventory.equipment.defenseIds.includes(item.id));
   impactSystem.generateForecast(tideSystem.getCurrentIntensity(), growthSystem.getModifiers().forecastClarity,
-    tideSystem.peekNextIntensity(), memorySlotted);
+    tideSystem.peekNextIntensity());
   return {
     version: 2,
     kindlingReserve: gs.kindlingReserve,
+    repairBonusHp: gs.repairBonusHp,
     modules: gs.modules,
     moduleMaxHpTier: gs.moduleMaxHpTier,
     cycle: gs.cycle,
@@ -112,6 +111,17 @@ function enableInventoryPersistence(): void {
 // ---------------------------------------------------------------------------
 
 export const saveManager = {
+  /** A useful injection and its finite bonus must be durable together. */
+  allocateToModule(id: string, amount: number): number {
+    if (pendingWorldSave) return 0;
+    const before = gameState.getState();
+    const spent = gameState.allocateToModule(id, amount);
+    if (spent <= 0) return 0;
+    if (this.trySave()) return spent;
+    gameState.loadState(before);
+    return 0;
+  },
+
   /** Combine a synchronous world/ownership change into one save; retry never replays effects. */
   commitWorldTransaction(change: () => void): boolean {
     if (pendingWorldSave) return false;
@@ -173,6 +183,7 @@ export const saveManager = {
     // Distribute to systems
     gameState.loadState({
       kindlingReserve: data.kindlingReserve,
+      repairBonusHp: data.repairBonusHp,
       cycle: data.cycle,
       modules: data.modules,
       moduleMaxHpTier: data.moduleMaxHpTier,

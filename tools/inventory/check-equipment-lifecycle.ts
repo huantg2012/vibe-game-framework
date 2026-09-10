@@ -44,8 +44,10 @@ const baseState = (items: InventoryItem[]): InventoryState => ({ version: 2, ite
   }, ['w', 'erode']);
   assert.equal(result.slotDisclosures.length, 1, 'weapon grants no invented defense effect');
   assert.equal(result.slotDisclosures[0]?.contaminantId, 'erode', 'threshold-crossing contaminant defended this impact');
-  assert.equal(result.bonusCharges.w, 1, 'existing sibling charge reaches weapon in same offering slots');
+  assert.equal(result.bonusCharges.w, undefined, 'retired cross-slot charge must not refill or accelerate weapons');
   const mature = s.finishOfferingImpact(['w', 'erode'], 1, result.bonusCharges); assert(mature.ok);
+  assert.equal(getEquipmentLifecycle(s.getItem('w')!).stage, 'defense', 'weapon still needs its third ordinary impact');
+  assert(s.finishOfferingImpact(['w', 'erode'], 1).ok);
   assert.equal(getEquipmentLifecycle(s.getItem('w')!).stage, 'tool');
   assert.equal(getEquipmentLifecycle(s.getItem('erode')!).stage, 'tool');
 }
@@ -67,7 +69,7 @@ const baseState = (items: InventoryItem[]): InventoryState => ({ version: 2, ite
   const malformed = structuredClone(legacy); malformed.version = 2;
   assert.equal(s.loadState(malformed), false, 'missing lifecycle in new saves must not silently become ready');
 }
-console.log('equipment-lifecycle PASS: shared offering/last-impact defense/cross-slot charge, raw equipment gate, durability, atomic rollback, base/departure burden, legacy-only migration');
+console.log('equipment-lifecycle PASS: shared offering/last-impact defense/retired bonus removal, raw equipment gate, durability, atomic rollback, base/departure burden, legacy-only migration');
 
 // Malformed legacy rows must be rejected, not dereferenced during migration.
 {

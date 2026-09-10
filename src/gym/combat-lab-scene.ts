@@ -1,6 +1,6 @@
 import { getContaminantMaxUses, supportsContaminantQuality } from '@/systems/contaminant-quality';
 import { hasLineOfSight } from '@/utils/grid-raycast';
-import { findSingleWallLanding, findSoundLureLanding } from '@/systems/tool-targeting';
+import { collectToolRevealSnapshot, findStitchPlacement, findSingleWallLanding, findSoundLureLanding } from '@/systems/tool-targeting';
 import { createWeaponInstance } from '@/systems/weapon-loot';
 /** Isolated hands-on arena. Every attack, tool, body and host uses production systems. */
 import Phaser from 'phaser';
@@ -27,7 +27,7 @@ import { contaminantSystem } from '@/systems/contaminant-system';
 import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH } from '@/systems/ground-depth';
 import { inventoryStore } from '@/systems/inventory-store';
 import { RiftSurfacePainter } from '@/systems/procedural-surface';
-import { getBurdenSpeedFactor, getSurvivalAttributes } from '@/systems/survival-attributes';
+import { getBurdenSpeedFactor, getSurvivalAttributes, sumPollutionResistance } from '@/systems/survival-attributes';
 import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
 import { ToolSystem } from '@/systems/tool-system';
@@ -113,7 +113,7 @@ export class CombatLabScene extends Phaser.Scene {
     this.combat.setGodMode(this.config.protected);
     this.chaos = new ChaosSystem({
       isEnemyTargetingLure: id => this.ai.getEnemyById(id)?.isTargetingLure?.() ?? false, startingValue: this.config.startingChaos,
-      getPollutionResistance: () => getSurvivalAttributes().resistancePercent,
+      getPollutionResistance: () => sumPollutionResistance([getSurvivalAttributes().resistancePercent, this.tools.getPollutionResistanceBonus()]),
       onModulate: mods => this.player.setSpeedModifier('chaos', mods.speedMult),
     });
     this.player.setSpeedModifier('chaos', getChaosModulators(this.chaos.getValue()).speedMult);
@@ -165,6 +165,9 @@ export class CombatLabScene extends Phaser.Scene {
     if (!inventoryStore.loadState(state)) throw new Error('Invalid combat lab equipment configuration');
   }
 
+  private revealMarks: Phaser.GameObjects.Graphics | null = null;
+  private revealUntil = 0;
+
   private createTools(): void {
     this.tools.create(this, contaminantSystem.getSortieLoadout(), () => this.player.getPosition(), () => this.ai.getEnemies(), {
       getPlayerSprite: () => this.player.getSprite(),
@@ -183,6 +186,15 @@ export class CombatLabScene extends Phaser.Scene {
           return findSoundLureLanding(body.center, { x: Math.cos(angle), y: Math.sin(angle) }, maxDistance,
             this.grid!, Math.max(body.halfWidth, body.halfHeight) * 2);
         },
+        getStitchPlacement: (length, distance) => {
+          const angle = this.player.getFacingAngle();
+          return findStitchPlacement(this.player.getPosition(), { x: Math.cos(angle), y: Math.sin(angle) }, distance, length,
+            this.grid!, (from, to) => hasLineOfSight(this.grid!, from, to));
+        },
+        getRevealSnapshot: range => collectToolRevealSnapshot(this.player.getPosition(), range, this.grid!,
+          [...this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
+            ...this.hosts.getToolTargets().map(host => host.position)], []),
+        delayEnvironmentHazard: (id, source, duration) => this.hosts.delayNextHazard(id, source, duration),
         getEnvironmentTargets: () => this.hosts.getToolTargets(),
         suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressReleasedHazard(id, source, duration),
         clearEnvironmentControl: (id, source) => this.hosts.clearToolControl(id, source),
@@ -219,7 +231,17 @@ export class CombatLabScene extends Phaser.Scene {
       knockbackEnemy: (id, dx, dy) => this.ai.knockbackEnemy(id, dx, dy),
       setDecoyPosition: pos => this.ai.setDecoyPosition(pos),
       damageEnemy: (id, amount) => this.combat.applyToolDamage(id, amount),
-      showAbyssReveal: () => { this.message = '窥渊已施放；此处全场可见，无搜寻物，地图揭示不另造目标。'; },
+      showAbyssReveal: (enemies, _nodes, duration) => {
+        this.revealMarks?.destroy(); this.revealMarks = null;
+        this.revealUntil = this.time.now + duration;
+        if (duration <= 0) return;
+        this.revealMarks = this.add.graphics().setDepth(60);
+        for (const position of enemies) {
+          this.revealMarks.lineStyle(1, 0x7c998e, .8);
+          this.revealMarks.strokeRect(Math.round(position.x) - 3, Math.round(position.y) - 3, 6, 6);
+        }
+        this.message = `背光珠留下附近 ${enemies.length} 处旧位置；标记不会跟随目标。`;
+      },
       getKindlingPositions: () => [],
       boostChaosRate: (mult, ms) => this.chaos?.setTemporaryRateMult(mult, ms),
       reduceChaosRate: (mult, ms) => this.chaos?.setTemporaryRateReduction(mult, ms),
@@ -233,6 +255,9 @@ export class CombatLabScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
+    if (this.revealMarks && this.time.now >= this.revealUntil) {
+      this.revealMarks.destroy(); this.revealMarks = null;
+    }
     if (!this.created) return;
     this.lastDelta = delta;
     if (this.input.keyboard?.enabled && this.keys[3] && Phaser.Input.Keyboard.JustDown(this.keys[3])) {
@@ -315,7 +340,7 @@ export class CombatLabScene extends Phaser.Scene {
     const weapon = weaponId ? inventoryStore.getItem(weaponId) : undefined;
     return { ready: this.created, health: this.created ? this.combat.getHealth() : 0,
       maxHealth: this.created ? this.combat.getMaxHealth() : 0, chaos: this.chaos?.getValue() ?? 0,
-      weight: attr.weight + (this.config?.extraWeight ?? 0), resistancePercent: attr.resistancePercent,
+      weight: attr.weight + (this.config?.extraWeight ?? 0), resistancePercent: sumPollutionResistance([attr.resistancePercent, this.tools.getPollutionResistanceBonus()]),
       speedFactor: getBurdenSpeedFactor(attr.weight + (this.config?.extraWeight ?? 0), attr.capacity),
       playerPhase: this.roundEnded ? 'ended' : this.combat.getAttackState().phase,
       weaponDurability: weapon?.kind === 'weapon' ? weapon.weapon.usesRemaining : 0,

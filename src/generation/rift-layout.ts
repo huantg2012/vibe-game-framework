@@ -617,6 +617,7 @@ function placeOnIsland(
   for (const i of contaminantsCells) occupied.add(i);
   const contaminants: ContaminantNodeDef[] = contaminantsCells.map((cell, idx) => ({
     id: `CTM_NODE_0${idx + 1}`,
+    tier: deepPool.includes(cell) ? 'deep' : contestedPool.includes(cell) ? 'contested' : 'safe',
     position: worldOf(colOf(cols, cell), rowOf(cols, cell)),
   }));
 

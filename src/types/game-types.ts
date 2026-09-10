@@ -227,6 +227,8 @@ export interface SaveDataV1 {
    * Optional so pre-Slice-7 saves still load (treated as 0; missing PURIFIER is filled).
    */
   moduleMaxHpTier?: 0 | 1 | 2 | 3;
+  /** One-shot module repair allowance; missing on old saves means none earned. */
+  repairBonusHp?: number;
   /** Optional on old saves. Keeps displayed impact promises stable across menu/load. */
   impactForecast?: import('../systems/impact-system').ImpactForecastState;
 }

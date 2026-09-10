@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { CONTAMINANT_DATA } from '../../src/generated/contaminant-data';
+import { CONTAMINANT_DATA, ACTIVE_CONTAMINANT_TYPES } from '../../src/generated/contaminant-data';
 import { CONTAMINANT_QUALITY_DATA, CONTAMINANT_QUALITY_ORDER } from '../../src/generated/contaminant-quality-data';
 import { WEAPON_DATA } from '../../src/generated/weapon-data';
 import { InventoryStore, inventoryStore } from '../../src/systems/inventory-store';
@@ -15,13 +15,13 @@ import { GAME_CONSTANTS } from '../../src/config/constants';
 import type { Contaminant, ContaminantQuality, ContaminantType, SaveDataV2 } from '../../src/types/game-types';
 import type { InventoryItem, InventoryState } from '../../src/types/inventory-types';
 
-const families = Object.keys(CONTAMINANT_DATA) as ContaminantType[];
+const families = ACTIVE_CONTAMINANT_TYPES;
 const baselineUses: Partial<Record<ContaminantType, number>> = {
-  solidify: 5, scatter: 5, retrograde: 5, muffle: 5, expand: 3, mirror: 4, kindle: 5, combust: 3,
+  solidify: 5, scatter: 5, retrograde: 5, muffle: 5, expand: 3, mirror: 4, kindle: 5, combust: 3, delay: 4, siphon: 5, stitch: 4, compress: 4, abyss: 3,
 };
 const stableNames: Partial<Record<ContaminantType, string>> = {
   solidify: '冷结块', scatter: '重影片', retrograde: '返刻片', muffle: '缄口布',
-  expand: '缺口石', mirror: '留影玻璃', kindle: '复声壳', combust: '余烬核',
+  expand: '缺口石', mirror: '留影玻璃', kindle: '复声壳', combust: '余烬核', delay: '迟落砂', siphon: '附生壳', stitch: '错结线', compress: '坠手石', abyss: '背光珠',
 };
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 let checks = 0;
@@ -33,9 +33,9 @@ function makeStore(): InventoryStore {
   return store;
 }
 
-check('32 quality variants share identity, body burden and offering threshold while uses improve', () => {
-  assert.equal(families.length, 18);
-  assert.equal(families.filter(supportsContaminantQuality).length, 8);
+check('52 quality variants share identity, body burden and offering threshold while uses improve', () => {
+  assert.equal(families.length, 13);
+  assert.equal(families.filter(supportsContaminantQuality).length, 13);
   for (const type of families) {
     const definition = CONTAMINANT_DATA[type];
     if (!supportsContaminantQuality(type)) {

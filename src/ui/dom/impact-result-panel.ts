@@ -274,6 +274,8 @@ function buildSlotFacts(sd: SlotDisclosure): SlotFact[] {
   }
   if (sd.toolUseGrant) facts.push({ label: '随机工具', value: '次数+1', color: teal });
   if (sd.moduleSwapTriggered) facts.push({ label: '效果', value: '模块互换', color: warn });
+  if (sd.transferredDamage) facts.push({ label: '转移伤害', value: String(sd.transferredDamage), color: teal, unit: `至${MODULE_LABELS[sd.transferModuleId ?? ''] ?? ''}` });
+  if (sd.repairBonusHp) facts.push({ label: '下次有效注入', value: `至多+${sd.repairBonusHp}`, color: teal, unit: '完整度' });
   if (sd.equalizationAmount) facts.push({ label: '均摊', value: String(sd.equalizationAmount), color: teal });
   if (sd.healAmount) {
     const moduleLabel = MODULE_LABELS[sd.healModuleId ?? ''] ?? sd.healModuleId ?? '';

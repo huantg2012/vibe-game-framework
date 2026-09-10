@@ -147,14 +147,14 @@ export class Minimap {
     this.drawFrame(originTileX, originTileY, facing);
   }
 
-  /** abyss: "10秒内地图上所有敌人与可翻找物位置以标记显示(含视野外)". */
+  /** A bounded six-second position snapshot; never live enemy tracking. */
   showAbyssReveal(
     enemyPositions: readonly Vector2[],
     nodePositions: readonly Vector2[],
     durationMs: number,
   ): void {
-    this.abyssEnemyPositions = enemyPositions;
-    this.abyssNodePositions = nodePositions;
+    this.abyssEnemyPositions = enemyPositions.map(position => ({ ...position }));
+    this.abyssNodePositions = nodePositions.map(position => ({ ...position }));
     this.abyssRemainingMs = durationMs;
     this.abyssTotalMs = durationMs;
   }

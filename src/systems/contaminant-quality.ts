@@ -1,5 +1,8 @@
 /** CSV-owned quality rules. Queries never mutate legacy instances or refill uses. */
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { CONTAMINANT_DATA, ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
+import { CONTAMINANT_LOOT_PROFILES } from '@/generated/contaminant-economy-data';
+import { mix32 } from '@/generation/seed-fork';
+import type { KindlingTier } from '@/types/map-types';
 import { CONTAMINANT_QUALITY_DATA, CONTAMINANT_QUALITY_ORDER } from '@/generated/contaminant-quality-data';
 import type { Contaminant, ContaminantQuality, ContaminantRarity, ContaminantType } from '@/types/game-types';
 
@@ -10,7 +13,7 @@ export type ContaminantQualityWeights = Readonly<Record<ContaminantQuality, numb
 const LEGACY_QUALITY: Readonly<Record<ContaminantRarity, ContaminantQuality>> = {
   common: 'ordinary', fine: 'good', rare: 'fine',
 };
-const DROP_FAMILIES = Object.keys(CONTAMINANT_DATA) as ContaminantType[];
+const DROP_FAMILIES = ACTIVE_CONTAMINANT_TYPES;
 
 export function isContaminantQuality(value: unknown): value is ContaminantQuality {
   return typeof value === 'string' && Object.prototype.hasOwnProperty.call(CONTAMINANT_QUALITY_DATA, value);
@@ -85,4 +88,12 @@ function sampleRandom(random: () => number): number {
   const value = random();
   if (!Number.isFinite(value) || value < 0 || value >= 1) throw new Error('Random sample must be in [0, 1)');
   return value;
+}
+
+/** Per-node streams prevent redraws, combat RNG or failed persistence from rerolling loot. */
+export function rollContaminantNodeDrop(runSeed: number, nodeId: string, tier: KindlingTier): ContaminantDrop {
+  const seed = mix32(runSeed, 'contaminant-pile:' + nodeId);
+  const samples = [mix32(seed, 'family'), mix32(seed, 'quality')];
+  let index = 0;
+  return rollContaminantDrop(() => (samples[index++]! >>> 0) / 4294967296, CONTAMINANT_LOOT_PROFILES[tier]);
 }

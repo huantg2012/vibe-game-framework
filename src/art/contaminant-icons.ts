@@ -10,7 +10,7 @@ type Ink = 's'|'d'|'m'|'l'|'h'|'t'|'g'|'b';
 const PALETTE: Record<Ink, string> = { s:'#272d2b', d:'#444d47', m:'#687366', l:'#939b85', h:'#bdc2a4', t:'#245a50', g:'#398a72', b:'#78b79a' };
 export type ContaminantArtQuality = 'ordinary'|'good'|'fine'|'excellent';
 export const CONTAMINANT_ART_QUALITIES = ['ordinary','good','fine','excellent'] as const;
-export const CONTAMINANT_SAMPLE_IDS = ['solidify','scatter','retrograde','muffle','expand','mirror','kindle','combust'] as const satisfies readonly ContaminantType[];
+export const CONTAMINANT_SAMPLE_IDS = ['solidify','scatter','retrograde','muffle','expand','mirror','kindle','combust','delay','siphon','stitch','compress','abyss'] as const satisfies readonly ContaminantType[];
 export interface ContaminantIconPixels { readonly width: 24; readonly height: 24; readonly data: Uint8ClampedArray }
 export interface ContaminantWorldPixels { readonly width: 32; readonly height: 32; readonly data: Uint8ClampedArray }
 class Pixels {
@@ -178,6 +178,86 @@ const SAMPLE_DRAW: Partial<Record<ContaminantType,(p:Pixels,q:number)=>void>> = 
     if(q>=1){p.poly([[15,5],[18,6],[20,10],[18,12],[17,8]],'d');p.line([[17,6],[19,9]],'m');p.line([[9,12],[10,13],[13,12]],'g');p.rect(8,18,5,1);}
     if(q>=2){p.poly([[4,7],[7,4],[11,3],[12,5],[8,6],[6,10]],'d');p.line([[5,7],[8,4],[10,4]],'l');p.line([[11,12],[12,14],[15,15]],'g');p.dot(11,13,'b');}
     if(q>=3){p.poly([[18,14],[21,13],[21,17],[18,21],[13,22],[16,19]],'d');p.line([[20,15],[19,18],[17,20]],'l');p.line([[8,10],[10,11],[13,10],[15,11]],'g');p.rect(4,12,4,1);}
+  },
+  delay(p,q) {
+    // A torn grain pouch, cinched at the top. The spill hangs BELOW its real broken mouth.
+    // Vertical cloth + isolated grains distinguish it from a stone / hourglass emblem.
+    p.poly([[8,3],[12,2],[15,4],[14,7],[17,11],[16,15],[12,16],[7,14],[5,10],[8,6]],'d');
+    p.poly([[8,4],[11,3],[12,6],[9,9],[8,13],[6,10]],'m');
+    p.poly([[11,8],[14,7],[16,11],[14,13],[10,13]],'m');
+    p.line([[8,4],[10,3],[13,4]],'l');
+    p.line([[7,9],[8,7]],'l');p.line([[10,7],[13,6]],'s');
+    p.poly([[8,12],[12,13],[15,11],[14,15],[11,14],[9,16],[7,14]],'s');
+    p.line([[8,13],[10,14]],'l');p.dot(14,13,'l');
+    p.dot(10,17,'m');p.dot(13,19,'l');p.dot(8,20,'d');p.rect(10,21,2,1,'m');
+    p.dot(11,16,'t');
+    if(q>=1){p.rect(11,12,1,3);p.line([[15,9],[16,11],[15,14]],'t');p.dot(10,17,'g');p.dot(15,18,'m');p.dot(11,19,'l');}
+    if(q>=2){p.poly([[17,8],[19,10],[18,14],[16,16],[17,12]],'d');p.line([[18,10],[18,12]],'l');p.dot(7,17,'l');p.dot(14,21,'g');p.line([[11,4],[12,5]],'h');}
+    if(q>=3){p.line([[5,7],[4,10],[6,13]],'m');p.rect(7,10,2,1);p.dot(12,18,'b');p.dot(17,20,'m');p.dot(8,18,'g');p.rect(13,8,1,2);p.line([[14,7],[16,8]],'l');}
+  },
+  siphon(p,q) {
+    // A discarded clinging shell: skewed ribbed back right, a concave grip opening left.
+    // There is no central eye, vessel mouth or regular radial shell pattern.
+    p.poly([[11,3],[16,4],[20,8],[21,14],[18,19],[12,21],[8,19],[7,16],[10,17],[14,16],[15,12],[13,8],[8,7]],'d');
+    p.poly([[11,4],[15,5],[18,8],[18,13],[15,18],[11,19],[9,17],[13,17],[15,13],[13,8],[9,6]],'m');
+    p.line([[11,4],[14,5],[17,8]],'l');
+    p.line([[16,7],[18,10],[18,13],[16,16]],'l');
+    p.line([[16,11],[19,11]],'s');p.line([[15,15],[18,16]],'s');
+    p.line([[13,8],[14,11],[13,15]],'s');
+    p.poly([[7,7],[11,6],[13,8],[11,9],[8,9],[5,12],[4,10]],'m');
+    p.line([[7,7],[10,7]],'l');
+    p.line([[12,17],[9,16],[6,17],[5,19]],'m');
+    p.line([[12,15],[11,16],[8,15]],'t');p.dot(11,16,'g');
+    if(q>=1){p.line([[8,10],[7,12],[8,14],[11,14]],'d');p.line([[9,10],[8,12],[10,13]],'g');p.line([[5,18],[7,18]],'l');}
+    if(q>=2){p.poly([[18,3],[21,6],[22,10],[20,10],[19,6],[16,4]],'d');p.line([[19,4],[21,7]],'m');p.rect(16,13,3,1);p.line([[16,14],[18,15]],'g');}
+    if(q>=3){p.poly([[10,2],[13,2],[14,3],[10,4],[7,6],[5,6]],'m');p.line([[7,5],[9,3]],'l');p.line([[6,12],[6,14],[8,15]],'l');p.rect(12,18,3,1);p.dot(10,13,'b');}
+  },
+  stitch(p,q) {
+    // A slanting hank with two loose ends, not four radiating limbs. Wide overlapping
+    // thread faces make the over/under knot readable at 24px without an insect silhouette.
+    p.poly([[7,3],[11,4],[15,9],[16,14],[13,18],[8,17],[5,13],[6,9],[8,7],[5,5]],'d');
+    p.line([[7,4],[10,5],[13,9],[14,13],[12,16],[9,15],[7,12],[8,9],[10,8]],'m');
+    p.line([[7,4],[10,5],[12,8]],'l');
+    p.line([[6,9],[5,12],[8,16],[12,18],[15,15],[15,11],[12,8]],'m');
+    p.line([[6,10],[6,12],[8,15],[10,16]],'l');
+    p.line([[10,9],[8,11],[9,13],[12,14],[14,12]],'s');
+    p.line([[10,10],[9,11],[10,13],[12,13]],'l');p.dot(10,11,'h');
+    p.line([[12,14],[15,17],[17,21]],'d');
+    p.line([[12,15],[14,17],[16,21]],'m');p.line([[14,18],[15,20]],'l');
+    p.line([[8,16],[8,17],[10,18]],'m');p.line([[8,17],[9,18]],'l');
+    p.line([[11,15],[12,16]],'t');
+    if(q>=1){p.line([[13,9],[16,9],[18,12],[17,15],[14,16]],'d');p.line([[15,10],[17,12],[16,14]],'m');p.line([[10,15],[12,16],[14,14]],'g');p.rect(12,8,1,1);}
+    if(q>=2){p.line([[4,8],[3,11],[4,14],[6,16]],'m');p.line([[4,9],[4,12],[5,14]],'l');p.rect(7,15,1,1);p.line([[7,16],[8,17]],'g');}
+    if(q>=3){p.line([[13,3],[15,5],[15,7]],'d');p.line([[13,4],[14,5],[14,6]],'l');p.rect(14,11,2,1);p.line([[15,12],[14,14]],'g');p.dot(12,13,'b');p.line([[18,15],[19,18],[20,19]],'m');}
+  },
+  compress(p,q) {
+    // Thick off-centre stone with a lower face pulled downward. No broad cap or floating cone.
+    p.poly([[7,5],[12,3],[17,6],[18,12],[16,19],[12,22],[7,19],[5,13],[4,8]],'s');
+    p.poly([[7,5],[12,4],[16,6],[15,9],[9,10],[5,8]],'m');
+    p.poly([[5,9],[9,11],[15,10],[16,15],[13,20],[9,18],[7,14]],'d');
+    p.poly([[6,10],[9,11],[10,17],[8,17],[6,13]],'m');
+    p.line([[7,5],[11,4],[14,5]],'l');p.line([[7,7],[10,6],[12,7]],'h');
+    p.line([[14,10],[14,14],[12,18],[12,21]],'s');
+    p.line([[10,12],[11,15],[11,19]],'t');p.dot(11,16,'g');
+    p.dot(8,12,'d');p.dot(14,12,'m');
+    if(q>=1){p.line([[15,13],[14,18],[13,21]],'m');p.rect(10,19,1,2);p.line([[11,14],[12,17],[12,20]],'g');}
+    if(q>=2){p.poly([[3,11],[5,12],[7,17],[6,20],[4,18]],'d');p.line([[4,13],[5,16],[5,18]],'l');p.rect(8,9,3,1);p.line([[11,10],[13,10]],'g');}
+    if(q>=3){p.poly([[18,10],[20,12],[19,16],[17,20],[16,21],[17,16]],'d');p.line([[19,12],[18,16],[17,18]],'m');p.rect(12,6,1,2);p.dot(12,18,'b');p.line([[14,17],[14,20]],'g');}
+  },
+  abyss(p,q) {
+    // A small dull bead eclipsed from BEHIND by an incomplete thick shutter.
+    // Single material hemisphere + offset black crescent, never concentric pupil/iris.
+    p.poly([[10,4],[16,4],[20,8],[21,14],[17,19],[11,20],[8,17],[14,17],[17,13],[17,9],[13,6],[8,7]],'s');
+    p.line([[12,4],[16,5],[19,8],[20,12]],'d');
+    p.poly([[6,8],[10,6],[14,8],[16,12],[14,16],[10,18],[6,16],[4,12]],'d');
+    p.poly([[6,8],[10,7],[13,9],[13,12],[10,13],[6,12]],'m');
+    p.line([[6,9],[8,7],[11,8]],'l');p.dot(8,8,'h');
+    p.poly([[12,10],[16,11],[15,15],[11,17],[8,16],[12,14]],'s');
+    p.line([[14,8],[15,10],[15,12]],'t');
+    p.line([[6,14],[8,16],[10,17]],'m');
+    if(q>=1){p.line([[17,7],[18,10],[18,13],[16,16]],'t');p.line([[17,11],[17,14]],'g');p.rect(10,16,2,1);}
+    if(q>=2){p.poly([[7,4],[11,3],[15,3],[17,4],[13,5],[9,5],[6,7]],'d');p.line([[9,4],[13,4]],'m');p.rect(18,12,3,1);p.line([[18,14],[16,17]],'m');}
+    if(q>=3){p.poly([[3,15],[6,18],[10,20],[8,22],[4,20],[2,17]],'d');p.line([[4,17],[6,19],[8,20]],'m');p.rect(13,5,1,3);p.line([[13,8],[14,10]],'g');p.dot(14,11,'b');}
   },
 };
 const pixelsCache = new Map<string,Pixels>();

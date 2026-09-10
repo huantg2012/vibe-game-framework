@@ -1,16 +1,16 @@
 ---
 status: IMPLEMENTED / AWAITING-HUMAN-VISUAL-REVIEW
 date: 2026-09-10
-scope: First eight contaminant families; four quality appearances; inventory icons and world objects
+scope: All thirteen production contaminant families; four quality appearances; inventory icons and world objects
 ---
 
-# 迭代 20：首批异物实物与图标
+# 迭代 20：十三族异物实物与图标
 
-本批把八种异物画成可以被捡起、放下的残留实物。品质从普通、优良、精良到卓越，增加的是同一件东西保存下来的异常结构：错位断层、重复薄边、不可能的折叠。不是给物体换颜色，也不是加一圈品质边框。画面仍待玩家在库存与裂隙中的最终审查。
+本批把十三种异物画成可以被捡起、放下的残留实物。品质从普通、优良、精良到卓越，增加的是同一件东西保存下来的异常结构：错位断层、重复薄边、不可能的折叠。不是给物体换颜色，也不是加一圈品质边框。画面仍待玩家在库存与裂隙中的最终审查。
 
 用户要求独立设计，本批没有读取 `in-game-ux`、`pixel-models` 或 `visual-card-draw`。以世界观的旧材质、异常改变物理关系、冷灰与局部污染色作为边界；不扩展全局色板，不改变现有菜单载体。
 
-## 八件实物
+## 十三件实物
 
 - **冷结块 / solidify**：普通为断裂的浇铸石块；优良露出停在下落中途的横向断口；精良保留上方悬置碎层；卓越再露出上下仍保持关系的碎角。避免长尖晶体和冰冻法术图标。
 - **重影片 / scatter**：一片薄硬旧板，折面是主形。品质逐步露出无法与实物重合的第二、第三条材质边；不是外加选择框。
@@ -20,6 +20,13 @@ scope: First eight contaminant families; four quality appearances; inventory ico
 - **留影玻璃 / mirror**：偏斜旧玻璃片、暗背衬和一段不与断口对齐的反射。高品质保留更多错位反射边；镜面高光局部出现，不能整片自发光。
 - **复声壳 / kindle**：侧放的厚空壳，开口偏在左下，壳背有不等距肋层。高品质壳口内出现错位内缘，壳背被留下一层不应该还在的外壳。与旧火焰碎片彻底区分；不使用音符、波纹符号。第一轮圆环形已重画，避免与余烬核都读成“长了眼的石头”。
 - **余烬核 / combust**：致密脆裂的小块余烬，污染色从实心炭层的分叉裂缝中透出。高品质保留更多断开的外层和内部连接；没有杯口、眼窝或同心圆。第一轮中央空洞已移除。
+
+
+- **迟落砂 / delay**：破口的旧囊垂在不肯继续落下的砂粒上方。普通已经看得到囊口与颗粒分离；优良出现缝隙错位；精良保留不在囊壁原位的残布；卓越颗粒停在多个离散高度，破口关系更异常。没有沙漏、圆石或魔法粉末图标。
+- **附生壳 / siphon**：偏置的厚背肋片向左内抱，内侧开口不在中心。高品质逐步增加内抱的层次和脱位的背肋；沿用冷灰壳质，不能变成血肉寄生虫，也不同于复声壳侧向外张的开口。
+- **错结线 / stitch**：斜长旧线束穿过自身，不等长末端沿整体斜轴收束。品质增加交叠和断开后仍延续的线段。已重画初版四向放射的轮廓，去掉容易读作虫肢的双下叉；交叉不是法术 X 符号。
+- **坠手石 / compress**：偏重一侧的厚断块，下面被拉成长短不一的断面。高品质垂坠得更深而石块上部仍有厚度。已去掉首轮过宽上盖、过尖下端造成的悬浮岛/蘑菇轮廓；与冷结块水平停滞和缺口石横向缺失区分。
+- **背光珠 / abyss**：小珠体被背面一块不完整的暗壳遮住。亮面偏向左上，背面没有眼珠/瞳孔；品质增加遮挡面的错位与不闭合断环。污染色仅留在被遮住的一侧，避免科技球体。
 
 ## 尺寸、色彩与接口
 
@@ -34,7 +41,7 @@ scope: First eight contaminant families; four quality appearances; inventory ico
 - `contaminantIconUrl(type, quality?)` → 缓存 data URL。
 - `contaminantWorldPixels(type, quality?)` → 32×32 RGBA。
 - quality = `ordinary | good | fine | excellent`，缺省 ordinary，兼容旧调用。
-- 其余十个历史 id 保留原图，以保障旧存档身份与迁移显示；本批未给它们声称新的四品质美术。
+- 五个兼容 id（ruminate / resonate / overwrite / erode / echo）的既有 PNG/SVG 文件保留，供旧身份兼容；它们不再进入生产 manifest 和展板，也不再导出独立品质展项。`CONTAMINANT_ICON_IDS` 仍覆盖兼容身份，`CONTAMINANT_SAMPLE_IDS` 列出十三个生产身份。
 
 导出器：`tools/inventory/export-contaminant-icons.ts`。
 
@@ -42,22 +49,25 @@ scope: First eight contaminant families; four quality appearances; inventory ico
 TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/inventory/export-contaminant-icons.ts
 ```
 
-输出：`public/assets/items/contaminants/`。每个样板有 `id-quality.png`、`id-quality.svg`、`id-quality-world.png`；原来的 `id.png / id.svg` 仍对应 ordinary。共 64 张样板 PNG 与 32 张品质 SVG，另有原来 18 个默认图标。导出 manifest 列出尺寸、品质、文件路径，不把展板算作生产物件。
+输出：`public/assets/items/contaminants/`。每个样板有 `id-quality.png`、`id-quality.svg`、`id-quality-world.png`；原来的 `id.png / id.svg` 仍对应 ordinary。共 104 张品质 PNG 与 52 张品质 SVG，另有 13 个生产默认图标。五个旧身份的默认文件保留但不重新作为生产条目导出。导出 manifest 列出尺寸、品质、文件路径，不把展板算作生产物件。
 
 ## 验证与待判断
 
-已运行原生导出及检查：18 个 CSV 身份覆盖、图标轮廓不重复、八色色板、完全透明/完全不透明 alpha、无画布边缘裁切、每件四品质图像不同。每个尺寸/品质至少四个实体像素相对报告暗底 `#151a17` 和较亮测试地面 `#292a2b` 达到 3:1 对比度；这是材质边缘的最低读数，不代替迷雾场景的肉眼评估。RGBA 由源几何直接输出，没有图像后处理。已亲看 1:1 图标/实物与 4× 展板；改过复声壳/余烬核混读的问题，并保留缄口布的下垂折边。
+已运行原生导出及检查：CSV 身份兼容覆盖、13 个生产身份完整覆盖、图标轮廓不重复、八色色板、完全透明/完全不透明 alpha、无画布边缘裁切、每件四品质的图标与世界实物分别检查图像不同。每个尺寸/品质至少四个实体像素相对报告暗底 `#151a17` 和较亮测试地面 `#292a2b` 达到 3:1 对比度；这是材质边缘的最低读数，不代替迷雾场景的肉眼评估。RGBA 由源几何直接输出，没有图像后处理。已亲看 1:1 图标/实物与 4× 展板；改过复声壳/余烬核混读的问题，并保留缄口布的下垂折边。后五族自检修正了错结线四向辐射像虫肢、坠手石宽帽像悬浮岛的问题；没有改首八族的像素源。
 
 预览：
 
 - `public/assets/items/contaminants/iteration-20-quality-sheet.png`：逐家族、逐品质，24px 图标与 32px 实物的 4× 放大和原尺寸对照。
-- `public/assets/items/contaminants/iteration-20-native-sheet.png`：只有原尺寸，按上述八件顺序从上到下，品质从左到右。
+- `public/assets/items/contaminants/iteration-20-native-sheet.png`：只有原尺寸，按上述十三件顺序从上到下，品质从左到右。
+
+- `public/assets/items/contaminants/iteration-20-remaining-five-sheet.png`：只截出后五族，便于单独查看 24/32px 与四品质对照。
 
 仍须人判断：
 
 1. 在实际报告背景与裂隙迷雾中，是否能把薄片、旧布、石块、玻璃、空壳、余烬区分开。展板底色不是实际场景，不能代替这一判断。
 2. 普通到优良的差异刻意比普通到卓越小。24px 的返刻片、缄口布、复声壳相邻品质主要由局部结构区分；是否达到玩家想要的品质层次，还需要与品质文字一起体验。
 3. 高品质重影片/留影玻璃的错边，应读成实物残影，而不是外加选中轮廓。若在游戏菜单的选中态里发生混淆，应调整实物的断边节奏，不额外加粗 UI 框。
-4. 世界实物 API 与静态 PNG 已备齐。本资产任务没有擅自更改翻堆揭晓、地面部署或库存载体，实际挂载由集成任务完成。
+4. 错结线在实际地面上是否仍像遗失的线束，附生壳与背光珠的暗部是否保留各自的材质，而不混为眼窝/普通石头。这需要与其他物件和敌人并置看。
+5. 世界实物 API 与静态 PNG 已备齐。首批已由集成任务接入真实库存、供奉、备行与落地物件；本批在同一 API 扩展五族，没有擅自改变载体。真实场景的最终截图审查由集成任务组织。
 
 没有将任何资产记为用户 APPROVED。

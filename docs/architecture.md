@@ -1007,4 +1007,14 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 - ToolSystem通过场景注入视觉诱饵、声音投掷落点/声源、Host危险查询/压制/清理；RiftScene与CombatLabScene用同一条接线。`findSoundLureLanding`用连续射线阻止墙/VOID穿透。
 - AISystem区分玩家、视觉诱饵和声音调查来源；ChaosSystem由场景提供归属查询，屏缘被发现提示过滤诱饵事件。Host声音接口不等价于声音诱饵，未混接。
 - `contaminant-icons.ts`共享身份几何生成24px图标/32px世界硬像素，field-loot、库存、供奉与备行传实例quality；combat-lab增加四品质选择和所选物件图标/完整用途。
-- 首8替换定义；其余10旧能力留待下一批，不提前删除旧实例，不改变武器耐久/死亡全丢/开包不停。
+- A/B阶段首8替换定义；后续C/D已完成13族全量目录（见下节），不改变武器耐久/死亡全丢/开包不停。
+
+### 迭代20 C/D/E：全量接线与经济迁移
+
+- `contaminants.csv.active`生成ACTIVE_CONTAMINANT_TYPES / DATA，唯一生产13族清单；旧5族数据只供解析。检视/试验菜单和正式掉落均用生产清单。
+- `contaminant-migrations.csv`、`contaminant-loot.csv`→`contaminant-economy-data.ts`。`contaminant-migration.ts`在InventoryStore载入、导入、加入和揭晓边界正规化实例，保留ID引用，不操作保存账本的退出政策。
+- Rift生成节点携带风险tier，LootSearch用runSeed+节点ID稳定抽取族/品质；揭晓仍为InventoryStore事务，取丢/重试不重抽。
+- ToolSystem接Host下一次释放延迟、实际伤害后的短时抗性、结线穿越停步、区域纯移动减速和可达位置快照；RiftScene与CombatLabScene提供相同生产适配，minimap只持有快照读数。旧归并重复被动累加可消费余次，实际提交仍按实例。
+- GameState持有一次性repairBonusHp；SaveManager.allocateToModule将真实修复与扣薪柴/额度一同保存，失败全部回滚。ImpactSystem只在实际供奉冲击后挣得下一轮真实预告，保留旧已承诺记录。
+- DefenseEngine输出13族防御反应，转移守恒/不击毁接收装置；逐槽整数挡下对齐模块最终伤害，转移单列，冲击后修复单列。
+- 完整验证索引见`docs/qa/iteration-20-final.md`；独立审查`iteration-20-final-audit.md`。世界效果和用户体验的最终批准仍由用户作出。

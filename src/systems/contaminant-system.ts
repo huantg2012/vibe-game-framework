@@ -22,7 +22,6 @@ import type { Contaminant, ContaminantQuality, ContaminantRarity, ContaminantTyp
 
 const CN = GAME_CONSTANTS.CONTAMINANT;
 const TIDE = GAME_CONSTANTS.TIDE;
-const P = GAME_CONSTANTS.PURIFICATION;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -86,25 +85,6 @@ function syncResonateBonus(): void {
   gameState.setResonateBonusActive(active);
 }
 
-/**
- * siphon (Slice 5 gap-fill): recomputes GameState's repair-efficiency multiplier from the
- * current defense loadout - identical "装备期间" derivation pattern to syncResonateBonus()
- * above, called from the same mutation points. Previously this was a per-impact one-shot
- * set by ImpactSystem from DefenseEngine's output, which never reset back to 1.0 when
- * siphon left the defense slot (only another impact happening to compute exactly 1.0 could
- * have corrected it, and the code never even did that). This is the fix: the multiplier
- * now always reflects "is siphon defense-slotted right now", not "what did the last impact
- * compute".
- */
-function syncRepairEfficiencyMult(): void {
-  const active = slots().defenseSlots.some((id) => {
-    if (!id) return false;
-    const c = findById(id);
-    return c !== undefined && c.type === 'siphon' && c.stage === 'defense';
-  });
-  gameState.setRepairEfficiencyMult(active ? P.SIPHON_REPAIR_EFFICIENCY_MULT : 1.0);
-}
-
 /** Effective defense slot count: base + growth_defense_slot bonus (0 or 1). */
 function computeDefenseSlotCount(): number {
   return CN.DEFENSE_SLOTS + growthSystem.getDefenseSlotBonus();
@@ -135,7 +115,6 @@ export const contaminantSystem = {
     const live = new Set(inventoryStore.getContaminants().map(c => c.id));
     for (const id of echoBonusGranted.keys()) if (!live.has(id)) echoBonusGranted.delete(id);
     syncResonateBonus();
-    syncRepairEfficiencyMult();
   },
   getAll(): readonly Contaminant[] {
     return inventoryStore.getItems().flatMap(item => item.kind === 'contaminant' && item.location.kind !== 'ground' ? [item.contaminant] : []);
@@ -211,7 +190,6 @@ export const contaminantSystem = {
 
     if (!inventoryStore.slotDefense(contaminantId, slotIndex).ok) return false;
     syncResonateBonus();
-    syncRepairEfficiencyMult();
     return true;
   },
 
@@ -220,7 +198,6 @@ export const contaminantSystem = {
     if (slotIndex < 0 || slotIndex >= computeDefenseSlotCount()) return;
     if (!inventoryStore.slotDefense(null, slotIndex).ok) return;
     syncResonateBonus();
-    syncRepairEfficiencyMult();
   },
 
   /**
@@ -260,7 +237,7 @@ export const contaminantSystem = {
     const result = inventoryStore.finishOfferingImpact(snapshotIds,
       isHighTide ? TIDE.CREST_CHARGE_COST : TIDE.NORMAL_CHARGE_COST, bonusCharges);
     if (result.ok) {
-      syncResonateBonus(); syncRepairEfficiencyMult();
+      syncResonateBonus();
       for (const item of result.value) if (item.kind === 'contaminant') {
         eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: item.itemId });
       }
@@ -309,7 +286,7 @@ export const contaminantSystem = {
   applyBonusCharges(bonus: Record<string, number>): ContaminantTransformResult[] {
     const result = inventoryStore.finishOfferingImpact([...slots().defenseSlots], 0, bonus);
     if (!result.ok) return [];
-    syncResonateBonus(); syncRepairEfficiencyMult();
+    syncResonateBonus();
     return result.value.flatMap(item => {
       if (item.kind !== 'contaminant') return [];
       eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: item.itemId });
@@ -360,7 +337,6 @@ export const contaminantSystem = {
     inventoryStore.ensureStarter();
     echoBonusGranted.clear();
     syncResonateBonus();
-    syncRepairEfficiencyMult();
   },
 
   /** Serialize current state for saving. */
@@ -380,6 +356,5 @@ export const contaminantSystem = {
   loadState(saved: ContaminantSystemState): void {
     inventoryStore.importLegacy(saved.contaminants, normalizeSlotArray(saved.defenseSlots, CN.MAX_DEFENSE_SLOTS), normalizeSlotArray(saved.sortieLoadout, CN.MAX_SORTIE_SLOTS));
     syncResonateBonus();
-    syncRepairEfficiencyMult();
   },
 };

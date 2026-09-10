@@ -52,7 +52,7 @@ export interface ImpactResult {
  */
 export type ForecastSeverity = 'light' | 'moderate' | 'heavy' | 'extreme';
 
-/** Player-facing target and severity. Retrograde upgrades an existing reading to a promise. */
+/** Player-facing target and severity; earned memory readings are exact. */
 export interface ForecastDisplay {
   readonly targetId: string;
   readonly severity: ForecastSeverity;
@@ -74,6 +74,8 @@ export interface ImpactForecastState {
   queuedTargets: string[];
   nextIntensity: number;
   nextNextIntensity: number;
+  /** Earned by a real offering impact, consumed by the next forecast creation. */
+  earnedPending?: boolean;
 }
 
 export function validImpactForecastState(value: unknown, moduleIds: readonly string[]): value is ImpactForecastState {
@@ -86,6 +88,7 @@ export function validImpactForecastState(value: unknown, moduleIds: readonly str
     return typeof data.targetId === 'string' && moduleIds.includes(data.targetId)
       && SEVERITY_ORDER.includes(data.severity as ForecastSeverity);
   };
+  if (state.earnedPending !== undefined && typeof state.earnedPending !== 'boolean') return false;
   if (state.version !== 1 || typeof state.committed !== 'boolean' || typeof state.consumed !== 'boolean'
     || !validReading(state.display) || !validReading(state.lookahead)
     || !Array.isArray(state.queuedTargets) || state.queuedTargets.length > 1
@@ -181,38 +184,26 @@ function distributeThreatDamage<T extends { id: string }>(
 let forecastTargetId: string | null = null;
 let forecastDisplay: ForecastDisplay | null = null;
 let forecastCommitted = false;
+let memoryEarnedPending = false;
 let forecastConsumed = false;
 let forecastIntensity = 1;
 let forecastNextNextIntensity = 1;
 const pendingTargetQueue: string[] = [];
 let forecastLookahead: ForecastLookahead | null = null;
 
-function memoryIsSlotted(): boolean {
-  return contaminantSystem.getDefenseSlotted().some(item => item?.type === 'retrograde' && item.stage === 'defense');
-}
-
-function upgradeMemoryPromise(memorySlotted = memoryIsSlotted()): void {
-  if (!memorySlotted || !forecastDisplay || forecastConsumed) return;
-  forecastCommitted = true;
-  forecastDisplay = { targetId: forecastDisplay.targetId, severity: severityFromIntensity(forecastIntensity) };
-  if (pendingTargetQueue.length === 0) pendingTargetQueue.push(pickUniform(gameState.getModules()).id);
-  forecastLookahead = { targetId: pendingTargetQueue[0]!, severity: severityFromIntensity(forecastNextNextIntensity) };
-}
-
 export const impactSystem = {
   getForecastDisplay(): ForecastDisplay | null {
-    upgradeMemoryPromise();
     return forecastDisplay;
   },
 
   getForecastLookahead(): ForecastLookahead | null {
-    upgradeMemoryPromise();
     return forecastLookahead;
   },
 
   /** Snapshot without mutation, also used to roll back a failed inventory save. */
   getForecastState(): ImpactForecastState {
     return { version: 1, targetId: forecastTargetId, committed: forecastCommitted, consumed: forecastConsumed,
+      earnedPending: memoryEarnedPending,
       display: forecastDisplay ? { ...forecastDisplay } : null,
       lookahead: forecastLookahead ? { ...forecastLookahead } : null,
       queuedTargets: [...pendingTargetQueue], nextIntensity: forecastIntensity, nextNextIntensity: forecastNextNextIntensity };
@@ -224,6 +215,7 @@ export const impactSystem = {
     if (!state) return;
     forecastTargetId = state.targetId;
     forecastCommitted = state.committed;
+    memoryEarnedPending = state.earnedPending ?? false;
     forecastConsumed = state.consumed;
     forecastDisplay = state.display ? { ...state.display } : null;
     forecastLookahead = state.lookahead ? { ...state.lookahead } : null;
@@ -236,6 +228,7 @@ export const impactSystem = {
     forecastTargetId = null;
     forecastDisplay = null;
     forecastCommitted = false;
+    memoryEarnedPending = false;
     forecastConsumed = false;
     forecastIntensity = 1;
     forecastNextNextIntensity = 1;
@@ -258,7 +251,7 @@ export const impactSystem = {
       return { damages: [], intensity: 0, skipped: true };
     }
 
-    upgradeMemoryPromise(defenseSlots?.some(item => item?.type === 'retrograde' && item.stage === 'defense') ?? memoryIsSlotted());
+
 
     // overwrite's module-swap side effect lasts exactly "1 次出击" (DEC-031): the sortie
     // between this impact and the next one. Clear it here, before this impact's own
@@ -311,10 +304,8 @@ export const impactSystem = {
         gameState.addPendingSideEffects(defenseResult.sideEffects);
       }
 
-      // Store upgrade discount. Repair efficiency (siphon) is NOT set here - it is a
-      // standing "while equipped" bonus owned by ContaminantSystem.syncRepairEfficiencyMult()
-      // (called on every defense-slot mutation), not a per-impact trigger. See
-      // defense-engine.ts's applySiphon() doc comment for why.
+      if (defenseResult.repairBonusHp > 0) gameState.grantRepairBonus(defenseResult.repairBonusHp);
+
       if (defenseResult.upgradeDiscount > 0) {
         gameState.setUpgradeDiscount(defenseResult.upgradeDiscount);
       }
@@ -371,6 +362,9 @@ export const impactSystem = {
       }
     }
 
+    // Snapshot before offering maturation: its final impact earns the same record.
+    if (slots.some(item => item?.type === 'retrograde' && item.stage === 'defense'
+      && (!offeringIds || offeringIds.includes(item.id)))) memoryEarnedPending = true;
     forecastConsumed = true;
 
     // Emit resolved
@@ -387,29 +381,27 @@ export const impactSystem = {
     };
   },
 
-  /** Establish once per actual impact. Scene/menu refreshes never consume a queued promise.
-   * Candidate inventory saves pass memorySlotted explicitly so a slot transaction persists
-   * its promise atomically, before InventoryStore publishes its new state.
+  /** Establish once per actual impact. Slot/read/unslot cannot earn information.
+   * Old already-disclosed lookaheads still flow through the one-element queue.
    */
   generateForecast(
     nextIntensity: number,
     forecastReliabilityBonus = 0,
     nextNextIntensityEstimate: number,
-    memorySlotted = memoryIsSlotted(),
   ): void {
     if (forecastDisplay && !forecastConsumed) {
-      upgradeMemoryPromise(memorySlotted);
       return;
     }
     const modules = gameState.getModules();
     forecastIntensity = nextIntensity;
     forecastNextNextIntensity = nextNextIntensityEstimate;
     forecastConsumed = false;
-    forecastCommitted = pendingTargetQueue.length > 0;
+    forecastCommitted = pendingTargetQueue.length > 0 || memoryEarnedPending;
+    memoryEarnedPending = false;
     forecastTargetId = pendingTargetQueue.shift() ?? pickUniform(modules).id;
     forecastLookahead = null;
     const trueSeverity = severityFromIntensity(nextIntensity);
-    const blurChance = forecastCommitted || memorySlotted ? 0 : Math.max(SEVERITY_BLUR_FLOOR_CHANCE,
+    const blurChance = forecastCommitted ? 0 : Math.max(SEVERITY_BLUR_FLOOR_CHANCE,
       SEVERITY_BLUR_BASE_CHANCE - Math.max(0, forecastReliabilityBonus));
     let severity = trueSeverity;
     if (blurChance > 0 && Math.random() < blurChance) {
@@ -417,6 +409,5 @@ export const impactSystem = {
       severity = SEVERITY_ORDER[Math.min(SEVERITY_ORDER.length - 1, Math.max(0, SEVERITY_ORDER.indexOf(trueSeverity) + direction))]!;
     }
     forecastDisplay = { targetId: forecastTargetId, severity };
-    upgradeMemoryPromise(memorySlotted);
   },
 };

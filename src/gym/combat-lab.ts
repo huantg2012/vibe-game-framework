@@ -9,7 +9,7 @@ import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
 import { audioManager } from '@/managers/audio-manager';
 import { inventoryStore } from '@/systems/inventory-store';
 import { WEAPON_DATA } from '@/generated/weapon-data';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { CONTAMINANT_DATA, ACTIVE_CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { LEXEME_DATA, PORTFOLIO_DATA, SUBSTRATE_DATA, type CoverageId } from '@/generated/contamination-lexicon-data';
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import { motionChoicesFor } from '@/generation/contamination-draw';
@@ -56,7 +56,7 @@ for (const entry of INSPECTOR_ENTRIES) {
   group.append(new Option(entry.label, entry.id));
 }
 select('enemy').value = INSPECTOR_ENTRIES.find(e=>e.id===query.get('enemy'))?.id ?? INSPECTOR_ENTRIES.find(e=>e.family.substrate==='insect_remnant')!.id;
-for (const id of ['tool-q','tool-f','tool-passive']) fill(id, [{value:'',label:'不装配'},...Object.values(CONTAMINANT_DATA).filter(c=>c.toolType===(id==='tool-passive'?'passive':'active')).map(c=>({value:c.id,label:c.displayNameTool}))], query.get(id));
+for (const id of ['tool-q','tool-f','tool-passive']) fill(id, [{value:'',label:'不装配'},...ACTIVE_CONTAMINANT_DATA.filter(c=>c.toolType===(id==='tool-passive'?'passive':'active')).map(c=>({value:c.id,label:c.displayNameTool}))], query.get(id));
 fill('tool-quality', Object.values(CONTAMINANT_QUALITY_DATA).map(q=>({value:q.id,label:q.name})),query.get('tool-quality'));
 fill('fragment', Object.values(RIFT_FRAGMENT_DATA).filter(f=>['frag-library','frag-clinic','frag-metro','frag-outdoor'].includes(f.id)).map(f=>({value:f.id,label:f.displayName})),query.get('fragment')??'frag-library');
 for (const id of ['coverage','count','exercise','zoom','chaos']) fromQuery(id);

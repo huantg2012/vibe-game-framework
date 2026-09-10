@@ -6,7 +6,7 @@ import { DENSE_PLAYER_GROUND_OFFSET_Y } from '@/entities/player-sprite-dense';
 import Phaser from 'phaser';
 import { PurificationScene, type WorldInteractionTarget } from '@/scenes/purification-scene';
 import { gameConfig } from '@/config/game-config';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
 import { gameState } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
 import { contaminantSystem } from '@/systems/contaminant-system';
@@ -22,7 +22,6 @@ import { loadoutPanel } from '@/ui/dom/loadout-panel';
 import { impactResultPanel } from '@/ui/dom/impact-result-panel';
 import { riftResultPanel } from '@/ui/dom/rift-result-panel';
 import { pauseMenu } from '@/ui/dom/pause-menu';
-import type { ContaminantType } from '@/types/game-types';
 import { audioManager } from '@/managers/audio-manager';
 
 if (import.meta.env.DEV) {
@@ -129,7 +128,7 @@ if (import.meta.env.DEV) {
       gameState.addKindling(85);
       const core = gameState.getModule('CORE');
       if (core) core.hp = 28;
-      const types = Object.keys(CONTAMINANT_DATA) as ContaminantType[];
+      const types = ACTIVE_CONTAMINANT_TYPES;
       Array.from({ length: copies }, () => types).flat().forEach((type, i) => {
         contaminantSystem.acquire(type, i % 2 === 0 ? 'fine' : 'rare');
         const tool = contaminantSystem.acquire(type, 'fine');
