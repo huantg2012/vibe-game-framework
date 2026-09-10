@@ -1,4 +1,4 @@
-import { rollWeaponDrop } from '@/systems/weapon-loot';
+import { createWeaponInstance, rollWeaponDrop } from '@/systems/weapon-loot';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 /**
  * Loot-search channel: hold E for SEARCH_CHANNEL_MS, then settle.
@@ -8,7 +8,7 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { rollContaminantDrop, getContaminantQualityName, supportsContaminantQuality } from '@/systems/contaminant-quality';
 import { audioManager } from '@/managers/audio-manager';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
@@ -19,7 +19,7 @@ import {
   type SearchObjectVisual,
 } from '@/systems/loot-search-presentation';
 import { GameEvent } from '@/types/events';
-import type { ContaminantRarity, ContaminantType, Vector2 } from '@/types/game-types';
+import type { ContaminantRarity, Vector2 } from '@/types/game-types';
 import type { NewInventoryItem } from '@/types/inventory-types';
 import type { ContaminantNodeDef, KindlingNodeDef, KindlingTier } from '@/types/map-types';
 import { LootSearchHud, type LootSearchPromptKind } from '@/ui/dom/loot-search-hud';
@@ -77,16 +77,6 @@ interface ChannelState {
   elapsedMs: number;
 }
 
-const TYPES_BY_RARITY: Record<ContaminantRarity, ContaminantType[]> = {
-  common: [],
-  fine: [],
-  rare: [],
-};
-
-for (const [id, def] of Object.entries(CONTAMINANT_DATA)) {
-  TYPES_BY_RARITY[def.rarity].push(id as ContaminantType);
-}
-
 function tierValue(tier: KindlingTier): number {
   const loot = GAME_CONSTANTS.LOOT;
   switch (tier) {
@@ -103,20 +93,6 @@ function hashId(id: string): number {
     h = Math.imul(h, 16777619);
   }
   return h >>> 0;
-}
-
-function rollRarity(): ContaminantRarity {
-  const weights = GAME_CONSTANTS.CONTAMINANT.RARITY_WEIGHTS;
-  const total = weights.common + weights.fine + weights.rare;
-  const roll = Math.random() * total;
-  if (roll < weights.common) return 'common';
-  if (roll < weights.common + weights.fine) return 'fine';
-  return 'rare';
-}
-
-function rollType(rarity: ContaminantRarity): ContaminantType {
-  const pool = TYPES_BY_RARITY[rarity];
-  return pool[Math.floor(Math.random() * pool.length)]!;
 }
 
 export class LootSearchSystem {
@@ -233,6 +209,15 @@ export class LootSearchSystem {
     const out: Vector2[] = [];
     for (const node of this.nodes) {
       if (node.kind === 'contaminant' && node.collected) out.push(node.position);
+    }
+    return out;
+  }
+
+  /** Revisitable fuel piles only; collected contaminant piles cannot yield bonus fuel. */
+  getCollectedKindlingPositions(): readonly Vector2[] {
+    const out: Vector2[] = [];
+    for (const node of this.nodes) {
+      if (node.kind === 'kindling' && node.collected) out.push(node.position);
     }
     return out;
   }
@@ -443,7 +428,7 @@ export class LootSearchSystem {
         if (node.weaponDefinitionId) {
           if (!node.revealedItem) {
             const id = `WPN_${crypto.randomUUID()}`;
-            node.revealedItem = { id, kind: 'weapon', weapon: { id, definitionId: node.weaponDefinitionId } };
+            node.revealedItem = { id, kind: 'weapon', weapon: createWeaponInstance(node.weaponDefinitionId, false, id) };
           }
           const result = inventoryStore.revealBatch(node.id, [node.revealedItem], node.position);
           if (!result.ok) { this.onMessage?.('未能记下所得。物件仍留在原处。'); return; }
@@ -469,17 +454,21 @@ export class LootSearchSystem {
       }
     } else {
       let rarity: ContaminantRarity;
+      let qualityLabel: string | undefined;
       if (this.preview) {
-        rarity = rollRarity();
+        const drop = rollContaminantDrop();
+        rarity = drop.rarity;
+        if (supportsContaminantQuality(drop.type)) qualityLabel = getContaminantQualityName(drop);
       } else {
         if (!node.revealedItem) {
-          const rolledRarity = rollRarity();
-          const contaminant = contaminantSystem.createUnowned(rollType(rolledRarity), rolledRarity);
+          const drop = rollContaminantDrop();
+          const contaminant = contaminantSystem.createUnowned(drop.type, drop.rarity, drop.quality);
           node.revealedItem = { id: contaminant.id, kind: 'contaminant', contaminant };
         }
         const item = node.revealedItem;
         if (item.kind !== 'contaminant') return;
         rarity = item.contaminant.rarity;
+        if (supportsContaminantQuality(item.contaminant.type)) qualityLabel = getContaminantQualityName(item.contaminant);
         if (!this.inventoryEnabled) {
           // The pre-W4 route still acquires directly, without a run/ground ledger.
           // Persist before consuming the pile, and retain this exact roll on failure.
@@ -505,9 +494,9 @@ export class LootSearchSystem {
         }
       }
       node.collected = true;
-      node.visual.playReveal({ kind: 'contaminant', rarity, playerPos: player });
+      node.visual.playReveal({ kind: 'contaminant', rarity: qualityLabel ? 'common' : rarity, playerPos: player });
       audioManager.playSFX('sfx-shared-player-search-reveal-residue');
-      this.hud.flashResidue(rarity);
+      this.hud.flashResidue(rarity, qualityLabel);
     }
   }
 

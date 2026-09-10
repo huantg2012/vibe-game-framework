@@ -65,7 +65,11 @@ export class PurificationHud {
   private promptVisible = true;
   private nearestTarget: InteractionTarget | null = null;
 
-  create(): void {
+  private onReport: (() => void) | undefined;
+
+  create(onReport?: () => void): void {
+    this.destroy();
+    this.onReport = onReport;
     injectPanelStyles();
     this.promptVisible = true;
     this.createHudPanel();
@@ -111,10 +115,20 @@ export class PurificationHud {
           this.buildForecastSlot() +
           this.buildLookaheadSlot() +
         `</div>` +
+        (this.onReport ? `<button type="button" class="hud-report-entry" id="purif-report-entry" aria-label="打开存续报告（Tab）" aria-keyshortcuts="Tab"><span class="hud-entry-key">Tab</span><span>存续报告</span></button>` : '') +
       `</div>`;
 
     if (html !== this.lastHudHtml) {
+      // Keep the actual control node: inventory remembers it to restore focus
+      // after an equipment transaction updates this HUD behind the open panel.
+      const entry = this.hudEl.querySelector<HTMLButtonElement>('#purif-report-entry');
+      const restoreFocus = entry === document.activeElement;
       this.hudEl.innerHTML = html;
+      const replacement = this.hudEl.querySelector<HTMLButtonElement>('#purif-report-entry');
+      if (entry && replacement) {
+        replacement.replaceWith(entry);
+        if (restoreFocus) entry.focus({ preventScroll: true });
+      }
       this.lastHudHtml = html;
     }
   }
@@ -137,6 +151,7 @@ export class PurificationHud {
   }
 
   destroy(): void {
+    this.onReport = undefined;
     this.hudEl?.remove();
     this.hudEl = null;
     this.promptEl?.remove();
@@ -163,6 +178,12 @@ export class PurificationHud {
     this.hudEl = document.createElement('div');
     this.hudEl.id = 'purif-hud';
     this.hudEl.className = 'device-plate';
+    this.hudEl.addEventListener('click', event => {
+      if (event.target instanceof Element && event.target.closest('.hud-report-entry')) { event.stopPropagation(); this.onReport?.(); }
+    });
+    for (const name of ['pointerdown', 'keydown', 'keyup'] as const) this.hudEl.addEventListener(name, event => {
+      if (event.target instanceof Element && event.target.closest('.hud-report-entry') && (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key))) event.stopPropagation();
+    });
     getDomUiRoot().appendChild(this.hudEl);
     this.refresh();
   }

@@ -76,7 +76,10 @@ export class PlayerWeaponRig {
 
   constructor(private readonly scene: Phaser.Scene, private readonly body: Phaser.GameObjects.Image) {
     this.upper = scene.add.image(body.x, body.y, body.texture.key).setOrigin(.5, 22 / 32).setCrop(0, 0, 32, 22).setVisible(false);
-    this.weapon = scene.add.image(0, 0, body.texture.key).setOrigin(16 / 32, 24 / 32).setVisible(false);
+    // A 32px asset is an authoring canvas, not the held object's physical length.
+    // Keep the shared grip fixed; the iron itself occupies about 18 world pixels.
+    this.weapon = scene.add.image(0, 0, body.texture.key)
+      .setOrigin(16 / 32, 24 / 32).setScale(.68).setVisible(false);
     this.arm = scene.add.graphics().setVisible(false);
   }
 

@@ -1,15 +1,17 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-09-05
-last-modified-by: code agent（2026-09-05 DEC-117：加厚并进蜕变面板）
-interface-changed: false
+last-modified-date: 2026-09-10
+last-modified-by: director / code（DEC-142）
+interface-changed: true
 interfaces-with:
+  - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
   - system-purification-impact   # 潮汐模型替代线性递增；污染物防御 slot 扩展净化点
   - system-chaos-scavenge-extract # 出击工具 + 永久改造修正出击参数；新增污染物拾取节点
   - system-movement-vision       # 永久改造修正移速/视野；出击工具修正感知/移动
   - system-enemy-ai              # 出击工具影响敌人状态（冻结/覆写/削弱）
 exposes:
+  - contaminantSystem.finishOfferingImpact(isHighTide, bonusCharges, snapshotIds?)
   - tideSystem.getState() (含 phase / tideNumber / currentIntensity) / getCurrentIntensity() / isHighTide()
   - contaminantSystem.getDefenseSlotted() / getSortieLoadout()
   - growthSystem.getLevel(id) / getModifiers()
@@ -18,6 +20,31 @@ exposes:
 ---
 
 # 系统设计：成长 + 潮汐经济
+
+## 迭代20：首批8个异物样板（DEC-143）
+
+当前18个能力身份保留，其中8件已统一固定名称与四品质（普通／优良／精良／卓越）；另10种仍走旧定义，后续C/D再收敛13族。首8的供奉、工具、文字定义归`data/contaminants.csv`，品质与满次数归`data/contaminant-qualities.csv`，不是由旧rarity决定能力种类。
+
+### 身份与品质
+
+冷结块、重影片、返刻片、缄口布、缺口石、留影玻璃、复声壳、余烬核在供奉前后保留同一名称与实例。品质不改变职责、目标、供奉阈值或重量，只改变可用次数及物件的侵蚀结构。四品质次数：前四件5/6/7/8，缺口石与余烬核3/4/5/6，留影玻璃4/5/6/7，复声壳5/6/7/8。首版初值待用户体验，未声称经济平衡已验证。
+
+旧实例没有quality时只读投影common→普通、fine→优良、rare→精良，保留原实例、位置、进度和实际余次，不因读取或开界面补满。四档原生图标24px、世界实物32px，库存/供奉/备行/实际带回/拾获读数统一实例品质；已揭晓后才显示物件本身。
+
+### 裂隙实际能力
+
+- 冷结块：视野内无遮挡的最近存活地面实体停滞4秒；禁止移动、感知、攻击，取消旧前摇。受到真实正伤害解除；恢复后攻击重做完整前摇。无目标不扣次。
+- 重影片：被动，新一次针对玩家的怀疑事件使该敌人的感知填充速度×0.7；同事件一次，退回巡逻/返回后新事件可再触发。诱饵引发的怀疑不消费。
+- 返刻片：被动，在针对玩家的新追击中失去视线时，保留最后可见位置6秒。同次追击一次；残影固定，不给视野外实时追踪。旧存档主动槽引用不擅自移动：新出击要求改放被动位；已经在途的旧实例按被动逻辑工作。
+- 缄口布：被动，连续有效听觉遭遇消费一次；同一遭遇多个敌人不重复扣次，连续1500ms没有有效听觉发现信号后结束。末次仍完成整个事件；不屏蔽视线、接触、场域。
+- 缺口石：沿面向在96px内越过恰好一格薄实墙，完整身体安全落地后实体化1秒。厚墙、虚空、边界、贴角第二堵墙、不净空落点均失败免费；不关闭物理body。
+- 留影玻璃：脚下留下8秒视觉诱饵；敌人需要确实看见它，已确认玩家的追击不被强行洗掉。多次投放独立计时；针对诱饵的警觉不计玩家发现压力或被发现边缘提示。
+- 复声壳：沿面向最多投96px，落在无遮挡地面，靠墙时落在墙前，空间不足免费；6秒内每1000ms向96px内能听见的地面实体发出一次调查声源。敌人朝实际落点调查；不制造眩晕/伤害，不把Host场域的玩家感应误当声源调查。
+- 余烬核：选择128px内可见、无遮挡、已经释放且未被压制的最近环境危险，压制5秒；适用于占漆和气团/雾团/尘絮群。只压制危险，核心仍可命中、实体仍流动。未释放/已压制/不可见目标失败免费；结束后等待自然蓄势预兆再恢复危险。
+
+### 跨能力合同
+
+控制按独立来源叠加，退出一片区域只移除其自身效果；减速/感知倍率相乘，攻击禁用取并集。眩晕不因伤害自动解除。延缓感知同样挡住满条直接升级；受伤警觉另算。消费必须持久化成功后才能改变世界；失败不位移、不控制、不发资源；末次消费完成效果再清理。旧反刍兼容修复为每趟每个已翻找薪柴堆最多一次，不含污染物堆。
 
 > **TL;DR**: 打破必然下行螺旋——引入潮汐冲击节奏（压力有涨有退）、污染物生命周期（裂隙获取→防御→转化→出击工具→破碎）、永久改造（薪柴投资角色属性）、净化稳定度（长期进度目标）。单一货币（薪柴）三向分配：模块修复 / 永久改造 / 经济自然循环。
 
@@ -109,29 +136,29 @@ interface SaveData {
 
 ### CN — 污染物系统
 
-8. **获取方式**：裂隙地图中新增"污染物节点"（区别于薪柴节点）。每张地图固定 2-3 个。**迭代 10 起（DEC-108）**：污染物节点与薪柴节点统一为**可翻找对象**——外观不泄露内容物，走近按住 E 读条（`LOOT.SEARCH_CHANNEL_MS`，建议 1200 ms）完成才结算；读条规则、打断、发声、可见性门槛与上下文优先级全部归 `system-chaos-scavenge-extract` 规则 14/14a/14b/15/16。读条完成后获得一件随机污染物（rarity 权重：common 60% / fine 30% / rare 10%）。
-9. **污染物节点视觉（迭代 10 改口）**：不再是深紫色脉冲方块，也不再「走过即拾取」。与薪柴节点统一为可翻找对象：同一套外观，玩家不能通过外观区分内容物（薪柴 / 残渣）；对象不是 glow source，alpha 乘可见性（规则归 `system-chaos-scavenge-extract` 规则 16/17）。内容物在翻找完成时由揭晓动画告知：残渣揭晓用 teal ramp（common 暗 / fine contam-core / rare contam-bright，与 UI 稀有度色谱 `RARITY_COLORS` 同一份；禁止紫谱——紫色在 art-direction 无登记，UI 层已锁无独立紫色类），并走 toast-inline `残渣` + 稀有度星等，不给具体类型名。机制论述见 `docs/design-notes/loot-search.md`。
-10. **库存**：玩家的污染物库存无上限。所有已获取的污染物存在 `contaminants[]` 中。
+8. **获取方式**：裂隙地图中新增"污染物节点"（区别于薪柴节点）。每张地图固定 2-3 个。**迭代 10 起（DEC-108）**：污染物节点与薪柴节点统一为**可翻找对象**——外观不泄露内容物，走近按住 E 读条（`LOOT.SEARCH_CHANNEL_MS`，建议 1200 ms）完成才结算；读条规则、打断、发声、可见性门槛与上下文优先级全部归 `system-chaos-scavenge-extract` 规则 14/14a/14b/15/16。读条完成后揭晓物件。当前先在18个能力族等概率选族，首8再按CSV抽品质（60/25/12/3），旧10保留其旧rarity。危险来源偏置待D，不提前伪装成已接入。
+9. **污染物节点视觉（迭代 10 改口）**：不再是深紫色脉冲方块，也不再「走过即拾取」。与薪柴节点统一为可翻找对象：同一套外观，玩家不能通过外观区分内容物（薪柴 / 残渣）；对象不是 glow source，alpha 乘可见性（规则归 `system-chaos-scavenge-extract` 规则 16/17）。内容物在翻找完成时揭晓。首8使用中性的材质揭晓与品质文字，不以旧rarity制造错误等级；世界实物按实例品质绘制。旧10保留旧星等提示。机制论述见 `docs/design-notes/loot-search.md`。
+10. **库存（DEC-142）**：净化点统一物件库无负重上限，武器与技能污染物都由 `InventoryStore` 单一持有；`ContaminantSystem` 是技能效果适配器，不再拥有第二份可写 `contaminants[]`。裂隙装备和拾获共同计重，但拾获页只管理战利品，完整合同见 `system-field-inventory.md`。
 
 11. **防御阶段**：
     - 净化点有 3 个防御 slot（等价，不分方向）。**Slice 5 起槽位数可变**：改造 `growth_defense_slot` 解锁第 4 槽，唯一真相是 `contaminantSystem.getDefenseSlotCount()`，任何地方都不得假定固定为 3
-    - 玩家在净化点将库存中 `stage === 'defense'` 的污染物装入 slot
+    - 玩家在净化点将库中 `stage === 'defense'` 的武器或技能污染物装入同一供奉 slot。武器占槽积累进度但不提供虚构的防御效果
     - 已装备的污染物在每次冲击时：(a) 执行其防御效果，(b) `impactCharges += chargeCost`（一般 1，高潮 3）
-    - `impactCharges >= 3` 时自动转化：`stage = 'tool'`，从防御 slot 弹出，进入工具池
+    - 本次冲击先完整结算防御效果，再应用一般/高潮及技能附加计数；达到定义阈值时 `stage = 'tool'`，设定定义余次、清槽回库。武器阈值3、余次60/75/90/110，技能沿原定义。跳过的冲击不充能
 
-12. **防御效果**：每种污染物的具体效果见 `docs/design-notes/slice3-contaminant-brainstorm.md`。Spec 层面的规则：
+12. **防御效果**：具体效果由CSV定义，结算合同见`system-purification-impact.md`。Spec 层面的规则：
     - 效果在冲击计算阶段应用（伤害计算后、HP 扣除前）
     - 多个 slot 的效果依次应用（顺序无关——各自独立计算对各模块的修正）
     - 空 slot 无防御效果
 
 13. **出击工具阶段**：
     - 出击前从 `stage === 'tool'` 的库存中选件装入出击 slot
-    - **Slice 5 起**：基础 3 槽（最多 3 主动键 `Q / F / G`）+ 改造可解锁第 4 槽（被动）。唯一真相是 `getSortieActiveSlotCount()` / `getSortiePassiveSlotIndex()`，不得写死「选 3 件 / 最多 2 个主动键」
+    - 基础2主动+1被动，成长后3主动+1被动；主动键 `Q / F / G`。唯一真相为 `getSortieActiveSlotCount()` / `getSortiePassiveSlotIndex()`。DEC-142另有1个武器槽，不占技能槽；唯一装配入口为裂隙入口的备行
     - 出击中使用主动工具：按对应键位触发
     - 每次使用 `usesRemaining--`
     - `usesRemaining === 0` 时 `stage = 'broken'`，从库存中移除
 
-14. **出击工具效果**：每种转化后工具的具体能力见 `docs/design-notes/slice3-sortie-tools.md`。
+14. **出击工具效果**：首8能力见本节，全部具体定义见CSV；历史brainstorm不作为现行数值真相。
 
 15. **被动工具**：装了即生效，不占主动键位。触发次数计为 `usesRemaining`（每次触发消耗 1 次）。**每次触发必须有可见反馈**（贴源短闪 + 通道 B 事件条，见 Kit 反馈通道；不得静默扣次数）。
 
@@ -141,7 +168,7 @@ interface SaveData {
 
 15c. **检视五层（Slice 5.5）**：选中即填充，无第二层打开。L1 身份 / L2 摘要 / L3 数值 / L4 与我的关系 / L5 转化去向。转化去向必须在防御槽第一屏可见（不得只藏在滚动区）。
 
-15d. **库存排序**：阶段 → 稀有度 → 类型 id，固定，不随获取时间变。
+15d. **库存排序**：按当前库存页所选排序稳定排序；同名物件优先高品质，余次与成熟状态独立展示，不在每帧重排。
 
 ### G — 永久改造
 
@@ -195,7 +222,7 @@ interface SaveData {
 24. **保存时机**：每次返回净化点时自动保存（包括分配/改造操作后）。
 25. **存储**：`localStorage` key = `'coh-save-v1'`。
 26. **加载**：主菜单"Continue"按钮读取存档恢复全部状态。
-27. **版本迁移**：`SaveData.version` 字段。迭代19库存底座当前写入version=2（`SaveDataV2`）；旧version=1经统一库存导入保留污染物ID、阶段、次数、装配和成长，迁移增加普通白板。V2以`inventory`为唯一物品归属，旧污染物数组不重复写入。下文早期SaveData示意属于V1合同；实际字段以`src/types/game-types.ts`为准。新出击归属/恢复链尚未整链启用，未完成出击不得由load自行处罚，详见`system-field-inventory.md`。
+27. **版本迁移**：`SaveData.version` 字段。迭代19库存底座当前写入version=2（`SaveDataV2`）；旧version=1经统一库存导入保留污染物ID、阶段、次数、装配和成长，迁移增加普通白板。V2以`inventory`为唯一物品归属，旧污染物数组不重复写入。下文早期SaveData示意属于V1合同；实际字段以`src/types/game-types.ts`为准。正常出击、拾获、死亡/撤离、归来结算已接通；未完成出击的刷新/退出政策仍未定，不得由load自行处罚，详见`system-field-inventory.md`。库存内部版本2保存武器供奉/余次；旧内部版本1无字段武器仅迁移一次，已消费的余次不因重载回满。
 28. **重置**："New Expedition" 清除存档重新开始。
 
 ### F — 场景流修改

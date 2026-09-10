@@ -20,6 +20,7 @@ export default defineConfig({
         main: path.resolve(__dirname, 'index.html'),
         gym: path.resolve(__dirname, 'gym.html'),
         inspector: path.resolve(__dirname, 'enemy-inspector.html'),
+        combatLab: path.resolve(__dirname, 'combat-lab.html'),
       },
     },
   },

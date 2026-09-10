@@ -123,6 +123,10 @@ export interface ToolSlotInfo {
 }
 
 /** A sortie-duration status effect line (IA S10 "生效中状态"). */
+export interface RiftEquipmentSlot {
+  slotId: string; itemId?: string; label: string; name: string; icon?: string; usesRemaining?: number; maxDurability?: number; isPassive?: boolean;
+}
+
 export interface ActiveEffectInfo {
   /** Pre-formatted line, e.g. "移速 -10%". Resolved by the caller, which owns the
    *  CSV source name and the effect-specific phrasing. */
@@ -138,6 +142,7 @@ export interface HUDConfig {
   toolSlots?: ToolSlotInfo[];
   /** When true, [E] prompt is owned by LootSearchHud (search / extract). */
   suppressExtractPrompt?: boolean;
+  onInventory?: () => void;
 }
 
 export class RiftHud {
@@ -160,7 +165,8 @@ export class RiftHud {
   private lastEffectsString = '';
 
   private kindlingEl!: HTMLDivElement;
-  private burdenEl!: HTMLDivElement;
+  private burdenEl!: HTMLButtonElement;
+  private burdenValueEl!: HTMLSpanElement;
   private lastBurden = "";
   private extractPromptEl!: HTMLDivElement;
   private extractPromptVisible = false;
@@ -169,6 +175,8 @@ export class RiftHud {
   // Tool slot display (bottom left)
   private toolSlotEl: HTMLDivElement | null = null;
   private toolSlotData: ToolSlotInfo[] = [];
+  private equipmentData: readonly RiftEquipmentSlot[] = [];
+  private equipmentSignature = "";
 
   // State
   private chaosValue = 0;
@@ -200,6 +208,9 @@ export class RiftHud {
     this.showPickupFlash(payload.amount);
   };
   private readonly onToolUsed = (payload: { contaminantId: string; toolType: ContaminantType; usesLeft: number }): void => {
+    const actual = this.equipmentData.find(slot => slot.itemId === payload.contaminantId);
+    if (actual?.isPassive) this.showPassiveFlash(actual.name);
+    if (this.equipmentData.length) return;
     const slot = this.toolSlotData.find((s) => s.type === payload.toolType && s.usesRemaining > payload.usesLeft);
     if (slot) {
       slot.usesRemaining = payload.usesLeft;
@@ -213,6 +224,7 @@ export class RiftHud {
     ensurePulseKeyframes();
     this.config = config;
     this.active = true;
+    this.equipmentData = []; this.equipmentSignature = "";
     this.chaosValue = 0;
     this.healthFrac = 1;
     this.healthCurrent = GAME_CONSTANTS.PLAYER.MAX_HEALTH;
@@ -244,11 +256,27 @@ export class RiftHud {
    */
   setBurden(weight: number, capacity: number): void {
     if (!this.burdenEl) return;
-    const next = `B 随身 ${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
+    const next = `Tab 拾获 ${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
     if (next === this.lastBurden) return;
     this.lastBurden = next;
-    this.burdenEl.textContent = next;
-    this.burdenEl.style.opacity = weight >= capacity * .875 ? ".85" : ".55";
+    this.burdenValueEl.textContent = `${(weight / 10).toFixed(1)} / ${(capacity / 10).toFixed(1)}`;
+    this.burdenEl.classList.toggle('is-heavy', weight >= capacity * .875);
+  }
+
+  setEquipment(slots: readonly RiftEquipmentSlot[]): void {
+    const signature = JSON.stringify(slots);
+    if (!this.root || signature === this.equipmentSignature) return;
+    this.equipmentSignature = signature; this.equipmentData = slots;
+    if (!this.toolSlotEl) { this.toolSlotEl = document.createElement('div'); this.toolSlotEl.id = 'rift-hud-tools'; this.toolSlotEl.className = 'device-plate'; this.root.append(this.toolSlotEl); }
+    this.toolSlotEl.replaceChildren();
+    for (const slot of slots) {
+      const row = document.createElement('div'); row.className = `rift-equipment-row${slot.itemId ? '' : ' is-empty'}`; row.dataset.slotId = slot.slotId; row.dataset.itemId = slot.itemId ?? '';
+      const icon = document.createElement('img'); if (slot.icon) icon.src = slot.icon; else icon.style.visibility = 'hidden'; icon.alt = '';
+      const key = document.createElement('span'); key.className = 'rift-equipment-key'; key.textContent = slot.label;
+      const name = document.createElement('span'); name.className = 'rift-equipment-name'; name.textContent = slot.name;
+      const uses = document.createElement('span'); uses.className = 'rift-equipment-uses'; uses.textContent = slot.usesRemaining === undefined ? '—' : slot.maxDurability !== undefined ? `${slot.usesRemaining}/${slot.maxDurability}` : String(slot.usesRemaining);
+      row.append(icon, key, name, uses); row.setAttribute('aria-label', `${slot.label} ${slot.name}${slot.usesRemaining === undefined ? '' : slot.maxDurability !== undefined ? `，耐久度 ${slot.usesRemaining} / ${slot.maxDurability}` : `，剩余 ${slot.usesRemaining} 次`}`); this.toolSlotEl.append(row);
+    }
   }
 
   setActiveEffects(effects: ActiveEffectInfo[]): void {
@@ -393,9 +421,20 @@ export class RiftHud {
     kindlingValue.className = 'rift-hud-value';
     this.kindlingEl.appendChild(kindlingLabel);
     this.kindlingEl.appendChild(kindlingValue);
-    this.burdenEl = document.createElement('div');
+    this.burdenEl = document.createElement('button');
+    this.burdenEl.type = 'button';
+    this.burdenEl.className = 'hud-report-entry';
+    this.burdenEl.setAttribute('aria-label', '查看本趟拾获（Tab）');
+    this.burdenEl.setAttribute('aria-keyshortcuts', 'Tab');
+    this.burdenEl.hidden = !this.config.onInventory;
+    this.burdenEl.innerHTML = '<span class="hud-entry-key">Tab</span><span>拾获</span>';
+    this.burdenValueEl = document.createElement('span');
+    this.burdenValueEl.className = 'hud-entry-weight';
+    this.burdenEl.append(this.burdenValueEl);
+    this.burdenEl.addEventListener('click', event => { event.stopPropagation(); if (!this.config.isRunEnded()) this.config.onInventory?.(); });
+    for (const name of ['pointerdown', 'keydown', 'keyup'] as const) this.burdenEl.addEventListener(name, event => { if (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key)) event.stopPropagation(); });
     this.burdenEl.id = 'rift-hud-burden';
-    this.burdenEl.style.cssText = 'position:absolute;right:24px;top:48px;font-size:11px;line-height:18px;color:#a3ada5;opacity:.55;pointer-events:none';
+    this.burdenEl.style.cssText = 'position:absolute;right:20px;top:44px';
     this.lastBurden = "";
     root.appendChild(this.burdenEl);
 
@@ -600,7 +639,7 @@ export class RiftHud {
   }
 
   private updateToolSlotText(): void {
-    if (!this.toolSlotEl) return;
+    if (!this.toolSlotEl || this.equipmentData.length) return;
 
     this.toolSlotEl.replaceChildren();
     for (const slot of this.toolSlotData) {

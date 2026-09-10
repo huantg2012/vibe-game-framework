@@ -140,6 +140,9 @@ export type ContaminantType =
 /** Contaminant rarity */
 export type ContaminantRarity = 'common' | 'fine' | 'rare';
 
+/** Quality is independent of the legacy ability-family rarity/visual identity. */
+export type ContaminantQuality = 'ordinary' | 'good' | 'fine' | 'excellent';
+
 /** Contaminant lifecycle stage */
 export type ContaminantStage = 'defense' | 'tool' | 'broken';
 
@@ -148,6 +151,8 @@ export interface Contaminant {
   id: string;
   type: ContaminantType;
   rarity: ContaminantRarity;
+  /** Absent on legacy instances; display resolves a fallback without rewriting the save. */
+  quality?: ContaminantQuality;
   stage: ContaminantStage;
   /** Impact charges accumulated during defense stage (transforms at 3) */
   impactCharges: number;
@@ -222,6 +227,8 @@ export interface SaveDataV1 {
    * Optional so pre-Slice-7 saves still load (treated as 0; missing PURIFIER is filled).
    */
   moduleMaxHpTier?: 0 | 1 | 2 | 3;
+  /** Optional on old saves. Keeps displayed impact promises stable across menu/load. */
+  impactForecast?: import('../systems/impact-system').ImpactForecastState;
 }
 
 /** Inventory-backed save. V1 remains readable and is migrated without changing IDs. */

@@ -3,11 +3,11 @@ import { InventoryStore } from '../../src/systems/inventory-store';
 import type { Contaminant } from '../../src/types/game-types';
 import type { NewInventoryItem } from '../../src/types/inventory-types';
 
-const c = (id: string, tool = false): Contaminant => ({ id, type: 'freeze', rarity: 'common', stage: tool ? 'tool' : 'defense', impactCharges: 0, usesRemaining: 2 });
+const c = (id: string, tool = false): Contaminant => ({ id, type: 'solidify', rarity: 'common', stage: tool ? 'tool' : 'defense', impactCharges: 0, usesRemaining: 2 });
 const loot = (id: string): NewInventoryItem => ({ id, kind: 'contaminant', contaminant: c(id) });
 function store(capacity = 160): InventoryStore {
   const result = new InventoryStore();
-  result.configure({ capacity, contaminantWeight: 20, starterDefinitionId: 'test-plain', weaponDefinition: id => id === 'test-plain' ? { id, weight: 30 } : undefined, isPassiveTool: () => false, toolSlotCount: () => 3 });
+  result.configure({ capacity, contaminantWeight: 20, starterDefinitionId: 'crowbar_plain', weaponDefinition: id => id === 'crowbar_plain' ? { id, weight: 30 } : undefined, isPassiveTool: () => false, toolSlotCount: () => 3 });
   assert.equal(result.ensureStarter().ok, true);
   return result;
 }

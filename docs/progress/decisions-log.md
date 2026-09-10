@@ -7,6 +7,22 @@ note: Append-only. Do not modify historical entries.
 
 ---
 
+## DEC-141: 战斗首轮反馈与随身入口
+
+- Date: 2026-09-09
+- User decision: 玩家攻击动画获认可；要求敌人受击清楚、手中撬棍缩小、净化点与裂隙背包触发/视觉与既有UX统一。
+- Scope: 保留玩家攻击动作及玩法，完善生产身体/可击核心纯表现受力反应；手持0.68倍率，品质图标不变。B及右上随身按钮共用入口，Tab保留报告，裂隙整理不停。
+- Status: 内部实际浏览器与构建验证通过；记录 `docs/qa/iteration-19-feedback.md`。修正后体验待用户审查，不标整轮结案，不提交推送。
+
+## DEC-140: 专用攻击与受击体验关卡
+
+- Date: 2026-09-09
+- User decision: “游戏中的攻击/受击需要专门的体验测试关卡，自由切换装备、敌人，让我体验手感。”
+- Scope: 迭代19新增W7战斗试验场。独立HTML入口复用生产玩家、武器、敌人模型、AI、Combat、Host与工具；选择装备/敌人/污染档，空场试挥与真实对练，真实掉血、快捷重开、可选自动续场与明确标注的免伤。
+- Experience: 默认实战镜头，提供近观；配置时暂停防止操作控件时受袭，点击场地恢复。此为试验场控制，正式裂隙背包不停的规则不变。
+- Isolation: 不读写正式存档，URL保存配置；试验装备、工具消费和战果仅本页内存。不给正式游戏发放物品，不借本任务决定退出/刷新损失。
+- Status: 实现与内部浏览器验证已通过；入口 `/combat-lab.html`，手感待用户体验。验收见 `docs/qa/iteration-19-combat-lab.md`；本批尚未提交推送。
+
 ## DEC-139: 保存迭代19阶段进度并推送
 
 - Date: 2026-09-09
@@ -2209,3 +2225,21 @@ I9-G 实现 `docs/art/rift-vision-presentation.md` 处方 2 时，规格给了�
 - Alternatives: PixiJS (render-only), Excalibur.js (smaller community), raw Canvas
 - Reason: Most mature and documented Web 2D game framework. Built-in physics, input, audio, camera, scene management reduces ~60% boilerplate. Largest community ensures best AI vibe coding quality (most training data available). TypeScript support is solid.
 - Impact: Architecture constrained to Phaser Scene lifecycle. Physics limited to Arcade (AABB). UI limited in Canvas (compensated with DOM overlay for complex screens).
+
+
+## DEC-142 · 统一物件供奉、有限使用与Tab报告（2026-09-09）
+
+**来源：** 用户指出Tab存续报告与B背包重复拥有污染物，要求武器/技能污染物整合；追问确认开局白板已供奉、照常消耗，武器按命中且次数更多。
+
+**决定：** 新拾两类物件均需在现有供奉台经历冲击计数，再在出击前装备；武器不增加虚构的基地防御技能。技能防御末轮先结算再转化。开局白板直接可用；按有效命中的挥击消耗一次，同挥多目标只扣一次、空挥不扣。初始武器次数普通60、优良75、精良90、卓越110（内部平衡初值，待试玩）；最后一击完整完成。
+
+净化点没有负重；Tab物件页统一管理库、供奉台处理供奉、入口备行唯一装配。B独立界面与布卷视觉撤下，裂隙Tab仅管理拾获且不停世界。备行增加1武器槽，技能槽仍基础2主动+1被动/成长3主动+1被动。18类污染物各有图标，裂隙HUD显示实际实例装备和余次。死亡丢全部携入及所得、基地保留规则不变。已有基地无就绪武器补普通白板策略保留，裂隙内不补。刷新/主动退出/崩溃政策仍未授权决定。
+
+**状态：** W9实现及内部领域、真实场景与静态美术核已完成，等用户体验；不是人审PASS。见 `docs/tasks/iteration-19.md`、`docs/qa/iteration-19-unified-equipment.md`。W7–W9尚未提交推送。
+
+**DEC-142后续呈现补充：** 用户建议将武器使用次数包装为耐久度。采用当前／最大耐久显示（普通60／优良75／精良90／卓越110），命中挥击损耗1、空挥0、归零损坏；技能继续使用次数。保留同一存档字段与原消耗机制，不新增维修、升级或低耐久降伤。已同步报告、备行、供奉预览、裂隙HUD和战斗试验场。
+
+
+## DEC-143 · 非武器污染物审查转实施（2026-09-10）
+
+用户“你的设计很不错，按你的计划继续推进吧”批准审查方向与分批计划。固定物件身份、独立四品质、18条缩并为13候选族、信息/环境职责与供奉收益重整均进入实施；具体数值按CSV落地后测试，不代称平衡已过。先交行为合同基础，再交8个完整样板，之后余5族与搜撤经济/旧物件迁移。每件完整落地才替换旧件，保留实例与余次比例，不删除或补满玩家库存。退出/刷新政策仍未决定。合同 `docs/tasks/iteration-20.md`。

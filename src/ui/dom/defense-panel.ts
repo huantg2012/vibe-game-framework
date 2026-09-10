@@ -1,3 +1,4 @@
+import { getContaminantQuality, getContaminantQualityName, getContaminantQualityRank, supportsContaminantQuality } from '@/systems/contaminant-quality';
 /**
  * 供奉：已装填槽和库存为主区、单项检视为从区；键鼠共享选择状态。
  * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
@@ -6,12 +7,14 @@
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { audioManager } from '@/managers/audio-manager';
 import { gameState } from '@/managers/game-state';
-import { saveManager } from '@/managers/save-manager';
+import { inventoryStore } from '@/systems/inventory-store';
+import { getEquipmentLifecycle, type InventoryItem } from '@/types/inventory-types';
+import { WEAPON_DATA } from '@/generated/weapon-data';
+import { contaminantIconUrl } from '@/art/contaminant-icons';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
-import { getDefenseName, getRarityStars, sortContaminants } from '@/ui/contaminant-names';
+import { getDefenseName, getRarityStars } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
-import type { Contaminant } from '@/types/game-types';
 import { renderPanelContent } from './panel-render-state';
 import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
@@ -36,6 +39,23 @@ const RARITY_COLORS: Record<string, string> = {
 let panel: HTMLDivElement | null = null;
 let cleanupWorldInteraction: (() => void) | null = null;
 let onCloseCallback: (() => void) | null = null;
+let actionError = '';
+const escape = (value: string): string => value.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]!));
+function offeringMeta(item: InventoryItem) {
+  if (item.kind === 'weapon') {
+    const def = WEAPON_DATA[item.weapon.definitionId]!;
+    return { name: def.name, rank: def.qualityRank, badge: def.qualityName, color: '#a3b3a0', threshold: def.offeringCharges, icon: `/assets/weapons/crowbars/${def.id}-icon.png`, summary: '承受冲击' };
+  }
+  const c = item.contaminant, def = CONTAMINANT_DATA[c.type];
+  return { name: getDefenseName(c.type), rank: getContaminantQualityRank(c), badge: supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity), color: supportsContaminantQuality(c.type) ? '#a3b3a0' : RARITY_COLORS[c.rarity], threshold: GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD, icon: contaminantIconUrl(c.type, getContaminantQuality(c)), summary: def.summaryDefense };
+}
+function offeringIcon(item: InventoryItem, size = 28): string { return `<img src="${escape(offeringMeta(item).icon)}" alt="" width="${size}" height="${size}" style="object-fit:contain;image-rendering:pixelated;flex:none;vertical-align:middle">`; }
+function changeSlot(id: string | null, slot: number): void {
+  const result = inventoryStore.slotOffering(id, slot);
+  actionError = result.ok ? '' : result.error === 'storage-failed' ? '未能保存，物件位置未改变。请重试。' : '物件或槽位已变化，请重新选择。';
+  if (result.ok) contaminantSystem.syncInventoryDerivedState();
+  render();
+}
 
 // Keyboard cursor (IA §0.4 "键盘是第一公民"): three focus regions, cycled with Tab.
 type CursorRegion = 'slots' | 'inventory' | 'actions';
@@ -63,6 +83,7 @@ export const defensePanel = {
     cursorSlot = 0;
     cursorInv = 0;
     cursorAction = 0;
+    actionError = '';
     createPanel(context);
     audioManager.playSFX('sfx-ui-open');
   },
@@ -120,7 +141,7 @@ function onKeyDown(e: KeyboardEvent): void {
     return;
   }
 
-  const slots = contaminantSystem.getDefenseSlotted();
+  const slots = inventoryStore.getOfferingItems();
   const inventory = getInventory();
 
   if (e.key === 'Tab') {
@@ -180,13 +201,11 @@ function moveCursor(dir: 1 | -1, slotCount: number, invCount: number, vertical: 
   }
 }
 
-function activateFocused(slots: (Contaminant | null)[], inventory: Contaminant[]): void {
+function activateFocused(slots: (InventoryItem | null)[], inventory: InventoryItem[]): void {
   if (cursorRegion === 'slots') {
     const c = slots[cursorSlot];
     if (c) {
-      contaminantSystem.unslotDefense(cursorSlot);
-      saveManager.save();
-      render();
+      changeSlot(null, cursorSlot);
     }
   } else if (cursorRegion === 'inventory') {
     const c = inventory[cursorInv];
@@ -200,20 +219,18 @@ function activateFocused(slots: (Contaminant | null)[], inventory: Contaminant[]
 // Rendering
 // ---------------------------------------------------------------------------
 
-function getInventory(): Contaminant[] {
-  return sortContaminants(
-    contaminantSystem.getAll().filter((c) => c.stage === 'defense' && !isSlotted(c.id)),
-  );
+function getInventory(): InventoryItem[] {
+  return inventoryStore.getItems().filter(item => item.location.kind === 'stash' && getEquipmentLifecycle(item).stage === 'defense')
+    .sort((a,b) => offeringMeta(b).rank - offeringMeta(a).rank || a.id.localeCompare(b.id));
 }
 
 function render(selectionOnly = false, revealSelection = false): void {
   if (!panel) return;
 
-  const slots = contaminantSystem.getDefenseSlotted();
+  const slots = inventoryStore.getOfferingItems();
   const inventory = getInventory();
   clampCursor(slots.length, inventory.length);
 
-  const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
 
   // Defense stage = "charging/dormant" reading of the same substance the tool stage is
   // the "active" reading of — same contam-core tone as the loadout panel's title
@@ -229,12 +246,11 @@ function render(selectionOnly = false, revealSelection = false): void {
     const selected = cursorRegion === 'slots' && cursorSlot === i;
     const cursor = '';
     if (c) {
-      const name = getDefenseName(c.type);
-      const stars = getRarityStars(c.rarity);
-      const color = RARITY_COLORS[c.rarity];
+      const meta = offeringMeta(c);
+      const { name, badge: stars, color } = meta;
       html += `<div class="slot-cell slot-filled defense-unslot-btn${selected ? ' slot-selected' : ''}" data-index="${i}">
-        <div>${cursor}<span class="slot-name" style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></div>
-        <div class="slot-info">充能 ${c.impactCharges} / ${threshold}</div>
+        <div>${offeringIcon(c)}${cursor}<span class="slot-name" style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></div>
+        <div class="slot-info">供奉 ${getEquipmentLifecycle(c).impactCharges} / ${meta.threshold}</div>
       </div>`;
     } else {
       html += `<div class="slot-cell${selected ? ' slot-selected' : ''}" data-index="${i}">
@@ -251,21 +267,20 @@ function render(selectionOnly = false, revealSelection = false): void {
   } else {
     const canEquip = slots.some((s) => s === null);
     inventory.forEach((c, idx) => {
-      const name = getDefenseName(c.type);
-      const stars = getRarityStars(c.rarity);
-      const color = RARITY_COLORS[c.rarity];
-      const def = CONTAMINANT_DATA[c.type];
-      const reductionPct = Math.round(def.defenseReduction * 100);
+      const meta = offeringMeta(c);
+      const { name, badge: stars, color } = meta;
+
       const selected = cursorRegion === 'inventory' && cursorInv === idx;
       const cursor = '';
-      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${c.id}" data-inv-index="${idx}" style="display:flex;justify-content:space-between;gap:5px;">
-        <span>${cursor}<span style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></span>
-        <span style="color:#729887;font-weight:400;">${reductionPct}%</span>
+      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${escape(c.id)}" data-inv-index="${idx}" style="display:flex;justify-content:space-between;gap:5px;">
+        <span>${offeringIcon(c)} ${cursor}<span style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></span>
+        <span style="color:#729887;font-weight:400;">${meta.summary}</span>
       </div>`;
     });
   }
   html += `</div>`;
-  html += `</div><div class="decision-aside readout-detail inspect-dock" id="defense-inspect-dock">${computeInspectHtml(slots, inventory, threshold)}</div></div>`;
+  html += `</div><div class="decision-aside readout-detail inspect-dock" id="defense-inspect-dock">${computeInspectHtml(slots, inventory)}</div></div>`;
+  if (actionError) html += `<p class="readout-note" role="alert">${actionError}</p>`;
   html += buildKeyHintBar(slots, inventory);
 
   renderPanelContent(panel, html, selectionOnly);
@@ -273,14 +288,14 @@ function render(selectionOnly = false, revealSelection = false): void {
   wireEvents(selectionOnly);
 }
 
-function inventoryEmptyHtml(slots: (Contaminant | null)[]): string {
+function inventoryEmptyHtml(slots: (InventoryItem | null)[]): string {
   const hasSlotted = slots.some((s) => s !== null);
-  return `<div class="readout-empty"><div class="readout-section">${hasSlotted ? '残渣已全部供奉' : '尚无可供奉残渣'}</div>
-    <p class="readout-copy">${hasSlotted ? '已装填的残渣在归来冲击时生效。选择槽位可取下。' : '裂隙中的翻堆可能留下残渣。'}</p>
+  return `<div class="readout-empty"><div class="readout-section">${hasSlotted ? '待供奉物件已全部装填' : '尚无待供奉物件'}</div>
+    <p class="readout-copy">${hasSlotted ? '物件在归来冲击中完成供奉。选择槽位可取下，已有进度保留。' : '裂隙中拾获的武器与污染物，都在这里完成供奉后用于出击。'}</p>
     ${hasSlotted ? '' : '<p class="readout-note">关闭供奉，前往裂隙入口。</p>'}</div>`;
 }
 
-function buildKeyHintBar(slots: (Contaminant | null)[], inventory: Contaminant[]): string {
+function buildKeyHintBar(slots: (InventoryItem | null)[], inventory: InventoryItem[]): string {
   if (cursorRegion === 'actions') {
     return `<div class="key-hint-bar">
     <span><span class="key">Tab</span> 切区</span>
@@ -320,9 +335,7 @@ function wireEvents(selectionOnly = false): void {
       const index = parseInt(el.dataset.index!, 10);
       cursorRegion = 'slots';
       cursorSlot = index;
-      contaminantSystem.unslotDefense(index);
-      saveManager.save();
-      render();
+      changeSlot(null, index);
     });
   });
 
@@ -348,8 +361,8 @@ function wireEvents(selectionOnly = false): void {
         return;
       }
       const id = el.dataset.id!;
-      const c = contaminantSystem.getAll().find((item) => item.id === id);
-      if (c) equipDefense(c, contaminantSystem.getDefenseSlotted());
+      const c = inventoryStore.getItem(id);
+      if (c) equipDefense(c, inventoryStore.getOfferingItems());
     });
     el.addEventListener('pointermove', () => {
       const idx = parseInt(el.dataset.invIndex!, 10);
@@ -362,19 +375,16 @@ function wireEvents(selectionOnly = false): void {
   });
 }
 
-function equipDefense(c: Contaminant, currentSlots: (Contaminant | null)[]): void {
+function equipDefense(c: InventoryItem, currentSlots: (InventoryItem | null)[]): void {
   const firstEmpty = currentSlots.findIndex((s) => s === null);
   if (firstEmpty >= 0) {
-    contaminantSystem.slotDefense(c.id, firstEmpty);
-    saveManager.save();
-    render();
+    changeSlot(c.id, firstEmpty);
   }
 }
 
 function computeInspectHtml(
-  slots: (Contaminant | null)[],
-  inventory: Contaminant[],
-  threshold: number,
+  slots: (InventoryItem | null)[],
+  inventory: InventoryItem[],
 ): string {
   const target = cursorRegion === 'slots' ? { kind: 'slot' as const, index: cursorSlot }
     : cursorRegion === 'inventory' ? { kind: 'inventory' as const, index: cursorInv }
@@ -383,21 +393,28 @@ function computeInspectHtml(
 
   if (target.kind === 'slot') {
     const c = slots[target.index];
-    if (!c) return `<div class="readout-section">供奉槽 ${target.index + 1}</div><p class="readout-copy">未供奉。</p><p class="readout-note">${inventory.length > 0 ? "用 Tab 切到库存，选择残渣后装填。" : "取得残渣后，可在此抵挡归来冲击。"}</p>`;
-    return buildDefenseInspectHtml(c, { chargeThreshold: threshold, slotState: 'slotted', canEquip: true });
+    if (!c) return `<div class="readout-section">供奉槽 ${target.index + 1}</div><p class="readout-copy">未供奉。</p><p class="readout-note">${inventory.length > 0 ? "用 Tab 切到库存，选择物件后供奉。" : "取得武器或污染物后，在此承受归来冲击，完成供奉。"}</p>`;
+    return inspectOffering(c, true, true);
   }
 
   const c = inventory[target.index];
   if (!c) return INSPECT_EMPTY_HTML;
   const canEquip = slots.some((s) => s === null);
-  return buildDefenseInspectHtml(c, { chargeThreshold: threshold, slotState: 'unslotted', canEquip });
+  return inspectOffering(c, false, canEquip);
 }
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function isSlotted(id: string): boolean {
-  const slots = contaminantSystem.getDefenseSlotted();
-  return slots.some((c) => c?.id === id);
+function inspectOffering(item: InventoryItem, slotted: boolean, canEquip: boolean): string {
+  const meta = offeringMeta(item), life = getEquipmentLifecycle(item);
+  const art = `<div style="margin-bottom:12px">${offeringIcon(item, 48)}</div>`;
+  if (item.kind === 'contaminant') return art + buildDefenseInspectHtml(item.contaminant, {
+    chargeThreshold: meta.threshold, slotState: slotted ? 'slotted' : 'unslotted', canEquip,
+  });
+  const def = WEAPON_DATA[item.weapon.definitionId]!;
+  return art + `<div class="readout-section">${escape(meta.name)}</div>
+    <p class="readout-copy">${escape(meta.badge)} · 武器</p>
+    <p class="readout-copy">供奉进度 ${life.impactCharges} / ${meta.threshold}</p>
+    <p class="readout-note">在此承受冲击，完成后才可放入出击武器位。供奉期间不提供装置防护。</p>
+    <div class="readout-section">供奉完成后</div>
+    <p class="readout-copy">伤害 ${def.damageMin}–${def.damageMax} · 耐久度 ${def.maxUses} / ${def.maxUses}</p>
+    <p class="readout-note">${slotted ? '已在供奉中。取下保留进度。' : canEquip ? 'Enter 供奉到空槽。' : '供奉槽已满，先取下一件。'}</p>`;
 }

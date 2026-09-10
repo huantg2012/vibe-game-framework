@@ -38,6 +38,7 @@ import { doorwayWallSeats } from '@/generation/wall-host-placement';
  */
 
 import Phaser from 'phaser';
+import { EnvironmentHazardControl } from './environment-hazard-control';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { isPaintInflated, PAINT_BREATH } from '@/entities/form-renderers/d/paint-genome/live';
@@ -87,6 +88,18 @@ export interface HostSubject {
   readonly id: string;
   readonly form: ContaminationForm;
   readonly position: Vector2;
+}
+
+export interface HostToolTarget extends HostSubject {
+  readonly category: 'wall' | 'paint' | 'volume';
+  /** Natural release state, even while temporarily suppressed. */
+  readonly hazardReleased: boolean;
+  readonly canSuppressReleasedHazard: boolean;
+  readonly canDelayNextHazard: boolean;
+  readonly suppressionRemainingMs: number;
+  readonly delayRemainingMs: number;
+  readonly recoveryPending: boolean;
+  readonly recoveryWarning: boolean;
 }
 
 interface HostBase {
@@ -172,6 +185,7 @@ interface DingHost extends HostBase {
   awake: boolean;
   live: PixelRect;
   elapsedMs: number;
+  phaseElapsedMs: number;
   moving: boolean;
   reverseActivity: ReverseActivityClock;
 }
@@ -197,6 +211,7 @@ export class ContaminationHostSystem {
   private getVisibility: ((p: Readonly<Vector2>) => number) | null = null;
   private readonly meleeTargetCache = new WeakMap<object, MeleeTarget>();
   private readonly coreFlashMs = new Map<string, number>();
+  private readonly hazardControls = new Map<string, EnvironmentHazardControl>();
   private volumeSight = 1;
   private lastPlayerTile = { col: -1, row: -1 };
   private lastDraw: SortieDraw | null = null;
@@ -277,6 +292,7 @@ export class ContaminationHostSystem {
     this.liveMotion = false;
     this.paintFloors.clear();
     this.coreFlashMs.clear();
+    this.hazardControls.clear();
     this.walkableFloors = null;
     this.occluders = null;
     this.hearingPolicy = undefined;
@@ -312,6 +328,7 @@ export class ContaminationHostSystem {
   clearHosts(): void {
     this.paintFloors.clear();
     this.coreFlashMs.clear();
+    this.hazardControls.clear();
     for (const host of this.hosts) {
       host.gfx.destroy();
       host.marks?.destroy();
@@ -328,6 +345,7 @@ export class ContaminationHostSystem {
         continue;
       }
       this.paintFloors.delete(host.id);
+      this.hazardControls.delete(host.id);
       host.gfx.destroy();
       host.marks?.destroy();
       if (host.kind === 'yi') host.telegraph.destroy();
@@ -360,6 +378,65 @@ export class ContaminationHostSystem {
     return this.hosts
       .filter((h) => h.alive)
       .map((h) => ({ id: h.id, form: h.form, position: h.core }));
+  }
+
+  /** Query-only projection. Selection, visibility and item consumption belong to the caller. */
+  getToolTargets(): readonly HostToolTarget[] {
+    return this.hosts.filter(host => host.alive).map(host => {
+      const released = this.hasReleasedHazard(host);
+      const control = this.hazardControls.get(host.id);
+      return {
+        id: host.id, form: host.form, position: host.core,
+        category: host.kind === 'bing' ? 'paint' : host.kind === 'ding' ? 'volume' : 'wall',
+        hazardReleased: released,
+        canSuppressReleasedHazard: released,
+        canDelayNextHazard: this.hasDelayableHazard(host),
+        suppressionRemainingMs: control?.suppressionRemainingMs ?? 0,
+        delayRemainingMs: control?.delayRemainingMs ?? 0,
+        recoveryPending: control?.recoveryPending ?? false,
+        recoveryWarning: control?.recoveryWarning ?? false,
+      };
+    });
+  }
+
+  /** Persistent paint or a material volume's current released field; never kills its core. */
+  suppressReleasedHazard(id: string, sourceId: string, durationMs: number): boolean {
+    const host = this.hosts.find(candidate => candidate.id === id && candidate.alive);
+    if (!host || !this.hasReleasedHazard(host) || !EnvironmentHazardControl.valid(sourceId, durationMs)) return false;
+    this.hazardControl(id).suppress(sourceId, durationMs);
+    if (host.kind === 'ding' && host.presence) host.presence.hazardActive = false;
+    return true;
+  }
+
+  /** Material volumes only. A field that has reached release cannot be delayed retroactively. */
+  delayNextHazard(id: string, sourceId: string, durationMs: number): boolean {
+    const host = this.hosts.find(candidate => candidate.id === id && candidate.alive);
+    if (!host || !this.hasDelayableHazard(host) || !EnvironmentHazardControl.valid(sourceId, durationMs)) return false;
+    this.hazardControl(id).delay(sourceId, durationMs);
+    return true;
+  }
+
+  clearToolControl(id: string, sourceId: string): void {
+    this.hazardControls.get(id)?.clear(sourceId);
+  }
+
+  private hazardControl(id: string): EnvironmentHazardControl {
+    let control = this.hazardControls.get(id);
+    if (!control) { control = new EnvironmentHazardControl(); this.hazardControls.set(id, control); }
+    return control;
+  }
+
+  private hasReleasedHazard(host: Host): boolean {
+    if (host.kind === 'bing') return resolveContactChannel(host.form.portfolio, host.form.lexemes.contact) === 'step_chaos';
+    return host.kind === 'ding' && !!host.presence && host.presence.hasPresence &&
+      host.presence.phase === 'release' && this.volumeActive(host) &&
+      resolveContactChannel(host.form.portfolio, host.form.lexemes.contact) === 'volume_chaos_sight';
+  }
+
+  private hasDelayableHazard(host: Host): boolean {
+    return host.kind === 'ding' && !!host.presence && host.presence.hasPresence &&
+      host.presence.phase !== 'release' &&
+      resolveContactChannel(host.form.portfolio, host.form.lexemes.contact) === 'volume_chaos_sight';
   }
 
   /**
@@ -485,7 +562,13 @@ export class ContaminationHostSystem {
   private refreshVolumePresence(host: DingHost, elapsedMs: number, active: boolean): void {
     if (!host.presence) return;
     updateVolumePresenceFrame(host.presence, { substrate: host.form.substrate, coverage: host.form.coverage,
-      elapsedMs, rect: host.live, active, isWalkableFloor: this.volumeFloorAllowed });
+      elapsedMs, phaseElapsedMs: host.previewTimeMs ?? host.phaseElapsedMs,
+      rect: host.live, active, isWalkableFloor: this.volumeFloorAllowed });
+    const control = this.hazardControls.get(host.id);
+    if (control) {
+      control.observeVolumePhase(host.presence.phase);
+      if (control.suppressed) host.presence.hazardActive = false;
+    }
     if (host.presence.hasPresence) { host.core.x = host.presence.coreX; host.core.y = host.presence.coreY; }
   }
 
@@ -767,6 +850,7 @@ export class ContaminationHostSystem {
       awake: false,
       live: aabbPixelRect(box, TILE),
       elapsedMs: 0,
+      phaseElapsedMs: 0,
       moving: false,
       marks,
     });
@@ -873,11 +957,14 @@ export class ContaminationHostSystem {
 
   /** Pre-R2-C2 body. Always step-chaos. Does not read lexemes.contact. */
   private tickBingSortie(host: BingHost, col: number, row: number, dtMs: number): void {
+    const control = this.hazardControls.get(host.id);
+    control?.tick(dtMs);
     host.phase += dtMs * PAINT_BREATH;
     const inflated = isPaintInflated(host.phase);
+    control?.observePaintInflation(inflated);
     const onPaint = this.bingOnPaint(host, col, row);
     const stepped = col !== this.lastPlayerTile.col || row !== this.lastPlayerTile.row;
-    if (onPaint && stepped) {
+    if (onPaint && stepped && !control?.suppressed) {
       const amount = inflated ? C.PAINT_STEP_CHAOS_INFLATED : C.PAINT_STEP_CHAOS_REST;
       this.chaos?.addChaos('paint_step', amount);
     }
@@ -887,11 +974,14 @@ export class ContaminationHostSystem {
   private tickBingLive(host: BingHost, col: number, row: number, dtMs: number): void {
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal') return;
+    const control = this.hazardControls.get(host.id);
+    control?.tick(dtMs);
     host.phase += dtMs * PAINT_BREATH;
     const inflated = isPaintInflated(host.phase);
+    control?.observePaintInflation(inflated);
     const stepped = col !== this.lastPlayerTile.col || row !== this.lastPlayerTile.row;
     const channel = resolveContactChannel(host.form.portfolio, host.form.lexemes.contact);
-    if (channel === 'step_chaos' && stepped) {
+    if (channel === 'step_chaos' && stepped && !control?.suppressed) {
       if (this.bingOnPaint(host, col, row)) {
         const amount = inflated ? C.PAINT_STEP_CHAOS_INFLATED : C.PAINT_STEP_CHAOS_REST;
         this.chaos?.addChaos('paint_step', amount);
@@ -977,7 +1067,12 @@ export class ContaminationHostSystem {
     const stop = resolveStopLoss(host.form);
     if (stop === 'illegal') return;
     const prev = host.live;
-    if (host.activity.visual.phase === 'active') host.elapsedMs += dtMs;
+    const control = this.hazardControls.get(host.id);
+    const phaseDtMs = control?.tick(dtMs) ?? dtMs;
+    if (host.activity.visual.phase === 'active') {
+      host.elapsedMs += dtMs;
+      host.phaseElapsedMs += phaseDtMs;
+    }
     // New material volumes own their complete shape cycle; do not compound it
     // with the legacy echo box morph (which can flip a near-square mist axis).
     if (!host.presence) host.live = dingLiveRect(host.box, host.form.lexemes.motion, host.elapsedMs, TILE);

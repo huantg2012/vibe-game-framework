@@ -11,24 +11,18 @@ import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
 import { tideSystem } from '@/systems/tide-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
-import { contaminantSystem } from '@/systems/contaminant-system';
+import { openInventory } from '@/ui/inventory-presenter';
+import { inventoryPanel } from './inventory-panel';
 import { impactSystem, SEVERITY_LABEL } from '@/systems/impact-system';
-import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
-import { buildDefenseInspectHtml, buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
-import { BAR_COLOR, DIM, MODULE_LABEL, MODULE_ORDER } from './module-identity-strip';
+import { INSPECT_EMPTY_HTML } from './inspect-dock';
+import { BAR_COLOR, MODULE_LABEL, MODULE_ORDER } from './module-identity-strip';
 import { formatChaosRateDelta } from '@/ui/side-effect-labels';
 import type { InteractionTargetType } from './purification-hud';
-import type { Contaminant, GrowthUpgradeId, TidePhase } from '@/types/game-types';
+import type { GrowthUpgradeId, TidePhase } from '@/types/game-types';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 import { renderPanelContent } from './panel-render-state';
 
-const RARITY_COLORS: Record<string, string> = {
-  common: '#8a8f96',
-  fine: '#729887',
-  rare: '#9bb3a2',
-};
-
-const TABS = ['装置', '残渣', '潮汐', '蜕变'] as const;
+const TABS = ['装置', '物件', '潮汐', '蜕变'] as const;
 type TabIndex = 0 | 1 | 2 | 3;
 
 const MODULE_HP_LABEL: Record<ModuleType, string> = {
@@ -48,6 +42,7 @@ const PHASE_LABEL: Record<TidePhase, string> = {
 // ---------------------------------------------------------------------------
 
 let panel: HTMLDivElement | null = null;
+let onOfferingCallback: (() => void) | null = null;
 let onCloseCallback: (() => void) | null = null;
 
 let activeTab: TabIndex = 0;
@@ -64,9 +59,10 @@ export const statusPanel = {
     return panel !== null;
   },
 
-  open(onClose?: () => void, nearestOverlap?: InteractionTargetType | null): void {
+  open(onClose?: () => void, nearestOverlap?: InteractionTargetType | null, onOffering?: () => void): void {
     if (panel) return;
     onCloseCallback = onClose ?? null;
+    onOfferingCallback = onOffering ?? null;
     activeTab = 0;
     cursorIndex = 0;
     approachedModule = overlapToModule(nearestOverlap);
@@ -81,6 +77,7 @@ export const statusPanel = {
     destroyPanel();
     onCloseCallback?.();
     onCloseCallback = null;
+    onOfferingCallback = null;
   },
 };
 
@@ -105,12 +102,13 @@ function createPanel(): void {
   backdrop.id = 'status-backdrop';
   root.appendChild(backdrop);
 
-  render();
   root.appendChild(panel);
+  render();
   document.addEventListener('keydown', onKeyDown);
 }
 
 function destroyPanel(): void {
+  inventoryPanel.close();
   document.removeEventListener('keydown', onKeyDown);
   if (panel) {
     panel.remove();
@@ -167,16 +165,9 @@ function setTab(next: TabIndex): void {
 }
 
 function getInspectableCount(): number {
-  if (activeTab === 1) return listResidueInspectable().length;
+  if (activeTab === 1) return 0;
   if (activeTab === 3) return listInscribedIds().length;
   return 0;
-}
-
-function listResidueInspectable(): Contaminant[] {
-  const all = contaminantSystem.getAll();
-  const defenseItems = sortContaminants(all.filter((c) => c.stage === 'defense'));
-  const toolItems = sortContaminants(all.filter((c) => c.stage === 'tool'));
-  return [...defenseItems, ...toolItems];
 }
 
 function listInscribedIds(): GrowthUpgradeId[] {
@@ -206,9 +197,11 @@ function render(selectionOnly = false, revealSelection = false, resetScroll = fa
     <span id="status-close-btn"><span class="key">Tab</span> / <span class="key">Esc</span> 合上</span>
   </div>`;
 
+  inventoryPanel.close();
   renderPanelContent(panel, html, selectionOnly, resetScroll);
   if (revealSelection) scrollFocusedIntoView(panel);
   bindEvents(selectionOnly);
+  if (activeTab === 1) openInventory({ mode: 'catalog', mount: panel.querySelector<HTMLElement>('#status-inventory-host')!, onClose: () => {}, onOffering: onOfferingCallback ? () => { const callback = onOfferingCallback; statusPanel.close(); callback?.(); } : undefined });
 }
 
 function tabsHtml(): string {
@@ -221,7 +214,7 @@ function tabsHtml(): string {
 
 function detailHtml(): string {
   if (activeTab === 0) return deviceDetailHtml();
-  if (activeTab === 1) return residueDetailHtml();
+  if (activeTab === 1) return '<div id="status-inventory-host" style="min-height:0;flex:1;display:flex;"></div>';
   if (activeTab === 2) return tideDetailHtml();
   return growthDetailHtml();
 }
@@ -253,74 +246,6 @@ function deviceDetailHtml(): string {
       <div class="readout-metric"><span class="readout-label">起始混乱</span><span class="readout-value">${mods.startingChaos}</span></div>
     </div>` : '';
   return `<div class="module-report-layout"><div class="module-report-list">${list}</div><div class="readout-detail">${body}</div></div>`;
-}
-
-function residueDetailHtml(): string {
-  const all = contaminantSystem.getAll();
-  const defenseItems = sortContaminants(all.filter((c) => c.stage === 'defense'));
-  const toolItems = sortContaminants(all.filter((c) => c.stage === 'tool'));
-  const brokenItems = sortContaminants(all.filter((c) => c.stage === 'broken'));
-  const inspectable = [...defenseItems, ...toolItems];
-  if (cursorIndex >= inspectable.length) cursorIndex = Math.max(0, inspectable.length - 1);
-  const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
-  const empty = defenseItems.length === 0 && toolItems.length === 0 && brokenItems.length === 0;
-
-  let body = '';
-  if (empty) {
-    body += emptyStateHtml('尚无残渣', '裂隙中的翻堆可能留下残渣。', '关闭报告，前往裂隙入口。');
-  } else {
-    if (defenseItems.length > 0) {
-      body += groupLabelHtml('残渣');
-      body += `<div class="readout-list">`;
-      defenseItems.forEach((c, i) => {
-        body += residueTileHtml(c, i, inspectable, 'defense', threshold);
-      });
-      body += `</div>`;
-    }
-    if (toolItems.length > 0) {
-      body += groupLabelHtml('工具');
-      body += `<div class="readout-list">`;
-      toolItems.forEach((c, i) => {
-        body += residueTileHtml(c, defenseItems.length + i, inspectable, 'tool', 0);
-      });
-      body += `</div>`;
-    }
-    if (brokenItems.length > 0) {
-      body += groupLabelHtml('破碎');
-      body += `<div class="readout-list">`;
-      for (const c of brokenItems) {
-        const name = getDefenseName(c.type);
-        body += `<div class="item-tile"><span>${name}</span></div>`;
-      }
-      body += `</div>`;
-    }
-  }
-
-  let html = `<div class="scroll-area">${body}</div>`;
-  if (inspectable.length > 0) {
-    html = `<div class="decision-layout"><div class="decision-main scroll-area">${body}</div><div class="decision-aside readout-detail inspect-dock" id="status-inspect-dock">${computeResidueInspectHtml(inspectable, threshold)}</div></div>`;
-  }
-  return html;
-}
-
-function residueTileHtml(
-  c: Contaminant,
-  inspectIndex: number,
-  inspectable: Contaminant[],
-  kind: 'defense' | 'tool',
-  threshold: number,
-): string {
-  const name = kind === 'defense' ? getDefenseName(c.type) : getToolName(c.type);
-  const color = RARITY_COLORS[c.rarity] ?? '#8a8f96';
-  const selected = inspectable[cursorIndex] === c;
-  const extra = kind === 'defense'
-    ? `<span style="color:#8a8f96;">${c.impactCharges}/${threshold}</span>`
-    : `<span style="color:#8a8f96;">${c.usesRemaining}</span>`;
-  return `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${inspectIndex}">
-    <span style="color:${color};">${name}</span>
-    <span style="color:${color};">${getRarityStars(c.rarity)}</span>
-    ${extra}
-  </div>`;
 }
 
 function tideDetailHtml(): string {
@@ -373,10 +298,6 @@ function growthDetailHtml(): string {
   return html;
 }
 
-function groupLabelHtml(label: string): string {
-  return `<div style="font-size:12px;color:${DIM};margin:6px 0 4px;">${label}</div>`;
-}
-
 function emptyStateHtml(title: string, reason: string, nextAction: string): string {
   return `<div class="readout-empty"><div class="readout-section">${title}</div><p class="readout-copy">${reason}</p><p class="readout-note">${nextAction}</p></div>`;
 }
@@ -423,35 +344,6 @@ function bindEvents(selectionOnly = false): void {
       render(true);
     });
   });
-}
-
-function isDefenseSlotted(id: string): boolean {
-  return contaminantSystem.getDefenseSlotted().some((c) => c?.id === id);
-}
-
-function computeResidueInspectHtml(inspectable: Contaminant[], threshold: number): string {
-  const c = inspectable[cursorIndex];
-  if (!c) return INSPECT_EMPTY_HTML;
-
-  if (c.stage === 'defense') {
-    const slotted = isDefenseSlotted(c.id);
-    return buildDefenseInspectHtml(c, {
-      chargeThreshold: threshold,
-      slotState: slotted ? 'slotted' : 'unslotted',
-      canEquip: true,
-      readOnly: true,
-    });
-  }
-
-  const sortieSlots = contaminantSystem.getSortieLoadout();
-  const slotIndex = sortieSlots.findIndex((s) => s?.id === c.id);
-  if (slotIndex >= 0) {
-    const passiveIndex = contaminantSystem.getSortiePassiveSlotIndex();
-    const isPassiveSlot = slotIndex === passiveIndex;
-    const hotkeyLabel = isPassiveSlot ? undefined : GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[slotIndex];
-    return buildToolInspectHtml(c, { slotState: 'slotted', hotkeyLabel, canEquip: true, readOnly: true });
-  }
-  return buildToolInspectHtml(c, { slotState: 'unslotted', canEquip: true, readOnly: true });
 }
 
 function computeUpgradeInspectHtml(inscribed: GrowthUpgradeId[]): string {

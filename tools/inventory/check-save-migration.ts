@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { GAME_CONSTANTS } from '../../src/config/constants';
 import { saveManager } from '../../src/managers/save-manager';
 import { gameState } from '../../src/managers/game-state';
+import { WEAPON_DATA } from '../../src/generated/weapon-data';
 import { inventoryStore } from '../../src/systems/inventory-store';
 import { contaminantSystem } from '../../src/systems/contaminant-system';
 import { growthSystem } from '../../src/systems/growth-system';
@@ -157,6 +158,27 @@ try {
     assert.equal(gameState.getCycle(), previousCycle + 1);
     assert.equal(gameState.getKindlingReserve(), previousKindling + 7);
     assert.equal(inventoryStore.getRun()?.baseSettled, true);
+  });
+  check('old V2 weapon lifecycle migrates once; spent uses survive reload and bad new lifecycle is rejected', () => {
+    const old = readV2(); old.inventory.version = 1;
+    const weapon = old.inventory.items.find(item => item.kind === 'weapon'); assert(weapon?.kind === 'weapon');
+    const id = weapon.id, def = WEAPON_DATA[weapon.weapon.definitionId]!;
+    delete (weapon.weapon as Partial<typeof weapon.weapon>).stage;
+    delete (weapon.weapon as Partial<typeof weapon.weapon>).impactCharges;
+    delete (weapon.weapon as Partial<typeof weapon.weapon>).usesRemaining;
+    memoryStorage.setItem(key, JSON.stringify(old)); assert(saveManager.load());
+    assert.equal(readV2().inventory.version, 2);
+    const migratedWeapon = inventoryStore.getItem(id); assert(migratedWeapon?.kind === 'weapon');
+    assert.equal(migratedWeapon.weapon.stage, 'tool'); assert.equal(migratedWeapon.weapon.usesRemaining, def.maxUses);
+    assert(inventoryStore.consumeEquipmentUse(id).ok);
+    assert(saveManager.load());
+    const spent = inventoryStore.getItem(id); assert(spent?.kind === 'weapon');
+    assert.equal(spent.weapon.usesRemaining, def.maxUses - 1, 'do not refill on every load');
+    const malformed = readV2();
+    const bad = malformed.inventory.items.find(item => item.id === id); assert(bad?.kind === 'weapon');
+    delete (bad.weapon as Partial<typeof bad.weapon>).usesRemaining;
+    const before = snapshot(); memoryStorage.setItem(key, JSON.stringify(malformed));
+    assert.equal(saveManager.load(), false); assert.deepEqual(snapshot(), before);
   });
   console.log(`${checks} real SaveManager migration/integration checks passed.`);
 } finally {

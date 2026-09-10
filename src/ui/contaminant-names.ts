@@ -1,3 +1,4 @@
+import { getContaminantQualityRank } from '@/systems/contaminant-quality';
 /**
  * Single lookup entry point for contaminant display names + canonical inventory
  * ordering (Slice 5.5 C2/C3).
@@ -50,19 +51,19 @@ export function getRarityStars(rarity: ContaminantRarity): string {
 // ---------------------------------------------------------------------------
 
 const STAGE_ORDER: Record<ContaminantStage, number> = { defense: 0, tool: 1, broken: 2 };
-const RARITY_ORDER: Record<ContaminantRarity, number> = { rare: 0, fine: 1, common: 2 };
 const TYPE_ORDER: Record<string, number> = Object.fromEntries(
   Object.keys(CONTAMINANT_DATA).map((id, index) => [id, index]),
 );
 
 /** Sort a contaminant list into the fixed inventory order all panels must share,
  *  so cursor position stays muscle-memory-stable across opens (not insertion order). */
-export function sortContaminants<T extends Pick<Contaminant, 'stage' | 'rarity' | 'type'>>(
+export function sortContaminants<T extends Pick<Contaminant, 'stage' | 'rarity' | 'type' | 'quality'>>(
   list: readonly T[],
 ): T[] {
   return [...list].sort((a, b) => {
     if (a.stage !== b.stage) return STAGE_ORDER[a.stage] - STAGE_ORDER[b.stage];
-    if (a.rarity !== b.rarity) return RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity];
+    const quality = getContaminantQualityRank(b) - getContaminantQualityRank(a);
+    if (quality) return quality;
     return (TYPE_ORDER[a.type] ?? 0) - (TYPE_ORDER[b.type] ?? 0);
   });
 }

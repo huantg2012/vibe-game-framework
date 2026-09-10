@@ -2,7 +2,7 @@
 export type WeaponQuality = "ordinary" | "good" | "fine" | "excellent";
 export type WeaponVariant = "standard" | "light" | "resistant";
 /** Weight is integer tenths. damage is the mean for legacy summaries; combat uses damageMin/Max. */
-export interface WeaponDefinition { readonly id: string; readonly name: string; readonly type: string; readonly profileId: string; readonly quality: WeaponQuality; readonly qualityName: string; readonly qualityRank: number; readonly variant: WeaponVariant; readonly weight: number; readonly damageMin: number; readonly damageMax: number; readonly damage: number; readonly pollutionResistance: number; readonly visualKey: string; }
+export interface WeaponDefinition { readonly id: string; readonly name: string; readonly type: string; readonly profileId: string; readonly quality: WeaponQuality; readonly qualityName: string; readonly qualityRank: number; readonly variant: WeaponVariant; readonly weight: number; readonly damageMin: number; readonly damageMax: number; readonly damage: number; readonly pollutionResistance: number; readonly visualKey: string; readonly offeringCharges: number; readonly maxUses: number; }
 export interface WeaponAttackProfile { readonly reachPx: number; readonly arcDeg: number; readonly windupMs: number; readonly activeMs: number; readonly recoveryMs: number; readonly minIntervalMs: number; readonly targetLimit: number; readonly chaosPerTarget: number; readonly noiseWhiffPx: number; readonly noiseHitPx: number; readonly noiseKillPx: number; readonly recoilVisualPx: number; readonly contactHoldMs: number; }
 export interface WeaponLootProfile { readonly chancePercent: number; readonly qualityWeights: readonly number[]; readonly variantWeights: readonly number[]; }
 export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
@@ -15,6 +15,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "普通",
     "qualityRank": 1,
     "variant": "standard",
+    "offeringCharges": 3,
+    "maxUses": 60,
     "weight": 30,
     "damageMin": 22,
     "damageMax": 28,
@@ -31,6 +33,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "优良",
     "qualityRank": 2,
     "variant": "standard",
+    "offeringCharges": 3,
+    "maxUses": 75,
     "weight": 30,
     "damageMin": 29,
     "damageMax": 35,
@@ -47,6 +51,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "优良",
     "qualityRank": 2,
     "variant": "light",
+    "offeringCharges": 3,
+    "maxUses": 75,
     "weight": 27,
     "damageMin": 29,
     "damageMax": 35,
@@ -63,6 +69,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "优良",
     "qualityRank": 2,
     "variant": "resistant",
+    "offeringCharges": 3,
+    "maxUses": 75,
     "weight": 33,
     "damageMin": 29,
     "damageMax": 35,
@@ -79,6 +87,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "精良",
     "qualityRank": 3,
     "variant": "standard",
+    "offeringCharges": 3,
+    "maxUses": 90,
     "weight": 30,
     "damageMin": 36,
     "damageMax": 44,
@@ -95,6 +105,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "精良",
     "qualityRank": 3,
     "variant": "light",
+    "offeringCharges": 3,
+    "maxUses": 90,
     "weight": 27,
     "damageMin": 36,
     "damageMax": 44,
@@ -111,6 +123,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "精良",
     "qualityRank": 3,
     "variant": "resistant",
+    "offeringCharges": 3,
+    "maxUses": 90,
     "weight": 33,
     "damageMin": 36,
     "damageMax": 44,
@@ -127,6 +141,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "卓越",
     "qualityRank": 4,
     "variant": "standard",
+    "offeringCharges": 3,
+    "maxUses": 110,
     "weight": 30,
     "damageMin": 46,
     "damageMax": 56,
@@ -143,6 +159,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "卓越",
     "qualityRank": 4,
     "variant": "light",
+    "offeringCharges": 3,
+    "maxUses": 110,
     "weight": 27,
     "damageMin": 46,
     "damageMax": 56,
@@ -159,6 +177,8 @@ export const WEAPON_DATA: Readonly<Record<string, WeaponDefinition>> = {
     "qualityName": "卓越",
     "qualityRank": 4,
     "variant": "resistant",
+    "offeringCharges": 3,
+    "maxUses": 110,
     "weight": 33,
     "damageMin": 46,
     "damageMax": 56,

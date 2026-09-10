@@ -51,6 +51,8 @@ export interface EnemyView {
    * marker on the right enemy without AISystem needing to know anything about VFX.
    */
   isTargetingDecoy(): boolean;
+  /** True while investigating a physical sound lure or tracking a visible false body. */
+  isTargetingLure?(): boolean;
 }
 
 /**
@@ -201,6 +203,8 @@ export interface EnemyAIState {
   pendingDamage: boolean;
   readonly pendingDamagePos: Vector2;
   pendingNoiseLevel: 'suspicious' | 'alert' | null;
+  pendingNoiseIsLure?: boolean;
+  investigatingLure?: boolean;
   readonly pendingNoisePos: Vector2;
 
   // --- Slice 5 tool overrides (T1), set/cleared by ToolSystem via AISystem's setters.

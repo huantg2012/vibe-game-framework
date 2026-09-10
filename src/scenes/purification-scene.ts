@@ -1,4 +1,5 @@
 import { inventoryStore } from '@/systems/inventory-store';
+import { getEquipmentLifecycle, type OfferingTransformResult } from '@/types/inventory-types';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { openInventory, inventoryError } from '@/ui/inventory-presenter';
@@ -282,6 +283,7 @@ export class PurificationScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private unsubscribeWeapon: (() => void) | null = null;
+  private unsubscribeForecast: (() => void) | null = null;
   private readonly visibility = new VisibilitySystem();
   private groundDepthSorter: GroundDepthSorter | null = null;
   private deviceCollision: PurificationCollision | null = null;
@@ -314,7 +316,6 @@ export class PurificationScene extends Phaser.Scene {
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
-  private bagKey: Phaser.Input.Keyboard.Key | null = null;
   private saveRetryTimer: number | null = null;
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
   // 核心抽卡方案切换（实测用）：1/2/3 -> A 敬畏 / B 仪式 / C 封印
@@ -367,7 +368,7 @@ export class PurificationScene extends Phaser.Scene {
     let impactResult: ReturnType<typeof impactSystem.run> = { skipped: true, damages: [], intensity: 0 };
     let chargeChanges: ChargeChangeEntry[] = [];
     let phaseChange: PhaseChangeInfo | null = null;
-    let transformResults: { contaminantId: string; type: string; slotIndex: number }[] = [];
+    let transformResults: OfferingTransformResult[] = [];
     // Captured BEFORE run() consumes/regenerates the forecast, so this is exactly what
     // the player saw on their way out — the prediction this impact is judged against
     // (Slice 5.5 D5 "预告 vs 实际", IA §S8).
@@ -391,25 +392,24 @@ export class PurificationScene extends Phaser.Scene {
       // Snapshot defense slot charges before applying impact (for D2 visualization)
       const chargesBefore = this.snapshotDefenseCharges();
 
-      // Apply contaminant defense charges before running impact
+      // Every offered item participates in this impact before completing its offering.
+      const offeringIds = inventoryStore.getOfferingItems().map(item => item?.id ?? null);
       const isHighTide = tideSystem.isHighTide();
-      transformResults = contaminantSystem.applyImpactCharge(isHighTide);
-
-      // Compute charge changes for impact panel (D2)
-      chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
-
       predictedForecast = impactSystem.getForecastDisplay();
-
-      // Run impact on arrival (pass defense slots to avoid cross-system import)
-      const defenseSlots = contaminantSystem.getDefenseSlotted();
-      impactResult = impactSystem.run(defenseSlots);
+      impactResult = impactSystem.run(contaminantSystem.getDefenseSlotted(), offeringIds);
+      if (!impactResult.skipped) {
+        const finished = contaminantSystem.finishOfferingImpact(isHighTide, impactResult.defenseResult?.bonusCharges ?? {}, offeringIds);
+        if (!finished.ok) throw new Error(`Offering settlement failed: ${finished.error}`);
+        transformResults = finished.value;
+        chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
+      }
 
       // Advance tide cycle after impact resolves (E1: capture phase change)
       phaseChange = tideSystem.advanceCycle();
     }
 
     // Generate the non-spatial forecast (target module + severity) for the NEXT impact
-    // (DEC-034), plus muffle's extra lookahead layer for the impact after that (previewed
+    // (DEC-034), plus retrograde's extra lookahead layer for the impact after that (previewed
     // via a pure, RNG-free peek at tide state). Intensity/clarity/peek are read here and
     // passed in so impact-system.ts doesn't import tideSystem/growthSystem directly
     // (DEC-ARCH-002) — see its generateForecast() doc.
@@ -567,7 +567,7 @@ export class PurificationScene extends Phaser.Scene {
     this.defenseGraphics = this.add.graphics().setDepth(20);
     this.offeringStand = new OfferingStandVisual(this, DEFENSE_POS.x, DEFENSE_POS.y);
     this.offeringStand.mount(
-      offeringStandChargeFromSlots(contaminantSystem.getDefenseSlotted()),
+      offeringStandChargeFromSlots(inventoryStore.getOfferingItems()),
     );
     this.growthGraphics = this.add.graphics().setDepth(20);
     this.growthConsole = new GrowthConsoleVisual(this, GROWTH_POS.x, GROWTH_POS.y);
@@ -590,8 +590,13 @@ export class PurificationScene extends Phaser.Scene {
     this.groundDepthSorter.update();
 
     // Purification HUD (DOM overlay)
-    purificationHud.create();
+    purificationHud.create(() => this.openStatusPanel());
     purificationHud.refresh();
+    this.unsubscribeForecast = inventoryStore.subscribe(() => {
+      impactSystem.generateForecast(tideSystem.getCurrentIntensity(), growthSystem.getModifiers().forecastClarity,
+        tideSystem.peekNextIntensity());
+      purificationHud.refresh();
+    });
     if (this.menuEntry) {
       purificationHud.setEntryVisible(false);
       this.player.setInputEnabled(false);
@@ -607,7 +612,6 @@ export class PurificationScene extends Phaser.Scene {
     if (keyboard) {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
-      this.bagKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false);
       this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
       // 1/2/3 切核心对照（生产默认 B）；4/5/7/8/9 切裂隙入口（生产默认卡 5）
       this.coreVariantKeys = [
@@ -740,7 +744,7 @@ export class PurificationScene extends Phaser.Scene {
     const defSpeed = defHighlight ? BREATH_SPEED_HIGHLIGHT : (nearDefense ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
     this.defensePulse += delta * defSpeed;
     this.offeringStand?.setCharge(
-      offeringStandChargeFromSlots(contaminantSystem.getDefenseSlotted()),
+      offeringStandChargeFromSlots(inventoryStore.getOfferingItems()),
     );
     if (this.offeringStand?.isShowing()) {
       this.defenseGraphics.setVisible(false);
@@ -835,7 +839,6 @@ export class PurificationScene extends Phaser.Scene {
       writeEntranceVariantQuery(variant);
     }
 
-    if (this.bagKey && Phaser.Input.Keyboard.JustDown(this.bagKey) && !this.isAnyPanelOpen()) this.openBag();
 
     // ESC
     if (this.escKey && Phaser.Input.Keyboard.JustDown(this.escKey)) {
@@ -1102,27 +1105,23 @@ export class PurificationScene extends Phaser.Scene {
 
   /** A1 + B1: Open the combined status & inventory panel. */
   private openStatusPanel(): void {
+    if (this.isAnyPanelOpen() || pauseMenu.isOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.player.setInputEnabled(false);
     statusPanel.open(() => {
       this.player.setInputEnabled(true);
-    }, this.lastOverlapType);
+    }, this.lastOverlapType, () => this.openOfferingFromInventory());
   }
 
   private enterRift(): void {
     if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(RIFT_ENTRANCE_POS, 184);
-    openInventory({ mode: 'prepare', onClose: () => this.restoreInteractionFocus(),
+    const sprite = this.player.getSprite();
+    const portrait = document.createElement('canvas'); portrait.width = sprite.frame.cutWidth; portrait.height = sprite.frame.cutHeight;
+    portrait.getContext('2d')?.drawImage(sprite.texture.getSourceImage() as CanvasImageSource, sprite.frame.cutX, sprite.frame.cutY, portrait.width, portrait.height, 0, 0, portrait.width, portrait.height);
+    openInventory({ mode: 'prepare', portrait: portrait.toDataURL(), onClose: () => this.restoreInteractionFocus(),
       onDepart: () => this.transitionToRift(),
       onOffering: () => this.openOfferingFromInventory(),
     });
-  }
-
-  private openBag(): void {
-    this.player.setInputEnabled(false);
-    openInventory({ mode: 'base', onClose: () => {
-      this.panelClosedAt = this.time.now;
-      if (!this.shuttingDown) this.player.setInputEnabled(true);
-    }, onOffering: () => this.openOfferingFromInventory() });
   }
 
   private openOfferingFromInventory(): void {
@@ -1250,9 +1249,7 @@ export class PurificationScene extends Phaser.Scene {
         return reserve > 0 && mod !== undefined && mod.hp < mod.maxHp;
       }
       case 'defense': {
-        const all = contaminantSystem.getAll();
-        const slotted = contaminantSystem.getDefenseSlotted();
-        return all.some((c) => c.stage === 'defense' && !slotted.some((s) => s?.id === c.id));
+        return inventoryStore.getItems().some(item => item.location.kind === 'stash' && getEquipmentLifecycle(item).stage === 'defense');
       }
       case 'growth': {
         const canInscribe = growthSystem.getAllUpgradeIds().some((id) => growthSystem.canAfford(id, reserve));
@@ -1263,11 +1260,11 @@ export class PurificationScene extends Phaser.Scene {
 
   /** B3: Show a Channel-B toast (C6 shared primitive) when new tools are available
    *  from transformation. */
-  private showNewToolToast(transformResults: { contaminantId: string; type: string; slotIndex: number }[]): void {
+  private showNewToolToast(transformResults: OfferingTransformResult[]): void {
     if (transformResults.length === 0) return;
 
-    const names = transformResults.map((r) => getToolName(r.type as ContaminantType));
-    const text = `新工具可用: ${names.join(', ')}`;
+    const names = transformResults.map(r => r.kind === 'weapon' ? WEAPON_DATA[r.definitionId]?.name ?? '武器' : getToolName(r.definitionId as ContaminantType));
+    const text = `供奉完成：${names.join('、')}，可在备行时装配`;
 
     showToastInline(text, {
       color: '#2ae6c8',
@@ -1369,51 +1366,34 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   /** Snapshot current defense slot charge levels before impact application (D2). */
-  private snapshotDefenseCharges(): { slotIndex: number; id: string; type: string; charges: number }[] {
-    const slots = contaminantSystem.getDefenseSlotted();
-    const result: { slotIndex: number; id: string; type: string; charges: number }[] = [];
-    for (let i = 0; i < slots.length; i++) {
-      const c = slots[i];
-      if (c) {
-        result.push({ slotIndex: i, id: c.id, type: c.type, charges: c.impactCharges });
-      }
-    }
-    return result;
+  private snapshotDefenseCharges(): { slotIndex: number; id: string; type: ContaminantType | null; weaponDefinitionId?: string; charges: number; threshold: number }[] {
+    return inventoryStore.getOfferingItems().flatMap((item, slotIndex) => item ? [{
+      slotIndex, id: item.id, type: item.kind === 'contaminant' ? item.contaminant.type : null,
+      weaponDefinitionId: item.kind === 'weapon' ? item.weapon.definitionId : undefined,
+      charges: getEquipmentLifecycle(item).impactCharges,
+      threshold: item.kind === 'weapon' ? WEAPON_DATA[item.weapon.definitionId]!.offeringCharges : GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD,
+    }] : []);
   }
 
-  /** Compute charge change entries by comparing before snapshot with current state (D2). */
   private computeChargeChanges(
-    before: { slotIndex: number; id: string; type: string; charges: number }[],
-    transformResults: { contaminantId: string; type: string; slotIndex: number }[],
+    before: ReturnType<PurificationScene['snapshotDefenseCharges']>,
+    transformResults: OfferingTransformResult[],
   ): ChargeChangeEntry[] {
-    const threshold = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;
-    const transformedIds = new Set(transformResults.map((r) => r.contaminantId));
-    const changes: ChargeChangeEntry[] = [];
-
-    for (const entry of before) {
+    const transformedIds = new Set(transformResults.map(r => r.itemId));
+    return before.map(entry => {
+      const current = inventoryStore.getItem(entry.id);
       const transformed = transformedIds.has(entry.id);
-      // After transformation, the contaminant is no longer in defense slots
-      // so we compute the "after" charge from the threshold if transformed
-      const allContaminants = contaminantSystem.getAll();
-      const current = allContaminants.find((c) => c.id === entry.id);
-      const afterCharges = transformed ? threshold : (current?.impactCharges ?? entry.charges);
-
-      changes.push({
-        slotIndex: entry.slotIndex,
-        type: entry.type as import('@/types/game-types').ContaminantType,
-        before: entry.charges,
-        after: afterCharges,
-        threshold,
-        transformed,
-      });
-    }
-
-    return changes;
+      return { slotIndex: entry.slotIndex, type: entry.type, weaponDefinitionId: entry.weaponDefinitionId,
+        before: entry.charges, after: transformed ? entry.threshold : current ? getEquipmentLifecycle(current).impactCharges : entry.charges,
+        threshold: entry.threshold, transformed };
+    });
   }
 
   private onShutdown(): void {
     this.unsubscribeWeapon?.();
     this.unsubscribeWeapon = null;
+    this.unsubscribeForecast?.();
+    this.unsubscribeForecast = null;
     this.shuttingDown = true;
     this.menuEntry?.destroy();
     this.menuEntry = null;
@@ -1454,7 +1434,6 @@ export class PurificationScene extends Phaser.Scene {
       this.input.keyboard?.removeKey(this.escKey, true);
       this.escKey = null;
     }
-    if (this.bagKey) { this.input.keyboard?.removeKey(this.bagKey, true); this.bagKey = null; }
     if (this.tabKey) {
       this.input.keyboard?.removeKey(this.tabKey, true);
       this.tabKey = null;

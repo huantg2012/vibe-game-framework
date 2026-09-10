@@ -1,3 +1,4 @@
+import { getContaminantQualityName, getContaminantMaxUses, supportsContaminantQuality } from '@/systems/contaminant-quality';
 /**
  * Inspect dock content builder — "选中即检视" five-layer text
  * (`docs/design-notes/ux-information-architecture.md` S13, `ui-art-overhaul.md` A5-13).
@@ -46,7 +47,7 @@ export interface DefenseInspectContext {
 export function buildDefenseInspectHtml(c: Contaminant, ctx: DefenseInspectContext): string {
   const def = CONTAMINANT_DATA[c.type];
   const name = getDefenseName(c.type);
-  const stars = getRarityStars(c.rarity);
+  const stars = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity);
   const reductionPct = Math.round(def.defenseReduction * 100);
 
   const l1 = `${name} ${stars} · 防御 · ${def.defenseCategory}`;
@@ -55,12 +56,12 @@ export function buildDefenseInspectHtml(c: Contaminant, ctx: DefenseInspectConte
     ? `减伤 ${reductionPct}% · 充能 ${c.impactCharges}/${ctx.chargeThreshold}`
     : `减伤 ${reductionPct}%`;
   const l4 = ctx.slotState === 'slotted'
-    ? `副作用：${def.defenseSideEffect}（${def.sideEffectDuration}）`
+    ? (def.defenseSideEffect && def.defenseSideEffect !== '无' ? `副作用：${def.defenseSideEffect}（${def.sideEffectDuration}）` : '本轮先完成供奉效果，再积累成熟进度')
     : (ctx.readOnly ? '未供奉 · 前往供奉台装填' : ctx.canEquip ? '可装填 · 自动放入空槽' : '槽位已满 · 先取下一件');
   const remaining = Math.max(0, ctx.chargeThreshold - c.impactCharges);
   const l5 = remaining > 0
-    ? `还需 ${remaining} 次冲击 → 【${def.displayNameTool}】：${def.summaryTool}`
-    : `转化在即 → 【${def.displayNameTool}】：${def.summaryTool}`;
+    ? `还需 ${remaining} 次冲击 → 可用 ${getContaminantMaxUses(c)} 次 · ${def.summaryTool}`
+    : `转化在即 → 可用 ${getContaminantMaxUses(c)} 次 · ${def.summaryTool}`;
 
   return wrapInspectLines([l1, l2, l3, l4, l5]);
 }
@@ -79,7 +80,7 @@ export interface ToolInspectContext {
 export function buildToolInspectHtml(c: Contaminant, ctx: ToolInspectContext): string {
   const def = CONTAMINANT_DATA[c.type];
   const name = getToolName(c.type);
-  const stars = getRarityStars(c.rarity);
+  const stars = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity);
   const isPassive = def.toolType === 'passive';
   const typeLabel = isPassive ? '被动' : '主动';
 
@@ -87,7 +88,8 @@ export function buildToolInspectHtml(c: Contaminant, ctx: ToolInspectContext): s
   const l2 = def.summaryTool;
   const rangeLabel = def.toolRangePx > 0 ? `${Math.round(def.toolRangePx / GAME_CONSTANTS.TILE_SIZE)}格` : '无范围';
   const durationLabel = def.toolDurationMs > 0 ? `${(def.toolDurationMs / 1000).toFixed(0)}秒` : '即时';
-  const l3 = `剩余 ${c.usesRemaining}/${def.toolUses} 次 · 范围 ${rangeLabel} · 持续 ${durationLabel}`;
+  const l3 = (c.usesRemaining > getContaminantMaxUses(c) ? `剩余 ${c.usesRemaining} 次 · 基准 ${getContaminantMaxUses(c)}` : `剩余 ${c.usesRemaining}/${getContaminantMaxUses(c)} 次`)
+    + (c.type === 'muffle' || c.type === 'scatter' ? ' · 按遭遇触发' : ` · 范围 ${rangeLabel} · 持续 ${durationLabel}`);
 
   let l4: string;
   if (ctx.slotState === 'slotted') {

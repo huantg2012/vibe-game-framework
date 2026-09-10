@@ -1,7 +1,9 @@
+import { hasLineOfSight } from '@/utils/grid-raycast';
+import { findSingleWallLanding, findSoundLureLanding } from '@/systems/tool-targeting';
 import { getSurvivalAttributes } from '@/systems/survival-attributes';
 import { inventoryStore } from '@/systems/inventory-store';
 import { FieldLootInventory, notifyFieldAcquisition } from '@/systems/field-loot-inventory';
-import { openInventory } from '@/ui/inventory-presenter';
+import { openInventory, projectInventoryItem } from '@/ui/inventory-presenter';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH, type GroundDepthTarget } from '@/systems/ground-depth';
@@ -49,7 +51,7 @@ import { RiftSurfacePainter } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { DetectionPulse } from '@/ui/dom/detection-pulse';
 import { EncounterNarration } from '@/ui/dom/encounter-narration';
-import { RiftHud, type ActiveEffectInfo, type ToolSlotInfo } from '@/ui/dom/rift-hud';
+import { RiftHud, type ActiveEffectInfo, type RiftEquipmentSlot } from '@/ui/dom/rift-hud';
 import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { describeSideEffectBody, formatChaosMultDelta } from '@/ui/side-effect-labels';
@@ -220,6 +222,13 @@ export class RiftScene extends Phaser.Scene {
       onNoise: this.reportNoise,
       onCue: this.onCombatCue,
       captureEnemyVisual: (id) => this.formVisuals.get(id)?.getFlashSource?.(),
+      consumeWeaponUse: () => {
+        const id = inventoryStore.getEquipment().weaponId;
+        if (!id) return false;
+        const result = inventoryStore.consumeEquipmentUse(id);
+        if (!result.ok && result.error === 'storage-failed') showToastInline('未能保存耐久度，本次命中没有生效。', {});
+        return result.ok;
+      },
     });
     const weaponId = inventoryStore.getEquipment().weaponId;
     const equippedWeapon = weaponId ? inventoryStore.getItem(weaponId) : undefined;
@@ -243,6 +252,7 @@ export class RiftScene extends Phaser.Scene {
     const openingChaos = clamp(startingChaos + residueChaos, 0, GAME_CONSTANTS.CHAOS.HARD_CAP);
 
     this.chaos = new ChaosSystem({
+      isEnemyTargetingLure: id => this.ai.getEnemyById(id)?.isTargetingLure?.() ?? false,
       onModulate: this.applyChaosModulators,
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
@@ -286,13 +296,49 @@ export class RiftScene extends Phaser.Scene {
       () => this.ai.getEnemies(),
       {
         getPlayerSprite: () => this.player.getSprite(),
+        isTargetAlive: id => this.combat.isEnemyAlive(id),
+        isTargetVisible: position => this.visibilityAt(position) > 0,
+        hasTargetLineOfSight: (from, to) => hasLineOfSight(grid, from, to),
+        setEnemyControl: (id, source, effect) => this.ai.setEnemyControl(id, source, effect),
+        clearEnemyControl: (id, source) => this.ai.clearEnemyControl(id, source),
+        hasEnemyControl: (id, source) => this.ai.hasEnemyControl(id, source),
+        setVisualDecoy: (source, position) => this.ai.setVisualDecoy(source, position),
+        reportSoundLure: (position, radius) => this.ai.reportSoundLure(position, radius),
+        getSoundLureDestination: maxDistance => {
+          const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body | null;
+          if (!body) return null;
+          const angle = this.player.getFacingAngle();
+          return findSoundLureLanding(body.center, { x: Math.cos(angle), y: Math.sin(angle) }, maxDistance,
+            grid, Math.max(body.halfWidth, body.halfHeight) * 2);
+        },
+        getEnvironmentTargets: () => this.hosts.getToolTargets(),
+        suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressReleasedHazard(id, source, duration),
+        clearEnvironmentControl: (id, source) => this.hosts.clearToolControl(id, source),
+        getPhaseDestination: () => {
+          const sprite = this.player.getSprite();
+          const body = sprite.body as Phaser.Physics.Arcade.Body | null;
+          if (!body) return null;
+          const angle = this.player.getFacingAngle();
+          const landing = findSingleWallLanding({
+            origin: body.center, direction: { x: Math.cos(angle), y: Math.sin(angle) },
+            maxDistance: CONTAMINANT_DATA.expand.toolRangePx,
+            bodyHalfWidth: body.halfWidth, bodyHalfHeight: body.halfHeight,
+            grid, isPhaseableWall: (col, row) => grid.getTile(col, row) === TileType.WALL,
+          });
+          return landing ? { x: sprite.x + landing.x - body.center.x, y: sprite.y + landing.y - body.center.y } : null;
+        },
+        movePlayerTo: position => {
+          const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+          body.reset(position.x, position.y);
+          this.player.postUpdate();
+        },
         setPlayerCollision: (enabled) => {
           const sprite = this.player.getSprite();
           const body = sprite.body as Phaser.Physics.Arcade.Body | null;
           if (body) body.enable = enabled;
         },
         setPlayerInput: (enabled) => { this.toolInputAllowed = enabled; this.syncPlayerInput(); },
-        getCollectedNodes: () => this.search.getCollectedContaminantPositions(),
+        getCollectedNodes: () => this.search.getCollectedKindlingPositions(),
         addKindling: (n) => this.search.addBonusKindling(n),
         setEnemySpeedMultiplier: (id, mult) => this.ai.setEnemySpeedMultiplier(id, mult),
         setEnemyMovementLocked: (id, locked) => this.ai.setEnemyMovementLocked(id, locked),
@@ -316,7 +362,7 @@ export class RiftScene extends Phaser.Scene {
     );
     // muffle (T7 rewire): the AI announces a swallowed hearing signal here; ToolSystem
     // spends one of muffle's charges for it (same translation role as `reportNoise`).
-    this.ai.setHearingAvoidedListener((_enemyId) => this.toolSystem.notifyProximityAvoid());
+    this.ai.setHearingAvoidedListener(() => this.toolSystem.notifyProximityAvoid());
 
     this.extraction.create(
       this,
@@ -333,35 +379,11 @@ export class RiftScene extends Phaser.Scene {
       onSettlementFailure: (message, retry) => this.showSettlementRetry(message, retry),
     });
 
-    // Build tool slot info for HUD display. The passive slot is always the last unlocked
-    // slot (growth_sortie_slot adds a 4th slot ahead of it, never after) - never a
-    // hardcoded index, so a 4-slot loadout doesn't mislabel slot 2 as passive. Labelled
-    // by mapping over the loadout BEFORE filtering out empties, so an empty earlier slot
-    // (the panel lets you unslot any individual cell) can't shift a later filled slot's
-    // label off its real hotkey.
-    const passiveSlotIndex = contaminantSystem.getSortiePassiveSlotIndex();
-    const activeKeys = GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS;
-    const toolSlots = sortieLoadout
-      .map((c, i): ToolSlotInfo | null =>
-        c
-          ? {
-              label: i === passiveSlotIndex ? '被动' : activeKeys[i] ?? '?',
-              type: c.type,
-              // Single-source name lookup (Slice 5.5 C2) - this field used to carry the
-              // raw type id (`solidify`), which is not a display name at all (S10 diagnosis).
-              name: getToolName(c.type),
-              usesRemaining: c.usesRemaining,
-              isPassive: i === passiveSlotIndex,
-            }
-          : null,
-      )
-      .filter((s): s is ToolSlotInfo => s !== null);
-
     this.hud.create({
       canExtract: () => this.extraction.canExtract(),
       isRunEnded: () => this.runController.isRunEnded(),
-      toolSlots: toolSlots.length > 0 ? toolSlots : undefined,
       suppressExtractPrompt: true,
+      onInventory: () => this.openBag(),
     });
     this.encounter.create();
     this.detectionPulse.create();
@@ -385,9 +407,20 @@ export class RiftScene extends Phaser.Scene {
     );
 
     const updateBurden = (): void => {
+      const id = inventoryStore.getEquipment().weaponId;
+      const equipped = id ? inventoryStore.getItem(id) : undefined;
+      this.combat.configureWeapon(equipped?.kind === 'weapon' ? equipped.weapon.definitionId : null);
       const attributes = getSurvivalAttributes();
       this.player.setBurdenSpeedFactor(attributes.burdenSpeedFactor);
       this.hud.setBurden(attributes.weight, attributes.capacity);
+      const equipment = inventoryStore.getEquipment();
+      const makeSlot = (slotId: string, itemId: string | null | undefined, label: string, isPassive = false): RiftEquipmentSlot => {
+        const item = itemId ? inventoryStore.getItem(itemId) : undefined;
+        const view = item ? projectInventoryItem(item, 'prepare') : undefined;
+        return { slotId, itemId: view?.id, label, name: view?.name ?? '未装配', icon: view?.icon, usesRemaining: view?.usesRemaining, maxDurability: view?.maxDurability, isPassive };
+      };
+      const passive = contaminantSystem.getSortiePassiveSlotIndex();
+      this.hud.setEquipment([makeSlot('weapon', equipment.weaponId, '武器'), ...Array.from({ length: contaminantSystem.getSortieSlotCount() }, (_, index) => makeSlot(String(index), equipment.toolIds[index], index === passive ? '被动' : GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[index] ?? '?', index === passive))]);
     };
     updateBurden();
     this.unsubscribeInventory = inventoryStore.subscribe(updateBurden);
@@ -406,7 +439,7 @@ export class RiftScene extends Phaser.Scene {
     this.ai.setCueListener(this.onAiCue);
     this.startRiftAudio();
     this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
-    this.input.keyboard?.on('keydown-B', this.openBag, this);
+    this.input.keyboard?.on('keydown-TAB', this.openBag, this);
 
     if (import.meta.env.DEV) this.createDebugOverlay();
   }
@@ -569,7 +602,7 @@ export class RiftScene extends Phaser.Scene {
       deltaMs,
       { worldX: view.x, worldY: view.y, worldW: view.width, worldH: view.height },
       player,
-      this.ai.getEnemies().map((enemy) => {
+      this.ai.getEnemies().filter(enemy => !enemy.isTargetingLure?.()).map((enemy) => {
         const pos = enemy.getPosition();
         return {
           id: enemy.getId(),
@@ -691,7 +724,7 @@ export class RiftScene extends Phaser.Scene {
       elapsedMs: this.runController.getElapsedMs(),
       acquired: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
         const item = inventoryStore.getItem(id);
-        return item?.kind === 'contaminant' ? [{ type: item.contaminant.type, rarity: item.contaminant.rarity }] : [];
+        return item?.kind === 'contaminant' ? [{ type: item.contaminant.type, rarity: item.contaminant.rarity, quality: item.contaminant.quality }] : [];
       }),
       weapons: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
         const item = inventoryStore.getItem(id);
@@ -815,7 +848,7 @@ export class RiftScene extends Phaser.Scene {
     const enemies = this.ai.getEnemies();
     const spotted = enemies.some((enemy) => {
       const state = enemy.getState();
-      return state === AIState.ALERT || state === AIState.CHASE;
+      return !enemy.isTargetingLure?.() && (state === AIState.ALERT || state === AIState.CHASE);
     });
     const chaosThreat = value > 60 ? 0.5 * clamp((value - 60) / 40, 0, 1) : 0;
     const threat = spotted ? Math.max(0.5, chaosThreat) : chaosThreat;
@@ -1383,7 +1416,7 @@ export class RiftScene extends Phaser.Scene {
   private onShutdown(): void {
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
-    this.input.keyboard?.off('keydown-B', this.openBag, this);
+    this.input.keyboard?.off('keydown-TAB', this.openBag, this);
     inventoryPanel.close();
     this.fieldInventory.destroy();
     this.unsubscribeInventory?.(); this.unsubscribeInventory = null;

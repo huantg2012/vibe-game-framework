@@ -13,6 +13,7 @@ import { ENEMY_DATA, type EnemyRole } from '@/generated/enemy-data';
 import { BEHAVIOR_PROFILE_DATA } from '@/generated/contamination-capability-data';
 import { BODY_PROFILE_DATA } from '@/generated/contamination-body-data';
 import { ActivityClock, type ActivityVisualState } from '@/systems/ai/activity-state';
+import { EnemyControlState } from '@/systems/enemy-control-state';
 import { INFILTRATOR_FORM, REWRITER_FORM, type ContaminationForm } from '@/generation/contamination-draw';
 import { AIState, type Facing4, type Vector2 } from '@/types/game-types';
 import type { EnemySpawnData } from '@/types/map-types';
@@ -112,6 +113,7 @@ export function createInfiltratorConfig(): EnemyTypeConfig {
 }
 
 export class Enemy implements EnemyView {
+  readonly controls = new EnemyControlState();
   readonly id: string;
   readonly spawnData: EnemySpawnData;
   readonly config: EnemyTypeConfig;
@@ -305,6 +307,10 @@ export class Enemy implements EnemyView {
 
   isTargetingDecoy(): boolean {
     return this.ai.targetingDecoy;
+  }
+
+  isTargetingLure(): boolean {
+    return this.ai.targetingDecoy || this.ai.investigatingLure === true;
   }
 
   getSprite(): Phaser.Physics.Arcade.Image {

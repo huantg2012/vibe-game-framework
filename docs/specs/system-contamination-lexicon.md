@@ -3,7 +3,7 @@ status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
 last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
-last-modified-date: 2026-09-08
+last-modified-date: 2026-09-10
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -42,6 +42,17 @@ note: |
 ---
 
 # 系统设计：污染句法
+
+## 迭代20 A：环境工具目标合同
+
+`ContaminationHostSystem.getToolTargets()`提供活Host、位置、类别、已释放/支持状态、来源剩余时间与恢复预兆；仅基础接口已交，正式余烬核/迟落砂的道具选择、扣次和新反馈留给后续完整样板，不把接口存在当成新道具上线。
+
+`suppressReleasedHazard(id,sourceId,durationMs)`支持持续占漆与已释放气团/雾团/尘絮；保留实体、漂移与可打的核心，不杀敌、不永久净化。`delayNextHazard`仅支持尚未释放的这三类占空，暂停危险相位时钟，形体流动时钟继续。余响与历史墙不属于这两类干预，返回false。
+
+来源独立计时，重叠期间按最长剩余时间保护；不叠加永久延时。压制到期若处于释放中，等自然下一次完整预兆再恢复危险；持续占漆等完整低伏→膨胀，避免到期中途骤伤。volume-presence和dust-flow的phaseElapsedMs仅决定危险相位及相关动作，不冻掉独立漂移。
+
+
+迭代20 B：余烬核已在RiftScene与CombatLabScene接入真实Host查询/压制。选择可见无遮挡128px内已释放且未压制的最近危险，压制5秒，核心/实体/流动保留；环境恢复须重新自然预兆。Tool销毁时以实例source清理，不移除其他来源。下一次危险推迟接口供后续迟落砂使用，本批尚无对应成品，不声称已上线该能力。声音诱饵仅给地面AI，Host.reportNoise只是活动感应，不可冒充朝声源调查。
 
 ## R4-C 当前实体占空合同
 

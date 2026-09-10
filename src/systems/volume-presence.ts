@@ -12,6 +12,8 @@ export interface VolumePresenceFrame {
 }
 export interface VolumePresenceInput {
   substrate: string; coverage: string; elapsedMs: number; rect: Readonly<VolumeRect>; active: boolean;
+  /** Optional release clock. Ambient drift keeps advancing on elapsedMs. */
+  phaseElapsedMs?: number;
   isWalkableFloor?: (col: number, row: number) => boolean;
 }
 const MIST_LENGTH = [.46, .57, .39, .35] as const;
@@ -44,7 +46,8 @@ export function updateVolumePresenceFrame(f: VolumePresenceFrame, input: VolumeP
   f.rect.x = input.rect.x; f.rect.y = input.rect.y; f.rect.w = input.rect.w; f.rect.h = input.rect.h;
   f.gapPx = p.gapPx; f.dangerThreshold = p.dangerThreshold;
   const cycle = p.restMs + p.gatherMs + p.releaseMs + p.disperseMs;
-  let t = ((input.elapsedMs % cycle) + cycle) % cycle;
+  const phaseTime = input.phaseElapsedMs ?? input.elapsedMs;
+  let t = ((phaseTime % cycle) + cycle) % cycle;
   for (const phase of PHASES) { const d = duration(p, phase); if (t < d) { f.phase = phase; f.progress = t / d; break; } t -= d; }
   f.hazardActive = f.active && (f.substrate === 'sound_echo' || f.phase === 'release');
   const u = f.progress, cx = f.rect.x + f.rect.w / 2, cy = f.rect.y + f.rect.h / 2;
@@ -66,7 +69,7 @@ export function updateVolumePresenceFrame(f: VolumePresenceFrame, input: VolumeP
     f.flowX = horizontal ? Math.cos(input.elapsedMs / 2100) : 0;
     f.flowY = horizontal ? 0 : Math.cos(input.elapsedMs / 2100);
   } else if (f.substrate === 'dust_swarm') {
-    fillDustKnots(f, p);
+    fillDustKnots(f, p, phaseTime);
   } else {
     f.partCount = 3;
     for (let i = 0; i < 3; i++) {

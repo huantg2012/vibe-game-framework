@@ -3,7 +3,7 @@ import { WEAPON_DATA } from '../../src/generated/weapon-data';
 import { getBurdenSpeedFactor, sumPollutionResistance, getSurvivalAttributes } from '../../src/systems/survival-attributes';
 import { ChaosSystem } from '../../src/systems/chaos-system';
 import { inventoryStore } from '../../src/systems/inventory-store';
-import { rollWeaponDrop } from '../../src/systems/weapon-loot';
+import { rollWeaponDrop, createWeaponInstance } from '../../src/systems/weapon-loot';
 import { eventBus } from '../../src/core/event-bus';
 import { GameEvent } from '../../src/types/events';
 
@@ -22,7 +22,7 @@ inventoryStore.configure({ weaponDefinition: id => WEAPON_DATA[id], starterDefin
 assert.ok(inventoryStore.ensureStarter().ok);
 inventoryStore.beginRun('attributes');
 inventoryStore.revealBatch('weapons', [
-  {kind:'weapon',id:'resistant',weapon:{id:'resistant',definitionId:'crowbar_excellent_resistant'}},
+  {kind:'weapon',id:'resistant',weapon:createWeaponInstance('crowbar_excellent_resistant',true,'resistant')},
 ], {x:0,y:0});
 assert.equal(getSurvivalAttributes().resistancePercent,0,'Un-equipped loot grants no resistance');
 inventoryStore.settleRun('attributes','extract');

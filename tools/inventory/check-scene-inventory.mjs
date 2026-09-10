@@ -16,15 +16,15 @@ try {
   });
   await page.waitForFunction(() => window.__game.scene.isActive('PurificationScene'));
   await page.waitForFunction(()=>!window.__game.scene.getScene('PurificationScene').menuEntry);
-  await page.keyboard.press('b', {delay:80}); await page.waitForSelector('#inventory-panel');
-  assert.equal(await page.locator('.inventory-title').innerText(), '随身');
+  await page.keyboard.press('Tab', {delay:80}); await page.waitForSelector('#status-panel');
+  assert.match(await page.locator('#status-panel').innerText(), /存续报告/);
   await page.keyboard.press('Escape', {delay:80});
   await page.evaluate(() => window.__game.scene.getScene('PurificationScene').enterRift());
   await page.waitForSelector('#inventory-panel'); await page.keyboard.press('Shift+Enter', {delay:80});
   await page.waitForFunction(() => window.__game.scene.isActive('RiftScene'));
   const departed = await page.evaluate(async () => (await window.productionModule('/src/systems/inventory-store.ts')).inventoryStore.getState());
   assert.equal(departed.run.status, 'active'); assert.equal(departed.run.carriedOutIds.length, 1);
-  console.log('PASS real base B, preparation and durable departure');
+  console.log('PASS real base Tab report, preparation and durable departure');
 
   await page.evaluate(() => {
     const scene = window.__game.scene.getScene('RiftScene');
@@ -41,7 +41,7 @@ try {
   assert.equal(loot.location.kind, 'carried');
   console.log('PASS actual timed pile search yields a durable first crowbar alongside kindling');
 
-  await page.keyboard.press('b', {delay:80}); await page.waitForSelector('#inventory-panel');
+  await page.keyboard.press('Tab', {delay:80}); await page.waitForSelector('#inventory-panel');
   const before = await page.evaluate(() => window.__game.scene.getScene('RiftScene').time.now);
   await page.waitForTimeout(250);
   assert.equal(await page.evaluate(time => window.__game.scene.getScene('RiftScene').time.now > time, before), true);
@@ -61,7 +61,14 @@ try {
   assert.deepEqual(returned.run.returnedIds, [loot.id]);
   console.log('PASS actual result shows final carried loot and base settlement is durable');
 
-  // A second run dies: carry-out equipment is lost but the previous run's stashed crowbar remains.
+  // Mature the found weapon through the domain offering lifecycle before the second sortie.
+  await page.evaluate(async id => {
+    const {inventoryStore}=await window.productionModule('/src/systems/inventory-store.ts');
+    if(!inventoryStore.slotOffering(id,0).ok)throw Error('cannot offer found crowbar');
+    const transformed=inventoryStore.finishOfferingImpact(inventoryStore.getEquipment().defenseIds,3);
+    if(!transformed.ok || inventoryStore.getItem(id).weapon.stage!=='tool')throw Error('offering maturity failed');
+  },loot.id);
+  // A second run dies: carry-out equipment is lost; the stashed plain crowbar remains.
   await page.evaluate(async () => {
     const { impactResultPanel } = await window.productionModule('/src/ui/dom/impact-result-panel.ts');
     impactResultPanel.close();

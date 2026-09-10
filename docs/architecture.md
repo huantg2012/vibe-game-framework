@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-08
+last-modified: 2026-09-09
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,20 +10,23 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-### 迭代19撬棍像素素材（待接入，DEC-137）
+## 迭代19武器、供奉与统一物件（DEC-142，2026-09-09）
 
-`src/art/crowbar-pixels.ts`是无引擎依赖的RGBA美术源，输出32×32世界基型与48×48库存图标及各自握点。`tools/inventory/export-crowbar-pixels.ts`读取draft成品CSV并导出`public/assets/weapons/crowbars/`的PNG和清单；不生成战斗属性，也不在运行帧中重绘资产。`/tools/inventory/crowbar-review.html`复用真实玩家贴图作四向持握标定。当前生产Player和库存presenter尚未引用新品质模型；攻击动作与实景接线继续按W2/W3执行。
+`src/art/crowbar-pixels.ts`输出32px世界武器与48px图标；正式成品由 `data/weapons.csv`、`weapon-qualities.csv`、`weapon-attack-profiles.csv` 经codegen生成，十款均已接玩家持握、地面与库存。`PlayerWeaponRig`绕握点以0.68倍率显示，动画沿用已获认可的身体动作。
 
+`InventoryStore`是物品实例、位置、供奉槽、装备引用与出击账本的唯一所有者；`ContaminantSystem`只适配既有技能效果与事件。`EquipmentLifecycle`由武器/污染物各自payload唯一持有，不存重复镜像；`equipment-lifecycle.ts`统一查定义、创建未供奉/就绪武器。`getOfferingItems`投影完整槽位，`slotOffering` / `finishOfferingImpact`支持两类物件；技能引擎的旧污染物槽投影保留同样索引，武器以null占位，附加充能通过快照ID作用到完整槽位。
 
-## 迭代19库存实现边界（2026-09-09，尚未整链启用）
+归来先完成 `ImpactSystem.run` 的防御和模块伤害，再以相同槽位快照统一充能与转化；武器没有虚构防御效果。正常冲击、收益、潮汐与baseSettled一次世界事务保存。世界供奉环装填档统计完整物件槽，不能只看技能投影。
 
-`InventoryStore`（`src/systems/inventory-store.ts`）成为物品身份与位置的唯一所有者；`ContaminantSystem`保留污染物生命周期与既有事件的适配职责。重量以十分之一整数存储；装备仅引用实例ID。领域事务验证后先写入存档，再发布归属变化；工具消费成功才释放主动或被动效果。暂存的旧工具引用在最后一次使用或销毁后失效。
+`CombatSystem`在首个合法接触通过 `consumeWeaponUse` 先保存一次消费，同挥多目标只扣1；最后一次仍以冻结的 `swingWeaponId` 完成全部伤害与回收，随后卸去持武层。场景订阅领域状态刷新装备/HUD；无武器不能继续挥击。训练场同一计数，重开创建就绪满次训练实例；训练保存隔离。
 
-`SaveManager`写入`SaveDataV2.inventory`，V1污染物、槽位与次数迁入统一物品结构，不再同时保存两套可写污染物数组。加载活动出击账本不会自行执行死亡或放弃；中断政策等待用户决定。新游戏/旧档迁移提供普通白板，`data/weapons.csv`经codegen只生成该已确认基线，R4四档伤害区间、同档抗性和生存属性候选仍留在`data/drafts/`。
+`SaveDataV2.inventory` 内部schema版本2包含武器供奉和余次。旧内部v1无字段武器仅一次迁为就绪满次，原技能进度保留，后续加载不补满；畸形行/非法引用拒绝加载。活动出击的刷新/退出政策尚未确定，不能自动套死亡处罚。
 
-`inventory-panel.ts`与`inventory-panel-styles.ts`为基地、备行、裂隙共用的展示组件；`src/ui/inventory-presenter.ts`从领域查询生成视图、把动作回传领域，不另存物品。`FieldLootInventory`负责已揭晓地面物的世界投影、附近可见性及E拾取；`LootSearchSystem.inventoryEnabled`必须显式启用，当前默认关闭，正式裂隙仍走原搜寻路径。
+`StatusPanel`的物件页嵌入 `InventoryPanel(catalog)`，统一总览并导航供奉；`InventoryPanel(prepare)`仅在裂隙入口装配，真实人物关联一个武器位及动态主动/被动槽；`InventoryPanel(rift)`只整理本趟拾获和附近物件。`InventoryPresenter`只投影同一领域实例，B独立库存已下线。净化点无重量上限/读数；出发校验真实携入负重，裂隙总重包括装备与拾获，打开Tab不停世界。
 
-**未完成的生产接线**：场景B入口与备行替换、出发账本、死亡/撤离与基地冲击的持久化结算、中断恢复、结果实际携回列表。不能以领域测试或独立界面验收替代上述完整循环。当前合同见`system-field-inventory.md`与`iteration-19.md`；本节不改变已验收的敌人/场景美术。
+`src/art/contaminant-icons.ts`持有18类24px硬边物件图标，报告/供奉/备行/HUD共用 `contaminantIconUrl`；`tools/inventory/export-contaminant-icons.ts`导出PNG/SVG与contact sheet，并验证CSV覆盖、唯一轮廓、色板和透明边界。`RiftHud`按实例ID而非类型绑定装备与余次，保持空槽，避免同型技能串位。
+
+正常出发→真实翻堆→撤离/死亡→归来结算已接通。`FieldLootInventory`持有可见附近地面投影、E取得与交换，`LootSearchSystem`揭晓新武器必须调用未供奉工厂。未交部分仅完整中断恢复政策与人审体验，不把此保护标为恢复完成。当前规格见 `system-field-inventory.md`，验证见 `docs/qa/iteration-19-unified-equipment.md`。
 
 ## R4-C 当前实体占空合同
 
@@ -963,8 +966,45 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 
 `weapon-swing.ts`拥有每次挥击抽样、时间窗口与共享目标预算，Combat统合身体及Host登记的核；Host不再独立轮询武器有效帧。`player-weapon-rig.ts`读取同一攻击姿态，脚底固定，拆分上身/双臂与32px武器握点。`crowbar-pixels.ts`共用于持握、地面物，PNG图标由同源导出。
 
-`inventory-store.ts`是唯一实例/归属/装备/出击账本所有者；`inventory-presenter.ts`与DOM视图共享于基地B、入口整备及裂隙B。`field-loot-inventory.ts`提交揭晓/取得/交换/落地，`weapon-loot.ts`使用独立确定性随机流。`survival-attributes.ts`从已提交库存派生抗性及负重速度，场景订阅后更新玩家、Chaos及HUD；预览不更改运行时属性。
+`inventory-store.ts`是唯一实例/归属/装备/出击账本所有者；`inventory-presenter.ts`与DOM视图共享于报告物件页、入口备行及裂隙Tab拾获（B已由DEC-142下线）。`field-loot-inventory.ts`提交揭晓/取得/交换/落地，`weapon-loot.ts`使用独立确定性随机流。`survival-attributes.ts`从已提交库存派生抗性及负重速度，场景订阅后更新玩家、Chaos及HUD；预览不更改运行时属性。
 
 出发先保存beginRun，再转换场景；RunController先保存死亡/撤离settleRun，结果只读实际returnedIds。基地收益/冲击/潮汐/baseSettled通过SaveManager.commitWorldTransaction保存一次；失败保留会话结果并锁下一次出发，重试只写快照。开发ui-review的此事务也隔离真实存档。
 
 未完成出击的刷新/退出政策尚未确定；当前session阻止active账本载入基地，保留原记录并说明无法继续。该保护不是裂隙快照恢复。
+
+
+### I19 战斗试验场（DEC-140）
+
+`combat-lab.html` → `src/gym/combat-lab.ts` / `combat-lab.css` → `CombatLabScene`（`combat-lab-scene.ts`）。`combat-lab-types.ts`声明配置及观察状态；`combat-lab-runtime-ground.ts`将受控场地适配到生产`RiftSurfacePainter`。逻辑画布960×640；独立开发入口纳入Vite多页构建，敌人检视室提供跳转，不挂正式主菜单。
+
+武器/工具消费生成表，敌人消费检视室共享的合法家族与形态目录；运行时直接复用Player、CombatSystem、AISystem、Host、ToolSystem、ChaosSystem、生产模型和深度排序。场地是固定试验几何；不模拟完整迷雾、搜寻或出击结算。所有攻击及受伤走真实系统，免伤选项默认关闭。
+
+入口加载完生产依赖后及场景初始化时显式`inventoryStore.setPersistence(null)`，训练实例仅在本页内存重建，不加载或写入正式存档。配置修改重开并暂停，点击场地恢复；清场/倒地可自动续场，R手动重开。结束回合关闭伤害与移动但继续消退战斗表现，shutdown释放纹理、实体和监听。
+
+`tools/inventory/check-combat-lab.mjs`在独立浏览器上下文验证真实输入、伤害、消费、配置和生命周期，并以存档哨兵检查保存隔离；执行结果见`docs/qa/iteration-19-combat-lab.md`。
+
+
+### I19 首次体验反馈（DEC-141）
+
+`entities/hit-reaction.ts`拥有按subjectId订阅的纯表现冲量与220ms回弹曲线；`d/model-visual.ts`在原动作/材质之上应用变换，销毁时注销监听。Combat通过真实命中入口触发，固定8槽Graphics池承担身体/核心局部接触与碎屑，结束/重置/销毁清理。场景无需另接一套受击模型；物理、AI时序、攻击规则均由原系统持有。
+
+`PlayerWeaponRig`以0.68倍率围绕原握点显示32px武器图，原动作时钟保持。W8的独立B随身入口已由DEC-142替换为净化点Tab报告与裂隙Tab拾获，当前接线见本文迭代19统一物件节；W8身体与核心受击反应继续有效。
+
+
+## 迭代20 A 模块登记（DEC-143）
+
+- `src/systems/enemy-control-state.ts`：敌人拥有的来源隔离控制值，AI写入与投影，Combat只读攻击资格；真实正伤害经窄接口通知解除可打破来源，不直接写FSM。
+- `src/systems/tool-targeting.ts`：纯函数最近可见目标选择与单格实墙连续swept-AABB安全落点，供正式Rift与战斗试验场共用。
+- `src/systems/environment-hazard-control.ts`：Host拥有的来源计时与恢复预兆状态，无伤害/库存权限。Host公开目标查询、已释放危险压制及未释放危险推迟；正式异物消费接入属于后续批次。
+- `ToolSystem`拥有区域实例source、听觉遭遇与已回收节点记录；场景注入可见性、共享LOS、存活查询与安全位移。定向目标不再无条件遍历全图命中。
+- `volume-presence` / `dust-flow`拆分phaseElapsedMs（危险预兆/释放）与elapsedMs（流动），保持模型与真实危区共用同一相位。
+
+架构边界的窄补充：Combat可以在正伤害接受后通知AI解除damage-breakable控制，其余reportDamage/noise/despawn仍通过场景层。控制与背包持久化失败不应先改世界。
+
+### 迭代20 B：首8异物样板
+
+- `contaminant-qualities.csv` → `contaminant-quality-data.ts` → `contaminant-quality.ts`：四品质、次数、掉落与旧实例只读投影。InventoryStore仍是实例唯一所有者。
+- ToolSystem通过场景注入视觉诱饵、声音投掷落点/声源、Host危险查询/压制/清理；RiftScene与CombatLabScene用同一条接线。`findSoundLureLanding`用连续射线阻止墙/VOID穿透。
+- AISystem区分玩家、视觉诱饵和声音调查来源；ChaosSystem由场景提供归属查询，屏缘被发现提示过滤诱饵事件。Host声音接口不等价于声音诱饵，未混接。
+- `contaminant-icons.ts`共享身份几何生成24px图标/32px世界硬像素，field-loot、库存、供奉与备行传实例quality；combat-lab增加四品质选择和所选物件图标/完整用途。
+- 首8替换定义；其余10旧能力留待下一批，不提前删除旧实例，不改变武器耐久/死亡全丢/开包不停。

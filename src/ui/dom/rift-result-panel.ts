@@ -1,3 +1,5 @@
+import { getContaminantQualityName, supportsContaminantQuality } from '@/systems/contaminant-quality';
+import type { ContaminantQuality } from '@/types/game-types';
 /**
  * RiftResultPanel - DOM overlay for the rift sortie result (extraction / death).
  *
@@ -24,7 +26,7 @@ export interface RiftResultData {
   peakChaos: number;
   elapsedMs: number;
   /** Every contaminant picked up this sortie, in pickup order. */
-  acquired: readonly { type: ContaminantType; rarity: ContaminantRarity }[];
+  acquired: readonly { type: ContaminantType; rarity: ContaminantRarity; quality?: ContaminantQuality }[];
   /** Passive tool trigger counts this sortie, keyed by contaminant type. */
   weapons?: readonly string[];
   passiveTriggers: ReadonlyMap<ContaminantType, number>;
@@ -99,8 +101,8 @@ export const riftResultPanel = {
       html += `<div class="tile-grid">`;
       for (const c of data.acquired) {
         const name = getDefenseName(c.type);
-        const color = RARITY_COLORS[c.rarity];
-        const stars = RARITY_STARS[c.rarity];
+        const color = supportsContaminantQuality(c.type) ? '#a3b3a0' : RARITY_COLORS[c.rarity];
+        const stars = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : RARITY_STARS[c.rarity];
         html += `<span class="pill" style="color:${color};">${name} ${stars}</span>`;
       }
       html += `</div>`;

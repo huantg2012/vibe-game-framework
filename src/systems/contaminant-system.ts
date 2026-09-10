@@ -15,9 +15,10 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { inventoryStore } from '@/systems/inventory-store';
+import { isContaminantQuality, supportsContaminantQuality } from '@/systems/contaminant-quality';
 import type { ContaminantRuntimeState } from '@/systems/defense-engine';
 import { GameEvent } from '@/types/events';
-import type { Contaminant, ContaminantRarity, ContaminantType } from '@/types/game-types';
+import type { Contaminant, ContaminantQuality, ContaminantRarity, ContaminantType } from '@/types/game-types';
 
 const CN = GAME_CONSTANTS.CONTAMINANT;
 const TIDE = GAME_CONSTANTS.TIDE;
@@ -173,15 +174,20 @@ export const contaminantSystem = {
    * Starts in 'defense' stage with 0 impact charges.
    */
   /** Factory only: field reveal must decide ownership and burden before acquiring. */
-  createUnowned(type: ContaminantType, rarity: ContaminantRarity): Contaminant {
+  createUnowned(type: ContaminantType, rarity: ContaminantRarity, quality?: ContaminantQuality): Contaminant {
+    const supportsQuality = supportsContaminantQuality(type);
+    if (quality !== undefined && (!isContaminantQuality(quality) || !supportsQuality)) {
+      throw new Error(`Unsupported contaminant quality for ${type}`);
+    }
     return {
       id: `CTM_${crypto.randomUUID()}`,
-      type, rarity, stage: 'defense', impactCharges: 0, usesRemaining: CN.USES[rarity],
+      type, rarity, stage: 'defense', impactCharges: 0, usesRemaining: 0,
+      ...(supportsQuality ? { quality: quality ?? 'ordinary' } : {}),
     };
   },
 
-  acquire(type: ContaminantType, rarity: ContaminantRarity): Contaminant {
-    const contaminant = this.createUnowned(type, rarity);
+  acquire(type: ContaminantType, rarity: ContaminantRarity, quality?: ContaminantQuality): Contaminant {
+    const contaminant = this.createUnowned(type, rarity, quality);
     const added = inventoryStore.addContaminant(contaminant);
     if (!added.ok) throw new Error(`Contaminant acquisition failed: ${added.error}`);
     const owned = findById(contaminant.id)!;
@@ -248,40 +254,24 @@ export const contaminantSystem = {
    *
    * Returns list of contaminants that transformed (defense -> tool).
    */
-  applyImpactCharge(isHighTide: boolean): ContaminantTransformResult[] {
-    const chargeCost = isHighTide ? TIDE.CREST_CHARGE_COST : TIDE.NORMAL_CHARGE_COST;
-    const results: ContaminantTransformResult[] = [];
-
-    for (let i = 0; i < slots().defenseSlots.length; i++) {
-      const id = slots().defenseSlots[i];
-      if (!id) continue;
-
-      const c = findById(id);
-      if (!c) {
-        // Orphaned reference — clear it
-        slots().defenseSlots[i] = null;
-        continue;
-      }
-
-      // Apply charge multiplier from contaminant data (e.g. kindle = 2.0)
-      const chargeMult = CONTAMINANT_DATA[c.type]?.defenseChargeMult ?? 1;
-      c.impactCharges += chargeCost * chargeMult;
-
-      if (c.impactCharges >= TIDE.TRANSFORM_THRESHOLD) {
-        // Transform: defense -> tool; reset uses to per-type value from CSV data
-        c.stage = 'tool';
-        const item = inventoryStore.getItem(c.id);
-        if (item) item.location = { kind: 'stash' };
-        c.usesRemaining = CONTAMINANT_DATA[c.type]?.toolUses ?? CN.USES[c.rarity];
-        slots().defenseSlots[i] = null;
-        results.push({ contaminantId: c.id, type: c.type, slotIndex: i });
-        eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: c.id });
+  /** Finalize only after the same slot snapshot has defended the actual impact. */
+  finishOfferingImpact(isHighTide: boolean, bonusCharges: Readonly<Record<string, number>> = {},
+    snapshotIds: readonly (string | null)[] = [...slots().defenseSlots]) {
+    const result = inventoryStore.finishOfferingImpact(snapshotIds,
+      isHighTide ? TIDE.CREST_CHARGE_COST : TIDE.NORMAL_CHARGE_COST, bonusCharges);
+    if (result.ok) {
+      syncResonateBonus(); syncRepairEfficiencyMult();
+      for (const item of result.value) if (item.kind === 'contaminant') {
+        eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: item.itemId });
       }
     }
+    return result;
+  },
 
-    syncResonateBonus();
-    syncRepairEfficiencyMult();
-    return results;
+  applyImpactCharge(isHighTide: boolean): ContaminantTransformResult[] {
+    const result = this.finishOfferingImpact(isHighTide);
+    return result.ok ? result.value.flatMap(item => item.kind === 'contaminant'
+      ? [{ contaminantId: item.itemId, type: item.definitionId as ContaminantType, slotIndex: item.slotIndex }] : []) : [];
   },
 
   /**
@@ -317,30 +307,14 @@ export const contaminantSystem = {
    * Returns transform results for any contaminant that crossed the transform threshold.
    */
   applyBonusCharges(bonus: Record<string, number>): ContaminantTransformResult[] {
-    const results: ContaminantTransformResult[] = [];
-
-    for (const [id, amount] of Object.entries(bonus)) {
-      if (amount <= 0) continue;
-      const c = findById(id);
-      if (!c || c.stage !== 'defense') continue;
-
-      c.impactCharges += amount;
-
-      if (c.impactCharges >= TIDE.TRANSFORM_THRESHOLD) {
-        c.stage = 'tool';
-        const item = inventoryStore.getItem(c.id);
-        if (item) item.location = { kind: 'stash' };
-        c.usesRemaining = CONTAMINANT_DATA[c.type]?.toolUses ?? CN.USES[c.rarity];
-        const slotIdx = slots().defenseSlots.indexOf(id);
-        if (slotIdx !== -1) slots().defenseSlots[slotIdx] = null;
-        results.push({ contaminantId: c.id, type: c.type, slotIndex: slotIdx });
-        eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: c.id });
-      }
-    }
-
-    syncResonateBonus();
-    syncRepairEfficiencyMult();
-    return results;
+    const result = inventoryStore.finishOfferingImpact([...slots().defenseSlots], 0, bonus);
+    if (!result.ok) return [];
+    syncResonateBonus(); syncRepairEfficiencyMult();
+    return result.value.flatMap(item => {
+      if (item.kind !== 'contaminant') return [];
+      eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: item.itemId });
+      return [{ contaminantId: item.itemId, type: item.definitionId as ContaminantType, slotIndex: item.slotIndex }];
+    });
   },
 
   /**

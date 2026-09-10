@@ -18,7 +18,7 @@ class Draw {
 let acquired = 0;
 eventBus.on(GameEvent.CONTAMINANT_ACQUIRED, () => acquired++);
 store.reset();
-store.configure({ capacity: 30, contaminantWeight: 20, starterDefinitionId: 'test', weaponDefinition: id => ({ id, weight: 30 }) });
+store.configure({ capacity: 30, contaminantWeight: 20, starterDefinitionId: 'crowbar_plain', weaponDefinition: id => ({ id, weight: 30 }) });
 assert(store.ensureStarter().ok); assert(store.beginRun('field-test').ok);
 const player = { x: 0, y: 0 };
 let visible = 1, legal = true, opened = 0;

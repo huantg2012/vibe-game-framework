@@ -14,7 +14,7 @@ export function dustNoise(t: number, seed: number): number {
   const i = Math.floor(t), u = ease(t - i);
   return (dustHash(i + seed) * (1 - u) + dustHash(i + seed + 1) * u) * 2 - 1;
 }
-export function fillDustKnots(f: VolumePresenceFrame, p: Readonly<VolumeProfile>): void {
+export function fillDustKnots(f: VolumePresenceFrame, p: Readonly<VolumeProfile>, phaseElapsedMs = f.elapsedMs): void {
   f.partCount = DUST_KNOT_COUNT;
   f.travelScale = p.travelScale;
   const r = f.rect, w = r.w / 2, h = r.h / 2;
@@ -25,7 +25,7 @@ export function fillDustKnots(f: VolumePresenceFrame, p: Readonly<VolumeProfile>
   const horizontal = r.w >= r.h;
   for (let i = 0; i < f.partCount; i++) {
     const a = f.parts[i]!, k = seed + i * 7919;
-    const delayed = f.elapsedMs - dustHash(k + 8) * 360;
+    const delayed = phaseElapsedMs - dustHash(k + 8) * 360;
     const t = ((delayed % cycle) + cycle) % cycle;
     let pull = 0, sweep = 0;
     if (t >= p.restMs && t < p.restMs + p.gatherMs) {

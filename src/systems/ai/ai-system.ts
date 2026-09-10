@@ -42,6 +42,7 @@ import { closeAlertEpisode, stepFsm, transitionTo } from '@/systems/ai/state-mac
 import { hasLineOfSight } from '@/utils/grid-raycast';
 import { clamp, lerp, shortestArc } from '@/utils/math';
 import { separateContacts, type ContactBody } from '@/systems/ai/contact-separation';
+import type { EnemyControlEffect, EnemyControlSnapshot } from '@/systems/enemy-control-state';
 
 /** How the player's field of view rates a world position: 0 means "not drawn" (rule R4). */
 export type VisibilityProvider = (point: Readonly<Vector2>) => number;
@@ -93,6 +94,11 @@ export interface AISystemAPI {
   despawn(enemyId: string): void;
   onPlayerLost(): void;
   destroy(): void;
+  setEnemyControl(enemyId: string, sourceId: string, effect: EnemyControlEffect): void;
+  clearEnemyControl(enemyId: string, sourceId: string): void;
+  hasEnemyControl(enemyId: string, sourceId: string): boolean;
+  getEnemyControlState(enemyId: string): EnemyControlSnapshot | undefined;
+  breakEnemyControlsOnDamage(enemyId: string): void;
 
   // --- Slice 5 tool overrides (T1), called by ToolSystem through the scene's wiring. ---
   /** compress / echo / resonate's post-knockback stun: 1 = no effect. */
@@ -107,6 +113,8 @@ export interface AISystemAPI {
   forceEnemyReturn(enemyId: string): void;
   /** mirror's decoy position, or null while no decoy is active. */
   setDecoyPosition(pos: Readonly<Vector2> | null): void;
+  setVisualDecoy(sourceId: string, pos: Readonly<Vector2> | null): void;
+  reportSoundLure(pos: Readonly<Vector2>, radius: number): void;
   /** resonate: "被弹回3格". A direct reposition (placeholder-tier: no wall-awareness),
    * since nothing today moves an enemy's body except its own steering. */
   knockbackEnemy(enemyId: string, dx: number, dy: number): void;
@@ -136,6 +144,7 @@ export interface AISystemAPI {
 }
 
 export class AISystem implements AISystemAPI {
+  private readonly visualDecoys = new Map<string, Vector2>();
   private scene!: Phaser.Scene;
   private occluders!: OccluderGrid;
   private walk!: WalkGrid;
@@ -323,6 +332,7 @@ export class AISystem implements AISystemAPI {
     this.visibilityProvider = null;
     this.cueListener = null;
     this.hearingAvoidedListener = null;
+    this.visualDecoys.clear();
   }
 
   // ------------------------------------------------------------------ update
@@ -344,6 +354,10 @@ export class AISystem implements AISystemAPI {
     this.raysThisFrame = 0;
 
     for (const enemy of this.enemies) {
+      this.context.decoyPos = this.visibleDecoyFor(enemy);
+      if (enemy.ai.targetingDecoy && !this.context.decoyPos && enemy.ai.losGraceMs === 0) {
+        enemy.ai.losGraceMs = 1;
+      }
       this.updateActivity(enemy, dtMs);
       enemy.tickGait(dtMs);
       if (!enemy.canAct()) {
@@ -449,8 +463,39 @@ export class AISystem implements AISystemAPI {
   // ------------------------------------------------------------------ Slice 5 tool overrides (T1)
 
   setEnemySpeedMultiplier(enemyId: string, mult: number): void {
+    if (mult === 1) this.clearEnemyControl(enemyId, 'legacy:movement');
+    else this.setEnemyControl(enemyId, 'legacy:movement', { movementMultiplier: mult });
+  }
+
+  setEnemyControl(enemyId: string, sourceId: string, effect: EnemyControlEffect): void {
     const enemy = this.findEnemy(enemyId);
-    if (enemy) enemy.ai.externalSpeedMult = mult;
+    if (!enemy) return;
+    enemy.controls.set(sourceId, effect);
+    this.syncControlMultipliers(enemy);
+  }
+
+  clearEnemyControl(enemyId: string, sourceId: string): void {
+    const enemy = this.findEnemy(enemyId);
+    if (enemy?.controls.clear(sourceId)) this.syncControlMultipliers(enemy);
+  }
+
+  hasEnemyControl(enemyId: string, sourceId: string): boolean {
+    return this.findEnemy(enemyId)?.controls.has(sourceId) ?? false;
+  }
+
+  getEnemyControlState(enemyId: string): EnemyControlSnapshot | undefined {
+    return this.findEnemy(enemyId)?.controls;
+  }
+
+  breakEnemyControlsOnDamage(enemyId: string): void {
+    const enemy = this.findEnemy(enemyId);
+    if (enemy?.controls.breakOnDamage()) this.syncControlMultipliers(enemy);
+  }
+
+  private syncControlMultipliers(enemy: Enemy): void {
+    enemy.ai.externalSpeedMult = enemy.controls.movementMultiplier;
+    enemy.ai.perceptionRangeMult = enemy.controls.perceptionMultiplier;
+    if (enemy.ai.externalSpeedMult === 0) enemy.setVelocity(0, 0);
   }
 
   setEnemyMovementLocked(enemyId: string, locked: boolean): void {
@@ -473,8 +518,8 @@ export class AISystem implements AISystemAPI {
   }
 
   setEnemyPerceptionMultiplier(enemyId: string, mult: number): void {
-    const enemy = this.findEnemy(enemyId);
-    if (enemy) enemy.ai.perceptionRangeMult = mult;
+    if (mult === 1) this.clearEnemyControl(enemyId, 'legacy:perception');
+    else this.setEnemyControl(enemyId, 'legacy:perception', { perceptionMultiplier: mult });
   }
 
   reverseEnemyPatrol(enemyId: string): void {
@@ -501,14 +546,55 @@ export class AISystem implements AISystemAPI {
   }
 
   setDecoyPosition(pos: Readonly<Vector2> | null): void {
+    this.setVisualDecoy('legacy:mirror', pos);
+  }
+
+  setVisualDecoy(sourceId: string, pos: Readonly<Vector2> | null): void {
     if (!pos) {
-      this.context.decoyPos = null;
+      this.visualDecoys.delete(sourceId);
       return;
     }
-    if (!this.context.decoyPos) this.context.decoyPos = { x: pos.x, y: pos.y };
-    else {
-      this.context.decoyPos.x = pos.x;
-      this.context.decoyPos.y = pos.y;
+    const existing = this.visualDecoys.get(sourceId);
+    if (existing) { existing.x = pos.x; existing.y = pos.y; }
+    else this.visualDecoys.set(sourceId, { x: pos.x, y: pos.y });
+  }
+
+  private visibleDecoyFor(enemy: Enemy): Vector2 | null {
+    const ai = enemy.ai;
+    if ((ai.state === AIState.CHASE && !ai.targetingDecoy) || enemy.config.profile.visionWeight <= 0) return null;
+    let nearest: Vector2 | null = null;
+    let nearestSq = (enemy.config.sight.rangeCore * ai.perceptionRangeMult) ** 2;
+    if (nearestSq <= 0) return null;
+    for (const pos of this.visualDecoys.values()) {
+      const dx = pos.x - ai.position.x;
+      const dy = pos.y - ai.position.y;
+      const distanceSq = dx * dx + dy * dy;
+      if (distanceSq > nearestSq) continue;
+      if (Math.abs(shortestArc(Math.atan2(dy, dx) - ai.facingAngle)) > enemy.config.sight.halfAngleCore) continue;
+      if (!hasLineOfSight(this.occluders, ai.position, pos)) continue;
+      nearest = pos;
+      nearestSq = distanceSq;
+    }
+    return nearest;
+  }
+
+  /** A physical sound source: hearing range and wall attenuation apply, not player coordinates. */
+  reportSoundLure(pos: Readonly<Vector2>, radius: number): void {
+    for (const enemy of this.enemies) {
+      const ai = enemy.ai;
+      // A lure never erases a confirmed chase, damage, or a higher-priority combat sound.
+      if (ai.state === AIState.CHASE || ai.pendingDamage || ai.pendingNoiseLevel === 'alert') continue;
+      const range = Math.min(radius, enemy.config.hearing.range * ai.perceptionRangeMult);
+      if (range <= 0) continue;
+      const distance = Math.hypot(pos.x - ai.position.x, pos.y - ai.position.y);
+      if (distance > range) continue;
+      const audibleRange = range * (hasLineOfSight(this.occluders, ai.position, pos) ? 1 : enemy.config.hearing.wallFactor);
+      if (distance > audibleRange) continue;
+      ai.pendingNoiseLevel = 'suspicious';
+      ai.pendingNoiseIsLure = true;
+      ai.pendingNoisePos.x = pos.x;
+      ai.pendingNoisePos.y = pos.y;
+      this.forceNextTick(enemy);
     }
   }
 
@@ -623,6 +709,7 @@ export class AISystem implements AISystemAPI {
 
       // Never downgrade a pending stimulus: an alert-grade noise outranks a suspicious one.
       if (level === 'alert' || ai.pendingNoiseLevel === null) ai.pendingNoiseLevel = level;
+      ai.pendingNoiseIsLure = false;
       ai.pendingNoisePos.x = pos.x;
       ai.pendingNoisePos.y = pos.y;
       this.forceNextTick(enemy);
@@ -705,6 +792,13 @@ export class AISystem implements AISystemAPI {
     ai.perceptionAccumMs = 0;
 
     this.perceive(enemy, distanceToPlayer);
+    // A real visible decoy can be noticed even when the player is outside the cone.
+    const decoy = this.context.decoyPos;
+    if (decoy) {
+      this.perception.visible = true;
+      this.perception.zone = 'core';
+      this.perception.distance = Math.hypot(decoy.x - ai.position.x, decoy.y - ai.position.y);
+    }
     stepFsm(enemy, this.perception, elapsed, this.context);
   }
 
@@ -737,7 +831,7 @@ export class AISystem implements AISystemAPI {
     const hearingBase = (this.playerIsMoving ? profile.hearingRange : profile.hearingStillRange) * hearingMult;
     const rayRange = Math.max(sightRange, hearingBase);
 
-    out.rayCast = distance <= rayRange;
+    out.rayCast = rangeMult > 0 && distance <= rayRange;
     out.hasLineOfSight = out.rayCast
       ? hasLineOfSight(this.occluders, ai.position, this.playerPos, rayRange)
       : false;

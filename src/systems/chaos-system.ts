@@ -82,6 +82,7 @@ export interface ChaosSystemAPI {
 }
 
 export interface ChaosSystemConfig {
+  isEnemyTargetingLure?: (enemyId: string) => boolean;
   /** Effective equipped resistance; evaluated on positive inflow only. */
   getPollutionResistance?: () => number;
   /** Called when value moves far enough to warrant a modulator update. */
@@ -137,6 +138,7 @@ export class ChaosSystem implements ChaosSystemAPI {
 
     this.onEnemyAlert = (payload) => {
       const { enemyId, alertLevel } = payload;
+      if (config?.isEnemyTargetingLure?.(enemyId)) return;
       if (alertLevel === 'chase') {
         this.chasingEnemies.add(enemyId);
         this.updateRateMultiplier();

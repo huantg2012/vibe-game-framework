@@ -3,8 +3,8 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
-last-modified-date: 2026-09-08
-interface-changed: false
+last-modified-date: 2026-09-10
+interface-changed: true
 slice: 8
 interfaces-with:
   - system-movement-vision         # 复用 utils/grid-raycast 做视线遮挡；敌人渲染可见性由 VisibilitySystem 决定；平衡不变量来源（玩家视距/移速）
@@ -28,6 +28,17 @@ exposes:
 ---
 
 # 系统设计：敌人 AI（五态 FSM · 两种感知剖面）
+
+## 迭代20 A：来源隔离控制
+
+敌人拥有 `EnemyControlState`，AI公开 `setEnemyControl(id,source,effect)` / `clearEnemyControl(id,source)` / `hasEnemyControl` / `getEnemyControlState` / `breakEnemyControlsOnDamage`。effect包含movementMultiplier、perceptionMultiplier、suppressAttack、breakOnDamage；前两者各来源相乘，任一攻击抑制成立即禁止出手。移除一来源不能清掉其他来源。
+
+旧setEnemySpeedMultiplier/setEnemyPerceptionMultiplier兼容为独立legacy来源。ToolSystem正式区域使用每实例source；方向锁和感知升级抑制按存活来源并集。Combat仅接受正伤害后可通知AI解除breakOnDamage来源，不直接修改FSM。攻击抑制版本单调递增，即使一帧内施加又解除，也取消旧前摇。恢复后重新完整预兆。
+
+听觉抑制是否成功以ToolSystem消费回调boolean为准。连续听觉遭遇的完整消费合同归system-growth-tide迭代20节，禁止按每个感知tick耗次。
+
+
+迭代20 B诱饵归属：视觉诱饵按来源独立保存，必须被该敌人的视距/视锥/遮挡检查真正看到；视觉权重0的实体忽略它，已确认真身追击优先。声音诱饵保存实际投掷落点，按听距及墙体衰减形成调查目标，不复制玩家位置。`EnemyView.isTargetingLure()`同时覆盖视觉追逐和声音调查；ToolSystem的怀疑/失视消费、ChaosSystem的发现增压、RiftScene屏缘被发现提示均忽略诱饵归属事件。敌人从诱饵转向实际看见/受玩家伤害时，必须再发真实追击事件，不能被同级节流吞掉。
 
 ## R4-C 当前实体占空合同
 

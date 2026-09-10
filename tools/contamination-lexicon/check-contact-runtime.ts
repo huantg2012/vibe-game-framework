@@ -95,12 +95,13 @@ assert.equal(velocity.x, 6, 'old renderers retain their coupled hitch carrier');
 const ai = { state: AIState.CHASE, position: { x: 80, y: 80 }, velocity: { x: 0, y: 0 },
   detection: 1, facingAngle: 0, facing4: 'right', losGraceMs: 0, targetingDecoy: true,
   lastSeenPlayerPos: { x: 100, y: 80 }, lastSeenPlayerVel: { x: 0, y: 0 },
-  preferPathMs: 0, externalSpeedMult: 1, movementDirLocked: false, engaged: true,
+  preferPathMs: 0, externalSpeedMult: 1, perceptionRangeMult: 1, movementDirLocked: false, engaged: true,
   pathTargetAtRequest: { x: 0, y: 0 }, pathRequestTarget: { x: 0, y: 0 }, pathPoints: null,
 };
 const seeker = { id: 'seeker', ai, config: createEnemyTypeConfig('infiltrator'), getForm: () => INFILTRATOR_FORM,
   setVelocity(x: number, y: number) { ai.velocity.x = x; ai.velocity.y = y; } } as unknown as Enemy;
 const context = { dtMs: 16, enemies: [seeker], playerPos: { x: 60, y: 80 }, playerVel: { x: 0, y: 0 },
+  emitAlert() {},
   decoyPos: { x: 112, y: 80 }, occluders: { ...arena, isOpaque: (col: number, row: number) => !arena.isWalkable(col, row) },
 } as unknown as AIContext;
 updateBehavior(seeker, context);

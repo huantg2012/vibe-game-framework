@@ -1,20 +1,22 @@
 /** Shared inventory PRESENTATION. Ownership, slots, item stats, transactions,
  * capacity validation, and world time remain the injected domain's concern. */
-import { getDomUiRoot } from './panel-styles';
+import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 import { ensureInventoryPanelStyles } from './inventory-panel-styles';
 
-export type InventoryPanelMode = 'base' | 'prepare' | 'rift';
+export type InventoryPanelMode = 'catalog' | 'prepare' | 'rift';
 export interface InventoryPanelStat { label: string; value: string | number; comparison?: string | number }
 export interface InventoryPanelItem {
   id: string;
   kind: 'weapon' | 'contaminant';
   name: string;
   quality?: string;
+  qualityRank?: number;
   /** Integer tenths; presentation alone divides by ten. */
   weight: number;
   location: 'stash' | 'carried' | 'ground' | 'defense';
   equippedLabel?: string;
   description?: string;
+  explanations?: readonly { label: string; text: string }[];
   /** Read-only proposed equipment result, never committed stats. */
   preview?: string;
   stats?: readonly InventoryPanelStat[];
@@ -24,6 +26,11 @@ export interface InventoryPanelItem {
   toolSlots?: readonly string[];
   /** Unoffered residue; navigation cannot consume or equip the item. */
   canOffer?: boolean;
+  canEquip?: boolean;
+  stageLabel?: string;
+  usesRemaining?: number;
+  /** Weapon-only display ceiling; consumption still uses the shared lifecycle. */
+  maxDurability?: number;
 }
 export interface InventoryEquipmentSlot { id: string; label: string; itemId?: string | null; locked?: boolean }
 export interface InventoryPanelSnapshot {
@@ -31,6 +38,7 @@ export interface InventoryPanelSnapshot {
   equipment: readonly InventoryEquipmentSlot[];
   weight: number;
   capacity: number;
+  equippedWeight?: number;
   survival?: { resistancePercent: number; burdenSpeedFactor: number };
   message?: string;
   canDepart?: boolean;
@@ -52,6 +60,8 @@ export interface InventoryPanelOptions {
   onClose: () => void;
   onDepart?: () => void;
   onOffering?: () => void;
+  mount?: HTMLElement;
+  portrait?: string;
 }
 type Filter = 'all' | 'weapon' | 'contaminant';
 type Sort = 'kept' | 'name' | 'weight';
@@ -85,11 +95,11 @@ function putIcon(target: HTMLElement, item?: InventoryPanelItem): void {
 
 class InventoryPanel {
   private panel: HTMLDivElement | null = null;
+  private backdrop: HTMLDivElement | null = null;
   private options: InventoryPanelOptions | null = null;
   private snapshot: InventoryPanelSnapshot | null = null;
   private filter: Filter = 'all';
   private sort: Sort = 'kept';
-  private carriedOnly = false;
   private focusId: string | null = null;
   private lane: Lane = 'main';
   private picks = new Set<string>();
@@ -98,12 +108,12 @@ class InventoryPanel {
   private lists: Partial<Record<Lane, ListElements>> = {};
   private equipment!: HTMLDivElement;
   private detail!: HTMLElement;
+  private detailHint!: HTMLElement;
   private weight!: HTMLElement;
   private message!: HTMLElement;
   private primary!: HTMLButtonElement;
   private exchangeInspect!: HTMLElement;
   private filters = new Map<Filter, HTMLButtonElement>();
-  private carriedToggle!: HTMLButtonElement;
   private equipmentSignature = '';
   private detailSignature = '';
   private signature = '';
@@ -122,9 +132,10 @@ class InventoryPanel {
 
   open(options: InventoryPanelOptions): void {
     if (this.panel) this.close();
+    injectPanelStyles();
     ensureInventoryPanelStyles();
     this.options = options;
-    this.filter = 'all'; this.sort = 'kept'; this.carriedOnly = false;
+    this.filter = 'all'; this.sort = 'kept';
     this.focusId = null; this.lane = 'main'; this.pendingScroll.clear();
     this.picks.clear(); this.takes.clear(); this.memory.clear(); this.filters.clear();
     this.signature = ''; this.equipmentSignature = ''; this.detailSignature = ''; this.localMessage = ''; this.busy = false; this.suggestedGround = false;
@@ -152,7 +163,7 @@ class InventoryPanel {
     document.removeEventListener('pointercancel', this.cancelDiscardHold, true);
     document.removeEventListener('visibilitychange', this.cancelDiscardHold);
     window.removeEventListener('blur', this.cancelDiscardHold);
-    this.panel.remove(); this.panel = null; this.options = null; this.snapshot = null; this.lists = {};
+    this.panel.remove(); this.backdrop?.remove(); this.backdrop = null; this.panel = null; this.options = null; this.snapshot = null; this.lists = {};
     this.picks.clear(); this.takes.clear(); this.busy = false;
     if (this.previousFocus?.isConnected) this.previousFocus.focus({ preventScroll: true });
     this.previousFocus = null;
@@ -181,27 +192,27 @@ class InventoryPanel {
   private get items(): readonly InventoryPanelItem[] { return this.snapshot?.items ?? []; }
   private item(id: string | null): InventoryPanelItem | undefined { return this.items.find(item => item.id === id); }
   private isEquipped(item: InventoryPanelItem): boolean { return !!item.equippedLabel || !!this.snapshot?.equipment.some(slot => slot.itemId === item.id); }
-  private memoryKey(lane = this.lane): string { return `${this.filter}:${this.sort}:${this.carriedOnly}:${lane}`; }
+  private memoryKey(lane = this.lane): string { return `${this.filter}:${this.sort}:${lane}`; }
 
   private create(): void {
-    const panel = element('div', 'inventory-wrap'); panel.id = 'inventory-panel'; panel.tabIndex = -1;
-    panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', this.options!.mode === 'prepare' ? '备行' : '随身物件');
+    const embedded = this.options!.mode === 'catalog';
+    const panel = element('div', `inventory-wrap ${embedded ? 'inventory-catalog' : 'game-panel crt-stack scene-menu'} is-${this.options!.mode}`); panel.id = 'inventory-panel'; panel.tabIndex = -1;
+    panel.setAttribute('role', embedded ? 'region' : 'dialog'); if (!embedded) panel.setAttribute('aria-modal', 'true'); panel.setAttribute('aria-label', this.options!.mode === 'prepare' ? '备行' : embedded ? '物件' : '本趟拾获');
     const header = element('header', 'inventory-header');
-    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '备行' : '随身'));
-    header.append(element('span', 'inventory-context', this.options!.mode === 'rift' ? '本趟装备已定' : '收好，再沿旧路走'));
+    header.append(element('h2', 'inventory-title', this.options!.mode === 'prepare' ? '备行' : '本趟拾获'));
+    header.hidden = embedded;
+    header.append(element('span', 'inventory-context', this.options!.mode === 'rift' ? '只收好这次带回的物件' : '沿旧路出发'));
+    this.equipment = element('div', 'inventory-equipment');
     this.weight = element('div', 'inventory-weight'); header.append(this.weight);
-    const close = button('inventory-close', 'Esc 收起', () => this.close()); close.setAttribute('aria-label', '收起背包'); header.append(close);
-    this.equipment = element('div', 'inventory-equipment'); this.equipment.setAttribute('aria-label', '本趟装备');
+    const close = button('inventory-close', 'Esc 收起', () => this.close()); close.setAttribute('aria-label', this.options!.mode === 'prepare' ? '离开备行' : '合上拾获'); header.append(close);
+    this.equipment.setAttribute('aria-label', '本趟装备'); this.equipment.hidden = this.options!.mode !== 'prepare';
     const filters = element('nav', 'inventory-filters'); filters.setAttribute('aria-label', '物件筛选');
     for (const [value, label] of [['all', '全部'], ['weapon', '武器'], ['contaminant', '污染物']] as const) {
       const control = button('inventory-filter', label, () => this.changeFilter(value)); this.filters.set(value, control); filters.append(control);
     }
-    this.carriedToggle = button('inventory-carried-toggle', '只看随身', () => {
-      this.remember(); this.carriedOnly = !this.carriedOnly; this.restore(); this.render();
-    });
-    this.carriedToggle.hidden = this.options!.mode === 'rift'; filters.append(this.carriedToggle);
     const sort = element('select', 'inventory-sort'); sort.setAttribute('aria-label', '物件排序');
     for (const [value, label] of [['kept', '原来顺序'], ['name', '按名称'], ['weight', '按负重']] as const) {
+      if (value === 'weight' && this.options!.mode !== 'rift') continue;
       const option = element('option', '', label); option.value = value; sort.append(option);
     }
     sort.addEventListener('change', () => { this.remember(); this.sort = sort.value as Sort; this.restore(); this.render(); }); filters.append(sort);
@@ -210,18 +221,24 @@ class InventoryPanel {
     this.lists.nearby = this.makeList('nearby', '附近');
     this.lists.main = this.makeList('main', '物件');
     this.detail = element('aside', 'inventory-detail'); this.detail.setAttribute('aria-label', '正在查看的物件');
-    body.append(this.lists.nearby.column, this.lists.main.column, this.detail);
+    const detailColumn = element('div', 'inventory-detail-column');
+    this.detailHint = element('div', 'inventory-detail-hint');
+    this.detail.addEventListener('scroll', this.updateDetailOverflow, { passive: true });
+    this.detail.addEventListener('toggle', this.updateDetailOverflow, true);
+    detailColumn.append(this.detail, this.detailHint);
+    body.append(this.lists.nearby.column, this.lists.main.column, detailColumn);
     const bottom = element('footer', 'inventory-bottom');
     this.message = element('div', 'inventory-message'); this.message.setAttribute('role', 'status'); this.message.setAttribute('aria-live', 'polite');
     const bottomRow = element('div', 'inventory-bottom-row');
-    const help = element('span', 'inventory-key-help', '↑↓ 查看 · Tab 移步 · Enter 操作\nB / Esc 收起');
+    const help = element('span', 'inventory-key-help', embedded ? '↑↓ 查看 · Enter 操作' : this.options!.mode === 'prepare' ? '↑↓ 查看 · Tab 移步 · Esc 离开' : '↑↓ 查看 · Enter 操作 · Tab / Esc 合上');
     this.primary = button('inventory-primary', '', () => this.primaryAction());
     bottomRow.append(help, this.primary); bottom.append(this.message, bottomRow);
     panel.append(header, this.equipment, filters, this.exchangeInspect, body, bottom);
     panel.addEventListener('pointerdown', event => event.stopPropagation());
     panel.addEventListener('click', event => event.stopPropagation());
     panel.addEventListener('wheel', event => event.stopPropagation(), { passive: true });
-    getDomUiRoot().append(panel); this.panel = panel;
+    if (!embedded) { this.backdrop = element('div', 'game-panel-backdrop scene-menu-backdrop'); getDomUiRoot().append(this.backdrop); }
+    (this.options!.mount ?? getDomUiRoot()).append(panel); this.panel = panel;
   }
 
   private makeList(lane: Lane, title: string): ListElements {
@@ -240,10 +257,9 @@ class InventoryPanel {
       if (item.location === 'ground') return false;
       if (this.options?.mode === 'rift' && this.isEquipped(item)) return false;
       if ((this.options?.mode === 'rift' || this.exchange) && item.location !== 'carried') return false;
-      if (this.carriedOnly && item.location !== 'carried') return false;
       return this.filter === 'all' || item.kind === this.filter;
     });
-    if (this.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN') || a.id.localeCompare(b.id));
+    if (this.sort === 'name') list.sort((a, b) => a.name.localeCompare(b.name, 'zh-CN') || (b.qualityRank ?? 0) - (a.qualityRank ?? 0) || a.id.localeCompare(b.id));
     if (this.sort === 'weight') list.sort((a, b) => b.weight - a.weight || a.id.localeCompare(b.id));
     return list;
   }
@@ -254,10 +270,8 @@ class InventoryPanel {
     this.lists.nearby!.column.hidden = !this.exchange;
     this.lists.nearby!.heading.textContent = '附近';
     this.lists.nearby!.list.setAttribute('aria-label', '附近物件');
-    this.carriedToggle.hidden = this.options?.mode === 'rift' || this.exchange;
-    this.lists.main!.heading.textContent = this.exchange ? '随身' : this.options?.mode === 'rift' ? '随身物件' : '物件 · 随身与留存';
+    this.lists.main!.heading.textContent = this.options?.mode === 'rift' ? '本趟拾获' : this.options?.mode === 'prepare' ? '选择装配' : '全部物件';
     for (const [filter, control] of this.filters) { control.classList.toggle('is-current', filter === this.filter); control.setAttribute('aria-pressed', String(filter === this.filter)); }
-    this.carriedToggle.setAttribute('aria-pressed', String(this.carriedOnly));
     this.renderEquipment();
     const previousIds = this.lists[this.lane]?.ids ?? [];
     const oldIndex = Math.max(0, previousIds.indexOf(this.focusId ?? ''));
@@ -272,11 +286,13 @@ class InventoryPanel {
   }
 
   private renderEquipment(): void {
+    if (this.options?.mode !== 'prepare') return;
     const signature = JSON.stringify([this.snapshot!.equipment, this.snapshot!.equipment.map(slot => this.item(slot.itemId ?? null))]);
     if (signature === this.equipmentSignature) return;
     this.equipmentSignature = signature;
     const activeId = document.activeElement instanceof HTMLElement ? document.activeElement.dataset.slotId : undefined;
     this.equipment.replaceChildren();
+    if (this.options.portrait) { const portrait = element('img', 'inventory-player-portrait'); portrait.src = this.options.portrait; portrait.alt = ''; this.equipment.append(portrait); }
     for (const slot of this.snapshot!.equipment) {
       const item = this.item(slot.itemId ?? null);
       const control = button('inventory-slot', '', () => {
@@ -284,9 +300,10 @@ class InventoryPanel {
         else { this.localMessage = this.options?.mode === 'rift' ? '本趟装备已定' : slot.locked ? '这个挂点尚未开放' : `先选一件污染物，再装到 ${slot.label}`; this.renderFooter(); }
       });
       control.dataset.slotId = slot.id; control.classList.toggle('is-locked', !!slot.locked);
-      control.setAttribute('aria-label', `${slot.label} · ${item?.name ?? (slot.locked && this.options?.mode !== 'rift' ? '未开放' : '空')}`);
+      control.setAttribute('aria-label', `${slot.label} · ${item?.name ?? (slot.locked ? '未开放' : '空')}`);
       const art = element('span', 'inventory-slot-icon'); putIcon(art, item);
-      control.append(art, element('span', 'inventory-slot-label', `${slot.label}${slot.id === 'weapon' && item ? ` · ${item.name}` : ''}`));
+      control.append(art, element('span', 'inventory-slot-label', slot.label), element('span', 'inventory-slot-name', item?.name ?? '未装配'));
+      if (item?.usesRemaining !== undefined) control.append(element('span', 'inventory-slot-uses', item.kind === 'weapon' ? `耐久 ${item.usesRemaining} / ${item.maxDurability ?? '—'}` : `余次 ${item.usesRemaining}`));
       this.equipment.append(control);
       if (activeId === slot.id) control.focus({ preventScroll: true });
     }
@@ -312,15 +329,16 @@ class InventoryPanel {
         row.dataset.signature = itemSignature;
         const icon = element('span', 'inventory-item-image'); putIcon(icon, item);
         const copy = element('span', 'inventory-item-copy');
-        copy.append(element('span', 'inventory-item-name', item.name), element('span', 'inventory-item-caption', [locationName(item), item.quality].filter(Boolean).join(' · ')));
-        row.replaceChildren(icon, copy, element('span', 'inventory-item-weight', formatWeight(item.weight)));
-        row.setAttribute('aria-label', `${item.name}，负重 ${formatWeight(item.weight)}，${locationName(item)}`);
+        copy.append(element('span', 'inventory-item-name', item.name), element('span', 'inventory-item-caption', [locationName(item), item.stageLabel, item.quality].filter(Boolean).join(' · ')));
+        row.replaceChildren(icon, copy);
+        if (this.options?.mode === 'rift') row.append(element('span', 'inventory-item-weight', formatWeight(item.weight)));
+        row.setAttribute('aria-label', `${item.name}，${locationName(item)}${this.options?.mode === 'rift' ? `，负重 ${formatWeight(item.weight)}` : ''}`);
       }
       // Do not re-append every keyed node: moving the focused node can lose
       // focus and browser scroll even when all instance IDs remain unchanged.
       if (view.list.children[index] !== row) view.list.insertBefore(row, view.list.children[index] ?? null);
     }
-    if (!items.length) view.list.append(element('div', 'inventory-empty', lane === 'nearby' ? '附近没有这一类物件' : '这层布衬里没有物件'));
+    if (!items.length) view.list.append(element('div', 'inventory-empty', lane === 'nearby' ? '附近没有这一类物件' : this.options?.mode === 'rift' ? '本趟尚无拾获' : '没有这一类物件'));
     view.ids = ids; view.list.scrollTop = scroll;
     this.renderPosition(lane);
   }
@@ -329,8 +347,9 @@ class InventoryPanel {
     const view = this.lists[lane]; if (!view) return;
     const count = view.ids.length;
     if (!count) { view.position.textContent = ''; return; }
-    const start = Math.min(count, Math.floor(view.list.scrollTop / 48) + 1);
-    const end = Math.max(start, Math.ceil((view.list.scrollTop + view.list.clientHeight) / 48));
+    const rowHeight = (view.list.firstElementChild as HTMLElement | null)?.offsetHeight || 52;
+    const start = Math.min(count, Math.floor(view.list.scrollTop / rowHeight) + 1);
+    const end = Math.max(start, Math.floor((view.list.scrollTop + view.list.clientHeight) / rowHeight));
     view.position.textContent = `${start}–${Math.min(count, end)} / ${count}`;
   }
 
@@ -364,10 +383,18 @@ class InventoryPanel {
     if (signature === this.detailSignature) return;
     this.detailSignature = signature;
     this.cancelDiscardHold();
-    const scroll = this.detail.scrollTop; this.detail.replaceChildren();
-    if (!item) { this.detail.append(element('p', '', '选一件物件，看看它还能做什么。')); this.exchangeInspect.textContent = '先选准备拿取的物件，再选要放下的收获。'; return; }
+    const scroll = this.detail.dataset.itemId === item?.id ? this.detail.scrollTop : 0;
+    this.detail.dataset.itemId = item?.id ?? '';
+    const expanded = new Set([...this.detail.querySelectorAll<HTMLDetailsElement>('details[open]')].filter(node => node.dataset.itemId === item?.id).map(node => node.dataset.label));
+    this.detail.replaceChildren();
+    if (!item) { this.detail.append(element('p', '', '选一件物件，看看它还能做什么。')); this.detailHint.textContent = ''; this.exchangeInspect.textContent = '先选准备拿取的物件，再选要放下的收获。'; return; }
     const art = element('div', `inventory-art${item.kind === 'weapon' ? ' is-weapon' : ''}`); putIcon(art, item);
-    this.detail.append(art, element('h3', '', item.name), element('div', 'inventory-detail-meta', `${locationName(item)} · 负重 ${formatWeight(item.weight)}`));
+    this.detail.append(art, element('h3', '', item.name), element('div', 'inventory-detail-meta', `${locationName(item)}${this.options?.mode === 'rift' ? ` · 负重 ${formatWeight(item.weight)}` : ''}`));
+    if (item.usesRemaining !== undefined) {
+      const remaining = element('div', 'inventory-stat inventory-detail-uses');
+      remaining.append(element('span', '', item.kind === 'weapon' ? '耐久度' : '剩余次数'), element('strong', '', item.kind === 'weapon' ? `${item.usesRemaining} / ${item.maxDurability ?? '—'}` : String(item.usesRemaining)));
+      this.detail.append(remaining);
+    }
     if (item.description) this.detail.append(element('p', '', item.description));
     for (const stat of item.stats ?? []) {
       const line = element('div', 'inventory-stat'); line.append(element('span', '', stat.label), element('strong', '', stat.comparison !== undefined ? `${stat.comparison} → ${stat.value}` : String(stat.value))); this.detail.append(line);
@@ -375,7 +402,7 @@ class InventoryPanel {
     const actions = element('div', 'inventory-actions');
     const action = (label: string, run: () => void, disabled = false) => { const control = button('inventory-action', label, run); control.disabled = disabled; actions.append(control); };
     if (this.options?.mode !== 'rift') {
-      if (item.location === 'carried' || item.location === 'stash') {
+      if (this.options?.mode === 'prepare' && item.canEquip && (item.location === 'carried' || item.location === 'stash')) {
         if (item.kind === 'weapon') action('换到在手', () => void this.dispatch({ type: 'equipWeapon', itemId: item.id }), this.isEquipped(item));
         else for (const slot of this.snapshot!.equipment.filter(slot => slot.id !== 'weapon' && !slot.locked && (!item.toolSlots || item.toolSlots.includes(slot.id)))) {
           if (slot.itemId === item.id) action(`卸下 ${slot.label}`, () => void this.dispatch({ type: 'unequipTool', slotId: slot.id }));
@@ -383,16 +410,30 @@ class InventoryPanel {
         }
       }
       if (item.canOffer && this.options?.onOffering) action('前往供奉台', () => this.goToOffering());
-      if (item.location === 'stash' && !this.isEquipped(item)) actions.append(this.makeDiscardControl(item));
+      if (this.options?.mode === 'catalog' && item.location === 'stash' && !this.isEquipped(item)) actions.append(this.makeDiscardControl(item));
       if (item.location === 'defense') this.detail.append(element('p', 'inventory-locked-note', '正在净化点守护中'));
     } else if (this.exchange) {
       action(item.location === 'ground' ? (this.takes.has(item.id) ? '取消拿取' : '选为拿取') : (this.picks.has(item.id) ? '取消放下' : '选为放下'), () => this.togglePick(item), item.location !== 'ground' && (item.location !== 'carried' || this.isEquipped(item)));
     } else if (item.location === 'carried' && !this.isEquipped(item)) action('放在脚边', () => void this.dispatch({ type: 'drop', itemIds: [item.id] }));
     if (item.preview) this.detail.append(element('p', 'inventory-preview', item.preview));
     if (this.options?.mode === 'rift' && this.isEquipped(item)) this.detail.append(element('p', 'inventory-locked-note', '本趟已装配 · 不能卸下'));
-    this.detail.append(actions); this.detail.scrollTop = scroll;
+    this.detail.append(actions);
+    for (const explanation of item.explanations ?? []) {
+      const disclosure = element('details', 'inventory-explanation');
+      disclosure.dataset.itemId = item.id; disclosure.dataset.label = explanation.label;
+      disclosure.open = expanded.has(explanation.label);
+      disclosure.append(element('summary', '', explanation.label), element('p', '', explanation.text));
+      this.detail.append(disclosure);
+    }
+    this.detail.scrollTop = scroll;
+    this.updateDetailOverflow();
     this.exchangeInspect.textContent = [item.name, `负重 ${formatWeight(item.weight)}`, item.description, ...(item.stats ?? []).map(stat => `${stat.label} ${stat.comparison !== undefined ? `${stat.comparison} → ` : ''}${stat.value}`)].filter(Boolean).join(' · ');
   }
+
+  private updateDetailOverflow = (): void => {
+    const hasMore = this.detail.scrollTop + this.detail.clientHeight < this.detail.scrollHeight - 1;
+    this.detailHint.textContent = hasMore ? '向下滚动查看 ↓' : this.detail.scrollTop > 0 ? '↑ 向上查看' : '';
+  };
 
   private makeDiscardControl(item: InventoryPanelItem): HTMLButtonElement {
     const control = button('inventory-action inventory-discard', '长按永久丢弃', () => {
@@ -452,8 +493,9 @@ class InventoryPanel {
   private renderFooter(): void {
     if (!this.panel || !this.snapshot) return;
     const preview = this.preview(); const changed = this.exchange && (this.takes.size > 0 || this.picks.size > 0);
+    this.weight.hidden = this.options?.mode !== 'rift';
     this.weight.replaceChildren(document.createTextNode('负重'), element('strong', '', `${formatWeight(this.snapshot.weight)}${changed ? ` → ${formatWeight(preview.result)}` : ''} / ${formatWeight(this.snapshot.capacity)}`));
-    if (this.snapshot.survival) this.weight.append(element('span', 'inventory-survival', `移动 −${Math.round((1 - this.snapshot.survival.burdenSpeedFactor) * 100)}% · 抗性 ${this.snapshot.survival.resistancePercent}%`));
+    if (this.options?.mode === 'rift' && this.snapshot.survival) this.weight.append(element('span', 'inventory-survival', `移动 −${Math.round((1 - this.snapshot.survival.burdenSpeedFactor) * 100)}% · 抗性 ${this.snapshot.survival.resistancePercent}%`));
     this.weight.classList.toggle('is-over', changed ? preview.result > this.snapshot.capacity : this.snapshot.weight > this.snapshot.capacity);
     this.lists.nearby!.count.textContent = this.exchange ? `准备拿取 ${formatWeight(preview.added)}` : '';
     this.lists.main!.count.textContent = this.exchange ? `准备放下 ${formatWeight(preview.removed)}` : '';
@@ -465,12 +507,12 @@ class InventoryPanel {
       this.message.textContent = this.localMessage || this.snapshot.message || (this.takes.size ? `${formatWeight(this.snapshot.weight)} − ${formatWeight(preview.removed)} + ${formatWeight(preview.added)} = ${formatWeight(preview.result)} / ${formatWeight(this.snapshot.capacity)}　·　Space 选择，Esc 保持原样` : '先选附近物件，再用 Space 选择要放下的收获');
     } else if (this.options?.mode === 'prepare' && this.options.onDepart) {
       this.primary.textContent = 'Shift+Enter 踏入裂隙'; this.primary.disabled ||= this.snapshot.canDepart === false;
-      this.message.textContent = this.localMessage || this.snapshot.message || this.snapshot.departReason || '在手与工具带入本趟，装备也计入负重';
+      this.message.textContent = this.localMessage || this.snapshot.message || this.snapshot.departReason || '只装配已成熟物件 · 空工具位不妨碍出发';
     } else {
       const item = this.item(this.focusId);
-      this.primary.textContent = this.options?.mode === 'rift' ? 'Enter 放在脚边' : item?.kind === 'weapon' ? 'Enter 换到在手' : item?.canOffer && this.options?.onOffering ? 'Enter 前往供奉台' : 'Enter 选择挂点';
-      this.primary.disabled ||= !item || item.location === 'defense' || (this.options?.mode === 'rift' && this.isEquipped(item)) || (this.options?.mode !== 'rift' && item.kind === 'weapon' && this.isEquipped(item)) || (this.options?.mode !== 'rift' && item.kind === 'contaminant' && item.toolSlots?.length === 0 && !(item.canOffer && this.options?.onOffering));
-      this.message.textContent = this.localMessage || this.snapshot.message || (this.options?.mode === 'rift' ? '世界仍在继续 · 本趟装备不可更换' : '武器与污染物共用随身负重，留存不设容量');
+      this.primary.textContent = this.options?.mode === 'rift' ? 'Enter 放在脚边' : item?.canOffer && this.options?.onOffering ? 'Enter 前往供奉台' : '仅供查看';
+      this.primary.disabled ||= this.options?.mode === 'catalog' ? !(item?.canOffer && this.options.onOffering) : !item || item.location === 'defense' || (this.options?.mode === 'rift' && this.isEquipped(item)) || (this.options?.mode !== 'rift' && item.kind === 'weapon' && this.isEquipped(item)) || (this.options?.mode !== 'rift' && item.kind === 'contaminant' && item.toolSlots?.length === 0 && !(item.canOffer && this.options?.onOffering));
+      this.message.textContent = this.localMessage || this.snapshot.message || (this.options?.mode === 'rift' ? `世界仍在继续 · 已装配占 ${formatWeight(this.snapshot.equippedWeight ?? 0)}` : '装备请前往裂隙入口备行；未成熟物件先供奉');
     }
     this.panel.classList.toggle('is-busy', this.busy);
   }
@@ -498,9 +540,9 @@ class InventoryPanel {
     if (this.exchange) { this.togglePick(item); return; }
     if (this.options.mode === 'rift') {
       if (item.location === 'carried' && !this.isEquipped(item)) void this.dispatch({ type: 'drop', itemIds: [item.id] });
-    } else if ((item.location === 'carried' || item.location === 'stash') && item.kind === 'weapon' && !this.isEquipped(item)) void this.dispatch({ type: 'equipWeapon', itemId: item.id });
+    } else if (this.options.mode === 'prepare' && item.canEquip && (item.location === 'carried' || item.location === 'stash') && item.kind === 'weapon' && !this.isEquipped(item)) void this.dispatch({ type: 'equipWeapon', itemId: item.id });
     else if (item.canOffer && this.options.onOffering) this.goToOffering();
-    else if ((item.location === 'carried' || item.location === 'stash') && item.kind === 'contaminant') {
+    else if (this.options.mode === 'prepare' && item.canEquip && (item.location === 'carried' || item.location === 'stash') && item.kind === 'contaminant') {
       const target = this.detail.querySelector<HTMLButtonElement>('.inventory-action:not(:disabled)'); target?.focus({ preventScroll: true });
     }
   }
@@ -561,7 +603,8 @@ class InventoryPanel {
       if (!event.repeat) this.startDiscardHold(target);
       return;
     }
-    if (key === 'escape' || key === 'b') {
+    if (this.options.mode === 'catalog' && ['escape', 'tab', '[', ']'].includes(key)) return;
+    if (key === 'escape' || (key === 'tab' && this.options.mode === 'rift')) {
       event.preventDefault(); event.stopImmediatePropagation();
       if (!event.repeat) {
         if (key === 'escape' && this.exchange && (this.takes.size || this.picks.size)) {
@@ -573,10 +616,11 @@ class InventoryPanel {
     }
     if (this.options.mode === 'rift' && ['w', 'a', 's', 'd'].includes(key)) { this.close(); return; }
     if (event.key === 'Enter' && event.shiftKey) { event.preventDefault(); event.stopImmediatePropagation(); if (!event.repeat) this.depart(); return; }
+    if (target?.tagName === 'SUMMARY' && ['Enter', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }
     if (target instanceof HTMLSelectElement && ['ArrowUp', 'ArrowDown', 'Home', 'End', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }
     if (event.key === 'Tab') {
       event.preventDefault(); event.stopImmediatePropagation();
-      const focusable = [...this.panel.querySelectorAll<HTMLElement>('button:not(:disabled),select')].filter(node => node.tabIndex >= 0 && node.getClientRects().length > 0);
+      const focusable = [...this.panel.querySelectorAll<HTMLElement>('button:not(:disabled),select,summary')].filter(node => node.tabIndex >= 0 && node.getClientRects().length > 0);
       const at = focusable.indexOf(document.activeElement as HTMLElement), next = (at + (event.shiftKey ? -1 : 1) + focusable.length) % focusable.length;
       focusable[next]?.focus({ preventScroll: true }); return;
     }

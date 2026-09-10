@@ -1,3 +1,4 @@
+import { notifyVisualHit } from '@/entities/hit-reaction';
 /** Shared crowbar swing authority. Bodies and host cores consume one damage sample,
  * one swept arc and one target budget. AI, chaos and movement remain separately owned. */
 
@@ -23,6 +24,7 @@ import { AIState, type Vector2 } from '@/types/game-types';
 import type { OccluderGrid } from '@/types/map-types';
 import { hasLineOfSight } from '@/utils/grid-raycast';
 import { clamp, degToRad, lerp, shortestArc } from '@/utils/math';
+import type { EnemyControlSnapshot } from '@/systems/enemy-control-state';
 
 /** Player swing phases. The cooldown starts at the input instant and runs alongside them. */
 export type AttackPhase = 'idle' | 'windup' | 'active' | 'recovery';
@@ -56,6 +58,8 @@ export type CombatCueId =
  */
 export interface CombatHooks {
   /** Actual model texture, copied synchronously before entity destruction. */
+  /** Called once at the first real contact in a swing. False keeps the swing harmless; scene reports persistence failures. */
+  consumeWeaponUse?(): boolean;
   captureEnemyVisual?(enemyId: string): FormFlashSource | undefined;
   onNoise(pos: Readonly<Vector2>, radius: number, level: NoiseLevel): void;
   /** Optional until an audio manager exists. */
@@ -63,13 +67,14 @@ export interface CombatHooks {
 }
 
 /**
- * The only part of the AI system combat is allowed to see. Narrowed on purpose: the
- * stimulus entry points (`reportDamage` / `reportNoise` / `despawn`) are missing from this
- * view so that changing AI state from here is a type error rather than a code review note.
+ * Narrow AI facet: combat can read control eligibility and notify accepted damage to
+ * break damage-sensitive controls. FSM stimuli and despawns still go through the scene.
  */
 export interface AISystemReadView {
   getEnemies(): readonly EnemyView[];
   getEnemyById(id: string): EnemyView | undefined;
+  getEnemyControlState?(enemyId: string): EnemyControlSnapshot | undefined;
+  breakEnemyControlsOnDamage?(enemyId: string): void;
 }
 
 /**
@@ -166,6 +171,8 @@ interface EnemyCombatState {
   engagedSinceMs: number;
   /** Frames left of the single full-brightness frame at the strike instant (spec V2). */
   strikeFxFrames: number;
+  /** Last interruption already consumed; does not reset when a freeze is broken. */
+  controlInterruptRevision: number;
 }
 
 const LEGACY_BODY_PROFILE: ContaminationBodyProfile = {
@@ -185,6 +192,8 @@ function bodyProfileFor(state: EnemyCombatState): ContaminationBodyProfile {
 /** One pooled white flash. Death effects outlive the enemy entity, hence the pool. */
 let flashPoolSerial = 0;
 
+interface ImpactSlot { x: number; y: number; dx: number; dy: number; core: boolean; remainingMs: number }
+
 interface FxSlot {
   readonly texture: Phaser.Textures.CanvasTexture;
   readonly image: Phaser.GameObjects.Image;
@@ -202,6 +211,8 @@ export class CombatSystem implements CombatSystemAPI {
 
   private graphics!: Phaser.GameObjects.Graphics;
   private readonly fx: FxSlot[] = [];
+  private impactGraphics!: Phaser.GameObjects.Graphics;
+  private readonly impacts: ImpactSlot[] = [];
 
   private enabled = true;
 
@@ -223,6 +234,9 @@ export class CombatSystem implements CombatSystemAPI {
   /** Preallocated and cleared per swing, never rebuilt (one settlement per enemy per swing). */
   private readonly hitSet = new Set<string>();
   private weaponId: string | null = 'crowbar_plain';
+  private swingWeaponId: string | null = null;
+  private weaponUseAttempted = false;
+  private weaponUseCommitted = false;
   private runSeed = 0;
   private attackSequence = 0;
   private damageThisSwing = 0;
@@ -285,6 +299,9 @@ export class CombatSystem implements CombatSystemAPI {
     this.hitSet.clear();
 
     this.graphics = scene.add.graphics().setDepth(COMBAT_FX_DEPTH);
+    this.impactGraphics = scene.add.graphics().setDepth(COMBAT_FX_DEPTH + .1);
+    this.impacts.length = 0;
+    for (let i = 0; i < 8; i++) this.impacts.push({ x: 0, y: 0, dx: 0, dy: 0, core: false, remainingMs: 0 });
     for (let i = 0; i < GAME_CONSTANTS.COMBAT.FX_POOL_SIZE; i++) {
       const texture = scene.textures.createCanvas(`combat-flash-${flashPoolSerial++}`, 1, 1);
       if (!texture) throw new Error('Could not allocate combat flash texture');
@@ -314,6 +331,8 @@ export class CombatSystem implements CombatSystemAPI {
     }
     this.fx.length = 0;
     this.graphics?.destroy();
+    this.impactGraphics?.destroy();
+    this.impacts.length = 0;
     this.externalTargets.clear();
     this.bodyTargets.clear();
     this.meleeTargets.length = 0;
@@ -388,7 +407,8 @@ export class CombatSystem implements CombatSystemAPI {
   }
 
   private syncEquippedVisual(): void {
-    const weapon = this.weaponId ? WEAPON_DATA[this.weaponId] : undefined;
+    const visualId = this.swingWeaponId ?? this.weaponId;
+    const weapon = visualId ? WEAPON_DATA[visualId] : undefined;
     this.player?.setWeaponVisual?.(weapon?.quality ?? null, weapon?.variant ?? 'standard');
   }
 
@@ -414,10 +434,14 @@ export class CombatSystem implements CombatSystemAPI {
   private beginSwing(): void {
     const weapon = this.weaponId ? WEAPON_DATA[this.weaponId] : undefined;
     if (!weapon) return;
+    this.weaponUseAttempted = false;
+    this.weaponUseCommitted = false;
+    this.swingWeaponId = weapon.id;
     const profile = WEAPON_ATTACK_PROFILES.crowbar!;
     this.attackAngle = this.player.getFacingAngle();
     this.damageThisSwing = swingDamage(this.runSeed, ++this.attackSequence, weapon.damageMin, weapon.damageMax);
     this.phase = 'windup';
+    this.syncEquippedVisual();
     this.swingElapsedMs = 0;
     this.cooldownRemainingMs = profile.minIntervalMs;
     this.bufferedMs = 0;
@@ -515,12 +539,18 @@ export class CombatSystem implements CombatSystemAPI {
   }
 
   applyToolDamage(enemyId: string, amount: number): boolean {
-    if (!this.enabled || amount <= 0) return false;
+    if (!this.enabled || !Number.isFinite(amount) || amount <= 0) return false;
     const state = this.enemies.get(enemyId);
     if (!state || !state.alive) return false;
 
     state.health -= amount;
+    this.ai.breakEnemyControlsOnDamage?.(enemyId);
     const pos = state.view.getPosition();
+    const playerPos = this.player.getPosition();
+    notifyVisualHit(state.id, pos.x - playerPos.x, pos.y - playerPos.y);
+    const forceLength = Math.hypot(pos.x - playerPos.x, pos.y - playerPos.y) || 1;
+    this.spawnImpact(pos.x - (pos.x - playerPos.x) / forceLength * 5,
+      pos.y - 7 - (pos.y - playerPos.y) / forceLength * 5, pos.x - playerPos.x, pos.y - playerPos.y);
     this.spawnFx(pos, state.view, GAME_CONSTANTS.COMBAT.ENEMY_HIT_FLASH_MS, false);
 
     eventBus.emit(GameEvent.ENEMY_DAMAGED, { enemyId: state.id, amount, source: 'tool' });
@@ -618,10 +648,22 @@ export class CombatSystem implements CombatSystemAPI {
       this.candidates[first] = this.candidates[i]!; this.candidates[i] = selected;
       const target = selected.target;
       if (!target.isAlive() || (target.hostId && this.hitHosts.has(target.hostId))) continue;
+      if (!this.weaponUseAttempted) {
+        this.weaponUseAttempted = true;
+        this.weaponUseCommitted = this.hooks.consumeWeaponUse?.() ?? true;
+      }
+      if (!this.weaponUseCommitted) return;
       this.hitSet.add(target.id);
       if (target.hostId) this.hitHosts.add(target.hostId);
       const pos = target.getPosition();
       this.deathPos.x = pos.x; this.deathPos.y = pos.y;
+      const contactDx = pos.x - this.player.getPosition().x;
+      const contactDy = pos.y - this.player.getPosition().y;
+      if (target.hostId) notifyVisualHit(target.hostId, contactDx, contactDy);
+      const forceLength = Math.hypot(contactDx, contactDy) || 1;
+      const inset = target.hostId ? 0 : 5;
+      this.spawnImpact(pos.x - contactDx / forceLength * inset,
+        pos.y - (target.hostId ? 0 : 7) - contactDy / forceLength * inset, contactDx, contactDy, Boolean(target.hostId));
       target.applyHit(this.damageThisSwing);
       this.contactRemainingMs = p.contactHoldMs;
       this.contactElapsedMs = p.windupMs + selected.progress * p.activeMs;
@@ -648,7 +690,11 @@ export class CombatSystem implements CombatSystemAPI {
   private applyPlayerHit(state: EnemyCombatState, enemyPos: Readonly<Vector2>): void {
     const combat = GAME_CONSTANTS.COMBAT;
 
+    if (!Number.isFinite(this.damageThisSwing) || this.damageThisSwing <= 0) return;
     state.health -= this.damageThisSwing;
+    this.ai.breakEnemyControlsOnDamage?.(state.id);
+    const origin = this.player.getPosition();
+    notifyVisualHit(state.id, enemyPos.x - origin.x, enemyPos.y - origin.y);
     // The flash is a pooled sprite rather than state on the enemy: the death version has
     // to outlive the entity, so one mechanism owns both and there is nothing write-only.
     this.spawnFx(enemyPos, state.view, combat.ENEMY_HIT_FLASH_MS, false);
@@ -694,6 +740,7 @@ export class CombatSystem implements CombatSystemAPI {
   /** Ends a swing from any cause and always releases the slow. */
   private cancelSwing(): void {
     this.contactRemainingMs = 0;
+    this.swingWeaponId = null;
     this.phase = 'idle';
     this.swingElapsedMs = 0;
     this.hitSet.clear();
@@ -710,6 +757,15 @@ export class CombatSystem implements CombatSystemAPI {
     for (const state of this.enemies.values()) {
       if (!state.alive) continue;
 
+      const control = this.ai?.getEnemyControlState?.(state.id);
+      const interruptRevision = control?.attackInterruptRevision ?? 0;
+      if (control?.attackSuppressed || interruptRevision !== (state.controlInterruptRevision ?? 0)) {
+        state.controlInterruptRevision = interruptRevision;
+        this.interruptEnemyAttack(state);
+        // Even a same-frame freeze and damage release starts a fresh telegraph next frame.
+        continue;
+      }
+
       if (state.cooldownRemainingMs > 0) {
         state.cooldownRemainingMs = Math.max(0, state.cooldownRemainingMs - dtMs);
         if (state.cooldownRemainingMs === 0 && state.attackPhase === 'cooldown') {
@@ -723,8 +779,7 @@ export class CombatSystem implements CombatSystemAPI {
       state.engagedSinceMs = engaged ? state.engagedSinceMs + dtMs : 0;
 
       if (state.attackPhase === 'windup') {
-        // A windup cannot be interrupted (only cancelled by dying). Interruption would
-        // make pre-emptive swinging dominant and turn "should I fight" into "fight well".
+        // Ordinary hits retain the committed attack; explicit controls cancel it above.
         state.attackTimerMs += dtMs;
         if (state.attackTimerMs >= bodyProfileFor(state).windupMs) {
           this.resolveEnemyAttack(state, playerPos);
@@ -745,6 +800,7 @@ export class CombatSystem implements CombatSystemAPI {
     const combat = GAME_CONSTANTS.COMBAT;
     const profile = bodyProfileFor(state);
     if (this.dead) return false;
+    if (this.ai?.getEnemyControlState?.(state.id)?.attackSuppressed) return false;
     if (state.view.isAttackAvailable?.() === false) return false;
     if (state.cooldownRemainingMs > 0) return false;
     if (state.engagedSinceMs < combat.ENEMY_FIRST_ATTACK_DELAY_MS) return false;
@@ -760,6 +816,17 @@ export class CombatSystem implements CombatSystemAPI {
     if (facingOffset > degToRad(profile.halfAngleDeg)) return false;
 
     return hasLineOfSight(this.occluders, enemyPos, playerPos);
+  }
+
+  private interruptEnemyAttack(state: EnemyCombatState): void {
+    if (state.attackPhase === 'windup') {
+      this.releaseToken();
+      state.attackPhase = 'idle';
+    }
+    state.view.setAttackCommitted?.(false);
+    state.attackTimerMs = 0;
+    state.engagedSinceMs = 0;
+    state.strikeFxFrames = 0;
   }
 
   private startEnemyWindup(state: EnemyCombatState, playerPos: Readonly<Vector2>): void {
@@ -900,6 +967,7 @@ export class CombatSystem implements CombatSystemAPI {
         cooldownRemainingMs: 0,
         engagedSinceMs: 0,
         strikeFxFrames: 0,
+        controlInterruptRevision: this.ai.getEnemyControlState?.(id)?.attackInterruptRevision ?? 0,
       });
     }
 
@@ -1006,18 +1074,68 @@ export class CombatSystem implements CombatSystemAPI {
     slot.durationMs = durationMs;
     slot.fade = true;
     if (fade) slot.image.clearTint();
-    else slot.image.setTintFill(0x9f8a6b);
+    else slot.image.setTintFill(0xaed0bb);
     slot.image
       .setTexture(slot.texture.key)
       .setScale(flash.scaleX ?? 1, flash.scaleY ?? 1)
       .setOrigin(flash.originX, flash.originY)
       .setPosition(position.x, position.y)
       .setRotation(0)
-      .setAlpha(fade ? .8 : .65)
+      .setAlpha(fade ? .8 : .85)
       .setVisible(true);
   }
 
+  private spawnImpact(x: number, y: number, dx: number, dy: number, core = false): void {
+    let slot = this.impacts[0];
+    for (const candidate of this.impacts) {
+      if (candidate.remainingMs <= 0) { slot = candidate; break; }
+      if (!slot || candidate.remainingMs < slot.remainingMs) slot = candidate;
+    }
+    if (!slot) return;
+    const length = Math.hypot(dx, dy) || 1;
+    slot.x = x; slot.y = y; slot.dx = dx / length; slot.dy = dy / length; slot.core = core; slot.remainingMs = 240;
+  }
+
   private stepFx(dtMs: number): void {
+    this.impactGraphics?.clear();
+    for (const impact of this.impacts) {
+      if (impact.remainingMs <= 0) continue;
+      const age = 240 - impact.remainingMs;
+      impact.remainingMs = Math.max(0, impact.remainingMs - dtMs);
+      const alpha = impact.remainingMs / 240;
+      // Hosts stay anchored. Only the struck 6px core rim closes inward and splits again.
+      if (impact.core && age < 180) {
+        const u = age / 180;
+        const pinch = Math.sin(Math.PI * u);
+        const offset = 1.5 * pinch;
+        const radius = 3 - pinch * 1.5;
+        const cx = impact.x + impact.dx * offset, cy = impact.y + impact.dy * offset;
+        this.impactGraphics.fillStyle(0x244a41, (1 - u) * .9);
+        this.impactGraphics.fillRect(Math.round(cx - 2), Math.round(cy - 2), 4, 4);
+        this.impactGraphics.fillStyle(0x8bbbab, (1 - u) * .85);
+        for (let side = -1; side <= 1; side += 2) {
+          this.impactGraphics.fillRect(Math.round(cx - impact.dy * radius * side),
+            Math.round(cy + impact.dx * radius * side), 2, 2);
+        }
+      }
+      // Small fractured contact seam, then five material fragments travel away from force.
+      if (age < 70) {
+        this.impactGraphics.fillStyle(0xc3d4ba, .95 * (1 - age / 90));
+        for (let p = -2; p <= 2; p++) {
+          const across = p * 2;
+          this.impactGraphics.fillRect(Math.round(impact.x - impact.dy * across + impact.dx * Math.abs(p)),
+            Math.round(impact.y + impact.dx * across + impact.dy * Math.abs(p)), 2, 2);
+        }
+      }
+      for (let i = 0; i < 5; i++) {
+        const spread = (i - 2) * .9;
+        const distance = age / 240 * (9 + (i % 3) * 4);
+        const x = impact.x + impact.dx * distance - impact.dy * spread * distance * .55;
+        const y = impact.y + impact.dy * distance + impact.dx * spread * distance * .55 + age * age / 22000;
+        this.impactGraphics.fillStyle(i % 2 ? 0x779d8a : 0x496b61, alpha * .85);
+        this.impactGraphics.fillRect(Math.round(x), Math.round(y), i % 2 ? 2 : 1, i % 2 ? 1 : 2);
+      }
+    }
     for (const slot of this.fx) {
       if (slot.remainingMs <= 0) continue;
       slot.remainingMs -= dtMs;
@@ -1026,11 +1144,13 @@ export class CombatSystem implements CombatSystemAPI {
         slot.image.setVisible(false);
         continue;
       }
-      if (slot.fade) slot.image.setAlpha(.65 * slot.remainingMs / slot.durationMs);
+      if (slot.fade) slot.image.setAlpha(.85 * slot.remainingMs / slot.durationMs);
     }
   }
 
   private clearAllFx(): void {
+    for (const impact of this.impacts) impact.remainingMs = 0;
+    this.impactGraphics?.clear();
     for (const slot of this.fx) {
       slot.remainingMs = 0;
       slot.image.setVisible(false);

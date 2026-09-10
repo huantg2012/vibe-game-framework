@@ -138,11 +138,11 @@ export class LootSearchHud {
     });
   }
 
-  flashResidue(rarity: ContaminantRarity): void {
+  flashResidue(rarity: ContaminantRarity, qualityLabel?: string): void {
     if (!this.root) return;
-    const color = RARITY_COLOR[rarity];
+    const color = qualityLabel ? '#a3b3a0' : RARITY_COLOR[rarity];
     showToastInline(
-      `<span>${t('hud.residue.label')}</span> <span>${STARS[rarity]}</span>`,
+      `<span>${t('hud.residue.label')}</span> <span>${qualityLabel ?? STARS[rarity]}</span>`,
       {
         host: this.root,
         skipQueue: true,

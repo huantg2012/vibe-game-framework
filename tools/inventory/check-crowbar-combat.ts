@@ -1,3 +1,4 @@
+import { observeVisualHits } from '../../src/entities/hit-reaction';
 /** Real Combat + Host methods with engine effects replaced, no duplicate damage model. */
 import assert from 'node:assert/strict';
 import { CombatSystem } from '../../src/systems/combat-system';
@@ -54,6 +55,8 @@ assert.equal(swingContactProgress(30, 0, 0, 40, Math.PI * 2 / 3), .5);
 for (const step of [8, 16, 33, 100]) {
   const { combat, noise } = fixture([{ id: 'body', x: 109, y: 81 }, { id: 'late', x: 98, y: 101 }, { id: 'behind', x: 75, y: 80 }]);
   const { cores } = hostFixture(combat, [{ x: 100, y: 68 }, { x: 100, y: 72 }]);
+  const visualHits: string[] = [];
+  const stopHits = ['body', 'host', 'late', 'behind'].map(id => observeVisualHits(id, () => visualHits.push(id)));
   const damageEvents: number[] = [];
   const handler = (e: { amount: number }) => damageEvents.push(e.amount);
   eventBus.on(GameEvent.ENEMY_DAMAGED, handler);
@@ -67,6 +70,8 @@ for (const step of [8, 16, 33, 100]) {
   assert.equal(combat.getEnemyHealth('late'), 75, 'later target outside shared budget');
   assert.equal(combat.getEnemyHealth('behind'), 75, 'rear near target cannot be hit');
   assert.deepEqual(damageEvents, [sample, sample]);
+  assert.deepEqual(visualHits, ['host', 'body'], 'only real shared-budget hits notify visuals');
+  stopHits.forEach(stop => stop());
   assert.equal(noise.filter(n => n === 160).length, 1, 'contact noise deduplicated across body and core');
   assert.equal(combat.getAttackState().phase, 'idle');
 }
@@ -75,9 +80,13 @@ for (const step of [8, 16, 33, 100]) {
 {
   const { combat } = fixture([{ id: 'wall', x: 112, y: 80 }]);
   const { cores } = hostFixture(combat, [{ x: 114, y: 78 }]);
+  let visualHits = 0;
+  const stop = observeVisualHits('wall', () => visualHits++);
+  const stopHost = observeVisualHits('host', () => visualHits++);
   Object.assign(combat, { occluders: { ...grid, isOpaque: (x: number) => x === 12 } });
   combat.requestPlayerAttack(); advance(combat, 300, 100);
   assert.equal(combat.getEnemyHealth('wall'), 75); assert.equal(cores[0]!.hp, 50);
+  assert.equal(visualHits, 0, 'wall-blocked swings produce no impact reaction'); stop(); stopHost();
 }
 // Unkillable fields do not consume either budget or HP; high quality still cannot kill one.
 {
@@ -108,6 +117,42 @@ for (const step of [8, 16, 33, 100]) {
   combat.configureWeapon(null); combat.requestPlayerAttack();
   assert.equal(combat.getSwingSnapshot().sequence, 3);
 }
+// Uses are spent once per successful swing, not once per target or frame.
+{
+  const { combat } = fixture([{ id: 'a', x: 109, y: 79 }, { id: 'b', x: 108, y: 83 }]);
+  const visuals: (string | null)[] = [];
+  const internals = combat as unknown as { hooks: { consumeWeaponUse?: () => boolean }; player: { setWeaponVisual: (quality: string | null) => void } };
+  internals.player.setWeaponVisual = quality => visuals.push(quality);
+  let uses = 1, calls = 0;
+  internals.hooks.consumeWeaponUse = () => { calls++; uses--; combat.configureWeapon(null); return true; };
+  combat.requestPlayerAttack();
+  assert.equal(uses, 1, 'starting/whiffing a swing does not spend durability');
+  const damage = combat.getSwingSnapshot().damage;
+  advance(combat, 220);
+  assert.equal(calls, 1); assert.equal(uses, 0);
+  assert.equal(combat.getEnemyHealth('a'), 75 - damage);
+  assert.equal(combat.getEnemyHealth('b'), 75 - damage, 'last use still hits second budgeted target');
+  assert.equal(visuals.at(-1), 'ordinary', 'last-use weapon remains through recovery');
+  advance(combat, 200);
+  assert.equal(visuals.at(-1), null, 'weapon disappears after completed recovery');
+  combat.requestPlayerAttack(); assert.equal(combat.getSwingSnapshot().sequence, 1);
+}
+{
+  const { combat } = fixture([{ id: 'behind', x: 72, y: 80 }]);
+  let calls = 0;
+  Object.assign((combat as unknown as { hooks: object }).hooks, { consumeWeaponUse: () => { calls++; return true; } });
+  combat.requestPlayerAttack(); advance(combat, 420);
+  assert.equal(calls, 0, 'air/rear miss spends no use');
+}
+{
+  const { combat } = fixture([{ id: 'a', x: 109, y: 79 }, { id: 'b', x: 108, y: 83 }]);
+  let calls = 0;
+  Object.assign((combat as unknown as { hooks: object }).hooks, { consumeWeaponUse: () => { calls++; return false; } });
+  combat.requestPlayerAttack(); advance(combat, 420, 8);
+  assert.equal(calls, 1, 'failed storage is not retried every active frame');
+  assert.equal(combat.getEnemyHealth('a'), 75); assert.equal(combat.getEnemyHealth('b'), 75);
+}
+
 // Rendering curves have a moving elbow/chest, fixed family envelope, continuous phase joins.
 const attack: WeaponAttackPose = { phase: 'windup', elapsedMs: 0, facing: 0, windupMs: 120, activeMs: 60,
   recoveryMs: 220, contactHoldMs: 24, contactRemainingMs: 0 };

@@ -1,13 +1,26 @@
+import { createWeaponInstance, equipmentLifecycleDefinition } from './equipment-lifecycle';
+import { getEquipmentLifecycle, type OfferingTransformResult } from '../types/inventory-types';
+import { CONTAMINANT_DATA } from '../generated/contaminant-data';
+import { isContaminantQuality, supportsContaminantQuality } from './contaminant-quality';
 /** Single inventory owner. Pure and Phaser-free; all field mutations persist before publishing. */
 import type { Contaminant, Vector2 } from '../types/game-types';
 import type { InventoryEquipment, InventoryError, InventoryGroundValidation, InventoryItem, InventoryResult, InventoryRules, InventoryState, NewInventoryItem, RunInventoryLedger } from '../types/inventory-types';
 
 function emptyState(): InventoryState {
-  return { version: 1, items: [], equipment: { weaponId: null, toolIds: [], defenseIds: [] }, run: null, starterGranted: false, firstWeaponDiscovered: false };
+  return { version: 2, items: [], equipment: { weaponId: null, toolIds: [], defenseIds: [] }, run: null, starterGranted: false, firstWeaponDiscovered: false };
 }
 function copy<T>(value: T): T { return JSON.parse(JSON.stringify(value)) as T; }
 function fail(error: InventoryError): InventoryResult<never> { return { ok: false, error }; }
 function success<T>(value: T): InventoryResult<T> { return { ok: true, value }; }
+function validContaminant(contaminant: Contaminant | undefined): boolean {
+  const c = contaminant;
+  return !!c && typeof c.id === 'string' && c.id.length > 0
+    && Object.prototype.hasOwnProperty.call(CONTAMINANT_DATA, c.type)
+    && ['common', 'fine', 'rare'].includes(c.rarity) && ['defense', 'tool'].includes(c.stage)
+    && Number.isFinite(c.impactCharges) && c.impactCharges >= 0
+    && Number.isSafeInteger(c.usesRemaining) && c.usesRemaining >= 0
+    && (c.quality === undefined || (isContaminantQuality(c.quality) && supportsContaminantQuality(c.type)));
+}
 function clearReferences(state: InventoryState, id: string): void {
   if (state.equipment.weaponId === id) state.equipment.weaponId = null;
   state.equipment.toolIds = state.equipment.toolIds.map(value => value === id ? null : value);
@@ -24,6 +37,12 @@ export class InventoryStore {
   subscribe(listener: () => void): () => void { this.listeners.add(listener); return () => this.listeners.delete(listener); }
   getState(): InventoryState { return copy(this.state); }
   getItems(): readonly InventoryItem[] { return this.state.items; }
+  getOfferingItems(): (InventoryItem | null)[] {
+    return Array.from({ length: this.rules.defenseSlotCount() }, (_, slot) => {
+      const id = this.state.equipment.defenseIds[slot];
+      return id ? this.getItem(id) ?? null : null;
+    });
+  }
   getItem(id: string): InventoryItem | undefined { return this.state.items.find(item => item.id === id); }
   getEquipment(): Readonly<InventoryEquipment> { return this.state.equipment; }
   getRun(): Readonly<RunInventoryLedger> | null { return this.state.run; }
@@ -48,6 +67,7 @@ export class InventoryStore {
     for (const item of next.items) {
       const previous = this.getItem(item.id);
       if (item.kind === 'contaminant' && previous?.kind === 'contaminant') {
+        if (item.contaminant.quality === undefined) delete previous.contaminant.quality;
         Object.assign(previous.contaminant, item.contaminant);
         item.contaminant = previous.contaminant;
       }
@@ -73,15 +93,25 @@ export class InventoryStore {
     return result;
   }
   loadState(state: InventoryState): boolean {
-    if (!state || state.version !== 1 || !Array.isArray(state.items) || !state.equipment || !Array.isArray(state.equipment.toolIds) || !Array.isArray(state.equipment.defenseIds)) return false;
+    if (!state || ![1, 2].includes(state.version) || !Array.isArray(state.items) || !state.equipment || !Array.isArray(state.equipment.toolIds) || !Array.isArray(state.equipment.defenseIds)) return false;
+    state = copy(state);
+    if (state.version === 1) {
+      for (const item of state.items) if (item?.kind === 'weapon' && item.weapon && item.weapon.stage === undefined) {
+        try { item.weapon = createWeaponInstance(item.weapon.definitionId, true, item.id); } catch { return false; }
+      }
+    }
+    state.version = 2;
     const ids = new Set<string>();
     for (const item of state.items) {
       if (!item || typeof item.id !== 'string' || !item.id || ids.has(item.id) || !item.location || !['stash', 'carried', 'ground', 'defense'].includes(item.location.kind)) return false;
       if (item.kind === 'weapon') {
         if (item.weapon?.id !== item.id || typeof item.weapon.definitionId !== 'string') return false;
+        const w = item.weapon;
+        if (!['defense', 'tool'].includes(w.stage) || !Number.isFinite(w.impactCharges) || w.impactCharges < 0 || !Number.isSafeInteger(w.usesRemaining) || w.usesRemaining < 0 || (w.stage === 'tool' && w.usesRemaining === 0)) return false;
+        try { equipmentLifecycleDefinition(item); } catch { return false; }
       } else if (item.kind === 'contaminant') {
         const c = item.contaminant;
-        if (!c || c.id !== item.id || typeof c.type !== 'string' || !['common', 'fine', 'rare'].includes(c.rarity) || !['defense', 'tool'].includes(c.stage) || !Number.isFinite(c.impactCharges) || c.impactCharges < 0 || !Number.isSafeInteger(c.usesRemaining) || c.usesRemaining < 0) return false;
+        if (!validContaminant(c) || c.id !== item.id) return false;
       } else return false;
       if (item.location.kind === 'ground' && (!item.location.position || !Number.isFinite(item.location.position.x) || !Number.isFinite(item.location.position.y) || item.location.runId !== state.run?.id)) return false;
       if (item.location.kind === 'defense' && (!Number.isInteger(item.location.slot) || item.location.slot < 0)) return false;
@@ -96,7 +126,7 @@ export class InventoryStore {
     }
     if (state.equipment.weaponId) {
       const weapon = state.items.find(item => item.id === state.equipment.weaponId);
-      if (weapon?.kind !== 'weapon' || weapon.location.kind !== 'carried') return false;
+      if (weapon?.kind !== 'weapon' || weapon.weapon.stage !== 'tool' || weapon.weapon.usesRemaining <= 0 || weapon.location.kind !== 'carried') return false;
     }
     for (const id of state.equipment.toolIds) {
       if (!id) continue;
@@ -107,7 +137,7 @@ export class InventoryStore {
       const id = state.equipment.defenseIds[slot];
       if (!id) continue;
       const item = state.items.find(value => value.id === id);
-      if (item?.kind !== 'contaminant' || item.contaminant.stage !== 'defense' || item.location.kind !== 'defense' || item.location.slot !== slot) return false;
+      if (!item || getEquipmentLifecycle(item).stage !== 'defense' || item.location.kind !== 'defense' || item.location.slot !== slot) return false;
     }
     if (state.run && (typeof state.run.id !== 'string' || !['active', 'settled'].includes(state.run.status) || !Array.isArray(state.run.carriedOutIds) || !Array.isArray(state.run.destroyedIds) || !state.run.revealedNodes || typeof state.run.revealedNodes !== 'object')) return false;
     this.publish(copy(state));
@@ -128,23 +158,24 @@ export class InventoryStore {
   }
   ensureStarter(): InventoryResult<string | null> {
     if (this.state.run?.status === 'active') return fail('run-active');
-    const owned = this.state.items.find(item => item.kind === 'weapon');
+    const owned = this.state.items.find(item => item.kind === 'weapon' && item.weapon.stage === 'tool' && item.weapon.usesRemaining > 0);
     if (owned) return success(owned.id);
     const definitionId = this.rules.starterDefinitionId;
     if (!definitionId || !this.rules.weaponDefinition(definitionId)) return fail('missing-weapon');
     return this.transaction(state => {
       const id = `WPN_${crypto.randomUUID()}`;
-      state.items.push({ kind: 'weapon', id, weapon: { id, definitionId }, location: { kind: 'carried' } });
+      state.items.push({ kind: 'weapon', id, weapon: createWeaponInstance(definitionId, true, id), location: { kind: 'carried' } });
       state.equipment.weaponId = id;
       state.starterGranted = true;
       return success(id);
     });
   }
   addContaminant(contaminant: Contaminant): InventoryResult<string> {
+    if (!validContaminant(contaminant)) return fail('invalid-item');
     return this.transaction(state => {
       if (state.items.some(item => item.id === contaminant.id)) return fail('duplicate-id');
       state.items.push({ kind: 'contaminant', id: contaminant.id, contaminant: { ...contaminant }, location: { kind: state.run?.status === 'active' ? 'carried' : 'stash' } });
-      return this.weight(state) > this.rules.capacity ? fail('overweight') : success(contaminant.id);
+      return state.run?.status === 'active' && this.weight(state) > this.rules.capacity ? fail('overweight') : success(contaminant.id);
     });
   }
   prepareWeapon(id: string): InventoryResult {
@@ -152,11 +183,12 @@ export class InventoryStore {
       if (state.run?.status === 'active') return fail('run-active');
       const item = state.items.find(value => value.id === id);
       if (item?.kind !== 'weapon' || !['stash', 'carried'].includes(item.location.kind)) return fail('invalid-item');
+      if (item.weapon.stage !== 'tool' || item.weapon.usesRemaining <= 0) return fail('not-ready');
       const old = state.items.find(value => value.id === state.equipment.weaponId);
       if (old) old.location = { kind: 'stash' };
       item.location = { kind: 'carried' };
       state.equipment.weaponId = id;
-      return this.weight(state) > this.rules.capacity ? fail('overweight') : success(undefined);
+      return success(undefined);
     });
   }
   prepareTool(id: string | null, slot: number): InventoryResult {
@@ -172,15 +204,16 @@ export class InventoryStore {
       if (id) state.equipment.toolIds = state.equipment.toolIds.map(value => value === id ? null : value);
       state.equipment.toolIds[slot] = id;
       if (item) item.location = { kind: 'carried' };
-      return this.weight(state) > this.rules.capacity ? fail('overweight') : success(undefined);
+      return success(undefined);
     });
   }
-  slotDefense(id: string | null, slot: number): InventoryResult {
+  slotDefense(id: string | null, slot: number): InventoryResult { return this.slotOffering(id, slot); }
+  slotOffering(id: string | null, slot: number): InventoryResult {
     return this.transaction(state => {
       if (state.run?.status === 'active') return fail('run-active');
       if (slot < 0 || slot >= this.rules.defenseSlotCount()) return fail('incompatible');
       const item = id ? state.items.find(value => value.id === id) : undefined;
-      if (id && (item?.kind !== 'contaminant' || item.contaminant.stage !== 'defense' || item.location.kind !== 'stash')) return fail('incompatible');
+      if (id && (!item || getEquipmentLifecycle(item).stage !== 'defense' || item.location.kind !== 'stash')) return fail('incompatible');
       const old = state.items.find(value => value.id === state.equipment.defenseIds[slot]);
       if (old) old.location = { kind: 'stash' };
       state.equipment.defenseIds[slot] = id;
@@ -192,8 +225,17 @@ export class InventoryStore {
     return this.transaction(state => {
       if (state.run?.id === runId) return fail('run-active');
       if (state.run?.status === 'active') return fail('run-active');
-      if (!state.equipment.weaponId || !state.items.some(item => item.id === state.equipment.weaponId && item.kind === 'weapon')) return fail('missing-weapon');
+      if (!state.equipment.weaponId || !state.items.some(item => item.id === state.equipment.weaponId && item.kind === 'weapon' && item.weapon.stage === 'tool' && item.weapon.usesRemaining > 0)) return fail('missing-weapon');
       if (this.weight(state) > this.rules.capacity) return fail('overweight');
+      const toolSlotCount = this.rules.toolSlotCount();
+      for (let slot = 0; slot < state.equipment.toolIds.length; slot++) {
+        const id = state.equipment.toolIds[slot];
+        if (!id) continue;
+        const item = state.items.find(value => value.id === id);
+        if (slot >= toolSlotCount || item?.kind !== 'contaminant' || item.contaminant.stage !== 'tool'
+          || item.contaminant.usesRemaining <= 0
+          || this.rules.isPassiveTool(item.contaminant) !== (slot === toolSlotCount - 1)) return fail('incompatible');
+      }
       const equipped = new Set([state.equipment.weaponId, ...state.equipment.toolIds]);
       if (state.items.some(item => item.location.kind === 'carried' && !equipped.has(item.id))) return fail('wrong-location');
       state.run = { id: runId, status: 'active', carriedOutIds: state.items.filter(item => item.location.kind === 'carried').map(item => item.id), revealedNodes: {}, destroyedIds: [] };
@@ -211,6 +253,8 @@ export class InventoryStore {
       for (const item of items) {
         if (ids.has(item.id)) return fail('duplicate-id');
         if (item.id !== (item.kind === 'weapon' ? item.weapon.id : item.contaminant.id) || !Number.isFinite(this.getWeight({ ...item, location: { kind: 'stash' } }))) return fail('invalid-item');
+        if (item.kind === 'weapon' && (!['defense', 'tool'].includes(item.weapon.stage) || !Number.isSafeInteger(item.weapon.usesRemaining) || item.weapon.usesRemaining < 0)) return fail('invalid-item');
+        if (item.kind === 'contaminant' && !validContaminant(item.contaminant)) return fail('invalid-item');
         ids.add(item.id);
       }
       const revealed: InventoryItem[] = items.map(item => ({ ...copy(item), location: { kind: 'ground', runId: run.id, position: { ...position } }, source: { ...item.source, nodeId, runId: run.id } }));
@@ -246,18 +290,54 @@ export class InventoryStore {
     });
   }
   consumeTool(id: string): InventoryResult<{ broken: boolean; usesLeft: number }> {
+    if (this.getItem(id)?.kind !== 'contaminant') return fail('invalid-item');
+    return this.consumeEquipmentUse(id);
+  }
+  consumeEquipmentUse(id: string): InventoryResult<{ broken: boolean; usesLeft: number }> {
     return this.transaction(state => {
       const item = state.items.find(value => value.id === id);
-      if (item?.kind !== 'contaminant' || item.contaminant.stage !== 'tool' || item.contaminant.usesRemaining <= 0) return fail('invalid-item');
-      if (state.run?.status === 'active' && !state.equipment.toolIds.includes(id)) return fail('equipped');
-      item.contaminant.usesRemaining--;
-      const broken = item.contaminant.usesRemaining === 0;
+      if (!item) return fail('invalid-item');
+      const lifecycle = getEquipmentLifecycle(item);
+      if (lifecycle.stage !== 'tool' || lifecycle.usesRemaining <= 0) return fail('invalid-item');
+      if (item.location.kind !== 'carried') return fail('wrong-location');
+      const equipped = item.kind === 'weapon' ? state.equipment.weaponId === id : state.equipment.toolIds.includes(id);
+      if (!equipped) return fail('equipped');
+      lifecycle.usesRemaining--;
+      const broken = lifecycle.usesRemaining === 0;
       if (broken) {
         clearReferences(state, id);
         state.items = state.items.filter(value => value.id !== id);
         state.run?.destroyedIds.push(id);
       }
-      return success({ broken, usesLeft: item.contaminant.usesRemaining });
+      return success({ broken, usesLeft: lifecycle.usesRemaining });
+    });
+  }
+  finishOfferingImpact(snapshotIds: readonly (string | null)[], normalCharges: number,
+    bonusCharges: Readonly<Record<string, number>> = {}): InventoryResult<OfferingTransformResult[]> {
+    return this.transaction(state => {
+      if (state.run?.status === 'active') return fail('run-active');
+      if (!Number.isFinite(normalCharges) || normalCharges < 0) return fail('invalid-item');
+      const results: OfferingTransformResult[] = [];
+      const visited = new Set<string>();
+      for (let slot = 0; slot < snapshotIds.length; slot++) {
+        const id = snapshotIds[slot];
+        if (!id || visited.has(id)) continue;
+        visited.add(id);
+        const item = state.items.find(value => value.id === id);
+        if (!item || item.location.kind !== 'defense' || state.equipment.defenseIds[slot] !== id) continue;
+        const lifecycle = getEquipmentLifecycle(item);
+        if (lifecycle.stage !== 'defense') continue;
+        const rule = equipmentLifecycleDefinition(item);
+        const bonus = bonusCharges[id] ?? 0;
+        if (!Number.isFinite(bonus) || bonus < 0) return fail('invalid-item');
+        lifecycle.impactCharges += normalCharges * rule.chargeMultiplier + bonus;
+        if (lifecycle.impactCharges < rule.offeringCharges) continue;
+        lifecycle.stage = 'tool'; lifecycle.usesRemaining = rule.maxUses;
+        item.location = { kind: 'stash' }; state.equipment.defenseIds[slot] = null;
+        results.push({ itemId: id, kind: item.kind,
+          definitionId: item.kind === 'weapon' ? item.weapon.definitionId : item.contaminant.type, slotIndex: slot });
+      }
+      return success(results);
     });
   }
   discardAtBase(id: string): InventoryResult {

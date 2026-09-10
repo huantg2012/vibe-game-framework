@@ -3,8 +3,8 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
 last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
-last-modified-date: 2026-09-08
-interface-changed: false
+last-modified-date: 2026-09-10
+interface-changed: true
 slice: 1
 interfaces-with:
   - system-movement-vision         # T1：共享 Player 实体（本 spec 只拥有 HP/攻击/受击/死亡触发）；复用 utils/grid-raycast 做隔墙判定；用 setSpeedModifier('attack') 做出手僵直
@@ -25,6 +25,13 @@ exposes:
 ---
 
 # 系统设计：简化战斗
+
+## 迭代20 A：攻击控制与受击解冻
+
+Combat通过AISystem窄接口读取attackSuppressed与attackInterruptRevision。任意新中断取消正在进行的前摇、归还攻击令牌、清攻击承诺及当前出手计时；抑制期间不能重启攻击；解除后重新完整前摇，不释放被暂停的旧攻击。
+
+仅已接受且大于0的真实地面敌人伤害调用breakEnemyControlsOnDamage。空挥、被拒绝的伤害、武器耐久持久化失败不解除冻结；零伤害不解除。不可打破的眩晕来源保留。最终耐久挥击仍使用捕获的武器并完成所有合法目标及收招。此接口不替代场景层reportDamage/noise/despawn事件翻译。
+
 
 ## R4-C 当前实体占空合同
 

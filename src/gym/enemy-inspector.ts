@@ -13,7 +13,7 @@ import { motionChoicesFor } from '@/generation/contamination-draw';
 import type { FormVisualPose } from '@/entities/form-renderers/form-renderer';
 import './enemy-inspector.css';
 const root = document.getElementById('inspector-root')!;
-root.innerHTML = `<header><h1>敌人检视室</h1><p>那天之后 / 正式模型与行为</p><a href="/">返回游戏</a></header>
+root.innerHTML = `<header><h1>敌人检视室</h1><p>那天之后 / 正式模型与行为</p><a href="/combat-lab.html">战斗试验场</a><a href="/">返回游戏</a></header>
 <main><nav aria-label="敌人目录" id="catalog"></nav><section class="viewer">
 <div class="mode-row"><button id="preview-mode" aria-pressed="true">单体检视</button><button id="arena-mode" aria-pressed="false">实战观察</button><button id="context-mode" aria-pressed="false">同场景对照</button><span id="sample-meta"></span></div>
 <div id="game-container" tabindex="0" aria-label="敌人展示画布"></div><div id="error" role="alert"></div>

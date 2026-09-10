@@ -1,3 +1,4 @@
+import { HitReaction, observeVisualHits } from '@/entities/hit-reaction';
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import { applyFormVisibility, type FormAttachContext, type FormVisual, type FormVisualPose } from '../form-renderer';
 import type { PaintBuf } from './genome/buffer';
@@ -32,6 +33,8 @@ export function attachAnimatedModel(ctx: FormAttachContext, model: AnimatedModel
   image.setScale(ctx.displayScale ?? 1);
   const context = texture.getContext();
   const pixels = context.createImageData(canvas.w, canvas.h);
+  const reaction = new HitReaction();
+  const stopHits = ctx.subjectId ? observeVisualHits(ctx.subjectId, reaction.receive) : () => {};
   const clock = new ModelAnimationClock(model.walkCycleMs, model.stridePixels);
   const cache = new Map<string, Uint8ClampedArray>();
   cache.set(`${ctx.form.coverage}:down:idle:0:0`, initial.buf.data);
@@ -54,7 +57,9 @@ export function attachAnimatedModel(ctx: FormAttachContext, model: AnimatedModel
         restAmount = targetRest;
         receivedActivity = true;
       } else restAmount += Math.sign(targetRest - restAmount) * Math.min(Math.abs(targetRest - restAmount), step);
-      image.setPosition(pose.x, pose.y);
+      const hit = reaction.advance(pose.deltaMs);
+      image.setPosition(pose.x + hit.x, pose.y + hit.y);
+      image.setScale((ctx.displayScale ?? 1) * hit.scaleX, (ctx.displayScale ?? 1) * hit.scaleY);
       applyFormVisibility(image, pose.visibility);
       if (pose.visibility <= 0) return;
       const sample = Math.min(29, Math.floor(frame.progress * 30));
@@ -94,6 +99,7 @@ export function attachAnimatedModel(ctx: FormAttachContext, model: AnimatedModel
     destroy() {
       if (destroyed) return;
       destroyed = true;
+      stopHits();
       cache.clear();
       image.destroy();
       ctx.scene.textures.remove(key);

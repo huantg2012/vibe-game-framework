@@ -1,9 +1,13 @@
 /** Exercise production ToolSystem with a headless graphics sink and real inventory transactions. */
 import assert from 'node:assert/strict';
+import Phaser from 'phaser';
+// Supply the graphics-only math called by successful ruminate VFX in the headless adapter.
+Object.assign(Phaser.Math, { Clamp: (value: number, min: number, max: number) => Math.max(min, Math.min(max, value)) });
 import { ToolSystem } from '../../src/systems/tool-system';
 import { inventoryStore } from '../../src/systems/inventory-store';
 import { contaminantSystem } from '../../src/systems/contaminant-system';
 import { CONTAMINANT_DATA } from '../../src/generated/contaminant-data';
+import { EnemyControlState } from '../../src/systems/enemy-control-state';
 import { AISystem } from '../../src/systems/ai/ai-system';
 import type { ContaminantType } from '../../src/types/game-types';
 
@@ -21,9 +25,11 @@ function fixture(type: ContaminantType, uses = 2) {
   let graphics = 0;
   const g: unknown = new Proxy({}, { get: () => (..._args: unknown[]) => g });
   const scene = { add: { graphics() { graphics++; events.push('visual'); return g; } }, time: { now: 0, delayedCall() {} } };
-  const enemy = { getId: () => 'enemy', getPosition: () => ({ x: 12, y: 12 }), getState: () => 'patrol' };
+  const enemy = { getRole: () => 'infiltrator', getId: () => 'enemy', getPosition: () => ({ x: 12, y: 12 }), getState: () => 'patrol' };
   const system = new ToolSystem();
   system.create(scene as never, contaminantSystem.getSortieLoadout(), () => ({ x: 0, y: 0 }), () => [enemy] as never, {
+    getPhaseDestination: () => ({ x: 48, y: 0 }),
+    movePlayerTo: () => events.push('phase'),
     getCollectedNodes: () => [{ x: 8, y: 8 }],
     addKindling: () => events.push('kindling'),
     setEnemySpeedMultiplier: () => events.push('speed'),
@@ -31,10 +37,16 @@ function fixture(type: ContaminantType, uses = 2) {
     setEnemyDetectionFillRateMult: () => events.push('detection'),
     setHearingSuppressed: active => events.push(`hearing:${active}`),
     reduceChaosRate: () => events.push('chaos'),
+    getSoundLureDestination: () => ({ x: 48, y: 0 }),
+    reportSoundLure: () => events.push('sound-lure'),
+    setVisualDecoy: () => events.push('decoy'),
+    getEnvironmentTargets: () => [{ id: 'host', position: { x: 12, y: 0 }, hazardReleased: true,
+      canSuppressReleasedHazard: true, suppressionRemainingMs: 0 }] as never,
+    suppressEnvironmentHazard: () => { events.push('suppress-host'); return true; },
   });
   return { system, slot, id: item.id, events, graphics: () => graphics };
 }
-for (const type of ['solidify', 'delay', 'erode', 'ruminate', 'retrograde', 'kindle', 'stitch', 'expand', 'compress', 'mirror', 'echo', 'resonate', 'overwrite', 'abyss', 'combust'] as ContaminantType[]) {
+for (const type of ['solidify', 'delay', 'erode', 'ruminate', 'kindle', 'stitch', 'expand', 'compress', 'mirror', 'echo', 'resonate', 'overwrite', 'abyss', 'combust'] as ContaminantType[]) {
   const f = fixture(type);
   if (type === 'stitch' || type === 'resonate') {
     assert.equal(f.system.useSlot(f.slot), false); // Point A is visual-only, deliberately free.
@@ -73,7 +85,8 @@ for (const type of ['scatter', 'muffle', 'siphon'] as ContaminantType[]) {
   assert(f.events.every(event => event === 'hearing:false'), `${type}: no effect or counter decrement on failure`);
   f.events.length = 0; inventoryStore.setPersistence(() => f.events.push('persist')); trigger();
   assert.equal(f.events[0], 'persist'); assert.equal(inventoryStore.getItem(f.id), undefined);
-  const count = f.events.length; trigger(); assert.equal(f.events.length, count, 'last charge cannot trigger twice');
+  const count = f.events.length; trigger(); assert.equal(f.events.length, count, 'same episode cannot spend twice');
+  if (type === 'muffle') { f.system.update(CONTAMINANT_DATA.muffle.toolDurationMs); assert.equal(trigger(), false, 'final episode ends after silence'); }
   checks++;
 }
 {
@@ -87,6 +100,54 @@ for (const type of ['scatter', 'muffle', 'siphon'] as ContaminantType[]) {
   (ai as unknown as { context: { hearingSuppressed: boolean } }).context = { hearingSuppressed: true };
   ai.setHearingAvoidedListener(() => false); assert.equal(ai.trySuppressHearingDiscovery('enemy'), false);
   ai.setHearingAvoidedListener(() => true); assert.equal(ai.trySuppressHearingDiscovery('enemy'), true); checks++;
+}
+{
+  const f = fixture('ruminate', 2);
+  assert.equal(f.system.useSlot(0), true);
+  assert.equal(f.system.useSlot(0), false, 'a searched pile may be reclaimed only once');
+  assert.equal(inventoryStore.getContaminants()[0]!.usesRemaining, 1); checks++;
+}
+{
+  const f = fixture('expand', 1);
+  (f.system as unknown as { getPhaseDestination(): null }).getPhaseDestination = () => null;
+  let writes = 0; inventoryStore.setPersistence(() => { writes++; });
+  assert.equal(f.system.useSlot(0), false); assert.equal(writes, 0);
+  assert.equal(inventoryStore.getContaminants()[0]!.usesRemaining, 1); checks++;
+}
+{
+  const f = fixture('muffle', 2);
+  assert.equal(f.system.notifyProximityAvoid(), true);
+  for (let i = 0; i < 40; i++) { f.system.update(100); assert.equal(f.system.notifyProximityAvoid(), true); }
+  assert.equal(inventoryStore.getContaminants()[0]!.usesRemaining, 1, 'continuous encounter costs once');
+  f.system.update(CONTAMINANT_DATA.muffle.toolDurationMs);
+  assert.equal(f.system.notifyProximityAvoid(), true);
+  assert.equal(inventoryStore.getItem(f.id), undefined, 'next independent episode spends last use');
+  assert.equal(f.system.notifyProximityAvoid(), true, 'last use continues suppressing'); checks++;
+}
+{
+  // Exercise real ToolSystem timers: one zone expires without releasing a later zone,
+  // and damage-broken freeze must not restore speed through a surviving slow field.
+  const f = fixture('erode', 2);
+  const control = new EnemyControlState();
+  const live = f.system as unknown as {
+    setEnemyControl: (id: string, source: string, effect: Parameters<EnemyControlState['set']>[1]) => void;
+    clearEnemyControl: (id: string, source: string) => void;
+    hasEnemyControl: (id: string, source: string) => boolean;
+    applySolidify: (commit: () => boolean) => boolean;
+  };
+  live.setEnemyControl = (_id, source, effect) => control.set(source, effect);
+  live.clearEnemyControl = (_id, source) => { control.clear(source); };
+  live.hasEnemyControl = (_id, source) => control.has(source);
+  assert.equal(f.system.useSlot(0), true); f.system.update(1000);
+  assert.equal(f.system.useSlot(0), true); f.system.update(100);
+  assert.equal(control.movementMultiplier, 0.36, 'overlapping zones keep separate sources');
+  assert.equal(live.applySolidify(() => true), true);
+  assert.equal(control.attackSuppressed, true); assert.equal(control.movementMultiplier, 0);
+  control.breakOnDamage(); f.system.update(100);
+  assert.equal(control.attackSuppressed, false); assert.equal(control.movementMultiplier, 0.36);
+  f.system.update(10801);
+  assert.equal(control.movementMultiplier, 0.6, 'first zone expiry preserves second zone');
+  f.system.destroy(); assert.equal(control.movementMultiplier, 1, 'shutdown releases own remaining sources'); checks++;
 }
 inventoryStore.setPersistence(null);
 console.log(`${checks} production tool consumption checks passed.`);

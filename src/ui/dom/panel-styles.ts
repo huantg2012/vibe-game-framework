@@ -300,6 +300,13 @@ const CSS = `
 .focus-pause-copy span { display:block; margin-top:14px; font:11px/18px var(--ui-font); color:#7e8a7e; letter-spacing:0; }
 /* HUD has no solid plate. Small stable readings sit in the margins. */
 .device-plate { position:absolute; box-sizing:border-box; padding:0; border:0; background:transparent; font:11px/16px var(--ui-font); color:#8a9a88; pointer-events:none; text-shadow:0 1px 3px #000; }
+.hud-report-entry{display:flex;align-items:baseline;justify-content:flex-end;gap:7px;padding:4px;border:0;background:transparent;color:#929e91;font:11px/18px var(--ui-font);text-shadow:0 1px 3px #000;pointer-events:auto;cursor:pointer;white-space:nowrap}
+.hud-report-entry .hud-entry-key{font:11px/18px var(--ui-mono);color:#b0b7a7}.hud-report-entry .hud-entry-weight{font:10px/18px var(--ui-mono);color:#879581}
+.hud-report-entry:hover,.hud-report-entry:focus-visible{color:#c0c3b0}.hud-report-entry:focus-visible{outline:1px solid #727e66;outline-offset:1px}.hud-report-entry.is-heavy .hud-entry-weight{color:#b0a689}
+.hud-report-entry[hidden],#dom-ui-root:has(.game-panel,.inventory-wrap) .hud-report-entry{visibility:hidden;pointer-events:none}
+#purif-report-entry{align-self:flex-end;margin-right:-4px}
+#rift-hud-burden{opacity:.8}
+.rift-equipment-row{display:grid;grid-template-columns:24px 25px minmax(0,1fr) max-content;gap:6px;align-items:center;min-height:28px}.rift-equipment-row img{width:24px;height:24px;image-rendering:pixelated;object-fit:contain}.rift-equipment-row .rift-equipment-name{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rift-equipment-row.is-empty{opacity:.45}.rift-equipment-key{font:9px/14px var(--ui-mono);color:#8e9e81}.rift-equipment-uses{font:10px/14px var(--ui-mono);text-align:right;color:#b1b49c}
 #purif-hud { top:22px; right:24px; width:auto; min-width:162px; z-index:999; opacity:.68; }
 .purif-hud-inner { display:flex; flex-direction:column; gap:5px; }
 .purif-hud-kindling { display:flex; justify-content:flex-end; align-items:baseline; gap:8px; }

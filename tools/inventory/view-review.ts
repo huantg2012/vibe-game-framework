@@ -3,7 +3,7 @@
 import { inventoryPanel, type InventoryPanelAction, type InventoryPanelActionResult, type InventoryPanelItem, type InventoryPanelMode, type InventoryPanelSnapshot } from '../../src/ui/dom/inventory-panel';
 
 if (!import.meta.env.DEV) throw new Error('Inventory review is development-only');
-let currentMode: InventoryPanelMode = 'base';
+let currentMode: InventoryPanelMode = 'prepare';
 let state: InventoryPanelSnapshot;
 let failNext = false;
 let events = 0;
@@ -18,7 +18,7 @@ function createFixture(mode: InventoryPanelMode): InventoryPanelSnapshot {
     return {
       id: `fixture-${index}`, kind: weapon ? 'weapon' : 'contaminant',
       name: weapon ? `旧撬棍 · ${String(index / 4 + 1).padStart(2, '0')}` : `检视用残片 · ${String(index).padStart(2, '0')}`,
-      quality: weapon ? '普通' : undefined, weight: weapon ? 30 : 20, location: index < 7 ? 'carried' : 'stash',
+      canEquip: true, stageLabel: '已成熟', usesRemaining: 3, quality: weapon ? '普通' : undefined, weight: weapon ? 30 : 20, location: index < 7 ? 'carried' : 'stash',
       description: weapon ? '普通铁撬棍，握持处缠着旧布。此页所有撬棍使用同一套普通属性。' : '仅用于测试物件分类、挂点和交换，不代表新增生产污染物。',
       stats: weapon ? [{ label: '伤害', value: 25 }, { label: '负重', value: 3 }] : [{ label: '使用余次', value: '3 次' }, { label: '作用', value: '检视用占位说明' }],
       toolSlots: weapon ? undefined : index === 3 ? ['passive'] : ['q', 'f'],
@@ -57,7 +57,7 @@ function onAction(action: InventoryPanelAction): InventoryPanelActionResult {
     if (currentMode !== 'rift' || action.itemIds.some(id => item(id)?.location !== 'carried' || equipped(id))) return { ok: false, message: '本趟装备不能放下' };
     for (const id of action.itemIds) item(id)!.location = 'ground';
   } else if (action.type === 'equipWeapon' || action.type === 'equipTool') {
-    if (currentMode === 'rift') return { ok: false, message: '本趟装备已定' };
+    if (currentMode !== 'prepare') return { ok: false, message: '仅备行时可装配' };
     const selected = item(action.itemId);
     const slot = candidate.equipment.find(entry => entry.id === (action.type === 'equipWeapon' ? 'weapon' : action.slotId));
     if (!selected || !slot || slot.locked || (action.type === 'equipTool' && !selected.toolSlots?.includes(slot.id))) return { ok: false, message: '不能装到这个挂点' };
@@ -66,7 +66,7 @@ function onAction(action: InventoryPanelAction): InventoryPanelActionResult {
     for (const other of candidate.equipment) if (other.itemId === selected.id) other.itemId = null;
     slot.itemId = selected.id; selected.equippedLabel = slot.label; selected.location = 'carried';
   } else if (action.type === 'unequipTool') {
-    if (currentMode === 'rift') return { ok: false, message: '本趟装备已定' };
+    if (currentMode !== 'prepare') return { ok: false, message: '仅备行时可装配' };
     const slot = candidate.equipment.find(entry => entry.id === action.slotId);
     if (!slot || slot.id === 'weapon') return { ok: false, message: '这个位置不能卸下' };
     const old = slot.itemId ? item(slot.itemId) : undefined;
@@ -74,7 +74,7 @@ function onAction(action: InventoryPanelAction): InventoryPanelActionResult {
     slot.itemId = null;
   } else return { ok: false, message: '净化点通过装配携出，不手动转移库存' };
   candidate.weight = sumWeight(candidate);
-  if (candidate.weight > candidate.capacity) return { ok: false, message: `超过负重 ${(candidate.weight - candidate.capacity) / 10}，没有移动任何物件` };
+  if (currentMode === 'rift' && candidate.weight > candidate.capacity) return { ok: false, message: `超过负重 ${(candidate.weight - candidate.capacity) / 10}，没有移动任何物件` };
   state = candidate; report();
   return { ok: true, message: action.type === 'exchange' ? '交换完成，附近物件仍可查看' : '测试物件已收好' };
 }
@@ -83,9 +83,9 @@ function open(): void {
   inventoryPanel.open({ mode: currentMode, getSnapshot: () => state, onAction, onClose: () => log('已收起，测试数据未写入游戏'), onDepart: () => log('出发回调已收到；测试页不会进入真实关卡') });
   report();
 }
-for (const mode of ['base', 'prepare', 'rift'] as const) document.querySelector(`#review-${mode}`)!.addEventListener('click', () => { currentMode = mode; state = createFixture(mode); failNext = false; open(); });
+for (const mode of ['catalog', 'prepare', 'rift'] as const) document.querySelector(`#review-${mode}`)!.addEventListener('click', () => { currentMode = mode; state = createFixture(mode); failNext = false; open(); });
 document.querySelector('#review-refresh')!.addEventListener('click', () => { inventoryPanel.update(); log('无变化刷新已完成'); });
 document.querySelector('#review-fail')!.addEventListener('click', () => { failNext = true; report(); });
-document.querySelector('#review-empty')!.addEventListener('click', () => { currentMode = 'base'; state = { items: [], equipment: [{ id: 'weapon', label: '在手' }, { id: 'q', label: 'Q' }, { id: 'passive', label: '被动' }], weight: 0, capacity: 160 }; open(); });
-state = createFixture('base');
+document.querySelector('#review-empty')!.addEventListener('click', () => { currentMode = 'catalog'; state = { items: [], equipment: [{ id: 'weapon', label: '在手' }, { id: 'q', label: 'Q' }, { id: 'passive', label: '被动' }], weight: 0, capacity: 160 }; open(); });
+state = createFixture('prepare');
 open();

@@ -1,10 +1,12 @@
+import { getContaminantQuality, getContaminantQualityName, getContaminantQualityRank, getContaminantMaxUses, supportsContaminantQuality } from '@/systems/contaminant-quality';
 /** Projects the one inventory owner into the shared base / field view. */
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
-import { getBurdenSpeedFactor, getSurvivalAttributes } from '@/systems/survival-attributes';
+import { contaminantIconUrl } from '@/art/contaminant-icons';
+import { getSurvivalAttributes } from '@/systems/survival-attributes';
 import type { InventoryError, InventoryItem, InventoryResult } from '@/types/inventory-types';
 import type { Vector2 } from '@/types/game-types';
 import { getDefenseName, getRarityStars, getToolName } from './contaminant-names';
@@ -17,6 +19,7 @@ const ERRORS: Record<InventoryError, string> = {
   'run-active': '本次出击尚未结算。', 'no-active-run': '本次出击已结束。',
   'invalid-ground': '物品已不在可取范围内，或这里无法放下物品。',
   'storage-failed': '未能保存，本次操作没有生效。请释放按键后重试。',
+  'not-ready': '尚未成熟，请先到供奉台承受冲击。',
   'missing-weapon': '请先装上一把撬棍。',
 };
 export function inventoryError(error: InventoryError): string { return ERRORS[error]; }
@@ -27,6 +30,8 @@ export interface InventoryPresenterOptions {
   onDepart?: () => void;
   /** Navigation only; offering remains owned by the purification scene. */
   onOffering?: () => void;
+  mount?: HTMLElement;
+  portrait?: string;
   getNearby?: () => readonly InventoryItem[];
   getDropPosition?: () => Vector2;
   canTake?: (item: InventoryItem) => boolean;
@@ -34,11 +39,13 @@ export interface InventoryPresenterOptions {
   onTaken?: (ids: readonly string[]) => void;
 }
 
-function itemView(item: InventoryItem, mode: InventoryPanelMode): InventoryPanelItem {
+export function projectInventoryItem(item: InventoryItem, mode: InventoryPanelMode): InventoryPanelItem {
   const eq = inventoryStore.getEquipment();
   const slot = eq.toolIds.indexOf(item.id);
   const equippedLabel = eq.weaponId === item.id ? '在手' : slot >= 0 ? (slot === contaminantSystem.getSortiePassiveSlotIndex() ? '被动挂位' : `工具 ${GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[slot] ?? slot + 1}`) : undefined;
-  const common = { id: item.id, kind: item.kind, weight: inventoryStore.getWeight(item), location: item.location.kind, equippedLabel };
+  const lifecycle = item.kind === 'weapon' ? item.weapon : item.contaminant;
+  const canEquip = lifecycle.stage === 'tool' && lifecycle.usesRemaining > 0;
+  const common = { id: item.id, kind: item.kind, weight: inventoryStore.getWeight(item), location: item.location.kind, equippedLabel, canEquip, usesRemaining: lifecycle.stage === 'tool' ? lifecycle.usesRemaining : undefined, stageLabel: lifecycle.stage === 'tool' ? '已成熟' : '未成熟', canOffer: lifecycle.stage === 'defense' && item.location.kind === 'stash' };
   if (item.kind === 'weapon') {
     const def = WEAPON_DATA[item.weapon.definitionId];
     const held = inventoryStore.getItems().find(value => value.id === eq.weaponId);
@@ -50,25 +57,28 @@ function itemView(item: InventoryItem, mode: InventoryPanelMode): InventoryPanel
       { label: '构造', value: def ? { standard: '标准', light: '轻型', resistant: '抗污' }[def.variant] : '—' },
       { label: '伤害', value: damage, comparison: comparing ? `${current.damageMin}–${current.damageMax}` : undefined },
       { label: '污染抗性', value: `${def?.pollutionResistance ?? 0}%`, comparison: comparing ? `${current.pollutionResistance}%` : undefined },
-      { label: '负重', value: (common.weight / 10).toFixed(1), comparison: comparing ? (current.weight / 10).toFixed(1) : undefined },
+      ...(mode === 'rift' ? [{ label: '负重', value: (common.weight / 10).toFixed(1), comparison: comparing ? (current.weight / 10).toFixed(1) : undefined }] : []),
+      ...(lifecycle.stage === 'tool' ? [] : [{ label: '供奉积累', value: `${lifecycle.impactCharges} / ${def?.offeringCharges ?? '—'}` }]),
     ];
-    const preview = mode !== 'rift' && comparing && ['stash', 'carried'].includes(item.location.kind)
-      ? inventoryStore.getCarryWeight() - (held?.location.kind === 'carried' ? inventoryStore.getWeight(held) : 0) + (item.location.kind === 'carried' ? 0 : common.weight) : undefined;
-    return { ...common, name: def?.name ?? '未识别武器', quality: def?.qualityName,
+    return { ...common, name: def?.name ?? '未识别武器', quality: def?.qualityName, qualityRank: def?.qualityRank, maxDurability: def?.maxUses,
       icon: def ? `/assets/weapons/crowbars/${def.id}-icon.png` : undefined,
-      description: mode === 'rift' ? '回到净化点可装配。每次挥击在伤害区间内浮动。' : '每次挥击在伤害区间内浮动。撬棍不可升级。',
+      description: canEquip ? '已完成供奉。每次有效命中消耗 1 点耐久度，同次挥击只扣一次，空挥不消耗；耐久归零后损坏。伤害在区间内浮动。' : '尚未成熟。带回后在供奉台承受冲击，再装配出击。',
       stats,
-      preview: preview === undefined ? undefined : `装配后负重 ${(preview / 10).toFixed(1)} / ${(inventoryStore.getCapacity() / 10).toFixed(1)} · 移动 −${Math.round((1 - getBurdenSpeedFactor(preview, inventoryStore.getCapacity())) * 100)}%`,
+
     };
   }
   const c = item.contaminant;
+  const def = CONTAMINANT_DATA[c.type];
   const count = contaminantSystem.getSortieSlotCount();
-  const passive = CONTAMINANT_DATA[c.type]?.toolType === 'passive';
+  const passive = def.toolType === 'passive';
   const toolSlots = c.stage === 'tool' && c.usesRemaining > 0
     ? Array.from({ length: count }, (_, i) => i).filter(i => passive === (i === count - 1)).map(String) : [];
-  return { ...common, name: c.stage === 'tool' ? getToolName(c.type) : getDefenseName(c.type), quality: getRarityStars(c.rarity), toolSlots, canOffer: c.stage === 'defense' && item.location.kind === 'stash',
-    description: c.stage === 'tool' ? '在净化点装入工具挂位，出击期间保持装配。' : c.stage === 'broken' ? '已耗尽。' : '带回净化点，可在供奉台投入防御。',
-    stats: c.stage === 'tool' ? [{ label: '剩余次数', value: c.usesRemaining }] : [{ label: '阶段', value: c.stage === 'broken' ? '已耗尽' : '残渣' }, { label: '冲击蓄积', value: c.impactCharges }] };
+  return { ...common, name: c.stage === 'tool' ? getToolName(c.type) : getDefenseName(c.type), quality: supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity), qualityRank: getContaminantQualityRank(c), toolSlots, icon: contaminantIconUrl(c.type, getContaminantQuality(c)),
+    description: c.stage === 'tool' ? def.summaryTool : c.stage === 'broken' ? '已耗尽。' : `供奉：${def.summaryDefense} 成熟后 · ${def.displayNameTool}：${def.summaryTool}`,
+    explanations: c.stage === 'tool' ? [{ label: '技能说明', text: def.descriptionTool }] : [
+      { label: '供奉说明', text: def.descriptionDefense }, { label: `成熟后 · ${def.displayNameTool}`, text: def.descriptionTool },
+    ],
+    stats: [{ label: '品质', value: supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity) }, ...(c.stage === 'tool' ? [{ label: '类型', value: passive ? '被动' : '主动' }, { label: '余次', value: c.usesRemaining > getContaminantMaxUses(c) ? `${c.usesRemaining} 次 · 基准 ${getContaminantMaxUses(c)}` : `${c.usesRemaining} / ${getContaminantMaxUses(c)}` }] : [{ label: '供奉积累', value: `${c.impactCharges} / ${GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD}` }, { label: '成熟后次数', value: getContaminantMaxUses(c) }])] };
 }
 
 function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
@@ -77,14 +87,20 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   const count = contaminantSystem.getSortieSlotCount();
   const weight = inventoryStore.getCarryWeight();
   const capacity = inventoryStore.getCapacity();
+  const misplaced = eq.toolIds.some((id, index) => {
+    const item = id ? inventoryStore.getItem(id) : undefined;
+    return item?.kind === 'contaminant' && (CONTAMINANT_DATA[item.contaminant.type].toolType === 'passive') !== (index === count - 1);
+  });
   const reason = inventoryStore.getRun()?.status === 'active' ? '本次出击尚未结算。'
-    : !eq.weaponId ? '请先装上一把撬棍。' : weight > capacity ? '出发负重超过上限。' : '';
+    : !eq.weaponId ? '请先装上一把已成熟的撬棍。' : misplaced ? '物件槽位需要调整：返刻片现为被动，请移至被动挂位。' : '';
+  const carriedOut = new Set(inventoryStore.getRun()?.carriedOutIds ?? []);
   return {
     items: inventoryStore.getItems().filter(item => options.mode === 'rift'
-      ? item.location.kind === 'carried' || nearby.has(item.id)
-      : item.location.kind !== 'ground').map(item => itemView(item, options.mode)),
-    equipment: [{ id: 'weapon', label: '在手', itemId: eq.weaponId, locked: options.mode === 'rift' },
-      ...Array.from({ length: count }, (_, i) => ({ id: String(i), label: i === count - 1 ? '被动' : `工具 ${GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[i] ?? i + 1}`, itemId: eq.toolIds[i], locked: options.mode === 'rift' }))],
+      ? (item.location.kind === 'carried' && !carriedOut.has(item.id) && !inventoryStore.isEquipped(item.id)) || nearby.has(item.id)
+      : item.location.kind !== 'ground').map(item => projectInventoryItem(item, options.mode)),
+    equipment: options.mode === 'rift' ? [] : [{ id: 'weapon', label: '在手', itemId: eq.weaponId, locked: false },
+      ...Array.from({ length: count }, (_, i) => ({ id: String(i), label: i === count - 1 ? '被动' : `工具 ${GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[i] ?? i + 1}`, itemId: eq.toolIds[i], locked: false }))],
+    equippedWeight: inventoryStore.getItems().reduce((sum, item) => sum + (item.location.kind === 'carried' && carriedOut.has(item.id) ? inventoryStore.getWeight(item) : 0), 0),
     weight, capacity, survival: getSurvivalAttributes(), canDepart: !reason, departReason: reason,
   };
 }
@@ -96,10 +112,10 @@ function act(action: InventoryPanelAction, options: InventoryPresenterOptions): 
   const canTake = options.canTake ?? (() => false);
   const canDrop = options.canDrop ?? (() => false);
   const field = options.mode === 'rift';
-  if (!field && action.type === 'equipWeapon') result = inventoryStore.prepareWeapon(action.itemId);
-  else if (!field && action.type === 'equipTool') result = inventoryStore.prepareTool(action.itemId, Number(action.slotId));
-  else if (!field && action.type === 'discard') result = inventoryStore.discardAtBase(action.itemId);
-  else if (!field && action.type === 'unequipTool') result = inventoryStore.prepareTool(null, Number(action.slotId));
+  if (options.mode === 'prepare' && action.type === 'equipWeapon') result = inventoryStore.prepareWeapon(action.itemId);
+  else if (options.mode === 'prepare' && action.type === 'equipTool') result = inventoryStore.prepareTool(action.itemId, Number(action.slotId));
+  else if (options.mode === 'catalog' && action.type === 'discard') result = inventoryStore.discardAtBase(action.itemId);
+  else if (options.mode === 'prepare' && action.type === 'unequipTool') result = inventoryStore.prepareTool(null, Number(action.slotId));
   else if (field && action.type === 'take') result = inventoryStore.take(action.itemIds, canTake);
   else if (field && action.type === 'drop') result = inventoryStore.drop(action.itemIds, pos, canDrop);
   else if (field && action.type === 'exchange') result = inventoryStore.exchange(action.takeIds, action.dropIds, pos, { canTake, canDrop });

@@ -20,6 +20,7 @@ import { GameEvent } from '@/types/events';
 import type { ExpeditionSaveData, SaveDataV2 } from '@/types/game-types';
 import type { InventoryState } from '@/types/inventory-types';
 import { InventoryStore, inventoryStore } from '@/systems/inventory-store';
+import { impactSystem, validImpactForecastState } from '@/systems/impact-system';
 
 const SAVE = GAME_CONSTANTS.SAVE;
 
@@ -28,6 +29,7 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (!data || (data.version !== 1 && data.version !== 2)) return false;
   if (!Number.isFinite(data.kindlingReserve) || !Number.isFinite(data.cycle) || !Array.isArray(data.modules)) return false;
   if (data.modules.some(module => !module || typeof module.id !== 'string' || typeof module.type !== 'string' || !Number.isFinite(module.hp) || !Number.isFinite(module.maxHp))) return false;
+  if (data.impactForecast !== undefined && !validImpactForecastState(data.impactForecast, data.modules.map(module => module.id))) return false;
   if (!data.tide || !Number.isFinite(data.tide.tideNumber) || !Number.isFinite(data.tide.cycleInPhase) || !Number.isFinite(data.tide.currentIntensity) || !['rise', 'crest', 'ebb'].includes(data.tide.phase)) return false;
   if (!data.growth?.upgrades || typeof data.growth.upgrades !== 'object' || !data.stability || !Number.isFinite(data.stability.progress) || typeof data.stability.reached !== 'boolean') return false;
   const probe = new InventoryStore();
@@ -73,6 +75,11 @@ function mergeRuntimeState(
 
 function collectSave(inventory: InventoryState): SaveDataV2 {
   const gs = gameState.getState();
+  const memorySlotted = inventory.items.some(item => item.kind === 'contaminant'
+    && item.contaminant.type === 'retrograde' && item.contaminant.stage === 'defense'
+    && inventory.equipment.defenseIds.includes(item.id));
+  impactSystem.generateForecast(tideSystem.getCurrentIntensity(), growthSystem.getModifiers().forecastClarity,
+    tideSystem.peekNextIntensity(), memorySlotted);
   return {
     version: 2,
     kindlingReserve: gs.kindlingReserve,
@@ -84,6 +91,7 @@ function collectSave(inventory: InventoryState): SaveDataV2 {
     growth: growthSystem.getState(),
     stability: stabilityTracker.getState(),
     contaminantRuntimeState: mergeRuntimeState(getDefenseRuntimeState(), contaminantSystem.getEchoBonusState()),
+    impactForecast: impactSystem.getForecastState(),
   };
 }
 let worldTransaction = false;
@@ -93,7 +101,9 @@ function enableInventoryPersistence(): void {
   inventoryStore.setPersistence(inventory => {
     if (worldTransaction) return;
     if (pendingWorldSave) throw new Error("Previous settlement must be saved first");
-    localStorage.setItem(SAVE.KEY, JSON.stringify(collectSave(inventory)));
+    const beforeForecast = impactSystem.getForecastState();
+    try { localStorage.setItem(SAVE.KEY, JSON.stringify(collectSave(inventory))); }
+    catch (error) { impactSystem.loadForecastState(beforeForecast); throw error; }
   });
 }
 
@@ -124,9 +134,11 @@ export const saveManager = {
    * Emits GAME_SAVED on success.
    */
   save(): void {
-    const data = collectSave(inventoryStore.getState());
-
-    localStorage.setItem(SAVE.KEY, JSON.stringify(data));
+    const beforeForecast = impactSystem.getForecastState();
+    try {
+      const data = collectSave(inventoryStore.getState());
+      localStorage.setItem(SAVE.KEY, JSON.stringify(data));
+    } catch (error) { impactSystem.loadForecastState(beforeForecast); throw error; }
     pendingWorldSave = false;
     enableInventoryPersistence();
     eventBus.emit(GameEvent.GAME_SAVED, { timestamp: Date.now() });
@@ -191,9 +203,10 @@ export const saveManager = {
 
     // Sync impact intensity from tide
     gameState.setImpactIntensity(data.tide.currentIntensity);
+    impactSystem.loadForecastState(data.impactForecast);
 
     // Migration is durable immediately; failure leaves the readable V1 record intact.
-    if (data.version === 1) {
+    if (data.version === 1 || data.inventory.version === 1) {
       try { localStorage.setItem(SAVE.KEY, JSON.stringify(collectSave(inventoryStore.getState()))); } catch { /* trySave exposes retry; do not erase old save */ }
     }
     enableInventoryPersistence();

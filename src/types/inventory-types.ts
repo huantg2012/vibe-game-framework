@@ -6,7 +6,9 @@ export type ItemLocation =
   | { kind: 'defense'; slot: number }
   | { kind: 'ground'; runId: string; position: Vector2 };
 export interface ItemSource { nodeId?: string; runId?: string; fragmentId?: string }
-export interface WeaponInstance { id: string; definitionId: string }
+export interface EquipmentLifecycle { stage: 'defense' | 'tool' | 'broken'; impactCharges: number; usesRemaining: number }
+export interface WeaponInstance extends EquipmentLifecycle { id: string; definitionId: string }
+export interface OfferingTransformResult { itemId: string; kind: 'weapon' | 'contaminant'; definitionId: string; slotIndex: number }
 export type InventoryItem = (
   | { kind: 'weapon'; weapon: WeaponInstance }
   | { kind: 'contaminant'; contaminant: Contaminant }
@@ -24,14 +26,14 @@ export interface RunInventoryLedger {
   baseSettled?: boolean;
 }
 export interface InventoryState {
-  version: 1;
+  version: 1 | 2;
   items: InventoryItem[];
   equipment: InventoryEquipment;
   run: RunInventoryLedger | null;
   starterGranted: boolean;
   firstWeaponDiscovered: boolean;
 }
-export type InventoryError = 'invalid-item' | 'duplicate-id' | 'wrong-location' | 'equipped' | 'incompatible' | 'overweight' | 'run-active' | 'no-active-run' | 'invalid-ground' | 'storage-failed' | 'missing-weapon';
+export type InventoryError = 'invalid-item' | 'duplicate-id' | 'wrong-location' | 'equipped' | 'incompatible' | 'overweight' | 'run-active' | 'no-active-run' | 'invalid-ground' | 'storage-failed' | 'missing-weapon' | 'not-ready';
 export type InventoryResult<T = undefined> = { ok: true; value: T } | { ok: false; error: InventoryError };
 export interface InventoryRules {
   capacity: number;
@@ -46,4 +48,9 @@ export type NewInventoryItem = Omit<Extract<InventoryItem, { kind: 'weapon' }>, 
 export interface InventoryGroundValidation {
   canTake: (item: Readonly<InventoryItem>) => boolean;
   canDrop: (position: Readonly<Vector2>) => boolean;
+}
+
+/** One lifecycle payload per item; never a parallel mutable inventory field. */
+export function getEquipmentLifecycle(item: InventoryItem): EquipmentLifecycle {
+  return item.kind === 'weapon' ? item.weapon : item.contaminant;
 }

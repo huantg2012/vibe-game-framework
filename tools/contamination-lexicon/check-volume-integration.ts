@@ -4,6 +4,7 @@
  * attack resolution and animation come from production modules.
  */
 import assert from 'node:assert/strict';
+import { CombatSystem } from '../../src/systems/combat-system';
 import { ContaminationHostSystem } from '../../src/systems/contamination-host-system';
 import { attachDingD } from '../../src/entities/form-renderers/d/ding';
 import type { ContaminationForm } from '../../src/generation/contamination-draw';
@@ -29,7 +30,7 @@ function fixture(legal=(col:number,row:number)=>col>=1&&col<=10&&row>=1&&row<=10
     fillRect(x:number,y:number,w:number,h:number){this.rects.push({x,y,w,h});return this;}
     destroy(){objects.delete(this);}
   }
-  let chaos=0;let swing=false;let angle=0;
+  let chaos=0;let swing=false;let pendingSwing=false;let angle=0;
   const host=new ContaminationHostSystem();
   const player={x:208,y:208};
   const scene={hosts:host,add:{image:(_x:number,_y:number,key:string)=>{const o=new Draw();o.key=key;return o;},graphics:()=>new Draw()},
@@ -38,8 +39,17 @@ function fixture(legal=(col:number,row:number)=>col>=1&&col<=10&&row>=1&&row<=10
         getContext(){return {createImageData(){return {data:new Uint8ClampedArray(w*h*4)};},putImageData(p:{data:Uint8ClampedArray}){row.data=p.data.slice();}};}}}},
     cameras:{main:{midPoint:player}}};
   const grid={cols:12,rows:12,tileSize:32,version:0,isWalkable:legal,isOpaque:(col:number,row:number)=>!legal(col,row)};
+  const combat = new CombatSystem();
+  Object.assign(combat, {
+    player: {getPosition:()=>player,getFacingAngle:()=>angle,setSpeedModifier(){},clearSpeedModifier(){},setWeaponVisual(){},setWeaponAttackPose(){}},
+    occluders:grid, hooks:{onNoise(){}}, ai:{getEnemies:()=>[],getEnemyById:()=>undefined},
+    spawnFx(){},drawVisuals(){},stepFx(){},
+    applyHazardHit(){throw new Error('volume cannot hit HP');},
+  });
+  // Production damage stream yields 25 for the first two ordinary-crowbar swings.
+  combat.configureWeapon('crowbar_plain',129);
   host.bindPractice(scene as never,{wallEdges:[],paintFloors:[],corridorAabbs:[{minCol:4,minRow:4,maxCol:8,maxRow:8,coreCol:6,coreRow:6}]} as never,
-    {getAttackState:()=>({phase:swing?'active':'idle'}),getLockedAttackAngle:()=>angle,applyHazardHit(){throw new Error('volume cannot hit HP');}} as never,
+    combat,
     {addChaos(source:string,amount:number){assert.equal(source,'volume_field');chaos+=amount;}} as never,()=>1,{liveMotion:true,occluders:grid});
   host.setSkipPaint(true);
   const spawn=(form:ContaminationForm)=>{const id=host.spawnForm(form);assert(id,'valid volume must spawn');return id;};
@@ -50,9 +60,17 @@ function fixture(legal=(col:number,row:number)=>col>=1&&col<=10&&row>=1&&row<=10
     return {x:p.x+(p.width??0)/2,y:p.y+(p.height??0)/2,facing4:'down',moving:host.getVisualMoving(id),visibility:1,
       signal:host.getVisualSignal(id),activity:host.getActivityVisualState(id),deltaMs:dt};
   };
-  const step=(ms:number,p:Point=player,facing=0)=>{Object.assign(player,p);host.update(ms,player,false,facing);};
+  const step=(ms:number,p:Point=player,facing=0)=>{
+    Object.assign(player,p);host.update(ms,player,false,facing);
+    if(pendingSwing){
+      pendingSwing=false;combat.requestPlayerAttack();
+      // Complete the real windup/contact/recovery against this sampled host pose.
+      // Host geometry/chaos time is advanced only by the caller's explicit step.
+      for(let n=0;n<50;n++)combat.update(10);
+    }
+  };
   return {host,scene,spawn,draw,pose,step,player,objects,textures,grid,legal,
-    chaos:()=>chaos,swing:(v:boolean,a=0)=>{swing=v;angle=a;}};
+    chaos:()=>chaos,swing:(v:boolean,a=0)=>{if(v&&!swing)pendingSwing=true;swing=v;angle=a;}};
 }
 
 const formOf=(substrate:string,continuity:'monolith'|'field'='monolith',sense='sense_domain',rhythm='rhythm_open'):ContaminationForm=>({

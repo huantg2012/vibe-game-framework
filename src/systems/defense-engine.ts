@@ -14,10 +14,8 @@
  */
 
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
-import { GAME_CONSTANTS } from '@/config/constants';
 import type { Contaminant, ContaminantType } from '@/types/game-types';
 
-const P = GAME_CONSTANTS.PURIFICATION;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -181,6 +179,7 @@ export function applyDefenseEffects(
   baseDamagePerModule: Record<string, number>,
   defenseSlots: (Contaminant | null)[],
   context: DefenseContext,
+  offeringIds: readonly (string | null)[] = defenseSlots.map(item => item?.id ?? null),
 ): DefenseResult {
   const sideEffects: PendingSideEffect[] = [];
   let kindlingGain = 0;
@@ -222,7 +221,6 @@ export function applyDefenseEffects(
     const effect = applySlotEffect(
       contaminant,
       def.defenseReduction,
-      forecastCorrect,
       context,
     );
 
@@ -274,9 +272,9 @@ export function applyDefenseEffects(
       // 30% chance: every currently-slotted contaminant (including resonate itself)
       // gets +1 impact charge, all at once.
       let granted = 0;
-      for (const other of defenseSlots) {
-        if (other) {
-          bonusCharges[other.id] = (bonusCharges[other.id] ?? 0) + 1;
+      for (const otherId of offeringIds) {
+        if (otherId) {
+          bonusCharges[otherId] = (bonusCharges[otherId] ?? 0) + 1;
           granted++;
         }
       }
@@ -286,9 +284,9 @@ export function applyDefenseEffects(
       // Unconditional every impact: +1 to every OTHER slotted contaminant, regardless
       // of how many other slots exist (DEC-033 changed this from a hardcoded "2").
       let granted = 0;
-      for (const other of defenseSlots) {
-        if (other && other.id !== contaminant.id) {
-          bonusCharges[other.id] = (bonusCharges[other.id] ?? 0) + 1;
+      for (const otherId of offeringIds) {
+        if (otherId && otherId !== contaminant.id) {
+          bonusCharges[otherId] = (bonusCharges[otherId] ?? 0) + 1;
           granted++;
         }
       }
@@ -310,15 +308,29 @@ export function applyDefenseEffects(
     const totalDamage = Object.values(baseDamagePerModule).reduce((a, b) => a + b, 0);
     const reducedTotal = Math.round(totalDamage * totalReductionMult);
     const moduleIds = Object.keys(finalDamage);
-    const perModule = Math.round(reducedTotal / moduleIds.length);
+    const perModule = Math.floor(reducedTotal / moduleIds.length);
+    let remainder = reducedTotal - perModule * moduleIds.length;
     for (const id of moduleIds) {
-      finalDamage[id] = perModule;
+      finalDamage[id] = perModule + (remainder-- > 0 ? 1 : 0);
     }
   } else {
     // Normal: apply reduction to each module's damage
     for (const key of Object.keys(finalDamage)) {
       finalDamage[key] = Math.round(finalDamage[key]! * totalReductionMult);
     }
+  }
+
+  for (const item of defenseSlots) {
+    if (!item || item.stage !== 'defense' || item.type !== 'mirror') continue;
+    let blocked = 0;
+    for (const id of Object.keys(finalDamage)) {
+      if (id === context.actualPrimaryId) continue;
+      const before = finalDamage[id] ?? 0;
+      finalDamage[id] = Math.round(before * (1 - CONTAMINANT_DATA.mirror.defenseSecondaryReduction));
+      blocked += before - finalDamage[id]!;
+    }
+    const disclosure = slotDisclosures.find(value => value.contaminantId === item.id);
+    if (disclosure) disclosure.damageBlocked += blocked;
   }
 
   // abyss: 5% chance of unmitigated bonus damage to a full-HP module. Applied on top
@@ -358,71 +370,26 @@ export function applyDefenseEffects(
     break; // Only apply once even if multiple stitch are slotted
   }
 
-  // Post-damage: combust accumulation + burst release (DEC-030). Needs the actual
-  // damage taken this impact, so it runs after the damage math above is final.
+  // The ember returns a small, deterministic share of accepted damage this impact.
+  // No unreachable multi-impact threshold and no delayed chaos penalty.
   const healOut: Record<string, number> = {};
-  for (const contaminant of defenseSlots) {
-    if (!contaminant || contaminant.type !== 'combust') continue;
-    if (contaminant.stage !== 'defense') continue;
-
-    const moduleIds = Object.keys(context.moduleHps);
-    const actualDamageThisImpact = moduleIds.reduce(
-      (sum, id) => sum + Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0),
-      0,
-    );
-
-    const prevAccum = combustAccumulators.get(contaminant.id) ?? 0;
-    let accum = prevAccum + actualDamageThisImpact;
-
-    if (accum >= P.COMBUST_BURN_THRESHOLD) {
-      const healAmount = Math.round(accum * 0.5);
-
-      // Lowest-HP module after this impact's damage (pre-heal).
-      let lowestId = moduleIds[0]!;
-      let lowestHp = Infinity;
-      for (const id of moduleIds) {
-        const hpAfter = Math.max(0, (context.moduleHps[id] ?? 0) - Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0));
-        if (hpAfter < lowestHp) {
-          lowestHp = hpAfter;
-          lowestId = id;
-        }
-      }
-
-      healOut[lowestId] = (healOut[lowestId] ?? 0) + healAmount;
-      accum = 0;
-      sideEffects.push({ type: 'initial_chaos', value: 10, duration: 'next_sortie', source: 'combust' });
-
-      const combustDisclosure = slotDisclosures.find((d) => d.contaminantId === contaminant.id);
-      if (combustDisclosure) {
-        combustDisclosure.healAmount = healAmount;
-        combustDisclosure.healModuleId = lowestId;
-        combustDisclosure.sideEffects = [
-          ...combustDisclosure.sideEffects,
-          { type: 'initial_chaos', value: 10, duration: 'next_sortie', source: 'combust' },
-        ];
-      }
-    }
-
-    combustAccumulators.set(contaminant.id, accum);
-    break; // Only one combust accumulator processed even if multiple are slotted
-  }
-
-  // Post-damage: mirror kindling return (moved here so it is based on actual damage
-  // taken this impact, not damage accumulated before reduction was known).
-  for (const contaminant of defenseSlots) {
-    if (!contaminant || contaminant.type !== 'mirror') continue;
-    if (contaminant.stage !== 'defense') continue;
-
-    const moduleIds = Object.keys(context.moduleHps);
-    const actualDamageThisImpact = moduleIds.reduce(
-      (sum, id) => sum + Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0),
-      0,
-    );
-    const returned = Math.max(1, Math.floor(actualDamageThisImpact * 0.1));
-    kindlingGain += returned;
-    const mirrorDisclosure = slotDisclosures.find((d) => d.contaminantId === contaminant.id);
-    if (mirrorDisclosure) mirrorDisclosure.kindlingReturned = returned;
-    break; // Only once even if multiple mirror are slotted
+  for (const item of defenseSlots) {
+    if (!item || item.type !== 'combust' || item.stage !== 'defense') continue;
+    const ids = Object.keys(context.moduleHps);
+    if (ids.length === 0) continue;
+    const received = ids.reduce((sum, id) => sum + Math.min(finalDamage[id] ?? 0, context.moduleHps[id] ?? 0), 0);
+    const heal = Math.floor(received * CONTAMINANT_DATA.combust.defenseHealRatio);
+    if (heal <= 0) continue;
+    const lowest = ids.reduce((a, b) => {
+      const after = (id: string) => Math.max(0, (context.moduleHps[id] ?? 0) - (finalDamage[id] ?? 0)) + (healOut[id] ?? 0);
+      return after(b) < after(a) ? b : a;
+    });
+    const missing = Math.max(0, (context.moduleMaxHps[lowest] ?? 0) - Math.max(0, (context.moduleHps[lowest] ?? 0) - (finalDamage[lowest] ?? 0)) - (healOut[lowest] ?? 0));
+    const actualHeal = Math.min(heal, missing);
+    healOut[lowest] = (healOut[lowest] ?? 0) + actualHeal;
+    const disclosure = slotDisclosures.find(value => value.contaminantId === item.id);
+    if (disclosure) { disclosure.healAmount = actualHeal; disclosure.healModuleId = lowest; }
+    combustAccumulators.delete(item.id);
   }
 
   return {
@@ -501,7 +468,6 @@ interface SlotEffectResult {
 function applySlotEffect(
   contaminant: Contaminant,
   baseReduction: number,
-  forecastCorrect: boolean,
   context: DefenseContext,
 ): SlotEffectResult {
   const result: SlotEffectResult = {
@@ -519,7 +485,6 @@ function applySlotEffect(
 
   switch (contaminant.type) {
     case 'solidify':
-      applySolidify(contaminant, result);
       break;
     case 'ruminate':
       applyRuminate(result);
@@ -528,13 +493,10 @@ function applySlotEffect(
       applyScatter(result);
       break;
     case 'retrograde':
-      applyRetrograde(forecastCorrect, result);
       break;
     case 'muffle':
-      applyMuffle(result);
       break;
     case 'kindle':
-      applyKindle(result);
       break;
     case 'stitch':
       applyStitch(result);
@@ -546,7 +508,6 @@ function applySlotEffect(
       applySiphon(result);
       break;
     case 'expand':
-      applyExpand(result);
       break;
     default:
       // For types without special common-tier mechanics, apply the CSV base reduction
@@ -559,20 +520,6 @@ function applySlotEffect(
 }
 
 // --- Common tier implementations ---
-
-/** Solidify: 35% reduction, every 4th impact reduces to 20% (shatter cycle). */
-function applySolidify(contaminant: Contaminant, result: SlotEffectResult): void {
-  const counter = solidifyCounters.get(contaminant.id) ?? 0;
-
-  if (counter >= 3) {
-    // Shatter: reduced defense this impact
-    result.damageReduction = 0.20;
-    solidifyCounters.set(contaminant.id, 0);
-  } else {
-    result.damageReduction = 0.35;
-    solidifyCounters.set(contaminant.id, counter + 1);
-  }
-}
 
 /** Ruminate: 30% reduction + 2 kindling + side effect: initial chaos +5. */
 function applyRuminate(result: SlotEffectResult): void {
@@ -587,55 +534,9 @@ function applyRuminate(result: SlotEffectResult): void {
 
 /** Scatter: redistribute damage evenly + side effect: initial chaos +3. */
 function applyScatter(result: SlotEffectResult): void {
-  // Scatter doesn't reduce total damage but redistributes it.
-  // The effective reduction on the primary target is ~50% (since it splits evenly).
-  // We set damageReduction to 0 here; the redistribution is handled in the main function.
-  result.damageReduction = 0;
+  result.damageReduction = CONTAMINANT_DATA.scatter.defenseReduction;
   result.scatterRedistribute = true;
-  result.sideEffects.push({
-    type: 'initial_chaos',
-    value: 3,
-    duration: 'next_sortie',
-  });
-}
 
-/** Retrograde: 15% base + 20% upgrade discount on correct forecast + vision penalty on wrong. */
-function applyRetrograde(forecastCorrect: boolean, result: SlotEffectResult): void {
-  result.damageReduction = 0.15;
-  if (forecastCorrect) {
-    result.upgradeDiscount = 0.20;
-  } else {
-    result.sideEffects.push({
-      type: 'vision_reduction',
-      value: 0.05,
-      duration: 'next_sortie',
-    });
-  }
-}
-
-/** Muffle: 30% reduction + advance forecast 1 round. Side effect: enemy proximity sense +15%. */
-function applyMuffle(result: SlotEffectResult): void {
-  result.damageReduction = 0.30;
-  // The "forecast advance" (extra lookahead layer in the impact forecast) is a passive
-  // while-equipped benefit, not a per-impact damage-resolution effect — implemented in
-  // impact-system.ts's generateForecast() (checks getDefenseSlotted() for 'muffle'
-  // directly, same pattern as its existing mirror check) and rendered in
-  // purification-hud.ts. The side effect below is what this file tracks.
-  result.sideEffects.push({
-    type: 'proximity_sense_boost',
-    value: 0.15,
-    duration: 'next_sortie',
-  });
-}
-
-/** Kindle: 15% reduction, charge_mult=2.0 (already handled by contaminant system). Side effect: initial chaos +4. */
-function applyKindle(result: SlotEffectResult): void {
-  result.damageReduction = 0.15;
-  result.sideEffects.push({
-    type: 'initial_chaos',
-    value: 4,
-    duration: 'next_sortie',
-  });
 }
 
 /** Stitch: 25% reduction + post-impact HP equalization. Side effect: speed -10%. */
@@ -680,17 +581,6 @@ function applySiphon(result: SlotEffectResult): void {
       value: 0.5,
       duration: 'next_sortie',
     });
-  }
-}
-
-/** Expand: 50% chance to completely nullify. On success: stability -1. */
-function applyExpand(result: SlotEffectResult): void {
-  if (Math.random() < 0.5) {
-    result.expandNullified = true;
-    result.damageReduction = 1.0; // full nullification
-    result.stabilityChange = -1;
-  } else {
-    result.damageReduction = 0; // failed: no reduction
   }
 }
 
@@ -741,14 +631,7 @@ function applyGenericDefense(type: ContaminantType, result: SlotEffectResult, co
       });
       break;
     case 'mirror':
-      // Kindling return is computed post-damage in applyDefenseEffects (needs actual
-      // damage taken). The forecast-misinformation side effect (DEC-034: mirror lies
-      // about which module the forecast targets, 10% chance, checked against whether
-      // mirror is currently defense-slotted) lives in impact-system.ts's
-      // generateForecast() instead — it's a property of the *forecast* (generated once
-      // per purification-scene visit, before this per-impact defense math runs), not of
-      // this impact's damage resolution.
-      result.damageReduction = 0.25;
+      // Secondary-ripple attenuation is resolved with real damage above.
       break;
     case 'echo':
       result.damageReduction = 0.20;
@@ -792,7 +675,6 @@ function applyGenericDefense(type: ContaminantType, result: SlotEffectResult, co
     case 'combust':
       // Accumulation + burst-release heal is computed post-damage in applyDefenseEffects
       // (needs the contaminant id + actual damage taken this impact, DEC-030).
-      result.damageReduction = 0.25;
       break;
     default:
       break;

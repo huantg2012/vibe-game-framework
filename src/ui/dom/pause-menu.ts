@@ -123,7 +123,8 @@ function paint(): void {
     `<div class="readout-note">${mode === 'root' ? '当前行动已暂停。' : '此操作将替换已保存的纪录。'}</div>` +
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
-    buildKeyHintBar();
+    buildKeyHintBar() +
+    (mode === 'root' ? `<div class="readout-note">合上后 <span class="key">Tab</span> ${host?.scene.key === 'PurificationScene' ? '存续报告 · 物件' : '本趟拾获 · 世界继续'}</div>` : '');
 
   panel.querySelectorAll<HTMLElement>('.pause-menu-row').forEach((row) => {
     row.addEventListener('pointermove', () => {

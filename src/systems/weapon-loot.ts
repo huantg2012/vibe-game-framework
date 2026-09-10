@@ -36,3 +36,5 @@ export function rollWeaponDrop(request: WeaponLootRequest): string | null {
   if (!WEAPON_DATA[id]) throw new Error('Weapon drop references missing definition: ' + id);
   return id;
 }
+
+export { createWeaponInstance } from '@/systems/equipment-lifecycle';

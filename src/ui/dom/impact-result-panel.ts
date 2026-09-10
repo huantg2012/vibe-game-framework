@@ -1,3 +1,4 @@
+import { WEAPON_DATA } from '@/generated/weapon-data';
 /**
  * ImpactResultPanel — 冲击结算墙机（载体 B）。
  *
@@ -24,7 +25,8 @@ import { audioManager } from '@/managers/audio-manager';
  *  there is no local copy that can drift from the CSV. */
 export interface ChargeChangeEntry {
   slotIndex: number;
-  type: ContaminantType;
+  type: ContaminantType | null;
+  weaponDefinitionId?: string;
   before: number;
   after: number;
   threshold: number;
@@ -175,7 +177,7 @@ function buildHtml(
   if (chargeChanges && chargeChanges.length > 0) {
     html += `<div class="separator"></div>`;
     for (const c of chargeChanges) {
-      const name = getDefenseName(c.type);
+      const name = c.weaponDefinitionId ? WEAPON_DATA[c.weaponDefinitionId]?.name ?? '武器' : c.type ? getDefenseName(c.type) : '物件';
       html += `<div class="stat-row">
         <span class="stat-label">${name}</span>
         <span class="stat-value">${c.before}</span>
@@ -183,7 +185,7 @@ function buildHtml(
         <span class="stat-value">${c.after}</span>
         <span>/</span>
         <span class="stat-value">${c.threshold}</span>
-        ${c.transformed ? `<span>转化</span><span class="stat-value" style="color:#729887;">${getToolName(c.type)}</span>` : ''}
+        ${c.transformed ? `<span>供奉完成</span><span class="stat-value" style="color:#729887;">${c.type ? getToolName(c.type) : name}</span>` : ''}
       </div>`;
     }
   }

@@ -59,19 +59,22 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
 
   // --- priority 1: it was hit. Being attacked needs no confidence. ---
   if (ai.pendingDamage) {
+    const wasLure = ai.targetingDecoy || ai.investigatingLure === true;
     ai.pendingDamage = false;
     ai.targetingDecoy = false;
+    ai.investigatingLure = false;
     ai.detection = 1;
     setLastSeen(enemy, ai.pendingDamagePos.x, ai.pendingDamagePos.y, ctx.playerVel);
     ai.losGraceMs = 0;
     if (ai.state !== AIState.CHASE) transitionTo(enemy, AIState.CHASE, ctx);
+    else if (wasLure) emitRealChaseTarget(enemy, ctx);
     return;
   }
 
   // --- priority 2: certain and looking right at them ---
-  // delay (T7 rewire): "不会从警戒升级为追击" - only the ALERT→CHASE leg is named, so a
-  // SUSPICIOUS enemy reaching full detection still completes its suspicion normally.
-  if (ai.detection >= 1 && p.visible && !(ai.state === AIState.ALERT && ai.escalationSuppressed)) {
+  // Suppressed perception escalation cannot bypass ALERT by filling suspicion first.
+  // Damage (priority 1) remains authoritative even while escalation is suppressed.
+  if (ai.detection >= 1 && p.visible && !ai.escalationSuppressed) {
     const target = sightTargetPos(enemy, ctx);
     setLastSeen(enemy, target.x, target.y, target === ctx.playerPos ? ctx.playerVel : null);
     ai.losGraceMs = 0;
@@ -94,6 +97,8 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
 
   // --- priority 4: an "alert" grade noise (combat) ---
   if (ai.pendingNoiseLevel === 'alert') {
+    ai.investigatingLure = ai.pendingNoiseIsLure === true;
+    ai.pendingNoiseIsLure = false;
     ai.pendingNoiseLevel = null;
     // A noise says "something happened over there", not "the player is moving that way":
     // no velocity to extrapolate from.
@@ -141,11 +146,14 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
     // exact locator reads as cheating, so it is fuzzed and sampled only once per episode
     // (rule P7). A reported noise always refreshes the point (rule P8).
     if (noiseStimulus) {
+      ai.investigatingLure = ai.pendingNoiseIsLure === true;
+      ai.pendingNoiseIsLure = false;
       setInvestigatePos(enemy, ai.pendingNoisePos.x, ai.pendingNoisePos.y, enemy.config.hearing.posJitter);
     } else if (seenEnough) {
       const target = sightTargetPos(enemy, ctx);
       setInvestigatePos(enemy, target.x, target.y, 0);
     } else if (entering) {
+      ai.investigatingLure = false;
       setHearingInvestigatePos(enemy, ctx);
     }
 
@@ -297,6 +305,8 @@ function applyHearingAlertPush(enemy: Enemy, p: Perception, ctx: AIContext): boo
   if (ai.detection < config.HEAR_ALERT_THRESHOLD) return false;
   if (p.visible) return false;
 
+  ai.investigatingLure = false;
+
   if (ai.state === AIState.ALERT || ai.state === AIState.CHASE) {
     ai.searchTimerMs = 0;
     setHearingInvestigatePos(enemy, ctx);
@@ -332,6 +342,8 @@ export function closeAlertEpisode(enemy: Enemy, ctx: AIContext): void {
   if (!ai.alertEpisodeActive) return;
   ai.alertEpisodeActive = false;
   ai.hearingJitterLocked = false;
+  ai.investigatingLure = false;
+  ai.targetingDecoy = false;
   ctx.emitLost(enemy);
   ctx.cue(enemy, 'ai.cue.lost');
 }
@@ -420,18 +432,28 @@ function setLastSeen(enemy: Enemy, x: number, y: number, velocity: Readonly<Vect
  */
 function sightTargetPos(enemy: Enemy, ctx: AIContext): Readonly<Vector2> {
   const decoy = ctx.decoyPos;
-  if (decoy) {
-    const range = enemy.config.sight.rangeCore;
+  if (decoy && !(enemy.ai.state === AIState.CHASE && !enemy.ai.targetingDecoy) && enemy.config.profile.visionWeight > 0) {
+    const range = enemy.config.sight.rangeCore * enemy.ai.perceptionRangeMult;
     const dx = decoy.x - enemy.ai.position.x;
     const dy = decoy.y - enemy.ai.position.y;
     const insideCone = Math.abs(shortestArc(Math.atan2(dy, dx) - enemy.ai.facingAngle)) <= enemy.config.sight.halfAngleCore;
     if (dx * dx + dy * dy <= range * range && insideCone && hasLineOfSight(ctx.occluders, enemy.ai.position, decoy)) {
       enemy.ai.targetingDecoy = true;
+      enemy.ai.investigatingLure = true;
       return decoy;
     }
   }
+  const wasLure = enemy.ai.targetingDecoy || enemy.ai.investigatingLure === true;
   enemy.ai.targetingDecoy = false;
+  enemy.ai.investigatingLure = false;
+  if (wasLure && enemy.ai.state === AIState.CHASE) emitRealChaseTarget(enemy, ctx);
   return ctx.playerPos;
+}
+
+/** A real player newly replaces a false target even if the FSM state remains CHASE. */
+function emitRealChaseTarget(enemy: Enemy, ctx: AIContext): void {
+  enemy.ai.alertEmitCooldownMs = 0;
+  ctx.emitAlert(enemy, 'chase');
 }
 
 function setInvestigatePos(enemy: Enemy, x: number, y: number, jitter: number): void {
@@ -498,7 +520,7 @@ function updateDetection(enemy: Enemy, p: Perception, tickDtMs: number): void {
       ai.detectionFillRateMult;
   }
 
-  const rateHear = p.hearingRate;
+  const rateHear = p.hearingRate * ai.detectionFillRateMult;
   if (rateVision > 0 || rateHear > 0) {
     const before = ai.detection;
     const next = Math.min(1, before + (rateVision + rateHear) * dt);

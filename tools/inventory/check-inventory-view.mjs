@@ -10,17 +10,20 @@ try {
   await page.goto(`${process.env.GAME_URL ?? 'http://127.0.0.1:3000'}/tools/inventory/view-review.html`);
   await page.waitForSelector('#inventory-panel');
   await page.evaluate(async () => {
-    const { inventoryPanel } = await import('/src/ui/dom/inventory-panel.ts');
-    const { inventoryStore } = await import('/src/systems/inventory-store.ts');
     const { openInventory } = await import('/src/ui/inventory-presenter.ts');
-    const { WEAPON_DATA } = await import('/src/generated/weapon-data.ts');
+    const productionModule=path=>import(performance.getEntriesByType('resource').find(entry=>new URL(entry.name).pathname===path).name);
+    const { inventoryPanel } = await productionModule('/src/ui/dom/inventory-panel.ts');
+    const { inventoryStore } = await productionModule('/src/systems/inventory-store.ts');
+    const { WEAPON_DATA } = await productionModule('/src/generated/weapon-data.ts');
     inventoryStore.setPersistence(null);
     inventoryStore.configure({weaponDefinition: id => WEAPON_DATA[id]});
     const defs = Object.keys(WEAPON_DATA);
-    const items = Array.from({ length: 60 }, (_, i) => ({ id: `ui-${i}`, kind: 'weapon', weapon: { id: `ui-${i}`, definitionId: defs[i % defs.length] }, location: { kind: i ? 'stash' : 'carried' } }));
+    const items = Array.from({ length: 60 }, (_, i) => ({ id: `ui-${i}`, kind: 'weapon', weapon: { id: `ui-${i}`, definitionId: defs[i % defs.length], stage: 'tool', impactCharges: 3, usesRemaining: 60 }, location: { kind: i ? 'stash' : 'carried' } }));
     const loaded = inventoryStore.loadState({ version: 1, items, equipment: { weaponId: 'ui-0', toolIds: [null, null, null], defenseIds: [] }, run: null, starterGranted: true, firstWeaponDiscovered: false });
     if(!loaded) throw Error('Fixture inventory load failed');
-    window.testInventory = { inventoryPanel, inventoryStore, openInventory, changes: 0, closed: 0, departed: 0 };
+    const mount=document.createElement('div'); mount.style.cssText='position:absolute;left:250px;top:50px;width:670px;height:540px'; document.body.append(mount);
+    const openPanel=options=>openInventory({...options,...(options.mode==='catalog'?{mount}:{})});
+    window.testInventory = { inventoryPanel, inventoryStore, openInventory:openPanel, changes: 0, closed: 0, departed: 0 };
     inventoryStore.subscribe(() => window.testInventory.changes++);
     openInventory({ mode: 'prepare', onClose: () => window.testInventory.closed++, onDepart: () => window.testInventory.departed++ });
   });
@@ -28,13 +31,13 @@ try {
   await page.locator('[data-item-id="ui-3"]').click();
   const detail = await page.locator('.inventory-detail').innerText();
   assert.ok(detail.includes('22–28 → 29–35') && detail.includes('0% → 4%'), detail);
-  assert.ok(detail.includes('装配后负重 3.3'), detail);
+  assert.doesNotMatch(detail, /负重/);
   assert.equal(await page.locator('.inventory-detail img').getAttribute('src'), '/assets/weapons/crowbars/crowbar_good_resistant-icon.png');
-  assert.equal(await page.locator('.inventory-survival').innerText(), '移动 −0% · 抗性 0%');
+  assert.equal(await page.locator('.inventory-survival').count(), 0);
   await page.locator('.inventory-action:not(.inventory-discard)').first().click();
-  assert.equal(await page.locator('.inventory-survival').innerText(), '移动 −0% · 抗性 4%');
+  assert.equal(await page.locator('.inventory-survival').count(), 0);
   assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getEquipment().weaponId), 'ui-3');
-  console.log('PASS actual CSV ranges, per-quality variants, PNG, comparison, preview and committed survival');
+  console.log('PASS actual CSV ranges, per-quality variants, PNG, comparison and no base weight');
 
   await page.locator('[data-item-id="ui-42"]').click();
   const scroll = await page.locator('[data-lane="main"].inventory-list').evaluate(node => node.scrollTop);
@@ -65,6 +68,7 @@ try {
   assert.equal(await page.locator('#inventory-panel').count(), 1);
   console.log('PASS failed durable action unchanged; one Enter one commit; departure stays open until scene accepts');
 
+  await page.evaluate(() => { const t=window.testInventory; t.openInventory({mode:'catalog',onClose:()=>t.closed++}); });
   await page.locator('[data-item-id="ui-43"]').click();
   const discarded = page.locator('.inventory-discard');
   const countBeforeDiscard = await page.evaluate(() => window.testInventory.inventoryStore.getItems().length);
@@ -78,12 +82,13 @@ try {
   assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItems().length), countBeforeDiscard);
   await page.keyboard.down('Enter');
   await page.keyboard.press('Escape');
+  await page.evaluate(() => window.testInventory.inventoryPanel.close());
   await page.keyboard.up('Enter');
   await page.waitForTimeout(1550);
   assert.equal(await page.evaluate(() => window.testInventory.inventoryStore.getItems().length), countBeforeDiscard);
   await page.evaluate(() => {
     const t = window.testInventory;
-    t.openInventory({ mode: 'base', onClose: () => t.closed++ });
+    t.openInventory({ mode: 'catalog', onClose: () => t.closed++ });
   });
   await page.locator('[data-item-id="ui-43"]').click();
   await discarded.focus();
@@ -105,7 +110,7 @@ try {
   await page.evaluate(() => {
     const t = window.testInventory;
     t.inventoryStore.beginRun('ui-run');
-    t.inventoryStore.revealBatch('loot', [0, 1, 2, 3, 4].map(i => ({ id: `loot-${i}`, kind: 'weapon', weapon: { id: `loot-${i}`, definitionId: 'crowbar_plain' } })), { x: 0, y: 0 });
+    t.inventoryStore.revealBatch('loot', [0, 1, 2, 3, 4].map(i => ({ id: `loot-${i}`, kind: 'weapon', weapon: { id: `loot-${i}`, definitionId: 'crowbar_plain', stage:'defense', impactCharges:0, usesRemaining:0 } })), { x: 0, y: 0 });
     t.openInventory({ mode: 'rift', onClose: () => t.closed++, getNearby: () => t.inventoryStore.getItems().filter(item => item.location.kind === 'ground'), getDropPosition: () => ({ x: 0, y: 0 }), canTake: () => true, canDrop: () => true });
   });
   assert.equal(await page.locator('.inventory-list[data-lane="main"] .inventory-item').count(), 0);
@@ -124,13 +129,13 @@ try {
   await page.keyboard.press('w');
   assert.equal(await page.locator('#inventory-panel').count(), 0);
   assert.equal(await page.evaluate(() => window.testMovementEvents), 1);
-  console.log('PASS equipped field items only on belt; Escape discards draft; movement closes and forwards intention');
+  console.log('PASS carried-out gear excluded from collection; Escape discards draft; movement closes and forwards intention');
   await page.evaluate(() => {
     const t = window.testInventory;
     t.inventoryStore.settleRun('ui-run', 'extract');
-    t.inventoryStore.addContaminant({ id: 'offering-residue', type: 'freeze', rarity: 'common', stage: 'defense', impactCharges: 0, usesRemaining: 0 });
+    t.inventoryStore.addContaminant({ id: 'offering-residue', type: 'solidify', rarity: 'common', stage: 'defense', impactCharges: 0, usesRemaining: 0 });
     window.offeringTrace = [];
-    t.openInventory({ mode: 'base', onClose: () => window.offeringTrace.push('closed'), onOffering: () => window.offeringTrace.push('offering') });
+    t.openInventory({ mode: 'catalog', onClose: () => window.offeringTrace.push('closed'), onOffering: () => window.offeringTrace.push('offering') });
   });
   await page.locator('[data-item-id="offering-residue"]').click();
   const stateBeforeOffering = await page.evaluate(() => window.testInventory.inventoryStore.getState());

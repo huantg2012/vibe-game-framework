@@ -1,3 +1,5 @@
+import { contaminantWorldPixels } from '@/art/contaminant-icons';
+import { getContaminantQuality } from '@/systems/contaminant-quality';
 import { renderCrowbarPixels } from '@/art/crowbar-pixels';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 /** Revealed field items: a projection of InventoryStore, never a second inventory. */
@@ -171,10 +173,13 @@ export class FieldLootInventory {
         graphics.fillStyle(color, 1).fillRect(y - 16, x - 16, 1, 1);
       }
     } else {
-      graphics.fillStyle(0x454d42, 1).fillRect(-5, -4, 9, 7).fillRect(-3, -6, 6, 2);
-      graphics.fillStyle(0x777a65, 1).fillRect(-4, -4, 6, 2).fillRect(-5, -2, 2, 3);
-      graphics.fillStyle(0x8f8162, 1).fillRect(-5, 0, 9, 2);
-      graphics.fillStyle(0x3d6b5c, 1).fillRect(1, -3, 2, 3);
+      const pixels = contaminantWorldPixels(item.contaminant.type, getContaminantQuality(item.contaminant));
+      for (let y = 0; y < pixels.height; y++) for (let x = 0; x < pixels.width; x++) {
+        const i = (y * pixels.width + x) * 4;
+        if (!pixels.data[i + 3]) continue;
+        const color = pixels.data[i]! * 65536 + pixels.data[i + 1]! * 256 + pixels.data[i + 2]!;
+        graphics.fillStyle(color, 1).fillRect(x - pixels.width / 2, y - pixels.height / 2, 1, 1);
+      }
     }
   }
 }
