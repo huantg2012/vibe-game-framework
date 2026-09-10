@@ -48,7 +48,7 @@ function fixture(type: ContaminantType, uses = 2) {
     delayEnvironmentHazard: () => { events.push('delay-host'); return true; },
     getEnvironmentTargets: () => [{ id: 'host', position: { x: 12, y: 0 }, hazardReleased: type !== 'delay',
       canDelayNextHazard: type === 'delay', delayRemainingMs: 0,
-      canSuppressReleasedHazard: true, suppressionRemainingMs: 0 }] as never,
+      canSuppressHazard: true, suppressionRemainingMs: 0 }] as never,
     suppressEnvironmentHazard: () => { events.push('suppress-host'); return true; },
   });
   return { system, slot, id: item.id, events, graphics: () => graphics };

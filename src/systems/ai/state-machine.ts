@@ -55,6 +55,13 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
   const ai = enemy.ai;
   const config = GAME_CONSTANTS.AI;
 
+  // Suppress the hearing channel before either confidence or the rewriter's direct
+  // escalation can consume it. Sight, damage and explicit noise reports stay authoritative.
+  const calm = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
+  if (calm && !ai.pendingDamage && !ai.pendingNoiseLevel && !p.visible
+    && (p.hearingHit || p.hearingRate > 0) && ctx.hearingSuppressed && ctx.onHearingAvoided(enemy)) {
+    p = { ...p, hearingHit: false, hearingRate: 0 };
+  }
   updateDetection(enemy, p, tickDtMs);
 
   // --- priority 1: it was hit. Being attacked needs no confidence. ---
@@ -128,16 +135,7 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
     ai.detection >= config.SUSPICION_THRESHOLD && (p.visible || hearingFill);
   const noiseStimulus = ai.pendingNoiseLevel === 'suspicious';
 
-  // muffle (T7 rewire): a hearing-only signal pulling a calm enemy into SUSPICIOUS is
-  // exactly "被近距发现" - the one case the CSV describes ("360度近距检测对玩家无效").
-  // Sight and reported noises are never swallowed, only this.
-  const hearingOnly = (p.hearingHit || hearingFill) && !p.visible && !noiseStimulus;
   const entering = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
-  if (hearingOnly && entering && ctx.hearingSuppressed && ctx.onHearingAvoided(enemy)) {
-    // Stays calm (PATROL/RETURN have no downgrade of their own) - the whole point of
-    // muffle is that this tick looks exactly like nothing happened.
-    return;
-  }
 
   if (seenEnough || p.hearingHit || noiseStimulus) {
     ai.pendingNoiseLevel = null;

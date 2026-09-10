@@ -57,7 +57,11 @@ assert.equal(phase(oneWall, { maxDistance: 57 }), null, 'range covers complete t
 assert.equal(phase(gridWith()), null, 'ordinary open floor cannot spend a wall-crossing use');
 assert.equal(phase(gridWith([[2, 1, TileType.VOID]])), null, 'VOID is never phaseable');
 assert.equal(phase(gridWith([[2, 1], [3, 1]])), null, 'two tiles thick is rejected');
-assert.equal(phase(gridWith([[2, 1], [2, 2]]), { origin: { x: 48, y: 60 } }), null, 'body cannot clip an adjacent wall at the corner');
+assert(phase(gridWith([[2, 1], [2, 2]]), { origin: { x: 48, y: 60 } }), 'a continuous one-tile-thick wall is phaseable across a brick seam');
+assert.equal(phase(gridWith([[2, 1], [2, 2], [3, 2]]), { origin: { x: 48, y: 60 } }), null, 'a second wall thickness beside the centre ray still blocks the swept body');
+assert(phase(gridWith([[1, 2], [2, 2]]), { origin: { x: 60, y: 48 }, direction: { x: 0, y: 1 } }), 'vertical crossing also accepts a continuous wall seam');
+assert(phase(gridWith([[2, 1], [2, 2]]), { origin: { x: 144, y: 60 }, direction: { x: -1, y: 0 } }), 'reverse crossing shares the same wall-thickness rule');
+assert.equal(phase(gridWith([[2, 1], [2, 2, TileType.VOID]]), { origin: { x: 48, y: 60 } }), null, 'adjacent VOID is never part of a phaseable wall plane');
 assert.equal(phase(gridWith([[2, 1], [3, 2, TileType.VOID]]), { direction: { x: 1, y: 0.25 } }), null, 'a clear centre landing cannot hide body overlap with VOID');
 assert.equal(phase(gridWith([[5, 1]])), null, 'far map-edge wall has no body-safe landing');
 assert.equal(phase(gridWith([[5, 1]]), { origin: { x: 144, y: 48 } }), null);

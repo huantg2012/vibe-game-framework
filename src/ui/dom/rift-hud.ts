@@ -20,6 +20,7 @@
  * active-effect lines, extract prompt, pickup/passive toasts, overflow veil.
  */
 
+import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { t } from '@/i18n';
@@ -209,12 +210,15 @@ export class RiftHud {
   };
   private readonly onToolUsed = (payload: { contaminantId: string; toolType: ContaminantType; usesLeft: number }): void => {
     const actual = this.equipmentData.find(slot => slot.itemId === payload.contaminantId);
-    if (actual?.isPassive) this.showPassiveFlash(actual.name);
+    const definition = CONTAMINANT_DATA[payload.toolType];
+    // Consumption synchronously removes the last item before TOOL_USED is emitted.
+    // Identity must therefore come from the event, not the now-empty equipment slot.
+    if (definition?.toolType === 'passive') this.showPassiveFlash(actual?.name ?? definition.displayNameTool, payload.toolType);
     if (this.equipmentData.length) return;
     const slot = this.toolSlotData.find((s) => s.type === payload.toolType && s.usesRemaining > payload.usesLeft);
     if (slot) {
       slot.usesRemaining = payload.usesLeft;
-      if (slot.isPassive) this.showPassiveFlash(slot.name);
+
     }
     this.updateToolSlotText();
   };
@@ -627,9 +631,10 @@ export class RiftHud {
    * variant). Gives the three passive tools (碎影/消声步/寄生引流) a perceptible
    * trigger instead of a silently-shrinking dot.
    */
-  private showPassiveFlash(name: string): void {
+  private showPassiveFlash(name: string, type: ContaminantType): void {
     if (!this.active || !this.toolSlotEl) return;
-    showToastInline(`<span>${name}</span> <span>生效</span>`, {
+    const meaning = type === 'muffle' ? '声响压住' : type === 'scatter' ? '辨认变慢' : type === 'siphon' ? '抗污增强' : type === 'retrograde' ? '留下旧影' : '生效';
+    showToastInline(`<span>${name}</span> <span>${meaning}</span>`, {
       position: `left:${MARGIN}px;bottom:146px;`,
       color: CHAOS_COLOR,
       extraStyle: 'font-size:11px;padding:2px 4px;',

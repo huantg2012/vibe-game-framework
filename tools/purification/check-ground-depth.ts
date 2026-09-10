@@ -33,3 +33,16 @@ new GroundDepthSorter([...targets].reverse().map(t => ({ ...t, applyDepth: depth
 assert.deepEqual([...reversed.entries()].sort((a,b)=>a[1]-b[1]).map(([id])=>id), tied, 'ties independent of registration order');
 assert.throws(() => new GroundDepthSorter([targets[0]!, targets[0]!]), /unique/);
 console.log('PASS grounded front/back order, stable ties, attached effects, floor/mask bounds and idle updates');
+
+// A stationary body echo must sit between moving actors without gaining a global overlay depth.
+for (const playerY of [270, 350, 450]) {
+  contacts.set('player', playerY); sorter.update();
+  for (const echoY of [250, 300, 360, 420]) {
+    const depth = sorter.depthAt(echoY);
+    for (const [id, y] of contacts) {
+      assert.equal(depth > assigned.get(id)!, echoY >= y, `echo ${echoY} versus ${id} at ${y}`);
+    }
+    assert(depth < WORLD_READOUT_DEPTH && depth > GROUND_LIGHT_DEPTH);
+  }
+}
+console.log('PASS body echoes share current ground order before/behind actors without crossing fog/readouts');

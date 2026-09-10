@@ -1,3 +1,4 @@
+import { muteSuppressedMaterial } from '@/systems/tool-ground-vfx';
 /** Occupied space: R4 materials share authoritative presence; echo retains its original field. */
 import Phaser from 'phaser';
 import { createVolumePresenceFrame,updateVolumePresenceFrame,isVolumeDangerousAt,type VolumePresenceFrame } from '@/systems/volume-presence';
@@ -210,11 +211,12 @@ export function attachDingD(ctx: FormAttachContext): FormVisual {
         state.stains.clear();
         return;
       }
-      const paintKey = `${Math.floor((presence?.elapsedMs??state.elapsedMs) / (1000/60))}:${pose.signal}:${pose.activity?.phase}:${pose.activity?.progress}:${presence?.active}:${presence?.rect.x}:${presence?.rect.y}:${presence?.rect.w}:${presence?.rect.h}:${presence?.phase}:${presence?.progress}:${explicitTime}:${presence?.coreX}:${presence?.coreY}`;
+      const paintKey = `${Math.floor((presence?.elapsedMs??state.elapsedMs) / (1000/60))}:${pose.signal}:${pose.toolControl}:${pose.activity?.phase}:${pose.activity?.progress}:${presence?.active}:${presence?.rect.x}:${presence?.rect.y}:${presence?.rect.w}:${presence?.rect.h}:${presence?.phase}:${presence?.progress}:${explicitTime}:${presence?.coreX}:${presence?.coreY}`;
       if (state.lastPaintKey !== paintKey) {
         const cloud = cloudForLive(recipe, live, canvasW, canvasH, state.elapsedMs);
         if(presence)paintVolumePresence(state.pixels.data,canvasW,canvasH,presence,state.seed,recipe.paintStrikeCore?recipe.strikeCorePx:0,pose.activity?.phase==='rest'?.5:pose.activity?.phase==='waking'?.5+.5*pose.activity.progress:1);
         else paintDingFrame(state.pixels.data, canvasW, canvasH, recipe, pose, state.elapsedMs, cloud);
+        if (pose.toolControl === 'suppressed') muteSuppressedMaterial(state.pixels.data);
         canvasCtx.putImageData(state.pixels, 0, 0);
         texture.refresh();
         state.lastPaintKey = paintKey;

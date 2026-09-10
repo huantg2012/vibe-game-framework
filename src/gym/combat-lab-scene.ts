@@ -171,6 +171,9 @@ export class CombatLabScene extends Phaser.Scene {
   private createTools(): void {
     this.tools.create(this, contaminantSystem.getSortieLoadout(), () => this.player.getPosition(), () => this.ai.getEnemies(), {
       getPlayerSprite: () => this.player.getSprite(),
+        getPlayerGroundY: () => this.player.getGroundY(),
+        getGroundVisualDepth: groundY => this.depthSorter?.depthAt(groundY) ?? 29,
+        captureEnemyVisual: id => this.subjects.find(s => s.id === id)?.visual?.getFlashSource?.(),
         isTargetAlive: id => this.combat.isEnemyAlive(id),
         isTargetVisible: () => true,
         hasTargetLineOfSight: (from, to) => hasLineOfSight(this.grid!, from, to),
@@ -192,11 +195,11 @@ export class CombatLabScene extends Phaser.Scene {
             this.grid!, (from, to) => hasLineOfSight(this.grid!, from, to));
         },
         getRevealSnapshot: range => collectToolRevealSnapshot(this.player.getPosition(), range, this.grid!,
-          [...this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
-            ...this.hosts.getToolTargets().map(host => host.position)], []),
+          this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
+          [], this.hosts.getToolTargets().map(host => host.position)),
         delayEnvironmentHazard: (id, source, duration) => this.hosts.delayNextHazard(id, source, duration),
         getEnvironmentTargets: () => this.hosts.getToolTargets(),
-        suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressReleasedHazard(id, source, duration),
+        suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressHazard(id, source, duration),
         clearEnvironmentControl: (id, source) => this.hosts.clearToolControl(id, source),
         getPhaseDestination: () => {
           const sprite = this.player.getSprite();
@@ -231,16 +234,20 @@ export class CombatLabScene extends Phaser.Scene {
       knockbackEnemy: (id, dx, dy) => this.ai.knockbackEnemy(id, dx, dy),
       setDecoyPosition: pos => this.ai.setDecoyPosition(pos),
       damageEnemy: (id, amount) => this.combat.applyToolDamage(id, amount),
-      showAbyssReveal: (enemies, _nodes, duration) => {
+      showAbyssReveal: (enemies, _nodes, duration, cores = []) => {
         this.revealMarks?.destroy(); this.revealMarks = null;
         this.revealUntil = this.time.now + duration;
         if (duration <= 0) return;
         this.revealMarks = this.add.graphics().setDepth(60);
+        for (const position of cores) {
+          this.revealMarks.fillStyle(0x91846d, .7);
+          this.revealMarks.fillRect(Math.round(position.x) - 2, Math.round(position.y) - 2, 4, 4);
+        }
         for (const position of enemies) {
           this.revealMarks.lineStyle(1, 0x7c998e, .8);
           this.revealMarks.strokeRect(Math.round(position.x) - 3, Math.round(position.y) - 3, 6, 6);
         }
-        this.message = `背光珠留下附近 ${enemies.length} 处旧位置；标记不会跟随目标。`;
+        this.message = `映出别处的珠子留下附近 ${enemies.length} 处旧位置；标记不会跟随目标。`;
       },
       getKindlingPositions: () => [],
       boostChaosRate: (mult, ms) => this.chaos?.setTemporaryRateMult(mult, ms),
@@ -281,13 +288,14 @@ export class CombatLabScene extends Phaser.Scene {
         const type = this.config.tools[i];
         if (type === 'ruminate') this.message = '反刍需要已搜取节点；此战斗场不放置搜寻经济节点，未消耗次数。';
         const used = this.tools.useSlot(i);
-        if (!used && type && type !== 'ruminate') this.message = '未施放：检查剩余次数、目标距离，线型工具需在两处各按一次。';
+        if (!used && type && type !== 'ruminate') this.message = this.tools.getLastUseFailure() ?? '物品未装配或尚不可用。';
       }
     }
     this.tools.update(delta);
     this.combat.update(delta);
     if (this.roundEnded) return;
     this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
+    this.tools.syncHostVisuals();
     if (this.roundEnded) return;
     this.chaos?.update(delta);
     this.surface.update(delta);
@@ -406,14 +414,17 @@ export class CombatLabScene extends Phaser.Scene {
       const speed = velocity ? Math.hypot(velocity.x, velocity.y) : 0;
       const pin = this.hosts.getVisualPin(subject.id);
       visual.update({ x: pin?.kind === 'cluster' ? pin.x : position.x, y: pin?.kind === 'cluster' ? pin.y : position.y,
-        visibility: 1, deltaMs: this.lastDelta, facing4: view?.getFacing4() ?? this.hosts.getVisualFacing(subject.id),
+        visibility: 1, deltaMs: this.ai.getEnemyControlState(subject.id)?.attackSuppressed && this.ai.getEnemyControlState(subject.id)?.movementMultiplier === 0 ? 0 : this.lastDelta, facing4: view?.getFacing4() ?? this.hosts.getVisualFacing(subject.id),
         moving: view ? isActorWalking(speed) : this.hosts.getVisualMoving(subject.id), movementSpeed: speed,
+        toolControl: this.hosts.getToolVisualControl(subject.id),
+        restraint: this.tools.getEnemyRestraintPose(subject.id),
         signal: enemy ? signalFor(enemy) : this.hosts.getVisualSignal(subject.id),
         attack: view ? this.combat.getEnemyAttackVisualState(subject.id) : this.hosts.getAttackVisualState(subject.id),
         activity: enemy?.getActivityVisualState() ?? this.hosts.getActivityVisualState(subject.id),
       });
     }
     this.depthSorter?.update();
+    this.tools.syncBodyVisuals();
   }
 
   private syncBurden(): void {

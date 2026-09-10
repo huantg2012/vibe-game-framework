@@ -32,6 +32,8 @@ export interface FormAttackPose {
 }
 
 export interface FormVisualPose {
+  restraint?: import('@/entities/restraint-reaction').RestraintPose;
+  toolControl?: 'held' | 'suppressed';
   x: number;
   y: number;
   facing4: 'up' | 'down' | 'left' | 'right';

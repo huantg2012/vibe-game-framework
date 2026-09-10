@@ -26,6 +26,18 @@ export class GroundDepthSorter {
     }
   }
 
+  /** Place a short-lived body trace between the same ground-sorted actors, not in a global overlay. */
+  depthAt(groundY: number): number {
+    let behind = ENTITY_START - 1, ahead = ENTITY_END + 1;
+    for (const target of this.ordered) {
+      const depth = this.depths.get(target.id);
+      if (depth === undefined) continue;
+      if (target.groundY() <= groundY) behind = Math.max(behind, depth);
+      else ahead = Math.min(ahead, depth);
+    }
+    return behind + Math.max(.01, Math.min(.45, (ahead - behind) * .5));
+  }
+
   update(): void {
     this.ordered.sort((a, b) => a.groundY() - b.groundY() ||
       (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));

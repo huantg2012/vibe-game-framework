@@ -5,6 +5,8 @@ import { TileType } from '@/types/game-types';
 
 export function createCombatLabGround(fragmentTypeId: string, seed: number): RuinedMask {
   const tileMap = createLexiconObserveMap(fragmentTypeId);
+  // A single-cell partition for real phase-tool practice, away from the sparring lane.
+  for (let row = 5; row <= 8; row++) tileMap.tiles[row]![4] = TileType.WALL;
   const { cols, rows, tileSize } = tileMap;
   const walls = new Uint8Array(cols * rows);
   const land = new Uint8Array(cols * rows).fill(1);

@@ -1,3 +1,4 @@
+import { muteSuppressedMaterial } from '@/systems/tool-ground-vfx';
 /**
  * 占漆拓扑挂载。烤拓扑静帧；检视 / 句法课 / 出击沿生长方向连续扩散收缩（DEC-070 5–20%）。
  * 油膜省略 `paintVeinVariant` 时按个体种子采样 3/4/5。陈列馆浏览 `deltaMs === 0` 只留静帧。
@@ -136,6 +137,7 @@ class BingPaintGenomeVisual implements FormVisual {
     });
     paintSurfaceMaterial(this.pixels.data,this.scratch,this.w,this.h,this.substrate,this.coverage,this.seed,this.clock,pose);
     this.applyDangerSurface(pose);
+    if (pose.toolControl === 'suppressed') muteSuppressedMaterial(this.pixels.data);
     this.canvasCtx.putImageData(this.pixels, 0, 0);
     this.texture.refresh();
   }

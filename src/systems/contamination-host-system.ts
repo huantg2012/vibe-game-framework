@@ -94,7 +94,7 @@ export interface HostToolTarget extends HostSubject {
   readonly category: 'wall' | 'paint' | 'volume';
   /** Natural release state, even while temporarily suppressed. */
   readonly hazardReleased: boolean;
-  readonly canSuppressReleasedHazard: boolean;
+  readonly canSuppressHazard: boolean;
   readonly canDelayNextHazard: boolean;
   readonly suppressionRemainingMs: number;
   readonly delayRemainingMs: number;
@@ -389,7 +389,7 @@ export class ContaminationHostSystem {
         id: host.id, form: host.form, position: host.core,
         category: host.kind === 'bing' ? 'paint' : host.kind === 'ding' ? 'volume' : 'wall',
         hazardReleased: released,
-        canSuppressReleasedHazard: released,
+        canSuppressHazard: this.canSuppressHazard(host),
         canDelayNextHazard: this.hasDelayableHazard(host),
         suppressionRemainingMs: control?.suppressionRemainingMs ?? 0,
         delayRemainingMs: control?.delayRemainingMs ?? 0,
@@ -399,10 +399,10 @@ export class ContaminationHostSystem {
     });
   }
 
-  /** Persistent paint or a material volume's current released field; never kills its core. */
-  suppressReleasedHazard(id: string, sourceId: string, durationMs: number): boolean {
+  /** Suppress an active material source in any natural phase; never kills its core. */
+  suppressHazard(id: string, sourceId: string, durationMs: number): boolean {
     const host = this.hosts.find(candidate => candidate.id === id && candidate.alive);
-    if (!host || !this.hasReleasedHazard(host) || !EnvironmentHazardControl.valid(sourceId, durationMs)) return false;
+    if (!host || !this.canSuppressHazard(host) || !EnvironmentHazardControl.valid(sourceId, durationMs)) return false;
     this.hazardControl(id).suppress(sourceId, durationMs);
     if (host.kind === 'ding' && host.presence) host.presence.hazardActive = false;
     return true;
@@ -424,6 +424,17 @@ export class ContaminationHostSystem {
     let control = this.hazardControls.get(id);
     if (!control) { control = new EnvironmentHazardControl(); this.hazardControls.set(id, control); }
     return control;
+  }
+
+  private canSuppressHazard(host: Host): boolean {
+    const control = this.hazardControls.get(host.id);
+    if (control && (control.suppressionRemainingMs > 0 || control.recoveryPending || control.delayRemainingMs > 0)) return false;
+    if (host.kind === 'bing') {
+      const floors = this.paintFloors.get(host.id);
+      return (!floors || floors.size > 0) && resolveContactChannel(host.form.portfolio, host.form.lexemes.contact) === 'step_chaos';
+    }
+    return host.kind === 'ding' && !!host.presence?.hasPresence && this.volumeActive(host) &&
+      resolveContactChannel(host.form.portfolio, host.form.lexemes.contact) === 'volume_chaos_sight';
   }
 
   private hasReleasedHazard(host: Host): boolean {
@@ -518,6 +529,13 @@ export class ContaminationHostSystem {
       width: (host.box.maxCol - host.box.minCol + 1) * TILE,
       height: (host.box.maxRow - host.box.minRow + 1) * TILE,
     };
+  }
+
+  getToolVisualControl(hostId: string): 'held' | 'suppressed' | undefined {
+    const control = this.hazardControls.get(hostId);
+    if (control?.suppressed) return 'suppressed';
+    if ((control?.delayRemainingMs ?? 0) > 0) return 'held';
+    return undefined;
   }
 
   getVisualSignal(hostId: string): HostVisualSignal {

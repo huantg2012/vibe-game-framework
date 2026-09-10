@@ -27,11 +27,11 @@ function fixture(type: ContaminantType, uses = 2) {
   const noises: { position: { x: number; y: number }; radius: number }[] = [];
   const controls: string[] = [];
   const hosts = [
-    { id: 'hidden', position: { x: -20, y: 0 }, hazardReleased: true, canSuppressReleasedHazard: true, suppressionRemainingMs: 0 },
-    { id: 'wall', position: { x: 25, y: 0 }, hazardReleased: true, canSuppressReleasedHazard: true, suppressionRemainingMs: 0 },
-    { id: 'gather', position: { x: 30, y: 0 }, hazardReleased: false, canSuppressReleasedHazard: false, suppressionRemainingMs: 0 },
-    { id: 'released', position: { x: 50, y: 0 }, hazardReleased: true, canSuppressReleasedHazard: true, suppressionRemainingMs: 0 },
-    { id: 'far', position: { x: 500, y: 0 }, hazardReleased: true, canSuppressReleasedHazard: true, suppressionRemainingMs: 0 },
+    { id: 'hidden', position: { x: -20, y: 0 }, hazardReleased: true, canSuppressHazard: true, suppressionRemainingMs: 0 },
+    { id: 'wall', position: { x: 25, y: 0 }, hazardReleased: true, canSuppressHazard: true, suppressionRemainingMs: 0 },
+    { id: 'gather', position: { x: 30, y: 0 }, hazardReleased: false, canSuppressHazard: true, suppressionRemainingMs: 0 },
+    { id: 'released', position: { x: 50, y: 0 }, hazardReleased: true, canSuppressHazard: true, suppressionRemainingMs: 0 },
+    { id: 'far', position: { x: 500, y: 0 }, hazardReleased: true, canSuppressHazard: true, suppressionRemainingMs: 0 },
   ];
   const enemy = { getId: () => 'enemy', getRole: () => 'infiltrator', getPosition: () => position,
     getState: () => AIState.CHASE, isTargetingDecoy: () => false, isTargetingLure: () => targetingLure };
@@ -118,16 +118,18 @@ function fixture(type: ContaminantType, uses = 2) {
   assert.deepEqual([...f.decoys.values()][0], { x: 60, y: 0 });
   f.system.destroy(); assert.equal(f.decoys.size, 0);
 }
-// One visible released host only; gather, walls, darkness and range do not consume.
+// Active gathering is eligible too; skip blocked sources and select the next legal one.
 {
-  const f = fixture('combust', 2);
+  const f = fixture('combust', 3);
   f.setVisible(false); assert.equal(f.system.useSlot(0), false); assert.equal(f.writes.length, 0);
   f.setVisible(true); assert(f.system.useSlot(0));
-  assert.equal(f.controls.length, 1); assert(f.controls[0]!.startsWith('released:'));
+  assert.equal(f.controls.length, 1); assert(f.controls[0]!.startsWith('gather:'));
   assert.equal(f.writes.length, 1);
-  assert.equal(f.system.useSlot(0), false, 'already suppressed host is not charged again');
-  assert.equal(f.writes.length, 1);
-  f.system.destroy(); assert(f.controls.includes('clear:released'));
+  assert(f.system.useSlot(0), 'suppressed near source must not hide a legal farther source');
+  assert.equal(f.writes.length, 2); assert(f.controls[1]!.startsWith('released:'));
+  assert.equal(f.system.useSlot(0), false, 'already suppressed sources are not charged again');
+  assert.equal(f.writes.length, 2);
+  f.system.destroy(); assert(f.controls.includes('clear:released') && f.controls.includes('clear:gather'));
 }
 
 const grid = { cols: 40, rows: 40, tileSize: 8, version: 0, isOpaque: () => false };

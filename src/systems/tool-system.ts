@@ -8,6 +8,8 @@
  */
 
 import Phaser from 'phaser';
+import { captureBodyEcho, type BodyEcho, type BodyEchoSource } from '@/systems/tool-body-echo';
+import { drawToolObject, drawPressure, drawFootDrag, drawSeam, drawHostRestraint } from '@/systems/tool-ground-vfx';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
@@ -22,21 +24,18 @@ import type { HostToolTarget } from '@/systems/contamination-host-system';
 import {
   CONTAM_BRIGHT,
   CONTAM_COLD,
-  CONTAM_DEEP,
   CONTAM_GLOW,
   CONTAM_MID,
   CONTAM_PEAK,
   EnemyPerceptionIndicators,
   GHOST_COLOR,
   buildGlitchBlockField,
-  buildJaggedPolygon,
   createDissolveState,
   createStepFade,
   drawBracketMarker,
   hashSeed,
   mulberry32,
   renderGlitchBlockField,
-  renderPolygonOutline,
   renderPolylineRing,
   stepDissolve,
   stepFade,
@@ -51,10 +50,9 @@ import {
 
 /** A frozen enemy effect (solidify - 族群 A). */
 interface FreezeEffect {
+  echo?: BodyEcho | null;
   enemyId: string;
   remainingMs: number;
-  /** Crystal outline points, relative to the enemy's current position. */
-  polygon: Vector2[];
   /** Last known world position - the dissolve anchor once the enemy stops existing
    * (e.g. killed while frozen), so the crack animation doesn't jump to (0,0). */
   lastPos: Vector2;
@@ -89,6 +87,7 @@ interface ErodeZone {
 
 /** A single stale last-seen footprint. It never follows an invisible enemy. */
 interface RetrogradeMark {
+  echo?: BodyEcho | null;
   enemyId: string;
   position: Vector2;
   remainingMs: number;
@@ -98,6 +97,8 @@ interface RetrogradeMark {
 }
 
 interface TrackingEpisode {
+  echo?: BodyEcho | null;
+  sampledAt?: number;
   lastVisiblePosition: Vector2;
   hasVisiblePosition: boolean;
   spent: boolean;
@@ -105,6 +106,7 @@ interface TrackingEpisode {
 
 /** One thrown sound source; no control or damage attached. */
 interface KindleZone {
+  throwFrom?: Vector2;
   position: Vector2;
   radius: number;
   remainingMs: number;
@@ -116,6 +118,7 @@ interface KindleZone {
 
 /** A finite seam stopping each crossing enemy once (族群 D). */
 interface StitchBarrier {
+  tensionMs?: number;
   previousPositions: Map<string, Vector2>;
   pointA: Vector2;
   pointB: Vector2;
@@ -128,6 +131,7 @@ interface StitchBarrier {
 
 /** An expand (phase-through) effect on the player (族群 G). */
 interface ExpandEffect {
+  echo?: BodyEcho | null;
   remainingMs: number;
   stiffnessMs: number;
   phase: 'active' | 'stiffness';
@@ -153,19 +157,14 @@ interface CompressAnchor {
 
 /** A mirror decoy (族群 F): enemies who visually sight the player within range target this instead. */
 interface MirrorDecoy {
+  groundY?: number;
+  echo?: BodyEcho | null;
   position: Vector2;
   remainingMs: number;
   visual: Phaser.GameObjects.Graphics;
   shattering: boolean;
   shatterBlocks: GlitchBlock[];
   shatterDissolve: DissolveState;
-}
-
-/** A4 副标示 marker on whichever enemy(ies) `AISystem` currently reports as sighting the
- * decoy instead of the player (`EnemyView.isTargetingDecoy()`) - "视野内敌人优先对镜像产生
- * 怀疑" made visible, per `tool-vfx-spec.md` A4's bracket-marker list. */
-interface MirrorDecoyMarker {
-  visual: Phaser.GameObjects.Graphics;
 }
 
 /** A resonate tripwire between two points (族群 D): crossing it knocks back + stuns. */
@@ -207,6 +206,7 @@ interface StunEntry {
 
 /** A pending abyss aperture-closing burst at the player position (族群 H, rare). */
 interface AbyssBurst {
+  echo?: BodyEcho | null;
   position: Vector2;
   remainingMs: number;
   visual: Phaser.GameObjects.Graphics;
@@ -265,6 +265,11 @@ export class ToolSystem {
   private getEnemies!: () => readonly EnemyView[];
   /** expand (族群 G, A1 exception): the one tool allowed to touch the player sprite's own
    * alpha directly, for the "数据稀释" dim during its active phase. */
+  private getPlayerGroundY?: () => number;
+  private getGroundVisualDepth?: (groundY: number) => number;
+  private captureEnemyVisual?: (id: string) => BodyEchoSource | undefined;
+  private lastUseFailure: string | null = null;
+  private passiveVisual: Phaser.GameObjects.Graphics | null = null;
   private getPlayerSprite?: () => Phaser.GameObjects.Image | undefined;
   private getPhaseDestination?: () => Vector2 | null;
   private movePlayerTo?: (position: Vector2) => void;
@@ -302,6 +307,7 @@ export class ToolSystem {
     enemyPositions: readonly Vector2[],
     nodePositions: readonly Vector2[],
     durationMs: number,
+    corePositions?: readonly Vector2[],
   ) => void;
 
   // Active effects
@@ -317,7 +323,6 @@ export class ToolSystem {
   // Slice 5 (T1) active effects
   private compressAnchors: CompressAnchor[] = [];
   private mirrorDecoys: MirrorDecoy[] = [];
-  private readonly mirrorDecoyMarkers = new Map<string, MirrorDecoyMarker>();
   private resonateStrings: ResonateString[] = [];
   private overwriteMarks: OverwriteMark[] = [];
   private combustFields: CombustField[] = [];
@@ -361,6 +366,7 @@ export class ToolSystem {
     if (payload.alertLevel === 'chase') this.beginTrackingEpisode(payload.enemyId);
   };
   private readonly onEnemyLostPlayer = (payload: { enemyId: string }): void => {
+    this.trackingEpisodes.get(payload.enemyId)?.echo?.destroy();
     this.trackingEpisodes.delete(payload.enemyId);
     if (this.scatterSuppressedEnemyIds.delete(payload.enemyId)) {
       this.setEnemyDetectionFillRateMult?.(payload.enemyId, 1);
@@ -379,6 +385,9 @@ export class ToolSystem {
       isTargetAlive?: (id: string) => boolean;
       isTargetVisible?: (position: Readonly<Vector2>) => boolean;
       hasTargetLineOfSight?: (from: Readonly<Vector2>, to: Readonly<Vector2>) => boolean;
+      getPlayerGroundY?: () => number;
+      getGroundVisualDepth?: (groundY: number) => number;
+      captureEnemyVisual?: (id: string) => BodyEchoSource | undefined;
       getPlayerSprite?: () => Phaser.GameObjects.Image | undefined;
       getPhaseDestination?: () => Vector2 | null;
       movePlayerTo?: (position: Vector2) => void;
@@ -408,6 +417,7 @@ export class ToolSystem {
         enemyPositions: readonly Vector2[],
         nodePositions: readonly Vector2[],
         durationMs: number,
+        corePositions?: readonly Vector2[],
       ) => void;
       getKindlingPositions?: () => readonly Vector2[];
       boostChaosRate?: (mult: number, durationMs: number) => void;
@@ -436,6 +446,9 @@ export class ToolSystem {
     this.getPlayerPos = getPlayerPos;
     this.getEnemies = getEnemies;
     this.getPlayerSprite = options?.getPlayerSprite;
+    this.captureEnemyVisual = options?.captureEnemyVisual;
+    this.getGroundVisualDepth = options?.getGroundVisualDepth;
+    this.getPlayerGroundY = options?.getPlayerGroundY;
     this.setPlayerCollision = options?.setPlayerCollision;
     this.getPhaseDestination = options?.getPhaseDestination;
     this.movePlayerTo = options?.movePlayerTo;
@@ -458,6 +471,7 @@ export class ToolSystem {
     this.delayEnvironmentHazard = options?.delayEnvironmentHazard;
     this.suppressEnvironmentHazard = options?.suppressEnvironmentHazard;
     this.clearEnvironmentControl = options?.clearEnvironmentControl;
+    for (const episode of this.trackingEpisodes.values()) episode.echo?.destroy();
     this.trackingEpisodes.clear();
     this.retrogradeEquipped = false;
     this.showAbyssReveal = options?.showAbyssReveal;
@@ -480,7 +494,6 @@ export class ToolSystem {
     this.expandEffect = null;
     this.compressAnchors = [];
     this.mirrorDecoys = [];
-    this.mirrorDecoyMarkers.clear();
     this.resonateStrings = [];
     this.overwriteMarks = [];
     this.combustFields = [];
@@ -535,7 +548,35 @@ export class ToolSystem {
    * Attempt to use the tool in the given slot (0 or 1).
    * Returns true if usage was successful.
    */
+  getLastUseFailure(): string | null { return this.lastUseFailure; }
+
+  /** Aggregate actual applied sources; model feedback must not invent a new control. */
+  getEnemyRestraintPose(id: string): import('@/entities/restraint-reaction').RestraintPose {
+    return {
+      pressure: this.compressAnchors.some(anchor => !anchor.dissolving && anchor.affectedEnemyIds.has(id)),
+      snared: this.stitchStops.some(stop => stop.enemyId === id && stop.remainingMs > 0),
+    };
+  }
+
+  private playerEcho(mode: 'mirror' | 'phase' | 'memory'): BodyEcho | null {
+    const sprite = this.getPlayerSprite?.();
+    if (!sprite?.texture) return null;
+    return captureBodyEcho(this.scene, { textureKey: sprite.texture.key, frame: sprite.frame.name,
+      originX: sprite.originX, originY: sprite.originY, scaleX: sprite.scaleX, scaleY: sprite.scaleY }, mode);
+  }
+
+  private footContact(enemy: EnemyView): Vector2 {
+    const position = enemy.getPosition();
+    return { x: position.x, y: position.y + GAME_CONSTANTS.AI.BODY_SIZE / 2 };
+  }
+
+  private enemyEcho(id: string, mode: 'freeze' | 'memory'): BodyEcho | null {
+    const source = this.captureEnemyVisual?.(id);
+    return source ? captureBodyEcho(this.scene, source, mode) : null;
+  }
+
   useSlot(slotIndex: number): boolean {
+    this.lastUseFailure = null;
     const contaminant = this.loadout[slotIndex];
     if (!contaminant) return false;
     if (contaminant.stage !== 'tool') return false;
@@ -547,14 +588,24 @@ export class ToolSystem {
 
     // Each effect validates its target/placement first, then calls this gate exactly
     // once before changing gameplay or creating its visible effect.
-    return this.applyEffect(contaminant.type, () => this.commitToolUse(slotIndex));
+    const used = this.applyEffect(contaminant.type, () => this.commitToolUse(slotIndex));
+    if (!used && !this.lastUseFailure) {
+      const reasons: Partial<Record<ContaminantType, string>> = {
+        solidify: '附近没有可凝滞的可见目标。', delay: '附近没有尚未释放、可暂缓的污染源。',
+        combust: '附近没有可压制的活动污染源；已受压制或暂缓的目标不能重复使用。', kindle: '前方没有可落下回声空壳的位置。',
+        stitch: '前方没有足够完整的地面铺设打结的细线。', expand: this.expandEffect ? '身体尚未归位。' : '朝向贴近薄墙，另一侧需要能落脚。',
+        abyss: this.abyssRevealRemainingMs > 0 ? '旧影尚未散去。' : '附近没有可以留下旧影的目标。',
+      };
+      this.lastUseFailure = reasons[contaminant.type] ?? '此处无法施放，未消耗次数。';
+    }
+    return used;
   }
 
   private commitToolUse(slotIndex: number): boolean {
     const contaminant = this.loadout[slotIndex];
     if (!contaminant || contaminant.stage !== 'tool' || contaminant.usesRemaining <= 0) return false;
     const result = contaminantSystem.tryConsumeTool(contaminant.id);
-    if (!result.ok) return false;
+    if (!result.ok) { this.lastUseFailure = result.error === 'storage-failed' ? '未能保存，本次未施放，未消耗次数。' : '物品状态已改变，本次未施放。'; return false; }
     if (result.value.broken) this.loadout[slotIndex] = null;
     return true;
   }
@@ -594,6 +645,39 @@ export class ToolSystem {
     this.indicators.update(deltaMs, (id) => enemies.find((e) => e.getId() === id)?.getPosition());
   }
 
+  /** Re-seat body traces after the scene has resolved physics and painter order. */
+  syncBodyVisuals(): void {
+    for (const effect of this.freezeEffects) if (!effect.dissolving) {
+      effect.echo?.update(effect.lastPos, 1 - effect.remainingMs / CONTAMINANT_DATA.solidify.toolDurationMs,
+        this.getGroundVisualDepth?.(effect.lastPos.y) ?? 39);
+    }
+    for (const decoy of this.mirrorDecoys) if (!decoy.shattering) {
+      decoy.echo?.update(decoy.position, 1 - decoy.remainingMs / CONTAMINANT_DATA.mirror.toolDurationMs,
+        this.getGroundVisualDepth?.(decoy.groundY ?? decoy.position.y) ?? 29);
+    }
+    const phase = this.expandEffect;
+    if (phase) phase.echo?.update(this.getPlayerPos(), 1 - phase.remainingMs / phase.stiffnessMs,
+      (this.getPlayerSprite?.()?.depth ?? 38) + .2);
+  }
+
+  /** Called after Host motion; attached material traces must share this frame's core position. */
+  syncHostVisuals(): void {
+    if (!this.delayDevices.length && !this.combustFields.length) return;
+    const targets = this.getEnvironmentTargets?.() ?? [];
+    for (const device of this.delayDevices) {
+      const host = targets.find(target => target.id === device.hostId);
+      if (!host) continue;
+      device.position = { ...host.position };
+      drawHostRestraint(device.visual, device.position, true, device.remainingMs, this.elapsedMs);
+    }
+    for (const field of this.combustFields) {
+      const host = targets.find(target => target.id === field.hostId);
+      if (!host) continue;
+      field.position = { ...host.position };
+      drawHostRestraint(field.visual, field.position, false, field.remainingMs, this.elapsedMs);
+    }
+  }
+
   /** Get remaining uses for a slot (for HUD). Returns 0 if slot is empty. */
   getSlotUses(slotIndex: number): number {
     return this.loadout[slotIndex]?.usesRemaining ?? 0;
@@ -625,7 +709,7 @@ export class ToolSystem {
     for (const z of this.kindleZones) consider('kindle', z.remainingMs, z.dissolving);
     for (const b of this.stitchBarriers) consider('stitch', b.remainingMs, b.dissolving);
     for (const stop of this.stitchStops) consider('stitch', stop.remainingMs, false);
-    if (this.expandEffect?.phase === 'active') {
+    if (this.expandEffect) {
       consider('expand', this.expandEffect.remainingMs, false);
     }
     for (const a of this.compressAnchors) consider('compress', a.remainingMs, a.dissolving);
@@ -691,7 +775,6 @@ export class ToolSystem {
     this.expandEffect = null;
     this.compressAnchors = [];
     this.mirrorDecoys = [];
-    this.mirrorDecoyMarkers.clear();
     this.resonateStrings = [];
     this.overwriteMarks = [];
     this.combustFields = [];
@@ -731,6 +814,7 @@ export class ToolSystem {
     this.siphonEffectRemainingMs = 0;
     if (this.abyssRevealRemainingMs > 0) this.showAbyssReveal?.([], [], 0);
     this.abyssRevealRemainingMs = 0;
+    for (const episode of this.trackingEpisodes.values()) episode.echo?.destroy();
     this.trackingEpisodes.clear();
     if (this.mirrorDecoys.length > 0) this.setDecoyPosition?.(null);
     if (this.expandEffect) {
@@ -828,17 +912,14 @@ export class ToolSystem {
     this.applyControl(id, `solidify:${id}`, { movementMultiplier: 0, perceptionMultiplier: 0, suppressAttack: true, breakOnDamage: true });
     this.indicators.set(id, 'solidify', 0, false);
 
-    // 施放瞬间 + 持续期: a jagged crystal outline (棱角分明, never a smooth circle) that
-    // stays put for the freeze's duration, only breathing in alpha.
-    const rng = mulberry32(hashSeed(id));
-    const polygon = buildJaggedPolygon(14, rng);
+    // Capture the actual body; the visible trace is a material edge, not a selection shape.
     const g = this.scene.add.graphics().setDepth(26);
-    renderPolygonOutline(g, nearest.getPosition(), polygon, CONTAM_COLD, 0.6, 2);
+
 
     this.freezeEffects.push({
       enemyId: id,
+      echo: this.enemyEcho(id, 'freeze'),
       remainingMs: CONTAMINANT_DATA.solidify.toolDurationMs,
-      polygon,
       lastPos: { ...nearest.getPosition() },
       visual: g,
       dissolving: false,
@@ -859,9 +940,8 @@ export class ToolSystem {
 
         if (enemy) {
           effect.lastPos = { ...enemy.getPosition() };
-          // 结冰=零运动: outline itself never moves, only alpha breathes (1.5-2s period).
-          const breath = 0.5 + Math.sin(effect.remainingMs * 0.0035) * 0.1 + 0.1;
-          renderPolygonOutline(effect.visual, effect.lastPos, effect.polygon, CONTAM_COLD, breath, 2);
+          effect.echo?.update(effect.lastPos, 1 - effect.remainingMs / CONTAMINANT_DATA.solidify.toolDurationMs, this.getGroundVisualDepth?.(effect.lastPos.y) ?? 39);
+          effect.visual.clear();
         }
 
         if (!enemy || effect.remainingMs <= 0 || (this.hasEnemyControl && !this.hasEnemyControl(effect.enemyId, `solidify:${effect.enemyId}`))) {
@@ -871,9 +951,10 @@ export class ToolSystem {
           this.indicators.clear(effect.enemyId, 'solidify');
 
           // 结束消散: crack into blocks and shed them in 2 discrete steps, not a fade.
+          effect.echo?.destroy();
           effect.dissolving = true;
           const rng = mulberry32(hashSeed(effect.enemyId) ^ 0x9e3779b9);
-          effect.dissolveBlocks = buildGlitchBlockField(16, 6, 4, 8, rng);
+          effect.dissolveBlocks = effect.remainingMs > 0 ? buildGlitchBlockField(12, 7, 1, 2, rng) : [];
         }
         continue;
       }
@@ -908,7 +989,7 @@ export class ToolSystem {
     });
     if (!target || !commit()) return false;
     const device: DelayDevice = { hostId: target.id, position: { ...target.position }, remainingMs: def.toolDurationMs,
-      visual: this.scene.add.graphics().setDepth(10) };
+      visual: this.scene.add.graphics().setDepth(43) };
     this.delayEnvironmentHazard(target.id, this.sourceFor(device), def.toolDurationMs);
     this.delayDevices.push(device);
     return true;
@@ -918,18 +999,15 @@ export class ToolSystem {
     for (let i = this.delayDevices.length - 1; i >= 0; i--) {
       const device = this.delayDevices[i]!;
       device.remainingMs -= deltaMs;
-      if (device.remainingMs <= 0) {
+      if (device.remainingMs <= -450) {
         // Host owns the actual timer and consumes the remaining frame fraction itself.
+        // The extra 450 ms is only falling grit; it never extends the delay.
         device.visual.destroy(); this.delayDevices.splice(i, 1); continue;
       }
-      const g = device.visual; g.clear();
-      // A suspended fall of sand local to the delayed core, not a field over enemies.
-      const phase = this.elapsedMs * .0007;
-      for (let j = 0; j < 7; j++) {
-        g.fillStyle(j % 3 === 0 ? CONTAM_COLD : CONTAM_MID, .3 + .2 * Math.sin(phase + j));
-        g.fillRect(Math.round(device.position.x + ((j * 7) % 19) - 9),
-          Math.round(device.position.y - 12 + ((j * 11) % 23)), j % 2 + 1, 2);
-      }
+      const host = this.getEnvironmentTargets?.().find(target => target.id === device.hostId);
+      if (!host) { device.visual.destroy(); this.delayDevices.splice(i, 1); continue; }
+      device.position = { ...host.position };
+      drawHostRestraint(device.visual, device.position, true, device.remainingMs, this.elapsedMs);
     }
   }
 
@@ -1036,7 +1114,7 @@ export class ToolSystem {
     if (!destination || !this.reportSoundLure) return false;
     if (!commit()) return false;
     const zone: KindleZone = {
-      position: { ...destination }, radius: def.toolRangePx,
+      position: { ...destination }, throwFrom: { ...this.getPlayerPos() }, radius: def.toolRangePx,
       remainingMs: def.toolDurationMs, elapsedMs: 0, pulseAccumMs: 0,
       visual: this.scene.add.graphics().setDepth(10), dissolving: false,
     };
@@ -1051,9 +1129,12 @@ export class ToolSystem {
     const fade = Math.min(1, Math.max(0, zone.remainingMs / 500));
     const x = Math.round(zone.position.x), y = Math.round(zone.position.y);
     g.clear();
-    g.fillStyle(0x282b28, .85 * fade); g.fillRect(x - 5, y - 2, 9, 4);
-    g.fillStyle(0x69756b, .8 * fade); g.fillRect(x - 4, y - 4, 5, 2); g.fillRect(x + 2, y - 1, 3, 3);
-    g.fillStyle(CONTAM_MID, .6 * fade); g.fillRect(x - 1, y - 2, 2, 2);
+    drawToolObject(g, 'kindle', zone.position, fade);
+    if (zone.throwFrom && zone.elapsedMs < 160) {
+      const p = zone.elapsedMs / 160;
+      drawToolObject(g, 'kindle', { x: zone.throwFrom.x + (zone.position.x - zone.throwFrom.x) * p,
+        y: zone.throwFrom.y + (zone.position.y - zone.throwFrom.y) * p - Math.sin(p * Math.PI) * 10 }, .45 * (1 - p));
+    }
     const pulse = (zone.elapsedMs % CONTAMINANT_DATA.kindle.toolPulseIntervalMs) / CONTAMINANT_DATA.kindle.toolPulseIntervalMs;
     const radius = 6 + pulse * 22;
     for (let i = 0; i < 18; i++) {
@@ -1097,14 +1178,14 @@ export class ToolSystem {
     const blocks = buildGlitchBlockField(radius, tier.count, tier.sizeMin, tier.sizeMax, rng);
 
     const g = this.scene.add.graphics().setDepth(10);
-    renderGlitchBlockField(g, pos, blocks, CONTAM_DEEP, tier.alpha);
+    drawPressure(g, pos, radius, 1);
 
     this.compressAnchors.push({
       position: pos,
       radius,
       remainingMs: def.toolDurationMs,
       visual: g,
-      bracketVisual: this.scene.add.graphics().setDepth(26),
+      bracketVisual: this.scene.add.graphics().setDepth(10),
       blocks,
       dissolving: false,
       dissolve: createDissolveState(2, 80),
@@ -1145,25 +1226,15 @@ export class ToolSystem {
         }
         anchor.affectedEnemyIds = stillIn;
 
-        // "密度趋向无穷大": blocks drift toward the anchor centre then respawn at the rim.
-        for (const b of anchor.blocks) {
-          b.dx *= 0.985;
-          b.dy *= 0.985;
-          if (Math.hypot(b.dx, b.dy) < 6) {
-            const angle = Math.random() * Math.PI * 2;
-            b.dx = Math.cos(angle) * anchor.radius * 0.9;
-            b.dy = Math.sin(angle) * anchor.radius * 0.9;
-          }
-        }
-        renderGlitchBlockField(anchor.visual, anchor.position, anchor.blocks, CONTAM_DEEP, RARITY_VFX.fine.alpha);
+        drawPressure(anchor.visual, anchor.position, anchor.radius,
+          Math.min(1, anchor.remainingMs / 500));
 
-        // A4 副标示: 6x6 bracket under every enemy this anchor currently has locked.
+        // Pressure at the physical foot; leaving the radius removes it immediately.
         anchor.bracketVisual.clear();
         for (const id of anchor.affectedEnemyIds) {
           const enemy = enemies.find((e) => e.getId() === id);
-          if (!enemy) continue;
-          const ep = enemy.getPosition();
-          drawBracketMarker(anchor.bracketVisual, { x: ep.x, y: ep.y + 16 }, CONTAM_DEEP, 0.85);
+          if (!enemy || !this.canTarget(enemy)) continue;
+          drawFootDrag(anchor.bracketVisual, this.footContact(enemy), .85);
         }
 
         if (anchor.remainingMs <= 0) {
@@ -1179,7 +1250,7 @@ export class ToolSystem {
 
       const { jitter, done } = stepDissolve(anchor.dissolve, anchor.blocks, deltaMs);
       const dAnchor = { x: anchor.position.x + jitter.x, y: anchor.position.y + jitter.y };
-      renderGlitchBlockField(anchor.visual, dAnchor, anchor.blocks, CONTAM_DEEP, RARITY_VFX.fine.alpha);
+      drawPressure(anchor.visual, dAnchor, anchor.radius, done ? 0 : .2);
 
       if (done) {
         anchor.visual.destroy();
@@ -1194,32 +1265,42 @@ export class ToolSystem {
   // =========================================================================
 
   private beginTrackingEpisode(enemyId: string): void {
-    if (!this.retrogradeEquipped || this.trackingEpisodes.has(enemyId)) return;
+    if (!this.retrogradeEquipped || this.trackingEpisodes.has(enemyId)
+      || !this.loadout.some(item => item?.type === 'retrograde' && item.usesRemaining > 0)) return;
     const enemy = this.getEnemies().find(candidate => candidate.getId() === enemyId);
     if (!enemy || enemy.isTargetingLure?.() || enemy.isTargetingDecoy?.()) return;
     const visible = this.canTarget(enemy);
     this.trackingEpisodes.set(enemyId, {
       lastVisiblePosition: visible ? { ...enemy.getPosition() } : { x: 0, y: 0 },
-      hasVisiblePosition: visible, spent: false,
+      hasVisiblePosition: visible, spent: false, echo: visible ? this.enemyEcho(enemyId, 'memory') : null, sampledAt: this.elapsedMs,
     });
   }
 
   private updateTrackingEpisodes(): void {
     for (const [id, episode] of this.trackingEpisodes) {
+      if (!this.loadout.some(item => item?.type === 'retrograde' && item.stage === 'tool' && item.usesRemaining > 0)) {
+        for (const remaining of this.trackingEpisodes.values()) remaining.echo?.destroy();
+        this.trackingEpisodes.clear();
+        return; // Generated marks own their full lifetime; no further snapshots can be used.
+      }
       if (episode.spent) continue;
       const enemy = this.getEnemies().find(candidate => candidate.getId() === id);
-      if (!enemy || this.isTargetAlive?.(id) === false) { this.trackingEpisodes.delete(id); continue; }
+      if (!enemy || this.isTargetAlive?.(id) === false) { episode.echo?.destroy(); this.trackingEpisodes.delete(id); continue; }
       if (this.canTarget(enemy)) {
         const position = enemy.getPosition();
         episode.lastVisiblePosition.x = position.x;
         episode.lastVisiblePosition.y = position.y;
         episode.hasVisiblePosition = true;
+        if (this.elapsedMs - (episode.sampledAt ?? -Infinity) >= 100) {
+          episode.echo?.destroy(); episode.echo = this.enemyEcho(id, 'memory'); episode.sampledAt = this.elapsedMs;
+        }
       } else if (episode.hasVisiblePosition && this.commitPassiveUse('retrograde')) {
         episode.spent = true;
-        this.retrogradeMarks.push({ enemyId: id, position: { ...episode.lastVisiblePosition },
+        this.retrogradeMarks.push({ enemyId: id, echo: episode.echo, position: { ...episode.lastVisiblePosition },
           remainingMs: CONTAMINANT_DATA.retrograde.toolDurationMs,
           visual: this.scene.add.graphics().setDepth(RETROGRADE_VISUAL_DEPTH),
           collapsing: false, collapseFade: createStepFade(2, 90) });
+        episode.echo = null;
       }
     }
   }
@@ -1228,18 +1309,8 @@ export class ToolSystem {
     for (let i = this.retrogradeMarks.length - 1; i >= 0; i--) {
       const mark = this.retrogradeMarks[i]!;
       mark.remainingMs -= deltaMs;
-      if (mark.remainingMs <= 0) { mark.visual.destroy(); this.retrogradeMarks.splice(i, 1); continue; }
-      const alpha = .45 * Math.min(1, mark.remainingMs / 1000);
-      const x = Math.round(mark.position.x), y = Math.round(mark.position.y);
-      // A broken, ground-level memory: never draw a route or query the target's hidden pose.
-      mark.visual.clear();
-      mark.visual.fillStyle(GHOST_COLOR, alpha);
-      mark.visual.fillRect(x - 5, y - 1, 3, 2);
-      mark.visual.fillRect(x + 2, y + 1, 4, 2);
-      mark.visual.fillStyle(CONTAM_MID, alpha * .75);
-      mark.visual.fillRect(x - 3, y - 5, 2, 2);
-      mark.visual.fillRect(x + 1, y - 8, 2, 3);
-      mark.visual.fillRect(x - 1, y - 12, 3, 2);
+      if (mark.remainingMs <= 0) { mark.echo?.destroy(); mark.visual.destroy(); this.retrogradeMarks.splice(i, 1); continue; }
+      mark.echo?.update(mark.position, 1 - mark.remainingMs / CONTAMINANT_DATA.retrograde.toolDurationMs, RETROGRADE_VISUAL_DEPTH);
     }
   }
 
@@ -1340,6 +1411,7 @@ export class ToolSystem {
     const enemies = this.getEnemies();
     for (let i = this.stitchBarriers.length - 1; i >= 0; i--) {
       const barrier = this.stitchBarriers[i]!;
+      barrier.tensionMs = Math.max(0, (barrier.tensionMs ?? 0) - deltaMs);
       if (!barrier.dissolving) {
         barrier.remainingMs -= deltaMs;
         if (barrier.remainingMs > 0) for (const enemy of enemies) {
@@ -1348,6 +1420,7 @@ export class ToolSystem {
           if (previous && !barrier.affectedEnemyIds.has(id) && (this.isTargetAlive?.(id) ?? true)
             && crossesToolLine(previous, position, barrier)) {
             barrier.affectedEnemyIds.add(id);
+            barrier.tensionMs = 320;
             const stop = { enemyId: id, remainingMs: CONTAMINANT_DATA.stitch.toolStopMs, source: '' };
             stop.source = this.sourceFor(stop);
             this.stitchStops.push(stop);
@@ -1356,7 +1429,11 @@ export class ToolSystem {
           if (previous) { previous.x = position.x; previous.y = position.y; }
           else barrier.previousPositions.set(id, { ...position });
         }
-        this.drawStitchLine(barrier.visual, barrier.pointA, barrier.pointB, 1);
+        drawSeam(barrier.visual, barrier.pointA, barrier.pointB, 1, (barrier.tensionMs ?? 0) / 320);
+        for (const stop of this.stitchStops) {
+          const enemy = enemies.find(candidate => candidate.getId() === stop.enemyId);
+          if (enemy && this.canTarget(enemy)) drawFootDrag(barrier.visual, this.footContact(enemy), Math.min(1, stop.remainingMs / 200));
+        }
         if (barrier.remainingMs <= 0) barrier.dissolving = true;
         continue;
       }
@@ -1366,40 +1443,9 @@ export class ToolSystem {
     }
   }
 
-  /** "缝隙光" 语法: a static line with perpendicular tick marks every 12-16px (针脚),
-   * not a glowing laser - stitch is a physical seam, not an energy beam. */
+  /** Same fibers persist through release, with their opacity falling away. */
   private drawStitchLine(g: Phaser.GameObjects.Graphics, a: Vector2, b: Vector2, alphaMult: number): void {
-    g.clear();
-    g.lineStyle(2, CONTAM_MID, 0.55 * alphaMult);
-    g.beginPath();
-    g.moveTo(a.x, a.y);
-    g.lineTo(b.x, b.y);
-    g.strokePath();
-
-    const dx = b.x - a.x;
-    const dy = b.y - a.y;
-    const len = Math.hypot(dx, dy) || 1;
-    const ux = dx / len;
-    const uy = dy / len;
-    const nx = -uy;
-    const ny = ux;
-    const spacing = 14;
-    const stitchCount = Math.max(0, Math.floor(len / spacing));
-    g.lineStyle(1, CONTAM_MID, 0.6 * alphaMult);
-    for (let i = 1; i <= stitchCount; i++) {
-      const t = (i * spacing) / len;
-      if (t >= 1) break;
-      const px = a.x + dx * t;
-      const py = a.y + dy * t;
-      g.beginPath();
-      g.moveTo(px - nx * 2, py - ny * 2);
-      g.lineTo(px + nx * 2, py + ny * 2);
-      g.strokePath();
-    }
-
-    g.fillStyle(CONTAM_MID, 0.7 * alphaMult);
-    g.fillRect(a.x - 2, a.y - 2, 4, 4);
-    g.fillRect(b.x - 2, b.y - 2, 4, 4);
+    drawSeam(g, a, b, alphaMult);
   }
 
   private applyResonate(commit: () => boolean): boolean {
@@ -1587,10 +1633,10 @@ export class ToolSystem {
     const def = CONTAMINANT_DATA.mirror;
 
     const g = this.scene.add.graphics().setDepth(24);
-    // 施放瞬间: 2-3 frame "mirror-flicker" - alternating hard-edge flashes before settling
-    // into the decoy, reading as "this is not the real body".
-    this.drawMirrorDecoy(g, pos, 0.9);
+
     const decoy: MirrorDecoy = {
+      echo: this.playerEcho('mirror'),
+      groundY: this.getPlayerGroundY?.() ?? pos.y,
       position: pos,
       remainingMs: def.toolDurationMs,
       visual: g,
@@ -1639,7 +1685,8 @@ export class ToolSystem {
         // "被敌人接触碎裂" - explodes into 4-6 blocks and clears fast (150ms), distinct
         // from the slower 2-step fade a natural expiry gets below.
         const rng = mulberry32(hashSeed(`mirror-shatter-${this.scene.time.now}`));
-        decoy.shatterBlocks = buildGlitchBlockField(14, 5, 4, 8, rng);
+        decoy.echo?.destroy();
+        decoy.shatterBlocks = buildGlitchBlockField(13, 8, 1, 3, rng);
         decoy.shatterDissolve = createDissolveState(2, 75);
         decoy.shattering = true;
         this.setVisualDecoy?.(this.sourceFor(decoy), null);
@@ -1648,14 +1695,14 @@ export class ToolSystem {
 
       if (decoy.remainingMs <= 0) {
         this.setVisualDecoy?.(this.sourceFor(decoy), null);
-        // Normal expiry: 2-step discrete fade of the rect outline (not a shatter).
+        decoy.echo?.destroy();
+        // The real-pose imprint has already faded over the final part of its lifetime.
         decoy.visual.destroy();
         this.mirrorDecoys.splice(i, 1);
         continue;
       }
 
-      const pulse = 0.55 + Math.sin(decoy.remainingMs * 0.006) * 0.3;
-      this.drawMirrorDecoy(decoy.visual, decoy.position, pulse);
+      decoy.echo?.update(decoy.position, 1 - decoy.remainingMs / CONTAMINANT_DATA.mirror.toolDurationMs, this.getGroundVisualDepth?.(decoy.groundY ?? decoy.position.y) ?? 29);
     }
 
     // Point AISystem at whichever decoy is newest/still alive; clear once none remain.
@@ -1664,51 +1711,6 @@ export class ToolSystem {
       this.setDecoyPosition?.(active?.position ?? null);
     }
 
-    this.updateMirrorDecoyMarkers();
-  }
-
-  /**
-   * A4 副标示: draws the 6x6px bracket marker on every enemy `AISystem` currently reports
-   * as sighting the decoy (`EnemyView.isTargetingDecoy()`) instead of the real player -
-   * "视野内敌人优先对镜像产生怀疑,忽略真身方向" made visible. Gated on a live (non-
-   * shattering) decoy existing so a marker never outlives the decoy it points at, even if
-   * an enemy's own targeting flag is momentarily stale (it only updates on a fresh
-   * sighting tick - see `state-machine.ts`'s `sightTargetPos()`).
-   */
-  private updateMirrorDecoyMarkers(): void {
-    const decoyActive = this.mirrorDecoys.some((d) => !d.shattering);
-    const enemies = this.getEnemies();
-    const targetingIds = new Set(
-      decoyActive ? enemies.filter((e) => e.isTargetingDecoy?.()).map((e) => e.getId()) : [],
-    );
-
-    for (const [id, marker] of this.mirrorDecoyMarkers) {
-      if (!targetingIds.has(id)) {
-        marker.visual.destroy();
-        this.mirrorDecoyMarkers.delete(id);
-      }
-    }
-
-    for (const enemy of enemies) {
-      const id = enemy.getId();
-      if (!targetingIds.has(id)) continue;
-      let marker = this.mirrorDecoyMarkers.get(id);
-      if (!marker) {
-        marker = { visual: this.scene.add.graphics().setDepth(26) };
-        this.mirrorDecoyMarkers.set(id, marker);
-      }
-      const ep = enemy.getPosition();
-      marker.visual.clear();
-      drawBracketMarker(marker.visual, { x: ep.x, y: ep.y + 16 }, CONTAM_BRIGHT, 0.85);
-    }
-  }
-
-  private drawMirrorDecoy(g: Phaser.GameObjects.Graphics, pos: Vector2, alpha: number): void {
-    g.clear();
-    g.lineStyle(1.5, CONTAM_BRIGHT, alpha);
-    g.strokeRect(pos.x - 9, pos.y - 9, 18, 18);
-    g.fillStyle(CONTAM_BRIGHT, alpha * 0.22);
-    g.fillRect(pos.x - 9, pos.y - 9, 18, 18);
   }
 
   // =========================================================================
@@ -1727,6 +1729,7 @@ export class ToolSystem {
       remainingMs: duration,
       stiffnessMs: duration,
       phase: 'stiffness',
+      echo: this.playerEcho('phase'),
       visual: this.scene.add.graphics().setDepth(30),
       jitterPhase: 0,
     };
@@ -1738,18 +1741,12 @@ export class ToolSystem {
     const effect = this.expandEffect;
     const pos = this.getPlayerPos();
 
-    // Stiffness phase: one brief "re-materialising" flash, then nothing (no residue).
     effect.remainingMs -= deltaMs;
-    if (effect.remainingMs > effect.stiffnessMs - 90) {
-      effect.visual.clear();
-      effect.visual.lineStyle(1.5, CONTAM_COLD, 0.8);
-      effect.visual.strokeRect(pos.x - 10, pos.y - 10, 20, 20);
-    } else if (effect.visual.alpha !== 0) {
-      effect.visual.clear();
-    }
+    effect.echo?.update(pos, 1 - effect.remainingMs / effect.stiffnessMs, (this.getPlayerSprite?.()?.depth ?? 38) + .2);
 
     if (effect.remainingMs <= 0) {
       this.setPlayerInput?.(true);
+      effect.echo?.destroy();
       effect.visual.destroy();
       this.expandEffect = null;
     }
@@ -1818,8 +1815,8 @@ export class ToolSystem {
     const def = CONTAMINANT_DATA.abyss;
     if (!this.getRevealSnapshot || !this.showAbyssReveal || this.abyssRevealRemainingMs > 0) return false;
     const snapshot = this.getRevealSnapshot(def.toolRangePx);
-    if (snapshot.enemyPositions.length + snapshot.nodePositions.length === 0 || !commit()) return false;
-    this.showAbyssReveal(snapshot.enemyPositions.map(p => ({ ...p })), snapshot.nodePositions.map(p => ({ ...p })), def.toolDurationMs);
+    if (snapshot.enemyPositions.length + snapshot.nodePositions.length + (snapshot.corePositions?.length ?? 0) === 0 || !commit()) return false;
+    this.showAbyssReveal(snapshot.enemyPositions.map(p => ({ ...p })), snapshot.nodePositions.map(p => ({ ...p })), def.toolDurationMs, snapshot.corePositions?.map(p => ({ ...p })));
     this.abyssRevealRemainingMs = def.toolDurationMs;
 
     // 施放瞬间: "孔径闭合" - blocks collapse inward and vanish, the one effect in the
@@ -1828,7 +1825,7 @@ export class ToolSystem {
     const rng = mulberry32(hashSeed(`abyss-${this.scene.time.now}`));
     const blocks = buildGlitchBlockField(28, 5, 6, 10, rng);
     const g = this.scene.add.graphics().setDepth(15);
-    this.abyssBursts.push({ position: pos, remainingMs: 150, visual: g, blocks });
+    this.abyssBursts.push({ position: pos, remainingMs: 240, visual: g, blocks, echo: this.playerEcho('memory') });
 
     return true;
   }
@@ -1837,16 +1834,9 @@ export class ToolSystem {
     for (let i = this.abyssBursts.length - 1; i >= 0; i--) {
       const burst = this.abyssBursts[i]!;
       burst.remainingMs -= deltaMs;
-      const frac = Phaser.Math.Clamp(1 - burst.remainingMs / 150, 0, 1);
-      for (const b of burst.blocks) {
-        b.alphaMult = 1 - frac;
-      }
-      // Contract toward the anchor as the burst plays out.
-      const shrink = 1 - frac;
-      const shrunk = burst.blocks.map((b) => ({ ...b, dx: b.dx * shrink, dy: b.dy * shrink }));
-      renderGlitchBlockField(burst.visual, burst.position, shrunk, CONTAM_PEAK, 0.3);
-
+      burst.echo?.update(burst.position, 1 - burst.remainingMs / 240, 39);
       if (burst.remainingMs <= 0) {
+        burst.echo?.destroy();
         burst.visual.destroy();
         this.abyssBursts.splice(i, 1);
       }
@@ -1861,10 +1851,21 @@ export class ToolSystem {
   private updateSiphonEffect(deltaMs: number): void {
     if (this.siphonEffectRemainingMs <= 0) return;
     this.siphonEffectRemainingMs = Math.max(0, this.siphonEffectRemainingMs - deltaMs);
+    this.passiveVisual ??= this.scene.add.graphics().setDepth(39);
+    this.passiveVisual.clear();
+    const elapsed = CONTAMINANT_DATA.siphon.toolDurationMs - this.siphonEffectRemainingMs;
+    if (elapsed < 650 && this.siphonEffectRemainingMs > 0) {
+      const p = this.getPlayerPos();
+      const inset = Math.round(3 * elapsed / 650);
+      this.passiveVisual.fillStyle(0x859887, .7 * (1 - elapsed / 650));
+      // A brief closing material edge, not a heal or a damage-absorbing bubble.
+      this.passiveVisual.fillRect(Math.round(p.x) - 8 + inset, Math.round(p.y) - 10, 1, 5);
+      this.passiveVisual.fillRect(Math.round(p.x) + 7 - inset, Math.round(p.y) - 6, 1, 4);
+    }
   }
 
   // =========================================================================
-  // Combust: suppress one visible, already-released environmental hazard.
+  // Combust: suppress one visible, active environmental source.
   // =========================================================================
 
   private applyCombust(commit: () => boolean): boolean {
@@ -1873,7 +1874,7 @@ export class ToolSystem {
     const origin = this.getPlayerPos();
     const nearest = selectNearestVisibleTarget(origin, this.getEnvironmentTargets(), {
       getPosition: host => host.position,
-      isAlive: host => host.hazardReleased && host.canSuppressReleasedHazard && host.suppressionRemainingMs <= 0,
+      isAlive: host => host.canSuppressHazard && host.suppressionRemainingMs <= 0 && !host.recoveryPending && !(host.delayRemainingMs > 0),
       isVisible: host => this.isTargetVisible?.(host.position) ?? true,
       hasLineOfSight: (from, to) => this.hasTargetLineOfSight?.(from, to) ?? true,
       maxDistance: def.toolRangePx,
@@ -1881,7 +1882,7 @@ export class ToolSystem {
     if (!nearest || !commit()) return false;
     const field: CombustField = {
       hostId: nearest.id, position: { ...nearest.position }, remainingMs: def.toolDurationMs,
-      visual: this.scene.add.graphics().setDepth(11),
+      visual: this.scene.add.graphics().setDepth(43),
       blocks: buildGlitchBlockField(15, 9, 2, 5, mulberry32(hashSeed(nearest.id))),
       dissolving: false, dissolve: createDissolveState(3, 90),
     };
@@ -1897,10 +1898,10 @@ export class ToolSystem {
       if (field.remainingMs <= 0) {
         field.visual.destroy(); this.combustFields.splice(i, 1); continue;
       }
-      const alpha = .65 * Math.min(1, field.remainingMs / 750);
-      renderGlitchBlockField(field.visual, field.position, field.blocks, 0x101714, alpha);
-      field.visual.fillStyle(CONTAM_MID, alpha * .8);
-      field.visual.fillRect(Math.round(field.position.x) - 2, Math.round(field.position.y) - 3, 2, 1);
+      const host = this.getEnvironmentTargets?.().find(target => target.id === field.hostId);
+      if (!host) { field.visual.destroy(); this.combustFields.splice(i, 1); continue; }
+      field.position = { ...host.position };
+      drawHostRestraint(field.visual, field.position, false, field.remainingMs, this.elapsedMs);
     }
   }
 
@@ -1990,14 +1991,16 @@ export class ToolSystem {
   }
 
   private cleanupVisuals(): void {
-    for (const effect of this.freezeEffects) effect.visual.destroy();
+    this.passiveVisual?.destroy(); this.passiveVisual = null;
+    for (const effect of this.freezeEffects) { effect.echo?.destroy(); effect.visual.destroy(); }
     for (const device of this.delayDevices) device.visual.destroy();
     for (const zone of this.erodeZones) zone.visual.destroy();
-    for (const mark of this.retrogradeMarks) mark.visual.destroy();
+    for (const mark of this.retrogradeMarks) { mark.echo?.destroy(); mark.visual.destroy(); }
     for (const zone of this.kindleZones) zone.visual.destroy();
     for (const barrier of this.stitchBarriers) barrier.visual.destroy();
     this.resonatePendingVisual?.destroy();
     if (this.expandEffect) {
+      this.expandEffect.echo?.destroy();
       this.expandEffect.visual.destroy();
       // No-residue guarantee (spec) also covers the "run reset/scene shutdown mid-effect"
       // path - not just expand's own natural expiry above.
@@ -2008,12 +2011,11 @@ export class ToolSystem {
       anchor.visual.destroy();
       anchor.bracketVisual.destroy();
     }
-    for (const decoy of this.mirrorDecoys) decoy.visual.destroy();
-    for (const marker of this.mirrorDecoyMarkers.values()) marker.visual.destroy();
+    for (const decoy of this.mirrorDecoys) { decoy.echo?.destroy(); decoy.visual.destroy(); }
     for (const tripwire of this.resonateStrings) tripwire.visual.destroy();
     for (const mark of this.overwriteMarks) mark.bracketVisual.destroy();
     for (const field of this.combustFields) field.visual.destroy();
     for (const stunned of this.stunnedEnemies) stunned.bracketVisual?.destroy();
-    for (const burst of this.abyssBursts) burst.visual.destroy();
+    for (const burst of this.abyssBursts) { burst.echo?.destroy(); burst.visual.destroy(); }
   }
 }

@@ -315,7 +315,9 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | LootSearchPresentation | src/systems/loot-search-presentation.ts | 统一残骸堆外观 + 翻找微动 + 揭晓粒子。堆色四槽查表（DEC-110 v2）：主体按 fragmentTypeId 查残骸格，渍缝 stainKey，底影 void-black，高光 metal-light。墙模拟 RGB 量化已退役。每碎片 3 个排布变体预生成 | ensureLootSearchTextures / createSearchObjectVisual / derivePileSlots | 已实现（迭代 10；I10-HOTFIX-1 配色 v2） |
 | LootSearchHud | src/ui/dom/loot-search-hud.ts | `[E] 翻找` / `[E] 撤离` 提示、底部装置读数条、残渣 toast-inline。挂调用方 overlay 根 | create(overlayRoot, opts?), setPrompt, setChannel, flashResidue | 已实现（迭代 10） |
 | DefenseEngine | src/systems/defense-engine.ts | 冲击结算时计算各防御 slot 的效果（减伤/薪柴增益/稳定度变化/副作用等），纯函数无 Phaser 依赖；`solidifyCounters` 是唯一跨冲击持久的内部状态（不进存档） | applyDefenseEffects(baseDamagePerModule, defenseSlots, context), resetDefenseEngine() | 已实现（Slice 4，`applyGenericDefense()` 内 6 处机制标注 `handled externally`/`future iteration` 待 Slice 5 T3 接线） |
-| ToolSystem | src/systems/tool-system.ts | 出击主动/被动工具使用与效果管理（switch + 私有方法，非基类继承），产出 `ToolDebuffs` 描述符，由场景层在 AI update 之后应用到敌人/玩家 | create(scene, loadout, getPlayerPos, getEnemies, options?), useSlot(slotIndex), update(deltaMs), getDebuffs(), getSlotUses(slotIndex), getSlotType(slotIndex), getActiveTimedEffects(), notifyEnemySuspicious(enemyId), notifyProximityAvoid(), reset(), destroy() | 已实现 15 种。Slice 6 C4：abyss 经 `options.getKindlingPositions` 读本次薪柴；迭代 10 改口为全部未拾取可翻找对象（同一菱形） |
+| ToolSystem | src/systems/tool-system.ts | 十三族非武器污染物的消费前验证、来源隔离控制、有限效果和VFX寿命；旧族仅兼容 | create, useSlot, getLastUseFailure, update, syncHostVisuals, syncBodyVisuals, getActiveTimedEffects, notifyEnemySuspicious, notifyProximityAvoid, reset, destroy | 迭代20：AI/Combat/Host真实接线，最后一次完整；环境视觉跟随当帧核心；背光快照区分移动体/核心/物资 |
+| ToolBodyEcho | src/systems/tool-body-echo.ts | 真实姿态的独立像素快照；留影、记忆、凝滞、实体化 | captureBodyEcho → update / destroy | 三层缓存、源透明度/裁切/origin/scale保留、销毁幂等；不读失视目标实时姿态 |
+| ToolGroundVfx | src/systems/tool-ground-vfx.ts | 技能物件、压痕、纤维、砂灰与压制材质 | drawToolObject, drawPressure, drawFootDrag, drawSeam, drawHostRestraint, muteSuppressedMaterial | 视觉消费权威状态，不产生机制；具体语言见tool-vfx-spec |
 | GrowthSystem | src/systems/growth-system.ts | 永久改造购买、费用计算与效果聚合，module-level singleton | getLevel(id), getMaxLevel(id), getCost(id), canAfford(id, reserve), purchase(id), getModifiers(), getState(), loadState(), reset() | 已实现（Slice 3，当前 3 项改造） |
 | TideSystem | src/systems/tide-system.ts | 潮汐冲击强度状态机（Rise→Crest→Ebb→下一 Tide），替代线性递增，module-level singleton | getState(), getCurrentIntensity(), isHighTide(), advanceCycle(), loadState(), reset() | 已实现（Slice 3） |
 | ImpactSystem | src/systems/impact-system.ts | 冲击伤害计算与结算（重点目标 + 其余承血模块均分残差、接入 DefenseEngine、写回 GameState），预告在全部三模块中抽 | getForecastDisplay(), getForecastLookahead(), resetForecastState(), run(defenseSlots?), generateForecast() | 已实现（Slice 2-4；Slice 7 三模块抽目标 + DefenseContext 三键） |
@@ -995,7 +997,7 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 
 - `src/systems/enemy-control-state.ts`：敌人拥有的来源隔离控制值，AI写入与投影，Combat只读攻击资格；真实正伤害经窄接口通知解除可打破来源，不直接写FSM。
 - `src/systems/tool-targeting.ts`：纯函数最近可见目标选择与单格实墙连续swept-AABB安全落点，供正式Rift与战斗试验场共用。
-- `src/systems/environment-hazard-control.ts`：Host拥有的来源计时与恢复预兆状态，无伤害/库存权限。Host公开目标查询、已释放危险压制及未释放危险推迟；正式异物消费接入属于后续批次。
+- `src/systems/environment-hazard-control.ts`：Host拥有的来源计时与恢复预兆状态，无伤害/库存权限。Host公开活动污染源压制及未释放危险推迟；两件正式异物已接消费。压制资格包括各自然相位，排除恢复等待/已压制/仍暂缓的源，查询与执行共用校验。
 - `ToolSystem`拥有区域实例source、听觉遭遇与已回收节点记录；场景注入可见性、共享LOS、存活查询与安全位移。定向目标不再无条件遍历全图命中。
 - `volume-presence` / `dust-flow`拆分phaseElapsedMs（危险预兆/释放）与elapsedMs（流动），保持模型与真实危区共用同一相位。
 
@@ -1018,3 +1020,12 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 - GameState持有一次性repairBonusHp；SaveManager.allocateToModule将真实修复与扣薪柴/额度一同保存，失败全部回滚。ImpactSystem只在实际供奉冲击后挣得下一轮真实预告，保留旧已承诺记录。
 - DefenseEngine输出13族防御反应，转移守恒/不击毁接收装置；逐槽整数挡下对齐模块最终伤害，转移单列，冲击后修复单列。
 - 完整验证索引见`docs/qa/iteration-20-final.md`；独立审查`iteration-20-final-audit.md`。世界效果和用户体验的最终批准仍由用户作出。
+
+
+### 迭代20：敌人承受技能反馈与描述性名称
+
+`ToolSystem.getEnemyRestraintPose`只读聚合实际仍生效的压力/结线来源。RiftScene与CombatLabScene将投影传给同一个`attachAnimatedModel`；`RestraintReaction`只负责身体入效顿挫、持续沉降和退出回稳，与HP、物理、感知和攻击时钟无写耦合，真实HitReaction独立叠加。六类生产地面基底共用此入口，迷雾可见性仍由场景提供。
+
+物件显示名由`data/contaminants.csv`生成，供奉态/工具态同名，内部ID、品质、实例余次与迁移不变。正文和界面使用完整描述性短语，旧验收证据保留拍摄时名称。
+
+单薄墙安全落点指一格厚的墙面；正交横穿时可覆盖同墙面相邻砖块，避免在砖缝处无理由失败。第二层墙、斜角第二障碍、VOID及身体不净空仍由连续swept-AABB拒绝。试验场在左侧增加单格厚连续墙供真实按键验证。

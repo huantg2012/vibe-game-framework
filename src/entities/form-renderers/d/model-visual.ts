@@ -1,4 +1,5 @@
 import { HitReaction, observeVisualHits } from '@/entities/hit-reaction';
+import { RestraintReaction } from '@/entities/restraint-reaction';
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import { applyFormVisibility, type FormAttachContext, type FormVisual, type FormVisualPose } from '../form-renderer';
 import type { PaintBuf } from './genome/buffer';
@@ -34,6 +35,7 @@ export function attachAnimatedModel(ctx: FormAttachContext, model: AnimatedModel
   const context = texture.getContext();
   const pixels = context.createImageData(canvas.w, canvas.h);
   const reaction = new HitReaction();
+  const restraint = new RestraintReaction();
   const stopHits = ctx.subjectId ? observeVisualHits(ctx.subjectId, reaction.receive) : () => {};
   const clock = new ModelAnimationClock(model.walkCycleMs, model.stridePixels);
   const cache = new Map<string, Uint8ClampedArray>();
@@ -58,8 +60,12 @@ export function attachAnimatedModel(ctx: FormAttachContext, model: AnimatedModel
         receivedActivity = true;
       } else restAmount += Math.sign(targetRest - restAmount) * Math.min(Math.abs(targetRest - restAmount), step);
       const hit = reaction.advance(pose.deltaMs);
-      image.setPosition(pose.x + hit.x, pose.y + hit.y);
-      image.setScale((ctx.displayScale ?? 1) * hit.scaleX, (ctx.displayScale ?? 1) * hit.scaleY);
+      const held = restraint.advance(pose.deltaMs, pose.restraint);
+      const scale = ctx.displayScale ?? 1;
+      // Keep the ground contact fixed while the body's weight settles. Real strikes
+      // retain their independent recoil; restraint never interrupts an attack pose.
+      image.setPosition(pose.x + hit.x, pose.y + hit.y + 6 * scale * (1 - held.scaleY));
+      image.setScale(scale * hit.scaleX * held.scaleX, scale * hit.scaleY * held.scaleY);
       applyFormVisibility(image, pose.visibility);
       if (pose.visibility <= 0) return;
       const sample = Math.min(29, Math.floor(frame.progress * 30));

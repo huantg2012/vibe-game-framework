@@ -20,8 +20,8 @@ const baselineUses: Partial<Record<ContaminantType, number>> = {
   solidify: 5, scatter: 5, retrograde: 5, muffle: 5, expand: 3, mirror: 4, kindle: 5, combust: 3, delay: 4, siphon: 5, stitch: 4, compress: 4, abyss: 3,
 };
 const stableNames: Partial<Record<ContaminantType, string>> = {
-  solidify: '冷结块', scatter: '重影片', retrograde: '返刻片', muffle: '缄口布',
-  expand: '缺口石', mirror: '留影玻璃', kindle: '复声壳', combust: '余烬核', delay: '迟落砂', siphon: '附生壳', stitch: '错结线', compress: '坠手石', abyss: '背光珠',
+  solidify: '凝滞的石块', scatter: '重影碎片', retrograde: '记忆碎片', muffle: '消声的旧布',
+  expand: '带缺口的石头', mirror: '留影玻璃', kindle: '回声空壳', combust: '冷却的余烬', delay: '不落的砂砾', siphon: '附着的空壳', stitch: '打结的细线', compress: '沉重的石块', abyss: '映出别处的珠子',
 };
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 let checks = 0;

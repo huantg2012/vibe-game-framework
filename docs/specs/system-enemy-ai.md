@@ -757,3 +757,7 @@ interface EnemyView {
 - [ ] 改写体沿用渗透体 75 HP 三刀不破坏「战斗是止损」。若打起来反而更便宜，回 combat，本 Slice 不先改。
 
 Slice 1 的 escalate（听觉是否看 `isMoving`、接敌分工、R4、事件降级、suspicious 不计混乱值）**已关闭**，本 Slice 不重开、不问人。覆盖体不做。
+
+## 迭代20：消声的旧布接管原始听觉
+
+PATROL/RETURN中，无视觉、无待处理真实伤害、无外报噪声而有近距/连续听觉时，先向ToolSystem请求接管本次听觉。只有消费事务成功或已有连续保护事件仍有效，才把本tick听觉Hit/Rate置零，再执行识别累计和改写体警戒推进。不能先累计再在怀疑入口返回；否则700ms连续听觉会绕过。真实视觉、受伤、外报suspicious/alert与诱饵声仍走原优先级。独立回归`check-muffle-live-perception.ts`覆盖两类敌人、末次、混合刺激与保存失败。

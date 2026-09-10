@@ -52,7 +52,7 @@ export interface SingleWallLandingInput {
 interface RayInterval { enter: number; exit: number }
 
 /**
- * Finds the first safe body-centre position beyond exactly one solid tile.
+ * Finds the first safe body-centre position beyond one tile of wall thickness.
  * Uses continuous swept AABB checks, so shallow angles cannot tunnel through a
  * second wall/VOID between sampling steps. Only intended for activation/preview,
  * not for every entity's movement update. No physics state or charges are changed.
@@ -116,6 +116,11 @@ export function findSingleWallLanding(input: SingleWallLandingInput): Vector2 | 
   for (let row = sweepMinRow; row <= sweepMaxRow; row++) {
     for (let col = sweepMinCol; col <= sweepMaxCol; col++) {
       if ((col === wallCol && row === wallRow) || grid.isWalkable(col, row)) continue;
+      // Orthogonal passage crosses a wall plane, not an individual brick. The
+      // body may straddle a mortar seam without adding a second wall thickness.
+      const samePlane = (Math.abs(dy) < 1e-10 && col === wallCol)
+        || (Math.abs(dx) < 1e-10 && row === wallRow);
+      if (samePlane && input.isPhaseableWall(col, row)) continue;
       if (intersectRayBox(origin, dx, dy, col * size - halfW + epsilon, row * size - halfH + epsilon,
         (col + 1) * size + halfW - epsilon, (row + 1) * size + halfH - epsilon, interval)
         && interval.enter < travel && interval.exit > 0) return null;
@@ -187,7 +192,7 @@ export function findSoundLureLanding(
 }
 
 export interface ToolLine { readonly pointA: Vector2; readonly pointB: Vector2 }
-export interface ToolRevealSnapshot { readonly enemyPositions: Vector2[]; readonly nodePositions: Vector2[] }
+export interface ToolRevealSnapshot { readonly enemyPositions: Vector2[]; readonly nodePositions: Vector2[]; readonly corePositions?: Vector2[] }
 
 /** Entire physical seam must lie on floor and be visible from its owner at placement. */
 export function findStitchPlacement(
@@ -243,6 +248,7 @@ export function crossesToolLine(previous: Readonly<Vector2>, current: Readonly<V
 export function collectToolRevealSnapshot(
   origin: Readonly<Vector2>, range: number, grid: ToolWalkGrid,
   enemyPositions: readonly Readonly<Vector2>[], nodePositions: readonly Readonly<Vector2>[],
+  corePositions?: readonly Readonly<Vector2>[],
 ): ToolRevealSnapshot {
   const empty: ToolRevealSnapshot = { enemyPositions: [], nodePositions: [] };
   if (!finitePoint(origin) || !Number.isFinite(range) || range <= 0 || grid.tileSize <= 0) return empty;
@@ -265,5 +271,6 @@ export function collectToolRevealSnapshot(
     const x = Math.floor(p.x / grid.tileSize), y = Math.floor(p.y / grid.tileSize);
     return x >= 0 && y >= 0 && x < grid.cols && y < grid.rows && costs.has(y * grid.cols + x);
   }).map(p => ({ x: p.x, y: p.y }));
-  return { enemyPositions: filter(enemyPositions), nodePositions: filter(nodePositions) };
+  return { enemyPositions: filter(enemyPositions), nodePositions: filter(nodePositions),
+    ...(corePositions ? { corePositions: filter(corePositions) } : {}) };
 }

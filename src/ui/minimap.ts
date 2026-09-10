@@ -29,14 +29,11 @@ const EXPLORED_FLOOR = '#151a1e';
 const EXPLORED_WALL = '#4a4e55';
 const PLAYER_COLOR = '#c4873a';
 const EXTRACTION_COLOR = '#b0fff5';
-const ABYSS_ENEMY_COLOR = '#7fffee';
+const ABYSS_ENEMY_COLOR = '#9db5a8';
 const ABYSS_NODE_COLOR = '#1aad96';
 
-/**
- * abyss tool (`docs/art/tool-vfx-spec.md` A5 族群H): "地图上所有敌人与可翻找物位置以标记
- * 显示(含视野外)". Enemies stay 3×3 squares; nodes are a 3px diamond in a darker
- * same-family teal so the two marks are not the same shape.
- */
+/** Bounded, stale positions: mobile bodies are solid, cores hollow, loot diamond-shaped.
+ * Brightness ages with the captured record; none of these marks reads live positions. */
 const ABYSS_DOT_ALPHA_FLOOR = 0.30;
 const ABYSS_FLICKER_WINDOW_MS = 1000;
 const ABYSS_FLICKER_PERIOD_MS = 180;
@@ -59,6 +56,7 @@ export class Minimap {
 
   /** Slice 5 abyss tool (T1). Empty/zero when no reveal is active. */
   private abyssEnemyPositions: readonly Vector2[] = [];
+  private abyssCorePositions: readonly Vector2[] = [];
   private abyssNodePositions: readonly Vector2[] = [];
   private abyssRemainingMs = 0;
   /** Captured once per reveal so brightness decay (below) has a stable denominator even
@@ -134,6 +132,7 @@ export class Minimap {
       this.abyssRemainingMs -= deltaMs;
       if (this.abyssRemainingMs <= 0) {
         this.abyssRemainingMs = 0;
+        this.abyssCorePositions = [];
         this.abyssEnemyPositions = [];
         this.abyssNodePositions = [];
       }
@@ -152,7 +151,9 @@ export class Minimap {
     enemyPositions: readonly Vector2[],
     nodePositions: readonly Vector2[],
     durationMs: number,
+    corePositions: readonly Vector2[] = [],
   ): void {
+    this.abyssCorePositions = corePositions.map(position => ({ ...position }));
     this.abyssEnemyPositions = enemyPositions.map(position => ({ ...position }));
     this.abyssNodePositions = nodePositions.map(position => ({ ...position }));
     this.abyssRemainingMs = durationMs;
@@ -162,6 +163,7 @@ export class Minimap {
   reset(): void {
     this.explored.fill(0);
     this.extractionDiscovered = false;
+    this.abyssCorePositions = [];
     this.abyssEnemyPositions = [];
     this.abyssNodePositions = [];
     this.abyssRemainingMs = 0;
@@ -293,6 +295,18 @@ export class Minimap {
             originTileY,
           );
           if (cell) this.drawNodeDiamond(cell.cx, cell.cy, alpha);
+        }
+        for (const pos of this.abyssCorePositions) {
+          const cell = this.windowCellCenter(Math.floor(pos.x / this.tileSize), Math.floor(pos.y / this.tileSize), originTileX, originTileY);
+          if (cell) {
+            this.ctx.globalAlpha = alpha;
+            this.ctx.fillStyle = '#a49778';
+            this.ctx.fillRect(cell.cx - 1, cell.cy - 1, 3, 1);
+            this.ctx.fillRect(cell.cx - 1, cell.cy + 1, 3, 1);
+            this.ctx.fillRect(cell.cx - 1, cell.cy, 1, 1);
+            this.ctx.fillRect(cell.cx + 1, cell.cy, 1, 1);
+            this.ctx.globalAlpha = 1;
+          }
         }
         for (const pos of this.abyssEnemyPositions) {
           const cell = this.windowCellCenter(

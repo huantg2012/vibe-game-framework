@@ -296,6 +296,9 @@ export class RiftScene extends Phaser.Scene {
       () => this.ai.getEnemies(),
       {
         getPlayerSprite: () => this.player.getSprite(),
+        getPlayerGroundY: () => this.player.getGroundY(),
+        getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
+        captureEnemyVisual: id => this.formVisuals.get(id)?.getFlashSource?.(),
         isTargetAlive: id => this.combat.isEnemyAlive(id),
         isTargetVisible: position => this.visibilityAt(position) > 0,
         hasTargetLineOfSight: (from, to) => hasLineOfSight(grid, from, to),
@@ -317,11 +320,11 @@ export class RiftScene extends Phaser.Scene {
             grid, (from, to) => hasLineOfSight(grid, from, to));
         },
         getRevealSnapshot: range => collectToolRevealSnapshot(this.player.getPosition(), range, grid,
-          [...this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
-            ...this.hosts.getToolTargets().map(host => host.position)], this.search.getUncollectedSearchPositions()),
+          this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
+          this.search.getUncollectedSearchPositions(), this.hosts.getToolTargets().map(host => host.position)),
         delayEnvironmentHazard: (id, source, duration) => this.hosts.delayNextHazard(id, source, duration),
         getEnvironmentTargets: () => this.hosts.getToolTargets(),
-        suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressReleasedHazard(id, source, duration),
+        suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressHazard(id, source, duration),
         clearEnvironmentControl: (id, source) => this.hosts.clearToolControl(id, source),
         getPhaseDestination: () => {
           const sprite = this.player.getSprite();
@@ -357,7 +360,7 @@ export class RiftScene extends Phaser.Scene {
         knockbackEnemy: (id, dx, dy) => this.ai.knockbackEnemy(id, dx, dy),
         setDecoyPosition: (pos) => this.ai.setDecoyPosition(pos),
         damageEnemy: (id, amount) => this.combat.applyToolDamage(id, amount),
-        showAbyssReveal: (enemies, nodes, durationMs) => this.minimap.showAbyssReveal(enemies, nodes, durationMs),
+        showAbyssReveal: (enemies, nodes, durationMs, cores) => this.minimap.showAbyssReveal(enemies, nodes, durationMs, cores),
         getKindlingPositions: () => this.search.getUncollectedSearchPositions(),
         boostChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateMult(mult, durationMs),
         reduceChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateReduction(mult, durationMs),
@@ -467,6 +470,7 @@ export class RiftScene extends Phaser.Scene {
     // nothing".
     this.combat.update(delta);
     this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
+    this.toolSystem.syncHostVisuals();
 
     const tileSize = GAME_CONSTANTS.TILE_SIZE;
     const p = this.player.getPosition();
@@ -521,7 +525,10 @@ export class RiftScene extends Phaser.Scene {
     // Tool key input (edge-triggered), one entry per active sortie slot.
     for (let i = 0; i < this.toolKeys.length; i++) {
       if (toolJustDown[i] && !inventoryPanel.isOpen() && !this.runController.isRunEnded()) {
-        this.toolSystem.useSlot(i);
+        if (!this.toolSystem.useSlot(i)) {
+          const reason = this.toolSystem.getLastUseFailure();
+          if (reason) showToastInline(reason, {});
+        }
       }
     }
 
@@ -556,6 +563,7 @@ export class RiftScene extends Phaser.Scene {
     this.ai.postUpdate(delta);
     this.syncSchemeDPoses(delta);
     this.groundDepthSorter?.update();
+    this.toolSystem.syncBodyVisuals();
     // Minimap after visibility so explored tiles match this frame's cone + occlusion.
     this.syncMinimapExploration();
     this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
@@ -1052,7 +1060,7 @@ export class RiftScene extends Phaser.Scene {
       if (inventoryPanel.isOpen()) inventoryPanel.update();
     }
     const toolLines: ActiveEffectInfo[] = this.toolSystem.getActiveTimedEffects().map((e) => ({
-      label: getToolName(e.type),
+      label: e.type === 'siphon' ? `抗污 +${resistanceBonus}` : e.type === 'expand' ? '身体归位' : e.type === 'abyss' ? '附近旧影 · 非实时' : getToolName(e.type),
       remainingMs: e.remainingMs,
     }));
     this.hud.setActiveEffects([...this.defenseHudEffects, ...toolLines]);
@@ -1360,11 +1368,12 @@ export class RiftScene extends Phaser.Scene {
           facing4: view.getFacing4(),
           moving: isActorWalking(Math.hypot(vel.x, vel.y)),
           movementSpeed: Math.hypot(vel.x, vel.y),
+          restraint: this.toolSystem.getEnemyRestraintPose(id),
           visibility: this.visibility.getVisibilityAt(pos),
           signal: this.jiaSchemeSignal(view, attack),
           attack,
           activity: view instanceof Enemy ? view.getActivityVisualState() : undefined,
-          deltaMs,
+          deltaMs: this.ai.getEnemyControlState(id)?.attackSuppressed && this.ai.getEnemyControlState(id)?.movementMultiplier === 0 ? 0 : deltaMs,
         });
         continue;
       }
@@ -1378,6 +1387,7 @@ export class RiftScene extends Phaser.Scene {
         moving: this.hosts.getVisualMoving(id),
         visibility: this.hostSchemeVisibility(id, host.position),
         signal: this.hosts.getVisualSignal(id),
+        toolControl: this.hosts.getToolVisualControl(id),
         attack: this.hosts.getAttackVisualState(id),
         activity: this.hosts.getActivityVisualState(id),
         deltaMs,
