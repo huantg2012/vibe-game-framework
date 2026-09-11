@@ -9,6 +9,8 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH, type GroundDepthTarget } from '@/systems/ground-depth';
 import { productionModelFor } from '@/entities/form-renderers/d/production-models';
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
+import { createPresentationFrame } from '@/dev/spatial-study/stage/bridge';
+import type { RiftPresentationFrame, RiftPresentationView, RiftWorldProjector, RiftPresentationEvent } from '@/dev/spatial-study/stage/bridge';
 /**
  * Rift Scene - core gameplay.
  *
@@ -38,6 +40,36 @@ export interface RiftDevFixture {
   createLayout(): GeneratedRiftLayout;
   onReturn(): void;
   onPause?(): void;
+  configureCamera?(camera: Phaser.Cameras.Scene2D.Camera): void;
+  /** Display-only adjustment for the large legacy through-fog extraction marker. */
+  extractionGlowRadius?: number;
+  createRuntime?(context: RiftDevRuntimeContext): RiftDevRuntime;
+}
+export interface RiftDevActorVisuals {
+  readonly id: string;
+  readonly objects: readonly Phaser.GameObjects.GameObject[];
+  readonly getPosition: () => Readonly<{ x: number; y: number }>;
+  readonly getGroundY: () => number;
+}
+export interface RiftDevRuntimeContext {
+  readonly scene: RiftScene;
+  readonly layout: GeneratedRiftLayout;
+  readonly player: RiftDevActorVisuals;
+  readonly enemies: readonly RiftDevActorVisuals[];
+  readonly applyHazardHit: (source: string, damage: number) => boolean;
+  readonly visibilityAt: (position: Readonly<{ x: number; y: number }>) => number;
+  readonly getFootprint: () => Readonly<{ x: number; y: number; width: number; height: number }>;
+  readonly getGroundVisualDepth: (groundY: number) => number;
+  readonly revealProjectedTerrain: (image: Phaser.GameObjects.Image, visibility: number) => void;
+  /** Read-only production frame for a complete alternative DEV renderer. */
+  readonly readPresentationFrame: () => RiftPresentationView;
+  /** Adapts the existing directional HUD to the renderer's camera; no input/rule changes. */
+  readonly setWorldProjector: (projector: RiftWorldProjector | null) => void;
+}
+export interface RiftDevRuntime {
+  update(elapsedMs: number, ended: boolean): void;
+  afterUpdate(elapsedMs: number): void;
+  destroy(): void;
 }
 import { mix32 } from '@/generation/seed-fork';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
@@ -109,7 +141,12 @@ export class RiftScene extends Phaser.Scene {
   private unsubscribeInventory: (() => void) | null = null;
   private readonly fieldInventory = new FieldLootInventory();
   private devFixture: RiftDevFixture | null = null;
+  private devRuntime: RiftDevRuntime | null = null;
+  private readonly devEnemyVisuals: RiftDevActorVisuals[] = [];
   private devElapsedMs = 0;
+  private devPresentation: RiftPresentationFrame | null = null;
+  private devWorldProjector: RiftWorldProjector | null = null;
+  private devEventSequence = 0;
   private inventoryClosedAt = -1000;
   private readonly runController = new RunController();
   private readonly hud = new RiftHud();
@@ -164,6 +201,9 @@ export class RiftScene extends Phaser.Scene {
   create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture }): void {
     this.devFixture = import.meta.env.DEV ? data?.devFixture ?? null : null;
     this.devElapsedMs = 0;
+    this.devPresentation = this.devFixture ? createPresentationFrame() : null;
+    this.devWorldProjector = null;
+    this.devEventSequence = 0;
     this.probeSearchHeld = false;
     this.inventoryClosedAt = -1000;
     this.thresholdUntilMs = 0;
@@ -184,6 +224,10 @@ export class RiftScene extends Phaser.Scene {
     const grid = new TileGrid(tileMap);
     this.formFloorGrid = grid;
     const layout = generated;
+    if (this.devPresentation) {
+      Object.assign(this.devPresentation.exit.position, layout.extractionPoint.position);
+      this.devPresentation.exit.radius = layout.extractionPoint.triggerRadius;
+    }
     this.layoutDebug = {
       seed: generated.seed,
       fragmentTypeId: generated.fragmentTypeId,
@@ -207,9 +251,12 @@ export class RiftScene extends Phaser.Scene {
     const camera = this.cameras.main;
     camera.setBounds(0, 0, grid.widthPx, grid.heightPx);
     camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM);
+    this.devFixture?.configureCamera?.(camera);
     camera.setBackgroundColor(GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
 
+    const beforePlayer = this.devFixture?.createRuntime ? new Set(this.children.list) : null;
     this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right' });
+    const playerVisuals = beforePlayer ? this.children.list.filter(child => !beforePlayer.has(child)) : [];
     this.physics.add.collider(this.player.getSprite(), layer);
     camera.startFollow(this.player.getSprite(), true);
 
@@ -397,7 +444,7 @@ export class RiftScene extends Phaser.Scene {
       layout.extractionPoint,
       () => this.player.getPosition(),
       () => this.runController.isRunEnded(),
-      { registerGlowSource: (id, pos, r) => this.visibility.registerGlowSource(id, pos, r) },
+      { registerGlowSource: (id, pos, r) => this.visibility.registerGlowSource(id, pos, this.devFixture?.extractionGlowRadius ?? r) },
     );
 
     this.runController.create(this, {
@@ -458,6 +505,24 @@ export class RiftScene extends Phaser.Scene {
     this.bindToolKeys();
 
     this.attachSchemeD();
+    this.syncDevPresentation();
+    this.devRuntime = this.devFixture?.createRuntime?.({ scene: this, layout,
+      player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY() },
+      enemies: this.devEnemyVisuals,
+      applyHazardHit: (source, damage) => this.combat.applyHazardHit(source, damage),
+      visibilityAt: this.visibilityAt,
+      getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
+      revealProjectedTerrain: (image, visibility) => this.visibility.revealProjectedTerrain(image, visibility),
+      readPresentationFrame: () => {
+        if (!this.devPresentation) throw new Error('Presentation bridge requires an active DEV fixture');
+        return this.devPresentation;
+      },
+      setWorldProjector: projector => { this.devWorldProjector = projector; },
+      getFootprint: () => {
+        const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+        return { x: body.x, y: body.y, width: body.width, height: body.height };
+      },
+    }) ?? null;
 
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
@@ -488,6 +553,7 @@ export class RiftScene extends Phaser.Scene {
     // nothing".
     this.combat.update(delta);
     this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
+    this.devRuntime?.update(this.devElapsedMs, this.runController.isRunEnded());
     this.toolSystem.syncHostVisuals();
 
     const tileSize = GAME_CONSTANTS.TILE_SIZE;
@@ -586,6 +652,8 @@ export class RiftScene extends Phaser.Scene {
     this.syncMinimapExploration();
     this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
     this.syncDetectionPulse(delta);
+    this.syncDevPresentation();
+    this.devRuntime?.afterUpdate(this.devElapsedMs);
     if (this.debugPanel) this.updateDebugOverlay(delta);
   }
 
@@ -633,18 +701,23 @@ export class RiftScene extends Phaser.Scene {
     const cam = this.cameras.main;
     const view = cam.worldView;
     const player = this.player.getPosition();
+    const projectedPlayer = this.devWorldProjector ? { x: player.x, y: player.y } : player;
+    this.devWorldProjector?.(player, projectedPlayer);
     this.detectionPulse.update(
       deltaMs,
-      { worldX: view.x, worldY: view.y, worldW: view.width, worldH: view.height },
-      player,
+      this.devWorldProjector ? { worldX: 0, worldY: 0, worldW: 960, worldH: 640 }
+        : { worldX: view.x, worldY: view.y, worldW: view.width, worldH: view.height },
+      projectedPlayer,
       this.ai.getEnemies().filter(enemy => !enemy.isTargetingLure?.()).map((enemy) => {
         const pos = enemy.getPosition();
+        const projected = this.devWorldProjector ? { x: pos.x, y: pos.y } : pos;
+        this.devWorldProjector?.(pos, projected);
         return {
           id: enemy.getId(),
           detection: enemy.getDetection(),
           state: enemy.getState(),
-          worldX: pos.x,
-          worldY: pos.y,
+          worldX: projected.x,
+          worldY: projected.y,
         };
       }),
     );
@@ -724,16 +797,21 @@ export class RiftScene extends Phaser.Scene {
     }
   }
 
-  private readonly onPlayerDamaged = (): void => {
+  private readonly onPlayerDamaged = ({ amount, source }: { amount: number; source: string }): void => {
     this.hitThisFrame = true;
     inventoryPanel.close();
+    this.recordDevPresentationEvent('player-hit', 'player', source, amount, this.player.getPosition(),
+      this.ai.getEnemyById(source)?.getPosition());
   };
 
-  private readonly onEnemyDamaged = ({ enemyId }: { enemyId: string }): void => {
+  private readonly onEnemyDamaged = ({ enemyId, amount, source }: { enemyId: string; amount: number; source?: string }): void => {
+    const position = this.ai.getEnemyById(enemyId)?.getPosition();
+    if (position) this.recordDevPresentationEvent('enemy-hit', enemyId, source ?? 'player', amount, position, this.player.getPosition());
     this.ai.reportDamage(enemyId, this.player.getPosition());
   };
 
-  private readonly onEnemyKilled = ({ enemyId }: { enemyId: string }): void => {
+  private readonly onEnemyKilled = ({ enemyId, position }: { enemyId: string; position: Vector2 }): void => {
+    this.recordDevPresentationEvent('enemy-death', enemyId, 'player', 0, position, this.player.getPosition());
     this.destroySchemeDVisual(enemyId);
     this.ai.despawn(enemyId);
     this.sortieKillCount++;
@@ -1321,6 +1399,7 @@ export class RiftScene extends Phaser.Scene {
    */
   private attachSchemeD(): void {
     this.destroySchemeDVisuals();
+    this.devEnemyVisuals.length = 0;
     const renderer = getFormRenderer('d-mixed');
     if (renderer?.ready !== true) return;
     this.hosts.setSkipPaint(true);
@@ -1332,6 +1411,7 @@ export class RiftScene extends Phaser.Scene {
       if (productionModelFor(view.getForm().substrate)) {
         view.setLocomotionMode('continuous');
       }
+      const beforeVisual = this.devFixture?.createRuntime ? new Set(this.children.list) : null;
       const visual = renderer.attach({
         scene: this,
         form: view.getForm(),
@@ -1340,6 +1420,9 @@ export class RiftScene extends Phaser.Scene {
         fragmentTypeId,
       });
       this.formVisuals.set(view.getId(), visual);
+      if (beforeVisual) this.devEnemyVisuals.push({ id: view.getId(),
+        objects: this.children.list.filter(child => !beforeVisual.has(child)),
+        getPosition: () => view.getPosition(), getGroundY: () => view.getPosition().y });
     }
     for (const subject of this.hosts.getSubjects()) {
       const pin = this.hosts.getVisualPin(subject.id) ?? undefined;
@@ -1458,6 +1541,8 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
+    this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
+    this.devPresentation = null; this.devWorldProjector = null;
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
     this.input.keyboard?.off('keydown-TAB', this.openBag, this);
@@ -1626,6 +1711,79 @@ export class RiftScene extends Phaser.Scene {
   }
 
   /** Development review only: exposes production state without a second simulation. */
+  private recordDevPresentationEvent(kind: RiftPresentationEvent['kind'], id: string, source: string, amount: number,
+    position: Readonly<Vector2>, from?: Readonly<Vector2>): void {
+    const frame = this.devPresentation;
+    if (!frame) return;
+    const dx = from ? position.x - from.x : 0, dy = from ? position.y - from.y : 0;
+    const length = Math.hypot(dx, dy) || 1;
+    frame.events.push({ sequence: ++this.devEventSequence, elapsedMs: this.devElapsedMs, kind, id, source, amount,
+      position: { x: position.x, y: position.y }, direction: { x: dx / length, y: dy / length } });
+    if (frame.events.length > 32) frame.events.shift();
+  }
+
+  /** Runs only for DEV fixtures, after resolved physics and the actual visibility update. */
+  private syncDevPresentation(): void {
+    const frame = this.devPresentation;
+    if (!frame) return;
+    frame.sequence++;
+    frame.elapsedMs = this.devElapsedMs; frame.ended = this.runController.isRunEnded();
+    const player = frame.player, body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+    Object.assign(player.position, this.player.getPosition()); Object.assign(player.velocity, body.velocity);
+    player.body.x = body.x; player.body.y = body.y; player.body.width = body.width; player.body.height = body.height;
+    player.facing = this.player.getFacingAngle(); player.moving = this.player.isMoving();
+    player.hp = this.combat.getHealth(); player.maxHp = this.combat.getMaxHealth(); player.invulnerable = this.combat.isInvulnerable();
+    Object.assign(player.attack, this.combat.getWeaponVisualState());
+    player.weaponId = inventoryStore.getEquipment().weaponId;
+    const weapon = player.weaponId ? inventoryStore.getItem(player.weaponId) : undefined;
+    player.weaponDefinitionId = weapon?.kind === 'weapon' ? weapon.weapon.definitionId : null;
+    player.durability = weapon?.kind === 'weapon' ? weapon.weapon.usesRemaining : 0;
+    let index = 0;
+    for (const enemy of this.ai.getEnemies()) {
+      let target = frame.enemies[index];
+      if (!target) { target = { id: '', substrate: '', coverage: '', position: { x: 0, y: 0 }, velocity: { x: 0, y: 0 },
+        facing: 0, hp: 0, visibility: 0, state: '', activity: { phase: 'active', progress: 0 }, attack: { phase: 'idle', progress: 0 } };
+        frame.enemies.push(target); }
+      target.id = enemy.getId(); target.substrate = enemy.getForm().substrate; target.coverage = enemy.getForm().coverage;
+      Object.assign(target.position, enemy.getPosition());
+      if (enemy instanceof Enemy) {
+        Object.assign(target.velocity, enemy.getActualVelocity()); Object.assign(target.activity, enemy.getActivityVisualState());
+      } else { target.velocity.x = 0; target.velocity.y = 0; }
+      target.facing = enemy.getFacingAngle(); target.hp = this.combat.getEnemyHealth(target.id) ?? 0;
+      target.visibility = this.visibilityAt(target.position); target.state = enemy.getState();
+      target.attack = this.combat.getEnemyAttackVisualState(target.id); index++;
+    }
+    frame.enemies.length = index;
+    const search = this.search.getPresentationTarget();
+    frame.search.targetId = search.targetId; frame.search.channelId = search.channelId;
+    frame.search.prompt = this.search.getPrompt(); frame.search.progress = this.search.getChannelProgress01();
+    index = 0;
+    for (const node of this.search.getPresentationNodes()) {
+      let target = frame.piles[index];
+      if (!target) { target = { id: '', position: { x: 0, y: 0 }, collected: false, visibility: 0, searching: false, targeted: false, progress: 0 }; frame.piles.push(target); }
+      target.id = node.id; target.position.x = node.x; target.position.y = node.y; target.collected = node.collected;
+      target.visibility = this.visibilityAt(target.position); target.searching = node.id === search.channelId;
+      target.targeted = node.id === search.targetId; target.progress = target.searching ? frame.search.progress ?? 0 : 0; index++;
+    }
+    frame.piles.length = index;
+    const runId = inventoryStore.getRun()?.id;
+    index = 0;
+    for (const item of inventoryStore.getItems()) {
+      if (item.location.kind !== 'ground' || item.location.runId !== runId) continue;
+      let target = frame.groundItems[index];
+      if (!target) { target = { id: '', kind: 'contaminant', definitionId: '', position: { x: 0, y: 0 }, visibility: 0 }; frame.groundItems.push(target); }
+      target.id = item.id; target.kind = item.kind;
+      target.definitionId = item.kind === 'weapon' ? item.weapon.definitionId : item.contaminant.type;
+      Object.assign(target.position, item.location.position); target.visibility = this.visibilityAt(target.position); index++;
+    }
+    frame.groundItems.length = index;
+    frame.exit.inRange = this.extraction.canExtract();
+  }
+
+  probePresentationFrame(): RiftPresentationView | null {
+    return import.meta.env.DEV && this.devFixture ? this.devPresentation : null;
+  }
+
   probeEnemyReview() {
     if (!import.meta.env.DEV) return null;
     return {

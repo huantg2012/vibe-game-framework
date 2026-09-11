@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>两个世界局部 · 那天之后</title>
+  <style>
+    * { box-sizing: border-box; } body { margin: 0; background: #111519; color: #d4dbdf; font: 14px/1.6 system-ui, sans-serif; }
+    main { display: flex; height: 100vh; } aside { width: 280px; flex: 0 0 280px; padding: 18px; overflow-y: auto; border-right: 1px solid #3b444b; }
+    h1 { font-size: 20px; margin: 0 0 12px; } p { color: #aebbc3; } a { color: #becfcf; } label { display: block; margin: 10px 0; }
+    select, input, button { font: inherit; color: inherit; background: #202b33; border: 1px solid #53636e; padding: 7px; border-radius: 3px; }
+    select, input { display: block; width: 100%; } button { cursor: pointer; margin: 4px 0; width: 100%; } button:disabled { opacity: .45; cursor: default; }
+    #game-container { position: relative; flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; background: #070a0b; overflow: hidden; outline: none; }
+    #game-container canvas { display: block; } #status { color: #d8dfca; } #error { color: #efad9d; white-space: pre-wrap; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 ui-monospace, monospace; }
+  </style>
+</head><body><main>
+  <aside>
+    <h1>悬海 · 两个局部</h1>
+    <p><a href="/world-study.html">世界方向图</a> · <a href="/build-lab.html">构筑对照场</a></p>
+    <p>同一条真实 Rift 路线、白板撬棍、敌人与水幕周期。训练库存隔离，不读写正式纪录。</p>
+    <label>空间呈现<select id="view"><option value="stage" selected>一 · 三维像素舞台</option><option value="vista">二 · 正俯视边界奇观</option></select></label>
+    <label>种子<input id="seed" type="number" min="0" max="4294967295" step="1" value="7" /></label>
+    <p id="description"></p>
+    <button id="start" disabled>开始 / 中止当前并重开</button>
+    <button id="abort" disabled>中止本次</button><button id="pause" disabled>暂停 / 继续（Esc）</button>
+    <button id="download">下载本页全部记录 JSON</button>
+    <p>向东绕过中央裂口 → 观察落水并翻找东侧残堆 → 沿北侧接敌 → 翻找西北残堆 → 折返南侧起点。可以自由探索。</p>
+    <p>落水接地时伤人，湿区轮廓就是接触区域；可等待或从旁边绕行。中央裂口不能跨过，海的自然开口不改变脚下道路。</p>
+    <p>WASD 移动 / 转向 · 空格挥击<br>E 按住翻找、在起点按 E 撤离<br>Tab 本趟拾获（世界继续）<br>结束后 R 返回本页配置</p>
+    <p id="status">载入正式游戏资源…</p><details><summary>本次观测</summary><pre id="state"></pre></details><pre id="error" role="alert"></pre>
+  </aside><div id="game-container" tabindex="0"></div>
+</main><script type="module" src="/src/dev/spatial-slices.ts"></script></body></html>

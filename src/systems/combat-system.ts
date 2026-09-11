@@ -496,6 +496,11 @@ export class CombatSystem implements CombatSystemAPI {
     return this.attackAngle;
   }
 
+  /** Borrowed presentation state: the same clock supplied to the production player rig. */
+  getWeaponVisualState(): Readonly<WeaponAttackPose> {
+    return this.weaponPose;
+  }
+
   getEnemyAttackVisualState(enemyId: string): FormAttackPose {
     const state = this.enemies.get(enemyId);
     if (!this.enabled || !state) return { phase: 'idle', progress: 0 };

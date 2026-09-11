@@ -110,6 +110,8 @@ export class LootSearchSystem {
   private readonly playerPos: Vector2 = { x: 0, y: 0 };
   private nearest: SearchNode | null = null;
   private nearestDist = 0;
+  private readonly presentationTarget: { targetId: string | null; channelId: string | null } = { targetId: null, channelId: null };
+  private readonly presentationNodes: { id: string; x: number; y: number; collected: boolean }[] = [];
   private prompt: LootSearchPromptKind = null;
   private loopPlaying = false;
   private requiresRelease = false;
@@ -204,6 +206,24 @@ export class LootSearchSystem {
 
   getPrompt(): LootSearchPromptKind {
     return this.prompt;
+  }
+
+  /** Read-only interaction identity. Never reveals the concealed contents of a pile. */
+  getPresentationTarget(): Readonly<{ targetId: string | null; channelId: string | null }> {
+    this.presentationTarget.targetId = this.prompt === 'search' ? this.nearest?.id ?? null : null;
+    this.presentationTarget.channelId = this.channel?.node.id ?? null;
+    return this.presentationTarget;
+  }
+
+  /** Borrowed scalar views for continuous rendering; no contents or Phaser objects. */
+  getPresentationNodes(): readonly Readonly<{ id: string; x: number; y: number; collected: boolean }>[] {
+    for(let i=0;i<this.nodes.length;i++){
+      const node=this.nodes[i]!;
+      let view=this.presentationNodes[i];
+      if(!view){view={id:'',x:0,y:0,collected:false};this.presentationNodes.push(view);}
+      view.id=node.id;view.x=node.position.x;view.y=node.position.y;view.collected=node.collected;
+    }
+    this.presentationNodes.length=this.nodes.length;return this.presentationNodes;
   }
 
   getCollectedContaminantPositions(): readonly Vector2[] {

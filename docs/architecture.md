@@ -16,11 +16,39 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `src/dev/build-lab-fixtures.ts`构造完整布局及每趟新建的可变遮罩；`build-lab-session.ts`初始化隔离的普通训练库存、成长和出击；`build-lab-recorder.ts`只读正式事件和场景状态，区分实际消耗、死亡损失与中止，保存初始条件、采样、结果及训练标记；`build-lab.ts`组织配置、暂停/重开和JSON下载。页面改变配置须重开，不能继承上一趟的计时、拾获或AI。
 
-`RiftScene`的DEV fixture仅替换布局输入并提供返回/暂停回调；正式移动、AI、视野、危险、技能消费、翻找和撤离/死亡不分叉。只读`probeBuildLabState()`限DEV fixture，供实验记录和实际输入测试观察。`SaveManager.setStorage()`将所有存储操作统一导向可注入后端，默认仍为正式`localStorage`；实验在初始化前注入内存后端，未完成的世界事务期间禁止切换存储。加载、保存、删除和失败重试均使用同一后端，不靠只替换`save()`隔离。
+`RiftScene`的DEV fixture替换布局输入并提供返回/暂停回调；F批另加创建前相机/视野显示配置与运行层生命周期钩子（见下）。正式移动、AI、技能消费、翻找和撤离/死亡不分叉。只读`probeBuildLabState()`限DEV fixture，供实验记录和实际输入测试观察。`SaveManager.setStorage()`将所有存储操作统一导向可注入后端，默认仍为正式`localStorage`；实验在初始化前注入内存后端，未完成的世界事务期间禁止切换存储。加载、保存、删除和失败重试均使用同一后端，不靠只替换`save()`隔离。
 
 `RunController`的可选`onReturn`在正式出击账本结算、保存及退出事件之后执行，未提供时沿原生产归来路径。实验返回配置页，不进入基地`ImpactSystem`或供奉结算；训练库存、单趟携回不能作为完整基地循环或四A持续供给证据。刷新实验页也不是生产出击恢复方案。
 
 `world-study.html`展示仓库中的世界意象与局部概念，读取`docs/art/iteration-21-worlds/manifest.json`；它和构筑对照入口均未加入生产打包入口或主菜单。开发合同见[build-lab](dev/build-lab.md)，几何/隔离/失败重试/真实操作证据见[迭代21 QA](qa/iteration-21.md)。尚未新增生产世界类型。
+
+### H/I：两个完整空间局部（DEC-152 / DEC-153，开发试作）
+
+`spatial-slices.html` / `src/dev/spatial-slices.ts`是新DEV入口。五张`data/spatial-slice-*.csv`经codegen生成`spatial-slice-data.ts`：真实31×27格环床与中央VOID、生产虫和翻堆、落水周期/不规则轮廓、五处自然海孔。`SpatialSliceWorld`唯一拥有自然孔、海体上下表面、局部前腹上卷、真实落水多边形与世界时钟；两个呈现不各自决定伤害范围。泛化fixture复用原布局构建，验证出口及每个巡逻点可达。
+
+`SliceRuntime`接生产RiftScene的DEV生命周期。只读呈现帧包含玩家/敌人的正式位姿、挥击时钟、翻找/地面拾获/撤离、已生效受击及死亡事件；`CombatSystem`与`LootSearchSystem`仅补只读显示查询。`setWorldProjector`让已有屏幕方位提示使用当前呈现相机，不修改输入、碰撞或AI。
+
+方向I的`stage/**`使用方位0、俯角35°的正交Three相机，角色、虫、地面、礁体和悬海走同一坐标/深度。Phaser仍运行唯一模拟与相机生命周期，原canvas仅隐藏像素输出；独立Three canvas对齐相同逻辑画幅且不截获指针。水体14px网格每点共用海柱/顶底法线，轮廓交点缓存并二分到子像素，避免每个三角面重复采样；流动孔的瞬时位姿由世界缓存。水体先写最近表面深度，再以相等深度着色，避免透明体背面穿出；上下表面与侧腹共享端点。只对见过的地貌缓存极暗轮廓，独立于实时感知，不反向写入正式FOV或放宽敌人显隐。结算后仅模型死亡余动画最多继续1秒，正式世界、危险与记录时钟保持冻结，暂停同时冻结余动画。销毁恢复canvas/projector并释放GPU对象。
+
+方向II的`vista/presentation.ts`保留正式角色与正俯视操作。`void-regions.ts`从地图边界洪泛识别外部；可见外缘建立远景可见性，随玩家距离衰减，远处形体与近处光影共享世界位置。**内部VOID不可显示水、巨物或深层地貌**，最后以不透明未知面收口。海体自然孔仅影响前景水，不能新增道路或扩大实体视野。
+
+I批增加`ground-height.ts`/`ground-mesh.ts`：8px网格的同源三角形插值供海床、人物/虫脚、拾获、礁骨、出口与落水使用，CSV提供五条坡脊/低地。浮点高度纹理供水材质反投影到真实海床；无跨层物理。`actor-pixels.ts`绘制有限色板的实际像素，同时提供像素姿态深度；`actors.ts`以alpha裁切和gl_FragDepth写入真实深度，保留生产动作时钟。`water-flow.ts`只改变表现：供水→下落前沿→断流→尾水落尽，接地危险时窗与旧规则逐毫秒一致。
+
+两线继续使用内存训练session与正式归来/死亡账本，`__spatialSlices`只读观测和记录；Three仅由DEV入口引用，尚未进入生产场景或默认镜头。构图与操作验收均需新的实际画面，旧R1/R2测试不可继承为新视觉通过。入口、验证与边界见[空间局部合同](dev/spatial-study.md)及[QA](qa/iteration-21-spatial.md)；四A仍未开始。
+
+### F：悬海空间研究（DEC-149 / DEC-150，R2历史）
+
+R1空间视觉被用户以30/100否决；旧功能证据不继承为R2视觉PASS。`spatial-study.html` / `src/dev/spatial-study.ts`为DEV入口，沿用内存训练session、正式RiftScene与事件记录器。三张`data/spatial-study-*.csv`经codegen生成`src/generated/spatial-study-data.ts`，拥有地形、部署、海体基准高度、礁石及落水危险周期；不复制敌人定义。
+
+`projection.ts`：B为主研究机位，zoomX=1.5、zoomY=.78，地面Y压缩.52；高度Z按`sqrt(1-k²)/k`投影。A为真实正俯视技术对照（k=1、高度投影0），取消人工侧边。`SpatialBillboardBridge`只包装显示对象的渲染父矩阵，按真实脚底补偿直立，不改对象位置、scale、20×20物理体或相机目标，销毁恢复原方法。仍只有Z=0行走平面，无自由相机或跨层寻路。
+
+`sea-geometry.ts`生成随时间形变的闭合上下表面、圆转侧腹与独立下落水片；右侧前腹远退上卷，真实空气间隙露出体内源口，禁止用源点透明补丁。`sea-raster.ts`使用三角形重心深度光栅化；主体与下落体分别保存像素、表面类型与同度量深度，较大值靠近相机。`sea-volume.ts`封装复用缓冲、移动材质和只读统计。原`material.ts`侧边带已删除。既有`assets/sea-water-r1.png`作为动态UV材质，水片采用沿下降方向拉长的流束采样，生成来源见[材质记录](art/iteration-21-worlds/spatial-materials.md)。
+
+`volume-composite.ts`按真实深度合成两类水面，仅改变玩家附近水体的透明度；不擦除原地面迷雾。`presentation.ts`组织海床、原Fog下的折光/接地泡沫（depth4）与水体（depth51）。礁石整体按`getGroundVisualDepth`参与原脚底排序；`VisibilitySystem.revealProjectedTerrain`在原Fog重建后，仅按可见礁石自身的不透明轮廓与基部可见性消除对应蒙层。礁石本体覆盖这些像素并保持实体排序，再由海体遮挡；逻辑FOV、地面查询、敌人显隐不改，不清出轮廓之外的地面雾带。
+
+`water-curtain.ts`是周期与伤害接触的唯一状态。玩家逻辑中心进入CSV椭圆（144×88）并达到接触相位才调用正式`CombatSystem.applyHazardHit`；外接矩形角安全，按interval限频，结束后不施伤。同步致死结算后的microtask归档保留最后一次生效命中。礁石唯一碰撞墙格为25:16，旧并行墙已移除。
+
+只读`__spatialStudy`提供生产状态、实际相机、身体碰撞、几何上下界、源口、深度、危险相位及事件；100ms采样可导出。DEV撤离穿雾定位光半径8，真实触发距离不变。入口不写正式存档、不进入基地供奉循环、未加入生产构建或默认镜头。开发合同见[空间样板](dev/spatial-study.md)，独立验收见[空间QA](qa/iteration-21-spatial.md)。**四A持续供给仍未开始，四A通过前不进入四B扩产。**
 
 ## 迭代19武器、供奉与统一物件（DEC-142，2026-09-09）
 

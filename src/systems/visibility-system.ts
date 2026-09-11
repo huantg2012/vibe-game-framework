@@ -495,6 +495,18 @@ export class VisibilitySystem {
     };
   }
 
+  /** DEV spatial terrain: carry a visible base's fog strength up only the opaque
+   * landmark silhouette. The landmark stays in its ordinary ground depth, so
+   * actors in front still cover it. No logical visibility or ground ray changes.
+   * Call after update; the next update rebuilds the mask from scratch. */
+  revealProjectedTerrain(image: Phaser.GameObjects.Image, visibility: number): void {
+    if (!this.mask || visibility <= 0 || !image.visible) return;
+    const alpha = image.alpha;
+    image.setAlpha(clamp(visibility, 0, 1));
+    try { this.mask.erase(image, image.x - this.maskOriginX, image.y - this.maskOriginY); }
+    finally { image.setAlpha(alpha); }
+  }
+
   // ------------------------------------------------------------ glow sources
 
   /** Slice 1 registers only the extraction point: the player should always know the way home. */

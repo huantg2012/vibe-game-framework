@@ -2,15 +2,15 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
-last-modified: 2026-09-11
-note: 迭代21ACTIVE / WORLD-DIRECTION-REVIEW-PENDING（DEC-147，2026-09-11）。阶段一六张世界概念图已交，正式RiftScene构筑对照场及实玩AGENT-VERIFIED，待用户选择世界方向。执行总台账docs/progress/content-expansion-plan.md；四A持续供给验证仍未开始，未通过不得进入四B扩产。实现基线2d9725f，本批纳入阶段提交、未推送；旧迭代待验与中断恢复未决项保留。
+last-modified: 2026-09-12
+note: 迭代21ACTIVE / STAGE-DIRECTION-SELECTED（DEC-154）。用户认可R4三维并选为后续主线；正俯视冻结于R4。当前提交已有成果，再完善写意海体、中央未知区域的空间断面与整场色彩。阶段一继续，四A仍NOT-STARTED，四B不解锁。
 ---
 
 # 按需游戏迭代（DEC-072）
 
-**当前执行：迭代21「世界方向与玩法样板」ACTIVE / WORLD-DIRECTION-REVIEW-PENDING（DEC-147，2026-09-11）。** 三个方向共六张概念图已交至[世界取景](http://127.0.0.1:3000/world-study.html)；[构筑对照场](http://127.0.0.1:3000/build-lab.html)复用正式RiftScene，三遭遇、七配置及记录导出已交。22次实际尝试中15次满足各自断言，7次失败探索保留；10趟真实携回，功能、隔离与代表实玩AGENT-VERIFIED，见[QA](../qa/iteration-21.md)。静默短路的高代价不算优势，单种子对照不算长期平衡通过。
+**当前执行：迭代21 J批 / 三维方向定向打磨（DEC-154）。** 用户认可R4三维效果，选择三维像素舞台作为后续方向；正俯视冻结于R4，保留代码、入口与证据。本次先提交F–I累计成果及路线决定，再处理海体碎纹过密、中央黑区仍平面和整场色彩。海体以用户附件中的宽阔写意块面为参考，保持R4已修好的体积、自然落水与像素角色。
 
-下一步由用户选择世界方向，再制作首个局部动态样板；阶段一整体尚未通过。合同见[迭代21](../tasks/iteration-21.md)，总台账见[内容扩展计划](content-expansion-plan.md)。**四A供给验证未开始，四B扩产仍须等待其通过。** 本批纳入阶段提交，未推送；下方“实施未开始”属于启动前历史记录，不覆盖此状态。
+仍属[锁定总计划](content-expansion-plan.md)阶段一，详见[迭代21](../tasks/iteration-21.md)。空间主线已选三维；完整世界与生产接入尚未实施。**四A持续游玩供给仍NOT-STARTED，未通过不得进入四B扩产。** 本次获授权提交现有成果；不推送。既有历史未决项保留。
 
 ## 启动前进度快照（2026-09-11，已由迭代21启动更新）
 

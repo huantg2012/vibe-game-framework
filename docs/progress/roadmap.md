@@ -2,14 +2,16 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-09-11
+last-modified: 2026-09-12
 last-closed-slice: 9
-note: 迭代21ACTIVE / WORLD-DIRECTION-REVIEW-PENDING（DEC-147，2026-09-11）。阶段一六张世界概念图已交，正式RiftScene构筑对照场及实玩AGENT-VERIFIED，待用户选择世界方向。执行总台账docs/progress/content-expansion-plan.md；四A持续供给验证仍未开始，未通过不得进入四B扩产。实现基线2d9725f，本批纳入阶段提交、未推送；旧迭代待验与中断恢复未决项保留。
+note: 迭代21ACTIVE / STAGE-DIRECTION-SELECTED（DEC-154）。用户认可R4三维并选为后续主线；正俯视冻结于R4。当前提交已有成果，再完善写意海体、中央未知区域的空间断面与整场色彩。阶段一继续，四A仍NOT-STARTED，四B不解锁。
 ---
 
 # Roadmap
 
-**当前执行：迭代21「世界方向与玩法样板」ACTIVE / WORLD-DIRECTION-REVIEW-PENDING（DEC-147，2026-09-11）。** 六张图已交至[世界取景](http://127.0.0.1:3000/world-study.html)，三遭遇/七配置已交至[构筑对照场](http://127.0.0.1:3000/build-lab.html)。功能、存档隔离及代表实玩已由Agent验证；22次真实尝试保留7次失败探索，静默短路的高代价结果照实记录，详见[QA](../qa/iteration-21.md)。下一步等待用户选择世界方向，再进入局部动态样板；阶段一整体尚未通过。合同见[迭代21](../tasks/iteration-21.md)，总台账见[内容扩展计划](content-expansion-plan.md)。**四A供给验证未开始，四B扩产仍须等待其通过。** 本批纳入阶段提交，未推送；下方“实施未开始”属于启动前历史记录。
+**当前执行：迭代21 J批 / 三维方向定向打磨（DEC-154）。** 用户认可R4三维效果，选择三维像素舞台作为后续方向；正俯视冻结于R4，保留代码、入口与证据。本次先提交F–I累计成果及路线决定，再处理海体碎纹过密、中央黑区仍平面和整场色彩。海体以用户附件中的宽阔写意块面为参考，保持R4已修好的体积、自然落水与像素角色。
+
+仍属[锁定总计划](content-expansion-plan.md)阶段一，详见[迭代21](../tasks/iteration-21.md)。空间主线已选三维；完整世界与生产接入尚未实施。**四A持续游玩供给仍NOT-STARTED，未通过不得进入四B扩产。** 本次获授权提交现有成果；不推送。既有历史未决项保留。
 
 **启动前进度核对记录（2026-09-11，已由文首DEC-147更新）：** 当时主线是DEC-146内容扩展，计划已批准、实施未开始。最近实现为迭代20，验证状态AGENT-VERIFIED，代码已提交`2d9725f`。DEC-144–146相关文档仍在本地工作区，未提交；当次仅同步进度。
 
@@ -79,7 +81,7 @@ R3曾完成六生物与八环境重制和内部验证，但当前用户取舍覆
 
 ## 当前工作单元（DEC-072）
 
-**当前主线：内容扩展计划（DEC-146），阶段一由迭代21执行（DEC-147）。** 世界图像及构筑实玩已交，待用户选择世界方向；总台账见[内容扩展推进计划](content-expansion-plan.md)。本轮实现基线为迭代20、2d9725f，迭代21首批纳入阶段提交；迭代19未决项与下文迭代5–11历史待验保留。四A持续供给验证未通过前不得进入四B分批扩产。
+**当前主线：内容扩展计划（DEC-146），阶段一由迭代21执行（DEC-147–153）。** 世界概念、构筑实玩及双线R4局部精修已交，当前等待用户审查空间表现，再选首个世界；总台账见[内容扩展推进计划](content-expansion-plan.md)。首批基线为迭代20的2d9725f，空间批基线为3c1bc7c；迭代19未决项与下文迭代5–11历史待验保留。四A持续供给验证未通过前不得进入四B分批扩产。
 
 **历史记录：无进行中 Slice；当时当前为迭代 5（污染外形基因谱）。** 三层管线重做占地外形 + 街具残骸合并 + 生物基底 + 粗占格闸门（DEC-087 / DEC-088）。合同：`docs/tasks/iteration-5.md`。设计正文：`docs/design-notes/contamination-form-genome.md`。**迭代 6（碎片配色 / 世界美术）COMPLETE（2026-08-26）**：人答验证问题 1–6 全部过。居民区公寓本轮不启用。合同：`docs/tasks/iteration-6.md`。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体）已锁定并上线。**占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来另开迭代。** 站着不计仍挂起。合同：`docs/tasks/iteration-7.md`。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过。合同：`docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同：`docs/tasks/iteration-9.md`。**迭代 10 COMPLETE（2026-08-31）。** **迭代 11（全游戏 UX/UI 重构）COMPLETE（DEC-119，2026-09-07，用户验收结单）。** 净化点世界内交互物已翻生产（DEC-111–117）。P3 / P4 仍挂起。活指针仍在迭代 5。迭代 4 COMPLETE（2026-08-28，人再滚甲大厅 PASS）。迭代 3 COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 2 练习场探索 COMPLETE。迭代 1 COMPLETE（2026-08-28，体验已验证）。活指针：`docs/progress/current-iteration.md`。
 

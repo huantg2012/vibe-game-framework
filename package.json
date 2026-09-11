@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "check:spatial-study": "node --import tsx tools/spatial-study/check.ts && node --import tsx tools/spatial-study/check-volume.ts",
+    "check:spatial-slices": "node --import tsx tools/spatial-study/check-slices.ts && node --import tsx tools/spatial-study/check-stage.ts && node --import tsx tools/spatial-study/check-ground.ts && node --import tsx tools/spatial-study/check-ground-clearance.ts && node --import tsx tools/spatial-study/check-flow.ts && node --import tsx tools/spatial-study/check-actor-pixels.ts",
     "predev": "node tools/ensure-deps.mjs",
     "dev": "vite",
     "pregym": "node tools/ensure-deps.mjs",
@@ -78,12 +80,14 @@
     "check:crowbar-combat": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-crowbar-combat.ts"
   },
   "dependencies": {
-    "phaser": "^3.80.1"
+    "phaser": "^3.80.1",
+    "three": "0.186.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.5",
-    "vite": "^5.4.2",
+    "@types/three": "0.185.4",
+    "sharp": "^0.33.0",
     "tsx": "^4.0.0",
-    "sharp": "^0.33.0"
+    "typescript": "^5.4.5",
+    "vite": "^5.4.2"
   }
 }
