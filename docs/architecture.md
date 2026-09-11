@@ -2,13 +2,25 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-09
+last-modified: 2026-09-11
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
+
+## 迭代21：正式系统的构筑对照入口（DEC-147，2026-09-11）
+
+`build-lab.html`是仅开发环境可用的独立入口，直接挂载生产`RiftScene`。`data/build-lab-scenes.csv`、`build-lab-placements.csv`、`build-lab-loadouts.csv`经既有codegen生成`src/generated/build-lab-data.ts`，分别拥有场景几何、部署及普通配置；不复制玩家、敌人、技能或物件数值。
+
+`src/dev/build-lab-fixtures.ts`构造完整布局及每趟新建的可变遮罩；`build-lab-session.ts`初始化隔离的普通训练库存、成长和出击；`build-lab-recorder.ts`只读正式事件和场景状态，区分实际消耗、死亡损失与中止，保存初始条件、采样、结果及训练标记；`build-lab.ts`组织配置、暂停/重开和JSON下载。页面改变配置须重开，不能继承上一趟的计时、拾获或AI。
+
+`RiftScene`的DEV fixture仅替换布局输入并提供返回/暂停回调；正式移动、AI、视野、危险、技能消费、翻找和撤离/死亡不分叉。只读`probeBuildLabState()`限DEV fixture，供实验记录和实际输入测试观察。`SaveManager.setStorage()`将所有存储操作统一导向可注入后端，默认仍为正式`localStorage`；实验在初始化前注入内存后端，未完成的世界事务期间禁止切换存储。加载、保存、删除和失败重试均使用同一后端，不靠只替换`save()`隔离。
+
+`RunController`的可选`onReturn`在正式出击账本结算、保存及退出事件之后执行，未提供时沿原生产归来路径。实验返回配置页，不进入基地`ImpactSystem`或供奉结算；训练库存、单趟携回不能作为完整基地循环或四A持续供给证据。刷新实验页也不是生产出击恢复方案。
+
+`world-study.html`展示仓库中的世界意象与局部概念，读取`docs/art/iteration-21-worlds/manifest.json`；它和构筑对照入口均未加入生产打包入口或主菜单。开发合同见[build-lab](dev/build-lab.md)，几何/隔离/失败重试/真实操作证据见[迭代21 QA](qa/iteration-21.md)。尚未新增生产世界类型。
 
 ## 迭代19武器、供奉与统一物件（DEC-142，2026-09-09）
 

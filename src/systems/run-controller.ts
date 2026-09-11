@@ -27,6 +27,8 @@ export interface RunControllerDeps {
   setPlayerInput: (enabled: boolean) => void;
   getCarriedKindling: () => number;
   onSettlementFailure?: (message: string, retry: () => void) => void;
+  /** Alternate development destination, after the normal saved settlement and event. */
+  onReturn?: () => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -90,6 +92,12 @@ export class RunController {
   restart(): void {
     if (!this.runEnded || this.restarted) return;
     if (!this.saveSettlement()) return;
+    if (this.deps.onReturn) {
+      this.restarted = true;
+      this.emitSettlement();
+      this.deps.onReturn();
+      return;
+    }
     this.transitionToPurification();
   }
 

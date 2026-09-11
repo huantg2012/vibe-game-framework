@@ -1514,4 +1514,55 @@ generateWeapons();
   ].join('\n'));
 }
 
+// Development encounter source tables use the same one-way pipeline as live content.
+{
+  const records = filename => {
+    const { header, rows } = readCsv(filename);
+    return rows.map(row => {
+      if (row.length !== header.length) throw new Error(`[codegen] column count in ${filename}: ${row[0]}`);
+      return Object.fromEntries(header.map((key, i) => [toCamel(key), row[i]]));
+    });
+  };
+  const scenes = records('build-lab-scenes.csv');
+  const placements = records('build-lab-placements.csv');
+  const loadouts = records('build-lab-loadouts.csv');
+  const knownScenes = new Set(scenes.map(row => row.id));
+  const knownItems = new Map(records('contaminants.csv').map(row => [row.id, row]));
+  const knownWeapons = new Set(records('weapons.csv').map(row => row.id));
+  const knownSubstrates = new Set(records('contamination-substrates.csv').map(row => row.id));
+  for (const [label, rows] of [['scene', scenes], ['loadout', loadouts]]) {
+    if (new Set(rows.map(row => row.id)).size !== rows.length) throw new Error(`[codegen] duplicate build-lab ${label}`);
+  }
+  for (const row of scenes) {
+    row.cols = Number(row.cols); row.rows = Number(row.rows);
+    if (![row.cols, row.rows].every(n => Number.isSafeInteger(n) && n >= 8 && n <= 100)) throw new Error('Invalid build-lab dimensions');
+  }
+  const placementIds = new Set();
+  for (const row of placements) {
+    const key = row.scene + ':' + row.id;
+    if (!knownScenes.has(row.scene) || placementIds.has(key) || !['enemy','volume','kindling','contaminant'].includes(row.kind)) throw new Error('Invalid build-lab placement');
+    placementIds.add(key);
+    row.col = Number(row.col); row.row = Number(row.row); row.facing = Number(row.facing);
+    if (![row.col,row.row,row.facing].every(Number.isFinite)) throw new Error('Invalid build-lab coordinate');
+    if (['enemy','volume'].includes(row.kind) && !knownSubstrates.has(row.substrate)) throw new Error('Unknown build-lab substrate');
+  }
+  for (const row of loadouts) {
+    if (!knownWeapons.has(row.weapon)) throw new Error('Unknown build-lab weapon');
+    for (const [slot, passive] of [['activeA',false],['activeB',false],['passive',true]]) {
+      const item = knownItems.get(row[slot]);
+      if (row[slot] && (!item || item.active !== 'true' || (item.toolType === 'passive') !== passive)) throw new Error('Invalid build-lab tool slot');
+    }
+    for (const pair of row.pair.split('|').filter(Boolean)) if (!loadouts.some(other => other.id === pair)) throw new Error('Invalid build-lab pair');
+  }
+  writeFileSync(resolve(OUT_DIR, 'build-lab-data.ts'), [
+    '// AUTO-GENERATED from data/build-lab-*.csv — DO NOT EDIT',
+    'export const BUILD_LAB_SCENES = '+JSON.stringify(scenes,null,2)+' as const;',
+    'export const BUILD_LAB_PLACEMENTS = '+JSON.stringify(placements,null,2)+' as const;',
+    'export const BUILD_LAB_LOADOUTS = '+JSON.stringify(loadouts,null,2)+' as const;',
+    'export type BuildLabSceneId = typeof BUILD_LAB_SCENES[number]["id"];',
+    'export type BuildLabLoadoutId = typeof BUILD_LAB_LOADOUTS[number]["id"];',
+    '',
+  ].join('\n'));
+}
+
 console.log('[codegen] Done.');

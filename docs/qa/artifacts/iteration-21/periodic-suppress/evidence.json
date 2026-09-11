@@ -1,0 +1,2962 @@
+{
+  "case": "periodic-suppress",
+  "method": "UI setup, real keyboard/mouse thereafter, read-only snapshots, natural simulation clock.",
+  "observations": [
+    {
+      "label": "01-start",
+      "ready": true,
+      "running": true,
+      "paused": false,
+      "snapshot": {
+        "elapsedMs": 216.38666666666677,
+        "ended": false,
+        "player": {
+          "x": 176,
+          "y": 400
+        },
+        "hp": 100,
+        "chaos": 15.085472733333336,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": "extract",
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "BL_periodic_listener",
+            "state": "patrol",
+            "position": {
+              "x": 982,
+              "y": 656
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 619.8205777454546,
+              "y": 416
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "rest",
+              "elapsedMs": 216.38666666666677,
+              "hazardActive": false
+            }
+          }
+        ]
+      },
+      "inventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "weapon": {
+              "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+            "contaminant": {
+              "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+              "type": "combust",
+              "rarity": "rare",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+          "toolIds": [
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-8bed472b-95b8-44c3-8c74-e06ed3019025",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": []
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "attributes": {
+        "resistancePercent": 0,
+        "burdenSpeedFactor": 1,
+        "weight": 50,
+        "capacity": 160
+      },
+      "records": 0,
+      "error": ""
+    },
+    {
+      "label": "02-at-hazard",
+      "ready": true,
+      "running": true,
+      "paused": false,
+      "snapshot": {
+        "elapsedMs": 4047.259999999995,
+        "ended": false,
+        "player": {
+          "x": 472.10744444444236,
+          "y": 400
+        },
+        "hp": 100,
+        "chaos": 16.598667700000117,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "BL_periodic_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1005,
+              "y": 656
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 620.2573669647059,
+              "y": 416
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "disperse",
+              "elapsedMs": 4047.259999999995,
+              "hazardActive": false
+            }
+          }
+        ]
+      },
+      "inventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "weapon": {
+              "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+            "contaminant": {
+              "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+              "type": "combust",
+              "rarity": "rare",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+          "toolIds": [
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-8bed472b-95b8-44c3-8c74-e06ed3019025",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": []
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "attributes": {
+        "resistancePercent": 0,
+        "burdenSpeedFactor": 1,
+        "weight": 50,
+        "capacity": 160
+      },
+      "records": 0,
+      "error": ""
+    },
+    {
+      "label": "03-after-q",
+      "ready": true,
+      "running": true,
+      "paused": false,
+      "snapshot": {
+        "elapsedMs": 4213.929999999995,
+        "ended": false,
+        "player": {
+          "x": 476.77371111110904,
+          "y": 400
+        },
+        "hp": 100,
+        "chaos": 16.664502350000124,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "BL_periodic_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1000,
+              "y": 656
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 620.0597159529411,
+              "y": 416
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "disperse",
+              "elapsedMs": 4213.929999999995,
+              "hazardActive": false
+            }
+          }
+        ]
+      },
+      "inventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "weapon": {
+              "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+            "contaminant": {
+              "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+              "type": "combust",
+              "rarity": "rare",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+          "toolIds": [
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-8bed472b-95b8-44c3-8c74-e06ed3019025",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": []
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "attributes": {
+        "resistancePercent": 0,
+        "burdenSpeedFactor": 1,
+        "weight": 50,
+        "capacity": 160
+      },
+      "records": 0,
+      "error": ""
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "formal save unchanged: start"
+  ],
+  "passed": false,
+  "failure": "AssertionError [ERR_ASSERTION]: Actual Q must affect a real Host\n    at file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:76:8\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:459:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)",
+  "records": [
+    {
+      "schemaVersion": 1,
+      "metadata": {
+        "runId": "build-lab-8bed472b-95b8-44c3-8c74-e06ed3019025",
+        "sceneId": "periodic",
+        "loadoutId": "cycle-suppress",
+        "seed": 7,
+        "volume": "gas_mass",
+        "fixtureSignature": "8cead7b1",
+        "codeBaseline": "2d9725f + iteration-21 working tree",
+        "startedAt": "2026-09-11T03:04:50.335Z",
+        "trainingInventory": true,
+        "supplyValidation": false,
+        "description": "压制当前危险并观察恢复前兆",
+        "loadoutDefinition": {
+          "id": "cycle-suppress",
+          "name": "周期对照 · 冷却的余烬",
+          "weapon": "crowbar_plain",
+          "activeA": "combust",
+          "activeB": "",
+          "passive": "",
+          "pair": "cycle-none|cycle-delay",
+          "description": "压制当前危险并观察恢复前兆"
+        },
+        "modules": {
+          "kindlingReserve": 0,
+          "cycle": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 70,
+              "maxHp": 100
+            }
+          ],
+          "moduleMaxHpTier": 0,
+          "pendingSideEffects": [],
+          "upgradeDiscount": 0,
+          "moduleSwapActive": false,
+          "repairBonusHp": 0
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          }
+        },
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "initialAttributes": {
+          "resistancePercent": 0,
+          "burdenSpeedFactor": 1,
+          "weight": 50,
+          "capacity": 160
+        },
+        "measurement": "100ms read-only simulation samples; stationary time includes observation; alert/engaged are AI states, not inferred player intent. Uses are committed inventory differences. Recorder does not inject inputs."
+      },
+      "initialInventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "weapon": {
+              "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+            "contaminant": {
+              "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+              "type": "combust",
+              "rarity": "rare",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+          "toolIds": [
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-8bed472b-95b8-44c3-8c74-e06ed3019025",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": []
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "finalInventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "weapon": {
+              "id": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+            "contaminant": {
+              "id": "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621",
+              "type": "combust",
+              "rarity": "rare",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+          "toolIds": [
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-8bed472b-95b8-44c3-8c74-e06ed3019025",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_fe5f7132-90b7-47f9-9eab-b53379bd0044",
+            "CTM_62998f0e-eed3-4408-9dea-d75fea0a8621"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": []
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "samples": [
+        {
+          "elapsedMs": 0,
+          "ended": false,
+          "player": {
+            "x": 176,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 976,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.424,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 0,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 16.640000000000004,
+          "ended": false,
+          "player": {
+            "x": 176,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.0065728,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 976,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.4544965818181,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 16.640000000000004,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 99.85333333333338,
+          "ended": false,
+          "player": {
+            "x": 176,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.03944206666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 978.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.6070039272727,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 99.85333333333338,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 166.44000000000008,
+          "ended": false,
+          "player": {
+            "x": 176,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.065743800000003,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 980.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.7290391272727,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 166.44000000000008,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 266.32666666666677,
+          "ended": false,
+          "player": {
+            "x": 176,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.105199033333337,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 983.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.9121041454546,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 266.32666666666677,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 366.2,
+          "ended": false,
+          "player": {
+            "x": 177.66444444444446,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.144649000000005,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 986.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.0951447272728,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 366.2,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 466.0599999999999,
+          "ended": false,
+          "player": {
+            "x": 185.44077777777784,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.184093700000007,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 989.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.2781608727273,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 466.0599999999999,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 565.9199999999998,
+          "ended": false,
+          "player": {
+            "x": 193.4407777777779,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.22353840000001,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 992.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.4611770181818,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 565.9199999999998,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 665.7733333333331,
+          "ended": false,
+          "player": {
+            "x": 201.44077777777795,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.26298046666668,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 995.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.6441809454545,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 665.7733333333331,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 765.633333333333,
+          "ended": false,
+          "player": {
+            "x": 209.440777777778,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.302425166666682,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 998.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.8271970909091,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 765.633333333333,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 865.4999999999995,
+          "ended": false,
+          "player": {
+            "x": 217.44077777777807,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.341872500000017,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1001.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.0102254545454,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 865.4999999999995,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 965.3266666666661,
+          "ended": false,
+          "player": {
+            "x": 225.44077777777812,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.381304033333352,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1004.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.1931805090909,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 965.3266666666661,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1065.1133333333325,
+          "ended": false,
+          "player": {
+            "x": 233.44077777777818,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.42071976666669,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1007.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.3760622545454,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 1065.1133333333325,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1164.8933333333323,
+          "ended": false,
+          "player": {
+            "x": 241.44077777777824,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.46013286666669,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1010.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.1380962461539,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1164.8933333333323,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1264.726666666665,
+          "ended": false,
+          "player": {
+            "x": 249.4407777777783,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.49956703333336,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1013.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.6736408615385,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1264.726666666665,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1364.5866666666652,
+          "ended": false,
+          "player": {
+            "x": 257.4407777777784,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.53901173333336,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1016.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.2090614153847,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1364.5866666666652,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1464.4599999999987,
+          "ended": false,
+          "player": {
+            "x": 265.44077777777864,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.578461700000029,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1019.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.7444199384615,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1464.4599999999987,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1564.319999999998,
+          "ended": false,
+          "player": {
+            "x": 273.4407777777785,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.617906400000031,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1022.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.2798404923077,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1564.319999999998,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1664.1933333333313,
+          "ended": false,
+          "player": {
+            "x": 281.4407777777784,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.657356366666699,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1025.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 618.8151990153847,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1664.1933333333313,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1764.0566666666653,
+          "ended": false,
+          "player": {
+            "x": 289.4407777777783,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.696802383333367,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1028.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 618.3506040615384,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1764.0566666666653,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1864.0099999999984,
+          "ended": false,
+          "player": {
+            "x": 297.4407777777782,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.736283950000034,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1031.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 617.8855904,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1864.0099999999984,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 1963.9999999999989,
+          "ended": false,
+          "player": {
+            "x": 305.44077777777807,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.775780000000038,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 617.4204061538462,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 1963.9999999999989,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2063.9899999999993,
+          "ended": false,
+          "player": {
+            "x": 313.44077777777795,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.815276050000042,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 616.9552219076924,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 2063.9899999999993,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2163.979999999999,
+          "ended": false,
+          "player": {
+            "x": 321.44077777777784,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.854772100000046,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 616.4900376615385,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 2163.979999999999,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2263.979999999999,
+          "ended": false,
+          "player": {
+            "x": 329.4407777777777,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.89427210000005,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 616.0248068923077,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 2263.979999999999,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2363.9899999999984,
+          "ended": false,
+          "player": {
+            "x": 337.4407777777776,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.933776050000054,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 615.5595296,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "gather",
+                "elapsedMs": 2363.9899999999984,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2463.979999999998,
+          "ended": false,
+          "player": {
+            "x": 345.4407777777775,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.973272100000058,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 616.3233883582575,
+                "y": 416
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "release",
+                "elapsedMs": 2463.979999999998,
+                "hazardActive": true
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2563.9899999999984,
+          "ended": false,
+          "player": {
+            "x": 353.4407777777774,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.01277605000006,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 617.726573978123,
+                "y": 416
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "release",
+                "elapsedMs": 2563.9899999999984,
+                "hazardActive": true
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2663.979999999998,
+          "ended": false,
+          "player": {
+            "x": 361.44077777777727,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.052272100000064,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 618.9938208210853,
+                "y": 416
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "release",
+                "elapsedMs": 2663.979999999998,
+                "hazardActive": true
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2763.9499999999975,
+          "ended": false,
+          "player": {
+            "x": 369.44077777777716,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.091760250000068,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.0515982398132,
+                "y": 416
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "release",
+                "elapsedMs": 2763.9499999999975,
+                "hazardActive": true
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2863.9699999999975,
+          "ended": false,
+          "player": {
+            "x": 377.44077777777704,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.13126815000007,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.8390560266362,
+                "y": 416
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "release",
+                "elapsedMs": 2863.9699999999975,
+                "hazardActive": true
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 2963.969999999997,
+          "ended": false,
+          "player": {
+            "x": 385.44077777777693,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.170768150000075,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.3097643672724,
+                "y": 416
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "release",
+                "elapsedMs": 2963.969999999997,
+                "hazardActive": true
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3063.9399999999964,
+          "ended": false,
+          "player": {
+            "x": 393.4407777777768,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.21025630000008,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1032.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.4234688,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3063.9399999999964,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3163.9699999999966,
+          "ended": false,
+          "player": {
+            "x": 401.4407777777767,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.249768150000083,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1031.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.3048449882353,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3163.9699999999966,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3263.9699999999966,
+          "ended": false,
+          "player": {
+            "x": 409.4407777777766,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.289268150000087,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1028.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.1862567529412,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3263.9699999999966,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3363.9299999999957,
+          "ended": false,
+          "player": {
+            "x": 417.4407777777765,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.32875235000009,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1025.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 621.0677159529412,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3363.9299999999957,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3463.9299999999957,
+          "ended": false,
+          "player": {
+            "x": 425.44077777777636,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.368252350000095,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1022.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.9491277176471,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3463.9299999999957,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3563.9299999999957,
+          "ended": false,
+          "player": {
+            "x": 433.44077777777625,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.4077523500001,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1019.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.830539482353,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3563.9299999999957,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3663.9299999999957,
+          "ended": false,
+          "player": {
+            "x": 441.44077777777613,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.447252350000102,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1016.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.7119512470588,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3663.9299999999957,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3763.9299999999957,
+          "ended": false,
+          "player": {
+            "x": 449.440777777776,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.486752350000106,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1013.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.5933630117647,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3763.9299999999957,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3863.9299999999957,
+          "ended": false,
+          "player": {
+            "x": 457.4407777777759,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.52625235000011,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1010.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.4747747764706,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3863.9299999999957,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 3963.9099999999953,
+          "ended": false,
+          "player": {
+            "x": 465.4407777777758,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.565744450000114,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1007.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.3562102588236,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3963.9099999999953,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 4063.919999999995,
+          "ended": false,
+          "player": {
+            "x": 473.4407777777757,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.605248400000118,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1004.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.2376101647059,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 4063.919999999995,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 4163.939999999995,
+          "ended": false,
+          "player": {
+            "x": 476.77371111110904,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.64475630000012,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 1001.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.1189982117647,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 4163.939999999995,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 4263.909999999994,
+          "ended": false,
+          "player": {
+            "x": 476.77371111110904,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 16.684244450000126,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 998.5,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.0004455529412,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 4263.909999999994,
+                "hazardActive": false
+              }
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "outcome": "running",
+      "metrics": {
+        "distancePx": 300.77371111110904,
+        "stationaryMs": 366.2966666666661,
+        "alertMs": 0,
+        "engagedMs": 0,
+        "peakChaos": 16.684244450000126,
+        "consumedUses": {},
+        "discardedItems": [],
+        "sampleLimitReached": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>世界取景 · 那天之后</title>
+    <style>
+      :root{color-scheme:dark;font-family:system-ui,-apple-system,"PingFang SC",sans-serif;background:#0d1012;color:#d3d4d1;font-synthesis:none}
+      *{box-sizing:border-box}body{margin:0}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;color:inherit;cursor:pointer}a{color:#b5c9c5;text-underline-offset:4px}button:focus-visible,a:focus-visible{outline:2px solid #bbd5ce;outline-offset:4px}
+      header{padding:26px 4vw 20px;border-bottom:1px solid #2a3031;display:flex;align-items:center;gap:26px;flex-wrap:wrap}header p{margin:0;color:#8c9594;font-size:12px;letter-spacing:.08em}h1{font-size:21px;font-weight:500;margin:0}header a{margin-left:auto;font-size:13px}
+      main{max-width:1570px;margin:0 auto;padding:30px 4vw 48px;display:grid;grid-template-columns:218px minmax(0,1fr);gap:32px}nav{display:flex;flex-direction:column;gap:8px}nav button{background:none;border:1px solid transparent;text-align:left;padding:16px 12px;line-height:1.6;font-size:15px}nav button small{display:block;font-size:11px;color:#858f91;letter-spacing:.09em}nav button[aria-pressed=true]{border-color:#515e5e;background:#192022}nav p{font-size:12px;color:#899291;line-height:1.9;padding:8px 12px}nav a{font-size:12px;margin:6px 12px}
+      .toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}.views{display:flex;gap:6px}.views button,.full{border:1px solid #394345;background:#151b1d;padding:8px 13px;font-size:12px}.views button[aria-pressed=true]{background:#303b3c;border-color:#728780;color:#eff5ef}.full{color:#b1b9b6}
+      figure{margin:0;background:#080a0c;border:1px solid #263033}figure img{display:block;width:100%;aspect-ratio:3/2;object-fit:contain}figcaption{padding:12px 16px;color:#949f9d;font-size:12px;border-top:1px solid #263033;line-height:1.7}
+      .note{padding:22px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:22px}.note h2{font-size:13px;font-weight:500;color:#b5c5bf;margin:0 0 9px}.note p{font-size:14px;line-height:1.9;margin:0;color:#a6afab}.status{font-size:12px;color:#80948d;margin:24px 0 0;line-height:1.8}
+      dialog{border:1px solid #46514f;padding:0;background:#080a0b;max-width:96vw;max-height:96vh;color:inherit}dialog::backdrop{background:#030607ed}dialog img{display:block;max-height:84vh;max-width:94vw;object-fit:contain}dialog form{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;gap:28px}dialog p{margin:0;font-size:12px;color:#adb4b0}dialog button{background:#253130;border:1px solid #586a65;padding:6px 14px;font-size:13px}
+      @media(max-width:850px){main{grid-template-columns:1fr;padding-top:18px;gap:18px}nav{display:grid;grid-template-columns:repeat(3,1fr)}nav button{padding:8px;font-size:13px}nav p,nav a{display:none}.note{grid-template-columns:1fr;gap:18px}header{gap:12px}.toolbar{flex-wrap:wrap}}
+    </style>
+  </head>
+  <body>
+    <header><p>AFTER THAT DAY · 迭代 21</p><h1>世界取景</h1><a href="/build-lab.html">进入构筑对照场 →</a></header>
+    <main>
+      <nav aria-label="世界方向">
+        <button data-world="suspended-sea" aria-pressed="true"><small>01 / 自然与尺度</small>悬在头顶的海</button>
+        <button data-world="living-continent" aria-pressed="false"><small>02 / 生命与地貌</small>彼此托举的生命大陆</button>
+        <button data-world="forced-thickness" aria-pressed="false"><small>03 / 空间与身体</small>被撑出厚度的世界</button>
+        <p>先看世界如何存在，再看玩家脚下的局部。<br>1 / 2 / 3 切换方向<br>← / → 切换两种视图</p>
+        <a href="/docs/art/iteration-21-worlds/README.md" target="_blank" rel="noopener">完整设计说明 ↗</a>
+      </nav>
+      <section aria-label="方向图与设计说明">
+        <div class="toolbar"><div class="views" aria-label="视图"><button data-view="world" aria-pressed="true">世界意象</button><button data-view="scene" aria-pressed="false">俯视场景概念</button></div><button class="full" id="full">查看大图 ↗</button></div>
+        <figure><img id="art" alt="正在读取世界概念图" /><figcaption id="caption">正在读取图片…</figcaption></figure>
+        <div class="note"><div><h2>原生秩序与污染改写</h2><p id="origin"></p></div><div><h2>玩家要观察与判断的事</h2><p id="action"></p></div></div>
+        <p class="status">阶段一 · 方向审查。这里是概念图，尚未接入关卡；局部图用于讨论镜头、尺度与路线，碰撞和动态关系需要在选定方向后验证。</p>
+      </section>
+    </main>
+    <dialog id="large"><img id="large-art" alt="" /><form method="dialog"><p id="large-label"></p><button>关闭 · Esc</button></form></dialog>
+    <script type="module">
+      if (!import.meta.env.DEV) {
+        document.body.textContent = '世界取景仅在开发服务器开放。';
+      } else {
+        const folder='/docs/art/iteration-21-worlds/';
+        const descriptions={
+          'suspended-sea':{origin:'海床已经干露，海本身却仍悬在头顶。相邻水层被指定了不同的“下方”，垂下的水柱在触地前转向，接回另一处深海。',action:'先观察水下缘增厚和壳屑移动，再判断何时穿过水幕。较长的干露海脊保留绕路，近路尽头的沉积值得冒险翻找。'},
+          'living-continent':{origin:'巨大的生命互相承重，形成没有地面的生态层。它们仍在舒展，某些连接却失去了放松能力，将宽阔的鳍面勒成异样的折角。',action:'从纤维拉直、受力面抬高和接缝收窄，判断哪片支撑将被牵动。稳定根部与近路形成取舍，边缘残留的拿取要留出返程时间。'},
+          'forced-thickness':{origin:'生命原本存在于曲面之内；污染强迫薄面拥有体积。原本相邻的部分被撑开的内部隔断，一个线状轮廓转向后突然成为巨大的面积。',action:'观察双重边缘与膨出的截面，预判展开会占据哪里。褶底可避让，沿面根可以绕行；图中的薄面要在实机里拥有一致的遮挡与通行边界。'}
+        };
+        const art=document.querySelector('#art'),caption=document.querySelector('#caption');
+        let world=Object.keys(descriptions)[0],view='world',manifest;
+        const fromHash=location.hash.slice(1).split('/');
+        if(descriptions[fromHash[0]])world=fromHash[0];
+        if(fromHash[1]==='scene')view='scene';
+        function render(){
+          const asset=manifest.assets.find(row=>row.id===world+'-'+view);
+          if(!asset)throw new Error('该方向缺少图片：'+world+'-'+view);
+          art.src=folder+asset.file;art.alt=asset.title+'，方向概念图';
+          caption.textContent=asset.title+' · '+(view==='world'?'尺度、主体结构与氛围探索':'R2 · 俯视镜头与像素场景构图研究');
+          document.querySelector('#origin').textContent=descriptions[world].origin;
+          document.querySelector('#action').textContent=descriptions[world].action;
+          document.querySelectorAll('[data-world]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.world===world)));
+          document.querySelectorAll('[data-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.view===view)));
+          history.replaceState(null,'','#'+world+'/'+view);
+        }
+        try{
+          const response=await fetch(folder+'manifest.json');
+          if(!response.ok)throw new Error('图片目录未加载');
+          manifest=await response.json();render();
+          document.querySelectorAll('[data-world]').forEach(button=>button.addEventListener('click',()=>{world=button.dataset.world;render();}));
+          document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>{view=button.dataset.view;render();}));
+          document.addEventListener('keydown',event=>{
+            if(document.querySelector('#large').open||event.altKey||event.ctrlKey||event.metaKey)return;
+            if(['1','2','3'].includes(event.key)){world=Object.keys(descriptions)[Number(event.key)-1];render();}
+            else if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();view=view==='world'?'scene':'world';render();}
+          });
+          document.querySelector('#full').addEventListener('click',()=>{
+            const enlarged=document.querySelector('#large-art');enlarged.src=art.src;enlarged.alt=art.alt;
+            document.querySelector('#large-label').textContent=caption.textContent;document.querySelector('#large').showModal();
+          });
+          art.addEventListener('error',()=>{caption.textContent='图片未能读取，请刷新重试。';});
+        }catch(error){caption.textContent=error.message;document.querySelector('#full').disabled=true;}
+      }
+    </script>
+  </body>
+</html>

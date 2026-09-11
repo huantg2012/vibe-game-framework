@@ -1,0 +1,802 @@
+[
+  {
+    "case": "contested-bare",
+    "passed": false,
+    "failure": "Error: Walking blocked towards x=816: {\"x\":726,\"y\":169.3507693368653}\n    at move (file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:36:26)\n    at async file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:68:25",
+    "checks": [
+      "formal save unchanged: start"
+    ],
+    "pageErrors": [],
+    "outcome": "running",
+    "hp": 100,
+    "elapsedMs": 17213.316666666637,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 30,
+      "capacity": 160
+    },
+    "fixture": "51c732bb",
+    "metrics": {
+      "distancePx": 778.3088215174234,
+      "stationaryMs": 7315.803333333314,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 21.799260083333962,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": []
+  },
+  {
+    "case": "contested-bare-fixed",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 32196.006666666228,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 30,
+      "capacity": 160
+    },
+    "fixture": "51c732bb",
+    "metrics": {
+      "distancePx": 2411.1880950681807,
+      "stationaryMs": 1757.8699999999917,
+      "alertMs": 16832.65999999957,
+      "engagedMs": 99.97999999999956,
+      "peakChaos": 37.22807728333517,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 1
+  },
+  {
+    "case": "contested-melee",
+    "passed": false,
+    "failure": "Error: Walking blocked towards x=816: {\"x\":726,\"y\":168.73573438026185}\n    at move (file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:36:26)\n    at async file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:68:25",
+    "checks": [
+      "formal save unchanged: start"
+    ],
+    "pageErrors": [],
+    "outcome": "running",
+    "hp": 100,
+    "elapsedMs": 17163.609999999964,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "51c732bb",
+    "metrics": {
+      "distancePx": 779.1976543809055,
+      "stationaryMs": 7066.149999999971,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 21.779625950000618,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": []
+  },
+  {
+    "case": "contested-melee-facing",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 85,
+    "elapsedMs": 41378.969999999725,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "51c732bb",
+    "metrics": {
+      "distancePx": 2479.893796539483,
+      "stationaryMs": 8565.853333333112,
+      "alertMs": 3499.8499999999494,
+      "engagedMs": 1899.899999999965,
+      "peakChaos": 47.788386380001185,
+      "consumedUses": {
+        "CTM_ea26254f-14a0-4110-9784-bbe46aba3223": 1,
+        "CTM_d8f3f6e4-4014-4c3c-90e7-bf0cbb5e469e": 1,
+        "WPN_715d915f-b4f4-44d0-8ddd-6764ba79d287": 3,
+        "CTM_ab2f4661-a861-4a8d-87c1-895ed71b7104": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "stitch",
+        "uses": 1
+      },
+      {
+        "type": "compress",
+        "uses": 1
+      },
+      {
+        "type": "crowbar_plain",
+        "uses": 3
+      },
+      {
+        "type": "siphon",
+        "uses": 1
+      }
+    ],
+    "returned": 1
+  },
+  {
+    "case": "contested-melee-fixed",
+    "passed": false,
+    "failure": "AssertionError [ERR_ASSERTION]: The actual searched item must be carried home; an empty retreat is not a loot completion\n    at file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:94:4",
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 40,
+    "elapsedMs": 38612.393333333064,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "51c732bb",
+    "metrics": {
+      "distancePx": 2429.1905183788654,
+      "stationaryMs": 7282.7933333331675,
+      "alertMs": 23232.409999999738,
+      "engagedMs": 5199.809999999863,
+      "peakChaos": 43.95803173666882,
+      "consumedUses": {
+        "CTM_9b62c861-85fb-4446-a191-318897ad53f3": 1,
+        "CTM_6adfdb0c-f35e-4d04-8c07-3af7d79eadb8": 1,
+        "CTM_7cd4ced4-5c9f-4da9-ba02-cd20eece3649": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "stitch",
+        "uses": 1
+      },
+      {
+        "type": "compress",
+        "uses": 1
+      },
+      {
+        "type": "siphon",
+        "uses": 1
+      }
+    ],
+    "returned": 0
+  },
+  {
+    "case": "death",
+    "passed": false,
+    "failure": "Error: Walking blocked towards x=792: {\"x\":726,\"y\":168.01745622358916}\n    at move (file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:36:26)\n    at async file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:59:25",
+    "checks": [
+      "formal save unchanged: start"
+    ],
+    "pageErrors": [],
+    "outcome": "running",
+    "hp": 100,
+    "elapsedMs": 17196.55666666662,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 30,
+      "capacity": 160
+    },
+    "fixture": "51c732bb",
+    "metrics": {
+      "distancePx": 779.6421501997439,
+      "stationaryMs": 7299.356666666628,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 21.792639883333948,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": []
+  },
+  {
+    "case": "death-fixed",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual death",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "death",
+    "hp": 0,
+    "elapsedMs": 27262.36666666635,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 30,
+      "capacity": 160
+    },
+    "fixture": "51c732bb",
+    "metrics": {
+      "distancePx": 1145.8900757004672,
+      "stationaryMs": 12765.61666666636,
+      "alertMs": 11882.859999999693,
+      "engagedMs": 10082.939999999697,
+      "peakChaos": 36.304372433334784,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 0
+  },
+  {
+    "case": "isolation",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: pause",
+      "formal save unchanged: configuration restart",
+      "formal save unchanged: abort restart",
+      "formal save unchanged: reload",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 116.49333333333333,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 0.3261439999999993,
+      "stationaryMs": 116.49333333333333,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 15.04601486666667,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 0
+  },
+  {
+    "case": "isolation-final",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "configuration focus pauses actual simulation",
+      "formal save unchanged: pause",
+      "formal save unchanged: configuration restart",
+      "formal save unchanged: abort restart",
+      "formal save unchanged: reload",
+      "formal save unchanged: actual extraction",
+      "actual JSON download contains real settlement and declares training only",
+      "formal save unchanged: R return",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 83.22666666666669,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 0,
+      "stationaryMs": 83.22666666666669,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 15.032874533333334,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 0
+  },
+  {
+    "case": "periodic-delay",
+    "passed": false,
+    "failure": "AssertionError [ERR_ASSERTION]: Actual Q must affect a real Host\n    at file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:76:8",
+    "checks": [
+      "formal save unchanged: start"
+    ],
+    "pageErrors": [],
+    "outcome": "running",
+    "hp": 100,
+    "elapsedMs": 4180.523333333328,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 50,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 296.77506666666454,
+      "stationaryMs": 382.94333333333344,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 16.651306716666788,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": []
+  },
+  {
+    "case": "periodic-near-suppress-dust",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 15446.353333333322,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 50,
+      "capacity": 160
+    },
+    "fixture": "587ee398",
+    "metrics": {
+      "distancePx": 1183.8282111111184,
+      "stationaryMs": 399.62666666666684,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 21.101309566667204,
+      "consumedUses": {
+        "CTM_f42b6db7-b45b-43fb-a428-8e112529cad8": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "combust",
+        "uses": 1
+      }
+    ],
+    "returned": 0
+  },
+  {
+    "case": "periodic-near-suppress-mist",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 15446.79333333332,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 50,
+      "capacity": 160
+    },
+    "fixture": "62591e6b",
+    "metrics": {
+      "distancePx": 1181.162411111119,
+      "stationaryMs": 549.5999999999995,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 21.101483366667225,
+      "consumedUses": {
+        "CTM_c15cc10c-3c47-4df1-a964-e86764be206b": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "combust",
+        "uses": 1
+      }
+    ],
+    "returned": 0
+  },
+  {
+    "case": "periodic-none",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 34779.236666666184,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 30,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 2610.6457874009393,
+      "stationaryMs": 1666.186666666665,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 28.737798483334643,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 1
+  },
+  {
+    "case": "periodic-phase-delay",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 36129.089999999516,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 50,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 2588.839118116318,
+      "stationaryMs": 3349.659999999997,
+      "alertMs": 4199.82999999986,
+      "engagedMs": 0,
+      "peakChaos": 29.270990550001343,
+      "consumedUses": {
+        "CTM_7b8d9593-d89f-412c-bb3c-949b3019ebef": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "delay",
+        "uses": 1
+      }
+    ],
+    "returned": 1
+  },
+  {
+    "case": "periodic-phase-none",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 38162.31999999966,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 30,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 2604.1824112529303,
+      "stationaryMs": 5066.169999999996,
+      "alertMs": 13199.469999999892,
+      "engagedMs": 0,
+      "peakChaos": 38.03116890000191,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 1
+  },
+  {
+    "case": "periodic-phase-suppress",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 36212.61999999963,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 50,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 2597.909497201686,
+      "stationaryMs": 3167.846666666664,
+      "alertMs": 12432.84999999986,
+      "engagedMs": 0,
+      "peakChaos": 36.872629950001794,
+      "consumedUses": {
+        "CTM_5e4836f1-478d-4115-bd30-12c7023705c4": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "combust",
+        "uses": 1
+      }
+    ],
+    "returned": 1
+  },
+  {
+    "case": "periodic-suppress",
+    "passed": false,
+    "failure": "AssertionError [ERR_ASSERTION]: Actual Q must affect a real Host\n    at file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:76:8\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:459:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)",
+    "checks": [
+      "formal save unchanged: start"
+    ],
+    "pageErrors": [],
+    "outcome": "running",
+    "hp": 100,
+    "elapsedMs": 4263.909999999994,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 50,
+      "capacity": 160
+    },
+    "fixture": "8cead7b1",
+    "metrics": {
+      "distancePx": 300.77371111110904,
+      "stationaryMs": 366.2966666666661,
+      "alertMs": 0,
+      "engagedMs": 0,
+      "peakChaos": 16.684244450000126,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": []
+  },
+  {
+    "case": "watched-bare",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 85,
+    "elapsedMs": 34845.54666666624,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 30,
+      "capacity": 160
+    },
+    "fixture": "e6583d23",
+    "metrics": {
+      "distancePx": 2616.544972022668,
+      "stationaryMs": 1749.4399999999482,
+      "alertMs": 19199.189999999588,
+      "engagedMs": 483.2999999999811,
+      "peakChaos": 42.13042493333536,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 1
+  },
+  {
+    "case": "watched-wall-light",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 85,
+    "elapsedMs": 35129.34666666627,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 1,
+      "weight": 70,
+      "capacity": 160
+    },
+    "fixture": "e6583d23",
+    "metrics": {
+      "distancePx": 2600.436152244257,
+      "stationaryMs": 1882.9466666666312,
+      "alertMs": 19349.229999999618,
+      "engagedMs": 599.9699999999903,
+      "peakChaos": 39.282045683335376,
+      "consumedUses": {},
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [],
+    "returned": 1
+  },
+  {
+    "case": "watched-wall-quiet",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 100,
+    "elapsedMs": 36229.213333332984,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "e6583d23",
+    "metrics": {
+      "distancePx": 2601.257868315993,
+      "stationaryMs": 2766.219999999959,
+      "alertMs": 22065.82999999968,
+      "engagedMs": 0,
+      "peakChaos": 39.34125881666871,
+      "consumedUses": {
+        "CTM_45573576-7f62-420b-948a-5b967e4142b9": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "expand",
+        "uses": 1
+      }
+    ],
+    "returned": 1
+  },
+  {
+    "case": "watched-wall-quiet-direct",
+    "passed": false,
+    "failure": "AssertionError [ERR_ASSERTION]: The actual searched item must be carried home; an empty retreat is not a loot completion\n    at file:///Users/yilungao/coh/tools/build-lab/qa-playthrough.mjs:94:4",
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 55,
+    "elapsedMs": 32046.003333332897,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "e6583d23",
+    "metrics": {
+      "distancePx": 2324.8829989389287,
+      "stationaryMs": 2682.819999999998,
+      "alertMs": 23565.759999999573,
+      "engagedMs": 2699.8899999999976,
+      "peakChaos": 42.74282371666875,
+      "consumedUses": {
+        "CTM_47b26741-ac5d-44f5-b9c2-0c326645505a": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "expand",
+        "uses": 1
+      }
+    ],
+    "returned": 0
+  },
+  {
+    "case": "watched-wall-quiet-direct-lure",
+    "passed": true,
+    "checks": [
+      "formal save unchanged: start",
+      "formal save unchanged: actual extraction",
+      "formal save unchanged: final"
+    ],
+    "pageErrors": [],
+    "outcome": "extract",
+    "hp": 40,
+    "elapsedMs": 34579.2699999996,
+    "initialAttributes": {
+      "resistancePercent": 0,
+      "burdenSpeedFactor": 0.98,
+      "weight": 90,
+      "capacity": 160
+    },
+    "fixture": "e6583d23",
+    "metrics": {
+      "distancePx": 2335.929528525258,
+      "stationaryMs": 4416.023333333302,
+      "alertMs": 26165.609999999608,
+      "engagedMs": 4299.799999999925,
+      "peakChaos": 44.78357015000229,
+      "consumedUses": {
+        "CTM_c84a9e43-f534-41ed-b49f-efee5a19731a": 1,
+        "CTM_d581ffa8-3951-4cbd-87d8-f959008c7c9e": 1
+      },
+      "discardedItems": [],
+      "sampleLimitReached": false
+    },
+    "consumed": [
+      {
+        "type": "expand",
+        "uses": 1
+      },
+      {
+        "type": "kindle",
+        "uses": 1
+      }
+    ],
+    "returned": 1
+  }
+]

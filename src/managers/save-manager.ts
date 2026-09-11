@@ -24,6 +24,11 @@ import { impactSystem, validImpactForecastState } from '@/systems/impact-system'
 
 const SAVE = GAME_CONSTANTS.SAVE;
 
+/** Defaults to browser storage; isolated development sessions inject their own backend. */
+export type SaveStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+let injectedStorage: SaveStorage | null = null;
+function storage(): SaveStorage { return injectedStorage ?? localStorage; }
+
 /** Check the fields consumed by existing loaders before touching live systems. */
 function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (!data || (data.version !== 1 && data.version !== 2)) return false;
@@ -43,7 +48,7 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
 }
 
 function readSaveJson(): ExpeditionSaveData | null {
-  const raw = localStorage.getItem(SAVE.KEY);
+  const raw = storage().getItem(SAVE.KEY);
   if (!raw) return null;
   try {
     const data = JSON.parse(raw) as ExpeditionSaveData;
@@ -101,7 +106,7 @@ function enableInventoryPersistence(): void {
     if (worldTransaction) return;
     if (pendingWorldSave) throw new Error("Previous settlement must be saved first");
     const beforeForecast = impactSystem.getForecastState();
-    try { localStorage.setItem(SAVE.KEY, JSON.stringify(collectSave(inventory))); }
+    try { storage().setItem(SAVE.KEY, JSON.stringify(collectSave(inventory))); }
     catch (error) { impactSystem.loadForecastState(beforeForecast); throw error; }
   });
 }
@@ -111,6 +116,12 @@ function enableInventoryPersistence(): void {
 // ---------------------------------------------------------------------------
 
 export const saveManager = {
+  /** Call before session initialization. Every persistence path resolves this backend. */
+  setStorage(backend: SaveStorage | null): void {
+    if (worldTransaction || pendingWorldSave) throw new Error('Cannot replace storage during a pending settlement');
+    injectedStorage = backend;
+    enableInventoryPersistence();
+  },
   /** A useful injection and its finite bonus must be durable together. */
   allocateToModule(id: string, amount: number): number {
     if (pendingWorldSave) return 0;
@@ -136,7 +147,7 @@ export const saveManager = {
 
   /** Check if a save file exists in localStorage. */
   hasSave(): boolean {
-    return localStorage.getItem(SAVE.KEY) !== null;
+    return storage().getItem(SAVE.KEY) !== null;
   },
 
   /**
@@ -147,7 +158,7 @@ export const saveManager = {
     const beforeForecast = impactSystem.getForecastState();
     try {
       const data = collectSave(inventoryStore.getState());
-      localStorage.setItem(SAVE.KEY, JSON.stringify(data));
+      storage().setItem(SAVE.KEY, JSON.stringify(data));
     } catch (error) { impactSystem.loadForecastState(beforeForecast); throw error; }
     pendingWorldSave = false;
     enableInventoryPersistence();
@@ -160,7 +171,7 @@ export const saveManager = {
    * Emits GAME_LOADED on success.
    */
   load(): boolean {
-    const raw = localStorage.getItem(SAVE.KEY);
+    const raw = storage().getItem(SAVE.KEY);
     if (!raw) return false;
 
     let data: ExpeditionSaveData;
@@ -218,7 +229,7 @@ export const saveManager = {
 
     // Migration is durable immediately; failure leaves the readable V1 record intact.
     if (data.version === 1 || data.inventory.version === 1) {
-      try { localStorage.setItem(SAVE.KEY, JSON.stringify(collectSave(inventoryStore.getState()))); } catch { /* trySave exposes retry; do not erase old save */ }
+      try { storage().setItem(SAVE.KEY, JSON.stringify(collectSave(inventoryStore.getState()))); } catch { /* trySave exposes retry; do not erase old save */ }
     }
     enableInventoryPersistence();
     eventBus.emit(GameEvent.GAME_LOADED, { cycle: data.cycle });
@@ -232,7 +243,7 @@ export const saveManager = {
 
   /** Delete the save from localStorage. */
   deleteSave(): void {
-    localStorage.removeItem(SAVE.KEY);
+    storage().removeItem(SAVE.KEY);
     // Starter creation happens before the other systems finish resetting.
     // Do not let that transaction save a half-reset record.
     inventoryStore.setPersistence(null);

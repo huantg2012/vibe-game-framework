@@ -1,0 +1,1403 @@
+{
+  "case": "isolation",
+  "method": "UI setup, real keyboard/mouse thereafter, read-only snapshots, natural simulation clock.",
+  "observations": [
+    {
+      "label": "01-start",
+      "ready": true,
+      "running": true,
+      "paused": false,
+      "snapshot": {
+        "elapsedMs": 216.3866666666666,
+        "ended": false,
+        "player": {
+          "x": 176,
+          "y": 400
+        },
+        "hp": 100,
+        "chaos": 15.085472733333336,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": "extract",
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "BL_periodic_listener",
+            "state": "patrol",
+            "position": {
+              "x": 982,
+              "y": 656
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 619.8205777454546,
+              "y": 416
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "rest",
+              "elapsedMs": 216.3866666666666,
+              "hazardActive": false
+            }
+          }
+        ]
+      },
+      "inventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_982904c1-8a6d-45ee-a336-c298c754ce09",
+            "weapon": {
+              "id": "WPN_982904c1-8a6d-45ee-a336-c298c754ce09",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_982904c1-8a6d-45ee-a336-c298c754ce09",
+          "toolIds": [],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-2e366798-d12e-4f07-adf1-cfe9b2528677",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_982904c1-8a6d-45ee-a336-c298c754ce09"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": []
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "attributes": {
+        "resistancePercent": 0,
+        "burdenSpeedFactor": 1,
+        "weight": 30,
+        "capacity": 160
+      },
+      "records": 0,
+      "error": ""
+    },
+    {
+      "label": "after-extract",
+      "ready": true,
+      "running": true,
+      "paused": false,
+      "snapshot": {
+        "elapsedMs": 116.49333333333333,
+        "ended": true,
+        "player": {
+          "x": 176,
+          "y": 399.673856
+        },
+        "hp": 100,
+        "chaos": 15.04601486666667,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "BL_periodic_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1032.5,
+              "y": 656
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 619.369897693774,
+              "y": 416
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "release",
+              "elapsedMs": 2697.023333333338,
+              "hazardActive": true
+            }
+          }
+        ]
+      },
+      "inventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "weapon": {
+              "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "contaminant": {
+              "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+              "type": "kindle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "contaminant": {
+              "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+              "type": "expand",
+              "rarity": "fine",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+            "contaminant": {
+              "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+              "type": "muffle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+          "toolIds": [
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-6c3df810-b94d-4d53-8e20-ce3aaf455b9e",
+          "status": "settled",
+          "carriedOutIds": [
+            "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "outcome": "extract",
+          "returnedIds": [],
+          "kindlingGained": 0
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "attributes": {
+        "resistancePercent": 0,
+        "burdenSpeedFactor": 0.98,
+        "weight": 90,
+        "capacity": 160
+      },
+      "records": 1,
+      "error": ""
+    },
+    {
+      "label": "90-final",
+      "ready": true,
+      "running": true,
+      "paused": false,
+      "snapshot": {
+        "elapsedMs": 116.49333333333333,
+        "ended": true,
+        "player": {
+          "x": 176,
+          "y": 399.673856
+        },
+        "hp": 100,
+        "chaos": 15.04601486666667,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "BL_periodic_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1032.5,
+              "y": 656
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 619.369897693774,
+              "y": 416
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "release",
+              "elapsedMs": 2697.023333333338,
+              "hazardActive": true
+            }
+          }
+        ]
+      },
+      "inventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "weapon": {
+              "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "contaminant": {
+              "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+              "type": "kindle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "contaminant": {
+              "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+              "type": "expand",
+              "rarity": "fine",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+            "contaminant": {
+              "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+              "type": "muffle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+          "toolIds": [
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-6c3df810-b94d-4d53-8e20-ce3aaf455b9e",
+          "status": "settled",
+          "carriedOutIds": [
+            "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "outcome": "extract",
+          "returnedIds": [],
+          "kindlingGained": 0
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "attributes": {
+        "resistancePercent": 0,
+        "burdenSpeedFactor": 0.98,
+        "weight": 90,
+        "capacity": 160
+      },
+      "records": 1,
+      "error": ""
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "formal save unchanged: start",
+    "formal save unchanged: pause",
+    "formal save unchanged: configuration restart",
+    "formal save unchanged: abort restart",
+    "formal save unchanged: reload",
+    "formal save unchanged: actual extraction",
+    "formal save unchanged: final"
+  ],
+  "passed": true,
+  "records": [
+    {
+      "schemaVersion": 1,
+      "metadata": {
+        "runId": "build-lab-6c3df810-b94d-4d53-8e20-ce3aaf455b9e",
+        "sceneId": "periodic",
+        "loadoutId": "quiet",
+        "seed": 7,
+        "volume": "gas_mass",
+        "fixtureSignature": "8cead7b1",
+        "codeBaseline": "2d9725f + iteration-21 working tree",
+        "startedAt": "2026-09-11T03:01:09.269Z",
+        "trainingInventory": true,
+        "supplyValidation": false,
+        "description": "回声空壳与穿薄墙；被动仅抑制听觉发现",
+        "loadoutDefinition": {
+          "id": "quiet",
+          "name": "静默绕行",
+          "weapon": "crowbar_plain",
+          "activeA": "kindle",
+          "activeB": "expand",
+          "passive": "muffle",
+          "pair": "light",
+          "description": "回声空壳与穿薄墙；被动仅抑制听觉发现"
+        },
+        "modules": {
+          "kindlingReserve": 0,
+          "cycle": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 70,
+              "maxHp": 100
+            }
+          ],
+          "moduleMaxHpTier": 0,
+          "pendingSideEffects": [],
+          "upgradeDiscount": 0,
+          "moduleSwapActive": false,
+          "repairBonusHp": 0
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          }
+        },
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "initialAttributes": {
+          "resistancePercent": 0,
+          "burdenSpeedFactor": 0.98,
+          "weight": 90,
+          "capacity": 160
+        },
+        "measurement": "100ms read-only simulation samples; stationary time includes observation; alert/engaged are AI states, not inferred player intent. Uses are committed inventory differences. Recorder does not inject inputs."
+      },
+      "initialInventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "weapon": {
+              "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "contaminant": {
+              "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+              "type": "kindle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "contaminant": {
+              "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+              "type": "expand",
+              "rarity": "fine",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+            "contaminant": {
+              "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+              "type": "muffle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+          "toolIds": [
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-6c3df810-b94d-4d53-8e20-ce3aaf455b9e",
+          "status": "active",
+          "carriedOutIds": [
+            "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": []
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "finalInventory": {
+        "version": 2,
+        "items": [
+          {
+            "kind": "weapon",
+            "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "weapon": {
+              "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+              "definitionId": "crowbar_plain",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 60
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "contaminant": {
+              "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+              "type": "kindle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "contaminant": {
+              "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+              "type": "expand",
+              "rarity": "fine",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 3,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          },
+          {
+            "kind": "contaminant",
+            "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+            "contaminant": {
+              "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+              "type": "muffle",
+              "rarity": "common",
+              "stage": "tool",
+              "impactCharges": 3,
+              "usesRemaining": 5,
+              "quality": "ordinary"
+            },
+            "location": {
+              "kind": "carried"
+            }
+          }
+        ],
+        "equipment": {
+          "weaponId": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+          "toolIds": [
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "defenseIds": []
+        },
+        "run": {
+          "id": "build-lab-6c3df810-b94d-4d53-8e20-ce3aaf455b9e",
+          "status": "settled",
+          "carriedOutIds": [
+            "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+            "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+            "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+            "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+          ],
+          "revealedNodes": {},
+          "destroyedIds": [],
+          "outcome": "extract",
+          "returnedIds": [],
+          "kindlingGained": 0
+        },
+        "starterGranted": true,
+        "firstWeaponDiscovered": false
+      },
+      "samples": [
+        {
+          "elapsedMs": 0,
+          "ended": false,
+          "player": {
+            "x": 176,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 976,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.424,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 0,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 16.64,
+          "ended": false,
+          "player": {
+            "x": 176,
+            "y": 400
+          },
+          "hp": 100,
+          "chaos": 15.0065728,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "extract",
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 976,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.4544965818181,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 16.64,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "ended": true,
+          "player": {
+            "x": 176,
+            "y": 399.673856
+          },
+          "hp": 100,
+          "chaos": 15.04601486666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 980,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.6984814545455,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 149.76666666666665,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "ended": true,
+          "player": {
+            "x": 176,
+            "y": 399.673856
+          },
+          "hp": 100,
+          "chaos": 15.04601486666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 983,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 619.8814120727272,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 249.58,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "ended": true,
+          "player": {
+            "x": 176,
+            "y": 399.673856
+          },
+          "hp": 100,
+          "chaos": 15.04601486666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 986,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.0644282181818,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 349.43999999999994,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "ended": true,
+          "player": {
+            "x": 176,
+            "y": 399.673856
+          },
+          "hp": 100,
+          "chaos": 15.04601486666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 989,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.2474199272727,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 449.2866666666665,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "ended": true,
+          "player": {
+            "x": 176,
+            "y": 399.673856
+          },
+          "hp": 100,
+          "chaos": 15.04601486666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 992,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.4303749818182,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 549.1133333333331,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "ended": true,
+          "player": {
+            "x": 176,
+            "y": 399.673856
+          },
+          "hp": 100,
+          "chaos": 15.04601486666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 995,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.6133911272727,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 648.973333333333,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "ended": true,
+          "player": {
+            "x": 176,
+            "y": 399.673856
+          },
+          "hp": 100,
+          "chaos": 15.04601486666667,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 4
+          },
+          "enemies": [
+            {
+              "id": "BL_periodic_listener",
+              "state": "patrol",
+              "position": {
+                "x": 997,
+                "y": 656
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 620.7354141090909,
+                "y": 416
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 715.553333333333,
+                "hazardActive": false
+              }
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "elapsedMs": 16.64,
+          "event": "inventory:committed",
+          "payload": {
+            "version": 2,
+            "items": [
+              {
+                "kind": "weapon",
+                "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+                "weapon": {
+                  "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+                  "definitionId": "crowbar_plain",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 60
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              },
+              {
+                "kind": "contaminant",
+                "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                "contaminant": {
+                  "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                  "type": "kindle",
+                  "rarity": "common",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 5,
+                  "quality": "ordinary"
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              },
+              {
+                "kind": "contaminant",
+                "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                "contaminant": {
+                  "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                  "type": "expand",
+                  "rarity": "fine",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 3,
+                  "quality": "ordinary"
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              },
+              {
+                "kind": "contaminant",
+                "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+                "contaminant": {
+                  "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+                  "type": "muffle",
+                  "rarity": "common",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 5,
+                  "quality": "ordinary"
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              }
+            ],
+            "equipment": {
+              "weaponId": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+              "toolIds": [
+                "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+              ],
+              "defenseIds": []
+            },
+            "run": {
+              "id": "build-lab-6c3df810-b94d-4d53-8e20-ce3aaf455b9e",
+              "status": "settled",
+              "carriedOutIds": [
+                "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+                "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+              ],
+              "revealedNodes": {},
+              "destroyedIds": [],
+              "outcome": "extract",
+              "returnedIds": [],
+              "kindlingGained": 0
+            },
+            "starterGranted": true,
+            "firstWeaponDiscovered": false
+          }
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "event": "rift:exited",
+          "payload": {
+            "kindlingGained": 0,
+            "survived": true
+          }
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "event": "inventory:committed",
+          "payload": {
+            "version": 2,
+            "items": [
+              {
+                "kind": "weapon",
+                "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+                "weapon": {
+                  "id": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+                  "definitionId": "crowbar_plain",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 60
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              },
+              {
+                "kind": "contaminant",
+                "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                "contaminant": {
+                  "id": "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                  "type": "kindle",
+                  "rarity": "common",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 5,
+                  "quality": "ordinary"
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              },
+              {
+                "kind": "contaminant",
+                "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                "contaminant": {
+                  "id": "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                  "type": "expand",
+                  "rarity": "fine",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 3,
+                  "quality": "ordinary"
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              },
+              {
+                "kind": "contaminant",
+                "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+                "contaminant": {
+                  "id": "CTM_44428e76-88e8-413b-831e-8f3a84970a52",
+                  "type": "muffle",
+                  "rarity": "common",
+                  "stage": "tool",
+                  "impactCharges": 3,
+                  "usesRemaining": 5,
+                  "quality": "ordinary"
+                },
+                "location": {
+                  "kind": "carried"
+                }
+              }
+            ],
+            "equipment": {
+              "weaponId": "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+              "toolIds": [
+                "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+              ],
+              "defenseIds": []
+            },
+            "run": {
+              "id": "build-lab-6c3df810-b94d-4d53-8e20-ce3aaf455b9e",
+              "status": "settled",
+              "carriedOutIds": [
+                "WPN_73a7aecb-2411-47ea-bd4c-772d5a5f05c1",
+                "CTM_6c887b31-2d85-48f2-ade9-de0f4a4ced6f",
+                "CTM_f38753e5-1811-4f93-876a-533dae73ba67",
+                "CTM_44428e76-88e8-413b-831e-8f3a84970a52"
+              ],
+              "revealedNodes": {},
+              "destroyedIds": [],
+              "outcome": "extract",
+              "returnedIds": [],
+              "kindlingGained": 0
+            },
+            "starterGranted": true,
+            "firstWeaponDiscovered": false
+          }
+        },
+        {
+          "elapsedMs": 116.49333333333333,
+          "event": "record:finished",
+          "payload": {
+            "outcome": "extract"
+          }
+        }
+      ],
+      "outcome": "extract",
+      "metrics": {
+        "distancePx": 0.3261439999999993,
+        "stationaryMs": 116.49333333333333,
+        "alertMs": 0,
+        "engagedMs": 0,
+        "peakChaos": 15.04601486666667,
+        "consumedUses": {},
+        "discardedItems": [],
+        "sampleLimitReached": false
+      }
+    }
+  ]
+}

@@ -31,6 +31,14 @@ import { getFormRenderer, type FormVisual, type FormVisualSignal } from '@/entit
 import { Player } from '@/entities/player';
 import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import { generateRiftLayout } from '@/generation/rift-layout';
+import type { GeneratedRiftLayout } from '@/generation/types';
+
+/** Development encounters still use the complete production scene lifecycle. */
+export interface RiftDevFixture {
+  createLayout(): GeneratedRiftLayout;
+  onReturn(): void;
+  onPause?(): void;
+}
 import { mix32 } from '@/generation/seed-fork';
 import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
 import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
@@ -100,6 +108,8 @@ export class RiftScene extends Phaser.Scene {
   private toolInputAllowed = true;
   private unsubscribeInventory: (() => void) | null = null;
   private readonly fieldInventory = new FieldLootInventory();
+  private devFixture: RiftDevFixture | null = null;
+  private devElapsedMs = 0;
   private inventoryClosedAt = -1000;
   private readonly runController = new RunController();
   private readonly hud = new RiftHud();
@@ -151,15 +161,21 @@ export class RiftScene extends Phaser.Scene {
     super({ key: 'RiftScene' });
   }
 
-  create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[] }): void {
+  create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture }): void {
+    this.devFixture = import.meta.env.DEV ? data?.devFixture ?? null : null;
+    this.devElapsedMs = 0;
+    this.probeSearchHeld = false;
+    this.inventoryClosedAt = -1000;
+    this.thresholdUntilMs = 0;
     this.toolInputAllowed = true;
     const sortieModifiers = data?.modifiers;
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
-    const seed = readRiftSeed();
+    let seed = readRiftSeed();
     const recipeId = readRiftRecipeId();
     let generated;
     try {
-      generated = generateRiftLayout(seed, recipeId ? { recipeId } : undefined);
+      generated = this.devFixture?.createLayout() ?? generateRiftLayout(seed, recipeId ? { recipeId } : undefined);
+      seed = generated.seed;
     } catch (err) {
       console.error(`[RiftScene] generateRiftLayout(${seed}) failed`, err);
       throw err;
@@ -389,6 +405,7 @@ export class RiftScene extends Phaser.Scene {
       setPlayerInput: () => this.syncPlayerInput(),
       getCarriedKindling: () => this.search.getCarriedKindling(),
       onSettlementFailure: (message, retry) => this.showSettlementRetry(message, retry),
+      onReturn: this.devFixture?.onReturn,
     });
 
     this.hud.create({
@@ -457,6 +474,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
+    if (this.devFixture && !this.runController.isRunEnded()) this.devElapsedMs += delta;
     this.player.update(delta);
     this.syncRiftAudio();
     this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
@@ -1292,7 +1310,8 @@ export class RiftScene extends Phaser.Scene {
 
   private openPauseMenu(): void {
     if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150 || riftResultPanel.isOpen()) return;
-    pauseMenu.open(this);
+    if (this.devFixture?.onPause) this.devFixture.onPause();
+    else pauseMenu.open(this);
   }
 
   /**
@@ -1638,6 +1657,27 @@ export class RiftScene extends Phaser.Scene {
         })(),
       })),
       textures: this.textures.getTextureKeys().filter((key) => /insect16|human17|beast18|worm18|relic18|growth18|remnant18/.test(key) || key.startsWith('combat-flash-')),
+    };
+  }
+
+  /** Read-only recorder sample. No teleport, invulnerability or timing overrides. */
+  probeBuildLabState() {
+    if (!import.meta.env.DEV || !this.devFixture) return null;
+    return {
+      elapsedMs: this.devElapsedMs, ended: this.runController.isRunEnded(),
+      player: { ...this.player.getPosition() }, hp: this.combat.getHealth(), chaos: this.chaos.getValue(),
+      attack: { ...this.combat.getAttackState() }, kindling: this.search.getCarriedKindling(),
+      search: { prompt: this.search.getPrompt(), progress: this.search.getChannelProgress01(), remaining: this.search.getRemainingCount() },
+      enemies: this.ai.getEnemies().map(enemy => ({ id: enemy.getId(), state: enemy.getState(),
+        position: { ...enemy.getPosition() }, hp: this.combat.getEnemyHealth(enemy.getId()),
+        detection: enemy.getDetection(), engaged: enemy.isEngaged(), visible: this.visibilityAt(enemy.getPosition()) > 0 })),
+      hosts: this.hosts.getToolTargets().map(host => ({ id: host.id, substrate: host.form.substrate,
+        position: { ...host.position }, hazardReleased: host.hazardReleased,
+        suppressionRemainingMs: host.suppressionRemainingMs, delayRemainingMs: host.delayRemainingMs,
+        recoveryWarning: host.recoveryWarning,
+        volume: (() => { const frame = this.hosts.getVolumePresenceFrame(host.id); return frame ? {
+          phase: frame.phase, elapsedMs: frame.elapsedMs, hazardActive: frame.hazardActive,
+        } : undefined; })() })),
     };
   }
 
