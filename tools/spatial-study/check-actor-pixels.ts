@@ -104,7 +104,8 @@ check('per-pixel pose depth equals the common camera depth, instead of a flat bi
 check('weapon drawing follows the formal attack/contact clock and remains within the actual reach', () => {
   const model = new StagePlayer(); scene.add(model.root); const frame = createPresentationFrame();
   const p = frame.player, profile = WEAPON_ATTACK_PROFILES.crowbar!; p.hp = 100; p.weaponDefinitionId = 'crowbar_plain';
-  Object.assign(p.attack, { phase: 'active', elapsedMs: 25, facing: .3, contactElapsedMs: 15, contactRemainingMs: 10,
+  Object.assign(p.attack, { phase: 'active', elapsedMs: profile.windupMs + 25, facing: .3,
+    contactElapsedMs: profile.windupMs + 15, contactRemainingMs: 10,
     windupMs: profile.windupMs, activeMs: profile.activeMs, recoveryMs: profile.recoveryMs });
   const source = JSON.stringify(p); model.update(p, 1000); const held = Number(model.snapshot().attackArc);
   model.update(p, 1100); near(Number(model.snapshot().attackArc), held); assert.equal(JSON.stringify(p), source);
@@ -112,7 +113,8 @@ check('weapon drawing follows the formal attack/contact clock and remains within
   for (const phase of ['windup', 'active', 'recovery'] as const) {
     p.attack.phase = phase; p.attack.contactRemainingMs = 0;
     for (const elapsed of [0, 15, 30, 45]) {
-      p.attack.elapsedMs = elapsed; model.update(p, 1200 + elapsed);
+      p.attack.elapsedMs = elapsed + (phase === 'windup' ? 0 : profile.windupMs)
+        + (phase === 'recovery' ? profile.activeMs : 0); model.update(p, 1200 + elapsed);
       const tip = model.snapshot().weaponTip as number[];
       assert.ok(Math.hypot(tip[0]! - p.position.x, tip[2]! - p.position.y) <= profile.reachPx);
     }

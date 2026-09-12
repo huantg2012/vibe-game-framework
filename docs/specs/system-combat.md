@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
-last-modified-by: code / director（DEC-155：开敞空洞视线与物理通行分离）
+last-modified-by: code / director（DEC-156：真实挥击呈现与末次武器）
 last-modified-date: 2026-09-12
 interface-changed: true
 slice: 1
@@ -15,6 +15,7 @@ interfaces-with:
 exposes:
   - PlayerCombat.getHealth() / getMaxHealth() / isDead() / isInvulnerable() / getAttackState()
   - CombatSystem.requestPlayerAttack()   # 由场景层在按下攻击键时调用（按键读取归 RiftScene）
+  - CombatSystem.getWeaponVisualState() / getWeaponVisualDefinitionId() # 只读整次挥击与末次物件呈现
   - CombatSystem.update(dt) / setEnabled(b) / getEnemyHealth(id) / isEnemyAlive(id) / reset() / destroy()
   - CombatHooks.onNoise(pos, radius, level)   # 注入式回调：场景层转调 AISystem.reportNoise
   - 事件 PLAYER_DAMAGED { amount, source }（既有；本 spec 是拥有者，定义 source = enemyId）
@@ -25,6 +26,14 @@ exposes:
 ---
 
 # 系统设计：简化战斗
+
+## 迭代21 M：挥击与承受的显示合同
+
+`getWeaponVisualState()`的elapsedMs及contactElapsedMs均是从整次挥击起点计时。Stage的蓄势/出手/回收局部进度须分别扣除已完成相位时长，不能把整次elapsed直接除以当前相位长度；短命中停顿沿同一真实接触时刻显示，不倒回起手。
+
+`getWeaponVisualDefinitionId()`读取已承诺挥击的物件定义；末次耐久在合法接触时扣完并卸去槽位后，本次武器仍显示至回收结束。此查询不恢复装备、不增加可攻击次数，也不改变同挥多目标只扣一次的规则。实际受伤事件才驱动受击，移动牵制/压力单独驱动承受姿态，不伪造伤害或停攻。
+
+本批只为已支持的Stage虫形与普通撬棍补呈现；预兆、伤害和冷却仍以Combat/AI为准，不构成第二套攻击判定。结算后的模型余动画最多1秒，不推进工具、攻击、危险或消费时钟。
 
 ## 迭代21 K：开敞空洞的视线与位移（DEC-155）
 

@@ -135,12 +135,15 @@ void main(){
  for(int i=0;i<3;i++)gp.y=worldPoint.z-(worldPoint.y-groundAt(gp))/0.7002075382;
  vec2 guv=gp/worldSize;
  float valid=step(0.,guv.x)*step(guv.x,1.)*step(0.,guv.y)*step(guv.y,1.);
- vec3 perception=texture2D(terrainPerception,guv).rgb*valid;
+ // The continuous reference is a sight query, not evidence that a surface
+ // exists on this camera ray. Projecting terrain memory here stamps old tile
+ // footprints onto water even where there is only empty space underneath.
+ vec2 currentSight=texture2D(terrainPerception,guv).rb*valid;
  vec2 delta=(screenPoint-playerScreen)*resolution*.5;
  float nearPlayer=1.-smoothstep(35.,166.,length(delta/vec2(1.,.83)));
  if(falling<.5){
-   float visibleAir=perception.r*(1.-perception.b);
-   float transmission=max(perception.r*.79,perception.g*.24);
+   float visibleAir=currentSight.x*(1.-currentSight.y);
+   float transmission=currentSight.x*.79;
    transmission=max(transmission,visibleAir*.94);
    if(useSceneDepth>.5){
      vec2 pixelUv=gl_FragCoord.xy/resolution;
@@ -149,13 +152,15 @@ void main(){
        vec4 actual=inverseCamera*vec4(pixelUv*2.-1.,opaqueDepth*2.-1.,1.);
        vec3 actualPoint=actual.xyz/actual.w;
        vec2 actualUv=actualPoint.xz/worldSize;
-       vec2 actualPerception=texture2D(terrainPerception,actualUv).rg;
+       float actualValid=step(0.,actualUv.x)*step(actualUv.x,1.)*step(0.,actualUv.y)*step(actualUv.y,1.);
+       float actualSight=texture2D(terrainPerception,actualUv).r*actualValid;
        // A depth sample exists only where the native opaque render has
-       // already admitted a surface. No hidden terrain/actor is revealed.
-       // Correct only descending rock. Keep the established ground reveal;
-       // revealing every remembered depth pixel would trace out the map.
+       // already admitted a real surface. Terrain keeps its own dim memory,
+       // but memory must not open an otherwise intact sea above an old shore.
+       // Only current sight additionally exposes vertical thickness; natural
+       // water openings still show remembered ground without a synthetic cutout.
        float section=smoothstep(2.,7.,groundAt(actualPoint.xz)-actualPoint.y);
-       transmission=max(transmission,(.40+.54*actualPerception.r)*section);
+       transmission=max(transmission,actualSight*.94*section);
      }
    }
    transmission=max(transmission,nearPlayer*.47);

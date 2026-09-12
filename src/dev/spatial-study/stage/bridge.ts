@@ -1,5 +1,8 @@
 import type { WeaponAttackPose } from '@/systems/weapon-swing';
 import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
+import { createToolPresentationFrame, type ToolPresentationView } from '@/systems/tool-presentation';
+import type { RestraintPose } from '@/entities/restraint-reaction';
+import type { ContaminantQuality } from '@/types/game-types';
 
 /** Borrowed until the next simulation tick. No renderer receives mutable game objects. */
 export type DeepReadonly<T> = T extends readonly (infer E)[] ? readonly DeepReadonly<E>[]
@@ -10,6 +13,9 @@ export interface RiftPresentationEnemy {
   id: string; substrate: string; coverage: string; position: PresentationPoint;
   velocity: PresentationPoint; facing: number; hp: number; visibility: number;
   state: string; activity: { phase: string; progress: number }; attack: FormAttackPose;
+  restraint?: RestraintPose;
+  motionSuppressed?: boolean;
+  targetingLure?: boolean;
 }
 export interface RiftPresentationPile {
   id: string; position: PresentationPoint; collected: boolean; visibility: number;
@@ -17,6 +23,7 @@ export interface RiftPresentationPile {
 }
 export interface RiftPresentationItem {
   id: string; kind: 'weapon' | 'contaminant'; definitionId: string;
+  quality?: ContaminantQuality;
   position: PresentationPoint; visibility: number;
 }
 export interface RiftPresentationEvent {
@@ -29,6 +36,7 @@ export interface RiftPresentationFrame {
     facing: number; moving: boolean; hp: number; maxHp: number; invulnerable: boolean;
     attack: WeaponAttackPose; weaponId: string | null; weaponDefinitionId: string | null; durability: number };
   enemies: RiftPresentationEnemy[]; piles: RiftPresentationPile[]; groundItems: RiftPresentationItem[];
+  tools: ToolPresentationView;
   search: { prompt: string | null; targetId: string | null; channelId: string | null; progress: number | null };
   exit: { position: PresentationPoint; radius: number; inRange: boolean };
   /** Bounded, sequence-numbered history. An event is never fabricated from a keypress. */
@@ -45,6 +53,6 @@ export function createPresentationFrame(): RiftPresentationFrame {
       attack: { phase: 'idle', elapsedMs: 0, facing: 0, windupMs: 0, activeMs: 0, recoveryMs: 0,
         contactHoldMs: 0, contactRemainingMs: 0, contactElapsedMs: 0 },
       weaponId: null, weaponDefinitionId: null, durability: 0 },
-    enemies: [], piles: [], groundItems: [], search: { prompt: null, targetId: null, channelId: null, progress: null },
+    enemies: [], piles: [], groundItems: [], tools: createToolPresentationFrame(), search: { prompt: null, targetId: null, channelId: null, progress: null },
     exit: { position: { x: 0, y: 0 }, radius: 0, inRange: false }, events: [] };
 }

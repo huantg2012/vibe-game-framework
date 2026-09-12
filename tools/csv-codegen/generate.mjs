@@ -1606,47 +1606,49 @@ generateWeapons();
     'export const SPATIAL_STUDY_WATER = '+JSON.stringify(water,null,2)+' as const;', '',
   ].join('\n'));
 
-  const sliceScenes = records('spatial-slice-scenes.csv');
-  const slicePlacements = records('spatial-slice-placements.csv');
-  const sliceWater = records('spatial-slice-water.csv');
-  const sliceOpenings = records('spatial-slice-openings.csv');
-  const sliceGround = records('spatial-slice-ground.csv');
-  numeric(sliceScenes, ['cols','rows','seaFrontY','seaBottomHeight','seaTopHeight','reefCol','reefRow','reefHeight']);
-  numeric(slicePlacements, ['col','row','facing']);
-  numeric(sliceWater, ['x','y','width','depth','quietMs','warningMs','activeMs','retractMs','damage','hitIntervalMs','contactExtension','fallTravelMs']);
-  numeric(sliceOpenings, ['x','y','radiusX','radiusY','driftX','driftY','phase']);
-  numeric(sliceGround, ['x','y','radiusX','radiusY']);
-  for (const form of sliceGround) {
-    form.angle = Number(form.angle); form.height = Number(form.height);
-    if (!['ridge','scour','shelf'].includes(form.kind) || !Number.isFinite(form.angle) || Math.abs(form.angle) > 180
-      || !Number.isFinite(form.height) || Math.abs(form.height) > 80 || form.radiusX <= 0 || form.radiusY <= 0) throw new Error(`Invalid spatial slice ground ${form.id}`);
+  for (const [prefix, exportPrefix] of [['spatial-slice', 'SPATIAL_SLICE'], ['stage-gameplay', 'STAGE_GAMEPLAY']]) {
+    const sliceScenes = records(`${prefix}-scenes.csv`);
+    const slicePlacements = records(`${prefix}-placements.csv`);
+    const sliceWater = records(`${prefix}-water.csv`);
+    const sliceOpenings = records(`${prefix}-openings.csv`);
+    const sliceGround = records(`${prefix}-ground.csv`);
+    numeric(sliceScenes, ['cols','rows','seaFrontY','seaBottomHeight','seaTopHeight','reefCol','reefRow','reefHeight']);
+    numeric(slicePlacements, ['col','row','facing']);
+    numeric(sliceWater, ['x','y','width','depth','quietMs','warningMs','activeMs','retractMs','damage','hitIntervalMs','contactExtension','fallTravelMs']);
+    numeric(sliceOpenings, ['x','y','radiusX','radiusY','driftX','driftY','phase']);
+    numeric(sliceGround, ['x','y','radiusX','radiusY']);
+    for (const form of sliceGround) {
+      form.angle = Number(form.angle); form.height = Number(form.height);
+      if (!['ridge','scour','shelf'].includes(form.kind) || !Number.isFinite(form.angle) || Math.abs(form.angle) > 180
+        || !Number.isFinite(form.height) || Math.abs(form.height) > 80 || form.radiusX <= 0 || form.radiusY <= 0) throw new Error(`Invalid spatial slice ground ${form.id}`);
+    }
+    for (const opening of sliceOpenings) {
+      opening.angle = Number(opening.angle);
+      if (!Number.isFinite(opening.angle) || Math.abs(opening.angle) > 180) throw new Error(`Invalid spatial slice ${opening.id}.angle`);
+    }
+    if (sliceScenes.length !== 1 || sliceWater.length !== 1 || sliceOpenings.length < 3) throw new Error('Spatial slices require one common layout, water cycle and distributed openings');
+    for (const row of sliceScenes) {
+      if (!Number.isSafeInteger(row.cols) || !Number.isSafeInteger(row.rows) || row.cols < 8 || row.rows < 8 || row.cols > 100 || row.rows > 100 || row.seaBottomHeight >= row.seaTopHeight || !knownLoadouts.has(row.loadout)) throw new Error('Invalid spatial slice geometry');
+    }
+    for (const row of slicePlacements) {
+      if (!Number.isSafeInteger(row.col) || !Number.isSafeInteger(row.row) || !['enemy','kindling','contaminant'].includes(row.kind) || (row.kind === 'enemy' && !knownSubstrates.has(row.substrate))) throw new Error('Invalid spatial slice placement');
+    }
+    for (const row of sliceWater) {
+      if (['width','depth','quietMs','warningMs','activeMs','retractMs','damage','hitIntervalMs','contactExtension'].some(key => row[key] <= 0) || row.contactExtension > 1) throw new Error('Invalid spatial slice water cycle');
+      if (row.fallTravelMs <= 0 || row.fallTravelMs >= row.warningMs || row.fallTravelMs >= row.activeMs) throw new Error('Water travel must fit its warning and feeding interval');
+      const points = row.outline.split('|').map(p => p.split(':').map(Number));
+      if (points.length < 5 || points.some(p => p.length !== 2 || !p.every(Number.isFinite) || Math.abs(p[0]) > row.width / 2 || Math.abs(p[1]) > row.depth / 2)) throw new Error('Invalid spatial slice water outline');
+    }
+    if (sliceOpenings.some(row => row.radiusX <= 0 || row.radiusY <= 0)) throw new Error('Invalid spatial slice opening');
+    writeFileSync(resolve(OUT_DIR, `${prefix}-data.ts`), [
+      `// AUTO-GENERATED from data/${prefix}-*.csv — DO NOT EDIT`,
+      `export const ${exportPrefix}_SCENES = `+JSON.stringify(sliceScenes,null,2)+' as const;',
+      `export const ${exportPrefix}_PLACEMENTS = `+JSON.stringify(slicePlacements,null,2)+' as const;',
+      `export const ${exportPrefix}_WATER = `+JSON.stringify(sliceWater,null,2)+' as const;',
+      `export const ${exportPrefix}_OPENINGS = `+JSON.stringify(sliceOpenings,null,2)+' as const;', '',
+      `export const ${exportPrefix}_GROUND = `+JSON.stringify(sliceGround,null,2)+' as const;', '',
+    ].join('\n'));
   }
-  for (const opening of sliceOpenings) {
-    opening.angle = Number(opening.angle);
-    if (!Number.isFinite(opening.angle) || Math.abs(opening.angle) > 180) throw new Error(`Invalid spatial slice ${opening.id}.angle`);
-  }
-  if (sliceScenes.length !== 1 || sliceWater.length !== 1 || sliceOpenings.length < 3) throw new Error('Spatial slices require one common layout, water cycle and distributed openings');
-  for (const row of sliceScenes) {
-    if (!Number.isSafeInteger(row.cols) || !Number.isSafeInteger(row.rows) || row.cols < 8 || row.rows < 8 || row.cols > 100 || row.rows > 100 || row.seaBottomHeight >= row.seaTopHeight || !knownLoadouts.has(row.loadout)) throw new Error('Invalid spatial slice geometry');
-  }
-  for (const row of slicePlacements) {
-    if (!Number.isSafeInteger(row.col) || !Number.isSafeInteger(row.row) || !['enemy','kindling','contaminant'].includes(row.kind) || (row.kind === 'enemy' && !knownSubstrates.has(row.substrate))) throw new Error('Invalid spatial slice placement');
-  }
-  for (const row of sliceWater) {
-    if (['width','depth','quietMs','warningMs','activeMs','retractMs','damage','hitIntervalMs','contactExtension'].some(key => row[key] <= 0) || row.contactExtension > 1) throw new Error('Invalid spatial slice water cycle');
-    if (row.fallTravelMs <= 0 || row.fallTravelMs >= row.warningMs || row.fallTravelMs >= row.activeMs) throw new Error('Water travel must fit its warning and feeding interval');
-    const points = row.outline.split('|').map(p => p.split(':').map(Number));
-    if (points.length < 5 || points.some(p => p.length !== 2 || !p.every(Number.isFinite) || Math.abs(p[0]) > row.width / 2 || Math.abs(p[1]) > row.depth / 2)) throw new Error('Invalid spatial slice water outline');
-  }
-  if (sliceOpenings.some(row => row.radiusX <= 0 || row.radiusY <= 0)) throw new Error('Invalid spatial slice opening');
-  writeFileSync(resolve(OUT_DIR, 'spatial-slice-data.ts'), [
-    '// AUTO-GENERATED from data/spatial-slice-*.csv — DO NOT EDIT',
-    'export const SPATIAL_SLICE_SCENES = '+JSON.stringify(sliceScenes,null,2)+' as const;',
-    'export const SPATIAL_SLICE_PLACEMENTS = '+JSON.stringify(slicePlacements,null,2)+' as const;',
-    'export const SPATIAL_SLICE_WATER = '+JSON.stringify(sliceWater,null,2)+' as const;',
-    'export const SPATIAL_SLICE_OPENINGS = '+JSON.stringify(sliceOpenings,null,2)+' as const;', '',
-    'export const SPATIAL_SLICE_GROUND = '+JSON.stringify(sliceGround,null,2)+' as const;', '',
-  ].join('\n'));
 }
 
 console.log('[codegen] Done.');

@@ -501,6 +501,11 @@ export class CombatSystem implements CombatSystemAPI {
     return this.weaponPose;
   }
 
+  /** The accepted swing retains its object through the final durability use. */
+  getWeaponVisualDefinitionId(): string | null {
+    return this.swingWeaponId ?? this.weaponId;
+  }
+
   getEnemyAttackVisualState(enemyId: string): FormAttackPose {
     const state = this.enemies.get(enemyId);
     if (!this.enabled || !state) return { phase: 'idle', progress: 0 };

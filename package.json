@@ -6,6 +6,7 @@
   "scripts": {
     "check:spatial-study": "node --import tsx tools/spatial-study/check.ts && node --import tsx tools/spatial-study/check-volume.ts",
     "check:spatial-slices": "node --import tsx tools/spatial-study/check-slices.ts && node --import tsx tools/spatial-study/check-stage.ts && node --import tsx tools/spatial-study/check-ground.ts && node --import tsx tools/spatial-study/check-ground-clearance.ts && node --import tsx tools/spatial-study/check-flow.ts && node --import tsx tools/spatial-study/check-actor-pixels.ts && node --import tsx tools/spatial-study/check-void-section.ts && node --import tsx tools/spatial-study/check-stage-sight.ts",
+    "check:stage-gameplay": "node --import tsx tools/spatial-study/check-stage-camera.ts && node --import tsx tools/spatial-study/check-stage-gameplay.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/spatial-study/check-stage-tools.ts",
     "predev": "node tools/ensure-deps.mjs",
     "dev": "vite",
     "pregym": "node tools/ensure-deps.mjs",

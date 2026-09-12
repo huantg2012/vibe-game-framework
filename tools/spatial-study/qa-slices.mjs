@@ -398,7 +398,7 @@ async function lifecycle() {
   await page.reload(); await page.waitForFunction(() => window.__spatialSlices?.getState().snapshot?.elapsedMs > 100); await sentinel('refresh'); await cap('95-refreshed');
 }
 try {
-  await page.goto(`${base}/spatial-slices.html?view=${view}&seed=7&autostart=0`);
+  await page.goto(`${base}/spatial-slices.html?view=${view}&route=local&loadout=bare&seed=7&autostart=0`);
   await page.waitForFunction(() => window.__spatialSlices?.getState().ready, null, { timeout: 30000 });
   await page.evaluate(value => { if (localStorage.getItem('coh-save-v1') !== null) throw Error('Refuse to overwrite existing save'); localStorage.setItem('coh-save-v1', value); }, sentinelValue);
   await page.locator('#start').click(); await until(s => s.running && s.snapshot?.elapsedMs > 100, 'production scene started'); await focusGame();

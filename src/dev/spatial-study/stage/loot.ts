@@ -1,20 +1,21 @@
 import * as THREE from 'three';
 import type { RiftPresentationView } from './bridge';
 import { ellipsoid, noise, roughMaterial, surfaceTexture } from './materials';
+import { renderCrowbarPixels } from '@/art/crowbar-pixels';
+import { contaminantWorldPixels, CONTAMINANT_ICON_IDS } from '@/art/contaminant-icons';
+import { WEAPON_DATA } from '@/generated/weapon-data';
+import type { ContaminantType } from '@/types/game-types';
 
 interface PileModel { root:THREE.Group; pieces:THREE.Mesh[]; collectedAt:number; wasCollected:boolean; material:THREE.MeshStandardMaterial }
+interface ItemModel { root: THREE.Group; mesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>; signature: string; definitionId: string }
 
 /** Opaque search piles disclose nothing until the production inventory reveals an item. */
 export class StageLoot {
   readonly group=new THREE.Group();
   private readonly piles=new Map<string,PileModel>();
-  private readonly items=new Map<string,THREE.Group>();
-  private readonly iron=roughMaterial(0x8d9288);
-  private readonly dark=roughMaterial(0x313933);
-  private readonly relic=roughMaterial(0x73847b);
-  private readonly up=new THREE.Vector3(0,1,0);
-  private readonly normal=new THREE.Vector3(0,1,0);
-  constructor(private readonly groundHeightAt:(x:number,y:number)=>number=()=>0){}
+  private readonly items=new Map<string,ItemModel>();
+  constructor(private readonly groundHeightAt:(x:number,y:number)=>number=()=>0,
+    private readonly isFloor:(x:number,y:number)=>boolean=()=>true){}
 
   update(frame:RiftPresentationView,elapsedMs:number):void{
     for(const pile of frame.piles){
@@ -47,30 +48,58 @@ export class StageLoot {
     }
     for(const item of frame.groundItems){
       let model=this.items.get(item.id);
+      const signature = `${item.definitionId}:${item.quality ?? 'ordinary'}:${item.position.x}:${item.position.y}`;
       if(!model){
-        model=new THREE.Group();
-        if(item.kind==='weapon'){
-          const rod=new THREE.Mesh(new THREE.CylinderGeometry(.9,.8,25,7),this.iron);rod.rotation.x=Math.PI/2;rod.rotation.z=.28;rod.position.y=2.8;model.add(rod);
-          const handle=new THREE.Mesh(new THREE.BoxGeometry(2,2,6),this.dark);handle.position.set(0,2.8,-9);model.add(handle);
-        }else{
-          const relic=ellipsoid(5.5,3.8,4,this.relic,9);relic.position.y=4;model.add(relic);
-          const seam=new THREE.Mesh(new THREE.BoxGeometry(1.1,1,6),roughMaterial(0xa1bdb1));seam.position.set(-1,6.8,0);model.add(seam);
-        }
-        this.items.set(item.id,model);this.group.add(model);
+        const root = new THREE.Group(), material = new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.DoubleSide, toneMapped: false });
+        const mesh = new THREE.Mesh(this.itemGeometry(item), material); mesh.name = `field-object:${item.definitionId}`;
+        root.add(mesh); model = { root, mesh, signature, definitionId: item.definitionId };
+        this.items.set(item.id,model);this.group.add(root);
+      } else if (model.signature !== signature) {
+        model.mesh.geometry.dispose(); model.mesh.geometry = this.itemGeometry(item);
+        model.signature = signature; model.definitionId = item.definitionId;
       }
-      model.position.set(item.position.x,this.groundHeightAt(item.position.x,item.position.y),item.position.y);
-      // The revealed item rests on the local slope; this never rotates its
-      // formal pickup position or changes interaction reach.
-      const dx=(this.groundHeightAt(item.position.x+1,item.position.y)-this.groundHeightAt(item.position.x-1,item.position.y))/2;
-      const dz=(this.groundHeightAt(item.position.x,item.position.y+1)-this.groundHeightAt(item.position.x,item.position.y-1))/2;
-      this.normal.set(-dx,1,-dz).normalize();model.quaternion.setFromUnitVectors(this.up,this.normal);
-      model.visible=item.visibility>0;
+      model.root.position.set(item.position.x,this.groundHeightAt(item.position.x,item.position.y),item.position.y);
+      model.mesh.material.color.setScalar(Math.max(0, item.visibility));
+      model.root.visible=item.visibility>0;
     }
-    for(const [id,model]of this.items)if(!frame.groundItems.some(item=>item.id===id))model.visible=false;
+    for(const [id,model]of this.items)if(!frame.groundItems.some(item=>item.id===id))model.root.visible=false;
+  }
+
+  /** Native authored object pixels laid onto actual support, never a generic rod/stone.
+   * Geometry is built only on reveal or a real inventory location change. */
+  private itemGeometry(item: RiftPresentationView['groundItems'][number]): THREE.BufferGeometry {
+    const definition = item.kind === 'weapon' ? WEAPON_DATA[item.definitionId] : null;
+    if (item.kind === 'weapon' && !definition) throw new Error(`Unknown field weapon ${item.definitionId}`);
+    if (item.kind === 'contaminant' && !CONTAMINANT_ICON_IDS.includes(item.definitionId as ContaminantType))
+      throw new Error(`Unknown field object ${item.definitionId}`);
+    const pixels = definition ? renderCrowbarPixels(definition.quality, definition.variant, 'world')
+      : contaminantWorldPixels(item.definitionId as ContaminantType, item.quality ?? 'ordinary');
+    const positions: number[] = [], colours: number[] = [], colour = new THREE.Color();
+    const base = this.groundHeightAt(item.position.x, item.position.y);
+    for (let y = 0; y < pixels.height; y++) for (let x = 0; x < pixels.width; x++) {
+      const at = (y * pixels.width + x) * 4;
+      if (!pixels.data[at + 3]) continue;
+      const px = item.kind === 'weapon' ? y - pixels.height / 2 : x - pixels.width / 2;
+      const pz = item.kind === 'weapon' ? x - pixels.width / 2 : y - pixels.height / 2;
+      let supported = true;
+      for (const [dx, dz] of [[0, 0], [1, 0], [0, 1], [1, 1]])
+        supported &&= this.isFloor(item.position.x + px + dx!, item.position.y + pz + dz!);
+      if (!supported) continue;
+      colour.setRGB(pixels.data[at]! / 255, pixels.data[at + 1]! / 255, pixels.data[at + 2]! / 255, THREE.SRGBColorSpace);
+      for (const [dx, dz] of [[0, 0], [1, 0], [0, 1], [1, 0], [1, 1], [0, 1]]) {
+        const gx = px + dx!, gz = pz + dz!;
+        positions.push(gx, this.groundHeightAt(item.position.x + gx, item.position.y + gz) - base + .8, gz);
+        colours.push(colour.r, colour.g, colour.b);
+      }
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Float32BufferAttribute(colours, 3));
+    return geometry;
   }
 
   snapshot():Record<string,unknown>{return {
     piles:[...this.piles].map(([id,pile])=>({id,visible:pile.root.visible,position:pile.root.position.toArray()})),
-    items:[...this.items].map(([id,item])=>({id,visible:item.visible,position:item.position.toArray()})),
+    items:[...this.items].map(([id,item])=>({id,definitionId:item.definitionId,visible:item.root.visible,position:item.root.position.toArray()})),
   };}
 }

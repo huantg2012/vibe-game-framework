@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-09-10
-last-modified-by: director / code（DEC-142）
+last-modified-date: 2026-09-12
+last-modified-by: director / code（DEC-156：三维呈现只读接线）
 interface-changed: true
 interfaces-with:
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
@@ -20,6 +20,14 @@ exposes:
 ---
 
 # 系统设计：成长 + 潮汐经济
+
+## 迭代21 M：技能状态的三维呈现边界
+
+`ToolSystem.getPresentationState()`仅公开已经成立的效果实例及其真实时钟，契约为`tool-presentation.ts`的借用只读视图。结线端点/绷紧、压力区中心/半径、声音诱饵落点/脉冲、附着空壳剩余时长及消声遭遇状态供Stage消费；查询不施放、不扣次、不推进时间或生成新目标。观测跨帧保存须复制。舞台消费当前效果与真实受控对象，不以按键猜成功，不以槽位清空提前结束末次效果。
+
+本批只开放bare/melee/light对应的五件技能，未适配能力在DEV入口拒绝，不改变现行13族目录、资格、范围或数值。地面图形裁去虚空仅为呈现：沉重的石块仍按既有欧氏半径作用，不能暗改为同岸寻路范围。敌人受控姿态与真实伤害反应分开，移动减速不延长攻击时序。
+
+RiftScene在出击结算后不再调用工具更新，工具实例、世界、伤害及消费一起冻结；死亡模型余动画不推进技能。暂停同样冻结，重开/销毁清理旧实例及呈现身份。完整实机证据登记于[三维游玩QA](../qa/iteration-21-gameplay.md)，不能用实现接线宣告技能全部视觉通过。
 
 ## 迭代20：十三族异物（DEC-143）
 

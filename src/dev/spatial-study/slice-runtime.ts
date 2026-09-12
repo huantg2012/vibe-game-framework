@@ -7,8 +7,9 @@ export class SpatialSliceRuntime implements RiftDevRuntime {
   private readonly presentation: SlicePresentation;
   private phase = '';
   constructor(private readonly context: RiftDevRuntimeContext, readonly world: SpatialSliceWorld,
-    readonly mode: SpatialSliceMode, private readonly recordEvent: (event: string, payload: unknown) => void) {
-    this.presentation = mode === 'stage' ? new StagePresentation(context, world) : new VistaPresentation(context, world);
+    readonly mode: SpatialSliceMode, private readonly recordEvent: (event: string, payload: unknown) => void,
+    options: { readonly camera?: 'fixed' | 'follow' } = {}) {
+    this.presentation = mode === 'stage' ? new StagePresentation(context, world, options) : new VistaPresentation(context, world);
     this.afterUpdate(0);
   }
 

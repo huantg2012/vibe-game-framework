@@ -133,8 +133,10 @@ for (const step of [8, 16, 33, 100]) {
   assert.equal(combat.getEnemyHealth('a'), 75 - damage);
   assert.equal(combat.getEnemyHealth('b'), 75 - damage, 'last use still hits second budgeted target');
   assert.equal(visuals.at(-1), 'ordinary', 'last-use weapon remains through recovery');
+  assert.equal(combat.getWeaponVisualDefinitionId(), 'crowbar_plain', 'alternate renderers retain the actual last-use definition through recovery');
   advance(combat, 200);
   assert.equal(visuals.at(-1), null, 'weapon disappears after completed recovery');
+  assert.equal(combat.getWeaponVisualDefinitionId(), null, 'alternate renderers clear the exhausted definition after recovery');
   combat.requestPlayerAttack(); assert.equal(combat.getSwingSnapshot().sequence, 1);
 }
 {

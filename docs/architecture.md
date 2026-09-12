@@ -22,6 +22,24 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `world-study.html`展示仓库中的世界意象与局部概念，读取`docs/art/iteration-21-worlds/manifest.json`；它和构筑对照入口均未加入生产打包入口或主菜单。开发合同见[build-lab](dev/build-lab.md)，几何/隔离/失败重试/真实操作证据见[迭代21 QA](qa/iteration-21.md)。尚未新增生产世界类型。
 
+### M：三维长路线与正式物件反馈（DEC-156）
+
+`data/stage-gameplay-*.csv`经原codegen生成`stage-gameplay-data.ts`，独立提供57×35格路线、两处封闭空洞、两个虫遭遇、三处翻堆及落水。`SpatialSliceWorld`接受显式`SpatialSliceData`，不传时继续使用原局部数据；自然孔、地形高度、落水接触与世界时钟仍由同一个world拥有。`stage-gameplay-fixture.ts`在创建前校验路线、种子、装配及合法敌人范围。原局部seed 7签名仍为`aa970f9f`；冻结Vista只开放local/bare，不继承新长路或技能配置。
+
+共用`fixture.ts`按正式生成器规则映射基础敌人类型：sense_hear对应rewriter，其余为infiltrator；形态词素与基础类型的听觉预算同时核对。入口以Phaser CREATE完成事件为可采样边界，部分创建失败先记录原始异常，跳过最终状态采样再清理；不会用清理异常覆盖原因或把半建场景登记为运行中。
+
+`stage/camera.ts`的`StageFollowCamera`保持35°俯角、yaw 0与1060世界单位跨度，按真实水平位移作有边界的平滑平移，不改变人物比例、物理或感知。死区围绕逻辑画面足点(480,385)，地图两端允许人物自然偏置；横向边界把现有海域人工侧截面保留在画幅外，并留8世界单位余量。静止转身和攻击不移动镜头；坡面高度只用于足点投影，不驱动相机起伏。`SpatialSliceRuntime`显式传入fixed/follow，原局部沿用固定相机。主光及阴影覆盖随相机平移保持相对方向，world projector使用实际Three相机。
+
+`ToolSystem.getPresentationState()`返回`tool-presentation.ts`定义的借用只读视图：已成立的结线、压力区和声音诱饵实例、各自剩余时间、真实脉冲，以及siphon/muffle状态。显示端不能据此推进技能或消费；需要留存的观测先复制。`RiftScene`在正式模拟后将这些状态、敌人的实际控制姿态和揭晓物件品质写入呈现帧。出击结束后停止推进工具时钟，与已冻结的世界/出击时钟一致。
+
+`stage/effects.ts`用实际状态绘制地表纤维、石块/压痕、投出壳物及真实攻击预兆，逐点采样地形并裁去无支撑位置；共享Stage实时感知纹理，不把地貌记忆当作当前实体可见性。`actors.ts`消费真实受控状态和承伤后壳缘，受伤事件与移动限制分开；压制移动不慢放攻击。`loot.ts`按正式定义及品质使用既有原生物件像素，在揭晓后显示实际物件。效果自身释放Points等GPU资源，不销毁借用的地形感知纹理。
+
+首次长路实图暴露旧海层把地貌记忆投到连续高程查询面，产生矩形透明块，并额外显露旧岸壁。第一轮仅改为从实际表面取G后仍有栅栏；同帧几何/视线重建确认这些位置的即时视线均为0，退海仅由G驱动。M最终从海层彻底移除G退让：连续参考和不透明深度补偿都只消费R当前视线。G仍留在Terrain地貌记忆中，只有自然海孔或当前视线打开前方海体后，才看得到相应暗地貌。下沉面当前视线补偿保留，纹理查询须在有效世界UV内，不能靠ClampToEdge外推。没有新增地面/深度代理、扩大FOV或改变海体几何。
+
+`stage/support.ts`明确当前能力：普通白板撬棍、insect_remnant/infiltrate地面体、bare/melee/light三组配置中的stitch/compress/siphon/kindle/muffle。未实现形态拒绝入场，不用同一虫模型代画。武器显示读取Combat当前整次挥击定义；相位内进度须从整次elapsed扣除前相位时长，末次耐久耗尽也保留完整收招。相关边界由专项检查与[长路线实机QA](qa/iteration-21-gameplay.md)分别验证，不据支持矩阵宣布全目录适配。
+
+入口仍为独立DEV，记录route/loadout/cameraMode及`r8-stage-gameplay-foundation`。正式持久存档、完整悬海世界与基地循环尚未接入；四A持续供给仍NOT-STARTED。完整视觉合同见[三维游玩方向](art/iteration-21-worlds/stage-gameplay-direction.md)。
+
 ### K：Stage的开敞空洞、权威视线与海体显露（DEC-155）
 
 `RiftDevFixture.createSightGrid(layout, physicalGrid)`是显式依赖注入口，未提供时继续使用原TileGrid。`src/dev/spatial-study/stage/sight-grid.ts`只将内部封闭VOID视为空气；外缘/越界/WALL仍遮视，底层版本变化需要重新分类。入口仅Stage提供该工厂；Vista与生产默认不启用。正式Visibility、AI视线、战斗和视线型工具/Host查询消费同一OccluderGrid，范围/角度/数值不变。
@@ -381,7 +399,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | LootSearchPresentation | src/systems/loot-search-presentation.ts | 统一残骸堆外观 + 翻找微动 + 揭晓粒子。堆色四槽查表（DEC-110 v2）：主体按 fragmentTypeId 查残骸格，渍缝 stainKey，底影 void-black，高光 metal-light。墙模拟 RGB 量化已退役。每碎片 3 个排布变体预生成 | ensureLootSearchTextures / createSearchObjectVisual / derivePileSlots | 已实现（迭代 10；I10-HOTFIX-1 配色 v2） |
 | LootSearchHud | src/ui/dom/loot-search-hud.ts | `[E] 翻找` / `[E] 撤离` 提示、底部装置读数条、残渣 toast-inline。挂调用方 overlay 根 | create(overlayRoot, opts?), setPrompt, setChannel, flashResidue | 已实现（迭代 10） |
 | DefenseEngine | src/systems/defense-engine.ts | 冲击结算时计算各防御 slot 的效果（减伤/薪柴增益/稳定度变化/副作用等），纯函数无 Phaser 依赖；`solidifyCounters` 是唯一跨冲击持久的内部状态（不进存档） | applyDefenseEffects(baseDamagePerModule, defenseSlots, context), resetDefenseEngine() | 已实现（Slice 4，`applyGenericDefense()` 内 6 处机制标注 `handled externally`/`future iteration` 待 Slice 5 T3 接线） |
-| ToolSystem | src/systems/tool-system.ts | 十三族非武器污染物的消费前验证、来源隔离控制、有限效果和VFX寿命；旧族仅兼容 | create, useSlot, getLastUseFailure, update, syncHostVisuals, syncBodyVisuals, getActiveTimedEffects, notifyEnemySuspicious, notifyProximityAvoid, reset, destroy | 迭代20：AI/Combat/Host真实接线，最后一次完整；环境视觉跟随当帧核心；背光快照区分移动体/核心/物资 |
+| ToolSystem | src/systems/tool-system.ts | 十三族非武器污染物的消费前验证、来源隔离控制、有限效果和VFX寿命；旧族仅兼容 | create, useSlot, getLastUseFailure, update, syncHostVisuals, syncBodyVisuals, getActiveTimedEffects, getPresentationState, notifyEnemySuspicious, notifyProximityAvoid, reset, destroy | 迭代20正式接线；迭代21 M新增借用只读呈现状态，不增加第二份机制时钟；末次效果完整 |
 | ToolBodyEcho | src/systems/tool-body-echo.ts | 真实姿态的独立像素快照；留影、记忆、凝滞、实体化 | captureBodyEcho → update / destroy | 三层缓存、源透明度/裁切/origin/scale保留、销毁幂等；不读失视目标实时姿态 |
 | ToolGroundVfx | src/systems/tool-ground-vfx.ts | 技能物件、压痕、纤维、砂灰与压制材质 | drawToolObject, drawPressure, drawFootDrag, drawSeam, drawHostRestraint, muteSuppressedMaterial | 视觉消费权威状态，不产生机制；具体语言见tool-vfx-spec |
 | GrowthSystem | src/systems/growth-system.ts | 永久改造购买、费用计算与效果聚合，module-level singleton | getLevel(id), getMaxLevel(id), getCost(id), canAfford(id, reserve), purchase(id), getModifiers(), getState(), loadState(), reset() | 已实现（Slice 3，当前 3 项改造） |

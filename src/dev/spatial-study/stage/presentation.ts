@@ -5,14 +5,19 @@ import { StagePlayer, StageInsect } from './actors';
 import { StageTerrain } from './terrain';
 import { StageSea } from './sea';
 import { StageLoot } from './loot';
-import { createStageCamera, projectStagePoint } from './camera';
+import { createStageCamera, projectStagePoint, StageFollowCamera, type StageCameraMode } from './camera';
 import { ACTOR_HEIGHT, disposeTree, STAGE_HEIGHT, STAGE_WIDTH } from './materials';
 import { STAGE_PALETTE } from './palette';
+import { StageEffects } from './effects';
+import { assertStagePresentationSupported, supportsStageForm } from './support';
 
 /** A complete alternate renderer. The Phaser scene remains the only simulation. */
 export class StagePresentation implements SlicePresentation {
   private readonly scene = new THREE.Scene();
   private readonly camera: THREE.OrthographicCamera;
+  private readonly followCamera: StageFollowCamera | null;
+  private readonly sun: THREE.DirectionalLight;
+  private readonly rim: THREE.DirectionalLight;
   private readonly renderer: THREE.WebGLRenderer;
   private readonly opaqueTarget = new THREE.WebGLRenderTarget(STAGE_WIDTH, STAGE_HEIGHT, {
     minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter,
@@ -22,6 +27,7 @@ export class StagePresentation implements SlicePresentation {
   private readonly terrain: StageTerrain;
   private readonly sea: StageSea;
   private readonly loot:StageLoot;
+  private readonly effects: StageEffects;
   private readonly enemies = new Map<string,StageInsect>();
   private readonly resizeObserver: ResizeObserver;
   private readonly previousCanvasOpacity: string;
@@ -32,7 +38,11 @@ export class StagePresentation implements SlicePresentation {
   private opaqueTriangles = 0;
   private endTailMs=0;
 
-  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld) {
+  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld,
+    options: { readonly camera?: StageCameraMode } = {}) {
+    assertStagePresentationSupported(context.readPresentationFrame());
+    for (const form of context.layout.contaminationDraw.forms) if (!supportsStageForm(form))
+      throw new Error(`Stage has no world model for ${form.occupancy}/${form.substrate}/${form.coverage}`);
     this.renderer = new THREE.WebGLRenderer({antialias:false,alpha:false,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(1); this.renderer.setSize(STAGE_WIDTH,STAGE_HEIGHT,false);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -45,22 +55,37 @@ export class StagePresentation implements SlicePresentation {
     original.parentElement!.append(canvas);
     this.previousCanvasOpacity=original.style.opacity; original.style.opacity='0';
     this.resizeObserver=new ResizeObserver(this.alignCanvas); this.resizeObserver.observe(original); this.alignCanvas();
-    this.camera=createStageCamera(world.width,world.height);
+    this.followCamera=options.camera==='follow' ? new StageFollowCamera(world.width,world.height,world.layout.spawnPoint) : null;
+    this.camera=this.followCamera?.camera ?? createStageCamera(world.width,world.height);
     this.scene.add(new THREE.HemisphereLight(STAGE_PALETTE.sky,STAGE_PALETTE.bounce,1.3));
-    const sun=new THREE.DirectionalLight(STAGE_PALETTE.key,1.8); sun.position.set(-280,680,-390); sun.target.position.set(world.width*.5,0,world.height*.5);
+    const sun=this.sun=new THREE.DirectionalLight(STAGE_PALETTE.key,1.8); sun.position.set(-280,680,-390); sun.target.position.set(world.width*.5,0,world.height*.5);
     sun.castShadow=true; sun.shadow.mapSize.set(1024,1024); sun.shadow.camera.left=-650; sun.shadow.camera.right=650;
     sun.shadow.camera.top=650; sun.shadow.camera.bottom=-650; sun.shadow.camera.far=1800; sun.shadow.bias=-.001;
     this.scene.add(sun,sun.target);
-    const rim=new THREE.DirectionalLight(STAGE_PALETTE.rim,.62); rim.position.set(850,210,400); this.scene.add(rim);
-    this.loot=new StageLoot(this.groundHeightAt);
+    const rim=this.rim=new THREE.DirectionalLight(STAGE_PALETTE.rim,.62); rim.position.set(850,210,400); this.scene.add(rim,rim.target);
+    this.updateLightFootprint();
+    this.loot=new StageLoot(this.groundHeightAt,(x,y)=>world.isFloor(x,y));
     this.player.setGroundSampler(this.groundHeightAt);
     this.terrain=new StageTerrain(context,world); this.scene.add(this.terrain.group,this.player.root);
+    this.effects = new StageEffects(context, world, this.terrain.visibility.texture);
+    this.scene.add(this.effects.group);
     this.sea=new StageSea(context,world,this.terrain.visibility.texture,this.terrain.heightTexture,this.opaqueTarget.depthTexture!);this.scene.add(this.sea.group,this.loot.group);
     context.setWorldProjector((point,out)=>projectStagePoint(this.camera,point,out,this.groundHeightAt(point.x,point.y)));
     this.update(0);
   }
 
   private readonly groundHeightAt=(x:number,y:number):number=>this.world.groundHeightAt(x,y);
+
+  /** Translation changes the shadow footprint, never the material's key-light
+   * direction. Otherwise a longer map would relight its far shore differently. */
+  private updateLightFootprint():void {
+    if(!this.followCamera)return;
+    const focus=this.followCamera.focus;
+    this.sun.target.position.set(focus.x,0,focus.z);
+    this.sun.position.set(focus.x-776,680,focus.z-822);
+    this.rim.target.position.set(focus.x,0,focus.z);
+    this.rim.position.set(focus.x+850,210,focus.z+400);
+  }
 
   private readonly alignCanvas=():void=>{
     if(this.destroyed)return;
@@ -73,6 +98,9 @@ export class StagePresentation implements SlicePresentation {
   update(elapsedMs:number):void{
     if(this.destroyed)return;
     const start=performance.now(),frame=this.context.readPresentationFrame();
+    assertStagePresentationSupported(frame);
+    this.followCamera?.update(elapsedMs,frame.player,frame.ended,this.groundHeightAt(frame.player.position.x,frame.player.position.y));
+    this.updateLightFootprint();
     for(const enemy of frame.enemies)if(!this.enemies.has(enemy.id)){
       const model=new StageInsect(enemy.id);model.setGroundSampler(this.groundHeightAt);
       this.enemies.set(enemy.id,model);this.scene.add(model.root);
@@ -86,13 +114,14 @@ export class StagePresentation implements SlicePresentation {
     // stops this callback; the world/sea/hazard/record clocks remain frozen.
     if(frame.ended)this.endTailMs=Math.min(1000,this.endTailMs+Math.min(34,Math.max(0,this.context.scene.game.loop.delta)));
     this.player.setGroundHeight(this.groundHeightAt(frame.player.position.x,frame.player.position.y));
-    this.player.update(frame.player,elapsedMs+this.endTailMs);
+    this.player.update(frame.player,elapsedMs+this.endTailMs,frame.tools);
     for(const [id,model]of this.enemies){
       const state=frame.enemies.find(enemy=>enemy.id===id);
       if(state)model.setGroundHeight(this.groundHeightAt(state.position.x,state.position.y));
       model.update(state,elapsedMs+this.endTailMs);
     }
     this.terrain.update(elapsedMs,frame.exit.inRange);
+    if (!frame.ended) this.effects.update(frame);
     this.loot.update(frame,elapsedMs);this.sea.update(elapsedMs,frame.player.position,this.camera);
     // The water reads the actual visible opaque surface, including a cliff
     // below ground and each pixel actor's pose depth. A ground-plane projection
@@ -121,15 +150,16 @@ export class StagePresentation implements SlicePresentation {
     simulation:'production-rift',worldSignature:this.world.signature(),renderMs:this.renderMs,drawCalls:this.opaqueDrawCalls+this.renderer.info.render.calls,
     triangles:this.opaqueTriangles+this.renderer.info.render.triangles,terrainVisibilitySamples:this.terrain.visibility.samples,
     terrainPerception:this.terrain.visibility.snapshot(),endTailMs:this.endTailMs,
-    terrain:this.terrain.snapshot(),loot:this.loot.snapshot(),waterReveal:'current sight opens ground and empty chasms; opaque depth additionally projects descending shores; only physical terrain is remembered',
+    terrain:this.terrain.snapshot(),loot:this.loot.snapshot(),effects:this.effects.snapshot(),waterReveal:'current sight opens ground and empty chasms; opaque depth additionally projects descending shores; only physical terrain is remembered',
     sea:this.sea.snapshot(this.camera),
     player:this.player.snapshot(),
-    camera:{position:this.camera.position.toArray(),left:this.camera.left,right:this.camera.right,top:this.camera.top,bottom:this.camera.bottom},
+    camera:{position:this.camera.position.toArray(),left:this.camera.left,right:this.camera.right,top:this.camera.top,bottom:this.camera.bottom,
+      ...(this.followCamera?.snapshot() ?? {mode:'fixed',span:this.camera.right-this.camera.left})},
     entities:[...this.enemies].map(([id,model])=>({id,visible:model.root.visible,position:model.root.position.toArray()}))};}
 
   destroy():void{
     if(this.destroyed)return;this.destroyed=true;this.context.setWorldProjector(null);
-    this.resizeObserver.disconnect();this.terrain.destroy();this.sea.destroy();disposeTree(this.scene);
+    this.resizeObserver.disconnect();this.effects.destroy();this.terrain.destroy();this.sea.destroy();disposeTree(this.scene);
     this.opaqueTarget.dispose();this.renderer.dispose();this.renderer.forceContextLoss();this.renderer.domElement.remove();
     this.context.scene.game.canvas.style.opacity=this.previousCanvasOpacity;
   }

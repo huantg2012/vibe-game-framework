@@ -81,13 +81,14 @@ check('actors submit authored opaque pixel drawings with nearest sampling, not a
 check('crowbar motion follows formal phases, locked direction and contact hold instead of another animation timer',()=>{
   const model=new StagePlayer();stage.add(model.root);const f=createPresentationFrame(),profile=WEAPON_ATTACK_PROFILES.crowbar!;
   f.player.hp=100;f.player.weaponDefinitionId='crowbar_plain';f.player.facing=2;
-  Object.assign(f.player.attack,{phase:'active',elapsedMs:22,contactRemainingMs:12,contactElapsedMs:15,
+  Object.assign(f.player.attack,{phase:'active',elapsedMs:profile.windupMs+22,
+    contactRemainingMs:12,contactElapsedMs:profile.windupMs+15,
     windupMs:profile.windupMs,activeMs:profile.activeMs,recoveryMs:profile.recoveryMs,facing:.3});
   model.update(f.player,1000);const held=model.snapshot();model.update(f.player,8000);
   near(Number(model.snapshot().attackArc),Number(held.attackArc));
   near(model.root.rotation.y,Math.PI/2-.3);
   const half=profile.arcDeg*Math.PI/360;near(Number(held.attackArc),-half+2*half*15/profile.activeMs);
-  f.player.attack.contactRemainingMs=0;f.player.attack.elapsedMs=45;model.update(f.player,8016);
+  f.player.attack.contactRemainingMs=0;f.player.attack.elapsedMs=profile.windupMs+45;model.update(f.player,8016);
   assert.ok(Number(model.snapshot().attackArc)>Number(held.attackArc));
   const tip=model.snapshot().weaponTip as number[];
   assert.ok(Math.hypot(tip[0]!-f.player.position.x,tip[2]!-f.player.position.y)<=profile.reachPx+1,

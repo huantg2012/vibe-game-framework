@@ -16,16 +16,18 @@
   <aside>
     <h1>悬海 · 三维像素舞台</h1>
     <p><a href="/world-study.html">世界方向图</a> · <a href="/build-lab.html">构筑对照场</a></p>
-    <p>同一条真实 Rift 路线、白板撬棍、敌人与水幕周期。训练库存隔离，不读写正式纪录。</p>
+    <p>正式 Rift 的行走、交战、技能和搜撤。三维长路线先验证游玩基础；训练库存隔离，不读写正式纪录。</p>
     <label>空间呈现<select id="view"><option value="stage" selected>三维像素舞台 · 当前方向</option><option value="vista">正俯视边界奇观 · R4冻结</option></select></label>
+    <label>路线<select id="route"><option value="long" selected>两岸路线 · 连续游玩</option><option value="local">原局部 · 沿岸回归</option></select></label>
+    <label>出击配置<select id="loadout"></select></label>
     <label>种子<input id="seed" type="number" min="0" max="4294967295" step="1" value="7" /></label>
     <p id="description"></p>
     <button id="start" disabled>开始 / 中止当前并重开</button>
     <button id="abort" disabled>中止本次</button><button id="pause" disabled>暂停 / 继续（Esc）</button>
     <button id="download">下载本页全部记录 JSON</button>
-    <p>向东绕过中央裂口 → 观察落水并翻找东侧残堆 → 沿北侧接敌 → 翻找西北残堆 → 折返南侧起点。可以自由探索。</p>
+    <p id="route-description"></p>
     <p>落水接地时伤人，湿区轮廓就是接触区域；可等待或从旁边绕行。中央裂口不能跨过，海的自然开口不改变脚下道路。</p>
-    <p>WASD 移动 / 转向 · 空格挥击<br>E 按住翻找、在起点按 E 撤离<br>Tab 本趟拾获（世界继续）<br>结束后 R 返回本页配置</p>
+    <p>WASD 移动 / 转向 · 空格挥击<br>Q / F 使用已装配物件<br>E 按住翻找、在起点按 E 撤离<br>Tab 本趟拾获（世界继续）<br>结束后 R 返回本页配置</p>
     <p id="status">载入正式游戏资源…</p><details><summary>本次观测</summary><pre id="state"></pre></details><pre id="error" role="alert"></pre>
   </aside><div id="game-container" tabindex="0"></div>
 </main><script type="module" src="/src/dev/spatial-slices.ts"></script></body></html>

@@ -1,15 +1,29 @@
 ---
-status: STAGE-DIRECTION-SELECTED / VISTA-FROZEN-R4
+status: M-AGENT-VERIFIED / USER-REVIEW-PENDING / VISTA-FROZEN-R4
 iteration: 21
-decision: DEC-149 / DEC-150 / DEC-151 / DEC-152 / DEC-153 / DEC-154 / DEC-155
+decision: DEC-149 / DEC-150 / DEC-151 / DEC-152 / DEC-153 / DEC-154 / DEC-155 / DEC-156
 last-modified-date: 2026-09-12
 ---
 
 # 悬海空间样板
 
-**最新决定（DEC-155，2026-09-12）：** Stage继续作为选定方向，Vista冻结于R4。K批修正中央天井沿用实体阻视、海体据此不显露的错误关系：内部空洞可望不可跨，当前空气也参与海体退让。仍属DEV局部，未迁入生产入口；J的视线相关画面未获通过。
+**当前（M / DEC-156）：** 第一批已将R7局部扩为可连续行走的三维路线。长路、镜头、三配置和五类技能接线已交；完整白板/近战搜撤与轻装、生命周期、最终海层/视野显隐、实际结算冻结均完成Agent验收。用户观感待审。下方K/J等段为历史记录，当前证据见[本批QA](../qa/iteration-21-gameplay.md)。
 
-## 当前：空洞可望、不可跨越（DEC-155 / K）
+## M：长路线与三种配置
+
+当前稳定入口：[长路线 / 白板](http://127.0.0.1:3002/spatial-slices.html?view=stage&route=long&loadout=bare&seed=7)，也可直接进入[短窗近战](http://127.0.0.1:3002/spatial-slices.html?view=stage&route=long&loadout=melee&seed=7)或[轻装诱导](http://127.0.0.1:3002/spatial-slices.html?view=stage&route=long&loadout=light&seed=7)。端口3002关闭HMR/watch，以免长趟被开发热更新打断；仍是本工作树的DEV服务，重启服务才载入后续源码修改。通常开发端口3000也提供同一入口。Stage默认long；原短局部显式使用`route=local`。`loadout`可选bare（普通撬棍）、melee（打结的细线/沉重的石块/附着的空壳）、light（回声空壳/消声的旧布）。页面选择后中止并重开，每趟库存、AI及技能实例独立。未知配置或未支持的基底/污染档会明确拒绝，不悄悄换成虫。Vista只接受local/bare，旧局部seed 7签名仍为`aa970f9f`。
+
+新五张`data/stage-gameplay-*.csv`提供57×35格两岸路线，两处不规则空洞、两个合法的低污染虫遭遇、三处残堆及可等待/绕行的落水。西南起点同时是撤离点；可先沿西岸北上，再绕北岸到东北翻找、沿东岸南下，最后折返。真实游玩时长与完整取物可行性由[本批QA](../qa/iteration-21-gameplay.md)报告，不以地图长度代替。
+
+长路保持人物尺度与35°固定朝向，镜头仅平移。真实技能状态驱动地表纤维、石块、壳的落点/声痕及敌人承受；地面图形贴坡并裁空洞，隐藏目标不靠特效暴露。拾获物只在揭晓后按实际定义及品质显示。当前仅适配普通撬棍持握及insect_remnant/infiltrate地面虫，其他目录和完整世界仍待后续；不是所有物件/污染形态已经三维化。
+
+操作沿用WASD、Space、Q/F、E、Tab与Esc；打开Tab不暂停。记录包含路线、配置、镜头、`r8-stage-gameplay-foundation`、实际消费与结果。原短局部回归脚本已显式锁定local/bare。主菜单与持久存档未迁移，训练授予和单趟携回不是四A持续供给证据。
+
+玩法基础、视觉合同、技术接线分别见[迭代21 M](../tasks/iteration-21.md)、[三维游玩方向](../art/iteration-21-worlds/stage-gameplay-direction.md)、[架构](../architecture.md)。当前已完成Agent验收，用户观感待审；原图及逐趟源码哈希见[代表帧索引](../qa/iteration-21-gameplay-review/README.md)。完整机制趟先于最后海层修正，末次修正仅复验受影响的海体/技能合成和实际结算，不混称全套重跑。
+
+工程检查：`npm run check:stage-gameplay`覆盖相机、长路与真实工具状态；构建使用`npm run build`。实机执行器为`tools/spatial-study/qa-gameplay.mjs`，通过`GAME_URL=http://127.0.0.1:3002 CASE=bare node tools/spatial-study/qa-gameplay.mjs`（CASE也可为melee/light/lifecycle/composition/settlement）选择场景。空Chrome context、正式模拟和真实按键，结果写入被Git忽略的`docs/qa/artifacts/iteration-21-gameplay/`；保留原始失败，不写入用户SAVE。
+
+## K历史：空洞可望、不可跨越（DEC-155）
 
 Stage仍使用[同一入口](http://127.0.0.1:3000/spatial-slices.html?view=stage&seed=7)，记录版本`r6-open-chasm-sight`。中央无底空洞现在应允许有限视线穿过，地面/敌人都不能直穿；玩家和敌人使用相同视线遮挡依赖，导航/推退继续按实体身体与实际地面约束。真实墙与地图外侧依旧挡视线。此项只由Stage显式启用，Vista保留R4不透明VOID；记录里的`sightPolicy`说明差异，不再声称两者只有显示不同。
 

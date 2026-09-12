@@ -3,6 +3,9 @@ import { WEAPON_ATTACK_PROFILES } from '@/generated/weapon-data';
 import type { DeepReadonly, RiftPresentationEnemy, RiftPresentationEvent, RiftPresentationFrame } from './bridge';
 import { ACTOR_HEIGHT } from './materials';
 import { ActorPixelDrawing, createActorContactShadow } from './actor-pixels';
+import { RestraintReaction } from '@/entities/restraint-reaction';
+import type { ToolPresentationView } from '@/systems/tool-presentation';
+import { stageWeaponPhaseProgress } from './support';
 
 type PlayerView = DeepReadonly<RiftPresentationFrame['player']>;
 type GroundSampler = (x: number, y: number) => number;
@@ -111,7 +114,7 @@ export class StagePlayer {
     this.hitAt = event.elapsedMs; this.hitX = event.direction.x; this.hitY = event.direction.y;
   }
 
-  update(p: PlayerView, elapsedMs: number): void {
+  update(p: PlayerView, elapsedMs: number, tools?: ToolPresentationView): void {
     const d = this.drawing;
     const travelled = Number.isFinite(this.lastX) ? Math.hypot(p.position.x - this.lastX, p.position.y - this.lastY) : 0;
     this.travel += Math.min(8, travelled); this.lastX = p.position.x; this.lastY = p.position.y;
@@ -120,15 +123,15 @@ export class StagePlayer {
     this.lastTime = elapsedMs;
     this.gaitAmount = mix(this.gaitAmount, walking ? 1 : 0, Math.min(1, delta / 85));
     const phase = this.travel / 17 * Math.PI, t = elapsedMs / 1000;
-    const attack = p.attack, attacking = attack.phase !== 'idle';
+    this.weaponVisible = p.weaponDefinitionId !== null;
+    const attack = p.attack, attacking = this.weaponVisible && attack.phase !== 'idle';
+    const attackPhase = attack.contactRemainingMs > 0 && attacking ? 'active' : attack.phase;
     const facing = attacking ? attack.facing : p.facing;
     const halfArc = THREE.MathUtils.degToRad(WEAPON_ATTACK_PROFILES.crowbar!.arcDeg / 2);
-    const progress = attack.phase === 'windup' ? attack.elapsedMs / Math.max(1, attack.windupMs)
-      : attack.phase === 'active' ? (attack.contactRemainingMs > 0 ? attack.contactElapsedMs ?? attack.elapsedMs : attack.elapsedMs) / Math.max(1, attack.activeMs)
-        : attack.elapsedMs / Math.max(1, attack.recoveryMs);
-    this.attackArc = attack.phase === 'windup' ? mix(.4, -halfArc, Math.min(1, progress))
-      : attack.phase === 'active' ? mix(-halfArc, halfArc, Math.min(1, progress))
-        : attack.phase === 'recovery' ? mix(halfArc, .4, Math.min(1, progress)) : .4;
+    const progress = stageWeaponPhaseProgress(attack);
+    this.attackArc = !attacking ? .4 : attackPhase === 'windup' ? mix(.4, -halfArc, progress)
+      : attackPhase === 'active' ? mix(-halfArc, halfArc, progress)
+        : attackPhase === 'recovery' ? mix(halfArc, .4, progress) : .4;
     this.root.position.set(p.position.x, this.groundHeight, p.position.y);
     this.root.rotation.y = Math.PI / 2 - facing;
     const yaw = this.root.rotation.y, c = Math.cos(yaw), s = Math.sin(yaw);
@@ -161,9 +164,19 @@ export class StagePlayer {
     const bodyTwist = attacking ? -this.attackArc * .35 : Math.sin(phase) * .045 * this.gaitAmount;
     d.setBodyTransform(localHitX, bob - collapse * 4, localHitZ, collapse * 1.28, 1 - collapse * .12, bodyTwist);
     coat(d);
+    // A spent shell closes against the coat once, after real damage. Its eight
+    // second resistance stays in the existing HUD; this is neither healing nor a shield.
+    const shellAge = tools ? tools.siphonDurationMs - tools.siphonRemainingMs : Infinity;
+    if (tools && tools.siphonRemainingMs > 0 && shellAge >= 0 && shellAge < 650) {
+      const close = clamp(shellAge / 650, 0, 1), margin = 8 - close * 2.8;
+      const colour = close < .5 ? 0xa0ab93 : 0x778773;
+      d.line(-margin, 27, 5, -margin + .4, 23, 5, 1, colour, .7);
+      d.line(-margin + .3, 21, 5.1, -margin + 1, 19, 5.1, 1, colour, .7);
+      d.line(margin, 25, 5, margin - .3, 21, 5, 1, colour, .7);
+    }
     d.setBodyTransform(localHitX, bob - collapse * 4, localHitZ, collapse * 1.28, 1 - collapse * .12);
     const handX = attacking ? Math.sin(-this.attackArc) * 12 : 7.1;
-    const handZ = attacking ? Math.cos(this.attackArc) * 12 : 1.5;
+    const handZ = attacking ? Math.cos(this.attackArc) * 12 : 1.5 + (this.weaponVisible ? 0 : Math.cos(phase) * 3.1 * this.gaitAmount);
     const handY = attacking ? 25.5 : 22;
     for (let i = 0; i < 2; i++) {
       const sign = i ? 1 : -1;
@@ -186,7 +199,6 @@ export class StagePlayer {
     d.point(1.5, 38, 3.2, 1, person.glass, .5);
     d.line(-3.2, 40.3, -1.1, .5, 40.3, -1.1, 1, person.coatEdge, .4);
     d.setBodyTransform(localHitX, bob - collapse * 4, localHitZ, collapse * 1.28, 1 - collapse * .12);
-    this.weaponVisible = p.weaponDefinitionId !== null;
     const weaponPitch = attacking ? 0 : .83;
     const weaponLength = 20;
     const tipX = handX - Math.sin(this.attackArc) * Math.cos(weaponPitch) * weaponLength;
@@ -261,7 +273,11 @@ export class StageInsect {
   private deathAt = Infinity;
   private visibility = 0;
   private facing = 0;
-  private activity = false;
+  private activity = 0;
+  private readonly restraint = new RestraintReaction();
+  private restraintScale = 1;
+  private lastTime = NaN;
+  private animationMs = 0;
 
   constructor(readonly id: string) {
     this.root.add(this.shadow, this.drawing.mesh);
@@ -277,11 +293,16 @@ export class StageInsect {
   }
 
   update(state: DeepReadonly<RiftPresentationEnemy> | undefined, elapsedMs: number): void {
+    const delta = Number.isFinite(this.lastTime) ? clamp(elapsedMs - this.lastTime, 0, 100) : 0;
+    this.lastTime = elapsedMs;
+    if (!state?.motionSuppressed) this.animationMs += delta;
+    this.restraintScale = this.restraint.advance(delta, state?.restraint).scaleY;
     if (state) {
       const moved = Number.isFinite(this.lastX) ? Math.hypot(state.position.x - this.lastX, state.position.y - this.lastY) : 0;
       this.travel += Math.min(8, moved); this.lastX = state.position.x; this.lastY = state.position.y;
       this.facing = state.attack.phase === 'idle' ? state.facing : state.attack.facingAngle ?? state.facing;
-      this.visibility = state.visibility; this.activity = state.activity.phase === 'active';
+      this.visibility = state.visibility;
+      this.activity = state.activity.phase === 'active' ? 1 : state.activity.phase === 'waking' ? state.activity.progress : 0;
     }
     this.root.position.set(Number.isFinite(this.lastX) ? this.lastX : 0, this.groundHeight, Number.isFinite(this.lastY) ? this.lastY : 0);
     this.root.rotation.y = Math.PI / 2 - this.facing;
@@ -317,7 +338,8 @@ export class StageInsect {
       d.line(kneeX, 6.5 + lift * .3, kneeZ, footX, footY + .4, footZ, 1, insect.edge, .35);
       d.line(footX, footY, footZ, footX - sign * 1.7, footY - .3, footZ + 2.2, 1, insect.recess);
     }
-    d.setBodyTransform(localHitX, -collapse * 5.5, localHitZ + pull, collapse * .38, 1 - hit * .18 - collapse * .26);
+    d.setBodyTransform(localHitX, -collapse * 5.5, localHitZ + pull, collapse * .38,
+      (1 - hit * .18 - collapse * .26) * this.restraintScale);
     quad(d, insect.recess, -6.5, 5, -23, -8, 5.5, 14, 7, 5.5, 21, 6, 5, -23);
     // Unequal charcoal membranes break the insect symmetry before bright details.
     shellPlate(d, -7, 7.1, -7, membraneOutline, insect.membrane, 1.2, 1.4);
@@ -327,7 +349,7 @@ export class StageInsect {
     for (let i = 0; i < 4; i++) {
       const x = i === 1 ? -2.5 : i === 3 ? 1.9 : .6;
       const z = 15 - i * 10.5;
-      const y = 8.7 + Math.sin(i * 2) * 1.1 + (this.activity ? Math.sin(elapsedMs * .003 - i * .8) * .28 : -.6);
+      const y = 8.7 + Math.sin(i * 2) * 1.1 + Math.sin(this.animationMs * .003 - i * .8) * .28 * this.activity - .6 * (1 - this.activity);
       const outline = plateOutlines[i]!;
       shellPlate(d, x, y - 2, z, outline, insect.shellDeep, 1.04, 1.1);
       shellPlate(d, x - .3, y + .4, z - .4, outline, flash ? insect.hit : insect.shell, .95, 1.02);
@@ -357,6 +379,7 @@ export class StageInsect {
   copyPixels(): Uint8Array { return this.drawing.rgba.slice(); }
   snapshot(): Record<string, unknown> {
     return { rendering: 'authored-pixel-card', texture: { width: this.drawing.width, height: this.drawing.height },
-      feet: this.footPoints.map(foot => foot.toArray()), hitAt: this.hitAt, deathAt: this.deathAt, groundHeight: this.groundHeight };
+      feet: this.footPoints.map(foot => foot.toArray()), hitAt: this.hitAt, deathAt: this.deathAt,
+      restraintScale: this.restraintScale, activity: this.activity, groundHeight: this.groundHeight };
   }
 }

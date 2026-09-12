@@ -6,6 +6,7 @@ import { FieldLootInventory, notifyFieldAcquisition } from '@/systems/field-loot
 import { openInventory, projectInventoryItem } from '@/ui/inventory-presenter';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { WEAPON_DATA } from '@/generated/weapon-data';
+import { getContaminantQuality } from '@/systems/contaminant-quality';
 import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH, type GroundDepthTarget } from '@/systems/ground-depth';
 import { productionModelFor } from '@/entities/form-renderers/d/production-models';
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
@@ -601,7 +602,7 @@ export class RiftScene extends Phaser.Scene {
       blocked: inventoryPanel.isOpen() || this.runController.isRunEnded() || this.hitThisFrame || this.player.isMoving() || Boolean(this.attackKey?.isDown) || toolJustDown.some(Boolean),
     });
     this.hitThisFrame = false;
-    this.toolSystem.update(delta);
+    if (!this.runController.isRunEnded()) this.toolSystem.update(delta);
     this.tickDefenseHudEffects(delta);
     this.syncHudActiveEffects();
     this.extraction.update(delta);
@@ -1738,7 +1739,7 @@ export class RiftScene extends Phaser.Scene {
     Object.assign(player.attack, this.combat.getWeaponVisualState());
     player.weaponId = inventoryStore.getEquipment().weaponId;
     const weapon = player.weaponId ? inventoryStore.getItem(player.weaponId) : undefined;
-    player.weaponDefinitionId = weapon?.kind === 'weapon' ? weapon.weapon.definitionId : null;
+    player.weaponDefinitionId = this.combat.getWeaponVisualDefinitionId();
     player.durability = weapon?.kind === 'weapon' ? weapon.weapon.usesRemaining : 0;
     let index = 0;
     for (const enemy of this.ai.getEnemies()) {
@@ -1753,9 +1754,15 @@ export class RiftScene extends Phaser.Scene {
       } else { target.velocity.x = 0; target.velocity.y = 0; }
       target.facing = enemy.getFacingAngle(); target.hp = this.combat.getEnemyHealth(target.id) ?? 0;
       target.visibility = this.visibilityAt(target.position); target.state = enemy.getState();
+      target.restraint ??= { pressure: false, snared: false };
+      Object.assign(target.restraint, this.toolSystem.getEnemyRestraintPose(target.id));
+      const control = this.ai.getEnemyControlState(target.id);
+      target.motionSuppressed = !!control?.attackSuppressed && control.movementMultiplier === 0;
+      target.targetingLure = enemy.isTargetingLure?.() ?? enemy.isTargetingDecoy();
       target.attack = this.combat.getEnemyAttackVisualState(target.id); index++;
     }
     frame.enemies.length = index;
+    frame.tools = this.toolSystem.getPresentationState();
     const search = this.search.getPresentationTarget();
     frame.search.targetId = search.targetId; frame.search.channelId = search.channelId;
     frame.search.prompt = this.search.getPrompt(); frame.search.progress = this.search.getChannelProgress01();
@@ -1773,9 +1780,10 @@ export class RiftScene extends Phaser.Scene {
     for (const item of inventoryStore.getItems()) {
       if (item.location.kind !== 'ground' || item.location.runId !== runId) continue;
       let target = frame.groundItems[index];
-      if (!target) { target = { id: '', kind: 'contaminant', definitionId: '', position: { x: 0, y: 0 }, visibility: 0 }; frame.groundItems.push(target); }
+      if (!target) { target = { id: '', kind: 'contaminant', definitionId: '', quality: 'ordinary', position: { x: 0, y: 0 }, visibility: 0 }; frame.groundItems.push(target); }
       target.id = item.id; target.kind = item.kind;
       target.definitionId = item.kind === 'weapon' ? item.weapon.definitionId : item.contaminant.type;
+      target.quality = item.kind === 'weapon' ? WEAPON_DATA[item.weapon.definitionId]!.quality : getContaminantQuality(item.contaminant);
       Object.assign(target.position, item.location.position); target.visibility = this.visibilityAt(target.position); index++;
     }
     frame.groundItems.length = index;

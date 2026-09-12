@@ -84,7 +84,10 @@ export function createSpatialStudyLayout(seed: number, definition: SpatialFixtur
       if (!reachable.has(point.row * cols + point.col)) throw new Error('Unreachable spatial patrol point');
     }
     forms.push(form);
-    enemySpawns.push({ id, type: 'rewriter', spawn: point, facing: row.facing, patrol: { waypoints, mode: 'pingpong' }, form });
+    // Match the formal Rift generator's sense-to-runtime-class mapping. A
+    // sight-based insect must not consume the exactly-one hearing-body budget.
+    enemySpawns.push({ id, type: form.lexemes.sense === 'sense_hear' ? 'rewriter' : 'infiltrator',
+      spawn: point, facing: row.facing, patrol: { waypoints, mode: 'pingpong' }, form });
   }
   if (forms.filter(form => form.lexemes.sense === 'sense_hear').length !== 1) throw new Error('Spatial study requires one production hearing entity');
   const outlineTiles = tiles.map(row => row.map(tile => tile === TileType.WALL ? TileType.FLOOR : tile));

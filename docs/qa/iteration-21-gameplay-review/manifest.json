@@ -1,0 +1,3153 @@
+{
+  "schema": "coh-stage-gameplay-review-v1",
+  "date": "2026-09-12",
+  "baseline": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+  "revision": "r8-stage-gameplay-foundation",
+  "userVerdict": "PENDING",
+  "method": "原始Playwright整页PNG直接复制，未裁剪、调色或标注。真实输入的逐帧轨迹和视频保留在本地ignored目录；CPU诊断单列，不冒充GPU测量。",
+  "representatives": [
+    {
+      "file": "stage-long-sea.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/10-middle-bank-look-w.png",
+      "sha256": "c4e5d4c21ae5913e7429b35756fc5ca834f2d3aa7bf8d20e62e3e06f748e870c",
+      "bytes": 193071,
+      "caption": "最终海层：中岸和真实孔口，无记忆岸壁跨海栅栏"
+    },
+    {
+      "file": "stage-north-edge.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/03-north-outside-look-s.png",
+      "sha256": "b5610aacd4f12c48aa4f46295a6431a0af4677dfe608802b58bc100921e7d116",
+      "bytes": 191648,
+      "caption": "最终海层：北外沿正常反向观察"
+    },
+    {
+      "file": "stage-pressure.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/04-pressure-offset.png",
+      "sha256": "49fedefefd23963823e9e41a277ea7547d607098d8e8c6d1b3dc22cb4da217bb",
+      "bytes": 208470,
+      "caption": "最终海层：离身回看落地石块与断续压力痕"
+    },
+    {
+      "file": "stage-tools-visible.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/04-currently-visible-tools.png",
+      "sha256": "74398f671eff75f8c9314c65f825e4f50709ec2d11673f238db68e79c61ff7fd",
+      "bytes": 210889,
+      "caption": "最终海层：当前可见的真实线与压力"
+    },
+    {
+      "file": "stage-tools-hidden.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/05-alive-tools-outside-sight.png",
+      "sha256": "d9b4d307f5bca684c357d9b5b01a699b1d538173df4ed49875fb9fc82fa783b9",
+      "bytes": 201879,
+      "caption": "最终海层：实例尚在生效，离开视野时图形隐藏"
+    },
+    {
+      "file": "stage-tools-returned.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/06-returned-sight-tools.png",
+      "sha256": "e820323b80b96fb3fc731fb195c71ae6f794f719ea66d953eb502302d77cb3b8",
+      "bytes": 201142,
+      "caption": "最终海层：回看原处，真实痕迹恢复"
+    },
+    {
+      "file": "melee-stitch.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/04-stitch-deployed.png",
+      "sha256": "748abb2fc52f049c92bb537c554708b5b878c0600f10e52b774b5a9c75cb5632",
+      "bytes": 216851,
+      "caption": "完整近战趟：真实结线已落地；使用第一轮海层修正，不作为最终海体样貌"
+    },
+    {
+      "file": "melee-siphon.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/07-siphon-positive-hit.png",
+      "sha256": "91f42ccc62285457c3a75a3de2681ee648578a27e8fedd9571cb221a5ce6a514",
+      "bytes": 216120,
+      "caption": "完整近战趟：正伤触发空壳；仅该瞬间，不证明全段短动画可辨"
+    },
+    {
+      "file": "light-hearing.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/04-muffle-hearing.png",
+      "sha256": "4448b29a4505863b28e71c5b8eca123b5dc5ba3f05e31b16f884a39f7530f763",
+      "bytes": 222653,
+      "caption": "轻装趟：真实纯听觉拦截确认；使用第一轮海层修正"
+    },
+    {
+      "file": "light-lure.png",
+      "original": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/06-lure-recipient.png",
+      "sha256": "d1b86afcf9f28250f8956be09399d33eb7e7371e058ec0b44237216786518152",
+      "bytes": 220644,
+      "caption": "轻装趟：真实声音落点影响敌人；壳与敌人脚部分重叠，静帧不能证明投掷全过程"
+    }
+  ],
+  "rawFiles": [
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-10-44-618Z/evidence.json",
+      "bytes": 3712,
+      "sha256": "ee575b000110e5352a2009025dbb0f3cb4485c473e4efdaacc6e474834471735"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-10-44-618Z/source-start.json",
+      "bytes": 3263,
+      "sha256": "7f759cffcb210115d26e486432aea21b7b9d947fb492f632c0028074255c9cb9"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-11-05-315Z/99-final.png",
+      "bytes": 155665,
+      "sha256": "eab9547ecffcc9c2769e6e2d508db00205dbc63ab86d21c86e4add6f67592b1b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-11-05-315Z/continuous.webm",
+      "bytes": 99298,
+      "sha256": "ab1c96eb299219932d9c88a374dfefc2dafe893aecf6db8ed63f3d72192941c4"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-11-05-315Z/evidence.json",
+      "bytes": 12781,
+      "sha256": "4f126bdd4e610c47075eb8f277ec259b75bd093d8a7f70ee9c7ca7ee753b0eaa"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-11-05-315Z/source-start.json",
+      "bytes": 3263,
+      "sha256": "7f759cffcb210115d26e486432aea21b7b9d947fb492f632c0028074255c9cb9"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/01-spawn.png",
+      "bytes": 157219,
+      "sha256": "00cc96c480d39386329441bebd2904ed0702e17ea9057477f59872d855b5fd0d"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/02-esc-paused.png",
+      "bytes": 157802,
+      "sha256": "edc1186dfd277d7f88fc0bd630855157c220cf9cbd9b39aa31e79f00a4e1b088"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/02-tab-live.png",
+      "bytes": 425236,
+      "sha256": "3acc2b004bbb548e4705594d342645f0d8c30f580d2e2a5af98b4f7937089e7d"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/03-west-search.png",
+      "bytes": 187850,
+      "sha256": "cf564a4c2302e7bad393b20ef66a1a736b1985c6c90b59e11976baf485bee187"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/09-listener-killed.png",
+      "bytes": 205592,
+      "sha256": "c4a1a3afb48fab1978f011d618eef16dbad4aa0500839d0f13c9223e143ab44c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/10-camera-middle.png",
+      "bytes": 197709,
+      "sha256": "b9b539e819029a462199b93a3ac7f9cddaafd399e532c052aab17035f4de0949"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/11-far-search.png",
+      "bytes": 197776,
+      "sha256": "3ea0a6162a6194bc743d897cdf84f163630c968b10396aad4f4c89a504d68f7e"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/12-watcher-killed.png",
+      "bytes": 200609,
+      "sha256": "cf7871efe3539db628ea303e0a3cf649d918837a59b20d92d21d0ee888fc3207"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/13-return-search.png",
+      "bytes": 187578,
+      "sha256": "62f68a18b4bb626a6640dbc008117efe6103113c3ea06bc3b698214af9e7979c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/14-water-from-safe-south.png",
+      "bytes": 189319,
+      "sha256": "fb9d67c921323ac65fc0b7c06fedb3f12f7ef2bcd5ff5bec2030795c584a8539"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/15-return-camera.png",
+      "bytes": 192595,
+      "sha256": "f810c997b3c9c2952a2f1c7c1420960e46316ebadb3829f6fdbdfa782b6fe25d"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/90-extraction.png",
+      "bytes": 191967,
+      "sha256": "f021554a465f8f8713b3fbf046a7eb1dfe02ea731e2971b1ac2e090ed16e969e"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/99-final.png",
+      "bytes": 297133,
+      "sha256": "13152c5aab9629be42dfffd892cfbc5a837ccdf6063891693e9eb4d2e55e6f48"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/continuous.webm",
+      "bytes": 9168058,
+      "sha256": "a4e231a1ef0c74d2f2c02115cd89e28ed0807156fcd5f6e15bf8be4629a3681b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/evidence.json",
+      "bytes": 296394,
+      "sha256": "33dfbe3927190d029cceaa53c6e5da9e852338e061e8fc2dcab8e8c95fb982ae"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/post-run-audit.json",
+      "bytes": 476,
+      "sha256": "b14bda3b01bd93005c5e3594b99154b3947b387dbd83f98340bc81b850907a3e"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/source-start.json",
+      "bytes": 3430,
+      "sha256": "f880f503650b4306873f5bab37b971094d893f47b77c60248d6ef837bd7b4fe0"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-16-41-416Z/trace.json",
+      "bytes": 1837090,
+      "sha256": "d152f87f72563134c69f4bf66f8abf8fa9b65cc0dec68a6b0c322c7feac5bc6a"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/01-spawn.png",
+      "bytes": 160489,
+      "sha256": "39ac6bbdadeba05846f03f88c1965ea02b8f46a1496916a61e215e75a6d3114d"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/02-esc-paused.png",
+      "bytes": 160319,
+      "sha256": "b67877e57ef0cab84408390cca7c621fbf23e4421fcfa999a7a6a679298f1352"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/02-tab-live.png",
+      "bytes": 437463,
+      "sha256": "19799bb46f7beeff64c24a1feb7b7239185b77a4dc387739f9a5f0e80dfcfd25"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/02-west-boundary-swing-in.png",
+      "bytes": 182306,
+      "sha256": "f10196eaf3457c71010d4afe2b978f9223cad8d1dad428875119efb0ac5de3ea"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/02-west-boundary-swing-out.png",
+      "bytes": 182194,
+      "sha256": "0954145275725a28f2f053a3c97e63f5708e99d2d40afc615c079122b4d58192"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/03-north-outside-look-s.png",
+      "bytes": 193461,
+      "sha256": "55e8750fb3f5b4319ed8c0b30e4e49719973e10f35d0250028868a3e6bdc42f0"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/03-north-outside-look-w.png",
+      "bytes": 193100,
+      "sha256": "ea695285bb7f26c96d2dc55f8bab04b54b5afa30ac168d89edc3ae6d7b8afb2f"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/03-west-bank-look-s.png",
+      "bytes": 194808,
+      "sha256": "df81c9ebf2a6fdd40f6ac552c8280d6f7a12216fbcc0308f9e054c1d9d551a0b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/03-west-bank-look-w.png",
+      "bytes": 193737,
+      "sha256": "563358f68d78ad79b40cf2628fef7328e608035621ca4a44c0c838bfa010cdec"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/03-west-search.png",
+      "bytes": 193674,
+      "sha256": "2eb1be8d21ceaf387152560bb36837578daa1f5dd12acfe6394f09eec2144e61"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/09-listener-killed.png",
+      "bytes": 196117,
+      "sha256": "f578aa7172db19650808c52347d344050d9543d708efc99f91fe8a7a48142018"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/09-north-bank-look-s.png",
+      "bytes": 196278,
+      "sha256": "838a43c4f2e1c2e061791e89ef537f983f60f24069840a63e921b166ce089d1c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/09-north-bank-look-w.png",
+      "bytes": 195667,
+      "sha256": "b609816009017be38baaa9d25eaaf6e7cf1622880ac0935359188edb98bfc44c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/10-camera-middle.png",
+      "bytes": 191834,
+      "sha256": "f81ebb1cced69b14db7a7052a935cdd4ab32ae8e94434b5de9d93f909873a140"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/10-middle-bank-look-s.png",
+      "bytes": 191708,
+      "sha256": "9bfc0426a99cb754fb73025a6f4cb5a8186fbaea3e70e77058fbff2aa4c10759"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/10-middle-bank-look-w.png",
+      "bytes": 191794,
+      "sha256": "097dfec1012b6827269d542b7bd5751dec6a7677df86b426ac00fa0cce9b07ec"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/11-far-search.png",
+      "bytes": 208720,
+      "sha256": "54f404369390be3c47f756c0cb7e71d85ea4c2daa21b782d87ac2ceb9bf1ae9d"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/12-east-boundary-swing-in.png",
+      "bytes": 201702,
+      "sha256": "e2d04587281095e906dc58b012d3a1504c8df03b971de03e9d54b6f068699482"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/12-east-boundary-swing-out.png",
+      "bytes": 201545,
+      "sha256": "91707f3c7d267e11d8f1875d5a6bd8875b303d087752b83bd42a7025bdd293e5"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/12-watcher-killed.png",
+      "bytes": 212082,
+      "sha256": "f0a991501f9c7e9c8f2804761d6e34421ed718556161dade8a8e3fd69d0ad771"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/13-return-search.png",
+      "bytes": 194968,
+      "sha256": "42886b622bfd85d3e85b4dd19175bcd488fb58029232c2fe466f68e3b817600c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/14-water-from-safe-south.png",
+      "bytes": 187367,
+      "sha256": "1b14ca1a56a9045ed955ca117b3a6faeba89f1c3d068264bb160c6f36e981873"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/15-return-camera.png",
+      "bytes": 192467,
+      "sha256": "3f6a762f9347051b8383fe72d6539257dcfb2a55d388d700ea544cee8171e329"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/90-extraction.png",
+      "bytes": 335483,
+      "sha256": "c0e4883ec9613dbe47ee3a02f1744dfd46dab9858dbd147eff5a66d92c00dbb4"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/99-final.png",
+      "bytes": 477634,
+      "sha256": "4b894c429723778bd06fb93e344ad71ebce93171926fb0c8a43ecf1f36a2e53b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/continuous.webm",
+      "bytes": 10265881,
+      "sha256": "9bb22b3f9ac156aabe4552f502282d7ee79761bcdf413810f7f728090188e2ad"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/evidence.json",
+      "bytes": 511297,
+      "sha256": "e01508bf91bcb8805731af71c49d8a351bf423e2466f3e0e60338c31edeefa6f"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/source-start.json",
+      "bytes": 3951,
+      "sha256": "d976b2e2a5e1ed139499f5e67958bd28a6931082b191146ad407c3bdaf34eaf3"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/bare-2026-09-12T08-27-07-620Z/trace.json",
+      "bytes": 2061209,
+      "sha256": "0bda52d8679b561e8814cee5034254ffb76913ae97206a09835d8ff3511d9b0c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/01-spawn.png",
+      "bytes": 164719,
+      "sha256": "1e6e6c4a6419056068aedab7515e1ded6145c390231a8ea8fd3122626b68a9e9"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/03-north-outside-look-s.png",
+      "bytes": 191648,
+      "sha256": "b5610aacd4f12c48aa4f46295a6431a0af4677dfe608802b58bc100921e7d116"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/03-north-outside-look-w.png",
+      "bytes": 191580,
+      "sha256": "026656230d8cfd52681cbb7a7b257c03279a02f08ff21af86333021138b35193"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/03-west-bank-look-s.png",
+      "bytes": 197596,
+      "sha256": "3c7b07055a58dd74bfcdf9727a4c844935631f62e16cf047c2d61ca7c72714c9"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/03-west-bank-look-w.png",
+      "bytes": 195694,
+      "sha256": "4c49b1421654cc051c8fcabacb8c332f5142f91a6aa49c60e600c60ed8c0fbf0"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/04-currently-visible-tools.png",
+      "bytes": 210889,
+      "sha256": "74398f671eff75f8c9314c65f825e4f50709ec2d11673f238db68e79c61ff7fd"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/04-pressure-offset.png",
+      "bytes": 208470,
+      "sha256": "49fedefefd23963823e9e41a277ea7547d607098d8e8c6d1b3dc22cb4da217bb"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/05-alive-tools-outside-sight.png",
+      "bytes": 201879,
+      "sha256": "d9b4d307f5bca684c357d9b5b01a699b1d538173df4ed49875fb9fc82fa783b9"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/06-returned-sight-tools.png",
+      "bytes": 201142,
+      "sha256": "e820323b80b96fb3fc731fb195c71ae6f794f719ea66d953eb502302d77cb3b8"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/10-camera-middle.png",
+      "bytes": 192224,
+      "sha256": "1fad7a6b890fbf72e6942ebe44518110af87e5c37e0213c4c1dd28c2ded990b4"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/10-middle-bank-look-s.png",
+      "bytes": 192675,
+      "sha256": "b1eeac7db4454fd4c61448ae7a0243a4a399dac890f20d2ec0413ec17acf3d90"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/10-middle-bank-look-w.png",
+      "bytes": 193071,
+      "sha256": "c4e5d4c21ae5913e7429b35756fc5ca834f2d3aa7bf8d20e62e3e06f748e870c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/99-final.png",
+      "bytes": 109871,
+      "sha256": "0acb8b810e843e110e73fabd24d338ee4135d2be77325ebf80415911f4b28368"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/continuous.webm",
+      "bytes": 3804101,
+      "sha256": "ce6d8ffeb0c7c5a51ceaf52a7157264ba67042c0ba933510432bfefb08d9ad33"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/evidence.json",
+      "bytes": 275264,
+      "sha256": "d3fb64618ca5e1ec11dadb1df86c23bca7f8309db477ef5a1a292fe022750fe4"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/source-start.json",
+      "bytes": 3951,
+      "sha256": "732081e5dcd3cd6fe89a7fe3ecb4f8a418dd9a66f733332ab26728c73a50a8ce"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/composition-2026-09-12T08-39-33-916Z/trace.json",
+      "bytes": 949460,
+      "sha256": "4eb713a0d07f4a3e6d6bc09e3c1a9b631c4cd7cc797142b3deb045cf9ed6c1bc"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/diagnostic-sea-memory/README.md",
+      "bytes": 2437,
+      "sha256": "26bb56e75d999e1d28bbf05887363af74213c1588f2529aaf05d2692ad4345fd"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/diagnostic-sea-memory/cpu-reconstruction.json",
+      "bytes": 5890,
+      "sha256": "bd038c11ead7460bd75c494e64cb1eab174cefa604fcf81e2835cfe8d1c969c5"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/diagnostic-sea-memory/reconstruct.ts",
+      "bytes": 5297,
+      "sha256": "e3eacaefc0c795b7aa3a964bef02cc10ea05bc5d70055537c732df83650e5d77"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/diagnostic-startup/diagnose.mjs",
+      "bytes": 1720,
+      "sha256": "68cbb2857efaa63622a0ba3eccd7509832dd1c901e757015d418d55762743bd0"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/diagnostic-startup/exceptions.json",
+      "bytes": 3546,
+      "sha256": "d5e872cd8c5a881c9e6d9191117ca76dca8e84c812fd156c3690957e2cdfb09f"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/diagnostic-startup/final.png",
+      "bytes": 155665,
+      "sha256": "eab9547ecffcc9c2769e6e2d508db00205dbc63ab86d21c86e4add6f67592b1b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/01-spawn.png",
+      "bytes": 164708,
+      "sha256": "33924a1f7592cca447b301e32c2bcfb8c9e85f93e6053911ecc79324107d46ed"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/02-esc-paused.png",
+      "bytes": 171032,
+      "sha256": "6b5232663da3160da58ea26371cbafb9ee185f0e9911ae0946c3bb27ebebcc10"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/02-tab-live.png",
+      "bytes": 445941,
+      "sha256": "db8656bcaad92af89f6ebc3ebe7d3ba1e68df4f0cda86231ec791163780a7cec"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/92-vista-cleared.png",
+      "bytes": 406514,
+      "sha256": "33bffae1b98a2a6565b60a11fe6256bb64afa8ea851e10264a0bcfdd0ee98081"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/93-stage-cleared.png",
+      "bytes": 163171,
+      "sha256": "35584f7fa524535635bb89eef880789917ebd815cdd681be818cfdb044828a43"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/99-final.png",
+      "bytes": 110089,
+      "sha256": "d01d965f500558209fb93d8ad87d7f5fca272350850f719a48ae7d8d053b650b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/continuous.webm",
+      "bytes": 493148,
+      "sha256": "9f758427a7c3fbe0041dff47effc7e06fae0c475a6d5d23d1400dafbc4d8f57d"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/evidence.json",
+      "bytes": 132440,
+      "sha256": "9d939c565d9dab1626e5321c06b82515129776e84397ea5101ede6d737358b9c"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/source-start.json",
+      "bytes": 3951,
+      "sha256": "3deae990a4701649e82dff8cac898b0dc63e6b7bef62d34e5d9777349b67ad14"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/lifecycle-2026-09-12T08-33-14-942Z/trace.json",
+      "bytes": 47008,
+      "sha256": "2bd3a7d8b1922000c317ebe23ff3d5bf0cd7e033435c0e3cb1ee0af3a45ed6e2"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-30-37-430Z/01-spawn.png",
+      "bytes": 162687,
+      "sha256": "296d6122fe48b4bb203eb9ef8f79614870d25da33dbd78256df81c7d3cd5ec1d"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-30-37-430Z/03-west-search.png",
+      "bytes": 197146,
+      "sha256": "85e050a3c5787a77f16d4ff297b2eededead44701993d0c95f177eea6867eeba"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-30-37-430Z/99-final.png",
+      "bytes": 204507,
+      "sha256": "a1c4b8ee4e03c523f6049b953e2a0ca0147a2c0d3937ae4d7e8f0f17beb6bb4a"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-30-37-430Z/continuous.webm",
+      "bytes": 2643882,
+      "sha256": "db70689fcf59c1dfb5677cad93065c07c398caefdc9a617565c0bfd36bc2c6fe"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-30-37-430Z/evidence.json",
+      "bytes": 63140,
+      "sha256": "de2b532678968a218a559552775f0d6487096ab31251afc93f5ab33b276936c1"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-30-37-430Z/source-start.json",
+      "bytes": 3951,
+      "sha256": "d976b2e2a5e1ed139499f5e67958bd28a6931082b191146ad407c3bdaf34eaf3"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-30-37-430Z/trace.json",
+      "bytes": 610491,
+      "sha256": "85a61671853ed9c5a0466973df175136b4fc146b04997474858ebe6cae1adbbe"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/01-spawn.png",
+      "bytes": 162674,
+      "sha256": "74c6e8cb75cff1b556f9453aed85ba139c55fa05ab05a9ace7b3beec48d2df10"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/02-esc-paused.png",
+      "bytes": 212528,
+      "sha256": "1c2a79a3426a653f0692261e540c587c53480e4ee3e5db6899343d5752d1e272"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/02-tab-live.png",
+      "bytes": 529499,
+      "sha256": "e6c319529ff756450199e1fb448441369a2de35bae80e320ed436ed3d7a0bd17"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/03-west-search.png",
+      "bytes": 197154,
+      "sha256": "a90a1ea7d9aa78eae8799f265504c323108c0c5122fc3d1c1f630d7a6ed15e91"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/04-muffle-hearing.png",
+      "bytes": 222653,
+      "sha256": "4448b29a4505863b28e71c5b8eca123b5dc5ba3f05e31b16f884a39f7530f763"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/05-kindling-throw.png",
+      "bytes": 221052,
+      "sha256": "84509a240a5b3bec72ed1df7046ce7e03a00d12f9aa358bc9bf7b4c6d3095543"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/06-lure-recipient.png",
+      "bytes": 220644,
+      "sha256": "d1b86afcf9f28250f8956be09399d33eb7e7371e058ec0b44237216786518152"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/07-lure-finished.png",
+      "bytes": 207988,
+      "sha256": "767c713ce498c25d4498f1a643bf706587e8c7880a7332438385a0138f1f2cb8"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/92-vista-cleared.png",
+      "bytes": 418005,
+      "sha256": "64207ffd12309689038583b44fa359cd2ede8cf9903c0e904837820f58b7eda8"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/93-stage-cleared.png",
+      "bytes": 163308,
+      "sha256": "545bcacfbfc062bd363150cf716a4765b67999389e05af5512d02e0cddf0eb9b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/99-final.png",
+      "bytes": 110089,
+      "sha256": "d01d965f500558209fb93d8ad87d7f5fca272350850f719a48ae7d8d053b650b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/continuous.webm",
+      "bytes": 3349919,
+      "sha256": "5d06b5c7471e0253702b0dedf9fb1258288583954fe118d32e82afde4d75ceb1"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/evidence.json",
+      "bytes": 225262,
+      "sha256": "b800e2ed42b56be124d22d09e880718d1e005b8a32de3984b083f69d70ae52ba"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/source-start.json",
+      "bytes": 3951,
+      "sha256": "3deae990a4701649e82dff8cac898b0dc63e6b7bef62d34e5d9777349b67ad14"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/light-2026-09-12T08-32-29-942Z/trace.json",
+      "bytes": 766018,
+      "sha256": "f41792e95b0daa12383d91fc68d7c80415c9e8713c8cc776b86a267099a44712"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/01-spawn.png",
+      "bytes": 164822,
+      "sha256": "600b55ad238d41a127bbcacae52e23df82ecdc5ba8e2f3bf7072c1d3a73ad1ea"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/03-rejected-void-stitch.png",
+      "bytes": 199264,
+      "sha256": "ed6666f3ac017e291b5a4c985cf0166ef5734a5bc27dc1e407b6641bac3fcff9"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/03-west-search.png",
+      "bytes": 200087,
+      "sha256": "8c9a46eebc008843b3fd1b5608d2398f28dbb3fca3394a80eca142467e297cf0"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/04-stitch-deployed.png",
+      "bytes": 216851,
+      "sha256": "748abb2fc52f049c92bb537c554708b5b878c0600f10e52b774b5a9c75cb5632"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/05-stitch-recipient.png",
+      "bytes": 206474,
+      "sha256": "fbfcc4d13315fed1f3de7ebe459a67aba00a8c0939c7fe00219094db8860c6b8"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/06-pressure-recipient.png",
+      "bytes": 210218,
+      "sha256": "39065fd357cec98da227d6a87b3201731f0f1b07b1876a63d2a42a17b9c12cdb"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/07-siphon-positive-hit.png",
+      "bytes": 216120,
+      "sha256": "91f42ccc62285457c3a75a3de2681ee648578a27e8fedd9571cb221a5ce6a514"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/08-pressure-released.png",
+      "bytes": 203603,
+      "sha256": "581ded60743451835f6f975c73d9e8ed165d266e799b3dba464fe07da1cb86bc"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/09-listener-killed.png",
+      "bytes": 202977,
+      "sha256": "bfd129d71e080612f213736a5115214108f4a8d48dc150112ed2c6f745909773"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/10-camera-middle.png",
+      "bytes": 203935,
+      "sha256": "14d48b4582c265cea34a337f8fabec7dd37bc6c077b0c70d1eb50d0b9fecf179"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/11-far-search.png",
+      "bytes": 208376,
+      "sha256": "6ec5b32c5bbb0c7330ee8540586a71b122ab4475e8661a00e09cbc21a481af22"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/12-watcher-killed.png",
+      "bytes": 211727,
+      "sha256": "5dded549597d5bd1fbe1d67c05f675558b3d8d05e17df865a4f901c6c09c7dd2"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/13-return-search.png",
+      "bytes": 199371,
+      "sha256": "edf00840ededd51266e9c6a370b8ab66b2e2ecf15caf759564be0384b526de98"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/14-water-from-safe-south.png",
+      "bytes": 196682,
+      "sha256": "a5473bd584768695a19ec0f9028495bc4f4b37bdbb93dc01e45afdfae748cf51"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/15-return-camera.png",
+      "bytes": 200665,
+      "sha256": "93927d241968223d17cad5be60657f23dcc6dfd5cdc4d4d4733ead679bb81d20"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/90-extraction.png",
+      "bytes": 343426,
+      "sha256": "2e7a65b398388d56ae2726f4dc14c68f10b45a42628d7c6c149746e4a0b9bc77"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/99-final.png",
+      "bytes": 483528,
+      "sha256": "b03459fed66e5f07922d82ec2ad16535d04ead403f18ced37410202b6bef0d7b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/continuous.webm",
+      "bytes": 11249905,
+      "sha256": "828439f1589be41c9250b1d8fe65054ea089e1debdd63dff3066083693822cfe"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/evidence.json",
+      "bytes": 449853,
+      "sha256": "b5a6596277ddc8d5db10a683fafa88b52925d0c793c84206f653d04b497b1870"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/source-start.json",
+      "bytes": 3951,
+      "sha256": "d976b2e2a5e1ed139499f5e67958bd28a6931082b191146ad407c3bdaf34eaf3"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/melee-2026-09-12T08-28-55-541Z/trace.json",
+      "bytes": 2435196,
+      "sha256": "a095abfc05a2ecf750ddb9002901341d8e2fd6a4f7e7ed11be4ddc7b376d6844"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/01-spawn.png",
+      "bytes": 164733,
+      "sha256": "3faed98fb4baa616f91890ee634ad58a0a2a2a7c135ac0d4bce6b419768ed1fb"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/80-pre-extract-active-tools.png",
+      "bytes": 172538,
+      "sha256": "f1f7a019a5144cbccf938b21db61630a684adde63592bec2764211d236655b3b"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/90-active-extraction-frozen.png",
+      "bytes": 445022,
+      "sha256": "bb4fb5e2557b4b246f6369dbee9479794c3eb8e6e0eec8aa7beb1c7e92f1e130"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/99-final.png",
+      "bytes": 445022,
+      "sha256": "bb4fb5e2557b4b246f6369dbee9479794c3eb8e6e0eec8aa7beb1c7e92f1e130"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/continuous.webm",
+      "bytes": 263206,
+      "sha256": "c9e6f2b8035ce55af31382510fc7f9a82548e25003a6f80d91b3e93da88020db"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/evidence.json",
+      "bytes": 94472,
+      "sha256": "acef0b30b181f93ecb263b86ad09fca333a5980b7e43e7fbd1d67afbd0318028"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/source-start.json",
+      "bytes": 3951,
+      "sha256": "732081e5dcd3cd6fe89a7fe3ecb4f8a418dd9a66f733332ab26728c73a50a8ce"
+    },
+    {
+      "path": "docs/qa/artifacts/iteration-21-gameplay/settlement-2026-09-12T08-40-30-403Z/trace.json",
+      "bytes": 76128,
+      "sha256": "7c0155de45675a64f625c926d22396407faaeacb4ca9ec8ff316d0e2486395e4"
+    }
+  ],
+  "runs": [
+    {
+      "passed": false,
+      "directory": "bare-2026-09-12T08-10-44-618Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 32233,
+            "sha256": "74abd8fa58f3347e4160f8b5270acbecaf4473261423bac3d9b69120482b73d3"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 14540,
+            "sha256": "bff110a7f7d3fbf7c8044f38deef94bae0475b7b8274ed3c0739a7dc0b910291"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 6859,
+            "sha256": "fa05c0bab557a4ec258d2a222bacc941e4287b790efd68aa3eaadcdd392b9eff"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 26036,
+            "sha256": "15a412574e78368a6f8de7a32c62eea87711c493a3cffaeadb0ece50bfd65db0"
+          }
+        ]
+      },
+      "sourceAfter": null,
+      "errors": null
+    },
+    {
+      "testCase": "bare",
+      "loadout": "bare",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-11-05-315Z",
+      "passed": false,
+      "codeChangedDuringRun": [],
+      "directory": "bare-2026-09-12T08-11-05-315Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 32233,
+            "sha256": "74abd8fa58f3347e4160f8b5270acbecaf4473261423bac3d9b69120482b73d3"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 14540,
+            "sha256": "bff110a7f7d3fbf7c8044f38deef94bae0475b7b8274ed3c0739a7dc0b910291"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 6859,
+            "sha256": "fa05c0bab557a4ec258d2a222bacc941e4287b790efd68aa3eaadcdd392b9eff"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 26036,
+            "sha256": "15a412574e78368a6f8de7a32c62eea87711c493a3cffaeadb0ece50bfd65db0"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 32233,
+            "sha256": "74abd8fa58f3347e4160f8b5270acbecaf4473261423bac3d9b69120482b73d3"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 14540,
+            "sha256": "bff110a7f7d3fbf7c8044f38deef94bae0475b7b8274ed3c0739a7dc0b910291"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 6859,
+            "sha256": "fa05c0bab557a4ec258d2a222bacc941e4287b790efd68aa3eaadcdd392b9eff"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 26036,
+            "sha256": "15a412574e78368a6f8de7a32c62eea87711c493a3cffaeadb0ece50bfd65db0"
+          }
+        ]
+      },
+      "errors": [
+        "Cannot read properties of undefined (reading 'getValue')"
+      ]
+    },
+    {
+      "testCase": "bare",
+      "loadout": "bare",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-16-41-416Z",
+      "passed": false,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 4352,
+        "medianMs": 16.69999999999709,
+        "p95Ms": 16.70000000001164,
+        "maxMs": 33.30000000000291,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "bare-2026-09-12T08-16-41-416Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 32773,
+            "sha256": "a30bac6a775352430746b8bed0df1722c0f624634b1ab99c88209382fd7241e5"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 6859,
+            "sha256": "fa05c0bab557a4ec258d2a222bacc941e4287b790efd68aa3eaadcdd392b9eff"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 26322,
+            "sha256": "1518f31fc7491294c42386e0f9cbd67e9af654675fbdb4a50be94b3efdb407c4"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 32773,
+            "sha256": "a30bac6a775352430746b8bed0df1722c0f624634b1ab99c88209382fd7241e5"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 6859,
+            "sha256": "fa05c0bab557a4ec258d2a222bacc941e4287b790efd68aa3eaadcdd392b9eff"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 26322,
+            "sha256": "1518f31fc7491294c42386e0f9cbd67e9af654675fbdb4a50be94b3efdb407c4"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "testCase": "bare",
+      "loadout": "bare",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-27-07-620Z",
+      "passed": true,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 4905,
+        "medianMs": 16.69999999999709,
+        "p95Ms": 16.70000000001164,
+        "maxMs": 33.30000000000291,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "bare-2026-09-12T08-27-07-620Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27768,
+            "sha256": "1c537b69fb182513cabb4b4442514617d7682a6c6412548802ee691057ae77e0"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27768,
+            "sha256": "1c537b69fb182513cabb4b4442514617d7682a6c6412548802ee691057ae77e0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "testCase": "composition",
+      "loadout": "melee",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-39-33-916Z",
+      "passed": true,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 1730,
+        "medianMs": 16.699999999999818,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 33.39999999999782,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "composition-2026-09-12T08-39-33-916Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25634,
+            "sha256": "7ebaa6232aa657bcde62f307520cfc66d85520b2ca56d544c8d50b5b317ca7a4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 31208,
+            "sha256": "1c9254a7c6f6f0fe928310af8277996cda73b832b48f54f57afe8af0f34b1652"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25634,
+            "sha256": "7ebaa6232aa657bcde62f307520cfc66d85520b2ca56d544c8d50b5b317ca7a4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 31208,
+            "sha256": "1c9254a7c6f6f0fe928310af8277996cda73b832b48f54f57afe8af0f34b1652"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "testCase": "lifecycle",
+      "loadout": "melee",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-33-14-942Z",
+      "passed": true,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 133,
+        "medianMs": 16.699999999999818,
+        "p95Ms": 16.700000000000273,
+        "maxMs": 16.800000000000182,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "lifecycle-2026-09-12T08-33-14-942Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27812,
+            "sha256": "ddd4841a7cb70c1231509df81e9118945db61bf2275f018797e0e036e983f9c0"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27812,
+            "sha256": "ddd4841a7cb70c1231509df81e9118945db61bf2275f018797e0e036e983f9c0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "testCase": "light",
+      "loadout": "light",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-30-37-430Z",
+      "passed": false,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 1194,
+        "medianMs": 16.699999999999818,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000291,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "light-2026-09-12T08-30-37-430Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27768,
+            "sha256": "1c537b69fb182513cabb4b4442514617d7682a6c6412548802ee691057ae77e0"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27768,
+            "sha256": "1c537b69fb182513cabb4b4442514617d7682a6c6412548802ee691057ae77e0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "testCase": "light",
+      "loadout": "light",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-32-29-942Z",
+      "passed": true,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 1481,
+        "medianMs": 16.69999999999891,
+        "p95Ms": 16.799999999999272,
+        "maxMs": 33.39999999999782,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "light-2026-09-12T08-32-29-942Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27812,
+            "sha256": "ddd4841a7cb70c1231509df81e9118945db61bf2275f018797e0e036e983f9c0"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27812,
+            "sha256": "ddd4841a7cb70c1231509df81e9118945db61bf2275f018797e0e036e983f9c0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "testCase": "melee",
+      "loadout": "melee",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-28-55-541Z",
+      "passed": true,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 5381,
+        "medianMs": 16.69999999999709,
+        "p95Ms": 16.70000000001164,
+        "maxMs": 33.5,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "melee-2026-09-12T08-28-55-541Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27768,
+            "sha256": "1c537b69fb182513cabb4b4442514617d7682a6c6412548802ee691057ae77e0"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25623,
+            "sha256": "c8672daafbbccd81bae177c3b9bdb1fe1c9db98bdfa26a723a33acc51f5524f4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 27768,
+            "sha256": "1c537b69fb182513cabb4b4442514617d7682a6c6412548802ee691057ae77e0"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "testCase": "settlement",
+      "loadout": "melee",
+      "route": "long",
+      "seed": 7,
+      "runId": "2026-09-12T08-40-30-403Z",
+      "passed": true,
+      "codeChangedDuringRun": [],
+      "performance": {
+        "count": 133,
+        "medianMs": 16.699999999999818,
+        "p95Ms": 16.800000000000182,
+        "maxMs": 16.800000000000182,
+        "over50ms": 0,
+        "scope": "This host, headless Chrome with video; no cross-device/performance certification."
+      },
+      "directory": "settlement-2026-09-12T08-40-30-403Z",
+      "sourceBefore": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25634,
+            "sha256": "7ebaa6232aa657bcde62f307520cfc66d85520b2ca56d544c8d50b5b317ca7a4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 31208,
+            "sha256": "1c9254a7c6f6f0fe928310af8277996cda73b832b48f54f57afe8af0f34b1652"
+          }
+        ]
+      },
+      "sourceAfter": {
+        "head": "a96fed3ef61d9084105dc92cf73e89e47678949f",
+        "files": [
+          {
+            "file": "docs/tasks/iteration-21.md",
+            "bytes": 33083,
+            "sha256": "fd7ca886f66eb520bb2292fbf9b4facdaab5db433c6bd8fd889d832787610e74"
+          },
+          {
+            "file": "src/dev/spatial-slices.ts",
+            "bytes": 16803,
+            "sha256": "bbb522a83e3b5e15959e96b01b55c17396eef461c9a50cc8820141d86a4d85a0"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-runtime.ts",
+            "bytes": 2716,
+            "sha256": "09e18e1b9ef31991383b6c9b5ecd4e067daa420df8da6fc8d62d891e4717c09e"
+          },
+          {
+            "file": "src/dev/spatial-study/slice-world.ts",
+            "bytes": 9893,
+            "sha256": "58772370fa3c2cda0d194acf4c2411b5ec6687f34b6138b3f8e3571597be4e53"
+          },
+          {
+            "file": "src/dev/spatial-study/fixture.ts",
+            "bytes": 7995,
+            "sha256": "67cc7252ced59f63320fa500f8918def435bbacdeaebc002226aa55d52563469"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/camera.ts",
+            "bytes": 7078,
+            "sha256": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/presentation.ts",
+            "bytes": 10436,
+            "sha256": "2d7794f2d949c27007d693cb33443be922c2eb7cc39d8f3bf9ffbf929b84b318"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/actors.ts",
+            "bytes": 22430,
+            "sha256": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/sea.ts",
+            "bytes": 25634,
+            "sha256": "7ebaa6232aa657bcde62f307520cfc66d85520b2ca56d544c8d50b5b317ca7a4"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/terrain.ts",
+            "bytes": 13530,
+            "sha256": "035a68ddf447b019e31e37c0b3d00c39a8fbf5e9809e482fc40f2c8c8fc9c153"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/ground-mesh.ts",
+            "bytes": 3543,
+            "sha256": "bb285958bf1cc8d6ecb965c06bf41f4ca613c26837675edcc8cb16c3094cfe1b"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/bridge.ts",
+            "bytes": 3643,
+            "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/support.ts",
+            "bytes": 1979,
+            "sha256": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+          },
+          {
+            "file": "src/dev/spatial-study/stage/effects.ts",
+            "bytes": 10794,
+            "sha256": "d8f32221ee950ddf6fff89d0c463b69c9f21cf7fb333e61d13d503f825eb93c3"
+          },
+          {
+            "file": "src/systems/tool-presentation.ts",
+            "bytes": 1712,
+            "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+          },
+          {
+            "file": "src/systems/tool-system.ts",
+            "bytes": 90084,
+            "sha256": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+          },
+          {
+            "file": "src/systems/combat-system.ts",
+            "bytes": 49202,
+            "sha256": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+          },
+          {
+            "file": "src/scenes/rift-scene.ts",
+            "bytes": 90838,
+            "sha256": "b42b0bbcb65586232759de89042fe225d0ae974b5794ccb61540c5391e5bb63a"
+          },
+          {
+            "file": "data/stage-gameplay-scenes.csv",
+            "bytes": 388,
+            "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+          },
+          {
+            "file": "data/stage-gameplay-placements.csv",
+            "bytes": 440,
+            "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+          },
+          {
+            "file": "data/stage-gameplay-water.csv",
+            "bytes": 288,
+            "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+          },
+          {
+            "file": "data/build-lab-loadouts.csv",
+            "bytes": 851,
+            "sha256": "fc0147cf70347be9a4a234e237a536e682c565526e10df9b4665bc8ad69c2424"
+          },
+          {
+            "file": "tools/spatial-study/qa-gameplay.mjs",
+            "bytes": 31208,
+            "sha256": "1c9254a7c6f6f0fe928310af8277996cda73b832b48f54f57afe8af0f34b1652"
+          }
+        ]
+      },
+      "errors": []
+    }
+  ],
+  "finalSourceStillMatches": [
+    "src/dev/spatial-slices.ts",
+    "src/dev/spatial-study/slice-runtime.ts",
+    "src/dev/spatial-study/slice-world.ts",
+    "src/dev/spatial-study/fixture.ts",
+    "src/dev/spatial-study/stage/camera.ts",
+    "src/dev/spatial-study/stage/presentation.ts",
+    "src/dev/spatial-study/stage/actors.ts",
+    "src/dev/spatial-study/stage/sea.ts",
+    "src/dev/spatial-study/stage/terrain.ts",
+    "src/dev/spatial-study/stage/ground-mesh.ts",
+    "src/dev/spatial-study/stage/bridge.ts",
+    "src/dev/spatial-study/stage/support.ts",
+    "src/dev/spatial-study/stage/effects.ts",
+    "src/systems/tool-presentation.ts",
+    "src/systems/tool-system.ts",
+    "src/systems/combat-system.ts",
+    "src/scenes/rift-scene.ts",
+    "data/stage-gameplay-scenes.csv",
+    "data/stage-gameplay-placements.csv",
+    "data/stage-gameplay-water.csv",
+    "data/build-lab-loadouts.csv"
+  ]
+}

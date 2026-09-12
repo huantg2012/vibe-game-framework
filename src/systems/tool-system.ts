@@ -21,6 +21,7 @@ import { crossesToolLine, selectNearestVisibleTarget, type ToolLine, type ToolRe
 import { EnemyControlState, type EnemyControlEffect } from '@/systems/enemy-control-state';
 import type { EnemyView } from '@/types/ai-types';
 import type { HostToolTarget } from '@/systems/contamination-host-system';
+import { createToolPresentationFrame, type ToolPresentationView } from '@/systems/tool-presentation';
 import {
   CONTAM_BRIGHT,
   CONTAM_COLD,
@@ -245,6 +246,9 @@ const RARITY_VFX = {
 type ToolControl = EnemyControlEffect & { movementLocked?: boolean; escalationSuppressed?: boolean };
 
 export class ToolSystem {
+  private readonly presentation = createToolPresentationFrame();
+  private presentationIds = new WeakMap<object, number>();
+  private presentationSerial = 0;
   private controlSources = new Map<string, Map<string, ToolControl>>();
   private controlIds = new WeakMap<object, string>();
   private controlSerial = 0;
@@ -439,6 +443,8 @@ export class ToolSystem {
     this.isTargetVisible = options?.isTargetVisible;
     this.hasTargetLineOfSight = options?.hasTargetLineOfSight;
     this.elapsedMs = 0;
+    this.presentationIds = new WeakMap();
+    this.presentationSerial = 0;
     this.muffleLastSignalMs = -Infinity;
     this.muffleEpisodeActive = false;
     this.reclaimedNodes.clear();
@@ -556,6 +562,62 @@ export class ToolSystem {
       pressure: this.compressAnchors.some(anchor => !anchor.dissolving && anchor.affectedEnemyIds.has(id)),
       snared: this.stitchStops.some(stop => stop.enemyId === id && stop.remainingMs > 0),
     };
+  }
+
+  /**
+   * The Stage reads the same committed instances and clocks as the Phaser effects.
+   * IDs are presentation-only: querying this view never changes control sources,
+   * random streams, timers, inventory, targeting or simulation state.
+   */
+  getPresentationState(): ToolPresentationView {
+    const out = this.presentation;
+    out.elapsedMs = this.elapsedMs;
+    for (let i = 0; i < this.loadout.length; i++) out.loadoutTypes[i] = this.loadout[i]?.type ?? null;
+    out.loadoutTypes.length = this.loadout.length;
+    out.siphonRemainingMs = this.siphonEffectRemainingMs;
+    out.siphonDurationMs = CONTAMINANT_DATA.siphon.toolDurationMs;
+    out.muffleEpisodeActive = this.muffleEpisodeActive;
+    let index = 0;
+    for (const seam of this.stitchBarriers) {
+      const row = out.seams[index] ??= { id: 0, ax: 0, ay: 0, bx: 0, by: 0,
+        remainingMs: 0, durationMs: 0, tension: 0, opacity: 0 };
+      row.id = this.presentationId(seam);
+      row.ax = seam.pointA.x; row.ay = seam.pointA.y; row.bx = seam.pointB.x; row.by = seam.pointB.y;
+      row.remainingMs = Math.max(0, seam.remainingMs); row.durationMs = CONTAMINANT_DATA.stitch.toolDurationMs;
+      row.tension = Math.min(1, (seam.tensionMs ?? 0) / 320);
+      row.opacity = seam.dissolving ? seam.fade.alphaSteps[seam.fade.stepIndex] ?? 0 : 1;
+      index++;
+    }
+    out.seams.length = index; index = 0;
+    for (const anchor of this.compressAnchors) {
+      const row = out.pressures[index] ??= { id: 0, x: 0, y: 0, radius: 0,
+        remainingMs: 0, durationMs: 0, opacity: 0 };
+      row.id = this.presentationId(anchor); row.x = anchor.position.x; row.y = anchor.position.y;
+      row.radius = anchor.radius; row.remainingMs = Math.max(0, anchor.remainingMs);
+      row.durationMs = CONTAMINANT_DATA.compress.toolDurationMs;
+      row.opacity = anchor.dissolving ? .2 * (1 - anchor.dissolve.stepsDone / anchor.dissolve.stepsTotal)
+        : Math.min(1, row.remainingMs / 500);
+      index++;
+    }
+    out.pressures.length = index; index = 0;
+    for (const sound of this.kindleZones) {
+      const row = out.soundLures[index] ??= { id: 0, x: 0, y: 0, fromX: 0, fromY: 0, radius: 0,
+        elapsedMs: 0, remainingMs: 0, durationMs: 0, pulseElapsedMs: 0, pulseIntervalMs: 0 };
+      row.id = this.presentationId(sound); row.x = sound.position.x; row.y = sound.position.y;
+      row.fromX = sound.throwFrom?.x ?? row.x; row.fromY = sound.throwFrom?.y ?? row.y;
+      row.radius = sound.radius; row.elapsedMs = sound.elapsedMs;
+      row.remainingMs = Math.max(0, sound.remainingMs); row.durationMs = CONTAMINANT_DATA.kindle.toolDurationMs;
+      row.pulseElapsedMs = sound.pulseAccumMs; row.pulseIntervalMs = CONTAMINANT_DATA.kindle.toolPulseIntervalMs;
+      index++;
+    }
+    out.soundLures.length = index;
+    return out;
+  }
+
+  private presentationId(source: object): number {
+    let id = this.presentationIds.get(source);
+    if (id === undefined) { id = ++this.presentationSerial; this.presentationIds.set(source, id); }
+    return id;
   }
 
   private playerEcho(mode: 'mirror' | 'phase' | 'memory'): BodyEcho | null {
