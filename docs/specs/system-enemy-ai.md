@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
-last-modified-date: 2026-09-10
+last-modified-by: code / director（DEC-155：开敞空洞视线与物理通行分离）
+last-modified-date: 2026-09-12
 interface-changed: true
 slice: 8
 interfaces-with:
@@ -28,6 +28,14 @@ exposes:
 ---
 
 # 系统设计：敌人 AI（五态 FSM · 两种感知剖面）
+
+## 迭代21 K：视线与身体通行分离（DEC-155）
+
+感知仍读取注入的OccluderGrid，移动从独立WalkGrid派生`movementOccluders`，用于导航直行、身体净空和路径平滑。Stage显式令内部空洞透视，但通路仍需绕岸；默认TileGrid不透明VOID的行为保持。不能把光学LOS用于跳过不可通行格；真实反例为(432,336)→(592,336)，直线透视成立，身体必须沿y304绕行。
+
+`AISystem.knockbackEnemy`保持由AI拥有位移：按真实physics body中心与半宽/半高对位移整段扫掠，将目标夹在第一处无地面或实体墙前，再以允许增量移动原sprite并同步AI位置。不能只校验终点，也不因两岸均合法就跨过中间空洞。此物理约束同时修复默认模式已有的直接reset穿越缺口；武器/技能伤害、控制时长和位移请求值不变。
+
+Host的`sightGrid`可选参数负责知觉/视线，原`occluders`继续负责部署和地表约束；未提供新参数时回退原网格，创建/销毁时重置，不继承别的试验模式。
 
 ## 迭代20 A：来源隔离控制
 
@@ -243,7 +251,7 @@ interface WalkGrid {
 }
 ```
 
-**`OccluderGrid` 与 `WalkGrid` 的关系**：Slice 1 中两者由同一份 tile 数据派生，且**墙体 = 既不可通行也不透视**。本 spec 不假设两者永远等价（后续可能出现"矮墙：可挡视线不挡路"一类不对称格子），所以接口分开。注：裂隙虚空（VOID）自 DEC-106（2026-08-29）起不可走**且**挡视线（虚空吞光），敌人视线与玩家视野走同一套 `hasLineOfSight`，虚空海湾两侧不可互见。
+**`OccluderGrid` 与 `WalkGrid` 的关系**：两者独立，不能假设等价。默认裂隙VOID自DEC-106起不可走且挡视线；DEC-155仅Stage显式启用的内部开敞空洞允许视线穿过，仍不可走。两种模式下，玩家/敌人视线都走同一注入网格和`hasLineOfSight`；导航/身体净空始终由WalkGrid决定。
 
 ---
 
@@ -401,7 +409,7 @@ detection = clamp(detection, 0, 1)
 
 **N1｜算法**：自实现 grid A\*（DEC-ARCH-002），8 邻接，octile 启发式。直线代价 1，对角代价 √2。
 
-**N2｜不许切角（与视线规则对齐）**：对角移动仅当**两个正交邻居都可通行**时才合法。这与 T1 视线规则 14「对角缝隙不可穿透」是同一条几何纪律——敌人不能走玩家看不到的缝，也不能从玩家认为封死的角上钻过来。
+**N2｜不许切角**：对角移动仅当**两个正交邻居都可通行**时才合法。依据身体通行判断，不能拿光学透明的空洞当成可通过的邻格；实体墙的零宽对角缝仍同时阻视与阻行。
 
 **N3｜分帧调度**（架构性能规则：每帧最多 1 次 A\*）：
 - 全局单一请求队列，**每帧最多出队并执行 1 次 A\***。
@@ -409,8 +417,7 @@ detection = clamp(detection, 0, 1)
 - 同一敌人的重规划最小间隔 `AI_REPATH_INTERVAL_MS`（500 ms）。CHASE 态下若目标移动超过 `AI_REPATH_MOVE_THRESHOLD`（48 px）则允许提前重规划（仍受队列限制）。
 - **等待期间不停摆**：敌人继续跟随旧路径；若无旧路径，则朝目标做直线转向 + 依赖 Arcade 的沿墙滑动（简化 steering fallback）。绝不允许出现"站着等路径"。
 
-**N4｜直线优先（最有效的简化寻路）**：发起 A\* 之前先测 `hasLineOfSight(occluders, enemyPos, target)`。为真则**跳过 A\***，直接 steering 朝目标走。CHASE 态下这条在多数时间成立（能看见你通常就意味着直线可达），实际把追击期间的 A\* 调用压到接近零。
-> 注意：视线畅通 ≠ 20 px 宽的身体能通过。`AI_BODY_SIZE`(20) < `TILE_SIZE`(32) 且 N2 已禁止切角，斜穿窄缝的风险可接受；若实测出现卡墙，退化方案是把这条优化限制在 `d ≤ 3 tile` 内。
+**N4｜直线优先**：允许直行优化时，先测`hasClearPath(movementOccluders, enemyPos, target, AI_BODY_SIZE)`，身体整段有净空才跳过A\*直接steering。movementOccluders由WalkGrid派生，光学可见不能代替物理可达；跨空洞时仍请求绕行路径。
 
 **N5｜远距离降级**：目标距离 > `AI_SIMPLE_PATH_RANGE`（384 px = 12 tile）的请求降为最低优先级，且该敌人的重规划间隔放宽到 1000 ms。由于 CHASE 有 320 px 的放弃距离，长距离请求只可能来自 RETURN——它不急。
 
@@ -421,7 +428,7 @@ detection = clamp(detection, 0, 1)
 - RETURN 失败 3 次 → 就地转 PATROL（见降级表）。
 - 记录一次开发模式告警（地图数据问题的早期信号）。
 
-**N7｜路径平滑**：A\* 返回的 tile 路径做一次 string-pulling——用 `hasLineOfSight` 逐点尝试跳过中间点，保留最少的拐点。目的是消除网格锯齿走位，让敌人的移动读起来像"生物"而不是"棋子"。
+**N7｜路径平滑**：A\* 返回的tile路径做一次string-pulling，用`hasClearPath(movementOccluders, ..., BODY_SIZE)`逐点尝试跳过中间点。movementOccluders只由WalkGrid派生；看得见的空洞仍阻止身体直线通过。保留实际身体净空所需的拐点，不能用光学视线网格平滑。
 
 **N8｜远处敌人降频**：距玩家 > `AI_ACTIVE_RANGE`（640 px）的敌人，FSM 与感知降到 5 Hz。**巡逻态**走预计算路径、不发起任何 A\*；但**远处 RETURN 态**仍可发起 A\*（否则会永久贴墙走不回路点），只是降到队列最低优先级，永不延误近处追击（DEC-022 ⑤，修正原 spec 括号"都在巡逻"的隐含假设）。玩家看不到也听不到的地方，AI 的精度没有观察者。
 

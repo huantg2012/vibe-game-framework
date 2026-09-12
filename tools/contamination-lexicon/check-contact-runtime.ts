@@ -103,6 +103,7 @@ const seeker = { id: 'seeker', ai, config: createEnemyTypeConfig('infiltrator'),
 const context = { dtMs: 16, enemies: [seeker], playerPos: { x: 60, y: 80 }, playerVel: { x: 0, y: 0 },
   emitAlert() {},
   decoyPos: { x: 112, y: 80 }, occluders: { ...arena, isOpaque: (col: number, row: number) => !arena.isWalkable(col, row) },
+  movementOccluders: { ...arena, isOpaque: (col: number, row: number) => !arena.isWalkable(col, row) },
 } as unknown as AIContext;
 updateBehavior(seeker, context);
 assert(ai.velocity.x > 0, 'pursuer heads toward selected mirror, not nearby player behind it');
@@ -134,6 +135,11 @@ const host = {
     lexemes: { motion: 'motion_anchor', sense: 'sense_touch', rhythm: 'rhythm_open', contact: 'contact_adjacent_strike' } },
 };
 const system = new ContaminationHostSystem();
+// This fixture bypasses create()/bindPractice() and swaps the legacy physical grid
+// directly; mirror their default optical binding while preserving each old scenario.
+Object.defineProperty(system, 'sightGrid', {
+  get: () => (system as unknown as { occluders: unknown }).occluders,
+});
 Object.assign(system, { hosts: [host], liveMotion: true, skipPaint: true,
   combat: { getAttackState: () => ({ phase: 'idle' }), applyHazardHit() { hits++; } },
   chaos: { addChaos(_source: string, amount: number) { chaos += amount; } },

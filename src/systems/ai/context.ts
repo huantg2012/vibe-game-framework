@@ -30,6 +30,8 @@ export type PathPriorityValue = (typeof PathPriority)[keyof typeof PathPriority]
 export interface AIContext {
   /** Line of sight. The only occlusion authority in the project (rule P3). */
   readonly occluders: OccluderGrid;
+  /** Non-walkable tiles; separate from perception for chasms and low obstacles. */
+  readonly movementOccluders: OccluderGrid;
   readonly pathfinder: GridPathfinder;
   readonly enemies: readonly Enemy[];
 

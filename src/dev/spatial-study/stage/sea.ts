@@ -3,6 +3,7 @@ import type { RiftDevRuntimeContext } from '@/scenes/rift-scene';
 import type { SeaColumn, SlicePoint, SpatialSliceWorld } from '../slice-world';
 import { STAGE_HEIGHT, STAGE_WIDTH, noise } from './materials';
 import { WaterFlowCycle, createFallingWaterFlow } from '../water-flow';
+import { STAGE_PALETTE, pigmentGlsl } from './palette';
 
 interface Vertex {
   x:number; z:number; field:number; top:number; bottom:number;
@@ -64,8 +65,9 @@ void main(){
 }`;
 const fragmentShader=`
 uniform float clock; uniform float falling; uniform float waterActive; uniform float residue;
-uniform vec2 playerScreen; uniform sampler2D waterGrain; uniform vec2 resolution;
+uniform vec2 playerScreen; uniform vec2 resolution;
 uniform sampler2D terrainPerception; uniform sampler2D terrainHeight; uniform vec2 groundGrid;
+uniform sampler2D sceneDepth; uniform float useSceneDepth; uniform mat4 inverseCamera;
 uniform vec2 worldSize; varying vec3 worldPoint; varying vec3 worldNormal; varying vec2 screenPoint;
 float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 float n(vec2 p){vec2 f=fract(p),i=floor(p);f=f*f*(3.-2.*f);
@@ -79,44 +81,33 @@ float groundAt(vec2 p){
  return f.x+f.y<=1.?a+(c-a)*f.x+(b-a)*f.y:d+(b-d)*(1.-f.x)+(c-d)*(1.-f.y);
 }
 vec3 pigment(float value){
- if(value<.5)return vec3(6,15,20)/255.;
- if(value<1.5)return vec3(9,26,32)/255.;
- if(value<2.5)return vec3(15,36,42)/255.;
- if(value<3.5)return vec3(24,48,54)/255.;
- if(value<4.5)return vec3(36,64,70)/255.;
- if(value<5.5)return vec3(56,87,92)/255.;
- return vec3(111,144,139)/255.;
+ ${STAGE_PALETTE.sea.slice(0,-1).map((color,i)=>`if(value<${i+.5})return ${pigmentGlsl(color)};`).join('\n ')}
+ return ${pigmentGlsl(STAGE_PALETTE.sea[6])};
 }
 void main(){
  vec3 normal=normalize(worldNormal), pp=floor(worldPoint/2.)*2.;
  float side=1.-abs(normal.y);
- vec2 flow=vec2(pp.x/115.-clock*.105,(pp.z*(1.-side*.45)+pp.y*side*.65)/31.
-   +sin(pp.x/147.-clock*.17)*1.25);
- float broad=n(vec2(pp.x/190.+clock*.018,pp.z/160.-clock*.025));
- float current=n(flow), breakage=n(flow*vec2(3.2,1.6)+5.);
- vec2 uv=vec2(pp.x/245.-clock*.035,(pp.z+pp.y*side*.7)/260.+clock*.011);
- float grain=dot(texture2D(waterGrain,uv).rgb,vec3(.22,.63,.15));
  float light=dot(normal,normalize(vec3(-.38,.86,-.28)));
- // Large quiet water masses, separated by broken 2-4px pigment clusters.
- // There is no smooth specular band and no blanket of equal-brightness noise.
- vec2 weave=vec2(pp.x+sin(pp.z/91.-clock*.13)*16.,pp.z+sin(pp.x/103.)*12.);
- float cluster=n(weave/vec2(27.,16.)+vec2(-clock*.11,clock*.07));
- float fleck=n(weave/vec2(5.,3.)+vec2(-clock*.48,clock*.31));
- float fine=n(weave/vec2(2.,3.)+vec2(clock*.13,clock*.21));
- float value=1.+step(.32,light);
- value+=step(.53,cluster)*step(.28,broad)*step(.38,fleck);
- value-=step(cluster,.27)*step(fleck,.55);
- // Reflections are loose groups of short strokes. The group travels slowly,
- // but its small strokes join and break on a faster, independent clock.
- float reflection=step(.58,current)*step(.51,cluster)*step(.52,fleck);
- value+=reflection*(1.+step(.72,fleck)*step(.49,grain));
- value+=step(.82,cluster)*step(.83,fleck)*step(.67,fine);
+ // Water is the background mass: broad, connected ink and drifting light.
+ // Pixel steps live at the shapes' edges, not as a blanket of surface speckle.
+ vec2 weave=vec2(pp.x+sin(pp.z/163.-clock*.09)*39.,
+   pp.z+sin(pp.x/152.+clock*.075)*28.);
+ vec2 flow=weave/vec2(145.,32.)+vec2(-clock*.043,clock*.025);
+ float current=n(flow);
+ float broad=n(weave/vec2(243.,133.)+vec2(clock*.012,-clock*.009));
+ float edgeGrain=(hash(floor(pp.xz/vec2(6.,2.)))-.5)*.025;
+ float value=1.+step(.22,light);
+ value+=step(.60+edgeGrain,current)*step(.31,broad);
+ value+=step(.70+edgeGrain,current)*step(.43,broad);
+ value+=step(.79,current)*step(.63,broad);
+ // Small light tips follow only a few wide reflections; they never fill the dark mass.
+ float crest=n(flow*vec2(.83,1.37)+vec2(3.4,clock*.025));
+ value+=step(.84,current)*step(.66,crest)*step(.54,broad);
  if(side>.36){
-   vec2 sideWeave=vec2(pp.x+pp.z*.43,pp.y+sin(pp.x/71.-clock*.12)*7.);
-   float sheet=n(sideWeave/vec2(39.,17.)+vec2(-clock*.075,clock*.12));
-   float fragment=n(sideWeave/vec2(6.,3.)+vec2(clock*.18,clock*.31));
-   value=step(.12,light)+step(.54,sheet)*step(.47,fragment);
-   value+=step(.74,sheet)*step(.61,fragment)*2.;
+   vec2 sideWeave=vec2(pp.x+pp.z*.43,pp.y+sin(pp.x/153.-clock*.07)*13.);
+   float sheet=n(sideWeave/vec2(131.,37.)+vec2(-clock*.035,clock*.031));
+   value=step(.08,light)+step(.57,sheet);
+   value+=step(.73,sheet)*step(.24,light);
  }
  vec3 color=pigment(value);
  float alpha=.97;
@@ -137,20 +128,41 @@ void main(){
      color=pigment(value);alpha=.68+step(.68,streak)*.2;
    }
  }
+ // Continue the local ground-height reference THROUGH the open chasm for
+ // sight projection. This is a query plane, never a drawn floor or depth proxy:
+ // a camera ray with no opaque surface must still open the overhead water.
  vec2 gp=vec2(worldPoint.x,worldPoint.z-worldPoint.y/0.7002075382);
  for(int i=0;i<3;i++)gp.y=worldPoint.z-(worldPoint.y-groundAt(gp))/0.7002075382;
  vec2 guv=gp/worldSize;
  float valid=step(0.,guv.x)*step(guv.x,1.)*step(0.,guv.y)*step(guv.y,1.);
- vec2 perception=texture2D(terrainPerception,guv).rg*valid;
+ vec3 perception=texture2D(terrainPerception,guv).rgb*valid;
  vec2 delta=(screenPoint-playerScreen)*resolution*.5;
  float nearPlayer=1.-smoothstep(35.,166.,length(delta/vec2(1.,.83)));
  if(falling<.5){
+   float visibleAir=perception.r*(1.-perception.b);
    float transmission=max(perception.r*.79,perception.g*.24);
+   transmission=max(transmission,visibleAir*.94);
+   if(useSceneDepth>.5){
+     vec2 pixelUv=gl_FragCoord.xy/resolution;
+     float opaqueDepth=texture2D(sceneDepth,pixelUv).r;
+     if(opaqueDepth<.999999){
+       vec4 actual=inverseCamera*vec4(pixelUv*2.-1.,opaqueDepth*2.-1.,1.);
+       vec3 actualPoint=actual.xyz/actual.w;
+       vec2 actualUv=actualPoint.xz/worldSize;
+       vec2 actualPerception=texture2D(terrainPerception,actualUv).rg;
+       // A depth sample exists only where the native opaque render has
+       // already admitted a surface. No hidden terrain/actor is revealed.
+       // Correct only descending rock. Keep the established ground reveal;
+       // revealing every remembered depth pixel would trace out the map.
+       float section=smoothstep(2.,7.,groundAt(actualPoint.xz)-actualPoint.y);
+       transmission=max(transmission,(.40+.54*actualPerception.r)*section);
+     }
+   }
    transmission=max(transmission,nearPlayer*.47);
    alpha-=transmission;
    // A few quiet surface strokes remain above the revealed ground, so its
    // local light cannot become an opaque gray tile pasted onto the sea.
-   if(value>3.5)alpha=max(alpha,.39);
+   if(value>3.5)alpha=max(alpha,mix(.39,.08,visibleAir));
  }else if(normal.y<.72){alpha-=nearPlayer*.16;}
  gl_FragColor=vec4(pow(color,vec3(2.2)),clamp(alpha,0.,1.));
  #include <colorspace_fragment>
@@ -166,7 +178,6 @@ export class StageSea {
   private readonly material:THREE.ShaderMaterial;
   private readonly fallMaterial:THREE.ShaderMaterial;
   private readonly depthMaterial:THREE.ShaderMaterial;
-  private readonly texture:THREE.Texture;
   private readonly perception:THREE.Texture;
   private readonly ownsPerception:boolean;
   private readonly terrainHeight:THREE.Texture;
@@ -182,7 +193,7 @@ export class StageSea {
   private readonly ray=new THREE.Raycaster();
   private readonly bodyMesh:THREE.Mesh;
 
-  constructor(context:RiftDevRuntimeContext,private readonly world:SpatialSliceWorld,terrainPerception?:THREE.Texture,terrainHeight?:THREE.Texture){
+  constructor(_context:RiftDevRuntimeContext,private readonly world:SpatialSliceWorld,terrainPerception?:THREE.Texture,terrainHeight?:THREE.Texture,sceneDepth?:THREE.Texture){
     this.gridColumns=Math.ceil((world.width+112-GRID_X)/SEA_STEP)+1;
     this.gridRows=Math.ceil((world.height+28-GRID_Z)/SEA_STEP)+1;
     for(let row=0;row<this.gridRows;row++)for(let col=0;col<this.gridColumns;col++){
@@ -190,9 +201,6 @@ export class StageSea {
         topNormal:[0,1,0],bottomNormal:[0,-1,0],outward:[0,0],index:this.grid.length});
     }
     this.flowCycle=new WaterFlowCycle(world.waterDefinition);
-    const image=context.scene.textures.get('spatial-sea-material').getSourceImage();
-    this.texture=new THREE.Texture(image);this.texture.wrapS=this.texture.wrapT=THREE.RepeatWrapping;
-    this.texture.magFilter=this.texture.minFilter=THREE.NearestFilter;this.texture.needsUpdate=true;
     this.ownsPerception=!terrainPerception;
     this.perception=terrainPerception??new THREE.DataTexture(new Uint8Array([0,0,0,255]),1,1);
     if(this.ownsPerception)this.perception.needsUpdate=true;
@@ -200,9 +208,10 @@ export class StageSea {
     this.terrainHeight=terrainHeight??new THREE.DataTexture(new Float32Array([0,0,0,0]),2,2,THREE.RedFormat,THREE.FloatType);
     if(this.ownsHeight){this.terrainHeight.minFilter=this.terrainHeight.magFilter=THREE.NearestFilter;this.terrainHeight.needsUpdate=true;}
     const uniforms={clock:{value:0},falling:{value:0},waterActive:{value:0},residue:{value:0},
+      sceneDepth:{value:sceneDepth??this.terrainHeight},useSceneDepth:{value:sceneDepth?1:0},inverseCamera:{value:new THREE.Matrix4()},
       terrainHeight:{value:this.terrainHeight},groundGrid:{value:new THREE.Vector2(terrainHeight?world.ground.columns:2,terrainHeight?world.ground.rows:2)},playerScreen:{value:new THREE.Vector2()},
       terrainPerception:{value:this.perception},worldSize:{value:new THREE.Vector2(world.width,world.height)},
-      waterGrain:{value:this.texture},resolution:{value:new THREE.Vector2(STAGE_WIDTH,STAGE_HEIGHT)}};
+      resolution:{value:new THREE.Vector2(STAGE_WIDTH,STAGE_HEIGHT)}};
     // First establish the nearest water depth AFTER opaque gameplay rendering.
     // Then transmit only that front skin. Far water faces cannot blend through it
     // or overwrite an actor in front, regardless of mesh/triangle insertion order.
@@ -213,9 +222,9 @@ export class StageSea {
       transparent:true,depthWrite:false,depthTest:true,depthFunc:THREE.EqualDepth});
     this.material.forceSinglePass=true;this.material.toneMapped=false;
     this.fallMaterial=this.material.clone();this.fallMaterial.uniforms.falling!.value=1;
-    this.fallMaterial.uniforms.waterGrain!.value=this.texture;
     this.fallMaterial.uniforms.terrainPerception!.value=this.perception;
     this.fallMaterial.uniforms.terrainHeight!.value=this.terrainHeight;
+    this.fallMaterial.uniforms.sceneDepth!.value=this.material.uniforms.sceneDepth!.value;
     this.bodyMesh=new THREE.Mesh(this.body.geometry,this.material);this.bodyMesh.frustumCulled=false;
     const fallMesh=new THREE.Mesh(this.fall.geometry,this.fallMaterial);fallMesh.frustumCulled=false;
     const bodyDepth=new THREE.Mesh(this.body.geometry,this.depthMaterial),fallDepth=new THREE.Mesh(this.fall.geometry,this.depthMaterial);
@@ -407,6 +416,7 @@ export class StageSea {
   update(time:number,player:Readonly<{x:number;y:number}>,camera:THREE.Camera):void{
     this.projectedPlayer.set(player.x,this.world.groundHeightAt(player.x,player.y)+23,player.y).project(camera);
     for(const material of [this.material,this.fallMaterial]){
+      (material.uniforms.inverseCamera!.value as THREE.Matrix4).multiplyMatrices(camera.matrixWorld,camera.projectionMatrixInverse);
       material.uniforms.clock!.value=time/1000;
       material.uniforms.waterActive!.value=this.world.water.active?1:0;
       material.uniforms.residue!.value=this.flowCycle.sample(time,this.flow).residue;
@@ -428,7 +438,7 @@ export class StageSea {
     return {bodyTriangles:this.body.count/3,fallTriangles:this.fall.count/3,source:source.toArray(),
       sourceLineOfSight:this.sourceVisible,nearestOccluder:hits[0]?.distance??null,
       trueGeometryHoles:true,waterSource:'shared-world-column',contact:'shared-world-water-outline',
-      flow:{...this.flow},motion:'feeding / accelerated fall / downward draining tail',pixelSurface:'seven directed pigment values'};
+      flow:{...this.flow},motion:'feeding / accelerated fall / downward draining tail',pixelSurface:'broad ink masses and sparse drifting reflections; seven pigment values'};
   }
 
   /** Detached arrays for topology checks; never exposes a mutable live GPU buffer. */
@@ -436,7 +446,7 @@ export class StageSea {
     return {positions:this.body.positions.slice(0,this.body.count*3),normals:this.body.normals.slice(0,this.body.count*3)};
   }
 
-  destroy():void{this.texture.dispose();if(this.ownsPerception)this.perception.dispose();if(this.ownsHeight)this.terrainHeight.dispose();}
+  destroy():void{if(this.ownsPerception)this.perception.dispose();if(this.ownsHeight)this.terrainHeight.dispose();}
 }
 
 function mix(a:number,b:number,t:number):number{return a+(b-a)*t;}

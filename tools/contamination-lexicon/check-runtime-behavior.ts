@@ -194,9 +194,11 @@ for (const substrate of ['doorframe', 'street_wreckage', 'stalk_clump']) {
 for (const substrate of ['doorframe', 'street_wreckage', 'organic_remnant']) {
   const { enemy } = fixture({ ...INFILTRATOR_FORM, substrate });
   let resets = 0;
-  const body = { reset() { resets++; } };
-  (enemy as unknown as { getSprite(): unknown }).getSprite = () => ({ body });
+  const body = { center: { x: 103, y: 95 }, halfWidth: 10, halfHeight: 10, reset() { resets++; } };
+  (enemy as unknown as { getSprite(): unknown }).getSprite = () => ({ x: 100, y: 100, body });
   const ai = new AISystem();
+  Object.assign(ai, { walk: { cols: 20, rows: 20, tileSize: 32, version: 0,
+    isWalkable: (col: number, row: number) => col >= 0 && row >= 0 && col < 20 && row < 20 } });
   (ai as unknown as { enemies: Enemy[] }).enemies.push(enemy);
   ai.knockbackEnemy('test', 30, 20);
   assert.equal(resets, 0, 'missing enemy is a no-op');

@@ -151,12 +151,29 @@ check('terrain memory records only seen samples, never raises live perception, a
   const context={visibilityAt:(point:{x:number})=>region===0&&point.x<8?1:region===2&&point.x>=8?.6:0} as unknown as RiftDevRuntimeContext;
   const field=new StageVisibility(context,16,8);field.update(0);
   const bytes=(field.texture.image as {data:Uint8Array}).data;
-  assert.deepEqual([...bytes],[255,255,0,0]);
-  region=1;field.update(100);assert.deepEqual([...bytes],[0,255,0,0]);
+  assert.deepEqual([...bytes],[255,255,255,255,0,0,255,255]);
+  region=1;field.update(100);assert.deepEqual([...bytes],[0,255,255,255,0,0,255,255]);
   assert.equal(context.visibilityAt({x:4,y:4}),0);
-  region=2;field.update(200);assert.deepEqual([...bytes],[0,255,153,255]);
+  region=2;field.update(200);assert.deepEqual([...bytes],[0,255,255,255,153,255,255,255]);
   field.destroy();const next=new StageVisibility(context,16,8);
-  assert.deepEqual([...(next.texture.image as {data:Uint8Array}).data],[0,0,0,0]);next.destroy();
+  assert.deepEqual([...(next.texture.image as {data:Uint8Array}).data],[0,0,255,255,0,0,255,255]);next.destroy();
+});
+
+check('visible empty space opens the sea without remembering a nonexistent floor after turning away',()=>{
+  let looking=true;
+  const context={visibilityAt:()=>looking?1:0} as unknown as RiftDevRuntimeContext;
+  const field=new StageVisibility(context,16,8,x=>x<8);
+  field.update(0);
+  const pixels=(field.texture.image as {data:Uint8Array}).data;
+  assert.equal(pixels[0],255);assert.equal(pixels[4],255,'authoritative sight reaches air as well as land');
+  assert.equal(pixels[1],255);assert.equal(pixels[5],0,'air has no terrain memory');
+  assert.equal(pixels[2],255);assert.equal(pixels[6],0,'surface membership is independent of current sight');
+  assert.equal(field.snapshot().visibleAirCells,1);
+  looking=false;field.update(100);
+  assert.equal(pixels[0],0);assert.equal(pixels[4],0);
+  assert.equal(pixels[1],255);assert.equal(pixels[5],0,'turning away remembers only real rock');
+  assert.equal(context.visibilityAt({x:4,y:4}),0,'presentation never changes authoritative sight');
+  field.destroy();
 });
 
 disposeTree(stage);

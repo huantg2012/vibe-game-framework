@@ -414,7 +414,7 @@ function navigateTo(
   const clearance = GAME_CONSTANTS.AI.BODY_SIZE;
   if (
     ai.preferPathMs <= 0 &&
-    hasClearPath(ctx.occluders, ai.position, scratchTarget, clearance)
+    hasClearPath(ctx.movementOccluders, ai.position, scratchTarget, clearance)
   ) {
     clearPath(enemy);
     ai.pathRequestPending = false;

@@ -42,6 +42,7 @@ import { closeAlertEpisode, stepFsm, transitionTo } from '@/systems/ai/state-mac
 import { hasLineOfSight } from '@/utils/grid-raycast';
 import { clamp, lerp, shortestArc } from '@/utils/math';
 import { separateContacts, type ContactBody } from '@/systems/ai/contact-separation';
+import { bodyDisplacementFraction, createMovementOccluders } from '@/systems/ai/physical-grid';
 import type { EnemyControlEffect, EnemyControlSnapshot } from '@/systems/enemy-control-state';
 
 /** How the player's field of view rates a world position: 0 means "not drawn" (rule R4). */
@@ -115,8 +116,7 @@ export interface AISystemAPI {
   setDecoyPosition(pos: Readonly<Vector2> | null): void;
   setVisualDecoy(sourceId: string, pos: Readonly<Vector2> | null): void;
   reportSoundLure(pos: Readonly<Vector2>, radius: number): void;
-  /** resonate: "被弹回3格". A direct reposition (placeholder-tier: no wall-awareness),
-   * since nothing today moves an enemy's body except its own steering. */
+  /** Tool displacement, swept against physical support so walls and chasms stop it. */
   knockbackEnemy(enemyId: string, dx: number, dy: number): void;
 
   // --- Slice 4 tool overrides (T7 rewire), same shape as the Slice 5 block above. ---
@@ -148,6 +148,7 @@ export class AISystem implements AISystemAPI {
   private scene!: Phaser.Scene;
   private occluders!: OccluderGrid;
   private walk!: WalkGrid;
+  private movementOccluders!: OccluderGrid;
   private pathfinder!: GridPathfinder;
   private readonly enemies: Enemy[] = [];
   /** Live array handed to the scene's wall collider; despawn splices it. */
@@ -228,11 +229,12 @@ export class AISystem implements AISystemAPI {
     this.observedWorld.on('worldstep', this.onWorldStep, this);
     this.occluders = occluders;
     this.walk = walk;
+    this.movementOccluders = createMovementOccluders(walk);
     this.hasPreviousPlayerPos = false;
     this.playerIsMoving = false;
     // Smoothing has to keep a body's width of room, not just a sight line: a shortcut
     // that only a point could take leaves the enemy grinding against a corner.
-    this.pathfinder = new GridPathfinder(walk, occluders, GAME_CONSTANTS.AI.BODY_SIZE);
+    this.pathfinder = new GridPathfinder(walk, this.movementOccluders, GAME_CONSTANTS.AI.BODY_SIZE);
     this.context = this.createContext();
 
     if (import.meta.env?.DEV && spawns.length > GAME_CONSTANTS.AI.MAX_ACTIVE_ENEMIES) {
@@ -602,13 +604,16 @@ export class AISystem implements AISystemAPI {
     const enemy = this.findEnemy(enemyId);
     if (!enemy || floorMotionFor(enemy.getForm()) === 'motion_anchor') return;
     const ai = enemy.ai;
-    const newX = ai.position.x + dx;
-    const newY = ai.position.y + dy;
+    const sprite = enemy.getSprite();
+    const body = sprite.body as Phaser.Physics.Arcade.Body;
+    const fraction = bodyDisplacementFraction(this.walk, body.center, body.halfWidth, body.halfHeight, dx, dy);
+    const newX = sprite.x + (fraction > 0 ? dx * fraction : 0);
+    const newY = sprite.y + (fraction > 0 ? dy * fraction : 0);
 
     // `Body.reset()` moves both the physics body and its Game Object in one call and
     // zeroes velocity - a plain `sprite.setPosition()` would leave the Arcade body where
     // it was, and the two would fight on the next physics step.
-    (enemy.getSprite().body as Phaser.Physics.Arcade.Body).reset(newX, newY);
+    body.reset(newX, newY);
     ai.position.x = newX;
     ai.position.y = newY;
   }
@@ -1016,6 +1021,7 @@ export class AISystem implements AISystemAPI {
   private createContext(): AIContext {
     return {
       occluders: this.occluders,
+      movementOccluders: this.movementOccluders,
       pathfinder: this.pathfinder,
       enemies: this.enemies,
       playerPos: this.playerPos,

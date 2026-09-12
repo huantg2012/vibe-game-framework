@@ -1,20 +1,126 @@
 ---
-status: R4-TECHNICAL-VERIFIED / USER-VISUAL-PENDING
+status: L-BOUNDED-TECHNICAL-VERIFIED / R7-USER-PROVISIONALLY-ACCEPTED
+k-status: TECHNICAL-VERIFIED
+j-status: TECHNICAL-VERIFIED / USER-REPORTED-VOID-SIGHT-DEFECT
+r4-status: TECHNICAL-VERIFIED / STAGE-DIRECTION-ACCEPTED / VISTA-FROZEN
 r3-status: TECHNICAL-VERIFIED / USER-PARTIALLY-VIABLE-NOT-ACCEPTED
 r2-status: TECHNICAL-VERIFIED / USER-VISUAL-NOT-ACCEPTED
 r1-status: TECHNICAL-VERIFIED / USER-VISUAL-REJECTED
 date: 2026-09-12
 owner: qa
-baseline: 3c1bc7c + iteration-21 F / H / I working tree
+baseline: fab67e2 + iteration-21 J / K / L working tree
 ---
 
-# 迭代21 H／I：双线局部与像素精修验收（DEC-152／DEC-153）
+# 迭代21 H／I／J／K／L：空间局部与中央视线验收
 
 **用户复核（DEC-154，2026-09-12）：** 认可三维整体效果并选为后续方向，正俯视冻结于R4。J批追加海面写意程度、中央缺失空间和色彩打磨。以下41组与实玩结果属于已提交R4基线，不冒充J批验证。
 
 **证据保存：** 下文原始录像、逐帧大JSON与工作截图保存在本地`artifacts/iteration-21-spatial/`，不将数百MB运行产物放入Git。文件清单/大小/SHA256见`iteration-21-spatial-artifacts.json`，代表截图见`iteration-21-spatial-review/`，可执行复验脚本随源码保存。Git克隆不包含原始录像。
 
-## 当前 R4：最终技术验证完成，用户空间／视觉待审
+## 当前 L／R7：北岸材质有限复核完成，用户暂予接受
+
+**用户后续（2026-09-12）：** “还凑合，提交吧”。当前R7记为用户暂予接受并授权保存J/K/L累计成果；不改写既有技术证据，不扩大为整项美术或发行质量通过。阶段一仍ACTIVE，四A未开始。
+
+本轮任务限定北岸材质热修：可走面在薄唇结束，其下应读成暗立面、向下纹理，减弱横向台阶感。依据ROOT任务简报，产品修改范围为Stage地形／断面材质及版本metadata，几何／规则／视线／海体不改。已显式读取 `.cursor/agents/qa.md`，未读取旧美术skills／HOW；没有改产品代码、隐藏海层、扩展FOV或启用美术诊断开关。
+
+最终只执行一次 `GAME_URL=http://127.0.0.1:3001 CASE=shore-stage`，ROOT先完成构建并重启同源码、HMR关闭的独立验收服务。新空白隔离Chrome真实WASD：出生绕西北侧走到北岸，持续按s撞岸、停驻约6秒，再绕西侧返回南岸、按w撞岸，正常中止。未重跑搜撤／死亡／全套八点视线；K下文已完成的玩法与通视结果保留为前轮证据，不冒充本轮重新测试。
+
+正常尺寸送审图：[北岸接触](artifacts/iteration-21-spatial/r7-north-shore-material/shore-stage-2026-09-12T06-39-54-573Z/08-north-shore-contact.png)、[北岸停驻](artifacts/iteration-21-spatial/r7-north-shore-material/shore-stage-2026-09-12T06-39-54-573Z/08-north-shore-depth.png)、[南岸返程](artifacts/iteration-21-spatial/r7-north-shore-material/shore-stage-2026-09-12T06-39-54-573Z/10-south-shore-depth.png)、[原速录像](artifacts/iteration-21-spatial/r7-north-shore-material/shore-stage-2026-09-12T06-39-54-573Z/continuous.webm)、[实际记录](artifacts/iteration-21-spatial/r7-north-shore-material/shore-stage-2026-09-12T06-39-54-573Z/evidence.json)。实图中角色脚下地面在窄亮唇结束，下面为暗立面与纵向细裂痕，先前横向踏阶读法明显减弱；此为QA观察，不等于用户已认可最终材质／空间表现。
+
+真实北岸坐标 **(498.63,310)**、朝南，接触与停驻两帧位置相同；南岸 **(497.81,554)**、朝北，仍被原20×20身体碰撞边界阻挡。最后记录模拟时间32.430秒、HP100、耐久60；结果为 **aborted**，不称撤离／携回。4个检查点的正式XY、坡面根高度、脚部支持及可见对象支持面通过；没有把这4点说成完整逐帧空间穷尽。
+
+实际只读深度接线：960×640原生DepthTexture同时被海体／落水使用，enabled=1，海组可见，最终目标回屏幕，8次opaque绘制／22,874三角。新context启动前确认cookies／origins空、正式SAVE为null后才设哨兵，启动与中止后均不变。GPU仍为M4 Pro Metal／WebGL2，contextLost=false；0 pageerror／shader error／游戏资源缺失，仅两次favicon404单列。
+
+rAF **1936帧，中位16.7ms／p95 16.7ms／最大66.7ms，2帧>50ms**，仍为本机带录制开发环境，不扩大为普遍性能保证。浏览器已正常归档并关闭，3001验收服务保留。ROOT另行执行的新构建（247模块／3.23秒）与terrain-memory／visible-air两个既有回归通过；本QA未重跑构建。阶段四A继续 **NOT-STARTED**。
+
+## 已完成 K／R6：中央空气通视与正式搜撤技术验证完成
+
+用户指出中央缺失应读作空气／天井，却继续遮断视线与海体显露。K只让显式选择的Stage内部VOID透过视线，物理不可走不变；真实WALL、外界及默认Vista保留原规则。J的旧验证不能覆盖新规则。已显式读取 `.cursor/agents/qa.md`，未读取旧美术skills／HOW；本轮不代用户签美术PASS，阶段四A仍 **NOT-STARTED**。
+
+最终仅在稳定验收入口 `http://127.0.0.1:3001/` 串行完成一趟 `sight-stage` 和一趟 `functional-stage`，两浏览器均已关闭，验收服务保留。ROOT使用同一当前源码，关闭HMR／文件watch并采用独立cache，避免此前开发服务断连与重载；未修改游戏时钟、帧率、角色／AI或视野数值。每趟使用新空白Chrome context，先断言cookies／origins为空、正式SAVE不存在，再放入测试哨兵；没有访问或覆盖用户存档。输入为真实WASD／Space／E／Tab／Esc及正常页面控件，探针只读；走位采用短按、松键后读坐标的有界收敛。
+
+### 八点视线专项
+
+最终 [完整记录](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/evidence.json)、[原速录像](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/continuous.webm)。读取的均为当前生产 `getVisibilityAt()`／`getEffectiveRadius()`、真实遮挡grid和Stage实际RGBA纹理，基础前向224px／周边80px保持原值。
+
+1. 南岸实际(496,554)朝北：24／104／160px空气点可见，均非FLOOR、sightOpaque=false、RGBA[255,0,0,255]；250px外北岸仍不可见。[南岸](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/sight-01-south-looking-north.png)。
+2. 真实按s转背并走到y576.11：原空气点距126.11px，后向有效半径80px，visibility=0、RGBA[0,0,0,255]；空气没有留下地形记忆。
+3. 南岸横移至约(563.41,554)再朝北：三个有效空气点仍可见，250px外地面仍隐藏；近岸显露随真实位置与朝向更新。
+4. 窄口实际(438,331.41)朝东，身体被x448边界挡住：74.05px空气和154.02px对岸真实地面均visibility=1；对岸RGBA[255,255,255,255]，空气G／B始终0。[窄口跨岸](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/sight-04-narrow-cross-shore.png)。
+5. 真实按a退至x415.69并朝西：对岸距176.33px、后向半径80px，visibility=0；真实地形仅保留G记忆，不当作当前可见。
+6. 真实按d返回x438朝东：相同空气／对岸恢复可见，没有扩大视距或传送。
+7. 北岸实际(498.89,310)朝南：24／120px空气可见，250px外南岸仍visibility=0。这里南岸虽曾被看见，RGBA[0,255,255,255]也没有被误读为当前可见。[北岸](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/sight-07-north-looking-south.png)。
+8. 正常中止Stage、切Vista、重新步行到(496,554)：相同24／104px内部VOID均sightOpaque=true、visibility=0，默认旧规则保持；切换与中止的正式SAVE哨兵不变。[Vista旧规则](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/sight-08-default-vista-still-opaque.png)。
+
+两次局部运行世界签名都为 `aa970f9f`，记录的 `sightPolicy` 分别明确Stage空气透明、Vista R4 VOID遮挡；不能继续称两线视线规则相同。`RiftDevFixture`接口和感知/AI接线是本轮有意修改。ROOT收尾另行核对[11份冻结文件哈希](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/source-freeze-final.json)：Vista呈现、共享世界/fixture实现/水流及数据仍与 `fab67e2` 一致；这不等于所有运行行为不变，共用AI推退也修复了默认模式原有穿墙缺陷。该专项正常中止，不冒充真实撤离或死亡。8个Stage支持检查点通过。
+
+### 一次正式战斗／翻找／携回回归
+
+最终 [完整记录](artifacts/iteration-21-spatial/r6-open-chasm-sight/functional-stage-2026-09-11T20-12-21-628Z/evidence.json)、[原速录像](artifacts/iteration-21-spatial/r6-open-chasm-sight/functional-stage-2026-09-11T20-12-21-628Z/continuous.webm)：真实模拟时长 **73.762秒，HP70撤离**，实际移动约2713.92px。听觉虫进入警戒／交战，玩家三次正式伤害 **23／27／25**将其击杀，玩家承受两次 **15**伤害，撬棍耐久 **60→57**，消费账本为3次。不是以空挥动画或按键次数代替命中。[实际战斗](artifacts/iteration-21-spatial/r6-open-chasm-sight/functional-stage-2026-09-11T20-12-21-628Z/07-actual-combat.png)。
+
+东／西两堆均经正式按住E完成翻找与揭晓，remaining=0；结算outcome=extract、run.status=settled，实际携回 **2薪柴、1把拾获撬棍、1件结线污染物**，returnedIds恰有两件。带入撬棍保留57耐久；拾获物处于应有的未供奉阶段，不当作训练库存持续供给通过。[正式携回](artifacts/iteration-21-spatial/r6-open-chasm-sight/functional-stage-2026-09-11T20-12-21-628Z/90-real-return.png)。
+
+干路绕行、观察完整自然水周期、等待quiet后穿越均水伤0。真实向东撞中央缺失，角色停在(342,401.78)，没有把空气透明变成可走。Tab保持运行，Esc暂停时世界／水流冻结；启动、暂停、真实携回后的正式SAVE哨兵均不变。17个实际检查点的正式XY／坡面支撑／可见敌人与拾获物支持面通过。本轮按范围未重跑死亡、整套生命周期或Vista长搜撤，旧R4证据仍明确留在历史段落。
+
+### 实际位置、错误与性能范围
+
+已将保存的真实100ms记录离线交给当前生产 `SpatialSliceWorld.isFloor()`核对，seed7：
+
+- [视线专项位置核对](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T20-11-20-119Z/physical-position-audit.json)：Stage 232个玩家中心／928个20×20身体内侧角点／232个敌人中心，以及Vista 37／148／37，全部位于合法物理地面。
+- [完整路线位置核对](artifacts/iteration-21-spatial/r6-open-chasm-sight/functional-stage-2026-09-11T20-12-21-628Z/physical-position-audit.json)：743个玩家中心／2972个身体角点／428个敌人中心，均合法。**这是实际采样核对，不是每帧穷尽、连续扫掠证明或完整AI导航证明。** 实际交战与正常路线已观察；AI导航／扫掠击退边界由ROOT另行纯回归覆盖。
+
+最终两趟均0 pageerror／0 shader error／无游戏资源缺失，仅favicon404单列。只读GPU为 `ANGLE Metal Renderer: Apple M4 Pro`、WebGL2、contextLost=false，原生960×640、viewport1440×960、录像1080×720。`renderMs`实际测的是呈现CPU更新加两次绘制提交的墙钟，不是独立GPU计时。
+
+视线专项rAF **1572帧，中位16.7ms／p95 16.8ms／最大150ms，1帧>50ms**；完整路线 **4532帧，中位16.7ms／p95 16.7ms／最大150ms，13帧>50ms**。保留取证／录屏中的长帧，不将独立端口与性能恢复简单归为因果，也不将M4后端当作此前慢帧的根因证明；本机结果不等于普通设备或跨浏览器认证。
+
+ROOT另执行并回报最终runtime-behavior回归（320draw／32layout／五态，以及噪声、伤害、combat、decoy、knockback、turn、patrol）、实际AI导航与扫掠击退纯回归，以及TypeScript／Vite构建通过247模块。本QA没有重复构建，也未将ROOT结果冒充独立重测。ROOT只读复核窄口与北岸未发现新的显示阻断，横层纹略规整留作后续美术细节；海层显露、空间自然度与最终审美仍由用户复核。
+
+### K早期失败记录（保留；不是最终结果）
+
+- [17:34首趟](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T17-34-05-280Z/evidence.json)：南岸转身后开发重载，`Execution context was destroyed`。当时仍有产品防御代码落盘，不能当成通视逻辑失败。重载／后台负载期间rAF中位50ms、p95 66.7ms保留。
+- [17:42冻结后尝试](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T17-42-59-413Z/evidence.json)：南岸／转背／横移通过；慢帧期间完整探针读取仍持续按键，预定y334实际过冲至y292.25，随后x537.95，窄口x438断言失败。此处本来是可走地面，不能报告为穿洞。1335帧中位50ms、p95 83.3ms、最大899.9ms、492帧>50ms，原因未穷尽。后将测试改为真实短脉冲、先松键再读坐标，不修改产品规则。
+- [17:49修正后尝试](artifacts/iteration-21-spatial/r6-open-chasm-sight/sight-stage-2026-09-11T17-49-23-737Z/evidence.json)：17:50:18.625Z出现`[vite] server connection lost. Polling for restart...`并重新导航，`__spatialSlices`销毁，未获得持续rAF样本。随后ROOT提供同源码3001无热更新入口，才完成上文两趟。没有隐去这些中断或反复刷成审美PASS。
+
+## 历史 J／R5：完整搜撤与最终岸边复核结果
+
+用户选择三维方向不等于已经验收 J 批新的海面写意组织、整场色彩与中央深断面。当前依据 `docs/tasks/iteration-21.md` J1–J6（DEC-154），本 QA 只负责 J5 新验收及证据，不修改生产代码／CSV／被冻结内容。已显式读取 `.cursor/agents/qa.md`，未读取旧美术 skills／HOW。
+
+**最终有限修正后的短复核已完成，无重跑全玩法。** ROOT诊断关海后墙仍黑，因此修正已知断层的漫反射暗部下限，并将海层显露补为读取真正已绘制的不透明深度，仅扩大到下沉岸壁，不扩大逻辑感知。QA使用正常海层、正常FOV，从出生真实绕西侧到北岸，朝南撞边后停6秒，再绕西返回南岸；没有操作诊断开关。北岸现在能在正常尺寸画面中看见脚下向下延伸、衰减入暗处的紫灰分层壁，先前“几乎全黑”问题已观察到改善；仍不把局部可见性当作本轮三项美术PASS。
+
+最新送审材料：[北岸接点](artifacts/iteration-21-spatial/r5-stage-atmosphere/shore-stage-2026-09-11T16-57-00-437Z/08-north-shore-contact.png)、[北岸停驻6秒](artifacts/iteration-21-spatial/r5-stage-atmosphere/shore-stage-2026-09-11T16-57-00-437Z/08-north-shore-depth.png)、[南岸](artifacts/iteration-21-spatial/r5-stage-atmosphere/shore-stage-2026-09-11T16-57-00-437Z/10-south-shore-depth.png)、[原速录像](artifacts/iteration-21-spatial/r5-stage-atmosphere/shore-stage-2026-09-11T16-57-00-437Z/continuous.webm)、[实际记录](artifacts/iteration-21-spatial/r5-stage-atmosphere/shore-stage-2026-09-11T16-57-00-437Z/evidence.json)。南岸仍主要显出近唇，活角色完整可见，没有底面或内部世界被打开。
+
+这次只读接线证据：960×640原生DepthTexture同时交给海体与落水，`useSceneDepth=1`，8次不透明绘制／22,874三角；最终渲染目标回屏幕，海组仍可见。北岸实际(500.19,310)、南岸(501.14,554)，真实碰撞未跨入缺失，4个角色／地面支持检查点通过，HP始终100。0 pageerror／shader error；rAF中位16.7ms／p95 16.7ms，最大83.4ms、2帧>50ms，范围仍仅本机带录制开发环境。[最终11文件哈希](artifacts/iteration-21-spatial/r5-stage-atmosphere/shore-stage-2026-09-11T16-57-00-437Z/source-freeze-final.json)再次确认Vista及共享world／flow／fixture／CSV／生成数据逐字节等于 `fab67e2`。此短趟正常中止，只补显示与岸边接线，不冒充再次撤离／死亡。
+
+**最终构建补记（ROOT执行）：** 岸壁漫反射与真实深度合成修正后再次执行 `npm run build`，TypeScript／Vite通过，246模块，3.04秒；仅保留既有共享包体积提示。45组专项是此前本批几何／领域检查结果，未冒充最终shader修改后的重复运行；最后呈现接线由上述正常海层岸边短趟补验。
+
+### J5首趟完整路线与断面失败记录（保留，显露已由上段补验）
+
+源码冻结后仅执行了一趟 `SHORE_REVIEW=1 CASE=functional-stage`，**87.21秒、HP70实际携回**，无重试。新空白隔离 Chrome、真实按键、自然时钟；完成干路／等待安全期穿水、听觉虫实际击杀、耐久60→57、2堆翻找与揭晓，携回2薪柴和武器／污染物各1件，水伤0。Tab继续运行、Esc暂停世界与水流，正式SAVE哨兵启动与携回后不变。没有重跑死亡或冻结Vista。[完整记录](artifacts/iteration-21-spatial/r5-stage-atmosphere/functional-stage-2026-09-11T16-45-54-224Z/evidence.json)、[正常速度录像](artifacts/iteration-21-spatial/r5-stage-atmosphere/functional-stage-2026-09-11T16-45-54-224Z/continuous.webm)。
+
+三岸真实碰撞与呈现结果：
+
+- 北岸实际(489.23,310)、朝南；持续按键未进入 y320 后的VOID。此处是35°机位下应能看到下沉壁面的主要样本。[北岸接点](artifacts/iteration-21-spatial/r5-stage-atmosphere/functional-stage-2026-09-11T16-45-54-224Z/08-north-shore-contact.png)、[停驻后](artifacts/iteration-21-spatial/r5-stage-atmosphere/functional-stage-2026-09-11T16-45-54-224Z/08-north-shore-depth.png)。**当时实际合成画面几乎看不清断面**，ROOT看图亦确认；未以5200壁面三角或射线通过宣布空间表达完成。随后有限修正与最新实图见上段，不覆盖这份失败原始材料。
+- 南岸实际(502.01,554)、朝北，西岸实际(342,407.33)、朝东；均停在20px身体所要求的边界。南岸角色没有被壁面遮住，正常尺寸主要读到近唇。[南岸停驻](artifacts/iteration-21-spatial/r5-stage-atmosphere/functional-stage-2026-09-11T16-45-54-224Z/10-south-shore-depth.png)、[西岸](artifacts/iteration-21-spatial/r5-stage-atmosphere/functional-stage-2026-09-11T16-45-54-224Z/09-real-void-collision.png)。21个实际检查点支持面／正式XY断言通过，不等于每个角度的壁面艺术表现均已通过。
+
+无 pageerror／shader error，游戏资源无缺失；favicon 404单列。rAF中位16.7ms／p95 16.8ms，最大216.7ms、18帧超过50ms，截图／记录序列化和录屏开启；保留长帧，不扩大为普通设备性能保证。ROOT统一运行45组专项及全量build通过（246 modules，保留既有大包警告），这部分为ROOT执行证据。最终 [冻结哈希复核](artifacts/iteration-21-spatial/r5-stage-atmosphere/functional-stage-2026-09-11T16-45-54-224Z/source-freeze-final.json) 确认11份Vista／共享world／flow／fixture／CSV与生成数据仍逐字节等于 `fab67e2`。
+
+**当时剩余项已处理：** 中央断面显露问题通过一次有限修正和一次北／南岸短复核补齐，没有重复完整玩法。正式证据从未隐藏海层、打开底面、扩展感知或改模拟。当前剩余为用户对海面／色彩／深断面三项的视觉复核，三维方向选择已获认可不等于三项全部PASS。
+
+### J5准备记录（以下为执行前计划，实际结果见上）
+
+准备检查已完成：11份冻结的 Vista 实现、共享 world／fixture／flow／water-curtain、生成数据与5份CSV逐字节等于 `fab67e2`，SHA-256记录见 [冻结范围核对](artifacts/iteration-21-spatial/r5-stage-direction/source-freeze-preparation.json)。这次只证明检查时点没有变动，最终源码冻结后还需复核。脚本语法检查通过，没有开启 R5 浏览器；ROOT 另行执行的海面短冒烟不是本 QA 重测。
+
+已为真实完整 Stage 搜撤增加三岸观察，等源码冻结后执行一次：
+
+- 北岸：沿北侧地面走到 x496／y300，持续向南650ms，20px身体中心应停在 y310 附近，不可跨入 y320 起始的中央VOID；停留拍接点与深断面。
+- 西岸：沿既有西路线到 x332／y400，向东撞边，中心应停在 x342，不可跨入 x352 开始的VOID；自然静止观察前后帧。
+- 南岸：返回时从 x496／y580 向北持续650ms，中心应停在 y554 附近，不可进入 y544 上方的VOID；观察岸壁不能遮住活角色、脚点保持与实际支撑地面一致，再正常走回撤离。
+
+这些路线只使用真实按键与只读状态，不传送、不改变 AI／伤害／相位。记录新海面完整原速周期、合法可见敌人、生产攻击与受击、翻找和真携回；读取岸壁／FOV快照仅作定位，真实画面用于判断是否仍像平面黑片。没有底面或内部世界应与真实缺失一致，但专项规则通过不等于深度读法已获用户认可。首趟失败会保留，只有明确原因才做一次重试。
+
+R5准备哈希写入 `artifacts/iteration-21-spatial/r5-stage-direction/`，按ROOT最终指定，实际材料写入 `artifacts/iteration-21-spatial/r5-stage-atmosphere/`，不覆盖R4。死亡／隔离规则和冻结Vista沿用下面明确列出的R4实证，不重复两条长路线或死亡。阶段四A仍 **NOT-STARTED**。
+
+## 历史 R4：最终技术验证及提交时送审证据
 
 最终产品冻结后，已独立完成两线真实完整搜撤，以及一次自然死亡和存档隔离生命周期。两线使用同一世界签名 `aa970f9f`；脚本为真实 WASD／Space／E／Tab／Esc 和正常页面控件，只读状态辅助路线，没有传送、遥控 AI 或改血量／相位。每趟使用全新空白 Chrome context，先断言 cookies／origins 为空、正式 SAVE 不存在，再写测试哨兵；未访问用户浏览器存档。前述 GPU／性能缺陷及修复过程保留在下文，不抵消本次实际复验。
 

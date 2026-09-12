@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
-last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
-last-modified-date: 2026-09-10
+last-modified-by: code / director（DEC-155：开敞空洞视线与物理通行分离）
+last-modified-date: 2026-09-12
 interface-changed: true
 slice: 1
 interfaces-with:
@@ -25,6 +25,10 @@ exposes:
 ---
 
 # 系统设计：简化战斗
+
+## 迭代21 K：开敞空洞的视线与位移（DEC-155）
+
+Combat仍用场景注入的OccluderGrid做不穿实体墙判定；Stage内部空洞透视时同样允许射程内的合法攻击视线，不因目标站在另一岸而额外拒绝，仍满足各武器/技能的范围、方向和目标条件。位移归AI，击退请求经真实physics AABB整段扫掠限制在有地面的位置；不会跨越空洞或穿实体墙。默认场景的光学VOID规则不变，此扫掠同时补上已有的直接reset位移漏洞。诱饵、穿墙和地表传播仍遵守各自物理合同。
 
 ## 迭代20 A：攻击控制与受击解冻
 

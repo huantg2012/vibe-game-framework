@@ -147,6 +147,8 @@ export interface HostSystemOptions {
    */
   readonly liveMotion?: boolean;
   readonly occluders?: OccluderGrid;
+  /** Optical view. `occluders` remains physical terrain for seats and paint support. */
+  readonly sightGrid?: OccluderGrid;
   readonly hearingPolicy?: {
     getRangeMultiplier(): number;
     suppressDiscovery(id: string): boolean;
@@ -227,6 +229,7 @@ export class ContaminationHostSystem {
   private walkableFloors: ReadonlySet<string> | null = null;
   private readonly visQuery = { x: 0, y: 0 };
   private occluders: OccluderGrid | null = null;
+  private sightGrid: OccluderGrid | null = null;
   private hearingPolicy: HostSystemOptions['hearingPolicy'];
   private readonly swingTarget = { x: 0, y: 0 };
   private playerFacingAngle = 0;
@@ -254,6 +257,7 @@ export class ContaminationHostSystem {
     this.liveMotion = options?.liveMotion === true;
     this.hearingPolicy = options?.hearingPolicy;
     this.occluders = options?.occluders ?? new TileGrid(layout.tileMap);
+    this.sightGrid = options?.sightGrid ?? this.occluders;
     this.walkableFloors = walkableFloorKeys(layout.tileMap.tiles);
 
     const pins = layout.contaminationPins;
@@ -295,6 +299,7 @@ export class ContaminationHostSystem {
     this.hazardControls.clear();
     this.walkableFloors = null;
     this.occluders = null;
+    this.sightGrid = null;
     this.hearingPolicy = undefined;
   }
 
@@ -322,6 +327,7 @@ export class ContaminationHostSystem {
     this.liveMotion = options?.liveMotion === true;
     this.hearingPolicy = options?.hearingPolicy;
     this.occluders = options?.occluders ?? null;
+    this.sightGrid = options?.sightGrid ?? this.occluders;
     this.walkableFloors = null;
   }
 
@@ -690,7 +696,7 @@ export class ContaminationHostSystem {
         const activeHearing = host.form.lexemes.sense === 'sense_hear' && host.activity.visual.phase === 'active';
         if (playerIsMoving && (asleep || activeHearing)) {
           const hear = ENEMY_DATA.rewriter;
-          const clear = !this.occluders || hasLineOfSight(this.occluders, playerPos, host.core);
+          const clear = !this.sightGrid || hasLineOfSight(this.sightGrid, playerPos, host.core);
           const range = hear.hearingRange * (clear ? 1 : hear.hearingWallFactor) *
             (this.hearingPolicy?.getRangeMultiplier() ?? 1);
           if (Math.hypot(playerPos.x - host.core.x, playerPos.y - host.core.y) <= range) {
@@ -965,7 +971,7 @@ export class ContaminationHostSystem {
     this.visQuery.x = host.core.x + attach.nx * .5;
     this.visQuery.y = host.core.y + attach.ny * .5;
     this.swingTarget.x = x; this.swingTarget.y = y;
-    return !this.occluders || hasLineOfSight(this.occluders, this.visQuery, this.swingTarget);
+    return !this.sightGrid || hasLineOfSight(this.sightGrid, this.visQuery, this.swingTarget);
   }
 
   private tickBing(host: BingHost, col: number, row: number, dtMs: number): void {
@@ -1127,14 +1133,14 @@ export class ContaminationHostSystem {
         const bearing = Math.atan2(host.core.y - playerPos.y, host.core.x - playerPos.x);
         if (Math.abs(shortestArc(bearing - this.playerFacingAngle)) > Math.PI / 3) return false;
         return (!this.getVisibility || this.getVisibility(host.core) > 0) &&
-          (!this.occluders || hasLineOfSight(this.occluders, playerPos, host.core));
+          (!this.sightGrid || hasLineOfSight(this.sightGrid, playerPos, host.core));
       }
       const limit = Math.hypot(playerPos.x - (f.rect.x + f.rect.w / 2), playerPos.y - (f.rect.y + f.rect.h / 2)) + Math.hypot(f.rect.w, f.rect.h);
       for (let d = 0; d <= limit; d += 4) {
         this.visQuery.x = playerPos.x + dx * d; this.visQuery.y = playerPos.y + dy * d;
         if (sampleVolumeDensity(f, this.visQuery.x, this.visQuery.y) < f.dangerThreshold) continue;
         if (this.getVisibility && this.getVisibility(this.visQuery) <= 0) continue;
-        return !this.occluders || hasLineOfSight(this.occluders, playerPos, this.visQuery);
+        return !this.sightGrid || hasLineOfSight(this.sightGrid, playerPos, this.visQuery);
       }
       return false;
     }
@@ -1165,7 +1171,7 @@ export class ContaminationHostSystem {
       this.visQuery.y = playerPos.y + dy * (near + .01);
       if (this.getVisibility && this.getVisibility(this.visQuery) <= 0) return false;
     }
-    return !this.occluders || hasLineOfSight(this.occluders, playerPos, this.visQuery);
+    return !this.sightGrid || hasLineOfSight(this.sightGrid, playerPos, this.visQuery);
   }
 
   private spawnBingNuclei(

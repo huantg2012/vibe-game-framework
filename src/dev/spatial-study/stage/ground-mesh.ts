@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import type { SpatialSliceWorld } from '../slice-world';
 import { TileType } from '@/types/game-types';
 import { noise } from './materials';
+import { createVoidSectionGeometry } from './void-section';
+import { STAGE_PALETTE } from './palette';
 
 export interface StageGroundGeometry {
   surface: THREE.BufferGeometry;
@@ -29,52 +31,7 @@ export function createStageGroundGeometry(world: SpatialSliceWorld): StageGround
   surface.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
   surface.setIndex(indices); surface.computeVertexNormals();
 
-  const edgePositions: number[] = [], edgeUvs: number[] = [], edgeDrops: number[] = [];
-  const triangle = (a: readonly number[], b: readonly number[], c: readonly number[]): void => {
-    for (const p of [a, b, c]) {
-      edgePositions.push(p[0]!, p[1]!, p[2]!);
-      // Horizontal mineral seams follow the actual rock section, not the
-      // camera. The skirt terminates by dissolving into air, not by a cap.
-      edgeUvs.push((p[0]! + p[2]! * .31) / 110, (p[1]! + p[2]! * .015) / 58);
-      edgeDrops.push(p[3]!);
-    }
-  };
-  const levels = [0, 5, 15, 34];
-  const inset = [0, 1.5, 5, 14];
-  for (let row = 0; row < map.rows; row++) for (let col = 0; col < map.cols; col++) {
-    if (map.tiles[row]![col] !== TileType.FLOOR) continue;
-    const x = col * map.tileSize, z = row * map.tileSize;
-    const edges = [
-      [0, -1, x, z, x + map.tileSize, z],
-      [1, 0, x + map.tileSize, z, x + map.tileSize, z + map.tileSize],
-      [0, 1, x + map.tileSize, z + map.tileSize, x, z + map.tileSize],
-      [-1, 0, x, z + map.tileSize, x, z],
-    ];
-    for (const [dx, dz, ax, az, bx, bz] of edges) {
-      if (map.tiles[row + dz!]?.[col + dx!] !== undefined
-        && map.tiles[row + dz!]?.[col + dx!] !== TileType.VOID) continue;
-      for (let part = 0; part < map.tileSize / field.step; part++) {
-        const at = part * field.step / map.tileSize, next = (part + 1) * field.step / map.tileSize;
-        const xa = ax! + (bx! - ax!) * at, za = az! + (bz! - az!) * at;
-        const xb = ax! + (bx! - ax!) * next, zb = az! + (bz! - az!) * next;
-        const point = (px: number, pz: number, level: number): number[] => {
-          const drop = levels[level]! * (.78 + noise(Math.floor(px / 19), Math.floor(pz / 17), world.seed) * .44);
-          return [px - dx! * inset[level]!, field.heightAt(px, pz) - drop, pz - dz! * inset[level]!, drop];
-        };
-        for (let level = 0; level < levels.length - 1; level++) {
-          const a = point(xa, za, level), b = point(xb, zb, level);
-          const c = point(xa, za, level + 1), d = point(xb, zb, level + 1);
-          triangle(a, b, c); triangle(b, d, c);
-        }
-      }
-    }
-  }
-  const edge = new THREE.BufferGeometry();
-  edge.setAttribute('position', new THREE.Float32BufferAttribute(edgePositions, 3));
-  edge.setAttribute('uv', new THREE.Float32BufferAttribute(edgeUvs, 2));
-  edge.setAttribute('stageDrop', new THREE.Float32BufferAttribute(edgeDrops, 1));
-  edge.computeVertexNormals();
-  return { surface, edge };
+  return { surface, edge: createVoidSectionGeometry(world) };
 }
 
 /** World-aligned two-pixel mineral clusters. Texture describes deposited
@@ -82,7 +39,7 @@ export function createStageGroundGeometry(world: SpatialSliceWorld): StageGround
 export function createSeabedTexture(world: SpatialSliceWorld): THREE.DataTexture {
   const width = Math.ceil(world.width / 2), height = Math.ceil(world.height / 2);
   const bytes = new Uint8Array(width * height * 4);
-  const palette = [0x38473e, 0x465449, 0x56604f, 0x676b58, 0x7c7e69].map(color => new THREE.Color(color));
+  const palette = STAGE_PALETTE.ground.map(color => new THREE.Color(color));
   for (let row = 0; row < height; row++) for (let col = 0; col < width; col++) {
     const x = col * 2, z = row * 2;
     const broad = noise(Math.floor((x + z * .21) / 38), Math.floor(z / 24), world.seed + 13);

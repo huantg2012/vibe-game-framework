@@ -35,6 +35,42 @@ export function surfaceTexture(base: number, seed: number, kind: 'stone' | 'clot
   return texture;
 }
 
+/** Exposed vertical rock: quiet pigment planes and a few irregular descending
+ * fractures. Kept separate from the bedded stone used by walkable ground. */
+export function sectionTexture(base: number, seed: number): THREE.DataTexture {
+  const side = 64, bytes = new Uint8Array(side * side * 4), color = new THREE.Color(base);
+  const pigment = color.r * .2126 + color.g * .7152 + color.b * .0722;
+  color.setRGB(pigment * 1.035, pigment, pigment * .94);
+  const paint = (x: number, y: number, shade: number): void => {
+    const at = (((y + side) % side) * side + (x + side) % side) * 4;
+    bytes[at] = Math.min(255, color.r * shade * 255);
+    bytes[at + 1] = Math.min(255, color.g * shade * 255);
+    bytes[at + 2] = Math.min(255, color.b * shade * 255); bytes[at + 3] = 255;
+  };
+  for (let y = 0; y < side; y++) for (let x = 0; x < side; x++) {
+    const plane = noise(Math.floor((x + Math.sin(y / 23) * 2) / 13), Math.floor(y / 29), seed + 3);
+    paint(x, y, plane < .2 ? .80 : plane < .75 ? .91 : 1.02);
+  }
+  for (let scar = 0; scar < 7; scar++) {
+    const startX = Math.floor(noise(scar, 0, seed + 31) * side);
+    const startY = Math.floor(noise(scar, 1, seed + 31) * side);
+    const length = 9 + Math.floor(noise(scar, 2, seed + 31) * 29);
+    const lean = (noise(scar, 3, seed + 31) - .5) * .42;
+    for (let step = 0; step < length; step++) {
+      if (noise(scar, Math.floor(step / 3), seed + 67) > .91) continue;
+      const bend = Math.floor((noise(scar, Math.floor(step / 7), seed + 43) - .5) * 3);
+      const x = startX + Math.round(step * lean) + bend, y = startY + step;
+      paint(x, y, step < 3 || step > length - 4 ? .65 : .46);
+      if (step > 5 && step < length - 6 && scar % 3 === 0) paint(x + 1, y, .70);
+    }
+  }
+  const texture = new THREE.DataTexture(bytes, side, side);
+  texture.magFilter = texture.minFilter = THREE.NearestFilter;
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.colorSpace = THREE.LinearSRGBColorSpace; texture.needsUpdate = true;
+  return texture;
+}
+
 export function roughMaterial(color: number, texture?: THREE.Texture): THREE.MeshStandardMaterial {
   const material = new THREE.MeshStandardMaterial({ color: texture ? 0xffffff : color, map: texture ?? null,
     roughness: 1, metalness: 0 });

@@ -1,12 +1,14 @@
-/** R4: isolated browser + actual input + read-only probes; no simulation control. */
+/** R4/R5: isolated browser + actual input + read-only probes; no simulation control. */
 import assert from 'node:assert/strict';
 import { mkdir, writeFile, rename, access } from 'node:fs/promises';
 import path from 'node:path';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const mode = process.env.CASE ?? 'functional-stage';
-assert(/^(functional|death|visual|windows|tail|terminal|look|gpu|smoke)-(stage|vista)$/.test(mode), 'CASE must be functional/death/visual/windows/tail/terminal/look/gpu/smoke-stage/vista');
+assert(/^(functional|death|visual|windows|tail|terminal|look|gpu|smoke|shore|sight)-(stage|vista)$/.test(mode), 'Unsupported CASE');
 const view = mode.endsWith('-stage') ? 'stage' : 'vista';
+const shoreReview = process.env.SHORE_REVIEW === '1';
+assert(!shoreReview || view === 'stage', 'R5 shore review belongs only to the selected Stage direction');
 const runId = process.env.RUN_ID ?? new Date().toISOString().replace(/[:.]/g, '-');
 const dir = path.join(process.env.ARTIFACT_DIR ?? 'docs/qa/artifacts/iteration-21-spatial/r4-pixel-polish', `${mode}-${runId}`);
 await mkdir(dir, { recursive: true });
@@ -16,7 +18,7 @@ const browser = await chromium.launch({ headless: true, executablePath: process.
 const context = await browser.newContext({ viewport: { width: 1440, height: 960 }, recordVideo: { dir, size: { width: 1080, height: 720 } } });
 assert.deepEqual(await context.storageState(), { cookies: [], origins: [] });
 const page = await context.newPage(), held = new Set();
-const evidence = { mode, runId, method: 'New empty context; real keyboard held across simulation frames; natural clock; only read-only game probes. No teleport, AI/HP/phase manipulation.',
+const evidence = { mode, runId, shoreReview, method: 'New empty context; real keyboard held across simulation frames; natural clock; only read-only game probes. No teleport, AI/HP/phase manipulation.',
   observations: [], checks: [], errors: [], consoleErrors: [], consoleErrorLocations: [], navigation: [], resourceFailures: [], devUpdates: [], visualVerdict: 'NOT-REVIEWED: successful scripted inputs do not approve the presentation.' };
 page.on('pageerror', error => evidence.errors.push(error.message));
 page.on('console', message => {
@@ -44,15 +46,27 @@ async function until(predicate, label, timeout = 12000) {
   throw Error(`Timeout: ${label}; ${JSON.stringify((await observe()).snapshot)}`);
 }
 async function focusGame() { await page.locator('#game-container').click({ position: { x: 24, y: 24 } }); }
-async function move(axis, target, timeout = 16000) {
-  const start = await observe(); assert(start.running && !start.paused && !start.snapshot.ended, 'Must move in active simulation');
-  if (Math.abs(start.snapshot.player[axis] - target) < 2) return;
-  const sign = target > start.snapshot.player[axis] ? 1 : -1;
-  const name = axis === 'x' ? sign > 0 ? 'd' : 'a' : sign > 0 ? 's' : 'w';
-  held.add(name); await page.keyboard.down(name);
-  try { await until(s => { if (s.snapshot.ended) throw Error('Run ended during actual walking'); return sign * (target - s.snapshot.player[axis]) <= 2; }, `${axis}=${target}`, timeout); }
-  finally { await release(); }
+async function move(axis, target, timeout = 30000) {
+  // Release before each read: a slow DevTools response must not leave WASD held
+  // while serializing the full presentation probe. Real short pulses converge
+  // from either side; they do not change game coordinates or its movement speed.
+  const deadline = Date.now() + timeout;
+  let pulses = 0;
+  while (Date.now() < deadline) {
+    const state = await observe();
+    assert(state.running && !state.paused && !state.snapshot.ended, 'Must move in active simulation');
+    const difference = target - state.snapshot.player[axis];
+    if (Math.abs(difference) <= 4) {
+      (evidence.walkTargets ??= []).push({ axis, target, actual: state.snapshot.player[axis], pulses });
+      return;
+    }
+    const name = axis === 'x' ? difference > 0 ? 'd' : 'a' : difference > 0 ? 's' : 'w';
+    await key(name, Math.max(20, Math.min(160, Math.abs(difference) * 3)));
+    pulses++;
+  }
+  throw Error(`Walking did not converge ${axis}=${target}; ${JSON.stringify((await observe()).snapshot.player)}`);
 }
+
 async function cap(label) {
   await observe(label); await page.screenshot({ path: path.join(dir, `${label}.png`) });
   if (view === 'stage' && (await observe()).running) {
@@ -180,16 +194,133 @@ async function functional() {
   await move('y', 320); await cap('05-north-approach');
   await until(s => s.spatial.targets.some(t => t.visibility > 0), 'legally visible nearby enemy', 3000);
   await cap('06-visible-enemy'); await fight();
+  if (shoreReview) {
+    await move('y', 272); await move('x', 496); await move('y', 300);
+    await key('s', 650); await cap('08-north-shore-contact');
+    const north = (await observe()).snapshot.player;
+    assert(north.y <= 310.5 && north.y >= 307, 'North bank stops the 20px body before internal VOID begins at y320');
+    await page.waitForTimeout(1800); await cap('08-north-shore-depth');
+    await move('y', 272);
+  }
   await move('y', 272); await move('x', 272); await search('08-west-search');
   // Test actual collision from the safe west lip of the central VOID (col11 starts x352).
   await move('y', 400); await move('x', 332); await key('d', 650); await cap('09-real-void-collision');
   assert((await observe()).snapshot.player.x <= 342.5, 'Player center must stop one half-body before the true VOID');
   await worldWindow('09-central-void-window');
-  await move('x', 272); await move('y', 688); await move('x', 496); await move('y', 752);
+  await move('x', 272); await move('y', 688); await move('x', 496);
+  if (shoreReview) {
+    await move('y', 580); await key('w', 650); await cap('10-south-shore-contact');
+    const south = (await observe()).snapshot.player;
+    assert(south.y >= 553.5 && south.y <= 557, 'South bank stops the 20px body after internal VOID ends at y544');
+    await page.waitForTimeout(1800); await cap('10-south-shore-depth');
+  }
+  await move('y', 752);
   await key('e', 1750); await until(s => s.inventory.run?.status === 'settled', 'actual extraction settlement', 5000);
   await page.waitForFunction(() => window.__spatialSlices.getRecords().some(r => r.gameplay.outcome === 'extract'), null, { timeout: 5000 });
   const final = await observe(); assert.equal(final.inventory.run.outcome, 'extract'); assert(final.inventory.run.returnedIds.length > 0);
   await cap('90-real-return'); await sentinel('actual carried loot settlement');
+}
+async function finalShore() {
+  assert.equal(view, 'stage');
+  await move('x', 272); await move('y', 272); await move('x', 496); await move('y', 300);
+  await key('s', 650); await cap('08-north-shore-contact');
+  const north = await observe(); assert(north.snapshot.player.y >= 307 && north.snapshot.player.y <= 310.5);
+  assert(Math.abs(north.presentationFrame.player.facing - Math.PI / 2) < .02, 'Look south over the north shore');
+  await page.waitForTimeout(6000); await cap('08-north-shore-depth');
+  const depth = await page.evaluate(() => {
+    const p = window.__spatialSlices.game.scene.getScene('RiftScene').devRuntime.presentation;
+    return { targetWidth:p.opaqueTarget.width, targetHeight:p.opaqueTarget.height, isDepthTexture:p.opaqueTarget.depthTexture.isDepthTexture,
+      seaUsesNativeDepth:p.sea.material.uniforms.sceneDepth.value===p.opaqueTarget.depthTexture,
+      fallUsesNativeDepth:p.sea.fallMaterial.uniforms.sceneDepth.value===p.opaqueTarget.depthTexture,
+      enabled:p.sea.material.uniforms.useSceneDepth.value, seaVisible:p.sea.group.visible,
+      finalTargetIsScreen:p.renderer.getRenderTarget()===null,
+      opaqueDrawCalls:p.opaqueDrawCalls, opaqueTriangles:p.opaqueTriangles,
+      declaration:p.snapshot().waterReveal };
+  });
+  assert(depth.isDepthTexture && depth.seaUsesNativeDepth && depth.fallUsesNativeDepth && depth.enabled===1 && depth.seaVisible && depth.finalTargetIsScreen);
+  assert(depth.opaqueDrawCalls>0 && depth.opaqueTriangles>0); evidence.nativeDepthWiring=depth;
+  await move('x', 272); await move('y', 688); await move('x', 496); await move('y', 580);
+  await key('w', 650); await cap('10-south-shore-depth');
+  const south = await observe(); assert(south.snapshot.player.y >= 553.5 && south.snapshot.player.y <= 557);
+  assert(Math.abs(south.presentationFrame.player.facing + Math.PI / 2) < .02, 'Look north over the south shore');
+  await page.locator('#abort').click(); await sentinel('bounded final shore observation abort');
+}
+async function sightProbe(label, points) {
+  await page.waitForTimeout(130); // Let the native 20Hz perception texture catch up after real input.
+  const data = await page.evaluate(points => {
+    const scene=window.__spatialSlices.game.scene.getScene('RiftScene'), runtime=scene.devRuntime;
+    const vision=scene.visibility, origin={...vision.origin}, facing=vision.facingCache;
+    const texture=runtime.presentation.terrain?.visibility.texture.image;
+    return { mode:window.__spatialSlices.getState().spatial.mode, origin, facing,
+      baseForward:vision.config.radiusForward, baseAmbient:vision.config.radiusAmbient,
+      radiusScale:vision.getRadiusScale(),
+      points:points.map(point=>{
+        const offset=Math.atan2(point.y-origin.y,point.x-origin.x)-facing;
+        let rgba=null, cellVisibility=null;
+        if(texture){
+          const col=Math.floor(point.x/runtime.world.width*texture.width), row=Math.floor(point.y/runtime.world.height*texture.height);
+          const stride=texture.data.length/(texture.width*texture.height), index=(row*texture.width+col)*stride;
+          rgba=Array.from(texture.data.slice(index,index+stride));
+          cellVisibility=vision.getVisibilityAt({x:(col+.5)/texture.width*runtime.world.width,y:(row+.5)/texture.height*runtime.world.height});
+        }
+        return {...point, distance:Math.hypot(point.x-origin.x,point.y-origin.y),effectiveRadius:vision.getEffectiveRadius(offset),
+          visibility:vision.getVisibilityAt(point),isFloor:runtime.world.isFloor(point.x,point.y),
+          sightOpaque:vision.occluders.isOpaque(Math.floor(point.x/32),Math.floor(point.y/32)),rgba,cellVisibility};
+      })};
+  },points);
+  assert.equal(data.baseForward,224); assert.equal(data.baseAmbient,80);
+  for(const p of data.points){
+    if(p.kind==='air')assert.equal(p.isFloor,false,'Transparent air must remain unwalkable');
+    if(p.kind==='floor')assert.equal(p.isFloor,true,'Cross-shore target must be real land');
+    if(p.expect==='visible'){
+      assert(p.distance<p.effectiveRadius-2,`${p.id}: test target must fit the current real cone/radius`);
+      assert(p.visibility>0,`${p.id}: valid in-range air/land should be visible through the opening`);
+    } else if(p.expect==='hidden')assert.equal(p.visibility,0,`${p.id}: no range or backwards-vision extension`);
+    if(data.mode==='stage' && p.kind==='air'){
+      assert.equal(p.sightOpaque,false,'Stage interior air is not a sight occluder');
+      assert(p.rgba?.length===4,'Stage perception texture must expose RGBA roles');
+      assert.equal(p.rgba[1],0,'Air must never accumulate remembered terrain');
+      assert.equal(p.rgba[2],0,'Air must never become a real surface');
+      if(p.expect==='visible' && p.cellVisibility>0)assert(p.rgba[0]>0,'Visible air must reach actual render perception');
+    }
+  }
+  (evidence.sightChecks??=[]).push({label,...data}); await cap(label); return data;
+}
+async function sightRoute(){
+  assert.equal(view,'stage');
+  await move('y',580); await key('w',650);
+  let p=(await observe()).snapshot.player; assert(p.y>=553.5 && p.y<=557);
+  const southPoints=x=>[
+    {id:'near-air',x,y:530,kind:'air',expect:'visible'},
+    {id:'middle-air',x,y:450,kind:'air',expect:'visible'},
+    {id:'inner-air',x,y:394,kind:'air',expect:'visible'},
+    {id:'far-north-bank',x,y:304,kind:'floor',expect:'hidden'}];
+  await sightProbe('sight-01-south-looking-north',southPoints(p.x));
+  await key('s',250); await sightProbe('sight-02-south-turned-away',[{id:'middle-air-behind',x:p.x,y:450,kind:'air',expect:'hidden'}]);
+  await key('w',650); await move('x',560); await key('w',250);
+  p=(await observe()).snapshot.player; await sightProbe('sight-03-south-lateral',southPoints(p.x));
+  await move('y',688); await move('x',272); await move('y',334); await move('x',432); await key('d',650);
+  p=(await observe()).snapshot.player; assert(p.x<=438.5 && p.x>=435);
+  const cross=[{id:'narrow-opening',x:512,y:334,kind:'air',expect:'visible'},
+    {id:'opposite-land',x:592,y:334,kind:'floor',expect:'visible'}];
+  await sightProbe('sight-04-narrow-cross-shore',cross);
+  await key('a',250); await sightProbe('sight-05-cross-shore-behind',[{...cross[1],expect:'hidden'}]);
+  await key('d',650); await sightProbe('sight-06-cross-shore-returned',cross);
+  await move('y',272); await move('x',496); await key('s',650);
+  p=(await observe()).snapshot.player; assert(p.y<=310.5 && p.y>=307);
+  await sightProbe('sight-07-north-looking-south',[
+    {id:'near-air',x:p.x,y:334,kind:'air',expect:'visible'},
+    {id:'middle-air',x:p.x,y:430,kind:'air',expect:'visible'},
+    {id:'far-south-bank',x:p.x,y:560,kind:'floor',expect:'hidden'}]);
+  await page.locator('#abort').click(); await sentinel('Stage sight observation abort');
+  await page.locator('#view').selectOption('vista'); await page.locator('#start').click();
+  await until(s=>s.running && s.snapshot?.elapsedMs>100,'normal switch to unchanged Vista'); await focusGame();
+  await move('y',580); await key('w',650); p=(await observe()).snapshot.player;
+  const vista=await sightProbe('sight-08-default-vista-still-opaque',[
+    {id:'legacy-near-void',x:p.x,y:530,kind:'air',expect:'hidden'},
+    {id:'legacy-middle-void',x:p.x,y:450,kind:'air',expect:'hidden'}]);
+  assert.equal(vista.mode,'vista'); assert(vista.points.every(point=>point.sightOpaque));
+  await sentinel('normal Vista switch'); await page.locator('#abort').click();
 }
 async function death() {
   await move('x', 800); await move('y', 688); await move('x', 784); await move('y', 592);
@@ -271,10 +402,24 @@ try {
   await page.waitForFunction(() => window.__spatialSlices?.getState().ready, null, { timeout: 30000 });
   await page.evaluate(value => { if (localStorage.getItem('coh-save-v1') !== null) throw Error('Refuse to overwrite existing save'); localStorage.setItem('coh-save-v1', value); }, sentinelValue);
   await page.locator('#start').click(); await until(s => s.running && s.snapshot?.elapsedMs > 100, 'production scene started'); await focusGame();
+  evidence.browserRenderer = await page.evaluate(() => {
+    const presentation = window.__spatialSlices.game.scene.getScene('RiftScene').devRuntime.presentation;
+    const renderer = presentation.renderer;
+    if (!renderer?.getContext) return { stageRenderer: false, viewport: [innerWidth, innerHeight] };
+    const gl = renderer.getContext(), debug = gl.getExtension('WEBGL_debug_renderer_info');
+    return { stageRenderer: true, viewport: [innerWidth, innerHeight],
+      canvas: [gl.drawingBufferWidth, gl.drawingBufferHeight],
+      vendor: gl.getParameter(gl.VENDOR), renderer: gl.getParameter(gl.RENDERER),
+      unmaskedVendor: debug ? gl.getParameter(debug.UNMASKED_VENDOR_WEBGL) : null,
+      unmaskedRenderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : null,
+      version: gl.getParameter(gl.VERSION), contextLost: gl.isContextLost() };
+  });
   await sentinel('start'); await cap('01-spawn');
   assert((await observe()).spatial.targets.every(t => t.visibility === 0), 'Unknown distant enemy remains hidden at spawn');
   await page.evaluate(() => { window.__qaFrames = []; let last; const collect = t => { if (last !== undefined && window.__qaFrames.length < 18000) window.__qaFrames.push(t - last); last = t; requestAnimationFrame(collect); }; requestAnimationFrame(collect); });
   if (mode.startsWith('functional')) await functional();
+  else if (mode.startsWith('shore')) await finalShore();
+  else if (mode.startsWith('sight')) await sightRoute();
   else if (mode.startsWith('smoke')) { await eastApproach(); await page.locator('#abort').click(); await sentinel('bounded refinement GPU smoke'); }
   else if (mode.startsWith('tail')) await stageTail();
   else if (mode.startsWith('terminal')) {

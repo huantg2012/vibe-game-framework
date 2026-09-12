@@ -16,6 +16,7 @@ import { BuildLabRecorder, type BuildLabRecord } from './build-lab-recorder';
 import { BuildLabMemoryStorage, prepareBuildLabRun } from './build-lab-session';
 import { SpatialSliceWorld, SLICE_SCENE, type SpatialSliceMode } from './spatial-study/slice-world';
 import { SpatialSliceRuntime } from './spatial-study/slice-runtime';
+import { createStageSightGrid } from './spatial-study/stage/sight-grid';
 import seaMaterialUrl from './spatial-study/assets/sea-water-r1.png';
 
 if (import.meta.env.DEV) {
@@ -78,8 +79,9 @@ if (import.meta.env.DEV) {
       const world = new SpatialSliceWorld(seedValue);
       stopRun(); error.textContent = ''; initialized = true;
       const runId = prepareBuildLabRun(SLICE_SCENE.loadout);
-      recorder = new BuildLabRecorder({ runId, seed: seedValue, mode: choice, presentationRevision: 'r4-pixel-space-polish', fixtureSignature: world.signature(),
-        codeBaseline: '3c1bc7c + iteration-21 I working tree', startedAt: new Date().toISOString(),
+      recorder = new BuildLabRecorder({ runId, seed: seedValue, mode: choice, presentationRevision: choice === 'stage' ? 'r7-north-shore-material' : 'r4-pixel-space-polish', fixtureSignature: world.signature(),
+        codeBaseline: 'fab67e2 + iteration-21 J/K/L working tree', startedAt: new Date().toISOString(),
+        sightPolicy: choice === 'stage' ? 'Internal chasms transmit sight; walls and exterior void block. Movement remains on real floor.' : 'R4 opaque VOID; unchanged.',
         trainingInventory: true, supplyValidation: false, loadout: SLICE_SCENE.loadout,
         presentationLimits: 'Two complete local studies, one authoritative RiftScene simulation. Stage: pixel-painted actors in a fixed 3D camera, a shared relief field, and falling/draining water. Vista: overhead floor, opaque internal absence, exterior scenery and independent upper openings. No multi-floor navigation. Native target visibility and isolated inventory remain authoritative. Not a complete production world or supply validation.',
         measurement: '100ms real simulation samples, committed inventory changes and production events; no synthetic inputs or results.' }, inventoryStore.getState());
@@ -102,6 +104,7 @@ if (import.meta.env.DEV) {
       running = true; abort.disabled = false; pause.disabled = false;
       game.scene.start('RiftScene', { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle(), loadout: contaminantSystem.getSortieLoadout(),
         devFixture: { createLayout: () => world.layout, onReturn: stopRun, onPause: togglePause, extractionGlowRadius: 8,
+          createSightGrid: choice === 'stage' ? createStageSightGrid : undefined,
           configureCamera: (camera: Phaser.Cameras.Scene2D.Camera) => camera.setZoom(1.35),
           createRuntime: (context: ConstructorParameters<typeof SpatialSliceRuntime>[0]) => {
             runtime = new SpatialSliceRuntime(context, world, choice, (event, payload) => recorder?.event(event, payload)); return runtime;
@@ -115,7 +118,7 @@ if (import.meta.env.DEV) {
   }
   function describe(): void {
     document.querySelector<HTMLElement>('#description')!.textContent = view.value === 'stage'
-      ? '固定机位、像素角色与有起伏的海床。观察脚底贴坡、海腹透光，以及汇流、下落、断流和余水落尽。'
+      ? '固定机位。空洞可望、不可跨越。沿近岸转身与横移，观察视线穿过断口时海体的显露、两岸的厚度，以及汇流、下落和尾水落尽。'
       : '正俯视。中央黑区保持不可探知；远处景观留在地图外缘，大面积悬水保持自然镂空，脚边光影回应远处的运动。';
   }
   for (const control of [view, seed]) {
@@ -129,7 +132,7 @@ if (import.meta.env.DEV) {
   }, true);
   const getRecords = () => [...records, ...(recorder?.record.outcome === 'running' ? [{ gameplay: recorder.record, space: spaceSamples }] : [])];
   document.querySelector<HTMLButtonElement>('#download')!.onclick = () => {
-    const blob = new Blob([JSON.stringify({ study: 'iteration-21-I-pixel-space-polish', trainingInventory: true, supplyValidation: false, records: getRecords() }, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify({ study: 'iteration-21-L-north-shore-material', trainingInventory: true, supplyValidation: false, records: getRecords() }, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url;
     link.download = `spatial-slices-${new Date().toISOString().replace(/[:.]/g, '-')}.json`; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);

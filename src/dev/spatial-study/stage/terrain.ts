@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 import type { RiftDevRuntimeContext } from '@/scenes/rift-scene';
 import type { SpatialSliceWorld } from '../slice-world';
-import { noise, ringBody, roughMaterial, surfaceTexture } from './materials';
+import { noise, ringBody, roughMaterial, sectionTexture, surfaceTexture } from './materials';
 import { createSeabedTexture, createStageGroundGeometry } from './ground-mesh';
+import { VOID_SECTION_FADE_END, VOID_SECTION_FADE_START } from './void-section';
+import { STAGE_PALETTE } from './palette';
+import { TileType } from '@/types/game-types';
 
 export class StageVisibility {
   readonly texture: THREE.DataTexture;
@@ -14,13 +17,21 @@ export class StageVisibility {
   samples = 0;
   private rememberedCells=0;
   private visibleCells=0;
+  private visibleAirCells=0;
 
-  constructor(private readonly context: RiftDevRuntimeContext, readonly worldWidth: number, readonly worldHeight: number) {
+  constructor(private readonly context: RiftDevRuntimeContext, readonly worldWidth: number, readonly worldHeight: number,
+    isSurfaceAt: (x: number, y: number) => boolean = () => true) {
     this.width = Math.ceil(worldWidth / 8); this.height = Math.ceil(worldHeight / 8);
-    // R is current, authoritative perception. G is a stage-local record of
-    // ground that has already been seen; it is never supplied back to gameplay.
-    this.data = new Uint8Array(this.width * this.height*2);
-    this.texture = new THREE.DataTexture(this.data, this.width, this.height, THREE.RGFormat);
+    // R = current sight through both land and air; G = seen physical terrain.
+    // B = actual surface membership, not walkability or sight opacity. Empty
+    // space can be looked through but never accumulates a phantom floor memory.
+    this.data = new Uint8Array(this.width * this.height * 4);
+    for (let row = 0; row < this.height; row++) for (let col = 0; col < this.width; col++) {
+      const at = (row * this.width + col) * 4;
+      this.data[at + 2] = isSurfaceAt((col + .5) / this.width * worldWidth, (row + .5) / this.height * worldHeight) ? 255 : 0;
+      this.data[at + 3] = 255;
+    }
+    this.texture = new THREE.DataTexture(this.data, this.width, this.height, THREE.RGBAFormat);
     this.texture.minFilter = this.texture.magFilter = THREE.NearestFilter;
     this.texture.wrapS = this.texture.wrapT = THREE.ClampToEdgeWrapping; this.texture.needsUpdate = true;
   }
@@ -29,19 +40,24 @@ export class StageVisibility {
     // Actor visibility is exact every tick. The 8px terrain field is refreshed at 20Hz.
     const sequence = Math.floor(elapsedMs / 50); if (sequence === this.lastSequence) return;
     this.lastSequence = sequence;
-    let at = 0;this.visibleCells=0;
+    let at = 0;this.visibleCells=0;this.visibleAirCells=0;
     for (let row = 0; row < this.height; row++) for (let col = 0; col < this.width; col++) {
       this.point.x = (col + .5) / this.width * this.worldWidth;
       this.point.y = (row + .5) / this.height * this.worldHeight;
       const live=Math.round(this.context.visibilityAt(this.point)*255);
       this.data[at]=live;
-      if(live>0){this.visibleCells++;if(!this.data[at+1]){this.data[at+1]=255;this.rememberedCells++;}}
-      at+=2;
+      if(live>0){
+        this.visibleCells++;
+        if(this.data[at+2]){if(!this.data[at+1]){this.data[at+1]=255;this.rememberedCells++;}}
+        else this.visibleAirCells++;
+      }
+      at+=4;
     }
-    this.samples += at/2; this.texture.needsUpdate = true;
+    this.samples += at/4; this.texture.needsUpdate = true;
   }
 
-  apply(material: THREE.MeshStandardMaterial, fixedAnchor?: Readonly<{ x: number; y: number }>, erodedEdge = false): void {
+  apply(material: THREE.MeshStandardMaterial, fixedAnchor?: Readonly<{ x: number; y: number }>, erodedEdge = false,
+    shoreSurface?: THREE.Texture): void {
     const size = new THREE.Vector2(this.worldWidth, this.worldHeight);
     const priorCompile = material.onBeforeCompile, priorCacheKey = material.customProgramCacheKey;
     material.onBeforeCompile = (shader, renderer) => {
@@ -50,20 +66,22 @@ export class StageVisibility {
       priorCompile.call(material, shader, renderer);
       shader.uniforms.stageVisibility = { value: this.texture }; shader.uniforms.stageWorldSize = { value: size };
       shader.vertexShader = shader.vertexShader.replace('#include <common>', `#include <common>\nvarying vec3 stageWorld;
-        ${erodedEdge ? 'attribute float stageDrop; varying float stageEdgeDepth;' : ''}`)
+        ${erodedEdge ? `attribute float stageDrop; attribute float stageSectionSpan; attribute vec2 stageAnchor;
+          varying float stageEdgeDepth; varying float stageEdgeSpan; varying vec2 stageShore;` : ''}`)
         .replace('#include <worldpos_vertex>', `#include <worldpos_vertex>
           vec4 stagePosition=vec4(transformed,1.0);
           #ifdef USE_INSTANCING
             stagePosition=instanceMatrix*stagePosition;
           #endif
           stageWorld=(modelMatrix*stagePosition).xyz;
-          ${erodedEdge ? 'stageEdgeDepth=stageDrop;' : ''}`);
+          ${erodedEdge ? 'stageEdgeDepth=stageDrop;stageEdgeSpan=stageSectionSpan;stageShore=stageAnchor;' : ''}`);
       shader.fragmentShader = shader.fragmentShader.replace('#include <common>', `#include <common>
         uniform sampler2D stageVisibility; uniform vec2 stageWorldSize; varying vec3 stageWorld;
-        ${erodedEdge ? 'varying float stageEdgeDepth;' : ''}
+        ${erodedEdge ? `varying float stageEdgeDepth; varying float stageEdgeSpan; varying vec2 stageShore;
+          ${shoreSurface ? 'uniform sampler2D stageShoreSurface;' : ''}` : ''}
         float stageCluster(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}`)
         .replace('#include <opaque_fragment>', `
-          vec2 perceptionPoint=${fixedAnchor ? `vec2(${fixedAnchor.x.toFixed(2)},${fixedAnchor.y.toFixed(2)})` : 'stageWorld.xz'};
+          vec2 perceptionPoint=${fixedAnchor ? `vec2(${fixedAnchor.x.toFixed(2)},${fixedAnchor.y.toFixed(2)})` : erodedEdge ? 'stageShore' : 'stageWorld.xz'};
           vec2 perceptionUv=perceptionPoint/stageWorldSize;
           vec2 perception=texture2D(stageVisibility,perceptionUv).rg;
           float awareness=perception.r;
@@ -79,23 +97,42 @@ export class StageVisibility {
             texture2D(stageVisibility,perceptionUv-vec2(0.,stepUv.y)).g));
           float grain=stageCluster(floor(stageWorld.xz/4.));
           if(.36+.64*max(adjacent,awareness) < grain*.68)discard;
+          ${erodedEdge ? `// The deposited top stops at a thin broken lip. Its
+          // vertical face has a separate, darker response rather than repeating
+          // the light horizontal strata that read as another walkable terrace.
+          float sectionDepth=clamp(stageEdgeDepth/max(stageEdgeSpan,1.),0.,1.);
+          float sideFace=smoothstep(1.5,7.,stageEdgeDepth);
+          float sectionScatter=mix(.28,.20,sectionDepth)*(.94+.06*abs(normal.x));
+          vec3 sectionLight=max(outgoingLight*mix(.58,.48,sectionDepth),diffuseColor.rgb*sectionScatter);
+          outgoingLight=mix(max(outgoingLight,diffuseColor.rgb*.52),sectionLight,sideFace);` : ''}
           vec3 rememberedGround=outgoingLight*.12+vec3(.0015,.002,.0015);
           outgoingLight=mix(rememberedGround,outgoingLight,smoothstep(.015,.92,awareness));
-          ${erodedEdge ? `float loss=1.-smoothstep(6.,31.,stageEdgeDepth);
-          if(loss<grain*.78)discard;
-          outgoingLight=mix(vec3(.0015,.003,.0035),outgoingLight,loss*loss);` : ''}`}
+          ${erodedEdge ? `// A known shore exposes its geological thickness; only the
+          // root is swallowed. The missing interior never receives a surface.
+          float sectionRatio=stageEdgeDepth/max(stageEdgeSpan,1.);
+          float loss=1.-smoothstep(${VOID_SECTION_FADE_START},${VOID_SECTION_FADE_END},sectionRatio);
+          if(loss<grain*.62)discard;
+          outgoingLight*=pow(loss,1.25);` : ''}`}
           #include <opaque_fragment>`);
+      if (erodedEdge && shoreSurface) {
+        shader.uniforms.stageShoreSurface = { value: shoreSurface };
+        shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+          // Only the thin broken lip carries the deposited ground pigment;
+          // a short transition immediately turns into the dark vertical face.
+          vec3 shorePigment=texture2D(stageShoreSurface,stageShore/stageWorldSize).rgb;
+          diffuseColor.rgb=mix(shorePigment*.78,diffuseColor.rgb,smoothstep(1.5,7.,stageEdgeDepth));`);
+      }
     };
     material.customProgramCacheKey = () => `${priorCacheKey.call(material)}|${fixedAnchor
-      ? `stage-anchor:${fixedAnchor.x}:${fixedAnchor.y}` : `stage-ground:${erodedEdge}`}`;
+      ? `stage-anchor:${fixedAnchor.x}:${fixedAnchor.y}` : `stage-ground:${erodedEdge}:shore-${!!shoreSurface}:lip-r7`}`;
   }
 
   destroy(): void { this.texture.dispose(); }
 
   snapshot():Record<string,unknown>{return {step:8,width:this.width,height:this.height,
-    visibleCells:this.visibleCells,rememberedCells:this.rememberedCells,
+    visibleCells:this.visibleCells,visibleAirCells:this.visibleAirCells,rememberedCells:this.rememberedCells,
     neverSeenSurface:'discarded, no opaque proxy',
-    authority:'R=current production visibility; G=static terrain appearance only; cleared with stage'};}
+    authority:'R=current authoritative sight including air; G=physical terrain memory only; B=surface membership; cleared with stage'};}
 }
 
 export class StageTerrain {
@@ -105,9 +142,14 @@ export class StageTerrain {
   readonly heightTexture: THREE.DataTexture;
   private readonly extract = new THREE.Group();
   private readonly extractGlass: THREE.MeshStandardMaterial;
+  private readonly sectionStats:Record<string,unknown>;
 
   constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld) {
-    this.visibility = new StageVisibility(context, world.width, world.height);
+    this.visibility = new StageVisibility(context, world.width, world.height, (x, z) => {
+      const map = world.layout.tileMap;
+      const tile = map.tiles[Math.floor(z / map.tileSize)]?.[Math.floor(x / map.tileSize)];
+      return tile !== undefined && tile !== TileType.VOID;
+    });
     this.heightTexture = new THREE.DataTexture(world.ground.copyHeights(), world.ground.columns,
       world.ground.rows, THREE.RedFormat, THREE.FloatType);
     this.heightTexture.minFilter = this.heightTexture.magFilter = THREE.NearestFilter;
@@ -115,11 +157,13 @@ export class StageTerrain {
     this.heightTexture.needsUpdate = true;
     const stone = roughMaterial(0, createSeabedTexture(world));
     this.visibility.apply(stone);
-    const sediment = roughMaterial(0, surfaceTexture(0x6f7161, world.seed + 14, 'stone'));
+    const sediment = roughMaterial(0, surfaceTexture(STAGE_PALETTE.sediment, world.seed + 14, 'stone'));
     this.visibility.apply(sediment);
-    const dark = roughMaterial(0, surfaceTexture(0x343f40, world.seed + 2, 'stone'));
-    this.visibility.apply(dark, undefined, true);
+    const dark = roughMaterial(0, sectionTexture(STAGE_PALETTE.section, world.seed + 2));
+    this.visibility.apply(dark, undefined, true, stone.map!);
     const geometry = createStageGroundGeometry(world);
+    this.sectionStats={...geometry.edge.userData,triangles:geometry.edge.getAttribute('position').count/3,
+      fadeStart:VOID_SECTION_FADE_START,fadeEnd:VOID_SECTION_FADE_END};
     const surface = new THREE.Mesh(geometry.surface, stone), edge = new THREE.Mesh(geometry.edge, dark);
     surface.receiveShadow = edge.receiveShadow = true; this.group.add(surface, edge);
     // Sparse shell fragments sit on the shared deposited surface, rather than
@@ -136,7 +180,7 @@ export class StageTerrain {
       q.setFromAxisAngle(axis,.5 + Math.sin(z / 81)*.5); matrix.compose(position,q,scale); chips.setMatrixAt(count++,matrix);
     }
     chips.count = count; chips.receiveShadow = true; this.group.add(chips);
-    const reefMaterial = roughMaterial(0, surfaceTexture(0x707a71,world.seed+81,'stone'));
+    const reefMaterial = roughMaterial(0, surfaceTexture(STAGE_PALETTE.reef,world.seed+81,'stone'));
     this.visibility.apply(reefMaterial,world.reef);
     const h = world.reef.height;
     this.reef = new THREE.Mesh(ringBody([
@@ -163,7 +207,7 @@ export class StageTerrain {
 
   snapshot():Record<string,unknown>{return {height:this.world.ground.snapshot(),
     reefBase:this.reef.position.toArray(),exitBase:this.extract.position.toArray(),
-    edge:'eroded real VOID section, fading to absent space; no bottom cap'};}
+    edge:this.sectionStats};}
 
   destroy():void { this.visibility.destroy(); this.heightTexture.dispose(); }
 }

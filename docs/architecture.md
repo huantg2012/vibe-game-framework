@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-11
+last-modified: 2026-09-12
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -21,6 +21,32 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 `RunController`的可选`onReturn`在正式出击账本结算、保存及退出事件之后执行，未提供时沿原生产归来路径。实验返回配置页，不进入基地`ImpactSystem`或供奉结算；训练库存、单趟携回不能作为完整基地循环或四A持续供给证据。刷新实验页也不是生产出击恢复方案。
 
 `world-study.html`展示仓库中的世界意象与局部概念，读取`docs/art/iteration-21-worlds/manifest.json`；它和构筑对照入口均未加入生产打包入口或主菜单。开发合同见[build-lab](dev/build-lab.md)，几何/隔离/失败重试/真实操作证据见[迭代21 QA](qa/iteration-21.md)。尚未新增生产世界类型。
+
+### K：Stage的开敞空洞、权威视线与海体显露（DEC-155）
+
+`RiftDevFixture.createSightGrid(layout, physicalGrid)`是显式依赖注入口，未提供时继续使用原TileGrid。`src/dev/spatial-study/stage/sight-grid.ts`只将内部封闭VOID视为空气；外缘/越界/WALL仍遮视，底层版本变化需要重新分类。入口仅Stage提供该工厂；Vista与生产默认不启用。正式Visibility、AI视线、战斗和视线型工具/Host查询消费同一OccluderGrid，范围/角度/数值不变。
+
+`src/systems/ai/physical-grid.ts`从WalkGrid派生身体通行遮挡并提供AABB位移扫掠。导航直行/平滑、推退与落点使用物理地表，不能因光线穿过空洞就让身体跨过。声音诱饵落地、穿墙落地与沿连通地表的揭示维持各自现有物理合同；开敞空洞不增加地面或通路。新增检查`tools/spatial-study/check-stage-sight.ts`涵盖这种分离和默认兼容。
+
+Stage感知纹理改为RGBA：R实时视线（含空气）、G真实地貌记忆、B真实地表成员、A常量。只记真实地表，不记空气。`sea.ts`沿相机射线查询连续高度参考上的当前视线，故没有不透明深度的空洞也可让上方海体退让；此参考不生成渲染/碰撞面。既有不透明深度继续补偿下沉岸壁的真实投影。当前空气显露随转身收回，地表/断面已知记忆和当前实体显隐相互独立。
+
+`terrain.ts`用同一海床纹理采样接到岩壁上端，向下才渐转低彩阴面，减少独立紫色横条。固定35°机位、断面几何、海体拓扑和落水规则沿用J/R4。试验记录新增`sightPolicy`并标记`r6-open-chasm-sight`；Stage与冻结Vista从此不是仅换显示的A/B，不能拿同数据签名声称视线规则完全相同。
+
+### L：北沿侧面材质分面（DEC-155跟进）
+
+`stage/materials.ts`新增仅岸壁使用的`sectionTexture`，沿既有侧面UV提供稀疏向下裂隙；原stone/cloth/shell纹理不变。`terrain.ts`把岸色延续限制在1.5–7世界单位薄唇内，其下用较暗的侧面受光，不再延续大面积地面横纹。材质仍经过原感知/记忆/根部衰减；不改几何、物理、海体显露或K的RGBA合同。仅调现有材质模块，无新玩法接口和UI。记录版本为`r7-north-shore-material`，sightPolicy仍是K规则。
+
+### J：已选定三维方向的场景打磨（DEC-154，K之前记录）
+
+用户认可三维像素舞台作为后续方向，Vista冻结于`fab67e2`的R4源码；这次调整仍仅在DEV局部，不自动将正式RiftScene/净化点或其它世界切换到Three。
+
+`stage/palette.ts`拥有Stage的海、地层与灯光色彩常量。`sea.ts`在既有最近表面深度/14px海体拓扑上，用不同速度的宽尺度变形组织连续暗面和少量宽流光；移除没有再被使用的水纹纹理分配。水体体积、自然开口、统一高度反投影和`water-flow.ts`危险对应关系不变。角色依旧是实际像素绘制，HUD不换皮。
+
+`stage/void-section.ts`只为真实FLOOR/VOID边界生成下沉地层，不对普通未知地面生成实体。断面顶点焊在原8px地表边界，向地层内部收折并下沉，末端无底盖；断面顶点的`stageAnchor`固定在所属岸边FLOOR内，`StageVisibility`沿该实际岸边继承可见/记忆状态，不能采屏幕投影点作为远处地面。变深只改变显示，不添加通行层/碰撞体、FOV通道或内部景物。各岸在同一相机深度中自然遮挡，不用overlay强行露出。
+
+首次完整实图仍看不清断面，最终补正：Stage每帧先把已通过正式显隐/地貌记忆裁切的不透明场景绘入固定960×640离屏颜色/深度目标，再完成海体合成；第二次绘制复用阴影，不重复阴影重建。海材质通过深度纹理与相机逆矩阵取得实际可见表面位置，仅对低于同源地形2–7px的下沉面补透光，沿用原地面显露，防止把全部记忆地貌描成地图轮廓。深度目标由Stage创建、销毁，无第二份模拟/感知状态。已知断面材质另提供随贴图变化的有限暗部漫反射下限，再经过正式感知/记忆和根部衰减；不使用固定自发光板或填洞。
+
+新材质/断面/灯光均只供Stage使用，冻结的Vista、共用CSV、world与水流规则保持逐字节一致；正式模拟依然唯一。最终实机与几何证据见[空间QA](qa/iteration-21-spatial.md)，剩余总计划仍见[扩展总台账](progress/content-expansion-plan.md)，四A持续供给未启动。
 
 ### H/I：两个完整空间局部（DEC-152 / DEC-153，开发试作）
 

@@ -38,6 +38,8 @@ import type { GeneratedRiftLayout } from '@/generation/types';
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
   createLayout(): GeneratedRiftLayout;
+  /** Optical terrain only; physics and navigation always retain the source TileGrid. */
+  createSightGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid): OccluderGrid;
   onReturn(): void;
   onPause?(): void;
   configureCamera?(camera: Phaser.Cameras.Scene2D.Camera): void;
@@ -103,7 +105,7 @@ import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
 import { AIState, TileType, type Contaminant, type ContaminantRarity, type ContaminantType, type Vector2 } from '@/types/game-types';
 import type { AICueId } from '@/types/ai-types';
-import type { LandmarkDef } from '@/types/map-types';
+import type { LandmarkDef, OccluderGrid } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
 
@@ -222,6 +224,7 @@ export class RiftScene extends Phaser.Scene {
     }
     const tileMap = generated.tileMap;
     const grid = new TileGrid(tileMap);
+    const sightGrid = this.devFixture?.createSightGrid?.(generated, grid) ?? grid;
     this.formFloorGrid = grid;
     const layout = generated;
     if (this.devPresentation) {
@@ -260,20 +263,19 @@ export class RiftScene extends Phaser.Scene {
     this.physics.add.collider(this.player.getSprite(), layer);
     camera.startFollow(this.player.getSprite(), true);
 
-    this.visibility.create(this, createRiftVisionConfig(DEPTH.visionMask), grid);
+    this.visibility.create(this, createRiftVisionConfig(DEPTH.visionMask), sightGrid);
     this.visibility.clipLightsToIsland(tileMap);
     this.visibility.setExtractionPosition(layout.extractionPoint.position);
 
     this.trail.create(this, tileMap.cols, tileMap.tileSize, this.visibilityAt);
     this.createLandmarkDecals(layout.landmarks, tileMap.tileSize);
 
-    // The AI reads the same grid twice through two different contracts: as an occluder
-    // grid for line of sight, as a walk grid for pathfinding. Slice 1 derives both from
-    // one tile array, but low walls or chasms would break that equivalence later.
+    // Sight and walkability are independent. Stage chasms are open air for perception;
+    // every movement, body clearance and path still uses the physical grid.
     const hearingCount = layout.contaminationDraw.forms.filter(form => form.lexemes.sense === 'sense_hear').length;
     if (hearingCount !== 1) throw new Error(`Rift hearing budget invalid: ${hearingCount}`);
     const floorHearingCount = layout.enemySpawns.filter(spawn => spawn.form?.lexemes.sense === 'sense_hear').length;
-    this.ai.create(this, layout.enemySpawns, grid, grid, { requireExactlyOneRewriter: floorHearingCount === 1 });
+    this.ai.create(this, layout.enemySpawns, sightGrid, grid, { requireExactlyOneRewriter: floorHearingCount === 1 });
     this.ai.setVisibilityProvider(this.visibilityAt);
     this.ai.addWallCollider(layer);
     this.ai.addStaticPlayerCollider(this.player.getSprite());
@@ -281,7 +283,7 @@ export class RiftScene extends Phaser.Scene {
     // Combat gets a read-only view of the AI (`getEnemies` / `getEnemyById`) plus one
     // callback. Noise is the only cross-system output that does not go through the bus: a
     // whiffed swing is audible yet emits nothing, so there is no event to carry it.
-    this.combat.create(this, grid, this.player, this.ai, {
+    this.combat.create(this, sightGrid, this.player, this.ai, {
       onNoise: this.reportNoise,
       onCue: this.onCombatCue,
       captureEnemyVisual: (id) => this.formVisuals.get(id)?.getFlashSource?.(),
@@ -321,7 +323,7 @@ export class RiftScene extends Phaser.Scene {
       startingValue: openingChaos,
       getPollutionResistance: () => sumPollutionResistance([getSurvivalAttributes().resistancePercent, this.toolSystem.getPollutionResistanceBonus()]),
     });
-    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: grid,
+    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: grid, sightGrid,
       hearingPolicy: {
         getRangeMultiplier: () => this.ai.getHearingRangeMultiplier(),
         suppressDiscovery: (id) => this.ai.trySuppressHearingDiscovery(id),
@@ -364,7 +366,7 @@ export class RiftScene extends Phaser.Scene {
         captureEnemyVisual: id => this.formVisuals.get(id)?.getFlashSource?.(),
         isTargetAlive: id => this.combat.isEnemyAlive(id),
         isTargetVisible: position => this.visibilityAt(position) > 0,
-        hasTargetLineOfSight: (from, to) => hasLineOfSight(grid, from, to),
+        hasTargetLineOfSight: (from, to) => hasLineOfSight(sightGrid, from, to),
         setEnemyControl: (id, source, effect) => this.ai.setEnemyControl(id, source, effect),
         clearEnemyControl: (id, source) => this.ai.clearEnemyControl(id, source),
         hasEnemyControl: (id, source) => this.ai.hasEnemyControl(id, source),
@@ -380,7 +382,7 @@ export class RiftScene extends Phaser.Scene {
         getStitchPlacement: (length, distance) => {
           const angle = this.player.getFacingAngle();
           return findStitchPlacement(this.player.getPosition(), { x: Math.cos(angle), y: Math.sin(angle) }, distance, length,
-            grid, (from, to) => hasLineOfSight(grid, from, to));
+            grid, (from, to) => hasLineOfSight(sightGrid, from, to));
         },
         getRevealSnapshot: range => collectToolRevealSnapshot(this.player.getPosition(), range, grid,
           this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
