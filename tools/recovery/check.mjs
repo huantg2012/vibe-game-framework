@@ -1,0 +1,8 @@
+import { spawnSync } from 'node:child_process';
+const checks = ['actors', 'effects', 'world', 'state', 'run', 'persistence', 'settlement-random', 'admission', 'journey-recovery', 'lifecycle'];
+for (const name of checks) {
+  const result = spawnSync(process.execPath, ['--import', 'tsx', `tools/recovery/check-${name}.ts`], {
+    stdio: 'inherit', env: { ...process.env, TSX_TSCONFIG_PATH: 'tools/contam-preview/tsconfig.json' },
+  });
+  if (result.status !== 0) process.exit(result.status ?? 1);
+}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>悬海 · 基地往返 · 那天之后</title>
+  <style>
+    body { margin: 0; background: #111519; }
+    #sea-journey { display: flex; height: 100vh; }
+    #journey-controls { box-sizing: border-box; width: 280px; flex: 0 0 280px; padding: 18px; overflow-y: auto; border-right: 1px solid #3b444b; color: #d4dbdf; font: 14px/1.6 system-ui, sans-serif; }
+    #journey-controls h1 { font-size: 20px; margin: 0 0 12px; }
+    #journey-controls p { color: #aebbc3; } #journey-controls a { color: #becfcf; }
+    #journey-controls label { display: block; margin: 10px 0; }
+    #journey-controls :is(select, input, button) { box-sizing: border-box; display: block; width: 100%; font: inherit; color: inherit; background: #202b33; border: 1px solid #53636e; padding: 7px; border-radius: 3px; }
+    #journey-controls button { cursor: pointer; margin: 6px 0; } #journey-controls :disabled { opacity: .45; cursor: default; }
+    #journey-controls #error { color: #efad9d; }
+    #journey-controls pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 ui-monospace, monospace; }
+    #game-container { position: relative; flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; background: #070a0b; overflow: hidden; outline: none; }
+    #game-container > canvas { display: block; }
+  </style>
+</head><body><main id="sea-journey">
+  <aside id="journey-controls">
+    <h1>悬海 · 基地往返</h1>
+    <p>临时隔离会话：从一把普通撬棍开始，使用正式净化点完成拾获、供奉、备行与往返。本页只保存在内存，刷新会清空本页，不改动正式存档；这不是正式游戏的中断恢复政策。</p>
+    <label>下趟海床<select id="scene" disabled><option value="sea-open-channel">开阔潮沟</option><option value="sea-folded-ridge">折返岸脊</option></select></label>
+    <label>下趟种子<input id="seed" type="number" min="0" max="4294967295" step="1" value="19" disabled /></label>
+    <p>在基地出发前选择。携带物品由净化点入口的备行界面配置，出发后本趟世界固定。</p>
+    <button id="pause" disabled>暂停（Esc）</button><button id="download">下载整段会话记录 JSON</button>
+    <p>WASD 移动 · E 与装置交互<br>净化点 Tab 存续报告<br>裂隙空格挥击，Q / F 使用物件<br>裂隙 Tab 本趟拾获（世界继续）<br>真实结算后 R 返回净化点</p>
+    <p id="status">载入正式游戏资源…</p>
+    <details><summary>会话观测</summary><pre id="state"></pre></details><pre id="error" role="alert"></pre>
+  </aside><div id="game-container" tabindex="0"></div>
+</main><script type="module" src="/src/dev/suspended-sea-journey.ts"></script></body></html>

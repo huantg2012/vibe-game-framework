@@ -28,6 +28,9 @@ export const PathPriority = {
 export type PathPriorityValue = (typeof PathPriority)[keyof typeof PathPriority];
 
 export interface AIContext {
+  /** Optional persisted run stream; omitted keeps historical scene behavior. */
+  readonly random?: () => number;
+
   /** Line of sight. The only occlusion authority in the project (rule P3). */
   readonly occluders: OccluderGrid;
   /** Non-walkable tiles; separate from perception for chasms and low obstacles. */

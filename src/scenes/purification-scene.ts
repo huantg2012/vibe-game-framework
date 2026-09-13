@@ -1,3 +1,5 @@
+import { mix32 } from '@/generation/seed-fork';
+import { SeededRandom } from '@/utils/random';
 import { inventoryStore } from '@/systems/inventory-store';
 import { getEquipmentLifecycle, type OfferingTransformResult } from '@/types/inventory-types';
 import { WEAPON_DATA } from '@/generated/weapon-data';
@@ -44,7 +46,7 @@ import {
   offeringStandChargeFromSlots,
 } from '@/scenes/offering-stand-visual';
 import { GrowthConsoleVisual } from '@/scenes/growth-console-visual';
-import { gameState } from '@/managers/game-state';
+import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
 import { BoundaryAtmosphere } from '@/systems/boundary-atmosphere';
@@ -279,6 +281,23 @@ function drawInteractionPoint(
 
 export type WorldInteractionTarget = 'CORE' | 'STORAGE' | 'PURIFIER' | 'defense' | 'growth' | 'rift';
 
+/** DEV routing is prepared before the departure transaction. Production owns all
+ * inventory, cycle, save and transition work; the adapter only selects the scene. */
+export interface PurificationDepartureData {
+  readonly modifiers: SortieModifiers;
+  readonly cycle: number;
+  readonly loadout: ReturnType<typeof contaminantSystem.getSortieLoadout>;
+}
+export interface PurificationDevDeparture {
+  readonly recoveryIdentity?: import('@/types/rift-checkpoint').RiftCheckpoint['identity'];
+  start(data: PurificationDepartureData): void;
+  cancel(): void;
+}
+export interface PurificationDevSession {
+  prepareDeparture(): PurificationDevDeparture;
+  onPause?(): void;
+}
+
 export class PurificationScene extends Phaser.Scene {
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
@@ -323,6 +342,8 @@ export class PurificationScene extends Phaser.Scene {
   // 裂隙入口外形对照（实测用）：4/5/7/8/9 -> 卡 4 地缝（对照）/ 5 击裂（生产默认）/ 7 错位 / 8 掀皮 / 9 网裂
   private entranceVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
+  private devSession: PurificationDevSession | null = null;
+  private devDeparture: PurificationDevDeparture | null = null;
   private menuEntry: MenuEntryTransition | null = null;
   private transitionDelay: Phaser.Time.TimerEvent | null = null;
   private transitionOverlay: HTMLDivElement | null = null;
@@ -346,8 +367,10 @@ export class PurificationScene extends Phaser.Scene {
     super({ key: 'PurificationScene' });
   }
 
-  create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean; menuEntry?: MenuEntryTransition }): void {
+  create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean; menuEntry?: MenuEntryTransition; devSession?: PurificationDevSession }): void {
     this.shuttingDown = false;
+    this.devSession = import.meta.env?.DEV ? data?.devSession ?? null : null;
+    this.devDeparture = null;
     this.menuEntry = data?.menuEntry ?? null;
     // Determine if this is a return from rift (vs. menu/load entry)
     const ledger = inventoryStore.getRun();
@@ -374,6 +397,9 @@ export class PurificationScene extends Phaser.Scene {
     // (Slice 5.5 D5 "预告 vs 实际", IA §S8).
     let predictedForecast: ForecastDisplay | null = null;
 
+    const recoveryReturn = isReturnFromRift && ledger && saveManager.peekRiftCheckpoint()?.runId === ledger.id;
+    const impactRandom = recoveryReturn ? new SeededRandom(mix32(0, `return:${ledger.id}:impact`)) : null;
+    const forecastRandom = recoveryReturn ? new SeededRandom(mix32(0, `return:${ledger.id}:forecast`)) : null;
     const saved = saveManager.commitWorldTransaction(() => {
     // Credit kindling from the rift run (spec rule 10)
     if (isReturnFromRift && survived && kindlingGained > 0) {
@@ -396,7 +422,7 @@ export class PurificationScene extends Phaser.Scene {
       const offeringIds = inventoryStore.getOfferingItems().map(item => item?.id ?? null);
       const isHighTide = tideSystem.isHighTide();
       predictedForecast = impactSystem.getForecastDisplay();
-      impactResult = impactSystem.run(contaminantSystem.getDefenseSlotted(), offeringIds);
+      impactResult = impactSystem.run(contaminantSystem.getDefenseSlotted(), offeringIds, impactRandom ? () => impactRandom.next() : undefined);
       if (!impactResult.skipped) {
         const finished = contaminantSystem.finishOfferingImpact(isHighTide, impactResult.defenseResult?.bonusCharges ?? {}, offeringIds);
         if (!finished.ok) throw new Error(`Offering settlement failed: ${finished.error}`);
@@ -417,10 +443,11 @@ export class PurificationScene extends Phaser.Scene {
       tideSystem.getCurrentIntensity(),
       growthSystem.getModifiers().forecastClarity,
       tideSystem.peekNextIntensity(),
+      forecastRandom ? () => forecastRandom.next() : undefined,
     );
 
     if (isReturnFromRift && ledger?.status === 'settled') inventoryStore.markBaseSettled();
-    inventoryStore.ensureStarter();
+    inventoryStore.ensureStarter(recoveryReturn ? `WPN_replacement:${ledger.id}` : undefined);
     });
     if (!saved) this.requestSaveRetry();
 
@@ -862,7 +889,8 @@ export class PurificationScene extends Phaser.Scene {
         statusPanel.close();
         this.panelClosedAt = this.time.now;
       } else if (!this.interactionFocusReturn && !pauseMenu.isOpen() && this.time.now - this.panelClosedAt > 150) {
-        pauseMenu.open(this);
+        if (this.devSession?.onPause) this.devSession.onPause();
+        else pauseMenu.open(this);
       }
     }
 
@@ -874,6 +902,17 @@ export class PurificationScene extends Phaser.Scene {
         this.openStatusPanel();
       }
     }
+  }
+
+  /** Isolated journey diagnostics only. No commands, inventory writes or position setters. */
+  probeJourneyState(): Record<string, unknown> | null {
+    if (!import.meta.env?.DEV || this.shuttingDown) return null;
+    return { player: { ...this.player.getPosition() }, transitioning: this.transitioning,
+      pendingSave: saveManager.hasPendingSave(),
+      devices: { core: { ...CORE_POS }, storage: { ...STORAGE_POS }, purifier: { ...PURIFIER_POS },
+        entrance: { ...RIFT_ENTRANCE_POS }, offering: { ...DEFENSE_POS }, growth: { ...GROWTH_POS } },
+      panels: { inventory: inventoryPanel.isOpen(), status: statusPanel.isOpen(), offering: defensePanel.isOpen(),
+        impact: impactResultPanel.isOpen(), allocation: allocationPanel.isOpen(), growth: growthPanel.isOpen() } };
   }
 
   // ------------------------------------------------------------------ private
@@ -1146,13 +1185,17 @@ export class PurificationScene extends Phaser.Scene {
   /** D4: Scene transition with narrative overlay + T10 radial glow. */
   private transitionToRift(): void {
     if (this.transitioning || saveManager.hasPendingSave()) return;
+    try { this.devDeparture = this.devSession?.prepareDeparture() ?? null; }
+    catch (reason) { showToastInline(reason instanceof Error ? reason.message : String(reason), {}); return; }
     let error: string | null = null;
     const saved = saveManager.commitWorldTransaction(() => {
       const begun = inventoryStore.beginRun(crypto.randomUUID());
       if (!begun.ok) { error = inventoryError(begun.error); return; }
       gameState.incrementCycle();
+      if (this.devDeparture?.recoveryIdentity) saveManager.recordRiftDeparture({ version: 1, runId: inventoryStore.getRun()!.id,
+        identity: this.devDeparture.recoveryIdentity, conditions: { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle() } });
     });
-    if (error) { showToastInline(error, {}); return; }
+    if (error) { this.devDeparture?.cancel(); this.devDeparture = null; showToastInline(error, {}); return; }
     if (!saved) { this.requestSaveRetry(() => this.finishRiftDeparture()); return; }
     this.finishRiftDeparture();
   }
@@ -1203,7 +1246,10 @@ export class PurificationScene extends Phaser.Scene {
         this.transitionDelay = null;
         overlay.remove();
         this.transitionOverlay = null;
-        this.scene.start('RiftScene', { modifiers, cycle, loadout });
+        const departure = this.devDeparture;
+        this.devDeparture = null; // A synchronous scene shutdown must not cancel the handed-off run.
+        if (departure) departure.start({ modifiers, cycle, loadout });
+        else this.scene.start('RiftScene', { modifiers, cycle, loadout });
       });
     });
   }
@@ -1390,6 +1436,9 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
+    this.devDeparture?.cancel();
+    this.devDeparture = null;
+    this.devSession = null;
     this.unsubscribeWeapon?.();
     this.unsubscribeWeapon = null;
     this.unsubscribeForecast?.();

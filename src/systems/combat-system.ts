@@ -3,6 +3,7 @@ import { notifyVisualHit } from '@/entities/hit-reaction';
  * one swept arc and one target budget. AI, chaos and movement remain separately owned. */
 
 import Phaser from 'phaser';
+import { runtimeEnemyForm, runtimeInteger, runtimeNumber, runtimeRecord, runtimeStrings } from '@/systems/ai/runtime-validation';
 import { WEAPON_DATA, WEAPON_ATTACK_PROFILES } from '@/generated/weapon-data';
 import type { CrowbarQuality, CrowbarVariant } from '@/art/crowbar-pixels';
 import { swingDamage, swingContactProgress, type MeleeTarget, type WeaponAttackPose } from '@/systems/weapon-swing';
@@ -18,7 +19,8 @@ import {
   REWRITER_ORIGIN_Y,
   rewriterTextureFor,
 } from '@/entities/rewriter-sprite';
-import type { EnemyView } from '@/types/ai-types';
+import type { EnemyRole, EnemyView } from '@/types/ai-types';
+import type { ContaminationForm } from '@/generation/contamination-draw';
 import { GameEvent } from '@/types/events';
 import { AIState, type Vector2 } from '@/types/game-types';
 import type { OccluderGrid } from '@/types/map-types';
@@ -103,6 +105,10 @@ export interface PlayerCombatAPI {
 }
 
 export interface CombatSystemAPI extends PlayerCombatAPI {
+  enableRuntimeRecovery(options: CombatRuntimeRecoveryOptions): void;
+  exportRuntimeState(): CombatRuntimeState;
+  validateRuntimeState(value: unknown): value is CombatRuntimeState;
+  restoreRuntimeState(value: unknown): void;
   create(
     scene: Phaser.Scene,
     occluders: OccluderGrid,
@@ -202,7 +208,142 @@ interface FxSlot {
   fade: boolean;
 }
 
+export interface CombatRuntimeRecoveryOptions {
+  readonly signature: string;
+  readonly runSeed: number;
+  /** Authored shell target IDs. Hosts are outside this recovery package. */
+  readonly externalTargetIds: readonly string[];
+}
+
+export interface CombatRuntimeConfigurationEnemy {
+  readonly id: string;
+  readonly role: EnemyRole;
+  readonly form: ContaminationForm;
+}
+
+/** Shared by enableRuntimeRecovery and admission before there are any live actors. */
+export function createCombatRuntimeConfigurationSignature(options: CombatRuntimeRecoveryOptions,
+  enemies: readonly CombatRuntimeConfigurationEnemy[], maxHealth: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH): string {
+  if (!options.signature || !runtimeInteger(options.runSeed, 0, 0xffffffff) || !runtimeStrings(options.externalTargetIds, 1)
+    || enemies.length !== 2 || new Set(enemies.map(enemy => enemy.id)).size !== 2
+    || enemies.filter(enemy => enemy.role === 'rewriter').length !== 1
+    || enemies.some(enemy => !runtimeEnemyForm(enemy.form, enemy.role)) || !runtimeNumber(maxHealth, Number.MIN_VALUE)) {
+    throw new Error('Unsupported combat recovery configuration');
+  }
+  return JSON.stringify({ signature: options.signature, weapons: WEAPON_DATA,
+    attackProfile: WEAPON_ATTACK_PROFILES.crowbar, combat: GAME_CONSTANTS.COMBAT,
+    maxHealth, bodyProfile: BODY_PROFILE_DATA.insect_remnant,
+    enemies: enemies.map(enemy => ({ id: enemy.id, role: enemy.role, form: enemy.form })), targets: options.externalTargetIds });
+}
+
+export interface CombatRuntimeEnemy {
+  readonly id: string;
+  readonly health: number;
+  readonly alive: true;
+  readonly attackPhase: EnemyAttackPhase;
+  readonly attackTimerMs: number;
+  readonly attackAngle: number;
+  readonly cooldownRemainingMs: number;
+  readonly engagedSinceMs: number;
+  readonly strikeFxFrames: number;
+  readonly controlInterruptRevision: number;
+}
+
+export interface CombatRuntimeState {
+  readonly version: 1;
+  readonly signature: string;
+  readonly configurationSignature: string;
+  readonly enemyIds: readonly string[];
+  readonly externalTargetIds: readonly string[];
+  readonly enabled: boolean;
+  readonly health: number;
+  readonly dead: boolean;
+  readonly phase: AttackPhase;
+  readonly swingElapsedMs: number;
+  readonly attackAngle: number;
+  readonly cooldownRemainingMs: number;
+  readonly invulnRemainingMs: number;
+  readonly flashRemainingMs: number;
+  readonly weaponId: string | null;
+  readonly swingWeaponId: string | null;
+  readonly weaponUseAttempted: boolean;
+  readonly weaponUseCommitted: boolean;
+  readonly runSeed: number;
+  readonly attackSequence: number;
+  readonly damageThisSwing: number;
+  readonly bufferedMs: number;
+  readonly contactRemainingMs: number;
+  readonly contactElapsedMs: number;
+  readonly hitSet: readonly string[];
+  readonly hitHosts: readonly string[];
+  readonly swingNoiseSent: boolean;
+  readonly hitNoiseSent: boolean;
+  readonly attackTokensInUse: number;
+  readonly enemies: readonly CombatRuntimeEnemy[];
+}
+
+function runtimeWeapon(value: unknown): value is string | null {
+  return value === null || (typeof value === 'string' && WEAPON_DATA[value]?.type === 'crowbar'
+    && WEAPON_DATA[value]?.profileId === 'crowbar');
+}
+
+/** Pure boundary validation; instance validation additionally checks the bound roster/content. */
+export function validateCombatRuntimeState(value: unknown): value is CombatRuntimeState {
+  const p = WEAPON_ATTACK_PROFILES.crowbar!;
+  const c = GAME_CONSTANTS.COMBAT;
+  if (!runtimeRecord(value) || value.version !== 1 || typeof value.signature !== 'string' || !value.signature
+    || typeof value.configurationSignature !== 'string' || !value.configurationSignature
+    || !runtimeStrings(value.enemyIds, 2) || value.enemyIds.length !== 2
+    || !runtimeStrings(value.externalTargetIds, 1)
+    || !runtimeStrings(value.hitSet, p.targetLimit) || !runtimeStrings(value.hitHosts, 0)
+    || !['enabled', 'dead', 'weaponUseAttempted', 'weaponUseCommitted', 'swingNoiseSent', 'hitNoiseSent'].every(key => typeof value[key] === 'boolean')
+    || !runtimeNumber(value.health, 0, GAME_CONSTANTS.PLAYER.MAX_HEALTH) || value.dead !== (value.health === 0)
+    || !['idle', 'windup', 'active', 'recovery'].includes(value.phase as string)
+    || !runtimeNumber(value.swingElapsedMs, 0, p.windupMs + p.activeMs + p.recoveryMs)
+    || !runtimeNumber(value.attackAngle) || !runtimeNumber(value.cooldownRemainingMs, 0, p.minIntervalMs)
+    || !runtimeNumber(value.invulnRemainingMs, 0, c.PLAYER_IFRAME_MS)
+    || !runtimeNumber(value.flashRemainingMs, 0, c.PLAYER_HIT_FLASH_MS)
+    || !runtimeWeapon(value.weaponId) || !runtimeWeapon(value.swingWeaponId)
+    || !runtimeInteger(value.runSeed, 0, 0xffffffff) || !runtimeInteger(value.attackSequence)
+    || !runtimeInteger(value.damageThisSwing) || !runtimeNumber(value.bufferedMs, 0, 100)
+    || !runtimeNumber(value.contactRemainingMs, 0, p.contactHoldMs)
+    || !runtimeNumber(value.contactElapsedMs, 0, p.windupMs + p.activeMs)
+    || !runtimeInteger(value.attackTokensInUse, 0, c.ENEMY_ATTACK_TOKENS)
+    || !Array.isArray(value.enemies) || value.enemies.length > 2) return false;
+  if (value.weaponUseCommitted && !value.weaponUseAttempted) return false;
+  const targetIds = new Set([...value.enemyIds.map(id => `body:${id}`), ...value.externalTargetIds]);
+  if (value.hitSet.some(id => !targetIds.has(id)) || (value.hitSet.length > 0 && !value.weaponUseCommitted)) return false;
+  if (value.phase === 'idle') {
+    if (value.swingWeaponId !== null || value.swingElapsedMs !== 0 || value.contactRemainingMs !== 0 || value.hitSet.length !== 0) return false;
+  } else {
+    const weapon = value.swingWeaponId ? WEAPON_DATA[value.swingWeaponId] : undefined;
+    if (!weapon || value.attackSequence < 1 || value.damageThisSwing !== swingDamage(value.runSeed, value.attackSequence, weapon.damageMin, weapon.damageMax)) return false;
+    const expected = value.swingElapsedMs < p.windupMs ? 'windup' : value.swingElapsedMs < p.windupMs + p.activeMs ? 'active' : 'recovery';
+    if (value.phase !== expected || value.swingElapsedMs >= p.windupMs + p.activeMs + p.recoveryMs) return false;
+  }
+  if (!value.enabled && (value.phase !== 'idle' || value.attackTokensInUse !== 0)) return false;
+  if (value.dead && value.enabled) return false;
+  const ids = new Set<string>();
+  let tokens = 0;
+  for (const enemy of value.enemies) {
+    if (!runtimeRecord(enemy) || typeof enemy.id !== 'string' || !value.enemyIds.includes(enemy.id) || ids.has(enemy.id)
+      || enemy.alive !== true || !runtimeNumber(enemy.health, Number.MIN_VALUE, c.ENEMY_MAX_HEALTH)
+      || !['idle', 'windup', 'cooldown'].includes(enemy.attackPhase as string)
+      || !runtimeNumber(enemy.attackAngle) || !runtimeNumber(enemy.attackTimerMs, 0)
+      || !runtimeNumber(enemy.cooldownRemainingMs, 0) || !runtimeNumber(enemy.engagedSinceMs, 0)
+      || !runtimeInteger(enemy.strikeFxFrames, 0, 1) || !runtimeInteger(enemy.controlInterruptRevision)) return false;
+    const profile = BODY_PROFILE_DATA.insect_remnant!;
+    if (enemy.attackTimerMs >= profile.windupMs || enemy.cooldownRemainingMs > profile.cooldownMs) return false;
+    ids.add(enemy.id);
+    if (enemy.attackPhase === 'windup') tokens++;
+  }
+  return tokens === value.attackTokensInUse;
+}
+
 export class CombatSystem implements CombatSystemAPI {
+  private runtimeRecovery: CombatRuntimeRecoveryOptions | null = null;
+  private runtimeEnemyIds: string[] = [];
+  private runtimeConfigurationSignature = "";
   private scene!: Phaser.Scene;
   private occluders!: OccluderGrid;
   private player!: PlayerCombatTarget;
@@ -274,6 +415,9 @@ export class CombatSystem implements CombatSystemAPI {
     ai: AISystemReadView,
     hooks: CombatHooks
   ): void {
+    this.runtimeRecovery = null;
+    this.runtimeEnemyIds = [];
+    this.runtimeConfigurationSignature = '';
     this.scene = scene;
     this.occluders = occluders;
     this.player = player;
@@ -372,6 +516,94 @@ export class CombatSystem implements CombatSystemAPI {
     this.syncRoster();
     this.clearAllFx();
     this.emitHealth();
+  }
+
+  /** Called after fixture target registration and configureWeapon, before simulation starts. */
+  enableRuntimeRecovery(options: CombatRuntimeRecoveryOptions): void {
+    const views = this.ai.getEnemies();
+    if (!options.signature || !runtimeInteger(options.runSeed, 0, 0xffffffff) || options.runSeed !== this.runSeed
+      || !runtimeStrings(options.externalTargetIds, 1) || views.length !== 2
+      || new Set(views.map(view => view.getId())).size !== 2
+      || views.filter(view => view.getRole() === 'rewriter').length !== 1
+      || views.some(view => !runtimeEnemyForm(view.getForm(), view.getRole()))
+      || !runtimeWeapon(this.weaponId) || this.godMode) throw new Error('Unsupported combat recovery configuration');
+    const targets: MeleeTarget[] = [];
+    for (const provider of this.externalTargets) provider.collectMeleeTargets(targets);
+    if (targets.some(target => target.hostId || !options.externalTargetIds.includes(target.id))
+      || targets.length !== options.externalTargetIds.length || new Set(targets.map(target => target.id)).size !== targets.length) {
+      throw new Error('Combat recovery requires the exact authored shell targets and no Hosts');
+    }
+    this.runtimeRecovery = { ...options, externalTargetIds: [...options.externalTargetIds] };
+    this.runtimeEnemyIds = views.map(view => view.getId());
+    this.runtimeConfigurationSignature = createCombatRuntimeConfigurationSignature(options,
+      views.map(view => ({ id: view.getId(), role: view.getRole(), form: view.getForm() })), this.maxHealth);
+  }
+
+  exportRuntimeState(): CombatRuntimeState {
+    if (!this.runtimeRecovery || this.godMode) throw new Error('Combat recovery has not been enabled');
+    const value: CombatRuntimeState = { version: 1, signature: this.runtimeRecovery.signature,
+      configurationSignature: this.runtimeConfigurationSignature, enemyIds: [...this.runtimeEnemyIds],
+      externalTargetIds: [...this.runtimeRecovery.externalTargetIds], enabled: this.enabled, health: this.health,
+      dead: this.dead, phase: this.phase, swingElapsedMs: this.swingElapsedMs, attackAngle: this.attackAngle,
+      cooldownRemainingMs: this.cooldownRemainingMs, invulnRemainingMs: this.invulnRemainingMs,
+      flashRemainingMs: this.flashRemainingMs, weaponId: this.weaponId, swingWeaponId: this.swingWeaponId,
+      weaponUseAttempted: this.weaponUseAttempted, weaponUseCommitted: this.weaponUseCommitted,
+      runSeed: this.runSeed, attackSequence: this.attackSequence, damageThisSwing: this.damageThisSwing,
+      bufferedMs: this.bufferedMs, contactRemainingMs: this.contactRemainingMs, contactElapsedMs: this.contactElapsedMs,
+      hitSet: [...this.hitSet], hitHosts: [...this.hitHosts], swingNoiseSent: this.swingNoiseSent,
+      hitNoiseSent: this.hitNoiseSent, attackTokensInUse: this.attackTokensInUse,
+      enemies: [...this.enemies.values()].map(state => ({ id: state.id, health: state.health, alive: true,
+        attackPhase: state.attackPhase, attackTimerMs: state.attackTimerMs, attackAngle: state.attackAngle,
+        cooldownRemainingMs: state.cooldownRemainingMs, engagedSinceMs: state.engagedSinceMs,
+        strikeFxFrames: state.strikeFxFrames, controlInterruptRevision: state.controlInterruptRevision })) };
+    if (!this.validateRuntimeState(value) || this.ai.getEnemies().length !== value.enemies.length) {
+      throw new Error('Combat cannot export invalid runtime state');
+    }
+    return value;
+  }
+
+  validateRuntimeState(value: unknown): value is CombatRuntimeState {
+    if (!this.runtimeRecovery || !validateCombatRuntimeState(value) || this.godMode
+      || value.signature !== this.runtimeRecovery.signature || value.runSeed !== this.runtimeRecovery.runSeed
+      || value.configurationSignature !== this.runtimeConfigurationSignature
+      || JSON.stringify(value.enemyIds) !== JSON.stringify(this.runtimeEnemyIds)
+      || JSON.stringify(value.externalTargetIds) !== JSON.stringify(this.runtimeRecovery.externalTargetIds)) return false;
+    return value.enemies.every(state => {
+      const view = this.ai.getEnemyById(state.id);
+      return !!view && runtimeEnemyForm(view.getForm(), view.getRole());
+    });
+  }
+
+  /** AI roster hydration must precede this. No input, consumption, damage, noise, or health events. */
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value) || this.ai.getEnemies().length !== value.enemies.length) {
+      throw new Error('Invalid or incompatible combat runtime state; restore AI roster first');
+    }
+    this.enabled = value.enabled; this.health = value.health; this.dead = value.dead;
+    this.phase = value.phase; this.swingElapsedMs = value.swingElapsedMs; this.attackAngle = value.attackAngle;
+    this.cooldownRemainingMs = value.cooldownRemainingMs; this.invulnRemainingMs = value.invulnRemainingMs;
+    this.flashRemainingMs = value.flashRemainingMs; this.weaponId = value.weaponId; this.swingWeaponId = value.swingWeaponId;
+    this.weaponUseAttempted = value.weaponUseAttempted; this.weaponUseCommitted = value.weaponUseCommitted;
+    this.runSeed = value.runSeed; this.attackSequence = value.attackSequence; this.damageThisSwing = value.damageThisSwing;
+    this.bufferedMs = value.bufferedMs; this.contactRemainingMs = value.contactRemainingMs;
+    this.contactElapsedMs = value.contactElapsedMs; this.swingNoiseSent = value.swingNoiseSent; this.hitNoiseSent = value.hitNoiseSent;
+    this.hitSet.clear(); for (const id of value.hitSet) this.hitSet.add(id);
+    this.hitHosts.clear();
+    this.enemies.clear(); this.bodyTargets.clear();
+    this.syncRoster();
+    for (const entry of value.enemies) {
+      const state = this.enemies.get(entry.id)!;
+      Object.assign(state, entry);
+      state.view.setAttackCommitted?.(entry.attackPhase === 'windup');
+      this.enemies.delete(entry.id); this.enemies.set(entry.id, state);
+    }
+    this.attackTokensInUse = value.attackTokensInUse;
+    this.meleeTargets.length = 0; this.candidates.length = 0; this.candidateCount = 0;
+    this.clearAllFx();
+    if (this.phase === 'idle') this.player.clearSpeedModifier(SLOW_SOURCE);
+    else this.player.setSpeedModifier(SLOW_SOURCE, GAME_CONSTANTS.COMBAT.ATTACK_SELF_SLOW);
+    this.syncEquippedVisual();
+    this.syncWeaponPose();
   }
 
   // ------------------------------------------------------------------ update

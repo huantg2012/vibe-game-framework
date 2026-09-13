@@ -24,6 +24,9 @@ export interface StageFollowCameraSnapshot {
   readonly anchor: Readonly<PresentationPoint>; readonly deadZone: Readonly<PresentationPoint>;
   readonly elapsedMs: number;
 }
+export interface StageCameraRuntimeStateV1 {
+  version: 1; center: PresentationPoint; target: PresentationPoint; previousPlayer: PresentationPoint; elapsedMs: number;
+}
 
 const FOLLOW_SPAN = 1060;
 const ELEVATION = 35 * Math.PI / 180;
@@ -103,6 +106,25 @@ export class StageFollowCamera {
       center: { ...this.currentCenter }, target: { ...this.targetCenter }, focus: { ...this.lookAt },
       playerScreen: { ...this.playerScreen }, anchor: { x: STAGE_WIDTH / 2, y: ANCHOR_Y },
       deadZone: { x: 80, y: 60 }, elapsedMs: this.elapsedMs };
+  }
+
+  exportRuntimeState(): StageCameraRuntimeStateV1 {
+    return { version: 1, center: { ...this.currentCenter }, target: { ...this.targetCenter },
+      previousPlayer: { ...this.previousPlayer }, elapsedMs: this.elapsedMs };
+  }
+  validateRuntimeState(value: unknown): value is StageCameraRuntimeStateV1 {
+    if (!value || typeof value !== 'object') return false;
+    const state = value as StageCameraRuntimeStateV1;
+    const point = (p: PresentationPoint | undefined): p is PresentationPoint => !!p && Number.isFinite(p.x) && Number.isFinite(p.y);
+    return state.version === 1 && Number.isFinite(state.elapsedMs) && state.elapsedMs >= 0
+      && point(state.center) && point(state.target) && point(state.previousPlayer)
+      && [state.center, state.target].every(p => p.x >= this.minimumX && p.x <= this.maximumX && p.y >= this.minimumY && p.y <= this.maximumY);
+  }
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid follow-camera checkpoint');
+    Object.assign(this.currentCenter, value.center); Object.assign(this.targetCenter, value.target);
+    Object.assign(this.previousPlayer, value.previousPlayer); this.elapsedMs = value.elapsedMs;
+    this.applyCenter();
   }
 
   private clampX(value: number): number { return Math.max(this.minimumX, Math.min(this.maximumX, value)); }

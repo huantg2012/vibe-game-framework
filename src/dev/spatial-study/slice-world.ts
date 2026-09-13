@@ -11,6 +11,11 @@ export interface SlicePoint { x: number; y: number }
 export interface SeaColumn { field: number; top: number; bottom: number }
 export interface SlicePresentation {
   update(elapsedMs: number): void;
+  /** Update information memory before the complete frame is saved, without rendering. */
+  prepareFrame?(elapsedMs: number): void;
+  exportRuntimeState?(): unknown;
+  validateRuntimeState?(state: unknown): boolean;
+  restoreRuntimeState?(state: unknown): void;
   snapshot(): Record<string, unknown>;
   destroy(): void;
 }
@@ -20,7 +25,7 @@ export const SLICE_WATER = SPATIAL_SLICE_WATER[0];
 export interface SpatialSliceSceneDefinition extends SpatialFixtureDefinition {
   readonly name: string; readonly loadout: BuildLabLoadoutId;
   readonly seaFrontY: number; readonly seaTopHeight: number; readonly seaBottomHeight: number;
-  readonly reefCol: number; readonly reefRow: number; readonly reefHeight: number;
+  readonly reefCol: number | null; readonly reefRow: number | null; readonly reefHeight: number | null;
 }
 export interface SpatialSliceOpening {
   readonly id: string; readonly x: number; readonly y: number;
@@ -75,7 +80,14 @@ export class SpatialSliceWorld {
       const [x, y] = p.split(':').map(Number); return { x: x!, y: y! };
     });
     this.waterOutline = this.baseWater.map(() => ({ x: 0, y: 0 }));
-    this.reef = { x: (data.scene.reefCol + .5) * 32, y: (data.scene.reefRow + .5) * 32, height: data.scene.reefHeight };
+    const { reefCol, reefRow, reefHeight } = data.scene;
+    const reefValues = [reefCol, reefRow, reefHeight];
+    if (reefValues.some(value => value === null) && !reefValues.every(value => value === null)) {
+      throw new Error('An omitted datum reef requires all three columns to be empty');
+    }
+    this.reef = reefCol === null || reefRow === null || reefHeight === null
+      ? { x: 0, y: 0, height: 0 }
+      : { x: (reefCol + .5) * 32, y: (reefRow + .5) * 32, height: reefHeight };
     this.advance(0, this.layout.spawnPoint, true, () => false);
   }
 
@@ -144,6 +156,13 @@ export class SpatialSliceWorld {
 
   advance(elapsedMs: number, player: Readonly<SlicePoint>, ended: boolean,
     applyHit: (source: string, damage: number) => boolean): void {
+    this.prepare(elapsedMs);
+    this.resolveContact(player, ended, applyHit);
+  }
+
+  /** A world with melee-controlled environment objects prepares its authoritative
+   * phase before Combat, then resolves contact after the same frame's swing. */
+  prepare(elapsedMs: number): void {
     this.elapsedMs = elapsedMs;
     const wasActive = this.water.active;
     sampleWaterCurtain(this.water, elapsedMs, this.waterDefinition);
@@ -156,8 +175,12 @@ export class SpatialSliceWorld {
       point.y = this.waterDefinition.y + base.y * (1 + .07 * Math.sin(t * .83 - i * .7));
     }
     if (!this.water.active || !wasActive) this.nextHit = elapsedMs;
-    if (ended || !this.water.active || elapsedMs < this.nextHit || !this.isInsideWater(player)) return;
-    this.nextHit = elapsedMs + this.waterDefinition.hitIntervalMs;
+  }
+
+  resolveContact(player: Readonly<SlicePoint>, ended: boolean,
+    applyHit: (source: string, damage: number) => boolean): void {
+    if (ended || !this.water.active || this.elapsedMs < this.nextHit || !this.isInsideWater(player)) return;
+    this.nextHit = this.elapsedMs + this.waterDefinition.hitIntervalMs;
     this.attempts++;
     if (applyHit(`environment:${this.waterDefinition.id}`, this.waterDefinition.damage)) this.hits++;
   }

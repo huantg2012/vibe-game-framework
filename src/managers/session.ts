@@ -45,7 +45,7 @@ export function beginNewExpedition(host: Phaser.Scene, enter?: ExpeditionEntry):
   enterPurification(host, 'new', enter);
 }
 
-/** Load the stored record. Falls back to a new expedition if the file is unreadable. */
+/** Preserve unreadable or unsupported records until the player explicitly replaces them. */
 export function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry): void {
   if (saveManager.hasPendingSave()) {
     showToastInline('结算尚未保存，请先回到当前场景重试保存。', {});
@@ -58,7 +58,9 @@ export function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry): voi
   }
   if (loaded) {
     enterPurification(host, 'continue', enter);
-  } else {
+  } else if (!saveManager.hasSave()) {
     beginNewExpedition(host, enter);
+  } else {
+    showToastInline('这份记录暂时无法读取，原记录已保留。', {});
   }
 }

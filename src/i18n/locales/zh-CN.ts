@@ -57,6 +57,7 @@ export const zhCN: LocaleSchema = {
     prompt: {
       extract: '撤离',
       search: '翻找',
+      pickup: '拾取',
     },
     residue: {
       label: '残渣',

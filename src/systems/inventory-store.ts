@@ -33,6 +33,7 @@ export class InventoryStore {
   private rules: InventoryRules = { capacity: 160, contaminantWeight: 20, weaponDefinition: () => undefined, isPassiveTool: () => false, toolSlotCount: () => 3, defenseSlotCount: () => 3 };
   private persist: ((state: InventoryState) => void) | null = null;
   private readonly listeners = new Set<() => void>();
+  private frame: { before: InventoryState; changed: boolean; locked: boolean } | null = null;
   configure(rules: Partial<InventoryRules>): void { this.rules = { ...this.rules, ...rules }; }
   setPersistence(persist: ((state: InventoryState) => void) | null): void { this.persist = persist; }
   subscribe(listener: () => void): () => void { this.listeners.add(listener); return () => this.listeners.delete(listener); }
@@ -63,7 +64,12 @@ export class InventoryStore {
     return { defenseSlots: this.state.equipment.defenseIds, sortieLoadout: this.state.equipment.toolIds };
   }
   private weight(state: InventoryState): number { return state.items.reduce((sum, item) => sum + (item.location.kind === 'carried' ? this.getWeight(item) : 0), 0); }
-  private publish(next: InventoryState): void {
+  private notify(): void {
+    for (const listener of this.listeners) {
+      try { listener(); } catch (error) { console.error('Inventory subscriber failed after commit', error); }
+    }
+  }
+  private publish(next: InventoryState, notify = true): void {
     // Keep legacy tool references live; callers retain contaminants throughout a sortie.
     for (const item of next.items) {
       const previous = this.getItem(item.id);
@@ -81,17 +87,50 @@ export class InventoryStore {
       }
     }
     this.state = next;
-    for (const listener of this.listeners) {
-      try { listener(); } catch (error) { console.error('Inventory subscriber failed after commit', error); }
-    }
+    if (notify) this.notify();
   }
   private transaction<T>(mutate: (draft: InventoryState) => InventoryResult<T>): InventoryResult<T> {
+    if (this.frame?.locked) return fail('storage-failed');
     const draft = copy(this.state);
     const result = mutate(draft);
     if (!result.ok) return result;
+    if (this.frame) {
+      // Mechanics in this frame must see the consumed item, including the
+      // legacy tool payload. Observers only see it after the world is durable.
+      this.frame.changed = true;
+      this.publish(draft, false);
+      return result;
+    }
     try { this.persist?.(copy(draft)); } catch { return fail('storage-failed'); }
     this.publish(draft);
     return result;
+  }
+  /** Explicit opt-in for a scene that saves inventory and its resulting world
+   * together. The ordinary inventory transaction path is unchanged. */
+  beginFrameTransaction(): void {
+    if (this.frame) throw new Error('Inventory frame is already open');
+    this.frame = { before: this.getState(), changed: false, locked: false };
+  }
+  hasFrameTransaction(): boolean { return this.frame !== null; }
+  hasFrameChanges(): boolean { return this.frame?.changed ?? false; }
+  /** The caller captures an immutable whole-world candidate before calling
+   * this, and retries those exact bytes on failure. Never re-run gameplay. */
+  commitFrameTransaction(persistCompleteFrame: (inventory: InventoryState) => void): boolean {
+    const frame = this.frame;
+    if (!frame) throw new Error('No inventory frame to commit');
+    frame.locked = true;
+    try { persistCompleteFrame(this.getState()); } catch { return false; }
+    this.frame = null;
+    if (frame.changed) this.notify();
+    return true;
+  }
+  /** Teardown only: the coordinator must also discard the matching uncommitted
+   * world. This does not offer a user-selectable historical checkpoint. */
+  cancelFrameTransaction(): void {
+    const frame = this.frame;
+    if (!frame) return;
+    this.frame = null;
+    this.publish(frame.before);
   }
   loadState(state: InventoryState): boolean {
     if (!state || ![1, 2].includes(state.version) || !Array.isArray(state.items) || !state.equipment || !Array.isArray(state.equipment.toolIds) || !Array.isArray(state.equipment.defenseIds)) return false;
@@ -158,14 +197,15 @@ export class InventoryStore {
     state.equipment.toolIds = toolIds.map(id => id && valid.has(id) ? id : null);
     if (!this.loadState(state)) throw new Error('Invalid legacy inventory');
   }
-  ensureStarter(): InventoryResult<string | null> {
+  ensureStarter(replacementId?: string): InventoryResult<string | null> {
     if (this.state.run?.status === 'active') return fail('run-active');
     const owned = this.state.items.find(item => item.kind === 'weapon' && item.weapon.stage === 'tool' && item.weapon.usesRemaining > 0);
     if (owned) return success(owned.id);
     const definitionId = this.rules.starterDefinitionId;
     if (!definitionId || !this.rules.weaponDefinition(definitionId)) return fail('missing-weapon');
     return this.transaction(state => {
-      const id = `WPN_${crypto.randomUUID()}`;
+      const id = replacementId ?? `WPN_${crypto.randomUUID()}`;
+      if (state.items.some(item => item.id === id)) return fail('duplicate-id');
       state.items.push({ kind: 'weapon', id, weapon: createWeaponInstance(definitionId, true, id), location: { kind: 'carried' } });
       state.equipment.weaponId = id;
       state.starterGranted = true;
@@ -354,7 +394,7 @@ export class InventoryStore {
       return success(undefined);
     });
   }
-  settleRun(runId: string, outcome: 'extract' | 'death' | 'abandon-keep', kindlingGained = 0): InventoryResult<{ returnedIds: string[] }> {
+  settleRun(runId: string, outcome: 'extract' | 'death' | 'abandon' | 'abandon-keep', kindlingGained = 0): InventoryResult<{ returnedIds: string[] }> {
     return this.transaction(state => {
       const run = state.run;
       if (!run || run.id !== runId) return fail('no-active-run');
@@ -363,7 +403,7 @@ export class InventoryStore {
       state.items = state.items.filter(item => {
         if (item.location.kind === 'ground') return false;
         if (item.location.kind !== 'carried') return true;
-        if (outcome === 'death' || (outcome === 'abandon-keep' && !run.carriedOutIds.includes(item.id))) { clearReferences(state, item.id); return false; }
+        if (outcome === 'death' || outcome === 'abandon' || (outcome === 'abandon-keep' && !run.carriedOutIds.includes(item.id))) { clearReferences(state, item.id); return false; }
         if (!run.carriedOutIds.includes(item.id)) returnedIds.push(item.id);
         if (state.equipment.weaponId !== item.id && !state.equipment.toolIds.includes(item.id)) item.location = { kind: 'stash' };
         return true;

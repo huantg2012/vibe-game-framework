@@ -8,17 +8,29 @@ import type { ContaminantType } from '@/types/game-types';
 
 interface PileModel { root:THREE.Group; pieces:THREE.Mesh[]; collectedAt:number; wasCollected:boolean; material:THREE.MeshStandardMaterial }
 interface ItemModel { root: THREE.Group; mesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>; signature: string; definitionId: string }
+export interface StageNativePile {
+  readonly root: THREE.Group;
+  update(pile: RiftPresentationView['piles'][number], elapsedMs: number): void;
+}
+export type StagePileFactory = (pile: RiftPresentationView['piles'][number]) => StageNativePile;
 
 /** Opaque search piles disclose nothing until the production inventory reveals an item. */
 export class StageLoot {
   readonly group=new THREE.Group();
   private readonly piles=new Map<string,PileModel>();
   private readonly items=new Map<string,ItemModel>();
+  private readonly nativePiles=new Map<string,StageNativePile>();
   constructor(private readonly groundHeightAt:(x:number,y:number)=>number=()=>0,
-    private readonly isFloor:(x:number,y:number)=>boolean=()=>true){}
+    private readonly isFloor:(x:number,y:number)=>boolean=()=>true,
+    private readonly createPile?: StagePileFactory){}
 
   update(frame:RiftPresentationView,elapsedMs:number):void{
     for(const pile of frame.piles){
+      if(this.createPile){
+        let native=this.nativePiles.get(pile.id);
+        if(!native){native=this.createPile(pile);this.nativePiles.set(pile.id,native);this.group.add(native.root);}
+        native.update(pile,elapsedMs);continue;
+      }
       let model=this.piles.get(pile.id);
       if(!model){
         const root=new THREE.Group(),material=roughMaterial(0,surfaceTexture(0x777469,pile.id.length*17,'stone'));
@@ -100,6 +112,7 @@ export class StageLoot {
 
   snapshot():Record<string,unknown>{return {
     piles:[...this.piles].map(([id,pile])=>({id,visible:pile.root.visible,position:pile.root.position.toArray()})),
+    nativePiles:[...this.nativePiles].map(([id,pile])=>({id,visible:pile.root.visible,position:pile.root.position.toArray()})),
     items:[...this.items].map(([id,item])=>({id,definitionId:item.definitionId,visible:item.root.visible,position:item.root.position.toArray()})),
   };}
 }

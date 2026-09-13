@@ -15,11 +15,13 @@ export interface SpatialFixtureDefinition {
   readonly id: string; readonly cols: number; readonly rows: number;
   readonly floors: string; readonly walls: string; readonly voids?: string;
   readonly spawn: string; readonly extract: string;
+  readonly fragmentTypeId?: string; readonly recipeId?: string;
 }
 export interface SpatialFixturePlacement {
   readonly id: string; readonly kind: string; readonly col: number; readonly row: number; readonly tier: string;
   readonly substrate: string; readonly coverage: string; readonly motion: string; readonly sense: string;
   readonly rhythm: string; readonly contact: string; readonly facing: number; readonly patrol: string;
+  readonly lootPoolId?: string; readonly allowWeapon?: boolean;
 }
 function integers(value: string, count: number): number[] {
   const result = value.split(':').map(Number);
@@ -71,7 +73,9 @@ export function createSpatialStudyLayout(seed: number, definition: SpatialFixtur
       const tier = row.tier as KindlingTier;
       if (!['safe','contested','deep'].includes(tier)) throw new Error('Invalid spatial loot tier');
       const node = { id, position: world(point), tier };
-      if (row.kind === 'kindling') kindlingNodes.push(node); else contaminantNodes.push(node);
+      if (row.kind === 'kindling') kindlingNodes.push({ ...node, ...(row.allowWeapon === undefined ? {} : { allowWeapon: row.allowWeapon }) });
+      else if (row.kind === 'contaminant') contaminantNodes.push({ ...node, ...(row.lootPoolId ? { lootPoolId: row.lootPoolId } : {}) });
+      else throw new Error(`Unknown spatial placement kind: ${row.kind}`);
       continue;
     }
     const form: ContaminationForm = { substrate: row.substrate, coverage: row.coverage as ContaminationForm['coverage'],
@@ -94,8 +98,9 @@ export function createSpatialStudyLayout(seed: number, definition: SpatialFixtur
   const outline = { seed, attempt: 0, cols, rows, tileSize: TILE, land,
     tileMap: { cols, rows, tileSize: TILE, tiles: outlineTiles }, metrics: measureOutline(land, cols, rows) };
   const wallCount = walls.reduce((sum, value) => sum + value, 0);
-  return { seed, recipeId: `spatial-study-${definition.id}`, fragmentTypeId: 'frag-library', contaminationAge: 'new', ruinSeverity: 'broken',
-    tileMap, ruins: { seed, attempt: 0, fragmentTypeId: 'frag-library', outline, walls, features, tileMap,
+  const fragmentTypeId = definition.fragmentTypeId ?? 'frag-library';
+  return { seed, recipeId: definition.recipeId ?? `spatial-study-${definition.id}`, fragmentTypeId, contaminationAge: 'new', ruinSeverity: 'broken',
+    tileMap, ruins: { seed, attempt: 0, fragmentTypeId, outline, walls, features, tileMap,
       metrics: { wallCount, wallRatio: wallCount / outline.metrics.landCount, featureCount: features.length,
         leftoverConnected: reachable.size === outline.metrics.landCount - wallCount }, contaminationAge: 'new', ruinSeverity: 'broken' },
     walkableMask: grid, spawnPoint: world(spawn),

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>悬海 · 完整出击 · 那天之后</title>
+  <style>
+    * { box-sizing: border-box; } body { margin: 0; background: #111519; color: #d4dbdf; font: 14px/1.6 system-ui, sans-serif; }
+    #sea-study { display: flex; height: 100vh; } #sea-controls { width: 280px; flex: 0 0 280px; padding: 18px; overflow-y: auto; border-right: 1px solid #3b444b; }
+    #sea-controls h1 { font-size: 20px; margin: 0 0 12px; } #sea-controls p { color: #aebbc3; } #sea-controls a { color: #becfcf; } #sea-controls label { display: block; margin: 10px 0; }
+    #sea-controls :is(select, input, button) { font: inherit; color: inherit; background: #202b33; border: 1px solid #53636e; padding: 7px; border-radius: 3px; }
+    #sea-controls :is(select, input) { display: block; width: 100%; } #sea-controls button { cursor: pointer; margin: 4px 0; width: 100%; } #sea-controls button:disabled { opacity: .45; cursor: default; }
+    #game-container { position: relative; flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; background: #070a0b; overflow: hidden; outline: none; }
+    #game-container canvas { display: block; } #sea-controls #status { color: #d8dfca; } #sea-controls #error { color: #efad9d; white-space: pre-wrap; }
+    #sea-controls pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 ui-monospace, monospace; }
+  </style>
+</head><body><main id="sea-study">
+  <aside id="sea-controls">
+    <h1>悬海 · 完整出击</h1>
+    <p><a href="/world-study.html">世界方向图</a> · <a href="/build-lab.html">构筑对照场</a></p>
+    <p>两种海床路线，同一片悬海。使用正式移动、交战、搜取与撤离；本页训练物品和记录隔离，不读写长期存档。</p>
+    <label>海床编排<select id="scene"><option value="sea-open-channel">开阔潮沟</option><option value="sea-folded-ridge">折返岸脊</option></select></label>
+    <label>出击配置<select id="loadout"></select></label>
+    <label>种子<input id="seed" type="number" min="0" max="4294967295" step="1" value="7" /></label>
+    <p id="description"></p>
+    <button id="start" disabled>开始 / 中止当前并重开</button>
+    <button id="abort" disabled>中止本次</button><button id="pause" disabled>暂停 / 继续（Esc）</button>
+    <button id="download">下载本页全部记录 JSON</button>
+    <p id="route-description"></p>
+    <p>水压会合拢壳片，把落水挤向岸道。敲偏薄唇后余水需要退尽，上方落水仍然危险；等待和绕岸也能通行。天井可望，不可跨越。</p>
+    <p>WASD 移动 / 转向 · 空格挥击<br>Q / F 使用已装配物件<br>E 按住翻找、在起点按 E 撤离<br>Tab 本趟拾获（世界继续）<br>结束后 R 返回本页配置</p>
+    <p id="status">载入正式游戏资源…</p><details><summary>本次观测</summary><pre id="state"></pre></details><pre id="error" role="alert"></pre>
+  </aside><div id="game-container" tabindex="0"></div>
+</main><script type="module" src="/src/dev/suspended-sea.ts"></script></body></html>

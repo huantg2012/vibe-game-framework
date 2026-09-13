@@ -19,7 +19,9 @@ import { beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/
 import { saveManager } from '@/managers/save-manager';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
-type MenuMode = 'root' | 'confirmOverwrite';
+type MenuMode = 'root' | 'confirmOverwrite' | 'confirmAbandon';
+export interface PauseMenuOptions { onAbandon?: () => void }
+let recoveryOptions: PauseMenuOptions | undefined;
 
 interface MenuItem {
   label: string;
@@ -88,6 +90,18 @@ function onLoadSave(): void {
 }
 
 function buildRootItems(): void {
+  if (recoveryOptions?.onAbandon) {
+    items = [
+      { label: '合上，继续本趟', action: () => pauseMenu.close() },
+      { label: '放弃本趟', action: () => {
+        mode = 'confirmAbandon';
+        items = [{ label: '保留本趟，返回', action: () => { mode = 'root'; buildRootItems(); paint(); } },
+          { label: '确认放弃，遗失随身物', action: () => { const action = recoveryOptions?.onAbandon; pauseMenu.close(); action?.(); } }];
+        selectedIndex = 0; paint();
+      } },
+    ];
+    selectedIndex = 0; return;
+  }
   items = [{ label: t('menu.newSave'), action: onNewSave }];
   if (hasReadableSave()) {
     items.push({ label: t('menu.continue'), action: onLoadSave });
@@ -111,7 +125,7 @@ function paint(): void {
     ? `<div class="hint" style="text-align:left;margin:0 0 12px;">${
         t('menu.overwriteWarning', { tideNumber: saveManager.peekTideNumber() ?? 1 })
       }</div>`
-    : '';
+    : mode === 'confirmAbandon' ? '<div class="hint" style="text-align:left;margin:0 0 12px;">带入装备与本趟拾获全部遗失，不给予携回奖励。返回净化点后结算一次既有冲击，基地库存保留。</div>' : '';
 
   const rows = items.map((item, i) => {
     const selected = i === selectedIndex;
@@ -120,7 +134,7 @@ function paint(): void {
 
   panel.innerHTML =
     `<div class="panel-title">${t('menu.pauseTitle')}</div>` +
-    `<div class="readout-note">${mode === 'root' ? '当前行动已暂停。' : '此操作将替换已保存的纪录。'}</div>` +
+    `<div class="readout-note">${mode === 'confirmAbandon' ? '只有明确放弃才结损。' : mode === 'root' ? (recoveryOptions ? '当前行动已暂停。关闭或刷新后，继续这一趟。' : '当前行动已暂停。') : '此操作将替换已保存的纪录。'}</div>` +
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
     buildKeyHintBar() +
@@ -147,7 +161,7 @@ function buildKeyHintBar(): string {
   const selectedLabel = items[selectedIndex]?.label ?? '';
   const resumeLabel = t('menu.resume');
 
-  if (mode === 'confirmOverwrite') {
+  if (mode === 'confirmOverwrite' || mode === 'confirmAbandon') {
     return `<div class="key-hint-bar">
     <span><span class="key">↑↓</span> 选中</span>
     <span><span class="key">Enter</span> ${selectedLabel}</span>
@@ -176,7 +190,7 @@ function onKey(e: KeyboardEvent): void {
     e.preventDefault();
     e.stopPropagation();
     if (performance.now() < ignoreEscUntil) return;
-    if (mode === 'confirmOverwrite') {
+    if (mode === 'confirmOverwrite' || mode === 'confirmAbandon') {
       mode = 'root';
       buildRootItems();
       paint();
@@ -216,11 +230,12 @@ export const pauseMenu = {
     return panel !== null;
   },
 
-  open(scene: Phaser.Scene): void {
+  open(scene: Phaser.Scene, options?: PauseMenuOptions): void {
     if (panel) return;
     if (performance.now() < closedAt + 200) return;
     injectPanelStyles();
     host = scene;
+    recoveryOptions = options;
     mode = 'root';
     ignoreEscUntil = performance.now() + 200;
     pauseHost();
@@ -256,13 +271,14 @@ export const pauseMenu = {
     destroyDom();
     document.removeEventListener('keydown', onKey, true);
     resumeHost();
-    host = null;
+    host = null; recoveryOptions = undefined;
     closedAt = performance.now();
     ignoreEscUntil = closedAt + 200;
   },
 
   /** Tear down without resuming the host scene (scene is stopping). */
   discard(): void {
+    recoveryOptions = undefined;
     if (!panel) {
       host = null;
       return;

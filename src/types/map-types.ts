@@ -79,6 +79,8 @@ export interface KindlingNodeDef {
   readonly position: Vector2;
   /** Omit to use the tier default from `LOOT.VALUE_*`. */
   readonly value?: number;
+  /** Explicit source eligibility; false also excludes the first-discovery guarantee. */
+  readonly allowWeapon?: boolean;
 }
 
 export interface ExtractionPointDef {
@@ -112,6 +114,8 @@ export interface ContaminantNodeDef {
   readonly id: string;
   /** Static route exposure from placement, never the player current chaos. */
   readonly tier?: KindlingTier;
+  /** CSV source pool. Omitted on legacy maps to retain the full active-family pool. */
+  readonly lootPoolId?: string;
   /** World position (px), tile centre. */
   readonly position: Vector2;
 }

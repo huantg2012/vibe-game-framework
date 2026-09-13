@@ -1,0 +1,1501 @@
+{
+  "schemaVersion": 1,
+  "status": "completed-with-retained-limitations",
+  "test": "normal-five-trip-base-chain-and-real-death",
+  "method": "One empty Chrome context, formal initial white crowbar and original base/rift scenes; only logged keyboard/mouse. Read-only probes from the existing bound game. No grants, fake impact, teleport, HP/state/time override. Pauses are the actual page control.",
+  "sourceRoot": "/private/tmp/coh-i22-journey-review",
+  "sourceHead": "2ee0b2b98c50b52dc2e763618264450c8e6865b0",
+  "hashedFiles": 430,
+  "sourceChanged": [],
+  "saveSentinelUnchanged": true,
+  "trainingInventory": false,
+  "temporaryMemorySession": true,
+  "supplyValidation": false,
+  "refreshRecoveryValidation": false,
+  "gameErrors": [],
+  "resourceFailures": [],
+  "commands": 138,
+  "inputs": 2897,
+  "checkpoints": 35,
+  "bodyTrace": {
+    "samples": 5339,
+    "illegal": 0,
+    "sampleErrors": [],
+    "lureSamples": 0
+  },
+  "trips": [
+    {
+      "number": 1,
+      "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987",
+      "seed": 19,
+      "scene": "sea-open-channel",
+      "variants": {
+        "listener-deposit": 1
+      },
+      "outcome": "extract",
+      "elapsedMs": 102994.20999999941,
+      "hp": [
+        100,
+        58
+      ],
+      "searchedPiles": 7,
+      "kindlingGathered": 8,
+      "kindlingAwarded": 8,
+      "returnedIds": [
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+        "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+        "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a",
+        "WPN_d64a518e-810a-4192-8843-459097d232a6",
+        "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde"
+      ],
+      "revealedIds": {
+        "SS_retreat-deposit": [
+          "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a"
+        ],
+        "SS_foreign-remnant": [
+          "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a"
+        ],
+        "SS_far-deposit": [
+          "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a"
+        ],
+        "SS_foreign-kindling": [
+          "WPN_d64a518e-810a-4192-8843-459097d232a6"
+        ],
+        "SS_return-remnant": [
+          "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde"
+        ],
+        "SS_far-kindling": [
+          "WPN_bbe886fc-14f1-44f7-a5c6-7c198a744368"
+        ]
+      },
+      "metrics": {
+        "distancePx": 5021.883129832318,
+        "stationaryMs": 30613.719999999965,
+        "alertMs": 6399.75999999978,
+        "engagedMs": 3183.2199999999684,
+        "peakChaos": 98.66422649999124,
+        "consumedUses": {
+          "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": 7
+        },
+        "discardedItems": [],
+        "sampleLimitReached": false
+      },
+      "broughtItems": [
+        {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 60,
+          "source": null
+        }
+      ],
+      "sameIdStateAfterBaseImpact": {
+        "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 53,
+          "source": null
+        },
+        "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "WPN_d64a518e-810a-4192-8843-459097d232a6": {
+          "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+          "kind": "weapon",
+          "definition": "crowbar_good_standard",
+          "quality": null,
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-kindling",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a": {
+          "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+          "kind": "contaminant",
+          "definition": "siphon",
+          "quality": "fine",
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_retreat-deposit",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      },
+      "baseAfterImpactBeforeRepairs": {
+        "cycle": 1,
+        "reserve": 8,
+        "modules": {
+          "CORE": 65,
+          "STORAGE": 50,
+          "PURIFIER": 65
+        },
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 1,
+          "currentIntensity": 1.2
+        }
+      },
+      "ledgerSequences": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "number": 2,
+      "runId": "e956300d-059f-4a4a-8676-c840b556fa30",
+      "seed": 7,
+      "scene": "sea-open-channel",
+      "variants": {
+        "listener-deposit": 1
+      },
+      "outcome": "extract",
+      "elapsedMs": 78880.20999999781,
+      "hp": [
+        100,
+        70
+      ],
+      "searchedPiles": 5,
+      "kindlingGathered": 8,
+      "kindlingAwarded": 8,
+      "returnedIds": [
+        "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f",
+        "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53"
+      ],
+      "revealedIds": {
+        "SS_retreat-deposit": [
+          "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f"
+        ],
+        "SS_foreign-remnant": [
+          "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53"
+        ]
+      },
+      "metrics": {
+        "distancePx": 4653.720642417721,
+        "stationaryMs": 15449.419999999069,
+        "alertMs": 7299.649999999416,
+        "engagedMs": 2899.8799999997937,
+        "peakChaos": 90.71702445500372,
+        "consumedUses": {
+          "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": 7
+        },
+        "discardedItems": [],
+        "sampleLimitReached": false
+      },
+      "broughtItems": [
+        {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 53,
+          "source": null
+        }
+      ],
+      "sameIdStateAfterBaseImpact": {
+        "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 46,
+          "source": null
+        },
+        "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "defense",
+            "slot": 0
+          },
+          "stage": "defense",
+          "impactCharges": 2,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "WPN_d64a518e-810a-4192-8843-459097d232a6": {
+          "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+          "kind": "weapon",
+          "definition": "crowbar_good_standard",
+          "quality": null,
+          "location": {
+            "kind": "defense",
+            "slot": 1
+          },
+          "stage": "defense",
+          "impactCharges": 1,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-kindling",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a": {
+          "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+          "kind": "contaminant",
+          "definition": "siphon",
+          "quality": "fine",
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_retreat-deposit",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      },
+      "baseAfterImpactBeforeRepairs": {
+        "cycle": 2,
+        "reserve": 8,
+        "modules": {
+          "CORE": 63,
+          "STORAGE": 60,
+          "PURIFIER": 60
+        },
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 2,
+          "currentIntensity": 1.4
+        }
+      },
+      "ledgerSequences": [
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "number": 3,
+      "runId": "91d974a7-6f50-4649-a11a-3756f76a84c1",
+      "seed": 41,
+      "scene": "sea-open-channel",
+      "variants": {
+        "listener-deposit": 0
+      },
+      "outcome": "extract",
+      "elapsedMs": 71047.2200000016,
+      "hp": [
+        100,
+        70
+      ],
+      "searchedPiles": 5,
+      "kindlingGathered": 8,
+      "kindlingAwarded": 8,
+      "returnedIds": [
+        "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3",
+        "CTM_ae19f250-f813-4923-94db-c773b7c9aca9",
+        "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe"
+      ],
+      "revealedIds": {
+        "SS_retreat-deposit": [
+          "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3"
+        ],
+        "SS_foreign-remnant": [
+          "CTM_ae19f250-f813-4923-94db-c773b7c9aca9"
+        ],
+        "SS_foreign-kindling": [
+          "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe"
+        ]
+      },
+      "metrics": {
+        "distancePx": 4138.431545288413,
+        "stationaryMs": 14449.479999999925,
+        "alertMs": 7116.400000000016,
+        "engagedMs": 2433.2599999999766,
+        "peakChaos": 84.9737805000008,
+        "consumedUses": {
+          "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": 6
+        },
+        "discardedItems": [],
+        "sampleLimitReached": false
+      },
+      "broughtItems": [
+        {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 46,
+          "source": null
+        }
+      ],
+      "sameIdStateAfterBaseImpact": {
+        "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 40,
+          "source": null
+        },
+        "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "tool",
+          "impactCharges": 4,
+          "usesRemaining": 6,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "WPN_d64a518e-810a-4192-8843-459097d232a6": {
+          "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+          "kind": "weapon",
+          "definition": "crowbar_good_standard",
+          "quality": null,
+          "location": {
+            "kind": "defense",
+            "slot": 1
+          },
+          "stage": "defense",
+          "impactCharges": 2,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-kindling",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a": {
+          "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+          "kind": "contaminant",
+          "definition": "siphon",
+          "quality": "fine",
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_retreat-deposit",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      },
+      "baseAfterImpactBeforeRepairs": {
+        "cycle": 3,
+        "reserve": 8,
+        "modules": {
+          "CORE": 73,
+          "STORAGE": 70,
+          "PURIFIER": 38
+        },
+        "tide": {
+          "tideNumber": 1,
+          "phase": "crest",
+          "cycleInPhase": 0,
+          "currentIntensity": 1.6
+        }
+      },
+      "ledgerSequences": [
+        12,
+        13,
+        14
+      ]
+    },
+    {
+      "number": 4,
+      "runId": "2c54988a-eca5-4730-a6e5-68c81e6f6902",
+      "seed": 19,
+      "scene": "sea-open-channel",
+      "variants": {
+        "listener-deposit": 1
+      },
+      "outcome": "extract",
+      "elapsedMs": 104262.43999999999,
+      "hp": [
+        100,
+        40
+      ],
+      "searchedPiles": 3,
+      "kindlingGathered": 8,
+      "kindlingAwarded": 8,
+      "returnedIds": [
+        "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c",
+        "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe"
+      ],
+      "revealedIds": {
+        "SS_far-kindling": [
+          "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c"
+        ],
+        "SS_foreign-kindling": [
+          "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe"
+        ]
+      },
+      "metrics": {
+        "distancePx": 6201.356000191967,
+        "stationaryMs": 14066.150000000654,
+        "alertMs": 43264.96000000064,
+        "engagedMs": 4999.810000000009,
+        "peakChaos": 115.92608641500254,
+        "consumedUses": {
+          "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": 1,
+          "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": 7
+        },
+        "discardedItems": [],
+        "sampleLimitReached": false
+      },
+      "broughtItems": [
+        {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 40,
+          "source": null
+        },
+        {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 4,
+          "usesRemaining": 6,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      ],
+      "sameIdStateAfterBaseImpact": {
+        "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 33,
+          "source": null
+        },
+        "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 4,
+          "usesRemaining": 5,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "WPN_d64a518e-810a-4192-8843-459097d232a6": {
+          "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+          "kind": "weapon",
+          "definition": "crowbar_good_standard",
+          "quality": null,
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "tool",
+          "impactCharges": 5,
+          "usesRemaining": 75,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-kindling",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a": {
+          "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+          "kind": "contaminant",
+          "definition": "siphon",
+          "quality": "fine",
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_retreat-deposit",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      },
+      "baseAfterImpactBeforeRepairs": {
+        "cycle": 4,
+        "reserve": 8,
+        "modules": {
+          "CORE": 64,
+          "STORAGE": 39,
+          "PURIFIER": 62
+        },
+        "tide": {
+          "tideNumber": 1,
+          "phase": "ebb",
+          "cycleInPhase": 0,
+          "currentIntensity": 1.6
+        }
+      },
+      "ledgerSequences": [
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "number": 5,
+      "runId": "705945a4-8d47-4023-b322-31709beb3cd2",
+      "seed": 7,
+      "scene": "sea-open-channel",
+      "variants": {
+        "listener-deposit": 1
+      },
+      "outcome": "extract",
+      "elapsedMs": 78580.19000000377,
+      "hp": [
+        100,
+        85
+      ],
+      "searchedPiles": 5,
+      "kindlingGathered": 7,
+      "kindlingAwarded": 7,
+      "returnedIds": [
+        "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943",
+        "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3"
+      ],
+      "revealedIds": {
+        "SS_retreat-deposit": [
+          "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943"
+        ],
+        "SS_foreign-remnant": [
+          "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3"
+        ]
+      },
+      "metrics": {
+        "distancePx": 4608.16207862688,
+        "stationaryMs": 14574.46000000104,
+        "alertMs": 2199.890000000334,
+        "engagedMs": 1016.6200000001627,
+        "peakChaos": 68.41130117840106,
+        "consumedUses": {
+          "WPN_d64a518e-810a-4192-8843-459097d232a6": 3
+        },
+        "discardedItems": [],
+        "sampleLimitReached": false
+      },
+      "broughtItems": [
+        {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 4,
+          "usesRemaining": 5,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        {
+          "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+          "kind": "weapon",
+          "definition": "crowbar_good_standard",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 5,
+          "usesRemaining": 75,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-kindling",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      ],
+      "sameIdStateAfterBaseImpact": {
+        "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 33,
+          "source": null
+        },
+        "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 4,
+          "usesRemaining": 5,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "WPN_d64a518e-810a-4192-8843-459097d232a6": {
+          "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+          "kind": "weapon",
+          "definition": "crowbar_good_standard",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 5,
+          "usesRemaining": 72,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-kindling",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a": {
+          "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+          "kind": "contaminant",
+          "definition": "siphon",
+          "quality": "fine",
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_retreat-deposit",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      },
+      "baseAfterImpactBeforeRepairs": {
+        "cycle": 5,
+        "reserve": 15,
+        "modules": {
+          "CORE": 55,
+          "STORAGE": 8,
+          "PURIFIER": 54
+        },
+        "tide": {
+          "tideNumber": 1,
+          "phase": "ebb",
+          "cycleInPhase": 1,
+          "currentIntensity": 1.4
+        }
+      },
+      "ledgerSequences": [
+        20,
+        21,
+        22
+      ]
+    },
+    {
+      "number": 6,
+      "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+      "seed": 19,
+      "scene": "sea-open-channel",
+      "variants": {
+        "listener-deposit": 1
+      },
+      "outcome": "death",
+      "elapsedMs": 48898.020000001976,
+      "hp": [
+        100,
+        0
+      ],
+      "searchedPiles": 2,
+      "kindlingGathered": 1,
+      "kindlingAwarded": 0,
+      "returnedIds": [],
+      "revealedIds": {
+        "SS_retreat-deposit": [
+          "CTM_de726c97-0aee-4417-9c40-198198e1c786"
+        ]
+      },
+      "metrics": {
+        "distancePx": 1758.373958635385,
+        "stationaryMs": 25082.300000002186,
+        "alertMs": 0,
+        "engagedMs": 0,
+        "peakChaos": 41.562692662499195,
+        "consumedUses": {
+          "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": 1
+        },
+        "discardedItems": [],
+        "sampleLimitReached": false
+      },
+      "broughtItems": [
+        {
+          "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+          "kind": "contaminant",
+          "definition": "kindle",
+          "quality": "good",
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 4,
+          "usesRemaining": 5,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-remnant",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        },
+        {
+          "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+          "kind": "weapon",
+          "definition": "crowbar_good_standard",
+          "quality": null,
+          "location": {
+            "kind": "carried"
+          },
+          "stage": "tool",
+          "impactCharges": 5,
+          "usesRemaining": 72,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_foreign-kindling",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      ],
+      "sameIdStateAfterBaseImpact": {
+        "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c": {
+          "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+          "kind": "weapon",
+          "definition": "crowbar_plain",
+          "quality": null,
+          "location": {
+            "kind": "stash"
+          },
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 33,
+          "source": null
+        },
+        "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a": null,
+        "WPN_d64a518e-810a-4192-8843-459097d232a6": null,
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a": {
+          "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+          "kind": "contaminant",
+          "definition": "siphon",
+          "quality": "fine",
+          "location": {
+            "kind": "defense",
+            "slot": 0
+          },
+          "stage": "defense",
+          "impactCharges": 1,
+          "usesRemaining": 0,
+          "source": {
+            "fragmentId": "suspended-sea",
+            "nodeId": "SS_retreat-deposit",
+            "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+          }
+        }
+      },
+      "baseAfterImpactBeforeRepairs": {
+        "cycle": 6,
+        "reserve": 0,
+        "modules": {
+          "CORE": 68,
+          "STORAGE": 25,
+          "PURIFIER": 48
+        },
+        "tide": {
+          "tideNumber": 2,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1.2
+        }
+      },
+      "ledgerSequences": [
+        24,
+        25,
+        26
+      ]
+    }
+  ],
+  "death": {
+    "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+    "elapsedMs": 48898.020000001976,
+    "waterHits": [
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 1,
+        "elapsedMs": 28182.189999999744,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 920.437878749225,
+          "y": 462.20548335586716
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 2,
+        "elapsedMs": 28998.83999999972,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 876.3724801414397,
+          "y": 475.2282787303114
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 3,
+        "elapsedMs": 29815.409999999698,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 891.3743695656575,
+          "y": 478.63271967260613
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 4,
+        "elapsedMs": 37581.80000000038,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 891.3743695656575,
+          "y": 478.63271967260613
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 5,
+        "elapsedMs": 38398.410000000506,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 891.3743695656575,
+          "y": 478.63271967260613
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 6,
+        "elapsedMs": 39215.040000000605,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 891.3743695656575,
+          "y": 478.63271967260613
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 7,
+        "elapsedMs": 40031.70000000073,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 891.3743695656575,
+          "y": 478.63271967260613
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 8,
+        "elapsedMs": 48081.380000001875,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 891.3743695656575,
+          "y": 478.63271967260613
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+        "sequence": 9,
+        "elapsedMs": 48898.020000001976,
+        "kind": "player-hit",
+        "id": "player",
+        "source": "environment:folding-shell",
+        "amount": 12,
+        "position": {
+          "x": 891.3743695656575,
+          "y": 478.63271967260613
+        },
+        "direction": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    ],
+    "lostIds": [
+      "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+      "CTM_de726c97-0aee-4417-9c40-198198e1c786",
+      "WPN_d64a518e-810a-4192-8843-459097d232a6"
+    ],
+    "stashUnchangedIds": [
+      "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+      "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a",
+      "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde",
+      "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f",
+      "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53",
+      "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3",
+      "CTM_ae19f250-f813-4923-94db-c773b7c9aca9",
+      "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe",
+      "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c",
+      "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe",
+      "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943",
+      "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3"
+    ],
+    "newItemsGrantedAfterDeath": [],
+    "keptOfferingBefore": {
+      "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+      "kind": "contaminant",
+      "definition": "siphon",
+      "quality": "fine",
+      "location": {
+        "kind": "defense",
+        "slot": 0
+      },
+      "stage": "defense",
+      "impactCharges": 0,
+      "usesRemaining": 0,
+      "source": {
+        "fragmentId": "suspended-sea",
+        "nodeId": "SS_retreat-deposit",
+        "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+      }
+    },
+    "keptOfferingAfterImpact": {
+      "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+      "kind": "contaminant",
+      "definition": "siphon",
+      "quality": "fine",
+      "location": {
+        "kind": "defense",
+        "slot": 0
+      },
+      "stage": "defense",
+      "impactCharges": 1,
+      "usesRemaining": 0,
+      "source": {
+        "fragmentId": "suspended-sea",
+        "nodeId": "SS_retreat-deposit",
+        "runId": "37f37b82-549e-45c3-8a01-0ee966e7e987"
+      }
+    },
+    "baseModulesAfterImpact": {
+      "CORE": 68,
+      "STORAGE": 25,
+      "PURIFIER": 48
+    },
+    "baseSettled": true,
+    "kindlingReward": 0,
+    "equipmentAfter": {
+      "weaponId": null,
+      "toolIds": [
+        null
+      ],
+      "defenseIds": [
+        "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+        null
+      ]
+    }
+  },
+  "actualCommittedSave": {
+    "file": "actual-base-save-after-repairs.json",
+    "bytes": 7089,
+    "sha256": "2cb41cafa4be641fde2a17d932b13f1ee527aedfef4da29240751e8db13edf30",
+    "proof": "actual-base-save-after-repairs-export.json",
+    "method": "Observed original BuildLabMemoryStorage.getItem return during one real saveManager.peekRecordSummary(); wrapper returned original value unchanged and was immediately restored in finally. No setItem or game-state mutations.",
+    "probeSha256": "4be7dc30dab152753b83692d12eb99490683357c3dbdda2afb3c832eb7909a8e"
+  },
+  "retainedQaCommandFailures": [
+    {
+      "command": {
+        "op": "extract"
+      },
+      "error": "AssertionError [ERR_ASSERTION]: No legal dry path",
+      "at": 1789230891795
+    },
+    {
+      "command": {
+        "op": "return"
+      },
+      "error": "Error: Timeout real return",
+      "at": 1789230904155
+    },
+    {
+      "command": {
+        "op": "move",
+        "points": [
+          {
+            "x": 336,
+            "y": 216
+          }
+        ]
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Blocked x 318.9385063277863 → 336",
+      "at": 1789231970521
+    }
+  ],
+  "endedEnemyMovementObservation": [
+    {
+      "runId": "705945a4-8d47-4023-b322-31709beb3cd2",
+      "samples": 48,
+      "elapsedValues": [
+        78580.19000000377
+      ],
+      "distinctEnemyPositions": {
+        "SS_listener": 48
+      },
+      "first": {
+        "sequence": 4770,
+        "enemies": [
+          {
+            "id": "SS_listener",
+            "substrate": "insect_remnant",
+            "coverage": "infiltrate",
+            "position": {
+              "x": 1170,
+              "y": 272
+            },
+            "velocity": {
+              "x": -29.999999999999996,
+              "y": 0
+            },
+            "facing": 3.141592653589793,
+            "hp": 75,
+            "visibility": 0,
+            "state": "patrol",
+            "activity": {
+              "phase": "active",
+              "progress": 1
+            },
+            "attack": {
+              "phase": "idle",
+              "progress": 0
+            },
+            "restraint": {
+              "pressure": false,
+              "snared": false
+            },
+            "motionSuppressed": false,
+            "targetingLure": false
+          }
+        ]
+      },
+      "last": {
+        "sequence": 5050,
+        "enemies": [
+          {
+            "id": "SS_listener",
+            "substrate": "insect_remnant",
+            "coverage": "infiltrate",
+            "position": {
+              "x": 1030,
+              "y": 272
+            },
+            "velocity": {
+              "x": -29.999999999999996,
+              "y": 0
+            },
+            "facing": 3.141592653589793,
+            "hp": 75,
+            "visibility": 0,
+            "state": "patrol",
+            "activity": {
+              "phase": "active",
+              "progress": 1
+            },
+            "attack": {
+              "phase": "idle",
+              "progress": 0
+            },
+            "restraint": {
+              "pressure": false,
+              "snared": false
+            },
+            "motionSuppressed": false,
+            "targetingLure": false
+          }
+        ]
+      }
+    },
+    {
+      "runId": "0acd7630-5519-4d3e-b8e2-36215f042b07",
+      "samples": 254,
+      "elapsedValues": [
+        48898.020000001976
+      ],
+      "distinctEnemyPositions": {
+        "SS_listener": 208,
+        "SS_watcher": 143
+      },
+      "first": {
+        "sequence": 3000,
+        "enemies": [
+          {
+            "id": "SS_listener",
+            "substrate": "insect_remnant",
+            "coverage": "infiltrate",
+            "position": {
+              "x": 1236,
+              "y": 272
+            },
+            "velocity": {
+              "x": 29.999999999999996,
+              "y": 0
+            },
+            "facing": 0,
+            "hp": 75,
+            "visibility": 0,
+            "state": "patrol",
+            "activity": {
+              "phase": "active",
+              "progress": 1
+            },
+            "attack": {
+              "phase": "idle",
+              "progress": 0
+            },
+            "restraint": {
+              "pressure": false,
+              "snared": false
+            },
+            "motionSuppressed": false,
+            "targetingLure": false
+          },
+          {
+            "id": "SS_watcher",
+            "substrate": "insect_remnant",
+            "coverage": "infiltrate",
+            "position": {
+              "x": 1584,
+              "y": 808
+            },
+            "velocity": {
+              "x": 0,
+              "y": 29.999999999999996
+            },
+            "facing": 1.5707963267948966,
+            "hp": 75,
+            "visibility": 0,
+            "state": "patrol",
+            "activity": {
+              "phase": "active",
+              "progress": 1
+            },
+            "attack": {
+              "phase": "idle",
+              "progress": 0
+            },
+            "restraint": {
+              "pressure": false,
+              "snared": false
+            },
+            "motionSuppressed": false,
+            "targetingLure": false
+          }
+        ]
+      },
+      "last": {
+        "sequence": 4510,
+        "enemies": [
+          {
+            "id": "SS_listener",
+            "substrate": "insect_remnant",
+            "coverage": "infiltrate",
+            "position": {
+              "x": 1288.5,
+              "y": 272
+            },
+            "velocity": {
+              "x": 0,
+              "y": 0
+            },
+            "facing": 0,
+            "hp": 75,
+            "visibility": 0,
+            "state": "patrol",
+            "activity": {
+              "phase": "active",
+              "progress": 1
+            },
+            "attack": {
+              "phase": "idle",
+              "progress": 0
+            },
+            "restraint": {
+              "pressure": false,
+              "snared": false
+            },
+            "motionSuppressed": false,
+            "targetingLure": false
+          },
+          {
+            "id": "SS_watcher",
+            "substrate": "insect_remnant",
+            "coverage": "infiltrate",
+            "position": {
+              "x": 1584,
+              "y": 771
+            },
+            "velocity": {
+              "x": 0,
+              "y": -29.999999999999996
+            },
+            "facing": -1.5707963267948966,
+            "hp": 75,
+            "visibility": 0,
+            "state": "patrol",
+            "activity": {
+              "phase": "active",
+              "progress": 1
+            },
+            "attack": {
+              "phase": "idle",
+              "progress": 0
+            },
+            "restraint": {
+              "pressure": false,
+              "snared": false
+            },
+            "motionSuppressed": false,
+            "targetingLure": false
+          }
+        ]
+      }
+    }
+  ],
+  "frameTimes": {
+    "scope": "Whole page, including base, pauses, screenshots, video/audio and brief QA-host inspector export; not release FPS",
+    "samples": 110755,
+    "medianMs": 16.699999999953434,
+    "p95Ms": 16.700000000186265,
+    "maxMs": 2316.600000000093,
+    "over50Ms": 140
+  },
+  "limits": [
+    "No complete lure-then-search tactical advantage was demonstrated; earned shell throws consumed real charges but this journey has zero targetingLure samples.",
+    "Live enemies continue moving after run.ended while world elapsed is fixed. Reported to ROOT; settlement, inventory and rewards stayed correct. No post-settlement harm observed.",
+    "Three navigation/adapter command failures and their actual cost are retained, plus the out-of-range base repair attempt; no source or success threshold was changed during this journey.",
+    "This is a temporary normal-game memory session, not refresh recovery, long-term persistence, four-A supply, balance, hearing quality or player aesthetic approval.",
+    "Audio is captured from the actual game bus but has not been listened to by this QA agent."
+  ],
+  "artifacts": [
+    {
+      "file": "source-start.json",
+      "bytes": 64003,
+      "sha256": "f183a653102269715a9ab0e125dff24b7550d594b58af354423c7bf4085ba2e8"
+    },
+    {
+      "file": "evidence.json",
+      "bytes": 1257116,
+      "sha256": "95166d2d26d444eee84314a83b8f643aa253d4677e3ef49b9a76874fdceb7bc3"
+    },
+    {
+      "file": "journey-record.json",
+      "bytes": 35312173,
+      "sha256": "225af0586bd956cc1c1493e8f510b2edacd0df8f6c479fdcf329ac61d0695e9b"
+    },
+    {
+      "file": "trace.json",
+      "bytes": 26240080,
+      "sha256": "3fbf302bb5112b55f66b7721ec674e6d9b9b6e906b3d5399181bd14c3529a0ee"
+    },
+    {
+      "file": "continuous.webm",
+      "bytes": 146407296,
+      "sha256": "8a28612a2de25caca3e285feaf20f1ad5b830057bbe520ea2a11f8a234cd824a"
+    },
+    {
+      "file": "actual-game-audio.webm",
+      "bytes": 23258114,
+      "sha256": "209f2c2e651795fe4ae381f64515896d8ad255331fc2e8691956841da0f82640"
+    },
+    {
+      "file": "actual-base-save-after-repairs.json",
+      "bytes": 7089,
+      "sha256": "2cb41cafa4be641fde2a17d932b13f1ee527aedfef4da29240751e8db13edf30"
+    },
+    {
+      "file": "actual-base-save-after-repairs-export.json",
+      "bytes": 28083,
+      "sha256": "d53526a0b735b82aa996c28f08350f2e0859c0e36b4f5a4233161c508f7e2364"
+    },
+    {
+      "file": "actual-base-save.json",
+      "bytes": 7089,
+      "sha256": "2cb41cafa4be641fde2a17d932b13f1ee527aedfef4da29240751e8db13edf30"
+    },
+    {
+      "file": "actual-base-save-export.json",
+      "bytes": 28083,
+      "sha256": "d53526a0b735b82aa996c28f08350f2e0859c0e36b4f5a4233161c508f7e2364"
+    },
+    {
+      "file": "memory-export-probe.mjs",
+      "bytes": 4004,
+      "sha256": "4be7dc30dab152753b83692d12eb99490683357c3dbdda2afb3c832eb7909a8e"
+    }
+  ]
+}

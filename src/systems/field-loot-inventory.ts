@@ -10,9 +10,22 @@ import { inventoryStore } from '@/systems/inventory-store';
 import { GameEvent } from '@/types/events';
 import type { Vector2 } from '@/types/game-types';
 import type { InventoryItem, InventoryResult } from '@/types/inventory-types';
+import { runtimeRecord, runtimeStrings } from '@/systems/ai/runtime-validation';
 
 let acquisitionRun: string | null = null;
 const acquiredIds = new Set<string>();
+
+export interface FieldLootRuntimeState {
+  readonly version: 1;
+  readonly acquisitionRun: string | null;
+  readonly acquiredIds: readonly string[];
+}
+
+export function validateFieldLootRuntimeState(value: unknown): value is FieldLootRuntimeState {
+  return runtimeRecord(value) && value.version === 1
+    && (value.acquisitionRun === null || (typeof value.acquisitionRun === 'string' && value.acquisitionRun.length > 0))
+    && runtimeStrings(value.acquiredIds, 4096) && (value.acquisitionRun !== null || value.acquiredIds.length === 0);
+}
 
 /** Call only AFTER a successful take/reveal transaction (also used by bag exchange). */
 export function notifyFieldAcquisition(ids: readonly string[]): void {
@@ -35,8 +48,8 @@ export function notifyFieldAcquisition(ids: readonly string[]): void {
 
 export interface FieldLootInput {
   interactHeld: boolean;
-  /** The shared nearest-object prompt has awarded E to extraction. */
-  extractPriority: boolean;
+  /** The shared nearest-object prompt has awarded E to this revealed item. */
+  pickupPriority: boolean;
   /** Bag, attack, tool input, movement, hit, pause, or ended run. */
   blocked?: boolean;
 }
@@ -52,6 +65,27 @@ export class FieldLootInventory {
   private readonly visuals = new Map<string, Phaser.GameObjects.Graphics>();
   /** A held search key must not take the item it has just revealed. */
   private released = false;
+
+  exportRuntimeState(): FieldLootRuntimeState {
+    return { version: 1, acquisitionRun, acquiredIds: [...acquiredIds] };
+  }
+
+  validateRuntimeState(value: unknown): value is FieldLootRuntimeState {
+    if (!validateFieldLootRuntimeState(value)) return false;
+    const run = inventoryStore.getRun();
+    if (run?.id !== value.acquisitionRun) return true; // No notification yet in this run.
+    const known = new Set([...run.carriedOutIds, ...run.destroyedIds, ...Object.values(run.revealedNodes).flat()]);
+    return value.acquiredIds.every(id => known.has(id));
+  }
+
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid field acquisition runtime state');
+    acquisitionRun = value.acquisitionRun;
+    acquiredIds.clear();
+    for (const id of value.acquiredIds) acquiredIds.add(id);
+    // Reconnect requires a fresh key release; neither acquisition events nor held E replay.
+    this.released = false;
+  }
 
   create(
     scene: Phaser.Scene,
@@ -118,7 +152,7 @@ export class FieldLootInventory {
     if (!input.interactHeld) { this.released = true; return; }
     const pressed = this.released;
     this.released = false;
-    if (!pressed || input.blocked || input.extractPriority) return;
+    if (!pressed || input.blocked || !input.pickupPriority) return;
     const item = this.getNearby()[0];
     if (!item) return;
     const result = this.take([item.id]);

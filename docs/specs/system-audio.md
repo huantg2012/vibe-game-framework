@@ -4,8 +4,8 @@ created-by: design agent
 created-date: 2026-08-19
 created-when: Slice 9 设计阶段
 last-modified-by: code agent
-last-modified-date: 2026-08-30
-interface-changed: false
+last-modified-date: 2026-09-12
+interface-changed: true
 slice: 9
 interfaces-with:
   - system-enemy-ai                 # 消费 AISystem.setCueListener 的 ai.cue.*；渗透体 idle / 改写体 hum；警觉与追击循环
@@ -20,13 +20,31 @@ exposes:
   - AudioManager.playSFX(key, config?) / playAmbient(key, fadeIn?) / stopAmbient(key, fadeOut?)
   - AudioManager.setLayerVolume(layer, volume, duration?) / playSpatialSFX(key, sourcePos, listenerPos, config?)
   - AudioManager.pauseAll() / resumeAll() / unlock()
-  - 资产 key 注册表（43 个 key；每个非空 .ogg + .mp3）
+  - 资产 key 注册表（49 个 key；每个非空 .ogg + .mp3）
   - 分组默认音量 Master 1.0 / BGM 0.6 / Ambient 0.5 / SFX 0.8（本 Slice 不暴露调节面板）
   - 同时 8 轨、溢出与 UI 不被踢
   - 距离衰减（tile）：敌人 5–8、点声源 3–6、改写体 hum 10–15、边界脉冲 0–2
 ---
 
 # 系统设计：音频（氛围床 + 裂隙分层 + 清单音效）
+
+## 迭代22：悬海音景与真实水流
+
+新世界显式选择`amb-suspended-sea-pressure`替换旧异域环境循环，沿同一AudioManager及自适应混音，不叠加两条环境床。沉积海床显式使用soil脚步。短入场由RiftScene冻结玩法，声音先建立；暂停由既有音频暂停机制同步冻结，结束/销毁清理本地实例。
+
+六个新增key由`tools/suspended-sea/generate-audio.mjs`确定性离线合成，参数、seed、时长、格式与源PCM检测保存于相邻`audio-manifest.json`；不是实地录音或外部模型生成。输出单声道44.1kHz OGG/MP3到资产目录及public副本，只生成这六键，不重写旧43键。20秒环境床与短接水循环需检查编码后的边界；PCM首尾相等不等于实际混音已听验。
+
+- `amb-suspended-sea-pressure`：20秒低中频宽带压力床。
+- `sfx-suspended-sea-gather`：1.6秒汇流水声，真实汇流阶段至供水开始以一个空间循环实例及状态包络呈现。
+- `sfx-suspended-sea-fall`：0.75秒供水起声，只在真实feedStart穿越时触发。
+- `sfx-suspended-sea-contact`：2.2秒接水循环，仅真实coreActive时存在；改流时声源随已发生的排水转移，不因按键预播。
+- `sfx-suspended-sea-drain`：0.9秒断供尾声，跟真实feedEnd；声音播放结束不能决定安全。
+- `sfx-suspended-sea-shell-hit`：0.28秒材质命中，消费实际hitSequence，每次只触发一次。
+
+`SuspendedSeaAudio`只借读同一ShellView和WaterFlowCycle，暂停不追赶补播，长帧不能补出一串过去的音。汇流与接水共享一个near实例，切相先停旧循环；transient与shell-hit分别有固定实例ID，destroy逐一清理。真实环境目标的普通敌人命中音只针对该接触替换，敌人声音、AI噪声与正式受击反馈保持。
+
+`AudioManager.getState()`暴露当前实际voice/key/instanceId/loop/paused/volume供只读诊断；`stopInstance`按本地实例清理。现实现的8轨是普通voice准入阈值，BGM/Ambient床与必要UI存在准入例外，因此不是全局严格8条上限。验证必须报告实际峰值与近水循环数，不能只引常量宣称不超过8。新增音景的正常听感和实机混音证据登记于[迭代22 QA](../qa/iteration-22.md)。
+
 
 > **TL;DR**: AudioManager 按场景播 5 条氛围床、裂隙内用四层混音（Base / Tension / Threat / Proximity），并接通方向文档 §4.2 全部短音；每个 key 必须有非空 OGG+MP3。消费已有 AI / 战斗 cue 与暂停钩子。同时 8 轨。禁止 jump scare、禁止第三种敌人、禁止用振荡器冒充交付。
 
@@ -75,7 +93,7 @@ interface PlayBgmOpts {
 
 ### A. 资产合同
 
-1. **注册表即清单**：下文「资产表」43 个 key 是现行交付（Slice 9 的 39 + 迭代 10 翻找四键）。每个 key = 文件名不含扩展名。BootScene 预加载全部 key 的 `.ogg` 与 `.mp3`。
+1. **注册表即清单**：下文「资产表」49 个 key 是现行目录（Slice 9 的39 + 迭代10翻找四键 + 迭代22悬海六键）。每个 key = 文件名不含扩展名。BootScene 预加载全部 key 的 `.ogg` 与 `.mp3`。
 2. **非空双格式**：`assets/audio/.../{key}.ogg` 与 `{key}.mp3` 都必须存在，字节数 > 0，解码时长 > 0。禁止 0 字节、禁止只有头没有声。
 3. **禁止振荡器冒充交付**：方向文档 §9 的运行时 `OscillatorNode` / 白噪声 / 正弦 beep **作废**。占位必须是仓库里的文件（ffmpeg/sox/脚本合成）。运行时只允许用 WebAudio 做增益、声像、淡入淡出、距离衰减。
 4. **码率与采样率**（方向文档 5.1）：BGM 与短音效 128 kbps / 44.1 kHz；循环环境 96 kbps / 44.1 kHz。OGG 与 MP3 各一份。
@@ -303,7 +321,7 @@ assets/audio/
 | 长 | 0.80–2.0 | 进出裂隙、冲击起声、循环单元、边界 |
 | 床 | 60–180 | 场景 / 层；冲击床 60–90 且不循环 |
 
-### 资产表（43 key）
+### 资产表（49 key）
 
 #### 场景氛围 5 + 裂隙层 4（唯一文件 7：Base=裂隙基准，Tension=裂隙高混乱）
 
@@ -378,7 +396,7 @@ assets/audio/
 | `sfx-shared-module-repair` | 中 0.5s | 否 | 薪柴分配确认且有花费 | 无 |
 | `sfx-pp-boundary-pulse` | 长 1–2s | 否 | 净化点边界 2 tile 内，10 秒一次 | 边界 0–2 |
 
-**唯一 key 合计 43**（氛围/层 7 + 环境循环 2 + SFX 34）。
+**唯一 key 合计49**（旧43 + 悬海环境床1 + 悬海状态SFX5）。
 
 ## 有意不做
 

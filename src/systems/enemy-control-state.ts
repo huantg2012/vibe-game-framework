@@ -27,6 +27,19 @@ export class EnemyControlState implements EnemyControlSnapshot {
   get attackSuppressed(): boolean { return this.blocked; }
   get attackInterruptRevision(): number { return this.interruptRevision; }
 
+  /** Recovery prepares an empty projection; ToolSystem then rebuilds the owning sources. */
+  beginRuntimeRestore(): void {
+    this.sources.clear();
+    this.interruptRevision = 0;
+    this.recompute();
+  }
+
+  /** Restore the historical latch after source hydration, without simulating an interruption. */
+  restoreInterruptRevision(revision: number): void {
+    if (!Number.isSafeInteger(revision) || revision < 0) throw new Error('Invalid control interruption revision');
+    this.interruptRevision = revision;
+  }
+
   set(source: string, effect: EnemyControlEffect): void {
     if (!source) throw new Error('Enemy control requires a source id');
     for (const value of [effect.movementMultiplier, effect.perceptionMultiplier]) {

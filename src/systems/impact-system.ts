@@ -140,21 +140,22 @@ function severityFromIntensity(intensity: number): ForecastSeverity {
   return 'extreme';
 }
 
-function pickUniform<T extends { id: string }>(items: readonly T[], exceptId?: string | null): T {
+function pickUniform<T extends { id: string }>(items: readonly T[], random: () => number, exceptId?: string | null): T {
   const pool = exceptId ? items.filter((m) => m.id !== exceptId) : items;
   const source = pool.length > 0 ? pool : items;
-  return source[Math.floor(Math.random() * source.length)]!;
+  return source[Math.floor(random() * source.length)]!;
 }
 
 function pickPrimaryModule<T extends { id: string }>(
   modules: readonly T[],
   forecastId: string | null,
+  random: () => number,
 ): T {
   const forecast = forecastId ? modules.find((m) => m.id === forecastId) : undefined;
-  if (Math.random() < P.FORECAST_ACCURACY) {
-    return forecast ?? pickUniform(modules);
+  if (random() < P.FORECAST_ACCURACY) {
+    return forecast ?? pickUniform(modules, random);
   }
-  return pickUniform(modules, forecastId);
+  return pickUniform(modules, random, forecastId);
 }
 
 /** Primary takes THREAT_FOCUS_RATIO; remainder split across the others; last eats residue. */
@@ -243,7 +244,7 @@ export const impactSystem = {
    * @param defenseSlots - The 3 defense-slotted contaminants, passed from the scene layer
    *   to preserve the "systems never import each other" rule (DEC-ARCH-002).
    */
-  run(defenseSlots?: (Contaminant | null)[], offeringIds?: readonly (string | null)[]): ImpactResult {
+  run(defenseSlots?: (Contaminant | null)[], offeringIds?: readonly (string | null)[], random: () => number = Math.random): ImpactResult {
     const cycle = gameState.getCycle();
 
     // First sortie: no impact (spec rule 20)
@@ -268,7 +269,7 @@ export const impactSystem = {
     // among the remaining blood-bearing modules. Never hardcode modules[0]/[1].
     const modules = gameState.getModules();
     const primary = (forecastCommitted ? modules.find(module => module.id === forecastTargetId) : undefined)
-      ?? pickPrimaryModule(modules, forecastTargetId);
+      ?? pickPrimaryModule(modules, forecastTargetId, random);
     const baseDamagePerModule = distributeThreatDamage(totalDamage, primary.id, modules);
 
     // --- Defense engine phase (Slice 4) ---
@@ -312,7 +313,7 @@ export const impactSystem = {
 
       // echo: grant +1 use to a random tool-stage contaminant (no-ops if none eligible)
       for (let i = 0; i < defenseResult.toolUseGrants; i++) {
-        contaminantSystem.grantRandomToolUse();
+        contaminantSystem.grantRandomToolUse(random);
       }
 
       // overwrite: swap CORE/STORAGE module effects for the next sortie (DEC-031).
@@ -388,6 +389,7 @@ export const impactSystem = {
     nextIntensity: number,
     forecastReliabilityBonus = 0,
     nextNextIntensityEstimate: number,
+    random: () => number = Math.random,
   ): void {
     if (forecastDisplay && !forecastConsumed) {
       return;
@@ -398,14 +400,14 @@ export const impactSystem = {
     forecastConsumed = false;
     forecastCommitted = pendingTargetQueue.length > 0 || memoryEarnedPending;
     memoryEarnedPending = false;
-    forecastTargetId = pendingTargetQueue.shift() ?? pickUniform(modules).id;
+    forecastTargetId = pendingTargetQueue.shift() ?? pickUniform(modules, random).id;
     forecastLookahead = null;
     const trueSeverity = severityFromIntensity(nextIntensity);
     const blurChance = forecastCommitted ? 0 : Math.max(SEVERITY_BLUR_FLOOR_CHANCE,
       SEVERITY_BLUR_BASE_CHANCE - Math.max(0, forecastReliabilityBonus));
     let severity = trueSeverity;
-    if (blurChance > 0 && Math.random() < blurChance) {
-      const direction = Math.random() < .5 ? -1 : 1;
+    if (blurChance > 0 && random() < blurChance) {
+      const direction = random() < .5 ? -1 : 1;
       severity = SEVERITY_ORDER[Math.min(SEVERITY_ORDER.length - 1, Math.max(0, SEVERITY_ORDER.indexOf(trueSeverity) + direction))]!;
     }
     forecastDisplay = { targetId: forecastTargetId, severity };

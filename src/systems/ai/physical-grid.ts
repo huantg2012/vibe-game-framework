@@ -1,6 +1,25 @@
 import type { Vector2 } from '@/types/game-types';
 import type { OccluderGrid, WalkGrid } from '@/types/map-types';
 
+const BODY_CLEARANCE_EPSILON = 1e-6;
+
+/** Static counterpart of the displacement sweep, for admitting restored bodies.
+ * Touching a tile boundary is legal; overlapping unsupported space is not. */
+export function bodyHasSupport(walk: WalkGrid, center: Readonly<Vector2>, halfWidth: number, halfHeight: number): boolean {
+  if (![center.x, center.y, halfWidth, halfHeight].every(Number.isFinite) || halfWidth < 0 || halfHeight < 0
+    || center.x - halfWidth < 0 || center.y - halfHeight < 0
+    || center.x + halfWidth > walk.cols * walk.tileSize || center.y + halfHeight > walk.rows * walk.tileSize) return false;
+  const insetX = Math.min(halfWidth, BODY_CLEARANCE_EPSILON), insetY = Math.min(halfHeight, BODY_CLEARANCE_EPSILON);
+  const firstCol = Math.floor((center.x - halfWidth + insetX) / walk.tileSize);
+  const lastCol = Math.floor((center.x + halfWidth - insetX) / walk.tileSize);
+  const firstRow = Math.floor((center.y - halfHeight + insetY) / walk.tileSize);
+  const lastRow = Math.floor((center.y + halfHeight - insetY) / walk.tileSize);
+  for (let row = firstRow; row <= lastRow; row++) {
+    for (let col = firstCol; col <= lastCol; col++) if (!walk.isWalkable(col, row)) return false;
+  }
+  return true;
+}
+
 /** Ray-based body clearance must query physical support, never optical visibility. */
 export function createMovementOccluders(walk: WalkGrid): OccluderGrid {
   return {
@@ -31,7 +50,7 @@ export function bodyDisplacementFraction(
     || !Number.isFinite(halfHeight) || !Number.isFinite(dx) || !Number.isFinite(dy)
     || halfWidth < 0 || halfHeight < 0) return 0;
   if (dx === 0 && dy === 0) return 0;
-  const size = walk.tileSize, epsilon = 1e-6;
+  const size = walk.tileSize, epsilon = BODY_CLEARANCE_EPSILON;
   const firstCol = Math.max(-1, Math.floor((Math.min(center.x, center.x + dx) - halfWidth) / size));
   const lastCol = Math.min(walk.cols, Math.floor((Math.max(center.x, center.x + dx) + halfWidth) / size));
   const firstRow = Math.max(-1, Math.floor((Math.min(center.y, center.y + dy) - halfHeight) / size));

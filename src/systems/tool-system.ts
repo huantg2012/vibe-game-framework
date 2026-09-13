@@ -22,6 +22,8 @@ import { EnemyControlState, type EnemyControlEffect } from '@/systems/enemy-cont
 import type { EnemyView } from '@/types/ai-types';
 import type { HostToolTarget } from '@/systems/contamination-host-system';
 import { createToolPresentationFrame, type ToolPresentationView } from '@/systems/tool-presentation';
+import { inventoryStore } from '@/systems/inventory-store';
+import { copyRuntimeVector, runtimeInteger, runtimeNumber, runtimeRecord, runtimeStrings, runtimeVector } from '@/systems/ai/runtime-validation';
 import {
   CONTAM_BRIGHT,
   CONTAM_COLD,
@@ -245,6 +247,109 @@ const RARITY_VFX = {
 
 type ToolControl = EnemyControlEffect & { movementLocked?: boolean; escalationSuppressed?: boolean };
 
+const RECOVERABLE_TOOLS: readonly ContaminantType[] = ['stitch', 'compress', 'kindle', 'siphon', 'muffle'];
+export interface ToolRuntimeState {
+  readonly version: 1;
+  readonly loadoutIds: readonly (string | null)[];
+  readonly elapsedMs: number;
+  readonly controlSerial: number;
+  readonly presentationSerial: number;
+  readonly lastUseFailure: string | null;
+  readonly muffle: { readonly triggersRemaining: number; readonly equipped: boolean;
+    readonly episodeActive: boolean; readonly lastSignalMs: number | null };
+  readonly siphon: { readonly triggersRemaining: number; readonly equipped: boolean; readonly effectRemainingMs: number };
+  readonly stitches: readonly {
+    readonly presentationId: number | null;
+    readonly pointA: Readonly<Vector2>; readonly pointB: Readonly<Vector2>;
+    readonly remainingMs: number; readonly tensionMs: number; readonly dissolving: boolean;
+    readonly fade: Readonly<StepFadeState>; readonly affectedEnemyIds: readonly string[];
+    readonly previousPositions: readonly { readonly enemyId: string; readonly position: Readonly<Vector2> }[];
+  }[];
+  readonly stitchStops: readonly { readonly enemyId: string; readonly source: string; readonly remainingMs: number }[];
+  readonly anchors: readonly {
+    readonly presentationId: number | null; readonly source: string | null;
+    readonly position: Readonly<Vector2>; readonly radius: number; readonly remainingMs: number;
+    readonly dissolving: boolean; readonly dissolve: Readonly<DissolveState>;
+    readonly blocks: readonly Readonly<GlitchBlock>[]; readonly affectedEnemyIds: readonly string[];
+  }[];
+  readonly lures: readonly {
+    readonly presentationId: number | null; readonly position: Readonly<Vector2>;
+    readonly throwFrom: Readonly<Vector2> | null; readonly radius: number;
+    readonly remainingMs: number; readonly elapsedMs: number; readonly pulseAccumMs: number;
+  }[];
+}
+
+export function validateToolRuntimeState(value: unknown): value is ToolRuntimeState {
+  if (!runtimeRecord(value) || value.version !== 1 || !Array.isArray(value.loadoutIds) || value.loadoutIds.length > 16
+    || !value.loadoutIds.every(id => id === null || (typeof id === 'string' && id.length > 0))
+    || new Set(value.loadoutIds.filter(id => id !== null)).size !== value.loadoutIds.filter(id => id !== null).length
+    || !runtimeNumber(value.elapsedMs, 0) || !runtimeInteger(value.controlSerial) || !runtimeInteger(value.presentationSerial)
+    || !(value.lastUseFailure === null || typeof value.lastUseFailure === 'string')
+    || !runtimeRecord(value.muffle) || !runtimeRecord(value.siphon)
+    || !runtimeInteger(value.muffle.triggersRemaining, 0, 1000) || typeof value.muffle.equipped !== 'boolean'
+    || typeof value.muffle.episodeActive !== 'boolean'
+    || !(value.muffle.lastSignalMs === null || runtimeNumber(value.muffle.lastSignalMs, 0, value.elapsedMs))
+    || (value.muffle.episodeActive && value.muffle.lastSignalMs === null)
+    || !runtimeInteger(value.siphon.triggersRemaining, 0, 1000) || typeof value.siphon.equipped !== 'boolean'
+    || !runtimeNumber(value.siphon.effectRemainingMs, 0, CONTAMINANT_DATA.siphon.toolDurationMs)
+    || value.muffle.equipped !== (value.muffle.triggersRemaining > 0)
+    || value.siphon.equipped !== (value.siphon.triggersRemaining > 0)) return false;
+  for (const key of ['stitches', 'stitchStops', 'anchors', 'lures']) {
+    if (!Array.isArray(value[key]) || (value[key] as unknown[]).length > 512) return false;
+  }
+  const sources = new Set<string>(), presentations = new Set<number>();
+  const source = (id: unknown): id is string => {
+    if (typeof id !== 'string' || !/^tool:[1-9][0-9]*$/.test(id) || sources.has(id)
+      || !runtimeInteger(Number(id.slice(5)), 1, value.controlSerial as number)) return false;
+    sources.add(id); return true;
+  };
+  const presentation = (id: unknown): boolean => {
+    if (id === null) return true;
+    if (!runtimeInteger(id, 1, value.presentationSerial as number) || presentations.has(id)) return false;
+    presentations.add(id); return true;
+  };
+  const lifetime = (row: Record<string, unknown>, maximum: number): boolean => typeof row.dissolving === 'boolean'
+    && runtimeNumber(row.remainingMs, row.dissolving ? -Infinity : Number.MIN_VALUE, row.dissolving ? 0 : maximum);
+  for (const row of value.stitches as unknown[]) {
+    if (!runtimeRecord(row) || !presentation(row.presentationId) || !runtimeVector(row.pointA) || !runtimeVector(row.pointB)
+      || !lifetime(row, CONTAMINANT_DATA.stitch.toolDurationMs) || !runtimeNumber(row.tensionMs, 0, 320)
+      || !runtimeStrings(row.affectedEnemyIds, 2048) || !Array.isArray(row.previousPositions) || row.previousPositions.length > 2048
+      || !runtimeRecord(row.fade) || !Array.isArray(row.fade.alphaSteps)
+      || row.fade.alphaSteps.length !== 3 || row.fade.alphaSteps.some((alpha, i) => alpha !== 1 - i / 2)
+      || !runtimeInteger(row.fade.stepIndex, 0, 1) || row.fade.stepIntervalMs !== 90 || !runtimeNumber(row.fade.timerMs, 0, 90)) return false;
+    const ids = new Set<string>();
+    for (const previous of row.previousPositions) {
+      if (!runtimeRecord(previous) || typeof previous.enemyId !== 'string' || !previous.enemyId
+        || ids.has(previous.enemyId) || !runtimeVector(previous.position)) return false;
+      ids.add(previous.enemyId);
+    }
+  }
+  for (const row of value.stitchStops as unknown[]) {
+    if (!runtimeRecord(row) || typeof row.enemyId !== 'string' || !row.enemyId || !source(row.source)
+      || !runtimeNumber(row.remainingMs, Number.MIN_VALUE, CONTAMINANT_DATA.stitch.toolStopMs)) return false;
+  }
+  for (const row of value.anchors as unknown[]) {
+    if (!runtimeRecord(row) || !presentation(row.presentationId) || !(row.source === null || source(row.source))
+      || !runtimeVector(row.position) || row.radius !== CONTAMINANT_DATA.compress.toolRangePx
+      || !lifetime(row, CONTAMINANT_DATA.compress.toolDurationMs) || !runtimeStrings(row.affectedEnemyIds, 2048)
+      || ((row.source === null || row.dissolving) && row.affectedEnemyIds.length !== 0)
+      || !runtimeRecord(row.dissolve) || row.dissolve.stepsTotal !== 2 || !runtimeInteger(row.dissolve.stepsDone, 0, 1)
+      || row.dissolve.stepIntervalMs !== 80 || !runtimeNumber(row.dissolve.timerMs, 0, 80)
+      || typeof row.dissolve.jitterPending !== 'boolean' || !Array.isArray(row.blocks) || row.blocks.length > 8
+      || !row.blocks.every(block => runtimeRecord(block) && runtimeNumber(block.dx) && runtimeNumber(block.dy)
+        && runtimeNumber(block.size, 0) && runtimeNumber(block.alphaMult, 0, 1))) return false;
+  }
+  for (const row of value.lures as unknown[]) {
+    if (!runtimeRecord(row) || !presentation(row.presentationId) || !runtimeVector(row.position)
+      || !(row.throwFrom === null || runtimeVector(row.throwFrom)) || row.radius !== CONTAMINANT_DATA.kindle.toolRangePx
+      || !runtimeNumber(row.remainingMs, Number.MIN_VALUE, CONTAMINANT_DATA.kindle.toolDurationMs)
+      || !runtimeNumber(row.elapsedMs, 0, CONTAMINANT_DATA.kindle.toolDurationMs)
+      || Math.abs(row.elapsedMs + row.remainingMs - CONTAMINANT_DATA.kindle.toolDurationMs) > 0.001
+      || !runtimeNumber(row.pulseAccumMs, 0, CONTAMINANT_DATA.kindle.toolPulseIntervalMs - Number.EPSILON)) return false;
+  }
+  return true;
+}
+
 export class ToolSystem {
   private readonly presentation = createToolPresentationFrame();
   private presentationIds = new WeakMap<object, number>();
@@ -376,6 +481,140 @@ export class ToolSystem {
       this.setEnemyDetectionFillRateMult?.(payload.enemyId, 1);
     }
   };
+
+  /** Recovery is deliberately finite: fail before a world starts losing other families. */
+  private supportsRuntimeRecovery(): boolean {
+    return this.loadout.every(item => !item || RECOVERABLE_TOOLS.includes(item.type))
+      && !this.freezeEffects.length && !this.delayDevices.length && !this.erodeZones.length
+      && !this.retrogradeMarks.length && !this.trackingEpisodes.size && !this.retrogradeEquipped
+      && !this.expandEffect && !this.mirrorDecoys.length && !this.resonateStrings.length
+      && !this.overwriteMarks.length && !this.combustFields.length && !this.stunnedEnemies.length
+      && !this.abyssBursts.length && !this.abyssRevealRemainingMs && !this.resonatePendingPoint
+      && !this.scatterActive && !this.scatterTriggersRemaining && !this.scatterSuppressedEnemyIds.size
+      && !this.reclaimedNodes.size;
+  }
+
+  exportRuntimeState(): ToolRuntimeState {
+    if (!this.supportsRuntimeRecovery()) throw new Error('Tool recovery supports stitch, compress, kindle, siphon and muffle only');
+    const value: ToolRuntimeState = {
+      version: 1, loadoutIds: this.loadout.map(item => item?.id ?? null), elapsedMs: this.elapsedMs,
+      controlSerial: this.controlSerial, presentationSerial: this.presentationSerial, lastUseFailure: this.lastUseFailure,
+      muffle: { triggersRemaining: this.muffleTriggersRemaining, equipped: this.muffleEquipped,
+        episodeActive: this.muffleEpisodeActive, lastSignalMs: Number.isFinite(this.muffleLastSignalMs) ? this.muffleLastSignalMs : null },
+      siphon: { triggersRemaining: this.siphonTriggersRemaining, equipped: this.siphonEquipped,
+        effectRemainingMs: this.siphonEffectRemainingMs },
+      stitches: this.stitchBarriers.map(row => ({
+        presentationId: this.presentationIds.get(row) ?? null, pointA: copyRuntimeVector(row.pointA), pointB: copyRuntimeVector(row.pointB),
+        remainingMs: row.remainingMs, tensionMs: row.tensionMs ?? 0, dissolving: row.dissolving,
+        fade: { ...row.fade, alphaSteps: [...row.fade.alphaSteps] }, affectedEnemyIds: [...row.affectedEnemyIds],
+        previousPositions: [...row.previousPositions].map(([enemyId, position]) => ({ enemyId, position: copyRuntimeVector(position) })),
+      })),
+      stitchStops: this.stitchStops.map(row => ({ ...row })),
+      anchors: this.compressAnchors.map(row => ({
+        presentationId: this.presentationIds.get(row) ?? null, source: this.controlIds.get(row) ?? null,
+        position: copyRuntimeVector(row.position), radius: row.radius, remainingMs: row.remainingMs,
+        dissolving: row.dissolving, dissolve: { ...row.dissolve }, blocks: row.blocks.map(block => ({ ...block })),
+        affectedEnemyIds: [...row.affectedEnemyIds],
+      })),
+      lures: this.kindleZones.map(row => ({
+        presentationId: this.presentationIds.get(row) ?? null, position: copyRuntimeVector(row.position),
+        throwFrom: row.throwFrom ? copyRuntimeVector(row.throwFrom) : null, radius: row.radius,
+        remainingMs: row.remainingMs, elapsedMs: row.elapsedMs, pulseAccumMs: row.pulseAccumMs,
+      })),
+    };
+    if (!this.validateRuntimeState(value)) throw new Error('Tool state does not match its recoverable inventory');
+    return value;
+  }
+
+  validateRuntimeState(value: unknown): value is ToolRuntimeState {
+    if (!this.scene || !this.supportsRuntimeRecovery() || !validateToolRuntimeState(value)) return false;
+    const ids = inventoryStore.getEquipment().toolIds;
+    // The legacy facade pads empty slots; InventoryStore may keep an empty/trailing-short array.
+    if (value.loadoutIds.length !== contaminantSystem.getSortieLoadout().length
+      || value.loadoutIds.some((id, i) => id !== (ids[i] ?? null))
+      || ids.slice(value.loadoutIds.length).some(id => id !== null)) return false;
+    const items: Contaminant[] = [];
+    for (const id of value.loadoutIds) {
+      if (id === null) continue;
+      const item = inventoryStore.getItem(id);
+      if (item?.kind !== 'contaminant' || item.location.kind !== 'carried' || item.contaminant.stage !== 'tool'
+        || item.contaminant.usesRemaining <= 0 || !RECOVERABLE_TOOLS.includes(item.contaminant.type)) return false;
+      items.push(item.contaminant);
+    }
+    for (const type of ['muffle', 'siphon'] as const) {
+      const item = items.find(candidate => candidate.type === type);
+      if (value[type].triggersRemaining !== (item?.usesRemaining ?? 0)) return false;
+    }
+    return true;
+  }
+
+  /** AI.restoreRuntimeState must precede this; AI.finishRuntimeRestore follows it.
+   * Restore stable Tool-owned sources, never an aggregate speed or a second AI clock. */
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid or incompatible tool runtime state');
+    for (const [enemyId, sources] of this.controlSources) {
+      for (const source of sources.keys()) this.clearEnemyControl?.(enemyId, source);
+      this.syncControlFallback(enemyId, new Map());
+    }
+    this.controlSources.clear();
+    this.cleanupVisuals();
+    this.loadout = value.loadoutIds.map(id => {
+      const item = id ? inventoryStore.getItem(id) : undefined;
+      return item?.kind === 'contaminant' ? item.contaminant : null;
+    });
+    this.elapsedMs = value.elapsedMs; this.controlSerial = value.controlSerial; this.presentationSerial = value.presentationSerial;
+    this.controlIds = new WeakMap(); this.presentationIds = new WeakMap();
+    this.lastUseFailure = value.lastUseFailure;
+    this.muffleTriggersRemaining = value.muffle.triggersRemaining; this.muffleEquipped = value.muffle.equipped;
+    this.muffleEpisodeActive = value.muffle.episodeActive; this.muffleLastSignalMs = value.muffle.lastSignalMs ?? -Infinity;
+    this.siphonTriggersRemaining = value.siphon.triggersRemaining; this.siphonEquipped = value.siphon.equipped;
+    this.siphonEffectRemainingMs = value.siphon.effectRemainingMs;
+    this.stitchBarriers = value.stitches.map(saved => {
+      const row: StitchBarrier = {
+        pointA: copyRuntimeVector(saved.pointA), pointB: copyRuntimeVector(saved.pointB), remainingMs: saved.remainingMs,
+        tensionMs: saved.tensionMs, dissolving: saved.dissolving, fade: { ...saved.fade, alphaSteps: [...saved.fade.alphaSteps] },
+        previousPositions: new Map(saved.previousPositions.map(previous => [previous.enemyId, copyRuntimeVector(previous.position)])),
+        affectedEnemyIds: new Set(saved.affectedEnemyIds), visual: this.scene.add.graphics().setDepth(10),
+      };
+      if (saved.presentationId !== null) this.presentationIds.set(row, saved.presentationId);
+      drawSeam(row.visual, row.pointA, row.pointB, row.dissolving ? row.fade.alphaSteps[row.fade.stepIndex]! : 1, saved.tensionMs / 320);
+      return row;
+    });
+    this.stitchStops = value.stitchStops.map(saved => {
+      const stop = { ...saved };
+      this.controlIds.set(stop, stop.source);
+      this.applyControl(stop.enemyId, stop.source, { movementMultiplier: 0 });
+      return stop;
+    });
+    this.compressAnchors = value.anchors.map(saved => {
+      const row: CompressAnchor = {
+        position: copyRuntimeVector(saved.position), radius: saved.radius, remainingMs: saved.remainingMs,
+        dissolving: saved.dissolving, dissolve: { ...saved.dissolve }, blocks: saved.blocks.map(block => ({ ...block })),
+        affectedEnemyIds: new Set(saved.affectedEnemyIds), visual: this.scene.add.graphics().setDepth(10),
+        bracketVisual: this.scene.add.graphics().setDepth(10),
+      };
+      if (saved.presentationId !== null) this.presentationIds.set(row, saved.presentationId);
+      if (saved.source !== null) {
+        this.controlIds.set(row, saved.source);
+        for (const enemyId of saved.affectedEnemyIds) this.applyControl(enemyId, saved.source, { movementMultiplier: CONTAMINANT_DATA.compress.toolMovementMult });
+      }
+      drawPressure(row.visual, row.position, row.radius, row.dissolving ? .2 : Math.min(1, row.remainingMs / 500));
+      return row;
+    });
+    this.kindleZones = value.lures.map(saved => {
+      const row: KindleZone = {
+        position: copyRuntimeVector(saved.position), throwFrom: saved.throwFrom ? copyRuntimeVector(saved.throwFrom) : undefined,
+        radius: saved.radius, remainingMs: saved.remainingMs, elapsedMs: saved.elapsedMs, pulseAccumMs: saved.pulseAccumMs,
+        visual: this.scene.add.graphics().setDepth(10), dissolving: false,
+      };
+      if (saved.presentationId !== null) this.presentationIds.set(row, saved.presentationId);
+      this.drawSoundShell(row); // Initial lure is already in the saved AI facts; do not report it again.
+      return row;
+    });
+    // AI restored the last published hearing flag already. In particular, a fresh
+    // equipped muffle has not published it until the first real Tool.update.
+    this.updateSiphonEffect(0);
+  }
 
   create(
     scene: Phaser.Scene,

@@ -1,0 +1,2101 @@
+{
+  "schemaVersion": 1,
+  "status": "final-core-browser-cases-pass-with-retained-initial-defects-and-driver-mistakes",
+  "method": "Read-only summary of ROOT's already finished real keyboard/mouse/reload tests. No browser or gameplay changes by this summarizer. Each assertion references SHA-tracked raw evidence.",
+  "rawRoots": {
+    "A": "/private/tmp/coh-i22-base-loop/docs/qa/artifacts/iteration-22/recovery-2026-09-12T17-16-25-560Z",
+    "B": "/private/tmp/coh-i22-base-loop/docs/qa/artifacts/iteration-22/recovery-2026-09-12T17-32-19-112Z"
+  },
+  "A": {
+    "status": "partial-pass-with-defects",
+    "sourceAndErrors": {
+      "basis": [
+        "A/evidence.json",
+        "A/source-start.json"
+      ],
+      "startHead": "2ee0b2b98c50b52dc2e763618264450c8e6865b0",
+      "hashedFiles": 438,
+      "fullManifestUnchanged": null,
+      "integrityLimit": "A aborted before finish; no final source snapshot. Do not infer full-run source immutability.",
+      "saveSentinelUnchanged": null,
+      "recordedPageErrors": [],
+      "recordedResponseFailures": [],
+      "consoleErrors": [
+        {
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "count": 8
+        }
+      ],
+      "consoleLimit": "Console 404 entries lack a URL in the recording. Response failure list is empty; do not label the console entirely clean or infer which asset failed.",
+      "retainedDriverFailures": [
+        {
+          "command": {
+            "op": "retry-save",
+            "label": "09-storage-retried"
+          },
+          "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#inventory-settlement-retry button')\u001b[22m\n",
+          "at": 1789233886867
+        },
+        {
+          "command": {
+            "op": "click",
+            "selector": "#inventory-settlement-retry",
+            "wait": 180
+          },
+          "error": "TimeoutError: locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#inventory-settlement-retry')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"action-btn\" id=\"inventory-settlement-retry\">这一刻尚未保存，行动已停住。 点击重试保存</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <canvas width=\"960\" height=\"640\"></canvas> from <main id=\"sea-journey\">…</main> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <canvas width=\"960\" height=\"640\"></canvas> from <main id=\"sea-journey\">…</main> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    7 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <canvas width=\"960\" height=\"640\"></canvas> from <main id=\"sea-journey\">…</main> subtree intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n",
+          "at": 1789233926261
+        }
+      ],
+      "earnedSetup": {
+        "path": "/Users/yilungao/coh/docs/qa/artifacts/iteration-22/base-journey-2026-09-12T16-32-31-769Z/actual-base-save-after-repairs.json",
+        "sha256": "2cb41cafa4be641fde2a17d932b13f1ee527aedfef4da29240751e8db13edf30"
+      }
+    },
+    "reloadCases": [
+      {
+        "case": "A/02-pure-fuel",
+        "status": "pass",
+        "interpretation": "Pure fuel was already gathered; no re-award or position/time reset.",
+        "basis": [
+          "A/02-pure-fuel-after-transport.json"
+        ],
+        "loadedRawSha256": "b5955fe075f2521f8e05b9f4a12a15e3840409ceba3a42692bd26fb9711a4784",
+        "savedEqualsFirstReady": {
+          "runId": "630ba88f-ab6a-416c-8fbb-a6242d267c1d",
+          "elapsedMs": 3898.1899999999996,
+          "position": {
+            "x": 284.4822946419538,
+            "y": 876.8177499928904
+          },
+          "hp": 100,
+          "chaos": 24.480337652500126,
+          "kindling": 1,
+          "remainingPiles": 6,
+          "inventorySha256Canonical": "db636227599453e28a664ed5c2d66a6c9a1287ca6c8ed798362ff2b9d52b59ab",
+          "items": [
+            {
+              "id": "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 5,
+              "charges": 4
+            },
+            {
+              "id": "CTM_ae19f250-f813-4923-94db-c773b7c9aca9",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "tool",
+              "uses": 33,
+              "charges": 3
+            },
+            {
+              "id": "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 72,
+              "charges": 5
+            }
+          ],
+          "aliveEnemies": [
+            {
+              "id": "SS_listener",
+              "position": {
+                "x": 1252,
+                "y": 272
+              },
+              "hp": 75
+            },
+            {
+              "id": "SS_watcher",
+              "position": {
+                "x": 1584,
+                "y": 904.5
+              },
+              "hp": 75
+            }
+          ]
+        },
+        "savedActiveLures": [],
+        "assertions": [
+          {
+            "assertion": "firstReady matches saved runId",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved elapsedMs",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved position",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved hp",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved chaos",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved kindling",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved remainingPiles",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved inventorySha256Canonical",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved items",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved aliveEnemies",
+            "result": "pass"
+          },
+          {
+            "assertion": "entire inventory equality, including quality/source/equipment/lifecycle",
+            "result": "pass"
+          },
+          {
+            "assertion": "active lure count is presented on firstReady",
+            "result": "pass",
+            "observed": 0
+          }
+        ]
+      },
+      {
+        "case": "A/04-active-lure",
+        "status": "pass",
+        "interpretation": "One active earned shell lure and its consumed use survive reload; not proof of tactical lure advantage.",
+        "basis": [
+          "A/04-active-lure-after-transport.json"
+        ],
+        "loadedRawSha256": "72c8b61890d148f5b4d86f89c8417500b38706bc9ebbb82edcfa096be7098946",
+        "savedEqualsFirstReady": {
+          "runId": "630ba88f-ab6a-416c-8fbb-a6242d267c1d",
+          "elapsedMs": 4481.453333333334,
+          "position": {
+            "x": 284.4822946419538,
+            "y": 876.8177499928904
+          },
+          "hp": 100,
+          "chaos": 24.701831903333485,
+          "kindling": 1,
+          "remainingPiles": 6,
+          "inventorySha256Canonical": "9d67a3ce9370f656abbf21a5a8d3b6664753378ce0886aca610be7038498dc3a",
+          "items": [
+            {
+              "id": "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 4,
+              "charges": 4
+            },
+            {
+              "id": "CTM_ae19f250-f813-4923-94db-c773b7c9aca9",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "tool",
+              "uses": 33,
+              "charges": 3
+            },
+            {
+              "id": "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 72,
+              "charges": 5
+            }
+          ],
+          "aliveEnemies": [
+            {
+              "id": "SS_listener",
+              "position": {
+                "x": 1269.5,
+                "y": 272
+              },
+              "hp": 75
+            },
+            {
+              "id": "SS_watcher",
+              "position": {
+                "x": 1584,
+                "y": 896.5
+              },
+              "hp": 75
+            }
+          ]
+        },
+        "savedActiveLures": [
+          {
+            "presentationId": 1,
+            "position": {
+              "x": 380.4822946419538,
+              "y": 876.8177499928904
+            },
+            "throwFrom": {
+              "x": 284.4822946419538,
+              "y": 876.8177499928904
+            },
+            "radius": 96,
+            "remainingMs": 5574.999999999999,
+            "elapsedMs": 424.9999999999986,
+            "pulseAccumMs": 424.9999999999986
+          }
+        ],
+        "assertions": [
+          {
+            "assertion": "firstReady matches saved runId",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved elapsedMs",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved position",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved hp",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved chaos",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved kindling",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved remainingPiles",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved inventorySha256Canonical",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved items",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved aliveEnemies",
+            "result": "pass"
+          },
+          {
+            "assertion": "entire inventory equality, including quality/source/equipment/lifecycle",
+            "result": "pass"
+          },
+          {
+            "assertion": "active lure count is presented on firstReady",
+            "result": "pass",
+            "observed": 1
+          }
+        ]
+      },
+      {
+        "case": "A/05-loot-and-combat",
+        "status": "pass",
+        "interpretation": "Loot/source IDs and actual environmental injury survive reload. This label does not prove combat; both enemies remain alive.",
+        "basis": [
+          "A/05-loot-and-combat-after-transport.json"
+        ],
+        "loadedRawSha256": "7ae3c408e51a82c5175d92cf16b8648d2be9d772c4d5ca87040bb3051e9aa77e",
+        "savedEqualsFirstReady": {
+          "runId": "630ba88f-ab6a-416c-8fbb-a6242d267c1d",
+          "elapsedMs": 28378.06999999967,
+          "position": {
+            "x": 1278.7322587208012,
+            "y": 627.7253001491019
+          },
+          "hp": 76,
+          "chaos": 33.77657208250095,
+          "kindling": 3,
+          "remainingPiles": 4,
+          "inventorySha256Canonical": "806ec34b269ddd35e522b57b419d874a75f03af70f10418d950c47caaa86f8ad",
+          "items": [
+            {
+              "id": "CTM_1861de61-ee72-4b12-a6ae-3008da196378",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 4,
+              "charges": 4
+            },
+            {
+              "id": "CTM_ae19f250-f813-4923-94db-c773b7c9aca9",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "tool",
+              "uses": 33,
+              "charges": 3
+            },
+            {
+              "id": "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d4322e9e-9f86-4ff2-a3b7-2e0a2de38200",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 72,
+              "charges": 5
+            }
+          ],
+          "aliveEnemies": [
+            {
+              "id": "SS_listener",
+              "position": {
+                "x": 1288.5,
+                "y": 272
+              },
+              "hp": 75
+            },
+            {
+              "id": "SS_watcher",
+              "position": {
+                "x": 1584,
+                "y": 695.5
+              },
+              "hp": 75
+            }
+          ]
+        },
+        "savedActiveLures": [],
+        "assertions": [
+          {
+            "assertion": "firstReady matches saved runId",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved elapsedMs",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved position",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved hp",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved chaos",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved kindling",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved remainingPiles",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved inventorySha256Canonical",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved items",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved aliveEnemies",
+            "result": "pass"
+          },
+          {
+            "assertion": "entire inventory equality, including quality/source/equipment/lifecycle",
+            "result": "pass"
+          },
+          {
+            "assertion": "active lure count is presented on firstReady",
+            "result": "pass",
+            "observed": 0
+          }
+        ]
+      },
+      {
+        "case": "A/06-real-combat",
+        "status": "pass",
+        "interpretation": "Real combat, HP61, crowbar69 durability, and exactly one surviving enemy are preserved; killed watcher is not respawned.",
+        "basis": [
+          "A/06-real-combat-after-transport.json"
+        ],
+        "loadedRawSha256": "4b77ea34d46ea1e4b44c0572d2dfa2a0a799038c6f87af06eb9f9415655c5897",
+        "savedEqualsFirstReady": {
+          "runId": "630ba88f-ab6a-416c-8fbb-a6242d267c1d",
+          "elapsedMs": 40927.45999999921,
+          "position": {
+            "x": 1536.8166487841638,
+            "y": 792.7453953731988
+          },
+          "hp": 61,
+          "chaos": 57.087245920001216,
+          "kindling": 3,
+          "remainingPiles": 4,
+          "inventorySha256Canonical": "e44d9c3cbce8edbd65e85c945597382de99b9bbe47bc9dbcb5ca3c32d16dd14c",
+          "items": [
+            {
+              "id": "CTM_1861de61-ee72-4b12-a6ae-3008da196378",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 4,
+              "charges": 4
+            },
+            {
+              "id": "CTM_ae19f250-f813-4923-94db-c773b7c9aca9",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "tool",
+              "uses": 33,
+              "charges": 3
+            },
+            {
+              "id": "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d4322e9e-9f86-4ff2-a3b7-2e0a2de38200",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 69,
+              "charges": 5
+            }
+          ],
+          "aliveEnemies": [
+            {
+              "id": "SS_listener",
+              "position": {
+                "x": 995,
+                "y": 272
+              },
+              "hp": 75
+            }
+          ]
+        },
+        "savedActiveLures": [],
+        "assertions": [
+          {
+            "assertion": "firstReady matches saved runId",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved elapsedMs",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved position",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved hp",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved chaos",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved kindling",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved remainingPiles",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved inventorySha256Canonical",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved items",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved aliveEnemies",
+            "result": "pass"
+          },
+          {
+            "assertion": "entire inventory equality, including quality/source/equipment/lifecycle",
+            "result": "pass"
+          },
+          {
+            "assertion": "active lure count is presented on firstReady",
+            "result": "pass",
+            "observed": 0
+          }
+        ]
+      }
+    ],
+    "postmortem": {
+      "basis": "A/postmortem.json",
+      "status": "partial-pass-with-defects",
+      "passed": [
+        "pure-fuel reload",
+        "active-lure reload",
+        "loot IDs preserved",
+        "real kill / HP / durability reload",
+        "storage-failure freeze",
+        "abandon loss and terminal actor position freeze"
+      ],
+      "unpassed": [
+        "retry click: wrong QA selector first; actual button pointer-events inherited from root then proved unreachable",
+        "R return: shutdown dereferenced destroyed Arcade world; driver aborted"
+      ],
+      "misleadingLabels": {
+        "05-loot-and-combat": "loot only; actual combat is 06",
+        "09-storage-retried": "driver selector timed out",
+        "12-retry-succeeded": "actual pointer intercepted, no commit",
+        "14-abandoned": "menu reopened within its 200ms key guard; still active",
+        "15-ended-still": "still active; actual terminal cases are 16 and17"
+      },
+      "next": "new source short test preserves original saved 13 checkpoint as setup, no edits to earned data"
+    },
+    "retryFailure": {
+      "status": "failed-in-A-fixed-in-B",
+      "candidateSha256": "a5d7d3fb6cabe56d1adef740f1481447f01ed1393fc315c3ec2c42f23bf01f6e",
+      "successfulCandidateCommits": 0,
+      "basis": [
+        "A/11-retry-candidate-transport.json",
+        "A/12-retry-succeeded-transport.json",
+        "A/evidence.json"
+      ],
+      "interpretation": "First QA selector was incorrect; actual retry button then proved unreachable because canvas intercepted pointer events. Label 12 is not a successful retry."
+    },
+    "returnFailure": {
+      "status": "failed-in-A-fixed-in-B",
+      "basis": "A/postmortem.json",
+      "interpretation": "R shutdown dereferenced a destroyed Arcade world and aborted the driver. Evidence pageerror array was saved before this fault; empty array does not negate postmortem."
+    },
+    "bodySampling": {
+      "method": "Longest cumulative trace per loaded-start raw SHA. Four corner checks on actual 20x20 body, sampled at 100ms; not every rendered/physics frame.",
+      "samples": 634,
+      "epochs": [
+        {
+          "loadedStartSha256": "1bfdb93b6036b87f2de91e3c943850f329ddde2f2c0039a73787e4038198dd46",
+          "basis": "A/11-retry-candidate-trace.json",
+          "samples": 2,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "2cb41cafa4be641fde2a17d932b13f1ee527aedfef4da29240751e8db13edf30",
+          "basis": "A/02-pure-fuel-before-trace.json",
+          "samples": 52,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "4b77ea34d46ea1e4b44c0572d2dfa2a0a799038c6f87af06eb9f9415655c5897",
+          "basis": "A/09-storage-retried-failed-trace.json",
+          "samples": 2,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "72c8b61890d148f5b4d86f89c8417500b38706bc9ebbb82edcfa096be7098946",
+          "basis": "A/05-loot-and-combat-before-trace.json",
+          "samples": 238,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "7ae3c408e51a82c5175d92cf16b8648d2be9d772c4d5ca87040bb3051e9aa77e",
+          "basis": "A/06-real-combat-before-trace.json",
+          "samples": 125,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "9e0a3fc9c9ac2a0b955de864d7cd8320b2adf2b6fd287d47cafdabf45fe98beb",
+          "basis": "A/18-terminal-record-trace.json",
+          "samples": 210,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "b5955fe075f2521f8e05b9f4a12a15e3840409ceba3a42692bd26fb9711a4784",
+          "basis": "A/04-active-lure-before-trace.json",
+          "samples": 5,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        }
+      ],
+      "illegalBodySamples": 0,
+      "limit": "The final trace alone covers only the document after the last reload; earlier documents are checked from their separate raw trace files."
+    }
+  },
+  "B": {
+    "status": "final-core-pass",
+    "sourceAndErrors": {
+      "basis": [
+        "B/evidence.json",
+        "B/source-start.json"
+      ],
+      "startHead": "2ee0b2b98c50b52dc2e763618264450c8e6865b0",
+      "hashedFiles": 438,
+      "fullManifestUnchanged": true,
+      "integrityLimit": null,
+      "saveSentinelUnchanged": true,
+      "recordedPageErrors": [],
+      "recordedResponseFailures": [],
+      "consoleErrors": [
+        {
+          "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "count": 6
+        }
+      ],
+      "consoleLimit": "Console 404 entries lack a URL in the recording. Response failure list is empty; do not label the console entirely clean or infer which asset failed.",
+      "retainedDriverFailures": [
+        {
+          "command": {
+            "op": "ui",
+            "text": "放弃本趟"
+          },
+          "error": "TimeoutError: locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('放弃本趟', { exact: true })\u001b[22m\n",
+          "at": 1789234496689
+        },
+        {
+          "command": {
+            "op": "ui",
+            "text": "确认放弃，遗失随身物",
+            "wait": 1500
+          },
+          "error": "TimeoutError: locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('确认放弃，遗失随身物', { exact: true })\u001b[22m\n",
+          "at": 1789234500835
+        }
+      ],
+      "earnedSetup": {
+        "path": "/private/tmp/coh-i22-base-loop/docs/qa/artifacts/iteration-22/recovery-2026-09-12T17-16-25-560Z/13-retry-reload-before-save.json",
+        "sha256": "9e0a3fc9c9ac2a0b955de864d7cd8320b2adf2b6fd287d47cafdabf45fe98beb"
+      }
+    },
+    "cases": [
+      {
+        "case": "B/04-retry-same-candidate",
+        "status": "pass",
+        "basis": [
+          "B/02-failed-frame.json",
+          "B/03-still-frozen.json",
+          "B/04-retry-success-failed-transport.json",
+          "B/04-retry-success-retried-transport.json"
+        ],
+        "candidateSha256": "b9cd8f1beaaff6dbb2761049f672d2d331ff87131374045c8f66a3a7fce2bee8",
+        "candidateBytes": 37919,
+        "candidateElapsedMs": 50357.476666666014,
+        "newWrites": [
+          {
+            "at": 37220.09999990463,
+            "failed": false,
+            "sha256": "b9cd8f1beaaff6dbb2761049f672d2d331ff87131374045c8f66a3a7fce2bee8"
+          },
+          {
+            "at": 37475.59999990463,
+            "failed": false,
+            "sha256": "c805e7c299cf3fbb6d78d8f569cbc1d400c1790f34d981e9ff51ba486d843fbe"
+          },
+          {
+            "at": 37476.799999952316,
+            "failed": false,
+            "sha256": "1af1c92448675ba19ca9431fa066106922b754385a5c3b0a682b4e0262f56c52"
+          }
+        ],
+        "assertions": [
+          {
+            "assertion": "failed frame is entirely unchanged during wait",
+            "result": "pass"
+          },
+          {
+            "assertion": "first retry commits the exact frozen candidate bytes",
+            "result": "pass"
+          },
+          {
+            "assertion": "same candidate has exactly one successful write",
+            "result": "pass"
+          },
+          {
+            "assertion": "no second skill use during retry",
+            "result": "pass",
+            "observed": [
+              4,
+              3,
+              3
+            ]
+          },
+          {
+            "assertion": "pending effect is one actual 6000ms lure",
+            "result": "pass"
+          }
+        ]
+      },
+      {
+        "case": "B/05-reloaded-after-retry",
+        "status": "pass",
+        "interpretation": "Retried charge3, crowbar69, actual loot IDs, surviving enemy and remaining lure life restore without another use or a fresh 6000ms lifetime.",
+        "basis": [
+          "B/05-reloaded-after-retry-after-transport.json"
+        ],
+        "loadedRawSha256": "3566797c1c8c61c412c7503f2b0b6268f45109a1e1eec3a6edd71923fb06e1d1",
+        "savedEqualsFirstReady": {
+          "runId": "630ba88f-ab6a-416c-8fbb-a6242d267c1d",
+          "elapsedMs": 50607.46666666602,
+          "position": {
+            "x": 1536.8166487841638,
+            "y": 792.7453953731988
+          },
+          "hp": 61,
+          "chaos": 60.76322845166825,
+          "kindling": 3,
+          "remainingPiles": 4,
+          "inventorySha256Canonical": "842f66ec5b593c5e04e918862b532ccb2df64d105439fd2c64b9d25b6adc4e5d",
+          "items": [
+            {
+              "id": "CTM_1861de61-ee72-4b12-a6ae-3008da196378",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_4d396a1b-0b61-4ea3-8859-cf3cb4d48943",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_845ab3c8-9e58-40dc-9583-bea5aaddfec3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_90c503f6-2a50-403a-bc7c-d8059ab81e53",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_95887fae-6cf6-474c-a589-04ba7e137d6a",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 3,
+              "charges": 4
+            },
+            {
+              "id": "CTM_ae19f250-f813-4923-94db-c773b7c9aca9",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_ba24d92a-3a33-44f9-8dc4-0a5c2df0680f",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_cb62dfab-cf5c-4e0e-a877-657130492bde",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d32912e9-59c2-4f03-9df1-0d28d1560ca3",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d4867cd2-4081-4a27-bf81-bbbb74290d2a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "CTM_d55cd5c8-dc38-4e13-9ff8-c8030a14ed4a",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_5bd49e25-d931-47e3-9cde-5f9c794d590c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_8107fc65-71c5-469a-b6d0-b6ee241bc50c",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "tool",
+              "uses": 33,
+              "charges": 3
+            },
+            {
+              "id": "WPN_b97655a4-6338-40c5-a822-9aa5426ce4fe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_c173a0fb-0768-4064-84f9-ff331dee7bfe",
+              "location": {
+                "kind": "stash"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d4322e9e-9f86-4ff2-a3b7-2e0a2de38200",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0
+            },
+            {
+              "id": "WPN_d64a518e-810a-4192-8843-459097d232a6",
+              "location": {
+                "kind": "carried"
+              },
+              "stage": "tool",
+              "uses": 69,
+              "charges": 5
+            }
+          ],
+          "aliveEnemies": [
+            {
+              "id": "SS_listener",
+              "position": {
+                "x": 1285.5,
+                "y": 272
+              },
+              "hp": 75
+            }
+          ]
+        },
+        "savedActiveLures": [
+          {
+            "presentationId": 2,
+            "position": {
+              "x": 1536.8166487841638,
+              "y": 888.7453953731988
+            },
+            "throwFrom": {
+              "x": 1536.8166487841638,
+              "y": 792.7453953731988
+            },
+            "radius": 96,
+            "remainingMs": 5750.009999999999,
+            "elapsedMs": 249.99000000000012,
+            "pulseAccumMs": 249.99000000000012
+          }
+        ],
+        "assertions": [
+          {
+            "assertion": "firstReady matches saved runId",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved elapsedMs",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved position",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved hp",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved chaos",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved kindling",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved remainingPiles",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved inventorySha256Canonical",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved items",
+            "result": "pass"
+          },
+          {
+            "assertion": "firstReady matches saved aliveEnemies",
+            "result": "pass"
+          },
+          {
+            "assertion": "entire inventory equality, including quality/source/equipment/lifecycle",
+            "result": "pass"
+          },
+          {
+            "assertion": "active lure count is presented on firstReady",
+            "result": "pass",
+            "observed": 1
+          },
+          {
+            "assertion": "lure presentation ID/source position preserved after first live frames",
+            "result": "pass"
+          },
+          {
+            "assertion": "lure remaining time decreases by actual elapsed delta",
+            "result": "pass",
+            "observed": {
+              "remainingBeforeMs": 5750.009999999999,
+              "remainingAfterMs": 5700.049999999998,
+              "elapsedDeltaMs": 49.9600000000064
+            }
+          }
+        ]
+      },
+      {
+        "case": "B/07-08-terminal-freeze",
+        "status": "pass",
+        "basis": [
+          "B/07-abandoned.json",
+          "B/08-terminal-still.json"
+        ],
+        "elapsedMs": 50657.426666666026,
+        "assertions": [
+          {
+            "assertion": "explicit abandon settled with zero reward",
+            "result": "pass"
+          },
+          {
+            "assertion": "run, actor positions, HP, chaos and inventory stay fixed",
+            "result": "pass"
+          },
+          {
+            "assertion": "live enemies and active tool snapshots stay fixed",
+            "result": "pass"
+          },
+          {
+            "assertion": "water and shell stop with the terminal run",
+            "result": "pass"
+          }
+        ],
+        "limit": "Presentation sequence/render counters may change; equality refers to actual gameplay state, positions and effect clocks."
+      },
+      {
+        "case": "B/10-11-return-and-reload",
+        "status": "pass",
+        "basis": [
+          "B/10-returned-base.json",
+          "B/11-base-reload.json",
+          "B/11-base-reload-after-transport.json"
+        ],
+        "state": {
+          "phase": "base",
+          "runId": "630ba88f-ab6a-416c-8fbb-a6242d267c1d",
+          "cycle": 6,
+          "modules": {
+            "CORE": 67,
+            "STORAGE": 21,
+            "PURIFIER": 47
+          },
+          "reserve": 0,
+          "tide": {
+            "tideNumber": 2,
+            "phase": "rise",
+            "cycleInPhase": 0,
+            "currentIntensity": 1.2
+          },
+          "inventorySha256Canonical": "b50d4ac49919f9db1325a37164d6b960a1c6eb552dac9131cd07da05c33a144d",
+          "equipment": {
+            "weaponId": null,
+            "toolIds": [
+              null
+            ],
+            "defenseIds": [
+              null,
+              null
+            ]
+          },
+          "baseSettled": true
+        },
+        "assertions": [
+          {
+            "assertion": "R reaches real base without A's destroyed-world exception",
+            "result": "pass"
+          },
+          {
+            "assertion": "reload preserves every persistent base field",
+            "result": "pass"
+          },
+          {
+            "assertion": "base settlement marked once, no extra cycle",
+            "result": "pass"
+          }
+        ],
+        "transientDifferences": [
+          "world",
+          "boundaries"
+        ]
+      },
+      {
+        "case": "B/15-16-actual-entry-abandon",
+        "status": "pass",
+        "basis": [
+          "B/15-entry-paused.json",
+          "B/16-entry-abandoned-frozen.json",
+          "B/evidence.json"
+        ],
+        "entryElapsedMs": 466.61999999999676,
+        "assertions": [
+          {
+            "assertion": "actual Rift entry paused before handoff",
+            "result": "pass"
+          },
+          {
+            "assertion": "explicit confirmation ends run without advancing entry clock",
+            "result": "pass"
+          },
+          {
+            "assertion": "no movement or gameplay time in abandoned entry",
+            "result": "pass"
+          }
+        ]
+      },
+      {
+        "case": "B/17-18-terminal-receipt-and-once-only-replacement",
+        "status": "pass",
+        "basis": [
+          "B/17-terminal-reload-base.json",
+          "B/18-base-reload-once.json",
+          "B/17-terminal-reload-base-after-transport.json",
+          "B/18-base-reload-once-after-transport.json"
+        ],
+        "state": {
+          "phase": "base",
+          "runId": "8a059ad6-2030-40b6-bed0-5cf5269b436f",
+          "cycle": 7,
+          "modules": {
+            "CORE": 44,
+            "STORAGE": 14,
+            "PURIFIER": 41
+          },
+          "reserve": 0,
+          "tide": {
+            "tideNumber": 2,
+            "phase": "rise",
+            "cycleInPhase": 1,
+            "currentIntensity": 1.4
+          },
+          "inventorySha256Canonical": "1d4f15533303db812e6e8524b2510d495e9d4013b2b452f3ecfa9bb81c824201",
+          "equipment": {
+            "weaponId": "WPN_replacement:8a059ad6-2030-40b6-bed0-5cf5269b436f",
+            "toolIds": [
+              null
+            ],
+            "defenseIds": [
+              null,
+              null
+            ]
+          },
+          "baseSettled": true
+        },
+        "replacementId": "WPN_replacement:8a059ad6-2030-40b6-bed0-5cf5269b436f",
+        "assertions": [
+          {
+            "assertion": "reload starts with a real unsettled-base terminal receipt",
+            "result": "pass"
+          },
+          {
+            "assertion": "first reload performs base settlement and clears terminal receipt",
+            "result": "pass"
+          },
+          {
+            "assertion": "next reload does not reroll impact or reward",
+            "result": "pass"
+          },
+          {
+            "assertion": "same run-derived replacement ID exists exactly once",
+            "result": "pass"
+          },
+          {
+            "assertion": "next firstReady preserves entire saved inventory",
+            "result": "pass"
+          }
+        ]
+      },
+      {
+        "case": "B/19-new-run-receives-input",
+        "status": "pass",
+        "basis": [
+          "B/19-next-run-moves.json",
+          "B/evidence.json"
+        ],
+        "runId": "30987487-f68d-4ef3-a93d-946daf68d77a",
+        "position": {
+          "x": 240,
+          "y": 913.2220999999993
+        },
+        "elapsedMs": 699.9399999999996,
+        "assertions": [
+          {
+            "assertion": "new run, cycle8 and carried replacement",
+            "result": "pass"
+          },
+          {
+            "assertion": "actual W input moves north from spawn after entry",
+            "result": "pass"
+          }
+        ]
+      }
+    ],
+    "misleadingLabels": {
+      "12-next-entry-paused": {
+        "basis": "B/12-next-entry-paused.json",
+        "actualScene": "PurificationScene",
+        "actualPhase": "departing",
+        "status": "not-an-entry-pass"
+      },
+      "13-entry-abandon": {
+        "basis": "B/13-entry-abandon.json",
+        "actualScene": "PurificationScene",
+        "actualPhase": "departing",
+        "status": "not-an-entry-pass"
+      },
+      "14-actual-entry-pause": {
+        "basis": "B/14-actual-entry-pause.json",
+        "actualScene": "PurificationScene",
+        "actualPhase": "departing",
+        "status": "not-an-entry-pass"
+      }
+    },
+    "testInstructionErrors": {
+      "count": 2,
+      "basis": "B/evidence.json",
+      "interpretation": "Two abandon UI commands were issued while still paused in the PurificationScene departure transition; no such menu exists there. Commands timed out. Real entry case is 15/16, not 12/13. No game bug inferred from these two locator failures."
+    },
+    "bodySampling": {
+      "method": "Longest cumulative trace per loaded-start raw SHA. Four corner checks on actual 20x20 body, sampled at 100ms; not every rendered/physics frame.",
+      "samples": 271,
+      "epochs": [
+        {
+          "loadedStartSha256": "3566797c1c8c61c412c7503f2b0b6268f45109a1e1eec3a6edd71923fb06e1d1",
+          "basis": "B/11-base-reload-before-trace.json",
+          "samples": 141,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "4333b9af8a064698c9d1ed1636da43ee49968f3bb7ae443dc499f43e1fd86b3a",
+          "basis": "B/final-trace.json",
+          "samples": 17,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "749235fad2036dd366c9a39902afed65bb37701ad044f88c423a61d66a340721",
+          "basis": "B/17-terminal-reload-base-after-trace.json",
+          "samples": 0,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "8b8f867f907e9a5afc90ad904af08fea4c1b484a77ffd2c80554935a60cfd704",
+          "basis": "B/17-terminal-reload-base-before-trace.json",
+          "samples": 19,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        },
+        {
+          "loadedStartSha256": "9e0a3fc9c9ac2a0b955de864d7cd8320b2adf2b6fd287d47cafdabf45fe98beb",
+          "basis": "B/04-retry-success-retried-trace.json",
+          "samples": 94,
+          "illegalBodySamples": 0,
+          "sampleErrors": []
+        }
+      ],
+      "illegalBodySamples": 0,
+      "limit": "The final trace alone covers only the document after the last reload; earlier documents are checked from their separate raw trace files."
+    },
+    "finalTraceOnly": {
+      "samples": 17,
+      "illegal": 0,
+      "sampleErrors": [],
+      "lureSamples": 0
+    },
+    "finalEvidence": [
+      "B/final-save.json",
+      "B/final-transport.json",
+      "B/final-trace.json",
+      "B/trace.json",
+      "B/journey-record.json"
+    ]
+  },
+  "versions": {
+    "AtoBChangedFiles": [
+      "QA:tools/recovery/qa-runtime.mjs",
+      "src/scenes/rift-scene.ts"
+    ],
+    "originalMatrixAndMemoryJourney": "Earlier 16/16 matrix and five-trip memory journey ran on separate frozen source versions. They were not all replayed on final recovery source. B verifies targeted recovery fixes only.",
+    "sourceIntegrityClaim": "B's full 438-file start/end manifests are identical. A has no end manifest after abort. Do not transfer B's unchanged-source claim to A or older matrix runs.",
+    "postRuntimeIntegration": "ROOT reports aggregate 10-group checks and build passed on main after integration. This summary task does not rerun them; check ROOT's main QA report. The documented post-runtime notice overflow style adjustment is not a fresh browser pass."
+  },
+  "baseJourneySummaryCopy": {
+    "file": "base-journey-summary.json",
+    "sha256": "f378a1e3ff6721aaa85afe75210639465da3df503f0590ca4ab23d8eb6a4ed54",
+    "identicalTo": "docs/qa/artifacts/iteration-22/base-journey-2026-09-12T16-32-31-769Z/base-journey-summary.json",
+    "originalUnmodified": true
+  },
+  "notBrowserValidatedHere": [
+    "Precise shell diversion deadlines and all water boundary milliseconds",
+    "Full-bag plus last-use/last-durability combined cases",
+    "Every five-family effect final tick and concurrent multi-target budget",
+    "Long-term four-A supply, balance or second-world production",
+    "Firefox/Safari compatibility or release performance",
+    "Sound listening or aesthetic/player-fun approval"
+  ],
+  "coverageBoundary": "Shell deadlines, all final-use variants and admission/persistence invariants belong to the separately run programmatic groups. Earlier real water/death, routes and base journey remain separately versioned evidence; they are not new recovery-browser cases.",
+  "audio": "Not recorded or listened during these two reload runs.",
+  "rawManifest": {
+    "A/evidence.json": {
+      "bytes": 767500,
+      "sha256": "54f26f4d68bfca41df03b3ee6c744ba17a4d77b7fc3c282925199a2a10f51b10"
+    },
+    "B/evidence.json": {
+      "bytes": 814068,
+      "sha256": "1e970014a6e9d1fa88ccd5da74dd5dc7f417dcadd86a2da016fab4bb87881396"
+    },
+    "A/postmortem.json": {
+      "bytes": 951,
+      "sha256": "83bc6ca85eea95f8b25bc733bd6dd98ece5066faafed0c66cf7179cb9b482046"
+    },
+    "A/02-pure-fuel-after-transport.json": {
+      "bytes": 166743,
+      "sha256": "01c41d39113552cd6b1a9fd7672849bbdcbb949f1f697bbab24209b3b5c37a8d"
+    },
+    "A/04-active-lure-after-transport.json": {
+      "bytes": 167911,
+      "sha256": "eea047fd711a00dc74262f8908948f6b11381d8920f29f166bd42ce3fe2a2146"
+    },
+    "A/05-loot-and-combat-after-transport.json": {
+      "bytes": 182632,
+      "sha256": "e58943c16d6d84c9fb58d6e542a7f79bc7fb6645d8c30b18080deb1177a3499a"
+    },
+    "A/06-real-combat-after-transport.json": {
+      "bytes": 173322,
+      "sha256": "eaaf8d4b2df4a94e5a98aef34b006ac2b47f09c985af985805b02b47829d889c"
+    },
+    "A/11-retry-candidate-transport.json": {
+      "bytes": 216349,
+      "sha256": "d3e61d3b48b973442a1ad2c52a30ad908ebe47687de6b9511c66e9a982c38950"
+    },
+    "A/12-retry-succeeded-transport.json": {
+      "bytes": 216349,
+      "sha256": "d3e61d3b48b973442a1ad2c52a30ad908ebe47687de6b9511c66e9a982c38950"
+    },
+    "B/02-failed-frame.json": {
+      "bytes": 32434,
+      "sha256": "b973b929c5cb9983378224f2c3cf3fca14941249e594f6fa614d749b78b74015"
+    },
+    "B/03-still-frozen.json": {
+      "bytes": 32434,
+      "sha256": "b973b929c5cb9983378224f2c3cf3fca14941249e594f6fa614d749b78b74015"
+    },
+    "B/04-retry-success-failed-transport.json": {
+      "bytes": 982251,
+      "sha256": "1c39b98e7bc167ff94de11b0e814c32adb26bdae28d5bfc00f1ea123baf4c237"
+    },
+    "B/04-retry-success-retried-transport.json": {
+      "bytes": 1111111,
+      "sha256": "bdf9283a8f10a908ff8a61dd0fcc45f980e1c8534f4ec64fe22421deebd087e6"
+    },
+    "B/05-reloaded-after-retry-after-transport.json": {
+      "bytes": 174328,
+      "sha256": "dc95715396e1554409998c146075120f83320bd3a5126e5dcc5cbb97ecce100f"
+    },
+    "B/07-abandoned.json": {
+      "bytes": 29728,
+      "sha256": "9eca4fe0e8c3920b3aa54f790df5d5e9fd1d4475adfca0e989fd2350a5ea057c"
+    },
+    "B/08-terminal-still.json": {
+      "bytes": 29715,
+      "sha256": "c4950fe2c3cc89eb5bb55de0741cda90b63a68e89b461b2453eb0e49f20521b7"
+    },
+    "B/10-returned-base.json": {
+      "bytes": 14539,
+      "sha256": "56f64ed3bb0b52b9d07ac2f92d361ef2f11b9fb278c573e7002b8f933b13dd45"
+    },
+    "B/11-base-reload.json": {
+      "bytes": 12124,
+      "sha256": "81815af3491cee94f30b4876bce98c4e6456602a0e8ea4ee2f3681cd2980981c"
+    },
+    "B/11-base-reload-after-transport.json": {
+      "bytes": 28174,
+      "sha256": "0668834d24bf84bfcd47ecdef6e7c7923c8d3b31466b65982009fc00a053601e"
+    },
+    "B/15-entry-paused.json": {
+      "bytes": 29529,
+      "sha256": "a0cdacd13c9363bd3be748b3bf9a25ad43ab7c848865c0817a1e6f3edfef3e7b"
+    },
+    "B/16-entry-abandoned-frozen.json": {
+      "bytes": 28792,
+      "sha256": "f288320096bbc9d433ccd39c754be389a53c8bfa244cb75d0ea49ca678fe5459"
+    },
+    "B/17-terminal-reload-base.json": {
+      "bytes": 12786,
+      "sha256": "a38833126b761621a737d9545966f0fbd5a9d3ae687d7c1951674649a9b11c50"
+    },
+    "B/18-base-reload-once.json": {
+      "bytes": 11959,
+      "sha256": "df395e211cb740715393ef4af12931e49fa5d33781730891a4f651a774c16b8c"
+    },
+    "B/17-terminal-reload-base-after-transport.json": {
+      "bytes": 28228,
+      "sha256": "c392b90f5fe6dd508039a81923132ca53e4e00e26f37b168898f01468a256ba2"
+    },
+    "B/18-base-reload-once-after-transport.json": {
+      "bytes": 27815,
+      "sha256": "889f8e22b8ebe8ccf9ad354202134e81097898ca69caad7710243695cdb31cad"
+    },
+    "B/19-next-run-moves.json": {
+      "bytes": 30004,
+      "sha256": "06e2783922deed8a6a97d59e9ca5e7760e031d5f9bd55cf30956c00a6663b7f6"
+    },
+    "B/12-next-entry-paused.json": {
+      "bytes": 13373,
+      "sha256": "74fe647bbe1343b824815501e2000052aca495e7beffff61e5deec0505f8ec7e"
+    },
+    "B/13-entry-abandon.json": {
+      "bytes": 13373,
+      "sha256": "74fe647bbe1343b824815501e2000052aca495e7beffff61e5deec0505f8ec7e"
+    },
+    "B/14-actual-entry-pause.json": {
+      "bytes": 13373,
+      "sha256": "74fe647bbe1343b824815501e2000052aca495e7beffff61e5deec0505f8ec7e"
+    },
+    "A/source-start.json": {
+      "bytes": 65174,
+      "sha256": "17e021409631135e835e2b49e697806068f401d724df7cc605b0be2cdbb026eb"
+    },
+    "B/source-start.json": {
+      "bytes": 65174,
+      "sha256": "f9c53f4b9fd4c9d63302a80e5dcd973c501b8e873aba091e8bb9a3a89c14d55d"
+    },
+    "A/02-pure-fuel-after-trace.json": {
+      "bytes": 201,
+      "sha256": "182c459d227767019ad611b02b59beb9ee8773528eab8dd59d79d1ec17143e5b"
+    },
+    "A/02-pure-fuel-before-transport.json": {
+      "bytes": 591410,
+      "sha256": "65f7dec0baaa9162243a1bd396358b2b106d75b1400203dbe15b3255fe3d955c"
+    },
+    "A/02-pure-fuel-before-trace.json": {
+      "bytes": 221678,
+      "sha256": "9b140e1edfedaa05eb45a0065b35f96483c445768d38fb71397120dd68f3e51b"
+    },
+    "A/04-active-lure-after-trace.json": {
+      "bytes": 182,
+      "sha256": "57ef6fc93da8fb661f5eb8b7cebb8fd6f3b379b2d2d3c76667f2651b2214a824"
+    },
+    "A/04-active-lure-before-transport.json": {
+      "bytes": 290842,
+      "sha256": "573d5d51668a80063bfc7215a9296aedc826fa3e832b48eb84ace4d28ea11641"
+    },
+    "A/04-active-lure-before-trace.json": {
+      "bytes": 69624,
+      "sha256": "cf92a6785e7a58d50855a4d619fb1ac8873c4367820f3180b0ba105e3bda501e"
+    },
+    "A/05-loot-and-combat-after-trace.json": {
+      "bytes": 202,
+      "sha256": "0219487357b79b67f21e95dfc82d2af96091b86d88f0cb0cdd21f0b8ac7ce380"
+    },
+    "A/05-loot-and-combat-before-transport.json": {
+      "bytes": 2270699,
+      "sha256": "c27da7b1b5c4e607dcd93a556ee8b57635d41073875b015d1a3c0bf165cc9d4b"
+    },
+    "A/05-loot-and-combat-before-trace.json": {
+      "bytes": 939753,
+      "sha256": "7dd0502c37f32f8bd15910f8854c9a49c675ba5bb052b6e5be1ffe0fa85e2fc5"
+    },
+    "A/06-real-combat-after-trace.json": {
+      "bytes": 202,
+      "sha256": "c41bac082ede9c3b894c9fb9f3be0ebe735b1a2355ad917c1652006a22b97756"
+    },
+    "A/06-real-combat-before-transport.json": {
+      "bytes": 1492593,
+      "sha256": "608f5c2400b6a40d781263cb91ef4bf8b4c67fb4d8873c33d042f2865ed5b1a0"
+    },
+    "A/06-real-combat-before-trace.json": {
+      "bytes": 796244,
+      "sha256": "290c07714f9db8a4a7c6c03f86f18420a9a15ad77060ba4efb8b030fbf7109f7"
+    },
+    "A/09-storage-retried-failed-transport.json": {
+      "bytes": 216266,
+      "sha256": "cb329be5f596e72bdef9a5f45177048d4c09251ed48f297196dc46b75e8ed14a"
+    },
+    "A/09-storage-retried-failed-trace.json": {
+      "bytes": 60779,
+      "sha256": "b412bf9f6350f0b0bb2bb622c6278f2af80461d3a58ac9547633b9e856a7f4d1"
+    },
+    "A/10-after-retry-reload-after-transport.json": {
+      "bytes": 173342,
+      "sha256": "143ca34ca20a8a6cfb56f7d2cc5797e2cc06cf404440c610549254772619e30e"
+    },
+    "A/10-after-retry-reload-after-trace.json": {
+      "bytes": 183,
+      "sha256": "b167ffeaed8117a090da9e389da8b90ee80c47191e76c25b825955b1fcb3a018"
+    },
+    "A/10-after-retry-reload-before-transport.json": {
+      "bytes": 216266,
+      "sha256": "cb329be5f596e72bdef9a5f45177048d4c09251ed48f297196dc46b75e8ed14a"
+    },
+    "A/10-after-retry-reload-before-trace.json": {
+      "bytes": 93697,
+      "sha256": "478c493fed983a09f9724979cd0f306c24253cef08560e6af7aa3b1051ef61e5"
+    },
+    "A/11-retry-candidate-trace.json": {
+      "bytes": 31151,
+      "sha256": "df5c2b6fe0a3188c2d6b405488665136e60fce174c96ed8c8ee7104d059eda1f"
+    },
+    "A/12-retry-succeeded-trace.json": {
+      "bytes": 49978,
+      "sha256": "27ccb11b55e565f8253952688b5493897105977bdbe45cfead90f084d913f314"
+    },
+    "A/13-retry-reload-after-transport.json": {
+      "bytes": 173270,
+      "sha256": "0a28d348fab76a9203dac630738c0bd661034578b8a76bb59a8bfe65a30341a0"
+    },
+    "A/13-retry-reload-after-trace.json": {
+      "bytes": 183,
+      "sha256": "de13ef6c2120dd1d7534088125e9d1c476f52b420d2b6b850fbab92cb170bb32"
+    },
+    "A/13-retry-reload-before-transport.json": {
+      "bytes": 216349,
+      "sha256": "d3e61d3b48b973442a1ad2c52a30ad908ebe47687de6b9511c66e9a982c38950"
+    },
+    "A/13-retry-reload-before-trace.json": {
+      "bytes": 50016,
+      "sha256": "700964ae726f7ecdab492a7e48cd0cfee8e04fc1f6637d3f2e3c3e308e512373"
+    },
+    "A/18-terminal-record-transport.json": {
+      "bytes": 636616,
+      "sha256": "26f358867ea433e026bae2f27d2c83d8652fd5643dfaa12b478e2aa68bbd477a"
+    },
+    "A/18-terminal-record-trace.json": {
+      "bytes": 720390,
+      "sha256": "45cbc70f447cd452e5f77ff42f95b47bef89cb87486ab518f9569222ce71de63"
+    },
+    "B/04-retry-success-failed-trace.json": {
+      "bytes": 319197,
+      "sha256": "26faf6841baa6f99ed3b5f8196d53138d03bde8ae8ce76f10eaee7a9d4df4256"
+    },
+    "B/04-retry-success-retried-trace.json": {
+      "bytes": 326501,
+      "sha256": "3c06236a49b9de72491a0f156dc969bcd15ed21ee06005bfdfbac5961d46aca8"
+    },
+    "B/05-reloaded-after-retry-after-trace.json": {
+      "bytes": 181,
+      "sha256": "2bc8b75bd2ac898a713058ea41b0539a5783f7de0fcf5e354c258206b3e1c7a0"
+    },
+    "B/05-reloaded-after-retry-before-transport.json": {
+      "bytes": 1111111,
+      "sha256": "bdf9283a8f10a908ff8a61dd0fcc45f980e1c8534f4ec64fe22421deebd087e6"
+    },
+    "B/05-reloaded-after-retry-before-trace.json": {
+      "bytes": 326831,
+      "sha256": "1cb9988bf02ae11443dd6521630d3a561d3d781ecd660d49a0fa85ff344e163c"
+    },
+    "B/09-terminal-receipt-transport.json": {
+      "bytes": 126010,
+      "sha256": "22b0a79ced545f29595b28e7d889cbac4c6ffa88ed57be2fec657a34272c44f4"
+    },
+    "B/09-terminal-receipt-trace.json": {
+      "bytes": 510881,
+      "sha256": "b1b4bb1f106d02dfbb9cd1eb6e84f25050af581716ddd5ee85d337bf7043073e"
+    },
+    "B/11-base-reload-after-trace.json": {
+      "bytes": 162,
+      "sha256": "335b6092bbdb3f908a2bdee64cb8a064a9f51190d4cec17087e31417d6b8bda1"
+    },
+    "B/11-base-reload-before-transport.json": {
+      "bytes": 139563,
+      "sha256": "1434262d46408d609424b937c99d5d90bb60906cd5978138ded3aaf4f9439e77"
+    },
+    "B/11-base-reload-before-trace.json": {
+      "bytes": 514590,
+      "sha256": "ab48c5abbe6bd94d66c22308e93ae0b79167b6237703740d830c3bf063244a03"
+    },
+    "B/17-terminal-reload-base-after-trace.json": {
+      "bytes": 163,
+      "sha256": "489a9fa5996059eec4ca2d17c4236b14025abd735e84e68ff392b3d220d5c0d6"
+    },
+    "B/17-terminal-reload-base-before-transport.json": {
+      "bytes": 176424,
+      "sha256": "e32e369f1899720d828a7644b4c8afa658916fa64349ca109d560f23ed3057e3"
+    },
+    "B/17-terminal-reload-base-before-trace.json": {
+      "bytes": 185397,
+      "sha256": "2bee6bad0a5da9d90d01704b5b3e63f1d6b44a26fb9c074b97e8cd791eac501d"
+    },
+    "B/18-base-reload-once-after-trace.json": {
+      "bytes": 162,
+      "sha256": "df1ff92618bf57d6319b2f0b99163b0fe5b23e3f0875e8b4dc993a37b4563812"
+    },
+    "B/18-base-reload-once-before-transport.json": {
+      "bytes": 28228,
+      "sha256": "c392b90f5fe6dd508039a81923132ca53e4e00e26f37b168898f01468a256ba2"
+    },
+    "B/18-base-reload-once-before-trace.json": {
+      "bytes": 237,
+      "sha256": "bcf482f390909de40689cf916dbba504262f8b3274abc9e78007f8e761d23bc4"
+    },
+    "B/final-transport.json": {
+      "bytes": 335174,
+      "sha256": "2a07a2a80fc86bde6468973191b8508352274e5309eec06ce3bc89273ca1da41"
+    },
+    "B/final-trace.json": {
+      "bytes": 102146,
+      "sha256": "541c3dda4c577e98090ba43897c50441e2544385bdb6692d3da6a0687d01c0cf"
+    },
+    "B/final-save.json": {
+      "bytes": 35096,
+      "sha256": "03280e9f6c3e2b53504d0b26f3ec7b91bb66bb563ba7cad893f618fda21e1e38"
+    },
+    "B/trace.json": {
+      "bytes": 102108,
+      "sha256": "8b93edbda544bd71f72d2da4c939ae693a52588f69f621ef7afb477efa3b5a2e"
+    },
+    "B/journey-record.json": {
+      "bytes": 160605,
+      "sha256": "e71f855b5724684452db9bf4d78ba3d5aae875b9eb84719e27ae7e96aa3f7a26"
+    }
+  }
+}

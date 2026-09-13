@@ -1651,4 +1651,134 @@ generateWeapons();
   }
 }
 
+// Explicit native-world data. Old spatial fixtures and global loot defaults do not inherit it.
+{
+  const records = filename => {
+    const { header, rows } = readCsv(filename);
+    return rows.map(row => {
+      if (row.length !== header.length) throw new Error(`[codegen] column count in ${filename}: ${row[0]}`);
+      return Object.fromEntries(header.map((key, i) => [toCamel(key), row[i]]));
+    });
+  };
+  const requireNumber = (row, key, minimum = 0, integer = false) => {
+    if (row[key] === '') throw new Error(`[codegen] missing ${row.id ?? row.poolId}.${key}`);
+    row[key] = Number(row[key]);
+    if (!Number.isFinite(row[key]) || row[key] < minimum || (integer && !Number.isSafeInteger(row[key]))) {
+      throw new Error(`[codegen] invalid ${row.id ?? row.poolId}.${key}`);
+    }
+  };
+  const sources = records('contaminant-sources.csv'), sourcePools = {};
+  const activeTypes = new Set(records('contaminants.csv').filter(row => row.active === 'true').map(row => row.id));
+  const sourceKeys = new Set();
+  for (const row of sources) {
+    if (!/^[a-z][a-z0-9-]*$/.test(row.poolId) || !activeTypes.has(row.type) || sourceKeys.has(`${row.poolId}:${row.type}`)) throw new Error('[codegen] invalid contaminant source');
+    requireNumber(row, 'weight', Number.MIN_VALUE);
+    sourceKeys.add(`${row.poolId}:${row.type}`);
+    (sourcePools[row.poolId] ??= []).push({ type: row.type, weight: row.weight });
+  }
+  if (sources.length === 0) throw new Error('[codegen] contaminant sources cannot be empty');
+  for (const pool of Object.values(sourcePools)) {
+    if (!Number.isFinite(pool.reduce((sum, row) => sum + row.weight, 0))) throw new Error('[codegen] contaminant source weight total must be finite');
+  }
+  writeFileSync(resolve(OUT_DIR, 'contaminant-sources-data.ts'),
+    '// AUTO-GENERATED from data/contaminant-sources.csv — DO NOT EDIT\n'
+    + 'export const CONTAMINANT_SOURCE_POOLS = ' + JSON.stringify(sourcePools, null, 2) + ' as const;\n');
+
+  const scenes = records('suspended-sea-scenes.csv'), ground = records('suspended-sea-ground.csv');
+  const openings = records('suspended-sea-openings.csv'), water = records('suspended-sea-water.csv');
+  const placements = records('suspended-sea-placements.csv');
+  const sceneIds = new Set(scenes.map(row => row.id));
+  if (sceneIds.size !== scenes.length || scenes.length !== 2) throw new Error('[codegen] suspended sea requires two distinct scenes');
+  for (const row of scenes) {
+    if (row.worldId !== 'suspended-sea' || !['sea-open-channel', 'sea-folded-ridge'].includes(row.id)) throw new Error('[codegen] unknown suspended sea world/scene');
+    for (const key of ['cols','rows','recipeVersion','entryDurationMs']) requireNumber(row,key,1,true);
+    for (const key of ['seaFrontY','seaBottomHeight','seaTopHeight']) requireNumber(row,key);
+    if (row.cols > 100 || row.rows > 100 || row.cols < 8 || row.rows < 8 || row.seaBottomHeight >= row.seaTopHeight || row.entryDurationMs > 1500) throw new Error('[codegen] invalid suspended sea dimensions or entry');
+    const reefKeys = ['reefCol','reefRow','reefHeight'];
+    if (reefKeys.some(key => row[key] === '') && !reefKeys.every(key => row[key] === '')) throw new Error('[codegen] partial suspended sea reef');
+    for (const key of reefKeys) { if (row[key] === '') row[key] = null; else requireNumber(row,key,0,key !== 'reefHeight'); }
+  }
+  for (const rows of [ground,openings,water]) {
+    const ids = new Set();
+    for (const row of rows) {
+      const key = `${row.sceneId}:${row.id}`;
+      if (!sceneIds.has(row.sceneId) || !row.id || ids.has(key)) throw new Error('[codegen] unknown/duplicate suspended sea row');
+      ids.add(key);
+      requireNumber(row,'x'); requireNumber(row,'y');
+    }
+  }
+  for (const row of ground) {
+    for (const key of ['radiusX','radiusY']) requireNumber(row,key,Number.MIN_VALUE);
+    for (const key of ['angle','height']) requireNumber(row,key,-180);
+    if (!['ridge','scour','shelf'].includes(row.kind) || Math.abs(row.height)>80 || Math.abs(row.angle)>180) throw new Error('[codegen] invalid suspended sea landform');
+  }
+  for (const row of openings) {
+    for (const key of ['radiusX','radiusY']) requireNumber(row,key,Number.MIN_VALUE);
+    for (const key of ['driftX','driftY','phase']) requireNumber(row,key);
+    requireNumber(row,'angle',-180);
+    if (row.angle>180) throw new Error('[codegen] invalid suspended sea opening');
+  }
+  const points = (value, minimum) => {
+    const parsed = value.split('|').map(point => point.split(':').map(Number));
+    if (parsed.length < minimum || parsed.some(point => point.length !== 2 || point.some(n => !Number.isFinite(n)))) throw new Error('[codegen] invalid suspended sea point string');
+    return parsed;
+  };
+  for (const row of water) {
+    for (const key of ['width','depth','quietMs','warningMs','activeMs','retractMs','damage','hitIntervalMs','contactExtension','fallTravelMs','divertMs','returnMs']) requireNumber(row,key,Number.MIN_VALUE);
+    for (const key of ['shellX','shellY','shellHitX','shellHitY']) requireNumber(row,key);
+    if (row.id !== 'folding-shell' || row.contactExtension>1 || row.fallTravelMs>=row.warningMs || row.fallTravelMs>=row.activeMs) throw new Error('[codegen] invalid suspended sea water timing');
+    const outline = points(row.outline,5);
+    points(row.spillOutline,5); points(row.drainPath,2);
+    if (outline.some(([x,y]) => Math.abs(x)>row.width/2 || Math.abs(y)>row.depth/2)) throw new Error('[codegen] suspended sea core outside declared bounds');
+  }
+  const placementKeys = new Set();
+  for (const row of placements) {
+    if (!sceneIds.has(row.sceneId) || !row.id || !['enemy','kindling','contaminant'].includes(row.kind)) throw new Error('[codegen] invalid suspended sea placement');
+    for (const key of ['col','row']) requireNumber(row,key,0,true);
+    requireNumber(row,'facing');
+    if (row.variantGroup === '') {
+      if (row.variant !== '') throw new Error('[codegen] variant without group');
+      row.variant = null;
+    } else requireNumber(row,'variant',0,true);
+    const key = `${row.sceneId}:${row.id}:${row.variantGroup}:${row.variant}`;
+    if (placementKeys.has(key)) throw new Error('[codegen] duplicate suspended sea placement');
+    placementKeys.add(key);
+    if (row.kind === 'enemy') {
+      if (row.substrate !== 'insect_remnant' || row.coverage !== 'infiltrate' || !['sense_hear','sense_cone'].includes(row.sense)
+        || row.motion !== 'motion_patrol' || row.rhythm !== 'rhythm_open' || row.contact !== 'contact_melee_three'
+        || row.tier || row.lootPoolId || row.allowWeapon) throw new Error('[codegen] unsupported suspended sea enemy');
+      points(row.patrol,1);
+    } else {
+      if (!['safe','contested','deep'].includes(row.tier) || ['substrate','coverage','motion','sense','rhythm','contact','patrol'].some(key => row[key])) throw new Error('[codegen] invalid suspended sea loot');
+      if (row.kind === 'contaminant') {
+        if (!sourcePools[row.lootPoolId] || row.allowWeapon) throw new Error('[codegen] missing/unknown suspended sea source');
+      } else if (!['true','false'].includes(row.allowWeapon) || row.lootPoolId) throw new Error('[codegen] missing suspended sea weapon permission');
+    }
+    row.allowWeapon = row.allowWeapon === '' ? null : row.allowWeapon === 'true';
+  }
+  for (const sceneId of sceneIds) {
+    if (water.filter(row=>row.sceneId===sceneId).length !== 1 || ground.filter(row=>row.sceneId===sceneId).length < 3 || openings.filter(row=>row.sceneId===sceneId).length < 3) throw new Error('[codegen] incomplete suspended sea scene');
+    const rows = placements.filter(row=>row.sceneId===sceneId);
+    const groups = new Set(rows.map(row=>row.variantGroup).filter(Boolean));
+    if (groups.size === 0) throw new Error('[codegen] suspended sea requires actual content variants');
+    const logicalOwners = new Map();
+    for (const row of rows) {
+      const owner = logicalOwners.get(row.id);
+      if (owner !== undefined && owner !== row.variantGroup) throw new Error('[codegen] placement id reused across groups');
+      logicalOwners.set(row.id,row.variantGroup);
+    }
+    for (const group of groups) {
+      const variants = [...new Set(rows.filter(row=>row.variantGroup===group).map(row=>row.variant))].sort((a,b)=>a-b);
+      if (variants.length<2 || variants.some((variant,i)=>variant!==i)) throw new Error('[codegen] content variants must be contiguous from zero');
+      const memberIds = variants.map(variant => rows.filter(row=>row.variantGroup===group && row.variant===variant).map(row=>row.id).sort().join('|'));
+      if (memberIds.some(ids=>ids!==memberIds[0])) throw new Error('[codegen] atomic content variants must preserve their members');
+    }
+  }
+  writeFileSync(resolve(OUT_DIR, 'suspended-sea-data.ts'), [
+    '// AUTO-GENERATED from data/suspended-sea-*.csv — DO NOT EDIT',
+    ...[['SCENES',scenes],['GROUND',ground],['OPENINGS',openings],['WATER',water],['PLACEMENTS',placements]].map(([key,rows]) => `export const SUSPENDED_SEA_${key} = ${JSON.stringify(rows,null,2)} as const;`),
+    'export type SuspendedSeaSceneId = typeof SUSPENDED_SEA_SCENES[number]["id"];','',
+  ].join('\n'));
+}
+
 console.log('[codegen] Done.');

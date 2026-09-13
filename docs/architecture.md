@@ -10,6 +10,29 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+## 迭代22：完整悬海内容包（DEC-157，集成验证中）
+
+`data/suspended-sea-*.csv`经既有codegen生成`src/generated/suspended-sea-data.ts`，拥有两张编排、地形、自然孔、真实落水/侧溢/排水路径与七翻堆。`src/dev/suspended-sea/world.ts`校验明确世界ID、版本、种子及原子部署变体，组合`SpatialSliceWorld`并返回壳片合同/来源元信息；没有继承覆盖基类构造期的advance。真实来源为`suspended-sea`，不冒报旧图书馆；空reef不创建占地或显示实例。旧M/local数据与Vista默认不变。
+
+`src/worlds/suspended-sea/types.ts`声明借用只读ShellView/SeaEntryView，`shell-system.ts`只拥有环境目标资格、击偏/回摆及单水源接触；没有第二个玩家、AI、库存或武器系统。`src/dev/suspended-sea/runtime.ts`将其与正式RiftScene及原SpatialSliceWorld组合：beforeCombat先prepare同一时刻，Combat按实际武器预算消费并命中，runtime再用核心与侧溢并集判水伤，afterUpdate只呈现与留存实际事件。旧world.advance继续原准备+接触路径，新runtime只调用准备并拥有唯一水源节流，不能重复判伤。注册目标返回幂等注销函数，结束/销毁不会留下旧目标。事件与异步snapshot复制借用视图，不能留可变数组引用。
+
+RiftDevFixture显式注入1200ms入场、世界环境音、soil脚步、运行层地表和搜索物件工厂；RiftScene对短入场统一冻结物理与完整模拟，Enter跳过到同一交控态，held动作键须keyup后才恢复。只冻结自己拥有的物理暂停，Esc与已有菜单控制保持。RunController的可选getElapsedMs读取正式dev运行时钟，不计入场；未注入的旧场景沿原时钟。Phaser仍拥有真实地板、碰撞与感知；跳过的是被完整Three替代的旧地表绘制，不能跳过玩法。
+
+`StagePresentationOptions`提供显式terrain/createPile/sea/createAttachment接点，所有未传的旧调用保持原表现。`src/dev/suspended-sea/seabed.ts`与`presentation.ts`实现沉积海床、来源翻堆、薄壳片及侧水/入场；同一个Three scene、camera、真实深度与StageVisibility负责显隐。原海体只在新world按CSV核心尺寸绘落水，附属侧流读ShellView，不独立算伤害。入场在最终合成画面上建立，不隐藏海体暴露未知地面，也不改机位/视野。薄唇显示锚点与实际命中点显式分开，排水在真实天井边下落，不生成可走的桥。
+
+`src/dev/suspended-sea/audio.ts`读真实WaterFlowCycle与ShellView，以AudioManager的固定实例播放汇流/接地/断流/壳击；pause与destroy沿同一生命周期。六个离线合成音源注册于audio-catalog，独立生成脚本保参数与seed，源素材/公开副本一致。AudioManager新增按instanceId停止及只读voice诊断；不得以普通8轨准入阈值假称所有床轨也被严格限制为8。
+
+来源数据`data/contaminant-sources.csv`生成`contaminant-sources-data.ts`；可选lootPoolId/allowWeapon经map-types、fixture及LootSearch传到原污染物/武器抽取。来源与品质分别抽，未知显式pool拒绝，allowWeapon=false先于首发现保障。InventoryStore仍唯一拥有揭晓物与装备，不新增背包账本。shore仅在已有build-lab-loadouts新增组合，现有五族机制不变。
+
+`suspended-sea.html`与`src/dev/suspended-sea.ts`是独立DEV整趟入口，CREATE以后才允许probe采样；部分建场失败保留初始异常后释放原生资源。四配置、两编排、seed、实际元数据和连续事件进入同一训练记录，`__suspendedSea`提供只读状态。共享内存后端隔离正式存档，未加入生产随机池或默认构建；基地供奉往返与长期恢复在第三工作包。开发说明见[悬海入口](dev/suspended-sea.md)，当前验收见[迭代22 QA](qa/iteration-22.md)，四A持续供给仍未开始。
+
+第三包隔离实现新增`suspended-sea-journey.html`：复用正式净化点的整备、供奉和归来冲击，在同一库存中往返悬海。默认memory页供真实多趟链验收；`?resume=1`使用独立的`coh-suspended-sea-journey:`存储空间，正式游戏存档不变。代码已按三方SHA核对合入主工程；模块/新进程路由与真实刷新、同字节重试、主动放弃/一次基地结算及下一趟移动验证通过。其它旧世界未注册完整恢复。
+
+完整恢复分工：`RiftFrameCommit`负责POST_UPDATE整帧/500ms检查点与失败冻结，`InventoryStore`提供可选帧草稿，`SaveManager`一次写入基地/库存/世界且保留完整上一包。`commit-effects`仅延后成功呈现，机制事件保持同步。各Player/AI/Combat/Tool/Search/Run状态由原所有者导出和恢复；`rift-recovery-state`校验跨系统关系，`suspended-sea/recovery-validation`先按当前CSV世界/AI/战斗签名和实际AABB校验，再允许载入。地貌仅恢复G记忆、R重算；物理步长余数与镜头缓动保留。
+
+`departure intent`先与beginRun/cycle同存；active续原局，终局保存独立回执，未结基地才进入PurificationScene一次冲击。run ID确定归来随机流与白板替补ID，存储失败后的重载不会重抽结果。任何未知世界或完整包损坏保留原记录；本包恢复能力不扩到未适配的随机池。
+
+
 ## 迭代21：正式系统的构筑对照入口（DEC-147，2026-09-11）
 
 `build-lab.html`是仅开发环境可用的独立入口，直接挂载生产`RiftScene`。`data/build-lab-scenes.csv`、`build-lab-placements.csv`、`build-lab-loadouts.csv`经既有codegen生成`src/generated/build-lab-data.ts`，分别拥有场景几何、部署及普通配置；不复制玩家、敌人、技能或物件数值。
@@ -110,7 +133,7 @@ R1空间视觉被用户以30/100否决；旧功能证据不继承为R2视觉PASS
 
 `src/art/contaminant-icons.ts`持有18类24px硬边物件图标，报告/供奉/备行/HUD共用 `contaminantIconUrl`；`tools/inventory/export-contaminant-icons.ts`导出PNG/SVG与contact sheet，并验证CSV覆盖、唯一轮廓、色板和透明边界。`RiftHud`按实例ID而非类型绑定装备与余次，保持空槽，避免同型技能串位。
 
-正常出发→真实翻堆→撤离/死亡→归来结算已接通。`FieldLootInventory`持有可见附近地面投影、E取得与交换，`LootSearchSystem`揭晓新武器必须调用未供奉工厂。未交部分仅完整中断恢复政策与人审体验，不把此保护标为恢复完成。当前规格见 `system-field-inventory.md`，验证见 `docs/qa/iteration-19-unified-equipment.md`。
+正常出发→真实翻堆→撤离/死亡→归来结算已接通。`FieldLootInventory`持有可见附近地面投影、E取得与交换，`LootSearchSystem`揭晓新武器必须调用未供奉工厂。中断政策已锁DEC-158，悬海独立旅程已实现完整恢复；旧世界仍只有活动账本保护，不能把这项保护视为恢复完成。当前规格见 `system-field-inventory.md`，验证见 `docs/qa/iteration-19-unified-equipment.md`。
 
 ## R4-C 当前实体占空合同
 
@@ -445,7 +468,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | LoadoutPanel | src/ui/dom/loadout-panel.ts | 出击装配墙机：只读身份带 + 工具槽 + 只读出击预估三项（表名薪柴价值）。无顶 Tab | isOpen(), open(onConfirm, onClose?), close() | 已实现（Slice 3+；I11-B4c 同族） |
 | StatusPanel | src/ui/dom/status-panel.ts | 存续报告墙机：身份带 + 顶 Tab（装置/残渣/潮汐/蜕变）+ 详情主-从。`open` 第二参是净化点最近 overlap 类型，用来亮走近的台 | isOpen(), open(onClose?, nearestOverlap?), close() | 已实现（Slice 3+；I11-B4a 主-从） |
 | ModuleIdentityStrip | src/ui/dom/module-identity-strip.ts | 三模块身份带 HTML helper（名 + 条 + hp/maxHp）。效果百分比不进带。供存续报告 / 分配 / 蜕变 / 供奉 / 出击装配同族 | identityBandHtml(opts) | 已实现（I11-B4c 抽出，不是新系统） |
-| PauseMenu | src/ui/dom/pause-menu.ts | 局内 Esc 记录菜单：新的纪录 / 沿旧路返回 / 合上。关闭=场景原样恢复；在裂隙内选新的纪录或沿旧路返回会结束当前出击 | isOpen(), open(scene), close(), discard() | 已实现 |
+| PauseMenu | src/ui/dom/pause-menu.ts | 局内Esc场景菜单；普通入口保留记录操作，活动/待保存账本禁止错误载入。完整恢复入口只提供继续原局、明确确认放弃；关闭原样续玩 | isOpen(), open(scene, { onAbandon? }), close(), discard() | 迭代22恢复入口已接 |
 | Session | src/managers/session.ts | 新档/读档的共享启动序列（主菜单与记录菜单共用，避免漏 reset） | hasReadableSave(), beginNewExpedition(scene, enter?), loadExpedition(scene, enter?)；可选ExpeditionEntry回调接new/continue，只有首页传入 | 已实现 |
 | PurificationHud | src/ui/dom/purification-hud.ts | 净化点贴顶 `.device-plate` 读数（薪柴上行 / 潮汐与下次归来下行）+ 底栏 `#purif-prompt`（无目标弱 / 靠近两行），挂 `#dom-ui-root`。不套 `.game-panel` | create(), updatePrompt(target), refresh(), setPromptVisible(visible), destroy() | 已实现（Slice 2+；Slice 7 净化器目标名；DEC-117 去掉加厚底栏；I11-B3 容器化） |
 

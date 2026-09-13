@@ -38,6 +38,7 @@ export interface InventoryPresenterOptions {
   canTake?: (item: InventoryItem) => boolean;
   canDrop?: (position: Vector2) => boolean;
   onTaken?: (ids: readonly string[]) => void;
+  afterMutation?: () => Promise<void>;
 }
 
 export function projectInventoryItem(item: InventoryItem, mode: InventoryPanelMode): InventoryPanelItem {
@@ -135,7 +136,10 @@ export function openInventory(options: InventoryPresenterOptions): void {
   // Close before subscribing so replacing one panel cannot retain its listener.
   inventoryPanel.close();
   let unsubscribe: (() => void) | undefined;
-  inventoryPanel.open({ ...options, getSnapshot: () => snapshot(options), onAction: action => act(action, options),
+  inventoryPanel.open({ ...options, getSnapshot: () => snapshot(options), onAction: action => {
+    const result = act(action, options);
+    return result.ok && options.afterMutation ? options.afterMutation().then(() => result) : result;
+  },
     onClose: () => { unsubscribe?.(); unsubscribe = undefined; options.onClose(); },
   });
   unsubscribe = inventoryStore.subscribe(() => inventoryPanel.update());

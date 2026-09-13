@@ -1,3 +1,4 @@
+import { WEAPON_DATA } from '@/generated/weapon-data';
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import type { ContaminantType } from '@/types/game-types';
 import type { RiftPresentationView } from './bridge';
@@ -9,8 +10,14 @@ export function supportsStageForm(form: Pick<ContaminationForm, 'substrate' | 'c
   return form.occupancy === 'floor' && form.substrate === 'insect_remnant' && form.coverage === 'infiltrate';
 }
 
+/** Native models exist for the currently authored crowbar family only. */
+export function supportsStageWeapon(definitionId: string): boolean {
+  const weapon = WEAPON_DATA[definitionId];
+  return !!weapon && weapon.type === 'crowbar' && weapon.profileId === 'crowbar';
+}
+
 export function assertStagePresentationSupported(frame: RiftPresentationView): void {
-  if (frame.player.weaponDefinitionId !== null && frame.player.weaponDefinitionId !== 'crowbar_plain')
+  if (frame.player.weaponDefinitionId !== null && !supportsStageWeapon(frame.player.weaponDefinitionId))
     throw new Error(`Stage has no held model for ${frame.player.weaponDefinitionId}`);
   for (const enemy of frame.enemies) if (enemy.substrate !== 'insect_remnant' || enemy.coverage !== 'infiltrate')
     throw new Error(`Stage has no actor model for ${enemy.substrate}/${enemy.coverage}`);

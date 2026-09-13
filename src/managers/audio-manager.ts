@@ -6,6 +6,7 @@
  */
 
 import Phaser from 'phaser';
+import { commitEffects } from '@/core/commit-effects';
 import { GAME_CONSTANTS } from '@/config/constants';
 import {
   AUDIO_ASSETS,
@@ -211,6 +212,11 @@ export class AudioManager {
 
   playSFX(key: string, config?: PlaySfxConfig): void {
     const priority = defaultPriority(key, config?.priority);
+    if (priority !== 'ui' && commitEffects.isOpen()) {
+      const captured = config ? { ...config } : undefined;
+      commitEffects.defer(() => this.playSFX(key, captured));
+      return;
+    }
     if (this.paused && priority !== 'ui') return;
     if (key === 'sfx-ui-hover') {
       const now = performance.now();
@@ -388,10 +394,20 @@ export class AudioManager {
   }
 
   stopLoop(instanceId: string, fadeOut = 0.15): void {
+    if (commitEffects.defer(() => this.stopLoop(instanceId, fadeOut))) return;
     for (const voice of this.voices) {
       if (voice.instanceId === instanceId && voice.loop) {
         this.startFade(voice, voice.fadeGain, 0, fadeOut, true);
       }
+    }
+  }
+
+  /** Releases all voices owned by a world object, including its brief material
+   * contacts. Scene disposal must not leave a final tail in the next run. */
+  stopInstance(instanceId: string, fadeOut = 0.15): void {
+    if (commitEffects.defer(() => this.stopInstance(instanceId, fadeOut))) return;
+    for (const voice of [...this.voices]) {
+      if (voice.instanceId === instanceId) this.startFade(voice, voice.fadeGain, 0, fadeOut, true);
     }
   }
 
@@ -402,6 +418,7 @@ export class AudioManager {
     activeAmbients: string[];
     layerVolume: Record<RiftLayer, number>;
     playingCount: number;
+    voices: readonly { key: string; instanceId: string; loop: boolean; paused: boolean; volume: number }[];
   } {
     return {
       unlocked: this.unlocked,
@@ -410,6 +427,8 @@ export class AudioManager {
       activeAmbients: [...this.activeAmbients],
       layerVolume: { ...this.layerVolume },
       playingCount: this.voices.filter((v) => isActiveSound(v.sound)).length,
+      voices: this.voices.filter(v => isActiveSound(v.sound)).map(v => ({ key: v.key, instanceId: v.instanceId,
+        loop: v.loop, paused: v.sound.isPaused, volume: this.volumeFor(v) })),
     };
   }
 

@@ -235,3 +235,10 @@ export interface EnemyAIState {
    * scatter has a charge, cleared when its alert episode closes (`ENEMY_LOST_PLAYER`). */
   detectionFillRateMult: number;
 }
+
+/** JSON facts only; immutable patrol arrays are rebuilt from the verified content signature. */
+export type EnemyAIRuntimeState = Omit<EnemyAIState,
+  'externalSpeedMult' | 'perceptionRangeMult' | 'pathPoints' | 'currentPatrolLeg' | 'patrolWaypoints' | 'patrolPaths'> & {
+  readonly pathBinding: { readonly kind: 'dynamic' } | { readonly kind: 'patrol'; readonly index: number } | null;
+  readonly currentPatrolLegIndex: number | null;
+};

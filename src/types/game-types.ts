@@ -229,6 +229,9 @@ export interface SaveDataV1 {
   moduleMaxHpTier?: 0 | 1 | 2 | 3;
   /** One-shot module repair allowance; missing on old saves means none earned. */
   repairBonusHp?: number;
+  pendingSideEffects?: import('../systems/defense-engine').PendingSideEffect[];
+  upgradeDiscount?: number;
+  moduleSwapActive?: boolean;
   /** Optional on old saves. Keeps displayed impact promises stable across menu/load. */
   impactForecast?: import('../systems/impact-system').ImpactForecastState;
 }
@@ -237,5 +240,10 @@ export interface SaveDataV1 {
 export interface SaveDataV2 extends Omit<SaveDataV1, 'version' | 'contaminants' | 'defenseSlots' | 'sortieLoadout'> {
   version: 2;
   inventory: import('./inventory-types').InventoryState;
+  /** Present only when this run's world implements complete recovery. */
+  riftCheckpoint?: import('./rift-checkpoint').RiftCheckpoint;
+  riftDeparture?: import('./rift-checkpoint').RiftDepartureIntent;
+  /** Checksum of this whole record with this field omitted. */
+  checkpointChecksum?: string;
 }
 export type ExpeditionSaveData = SaveDataV1 | SaveDataV2;

@@ -2,14 +2,37 @@ import * as THREE from 'three';
 import type { RiftDevRuntimeContext } from '@/scenes/rift-scene';
 import type { SlicePresentation, SpatialSliceWorld } from '../slice-world';
 import { StagePlayer, StageInsect } from './actors';
-import { StageTerrain } from './terrain';
-import { StageSea } from './sea';
-import { StageLoot } from './loot';
+import { StageTerrain, type StageTerrainStyle, type StageVisibility } from './terrain';
+import { StageSea, type StageSeaOptions } from './sea';
+import { StageLoot, type StagePileFactory } from './loot';
+import type { RiftPresentationView } from './bridge';
 import { createStageCamera, projectStagePoint, StageFollowCamera, type StageCameraMode } from './camera';
 import { ACTOR_HEIGHT, disposeTree, STAGE_HEIGHT, STAGE_WIDTH } from './materials';
 import { STAGE_PALETTE } from './palette';
 import { StageEffects } from './effects';
 import { assertStagePresentationSupported, supportsStageForm } from './support';
+
+/** Explicit world-owned additions share the same depth, sight and final canvas.
+ * The default stage never opts into a content pack's materials or atmosphere. */
+export interface StageAttachmentContext {
+  readonly scene: THREE.Scene;
+  readonly camera: THREE.OrthographicCamera;
+  readonly visibility: StageVisibility;
+}
+export interface StageAttachment {
+  update(elapsedMs: number, frame: RiftPresentationView): void;
+  renderOverlay?(renderer: THREE.WebGLRenderer): void;
+  snapshot(): Record<string, unknown>;
+  onRuntimeRestored?(): void;
+  destroy(): void;
+}
+export interface StagePresentationOptions {
+  readonly camera?: StageCameraMode;
+  readonly terrain?: StageTerrainStyle;
+  readonly createPile?: StagePileFactory;
+  readonly sea?: StageSeaOptions;
+  readonly createAttachment?: (stage: StageAttachmentContext) => StageAttachment;
+}
 
 /** A complete alternate renderer. The Phaser scene remains the only simulation. */
 export class StagePresentation implements SlicePresentation {
@@ -36,10 +59,13 @@ export class StagePresentation implements SlicePresentation {
   private renderMs = 0;
   private opaqueDrawCalls = 0;
   private opaqueTriangles = 0;
+  private finalDrawCalls = 0;
+  private finalTriangles = 0;
   private endTailMs=0;
+  private readonly attachment: StageAttachment | undefined;
 
   constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld,
-    options: { readonly camera?: StageCameraMode } = {}) {
+    options: StagePresentationOptions = {}) {
     assertStagePresentationSupported(context.readPresentationFrame());
     for (const form of context.layout.contaminationDraw.forms) if (!supportsStageForm(form))
       throw new Error(`Stage has no world model for ${form.occupancy}/${form.substrate}/${form.coverage}`);
@@ -64,14 +90,22 @@ export class StagePresentation implements SlicePresentation {
     this.scene.add(sun,sun.target);
     const rim=this.rim=new THREE.DirectionalLight(STAGE_PALETTE.rim,.62); rim.position.set(850,210,400); this.scene.add(rim,rim.target);
     this.updateLightFootprint();
-    this.loot=new StageLoot(this.groundHeightAt,(x,y)=>world.isFloor(x,y));
+    this.loot=new StageLoot(this.groundHeightAt,(x,y)=>world.isFloor(x,y),options.createPile);
     this.player.setGroundSampler(this.groundHeightAt);
-    this.terrain=new StageTerrain(context,world); this.scene.add(this.terrain.group,this.player.root);
+    this.terrain=new StageTerrain(context,world,options.terrain); this.scene.add(this.terrain.group,this.player.root);
     this.effects = new StageEffects(context, world, this.terrain.visibility.texture);
     this.scene.add(this.effects.group);
-    this.sea=new StageSea(context,world,this.terrain.visibility.texture,this.terrain.heightTexture,this.opaqueTarget.depthTexture!);this.scene.add(this.sea.group,this.loot.group);
-    context.setWorldProjector((point,out)=>projectStagePoint(this.camera,point,out,this.groundHeightAt(point.x,point.y)));
-    this.update(0);
+    this.sea=new StageSea(context,world,this.terrain.visibility.texture,this.terrain.heightTexture,this.opaqueTarget.depthTexture!,options.sea);this.scene.add(this.sea.group,this.loot.group);
+    try {
+      this.attachment=options.createAttachment?.({scene:this.scene,camera:this.camera,visibility:this.terrain.visibility});
+      context.setWorldProjector((point,out)=>projectStagePoint(this.camera,point,out,this.groundHeightAt(point.x,point.y)));
+      this.update(0);
+    } catch (error) {
+      // A content factory can fail after the native canvas and GPU resources
+      // already exist. Runtime cannot receive this half-built owner to clean it.
+      try { this.destroy(); } catch (cleanupError) { console.warn('Stage startup cleanup failed', cleanupError); }
+      throw error;
+    }
   }
 
   private readonly groundHeightAt=(x:number,y:number):number=>this.world.groundHeightAt(x,y);
@@ -94,6 +128,27 @@ export class StagePresentation implements SlicePresentation {
     style.left=`${a.left-p.left+parent.scrollLeft}px`;style.top=`${a.top-p.top+parent.scrollTop}px`;
     style.width=`${a.width}px`;style.height=`${a.height}px`;
   };
+
+  prepareFrame(elapsedMs: number): void {
+    const frame = this.context.readPresentationFrame();
+    this.followCamera?.update(elapsedMs, frame.player, frame.ended, this.groundHeightAt(frame.player.position.x, frame.player.position.y));
+    this.terrain.visibility.update(elapsedMs);
+  }
+
+  exportRuntimeState(): unknown { return { version: 1, memory: this.terrain.visibility.exportRuntimeState(), camera: this.followCamera?.exportRuntimeState() ?? null }; }
+  validateRuntimeState(value: unknown): boolean {
+    if (!value || typeof value !== 'object') return false;
+    const state = value as { version: number; memory: unknown; camera: unknown };
+    return state.version === 1 && this.terrain.visibility.validateRuntimeState(state.memory)
+      && (this.followCamera ? this.followCamera.validateRuntimeState(state.camera) : state.camera === null);
+  }
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid stage checkpoint');
+    const state = value as { memory: unknown; camera: unknown };
+    this.terrain.visibility.restoreRuntimeState(state.memory);
+    this.followCamera?.restoreRuntimeState(state.camera);
+    this.attachment?.onRuntimeRestored?.();
+  }
 
   update(elapsedMs:number):void{
     if(this.destroyed)return;
@@ -123,6 +178,7 @@ export class StagePresentation implements SlicePresentation {
     this.terrain.update(elapsedMs,frame.exit.inRange);
     if (!frame.ended) this.effects.update(frame);
     this.loot.update(frame,elapsedMs);this.sea.update(elapsedMs,frame.player.position,this.camera);
+    this.attachment?.update(elapsedMs,frame);
     // The water reads the actual visible opaque surface, including a cliff
     // below ground and each pixel actor's pose depth. A ground-plane projection
     // alone incorrectly paints water back over a known descending shore.
@@ -137,6 +193,14 @@ export class StagePresentation implements SlicePresentation {
       this.renderer.setRenderTarget(null);
       this.renderer.shadowMap.autoUpdate=false;
       this.renderer.render(this.scene,this.camera);
+      this.finalDrawCalls=this.renderer.info.render.calls;
+      this.finalTriangles=this.renderer.info.render.triangles;
+      const frameBeforeOverlay=this.renderer.info.render.frame;
+      this.attachment?.renderOverlay?.(this.renderer);
+      if(this.renderer.info.render.frame!==frameBeforeOverlay){
+        this.finalDrawCalls+=this.renderer.info.render.calls;
+        this.finalTriangles+=this.renderer.info.render.triangles;
+      }
     } finally {
       this.sea.group.visible=true;
       this.renderer.setRenderTarget(null);
@@ -147,11 +211,11 @@ export class StagePresentation implements SlicePresentation {
 
   snapshot():Record<string,unknown>{return {type:'three-orthographic-stage',yaw:0,elevation:35,
     resolution:{width:STAGE_WIDTH,height:STAGE_HEIGHT},actorHeight:ACTOR_HEIGHT,
-    simulation:'production-rift',worldSignature:this.world.signature(),renderMs:this.renderMs,drawCalls:this.opaqueDrawCalls+this.renderer.info.render.calls,
-    triangles:this.opaqueTriangles+this.renderer.info.render.triangles,terrainVisibilitySamples:this.terrain.visibility.samples,
+    simulation:'production-rift',worldSignature:this.world.signature(),renderMs:this.renderMs,drawCalls:this.opaqueDrawCalls+this.finalDrawCalls,
+    triangles:this.opaqueTriangles+this.finalTriangles,terrainVisibilitySamples:this.terrain.visibility.samples,
     terrainPerception:this.terrain.visibility.snapshot(),endTailMs:this.endTailMs,
     terrain:this.terrain.snapshot(),loot:this.loot.snapshot(),effects:this.effects.snapshot(),waterReveal:'current sight opens ground and empty chasms; opaque depth additionally projects descending shores; only physical terrain is remembered',
-    sea:this.sea.snapshot(this.camera),
+    sea:this.sea.snapshot(this.camera),attachment:this.attachment?.snapshot() ?? null,
     player:this.player.snapshot(),
     camera:{position:this.camera.position.toArray(),left:this.camera.left,right:this.camera.right,top:this.camera.top,bottom:this.camera.bottom,
       ...(this.followCamera?.snapshot() ?? {mode:'fixed',span:this.camera.right-this.camera.left})},
@@ -159,7 +223,7 @@ export class StagePresentation implements SlicePresentation {
 
   destroy():void{
     if(this.destroyed)return;this.destroyed=true;this.context.setWorldProjector(null);
-    this.resizeObserver.disconnect();this.effects.destroy();this.terrain.destroy();this.sea.destroy();disposeTree(this.scene);
+    this.resizeObserver.disconnect();this.attachment?.destroy();this.effects.destroy();this.terrain.destroy();this.sea.destroy();disposeTree(this.scene);
     this.opaqueTarget.dispose();this.renderer.dispose();this.renderer.forceContextLoss();this.renderer.domElement.remove();
     this.context.scene.game.canvas.style.opacity=this.previousCanvasOpacity;
   }

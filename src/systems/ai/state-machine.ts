@@ -146,10 +146,10 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
     if (noiseStimulus) {
       ai.investigatingLure = ai.pendingNoiseIsLure === true;
       ai.pendingNoiseIsLure = false;
-      setInvestigatePos(enemy, ai.pendingNoisePos.x, ai.pendingNoisePos.y, enemy.config.hearing.posJitter);
+      setInvestigatePos(enemy, ctx, ai.pendingNoisePos.x, ai.pendingNoisePos.y, enemy.config.hearing.posJitter);
     } else if (seenEnough) {
       const target = sightTargetPos(enemy, ctx);
-      setInvestigatePos(enemy, target.x, target.y, 0);
+      setInvestigatePos(enemy, ctx, target.x, target.y, 0);
     } else if (entering) {
       ai.investigatingLure = false;
       setHearingInvestigatePos(enemy, ctx);
@@ -330,7 +330,7 @@ function applyHearingAlertPush(enemy: Enemy, p: Perception, ctx: AIContext): boo
 function setHearingInvestigatePos(enemy: Enemy, ctx: AIContext): void {
   const ai = enemy.ai;
   if (ai.hearingJitterLocked && ai.investigatePos) return;
-  setInvestigatePos(enemy, ctx.playerPos.x, ctx.playerPos.y, enemy.config.hearing.posJitter);
+  setInvestigatePos(enemy, ctx, ctx.playerPos.x, ctx.playerPos.y, enemy.config.hearing.posJitter);
   ai.hearingJitterLocked = true;
 }
 
@@ -380,8 +380,8 @@ export function buildSearchPoints(
     }
   }
 
-  const angle = Math.random() * Math.PI * 2;
-  const radius = config.SEARCH_SPREAD * (0.5 + Math.random() * 0.5);
+  const angle = (ctx.random ?? Math.random)() * Math.PI * 2;
+  const radius = config.SEARCH_SPREAD * (0.5 + (ctx.random ?? Math.random)() * 0.5);
   if (
     count < points.length &&
     ctx.pathfinder.findNearestWalkable(
@@ -454,13 +454,13 @@ function emitRealChaseTarget(enemy: Enemy, ctx: AIContext): void {
   ctx.emitAlert(enemy, 'chase');
 }
 
-function setInvestigatePos(enemy: Enemy, x: number, y: number, jitter: number): void {
+function setInvestigatePos(enemy: Enemy, ctx: AIContext, x: number, y: number, jitter: number): void {
   const ai = enemy.ai;
   let targetX = x;
   let targetY = y;
   if (jitter > 0) {
-    const angle = Math.random() * Math.PI * 2;
-    const radius = Math.random() * jitter;
+    const angle = (ctx.random ?? Math.random)() * Math.PI * 2;
+    const radius = (ctx.random ?? Math.random)() * jitter;
     targetX += Math.cos(angle) * radius;
     targetY += Math.sin(angle) * radius;
   }

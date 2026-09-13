@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-09-11
+last-modified: 2026-09-12
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-**当前主线（2026-09-12，DEC-144–155）：** [内容扩展计划](progress/content-expansion-plan.md)阶段一由[迭代21](tasks/iteration-21.md)执行。用户已选三维像素舞台，正俯视冻结R4，基线`fab67e2`已提交。J写意海面/断面/色彩之后，K修正中央空洞的视线、通行与海层显露关系，规则见[移动与视野](specs/system-movement-vision.md)。完整世界与生产接入未实施，四A持续供给未开始，必须在四B扩产前通过。
+**当前主线（2026-09-12，DEC-144–157）：** [内容扩展计划](progress/content-expansion-plan.md)阶段一已按范围交付；用户选择固定机位三维像素舞台，M游玩基础与长路线已提交`2ee0b2b`，正俯视R4冻结。阶段二由[迭代22](tasks/iteration-22.md)实施完整悬海：两种空间编排、可敲偏的承水壳片、来源物件池及原生音景，复用正式移动/战斗/库存，见[世界内容](content/suspended-sea.md)与[试玩入口](dev/suspended-sea.md)。当前实机验收中；净化点往返与长期记录尚未交付。四A持续供给未开始，必须在四B扩产前通过。
 
 **迭代19实施记录（2026-09-09，DEC-138）**。四品质十撬棍、统一挥击与持武像素、库存整备、真实拾取、负重/抗性和死亡/撤离结算已接生产；内部验证见 docs/qa/iteration-19.md。中断出击政策待用户明确，完整恢复未交，体验与美术待人审；本批纳入阶段提交（DEC-139）。
 

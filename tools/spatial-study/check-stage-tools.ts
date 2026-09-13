@@ -153,7 +153,8 @@ check('siphon and muffle derive from real passive triggers and retain their full
 
 check('the renderer explicitly rejects unsupported carried content and uses whole-swing phase boundaries', () => {
   const f = createPresentationFrame(); assertStagePresentationSupported(f);
-  f.player.weaponDefinitionId = 'crowbar_fine_standard'; assert.throws(() => assertStagePresentationSupported(f));
+  f.player.weaponDefinitionId = 'crowbar_fine_standard'; assertStagePresentationSupported(f);
+  f.player.weaponDefinitionId = 'future-unknown-weapon'; assert.throws(() => assertStagePresentationSupported(f));
   f.player.weaponDefinitionId = 'crowbar_plain';
   const tools = createToolPresentationFrame(); f.tools = tools; tools.loadoutTypes.push('expand');
   assert.throws(() => assertStagePresentationSupported(f)); tools.loadoutTypes[0] = 'stitch'; assertStagePresentationSupported(f);

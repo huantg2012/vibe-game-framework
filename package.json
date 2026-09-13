@@ -78,7 +78,13 @@
     "check:inventory-save": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-save-migration.ts",
     "check:survival-weapons": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-survival-weapons.ts",
     "art:crowbars": "tsx tools/inventory/export-crowbar-pixels.ts",
-    "check:crowbar-combat": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-crowbar-combat.ts"
+    "check:crowbar-combat": "tsx --tsconfig tools/contam-preview/tsconfig.json tools/inventory/check-crowbar-combat.ts",
+    "check:suspended-sea-content": "node --import tsx tools/suspended-sea/check-content.ts",
+    "check:suspended-sea-runtime": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/suspended-sea/check-runtime.ts",
+    "audio:suspended-sea": "node tools/suspended-sea/generate-audio.mjs",
+    "check:suspended-sea-presentation": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/suspended-sea/check-presentation.ts",
+    "check:suspended-sea-audio": "node tools/suspended-sea/check-audio-assets.mjs",
+    "check:rift-recovery": "node tools/recovery/check.mjs"
   },
   "dependencies": {
     "phaser": "^3.80.1",

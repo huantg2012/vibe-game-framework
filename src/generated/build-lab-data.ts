@@ -412,6 +412,16 @@ export const BUILD_LAB_LOADOUTS = [
     "passive": "",
     "pair": "cycle-none|cycle-delay",
     "description": "压制当前危险并观察恢复前兆"
+  },
+  {
+    "id": "shore",
+    "name": "稳步绕行",
+    "weapon": "crowbar_plain",
+    "activeA": "kindle",
+    "activeB": "stitch",
+    "passive": "muffle",
+    "pair": "light",
+    "description": "用两点额外负重携带结线；观察返程阻追是否值得"
   }
 ] as const;
 export type BuildLabSceneId = typeof BUILD_LAB_SCENES[number]["id"];

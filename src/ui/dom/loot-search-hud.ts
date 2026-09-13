@@ -8,7 +8,7 @@ import {
   showToastInline,
 } from '@/ui/dom/panel-styles';
 
-export type LootSearchPromptKind = 'search' | 'extract' | null;
+export type LootSearchPromptKind = 'search' | 'extract' | 'pickup' | null;
 
 export interface LootSearchHudOptions {
   readonly showKindling?: boolean;
@@ -98,7 +98,8 @@ export class LootSearchHud {
       return;
     }
     key.textContent = '[E]';
-    action.textContent = kind === 'extract' ? t('hud.prompt.extract') : t('hud.prompt.search');
+    action.textContent = kind === 'extract' ? t('hud.prompt.extract')
+      : kind === 'pickup' ? t('hud.prompt.pickup') : t('hud.prompt.search');
     prompt.style.display = 'block';
   }
 

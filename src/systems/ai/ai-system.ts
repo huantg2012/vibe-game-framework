@@ -19,14 +19,18 @@
  */
 
 import Phaser from 'phaser';
-import { floorMotionFor } from '@/generation/contamination-draw';
+import { AIRuntimeRandom, copyRuntimeVector, runtimeEnemyForm, runtimeInteger } from '@/systems/ai/runtime-validation';
+import { exportEnemyAIState, restoreEnemyAIState, validateAIRuntimeState, validateEnemyAIBindings, type AIRuntimeState, type AIRuntimeRecoveryOptions } from '@/systems/ai/runtime-state';
+export { validateAIRuntimeState } from '@/systems/ai/runtime-state';
+export type { AIRuntimeState, AIRuntimeRecoveryOptions } from '@/systems/ai/runtime-state';
+import { floorMotionFor, INFILTRATOR_FORM, REWRITER_FORM } from '@/generation/contamination-draw';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { AIState, type Vector2 } from '@/types/game-types';
 import { GameEvent } from '@/types/events';
 import type { EnemySpawnData, OccluderGrid, WalkGrid } from '@/types/map-types';
 import { ENEMY_DATA } from '@/generated/enemy-data';
-import type { AICueId, AlertLevel, EnemyView, Perception } from '@/types/ai-types';
+import type { AICueId, AlertLevel, EnemyTypeConfig, EnemyView, Perception } from '@/types/ai-types';
 import { createEnemy, createEnemyTypeConfig, type Enemy } from '@/entities/enemy-factory';
 import { GridPathfinder } from '@/systems/pathfinding';
 import { PathPriority, type AIContext, type PathPriorityValue } from '@/systems/ai/context';
@@ -57,6 +61,78 @@ export type CueListener = (enemyId: string, cue: AICueId) => void;
  */
 export const ENEMY_DEPTH = 25;
 
+interface PatrolConfiguration {
+  patrolMode: EnemySpawnData['patrol']['mode'];
+  patrolWaypoints: Vector2[];
+  patrolPaths: (Vector2[] | null)[];
+}
+
+export interface AIRuntimeConfiguration {
+  readonly rosterSignature: string;
+  readonly enemies: readonly {
+    readonly id: string;
+    readonly config: EnemyTypeConfig;
+    readonly patrolMode: EnemySpawnData['patrol']['mode'];
+    readonly patrolWaypoints: readonly Readonly<Vector2>[];
+    readonly patrolPaths: readonly (readonly Readonly<Vector2>[] | null)[];
+  }[];
+}
+
+/** The same create-time route computation serves live enemies and pre-load admission. */
+function createPatrolConfiguration(spawn: EnemySpawnData, position: Readonly<Vector2>, tileSize: number,
+  pathfinder: GridPathfinder, warn: (message: string) => void): PatrolConfiguration {
+  if (floorMotionFor(spawn.form ?? (spawn.type === 'rewriter' ? REWRITER_FORM : INFILTRATOR_FORM)) !== 'motion_patrol') {
+    return { patrolMode: 'static', patrolWaypoints: [{ ...position }], patrolPaths: [] };
+  }
+  const route: PatrolConfiguration = { patrolMode: spawn.patrol.mode,
+    patrolWaypoints: spawn.patrol.waypoints.map(point => ({ x: (point.col + .5) * tileSize, y: (point.row + .5) * tileSize })),
+    patrolPaths: new Array<Vector2[] | null>(spawn.patrol.waypoints.length * 2).fill(null) };
+  const count = route.patrolWaypoints.length;
+  if (route.patrolMode === 'static' || count <= 1) return route;
+  for (let from = 0; from < count; from++) {
+    for (const direction of [1, -1] as const) {
+      if (route.patrolMode === 'loop' && direction === -1) continue;
+      const next = resolveNextWaypoint(route.patrolMode, count, from, direction);
+      if (next.index === from) continue;
+      const legIndex = patrolLegIndex(from, next.direction);
+      if (route.patrolPaths[legIndex]) continue;
+      const buffer: Vector2[] = [];
+      for (let index = 0; index < GAME_CONSTANTS.AI.MAX_PATH_POINTS; index++) buffer.push({ x: 0, y: 0 });
+      const written = pathfinder.findPath(route.patrolWaypoints[from]!, route.patrolWaypoints[next.index]!, buffer, GAME_CONSTANTS.AI.ASTAR_MAX_NODES);
+      if (written === 0) {
+        warn(`${spawn.id} has no path from waypoint ${from} to ${next.index}; the route degrades to a static guard post`);
+        route.patrolMode = 'static'; route.patrolPaths.fill(null); return route;
+      }
+      buffer.length = written; route.patrolPaths[legIndex] = buffer;
+    }
+  }
+  return route;
+}
+
+function runtimeRosterSignature(spawns: readonly EnemySpawnData[], walk: WalkGrid,
+  enemies: AIRuntimeConfiguration['enemies']): string {
+  return JSON.stringify({ spawns, grid: { cols: walk.cols, rows: walk.rows, tileSize: walk.tileSize },
+    routes: enemies.map(enemy => ({ id: enemy.id, config: enemy.config,
+      waypoints: enemy.patrolWaypoints, paths: enemy.patrolPaths })) });
+}
+
+/** Pure current-content recipe. No entities, state transitions, events or random draws. */
+export function createAIRuntimeConfiguration(spawns: readonly EnemySpawnData[], walk: WalkGrid): AIRuntimeConfiguration {
+  if (spawns.length !== 2 || new Set(spawns.map(spawn => spawn.id)).size !== 2
+    || spawns.filter(spawn => spawn.type === 'rewriter').length !== 1
+    || spawns.some(spawn => !runtimeEnemyForm(spawn.form, spawn.type))) {
+    throw new Error('Unsupported suspended sea AI recovery configuration');
+  }
+  const pathfinder = new GridPathfinder(walk, createMovementOccluders(walk), GAME_CONSTANTS.AI.BODY_SIZE);
+  const enemies = spawns.map(spawn => {
+    const position = { x: (spawn.spawn.col + .5) * walk.tileSize, y: (spawn.spawn.row + .5) * walk.tileSize };
+    if (!walk.isWalkable(spawn.spawn.col, spawn.spawn.row)) pathfinder.findNearestWalkable(position.x, position.y, position);
+    return { id: spawn.id, config: createEnemyTypeConfig(spawn.type, spawn.form),
+      ...createPatrolConfiguration(spawn, position, walk.tileSize, pathfinder, () => {}) };
+  });
+  return { rosterSignature: runtimeRosterSignature(spawns, walk, enemies), enemies };
+}
+
 export interface AIStats {
   readonly enemyCount: number;
   readonly pendingPathRequests: number;
@@ -85,9 +161,13 @@ export interface AISystemAPI {
     spawns: readonly EnemySpawnData[],
     occluders: OccluderGrid,
     walk: WalkGrid,
-    options?: { requireExactlyOneRewriter?: boolean },
+    options?: { requireExactlyOneRewriter?: boolean; recovery?: AIRuntimeRecoveryOptions },
   ): void;
   update(deltaMs: number, playerPos: Readonly<Vector2>, playerIsMoving: boolean): void;
+  exportRuntimeState(): AIRuntimeState;
+  validateRuntimeState(value: unknown): value is AIRuntimeState;
+  restoreRuntimeState(value: unknown): void;
+  finishRuntimeRestore(): void;
   getEnemies(): readonly EnemyView[];
   getEnemyById(id: string): EnemyView | undefined;
   reportNoise(pos: Readonly<Vector2>, radius: number, level: 'suspicious' | 'alert'): void;
@@ -145,6 +225,10 @@ export interface AISystemAPI {
 
 export class AISystem implements AISystemAPI {
   private readonly visualDecoys = new Map<string, Vector2>();
+  private recoveryOptions: AIRuntimeRecoveryOptions | null = null;
+  private recoveryRandom: AIRuntimeRandom | null = null;
+  private recoveryRosterSignature = '';
+  private pendingRuntimeRestore: AIRuntimeState | null = null;
   private scene!: Phaser.Scene;
   private occluders!: OccluderGrid;
   private walk!: WalkGrid;
@@ -221,8 +305,18 @@ export class AISystem implements AISystemAPI {
     spawns: readonly EnemySpawnData[],
     occluders: OccluderGrid,
     walk: WalkGrid,
-    options?: { requireExactlyOneRewriter?: boolean },
+    options?: { requireExactlyOneRewriter?: boolean; recovery?: AIRuntimeRecoveryOptions },
   ): void {
+    const recovery = options?.recovery;
+    if (recovery && (!runtimeInteger(recovery.runSeed, 0, 0xffffffff) || !recovery.signature
+      || spawns.length !== 2 || new Set(spawns.map(spawn => spawn.id)).size !== 2
+      || spawns.filter(spawn => spawn.type === 'rewriter').length !== 1
+      || spawns.some(spawn => !runtimeEnemyForm(spawn.form, spawn.type)))) {
+      throw new Error('Unsupported suspended sea AI recovery configuration');
+    }
+    this.recoveryOptions = recovery ? { ...recovery } : null;
+    this.recoveryRandom = recovery ? new AIRuntimeRandom(recovery.runSeed) : null;
+    this.pendingRuntimeRestore = null;
     this.detachPhysicsHandles();
     this.scene = scene;
     this.observedWorld = scene.physics.world;
@@ -265,7 +359,11 @@ export class AISystem implements AISystemAPI {
       this.enemies.push(enemy);
       this.sprites.push(enemy.getSprite());
       this.registerContact(enemy);
+      if (recovery) enemy.setLocomotionMode('continuous');
     }
+    this.recoveryRosterSignature = recovery ? runtimeRosterSignature(spawns, walk,
+      this.enemies.map(enemy => ({ id: enemy.id, config: enemy.config, patrolMode: enemy.ai.patrolMode,
+        patrolWaypoints: enemy.ai.patrolWaypoints, patrolPaths: enemy.ai.patrolPaths }))) : '';
   }
 
   /**
@@ -307,6 +405,7 @@ export class AISystem implements AISystemAPI {
    * Caller must `CombatSystem.noteRosterChanged()` afterwards.
    */
   spawnOne(spawn: EnemySpawnData): string {
+    if (this.recoveryOptions) throw new Error('Recovery roster is immutable');
     if (!(spawn.type in ENEMY_DATA)) {
       throw new Error(`[AISystem] unknown enemy type '${spawn.type}' on ${spawn.id}`);
     }
@@ -335,11 +434,16 @@ export class AISystem implements AISystemAPI {
     this.cueListener = null;
     this.hearingAvoidedListener = null;
     this.visualDecoys.clear();
+    this.recoveryOptions = null;
+    this.recoveryRandom = null;
+    this.pendingRuntimeRestore = null;
+    this.recoveryRosterSignature = '';
   }
 
   // ------------------------------------------------------------------ update
 
   update(deltaMs: number, playerPos: Readonly<Vector2>, playerIsMoving: boolean): void {
+    if (this.pendingRuntimeRestore) throw new Error('AI restore requires ToolSystem source hydration and finishRuntimeRestore');
     if (this.enemies.length === 0) return;
 
     const startedAt = performance.now();
@@ -418,6 +522,7 @@ export class AISystem implements AISystemAPI {
    * measured there would always be zero.
    */
   postUpdate(deltaMs: number): void {
+    if (this.pendingRuntimeRestore) throw new Error('AI restore is not finished');
     const dtMs = Math.min(deltaMs, GAME_CONSTANTS.AI.DT_CLAMP_MS);
     // WORLD_STEP runs at Arcade's fixed cadence, often half the display rate. Sprite
     // positions have now been resolved by Arcade POST_UPDATE. Frames with no physics
@@ -450,6 +555,93 @@ export class AISystem implements AISystemAPI {
         body.velocity.set(vx, vy);
       },
     });
+  }
+
+  /** Captured only after all actors reached the same frame boundary. */
+  exportRuntimeState(): AIRuntimeState {
+    if (!this.recoveryOptions || !this.recoveryRandom || this.pendingRuntimeRestore) {
+      throw new Error('AI recovery was not enabled, or hydration is incomplete');
+    }
+    if (this.visualDecoys.size > 0) throw new Error('Visual decoys are outside suspended sea recovery support');
+    const value: AIRuntimeState = { version: 1, signature: this.recoveryOptions.signature,
+      rosterSignature: this.recoveryRosterSignature, runSeed: this.recoveryOptions.runSeed,
+      randomState: this.recoveryRandom.exportState(), playerPos: copyRuntimeVector(this.playerPos),
+      previousPlayerPos: copyRuntimeVector(this.previousPlayerPos), playerVel: copyRuntimeVector(this.playerVel),
+      playerIsMoving: this.playerIsMoving, hasPreviousPlayerPos: this.hasPreviousPlayerPos,
+      physicsElapsedMs: this.physicsElapsedMs, hearingRangeMult: this.context.hearingRangeMult,
+      hearingSuppressed: this.context.hearingSuppressed,
+      enemies: this.enemies.map(enemy => ({ id: enemy.id, entity: enemy.exportRuntimeState(),
+        state: exportEnemyAIState(enemy), attackInterruptRevision: enemy.controls.attackInterruptRevision })) };
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid live AI recovery state');
+    return value;
+  }
+
+  /** Includes content and live binding checks, without mutating any state. */
+  validateRuntimeState(value: unknown): value is AIRuntimeState {
+    if (!validateAIRuntimeState(value) || !this.recoveryOptions || !this.recoveryRandom
+      || value.signature !== this.recoveryOptions.signature || value.runSeed !== this.recoveryOptions.runSeed
+      || value.rosterSignature !== this.recoveryRosterSignature) return false;
+    return value.enemies.every(entry => {
+      const enemy = this.findEnemy(entry.id);
+      return !!enemy && enemy.supportsRuntimeRecovery() && validateEnemyAIBindings(enemy.ai, entry.state);
+    });
+  }
+
+  /** Restore actors/AI first; ToolSystem rebuilds sources before finishRuntimeRestore. */
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid or incompatible AI runtime state');
+    // Retain detached JSON data so a caller cannot alter the pending interruption latch.
+    const state: AIRuntimeState = structuredClone(value);
+    const liveIds = new Set(state.enemies.map(enemy => enemy.id));
+    for (let index = this.enemies.length - 1; index >= 0; index--) {
+      const enemy = this.enemies[index]!;
+      if (liveIds.has(enemy.id)) continue;
+      const spriteIndex = this.sprites.indexOf(enemy.getSprite());
+      if (spriteIndex >= 0) this.sprites.splice(spriteIndex, 1);
+      const contactIndex = this.contacts.findIndex(contact => contact.id === enemy.id);
+      if (contactIndex >= 0) this.contacts.splice(contactIndex, 1);
+      this.enemies.splice(index, 1);
+      enemy.destroy();
+    }
+    // Preserve roster iteration order: perception, path budgets, and control interactions use it.
+    this.enemies.sort((a, b) => state.enemies.findIndex(entry => entry.id === a.id)
+      - state.enemies.findIndex(entry => entry.id === b.id));
+    this.sprites.splice(0, this.sprites.length, ...this.enemies.map(enemy => enemy.getSprite()));
+    this.contacts.sort((a, b) => state.enemies.findIndex(entry => entry.id === a.id)
+      - state.enemies.findIndex(entry => entry.id === b.id));
+    for (const entry of state.enemies) {
+      const enemy = this.findEnemy(entry.id)!;
+      restoreEnemyAIState(enemy, entry.state);
+      enemy.restoreRuntimeState(entry.entity);
+      enemy.controls.beginRuntimeRestore();
+      enemy.ai.externalSpeedMult = 1;
+      enemy.ai.perceptionRangeMult = 1;
+    }
+    Object.assign(this.playerPos, state.playerPos);
+    Object.assign(this.previousPlayerPos, state.previousPlayerPos);
+    Object.assign(this.playerVel, state.playerVel);
+    this.playerIsMoving = state.playerIsMoving;
+    this.hasPreviousPlayerPos = state.hasPreviousPlayerPos;
+    this.physicsElapsedMs = state.physicsElapsedMs;
+    this.context.playerIsMoving = state.playerIsMoving;
+    this.context.hearingRangeMult = state.hearingRangeMult;
+    this.context.hearingSuppressed = state.hearingSuppressed;
+    this.context.decoyPos = null;
+    this.visualDecoys.clear();
+    this.recoveryRandom!.restoreState(state.randomState);
+    this.pendingRuntimeRestore = state;
+  }
+
+  /** Tool sources are the sole multiplier truth; rebinding must not count as new control. */
+  finishRuntimeRestore(): void {
+    const state = this.pendingRuntimeRestore;
+    if (!state) throw new Error('No pending AI runtime restore');
+    for (const entry of state.enemies) {
+      const enemy = this.findEnemy(entry.id)!;
+      enemy.controls.restoreInterruptRevision(entry.attackInterruptRevision);
+      this.syncControlMultipliers(enemy);
+    }
+    this.pendingRuntimeRestore = null;
   }
 
   // ------------------------------------------------------------------ queries
@@ -1020,6 +1212,7 @@ export class AISystem implements AISystemAPI {
 
   private createContext(): AIContext {
     return {
+      random: this.recoveryRandom ? () => this.recoveryRandom!.next() : undefined,
       occluders: this.occluders,
       movementOccluders: this.movementOccluders,
       pathfinder: this.pathfinder,
@@ -1065,74 +1258,10 @@ export class AISystem implements AISystemAPI {
 
     // Stagger the perception phase so several enemies never raycast on the same frame.
     enemy.ai.perceptionAccumMs = total > 0 ? (index * GAME_CONSTANTS.AI.PERCEPTION_TICK_MS) / total : 0;
-    if (floorMotionFor(enemy.getForm()) !== 'motion_patrol') {
-      enemy.ai.patrolMode = 'static';
-      enemy.ai.patrolWaypoints.push({ x: this.scratch.x, y: this.scratch.y });
-      return enemy;
-    }
-    enemy.ai.patrolMode = spawn.patrol.mode;
-
-    for (const waypoint of spawn.patrol.waypoints) {
-      enemy.ai.patrolWaypoints.push({
-        x: (waypoint.col + 0.5) * tileSize,
-        y: (waypoint.row + 0.5) * tileSize,
-      });
-    }
-
-    this.precomputePatrolPaths(enemy);
+    Object.assign(enemy.ai, createPatrolConfiguration(spawn, this.scratch, tileSize, this.pathfinder, this.context.warn));
+    if (floorMotionFor(enemy.getForm()) !== 'motion_patrol') return enemy;
     this.startPatrolLeg(enemy);
     return enemy;
-  }
-
-  /**
-   * Precomputes every patrol leg at create time (rule B1). A fixed map with fixed
-   * waypoints means these paths can never change, so patrolling - which is what enemies
-   * spend almost all of their time doing - costs no pathfinding at all.
-   */
-  private precomputePatrolPaths(enemy: Enemy): void {
-    const ai = enemy.ai;
-    const waypoints = ai.patrolWaypoints;
-    const count = waypoints.length;
-
-    ai.patrolPaths = new Array<Vector2[] | null>(count * 2).fill(null);
-    if (ai.patrolMode === 'static' || count <= 1) return;
-
-    for (let from = 0; from < count; from++) {
-      for (const direction of [1, -1] as const) {
-        // A loop only ever travels one way; only pingpong needs the reverse legs.
-        if (ai.patrolMode === 'loop' && direction === -1) continue;
-
-        const next = resolveNextWaypoint(ai.patrolMode, count, from, direction);
-        if (next.index === from) continue;
-
-        const legIndex = patrolLegIndex(from, next.direction);
-        if (ai.patrolPaths[legIndex]) continue;
-
-        const buffer: Vector2[] = [];
-        for (let i = 0; i < GAME_CONSTANTS.AI.MAX_PATH_POINTS; i++) buffer.push({ x: 0, y: 0 });
-        const written = this.pathfinder.findPath(
-          waypoints[from]!,
-          waypoints[next.index]!,
-          buffer,
-          GAME_CONSTANTS.AI.ASTAR_MAX_NODES
-        );
-
-        if (written === 0) {
-          // Bad map data, and it must not be silent: the enemy stays put and guards
-          // instead of walking into a wall for the rest of the run.
-          this.context.warn(
-            `${enemy.id} has no path from waypoint ${from} to ${next.index}; ` +
-              'the route degrades to a static guard post'
-          );
-          ai.patrolMode = 'static';
-          ai.patrolPaths.fill(null);
-          return;
-        }
-
-        buffer.length = written;
-        ai.patrolPaths[legIndex] = buffer;
-      }
-    }
   }
 
   /** Puts a freshly spawned enemy on the leg toward its next waypoint. */

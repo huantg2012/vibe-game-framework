@@ -7,6 +7,8 @@ import { VOID_SECTION_FADE_END, VOID_SECTION_FADE_START } from './void-section';
 import { STAGE_PALETTE } from './palette';
 import { TileType } from '@/types/game-types';
 
+export interface StageMemoryStateV1 { version: 1; width: number; height: number; seenBits: string }
+
 export class StageVisibility {
   readonly texture: THREE.DataTexture;
   readonly width: number;
@@ -19,7 +21,7 @@ export class StageVisibility {
   private visibleCells=0;
   private visibleAirCells=0;
 
-  constructor(private readonly context: RiftDevRuntimeContext, readonly worldWidth: number, readonly worldHeight: number,
+  constructor(private readonly context: Pick<RiftDevRuntimeContext, 'visibilityAt'>, readonly worldWidth: number, readonly worldHeight: number,
     isSurfaceAt: (x: number, y: number) => boolean = () => true) {
     this.width = Math.ceil(worldWidth / 8); this.height = Math.ceil(worldHeight / 8);
     // R = current sight through both land and air; G = seen physical terrain.
@@ -56,8 +58,44 @@ export class StageVisibility {
     this.samples += at/4; this.texture.needsUpdate = true;
   }
 
+  exportRuntimeState(): StageMemoryStateV1 {
+    const bits = new Uint8Array(Math.ceil(this.width * this.height / 8));
+    for (let index = 0; index < this.width * this.height; index++) {
+      if (this.data[index * 4 + 1]) bits[index >> 3]! |= 1 << (index & 7);
+    }
+    return { version: 1, width: this.width, height: this.height,
+      seenBits: btoa(String.fromCharCode(...bits)) };
+  }
+
+  validateRuntimeState(value: unknown): value is StageMemoryStateV1 {
+    if (!value || typeof value !== 'object') return false;
+    const state = value as StageMemoryStateV1;
+    if (state.version !== 1 || state.width !== this.width || state.height !== this.height || typeof state.seenBits !== 'string') return false;
+    try {
+      const bits = atob(state.seenBits);
+      if (bits.length !== Math.ceil(this.width * this.height / 8) || btoa(bits) !== state.seenBits) return false;
+      for (let index = 0; index < bits.length * 8; index++) {
+        if ((bits.charCodeAt(index >> 3) & (1 << (index & 7))) && !this.data[index * 4 + 2]) return false;
+      }
+      return true;
+    } catch { return false; }
+  }
+
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid terrain exploration memory');
+    const bits = atob(value.seenBits);
+    this.rememberedCells = 0; this.visibleCells = 0; this.visibleAirCells = 0;
+    for (let index = 0; index < this.width * this.height; index++) {
+      const seen = !!(bits.charCodeAt(index >> 3) & (1 << (index & 7)));
+      this.data[index * 4] = 0; // R is rebuilt from current sight, never from G.
+      this.data[index * 4 + 1] = seen ? 255 : 0;
+      if (seen) this.rememberedCells++;
+    }
+    this.lastSequence = -1; this.texture.needsUpdate = true;
+  }
+
   apply(material: THREE.MeshStandardMaterial, fixedAnchor?: Readonly<{ x: number; y: number }>, erodedEdge = false,
-    shoreSurface?: THREE.Texture): void {
+    shoreSurface?: THREE.Texture, currentOnly = false): void {
     const size = new THREE.Vector2(this.worldWidth, this.worldHeight);
     const priorCompile = material.onBeforeCompile, priorCacheKey = material.customProgramCacheKey;
     material.onBeforeCompile = (shader, renderer) => {
@@ -85,7 +123,7 @@ export class StageVisibility {
           vec2 perceptionUv=perceptionPoint/stageWorldSize;
           vec2 perception=texture2D(stageVisibility,perceptionUv).rg;
           float awareness=perception.r;
-          ${fixedAnchor ? `if(awareness<=0.)discard;
+          ${fixedAnchor || currentOnly ? `if(awareness<=0.)discard;
           outgoingLight*=mix(.18,1.,awareness);` : `
           // Never-seen terrain has no opaque black proxy. Only actual seen
           // ground survives as a dim material memory, so air/VOID remains air.
@@ -124,7 +162,7 @@ export class StageVisibility {
       }
     };
     material.customProgramCacheKey = () => `${priorCacheKey.call(material)}|${fixedAnchor
-      ? `stage-anchor:${fixedAnchor.x}:${fixedAnchor.y}` : `stage-ground:${erodedEdge}:shore-${!!shoreSurface}:lip-r7`}`;
+      ? `stage-anchor:${fixedAnchor.x}:${fixedAnchor.y}` : `stage-ground:${erodedEdge}:shore-${!!shoreSurface}:lip-r7:live-${currentOnly}`}`;
   }
 
   destroy(): void { this.texture.dispose(); }
@@ -133,6 +171,11 @@ export class StageVisibility {
     visibleCells:this.visibleCells,visibleAirCells:this.visibleAirCells,rememberedCells:this.rememberedCells,
     neverSeenSurface:'discarded, no opaque proxy',
     authority:'R=current authoritative sight including air; G=physical terrain memory only; B=surface membership; cleared with stage'};}
+}
+
+export interface StageTerrainStyle {
+  readonly createSurfaceTexture?: (world: SpatialSliceWorld) => THREE.Texture;
+  readonly scatterFragments?: boolean;
 }
 
 export class StageTerrain {
@@ -144,7 +187,8 @@ export class StageTerrain {
   private readonly extractGlass: THREE.MeshStandardMaterial;
   private readonly sectionStats:Record<string,unknown>;
 
-  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld) {
+  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld,
+    style: StageTerrainStyle = {}) {
     this.visibility = new StageVisibility(context, world.width, world.height, (x, z) => {
       const map = world.layout.tileMap;
       const tile = map.tiles[Math.floor(z / map.tileSize)]?.[Math.floor(x / map.tileSize)];
@@ -155,7 +199,7 @@ export class StageTerrain {
     this.heightTexture.minFilter = this.heightTexture.magFilter = THREE.NearestFilter;
     this.heightTexture.wrapS = this.heightTexture.wrapT = THREE.ClampToEdgeWrapping;
     this.heightTexture.needsUpdate = true;
-    const stone = roughMaterial(0, createSeabedTexture(world));
+    const stone = roughMaterial(0, style.createSurfaceTexture?.(world) ?? createSeabedTexture(world));
     this.visibility.apply(stone);
     const sediment = roughMaterial(0, surfaceTexture(STAGE_PALETTE.sediment, world.seed + 14, 'stone'));
     this.visibility.apply(sediment);
@@ -171,7 +215,7 @@ export class StageTerrain {
     const chips = new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),sediment,420);
     const matrix = new THREE.Matrix4(), q = new THREE.Quaternion(), axis = new THREE.Vector3(0,1,0), position = new THREE.Vector3(), scale = new THREE.Vector3();
     let count = 0;
-    for (let i = 0; i < 420; i++) {
+    for (let i = 0; i < (style.scatterFragments === false ? 0 : 420); i++) {
       const x = noise(i,1,world.seed) * world.width, z = noise(i,2,world.seed) * world.height;
       if (!world.isFloor(x,z)) continue;
       const groove = Math.sin(x / 61 + z / 102 + Math.sin(z / 81) * 1.6);
@@ -201,7 +245,7 @@ export class StageTerrain {
 
   update(elapsedMs: number, inRange: boolean): void {
     this.visibility.update(elapsedMs);
-    this.reef.visible=this.context.visibilityAt(this.world.reef)>0;
+    this.reef.visible=this.world.reef.height>0&&this.context.visibilityAt(this.world.reef)>0;
     this.extractGlass.emissiveIntensity = (inRange ? 1.2 : .5) + Math.sin(elapsedMs*.002)*.12;
   }
 

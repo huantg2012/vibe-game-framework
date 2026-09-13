@@ -8,6 +8,7 @@
  */
 
 import Phaser from 'phaser';
+import { copyRuntimeVector, runtimeEnemyForm, runtimeNumber, runtimeRecord, runtimeVector } from '@/systems/ai/runtime-validation';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { ENEMY_DATA, type EnemyRole } from '@/generated/enemy-data';
 import { BEHAVIOR_PROFILE_DATA } from '@/generated/contamination-capability-data';
@@ -112,6 +113,25 @@ export function createInfiltratorConfig(): EnemyTypeConfig {
   return createEnemyTypeConfig('infiltrator');
 }
 
+/** Physical facts only. AI and ToolSystem own behavior and effect source lifetimes. */
+export interface EnemyRuntimeState {
+  readonly version: 1;
+  readonly id: string;
+  readonly position: Vector2;
+  readonly bodyPosition: Vector2;
+  readonly velocity: Vector2;
+  readonly actualVelocity: Vector2;
+  readonly attackCommitted: boolean;
+  readonly activityHearingAccumMs: number;
+}
+
+export function validateEnemyRuntimeState(value: unknown): value is EnemyRuntimeState {
+  return runtimeRecord(value) && value.version === 1 && typeof value.id === 'string' && value.id.length > 0
+    && runtimeVector(value.position) && runtimeVector(value.bodyPosition) && runtimeVector(value.velocity)
+    && runtimeVector(value.actualVelocity) && typeof value.attackCommitted === 'boolean'
+    && runtimeNumber(value.activityHearingAccumMs, 0, 0);
+}
+
 export class Enemy implements EnemyView {
   readonly controls = new EnemyControlState();
   readonly id: string;
@@ -146,6 +166,38 @@ export class Enemy implements EnemyView {
   private readonly activity: ActivityClock;
   private attackCommitted = false;
   activityHearingAccumMs = 0;
+
+  supportsRuntimeRecovery(): boolean {
+    return this.locomotionMode === 'continuous' && runtimeEnemyForm(this.form, this.config.role);
+  }
+
+  exportRuntimeState(): EnemyRuntimeState {
+    if (!this.supportsRuntimeRecovery()) throw new Error(`Unsupported enemy recovery configuration: ${this.id}`);
+    const body = this.body.body as Phaser.Physics.Arcade.Body;
+    const state: EnemyRuntimeState = { version: 1, id: this.id,
+      position: { x: this.body.x, y: this.body.y }, bodyPosition: copyRuntimeVector(body.position),
+      velocity: copyRuntimeVector(body.velocity), actualVelocity: copyRuntimeVector(this.actualVelocity),
+      attackCommitted: this.attackCommitted, activityHearingAccumMs: this.activityHearingAccumMs };
+    if (!validateEnemyRuntimeState(state)) throw new Error('Enemy cannot export invalid runtime state');
+    return state;
+  }
+
+  restoreRuntimeState(value: unknown): void {
+    if (!validateEnemyRuntimeState(value) || value.id !== this.id || !this.supportsRuntimeRecovery()) {
+      throw new Error(`Invalid enemy runtime state: ${this.id}`);
+    }
+    const body = this.body.body as Phaser.Physics.Arcade.Body;
+    body.reset(value.position.x, value.position.y);
+    body.position.set(value.bodyPosition.x, value.bodyPosition.y);
+    body.prev.copy(body.position);
+    body.prevFrame.copy(body.position);
+    body.updateCenter();
+    body.velocity.set(value.velocity.x, value.velocity.y);
+    Object.assign(this.actualVelocity, value.actualVelocity);
+    this.attackCommitted = value.attackCommitted;
+    this.activityHearingAccumMs = value.activityHearingAccumMs;
+    this.shownFacing = this.ai.facing4;
+  }
 
   getActivityVisualState(): Readonly<ActivityVisualState> { return this.activity.visual; }
   isAttackAvailable(): boolean { return this.activity.visual.phase === 'active'; }

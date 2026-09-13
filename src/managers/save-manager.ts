@@ -21,12 +21,17 @@ import type { ExpeditionSaveData, SaveDataV2 } from '@/types/game-types';
 import type { InventoryState } from '@/types/inventory-types';
 import { InventoryStore, inventoryStore } from '@/systems/inventory-store';
 import { impactSystem, validImpactForecastState } from '@/systems/impact-system';
+import { checkpointChecksum, validRiftCheckpoint, validRiftDeparture, type RiftDepartureIntent, type RiftCheckpoint } from '@/types/rift-checkpoint';
 
 const SAVE = GAME_CONSTANTS.SAVE;
 
 /** Defaults to browser storage; isolated development sessions inject their own backend. */
 export type SaveStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 let injectedStorage: SaveStorage | null = null;
+let currentRiftCheckpoint: RiftCheckpoint | undefined;
+let currentRiftDeparture: RiftDepartureIntent | undefined;
+let validateDeparture: ((intent: RiftDepartureIntent) => boolean) | null = null;
+let validateRiftState: ((checkpoint: RiftCheckpoint, inventory: InventoryState) => boolean) | null = null;
 function storage(): SaveStorage { return injectedStorage ?? localStorage; }
 
 /** Check the fields consumed by existing loaders before touching live systems. */
@@ -38,8 +43,25 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (data.impactForecast !== undefined && !validImpactForecastState(data.impactForecast, data.modules.map(module => module.id))) return false;
   if (!data.tide || !Number.isFinite(data.tide.tideNumber) || !Number.isFinite(data.tide.cycleInPhase) || !Number.isFinite(data.tide.currentIntensity) || !['rise', 'crest', 'ebb'].includes(data.tide.phase)) return false;
   if (!data.growth?.upgrades || typeof data.growth.upgrades !== 'object' || !data.stability || !Number.isFinite(data.stability.progress) || typeof data.stability.reached !== 'boolean') return false;
+  if (data.pendingSideEffects !== undefined && (!Array.isArray(data.pendingSideEffects) || data.pendingSideEffects.some(effect =>
+    !effect || !['initial_chaos', 'chaos_rate_mult', 'vision_reduction', 'speed_reduction', 'repair_efficiency', 'upgrade_discount', 'storage_halved', 'proximity_sense_boost', 'module_swap'].includes(effect.type)
+    || !Number.isFinite(effect.value) || !['next_sortie', 'timed'].includes(effect.duration)
+    || (effect.durationMs !== undefined && (!Number.isFinite(effect.durationMs) || effect.durationMs < 0))))) return false;
+  if (data.upgradeDiscount !== undefined && !Number.isFinite(data.upgradeDiscount)) return false;
+  if (data.moduleSwapActive !== undefined && typeof data.moduleSwapActive !== 'boolean') return false;
   const probe = new InventoryStore();
-  if (data.version === 2) return probe.loadState(data.inventory);
+  if (data.version === 2) {
+    if (!probe.loadState(data.inventory)) return false;
+    if (data.riftCheckpoint !== undefined || data.riftDeparture !== undefined) {
+      if (data.riftCheckpoint !== undefined && data.riftDeparture !== undefined) return false;
+      if (data.riftCheckpoint !== undefined && (!validRiftCheckpoint(data.riftCheckpoint) || data.riftCheckpoint.runId !== data.inventory.run?.id)) return false;
+      if (data.riftDeparture !== undefined && (!validRiftDeparture(data.riftDeparture) || data.riftDeparture.runId !== data.inventory.run?.id
+        || data.inventory.run.status !== 'active' || data.riftDeparture.conditions.cycle !== data.cycle)) return false;
+      const { checkpointChecksum: checksum, ...record } = data;
+      if (checksum !== checkpointChecksum(record)) return false;
+    } else if (data.checkpointChecksum !== undefined) return false;
+    return true;
+  }
   if (!Array.isArray(data.contaminants) || !Array.isArray(data.defenseSlots) || !Array.isArray(data.sortieLoadout)) return false;
   try {
     probe.importLegacy(data.contaminants, data.defenseSlots, data.sortieLoadout);
@@ -79,14 +101,17 @@ function mergeRuntimeState(
   return out;
 }
 
-function collectSave(inventory: InventoryState): SaveDataV2 {
+function collectSave(inventory: InventoryState, forecast = true): SaveDataV2 {
   const gs = gameState.getState();
-  impactSystem.generateForecast(tideSystem.getCurrentIntensity(), growthSystem.getModifiers().forecastClarity,
+  if (forecast) impactSystem.generateForecast(tideSystem.getCurrentIntensity(), growthSystem.getModifiers().forecastClarity,
     tideSystem.peekNextIntensity());
   return {
     version: 2,
     kindlingReserve: gs.kindlingReserve,
     repairBonusHp: gs.repairBonusHp,
+    pendingSideEffects: gs.pendingSideEffects,
+    upgradeDiscount: gs.upgradeDiscount,
+    moduleSwapActive: gs.moduleSwapActive,
     modules: gs.modules,
     moduleMaxHpTier: gs.moduleMaxHpTier,
     cycle: gs.cycle,
@@ -100,13 +125,39 @@ function collectSave(inventory: InventoryState): SaveDataV2 {
 }
 let worldTransaction = false;
 let pendingWorldSave = false;
+let pendingWorldBytes: string | null = null;
+
+function attachCheckpoint(data: SaveDataV2, checkpoint = currentRiftCheckpoint): SaveDataV2 {
+  if (checkpoint && data.inventory.run?.id === checkpoint.runId && !data.inventory.run.baseSettled) {
+    data.riftCheckpoint = checkpoint;
+  } else if (currentRiftDeparture && data.inventory.run?.id === currentRiftDeparture.runId && data.inventory.run.status === 'active') {
+    data.riftDeparture = currentRiftDeparture;
+  }
+  if (data.riftCheckpoint || data.riftDeparture) {
+    data.checkpointChecksum = checkpointChecksum(data);
+  }
+  return data;
+}
+
+function writeRecord(bytes: string, keepPrevious = false): void {
+  const previous = keepPrevious ? storage().getItem(SAVE.KEY) : null;
+  // setItem replaces one complete value atomically. A failed backup must never
+  // report the already committed primary record as an unsuccessful gameplay step.
+  storage().setItem(SAVE.KEY, bytes);
+  if (previous && previous !== bytes) {
+    try { storage().setItem(`${SAVE.KEY}:previous`, previous); } catch { /* current record is durable */ }
+  }
+}
 
 function enableInventoryPersistence(): void {
   inventoryStore.setPersistence(inventory => {
     if (worldTransaction) return;
     if (pendingWorldSave) throw new Error("Previous settlement must be saved first");
+    if (currentRiftCheckpoint && inventory.run?.status === 'active') {
+      throw new Error('An active recovered world requires a complete frame commit');
+    }
     const beforeForecast = impactSystem.getForecastState();
-    try { storage().setItem(SAVE.KEY, JSON.stringify(collectSave(inventory))); }
+    try { writeRecord(JSON.stringify(attachCheckpoint(collectSave(inventory)))); }
     catch (error) { impactSystem.loadForecastState(beforeForecast); throw error; }
   });
 }
@@ -118,8 +169,10 @@ function enableInventoryPersistence(): void {
 export const saveManager = {
   /** Call before session initialization. Every persistence path resolves this backend. */
   setStorage(backend: SaveStorage | null): void {
-    if (worldTransaction || pendingWorldSave) throw new Error('Cannot replace storage during a pending settlement');
+    if (worldTransaction || pendingWorldSave || inventoryStore.hasFrameTransaction()) throw new Error('Cannot replace storage during a pending settlement');
     injectedStorage = backend;
+    currentRiftCheckpoint = undefined;
+    currentRiftDeparture = undefined;
     enableInventoryPersistence();
   },
   /** A useful injection and its finite bonus must be durable together. */
@@ -145,6 +198,51 @@ export const saveManager = {
 
   hasPendingSave(): boolean { return pendingWorldSave; },
 
+  /** The world adapter validates all domain DTOs before load mutates inventory,
+   * base modules or the scene. Unsupported worlds remain intact in storage. */
+  setRiftStateValidator(validate: ((checkpoint: RiftCheckpoint, inventory: InventoryState) => boolean) | null): void {
+    validateRiftState = validate;
+  },
+
+  setRiftDepartureValidator(validate: ((intent: RiftDepartureIntent) => boolean) | null): void { validateDeparture = validate; },
+  recordRiftDeparture(intent: RiftDepartureIntent): void {
+    if (!worldTransaction || !validRiftDeparture(intent) || inventoryStore.getRun()?.id !== intent.runId
+      || !validateDeparture?.(intent)) throw new Error('Invalid atomic Rift departure');
+    currentRiftDeparture = structuredClone(intent);
+    currentRiftCheckpoint = undefined;
+  },
+  peekRiftDeparture(): RiftDepartureIntent | null {
+    const data = readSaveJson();
+    return data?.version === 2 && validSaveEnvelope(data) ? data.riftDeparture ?? null : null;
+  },
+  peekRiftCheckpoint(): RiftCheckpoint | null {
+    const data = readSaveJson();
+    return data?.version === 2 && validSaveEnvelope(data) ? data.riftCheckpoint ?? null : null;
+  },
+
+  /** Capture once after the simulation frame. The returned operation retries
+   * exactly the same inventory, world, forecast and sequence, never a new roll. */
+  prepareRiftCommit(checkpoint: RiftCheckpoint): () => void {
+    if (worldTransaction || pendingWorldSave) throw new Error('Base settlement is still pending');
+    const inventory = inventoryStore.getState();
+    if (!validRiftCheckpoint(checkpoint) || checkpoint.runId !== inventory.run?.id
+      || !validateRiftState?.(checkpoint, inventory)) throw new Error('Incomplete Rift checkpoint');
+    if (currentRiftCheckpoint?.runId === checkpoint.runId && checkpoint.sequence <= currentRiftCheckpoint.sequence) {
+      throw new Error('Rift checkpoint sequence must increase');
+    }
+    const frozen = JSON.parse(JSON.stringify(checkpoint)) as RiftCheckpoint;
+    const data = attachCheckpoint(collectSave(inventory, false), frozen);
+    const bytes = JSON.stringify(data);
+    let committed = false;
+    return () => {
+      if (committed) return;
+      writeRecord(bytes, true);
+      currentRiftCheckpoint = frozen;
+      currentRiftDeparture = undefined;
+      committed = true;
+    };
+  },
+
   /** Check if a save file exists in localStorage. */
   hasSave(): boolean {
     return storage().getItem(SAVE.KEY) !== null;
@@ -155,12 +253,22 @@ export const saveManager = {
    * Emits GAME_SAVED on success.
    */
   save(): void {
+    if (inventoryStore.hasFrameTransaction()) throw new Error('Save the complete Rift frame first');
     const beforeForecast = impactSystem.getForecastState();
     try {
-      const data = collectSave(inventoryStore.getState());
-      storage().setItem(SAVE.KEY, JSON.stringify(data));
+      if (currentRiftCheckpoint && inventoryStore.getRun()?.status === 'active' && !worldTransaction) {
+        throw new Error('Active Rift requires its world checkpoint');
+      }
+      const bytes = pendingWorldBytes ?? JSON.stringify(attachCheckpoint(collectSave(inventoryStore.getState())));
+      if (pendingWorldSave) pendingWorldBytes = bytes;
+      writeRecord(bytes);
+      // A failed first write rolled this one side effect back; a byte-identical
+      // retry must publish the forecast from those bytes, not generate another.
+      if (pendingWorldBytes) impactSystem.loadForecastState((JSON.parse(bytes) as SaveDataV2).impactForecast);
     } catch (error) { impactSystem.loadForecastState(beforeForecast); throw error; }
     pendingWorldSave = false;
+    pendingWorldBytes = null;
+    if (inventoryStore.getRun()?.baseSettled) { currentRiftCheckpoint = undefined; currentRiftDeparture = undefined; }
     enableInventoryPersistence();
     eventBus.emit(GameEvent.GAME_SAVED, { timestamp: Date.now() });
   },
@@ -171,6 +279,7 @@ export const saveManager = {
    * Emits GAME_LOADED on success.
    */
   load(): boolean {
+    if (pendingWorldSave || inventoryStore.hasFrameTransaction()) return false;
     const raw = storage().getItem(SAVE.KEY);
     if (!raw) return false;
 
@@ -186,15 +295,23 @@ export const saveManager = {
       // Future: add migration functions here
       return false;
     }
+    if (data.version === 2 && data.riftCheckpoint && !validateRiftState?.(data.riftCheckpoint, data.inventory)) return false;
+
+    if (data.version === 2 && data.riftDeparture && !validateDeparture?.(data.riftDeparture)) return false;
 
     // Validate inventory before mutating any other system. Never infer an interrupted-run policy.
     inventoryStore.setPersistence(null);
     if (data.version === 2) inventoryStore.loadState(data.inventory);
+    currentRiftCheckpoint = data.version === 2 ? data.riftCheckpoint : undefined;
+    currentRiftDeparture = data.version === 2 ? data.riftDeparture : undefined;
 
     // Distribute to systems
     gameState.loadState({
       kindlingReserve: data.kindlingReserve,
       repairBonusHp: data.repairBonusHp,
+      pendingSideEffects: data.pendingSideEffects,
+      upgradeDiscount: data.upgradeDiscount,
+      moduleSwapActive: data.moduleSwapActive,
       cycle: data.cycle,
       modules: data.modules,
       moduleMaxHpTier: data.moduleMaxHpTier,
@@ -244,6 +361,10 @@ export const saveManager = {
   /** Delete the save from localStorage. */
   deleteSave(): void {
     storage().removeItem(SAVE.KEY);
+    currentRiftCheckpoint = undefined;
+    currentRiftDeparture = undefined;
+    pendingWorldSave = false;
+    pendingWorldBytes = null;
     // Starter creation happens before the other systems finish resetting.
     // Do not let that transaction save a half-reset record.
     inventoryStore.setPersistence(null);

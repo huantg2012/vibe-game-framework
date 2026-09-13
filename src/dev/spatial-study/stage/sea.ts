@@ -64,7 +64,7 @@ void main(){
  screenPoint=clip.xy/clip.w;gl_Position=clip;
 }`;
 const fragmentShader=`
-uniform float clock; uniform float falling; uniform float waterActive; uniform float residue;
+uniform float clock; uniform float falling; uniform float waterActive; uniform float residue; uniform float nativeFall;
 uniform vec2 playerScreen; uniform vec2 resolution;
 uniform sampler2D terrainPerception; uniform sampler2D terrainHeight; uniform vec2 groundGrid;
 uniform sampler2D sceneDepth; uniform float useSceneDepth; uniform mat4 inverseCamera;
@@ -112,6 +112,7 @@ void main(){
  vec3 color=pigment(value);
  float alpha=.97;
  if(falling>.5){
+   if(nativeFall>.5 && texture2D(terrainPerception,worldPoint.xz/worldSize).r<=0.)discard;
    bool contact=normal.y>.72;
    if(contact){
      vec2 ripple=vec2(pp.x/9.+sin(pp.z/19.)*.8,pp.z/5.-clock*5.5);
@@ -173,6 +174,8 @@ void main(){
  #include <colorspace_fragment>
 }`;
 
+export interface StageSeaOptions { readonly nativeFall?: boolean }
+
 export class StageSea {
   readonly group=new THREE.Group();
   private readonly body=new VolumeBuffer();
@@ -198,7 +201,8 @@ export class StageSea {
   private readonly ray=new THREE.Raycaster();
   private readonly bodyMesh:THREE.Mesh;
 
-  constructor(_context:RiftDevRuntimeContext,private readonly world:SpatialSliceWorld,terrainPerception?:THREE.Texture,terrainHeight?:THREE.Texture,sceneDepth?:THREE.Texture){
+  constructor(_context:RiftDevRuntimeContext,private readonly world:SpatialSliceWorld,terrainPerception?:THREE.Texture,terrainHeight?:THREE.Texture,sceneDepth?:THREE.Texture,
+    private readonly options:StageSeaOptions={}){
     this.gridColumns=Math.ceil((world.width+112-GRID_X)/SEA_STEP)+1;
     this.gridRows=Math.ceil((world.height+28-GRID_Z)/SEA_STEP)+1;
     for(let row=0;row<this.gridRows;row++)for(let col=0;col<this.gridColumns;col++){
@@ -212,7 +216,7 @@ export class StageSea {
     this.ownsHeight=!terrainHeight;
     this.terrainHeight=terrainHeight??new THREE.DataTexture(new Float32Array([0,0,0,0]),2,2,THREE.RedFormat,THREE.FloatType);
     if(this.ownsHeight){this.terrainHeight.minFilter=this.terrainHeight.magFilter=THREE.NearestFilter;this.terrainHeight.needsUpdate=true;}
-    const uniforms={clock:{value:0},falling:{value:0},waterActive:{value:0},residue:{value:0},
+    const uniforms={clock:{value:0},falling:{value:0},waterActive:{value:0},residue:{value:0},nativeFall:{value:options.nativeFall?1:0},
       sceneDepth:{value:sceneDepth??this.terrainHeight},useSceneDepth:{value:sceneDepth?1:0},inverseCamera:{value:new THREE.Matrix4()},
       terrainHeight:{value:this.terrainHeight},groundGrid:{value:new THREE.Vector2(terrainHeight?world.ground.columns:2,terrainHeight?world.ground.rows:2)},playerScreen:{value:new THREE.Vector2()},
       terrainPerception:{value:this.perception},worldSize:{value:new THREE.Vector2(world.width,world.height)},
@@ -339,12 +343,14 @@ export class StageSea {
     this.fall.reset();
     const def=this.world.waterDefinition,frame=this.world.water,outline=this.world.waterOutline;
     const flow=this.flowCycle.sample(time,this.flow),clock=time/1000;
+    const native=this.options.nativeFall===true;
     this.world.sampleSea(def.x,def.y,time,this.sourceColumn);
     const upper=this.sourceColumn.bottom+7;
     // Short asymmetric gathers hang from the source before any water is released.
     if(flow.swell>.01){
-      for(let i=0;i<7;i++){
-        const x=def.x-45+i*14+noise(i,3,this.world.seed)*5;
+      const gathers=native?3:7;
+      for(let i=0;i<gathers;i++){
+        const x=native?def.x+(i-1)*def.width*.27: def.x-45+i*14+noise(i,3,this.world.seed)*5;
         const z=def.y-8+noise(i,4,this.world.seed)*14;
         const drop=flow.swell*(7+noise(i,5,this.world.seed)*15);
         const span=7+noise(i,6,this.world.seed)*8;
@@ -354,10 +360,10 @@ export class StageSea {
     }
     // Six unequal water sheets have separate necks and bends. Their leading
     // and trailing edges both accelerate down; no part retracts like a hose.
-    for(let stream=0;stream<6;stream++){
-      const lateral=-56+stream*22+noise(stream,11,this.world.seed)*5;
-      const width=7+noise(stream,12,this.world.seed)*7;
-      const endZ=def.y+(noise(stream,13,this.world.seed)-.5)*23;
+    for(let stream=0;stream<(native?3:6);stream++){
+      const lateral=native?(stream-1)*def.width*.27:-56+stream*22+noise(stream,11,this.world.seed)*5;
+      const width=native?def.width*(.105+noise(stream,12,this.world.seed)*.035):7+noise(stream,12,this.world.seed)*7;
+      const endZ=def.y+(noise(stream,13,this.world.seed)-.5)*(native?def.depth*.32:23);
       const flight=def.fallTravelMs*(.86+noise(stream,14,this.world.seed)*.17);
       const front=Math.pow(Math.max(0,Math.min(1,(flow.cycleTime-(flow.contactStart-flight))/flight)),2);
       const tail=Math.pow(Math.max(0,Math.min(1,(flow.cycleTime-(flow.contactEnd-flight))/flight)),2);
@@ -406,8 +412,8 @@ export class StageSea {
       const birth=flow.contactStart+i*109;
       const age=(flow.cycleTime-birth)/1000;
       if(birth>flow.contactEnd || age<0 || age>.43)continue;
-      const baseX=def.x+(noise(i,19,this.world.seed)-.5)*115;
-      const baseZ=def.y+(noise(i,23,this.world.seed)-.5)*31;
+      const baseX=def.x+(noise(i,19,this.world.seed)-.5)*(native?def.width*.7:115);
+      const baseZ=def.y+(noise(i,23,this.world.seed)-.5)*(native?def.depth*.5:31);
       const x=baseX+(noise(i,29,this.world.seed)-.35)*65*age;
       const z=baseZ+(noise(i,31,this.world.seed)-.2)*32*age;
       const lift=(22+noise(i,37,this.world.seed)*29)*age-110*age*age;

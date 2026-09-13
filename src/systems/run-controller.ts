@@ -12,7 +12,9 @@ import { inventoryError } from '@/ui/inventory-presenter';
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { afterStateCommit } from '@/core/commit-effects';
 import { eventBus } from '@/core/event-bus';
+import { runtimeInteger, runtimeNumber, runtimeRecord } from '@/systems/ai/runtime-validation';
 import { GameEvent } from '@/types/events';
 import { getDomUiRoot } from '@/ui/dom/panel-styles';
 
@@ -20,7 +22,39 @@ import { getDomUiRoot } from '@/ui/dom/panel-styles';
 // Types
 // ---------------------------------------------------------------------------
 
-export type EndRunReason = 'extract' | 'player_died';
+export type EndRunReason = 'extract' | 'player_died' | 'abandon';
+
+/** The clock is rebased on restore; offline wall time never advances a run. */
+export interface RunRuntimeStateV1 {
+  version: 1;
+  runEnded: boolean;
+  /** A return has been requested; its presentation waits for the same commit. */
+  restarted: boolean;
+  lastEndReason: EndRunReason | null;
+  lastKindling: number;
+  settlementSaved: boolean;
+  /** Reserves the one event before commit. A committed reservation is never replayed. */
+  settlementEmitted: boolean;
+  clockSource: 'scene' | 'external';
+  elapsedMs: number;
+  settlementDelayRemainingMs: number | null;
+}
+
+/** Pure JSON guard. Inventory/run identity belongs to the whole-frame validator. */
+export function validateRunRuntimeState(value: unknown): value is RunRuntimeStateV1 {
+  if (!runtimeRecord(value) || value.version !== 1
+    || typeof value.runEnded !== 'boolean' || typeof value.restarted !== 'boolean'
+    || typeof value.settlementSaved !== 'boolean' || typeof value.settlementEmitted !== 'boolean'
+    || !runtimeInteger(value.lastKindling) || !runtimeNumber(value.elapsedMs, 0, Number.MAX_SAFE_INTEGER)
+    || (value.clockSource !== 'scene' && value.clockSource !== 'external')) return false;
+  if (!value.runEnded) return value.lastEndReason === null && value.lastKindling === 0
+    && !value.restarted && !value.settlementSaved && !value.settlementEmitted
+    && value.settlementDelayRemainingMs === null;
+  if (value.lastEndReason !== 'extract' && value.lastEndReason !== 'player_died' && value.lastEndReason !== 'abandon') return false;
+  if (value.lastEndReason !== 'extract' && value.lastKindling !== 0) return false;
+  if (value.restarted || value.settlementEmitted) return value.settlementSaved && value.settlementDelayRemainingMs === null;
+  return runtimeNumber(value.settlementDelayRemainingMs, 0, GAME_CONSTANTS.EXTRACTION.SETTLE_DELAY_MS);
+}
 
 export interface RunControllerDeps {
   pauseChaos: (paused: boolean) => void;
@@ -29,6 +63,10 @@ export interface RunControllerDeps {
   onSettlementFailure?: (message: string, retry: () => void) => void;
   /** Alternate development destination, after the normal saved settlement and event. */
   onReturn?: () => void;
+  /** Optional authoritative play clock (for preparation that precedes simulation). */
+  getElapsedMs?: () => number;
+  /** Recovery scenes mark the current frame dirty even when only lifecycle flags change. */
+  onRuntimeStateChanged?: () => void;
 }
 
 // ---------------------------------------------------------------------------
@@ -40,6 +78,7 @@ export class RunController {
   private deps!: RunControllerDeps;
   private scene!: Phaser.Scene;
   private startTimeMs = 0;
+  private elapsedOffsetMs = 0;
   /** Set to true when R is pressed to cancel the pending scene transition. */
   private restarted = false;
   /** Tracks the last endRun reason so purification gets the right survived flag. */
@@ -48,6 +87,14 @@ export class RunController {
   private lastKindling = 0;
   private settlementSaved = false;
   private settlementEmitted = false;
+  private settlementDelayRemainingMs: number | null = null;
+  private settlementDeadlineMs: number | null = null;
+  private settlementSchedulingQueued = false;
+  private returnPresented = false;
+  private created = false;
+  private restorePending = false;
+  /** Invalidates callbacks retained by a previous scene or pre-restore timer. */
+  private lifecycleRevision = 0;
 
   /** Stored for cleanup. */
   private readonly onPlayerDied: (payload: { cause: string }) => void;
@@ -63,15 +110,23 @@ export class RunController {
   }
 
   create(scene: Phaser.Scene, deps: RunControllerDeps): void {
+    this.lifecycleRevision++;
+    this.created = true;
+    this.restorePending = false;
     this.scene = scene;
     this.deps = deps;
     this.startTimeMs = scene.time.now;
+    this.elapsedOffsetMs = 0;
     this.runEnded = false;
     this.restarted = false;
     this.lastEndReason = null;
     this.lastKindling = 0;
     this.settlementSaved = false;
     this.settlementEmitted = false;
+    this.settlementDelayRemainingMs = null;
+    this.settlementDeadlineMs = null;
+    this.settlementSchedulingQueued = false;
+    this.returnPresented = false;
 
     eventBus.on(GameEvent.PLAYER_DIED, this.onPlayerDied);
     eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onRiftExitReached);
@@ -82,7 +137,64 @@ export class RunController {
   }
 
   getElapsedMs(): number {
-    return this.scene.time.now - this.startTimeMs;
+    return this.deps.getElapsedMs
+      ? this.deps.getElapsedMs() + this.elapsedOffsetMs
+      : this.scene.time.now - this.startTimeMs;
+  }
+
+  exportRuntimeState(): RunRuntimeStateV1 {
+    const state: RunRuntimeStateV1 = {
+      version: 1, runEnded: this.runEnded, restarted: this.restarted,
+      lastEndReason: this.lastEndReason, lastKindling: this.lastKindling,
+      settlementSaved: this.settlementSaved, settlementEmitted: this.settlementEmitted,
+      clockSource: this.deps.getElapsedMs ? 'external' : 'scene', elapsedMs: this.getElapsedMs(),
+      settlementDelayRemainingMs: this.settlementDeadlineMs === null ? this.settlementDelayRemainingMs
+        : Math.max(0, this.settlementDeadlineMs - this.scene.time.now),
+    };
+    if (!this.validateRuntimeState(state)) throw new Error('Unsupported run runtime state');
+    return state;
+  }
+
+  validateRuntimeState(value: unknown): value is RunRuntimeStateV1 {
+    return this.created && validateRunRuntimeState(value)
+      && value.clockSource === (this.deps.getElapsedMs ? 'external' : 'scene');
+  }
+
+  /** Hydrates facts only. Restore the external clock before calling this method. */
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid run runtime state');
+    const clock = this.deps.getElapsedMs?.() ?? this.scene.time.now;
+    if (!runtimeNumber(clock, 0, Number.MAX_SAFE_INTEGER)) throw new Error('Invalid live run clock');
+    this.lifecycleRevision++;
+    this.restorePending = true;
+    this.runEnded = value.runEnded;
+    this.restarted = value.restarted;
+    this.lastEndReason = value.lastEndReason;
+    this.lastKindling = value.lastKindling;
+    this.settlementSaved = value.settlementSaved;
+    this.settlementEmitted = value.settlementEmitted;
+    this.startTimeMs = this.scene.time.now - value.elapsedMs;
+    this.elapsedOffsetMs = this.deps.getElapsedMs ? value.elapsedMs - clock : 0;
+    this.settlementDelayRemainingMs = value.settlementDelayRemainingMs;
+    this.settlementDeadlineMs = null;
+    this.settlementSchedulingQueued = false;
+    this.returnPresented = false;
+  }
+
+  /** Call once after the entire committed world and its result projection are restored.
+   * An already reserved RIFT_EXITED is represented by that projection, never emitted again.
+   * This method does not settle inventory, pause systems, or reconstruct an endRun event. */
+  finishRuntimeRestore(): void {
+    if (!this.created || !this.restorePending) return;
+    this.restorePending = false;
+    if (!this.runEnded || !this.settlementSaved) return;
+    if (this.restarted) this.queueReturn();
+    else if (!this.settlementEmitted) this.scheduleSettlement();
+  }
+
+  /** Explicit loss of this trip. Closing or refreshing a page must not call this. */
+  abandon(): void {
+    this.endRun('abandon');
   }
 
   /**
@@ -90,18 +202,20 @@ export class RunController {
    * to purification (DEC-056). Survived is still decided by endRun reason.
    */
   restart(): void {
-    if (!this.runEnded || this.restarted) return;
+    if (!this.created || this.restorePending || !this.runEnded || this.restarted) return;
     if (!this.saveSettlement()) return;
-    if (this.deps.onReturn) {
-      this.restarted = true;
-      this.emitSettlement();
-      this.deps.onReturn();
-      return;
-    }
-    this.transitionToPurification();
+    this.restarted = true;
+    this.settlementDelayRemainingMs = null;
+    this.settlementDeadlineMs = null;
+    this.deps.onRuntimeStateChanged?.();
+    if (this.deps.onReturn) this.emitSettlement();
+    this.queueReturn();
   }
 
   destroy(): void {
+    this.lifecycleRevision++;
+    this.created = false;
+    this.restorePending = false;
     eventBus.off(GameEvent.PLAYER_DIED, this.onPlayerDied);
     eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onRiftExitReached);
   }
@@ -109,29 +223,31 @@ export class RunController {
   // ------------------------------------------------------------------ internal
 
   private endRun(reason: EndRunReason): void {
-    if (this.runEnded) return;
+    if (!this.created || this.restorePending || this.runEnded) return;
     this.runEnded = true;
     this.restarted = false;
     this.lastEndReason = reason;
     this.lastKindling = reason === 'extract' ? this.deps.getCarriedKindling() : 0;
+    this.settlementDelayRemainingMs = GAME_CONSTANTS.EXTRACTION.SETTLE_DELAY_MS;
 
     this.deps.pauseChaos(true);
     this.deps.setPlayerInput(false);
 
     this.saveSettlement();
-    this.scene.time.delayedCall(GAME_CONSTANTS.EXTRACTION.SETTLE_DELAY_MS, () => {
-      if (this.restarted || !this.settlementSaved) return;
-      this.emitSettlement();
-    });
+    this.deps.onRuntimeStateChanged?.();
+    this.scheduleSettlement();
   }
 
   private saveSettlement(): boolean {
     if (this.settlementSaved) return true;
     const run = inventoryStore.getRun();
     if (run?.status === 'active') {
-      const result = inventoryStore.settleRun(run.id, this.lastEndReason === 'extract' ? 'extract' : 'death', this.lastKindling);
+      const result = inventoryStore.settleRun(run.id, this.lastEndReason === 'extract' ? 'extract'
+        : this.lastEndReason === 'abandon' ? 'abandon' : 'death', this.lastKindling);
       if (!result.ok) {
+        const revision = this.lifecycleRevision;
         this.deps.onSettlementFailure?.(inventoryError(result.error), () => {
+          if (!this.created || this.restorePending || revision !== this.lifecycleRevision) return;
           if (this.saveSettlement()) this.emitSettlement();
         });
         return false;
@@ -142,14 +258,52 @@ export class RunController {
   }
 
   private emitSettlement(): void {
-    if (this.settlementEmitted) return;
+    if (this.settlementEmitted || !this.settlementSaved) return;
+    // Persist the reservation with the frame that publishes the event. A reload
+    // after commit but before its callback projects the result without replaying it.
     this.settlementEmitted = true;
-    eventBus.emit(GameEvent.RIFT_EXITED, { kindlingGained: this.lastKindling, survived: this.lastEndReason === 'extract' });
+    this.settlementDelayRemainingMs = null;
+    this.settlementDeadlineMs = null;
+    this.deps.onRuntimeStateChanged?.();
+    this.afterCommit(() => eventBus.emit(GameEvent.RIFT_EXITED,
+      { kindlingGained: this.lastKindling, survived: this.lastEndReason === 'extract' }));
+  }
+
+  private scheduleSettlement(): void {
+    if (this.settlementSchedulingQueued || this.settlementDeadlineMs !== null
+      || this.settlementEmitted || this.restarted || this.settlementDelayRemainingMs === null) return;
+    this.settlementSchedulingQueued = true;
+    this.afterCommit(() => {
+      this.settlementSchedulingQueued = false;
+      if (this.settlementEmitted || this.restarted || this.settlementDelayRemainingMs === null) return;
+      const delay = this.settlementDelayRemainingMs, revision = this.lifecycleRevision;
+      this.settlementDeadlineMs = this.scene.time.now + delay;
+      this.scene.time.delayedCall(delay, () => {
+        if (!this.created || this.restorePending || revision !== this.lifecycleRevision || this.restarted || this.settlementEmitted) return;
+        this.settlementDeadlineMs = null;
+        this.settlementDelayRemainingMs = 0;
+        if (this.settlementSaved) this.emitSettlement();
+      });
+    });
+  }
+
+  private queueReturn(): void {
+    this.afterCommit(() => {
+      if (this.returnPresented) return;
+      this.returnPresented = true;
+      if (this.deps.onReturn) this.deps.onReturn();
+      else this.transitionToPurification();
+    });
+  }
+
+  private afterCommit(effect: () => void): void {
+    const revision = this.lifecycleRevision;
+    afterStateCommit(() => {
+      if (this.created && !this.restorePending && revision === this.lifecycleRevision) effect();
+    });
   }
 
   private transitionToPurification(): void {
-    this.restarted = true;
-
     // Inject transition animation styles once
     this.injectTransitionStyles();
 

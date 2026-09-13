@@ -1,3 +1,7 @@
+import { RiftFrameCommit } from '@/systems/rift-frame-commit';
+import { validateRiftRecoveryState, type RiftRecoveryState } from '@/systems/rift-recovery-state';
+import { afterStateCommit, commitEffects } from '@/core/commit-effects';
+import type { RiftCheckpoint } from '@/types/rift-checkpoint';
 import { hasLineOfSight } from '@/utils/grid-raycast';
 import { collectToolRevealSnapshot, findStitchPlacement, findSingleWallLanding, findSoundLureLanding } from '@/systems/tool-targeting';
 import { getSurvivalAttributes, sumPollutionResistance } from '@/systems/survival-attributes';
@@ -12,6 +16,7 @@ import { productionModelFor } from '@/entities/form-renderers/d/production-model
 import type { CoverageId } from '@/generated/contamination-lexicon-data';
 import { createPresentationFrame } from '@/dev/spatial-study/stage/bridge';
 import type { RiftPresentationFrame, RiftPresentationView, RiftWorldProjector, RiftPresentationEvent } from '@/dev/spatial-study/stage/bridge';
+import type { MeleeTarget } from '@/systems/weapon-swing';
 /**
  * Rift Scene - core gameplay.
  *
@@ -38,6 +43,7 @@ import type { GeneratedRiftLayout } from '@/generation/types';
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
+  recovery?: { identity: RiftCheckpoint['identity']; externalTargetIds: readonly string[]; checkpoint?: RiftCheckpoint<RiftRecoveryState> };
   createLayout(): GeneratedRiftLayout;
   /** Optical terrain only; physics and navigation always retain the source TileGrid. */
   createSightGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid): OccluderGrid;
@@ -46,7 +52,23 @@ export interface RiftDevFixture {
   configureCamera?(camera: Phaser.Cameras.Scene2D.Camera): void;
   /** Display-only adjustment for the large legacy through-fog extraction marker. */
   extractionGlowRadius?: number;
+  /** Opt-in preparation before the first simulation frame; old fixtures enter immediately. */
+  entryDurationMs?: number;
+  /** A completed native run keeps its result clock alive, but stops its world. */
+  freezeAfterEnd?: boolean;
+  /** Replaces this world's ambient bed, preserving the existing adaptive audio mixer. */
+  atmosphereKey?: string;
+  footstepMaterial?: 'soil' | 'wood' | 'metal' | 'tile' | 'plaster';
+  createSearchObjectVisual?: LootSearchCreateConfig['createVisual'];
+  /** Explicit alternative-renderer ownership; never substitute a legacy fragment's ground. */
+  worldSurface?: 'runtime';
   createRuntime?(context: RiftDevRuntimeContext): RiftDevRuntime;
+}
+export interface RiftEntryView {
+  readonly active: boolean;
+  readonly elapsedMs: number;
+  readonly durationMs: number;
+  readonly progress: number;
 }
 export interface RiftDevActorVisuals {
   readonly id: string;
@@ -60,6 +82,10 @@ export interface RiftDevRuntimeContext {
   readonly player: RiftDevActorVisuals;
   readonly enemies: readonly RiftDevActorVisuals[];
   readonly applyHazardHit: (source: string, damage: number) => boolean;
+  readonly isRunEnded: () => boolean;
+  /** Uses the same target budget, damage snapshot and durability transaction as bodies. */
+  readonly registerMeleeTargets: (provider: { collectMeleeTargets(out: MeleeTarget[]): void }) => () => void;
+  readonly readEntryView: () => RiftEntryView;
   readonly visibilityAt: (position: Readonly<{ x: number; y: number }>) => number;
   readonly getFootprint: () => Readonly<{ x: number; y: number; width: number; height: number }>;
   readonly getGroundVisualDepth: (groundY: number) => number;
@@ -70,8 +96,15 @@ export interface RiftDevRuntimeContext {
   readonly setWorldProjector: (projector: RiftWorldProjector | null) => void;
 }
 export interface RiftDevRuntime {
+  beforeCombat?(elapsedMs: number, ended: boolean): void;
   update(elapsedMs: number, ended: boolean): void;
   afterUpdate(elapsedMs: number): void;
+  prepareCheckpoint?(elapsedMs: number): void;
+  exportRuntimeState?(): unknown;
+  validateRuntimeState?(state: unknown): boolean;
+  restoreRuntimeState?(state: unknown): void;
+  /** True only for an actual local contact whose material sound replaces this cue. */
+  handleCombatCue?(cue: CombatCueId, position: Readonly<Vector2>): boolean;
   destroy(): void;
 }
 import { mix32 } from '@/generation/seed-fork';
@@ -84,7 +117,7 @@ import { ContaminationHostSystem } from '@/systems/contamination-host-system';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { ExtractionSystem } from '@/systems/extraction-system';
 import { growthSystem } from '@/systems/growth-system';
-import { LootSearchSystem } from '@/systems/loot-search-system';
+import { LootSearchSystem, type LootSearchCreateConfig } from '@/systems/loot-search-system';
 import { RunController } from '@/systems/run-controller';
 import { TileGrid } from '@/systems/tile-grid';
 import { TilemapRenderer } from '@/systems/tilemap-renderer';
@@ -100,7 +133,7 @@ import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { describeSideEffectBody, formatChaosMultDelta } from '@/ui/side-effect-labels';
 import { riftResultPanel } from '@/ui/dom/rift-result-panel';
 import { pauseMenu } from '@/ui/dom/pause-menu';
-import { getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
+import { getDomUiRoot, injectPanelStyles, showToastInline, clearToastInline } from '@/ui/dom/panel-styles';
 import type { PendingSideEffect } from '@/systems/defense-engine';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
@@ -130,6 +163,8 @@ const DEPTH = {
 const RIFT_SURFACE_KEY = 'rift-surface';
 
 export class RiftScene extends Phaser.Scene {
+  private frameCommit: RiftFrameCommit | null = null;
+  private recoveryConditions = { modifiers: { chaosRateModifier: 1, kindlingValueModifier: 1, startingChaos: 0 }, cycle: 0 };
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private readonly visibility = new VisibilitySystem();
@@ -150,6 +185,11 @@ export class RiftScene extends Phaser.Scene {
   private devPresentation: RiftPresentationFrame | null = null;
   private devWorldProjector: RiftWorldProjector | null = null;
   private devEventSequence = 0;
+  private readonly devTargetDisposers = new Set<() => void>();
+  private readonly entryView = { active: false, elapsedMs: 0, durationMs: 0, progress: 1 };
+  private readonly entryHeldKeys = new Set<number>();
+  private entryOwnsPhysicsPause = false;
+  private entryFrameFrozen = false;
   private inventoryClosedAt = -1000;
   private readonly runController = new RunController();
   private readonly hud = new RiftHud();
@@ -189,6 +229,8 @@ export class RiftScene extends Phaser.Scene {
   /** Defense residue lines shown in the rift HUD; remainingMs ticked here, then
    *  merged with tool-system remaining each frame so tool rows are not double-counted. */
   private defenseHudEffects: ActiveEffectInfo[] = [];
+  private endOwnsPhysicsPause = false;
+  private endFrozen = false;
   /** Reused each post-update so the minimap visibility scan does not allocate. */
   private readonly minimapVisibilityQuery: Vector2 = { x: 0, y: 0 };
   /** Reused for scheme D visibility samples (乙 seam is offset 1px into the floor). */
@@ -203,6 +245,7 @@ export class RiftScene extends Phaser.Scene {
 
   create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture }): void {
     this.devFixture = import.meta.env.DEV ? data?.devFixture ?? null : null;
+    this.frameCommit = null;
     this.devElapsedMs = 0;
     this.devPresentation = this.devFixture ? createPresentationFrame() : null;
     this.devWorldProjector = null;
@@ -211,7 +254,21 @@ export class RiftScene extends Phaser.Scene {
     this.inventoryClosedAt = -1000;
     this.thresholdUntilMs = 0;
     this.toolInputAllowed = true;
-    const sortieModifiers = data?.modifiers;
+    const entryDurationMs = this.devFixture?.entryDurationMs ?? 0;
+    if (!Number.isFinite(entryDurationMs) || entryDurationMs < 0 || entryDurationMs > 1500) {
+      throw new Error('Rift entry duration must be finite and between 0 and 1500ms');
+    }
+    Object.assign(this.entryView, { active: entryDurationMs > 0, elapsedMs: 0, durationMs: entryDurationMs,
+      progress: entryDurationMs > 0 ? 0 : 1 });
+    this.entryHeldKeys.clear();
+    this.entryFrameFrozen = false;
+    this.entryOwnsPhysicsPause = false;
+    this.endOwnsPhysicsPause = false;
+    this.endFrozen = false;
+    const restoring = this.devFixture?.recovery?.checkpoint;
+    if (restoring && (!validateRiftRecoveryState(restoring.state, inventoryStore.getState(), restoring.elapsedMs) || restoring.state.phase !== 'active')) throw new Error('Cannot resume an incomplete or ended Rift');
+    const sortieModifiers = restoring?.state.conditions.modifiers ?? data?.modifiers;
+    this.recoveryConditions = { modifiers: { ...(sortieModifiers ?? gameState.getSortieModifiers()) }, cycle: data?.cycle ?? gameState.getCycle() };
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
     let seed = readRiftSeed();
     const recipeId = readRiftRecipeId();
@@ -247,7 +304,10 @@ export class RiftScene extends Phaser.Scene {
     });
     layer.setVisible(false);
 
-    this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface);
+    if (this.devFixture?.worldSurface === 'runtime') {
+      if (!this.devFixture.createRuntime) throw new Error('A runtime-owned world surface requires a complete presentation factory');
+      if (!this.devFixture.footstepMaterial) throw new Error('A runtime-owned world must declare its footstep material');
+    } else this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface);
 
     this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
 
@@ -276,7 +336,8 @@ export class RiftScene extends Phaser.Scene {
     const hearingCount = layout.contaminationDraw.forms.filter(form => form.lexemes.sense === 'sense_hear').length;
     if (hearingCount !== 1) throw new Error(`Rift hearing budget invalid: ${hearingCount}`);
     const floorHearingCount = layout.enemySpawns.filter(spawn => spawn.form?.lexemes.sense === 'sense_hear').length;
-    this.ai.create(this, layout.enemySpawns, sightGrid, grid, { requireExactlyOneRewriter: floorHearingCount === 1 });
+    this.ai.create(this, layout.enemySpawns, sightGrid, grid, { requireExactlyOneRewriter: floorHearingCount === 1,
+      recovery: this.devFixture?.recovery ? { runSeed: seed, signature: this.devFixture.recovery.identity.signature } : undefined });
     this.ai.setVisibilityProvider(this.visibilityAt);
     this.ai.addWallCollider(layer);
     this.ai.addStaticPlayerCollider(this.player.getSprite());
@@ -334,10 +395,11 @@ export class RiftScene extends Phaser.Scene {
     this.search.create(this, layout.kindlingNodes, layout.contaminantNodes, {
       inventoryEnabled: true,
       runSeed: seed,
-      onMessage: message => showToastInline(message, {}),
+      onMessage: message => afterStateCommit(() => showToastInline(message, { channel: 'field-loot' })),
       overlayRoot: getDomUiRoot(),
       getVisibilityAt: this.visibilityAt,
       fragmentTypeId: generated.fragmentTypeId,
+      createVisual: this.devFixture?.createSearchObjectVisual,
       extraction: {
         position: layout.extractionPoint.position,
         radius: layout.extractionPoint.triggerRadius,
@@ -348,7 +410,7 @@ export class RiftScene extends Phaser.Scene {
 
     this.fieldInventory.create(this, () => this.player.getPosition(), this.visibilityAt,
       position => grid.isWalkableAt(position.x, position.y), () => this.openBag(),
-      message => showToastInline(message, {}));
+      message => afterStateCommit(() => showToastInline(message, { channel: 'field-loot' })));
 
     // Tool system (Slice 4/5): sortie loadout with expanded options. The Slice 5 (T1/T2)
     // entries route enemy-, combat- and chaos-facing tool effects into AISystem /
@@ -456,6 +518,8 @@ export class RiftScene extends Phaser.Scene {
       getCarriedKindling: () => this.search.getCarriedKindling(),
       onSettlementFailure: (message, retry) => this.showSettlementRetry(message, retry),
       onReturn: this.devFixture?.onReturn,
+      getElapsedMs: entryDurationMs > 0 || this.devFixture?.recovery ? () => this.devElapsedMs : undefined,
+      onRuntimeStateChanged: () => this.frameCommit?.markChanged(),
     });
 
     this.hud.create({
@@ -475,7 +539,7 @@ export class RiftScene extends Phaser.Scene {
 
     // Consume pending side effects from defense engine (Slice 4).
     // initial_chaos is already folded into openingChaos — do not add it again.
-    this.applyPendingSideEffects();
+    if (!restoring) this.applyPendingSideEffects();
 
     this.minimap.create(
       tileMap.tiles,
@@ -506,43 +570,69 @@ export class RiftScene extends Phaser.Scene {
     this.bindAttackKey();
     this.bindExtractionKeys();
     this.bindToolKeys();
+    this.beginEntryGate();
 
     this.attachSchemeD();
     this.syncDevPresentation();
-    this.devRuntime = this.devFixture?.createRuntime?.({ scene: this, layout,
-      player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY() },
-      enemies: this.devEnemyVisuals,
-      applyHazardHit: (source, damage) => this.combat.applyHazardHit(source, damage),
-      visibilityAt: this.visibilityAt,
-      getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
-      revealProjectedTerrain: (image, visibility) => this.visibility.revealProjectedTerrain(image, visibility),
-      readPresentationFrame: () => {
-        if (!this.devPresentation) throw new Error('Presentation bridge requires an active DEV fixture');
-        return this.devPresentation;
-      },
-      setWorldProjector: projector => { this.devWorldProjector = projector; },
-      getFootprint: () => {
-        const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
-        return { x: body.x, y: body.y, width: body.width, height: body.height };
-      },
-    }) ?? null;
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+    try {
+      this.devRuntime = this.devFixture?.createRuntime?.({ scene: this, layout,
+        player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY() },
+        enemies: this.devEnemyVisuals,
+        applyHazardHit: (source, damage) => !this.entryView.active && this.combat.applyHazardHit(source, damage),
+        isRunEnded: () => this.runController.isRunEnded(),
+        registerMeleeTargets: this.registerDevMeleeTargets,
+        readEntryView: () => this.entryView,
+        visibilityAt: this.visibilityAt,
+        getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
+        revealProjectedTerrain: (image, visibility) => this.visibility.revealProjectedTerrain(image, visibility),
+        readPresentationFrame: () => {
+          if (!this.devPresentation) throw new Error('Presentation bridge requires an active DEV fixture');
+          return this.devPresentation;
+        },
+        setWorldProjector: projector => { this.devWorldProjector = projector; },
+        getFootprint: () => {
+          const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+          return { x: body.x, y: body.y, width: body.width, height: body.height };
+        },
+      }) ?? null;
+    } catch (error) {
+      this.onShutdown();
+      this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+      throw error;
+    }
 
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
 
     this.bindAIStimuli();
     this.ai.setCueListener(this.onAiCue);
-    this.startRiftAudio();
     this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
     this.input.keyboard?.on('keydown-TAB', this.openBag, this);
 
+    if (this.devFixture?.recovery) this.initializeRecovery(restoring);
+    this.startRiftAudio(!restoring);
     if (import.meta.env.DEV) this.createDebugOverlay();
   }
 
   update(_time: number, delta: number): void {
+    if (this.frameCommit?.isBlocked()) return;
+    this.frameCommit?.begin();
+    this.resetEntryHeldKeys();
+    this.entryFrameFrozen = this.entryView.active;
+    if (this.entryView.active) {
+      this.entryView.elapsedMs = Math.min(this.entryView.durationMs, this.entryView.elapsedMs + Math.max(0, delta));
+      this.entryView.progress = this.entryView.elapsedMs / this.entryView.durationMs;
+      if (this.entryView.elapsedMs >= this.entryView.durationMs) this.finishEntryGate();
+      return;
+    }
+    if (this.devFixture?.freezeAfterEnd && this.runController.isRunEnded()) {
+      this.devRuntime?.update(this.devElapsedMs, true);
+      return;
+    }
     if (this.devFixture && !this.runController.isRunEnded()) this.devElapsedMs += delta;
+    this.devRuntime?.beforeCombat?.(this.devElapsedMs, this.runController.isRunEnded());
     this.player.update(delta);
     this.syncRiftAudio();
     this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
@@ -586,6 +676,10 @@ export class RiftScene extends Phaser.Scene {
     for (let i = 0; i < this.toolKeys.length; i++) {
       toolJustDown[i] = Phaser.Input.Keyboard.JustDown(this.toolKeys[i]!);
     }
+    const nearbyItem = this.fieldInventory.getNearby()[0];
+    const nearbyItemDistance = nearbyItem?.location.kind === 'ground'
+      ? Math.hypot(nearbyItem.location.position.x - this.player.getPosition().x,
+        nearbyItem.location.position.y - this.player.getPosition().y) : Infinity;
     this.search.update(delta, {
       playerPos: this.player.getPosition(),
       searchHeld: this.probeSearchHeld || Boolean(this.extractKey?.isDown),
@@ -594,11 +688,12 @@ export class RiftScene extends Phaser.Scene {
       toolPressed: toolJustDown.some(Boolean),
       hitThisFrame: this.hitThisFrame,
       paused: false,
-      interactionBlocked: inventoryPanel.isOpen() || this.fieldInventory.hasNearby(),
+      interactionBlocked: inventoryPanel.isOpen(),
+      nearbyItemDistance,
       runEnded: this.runController.isRunEnded(),
     });
     this.fieldInventory.update(delta, {
-      interactHeld: Boolean(this.extractKey?.isDown), extractPriority: this.search.getPrompt() === 'extract',
+      interactHeld: Boolean(this.extractKey?.isDown), pickupPriority: this.search.getPrompt() === 'pickup',
       blocked: inventoryPanel.isOpen() || this.runController.isRunEnded() || this.hitThisFrame || this.player.isMoving() || Boolean(this.attackKey?.isDown) || toolJustDown.some(Boolean),
     });
     this.hitThisFrame = false;
@@ -607,7 +702,7 @@ export class RiftScene extends Phaser.Scene {
     this.syncHudActiveEffects();
     this.extraction.update(delta);
     this.hud.update(delta);
-    this.riftSurface.update(delta);
+    if (this.devFixture?.worldSurface !== 'runtime') this.riftSurface.update(delta);
 
     // Tool key input (edge-triggered), one entry per active sortie slot.
     for (let i = 0; i < this.toolKeys.length; i++) {
@@ -643,6 +738,23 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private onPostUpdate(_time: number, delta: number): void {
+    if (this.frameCommit?.isBlocked()) return;
+    if (this.devFixture?.freezeAfterEnd && this.runController.isRunEnded()) {
+      this.syncSchemeDPoses(0);
+      this.syncDevPresentation();
+      if (!this.commitRuntimeFrame()) return;
+      this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.frameCommit?.begin();
+      return;
+    }
+    if (this.entryView.active || this.entryFrameFrozen) {
+      this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
+      this.syncDevPresentation();
+      if (!this.commitRuntimeFrame()) return;
+      this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.frameCommit?.begin();
+      return;
+    }
     this.player.postUpdate();
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
     // Enemies are drawn last of the three: their visibility is looked up against the mask
@@ -656,7 +768,9 @@ export class RiftScene extends Phaser.Scene {
     this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
     this.syncDetectionPulse(delta);
     this.syncDevPresentation();
+    if (!this.commitRuntimeFrame()) return;
     this.devRuntime?.afterUpdate(this.devElapsedMs);
+    this.frameCommit?.begin();
     if (this.debugPanel) this.updateDebugOverlay(delta);
   }
 
@@ -773,9 +887,7 @@ export class RiftScene extends Phaser.Scene {
     this.restartKey = keyboard.addKey(restartCode, true, false);
     // Use event listener instead of polling in update() — works even when scene is paused
     keyboard.on('keydown-R', () => {
-      if (this.runController.isRunEnded()) {
-        this.runController.restart();
-      }
+      this.requestRunReturn();
     });
   }
 
@@ -801,6 +913,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private readonly onPlayerDamaged = ({ amount, source }: { amount: number; source: string }): void => {
+    this.frameCommit?.markChanged();
     this.hitThisFrame = true;
     inventoryPanel.close();
     this.recordDevPresentationEvent('player-hit', 'player', source, amount, this.player.getPosition(),
@@ -808,12 +921,14 @@ export class RiftScene extends Phaser.Scene {
   };
 
   private readonly onEnemyDamaged = ({ enemyId, amount, source }: { enemyId: string; amount: number; source?: string }): void => {
+    this.frameCommit?.markChanged();
     const position = this.ai.getEnemyById(enemyId)?.getPosition();
     if (position) this.recordDevPresentationEvent('enemy-hit', enemyId, source ?? 'player', amount, position, this.player.getPosition());
     this.ai.reportDamage(enemyId, this.player.getPosition());
   };
 
   private readonly onEnemyKilled = ({ enemyId, position }: { enemyId: string; position: Vector2 }): void => {
+    this.frameCommit?.markChanged();
     this.recordDevPresentationEvent('enemy-death', enemyId, 'player', 0, position, this.player.getPosition());
     this.destroySchemeDVisual(enemyId);
     this.ai.despawn(enemyId);
@@ -834,6 +949,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly onRiftExitedShowResult = (payload: { kindlingGained: number; survived: boolean }): void => {
     riftResultPanel.show({
       survived: payload.survived,
+      abandoned: inventoryStore.getRun()?.outcome === 'abandon',
       kindlingGained: payload.kindlingGained,
       killCount: this.sortieKillCount,
       peakChaos: this.chaos.getPeak(),
@@ -847,9 +963,7 @@ export class RiftScene extends Phaser.Scene {
         return item?.kind === 'weapon' ? [WEAPON_DATA[item.weapon.definitionId]?.name ?? '撬棍'] : [];
       }),
       passiveTriggers: this.sortiePassiveTriggers,
-    }, () => {
-      if (this.runController.isRunEnded()) this.runController.restart();
-    });
+    }, () => this.requestRunReturn());
   };
 
   /**
@@ -859,9 +973,27 @@ export class RiftScene extends Phaser.Scene {
    * the enemies mid-windup and the player's swing slow.
    */
   private readonly onRunEnded = (): void => {
+    const freeze = this.devFixture?.freezeAfterEnd === true;
+    if (freeze && this.endFrozen) return;
     inventoryPanel.close();
     this.ai.onPlayerLost();
     this.combat.setEnabled(false);
+    if (freeze) {
+      this.endFrozen = true;
+      // An abandon during entry inherits its pause. Ending the entry must never
+      // resume an already terminal world, even when RIFT_EXITED arrives again.
+      if (this.entryOwnsPhysicsPause) {
+        this.entryOwnsPhysicsPause = false;
+        this.endOwnsPhysicsPause = true;
+      }
+      this.endEntryGate();
+      this.entryFrameFrozen = false;
+      for (const enemy of this.ai.getEnemies()) if (enemy instanceof Enemy) enemy.setVelocity(0, 0);
+      if (!this.physics.world.isPaused) {
+        this.endOwnsPhysicsPause = true;
+        this.physics.world.pause();
+      }
+    }
   };
 
   /**
@@ -870,6 +1002,7 @@ export class RiftScene extends Phaser.Scene {
    * Phaser vision mask and won't block gameplay input.
    */
   private readonly onChaosThreshold = ({ level }: { level: 1 | 2 | 3 }): void => {
+    if (commitEffects.defer(() => this.onChaosThreshold({ level }))) return;
     this.thresholdUntilMs = this.time.now + 3000;
     audioManager.playSFX('sfx-shared-chaos-threshold');
     const config: Record<1 | 2 | 3, { color: string; alpha: number; text: string }> = {
@@ -935,17 +1068,17 @@ export class RiftScene extends Phaser.Scene {
     this.hosts.reportNoise(pos, radius);
   };
 
-  private startRiftAudio(): void {
+  private startRiftAudio(enterCue = true): void {
     audioManager.playBGM('bgm-rift-base-drone', 3.5);
     audioManager.setLayerVolume('base', 0.4, 0);
-    audioManager.playSFX('sfx-rift-enter');
+    if (enterCue) audioManager.playSFX('sfx-rift-enter');
     if (this.chaos.getValue() <= 25) {
-      audioManager.playAmbient('amb-rift-alien-atmosphere');
+      audioManager.playAmbient(this.devFixture?.atmosphereKey ?? 'amb-rift-alien-atmosphere');
     }
   }
 
   private stepKey(): string {
-    const material = RIFT_FRAGMENT_DATA[this.layoutDebug.fragmentTypeId]?.surfaceMaterial ?? 'soil';
+    const material = this.devFixture?.footstepMaterial ?? RIFT_FRAGMENT_DATA[this.layoutDebug.fragmentTypeId]?.surfaceMaterial ?? 'soil';
     if (material === 'metal') return 'sfx-shared-player-step-metal';
     if (material === 'soil' || material === 'wood') return 'sfx-shared-player-step-organic';
     return 'sfx-shared-player-step-crystal';
@@ -988,14 +1121,14 @@ export class RiftScene extends Phaser.Scene {
 
     if (tension > 0.05) {
       if (!this.atmosphereHeldOff) {
-        audioManager.stopAmbient('amb-rift-alien-atmosphere', 0.4);
+        audioManager.stopAmbient(this.devFixture?.atmosphereKey ?? 'amb-rift-alien-atmosphere', 0.4);
         this.atmosphereHeldOff = true;
       }
       this.atmosphereRestoreAt = 0;
     } else if (this.atmosphereHeldOff) {
       if (this.atmosphereRestoreAt === 0) this.atmosphereRestoreAt = now + 1000;
       if (now >= this.atmosphereRestoreAt) {
-        audioManager.playAmbient('amb-rift-alien-atmosphere', 1);
+        audioManager.playAmbient(this.devFixture?.atmosphereKey ?? 'amb-rift-alien-atmosphere', 1);
         this.atmosphereHeldOff = false;
         this.atmosphereRestoreAt = 0;
       }
@@ -1058,6 +1191,7 @@ export class RiftScene extends Phaser.Scene {
   };
 
   private readonly onCombatCue = (cue: CombatCueId, pos: Readonly<Vector2>): void => {
+    if (this.devRuntime?.handleCombatCue?.(cue, pos)) return;
     const playerPos = this.player.getPosition();
     if (cue === 'combat.cue.swing') audioManager.playSFX('sfx-shared-player-attack');
     else if (cue === 'combat.cue.hit') audioManager.playSpatialSFX('sfx-rift-enemy-hit', pos, playerPos);
@@ -1357,12 +1491,86 @@ export class RiftScene extends Phaser.Scene {
     }
   }
 
+  private readonly registerDevMeleeTargets = (provider: { collectMeleeTargets(out: MeleeTarget[]): void }): (() => void) => {
+    this.combat.registerMeleeTargets(provider);
+    let registered = true;
+    const unregister = (): void => {
+      if (!registered) return;
+      registered = false;
+      this.combat.unregisterMeleeTargets(provider);
+      this.devTargetDisposers.delete(unregister);
+    };
+    this.devTargetDisposers.add(unregister);
+    return unregister;
+  };
+
+  private beginEntryGate(): void {
+    if (!this.entryView.active) return;
+    const keyboard = this.input.keyboard;
+    for (const key of keyboard?.keys ?? []) {
+      if (key?.isDown && key.keyCode !== Phaser.Input.Keyboard.KeyCodes.ESC) this.entryHeldKeys.add(key.keyCode);
+    }
+    keyboard?.on('keydown', this.onEntryKeyDown, this);
+    keyboard?.on('keyup', this.onEntryKeyUp, this);
+    // A paused Scene does not receive KeyboardPlugin events; a physical release
+    // in the pause menu must still release this preparation-only input latch.
+    if (typeof window !== 'undefined') window.addEventListener('keyup', this.onEntryKeyUp, true);
+    this.entryOwnsPhysicsPause = !this.physics.world.isPaused;
+    if (this.entryOwnsPhysicsPause) this.physics.world.pause();
+    this.combat.clearAttackBuffer();
+    this.resetEntryHeldKeys();
+    this.syncPlayerInput();
+  }
+
+  private readonly onEntryKeyDown = (event: KeyboardEvent): void => {
+    // Escape remains the normal pause control. Held gameplay keys must be
+    // released even if browser key repeat continues after the reveal finishes.
+    if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.ESC) return;
+    if (this.entryView.active) this.entryHeldKeys.add(event.keyCode);
+    if (this.entryHeldKeys.has(event.keyCode)) this.input.keyboard?.keys[event.keyCode]?.reset();
+    if (this.entryView.active && event.keyCode === Phaser.Input.Keyboard.KeyCodes.ENTER) this.finishEntryGate();
+  };
+
+  private readonly onEntryKeyUp = (event: KeyboardEvent): void => {
+    this.entryHeldKeys.delete(event.keyCode);
+  };
+
+  private resetEntryHeldKeys(): void {
+    const keyboard = this.input.keyboard;
+    for (const code of this.entryHeldKeys) keyboard?.keys[code]?.reset();
+  }
+
+  private finishEntryGate(): void {
+    if (!this.entryView.active) return;
+    this.entryView.active = false;
+    this.entryView.elapsedMs = this.entryView.durationMs;
+    this.entryView.progress = 1;
+    this.combat.clearAttackBuffer();
+    this.input.keyboard?.resetKeys();
+    if (this.entryOwnsPhysicsPause) this.physics.world.resume();
+    this.entryOwnsPhysicsPause = false;
+    this.syncPlayerInput();
+  }
+
+  private endEntryGate(): void {
+    this.input.keyboard?.off('keydown', this.onEntryKeyDown, this);
+    this.input.keyboard?.off('keyup', this.onEntryKeyUp, this);
+    if (typeof window !== 'undefined') window.removeEventListener('keyup', this.onEntryKeyUp, true);
+    this.entryHeldKeys.clear();
+    // ArcadePhysics handles SHUTDOWN before this scene and may have cleared world.
+    if (this.entryOwnsPhysicsPause) this.physics.world?.resume();
+    this.entryOwnsPhysicsPause = false;
+    this.entryView.active = false;
+  }
+
   private syncPlayerInput(): void {
-    this.player.setInputEnabled(this.toolInputAllowed && !inventoryPanel.isOpen() && !this.runController.isRunEnded());
+    this.player.setInputEnabled(!this.entryView.active && this.toolInputAllowed && !inventoryPanel.isOpen() && !this.runController.isRunEnded());
   }
 
   private openBag(): void {
+    if (this.frameCommit?.isBlocked() || this.entryView.active || this.entryHeldKeys.has(Phaser.Input.Keyboard.KeyCodes.TAB)) return;
     if (inventoryPanel.isOpen() || this.runController.isRunEnded() || pauseMenu.isOpen() || this.time.now - this.inventoryClosedAt < 150) return;
+    clearToastInline('field-loot');
     this.combat.clearAttackBuffer();
     this.attackKey?.reset();
     this.extractKey?.reset();
@@ -1375,23 +1583,40 @@ export class RiftScene extends Phaser.Scene {
       getDropPosition: () => ({ ...this.player.getPosition() }),
       canTake: this.fieldInventory.canTake, canDrop: this.fieldInventory.canDrop,
       onTaken: notifyFieldAcquisition,
+      afterMutation: () => this.frameCommit?.whenCommitted() ?? Promise.resolve(),
     });
   }
 
   private showSettlementRetry(message: string, retry: () => void): void {
     if (document.getElementById('inventory-settlement-retry')) return;
+    injectPanelStyles();
+    // The overlay root passes input through. Use the same interactive carrier as
+    // the scene menus so this notice is both readable and reachable by pointer.
+    const notice = document.createElement('div');
+    notice.id = 'inventory-settlement-retry';
+    notice.className = 'game-panel scene-menu';
+    notice.style.cssText = 'left:288px;top:504px;width:432px;height:auto;gap:8px;align-items:flex-start;overflow:visible;z-index:3000';
+    const copy = document.createElement('div');
+    copy.className = 'readout-note';
+    copy.setAttribute('role', 'alert');
+    copy.textContent = message;
     const button = document.createElement('button');
-    button.id = 'inventory-settlement-retry'; button.className = 'action-btn';
-    button.textContent = `${message} 点击重试保存`;
-    button.style.cssText = 'position:absolute;left:272px;top:560px;z-index:3000';
-    button.onclick = () => { button.remove(); retry(); };
-    getDomUiRoot().append(button);
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => button.remove());
+    button.type = 'button'; button.className = 'action-btn';
+    button.textContent = '重试保存';
+    button.onclick = () => { notice.remove(); retry(); };
+    notice.append(copy, button);
+    getDomUiRoot().append(notice);
+    button.focus({ preventScroll: true });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => notice.remove());
   }
+
+  openRecoveredPauseMenu(): void { this.openPauseMenu(); }
 
   private openPauseMenu(): void {
     if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150 || riftResultPanel.isOpen()) return;
-    if (this.devFixture?.onPause) this.devFixture.onPause();
+    if (!this.flushRuntimeCheckpoint()) return;
+    if (this.devFixture?.recovery) pauseMenu.open(this, { onAbandon: () => this.abandonRecoveredRun() });
+    else if (this.devFixture?.onPause) this.devFixture.onPause();
     else pauseMenu.open(this);
   }
 
@@ -1543,8 +1768,170 @@ export class RiftScene extends Phaser.Scene {
     this.groundDepthSorter = null;
   }
 
+  private initializeRecovery(restored?: RiftCheckpoint<RiftRecoveryState>): void {
+    const recovery = this.devFixture!.recovery!;
+    if (!restored) {
+      // Entry pauses Arcade before its first step. Apply authored body offsets
+      // now so the initial checkpoint already contains the real foot positions.
+      for (const sprite of [this.player.getSprite(), ...this.ai.getSprites()]) {
+        const body = sprite.body as Phaser.Physics.Arcade.Body;
+        body.updateFromGameObject();
+        body.prev.copy(body.position);
+        body.prevFrame.copy(body.position);
+      }
+    }
+    this.combat.enableRuntimeRecovery({ signature: recovery.identity.signature, runSeed: recovery.identity.seed,
+      externalTargetIds: recovery.externalTargetIds });
+    if (restored) {
+      const state = restored.state;
+      if (state.phase !== 'active' || !this.ai.validateRuntimeState(state.ai) || !this.combat.validateRuntimeState(state.combat)
+        || !this.toolSystem.validateRuntimeState(state.tools) || !this.chaos.validateRuntimeState(state.chaos)
+        || !this.search.validateRuntimeState(state.search) || !this.fieldInventory.validateRuntimeState(state.field)
+        || !this.trail.validateRuntimeState(state.trail) || !this.minimap.validateRuntimeState(state.minimap)
+        || !this.runController.validateRuntimeState(state.run) || !this.devRuntime?.validateRuntimeState?.(state.world)) {
+        throw new Error('Saved Rift no longer matches this world; original record is retained');
+      }
+      const physics = this.physics.world;
+      if (physics.fixedStep !== state.physics.fixedStep || physics.fps !== state.physics.fps || physics.timeScale !== state.physics.timeScale) {
+        throw new Error('Saved physics configuration does not match the current world');
+      }
+      (physics as Phaser.Physics.Arcade.World & { _elapsed: number })._elapsed = state.physics.elapsedMs;
+      this.devElapsedMs = restored.elapsedMs;
+      this.player.restoreRuntimeState(state.player);
+      this.ai.restoreRuntimeState(state.ai);
+      this.toolSystem.restoreRuntimeState(state.tools);
+      this.ai.finishRuntimeRestore();
+      this.combat.restoreRuntimeState(state.combat);
+      this.chaos.restoreRuntimeState(state.chaos);
+      this.search.restoreRuntimeState(state.search);
+      this.fieldInventory.restoreRuntimeState(state.field);
+      this.trail.restoreRuntimeState(state.trail);
+      this.minimap.restoreRuntimeState(state.minimap);
+      this.runController.restoreRuntimeState(state.run);
+      this.recoveryConditions = structuredClone(state.conditions);
+      this.sortieKillCount = state.result.killCount;
+      this.sortieAcquired = state.result.acquired.map(item => ({ ...item }));
+      this.sortiePassiveTriggers = new Map(state.result.passiveTriggers);
+      this.defenseHudEffects = state.defenseHudEffects.map(effect => ({ ...effect }));
+      this.devEventSequence = state.presentationSequence;
+      this.endEntryGate();
+      this.entryFrameFrozen = false;
+      this.entryView.elapsedMs = this.entryView.durationMs; this.entryView.progress = 1;
+      this.input.keyboard?.resetKeys();
+      this.syncPlayerInput();
+      this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
+      // AI.postUpdate(0) is not a visual refresh: it resets the stuck watchdog.
+      this.syncSchemeDPoses(0);
+      this.syncDevPresentation();
+      this.devRuntime!.restoreRuntimeState!(state.world);
+      this.hud.restoreReadouts({ health: state.combat.health, maxHealth: GAME_CONSTANTS.PLAYER.MAX_HEALTH, chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
+      this.syncHudActiveEffects();
+      this.runController.finishRuntimeRestore();
+      this.devRuntime!.afterUpdate(this.devElapsedMs);
+    }
+    this.frameCommit = new RiftFrameCommit({ capture: sequence => this.captureRuntimeCheckpoint(sequence),
+      onFailure: retry => {
+        // Keep the completed candidate, RNG, velocities and attack phase intact.
+        this.scene.pause(); audioManager.pauseAll();
+        this.showSettlementRetry('这一刻尚未保存，行动已停住。', retry);
+      },
+      onRetried: () => {
+        document.getElementById('inventory-settlement-retry')?.remove();
+        if (!this.devRuntime || !this.frameCommit) return;
+        this.input.keyboard?.resetKeys();
+        if (this.scene.isPaused()) this.scene.resume();
+        audioManager.resumeAll(); this.frameCommit.begin();
+      },
+    }, restored);
+    this.frameCommit.begin();
+    window.addEventListener('pagehide', this.onRecoveryPageHide);
+    document.addEventListener('visibilitychange', this.onRecoveryVisibility);
+  }
+
+  private capturePhysicsClock(): { fixedStep: true; fps: 60; timeScale: 1; elapsedMs: number } {
+    const physics = this.physics.world as Phaser.Physics.Arcade.World & { _elapsed: number };
+    if (!physics.fixedStep || physics.fps !== 60 || physics.timeScale !== 1 || !Number.isFinite(physics._elapsed) || physics._elapsed < 0) {
+      throw new Error('Unsupported fixed-step physics clock');
+    }
+    return { fixedStep: true, fps: 60, timeScale: 1, elapsedMs: physics._elapsed };
+  }
+
+  private requestRunReturn(): boolean {
+    if (!this.runController.isRunEnded() || this.frameCommit?.isBlocked() || this.scene.isPaused() || pauseMenu.isOpen()) return false;
+    this.runController.restart();
+    return this.flushRuntimeCheckpoint();
+  }
+
+  private captureRuntimeCheckpoint(sequence: number): RiftCheckpoint<RiftRecoveryState> {
+    const recovery = this.devFixture!.recovery!;
+    const ledger = inventoryStore.getRun();
+    if (!ledger) throw new Error('Recoverable world requires a run ledger');
+    const shared = { version: 1 as const, conditions: structuredClone(this.recoveryConditions),
+      run: this.runController.exportRuntimeState(), presentationSequence: this.devEventSequence,
+      result: { killCount: this.sortieKillCount, acquired: structuredClone(this.sortieAcquired),
+        passiveTriggers: [...this.sortiePassiveTriggers] } };
+    const state: RiftRecoveryState = this.runController.isRunEnded() ? { ...shared, phase: 'settled' } : {
+      ...shared, phase: 'active', physics: this.capturePhysicsClock(), player: this.player.exportRuntimeState(), combat: this.combat.exportRuntimeState(),
+      ai: this.ai.exportRuntimeState(), tools: this.toolSystem.exportRuntimeState(), chaos: this.chaos.exportRuntimeState(),
+      search: this.search.exportRuntimeState(), field: this.fieldInventory.exportRuntimeState(),
+      trail: this.trail.exportRuntimeState(), minimap: this.minimap.exportRuntimeState(),
+      world: this.devRuntime!.exportRuntimeState!(), defenseHudEffects: structuredClone(this.defenseHudEffects),
+    };
+    return { version: 1, runId: ledger.id, sequence, identity: recovery.identity, elapsedMs: this.devElapsedMs, state };
+  }
+
+  private commitRuntimeFrame(force = false): boolean {
+    if (!this.frameCommit) return true;
+    this.frameCommit.begin();
+    // Final-use breakage must reach combat and movement before this frame is serialized.
+    const weaponId = inventoryStore.getEquipment().weaponId;
+    const item = weaponId ? inventoryStore.getItem(weaponId) : undefined;
+    this.combat.configureWeapon(item?.kind === 'weapon' ? item.weapon.definitionId : null);
+    this.player.setBurdenSpeedFactor(getSurvivalAttributes().burdenSpeedFactor);
+    this.devRuntime?.prepareCheckpoint?.(this.devElapsedMs);
+    try { return this.frameCommit.finish(this.devElapsedMs, force); }
+    catch (reason) {
+      // Unsupported state is not a new-game policy, and must never overwrite its predecessor.
+      console.error('Rift checkpoint validation failed; previous record retained', reason);
+      this.scene.pause(); audioManager.pauseAll();
+      showToastInline('当前状态暂时无法保存，原记录已保留。', {});
+      return false;
+    }
+  }
+
+  /** Called between complete physics frames for normal pause, visibility loss and page exit. */
+  flushRuntimeCheckpoint(): boolean {
+    if (!this.frameCommit) return true;
+    if (this.frameCommit.isBlocked()) return false;
+    this.syncDevPresentation();
+    const committed = this.commitRuntimeFrame(true);
+    if (committed) this.frameCommit?.begin();
+    return committed;
+  }
+  private readonly onRecoveryPageHide = (): void => { this.flushRuntimeCheckpoint(); };
+  private readonly onRecoveryVisibility = (): void => {
+    if (document.visibilityState === 'hidden') this.flushRuntimeCheckpoint();
+  };
+  /** Only the explicit, confirmed menu action calls this. Closing a page never does. */
+  private abandonRecoveredRun(): void {
+    if (!this.frameCommit || this.runController.isRunEnded() || this.frameCommit.isBlocked()) return;
+    this.frameCommit.begin();
+    this.runController.abandon();
+    this.onRunEnded();
+    this.frameCommit.markChanged();
+    this.flushRuntimeCheckpoint();
+  }
+
   private onShutdown(): void {
+    if (this.endOwnsPhysicsPause) this.physics.world?.resume();
+    this.endOwnsPhysicsPause = false;
+    this.endFrozen = false;
+    window.removeEventListener('pagehide', this.onRecoveryPageHide);
+    document.removeEventListener('visibilitychange', this.onRecoveryVisibility);
+    this.frameCommit?.destroy(); this.frameCommit = null;
     this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
+    for (const unregister of this.devTargetDisposers) unregister();
+    this.endEntryGate();
     this.devPresentation = null; this.devWorldProjector = null;
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);

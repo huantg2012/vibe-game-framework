@@ -3,9 +3,9 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: design agent（2026-08-30 迭代 10：拾取改读条翻找，规则 14/15/16/17/18/30g 改口）
-last-modified-date: 2026-08-30
+last-modified-date: 2026-09-12
 slice: 1 (extended in 5.5, 6, 7, 迭代 10)
-interface-changed: false
+interface-changed: true
 interfaces-with:
   - system-movement-vision     # T1：经场景层消费其三个视野调制器 + Player.setSpeedModifier('chaos')；撤离点注册为 glow source
   - system-enemy-ai            # T2：消费 ENEMY_ALERT / ENEMY_LOST_PLAYER / ENEMY_KILLED 判定"被侦测"与"被追击"
@@ -28,6 +28,19 @@ exposes:
 ---
 
 # 系统设计：混乱值 + 搜刮 + 撤离
+
+## 迭代22：按来源抽取，同一拾获事务
+
+新悬海节点通过可选`lootPoolId`指定污染物族来源；`data/contaminant-sources.csv`单向生成正权重池。`sea-deposit`包含附着的空壳、沉重的石块、回声空壳；`rift-debris`包含打结的细线、消声的旧布、回声空壳、附着的空壳，权重见内容CSV。族与品质独立抽取，品质仍读`contaminant-loot.csv`的safe/contested/deep权重。未知显式来源不能回退全局池；未指定池的旧地图仍用原13族等概率。
+
+薪柴节点的`allowWeapon=false`先于武器首次发现保障和普通概率，既不生成武器，也不消费保障。允许节点沿原品质及横向倾向规则。揭晓事务保留稳定nodeId、runId和真实fragmentId：首次成功揭晓生成一次，重复接近、打开Tab、保存失败重试不能刷新身份或品质。
+
+所有实际物件仍由InventoryStore拥有；新拾获未供奉、不能在本趟直接装备。整批能放入则原子取得，装不下整批留地，玩家通过原拾获界面决定留取；丢弃后再取保持同一实例。七翻堆可提供的理论资源不是携回保证，实际携回、留下、丢弃、负重及损耗进入本趟记录。开Tab世界继续，死亡全丢和归来结算不新增特例。
+
+**同一帧只有一个E目标。** 撤离点、可翻堆与可见合法的地上物按实际距离竞争，同距离保留撤离→翻找→拾取顺序。底部提示与实际执行读取同一赢家：较远的超重物不能在显示“翻找”时抢开拾获页；更近地上物显示“拾取”，取不下才打开整理。拾取仍需一次新的按下，翻堆刚揭晓、关包或容量变化不会把持续按住的E变成自动取得。
+
+独立入口的短入场由RiftScene统一冻结正式模拟与物理，交控后才计出击用时；跳过与自然播完到同一准备态，按住的动作键须松开再按才生效。Esc冻结入场。训练结束继续使用正式RunController及库存结算，但尚不触发基地供奉；不得把单趟收入当作四A连续供给通过。
+
 
 > **TL;DR**: 定义驱动"贪婪 vs 撤退"的三件套——混乱值（随时间单调上涨、可溢出 100 的压力钟，惩罚经 T1 的三个视野调制器 + 移速调制表达）、薪柴搜刮（按"离撤离点的路程 × 巡逻覆盖度"分档定价的散布物；迭代 10 起与污染物节点统一为可翻找对象——外观不泄露内容物，按住 E 读条拾取，读条发声，完成才揭晓）、撤离（按 E 确认，结算带出薪柴）；对外暴露混乱值/薪柴/出击结束的事件与查询，以及供 T6 消费的地图布局约束。
 

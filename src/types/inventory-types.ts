@@ -20,7 +20,7 @@ export interface RunInventoryLedger {
   carriedOutIds: string[];
   revealedNodes: Record<string, string[]>;
   destroyedIds: string[];
-  outcome?: 'extract' | 'death' | 'abandon-keep';
+  outcome?: 'extract' | 'death' | 'abandon' | 'abandon-keep';
   returnedIds?: string[];
   kindlingGained?: number;
   baseSettled?: boolean;

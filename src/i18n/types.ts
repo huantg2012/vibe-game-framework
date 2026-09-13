@@ -50,6 +50,7 @@ export interface LocaleSchema {
     prompt: {
       extract: string;
       search: string;
+      pickup: string;
     };
     residue: {
       label: string;

@@ -15,6 +15,47 @@ import { eventBus } from '@/core/event-bus';
 import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
 import { sumPollutionResistance } from '@/systems/survival-attributes';
+import { runtimeNumber, runtimeRecord, runtimeStrings } from '@/systems/ai/runtime-validation';
+
+/** Simulation time only: wall-clock time never advances a suspended expedition. */
+export interface ChaosRuntimeState {
+  readonly version: 1;
+  readonly value: number;
+  readonly peak: number;
+  readonly paused: boolean;
+  readonly clockMs: number;
+  readonly chaosRateModifier: number;
+  readonly lastEmitted: number;
+  readonly lastModulated: number;
+  readonly thresholdsFired: readonly [boolean, boolean, boolean];
+  readonly chasingEnemyIds: readonly string[];
+  readonly detectionCooldowns: readonly { readonly enemyId: string; readonly atMs: number }[];
+  readonly tempRateDeadlineMs: number;
+  readonly tempRateMult: number;
+  readonly reductionDeadlineMs: number;
+  readonly reductionMult: number;
+}
+
+export function validateChaosRuntimeState(value: unknown): value is ChaosRuntimeState {
+  if (!runtimeRecord(value) || value.version !== 1 || typeof value.paused !== 'boolean'
+    || !runtimeNumber(value.value, 0, GAME_CONSTANTS.CHAOS.HARD_CAP)
+    || !runtimeNumber(value.peak, value.value, GAME_CONSTANTS.CHAOS.HARD_CAP)
+    || !runtimeNumber(value.clockMs, 0) || !runtimeNumber(value.chaosRateModifier, 0)
+    || !runtimeNumber(value.lastEmitted, 0, value.peak) || !runtimeNumber(value.lastModulated, 0, value.peak)
+    || !Array.isArray(value.thresholdsFired) || value.thresholdsFired.length !== 3
+    || !value.thresholdsFired.every(flag => typeof flag === 'boolean')
+    || !runtimeStrings(value.chasingEnemyIds, 2048) || !Array.isArray(value.detectionCooldowns)
+    || value.detectionCooldowns.length > 2048
+    || !runtimeNumber(value.tempRateDeadlineMs, 0) || !runtimeNumber(value.tempRateMult, 0)
+    || !runtimeNumber(value.reductionDeadlineMs, 0) || !runtimeNumber(value.reductionMult, 0)) return false;
+  const ids = new Set<string>();
+  return value.detectionCooldowns.every(entry => {
+    if (!runtimeRecord(entry) || typeof entry.enemyId !== 'string' || !entry.enemyId
+      || ids.has(entry.enemyId) || !runtimeNumber(entry.atMs, 0, value.clockMs as number)) return false;
+    ids.add(entry.enemyId);
+    return true;
+  });
+}
 
 // ---------------------------------------------------------------------------
 // Pure function: chaos modulators (no class state, importable anywhere)
@@ -70,6 +111,9 @@ export function getChaosModulators(value: number): ChaosModulators {
 // ---------------------------------------------------------------------------
 
 export interface ChaosSystemAPI {
+  exportRuntimeState(): ChaosRuntimeState;
+  validateRuntimeState(value: unknown): value is ChaosRuntimeState;
+  restoreRuntimeState(value: unknown): void;
   update(deltaMs: number): void;
   getValue(): number;
   getRate(): number;
@@ -220,6 +264,37 @@ export class ChaosSystem implements ChaosSystemAPI {
     eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
     eventBus.off(GameEvent.ENEMY_LOST_PLAYER, this.onEnemyLostPlayer);
     eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
+  }
+
+  exportRuntimeState(): ChaosRuntimeState {
+    return {
+      version: 1, value: this.value, peak: this.peak, paused: this.paused, clockMs: this.clockMs,
+      chaosRateModifier: this.chaosRateModifier, lastEmitted: this.lastEmitted, lastModulated: this.lastModulated,
+      thresholdsFired: [...this.thresholdsFired], chasingEnemyIds: [...this.chasingEnemies],
+      detectionCooldowns: [...this.detectionCooldowns].map(([enemyId, atMs]) => ({ enemyId, atMs })),
+      tempRateDeadlineMs: this.tempRateDeadlineMs, tempRateMult: this.tempRateMult,
+      reductionDeadlineMs: this.reductionDeadlineMs, reductionMult: this.reductionMult,
+    };
+  }
+
+  validateRuntimeState(value: unknown): value is ChaosRuntimeState {
+    return validateChaosRuntimeState(value) && value.chaosRateModifier === this.chaosRateModifier;
+  }
+
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid or incompatible chaos runtime state');
+    this.value = value.value; this.peak = value.peak; this.paused = value.paused; this.clockMs = value.clockMs;
+    this.lastEmitted = value.lastEmitted; this.lastModulated = value.lastModulated;
+    this.thresholdsFired = [...value.thresholdsFired];
+    this.chasingEnemies.clear();
+    for (const id of value.chasingEnemyIds) this.chasingEnemies.add(id);
+    this.detectionCooldowns.clear();
+    for (const entry of value.detectionCooldowns) this.detectionCooldowns.set(entry.enemyId, entry.atMs);
+    this.tempRateDeadlineMs = value.tempRateDeadlineMs; this.tempRateMult = value.tempRateMult;
+    this.reductionDeadlineMs = value.reductionDeadlineMs; this.reductionMult = value.reductionMult;
+    this.updateRateMultiplier();
+    // Restore the last published projection, without replaying thresholds or inflow.
+    this.onModulate?.(getChaosModulators(this.lastModulated));
   }
 
   // ------------------------------------------------------------------ public API

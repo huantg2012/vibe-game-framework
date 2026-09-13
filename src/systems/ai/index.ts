@@ -6,3 +6,5 @@
 export { AISystem, ENEMY_DEPTH } from '@/systems/ai/ai-system';
 export type { AIStats, AISystemAPI, CueListener, VisibilityProvider } from '@/systems/ai/ai-system';
 export type { AICueId, AlertLevel, EnemyView } from '@/types/ai-types';
+export { validateAIRuntimeState } from '@/systems/ai/runtime-state';
+export type { AIRuntimeState, AIRuntimeRecoveryOptions, AIRuntimeEnemy } from '@/systems/ai/runtime-state';

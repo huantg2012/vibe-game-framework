@@ -468,6 +468,8 @@ interface ScalableGame {
 // ---------------------------------------------------------------------------
 
 export interface ToastInlineOptions {
+  /** Cancel only this source's transient feedback when its owning context changes. */
+  channel?: string;
   /** CSS position/placement. Used when `skipQueue` is true (Channel A local flash).
    *  Queued Channel B toasts ignore this — they live in `#toast-inline-queue`. */
   position?: string;
@@ -498,6 +500,7 @@ const TOAST_QUEUE_ID = 'toast-inline-queue';
 const TOAST_QUEUE_MAX_VISIBLE = 2;
 
 interface QueuedToast {
+  channel?: string;
   html: string;
   color: string;
   extraStyle: string;
@@ -505,6 +508,19 @@ interface QueuedToast {
 }
 
 const toastInlinePending: QueuedToast[] = [];
+const toastInlineMounted = new Map<HTMLElement, { channel?: string; timer: ReturnType<typeof setTimeout> }>();
+
+/** A pickup panel replaces its world toast, without discarding combat or save feedback. */
+export function clearToastInline(channel: string): void {
+  for (let index = toastInlinePending.length - 1; index >= 0; index--) {
+    if (toastInlinePending[index]!.channel === channel) toastInlinePending.splice(index, 1);
+  }
+  for (const [element, item] of toastInlineMounted) {
+    if (item.channel !== channel) continue;
+    clearTimeout(item.timer); element.remove(); toastInlineMounted.delete(element);
+  }
+  if (document.getElementById(TOAST_QUEUE_ID)) flushToastInlineQueue();
+}
 
 function getToastInlineQueueHost(): HTMLDivElement {
   injectPanelStyles();
@@ -541,10 +557,11 @@ function mountQueuedToastInline(host: HTMLDivElement, item: QueuedToast): void {
   ].join(';');
   toast.innerHTML = item.html;
   host.appendChild(toast);
-  setTimeout(() => {
-    toast.remove();
+  const timer = setTimeout(() => {
+    toastInlineMounted.delete(toast); toast.remove();
     flushToastInlineQueue();
   }, item.durationMs);
+  toastInlineMounted.set(toast, { channel: item.channel, timer });
 }
 
 /** Channel B banner (ux-information-architecture.md §S14): one line, non-blocking.
@@ -568,11 +585,12 @@ export function showToastInline(html: string, opts: ToastInlineOptions): void {
     ].join(';');
     toast.innerHTML = html;
     (opts.host ?? getDomUiRoot()).appendChild(toast);
-    setTimeout(() => toast.remove(), durationMs);
+    const timer = setTimeout(() => { toastInlineMounted.delete(toast); toast.remove(); }, durationMs);
+    toastInlineMounted.set(toast, { channel: opts.channel, timer });
     return;
   }
 
-  toastInlinePending.push({ html, color, extraStyle, durationMs });
+  toastInlinePending.push({ html, color, extraStyle, durationMs, channel: opts.channel });
   flushToastInlineQueue();
 }
 

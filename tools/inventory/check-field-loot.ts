@@ -45,29 +45,29 @@ store.setPersistence(null);
 finish();
 assert.equal(node.revealedItem, cached); assert.equal(node.collected, true);
 assert.equal(store.getItems().length, 2); assert.equal(acquired, 0);
-field.update(16, { interactHeld: true, extractPriority: false });
+field.update(16, { interactHeld: true, pickupPriority: true });
 assert.equal(field.getNearby().length, 1); assert.equal(draws.size, 1); assert.equal(opened, 0);
-field.update(16, { interactHeld: false, extractPriority: false });
-field.update(16, { interactHeld: true, extractPriority: false });
+field.update(16, { interactHeld: false, pickupPriority: true });
+field.update(16, { interactHeld: true, pickupPriority: true });
 assert.equal(opened, 1); assert.equal(acquired, 0);
 
 store.configure({ capacity: 100 });
-field.update(16, { interactHeld: true, extractPriority: false });
+field.update(16, { interactHeld: true, pickupPriority: true });
 assert.equal(acquired, 0, 'held key cannot auto-take after burden changes');
-field.update(16, { interactHeld: false, extractPriority: false });
-field.update(16, { interactHeld: true, extractPriority: true });
+field.update(16, { interactHeld: false, pickupPriority: true });
+field.update(16, { interactHeld: true, pickupPriority: false });
 assert.equal(acquired, 0, 'extraction wins E');
-field.update(16, { interactHeld: false, extractPriority: false });
-field.update(16, { interactHeld: true, extractPriority: false, blocked: true });
+field.update(16, { interactHeld: false, pickupPriority: true });
+field.update(16, { interactHeld: true, pickupPriority: true, blocked: true });
 assert.equal(acquired, 0);
-field.update(16, { interactHeld: false, extractPriority: false });
-field.update(16, { interactHeld: true, extractPriority: false });
+field.update(16, { interactHeld: false, pickupPriority: true });
+field.update(16, { interactHeld: true, pickupPriority: true });
 assert.equal(acquired, 1); assert.equal(draws.size, 0);
 const item = store.getItems().find(value => value.kind === 'contaminant')!;
 assert.equal(item.location.kind, 'carried');
 assert(store.drop([item.id], player, field.canDrop).ok);
 visible = 0;
-field.update(16, { interactHeld: false, extractPriority: false });
+field.update(16, { interactHeld: false, pickupPriority: true });
 assert.equal(field.getNearby().length, 0); assert([...draws].every(draw => !draw.visible));
 visible = 1; legal = false;
 assert.equal(field.getNearby().length, 0); assert.equal(field.canDrop(player), false);
@@ -79,6 +79,47 @@ assert.equal(field.take([item.id]).ok, false); assert.equal(store.getItem(item.i
 store.setPersistence(null);
 assert(field.take([item.id]).ok); notifyFieldAcquisition([item.id]);
 assert.equal(acquired, 1, 'drop/retrieve and repeated notifications never duplicate acquisition');
+// Regression: a left-behind object 45px away must not steal E from a pile
+// underfoot. Exercise both production update methods, with only draw/HUD adapted.
+player.x = 976; player.y = 880;
+assert(store.drop([item.id], { x: 1008, y: 912 }, field.canDrop).ok);
+store.configure({ capacity: 30 });
+const arbitration = new LootSearchSystem();
+const pile = { id: 'nearer-pile', kind: 'contaminant', position: { x: 976, y: 880 }, collected: false,
+  visual: { setVisibility() {}, setRummaging() {}, update() {}, playReveal() {}, destroy() {} } };
+const arbitrationState = arbitration as unknown as { nodes: unknown[]; getVisibilityAt: () => number;
+  extraction: { position: typeof player; radius: number } | undefined };
+arbitrationState.nodes = [pile]; arbitrationState.getVisibilityAt = () => 1;
+const nearbyDistance = () => {
+  const nearby = field.getNearby()[0];
+  return nearby?.location.kind === 'ground'
+    ? Math.hypot(nearby.location.position.x - player.x, nearby.location.position.y - player.y) : Infinity;
+};
+const interact = (held: boolean, moving = false) => {
+  arbitration.update(100, { playerPos: player, searchHeld: held, moving,
+    attacking: false, toolPressed: false, hitThisFrame: false, paused: false,
+    nearbyItemDistance: nearbyDistance() });
+  field.update(100, { interactHeld: held, pickupPriority: arbitration.getPrompt() === 'pickup', blocked: moving });
+};
+const bagsBefore = opened;
+interact(false); assert.equal(arbitration.getPrompt(), 'search');
+interact(true); interact(true);
+assert((arbitration.getChannelProgress01() ?? 0) > 0, 'nearer pile holds a real search channel');
+assert.equal(opened, bagsBefore, 'farther overweight ground item cannot open the bag');
+assert.equal(store.getItem(item.id)?.location.kind, 'ground');
+interact(false);
+arbitrationState.extraction = { position: { ...player }, radius: 48 };
+interact(false); assert.equal(arbitration.getPrompt(), 'extract', 'equal-distance extraction retains its priority');
+interact(true); assert.equal(opened, bagsBefore);
+arbitrationState.extraction = undefined;
+player.x = 1000; player.y = 912;
+interact(false, true); assert.equal(arbitration.getPrompt(), 'pickup', 'nearer revealed item owns the visible prompt');
+interact(true); assert.equal(opened, bagsBefore + 1, 'only the displayed pickup opens its overweight bag');
+assert.equal(arbitration.getChannelProgress01(), null);
+store.configure({ capacity: 100 });
+interact(true); assert.equal(store.getItem(item.id)?.location.kind, 'ground', 'holding E cannot retry after capacity changes');
+interact(false); interact(true); assert.equal(store.getItem(item.id)?.location.kind, 'carried');
+arbitration.destroy();
 field.destroy(); assert.equal(draws.size, 0);
 store.reset(); store.configure({ capacity: 30 }); assert(store.ensureStarter().ok);
 const legacy = new LootSearchSystem();

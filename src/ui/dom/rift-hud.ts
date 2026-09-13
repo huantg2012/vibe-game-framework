@@ -1,3 +1,4 @@
+import { commitEffects } from '@/core/commit-effects';
 /**
  * RiftHud - DOM overlay for the rift scene (A-class world-in-device readout,
  * ui-art-overhaul.md v2 §A0 #2/#3/#4).
@@ -192,23 +193,27 @@ export class RiftHud {
 
   // Event references for cleanup
   private readonly onChaosChanged = (payload: { value: number; delta: number; rate: number }): void => {
+    if (commitEffects.defer(() => this.onChaosChanged(payload))) return;
     this.chaosValue = payload.value;
     this.updateChaosBar();
     if (payload.delta > 0) this.playChaosGainAccent();
   };
   private readonly onHealthChanged = (payload: { current: number; max: number }): void => {
+    if (commitEffects.defer(() => this.onHealthChanged(payload))) return;
     this.healthCurrent = payload.current;
     this.healthMax = payload.max;
     this.healthFrac = payload.max > 0 ? payload.current / payload.max : 0;
     this.updateHealthBar();
   };
   private readonly onKindlingCollected = (payload: { amount: number; total: number }): void => {
+    if (commitEffects.defer(() => this.onKindlingCollected(payload))) return;
     if (!this.active) return;
     this.kindling = payload.total;
     this.updateKindlingText();
     this.showPickupFlash(payload.amount);
   };
   private readonly onToolUsed = (payload: { contaminantId: string; toolType: ContaminantType; usesLeft: number }): void => {
+    if (commitEffects.defer(() => this.onToolUsed(payload))) return;
     const actual = this.equipmentData.find(slot => slot.itemId === payload.contaminantId);
     const definition = CONTAMINANT_DATA[payload.toolType];
     // Consumption synchronously removes the last item before TOOL_USED is emitted.
@@ -305,6 +310,14 @@ export class RiftHud {
       this.extractPromptVisible = shouldShow;
       this.extractPromptEl.style.display = shouldShow ? 'block' : 'none';
     }
+  }
+
+  /** Hydrate committed numbers without pickup flashes, healing or threshold events. */
+  restoreReadouts(value: { health: number; maxHealth: number; chaos: number; kindling: number }): void {
+    this.healthCurrent = value.health; this.healthMax = value.maxHealth;
+    this.healthFrac = value.maxHealth > 0 ? value.health / value.maxHealth : 0;
+    this.chaosValue = value.chaos; this.kindling = value.kindling;
+    this.updateHealthBar(); this.updateChaosBar(); this.updateKindlingText();
   }
 
   reset(): void {

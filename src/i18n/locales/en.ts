@@ -57,6 +57,7 @@ export const en: LocaleSchema = {
     prompt: {
       extract: 'Extract',
       search: 'Search',
+      pickup: 'Pick up',
     },
     residue: {
       label: 'Residue',

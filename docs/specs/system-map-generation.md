@@ -3,9 +3,9 @@ status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
 last-modified-by: code（DEC-106：虚空改为挡光，翻转 Slice 6 不挡视线默认）
-last-modified-date: 2026-08-29
+last-modified-date: 2026-09-12
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
-interface-changed: false
+interface-changed: true
 slice: 6
 interfaces-with:
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出
@@ -24,6 +24,17 @@ exposes:
 ---
 
 # 系统设计：裂隙地图生成
+
+## 迭代22：完整悬海的有限内容包
+
+完整悬海的内容身份为`suspended-sea`，两份编排为`sea-open-channel`和`sea-folded-ridge`，配方版本1。五张`data/suspended-sea-*.csv`分别拥有场景矩形与空洞、地形、自然海孔、核心/侧溢/排水路径、敌人和拾获部署。它们经既有codegen生成显式数据，进入同一正式RiftScene与固定尺度Stage；不是旧图书馆的别名，不在未知ID时回退旧图。独立开发入口不把这个内容包自动加入长期存档或正式随机池。
+
+每图恰好一只听觉虫、一只视锥虫与七个翻堆。`variant_group`的巡逻及关联残堆按独立seed支流原子抽取，几何与物件随机不互相消费。记录world/scene/recipeVersion/seed/variant以及初始水相位。种子必须改变真实部署，不能用海面噪声变化冒充关卡变化。明确缺少的reef为无实例，不添加无意义石柱满足旧字段。
+
+`KindlingNodeDef.allowWeapon`与`ContaminantNodeDef.lootPoolId`是可选内容输入；新世界显式填写，未提供的旧图保持原掉落规则。来源池必须已注册，未知显式池拒绝。节点实际来源与版式、材质身份分开，不能为了查找纹理把物件来源标成旧图书馆。
+
+内部天井仍不可行走但允许视线通过，外缘/真墙保留阻光；Stage沿当前R显露海体，地貌记忆G不掏海。对每个部署变体以完整身体留量检查通行，并在核心与侧溢同时有效时验证观察处、干地退路和撤离旁路；普通配置无需攻击壳片也能完成一趟。两种编排、危险与收益关系的唯一内容正文为[悬海](../content/suspended-sea.md)。
+
 
 > **TL;DR**: 每一次从净化点踏入裂隙、开始这一次出击时，生成器交出一整张裂隙布局（tile 网格、可走掩膜、出生、一个撤离点、薪柴、污染物节点、巡逻、地标、碎片类型 id）；出击未结束前不变。活算法已锁：抽风格锚 + 新种子 + 邻域抖动再生成烤图（合同 `docs/design-notes/slice-6-layered-generation.md`「Agent 入口」）。十张画廊是样例不是地图库。本文件锁硬规则（P/G/C）；扩空间改锚/抖动/碎片表，不另起生成器。
 

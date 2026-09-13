@@ -1,0 +1,453 @@
+{
+  "sourceRoot": "/private/tmp/coh-i22-base-loop",
+  "sourceHead": "2ee0b2b",
+  "destinationBranch": "coh",
+  "method": "Three-way SHA guarded selective copy; main==frozen baseline before every change. Docs and framework excluded.",
+  "files": [
+    {
+      "file": "package.json",
+      "baseline": "76b6724516b53e57b863724a038af22a728fb8f4173259ae1eb81ce23714e364",
+      "isolated": "e99d6814067eeed6e32aff042e42ea40f88714b755262e3762ff6bbaa892ad95",
+      "main": "76b6724516b53e57b863724a038af22a728fb8f4173259ae1eb81ce23714e364"
+    },
+    {
+      "file": "src/core/commit-effects.ts",
+      "baseline": null,
+      "isolated": "600a92ce42887215575fee3b23e45cd71843599d6e79ffa2dec9993ba2af904d",
+      "main": null
+    },
+    {
+      "file": "src/dev/spatial-study/slice-world.ts",
+      "baseline": "42c46928ff51ec7785be71811b6cd6af6d45d8795f62eed9942a88abf7b7f0bc",
+      "isolated": "2a39275051f094dc4491763ac246cf2010438cbf64b082b603eea74a82a0eb70",
+      "main": "42c46928ff51ec7785be71811b6cd6af6d45d8795f62eed9942a88abf7b7f0bc"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actors.ts",
+      "baseline": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06",
+      "isolated": "ff0d3e7907cdfda7eefe5cf092255daedd09ed7effb2f34df0b00e9df4d1c60c",
+      "main": "4fcbabafb96e6ac0a26f64928e17c814dcbc6f6241654fb7dc9ae8a90b38ea06"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/camera.ts",
+      "baseline": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c",
+      "isolated": "725cba80925395e97627ab90c833f26a0cdef44b7a4d2e0806efac36dc3da5e0",
+      "main": "1f9eea2d24b1e69e71e590e9b857c271c70546c5ae4009b86c51a95225b6426c"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/presentation.ts",
+      "baseline": "fcbfd2b44d065625a96630023674ef82d5129af8bf0ba410baf60712fab2783e",
+      "isolated": "419af3dee585db6017e62c1a5762c1777e866100d92031e98c77aa6ba8f01c9c",
+      "main": "fcbfd2b44d065625a96630023674ef82d5129af8bf0ba410baf60712fab2783e"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/support.ts",
+      "baseline": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55",
+      "isolated": "4899b6000b70469e150270ccbd981a87c44258f77e89f3ef19160cf641a85d91",
+      "main": "011a57c3a39e8da47953ab88ec74d8c8d5a144c585a029549adea628677abd55"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/terrain.ts",
+      "baseline": "a1bcab2e3f31c36bd572cb5da01bd1c4e2907bf585354d8a9921393f05c8b33d",
+      "isolated": "e431a397826218e9a6a1760d8b7cf38fbbec0fb038fbd52340324262f98942f4",
+      "main": "a1bcab2e3f31c36bd572cb5da01bd1c4e2907bf585354d8a9921393f05c8b33d"
+    },
+    {
+      "file": "src/dev/suspended-sea-journey.ts",
+      "baseline": null,
+      "isolated": "6d122374ef172890c524ef433fdff80fbc7afdea2017f64a9d2910f38fa00a79",
+      "main": null
+    },
+    {
+      "file": "src/dev/suspended-sea.ts",
+      "baseline": "99fd52ba5f21b4694eb72192d7d6d388e4d16eb78d1b5716dcafd024e642a8f5",
+      "isolated": "94882918399a6530a8cdd0b63fcd177870c5af84bcec3f253eb5bf23a684fa32",
+      "main": "99fd52ba5f21b4694eb72192d7d6d388e4d16eb78d1b5716dcafd024e642a8f5"
+    },
+    {
+      "file": "src/dev/suspended-sea/audio.ts",
+      "baseline": "2b7f51f5937a8f82a073c48f597207645c8e1c8c42fc9affe9cb7d34f6718630",
+      "isolated": "741b8bb1fe9d96cc87a42f28702bafe4b098c5b1fb10ff66e88ce400094db5ac",
+      "main": "2b7f51f5937a8f82a073c48f597207645c8e1c8c42fc9affe9cb7d34f6718630"
+    },
+    {
+      "file": "src/dev/suspended-sea/fixture.ts",
+      "baseline": null,
+      "isolated": "249f2a2af75aef713b1855dd1be7db33105eb7a7b14ed385dd0fc80c649378c3",
+      "main": null
+    },
+    {
+      "file": "src/dev/suspended-sea/journey-session.ts",
+      "baseline": null,
+      "isolated": "8810ca9434bb48141d4c04444fb3d782665087e97bd98b7e679f50b4747d705a",
+      "main": null
+    },
+    {
+      "file": "src/dev/suspended-sea/presentation.ts",
+      "baseline": "26ca5711cd311559d0dd172b4434b3e4dfd791eb9171caf2451bd2b404e438cb",
+      "isolated": "45b6d5fa3f4e3d37fd51e525eaf6a4f206cb1f72644d8764744f9f833fabac98",
+      "main": "26ca5711cd311559d0dd172b4434b3e4dfd791eb9171caf2451bd2b404e438cb"
+    },
+    {
+      "file": "src/dev/suspended-sea/recovery-validation.ts",
+      "baseline": null,
+      "isolated": "d3968c34bef4a7307f5055b04c4ca0730f2b3632b7e75c8537969aea09e66bef",
+      "main": null
+    },
+    {
+      "file": "src/dev/suspended-sea/recovery.ts",
+      "baseline": null,
+      "isolated": "3b10cab5f8b1059dfbbd693ec0aa359b12b2bc63a9f5ba3d215be411939f3b18",
+      "main": null
+    },
+    {
+      "file": "src/dev/suspended-sea/runtime.ts",
+      "baseline": "201dcaef04c7ae501f46769da0bedfddb50d8ebfbf188a1731f7c87d2fdfd6c8",
+      "isolated": "2b65bc6591ef9cd7bd39a2f8d0da59ca8ed6274dab4f4762fbfe1732eab12fcf",
+      "main": "201dcaef04c7ae501f46769da0bedfddb50d8ebfbf188a1731f7c87d2fdfd6c8"
+    },
+    {
+      "file": "src/entities/enemy-factory.ts",
+      "baseline": "300b54039e574797f4fbe397509b6f3d554e153dd0391415669a3e4e4f4965f2",
+      "isolated": "9bf0dfc3682b6e0d1cf45d67a6a5963f1f99a2484082bd8ed681bc34f03ed84e",
+      "main": "300b54039e574797f4fbe397509b6f3d554e153dd0391415669a3e4e4f4965f2"
+    },
+    {
+      "file": "src/entities/player.ts",
+      "baseline": "1528e1fc98c5feb8b4fe5f7a6e1ea9b0ba45813c15f096564cd9f5c998d97d2c",
+      "isolated": "9bd85fd2389084d3c00103d06a47a08250703d39654c6540931cfbb853dcc636",
+      "main": "1528e1fc98c5feb8b4fe5f7a6e1ea9b0ba45813c15f096564cd9f5c998d97d2c"
+    },
+    {
+      "file": "src/managers/audio-manager.ts",
+      "baseline": "257b07d91bcac1f5785f99870f899574d154606a5bb9d49b3c2a5a1ee537aff2",
+      "isolated": "a85ea557cb857de975c39d143833dd0efd4d3f17d9df784784ff5dc6e7c2dbbb",
+      "main": "257b07d91bcac1f5785f99870f899574d154606a5bb9d49b3c2a5a1ee537aff2"
+    },
+    {
+      "file": "src/managers/save-manager.ts",
+      "baseline": "9c48ecbebc24038f88f4766c0db151e3fe5395186e01e849af53e0200d73607e",
+      "isolated": "261e4a65bc7b6160c80aeda33eeed12e516a5bc2540ea3f043c856125e876022",
+      "main": "9c48ecbebc24038f88f4766c0db151e3fe5395186e01e849af53e0200d73607e"
+    },
+    {
+      "file": "src/managers/session.ts",
+      "baseline": "e8741896c7cf506fa26e19a4d3b52d6e7351cf6f85acb591c63f798f85b8380e",
+      "isolated": "aff23d06fb90d4174c901162d495e0ca95ffdecec5be7d73b3a9f25ed866e5df",
+      "main": "e8741896c7cf506fa26e19a4d3b52d6e7351cf6f85acb591c63f798f85b8380e"
+    },
+    {
+      "file": "src/scenes/purification-scene.ts",
+      "baseline": "aa746ded0906427f9be1730c509182e54f8f887b0b39618caa2e055992b96b39",
+      "isolated": "7c6b212b3c84d597b004feda3264b6ba7561e18c33dab3bf320b1440805a06bf",
+      "main": "aa746ded0906427f9be1730c509182e54f8f887b0b39618caa2e055992b96b39"
+    },
+    {
+      "file": "src/scenes/rift-scene.ts",
+      "baseline": "6809d4b101f2813c0e5bf051256665dd404798592f07241360aef7985acc1971",
+      "isolated": "e29999fdfc260b909cb0122a40d67ad93452a385ca1faf1e09a0760f44f6bba7",
+      "main": "6809d4b101f2813c0e5bf051256665dd404798592f07241360aef7985acc1971"
+    },
+    {
+      "file": "src/systems/ai/ai-system.ts",
+      "baseline": "2c7894ed3676869d14a2d4d16887355f6c3f50f78641fc9899d58c8b85f467dc",
+      "isolated": "a1a99cf46d8a10924186eba3866b41ee4140835fd400f09cb7773ffd8d79dcde",
+      "main": "2c7894ed3676869d14a2d4d16887355f6c3f50f78641fc9899d58c8b85f467dc"
+    },
+    {
+      "file": "src/systems/ai/context.ts",
+      "baseline": "af660f3f98ae94f556fe5d2e99edd280aacb98db7850ec4e6a0882389aeb1b7a",
+      "isolated": "f652c81c599516f673fa6a3ea74793d6e36808062accabe9c26ea58f62c93f55",
+      "main": "af660f3f98ae94f556fe5d2e99edd280aacb98db7850ec4e6a0882389aeb1b7a"
+    },
+    {
+      "file": "src/systems/ai/index.ts",
+      "baseline": "ac7d04bc2afb6c6673668fa195fdc0ffade98ee9eefe85cc2cdab7b9ab4739ea",
+      "isolated": "99d8ef01a0b08850f7d034f7b85e47f8381ef774435ede06b729fd7961cd504d",
+      "main": "ac7d04bc2afb6c6673668fa195fdc0ffade98ee9eefe85cc2cdab7b9ab4739ea"
+    },
+    {
+      "file": "src/systems/ai/physical-grid.ts",
+      "baseline": "a1c86eae92d55d08e07020cc6df91dabf652fe0b756802d4c94d139a3f9cc340",
+      "isolated": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+      "main": "a1c86eae92d55d08e07020cc6df91dabf652fe0b756802d4c94d139a3f9cc340"
+    },
+    {
+      "file": "src/systems/ai/runtime-state.ts",
+      "baseline": null,
+      "isolated": "c23035bbc781542efd67fe1ab205379871d10261ed8a9cfb83ac64717f9743a4",
+      "main": null
+    },
+    {
+      "file": "src/systems/ai/runtime-validation.ts",
+      "baseline": null,
+      "isolated": "50b370cbe0948d6ccc6a686ab9fa98351f7e38b8f52c6b7e7bcaf7b51ac02b06",
+      "main": null
+    },
+    {
+      "file": "src/systems/ai/state-machine.ts",
+      "baseline": "96915ddd96fa4d1ab04347d6c830574e93af4f654075a34dee3222616cbf13eb",
+      "isolated": "60fdb70e139bb5254526fcd26278705f35d21ebffe0a1d93b0bc2683f11b3fd6",
+      "main": "96915ddd96fa4d1ab04347d6c830574e93af4f654075a34dee3222616cbf13eb"
+    },
+    {
+      "file": "src/systems/chaos-system.ts",
+      "baseline": "8aae61adae27b67139bd96c9cbb71f8d684250174f55c6eca12a0add5310c5cf",
+      "isolated": "f85d0eae755d34a88c5e0d35de479565d48574b6879be1f81b240b2b1bf260be",
+      "main": "8aae61adae27b67139bd96c9cbb71f8d684250174f55c6eca12a0add5310c5cf"
+    },
+    {
+      "file": "src/systems/combat-system.ts",
+      "baseline": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d",
+      "isolated": "43dc21c49724be080f6442e43f914ffe0fb51edb81980fd3421b52627fe7a5f3",
+      "main": "7af62a5e6eae40dab3c3e5b69c016394902e65a8887a3bd536a786640c40a47d"
+    },
+    {
+      "file": "src/systems/contaminant-system.ts",
+      "baseline": "5f75def3338f9b8653371012e42aa80c978c70b9c8a5152232625da80050c67f",
+      "isolated": "c14ec98ec218ef0d797162d2f22f3702798f047c825618ba523b87006d77e8b9",
+      "main": "5f75def3338f9b8653371012e42aa80c978c70b9c8a5152232625da80050c67f"
+    },
+    {
+      "file": "src/systems/enemy-control-state.ts",
+      "baseline": "9610de59a5cef7cfb65d6d05284087ff869e171a129c6ee7b3b0895c7b8b952c",
+      "isolated": "169b8ff365ffc8ae589cb576c0b808ba99e32d6d38fdf90f18f388a2a2638cc6",
+      "main": "9610de59a5cef7cfb65d6d05284087ff869e171a129c6ee7b3b0895c7b8b952c"
+    },
+    {
+      "file": "src/systems/field-loot-inventory.ts",
+      "baseline": "5e907fdd9cc4a3803a4d87993bc8e4c00a0161cd4a3053c4f6052f8854805040",
+      "isolated": "e5b511a07c277aa1180635a10338d4f0586f7b2a0da83f9d49e5998ffdae1234",
+      "main": "5e907fdd9cc4a3803a4d87993bc8e4c00a0161cd4a3053c4f6052f8854805040"
+    },
+    {
+      "file": "src/systems/impact-system.ts",
+      "baseline": "2014c3602d64549776126c25bb18201b3b0be59579979552c1b802c0291ee962",
+      "isolated": "430601e94a0ca102591b5c0e0d42a1bdf75b3dea4ea36aa89bf55c0f3876086f",
+      "main": "2014c3602d64549776126c25bb18201b3b0be59579979552c1b802c0291ee962"
+    },
+    {
+      "file": "src/systems/inventory-store.ts",
+      "baseline": "b74fb4ae01420913fd18ce853a8747eb2fdff8e165978fa3ce47188346fd25c8",
+      "isolated": "4ee419492e67ea7779431ce515310ec3d2d67dc56e8c43530f0e84931ed5135c",
+      "main": "b74fb4ae01420913fd18ce853a8747eb2fdff8e165978fa3ce47188346fd25c8"
+    },
+    {
+      "file": "src/systems/loot-search-system.ts",
+      "baseline": "0511b50df0a6889a6ead80336d1181feb94767d81dd680474df3359622a902bd",
+      "isolated": "de53cca7bec5b52a9e03e7d0c5e967a40e2c9bf9709f36d0e691d9d42133e42e",
+      "main": "0511b50df0a6889a6ead80336d1181feb94767d81dd680474df3359622a902bd"
+    },
+    {
+      "file": "src/systems/rift-frame-commit.ts",
+      "baseline": null,
+      "isolated": "fbcb12fbf92f750eb27546625bf20a4e20146d93e45c4d4409e422ed2497a765",
+      "main": null
+    },
+    {
+      "file": "src/systems/rift-recovery-state.ts",
+      "baseline": null,
+      "isolated": "53d2bdf2da32c7e72d053c024e934e6ca93d2352d2bc1d853fd4205068b11517",
+      "main": null
+    },
+    {
+      "file": "src/systems/run-controller.ts",
+      "baseline": "ecf111d0797cdc29932abf7cbcb9be9e9387f74e99e7d795e14b809389e9a083",
+      "isolated": "6bd34ebf3025e8b985b9ce7c35ab5425b4bbc0057432d1164245455fd90f6c6b",
+      "main": "ecf111d0797cdc29932abf7cbcb9be9e9387f74e99e7d795e14b809389e9a083"
+    },
+    {
+      "file": "src/systems/tool-system.ts",
+      "baseline": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96",
+      "isolated": "55c70b39af99a2f74b14b497a33ff3225634ca4e9cfe9fb0b9d93e9079ca30e2",
+      "main": "8d568f0808a3b814a01f9df80dfbe5f39fc8c887e1ccae90c779d34070998b96"
+    },
+    {
+      "file": "src/systems/trail-system.ts",
+      "baseline": "1eda63464629ba27c6691fcc963718f70d237f222b931c7b5a7554d95ce05e85",
+      "isolated": "57410f0c5ce4e2bda2cedcba1f0b6b3474e62cdc253901141f7872c259e189d3",
+      "main": "1eda63464629ba27c6691fcc963718f70d237f222b931c7b5a7554d95ce05e85"
+    },
+    {
+      "file": "src/types/ai-types.ts",
+      "baseline": "167cdf3ee5f1000abb1411034b5ae33591545780b173486896ed42ed34d36d91",
+      "isolated": "159e68d91e1a1f6cacd3abe63b3bfc935bf2b711340a38e648ca7711e8fac6b2",
+      "main": "167cdf3ee5f1000abb1411034b5ae33591545780b173486896ed42ed34d36d91"
+    },
+    {
+      "file": "src/types/game-types.ts",
+      "baseline": "e327b5fb7a1b18dcdeb4b547a2a6a996076b06f1166f943e606dd6f41456e328",
+      "isolated": "54847f8867fae71aec8aadbb54dcc6c70ab04008acb8bf3a03397436b3b15241",
+      "main": "e327b5fb7a1b18dcdeb4b547a2a6a996076b06f1166f943e606dd6f41456e328"
+    },
+    {
+      "file": "src/types/inventory-types.ts",
+      "baseline": "fc1dcc25f5a6021895089355cf19fd94ec75731b1cd272ec03fde47bd4bfe041",
+      "isolated": "5c53eeeff0df8e555947ed38aaa6ef7c242fb041669cf108f0df03ef86c257d6",
+      "main": "fc1dcc25f5a6021895089355cf19fd94ec75731b1cd272ec03fde47bd4bfe041"
+    },
+    {
+      "file": "src/types/rift-checkpoint.ts",
+      "baseline": null,
+      "isolated": "aab558470e1a5c7a3d711f51fc735d2072a770ab2b0d7c7a0777828ff9142710",
+      "main": null
+    },
+    {
+      "file": "src/ui/dom/panel-styles.ts",
+      "baseline": "edc02d668aa88403777fa94d357f8afdafc7fe09f1d5346bff6ff0483a29aedb",
+      "isolated": "2485849f3e75a1ac98ff4f6b17a93d0b600f8608a01b8d291784857d70cf3442",
+      "main": "edc02d668aa88403777fa94d357f8afdafc7fe09f1d5346bff6ff0483a29aedb"
+    },
+    {
+      "file": "src/ui/dom/pause-menu.ts",
+      "baseline": "7c0379887bec1cbfb0e0492dc71ff4e5e79c81af0da21a3fbbbe88929ac6b2d0",
+      "isolated": "49e7952db68449b7a4bf7fde9a7e88a31fc57f53dda17269d7ae7bb869a9fd97",
+      "main": "7c0379887bec1cbfb0e0492dc71ff4e5e79c81af0da21a3fbbbe88929ac6b2d0"
+    },
+    {
+      "file": "src/ui/dom/rift-hud.ts",
+      "baseline": "4fab77528bf7e49314f8f65a7ed5a1102b214ee1bbcc0b0abde6e92e0f51856a",
+      "isolated": "d2d36ca0daa255b2f79046dfb0187b49f6e05e1911b7cc6b634c45a0e95a44d9",
+      "main": "4fab77528bf7e49314f8f65a7ed5a1102b214ee1bbcc0b0abde6e92e0f51856a"
+    },
+    {
+      "file": "src/ui/dom/rift-result-panel.ts",
+      "baseline": "c1e41d350414dd0b6c47e85b21792f178d26aa9356a6db27a2b9c879f02930b2",
+      "isolated": "8ce1ffe4040da7e80c339b65cab65415215a8ee636895ef772e8e3ca336ac752",
+      "main": "c1e41d350414dd0b6c47e85b21792f178d26aa9356a6db27a2b9c879f02930b2"
+    },
+    {
+      "file": "src/ui/inventory-presenter.ts",
+      "baseline": "591a4e6c3723c4a9dc711489219f1cc68e5b89e055a2eaccd0b58f720d62ed27",
+      "isolated": "1803d103c9db5ec1bd17d125dde1b26c781893e19eba55c8c35be6a933901199",
+      "main": "591a4e6c3723c4a9dc711489219f1cc68e5b89e055a2eaccd0b58f720d62ed27"
+    },
+    {
+      "file": "src/ui/minimap.ts",
+      "baseline": "6c0d06faf436ce543d761e922217c46c61ca43291a45a99dfe68b43add2e1d29",
+      "isolated": "6e910d24cbfc0c0340645d19219f9c8706cffc867cf7bd1f57c04d6dc0cf809d",
+      "main": "6c0d06faf436ce543d761e922217c46c61ca43291a45a99dfe68b43add2e1d29"
+    },
+    {
+      "file": "src/worlds/suspended-sea/shell-system.ts",
+      "baseline": "67a088136fec01909b83e158504974bf6d46551ebb56cfc8068659550d78f221",
+      "isolated": "076a686497144a886e571a93f6a712ed1b2909630275e7fff4e93719015fd4e8",
+      "main": "67a088136fec01909b83e158504974bf6d46551ebb56cfc8068659550d78f221"
+    },
+    {
+      "file": "suspended-sea-journey.html",
+      "baseline": null,
+      "isolated": "ce737b2f746f2a49aabe251b3d84f2ddbeb25128e01bd4444bc0980636591640",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-actors.ts",
+      "baseline": null,
+      "isolated": "143027f9245c12142ca4c7dbff826f9a5956cd0e234ac6a3a550f8f1b0f125e7",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-admission.ts",
+      "baseline": null,
+      "isolated": "12e3ab4728942fd55fae9e86948104f46d3e80dc7da21554007ab28297f1a8a5",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-effects.ts",
+      "baseline": null,
+      "isolated": "6f8c0d4aee20e01aeab04530019a854e991c18c702aff0f7f3b4b34bc865d9e9",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-journey-recovery.ts",
+      "baseline": null,
+      "isolated": "0dcb0b212be418b3c53910f3430a7b62b762161c9110a1a15a81ba71b999051d",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-lifecycle.ts",
+      "baseline": null,
+      "isolated": "270229883278ca1eb5e9dd7c4f647d75e2de53511871007faf07182ed1b3672c",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-persistence.ts",
+      "baseline": null,
+      "isolated": "95a15bf9f294f50e00680686c8e8a852c64dc505ed333e6d84cfe3e8faf001d7",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-run.ts",
+      "baseline": null,
+      "isolated": "42f36bbff0382bf33ef7a7eef3c63bc60d7aa0be937608f1fbf7e3ea65ea788e",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-settlement-random.ts",
+      "baseline": null,
+      "isolated": "1a47eed7c77bb99f334a16ff631116cabd22aec05c199747bc452d033683f559",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-state.ts",
+      "baseline": null,
+      "isolated": "7142c8853151797bc4170f4847640cadd7123b4f0f51f4740560bae30f42dc7b",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check-world.ts",
+      "baseline": null,
+      "isolated": "72a733b1d40092ad3bf1eaad4306b5206680470b7964b479384b4e8f2c228ed4",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/check.mjs",
+      "baseline": null,
+      "isolated": "3577b36596ff5b15da24bc3aebcd904e8b4c34b28da50175960928e3fdec17a1",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/native-fixture.ts",
+      "baseline": null,
+      "isolated": "e8085531c8c99cd6c7310b3ab581264a7a348da4b398c90a0cd36ad7581ef428",
+      "main": null
+    },
+    {
+      "file": "tools/recovery/qa-runtime.mjs",
+      "baseline": null,
+      "isolated": "c8de77c8bbb5b1c25883afa5f194f4a1358078e5b79d0c77fc291239323e049c",
+      "main": null
+    },
+    {
+      "file": "tools/spatial-study/check-stage-tools.ts",
+      "baseline": "17cdbef420627c1240724049668a90f9795b3239c20f3b6fb81d0ec569b4d9e4",
+      "isolated": "43035d3a799dd480c61003af98f07404f9bfd3275fafa2f1524962d19d5cbd0a",
+      "main": "17cdbef420627c1240724049668a90f9795b3239c20f3b6fb81d0ec569b4d9e4"
+    },
+    {
+      "file": "tools/suspended-sea/check-journey-toast.ts",
+      "baseline": null,
+      "isolated": "240d1847d63576ff20eb1f8d0780a180692e1f8ccfe6b7259eb4f68d19c59806",
+      "main": null
+    },
+    {
+      "file": "tools/suspended-sea/check-journey.ts",
+      "baseline": null,
+      "isolated": "c8a4d1626ff7f35dde535de7fd8e51b8965f449264bc9e7ef4a247ff2f951237",
+      "main": null
+    }
+  ],
+  "postRuntimeChange": "Only notice overflow:visible added after final runtime to avoid clipping the focus outline; gameplay unchanged.",
+  "afterCopyQaOnlyChanges": [
+    {
+      "file": "tools/recovery/qa-runtime.mjs",
+      "current": "672d76ae62d89cdbb07835084e3b894b41a918471797010a9bcbfc2ee6406e3f",
+      "reason": "QA default source root made portable after testing; executed version archived alongside final raw evidence."
+    },
+    {
+      "file": "tools/recovery/native-fixture.ts",
+      "current": "c6e58c2213ad32e2de59947d2d9d6665b51060f4e2156e55aba44f50970442c4",
+      "reason": "Removed one trailing blank line from the test fixture during commit whitespace checks; no behavior change. Prior executed source hashes remain unchanged in their records."
+    }
+  ]
+}

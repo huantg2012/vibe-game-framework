@@ -299,14 +299,14 @@ export const contaminantSystem = {
    * respecting the per-tool cap (CN.ECHO_MAX_TOOL_USE_BONUS). Silently no-ops (returns
    * false) if the tool library is empty or every tool is already at the cap.
    */
-  grantRandomToolUse(): boolean {
+  grantRandomToolUse(random: () => number = Math.random): boolean {
     const cap = CN.ECHO_MAX_TOOL_USE_BONUS;
     const candidates = inventoryStore.getContaminants().filter(
       (c) => c.stage === 'tool' && (echoBonusGranted.get(c.id) ?? 0) < cap,
     );
     if (candidates.length === 0) return false;
 
-    const target = candidates[Math.floor(Math.random() * candidates.length)]!;
+    const target = candidates[Math.floor(random() * candidates.length)]!;
     target.usesRemaining++;
     echoBonusGranted.set(target.id, (echoBonusGranted.get(target.id) ?? 0) + 1);
     return true;

@@ -8,6 +8,7 @@ export interface WeaponLootRequest {
   readonly nodeId: string;
   readonly tier: KindlingTier;
   readonly firstWeaponDiscovered: boolean;
+  readonly allowWeapon?: boolean;
 }
 const tiers: readonly KindlingTier[] = ['safe', 'contested', 'deep'];
 const qualities = ['ordinary', 'good', 'fine', 'excellent'] as const;
@@ -24,6 +25,7 @@ function weighted(weights: readonly number[], seed: number): number {
 }
 
 export function rollWeaponDrop(request: WeaponLootRequest): string | null {
+  if (request.allowWeapon === false) return null;
   if (!request.firstWeaponDiscovered && tiers.indexOf(request.tier) >= tiers.indexOf(WEAPON_FIRST_DISCOVERY.minimumTier)) {
     return WEAPON_FIRST_DISCOVERY.definitionId;
   }

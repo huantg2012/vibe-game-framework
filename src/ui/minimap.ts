@@ -10,6 +10,30 @@
 
 import { TileType, type Facing4, type Vector2 } from '@/types/game-types';
 import { getDomUiRoot, injectPanelStyles } from '@/ui/dom/panel-styles';
+import { runtimeInteger, runtimeNumber, runtimeRecord } from '@/systems/ai/runtime-validation';
+
+/** Remembered information only. Current visibility is rebuilt by the scene. */
+export interface MinimapRuntimeState {
+  readonly version: 1;
+  readonly mapWidth: number;
+  readonly mapHeight: number;
+  readonly tileSize: number;
+  readonly extractionTile: { readonly x: number; readonly y: number };
+  readonly extractionDiscovered: boolean;
+  readonly explored: readonly number[];
+}
+
+export function validateMinimapRuntimeState(value: unknown): value is MinimapRuntimeState {
+  if (!runtimeRecord(value) || value.version !== 1 || !runtimeInteger(value.mapWidth, 1, 4096)
+    || !runtimeInteger(value.mapHeight, 1, 4096) || value.mapWidth * value.mapHeight > 1_048_576
+    || !runtimeNumber(value.tileSize, 1) || !runtimeRecord(value.extractionTile)
+    || !runtimeInteger(value.extractionTile.x, 0, value.mapWidth - 1)
+    || !runtimeInteger(value.extractionTile.y, 0, value.mapHeight - 1)
+    || typeof value.extractionDiscovered !== 'boolean' || !Array.isArray(value.explored)
+    || value.explored.length !== value.mapWidth * value.mapHeight
+    || !value.explored.every(cell => cell === 0 || cell === 1)) return false;
+  return value.extractionDiscovered === (value.explored[value.extractionTile.y * value.mapWidth + value.extractionTile.x] === 1);
+}
 
 // ---------------------------------------------------------------------------
 // Config (docs/art/ux-visual-pass-slice-55.md §4)
@@ -158,6 +182,30 @@ export class Minimap {
     this.abyssNodePositions = nodePositions.map(position => ({ ...position }));
     this.abyssRemainingMs = durationMs;
     this.abyssTotalMs = durationMs;
+  }
+
+  exportRuntimeState(): MinimapRuntimeState {
+    if (!this.extractionTile || this.abyssRemainingMs > 0 || this.abyssEnemyPositions.length
+      || this.abyssCorePositions.length || this.abyssNodePositions.length) {
+      throw new Error('Minimap recovery supports ordinary exploration without an abyss snapshot');
+    }
+    return { version: 1, mapWidth: this.mapWidth, mapHeight: this.mapHeight, tileSize: this.tileSize,
+      extractionTile: { ...this.extractionTile }, extractionDiscovered: this.extractionDiscovered,
+      explored: Array.from(this.explored) };
+  }
+
+  validateRuntimeState(value: unknown): value is MinimapRuntimeState {
+    return validateMinimapRuntimeState(value) && value.mapWidth === this.mapWidth
+      && value.mapHeight === this.mapHeight && value.tileSize === this.tileSize
+      && value.extractionTile.x === this.extractionTile?.x && value.extractionTile.y === this.extractionTile?.y;
+  }
+
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid or incompatible minimap runtime state');
+    this.explored = Uint8Array.from(value.explored);
+    this.extractionDiscovered = value.extractionDiscovered;
+    this.abyssEnemyPositions = []; this.abyssCorePositions = []; this.abyssNodePositions = [];
+    this.abyssRemainingMs = 0; this.abyssTotalMs = 0;
   }
 
   reset(): void {

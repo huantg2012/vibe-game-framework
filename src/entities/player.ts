@@ -13,6 +13,7 @@
  */
 
 import Phaser from 'phaser';
+import { copyRuntimeVector, runtimeFacing, runtimeNumber, runtimeRecord, runtimeVector } from '@/systems/ai/runtime-validation';
 import { PlayerWeaponRig } from '@/entities/player-weapon-rig';
 import type { CrowbarQuality, CrowbarVariant } from '@/art/crowbar-pixels';
 import type { WeaponAttackPose } from '@/systems/weapon-swing';
@@ -44,6 +45,44 @@ export interface PlayerConfig {
   readonly facing?: Facing4;
   /** Optional scene footprint. Omitted: the shared centered 20px rift body. */
   readonly body?: PlayerBodyConfig;
+}
+
+
+/** Frame-boundary movement facts; combat and inventory keep their own state. */
+export interface PlayerRuntimeState {
+  readonly version: 1;
+  readonly position: Vector2;
+  readonly bodyPosition: Vector2;
+  readonly velocity: Vector2;
+  readonly facingAngle: number;
+  readonly facing4: Facing4;
+  readonly inputVector: Vector2;
+  readonly moving: boolean;
+  readonly inputEnabled: boolean;
+  readonly baseSpeed: number;
+  readonly burdenSpeedFactor: number;
+  readonly speedModifiers: readonly (readonly [string, number])[];
+  readonly motionElapsedMs: number;
+  readonly lastDeltaMs: number;
+}
+
+export function validatePlayerRuntimeState(value: unknown): value is PlayerRuntimeState {
+  if (!runtimeRecord(value) || value.version !== 1 || !runtimeVector(value.position)
+    || !runtimeVector(value.bodyPosition) || !runtimeVector(value.velocity) || !runtimeVector(value.inputVector)
+    || !runtimeNumber(value.facingAngle) || !runtimeFacing(value.facing4)
+    || typeof value.moving !== 'boolean' || typeof value.inputEnabled !== 'boolean'
+    || !runtimeNumber(value.baseSpeed, 0) || !runtimeNumber(value.burdenSpeedFactor, .84, 1)
+    || !runtimeNumber(value.motionElapsedMs, 0) || !runtimeNumber(value.lastDeltaMs, 0)
+    || !Array.isArray(value.speedModifiers) || value.speedModifiers.length > 32) return false;
+  const sources = new Set<string>();
+  let product = 1;
+  for (const entry of value.speedModifiers) {
+    if (!Array.isArray(entry) || entry.length !== 2 || typeof entry[0] !== 'string' || !entry[0]
+      || sources.has(entry[0]) || !runtimeNumber(entry[1], 0)) return false;
+    sources.add(entry[0]);
+    product *= entry[1];
+  }
+  return Number.isFinite(product * value.baseSpeed) && Math.hypot(value.inputVector.x, value.inputVector.y) <= 1.000001;
 }
 
 export class Player {
@@ -149,6 +188,48 @@ export class Player {
     this.position.x = this.image.x;
     this.position.y = this.image.y;
     this.syncVisuals();
+  }
+
+  /** Capture after the physics POST_UPDATE checkpoint, never from the cached read view. */
+  exportRuntimeState(): PlayerRuntimeState {
+    const body = this.image.body as Phaser.Physics.Arcade.Body;
+    const state: PlayerRuntimeState = {
+      version: 1, position: { x: this.image.x, y: this.image.y },
+      bodyPosition: copyRuntimeVector(body.position), velocity: copyRuntimeVector(body.velocity),
+      facingAngle: this.facingAngle, facing4: this.facing4, inputVector: copyRuntimeVector(this.inputVector),
+      moving: this.moving, inputEnabled: this.inputEnabled, baseSpeed: this.baseSpeed,
+      burdenSpeedFactor: this.burdenSpeedFactor, speedModifiers: [...this.speedModifiers],
+      motionElapsedMs: this.motionElapsedMs, lastDeltaMs: this.lastDeltaMs,
+    };
+    if (!validatePlayerRuntimeState(state)) throw new Error('Player cannot export invalid runtime state');
+    return state;
+  }
+
+  /** Silent hydration; this never synthesizes input, combat events, or a teleport probe. */
+  restoreRuntimeState(value: unknown): void {
+    if (!validatePlayerRuntimeState(value)) throw new Error('Invalid player runtime state');
+    const body = this.image.body as Phaser.Physics.Arcade.Body;
+    body.reset(value.position.x, value.position.y);
+    body.position.set(value.bodyPosition.x, value.bodyPosition.y);
+    body.prev.copy(body.position);
+    body.prevFrame.copy(body.position);
+    body.updateCenter();
+    body.velocity.set(value.velocity.x, value.velocity.y);
+    Object.assign(this.position, value.position);
+    Object.assign(this.inputVector, value.inputVector);
+    this.facingAngle = value.facingAngle;
+    this.facing4 = value.facing4;
+    this.shownFacing = value.facing4;
+    this.moving = value.moving;
+    this.inputEnabled = value.inputEnabled;
+    this.baseSpeed = value.baseSpeed;
+    this.burdenSpeedFactor = value.burdenSpeedFactor;
+    this.speedModifiers.clear();
+    for (const [source, multiplier] of value.speedModifiers) this.speedModifiers.set(source, multiplier);
+    this.recomputeSpeedMultiplier();
+    this.motionElapsedMs = value.motionElapsedMs;
+    this.lastDeltaMs = value.lastDeltaMs;
+    this.syncVisuals(0);
   }
 
   // ------------------------------------------------------------------ queries
@@ -347,8 +428,8 @@ export class Player {
     this.speedMultiplier = Math.max(GAME_CONSTANTS.PLAYER.SPEED_MOD_MIN, product);
   }
 
-  private syncVisuals(): void {
-    this.motionElapsedMs += this.lastDeltaMs;
+  private syncVisuals(deltaMs = this.lastDeltaMs): void {
+    this.motionElapsedMs += deltaMs;
     if (this.facing4 !== this.shownFacing) {
       this.lag.trigger(this.shownFacing, this.image.texture.key);
       this.shownFacing = this.facing4;
@@ -367,8 +448,8 @@ export class Player {
       this.image.setTexture(textureKey);
     }
     this.image.setRotation(0);
-    this.weaponRig?.sync(this.facing4, this.facingAngle, this.weaponPose, this.motionElapsedMs, this.moving, this.lastDeltaMs);
-    this.lag.sync(this.image.x, this.image.y, true, this.lastDeltaMs);
+    this.weaponRig?.sync(this.facing4, this.facingAngle, this.weaponPose, this.motionElapsedMs, this.moving, deltaMs);
+    this.lag.sync(this.image.x, this.image.y, true, deltaMs);
     const torso = this.weaponRig?.getTorsoOffset();
     const originalLamp = DENSE_PLAYER_LAMP_LOCAL[this.facing4];
     const lamp = this.lampLocal[this.facing4];
@@ -380,7 +461,7 @@ export class Player {
       this.image.y,
       this.facing4,
       this.moving || turning,
-      this.lastDeltaMs
+      deltaMs
     );
   }
 }

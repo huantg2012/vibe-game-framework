@@ -1,11 +1,12 @@
 import * as THREE from 'three';
-import { WEAPON_ATTACK_PROFILES } from '@/generated/weapon-data';
+import { renderCrowbarPixels } from '@/art/crowbar-pixels';
+import { WEAPON_DATA, WEAPON_ATTACK_PROFILES } from '@/generated/weapon-data';
 import type { DeepReadonly, RiftPresentationEnemy, RiftPresentationEvent, RiftPresentationFrame } from './bridge';
 import { ACTOR_HEIGHT } from './materials';
 import { ActorPixelDrawing, createActorContactShadow } from './actor-pixels';
 import { RestraintReaction } from '@/entities/restraint-reaction';
 import type { ToolPresentationView } from '@/systems/tool-presentation';
-import { stageWeaponPhaseProgress } from './support';
+import { stageWeaponPhaseProgress, supportsStageWeapon } from './support';
 
 type PlayerView = DeepReadonly<RiftPresentationFrame['player']>;
 type GroundSampler = (x: number, y: number) => number;
@@ -79,6 +80,25 @@ function coat(d: ActorPixelDrawing): void {
   d.line(-4.3, 33.5, 2.8, -1.3, 32.8, 3.2, 2, person.coatEdge);
 }
 
+interface HeldPixel { readonly across: number; readonly along: number; readonly colour: number }
+const heldCrowbars = new Map<string, readonly HeldPixel[]>();
+/** Cache the accepted native assets once per module lifetime, never during a frame. */
+function prepareHeldCrowbars(): void {
+  if (heldCrowbars.size) return;
+  for (const weapon of Object.values(WEAPON_DATA)) {
+    if (!supportsStageWeapon(weapon.id) || weapon.id === 'crowbar_plain') continue;
+    const pixels = renderCrowbarPixels(weapon.quality, weapon.variant, 'world');
+    const cells: HeldPixel[] = [];
+    for (let y = 0; y < pixels.height; y++) for (let x = 0; x < pixels.width; x++) {
+      const i = (y * pixels.width + x) * 4;
+      if (!pixels.data[i + 3]) continue;
+      cells.push({ across: x - pixels.pivot.x, along: pixels.pivot.y - y,
+        colour: pixels.data[i]! * 65536 + pixels.data[i + 1]! * 256 + pixels.data[i + 2]! });
+    }
+    heldCrowbars.set(weapon.id, cells);
+  }
+}
+
 export class StagePlayer {
   readonly root = new THREE.Group();
   readonly torso = new THREE.Group();
@@ -99,8 +119,10 @@ export class StagePlayer {
   private hitY = 0;
   private attackArc = .4;
   private weaponVisible = false;
+  private weaponDefinitionId: string | null = null;
 
   constructor() {
+    prepareHeldCrowbars();
     this.root.add(this.torso, this.shadow, this.light);
     this.torso.add(this.drawing.mesh);
     this.root.userData.height = ACTOR_HEIGHT;
@@ -124,6 +146,7 @@ export class StagePlayer {
     this.gaitAmount = mix(this.gaitAmount, walking ? 1 : 0, Math.min(1, delta / 85));
     const phase = this.travel / 17 * Math.PI, t = elapsedMs / 1000;
     this.weaponVisible = p.weaponDefinitionId !== null;
+    this.weaponDefinitionId = p.weaponDefinitionId;
     const attack = p.attack, attacking = this.weaponVisible && attack.phase !== 'idle';
     const attackPhase = attack.contactRemainingMs > 0 && attacking ? 'active' : attack.phase;
     const facing = attacking ? attack.facing : p.facing;
@@ -206,12 +229,26 @@ export class StagePlayer {
     const tipY = handY - Math.sin(weaponPitch) * weaponLength;
     const hookX = tipX + Math.cos(this.attackArc) * 2.6;
     const hookZ = tipZ + Math.sin(this.attackArc) * 2.6;
-    if (this.weaponVisible) {
+    if (this.weaponVisible && p.weaponDefinitionId === 'crowbar_plain') {
       d.line(handX, handY, handZ, tipX, tipY, tipZ, 2, person.iron);
       d.line(tipX, tipY, tipZ, hookX, tipY - .5, hookZ, 2, person.iron);
       d.line(hookX, tipY - .5, hookZ, hookX, tipY - 2.4, hookZ - 1, 1, person.ironLight, .4);
       d.line(handX, handY + .3, handZ, mix(handX, tipX, .18), mix(handY, tipY, .18), mix(handZ, tipZ, .18), 2, person.leather, .6);
       d.line(mix(handX, tipX, .35), mix(handY, tipY, .35) + .4, mix(handZ, tipZ, .35), tipX, tipY + .4, tipZ, 1, person.ironLight, .35);
+      d.stamp(handX, handY, handZ, gloveShape, person.leather, .7, .8, .8);
+    }
+    if (this.weaponVisible && p.weaponDefinitionId !== 'crowbar_plain') {
+      const pixels = heldCrowbars.get(p.weaponDefinitionId!);
+      if (!pixels) throw new Error(`No native held crowbar model: ${p.weaponDefinitionId}`);
+      const wx = Math.cos(this.attackArc), wz = Math.sin(this.attackArc);
+      const lx = -wz * Math.cos(weaponPitch), ly = -Math.sin(weaponPitch), lz = wx * Math.cos(weaponPitch);
+      for (const pixel of pixels) {
+        const x = handX + wx * pixel.across + lx * pixel.along;
+        const y = handY + ly * pixel.along;
+        const z = handZ + wz * pixel.across + lz * pixel.along;
+        quad(d, pixel.colour, x, y, z, x + wx, y, z + wz,
+          x + wx - lx, y - ly, z + wz - lz, x - lx, y - ly, z - lz, .35);
+      }
       d.stamp(handX, handY, handZ, gloveShape, person.leather, .7, .8, .8);
     }
     this.tip.set(hookX * c + hookZ * s + p.position.x, tipY + this.groundHeight, -hookX * s + hookZ * c + p.position.y);
@@ -228,7 +265,7 @@ export class StagePlayer {
   copyPixels(): Uint8Array { return this.drawing.rgba.slice(); }
   snapshot(): Record<string, unknown> {
     return { origin: this.root.position.toArray(), bodyHeight: ACTOR_HEIGHT, attackArc: this.attackArc,
-      weaponTip: this.tip.toArray(), weaponVisible: this.weaponVisible,
+      weaponTip: this.tip.toArray(), weaponVisible: this.weaponVisible, weaponDefinitionId: this.weaponDefinitionId,
       feet: this.feet.map(foot => foot.toArray()), hitAt: this.hitAt,
       rendering: 'authored-pixel-card', texture: { width: this.drawing.width, height: this.drawing.height }, groundHeight: this.groundHeight };
   }

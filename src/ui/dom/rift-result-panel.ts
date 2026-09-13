@@ -21,6 +21,7 @@ import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
 export interface RiftResultData {
   survived: boolean;
+  abandoned?: boolean;
   kindlingGained: number;
   killCount: number;
   peakChaos: number;
@@ -51,7 +52,7 @@ const RARITY_COLORS: Record<ContaminantRarity, string> = {
 // ---------------------------------------------------------------------------
 
 let panel: HTMLDivElement | null = null;
-let continueCallback: (() => void) | null = null;
+let continueCallback: (() => boolean | void) | null = null;
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -62,7 +63,7 @@ export const riftResultPanel = {
     return panel !== null;
   },
 
-  show(data: RiftResultData, onContinue?: () => void): void {
+  show(data: RiftResultData, onContinue?: () => boolean | void): void {
     if (panel) destroyPanel();
     injectPanelStyles();
 
@@ -78,7 +79,7 @@ export const riftResultPanel = {
     backdrop.id = 'rift-result-backdrop';
     root.appendChild(backdrop);
 
-    const titleText = data.survived ? '撤离成功' : '阵亡';
+    const titleText = data.abandoned ? '放弃本趟' : data.survived ? '撤离成功' : '阵亡';
     const elapsedS = Math.round(data.elapsedMs / 1000);
     const peak = Math.round(data.peakChaos);
 
@@ -131,8 +132,7 @@ export const riftResultPanel = {
     panel.innerHTML = html;
     panel.querySelector('#rift-result-continue')?.addEventListener('click', () => {
       const callback = continueCallback;
-      destroyPanel();
-      callback?.();
+      if (callback?.() !== false) destroyPanel();
     });
     root.appendChild(panel);
   },

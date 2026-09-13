@@ -12,6 +12,28 @@
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { Vector2 } from '@/types/game-types';
+import { runtimeInteger, runtimeNumber, runtimeRecord } from '@/systems/ai/runtime-validation';
+
+export interface TrailRuntimeState {
+  readonly version: 1;
+  readonly mapWidth: number;
+  readonly tileSize: number;
+  readonly elapsedMs: number;
+  readonly visited: readonly { readonly tileKey: number; readonly atMs: number }[];
+}
+
+export function validateTrailRuntimeState(value: unknown): value is TrailRuntimeState {
+  if (!runtimeRecord(value) || value.version !== 1 || !runtimeInteger(value.mapWidth, 1, 4096)
+    || !runtimeNumber(value.tileSize, 1) || !runtimeNumber(value.elapsedMs, 0)
+    || !Array.isArray(value.visited) || value.visited.length > 1_048_576) return false;
+  const keys = new Set<number>();
+  return value.visited.every(entry => {
+    if (!runtimeRecord(entry) || !runtimeInteger(entry.tileKey) || keys.has(entry.tileKey)
+      || !runtimeNumber(entry.atMs, 0, value.elapsedMs as number)) return false;
+    keys.add(entry.tileKey);
+    return true;
+  });
+}
 
 /** Base trail lifetime in ms (at chaos 0). */
 const BASE_LIFETIME_MS = 90_000;
@@ -114,6 +136,23 @@ export class TrailSystem {
         this.graphics.fillRect(col * ts, row * ts, ts, ts);
       }
     }
+  }
+
+  /** Clears all trail data (e.g. on run restart). */
+  exportRuntimeState(): TrailRuntimeState {
+    return { version: 1, mapWidth: this.mapWidth, tileSize: this.tileSize, elapsedMs: this.elapsedMs,
+      visited: [...this.visited].map(([tileKey, atMs]) => ({ tileKey, atMs })) };
+  }
+
+  validateRuntimeState(value: unknown): value is TrailRuntimeState {
+    return validateTrailRuntimeState(value) && value.mapWidth === this.mapWidth && value.tileSize === this.tileSize;
+  }
+
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid or incompatible trail runtime state');
+    this.visited = new Map(value.visited.map(entry => [entry.tileKey, entry.atMs]));
+    this.elapsedMs = value.elapsedMs;
+    this.graphics?.clear();
   }
 
   /** Clears all trail data (e.g. on run restart). */

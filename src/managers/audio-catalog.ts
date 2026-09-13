@@ -67,10 +67,16 @@ export const AUDIO_ASSETS: readonly AudioAssetDef[] = [
   { key: 'sfx-impact-break', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'none' },
   { key: 'sfx-shared-module-repair', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'none' },
   { key: 'sfx-pp-boundary-pulse', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'boundary' },
+  { key: 'amb-suspended-sea-pressure', dir: 'ambient', group: 'Ambient', loop: true, spatial: 'none' },
+  { key: 'sfx-suspended-sea-gather', dir: 'sfx/system', group: 'SFX', loop: true, spatial: 'point' },
+  { key: 'sfx-suspended-sea-fall', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'point' },
+  { key: 'sfx-suspended-sea-contact', dir: 'sfx/system', group: 'SFX', loop: true, spatial: 'point' },
+  { key: 'sfx-suspended-sea-drain', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'point' },
+  { key: 'sfx-suspended-sea-shell-hit', dir: 'sfx/system', group: 'SFX', loop: false, spatial: 'point' },
 ] as const;
 
-if (AUDIO_ASSETS.length !== 43) {
-  throw new Error(`Expected 43 audio assets, got ${AUDIO_ASSETS.length}`);
+if (AUDIO_ASSETS.length !== 49 || new Set(AUDIO_ASSETS.map(asset => asset.key)).size !== AUDIO_ASSETS.length) {
+  throw new Error(`Expected 49 unique audio assets, got ${AUDIO_ASSETS.length}`);
 }
 
 export const LAYER_ASSET_KEY: Record<RiftLayer, string> = {

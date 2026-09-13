@@ -1,6 +1,7 @@
 /** CSV-owned quality rules. Queries never mutate legacy instances or refill uses. */
 import { CONTAMINANT_DATA, ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
 import { CONTAMINANT_LOOT_PROFILES } from '@/generated/contaminant-economy-data';
+import { CONTAMINANT_SOURCE_POOLS } from '@/generated/contaminant-sources-data';
 import { mix32 } from '@/generation/seed-fork';
 import type { KindlingTier } from '@/types/map-types';
 import { CONTAMINANT_QUALITY_DATA, CONTAMINANT_QUALITY_ORDER } from '@/generated/contaminant-quality-data';
@@ -91,9 +92,22 @@ function sampleRandom(random: () => number): number {
 }
 
 /** Per-node streams prevent redraws, combat RNG or failed persistence from rerolling loot. */
-export function rollContaminantNodeDrop(runSeed: number, nodeId: string, tier: KindlingTier): ContaminantDrop {
+export function rollContaminantNodeDrop(runSeed: number, nodeId: string, tier: KindlingTier, poolId?: string): ContaminantDrop {
   const seed = mix32(runSeed, 'contaminant-pile:' + nodeId);
   const samples = [mix32(seed, 'family'), mix32(seed, 'quality')];
+  if (poolId !== undefined) {
+    const pool = CONTAMINANT_SOURCE_POOLS[poolId as keyof typeof CONTAMINANT_SOURCE_POOLS];
+    if (!pool) throw new Error(`Unknown contaminant source pool: ${poolId}`);
+    const total = pool.reduce((sum, row) => sum + row.weight, 0);
+    let sample = (samples[0]! >>> 0) / 4294967296 * total;
+    let type: ContaminantType = pool[pool.length - 1]!.type;
+    for (const entry of pool) {
+      sample -= entry.weight;
+      if (sample < 0) { type = entry.type; break; }
+    }
+    const rarity = CONTAMINANT_DATA[type].rarity;
+    return { type, rarity, quality: rollContaminantQuality(() => (samples[1]! >>> 0) / 4294967296, CONTAMINANT_LOOT_PROFILES[tier]) };
+  }
   let index = 0;
   return rollContaminantDrop(() => (samples[index++]! >>> 0) / 4294967296, CONTAMINANT_LOOT_PROFILES[tier]);
 }
