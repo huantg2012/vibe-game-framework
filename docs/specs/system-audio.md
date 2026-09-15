@@ -28,9 +28,9 @@ exposes:
 
 # 系统设计：音频（氛围床 + 裂隙分层 + 清单音效）
 
-## 迭代23：观察场承重音景（DEC-164）
+## 迭代23：观察场承重音景（DEC-164 / DEC-165）
 
-仅`living-landmass-stage.html`的DEV表现音景，由`vista-audio.ts`拥有一个AudioContext/BufferSource，不进入正式AudioManager注册表或存档。`vista-motion.ts`确定性生成26秒PCM（矿化摩擦/低频承重），不是现场录音或外部音频模型；与非通行承体共享周期，5秒开始载荷、响应延迟1.4秒、8.2秒后摩擦渐强，末段渐退。没有通过新声音给敌人AI制造噪声事件。
+仅`living-landmass-stage.html`的DEV表现音景，由`vista-audio.ts`拥有一个AudioContext/BufferSource，不进入正式AudioManager注册表或存档。`vista-motion.ts`确定性生成26秒PCM（矿化摩擦/低频承重），不是现场录音或外部音频模型；与主绘景及非通行承体的固定端局部屈曲共享周期，5秒开始载荷、响应延迟1.4秒、8.2秒后摩擦渐强，末段渐退。没有通过新声音给敌人AI制造噪声事件。
 
 WASD/方向键/M首次非repeat真实按键解锁；解锁前不自动发声。M切静音但周期继续。声源固定(520,760)，声像clamp((source.x−player.x)/900,−.85,.85)，增益.9/(1+(distance/950)^2)，平滑目标分别.15/.18秒，不改全游戏混音规则。
 

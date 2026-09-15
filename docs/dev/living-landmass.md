@@ -1,22 +1,24 @@
 ---
-status: IMPLEMENTED-REVIEW-PENDING / FULL-LEVEL-FROZEN
+status: R5-TERRAIN-REWORK-REQUIRED / R6-PLANNED-NOT-STARTED / FULL-LEVEL-FROZEN
 last-modified-date: 2026-09-15
 iteration: 23
 ---
 
 # 生命大陆：实景观察与冻结局部
 
-## 当前：生命大陆承托群岛（DEC-164 / R4）
+**最新评审（DEC-166）：** 当前可运行实现仍是R5。用户指出岩石/地面同纹理及自然地貌不足，R6计划已归档并随当前成果提交，本次未实施。下一轮清单见[迭代23](../tasks/iteration-23.md)文末；下方是已有R5的操作与技术事实，不代表用户视觉通过。
+
+## 当前：生命大陆承托群岛（DEC-165 / R5）
 
 [打开完整走动场景](http://127.0.0.1:3011/living-landmass-stage.html)。启动：`npm run dev -- --host 127.0.0.1 --port 3011 --strictPort`。
 
 **WASD / 方向键行走，M静音。** 第一次移动解锁声音。由入口肩台向上走过矿化脊，到高位冠台看远景；沿右路下到纤维台、回折台，经底部连接返回入口。中间横脊连接左右两路，可再绕回。五地块/六连接有宽窄变化和真实缓坡；两处空气孔和所有岩石都不可穿越。
 
-当前工作镜头24°长焦透视，完整路线跟随；四距离层由最远绘景、固定世界弯曲绘景卡、真实深层承体和可走地图组成。Three内部1920×1280 MSAA抗锯齿，逻辑仍960×640。仅下方非通行承体缓慢载荷运动，走面静止；摩擦/承重声与同一周期相连。reduced-motion保持静态底音并停止装饰运动。
+当前工作镜头24°长焦透视，完整路线跟随；四距离层由最远绘景、固定世界弯曲绘景卡、真实深层承体和可走地图组成。Three内部1920×1280 MSAA抗锯齿，逻辑仍960×640。斜向中远承体根端固定、梢部缓慢屈曲，下方两个承体局部延迟响应；走面静止；摩擦/承重声与同一周期相连。reduced-motion保持静态底音并停止装饰运动。
 
-本轮仍在打磨可入游戏的场景质量；完整实走已完成，审美未代签；真实录音已交，Agent因音频输入能力限制未能审听。无敌人、搜撤、危险、战术视野或存档读写，刷新回入口。宏观景观可见不代表这些远方大陆可达。
+本轮仍在打磨可入游戏的场景质量；R4被用户要求返工，R5两轮质量段与最终155.3秒完整路线已查，审美未代签；真实录音已交，Agent因音频输入能力限制未能审听。无敌人、搜撤、危险、战术视野或存档读写，刷新回入口。宏观景观可见不代表这些远方大陆可达。
 
-新增绘景 `public/assets/dev/living-landmass/shoulder-r4.png` 与同目录 `.generation.json`保留prompt及真实alpha/尺寸；路线作者数据为六份 `data/living-landmass-vista-*.csv`。开发机位研究可用 `?camera=20` / `?camera=28`。合同见[视觉方向第12节](../art/living-landmass-direction.md)，进度与防遗漏清单见[迭代23](../tasks/iteration-23.md)，最终原帧/录音/路线见[QA](../qa/iteration-23.md)。
+新增绘景 `public/assets/dev/living-landmass/shoulder-r5.png`、绘制式地表 `ground-mineral-r5.png` 与同目录 `.generation.json`保留prompt及真实alpha/尺寸；路线作者数据为六份 `data/living-landmass-vista-*.csv`。开发机位研究可用 `?camera=20` / `?camera=28`。合同见[视觉方向第13节](../art/living-landmass-direction.md)，进度与防遗漏清单见[迭代23](../tasks/iteration-23.md)，最终原帧/录音/路线见[QA](../qa/iteration-23.md)。
 
 ## 冻结：首包受力鳍面（DEC-159/160）
 

@@ -25,11 +25,13 @@ exposes:
 
 # 系统设计：裂隙地图生成
 
-## DEC-164独立多地块场景
+## DEC-165独立多地块场景
 
-`living-landmass-stage.html` 为手工编排的连通场景，不调用正式随机地图生成。六份 `data/living-landmass-vista-*.csv`：outline有序外轮廓；holes按id分组有序内孔；rocks拥有id/x/y/radius/height；regions拥有标签、中心/目标高程/影响范围/色倾向/地标描述；route-nodes拥有id/region/x/y；connectors拥有连接ID及节点链。全部Vite raw运行解析、有限数/正尺寸/ID及引用校验，CSV→code。
+`living-landmass-stage.html` 为手工编排的连通场景，不调用正式随机地图生成。六份 `data/living-landmass-vista-*.csv`：outline有序外轮廓；holes按id分组有序内孔；rocks拥有id/x/y/radius/height/kind/yaw（kind=shell/ridge/plates/debris；yaw单位度）；regions拥有标签、中心/目标高程/影响范围/色倾向/地标描述；route-nodes拥有id/region/x/y；connectors拥有连接ID及节点链。全部Vite raw运行解析、有限数/正尺寸/ID及引用校验，CSV→code。
 
 五个地块=沉积肩台、矿化脊、高位冠台、纤维台、回折台；六条连接形成全环与中横脊，两内孔是真实空气。2200×1904范围、8px完整格准入与渲染轮廓/岩石足迹同源；三角化投影面积等于外轮廓减孔，不补洞底。snapshot输出regions/connectors/routeNodes/recommendedRoute/alternateRoute/qaChecks供只读正常行走验证，不提供传送。
+
+CSV宏轮廓先由vista-boundary派生磨圆与局部破口，再统一用于顶面/侧面/通行；侧面顶沿必须直接复用顶面的实际Float32边界坐标/高度，不能把边界包含查询的fallback当高程。岩块底环生成障碍足迹，几何细节不得假造支持。崖唇/主面/基底厚度沿程变化（外108/内77.76平均），两孔无底。四类自然地标及其yaw由CSV控制，纯装饰不新增物品规则。
 
 当前只构建静态连续高程，不做垂直重叠可走层。地块矿化/纤维/积屑细节不改变物件或敌人数据；非通行动态、独立绘景和下层承体都不参与支撑。此页不注册世界/敌人/掉落/存档，不能以五块图宣称完整第二世界、随机供给或新可达巨岛完成。
 

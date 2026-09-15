@@ -227,3 +227,31 @@ ROOT实际尝试通过工具接收上述音轨，工具返回“audio content om
 ### R4生命周期补证
 
 ROOT在完整路线之后仅做一次短[真实导航检查](artifacts/iteration-23/vista-r4/lifecycle-supplement/evidence.json)：同源可见iframe正常解锁声音，离开实际页面，存活父页面被动观察native AudioContext。两个上下文均closed，close调用及promise resolved通过，解决原CDP事件漏报的观测缺口；原路线失败记录不覆盖。产品源码未变化。原生Finder激活后仍focused=true/hidden=false，真实失焦继续未验证，不再无界重试。最终汇总见[R4 README](artifacts/iteration-23/vista-r4/README.md)。
+
+
+## 12. DEC-165 / R5统一空间与绘制质量
+
+R4已按用户指令归档提交fac7eb9；R4用户视觉否决与声音/失焦限制保留，不转写为认可。R5按“质量段→定向修正→最终真实全路线”执行，当前没有用户成品PASS。
+
+### 质量段与第一轮问题
+
+[第一轮](artifacts/iteration-23/vista-r5/2026-09-15T12-52-28-642Z/README.md)为12.331秒真实键盘出生到西台，揭示内孔壁/中连接下缘垂针及透空裂口；原帧和证据保留。code定向修正后，[第二轮](artifacts/iteration-23/vista-r5/2026-09-15T13-01-27-873Z/README.md)12.08秒原帧显示可见崖壁恢复连续，ROOT/art核图后才冻结全路线版本。两个短段均不是最终验收替代。
+
+### 冻结候选的实际验证
+
+- [最终QA汇总](artifacts/iteration-23/vista-r5/README.md)及[原始证据](artifacts/iteration-23/vista-r5/2026-09-15T13-02-56-653Z/evidence.json)：本轮正常浏览器验证总墙钟155.273秒，包含正常键盘、截图、观察、刷新与生命周期检查，未单独计量纯行走时长。五区六连接全环/中线/返程及四个岩石/空气/外缘分支均已执行；13232项采样断言通过，732精简动态样本、47原帧与连续视频保留。33源/资产/工具输入前后哈希一致，无页面/console/HTTP错误。通过数包含重复站位规则，不能表述为13232个独立测试用例。
+- 普通和对角速度均80，完整身体支撑、两脚实际三角面采样、人物射线投影一致。现场阻挡为石块x约394、南外缘y约1758、上孔y约826、下孔y约910，全部持续推边停止并真实退回。主路线未被装饰/岩块改动阻塞。
+- 3对象实际局部形变跨周期范围：independent-painted-shell为0～18、deep-bearing-body为0～10、delayed-load-lamella为0～6；固定端误差均0，消费实际声音时钟的load/延迟response。reduced-motion下三项phase/maxDisplacement均0，真实活动顶点回到restY且保持静止；原地玩家坐标与走面高度不随中景移动。
+- 松键、M静音/恢复、刷新回出生与重新锁音频、唯一可见Three canvas、无存档写入均通过。生命周期本轮采用存活父页面被动观察实际iframe导航离开：两个native AudioContext均closed，产品close调用及promise resolved已观察到，不重复R4的CDP事件漏报断言。
+- 实际MSAA4、1920×1280内部/960×640逻辑，24°工作透视；首屏ready1260ms。正常rAF中位8.3ms/p95 10ms/p99 10.3ms，48个>100ms间隔、最大647.3ms，包含截图/录屏/录音及probe开销，未逐一归因，不宣称零卡顿或跨设备稳定60FPS。geometry仅首次保存，动态使用getDynamicState()；最终构建由ROOT另行通过。
+
+### 音景和真实边界
+
+本轮[实际输出首30秒WAV](artifacts/iteration-23/vista-r5/2026-09-15T13-02-56-653Z/main-audio-2-first30.wav)、[原始录音](artifacts/iteration-23/vista-r5/2026-09-15T13-02-56-653Z/main-audio-2.webm)及[解码记录](artifacts/iteration-23/vista-r5/2026-09-15T13-02-56-653Z/audio-decode.json)保留供用户试听。旁路录制未改原播放连接/音量/时钟；audio-1是Phaser空轨。工具无音频感知能力，**Agent听感未验证**，没有用可解码/相位/RMS代签听感。
+
+**真实OS失焦仍未验证**，本轮按既定限制不调用CUA/Finder，不再重复无效系统切换，不注入blur冒充。刷新与销毁成功不能代替失焦恢复。多站原帧已交art抽查；画法统一、清晰度、空间关联、动作是否读作生命及是否达到可入游戏水平仍由用户终审。未新增玩法/完整第二世界/正式视野/供给验收，QA未修改产品或提交。
+
+
+### DEC-166后续人审反馈（2026-09-15）
+
+用户指出岩石与地面同纹理、各处相似、场景像人工公园泥土地面。R5运行/几何检查保留，地貌质量需返工；不能把第12节通过扩大为审美通过。ROOT自审与R6优化计划已归档到iteration-23.md文末，本次只提交当前成果与计划，没有实施R6或重跑游戏测试。

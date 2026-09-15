@@ -13,9 +13,11 @@ export interface VistaTerrainRegion extends VistaPoint {
 export interface VistaTerrain {
   readonly geometry: THREE.BufferGeometry;
   readonly heightAt: (x: number, y: number) => number;
+  readonly boundaryRings: readonly (readonly VistaBoundaryVertex[])[];
 }
+export interface VistaBoundaryVertex extends VistaPoint { readonly height: number }
 
-const SUBDIVISIONS = 4;
+const SUBDIVISIONS = 3;
 export const VISTA_EDGE_SEGMENTS = 2 ** SUBDIVISIONS;
 const BUCKET_SIZE = 64;
 
@@ -46,7 +48,7 @@ function improveTriangles(triangles: number[][], outline: readonly VistaPoint[])
       (q.x - r.x) ** 2 + (q.y - r.y) ** 2,
       (r.x - p.x) ** 2 + (r.y - p.y) ** 2);
   };
-  for (let pass = 0; pass < 512; pass++) {
+  for (let pass = 0; pass < 4096; pass++) {
     const edges = new Map<string, { triangle: number; opposite: number }>();
     let flipped = false;
     outer: for (let i = 0; i < triangles.length; i++) {
@@ -148,12 +150,38 @@ export function createVistaTerrain(outline: readonly VistaPoint[], holes: readon
       const denominator = (bz - cz) * (ax - cx) + (cx - bx) * (az - cz);
       const a = ((bz - cz) * (x - cx) + (cx - bx) * (y - cz)) / denominator;
       const b = ((cz - az) * (x - cx) + (ax - cx) * (y - cz)) / denominator;
-      if (a >= -1e-6 && b >= -1e-6 && a + b <= 1.000001) {
+      const c = 1 - a - b;
+      // A fixed barycentric tolerance changes its physical size with triangle
+      // aspect ratio. Use a sub-millimetre world-space edge tolerance instead.
+      const areaSquared = denominator * denominator;
+      const toleranceSquared = .00025 ** 2;
+      if ((a >= 0 || a * a * areaSquared <= toleranceSquared * ((bx - cx) ** 2 + (bz - cz) ** 2))
+        && (b >= 0 || b * b * areaSquared <= toleranceSquared * ((cx - ax) ** 2 + (cz - az) ** 2))
+        && (c >= 0 || c * c * areaSquared <= toleranceSquared * ((ax - bx) ** 2 + (az - bz) ** 2))) {
         return a * position.getY(i) + b * position.getY(i + 1) + (1 - a - b) * position.getY(i + 2);
       }
     }
     // Outside the actual outline. This value cannot grant physical support.
     return 0;
   };
-  return { geometry, heightAt };
+  // Side geometry binds to the actual top vertices, not a point-containment
+  // query evaluated on its mathematical boundary. Float32 rounding can place
+  // a boundary query microscopically outside its neighbouring triangle.
+  const vertexHeights = new Map<string, number>();
+  for (let i = 0; i < position.count; i++) vertexHeights.set(`${position.getX(i)}:${position.getZ(i)}`, position.getY(i));
+  const boundaryRings = [outline, ...holes].map(ring => {
+    const boundary: VistaBoundaryVertex[] = [];
+    for (let edge = 0; edge < ring.length; edge++) {
+      const a = ring[edge]!, b = ring[(edge + 1) % ring.length]!;
+      for (let step = 0; step < VISTA_EDGE_SEGMENTS; step++) {
+        const x = Math.fround(a.x + (b.x - a.x) * step / VISTA_EDGE_SEGMENTS);
+        const y = Math.fround(a.y + (b.y - a.y) * step / VISTA_EDGE_SEGMENTS);
+        const height = vertexHeights.get(`${x}:${y}`);
+        if (height === undefined) throw new Error(`Missing shared vista rim vertex ${x},${y}`);
+        boundary.push({ x, y, height });
+      }
+    }
+    return boundary;
+  });
+  return { geometry, heightAt, boundaryRings };
 }

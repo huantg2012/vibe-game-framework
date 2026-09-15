@@ -10,21 +10,21 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代23：分层绘景与多地块场景（DEC-164）
+## 迭代23：绘制型地貌与分层景观（DEC-165 / R5）
 
-`living-landmass-stage.html` → `src/dev/living-landmass-stage.ts` → `living-landmass-stage/scene.ts` 是独立DEV入口，不进入正式菜单或世界池。`vista-model.ts` 通过Vite raw解析6份 `living-landmass-vista-*.csv`（轮廓/孔洞/岩石/区域/路线节点/连接）。五个区域共用连续高程，六条连接构成环路与中部横脊；2200×1904，完整8px通行格由轮廓、孔洞和全部岩石足迹共同派生。任何绘景或中景都不提供通行。
+`living-landmass-stage.html` → `src/dev/living-landmass-stage.ts` → `living-landmass-stage/scene.ts` 是独立DEV入口，不进入正式菜单或世界池。`vista-model.ts` 通过Vite raw解析6份 `living-landmass-vista-*.csv`（轮廓/孔洞/岩石/区域/路线节点/连接）。五区六连接与中横脊保留，2200×1904、8px通行格；岩石表新增kind(shell/ridge/plates/debris)和yaw。
 
-`vista-terrain.ts` 按含孔轮廓三角化、改善瘦三角并细分。渲染使用Float32三角网，桶索引重心采样用于两脚与阴影。当前20480顶面三角，高度约5.67至108.48，最大坡0.158；五块高度渐变而无垂直重叠行走层。外崖厚108、孔壁77.76，层理/矿化/纤维低反差材质共享世界坐标；两孔仍为空气，不做洞底。
+`vista-boundary.ts` 从CSV宏观轮廓派生磨圆转角与75–115世界单位间隔的不规则8–17单位破口，同一有效polygon供顶面、崖壁与身体支持；不以视觉偏移伪造落脚面。`vista-terrain.ts` 是唯一实际Float32三角重心高程来源，两脚/阴影消费同一采样；当前21760顶面三角、高度约5.70–108.48、最大坡约0.157。`vista-terrain.ts`另输出绑定实际Float32顶点的boundaryRings，`vista-cliff.ts`直接消费这些边界坐标和高度，不在数学边界重新做可能因浮点误差失配的包含采样。崖壁的唇/主断面/基底沿程改变位置、厚度，平均外崖108/内77.76，局部约±20%；两孔不填底。`vista-rocks.ts` 用真实倒角和宽主面组合四类地标，根部碎屑/主块共享一个Mesh，渲染底环同时给出障碍足迹。无垂直重叠行走层。
 
-`vista-camera.ts` 使用24°工作默认的PerspectiveCamera，距离2600、焦面跨度1120、FOV约16.342°、far15000。DEV query只接受20/24/28；焦点跟随(x+45,y−390,height0)，在完整往返路线检查构图。StagePlayer按真实射线调整竖向绘制基底，原Player/20×20身体扫掠与80移动保持。逻辑输出960×640；Three内部1920×1280，原生MSAA开启，最终canvas正常缩放，不再整屏nearest粗放大。角色自身贴图保持原有像素绘制。
+`ground-mineral-r5.png` 是原尺寸1254方形绘制式albedo；顶/崖/岩块共用世界尺度纹理。材质以轻量亮度级混合形成克制绘制感，保留实际深度、接触与统一灯光；不是《八方旅人》的内部shader。`vista-camera.ts` 仍24°工作机位、distance2600、焦面跨度1120、FOV约16.342°、far15000；DEV20/24/28，焦点(x+45,y−390,height0)。正式Player/80速度/20×20扫掠不变，StagePlayer按真实视线调整绘制基底。逻辑960×640、内部1920×1280、MSAA、最终canvas正常缩放；角色原像素画法保持。
 
-四距离职责：`vista-r2.png` 最远背景；`shoulder-r4.png` 带alpha的独立弯曲绘景卡（固定世界坐标、透视视差）；`vista-scenery.ts` 三条真实深层承体与两薄雾；实际可走地形。绘景卡24×12细分、不随镜头平移，不能视作完整三维大陆；卡片接边/背景覆盖必须通过实际路线判断。新图像与生成prompt均存public资产目录。
+`vista-scenery.ts` 拥有四距离职责：最远`vista-r2.png`在clip-space背景网格上原位显示，只对该层压低彩度/对比并混入空气色，不做全屏模糊；中远`shoulder-r5.png`为1536×1024 RGBA、2500×1667世界尺寸、48×32曲面网格、固定(-650,-1250,-3000)与−24°旋转；其alpha覆盖通过smoothstep(.72,.97)收掉原图低透明度光晕，图像文件不编辑。三条真实深层承体与两层薄雾再接近处可走地图。中远绘景/背景都统一线性mipmap采样；材质与像素演员各按自身尺度处理。绘景有真实平移视差但不是可环绕的完整三维大陆，不授予通行。
 
-`vista-motion.ts` 定义唯一26秒景观周期：5秒起主承体上托10世界单位、响应体延迟1.4秒上托6单位，13秒后逐渐卸力；玩家走面完全静止。`vista-audio.ts` 一次生成确定性摩擦/低频承重PCM，实际AudioBuffer按同周期循环，8.2秒后摩擦渐起。首次WASD/方向键/M真实按键建立单一AudioContext，M只静音不暂停周期；音量按玩家距(520,760)衰减、左右声像随相对x变化。解锁后可听AudioContext时钟反向提供景观呈现时间，避免长帧使画面与声音漂离；无音频解锁前用场景时钟。reduced-motion保留静态底音、视觉动作与摩擦事件静止。
+`vista-motion.ts`仍为唯一26秒周期；`vista-scenery.ts`保存三个对象的静态顶点与固定权重，主绘景梢部局部位移上限18世界单位，根部零位移；下方主承体最大10、响应体6且两端固定，响应延迟1.4秒。对象transform不再整块上下移，走面完全静止；预扩包围球覆盖位移，不每帧重建网格。`vista-audio.ts`拥有原单一AudioContext/BufferSource与确定性PCM，实际声音时钟驱动画面，解锁前用场景时钟，reduced-motion动作归零/静态底音。M静音不重建音源，声源(520,760)距离/声像规则保持。
 
-blur/focus/visibilitychange及Phaser事件统一暂停/恢复输入、物理和音频。SHUTDOWN/DESTROY/pagehide幂等释放Three对象、地图纹理、绘景纹理、声音源/Context与监听器。model接管地面纹理，中景克隆纹理各自释放；加载失败明确报错。`__livingLandmassStage.getState()`只读报告路线、身体/足点、镜头、真实AA参数、景观变换与音频状态。外部footer仅元界面操作提示。当前无Rift敌人/搜撤/FOV或存档读写。
+blur/focus/visibilitychange及Phaser事件统一暂停/恢复输入、物理和音频；SHUTDOWN/DESTROY/pagehide幂等释放资源和监听。model接管地面纹理，scenery克隆表面纹理、拥有绘景与shader uniform背景纹理并显式释放后者。`__livingLandmassStage.getState()`提供完整只读几何；`getDynamicState()`省去不变大几何，包含actor/相机/真实AA/音频与每个形变体anchor/flex/maxDisplacement。没有测试状态写入口、FOV/搜撤/库存/存档。外部footer仅操作提示。
 
-旧研究模块和完整局部保持历史冻结；正式悬海路径不改变。视觉及真实验收见[开发说明](dev/living-landmass.md)、[方向第12节](art/living-landmass-direction.md)、[QA](qa/iteration-23.md)。
+旧研究和完整局部保持冻结；正式悬海路径不变。R5实际原帧/路线和限制见[QA](qa/iteration-23.md)，方向见[第13节](art/living-landmass-direction.md)，续接见[迭代23清单](tasks/iteration-23.md)。未代签用户视觉PASS。
 
 ## 迭代23：生命大陆受力局部（DEC-159）
 

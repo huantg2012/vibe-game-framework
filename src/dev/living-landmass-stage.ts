@@ -14,7 +14,9 @@ if (import.meta.env.DEV) {
     const game = new Phaser.Game(gameConfigWithScenes([LivingLandmassStudyScene]));
     Object.defineProperty(window, '__livingLandmassStage', { configurable: false, writable: false,
       value: Object.freeze({ getState: () => ({ ...((game.scene.getScene('LivingLandmassStudy') as LivingLandmassStudyScene | null)?.snapshot()
-        ?? { ready: false }), pageErrors: [...failures] }) }) });
+        ?? { ready: false }), pageErrors: [...failures] }),
+        getDynamicState: () => ({ ...((game.scene.getScene('LivingLandmassStudy') as LivingLandmassStudyScene | null)?.snapshot(false)
+          ?? { ready: false }), pageErrors: [...failures] }) }) });
     window.addEventListener('pagehide', () => {
       (game.scene.getScene('LivingLandmassStudy') as LivingLandmassStudyScene | null)?.dispose();
       game.destroy(true);

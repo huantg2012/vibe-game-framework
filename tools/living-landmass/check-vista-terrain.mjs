@@ -33,6 +33,37 @@ try {
   },0)) * .5;
   const expectedArea = polygonArea(snapshot.outline) - snapshot.holes.reduce((area,hole)=>area+polygonArea(hole),0);
   assert(Math.abs(surfaceArea-expectedArea)<1, 'triangulated top area must equal authored polygon minus air holes');
+  // Perimeter checks are independent from interior walking rays: a bad rim
+  // sample must never become a plausible-looking long hanging triangle.
+  const cliff = model.group.getObjectByName('worn-lips-fractured-faces-and-tapering-bases');
+  assert(cliff?.isMesh, 'actual rendered cliff mesh exists');
+  const cliffPosition = cliff.geometry.getAttribute('position'), cliffIndex = cliff.geometry.getIndex();
+  const actualTopVertices = new Map();
+  for(let i=0;i<position.count;i++) actualTopVertices.set(`${position.getX(i)}:${position.getZ(i)}`,position.getY(i));
+  let maxRimError=0,maxRimSamplerError=0,minCliffThickness=Infinity,maxCliffThickness=0;
+  for(let i=0;i<cliffPosition.count;i+=5) {
+    const x=cliffPosition.getX(i), y=cliffPosition.getZ(i), z=cliffPosition.getY(i);
+    const top=actualTopVertices.get(`${x}:${y}`);
+    assert(top!==undefined, `cliff rim is not bound to actual top vertex ${x},${y}`);
+    maxRimError=Math.max(maxRimError,Math.abs(z-top));
+    maxRimSamplerError=Math.max(maxRimSamplerError,Math.abs(z-model.groundHeightAt(x,y)));
+    assert(Math.abs(z-top)<1e-6, `cliff rim height mismatch ${x},${y}`);
+    assert(Math.abs(z-model.groundHeightAt(x,y))<.001, `public height query loses rim support ${x},${y}`);
+    const thickness=z-cliffPosition.getY(i+4);
+    minCliffThickness=Math.min(minCliffThickness,thickness);maxCliffThickness=Math.max(maxCliffThickness,thickness);
+    assert(thickness>55&&thickness<135, `invalid cliff thickness ${thickness}`);
+    for(let row=1;row<5;row++) assert(cliffPosition.getY(i+row)<cliffPosition.getY(i+row-1), 'cliff column folds upward');
+  }
+  const sideEdges=new Map();
+  for(let i=0;i<cliffIndex.count;i+=3)for(let edge=0;edge<3;edge++) {
+    const a=cliffIndex.getX(i+edge),b=cliffIndex.getX(i+(edge+1)%3);
+    assert(a>=0&&a<cliffPosition.count&&b>=0&&b<cliffPosition.count,'cliff index out of range');
+    const key=a<b?`${a}:${b}`:`${b}:${a}`;sideEdges.set(key,(sideEdges.get(key)??0)+1);
+  }
+  for(const [edge,count] of sideEdges) {
+    const [a,b]=edge.split(':').map(Number);
+    assert(count===2 || count===1&&a%5===b%5&&(a%5===0||a%5===4),`open internal cliff seam ${edge}`);
+  }
   for (const footprint of snapshot.obstacles) for (const p of footprint) {
     assert(model.contains(p.x,p.y), `rock footprint lacks real terrain at ${p.x},${p.y}`);
   }
@@ -107,6 +138,9 @@ try {
   const sources = [
     'src/dev/living-landmass-stage/vista-model.ts',
     'src/dev/living-landmass-stage/vista-terrain.ts',
+    'src/dev/living-landmass-stage/vista-boundary.ts',
+    'src/dev/living-landmass-stage/vista-cliff.ts',
+    'src/dev/living-landmass-stage/vista-rocks.ts',
     'data/living-landmass-vista-outline.csv',
     'data/living-landmass-vista-rocks.csv',
     'data/living-landmass-vista-holes.csv',
@@ -122,11 +156,12 @@ try {
   const result = { pass: true, recordedAt: new Date().toISOString(),
     method: 'Actual Vite SSR ?raw CSV imports; Three Raycaster against rendered BufferGeometry; production full-body physical-grid sweep',
     sourceSha256, triangles: position.count / 3, surfaceArea, expectedArea, height: model.snapshot().surfaceHeight,
+    rimVertices:cliffPosition.count/5,maxRimError,maxRimSamplerError,minCliffThickness,maxCliffThickness,internalCliffSeamsClosed:true,
     maxSlope, supportedBodies: supported, rays: samples, maxHeightError: maxError,
     regionCount: snapshot.regionCount, connectors: snapshot.connectors, routeSegments, airChecks, blockedProbes,
     longSweeps: sweeps, snapshotIsolation: true, textureDisposedOnce: true,
     limitations: 'Geometry and support only; does not certify visual quality, input events, camera composition or browser frame rate.' };
-  const output = path.join(root, 'docs/qa/artifacts/iteration-23/vista-expansion/terrain-check.json');
+  const output = path.join(root, 'docs/qa/artifacts/iteration-23/vista-r5/terrain-check.json');
   await mkdir(path.dirname(output), { recursive: true });
   await writeFile(output, JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify(result, null, 2));

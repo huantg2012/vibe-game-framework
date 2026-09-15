@@ -1,0 +1,296 @@
+{
+  "pass": true,
+  "recordedAt": "2026-09-15T13:00:13.814Z",
+  "method": "Actual Vite SSR ?raw CSV imports; Three Raycaster against rendered BufferGeometry; production full-body physical-grid sweep",
+  "sourceSha256": {
+    "src/dev/living-landmass-stage/vista-model.ts": "9dd527caec3216fbe1bbe7016dbabd1c8dac2e9016f659b1455ec50d33d58ca4",
+    "src/dev/living-landmass-stage/vista-terrain.ts": "39f13341935021a5ccf2277c071d115c9026ba429bd6e0284cae2edc2752ddd6",
+    "src/dev/living-landmass-stage/vista-boundary.ts": "d5ece683c876c3f64733f94efc588769b272baa4bb46405110d11a38cabfde50",
+    "src/dev/living-landmass-stage/vista-cliff.ts": "01e6b5b9dcbf3b3678e66e8d36c686f3b477d5f3359c67ab5b41eec44ddfffe8",
+    "src/dev/living-landmass-stage/vista-rocks.ts": "0149d8d11c39f8021d21199ef06ba8c1417942f33f56a81eeb7f3eac8b703164",
+    "data/living-landmass-vista-outline.csv": "0e769eae73c2828092876296d113ab62e24d05279e2e6a5d34b04d6c32a4f770",
+    "data/living-landmass-vista-rocks.csv": "028eb75878355af9e77c8d328bdffc28010ef291325f00d5357744f6bf2b3ba3",
+    "data/living-landmass-vista-holes.csv": "688a18c0040f1799c0f76726892231b62f7af023f6c107795baf2c29279e7128",
+    "data/living-landmass-vista-regions.csv": "25f02f749e2d4a2b5a3cd525e2da62d3114c0baaf15413c77652bee5c9f48283",
+    "data/living-landmass-vista-route-nodes.csv": "e46e304a11a5e8db005e7f6dc8aa4743133dd0b99f13497e63dd787cee618162",
+    "data/living-landmass-vista-connectors.csv": "10b3d06da52d58a81d5447c8cdd2098d8d3a5c53252e1e4e646e61d6beda3a80",
+    "src/systems/ai/physical-grid.ts": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+    "tools/living-landmass/check-vista-terrain.mjs": "3813bacbe51d588773089da1c8437fe66f9879a85e7cd2f56e58be09e7b58367"
+  },
+  "triangles": 21760,
+  "surfaceArea": 1530978.1803811835,
+  "expectedArea": 1530978.1778266777,
+  "height": {
+    "min": 5.695168972015381,
+    "max": 108.48027801513672,
+    "sampling": "actual-float32-triangle-barycentric"
+  },
+  "rimVertices": 2704,
+  "maxRimError": 0,
+  "maxRimSamplerError": 0,
+  "minCliffThickness": 63.66512870788574,
+  "maxCliffThickness": 129.3480930328369,
+  "internalCliffSeamsClosed": true,
+  "maxSlope": 0.15694087256949243,
+  "supportedBodies": 8140,
+  "rays": 339,
+  "maxHeightError": 1.2612133559741778e-13,
+  "regionCount": 5,
+  "connectors": [
+    {
+      "id": "west-rise",
+      "from": "arrival",
+      "to": "west",
+      "nodes": [
+        "spawn",
+        "west-rise",
+        "west"
+      ],
+      "width": 130
+    },
+    {
+      "id": "crown-ascent",
+      "from": "west",
+      "to": "crown",
+      "nodes": [
+        "west",
+        "upper-west",
+        "crown"
+      ],
+      "width": 130
+    },
+    {
+      "id": "crown-descent",
+      "from": "crown",
+      "to": "east",
+      "nodes": [
+        "crown",
+        "upper-east",
+        "east"
+      ],
+      "width": 110
+    },
+    {
+      "id": "east-turn",
+      "from": "east",
+      "to": "lower",
+      "nodes": [
+        "east",
+        "lower-east",
+        "lower"
+      ],
+      "width": 120
+    },
+    {
+      "id": "lower-return",
+      "from": "lower",
+      "to": "arrival",
+      "nodes": [
+        "lower",
+        "bottom",
+        "bottom-west",
+        "spawn"
+      ],
+      "width": 130
+    },
+    {
+      "id": "cross-ridge",
+      "from": "west",
+      "to": "east",
+      "nodes": [
+        "west",
+        "middle-west",
+        "middle",
+        "middle-east",
+        "east"
+      ],
+      "width": 125
+    }
+  ],
+  "routeSegments": [
+    {
+      "connection": "west-rise",
+      "from": "spawn",
+      "to": "west-rise",
+      "distance": 303.35622624235026
+    },
+    {
+      "connection": "west-rise",
+      "from": "west-rise",
+      "to": "west",
+      "distance": 365.1369606051954
+    },
+    {
+      "connection": "crown-ascent",
+      "from": "west",
+      "to": "upper-west",
+      "distance": 334.43983016381287
+    },
+    {
+      "connection": "crown-ascent",
+      "from": "upper-west",
+      "to": "crown",
+      "distance": 494.89897959078473
+    },
+    {
+      "connection": "crown-descent",
+      "from": "crown",
+      "to": "upper-east",
+      "distance": 421.54477816715985
+    },
+    {
+      "connection": "crown-descent",
+      "from": "upper-east",
+      "to": "east",
+      "distance": 436.033255612459
+    },
+    {
+      "connection": "east-turn",
+      "from": "east",
+      "to": "lower-east",
+      "distance": 360.1388621073821
+    },
+    {
+      "connection": "east-turn",
+      "from": "lower-east",
+      "to": "lower",
+      "distance": 276.58633371878665
+    },
+    {
+      "connection": "lower-return",
+      "from": "lower",
+      "to": "bottom",
+      "distance": 581.3776741499453
+    },
+    {
+      "connection": "lower-return",
+      "from": "bottom",
+      "to": "bottom-west",
+      "distance": 380.13155617496426
+    },
+    {
+      "connection": "lower-return",
+      "from": "bottom-west",
+      "to": "spawn",
+      "distance": 300
+    },
+    {
+      "connection": "cross-ridge",
+      "from": "west",
+      "to": "middle-west",
+      "distance": 292.8839360565888
+    },
+    {
+      "connection": "cross-ridge",
+      "from": "middle-west",
+      "to": "middle",
+      "distance": 405.0197526047341
+    },
+    {
+      "connection": "cross-ridge",
+      "from": "middle",
+      "to": "middle-east",
+      "distance": 400.1249804748512
+    },
+    {
+      "connection": "cross-ridge",
+      "from": "middle-east",
+      "to": "east",
+      "distance": 271.6615541441225
+    }
+  ],
+  "airChecks": [
+    {
+      "index": 0,
+      "center": {
+        "x": 1043.2227298979574,
+        "y": 681.1543079704929
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 1,
+      "center": {
+        "x": 1086.3248096178665,
+        "y": 1171.0244343144714
+      },
+      "noWalk": true,
+      "noSurface": true
+    }
+  ],
+  "blockedProbes": [
+    {
+      "id": "upper-air-edge",
+      "node": "middle",
+      "key": "W",
+      "dx": 0,
+      "dy": -300,
+      "expected": "void",
+      "start": {
+        "x": 1090,
+        "y": 870
+      },
+      "stop": {
+        "x": 1090,
+        "y": 826.000099
+      },
+      "fraction": 0.14666633666666667
+    },
+    {
+      "id": "lower-air-edge",
+      "node": "middle",
+      "key": "S",
+      "dx": 0,
+      "dy": 300,
+      "expected": "void",
+      "start": {
+        "x": 1090,
+        "y": 870
+      },
+      "stop": {
+        "x": 1090,
+        "y": 909.999901
+      },
+      "fraction": 0.13333300333333334
+    },
+    {
+      "id": "outer-edge",
+      "node": "arrival-look",
+      "key": "S",
+      "dx": 0,
+      "dy": 300,
+      "expected": "void",
+      "start": {
+        "x": 380,
+        "y": 1660
+      },
+      "stop": {
+        "x": 380,
+        "y": 1757.9999010000001
+      },
+      "fraction": 0.32666633666666706
+    },
+    {
+      "id": "arrival-stone",
+      "node": "spawn",
+      "key": "A",
+      "dx": -240,
+      "dy": 0,
+      "expected": "stone",
+      "start": {
+        "x": 450,
+        "y": 1490
+      },
+      "stop": {
+        "x": 394.000099,
+        "y": 1490
+      },
+      "fraction": 0.23333292083333332
+    }
+  ],
+  "longSweeps": 2160,
+  "snapshotIsolation": true,
+  "textureDisposedOnce": true,
+  "limitations": "Geometry and support only; does not certify visual quality, input events, camera composition or browser frame rate."
+}
