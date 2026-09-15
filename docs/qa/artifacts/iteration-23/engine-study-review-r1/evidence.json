@@ -1,0 +1,4821 @@
+{
+  "schema": 1,
+  "startedAt": "2026-09-15T03:00:11.582Z",
+  "scope": "Static engine geometry, actual camera, normal production Player movement and physical support. No combat, FOV or inventory validation.",
+  "method": "Empty isolated Chrome context. Real keyboard and mouse, normal clock. Read-only scene probe, no teleport or state/time overrides.",
+  "observations": [
+    {
+      "label": "01-start-50",
+      "at": "2026-09-15T03:00:13.509Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 582.6599999999997,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 568,
+          "y": 582,
+          "height": 131.27478795315903,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 422.03773584905673,
+            "y": 336.8640081398223
+          },
+          "body": {
+            "x": 558,
+            "y": 572,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 571.2,
+              "height": 132.9183586260137,
+              "y": 580.8,
+              "supportHeight": 131.4183586260137,
+              "clearance": 1.5
+            },
+            {
+              "x": 564.8,
+              "height": 133.22589572033982,
+              "y": 580.8,
+              "supportHeight": 131.72589572033982,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 37,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "02-camera-42",
+      "at": "2026-09-15T03:00:13.770Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 848.8999999999995,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 42,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1226.4350914459449,
+            1803.6606858593098
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.3583679495453002,
+            0,
+            0,
+            0.9335804264972017
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.7431448254773942,
+            0.6691306063588582,
+            0,
+            0,
+            -0.6691306063588582,
+            0.7431448254773942,
+            0,
+            -632,
+            295.4656764027253,
+            -2161.0263620123606,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 568,
+          "y": 582,
+          "height": 131.27478795315903,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 422.0377358490566,
+            "y": 316.7506328589566
+          },
+          "body": {
+            "x": 558,
+            "y": 572,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 571.2,
+              "height": 132.9183586260137,
+              "y": 580.8,
+              "supportHeight": 131.4183586260137,
+              "clearance": 1.5
+            },
+            {
+              "x": 564.8,
+              "height": 133.22589572033982,
+              "y": 580.8,
+              "supportHeight": 131.72589572033982,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 42,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 54,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "02-camera-58",
+      "at": "2026-09-15T03:00:14.018Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 1098.5466666666657,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 58,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1548.4865730815668,
+            1419.8546756197688
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.48480962024633706,
+            0,
+            0,
+            0.8746197071393957
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.5299192642332049,
+            0.848048096156426,
+            0,
+            0,
+            -0.848048096156426,
+            0.5299192642332049,
+            0,
+            -632,
+            383.53218899576393,
+            -2065.599435248115,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 568,
+          "y": 582,
+          "height": 131.27478795315903,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 422.0377358490566,
+            "y": 356.64914468477093
+          },
+          "body": {
+            "x": 558,
+            "y": 572,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 571.2,
+              "height": 132.9183586260137,
+              "y": 580.8,
+              "supportHeight": 131.4183586260137,
+              "clearance": 1.5
+            },
+            {
+              "x": 564.8,
+              "height": 133.22589572033982,
+              "y": 580.8,
+              "supportHeight": 131.72589572033982,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 58,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 70,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "02-camera-50",
+      "at": "2026-09-15T03:00:14.268Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 1348.1399999999971,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 568,
+          "y": 582,
+          "height": 131.27478795315903,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 422.03773584905673,
+            "y": 336.8640081398223
+          },
+          "body": {
+            "x": 558,
+            "y": 572,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 571.2,
+              "height": 132.9183586260137,
+              "y": 580.8,
+              "supportHeight": 131.4183586260137,
+              "clearance": 1.5
+            },
+            {
+              "x": 564.8,
+              "height": 133.22589572033982,
+              "y": 580.8,
+              "supportHeight": 131.72589572033982,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 86,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "03-east",
+      "at": "2026-09-15T03:00:15.394Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 2463.6566666666604,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 636.774244444446,
+          "y": 582,
+          "height": 129.21491722909326,
+          "facing": 0,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 484.32384402515873,
+            "y": 338.06315625663933
+          },
+          "body": {
+            "x": 626.774244444446,
+            "y": 572,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 638.5483885917439,
+              "height": 129.84054290990338,
+              "y": 585.2,
+              "supportHeight": 128.30177082803203,
+              "clearance": 1.5387720818713433
+            },
+            {
+              "x": 637.4001002971481,
+              "height": 131.4508191345503,
+              "y": 578.8,
+              "supportHeight": 129.9508191345503,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 153,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "04-diagonal",
+      "at": "2026-09-15T03:00:16.375Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 3446.966666666658,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 676.9217640110065,
+          "y": 541.8524804334395,
+          "height": 138.15954986281398,
+          "facing": -0.7853981633974483,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 520.6838617458174,
+            "y": 305.00267326875013
+          },
+          "body": {
+            "x": 666.9217640110065,
+            "y": 531.8524804334395,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 679.8884731334911,
+              "height": 139.17002533608795,
+              "y": 543.4112547105489,
+              "supportHeight": 137.67002533608795,
+              "clearance": 1.5
+            },
+            {
+              "x": 675.6521111633697,
+              "height": 140.85786208832812,
+              "y": 538.5966498814824,
+              "supportHeight": 139.1033408218294,
+              "clearance": 1.7545212664987275
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 212,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "05-north",
+      "at": "2026-09-15T03:00:18.140Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 5213.566666666657,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 676.9217640110065,
+          "y": 450.000099,
+          "height": 169.03189595102262,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 520.6838617458174,
+            "y": 223.30543438713235
+          },
+          "body": {
+            "x": 666.9217640110065,
+            "y": 440.000099,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 680.1217640110066,
+              "height": 170.89723132076173,
+              "y": 449.00684960652205,
+              "supportHeight": 169.3213022294043,
+              "clearance": 1.5759290913574375
+            },
+            {
+              "x": 673.7217640110065,
+              "height": 171.1377070934616,
+              "y": 448.5933483934779,
+              "supportHeight": 169.6377070934616,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 318,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 10,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "06-bay-rim",
+      "at": "2026-09-15T03:00:19.905Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 6980.1366666666545,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 666.000099,
+          "y": 450.000099,
+          "height": 169.44477960616237,
+          "facing": 3.141592653589793,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 510.7925424905661,
+            "y": 223.06507529481607
+          },
+          "body": {
+            "x": 656.000099,
+            "y": 440.000099,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 664.8557466188888,
+              "height": 172.21038430050154,
+              "y": 446.800099,
+              "supportHeight": 170.71038430050154,
+              "clearance": 1.5
+            },
+            {
+              "x": 664.7444513811112,
+              "height": 169.92598693394757,
+              "y": 453.20009899999997,
+              "supportHeight": 168.30770404210443,
+              "clearance": 1.618282891843137
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 424,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 50,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "07-near-rim",
+      "at": "2026-09-15T03:00:21.971Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 9046.706666666652,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 666.000099,
+          "y": 594.7782990000005,
+          "height": 125.70846624276783,
+          "facing": 1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 510.7925424905661,
+            "y": 348.96970556028884
+          },
+          "body": {
+            "x": 656.000099,
+            "y": 584.7782990000005,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 662.8000989999999,
+              "height": 126.89087389919078,
+              "y": 596.5506905904263,
+              "supportHeight": 125.39087389919078,
+              "clearance": 1.5
+            },
+            {
+              "x": 669.200099,
+              "height": 127.11356164921554,
+              "y": 595.4059074095749,
+              "supportHeight": 125.56870703772894,
+              "clearance": 1.544854611486599
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 548,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 50,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "08-edge-contact",
+      "at": "2026-09-15T03:00:26.740Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 13813.186666666648,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 666.000099,
+          "y": 709.999901,
+          "height": 115.14467028025967,
+          "facing": 1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 510.7925424905661,
+            "y": 435.0573841371852
+          },
+          "body": {
+            "x": 656.000099,
+            "y": 699.999901,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 662.8000989999999,
+              "height": 116.6706567614616,
+              "y": 711.0319226267183,
+              "supportHeight": 115.07847318155592,
+              "clearance": 1.5921835799056794
+            },
+            {
+              "x": 669.200099,
+              "height": 116.70162426286781,
+              "y": 711.3678793732818,
+              "supportHeight": 115.20162426286781,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 834,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 141,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "09-edge-stop",
+      "at": "2026-09-15T03:00:28.007Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 15079.806666666647,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 666.000099,
+          "y": 709.999901,
+          "height": 115.14467028025967,
+          "facing": 1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 510.7925424905661,
+            "y": 435.0573841371852
+          },
+          "body": {
+            "x": 656.000099,
+            "y": 699.999901,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 662.8000989999999,
+              "height": 116.67062743026734,
+              "y": 711.031975581139,
+              "supportHeight": 115.07847291081737,
+              "clearance": 1.592154519449977
+            },
+            {
+              "x": 669.200099,
+              "height": 116.70162452621787,
+              "y": 711.3678264188611,
+              "supportHeight": 115.20162452621787,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 910,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 171,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "10-edge-slide",
+      "at": "2026-09-15T03:00:28.873Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 15946.446666666647,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 677.999901,
+          "y": 709.999901,
+          "height": 115.40009305922048,
+          "facing": 0,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 521.6602876981133,
+            "y": 434.9086904639344
+          },
+          "body": {
+            "x": 667.999901,
+            "y": 699.999901,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 679.1439937437668,
+              "height": 116.90758210596923,
+              "y": 713.1999010000001,
+              "supportHeight": 115.40758210596923,
+              "clearance": 1.5
+            },
+            {
+              "x": 679.2558082562333,
+              "height": 117.07981657471363,
+              "y": 706.799901,
+              "supportHeight": 115.46102314395722,
+              "clearance": 1.618793430756412
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 962,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 184,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "label": "11-reload",
+      "at": "2026-09-15T03:00:30.112Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-static-engine-study",
+        "revision": 1,
+        "elapsedMs": 44.99333333333333,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 50,
+          "azimuth": 0,
+          "span": 1060,
+          "position": [
+            632,
+            1400.8799976141604,
+            1623.0176974357707
+          ],
+          "focus": {
+            "x": 632,
+            "height": 22,
+            "y": 466
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.9056603773584906,
+          "quaternion": [
+            -0.4226182617406994,
+            0,
+            0,
+            0.90630778703665
+          ],
+          "projectionMatrix": [
+            0.0018867924528301887,
+            0,
+            0,
+            0,
+            0,
+            0.0028301886792452833,
+            0,
+            0,
+            0,
+            0,
+            -0.00040008001600320064,
+            0,
+            0,
+            0,
+            -1.0004000800160031,
+            1
+          ],
+          "viewMatrix": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0.6427876096865394,
+            0.7660444431189778,
+            0,
+            0,
+            -0.7660444431189778,
+            0.6427876096865394,
+            0,
+            -631.9999999999999,
+            342.83538308033957,
+            -2116.3920038625442,
+            1
+          ]
+        },
+        "geometry": {
+          "meshes": 4,
+          "triangles": 63380,
+          "vertices": 42888,
+          "staticGeometry": true,
+          "topSurfaceTriangles": 16746,
+          "surface": "continuous loft; barycentric support on the rendered triangles",
+          "underside": "welded rolled perimeter and continuous belly",
+          "contact": {
+            "x": 645,
+            "y": 305,
+            "height": 121.10430525714656
+          },
+          "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+          "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+        },
+        "player": {
+          "x": 568,
+          "y": 582,
+          "height": 131.27478795315903,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 422.03773584905673,
+            "y": 336.8640081398223
+          },
+          "body": {
+            "x": 558,
+            "y": 572,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 571.2,
+              "height": 132.9183586260137,
+              "y": 580.8,
+              "supportHeight": 131.4183586260137,
+              "clearance": 1.5
+            },
+            {
+              "x": 564.8,
+              "height": 133.22589572033982,
+              "y": 580.8,
+              "supportHeight": 131.72589572033982,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 50,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 4,
+          "drawCalls": 9,
+          "triangles": 118764,
+          "buffers": 6,
+          "textures": 10
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "kind": "camera-key",
+      "key": "1",
+      "angle": 42
+    },
+    {
+      "kind": "camera-key",
+      "key": "3",
+      "angle": 58
+    },
+    {
+      "kind": "camera-key",
+      "key": "2",
+      "angle": 50
+    },
+    {
+      "keys": [
+        "d"
+      ],
+      "ms": 850,
+      "label": "03-east",
+      "at": "2026-09-15T03:00:14.356Z",
+      "before": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.03773584905673,
+          "y": 336.8640081398223
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "after": {
+        "x": 636.774244444446,
+        "y": 582,
+        "height": 129.21491722909326,
+        "facing": 0,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 484.32384402515873,
+          "y": 338.06315625663933
+        },
+        "body": {
+          "x": 626.774244444446,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 638.5483885917439,
+            "height": 129.84054290990338,
+            "y": 585.2,
+            "supportHeight": 128.30177082803203,
+            "clearance": 1.5387720818713433
+          },
+          {
+            "x": 637.4001002971481,
+            "height": 131.4508191345503,
+            "y": 578.8,
+            "supportHeight": 129.9508191345503,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "elapsedMs": 1032.2899999999972
+    },
+    {
+      "keys": [
+        "d",
+        "w"
+      ],
+      "ms": 700,
+      "label": "04-diagonal",
+      "at": "2026-09-15T03:00:15.489Z",
+      "before": {
+        "x": 636.774244444446,
+        "y": 582,
+        "height": 129.21491722909326,
+        "facing": 0,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 484.32384402515873,
+          "y": 338.06315625663933
+        },
+        "body": {
+          "x": 626.774244444446,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 638.1291888476344,
+            "height": 129.8450920753096,
+            "y": 585.2,
+            "supportHeight": 128.33462864532567,
+            "clearance": 1.510463429983929
+          },
+          {
+            "x": 637.8193000412577,
+            "height": 131.41307959488313,
+            "y": 578.8,
+            "supportHeight": 129.91307959488313,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "after": {
+        "x": 676.9217640110065,
+        "y": 541.8524804334395,
+        "height": 138.15954986281398,
+        "facing": -0.7853981633974483,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 520.6838617458174,
+          "y": 305.00267326875013
+        },
+        "body": {
+          "x": 666.9217640110065,
+          "y": 531.8524804334395,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 679.8884731334911,
+            "height": 139.17002533608795,
+            "y": 543.4112547105489,
+            "supportHeight": 137.67002533608795,
+            "clearance": 1.5
+          },
+          {
+            "x": 675.6521111633697,
+            "height": 140.85786208832812,
+            "y": 538.5966498814824,
+            "supportHeight": 139.1033408218294,
+            "clearance": 1.7545212664987275
+          }
+        ]
+      },
+      "elapsedMs": 883.2899999999981
+    },
+    {
+      "keys": [
+        "w"
+      ],
+      "ms": 1500,
+      "label": "05-north",
+      "at": "2026-09-15T03:00:16.455Z",
+      "before": {
+        "x": 676.9217640110065,
+        "y": 541.8524804334395,
+        "height": 138.15954986281398,
+        "facing": -0.7853981633974483,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 520.6838617458174,
+          "y": 305.00267326875013
+        },
+        "body": {
+          "x": 666.9217640110065,
+          "y": 531.8524804334395,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 679.98447515657,
+            "height": 139.19522741460491,
+            "y": 543.3152526874699,
+            "supportHeight": 137.69522741460491,
+            "clearance": 1.5
+          },
+          {
+            "x": 675.5561091402907,
+            "height": 140.66290323530646,
+            "y": 538.6926519045614,
+            "supportHeight": 139.0774082256652,
+            "clearance": 1.5854950096412495
+          }
+        ]
+      },
+      "after": {
+        "x": 676.9217640110065,
+        "y": 450.000099,
+        "height": 169.03189595102262,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 520.6838617458174,
+          "y": 223.30543438713235
+        },
+        "body": {
+          "x": 666.9217640110065,
+          "y": 440.000099,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 680.1217640110066,
+            "height": 170.89723132076173,
+            "y": 449.00684960652205,
+            "supportHeight": 169.3213022294043,
+            "clearance": 1.5759290913574375
+          },
+          {
+            "x": 673.7217640110065,
+            "height": 171.1377070934616,
+            "y": 448.5933483934779,
+            "supportHeight": 169.6377070934616,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "elapsedMs": 1683.289999999999
+    },
+    {
+      "keys": [
+        "a"
+      ],
+      "ms": 1500,
+      "label": "06-bay-rim",
+      "at": "2026-09-15T03:00:18.221Z",
+      "before": {
+        "x": 676.9217640110065,
+        "y": 450.000099,
+        "height": 169.03189595102262,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 520.6838617458174,
+          "y": 223.30543438713235
+        },
+        "body": {
+          "x": 666.9217640110065,
+          "y": 440.000099,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 680.1217640110066,
+            "height": 170.89801118456901,
+            "y": 448.86953743569717,
+            "supportHeight": 169.37250994219562,
+            "clearance": 1.5255012423733945
+          },
+          {
+            "x": 673.7217640110065,
+            "height": 171.08632329090602,
+            "y": 448.7306605643028,
+            "supportHeight": 169.58632329090602,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "after": {
+        "x": 666.000099,
+        "y": 450.000099,
+        "height": 169.44477960616237,
+        "facing": 3.141592653589793,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 223.06507529481607
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 440.000099,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 664.8557466188888,
+            "height": 172.21038430050154,
+            "y": 446.800099,
+            "supportHeight": 170.71038430050154,
+            "clearance": 1.5
+          },
+          {
+            "x": 664.7444513811112,
+            "height": 169.92598693394757,
+            "y": 453.20009899999997,
+            "supportHeight": 168.30770404210443,
+            "clearance": 1.618282891843137
+          }
+        ]
+      },
+      "elapsedMs": 1683.2499999999982
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "ms": 1800,
+      "label": "07-near-rim",
+      "at": "2026-09-15T03:00:19.988Z",
+      "before": {
+        "x": 666.000099,
+        "y": 450.000099,
+        "height": 169.44477960616237,
+        "facing": 3.141592653589793,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 223.06507529481607
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 440.000099,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 664.8187885877643,
+            "height": 172.21236231487316,
+            "y": 446.800099,
+            "supportHeight": 170.71236231487316,
+            "clearance": 1.5
+          },
+          {
+            "x": 664.7814094122357,
+            "height": 169.84554370174615,
+            "y": 453.20009899999997,
+            "supportHeight": 168.3058176805388,
+            "clearance": 1.5397260212073434
+          }
+        ]
+      },
+      "after": {
+        "x": 666.000099,
+        "y": 594.7782990000005,
+        "height": 125.70846624276783,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 348.96970556028884
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 584.7782990000005,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 126.89087389919078,
+            "y": 596.5506905904263,
+            "supportHeight": 125.39087389919078,
+            "clearance": 1.5
+          },
+          {
+            "x": 669.200099,
+            "height": 127.11356164921554,
+            "y": 595.4059074095749,
+            "supportHeight": 125.56870703772894,
+            "clearance": 1.544854611486599
+          }
+        ]
+      },
+      "elapsedMs": 1983.2499999999982
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "ms": 4500,
+      "label": "08-edge-contact",
+      "at": "2026-09-15T03:00:22.055Z",
+      "before": {
+        "x": 666.000099,
+        "y": 594.7782990000005,
+        "height": 125.70846624276783,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 348.96970556028884
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 584.7782990000005,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 126.9641351768905,
+            "y": 596.1705401610495,
+            "supportHeight": 125.4641351768905,
+            "clearance": 1.5
+          },
+          {
+            "x": 669.200099,
+            "height": 127.01149756445446,
+            "y": 595.7860578389516,
+            "supportHeight": 125.4964328731927,
+            "clearance": 1.515064691261756
+          }
+        ]
+      },
+      "after": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 116.6706567614616,
+            "y": 711.0319226267183,
+            "supportHeight": 115.07847318155592,
+            "clearance": 1.5921835799056794
+          },
+          {
+            "x": 669.200099,
+            "height": 116.70162426286781,
+            "y": 711.3678793732818,
+            "supportHeight": 115.20162426286781,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "elapsedMs": 4683.159999999996
+    },
+    {
+      "keys": [
+        "s"
+      ],
+      "ms": 1000,
+      "label": "09-edge-stop",
+      "at": "2026-09-15T03:00:26.821Z",
+      "before": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 116.6088540683188,
+            "y": 711.1435009615603,
+            "supportHeight": 115.07790271816219,
+            "clearance": 1.530951350156613
+          },
+          {
+            "x": 669.200099,
+            "height": 116.70217915821573,
+            "y": 711.2563010384397,
+            "supportHeight": 115.20217915821573,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "after": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 116.67062743026734,
+            "y": 711.031975581139,
+            "supportHeight": 115.07847291081737,
+            "clearance": 1.592154519449977
+          },
+          {
+            "x": 669.200099,
+            "height": 116.70162452621787,
+            "y": 711.3678264188611,
+            "supportHeight": 115.20162452621787,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "elapsedMs": 1183.2799999999988
+    },
+    {
+      "keys": [
+        "d"
+      ],
+      "ms": 600,
+      "label": "10-edge-slide",
+      "at": "2026-09-15T03:00:28.089Z",
+      "before": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 116.60885336170409,
+            "y": 711.1435022372798,
+            "supportHeight": 115.07790271163987,
+            "clearance": 1.5309506500642271
+          },
+          {
+            "x": 669.200099,
+            "height": 116.70217916456006,
+            "y": 711.2562997627202,
+            "supportHeight": 115.20217916456006,
+            "clearance": 1.5
+          }
+        ]
+      },
+      "after": {
+        "x": 677.999901,
+        "y": 709.999901,
+        "height": 115.40009305922048,
+        "facing": 0,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 521.6602876981133,
+          "y": 434.9086904639344
+        },
+        "body": {
+          "x": 667.999901,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 679.1439937437668,
+            "height": 116.90758210596923,
+            "y": 713.1999010000001,
+            "supportHeight": 115.40758210596923,
+            "clearance": 1.5
+          },
+          {
+            "x": 679.2558082562333,
+            "height": 117.07981657471363,
+            "y": 706.799901,
+            "supportHeight": 115.46102314395722,
+            "clearance": 1.618793430756412
+          }
+        ]
+      },
+      "elapsedMs": 783.3199999999997
+    }
+  ],
+  "checks": [
+    {
+      "name": "01-start-50: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.03773584905673,
+          "y": 336.8640081398223
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "01-start-50: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 571.2,
+          "height": 132.9183586260137,
+          "y": 580.8,
+          "supportHeight": 131.4183586260137,
+          "clearance": 1.5
+        },
+        {
+          "x": 564.8,
+          "height": 133.22589572033982,
+          "y": 580.8,
+          "supportHeight": 131.72589572033982,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "01-start-50: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "default camera is actual orthographic 50",
+      "ok": true,
+      "details": {
+        "projection": "orthographic",
+        "elevation": 50,
+        "azimuth": 0,
+        "span": 1060,
+        "position": [
+          632,
+          1400.8799976141604,
+          1623.0176974357707
+        ],
+        "focus": {
+          "x": 632,
+          "height": 22,
+          "y": 466
+        },
+        "resolution": {
+          "width": 960,
+          "height": 640
+        },
+        "pixelsPerWorldUnit": 0.9056603773584906,
+        "quaternion": [
+          -0.4226182617406994,
+          0,
+          0,
+          0.90630778703665
+        ],
+        "projectionMatrix": [
+          0.0018867924528301887,
+          0,
+          0,
+          0,
+          0,
+          0.0028301886792452833,
+          0,
+          0,
+          0,
+          0,
+          -0.00040008001600320064,
+          0,
+          0,
+          0,
+          -1.0004000800160031,
+          1
+        ],
+        "viewMatrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0.6427876096865394,
+          0.7660444431189778,
+          0,
+          0,
+          -0.7660444431189778,
+          0.6427876096865394,
+          0,
+          -631.9999999999999,
+          342.83538308033957,
+          -2116.3920038625442,
+          1
+        ]
+      }
+    },
+    {
+      "name": "native 960x640 draw target",
+      "ok": true,
+      "details": {
+        "width": 960,
+        "height": 640
+      }
+    },
+    {
+      "name": "real mesh scene",
+      "ok": true,
+      "details": {
+        "meshes": 4,
+        "triangles": 63380,
+        "vertices": 42888,
+        "staticGeometry": true,
+        "topSurfaceTriangles": 16746,
+        "surface": "continuous loft; barycentric support on the rendered triangles",
+        "underside": "welded rolled perimeter and continuous belly",
+        "contact": {
+          "x": 645,
+          "y": 305,
+          "height": 121.10430525714656
+        },
+        "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+        "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+      }
+    },
+    {
+      "name": "02-camera-42: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.0377358490566,
+          "y": 316.7506328589566
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "02-camera-42: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 571.2,
+          "height": 132.9183586260137,
+          "y": 580.8,
+          "supportHeight": 131.4183586260137,
+          "clearance": 1.5
+        },
+        {
+          "x": 564.8,
+          "height": 133.22589572033982,
+          "y": 580.8,
+          "supportHeight": 131.72589572033982,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "02-camera-42: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "camera 42 synchronized with actor",
+      "ok": true,
+      "details": {
+        "elevation": 42,
+        "colour": "native finite-palette pixel redraw",
+        "depth": "per-pixel physical pose; real shared depth buffer",
+        "material": "alpha-test .5, opaque depth-write, nearest texture",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "camera 42 does not move player",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.0377358490566,
+          "y": 316.7506328589566
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "camera 42 same geometry",
+      "ok": true,
+      "details": {
+        "meshes": 4,
+        "triangles": 63380,
+        "vertices": 42888,
+        "staticGeometry": true,
+        "topSurfaceTriangles": 16746,
+        "surface": "continuous loft; barycentric support on the rendered triangles",
+        "underside": "welded rolled perimeter and continuous belly",
+        "contact": {
+          "x": 645,
+          "y": 305,
+          "height": 121.10430525714656
+        },
+        "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+        "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+      }
+    },
+    {
+      "name": "02-camera-58: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.0377358490566,
+          "y": 356.64914468477093
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "02-camera-58: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 571.2,
+          "height": 132.9183586260137,
+          "y": 580.8,
+          "supportHeight": 131.4183586260137,
+          "clearance": 1.5
+        },
+        {
+          "x": 564.8,
+          "height": 133.22589572033982,
+          "y": 580.8,
+          "supportHeight": 131.72589572033982,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "02-camera-58: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "camera 58 synchronized with actor",
+      "ok": true,
+      "details": {
+        "elevation": 58,
+        "colour": "native finite-palette pixel redraw",
+        "depth": "per-pixel physical pose; real shared depth buffer",
+        "material": "alpha-test .5, opaque depth-write, nearest texture",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "camera 58 does not move player",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.0377358490566,
+          "y": 356.64914468477093
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "camera 58 same geometry",
+      "ok": true,
+      "details": {
+        "meshes": 4,
+        "triangles": 63380,
+        "vertices": 42888,
+        "staticGeometry": true,
+        "topSurfaceTriangles": 16746,
+        "surface": "continuous loft; barycentric support on the rendered triangles",
+        "underside": "welded rolled perimeter and continuous belly",
+        "contact": {
+          "x": 645,
+          "y": 305,
+          "height": 121.10430525714656
+        },
+        "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+        "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+      }
+    },
+    {
+      "name": "02-camera-50: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.03773584905673,
+          "y": 336.8640081398223
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "02-camera-50: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 571.2,
+          "height": 132.9183586260137,
+          "y": 580.8,
+          "supportHeight": 131.4183586260137,
+          "clearance": 1.5
+        },
+        {
+          "x": 564.8,
+          "height": 133.22589572033982,
+          "y": 580.8,
+          "supportHeight": 131.72589572033982,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "02-camera-50: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "camera 50 synchronized with actor",
+      "ok": true,
+      "details": {
+        "elevation": 50,
+        "colour": "native finite-palette pixel redraw",
+        "depth": "per-pixel physical pose; real shared depth buffer",
+        "material": "alpha-test .5, opaque depth-write, nearest texture",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "camera 50 does not move player",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.03773584905673,
+          "y": 336.8640081398223
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "camera 50 same geometry",
+      "ok": true,
+      "details": {
+        "meshes": 4,
+        "triangles": 63380,
+        "vertices": 42888,
+        "staticGeometry": true,
+        "topSurfaceTriangles": 16746,
+        "surface": "continuous loft; barycentric support on the rendered triangles",
+        "underside": "welded rolled perimeter and continuous belly",
+        "contact": {
+          "x": 645,
+          "y": 305,
+          "height": 121.10430525714656
+        },
+        "physics": "production 20px Player body and XY sweep on conservative 8px mask",
+        "texture": "authored 256px finite-colour fibre fields; nearest filtering; no scene images"
+      }
+    },
+    {
+      "name": "03-east moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 598.7741111111118,
+        "y": 582,
+        "height": 133.904294692997,
+        "facing": 0,
+        "moving": true,
+        "velocity": {
+          "x": 80,
+          "y": 0
+        },
+        "screen": {
+          "x": 449.9086289308183,
+          "y": 335.33324797201396
+        },
+        "body": {
+          "x": 588.7741111111118,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 605.2517750553424,
+            "height": 137.66432387920668,
+            "y": 585.2,
+            "supportHeight": 136.16432387920668,
+            "clearance": 1.5
+          },
+          {
+            "x": 594.6964471668812,
+            "height": 136.01543786431827,
+            "y": 578.8,
+            "supportHeight": 132.8369199251038,
+            "clearance": 3.1785179392144585
+          }
+        ]
+      }
+    },
+    {
+      "name": "03-east moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 605.2517750553424,
+          "height": 137.66432387920668,
+          "y": 585.2,
+          "supportHeight": 136.16432387920668,
+          "clearance": 1.5
+        },
+        {
+          "x": 594.6964471668812,
+          "height": 136.01543786431827,
+          "y": 578.8,
+          "supportHeight": 132.8369199251038,
+          "clearance": 3.1785179392144585
+        }
+      ]
+    },
+    {
+      "name": "03-east moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "03-east: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 636.774244444446,
+        "y": 582,
+        "height": 129.21491722909326,
+        "facing": 0,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 484.32384402515873,
+          "y": 338.06315625663933
+        },
+        "body": {
+          "x": 626.774244444446,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 638.5483885917439,
+            "height": 129.84054290990338,
+            "y": 585.2,
+            "supportHeight": 128.30177082803203,
+            "clearance": 1.5387720818713433
+          },
+          {
+            "x": 637.4001002971481,
+            "height": 131.4508191345503,
+            "y": 578.8,
+            "supportHeight": 129.9508191345503,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "03-east: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 638.5483885917439,
+          "height": 129.84054290990338,
+          "y": 585.2,
+          "supportHeight": 128.30177082803203,
+          "clearance": 1.5387720818713433
+        },
+        {
+          "x": 637.4001002971481,
+          "height": 131.4508191345503,
+          "y": 578.8,
+          "supportHeight": 129.9508191345503,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "03-east: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "east movement exists",
+      "ok": true,
+      "details": 68.77424444444603
+    },
+    {
+      "name": "production speed unchanged",
+      "ok": true,
+      "details": {
+        "x": 80,
+        "y": 0
+      }
+    },
+    {
+      "name": "04-diagonal moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 653.822942492245,
+        "y": 564.951301952201,
+        "height": 132.48539643854792,
+        "facing": -0.7853981633974483,
+        "moving": true,
+        "velocity": {
+          "x": 56.568542494923804,
+          "y": -56.568542494923804
+        },
+        "screen": {
+          "x": 499.76417433259934,
+          "y": 324.3312764841068
+        },
+        "body": {
+          "x": 643.822942492245,
+          "y": 554.951301952201,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 656.425899106644,
+            "height": 133.45661793497703,
+            "y": 566.8738287373959,
+            "supportHeight": 131.95661793497703,
+            "clearance": 1.5
+          },
+          {
+            "x": 652.9170421526937,
+            "height": 137.87634868764547,
+            "y": 561.3317188921584,
+            "supportHeight": 133.4254514604356,
+            "clearance": 4.450897227209879
+          }
+        ]
+      }
+    },
+    {
+      "name": "04-diagonal moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 656.425899106644,
+          "height": 133.45661793497703,
+          "y": 566.8738287373959,
+          "supportHeight": 131.95661793497703,
+          "clearance": 1.5
+        },
+        {
+          "x": 652.9170421526937,
+          "height": 137.87634868764547,
+          "y": 561.3317188921584,
+          "supportHeight": 133.4254514604356,
+          "clearance": 4.450897227209879
+        }
+      ]
+    },
+    {
+      "name": "04-diagonal moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "04-diagonal: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 676.9217640110065,
+        "y": 541.8524804334395,
+        "height": 138.15954986281398,
+        "facing": -0.7853981633974483,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 520.6838617458174,
+          "y": 305.00267326875013
+        },
+        "body": {
+          "x": 666.9217640110065,
+          "y": 531.8524804334395,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 679.8884731334911,
+            "height": 139.17002533608795,
+            "y": 543.4112547105489,
+            "supportHeight": 137.67002533608795,
+            "clearance": 1.5
+          },
+          {
+            "x": 675.6521111633697,
+            "height": 140.85786208832812,
+            "y": 538.5966498814824,
+            "supportHeight": 139.1033408218294,
+            "clearance": 1.7545212664987275
+          }
+        ]
+      }
+    },
+    {
+      "name": "04-diagonal: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 679.8884731334911,
+          "height": 139.17002533608795,
+          "y": 543.4112547105489,
+          "supportHeight": 137.67002533608795,
+          "clearance": 1.5
+        },
+        {
+          "x": 675.6521111633697,
+          "height": 140.85786208832812,
+          "y": 538.5966498814824,
+          "supportHeight": 139.1033408218294,
+          "clearance": 1.7545212664987275
+        }
+      ]
+    },
+    {
+      "name": "04-diagonal: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "diagonal normalized to same speed",
+      "ok": true,
+      "details": {
+        "x": 56.568542494923804,
+        "y": -56.568542494923804
+      }
+    },
+    {
+      "name": "05-north moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 676.9217640110065,
+        "y": 485.7408137667735,
+        "height": 156.0494028301439,
+        "facing": -1.5707963267948966,
+        "moving": true,
+        "velocity": {
+          "x": 0,
+          "y": -80
+        },
+        "screen": {
+          "x": 520.6838617458174,
+          "y": 255.65921098589052
+        },
+        "body": {
+          "x": 666.9217640110065,
+          "y": 475.7408137667735,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 680.1217640110066,
+            "height": 159.15577485784195,
+            "y": 488.0722245721403,
+            "supportHeight": 155.15400092451767,
+            "clearance": 4.001773933324273
+          },
+          {
+            "x": 673.7217640110065,
+            "height": 159.30513638907587,
+            "y": 481.00940296140664,
+            "supportHeight": 157.80513638907587,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "05-north moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 680.1217640110066,
+          "height": 159.15577485784195,
+          "y": 488.0722245721403,
+          "supportHeight": 155.15400092451767,
+          "clearance": 4.001773933324273
+        },
+        {
+          "x": 673.7217640110065,
+          "height": 159.30513638907587,
+          "y": 481.00940296140664,
+          "supportHeight": 157.80513638907587,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "05-north moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "05-north: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 676.9217640110065,
+        "y": 450.000099,
+        "height": 169.03189595102262,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 520.6838617458174,
+          "y": 223.30543438713235
+        },
+        "body": {
+          "x": 666.9217640110065,
+          "y": 440.000099,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 680.1217640110066,
+            "height": 170.89723132076173,
+            "y": 449.00684960652205,
+            "supportHeight": 169.3213022294043,
+            "clearance": 1.5759290913574375
+          },
+          {
+            "x": 673.7217640110065,
+            "height": 171.1377070934616,
+            "y": 448.5933483934779,
+            "supportHeight": 169.6377070934616,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "05-north: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 680.1217640110066,
+          "height": 170.89723132076173,
+          "y": 449.00684960652205,
+          "supportHeight": 169.3213022294043,
+          "clearance": 1.5759290913574375
+        },
+        {
+          "x": 673.7217640110065,
+          "height": 171.1377070934616,
+          "y": 448.5933483934779,
+          "supportHeight": 169.6377070934616,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "05-north: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "screen-depth movement exists",
+      "ok": true,
+      "details": 91.85238143343952
+    },
+    {
+      "name": "06-bay-rim moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 450.000099,
+        "height": 169.44477960616237,
+        "facing": 3.141592653589793,
+        "moving": true,
+        "velocity": {
+          "x": -16.65,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 223.06507529481607
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 440.000099,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 665.5643713999283,
+            "height": 172.17245830827963,
+            "y": 446.800099,
+            "supportHeight": 170.67245830827963,
+            "clearance": 1.5
+          },
+          {
+            "x": 664.0358266000716,
+            "height": 171.4685657088968,
+            "y": 453.20009899999997,
+            "supportHeight": 168.34405146328106,
+            "clearance": 3.124514245615728
+          }
+        ]
+      }
+    },
+    {
+      "name": "06-bay-rim moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 665.5643713999283,
+          "height": 172.17245830827963,
+          "y": 446.800099,
+          "supportHeight": 170.67245830827963,
+          "clearance": 1.5
+        },
+        {
+          "x": 664.0358266000716,
+          "height": 171.4685657088968,
+          "y": 453.20009899999997,
+          "supportHeight": 168.34405146328106,
+          "clearance": 3.124514245615728
+        }
+      ]
+    },
+    {
+      "name": "06-bay-rim moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "06-bay-rim: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 450.000099,
+        "height": 169.44477960616237,
+        "facing": 3.141592653589793,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 223.06507529481607
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 440.000099,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 664.8557466188888,
+            "height": 172.21038430050154,
+            "y": 446.800099,
+            "supportHeight": 170.71038430050154,
+            "clearance": 1.5
+          },
+          {
+            "x": 664.7444513811112,
+            "height": 169.92598693394757,
+            "y": 453.20009899999997,
+            "supportHeight": 168.30770404210443,
+            "clearance": 1.618282891843137
+          }
+        ]
+      }
+    },
+    {
+      "name": "06-bay-rim: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 664.8557466188888,
+          "height": 172.21038430050154,
+          "y": 446.800099,
+          "supportHeight": 170.71038430050154,
+          "clearance": 1.5
+        },
+        {
+          "x": 664.7444513811112,
+          "height": 169.92598693394757,
+          "y": 453.20009899999997,
+          "supportHeight": 168.30770404210443,
+          "clearance": 1.618282891843137
+        }
+      ]
+    },
+    {
+      "name": "06-bay-rim: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "07-near-rim moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 518.1117656666654,
+        "height": 145.52362080398964,
+        "facing": 1.5707963267948966,
+        "moving": true,
+        "velocity": {
+          "x": 0,
+          "y": 80
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 284.24495899198007
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 508.11176566666546,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 147.1264606981999,
+            "y": 518.0627610904968,
+            "supportHeight": 145.6264606981999,
+            "clearance": 1.5
+          },
+          {
+            "x": 669.200099,
+            "height": 149.1108507769915,
+            "y": 520.5607702428341,
+            "supportHeight": 144.6685576846409,
+            "clearance": 4.44229309235061
+          }
+        ]
+      }
+    },
+    {
+      "name": "07-near-rim moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 662.8000989999999,
+          "height": 147.1264606981999,
+          "y": 518.0627610904968,
+          "supportHeight": 145.6264606981999,
+          "clearance": 1.5
+        },
+        {
+          "x": 669.200099,
+          "height": 149.1108507769915,
+          "y": 520.5607702428341,
+          "supportHeight": 144.6685576846409,
+          "clearance": 4.44229309235061
+        }
+      ]
+    },
+    {
+      "name": "07-near-rim moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "07-near-rim: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 594.7782990000005,
+        "height": 125.70846624276783,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 348.96970556028884
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 584.7782990000005,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 126.89087389919078,
+            "y": 596.5506905904263,
+            "supportHeight": 125.39087389919078,
+            "clearance": 1.5
+          },
+          {
+            "x": 669.200099,
+            "height": 127.11356164921554,
+            "y": 595.4059074095749,
+            "supportHeight": 125.56870703772894,
+            "clearance": 1.544854611486599
+          }
+        ]
+      }
+    },
+    {
+      "name": "07-near-rim: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 662.8000989999999,
+          "height": 126.89087389919078,
+          "y": 596.5506905904263,
+          "supportHeight": 125.39087389919078,
+          "clearance": 1.5
+        },
+        {
+          "x": 669.200099,
+          "height": 127.11356164921554,
+          "y": 595.4059074095749,
+          "supportHeight": 125.56870703772894,
+          "clearance": 1.544854611486599
+        }
+      ]
+    },
+    {
+      "name": "07-near-rim: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "08-edge-contact moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": true,
+        "velocity": {
+          "x": 0,
+          "y": 16.65
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 117.8570492093719,
+            "y": 708.8960169751975,
+            "supportHeight": 115.09271813540954,
+            "clearance": 2.764331073962353
+          },
+          {
+            "x": 669.200099,
+            "height": 116.6900939576077,
+            "y": 713.5037850248026,
+            "supportHeight": 115.1900939576077,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "08-edge-contact moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 662.8000989999999,
+          "height": 117.8570492093719,
+          "y": 708.8960169751975,
+          "supportHeight": 115.09271813540954,
+          "clearance": 2.764331073962353
+        },
+        {
+          "x": 669.200099,
+          "height": 116.6900939576077,
+          "y": 713.5037850248026,
+          "supportHeight": 115.1900939576077,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "08-edge-contact moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "08-edge-contact: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 116.6706567614616,
+            "y": 711.0319226267183,
+            "supportHeight": 115.07847318155592,
+            "clearance": 1.5921835799056794
+          },
+          {
+            "x": 669.200099,
+            "height": 116.70162426286781,
+            "y": 711.3678793732818,
+            "supportHeight": 115.20162426286781,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "08-edge-contact: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 662.8000989999999,
+          "height": 116.6706567614616,
+          "y": 711.0319226267183,
+          "supportHeight": 115.07847318155592,
+          "clearance": 1.5921835799056794
+        },
+        {
+          "x": 669.200099,
+          "height": 116.70162426286781,
+          "y": 711.3678793732818,
+          "supportHeight": 115.20162426286781,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "08-edge-contact: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "09-edge-stop moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": true,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 650.000099,
+          "y": 693.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 117.60271213401809,
+            "y": 709.3500784646915,
+            "supportHeight": 115.08756202770715,
+            "clearance": 2.5151501063109407
+          },
+          {
+            "x": 669.200099,
+            "height": 116.6928102671777,
+            "y": 713.0497235353085,
+            "supportHeight": 115.1928102671777,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "09-edge-stop moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 662.8000989999999,
+          "height": 117.60271213401809,
+          "y": 709.3500784646915,
+          "supportHeight": 115.08756202770715,
+          "clearance": 2.5151501063109407
+        },
+        {
+          "x": 669.200099,
+          "height": 116.6928102671777,
+          "y": 713.0497235353085,
+          "supportHeight": 115.1928102671777,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "09-edge-stop moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "09-edge-stop: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 666.000099,
+        "y": 709.999901,
+        "height": 115.14467028025967,
+        "facing": 1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 510.7925424905661,
+          "y": 435.0573841371852
+        },
+        "body": {
+          "x": 656.000099,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 662.8000989999999,
+            "height": 116.67062743026734,
+            "y": 711.031975581139,
+            "supportHeight": 115.07847291081737,
+            "clearance": 1.592154519449977
+          },
+          {
+            "x": 669.200099,
+            "height": 116.70162452621787,
+            "y": 711.3678264188611,
+            "supportHeight": 115.20162452621787,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "09-edge-stop: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 662.8000989999999,
+          "height": 116.67062743026734,
+          "y": 711.031975581139,
+          "supportHeight": 115.07847291081737,
+          "clearance": 1.592154519449977
+        },
+        {
+          "x": 669.200099,
+          "height": 116.70162452621787,
+          "y": 711.3678264188611,
+          "supportHeight": 115.20162452621787,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "09-edge-stop: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "air edge blocks continued walking",
+      "ok": true,
+      "details": {
+        "distance": 0,
+        "blocked": 171
+      }
+    },
+    {
+      "name": "10-edge-slide moving: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 677.999901,
+        "y": 709.999901,
+        "height": 115.40009305922048,
+        "facing": 0,
+        "moving": true,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 521.6602876981133,
+          "y": 434.9086904639344
+        },
+        "body": {
+          "x": 661.999901,
+          "y": 693.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 678.4788994240764,
+            "height": 116.89279283528839,
+            "y": 713.1999010000001,
+            "supportHeight": 115.39279283528839,
+            "clearance": 1.5
+          },
+          {
+            "x": 679.9209025759237,
+            "height": 118.50828609872254,
+            "y": 706.799901,
+            "supportHeight": 115.47628012033154,
+            "clearance": 3.0320059783909983
+          }
+        ]
+      }
+    },
+    {
+      "name": "10-edge-slide moving: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 678.4788994240764,
+          "height": 116.89279283528839,
+          "y": 713.1999010000001,
+          "supportHeight": 115.39279283528839,
+          "clearance": 1.5
+        },
+        {
+          "x": 679.9209025759237,
+          "height": 118.50828609872254,
+          "y": 706.799901,
+          "supportHeight": 115.47628012033154,
+          "clearance": 3.0320059783909983
+        }
+      ]
+    },
+    {
+      "name": "10-edge-slide moving: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "10-edge-slide: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 677.999901,
+        "y": 709.999901,
+        "height": 115.40009305922048,
+        "facing": 0,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 521.6602876981133,
+          "y": 434.9086904639344
+        },
+        "body": {
+          "x": 667.999901,
+          "y": 699.999901,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 679.1439937437668,
+            "height": 116.90758210596923,
+            "y": 713.1999010000001,
+            "supportHeight": 115.40758210596923,
+            "clearance": 1.5
+          },
+          {
+            "x": 679.2558082562333,
+            "height": 117.07981657471363,
+            "y": 706.799901,
+            "supportHeight": 115.46102314395722,
+            "clearance": 1.618793430756412
+          }
+        ]
+      }
+    },
+    {
+      "name": "10-edge-slide: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 679.1439937437668,
+          "height": 116.90758210596923,
+          "y": 713.1999010000001,
+          "supportHeight": 115.40758210596923,
+          "clearance": 1.5
+        },
+        {
+          "x": 679.2558082562333,
+          "height": 117.07981657471363,
+          "y": 706.799901,
+          "supportHeight": 115.46102314395722,
+          "clearance": 1.618793430756412
+        }
+      ]
+    },
+    {
+      "name": "10-edge-slide: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "mouse camera control",
+      "ok": true,
+      "details": {
+        "projection": "orthographic",
+        "elevation": 42,
+        "azimuth": 0,
+        "span": 1060,
+        "position": [
+          632,
+          1226.4350914459449,
+          1803.6606858593098
+        ],
+        "focus": {
+          "x": 632,
+          "height": 22,
+          "y": 466
+        },
+        "resolution": {
+          "width": 960,
+          "height": 640
+        },
+        "pixelsPerWorldUnit": 0.9056603773584906,
+        "quaternion": [
+          -0.3583679495453002,
+          0,
+          0,
+          0.9335804264972017
+        ],
+        "projectionMatrix": [
+          0.0018867924528301887,
+          0,
+          0,
+          0,
+          0,
+          0.0028301886792452833,
+          0,
+          0,
+          0,
+          0,
+          -0.00040008001600320064,
+          0,
+          0,
+          0,
+          -1.0004000800160031,
+          1
+        ],
+        "viewMatrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0.7431448254773942,
+          0.6691306063588582,
+          0,
+          0,
+          -0.6691306063588582,
+          0.7431448254773942,
+          0,
+          -632,
+          295.4656764027253,
+          -2161.0263620123606,
+          1
+        ]
+      }
+    },
+    {
+      "name": "released movement does not drift",
+      "ok": true,
+      "details": {
+        "idle": {
+          "x": 677.999901,
+          "y": 693.2228343333331,
+          "height": 115.67146757150334,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 521.6602876981132,
+            "y": 394.6538443731973
+          },
+          "body": {
+            "x": 667.999901,
+            "y": 683.2228343333331,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 681.1999010000001,
+              "height": 117.47597258426994,
+              "y": 691.9122371870558,
+              "supportHeight": 115.77977072939811,
+              "clearance": 1.6962018548718305
+            },
+            {
+              "x": 674.799901,
+              "height": 117.13181984515906,
+              "y": 692.1334314796105,
+              "supportHeight": 115.63181984515906,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "later": {
+          "x": 677.999901,
+          "y": 693.2228343333331,
+          "height": 115.67146757150334,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 521.6602876981132,
+            "y": 394.6538443731973
+          },
+          "body": {
+            "x": 667.999901,
+            "y": 683.2228343333331,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 681.1999010000001,
+              "height": 117.27714849152034,
+              "y": 692.0225290940899,
+              "supportHeight": 115.7766069901551,
+              "clearance": 1.500541501365234
+            },
+            {
+              "x": 674.799901,
+              "height": 117.1349569053881,
+              "y": 692.0231395725764,
+              "supportHeight": 115.6349569053881,
+              "clearance": 1.5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "no storage records created",
+      "ok": true,
+      "details": {
+        "cookies": [],
+        "origins": []
+      }
+    },
+    {
+      "name": "11-reload: complete physical support",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.03773584905673,
+          "y": 336.8640081398223
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "11-reload: feet use rendered height",
+      "ok": true,
+      "details": [
+        {
+          "x": 571.2,
+          "height": 132.9183586260137,
+          "y": 580.8,
+          "supportHeight": 131.4183586260137,
+          "clearance": 1.5
+        },
+        {
+          "x": 564.8,
+          "height": 133.22589572033982,
+          "y": 580.8,
+          "supportHeight": 131.72589572033982,
+          "clearance": 1.5
+        }
+      ]
+    },
+    {
+      "name": "11-reload: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "refresh returns to same study spawn",
+      "ok": true,
+      "details": {
+        "x": 568,
+        "y": 582,
+        "height": 131.27478795315903,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 422.03773584905673,
+          "y": 336.8640081398223
+        },
+        "body": {
+          "x": 558,
+          "y": 572,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 571.2,
+            "height": 132.9183586260137,
+            "y": 580.8,
+            "supportHeight": 131.4183586260137,
+            "clearance": 1.5
+          },
+          {
+            "x": 564.8,
+            "height": 133.22589572033982,
+            "y": 580.8,
+            "supportHeight": 131.72589572033982,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "one live visible Three canvas after refresh",
+      "ok": true,
+      "details": 1
+    },
+    {
+      "name": "no browser errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "console": [],
+        "requests": []
+      }
+    },
+    {
+      "name": "tested source stayed unchanged",
+      "ok": true,
+      "details": null
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "verdict": "TECHNICAL-PASS / HUMAN-VISUAL-REVIEW-PENDING",
+  "visualVerdict": "HUMAN-REVIEW-PENDING; technical assertions cannot establish aesthetic acceptance.",
+  "sourceBefore": [
+    {
+      "file": "living-landmass-stage.html",
+      "sha256": "1999661ff3f6b5dbae718c3b2ffc543b8103a9e3bf63ecfd2521c1438c4b5e8c"
+    },
+    {
+      "file": "src/config/game-config.ts",
+      "sha256": "030ddf0e8f8e3668d8d5f74599301236c157c09a1ef7331c1d32afbc52bd8301"
+    },
+    {
+      "file": "src/dev/living-landmass-stage.ts",
+      "sha256": "c33b2f9e00c62530219e5126132df410421cb64bf4c5515ae16567378795493c"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/camera.ts",
+      "sha256": "ceeeca5f907e0ed7e3364d5f7c14fea8dc6ad858bbd31983d59e0e568e0ad32e"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/materials.ts",
+      "sha256": "6ddab1cf3b7d94377995cc6d21f00d81aade0e796e6794963423f17ade7d0ff5"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/model.ts",
+      "sha256": "45b18a00040e0e6f99e89285720969d2fca85571fbfd8b3b26b5202e29b00f47"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/scene.ts",
+      "sha256": "139305f9092a72f21d1c108a32bbde73be8b2d4688facbda71fa3fa97bb10582"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actor-pixels.ts",
+      "sha256": "58f9b4696dfb10928d40d9df12184ab3de148cf2a648378a15b0bedab4b3cc58"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actors.ts",
+      "sha256": "b4f93f07ec951a9637da46cf0f2446adddecbf7a8aea6379ed070a1544dcf15a"
+    },
+    {
+      "file": "src/entities/player.ts",
+      "sha256": "9bd85fd2389084d3c00103d06a47a08250703d39654c6540931cfbb853dcc636"
+    },
+    {
+      "file": "src/systems/ai/physical-grid.ts",
+      "sha256": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1"
+    },
+    {
+      "file": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "file": "tools/living-landmass/qa-engine-stage.mjs",
+      "sha256": "c9980f29e34896a72957fbfd59f4cf895dc32984317970323562b56e21f35850"
+    }
+  ],
+  "url": "http://127.0.0.1:3007/living-landmass-stage.html",
+  "sourceAfter": [
+    {
+      "file": "living-landmass-stage.html",
+      "sha256": "1999661ff3f6b5dbae718c3b2ffc543b8103a9e3bf63ecfd2521c1438c4b5e8c"
+    },
+    {
+      "file": "src/config/game-config.ts",
+      "sha256": "030ddf0e8f8e3668d8d5f74599301236c157c09a1ef7331c1d32afbc52bd8301"
+    },
+    {
+      "file": "src/dev/living-landmass-stage.ts",
+      "sha256": "c33b2f9e00c62530219e5126132df410421cb64bf4c5515ae16567378795493c"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/camera.ts",
+      "sha256": "ceeeca5f907e0ed7e3364d5f7c14fea8dc6ad858bbd31983d59e0e568e0ad32e"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/materials.ts",
+      "sha256": "6ddab1cf3b7d94377995cc6d21f00d81aade0e796e6794963423f17ade7d0ff5"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/model.ts",
+      "sha256": "45b18a00040e0e6f99e89285720969d2fca85571fbfd8b3b26b5202e29b00f47"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/scene.ts",
+      "sha256": "139305f9092a72f21d1c108a32bbde73be8b2d4688facbda71fa3fa97bb10582"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actor-pixels.ts",
+      "sha256": "58f9b4696dfb10928d40d9df12184ab3de148cf2a648378a15b0bedab4b3cc58"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actors.ts",
+      "sha256": "b4f93f07ec951a9637da46cf0f2446adddecbf7a8aea6379ed070a1544dcf15a"
+    },
+    {
+      "file": "src/entities/player.ts",
+      "sha256": "9bd85fd2389084d3c00103d06a47a08250703d39654c6540931cfbb853dcc636"
+    },
+    {
+      "file": "src/systems/ai/physical-grid.ts",
+      "sha256": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1"
+    },
+    {
+      "file": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "file": "tools/living-landmass/qa-engine-stage.mjs",
+      "sha256": "c9980f29e34896a72957fbfd59f4cf895dc32984317970323562b56e21f35850"
+    }
+  ],
+  "endedAt": "2026-09-15T03:00:30.199Z"
+}

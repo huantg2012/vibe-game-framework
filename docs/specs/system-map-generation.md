@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
 last-modified-by: code（DEC-106：虚空改为挡光，翻转 Slice 6 不挡视线默认）
-last-modified-date: 2026-09-12
+last-modified-date: 2026-09-13
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: true
 slice: 6
@@ -24,6 +24,20 @@ exposes:
 ---
 
 # 系统设计：裂隙地图生成
+
+## DEC-164独立多地块场景
+
+`living-landmass-stage.html` 为手工编排的连通场景，不调用正式随机地图生成。六份 `data/living-landmass-vista-*.csv`：outline有序外轮廓；holes按id分组有序内孔；rocks拥有id/x/y/radius/height；regions拥有标签、中心/目标高程/影响范围/色倾向/地标描述；route-nodes拥有id/region/x/y；connectors拥有连接ID及节点链。全部Vite raw运行解析、有限数/正尺寸/ID及引用校验，CSV→code。
+
+五个地块=沉积肩台、矿化脊、高位冠台、纤维台、回折台；六条连接形成全环与中横脊，两内孔是真实空气。2200×1904范围、8px完整格准入与渲染轮廓/岩石足迹同源；三角化投影面积等于外轮廓减孔，不补洞底。snapshot输出regions/connectors/routeNodes/recommendedRoute/alternateRoute/qaChecks供只读正常行走验证，不提供传送。
+
+当前只构建静态连续高程，不做垂直重叠可走层。地块矿化/纤维/积屑细节不改变物件或敌人数据；非通行动态、独立绘景和下层承体都不参与支撑。此页不注册世界/敌人/掉落/存档，不能以五块图宣称完整第二世界、随机供给或新可达巨岛完成。
+
+## 迭代23：生命大陆局部的支撑合同
+
+`living-landmass/living-borne-fin@1`先提供一张43×35格局部，四表分别拥有布局、支撑、承重周期与部署；正文见[生命大陆](../content/living-landmass.md)。平面足迹在一趟内固定，8px三角格连续形变，不新增可走面、水平搬运或拓扑重建。中央空腔不可走但能通视；真实身体沿稳定厚脊全周期可回唯一入口，额外路程384px。抬高本身不判危险，只有CSV夹合轮廓收费。
+
+四翻堆、一只既有低污染听觉虫使用原部署/来源规则；世界ID独立，不冒充旧图书馆。第一局部无部署随机变体，seed只影响已有掉落/形态支流及表面，不能宣传为大量不同关卡。当地原生敌人、专属来源池、全图编排和持久旅程是局部通过后的工作包。
 
 ## 迭代22：完整悬海的有限内容包
 

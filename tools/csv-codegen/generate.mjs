@@ -1781,4 +1781,104 @@ generateWeapons();
   ].join('\n'));
 }
 
+// The second native world has its own authored support and tension inputs;
+// it does not import dummy sea columns or mutate the frozen spatial recipes.
+{
+  const records = filename => {
+    const { header, rows } = readCsv(filename);
+    return rows.map(row => {
+      if (row.length !== header.length) throw new Error(`[codegen] column count in ${filename}: ${row[0]}`);
+      return Object.fromEntries(header.map((key, index) => [toCamel(key), row[index]]));
+    });
+  };
+  const number = (row, key, minimum = 0, integer = false) => {
+    if (row[key] === '') throw new Error(`[codegen] missing living landmass ${row.id}.${key}`);
+    row[key] = Number(row[key]);
+    if (!Number.isFinite(row[key]) || row[key] < minimum || (integer && !Number.isSafeInteger(row[key]))) {
+      throw new Error(`[codegen] invalid living landmass ${row.id}.${key}`);
+    }
+  };
+  const points = (text, minimum) => {
+    const value = text.split('|').map(pair => pair.split(':').map(Number));
+    if (value.length < minimum || value.some(point => point.length !== 2 || !point.every(Number.isFinite))) {
+      throw new Error('[codegen] invalid living-landmass point list');
+    }
+    return value;
+  };
+  const scenes = records('living-landmass-scenes.csv'), supports = records('living-landmass-supports.csv');
+  const tension = records('living-landmass-tension.csv'), placements = records('living-landmass-placements.csv');
+  const sceneIds = new Set(scenes.map(row => row.id));
+  const poolIds = new Set(records('contaminant-sources.csv').map(row => row.poolId));
+  if (scenes.length !== 1 || sceneIds.size !== scenes.length) throw new Error('[codegen] living-landmass first package requires one local scene');
+  for (const row of scenes) {
+    if (row.worldId !== 'living-landmass' || row.id !== 'living-borne-fin' || !row.name) throw new Error('[codegen] unknown living-landmass identity');
+    for (const key of ['recipeVersion', 'cols', 'rows', 'entryDurationMs']) number(row, key, 1, true);
+    if (row.cols < 8 || row.rows < 8 || row.cols > 100 || row.rows > 100 || row.entryDurationMs > 1500) {
+      throw new Error('[codegen] invalid living-landmass dimensions or entry');
+    }
+    points(row.spawn, 1); points(row.extract, 1);
+  }
+  for (const rows of [supports, tension, placements]) {
+    const ids = new Set();
+    for (const row of rows) {
+      const id = `${row.sceneId}:${row.id}`;
+      if (!sceneIds.has(row.sceneId) || !/^[a-z][a-z0-9-]*$/.test(row.id) || ids.has(id)) throw new Error('[codegen] duplicate or invalid living-landmass row');
+      ids.add(id);
+    }
+  }
+  for (const row of supports) {
+    for (const key of ['x', 'y']) number(row, key);
+    for (const key of ['radiusX', 'radiusY']) number(row, key, Number.MIN_VALUE);
+    number(row, 'angle', -180); number(row, 'height', -80); number(row, 'flexHeight', -80);
+    if (!['stable', 'fin'].includes(row.kind) || Math.abs(row.angle) > 180 || Math.abs(row.height) > 80
+      || Math.abs(row.flexHeight) > 80 || (row.kind === 'stable' && row.flexHeight !== 0)
+      || 1.5 * (Math.abs(row.height) + Math.abs(row.flexHeight)) / Math.min(row.radiusX, row.radiusY) > .4) {
+      throw new Error(`[codegen] living-landmass support exceeds smooth traversable slope: ${row.id}`);
+    }
+  }
+  for (const row of tension) {
+    for (const key of ['x', 'y', 'hitX', 'hitY']) number(row, key);
+    for (const key of ['quietMs', 'warningMs', 'activeMs', 'releaseMs', 'transmissionMs', 'reliefMs', 'damage', 'hitIntervalMs']) number(row, key, Number.MIN_VALUE);
+    number(row, 'dangerThreshold', Number.MIN_VALUE);
+    if (row.dangerThreshold > 1 || row.transmissionMs + row.reliefMs > row.releaseMs) {
+      throw new Error('[codegen] living-landmass relief must finish before the next full warning');
+    }
+    points(row.outline, 3);
+  }
+  for (const row of placements) {
+    for (const key of ['col', 'row']) number(row, key, 0, true);
+    number(row, 'facing');
+    if (row.kind === 'enemy') {
+      if (row.substrate !== 'insect_remnant' || row.coverage !== 'infiltrate' || row.sense !== 'sense_hear'
+        || row.motion !== 'motion_patrol' || row.rhythm !== 'rhythm_open' || row.contact !== 'contact_melee_three'
+        || row.tier || row.lootPoolId || row.allowWeapon) throw new Error('[codegen] unsupported living-landmass actor');
+      points(row.patrol, 1);
+    } else {
+      if (!['kindling', 'contaminant'].includes(row.kind) || !['safe', 'contested', 'deep'].includes(row.tier)
+        || ['substrate', 'coverage', 'motion', 'sense', 'rhythm', 'contact', 'patrol'].some(key => row[key])) {
+        throw new Error('[codegen] invalid living-landmass loot placement');
+      }
+      if (row.kind === 'contaminant') {
+        if (!poolIds.has(row.lootPoolId) || row.allowWeapon) throw new Error('[codegen] unknown living-landmass source pool');
+      } else if (!['true', 'false'].includes(row.allowWeapon) || row.lootPoolId) throw new Error('[codegen] missing living-landmass weapon-source permission');
+    }
+    row.allowWeapon = row.allowWeapon === '' ? null : row.allowWeapon === 'true';
+  }
+  for (const id of sceneIds) {
+    if (tension.filter(row => row.sceneId === id).length !== 1
+      || supports.filter(row => row.sceneId === id && row.kind === 'fin').length !== 1
+      || placements.filter(row => row.sceneId === id && row.kind === 'enemy').length !== 1
+      || placements.filter(row => row.sceneId === id && row.kind === 'kindling').length !== 2
+      || placements.filter(row => row.sceneId === id && row.kind === 'contaminant').length !== 2) {
+      throw new Error('[codegen] incomplete living-landmass local package');
+    }
+  }
+  writeFileSync(resolve(OUT_DIR, 'living-landmass-data.ts'), [
+    '// AUTO-GENERATED from data/living-landmass-*.csv — DO NOT EDIT',
+    ...[['SCENES', scenes], ['SUPPORTS', supports], ['TENSION', tension], ['PLACEMENTS', placements]]
+      .map(([key, rows]) => `export const LIVING_LANDMASS_${key} = ${JSON.stringify(rows, null, 2)} as const;`),
+    'export type LivingLandmassSceneId = typeof LIVING_LANDMASS_SCENES[number]["id"];', '',
+  ].join('\n'));
+}
+
 console.log('[codegen] Done.');

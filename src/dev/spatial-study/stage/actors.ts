@@ -3,7 +3,7 @@ import { renderCrowbarPixels } from '@/art/crowbar-pixels';
 import { WEAPON_DATA, WEAPON_ATTACK_PROFILES } from '@/generated/weapon-data';
 import type { DeepReadonly, RiftPresentationEnemy, RiftPresentationEvent, RiftPresentationFrame } from './bridge';
 import { ACTOR_HEIGHT } from './materials';
-import { ActorPixelDrawing, createActorContactShadow } from './actor-pixels';
+import { ActorPixelDrawing, createActorContactShadow, type ActorPixelProjectionOptions } from './actor-pixels';
 import { RestraintReaction } from '@/entities/restraint-reaction';
 import type { ToolPresentationView } from '@/systems/tool-presentation';
 import { stageWeaponPhaseProgress, supportsStageWeapon } from './support';
@@ -121,7 +121,8 @@ export class StagePlayer {
   private weaponVisible = false;
   private weaponDefinitionId: string | null = null;
 
-  constructor() {
+  constructor(projection: ActorPixelProjectionOptions = {}) {
+    this.drawing.setCameraElevation(projection.elevationDeg ?? 35);
     prepareHeldCrowbars();
     this.root.add(this.torso, this.shadow, this.light);
     this.torso.add(this.drawing.mesh);
@@ -131,6 +132,7 @@ export class StagePlayer {
 
   setGroundHeight(height: number): void { this.groundHeight = Number.isFinite(height) ? height : 0; }
   setGroundSampler(sampler: GroundSampler): void { this.groundSampler = sampler; }
+  setCameraElevation(degrees: number): void { this.drawing.setCameraElevation(degrees); }
 
   hit(event: DeepReadonly<RiftPresentationEvent>): void {
     this.hitAt = event.elapsedMs; this.hitX = event.direction.x; this.hitY = event.direction.y;
@@ -316,13 +318,15 @@ export class StageInsect {
   private lastTime = NaN;
   private animationMs = 0;
 
-  constructor(readonly id: string) {
+  constructor(readonly id: string, projection: ActorPixelProjectionOptions = {}) {
+    this.drawing.setCameraElevation(projection.elevationDeg ?? 35);
     this.root.add(this.shadow, this.drawing.mesh);
     this.root.userData.rendering = 'authored-pixel-card';
   }
 
   setGroundHeight(height: number): void { this.groundHeight = Number.isFinite(height) ? height : 0; }
   setGroundSampler(sampler: GroundSampler): void { this.groundSampler = sampler; }
+  setCameraElevation(degrees: number): void { this.drawing.setCameraElevation(degrees); }
 
   hit(event: DeepReadonly<RiftPresentationEvent>): void {
     this.hitAt = event.elapsedMs; this.hitX = event.direction.x; this.hitY = event.direction.y;

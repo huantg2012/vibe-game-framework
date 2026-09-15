@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-27
 last-modified-by: code / director（DEC-156：真实挥击呈现与末次武器）
-last-modified-date: 2026-09-12
+last-modified-date: 2026-09-13
 interface-changed: true
 slice: 1
 interfaces-with:
@@ -26,6 +26,12 @@ exposes:
 ---
 
 # 系统设计：简化战斗
+
+## 迭代23：承重连接与夹合接触
+
+生命大陆卡结复用既有`MeleeTarget`注册/注销和环境目标消费协议，与虫共用40px/120°、最多两目标、每挥一次耐久。只在自然前兆及受力阶段且本周期未撬开时有效；静息、卸力、重复和不合法接触免费。有效提交后沿350ms传力延迟和1200ms连续卸载改变局部载荷，不按伤害随机值决定撬几次，不产生敌伤/击杀收益。首局部保留正式接触停顿、动作噪声及命中音。
+
+夹合危险按CSV六点轮廓与实际FLOOR裁剪，只有受力阶段且局部载荷≥0.75才尝试10完整度伤害，单源尝试间隔1000ms。走正式`applyHazardHit`及受伤/有限被动/死亡链；普通地面抬升不伤人，渲染器不判伤。前置prepare、Combat、接触、呈现共享一帧，暂停/终局冻结。完整数值与卸载公式见[生命大陆内容合同](../content/living-landmass.md)。
 
 ## 迭代22：合拢壳片与单一水源
 

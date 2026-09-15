@@ -22,7 +22,8 @@ export class StageLoot {
   private readonly nativePiles=new Map<string,StageNativePile>();
   constructor(private readonly groundHeightAt:(x:number,y:number)=>number=()=>0,
     private readonly isFloor:(x:number,y:number)=>boolean=()=>true,
-    private readonly createPile?: StagePileFactory){}
+    private readonly createPile?: StagePileFactory,
+    private readonly dynamicSupport=false){}
 
   update(frame:RiftPresentationView,elapsedMs:number):void{
     for(const pile of frame.piles){
@@ -71,6 +72,14 @@ export class StageLoot {
         model.signature = signature; model.definitionId = item.definitionId;
       }
       model.root.position.set(item.position.x,this.groundHeightAt(item.position.x,item.position.y),item.position.y);
+      if(this.dynamicSupport){
+        const positions=model.mesh.geometry.getAttribute('position') as THREE.BufferAttribute;
+        const base=model.root.position.y;
+        for(let index=0;index<positions.count;index++) positions.setY(index,
+          this.groundHeightAt(item.position.x+positions.getX(index),item.position.y+positions.getZ(index))-base+.8);
+        positions.needsUpdate=true;
+        model.mesh.geometry.computeBoundingSphere();
+      }
       model.mesh.material.color.setScalar(Math.max(0, item.visibility));
       model.root.visible=item.visibility>0;
     }

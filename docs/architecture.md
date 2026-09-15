@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-12
+last-modified: 2026-09-15
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,7 +10,35 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代22：完整悬海内容包（DEC-157，集成验证中）
+## 迭代23：分层绘景与多地块场景（DEC-164）
+
+`living-landmass-stage.html` → `src/dev/living-landmass-stage.ts` → `living-landmass-stage/scene.ts` 是独立DEV入口，不进入正式菜单或世界池。`vista-model.ts` 通过Vite raw解析6份 `living-landmass-vista-*.csv`（轮廓/孔洞/岩石/区域/路线节点/连接）。五个区域共用连续高程，六条连接构成环路与中部横脊；2200×1904，完整8px通行格由轮廓、孔洞和全部岩石足迹共同派生。任何绘景或中景都不提供通行。
+
+`vista-terrain.ts` 按含孔轮廓三角化、改善瘦三角并细分。渲染使用Float32三角网，桶索引重心采样用于两脚与阴影。当前20480顶面三角，高度约5.67至108.48，最大坡0.158；五块高度渐变而无垂直重叠行走层。外崖厚108、孔壁77.76，层理/矿化/纤维低反差材质共享世界坐标；两孔仍为空气，不做洞底。
+
+`vista-camera.ts` 使用24°工作默认的PerspectiveCamera，距离2600、焦面跨度1120、FOV约16.342°、far15000。DEV query只接受20/24/28；焦点跟随(x+45,y−390,height0)，在完整往返路线检查构图。StagePlayer按真实射线调整竖向绘制基底，原Player/20×20身体扫掠与80移动保持。逻辑输出960×640；Three内部1920×1280，原生MSAA开启，最终canvas正常缩放，不再整屏nearest粗放大。角色自身贴图保持原有像素绘制。
+
+四距离职责：`vista-r2.png` 最远背景；`shoulder-r4.png` 带alpha的独立弯曲绘景卡（固定世界坐标、透视视差）；`vista-scenery.ts` 三条真实深层承体与两薄雾；实际可走地形。绘景卡24×12细分、不随镜头平移，不能视作完整三维大陆；卡片接边/背景覆盖必须通过实际路线判断。新图像与生成prompt均存public资产目录。
+
+`vista-motion.ts` 定义唯一26秒景观周期：5秒起主承体上托10世界单位、响应体延迟1.4秒上托6单位，13秒后逐渐卸力；玩家走面完全静止。`vista-audio.ts` 一次生成确定性摩擦/低频承重PCM，实际AudioBuffer按同周期循环，8.2秒后摩擦渐起。首次WASD/方向键/M真实按键建立单一AudioContext，M只静音不暂停周期；音量按玩家距(520,760)衰减、左右声像随相对x变化。解锁后可听AudioContext时钟反向提供景观呈现时间，避免长帧使画面与声音漂离；无音频解锁前用场景时钟。reduced-motion保留静态底音、视觉动作与摩擦事件静止。
+
+blur/focus/visibilitychange及Phaser事件统一暂停/恢复输入、物理和音频。SHUTDOWN/DESTROY/pagehide幂等释放Three对象、地图纹理、绘景纹理、声音源/Context与监听器。model接管地面纹理，中景克隆纹理各自释放；加载失败明确报错。`__livingLandmassStage.getState()`只读报告路线、身体/足点、镜头、真实AA参数、景观变换与音频状态。外部footer仅元界面操作提示。当前无Rift敌人/搜撤/FOV或存档读写。
+
+旧研究模块和完整局部保持历史冻结；正式悬海路径不改变。视觉及真实验收见[开发说明](dev/living-landmass.md)、[方向第12节](art/living-landmass-direction.md)、[QA](qa/iteration-23.md)。
+
+## 迭代23：生命大陆受力局部（DEC-159）
+
+**DEC-160/161：以下描述已存在的冻结实现。** 用户已否决旧局部与生成概念静帧，当前制作上面的独立真实引擎场景；以下相机/地形工厂等现有接口不约束新方案。旧完整局部的运行时规则未随此研究改变，视觉验证通过后再决定保留、适配或重做。
+
+`data/living-landmass-{scenes,supports,tension,placements}.csv`经既有codegen生成独立世界数据。`src/dev/living-landmass/world.ts`组合正式布局与单一8px三角高度格；CSV支撑控制基形及局部额外高度，`isFloor`只决定实际平面支撑。`src/worlds/living-landmass/tension-system.ts`拥有自然载荷、可撬资格、连续卸力与夹合接触。`runtime.ts`在Combat前准备同一时刻，正式命中后判接触，最后更新呈现；不新增玩家、AI、库存或物件账本。
+
+共享Stage新增窄接口`StageWorldGeometry`及`createTerrain`、`sea:false`、`lighting`、`dynamicSupport`接点。未传参数的悬海与既有局部保持原路径；新世界不能静默回退海床。`terrain.ts`直接把权威三角格画成地面，断面和角色足点、原生翻堆、已揭晓物及效果落点消费同一高度。动态掉落只修改原几何的位置缓冲，不每帧重建。无海的Stage只绘一次世界，不多做海体的深度预渲染。玩家/落物先挂入释放树，再调用地表工厂；部分创建失败逐步清理，单个所有者析构抛错也须释放余下GPU/Observer/画布并恢复原透明度，原始创建异常保持。
+
+`materials.ts/scenery.ts/pile-model.ts`拥有本世界的角质材质、下层承托巨体、连接与原生翻堆；近处危险/地表信息遵守真实感知，远景生命不泄露未知路线或拾获。宏观自然受力与被撬支路实际载荷分开，渲染不自行另算危险。全部实体共享一个Three场景、相机和深度。呈现按Stage生命周期释放资源，入场沿正式1200ms冻结与交控；首局部暂复用既有环境、脚步和命中音，专属音景归完整世界包。
+
+`living-landmass.html`→`src/dev/living-landmass.ts`使用隔离内存训练、原`RiftScene`、正式搜寻/战斗/有限装备/撤离；入口不加入生产构建和随机池。只读`__livingLandmass`及连续记录供实际键鼠验收。世界DTO与呈现记忆可导出/校验/恢复，但尚未注册完整旅程的持久恢复；刷新训练页不能冒称续原局。开发入口见[生命大陆](dev/living-landmass.md)，实施/未验项见[迭代23 QA](qa/iteration-23.md)。
+
+## 迭代22：完整悬海内容包（DEC-157，用户已验收）
 
 `data/suspended-sea-*.csv`经既有codegen生成`src/generated/suspended-sea-data.ts`，拥有两张编排、地形、自然孔、真实落水/侧溢/排水路径与七翻堆。`src/dev/suspended-sea/world.ts`校验明确世界ID、版本、种子及原子部署变体，组合`SpatialSliceWorld`并返回壳片合同/来源元信息；没有继承覆盖基类构造期的advance。真实来源为`suspended-sea`，不冒报旧图书馆；空reef不创建占地或显示实例。旧M/local数据与Vista默认不变。
 

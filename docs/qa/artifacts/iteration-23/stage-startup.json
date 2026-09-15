@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "startedAt": "2026-09-13T14:54:54.405Z",
+  "origin": "http://127.0.0.1:3007",
+  "method": "Actual Three/WebGL StagePresentation with synthetic frame/DOM/sight. Factory exceptions and resource instrumentation are injected. No game scene or player save is modified; this is startup lifecycle evidence only.",
+  "cases": [
+    {
+      "mode": "terrain-throws",
+      "passed": true,
+      "primaryPreserved": true,
+      "cleanupExceptionInjected": false,
+      "normalConstructed": false,
+      "geometryCount": 2,
+      "geometryDisposals": 2,
+      "rendererOwnedCpuGeometryCount": 1,
+      "observerCount": 1,
+      "observerDisconnections": 1,
+      "rendererCount": 1,
+      "rendererContextListenersRemoved": 3,
+      "contextLost": true,
+      "canvasCountBefore": 0,
+      "canvasCountAfter": 0,
+      "restoredOpacity": "0.73",
+      "terrainDestroyed": 0
+    },
+    {
+      "mode": "attachment-throws-cleanup-throws",
+      "passed": true,
+      "primaryPreserved": true,
+      "cleanupExceptionInjected": true,
+      "normalConstructed": false,
+      "geometryCount": 4,
+      "geometryDisposals": 4,
+      "rendererOwnedCpuGeometryCount": 1,
+      "observerCount": 1,
+      "observerDisconnections": 1,
+      "rendererCount": 1,
+      "rendererContextListenersRemoved": 3,
+      "contextLost": true,
+      "canvasCountBefore": 0,
+      "canvasCountAfter": 0,
+      "restoredOpacity": "0.73",
+      "terrainDestroyed": 1
+    },
+    {
+      "mode": "normal-after-failures",
+      "passed": true,
+      "primaryPreserved": false,
+      "cleanupExceptionInjected": false,
+      "normalConstructed": true,
+      "geometryCount": 4,
+      "geometryDisposals": 4,
+      "rendererOwnedCpuGeometryCount": 1,
+      "observerCount": 1,
+      "observerDisconnections": 1,
+      "rendererCount": 1,
+      "rendererContextListenersRemoved": 3,
+      "contextLost": true,
+      "canvasCountBefore": 0,
+      "canvasCountAfter": 0,
+      "restoredOpacity": "0.73",
+      "terrainDestroyed": 1
+    },
+    {
+      "mode": "normal-repeat-destroy",
+      "passed": true,
+      "primaryPreserved": false,
+      "cleanupExceptionInjected": false,
+      "normalConstructed": true,
+      "geometryCount": 4,
+      "geometryDisposals": 4,
+      "rendererOwnedCpuGeometryCount": 1,
+      "observerCount": 1,
+      "observerDisconnections": 1,
+      "rendererCount": 1,
+      "rendererContextListenersRemoved": 3,
+      "contextLost": true,
+      "canvasCountBefore": 0,
+      "canvasCountAfter": 0,
+      "restoredOpacity": "0.73",
+      "terrainDestroyed": 1
+    }
+  ],
+  "errors": [],
+  "resourceFailures": [],
+  "sourceBefore": [
+    {
+      "file": "src/dev/spatial-study/stage/presentation.ts",
+      "sha256": "cc363441a403af151b175cdd452668a268cd900e251655a92370524bf6681be4"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/materials.ts",
+      "sha256": "e61911aa3dd6ac0ae922513886088349da8a4c6ab18fbfab67d28f9df379d1dd"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actors.ts",
+      "sha256": "ff0d3e7907cdfda7eefe5cf092255daedd09ed7effb2f34df0b00e9df4d1c60c"
+    },
+    {
+      "file": "src/dev/living-landmass/world.ts",
+      "sha256": "faad6ec38175c969ac6fcd72fa90028f11bc9aeb1e5c2462e44cb2b8d8c6179f"
+    },
+    {
+      "file": "tools/living-landmass/check-stage-startup.mjs",
+      "sha256": "22011f14165d25253716b1cda561f5c40f38d9c890c3ad73c39e5d0fb608028c"
+    }
+  ],
+  "sourceAfter": [
+    {
+      "file": "src/dev/spatial-study/stage/presentation.ts",
+      "sha256": "cc363441a403af151b175cdd452668a268cd900e251655a92370524bf6681be4"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/materials.ts",
+      "sha256": "e61911aa3dd6ac0ae922513886088349da8a4c6ab18fbfab67d28f9df379d1dd"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actors.ts",
+      "sha256": "ff0d3e7907cdfda7eefe5cf092255daedd09ed7effb2f34df0b00e9df4d1c60c"
+    },
+    {
+      "file": "src/dev/living-landmass/world.ts",
+      "sha256": "faad6ec38175c969ac6fcd72fa90028f11bc9aeb1e5c2462e44cb2b8d8c6179f"
+    },
+    {
+      "file": "tools/living-landmass/check-stage-startup.mjs",
+      "sha256": "22011f14165d25253716b1cda561f5c40f38d9c890c3ad73c39e5d0fb608028c"
+    }
+  ],
+  "passed": true,
+  "finishedAt": "2026-09-13T14:54:55.567Z"
+}

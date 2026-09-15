@@ -3,8 +3,7 @@ import * as THREE from 'three';
 /** This is a drawing grid, not the resolution of a shaded 3D render target. */
 export const ACTOR_PIXEL_SIZE = 1;
 export const ACTOR_CAMERA_ELEVATION = 35 * Math.PI / 180;
-const sinElevation = Math.sin(ACTOR_CAMERA_ELEVATION);
-const cosElevation = Math.cos(ACTOR_CAMERA_ELEVATION);
+export interface ActorPixelProjectionOptions { readonly elevationDeg?: number }
 
 export interface PixelPoint { x: number; y: number; depth: number }
 
@@ -35,8 +34,13 @@ export class ActorPixelDrawing {
   private sinTwist = 0;
   private readonly cameraDepthRange = { value: 2999 };
   private depthDisposed = false;
+  private elevation = ACTOR_CAMERA_ELEVATION;
+  private sinElevation = Math.sin(ACTOR_CAMERA_ELEVATION);
+  private cosElevation = Math.cos(ACTOR_CAMERA_ELEVATION);
 
-  constructor(readonly width: number, readonly height: number, readonly anchorX: number, readonly anchorY: number) {
+  constructor(readonly width: number, readonly height: number, readonly anchorX: number, readonly anchorY: number,
+    projection: ActorPixelProjectionOptions = {}) {
+    this.setCameraElevation(projection.elevationDeg ?? 35);
     this.rgba = new Uint8Array(width * height * 4);
     this.depth = new Float32Array(width * height);
     this.texture = new THREE.DataTexture(this.rgba, width, height, THREE.RGBAFormat);
@@ -81,6 +85,15 @@ export class ActorPixelDrawing {
     };
   }
 
+  /** Fixed-azimuth orthographic studies may change elevation. Colour, card
+   * orientation and per-pixel pose depth must always use the same basis.
+   * Existing stages omit this option and retain their original 35° projection. */
+  setCameraElevation(degrees: number): void {
+    if (!Number.isFinite(degrees) || degrees <= 0 || degrees >= 90) throw new Error('Actor camera elevation must be between 0 and 90 degrees');
+    this.elevation = degrees * Math.PI / 180;
+    this.sinElevation = Math.sin(this.elevation); this.cosElevation = Math.cos(this.elevation);
+  }
+
   begin(rootYaw: number): void {
     this.rgba.fill(0);
     this.depth.fill(-Infinity);
@@ -89,7 +102,7 @@ export class ActorPixelDrawing {
     this.setBodyTransform(0, 0, 0);
     // The gameplay-facing root still rotates. Cancel just that rotation for
     // the card, then face the one stage camera. The foot anchor stays at zero.
-    this.mesh.rotation.set(-ACTOR_CAMERA_ELEVATION, -rootYaw, 0, 'YXZ');
+    this.mesh.rotation.set(-this.elevation, -rootYaw, 0, 'YXZ');
   }
 
   setBodyTransform(x: number, y: number, z: number, lean = 0, squash = 1, twist = 0): void {
@@ -105,8 +118,8 @@ export class ActorPixelDrawing {
     const worldX = localX * this.cosFacing + localZ * this.sinFacing;
     const worldZ = -localX * this.sinFacing + localZ * this.cosFacing;
     out.x = this.anchorX + worldX / ACTOR_PIXEL_SIZE;
-    out.y = this.anchorY - (localY * cosElevation - worldZ * sinElevation) / ACTOR_PIXEL_SIZE;
-    out.depth = worldZ * cosElevation + localY * sinElevation;
+    out.y = this.anchorY - (localY * this.cosElevation - worldZ * this.sinElevation) / ACTOR_PIXEL_SIZE;
+    out.depth = worldZ * this.cosElevation + localY * this.sinElevation;
   }
 
   polygon(vertices: readonly number[] | Float32Array, colour: number, count = vertices.length / 3, depthBias = 0): void {

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { BODY_PROFILE_DATA } from '@/generated/contamination-body-data';
 import type { RiftDevRuntimeContext } from '@/scenes/rift-scene';
-import type { SpatialSliceWorld } from '../slice-world';
+import type { StageWorldGeometry } from './world-geometry';
 import type { RiftPresentationView } from './bridge';
 
 const CAPACITY = 4096;
@@ -28,7 +28,7 @@ export class StageEffects {
   private lastPressures = 0;
   private lastSounds = 0;
 
-  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld, visibility: THREE.Texture) {
+  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: StageWorldGeometry, visibility: THREE.Texture) {
     this.geometry.setAttribute('position', new THREE.BufferAttribute(this.positions, 3).setUsage(THREE.DynamicDrawUsage));
     this.geometry.setAttribute('colour', new THREE.BufferAttribute(this.colours, 3).setUsage(THREE.DynamicDrawUsage));
     this.geometry.setAttribute('markOpacity', new THREE.BufferAttribute(this.opacity, 1).setUsage(THREE.DynamicDrawUsage));

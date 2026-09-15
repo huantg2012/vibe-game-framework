@@ -11,6 +11,16 @@ import { ACTOR_HEIGHT, disposeTree, STAGE_HEIGHT, STAGE_WIDTH } from './material
 import { STAGE_PALETTE } from './palette';
 import { StageEffects } from './effects';
 import { assertStagePresentationSupported, supportsStageForm } from './support';
+import type { StageWorldGeometry } from './world-geometry';
+
+export interface StageTerrainSurface {
+  readonly group: THREE.Group;
+  readonly visibility: StageVisibility;
+  readonly heightTexture?: THREE.DataTexture;
+  update(elapsedMs: number, exitInRange: boolean): void;
+  snapshot(): Record<string, unknown>;
+  destroy(): void;
+}
 
 /** Explicit world-owned additions share the same depth, sight and final canvas.
  * The default stage never opts into a content pack's materials or atmosphere. */
@@ -30,7 +40,10 @@ export interface StagePresentationOptions {
   readonly camera?: StageCameraMode;
   readonly terrain?: StageTerrainStyle;
   readonly createPile?: StagePileFactory;
-  readonly sea?: StageSeaOptions;
+  readonly sea?: StageSeaOptions | false;
+  readonly createTerrain?: (context: RiftDevRuntimeContext, world: StageWorldGeometry) => StageTerrainSurface;
+  readonly lighting?: { sky: number; bounce: number; key: number; rim: number; absence: number; exposure?: number };
+  readonly dynamicSupport?: boolean;
   readonly createAttachment?: (stage: StageAttachmentContext) => StageAttachment;
 }
 
@@ -47,8 +60,8 @@ export class StagePresentation implements SlicePresentation {
     depthTexture: new THREE.DepthTexture(STAGE_WIDTH, STAGE_HEIGHT, THREE.UnsignedIntType),
   });
   private readonly player = new StagePlayer();
-  private readonly terrain: StageTerrain;
-  private readonly sea: StageSea;
+  private readonly terrain: StageTerrainSurface;
+  private readonly sea: StageSea | null;
   private readonly loot:StageLoot;
   private readonly effects: StageEffects;
   private readonly enemies = new Map<string,StageInsect>();
@@ -64,17 +77,22 @@ export class StagePresentation implements SlicePresentation {
   private endTailMs=0;
   private readonly attachment: StageAttachment | undefined;
 
-  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: SpatialSliceWorld,
+  constructor(private readonly context: RiftDevRuntimeContext, private readonly world: StageWorldGeometry,
     options: StagePresentationOptions = {}) {
     assertStagePresentationSupported(context.readPresentationFrame());
     for (const form of context.layout.contaminationDraw.forms) if (!supportsStageForm(form))
       throw new Error(`Stage has no world model for ${form.occupancy}/${form.substrate}/${form.coverage}`);
+    // Legacy terrain/sea retain their exact implementation and explicit data
+    // contract. Other worlds must provide their own surface and opt out of sea.
+    if ((!options.createTerrain || options.sea !== false) && !('waterDefinition' in world && 'ground' in world && 'sampleSea' in world))
+      throw new Error('This world requires its own stage terrain and sea:false');
+    const palette = options.lighting ?? STAGE_PALETTE;
     this.renderer = new THREE.WebGLRenderer({antialias:false,alpha:false,powerPreference:'high-performance'});
     this.renderer.setPixelRatio(1); this.renderer.setSize(STAGE_WIDTH,STAGE_HEIGHT,false);
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
-    this.renderer.toneMapping=THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure=1.2;
+    this.renderer.toneMapping=THREE.ACESFilmicToneMapping; this.renderer.toneMappingExposure=options.lighting?.exposure ?? 1.2;
     this.renderer.shadowMap.enabled=true; this.renderer.shadowMap.type=THREE.PCFShadowMap;
-    this.renderer.setClearColor(STAGE_PALETTE.absence,1);
+    this.renderer.setClearColor(palette.absence,1);
     const canvas=this.renderer.domElement, original=context.scene.game.canvas;
     canvas.dataset.spatialStage='true'; canvas.setAttribute('aria-hidden','true');
     canvas.style.cssText='position:absolute;pointer-events:none;image-rendering:pixelated;z-index:0;';
@@ -83,20 +101,25 @@ export class StagePresentation implements SlicePresentation {
     this.resizeObserver=new ResizeObserver(this.alignCanvas); this.resizeObserver.observe(original); this.alignCanvas();
     this.followCamera=options.camera==='follow' ? new StageFollowCamera(world.width,world.height,world.layout.spawnPoint) : null;
     this.camera=this.followCamera?.camera ?? createStageCamera(world.width,world.height);
-    this.scene.add(new THREE.HemisphereLight(STAGE_PALETTE.sky,STAGE_PALETTE.bounce,1.3));
-    const sun=this.sun=new THREE.DirectionalLight(STAGE_PALETTE.key,1.8); sun.position.set(-280,680,-390); sun.target.position.set(world.width*.5,0,world.height*.5);
+    this.scene.add(new THREE.HemisphereLight(palette.sky,palette.bounce,1.3));
+    const sun=this.sun=new THREE.DirectionalLight(palette.key,1.8); sun.position.set(-280,680,-390); sun.target.position.set(world.width*.5,0,world.height*.5);
     sun.castShadow=true; sun.shadow.mapSize.set(1024,1024); sun.shadow.camera.left=-650; sun.shadow.camera.right=650;
     sun.shadow.camera.top=650; sun.shadow.camera.bottom=-650; sun.shadow.camera.far=1800; sun.shadow.bias=-.001;
     this.scene.add(sun,sun.target);
-    const rim=this.rim=new THREE.DirectionalLight(STAGE_PALETTE.rim,.62); rim.position.set(850,210,400); this.scene.add(rim,rim.target);
+    const rim=this.rim=new THREE.DirectionalLight(palette.rim,.62); rim.position.set(850,210,400); this.scene.add(rim,rim.target);
     this.updateLightFootprint();
-    this.loot=new StageLoot(this.groundHeightAt,(x,y)=>world.isFloor(x,y),options.createPile);
+    this.loot=new StageLoot(this.groundHeightAt,(x,y)=>world.isFloor(x,y),options.createPile,options.dynamicSupport);
     this.player.setGroundSampler(this.groundHeightAt);
-    this.terrain=new StageTerrain(context,world,options.terrain); this.scene.add(this.terrain.group,this.player.root);
-    this.effects = new StageEffects(context, world, this.terrain.visibility.texture);
-    this.scene.add(this.effects.group);
-    this.sea=new StageSea(context,world,this.terrain.visibility.texture,this.terrain.heightTexture,this.opaqueTarget.depthTexture!,options.sea);this.scene.add(this.sea.group,this.loot.group);
+    // These resources exist before the world factory. Own them immediately so
+    // even a failed factory is covered by the same stage cleanup.
+    this.scene.add(this.player.root,this.loot.group);
     try {
+      this.terrain=options.createTerrain?.(context,world) ?? new StageTerrain(context,world as SpatialSliceWorld,options.terrain);
+      this.scene.add(this.terrain.group);
+      this.effects = new StageEffects(context, world, this.terrain.visibility.texture);
+      this.scene.add(this.effects.group);
+      this.sea=options.sea===false ? null : new StageSea(context,world as SpatialSliceWorld,this.terrain.visibility.texture,this.terrain.heightTexture,this.opaqueTarget.depthTexture!,options.sea);
+      if(this.sea)this.scene.add(this.sea.group);
       this.attachment=options.createAttachment?.({scene:this.scene,camera:this.camera,visibility:this.terrain.visibility});
       context.setWorldProjector((point,out)=>projectStagePoint(this.camera,point,out,this.groundHeightAt(point.x,point.y)));
       this.update(0);
@@ -177,21 +200,25 @@ export class StagePresentation implements SlicePresentation {
     }
     this.terrain.update(elapsedMs,frame.exit.inRange);
     if (!frame.ended) this.effects.update(frame);
-    this.loot.update(frame,elapsedMs);this.sea.update(elapsedMs,frame.player.position,this.camera);
+    this.loot.update(frame,elapsedMs);this.sea?.update(elapsedMs,frame.player.position,this.camera);
     this.attachment?.update(elapsedMs,frame);
     // The water reads the actual visible opaque surface, including a cliff
     // below ground and each pixel actor's pose depth. A ground-plane projection
     // alone incorrectly paints water back over a known descending shore.
     const shadows=this.renderer.shadowMap.autoUpdate;
     try {
-      this.sea.group.visible=false;
-      this.renderer.setRenderTarget(this.opaqueTarget);
-      this.renderer.render(this.scene,this.camera);
-      this.opaqueDrawCalls=this.renderer.info.render.calls;
-      this.opaqueTriangles=this.renderer.info.render.triangles;
-      this.sea.group.visible=true;
+      if(this.sea){
+        this.sea.group.visible=false;
+        this.renderer.setRenderTarget(this.opaqueTarget);
+        this.renderer.render(this.scene,this.camera);
+        this.opaqueDrawCalls=this.renderer.info.render.calls;
+        this.opaqueTriangles=this.renderer.info.render.triangles;
+        this.sea.group.visible=true;
+        this.renderer.shadowMap.autoUpdate=false;
+      }else{
+        this.opaqueDrawCalls=0;this.opaqueTriangles=0;
+      }
       this.renderer.setRenderTarget(null);
-      this.renderer.shadowMap.autoUpdate=false;
       this.renderer.render(this.scene,this.camera);
       this.finalDrawCalls=this.renderer.info.render.calls;
       this.finalTriangles=this.renderer.info.render.triangles;
@@ -202,7 +229,7 @@ export class StagePresentation implements SlicePresentation {
         this.finalTriangles+=this.renderer.info.render.triangles;
       }
     } finally {
-      this.sea.group.visible=true;
+      if(this.sea)this.sea.group.visible=true;
       this.renderer.setRenderTarget(null);
       this.renderer.shadowMap.autoUpdate=shadows;
     }
@@ -214,17 +241,29 @@ export class StagePresentation implements SlicePresentation {
     simulation:'production-rift',worldSignature:this.world.signature(),renderMs:this.renderMs,drawCalls:this.opaqueDrawCalls+this.finalDrawCalls,
     triangles:this.opaqueTriangles+this.finalTriangles,terrainVisibilitySamples:this.terrain.visibility.samples,
     terrainPerception:this.terrain.visibility.snapshot(),endTailMs:this.endTailMs,
-    terrain:this.terrain.snapshot(),loot:this.loot.snapshot(),effects:this.effects.snapshot(),waterReveal:'current sight opens ground and empty chasms; opaque depth additionally projects descending shores; only physical terrain is remembered',
-    sea:this.sea.snapshot(this.camera),attachment:this.attachment?.snapshot() ?? null,
+    terrain:this.terrain.snapshot(),loot:this.loot.snapshot(),effects:this.effects.snapshot(),waterReveal:this.sea?'current sight opens ground and empty chasms; opaque depth additionally projects descending shores; only physical terrain is remembered':null,
+    sea:this.sea?.snapshot(this.camera) ?? null,attachment:this.attachment?.snapshot() ?? null,
     player:this.player.snapshot(),
     camera:{position:this.camera.position.toArray(),left:this.camera.left,right:this.camera.right,top:this.camera.top,bottom:this.camera.bottom,
       ...(this.followCamera?.snapshot() ?? {mode:'fixed',span:this.camera.right-this.camera.left})},
     entities:[...this.enemies].map(([id,model])=>({id,visible:model.root.visible,position:model.root.position.toArray()}))};}
 
   destroy():void{
-    if(this.destroyed)return;this.destroyed=true;this.context.setWorldProjector(null);
-    this.resizeObserver.disconnect();this.attachment?.destroy();this.effects.destroy();this.terrain.destroy();this.sea.destroy();disposeTree(this.scene);
-    this.opaqueTarget.dispose();this.renderer.dispose();this.renderer.forceContextLoss();this.renderer.domElement.remove();
-    this.context.scene.game.canvas.style.opacity=this.previousCanvasOpacity;
+    if(this.destroyed)return;this.destroyed=true;
+    const failures:unknown[]=[];
+    const release=(action:()=>void):void=>{try{action();}catch(error){failures.push(error);}};
+    release(()=>this.context.setWorldProjector(null));
+    release(()=>this.resizeObserver.disconnect());
+    release(()=>this.attachment?.destroy());
+    release(()=>this.effects?.destroy());
+    release(()=>this.terrain?.destroy());
+    release(()=>this.sea?.destroy());
+    release(()=>disposeTree(this.scene));
+    release(()=>this.opaqueTarget.dispose());
+    release(()=>this.renderer.dispose());
+    release(()=>this.renderer.forceContextLoss());
+    release(()=>this.renderer.domElement.remove());
+    release(()=>{this.context.scene.game.canvas.style.opacity=this.previousCanvasOpacity;});
+    if(failures.length)throw failures[0];
   }
 }

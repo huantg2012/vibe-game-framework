@@ -1,0 +1,552 @@
+{
+  "schema": 1,
+  "startedAt": "2026-09-15T07:46:59.752Z",
+  "method": "Isolated headed Chrome, real keyboard/mouse and window focus, normal clock, read-only scene probe. Playwright default forced-focus emulation is disabled before genuine window minimization; no fake events, teleport, state or clock overrides.",
+  "spec": "docs/art/living-landmass-direction.md §10 / DEC-162",
+  "checks": [
+    {
+      "name": "01-start: body supported",
+      "ok": true,
+      "details": {
+        "x": 275,
+        "y": 700,
+        "height": 0,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 235.71428571428572,
+          "y": 520.7845285192292
+        },
+        "body": {
+          "x": 265,
+          "y": 690,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 278.2,
+            "height": 1.5,
+            "y": 698.8,
+            "supportHeight": 0,
+            "clearance": 1.5
+          },
+          {
+            "x": 271.8,
+            "height": 1.5,
+            "y": 698.8,
+            "supportHeight": 0,
+            "clearance": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "name": "01-start: no scene errors",
+      "ok": true,
+      "details": {
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "01-start: visible screen position",
+      "ok": true,
+      "details": {
+        "x": 235.71428571428572,
+        "y": 520.7845285192292
+      }
+    },
+    {
+      "name": "correct new vista revision",
+      "ok": true,
+      "details": "living-landmass-vista-walk"
+    },
+    {
+      "name": "real background asset loaded",
+      "ok": true,
+      "details": [
+        {
+          "url": "http://127.0.0.1:3010/assets/dev/living-landmass/vista-r2.png",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "render target 960x640",
+      "ok": true,
+      "details": {
+        "width": 960,
+        "height": 640
+      }
+    }
+  ],
+  "observations": [
+    {
+      "label": "01-start",
+      "at": "2026-09-15T07:47:01.761Z",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-vista-walk",
+        "revision": 2,
+        "elapsedMs": 395.1251331807454,
+        "camera": {
+          "projection": "orthographic",
+          "elevation": 35,
+          "span": 1120,
+          "focus": {
+            "x": 560,
+            "y": 291.6,
+            "height": 0
+          },
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "pixelsPerWorldUnit": 0.8571428571428571,
+          "background": "painted distant panorama at infinity; no navigation/collision",
+          "position": [
+            560,
+            1032.4375854318828,
+            1766.0736797201853
+          ]
+        },
+        "geometry": {
+          "type": "simple-rock-terrace-with-distant-painted-world",
+          "outline": [
+            {
+              "x": 0,
+              "y": 475
+            },
+            {
+              "x": 130,
+              "y": 442
+            },
+            {
+              "x": 222,
+              "y": 461
+            },
+            {
+              "x": 295,
+              "y": 414
+            },
+            {
+              "x": 391,
+              "y": 427
+            },
+            {
+              "x": 455,
+              "y": 496
+            },
+            {
+              "x": 488,
+              "y": 568
+            },
+            {
+              "x": 562,
+              "y": 604
+            },
+            {
+              "x": 651,
+              "y": 577
+            },
+            {
+              "x": 714,
+              "y": 507
+            },
+            {
+              "x": 748,
+              "y": 403
+            },
+            {
+              "x": 832,
+              "y": 370
+            },
+            {
+              "x": 939,
+              "y": 400
+            },
+            {
+              "x": 1020,
+              "y": 446
+            },
+            {
+              "x": 1160,
+              "y": 425
+            },
+            {
+              "x": 1400,
+              "y": 470
+            },
+            {
+              "x": 1400,
+              "y": 1200
+            },
+            {
+              "x": 0,
+              "y": 1200
+            }
+          ],
+          "obstacles": [
+            [
+              {
+                "x": 146,
+                "y": 540
+              },
+              {
+                "x": 128.3040206873605,
+                "y": 568.661942147278
+              },
+              {
+                "x": 88.54151610405323,
+                "y": 575.7408572605857
+              },
+              {
+                "x": 56.65446320858631,
+                "y": 555.9061778760497
+              },
+              {
+                "x": 56.6544632085863,
+                "y": 524.0938221239503
+              },
+              {
+                "x": 88.54151610405322,
+                "y": 504.25914273941436
+              },
+              {
+                "x": 128.30402068736046,
+                "y": 511.33805785272205
+              }
+            ],
+            [
+              {
+                "x": 387,
+                "y": 601
+              },
+              {
+                "x": 374.95167365947947,
+                "y": 620.514513802402
+              },
+              {
+                "x": 347.87933011339794,
+                "y": 625.3342006880583
+              },
+              {
+                "x": 326.1689962271226,
+                "y": 611.8297381283743
+              },
+              {
+                "x": 326.1689962271226,
+                "y": 590.1702618716257
+              },
+              {
+                "x": 347.87933011339794,
+                "y": 576.6657993119417
+              },
+              {
+                "x": 374.95167365947947,
+                "y": 581.485486197598
+              }
+            ],
+            [
+              {
+                "x": 1031,
+                "y": 595
+              },
+              {
+                "x": 1015.9395920743493,
+                "y": 619.3931422530026
+              },
+              {
+                "x": 982.0991626417474,
+                "y": 625.4177508600729
+              },
+              {
+                "x": 954.9612452839033,
+                "y": 608.5371726604678
+              },
+              {
+                "x": 954.9612452839033,
+                "y": 581.4628273395322
+              },
+              {
+                "x": 982.0991626417474,
+                "y": 564.5822491399271
+              },
+              {
+                "x": 1015.9395920743493,
+                "y": 570.6068577469974
+              }
+            ],
+            [
+              {
+                "x": 1150,
+                "y": 479
+              },
+              {
+                "x": 1139.4577144520445,
+                "y": 496.0751995771018
+              },
+              {
+                "x": 1115.7694138492232,
+                "y": 500.292425602051
+              },
+              {
+                "x": 1096.7728716987322,
+                "y": 488.47602086232746
+              },
+              {
+                "x": 1096.7728716987322,
+                "y": 469.52397913767254
+              },
+              {
+                "x": 1115.7694138492232,
+                "y": 457.707574397949
+              },
+              {
+                "x": 1139.4577144520445,
+                "y": 461.9248004228982
+              }
+            ],
+            [
+              {
+                "x": 718,
+                "y": 932
+              },
+              {
+                "x": 694.6563677152415,
+                "y": 969.8093704921539
+              },
+              {
+                "x": 642.2037020947085,
+                "y": 979.147513833113
+              },
+              {
+                "x": 600.13993019005,
+                "y": 952.9826176237251
+              },
+              {
+                "x": 600.13993019005,
+                "y": 911.0173823762749
+              },
+              {
+                "x": 642.2037020947085,
+                "y": 884.852486166887
+              },
+              {
+                "x": 694.6563677152415,
+                "y": 894.1906295078461
+              }
+            ]
+          ],
+          "world": {
+            "width": 1400,
+            "height": 1200
+          },
+          "surfaceHeight": 0,
+          "relation": "local root strands continue off the left cliff toward the far living arch; scenery is not traversable",
+          "source": [
+            "data/living-landmass-vista-outline.csv",
+            "data/living-landmass-vista-rocks.csv"
+          ]
+        },
+        "player": {
+          "x": 275,
+          "y": 700,
+          "height": 0,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 235.71428571428572,
+            "y": 520.7845285192292
+          },
+          "body": {
+            "x": 265,
+            "y": 690,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 278.2,
+              "height": 1.5,
+              "y": 698.8,
+              "supportHeight": 0,
+              "clearance": 1.5
+            },
+            {
+              "x": 271.8,
+              "height": 1.5,
+              "y": 698.8,
+              "supportHeight": 0,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 35,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "frames": 46,
+          "drawCalls": 25,
+          "triangles": 4320,
+          "buffers": 15,
+          "textures": 9
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "keys": [
+        "d"
+      ],
+      "ms": 1000,
+      "label": "02-normal-east",
+      "at": "2026-09-15T07:47:01.894Z",
+      "before": {
+        "x": 275,
+        "y": 700,
+        "height": 0,
+        "facing": -1.5707963267948966,
+        "moving": false,
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "screen": {
+          "x": 235.71428571428572,
+          "y": 520.7845285192292
+        },
+        "body": {
+          "x": 265,
+          "y": 690,
+          "width": 20,
+          "height": 20
+        },
+        "supported": true,
+        "feet": [
+          {
+            "x": 278.2,
+            "height": 1.5,
+            "y": 698.8,
+            "supportHeight": 0,
+            "clearance": 1.5
+          },
+          {
+            "x": 271.8,
+            "height": 1.5,
+            "y": 698.8,
+            "supportHeight": 0,
+            "clearance": 1.5
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "resources": [
+    {
+      "url": "http://127.0.0.1:3010/assets/dev/living-landmass/vista-r2.png",
+      "status": 200
+    }
+  ],
+  "visualVerdict": "HUMAN REVIEW PENDING. Frame evidence is not aesthetic acceptance.",
+  "sourceBefore": [
+    {
+      "file": "src/dev/living-landmass-stage.ts",
+      "sha256": "d88bbf1ae11c7aa11a8d71279209de39f5b0998dd2aecca1be2418e56184d502"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/scene.ts",
+      "sha256": "e3294b33f8474f50092fad0dcc15874e1dcd3fcb6447534f898629cc4e654cea"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/vista-model.ts",
+      "sha256": "80fffc0529a07898451fc216617f6f54bbefa9b560d8c626773b1caeaf303343"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/vista-camera.ts",
+      "sha256": "0f37627ed209be397b8954a287b527edfe64d966dd61f7e423a9d019f799100b"
+    },
+    {
+      "file": "src/dev/living-landmass-stage/camera.ts",
+      "sha256": "ceeeca5f907e0ed7e3364d5f7c14fea8dc6ad858bbd31983d59e0e568e0ad32e"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actors.ts",
+      "sha256": "b4f93f07ec951a9637da46cf0f2446adddecbf7a8aea6379ed070a1544dcf15a"
+    },
+    {
+      "file": "src/dev/spatial-study/stage/actor-pixels.ts",
+      "sha256": "58f9b4696dfb10928d40d9df12184ab3de148cf2a648378a15b0bedab4b3cc58"
+    },
+    {
+      "file": "src/entities/player.ts",
+      "sha256": "9bd85fd2389084d3c00103d06a47a08250703d39654c6540931cfbb853dcc636"
+    },
+    {
+      "file": "src/systems/ai/physical-grid.ts",
+      "sha256": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1"
+    },
+    {
+      "file": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "file": "src/config/game-config.ts",
+      "sha256": "030ddf0e8f8e3668d8d5f74599301236c157c09a1ef7331c1d32afbc52bd8301"
+    },
+    {
+      "file": "data/living-landmass-vista-outline.csv",
+      "sha256": "32930596dead52d9fb5472dec3d9d97160cc7bf8b5db90d7f071cf94787e726a"
+    },
+    {
+      "file": "data/living-landmass-vista-rocks.csv",
+      "sha256": "40bad3edbd7d16f625074af778e8b71be13ed88a8e979fb10715644e8ebfac13"
+    },
+    {
+      "file": "public/assets/dev/living-landmass/vista-r2.png",
+      "sha256": "c2ae064dba5cac8e8c2339692a73c3861bd070aa3f2d9d16f642cbc9da07c7ad"
+    },
+    {
+      "file": "living-landmass-stage.html",
+      "sha256": "e45aa85de449bd1652378c3ac92b0f3168db075bec4d95a7b00563ee64459796"
+    },
+    {
+      "file": "tools/living-landmass/qa-vista-walk.mjs",
+      "sha256": "e17fa9c94ad4985380382ebc6828a6995f1328b60ec3b4ad110e334c3b3ee5df"
+    }
+  ],
+  "url": "http://127.0.0.1:3010/living-landmass-stage.html",
+  "readyMs": 618,
+  "verdict": "INCOMPLETE",
+  "failure": "keyboard.up: Target page, context or browser has been closed\n    at hold (/Users/yilungao/coh/tools/living-landmass/qa-vista-walk.mjs:21:418)\n    at async file:///Users/yilungao/coh/tools/living-landmass/qa-vista-walk.mjs:28:13",
+  "endedAt": "2026-09-15T07:47:02.403Z",
+  "video": "/Users/yilungao/coh/docs/qa/artifacts/iteration-23/vista-walk/2026-09-15T07-46-59-751Z/page@6935f51d3e51f7e69e92fe6667ac7c89.webm"
+}

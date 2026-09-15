@@ -1,0 +1,56 @@
+import assert from 'node:assert/strict';
+import { LandmassQaDriver } from './qa-driver.mjs';
+const driver=new LandmassQaDriver({testCase:process.env.CASE??'local-loop',loadout:process.env.LOADOUT??'bare',scene:'living-borne-fin'});
+let error=null;
+try{
+  await driver.open();await driver.start();await driver.recordAudio();
+  await driver.capture('01-entry');
+  await driver.waypoint(560,880,'yx');await driver.search('02-root-search');
+  await driver.waypoint(592,816,'yx');await driver.waypoint(880,816);
+  // Turning is deliberately gradual in the actual player controller.
+  await driver.press('w',120);
+  await driver.until(s=>s.spatial?.tension?.phase==='rest','rest at pressure observation');
+  await driver.capture('03-observation-rest');
+  await driver.until(s=>s.spatial?.tension?.phase==='pull','natural peak',14000);
+  await driver.capture('04-observation-pressure');
+  await driver.until(s=>s.spatial?.tension?.phase==='rest','release',12000);
+  const pausedAt=(await driver.read()).snapshot.elapsedMs;
+  await driver.page.locator('#pause').click();await driver.page.waitForTimeout(450);
+  assert.equal((await driver.read()).paused,true);
+  const paused=(await driver.fullState()).spatial;
+  await driver.page.waitForTimeout(650);
+  const again=(await driver.fullState()).spatial;
+  assert.equal(again.elapsedMs,paused.elapsedMs);assert.deepEqual(again.tension,paused.tension);
+  driver.evidence.checks.push('Pause freezes authoritative tension and world clock');
+  await driver.page.locator('#pause').click();await driver.focus();
+  assert((await driver.read()).snapshot.elapsedMs>=pausedAt);
+  await driver.until(s=>s.spatial?.tension?.canHit,'knot is actually taut',14000);
+  const before=(await driver.read()).frame.player.durability;
+  await driver.press('Space',90);
+  await driver.until(s=>s.spatial?.tension?.hitSequence>0,'real knot contact');
+  assert.equal((await driver.read()).frame.player.durability,before-1);
+  await driver.capture('05-knot-struck');
+  await driver.until(s=>s.spatial.tension.reliefProgress>.95&&!s.spatial.tension.active,'load has actually eased');
+  const hp=(await driver.read()).snapshot.hp;
+  await driver.waypoint(880,560,'yx');
+  assert.equal((await driver.read()).snapshot.hp,hp,'Relieved fin crossing is safe');
+  await driver.search('06-far-fin-search');
+  // Cross the upper route and return by the continuously supported outer ridge.
+  await driver.waypoint(880,432,'yx');await driver.waypoint(400,432);
+  await driver.waypoint(400,624,'yx');await driver.search('07-ridge-search');
+  await driver.waypoint(400,848,'yx');await driver.waypoint(592,848);
+  await driver.waypoint(592,944,'yx');
+  await driver.press('e',100);await driver.until(s=>s.snapshot.ended,'real extraction');
+  await driver.capture('08-extraction');
+  const ended=(await driver.fullState()).spatial;
+  await driver.page.waitForTimeout(700);
+  const afterEnd=(await driver.fullState()).spatial;
+  assert.equal(afterEnd.elapsedMs,ended.elapsedMs);assert.deepEqual(afterEnd.tension,ended.tension);
+  driver.evidence.checks.push('Ended run freezes the support/hazard; ordinary inputs searched and extracted');
+  await driver.press('r',100);await driver.page.waitForTimeout(200);
+  assert.equal((await driver.fullState()).running,false);
+  await driver.start();await driver.press('w',180);
+  assert((await driver.read()).snapshot.player.y<940,'Restart has a real moving player');
+  await driver.capture('09-restarted');await driver.assertSave('completed loop and restart');
+}catch(e){error=e;console.error(e.stack??e);}
+const result=await driver.finish(error);if(!result.passed)process.exitCode=1;

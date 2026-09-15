@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生命大陆 · 承托群岛</title>
+  <link rel="icon" href="data:," />
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; color: #aaa9a0; background: #111315; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 18px; }
+    #game-container { position: relative; width: min(100%, 1200px); aspect-ratio: 3 / 2; outline: none; overflow: hidden; }
+    #game-container canvas { display: block; image-rendering: auto; }
+    footer { width: min(100%, 1200px); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12px; line-height: 1.7; }
+    footer p { margin: 0; }
+    #angles { display: flex; gap: 5px; }
+    button { font: inherit; color: inherit; background: #202422; border: 1px solid #41463e; padding: 3px 10px; cursor: pointer; }
+    button[aria-pressed="true"] { color: #dfd4b6; border-color: #ac9871; }
+    .scope { opacity: .67; }
+    #error { color: #d8a89b; white-space: pre-wrap; max-width: 1100px; }
+  </style>
+</head>
+<body>
+  <main id="game-container" tabindex="0" aria-label="生命大陆远眺步道"></main>
+  <footer>
+    <p>WASD / 方向键 · 行走观察　M · 静音</p>
+    <p class="scope">生命大陆 · 承托群岛</p>
+  </footer>
+  <output id="error" role="alert"></output>
+  <script type="module" src="/src/dev/living-landmass-stage.ts"></script>
+</body>
+</html>

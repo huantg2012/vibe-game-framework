@@ -4,7 +4,7 @@ created-by: design agent
 created-date: 2026-08-19
 created-when: Slice 9 设计阶段
 last-modified-by: code agent
-last-modified-date: 2026-09-12
+last-modified-date: 2026-09-15
 interface-changed: true
 slice: 9
 interfaces-with:
@@ -27,6 +27,16 @@ exposes:
 ---
 
 # 系统设计：音频（氛围床 + 裂隙分层 + 清单音效）
+
+## 迭代23：观察场承重音景（DEC-164）
+
+仅`living-landmass-stage.html`的DEV表现音景，由`vista-audio.ts`拥有一个AudioContext/BufferSource，不进入正式AudioManager注册表或存档。`vista-motion.ts`确定性生成26秒PCM（矿化摩擦/低频承重），不是现场录音或外部音频模型；与非通行承体共享周期，5秒开始载荷、响应延迟1.4秒、8.2秒后摩擦渐强，末段渐退。没有通过新声音给敌人AI制造噪声事件。
+
+WASD/方向键/M首次非repeat真实按键解锁；解锁前不自动发声。M切静音但周期继续。声源固定(520,760)，声像clamp((source.x−player.x)/900,−.85,.85)，增益.9/(1+(distance/950)^2)，平滑目标分别.15/.18秒，不改全游戏混音规则。
+
+解锁后的实际buffer音频时钟驱动景观动作时间，避免场景delta截断使声画漂移。失焦/隐藏暂停Context和物理，回焦恢复同一源而非补播过去事件；销毁关闭Context并移除监听器。reduced-motion只留静态底音，停止承重摩擦事件与装饰变换。静音/未解锁/运行/暂停状态由只读probe报告。
+
+实际录音、审听、声画关系与生命周期结果见迭代23 QA。运行态与PCM数值检查不代替审听，声音身份与成品质感最终由用户验收。
 
 ## 迭代22：悬海音景与真实水流
 
