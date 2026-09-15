@@ -1,0 +1,87 @@
+{
+  "status": "FROZEN",
+  "source": "ROOT second quality freeze 2026-09-15 DEC-166 R6",
+  "revision": 6,
+  "cameraElevation": 24,
+  "logical": {
+    "width": 960,
+    "height": 640
+  },
+  "internal": {
+    "width": 1920,
+    "height": 1280
+  },
+  "cycleSeconds": 26,
+  "distanceRoles": [
+    "infinite panorama",
+    "receding eastern painting",
+    "fixed-world curved painting",
+    "real middle bearings",
+    "walkable terrain"
+  ],
+  "paintedLayers": 2,
+  "landforms": 3,
+  "assets": [
+    "/assets/dev/living-landmass/vista-r6.png",
+    "/assets/dev/living-landmass/shoulder-r6.png",
+    "/assets/dev/living-landmass/shell-mineral-r6.png",
+    "/assets/dev/living-landmass/sediment-r6.png",
+    "/assets/dev/living-landmass/shoulder-r5.png"
+  ],
+  "deformers": [
+    {
+      "name": "deep-bearing-body",
+      "role": "load",
+      "amplitude": 10,
+      "minCycleSpan": 8.0
+    },
+    {
+      "name": "delayed-load-lamella",
+      "role": "response",
+      "amplitude": 6,
+      "minCycleSpan": 4.800000000000001
+    },
+    {
+      "name": "independent-painted-shell",
+      "role": "load",
+      "amplitude": 18,
+      "minCycleSpan": 14.4
+    }
+  ],
+  "qualityRoute": [
+    "west-rise",
+    "west",
+    "upper-west",
+    "crown"
+  ],
+  "atmosphereLayers": 2,
+  "background": {
+    "painting": {
+      "width": 2400,
+      "height": 1600,
+      "airMix": 0
+    },
+    "farPainting": {
+      "width": 2200,
+      "height": 1467,
+      "airMix": 0.43,
+      "worldFixed": true
+    },
+    "panorama": {
+      "airMix": 0.12,
+      "chroma": 0.84
+    },
+    "transforms": {
+      "painting": [
+        -690,
+        -1260,
+        -3100
+      ],
+      "farPainting": [
+        3000,
+        -2280,
+        -5000
+      ]
+    }
+  }
+}

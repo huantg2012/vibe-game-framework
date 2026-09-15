@@ -46,9 +46,11 @@ export class LivingLandmassStudyScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image('living-vista-r2', '/assets/dev/living-landmass/vista-r2.png');
-    this.load.image('living-mineral-r5', '/assets/dev/living-landmass/ground-mineral-r5.png');
-    this.load.image('living-shoulder-r5', '/assets/dev/living-landmass/shoulder-r5.png');
+    this.load.image('living-vista-r6', '/assets/dev/living-landmass/vista-r6.png');
+    this.load.image('living-sediment-r6', '/assets/dev/living-landmass/sediment-r6.png');
+    this.load.image('living-shoulder-r6', '/assets/dev/living-landmass/shoulder-r6.png');
+    this.load.image('living-far-shoulder', '/assets/dev/living-landmass/shoulder-r5.png');
+    this.load.image('living-shell-r6', '/assets/dev/living-landmass/shell-mineral-r6.png');
   }
 
   create(): void {
@@ -67,16 +69,22 @@ export class LivingLandmassStudyScene extends Phaser.Scene {
       this.stageRenderer.outputColorSpace = THREE.SRGBColorSpace;
       this.stageRenderer.toneMapping = THREE.ACESFilmicToneMapping; this.stageRenderer.toneMappingExposure = 1.05;
       this.stageRenderer.shadowMap.enabled = true; this.stageRenderer.shadowMap.type = THREE.PCFShadowMap;
-      if (!this.textures.exists('living-vista-r2')) throw new Error('生命大陆背景加载失败，请刷新重试');
-      const panorama = new THREE.Texture(this.textures.get('living-vista-r2').getSourceImage());
+      if (!this.textures.exists('living-vista-r6')) throw new Error('生命大陆背景加载失败，请刷新重试');
+      const panorama = new THREE.Texture(this.textures.get('living-vista-r6').getSourceImage());
       this.scenery.setPanoramaTexture(panorama);
-      if (!this.textures.exists('living-shoulder-r5')) throw new Error('远景分层素材加载失败，请刷新重试');
-      this.scenery.setDistantTexture(new THREE.Texture(this.textures.get('living-shoulder-r5').getSourceImage()));
-      if (!this.textures.exists('living-mineral-r5')) throw new Error('岩层材质加载失败，请刷新重试');
-      const strata = new THREE.Texture(this.textures.get('living-mineral-r5').getSourceImage());
+      if (!this.textures.exists('living-shoulder-r6')) throw new Error('远景分层素材加载失败，请刷新重试');
+      this.scenery.setDistantTexture(new THREE.Texture(this.textures.get('living-shoulder-r6').getSourceImage()));
+      if (!this.textures.exists('living-sediment-r6')) throw new Error('岩层材质加载失败，请刷新重试');
+      const strata = new THREE.Texture(this.textures.get('living-sediment-r6').getSourceImage());
       strata.colorSpace = THREE.SRGBColorSpace; strata.magFilter = THREE.NearestFilter;
       strata.minFilter = THREE.LinearMipmapLinearFilter; strata.wrapS = strata.wrapT = THREE.RepeatWrapping;
-      strata.needsUpdate = true; this.model.setSurfaceTexture(strata); this.scenery.setSurfaceTexture(strata);
+      strata.needsUpdate = true; this.model.setSurfaceTexture(strata);
+      if (!this.textures.exists('living-shell-r6') || !this.textures.exists('living-far-shoulder')) throw new Error('矿壳与分层素材加载失败，请刷新重试');
+      const shell = new THREE.Texture(this.textures.get('living-shell-r6').getSourceImage());
+      shell.colorSpace=THREE.SRGBColorSpace;shell.wrapS=shell.wrapT=THREE.RepeatWrapping;
+      shell.magFilter=THREE.LinearFilter;shell.minFilter=THREE.LinearMipmapLinearFilter;shell.needsUpdate=true;
+      this.model.setRockTexture(shell); this.scenery.setSurfaceTexture(shell);
+      this.scenery.setFarShoulderTexture(new THREE.Texture(this.textures.get('living-far-shoulder').getSourceImage()));
       this.stageRenderer.setClearColor(0x8b8290, 1);
       const ambient = new THREE.HemisphereLight(0xdcd3da, 0x827580, 1.65);
       const key = new THREE.DirectionalLight(0xffe9d1, 1.45); key.position.set(2050, 1700, -200);
@@ -121,7 +129,7 @@ export class LivingLandmassStudyScene extends Phaser.Scene {
     const height = this.model.groundHeightAt(position.x, position.y);
     this.rig.project(position, height, this.projected);
     const actor = this.actor.snapshot(), feet = actor.feet as number[][];
-    return { ready: this.ready, study: 'living-landmass-vista-walk', revision: 5, elapsedMs: this.elapsedMs,
+    return { ready: this.ready, study: 'living-landmass-vista-walk', revision: 6, elapsedMs: this.elapsedMs,
       camera: this.rig.snapshot(), ...(includeGeometry ? { geometry: this.model.snapshot() } : {}), scenery: this.scenery.snapshot(), audio: this.audio?.snapshot(), inputPaused: this.inputPaused, player: { ...position, height,
         facing: this.player.getFacingAngle(), moving: this.player.isMoving(), velocity: { x: body.velocity.x, y: body.velocity.y },
         screen: { ...this.projected }, body: { x: body.x, y: body.y, width: body.width, height: body.height },

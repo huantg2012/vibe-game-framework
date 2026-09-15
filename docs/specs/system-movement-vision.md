@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code / director（DEC-156：三维长路线镜头平移）
+last-modified-by: code / director（DEC-166：实际地层高程与路线支持）
 last-modified-date: 2026-09-15
 interface-changed: true
 slice: 1
@@ -28,9 +28,9 @@ exposes:
 
 # 系统设计：移动 + 有限视野
 
-## 迭代23：多地块观察场的移动与感知边界（DEC-165）
+## 迭代23：多地块观察场的移动与感知边界（DEC-166）
 
-仅 `living-landmass-stage.html`：复用Player平面移动、80速度、斜向归一、转向与20×20完整身体扫掠。六CSV定义五地块、六连接、两空气孔及岩石；8px格按完整格留量准入，所有可见障碍占地参与阻挡。实际静态三角网提供两脚与阴影高程（5.70–108.48、最大坡约0.157），无跳跃、按坡减速、攀爬或同XY重叠楼层。
+仅 `living-landmass-stage.html`：复用Player平面移动、80速度、斜向归一、转向与20×20完整身体扫掠。八CSV定义五地块、六连接、两空气孔、岩石、地层形体及局部非通行断面；8px格按完整格留量准入，所有可见障碍占地参与阻挡。实际静态三角网提供两脚与阴影高程（随地层CSV制作、具体冻结统计见QA），主路线全身体宽度采样带坡度<.3，侧向地层总体<.6，实际高度/双脚/整身支持仍同源；无跳跃、按坡减速、攀爬或同XY重叠楼层。
 
 相机为24°长焦透视工作默认，distance2600、焦面跨度1120、FOV≈16.342°、far15000。DEV `?camera=20|24|28` 仅研究；焦点跟随(player.x+45,player.y−390,height0)。角色每帧按真实竖向射线绘制，透视下尺寸随深度变化。逻辑960×640，内部1920×1280加MSAA不会改变游戏速度、范围或坐标。
 

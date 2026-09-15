@@ -1,0 +1,102 @@
+{
+  "verdict": "COVERED CHECKS PASS / HUMAN REVIEW PENDING",
+  "readyMs": 1270,
+  "routeWallSeconds": 193.877,
+  "frameSummary": {
+    "samples": 23724,
+    "medianMs": 8.30000000000291,
+    "p95Ms": 10.300000000017462,
+    "p99Ms": 16.099999999998545,
+    "maxMs": 447.50000000000006,
+    "over33": 60,
+    "over50": 60,
+    "over100": 59,
+    "method": "Browser rAF intervals under active recording; includes screenshot overhead, no synthetic clock and not isolated GPU timing."
+  },
+  "lifecycle": {
+    "contexts": [
+      {
+        "state": "closed"
+      },
+      {
+        "state": "closed"
+      }
+    ],
+    "events": [
+      {
+        "type": "called",
+        "state": "closed"
+      },
+      {
+        "type": "resolved",
+        "state": "closed"
+      }
+    ]
+  },
+  "video": "/Users/yilungao/coh/docs/qa/artifacts/iteration-23/vista-r6/2026-09-15T15-42-32-583Z/page@a5060b43d90a782f4b87728400410a70.webm",
+  "unverified": [
+    "Real OS blur/resume remains unverified: prior bounded window/Finder attempts did not establish focus loss. No CUA/Finder or repeated OS switching in R6."
+  ],
+  "wallSeconds": 213.134,
+  "checks": 21613,
+  "failed": [],
+  "dynamicSamples": 1077,
+  "observations": 58,
+  "hashes": 43,
+  "sourceStable": true,
+  "currentHashMatch": true,
+  "errors": [],
+  "consoleErrors": [],
+  "httpErrors": [],
+  "heightRange": [
+    5.881661223943628,
+    136.64267872237718
+  ],
+  "footClearance": [
+    1.499999999999993,
+    4.499997789280648
+  ],
+  "deformers": {
+    "independent-painted-shell": {
+      "range": [
+        0,
+        18
+      ],
+      "maxAnchorError": 0
+    },
+    "deep-bearing-body": {
+      "range": [
+        0,
+        10
+      ],
+      "maxAnchorError": 0.0
+    },
+    "delayed-load-lamella": {
+      "range": [
+        0,
+        6
+      ],
+      "maxAnchorError": 0.0
+    }
+  },
+  "geometryCopiesInSamples": 0,
+  "routeNodes": 34,
+  "render": {
+    "logical": {
+      "width": 960,
+      "height": 640
+    },
+    "internal": {
+      "width": 1920,
+      "height": 1280
+    },
+    "antialias": true,
+    "samples": 4,
+    "frames": 4,
+    "drawCalls": 17,
+    "triangles": 82318,
+    "buffers": 13,
+    "textures": 11
+  },
+  "strata": 12
+}

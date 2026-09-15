@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { sampleVistaStrata, type VistaStratum } from './vista-strata';
 
 export type VistaPoint = Readonly<{ x: number; y: number }>;
 export interface VistaTerrainRegion extends VistaPoint {
@@ -23,14 +24,14 @@ const BUCKET_SIZE = 64;
 
 /** Broad bedding, rather than per-vertex noise. This function is only a mesh
  * authoring tool: runtime feet sample the actual Float32 triangles below. */
-function bedHeight(x: number, y: number, regions: readonly VistaTerrainRegion[]): number {
+function bedHeight(x: number, y: number, regions: readonly VistaTerrainRegion[], strata: readonly VistaStratum[]): number {
   let weighted = 0, total = 0;
   for (const region of regions) {
     const dx = (x - region.x) / region.radiusX, dy = (y - region.y) / region.radiusY;
     const weight = Math.exp(-.5 * (dx * dx + dy * dy));
     weighted += region.height * weight; total += weight;
   }
-  return weighted / total + 4 * Math.sin((x + y * .3) / 155) + 2 * Math.sin((x - y * .6) / 79);
+  return weighted / total + sampleVistaStrata(x, y, strata).height;
 }
 
 /** Earcut guarantees coverage, but long thin interior triangles can amplify
@@ -74,18 +75,22 @@ function improveTriangles(triangles: number[][], outline: readonly VistaPoint[])
 /** Every authored boundary edge receives the same subdivision depth, so
  * neighbouring earcut triangles have matching vertices, without T-junctions. */
 export function createVistaTerrain(outline: readonly VistaPoint[], holes: readonly (readonly VistaPoint[])[],
-  regions: readonly VistaTerrainRegion[]): VistaTerrain {
+  regions: readonly VistaTerrainRegion[], strata: readonly VistaStratum[] = []): VistaTerrain {
   const contour = outline.map(p => new THREE.Vector2(p.x, p.y));
   const voidContours = holes.map(hole => hole.map(p => new THREE.Vector2(p.x, p.y)));
   const vertices = [...outline, ...holes.flat()];
   const triangles = THREE.ShapeUtils.triangulateShape(contour, voidContours);
   improveTriangles(triangles, vertices);
   const positions: number[] = [], normals: number[] = [], uvs: number[] = [], colors: number[] = [];
+  const strataWeights: number[] = [], beddingUvs: number[] = [];
   const pigments = regions.map(region => new THREE.Color(`#${region.tint}`));
   const vertex = (p: VistaPoint): void => {
-    positions.push(p.x, bedHeight(p.x, p.y, regions), p.y);
-    const dx = bedHeight(p.x + .5, p.y, regions) - bedHeight(p.x - .5, p.y, regions);
-    const dz = bedHeight(p.x, p.y + .5, regions) - bedHeight(p.x, p.y - .5, regions);
+    const bed = sampleVistaStrata(p.x, p.y, strata);
+    strataWeights.push(bed.exposure, bed.sediment, bed.fracture);
+    beddingUvs.push(bed.beddingU, bed.beddingV);
+    positions.push(p.x, bedHeight(p.x, p.y, regions, strata), p.y);
+    const dx = bedHeight(p.x + .5, p.y, regions, strata) - bedHeight(p.x - .5, p.y, regions, strata);
+    const dz = bedHeight(p.x, p.y + .5, regions, strata) - bedHeight(p.x, p.y - .5, regions, strata);
     const length = Math.hypot(dx, 1, dz);
     normals.push(-dx / length, 1 / length, -dz / length);
     // A single continuous UV field bends with the long living bed; shared
@@ -98,7 +103,7 @@ export function createVistaTerrain(outline: readonly VistaPoint[], holes: readon
       const weight = Math.exp(-.75 * (rx * rx + ry * ry));
       r += color.r * weight; g += color.g * weight; b += color.b * weight; total += weight;
     }
-    colors.push(.52 + r / total * .55, .52 + g / total * .55, .52 + b / total * .55);
+    colors.push(.94 + r / total * .035, .94 + g / total * .035, .94 + b / total * .035);
   };
   const subdivide = (a: VistaPoint, b: VistaPoint, c: VistaPoint, depth: number): void => {
     if (!depth) {
@@ -122,6 +127,8 @@ export function createVistaTerrain(outline: readonly VistaPoint[], holes: readon
   geometry.setAttribute('position', position);
   geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
   geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setAttribute('vistaBedding', new THREE.Float32BufferAttribute(beddingUvs, 2));
+  geometry.setAttribute('vistaStrata', new THREE.Float32BufferAttribute(strataWeights, 3));
   geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
   geometry.computeBoundingBox(); geometry.computeBoundingSphere();
   const box = geometry.boundingBox!;

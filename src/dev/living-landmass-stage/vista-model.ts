@@ -1,4 +1,9 @@
 import * as THREE from 'three';
+import sectionsCSV from '../../../data/living-landmass-vista-sections.csv?raw';
+import type { VistaSection } from './vista-sections';
+import strataCSV from '../../../data/living-landmass-vista-strata.csv?raw';
+import type { VistaStratum, VistaStratumKind } from './vista-strata';
+import { createVistaMaterial, setVistaRockSampler } from './vista-material';
 import outlineCSV from '../../../data/living-landmass-vista-outline.csv?raw';
 import rocksCSV from '../../../data/living-landmass-vista-rocks.csv?raw';
 import holesCSV from '../../../data/living-landmass-vista-holes.csv?raw';
@@ -42,6 +47,17 @@ for (let i = 0; i < HOLES.length; i++) HOLES[i] = shapeVistaBoundary(HOLES[i]!, 
 const REGIONS: VistaTerrainRegion[] = rows(regionsCSV, 9).map(row => ({ id: row[0]!, label: row[1]!,
   x: number(row[2]), y: number(row[3]), height: number(row[4]), radiusX: number(row[5]), radiusY: number(row[6]),
   tint: row[7]!, landmark: row[8]! }));
+const SECTIONS: VistaSection[] = rows(sectionsCSV, 9).map(row => ({ id: row[0]!, ring: number(row[1]),
+  x: number(row[2]), y: number(row[3]), radius: number(row[4]), offsetX: number(row[5]), offsetY: number(row[6]),
+  drop: number(row[7]), thickness: number(row[8]) }));
+if (SECTIONS.some(section => !Number.isInteger(section.ring) || section.ring < 0 || section.ring > HOLES.length
+  || section.radius <= 0 || section.drop <= 8 || section.thickness <= 0)) throw new Error('Invalid vista section');
+const STRATA: VistaStratum[] = rows(strataCSV, 11).map(row => ({ id: row[0]!, region: row[1]!,
+  kind: row[2] as VistaStratumKind, x: number(row[3]), y: number(row[4]), length: number(row[5]),
+  width: number(row[6]), yaw: number(row[7]), rise: number(row[8]), exposure: number(row[9]), sediment: number(row[10]) }));
+if (STRATA.some(bed => !['shoulder', 'ridge', 'fold', 'basin', 'fold-plane', 'channel'].includes(bed.kind)
+  || !REGIONS.some(region => region.id === bed.region) || bed.length <= 0 || bed.width <= 0
+  || bed.exposure < 0 || bed.exposure > 1 || bed.sediment < 0 || bed.sediment > 1)) throw new Error('Invalid vista strata');
 const ROUTE_NODES = rows(routeNodesCSV, 4).map(row => ({ id: row[0]!, region: row[1]!, x: number(row[2]), y: number(row[3]) }));
 const CONNECTORS = rows(connectorsCSV, 5).map(row => ({ id: row[0]!, from: row[1]!, to: row[2]!,
   nodes: row[3]!.split('|'), width: number(row[4]) }));
@@ -111,13 +127,14 @@ export class LandmassVistaModel {
   readonly groundHeightAt: (x: number, y: number) => number;
   private disposed = false;
   private readonly obstacles: Point[][] = [];
-  private readonly texturedMaterials: THREE.MeshStandardMaterial[] = [];
+  private readonly rockMaterial: THREE.MeshStandardMaterial;
+  private cliffMaterial: THREE.MeshStandardMaterial | undefined;
 
   constructor() {
     this.group.name = 'five-connected-living-shelves';
-    const terrain = createVistaTerrain(OUTLINE, HOLES, REGIONS);
+    const terrain = createVistaTerrain(OUTLINE, HOLES, REGIONS, STRATA);
     this.groundHeightAt = terrain.heightAt;
-    const ground = this.material(0xffffff, terraceTexture());
+    const ground = createVistaMaterial('ground', terraceTexture());
     ground.vertexColors = true;
     this.surface = new THREE.Mesh(terrain.geometry, ground);
     this.surface.name = 'continuous-walkable-bedding';
@@ -126,7 +143,7 @@ export class LandmassVistaModel {
     this.makeCliff(terrain.boundaryRings);
     const rocks = createVistaRocks(ROCKS, this.groundHeightAt, (x, y) => this.contains(x, y));
     this.obstacles.push(...rocks.footprints);
-    const rockMaterial = this.material(0xffffff); rockMaterial.vertexColors = true;
+    const rockMaterial = this.rockMaterial = createVistaMaterial('rock'); rockMaterial.vertexColors = true;
     const rockMesh = new THREE.Mesh(rocks.geometry, rockMaterial);
     rockMesh.name = 'mineral-landmarks-and-basal-flakes'; rockMesh.castShadow = true; rockMesh.receiveShadow = true;
     this.group.add(rockMesh);
@@ -142,20 +159,30 @@ export class LandmassVistaModel {
       })) });
   }
 
-  /** Ownership transfers to this model. Terrain and rock share one physical
-   * pigment scale, with their UVs expressed directly in world units. */
+  /** Ownership transfers to the model. This image is sediment only; bare
+   * ground, embedded hard bodies and cliff sections keep their own coverage. */
   setSurfaceTexture(texture: THREE.Texture): void {
+    this.replaceTexture(this.surface.material, texture);
+  }
+
+  /** Optional hard-body albedo, in rock-local bedding UVs. Ownership transfers
+   * even when loading completes after destroy; that late asset is disposed. */
+  setRockTexture(texture: THREE.Texture): void {
+    if (this.disposed) { texture.dispose(); return; }
+    this.replaceTexture(this.rockMaterial, texture);
+    setVistaRockSampler(this.surface.material, texture);
+    if (this.cliffMaterial) setVistaRockSampler(this.cliffMaterial, texture);
+  }
+
+  private replaceTexture(material: THREE.MeshStandardMaterial, texture: THREE.Texture): void {
     if (this.disposed) { texture.dispose(); return; }
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    texture.magFilter = THREE.NearestFilter; texture.minFilter = THREE.LinearMipmapLinearFilter;
+    texture.magFilter = THREE.LinearFilter; texture.minFilter = THREE.LinearMipmapLinearFilter;
     texture.generateMipmaps = true; texture.needsUpdate = true;
-    const previous = new Set<THREE.Texture>();
-    for (const material of this.texturedMaterials) {
-      if (material.map && material.map !== texture) previous.add(material.map);
-      material.map = texture; material.needsUpdate = true;
-    }
-    previous.forEach(map => map.dispose());
+    const previous = material.map;
+    material.map = texture; material.needsUpdate = true;
+    if (previous && previous !== texture && previous !== this.surface.material.map && previous !== this.rockMaterial.map) previous.dispose();
   }
 
   contains(x: number, y: number): boolean {
@@ -167,6 +194,11 @@ export class LandmassVistaModel {
     return { type: 'five-connected-bedded-landmasses',
       outline: OUTLINE.map(p => ({ ...p })), holes: HOLES.map(hole => hole.map(p => ({ ...p }))),
       regions: REGIONS.map(region => ({ ...region, actualHeight: this.groundHeightAt(region.x, region.y) })), regionCount: REGIONS.length,
+      strata: STRATA.map(bed => ({ ...bed })),
+      sections: SECTIONS.map(section => ({ ...section })),
+      materials: { ground: 'sediment at lee and basins; exposed broad shell from geometric strata weights',
+        rock: 'local bedding UV, broad hard faces, basal deposit only', cliff: 'independent cross-section UV and localized geometric laminae',
+        sharedCoverageMap: false, rockTextureLoaded: this.rockMaterial.map !== null },
       landmarks: ROCKS.map(rock => ({ ...rock })),
       connectors: CONNECTORS.map(connection => ({ ...connection, nodes: [...connection.nodes] })),
       routeNodes: ROUTE_NODES.map(node => ({ ...node, height: this.groundHeightAt(node.x, node.y) })),
@@ -180,50 +212,18 @@ export class LandmassVistaModel {
       obstacles: this.obstacles.map(poly => poly.map(p => ({ ...p }))),
       world: { width: this.width, height: this.height },
       surfaceHeight: { min: bounds.min.y, max: bounds.max.y, sampling: 'actual-float32-triangle-barycentric' },
-      cliffDepth: { outerAverage: 108, innerAverage: 77.76, variation: 'local lip and base drift up to 20 percent' },
-      boundaryTreatment: 'shared rounded wear and occasional 8-17 world-unit chips; same mesh and physical polygon',
+      cliffDepth: { outerBase: 128, innerBase: 85, variation: 'body thickness follows positive strata relief; section tapers into the underside' },
+      boundaryTreatment: 'authored oblique shoulders and unequal shelves; restrained 4-11 unit local fracture, shared mesh and physical polygon',
       terrainTriangles: this.surface.geometry.getAttribute('position').count / 3,
       relation: 'a continuous low rock shelf and exposed bedding; remote structures never grant support',
-      source: ['outline', 'holes', 'regions', 'route-nodes', 'connectors', 'rocks'].map(name => `data/living-landmass-vista-${name}.csv`) };
+      source: ['outline', 'holes', 'regions', 'route-nodes', 'connectors', 'rocks', 'strata', 'sections'].map(name => `data/living-landmass-vista-${name}.csv`) };
   }
 
   destroy(): void { if (!this.disposed) { this.disposed = true; disposeTree(this.group); } }
 
-  private material(color: number, map = this.surface?.material.map): THREE.MeshStandardMaterial {
-    const material = new THREE.MeshStandardMaterial({ color, map, roughness: 1, metalness: 0 });
-    // Restrained pigment steps interpret light as a drawn surface. Actual
-    // depth, directional shadow and contact remain supplied by the scene.
-    material.onBeforeCompile = shader => {
-      shader.vertexShader = 'varying vec3 vVistaPaintPosition;\n' + shader.vertexShader;
-      shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>',
-        '#include <begin_vertex>\n vVistaPaintPosition = position;');
-      shader.fragmentShader = 'varying vec3 vVistaPaintPosition;\n' + shader.fragmentShader;
-      shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>',
-        `#include <map_fragment>
-        vec2 arrivalDelta = (vVistaPaintPosition.xz-vec2(450.,1490.))/vec2(250.,230.);
-        vec2 westDelta = (vVistaPaintPosition.xz-vec2(395.,825.))/vec2(230.,260.);
-        float quietFace = max(exp(-dot(arrivalDelta,arrivalDelta)),exp(-dot(westDelta,westDelta)));
-        float broadWash = .5+.5*sin(vVistaPaintPosition.x*.0027+sin(vVistaPaintPosition.z*.0019)*1.2);
-        float topFacing = smoothstep(.45,.85,abs(normalize(cross(dFdx(vVistaPaintPosition),dFdy(vVistaPaintPosition))).y));
-        diffuseColor.rgb = mix(diffuseColor.rgb,vec3(.29,.27,.24),topFacing*(quietFace*.10+broadWash*.035));
-        float mineralLum = max(dot(diffuseColor.rgb,vec3(.2126,.7152,.0722)),.001);
-        float mineralStep = floor(mineralLum*20.+.5)/20.;
-        diffuseColor.rgb *= mix(mineralLum,mineralStep,.24)/mineralLum;`);
-      shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>',
-        `float paintBase = max(dot(diffuseColor.rgb,vec3(.2126,.7152,.0722)),.002);
-        float paintLight = max(dot(outgoingLight,vec3(.2126,.7152,.0722)),.002)/paintBase;
-        float paintStep = floor(paintLight*5.+.5)/5.;
-        outgoingLight *= mix(paintLight,max(.08,paintStep),.24)/max(paintLight,.002);
-        #include <opaque_fragment>`);
-    };
-    material.customProgramCacheKey = () => 'vista-mineral-paint-r5';
-    this.texturedMaterials.push(material);
-    return material;
-  }
-
   private makeCliff(boundaryRings: readonly (readonly VistaBoundaryVertex[])[]): void {
-    const geometry = createVistaCliff(boundaryRings);
-    const material = this.material(0xffffff);
+    const geometry = createVistaCliff(boundaryRings, STRATA, SECTIONS);
+    const material = this.cliffMaterial = createVistaMaterial('cliff');
     material.vertexColors = true; material.side = THREE.DoubleSide;
     material.emissive.setHex(0x8f8479); material.emissiveIntensity = .12;
     const mesh = new THREE.Mesh(geometry, material);

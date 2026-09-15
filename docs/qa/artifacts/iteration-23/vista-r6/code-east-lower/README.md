@@ -1,0 +1,9 @@
+# East and lower-bay composition follow-up
+
+Targeted real-keyboard capture after the first complete QA route exposed insufficient east/lower differentiation. Chrome is headless; normal game time, unchanged camera, production Player and 20×20 support. Route: spawn → west-rise → west → middle-west → middle → middle-east → east → lower-east → lower. The evidence records input intervals, station states, console/page errors and identical before/after source hashes. No teleport or game-state/time writes.
+
+Changes under review: east is a broad inclined hard face with one longitudinal fold shoulder and an inner depressed sediment channel; lower is a short hard fold with a second low returning lamina, a closer concave inner edge and fragments grouped toward the inner basin. The former isolated lower 54-radius block is removed; one small detached source fragment remains. Both main forms are in the actual top mesh; the new lower section belongs to the same closed cliff mesh, not a second skin. Entrance, west and crown authoring rows are unchanged.
+
+Code directly viewed `quality-east.png` and `quality-lower.png`. East's hard face now extends through the actor-side walking frame; lower's isolated large block is gone and hard bedding spans the right-hand fold. The targeted frames are submitted for ROOT/art review, not claimed as user visual approval or evidence of return-route memory. Final QA scope after these east/lower geometry changes remains for ROOT to decide.
+
+Machine checks: TypeScript, full actual-geometry/Float32 rim/body support, all six route links, route-band slope <0.3, overall slope <0.6, UV continuity and existing living-landmass tests passed. Current top: 22464 triangles; max route-band slope 0.2688822152510089; overall max 0.5432573357977823. No lint script exists in this repository.

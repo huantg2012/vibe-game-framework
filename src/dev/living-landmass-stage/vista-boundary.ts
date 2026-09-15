@@ -8,7 +8,7 @@ export function shapeVistaBoundary(outline: readonly VistaPoint[], seed: number)
   const corners = outline.map((p, i) => {
     const previous = outline[(i + outline.length - 1) % outline.length]!;
     const next = outline[(i + 1) % outline.length]!;
-    const cut = 8 + noise(i, 1, seed) * 7;
+    const cut = 4 + noise(i, 1, seed) * 6;
     const before = Math.min(.12, cut / Math.hypot(previous.x - p.x, previous.y - p.y));
     const after = Math.min(.12, cut / Math.hypot(next.x - p.x, next.y - p.y));
     return { p, start: { x: p.x + (previous.x - p.x) * before, y: p.y + (previous.y - p.y) * before },
@@ -28,7 +28,7 @@ export function shapeVistaBoundary(outline: readonly VistaPoint[], seed: number)
     for (let j = 1; j < intervals; j++) {
       const t = j / intervals;
       const chip = (noise(i, j, seed + 14) - .5) * 2;
-      const offset = Math.sign(chip) * (8 + Math.abs(chip) * 9);
+      const offset = Math.abs(chip) > .62 ? Math.sign(chip) * (4 + Math.abs(chip) * 7) : 0;
       result.push({ x: corner.end.x + dx * t - dy / length * offset,
         y: corner.end.y + dy * t + dx / length * offset });
     }

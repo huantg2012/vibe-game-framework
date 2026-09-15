@@ -1,0 +1,1216 @@
+{
+  "method": "Actual headless Chrome and normal keyboard navigation, no game-state writes or time override; targeted UV/section self-check only",
+  "errors": [],
+  "samples": [
+    {
+      "id": "00-start",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-vista-walk",
+        "revision": 6,
+        "elapsedMs": 1937.2033333333375,
+        "camera": {
+          "projection": "long-lens perspective",
+          "elevation": 24,
+          "fov": 16.342467119899506,
+          "spanAtFocus": 1120,
+          "focus": {
+            "x": 495,
+            "y": 1100,
+            "height": 0
+          },
+          "distance": 2600,
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "background": "distant painted panorama; near and middle geometry share real perspective and depth",
+          "position": [
+            495,
+            1057.5152719970804,
+            3475.218189870762
+          ]
+        },
+        "scenery": {
+          "landforms": 3,
+          "paintedLayers": 2,
+          "atmosphereLayers": 2,
+          "collision": false,
+          "distanceRoles": [
+            "infinite panorama",
+            "receding eastern painting",
+            "fixed-world curved painting",
+            "real middle bearings",
+            "walkable terrain"
+          ],
+          "motion": {
+            "time": 1.9372033333333363,
+            "load": 0,
+            "response": 0,
+            "friction": 0,
+            "stage": "rest"
+          },
+          "reducedMotion": false,
+          "transforms": {
+            "bearing": [
+              0,
+              0,
+              0
+            ],
+            "response": [
+              0,
+              0,
+              0
+            ],
+            "painting": [
+              -690,
+              -1260,
+              -3100
+            ],
+            "farPainting": [
+              3000,
+              -2280,
+              -5000
+            ]
+          },
+          "deformation": [
+            {
+              "name": "deep-bearing-body",
+              "role": "load",
+              "phase": 0,
+              "anchor": {
+                "index": 1546,
+                "restY": -467.47747802734375,
+                "y": -467.47747802734375
+              },
+              "flex": {
+                "index": 765,
+                "restY": -249.31072998046875,
+                "y": -249.31072998046875
+              },
+              "maxDisplacement": 0
+            },
+            {
+              "name": "delayed-load-lamella",
+              "role": "response",
+              "phase": 0,
+              "anchor": {
+                "index": 1546,
+                "restY": -338.28826904296875,
+                "y": -338.28826904296875
+              },
+              "flex": {
+                "index": 765,
+                "restY": -258.5204162597656,
+                "y": -258.5204162597656
+              },
+              "maxDisplacement": 0
+            },
+            {
+              "name": "independent-painted-shell",
+              "role": "load",
+              "phase": 0,
+              "anchor": {
+                "index": 1616,
+                "restY": -800,
+                "y": -800
+              },
+              "flex": {
+                "index": 29,
+                "restY": 800,
+                "y": 800
+              },
+              "maxDisplacement": 0
+            }
+          ],
+          "painting": {
+            "width": 2400,
+            "height": 1600,
+            "sourceWidth": 1536,
+            "filter": "linear mipmapped, native source; narrow alpha coverage",
+            "airMix": 0
+          },
+          "farPainting": {
+            "width": 2200,
+            "height": 1467,
+            "sourceWidth": 1536,
+            "airMix": 0.43,
+            "worldFixed": true
+          },
+          "panorama": {
+            "airMix": 0.12,
+            "chroma": 0.84,
+            "filter": "linear mipmapped; no blur"
+          },
+          "relation": "layered mineral shell bearings connect toward two world-fixed painted shoulder tiers and an atmospheric panorama; no background grants support",
+          "animation": "26-second locally anchored bending; response delayed 1.4 seconds; walkable terrain remains static"
+        },
+        "audio": {
+          "state": "locked-until-movement",
+          "muted": false,
+          "paused": false,
+          "cycle": {
+            "time": 1.9372033333333363,
+            "load": 0,
+            "response": 0,
+            "friction": 0,
+            "stage": "rest"
+          },
+          "reducedMotion": false,
+          "audioContextTime": null,
+          "presentationSeconds": 1.9372033333333376,
+          "sourcePosition": {
+            "x": 520,
+            "y": 760
+          },
+          "distance": 733.3484846919641,
+          "pan": 0.07777777777777778,
+          "gain": 0.5639450114559467,
+          "sourceStarts": 0,
+          "errors": [],
+          "synthesis": "deterministic mineral friction and low bearing resonance; shared 26-second scenic cycle"
+        },
+        "inputPaused": false,
+        "player": {
+          "x": 450,
+          "y": 1490,
+          "height": 9.732742812231809,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 435.2247666732936,
+            "y": 468.9880842607528
+          },
+          "body": {
+            "x": 440,
+            "y": 1480,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 453.2,
+              "height": 11.065701947026842,
+              "y": 1488.8,
+              "supportHeight": 9.565701947026842,
+              "clearance": 1.5
+            },
+            {
+              "x": 446.8,
+              "height": 11.610117131818958,
+              "y": 1488.8,
+              "supportHeight": 10.110117131818958,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 27.82473937300866,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "logical": {
+            "width": 960,
+            "height": 640
+          },
+          "internal": {
+            "width": 1920,
+            "height": 1280
+          },
+          "antialias": true,
+          "samples": 4,
+          "frames": 118,
+          "drawCalls": 17,
+          "triangles": 82894,
+          "buffers": 13,
+          "textures": 11
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "id": "quality-west-rise",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-vista-walk",
+        "revision": 6,
+        "elapsedMs": 6403.653333333334,
+        "camera": {
+          "projection": "long-lens perspective",
+          "elevation": 24,
+          "fov": 16.342467119899506,
+          "spanAtFocus": 1120,
+          "focus": {
+            "x": 447.85800812167633,
+            "y": 802.7501857266332,
+            "height": 0
+          },
+          "distance": 2600,
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "background": "distant painted panorama; near and middle geometry share real perspective and depth",
+          "position": [
+            447.85800812167633,
+            1057.5152719970804,
+            3177.9683755973956
+          ]
+        },
+        "scenery": {
+          "landforms": 3,
+          "paintedLayers": 2,
+          "atmosphereLayers": 2,
+          "collision": false,
+          "distanceRoles": [
+            "infinite panorama",
+            "receding eastern painting",
+            "fixed-world curved painting",
+            "real middle bearings",
+            "walkable terrain"
+          ],
+          "motion": {
+            "time": 6.2298033333333365,
+            "load": 0.15173035613391975,
+            "response": 0,
+            "friction": 0,
+            "stage": "loading"
+          },
+          "reducedMotion": false,
+          "transforms": {
+            "bearing": [
+              0,
+              0,
+              0
+            ],
+            "response": [
+              0,
+              0,
+              0
+            ],
+            "painting": [
+              -690,
+              -1260,
+              -3100
+            ],
+            "farPainting": [
+              3000,
+              -2280,
+              -5000
+            ]
+          },
+          "deformation": [
+            {
+              "name": "deep-bearing-body",
+              "role": "load",
+              "phase": 0.15173035613391975,
+              "anchor": {
+                "index": 1546,
+                "restY": -467.47747802734375,
+                "y": -467.47747802734375
+              },
+              "flex": {
+                "index": 765,
+                "restY": -249.31072998046875,
+                "y": -247.79342651367188
+              },
+              "maxDisplacement": 1.5173035613391974
+            },
+            {
+              "name": "delayed-load-lamella",
+              "role": "response",
+              "phase": 0,
+              "anchor": {
+                "index": 1546,
+                "restY": -338.28826904296875,
+                "y": -338.28826904296875
+              },
+              "flex": {
+                "index": 765,
+                "restY": -258.5204162597656,
+                "y": -258.5204162597656
+              },
+              "maxDisplacement": 0
+            },
+            {
+              "name": "independent-painted-shell",
+              "role": "load",
+              "phase": 0.15173035613391975,
+              "anchor": {
+                "index": 1616,
+                "restY": -800,
+                "y": -800
+              },
+              "flex": {
+                "index": 29,
+                "restY": 800,
+                "y": 802.7311401367188
+              },
+              "maxDisplacement": 2.7311464104105556
+            }
+          ],
+          "painting": {
+            "width": 2400,
+            "height": 1600,
+            "sourceWidth": 1536,
+            "filter": "linear mipmapped, native source; narrow alpha coverage",
+            "airMix": 0
+          },
+          "farPainting": {
+            "width": 2200,
+            "height": 1467,
+            "sourceWidth": 1536,
+            "airMix": 0.43,
+            "worldFixed": true
+          },
+          "panorama": {
+            "airMix": 0.12,
+            "chroma": 0.84,
+            "filter": "linear mipmapped; no blur"
+          },
+          "relation": "layered mineral shell bearings connect toward two world-fixed painted shoulder tiers and an atmospheric panorama; no background grants support",
+          "animation": "26-second locally anchored bending; response delayed 1.4 seconds; walkable terrain remains static"
+        },
+        "audio": {
+          "state": "running",
+          "muted": false,
+          "paused": false,
+          "cycle": {
+            "time": 6.2298033333333365,
+            "load": 0.15173035613391975,
+            "response": 0,
+            "friction": 0,
+            "stage": "loading"
+          },
+          "reducedMotion": false,
+          "audioContextTime": 4.218666666666667,
+          "presentationSeconds": 6.229803333333338,
+          "sourcePosition": {
+            "x": 520,
+            "y": 760
+          },
+          "distance": 448.32462514082,
+          "pan": 0.13015776875369295,
+          "gain": 0.7360704148587096,
+          "sourceStarts": 1,
+          "errors": [],
+          "synthesis": "deterministic mineral friction and low bearing resonance; shared 26-second scenic cycle"
+        },
+        "inputPaused": false,
+        "player": {
+          "x": 402.85800812167633,
+          "y": 1192.7501857266332,
+          "height": 24.425198123372148,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 435.104981070437,
+            "y": 455.995753898595
+          },
+          "body": {
+            "x": 392.85800812167633,
+            "y": 1182.7501857266332,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 406.0580081216763,
+              "height": 25.92705323515913,
+              "y": 1191.549395452195,
+              "supportHeight": 24.41113329753547,
+              "clearance": 1.5159199376236572
+            },
+            {
+              "x": 399.65800812167635,
+              "height": 25.967136879649846,
+              "y": 1191.5509760010714,
+              "supportHeight": 24.467136879649846,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 27.492072098432,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "logical": {
+            "width": 960,
+            "height": 640
+          },
+          "internal": {
+            "width": 1920,
+            "height": 1280
+          },
+          "antialias": true,
+          "samples": 4,
+          "frames": 378,
+          "drawCalls": 17,
+          "triangles": 82894,
+          "buffers": 13,
+          "textures": 11
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "id": "quality-west",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-vista-walk",
+        "revision": 6,
+        "elapsedMs": 11620.083333333328,
+        "camera": {
+          "projection": "long-lens perspective",
+          "elevation": 24,
+          "fov": 16.342467119899506,
+          "spanAtFocus": 1120,
+          "focus": {
+            "x": 438.4296097460117,
+            "y": 437.2433882178316,
+            "height": 0
+          },
+          "distance": 2600,
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "background": "distant painted panorama; near and middle geometry share real perspective and depth",
+          "position": [
+            438.4296097460117,
+            1057.5152719970804,
+            2812.461578088594
+          ]
+        },
+        "scenery": {
+          "landforms": 3,
+          "paintedLayers": 2,
+          "atmosphereLayers": 2,
+          "collision": false,
+          "distanceRoles": [
+            "infinite panorama",
+            "receding eastern painting",
+            "fixed-world curved painting",
+            "real middle bearings",
+            "walkable terrain"
+          ],
+          "motion": {
+            "time": 11.445803333333338,
+            "load": 1,
+            "response": 1,
+            "friction": 1,
+            "stage": "bearing"
+          },
+          "reducedMotion": false,
+          "transforms": {
+            "bearing": [
+              0,
+              0,
+              0
+            ],
+            "response": [
+              0,
+              0,
+              0
+            ],
+            "painting": [
+              -690,
+              -1260,
+              -3100
+            ],
+            "farPainting": [
+              3000,
+              -2280,
+              -5000
+            ]
+          },
+          "deformation": [
+            {
+              "name": "deep-bearing-body",
+              "role": "load",
+              "phase": 1,
+              "anchor": {
+                "index": 1546,
+                "restY": -467.47747802734375,
+                "y": -467.47747802734375
+              },
+              "flex": {
+                "index": 765,
+                "restY": -249.31072998046875,
+                "y": -239.31072998046875
+              },
+              "maxDisplacement": 10
+            },
+            {
+              "name": "delayed-load-lamella",
+              "role": "response",
+              "phase": 1,
+              "anchor": {
+                "index": 1546,
+                "restY": -338.28826904296875,
+                "y": -338.28826904296875
+              },
+              "flex": {
+                "index": 765,
+                "restY": -258.5204162597656,
+                "y": -252.52041625976562
+              },
+              "maxDisplacement": 6
+            },
+            {
+              "name": "independent-painted-shell",
+              "role": "load",
+              "phase": 1,
+              "anchor": {
+                "index": 1616,
+                "restY": -800,
+                "y": -800
+              },
+              "flex": {
+                "index": 29,
+                "restY": 800,
+                "y": 818
+              },
+              "maxDisplacement": 18
+            }
+          ],
+          "painting": {
+            "width": 2400,
+            "height": 1600,
+            "sourceWidth": 1536,
+            "filter": "linear mipmapped, native source; narrow alpha coverage",
+            "airMix": 0
+          },
+          "farPainting": {
+            "width": 2200,
+            "height": 1467,
+            "sourceWidth": 1536,
+            "airMix": 0.43,
+            "worldFixed": true
+          },
+          "panorama": {
+            "airMix": 0.12,
+            "chroma": 0.84,
+            "filter": "linear mipmapped; no blur"
+          },
+          "relation": "layered mineral shell bearings connect toward two world-fixed painted shoulder tiers and an atmospheric panorama; no background grants support",
+          "animation": "26-second locally anchored bending; response delayed 1.4 seconds; walkable terrain remains static"
+        },
+        "audio": {
+          "state": "running",
+          "muted": false,
+          "paused": false,
+          "cycle": {
+            "time": 11.445803333333338,
+            "load": 1,
+            "response": 1,
+            "friction": 1,
+            "stage": "bearing"
+          },
+          "reducedMotion": false,
+          "audioContextTime": 9.434666666666667,
+          "presentationSeconds": 11.445803333333338,
+          "sourcePosition": {
+            "x": 520,
+            "y": 760
+          },
+          "distance": 143.32388826731193,
+          "pan": 0.1406337669488759,
+          "gain": 0.8799710430057236,
+          "sourceStarts": 1,
+          "errors": [],
+          "synthesis": "deterministic mineral friction and low bearing resonance; shared 26-second scenic cycle"
+        },
+        "inputPaused": false,
+        "player": {
+          "x": 393.4296097460117,
+          "y": 827.2433882178316,
+          "height": 43.73967942812431,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 434.9465342087708,
+            "y": 438.810099508398
+          },
+          "body": {
+            "x": 383.4296097460117,
+            "y": 817.2433882178316,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 396.6296097460117,
+              "height": 45.16317735599524,
+              "y": 826.0536173171046,
+              "supportHeight": 43.6479848115649,
+              "clearance": 1.5151925444303345
+            },
+            {
+              "x": 390.2296097460117,
+              "height": 45.50673777780775,
+              "y": 826.0331591185586,
+              "supportHeight": 44.00673777780775,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 27.05167647616517,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "logical": {
+            "width": 960,
+            "height": 640
+          },
+          "internal": {
+            "width": 1920,
+            "height": 1280
+          },
+          "antialias": true,
+          "samples": 4,
+          "frames": 684,
+          "drawCalls": 17,
+          "triangles": 82894,
+          "buffers": 13,
+          "textures": 11
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "id": "quality-upper-west",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-vista-walk",
+        "revision": 6,
+        "elapsedMs": 16636.553333333326,
+        "camera": {
+          "projection": "long-lens perspective",
+          "elevation": 24,
+          "fov": 16.342467119899506,
+          "spanAtFocus": 1120,
+          "focus": {
+            "x": 616.4951230552564,
+            "y": 151.00110548810494,
+            "height": 0
+          },
+          "distance": 2600,
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "background": "distant painted panorama; near and middle geometry share real perspective and depth",
+          "position": [
+            616.4951230552564,
+            1057.5152719970804,
+            2526.2192953588674
+          ]
+        },
+        "scenery": {
+          "landforms": 3,
+          "paintedLayers": 2,
+          "atmosphereLayers": 2,
+          "collision": false,
+          "distanceRoles": [
+            "infinite panorama",
+            "receding eastern painting",
+            "fixed-world curved painting",
+            "real middle bearings",
+            "walkable terrain"
+          ],
+          "motion": {
+            "time": 16.464470000000006,
+            "load": 0.5076133098985797,
+            "response": 0.7903642230193961,
+            "friction": 0.16635975907208023,
+            "stage": "release"
+          },
+          "reducedMotion": false,
+          "transforms": {
+            "bearing": [
+              0,
+              0,
+              0
+            ],
+            "response": [
+              0,
+              0,
+              0
+            ],
+            "painting": [
+              -690,
+              -1260,
+              -3100
+            ],
+            "farPainting": [
+              3000,
+              -2280,
+              -5000
+            ]
+          },
+          "deformation": [
+            {
+              "name": "deep-bearing-body",
+              "role": "load",
+              "phase": 0.5076133098985797,
+              "anchor": {
+                "index": 1546,
+                "restY": -467.47747802734375,
+                "y": -467.47747802734375
+              },
+              "flex": {
+                "index": 765,
+                "restY": -249.31072998046875,
+                "y": -244.23460388183594
+              },
+              "maxDisplacement": 5.076133098985797
+            },
+            {
+              "name": "delayed-load-lamella",
+              "role": "response",
+              "phase": 0.7903642230193961,
+              "anchor": {
+                "index": 1546,
+                "restY": -338.28826904296875,
+                "y": -338.28826904296875
+              },
+              "flex": {
+                "index": 765,
+                "restY": -258.5204162597656,
+                "y": -253.77822875976562
+              },
+              "maxDisplacement": 4.742185338116377
+            },
+            {
+              "name": "independent-painted-shell",
+              "role": "load",
+              "phase": 0.5076133098985797,
+              "anchor": {
+                "index": 1616,
+                "restY": -800,
+                "y": -800
+              },
+              "flex": {
+                "index": 29,
+                "restY": 800,
+                "y": 809.1370239257812
+              },
+              "maxDisplacement": 9.137039578174434
+            }
+          ],
+          "painting": {
+            "width": 2400,
+            "height": 1600,
+            "sourceWidth": 1536,
+            "filter": "linear mipmapped, native source; narrow alpha coverage",
+            "airMix": 0
+          },
+          "farPainting": {
+            "width": 2200,
+            "height": 1467,
+            "sourceWidth": 1536,
+            "airMix": 0.43,
+            "worldFixed": true
+          },
+          "panorama": {
+            "airMix": 0.12,
+            "chroma": 0.84,
+            "filter": "linear mipmapped; no blur"
+          },
+          "relation": "layered mineral shell bearings connect toward two world-fixed painted shoulder tiers and an atmospheric panorama; no background grants support",
+          "animation": "26-second locally anchored bending; response delayed 1.4 seconds; walkable terrain remains static"
+        },
+        "audio": {
+          "state": "running",
+          "muted": false,
+          "paused": false,
+          "cycle": {
+            "time": 16.464470000000006,
+            "load": 0.5076133098985797,
+            "response": 0.7903642230193961,
+            "friction": 0.16635975907208023,
+            "stage": "release"
+          },
+          "reducedMotion": false,
+          "audioContextTime": 14.453333333333333,
+          "presentationSeconds": 16.464470000000002,
+          "sourcePosition": {
+            "x": 520,
+            "y": 760
+          },
+          "distance": 224.9716948771737,
+          "pan": -0.057216803394729315,
+          "gain": 0.8522081092743039,
+          "sourceStarts": 1,
+          "errors": [],
+          "synthesis": "deterministic mineral friction and low bearing resonance; shared 26-second scenic cycle"
+        },
+        "inputPaused": false,
+        "player": {
+          "x": 571.4951230552564,
+          "y": 541.0011054881049,
+          "height": 79.90476937771841,
+          "facing": -1.5707963267948966,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 434.64682528396474,
+            "y": 406.30270904822794
+          },
+          "body": {
+            "x": 561.4951230552564,
+            "y": 531.0011054881049,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 574.6951230552564,
+              "height": 81.97794743802585,
+              "y": 539.7945521274845,
+              "supportHeight": 80.47794743802585,
+              "clearance": 1.5
+            },
+            {
+              "x": 568.2951230552563,
+              "height": 81.18845904145194,
+              "y": 539.8076588487254,
+              "supportHeight": 79.67282677049158,
+              "clearance": 1.515632270960353
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 26.217703817191072,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "logical": {
+            "width": 960,
+            "height": 640
+          },
+          "internal": {
+            "width": 1920,
+            "height": 1280
+          },
+          "antialias": true,
+          "samples": 4,
+          "frames": 980,
+          "drawCalls": 17,
+          "triangles": 82894,
+          "buffers": 13,
+          "textures": 11
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "id": "quality-crown",
+      "state": {
+        "ready": true,
+        "study": "living-landmass-vista-walk",
+        "revision": 6,
+        "elapsedMs": 23886.24333333312,
+        "camera": {
+          "projection": "long-lens perspective",
+          "elevation": 24,
+          "fov": 16.342467119899506,
+          "spanAtFocus": 1120,
+          "focus": {
+            "x": 1086.7131384686725,
+            "y": -11.03153664802295,
+            "height": 0
+          },
+          "distance": 2600,
+          "resolution": {
+            "width": 960,
+            "height": 640
+          },
+          "background": "distant painted panorama; near and middle geometry share real perspective and depth",
+          "position": [
+            1086.7131384686725,
+            1057.5152719970804,
+            2364.186653222739
+          ]
+        },
+        "scenery": {
+          "landforms": 3,
+          "paintedLayers": 2,
+          "atmosphereLayers": 2,
+          "collision": false,
+          "distanceRoles": [
+            "infinite panorama",
+            "receding eastern painting",
+            "fixed-world curved painting",
+            "real middle bearings",
+            "walkable terrain"
+          ],
+          "motion": {
+            "time": 23.71247000000001,
+            "load": 0,
+            "response": 0,
+            "friction": 0,
+            "stage": "rest"
+          },
+          "reducedMotion": false,
+          "transforms": {
+            "bearing": [
+              0,
+              0,
+              0
+            ],
+            "response": [
+              0,
+              0,
+              0
+            ],
+            "painting": [
+              -690,
+              -1260,
+              -3100
+            ],
+            "farPainting": [
+              3000,
+              -2280,
+              -5000
+            ]
+          },
+          "deformation": [
+            {
+              "name": "deep-bearing-body",
+              "role": "load",
+              "phase": 0,
+              "anchor": {
+                "index": 1546,
+                "restY": -467.47747802734375,
+                "y": -467.47747802734375
+              },
+              "flex": {
+                "index": 765,
+                "restY": -249.31072998046875,
+                "y": -249.31072998046875
+              },
+              "maxDisplacement": 0
+            },
+            {
+              "name": "delayed-load-lamella",
+              "role": "response",
+              "phase": 0,
+              "anchor": {
+                "index": 1546,
+                "restY": -338.28826904296875,
+                "y": -338.28826904296875
+              },
+              "flex": {
+                "index": 765,
+                "restY": -258.5204162597656,
+                "y": -258.5204162597656
+              },
+              "maxDisplacement": 0
+            },
+            {
+              "name": "independent-painted-shell",
+              "role": "load",
+              "phase": 0,
+              "anchor": {
+                "index": 1616,
+                "restY": -800,
+                "y": -800
+              },
+              "flex": {
+                "index": 29,
+                "restY": 800,
+                "y": 800
+              },
+              "maxDisplacement": 0
+            }
+          ],
+          "painting": {
+            "width": 2400,
+            "height": 1600,
+            "sourceWidth": 1536,
+            "filter": "linear mipmapped, native source; narrow alpha coverage",
+            "airMix": 0
+          },
+          "farPainting": {
+            "width": 2200,
+            "height": 1467,
+            "sourceWidth": 1536,
+            "airMix": 0.43,
+            "worldFixed": true
+          },
+          "panorama": {
+            "airMix": 0.12,
+            "chroma": 0.84,
+            "filter": "linear mipmapped; no blur"
+          },
+          "relation": "layered mineral shell bearings connect toward two world-fixed painted shoulder tiers and an atmospheric panorama; no background grants support",
+          "animation": "26-second locally anchored bending; response delayed 1.4 seconds; walkable terrain remains static"
+        },
+        "audio": {
+          "state": "running",
+          "muted": false,
+          "paused": false,
+          "cycle": {
+            "time": 23.71247000000001,
+            "load": 0,
+            "response": 0,
+            "friction": 0,
+            "stage": "rest"
+          },
+          "reducedMotion": false,
+          "audioContextTime": 21.706666666666667,
+          "presentationSeconds": 23.712470000000007,
+          "sourcePosition": {
+            "x": 520,
+            "y": 760
+          },
+          "distance": 646.0415085512586,
+          "pan": -0.5796812649651917,
+          "gain": 0.6154016889724259,
+          "sourceStarts": 1,
+          "errors": [],
+          "synthesis": "deterministic mineral friction and low bearing resonance; shared 26-second scenic cycle"
+        },
+        "inputPaused": false,
+        "player": {
+          "x": 1041.7131384686725,
+          "y": 378.96846335197705,
+          "height": 137.45929678043754,
+          "facing": 0,
+          "moving": false,
+          "velocity": {
+            "x": 0,
+            "y": 0
+          },
+          "screen": {
+            "x": 434.1615464263057,
+            "y": 353.66780897579423
+          },
+          "body": {
+            "x": 1031.7131384686725,
+            "y": 368.96846335197705,
+            "width": 20,
+            "height": 20
+          },
+          "supported": true,
+          "feet": [
+            {
+              "x": 1042.8883582057817,
+              "height": 138.51005618001483,
+              "y": 382.16846335197704,
+              "supportHeight": 136.99913599479873,
+              "clearance": 1.5109201852160936
+            },
+            {
+              "x": 1042.937918731563,
+              "height": 139.43356490079952,
+              "y": 375.76846335197706,
+              "supportHeight": 137.93356490079952,
+              "clearance": 1.5
+            }
+          ]
+        },
+        "actorProjection": {
+          "elevation": 24.865521562449214,
+          "colour": "native finite-palette pixel redraw",
+          "depth": "per-pixel physical pose; real shared depth buffer",
+          "material": "alpha-test .5, opaque depth-write, nearest texture",
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visibility": "open visual workbench; tactical perception is not enabled or validated",
+        "simulation": "shared production Player/input and physical-grid sweep only; no RiftScene, combat, search, inventory or save",
+        "render": {
+          "logical": {
+            "width": 960,
+            "height": 640
+          },
+          "internal": {
+            "width": 1920,
+            "height": 1280
+          },
+          "antialias": true,
+          "samples": 4,
+          "frames": 1410,
+          "drawCalls": 16,
+          "triangles": 80014,
+          "buffers": 13,
+          "textures": 11
+        },
+        "blockedFrames": 0,
+        "errors": [],
+        "pageErrors": []
+      }
+    }
+  ]
+}

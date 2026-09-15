@@ -1,40 +1,45 @@
 import * as THREE from 'three';
+import { sampleVistaSections, type VistaSection } from './vista-sections';
+import { sampleVistaStrata, type VistaStratum } from './vista-strata';
 import type { VistaBoundaryVertex } from './vista-terrain';
 
 /** A worn lip, broad cut face and tapering base. Their joints wander locally;
  * no horizontal material band closes around the entire landmass. */
-export function createVistaCliff(outlines: readonly (readonly VistaBoundaryVertex[])[]): THREE.BufferGeometry {
+export function createVistaCliff(outlines: readonly (readonly VistaBoundaryVertex[])[], strata: readonly VistaStratum[] = [], sections: readonly VistaSection[] = []): THREE.BufferGeometry {
   const positions: number[] = [], indices: number[] = [], uv: number[] = [], colors: number[] = [];
   for (let ring = 0; ring < outlines.length; ring++) {
     const outline = outlines[ring]!, points = outline;
-    let area = 0;
-    for (let i = 0; i < outline.length; i++) {
-      const a = outline[i]!, b = outline[(i + 1) % outline.length]!;
-      area += a.x * b.y - a.y * b.x;
-    }
-    const outwardSign = (area > 0 ? 1 : -1) * (ring ? -1 : 1);
+    // Lower rings are affine contractions of the complete authored body.
+    // Local inset normals at tiny wear corners fold through one another and
+    // create hanging slivers. This preserves each ring's ordered topology.
+    const center = outline.reduce((sum, p) => ({ x: sum.x + p.x / outline.length,
+      y: sum.y + p.y / outline.length }), { x: 0, y: 0 });
     const offset = positions.length / 3, count = points.length;
     let distance = 0;
     for (let i = 0; i < count; i++) {
-      const p = points[i]!, previous = points[(i + count - 1) % count]!, next = points[(i + 1) % count]!;
-      const tx = next.x - previous.x, ty = next.y - previous.y, length = Math.hypot(tx, ty);
-      const nx = ty / length * outwardSign, ny = -tx / length * outwardSign;
-      const phase = p.x / 137 + p.y / 193 + ring * 2.1;
-      const thickness = (ring ? 77.76 : 108) * (1 + Math.sin(phase) * .13 + Math.sin(phase * 2.37) * .07);
-      const lip = .11 + Math.sin(phase * 1.71) * .045;
-      const shoulder = .27 + Math.sin(phase + .8) * .075;
+      const p = points[i]!, next = points[(i + 1) % count]!;
+      const phase = p.x / 371 + p.y / 487 + ring * 2.1;
+      const bed = sampleVistaStrata(p.x, p.y, strata);
+      const section = sampleVistaSections(p.x, p.y, ring, sections);
+      const thickness = (ring ? 85 : 128) + Math.max(0, bed.height) * 1.5 + Math.sin(phase) * 13;
+      const lip = .065 + bed.fracture * .10;
+      const shoulder = .34 + Math.sin(phase + .8) * .07;
       const base = .79 + Math.sin(phase * .93 + 1.9) * .06;
-      const fractions = [0, lip, shoulder, base, 1];
+      const ledgeTop = Math.min(shoulder * .74, lip + section.drop / thickness);
+      const ledgeBase = Math.min(base * .83, Math.max(shoulder, ledgeTop + section.thickness / thickness));
+      const fractions = [0, ledgeTop, ledgeBase, base, 1];
       // Local wedges emerge only in selected spans; the rest is one plain cut.
-      const projectingPlate = Math.max(0, Math.sin(phase * .72 + .5) - .75) * 40;
-      const offsets = [0, 4 + projectingPlate, -4 + projectingPlate * .25, -12 - Math.sin(phase) * 6, -22 - Math.cos(phase * 1.3) * 7];
+      const contraction = [0, .001, .010, .026, .043];
       for (let row = 0; row < fractions.length; row++) {
         const z = p.height - thickness * fractions[row]!;
-        positions.push(p.x + nx * offsets[row]!, z, p.y + ny * offsets[row]!);
-        uv.push(distance / 744, (z + Math.sin(distance / 220) * 28) / 744);
+        const inset = contraction[row]! * (ring ? -.8 : 1);
+        const projection = row === 1 ? 1 : row === 2 ? .74 : 0;
+        positions.push(p.x + (center.x - p.x) * inset + section.offsetX * projection,
+          z, p.y + (center.y - p.y) * inset + section.offsetY * projection);
+        uv.push(distance / 390, z / 105);
         const shade = [1, .94, .83, .79, .76][row]!;
         const variation = 1 + Math.sin(phase * .51) * .025;
-        colors.push(shade * variation, shade * .97 * variation, shade * .93 * variation);
+        colors.push(shade * variation, shade * .99 * variation, shade * 1.025 * variation);
         if (i) {
           const a = offset + (i - 1) * 5 + row, b = offset + i * 5 + row;
           if (row < 4) indices.push(a, b, a + 1, b, b + 1, a + 1);
