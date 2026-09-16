@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: code / director（DEC-168：自然地形与探索拓扑分离）
+last-modified-by: director（DEC-169：确认正式2D主线，归档三维DEV合同）
 last-modified-date: 2026-09-16
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: true
@@ -25,7 +25,13 @@ exposes:
 
 # 系统设计：裂隙地图生成
 
-## DEC-168独立生命地貌观察场
+## 正式生产主线：俯视2D（DEC-169，2026-09-16）
+
+`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；Rift 使用 `generateRiftLayout`、原生 `TileGrid`、Phaser 2D 地表、像素角色及正式视野/战斗/搜撤。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。当前启用碎片由 `data/rift-fragments.csv` 决定：户外土壤、医院实验室、地铁工业、旧图书馆；居民区未启用。
+
+三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。本次无运行接口、玩法、CSV或存档格式变更；基线验证见 [2D记录](../qa/rift-2d-baseline.md)。
+
+## 归档DEV · DEC-168独立生命地貌观察场
 
 `living-landmass-stage.html`为手工编排的连续自然地貌，不调用正式随机地图生成。R7由路线网络偏移生成实体壳网的方案已被用户否决，`build-vista-web`与cells面环退出当前生产链。**路线拓扑描述走法，不决定地形轮廓、孔洞数量、宽度或高程。**
 
@@ -39,13 +45,13 @@ painted-footprints字段id/order/x/y，是固定机位绘制景物的独立落�
 
 本页不注册正式世界/敌人/掉落/存档；连续地貌与绘制式渲染首段不等于完整第二世界或供给验证完成。验收必须包括正常镜头下的路线选择、前望到达、人物落脚及自然形体，图论/通行PASS不代表画面成立。
 
-## 迭代23：生命大陆局部的支撑合同
+## 归档DEV · 迭代23：生命大陆局部的支撑合同
 
 `living-landmass/living-borne-fin@1`先提供一张43×35格局部，四表分别拥有布局、支撑、承重周期与部署；正文见[生命大陆](../content/living-landmass.md)。平面足迹在一趟内固定，8px三角格连续形变，不新增可走面、水平搬运或拓扑重建。中央空腔不可走但能通视；真实身体沿稳定厚脊全周期可回唯一入口，额外路程384px。抬高本身不判危险，只有CSV夹合轮廓收费。
 
 四翻堆、一只既有低污染听觉虫使用原部署/来源规则；世界ID独立，不冒充旧图书馆。第一局部无部署随机变体，seed只影响已有掉落/形态支流及表面，不能宣传为大量不同关卡。当地原生敌人、专属来源池、全图编排和持久旅程是局部通过后的工作包。
 
-## 迭代22：完整悬海的有限内容包
+## 归档DEV · 迭代22：完整悬海的有限内容包
 
 完整悬海的内容身份为`suspended-sea`，两份编排为`sea-open-channel`和`sea-folded-ridge`，配方版本1。五张`data/suspended-sea-*.csv`分别拥有场景矩形与空洞、地形、自然海孔、核心/侧溢/排水路径、敌人和拾获部署。它们经既有codegen生成显式数据，进入同一正式RiftScene与固定尺度Stage；不是旧图书馆的别名，不在未知ID时回退旧图。独立开发入口不把这个内容包自动加入长期存档或正式随机池。
 

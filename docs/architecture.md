@@ -10,7 +10,13 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代23：连续三维地貌与绘制景物（DEC-168 / R8）
+## 正式生产主线：俯视2D（DEC-169，2026-09-16）
+
+`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；Rift 使用 `generateRiftLayout`、原生 `TileGrid`、Phaser 2D 地表、像素角色及正式视野/战斗/搜撤。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。当前启用碎片由 `data/rift-fragments.csv` 决定：户外土壤、医院实验室、地铁工业、旧图书馆；居民区未启用。
+
+三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。本次无运行接口、玩法、CSV或存档格式变更；基线验证见 [2D记录](qa/rift-2d-baseline.md)。
+
+## 归档DEV · 迭代23：连续三维地貌与绘制景物（DEC-168 / R8）
 
 `living-landmass-stage.html` → `src/dev/living-landmass-stage.ts` → `living-landmass-stage/scene.ts`仍是独立DEV入口，不进入正式菜单或世界池。用户已否决R7将“网状探索”直接做成多孔实体网及满铺岩纹；R8前两次实际帧也未通过视觉评审。当前实现为**真实连续三维地形/碰撞＋唯一地表绘制图＋固定倾角绘制景物**，不再以纯程序三色块承诺完成近景画面。R6保存提交仍为`58b0605`，旧失败证据保留；当前技术通过不代替新合成实帧或用户终审。
 
@@ -34,7 +40,7 @@ blur/focus/visibilitychange与Phaser事件统一暂停/恢复输入、物理及�
 
 只读`__livingLandmassStage.getState()`含地形/路线与`paintedLandforms`的实际图尺寸、crop、UV、世界锚点/尺寸/固定角及深度状态；`surfaceAtlas`读取实际map尺寸、wrap/repeat/offset、shader bounds和geometry bounds。`getDynamicState()`省略不变几何，保留actor/相机/AA/音频及形变anchor/flex/maxDisplacement。无测试状态写入口，无新增跳跃/攀爬、战术FOV、搜撤、库存或存档。技术、真实输入去回程、同族画法、自然感与空间记忆分别取证；当前证据及未验项见[QA](qa/iteration-23.md)，画法见[方向](art/living-landmass-direction.md)，任务见[迭代23](tasks/iteration-23.md)。正式悬海路径与旧局部不受本DEV研究影响。
 
-## 迭代23：生命大陆受力局部（DEC-159）
+## 归档DEV · 迭代23：生命大陆受力局部（DEC-159）
 
 **DEC-160/161：以下描述已存在的冻结实现。** 用户已否决旧局部与生成概念静帧，当前制作上面的独立真实引擎场景；以下相机/地形工厂等现有接口不约束新方案。旧完整局部的运行时规则未随此研究改变，视觉验证通过后再决定保留、适配或重做。
 
@@ -46,7 +52,7 @@ blur/focus/visibilitychange与Phaser事件统一暂停/恢复输入、物理及�
 
 `living-landmass.html`→`src/dev/living-landmass.ts`使用隔离内存训练、原`RiftScene`、正式搜寻/战斗/有限装备/撤离；入口不加入生产构建和随机池。只读`__livingLandmass`及连续记录供实际键鼠验收。世界DTO与呈现记忆可导出/校验/恢复，但尚未注册完整旅程的持久恢复；刷新训练页不能冒称续原局。开发入口见[生命大陆](dev/living-landmass.md)，实施/未验项见[迭代23 QA](qa/iteration-23.md)。
 
-## 迭代22：完整悬海内容包（DEC-157，用户已验收）
+## 归档DEV · 迭代22：完整悬海内容包（DEC-157，用户已验收）
 
 `data/suspended-sea-*.csv`经既有codegen生成`src/generated/suspended-sea-data.ts`，拥有两张编排、地形、自然孔、真实落水/侧溢/排水路径与七翻堆。`src/dev/suspended-sea/world.ts`校验明确世界ID、版本、种子及原子部署变体，组合`SpatialSliceWorld`并返回壳片合同/来源元信息；没有继承覆盖基类构造期的advance。真实来源为`suspended-sea`，不冒报旧图书馆；空reef不创建占地或显示实例。旧M/local数据与Vista默认不变。
 

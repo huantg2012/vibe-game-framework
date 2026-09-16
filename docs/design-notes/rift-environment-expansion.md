@@ -2,7 +2,7 @@
 status: PROPOSED
 created-by: director
 created-date: 2026-09-10
-last-modified-date: 2026-09-11
+last-modified-date: 2026-09-16
 scope: 异时空取景、原生世界与污染改写、环境内容扩展
 related-decision: DEC-144 / DEC-145 / DEC-148 / DEC-149 / DEC-150 / DEC-151 / DEC-152 / DEC-153 / DEC-154
 note: 用户要求突破地球场所与人造环境的取景局限。本篇已原地重写；世界样本仍为提案，未作为正史或实现落地。
@@ -10,7 +10,7 @@ note: 用户要求突破地球场所与人造环境的取景局限。本篇已�
 
 # 裂隙环境扩展：从陌生世界中取景
 
-与构筑、敌人和获取系统一起落地的执行路线见[内容扩展推进计划](../progress/content-expansion-plan.md)（APPROVED / IN-PROGRESS）。迭代21用户已认可三维像素舞台并选择该方向（DEC-154），正俯视冻结在R4；以下双路线提案保留为方向来源，II不再同步开发。J批继续改海面大块关系、中央缺失断面与整场色彩，完整世界和生产接入尚未实施；四A持续供给仍须先验，才进入四B扩产。
+当前制作方向以[推进计划](../progress/content-expansion-plan.md)的 DEC-169 为准：用户终止三维/绘制式关卡重构，回到俯视2D像素Rift。本文保留世界意象提案与历史研究；三维主线及冻结俯视方向的旧决定已被覆盖，后续世界内容须在2D玩法和成本约束内重新评估。四A供给未开始、四B锁定。
 
 ## 1. 取景的起点
 

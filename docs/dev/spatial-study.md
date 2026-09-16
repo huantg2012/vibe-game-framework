@@ -1,13 +1,15 @@
 ---
-status: M-AGENT-VERIFIED / USER-REVIEW-PENDING / VISTA-FROZEN-R4
+status: ARCHIVED / DIRECTION-TERMINATED-BY-USER
 iteration: 21
 decision: DEC-149 / DEC-150 / DEC-151 / DEC-152 / DEC-153 / DEC-154 / DEC-155 / DEC-156
-last-modified-date: 2026-09-12
+last-modified-date: 2026-09-16
 ---
 
 # 悬海空间样板
 
-**当前（M / DEC-156）：** 第一批已将R7局部扩为可连续行走的三维路线。长路、镜头、三配置和五类技能接线已交；完整白板/近战搜撤与轻装、生命周期、最终海层/视野显隐、实际结算冻结均完成Agent验收。用户观感待审。下方K/J等段为历史记录，当前证据见[本批QA](../qa/iteration-21-gameplay.md)。
+**DEC-169 · 2026-09-16 方向终止归档。** 用户认可 R8 的视觉进步，但因制作成本和玩法损失决定回到俯视 2D 像素 Rift。三维/绘制式关卡探索停止，`218f773` 保留 R8 检查点；下文为历史实现、反馈和验证记录，不再构成继续制作或等待验收的授权。正式入口为 `/`（主菜单 → 净化点 → 裂隙），默认 `RiftScene` 保留原有 2D 地图与完整玩法。
+
+**历史（M / DEC-156）：** 第一批已将R7局部扩为可连续行走的三维路线。长路、镜头、三配置和五类技能接线已交；完整白板/近战搜撤与轻装、生命周期、最终海层/视野显隐、实际结算冻结均完成Agent验收。用户观感待审。下方K/J等段为历史记录，当前证据见[本批QA](../qa/iteration-21-gameplay.md)。
 
 ## M：长路线与三种配置
 

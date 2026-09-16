@@ -4,7 +4,7 @@ phase: HUMAN-PASS
 accepted-by: user
 accepted-date: 2026-09-13
 created-date: 2026-09-12
-last-modified-date: 2026-09-13
+last-modified-date: 2026-09-16
 owner: director
 decision: DEC-157 / DEC-158
 parent-plan: ../progress/content-expansion-plan.md
@@ -12,6 +12,8 @@ baseline: 2ee0b2b
 ---
 
 # 迭代22：悬海完整关卡与净化点往返
+
+**DEC-169 · 2026-09-16 方向终止归档。** 用户认可 R8 的视觉进步，但因制作成本和玩法损失决定回到俯视 2D 像素 Rift。三维/绘制式关卡探索停止，`218f773` 保留 R8 检查点；下文为历史实现、反馈和验证记录，不再构成继续制作或等待验收的授权。正式入口为 `/`（主菜单 → 净化点 → 裂隙），默认 `RiftScene` 保留原有 2D 地图与完整玩法。 当时已完成范围与用户验收事实保留，归档方向不撤销历史验收。
 
 用户于2026-09-13回复“验证ok，提交吧”，验收本轮已交付的完整悬海、净化点往返与独立原局恢复。迭代22按下列范围结案，本次提交保存游戏实现、进度及验证证据。M基线为`2ee0b2b`；本次不推送。未证实的诱离策略、Agent未审听及旧世界恢复等边界继续保留，不扩大为发行质量或持续供给通过。
 

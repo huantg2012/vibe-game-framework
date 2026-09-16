@@ -4,7 +4,7 @@ phase: SAMPLES-ACCEPTED-FOR-NEXT-STAGE
 gameplay-verdict: AGENT-VERIFIED
 spatial-verdict: R4-STAGE-USER-ACCEPTED-AS-DIRECTION / VISTA-FROZEN-AT-R4 / K-RULES-VERIFIED / R7-USER-PROVISIONALLY-ACCEPTED
 created-date: 2026-09-11
-last-modified-date: 2026-09-12
+last-modified-date: 2026-09-16
 owner: director
 decision: DEC-147 / DEC-148 / DEC-149 / DEC-150 / DEC-151 / DEC-152 / DEC-153 / DEC-154 / DEC-155 / DEC-156
 parent-plan: ../progress/content-expansion-plan.md
@@ -12,6 +12,8 @@ baseline: 2d9725f
 ---
 
 # 迭代21：世界方向与玩法样板
+
+**DEC-169 · 2026-09-16 方向终止归档。** 用户认可 R8 的视觉进步，但因制作成本和玩法损失决定回到俯视 2D 像素 Rift。三维/绘制式关卡探索停止，`218f773` 保留 R8 检查点；下文为历史实现、反馈和验证记录，不再构成继续制作或等待验收的授权。正式入口为 `/`（主菜单 → 净化点 → 裂隙），默认 `RiftScene` 保留原有 2D 地图与完整玩法。 当时已完成范围与用户验收事实保留，归档方向不撤销历史验收。
 
 用户已授权开始DEC-146计划。本迭代承担阶段一的世界概念、正式构筑对照与三维可玩基础。DEC-156用户“开工”接受近期三批安排，以悬海作为首包实施方向；当前先执行M批基础收口，完整世界与净化点往返在后续阶段交付，四A仍是扩产前置。
 

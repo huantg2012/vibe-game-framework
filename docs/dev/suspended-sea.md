@@ -1,14 +1,16 @@
 ---
-status: IMPLEMENTED / USER-ACCEPTED
+status: ARCHIVED / DIRECTION-TERMINATED-BY-USER
 accepted-date: 2026-09-13
 created-date: 2026-09-12
-last-modified-date: 2026-09-13
+last-modified-date: 2026-09-16
 iteration: 22
 decision: DEC-157
 supply-validation: NOT-STARTED
 ---
 
 # 完整悬海试玩入口
+
+**DEC-169 · 2026-09-16 方向终止归档。** 用户认可 R8 的视觉进步，但因制作成本和玩法损失决定回到俯视 2D 像素 Rift。三维/绘制式关卡探索停止，`218f773` 保留 R8 检查点；下文为历史实现、反馈和验证记录，不再构成继续制作或等待验收的授权。正式入口为 `/`（主菜单 → 净化点 → 裂隙），默认 `RiftScene` 保留原有 2D 地图与完整玩法。
 
 提供单趟训练与净化点连续旅程两种入口，仅开发服务器启用。单趟16组真实搜撤和连续五趟供奉链已验证，2026-09-13用户“验证ok，提交吧”验收本轮整体体验。它使用正式RiftScene、武器与技能、视线、物件账本、翻找及撤离，换入已登记的悬海内容和三维呈现。与旧M长路线、local、冻结Vista分别保留，不用新内容覆盖旧样本。
 

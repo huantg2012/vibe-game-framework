@@ -1,16 +1,18 @@
 ---
-status: IMPLEMENTED-REVIEW-PENDING / PRIOR-VISUALS-REJECTED
+status: ARCHIVED / DIRECTION-TERMINATED-BY-USER
 created-by: design
 created-date: 2026-09-13
 last-modified-by: director
-last-modified-date: 2026-09-15
+last-modified-date: 2026-09-16
 iteration: 23
 scope: DEC-164分层远景/多地块/AA/镜头/材质/动态声音与实走，以及旧实景/旧局部的历史记录；不含完整第二世界或供给验收
 ---
 
 # 迭代23：生命大陆局部验收计划
 
-**当前DEC-164 / R4：** 用户授权完整推进优化清单。五地块、六连接、四距离职责、AA、24°镜头、矿化材质和26秒同相位音景已实施；第11节记录本轮实际验证及听感限制。第10节和更早为历史记录。
+**DEC-169 · 2026-09-16 方向终止归档。** 用户认可 R8 的视觉进步，但因制作成本和玩法损失决定回到俯视 2D 像素 Rift。三维/绘制式关卡探索停止，`218f773` 保留 R8 检查点；下文为历史实现、反馈和验证记录，不再构成继续制作或等待验收的授权。正式入口为 `/`（主菜单 → 净化点 → 裂隙），默认 `RiftScene` 保留原有 2D 地图与完整玩法。
+
+**历史DEC-164 / R4：** 用户授权完整推进优化清单。五地块、六连接、四距离职责、AA、24°镜头、矿化材质和26秒同相位音景已实施；第11节记录本轮实际验证及听感限制。第10节和更早为历史记录。
 
 **用户视觉结论（2026-09-13，DEC-160）：未通过。** 用户无法从实机理解场景内容，要求退回原概念，先做视觉验证再制作任何关卡。证据：[用户原截图](artifacts/iteration-23/user-visual-rejection.png)。下列技术检查与Agent实玩是历史事实，不能替代“看得懂这个世界”；此前USER-REVIEW-PENDING与内部画面意见已被本次否决覆盖。旧完整局部冻结；随后[A/B/C静帧](../art/iteration-23-visual/README.md)也被用户明确否决（2026-09-15，DEC-161）：概念图不具备精确游戏空间证据，A/B偏侧视平台，C偏第三人称RPG。该最小真实引擎场景随后也被用户明确否决（DEC-162）；第8节是其历史技术记录；研究与技术合同见[视觉方向](../art/living-landmass-direction.md)。
 

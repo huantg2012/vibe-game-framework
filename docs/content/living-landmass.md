@@ -1,18 +1,20 @@
 ---
-status: IMPLEMENTATION-SNAPSHOT / FROZEN
-phase: FULL-LEVEL-FROZEN / ENGINE-VISUAL-STUDY-REVIEW-PENDING
+status: ARCHIVED / DIRECTION-TERMINATED-BY-USER
+phase: ARCHIVED / FULL-LEVEL-CANCELLED
 created-by: design
 created-date: 2026-09-13
 last-modified-by: design
-last-modified-date: 2026-09-15
+last-modified-date: 2026-09-16
 world-id: living-landmass
 content-version: 1
 decision: DEC-159 / DEC-160 / DEC-161
 interfaces-with: [system-map-generation, system-movement-vision, system-enemy-ai, system-combat, system-chaos-scavenge-extract, system-field-inventory, system-growth-tide, system-survival-attributes]
-note: 迭代23首包的实际机制与数据快照。用户已否决旧局部和生成静帧，按DEC-161冻结完整关卡、直接制作独立引擎视觉场景；下文机位、地图和周期不约束新视觉方案。规则未随研究静默修改，本文件不代表完整世界或供给通过。
+note: DEC-169终止三维关卡探索；下文仅记首包实际机制和数据，不再授权完整世界制作。
 ---
 
 # 彼此托举的生命大陆：受力鳍面局部
+
+**DEC-169 · 2026-09-16 方向终止归档。** 用户认可 R8 的视觉进步，但因制作成本和玩法损失决定回到俯视 2D 像素 Rift。三维/绘制式关卡探索停止，`218f773` 保留 R8 检查点；下文为历史实现、反馈和验证记录，不再构成继续制作或等待验收的授权。正式入口为 `/`（主菜单 → 净化点 → 裂隙），默认 `RiftScene` 保留原有 2D 地图与完整玩法。
 
 **当前状态：** 视觉未通过，停止关卡制作。下文只描述现存冻结程序，新的空间与画法研究以[视觉方向](../art/living-landmass-direction.md)为准；得到可读画面与短动态证据后再判断哪些机制保留或修改。
 
