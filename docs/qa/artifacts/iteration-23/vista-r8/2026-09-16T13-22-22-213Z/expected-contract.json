@@ -1,0 +1,354 @@
+{
+  "status": "FROZEN",
+  "source": "ROOT/code 2026-09-16 13:20:23 final frozen fallen ground-contour alignment; 280x120.4 card, 24 authored independent footprint points, original route and main shell unchanged",
+  "revision": 8,
+  "cameraElevation": 32,
+  "cameraSpan": 960,
+  "logical": {
+    "width": 960,
+    "height": 640
+  },
+  "internal": {
+    "width": 1920,
+    "height": 1280
+  },
+  "cycleSeconds": 26,
+  "distanceRoles": [
+    "distant painted silhouettes",
+    "painted middle cantilever",
+    "lower bearing roots",
+    "walkable landform"
+  ],
+  "paintedLayers": 1,
+  "landforms": 3,
+  "atmosphereLayers": 2,
+  "assets": [
+    "/assets/dev/living-landmass/vista-r8.png",
+    "/assets/dev/living-landmass/carapace-r8.png",
+    "/assets/dev/living-landmass/fallen-r8.png",
+    "/assets/dev/living-landmass/ground-atlas-r8.png",
+    "/assets/dev/living-landmass/middle-carapace-r8.png",
+    "/assets/dev/living-landmass/cutface-r8.png"
+  ],
+  "materials": {
+    "sharedCoverageMap": false,
+    "rockTextureLoaded": true,
+    "ground": "unique authored land atlas mapped once over terrain bounds, not repeated",
+    "rock": "painted hero cutouts over invisible solid shadow/collision proxies; small fragments retain painted shading",
+    "cliff": "separate painted cut-face trim over actual geological section geometry",
+    "rendering": "painted-assets-over-3d-r8",
+    "surfaceImageLoaded": true
+  },
+  "minStrata": 5,
+  "deformers": [
+    {
+      "name": "middle-painted-cantilever",
+      "role": "load",
+      "amplitude": 18,
+      "minCycleSpan": 14.4
+    },
+    {
+      "name": "deep-bearing-body",
+      "role": "load",
+      "amplitude": 10,
+      "minCycleSpan": 8
+    },
+    {
+      "name": "delayed-load-lamella",
+      "role": "response",
+      "amplitude": 6,
+      "minCycleSpan": 4.8
+    }
+  ],
+  "background": {
+    "panorama": {
+      "airMix": 0.1,
+      "chroma": 0.92,
+      "sourceWidth": 1536
+    },
+    "middlePainting": {
+      "loaded": true,
+      "width": 2400,
+      "height": 1600,
+      "airMix": 0.3,
+      "sourceWidth": 1536
+    }
+  },
+  "topology": {
+    "holes": 0,
+    "regions": 3,
+    "connectors": 5,
+    "nodes": 13,
+    "edges": 14,
+    "cycles": 2,
+    "minJunctions": 3
+  },
+  "qualityRoute": [
+    "spawn",
+    "split",
+    "west",
+    "look",
+    "rejoin",
+    "upper-turn",
+    "east",
+    "gap",
+    "wall-front",
+    "split"
+  ],
+  "route": [
+    "spawn",
+    "split",
+    "west",
+    "look",
+    "rejoin",
+    "upper-turn",
+    "east",
+    "gap",
+    "wall-front",
+    "split",
+    "wall-front",
+    "gap",
+    "basin",
+    "lower-turn",
+    "outer",
+    "east-join",
+    "east",
+    "east-join",
+    "outer",
+    "lower-turn",
+    "basin",
+    "gap",
+    "east",
+    "upper-turn",
+    "rejoin",
+    "look",
+    "west",
+    "split",
+    "spawn"
+  ],
+  "reverseRoute": [
+    "spawn",
+    "split",
+    "wall-front",
+    "gap",
+    "basin",
+    "lower-turn",
+    "outer",
+    "east-join",
+    "east",
+    "upper-turn",
+    "rejoin",
+    "look",
+    "west",
+    "split",
+    "spawn"
+  ],
+  "probeIds": [
+    "main-shell-wall",
+    "fallen-rib",
+    "western-cliff",
+    "southern-cliff"
+  ],
+  "probeDetours": [],
+  "maxRouteWallSeconds": 600,
+  "cameraLookahead": 350,
+  "cameraOffsetX": 60,
+  "paintedLandforms": {
+    "rendering": "fixed-painted-landforms-with-solid-shadow-proxies",
+    "fixedTiltDegrees": -32,
+    "cameraFollowing": false,
+    "alpha": {
+      "smoothstep": [
+        0.5,
+        0.9
+      ],
+      "alphaTest": 0.05
+    },
+    "cards": [
+      {
+        "id": "main-uplifted-shell",
+        "role": "hero",
+        "width": 480,
+        "height": 242,
+        "crop": {
+          "x": 40,
+          "y": 75,
+          "width": 1453,
+          "height": 732
+        }
+      },
+      {
+        "id": "fallen-shell-rib",
+        "role": "fallen",
+        "width": 280,
+        "height": 120.4,
+        "crop": {
+          "x": 13,
+          "y": 201,
+          "width": 1494,
+          "height": 643
+        }
+      }
+    ]
+  },
+  "mainSolidProxies": {
+    "colorWrite": false,
+    "depthWrite": false,
+    "castShadow": true,
+    "collisionRetained": true,
+    "collision": "wall bed footprints; fallen independent painted base footprint"
+  },
+  "surfaceAtlas": {
+    "loaded": true,
+    "imageSize": {
+      "width": 1472,
+      "height": 1069
+    },
+    "wrap": {
+      "s": 1001,
+      "t": 1001
+    },
+    "repeat": [
+      1,
+      1
+    ],
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "occlusionRoute": [
+    "spawn",
+    "split",
+    "wall-front",
+    "gap",
+    "basin",
+    "gap",
+    "east",
+    "upper-turn",
+    "rejoin",
+    "look",
+    "west",
+    "split",
+    "spawn"
+  ],
+  "fallenRoute": [
+    "spawn",
+    "split",
+    "gap",
+    "basin",
+    "lower-turn",
+    "outer",
+    "east-join",
+    "east",
+    "gap",
+    "basin",
+    "gap",
+    "split",
+    "spawn"
+  ],
+  "paintedFootprints": [
+    {
+      "id": "fallen-shell-rib",
+      "source": "data/living-landmass-vista-painted-footprints.csv",
+      "points": [
+        {
+          "x": 1177,
+          "y": 1362.642
+        },
+        {
+          "x": 1186.8,
+          "y": 1359.191
+        },
+        {
+          "x": 1203.6,
+          "y": 1358.956
+        },
+        {
+          "x": 1226,
+          "y": 1364.989
+        },
+        {
+          "x": 1254,
+          "y": 1369.865
+        },
+        {
+          "x": 1282,
+          "y": 1368.77
+        },
+        {
+          "x": 1310,
+          "y": 1377.543
+        },
+        {
+          "x": 1338,
+          "y": 1381.228
+        },
+        {
+          "x": 1366,
+          "y": 1383.742
+        },
+        {
+          "x": 1394,
+          "y": 1383.888
+        },
+        {
+          "x": 1416.4,
+          "y": 1375.903
+        },
+        {
+          "x": 1433.2,
+          "y": 1373.459
+        },
+        {
+          "x": 1443,
+          "y": 1373.273
+        },
+        {
+          "x": 1433.2,
+          "y": 1353.459
+        },
+        {
+          "x": 1416.4,
+          "y": 1341.903
+        },
+        {
+          "x": 1394,
+          "y": 1335.888
+        },
+        {
+          "x": 1366,
+          "y": 1328.742
+        },
+        {
+          "x": 1338,
+          "y": 1321.228
+        },
+        {
+          "x": 1310,
+          "y": 1317.543
+        },
+        {
+          "x": 1282,
+          "y": 1313.77
+        },
+        {
+          "x": 1254,
+          "y": 1319.865
+        },
+        {
+          "x": 1226,
+          "y": 1324.989
+        },
+        {
+          "x": 1203.6,
+          "y": 1334.956
+        },
+        {
+          "x": 1186.8,
+          "y": 1349.191
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { disposeTree, noise } from '../spatial-study/stage/materials';
 import { vistaMotion } from './vista-motion';
+import { createVistaMaterial, setVistaMaterialDistance } from './vista-material';
 
 interface RibStation { x: number; z: number; height: number; width: number; thickness: number }
 
@@ -14,36 +15,41 @@ export class VistaScenery {
 
   private bearing!: THREE.Mesh;
   private response!: THREE.Mesh;
-  private painted: THREE.Mesh | null = null;
+  private middle!: THREE.Mesh;
   private readonly deformations: { mesh: THREE.Mesh; rest: Float32Array; weights: Float32Array; role: 'load' | 'response'; amplitude: number }[] = [];
   private panorama: THREE.Mesh | null = null;
-  private farShoulder: THREE.Mesh | null = null;
   private motion = vistaMotion(0);
   private reducedMotion = false;
 
   constructor() {
     this.group.name = 'vista-middle-distance';
     this.addRidge('western-mineralized-flank', [
-      {x:205,z:1500,height:-70,width:300,thickness:160},
-      {x:65,z:1330,height:-170,width:270,thickness:210},
+      {x:410,z:1370,height:-78,width:230,thickness:230},
+      {x:255,z:1365,height:-155,width:240,thickness:205},
       {x:-170,z:910,height:-330,width:130,thickness:190},
       {x:-430,z:350,height:-430,width:195,thickness:240},
       {x:-900,z:-450,height:-790,width:230,thickness:280},
       {x:-1400,z:-2700,height:-1790,width:340,thickness:300},
-    ],0xc4bec9,.7);
+    ],0xcebaaa,.7);
     this.bearing = this.addRidge('deep-bearing-body', [
-      {x:520,z:1420,height:-320,width:100,thickness:120},
-      {x:630,z:1110,height:-250,width:110,thickness:150},
-      {x:880,z:810,height:-245,width:125,thickness:150},
+      {x:750,z:930,height:-40,width:260,thickness:240},
+      {x:980,z:965,height:-150,width:150,thickness:200},
+      {x:815,z:815,height:-265,width:120,thickness:180},
       {x:1090,z:480,height:-390,width:100,thickness:170},
       {x:1100,z:140,height:-470,width:140,thickness:160},
-    ],0xc5becb,.35);
+    ],0xb9a7a3,.35);
     this.response = this.addRidge('delayed-load-lamella', [
-      {x:1380,z:1570,height:-290,width:85,thickness:110},
-      {x:1320,z:1220,height:-255,width:85,thickness:120},
+      {x:1570,z:1180,height:-45,width:190,thickness:200},
+      {x:1520,z:1000,height:-190,width:120,thickness:165},
       {x:1450,z:900,height:-270,width:85,thickness:130},
       {x:1510,z:610,height:-340,width:95,thickness:140},
-    ],0xbdb7c7,.45);
+    ],0xb2a0a3,.45);
+    this.middle = new THREE.Mesh(new THREE.PlaneGeometry(2400,1600,48,32),
+      new THREE.MeshBasicMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,alphaTest:.05,toneMapped:false}));
+    this.middle.name='middle-painted-cantilever';
+    this.middle.position.set(-650,-1550,-2300);this.middle.rotation.x=-32*Math.PI/180;
+    this.middle.renderOrder=-4;this.group.add(this.middle);
+    this.registerDeformation(this.middle, 'load', 18, true);
     this.registerDeformation(this.bearing, 'load', 10, false);
     this.registerDeformation(this.response, 'response', 6, false);
     this.addMist(1100,-420,500,3700,360,.11,0);
@@ -59,11 +65,11 @@ export class VistaScenery {
     texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearMipmapLinearFilter;
     texture.generateMipmaps=true;texture.needsUpdate=true;
     const material=new THREE.ShaderMaterial({depthTest:false,depthWrite:false,
-      uniforms:{map:{value:texture},air:{value:new THREE.Color(0xb3a9b3)}},
+      toneMapped:false,uniforms:{map:{value:texture},air:{value:new THREE.Color(0x4c4653)}},
       vertexShader:'varying vec2 vUv; void main(){vUv=uv;gl_Position=vec4(position.xy,1.,1.);}',
       fragmentShader:`uniform sampler2D map;uniform vec3 air;varying vec2 vUv;
         void main(){vec3 c=texture2D(map,vUv).rgb;float l=dot(c,vec3(.2126,.7152,.0722));
-          c=mix(vec3(l),c,.84);c=mix(c,air,.12);gl_FragColor=vec4(c,1.);
+          c=mix(vec3(l),c,.92);c=mix(c,air,.10);gl_FragColor=vec4(c,1.);
           #include <tonemapping_fragment>
           #include <colorspace_fragment>
         }`});
@@ -72,69 +78,19 @@ export class VistaScenery {
     this.panorama.renderOrder=-100;this.group.add(this.panorama);
   }
 
-  /** Owns a world-fixed, gently curved cutout. Its diagonal silhouette leaves
-   * air around the playable path while camera translation supplies parallax. */
-  setDistantTexture(texture: THREE.Texture): void {
+  setMiddleTexture(texture:THREE.Texture):void {
     if(this.disposed){texture.dispose();return;}
-    if(this.painted) throw new Error('Distant painting already installed');
-    texture.colorSpace=THREE.SRGBColorSpace;
-    texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearMipmapLinearFilter;
-    texture.generateMipmaps=true;texture.needsUpdate=true;
-    const geometry=new THREE.PlaneGeometry(2400,1600,48,32);
-    const positions=geometry.getAttribute('position');
-    for(let i=0;i<positions.count;i++){
-      const x=positions.getX(i)/1200;
-      positions.setZ(i,-65*x*x);
-    }
-    geometry.computeVertexNormals();
-    const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,
-      side:THREE.DoubleSide,toneMapped:true,alphaTest:.02,color:0xe7e0e5});
-    // Generated alpha contains a broad low-opacity glow. Narrow only that
-    // coverage range; keep the original bitmap and antialiased object edges.
+    texture.colorSpace=THREE.SRGBColorSpace;texture.magFilter=THREE.LinearFilter;
+    texture.minFilter=THREE.LinearMipmapLinearFilter;texture.needsUpdate=true;
+    const material=this.middle.material as THREE.MeshBasicMaterial;
+    material.map?.dispose();material.map=texture;
     material.onBeforeCompile=shader=>{
+      shader.uniforms.middleAir={value:new THREE.Color(0x625c6d)};
+      shader.fragmentShader='uniform vec3 middleAir;\n'+shader.fragmentShader;
       shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',
-        '#include <map_fragment>\n diffuseColor.a = smoothstep(0.72, 0.97, diffuseColor.a);');
+        '#include <map_fragment>\n diffuseColor.a=smoothstep(.50,.90,diffuseColor.a); diffuseColor.rgb=mix(diffuseColor.rgb,middleAir,.30);');
     };
-    material.customProgramCacheKey=()=> 'vista-r6-painted-alpha';
-    this.painted=new THREE.Mesh(geometry,material);
-    this.painted.name='independent-painted-shell';this.painted.position.set(-690,-1260,-3100);
-    this.painted.rotation.x=-24*Math.PI/180;
-    this.painted.renderOrder=-5;this.group.add(this.painted);
-    this.registerDeformation(this.painted, 'load', 18, true);
-  }
-
-  /** A second world-fixed shoulder sits beyond the primary painting. Its own
-   * projection/air tier exposes a different silhouette from east and return. */
-  setFarShoulderTexture(texture: THREE.Texture): void {
-    if(this.disposed){texture.dispose();return;}
-    if(this.farShoulder) throw new Error('Far shoulder already installed');
-    texture.colorSpace=THREE.SRGBColorSpace;
-    texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearMipmapLinearFilter;
-    texture.generateMipmaps=true;texture.needsUpdate=true;
-    const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,
-      side:THREE.DoubleSide,alphaTest:.02});
-    material.onBeforeCompile=shader=>{
-      shader.uniforms.distanceAir={value:new THREE.Color(0xb6adb9)};
-      shader.fragmentShader='uniform vec3 distanceAir;\n'+shader.fragmentShader;
-      shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',
-        '#include <map_fragment>\n diffuseColor.a=smoothstep(.72,.97,diffuseColor.a); diffuseColor.rgb=mix(diffuseColor.rgb,distanceAir,.43);');
-    };
-    material.customProgramCacheKey=()=> 'vista-r6-far-shoulder';
-    this.farShoulder=new THREE.Mesh(new THREE.PlaneGeometry(2200,1467,1,1),material);
-    this.farShoulder.name='receding-eastern-shell';
-    this.farShoulder.position.set(3000,-2280,-5000);
-    this.farShoulder.rotation.x=-24*Math.PI/180;
-    this.farShoulder.renderOrder=-6;this.group.add(this.farShoulder);
-  }
-
-  /** Only hard mineral pigment is supplied here; loose ground never coats
-   * these structural bodies. Clones have independent material ownership. */
-  setSurfaceTexture(source: THREE.Texture): void {
-    for (const material of this.rockMaterials) {
-      const texture=source.clone();texture.repeat.set(.42,.48);texture.needsUpdate=true;
-      material.map?.dispose();
-      material.map=texture;material.needsUpdate=true;
-    }
+    material.customProgramCacheKey=()=> 'r8-middle-painted-air';material.needsUpdate=true;
   }
 
   update(elapsedMs: number, reducedMotion: boolean): void {
@@ -154,11 +110,11 @@ export class VistaScenery {
   }
 
   snapshot(): Record<string,unknown> {
-    return {landforms:3,paintedLayers:Number(Boolean(this.painted))+Number(Boolean(this.farShoulder)),atmosphereLayers:2,collision:false,
-      distanceRoles:['infinite panorama','receding eastern painting','fixed-world curved painting','real middle bearings','walkable terrain'],
+    return {landforms:3,paintedLayers:1,atmosphereLayers:2,collision:false,
+      distanceRoles:['distant painted silhouettes','painted middle cantilever','lower bearing roots','walkable landform'],
       motion:{...this.motion},reducedMotion:this.reducedMotion,
       transforms:{bearing:this.bearing.position.toArray(),response:this.response.position.toArray(),
-        painting:this.painted?.position.toArray(),farPainting:this.farShoulder?.position.toArray()},
+        middle:this.middle.position.toArray()},
       deformation:this.deformations.map(d=>{
         let max=0,anchorIndex=0,flexIndex=0;
         for(let i=0;i<d.weights.length;i++){if(d.weights[i]!>max){max=d.weights[i]!;flexIndex=i;}if(d.weights[i]===0)anchorIndex=i;}
@@ -168,10 +124,9 @@ export class VistaScenery {
           flex:{index:flexIndex,restY:d.rest[flexIndex*3+1],y:p.getY(flexIndex)},
           maxDisplacement:max*this.motion[d.role]*d.amplitude};
       }),
-      painting:{width:2400,height:1600,sourceWidth:1536,filter:'linear mipmapped, native source; narrow alpha coverage',airMix:0},
-      farPainting:{width:2200,height:1467,sourceWidth:1536,airMix:.43,worldFixed:true},
-      panorama:{airMix:.12,chroma:.84,filter:'linear mipmapped; no blur'},
-      relation:'layered mineral shell bearings connect toward two world-fixed painted shoulder tiers and an atmospheric panorama; no background grants support',
+      middlePainting:{loaded:!!(this.middle.material as THREE.MeshBasicMaterial).map,width:2400,height:1600,airMix:.30,sourceWidth:1536},
+      panorama:{airMix:.10,chroma:.92,sourceWidth:1536,filter:'linear mipmapped; simplified gouache silhouettes'},
+      relation:'continuous natural landform with a unique painted atlas and depth-sorted painted forms; world-fixed middle painting recedes into gouache silhouettes; route graph never generates the land; scenic roots grant no support',
       animation:'26-second locally anchored bending; response delayed 1.4 seconds; walkable terrain remains static'};
   }
 
@@ -230,33 +185,15 @@ export class VistaScenery {
     const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
     g.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));g.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
     g.setIndex(indices);g.computeVertexNormals();
-    const m=new THREE.MeshStandardMaterial({color:0xffffff,vertexColors:true,roughness:1,side:THREE.DoubleSide,
-      emissive:0x887886,emissiveIntensity:(1-lightStrength)*.22});
-    m.onBeforeCompile=shader=>{
-      shader.vertexShader='varying vec2 vBedding;\n'+shader.vertexShader;
-      shader.vertexShader=shader.vertexShader.replace('#include <uv_vertex>','#include <uv_vertex>\n vBedding=uv;');
-      shader.fragmentShader='varying vec2 vBedding;\n'+shader.fragmentShader;
-      shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>
-        float lamella=vBedding.y*5.+sin(vBedding.x*1.4)*.13;
-        float seam=1.-smoothstep(.015,.055,abs(fract(lamella)-.5));
-        float sideBand=smoothstep(.43,.65,vBedding.y)*(1.-smoothstep(1.35,1.55,vBedding.y));
-        diffuseColor.rgb*=1.-seam*sideBand*.13;
-      `);
-      shader.fragmentShader=shader.fragmentShader.replace('#include <opaque_fragment>',`
-        float lightValue=max(.001,dot(outgoingLight,vec3(.2126,.7152,.0722)));
-        float paintValue=floor(lightValue*8.+.5)/8.;
-        outgoingLight*=mix(1.,paintValue/lightValue,.20);
-        #include <opaque_fragment>
-      `);
-    };
-    m.customProgramCacheKey=()=> 'vista-r6-folded-bearing';
+    const m=createVistaMaterial('rock');m.side=THREE.DoubleSide;
+    setVistaMaterialDistance(m,(1-lightStrength)*.18);
     this.rockMaterials.push(m);const mesh=new THREE.Mesh(g,m);mesh.name=name;mesh.castShadow=false;mesh.receiveShadow=true;
     this.group.add(mesh);return mesh;
   }
 
   private addMist(x:number,height:number,z:number,width:number,tall:number,opacity:number,phase:number):void {
     const material=new THREE.ShaderMaterial({transparent:true,depthWrite:false,depthTest:true,side:THREE.DoubleSide,
-      uniforms:{time:{value:0},phase:{value:phase},strength:{value:opacity},tint:{value:new THREE.Color(0xb6a7b3)}},
+      uniforms:{time:{value:0},phase:{value:phase},strength:{value:opacity},tint:{value:new THREE.Color(0x4b4152)}},
       vertexShader:'varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
       fragmentShader:`varying vec2 vUv;uniform float time,phase,strength;uniform vec3 tint;
         float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}

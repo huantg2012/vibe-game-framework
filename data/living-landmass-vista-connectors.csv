@@ -1,7 +1,6 @@
-id,from,to,nodes,width
-west-rise,arrival,west,spawn|west-rise|west,130
-crown-ascent,west,crown,west|upper-west|crown,130
-crown-descent,crown,east,crown|upper-east|east,110
-east-turn,east,lower,east|lower-east|lower,120
-lower-return,lower,arrival,lower|bottom|bottom-west|spawn,130
-cross-ridge,west,east,west|middle-west|middle|middle-east|east,125
+id,from,to,nodes
+entry,arrival,arrival,spawn|split
+western-ascent,arrival,east,split|west|look|rejoin|upper-turn|east
+inner-foot,east,arrival,east|gap
+wall-base,arrival,arrival,gap|wall-front|split
+basin-detour,arrival,east,gap|basin|lower-turn|outer|east-join|east

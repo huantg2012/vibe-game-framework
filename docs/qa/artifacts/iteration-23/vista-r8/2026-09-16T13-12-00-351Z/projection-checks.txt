@@ -1,0 +1,6 @@
+Independently run by QA after freeze, same shared workspace source hashed in evidence.json:
+TSX_TSCONFIG_PATH=tsconfig.json node --import tsx tools/spatial-study/check-actor-pixels.ts
+PASS 9 checks, including actual emitted shader arithmetic versus Three perspective matrix, recorded fallen-contact counterexample, switching back to original orthographic formula, resource ownership.
+TSX_TSCONFIG_PATH=tsconfig.json node --import tsx tools/spatial-study/check-stage-camera.ts
+PASS 8 checks for orthographic camera framing, shared WASD/height projection, no motion from turns/attacks, bounded pause, overscan and copied snapshots.
+These are numerical/component checks; this run did not open a separate production orthographic scene.

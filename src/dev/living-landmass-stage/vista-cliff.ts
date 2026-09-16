@@ -21,7 +21,7 @@ export function createVistaCliff(outlines: readonly (readonly VistaBoundaryVerte
       const phase = p.x / 371 + p.y / 487 + ring * 2.1;
       const bed = sampleVistaStrata(p.x, p.y, strata);
       const section = sampleVistaSections(p.x, p.y, ring, sections);
-      const thickness = (ring ? 85 : 128) + Math.max(0, bed.height) * 1.5 + Math.sin(phase) * 13;
+      const thickness = 92 + Math.max(0, bed.height) * 1.4 + section.thickness * .5;
       const lip = .065 + bed.fracture * .10;
       const shoulder = .34 + Math.sin(phase + .8) * .07;
       const base = .79 + Math.sin(phase * .93 + 1.9) * .06;
@@ -36,7 +36,9 @@ export function createVistaCliff(outlines: readonly (readonly VistaBoundaryVerte
         const projection = row === 1 ? 1 : row === 2 ? .74 : 0;
         positions.push(p.x + (center.x - p.x) * inset + section.offsetX * projection,
           z, p.y + (center.y - p.y) * inset + section.offsetY * projection);
-        uv.push(distance / 390, z / 105);
+        // Cut-face trim follows the entire depth once: warm chipped crust at
+        // the lip, dense inner material below. It never reuses the ground atlas.
+        uv.push(distance / 620, 1 - fractions[row]!);
         const shade = [1, .94, .83, .79, .76][row]!;
         const variation = 1 + Math.sin(phase * .51) * .025;
         colors.push(shade * variation, shade * .99 * variation, shade * 1.025 * variation);

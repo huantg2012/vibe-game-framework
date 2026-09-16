@@ -1,0 +1,85 @@
+{
+  "verdict": "QUALITY VISUAL FAIL; short technical checks pass, not full acceptance",
+  "wallSeconds": 26.825,
+  "assertions": 3120,
+  "ruleGroups": 44,
+  "failures": 0,
+  "dynamicSamples": 154,
+  "hashes": 47,
+  "sourceStable": true,
+  "rawEvidenceBytes": 426689,
+  "browserErrors": 0,
+  "consoleErrors": 0,
+  "requestFailures": 0,
+  "topology": {
+    "nodeCount": 13,
+    "edgeCount": 14,
+    "edges": [
+      [
+        "spawn",
+        "split"
+      ],
+      [
+        "split",
+        "west"
+      ],
+      [
+        "look",
+        "west"
+      ],
+      [
+        "look",
+        "rejoin"
+      ],
+      [
+        "rejoin",
+        "upper-turn"
+      ],
+      [
+        "east",
+        "upper-turn"
+      ],
+      [
+        "east",
+        "gap"
+      ],
+      [
+        "gap",
+        "wall-front"
+      ],
+      [
+        "split",
+        "wall-front"
+      ],
+      [
+        "basin",
+        "gap"
+      ],
+      [
+        "basin",
+        "lower-turn"
+      ],
+      [
+        "lower-turn",
+        "outer"
+      ],
+      [
+        "east-join",
+        "outer"
+      ],
+      [
+        "east",
+        "east-join"
+      ]
+    ],
+    "components": 1,
+    "cycles": 2,
+    "junctions": [
+      "split",
+      "east",
+      "gap"
+    ],
+    "holeAreas": [],
+    "method": "Unique undirected edges from consecutive connector.nodes; region from/to never forms graph vertices"
+  }
+}

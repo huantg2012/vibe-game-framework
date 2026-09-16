@@ -1,0 +1,723 @@
+{
+  "pass": true,
+  "recordedAt": "2026-09-15T16:28:44.702Z",
+  "method": "Actual Vite SSR ?raw CSV imports; Three Raycaster against rendered BufferGeometry; production full-body physical-grid sweep",
+  "sourceSha256": {
+    "src/dev/living-landmass-stage/vista-model.ts": "f0a2e64de9c5741125d9b6a771b00fc5f94689f82ece186bb278394b504b1eb6",
+    "src/dev/living-landmass-stage/vista-terrain.ts": "f1a4cf161868e3ca5961763c838eb759a813976a0e4de94cdc63f723a6ebf6d1",
+    "src/dev/living-landmass-stage/vista-boundary.ts": "94a9dec33ca804a080f5b5baf8ec08763189b894bfd029f9cf3b5354193e97a0",
+    "src/dev/living-landmass-stage/vista-cliff.ts": "f31339c8ffeffac87b33082720f9305a304d727b863609250139a3cb8d9aa7fb",
+    "src/dev/living-landmass-stage/vista-rocks.ts": "4d3d0ea96e1bb4581f4a50fe742ac6b63e53ebc78195a9f1a0613132353263e2",
+    "src/dev/living-landmass-stage/vista-strata.ts": "8b7eb9ebaef0713edaa66aa8ee73ce2df589e413c4a6993e5655508d6bcf3538",
+    "src/dev/living-landmass-stage/vista-sections.ts": "ed9601e3ccb7f67eeddbe4a094e91411a844f798cd747ba8a1bb08e00f9d1a16",
+    "data/living-landmass-vista-sections.csv": "6649436756a641226df1f918bfffa2039cfe0e71c6f3cc0773ac7c9339002e46",
+    "src/dev/living-landmass-stage/vista-material.ts": "aed1f1e52b28d932b5602f8740335b2c1ae1c5706d5a3bfd89bedfd9cf8b07f6",
+    "data/living-landmass-vista-strata.csv": "3fa6b6f95f7ae002c284b5cb964015312d72b30706d616cc2f8719137b0b1c27",
+    "data/living-landmass-vista-outline.csv": "b240c4dde434787e264bb8a07f440a31634257c278b602584dcc969ef69183ff",
+    "data/living-landmass-vista-rocks.csv": "04b9753e71daafc1b884c7757d14e2f012cd8b66655ffec5e12bbf7b3dfd4aad",
+    "data/living-landmass-vista-holes.csv": "f4fe63600f0c352d222bf11a240643549d42609c867fa009d85970719361e58c",
+    "data/living-landmass-vista-regions.csv": "affce27e2b2a1f93532943630b62a3ca901e081d73acedc067779acabfbc7d61",
+    "data/living-landmass-vista-route-nodes.csv": "e966c6532e914b2a41c463e7897d37de14be2f51385c4d7b306a5beb05e5b0d4",
+    "data/living-landmass-vista-connectors.csv": "420889ec941d02cfc1059bd9020daeb9df635c3a4cfffc91dd6a19374a2a95d1",
+    "data/living-landmass-vista-cells.csv": "08bf6b49cb1b4e196db1c0d4dc4be119656ae8d5f1dfbc0b9e6a2356a15fb4a7",
+    "tools/living-landmass/build-vista-web.mjs": "b10543a6fbcfe2a029efda5470778a86c22c3c3d55cb865bcc52739e2653a306",
+    "src/systems/ai/physical-grid.ts": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+    "tools/living-landmass/check-vista-terrain.mjs": "47f657b052851cca4d7bf4f9ec90792bda8b3ef55a7bb8e70a8f2f1fd5bef738"
+  },
+  "triangles": 21632,
+  "surfaceArea": 1177552.2481795643,
+  "expectedArea": 1177552.2380055187,
+  "height": {
+    "min": 24.415050506591797,
+    "max": 126.69754791259766,
+    "sampling": "actual-float32-triangle-barycentric"
+  },
+  "rimVertices": 2592,
+  "maxRimError": 0,
+  "maxRimSamplerError": 0,
+  "minCliffThickness": 73.58209609985352,
+  "maxCliffThickness": 104.04445266723633,
+  "internalCliffSeamsClosed": true,
+  "maxSlope": 0.4074597842996306,
+  "maxRouteSlope": 0.28124553582852635,
+  "supportedBodies": 6213,
+  "rays": 258,
+  "maxHeightError": 8.526512829121202e-14,
+  "topology": {
+    "cells": [
+      {
+        "id": "western-air",
+        "nodes": [
+          "spawn",
+          "south-west-bend",
+          "west",
+          "west-core-bend",
+          "core",
+          "entry-saddle"
+        ]
+      },
+      {
+        "id": "northwest-air",
+        "nodes": [
+          "west",
+          "west-upper-bend",
+          "north-west",
+          "upper-west-bend",
+          "upper-join",
+          "core-neck",
+          "core",
+          "west-core-bend"
+        ]
+      },
+      {
+        "id": "upper-left-air",
+        "nodes": [
+          "north-west",
+          "north-cap-bend",
+          "crown",
+          "upper-stem",
+          "upper-join",
+          "upper-west-bend"
+        ]
+      },
+      {
+        "id": "upper-right-air",
+        "nodes": [
+          "crown",
+          "north-east-bend",
+          "north-east",
+          "upper-east-bend",
+          "upper-join",
+          "upper-stem"
+        ]
+      },
+      {
+        "id": "eastern-air",
+        "nodes": [
+          "north-east",
+          "east-rise-bend",
+          "east",
+          "east-core-bend",
+          "east-fork",
+          "core",
+          "core-neck",
+          "upper-join",
+          "upper-east-bend"
+        ]
+      },
+      {
+        "id": "outer-east-air",
+        "nodes": [
+          "east",
+          "east-lower-bend",
+          "lower-east",
+          "lower-east-fork",
+          "east-fork",
+          "east-core-bend"
+        ]
+      },
+      {
+        "id": "lower-right-air",
+        "nodes": [
+          "lower-east",
+          "lower-arc-bend",
+          "lower",
+          "lower-stem",
+          "core",
+          "east-fork",
+          "lower-east-fork"
+        ]
+      },
+      {
+        "id": "lower-left-air",
+        "nodes": [
+          "lower",
+          "lower-west-bend",
+          "spawn",
+          "entry-saddle",
+          "core",
+          "lower-stem"
+        ]
+      }
+    ],
+    "structuralSegments": 35,
+    "independentLoops": 8
+  },
+  "regionCount": 7,
+  "connectors": [
+    {
+      "id": "western-root",
+      "from": "arrival",
+      "to": "west",
+      "nodes": [
+        "spawn",
+        "south-west-bend",
+        "west"
+      ],
+      "width": 108
+    },
+    {
+      "id": "western-branch",
+      "from": "west",
+      "to": "west",
+      "nodes": [
+        "west",
+        "west-upper-bend",
+        "north-west"
+      ],
+      "width": 112
+    },
+    {
+      "id": "upper-left-rim",
+      "from": "west",
+      "to": "crown",
+      "nodes": [
+        "north-west",
+        "north-cap-bend",
+        "crown"
+      ],
+      "width": 118
+    },
+    {
+      "id": "upper-right-rim",
+      "from": "crown",
+      "to": "east",
+      "nodes": [
+        "crown",
+        "north-east-bend",
+        "north-east"
+      ],
+      "width": 122
+    },
+    {
+      "id": "eastern-root",
+      "from": "east",
+      "to": "east",
+      "nodes": [
+        "north-east",
+        "east-rise-bend",
+        "east"
+      ],
+      "width": 115
+    },
+    {
+      "id": "eastern-saddle",
+      "from": "east",
+      "to": "lower",
+      "nodes": [
+        "east",
+        "east-lower-bend",
+        "lower-east"
+      ],
+      "width": 98
+    },
+    {
+      "id": "lower-right-rim",
+      "from": "lower",
+      "to": "lower",
+      "nodes": [
+        "lower-east",
+        "lower-arc-bend",
+        "lower"
+      ],
+      "width": 106
+    },
+    {
+      "id": "lower-left-rim",
+      "from": "lower",
+      "to": "arrival",
+      "nodes": [
+        "lower",
+        "lower-west-bend",
+        "spawn"
+      ],
+      "width": 98
+    },
+    {
+      "id": "entry-fork",
+      "from": "arrival",
+      "to": "core",
+      "nodes": [
+        "spawn",
+        "entry-saddle",
+        "core"
+      ],
+      "width": 108
+    },
+    {
+      "id": "west-confluence",
+      "from": "west",
+      "to": "core",
+      "nodes": [
+        "west",
+        "west-core-bend",
+        "core"
+      ],
+      "width": 136
+    },
+    {
+      "id": "upper-left-fork",
+      "from": "west",
+      "to": "upper",
+      "nodes": [
+        "north-west",
+        "upper-west-bend",
+        "upper-join"
+      ],
+      "width": 104
+    },
+    {
+      "id": "upper-throat",
+      "from": "crown",
+      "to": "upper",
+      "nodes": [
+        "crown",
+        "upper-stem",
+        "upper-join"
+      ],
+      "width": 92
+    },
+    {
+      "id": "upper-right-fork",
+      "from": "east",
+      "to": "upper",
+      "nodes": [
+        "north-east",
+        "upper-east-bend",
+        "upper-join"
+      ],
+      "width": 118
+    },
+    {
+      "id": "central-spine",
+      "from": "upper",
+      "to": "core",
+      "nodes": [
+        "upper-join",
+        "core-neck",
+        "core"
+      ],
+      "width": 130
+    },
+    {
+      "id": "eastern-confluence",
+      "from": "east",
+      "to": "core",
+      "nodes": [
+        "east",
+        "east-core-bend",
+        "east-fork"
+      ],
+      "width": 112
+    },
+    {
+      "id": "lower-east-fork",
+      "from": "lower",
+      "to": "core",
+      "nodes": [
+        "lower-east",
+        "lower-east-fork",
+        "east-fork"
+      ],
+      "width": 102
+    },
+    {
+      "id": "root-division",
+      "from": "core",
+      "to": "core",
+      "nodes": [
+        "core",
+        "east-fork"
+      ],
+      "width": 164
+    },
+    {
+      "id": "lower-return",
+      "from": "lower",
+      "to": "core",
+      "nodes": [
+        "lower",
+        "lower-stem",
+        "core"
+      ],
+      "width": 105
+    }
+  ],
+  "routeSegments": [
+    {
+      "connection": "western-root",
+      "from": "spawn",
+      "to": "south-west-bend",
+      "distance": 216.33307652783935
+    },
+    {
+      "connection": "western-root",
+      "from": "south-west-bend",
+      "to": "west",
+      "distance": 310.64449134018133
+    },
+    {
+      "connection": "western-branch",
+      "from": "west",
+      "to": "west-upper-bend",
+      "distance": 261.1991577321795
+    },
+    {
+      "connection": "western-branch",
+      "from": "west-upper-bend",
+      "to": "north-west",
+      "distance": 352.17183305880667
+    },
+    {
+      "connection": "upper-left-rim",
+      "from": "north-west",
+      "to": "north-cap-bend",
+      "distance": 310.0403199585499
+    },
+    {
+      "connection": "upper-left-rim",
+      "from": "north-cap-bend",
+      "to": "crown",
+      "distance": 292.10443337957065
+    },
+    {
+      "connection": "upper-right-rim",
+      "from": "crown",
+      "to": "north-east-bend",
+      "distance": 278.92651361962703
+    },
+    {
+      "connection": "upper-right-rim",
+      "from": "north-east-bend",
+      "to": "north-east",
+      "distance": 292.0616373302047
+    },
+    {
+      "connection": "eastern-root",
+      "from": "north-east",
+      "to": "east-rise-bend",
+      "distance": 272.8094573140748
+    },
+    {
+      "connection": "eastern-root",
+      "from": "east-rise-bend",
+      "to": "east",
+      "distance": 311.4883625434504
+    },
+    {
+      "connection": "eastern-saddle",
+      "from": "east",
+      "to": "east-lower-bend",
+      "distance": 298.3286778035259
+    },
+    {
+      "connection": "eastern-saddle",
+      "from": "east-lower-bend",
+      "to": "lower-east",
+      "distance": 256.12496949731394
+    },
+    {
+      "connection": "lower-right-rim",
+      "from": "lower-east",
+      "to": "lower-arc-bend",
+      "distance": 304.138126514911
+    },
+    {
+      "connection": "lower-right-rim",
+      "from": "lower-arc-bend",
+      "to": "lower",
+      "distance": 320.62439083762797
+    },
+    {
+      "connection": "lower-left-rim",
+      "from": "lower",
+      "to": "lower-west-bend",
+      "distance": 270.7397274136177
+    },
+    {
+      "connection": "lower-left-rim",
+      "from": "lower-west-bend",
+      "to": "spawn",
+      "distance": 308.7069808086626
+    },
+    {
+      "connection": "entry-fork",
+      "from": "spawn",
+      "to": "entry-saddle",
+      "distance": 369.39139134527755
+    },
+    {
+      "connection": "entry-fork",
+      "from": "entry-saddle",
+      "to": "core",
+      "distance": 411.88590653237947
+    },
+    {
+      "connection": "west-confluence",
+      "from": "west",
+      "to": "west-core-bend",
+      "distance": 311.44823004794875
+    },
+    {
+      "connection": "west-confluence",
+      "from": "west-core-bend",
+      "to": "core",
+      "distance": 424.26406871192853
+    },
+    {
+      "connection": "upper-left-fork",
+      "from": "north-west",
+      "to": "upper-west-bend",
+      "distance": 227.43130831088317
+    },
+    {
+      "connection": "upper-left-fork",
+      "from": "upper-west-bend",
+      "to": "upper-join",
+      "distance": 270.41634565979916
+    },
+    {
+      "connection": "upper-throat",
+      "from": "crown",
+      "to": "upper-stem",
+      "distance": 200.9975124224178
+    },
+    {
+      "connection": "upper-throat",
+      "from": "upper-stem",
+      "to": "upper-join",
+      "distance": 194.16487838947597
+    },
+    {
+      "connection": "upper-right-fork",
+      "from": "north-east",
+      "to": "upper-east-bend",
+      "distance": 248.2438317461282
+    },
+    {
+      "connection": "upper-right-fork",
+      "from": "upper-east-bend",
+      "to": "upper-join",
+      "distance": 301.03986446980736
+    },
+    {
+      "connection": "central-spine",
+      "from": "upper-join",
+      "to": "core-neck",
+      "distance": 232.59406699226014
+    },
+    {
+      "connection": "central-spine",
+      "from": "core-neck",
+      "to": "core",
+      "distance": 206.155281280883
+    },
+    {
+      "connection": "eastern-confluence",
+      "from": "east",
+      "to": "east-core-bend",
+      "distance": 230.8679276123039
+    },
+    {
+      "connection": "eastern-confluence",
+      "from": "east-core-bend",
+      "to": "east-fork",
+      "distance": 257.0992026436488
+    },
+    {
+      "connection": "lower-east-fork",
+      "from": "lower-east",
+      "to": "lower-east-fork",
+      "distance": 178.88543819998318
+    },
+    {
+      "connection": "lower-east-fork",
+      "from": "lower-east-fork",
+      "to": "east-fork",
+      "distance": 200
+    },
+    {
+      "connection": "root-division",
+      "from": "core",
+      "to": "east-fork",
+      "distance": 322.80024783137947
+    },
+    {
+      "connection": "lower-return",
+      "from": "lower",
+      "to": "lower-stem",
+      "distance": 272.25906780123967
+    },
+    {
+      "connection": "lower-return",
+      "from": "lower-stem",
+      "to": "core",
+      "distance": 303.35622624235026
+    }
+  ],
+  "airChecks": [
+    {
+      "index": 0,
+      "center": {
+        "x": 582.5701708443567,
+        "y": 1238.234983976751
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 1,
+      "center": {
+        "x": 757.5628206576599,
+        "y": 866.6229295685322
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 2,
+      "center": {
+        "x": 889.5144082546558,
+        "y": 514.2636149394707
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 3,
+      "center": {
+        "x": 1260.4135538861092,
+        "y": 512.6664924120423
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 4,
+      "center": {
+        "x": 1440.615666538113,
+        "y": 899.3954763847217
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 5,
+      "center": {
+        "x": 1641.013370816584,
+        "y": 1266.3031367761457
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 6,
+      "center": {
+        "x": 1266.1110542176411,
+        "y": 1400.9497303848761
+      },
+      "noWalk": true,
+      "noSurface": true
+    },
+    {
+      "index": 7,
+      "center": {
+        "x": 826.763607818385,
+        "y": 1463.4471531058493
+      },
+      "noWalk": true,
+      "noSurface": true
+    }
+  ],
+  "blockedProbes": [
+    {
+      "id": "western-air-edge",
+      "node": "entry-saddle",
+      "key": "W",
+      "dx": 0,
+      "dy": -260,
+      "expected": "void",
+      "start": {
+        "x": 735,
+        "y": 1315
+      },
+      "stop": {
+        "x": 735,
+        "y": 1274.0000989999999
+      },
+      "fraction": 0.15769192692307735
+    },
+    {
+      "id": "lower-air-edge",
+      "node": "lower-stem",
+      "key": "D",
+      "dx": 260,
+      "dy": 0,
+      "expected": "void",
+      "start": {
+        "x": 1035,
+        "y": 1390
+      },
+      "stop": {
+        "x": 1069.9999010000001,
+        "y": 1390
+      },
+      "fraction": 0.13461500384615427
+    },
+    {
+      "id": "outer-edge",
+      "node": "south-west-bend",
+      "key": "A",
+      "dx": -260,
+      "dy": 0,
+      "expected": "void",
+      "start": {
+        "x": 330,
+        "y": 1370
+      },
+      "stop": {
+        "x": 290.000099,
+        "y": 1370
+      },
+      "fraction": 0.15384577307692307
+    },
+    {
+      "id": "root-fracture",
+      "node": "spawn",
+      "key": "A",
+      "dx": -200,
+      "dy": 0,
+      "expected": "stone",
+      "start": {
+        "x": 450,
+        "y": 1550
+      },
+      "stop": {
+        "x": 434.000099,
+        "y": 1550
+      },
+      "fraction": 0.07999950499999998
+    }
+  ],
+  "longSweeps": 1648,
+  "snapshotIsolation": true,
+  "textureDisposedOnce": true,
+  "independentMaterialRoles": true,
+  "lateTextureDisposedOnce": true,
+  "maskExtents": [
+    [
+      0.3285820186138153,
+      0.9399999976158142
+    ],
+    [
+      0.05000000074505806,
+      0.8399203419685364
+    ],
+    [
+      0,
+      0.8998301029205322
+    ]
+  ],
+  "maxBeddingUvGradient": 0.0013157308915169848,
+  "limitations": "Geometry and support only; does not certify visual quality, input events, camera composition or browser frame rate."
+}

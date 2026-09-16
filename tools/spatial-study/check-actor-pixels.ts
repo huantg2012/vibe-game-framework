@@ -101,6 +101,46 @@ check('per-pixel pose depth equals the common camera depth, instead of a flat bi
   }
 });
 
+check('perspective pose depth reprojects actual view-space offsets and resets for orthographic stages', () => {
+  const drawing = new ActorPixelDrawing(112, 88, 56, 61); scene.add(drawing.mesh);
+  const shader = { uniforms: {}, fragmentShader: '#include <dithering_fragment>' } as
+    Parameters<typeof drawing.material.onBeforeCompile>[0];
+  drawing.material.onBeforeCompile(shader, {} as THREE.WebGLRenderer);
+  // Evaluate the emitted GLSL arithmetic, comparing it against Three's full
+  // projection matrix rather than duplicating the implementation formula.
+  const viewExpression = shader.fragmentShader.match(/float viewZ = ([^;]+);/)![1]!
+    .replace('min(', 'Math.min(').replace('gl_FragCoord.w', 'reciprocalW').replace('actorPerspectiveDepth.z', 'scale');
+  const outputExpression = shader.fragmentShader.match(/gl_FragDepth = clamp\(([^;]+)\);/)![1]!;
+  const evaluate = new Function('nearPlane', 'farPlane', 'poseDepth', 'scale', 'reciprocalW',
+    `const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)); const viewZ=${viewExpression}; return clamp(${outputExpression});`) as
+    (near: number, far: number, pose: number, scale: number, reciprocalW: number) => number;
+  const render = (camera: THREE.Camera): void => drawing.mesh.onBeforeRender({} as THREE.WebGLRenderer,
+    scene, camera, drawing.mesh.geometry, drawing.material, null);
+  for (const nearPlane of [1, 4]) for (const distance of [80, 2000, 4000]) for (const tilt of [0, .071]) {
+    const camera = new THREE.PerspectiveCamera(14, 1.5, nearPlane, 15000);
+    camera.updateMatrixWorld(true);
+    drawing.mesh.rotation.set(-tilt, 0, 0); drawing.mesh.updateMatrixWorld(true); render(camera);
+    const settings = shader.uniforms.actorPerspectiveDepth!.value as THREE.Vector3;
+    near(settings.x, camera.near); near(settings.y, camera.far); near(settings.z, Math.cos(tilt));
+    for (const pose of [-20, 0, 20]) {
+      const actualPoint = new THREE.Vector3(70, 30, -distance)
+        .addScaledVector(new THREE.Vector3(0, Math.sin(tilt), Math.cos(tilt)), pose);
+      const expected = (actualPoint.project(camera).z + 1) / 2;
+      near(evaluate(settings.x, settings.y, pose, settings.z, 1 / distance), expected, 1e-12);
+    }
+  }
+  // R8's recorded contact: the opaque rib is ahead of the actor. The old
+  // 1/2999 subtraction falsely pulled even a one-unit pose offset through it.
+  const actorDepth = .9996296972527414, ribDepth = .9996160265055177;
+  const viewZ = 15000 / ((15000 - 1) * actorDepth - 15000);
+  assert(actorDepth - 1 / 2999 < ribDepth);
+  assert(evaluate(1, 15000, 1, 1, -1 / viewZ) > ribDepth);
+  const orthographic = createStageCamera(992, 864); render(orthographic);
+  assert.equal((shader.uniforms.actorPerspectiveDepth!.value as THREE.Vector3).x, 0);
+  assert.equal(shader.uniforms.actorCameraDepthRange!.value, orthographic.far - orthographic.near);
+  assert.match(shader.fragmentShader, /gl_FragCoord\.z - poseDepth \/ actorCameraDepthRange/);
+});
+
 check('weapon drawing follows the formal attack/contact clock and remains within the actual reach', () => {
   const model = new StagePlayer(); scene.add(model.root); const frame = createPresentationFrame();
   const p = frame.player, profile = WEAPON_ATTACK_PROFILES.crowbar!; p.hp = 100; p.weaponDefinitionId = 'crowbar_plain';

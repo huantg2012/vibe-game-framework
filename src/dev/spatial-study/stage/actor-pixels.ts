@@ -33,6 +33,8 @@ export class ActorPixelDrawing {
   private cosTwist = 1;
   private sinTwist = 0;
   private readonly cameraDepthRange = { value: 2999 };
+  private readonly perspectiveDepth = { value: new THREE.Vector3(0, 1, 1) };
+  private readonly depthDirection = new THREE.Vector3();
   private depthDisposed = false;
   private elevation = ACTOR_CAMERA_ELEVATION;
   private sinElevation = Math.sin(ACTOR_CAMERA_ELEVATION);
@@ -57,13 +59,25 @@ export class ActorPixelDrawing {
     this.material.onBeforeCompile = shader => {
       shader.uniforms['actorPixelDepth'] = { value: this.depthTexture };
       shader.uniforms['actorCameraDepthRange'] = this.cameraDepthRange;
-      shader.fragmentShader = `uniform sampler2D actorPixelDepth;\nuniform float actorCameraDepthRange;\n${shader.fragmentShader}`
+      shader.uniforms['actorPerspectiveDepth'] = this.perspectiveDepth;
+      shader.fragmentShader = `uniform sampler2D actorPixelDepth;\nuniform float actorCameraDepthRange;
+        uniform vec3 actorPerspectiveDepth;\n${shader.fragmentShader}`
         .replace('#include <dithering_fragment>', `#include <dithering_fragment>
           // The colour remains pixel art. Only its occlusion depth comes from
           // the physical pose. Alpha-test has already discarded empty pixels.
-          gl_FragDepth = clamp(gl_FragCoord.z - texture2D(actorPixelDepth, vMapUv).r / actorCameraDepthRange, 0.0, 1.0);`);
+          float poseDepth = texture2D(actorPixelDepth, vMapUv).r;
+          if (actorPerspectiveDepth.x > 0.0) {
+            // Perspective depth is nonlinear. gl_FragCoord.w is 1 / -viewZ;
+            // offset the physical camera-space point, then project it again.
+            float nearPlane = actorPerspectiveDepth.x;
+            float farPlane = actorPerspectiveDepth.y;
+            float viewZ = min(-nearPlane, -1.0 / gl_FragCoord.w + poseDepth * actorPerspectiveDepth.z);
+            gl_FragDepth = clamp((farPlane + nearPlane * farPlane / viewZ) / (farPlane - nearPlane), 0.0, 1.0);
+          } else {
+            gl_FragDepth = clamp(gl_FragCoord.z - poseDepth / actorCameraDepthRange, 0.0, 1.0);
+          }`);
     };
-    this.material.customProgramCacheKey = () => 'stage-authored-actor-pixel-depth-v1';
+    this.material.customProgramCacheKey = () => 'stage-authored-actor-pixel-depth-v2-projection';
     // disposeTree owns the material and colour map. The actor owns this extra
     // texture; bind it to that same lifetime instead of adding a second owner.
     this.material.userData.actorDepthTexture = this.depthTexture;
@@ -80,8 +94,18 @@ export class ActorPixelDrawing {
     this.mesh.name = 'authored-actor-pixels';
     this.mesh.userData.pixelDrawing = true;
     this.mesh.onBeforeRender = (_renderer, _scene, camera) => {
-      if (camera instanceof THREE.OrthographicCamera)
+      if (camera instanceof THREE.PerspectiveCamera) {
+        // The card follows the actor's local sight ray, which can differ from
+        // the camera's central axis. Project its pose-depth axis onto view Z.
+        this.depthDirection.set(0, 0, 1).transformDirection(this.mesh.matrixWorld)
+          .transformDirection(camera.matrixWorldInverse);
+        this.perspectiveDepth.value.set(camera.near, camera.far, this.depthDirection.z);
+      } else {
+        this.perspectiveDepth.value.x = 0;
+      }
+      if (camera instanceof THREE.OrthographicCamera) {
         this.cameraDepthRange.value = Math.max(1, camera.far - camera.near);
+      }
     };
   }
 

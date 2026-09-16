@@ -1,0 +1,38 @@
+{
+  "verdict": "OCCLUSION DEPTH FIX VERIFIED; FALLEN CONTACT VISUAL FAIL",
+  "wallSeconds": 66.594,
+  "routeWallSeconds": 49.672,
+  "routeVisits": 13,
+  "assertions": 4526,
+  "rules": 98,
+  "samples": 211,
+  "sourceHashCount": 55,
+  "sourceStable": true,
+  "failures": [
+    {
+      "name": "travel changes source direction and distance gain",
+      "at": 1789564374601,
+      "details": {
+        "pan": [
+          -0.7896043325977098,
+          -0.13912959071766118
+        ],
+        "gain": [
+          0.41708679489647216,
+          0.8261465522050867
+        ]
+      }
+    }
+  ],
+  "movingPNG": 45,
+  "canvasVideo": "main-canvas.webm",
+  "canvasVideoVerifiedContent": true,
+  "hiddenSamplesSeconds": [
+    22.310333333333336,
+    24.715
+  ],
+  "orthographicNumericalChecks": {
+    "actor": 9,
+    "stageCamera": 8
+  }
+}

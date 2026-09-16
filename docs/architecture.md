@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-15
+last-modified: 2026-09-16
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,25 +10,29 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代23：自然地貌与分层景观（DEC-166 / R6已实施）
+## 迭代23：连续三维地貌与绘制景物（DEC-168 / R8）
 
-`living-landmass-stage.html` → `src/dev/living-landmass-stage.ts` → `living-landmass-stage/scene.ts` 是独立DEV入口，不进入正式菜单或世界池。`vista-model.ts`通过Vite raw解析八份`living-landmass-vista-*.csv`（轮廓/孔洞/岩石/区域/路线节点/连接/地层形体/局部断面）。五区六连接与中横脊、两孔保留，2200×1904、8px通行格；内容CSV是形体和分布的来源。
+`living-landmass-stage.html` → `src/dev/living-landmass-stage.ts` → `living-landmass-stage/scene.ts`仍是独立DEV入口，不进入正式菜单或世界池。用户已否决R7将“网状探索”直接做成多孔实体网及满铺岩纹；R8前两次实际帧也未通过视觉评审。当前实现为**真实连续三维地形/碰撞＋唯一地表绘制图＋固定倾角绘制景物**，不再以纯程序三色块承诺完成近景画面。R6保存提交仍为`58b0605`，旧失败证据保留；当前技术通过不代替新合成实帧或用户终审。
 
-新增`vista-strata.ts`定义有限长度的肩、脊、折、洼、单折肩硬面与积屑浅槽形体；同一局部坐标与权重提供制作期高程、裸露/沉积/断裂分布，地层两端收回地表。`vista-terrain.ts`将其与区域基形合成实际Float32三角网，运行时两脚、阴影与身体支持消费同一三角重心高程，不重新评估另一套连续函数。当前22464顶面三角、高程2.29～148.24；总体坡度0.543、必要路线身体宽度带0.269，分别通过<.6与<.3限制。`vista-boundary.ts`从CSV轮廓派生有限磨圆/破口；有效polygon供顶面、崖面与通行。`vista-cliff.ts`直接复用顶面的实际Float32边界与高程，层厚随地层改变（本轮72.00～215.98），两孔无底；不在数学边界查询fallback高程。`vista-rocks.ts`按CSV方向构造嵌生硬壳、脊、剥落及积屑，实际底环给出障碍足迹。无垂直重叠可走楼层。
+`vista-model.ts`通过Vite raw解析九份`living-landmass-vista-*.csv`（轮廓/孔洞/岩石/区域/路线节点/连接/地层形体/局部断面/绘制落地足迹）。独立编排的主地约x350～1700/z620～1600，当前**0个内部孔洞**；世界2200×1904、8px通行格，入口(650,1450)。三个region与五个stratum共同定义前坡、后侧高坡、东侧浅洼及主壳/倒伏体埋根。`route-nodes.csv`只有id/region/x/y，`connectors.csv`只有id/from/to/nodes；**13节点、14邻接段、5条连接链、2个独立环路**只描述绕行与重连，不提供地貌宽高、不反向生成地形。R7的`cells.csv`与`build-vista-web.mjs`已退出现役。
 
-新增`vista-sections.ts`消费sections.csv，将四个指定边界跨度的方向/深度/厚度权重交给主崖唯一网格，在内部行生成局部错台并逐段收回；不另覆共面网格以免深度争夺，不授予新身体支持。
+`vista-strata.ts`给出高程与地层权重，`vista-terrain.ts`合成Float32顶面；运行时足点、接触阴影与身体支持消费实际三角重心高程。`vista-boundary.ts`与`vista-cliff.ts`共用有效轮廓及顶缘顶点。`vista-rocks.ts`保留不可走主壳wall(970,1080)、倒伏体fallen(1310,1315)与一块来源剥片：主壳三层、倒伏体两层有限厚板有实际埋根、出挑下表面及障碍足迹。model将wall/fallen合为隐藏主物代理，材质`colorWrite:false/depthWrite:false`，仍`castShadow:true`，主壳三层床保留同源碰撞；代理不写可见颜色或深度，不会叠在绘制外形前。fallen旧两床仅投影，其实际阻挡来自`painted-footprints.csv`独立24点宽浅基底：前沿按绘制底缘沿32°视线落到实际terrain，后沿收回4～60单位；不得继续用旧埋尾床碰撞。小剥片独立可见，继续用rock材质。只有一个可走高度场；主物和下方景观均不提供第二层通行。
 
-新增`vista-material.ts`拥有ground/rock/cliff三种独立绘制材质。`setSurfaceTexture`只给走面沉积输入`sediment-r6.png`（1254方形粉状矿屑）；`setRockTexture`给硬体独立`shell-mineral-r6.png`（1254方形），硬壳贴图由rock材质唯一拥有，ground裸露与cliff断面uniform借用；顶面裸壳使用连续世界UV场，避免跨地层选UV再插值造成折返；rock/断面/沉积各有独立尺度方向与覆盖，不覆同一张沉积图。model接管传入贴图释放，借用uniform不重复dispose；scenery只克隆硬壳图，不再克隆沉积。材质以克制亮度级混合保留几何接触和大面，最终外观须实景评审。
+[几何报告](qa/artifacts/iteration-23/vista-r8/terrain-check.json)记录5184顶面三角、高程11.472～105.065，总体及路线身体带最大坡度约.251254，分别满足<.6与<.3；6459次完整身体采样、268次网格射线及1712次长扫掠通过。664个实际Float32边界顶点与崖顶高程误差0，断面厚度约92～124.352；四处局部sections进入主崖网格。该报告证明对应版本的几何与支持，不证明绘制轮廓、遮挡读法或画面品质；最终运行证据另记录源/资产哈希。
 
-`vista-camera.ts`仍24°工作机位、distance2600、跨度1120、FOV约16.342°、far15000；DEV20/24/28，焦点(x+45,y−390,height0)。原Player/80速度/20×20扫掠保持，StagePlayer按实际视线调整绘制基底。逻辑960×640、内部1920×1280、MSAA、最终canvas正常缩放；角色原像素画法保持。
+`vista-material.ts`的ground材质使用`ground-atlas-r8.png`唯一地貌绘制图。scene调用`setSurfaceTexture`转交所有权，并把实际geometry boundingBox传给`setVistaAtlasBounds`；shader按世界xz边界归一化采样一次、翻转图像纵轴，Texture使用clamp与线性mipmap，**不平铺，不把地表图复用到主物/侧壁**。真实法线与阴影仍参与克制的体积调制。小剥片、下层根体和切面保留`createVistaMaterial(role)`及距离空气混合接口。第六张资源`cutface-r8.png`已由scene调用`setRockTexture`接入：rock材质map拥有贴图，rock与cliff通过`setVistaRockSampler`的userData uniform采样同一张专用切面图，ground不借用。崖面UV为沿边距离/620与1−深度比例，shader按实际法线调制切面绘制色；小剥片使用同一硬质切面图，主物hero/fallen仍走独立绘制牌面接口。
 
-`vista-scenery.ts`有五个距离职责：最远`vista-r6.png`为1536×1024 clip-space全背景，彩度.84/空气混色.12；更远右侧`shoulder-r5.png`为2200×1467固定(3000,-2280,-5000)绘景、空气混色.43；主中景`shoulder-r6.png`为1536×1024 RGBA、2400×1600世界尺寸、48×32曲面、固定(-690,-1260,-3100)；两画片均−24°旋转、线性mipmap与smoothstep(.72,.97)透明覆盖，源图不做离线编辑。三条真实承体以偏心叠层折壳截面衔接近处；western首端(205,-70,1500)接入口侧壁下方，再经(65,-170,1330)退入深处，不授予新通行。两层薄雾提供空气。绘景有平移视差但不是可环绕完整三维大陆，不授予通行；原图和内置imagegen完整prompt/provenance放在同资产目录。
+新`vista-painted-landforms.ts`由model拥有，`setHeroTextures(hero,fallen,options)`接收两张独立Texture。主壳`carapace-r8.png`以1536×1024源图左上像素crop(40,75,1453,732)绘制480×242世界牌面；倒伏体`fallen-r8.png`crop(13,201,1494,643)，牌面280×120.4。裁边在运行时转为UV offset/repeat，不离线改图；底部中心锚在各实际障碍最前z及该处实际地表高度。牌面固定x旋转−32°，不随人物或镜头转向，不宣称正交相机。材质为不透明MeshBasic、`depthTest/depthWrite:true`、`toneMapped:false`；alpha先`smoothstep(.50,.90)`再`.05`裁切，shader带独立cache key。可见像素写真实深度，让角色前后关系由场景深度决定；图内体积仍是绘制形象，并不等同于逐像素重建的立体表面，实际遮挡与碰撞投影一致性必须看正常行走原帧。
 
-`vista-motion.ts`仍为唯一26秒周期。scenery保存三个对象静态顶点与固定权重：主绘景梢部上限18、下方主承体10、响应体6且固定端零位移，响应延迟1.4秒；更远画片静态。走面静止，预扩包围球覆盖位移，不每帧重建网格。`vista-audio.ts`原单一Context/BufferSource与PCM保持，实际声音时钟驱动运动，解锁前场景时钟，reduced-motion动作零/静态底音。M静音不重建音源。
+scene当前接入六张资源：远图`vista-r8.png`、唯一ground atlas、hero/fallen、独立`middle-carapace-r8.png`及`cutface-r8.png`。`vista-scenery.ts`由**3条真实下层根体＋1张世界固定中景绘制卡＋2层空气介质**组成。中景牌面2400×1600、48×32分段，位置(−650,−1550,−2300)、倾角−32°，接替旧光滑程序悬挑；该远处卡使用透明材质、真实depthTest但不写深度，alpha裁切与.30空气混合，不继承近景hero的不透明深度合同。三个根体首端(x,height,z)为western(410,−78,1370)、deep(750,−40,930)、response(1570,−45,1180)。最远clip-space图不写深度，彩度.92、空气混合.10；景观均不授予身体支持。
 
-blur/focus/visibilitychange及Phaser事件统一暂停/恢复输入、物理和音频；SHUTDOWN/DESTROY/pagehide幂等释放资源和监听。scenery拥有两绘景贴图及克隆硬壳图，显式释放shader uniform背景贴图。`__livingLandmassStage.getState()`为完整只读几何和材质/地层元数据；`getDynamicState()`省去不变大几何，仍有actor/相机/真实AA/音频和各形变体anchor/flex/maxDisplacement。无测试状态写入口、战术FOV/搜撤/库存/存档。
+`vista-camera.ts`是长焦透视相机，工作俯角32°、scene显式跨度960，DEV可选28/32/36，distance2600、far15000；跟随焦点(x+60,y−350,height0)。绘制牌面按工作32°固定，其余DEV角度不自动重新对齐资产。原Player速度80、20×20身体扫掠不变，StagePlayer按实际视线调整绘制基底。逻辑960×640、内部1920×1280、MSAA及canvas缩放保持；ACES曝光.95、半球光1.2、主光1.4、反弹.22、补光.85，绘制材质`toneMapped:false`。这些参数不代替角色及脚前区域的实际可读性判断。 共用`stage/actor-pixels.ts`按实际相机类型写逐像素深度：正交保留原`gl_FragCoord.z − poseDepth/(far−near)`；透视由`gl_FragCoord.w`恢复viewZ，将姿态深度轴投影到相机Z后偏移，再按当前near/far重投影。两类相机切换逐帧更新uniform与分支，不能把正交线性深度偏移用于透视；像素画法、足点与物理不变。`check-actor-pixels.ts`以实际shader算式对照Three投影矩阵，并覆盖已记录的fallen前后遮挡数值反例，GPU合成及接触读法仍由专项实帧核对。
 
-R6实现与Agent实景复核、最终新源完整去回程技术检查已交，用户审美待验；技术证据、视觉问题与未验限制分开登记[QA](qa/iteration-23.md)，方向见[§15](art/living-landmass-direction.md)，唯一完成清单见[迭代23](tasks/iteration-23.md)。旧研究和完整局部冻结，正式悬海路径保持。
+`vista-motion.ts`仍是26秒周期：中景绘制卡、下方主承体与响应根体的局部位移上限18/10/6，固定权重点零位移，响应延迟1.4秒；西根、可走地表与前景hero/fallen保持静态。静态顶点/权重预存，包围球预扩；中景是分段牌面形变，不再称真实悬挑壳厚度随动。`vista-audio.ts`沿用单一Context/BufferSource与PCM，音频时钟驱动运动、解锁前使用场景时钟；reduced-motion动作归零/静态底音，M静音不重建音源。
+
+blur/focus/visibilitychange与Phaser事件统一暂停/恢复输入、物理及音频；SHUTDOWN/DESTROY/pagehide幂等释放资源。ground图与rock材质拥有的切面图随model释放树处理；cliff uniform仅借用切面图，不重复释放。paintedLandforms独占两张成功安装的图，替换时只释放不再引用的旧图，重复安装不重复释放，销毁后晚到图也释放。非法crop/尺寸在安装前拒绝、所有权留给调用方；两角色必须独立Texture以免UV变换串用。模块销毁先从model树移除，再释放自身材质/几何/贴图，避免树重复释放。scenery中景map随释放树处理，远景shader uniform图显式释放；各调用方不得在转交后另行释放同一GPU Texture。
+
+只读`__livingLandmassStage.getState()`含地形/路线与`paintedLandforms`的实际图尺寸、crop、UV、世界锚点/尺寸/固定角及深度状态；`surfaceAtlas`读取实际map尺寸、wrap/repeat/offset、shader bounds和geometry bounds。`getDynamicState()`省略不变几何，保留actor/相机/AA/音频及形变anchor/flex/maxDisplacement。无测试状态写入口，无新增跳跃/攀爬、战术FOV、搜撤、库存或存档。技术、真实输入去回程、同族画法、自然感与空间记忆分别取证；当前证据及未验项见[QA](qa/iteration-23.md)，画法见[方向](art/living-landmass-direction.md)，任务见[迭代23](tasks/iteration-23.md)。正式悬海路径与旧局部不受本DEV研究影响。
 
 ## 迭代23：生命大陆受力局部（DEC-159）
 

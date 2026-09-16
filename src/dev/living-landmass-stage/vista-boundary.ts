@@ -33,5 +33,23 @@ export function shapeVistaBoundary(outline: readonly VistaPoint[], seed: number)
         y: corner.end.y + dy * t + dx / length * offset });
     }
   }
+  // Exact straight intervals do not need a middle vertex. Earcut may retain
+  // a numerically collinear ear; subdivision then turns Float32 rounding into
+  // an inverted sliver with a fictitious vertical slope. Remove only points
+  // within .02 units of the segment joining their neighbours.
+  let changed = true;
+  while (changed && result.length > 3) {
+    changed = false;
+    for (let i = 0; i < result.length; i++) {
+      const a = result[(i + result.length - 1) % result.length]!;
+      const p = result[i]!, b = result[(i + 1) % result.length]!;
+      const dx = b.x - a.x, dy = b.y - a.y, length = Math.hypot(dx, dy);
+      const projection = ((p.x - a.x) * dx + (p.y - a.y) * dy) / (length * length);
+      if (projection > 0 && projection < 1
+        && Math.abs(dx * (p.y - a.y) - dy * (p.x - a.x)) / length < .02) {
+        result.splice(i, 1); changed = true; break;
+      }
+    }
+  }
   return result;
 }

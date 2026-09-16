@@ -26,7 +26,7 @@ export interface VistaStrataSample {
 /** Mesh-authoring only, never the runtime support source. Crest and lee use
  * the same local frame, so pigment cannot disagree with the shape beneath it. */
 export function sampleVistaStrata(x: number, y: number, strata: readonly VistaStratum[]): VistaStrataSample {
-  let height = 0, exposure = 0, sediment = .15, fracture = 0, channelCover = 0;
+  let height = 0, exposure = 0, sediment = .05, fracture = 0, channelCover = 0;
   // One continuous hard-substrate coordinate field. Different material
   // roles keep different scales; adjacent terrain vertices never switch UV
   // charts according to whichever geological influence happens to win.

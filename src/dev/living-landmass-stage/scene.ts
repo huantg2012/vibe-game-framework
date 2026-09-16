@@ -12,6 +12,7 @@ import { LandmassVistaCamera } from './vista-camera';
 import { LandmassVistaModel } from './vista-model';
 import { VistaScenery } from './vista-scenery';
 import { VistaAudio } from './vista-audio';
+import { setVistaAtlasBounds } from './vista-material';
 
 /** A walking visual study. Phaser's production Player is the sole movement
  * owner; this scene deliberately creates no game inventory, FOV or combat. */
@@ -28,7 +29,7 @@ export class LivingLandmassStudyScene extends Phaser.Scene {
   private inputPaused = false;
   private audio: VistaAudio | null = null;
   private readonly actor = new StagePlayer({ elevationDeg: 35 });
-  private readonly rig = new LandmassVistaCamera(this.model.focus, this.model.span);
+  private readonly rig = new LandmassVistaCamera(this.model.focus, 960);
   private stageRenderer: THREE.WebGLRenderer | null = null;
   private resizeObserver: ResizeObserver | null = null;
   private previousOpacity = '';
@@ -46,11 +47,12 @@ export class LivingLandmassStudyScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.load.image('living-vista-r6', '/assets/dev/living-landmass/vista-r6.png');
-    this.load.image('living-sediment-r6', '/assets/dev/living-landmass/sediment-r6.png');
-    this.load.image('living-shoulder-r6', '/assets/dev/living-landmass/shoulder-r6.png');
-    this.load.image('living-far-shoulder', '/assets/dev/living-landmass/shoulder-r5.png');
-    this.load.image('living-shell-r6', '/assets/dev/living-landmass/shell-mineral-r6.png');
+    this.load.image('living-vista-r8', '/assets/dev/living-landmass/vista-r8.png');
+    this.load.image('living-ground-r8', '/assets/dev/living-landmass/ground-atlas-r8.png');
+    this.load.image('living-carapace-r8', '/assets/dev/living-landmass/carapace-r8.png');
+    this.load.image('living-fallen-r8', '/assets/dev/living-landmass/fallen-r8.png');
+    this.load.image('living-middle-r8', '/assets/dev/living-landmass/middle-carapace-r8.png');
+    this.load.image('living-cutface-r8', '/assets/dev/living-landmass/cutface-r8.png');
   }
 
   create(): void {
@@ -67,33 +69,34 @@ export class LivingLandmassStudyScene extends Phaser.Scene {
       this.stageRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
       this.stageRenderer.setPixelRatio(2); this.stageRenderer.setSize(STUDY_WIDTH, STUDY_HEIGHT, false);
       this.stageRenderer.outputColorSpace = THREE.SRGBColorSpace;
-      this.stageRenderer.toneMapping = THREE.ACESFilmicToneMapping; this.stageRenderer.toneMappingExposure = 1.05;
+      this.stageRenderer.toneMapping = THREE.ACESFilmicToneMapping; this.stageRenderer.toneMappingExposure = .95;
       this.stageRenderer.shadowMap.enabled = true; this.stageRenderer.shadowMap.type = THREE.PCFShadowMap;
-      if (!this.textures.exists('living-vista-r6')) throw new Error('生命大陆背景加载失败，请刷新重试');
-      const panorama = new THREE.Texture(this.textures.get('living-vista-r6').getSourceImage());
-      this.scenery.setPanoramaTexture(panorama);
-      if (!this.textures.exists('living-shoulder-r6')) throw new Error('远景分层素材加载失败，请刷新重试');
-      this.scenery.setDistantTexture(new THREE.Texture(this.textures.get('living-shoulder-r6').getSourceImage()));
-      if (!this.textures.exists('living-sediment-r6')) throw new Error('岩层材质加载失败，请刷新重试');
-      const strata = new THREE.Texture(this.textures.get('living-sediment-r6').getSourceImage());
-      strata.colorSpace = THREE.SRGBColorSpace; strata.magFilter = THREE.NearestFilter;
-      strata.minFilter = THREE.LinearMipmapLinearFilter; strata.wrapS = strata.wrapT = THREE.RepeatWrapping;
-      strata.needsUpdate = true; this.model.setSurfaceTexture(strata);
-      if (!this.textures.exists('living-shell-r6') || !this.textures.exists('living-far-shoulder')) throw new Error('矿壳与分层素材加载失败，请刷新重试');
-      const shell = new THREE.Texture(this.textures.get('living-shell-r6').getSourceImage());
-      shell.colorSpace=THREE.SRGBColorSpace;shell.wrapS=shell.wrapT=THREE.RepeatWrapping;
-      shell.magFilter=THREE.LinearFilter;shell.minFilter=THREE.LinearMipmapLinearFilter;shell.needsUpdate=true;
-      this.model.setRockTexture(shell); this.scenery.setSurfaceTexture(shell);
-      this.scenery.setFarShoulderTexture(new THREE.Texture(this.textures.get('living-far-shoulder').getSourceImage()));
-      this.stageRenderer.setClearColor(0x8b8290, 1);
-      const ambient = new THREE.HemisphereLight(0xdcd3da, 0x827580, 1.65);
-      const key = new THREE.DirectionalLight(0xffe9d1, 1.45); key.position.set(2050, 1700, -200);
+      for(const asset of ['living-vista-r8','living-ground-r8','living-carapace-r8','living-fallen-r8','living-middle-r8','living-cutface-r8'])
+        if(!this.textures.exists(asset))throw new Error(`场景绘制资产加载失败: ${asset}`);
+      this.scenery.setPanoramaTexture(new THREE.Texture(this.textures.get('living-vista-r8').getSourceImage()));
+      this.scenery.setMiddleTexture(new THREE.Texture(this.textures.get('living-middle-r8').getSourceImage()));
+      const ground = new THREE.Texture(this.textures.get('living-ground-r8').getSourceImage());
+      this.model.setSurfaceTexture(ground);
+      this.model.setRockTexture(new THREE.Texture(this.textures.get('living-cutface-r8').getSourceImage()));
+      ground.wrapS=ground.wrapT=THREE.ClampToEdgeWrapping;
+      setVistaAtlasBounds(this.model.surface.material,this.model.surface.geometry.boundingBox!);
+      this.model.setHeroTextures(
+        new THREE.Texture(this.textures.get('living-carapace-r8').getSourceImage()),
+        new THREE.Texture(this.textures.get('living-fallen-r8').getSourceImage()),
+        {hero:{width:480,height:242,crop:{x:40,y:75,width:1453,height:732}},
+          fallen:{width:280,height:120.4,crop:{x:13,y:201,width:1494,height:643}}});
+      this.stageRenderer.setClearColor(0x302b37, 1);
+      const ambient = new THREE.HemisphereLight(0xbdb4b6, 0x51414a, 1.2);
+      const key = new THREE.DirectionalLight(0xd9baa0, 1.4); key.position.set(-472, 2536, 2344);
       key.target.position.set(1000, 40, 1000); key.castShadow = true;
       key.shadow.mapSize.set(2048, 2048); key.shadow.camera.left = -1700; key.shadow.camera.right = 1700;
       key.shadow.camera.top = 1700; key.shadow.camera.bottom = -1700; key.shadow.camera.far = 4700;
       key.shadow.bias = -.0003; key.shadow.normalBias = 1.2;
-      const bounce = new THREE.DirectionalLight(0xb5a8bd, .28); bounce.position.set(1260, -80, 930);
-      this.stage.add(ambient, key, key.target, bounce);
+      const bounce = new THREE.DirectionalLight(0x8b7c96, .22); bounce.position.set(1260, -80, 930);
+      // A broad, quiet front fill keeps mineral sections readable in the
+      // working view; the dark albedo still owns the scene's weight.
+      const fill = new THREE.DirectionalLight(0xbeb4c2, .85); fill.position.set(-900, 1100, 2400);
+      this.stage.add(ambient, key, key.target, bounce, fill);
       const canvas = this.stageRenderer.domElement, original = this.game.canvas;
       canvas.dataset.livingStage = 'true'; canvas.setAttribute('aria-label', '实时三维生命大陆');
       canvas.style.cssText = 'position:absolute;inset:0;pointer-events:none;image-rendering:auto';
@@ -129,7 +132,7 @@ export class LivingLandmassStudyScene extends Phaser.Scene {
     const height = this.model.groundHeightAt(position.x, position.y);
     this.rig.project(position, height, this.projected);
     const actor = this.actor.snapshot(), feet = actor.feet as number[][];
-    return { ready: this.ready, study: 'living-landmass-vista-walk', revision: 6, elapsedMs: this.elapsedMs,
+    return { ready: this.ready, study: 'living-landmass-vista-walk', revision: 8, elapsedMs: this.elapsedMs,
       camera: this.rig.snapshot(), ...(includeGeometry ? { geometry: this.model.snapshot() } : {}), scenery: this.scenery.snapshot(), audio: this.audio?.snapshot(), inputPaused: this.inputPaused, player: { ...position, height,
         facing: this.player.getFacingAngle(), moving: this.player.isMoving(), velocity: { x: body.velocity.x, y: body.velocity.y },
         screen: { ...this.projected }, body: { x: body.x, y: body.y, width: body.width, height: body.height },

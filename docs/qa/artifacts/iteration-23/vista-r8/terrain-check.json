@@ -1,0 +1,637 @@
+{
+  "pass": true,
+  "recordedAt": "2026-09-16T13:20:23.767Z",
+  "method": "Actual Vite SSR ?raw CSV imports; Three Raycaster against rendered BufferGeometry; production full-body physical-grid sweep",
+  "sourceSha256": {
+    "src/dev/living-landmass-stage/vista-model.ts": "1f2806f236b6b951587a2621e14a944cab0fe240c8220fae4ae0966689ca70bb",
+    "src/dev/living-landmass-stage/vista-terrain.ts": "f1a4cf161868e3ca5961763c838eb759a813976a0e4de94cdc63f723a6ebf6d1",
+    "src/dev/living-landmass-stage/vista-boundary.ts": "94a9dec33ca804a080f5b5baf8ec08763189b894bfd029f9cf3b5354193e97a0",
+    "src/dev/living-landmass-stage/vista-cliff.ts": "793a4dd60930f79e727c7e91d78725891683a5b34d1a74175887f5f8719f193b",
+    "src/dev/living-landmass-stage/vista-rocks.ts": "102236ea291fb9911e1495456d01da73db7b87a53320193b1728ee9b51df0ec6",
+    "src/dev/living-landmass-stage/vista-strata.ts": "628465bc8f5b16d1a2583e1ae1c8a57bdb4d2a1b7a49cfdb6f057ab351eb216e",
+    "src/dev/living-landmass-stage/vista-sections.ts": "ed9601e3ccb7f67eeddbe4a094e91411a844f798cd747ba8a1bb08e00f9d1a16",
+    "data/living-landmass-vista-sections.csv": "92bd6d31d4d3b36120e121b1cac9f10705f4e2678fa15c42e921d88eb3867718",
+    "src/dev/living-landmass-stage/vista-material.ts": "bf9fc77ca308bc4b42a11def4dc8eb1346af4346e0d1680c6857ba2598d5621f",
+    "data/living-landmass-vista-strata.csv": "5da9b259b646b972ab67f2ef4b64a64ffe6d4be6c409b97bda8a62d6b3736668",
+    "data/living-landmass-vista-outline.csv": "7fe18308f9a75ea9ee1a944062e6b1509888b8390aa8aba13024affe65d36cd6",
+    "data/living-landmass-vista-rocks.csv": "540fd22f2b47ab417275190b23765b6d9555e643356bf1bb8b3d037b7c7eab5c",
+    "data/living-landmass-vista-painted-footprints.csv": "a85c64284b480f16d8bfa21ab51b60b7ce6ba0478325665e71f16095b63f145d",
+    "src/dev/living-landmass-stage/vista-painted-landforms.ts": "61cd1a35e35bcfcaebab87278c120a9bede7735c9b54d892ba1a4daad981fbd5",
+    "public/assets/dev/living-landmass/fallen-r8.png": "b1ff8621fa9a49985cdcb6b5f21956625eda4b0a01565907868819358c636b16",
+    "data/living-landmass-vista-holes.csv": "f74168e17494714b825485d0e21cf1da20a318ea67cc39b1479eb12b847d2ce9",
+    "data/living-landmass-vista-regions.csv": "0c19c9a6c5436339597d495feaab5765a7b5124ebd10ee308fca6a1ef6ff0625",
+    "data/living-landmass-vista-route-nodes.csv": "9ed8dad404ed676cdbc9d53ac044ccc8229b9a634e28608bd76882be69e70922",
+    "data/living-landmass-vista-connectors.csv": "112be2760322ddff826ca5b1f74e7c4ac9c9c3663a8f6457071a8c587b2f39c1",
+    "src/systems/ai/physical-grid.ts": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+    "tools/living-landmass/check-vista-terrain.mjs": "b28c6e380fda25af519b0a9b6ab797d663f83c7bac290ad38368997d790dfecb"
+  },
+  "triangles": 5184,
+  "surfaceArea": 1093317.6445375625,
+  "expectedArea": 1093317.6496365871,
+  "height": {
+    "min": 11.472442626953125,
+    "max": 105.0649185180664,
+    "sampling": "actual-float32-triangle-barycentric"
+  },
+  "rimVertices": 664,
+  "maxRimError": 0,
+  "maxRimSamplerError": 0,
+  "minCliffThickness": 91.99999618530273,
+  "maxCliffThickness": 124.35185241699219,
+  "internalCliffSeamsClosed": true,
+  "maxSlope": 0.25125414738863583,
+  "maxRouteSlope": 0.25125414738863583,
+  "supportedBodies": 6459,
+  "rays": 269,
+  "maxHeightError": 9.237055564881302e-14,
+  "bedSections": [
+    {
+      "id": "main-uplifted-shell",
+      "kind": "wall",
+      "roots": [
+        {
+          "x": 790.8141479492188,
+          "y": 1050.821533203125,
+          "clearance": -6.999995795062205
+        },
+        {
+          "x": 819.4672241210938,
+          "y": 1129.545166015625,
+          "clearance": -7.0000024522583715
+        }
+      ],
+      "lipThickness": 33.539337158203125,
+      "undersideClearance": 90.82666431144116
+    },
+    {
+      "id": "main-uplifted-shell",
+      "kind": "wall",
+      "roots": [
+        {
+          "x": 771.470947265625,
+          "y": 1107.02685546875,
+          "clearance": -7.0000014658540834
+        },
+        {
+          "x": 800.7525634765625,
+          "y": 1187.4774169921875,
+          "clearance": -7.00000335668669
+        }
+      ],
+      "lipThickness": 23.894363403320312,
+      "undersideClearance": 63.26963345957286
+    },
+    {
+      "id": "main-uplifted-shell",
+      "kind": "wall",
+      "roots": [
+        {
+          "x": 859.273193359375,
+          "y": 1168.1551513671875,
+          "clearance": -7.000005689879302
+        },
+        {
+          "x": 876.4755859375,
+          "y": 1215.4183349609375,
+          "clearance": -7.0000008861404766
+        }
+      ],
+      "lipThickness": 14.5679931640625,
+      "undersideClearance": 35.108001925806974
+    },
+    {
+      "id": "fallen-shell-rib",
+      "kind": "fallen",
+      "roots": [
+        {
+          "x": 1206.003173828125,
+          "y": 1236.0946044921875,
+          "clearance": -6.999998886451145
+        },
+        {
+          "x": 1196.170654296875,
+          "y": 1257.1805419921875,
+          "clearance": -6.99999816066147
+        }
+      ],
+      "lipThickness": 14.680000305175781,
+      "undersideClearance": 35.220798459279735
+    },
+    {
+      "id": "fallen-shell-rib",
+      "kind": "fallen",
+      "roots": [
+        {
+          "x": 1228.4549560546875,
+          "y": 1284.014404296875,
+          "clearance": -6.999994184861283
+        },
+        {
+          "x": 1217.1962890625,
+          "y": 1308.1585693359375,
+          "clearance": -6.999999657825413
+        }
+      ],
+      "lipThickness": 10.993598937988281,
+      "undersideClearance": 15.348798091960518
+    }
+  ],
+  "paintedBase": {
+    "maxPaintedBaseError": 0.0004453455435395881,
+    "checkedFeet": 252,
+    "contacts": [
+      {
+        "x": 1190,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1194,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1198,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1202,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1206,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1210,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1214,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1218,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1222,
+        "z": 1378.0000989999999
+      },
+      {
+        "x": 1226,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1230,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1234,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1238,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1242,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1246,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1250,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1254,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1258,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1262,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1266,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1270,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1274,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1278,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1282,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1286,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1290,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1294,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1298,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1302,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1306,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1310,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1314,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1318,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1322,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1326,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1330,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1334,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1338,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1342,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1346,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1350,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1354,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1358,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1362,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1366,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1370,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1374,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1378,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1382,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1386,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1390,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1394,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1398,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1402,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1406,
+        "z": 1402.0000989999999
+      },
+      {
+        "x": 1410,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1414,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1418,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1422,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1426,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1430,
+        "z": 1394.0000989999999
+      },
+      {
+        "x": 1227.14495249,
+        "z": 1386.0000989999999
+      },
+      {
+        "x": 1230.64,
+        "z": 1386.0000989999999
+      }
+    ]
+  },
+  "topology": {
+    "geometryFromRoutes": false,
+    "routeSegments": 14,
+    "independentLoops": 2
+  },
+  "regionCount": 3,
+  "connectors": [
+    {
+      "id": "entry",
+      "from": "arrival",
+      "to": "arrival",
+      "nodes": [
+        "spawn",
+        "split"
+      ]
+    },
+    {
+      "id": "western-ascent",
+      "from": "arrival",
+      "to": "east",
+      "nodes": [
+        "split",
+        "west",
+        "look",
+        "rejoin",
+        "upper-turn",
+        "east"
+      ]
+    },
+    {
+      "id": "inner-foot",
+      "from": "east",
+      "to": "arrival",
+      "nodes": [
+        "east",
+        "gap"
+      ]
+    },
+    {
+      "id": "wall-base",
+      "from": "arrival",
+      "to": "arrival",
+      "nodes": [
+        "gap",
+        "wall-front",
+        "split"
+      ]
+    },
+    {
+      "id": "basin-detour",
+      "from": "arrival",
+      "to": "east",
+      "nodes": [
+        "gap",
+        "basin",
+        "lower-turn",
+        "outer",
+        "east-join",
+        "east"
+      ]
+    }
+  ],
+  "routeSegments": [
+    {
+      "connection": "entry",
+      "from": "spawn",
+      "to": "split",
+      "distance": 198.49433241279206
+    },
+    {
+      "connection": "western-ascent",
+      "from": "split",
+      "to": "west",
+      "distance": 260
+    },
+    {
+      "connection": "western-ascent",
+      "from": "west",
+      "to": "look",
+      "distance": 233.238075793812
+    },
+    {
+      "connection": "western-ascent",
+      "from": "look",
+      "to": "rejoin",
+      "distance": 200.9975124224178
+    },
+    {
+      "connection": "western-ascent",
+      "from": "rejoin",
+      "to": "upper-turn",
+      "distance": 200.9975124224178
+    },
+    {
+      "connection": "western-ascent",
+      "from": "upper-turn",
+      "to": "east",
+      "distance": 150.3329637837291
+    },
+    {
+      "connection": "inner-foot",
+      "from": "east",
+      "to": "gap",
+      "distance": 268.3281572999748
+    },
+    {
+      "connection": "wall-base",
+      "from": "gap",
+      "to": "wall-front",
+      "distance": 150.3329637837291
+    },
+    {
+      "connection": "wall-base",
+      "from": "wall-front",
+      "to": "split",
+      "distance": 160
+    },
+    {
+      "connection": "basin-detour",
+      "from": "gap",
+      "to": "basin",
+      "distance": 244.13111231467406
+    },
+    {
+      "connection": "basin-detour",
+      "from": "basin",
+      "to": "lower-turn",
+      "distance": 260
+    },
+    {
+      "connection": "basin-detour",
+      "from": "lower-turn",
+      "to": "outer",
+      "distance": 140
+    },
+    {
+      "connection": "basin-detour",
+      "from": "outer",
+      "to": "east-join",
+      "distance": 234.0939982143925
+    },
+    {
+      "connection": "basin-detour",
+      "from": "east-join",
+      "to": "east",
+      "distance": 215.40659228538019
+    }
+  ],
+  "airChecks": [],
+  "blockedProbes": [
+    {
+      "id": "main-shell-wall",
+      "node": "wall-front",
+      "key": "W",
+      "dx": 0,
+      "dy": -330,
+      "expected": "stone",
+      "start": {
+        "x": 940,
+        "y": 1300
+      },
+      "stop": {
+        "x": 940,
+        "y": 1218.0000989999999
+      },
+      "fraction": 0.24848454848484883
+    },
+    {
+      "id": "fallen-rib",
+      "node": "basin",
+      "key": "W",
+      "dx": 0,
+      "dy": -280,
+      "expected": "stone",
+      "start": {
+        "x": 1230,
+        "y": 1490
+      },
+      "stop": {
+        "x": 1230,
+        "y": 1386.0000989999999
+      },
+      "fraction": 0.37142821785714325
+    },
+    {
+      "id": "western-cliff",
+      "node": "west",
+      "key": "A",
+      "dx": -500,
+      "dy": 0,
+      "expected": "void",
+      "start": {
+        "x": 680,
+        "y": 1060
+      },
+      "stop": {
+        "x": 378.000099,
+        "y": 1060
+      },
+      "fraction": 0.603999802
+    },
+    {
+      "id": "southern-cliff",
+      "node": "spawn",
+      "key": "S",
+      "dx": 0,
+      "dy": 400,
+      "expected": "void",
+      "start": {
+        "x": 650,
+        "y": 1450
+      },
+      "stop": {
+        "x": 650,
+        "y": 1549.9999010000001
+      },
+      "fraction": 0.24999975250000026
+    }
+  ],
+  "longSweeps": 1712,
+  "snapshotIsolation": true,
+  "textureDisposedOnce": true,
+  "independentMaterialRoles": true,
+  "lateTextureDisposedOnce": true,
+  "maskExtents": [
+    [
+      0,
+      0.8799999952316284
+    ],
+    [
+      0.05000000074505806,
+      0.870405912399292
+    ],
+    [
+      0,
+      0.7897433042526245
+    ]
+  ],
+  "maxBeddingUvGradient": 0.0013156300858901237,
+  "limitations": "Geometry and support only; does not certify visual quality, input events, camera composition or browser frame rate."
+}

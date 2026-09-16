@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: code / director（DEC-166：独立场景地层与局部断面数据）
-last-modified-date: 2026-09-15
+last-modified-by: code / director（DEC-168：自然地形与探索拓扑分离）
+last-modified-date: 2026-09-16
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: true
 slice: 6
@@ -25,17 +25,19 @@ exposes:
 
 # 系统设计：裂隙地图生成
 
-## DEC-166独立多地块场景
+## DEC-168独立生命地貌观察场
 
-`living-landmass-stage.html` 为手工编排的连通场景，不调用正式随机地图生成。八份 `data/living-landmass-vista-*.csv`：outline有序外轮廓；holes按id分组有序内孔；rocks拥有id/x/y/radius/height/kind/yaw（kind=shell/ridge/plates/debris；yaw单位度）；regions拥有标签、中心/目标高程/影响范围/色倾向/地标描述；route-nodes拥有id/region/x/y；connectors拥有连接ID及节点链；strata拥有id/region/kind/x/y/length/width/yaw/rise/exposure/sediment，kind=shoulder/ridge/fold/basin/fold-plane/channel，yaw度、尺寸正数、rise允许凹陷负值、exposure/sediment为0～1；sections拥有id/ring/x/y/radius/offsetX/offsetY/drop/thickness，ring整数引用实际外环0或内孔1..N，radius/thickness正、drop>8，局部错台不产生可走面。全部Vite raw运行解析、有限数/正尺寸/ID及引用校验，CSV→code。
+`living-landmass-stage.html`为手工编排的连续自然地貌，不调用正式随机地图生成。R7由路线网络偏移生成实体壳网的方案已被用户否决，`build-vista-web`与cells面环退出当前生产链。**路线拓扑描述走法，不决定地形轮廓、孔洞数量、宽度或高程。**
 
-五个地块=沉积肩台、矿化脊、高位冠台、纤维台、回折台；六条连接形成全环与中横脊，两内孔是真实空气。2200×1904范围、8px完整格准入与渲染轮廓/岩石足迹同源；三角化投影面积等于外轮廓减孔，不补洞底。snapshot输出regions/connectors/routeNodes/recommendedRoute/alternateRoute/qaChecks供只读正常行走验证，不提供传送。
+九份`data/living-landmass-vista-*.csv`分别拥有outline/holes/regions/route-nodes/connectors/strata/sections/rocks/painted-footprints。轮廓、孔洞（允许零个）和地貌独立编排；regions描述区域基高、影响范围与地貌身份。route-nodes字段id/region/x/y；connectors字段id/from/to/nodes，其nodes为实际观察/转折点链，from/to只标区域归属。13节点14相邻段5连接组成2个绕行回环，是当前候选事实，不是质量目标；不得再将图的边拉宽为道路实体。
 
-CSV宏轮廓先由vista-boundary派生磨圆与局部破口，再统一用于顶面/侧面/通行；侧面顶沿必须直接复用顶面的实际Float32边界坐标/高度，不能把边界包含查询的fallback当高程。岩块底环生成障碍足迹，几何细节不得假造支持。崖唇/主面/基底厚度沿程变化（外128/内85为基厚，局部随地层变化），两孔无底。四类自然地标及其yaw由CSV控制，纯装饰不新增物品规则。
+strata字段id/region/kind/x/y/length/width/yaw/rise/exposure/sediment，有限shoulder/fold/basin/fold-plane等地形构成宽坡、埋入壳根、后侧高坡、东侧浅洼；形体同时提供真实制作期高度和有限沉积分布。sections字段id/ring/x/y/radius/offsetX/offsetY/drop/thickness，将有位置含义的局部断面并入主崖唯一网格。rocks字段id/x/y/radius/height/kind/yaw：wall/fallen的实体代理承担主物投影；wall底环保留固定阻挡，fallen旧埋尾床不再承担碰撞。代理几何有宽根、层肩和埋回轮廓，但不写颜色或深度。可见外形由各自固定绘制片承载，资产不是三维可攀爬实体；占地与脚缘对应需实走审查。零散碎片须有来源，不围每处节点摆石。
 
-vista-strata以CSV有限长度/宽度和方向提供地层升起/埋入、洼地与迎背侧分布，制作期高程与材质裸露/沉积/断裂权重同源；fold-plane用有限长的单折肩截面塑造斜硬面；channel是明确积屑浅槽，其覆盖会压低当地裸露权重。运行支持仍只采实际Float32三角。材质分为走面覆盖、硬体与断面，不以贴图颜色判断可走性。
+painted-footprints字段id/order/x/y，是固定机位绘制景物的独立落地足迹。当前仅用于fallen：前沿按绘制底缘沿工作32°视线落到真实地表，后沿形成宽浅实体；不从探索路线或旧投影床反推。若资产尺寸/锚点改变，必须同步轮廓并验证完整身体通路和正常接近触点，不得只改画面或只缩碰撞掩盖误读。
 
-当前只构建静态连续高程，不做垂直重叠可走层。地块矿化/纤维/积屑细节不改变物件或敌人数据；非通行动态、独立绘景和下层承体都不参与支撑。此页不注册世界/敌人/掉落/存档，不能以五块图宣称完整第二世界、随机供给或新可达巨岛完成。
+2200×1904世界坐标内的首段为连续宽主地。有效polygon供渲染和8px整格准入，三角顶面面积等于外轮廓减孔；顶崖共边使用实际Float32坐标/高度，两脚与身体支持同源。无垂直重叠楼层，中远景及下承体不授予可走支持。snapshot输出独立路线、正常键盘建议路与阻挡探针，不提供传送。
+
+本页不注册正式世界/敌人/掉落/存档；连续地貌与绘制式渲染首段不等于完整第二世界或供给验证完成。验收必须包括正常镜头下的路线选择、前望到达、人物落脚及自然形体，图论/通行PASS不代表画面成立。
 
 ## 迭代23：生命大陆局部的支撑合同
 

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { STUDY_WIDTH, STUDY_HEIGHT } from './camera';
 
-const ANGLES = [20, 24, 28] as const;
+const ANGLES = [28, 32, 36] as const;
 export type VistaAngle = typeof ANGLES[number];
 
 /** A restrained long lens adds real depth/parallax without changing heading.
@@ -14,8 +14,8 @@ export class LandmassVistaCamera {
   private readonly distance = 2600;
 
   constructor(readonly focus: Readonly<{ x: number; height: number; y: number }>, readonly span: number) {
-    const requested = typeof location === 'undefined' ? 24 : Number(new URLSearchParams(location.search).get('camera') ?? 24);
-    this.angle = ANGLES.includes(requested as VistaAngle) ? requested as VistaAngle : 24;
+    const requested = typeof location === 'undefined' ? 32 : Number(new URLSearchParams(location.search).get('camera') ?? 32);
+    this.angle = ANGLES.includes(requested as VistaAngle) ? requested as VistaAngle : 32;
     this.center = { ...focus };
     const verticalSpan = span * STUDY_HEIGHT / STUDY_WIDTH;
     const fov = THREE.MathUtils.radToDeg(2 * Math.atan(verticalSpan / (2 * this.distance)));
@@ -24,8 +24,8 @@ export class LandmassVistaCamera {
   }
 
   follow(point: { x: number; y: number }): void {
-    const x = point.x + 45;
-    const y = point.y - 390;
+    const x = point.x + 60;
+    const y = point.y - 350;
     this.moveTo(x, y);
   }
 

@@ -1,0 +1,177 @@
+{
+  "status": "FROZEN",
+  "source": "ROOT first quality freeze 2026-09-16, geometry all pass; threshold1.5 explicitly approved",
+  "revision": 7,
+  "cameraElevation": 24,
+  "logical": {
+    "width": 960,
+    "height": 640
+  },
+  "internal": {
+    "width": 1920,
+    "height": 1280
+  },
+  "cycleSeconds": 26,
+  "distanceRoles": [
+    "infinite panorama",
+    "receding eastern painting",
+    "fixed-world curved painting",
+    "real middle bearings",
+    "walkable terrain"
+  ],
+  "paintedLayers": 2,
+  "landforms": 3,
+  "atmosphereLayers": 2,
+  "assets": [
+    "/assets/dev/living-landmass/vista-r7.png",
+    "/assets/dev/living-landmass/shoulder-r7.png",
+    "/assets/dev/living-landmass/shell-mineral-r7.png",
+    "/assets/dev/living-landmass/sediment-r6.png"
+  ],
+  "deformers": [
+    {
+      "name": "deep-bearing-body",
+      "role": "load",
+      "amplitude": 10,
+      "minCycleSpan": 8.0
+    },
+    {
+      "name": "delayed-load-lamella",
+      "role": "response",
+      "amplitude": 6,
+      "minCycleSpan": 4.800000000000001
+    },
+    {
+      "name": "independent-painted-shell",
+      "role": "load",
+      "amplitude": 18,
+      "minCycleSpan": 14.4
+    }
+  ],
+  "background": {
+    "painting": {
+      "width": 2400,
+      "height": 1600,
+      "sourceWidth": 1536,
+      "airMix": 0
+    },
+    "farPainting": {
+      "width": 2200,
+      "height": 1467,
+      "sourceWidth": 1536,
+      "airMix": 0.28,
+      "worldFixed": true
+    },
+    "panorama": {
+      "airMix": 0.1,
+      "chroma": 0.92
+    }
+  },
+  "topology": {
+    "status": "FROZEN",
+    "holes": 8,
+    "regions": 7,
+    "connectors": 18,
+    "nodes": 28,
+    "edges": 35,
+    "cycles": 8,
+    "minHoleAreaRatio": 1.5,
+    "minJunctions": 4
+  },
+  "qualityRoute": [
+    "spawn",
+    "entry-saddle",
+    "core",
+    "west-core-bend",
+    "west"
+  ],
+  "route": [
+    "spawn",
+    "south-west-bend",
+    "west",
+    "west-upper-bend",
+    "north-west",
+    "north-cap-bend",
+    "crown",
+    "north-east-bend",
+    "north-east",
+    "east-rise-bend",
+    "east",
+    "east-lower-bend",
+    "lower-east",
+    "lower-arc-bend",
+    "lower",
+    "lower-west-bend",
+    "spawn",
+    "entry-saddle",
+    "core",
+    "west-core-bend",
+    "west",
+    "west-core-bend",
+    "core",
+    "core-neck",
+    "upper-join",
+    "upper-west-bend",
+    "north-west",
+    "upper-west-bend",
+    "upper-join",
+    "upper-stem",
+    "crown",
+    "upper-stem",
+    "upper-join",
+    "upper-east-bend",
+    "north-east",
+    "upper-east-bend",
+    "upper-join",
+    "core-neck",
+    "core",
+    "east-fork",
+    "east-core-bend",
+    "east",
+    "east-core-bend",
+    "east-fork",
+    "lower-east-fork",
+    "lower-east",
+    "lower-east-fork",
+    "east-fork",
+    "core",
+    "lower-stem",
+    "lower",
+    "lower-stem",
+    "core",
+    "entry-saddle",
+    "spawn",
+    "lower-west-bend",
+    "lower",
+    "lower-arc-bend",
+    "lower-east",
+    "east-lower-bend",
+    "east",
+    "east-rise-bend",
+    "north-east",
+    "north-east-bend",
+    "crown",
+    "north-cap-bend",
+    "north-west",
+    "west-upper-bend",
+    "west",
+    "south-west-bend",
+    "spawn"
+  ],
+  "reverseRoute": [
+    "entry-saddle",
+    "core",
+    "west-core-bend",
+    "west",
+    "south-west-bend",
+    "spawn"
+  ],
+  "probeIds": [
+    "western-air-edge",
+    "lower-air-edge",
+    "outer-edge",
+    "root-fracture"
+  ],
+  "probeDetours": [],
+  "maxRouteWallSeconds": 600
+}

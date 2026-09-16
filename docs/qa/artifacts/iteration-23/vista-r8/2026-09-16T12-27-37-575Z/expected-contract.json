@@ -1,0 +1,137 @@
+{
+  "status": "FROZEN",
+  "source": "ROOT R8 frozen rendering contract 2026-09-16; route graph independently read from authored CSV; camera span explicitly wired to960 in scene after final ROOT correction",
+  "revision": 8,
+  "cameraElevation": 32,
+  "cameraSpan": 960,
+  "logical": {
+    "width": 960,
+    "height": 640
+  },
+  "internal": {
+    "width": 1920,
+    "height": 1280
+  },
+  "cycleSeconds": 26,
+  "distanceRoles": [
+    "distant painted silhouettes",
+    "sculpted middle cantilever",
+    "lower bearing roots",
+    "walkable landform"
+  ],
+  "paintedLayers": 0,
+  "landforms": 4,
+  "atmosphereLayers": 2,
+  "assets": [
+    "/assets/dev/living-landmass/vista-r8.png"
+  ],
+  "materials": {
+    "sharedCoverageMap": false,
+    "rockTextureLoaded": false
+  },
+  "minStrata": 5,
+  "deformers": [
+    {
+      "name": "middle-cantilever-shell",
+      "role": "load",
+      "amplitude": 18,
+      "minCycleSpan": 14.4
+    },
+    {
+      "name": "deep-bearing-body",
+      "role": "load",
+      "amplitude": 10,
+      "minCycleSpan": 8
+    },
+    {
+      "name": "delayed-load-lamella",
+      "role": "response",
+      "amplitude": 6,
+      "minCycleSpan": 4.8
+    }
+  ],
+  "background": {
+    "panorama": {
+      "airMix": 0.1,
+      "chroma": 0.92,
+      "sourceWidth": 1536
+    }
+  },
+  "topology": {
+    "holes": 0,
+    "regions": 3,
+    "connectors": 5,
+    "nodes": 13,
+    "edges": 14,
+    "cycles": 2,
+    "minJunctions": 3
+  },
+  "qualityRoute": [
+    "spawn",
+    "split",
+    "west",
+    "look",
+    "rejoin",
+    "upper-turn",
+    "east",
+    "gap",
+    "wall-front",
+    "split"
+  ],
+  "route": [
+    "spawn",
+    "split",
+    "west",
+    "look",
+    "rejoin",
+    "upper-turn",
+    "east",
+    "gap",
+    "wall-front",
+    "split",
+    "wall-front",
+    "gap",
+    "basin",
+    "lower-turn",
+    "outer",
+    "east-join",
+    "east",
+    "east-join",
+    "outer",
+    "lower-turn",
+    "basin",
+    "gap",
+    "east",
+    "upper-turn",
+    "rejoin",
+    "look",
+    "west",
+    "split",
+    "spawn"
+  ],
+  "reverseRoute": [
+    "spawn",
+    "split",
+    "wall-front",
+    "gap",
+    "basin",
+    "lower-turn",
+    "outer",
+    "east-join",
+    "east",
+    "upper-turn",
+    "rejoin",
+    "look",
+    "west",
+    "split",
+    "spawn"
+  ],
+  "probeIds": [
+    "main-shell-wall",
+    "fallen-rib",
+    "western-cliff",
+    "southern-cliff"
+  ],
+  "probeDetours": [],
+  "maxRouteWallSeconds": 600
+}
