@@ -1,0 +1,95 @@
+// Generated from data/rift-world-profiles.csv. Edit CSV, then run codegen-world-profiles.mjs.
+import type { WorldProfile } from '../generation/world-study/types';
+
+export const WORLD_PROFILE_DATA: readonly WorldProfile[] = [
+  {
+    "id": "ash-strata",
+    "label": "无彩层原",
+    "description": "沉积层片与失色断面",
+    "material": "strata",
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 2302755,
+      "floor": 3421236,
+      "floorLight": 4539717,
+      "materialDark": 3158064,
+      "materialMid": 5855577,
+      "materialLight": 7895160,
+      "faceLight": 10066329,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 3421236,
+      "groundLight": 4539717,
+      "groundDark": 2302755,
+      "wall": 5855577,
+      "wallLight": 10066329,
+      "wallDark": 3158064
+    }
+  },
+  {
+    "id": "crystal-fibre",
+    "label": "晶化林床",
+    "description": "纤维床沿统一方向晶化",
+    "material": "crystal",
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 2303798,
+      "floor": 3158599,
+      "floorLight": 4472919,
+      "materialDark": 3488592,
+      "materialMid": 5001839,
+      "materialLight": 7173782,
+      "faceLight": 10136256,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 3158599,
+      "groundLight": 4472919,
+      "groundDark": 2303798,
+      "wall": 5001839,
+      "wallLight": 10136256,
+      "wallDark": 3488592
+    }
+  },
+  {
+    "id": "ivory-basin",
+    "label": "吸光釉原",
+    "description": "厚釉沉积与吸光结节",
+    "material": "glaze",
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 7367527,
+      "floor": 11182476,
+      "floorLight": 12564125,
+      "materialDark": 4868945,
+      "materialMid": 7695973,
+      "materialLight": 9799795,
+      "faceLight": 13813675,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 11182476,
+      "groundLight": 12564125,
+      "groundDark": 7367527,
+      "wall": 7695973,
+      "wallLight": 13813675,
+      "wallDark": 4868945
+    }
+  }
+];

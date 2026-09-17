@@ -1178,3 +1178,9 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 物件显示名由`data/contaminants.csv`生成，供奉态/工具态同名，内部ID、品质、实例余次与迁移不变。正文和界面使用完整描述性短语，旧验收证据保留拍摄时名称。
 
 单薄墙安全落点指一格厚的墙面；正交横穿时可覆盖同墙面相邻砖块，避免在砖缝处无理由失败。第二层墙、斜角第二障碍、VOID及身体不净空仍由连续swept-AABB拒绝。试验场在左侧增加单格厚连续墙供真实按键验证。
+
+## 裂隙图志：独立世界生成样板（2026-09-17）
+
+`rift-worlds.html` → `src/dev/world-study.ts` → `generation/world-study/`。独立Canvas地图入口纳入Vite构建，CSV配方→生成表→确定性地貌→静态材料烘焙；连续shape供显示边界与碰撞共用。完整设计仍见 `docs/design-notes/rift-world-space.md`，实际范围见 `docs/dev/rift-world-study.md`，未替换正式Rift生成/战斗/存档。
+
+原玩家的 `renderDensePlayerFrame` 同时服务正式atlas上传和此入口缓存，32帧不变。`light-field.ts`复用正式 `vision-textures.ts` 的方向光场曲线/32级强度，再按本图纯黑空洞裁掉视线；未知地面不保留残影。可见的晶片、沉积页和釉壳只属于陆地浅浮雕，不把空洞伪装成受光石块。

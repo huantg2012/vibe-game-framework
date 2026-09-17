@@ -3,7 +3,7 @@
  * Warm-grey body + visor slit + pack + lamp housing. No teal, no paired eyes, no outline.
  */
 
-import Phaser from 'phaser';
+import type Phaser from 'phaser';
 import type { Facing4 } from '@/types/game-types';
 import type { MotionGait } from '@/entities/actor-motion';
 
@@ -321,6 +321,12 @@ function paintPose(facing: Facing4, d: Deform): Uint8ClampedArray {
   return data;
 }
 
+/** Same source pixels for the game texture atlas and independent Canvas studies. */
+export function renderDensePlayerFrame(facing: Facing4, gait: MotionGait, frame: number): Uint8ClampedArray {
+  const pose = Number.isInteger(frame) && frame >= 0 && frame < 4 ? frame : 0;
+  return paintPose(facing, gait === 'walk' ? walkDeform(facing, pose) : idleDeform(pose));
+}
+
 function upload(scene: Phaser.Scene, key: string, pixels: Uint8ClampedArray): void {
   if (scene.textures.exists(key)) scene.textures.remove(key);
   const tex = scene.textures.createCanvas(key, CANVAS, CANVAS);
@@ -335,8 +341,8 @@ function upload(scene: Phaser.Scene, key: string, pixels: Uint8ClampedArray): vo
 export function generateDensePlayerPlaceholders(scene: Phaser.Scene): void {
   for (const facing of FACINGS) {
     for (let frame = 0; frame < 4; frame++) {
-      upload(scene, DENSE_PLAYER_IDLE_TEXTURE[facing][frame]!, paintPose(facing, idleDeform(frame)));
-      upload(scene, DENSE_PLAYER_WALK_TEXTURE[facing][frame]!, paintPose(facing, walkDeform(facing, frame)));
+      upload(scene, DENSE_PLAYER_IDLE_TEXTURE[facing][frame]!, renderDensePlayerFrame(facing, 'idle', frame));
+      upload(scene, DENSE_PLAYER_WALK_TEXTURE[facing][frame]!, renderDensePlayerFrame(facing, 'walk', frame));
     }
   }
 }
