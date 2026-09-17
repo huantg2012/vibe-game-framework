@@ -1,6 +1,8 @@
 import { Raster } from './raster';
 import { worldLandAt, worldWallAt } from './shape';
 import type { WorldSample } from './types';
+import { materialFieldAt } from './material-field';
+import { beginMaterialResponse } from './material-response';
 
 function hash(x: number, y: number, seed: number): number {
   let value = Math.imul(x | 0, 0x1f123bb5) ^ Math.imul(y | 0, 0x5f356495) ^ seed;
@@ -46,6 +48,7 @@ export function paintGroundMaterial(raster: Raster, sample: WorldSample, floorMa
     return floorMask ? floorMask[iy * width + ix] === 1 : worldLandAt(sample, ix, iy) && !worldWallAt(sample, ix, iy);
   };
   const material = profile.material;
+  const highlights = beginMaterialResponse(sample);
   const high = material === 'glaze' ? p.floorLight : mix(p.floorLight, p.materialLight, .30);
   const ramps = [0, 1, 2].map(region => Array.from({ length: 48 }, (_, index) => {
     const base = mix(p.floorDeep, high, index / 47);
@@ -58,40 +61,70 @@ export function paintGroundMaterial(raster: Raster, sample: WorldSample, floorMa
     const macro = noise(x / 250 + warp * .9, y / 220 - warp * .7, seed ^ 0x1851);
     const meso = noise(x / 43 + warp * 2, y / 38 + warp, seed ^ 0x7691);
     const fine = noise(x / 9, y / 7, seed ^ 0x5167);
-    const region = noise(x / 110, y / 95, seed ^ 0x3675);
+    const field = materialFieldAt(sample, x, y);
+    const region = field.amount * .85 + noise(x / 110, y / 95, seed ^ 0x3675) * .15;
     const grain = hash(x >> 1, y >> 1, seed ^ 0x2219) - .5;
-    let value = .53 + (macro - .5) * .9 + (meso - .5) * .46 + (fine - .5) * .20;
+    let value = .53 + (field.amount - .5) * .30 + (macro - .5) * .58
+      + (meso - .5) * .26 + (fine - .5) * (.10 + field.front * .07);
     let colorRegion = region < .35 ? 1 : region > .68 ? 2 : 0;
-    let joint = false, lip = false;
+    let joint = false, lip = false, reflection = 0, reflectAngle = field.direction;
     if (material === 'strata') {
       const bed = y * .81 + x * .26 + warp * 52;
       const bands = noise(x / 80, bed / 5.5, seed ^ 0x8271);
-      value += (bands - .5) * (.12 + region * .24) + grain * (.055 + meso * .12);
+      value += (bands - .5) * (.12 + field.front * .22) + grain * (.035 + field.front * .085);
       const strata = cellField(x + warp * 15, y * 2.5, 54, seed ^ 0x83);
-      joint = region > .49 && strata.edge < 1.25 && bands < .62;
-      lip = region > .49 && strata.edge > 1.5 && strata.edge < 2.8 && strata.plane < 0;
+      joint = field.front > .40 && strata.edge < 1.25 && bands < .62;
+      lip = field.front > .40 && strata.edge > 1.5 && strata.edge < 2.8 && strata.plane < 0;
       value += (strata.identity - .5) * .09;
+      const layer = (field.phase + noise(x / 120, y / 90, seed ^ 419) * .35) * 3.5;
+      const terrace = layer - Math.floor(layer);
+      value += (Math.floor(layer) % 2 ? -.025 : .025) * field.front;
+      if (field.front > .25 && terrace < .12) value -= .12;
+      if (field.front > .30 && terrace > .13 && terrace < .19 && bands > .33) value += .11;
     } else if (material === 'crystal') {
       const crystal = cellField(x + warp * 22, y - warp * 18, 32, seed ^ 0x631);
       const growth = Math.max(0, (region - .42) * 2.1);
       value += (crystal.identity - .5) * growth * .45;
-      value += Math.sign(crystal.plane) * growth * .055 + grain * (.065 + (1 - growth) * .06);
+      value += Math.sign(crystal.plane) * growth * .055 + grain * (.035 + (1 - growth) * .045);
       joint = growth > .22 && crystal.edge < 1.35;
       lip = growth > .35 && crystal.edge >= 1.35 && crystal.edge < 2.8 && crystal.plane < .1;
       if (growth > .45) colorRegion = 2;
+      const plane = cellField(x + warp * 26, y - warp * 14, 85, seed ^ 0x8381);
+      if (growth > .23) {
+        value += Math.sign(plane.plane) * growth * .075 + (plane.identity - .5) * growth * .22;
+        if (plane.edge < 1.4) value -= .15 * growth;
+        if (plane.edge >= 1.4 && plane.edge < 3.1 && plane.plane < .1) { value += .14 * growth; reflection = .55; }
+      }
+      if (lip) reflection = .42;
+      reflectAngle = plane.identity * Math.PI * 2;
     } else {
       const shell = cellField(x + warp * 25, y + warp * 19, 57, seed ^ 0x911);
       const glaze = noise(x / 23 + warp, y / 31, seed ^ 0x827);
       value += (shell.identity - .5) * .10 + (glaze - .5) * .21;
-      value += grain * (region < .45 ? .055 : .15);
-      joint = shell.edge < .95 && region > .32 && glaze < .72;
-      lip = shell.edge > 1.1 && shell.edge < 2.2 && region > .37 && shell.plane < 0;
+      value += grain * (.025 + field.front * .065 + (1 - region) * .035);
+      joint = shell.edge < .95 && field.front > .30 && glaze < .72;
+      lip = shell.edge > 1.1 && shell.edge < 2.2 && field.front > .30 && shell.plane < 0;
       if (region > .63 && fine > .54) value -= (fine - .5) * .40;
+      // The same deposition field separates surviving glaze from rough substrate.
+      const skin = field.amount + (meso - .5) * .17 + (fine - .5) * .035;
+      if (skin > .60) {
+        const thickness = noise(x / 66 + warp, y / 48 - warp, seed ^ 0x8123);
+        value = .71 + (macro - .5) * .24 + (thickness - .5) * .18
+          + (glaze - .5) * .14 + (fine - .5) * .025 + grain * .025;
+        if (shell.edge < .9 && thickness < .39) value -= .08;
+        reflection = .10;
+      } else if (skin < .43) value -= .07;
+      if (skin > .586 && skin <= .60 && glaze > .30) value -= .11;
+      if (skin > .60 && skin < .609 && glaze > .42 && fine < .63) value += .08;
     }
     if (joint) value -= material === 'glaze' ? .22 : .13;
     if (lip) value += material === 'crystal' ? .21 : .12;
     const index = Math.max(0, Math.min(47, Math.round(value * 47)));
     raster.rect(x, y, 2, 2, ramps[colorRegion]![index]!);
+    if (reflection > 0 && hash(x >> 1, y >> 1, seed ^ 17331) > .73
+      && floor(x, y) && floor(x + 1, y) && floor(x, y + 1) && floor(x + 1, y + 1)) {
+      highlights.push({ x, y, normal: reflectAngle, color: p.peak, strength: reflection, width: 2, height: 2 });
+    }
   }
 
   // Sparse but substantial deposits are correlated with the same region field.
@@ -100,14 +133,14 @@ export function paintGroundMaterial(raster: Raster, sample: WorldSample, floorMa
     const x = (gx + hash(gx, gy, seed ^ 927)) * 23;
     const y = (gy + hash(gx, gy, seed ^ 619)) * 23;
     if (!floor(x, y)) continue;
-    const region = noise(x / 110, y / 95, seed ^ 0x3675);
+    const field = materialFieldAt(sample, x, y);
     const pick = hash(gx, gy, seed ^ 7719);
-    if (pick > .10 + Math.max(0, region - .37) * 1.30) continue;
-    const cell = Math.min(sample.flowAngle.length - 1, Math.floor(y / tile) * cols + Math.floor(x / tile));
-    const angle = sample.flowAngle[cell]! + (pick - .5) * .8;
+    if (pick > .015 + field.front * .26 + Math.max(0, field.amount - .70) * .48) continue;
+    const size = hash(gx, gy, seed ^ 6113);
+    const angle = field.direction + (size - .5) * .7;
     const ux = Math.cos(angle), uy = Math.sin(angle), vx = -uy, vy = ux;
-    const length = material === 'crystal' ? 5 + pick * 28 : 4 + pick * 18;
-    const breadth = material === 'strata' ? 2 + pick * 3 : 3 + pick * 6;
+    const length = material === 'crystal' ? 3 + size * 11 : 2 + size * 9;
+    const breadth = material === 'strata' ? 1 + size * 2 : 2 + size * 3;
     const pt = (along: number, across: number): readonly [number, number] => [x + ux * along + vx * across, y + uy * along + vy * across];
     if (material === 'crystal') {
       const root = pt(-length * .35, 0), tip = pt(length, 0), left = pt(length * .3, -breadth), right = pt(length * .4, breadth);

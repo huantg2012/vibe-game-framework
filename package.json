@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "worlds:codegen": "node tools/map-preview/codegen-world-profiles.mjs",
-    "check:worlds": "node tools/map-preview/codegen-world-profiles.mjs --check && node --import tsx tools/map-preview/check-world-study.ts && node --import tsx tools/world-study/check-runtime.ts",
+    "check:worlds": "node tools/map-preview/codegen-world-profiles.mjs --check && node --import tsx tools/map-preview/check-world-study.ts && node --import tsx tools/world-study/check-runtime.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-movement.ts",
     "capture:worlds": "node tools/world-study/capture.mjs",
     "preview:worlds": "node --import tsx tools/world-study/render.ts",
     "check:living-landmass": "node --import tsx tools/living-landmass/check-content.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/living-landmass/check-runtime.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/living-landmass/check-stage-support.ts",

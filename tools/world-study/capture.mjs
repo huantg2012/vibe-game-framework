@@ -39,6 +39,7 @@ try {
         await capture(`${world}-walk`);
         const walking = await page.evaluate(() => window.__worldStudy.getState());
         if (!walking.field) throw new Error('Walking preview did not preserve core visibility');
+        if (walking.zoom !== 1.5) throw new Error('Walking preview must use the Rift base camera scale');
         await page.locator('#field').click();
         await capture(`${world}-surface`);
         await page.locator('#field').click();
@@ -54,7 +55,7 @@ try {
               return { ...state.player, canStand: window.__worldStudy.collisionAt(state.player.x, state.player.y) };
             }));
           }
-        await page.keyboard.up(key);
+          await page.keyboard.up(key);
         }
         const after = await page.evaluate(() => window.__worldStudy.getState());
         if (after.movedDistance <= before.movedDistance + 10) throw new Error(`${world}: keyboard input did not move player`);
@@ -98,6 +99,22 @@ try {
   await ready();
   if (!(await page.evaluate(() => window.__worldStudy.getState().field))) throw new Error('Direct walking URL must enable visibility');
   await capture('crystal-fibre-field');
+  await page.locator('canvas').focus();
+  await page.keyboard.down('w');
+  await page.waitForTimeout(200);
+  const normalVelocity = await page.evaluate(() => window.__worldStudy.getState().velocity);
+  await page.keyboard.down('Shift');
+  await page.waitForTimeout(200);
+  const shiftedVelocity = await page.evaluate(() => window.__worldStudy.getState().velocity);
+  await page.keyboard.up('w');
+  await page.keyboard.up('Shift');
+  await page.waitForTimeout(200);
+  const stoppedVelocity = await page.evaluate(() => window.__worldStudy.getState().velocity);
+  for (const velocity of [normalVelocity, shiftedVelocity]) {
+    if (Math.abs(Math.hypot(velocity.x, velocity.y) - 80) > .001) throw new Error('Actual browser movement must stay at 80px/s with or without Shift');
+  }
+  if (Math.hypot(stoppedVelocity.x, stoppedVelocity.y) > .001) throw new Error('Player did not settle after key release');
+  report.input.push({ baseMovement: { normalVelocity, shiftedVelocity, stoppedVelocity } });
   await page.locator('#regenerate').click();
   await ready();
   const newSeed = await page.evaluate(() => window.__worldStudy.getState().seed);

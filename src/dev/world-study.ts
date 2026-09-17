@@ -1,8 +1,11 @@
 /** Independent, seeded world study. No production save, combat or scene state. */
 import { generateWorldSample } from '@/generation/world-study/layout';
+import { GAME_CONSTANTS } from '@/config/constants';
+import { readWorldStudyInput, stepWorldStudyVelocity } from '@/generation/world-study/movement';
 import { renderWorldSurface } from '@/generation/world-study/surface';
 import { worldLandAt, worldWallAt } from '@/generation/world-study/shape';
 import { WorldStudyLightField, LIGHT_EXTENT, LIGHT_SIZE } from '@/generation/world-study/light-field';
+import { paintMaterialLight } from '@/generation/world-study/material-light';
 import { renderDensePlayerFrame, DENSE_PLAYER_GROUND_OFFSET_Y } from '@/entities/player-sprite-dense';
 import type { Facing4 } from '@/types/game-types';
 import type { WorldSample } from '@/generation/world-study/types';
@@ -43,10 +46,12 @@ let elapsed = 0;
 let lastFrame = 0;
 let movedDistance = 0;
 let width = 1, height = 1;
-let zoom = view === 'walk' ? 2 : 1;
+let zoom = view === 'walk' ? GAME_CONSTANTS.CAMERA.ZOOM : 1;
 const camera = { x: 0, y: 0 };
 const player: { x: number; y: number; facing: Facing4; walking: boolean } = { x: 0, y: 0, facing: 'up', walking: false };
 const keys = new Set<string>();
+const movementInput = { x: 0, y: 0 };
+const velocity = { x: 0, y: 0 };
 let drag: { x: number; y: number; cameraX: number; cameraY: number; pointer: number } | null = null;
 let motes: { x: number; y: number; phase: number; size: number }[] = [];
 let nextPositionUpdate = 0;
@@ -101,7 +106,7 @@ function setView(next: View): void {
   view = next;
   if (view === 'overview') fitOverview();
   if (view === 'walk') {
-    zoom = 2;
+    zoom = GAME_CONSTANTS.CAMERA.ZOOM;
     camera.x = player.x;
     camera.y = player.y;
   }
@@ -132,6 +137,8 @@ async function regenerate(nextWorld = worldId, nextTopology = topology, nextSeed
   errorBox.hidden = true;
   seedButton.disabled = true;
   keys.clear();
+  velocity.x = velocity.y = 0;
+  player.walking = false;
   await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
   if (token !== generation) return;
   try {
@@ -184,26 +191,28 @@ function canStand(x: number, y: number): boolean {
 }
 
 function updatePlayer(delta: number): void {
-  let dx = Number(keys.has('KeyD') || keys.has('ArrowRight')) - Number(keys.has('KeyA') || keys.has('ArrowLeft'));
-  let dy = Number(keys.has('KeyS') || keys.has('ArrowDown')) - Number(keys.has('KeyW') || keys.has('ArrowUp'));
-  const requested = dx !== 0 || dy !== 0;
+  readWorldStudyInput(keys, movementInput);
+  const requested = movementInput.x !== 0 || movementInput.y !== 0;
   player.walking = false;
-  if (busy || !sample || !requested) return;
-  if (Math.abs(dx) > 0) player.facing = dx < 0 ? 'left' : 'right';
-  else player.facing = dy < 0 ? 'up' : 'down';
-  const length = Math.hypot(dx, dy);
-  const speed = keys.has('ShiftLeft') || keys.has('ShiftRight') ? 155 : 100;
-  dx = dx / length * speed * delta; dy = dy / length * speed * delta;
+  if (busy || !sample) { velocity.x = velocity.y = 0; return; }
+  if (requested) {
+    if (Math.abs(movementInput.x) > 0) player.facing = movementInput.x < 0 ? 'left' : 'right';
+    else player.facing = movementInput.y < 0 ? 'up' : 'down';
+  }
+  stepWorldStudyVelocity(velocity, movementInput, delta);
+  let dx = velocity.x * delta, dy = velocity.y * delta;
   // Substeps keep collision stable even after a delayed animation frame.
   const steps = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) / 3));
   const initialDistance = movedDistance;
   for (let step = 0; step < steps; step++) {
     const beforeX = player.x, beforeY = player.y;
     if (canStand(player.x + dx / steps, player.y)) player.x += dx / steps;
+    else { velocity.x = 0; dx = 0; }
     if (canStand(player.x, player.y + dy / steps)) player.y += dy / steps;
+    else { velocity.y = 0; dy = 0; }
     movedDistance += Math.hypot(player.x - beforeX, player.y - beforeY);
   }
-  player.walking = movedDistance > initialDistance + .01;
+  player.walking = delta > 0 && (movedDistance - initialDistance) / delta >= GAME_CONSTANTS.ACTOR_MOTION.MOVE_SPEED_FLOOR;
 }
 
 function drawPlayer(): void {
@@ -243,6 +252,7 @@ function drawLitSurface(): void {
   litContext.imageSmoothingEnabled = false;
   litContext.setTransform(1, 0, 0, 1, -lightField.originX, -lightField.originY);
   drawSurface(litContext);
+  paintMaterialLight(litContext, sample, player.x, player.y, elapsed);
   litContext.setTransform(1, 0, 0, 1, 0, 0);
   litContext.globalCompositeOperation = 'destination-in';
   litContext.drawImage(lightMask, 0, 0, litCanvas.width, litCanvas.height);
@@ -304,8 +314,10 @@ window.addEventListener('keydown', event => {
   if (digit >= 1 && digit <= 3) void regenerate(worldIds[digit - 1]!);
 });
 window.addEventListener('keyup', event => keys.delete(event.code));
-window.addEventListener('blur', () => { keys.clear(); drag = null; player.walking = false; });
-document.addEventListener('visibilitychange', () => { if (document.hidden) keys.clear(); });
+window.addEventListener('blur', () => { keys.clear(); velocity.x = velocity.y = 0; drag = null; player.walking = false; });
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { keys.clear(); velocity.x = velocity.y = 0; player.walking = false; }
+});
 canvas.addEventListener('pointerdown', event => {
   if (event.button !== 0) return;
   canvas.focus(); canvas.setPointerCapture(event.pointerId);
@@ -336,7 +348,7 @@ canvas.addEventListener('wheel', event => {
 declare global {
   interface Window {
     __worldStudy: {
-      getState(): { ready: boolean; world: string; topology: string; seed: number; view: View; field: boolean; player: { x: number; y: number }; movedDistance: number; zoom: number; cols: number; rows: number; error: string | null };
+      getState(): { ready: boolean; world: string; topology: string; seed: number; view: View; field: boolean; player: { x: number; y: number }; velocity: { x: number; y: number }; movedDistance: number; zoom: number; cols: number; rows: number; error: string | null };
       regenerate(world: ProfileId, topology: TopologyId, seed: number): Promise<void>;
       setView(view: View): void;
       visibilityAt(x: number, y: number): number;
@@ -347,7 +359,7 @@ declare global {
 }
 window.__worldStudy = {
   getState: () => ({ ready: !!sample && !busy, world: worldId, topology, seed, view, field,
-    player: { x: player.x, y: player.y }, movedDistance, zoom, cols: sample?.cols ?? 0, rows: sample?.rows ?? 0,
+    player: { x: player.x, y: player.y }, velocity: { ...velocity }, movedDistance, zoom, cols: sample?.cols ?? 0, rows: sample?.rows ?? 0,
     error: errorBox.hidden ? null : errorBox.textContent }),
   regenerate, setView, collisionAt: canStand,
   visibilityAt: (x, y) => { lightField?.update(player.x, player.y, player.facing); return lightField?.visibilityAt(x, y) ?? 0; },

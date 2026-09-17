@@ -2,6 +2,7 @@
 import { Raster } from './raster';
 import { worldLandAt, worldWallAt } from './shape';
 import type { WorldSample } from './types';
+import { materialFieldAt } from './material-field';
 
 type Point = readonly [number, number];
 interface RimSeat { readonly x: number; readonly y: number; readonly nx: number; readonly ny: number }
@@ -51,25 +52,29 @@ function shifted(points: readonly Point[], x: number, y: number): Point[] {
 }
 
 function paintStrata(raster: Raster, sample: WorldSample, seat: RimSeat, seed: number): void {
-  const p = sample.profile.palette, width = 24 + seed % 35, layers = 3 + seed % 3;
-  // Offset thin laminae expose a broken bed; no raised rock occupies the hole.
+  const p = sample.profile.palette, width = 28 + seed % 43, layers = 1 + seed % 3;
+  const direction = materialFieldAt(sample, seat.x, seat.y).direction;
+  const bedSeat = { x: seat.x + seat.nx * 24, y: seat.y + seat.ny * 24,
+    nx: Math.cos(direction), ny: Math.sin(direction) };
+  // Fractured beds are inlaid in the ground plane. Broken partial edges replace
+  // the bright parallel slab stack, which could read as a standing barricade.
   for (let layer = layers - 1; layer >= 0; layer--) {
-    const length = 9 + layer * 5, offset = hash(seed + layer) % 17 - 8;
-    const a = point(seat, length, -width * .5 + offset), b = point(seat, length + 5, width * .48 + offset);
-    const c = point(seat, length + 12, width * .35 + offset), d = point(seat, length + 9, -width * .42 + offset);
-    raster.polygon(shifted([a, b, c, d], 1, 1), p.shadow);
-    raster.polygon([a, b, c, d], layer % 2 ? p.materialMid : p.materialLight);
-    raster.line(a[0], a[1], b[0], b[1], layer === 0 ? p.faceLight : p.floorLight, 2);
-    if (layer % 2 === 0) {
-      const start = point(seat, length + 1, offset + width * .11), end = point(seat, length + 11, offset + width * .06);
-      raster.line(start[0], start[1], end[0], end[1], p.materialDark, 2);
-    }
+    const random = hash(seed + layer), along = layer * 8 - 10, offset = random % 23 - 11;
+    const extent = width * (.65 + (random >>> 8) % 35 / 100);
+    const a = point(bedSeat, along, -extent * .5 + offset), b = point(bedSeat, along + 3, extent * .28 + offset);
+    const c = point(bedSeat, along + 12, extent * .42 + offset), notch = point(bedSeat, along + 9, offset);
+    const d = point(bedSeat, along + 17, -extent * .38 + offset);
+    raster.polygon([a, b, c, notch, d], layer % 2 ? p.materialDark : p.floorLight);
+    raster.line(b[0], b[1], c[0], c[1], p.materialDark);
+    const edge = point(bedSeat, along + 1, -extent * .15 + offset);
+    raster.line(a[0], a[1], edge[0], edge[1], p.materialMid);
+    const split = point(bedSeat, along + 7, -extent * .07 + offset);
+    raster.line(notch[0], notch[1], split[0], split[1], p.floorDeep);
   }
   for (let chip = 0; chip < 5; chip++) {
     const value = hash(seed + chip * 53), at = point(seat, 34 + value % 25, (value >>> 8) % 58 - 29);
     const shard: Point[] = [[at[0] - 4, at[1]], [at[0] + 8 + value % 8, at[1] - 3], [at[0] + 7, at[1] + 3], [at[0] - 5, at[1] + 3]];
-    raster.polygon(shifted(shard, 1, 2), p.floorDeep);
-    raster.polygon(shard, chip % 2 ? p.floorLight : p.materialMid);
+    raster.polygon(shard, chip % 2 ? p.floorLight : p.materialDark);
   }
 }
 
@@ -115,13 +120,18 @@ function paintCrystal(raster: Raster, sample: WorldSample, seat: RimSeat, seed: 
 }
 
 function paintGlaze(raster: Raster, sample: WorldSample, seat: RimSeat, seed: number): void {
-  const p = sample.profile.palette, width = 22 + seed % 26;
+  const p = sample.profile.palette, width = 27 + seed % 31;
   const a = point(seat, 11, -width * .5), b = point(seat, 7, width * .18), c = point(seat, 18, width * .5);
-  const d = point(seat, 28, width * .21), e = point(seat, 25, -width * .44);
-  raster.polygon(shifted([a, b, c, d, e], 1, 1), p.shadow);
-  raster.polygon([a, b, c, d, e], p.materialMid);
-  raster.polygon([a, b, point(seat, 16, width * .29), point(seat, 22, -width * .39)], p.floorLight);
-  raster.line(a[0], a[1], b[0], b[1], p.faceLight, 2);
+  const d = point(seat, 31, width * .21), e = point(seat, 27, -width * .44);
+  const notch = point(seat, 21, -width * .04);
+  // One broad fractured skin with no shaded side face or enclosing drop shadow.
+  raster.polygon([a, b, c, d, notch, e], p.floorLight);
+  raster.line(c[0], c[1], d[0], d[1], p.materialMid);
+  raster.line(d[0], d[1], notch[0], notch[1], p.floorDeep);
+  const glint = point(seat, 9, -width * .20);
+  raster.line(a[0], a[1], glint[0], glint[1], p.faceLight);
+  const split = point(seat, 15, width * .07);
+  raster.line(notch[0], notch[1], split[0], split[1], p.materialMid);
   const fracture = point(seat, 25, -width * .06), end = point(seat, 52, width * .22);
   raster.line(fracture[0], fracture[1], end[0], end[1], p.floorDeep);
   for (let chip = 0; chip < 4; chip++) {
@@ -146,9 +156,15 @@ export function paintMaterialForms(raster: Raster, sample: WorldSample, floorMas
   for (const formation of sample.formations) {
     const seed = hash(sample.seed ^ formation.id * 0x45d9f3b), candidates = seatsFor(sample, formation.cells);
     if (candidates.length === 0) continue;
-    const selected: RimSeat[] = [], desired = material === 'crystal' ? 2 + seed % 3 : 2 + seed % 2;
+    const selected: RimSeat[] = [];
+    const organization = materialFieldAt(sample, formation.center.x, formation.center.y);
+    const desired = Math.round(1 + organization.front * 2 + organization.amount * (material === 'crystal' ? 2 : 1));
+    candidates.sort((a, b) => {
+      const left = materialFieldAt(sample, a.x, a.y), right = materialFieldAt(sample, b.x, b.y);
+      return (right.front + right.amount * .35) - (left.front + left.amount * .35);
+    });
     for (let attempt = 0; attempt < candidates.length && selected.length < desired; attempt++) {
-      const candidate = candidates[hash(seed + attempt * 313) % candidates.length]!;
+      const candidate = candidates[attempt]!;
       if (selected.some(other => Math.hypot(other.x - candidate.x, other.y - candidate.y) < 60)) continue;
       selected.push(candidate);
       const variant = hash(seed + attempt);

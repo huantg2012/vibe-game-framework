@@ -1184,3 +1184,5 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 `rift-worlds.html` → `src/dev/world-study.ts` → `generation/world-study/`。独立Canvas地图入口纳入Vite构建，CSV配方→生成表→确定性地貌→静态材料烘焙；连续shape供显示边界与碰撞共用。完整设计仍见 `docs/design-notes/rift-world-space.md`，实际范围见 `docs/dev/rift-world-study.md`，未替换正式Rift生成/战斗/存档。
 
 原玩家的 `renderDensePlayerFrame` 同时服务正式atlas上传和此入口缓存，32帧不变。`light-field.ts`复用正式 `vision-textures.ts` 的方向光场曲线/32级强度，再按本图纯黑空洞裁掉视线；未知地面不保留残影。可见的晶片、沉积页和釉壳只属于陆地浅浮雕，不把空洞伪装成受光石块。
+
+`material-field.ts`插值生成样本的沉积与方向数据，统一地面层理、碎屑和断缘的组织。`material-response.ts`以样本弱引用持有烘焙反射点，`material-light.ts`按灯的位置着色，随后统一过原视野遮罩；反射像素必须全落在陆地。`movement.ts`复用正式基础速度/启停常量，单独验证与实际`Player.stepVelocity`一致；默认步行zoom同正式1.5，无Shift加速、未模拟负重/混乱。
