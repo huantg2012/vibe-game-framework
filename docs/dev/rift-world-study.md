@@ -6,6 +6,8 @@ scope: 独立2D世界生成样板，基于裂隙世界空间设计
 
 # 裂隙图志
 
+后续评审采用[从品类玩法出发的外部首次接触协议](../qa/rift-world-review-standard.md)草案。首轮不读取本文件及项目历史；先封存正常游玩的观察，再披露意图与实现。局部样板与完整游戏的结论范围分开记录。
+
 用户要求实际地图，并明确本轮以最便捷方法验证，不受旧项目内容和画法约束（世界观背景除外）。本入口独立生成地图、渲染和移动，复用正式角色像素与灯光曲线，不接正式存档或战斗。旧 `world-study.html` 方向画廊保留。
 
 入口：`/rift-worlds.html`。支持 `world=ash-strata|crystal-fibre|ivory-basin`、`topology=loops|channels`、`seed=0..4294967295`、`view=overview|walk`、`field=1|0`。默认步行并开启视野；`field=0`仅供关闭遮蔽检查材料。
