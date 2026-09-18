@@ -3,6 +3,7 @@ export class Raster {
   readonly rgba: Uint8ClampedArray;
   private readonly words: Uint32Array;
   private clip: ((x: number, y: number) => boolean) | null = null;
+  private paintObserver: ((startPixel: number, endPixel: number) => void) | null = null;
   private readonly littleEndian = new Uint8Array(new Uint32Array([1]).buffer)[0] === 1;
 
   constructor(readonly width: number, readonly height: number) {
@@ -18,12 +19,20 @@ export class Raster {
 
   setClip(clip: ((x: number, y: number) => boolean) | null): void { this.clip = clip; }
 
-  fill(color: number): void { this.words.fill(this.packed(color)); }
+  /** Observe accepted writes, including same-color overpaint. End is exclusive. */
+  setPaintObserver(observer: ((startPixel: number, endPixel: number) => void) | null): void { this.paintObserver = observer; }
+
+  fill(color: number): void {
+    this.words.fill(this.packed(color));
+    this.paintObserver?.(0, this.words.length);
+  }
 
   pixel(x: number, y: number, color: number): void {
     x = Math.floor(x); y = Math.floor(y);
     if (x < 0 || y < 0 || x >= this.width || y >= this.height || this.clip && !this.clip(x, y)) return;
-    this.words[y * this.width + x] = this.packed(color);
+    const index = y * this.width + x;
+    this.words[index] = this.packed(color);
+    this.paintObserver?.(index, index + 1);
   }
 
   rect(x: number, y: number, width: number, height: number, color: number): void {
@@ -32,8 +41,15 @@ export class Raster {
     if (x1 <= x0 || y1 <= y0) return;
     const packed = this.packed(color);
     for (let row = y0; row < y1; row++) {
-      if (!this.clip) this.words.fill(packed, row * this.width + x0, row * this.width + x1);
-      else for (let col = x0; col < x1; col++) if (this.clip(col, row)) this.words[row * this.width + col] = packed;
+      if (!this.clip) {
+        const start = row * this.width + x0, end = row * this.width + x1;
+        this.words.fill(packed, start, end);
+        this.paintObserver?.(start, end);
+      } else for (let col = x0; col < x1; col++) if (this.clip(col, row)) {
+        const index = row * this.width + col;
+        this.words[index] = packed;
+        this.paintObserver?.(index, index + 1);
+      }
     }
   }
 

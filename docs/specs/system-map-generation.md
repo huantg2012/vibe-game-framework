@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director（DEC-169：确认正式2D主线，归档三维DEV合同）
-last-modified-date: 2026-09-16
+last-modified-by: director（DEC-170：共享世界组织与正式2D隔离验证）
+last-modified-date: 2026-09-18
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
 interface-changed: true
 slice: 6
@@ -14,6 +14,9 @@ interfaces-with:
   - system-contamination-lexicon   # 交出墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
+  - generateWorldSample(profileOrId, topology, seed, space?) → WorldSample（DEV共享材料／空间配方）
+  - getWorldSupportGrid / worldSupportAt / canStandWorld（8px支撑与20×20身体）
+  - createWorldPlayMap → 原GeneratedRiftLayout适配、部署可达性与拒绝记录（DEV）
   - OutlineMask（矩形缓冲 + 陆地/虚空掩膜 + 质量指标）
   - generateOutline(seed) → OutlineMask | 坏图重试后仍失败则抛错
   - evaluateOutline(land) → 矩形/啃边/贴框则丢
@@ -30,6 +33,22 @@ exposes:
 `index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；Rift 使用 `generateRiftLayout`、原生 `TileGrid`、Phaser 2D 地表、像素角色及正式视野/战斗/搜撤。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。当前启用碎片由 `data/rift-fragments.csv` 决定：户外土壤、医院实验室、地铁工业、旧图书馆；居民区未启用。
 
 三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。本次无运行接口、玩法、CSV或存档格式变更；基线验证见 [2D记录](../qa/rift-2d-baseline.md)。
+
+## 当前DEV · 裂隙世界空间（DEC-170 / 迭代26）
+
+正式随机池仍走上述旧生成器。新世界能力位于 `generation/world-study/`，通过两条DEV入口验证：`rift-worlds.html` 是材料／空间查看器；`rift-world-play.html` 通过现有 `RiftDevFixture` 注入原 `RiftScene`，验证正式视野、玩家、敌人、翻找与撤离。第二入口使用内存存储，不写正式存档；`suppressVoidNoise`只对本DEV关闭未知区域暗噪声并以黑色作为未知背景，避免未见地面与空洞不同底色泄露轮廓。正式入口缺省不传该选项，原光域／暖光／转向／玩法遮挡照旧。是否达到完整游戏内容质量仍需实景与人审。
+
+**有效数据合同：** 世界配方 `data/rift-world-profiles.csv` 与空间配方 `data/rift-world-spaces.csv` 独立编译。`WorldProfile` 提供角色色板、底材／覆盖材及材料过程。除了 coverage/wear/deposits/scale/relief/contrast，区域组织增加 organization（patches/bands/clusters）、regionScale、quietness、formScale、fragmentation、accentCoverage。三个尺度字段 scale/regionScale/formScale 范围 .5–2，其余数量型字段0–1。旧匿名配方缺省使用共享默认，不按ID补参数；新CSV记录必须显式给齐。色彩角色不设低饱和上限，也不强制矿物世界；色彩组织通过底材、覆盖材、局部强调及明度分工控制。
+
+**有效支撑合同：** `generateWorldSample(profileOrId, topology, seed, space?)` 生成1792×1216空间；布局基础场16px采样，`getWorldSupportGrid` 统一重建8px最终支撑。地表像素裁切、查看器灯光和碰撞、正式适配的TileMapData必须使用这份支撑。身体使用20×20 AABB，接触边缘允许相切；整段可达验证不能只检查起终点。不可走的空洞保持不透明纯黑、遮挡视线且不可被照亮，未建立新的可照亮石块障碍类型。材料形体均是可跨越浅地形。
+
+**组织与渲染：** region-field驱动片区、静区和稀疏强调；surface-field在此基础上组织覆盖、磨损、沉积及露底；ground-material与material-forms共享过程。形体尺度独立于微纹理尺度；破碎度不能退化为到处加噪点。面片反射在拥有该像素后登记，任何后续覆盖（包括同色）都退役旧反射，防止高光浮在错误材料或空洞上。
+
+**失败处理：** 原开放空间质量门保留并升级真实身体检查；确定性重试上限12，失败明确拒绝。正式适配另校核部署可达与完整身体净宽，并公开实际seed／重试原因。有限样本不是整个条件世界空间的证明；完整世界包、条件采样器、离线入库和大量内容扩产不属于本迭代。
+
+DEV结果文案通过fixture可选`returnLabel`明确返回配置，正式缺省仍返回净化点。撤离显示glow在该入口设8px以留在已支持落点，不改正式48px默认及撤离触发距离。
+
+当前实施／证据以[迭代26合同](../tasks/iteration-26.md)与[开发入口](../dev/rift-world-study.md)为准。
 
 ## 归档DEV · DEC-168独立生命地貌观察场
 

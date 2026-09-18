@@ -1,9 +1,11 @@
 /** Independent, seeded world study. No production save, combat or scene state. */
 import { generateWorldSample } from '@/generation/world-study/layout';
+import { WORLD_PROFILES } from '@/generation/world-study/profiles';
+import { SPACE_PROFILES, spaceProfileForTopology } from '@/generation/world-study/space-profile';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { readWorldStudyInput, stepWorldStudyVelocity } from '@/generation/world-study/movement';
 import { renderWorldSurface } from '@/generation/world-study/surface';
-import { worldLandAt, worldWallAt } from '@/generation/world-study/shape';
+import { worldSupportAt, canStandWorld } from '@/generation/world-study/support';
 import { WorldStudyLightField, LIGHT_EXTENT, LIGHT_SIZE } from '@/generation/world-study/light-field';
 import { paintMaterialLight } from '@/generation/world-study/material-light';
 import { renderDensePlayerFrame, DENSE_PLAYER_GROUND_OFFSET_Y } from '@/entities/player-sprite-dense';
@@ -16,25 +18,33 @@ const seedInput = document.querySelector<HTMLInputElement>('#seed')!;
 const topologyInput = document.querySelector<HTMLSelectElement>('#topology')!;
 const loading = document.querySelector<HTMLElement>('#loading')!;
 const errorBox = document.querySelector<HTMLElement>('#error')!;
-const worldButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-world]'));
+const worldNavigation = document.querySelector<HTMLElement>('[data-world]')!.parentElement!;
+worldNavigation.replaceChildren(...WORLD_PROFILES.map(profile => {
+  const button = document.createElement('button');
+  button.type = 'button'; button.dataset.world = profile.id; button.textContent = profile.label;
+  return button;
+}));
+const worldButtons = Array.from(worldNavigation.querySelectorAll<HTMLButtonElement>('[data-world]'));
+topologyInput.replaceChildren(...SPACE_PROFILES.map(space => new Option(space.label, space.id)));
 const overviewButton = document.querySelector<HTMLButtonElement>('#overview')!;
 const walkButton = document.querySelector<HTMLButtonElement>('#walk')!;
 const fieldButton = document.querySelector<HTMLButtonElement>('#field')!;
 const seedButton = document.querySelector<HTMLButtonElement>('#regenerate')!;
 const positionLabel = document.querySelector<HTMLElement>('#position')!;
 
-type ProfileId = 'ash-strata' | 'crystal-fibre' | 'ivory-basin';
+type ProfileId = string;
 type TopologyId = 'loops' | 'channels';
 type View = 'overview' | 'walk' | 'free';
-const worldIds: readonly ProfileId[] = ['ash-strata', 'crystal-fibre', 'ivory-basin'];
+const worldIds = WORLD_PROFILES.map(profile => profile.id);
 function parseSeed(raw: string | null): number | null {
   if (raw === null || !/^\d{1,10}$/.test(raw.trim())) return null;
   const value = Number(raw);
   return Number.isSafeInteger(value) && value >= 0 && value <= 0xffffffff ? value : null;
 }
 const params = new URLSearchParams(location.search);
-let worldId: ProfileId = worldIds.includes(params.get('world') as ProfileId) ? params.get('world') as ProfileId : 'crystal-fibre';
+let worldId: ProfileId = worldIds.includes(params.get('world') as ProfileId) ? params.get('world') as ProfileId : worldIds[1] ?? worldIds[0]!;
 let topology: TopologyId = params.get('topology') === 'channels' ? 'channels' : 'loops';
+let spaceId = SPACE_PROFILES.find(space => space.id === params.get('space'))?.id ?? spaceProfileForTopology(topology).id;
 let seed = parseSeed(params.get('seed')) ?? 70421;
 let view: View = params.get('view') === 'overview' ? 'overview' : 'walk';
 let field = params.get('field') !== '0';
@@ -74,7 +84,7 @@ for (const facing of ['down', 'up', 'left', 'right'] as const) for (const gait o
 }
 
 function updateUrl(): void {
-  const query = new URLSearchParams({ world: worldId, topology, seed: String(seed), view: view === 'walk' ? 'walk' : 'overview' });
+  const query = new URLSearchParams({ world: worldId, topology, space: spaceId, seed: String(seed), view: view === 'walk' ? 'walk' : 'overview' });
   query.set('field', field ? '1' : '0');
   history.replaceState(null, '', `${location.pathname}?${query}`);
 }
@@ -85,12 +95,13 @@ function updateControls(): void {
     document.querySelector<HTMLElement>('#world-name')!.textContent = sample.profile.label;
     document.querySelector<HTMLElement>('#world-description')!.textContent = sample.profile.description;
   }
-  document.querySelector<HTMLElement>('#world-code')!.textContent = `RIFT / 0${worldIds.indexOf(worldId) + 1} · ${topology === 'loops' ? 'RETURNING FIELDS' : 'CONFLUENT RIDGES'}`;
-  topologyInput.value = topology;
+  document.querySelector<HTMLElement>('#world-code')!.textContent = `RIFT / ${String(worldIds.indexOf(worldId) + 1).padStart(2, '0')} · ${SPACE_PROFILES.find(space => space.id === spaceId)!.label}`;
+  topologyInput.value = spaceId;
   seedInput.value = String(seed);
   overviewButton.setAttribute('aria-pressed', String(view === 'overview'));
   walkButton.setAttribute('aria-pressed', String(view === 'walk'));
   fieldButton.setAttribute('aria-pressed', String(field && view !== 'overview'));
+  document.querySelector<HTMLAnchorElement>('#play')!.href = `/rift-world-play.html?${new URLSearchParams({ world: worldId, space: spaceId, seed: String(seed) })}`;
   updateUrl();
 }
 
@@ -130,7 +141,8 @@ function hash(value: number): number {
   return (h ^ (h >>> 15)) >>> 0;
 }
 
-async function regenerate(nextWorld = worldId, nextTopology = topology, nextSeed = seed): Promise<void> {
+async function regenerate(nextWorld = worldId, nextTopology = topology, nextSeed = seed,
+  nextSpace = nextTopology === topology ? spaceId : spaceProfileForTopology(nextTopology).id): Promise<void> {
   const token = ++generation;
   busy = true;
   loading.hidden = false;
@@ -142,7 +154,9 @@ async function regenerate(nextWorld = worldId, nextTopology = topology, nextSeed
   await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
   if (token !== generation) return;
   try {
-    const created = generateWorldSample(nextWorld, nextTopology, nextSeed);
+    const space = SPACE_PROFILES.find(value => value.id === nextSpace);
+    if (!space) throw new Error(`Unknown space profile: ${nextSpace}`);
+    const created = generateWorldSample(nextWorld, nextTopology, nextSeed, space);
     const surface = renderWorldSurface(created);
     const createdLight = new WorldStudyLightField(created);
     const baked = document.createElement('canvas');
@@ -151,9 +165,9 @@ async function regenerate(nextWorld = worldId, nextTopology = topology, nextSeed
     const image = bakedContext.createImageData(surface.width, surface.height);
     image.data.set(surface.rgba);
     bakedContext.putImageData(image, 0, 0);
-    const preserveLocation = sample && nextTopology === topology && nextSeed === seed;
+    const preserveLocation = sample && nextSpace === spaceId && nextSeed === seed;
     sample = created; terrain = baked; lightField = createdLight;
-    worldId = nextWorld; topology = nextTopology; seed = nextSeed >>> 0;
+    worldId = nextWorld; topology = nextTopology; seed = nextSeed >>> 0; spaceId = nextSpace;
     if (!preserveLocation) {
       player.x = sample.spawn.x; player.y = sample.spawn.y;
       player.facing = 'up'; movedDistance = 0;
@@ -177,17 +191,8 @@ async function regenerate(nextWorld = worldId, nextTopology = topology, nextSeed
   }
 }
 
-function isWalkable(x: number, y: number): boolean {
-  if (!sample) return false;
-  return worldLandAt(sample, x, y) && !worldWallAt(sample, x, y);
-}
-
 function canStand(x: number, y: number): boolean {
-  const radius = 6;
-  return isWalkable(x - radius, y - radius) && isWalkable(x + radius, y - radius)
-    && isWalkable(x - radius, y + radius) && isWalkable(x + radius, y + radius)
-    && isWalkable(x, y) && isWalkable(x - radius, y) && isWalkable(x + radius, y)
-    && isWalkable(x, y - radius) && isWalkable(x, y + radius);
+  return sample !== null && canStandWorld(sample, x, y);
 }
 
 function updatePlayer(delta: number): void {
@@ -235,9 +240,10 @@ function drawSurface(ctx = context): void {
     if (pulse < .58) continue;
     ctx.globalAlpha = inheritedAlpha * (pulse - .58) * .3;
     ctx.fillStyle = `#${sample.profile.palette.accentLight.toString(16).padStart(6, '0')}`;
-    const dx = worldId === 'crystal-fibre' ? Math.round(Math.sin(elapsed * .3 + mote.phase) * 3) : 0;
-    const dy = worldId === 'ivory-basin' ? -Math.round((elapsed * 2 + mote.phase * 6) % 14) : 0;
-    ctx.fillRect(mote.x + dx, mote.y + dy, mote.size, 1);
+    const dx = sample.profile.surface.coating === 'crystal' ? Math.round(Math.sin(elapsed * .3 + mote.phase) * 3) : 0;
+    const dy = sample.profile.surface.coating === 'glaze' ? -Math.round((elapsed * 2 + mote.phase * 6) % 14) : 0;
+    const x = mote.x + dx, y = mote.y + dy;
+    if (worldSupportAt(sample, x, y) && worldSupportAt(sample, x + mote.size, y)) ctx.fillRect(x, y, mote.size, 1);
   }
   ctx.globalAlpha = inheritedAlpha;
 }
@@ -288,7 +294,7 @@ function frame(timestamp: number): void {
 function nextSeed(): void { void regenerate(worldId, topology, (seed + 104729) >>> 0); }
 for (const button of worldButtons) button.addEventListener('click', () => void regenerate(button.dataset.world as ProfileId));
 seedButton.addEventListener('click', nextSeed);
-topologyInput.addEventListener('change', () => void regenerate(worldId, topologyInput.value as TopologyId));
+topologyInput.addEventListener('change', () => void regenerate(worldId, topology, seed, topologyInput.value));
 seedInput.addEventListener('change', () => {
   const value = parseSeed(seedInput.value);
   if (value === null) {
@@ -311,7 +317,7 @@ window.addEventListener('keydown', event => {
   if (event.code === 'KeyR') nextSeed();
   if (event.code === 'KeyV') { field = !field; updateControls(); }
   const digit = Number(event.code.replace('Digit', ''));
-  if (digit >= 1 && digit <= 3) void regenerate(worldIds[digit - 1]!);
+  if (digit >= 1 && digit <= Math.min(9, worldIds.length)) void regenerate(worldIds[digit - 1]!);
 });
 window.addEventListener('keyup', event => keys.delete(event.code));
 window.addEventListener('blur', () => { keys.clear(); velocity.x = velocity.y = 0; drag = null; player.walking = false; });
@@ -348,8 +354,8 @@ canvas.addEventListener('wheel', event => {
 declare global {
   interface Window {
     __worldStudy: {
-      getState(): { ready: boolean; world: string; topology: string; seed: number; view: View; field: boolean; player: { x: number; y: number }; velocity: { x: number; y: number }; movedDistance: number; zoom: number; cols: number; rows: number; error: string | null };
-      regenerate(world: ProfileId, topology: TopologyId, seed: number): Promise<void>;
+      getState(): { ready: boolean; world: string; topology: string; space: string; seed: number; view: View; field: boolean; player: { x: number; y: number }; velocity: { x: number; y: number }; movedDistance: number; zoom: number; cols: number; rows: number; error: string | null };
+      regenerate(world: ProfileId, topology: TopologyId, seed: number, space?: string): Promise<void>;
       setView(view: View): void;
       visibilityAt(x: number, y: number): number;
       collisionAt(x: number, y: number): boolean;
@@ -358,7 +364,7 @@ declare global {
   }
 }
 window.__worldStudy = {
-  getState: () => ({ ready: !!sample && !busy, world: worldId, topology, seed, view, field,
+  getState: () => ({ ready: !!sample && !busy, world: worldId, topology, space: spaceId, seed, view, field,
     player: { x: player.x, y: player.y }, velocity: { ...velocity }, movedDistance, zoom, cols: sample?.cols ?? 0, rows: sample?.rows ?? 0,
     error: errorBox.hidden ? null : errorBox.textContent }),
   regenerate, setView, collisionAt: canStand,

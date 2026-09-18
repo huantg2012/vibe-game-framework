@@ -1,6 +1,6 @@
 /** Production light curve over the study's continuous land/void geometry. */
 import { fieldVisibilityAt, SUBDIV2_LEVELS } from '../../systems/vision-textures';
-import { worldLandAt, worldWallAt } from './shape';
+import { worldSupportAt } from './support';
 import type { Facing4 } from '../../types/game-types';
 import type { WorldSample } from './types';
 
@@ -53,7 +53,7 @@ export class WorldStudyLightField {
     this.width = sample.cols * sample.tileSize; this.height = sample.rows * sample.tileSize;
     this.floor = new Uint8Array(this.width * this.height);
     for (let y = 0; y < this.height; y++) for (let x = 0; x < this.width; x++) {
-      this.floor[y * this.width + x] = Number(worldLandAt(sample, x + .5, y + .5) && !worldWallAt(sample, x + .5, y + .5));
+      this.floor[y * this.width + x] = Number(worldSupportAt(sample, x + .5, y + .5));
     }
     for (let i = 0; i < points; i++) this.pixels.set([255, 255, 255, 0], i * 4);
   }

@@ -1,6 +1,6 @@
 ---
 status: APPROVED
-execution: REPLAN-ON-TOP-DOWN-2D / 3D-DIRECTION-TERMINATED
+execution: I26-USER-ACCEPTED-CHECKPOINT
 approved-by: user
 approved-date: 2026-09-11
 approval-decision: DEC-146
@@ -8,16 +8,22 @@ supply-validation: NOT-STARTED
 batch-expansion: WAITING-ON-SUPPLY-VALIDATION
 created-by: director
 created-date: 2026-09-11
-last-modified-date: 2026-09-16
-last-progress-review: 2026-09-16
+last-modified-date: 2026-09-18
+last-progress-review: 2026-09-18
 implementation-baseline: 2d9725f
 source-decisions: DEC-144 / DEC-145 / DEC-146 / DEC-147 / DEC-148 / DEC-149 / DEC-150 / DEC-151 / DEC-152 / DEC-153 / DEC-154 / DEC-155 / DEC-156 / DEC-157 / DEC-158 / DEC-159 / DEC-160 / DEC-161 / DEC-162 / DEC-163 / DEC-164 / DEC-165 / DEC-166 / DEC-167 / DEC-168 / DEC-169
-note: DEC-169：三维关卡探索终止归档；主线为俯视2D像素Rift；四A未开始、四B锁定。
+note: DEC-170：迭代26四批成果已获用户认可，授权提交推送；四A未开始、四B锁定。
 ---
 
 # 内容扩展推进计划
 
-**当前状态（2026-09-16，DEC-169）：终止三维/绘制式关卡重构探索，回到俯视 2D 像素 Rift。** 用户认可 R8 视觉效果有飞跃，但认为制作成本高、损失原场景玩法可能，决定停止此方向。R8 实现与证据已保存于 `218f773`；迭代23以 TERMINATED / ARCHIVED 收口，不标 COMPLETE。正式 `/` → 主菜单 → 净化点 → `RiftScene` 本来就使用原有 2D 随机碎片与完整玩法，本次核实该入口并重新确立为开发主线，无需回滚共享战斗、库存或存档代码。基线标签为 `rift-2d-baseline-2026-09-16`，用户授权提交并推送 `coh` 分支及标签到 `origin`。验证见[2D 基线记录](../qa/rift-2d-baseline.md)。
+## 当前执行 · 迭代26（2026-09-18，DEC-170）
+
+用户授权的四批世界生成改进已实现并完成内部验证：[迭代26合同](../tasks/iteration-26.md)、[QA与实际证据](../qa/iteration-26.md)。当前 IMPLEMENTED / USER-ACCEPTED-CHECKPOINT；用户已回复“真不错，提交push”，认可本轮成果并授权保存推送。色彩自由、片区与材料体系、同源边界及20×20身体、正式隔离搜撤全部落到共享能力；原角色保持。5配方×2空间、未调参组合、真实搜撤／死亡／角点和短时性能已验。长片重复、釉厚薄与局部人物近色仍留在backlog，不扩大本轮认可范围。24/25规划占位不变，四A持续供给未开始、四B扩产仍锁定。本次按用户授权提交游戏改动并推送，独立CLAUDE框架改动排除；结果以Git远端为准。
+
+
+
+**前次基线记录（2026-09-16，DEC-169）：终止三维/绘制式关卡重构探索，回到俯视 2D 像素 Rift。** 用户认可 R8 视觉效果有飞跃，但认为制作成本高、损失原场景玩法可能，决定停止此方向。R8 实现与证据已保存于 `218f773`；迭代23以 TERMINATED / ARCHIVED 收口，不标 COMPLETE。正式 `/` → 主菜单 → 净化点 → `RiftScene` 本来就使用原有 2D 随机碎片与完整玩法，本次核实该入口并重新确立为开发主线，无需回滚共享战斗、库存或存档代码。基线标签为 `rift-2d-baseline-2026-09-16`，用户授权提交并推送 `coh` 分支及标签到 `origin`。验证见[2D 基线记录](../qa/rift-2d-baseline.md)。
 
 **后续边界：** 三维样板、悬海和生命大陆 DEV 页仅供历史复盘，不再作为正式出击方向或待继续打磨的任务。内容与构筑目标保留，但制作路线须按 2D 重新评估；迭代24/25未启动，四A供给验证未开始、四B扩产仍锁定。
 
@@ -42,11 +48,9 @@ DEC-169 是用户对制作路线的明确新决定：停止三维/绘制式关�
 
 **后续反馈（DEC-148，分析时点）：** 上述首批已提交`3c1bc7c`。用户认可概念想法，要求解决俯视镜头下的悬顶、托举和厚度表现，并允许考虑调整镜头；不能直接放弃世界。当时提出先以悬海比较现有二维分层与固定斜俯视，验证上层遮挡，并讨论空间建立镜头，见[环境提案第5.5节](../design-notes/rift-environment-expansion.md#spatial-presentation)。该分析随后获DEC-149实施授权；当前可操作样板状态见本文件末尾记录，不再停留于几何示意。
 
-## 1. 当前执行：保存俯视2D基线（DEC-169）
+## 1. 当前执行：保存迭代26用户认可成果（DEC-170）
 
-核实正式主菜单、净化点出击和返回仍走原生2D Rift；保留现有库存、战斗、敌人和随机碎片能力。归档三维探索及其未决项，以 `rift-2d-baseline-2026-09-16` 保存可追溯版本并推送当前分支。完整复盘见[基线验证](../qa/rift-2d-baseline.md)。
-
-后续制作聚焦2D关卡中的空间选择与玩法容量；本次不新开世界、构筑或供给实现批次，也不清除未完成的目标。
+四批生成系统打磨已落为共享能力，并通过原RiftScene完成隔离的搜撤／死亡／重复开局验证；详见[迭代26](../tasks/iteration-26.md)。原正式随机池与存档不替换，24/25尚未启动，四A未开始、四B锁定。后续依据用户实际地图观感处理明确余量，不重启三维或自行扩产。
 
 ### 1.1 历史三个工作包（DEC-156/157/158，2026-09-13已交付验收）
 

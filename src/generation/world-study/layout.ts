@@ -1,6 +1,9 @@
 import { SeededRandom } from '@/utils/random';
 import { worldProfileById } from './profiles';
-import type { WorldFormation, WorldProfileId, WorldSample, WorldTopologyId } from './types';
+import type { WorldFormation, WorldProfile, WorldProfileId, WorldSample, WorldTopologyId } from './types';
+import { erodeOpenLand } from './open-space';
+import { evaluateOpenSpace, type SpaceQuality } from './space-quality';
+import { spaceProfileForTopology, validateSpaceProfile, type SpaceProfile } from './space-profile';
 
 const COLS = 112;
 const ROWS = 76;
@@ -64,63 +67,6 @@ function makeLand(seed: number): Uint8Array {
   return land;
 }
 
-function stampLoops(walls: Uint8Array, land: Uint8Array, rng: SeededRandom): void {
-  const commonAngle = rng.nextFloat(-.6, .6);
-  const groups = Array.from({ length: 3 }, () => ({ x: rng.nextFloat(25, 88), y: rng.nextFloat(19, 58) }));
-  const masses: { x: number; y: number; radius: number }[] = [];
-  // Broad irregular masses on one continuous floor. Spaces reconnect around
-  // the masses; this is not a graph rendered as platforms and thin bridges.
-  // Clustered rejection sampling has no placement lattice. Large quiet bays
-  // coexist with several denser groups, rather than uniformly planted rocks.
-  for (let attempt = 0; attempt < 260 && masses.length < 17; attempt++) {
-    const group = rng.pick(groups), clustered = rng.next() < .72;
-    const cx = clustered ? group.x + rng.nextGaussian() * 14 : rng.nextFloat(14, 98);
-    const cy = clustered ? group.y + rng.nextGaussian() * 10 : rng.nextFloat(12, 64);
-    const large = masses.length < 2;
-    const rx = rng.nextFloat(large ? 9 : 4.5, large ? 12 : 9), ry = rng.nextFloat(large ? 4 : 2.6, large ? 6 : 4.8);
-    if (!clearance(land, Math.round(cx), Math.round(cy), 6)) continue;
-    if (masses.some(mass => Math.hypot(cx - mass.x, cy - mass.y) < Math.max(10, (rx + mass.radius) * .83))) continue;
-    masses.push({ x: cx, y: cy, radius: rx });
-    const angle = commonAngle + rng.nextFloat(-.9, .9);
-    const cosine = Math.cos(angle), sine = Math.sin(angle);
-    const notch = rng.nextFloat(.2, .75), phase = rng.nextFloat(0, 6.28);
-    for (let y = Math.max(1, Math.floor(cy - 13)); y < Math.min(ROWS - 1, cy + 13); y++) {
-      for (let x = Math.max(1, Math.floor(cx - 13)); x < Math.min(COLS - 1, cx + 13); x++) {
-        const dx = x - cx, dy = y - cy;
-        const u = (dx * cosine + dy * sine) / rx;
-        const v = (-dx * sine + dy * cosine) / ry;
-        const warped = v + notch * Math.sin(u * 2.3 + phase);
-        const boundary = 1 + .11 * Math.sin(Math.atan2(warped, u) * 3 + phase);
-        if (u * u + warped * warped < boundary && clearance(land, x, y, 4)) walls[y * COLS + x] = 1;
-      }
-    }
-  }
-}
-
-function stampChannels(walls: Uint8Array, land: Uint8Array, rng: SeededRandom): void {
-  const slope = rng.nextFloat(-.12, .12);
-  const amplitude = rng.nextFloat(2.2, 4.2), frequency = rng.nextFloat(.065, .09);
-  const phase = rng.nextFloat(0, 6.28);
-  for (let ridge = 0; ridge < 4; ridge++) {
-    const originY = 13 + ridge * 16 + rng.nextFloat(-1.4, 1.4);
-    const west = 10 + rng.nextInt(0, 8), east = COLS - 12 - rng.nextInt(0, 8);
-    const gapA = 29 + ridge * 5 + rng.nextFloat(-5, 5);
-    const gapB = 70 - ridge * 4 + rng.nextFloat(-5, 5);
-    for (let col = west; col < east; col++) {
-      // Crossings are intentionally staggered: along a channel, then cross
-      // and reconverge. Wide ends remain alternate routes around each ridge.
-      if (Math.abs(col - gapA) < 3.6 || Math.abs(col - gapB) < 3.2) continue;
-      const cy = originY + slope * (col - COLS / 2) + amplitude * Math.sin(col * frequency + phase + ridge * .42);
-      const taper = Math.min(1, (col - west + 1) / 5, (east - col) / 5,
-        (Math.abs(col - gapA) - 3.6) / 3, (Math.abs(col - gapB) - 3.2) / 3);
-      const halfWidth = (2 + .75 * Math.sin(col * .14 + phase + ridge)) * taper;
-      for (let row = Math.floor(cy - halfWidth); row <= Math.ceil(cy + halfWidth); row++) {
-        if (Math.abs(row - cy) <= halfWidth && clearance(land, col, row, 4)) walls[row * COLS + col] = 1;
-      }
-    }
-  }
-}
-
 function formationsOf(walls: Uint8Array): WorldFormation[] {
   return components(walls).map((cells, id) => {
     let cx = 0, cy = 0;
@@ -135,37 +81,26 @@ function formationsOf(walls: Uint8Array): WorldFormation[] {
   });
 }
 
-/** Geometry is solely a function of topology and seed, never profile color. */
-export function generateWorldSample(profileId: WorldProfileId | string, topologyId: WorldTopologyId, seed: number): WorldSample {
+export interface SpaceDiagnostics {
+  readonly space: SpaceProfile;
+  readonly attempt: number;
+  readonly pits: number;
+  readonly fractures: number;
+  readonly quality: SpaceQuality;
+}
+const diagnostics = new WeakMap<WorldSample, SpaceDiagnostics>();
+export function worldSpaceDiagnostics(sample: WorldSample): SpaceDiagnostics | undefined { return diagnostics.get(sample); }
+export const MAX_SPACE_ATTEMPTS = 12;
+
+/** Geometry depends on numeric space controls and seed, never visual identity. */
+export function generateWorldSample(profileId: WorldProfileId | string | WorldProfile, topologyId: WorldTopologyId, seed: number,
+  spaceProfile?: SpaceProfile): WorldSample {
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('World seed must be an unsigned 32-bit integer');
   if (topologyId !== 'loops' && topologyId !== 'channels') throw new Error(`Unknown topology: ${topologyId}`);
-  const profile = worldProfileById(profileId);
+  const profile = typeof profileId === 'string' ? worldProfileById(profileId) : profileId;
+  const space = spaceProfile ?? spaceProfileForTopology(topologyId);
+  validateSpaceProfile(space);
   const land = makeLand(seed);
-  const walls = new Uint8Array(land.length);
-  const rng = new SeededRandom(splitSeed(seed, topologyId === 'loops' ? 0x2156198d : 0x196319eb));
-  if (topologyId === 'loops') stampLoops(walls, land, rng);
-  else stampChannels(walls, land, rng);
-  // Rasterized tapered tips can leave disconnected one-cell crumbs. They are
-  // neither useful cover nor part of the readable landform, so discard them.
-  for (const fragment of components(walls)) {
-    if (fragment.length < 5) for (const cell of fragment) walls[cell] = 0;
-  }
-  const floor = Uint8Array.from(land, (value, index) => value && !walls[index] ? 1 : 0);
-  const floorParts = components(floor);
-  // No inaccessible floor-shaped pockets are presented as playable space.
-  for (const pocket of floorParts.slice(1)) for (const cell of pocket) { walls[cell] = 1; floor[cell] = 0; }
-  const seats = floorParts[0]!.filter(cell => clearance(floor, cell % COLS, Math.floor(cell / COLS), 2));
-  if (seats.length < 2) throw new Error('Map has no clear spawn/extraction seats');
-  const nearest = (targetX: number, targetY: number): number => {
-    let best = seats[0]!, bestDistance = Infinity;
-    for (const cell of seats) {
-      const dx = cell % COLS - targetX, dy = Math.floor(cell / COLS) - targetY;
-      const distance = dx * dx + dy * dy;
-      if (distance < bestDistance) { bestDistance = distance; best = cell; }
-    }
-    return best;
-  };
-  const point = (cell: number) => ({ x: (cell % COLS + .5) * TILE_SIZE, y: (Math.floor(cell / COLS) + .5) * TILE_SIZE });
   const flowAngle = new Float32Array(land.length), deposition = new Float32Array(land.length);
   const fieldRng = new SeededRandom(splitSeed(seed, 0x891957e1));
   const phase = fieldRng.nextFloat(0, Math.PI * 2), axis = fieldRng.nextFloat(-.7, .7);
@@ -174,6 +109,31 @@ export function generateWorldSample(profileId: WorldProfileId | string, topology
     flowAngle[index] = axis + .45 * Math.sin(row * .09 + phase) + .15 * Math.cos(col * .06 + phase);
     deposition[index] = .5 + .24 * Math.sin(col * .077 + row * .04 + phase) + .22 * Math.cos(row * .13 - col * .032 + phase);
   }
-  return { profile, topologyId, seed, cols: COLS, rows: ROWS, tileSize: TILE_SIZE, land, walls,
-    spawn: point(nearest(25, 55)), exit: point(nearest(87, 19)), formations: formationsOf(walls), flowAngle, deposition };
+  let reason = 'No erosion candidate';
+  for (let attempt = 0; attempt < MAX_SPACE_ATTEMPTS; attempt++) {
+    const rng = new SeededRandom(splitSeed(seed, 0x2156198d + attempt * 0x9e3779b1));
+    const erosion = erodeOpenLand(land, COLS, ROWS, rng, space), walls = erosion.walls;
+    if (erosion.actualFraction < space.voidFraction * .85) { reason = 'Requested erosion density could not fit broad spacing'; continue; }
+    const floor = Uint8Array.from(land, (value, index) => value && !walls[index] ? 1 : 0);
+    const seats: number[] = [];
+    for (let cell = 0; cell < floor.length; cell++)
+      if (floor[cell] && clearance(floor, cell % COLS, Math.floor(cell / COLS), 2)) seats.push(cell);
+    if (seats.length < 2) { reason = 'No broad spawn/exit seats'; continue; }
+    const nearest = (targetX: number, targetY: number): number => {
+      let best = seats[0]!, bestDistance = Infinity;
+      for (const cell of seats) {
+        const dx = cell % COLS - targetX, dy = Math.floor(cell / COLS) - targetY, distance = dx * dx + dy * dy;
+        if (distance < bestDistance) { bestDistance = distance; best = cell; }
+      }
+      return best;
+    };
+    const point = (cell: number) => ({ x: (cell % COLS + .5) * TILE_SIZE, y: (Math.floor(cell / COLS) + .5) * TILE_SIZE });
+    const sample: WorldSample = { profile, topologyId, seed, cols: COLS, rows: ROWS, tileSize: TILE_SIZE, land, walls,
+      spawn: point(nearest(25, 55)), exit: point(nearest(87, 19)), formations: formationsOf(walls), flowAngle, deposition };
+    const quality = evaluateOpenSpace(sample);
+    if (!quality.accepted) { reason = quality.failures.join('; '); continue; }
+    diagnostics.set(sample, { space, attempt, pits: erosion.pits, fractures: erosion.fractures, quality });
+    return sample;
+  }
+  throw new Error(`Open-space generation rejected after ${MAX_SPACE_ATTEMPTS} bounded attempts (${space.id}, seed ${seed}): ${reason}`);
 }

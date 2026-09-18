@@ -22,6 +22,8 @@ import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 export interface RiftResultData {
   survived: boolean;
   abandoned?: boolean;
+  /** Explicit DEV destination; production retains its ordinary base return. */
+  returnLabel?: '返回净化点' | '返回配置';
   kindlingGained: number;
   killCount: number;
   peakChaos: number;
@@ -125,7 +127,7 @@ export const riftResultPanel = {
 
     html += `</div><div class="key-hint-bar">
       ${continueCallback ? '<button class="action-btn" id="rift-result-continue">' : '<span>'}
-      <span class="key">R</span> 返回净化点
+      <span class="key">R</span> ${data.returnLabel ?? '返回净化点'}
       ${continueCallback ? '</button>' : '</span>'}
     </div>`;
 

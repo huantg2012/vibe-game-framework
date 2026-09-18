@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "worlds:codegen": "node tools/map-preview/codegen-world-profiles.mjs",
-    "check:worlds": "node tools/map-preview/codegen-world-profiles.mjs --check && node --import tsx tools/map-preview/check-world-study.ts && node --import tsx tools/world-study/check-runtime.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-movement.ts",
+    "worlds:codegen": "node tools/map-preview/codegen-world-profiles.mjs && node tools/map-preview/codegen-world-spaces.mjs",
+    "check:worlds": "node tools/map-preview/codegen-world-profiles.mjs --check && node --import tsx tools/map-preview/check-world-study.ts && node --import tsx tools/world-study/check-runtime.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-movement.ts && node tools/map-preview/codegen-world-spaces.mjs --check && node --import tsx tools/world-study/check-open-space.ts docs/qa/artifacts/rift-world-study/space-check.json && node --import tsx tools/world-study/check-surface-system.ts docs/qa/artifacts/rift-world-study/surface-system-check.json && node --import tsx tools/world-study/check-material-response.ts && node --import tsx tools/world-study/check-composition.ts",
     "capture:worlds": "node tools/world-study/capture.mjs",
     "preview:worlds": "node --import tsx tools/world-study/render.ts",
     "check:living-landmass": "node --import tsx tools/living-landmass/check-content.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/living-landmass/check-runtime.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/living-landmass/check-stage-support.ts",
@@ -89,7 +89,8 @@
     "audio:suspended-sea": "node tools/suspended-sea/generate-audio.mjs",
     "check:suspended-sea-presentation": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/suspended-sea/check-presentation.ts",
     "check:suspended-sea-audio": "node tools/suspended-sea/check-audio-assets.mjs",
-    "check:rift-recovery": "node tools/recovery/check.mjs"
+    "check:rift-recovery": "node tools/recovery/check.mjs",
+    "check:world-play": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-play-map.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1",

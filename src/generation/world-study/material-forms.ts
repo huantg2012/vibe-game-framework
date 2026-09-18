@@ -1,11 +1,22 @@
-/** Low material relief growing exclusively on the land side of spatial tears. */
+/** Connected, walkable material relief. Every mark is seated on supported land. */
 import { Raster } from './raster';
-import { worldLandAt, worldWallAt } from './shape';
-import type { WorldSample } from './types';
-import { materialFieldAt } from './material-field';
+import { worldSupportAt } from './support';
+import type { WorldMaterial, WorldSample } from './types';
+import { sampleSurfaceField } from './surface-field';
+import { compositionOf } from './region-field';
+import { materialHash, materialMix } from './material-noise';
+import { registerFormHighlight } from './material-response';
 
 type Point = readonly [number, number];
-interface RimSeat { readonly x: number; readonly y: number; readonly nx: number; readonly ny: number }
+type FormField = ReturnType<typeof sampleSurfaceField>;
+interface FormColors { readonly dark: number; readonly mid: number; readonly light: number; readonly edge: number; readonly exposed: number }
+interface FormSeat {
+  readonly x: number; readonly y: number;
+  readonly nx: number; readonly ny: number;
+  readonly length: number; readonly breadth: number;
+  readonly seed: number; readonly fragment: number;
+  readonly field: FormField; readonly colors: FormColors;
+}
 
 function hash(value: number): number {
   let output = Math.imul(value ^ value >>> 16, 0x21f0aaad);
@@ -13,165 +24,262 @@ function hash(value: number): number {
   return (output ^ output >>> 15) >>> 0;
 }
 
-const DIRECTIONS = Array.from({ length: 8 }, (_, index) => ({ x: Math.cos(index * Math.PI / 4), y: Math.sin(index * Math.PI / 4) }));
-
-function floorAt(sample: WorldSample, x: number, y: number): boolean {
-  return worldLandAt(sample, x, y) && !worldWallAt(sample, x, y);
+/** u/v are fractions of the group's ground-plane footprint, not sprite height. */
+function point(seat: FormSeat, u: number, v: number): Point {
+  const bend = ((seat.seed >>> 16) % 101 - 50) / 700;
+  const across = v * (.92 + ((seat.seed >>> 7) % 17) / 100 + u * bend) * (seat.seed & 2 ? -1 : 1);
+  const along = u + bend * v * v * 3;
+  return [seat.x + seat.nx * along * seat.length - seat.ny * across * seat.breadth,
+    seat.y + seat.ny * along * seat.length + seat.nx * across * seat.breadth];
 }
 
-function seatsFor(sample: WorldSample, cells: readonly number[]): RimSeat[] {
-  const { cols, tileSize } = sample;
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  for (const cell of cells) {
-    const x = cell % cols * tileSize, y = Math.floor(cell / cols) * tileSize;
-    minX = Math.min(minX, x); minY = Math.min(minY, y);
-    maxX = Math.max(maxX, x + tileSize); maxY = Math.max(maxY, y + tileSize);
-  }
-  const seats: RimSeat[] = [];
-  for (let y = minY - 16; y <= maxY + 16; y += 8) for (let x = minX - 16; x <= maxX + 16; x += 8) {
-    if (!floorAt(sample, x, y)) continue;
-    let inwardX = 0, inwardY = 0, hits = 0;
-    for (const direction of DIRECTIONS) {
-      if (!worldWallAt(sample, x + direction.x * 11, y + direction.y * 11)) continue;
-      inwardX += direction.x; inwardY += direction.y; hits++;
-    }
-    const length = Math.hypot(inwardX, inwardY);
-    if (hits === 0 || length < .5) continue;
-    const nx = -inwardX / length, ny = -inwardY / length;
-    if (floorAt(sample, x + nx * 18, y + ny * 18)) seats.push({ x, y, nx, ny });
-  }
-  return seats;
+function polygon(raster: Raster, seat: FormSeat, points: readonly Point[], color: number): void {
+  raster.polygon(points.map(([u, v]) => point(seat, u, v)), color);
 }
 
-function point(seat: RimSeat, along: number, across: number): Point {
-  return [seat.x + seat.nx * along - seat.ny * across, seat.y + seat.ny * along + seat.nx * across];
+function line(raster: Raster, seat: FormSeat, a: Point, b: Point, color: number, width = 1): void {
+  const start = point(seat, a[0], a[1]), end = point(seat, b[0], b[1]);
+  raster.line(start[0], start[1], end[0], end[1], color, width);
 }
 
-function shifted(points: readonly Point[], x: number, y: number): Point[] {
-  return points.map(p => [p[0] + x, p[1] + y]);
+function formColors(sample: WorldSample, coated: boolean, accent: number): FormColors {
+  const p = sample.profile.palette;
+  // Keep each material's hue family even in strongly complementary recipes.
+  const dark = coated ? p.materialDark : p.floorDeep;
+  const mid = coated ? p.materialMid : p.floor;
+  const light = coated ? p.materialLight : p.floorLight;
+  return { dark, mid, light, edge: materialMix(light, p.peak, .06 + accent * .20),
+    exposed: materialMix(p.floor, p.floorDeep, .22) };
 }
 
-function paintStrata(raster: Raster, sample: WorldSample, seat: RimSeat, seed: number): void {
-  const p = sample.profile.palette, width = 28 + seed % 43, layers = 1 + seed % 3;
-  const direction = materialFieldAt(sample, seat.x, seat.y).direction;
-  const bedSeat = { x: seat.x + seat.nx * 24, y: seat.y + seat.ny * 24,
-    nx: Math.cos(direction), ny: Math.sin(direction) };
-  // Fractured beds are inlaid in the ground plane. Broken partial edges replace
-  // the bright parallel slab stack, which could read as a standing barricade.
-  for (let layer = layers - 1; layer >= 0; layer--) {
-    const random = hash(seed + layer), along = layer * 8 - 10, offset = random % 23 - 11;
-    const extent = width * (.65 + (random >>> 8) % 35 / 100);
-    const a = point(bedSeat, along, -extent * .5 + offset), b = point(bedSeat, along + 3, extent * .28 + offset);
-    const c = point(bedSeat, along + 12, extent * .42 + offset), notch = point(bedSeat, along + 9, offset);
-    const d = point(bedSeat, along + 17, -extent * .38 + offset);
-    raster.polygon([a, b, c, notch, d], layer % 2 ? p.materialDark : p.floorLight);
-    raster.line(b[0], b[1], c[0], c[1], p.materialDark);
-    const edge = point(bedSeat, along + 1, -extent * .15 + offset);
-    raster.line(a[0], a[1], edge[0], edge[1], p.materialMid);
-    const split = point(bedSeat, along + 7, -extent * .07 + offset);
-    raster.line(notch[0], notch[1], split[0], split[1], p.floorDeep);
-  }
-  for (let chip = 0; chip < 5; chip++) {
-    const value = hash(seed + chip * 53), at = point(seat, 34 + value % 25, (value >>> 8) % 58 - 29);
-    const shard: Point[] = [[at[0] - 4, at[1]], [at[0] + 8 + value % 8, at[1] - 3], [at[0] + 7, at[1] + 3], [at[0] - 5, at[1] + 3]];
-    raster.polygon(shard, chip % 2 ? p.floorLight : p.materialDark);
+/** Register only after the owning face is complete; later overpaint retires it. */
+function highlight(sample: WorldSample, seat: FormSeat, u: number, v: number, turn: number, strength: number, sharpness: number): void {
+  const at = point(seat, u, v);
+  registerFormHighlight(sample, { x: at[0], y: at[1], width: 2, height: 2,
+    normal: Math.atan2(seat.ny, seat.nx) + turn, color: seat.colors.edge, strength, sharpness });
+}
+
+/** Detached pieces share their parent's material, direction and broken end. */
+function paintFragments(raster: Raster, sample: WorldSample, seat: FormSeat, material: WorldMaterial): void {
+  const count = Math.floor(seat.fragment * (1 + seat.field.deposit * 6));
+  const p = seat.colors;
+  for (let i = 0; i < count; i++) {
+    const value = hash(seat.seed ^ Math.imul(i + 1, 683));
+    const u = .39 + (value % 100) / 550, v = ((value >>> 8) % 101 - 50) / 140;
+    const half = .024 + (value >>> 16) % 9 / 420;
+    const center = point(seat, u, v);
+    if (!worldSupportAt(sample, center[0], center[1])) continue;
+    const shape: readonly Point[] = material === 'crystal'
+      ? [[u - half, v - half], [u + half * 1.8, v], [u + half * .25, v + half], [u - half, v + half * .4]]
+      : [[u - half * 1.4, v - half], [u + half, v - half * .8], [u + half * 1.7, v + half * .4], [u - half, v + half]];
+    polygon(raster, seat, shape, i % 2 ? p.mid : p.light);
+    if (i < 2) line(raster, seat, shape[0]!, shape[1]!, p.edge);
   }
 }
 
-function paintCrystal(raster: Raster, sample: WorldSample, seat: RimSeat, seed: number): void {
-  const p = sample.profile.palette, count = 3 + seed % 4, baseAngle = Math.atan2(seat.ny, seat.nx);
-  // Lengths lie in the map plane. Crystal fans are shallow and walkable, not
-  // tall blockers. Every polygon grows away from a supported land-side root.
-  for (let shard = 0; shard < count; shard++) {
-    const random = hash(seed ^ shard * 7919);
-    const angle = baseAngle + (shard - (count - 1) / 2) * .27 + ((random >>> 12) % 15 - 7) / 100;
-    const ux = Math.cos(angle), uy = Math.sin(angle), vx = -uy, vy = ux;
-    const root = point(seat, 12 + shard % 2 * 5, (shard - (count - 1) / 2) * 3);
-    let length = 18 + random % 25;
-    const halfWidth = 5 + random % 6;
-    const position = (distance: number, side: number): Point => [root[0] + ux * distance + vx * side, root[1] + uy * distance + vy * side];
-    while (length > 12 && ![position(length, 0), position(length * .68, halfWidth), position(length * .68, -halfWidth)]
-      .every(vertex => floorAt(sample, vertex[0], vertex[1]))) length -= 6;
-    if (length <= 12 || !floorAt(sample, root[0], root[1])) continue;
-    const a = position(0, -halfWidth * .55), b = position(length * .67, -halfWidth);
-    const tip = position(length, 0), c = position(length * .72, halfWidth);
-    const d = position(0, halfWidth * .62), ridge = position(length * .18, 0);
-    const solid: Point[] = [a, b, tip, c, d];
-    raster.polygon(shifted(solid, 1, 1), p.shadow);
-    raster.polygon(solid, p.materialDark);
-    raster.polygon([a, b, tip, ridge], shard % 2 ? p.materialLight : p.accentLight);
-    raster.polygon([ridge, tip, c, d], shard % 2 ? p.materialMid : p.accent);
-    raster.polygon([a, ridge, d], p.materialDark);
-    const glint = position(length * .6, 0);
-    raster.line(glint[0], glint[1], tip[0], tip[1], shard === 1 ? p.peak : p.faceLight);
-    if (length > 26) {
-      const crossA = position(length * .48, -halfWidth * .68), crossB = position(length * .54, halfWidth * .6);
-      raster.line(crossA[0], crossA[1], crossB[0], crossB[1], p.materialMid);
+function paintStrata(raster: Raster, sample: WorldSample, seat: FormSeat): void {
+  const p = seat.colors, split = seat.fragment;
+  // Unequal sections share one low bed; their broken ends are cuts, not teeth.
+  polygon(raster, seat, [[-.51, -.19], [-.30, -.43], [.08, -.39], [.45, -.25],
+    [.51, .04], [.38, .34], [-.05, .42], [-.43, .26]], materialMix(p.mid, p.light, .09));
+  const layers = 3 + seat.seed % 3, spacing = .72 / layers;
+  for (let layer = 0; layer < layers; layer++) {
+    const value = hash(seat.seed + layer * 191);
+    const v = -.36 + layer * spacing;
+    const side = Math.abs((layer + .5) / layers - .5);
+    const left = -.47 + side * .24 + (value % 15) / 150;
+    const right = .49 - side * .25 - ((value >>> 8) % 21) / 130;
+    const cut = .018 + split * ((value >>> 17) % 15) / 160;
+    const dip = ((value >>> 23) % 11 - 5) / 150;
+    polygon(raster, seat, [[left, v + .025], [left + .12, v - .018],
+      [right - .10, v + dip], [right, v + .04], [right - cut, v + spacing * .54],
+      [right - .015, v + spacing], [left + .035, v + spacing + .015]],
+    materialMix(p.mid, p.light, .09 + (layer % 3) * .085));
+    // Seams cover part of each joint; the uninterrupted plane remains dominant.
+    line(raster, seat, [left + .06, v + spacing], [left + .21, v + spacing + .005], materialMix(p.dark, p.mid, .46));
+    line(raster, seat, [left + .16, v + .005], [right - .14, v + dip], materialMix(p.light, p.mid, .32));
+    if (split + seat.field.wear > .62 && layer % 2 === 0) {
+      const crack = -.05 + ((value >>> 16) % 19) / 120;
+      line(raster, seat, [crack, v + spacing], [crack - .055, v + spacing * .48], p.mid);
+      line(raster, seat, [crack - .055, v + spacing * .48], [crack - .025, v + .035], p.dark);
     }
   }
-  const root = point(seat, 13, 0);
-  raster.polygon([[root[0] - 8, root[1] - 2], [root[0] + 8, root[1] - 4], [root[0] + 11, root[1] + 2],
-    [root[0], root[1] + 6], [root[0] - 10, root[1] + 3]], p.materialDark);
-  for (let chip = 0; chip < 7; chip++) {
-    const value = hash(seed + chip * 683), at = point(seat, 28 + value % 65, (value >>> 8) % 62 - 31), w = 2 + value % 4;
-    raster.polygon([[at[0] - w, at[1]], [at[0], at[1] - 2 - w], [at[0] + w * 2, at[1] + 2], [at[0], at[1] + w]], p.materialMid);
-    raster.line(at[0], at[1] - w, at[0] + w, at[1], p.materialLight);
+  if (split > .3) {
+    polygon(raster, seat, [[.36, -.12], [.47, -.09], [.40, .025], [.31, -.005]], p.exposed);
+    line(raster, seat, [.31, -.005], [.40, .025], p.light);
   }
+  paintFragments(raster, sample, seat, 'strata');
 }
 
-function paintGlaze(raster: Raster, sample: WorldSample, seat: RimSeat, seed: number): void {
-  const p = sample.profile.palette, width = 27 + seed % 31;
-  const a = point(seat, 11, -width * .5), b = point(seat, 7, width * .18), c = point(seat, 18, width * .5);
-  const d = point(seat, 31, width * .21), e = point(seat, 27, -width * .44);
-  const notch = point(seat, 21, -width * .04);
-  // One broad fractured skin with no shaded side face or enclosing drop shadow.
-  raster.polygon([a, b, c, d, notch, e], p.floorLight);
-  raster.line(c[0], c[1], d[0], d[1], p.materialMid);
-  raster.line(d[0], d[1], notch[0], notch[1], p.floorDeep);
-  const glint = point(seat, 9, -width * .20);
-  raster.line(a[0], a[1], glint[0], glint[1], p.faceLight);
-  const split = point(seat, 15, width * .07);
-  raster.line(notch[0], notch[1], split[0], split[1], p.materialMid);
-  const fracture = point(seat, 25, -width * .06), end = point(seat, 52, width * .22);
-  raster.line(fracture[0], fracture[1], end[0], end[1], p.floorDeep);
-  for (let chip = 0; chip < 4; chip++) {
-    const value = hash(seed + chip * 71), at = point(seat, 35 + value % 30, (value >>> 9) % 50 - 25), w = 5 + value % 8;
-    raster.polygon([[at[0] - w, at[1]], [at[0] + w, at[1] - 4], [at[0] + 3, at[1] + 6]], p.materialMid);
-    raster.line(at[0] - w, at[1], at[0] + w, at[1] - 4, p.floorLight);
+function paintCrystal(raster: Raster, sample: WorldSample, seat: FormSeat): void {
+  const p = seat.colors;
+  // A broad common root carries uneven, truncated faces embedded in the floor.
+  polygon(raster, seat, [[-.48, -.12], [-.29, -.34], [.08, -.29], [.29, .04],
+    [.04, .34], [-.39, .25]], materialMix(p.mid, p.light, .13));
+  const count = 2 + seat.seed % 3;
+  for (let i = 0; i < count; i++) {
+    const value = hash(seat.seed ^ (i + 1) * 7919);
+    const main = i === count - 1;
+    const start = -.42 + (value % 16) / 170;
+    const end = main ? .44 + ((value >>> 6) % 10) / 110 : .12 + ((value >>> 6) % 20) / 110;
+    const v = main ? -.02 : (i / Math.max(1, count - 2) - .5) * .39;
+    const tip = v + (((value >>> 14) % 13) - 6) / 85;
+    const breadth = main ? .19 : .105 + ((value >>> 19) % 7) / 130;
+    const broken = (value % 100) / 100 < seat.fragment;
+    const cut = broken ? .11 : .035;
+    const rootUpper: Point = [start, v - breadth * .36];
+    const rootLower: Point = [start + .025, v + breadth * .55];
+    const upper: Point = [end - .18, tip - breadth];
+    const lower: Point = [end - .14, tip + breadth * .74];
+    const tipA: Point = [end, tip - cut];
+    const tipB: Point = [end - .025, tip + cut];
+    const ridge: Point = [start + .19, v + .015];
+    polygon(raster, seat, [rootUpper, [start + .14, v - breadth * .74], upper, tipA,
+      tipB, lower, rootLower], materialMix(p.mid, p.light, .10));
+    polygon(raster, seat, [rootUpper, upper, tipA, ridge], materialMix(p.light, p.mid, main ? .28 : .46));
+    polygon(raster, seat, [ridge, tipA, tipB, lower, rootLower], materialMix(p.mid, p.dark, .08));
+    line(raster, seat, [start + .26, v + .014], [end - .08, tip - .02], p.light);
+    if (broken) {
+      polygon(raster, seat, [tipA, tipB, [tipB[0] - .04, tipB[1] - .006], [tipA[0] - .04, tipA[1] + .01]], materialMix(p.light, p.mid, .20));
+    }
+    // A short interrupted fault gives the plane a fracture without outlining it.
+    if (main && seat.field.wear > .25) {
+      line(raster, seat, [end - .22, tip - breadth * .7], [end - .18, tip - .03], p.mid);
+      line(raster, seat, [end - .17, tip + .015], [end - .19, tip + breadth * .5], p.dark);
+    }
+  }
+  line(raster, seat, [-.40, .14], [-.24, .19], materialMix(p.dark, p.mid, .45));
+  paintFragments(raster, sample, seat, 'crystal');
+  highlight(sample, seat, .12, -.11, -.45, .34, 5);
+  highlight(sample, seat, -.12, -.15, .70, .21, 4);
+}
+
+function paintGlaze(raster: Raster, sample: WorldSample, seat: FormSeat): void {
+  const p = seat.colors, split = seat.fragment;
+  // An irregular sheet, with thickness gathered against only some margins.
+  // Open overlapping planes replace nested rings and a repeated central icon.
+  polygon(raster, seat, [[-.51, -.13], [-.37, -.39], [-.11, -.34], [.035, -.23],
+    [.33, -.35], [.52, -.13], [.43, .19], [.18, .38], [-.12, .29], [-.45, .32]],
+  materialMix(p.mid, p.light, .13));
+  polygon(raster, seat, [[-.37, -.28], [-.13, -.29], [.025, -.17], [.31, -.29],
+    [.40, -.14], [.21, -.07], [-.09, -.16], [-.32, -.11]], materialMix(p.mid, p.light, .25));
+  polygon(raster, seat, [[-.34, .16], [-.14, .08], [.10, .17], [.30, .14],
+    [.16, .31], [-.10, .24], [-.39, .27]], materialMix(p.mid, p.light, .19));
+  line(raster, seat, [-.37, -.37], [-.17, -.33], materialMix(p.light, p.mid, .22));
+  line(raster, seat, [-.42, .28], [-.27, .28], materialMix(p.dark, p.mid, .65));
+  const choice = (seat.seed >>> 9) % 3;
+  const peeled: readonly Point[] = choice === 0
+    ? [[.35, -.30], [.50, -.14], [.39, -.07], [.34, -.15]]
+    : choice === 1 ? [[.05, .31], [.20, .37], [.35, .25], [.19, .18], [.21, .27]]
+      : [[-.49, .09], [-.43, .28], [-.24, .27], [-.31, .13], [-.39, .15]];
+  // Peel size responds to fragmentation; a lip touches its parent sheet.
+  const center = peeled.reduce<[number, number]>((sum, at) => [sum[0] + at[0] / peeled.length, sum[1] + at[1] / peeled.length], [0, 0]);
+  const peelScale = .65 + split * .65;
+  const cut = peeled.map(([u, v]) => [center[0] + (u - center[0]) * peelScale, center[1] + (v - center[1]) * peelScale] as const);
+  polygon(raster, seat, cut, p.exposed);
+  line(raster, seat, cut[2]!, cut[3]!, p.light);
+  const cracks = 1 + Math.floor((split + seat.field.wear) * 2);
+  for (let i = 0; i < cracks; i++) {
+    const value = hash(seat.seed + i * 71);
+    const u = -.24 + (value % 45) / 100, v = -.21 + ((value >>> 9) % 38) / 100;
+    const end: Point = [u + .055 + split * .05, v + .07];
+    line(raster, seat, [u - .08, v - .045], [u, v], p.mid);
+    line(raster, seat, [u, v], end, materialMix(p.dark, p.mid, .28));
+    if (split > .55) line(raster, seat, end, [end[0] + .04, end[1] - .02], p.mid);
+  }
+  paintFragments(raster, sample, seat, 'glaze');
+  highlight(sample, seat, -.15, -.14, -.25, .085, 2);
+  highlight(sample, seat, .10, .13, .30, .065, 2);
+}
+
+function supportedFootprint(sample: WorldSample, seat: FormSeat): boolean {
+  // Support is an 8px grid. A connected center seats the form; a small outer
+  // loss is allowed so the same material actually terminates at a void cut.
+  const along = Math.max(2, Math.ceil(seat.length * 1.12 / 8));
+  const across = Math.max(2, Math.ceil(seat.breadth / 8));
+  let lost = 0;
+  for (let j = 0; j <= across; j++) for (let i = 0; i <= along; i++) {
+    const u = -.56 + i / along * 1.12, v = -.50 + j / across;
+    const at = point(seat, u, v);
+    if (worldSupportAt(sample, at[0], at[1])) continue;
+    if (Math.abs(u) < .30 && Math.abs(v) < .27) return false;
+    lost++;
+  }
+  return lost / ((along + 1) * (across + 1)) <= .12;
+}
+
+function paintLandBreaks(raster: Raster, sample: WorldSample, onFloor: (x: number, y: number) => boolean): void {
+  const spec = sample.profile.surface, split = compositionOf(spec).fragmentation;
+  for (let y = 0; y < raster.height; y++) for (let x = 0; x < raster.width; x++) {
+    if (!onFloor(x, y)) continue;
+    const atEdge = (radius: number): boolean => !onFloor(x + radius, y) || !onFloor(x - radius, y)
+      || !onFloor(x, y + radius) || !onFloor(x, y - radius);
+    if (!atEdge(3)) continue;
+    const field = sampleSurfaceField(sample, x, y);
+    const nx = Math.cos(field.direction), ny = Math.sin(field.direction);
+    // Short correlated segments follow the material grain. Most shoreline is
+    // left alone; this is a broken upper surface, never a continuous sidewall.
+    const patch = materialHash(Math.floor((x * nx + y * ny) / 15),
+      Math.floor((-x * ny + y * nx) / 9), sample.seed ^ 0x3289);
+    if (patch > (.15 + split * .24 + field.wear * .10) * (1 - field.quiet * .55)) continue;
+    const depth = atEdge(1) ? 1 : atEdge(2) ? 2 : 3;
+    const coated = field.coverage > .5, material = coated ? spec.coating : spec.substrate;
+    const colors = formColors(sample, coated, 0);
+    const index = (y * raster.width + x) * 4;
+    const under = raster.rgba[index]! << 16 | raster.rgba[index + 1]! << 8 | raster.rgba[index + 2]!;
+    if (depth === 1) {
+      // Glaze can lose the skin at its margin; other materials expose a short
+      // dark fracture. No peak/white palette entry is used at a missing edge.
+      const broken = material === 'glaze' && field.wear + split > .65;
+      raster.pixel(x, y, materialMix(under, broken ? colors.exposed : colors.dark, broken ? .44 : .23));
+    } else if (depth === 2 || (material === 'glaze' && patch < .09)) {
+      const cross = Math.abs(nx * (Number(!onFloor(x + 3, y)) - Number(!onFloor(x - 3, y)))
+        + ny * (Number(!onFloor(x, y + 3)) - Number(!onFloor(x, y - 3))));
+      if (cross > .25 || material === 'glaze') {
+        raster.pixel(x, y, materialMix(under, colors.light, material === 'crystal' ? .22 : .14));
+      }
+    }
   }
 }
 
 export function paintMaterialForms(raster: Raster, sample: WorldSample, floorMask: Uint8Array): void {
-  const { width, height } = raster, p = sample.profile.palette, material = sample.profile.material;
+  const { width, height } = raster, spec = sample.profile.surface;
   const onFloor = (x: number, y: number): boolean => x >= 0 && y >= 0 && x < width && y < height && floorMask[y * width + x] === 1;
   raster.setClip(onFloor);
-  // Rim pixels are intact land. The absent side has neither faces nor light.
-  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
-    if (!floorMask[y * width + x]) continue;
-    const hole = (dx: number, dy: number): boolean => !onFloor(x + dx, y + dy);
-    if (hole(0, 3) || hole(3, 0) || hole(-3, 0) || hole(0, -3)) {
-      raster.pixel(x, y, material === 'crystal' ? p.shadow : p.materialDark);
-    } else if (material === 'glaze' && (hole(0, 8) || hole(7, 0) || hole(-7, 0))) raster.pixel(x, y, p.floorDeep);
-  }
-  for (const formation of sample.formations) {
-    const seed = hash(sample.seed ^ formation.id * 0x45d9f3b), candidates = seatsFor(sample, formation.cells);
-    if (candidates.length === 0) continue;
-    const selected: RimSeat[] = [];
-    const organization = materialFieldAt(sample, formation.center.x, formation.center.y);
-    const desired = Math.round(1 + organization.front * 2 + organization.amount * (material === 'crystal' ? 2 : 1));
-    candidates.sort((a, b) => {
-      const left = materialFieldAt(sample, a.x, a.y), right = materialFieldAt(sample, b.x, b.y);
-      return (right.front + right.amount * .35) - (left.front + left.amount * .35);
-    });
-    for (let attempt = 0; attempt < candidates.length && selected.length < desired; attempt++) {
-      const candidate = candidates[attempt]!;
-      if (selected.some(other => Math.hypot(other.x - candidate.x, other.y - candidate.y) < 60)) continue;
-      selected.push(candidate);
-      const variant = hash(seed + attempt);
-      if (material === 'strata') paintStrata(raster, sample, candidate, variant);
-      else if (material === 'crystal') paintCrystal(raster, sample, candidate, variant);
-      else paintGlaze(raster, sample, candidate, variant);
+  try {
+    const composition = compositionOf(spec), formScale = composition.formScale;
+    const stride = 88;
+    const selected: FormSeat[] = [];
+    for (let row = 0; row < height / stride; row++) for (let col = 0; col < width / stride; col++) {
+      const x = (col + materialHash(col, row, sample.seed ^ 0x6713)) * stride;
+      const y = (row + materialHash(col, row, sample.seed ^ 0x4371)) * stride;
+      if (!worldSupportAt(sample, x, y)) continue;
+      const field = sampleSurfaceField(sample, x, y);
+      const chance = (.16 + spec.relief * .55) * field.activity * (1 - field.quiet * .88) * (1 + field.accent * .6);
+      if (materialHash(col, row, sample.seed ^ 0x9911) > chance) continue;
+      const seed = hash(sample.seed ^ Math.imul(col, 8191) ^ Math.imul(row, 131071));
+      const coated = field.coverage > .5, material = coated ? spec.coating : spec.substrate;
+      let length = (88 + seed % 33) * formScale;
+      let breadth = (52 + (seed >>> 9) % 25) * formScale;
+      if (composition.organization === 'bands') { length *= 1.22; breadth *= .82; }
+      else if (composition.organization === 'clusters') { length *= .94; breadth *= 1.14; }
+      let seat: FormSeat = { x, y, nx: Math.cos(field.direction), ny: Math.sin(field.direction),
+        length, breadth, seed, fragment: composition.fragmentation, field, colors: formColors(sample, coated, field.accent) };
+      let fitted = supportedFootprint(sample, seat);
+      for (let fit = 0; !fitted && fit < 2; fit++) {
+        length *= .82; breadth *= .82;
+        seat = { ...seat, length, breadth };
+        fitted = supportedFootprint(sample, seat);
+      }
+      if (!fitted || selected.some(other => Math.hypot(other.x - x, other.y - y)
+        < (Math.max(other.length, other.breadth) + Math.max(length, breadth)) * .34)) continue;
+      selected.push(seat);
+      if (material === 'strata') paintStrata(raster, sample, seat);
+      else if (material === 'crystal') paintCrystal(raster, sample, seat);
+      else paintGlaze(raster, sample, seat);
     }
+    paintLandBreaks(raster, sample, onFloor);
+  } finally {
+    raster.setClip(null);
   }
-  raster.setClip(null);
 }

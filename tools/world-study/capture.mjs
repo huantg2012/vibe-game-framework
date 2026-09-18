@@ -29,7 +29,10 @@ async function capture(name) {
   console.log(name, JSON.stringify(state));
 }
 try {
-  for (const world of ['ash-strata', 'crystal-fibre', 'ivory-basin']) {
+  await page.goto(`${base}/rift-worlds.html`);
+  await ready();
+  const worlds = await page.locator('[data-world]').evaluateAll(buttons => buttons.map(button => button.dataset.world));
+  for (const world of worlds) {
     for (const topology of ['loops', 'channels']) {
       await page.goto(`${base}/rift-worlds.html?world=${world}&topology=${topology}&seed=70421&view=overview`);
       await ready();
@@ -127,6 +130,22 @@ try {
   await page.waitForTimeout(100);
   const zoomAfter = await page.evaluate(() => window.__worldStudy.getState().zoom);
   if (zoomAfter <= zoomBefore) throw new Error('Wheel did not zoom');
+  // Exercise CSV-driven controls and ensure a material swap preserves the map.
+  const spaceOptions = await page.locator('#topology option').evaluateAll(options => options.map(option => option.value));
+  if (spaceOptions.length < 2) throw new Error('Missing generated space controls');
+  for (const space of spaceOptions) {
+    await page.locator('#topology').selectOption(space);
+    await ready();
+    const before = await page.evaluate(() => ({ state: window.__worldStudy.getState(), grid: window.__worldStudy.getGrid() }));
+    if (before.state.space !== space || !await page.evaluate(() => new URLSearchParams(location.search).get('space'))) throw new Error('Space selection did not update state/URL');
+    for (const world of await page.locator('[data-world]').evaluateAll(buttons => buttons.map(button => button.dataset.world))) {
+      await page.locator(`[data-world="${world}"]`).click();
+      await ready();
+      const after = await page.evaluate(() => ({ state: window.__worldStudy.getState(), grid: window.__worldStudy.getGrid() }));
+      if (JSON.stringify(after.grid) !== JSON.stringify(before.grid) || JSON.stringify(after.state.player) !== JSON.stringify(before.state.player)) throw new Error('Changing material recipe changed space/player location');
+    }
+    report.input.push({ spaceControl: space, materialSwapPreservesGeometry: true });
+  }
   if (report.errors.length) throw new Error(`Browser errors: ${report.errors.join('; ')}`);
 } catch (error) {
   report.failure = String(error);

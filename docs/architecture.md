@@ -1181,8 +1181,40 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 
 ## 裂隙图志：独立世界生成样板（2026-09-17）
 
-`rift-worlds.html` → `src/dev/world-study.ts` → `generation/world-study/`。独立Canvas地图入口纳入Vite构建，CSV配方→生成表→确定性地貌→静态材料烘焙；连续shape供显示边界与碰撞共用。完整设计仍见 `docs/design-notes/rift-world-space.md`，实际范围见 `docs/dev/rift-world-study.md`，未替换正式Rift生成/战斗/存档。
+`rift-worlds.html` → `src/dev/world-study.ts` → `generation/world-study/`。独立Canvas入口纳入Vite构建；空间配方与材料配方分别编译、独立采样，再静态烘焙。完整设计仍为 `docs/design-notes/rift-world-space.md` 中的提案，实际范围见 `docs/dev/rift-world-study.md`。当前共享组织与正式DEV接线见下方迭代26节；正式地图随机池不变。
 
-原玩家的 `renderDensePlayerFrame` 同时服务正式atlas上传和此入口缓存，32帧不变。`light-field.ts`复用正式 `vision-textures.ts` 的方向光场曲线/32级强度，再按本图纯黑空洞裁掉视线；未知地面不保留残影。可见的晶片、沉积页和釉壳只属于陆地浅浮雕，不把空洞伪装成受光石块。
+### 空间数据与运行时质量
 
-`material-field.ts`插值生成样本的沉积与方向数据，统一地面层理、碎屑和断缘的组织。`material-response.ts`以样本弱引用持有烘焙反射点，`material-light.ts`按灯的位置着色，随后统一过原视野遮罩；反射像素必须全落在陆地。`movement.ts`复用正式基础速度/启停常量，单独验证与实际`Player.stepVelocity`一致；默认步行zoom同正式1.5，无Shift加速、未模拟负重/混乱。
+`data/rift-world-spaces.csv` → `tools/map-preview/codegen-world-spaces.mjs` → `src/generated/rift-world-space-data.ts` → `space-profile.ts`。`SpaceProfile` 声明侵蚀面积目标、短裂口比例、尺度、方向性和聚集；入口验证支持范围，不依赖世界材料/名称。
+
+`layout.ts` 的 `generateWorldSample(profileOrId, topologyId, seed, spaceProfile?)` 保留旧调用，并接受直接传入的 `WorldProfile` 与可选空间配方对象。旧 `loops` / `channels` 映射到空间预设；显式空间参数控制同一套 `open-space.ts` 连续陆地侵蚀算法，不再分别生成旧平台环或平行长带。`WorldSample` 继续提供支撑/空洞掩码、formations、出生/出口与流向/沉积场。
+
+`space-quality.ts` 检查全地面连通、宽地面比例、多方向开放度、内陆局部窗口、宽通行核心连通/双轴贯穿、内部夹道和身体净宽。`shape.ts`重建后由`support.ts`生成8px权威支撑；20×20完整AABB用于路径扫掠，渲染／碰撞／遮光同源。失败在同参数与种子下有界确定性重抽，达到 `MAX_SPACE_ATTEMPTS` 则明确拒绝；没有按世界 ID 或特定 seed 修补/回退。
+
+### 材料组合与烘焙
+
+`data/rift-world-profiles.csv` → `tools/map-preview/codegen-world-profiles.mjs` → `src/generated/rift-world-profile-data.ts`。`WorldProfile` 提供色板及 `SurfaceRecipe`；基础八项字段为 `substrate`、`coating`、`coverage`、`wear`、`deposits`、`scale`、`relief`、`contrast`。层岩/晶体/釉是可复用的绘制基元，均可参与底材与覆盖组合。世界 ID 只用于查表与展示，不进入材料绘制分支；当前五份世界数据不是组合数量上限；组织字段见迭代26节。
+
+`material-field.ts` 读取布局历史；`surface-field.ts` 分别建立覆盖/磨损/沉积/露底/方向场，并缓存于样本弱引用。`ground-material.ts` 合成底材、覆盖、露底、薄层接触边和碎屑。`material-forms.ts` 从整个受支持陆地取样局部形体，既可在边缘也可在开阔内部；不新增隐形碰撞。`surface.ts` 最后将全部空洞回写不透明纯黑。
+
+`material-response.ts` 缓存实际材料上的反射样本，`material-light.ts` 根据灯的位置、材料法向与反射锐度着色，随后过原视野遮罩。它不添加新光源；空洞既没有材质也不受光。
+
+### 角色、移动、灯光与入口边界
+
+`renderDensePlayerFrame` 同时服务正式atlas与此入口，原角色32帧不变。`movement.ts` 复用正式基础速度/启停常量，并与实际 `Player.stepVelocity` 对照；默认步行zoom同正式1.5，无Shift加速、未模拟负重/混乱。
+
+`light-field.ts` 复用 `vision-textures.ts` 的光场数学/32级强度并按本图空洞截断视线。它尚未等价接入完整生产 `VisibilitySystem`：当前四向照明、侧向射程与暖色加法灯光差异保留，本轮不修改；未知地面无残影。
+
+viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`；`?space` 承载独立空间选择，兼容旧 `?topology`。新增已有能力内的记录无需修改控件分支或绘制分支。最终URL兼容、参数实效、未命名组合、运行质量与实图验证结果待本轮收尾补齐；有限种子检查不构成全部组合或生产接入已验的结论。
+
+
+### 迭代26 · 世界组织与正式2D验证接线（DEC-170）
+
+- `generation/world-study/region-field.ts`：共享片区构成（patches/bands/clusters）、静区、强调色面积，接surface-field并服务地表及形体，不按世界ID选择算法。
+- `generation/world-study/support.ts`：8px最终支撑权威，`getWorldSupportGrid/worldSupportAt/canStandWorld`；20×20真实AABB，查看器／地表／正式TileGrid同源。
+- `generation/world-study/material-response.ts`：带像素写入版本的稀疏反射所有权，后绘同色也退役被盖材料；新增形体在完成自身绘制后登记反射。
+- `rift-world-play.html`及`dev/world-play*`、`generation/world-study/play-map.ts`：通过原RiftDevFixture进入原RiftScene，内存session，复用原角色／视野／AI／翻找／结算。适配结果和失败日志由DEV只读接口供检查；不会替换正式入口随机池。`dev/world-play-surface.ts`烘焙地面并以520px局部透明纹理、15Hz更新同源反射，原可见性再裁切。
+
+实施状态和最终文件登记在[迭代26](tasks/iteration-26.md)回填。颜色自由不改变游戏动作和缺失空间语义；固定正式逻辑分辨率960×640。
+
+迭代26 DEV表现选项：`suppressVoidNoise`仅改变未知背景噪声／底色，未见地面与空洞同为黑色；`extractionGlowRadius=8`保住支持范围内提示，默认正式入口不变。`RiftResultData.returnLabel`／fixture同名字段选择真实返回目的地，缺省仍是“返回净化点”，现有面板样式和按键不变。

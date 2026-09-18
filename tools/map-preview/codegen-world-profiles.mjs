@@ -14,7 +14,18 @@ const records = lines.map((line, index) => {
     if (!/^[0-9a-fA-F]{6}$/.test(row[key])) throw new Error(`Invalid ${row.id}.${key}`);
     return [key, Number.parseInt(row[key], 16)];
   }));
-  return { id: row.id, label: row.label, description: row.description, material: row.material,
+  if (!['patches', 'bands', 'clusters'].includes(row.organization)) throw new Error(`Invalid ${row.id}.organization`);
+  const surface = { substrate: row.substrate, coating: row.coating, organization: row.organization };
+  const kinds = ['strata', 'crystal', 'glaze'];
+  if (![row.material, row.substrate, row.coating].every(kind => kinds.includes(kind))) throw new Error(`Unknown material in ${row.id}`);
+  for (const key of ['coverage', 'wear', 'deposits', 'scale', 'relief', 'contrast', 'regionScale', 'quietness', 'formScale', 'fragmentation', 'accentCoverage']) {
+    const value = Number(row[key]);
+    const isScale = ['scale', 'regionScale', 'formScale'].includes(key);
+    const min = isScale ? .5 : 0, max = isScale ? 2 : 1;
+    if (!row[key] || !Number.isFinite(value) || value < min || value > max) throw new Error(`Invalid ${row.id}.${key}`);
+    surface[key] = value;
+  }
+  return { id: row.id, label: row.label, description: row.description, material: row.material, surface,
     palette: { ...palette, ground: palette.floor, groundLight: palette.floorLight,
       groundDark: palette.floorDeep, wall: palette.materialMid,
       wallLight: palette.faceLight, wallDark: palette.materialDark } };

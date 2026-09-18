@@ -18,8 +18,10 @@ for (const facing of ['down', 'up', 'left', 'right'] as const) for (const gait o
 
 // An open plane with a short void wall: bright floor before it, fully hidden
 // floor behind it, and a path around its end that restores line of sight.
-const sample = generateWorldSample('ivory-basin', 'loops', 70421);
-sample.land.fill(1); sample.walls.fill(0);
+const generated = generateWorldSample('ivory-basin', 'loops', 70421);
+// Geometry is immutable after generation: the runtime quality pass has already
+// sampled its cached smoothed boundary. Build a fresh fixture and fresh masks.
+const sample = { ...generated, land: new Uint8Array(generated.land.length).fill(1), walls: new Uint8Array(generated.walls.length) };
 for (let row = 6; row <= 16; row++) for (let col = 11; col <= 13; col++) sample.walls[row * sample.cols + col] = 1;
 const field = new WorldStudyLightField(sample);
 field.update(120, 176, 'right');

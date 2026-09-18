@@ -1,0 +1,196 @@
+{
+  "presets": {
+    "loops": {
+      "cases": 128,
+      "mean": {
+        "density": 0.09153825689306176,
+        "broad": 0.6231690142371801,
+        "open": 0.7518009091637378,
+        "local": 0.684336694281044,
+        "area": 29.722009196359465,
+        "coherence": 0.25674619998896225,
+        "spread": 390.26315808154544,
+        "crackShare": 0.17250718340719298,
+        "attempts": 1.0078125
+      },
+      "minimumBroad": 0.5751363140676118,
+      "minimumOpen": 0.7234831951113051,
+      "minimumLocal": 0.4972375690607735,
+      "maxAttempts": 2
+    },
+    "channels": {
+      "cases": 128,
+      "mean": {
+        "density": 0.10557012285729032,
+        "broad": 0.5962765517527859,
+        "open": 0.7039702928868813,
+        "local": 0.5592346583994319,
+        "area": 35.97833647673679,
+        "coherence": 0.35605380948667026,
+        "spread": 387.59235344337594,
+        "crackShare": 0.6245338626600113,
+        "attempts": 2.046875
+      },
+      "minimumBroad": 0.5615212527964206,
+      "minimumOpen": 0.6578829834747655,
+      "minimumLocal": 0.25824175824175827,
+      "maxAttempts": 9
+    }
+  },
+  "effects": {
+    "density": [
+      {
+        "density": 0.05170953720056675,
+        "broad": 0.7399885207990413,
+        "open": 0.7957925853291064,
+        "local": 0.741126515862657,
+        "area": 34.42616567460317,
+        "coherence": 0.3757084126335194,
+        "spread": 327.75152339100464,
+        "crackShare": 0.4014632936507937,
+        "attempts": 1
+      },
+      {
+        "density": 0.09956233211166227,
+        "broad": 0.6020062410352679,
+        "open": 0.7264024269770067,
+        "local": 0.6309325987934616,
+        "area": 31.621201709850606,
+        "coherence": 0.2572394974380285,
+        "spread": 390.0984134235924,
+        "crackShare": 0.3737839927637722,
+        "attempts": 1.0625
+      }
+    ],
+    "crackShare": [
+      {
+        "density": 0.07275014576333441,
+        "broad": 0.6982467989629911,
+        "open": 0.7867365511823347,
+        "local": 0.757118284710581,
+        "area": 35.015022824397825,
+        "coherence": 0.29886270820497246,
+        "spread": 349.46758552419186,
+        "crackShare": 0,
+        "attempts": 1
+      },
+      {
+        "density": 0.07347002257044258,
+        "broad": 0.6575746590329903,
+        "open": 0.7404598977154733,
+        "local": 0.6211643340977903,
+        "area": 31.56339285714286,
+        "coherence": 0.39746933241169585,
+        "spread": 375.2472302947658,
+        "crackShare": 1,
+        "attempts": 1
+      }
+    ],
+    "scale": [
+      {
+        "density": 0.06993423272642761,
+        "broad": 0.6030594334630565,
+        "open": 0.7642572860154305,
+        "local": 0.7558266991075494,
+        "area": 16.264463207066896,
+        "coherence": 0.2987997118464306,
+        "spread": 397.98709261883783,
+        "crackShare": 0.36402434053678334,
+        "attempts": 1
+      },
+      {
+        "density": 0.07308598817769893,
+        "broad": 0.7205425686275132,
+        "open": 0.7756157375093204,
+        "local": 0.6655568678772324,
+        "area": 50.8983878968254,
+        "coherence": 0.28639248036217746,
+        "spread": 333.7590027970193,
+        "crackShare": 0.3638392857142857,
+        "attempts": 1
+      }
+    ],
+    "direction": [
+      {
+        "density": 0.07309809555601088,
+        "broad": 0.6586758511627175,
+        "open": 0.7390353868043477,
+        "local": 0.624208942309641,
+        "area": 31.15999105061605,
+        "coherence": 0.3012410234333745,
+        "spread": 370.9859328869002,
+        "crackShare": 1,
+        "attempts": 1
+      },
+      {
+        "density": 0.07250359476531319,
+        "broad": 0.6666485233446137,
+        "open": 0.7435857518121758,
+        "local": 0.6203633667570779,
+        "area": 32.996900668775666,
+        "coherence": 0.9868309843388696,
+        "spread": 357.1375057560041,
+        "crackShare": 1,
+        "attempts": 1
+      }
+    ],
+    "clustering": [
+      {
+        "density": 0.07278628604194229,
+        "broad": 0.6897493131057556,
+        "open": 0.7723069876068935,
+        "local": 0.714677464115353,
+        "area": 33.98497596153846,
+        "coherence": 0.22378852978311697,
+        "spread": 381.94345798360706,
+        "crackShare": 0.3605902777777777,
+        "attempts": 1
+      },
+      {
+        "density": 0.07116354184177803,
+        "broad": 0.6879176528504736,
+        "open": 0.7680165870625321,
+        "local": 0.6376115964319019,
+        "area": 33.39390696109446,
+        "coherence": 0.27544420735147346,
+        "spread": 321.3309386755889,
+        "crackShare": 0.4146483724608724,
+        "attempts": 1
+      }
+    ]
+  },
+  "rejectedNegativeMaps": {
+    "alley": {
+      "accepted": false,
+      "failures": [
+        "Too little multidirectional open space",
+        "Locally corridor-dominated interior",
+        "Long alley between tears"
+      ],
+      "floorCells": 5052,
+      "voidFraction": 0.249554367201426,
+      "broadFloorRatio": 0.5756136183689627,
+      "multidirectionalRatio": 0.23515439429928742,
+      "worstLocalOpenRatio": 0,
+      "coreCoverage": 1,
+      "longestAlley": 84,
+      "bodyRoute": true
+    },
+    "bottle": {
+      "accepted": false,
+      "failures": [
+        "Narrow bottleneck splits broad floor",
+        "Broad floor does not cross the interior in both axes",
+        "No continuous broad-body spawn/exit route"
+      ],
+      "floorCells": 6417,
+      "voidFraction": 0.046791443850267345,
+      "broadFloorRatio": 0.8599033816425121,
+      "multidirectionalRatio": 0.7395979429640018,
+      "worstLocalOpenRatio": 0.42613636363636365,
+      "coreCoverage": 0.5056179775280899,
+      "longestAlley": 5,
+      "bodyRoute": false
+    }
+  }
+}

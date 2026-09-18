@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { generateWorldSample } from '../../src/generation/world-study/layout';
 import { WORLD_PROFILES } from '../../src/generation/world-study/profiles';
-import { worldLandAt, worldWallAt } from '../../src/generation/world-study/shape';
+import { canStandWorld } from '../../src/generation/world-study/support';
 import type { WorldSample, WorldTopologyId } from '../../src/generation/world-study/types';
 
 const seeds = [0, 1, 3, 11, 29, 47, 73, 101, 211, 409, 70421, 0xffffffff,
@@ -11,13 +11,8 @@ const seeds = [0, 1, 3, 11, 29, 47, 73, 101, 211, 409, 70421, 0xffffffff,
 const topologies: readonly WorldTopologyId[] = ['loops', 'channels'];
 const bodySeeds = [0, 47, 101, 409, 70421, 0xffffffff] as const;
 
-/** Same radius and nine sample locations as the viewer's canStand contract. */
-function bodyCanStand(sample: WorldSample, x: number, y: number): boolean {
-  for (const [dx, dy] of [[-6, -6], [6, -6], [-6, 6], [6, 6], [0, 0], [-6, 0], [6, 0], [0, -6], [0, 6]] as const) {
-    if (!worldLandAt(sample, x + dx, y + dy) || worldWallAt(sample, x + dx, y + dy)) return false;
-  }
-  return true;
-}
+/** Exercise the viewer/formal body's shared support contract along whole routes. */
+const bodyCanStand = canStandWorld;
 
 function checkContinuousBodyRoute(sample: WorldSample): void {
   const step = 8;
@@ -27,7 +22,7 @@ function checkContinuousBodyRoute(sample: WorldSample): void {
   for (const point of [sample.spawn, sample.exit]) {
     assert.equal(point.x % step, 0, 'Body test requires aligned starting/exit seats');
     assert.equal(point.y % step, 0, 'Body test requires aligned starting/exit seats');
-    assert(bodyCanStand(sample, point.x, point.y), `${prefix}: body does not fit on smoothed seat`);
+    assert(bodyCanStand(sample, point.x, point.y), `${prefix}: body does not fit on supported seat`);
   }
   const start = sample.spawn.y / step * cols + sample.spawn.x / step;
   const goal = sample.exit.y / step * cols + sample.exit.x / step;
@@ -54,7 +49,7 @@ function checkContinuousBodyRoute(sample: WorldSample): void {
       if (clear) { seen[next] = 1; queue.push(next); }
     }
   }
-  assert.fail(`${prefix}: no continuous radius-6 body route from spawn to exit`);
+  assert.fail(`${prefix}: no continuous 20×20 body route from spawn to exit`);
 }
 
 function geometrySignature(sample: WorldSample): string {
@@ -132,4 +127,4 @@ assert.throws(() => generateWorldSample('missing', 'loops', 1));
 assert.throws(() => generateWorldSample('ash-strata', 'loops', -1));
 assert.throws(() => generateWorldSample('ash-strata', 'loops', Number.NaN));
 assert.throws(() => generateWorldSample('ash-strata', 'channels', 1.5));
-console.log(`World study: ${checked} geometry cases, ${bodySeeds.length * topologies.length} continuous radius-6 body routes (nine probes; 8px lattice / 2px sweep), deterministic/seed/profile/topology independence, full grid reachability and achromatic palette passed.`);
+console.log(`World study: ${checked} geometry cases, ${bodySeeds.length * topologies.length} continuous 20×20 body routes (exact AABB; 8px lattice / 2px sweep), deterministic/seed/profile/topology independence, full grid reachability and achromatic palette passed.`);

@@ -1,0 +1,746 @@
+{
+  "test": "Native input only; routes read from body-safe graph",
+  "events": [
+    {
+      "action": "ready",
+      "elapsedWallMs": 1110,
+      "metadata": {
+        "world": "cobalt-gold",
+        "space": "open-scars",
+        "requestedSeed": 70421,
+        "effectiveSeed": 70421,
+        "attempt": 0,
+        "rejected": [],
+        "signature": "edfacbe5",
+        "bodySize": 20,
+        "supportTileSize": 8,
+        "reachableBodySeats": 16982,
+        "extractionRoutePx": 1568,
+        "encounterSource": "data/build-lab-placements.csv: watched; procedural body-safe seats"
+      }
+    },
+    {
+      "time": "2026-09-18T08:30:09.716Z",
+      "action": "start",
+      "snapshot": {
+        "elapsedMs": 515.9599999999994,
+        "ended": false,
+        "player": {
+          "x": 404,
+          "y": 884
+        },
+        "hp": 100,
+        "chaos": 15.203804200000011,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "patrol",
+            "position": {
+              "x": 1028,
+              "y": 917
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "WP_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1373,
+              "y": 732
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 394,
+          "y": 874,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 100,
+        "reflectionUpdatedMs": 515.9599999999994,
+        "textureCount": 2,
+        "phaserFps": 55.75
+      }
+    },
+    {
+      "action": "route",
+      "name": "safe-search",
+      "route": [
+        {
+          "x": 404,
+          "y": 884
+        },
+        {
+          "x": 452,
+          "y": 884
+        },
+        {
+          "x": 452,
+          "y": 852
+        },
+        {
+          "x": 468,
+          "y": 852
+        },
+        {
+          "x": 468,
+          "y": 820
+        },
+        {
+          "x": 484,
+          "y": 820
+        },
+        {
+          "x": 484,
+          "y": 804
+        },
+        {
+          "x": 500,
+          "y": 804
+        },
+        {
+          "x": 500,
+          "y": 788
+        },
+        {
+          "x": 524,
+          "y": 788
+        }
+      ]
+    },
+    {
+      "time": "2026-09-18T08:30:15.959Z",
+      "action": "arrive:safe-search",
+      "target": {
+        "x": 524,
+        "y": 788
+      },
+      "snapshot": {
+        "elapsedMs": 6763.606666666663,
+        "ended": false,
+        "player": {
+          "x": 527.0382222222208,
+          "y": 787.7213666666656
+        },
+        "hp": 100,
+        "chaos": 17.671624633333558,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": "search",
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "patrol",
+            "position": {
+              "x": 1028,
+              "y": 856.5
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "WP_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1312.5,
+              "y": 732
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 517.0382222222208,
+          "y": 777.7213666666656,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 85,
+        "reflectionUpdatedMs": 6730.266666666663,
+        "textureCount": 2,
+        "phaserFps": 59.67816162109375
+      }
+    },
+    {
+      "time": "2026-09-18T08:30:16.606Z",
+      "action": "search-release-interrupt",
+      "snapshot": {
+        "elapsedMs": 7413.566666666662,
+        "ended": false,
+        "player": {
+          "x": 527.0382222222208,
+          "y": 787.7213666666656
+        },
+        "hp": 100,
+        "chaos": 17.928358833333583,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": "search",
+          "progress": null,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "patrol",
+            "position": {
+              "x": 1028,
+              "y": 876
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "WP_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1332,
+              "y": 732
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 517.0382222222208,
+          "y": 777.7213666666656,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 85,
+        "reflectionUpdatedMs": 7413.566666666662,
+        "textureCount": 2,
+        "phaserFps": 59.67816162109375
+      }
+    },
+    {
+      "time": "2026-09-18T08:30:17.316Z",
+      "action": "search-channel",
+      "snapshot": {
+        "elapsedMs": 8113.536666666661,
+        "ended": false,
+        "player": {
+          "x": 527.0382222222208,
+          "y": 787.7213666666656
+        },
+        "hp": 100,
+        "chaos": 18.20484698333361,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": "search",
+          "progress": 0.5277416666666666,
+          "remaining": 4
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "patrol",
+            "position": {
+              "x": 1028,
+              "y": 897
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "WP_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1353,
+              "y": 732
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 517.0382222222208,
+          "y": 777.7213666666656,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 85,
+        "reflectionUpdatedMs": 8096.866666666661,
+        "textureCount": 2,
+        "phaserFps": 59.75862121582031
+      }
+    },
+    {
+      "time": "2026-09-18T08:30:18.831Z",
+      "action": "search-complete",
+      "snapshot": {
+        "elapsedMs": 9630.17666666666,
+        "ended": false,
+        "player": {
+          "x": 527.0382222222208,
+          "y": 787.7213666666656
+        },
+        "hp": 100,
+        "chaos": 18.80391978333367,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 1,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 3
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "patrol",
+            "position": {
+              "x": 1028,
+              "y": 924.5
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "WP_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1380.5,
+              "y": 732
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 517.0382222222208,
+          "y": 777.7213666666656,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 85,
+        "reflectionUpdatedMs": 9613.49666666666,
+        "textureCount": 2,
+        "phaserFps": 58.801724433898926
+      }
+    },
+    {
+      "action": "route",
+      "name": "extraction",
+      "route": [
+        {
+          "x": 524,
+          "y": 788
+        },
+        {
+          "x": 1220,
+          "y": 788
+        },
+        {
+          "x": 1220,
+          "y": 772
+        },
+        {
+          "x": 1284,
+          "y": 772
+        },
+        {
+          "x": 1284,
+          "y": 564
+        },
+        {
+          "x": 1300,
+          "y": 564
+        },
+        {
+          "x": 1300,
+          "y": 548
+        },
+        {
+          "x": 1396,
+          "y": 548
+        },
+        {
+          "x": 1396,
+          "y": 308
+        }
+      ]
+    },
+    {
+      "time": "2026-09-18T08:30:30.458Z",
+      "action": "moving-threat",
+      "snapshot": {
+        "elapsedMs": 21262.99666666652,
+        "ended": false,
+        "player": {
+          "x": 1092.9907888888933,
+          "y": 787.7213666666656
+        },
+        "hp": 100,
+        "chaos": 26.444960433334124,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 1,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 3
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "chase",
+            "position": {
+              "x": 1032.695027057548,
+              "y": 900.2740717140675
+            },
+            "hp": 75,
+            "detection": 1,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "WP_listener",
+            "state": "patrol",
+            "position": {
+              "x": 1350.5,
+              "y": 732
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 1082.9907888888933,
+          "y": 777.7213666666656,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 102,
+        "reflectionUpdatedMs": 21229.67666666652,
+        "textureCount": 2,
+        "phaserFps": 60.367906112263654
+      }
+    },
+    {
+      "time": "2026-09-18T08:30:34.447Z",
+      "action": "moving-damaged",
+      "snapshot": {
+        "elapsedMs": 25246.176666666426,
+        "ended": false,
+        "player": {
+          "x": 1266.8284555555542,
+          "y": 771.9437666666655
+        },
+        "hp": 85,
+        "chaos": 32.59167263333443,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 1,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 3
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "chase",
+            "position": {
+              "x": 1222,
+              "y": 775.0471074996943
+            },
+            "hp": 75,
+            "detection": 1,
+            "engaged": false,
+            "visible": true
+          },
+          {
+            "id": "WP_listener",
+            "state": "chase",
+            "position": {
+              "x": 1268.561439613165,
+              "y": 744.8650777902791
+            },
+            "hp": 75,
+            "detection": 1,
+            "engaged": true,
+            "visible": true
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 1256.8284555555542,
+          "y": 761.9437666666655,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 68,
+        "reflectionUpdatedMs": 25229.506666666428,
+        "textureCount": 2,
+        "phaserFps": 60.47187654333342
+      }
+    },
+    {
+      "time": "2026-09-18T08:30:47.120Z",
+      "action": "arrive:extraction",
+      "target": {
+        "x": 1396,
+        "y": 308
+      },
+      "snapshot": {
+        "elapsedMs": 37912.336666666255,
+        "ended": false,
+        "player": {
+          "x": 1397.4445222222166,
+          "y": 305.58996666666434
+        },
+        "hp": 40,
+        "chaos": 42.597939033335415,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 1,
+        "search": {
+          "prompt": "extract",
+          "progress": null,
+          "remaining": 3
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "chase",
+            "position": {
+              "x": 1406.366823889012,
+              "y": 334.38564334657883
+            },
+            "hp": 75,
+            "detection": 1,
+            "engaged": false,
+            "visible": true
+          },
+          {
+            "id": "WP_listener",
+            "state": "chase",
+            "position": {
+              "x": 1386.89187929611,
+              "y": 338.93828358092594
+            },
+            "hp": 75,
+            "detection": 1,
+            "engaged": false,
+            "visible": true
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 1387.4445222222166,
+          "y": 295.58996666666434,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 4,
+        "reflectionUpdatedMs": 37862.32666666625,
+        "textureCount": 2,
+        "phaserFps": 60.63121868112977
+      }
+    },
+    {
+      "time": "2026-09-18T08:30:48.329Z",
+      "action": "settled-extract",
+      "snapshot": {
+        "elapsedMs": 38062.34666666625,
+        "ended": true,
+        "player": {
+          "x": 1397.4445222222166,
+          "y": 305.36796666666436
+        },
+        "hp": 40,
+        "chaos": 42.716446933335426,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 1,
+        "search": {
+          "prompt": "extract",
+          "progress": null,
+          "remaining": 3
+        },
+        "enemies": [
+          {
+            "id": "WP_watcher",
+            "state": "return",
+            "position": {
+              "x": 1407.3851725090442,
+              "y": 332.0520696724443
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": true
+          },
+          {
+            "id": "WP_listener",
+            "state": "return",
+            "position": {
+              "x": 1387.3860967077294,
+              "y": 331.8598013878396
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": true
+          }
+        ],
+        "hosts": []
+      },
+      "surface": {
+        "footprint": {
+          "x": 1387.4445222222166,
+          "y": 295.36796666666436,
+          "width": 20,
+          "height": 20
+        },
+        "reflectionPixels": 1,
+        "reflectionUpdatedMs": 37995.686666666246,
+        "textureCount": 2,
+        "phaserFps": 60.47341401084733
+      }
+    },
+    {
+      "action": "storage-isolation",
+      "storage": {
+        "save": "I26-independent-browser-sentinel",
+        "writes": []
+      }
+    }
+  ],
+  "failures": [],
+  "errors": [],
+  "finalState": {
+    "ready": true,
+    "running": false,
+    "starting": false,
+    "sceneCreated": false,
+    "paused": false,
+    "snapshot": null,
+    "metadata": null,
+    "layout": null,
+    "surface": null,
+    "inventory": {
+      "version": 2,
+      "items": [
+        {
+          "kind": "weapon",
+          "id": "WPN_4ccfaf9d-28d4-4297-a3bd-a4e5b5681542",
+          "weapon": {
+            "id": "WPN_4ccfaf9d-28d4-4297-a3bd-a4e5b5681542",
+            "definitionId": "crowbar_plain",
+            "stage": "tool",
+            "impactCharges": 3,
+            "usesRemaining": 60
+          },
+          "location": {
+            "kind": "carried"
+          }
+        }
+      ],
+      "equipment": {
+        "weaponId": "WPN_4ccfaf9d-28d4-4297-a3bd-a4e5b5681542",
+        "toolIds": [],
+        "defenseIds": []
+      },
+      "run": {
+        "id": "build-lab-f3c99cfd-40ce-43bc-baf2-acb9a8fe4f5e",
+        "status": "settled",
+        "carriedOutIds": [
+          "WPN_4ccfaf9d-28d4-4297-a3bd-a4e5b5681542"
+        ],
+        "revealedNodes": {},
+        "destroyedIds": [],
+        "outcome": "extract",
+        "returnedIds": [],
+        "kindlingGained": 1
+      },
+      "starterGranted": true,
+      "firstWeaponDiscovered": false
+    },
+    "error": ""
+  },
+  "endedAt": "2026-09-18T08:30:48.806Z"
+}

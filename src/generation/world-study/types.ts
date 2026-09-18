@@ -30,11 +30,32 @@ export interface WorldPalette {
 }
 
 export interface WorldProfile {
-  readonly id: WorldProfileId;
+  readonly id: string;
   readonly label: string;
   readonly description: string;
+  /** Legacy CSV label; rendering uses the composable surface recipe below. */
   readonly material: WorldMaterial;
   readonly palette: WorldPalette;
+  readonly surface: SurfaceRecipe;
+}
+
+/** Composable material operations; independent of world names and palettes. */
+export interface SurfaceRecipe {
+  readonly substrate: WorldMaterial;
+  readonly coating: WorldMaterial;
+  readonly coverage: number;
+  readonly wear: number;
+  readonly deposits: number;
+  readonly scale: number;
+  readonly relief: number;
+  readonly contrast: number;
+  /** Optional for older/anonymous recipes; shared defaults are resolved by the field. */
+  readonly organization?: 'patches' | 'bands' | 'clusters';
+  readonly regionScale?: number;
+  readonly quietness?: number;
+  readonly formScale?: number;
+  readonly fragmentation?: number;
+  readonly accentCoverage?: number;
 }
 
 export interface WorldFormation {

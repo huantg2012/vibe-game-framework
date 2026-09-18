@@ -5,7 +5,7 @@ import sharp from 'sharp';
 import { generateWorldSample } from '../../src/generation/world-study/layout';
 import { renderWorldSurface } from '../../src/generation/world-study/surface';
 import { WORLD_PROFILES } from '../../src/generation/world-study/profiles';
-import { worldLandAt, worldWallAt } from '../../src/generation/world-study/shape';
+import { worldSupportAt } from '../../src/generation/world-study/support';
 import { groundMaterialHighlights } from '../../src/generation/world-study/material-response';
 import type { WorldTopologyId } from '../../src/generation/world-study/types';
 
@@ -20,14 +20,14 @@ for (const profile of WORLD_PROFILES) for (const topology of ['loops', 'channels
   if (surface.rgba.length !== surface.width * surface.height * 4) throw new Error('Invalid renderer output dimensions');
   let voidPixels = 0;
   for (let y = 0; y < surface.height; y++) for (let x = 0; x < surface.width; x++) {
-    if (worldLandAt(sample, x, y) && !worldWallAt(sample, x, y)) continue;
+    if (worldSupportAt(sample, x, y)) continue;
     const offset = (y * surface.width + x) * 4;
     if (surface.rgba[offset] || surface.rgba[offset + 1] || surface.rgba[offset + 2] || surface.rgba[offset + 3] !== 255) {
       throw new Error(`Missing space acquired a visible surface at ${profile.id} ${x},${y}`);
     }
     voidPixels++;
   }
-  if (profile.id === 'ash-strata') {
+  if (Object.values(profile.palette).every(color => (color >> 16 & 255) === (color >> 8 & 255) && (color >> 8 & 255) === (color & 255))) {
     for (let offset = 0; offset < surface.rgba.length; offset += 4) {
       if (surface.rgba[offset] !== surface.rgba[offset + 1] || surface.rgba[offset + 1] !== surface.rgba[offset + 2]) {
         throw new Error(`Achromatic surface has colored pixels at offset ${offset}`);
@@ -36,12 +36,12 @@ for (const profile of WORLD_PROFILES) for (const topology of ['loops', 'channels
   }
   const file = `${profile.id}-${topology}-terrain.png`;
   const highlights = groundMaterialHighlights(sample);
-  if (profile.material === 'strata' ? highlights.length !== 0 : highlights.length === 0) {
+  if (profile.surface.substrate === 'strata' && profile.surface.coating === 'strata' && highlights.length !== 0) {
     throw new Error(`${profile.id}: reflection samples disagree with material response`);
   }
   for (const highlight of highlights) for (let dy = 0; dy < highlight.height; dy++) for (let dx = 0; dx < highlight.width; dx++) {
     const x = highlight.x + dx, y = highlight.y + dy;
-    if (!worldLandAt(sample, x, y) || worldWallAt(sample, x, y)) throw new Error(`${profile.id}: reflection spills into missing space at ${x},${y}`);
+    if (!worldSupportAt(sample, x, y)) throw new Error(`${profile.id}: reflection spills into missing space at ${x},${y}`);
   }
   await sharp(surface.rgba, { raw: { width: surface.width, height: surface.height, channels: 4 } }).png().toFile(path.join(directory, file));
   records.push({ world: profile.id, topology, seed, file, width: surface.width, height: surface.height,

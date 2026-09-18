@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>裂隙世界 · 出行验证</title>
+  <style>
+    * { box-sizing: border-box; } body { margin: 0; background: #111519; color: #d4dbdf; font: 14px/1.6 system-ui, sans-serif; }
+    main { display: flex; height: 100vh; } #configuration { width: 300px; flex: 0 0 300px; padding: 18px; overflow-y: auto; border-right: 1px solid #3b444b; }
+    #configuration h1 { font-size: 20px; margin: 0 0 12px; } #configuration p { color: #aebbc3; } #configuration label { display: block; margin: 10px 0; }
+    #configuration select, #configuration input, #configuration button { font: inherit; color: inherit; background: #202b33; border: 1px solid #53636e; padding: 7px; border-radius: 3px; }
+    #configuration select, #configuration input { display: block; width: 100%; } #configuration button { cursor: pointer; margin: 4px 0; width: 100%; } #configuration button:disabled { opacity: .45; cursor: default; }
+    #game-container { position: relative; flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; background: #000; overflow: hidden; }
+    #game-container canvas { display: block; } #configuration #status { color: #d8dfca; } #configuration #error { color: #efad9d; white-space: pre-wrap; }
+    #configuration pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 ui-monospace, monospace; }
+  </style>
+</head>
+<body><main>
+  <aside id="configuration">
+    <h1>裂隙世界 · 出行验证</h1>
+    <p>在生成的世界中翻找、应对巡逻者，抵达撤离点。沿用原角色和正式搜撤规则。</p>
+    <p>隔离训练库存，刷新清空，不读写正式纪录。本页验证单趟出行。</p>
+    <label>世界<select id="world"></select></label>
+    <label>空间<select id="space"></select></label>
+    <label>装配<select id="loadout"></select></label>
+    <label>种子<input id="seed" type="number" min="0" max="4294967295" step="1" value="70421" /></label>
+    <p id="description"></p>
+    <button id="start" disabled>开始 / 中止当前并重开</button>
+    <button id="abort" disabled>中止本次试验</button>
+    <button id="pause" disabled>暂停 / 继续（Esc）</button>
+    <button id="download">下载本页记录 JSON</button>
+    <p>WASD 移动 / 转向 · 空格挥击<br>Q / F 主动技能<br>按住 E 翻找 · 按 E 撤离<br>Tab 本趟拾获（世界继续）<br>结束后 R 返回配置</p>
+    <p id="status">载入正式游戏资源…</p>
+    <details><summary>试验记录</summary><pre id="state"></pre></details>
+    <pre id="error" role="alert"></pre>
+  </aside>
+  <div id="game-container" tabindex="0"></div>
+</main><script type="module" src="/src/dev/world-play.ts"></script></body>
+</html>

@@ -22,6 +22,7 @@ export default defineConfig({
         inspector: path.resolve(__dirname, 'enemy-inspector.html'),
         combatLab: path.resolve(__dirname, 'combat-lab.html'),
         worldStudy: path.resolve(__dirname, 'rift-worlds.html'),
+        worldPlay: path.resolve(__dirname, 'rift-world-play.html'),
       },
     },
   },

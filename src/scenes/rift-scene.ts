@@ -48,6 +48,7 @@ export interface RiftDevFixture {
   /** Optical terrain only; physics and navigation always retain the source TileGrid. */
   createSightGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid): OccluderGrid;
   onReturn(): void;
+  returnLabel?: '返回净化点' | '返回配置';
   onPause?(): void;
   configureCamera?(camera: Phaser.Cameras.Scene2D.Camera): void;
   /** Display-only adjustment for the large legacy through-fog extraction marker. */
@@ -62,6 +63,8 @@ export interface RiftDevFixture {
   createSearchObjectVisual?: LootSearchCreateConfig['createVisual'];
   /** Explicit alternative-renderer ownership; never substitute a legacy fragment's ground. */
   worldSurface?: 'runtime';
+  /** DEV presentation only: unknown floor and absent support remain equally black. */
+  suppressVoidNoise?: boolean;
   createRuntime?(context: RiftDevRuntimeContext): RiftDevRuntime;
 }
 export interface RiftEntryView {
@@ -316,7 +319,7 @@ export class RiftScene extends Phaser.Scene {
     camera.setBounds(0, 0, grid.widthPx, grid.heightPx);
     camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM);
     this.devFixture?.configureCamera?.(camera);
-    camera.setBackgroundColor(GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
+    camera.setBackgroundColor(this.devFixture?.suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
 
     const beforePlayer = this.devFixture?.createRuntime ? new Set(this.children.list) : null;
     this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right' });
@@ -324,7 +327,9 @@ export class RiftScene extends Phaser.Scene {
     this.physics.add.collider(this.player.getSprite(), layer);
     camera.startFollow(this.player.getSprite(), true);
 
-    this.visibility.create(this, createRiftVisionConfig(DEPTH.visionMask), sightGrid);
+    const visionConfig = createRiftVisionConfig(DEPTH.visionMask);
+    this.visibility.create(this, this.devFixture?.suppressVoidNoise
+      ? { ...visionConfig, voidNoiseEnabled: false, voidColor: 0x000000 } : visionConfig, sightGrid);
     this.visibility.clipLightsToIsland(tileMap);
     this.visibility.setExtractionPosition(layout.extractionPoint.position);
 
@@ -649,7 +654,7 @@ export class RiftScene extends Phaser.Scene {
     this.devRuntime?.update(this.devElapsedMs, this.runController.isRunEnded());
     this.toolSystem.syncHostVisuals();
 
-    const tileSize = GAME_CONSTANTS.TILE_SIZE;
+    const tileSize = this.formFloorGrid!.tileSize;
     const p = this.player.getPosition();
     const pCol = Math.floor(p.x / tileSize);
     const pRow = Math.floor(p.y / tileSize);
@@ -716,7 +721,7 @@ export class RiftScene extends Phaser.Scene {
 
     // Trail system: record player position and redraw visible trail marks.
     const playerPos = this.player.getPosition();
-    const tile = GAME_CONSTANTS.TILE_SIZE;
+    const tile = this.formFloorGrid!.tileSize;
     this.trail.update(
       Math.floor(playerPos.x / tile),
       Math.floor(playerPos.y / tile),
@@ -783,7 +788,7 @@ export class RiftScene extends Phaser.Scene {
    * visible wall face then lights the wall; a blocked neighbor does not.
    */
   private syncMinimapExploration(): void {
-    const tileSize = GAME_CONSTANTS.TILE_SIZE;
+    const tileSize = this.formFloorGrid!.tileSize;
     const playerPos = this.player.getPosition();
     const playerTileX = Math.floor(playerPos.x / tileSize);
     const playerTileY = Math.floor(playerPos.y / tileSize);
@@ -949,6 +954,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly onRiftExitedShowResult = (payload: { kindlingGained: number; survived: boolean }): void => {
     riftResultPanel.show({
       survived: payload.survived,
+      returnLabel: this.devFixture?.returnLabel,
       abandoned: inventoryStore.getRun()?.outcome === 'abandon',
       kindlingGained: payload.kindlingGained,
       killCount: this.sortieKillCount,
@@ -2049,7 +2055,7 @@ export class RiftScene extends Phaser.Scene {
     this.debugAccumulatorMs = 0;
 
     const camera = this.cameras.main;
-    const tile = GAME_CONSTANTS.TILE_SIZE;
+    const tile = this.formFloorGrid!.tileSize;
     const stats = this.visibility.getStats();
     const ai = this.ai.getStats();
     const combat = this.combat.getStats();
