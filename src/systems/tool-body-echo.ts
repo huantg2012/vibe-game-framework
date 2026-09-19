@@ -1,5 +1,6 @@
 import type Phaser from 'phaser';
 import type { FormFlashSource } from '@/entities/form-renderers/form-renderer';
+import { runtimeNumber, runtimeInteger, runtimeRecord } from '@/systems/ai/runtime-validation';
 import type { Vector2 } from '@/types/game-types';
 
 export type BodyEchoMode = 'mirror' | 'memory' | 'freeze' | 'phase';
@@ -7,16 +8,50 @@ export interface BodyEchoSource extends FormFlashSource { readonly frame?: strin
 export interface BodyEcho {
   update(position: Readonly<Vector2>, progress: number, depth: number): void;
   destroy(): void;
+  exportRuntimeState(): BodyEchoRuntimeState;
 }
 let serial = 0;
 
+export interface BodyEchoRuntimeState {
+  readonly mode: BodyEchoMode;
+  readonly width: number; readonly height: number;
+  readonly originX: number; readonly originY: number;
+  readonly scaleX: number; readonly scaleY: number;
+  /** Original immutable visible pose, never a reference to a moving actor texture. */
+  readonly rgba: string;
+}
+export function validateBodyEchoRuntimeState(value: unknown): value is BodyEchoRuntimeState {
+  if (!runtimeRecord(value) || !['mirror','memory','freeze','phase'].includes(value.mode as string)
+    || !runtimeInteger(value.width, 1, 512) || !runtimeInteger(value.height, 1, 512)
+    || !runtimeNumber(value.originX, -10, 10) || !runtimeNumber(value.originY, -10, 10)
+    || !runtimeNumber(value.scaleX, -100, 100) || !runtimeNumber(value.scaleY, -100, 100)
+    || typeof value.rgba !== 'string' || value.rgba.length !== Math.ceil(value.width * value.height * 4 / 3) * 4
+    || !/^[A-Za-z0-9+/]*={0,2}$/.test(value.rgba)) return false;
+  try { return atob(value.rgba).length === value.width * value.height * 4; } catch { return false; }
+}
 /** Independent, immutable copies of the actual visible pose. Never reads a live target on update. */
 export function captureBodyEcho(scene: Phaser.Scene, source: BodyEchoSource, mode: BodyEchoMode): BodyEcho | null {
   if (!scene.textures?.exists(source.textureKey)) return null;
   const frame = scene.textures.getFrame(source.textureKey, source.frame);
-  if (!frame?.source?.image) return null;
-  const width = frame.realWidth, height = frame.realHeight;
-  if (!width || !height) return null;
+  if (!frame?.source?.image || !frame.realWidth || !frame.realHeight) return null;
+  try {
+    const canvas = document.createElement('canvas');
+    canvas.width = frame.realWidth; canvas.height = frame.realHeight;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!context) return null;
+    context.drawImage(frame.source.image as CanvasImageSource, frame.cutX, frame.cutY, frame.cutWidth, frame.cutHeight,
+      frame.x, frame.y, frame.cutWidth, frame.cutHeight);
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    let bytes = ''; for (const byte of pixels) bytes += String.fromCharCode(byte);
+    return restoreBodyEcho(scene, { mode, width:canvas.width, height:canvas.height,
+      originX:source.originX, originY:source.originY, scaleX:source.scaleX??1, scaleY:source.scaleY??1, rgba:btoa(bytes) });
+  } catch { return null; }
+}
+export function restoreBodyEcho(scene: Phaser.Scene, saved: BodyEchoRuntimeState | null): BodyEcho | null {
+  if (!saved || !validateBodyEchoRuntimeState(saved)) return null;
+  const snapshot = { ...saved };
+  const {width,height,mode} = snapshot;
+  const source = snapshot;
   const keys: string[] = [];
   const layers: Phaser.GameObjects.Image[] = [];
   let disposed = false;
@@ -29,13 +64,8 @@ export function captureBodyEcho(scene: Phaser.Scene, source: BodyEchoSource, mod
     keys.forEach(key => { if (scene.textures.exists(key)) scene.textures.remove(key); });
   };
   try {
-    const canvas = document.createElement('canvas');
-    canvas.width = width; canvas.height = height;
-    const context = canvas.getContext('2d', { willReadFrequently: true });
-    if (!context) return null;
-    context.drawImage(frame.source.image as CanvasImageSource, frame.cutX, frame.cutY, frame.cutWidth, frame.cutHeight,
-      frame.x, frame.y, frame.cutWidth, frame.cutHeight);
-    const pixels = context.getImageData(0, 0, width, height).data;
+    const bytes = atob(snapshot.rgba);
+    const pixels = Uint8ClampedArray.from(bytes, byte => byte.charCodeAt(0));
     let top = height, bottom = 0;
     for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
       if (pixels[(y * width + x) * 4 + 3]! > 24) { top = Math.min(top, y); bottom = Math.max(bottom, y); }
@@ -75,6 +105,7 @@ export function captureBodyEcho(scene: Phaser.Scene, source: BodyEchoSource, mod
     scene.events?.once('destroy', destroy);
     return {
       destroy,
+      exportRuntimeState: () => ({ ...snapshot }),
       update(position, progress, depth) {
         if (disposed) return;
         const p = Math.max(0, Math.min(1, progress));

@@ -1,0 +1,47 @@
+{
+  "purpose": "Explicit B-stage fixture, not natural growth/economy evidence",
+  "baseline": "docs/qa/artifacts/game-wide-review-2026-09-18/coordinator/fresh-base.storage.json",
+  "baselineSha256": "ce734d633a786906424847f33cb38cd856a6c5d3e30b248df8af27a784bd046b",
+  "files": [
+    {
+      "file": "advanced-24.storage.json",
+      "sha256": "c98e9433144c66c92a1bd1559d4f2ee40f56bdfbf2ebba7166b3275c76378b02",
+      "reserve": 24,
+      "itemCount": 6
+    },
+    {
+      "file": "advanced-0.storage.json",
+      "sha256": "d0bb11f350d2abd1fa4ba11ce5fff402adf0a9d8b88bc80711e5c97fd6c3fe4f",
+      "reserve": 0,
+      "itemCount": 6
+    }
+  ],
+  "changes": [
+    "Original base starter crowbar retained at its original instance ID and equipment location; original growth/tide/cycle/stability/forecast remain unchanged.",
+    "Added ordinary mirror and muffle through contaminantSystem factory; assigned stable QA-only IDs for traceable fixtures.",
+    "Added good-standard and fine-standard weapon instances through production factory, admitted through InventoryStore.loadState; no hand-copied weapon stats.",
+    "Mirror, muffle, good crowbar matured by slotOffering + three actual finishOfferingImpact(1) calls, then naturally returned to stash. These calls seed lifecycle only: they do not represent played sorties, base damage, or natural rewards.",
+    "Raw solidify and fine crowbar each received one actual offering charge and were removed to stash, preserving partial progress. Remaining defense slots empty.",
+    "Raised reserve0→24 with production addKindling; CORE70→40 and PURIFIER70→20 with production applyDamage, STORAGE70 retained; maxHP100 unchanged.",
+    "advanced-0 differs only by production spendKindling(24); all items/states identical.",
+    "Final save serialized and loaded through real SaveManager; run=null so preparation/offering allowed; no active/checkpoint/departure or artificial baseSettled ledger."
+  ],
+  "usage": [
+    "Use .storage.json as isolated storage map; .save.json is parsed SaveDataV2 for inspection. Never load into user storage.",
+    "advanced-24: repair cost/preview, mature versus unready item identity, offering progression, compatibility and preparation.",
+    "advanced-0: same module/item contexts with insufficient repair/growth resources.",
+    "Mature gear remains stash for visible preparation; ordinary original weapon remains equipped. No immediate equipped skills are implied."
+  ],
+  "ids": {
+    "mature": [
+      "QA_GW_mature_mirror",
+      "QA_GW_mature_muffle",
+      "QA_GW_good_crowbar"
+    ],
+    "unready": [
+      "QA_GW_raw_solidify",
+      "QA_GW_raw_fine_crowbar"
+    ]
+  },
+  "validation": "Both snapshots accepted by production SaveManager.load; no browser validation claimed."
+}

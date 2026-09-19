@@ -29,15 +29,12 @@ export function runtimeStrings(value: unknown, maximum: number): value is string
 
 export function copyRuntimeVector(value: Readonly<Vector2>): Vector2 { return { x: value.x, y: value.y }; }
 
-/** The first recovery package accepts only the two authored native insect profiles. */
+/** Current-content signatures separately bind the full authored form. */
 export function runtimeEnemyForm(value: unknown, role: unknown): value is ContaminationForm {
-  return runtimeRecord(value) && value.substrate === 'insect_remnant' && value.coverage === 'infiltrate'
-    && value.continuity === 'monolith' && value.occupancy === 'floor' && value.portfolio === 'jia'
-    && value.utteranceId === undefined && runtimeRecord(value.lexemes)
-    && value.lexemes.motion === 'motion_patrol' && value.lexemes.rhythm === 'rhythm_open'
-    && value.lexemes.contact === 'contact_melee_three'
-    && ((role === 'infiltrator' && value.lexemes.sense === 'sense_cone')
-      || (role === 'rewriter' && value.lexemes.sense === 'sense_hear'));
+  return runtimeRecord(value) && typeof value.substrate === 'string' && typeof value.coverage === 'string'
+    && value.occupancy === 'floor' && value.portfolio === 'jia' && runtimeRecord(value.lexemes)
+    && ['motion', 'rhythm', 'contact', 'sense'].every(key => typeof (value.lexemes as Record<string, unknown>)[key] === 'string')
+    && (role === 'infiltrator' || role === 'rewriter');
 }
 
 /** Opt-in mulberry32 stream. Legacy scenes continue to use their original random source. */

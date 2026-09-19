@@ -92,6 +92,7 @@ async function child(input: ChildInput) {
       const item = contaminantSystem.createUnowned('kindle', CONTAMINANT_DATA.kindle.rarity, 'good');
       item.id = 'earlier-trip-offered-shell'; item.impactCharges = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD - 1;
       assert(inventoryStore.addContaminant(item).ok); assert(inventoryStore.slotOffering(item.id, 0).ok);
+      gameState.incrementCycle(); // This earned-offering fixture already returned from its tutorial trip.
     }
     const scene = new PurificationScene();
     const selection = input.selection ?? { scene: 'sea-open-channel', seed: '19' };
@@ -105,7 +106,7 @@ async function child(input: ChildInput) {
       },
     });
     gate.transitionToRift();
-    assert.equal(gameState.getCycle(), 1); assert.equal(inventoryStore.getRun()?.status, 'active');
+    assert.equal(gameState.getCycle(), input.offering ? 2 : 1); assert.equal(inventoryStore.getRun()?.status, 'active');
     assert(saveManager.peekRiftDeparture());
     if (input.mode !== 'departure') {
       const intent = saveManager.peekRiftDeparture()!;

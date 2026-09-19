@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-16
+last-modified: 2026-09-19
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -70,9 +70,9 @@ RiftDevFixture显式注入1200ms入场、世界环境音、soil脚步、运行�
 
 第三包隔离实现新增`suspended-sea-journey.html`：复用正式净化点的整备、供奉和归来冲击，在同一库存中往返悬海。默认memory页供真实多趟链验收；`?resume=1`使用独立的`coh-suspended-sea-journey:`存储空间，正式游戏存档不变。代码已按三方SHA核对合入主工程；模块/新进程路由与真实刷新、同字节重试、主动放弃/一次基地结算及下一趟移动验证通过。其它旧世界未注册完整恢复。
 
-完整恢复分工：`RiftFrameCommit`负责POST_UPDATE整帧/500ms检查点与失败冻结，`InventoryStore`提供可选帧草稿，`SaveManager`一次写入基地/库存/世界且保留完整上一包。`commit-effects`仅延后成功呈现，机制事件保持同步。各Player/AI/Combat/Tool/Search/Run状态由原所有者导出和恢复；`rift-recovery-state`校验跨系统关系，`suspended-sea/recovery-validation`先按当前CSV世界/AI/战斗签名和实际AABB校验，再允许载入。地貌仅恢复G记忆、R重算；物理步长余数与镜头缓动保留。
+完整恢复分工：`RiftFrameCommit`负责POST_UPDATE整帧/500ms检查点与失败冻结，`InventoryStore`提供可选帧草稿，`SaveManager`一次写入基地/库存/世界且保留完整上一包。`commit-effects`仅延后成功呈现，机制事件保持同步。各Player/AI/Combat/Tool/Search/Run状态由原所有者导出和恢复；`rift-recovery-state`校验跨系统关系。悬海仍由`suspended-sea/recovery-validation`校验；迭代27正式2D新增`managers/rift-recovery.ts`，按原seed重建并核对生成/身体/Host核目标/搜寻节点清单，完整通过后才允许SaveManager hydrate。两种worldId显式区分，正式入口不接三维。地貌仅恢复G记忆、R重算；物理步长余数与镜头缓动保留。
 
-`departure intent`先与beginRun/cycle同存；active续原局，终局保存独立回执，未结基地才进入PurificationScene一次冲击。run ID确定归来随机流与白板替补ID，存储失败后的重载不会重抽结果。任何未知世界或完整包损坏保留原记录；本包恢复能力不扩到未适配的随机池。
+`departure intent`先与beginRun/cycle同存；active续原局，终局保存独立回执，未结基地才进入PurificationScene一次冲击。run ID确定归来随机流与白板替补ID，存储失败后的重载不会重抽结果。任何未知世界或完整包损坏保留原记录。正式随机2D已注册适配；其他未适配世界不隐式获得恢复支持。
 
 
 ## 迭代21：正式系统的构筑对照入口（DEC-147，2026-09-11）
@@ -1218,3 +1218,17 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 实施状态和最终文件登记在[迭代26](tasks/iteration-26.md)回填。颜色自由不改变游戏动作和缺失空间语义；固定正式逻辑分辨率960×640。
 
 迭代26 DEV表现选项：`suppressVoidNoise`仅改变未知背景噪声／底色，未见地面与空洞同为黑色；`extractionGlowRadius=8`保住支持范围内提示，默认正式入口不变。`RiftResultData.returnLabel`／fixture同名字段选择真实返回目的地，缺省仍是“返回净化点”，现有面板样式和按键不变。
+
+
+### 迭代27 · 购买、知识与恢复边界（DEC-171）
+
+- `managers/growth-purchases.ts`是成长/加厚的持久化应用服务：快照游戏、成长、稳定度，执行真实消费与升级，一次保存后发布成功事件；拒写完整回滚，活动出击/未结算纪录阻止购买。UI只消费结果，不自行扣资源或先发奖励。数据仍由CSV与既有系统常量定义。
+- `Minimap`保留同一局部33格窗与真实可见格累积，只为已见撤离口加圆外方向刻记；不生成通路/揭示未知。可选 `abyss` 保存旧目标位置及剩余/总时钟，恢复不重新查询目标。66px原生画布及简短已记状态挂原overlay根。
+- `RiftHud`首次显示12秒可收起输入说明，之后保留展开入口；说明位于左侧状态下方，底部翻找/撤离与遭遇读数不叠第三层。初始数值由场景在订阅后按真实系统状态hydrate，恢复也不重发拾取/阈值事件。
+- `managers/rift-recovery.ts`拥有正式随机2D的生成身份、有限布局缓存与入场预校验。最终recipe仅校准，不强制覆盖原seed生成器的重试分支。Host核清单复用生产油膜纯烘焙/可走裁切/核位选择，保持生成遍历顺序；固定搜寻节点绑定种类、位置、基础产值与来源，包不能自行定义合法对象。
+- `ContaminationHostSystem`导出活动/反相节律、受伤核、危险源与抑制时钟，先恢复Host权威时钟，再由Tool恢复来源和显示；不重演施放。AI恢复全体正式甲身体/活动及视觉诱饵，Combat绑定真实身体与Host核ID。临时效果可引用已死对象，但只能引用原始清单。Player/Search的maxHealth与kindlingAffinity同时受存档成长等级约束。
+- `SaveManager`的基地入场闸门校验模块完整身份、HP/tier容量、CSV成长级别、潮汐阶段与时钟、稳定度及库存。显式`load('abandon-active')`只剥离世界包，仍完整校验基地/库存，随后Session才做一次正式弃局结算；不存在“损坏即重置全档”的分支。
+- `PurificationScene`在Phaser关闭插件前逐资源清理并收集阶段错误，update在移交/清理中短路；失败回标题，已提交意图仍在。普通存储拒写保持原整帧候选重试；运行态校验失败则提供持久的返回标题入口，只丢弃未提交内存候选、保留原bytes。`TrailSystem.create/destroy`重置本趟时钟，恢复才载回同一趟的时间，不能在Scene复用时带入上一趟。
+
+
+迭代27工具恢复：`systems/tool-runtime-extended.ts`是当前13族工具的JSON边界，作为既有`ToolRuntimeState.version=1`的可选扩展，旧五族包仍可读；独立时钟、控制来源和末次耗尽后的效果继续存在。`tool-body-echo.ts`在捕获时保存原姿态RGBA与锚点/比例，恢复重建同一残影，不从当前敌人/人物重新取图。延迟/压制的Host计时先由Host恢复，Tool重建表现与来源，不再施放或消费；正式2D入场接线与交叉校验由本节登记的`managers/rift-recovery.ts`和Scene负责。

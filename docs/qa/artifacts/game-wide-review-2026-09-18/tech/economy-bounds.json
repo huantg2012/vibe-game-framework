@@ -1,0 +1,47 @@
+{
+  "assumptions": [
+    "formal2D source has 3 artifact nodes; all reached and carried; all quality variants eligible; no deaths; uniform family draw; independent idealized runs",
+    "Arithmetic bound, not player behavior or sustainable-supply pass"
+  ],
+  "oneChosenFamilyProbabilityPerThreeNodes": 0.21347291761492937,
+  "meanSuccessfulFullLootRunsToFirstChosenFamily": 4.684434968017059,
+  "noChosenFamilyAfterFiveFullLootRuns": 0.3010013241411075,
+  "formalFuelTierCounts": {
+    "safe": 3,
+    "contested": 3,
+    "deep": 2
+  },
+  "fullSweepFuelAtStorageHp": {
+    "0": 17,
+    "70": 19,
+    "100": 24
+  },
+  "weaponRegularDropsMeanPerFullSweep": 1.38,
+  "unmitigatedDamagePerReturnIntensity1To3": [
+    30,
+    90
+  ],
+  "repairContinuousLowerBoundKindling": [
+    7.5,
+    22.5
+  ],
+  "discreteModuleRepairMayRoundUp": true,
+  "allUpgradeCost": 334,
+  "thickenCost": 64,
+  "oneOrdinaryFamilyUses": {
+    "solidify": 5,
+    "scatter": 5,
+    "retrograde": 5,
+    "delay": 4,
+    "siphon": 5,
+    "expand": 3,
+    "muffle": 5,
+    "kindle": 5,
+    "stitch": 4,
+    "compress": 4,
+    "mirror": 4,
+    "abyss": 3,
+    "combust": 3
+  },
+  "slotCompetition": "3 offering slots base / 4 after35 cost; normal 3 charges vs crest3 at once; weapons occupy slots without defensive mitigation"
+}

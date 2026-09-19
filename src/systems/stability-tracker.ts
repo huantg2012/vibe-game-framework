@@ -14,6 +14,12 @@ import { eventBus } from '@/core/event-bus';
 import { GameEvent } from '@/types/events';
 import type { StabilityState } from '@/types/game-types';
 
+export interface StabilityReturnFacts {
+  readonly extracted: boolean;
+  readonly newlyZeroModules: number;
+  readonly phaseChange: { readonly from: string; readonly to: string; readonly survivedCrest?: boolean } | null;
+}
+
 const S = GAME_CONSTANTS.STABILITY;
 
 // ---------------------------------------------------------------------------
@@ -43,7 +49,7 @@ export const stabilityTracker = {
    * Emits STABILITY_CHANGED with the delta applied.
    * When progress reaches 100 for the first time, sets `reached = true`.
    */
-  addProgress(reason: string, amount: number): void {
+  addProgress(reason: string, amount: number, emitEvent = true): void {
     void reason; // For debugging/logging; not stored in state
 
     const before = progress;
@@ -52,11 +58,20 @@ export const stabilityTracker = {
 
     if (delta === 0) return;
 
-    eventBus.emit(GameEvent.STABILITY_CHANGED, { progress, delta });
+    if (emitEvent) eventBus.emit(GameEvent.STABILITY_CHANGED, { progress, delta });
 
     if (progress >= S.MAX && !reached) {
       reached = true;
     }
+  },
+
+  /** Called only inside the once-per-run base settlement transaction. Rewards are
+   * facts about the completed run; an empty kindling bag does not erase extraction. */
+  recordReturn(facts: StabilityReturnFacts): void {
+    const gained = (facts.extracted ? S.GAIN_EXTRACT : 0)
+      + (facts.phaseChange?.survivedCrest ? S.GAIN_CREST_SURVIVED : 0)
+      + (facts.phaseChange?.from === 'ebb' && facts.phaseChange.to === 'rise' ? S.GAIN_TIDE_ADVANCE : 0);
+    stabilityTracker.addProgress('return', gained + facts.newlyZeroModules * S.LOSS_MODULE_ZERO);
   },
 
   /** Serialize current state for saving. */

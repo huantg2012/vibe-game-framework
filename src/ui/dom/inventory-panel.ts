@@ -108,6 +108,7 @@ class InventoryPanel {
   private lists: Partial<Record<Lane, ListElements>> = {};
   private equipment!: HTMLDivElement;
   private detail!: HTMLElement;
+  private detailActions!: HTMLElement;
   private detailHint!: HTMLElement;
   private weight!: HTMLElement;
   private message!: HTMLElement;
@@ -223,9 +224,11 @@ class InventoryPanel {
     this.detail = element('aside', 'inventory-detail'); this.detail.setAttribute('aria-label', '正在查看的物件');
     const detailColumn = element('div', 'inventory-detail-column');
     this.detailHint = element('div', 'inventory-detail-hint');
+    this.detailActions = element('div', 'inventory-actions');
+    this.detailActions.setAttribute('aria-label', '当前物件操作');
     this.detail.addEventListener('scroll', this.updateDetailOverflow, { passive: true });
     this.detail.addEventListener('toggle', this.updateDetailOverflow, true);
-    detailColumn.append(this.detail, this.detailHint);
+    detailColumn.append(this.detail, this.detailHint, this.detailActions);
     body.append(this.lists.nearby.column, this.lists.main.column, detailColumn);
     const bottom = element('footer', 'inventory-bottom');
     this.message = element('div', 'inventory-message'); this.message.setAttribute('role', 'status'); this.message.setAttribute('aria-live', 'polite');
@@ -387,9 +390,10 @@ class InventoryPanel {
     this.detail.dataset.itemId = item?.id ?? '';
     const expanded = new Set([...this.detail.querySelectorAll<HTMLDetailsElement>('details[open]')].filter(node => node.dataset.itemId === item?.id).map(node => node.dataset.label));
     this.detail.replaceChildren();
+    this.detailActions.replaceChildren();
     if (!item) { this.detail.append(element('p', '', '选一件物件，看看它还能做什么。')); this.detailHint.textContent = ''; this.exchangeInspect.textContent = '先选准备拿取的物件，再选要放下的收获。'; return; }
     const art = element('div', `inventory-art${item.kind === 'weapon' ? ' is-weapon' : ''}`); putIcon(art, item);
-    this.detail.append(art, element('h3', '', item.name), element('div', 'inventory-detail-meta', `${locationName(item)}${this.options?.mode === 'rift' ? ` · 负重 ${formatWeight(item.weight)}` : ''}`));
+    this.detail.append(art, element('h3', '', item.name), element('div', 'inventory-detail-meta', [item.quality, item.stageLabel, locationName(item), this.options?.mode === 'rift' ? `负重 ${formatWeight(item.weight)}` : ''].filter(Boolean).join(' · ')));
     if (item.usesRemaining !== undefined) {
       const remaining = element('div', 'inventory-stat inventory-detail-uses');
       remaining.append(element('span', '', item.kind === 'weapon' ? '耐久度' : '剩余次数'), element('strong', '', item.kind === 'weapon' ? `${item.usesRemaining} / ${item.maxDurability ?? '—'}` : String(item.usesRemaining)));
@@ -399,7 +403,7 @@ class InventoryPanel {
     for (const stat of item.stats ?? []) {
       const line = element('div', 'inventory-stat'); line.append(element('span', '', stat.label), element('strong', '', stat.comparison !== undefined ? `${stat.comparison} → ${stat.value}` : String(stat.value))); this.detail.append(line);
     }
-    const actions = element('div', 'inventory-actions');
+    const actions = this.detailActions;
     const action = (label: string, run: () => void, disabled = false) => { const control = button('inventory-action', label, run); control.disabled = disabled; actions.append(control); };
     if (this.options?.mode !== 'rift') {
       if (this.options?.mode === 'prepare' && item.canEquip && (item.location === 'carried' || item.location === 'stash')) {
@@ -417,7 +421,6 @@ class InventoryPanel {
     } else if (item.location === 'carried' && !this.isEquipped(item)) action('放在脚边', () => void this.dispatch({ type: 'drop', itemIds: [item.id] }));
     if (item.preview) this.detail.append(element('p', 'inventory-preview', item.preview));
     if (this.options?.mode === 'rift' && this.isEquipped(item)) this.detail.append(element('p', 'inventory-locked-note', '本趟已装配 · 不能卸下'));
-    this.detail.append(actions);
     for (const explanation of item.explanations ?? []) {
       const disclosure = element('details', 'inventory-explanation');
       disclosure.dataset.itemId = item.id; disclosure.dataset.label = explanation.label;
@@ -543,7 +546,7 @@ class InventoryPanel {
     } else if (this.options.mode === 'prepare' && item.canEquip && (item.location === 'carried' || item.location === 'stash') && item.kind === 'weapon' && !this.isEquipped(item)) void this.dispatch({ type: 'equipWeapon', itemId: item.id });
     else if (item.canOffer && this.options.onOffering) this.goToOffering();
     else if (this.options.mode === 'prepare' && item.canEquip && (item.location === 'carried' || item.location === 'stash') && item.kind === 'contaminant') {
-      const target = this.detail.querySelector<HTMLButtonElement>('.inventory-action:not(:disabled)'); target?.focus({ preventScroll: true });
+      const target = this.detailActions.querySelector<HTMLButtonElement>('.inventory-action:not(:disabled)'); target?.focus({ preventScroll: true });
     }
   }
 

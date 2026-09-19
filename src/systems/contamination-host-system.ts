@@ -1,3 +1,7 @@
+import { checkpointChecksum } from '@/types/rift-checkpoint';
+import { runtimeRecord, runtimeNumber, runtimeInteger, runtimeVector } from './ai/runtime-validation';
+import type { ActivityRuntimeState, ReverseActivityRuntimeState } from './ai/activity-state';
+import type { HazardControlRuntimeState } from './environment-hazard-control';
 import { findTerrainSafeVolumeSeat, isMaterialVolume } from '@/generation/terrain-safe-volume-seat';
 import { createVolumePresenceFrame, updateVolumePresenceFrame, isVolumeDangerousAt, sampleVolumeDensity, type VolumePresenceFrame } from './volume-presence';
 import { doorwayWallSeats } from '@/generation/wall-host-placement';
@@ -206,6 +210,63 @@ export interface HostVisualPin {
 
 export type HostVisualSignal = 'idle' | 'strike' | 'inflated' | 'awake';
 
+export interface HostRuntimeState {
+  version: 1;
+  signature: string;
+  lastPlayerTile: { col: number; row: number };
+  volumeSight: number;
+  hosts: { id: string; kind: Host['kind']; state: Record<string, unknown>; activity: ActivityRuntimeState; reverseActivity?: ReverseActivityRuntimeState }[];
+  controls: [string, HazardControlRuntimeState][];
+  flashes: [string, number][];
+}
+const HOST_RUNTIME_KEYS = {
+  yi: ['hp', 'alive', 'core', 'noiseRemainingMs', 'hearingAccumMs', 'tile', 'strikeFloors', 'windupMs', 'strikeThisFrame', 'windupCol', 'windupRow', 'walk', 'moving'],
+  bing: ['hp', 'alive', 'core', 'noiseRemainingMs', 'hearingAccumMs', 'phase', 'nuclei'],
+  ding: ['hp', 'alive', 'core', 'noiseRemainingMs', 'hearingAccumMs', 'awake', 'live', 'elapsedMs', 'phaseElapsedMs', 'moving'],
+} as const;
+/** Match the authored structural shape without admitting graphics, callbacks or new fields. */
+function sameRuntimeShape(value: unknown, template: unknown): boolean {
+  if (typeof template === 'number') return typeof value === 'number' && Number.isFinite(value);
+  if (template === null) return value === null;
+  if (Array.isArray(template)) return Array.isArray(value) && value.length === template.length && value.every((item, i) => sameRuntimeShape(item, template[i]));
+  if (typeof template === 'object') return runtimeRecord(value) && Object.keys(value).length === Object.keys(template).length && Object.entries(template).every(([key, child]) => sameRuntimeShape(value[key], child));
+  return typeof value === typeof template;
+}
+
+/** Pure structural admission before a save can mutate live systems. */
+export function validateHostRuntimeSnapshot(value: unknown, draw: SortieDraw): value is HostRuntimeState {
+  if (!runtimeRecord(value) || value.version !== 1 || value.signature !== checkpointChecksum(draw)
+    || !runtimeRecord(value.lastPlayerTile) || !runtimeInteger(value.lastPlayerTile.col, -1) || !runtimeInteger(value.lastPlayerTile.row, -1)
+    || !runtimeNumber(value.volumeSight, 0, 1) || !Array.isArray(value.hosts) || !Array.isArray(value.controls) || !Array.isArray(value.flashes)) return false;
+  const forms = draw.forms.filter(form => form.portfolio !== 'jia');
+  if (forms.length !== value.hosts.length) return false;
+  const ids = new Set<string>();
+  let paintSlot = 0;
+  for (let index = 0; index < forms.length; index++) {
+    const form = forms[index]!, row = value.hosts[index];
+    if (!runtimeRecord(row) || !runtimeRecord(row.state) || row.kind !== form.portfolio || typeof row.id !== 'string' || ids.has(row.id)) return false;
+    const expected = form.portfolio === 'bing' ? `ENM_BING_${String(++paintSlot).padStart(2, '0')}` : `ENM_${form.portfolio.toUpperCase()}_01`;
+    if (row.id !== expected) return false; ids.add(row.id);
+    const state = row.state, keys = HOST_RUNTIME_KEYS[row.kind as Host['kind']];
+    if (!keys || Object.keys(state).length !== keys.length || !keys.every(key => key in state)
+      || !runtimeNumber(state.hp) || typeof state.alive !== 'boolean' || !runtimeVector(state.core)
+      || !runtimeNumber(state.noiseRemainingMs, 0) || !runtimeNumber(state.hearingAccumMs, 0)
+      || !new ActivityClock(form.lexemes.rhythm, row.id).validateRuntimeState(row.activity)) return false;
+    if (row.kind === 'bing') {
+      if (!runtimeNumber(state.phase) || !Array.isArray(state.nuclei) || state.nuclei.length > 4096 || !state.nuclei.every(nucleus =>
+        runtimeRecord(nucleus) && runtimeVector(nucleus.core) && runtimeNumber(nucleus.hp) && typeof nucleus.alive === 'boolean'
+        && runtimeInteger(nucleus.floorCol) && runtimeInteger(nucleus.floorRow) && runtimeNumber(nucleus.flashMs, 0, 80))) return false;
+    } else if (row.kind === 'ding') {
+      if (typeof state.awake !== 'boolean' || typeof state.moving !== 'boolean' || !runtimeNumber(state.elapsedMs, 0) || !runtimeNumber(state.phaseElapsedMs, 0)
+        || !runtimeRecord(state.live) || !['x', 'y', 'w', 'h'].every(key => runtimeNumber((state.live as Record<string, unknown>)[key]))
+        || !new ReverseActivityClock().validateRuntimeState(row.reverseActivity)) return false;
+    } else return false; // Production has no wall hosts; legacy gym worlds retain their own adapter.
+  }
+  return value.controls.every(row => Array.isArray(row) && row.length === 2 && ids.has(row[0]) && EnvironmentHazardControl.validateRuntimeState(row[1]))
+    && new Set(value.controls.map(row => row[0])).size === value.controls.length
+    && value.flashes.every(row => Array.isArray(row) && row.length === 2 && ids.has(row[0]) && runtimeNumber(row[1], 0, 80));
+}
+
 export class ContaminationHostSystem {
   private hosts: Host[] = [];
   private combat: CombatSystem | null = null;
@@ -239,6 +300,51 @@ export class ContaminationHostSystem {
    * Materialize 乙/丙/丁 from `layout.contaminationDraw`. Does not call `drawSortie`.
    * `combat` / `chaos` may be null: paint and tick visuals only (no swing hits / chaos).
    */
+  /** Host clocks, damaged nuclei and temporary controls belong to the same frame as actors. */
+  exportRuntimeState(): HostRuntimeState {
+    return { version: 1, signature: checkpointChecksum(this.lastDraw), lastPlayerTile: { ...this.lastPlayerTile }, volumeSight: this.volumeSight,
+      hosts: this.hosts.map(host => ({ id: host.id, kind: host.kind,
+        state: Object.fromEntries(HOST_RUNTIME_KEYS[host.kind].map(key => [key, structuredClone((host as unknown as Record<string, unknown>)[key])])),
+        activity: host.activity.exportRuntimeState(), ...(host.kind === 'ding' ? { reverseActivity: host.reverseActivity.exportRuntimeState() } : {}),
+      })), controls: [...this.hazardControls].map(([id, control]) => [id, control.exportRuntimeState()]), flashes: [...this.coreFlashMs] };
+  }
+
+  validateRuntimeState(value: unknown): value is HostRuntimeState {
+    if (!runtimeRecord(value) || value.version !== 1 || value.signature !== checkpointChecksum(this.lastDraw)
+      || !runtimeRecord(value.lastPlayerTile) || !runtimeInteger(value.lastPlayerTile.col, -1) || !runtimeInteger(value.lastPlayerTile.row, -1)
+      || !runtimeNumber(value.volumeSight, 0, 1) || !Array.isArray(value.hosts) || value.hosts.length !== this.hosts.length
+      || !Array.isArray(value.controls) || !Array.isArray(value.flashes)) return false;
+    const templates = this.exportRuntimeState();
+    if (!value.hosts.every((row, index) => {
+      const host = this.hosts[index]!, template = templates.hosts[index]!;
+      return runtimeRecord(row) && row.id === host.id && row.kind === host.kind && runtimeRecord(row.state)
+        && sameRuntimeShape(row.state, template.state) && runtimeNumber(row.state.hp) && typeof row.state.alive === 'boolean'
+        && runtimeVector(row.state.core) && host.activity.validateRuntimeState(row.activity)
+        && (host.kind !== 'ding' || host.reverseActivity.validateRuntimeState(row.reverseActivity));
+    })) return false;
+    const ids = new Set(this.hosts.map(host => host.id));
+    return value.controls.every(row => Array.isArray(row) && row.length === 2 && ids.has(row[0]) && EnvironmentHazardControl.validateRuntimeState(row[1]))
+      && new Set(value.controls.map(row => row[0])).size === value.controls.length
+      && value.flashes.every(row => Array.isArray(row) && row.length === 2 && ids.has(row[0]) && runtimeNumber(row[1], 0, 80));
+  }
+
+  restoreRuntimeState(value: unknown): void {
+    if (!this.validateRuntimeState(value)) throw new Error('Invalid contamination host state');
+    this.lastPlayerTile = { ...value.lastPlayerTile }; this.volumeSight = value.volumeSight;
+    for (let index = 0; index < value.hosts.length; index++) {
+      const row = value.hosts[index]!, host = this.hosts[index]!;
+      Object.assign(host, structuredClone(row.state)); host.activity.restoreRuntimeState(row.activity);
+      if (host.kind === 'ding') { host.reverseActivity.restoreRuntimeState(row.reverseActivity); this.refreshVolumePresence(host, host.elapsedMs, this.volumeActive(host)); }
+      if (!host.alive) { host.gfx.clear(); host.marks?.clear(); if (host.kind === 'yi') host.telegraph.clear(); }
+    }
+    this.hazardControls.clear(); for (const [id, state] of value.controls) { const control = new EnvironmentHazardControl(); control.restoreRuntimeState(state); this.hazardControls.set(id, control); }
+    this.coreFlashMs.clear(); for (const [id, remaining] of value.flashes) this.coreFlashMs.set(id, remaining);
+  }
+
+  getRecoveryTargetIds(): string[] {
+    const targets: MeleeTarget[] = []; this.collectMeleeTargets(targets); return targets.map(target => target.id);
+  }
+
   create(
     scene: Phaser.Scene,
     layout: GeneratedRiftLayout,
@@ -288,6 +394,7 @@ export class ContaminationHostSystem {
     this.chaos = null;
     this.getVisibility = null;
     this.volumeSight = 1;
+    this.lastPlayerTile = { col: -1, row: -1 };
     this.lastDraw = null;
     this.scene = null;
     this.pins = null;

@@ -5,13 +5,10 @@
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
-import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
-import { saveManager } from '@/managers/save-manager';
-import { stabilityTracker } from '@/systems/stability-tracker';
-import { GameEvent } from '@/types/events';
+import { purchaseGrowth, type GrowthPurchaseResult } from '@/managers/growth-purchases';
 import type { GrowthUpgradeId } from '@/types/game-types';
 import { renderPanelContent } from './panel-render-state';
 import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
@@ -230,29 +227,31 @@ function wireEvents(selectionOnly = false): void {
 /** Shared by the mouse click handler and the keyboard Enter handler so the two
  *  input paths can never diverge (U7 "输入一致"). */
 function purchaseCard(id: GrowthUpgradeId): void {
-  const prevLevel = growthSystem.getLevel(id);
-  const spent = growthSystem.purchase(id);
-  if (spent > 0) {
-    stabilityTracker.addProgress('growth', GAME_CONSTANTS.STABILITY.GAIN_GROWTH);
-    saveManager.save();
+  const result = purchaseGrowth(id);
+  if (result.ok) {
     render();
-    showPurchaseFlash(GROWTH_UPGRADE_NAMES[id], prevLevel + 1, '级');
-    checkFirstGrowthMilestone(id, prevLevel + 1);
+    showPurchaseFlash(GROWTH_UPGRADE_NAMES[id], result.newLevel, '级');
+    checkFirstGrowthMilestone(id, result.newLevel);
   } else {
-    audioManager.playSFX('sfx-ui-error');
+    showPurchaseFailure(result);
   }
 }
 
 function purchaseThicken(): void {
-  if (!gameState.raiseModuleMaxHp()) {
-    audioManager.playSFX('sfx-ui-error');
+  const result = purchaseGrowth(THICKEN_ID);
+  if (!result.ok) {
+    showPurchaseFailure(result);
     return;
   }
-  saveManager.save();
-  const newTier = gameState.getModuleMaxHpTier();
-  eventBus.emit(GameEvent.GROWTH_PURCHASED, { upgradeId: THICKEN_ID, newLevel: newTier });
   render();
-  showPurchaseFlash('加厚', newTier, '档');
+  showPurchaseFlash('加厚', result.newLevel, '档');
+}
+
+function showPurchaseFailure(result: Extract<GrowthPurchaseResult, { ok: false }>): void {
+  audioManager.playSFX('sfx-ui-error');
+  render();
+  if (result.reason !== 'unavailable') showToastStamp(result.reason === 'pending-save'
+    ? '先保存归来的记录。' : '未能保存，薪柴未扣除。');
 }
 
 // ---------------------------------------------------------------------------
@@ -291,14 +290,15 @@ function showPurchaseFlash(name: string, newLevel: number, unit: '级' | '档'):
 
 function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void {
   if (newLevel !== 1) return;
-  const flag = localStorage.getItem('coh_first_growth_done');
+  let flag: string | null;
+  try { flag = localStorage.getItem('coh_first_growth_done'); } catch { return; }
   if (flag) return;
 
   const ids = growthSystem.getAllUpgradeIds();
   const otherLevels = ids.filter((i) => i !== id).map((i) => growthSystem.getLevel(i));
   if (otherLevels.some((l) => l > 0)) return;
 
-  localStorage.setItem('coh_first_growth_done', '1');
+  try { localStorage.setItem('coh_first_growth_done', '1'); } catch { return; }
 
   // C6: migrated onto the shared `.toast-stamp` primitive (was a hand-rolled overlay
   // with an equivalent but independently-maintained dismiss-on-click/key/timeout).

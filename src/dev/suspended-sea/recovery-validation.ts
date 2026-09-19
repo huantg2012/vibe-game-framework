@@ -48,16 +48,17 @@ function remember<T>(cache: Map<string, T>, key: string, value: T): T {
 }
 function identityKey(identity: RiftCheckpoint['identity']): string { return `${identity.layoutId}:${identity.seed}`; }
 function currentIdentity(identity: RiftCheckpoint['identity']): boolean {
+  if (identity.worldId !== 'suspended-sea') return false;
   const key = identityKey(identity);
   let signature = identitySignatures.get(key);
   if (signature === undefined) signature = remember(identitySignatures, key,
-    createSuspendedSeaWorld(identity.seed, identity.layoutId).metadata.signature);
+    createSuspendedSeaWorld(identity.seed, identity.layoutId === 'sea-folded-ridge' ? identity.layoutId : 'sea-open-channel').metadata.signature);
   return signature === identity.signature;
 }
 function currentRecipe(identity: RiftCheckpoint['identity']): AdmissionRecipe {
   const key = identityKey(identity), cached = recipes.get(key);
   if (cached) return cached;
-  const world = createSuspendedSeaWorld(identity.seed, identity.layoutId);
+  const world = createSuspendedSeaWorld(identity.seed, identity.layoutId === 'sea-folded-ridge' ? identity.layoutId : 'sea-open-channel');
   const layout = world.base.layout, grid = new TileGrid(layout.tileMap);
   const recipe: AdmissionRecipe = { identitySignature: world.metadata.signature,
     worldSignature: checkpointChecksum(world.base.signature()), width: world.base.width, height: world.base.height,

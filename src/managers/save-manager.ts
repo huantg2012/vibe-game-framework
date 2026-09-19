@@ -1,3 +1,4 @@
+import { UPGRADE_DATA } from '@/generated/upgrade-data';
 /**
  * SaveManager — handles localStorage persistence of game state.
  *
@@ -22,6 +23,7 @@ import type { InventoryState } from '@/types/inventory-types';
 import { InventoryStore, inventoryStore } from '@/systems/inventory-store';
 import { impactSystem, validImpactForecastState } from '@/systems/impact-system';
 import { checkpointChecksum, validRiftCheckpoint, validRiftDeparture, type RiftDepartureIntent, type RiftCheckpoint } from '@/types/rift-checkpoint';
+import { runtimeInteger, runtimeNumber, runtimeRecord } from '@/systems/ai/runtime-validation';
 
 const SAVE = GAME_CONSTANTS.SAVE;
 
@@ -37,17 +39,40 @@ function storage(): SaveStorage { return injectedStorage ?? localStorage; }
 /** Check the fields consumed by existing loaders before touching live systems. */
 function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (!data || (data.version !== 1 && data.version !== 2)) return false;
-  if (!Number.isFinite(data.kindlingReserve) || !Number.isFinite(data.cycle) || !Array.isArray(data.modules)) return false;
-  if (data.modules.some(module => !module || typeof module.id !== 'string' || typeof module.type !== 'string' || !Number.isFinite(module.hp) || !Number.isFinite(module.maxHp))) return false;
+  if (!runtimeNumber(data.kindlingReserve, 0, Number.MAX_SAFE_INTEGER) || !runtimeInteger(data.cycle)
+    || !Array.isArray(data.modules)) return false;
+  const tier = data.moduleMaxHpTier ?? 0;
+  if (!runtimeInteger(tier, 0, GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_TIERS)) return false;
+  const maxHp = GAME_CONSTANTS.PURIFICATION.MODULE_BASE_MAX_HP + tier * GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER;
+  // Before Slice 7, V1 records contain CORE/STORAGE only. Current records must
+  // contain all three identities exactly once; arbitrary rows cannot rescue a base.
+  const expectedModules = data.version === 1 && data.modules.length === 2 ? ['CORE', 'STORAGE'] : ['CORE', 'STORAGE', 'PURIFIER'];
+  if (data.modules.length !== expectedModules.length || new Set(data.modules.map(module => module?.id)).size !== expectedModules.length
+    || data.modules.some(module => !module || !expectedModules.includes(module.id) || module.type !== module.id
+      || module.maxHp !== maxHp || !runtimeNumber(module.hp, 0, maxHp))) return false;
   if (data.repairBonusHp !== undefined && (!Number.isSafeInteger(data.repairBonusHp) || data.repairBonusHp < 0)) return false;
   if (data.impactForecast !== undefined && !validImpactForecastState(data.impactForecast, data.modules.map(module => module.id))) return false;
-  if (!data.tide || !Number.isFinite(data.tide.tideNumber) || !Number.isFinite(data.tide.cycleInPhase) || !Number.isFinite(data.tide.currentIntensity) || !['rise', 'crest', 'ebb'].includes(data.tide.phase)) return false;
-  if (!data.growth?.upgrades || typeof data.growth.upgrades !== 'object' || !data.stability || !Number.isFinite(data.stability.progress) || typeof data.stability.reached !== 'boolean') return false;
+  if (!data.tide || !runtimeInteger(data.tide.tideNumber, 1, GAME_CONSTANTS.TIDE.TIDES.length)
+    || !runtimeInteger(data.tide.cycleInPhase) || !['rise', 'crest', 'ebb'].includes(data.tide.phase)
+    || (data.tide.crestIntact !== undefined && typeof data.tide.crestIntact !== 'boolean')) return false;
+  const tide = GAME_CONSTANTS.TIDE.TIDES[data.tide.tideNumber - 1]!;
+  const phaseLength = data.tide.phase === 'rise' ? tide.riseCycles : data.tide.phase === 'crest' ? tide.crestCycles : tide.ebbCycles;
+  const minimumIntensity = data.tide.phase === 'crest' ? tide.peak : data.tide.phase === 'ebb' ? tide.ebbTarget : tide.floor;
+  if (data.tide.cycleInPhase >= phaseLength || !runtimeNumber(data.tide.currentIntensity, minimumIntensity - 1e-9, tide.peak + 1e-9)) return false;
+  if (!runtimeRecord(data.growth?.upgrades) || Object.entries(data.growth.upgrades).some(([id, level]) =>
+    !Object.prototype.hasOwnProperty.call(UPGRADE_DATA, id) || !runtimeInteger(level, 0, UPGRADE_DATA[id as keyof typeof UPGRADE_DATA].maxLevel))
+    || !data.stability || !runtimeNumber(data.stability.progress, 0, GAME_CONSTANTS.STABILITY.MAX)
+    || typeof data.stability.reached !== 'boolean' || (data.stability.progress === GAME_CONSTANTS.STABILITY.MAX && !data.stability.reached)) return false;
+  if (data.contaminantRuntimeState !== undefined && (!runtimeRecord(data.contaminantRuntimeState)
+    || Object.entries(data.contaminantRuntimeState).some(([id, state]) => !id || !runtimeRecord(state)
+      || Object.entries(state).some(([key, value]) => key === 'solidifyCounter' ? !runtimeInteger(value, 0, 2)
+        : key === 'combustAccumulator' ? !runtimeNumber(value, 0)
+        : key === 'echoBonusGranted' ? !runtimeInteger(value, 0, GAME_CONSTANTS.CONTAMINANT.ECHO_MAX_TOOL_USE_BONUS) : true)))) return false;
   if (data.pendingSideEffects !== undefined && (!Array.isArray(data.pendingSideEffects) || data.pendingSideEffects.some(effect =>
     !effect || !['initial_chaos', 'chaos_rate_mult', 'vision_reduction', 'speed_reduction', 'repair_efficiency', 'upgrade_discount', 'storage_halved', 'proximity_sense_boost', 'module_swap'].includes(effect.type)
     || !Number.isFinite(effect.value) || !['next_sortie', 'timed'].includes(effect.duration)
     || (effect.durationMs !== undefined && (!Number.isFinite(effect.durationMs) || effect.durationMs < 0))))) return false;
-  if (data.upgradeDiscount !== undefined && !Number.isFinite(data.upgradeDiscount)) return false;
+  if (data.upgradeDiscount !== undefined && !runtimeNumber(data.upgradeDiscount, 0, 1)) return false;
   if (data.moduleSwapActive !== undefined && typeof data.moduleSwapActive !== 'boolean') return false;
   const probe = new InventoryStore();
   if (data.version === 2) {
@@ -278,7 +303,7 @@ export const saveManager = {
    * Returns true if load was successful, false if no save or invalid data.
    * Emits GAME_LOADED on success.
    */
-  load(): boolean {
+  load(mode?: 'abandon-active'): boolean {
     if (pendingWorldSave || inventoryStore.hasFrameTransaction()) return false;
     const raw = storage().getItem(SAVE.KEY);
     if (!raw) return false;
@@ -290,12 +315,24 @@ export const saveManager = {
       return false;
     }
 
+    if (mode === 'abandon-active') {
+      if (data?.version !== 2 || data.inventory?.run?.status !== 'active') return false;
+      const { riftCheckpoint: _checkpoint, riftDeparture: _departure, checkpointChecksum: _checksum, ...base } = data;
+      data = base;
+    }
     // Validate the complete loaded payload before distributing state.
     if (!validSaveEnvelope(data)) {
       // Future: add migration functions here
       return false;
     }
     if (data.version === 2 && data.riftCheckpoint && !validateRiftState?.(data.riftCheckpoint, data.inventory)) return false;
+    if (data.version === 2 && data.riftCheckpoint?.identity.worldId === 'procedural-rift') {
+      const conditions = (data.riftCheckpoint.state as import('@/systems/rift-recovery-state').RiftRecoveryState).conditions;
+      const upgrades = data.growth.upgrades;
+      const maxHealth = GAME_CONSTANTS.PLAYER.MAX_HEALTH + (upgrades.growth_vitality ?? 0) * UPGRADE_DATA.growth_vitality.effectPerLevel;
+      const affinity = (upgrades.growth_kindling_affinity ?? 0) * UPGRADE_DATA.growth_kindling_affinity.effectPerLevel;
+      if (conditions.maxHealth !== maxHealth || conditions.kindlingAffinity !== affinity) return false;
+    }
 
     if (data.version === 2 && data.riftDeparture && !validateDeparture?.(data.riftDeparture)) return false;
 
@@ -351,6 +388,13 @@ export const saveManager = {
     enableInventoryPersistence();
     eventBus.emit(GameEvent.GAME_LOADED, { cycle: data.cycle });
     return true;
+  },
+
+  canAbandonInterruptedRun(): boolean {
+    const data = readSaveJson();
+    if (data?.version !== 2 || data.inventory?.run?.status !== 'active') return false;
+    const { riftCheckpoint: _checkpoint, riftDeparture: _departure, checkpointChecksum: _checksum, ...base } = data;
+    return validSaveEnvelope(base);
   },
 
   /** Explicit fallible entry point for departure and settlement UI. */

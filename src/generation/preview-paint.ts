@@ -276,7 +276,8 @@ function writeQuantizedRgba(
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
       const s = (y * W + x) * 3;
-      const d = (hash2(x, y, 31337) - 0.5) * 12;
+      // Clustered grain preserves connected material masses at native scale.
+      const d = (hash2(x >> 1, y >> 1, 31337) - 0.5) * 5;
       const r = clamp255(work[s]! + d);
       const g = clamp255(work[s + 1]! + d);
       const b = clamp255(work[s + 2]! + d);
@@ -1964,29 +1965,22 @@ export function bakeGround(
         g = bv * def.floorBiasG;
         b = bv * def.floorBiasB;
 
-        if (role === 'organic') {
-          const k = 0.62;
-          r += (0x1a - r) * k;
-          g += (0x6b - g) * k;
-          b += (0x5c - b) * k;
+        // Old vegetation/organic paint described an entire tile as green.
+        // These are inert remains, not a living paint host. Preserve the shared
+        // floor and build sparse, broken fibres out of its material instead.
+        if (role === 'organic' || role === 'vegetation') {
           const fx = x % T;
           const fy = y % T;
-          if ((fx * 3 + fy * 5) % 7 === 0) {
-            r += (0x0e - r) * 0.45;
-            g += (0x4a - g) * 0.45;
-            b += (0x3f - b) * 0.45;
-          }
-        } else if (role === 'vegetation') {
-          const k = 0.55;
-          r += (0x0e - r) * k;
-          g += (0x4a - g) * k;
-          b += (0x3f - b) * k;
-          const fx = x % T;
-          const fy = y % T;
-          if ((fx + fy) % 5 === 0) {
-            r += (0x1a - r) * 0.4;
-            g += (0x6b - g) * 0.4;
-            b += (0x5c - b) * 0.4;
+          const edge = Math.min(fx, fy, T - 1 - fx, T - 1 - fy);
+          const envelope = Math.min(1, edge / 4);
+          const fibres = vnoise(x + y * 0.35, y * 3.5, 1 / 13, mask.seed + 31);
+          const clump = vnoise(x, y, 1 / 19, mask.seed + 61);
+          if (clump > 0.42 && fibres > 0.54 && envelope > 0.2) {
+            const k = envelope * Math.min(0.8, (fibres - 0.54) * 5);
+            const residue = role === 'vegetation' ? hexToRgb('#24221e') : hexToRgb('#2e2d30');
+            r += (residue[0] - r) * k;
+            g += (residue[1] - g) * k;
+            b += (residue[2] - b) * k;
           }
         } else if (role === 'wreck') {
           const k = 0.5;
@@ -2009,6 +2003,19 @@ export function bakeGround(
             g += (srgb[1] - g) * k;
             b += (srgb[2] - b) * k;
           }
+        }
+        // Mid-scale material plates sit between the broad stain and tiny wear.
+        // World coordinates, seed and fragment grammar drive every generated map;
+        // no room/seed-specific stamps and no luminous colour on safe ground.
+        const grainX = x + (vnoise(x, y, 1 / 91, mask.seed + 17) - 0.5) * 18;
+        const grainY = y + (vnoise(x, y, 1 / 79, mask.seed + 29) - 0.5) * 12;
+        const strata = vnoise(grainX, grainY * 1.65, 1 / 38, mask.seed + 47);
+        const plate = strata > 0.57 ? 1.13 : strata < 0.35 ? 0.84 : 1;
+        r *= plate; g *= plate; b *= plate;
+        // A narrow interrupted lip gives a dry plate a surface, rather than
+        // outlining every tile or drawing another navigation grid.
+        if (strata > 0.556 && strata < 0.576 && vnoise(x, y, 1 / 24, mask.seed + 53) > 0.48) {
+          r += 4; g += 4; b += 3;
         }
         const nearVoid =
           cellAt(land, walls, cols, rows, col - 1, row) === 'void' ||

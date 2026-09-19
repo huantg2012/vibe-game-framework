@@ -1,3 +1,5 @@
+import { createProceduralDeparture, installProceduralRiftRecovery } from '@/managers/rift-recovery';
+import type { RiftCheckpoint } from '@/types/rift-checkpoint';
 import { mix32 } from '@/generation/seed-fork';
 import { SeededRandom } from '@/utils/random';
 import { inventoryStore } from '@/systems/inventory-store';
@@ -24,6 +26,7 @@ import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH } from '@/sy
 import Phaser from 'phaser';
 import { MenuEntryTransition } from './menu-entry-transition';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
 import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
 import {
@@ -343,6 +346,8 @@ export class PurificationScene extends Phaser.Scene {
   private entranceVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
   private devSession: PurificationDevSession | null = null;
+  private productionDeparture: RiftCheckpoint['identity'] | null = null;
+  private interactionPlayerAlpha: number | null = null;
   private devDeparture: PurificationDevDeparture | null = null;
   private menuEntry: MenuEntryTransition | null = null;
   private transitionDelay: Phaser.Time.TimerEvent | null = null;
@@ -354,6 +359,8 @@ export class PurificationScene extends Phaser.Scene {
   private coreRepairGlow: Phaser.GameObjects.Image | null = null;
   private readonly interactionScreenAnchor = { x: 0, y: 0 };
   private shuttingDown = false;
+  private cleanupComplete = false;
+  private cleanupStage = 'ready';
   private panelClosedAt = 0;
   private lastStepAt = -1000;
   private lastBoundaryPulseAt = -10000;
@@ -369,8 +376,10 @@ export class PurificationScene extends Phaser.Scene {
 
   create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean; menuEntry?: MenuEntryTransition; devSession?: PurificationDevSession }): void {
     this.shuttingDown = false;
+    this.cleanupComplete = false;
     this.devSession = import.meta.env?.DEV ? data?.devSession ?? null : null;
     this.devDeparture = null;
+    this.productionDeparture = null;
     this.menuEntry = data?.menuEntry ?? null;
     // Determine if this is a return from rift (vs. menu/load entry)
     const ledger = inventoryStore.getRun();
@@ -397,18 +406,13 @@ export class PurificationScene extends Phaser.Scene {
     // (Slice 5.5 D5 "预告 vs 实际", IA §S8).
     let predictedForecast: ForecastDisplay | null = null;
 
-    const recoveryReturn = isReturnFromRift && ledger && saveManager.peekRiftCheckpoint()?.runId === ledger.id;
+    const recoveryReturn = isReturnFromRift && ledger;
     const impactRandom = recoveryReturn ? new SeededRandom(mix32(0, `return:${ledger.id}:impact`)) : null;
     const forecastRandom = recoveryReturn ? new SeededRandom(mix32(0, `return:${ledger.id}:forecast`)) : null;
     const saved = saveManager.commitWorldTransaction(() => {
     // Credit kindling from the rift run (spec rule 10)
     if (isReturnFromRift && survived && kindlingGained > 0) {
       gameState.addKindling(kindlingGained);
-      // Stability: successful extraction (spec S21)
-      const beforeProgress = stabilityTracker.getProgress();
-      stabilityTracker.addProgress('extraction', GAME_CONSTANTS.STABILITY.GAIN_EXTRACT);
-      const afterProgress = stabilityTracker.getProgress();
-      stabilityMilestoneMessage = this.findCrossedStabilityMilestone(beforeProgress, afterProgress);
     }
 
     if (isReturnFromRift) {
@@ -422,7 +426,7 @@ export class PurificationScene extends Phaser.Scene {
       const offeringIds = inventoryStore.getOfferingItems().map(item => item?.id ?? null);
       const isHighTide = tideSystem.isHighTide();
       predictedForecast = impactSystem.getForecastDisplay();
-      impactResult = impactSystem.run(contaminantSystem.getDefenseSlotted(), offeringIds, impactRandom ? () => impactRandom.next() : undefined);
+      impactResult = impactSystem.run(contaminantSystem.getDefenseSlotted(), offeringIds, impactRandom ? () => impactRandom.next() : undefined, stabilityTracker.getProgress());
       if (!impactResult.skipped) {
         const finished = contaminantSystem.finishOfferingImpact(isHighTide, impactResult.defenseResult?.bonusCharges ?? {}, offeringIds);
         if (!finished.ok) throw new Error(`Offering settlement failed: ${finished.error}`);
@@ -431,7 +435,10 @@ export class PurificationScene extends Phaser.Scene {
       }
 
       // Advance tide cycle after impact resolves (E1: capture phase change)
-      phaseChange = tideSystem.advanceCycle();
+      phaseChange = tideSystem.advanceCycle(gameState.getModules().every(module => module.hp > 0) && !(impactResult.newlyZeroModules ?? 0));
+      const beforeProgress = stabilityTracker.getProgress();
+      stabilityTracker.recordReturn({ extracted: !!survived, newlyZeroModules: impactResult.newlyZeroModules ?? 0, phaseChange });
+      stabilityMilestoneMessage = this.findCrossedStabilityMilestone(beforeProgress, stabilityTracker.getProgress());
     }
 
     // Generate the non-spatial forecast (target module + severity) for the NEXT impact
@@ -713,7 +720,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number): void {
-    if (this.transitioning) return;
+    if (this.transitioning || this.shuttingDown) return;
 
     this.player.update(delta);
 
@@ -1019,6 +1026,7 @@ export class PurificationScene extends Phaser.Scene {
   };
 
   private onPostUpdate(_time: number, delta: number): void {
+    if (this.shuttingDown) return;
     this.player.postUpdate();
     this.groundDepthSorter?.update();
     if (this.coreRepairGlow && this.repairGlowModule) {
@@ -1073,6 +1081,10 @@ export class PurificationScene extends Phaser.Scene {
 
   private focusWorldInteraction(point: Readonly<{ x: number; y: number }>, screenX: number, mod: PurificationModuleEntity | null = null): void {
     this.player.setInputEnabled(false);
+    const actor = this.player.getSprite();
+    if (actor.y >= point.y && Math.hypot(actor.x - point.x, actor.y - point.y) < 48) {
+      this.interactionPlayerAlpha = actor.alpha; actor.setAlpha(.3);
+    }
     this.interactionWorldPoint.x = point.x;
     this.interactionWorldPoint.y = point.y;
     this.interactionModule = mod;
@@ -1094,6 +1106,11 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private restoreInteractionFocus(immediate = false): void {
+    if (this.interactionPlayerAlpha !== null) {
+      const actor = this.player.getSprite();
+      if (actor?.scene) actor.setAlpha(this.interactionPlayerAlpha);
+      this.interactionPlayerAlpha = null;
+    }
     // CameraManager handles SHUTDOWN before this scene listener. Its main camera
     // has already been removed; discard our snapshot instead of touching it.
     if (this.shuttingDown) {
@@ -1185,15 +1202,23 @@ export class PurificationScene extends Phaser.Scene {
   /** D4: Scene transition with narrative overlay + T10 radial glow. */
   private transitionToRift(): void {
     if (this.transitioning || saveManager.hasPendingSave()) return;
-    try { this.devDeparture = this.devSession?.prepareDeparture() ?? null; }
+    if (contaminantSystem.getSortieLoadout().some(item => item && !ACTIVE_CONTAMINANT_TYPES.includes(item.type))) {
+      showToastInline('行装中有已封存的旧式工具。请先将它卸下，再进入裂隙；物件仍会保留在储藏中。', {});
+      return;
+    }
+    try {
+      this.devDeparture = this.devSession?.prepareDeparture() ?? null;
+      if (!this.devSession) { installProceduralRiftRecovery(); this.productionDeparture = createProceduralDeparture(); }
+    }
     catch (reason) { showToastInline(reason instanceof Error ? reason.message : String(reason), {}); return; }
     let error: string | null = null;
     const saved = saveManager.commitWorldTransaction(() => {
       const begun = inventoryStore.beginRun(crypto.randomUUID());
       if (!begun.ok) { error = inventoryError(begun.error); return; }
       gameState.incrementCycle();
-      if (this.devDeparture?.recoveryIdentity) saveManager.recordRiftDeparture({ version: 1, runId: inventoryStore.getRun()!.id,
-        identity: this.devDeparture.recoveryIdentity, conditions: { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle() } });
+      const identity = this.devDeparture?.recoveryIdentity ?? this.productionDeparture;
+      if (identity) saveManager.recordRiftDeparture({ version: 1, runId: inventoryStore.getRun()!.id,
+        identity, conditions: { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle() } });
     });
     if (error) { this.devDeparture?.cancel(); this.devDeparture = null; showToastInline(error, {}); return; }
     if (!saved) { this.requestSaveRetry(() => this.finishRiftDeparture()); return; }
@@ -1248,8 +1273,17 @@ export class PurificationScene extends Phaser.Scene {
         this.transitionOverlay = null;
         const departure = this.devDeparture;
         this.devDeparture = null; // A synchronous scene shutdown must not cancel the handed-off run.
-        if (departure) departure.start({ modifiers, cycle, loadout });
-        else this.scene.start('RiftScene', { modifiers, cycle, loadout });
+        // Dispose owned callbacks while Phaser's scene plugins are still alive.
+        // SHUTDOWN remains a once-only fallback for menu/load transitions.
+        try {
+          const cleanupError = this.onShutdown();
+          if (cleanupError) throw cleanupError;
+          if (departure) departure.start({ modifiers, cycle, loadout });
+          else this.scene.start('RiftScene', { modifiers, cycle, loadout, recovery: this.productionDeparture ? { identity: this.productionDeparture, externalTargetIds: [] } : undefined });
+        } catch (reason) {
+          console.error(`Purification departure cleanup failed at ${this.cleanupStage}; saved departure retained`, reason);
+          this.scene.start('MainMenuScene', { recoveryError: '场景切换未完成，原出行记录已保留。' });
+        }
       });
     });
   }
@@ -1435,93 +1469,61 @@ export class PurificationScene extends Phaser.Scene {
     });
   }
 
-  private onShutdown(): void {
-    this.devDeparture?.cancel();
-    this.devDeparture = null;
-    this.devSession = null;
-    this.unsubscribeWeapon?.();
-    this.unsubscribeWeapon = null;
-    this.unsubscribeForecast?.();
-    this.unsubscribeForecast = null;
+  private onShutdown(): Error | null {
+    if (this.cleanupComplete) return null;
+    this.cleanupComplete = true;
     this.shuttingDown = true;
-    this.menuEntry?.destroy();
-    this.menuEntry = null;
-    this.transitionDelay?.remove(false);
-    this.transitionDelay = null;
-    this.transitionOverlay?.remove();
-    this.transitionOverlay = null;
-    this.restoreInteractionFocus(true);
+    const failures: string[] = [];
+    const dispose = (stage: string, action: () => void): void => {
+      this.cleanupStage = stage;
+      try { action(); } catch (reason) { failures.push(`${stage}: ${String(reason)}`); }
+    };
+    dispose('listeners', () => {
+      eventBus.off(GameEvent.ALLOCATION_CONFIRMED, this.onAllocationConfirmed);
+      eventBus.off(GameEvent.GROWTH_PURCHASED, this.onGrowthPurchased);
+      eventBus.off(GameEvent.STABILITY_CHANGED, this.onStabilityChanged);
+      this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
+    });
+    dispose('departure', () => this.devDeparture?.cancel()); this.devDeparture = null; this.devSession = null;
+    dispose('weapon-observer', () => this.unsubscribeWeapon?.()); this.unsubscribeWeapon = null;
+    dispose('forecast-observer', () => this.unsubscribeForecast?.()); this.unsubscribeForecast = null;
+    dispose('entry', () => this.menuEntry?.destroy()); this.menuEntry = null;
+    dispose('transition-delay', () => this.transitionDelay?.remove(false)); this.transitionDelay = null;
+    dispose('transition-overlay', () => this.transitionOverlay?.remove()); this.transitionOverlay = null;
+    dispose('interaction-focus', () => this.restoreInteractionFocus(true));
     if (this.coreRepairGlow) {
-      this.tweens.killTweensOf(this.coreRepairGlow);
-      this.coreRepairGlow.destroy();
-      this.coreRepairGlow = null;
+      dispose('repair-tween', () => this.tweens.killTweensOf(this.coreRepairGlow!));
+      dispose('repair-glow', () => this.coreRepairGlow?.destroy()); this.coreRepairGlow = null;
     }
-    this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
-
-    // Clean up event listeners
-    eventBus.off(GameEvent.ALLOCATION_CONFIRMED, this.onAllocationConfirmed);
-    eventBus.off(GameEvent.GROWTH_PURCHASED, this.onGrowthPurchased);
-    eventBus.off(GameEvent.STABILITY_CHANGED, this.onStabilityChanged);
-    audioManager.haltNonBgm();
-
-    // Clean up DOM panels
-    allocationPanel.close();
-    defensePanel.close();
-    growthPanel.close();
-    loadoutPanel.close();
-    inventoryPanel.close();
-    statusPanel.close();
-    impactResultPanel.destroy();
-    pauseMenu.discard();
-
-    // Clean up input keys
-    if (this.interactKey) {
-      this.input.keyboard?.removeKey(this.interactKey, true);
-      this.interactKey = null;
+    dispose('audio', () => audioManager.haltNonBgm());
+    for (const [name, close] of [
+      ['allocation', () => allocationPanel.close()], ['defense', () => defensePanel.close()],
+      ['growth', () => growthPanel.close()], ['loadout', () => loadoutPanel.close()],
+      ['inventory', () => inventoryPanel.close()], ['status', () => statusPanel.close()],
+      ['impact-result', () => impactResultPanel.destroy()], ['pause', () => pauseMenu.discard()],
+    ] as const) dispose(`panel:${name}`, close);
+    for (const key of [this.interactKey, this.escKey, this.tabKey, ...this.coreVariantKeys, ...this.entranceVariantKeys]) {
+      if (key) dispose(`input:${key.keyCode}`, () => this.input.keyboard?.removeKey(key, true));
     }
-    if (this.escKey) {
-      this.input.keyboard?.removeKey(this.escKey, true);
-      this.escKey = null;
-    }
-    if (this.tabKey) {
-      this.input.keyboard?.removeKey(this.tabKey, true);
-      this.tabKey = null;
-    }
-    for (const k of [...this.coreVariantKeys, ...this.entranceVariantKeys]) {
-      this.input.keyboard?.removeKey(k, true);
-    }
-    this.coreVariantKeys = [];
-    this.entranceVariantKeys = [];
-
-    this.groundDepthSorter = null;
-    this.repairGlowModule = null;
-
-    this.deviceCollision?.destroy();
-    this.deviceCollision = null;
-    destroyStaticCollision(this.boundaryCollider, this.boundaryBodies);
-    this.boundaryCollider = null;
-    this.boundaryBodies = null;
-
-    // Destroy systems
-    this.atmosphere.destroy();
-    this.breath.destroy();
-    this.visibility.destroy();
-    this.coreModule.destroy();
-    this.storageModule.destroy();
-    this.purifierModule.destroy();
-    this.player.destroy();
-    this.tilemapRenderer.destroy();
-    this.riftEntrance?.destroy();
-    this.riftEntrance = null;
-    this.riftEntranceGraphics?.destroy();
-    this.offeringStand?.destroy();
-    this.offeringStand = null;
-    this.defenseGraphics?.destroy();
-    this.growthConsole?.destroy();
-    this.growthConsole = null;
-    this.growthGraphics?.destroy();
-
-    // Destroy DOM HUD
-    purificationHud.destroy();
+    this.interactKey = null; this.escKey = null; this.tabKey = null;
+    this.coreVariantKeys = []; this.entranceVariantKeys = [];
+    this.groundDepthSorter = null; this.repairGlowModule = null;
+    dispose('device-collision', () => this.deviceCollision?.destroy()); this.deviceCollision = null;
+    dispose('boundary-collision', () => destroyStaticCollision(this.boundaryCollider, this.boundaryBodies));
+    this.boundaryCollider = null; this.boundaryBodies = null;
+    for (const [name, resource] of [
+      ['atmosphere', this.atmosphere], ['breath', this.breath], ['visibility', this.visibility],
+      ['core', this.coreModule], ['storage', this.storageModule], ['purifier', this.purifierModule],
+      ['player', this.player], ['tilemap', this.tilemapRenderer], ['entrance', this.riftEntrance],
+      ['entrance-graphics', this.riftEntranceGraphics], ['offering', this.offeringStand],
+      ['defense-graphics', this.defenseGraphics], ['growth', this.growthConsole], ['growth-graphics', this.growthGraphics],
+    ] as const) dispose(`world:${name}`, () => resource?.destroy());
+    this.riftEntrance = null; this.offeringStand = null; this.growthConsole = null;
+    dispose('hud', () => purificationHud.destroy());
+    this.cleanupStage = failures.length ? failures.join('; ') : 'complete';
+    if (!failures.length) return null;
+    const error = new Error(`Purification cleanup: ${this.cleanupStage}`);
+    console.error(error);
+    return error;
   }
 }

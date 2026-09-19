@@ -2,10 +2,9 @@ import { inventoryStore } from '@/systems/inventory-store';
 /**
  * In-game Esc record menu.
  *
- * Opens over the current scene without leaving it. Three intents:
- *   - 新的纪录 — wipe and start a new record (exits the rift if that is where we are)
- *   - 沿旧路返回 — load the stored record (same: exits the rift)
- *   - 合上 — dismiss; the current scene resumes, nothing happened
+ * Opens over the current scene without leaving it. At base: new record,
+ * load the saved record, or close and resume. During a recoverable outing:
+ * resume this run, or explicitly confirm abandonment and its item loss.
  *
  * A frameless menu over the current scene. Esc on the root list closes;
  * Esc on the overwrite guard returns to
@@ -104,7 +103,7 @@ function buildRootItems(): void {
   }
   items = [{ label: t('menu.newSave'), action: onNewSave }];
   if (hasReadableSave()) {
-    items.push({ label: t('menu.continue'), action: onLoadSave });
+    items.push({ label: '载入已保存的记录', action: onLoadSave });
   }
   items.push({ label: t('menu.resume'), action: () => pauseMenu.close() });
   selectedIndex = items.length - 1;
@@ -113,7 +112,7 @@ function buildRootItems(): void {
 function buildOverwriteItems(): void {
   items = [
     { label: t('menu.overwriteClear'), action: () => leaveForSession(beginNewExpedition) },
-    { label: t('menu.continue'), action: onLoadSave },
+    { label: '载入已保存的记录', action: onLoadSave },
   ];
   selectedIndex = 1;
 }

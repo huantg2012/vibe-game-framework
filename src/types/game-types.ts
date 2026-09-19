@@ -172,6 +172,8 @@ export interface TideState {
   cycleInPhase: number;
   /** Current impact intensity multiplier */
   currentIntensity: number;
+  /** Whether all modules stayed above zero throughout the current Crest. Old saves omit it. */
+  crestIntact?: boolean;
 }
 
 /**

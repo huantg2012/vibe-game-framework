@@ -1,0 +1,117 @@
+{
+  "method": "Actual active checkpoint copied unchanged except explicit bad identity; additional bad-base counterexample. Confirmation and write refusal via real keyboard. Storage transport fault only.",
+  "checks": [
+    "cancel preserves exact bytes",
+    "rejected abandon write preserves exact bytes",
+    "explicit retry returns original base with growth/stash",
+    "settlement applies once across reload",
+    "invalid base not salvageable and original bytes retained"
+  ],
+  "rescued": {
+    "version": 2,
+    "kindlingReserve": 0,
+    "repairBonusHp": 0,
+    "pendingSideEffects": [],
+    "upgradeDiscount": 0,
+    "moduleSwapActive": false,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 70,
+        "maxHp": 100
+      }
+    ],
+    "moduleMaxHpTier": 0,
+    "cycle": 1,
+    "tide": {
+      "tideNumber": 1,
+      "phase": "rise",
+      "cycleInPhase": 1,
+      "currentIntensity": 1.2
+    },
+    "inventory": {
+      "version": 2,
+      "items": [
+        {
+          "kind": "weapon",
+          "id": "WPN_replacement:e896038c-3f23-4ad5-b548-6f9a00e562d3",
+          "weapon": {
+            "id": "WPN_replacement:e896038c-3f23-4ad5-b548-6f9a00e562d3",
+            "definitionId": "crowbar_plain",
+            "stage": "tool",
+            "impactCharges": 3,
+            "usesRemaining": 60
+          },
+          "location": {
+            "kind": "carried"
+          }
+        }
+      ],
+      "equipment": {
+        "weaponId": "WPN_replacement:e896038c-3f23-4ad5-b548-6f9a00e562d3",
+        "toolIds": [],
+        "defenseIds": []
+      },
+      "run": {
+        "id": "e896038c-3f23-4ad5-b548-6f9a00e562d3",
+        "status": "settled",
+        "carriedOutIds": [
+          "WPN_a14cb2e8-088c-484f-ba0d-28ebe90ae784"
+        ],
+        "revealedNodes": {},
+        "destroyedIds": [],
+        "outcome": "abandon",
+        "returnedIds": [],
+        "kindlingGained": 0,
+        "baseSettled": true
+      },
+      "starterGranted": true,
+      "firstWeaponDiscovered": false
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 0,
+      "reached": false
+    },
+    "contaminantRuntimeState": {},
+    "impactForecast": {
+      "version": 1,
+      "targetId": "STORAGE",
+      "committed": false,
+      "consumed": false,
+      "earnedPending": false,
+      "display": {
+        "targetId": "STORAGE",
+        "severity": "light"
+      },
+      "lookahead": null,
+      "queuedTargets": [],
+      "nextIntensity": 1,
+      "nextNextIntensity": 1.2
+    }
+  },
+  "rescuedBytes": "{\"version\":2,\"kindlingReserve\":0,\"repairBonusHp\":0,\"pendingSideEffects\":[],\"upgradeDiscount\":0,\"moduleSwapActive\":false,\"modules\":[{\"id\":\"CORE\",\"type\":\"CORE\",\"hp\":70,\"maxHp\":100},{\"id\":\"STORAGE\",\"type\":\"STORAGE\",\"hp\":70,\"maxHp\":100},{\"id\":\"PURIFIER\",\"type\":\"PURIFIER\",\"hp\":70,\"maxHp\":100}],\"moduleMaxHpTier\":0,\"cycle\":1,\"tide\":{\"tideNumber\":1,\"phase\":\"rise\",\"cycleInPhase\":1,\"currentIntensity\":1.2},\"inventory\":{\"version\":2,\"items\":[{\"kind\":\"weapon\",\"id\":\"WPN_replacement:e896038c-3f23-4ad5-b548-6f9a00e562d3\",\"weapon\":{\"id\":\"WPN_replacement:e896038c-3f23-4ad5-b548-6f9a00e562d3\",\"definitionId\":\"crowbar_plain\",\"stage\":\"tool\",\"impactCharges\":3,\"usesRemaining\":60},\"location\":{\"kind\":\"carried\"}}],\"equipment\":{\"weaponId\":\"WPN_replacement:e896038c-3f23-4ad5-b548-6f9a00e562d3\",\"toolIds\":[],\"defenseIds\":[]},\"run\":{\"id\":\"e896038c-3f23-4ad5-b548-6f9a00e562d3\",\"status\":\"settled\",\"carriedOutIds\":[\"WPN_a14cb2e8-088c-484f-ba0d-28ebe90ae784\"],\"revealedNodes\":{},\"destroyedIds\":[],\"outcome\":\"abandon\",\"returnedIds\":[],\"kindlingGained\":0,\"baseSettled\":true},\"starterGranted\":true,\"firstWeaponDiscovered\":false},\"growth\":{\"upgrades\":{\"growth_chaos_resist\":0,\"growth_kindling_affinity\":0,\"growth_vitality\":0,\"growth_sortie_slot\":0,\"growth_defense_slot\":0,\"growth_forecast_clarity\":0}},\"stability\":{\"progress\":0,\"reached\":false},\"contaminantRuntimeState\":{},\"impactForecast\":{\"version\":1,\"targetId\":\"STORAGE\",\"committed\":false,\"consumed\":false,\"earnedPending\":false,\"display\":{\"targetId\":\"STORAGE\",\"severity\":\"light\"},\"lookahead\":null,\"queuedTargets\":[],\"nextIntensity\":1,\"nextNextIntensity\":1.2}}",
+  "errors": []
+}

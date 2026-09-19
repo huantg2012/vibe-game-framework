@@ -206,6 +206,7 @@ function ensureCoreLightTextures(scene: Phaser.Scene): void {
 
 export class PurificationModuleEntity {
   private graphics!: Phaser.GameObjects.Graphics;
+  private footing!: Phaser.GameObjects.Graphics;
   private hpBarBg!: Phaser.GameObjects.Graphics;
   private hpBarFill!: Phaser.GameObjects.Graphics;
   private indicatorLight!: Phaser.GameObjects.Graphics;
@@ -268,6 +269,7 @@ export class PurificationModuleEntity {
 
   /** All surface light stays with this body; ground pools and readouts have separate bands. */
   setGroundDepth(base: number, floorDepth: number, readoutDepth: number): void {
+    this.footing.setDepth(floorDepth - 0.1);
     this.graphics.setDepth(base);
     for (const sprite of [this.coreSprite, this.purifierSprite, this.storageSprite]) sprite?.setDepth(base);
     this.indicatorLight.setDepth(base + 0.1);
@@ -281,6 +283,7 @@ export class PurificationModuleEntity {
   create(scene: Phaser.Scene): void {
     this.scene = scene;
     const depth = 20;
+    this.footing = scene.add.graphics().setDepth(1);
 
     // Module shape
     this.graphics = scene.add.graphics();
@@ -599,6 +602,7 @@ export class PurificationModuleEntity {
     this.blinkTimer?.remove();
     this.blinkTimer = undefined;
     this.graphics?.destroy();
+    this.footing?.destroy();
     this.hpBarBg?.destroy();
     this.hpBarFill?.destroy();
     this.indicatorLight?.destroy();
@@ -663,6 +667,7 @@ export class PurificationModuleEntity {
     }
 
     this.graphics.clear();
+    this.drawFooting();
 
     if (type === 'CORE') {
       if (this.coreSprite) {
@@ -743,6 +748,31 @@ export class PurificationModuleEntity {
    * T6: 三态视觉中"框架"部分——受损时画裂缝线，严重受损时裂缝加宽并叠加边缘 teal 渗入点。
    * 健康状态不绘制任何附加物。指示灯部分见 drawIndicator()/setupIndicatorBlink()。
    */
+  /** Embedded anchors and maintenance seams continue into the same concrete.
+   * Wear follows the actual module's health; these marks do not add collision,
+   * indicate loot, or replace the approved body/sprite. */
+  private drawFooting(): void {
+    const g = this.footing;
+    const { x, y, type } = this.config;
+    const span = type === 'PURIFIER' ? 18 : type === 'STORAGE' ? 13 : 16;
+    g.clear();
+    g.fillStyle(0x151a1e, 0.6);
+    g.fillRect(x - span, y + 3, span * 2, 2);
+    g.fillRect(x - span + 3, y + 5, span * 2 - 8, 1);
+    g.fillStyle(0x3a3d42, 0.7);
+    g.fillRect(x - span - 2, y + 1, 3, 2);
+    g.fillRect(x + span - 1, y + 2, 3, 2);
+    if (this.healthState === 'healthy') return;
+    g.fillStyle(0x151a1e, 0.9);
+    g.fillRect(x + span - 2, y + 5, 5, 1);
+    g.fillRect(x + span + 2, y + 6, 1, 3);
+    g.fillRect(x - span - 3, y + 4, 2, 1);
+    if (this.healthState !== 'critical') return;
+    g.fillStyle(0x0e4a3f, 0.75);
+    g.fillRect(x + span + 1, y + 7, 2, 2);
+    g.fillRect(x + span + 2, y + 9, 4, 1);
+  }
+
   private drawDamageDecoration(size: number): void {
     if (this.healthState === 'healthy') return;
 

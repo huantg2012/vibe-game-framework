@@ -1,0 +1,9 @@
+import fs from 'node:fs';
+import sharp from 'sharp';
+import {generateRiftLayout} from '@/generation/rift-layout';
+import {bakeGround,compositeStaticPaint,LIVE_PAINT_PX_PER_TILE} from '@/generation/preview-paint';
+const seed=3036342668;const layout=generateRiftLayout(seed);const ground=bakeGround(layout.ruins,LIVE_PAINT_PX_PER_TILE);const work=new Float32Array(ground.raw.length),rgba=new Uint8Array(ground.width*ground.height*4);compositeStaticPaint(ground,work,rgba);
+const cells=[];const T=ground.tileSize;for(let i=0;i<ground.roles.length;i++){if(!['vegetation','organic'].includes(ground.roles[i]!))continue;const col=i%layout.tileMap.cols,row=Math.floor(i/layout.tileMap.cols);const colors=new Map<string,number>();for(let y=row*T;y<(row+1)*T;y++)for(let x=col*T;x<(col+1)*T;x++){const n=(y*ground.width+x)*4;const rgb=Array.from(rgba.subarray(n,n+3)).join(',');colors.set(rgb,(colors.get(rgb)??0)+1);}cells.push({col,row,role:ground.roles[i],tile:layout.tileMap.tiles[row]![col],colors:[...colors.entries()].sort((a,b)=>b[1]-a[1]).slice(0,4)});}
+const out='docs/qa/artifacts/game-wide-review-2026-09-18/tech';await sharp(rgba,{raw:{width:ground.width,height:ground.height,channels:4}}).png().toFile(out+'/ground-origin-baked.png');
+const counts:Record<string,number>={};for(const row of layout.tileMap.tiles)for(const tile of row)counts[tile]=(counts[tile]??0)+1;
+const result={seed,fragmentTypeId:layout.fragmentTypeId,recipeId:layout.recipeId,width:ground.width,height:ground.height,tileCounts:counts,cells,scope:'Same-source production bake without visibility/player/light; reproduces role coloration, not the exact art screenshot seed.'};fs.writeFileSync(out+'/ground-origin.json',JSON.stringify(result,null,2));console.log(JSON.stringify({seed,cells:cells.length,tileCounts:counts,first:cells.slice(0,3)}));

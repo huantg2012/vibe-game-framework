@@ -162,7 +162,7 @@ check('fresh muffle restores the initial unpublished hearing state, then the sam
   const f = prepareTools(['muffle']); assert.equal(f.hearing, false);
   compareToolContinuation(f, [current => current.system.update(16), current => { assert(current.system.notifyProximityAvoid()); }]);
 });
-check('invalid Tool state leaves a valid runtime untouched; unsupported families cannot silently snapshot', () => {
+check('invalid Tool state leaves runtime untouched; current families recover while retired effects refuse', () => {
   const f = prepareTools(['stitch']); assert(f.system.useSlot(0)); const saved = f.system.exportRuntimeState();
   const bad = json(saved) as unknown as { stitches: { pointA: { x: number } }[] };
   bad.stitches[0]!.pointA.x = NaN;
@@ -170,7 +170,10 @@ check('invalid Tool state leaves a valid runtime untouched; unsupported families
   assert.deepEqual(f.system.exportRuntimeState(), saved);
   const fork = json(saved) as ToolRuntimeState; (fork.stitches[0]!.pointA as Vector2).x = 999;
   assert.notDeepEqual(f.system.exportRuntimeState(), fork, 'exported coordinates are detached'); f.system.destroy();
-  const other = prepareTools(['solidify']); assert.throws(() => other.system.exportRuntimeState(), /supports/); other.system.destroy();
+  const other = prepareTools(['solidify']); assert(other.system.validateRuntimeState(other.system.exportRuntimeState()));
+  // Current solidify is supported by I27; a still-running retired resonance cannot be silently lost.
+  Object.assign(other.system, { resonatePendingPoint: { x: 0, y: 0 } });
+  assert.throws(() => other.system.exportRuntimeState(), /Retired/); other.system.destroy();
 });
 
 check('chaos restores thresholds/chase cooldowns/temp reductions/last projection and advances by simulation time alone', () => {
@@ -291,6 +294,14 @@ check('trail and minimap retain exploration/extraction information without advan
   const b = new TrailSystem(); b.create(scene as never, 3, 32, () => 1); b.restoreRuntimeState(saved);
   assert.deepEqual(b.exportRuntimeState(), saved); a.update(2, 2, 30, 80); b.update(2, 2, 30, 80);
   assert.deepEqual(b.exportRuntimeState(), a.exportRuntimeState()); a.destroy(); b.destroy();
+  // Phaser reuses the same Scene and its owned TrailSystem between sorties.
+  a.create(scene as never, 3, 32, () => 1);
+  assert.equal(a.exportRuntimeState().elapsedMs, 0);
+  assert.deepEqual(a.exportRuntimeState().visited, []);
+  a.update(1, 1, 0, 16);
+  assert.equal(a.exportRuntimeState().elapsedMs, 16, 'a new sortie must not retain its predecessor clock');
+  assert.equal(a.exportRuntimeState().visited[0]?.atMs, 16);
+  a.destroy();
   const map = () => {
     const m = new Minimap(); Object.assign(m, { mapWidth: 3, mapHeight: 3, tileSize: 32,
       extractionTile: { x: 1, y: 1 }, explored: new Uint8Array(9) }); return m;

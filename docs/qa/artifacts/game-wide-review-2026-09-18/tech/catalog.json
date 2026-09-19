@@ -1,0 +1,967 @@
+{
+  "weapons": [
+    {
+      "id": "crowbar_plain",
+      "name": "普通撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "ordinary",
+      "qualityName": "普通",
+      "qualityRank": 1,
+      "variant": "standard",
+      "offeringCharges": 3,
+      "maxUses": 60,
+      "weight": 30,
+      "damageMin": 22,
+      "damageMax": 28,
+      "damage": 25,
+      "pollutionResistance": 0,
+      "visualKey": "plain_iron"
+    },
+    {
+      "id": "crowbar_good_standard",
+      "name": "优良撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "good",
+      "qualityName": "优良",
+      "qualityRank": 2,
+      "variant": "standard",
+      "offeringCharges": 3,
+      "maxUses": 75,
+      "weight": 30,
+      "damageMin": 29,
+      "damageMax": 35,
+      "damage": 32,
+      "pollutionResistance": 2,
+      "visualKey": "good_standard"
+    },
+    {
+      "id": "crowbar_good_light",
+      "name": "优良轻型撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "good",
+      "qualityName": "优良",
+      "qualityRank": 2,
+      "variant": "light",
+      "offeringCharges": 3,
+      "maxUses": 75,
+      "weight": 27,
+      "damageMin": 29,
+      "damageMax": 35,
+      "damage": 32,
+      "pollutionResistance": 0,
+      "visualKey": "good_light"
+    },
+    {
+      "id": "crowbar_good_resistant",
+      "name": "优良抗污撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "good",
+      "qualityName": "优良",
+      "qualityRank": 2,
+      "variant": "resistant",
+      "offeringCharges": 3,
+      "maxUses": 75,
+      "weight": 33,
+      "damageMin": 29,
+      "damageMax": 35,
+      "damage": 32,
+      "pollutionResistance": 4,
+      "visualKey": "good_resistant"
+    },
+    {
+      "id": "crowbar_fine_standard",
+      "name": "精良撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "fine",
+      "qualityName": "精良",
+      "qualityRank": 3,
+      "variant": "standard",
+      "offeringCharges": 3,
+      "maxUses": 90,
+      "weight": 30,
+      "damageMin": 36,
+      "damageMax": 44,
+      "damage": 40,
+      "pollutionResistance": 2,
+      "visualKey": "fine_standard"
+    },
+    {
+      "id": "crowbar_fine_light",
+      "name": "精良轻型撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "fine",
+      "qualityName": "精良",
+      "qualityRank": 3,
+      "variant": "light",
+      "offeringCharges": 3,
+      "maxUses": 90,
+      "weight": 27,
+      "damageMin": 36,
+      "damageMax": 44,
+      "damage": 40,
+      "pollutionResistance": 0,
+      "visualKey": "fine_light"
+    },
+    {
+      "id": "crowbar_fine_resistant",
+      "name": "精良抗污撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "fine",
+      "qualityName": "精良",
+      "qualityRank": 3,
+      "variant": "resistant",
+      "offeringCharges": 3,
+      "maxUses": 90,
+      "weight": 33,
+      "damageMin": 36,
+      "damageMax": 44,
+      "damage": 40,
+      "pollutionResistance": 4,
+      "visualKey": "fine_resistant"
+    },
+    {
+      "id": "crowbar_excellent_standard",
+      "name": "卓越撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "excellent",
+      "qualityName": "卓越",
+      "qualityRank": 4,
+      "variant": "standard",
+      "offeringCharges": 3,
+      "maxUses": 110,
+      "weight": 30,
+      "damageMin": 46,
+      "damageMax": 56,
+      "damage": 51,
+      "pollutionResistance": 2,
+      "visualKey": "excellent_standard"
+    },
+    {
+      "id": "crowbar_excellent_light",
+      "name": "卓越轻型撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "excellent",
+      "qualityName": "卓越",
+      "qualityRank": 4,
+      "variant": "light",
+      "offeringCharges": 3,
+      "maxUses": 110,
+      "weight": 27,
+      "damageMin": 46,
+      "damageMax": 56,
+      "damage": 51,
+      "pollutionResistance": 0,
+      "visualKey": "excellent_light"
+    },
+    {
+      "id": "crowbar_excellent_resistant",
+      "name": "卓越抗污撬棍",
+      "type": "crowbar",
+      "profileId": "crowbar",
+      "quality": "excellent",
+      "qualityName": "卓越",
+      "qualityRank": 4,
+      "variant": "resistant",
+      "offeringCharges": 3,
+      "maxUses": 110,
+      "weight": 33,
+      "damageMin": 46,
+      "damageMax": 56,
+      "damage": 51,
+      "pollutionResistance": 4,
+      "visualKey": "excellent_resistant"
+    }
+  ],
+  "families": [
+    {
+      "type": "solidify",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "solidify",
+      "rarity": "common",
+      "displayNameDefense": "凝滞的石块",
+      "descriptionDefense": "凝滞的石块将冲击的一部分留在停滞裂面里，减伤35%，无额外副作用。",
+      "summaryDefense": "减伤35%。",
+      "defenseCategory": "纯减伤",
+      "defenseReduction": 0.35,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "凝滞的石块",
+      "descriptionTool": "使视野内无遮挡的最近地面实体停滞4秒，阻止移动、感知与攻击。受到伤害后提前解除；重新出手须完整预兆。不作用于占漆或占空场域。",
+      "summaryTool": "停滞4秒，受伤解除。",
+      "toolType": "active",
+      "toolUses": 5,
+      "toolRangePx": 0,
+      "toolDurationMs": 4000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "冰冷的结块，裂面里滞留着尚未落下的尘埃。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 5
+        },
+        {
+          "quality": "good",
+          "uses": 6
+        },
+        {
+          "quality": "fine",
+          "uses": 7
+        },
+        {
+          "quality": "excellent",
+          "uses": 8
+        }
+      ]
+    },
+    {
+      "type": "scatter",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "scatter",
+      "rarity": "common",
+      "displayNameDefense": "重影碎片",
+      "descriptionDefense": "将集中冲击分散到全部模块，总伤害不减少，脆弱模块也可能受伤。",
+      "summaryDefense": "冲击均摊至全部模块。",
+      "defenseCategory": "纯减伤",
+      "defenseReduction": 0,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "重影碎片",
+      "descriptionTool": "被动生效。当敌人新一次开始怀疑你的存在时，感知填充速度降低30%。同一怀疑事件只消耗一次。",
+      "summaryTool": "被动。新怀疑填充减速30%。",
+      "toolType": "passive",
+      "toolUses": 5,
+      "toolRangePx": 0,
+      "toolDurationMs": 15000,
+      "toolDetectionFillMult": 0.7,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "薄片的边缘总比自身慢半拍，像一件没有合拢的遗物。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 5
+        },
+        {
+          "quality": "good",
+          "uses": 6
+        },
+        {
+          "quality": "fine",
+          "uses": 7
+        },
+        {
+          "quality": "excellent",
+          "uses": 8
+        }
+      ]
+    },
+    {
+      "type": "retrograde",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "retrograde",
+      "rarity": "common",
+      "displayNameDefense": "记忆碎片",
+      "descriptionDefense": "减伤15%。每次在供奉中承受冲击后，记下下一轮准确目标与强度；取下或成熟后本次记录仍有效。",
+      "summaryDefense": "减伤15%，归来记下预告。",
+      "defenseCategory": "加速/催化",
+      "defenseReduction": 0.15,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "记忆碎片",
+      "descriptionTool": "被动生效。新一轮追击中，敌人离开你的视线后，在最后看见的位置留下6秒残影。同一轮追击只消耗一次；不追踪视野外的实时位置。",
+      "summaryTool": "被动。失去视线时保留最后位置6秒。",
+      "toolType": "passive",
+      "toolUses": 5,
+      "toolRangePx": 0,
+      "toolDurationMs": 6000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "刻痕从旧碎片的背面浮起，记着尚未彻底离开的东西。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 5
+        },
+        {
+          "quality": "good",
+          "uses": 6
+        },
+        {
+          "quality": "fine",
+          "uses": 7
+        },
+        {
+          "quality": "excellent",
+          "uses": 8
+        }
+      ]
+    },
+    {
+      "type": "delay",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "delay",
+      "rarity": "fine",
+      "displayNameDefense": "不落的砂砾",
+      "descriptionDefense": "悬住的砂粒承接冲击，稳定减伤30%。",
+      "summaryDefense": "减伤30%。",
+      "defenseCategory": "纯减伤",
+      "defenseReduction": 0.3,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "不落的砂砾",
+      "descriptionTool": "推迟视野内无遮挡且尚未释放的最近气团、雾团或尘絮群的下一次释放5秒。距离4格以内；不作用于已释放危险或持续占漆。没有合法目标不消耗。",
+      "summaryTool": "推迟尚未释放的危险5秒。",
+      "toolType": "active",
+      "toolUses": 4,
+      "toolRangePx": 128,
+      "toolDurationMs": 5000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "破口里漏出的砂粒迟迟不落，每一颗都悬着一小段未完的时间。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 4
+        },
+        {
+          "quality": "good",
+          "uses": 5
+        },
+        {
+          "quality": "fine",
+          "uses": 6
+        },
+        {
+          "quality": "excellent",
+          "uses": 7
+        }
+      ]
+    },
+    {
+      "type": "siphon",
+      "active": true,
+      "toolResistanceBonus": 20,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 6,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "siphon",
+      "rarity": "fine",
+      "displayNameDefense": "附着的空壳",
+      "descriptionDefense": "减伤15%。在供奉中实际承受冲击后，下一次有效注入额外修复最多6点完整度。额度不累积，取下或成熟后仍有效。",
+      "summaryDefense": "减伤15%，承压后助修6点。",
+      "defenseCategory": "模块增益",
+      "defenseReduction": 0.15,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "附着的空壳",
+      "descriptionTool": "被动。真实受伤后增加20点污染抗性，持续8秒，与装备抗性叠加至现有上限。生效期间再次受伤不重复消耗，不回血，也不消除已经积累的混乱。",
+      "summaryTool": "受伤后抗污+20，持续8秒。",
+      "toolType": "passive",
+      "toolUses": 5,
+      "toolRangePx": 0,
+      "toolDurationMs": 8000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "壳片向内抱住空洞，像还在保护一具早已不在的身体。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 5
+        },
+        {
+          "quality": "good",
+          "uses": 6
+        },
+        {
+          "quality": "fine",
+          "uses": 7
+        },
+        {
+          "quality": "excellent",
+          "uses": 8
+        }
+      ]
+    },
+    {
+      "type": "expand",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "expand",
+      "rarity": "fine",
+      "displayNameDefense": "带缺口的石头",
+      "descriptionDefense": "缺口令40%冲击失去着力点，稳定减伤40%，不扣稳定度。",
+      "summaryDefense": "减伤40%。",
+      "defenseCategory": "伤害转化",
+      "defenseReduction": 0.4,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "带缺口的石头",
+      "descriptionTool": "向面朝方向越过一格薄墙，抵达全身可站立的安全位置后实体化1秒。不能穿厚墙、虚空或边界；没有合法落点不消耗。",
+      "summaryTool": "越过薄墙，实体化1秒。",
+      "toolType": "active",
+      "toolUses": 3,
+      "toolRangePx": 96,
+      "toolDurationMs": 1000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "缺口穿过石心，隔着它看去，近处与远处偶尔重合。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 3
+        },
+        {
+          "quality": "good",
+          "uses": 4
+        },
+        {
+          "quality": "fine",
+          "uses": 5
+        },
+        {
+          "quality": "excellent",
+          "uses": 6
+        }
+      ]
+    },
+    {
+      "type": "muffle",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "muffle",
+      "rarity": "common",
+      "displayNameDefense": "消声的旧布",
+      "descriptionDefense": "声响消失在折布内，吸收30%冲击，不改变后续出击。",
+      "summaryDefense": "减伤30%。",
+      "defenseCategory": "纯减伤",
+      "defenseReduction": 0.3,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "消声的旧布",
+      "descriptionTool": "压住能够引起敌人听觉发现的声音，不屏蔽视觉或接触危险。连续听觉遭遇消耗1次；最后一份效果完整维持，连续1.5秒无有效听觉信号后结束。",
+      "summaryTool": "压住听觉，遭遇扣次。",
+      "toolType": "passive",
+      "toolUses": 5,
+      "toolRangePx": 0,
+      "toolDurationMs": 1500,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "布褶深处积着灰，揉动时听不见纤维摩擦的声音。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 5
+        },
+        {
+          "quality": "good",
+          "uses": 6
+        },
+        {
+          "quality": "fine",
+          "uses": 7
+        },
+        {
+          "quality": "excellent",
+          "uses": 8
+        }
+      ]
+    },
+    {
+      "type": "kindle",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "kindle",
+      "rarity": "common",
+      "displayNameDefense": "回声空壳",
+      "descriptionDefense": "减伤20%。壳内回声让自身每轮供奉积累翻倍，不加下次出击混乱。",
+      "summaryDefense": "减伤20%，积累翻倍。",
+      "defenseCategory": "加速/催化",
+      "defenseReduction": 0.2,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 2,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "回声空壳",
+      "descriptionTool": "向面朝方向的合法位置抛出回声空壳，持续6秒发出可被96像素范围内敌人听见的声音。不会造成伤害，也可能引来其他威胁。",
+      "summaryTool": "抛出声音诱饵6秒。",
+      "toolType": "active",
+      "toolUses": 5,
+      "toolRangePx": 96,
+      "toolDurationMs": 6000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 96,
+      "toolPulseIntervalMs": 1000,
+      "narrativeOrigin": "壳口里没有活物，却会重复它曾经收进去的声响。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 5
+        },
+        {
+          "quality": "good",
+          "uses": 6
+        },
+        {
+          "quality": "fine",
+          "uses": 7
+        },
+        {
+          "quality": "excellent",
+          "uses": 8
+        }
+      ]
+    },
+    {
+      "type": "stitch",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 1500,
+      "toolPlacementDistancePx": 32,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 4,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "stitch",
+      "rarity": "common",
+      "displayNameDefense": "打结的细线",
+      "descriptionDefense": "减伤20%，再将主要受冲击模块最多4点伤害转给余血最多的另一模块。接收方至少保留1点完整度，没有安全接收者时不转移。",
+      "summaryDefense": "减伤20%，转移至多4点。",
+      "defenseCategory": "伤害分担",
+      "defenseReduction": 0.2,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "打结的细线",
+      "descriptionTool": "在面前1格处横铺2格长的打结的细线，持续10秒。每个地面实体首次跨线时止步1.5秒，仍可感知和攻击。不跨墙或虚空，无法铺成完整线段时不消耗。",
+      "summaryTool": "横铺短线，跨线止步。",
+      "toolType": "active",
+      "toolUses": 4,
+      "toolRangePx": 64,
+      "toolDurationMs": 10000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "旧线结的两端接不到同一处，拉紧时却会让附近的地面绷住。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 4
+        },
+        {
+          "quality": "good",
+          "uses": 5
+        },
+        {
+          "quality": "fine",
+          "uses": 6
+        },
+        {
+          "quality": "excellent",
+          "uses": 7
+        }
+      ]
+    },
+    {
+      "type": "compress",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 0.5,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0.5,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "compress",
+      "rarity": "fine",
+      "displayNameDefense": "沉重的石块",
+      "descriptionDefense": "承住冲击最集中的一股，使主要模块受到的伤害减少50%。不减轻其他模块的余波。",
+      "summaryDefense": "主要模块减伤50%。",
+      "defenseCategory": "定点保护",
+      "defenseReduction": 0,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "沉重的石块",
+      "descriptionTool": "在脚下留下半径2格的沉重区域，持续6秒。区域内地面实体移速降低50%，离开即恢复；不改变方向、感知或攻击，场域本身不受影响。",
+      "summaryTool": "脚下重区，敌移速减半。",
+      "toolType": "active",
+      "toolUses": 4,
+      "toolRangePx": 64,
+      "toolDurationMs": 6000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "断面朝下坠着，放到地上以后，附近的脚步也像被它攥住。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 4
+        },
+        {
+          "quality": "good",
+          "uses": 5
+        },
+        {
+          "quality": "fine",
+          "uses": 6
+        },
+        {
+          "quality": "excellent",
+          "uses": 7
+        }
+      ]
+    },
+    {
+      "type": "mirror",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "mirror",
+      "rarity": "fine",
+      "displayNameDefense": "留影玻璃",
+      "descriptionDefense": "减伤25%，非主要目标承受的余波再减少25%。不返还薪柴或误导预告。",
+      "summaryDefense": "减伤25%，削弱余波。",
+      "defenseCategory": "经济收益",
+      "defenseReduction": 0.25,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0.25,
+      "defenseHealRatio": 0,
+      "displayNameTool": "留影玻璃",
+      "descriptionTool": "在原地留下一具持续8秒的视觉诱饵。只有能实际看见它的敌人才可能被吸引；不会抹去敌人已经确认的目标。",
+      "summaryTool": "留下视觉诱饵8秒。",
+      "toolType": "active",
+      "toolUses": 4,
+      "toolRangePx": 0,
+      "toolDurationMs": 8000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "旧玻璃留下的不是面容，而是刚刚站过的位置。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 4
+        },
+        {
+          "quality": "good",
+          "uses": 5
+        },
+        {
+          "quality": "fine",
+          "uses": 6
+        },
+        {
+          "quality": "excellent",
+          "uses": 7
+        }
+      ]
+    },
+    {
+      "type": "abyss",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0.4,
+      "defenseLowHpReduction": 0.5,
+      "id": "abyss",
+      "rarity": "rare",
+      "displayNameDefense": "映出别处的珠子",
+      "descriptionDefense": "各模块减伤20%；冲击前完整度不高于40%的模块改为减伤50%。不伤害其他模块。",
+      "summaryDefense": "减伤20%，濒危时50%。",
+      "defenseCategory": "危急保护",
+      "defenseReduction": 0.2,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0,
+      "displayNameTool": "映出别处的珠子",
+      "descriptionTool": "在6格以内沿可通行空间回探，短暂标记实体、环境危险核心及未翻找堆的位置，保留6秒。只记录施放瞬间，不显示内容物或实时追踪，不越过封闭墙体探知另一侧。",
+      "summaryTool": "近处位置快照，保留6秒。",
+      "toolType": "active",
+      "toolUses": 3,
+      "toolRangePx": 192,
+      "toolDurationMs": 6000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "珠子背面的黑始终朝向你，藏在黑里的微光却映着别处。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 3
+        },
+        {
+          "quality": "good",
+          "uses": 4
+        },
+        {
+          "quality": "fine",
+          "uses": 5
+        },
+        {
+          "quality": "excellent",
+          "uses": 6
+        }
+      ]
+    },
+    {
+      "type": "combust",
+      "active": true,
+      "toolResistanceBonus": 0,
+      "toolStopMs": 0,
+      "toolPlacementDistancePx": 0,
+      "toolMovementMult": 1,
+      "defenseRepairBonusHp": 0,
+      "defenseTransferCap": 0,
+      "defensePrimaryReduction": 0,
+      "defenseLowHpThreshold": 0,
+      "defenseLowHpReduction": 0,
+      "id": "combust",
+      "rarity": "rare",
+      "displayNameDefense": "冷却的余烬",
+      "descriptionDefense": "减伤25%。每轮将本次实际承伤的20%用于修复最低完整度模块；没有承伤不产生修复，不增加下次出击混乱。",
+      "summaryDefense": "减伤25%，承伤转修复。",
+      "defenseCategory": "伤害转化",
+      "defenseReduction": 0.25,
+      "defenseSideEffect": "无",
+      "sideEffectDuration": "无",
+      "defenseChargeMult": 1,
+      "defenseSecondaryReduction": 0,
+      "defenseHealRatio": 0.2,
+      "displayNameTool": "冷却的余烬",
+      "descriptionTool": "压住4格内可见且无遮挡的最近活动污染源5秒。气团、雾团、尘絮群的各活动阶段及持续占漆均可作用；已受压制或暂缓的目标不能重复使用。实体仍可攻击；没有合法目标不消耗。",
+      "summaryTool": "压住活动污染源5秒。",
+      "toolType": "active",
+      "toolUses": 3,
+      "toolRangePx": 128,
+      "toolDurationMs": 5000,
+      "toolDetectionFillMult": 1,
+      "toolThrowDistancePx": 0,
+      "toolPulseIntervalMs": 0,
+      "narrativeOrigin": "余烬早已冷透，暗缝仍缓慢吞下周围躁动的微光。",
+      "qualities": [
+        {
+          "quality": "ordinary",
+          "uses": 3
+        },
+        {
+          "quality": "good",
+          "uses": 4
+        },
+        {
+          "quality": "fine",
+          "uses": 5
+        },
+        {
+          "quality": "excellent",
+          "uses": 6
+        }
+      ]
+    }
+  ],
+  "upgrades": {
+    "growth_chaos_resist": {
+      "id": "growth_chaos_resist",
+      "axis": "出击效率",
+      "maxLevel": 5,
+      "effectPerLevel": 0.04,
+      "effectUnit": "混乱增速减免比例",
+      "costs": [
+        8,
+        12,
+        18,
+        25,
+        35
+      ],
+      "description": "反复暴露于异源模式后身体产生微量适应性"
+    },
+    "growth_kindling_affinity": {
+      "id": "growth_kindling_affinity",
+      "axis": "资源效率",
+      "maxLevel": 3,
+      "effectPerLevel": 1,
+      "effectUnit": "每次拾取额外薪柴",
+      "costs": [
+        8,
+        12,
+        18
+      ],
+      "description": "辨识和提取残渣的能力增强"
+    },
+    "growth_vitality": {
+      "id": "growth_vitality",
+      "axis": "生存韧性",
+      "maxLevel": 4,
+      "effectPerLevel": 15,
+      "effectUnit": "最大生命值增加",
+      "costs": [
+        8,
+        12,
+        18,
+        25
+      ],
+      "description": "核心抗性的物理表现增强"
+    },
+    "growth_sortie_slot": {
+      "id": "growth_sortie_slot",
+      "axis": "出击扩展",
+      "maxLevel": 1,
+      "effectPerLevel": 1,
+      "effectUnit": "解锁第4个出击工具槽位",
+      "costs": [
+        40
+      ],
+      "description": "扩展出击工具携带上限——允许同时装备3个主动工具+1个被动工具"
+    },
+    "growth_defense_slot": {
+      "id": "growth_defense_slot",
+      "axis": "防御扩展",
+      "maxLevel": 1,
+      "effectPerLevel": 1,
+      "effectUnit": "解锁第4个防御槽位",
+      "costs": [
+        35
+      ],
+      "description": "额外的防御容量允许更复杂的组合策略"
+    },
+    "growth_forecast_clarity": {
+      "id": "growth_forecast_clarity",
+      "axis": "信息优势",
+      "maxLevel": 3,
+      "effectPerLevel": 0.05,
+      "effectUnit": "冲击预告可靠度提升",
+      "costs": [
+        10,
+        20,
+        30
+      ],
+      "description": "对边界扰动的感知增强——冲击目标与强度的播报更少出错"
+    }
+  }
+}

@@ -18,6 +18,7 @@ import { buildDefenseInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import { renderPanelContent } from './panel-render-state';
 import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
+import { ensureOfferingPanelStyles } from './offering-panel-styles';
 
 // Rarity is "Degree not Kind": escalating contam brightness instead of unrelated hues
 // per tier (ui-art-overhaul.md A2 maps common -> contam-mid #1a6b5c, but that value is
@@ -102,6 +103,7 @@ export const defensePanel = {
 // ---------------------------------------------------------------------------
 
 function createPanel(context?: WorldInteractionContext): void {
+  ensureOfferingPanelStyles();
   panel = createCrtPanel('defense-panel');
 
   const root = getDomUiRoot();
@@ -244,12 +246,11 @@ function render(selectionOnly = false, revealSelection = false): void {
   for (let i = 0; i < slots.length; i++) {
     const c = slots[i];
     const selected = cursorRegion === 'slots' && cursorSlot === i;
-    const cursor = '';
     if (c) {
       const meta = offeringMeta(c);
       const { name, badge: stars, color } = meta;
       html += `<div class="slot-cell slot-filled defense-unslot-btn${selected ? ' slot-selected' : ''}" data-index="${i}">
-        <div>${offeringIcon(c)}${cursor}<span class="slot-name" style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></div>
+        <div class="offering-identity">${offeringIcon(c)}<span class="offering-copy"><span class="slot-name" style="color:${color};">${escape(name)}</span><span class="offering-quality">${escape(stars)}</span></span></div>
         <div class="slot-info">供奉 ${getEquipmentLifecycle(c).impactCharges} / ${meta.threshold}</div>
       </div>`;
     } else {
@@ -271,10 +272,8 @@ function render(selectionOnly = false, revealSelection = false): void {
       const { name, badge: stars, color } = meta;
 
       const selected = cursorRegion === 'inventory' && cursorInv === idx;
-      const cursor = '';
-      html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${escape(c.id)}" data-inv-index="${idx}" style="display:flex;justify-content:space-between;gap:5px;">
-        <span>${offeringIcon(c)} ${cursor}<span style="color:${color};">${name}</span> <span class="inventory-stars">${stars}</span></span>
-        <span style="color:#729887;font-weight:400;">${meta.summary}</span>
+        html += `<div class="item-tile defense-equip-tile${canEquip ? '' : ' tile-disabled'}${selected ? ' tile-selected' : ''}" data-id="${escape(c.id)}" data-inv-index="${idx}" >
+        <span class="offering-identity">${offeringIcon(c)}<span class="offering-copy"><span class="offering-name" style="color:${color};">${escape(name)}</span><span class="offering-quality">${escape(stars)} · ${getEquipmentLifecycle(c).impactCharges}/${meta.threshold}</span></span></span>
       </div>`;
     });
   }

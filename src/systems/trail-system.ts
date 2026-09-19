@@ -69,6 +69,8 @@ export class TrailSystem {
     tileSize: number,
     getVisibility: (pos: Vector2) => number
   ): void {
+    this.visited.clear();
+    this.elapsedMs = 0;
     this.scene = scene;
     this.mapWidth = mapWidth;
     this.tileSize = tileSize;
@@ -165,5 +167,6 @@ export class TrailSystem {
   destroy(): void {
     this.graphics?.destroy();
     this.visited.clear();
+    this.elapsedMs = 0;
   }
 }

@@ -102,7 +102,7 @@ export class SuspendedSeaJourneySession {
           if (!identity || !conditions || (checkpoint && checkpoint.state.phase !== 'active')) {
             throw new Error('旧记录缺少完整的裂隙状态，已保留，不能自动判为死亡或重开。');
           }
-          this.world = createSuspendedSeaWorld(identity.seed, identity.layoutId);
+          this.world = createSuspendedSeaWorld(identity.seed, identity.layoutId === 'sea-folded-ridge' ? identity.layoutId : 'sea-open-channel');
           this.phase = 'rift-starting'; this.record('recovered');
           this.ports.enterRift(this.world, { ...conditions, loadout: contaminantSystem.getSortieLoadout() }, checkpoint ?? undefined);
         } else {

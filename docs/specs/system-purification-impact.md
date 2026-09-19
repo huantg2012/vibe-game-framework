@@ -2,7 +2,7 @@
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
 last-modified-by: code（迭代20完整供奉与有限收益）
-last-modified-date: 2026-09-10
+last-modified-date: 2026-09-18
 interface-changed: true
 interfaces-with:
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
@@ -43,6 +43,12 @@ exposes:
 > **Slice 5 变更摘要**（细则见 D/V 组）：预告去掉方向、只报目标+档位（DEC-034）；防御侧 6 处未接线机制全部落地（DEC-029~033）；污染物运行时状态进存档（DEC-032）；模块受损三态视觉阈值登记（DEC-035）；防御槽位数不再固定 3。
 
 > **Slice 7 变更摘要**（DEC-064）：第三模块 = 净化器（完整度 → 出击起始混乱；满完整度起始 0；不改出击起始生命）。加厚：花薪柴全局抬全部模块 `maxHp`，3 档每档 +15（100→115→130→145），效果公式分母仍是基准 100。三模块均参与当前防御合同。**DEC-117：** 加厚并进蜕变面板第七张，不再是世界桩。
+
+## 迭代27：教学首归、稳定度事实与购买持久性
+
+- cycle在出发时递增：出生0，第一趟归来1；仅这两个值跳过冲击，第二趟起恢复正常。跳过不充供奉计数，潮汐仍按归来推进。
+- `ImpactSystem.run(slots, offeringIds, random, stabilityProgress)`接收场景查询的当前稳定度供防御上下文；返回`newlyZeroModules`，只统计本次由正生命扣至0的模块，既有0不重复扣。场景在账本的一次归来事务中统一结算稳定度与供奉，不以重复读取面板为事件。
+- 成长/加厚统一使用`purchaseGrowth`持久购买事务；加厚拒写时薪柴、档位、所有模块上限还原，成功后才发GROWTH_PURCHASED。维持12/20/32费用和不回血规则。
 
 ## 迭代12：世界内前后遮挡（DEC-120）
 
@@ -210,7 +216,7 @@ interface SortieModifiers {
 
 19. **触发时机是"返回净化点的那一刻"**，不是"按 E 出击之前"。玩家从裂隙回来、净化点场景 `create()` 时按序执行：潮汐强度同步 → 快照供奉槽实例ID → 冲击/防御完整结算 → 非跳过冲击增加供奉计数并完成转化 → 潮汐推进 → 预告重算 → 同笔世界存档。从菜单/读档进入净化点不触发冲击。
     - 设计后果：玩家是**带着冲击的结果**开始这一轮的分配与装配决策，而不是分配完再挨打。整个驻留期间看到的模块 hp 就是出击时的 hp。
-20. **首次豁免**：`cycle === 0` 时跳过冲击（返回 `skipped: true`）。第一次出击是"教学局"。
+20. **首次豁免**：`cycle <= 1` 时跳过冲击（返回 `skipped: true`）。第一次出击是"教学局"。
 21. **基础伤害**：`BASE_IMPACT_DAMAGE`（= 30）× `impactIntensity`。
 22. **威胁分布**：一个模块为"重点目标"，承受 `THREAT_FOCUS_RATIO`（65%）伤害；**其余伤害在其他全部承血模块之间均分**（两模块时另一个拿 35%；三模块时另外两个各 17.5%，四舍五入后用最后一个模块吃残差，保证总和等于本次总伤害）。预告从**全部**承血模块中均匀抽 ground-truth 目标。无可信承诺的冲击结算以 `FORECAST_ACCURACY`（0.8）的概率匹配预告，否则在其余模块均匀抽选；记忆碎片已承诺的目标必定兑现（规则25）。禁止再写死 `modules[0]` / `modules[1]`。
 23. **冲击演出**（在净化点场景 create 阶段，玩家输入被禁用）：
@@ -517,7 +523,7 @@ interface SortieModifiers {
 | 同类污染物多件同时在防御槽 | 减伤各自乘算叠加；`stitch` 逐件安全转移；`mirror` 余波逐件乘算；`combust` 逐件分配修复 |
 | 分配超过 reserve | UI 不允许输入超过 reserve 的值 |
 | 修复超过 maxHp | 多余部分不退回，clamp 到 maxHp（UI 应提前 clamp 可分配量） |
-| cycle=0 跳过冲击 | 第一次出击是"教学局"，让玩家先体验基线难度 |
+| cycle≤1 跳过冲击 | 第一次出击是"教学局"，让玩家先体验基线难度 |
 | 三个模块同时到 0 | 继续运行，不结束游戏。这是"最难但不是不可能"的状态 |
 | 潮汐压缩后的原始半径小于交互点要求 | 安全区钳制接管，气泡在该角度被钉住。高 intensity 下形态由钳制主导而非椭圆主导 |
 | 同一周期内反复进出净化点 | 形状完全相同（种子取自 cycle），玩家不会看到"边界莫名换了个样子" |
@@ -642,7 +648,7 @@ interface SortieModifiers {
 | 4 | ~~`GameState.incrementIntensity()` 的 +0.15 残留~~ | **已删**（2026-08-20）。冲击只读潮汐同步值 | 规则 12 |
 | 5 | `IMPACT_STARTED` / `IMPACT_RESOLVED` / `MODULE_DAMAGED` / `RIFT_ENTERED` 只发不收 | 事件保留，演出走返回值 | 事件契约段 |
 | 6 | `BOUNDARY.BREATH_*` 五个死常量 | 旧方案残留（Slice 5 的 B4 负责清理） | 边界形态数值表下的注 |
-| 7 | `DefenseContext.stabilityProgress` 恒为 0 | `stabilityTracker` 未接入冲击结算 | `impact-system.ts` 内 TODO |
+| 7 | `DefenseContext.stabilityProgress` | 迭代27已由场景传入当前稳定度；不再恒0 | `impact-system.ts` |
 
 ---
 

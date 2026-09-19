@@ -17,11 +17,12 @@ export class SeaJourneyStorage implements SaveStorage {
 export function installSuspendedSeaRecoveryValidation(): void {
   const signatures = new Map<string, string>();
   function current(identity: RiftCheckpoint['identity']): boolean {
+    if (identity.worldId !== 'suspended-sea') return false;
     const key = `${identity.layoutId}:${identity.seed}`;
     try {
       let signature = signatures.get(key);
       if (!signature) {
-        signature = createSuspendedSeaWorld(identity.seed, identity.layoutId).metadata.signature;
+        signature = createSuspendedSeaWorld(identity.seed, identity.layoutId === 'sea-folded-ridge' ? identity.layoutId : 'sea-open-channel').metadata.signature;
         if (signatures.size >= 16) signatures.clear();
         signatures.set(key, signature);
       }

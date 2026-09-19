@@ -58,6 +58,7 @@ const NOISE_SVG =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.10  0 0 0 0 0.68  0 0 0 0 0.59  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")";
 
 const PULSE_STYLE_ID = 'rift-hud-pulse-style';
+let controlsIntroduced = false;
 
 /** Idempotent - same critical-pulse idiom as purification-hud.ts's
  *  `hud-critical-pulse` (alpha 0.6-1.0, 300ms cycle, ui-art-overhaul.md A6). Moving
@@ -179,6 +180,8 @@ export class RiftHud {
   private toolSlotData: ToolSlotInfo[] = [];
   private equipmentData: readonly RiftEquipmentSlot[] = [];
   private equipmentSignature = "";
+  private controlsEl: HTMLDetailsElement | null = null;
+  private controlsIntroRemainingMs = 0;
 
   // State
   private chaosValue = 0;
@@ -297,7 +300,11 @@ export class RiftHud {
    *  Effect remainingMs is authoritative from `setActiveEffects` each frame
    *  (rift-scene merges defense residue + tool-system remaining). Do not tick
    *  remaining here — that would double-count against per-frame set. */
-  update(_deltaMs: number): void {
+  update(deltaMs: number): void {
+    if (this.controlsIntroRemainingMs > 0) {
+      this.controlsIntroRemainingMs = Math.max(0, this.controlsIntroRemainingMs - deltaMs);
+      if (this.controlsIntroRemainingMs === 0 && this.controlsEl) this.controlsEl.open = false;
+    }
     if (this.extractPromptSuppressed) {
       if (this.extractPromptVisible) {
         this.extractPromptVisible = false;
@@ -348,6 +355,8 @@ export class RiftHud {
     this.root?.remove();
     this.root = null;
     this.toolSlotEl = null;
+    this.controlsEl = null;
+    this.controlsIntroRemainingMs = 0;
   }
 
   // ------------------------------------------------------------------ internal
@@ -357,6 +366,18 @@ export class RiftHud {
 
     const root = document.createElement('div');
     root.id = 'rift-hud';
+    const controls = document.createElement('details');
+    controls.id = 'rift-hud-help';
+    controls.innerHTML = '<summary>操作 · 展开 / 收起</summary><div><span class="rift-control-key">WASD / 方向键</span> 移动与转向</div><div><span class="rift-control-key">Space</span> 朝面向挥击 · 走位避开攻击</div><div><span class="rift-control-key">E</span> 按住翻找 · 退路处按下撤离</div><div><span class="rift-control-key">B</span> 随身物品 · <span class="rift-control-key">Esc</span> 暂停</div><div>右下刻记只记已见地形与退路方向</div>';
+    controls.open = !controlsIntroduced;
+    this.controlsIntroRemainingMs = controls.open ? 12_000 : 0;
+    controlsIntroduced = true;
+    controls.querySelector('summary')!.addEventListener('click', () => { this.controlsIntroRemainingMs = 0; });
+    for (const eventName of ['keydown', 'keyup', 'pointerdown'] as const) {
+      controls.addEventListener(eventName, event => { if (!(event instanceof KeyboardEvent) || ['Enter', ' '].includes(event.key)) event.stopPropagation(); });
+    }
+    this.controlsEl = controls;
+    root.appendChild(controls);
     const statusPlate = document.createElement('div');
     statusPlate.id = 'rift-hud-status';
     statusPlate.className = 'device-plate';

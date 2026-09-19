@@ -31,6 +31,8 @@ export interface ImpactResult {
   readonly damages: ImpactDamageEntry[];
   readonly intensity: number;
   readonly skipped: boolean;
+  /** Count only positive-to-zero damage transitions, including later local repair. */
+  readonly newlyZeroModules?: number;
   /** Defense engine result (null when skipped or no defense slots active). */
   readonly defenseResult?: DefenseResult;
   /** The module that took the 65% "重点目标" share this impact (ground truth).
@@ -239,16 +241,17 @@ export const impactSystem = {
 
   /**
    * Run the impact calculation. Returns the result for the scene to display.
-   * On cycle=0, returns skipped=true and does nothing.
+   * Cycle 0 is the untouched base; the first departure increments it to 1.
+   * Both skip impact. Every later return applies impact, including death/abandon.
    *
    * @param defenseSlots - The 3 defense-slotted contaminants, passed from the scene layer
    *   to preserve the "systems never import each other" rule (DEC-ARCH-002).
    */
-  run(defenseSlots?: (Contaminant | null)[], offeringIds?: readonly (string | null)[], random: () => number = Math.random): ImpactResult {
+  run(defenseSlots?: (Contaminant | null)[], offeringIds?: readonly (string | null)[], random: () => number = Math.random, stabilityProgress = 0): ImpactResult {
     const cycle = gameState.getCycle();
 
     // First sortie: no impact (spec rule 20)
-    if (cycle === 0) {
+    if (cycle <= 1) {
       return { damages: [], intensity: 0, skipped: true };
     }
 
@@ -288,7 +291,7 @@ export const impactSystem = {
       const context: DefenseContext = {
         forecastTargetId,
         actualPrimaryId: primary.id,
-        stabilityProgress: 0, // TODO: wire stabilityTracker
+        stabilityProgress,
         moduleHps,
         moduleMaxHps,
       };
@@ -333,10 +336,13 @@ export const impactSystem = {
     // Apply damage to modules
     const damages: ImpactDamageEntry[] = [];
     const moduleDamage: Record<string, number> = {};
+    let newlyZeroModules = 0;
 
     for (const mod of modules) {
       const dmg = finalDamageMap[mod.id] ?? 0;
+      const beforeHp = mod.hp;
       const actualDmg = gameState.applyDamage(mod.id, dmg);
+      if (beforeHp > 0 && mod.hp === 0) newlyZeroModules++;
       damages.push({ moduleId: mod.id, damage: actualDmg, newHp: mod.hp });
       moduleDamage[mod.id] = actualDmg;
       eventBus.emit(GameEvent.MODULE_DAMAGED, { moduleId: mod.id, newHealth: mod.hp });
@@ -375,6 +381,7 @@ export const impactSystem = {
       damages,
       intensity,
       skipped: false,
+      newlyZeroModules,
       defenseResult,
       primaryModuleId: primary.id,
       trueSeverity: severityFromIntensity(intensity),

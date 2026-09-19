@@ -8,11 +8,12 @@
  */
 
 import Phaser from 'phaser';
-import { captureBodyEcho, type BodyEcho, type BodyEchoSource } from '@/systems/tool-body-echo';
+import { captureBodyEcho, restoreBodyEcho, type BodyEcho, type BodyEchoSource } from '@/systems/tool-body-echo';
 import { drawToolObject, drawPressure, drawFootDrag, drawSeam, drawHostRestraint } from '@/systems/tool-ground-vfx';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { validateToolExtendedRuntimeState, type ToolExtendedRuntimeState } from '@/systems/tool-runtime-extended';
+import { CONTAMINANT_DATA, ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
 import { ENEMY_DATA } from '@/generated/enemy-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { AIState, type Contaminant, type ContaminantType, type Vector2 } from '@/types/game-types';
@@ -247,9 +248,10 @@ const RARITY_VFX = {
 
 type ToolControl = EnemyControlEffect & { movementLocked?: boolean; escalationSuppressed?: boolean };
 
-const RECOVERABLE_TOOLS: readonly ContaminantType[] = ['stitch', 'compress', 'kindle', 'siphon', 'muffle'];
+const RECOVERABLE_TOOLS: readonly ContaminantType[] = ACTIVE_CONTAMINANT_TYPES;
 export interface ToolRuntimeState {
   readonly version: 1;
+  readonly extended?: ToolExtendedRuntimeState;
   readonly loadoutIds: readonly (string | null)[];
   readonly elapsedMs: number;
   readonly controlSerial: number;
@@ -346,6 +348,10 @@ export function validateToolRuntimeState(value: unknown): value is ToolRuntimeSt
       || !runtimeNumber(row.elapsedMs, 0, CONTAMINANT_DATA.kindle.toolDurationMs)
       || Math.abs(row.elapsedMs + row.remainingMs - CONTAMINANT_DATA.kindle.toolDurationMs) > 0.001
       || !runtimeNumber(row.pulseAccumMs, 0, CONTAMINANT_DATA.kindle.toolPulseIntervalMs - Number.EPSILON)) return false;
+  }
+  if (value.extended !== undefined && !validateToolExtendedRuntimeState(value.extended, value.elapsedMs, value.controlSerial)) return false;
+  if (value.extended) {
+    for (const row of [...value.extended.delays, ...value.extended.combusts, ...value.extended.mirrors]) if (!source(row.source)) return false;
   }
   return true;
 }
@@ -451,6 +457,8 @@ export class ToolSystem {
   private siphonEquipped = false;
   /** abyss local snapshot reveal — not the 150ms burst VFX. */
   private abyssRevealRemainingMs = 0;
+  private abyssSnapshot = { enemies: [] as Vector2[], nodes: [] as Vector2[], cores: [] as Vector2[] };
+  private echoPulses: {position:Vector2; remainingMs:number; visual:Phaser.GameObjects.Graphics}[] = [];
   /** siphon's temporary pollution resistance. */
   private siphonEffectRemainingMs = 0;
 
@@ -482,22 +490,18 @@ export class ToolSystem {
     }
   };
 
-  /** Recovery is deliberately finite: fail before a world starts losing other families. */
+  /** Retired abilities remain an explicit refusal; every current family is resumable. */
   private supportsRuntimeRecovery(): boolean {
     return this.loadout.every(item => !item || RECOVERABLE_TOOLS.includes(item.type))
-      && !this.freezeEffects.length && !this.delayDevices.length && !this.erodeZones.length
-      && !this.retrogradeMarks.length && !this.trackingEpisodes.size && !this.retrogradeEquipped
-      && !this.expandEffect && !this.mirrorDecoys.length && !this.resonateStrings.length
-      && !this.overwriteMarks.length && !this.combustFields.length && !this.stunnedEnemies.length
-      && !this.abyssBursts.length && !this.abyssRevealRemainingMs && !this.resonatePendingPoint
-      && !this.scatterActive && !this.scatterTriggersRemaining && !this.scatterSuppressedEnemyIds.size
-      && !this.reclaimedNodes.size;
+      && !this.erodeZones.length && !this.resonateStrings.length && !this.overwriteMarks.length
+      && !this.resonatePendingPoint && !this.reclaimedNodes.size
+      && this.stunnedEnemies.every(entry => entry.tag === 'echo');
   }
 
   exportRuntimeState(): ToolRuntimeState {
-    if (!this.supportsRuntimeRecovery()) throw new Error('Tool recovery supports stitch, compress, kindle, siphon and muffle only');
+    if (!this.supportsRuntimeRecovery()) throw new Error('Retired tool effects cannot be resumed');
     const value: ToolRuntimeState = {
-      version: 1, loadoutIds: this.loadout.map(item => item?.id ?? null), elapsedMs: this.elapsedMs,
+      version: 1, extended: this.exportExtendedRuntimeState(), loadoutIds: this.loadout.map(item => item?.id ?? null), elapsedMs: this.elapsedMs,
       controlSerial: this.controlSerial, presentationSerial: this.presentationSerial, lastUseFailure: this.lastUseFailure,
       muffle: { triggersRemaining: this.muffleTriggersRemaining, equipped: this.muffleEquipped,
         episodeActive: this.muffleEpisodeActive, lastSignalMs: Number.isFinite(this.muffleLastSignalMs) ? this.muffleLastSignalMs : null },
@@ -542,9 +546,12 @@ export class ToolSystem {
       items.push(item.contaminant);
     }
     for (const type of ['muffle', 'siphon'] as const) {
-      const item = items.find(candidate => candidate.type === type);
-      if (value[type].triggersRemaining !== (item?.usesRemaining ?? 0)) return false;
+      const remaining = items.filter(candidate => candidate.type === type).reduce((sum,item)=>sum+item.usesRemaining,0);
+      if (value[type].triggersRemaining !== remaining) return false;
     }
+    const scatter = items.filter(item => item.type === 'scatter').reduce((sum,item)=>sum+item.usesRemaining,0);
+    if ((value.extended?.scatter.triggersRemaining ?? 0) !== scatter) return false;
+    if (!value.extended && items.some(item => !['stitch','compress','kindle','siphon','muffle'].includes(item.type))) return false;
     return true;
   }
 
@@ -613,7 +620,101 @@ export class ToolSystem {
     });
     // AI restored the last published hearing flag already. In particular, a fresh
     // equipped muffle has not published it until the first real Tool.update.
+    this.restoreExtendedRuntimeState(value.extended);
     this.updateSiphonEffect(0);
+  }
+
+  private exportExtendedRuntimeState(): ToolExtendedRuntimeState {
+    const echo = (value: BodyEcho | null | undefined) => value?.exportRuntimeState() ?? null;
+    const copyBlocks = (value: GlitchBlock[]) => value.map(block => ({...block}));
+    return {
+      indicators:this.indicators.exportRuntimeState(),
+      freezes: this.freezeEffects.map(row => ({ enemyId:row.enemyId, remainingMs:row.remainingMs,
+        lastPos:copyRuntimeVector(row.lastPos), dissolving:row.dissolving, dissolveBlocks:copyBlocks(row.dissolveBlocks),
+        dissolve:{...row.dissolve}, echo:row.dissolving?null:echo(row.echo),
+        controlActive:!row.dissolving && (this.hasEnemyControl?.(row.enemyId,`solidify:${row.enemyId}`)
+          ?? this.controlSources.get(row.enemyId)?.has(`solidify:${row.enemyId}`) ?? false) })),
+      delays: this.delayDevices.map(row => ({hostId:row.hostId, position:copyRuntimeVector(row.position), remainingMs:row.remainingMs,source:this.controlIds.get(row)!})),
+      combusts: this.combustFields.map(row => ({hostId:row.hostId,position:copyRuntimeVector(row.position),remainingMs:row.remainingMs,
+        source:this.controlIds.get(row)!, blocks:copyBlocks(row.blocks),dissolving:row.dissolving,dissolve:{...row.dissolve}})),
+      marks: this.retrogradeMarks.map(row => ({enemyId:row.enemyId,position:copyRuntimeVector(row.position),remainingMs:row.remainingMs,
+        collapsing:row.collapsing,collapseFade:{...row.collapseFade,alphaSteps:[...row.collapseFade.alphaSteps]},echo:echo(row.echo)})),
+      tracking: [...this.trackingEpisodes].map(([enemyId,row]) => ({enemyId,sampledAt:row.sampledAt??null,
+        lastVisiblePosition:copyRuntimeVector(row.lastVisiblePosition),hasVisiblePosition:row.hasVisiblePosition,spent:row.spent,echo:echo(row.echo)})),
+      retrogradeEquipped:this.retrogradeEquipped,
+      mirrors:this.mirrorDecoys.map(row => ({position:copyRuntimeVector(row.position),groundY:row.groundY??row.position.y,
+        remainingMs:row.remainingMs,source:this.controlIds.get(row)!,shattering:row.shattering,
+        shatterBlocks:copyBlocks(row.shatterBlocks),shatterDissolve:{...row.shatterDissolve},echo:row.shattering?null:echo(row.echo)})),
+      expand:this.expandEffect ? {remainingMs:this.expandEffect.remainingMs,stiffnessMs:this.expandEffect.stiffnessMs,
+        phase:'stiffness',jitterPhase:this.expandEffect.jitterPhase,echo:echo(this.expandEffect.echo)} : null,
+      stuns:this.stunnedEnemies.map(row => ({enemyId:row.enemyId,remainingMs:row.remainingMs,tag:'echo'})),
+      pulses:this.echoPulses.map(row=>({position:copyRuntimeVector(row.position),remainingMs:row.remainingMs})),
+      bursts:this.abyssBursts.map(row=>({position:copyRuntimeVector(row.position),remainingMs:row.remainingMs,blocks:copyBlocks(row.blocks),echo:echo(row.echo)})),
+      abyss:{remainingMs:this.abyssRevealRemainingMs,enemies:this.abyssSnapshot.enemies.map(copyRuntimeVector),nodes:this.abyssSnapshot.nodes.map(copyRuntimeVector),cores:this.abyssSnapshot.cores.map(copyRuntimeVector)},
+      scatter:{triggersRemaining:this.scatterTriggersRemaining,active:this.scatterActive,suppressedEnemyIds:[...this.scatterSuppressedEnemyIds]},
+    };
+  }
+
+  private restoreExtendedRuntimeState(saved?: ToolExtendedRuntimeState): void {
+    const hadExpandInputLock = this.expandEffect !== null;
+    this.indicators?.destroy(); this.indicators = new EnemyPerceptionIndicators(this.scene);
+    for (const episode of this.trackingEpisodes.values()) episode.echo?.destroy();
+    this.trackingEpisodes.clear(); this.freezeEffects=[]; this.delayDevices=[]; this.combustFields=[];
+    this.retrogradeMarks=[]; this.mirrorDecoys=[]; this.expandEffect=null; this.stunnedEnemies=[];
+    this.abyssBursts=[]; this.echoPulses=[]; this.scatterSuppressedEnemyIds.clear();
+    this.retrogradeEquipped=false; this.scatterActive=false; this.scatterTriggersRemaining=0;
+    this.abyssRevealRemainingMs=0; this.abyssSnapshot={enemies:[],nodes:[],cores:[]};
+    if (hadExpandInputLock && !saved?.expand) this.setPlayerInput?.(true);
+    if (!saved) return;
+    const gfx = (depth:number) => this.scene.add.graphics().setDepth(depth);
+    this.freezeEffects=saved.freezes.map(row=>{
+      const effect:FreezeEffect={...structuredClone(row),echo:restoreBodyEcho(this.scene,row.echo),visual:gfx(26)};
+      if(row.controlActive) {
+        this.applyControl(row.enemyId,`solidify:${row.enemyId}`,{movementMultiplier:0,perceptionMultiplier:0,suppressAttack:true,breakOnDamage:true});
+        this.indicators.set(row.enemyId,'solidify',0,false);
+      }
+      return effect;
+    });
+    this.delayDevices=saved.delays.map(row=>{const effect:DelayDevice={...structuredClone(row),visual:gfx(43)};this.controlIds.set(effect,row.source);return effect;});
+    this.combustFields=saved.combusts.map(row=>{const effect:CombustField={...structuredClone(row),visual:gfx(43)};this.controlIds.set(effect,row.source);return effect;});
+    this.retrogradeMarks=saved.marks.map(row=>({...structuredClone(row),echo:restoreBodyEcho(this.scene,row.echo),visual:gfx(RETROGRADE_VISUAL_DEPTH)}));
+    for(const row of saved.tracking)this.trackingEpisodes.set(row.enemyId,{lastVisiblePosition:copyRuntimeVector(row.lastVisiblePosition),hasVisiblePosition:row.hasVisiblePosition,
+      spent:row.spent,sampledAt:row.sampledAt??undefined,echo:restoreBodyEcho(this.scene,row.echo)});
+    this.retrogradeEquipped=saved.retrogradeEquipped;
+    this.mirrorDecoys=saved.mirrors.map(row=>{
+      const effect:MirrorDecoy={...structuredClone(row),echo:restoreBodyEcho(this.scene,row.echo),visual:gfx(24)};
+      this.controlIds.set(effect,row.source);
+      if(!row.shattering)this.setVisualDecoy?.(row.source,copyRuntimeVector(row.position));
+      return effect;
+    });
+    if(!this.setVisualDecoy)this.setDecoyPosition?.(this.mirrorDecoys.find(row=>!row.shattering)?.position??null);
+    if(saved.expand){this.expandEffect={...structuredClone(saved.expand),echo:restoreBodyEcho(this.scene,saved.expand.echo),visual:gfx(30)};this.setPlayerInput?.(false);}
+    this.stunnedEnemies=saved.stuns.map(row=>{
+      const effect:StunEntry={...row,bracketVisual:null};
+      this.applyControl(row.enemyId,`stun:${row.enemyId}`,{movementMultiplier:0,suppressAttack:true});
+      this.indicators.set(row.enemyId,'echo',1,true);return effect;
+    });
+    this.echoPulses=saved.pulses.map(row=>({...structuredClone(row),visual:gfx(10)}));
+    this.abyssBursts=saved.bursts.map(row=>({...structuredClone(row),echo:restoreBodyEcho(this.scene,row.echo),visual:gfx(15)}));
+    this.abyssRevealRemainingMs=saved.abyss.remainingMs;
+    this.abyssSnapshot={enemies:saved.abyss.enemies.map(copyRuntimeVector),nodes:saved.abyss.nodes.map(copyRuntimeVector),cores:saved.abyss.cores.map(copyRuntimeVector)};
+    if(this.abyssRevealRemainingMs>0)this.showAbyssReveal?.(this.abyssSnapshot.enemies,this.abyssSnapshot.nodes,this.abyssRevealRemainingMs,this.abyssSnapshot.cores);
+    this.scatterTriggersRemaining=saved.scatter.triggersRemaining;this.scatterActive=saved.scatter.active;
+    for(const id of saved.scatter.suppressedEnemyIds){this.scatterSuppressedEnemyIds.add(id);this.setEnemyDetectionFillRateMult?.(id,CONTAMINANT_DATA.scatter.toolDetectionFillMult);}
+    if(saved.indicators)this.indicators.restoreRuntimeState(saved.indicators);
+    this.indicators.update(0,id=>this.getEnemies().find(enemy=>enemy.getId()===id)?.getPosition());
+    this.syncBodyVisuals(); this.syncHostVisuals(); this.updateEchoPulses(0);
+    for(const mark of this.retrogradeMarks)mark.echo?.update(mark.position,1-mark.remainingMs/CONTAMINANT_DATA.retrograde.toolDurationMs,RETROGRADE_VISUAL_DEPTH);
+  }
+
+  /** These visual clocks are saved with tools and stop with the world, including pause. */
+  private updateEchoPulses(deltaMs:number):void {
+    for(let i=this.echoPulses.length-1;i>=0;i--){
+      const pulse=this.echoPulses[i]!;pulse.remainingMs-=deltaMs;
+      if(pulse.remainingMs<=0){pulse.visual.destroy();this.echoPulses.splice(i,1);continue;}
+      const fraction=1-pulse.remainingMs/350;
+      renderPolylineRing(pulse.visual,pulse.position,CONTAMINANT_DATA.echo.toolRangePx*(.15+fraction*.85),14,CONTAM_GLOW,1-fraction*.3);
+    }
   }
 
   create(
@@ -919,6 +1020,7 @@ export class ToolSystem {
   /** Per-frame update of active tool effects. */
   update(deltaMs: number): void {
     this.elapsedMs += deltaMs;
+    this.updateEchoPulses(deltaMs);
     this.updateFreezes(deltaMs);
     this.updateDelayDevices(deltaMs);
     this.updateErodeZones(deltaMs);
@@ -1902,23 +2004,8 @@ export class ToolSystem {
       this.stunEnemy(id, def.toolDurationMs, 'echo');
     }
 
-    // "回响震荡" - the whole effect is the expansion itself, built from a polygon of
-    // short segments (the one circle-shape exception A3-1 grants), never `strokeCircle`.
-    const g = this.scene.add.graphics().setDepth(10);
-    const startedAt = this.scene.time.now;
-    const durationMs = 350;
-    const step = (): void => {
-      const elapsed = this.scene.time.now - startedAt;
-      const frac = Phaser.Math.Clamp(elapsed / durationMs, 0, 1);
-      const r = radius * (0.15 + frac * 0.85);
-      renderPolylineRing(g, pos, r, 14, CONTAM_GLOW, 1 - frac * 0.3);
-      if (frac >= 1) {
-        g.destroy();
-        return;
-      }
-      this.scene.time.delayedCall(16, step);
-    };
-    step();
+    this.echoPulses.push({ position: pos, remainingMs: 350, visual: this.scene.add.graphics().setDepth(10) });
+    this.updateEchoPulses(0);
 
     return true;
   }
@@ -1946,7 +2033,8 @@ export class ToolSystem {
       shatterDissolve: createDissolveState(1, 1),
     };
     this.mirrorDecoys.push(decoy);
-    if (this.setVisualDecoy) this.setVisualDecoy(this.sourceFor(decoy), pos);
+    const source = this.sourceFor(decoy);
+    if (this.setVisualDecoy) this.setVisualDecoy(source, pos);
     else this.setDecoyPosition?.(pos);
     return true;
   }
@@ -2117,7 +2205,8 @@ export class ToolSystem {
     if (!this.getRevealSnapshot || !this.showAbyssReveal || this.abyssRevealRemainingMs > 0) return false;
     const snapshot = this.getRevealSnapshot(def.toolRangePx);
     if (snapshot.enemyPositions.length + snapshot.nodePositions.length + (snapshot.corePositions?.length ?? 0) === 0 || !commit()) return false;
-    this.showAbyssReveal(snapshot.enemyPositions.map(p => ({ ...p })), snapshot.nodePositions.map(p => ({ ...p })), def.toolDurationMs, snapshot.corePositions?.map(p => ({ ...p })));
+    this.abyssSnapshot = { enemies:snapshot.enemyPositions.map(copyRuntimeVector), nodes:snapshot.nodePositions.map(copyRuntimeVector), cores:(snapshot.corePositions??[]).map(copyRuntimeVector) };
+    this.showAbyssReveal(this.abyssSnapshot.enemies,this.abyssSnapshot.nodes,def.toolDurationMs,this.abyssSnapshot.cores);
     this.abyssRevealRemainingMs = def.toolDurationMs;
 
     // 施放瞬间: "孔径闭合" - blocks collapse inward and vanish, the one effect in the
@@ -2292,6 +2381,8 @@ export class ToolSystem {
   }
 
   private cleanupVisuals(): void {
+    for (const pulse of this.echoPulses) pulse.visual.destroy();
+    this.echoPulses = [];
     this.passiveVisual?.destroy(); this.passiveVisual = null;
     for (const effect of this.freezeEffects) { effect.echo?.destroy(); effect.visual.destroy(); }
     for (const device of this.delayDevices) device.visual.destroy();

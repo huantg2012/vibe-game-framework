@@ -1,0 +1,127 @@
+{
+  "method": "Real production audio from Phaser master output: menu, fresh hub, ordinary prepare/departure, Space swing, movement, Escape pause/resume. Opens prepare panel by scene method, no grants/teleports/audio synthesis. Hearing aesthetics not assessed.",
+  "url": "http://127.0.0.1:3016/",
+  "bundles": [
+    "http://127.0.0.1:3016/assets/main--rkW9UpZ.js",
+    "http://127.0.0.1:3016/assets/vision-textures-pBvMIiR6.js",
+    "http://127.0.0.1:3016/assets/game-config-CIvexRcM.js",
+    "http://127.0.0.1:3016/assets/invariants-COrZ-W6n.js"
+  ],
+  "records": [
+    {
+      "label": "hub",
+      "scene": [
+        "PurificationScene"
+      ],
+      "sounds": [
+        {
+          "key": "bgm-pp-isolation-drone",
+          "playing": true,
+          "paused": false,
+          "volume": 0.6000000238418579
+        },
+        {
+          "key": "amb-pp-mechanical-hum",
+          "playing": true,
+          "paused": false,
+          "volume": 0.5
+        }
+      ]
+    },
+    {
+      "label": "rift",
+      "scene": [
+        "RiftScene"
+      ],
+      "sounds": [
+        {
+          "key": "bgm-pp-isolation-drone",
+          "playing": true,
+          "paused": false,
+          "volume": 0.3142954409122467
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "playing": true,
+          "paused": false,
+          "volume": 0.11428182572126389
+        },
+        {
+          "key": "amb-rift-alien-atmosphere",
+          "playing": true,
+          "paused": false,
+          "volume": 0.5
+        },
+        {
+          "key": "sfx-rift-enemy-overwriter-hum",
+          "playing": true,
+          "paused": false,
+          "volume": 0.800000011920929
+        }
+      ]
+    },
+    {
+      "label": "paused",
+      "scene": [],
+      "sounds": [
+        {
+          "key": "bgm-pp-isolation-drone",
+          "playing": false,
+          "paused": true,
+          "volume": 0.12287485599517822
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "playing": false,
+          "paused": true,
+          "volume": 0.19085006415843964
+        },
+        {
+          "key": "amb-rift-alien-atmosphere",
+          "playing": false,
+          "paused": true,
+          "volume": 0.5
+        },
+        {
+          "key": "sfx-rift-enemy-overwriter-hum",
+          "playing": false,
+          "paused": true,
+          "volume": 0.800000011920929
+        }
+      ]
+    },
+    {
+      "label": "resumed",
+      "scene": [
+        "RiftScene"
+      ],
+      "sounds": [
+        {
+          "key": "bgm-rift-base-drone",
+          "playing": true,
+          "paused": false,
+          "volume": 0.23999999463558197
+        },
+        {
+          "key": "amb-rift-alien-atmosphere",
+          "playing": true,
+          "paused": false,
+          "volume": 0.5
+        },
+        {
+          "key": "sfx-rift-enemy-overwriter-hum",
+          "playing": true,
+          "paused": false,
+          "volume": 0.800000011920929
+        }
+      ]
+    }
+  ],
+  "captured": {
+    "duration": 8.58,
+    "peak": 0.5611767172813416,
+    "rms": 0.10265066617389867,
+    "clipped": 0
+  },
+  "errors": []
+}

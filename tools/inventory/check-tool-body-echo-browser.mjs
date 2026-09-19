@@ -27,7 +27,7 @@ try {
   await load('exercise=empty');
   const unit = await page.evaluate(async () => {
     const s = window.echoScene; s.scene.pause();
-    const { captureBodyEcho } = await import('/src/systems/tool-body-echo.ts');
+    const { captureBodyEcho, restoreBodyEcho } = await import('/src/systems/tool-body-echo.ts');
     const before = window.echoKeys();
     const texture = s.textures.createCanvas('qa-trimmed-source', 80, 48);
     const ctx = texture.context;
@@ -66,6 +66,14 @@ try {
     Object.defineProperty(source, 'textureKey', { get() { throw new Error('live source read after capture'); } });
     for (let i = 0; i < 100; i++) echo.update({ x: 200.4, y: 300.4 }, i / 150, 29);
     const unchanged = JSON.stringify(keys.map(window.pixelDigest)) === JSON.stringify(digests);
+    const savedPose = JSON.parse(JSON.stringify(echo.exportRuntimeState()));
+    const beforeRestore = window.echoKeys();
+    const restored = restoreBodyEcho(s, savedPose);
+    if (!restored) throw new Error('saved pose did not restore');
+    restored.update({ x: 200.4, y: 300.4 }, .5, 29);
+    const restoredKeys = window.echoKeys().filter(key => !beforeRestore.includes(key));
+    const restoredEqual = JSON.stringify(restoredKeys.map(window.pixelDigest)) === JSON.stringify(digests);
+    restored.destroy();
     const transforms = images.map(image => ({ originX: image.originX, originY: image.originY, scaleX: image.scaleX,
       scaleY: image.scaleY, alpha: image.alpha, x: image.x, y: image.y }));
     const childrenBeforeDestroy = s.children.list.length;
@@ -74,7 +82,7 @@ try {
     const removedImages = childrenBeforeDestroy - s.children.list.length;
     const noSource = captureBodyEcho(s, { textureKey: 'missing-body-fixture', originX: .5, originY: .5 }, 'memory');
     s.textures.remove('qa-trimmed-source');
-    return { digests, outside, alphaAmplified, unchanged, bakes, transforms, cleared, removedImages,
+    return { digests, outside, alphaAmplified, unchanged, restoredEqual, bakes, transforms, cleared, removedImages,
       keyCountAfter: window.echoKeys().length, baselineCount: before.length, noSource };
   });
   assert.equal(unit.digests.length, 3);
@@ -82,6 +90,7 @@ try {
   assert.equal(unit.outside, 0, 'named cut frame and trim offset must preserve source support');
   assert.equal(unit.alphaAmplified, 0);
   assert(unit.unchanged, 'mutating the atlas cannot change a previously captured pose');
+  assert(unit.restoredEqual, 'JSON restoration uses immutable original pixels after the atlas changed');
   assert.equal(unit.bakes, 0, 'update must not rasterize or refresh textures');
   assert(unit.transforms.every(layer => layer.originX === .25 && layer.originY === .75 && layer.scaleX === 1.25 && layer.scaleY === .75 && layer.alpha <= .72));
   assert.equal(unit.transforms[0].x, 200, 'foot layer stays fixed');

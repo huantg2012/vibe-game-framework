@@ -1,0 +1,136 @@
+{
+  "date": "2026-09-19",
+  "status": "DESIGN-STATIC-CHECKS-PASS / NOT-GAMEPLAY-VERIFIED",
+  "counts": {
+    "families": 12,
+    "core": 36,
+    "weak": 8,
+    "inert": 4,
+    "offering_profiles": 5,
+    "appearances": 8,
+    "draft_csv_files": 7
+  },
+  "checks": [
+    "unique IDs and names",
+    "all core families have grades 1/2/3",
+    "single primary strength progression",
+    "weak lower than first core grade",
+    "inert has no ability or uses",
+    "weight and source references",
+    "normalised class/grade/reaction pools",
+    "all shells admit all 48 outcomes",
+    "conditional sampling diagnostics",
+    "weak capacity does not increase movement penalty at any sampled original load 0..16",
+    "source public labels consistent"
+  ],
+  "sampling": [
+    {
+      "nodes": 1,
+      "batches": 50000,
+      "expected": {
+        "core": 0.65,
+        "weak": 0.25,
+        "inert": 0.1
+      },
+      "sampled": {
+        "core": 0.64966,
+        "weak": 0.2511,
+        "inert": 0.09924
+      },
+      "zero_core_batches": 17517
+    },
+    {
+      "nodes": 2,
+      "batches": 50000,
+      "expected": {
+        "core": 0.65,
+        "weak": 0.25,
+        "inert": 0.1
+      },
+      "sampled": {
+        "core": 0.65069,
+        "weak": 0.24901,
+        "inert": 0.1003
+      },
+      "zero_core_batches": 6139
+    },
+    {
+      "nodes": 3,
+      "batches": 50000,
+      "expected": {
+        "core": 0.6791171477079796,
+        "weak": 0.22920203735144315,
+        "inert": 0.09168081494057725
+      },
+      "sampled": {
+        "core": 0.6798533333333333,
+        "weak": 0.22957333333333332,
+        "inert": 0.09057333333333334
+      },
+      "zero_core_batches": 0
+    },
+    {
+      "nodes": 5,
+      "batches": 50000,
+      "expected": {
+        "core": 0.6534319471046839,
+        "weak": 0.24754860921094007,
+        "inert": 0.09901944368437604
+      },
+      "sampled": {
+        "core": 0.654604,
+        "weak": 0.247056,
+        "inert": 0.09834
+      },
+      "zero_core_batches": 0
+    },
+    {
+      "nodes": 10,
+      "batches": 50000,
+      "expected": {
+        "core": 0.6500179310524344,
+        "weak": 0.24998719210540402,
+        "inert": 0.0999948768421616
+      },
+      "sampled": {
+        "core": 0.650376,
+        "weak": 0.249524,
+        "inert": 0.1001
+      },
+      "zero_core_batches": 0
+    }
+  ],
+  "interpretation": "Sampling is a standalone seeded model check of the design formula, not a test of the not-yet-implemented game generator. Proportions describe generated items, not player pickup or identification choices.",
+  "production_source_manifest": {
+    "files_checked": 492,
+    "changed_files": []
+  },
+  "independent_review_fixes": [
+    "departure intent locks content/loot/combat versions",
+    "zero-charge passive recovery validates runBinding",
+    "active effects carry resolved parameters independent of item survival",
+    "supply analysis distinguishes core and weak family drops",
+    "identified inert stays in base inventory",
+    "source preference is selectable within seen map regions",
+    "weak capacity rebalanced to +2 capacity at 1 weight; weak resistance +10 remains subject to play benefit gate",
+    "quality text does not praise inert outcomes",
+    "tutorial locks amber beetle with an ordinary use opportunity",
+    "natural sample and directed rare-case sample are separate"
+  ],
+  "unverified": [
+    "gameplay value and long-term balance",
+    "new icons not created",
+    "UI projection and transactions not implemented",
+    "canvas browser visual rendering"
+  ],
+  "canvas_typescript_check": "PASS; no browser visual validation",
+  "draft_sha256": {
+    "data/drafts/contaminant-ability-redesign.csv": "61f7c13f0fe5fd014b095e2fa828dd1ebd25cc8747bd6365aca97bd92fc2e4bc",
+    "data/drafts/contaminant-appearances.csv": "3ef50ebbc8aade186ceeefa408703ccb7bfbdfb6cd6871ddc38bacf9f742b32e",
+    "data/drafts/contaminant-items.csv": "54540bdfa98e364e8141bd4d589f6683dab48764713bbdde39ded299454ade98",
+    "data/drafts/contaminant-loot-profiles.csv": "a66e910db57073e934eb23fb824a99b4015656840e72bf1ad93598ddfae9bc15",
+    "data/drafts/contaminant-noise.csv": "4dbbf093ef0b4c25fbd5900f8e93065cc54fa763b909c436fbe811201f5e3347",
+    "data/drafts/contaminant-offerings.csv": "b503625852e0610ecded074019c4104ed0325e863400ecc4c29f519fbf771bf3",
+    "data/drafts/contaminant-source-affinities.csv": "37109e46fcea8a2b3b447b4a64e053ae465ac7bef561815dbdf8bd570c48faea"
+  }
+}

@@ -1,6 +1,9 @@
 /** Inventory uses the accepted report's shared scene material and typography. */
 const STYLE_ID = 'inventory-panel-styles';
 const CSS = `
+.inventory-detail-column > .inventory-actions{flex:none;margin-top:0;padding:7px 0 0 18px;border-left:1px solid #263525;min-height:26px;gap:5px 12px}
+.inventory-detail-column > .inventory-actions:empty{display:none}
+.inventory-detail-meta{overflow-wrap:normal;word-break:keep-all}
 .inventory-wrap{box-sizing:border-box;display:flex;flex-direction:column;gap:12px;font:11px/18px var(--ui-font);color:#9eaa98;pointer-events:auto;outline:none}
 #inventory-panel.game-panel{left:330px;top:102px;width:598px;height:490px;padding:0;z-index:1100}
 #inventory-panel.is-prepare{left:282px;top:74px;width:646px;height:524px}

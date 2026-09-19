@@ -114,7 +114,8 @@ export interface CombatSystemAPI extends PlayerCombatAPI {
     occluders: OccluderGrid,
     player: PlayerCombatTarget,
     ai: AISystemReadView,
-    hooks: CombatHooks
+    hooks: CombatHooks,
+    maxHealth?: number,
   ): void;
   update(deltaMs: number): void;
   requestPlayerAttack(): void;
@@ -188,6 +189,8 @@ const LEGACY_BODY_PROFILE: ContaminationBodyProfile = {
   rangePx: GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_RANGE,
   halfAngleDeg: GAME_CONSTANTS.COMBAT.ENEMY_ATTACK_HALF_ANGLE,
 };
+const RECOVERY_MAX_WINDUP_MS = Math.max(LEGACY_BODY_PROFILE.windupMs, ...Object.values(BODY_PROFILE_DATA).map(profile => profile.windupMs));
+const RECOVERY_MAX_COOLDOWN_MS = Math.max(LEGACY_BODY_PROFILE.cooldownMs, ...Object.values(BODY_PROFILE_DATA).map(profile => profile.cooldownMs));
 
 /** A single lookup feeds attack eligibility, execution, animation and ground warning. */
 function bodyProfileFor(state: EnemyCombatState): ContaminationBodyProfile {
@@ -211,7 +214,7 @@ interface FxSlot {
 export interface CombatRuntimeRecoveryOptions {
   readonly signature: string;
   readonly runSeed: number;
-  /** Authored shell target IDs. Hosts are outside this recovery package. */
+  /** Exact generated or authored targets, including Host nuclei. */
   readonly externalTargetIds: readonly string[];
 }
 
@@ -224,15 +227,15 @@ export interface CombatRuntimeConfigurationEnemy {
 /** Shared by enableRuntimeRecovery and admission before there are any live actors. */
 export function createCombatRuntimeConfigurationSignature(options: CombatRuntimeRecoveryOptions,
   enemies: readonly CombatRuntimeConfigurationEnemy[], maxHealth: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH): string {
-  if (!options.signature || !runtimeInteger(options.runSeed, 0, 0xffffffff) || !runtimeStrings(options.externalTargetIds, 1)
-    || enemies.length !== 2 || new Set(enemies.map(enemy => enemy.id)).size !== 2
-    || enemies.filter(enemy => enemy.role === 'rewriter').length !== 1
+  if (!options.signature || !runtimeInteger(options.runSeed, 0, 0xffffffff) || !runtimeStrings(options.externalTargetIds, 4096)
+    || !runtimeStrings(enemies.map(enemy => enemy.id), 4096)
     || enemies.some(enemy => !runtimeEnemyForm(enemy.form, enemy.role)) || !runtimeNumber(maxHealth, Number.MIN_VALUE)) {
     throw new Error('Unsupported combat recovery configuration');
   }
   return JSON.stringify({ signature: options.signature, weapons: WEAPON_DATA,
     attackProfile: WEAPON_ATTACK_PROFILES.crowbar, combat: GAME_CONSTANTS.COMBAT,
     maxHealth, bodyProfile: BODY_PROFILE_DATA.insect_remnant,
+    ...(enemies.some(enemy => enemy.form.substrate !== 'insect_remnant') ? { bodyProfiles: BODY_PROFILE_DATA } : {}),
     enemies: enemies.map(enemy => ({ id: enemy.id, role: enemy.role, form: enemy.form })), targets: options.externalTargetIds });
 }
 
@@ -288,16 +291,16 @@ function runtimeWeapon(value: unknown): value is string | null {
 }
 
 /** Pure boundary validation; instance validation additionally checks the bound roster/content. */
-export function validateCombatRuntimeState(value: unknown): value is CombatRuntimeState {
+export function validateCombatRuntimeState(value: unknown, maxHealth: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH): value is CombatRuntimeState {
   const p = WEAPON_ATTACK_PROFILES.crowbar!;
   const c = GAME_CONSTANTS.COMBAT;
   if (!runtimeRecord(value) || value.version !== 1 || typeof value.signature !== 'string' || !value.signature
     || typeof value.configurationSignature !== 'string' || !value.configurationSignature
-    || !runtimeStrings(value.enemyIds, 2) || value.enemyIds.length !== 2
-    || !runtimeStrings(value.externalTargetIds, 1)
-    || !runtimeStrings(value.hitSet, p.targetLimit) || !runtimeStrings(value.hitHosts, 0)
+    || !runtimeStrings(value.enemyIds, 4096)
+    || !runtimeStrings(value.externalTargetIds, 4096)
+    || !runtimeStrings(value.hitSet, p.targetLimit) || !runtimeStrings(value.hitHosts, p.targetLimit)
     || !['enabled', 'dead', 'weaponUseAttempted', 'weaponUseCommitted', 'swingNoiseSent', 'hitNoiseSent'].every(key => typeof value[key] === 'boolean')
-    || !runtimeNumber(value.health, 0, GAME_CONSTANTS.PLAYER.MAX_HEALTH) || value.dead !== (value.health === 0)
+    || !runtimeNumber(maxHealth, Number.MIN_VALUE) || !runtimeNumber(value.health, 0, maxHealth) || value.dead !== (value.health === 0)
     || !['idle', 'windup', 'active', 'recovery'].includes(value.phase as string)
     || !runtimeNumber(value.swingElapsedMs, 0, p.windupMs + p.activeMs + p.recoveryMs)
     || !runtimeNumber(value.attackAngle) || !runtimeNumber(value.cooldownRemainingMs, 0, p.minIntervalMs)
@@ -309,7 +312,7 @@ export function validateCombatRuntimeState(value: unknown): value is CombatRunti
     || !runtimeNumber(value.contactRemainingMs, 0, p.contactHoldMs)
     || !runtimeNumber(value.contactElapsedMs, 0, p.windupMs + p.activeMs)
     || !runtimeInteger(value.attackTokensInUse, 0, c.ENEMY_ATTACK_TOKENS)
-    || !Array.isArray(value.enemies) || value.enemies.length > 2) return false;
+    || !Array.isArray(value.enemies) || value.enemies.length > 4096) return false;
   if (value.weaponUseCommitted && !value.weaponUseAttempted) return false;
   const targetIds = new Set([...value.enemyIds.map(id => `body:${id}`), ...value.externalTargetIds]);
   if (value.hitSet.some(id => !targetIds.has(id)) || (value.hitSet.length > 0 && !value.weaponUseCommitted)) return false;
@@ -332,8 +335,7 @@ export function validateCombatRuntimeState(value: unknown): value is CombatRunti
       || !runtimeNumber(enemy.attackAngle) || !runtimeNumber(enemy.attackTimerMs, 0)
       || !runtimeNumber(enemy.cooldownRemainingMs, 0) || !runtimeNumber(enemy.engagedSinceMs, 0)
       || !runtimeInteger(enemy.strikeFxFrames, 0, 1) || !runtimeInteger(enemy.controlInterruptRevision)) return false;
-    const profile = BODY_PROFILE_DATA.insect_remnant!;
-    if (enemy.attackTimerMs >= profile.windupMs || enemy.cooldownRemainingMs > profile.cooldownMs) return false;
+    if (enemy.attackTimerMs >= RECOVERY_MAX_WINDUP_MS || enemy.cooldownRemainingMs > RECOVERY_MAX_COOLDOWN_MS) return false;
     ids.add(enemy.id);
     if (enemy.attackPhase === 'windup') tokens++;
   }
@@ -343,6 +345,7 @@ export function validateCombatRuntimeState(value: unknown): value is CombatRunti
 export class CombatSystem implements CombatSystemAPI {
   private runtimeRecovery: CombatRuntimeRecoveryOptions | null = null;
   private runtimeEnemyIds: string[] = [];
+  private runtimeHostIds: string[] = [];
   private runtimeConfigurationSignature = "";
   private scene!: Phaser.Scene;
   private occluders!: OccluderGrid;
@@ -359,7 +362,7 @@ export class CombatSystem implements CombatSystemAPI {
 
   // --- player combat state (spec's PlayerCombatState) ---
   private health: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH;
-  private readonly maxHealth: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH;
+  private maxHealth: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH;
   private dead = false;
   private phase: AttackPhase = 'idle';
   /** Time since the swing input. All three phases are derived from it. */
@@ -413,10 +416,14 @@ export class CombatSystem implements CombatSystemAPI {
     occluders: OccluderGrid,
     player: PlayerCombatTarget,
     ai: AISystemReadView,
-    hooks: CombatHooks
+    hooks: CombatHooks,
+    maxHealth: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH,
   ): void {
+    if (!Number.isFinite(maxHealth) || maxHealth <= 0) throw new Error('Invalid player maximum health');
+    this.maxHealth = maxHealth;
     this.runtimeRecovery = null;
     this.runtimeEnemyIds = [];
+    this.runtimeHostIds = [];
     this.runtimeConfigurationSignature = '';
     this.scene = scene;
     this.occluders = occluders;
@@ -522,19 +529,18 @@ export class CombatSystem implements CombatSystemAPI {
   enableRuntimeRecovery(options: CombatRuntimeRecoveryOptions): void {
     const views = this.ai.getEnemies();
     if (!options.signature || !runtimeInteger(options.runSeed, 0, 0xffffffff) || options.runSeed !== this.runSeed
-      || !runtimeStrings(options.externalTargetIds, 1) || views.length !== 2
-      || new Set(views.map(view => view.getId())).size !== 2
-      || views.filter(view => view.getRole() === 'rewriter').length !== 1
+      || !runtimeStrings(options.externalTargetIds, 4096) || !runtimeStrings(views.map(view => view.getId()), 4096)
       || views.some(view => !runtimeEnemyForm(view.getForm(), view.getRole()))
       || !runtimeWeapon(this.weaponId) || this.godMode) throw new Error('Unsupported combat recovery configuration');
     const targets: MeleeTarget[] = [];
     for (const provider of this.externalTargets) provider.collectMeleeTargets(targets);
-    if (targets.some(target => target.hostId || !options.externalTargetIds.includes(target.id))
+    if (targets.some(target => !options.externalTargetIds.includes(target.id))
       || targets.length !== options.externalTargetIds.length || new Set(targets.map(target => target.id)).size !== targets.length) {
-      throw new Error('Combat recovery requires the exact authored shell targets and no Hosts');
+      throw new Error('Combat recovery requires the exact world target roster');
     }
     this.runtimeRecovery = { ...options, externalTargetIds: [...options.externalTargetIds] };
     this.runtimeEnemyIds = views.map(view => view.getId());
+    this.runtimeHostIds = [...new Set(targets.flatMap(target => target.hostId ? [target.hostId] : []))];
     this.runtimeConfigurationSignature = createCombatRuntimeConfigurationSignature(options,
       views.map(view => ({ id: view.getId(), role: view.getRole(), form: view.getForm() })), this.maxHealth);
   }
@@ -563,14 +569,17 @@ export class CombatSystem implements CombatSystemAPI {
   }
 
   validateRuntimeState(value: unknown): value is CombatRuntimeState {
-    if (!this.runtimeRecovery || !validateCombatRuntimeState(value) || this.godMode
+    if (!this.runtimeRecovery || !validateCombatRuntimeState(value, this.maxHealth) || this.godMode
       || value.signature !== this.runtimeRecovery.signature || value.runSeed !== this.runtimeRecovery.runSeed
       || value.configurationSignature !== this.runtimeConfigurationSignature
+      || value.hitHosts.some(id => !this.runtimeHostIds.includes(id))
       || JSON.stringify(value.enemyIds) !== JSON.stringify(this.runtimeEnemyIds)
       || JSON.stringify(value.externalTargetIds) !== JSON.stringify(this.runtimeRecovery.externalTargetIds)) return false;
     return value.enemies.every(state => {
       const view = this.ai.getEnemyById(state.id);
-      return !!view && runtimeEnemyForm(view.getForm(), view.getRole());
+      const profile = (view?.getForm() && BODY_PROFILE_DATA[view.getForm().substrate]) ?? LEGACY_BODY_PROFILE;
+      return !!view && runtimeEnemyForm(view.getForm(), view.getRole())
+        && state.attackTimerMs < profile.windupMs && state.cooldownRemainingMs <= profile.cooldownMs;
     });
   }
 
@@ -588,7 +597,7 @@ export class CombatSystem implements CombatSystemAPI {
     this.bufferedMs = value.bufferedMs; this.contactRemainingMs = value.contactRemainingMs;
     this.contactElapsedMs = value.contactElapsedMs; this.swingNoiseSent = value.swingNoiseSent; this.hitNoiseSent = value.hitNoiseSent;
     this.hitSet.clear(); for (const id of value.hitSet) this.hitSet.add(id);
-    this.hitHosts.clear();
+    this.hitHosts.clear(); for (const id of value.hitHosts) this.hitHosts.add(id);
     this.enemies.clear(); this.bodyTargets.clear();
     this.syncRoster();
     for (const entry of value.enemies) {

@@ -1,0 +1,255 @@
+diff --git a/src/entities/purification-module.ts b/src/entities/purification-module.ts
+index 183d744..599d066 100644
+--- a/src/entities/purification-module.ts
++++ b/src/entities/purification-module.ts
+@@ -206,6 +206,7 @@ function ensureCoreLightTextures(scene: Phaser.Scene): void {
+ 
+ export class PurificationModuleEntity {
+   private graphics!: Phaser.GameObjects.Graphics;
++  private footing!: Phaser.GameObjects.Graphics;
+   private hpBarBg!: Phaser.GameObjects.Graphics;
+   private hpBarFill!: Phaser.GameObjects.Graphics;
+   private indicatorLight!: Phaser.GameObjects.Graphics;
+@@ -268,6 +269,7 @@ export class PurificationModuleEntity {
+ 
+   /** All surface light stays with this body; ground pools and readouts have separate bands. */
+   setGroundDepth(base: number, floorDepth: number, readoutDepth: number): void {
++    this.footing.setDepth(floorDepth - 0.1);
+     this.graphics.setDepth(base);
+     for (const sprite of [this.coreSprite, this.purifierSprite, this.storageSprite]) sprite?.setDepth(base);
+     this.indicatorLight.setDepth(base + 0.1);
+@@ -281,6 +283,7 @@ export class PurificationModuleEntity {
+   create(scene: Phaser.Scene): void {
+     this.scene = scene;
+     const depth = 20;
++    this.footing = scene.add.graphics().setDepth(1);
+ 
+     // Module shape
+     this.graphics = scene.add.graphics();
+@@ -599,6 +602,7 @@ export class PurificationModuleEntity {
+     this.blinkTimer?.remove();
+     this.blinkTimer = undefined;
+     this.graphics?.destroy();
++    this.footing?.destroy();
+     this.hpBarBg?.destroy();
+     this.hpBarFill?.destroy();
+     this.indicatorLight?.destroy();
+@@ -663,6 +667,7 @@ export class PurificationModuleEntity {
+     }
+ 
+     this.graphics.clear();
++    this.drawFooting();
+ 
+     if (type === 'CORE') {
+       if (this.coreSprite) {
+@@ -743,6 +748,31 @@ export class PurificationModuleEntity {
+    * T6: 三态视觉中"框架"部分——受损时画裂缝线，严重受损时裂缝加宽并叠加边缘 teal 渗入点。
+    * 健康状态不绘制任何附加物。指示灯部分见 drawIndicator()/setupIndicatorBlink()。
+    */
++  /** Embedded anchors and maintenance seams continue into the same concrete.
++   * Wear follows the actual module's health; these marks do not add collision,
++   * indicate loot, or replace the approved body/sprite. */
++  private drawFooting(): void {
++    const g = this.footing;
++    const { x, y, type } = this.config;
++    const span = type === 'PURIFIER' ? 18 : type === 'STORAGE' ? 13 : 16;
++    g.clear();
++    g.fillStyle(0x151a1e, 0.6);
++    g.fillRect(x - span, y + 3, span * 2, 2);
++    g.fillRect(x - span + 3, y + 5, span * 2 - 8, 1);
++    g.fillStyle(0x3a3d42, 0.7);
++    g.fillRect(x - span - 2, y + 1, 3, 2);
++    g.fillRect(x + span - 1, y + 2, 3, 2);
++    if (this.healthState === 'healthy') return;
++    g.fillStyle(0x151a1e, 0.9);
++    g.fillRect(x + span - 2, y + 5, 5, 1);
++    g.fillRect(x + span + 2, y + 6, 1, 3);
++    g.fillRect(x - span - 3, y + 4, 2, 1);
++    if (this.healthState !== 'critical') return;
++    g.fillStyle(0x0e4a3f, 0.75);
++    g.fillRect(x + span + 1, y + 7, 2, 2);
++    g.fillRect(x + span + 2, y + 9, 4, 1);
++  }
++
+   private drawDamageDecoration(size: number): void {
+     if (this.healthState === 'healthy') return;
+ 
+diff --git a/src/generation/preview-paint.ts b/src/generation/preview-paint.ts
+index 645a49a..6101963 100644
+--- a/src/generation/preview-paint.ts
++++ b/src/generation/preview-paint.ts
+@@ -276,7 +276,8 @@ function writeQuantizedRgba(
+   for (let y = 0; y < H; y++) {
+     for (let x = 0; x < W; x++) {
+       const s = (y * W + x) * 3;
+-      const d = (hash2(x, y, 31337) - 0.5) * 12;
++      // Clustered grain preserves connected material masses at native scale.
++      const d = (hash2(x >> 1, y >> 1, 31337) - 0.5) * 5;
+       const r = clamp255(work[s]! + d);
+       const g = clamp255(work[s + 1]! + d);
+       const b = clamp255(work[s + 2]! + d);
+@@ -1964,29 +1965,22 @@ export function bakeGround(
+         g = bv * def.floorBiasG;
+         b = bv * def.floorBiasB;
+ 
+-        if (role === 'organic') {
+-          const k = 0.62;
+-          r += (0x1a - r) * k;
+-          g += (0x6b - g) * k;
+-          b += (0x5c - b) * k;
++        // Old vegetation/organic paint described an entire tile as green.
++        // These are inert remains, not a living paint host. Preserve the shared
++        // floor and build sparse, broken fibres out of its material instead.
++        if (role === 'organic' || role === 'vegetation') {
+           const fx = x % T;
+           const fy = y % T;
+-          if ((fx * 3 + fy * 5) % 7 === 0) {
+-            r += (0x0e - r) * 0.45;
+-            g += (0x4a - g) * 0.45;
+-            b += (0x3f - b) * 0.45;
+-          }
+-        } else if (role === 'vegetation') {
+-          const k = 0.55;
+-          r += (0x0e - r) * k;
+-          g += (0x4a - g) * k;
+-          b += (0x3f - b) * k;
+-          const fx = x % T;
+-          const fy = y % T;
+-          if ((fx + fy) % 5 === 0) {
+-            r += (0x1a - r) * 0.4;
+-            g += (0x6b - g) * 0.4;
+-            b += (0x5c - b) * 0.4;
++          const edge = Math.min(fx, fy, T - 1 - fx, T - 1 - fy);
++          const envelope = Math.min(1, edge / 4);
++          const fibres = vnoise(x + y * 0.35, y * 3.5, 1 / 13, mask.seed + 31);
++          const clump = vnoise(x, y, 1 / 19, mask.seed + 61);
++          if (clump > 0.42 && fibres > 0.54 && envelope > 0.2) {
++            const k = envelope * Math.min(0.8, (fibres - 0.54) * 5);
++            const residue = role === 'vegetation' ? hexToRgb('#24221e') : hexToRgb('#2e2d30');
++            r += (residue[0] - r) * k;
++            g += (residue[1] - g) * k;
++            b += (residue[2] - b) * k;
+           }
+         } else if (role === 'wreck') {
+           const k = 0.5;
+@@ -2010,6 +2004,19 @@ export function bakeGround(
+             b += (srgb[2] - b) * k;
+           }
+         }
++        // Mid-scale material plates sit between the broad stain and tiny wear.
++        // World coordinates, seed and fragment grammar drive every generated map;
++        // no room/seed-specific stamps and no luminous colour on safe ground.
++        const grainX = x + (vnoise(x, y, 1 / 91, mask.seed + 17) - 0.5) * 18;
++        const grainY = y + (vnoise(x, y, 1 / 79, mask.seed + 29) - 0.5) * 12;
++        const strata = vnoise(grainX, grainY * 1.65, 1 / 38, mask.seed + 47);
++        const plate = strata > 0.57 ? 1.13 : strata < 0.35 ? 0.84 : 1;
++        r *= plate; g *= plate; b *= plate;
++        // A narrow interrupted lip gives a dry plate a surface, rather than
++        // outlining every tile or drawing another navigation grid.
++        if (strata > 0.556 && strata < 0.576 && vnoise(x, y, 1 / 24, mask.seed + 53) > 0.48) {
++          r += 4; g += 4; b += 3;
++        }
+         const nearVoid =
+           cellAt(land, walls, cols, rows, col - 1, row) === 'void' ||
+           cellAt(land, walls, cols, rows, col + 1, row) === 'void' ||
+diff --git a/src/systems/procedural-purification-surface.ts b/src/systems/procedural-purification-surface.ts
+index aed3e90..76dcde1 100644
+--- a/src/systems/procedural-purification-surface.ts
++++ b/src/systems/procedural-purification-surface.ts
+@@ -50,14 +50,14 @@ const SURFACE = {
+   /** Cold shift at ellipse edge */
+   coldR: -8, coldG: -3, coldB: 10,
+   /** Worn path brightness bonus */
+-  pathBrightness: 2,
++  pathBrightness: 4,
+   /** Path width in pixels (half-width for falloff) */
+-  pathHalfWidth: 1.0,
++  pathHalfWidth: 9,
+   /** Joint line interval range (px) */
+-  jointMinSpacing: 22,
+-  jointMaxSpacing: 48,
++  jointMinSpacing: 48,
++  jointMaxSpacing: 82,
+   /** Joint line darkening */
+-  jointDarken: 12,
++  jointDarken: 9,
+   /** Warm debris density (per 100 px^2 inside the inner 60%) */
+   debrisPer100: 0.01,
+   /** Vignette band width in px (ellipse edge to full black) */
+@@ -67,7 +67,7 @@ const SURFACE = {
+   /** Teal seep distance from ellipse edge (px, inward) */
+   tealBandInner: 8,
+   /** Dither amplitude to prevent banding */
+-  ditherAmp: 10,
++  ditherAmp: 5,
+ } as const;
+ 
+ // --- Deterministic value noise (mirrors procedural-surface.ts) ---
+@@ -268,9 +268,9 @@ export function createPurificationSurfaceTexture(
+   for (const jy of joints.horizontals) {
+     for (let x = 0; x < W; x++) {
+       // Skip pixels with ~18% probability for random gaps
+-      if (hash2(x, jy, 6161) < 0.18) continue;
++      if (vnoise(x, jy, 1 / 13, 6161) < 0.3) continue;
+       // Noise offset of +/-3 px vertically (wobbly lines)
+-      const offset = Math.round((hash2(x, jy, 8888) - 0.5) * 6);
++      const offset = Math.round((vnoise(x, jy, 1 / 34, 8888) - 0.5) * 6);
+       const yy = jy + offset;
+       if (yy >= 0 && yy < H) {
+         const col = (x / T) | 0;
+@@ -288,7 +288,7 @@ export function createPurificationSurfaceTexture(
+   for (const jx of joints.verticals) {
+     for (let y = 0; y < H; y++) {
+       // Skip pixels with ~18% probability for random gaps
+-      if (hash2(jx, y, 6262) < 0.18) continue;
++      if (vnoise(jx, y, 1 / 13, 6262) < 0.3) continue;
+       // Determine which horizontal band this y belongs to
+       let bandIdx = 0;
+       for (let b = 1; b < hBands.length; b++) {
+@@ -298,7 +298,7 @@ export function createPurificationSurfaceTexture(
+       // Per-slab horizontal offset based on band index
+       const slabOffset = Math.round((hash2(jx, bandIdx, 5050) - 0.5) * 12);
+       // Noise offset of +/-3 px horizontally (wobbly lines)
+-      const offset = Math.round((hash2(jx, y, 9999) - 0.5) * 6);
++      const offset = Math.round((vnoise(jx, y, 1 / 34, 9999) - 0.5) * 6);
+       const xx = jx + offset + slabOffset;
+       if (xx >= 0 && xx < W) {
+         const col = (xx / T) | 0;
+@@ -360,6 +360,26 @@ export function createPurificationSurfaceTexture(
+     placed++;
+   }
+ 
++  // Maintenance belongs to the actual work sites: a rubbed approach, broad
++  // patched concrete and embedded anchor scars. This is baked on the ground,
++  // never another prop/collision and never a glowing circle under each machine.
++  const maintenance = new Int8Array(W * H);
++  interactionPoints.forEach((point, site) => {
++    for (let dy = -18; dy <= 24; dy++) for (let dx = -31; dx <= 31; dx++) {
++      const x = Math.round(point.x + dx), y = Math.round(point.y + dy);
++      if (x < 0 || y < 0 || x >= W || y >= H || !shape.isInside(x, y)) continue;
++      const edge = Math.pow(dx / (25 + site % 3 * 3), 2) + Math.pow((dy - 3) / (17 + site % 2 * 3), 2);
++      const tear = vnoise(x, y, 1 / 7, 351 + site * 19);
++      if (edge > 0.8 + tear * 0.7) continue;
++      // Skim repairs and their chipped lower edges form connected masses.
++      let value = dy > 5 ? 4 : -3;
++      if (edge > 0.96 && tear > 0.55) value = -4;
++      if (dy > 5 && dy < 19 && Math.abs(dx + 3) < 13 && tear > 0.52) value = 6;
++      if ((dx === -14 || dx === 15) && dy >= -2 && dy <= 3) value = -13;
++      maintenance[y * W + x] = value;
++    }
++  });
++
+   // --- Per-pixel rendering (using BoundaryShape for distance) ---
+ 
+   for (let y = 0; y < H; y++) {
+@@ -398,7 +418,9 @@ export function createPurificationSurfaceTexture(
+ 
+       // --- Layer 1: Stone slab noise base ---
+       const noiseVal = (fractal3(x, y, 101) - 0.5) * 2; // range -1..1
+-      let brightness = SURFACE.baseBrightness + noiseVal * SURFACE.noiseAmp;
++      const broad = vnoise(x, y, 1 / 112, 911);
++      const slabTone = broad > 0.58 ? 4 : broad < 0.35 ? -5 : 0;
++      let brightness = SURFACE.baseBrightness + noiseVal * SURFACE.noiseAmp + slabTone + maintenance[y * W + x]!;
+ 
+       // --- Layer 2: Radial temperature gradient ---
+       // blobDist: 0 at center, 1 at boundary edge

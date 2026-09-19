@@ -128,6 +128,9 @@ export class PlayerWeaponRig {
     const pose = this.heldContactMs > 0 ? this.heldPose : this.pose;
     this.torsoOffset.x = pose.torsoX; this.torsoOffset.y = pose.torsoY; this.torsoOffset.rotation = pose.torsoRotation;
     const x = this.body.x, y = this.body.y, depth = this.body.depth;
+    // The segmented torso and held object belong to the same actor silhouette.
+    // Device-focus fading must not leave an opaque torso over the readout.
+    this.upper.setAlpha(this.body.alpha); this.weapon.setAlpha(this.body.alpha); this.arm.setAlpha(this.body.alpha);
     this.upper.setTexture(this.body.texture.key).setCrop(0, 0, 32, 22);
     this.upper.setPosition(x + pose.torsoX, y + 6 + pose.torsoY).setRotation(pose.torsoRotation).setDepth(depth + .02);
     this.weapon.setPosition(x + pose.handX, y + pose.handY).setRotation(pose.rotation).setDepth(depth + (pose.behind ? -.02 : .04));

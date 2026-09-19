@@ -309,7 +309,7 @@ for (const sceneId of ['sea-open-channel', 'sea-folded-ridge'] as const) {
   assert(!a.ai.validateRuntimeState({ ...saved.ai, signature: 'different' }));
   const badTarget = { ...saved.combat, hitSet: ['unknown'], weaponUseAttempted: true, weaponUseCommitted: true };
   assert(!validateCombatRuntimeState(badTarget)); assert.deepEqual(capture(a), saved);
-  const unsupported = json(a.native.base.layout.enemySpawns); unsupported[0]!.form!.lexemes.rhythm = 'rhythm_sleep';
+  const unsupported = json(a.native.base.layout.enemySpawns); unsupported[0]!.form!.portfolio = 'bing';
   const engine = sceneFixture(), ai = new AISystem();
   assert.throws(() => ai.create(engine.scene, unsupported, a.grid, a.grid, { recovery: { runSeed: 19, signature: 'unknown' } }), /Unsupported/);
   assert.equal(engine.world.listenerCount('worldstep'), 0, 'reject content before engine mutation');

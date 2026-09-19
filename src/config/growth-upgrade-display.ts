@@ -58,9 +58,9 @@ export const GROWTH_UPGRADE_DISPLAY: GrowthUpgradeDisplay[] = [
     icon: '✦', // four-point star
     effectLabel: (level, maxLevel) => numericEffectLabel(
       level, maxLevel,
-      (lvl) => `拾取额外 +${lvl * UPGRADE_DATA.growth_kindling_affinity.effectPerLevel}`,
-      '更高效的收割',
-    ),
+      (lvl) => `每堆基础薪柴 +${lvl * UPGRADE_DATA.growth_kindling_affinity.effectPerLevel}`,
+      '每堆基础薪柴 +0',
+    ) + '；再受储藏增益。',
   },
   {
     id: 'growth_vitality',

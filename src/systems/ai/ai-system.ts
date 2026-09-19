@@ -118,10 +118,10 @@ function runtimeRosterSignature(spawns: readonly EnemySpawnData[], walk: WalkGri
 
 /** Pure current-content recipe. No entities, state transitions, events or random draws. */
 export function createAIRuntimeConfiguration(spawns: readonly EnemySpawnData[], walk: WalkGrid): AIRuntimeConfiguration {
-  if (spawns.length !== 2 || new Set(spawns.map(spawn => spawn.id)).size !== 2
-    || spawns.filter(spawn => spawn.type === 'rewriter').length !== 1
+  if (spawns.length > 4096 || new Set(spawns.map(spawn => spawn.id)).size !== spawns.length
+    || spawns.filter(spawn => spawn.type === 'rewriter').length > 1
     || spawns.some(spawn => !runtimeEnemyForm(spawn.form, spawn.type))) {
-    throw new Error('Unsupported suspended sea AI recovery configuration');
+    throw new Error('Unsupported AI recovery configuration');
   }
   const pathfinder = new GridPathfinder(walk, createMovementOccluders(walk), GAME_CONSTANTS.AI.BODY_SIZE);
   const enemies = spawns.map(spawn => {
@@ -309,10 +309,10 @@ export class AISystem implements AISystemAPI {
   ): void {
     const recovery = options?.recovery;
     if (recovery && (!runtimeInteger(recovery.runSeed, 0, 0xffffffff) || !recovery.signature
-      || spawns.length !== 2 || new Set(spawns.map(spawn => spawn.id)).size !== 2
-      || spawns.filter(spawn => spawn.type === 'rewriter').length !== 1
+      || spawns.length > 4096 || new Set(spawns.map(spawn => spawn.id)).size !== spawns.length
+      || spawns.filter(spawn => spawn.type === 'rewriter').length > 1
       || spawns.some(spawn => !runtimeEnemyForm(spawn.form, spawn.type)))) {
-      throw new Error('Unsupported suspended sea AI recovery configuration');
+      throw new Error('Unsupported AI recovery configuration');
     }
     this.recoveryOptions = recovery ? { ...recovery } : null;
     this.recoveryRandom = recovery ? new AIRuntimeRandom(recovery.runSeed) : null;
@@ -562,7 +562,7 @@ export class AISystem implements AISystemAPI {
     if (!this.recoveryOptions || !this.recoveryRandom || this.pendingRuntimeRestore) {
       throw new Error('AI recovery was not enabled, or hydration is incomplete');
     }
-    if (this.visualDecoys.size > 0) throw new Error('Visual decoys are outside suspended sea recovery support');
+
     const value: AIRuntimeState = { version: 1, signature: this.recoveryOptions.signature,
       rosterSignature: this.recoveryRosterSignature, runSeed: this.recoveryOptions.runSeed,
       randomState: this.recoveryRandom.exportState(), playerPos: copyRuntimeVector(this.playerPos),
@@ -570,6 +570,7 @@ export class AISystem implements AISystemAPI {
       playerIsMoving: this.playerIsMoving, hasPreviousPlayerPos: this.hasPreviousPlayerPos,
       physicsElapsedMs: this.physicsElapsedMs, hearingRangeMult: this.context.hearingRangeMult,
       hearingSuppressed: this.context.hearingSuppressed,
+      visualDecoys: [...this.visualDecoys].map(([id, point]) => [id, { ...point }]),
       enemies: this.enemies.map(enemy => ({ id: enemy.id, entity: enemy.exportRuntimeState(),
         state: exportEnemyAIState(enemy), attackInterruptRevision: enemy.controls.attackInterruptRevision })) };
     if (!this.validateRuntimeState(value)) throw new Error('Invalid live AI recovery state');
@@ -628,6 +629,7 @@ export class AISystem implements AISystemAPI {
     this.context.hearingSuppressed = state.hearingSuppressed;
     this.context.decoyPos = null;
     this.visualDecoys.clear();
+    for (const [id, point] of state.visualDecoys ?? []) this.visualDecoys.set(id, { ...point });
     this.recoveryRandom!.restoreState(state.randomState);
     this.pendingRuntimeRestore = state;
   }

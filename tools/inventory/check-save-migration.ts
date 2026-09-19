@@ -42,7 +42,8 @@ try {
   const gs = gameState.getState();
   const legacy: SaveDataV1 = {
     version: 1, kindlingReserve: 117, modules: gs.modules, moduleMaxHpTier: gs.moduleMaxHpTier, cycle: 9,
-    tide: { ...tideSystem.getState(), tideNumber: 2, cycleInPhase: 1 },
+    // Tide 2, first completed Rise step: floor 1.2 + (2.0 - 1.2) / 4.
+    tide: { ...tideSystem.getState(), tideNumber: 2, cycleInPhase: 1, currentIntensity: 1.4 },
     contaminants: [
       { id: 'owned-active', type: 'solidify', rarity: 'common', stage: 'tool', impactCharges: 3, usesRemaining: 2 },
       { id: 'owned-passive', type: 'muffle', rarity: 'fine', stage: 'tool', impactCharges: 3, usesRemaining: 1 },

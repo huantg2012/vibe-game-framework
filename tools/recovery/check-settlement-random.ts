@@ -30,7 +30,7 @@ function reset() {
   failWrites = false; inventoryStore.setPersistence(null); saveManager.deleteSave();
   gameState.reset(); contaminantSystem.reset(); tideSystem.reset(); growthSystem.reset(); stabilityTracker.reset();
   loadDefenseRuntimeState(undefined);
-  impactSystem.resetForecastState(); gameState.incrementCycle(); gameState.setImpactIntensity(tideSystem.getCurrentIntensity());
+  impactSystem.resetForecastState(); gameState.incrementCycle(); gameState.incrementCycle(); gameState.setImpactIntensity(tideSystem.getCurrentIntensity());
 }
 function tool(type: ContaminantType, id: string) {
   const item = contaminantSystem.createUnowned(type, CONTAMINANT_DATA[type].rarity);

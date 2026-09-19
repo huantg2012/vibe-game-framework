@@ -1,0 +1,27 @@
+{
+  "fixture": "bare; ordinary starter crowbar, no growth, no tools",
+  "seed": 2042562272,
+  "recipe": "shear-clinic",
+  "safeSearch": {
+    "kindling": 1,
+    "health": 100
+  },
+  "melee": {
+    "enemyId": "ENM_INF_03",
+    "enemyHealthBefore": 75,
+    "enemyHealthAfter": 49,
+    "weaponUsesBefore": 60,
+    "weaponUsesAfter": 59,
+    "healthAfterRetreat": 100,
+    "attackSequence": 1
+  },
+  "return": {
+    "outcome": "extracted",
+    "health": 100,
+    "kindling": 1,
+    "elapsedMs": 27148.9,
+    "chaos": 86.89276925,
+    "kills": 0
+  },
+  "source": "Read-only game state queried during genuine keyboard journey; screenshots/journey.jsonl corroborate health, inventory, return."
+}

@@ -13,7 +13,7 @@ import type { ExpeditionEntryMode } from '@/managers/session';
 import { t } from '@/i18n';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
-import { beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/session';
+import { abandonInterruptedExpedition, beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/session';
 
 const COLOR_TEXT_BRIGHT = '#c8cdd4';
 const COLOR_TEXT = '#8a8f96';
@@ -43,7 +43,7 @@ interface MenuItem {
   action: () => void;
 }
 
-type MenuMode = 'root' | 'confirmOverwrite';
+type MenuMode = 'root' | 'confirmOverwrite' | 'confirmAbandon';
 
 export class MainMenuScene extends Phaser.Scene {
   private items: MenuItem[] = [];
@@ -73,7 +73,7 @@ export class MainMenuScene extends Phaser.Scene {
     beginNewExpedition(this, this.startEntry);
   }
 
-  create(): void {
+  create(data?: { recoveryError?: string }): void {
     this.entryTransition = null;
     this.entryHandoff = false;
     this.input.enabled = true;
@@ -120,6 +120,10 @@ export class MainMenuScene extends Phaser.Scene {
     this.focusMark = this.add.rectangle(TEXT_X - 20, ACTION_Y, 7, 1, 0xc8cdd4).setOrigin(0, 0.5);
 
     this.renderRoot();
+    if (data?.recoveryError) {
+      if (saveManager.canAbandonInterruptedRun()) this.renderConfirmAbandon();
+      else { this.warningText.setText(data.recoveryError).setVisible(true); this.subtitleText.setVisible(false); }
+    }
 
     audioManager.unlock();
     audioManager.playBGM('bgm-menu-void-pad');
@@ -179,7 +183,7 @@ export class MainMenuScene extends Phaser.Scene {
 
   private handleEscape(): void {
     if (this.entryTransition) return;
-    if (this.mode === 'confirmOverwrite') this.renderRoot();
+    if (this.mode !== 'root') this.renderRoot();
   }
 
   private clearSummary(): void {
@@ -241,7 +245,7 @@ export class MainMenuScene extends Phaser.Scene {
 
     if (this.canContinue) {
       this.renderSummary();
-      items.push({ label: t('menu.continue'), action: () => loadExpedition(this, this.startEntry) });
+      items.push({ label: '继续已保存的记录', action: () => loadExpedition(this, this.startEntry, () => this.renderConfirmAbandon()) });
       items.push({ label: t('menu.newSave'), action: () => this.onSelectNewSave() });
       defaultIndex = 0;
     } else {
@@ -252,6 +256,15 @@ export class MainMenuScene extends Phaser.Scene {
     this.items = items;
     this.selectedIndex = defaultIndex;
     this.layoutItems();
+  }
+
+  private renderConfirmAbandon(): void {
+    this.mode = 'confirmAbandon'; this.clearSummary(); this.subtitleText.setVisible(false);
+    this.warningText.setText('这趟出行暂时无法恢复。可保留原记录，或明确放弃随身物后回到原净化点。基地收存与成长保留，归来冲击结算一次。').setY(258).setVisible(true);
+    this.backHint.setVisible(true);
+    this.items = [{ label: '保留记录，返回', action: () => this.renderRoot() },
+      { label: '确认放弃本趟，返回净化点', action: () => abandonInterruptedExpedition(this, this.startEntry) }];
+    this.selectedIndex = 0; this.layoutItems();
   }
 
   private renderConfirmOverwrite(): void {
@@ -265,7 +278,7 @@ export class MainMenuScene extends Phaser.Scene {
     this.warningText.setVisible(true);
 
     this.items = [
-      { label: t('menu.continue'), action: () => loadExpedition(this, this.startEntry) },
+      { label: '继续已保存的记录', action: () => loadExpedition(this, this.startEntry, () => this.renderConfirmAbandon()) },
       { label: t('menu.overwriteClear'), action: () => beginNewExpedition(this, this.startEntry) },
     ];
     this.selectedIndex = 0;

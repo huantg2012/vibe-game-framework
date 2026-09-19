@@ -1,0 +1,23 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {gameState} from '@/managers/game-state';
+import {impactSystem} from '@/systems/impact-system';
+import {tideSystem} from '@/systems/tide-system';
+import {stabilityTracker} from '@/systems/stability-tracker';
+const out='docs/qa/artifacts/game-wide-review-2026-09-18/tech';
+gameState.reset();tideSystem.reset();stabilityTracker.reset();impactSystem.resetForecastState();
+const cycle0=impactSystem.run([],[],()=>0.1);assert.equal(cycle0.skipped,true);
+// Same public production calls as first normal departure/return. No scene rendering.
+gameState.incrementCycle();gameState.setImpactIntensity(tideSystem.getCurrentIntensity());
+const before=gameState.getState();const firstReturn=impactSystem.run([],[],()=>0.1);
+assert.equal(firstReturn.skipped,false);assert.equal(gameState.getModules().reduce((n,m)=>n+m.hp,0),180);
+const first={cycle:gameState.getCycle(),before,impact:firstReturn,after:gameState.getState()};
+stabilityTracker.loadState({progress:30,reached:false});tideSystem.loadState({tideNumber:1,phase:'crest',cycleInPhase:0,currentIntensity:1.6});
+const crest=tideSystem.advanceCycle();const afterCrest=stabilityTracker.getState();
+tideSystem.loadState({tideNumber:1,phase:'ebb',cycleInPhase:1,currentIntensity:1.4});const nextTide=tideSystem.advanceCycle();const afterTide=stabilityTracker.getState();
+gameState.applyDamage('CORE',1000);const afterZero=stabilityTracker.getState();
+assert.equal(afterCrest.progress,30);assert.equal(afterTide.progress,30);assert.equal(afterZero.progress,30);
+const src=fs.readFileSync('src/scenes/purification-scene.ts','utf8');assert(src.includes('if (isReturnFromRift && survived && kindlingGained > 0)'));
+fs.writeFileSync(out+'/cycle-contracts.json',JSON.stringify({scope:'Production domain calls + static inspection of scene subscribers. Not a played run.',first,stability:{crest,afterCrest,nextTide,afterTide,afterZero},emptyExtractionGate:'purification-scene.ts405 requires kindlingGained > 0 for both credit and stability'},null,2));
+console.log('REPRO first departure increments cycle to1, actual first-return ImpactSystem runs30 total damage. Source skips only cycle0.');
+console.log('REPRO domain crest/tide/zero events keep stability30; static repository search finds no wiring for respective constants; empty-fuel extraction excluded by scene condition.');

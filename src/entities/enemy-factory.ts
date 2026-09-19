@@ -13,7 +13,7 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { ENEMY_DATA, type EnemyRole } from '@/generated/enemy-data';
 import { BEHAVIOR_PROFILE_DATA } from '@/generated/contamination-capability-data';
 import { BODY_PROFILE_DATA } from '@/generated/contamination-body-data';
-import { ActivityClock, type ActivityVisualState } from '@/systems/ai/activity-state';
+import { ActivityClock, type ActivityVisualState, type ActivityRuntimeState } from '@/systems/ai/activity-state';
 import { EnemyControlState } from '@/systems/enemy-control-state';
 import { INFILTRATOR_FORM, REWRITER_FORM, type ContaminationForm } from '@/generation/contamination-draw';
 import { AIState, type Facing4, type Vector2 } from '@/types/game-types';
@@ -123,13 +123,19 @@ export interface EnemyRuntimeState {
   readonly actualVelocity: Vector2;
   readonly attackCommitted: boolean;
   readonly activityHearingAccumMs: number;
+  readonly activity?: ActivityRuntimeState;
+  readonly hitchMs?: number;
+  readonly hitchWasLunge?: boolean;
 }
 
 export function validateEnemyRuntimeState(value: unknown): value is EnemyRuntimeState {
   return runtimeRecord(value) && value.version === 1 && typeof value.id === 'string' && value.id.length > 0
     && runtimeVector(value.position) && runtimeVector(value.bodyPosition) && runtimeVector(value.velocity)
     && runtimeVector(value.actualVelocity) && typeof value.attackCommitted === 'boolean'
-    && runtimeNumber(value.activityHearingAccumMs, 0, 0);
+    && runtimeNumber(value.activityHearingAccumMs, 0)
+    && (value.hitchMs === undefined || runtimeNumber(value.hitchMs, 0))
+    && (value.hitchWasLunge === undefined || typeof value.hitchWasLunge === 'boolean')
+    && (value.activity === undefined || new ActivityClock('rhythm_open', '').validateRuntimeState(value.activity));
 }
 
 export class Enemy implements EnemyView {
@@ -168,7 +174,7 @@ export class Enemy implements EnemyView {
   activityHearingAccumMs = 0;
 
   supportsRuntimeRecovery(): boolean {
-    return this.locomotionMode === 'continuous' && runtimeEnemyForm(this.form, this.config.role);
+    return runtimeEnemyForm(this.form, this.config.role);
   }
 
   exportRuntimeState(): EnemyRuntimeState {
@@ -177,7 +183,7 @@ export class Enemy implements EnemyView {
     const state: EnemyRuntimeState = { version: 1, id: this.id,
       position: { x: this.body.x, y: this.body.y }, bodyPosition: copyRuntimeVector(body.position),
       velocity: copyRuntimeVector(body.velocity), actualVelocity: copyRuntimeVector(this.actualVelocity),
-      attackCommitted: this.attackCommitted, activityHearingAccumMs: this.activityHearingAccumMs };
+      attackCommitted: this.attackCommitted, activityHearingAccumMs: this.activityHearingAccumMs, activity: this.activity.exportRuntimeState(), hitchMs: this.hitchMs, hitchWasLunge: this.hitchWasLunge };
     if (!validateEnemyRuntimeState(state)) throw new Error('Enemy cannot export invalid runtime state');
     return state;
   }
@@ -196,6 +202,8 @@ export class Enemy implements EnemyView {
     Object.assign(this.actualVelocity, value.actualVelocity);
     this.attackCommitted = value.attackCommitted;
     this.activityHearingAccumMs = value.activityHearingAccumMs;
+    if (value.activity) this.activity.restoreRuntimeState(value.activity);
+    this.hitchMs = value.hitchMs ?? 0; this.hitchWasLunge = value.hitchWasLunge ?? false;
     this.shownFacing = this.ai.facing4;
   }
 

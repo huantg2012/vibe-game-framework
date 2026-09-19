@@ -10,7 +10,7 @@
 
 import { TileType, type Facing4, type Vector2 } from '@/types/game-types';
 import { getDomUiRoot, injectPanelStyles } from '@/ui/dom/panel-styles';
-import { runtimeInteger, runtimeNumber, runtimeRecord } from '@/systems/ai/runtime-validation';
+import { runtimeInteger, runtimeNumber, runtimeRecord, runtimeVector } from '@/systems/ai/runtime-validation';
 
 /** Remembered information only. Current visibility is rebuilt by the scene. */
 export interface MinimapRuntimeState {
@@ -21,6 +21,14 @@ export interface MinimapRuntimeState {
   readonly extractionTile: { readonly x: number; readonly y: number };
   readonly extractionDiscovered: boolean;
   readonly explored: readonly number[];
+  /** The tool captured these positions once. Restoring must not query live targets. */
+  readonly abyss?: {
+    readonly enemyPositions: readonly Vector2[];
+    readonly corePositions: readonly Vector2[];
+    readonly nodePositions: readonly Vector2[];
+    readonly remainingMs: number;
+    readonly totalMs: number;
+  };
 }
 
 export function validateMinimapRuntimeState(value: unknown): value is MinimapRuntimeState {
@@ -32,6 +40,16 @@ export function validateMinimapRuntimeState(value: unknown): value is MinimapRun
     || typeof value.extractionDiscovered !== 'boolean' || !Array.isArray(value.explored)
     || value.explored.length !== value.mapWidth * value.mapHeight
     || !value.explored.every(cell => cell === 0 || cell === 1)) return false;
+  if (value.abyss !== undefined) {
+    const abyss = value.abyss;
+    if (!runtimeRecord(abyss) || !runtimeNumber(abyss.totalMs, 0, 60_000)
+      || !runtimeNumber(abyss.remainingMs, 0, abyss.totalMs)) return false;
+    for (const key of ['enemyPositions', 'corePositions', 'nodePositions']) {
+      const positions = abyss[key];
+      if (!Array.isArray(positions) || positions.length > 4096 || !positions.every(runtimeVector)
+        || (abyss.remainingMs === 0 && positions.length > 0)) return false;
+    }
+  }
   return value.extractionDiscovered === (value.explored[value.extractionTile.y * value.mapWidth + value.extractionTile.x] === 1);
 }
 
@@ -49,7 +67,7 @@ const CLIP_CY = CLIP_CX;
 const CLIP_RADIUS = CLIP_CX;
 
 const BG_COLOR = '#080a0c';
-const EXPLORED_FLOOR = '#151a1e';
+const EXPLORED_FLOOR = '#30383b';
 const EXPLORED_WALL = '#4a4e55';
 const PLAYER_COLOR = '#c4873a';
 const EXTRACTION_COLOR = '#b0fff5';
@@ -68,6 +86,7 @@ const ABYSS_FLICKER_PERIOD_MS = 180;
 
 export class Minimap {
   private wrap: HTMLDivElement | null = null;
+  private legend: HTMLDivElement | null = null;
   private canvas!: HTMLCanvasElement;
   private ctx!: CanvasRenderingContext2D;
   private explored!: Uint8Array;
@@ -102,6 +121,8 @@ export class Minimap {
     this.tiles = mapTiles;
     this.explored = new Uint8Array(mapWidth * mapHeight);
     this.extractionDiscovered = false;
+    this.abyssEnemyPositions = []; this.abyssCorePositions = []; this.abyssNodePositions = [];
+    this.abyssRemainingMs = 0; this.abyssTotalMs = 0;
 
     this.extractionTile = {
       x: Math.floor(extractionPos.x / tileSize),
@@ -118,6 +139,13 @@ export class Minimap {
     this.canvas.width = CANVAS_SIZE;
     this.canvas.height = CANVAS_SIZE;
     wrap.appendChild(this.canvas);
+    this.legend = document.createElement('div');
+    this.legend.className = 'rift-minimap-legend';
+    this.legend.textContent = '退路未见';
+    wrap.appendChild(this.legend);
+    wrap.setAttribute('role', 'img');
+    wrap.setAttribute('aria-label', '已见地形；退路尚未发现');
+    wrap.title = '只记录已经看过的地形。找到退路后，边缘刻记保留它的方向，不代表可直线到达。';
     getDomUiRoot().appendChild(wrap);
     this.wrap = wrap;
 
@@ -143,6 +171,7 @@ export class Minimap {
       this.extractionTile.y === tileY
     ) {
       this.extractionDiscovered = true;
+      this.updateLegend();
     }
   }
 
@@ -185,13 +214,13 @@ export class Minimap {
   }
 
   exportRuntimeState(): MinimapRuntimeState {
-    if (!this.extractionTile || this.abyssRemainingMs > 0 || this.abyssEnemyPositions.length
-      || this.abyssCorePositions.length || this.abyssNodePositions.length) {
-      throw new Error('Minimap recovery supports ordinary exploration without an abyss snapshot');
-    }
+    if (!this.extractionTile) throw new Error('Minimap has not been created');
     return { version: 1, mapWidth: this.mapWidth, mapHeight: this.mapHeight, tileSize: this.tileSize,
       extractionTile: { ...this.extractionTile }, extractionDiscovered: this.extractionDiscovered,
-      explored: Array.from(this.explored) };
+      explored: Array.from(this.explored),
+      abyss: { enemyPositions: this.abyssEnemyPositions.map(p => ({ ...p })),
+        corePositions: this.abyssCorePositions.map(p => ({ ...p })), nodePositions: this.abyssNodePositions.map(p => ({ ...p })),
+        remainingMs: this.abyssRemainingMs, totalMs: this.abyssTotalMs } };
   }
 
   validateRuntimeState(value: unknown): value is MinimapRuntimeState {
@@ -204,13 +233,17 @@ export class Minimap {
     if (!this.validateRuntimeState(value)) throw new Error('Invalid or incompatible minimap runtime state');
     this.explored = Uint8Array.from(value.explored);
     this.extractionDiscovered = value.extractionDiscovered;
-    this.abyssEnemyPositions = []; this.abyssCorePositions = []; this.abyssNodePositions = [];
-    this.abyssRemainingMs = 0; this.abyssTotalMs = 0;
+    this.abyssEnemyPositions = value.abyss?.enemyPositions.map(p => ({ ...p })) ?? [];
+    this.abyssCorePositions = value.abyss?.corePositions.map(p => ({ ...p })) ?? [];
+    this.abyssNodePositions = value.abyss?.nodePositions.map(p => ({ ...p })) ?? [];
+    this.abyssRemainingMs = value.abyss?.remainingMs ?? 0; this.abyssTotalMs = value.abyss?.totalMs ?? 0;
+    this.updateLegend();
   }
 
   reset(): void {
     this.explored.fill(0);
     this.extractionDiscovered = false;
+    this.updateLegend();
     this.abyssCorePositions = [];
     this.abyssEnemyPositions = [];
     this.abyssNodePositions = [];
@@ -222,9 +255,16 @@ export class Minimap {
   destroy(): void {
     this.wrap?.remove();
     this.wrap = null;
+    this.legend = null;
   }
 
   // ------------------------------------------------------------------ internal
+
+  private updateLegend(): void {
+    if (this.legend) this.legend.textContent = this.extractionDiscovered ? '退路已记' : '退路未见';
+    this.wrap?.setAttribute('aria-label', this.extractionDiscovered
+      ? '已见地形；浅色刻记指向已发现的退路，方向不代表通路' : '已见地形；退路尚未发现');
+  }
 
   /**
    * abyss's minimap brightness: linearly decays from full to `ABYSS_DOT_ALPHA_FLOOR` over
@@ -375,7 +415,20 @@ export class Minimap {
         originTileX,
         originTileY,
       );
-      if (cell) this.drawExtractSlit(cell.cx, cell.cy);
+      if (cell && Math.hypot(cell.cx - CLIP_CX, cell.cy - CLIP_CY) <= CLIP_RADIUS - 4) {
+        this.drawExtractSlit(cell.cx, cell.cy);
+      } else {
+        // Knowledge is earned by sight. A remembered bearing is not a path through unseen void.
+        const dx = this.extractionTile.x - originTileX - WINDOW_RADIUS_TILES;
+        const dy = this.extractionTile.y - originTileY - WINDOW_RADIUS_TILES;
+        const length = Math.hypot(dx, dy);
+        if (length > 0) {
+          this.ctx.fillStyle = EXTRACTION_COLOR;
+          for (const radius of [CLIP_RADIUS - 3, CLIP_RADIUS - 5, CLIP_RADIUS - 7]) {
+            this.ctx.fillRect(Math.round(CLIP_CX + dx / length * radius), Math.round(CLIP_CY + dy / length * radius), 2, 2);
+          }
+        }
+      }
     }
 
     this.drawPlayerCross(facing);

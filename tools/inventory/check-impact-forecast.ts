@@ -26,7 +26,8 @@ function check(name: string, fn: () => void): void { fn(); console.log(`PASS ${n
 function reset(): void {
   failWrites = false; inventoryStore.setPersistence(null); saveManager.deleteSave();
   gameState.reset(); contaminantSystem.reset(); tideSystem.reset(); growthSystem.reset(); stabilityTracker.reset();
-  impactSystem.resetForecastState(); gameState.incrementCycle(); gameState.setImpactIntensity(1);
+  // The first returned sortie is now correctly exempt; this fixture exercises later impacts.
+  impactSystem.resetForecastState(); gameState.incrementCycle(); gameState.incrementCycle(); gameState.setImpactIntensity(1);
 }
 function generate(): void { impactSystem.generateForecast(tideSystem.getCurrentIntensity(), 0, tideSystem.peekNextIntensity()); }
 try {

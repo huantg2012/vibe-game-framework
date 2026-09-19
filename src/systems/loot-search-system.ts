@@ -62,6 +62,8 @@ export interface LootSearchCreateConfig {
   readonly inventoryEnabled?: boolean;
   readonly runSeed?: number;
   readonly kindlingValueModifier?: number;
+  /** Permanent per-pile base gain, before the storage multiplier. */
+  readonly kindlingAffinity?: number;
   readonly showKindling?: boolean;
   readonly onMessage?: (message: string) => void;
 }
@@ -93,6 +95,8 @@ export interface LootSearchRuntimeState {
   readonly runSeed: number;
   readonly fragmentTypeId: string;
   readonly kindlingValueModifier: number;
+  /** Old checkpoints omitted affinity and therefore use zero. */
+  readonly kindlingAffinity?: number;
   readonly carried: number;
   readonly requiresRelease: boolean;
   readonly channel: { readonly nodeId: string; readonly elapsedMs: number } | null;
@@ -119,6 +123,7 @@ function validRevealedItem(value: unknown): value is NewInventoryItem {
 export function validateLootSearchRuntimeState(value: unknown): value is LootSearchRuntimeState {
   if (!runtimeRecord(value) || value.version !== 1 || !runtimeInteger(value.runSeed, 0, 0xffffffff)
     || typeof value.fragmentTypeId !== 'string' || !value.fragmentTypeId || !runtimeNumber(value.kindlingValueModifier, 0)
+    || (value.kindlingAffinity !== undefined && !runtimeNumber(value.kindlingAffinity, 0))
     || !runtimeNumber(value.carried, 0) || typeof value.requiresRelease !== 'boolean'
     || !Array.isArray(value.nodes) || value.nodes.length > 4096) return false;
   const ids = new Set<string>(), items = new Set<string>();
@@ -177,6 +182,7 @@ export class LootSearchSystem {
   private runSeed = 0;
   private fragmentTypeId = '';
   private kindlingValueModifier = 1;
+  private kindlingAffinity = 0;
   private channel: ChannelState | null = null;
   private carried = 0;
   private readonly hud = new LootSearchHud();
@@ -194,6 +200,7 @@ export class LootSearchSystem {
   exportRuntimeState(): LootSearchRuntimeState {
     const value: LootSearchRuntimeState = {
       version: 1, runSeed: this.runSeed, fragmentTypeId: this.fragmentTypeId, kindlingValueModifier: this.kindlingValueModifier,
+      kindlingAffinity: this.kindlingAffinity,
       carried: this.carried, requiresRelease: this.requiresRelease,
       channel: this.channel ? { nodeId: this.channel.node.id, elapsedMs: this.channel.elapsedMs } : null,
       nodes: this.nodes.map(node => ({
@@ -211,6 +218,7 @@ export class LootSearchSystem {
   validateRuntimeState(value: unknown): value is LootSearchRuntimeState {
     if (this.preview || !this.inventoryEnabled || !validateLootSearchRuntimeState(value) || value.runSeed !== this.runSeed
       || value.fragmentTypeId !== this.fragmentTypeId || value.kindlingValueModifier !== this.kindlingValueModifier
+      || (value.kindlingAffinity ?? 0) !== this.kindlingAffinity
       || value.nodes.length !== this.nodes.length) return false;
     const run = inventoryStore.getRun();
     if (!run || run.status !== 'active' || Object.keys(run.revealedNodes).some(id => !value.nodes.some(node => node.id === id))) return false;
@@ -271,6 +279,8 @@ export class LootSearchSystem {
     this.onMessage = config.onMessage;
     this.requiresRelease = false;
     this.kindlingValueModifier = config.kindlingValueModifier ?? 1;
+    this.kindlingAffinity = config.kindlingAffinity ?? 0;
+    if (!Number.isFinite(this.kindlingAffinity) || this.kindlingAffinity < 0) throw new Error('Invalid kindling affinity');
     this.carried = 0;
     this.channel = null;
 
@@ -602,7 +612,7 @@ export class LootSearchSystem {
         }
       }
       node.collected = true;
-      const value = Math.max(1, Math.floor(node.value * this.kindlingValueModifier));
+      const value = Math.max(1, Math.floor((node.value + this.kindlingAffinity) * this.kindlingValueModifier));
       this.carried += value;
       this.hud.setKindling(this.carried);
       node.visual.playReveal({ kind: 'kindling', playerPos: player });

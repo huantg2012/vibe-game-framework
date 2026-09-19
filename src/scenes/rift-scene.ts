@@ -1,3 +1,5 @@
+import { proceduralRiftIdentity, restoreProceduralLayout, installProceduralRiftRecovery } from '@/managers/rift-recovery';
+import type { RiftRecoveryConditions } from '@/systems/rift-recovery-state';
 import { RiftFrameCommit } from '@/systems/rift-frame-commit';
 import { validateRiftRecoveryState, type RiftRecoveryState } from '@/systems/rift-recovery-state';
 import { afterStateCommit, commitEffects } from '@/core/commit-effects';
@@ -167,7 +169,8 @@ const RIFT_SURFACE_KEY = 'rift-surface';
 
 export class RiftScene extends Phaser.Scene {
   private frameCommit: RiftFrameCommit | null = null;
-  private recoveryConditions = { modifiers: { chaosRateModifier: 1, kindlingValueModifier: 1, startingChaos: 0 }, cycle: 0 };
+  private recovery: RiftDevFixture['recovery'] | null = null;
+  private recoveryConditions: RiftRecoveryConditions = { modifiers: { chaosRateModifier: 1, kindlingValueModifier: 1, startingChaos: 0 }, cycle: 0 };
   private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private readonly visibility = new VisibilitySystem();
@@ -246,9 +249,19 @@ export class RiftScene extends Phaser.Scene {
     super({ key: 'RiftScene' });
   }
 
-  create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture }): void {
+  create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): void {
+    try { this.createRun(data); }
+    catch (reason) {
+      console.error('Rift entry failed; saved record retained', reason);
+      this.scene.start('MainMenuScene', { recoveryError: '出行暂时无法恢复，原记录已保留。' });
+    }
+  }
+
+  private createRun(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): void {
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
     this.devFixture = import.meta.env.DEV ? data?.devFixture ?? null : null;
     this.frameCommit = null;
+    this.recovery = this.devFixture?.recovery ?? data?.recovery ?? null;
     this.devElapsedMs = 0;
     this.devPresentation = this.devFixture ? createPresentationFrame() : null;
     this.devWorldProjector = null;
@@ -268,20 +281,24 @@ export class RiftScene extends Phaser.Scene {
     this.entryOwnsPhysicsPause = false;
     this.endOwnsPhysicsPause = false;
     this.endFrozen = false;
-    const restoring = this.devFixture?.recovery?.checkpoint;
+    const restoring = this.recovery?.checkpoint;
     if (restoring && (!validateRiftRecoveryState(restoring.state, inventoryStore.getState(), restoring.elapsedMs) || restoring.state.phase !== 'active')) throw new Error('Cannot resume an incomplete or ended Rift');
     const sortieModifiers = restoring?.state.conditions.modifiers ?? data?.modifiers;
-    this.recoveryConditions = { modifiers: { ...(sortieModifiers ?? gameState.getSortieModifiers()) }, cycle: data?.cycle ?? gameState.getCycle() };
+    this.recoveryConditions = { modifiers: { ...(sortieModifiers ?? gameState.getSortieModifiers()) }, cycle: data?.cycle ?? gameState.getCycle(), maxHealth: GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus, kindlingAffinity: growthSystem.getModifiers().kindlingAffinity };
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
     let seed = readRiftSeed();
     const recipeId = readRiftRecipeId();
     let generated;
     try {
-      generated = this.devFixture?.createLayout() ?? generateRiftLayout(seed, recipeId ? { recipeId } : undefined);
+      generated = this.devFixture?.createLayout() ?? (this.recovery ? restoreProceduralLayout(this.recovery.identity) : generateRiftLayout(seed, recipeId ? { recipeId } : undefined));
       seed = generated.seed;
     } catch (err) {
       console.error(`[RiftScene] generateRiftLayout(${seed}) failed`, err);
       throw err;
+    }
+    if (!this.devFixture && !this.recovery) {
+      installProceduralRiftRecovery();
+      this.recovery = { identity: proceduralRiftIdentity(generated), externalTargetIds: [] };
     }
     const tileMap = generated.tileMap;
     const grid = new TileGrid(tileMap);
@@ -342,7 +359,7 @@ export class RiftScene extends Phaser.Scene {
     if (hearingCount !== 1) throw new Error(`Rift hearing budget invalid: ${hearingCount}`);
     const floorHearingCount = layout.enemySpawns.filter(spawn => spawn.form?.lexemes.sense === 'sense_hear').length;
     this.ai.create(this, layout.enemySpawns, sightGrid, grid, { requireExactlyOneRewriter: floorHearingCount === 1,
-      recovery: this.devFixture?.recovery ? { runSeed: seed, signature: this.devFixture.recovery.identity.signature } : undefined });
+      recovery: this.recovery ? { runSeed: seed, signature: this.recovery.identity.signature } : undefined });
     this.ai.setVisibilityProvider(this.visibilityAt);
     this.ai.addWallCollider(layer);
     this.ai.addStaticPlayerCollider(this.player.getSprite());
@@ -361,7 +378,7 @@ export class RiftScene extends Phaser.Scene {
         if (!result.ok && result.error === 'storage-failed') showToastInline('未能保存耐久度，本次命中没有生效。', {});
         return result.ok;
       },
-    });
+    }, GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus);
     const weaponId = inventoryStore.getEquipment().weaponId;
     const equippedWeapon = weaponId ? inventoryStore.getItem(weaponId) : undefined;
     this.combat.configureWeapon(equippedWeapon?.kind === 'weapon'
@@ -411,6 +428,7 @@ export class RiftScene extends Phaser.Scene {
       },
       onNoise: this.reportNoise,
       kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
+      kindlingAffinity: growthSystem.getModifiers().kindlingAffinity,
     });
 
     this.fieldInventory.create(this, () => this.player.getPosition(), this.visibilityAt,
@@ -523,7 +541,7 @@ export class RiftScene extends Phaser.Scene {
       getCarriedKindling: () => this.search.getCarriedKindling(),
       onSettlementFailure: (message, retry) => this.showSettlementRetry(message, retry),
       onReturn: this.devFixture?.onReturn,
-      getElapsedMs: entryDurationMs > 0 || this.devFixture?.recovery ? () => this.devElapsedMs : undefined,
+      getElapsedMs: entryDurationMs > 0 || this.recovery ? () => this.devElapsedMs : undefined,
       onRuntimeStateChanged: () => this.frameCommit?.markChanged(),
     });
 
@@ -579,7 +597,6 @@ export class RiftScene extends Phaser.Scene {
 
     this.attachSchemeD();
     this.syncDevPresentation();
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
     try {
       this.devRuntime = this.devFixture?.createRuntime?.({ scene: this, layout,
         player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY() },
@@ -616,7 +633,8 @@ export class RiftScene extends Phaser.Scene {
     this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
     this.input.keyboard?.on('keydown-TAB', this.openBag, this);
 
-    if (this.devFixture?.recovery) this.initializeRecovery(restoring);
+    if (this.recovery) this.initializeRecovery(restoring);
+    this.hud.restoreReadouts({ health: this.combat.getHealth(), maxHealth: this.combat.getMaxHealth(), chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
     this.startRiftAudio(!restoring);
     if (import.meta.env.DEV) this.createDebugOverlay();
   }
@@ -636,7 +654,7 @@ export class RiftScene extends Phaser.Scene {
       this.devRuntime?.update(this.devElapsedMs, true);
       return;
     }
-    if (this.devFixture && !this.runController.isRunEnded()) this.devElapsedMs += delta;
+    if ((this.devFixture || this.recovery) && !this.runController.isRunEnded()) this.devElapsedMs += delta;
     this.devRuntime?.beforeCombat?.(this.devElapsedMs, this.runController.isRunEnded());
     this.player.update(delta);
     this.syncRiftAudio();
@@ -1593,7 +1611,7 @@ export class RiftScene extends Phaser.Scene {
     });
   }
 
-  private showSettlementRetry(message: string, retry: () => void): void {
+  private showSettlementRetry(message: string, retry: () => void, actionLabel = '重试保存'): void {
     if (document.getElementById('inventory-settlement-retry')) return;
     injectPanelStyles();
     // The overlay root passes input through. Use the same interactive carrier as
@@ -1608,7 +1626,7 @@ export class RiftScene extends Phaser.Scene {
     copy.textContent = message;
     const button = document.createElement('button');
     button.type = 'button'; button.className = 'action-btn';
-    button.textContent = '重试保存';
+    button.textContent = actionLabel;
     button.onclick = () => { notice.remove(); retry(); };
     notice.append(copy, button);
     getDomUiRoot().append(notice);
@@ -1621,7 +1639,7 @@ export class RiftScene extends Phaser.Scene {
   private openPauseMenu(): void {
     if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150 || riftResultPanel.isOpen()) return;
     if (!this.flushRuntimeCheckpoint()) return;
-    if (this.devFixture?.recovery) pauseMenu.open(this, { onAbandon: () => this.abandonRecoveredRun() });
+    if (this.recovery) pauseMenu.open(this, { onAbandon: () => this.abandonRecoveredRun() });
     else if (this.devFixture?.onPause) this.devFixture.onPause();
     else pauseMenu.open(this);
   }
@@ -1775,7 +1793,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private initializeRecovery(restored?: RiftCheckpoint<RiftRecoveryState>): void {
-    const recovery = this.devFixture!.recovery!;
+    const recovery = this.recovery!;
     if (!restored) {
       // Entry pauses Arcade before its first step. Apply authored body offsets
       // now so the initial checkpoint already contains the real foot positions.
@@ -1787,14 +1805,14 @@ export class RiftScene extends Phaser.Scene {
       }
     }
     this.combat.enableRuntimeRecovery({ signature: recovery.identity.signature, runSeed: recovery.identity.seed,
-      externalTargetIds: recovery.externalTargetIds });
+      externalTargetIds: this.devFixture ? recovery.externalTargetIds : this.hosts.getRecoveryTargetIds() });
     if (restored) {
       const state = restored.state;
       if (state.phase !== 'active' || !this.ai.validateRuntimeState(state.ai) || !this.combat.validateRuntimeState(state.combat)
         || !this.toolSystem.validateRuntimeState(state.tools) || !this.chaos.validateRuntimeState(state.chaos)
         || !this.search.validateRuntimeState(state.search) || !this.fieldInventory.validateRuntimeState(state.field)
         || !this.trail.validateRuntimeState(state.trail) || !this.minimap.validateRuntimeState(state.minimap)
-        || !this.runController.validateRuntimeState(state.run) || !this.devRuntime?.validateRuntimeState?.(state.world)) {
+        || !this.runController.validateRuntimeState(state.run) || !(this.devRuntime ? this.devRuntime.validateRuntimeState?.(state.world) : this.hosts.validateRuntimeState((state.world as { hosts?: unknown }).hosts))) {
         throw new Error('Saved Rift no longer matches this world; original record is retained');
       }
       const physics = this.physics.world;
@@ -1803,6 +1821,7 @@ export class RiftScene extends Phaser.Scene {
       }
       (physics as Phaser.Physics.Arcade.World & { _elapsed: number })._elapsed = state.physics.elapsedMs;
       this.devElapsedMs = restored.elapsedMs;
+      if (!this.devRuntime) this.hosts.restoreRuntimeState((state.world as { hosts: unknown }).hosts);
       this.player.restoreRuntimeState(state.player);
       this.ai.restoreRuntimeState(state.ai);
       this.toolSystem.restoreRuntimeState(state.tools);
@@ -1829,11 +1848,12 @@ export class RiftScene extends Phaser.Scene {
       // AI.postUpdate(0) is not a visual refresh: it resets the stuck watchdog.
       this.syncSchemeDPoses(0);
       this.syncDevPresentation();
-      this.devRuntime!.restoreRuntimeState!(state.world);
-      this.hud.restoreReadouts({ health: state.combat.health, maxHealth: GAME_CONSTANTS.PLAYER.MAX_HEALTH, chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
+      if (this.devRuntime) this.devRuntime.restoreRuntimeState!(state.world);
+
+      this.hud.restoreReadouts({ health: state.combat.health, maxHealth: this.combat.getMaxHealth(), chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
       this.syncHudActiveEffects();
       this.runController.finishRuntimeRestore();
-      this.devRuntime!.afterUpdate(this.devElapsedMs);
+      this.devRuntime?.afterUpdate(this.devElapsedMs);
     }
     this.frameCommit = new RiftFrameCommit({ capture: sequence => this.captureRuntimeCheckpoint(sequence),
       onFailure: retry => {
@@ -1843,7 +1863,7 @@ export class RiftScene extends Phaser.Scene {
       },
       onRetried: () => {
         document.getElementById('inventory-settlement-retry')?.remove();
-        if (!this.devRuntime || !this.frameCommit) return;
+        if (!this.frameCommit) return;
         this.input.keyboard?.resetKeys();
         if (this.scene.isPaused()) this.scene.resume();
         audioManager.resumeAll(); this.frameCommit.begin();
@@ -1869,7 +1889,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private captureRuntimeCheckpoint(sequence: number): RiftCheckpoint<RiftRecoveryState> {
-    const recovery = this.devFixture!.recovery!;
+    const recovery = this.recovery!;
     const ledger = inventoryStore.getRun();
     if (!ledger) throw new Error('Recoverable world requires a run ledger');
     const shared = { version: 1 as const, conditions: structuredClone(this.recoveryConditions),
@@ -1881,7 +1901,7 @@ export class RiftScene extends Phaser.Scene {
       ai: this.ai.exportRuntimeState(), tools: this.toolSystem.exportRuntimeState(), chaos: this.chaos.exportRuntimeState(),
       search: this.search.exportRuntimeState(), field: this.fieldInventory.exportRuntimeState(),
       trail: this.trail.exportRuntimeState(), minimap: this.minimap.exportRuntimeState(),
-      world: this.devRuntime!.exportRuntimeState!(), defenseHudEffects: structuredClone(this.defenseHudEffects),
+      world: this.devRuntime ? this.devRuntime.exportRuntimeState!() : { version: 1, hosts: this.hosts.exportRuntimeState() }, defenseHudEffects: structuredClone(this.defenseHudEffects),
     };
     return { version: 1, runId: ledger.id, sequence, identity: recovery.identity, elapsedMs: this.devElapsedMs, state };
   }
@@ -1900,7 +1920,13 @@ export class RiftScene extends Phaser.Scene {
       // Unsupported state is not a new-game policy, and must never overwrite its predecessor.
       console.error('Rift checkpoint validation failed; previous record retained', reason);
       this.scene.pause(); audioManager.pauseAll();
-      showToastInline('当前状态暂时无法保存，原记录已保留。', {});
+      this.showSettlementRetry('当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。', () => {
+        // Discard only the unsaved in-memory candidate. No inventory loss or
+        // world settlement occurs, and the last complete bytes stay untouched.
+        this.frameCommit?.destroy(); this.frameCommit = null;
+        audioManager.resumeAll();
+        this.scene.start('MainMenuScene');
+      }, '返回标题，保留已存记录');
       return false;
     }
   }
@@ -1993,7 +2019,7 @@ export class RiftScene extends Phaser.Scene {
     this.extraction.destroy();
     this.toolSystem.destroy();
     this.search.destroy();
-    this.chaos.destroy();
+    this.chaos?.destroy();
     this.ai.destroy();
     this.trail.destroy();
     this.minimap.destroy();

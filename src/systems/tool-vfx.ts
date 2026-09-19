@@ -342,6 +342,19 @@ const INDICATOR_DOT_SIZE = 2;
 export class EnemyPerceptionIndicators {
   private readonly entries = new Map<string, IndicatorEntry>();
 
+  exportRuntimeState(): {enemyId:string; blinkPhase:number; sources:{tag:string;mult:number;suppressed:boolean}[]}[] {
+    return [...this.entries].map(([enemyId,entry])=>({enemyId,blinkPhase:entry.blinkPhase,
+      sources:[...entry.sources].map(([tag,source])=>({tag,...source}))}));
+  }
+
+  restoreRuntimeState(rows: ReturnType<EnemyPerceptionIndicators['exportRuntimeState']>): void {
+    this.destroy();
+    for(const row of rows) {
+      for(const source of row.sources)this.set(row.enemyId,source.tag,source.mult,source.suppressed);
+      const entry=this.entries.get(row.enemyId);if(entry)entry.blinkPhase=row.blinkPhase;
+    }
+  }
+
   constructor(
     private readonly scene: Phaser.Scene,
     private readonly depth = 26,

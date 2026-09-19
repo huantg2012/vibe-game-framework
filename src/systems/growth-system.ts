@@ -91,14 +91,14 @@ export const growthSystem = {
    * Deducts kindling from GameState. Returns the amount spent (0 if purchase failed).
    * Emits GROWTH_PURCHASED on success.
    */
-  purchase(id: GrowthUpgradeId): number {
+  purchase(id: GrowthUpgradeId, emitEvent = true): number {
     const cost = growthSystem.getCost(id);
     if (cost === Infinity) return 0;
 
     if (!gameState.spendKindling(cost)) return 0;
 
     upgrades[id]++;
-    eventBus.emit(GameEvent.GROWTH_PURCHASED, { upgradeId: id, newLevel: upgrades[id] });
+    if (emitEvent) eventBus.emit(GameEvent.GROWTH_PURCHASED, { upgradeId: id, newLevel: upgrades[id] });
     return cost;
   },
 

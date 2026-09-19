@@ -34,7 +34,8 @@ Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: {
 function reset(): void {
   failWrites = false; inventoryStore.setPersistence(null); saveManager.deleteSave();
   gameState.reset(); contaminantSystem.reset(); tideSystem.reset(); growthSystem.reset(); stabilityTracker.reset();
-  impactSystem.resetForecastState(); gameState.incrementCycle(); gameState.setImpactIntensity(1);
+  // Offering defense is tested on a real impact after the teaching sortie.
+  impactSystem.resetForecastState(); gameState.incrementCycle(); gameState.incrementCycle(); gameState.setImpactIntensity(1);
 }
 try {
   check('thirteen current families use CSV base values and no retired penalties/rewards', () => {

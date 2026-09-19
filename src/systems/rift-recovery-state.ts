@@ -18,10 +18,12 @@ import { runtimeInteger, runtimeNumber, runtimeRecord, runtimeStrings } from '@/
 import type { ContaminantRarity, ContaminantType } from '@/types/game-types';
 import type { InventoryState } from '@/types/inventory-types';
 
-const TOOL_TYPES: readonly ContaminantType[] = ['stitch', 'compress', 'kindle', 'siphon', 'muffle'];
+const TOOL_TYPES = Object.keys(CONTAMINANT_DATA) as ContaminantType[];
 export interface RiftRecoveryConditions {
   readonly modifiers: SortieModifiers;
   readonly cycle: number;
+  readonly maxHealth?: number;
+  readonly kindlingAffinity?: number;
 }
 export interface RiftRecoveryResult {
   readonly killCount: number;
@@ -60,16 +62,18 @@ export type RiftRecoveryState = ActiveRiftRecoveryState | SettledRiftRecoverySta
 function validConditions(value: unknown): value is RiftRecoveryConditions {
   return runtimeRecord(value) && runtimeInteger(value.cycle, 1) && runtimeRecord(value.modifiers)
     && runtimeNumber(value.modifiers.chaosRateModifier, 0) && runtimeNumber(value.modifiers.kindlingValueModifier, 0)
-    && runtimeNumber(value.modifiers.startingChaos, 0, GAME_CONSTANTS.CHAOS.HARD_CAP);
+    && runtimeNumber(value.modifiers.startingChaos, 0, GAME_CONSTANTS.CHAOS.HARD_CAP)
+    && (value.maxHealth === undefined || runtimeNumber(value.maxHealth, 100, 160))
+    && (value.kindlingAffinity === undefined || runtimeInteger(value.kindlingAffinity, 0, 3));
 }
 function validResult(value: unknown): value is RiftRecoveryResult {
-  if (!runtimeRecord(value) || !runtimeInteger(value.killCount, 0, 2) || !Array.isArray(value.acquired)
-    || value.acquired.length > 4096 || !Array.isArray(value.passiveTriggers) || value.passiveTriggers.length > 2) return false;
+  if (!runtimeRecord(value) || !runtimeInteger(value.killCount, 0, 4096) || !Array.isArray(value.acquired)
+    || value.acquired.length > 4096 || !Array.isArray(value.passiveTriggers) || value.passiveTriggers.length > TOOL_TYPES.length) return false;
   const passives = new Set<string>();
   return value.acquired.every(row => runtimeRecord(row) && TOOL_TYPES.includes(row.type as ContaminantType)
     && (row.rarity === 'common' || row.rarity === 'fine' || row.rarity === 'rare'))
     && value.passiveTriggers.every(entry => {
-      if (!Array.isArray(entry) || entry.length !== 2 || (entry[0] !== 'siphon' && entry[0] !== 'muffle')
+      if (!Array.isArray(entry) || entry.length !== 2 || !TOOL_TYPES.includes(entry[0] as ContaminantType)
         || !runtimeInteger(entry[1], 1, 1000) || passives.has(entry[0])) return false;
       passives.add(entry[0]); return true;
     });
@@ -163,7 +167,7 @@ export function validateRiftRecoveryState(
   if (value.phase !== 'active' || value.run.runEnded || !runtimeRecord(value.physics)
     || value.physics.fixedStep !== true || value.physics.fps !== 60 || value.physics.timeScale !== 1
     || !runtimeNumber(value.physics.elapsedMs, 0) || !validatePlayerRuntimeState(value.player)
-    || !validateCombatRuntimeState(value.combat) || !validateAIRuntimeState(value.ai) || !validateToolRuntimeState(value.tools)
+    || !validateCombatRuntimeState(value.combat, value.conditions.maxHealth ?? 100) || !validateAIRuntimeState(value.ai) || !validateToolRuntimeState(value.tools)
     || !validateChaosRuntimeState(value.chaos) || !validateLootSearchRuntimeState(value.search)
     || !validateFieldLootRuntimeState(value.field) || !validateTrailRuntimeState(value.trail)
     || !validateMinimapRuntimeState(value.minimap) || !runtimeRecord(value.world)
@@ -173,11 +177,14 @@ export function validateRiftRecoveryState(
   const active = value as unknown as ActiveRiftRecoveryState;
   const { ai, combat, tools, chaos, search, player, trail, minimap } = active;
   if (combat.dead || !combat.enabled || combat.signature !== ai.signature || combat.runSeed !== ai.runSeed
-    || search.runSeed !== ai.runSeed || search.fragmentTypeId !== 'suspended-sea'
+    || search.runSeed !== ai.runSeed
     || !near(search.kindlingValueModifier, active.conditions.modifiers.kindlingValueModifier)
+    || !near(search.kindlingAffinity ?? 0, active.conditions.kindlingAffinity ?? 0)
     || !orderedEqual(ai.enemies.map(enemy => enemy.id), combat.enemies.map(enemy => enemy.id))) return false;
   const roster = new Set(combat.enemyIds);
-  if (ai.enemies.some(enemy => !roster.has(enemy.id)) || active.result.killCount !== roster.size - ai.enemies.length) return false;
+  const hosts = runtimeRecord(active.world) && runtimeRecord(active.world.hosts) && Array.isArray(active.world.hosts.hosts) ? active.world.hosts.hosts : [];
+  const deadHosts = hosts.filter(host => runtimeRecord(host) && runtimeRecord(host.state) && host.state.alive === false).length;
+  if (ai.enemies.some(enemy => !roster.has(enemy.id)) || active.result.killCount !== roster.size - ai.enemies.length + deadHosts) return false;
   for (let index = 0; index < ai.enemies.length; index++) {
     const enemy = ai.enemies[index]!, attack = combat.enemies[index]!;
     if (enemy.entity.attackCommitted !== (attack.attackPhase === 'windup') || attack.controlInterruptRevision > enemy.attackInterruptRevision
@@ -199,6 +206,15 @@ export function validateRiftRecoveryState(
     || tools.anchors.some(anchor => anchor.affectedEnemyIds.some(id => !roster.has(id)))
     || chaos.chasingEnemyIds.some(id => !ai.enemies.some(enemy => enemy.id === id))
     || chaos.detectionCooldowns.some(entry => !roster.has(entry.enemyId))) return false;
+  const extended = tools.extended;
+  if (extended) {
+    const hostIds = new Set(hosts.filter(runtimeRecord).map(host => host.id));
+    if ([...extended.freezes, ...extended.stuns, ...extended.marks, ...extended.tracking, ...(extended.indicators ?? [])]
+      .some(effect => !roster.has(effect.enemyId))
+      || [...extended.delays, ...extended.combusts].some(effect => !hostIds.has(effect.hostId))
+      // A host can also report hearing through the scene's shared discovery gate.
+      || extended.scatter.suppressedEnemyIds.some(id => !roster.has(id) && !hostIds.has(id))) return false;
+  }
   if (trail.mapWidth !== minimap.mapWidth || trail.tileSize !== minimap.tileSize
     || trail.visited.some(entry => entry.tileKey >= minimap.mapWidth * minimap.mapHeight)) return false;
   // Owners keep their own clocks (including the death frame that skips Tool.update).

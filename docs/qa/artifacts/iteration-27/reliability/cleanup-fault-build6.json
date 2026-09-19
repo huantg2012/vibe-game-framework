@@ -1,0 +1,33 @@
+{
+  "method": "Fresh normal game and real prepare/depart input; only injected fault is one destructor throwing after its real release, all later resource cleanup traced. Reload resumes committed departure.",
+  "snapshot": {
+    "trace": [
+      "collision released then fault",
+      "atmosphere",
+      "breath",
+      "visibility",
+      "coreModule",
+      "storageModule",
+      "purifierModule",
+      "player",
+      "tilemapRenderer"
+    ],
+    "stage": "device-collision: Error: QA collision destructor fault",
+    "raw": "{\"version\":2,\"kindlingReserve\":0,\"repairBonusHp\":0,\"pendingSideEffects\":[],\"upgradeDiscount\":0,\"moduleSwapActive\":false,\"modules\":[{\"id\":\"CORE\",\"type\":\"CORE\",\"hp\":70,\"maxHp\":100},{\"id\":\"STORAGE\",\"type\":\"STORAGE\",\"hp\":70,\"maxHp\":100},{\"id\":\"PURIFIER\",\"type\":\"PURIFIER\",\"hp\":70,\"maxHp\":100}],\"moduleMaxHpTier\":0,\"cycle\":1,\"tide\":{\"tideNumber\":1,\"phase\":\"rise\",\"cycleInPhase\":0,\"currentIntensity\":1},\"inventory\":{\"version\":2,\"items\":[{\"kind\":\"weapon\",\"id\":\"WPN_5d20458c-fbab-47e5-9488-8b42fb3c28fa\",\"weapon\":{\"id\":\"WPN_5d20458c-fbab-47e5-9488-8b42fb3c28fa\",\"definitionId\":\"crowbar_plain\",\"stage\":\"tool\",\"impactCharges\":3,\"usesRemaining\":60},\"location\":{\"kind\":\"carried\"}}],\"equipment\":{\"weaponId\":\"WPN_5d20458c-fbab-47e5-9488-8b42fb3c28fa\",\"toolIds\":[],\"defenseIds\":[]},\"run\":{\"id\":\"acbeb969-fb37-40ee-801f-22b39d594f5d\",\"status\":\"active\",\"carriedOutIds\":[\"WPN_5d20458c-fbab-47e5-9488-8b42fb3c28fa\"],\"revealedNodes\":{},\"destroyedIds\":[]},\"starterGranted\":true,\"firstWeaponDiscovered\":false},\"growth\":{\"upgrades\":{\"growth_chaos_resist\":0,\"growth_kindling_affinity\":0,\"growth_vitality\":0,\"growth_sortie_slot\":0,\"growth_defense_slot\":0,\"growth_forecast_clarity\":0}},\"stability\":{\"progress\":0,\"reached\":false},\"contaminantRuntimeState\":{},\"impactForecast\":{\"version\":1,\"targetId\":\"STORAGE\",\"committed\":false,\"consumed\":false,\"earnedPending\":false,\"display\":{\"targetId\":\"STORAGE\",\"severity\":\"light\"},\"lookahead\":null,\"queuedTargets\":[],\"nextIntensity\":1,\"nextNextIntensity\":1.2},\"riftDeparture\":{\"version\":1,\"runId\":\"acbeb969-fb37-40ee-801f-22b39d594f5d\",\"identity\":{\"worldId\":\"procedural-rift\",\"layoutId\":\"procedural-rift\",\"seed\":2177351715,\"recipeId\":\"rim-soil\",\"signature\":\"957324e9\"},\"conditions\":{\"modifiers\":{\"chaosRateModifier\":0.79,\"kindlingValueModifier\":1.35,\"startingChaos\":15},\"cycle\":1}},\"checkpointChecksum\":\"99b91ee5\"}",
+    "notice": false,
+    "panels": 0,
+    "scenes": [
+      "MainMenuScene"
+    ]
+  },
+  "after": {
+    "runId": "acbeb969-fb37-40ee-801f-22b39d594f5d",
+    "seed": 2177351715,
+    "sequence": 3
+  },
+  "pageErrors": [],
+  "consoleErrors": [
+    "Error: Purification cleanup: device-collision: Error: QA collision destructor fault\n    at Qh.onShutdown (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:6986:4956)\n    at initialize.callback (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:6967:23340)\n    at initialize.update (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:5891:2060)\n    at h.emit (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:1:22759)\n    at initialize.step (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:5034:786)\n    at initialize.update (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:5021:3225)\n    at initialize.step (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:466:1768)\n    at initialize.step (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:470:2773)\n    at r (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:1036:186)",
+    "Purification departure cleanup failed at device-collision: Error: QA collision destructor fault; saved departure retained Error: Purification cleanup: device-collision: Error: QA collision destructor fault\n    at Qh.onShutdown (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:6986:4956)\n    at initialize.callback (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:6967:23340)\n    at initialize.update (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:5891:2060)\n    at h.emit (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:1:22759)\n    at initialize.step (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:5034:786)\n    at initialize.update (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:5021:3225)\n    at initialize.step (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:466:1768)\n    at initialize.step (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:470:2773)\n    at r (http://127.0.0.1:3090/assets/game-config-Dv2Ok0Oi.js:1036:186)"
+  ]
+}

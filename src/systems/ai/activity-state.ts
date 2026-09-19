@@ -1,5 +1,10 @@
 import { BEHAVIOR_PROFILE_DATA } from '@/generated/contamination-capability-data';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { runtimeRecord, runtimeNumber } from './runtime-validation';
+export interface ActivityRuntimeState { elapsed: number; encountered: boolean; visual: ActivityVisualState }
+export interface ReverseActivityRuntimeState { chargeMs: number; releaseMs: number; active: boolean; visual: ActivityVisualState }
+function validVisual(value: unknown): value is ActivityVisualState { return runtimeRecord(value) && ['rest', 'waking', 'active'].includes(value.phase as string) && runtimeNumber(value.progress, 0, 1); }
+
 
 export interface ActivityVisualState {
   phase: 'rest' | 'waking' | 'active';
@@ -24,6 +29,10 @@ export class ActivityClock {
     }
     if (this.visual.phase === 'rest') this.visual.progress = 0;
   }
+
+  exportRuntimeState(): ActivityRuntimeState { return { elapsed: this.elapsed, encountered: this.encountered, visual: { ...this.visual } }; }
+  validateRuntimeState(value: unknown): value is ActivityRuntimeState { return runtimeRecord(value) && runtimeNumber(value.elapsed, 0) && typeof value.encountered === 'boolean' && validVisual(value.visual); }
+  restoreRuntimeState(value: unknown): void { if (!this.validateRuntimeState(value)) throw new Error('Invalid activity clock'); this.elapsed = value.elapsed; this.encountered = value.encountered; Object.assign(this.visual, value.visual); }
 
   tick(deltaMs: number, stimulus: boolean, calm: boolean): void {
     const dt = Math.max(0, Math.min(deltaMs, GAME_CONSTANTS.AI.DT_CLAMP_MS));
@@ -60,6 +69,10 @@ export class ReverseActivityClock {
   active = false;
   private chargeMs = 0;
   private releaseMs = 0;
+
+  exportRuntimeState(): ReverseActivityRuntimeState { return { chargeMs: this.chargeMs, releaseMs: this.releaseMs, active: this.active, visual: { ...this.visual } }; }
+  validateRuntimeState(value: unknown): value is ReverseActivityRuntimeState { return runtimeRecord(value) && runtimeNumber(value.chargeMs, 0) && runtimeNumber(value.releaseMs, 0) && typeof value.active === 'boolean' && validVisual(value.visual); }
+  restoreRuntimeState(value: unknown): void { if (!this.validateRuntimeState(value)) throw new Error('Invalid reverse activity clock'); this.chargeMs = value.chargeMs; this.releaseMs = value.releaseMs; this.active = value.active; Object.assign(this.visual, value.visual); }
 
   tick(deltaMs: number, watched: boolean): void {
     const dt = Math.max(0, Math.min(deltaMs, GAME_CONSTANTS.AI.DT_CLAMP_MS));

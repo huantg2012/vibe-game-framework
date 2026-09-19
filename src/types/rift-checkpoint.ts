@@ -5,8 +5,9 @@ export interface RiftCheckpoint<State = unknown> {
   runId: string;
   sequence: number;
   identity: {
-    worldId: 'suspended-sea';
-    layoutId: 'sea-open-channel' | 'sea-folded-ridge';
+    worldId: 'suspended-sea' | 'procedural-rift';
+    layoutId: 'sea-open-channel' | 'sea-folded-ridge' | 'procedural-rift';
+    recipeId?: string;
     seed: number;
     signature: string;
   };
@@ -21,9 +22,10 @@ export function validRiftCheckpoint(value: unknown): value is RiftCheckpoint {
   return data.version === 1 && typeof data.runId === 'string' && data.runId.length > 0
     && Number.isSafeInteger(data.sequence) && data.sequence! >= 0
     && Number.isFinite(data.elapsedMs) && data.elapsedMs! >= 0
-    && !!identity && identity.worldId === 'suspended-sea'
-    && ['sea-open-channel', 'sea-folded-ridge'].includes(identity.layoutId)
+    && !!identity && (identity.worldId === 'suspended-sea' || identity.worldId === 'procedural-rift')
+    && (identity.worldId === 'procedural-rift' ? identity.layoutId === 'procedural-rift' : ['sea-open-channel', 'sea-folded-ridge'].includes(identity.layoutId))
     && Number.isSafeInteger(identity.seed) && identity.seed >= 0
+    && (identity.recipeId === undefined || typeof identity.recipeId === 'string')
     && typeof identity.signature === 'string' && identity.signature.length > 0
     && data.state !== null && typeof data.state === 'object';
 }

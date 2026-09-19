@@ -1,0 +1,2028 @@
+[
+  {
+    "label": "00-fresh-base",
+    "bank": 0,
+    "cycle": 0,
+    "modules": {
+      "CORE": 70,
+      "STORAGE": 70,
+      "PURIFIER": 70
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "rise",
+      "cycleInPhase": 0,
+      "currentIntensity": 1
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 0,
+      "reached": false
+    },
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": []
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      }
+    ]
+  },
+  {
+    "label": "01-base",
+    "bank": 12,
+    "cycle": 1,
+    "modules": {
+      "CORE": 70,
+      "STORAGE": 70,
+      "PURIFIER": 70
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "rise",
+      "cycleInPhase": 1,
+      "currentIntensity": 1.2
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 1,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 12,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": []
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      }
+    ]
+  },
+  {
+    "label": "01-invested-base",
+    "bank": 0,
+    "cycle": 1,
+    "modules": {
+      "CORE": 70,
+      "STORAGE": 70,
+      "PURIFIER": 86
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "rise",
+      "cycleInPhase": 1,
+      "currentIntensity": 1.2
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 2,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 12,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "WPN_bb340825-13c5-4722-af95-ac70176d9697"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      }
+    ]
+  },
+  {
+    "label": "02-base",
+    "bank": 11,
+    "cycle": 2,
+    "modules": {
+      "CORE": 66,
+      "STORAGE": 53,
+      "PURIFIER": 83
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "rise",
+      "cycleInPhase": 2,
+      "currentIntensity": 1.4
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 3,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 11,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "WPN_bb340825-13c5-4722-af95-ac70176d9697"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      }
+    ]
+  },
+  {
+    "label": "02-invested-base-final",
+    "bank": 2,
+    "cycle": 2,
+    "modules": {
+      "CORE": 82,
+      "STORAGE": 73,
+      "PURIFIER": 83
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "rise",
+      "cycleInPhase": 2,
+      "currentIntensity": 1.4
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 3,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 11,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 2
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      }
+    ]
+  },
+  {
+    "label": "03-base",
+    "bank": 3,
+    "cycle": 3,
+    "modules": {
+      "CORE": 77,
+      "STORAGE": 69,
+      "PURIFIER": 63
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "crest",
+      "cycleInPhase": 0,
+      "currentIntensity": 1.6,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 4,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 1,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 2
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      }
+    ]
+  },
+  {
+    "label": "03-invested-base",
+    "bank": 0,
+    "cycle": 3,
+    "modules": {
+      "CORE": 77,
+      "STORAGE": 69,
+      "PURIFIER": 75
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "crest",
+      "cycleInPhase": 0,
+      "currentIntensity": 1.6,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 4,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 1,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 2
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      }
+    ]
+  },
+  {
+    "label": "04-base",
+    "bank": 11,
+    "cycle": 4,
+    "modules": {
+      "CORE": 72,
+      "STORAGE": 46,
+      "PURIFIER": 70
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "ebb",
+      "cycleInPhase": 0,
+      "currentIntensity": 1.6,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 8,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 11,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 5,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      }
+    ]
+  },
+  {
+    "label": "04-invested-base",
+    "bank": 0,
+    "cycle": 4,
+    "modules": {
+      "CORE": 72,
+      "STORAGE": 74,
+      "PURIFIER": 86
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "ebb",
+      "cycleInPhase": 0,
+      "currentIntensity": 1.6,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 8,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 11,
+    "equipment": {
+      "weaponId": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+      "toolIds": [],
+      "defenseIds": [
+        "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        null
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 5,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      }
+    ]
+  },
+  {
+    "label": "05-base",
+    "bank": 12,
+    "cycle": 5,
+    "modules": {
+      "CORE": 63,
+      "STORAGE": 66,
+      "PURIFIER": 55
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "ebb",
+      "cycleInPhase": 1,
+      "currentIntensity": 1.4,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 9,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 12,
+    "equipment": {
+      "weaponId": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+      "toolIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74"
+      ],
+      "defenseIds": [
+        "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        null
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "stash"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 75,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 5,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      }
+    ]
+  },
+  {
+    "label": "05-invested-base",
+    "bank": 1,
+    "cycle": 5,
+    "modules": {
+      "CORE": 75,
+      "STORAGE": 74,
+      "PURIFIER": 79
+    },
+    "tide": {
+      "tideNumber": 1,
+      "phase": "ebb",
+      "cycleInPhase": 1,
+      "currentIntensity": 1.4,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 9,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 12,
+    "equipment": {
+      "weaponId": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+      "toolIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74"
+      ],
+      "defenseIds": [
+        "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "WPN_41d4efcd-a319-42c5-b179-2d183e846f51"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "stash"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 75,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 5,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 2
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      }
+    ]
+  },
+  {
+    "label": "06-base",
+    "bank": 8,
+    "cycle": 6,
+    "modules": {
+      "CORE": 48,
+      "STORAGE": 66,
+      "PURIFIER": 72
+    },
+    "tide": {
+      "tideNumber": 2,
+      "phase": "rise",
+      "cycleInPhase": 0,
+      "currentIntensity": 1.2,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 15,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 7,
+    "equipment": {
+      "weaponId": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+      "toolIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74"
+      ],
+      "defenseIds": [
+        "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "WPN_41d4efcd-a319-42c5-b179-2d183e846f51"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "stash"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 75,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 5,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 2
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      },
+      {
+        "id": "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "KDL_07",
+          "runId": "e4a28e85-a435-41a7-947c-6b2e62e402f1"
+        }
+      }
+    ]
+  },
+  {
+    "label": "06-maintained-base",
+    "bank": 0,
+    "cycle": 6,
+    "modules": {
+      "CORE": 80,
+      "STORAGE": 66,
+      "PURIFIER": 72
+    },
+    "tide": {
+      "tideNumber": 2,
+      "phase": "rise",
+      "cycleInPhase": 0,
+      "currentIntensity": 1.2,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 15,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 7,
+    "equipment": {
+      "weaponId": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+      "toolIds": [
+        "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74"
+      ],
+      "defenseIds": [
+        "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "WPN_41d4efcd-a319-42c5-b179-2d183e846f51"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "stash"
+        }
+      },
+      {
+        "id": "WPN_bb340825-13c5-4722-af95-ac70176d9697",
+        "definitionId": "crowbar_good_standard",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 75,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_02",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "CTM_987789e0-6340-4deb-a16d-f36d08bd3f74",
+        "type": "mirror",
+        "stage": "tool",
+        "charges": 5,
+        "uses": 5,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "CTM_NODE_03",
+          "runId": "06a79f03-f904-4b6a-a711-bcab3bde1d28"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 1
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 2
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      },
+      {
+        "id": "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "KDL_07",
+          "runId": "e4a28e85-a435-41a7-947c-6b2e62e402f1"
+        }
+      }
+    ]
+  },
+  {
+    "label": "07-loss-base",
+    "bank": 0,
+    "cycle": 7,
+    "modules": {
+      "CORE": 57,
+      "STORAGE": 59,
+      "PURIFIER": 66
+    },
+    "tide": {
+      "tideNumber": 2,
+      "phase": "rise",
+      "cycleInPhase": 1,
+      "currentIntensity": 1.4,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 15,
+      "reached": false
+    },
+    "outcome": "death",
+    "income": 0,
+    "equipment": {
+      "weaponId": null,
+      "toolIds": [
+        null
+      ],
+      "defenseIds": [
+        null,
+        null,
+        "WPN_41d4efcd-a319-42c5-b179-2d183e846f51"
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_5f0790d7-a092-4bbf-8998-07252fa3e0d4",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 60,
+        "location": {
+          "kind": "stash"
+        }
+      },
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "defense",
+        "charges": 2,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 2
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      },
+      {
+        "id": "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "KDL_07",
+          "runId": "e4a28e85-a435-41a7-947c-6b2e62e402f1"
+        }
+      }
+    ]
+  },
+  {
+    "label": "08-loss-base",
+    "bank": 0,
+    "cycle": 8,
+    "modules": {
+      "CORE": 30,
+      "STORAGE": 51,
+      "PURIFIER": 59
+    },
+    "tide": {
+      "tideNumber": 2,
+      "phase": "rise",
+      "cycleInPhase": 2,
+      "currentIntensity": 1.5999999999999999,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 15,
+      "reached": false
+    },
+    "outcome": "death",
+    "income": 0,
+    "equipment": {
+      "weaponId": null,
+      "toolIds": [
+        null
+      ],
+      "defenseIds": [
+        null,
+        null,
+        null
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      },
+      {
+        "id": "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "KDL_07",
+          "runId": "e4a28e85-a435-41a7-947c-6b2e62e402f1"
+        }
+      }
+    ]
+  },
+  {
+    "label": "09-recovery-base",
+    "bank": 11,
+    "cycle": 9,
+    "modules": {
+      "CORE": 21,
+      "STORAGE": 43,
+      "PURIFIER": 28
+    },
+    "tide": {
+      "tideNumber": 2,
+      "phase": "rise",
+      "cycleInPhase": 3,
+      "currentIntensity": 1.7999999999999998,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 16,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 11,
+    "equipment": {
+      "weaponId": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+      "toolIds": [
+        null
+      ],
+      "defenseIds": [
+        "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        null,
+        null
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      },
+      {
+        "id": "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "KDL_07",
+          "runId": "e4a28e85-a435-41a7-947c-6b2e62e402f1"
+        }
+      },
+      {
+        "id": "WPN_c66c5c1d-fd69-4e60-b49c-344410d02831",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_06",
+          "runId": "544a5b8c-f32c-4062-89b4-4d49dc3528d6"
+        }
+      }
+    ]
+  },
+  {
+    "label": "09-recovery-repaired-base",
+    "bank": 0,
+    "cycle": 9,
+    "modules": {
+      "CORE": 45,
+      "STORAGE": 43,
+      "PURIFIER": 48
+    },
+    "tide": {
+      "tideNumber": 2,
+      "phase": "rise",
+      "cycleInPhase": 3,
+      "currentIntensity": 1.7999999999999998,
+      "crestIntact": true
+    },
+    "growth": {
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      }
+    },
+    "stability": {
+      "progress": 16,
+      "reached": false
+    },
+    "outcome": "extract",
+    "income": 11,
+    "equipment": {
+      "weaponId": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+      "toolIds": [
+        null
+      ],
+      "defenseIds": [
+        "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        null,
+        null
+      ]
+    },
+    "items": [
+      {
+        "id": "WPN_3f508360-737c-4e33-b5e7-60ec4dd6db2b",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 4,
+        "uses": 75,
+        "location": {
+          "kind": "carried"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "61c91bce-838e-4c70-80fa-f675d9f36c64"
+        }
+      },
+      {
+        "id": "WPN_aae0193f-49b6-4e1e-9344-ec2070e27c3f",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_01",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_346bb343-d995-40d2-9bd5-e61530bfc553",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-clinic",
+          "nodeId": "KDL_06",
+          "runId": "3fd9e361-7af2-4fe0-9154-da0cf3689476"
+        }
+      },
+      {
+        "id": "WPN_41d4efcd-a319-42c5-b179-2d183e846f51",
+        "definitionId": "crowbar_good_resistant",
+        "stage": "tool",
+        "charges": 3,
+        "uses": 75,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-metro",
+          "nodeId": "KDL_07",
+          "runId": "978206d1-2a4a-466d-b8fa-86a0661dab01"
+        }
+      },
+      {
+        "id": "WPN_9eac3029-d58e-4cd5-a13f-e73062042e6a",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 1,
+        "uses": 0,
+        "location": {
+          "kind": "defense",
+          "slot": 0
+        },
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "KDL_07",
+          "runId": "e4a28e85-a435-41a7-947c-6b2e62e402f1"
+        }
+      },
+      {
+        "id": "WPN_c66c5c1d-fd69-4e60-b49c-344410d02831",
+        "definitionId": "crowbar_good_light",
+        "stage": "defense",
+        "charges": 0,
+        "uses": 0,
+        "location": {
+          "kind": "stash"
+        },
+        "source": {
+          "fragmentId": "frag-library",
+          "nodeId": "KDL_06",
+          "runId": "544a5b8c-f32c-4062-89b4-4d49dc3528d6"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "scope": "Production domain calls + static inspection of scene subscribers. Not a played run.",
+  "first": {
+    "cycle": 1,
+    "before": {
+      "kindlingReserve": 0,
+      "cycle": 1,
+      "modules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 70,
+          "maxHp": 100
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 70,
+          "maxHp": 100
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 70,
+          "maxHp": 100
+        }
+      ],
+      "moduleMaxHpTier": 0,
+      "pendingSideEffects": [],
+      "upgradeDiscount": 0,
+      "moduleSwapActive": false,
+      "repairBonusHp": 0
+    },
+    "impact": {
+      "damages": [
+        {
+          "moduleId": "CORE",
+          "damage": 20,
+          "newHp": 50
+        },
+        {
+          "moduleId": "STORAGE",
+          "damage": 5,
+          "newHp": 65
+        },
+        {
+          "moduleId": "PURIFIER",
+          "damage": 5,
+          "newHp": 65
+        }
+      ],
+      "intensity": 1,
+      "skipped": false,
+      "primaryModuleId": "CORE",
+      "trueSeverity": "light"
+    },
+    "after": {
+      "kindlingReserve": 0,
+      "cycle": 1,
+      "modules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 50,
+          "maxHp": 100
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 65,
+          "maxHp": 100
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 65,
+          "maxHp": 100
+        }
+      ],
+      "moduleMaxHpTier": 0,
+      "pendingSideEffects": [],
+      "upgradeDiscount": 0,
+      "moduleSwapActive": false,
+      "repairBonusHp": 0
+    }
+  },
+  "stability": {
+    "crest": {
+      "from": "crest",
+      "to": "ebb",
+      "newTideNumber": 1
+    },
+    "afterCrest": {
+      "progress": 30,
+      "reached": false
+    },
+    "nextTide": {
+      "from": "ebb",
+      "to": "rise",
+      "newTideNumber": 2
+    },
+    "afterTide": {
+      "progress": 30,
+      "reached": false
+    },
+    "afterZero": {
+      "progress": 30,
+      "reached": false
+    }
+  },
+  "emptyExtractionGate": "purification-scene.ts405 requires kindlingGained > 0 for both credit and stability"
+}

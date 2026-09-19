@@ -1,9 +1,24 @@
+import { runtimeRecord, runtimeNumber } from './ai/runtime-validation';
+export interface HazardControlRuntimeState { suppressions: [string, number][]; delays: [string, number][]; recovery: 'none' | 'wait-rest' | 'warning'; paintInflated: boolean }
 /** Source-scoped temporary environmental controls; owns no damage, geometry or item uses. */
 export class EnvironmentHazardControl {
   private readonly suppressions = new Map<string, number>();
   private readonly delays = new Map<string, number>();
   private recovery: 'none' | 'wait-rest' | 'warning' = 'none';
   private paintInflated = false;
+
+  exportRuntimeState(): HazardControlRuntimeState { return { suppressions: [...this.suppressions], delays: [...this.delays], recovery: this.recovery, paintInflated: this.paintInflated }; }
+  static validateRuntimeState(value: unknown): value is HazardControlRuntimeState {
+    if (!runtimeRecord(value) || !['none', 'wait-rest', 'warning'].includes(value.recovery as string) || typeof value.paintInflated !== 'boolean') return false;
+    return [value.suppressions, value.delays].every(rows => Array.isArray(rows) && rows.length < 1024 && rows.every(row => Array.isArray(row) && row.length === 2 && typeof row[0] === 'string' && row[0].length > 0 && runtimeNumber(row[1], 0)) && new Set(rows.map(row => row[0])).size === rows.length);
+  }
+  restoreRuntimeState(value: unknown): void {
+    if (!EnvironmentHazardControl.validateRuntimeState(value)) throw new Error('Invalid hazard control');
+    this.suppressions.clear(); this.delays.clear();
+    for (const [id, time] of value.suppressions) this.suppressions.set(id, time);
+    for (const [id, time] of value.delays) this.delays.set(id, time);
+    this.recovery = value.recovery; this.paintInflated = value.paintInflated;
+  }
 
   static valid(sourceId: string, durationMs: number): boolean {
     return sourceId.trim().length > 0 && Number.isFinite(durationMs) && durationMs > 0;

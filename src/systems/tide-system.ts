@@ -19,6 +19,8 @@ export interface PhaseChangeInfo {
   from: TidePhase;
   to: TidePhase;
   newTideNumber: number;
+  /** Only true when a finite Crest ended without any module reaching zero. */
+  survivedCrest?: boolean;
 }
 
 const TIDES = GAME_CONSTANTS.TIDE.TIDES;
@@ -70,9 +72,10 @@ export const tideSystem = {
    *
    * Returns phase change info if a transition occurred, or null otherwise.
    */
-  advanceCycle(): PhaseChangeInfo | null {
+  advanceCycle(modulesIntact = true): PhaseChangeInfo | null {
     const cfg = getTideConfig(state.tideNumber);
     const prevPhase = state.phase;
+    if (prevPhase === 'crest') state.crestIntact = (state.crestIntact ?? true) && modulesIntact;
     state.cycleInPhase++;
 
     // Apply intensity change for the current phase
@@ -105,6 +108,8 @@ export const tideSystem = {
       state.phase = 'crest';
       state.cycleInPhase = 0;
       state.currentIntensity = cfg.peak;
+      // Carry entry damage into the Crest contract, even if it is repaired later.
+      state.crestIntact = modulesIntact;
       phaseChanged = true;
     } else if (state.phase === 'crest' && !isFinalTide(state.tideNumber) && state.cycleInPhase >= cfg.crestCycles) {
       state.phase = 'ebb';
@@ -125,7 +130,8 @@ export const tideSystem = {
         phase: state.phase,
         intensity: state.currentIntensity,
       });
-      return { from: prevPhase, to: state.phase, newTideNumber: state.tideNumber };
+      return { from: prevPhase, to: state.phase, newTideNumber: state.tideNumber,
+        survivedCrest: prevPhase === 'crest' && state.phase === 'ebb' && state.crestIntact === true };
     }
 
     return null;

@@ -50,14 +50,14 @@ const SURFACE = {
   /** Cold shift at ellipse edge */
   coldR: -8, coldG: -3, coldB: 10,
   /** Worn path brightness bonus */
-  pathBrightness: 2,
+  pathBrightness: 4,
   /** Path width in pixels (half-width for falloff) */
-  pathHalfWidth: 1.0,
+  pathHalfWidth: 9,
   /** Joint line interval range (px) */
-  jointMinSpacing: 22,
-  jointMaxSpacing: 48,
+  jointMinSpacing: 48,
+  jointMaxSpacing: 82,
   /** Joint line darkening */
-  jointDarken: 12,
+  jointDarken: 9,
   /** Warm debris density (per 100 px^2 inside the inner 60%) */
   debrisPer100: 0.01,
   /** Vignette band width in px (ellipse edge to full black) */
@@ -67,7 +67,7 @@ const SURFACE = {
   /** Teal seep distance from ellipse edge (px, inward) */
   tealBandInner: 8,
   /** Dither amplitude to prevent banding */
-  ditherAmp: 10,
+  ditherAmp: 5,
 } as const;
 
 // --- Deterministic value noise (mirrors procedural-surface.ts) ---
@@ -268,9 +268,9 @@ export function createPurificationSurfaceTexture(
   for (const jy of joints.horizontals) {
     for (let x = 0; x < W; x++) {
       // Skip pixels with ~18% probability for random gaps
-      if (hash2(x, jy, 6161) < 0.18) continue;
+      if (vnoise(x, jy, 1 / 13, 6161) < 0.3) continue;
       // Noise offset of +/-3 px vertically (wobbly lines)
-      const offset = Math.round((hash2(x, jy, 8888) - 0.5) * 6);
+      const offset = Math.round((vnoise(x, jy, 1 / 34, 8888) - 0.5) * 6);
       const yy = jy + offset;
       if (yy >= 0 && yy < H) {
         const col = (x / T) | 0;
@@ -288,7 +288,7 @@ export function createPurificationSurfaceTexture(
   for (const jx of joints.verticals) {
     for (let y = 0; y < H; y++) {
       // Skip pixels with ~18% probability for random gaps
-      if (hash2(jx, y, 6262) < 0.18) continue;
+      if (vnoise(jx, y, 1 / 13, 6262) < 0.3) continue;
       // Determine which horizontal band this y belongs to
       let bandIdx = 0;
       for (let b = 1; b < hBands.length; b++) {
@@ -298,7 +298,7 @@ export function createPurificationSurfaceTexture(
       // Per-slab horizontal offset based on band index
       const slabOffset = Math.round((hash2(jx, bandIdx, 5050) - 0.5) * 12);
       // Noise offset of +/-3 px horizontally (wobbly lines)
-      const offset = Math.round((hash2(jx, y, 9999) - 0.5) * 6);
+      const offset = Math.round((vnoise(jx, y, 1 / 34, 9999) - 0.5) * 6);
       const xx = jx + offset + slabOffset;
       if (xx >= 0 && xx < W) {
         const col = (xx / T) | 0;
@@ -360,6 +360,26 @@ export function createPurificationSurfaceTexture(
     placed++;
   }
 
+  // Maintenance belongs to the actual work sites: a rubbed approach, broad
+  // patched concrete and embedded anchor scars. This is baked on the ground,
+  // never another prop/collision and never a glowing circle under each machine.
+  const maintenance = new Int8Array(W * H);
+  interactionPoints.forEach((point, site) => {
+    for (let dy = -18; dy <= 24; dy++) for (let dx = -31; dx <= 31; dx++) {
+      const x = Math.round(point.x + dx), y = Math.round(point.y + dy);
+      if (x < 0 || y < 0 || x >= W || y >= H || !shape.isInside(x, y)) continue;
+      const edge = Math.pow(dx / (25 + site % 3 * 3), 2) + Math.pow((dy - 3) / (17 + site % 2 * 3), 2);
+      const tear = vnoise(x, y, 1 / 7, 351 + site * 19);
+      if (edge > 0.8 + tear * 0.7) continue;
+      // Skim repairs and their chipped lower edges form connected masses.
+      let value = dy > 5 ? 4 : -3;
+      if (edge > 0.96 && tear > 0.55) value = -4;
+      if (dy > 5 && dy < 19 && Math.abs(dx + 3) < 13 && tear > 0.52) value = 6;
+      if ((dx === -14 || dx === 15) && dy >= -2 && dy <= 3) value = -13;
+      maintenance[y * W + x] = value;
+    }
+  });
+
   // --- Per-pixel rendering (using BoundaryShape for distance) ---
 
   for (let y = 0; y < H; y++) {
@@ -398,7 +418,9 @@ export function createPurificationSurfaceTexture(
 
       // --- Layer 1: Stone slab noise base ---
       const noiseVal = (fractal3(x, y, 101) - 0.5) * 2; // range -1..1
-      let brightness = SURFACE.baseBrightness + noiseVal * SURFACE.noiseAmp;
+      const broad = vnoise(x, y, 1 / 112, 911);
+      const slabTone = broad > 0.58 ? 4 : broad < 0.35 ? -5 : 0;
+      let brightness = SURFACE.baseBrightness + noiseVal * SURFACE.noiseAmp + slabTone + maintenance[y * W + x]!;
 
       // --- Layer 2: Radial temperature gradient ---
       // blobDist: 0 at center, 1 at boundary edge

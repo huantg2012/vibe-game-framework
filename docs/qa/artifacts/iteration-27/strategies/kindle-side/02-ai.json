@@ -1,0 +1,1572 @@
+{
+  "version": 1,
+  "signature": "46c5e1e2",
+  "rosterSignature": "{\"spawns\":[{\"id\":\"ENM_INF_01\",\"type\":\"infiltrator\",\"spawn\":{\"col\":49,\"row\":14},\"facing\":-71.56505117707799,\"patrol\":{\"waypoints\":[{\"col\":49,\"row\":14},{\"col\":50,\"row\":11}],\"mode\":\"pingpong\",\"pauseMs\":1200},\"form\":{\"substrate\":\"mammal_remnant\",\"coverage\":\"infiltrate\",\"continuity\":\"monolith\",\"occupancy\":\"floor\",\"portfolio\":\"jia\",\"lexemes\":{\"motion\":\"motion_patrol\",\"sense\":\"sense_cone\",\"rhythm\":\"rhythm_open\",\"contact\":\"contact_melee_three\"}}},{\"id\":\"ENM_INF_02\",\"type\":\"infiltrator\",\"spawn\":{\"col\":21,\"row\":20},\"facing\":-14.036243467926477,\"patrol\":{\"waypoints\":[{\"col\":21,\"row\":20},{\"col\":29,\"row\":18}],\"mode\":\"pingpong\",\"pauseMs\":1200},\"form\":{\"substrate\":\"insect_remnant\",\"coverage\":\"overwrite\",\"continuity\":\"monolith\",\"occupancy\":\"floor\",\"portfolio\":\"jia\",\"lexemes\":{\"motion\":\"motion_anchor\",\"sense\":\"sense_cone\",\"rhythm\":\"rhythm_open\",\"contact\":\"contact_melee_three\"}}},{\"id\":\"ENM_RWR_01\",\"type\":\"rewriter\",\"spawn\":{\"col\":31,\"row\":19},\"facing\":33.690067525979785,\"patrol\":{\"waypoints\":[{\"col\":31,\"row\":19},{\"col\":37,\"row\":23}],\"mode\":\"pingpong\",\"pauseMs\":1200},\"form\":{\"substrate\":\"worm_remnant\",\"coverage\":\"rewrite\",\"continuity\":\"monolith\",\"occupancy\":\"floor\",\"portfolio\":\"jia\",\"lexemes\":{\"motion\":\"motion_patrol\",\"sense\":\"sense_hear\",\"rhythm\":\"rhythm_pulse\",\"contact\":\"contact_melee_three\"}}},{\"id\":\"ENM_INF_04\",\"type\":\"infiltrator\",\"spawn\":{\"col\":38,\"row\":21},\"facing\":-6.34019174590991,\"patrol\":{\"waypoints\":[{\"col\":38,\"row\":21},{\"col\":47,\"row\":20}],\"mode\":\"pingpong\",\"pauseMs\":1200},\"form\":{\"substrate\":\"insect_remnant\",\"coverage\":\"infiltrate\",\"continuity\":\"monolith\",\"occupancy\":\"floor\",\"portfolio\":\"jia\",\"lexemes\":{\"motion\":\"motion_patrol\",\"sense\":\"sense_cone\",\"rhythm\":\"rhythm_pulse\",\"contact\":\"contact_melee_three\"}}}],\"grid\":{\"cols\":64,\"rows\":42,\"tileSize\":32},\"routes\":[{\"id\":\"ENM_INF_01\",\"config\":{\"role\":\"infiltrator\",\"profile\":{\"role\":\"infiltrator\",\"displayName\":\"渗透体\",\"sightRange\":180,\"sightHalfAngleCore\":55,\"sightRangePeriph\":90,\"sightHalfAnglePeriph\":90,\"chaseSightRange\":210,\"hearingRange\":100,\"hearingMoveMult\":1,\"hearingStillRange\":0,\"hearingWallFactor\":0.6,\"visionWeight\":1,\"hearingWeight\":0,\"hearingMaxPush\":\"suspicious\",\"patrolSpeed\":30,\"chaseSpeed\":65,\"suspiciousSpeed\":22,\"alertSpeed\":45,\"returnSpeed\":38},\"bodySize\":20,\"speeds\":{\"patrol\":33,\"suspicious\":24.200000000000003,\"alert\":49.50000000000001,\"chase\":71.5,\"return\":41.800000000000004},\"sight\":{\"rangeCore\":180,\"halfAngleCore\":0.9599310885968813,\"rangePeripheral\":90,\"halfAnglePeripheral\":1.5707963267948966,\"chaseRange\":210},\"hearing\":{\"range\":100,\"wallFactor\":0.6,\"posJitter\":32}},\"waypoints\":[{\"x\":1584,\"y\":464},{\"x\":1616,\"y\":368}],\"paths\":[[{\"x\":1584,\"y\":368},{\"x\":1616,\"y\":368}],null,null,[{\"x\":1584,\"y\":368},{\"x\":1584,\"y\":464}]]},{\"id\":\"ENM_INF_02\",\"config\":{\"role\":\"infiltrator\",\"profile\":{\"role\":\"infiltrator\",\"displayName\":\"渗透体\",\"sightRange\":180,\"sightHalfAngleCore\":55,\"sightRangePeriph\":90,\"sightHalfAnglePeriph\":90,\"chaseSightRange\":210,\"hearingRange\":100,\"hearingMoveMult\":1,\"hearingStillRange\":0,\"hearingWallFactor\":0.6,\"visionWeight\":1,\"hearingWeight\":0,\"hearingMaxPush\":\"suspicious\",\"patrolSpeed\":30,\"chaseSpeed\":65,\"suspiciousSpeed\":22,\"alertSpeed\":45,\"returnSpeed\":38},\"bodySize\":20,\"speeds\":{\"patrol\":30,\"suspicious\":22,\"alert\":45,\"chase\":65,\"return\":38},\"sight\":{\"rangeCore\":180,\"halfAngleCore\":0.9599310885968813,\"rangePeripheral\":90,\"halfAnglePeripheral\":1.5707963267948966,\"chaseRange\":210},\"hearing\":{\"range\":100,\"wallFactor\":0.6,\"posJitter\":32}},\"waypoints\":[{\"x\":688,\"y\":656}],\"paths\":[]},{\"id\":\"ENM_RWR_01\",\"config\":{\"role\":\"rewriter\",\"profile\":{\"role\":\"rewriter\",\"displayName\":\"改写体\",\"sightRange\":180,\"sightHalfAngleCore\":32,\"sightRangePeriph\":56,\"sightHalfAnglePeriph\":50,\"chaseSightRange\":210,\"hearingRange\":150,\"hearingMoveMult\":2,\"hearingStillRange\":40,\"hearingWallFactor\":0.6,\"visionWeight\":0.45,\"hearingWeight\":1,\"hearingMaxPush\":\"alert\",\"patrolSpeed\":30,\"chaseSpeed\":65,\"suspiciousSpeed\":22,\"alertSpeed\":45,\"returnSpeed\":38},\"bodySize\":20,\"speeds\":{\"patrol\":18,\"suspicious\":13.2,\"alert\":27,\"chase\":39,\"return\":22.8},\"sight\":{\"rangeCore\":180,\"halfAngleCore\":0.5585053606381855,\"rangePeripheral\":56,\"halfAnglePeripheral\":0.8726646259971648,\"chaseRange\":210},\"hearing\":{\"range\":150,\"wallFactor\":0.6,\"posJitter\":32}},\"waypoints\":[{\"x\":1008,\"y\":624},{\"x\":1200,\"y\":752}],\"paths\":[[{\"x\":1008,\"y\":688},{\"x\":1200,\"y\":752}],null,null,[{\"x\":1008,\"y\":688},{\"x\":1008,\"y\":624}]]},{\"id\":\"ENM_INF_04\",\"config\":{\"role\":\"infiltrator\",\"profile\":{\"role\":\"infiltrator\",\"displayName\":\"渗透体\",\"sightRange\":180,\"sightHalfAngleCore\":55,\"sightRangePeriph\":90,\"sightHalfAnglePeriph\":90,\"chaseSightRange\":210,\"hearingRange\":100,\"hearingMoveMult\":1,\"hearingStillRange\":0,\"hearingWallFactor\":0.6,\"visionWeight\":1,\"hearingWeight\":0,\"hearingMaxPush\":\"suspicious\",\"patrolSpeed\":30,\"chaseSpeed\":65,\"suspiciousSpeed\":22,\"alertSpeed\":45,\"returnSpeed\":38},\"bodySize\":20,\"speeds\":{\"patrol\":30,\"suspicious\":22,\"alert\":45,\"chase\":65,\"return\":38},\"sight\":{\"rangeCore\":180,\"halfAngleCore\":0.9599310885968813,\"rangePeripheral\":90,\"halfAnglePeripheral\":1.5707963267948966,\"chaseRange\":210},\"hearing\":{\"range\":100,\"wallFactor\":0.6,\"posJitter\":32}},\"waypoints\":[{\"x\":1232,\"y\":688},{\"x\":1520,\"y\":656}],\"paths\":[[{\"x\":1328,\"y\":656},{\"x\":1520,\"y\":656}],null,null,[{\"x\":1264,\"y\":656},{\"x\":1232,\"y\":688}]]}]}",
+  "runSeed": 1038043786,
+  "randomState": 1038043786,
+  "playerPos": {
+    "x": 400,
+    "y": 720
+  },
+  "previousPlayerPos": {
+    "x": 400,
+    "y": 720
+  },
+  "playerVel": {
+    "x": 0,
+    "y": 0
+  },
+  "playerIsMoving": false,
+  "hasPreviousPlayerPos": true,
+  "physicsElapsedMs": 0,
+  "hearingRangeMult": 1,
+  "hearingSuppressed": false,
+  "visualDecoys": [],
+  "enemies": [
+    {
+      "id": "ENM_INF_01",
+      "entity": {
+        "version": 1,
+        "id": "ENM_INF_01",
+        "position": {
+          "x": 1584,
+          "y": 460.1499999999999
+        },
+        "bodyPosition": {
+          "x": 1574,
+          "y": 450.1499999999999
+        },
+        "velocity": {
+          "x": 0,
+          "y": -33
+        },
+        "actualVelocity": {
+          "x": 0,
+          "y": -33.000000000000675
+        },
+        "attackCommitted": false,
+        "activityHearingAccumMs": 0,
+        "activity": {
+          "elapsed": 0,
+          "encountered": false,
+          "visual": {
+            "phase": "active",
+            "progress": 1
+          }
+        },
+        "hitchMs": 0,
+        "hitchWasLunge": false
+      },
+      "state": {
+        "facingAngle": -1.5707963267948966,
+        "detection": 0,
+        "losGraceMs": 0,
+        "perceptionAccumMs": 135.02000000000044,
+        "suspicionTimerMs": 0,
+        "searchTimerMs": 0,
+        "waypointPauseMs": 0,
+        "suspiciousTurnHoldMs": 0,
+        "searchHoldMs": 0,
+        "scanPhaseMs": 0,
+        "scanBaseAngle": -1.2490457723982544,
+        "repathCooldownMs": 0,
+        "pathRequestAgeMs": 0,
+        "preferPathMs": 0,
+        "stuckMs": 0,
+        "alertEmitCooldownMs": 0,
+        "detectionFillRateMult": 1,
+        "scanIndex": 0,
+        "searchPointCount": 0,
+        "searchIndex": 0,
+        "patrolIndex": 1,
+        "pathLength": 2,
+        "pathCursor": 0,
+        "pathFailCount": 0,
+        "hearingJitterLocked": false,
+        "pathRequestPending": false,
+        "engaged": false,
+        "alertEpisodeActive": false,
+        "pendingDamage": false,
+        "pendingNoiseIsLure": false,
+        "investigatingLure": false,
+        "movementDirLocked": false,
+        "targetingDecoy": false,
+        "escalationSuppressed": false,
+        "position": {
+          "x": 1584,
+          "y": 460.1499999999999
+        },
+        "velocity": {
+          "x": 0,
+          "y": -33
+        },
+        "pathRequestTarget": {
+          "x": 0,
+          "y": 0
+        },
+        "pathTargetAtRequest": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingDamagePos": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingNoisePos": {
+          "x": 0,
+          "y": 0
+        },
+        "lockedDir": {
+          "x": 0,
+          "y": 0
+        },
+        "lastSeenPlayerPos": null,
+        "lastSeenPlayerVel": null,
+        "investigatePos": null,
+        "state": "patrol",
+        "facing4": "up",
+        "role": "infiltrator",
+        "patrolMode": "pingpong",
+        "patrolDir": 1,
+        "lastEmittedLevel": "none",
+        "pendingNoiseLevel": null,
+        "searchPoints": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "dynamicPath": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "currentPatrolLegIndex": 0,
+        "pathBinding": {
+          "kind": "patrol",
+          "index": 0
+        }
+      },
+      "attackInterruptRevision": 0
+    },
+    {
+      "id": "ENM_INF_02",
+      "entity": {
+        "version": 1,
+        "id": "ENM_INF_02",
+        "position": {
+          "x": 688,
+          "y": 656
+        },
+        "bodyPosition": {
+          "x": 678,
+          "y": 646
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "actualVelocity": {
+          "x": 0,
+          "y": 0
+        },
+        "attackCommitted": false,
+        "activityHearingAccumMs": 0,
+        "activity": {
+          "elapsed": 0,
+          "encountered": false,
+          "visual": {
+            "phase": "active",
+            "progress": 1
+          }
+        },
+        "hitchMs": 0,
+        "hitchWasLunge": false
+      },
+      "state": {
+        "facingAngle": -0.24497866312686412,
+        "detection": 0,
+        "losGraceMs": 0,
+        "perceptionAccumMs": 60,
+        "suspicionTimerMs": 0,
+        "searchTimerMs": 0,
+        "waypointPauseMs": 0,
+        "suspiciousTurnHoldMs": 0,
+        "searchHoldMs": 0,
+        "scanPhaseMs": 0,
+        "scanBaseAngle": -0.24497866312686412,
+        "repathCooldownMs": 0,
+        "pathRequestAgeMs": 0,
+        "preferPathMs": 0,
+        "stuckMs": 0,
+        "alertEmitCooldownMs": 0,
+        "detectionFillRateMult": 1,
+        "scanIndex": 0,
+        "searchPointCount": 0,
+        "searchIndex": 0,
+        "patrolIndex": 0,
+        "pathLength": 0,
+        "pathCursor": 0,
+        "pathFailCount": 0,
+        "hearingJitterLocked": false,
+        "pathRequestPending": false,
+        "engaged": false,
+        "alertEpisodeActive": false,
+        "pendingDamage": false,
+        "pendingNoiseIsLure": false,
+        "investigatingLure": false,
+        "movementDirLocked": false,
+        "targetingDecoy": false,
+        "escalationSuppressed": false,
+        "position": {
+          "x": 688,
+          "y": 656
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "pathRequestTarget": {
+          "x": 0,
+          "y": 0
+        },
+        "pathTargetAtRequest": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingDamagePos": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingNoisePos": {
+          "x": 0,
+          "y": 0
+        },
+        "lockedDir": {
+          "x": 0,
+          "y": 0
+        },
+        "lastSeenPlayerPos": null,
+        "lastSeenPlayerVel": null,
+        "investigatePos": null,
+        "state": "patrol",
+        "facing4": "right",
+        "role": "infiltrator",
+        "patrolMode": "static",
+        "patrolDir": 1,
+        "lastEmittedLevel": "none",
+        "pendingNoiseLevel": null,
+        "searchPoints": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "dynamicPath": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "currentPatrolLegIndex": null,
+        "pathBinding": null
+      },
+      "attackInterruptRevision": 0
+    },
+    {
+      "id": "ENM_RWR_01",
+      "entity": {
+        "version": 1,
+        "id": "ENM_RWR_01",
+        "position": {
+          "x": 1008,
+          "y": 626.0999999999997
+        },
+        "bodyPosition": {
+          "x": 998,
+          "y": 616.0999999999997
+        },
+        "velocity": {
+          "x": 0,
+          "y": 18
+        },
+        "actualVelocity": {
+          "x": 0,
+          "y": 17.999999999997268
+        },
+        "attackCommitted": false,
+        "activityHearingAccumMs": 0,
+        "activity": {
+          "elapsed": 4393.02,
+          "encountered": false,
+          "visual": {
+            "phase": "active",
+            "progress": 1
+          }
+        },
+        "hitchMs": 0,
+        "hitchWasLunge": false
+      },
+      "state": {
+        "facingAngle": 1.436358283722958,
+        "detection": 0,
+        "losGraceMs": 0,
+        "perceptionAccumMs": 60,
+        "suspicionTimerMs": 0,
+        "searchTimerMs": 0,
+        "waypointPauseMs": 0,
+        "suspiciousTurnHoldMs": 0,
+        "searchHoldMs": 0,
+        "scanPhaseMs": 0,
+        "scanBaseAngle": 0.5880026035475675,
+        "repathCooldownMs": 0,
+        "pathRequestAgeMs": 0,
+        "preferPathMs": 0,
+        "stuckMs": 0,
+        "alertEmitCooldownMs": 0,
+        "detectionFillRateMult": 1,
+        "scanIndex": 0,
+        "searchPointCount": 0,
+        "searchIndex": 0,
+        "patrolIndex": 1,
+        "pathLength": 2,
+        "pathCursor": 0,
+        "pathFailCount": 0,
+        "hearingJitterLocked": false,
+        "pathRequestPending": false,
+        "engaged": false,
+        "alertEpisodeActive": false,
+        "pendingDamage": false,
+        "pendingNoiseIsLure": false,
+        "investigatingLure": false,
+        "movementDirLocked": false,
+        "targetingDecoy": false,
+        "escalationSuppressed": false,
+        "position": {
+          "x": 1008,
+          "y": 626.0999999999997
+        },
+        "velocity": {
+          "x": 0,
+          "y": 18
+        },
+        "pathRequestTarget": {
+          "x": 0,
+          "y": 0
+        },
+        "pathTargetAtRequest": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingDamagePos": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingNoisePos": {
+          "x": 0,
+          "y": 0
+        },
+        "lockedDir": {
+          "x": 0,
+          "y": 0
+        },
+        "lastSeenPlayerPos": null,
+        "lastSeenPlayerVel": null,
+        "investigatePos": null,
+        "state": "patrol",
+        "facing4": "down",
+        "role": "rewriter",
+        "patrolMode": "pingpong",
+        "patrolDir": 1,
+        "lastEmittedLevel": "none",
+        "pendingNoiseLevel": null,
+        "searchPoints": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "dynamicPath": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "currentPatrolLegIndex": 0,
+        "pathBinding": {
+          "kind": "patrol",
+          "index": 0
+        }
+      },
+      "attackInterruptRevision": 0
+    },
+    {
+      "id": "ENM_INF_04",
+      "entity": {
+        "version": 1,
+        "id": "ENM_INF_04",
+        "position": {
+          "x": 1232,
+          "y": 688
+        },
+        "bodyPosition": {
+          "x": 1222,
+          "y": 678
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "actualVelocity": {
+          "x": 0,
+          "y": 0
+        },
+        "attackCommitted": false,
+        "activityHearingAccumMs": 0,
+        "activity": {
+          "elapsed": 1981.0200000000004,
+          "encountered": false,
+          "visual": {
+            "phase": "rest",
+            "progress": 0
+          }
+        },
+        "hitchMs": 0,
+        "hitchWasLunge": false
+      },
+      "state": {
+        "facingAngle": -0.11065722117389565,
+        "detection": 0,
+        "losGraceMs": 0,
+        "perceptionAccumMs": 0,
+        "suspicionTimerMs": 0,
+        "searchTimerMs": 0,
+        "waypointPauseMs": 0,
+        "suspiciousTurnHoldMs": 0,
+        "searchHoldMs": 0,
+        "scanPhaseMs": 0,
+        "scanBaseAngle": -0.11065722117389565,
+        "repathCooldownMs": 0,
+        "pathRequestAgeMs": 0,
+        "preferPathMs": 0,
+        "stuckMs": 0,
+        "alertEmitCooldownMs": 0,
+        "detectionFillRateMult": 1,
+        "scanIndex": 0,
+        "searchPointCount": 0,
+        "searchIndex": 0,
+        "patrolIndex": 1,
+        "pathLength": 2,
+        "pathCursor": 0,
+        "pathFailCount": 0,
+        "hearingJitterLocked": false,
+        "pathRequestPending": false,
+        "engaged": false,
+        "alertEpisodeActive": false,
+        "pendingDamage": false,
+        "pendingNoiseIsLure": false,
+        "investigatingLure": false,
+        "movementDirLocked": false,
+        "targetingDecoy": false,
+        "escalationSuppressed": false,
+        "position": {
+          "x": 1232,
+          "y": 688
+        },
+        "velocity": {
+          "x": 0,
+          "y": 0
+        },
+        "pathRequestTarget": {
+          "x": 0,
+          "y": 0
+        },
+        "pathTargetAtRequest": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingDamagePos": {
+          "x": 0,
+          "y": 0
+        },
+        "pendingNoisePos": {
+          "x": 0,
+          "y": 0
+        },
+        "lockedDir": {
+          "x": 0,
+          "y": 0
+        },
+        "lastSeenPlayerPos": null,
+        "lastSeenPlayerVel": null,
+        "investigatePos": null,
+        "state": "patrol",
+        "facing4": "right",
+        "role": "infiltrator",
+        "patrolMode": "pingpong",
+        "patrolDir": 1,
+        "lastEmittedLevel": "none",
+        "pendingNoiseLevel": null,
+        "searchPoints": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "dynamicPath": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "currentPatrolLegIndex": 0,
+        "pathBinding": {
+          "kind": "patrol",
+          "index": 0
+        }
+      },
+      "attackInterruptRevision": 0
+    }
+  ]
+}

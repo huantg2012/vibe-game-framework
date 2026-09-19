@@ -32,6 +32,7 @@ export interface AIRuntimeState {
   readonly hearingRangeMult: number;
   readonly hearingSuppressed: boolean;
   readonly enemies: readonly AIRuntimeEnemy[];
+  readonly visualDecoys?: readonly (readonly [string, Vector2])[];
 }
 
 const numberFields = [
@@ -77,7 +78,8 @@ export function validateAIRuntimeState(value: unknown): value is AIRuntimeState 
     || !runtimeVector(value.previousPlayerPos) || !runtimeVector(value.playerVel)
     || typeof value.playerIsMoving !== 'boolean' || typeof value.hasPreviousPlayerPos !== 'boolean'
     || !runtimeNumber(value.physicsElapsedMs, 0) || !runtimeNumber(value.hearingRangeMult, 0)
-    || typeof value.hearingSuppressed !== 'boolean' || !Array.isArray(value.enemies) || value.enemies.length > 2) return false;
+    || typeof value.hearingSuppressed !== 'boolean' || !Array.isArray(value.enemies) || value.enemies.length > 4096) return false;
+  if (value.visualDecoys !== undefined && (!Array.isArray(value.visualDecoys) || value.visualDecoys.length > 1024 || !value.visualDecoys.every(row => Array.isArray(row) && row.length === 2 && typeof row[0] === 'string' && runtimeVector(row[1])) || new Set(value.visualDecoys.map(row => row[0])).size !== value.visualDecoys.length)) return false;
   const ids = new Set<string>();
   for (const enemy of value.enemies) {
     if (!runtimeRecord(enemy) || typeof enemy.id !== 'string' || !enemy.id || ids.has(enemy.id)

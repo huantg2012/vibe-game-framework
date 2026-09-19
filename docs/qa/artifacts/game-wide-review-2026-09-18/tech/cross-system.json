@@ -1,0 +1,1117 @@
+{
+  "generatedAt": "2026-09-18T14:37:55.834Z",
+  "scope": "Production modules in Node; Phaser/renderer stub; not gameplay or UI evidence",
+  "growthRows": [
+    {
+      "level": 0,
+      "modifiers": {
+        "chaosResist": 0,
+        "kindlingAffinity": 0,
+        "vitalityBonus": 0,
+        "forecastClarity": 0
+      },
+      "baseModifiers": {
+        "chaosRateModifier": 0.79,
+        "kindlingValueModifier": 1.35,
+        "startingChaos": 15
+      },
+      "rewards": [
+        1,
+        2,
+        5
+      ],
+      "combatMaxHp": 100,
+      "displayExpectedHp": 100
+    },
+    {
+      "level": 1,
+      "modifiers": {
+        "chaosResist": 0,
+        "kindlingAffinity": 1,
+        "vitalityBonus": 15,
+        "forecastClarity": 0
+      },
+      "baseModifiers": {
+        "chaosRateModifier": 0.79,
+        "kindlingValueModifier": 1.35,
+        "startingChaos": 15
+      },
+      "rewards": [
+        1,
+        2,
+        5
+      ],
+      "combatMaxHp": 100,
+      "displayExpectedHp": 115
+    },
+    {
+      "level": 3,
+      "modifiers": {
+        "chaosResist": 0,
+        "kindlingAffinity": 3,
+        "vitalityBonus": 45,
+        "forecastClarity": 0
+      },
+      "baseModifiers": {
+        "chaosRateModifier": 0.79,
+        "kindlingValueModifier": 1.35,
+        "startingChaos": 15
+      },
+      "rewards": [
+        1,
+        2,
+        5
+      ],
+      "combatMaxHp": 100,
+      "displayExpectedHp": 145
+    }
+  ],
+  "failedGrowth": [
+    {
+      "kind": "growth",
+      "error": "Error: simulated quota",
+      "before": {
+        "game": {
+          "kindlingReserve": 50,
+          "cycle": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 70,
+              "maxHp": 100
+            }
+          ],
+          "moduleMaxHpTier": 0,
+          "pendingSideEffects": [],
+          "upgradeDiscount": 0,
+          "moduleSwapActive": false,
+          "repairBonusHp": 0
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        }
+      },
+      "after": {
+        "game": {
+          "kindlingReserve": 42,
+          "cycle": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 70,
+              "maxHp": 100
+            }
+          ],
+          "moduleMaxHpTier": 0,
+          "pendingSideEffects": [],
+          "upgradeDiscount": 0,
+          "moduleSwapActive": false,
+          "repairBonusHp": 0
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 1,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          }
+        },
+        "stability": {
+          "progress": 1,
+          "reached": false
+        }
+      },
+      "savedBytesUnchanged": true,
+      "pendingSave": false
+    },
+    {
+      "kind": "thicken",
+      "error": "Error: simulated quota",
+      "before": {
+        "game": {
+          "kindlingReserve": 50,
+          "cycle": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 70,
+              "maxHp": 100
+            }
+          ],
+          "moduleMaxHpTier": 0,
+          "pendingSideEffects": [],
+          "upgradeDiscount": 0,
+          "moduleSwapActive": false,
+          "repairBonusHp": 0
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        }
+      },
+      "after": {
+        "game": {
+          "kindlingReserve": 38,
+          "cycle": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 70,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 70,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 70,
+              "maxHp": 115
+            }
+          ],
+          "moduleMaxHpTier": 1,
+          "pendingSideEffects": [],
+          "upgradeDiscount": 0,
+          "moduleSwapActive": false,
+          "repairBonusHp": 0
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        }
+      },
+      "savedBytesUnchanged": true,
+      "pendingSave": false
+    }
+  ],
+  "costs": [
+    {
+      "id": "growth_chaos_resist",
+      "total": 98,
+      "maxLevel": 5
+    },
+    {
+      "id": "growth_kindling_affinity",
+      "total": 38,
+      "maxLevel": 3
+    },
+    {
+      "id": "growth_vitality",
+      "total": 63,
+      "maxLevel": 4
+    },
+    {
+      "id": "growth_sortie_slot",
+      "total": 40,
+      "maxLevel": 1
+    },
+    {
+      "id": "growth_defense_slot",
+      "total": 35,
+      "maxLevel": 1
+    },
+    {
+      "id": "growth_forecast_clarity",
+      "total": 60,
+      "maxLevel": 3
+    }
+  ],
+  "tideRows": [
+    {
+      "cycle": 1,
+      "before": {
+        "tideNumber": 1,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 1,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.2
+      },
+      "unmitigatedDamage": 30,
+      "repairKindlingTheoretical": 7.5
+    },
+    {
+      "cycle": 2,
+      "before": {
+        "tideNumber": 1,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.2
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 1,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.4
+      },
+      "unmitigatedDamage": 36,
+      "repairKindlingTheoretical": 9
+    },
+    {
+      "cycle": 3,
+      "before": {
+        "tideNumber": 1,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.4
+      },
+      "change": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 1
+      },
+      "after": {
+        "tideNumber": 1,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.6
+      },
+      "unmitigatedDamage": 42,
+      "repairKindlingTheoretical": 10.5
+    },
+    {
+      "cycle": 4,
+      "before": {
+        "tideNumber": 1,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.6
+      },
+      "change": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 1
+      },
+      "after": {
+        "tideNumber": 1,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.6
+      },
+      "unmitigatedDamage": 48,
+      "repairKindlingTheoretical": 12
+    },
+    {
+      "cycle": 5,
+      "before": {
+        "tideNumber": 1,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.6
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 1,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.4
+      },
+      "unmitigatedDamage": 48,
+      "repairKindlingTheoretical": 12
+    },
+    {
+      "cycle": 6,
+      "before": {
+        "tideNumber": 1,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.4
+      },
+      "change": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 2
+      },
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.2
+      },
+      "unmitigatedDamage": 42,
+      "repairKindlingTheoretical": 10.5
+    },
+    {
+      "cycle": 7,
+      "before": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.2
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.4
+      },
+      "unmitigatedDamage": 36,
+      "repairKindlingTheoretical": 9
+    },
+    {
+      "cycle": 8,
+      "before": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.4
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.5999999999999999
+      },
+      "unmitigatedDamage": 42,
+      "repairKindlingTheoretical": 10.5
+    },
+    {
+      "cycle": 9,
+      "before": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.5999999999999999
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 1.7999999999999998
+      },
+      "unmitigatedDamage": 47.99999999999999,
+      "repairKindlingTheoretical": 11.999999999999998
+    },
+    {
+      "cycle": 10,
+      "before": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 1.7999999999999998
+      },
+      "change": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 2
+      },
+      "after": {
+        "tideNumber": 2,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2
+      },
+      "unmitigatedDamage": 53.99999999999999,
+      "repairKindlingTheoretical": 13.499999999999998
+    },
+    {
+      "cycle": 11,
+      "before": {
+        "tideNumber": 2,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2
+      },
+      "change": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 2
+      },
+      "after": {
+        "tideNumber": 2,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2
+      },
+      "unmitigatedDamage": 60,
+      "repairKindlingTheoretical": 15
+    },
+    {
+      "cycle": 12,
+      "before": {
+        "tideNumber": 2,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.75
+      },
+      "unmitigatedDamage": 60,
+      "repairKindlingTheoretical": 15
+    },
+    {
+      "cycle": 13,
+      "before": {
+        "tideNumber": 2,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.75
+      },
+      "change": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 3
+      },
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.5
+      },
+      "unmitigatedDamage": 52.5,
+      "repairKindlingTheoretical": 13.125
+    },
+    {
+      "cycle": 14,
+      "before": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.5
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.725
+      },
+      "unmitigatedDamage": 45,
+      "repairKindlingTheoretical": 11.25
+    },
+    {
+      "cycle": 15,
+      "before": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.725
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.9500000000000002
+      },
+      "unmitigatedDamage": 51.75,
+      "repairKindlingTheoretical": 12.9375
+    },
+    {
+      "cycle": 16,
+      "before": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.9500000000000002
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.1750000000000003
+      },
+      "unmitigatedDamage": 58.50000000000001,
+      "repairKindlingTheoretical": 14.625000000000002
+    },
+    {
+      "cycle": 17,
+      "before": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.1750000000000003
+      },
+      "change": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 3
+      },
+      "after": {
+        "tideNumber": 3,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.4
+      },
+      "unmitigatedDamage": 65.25000000000001,
+      "repairKindlingTheoretical": 16.312500000000004
+    },
+    {
+      "cycle": 18,
+      "before": {
+        "tideNumber": 3,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.4
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.4
+      },
+      "unmitigatedDamage": 72,
+      "repairKindlingTheoretical": 18
+    },
+    {
+      "cycle": 19,
+      "before": {
+        "tideNumber": 3,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.4
+      },
+      "change": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 3
+      },
+      "after": {
+        "tideNumber": 3,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.4
+      },
+      "unmitigatedDamage": 72,
+      "repairKindlingTheoretical": 18
+    },
+    {
+      "cycle": 20,
+      "before": {
+        "tideNumber": 3,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.4
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.1
+      },
+      "unmitigatedDamage": 72,
+      "repairKindlingTheoretical": 18
+    },
+    {
+      "cycle": 21,
+      "before": {
+        "tideNumber": 3,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.1
+      },
+      "change": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 4
+      },
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.8
+      },
+      "unmitigatedDamage": 63,
+      "repairKindlingTheoretical": 15.75
+    },
+    {
+      "cycle": 22,
+      "before": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.8
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.05
+      },
+      "unmitigatedDamage": 54,
+      "repairKindlingTheoretical": 13.5
+    },
+    {
+      "cycle": 23,
+      "before": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.05
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.3
+      },
+      "unmitigatedDamage": 61.49999999999999,
+      "repairKindlingTheoretical": 15.374999999999998
+    },
+    {
+      "cycle": 24,
+      "before": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.3
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.55
+      },
+      "unmitigatedDamage": 69,
+      "repairKindlingTheoretical": 17.25
+    },
+    {
+      "cycle": 25,
+      "before": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.55
+      },
+      "change": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 4
+      },
+      "after": {
+        "tideNumber": 4,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.8
+      },
+      "unmitigatedDamage": 76.5,
+      "repairKindlingTheoretical": 19.125
+    },
+    {
+      "cycle": 26,
+      "before": {
+        "tideNumber": 4,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.8
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.8
+      },
+      "unmitigatedDamage": 84,
+      "repairKindlingTheoretical": 21
+    },
+    {
+      "cycle": 27,
+      "before": {
+        "tideNumber": 4,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.8
+      },
+      "change": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 4
+      },
+      "after": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.8
+      },
+      "unmitigatedDamage": 84,
+      "repairKindlingTheoretical": 21
+    },
+    {
+      "cycle": 28,
+      "before": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.8
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.533333333333333
+      },
+      "unmitigatedDamage": 84,
+      "repairKindlingTheoretical": 21
+    },
+    {
+      "cycle": 29,
+      "before": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.533333333333333
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.2666666666666666
+      },
+      "unmitigatedDamage": 76,
+      "repairKindlingTheoretical": 19
+    },
+    {
+      "cycle": 30,
+      "before": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.2666666666666666
+      },
+      "change": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 5
+      },
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 2
+      },
+      "unmitigatedDamage": 68,
+      "repairKindlingTheoretical": 17
+    },
+    {
+      "cycle": 31,
+      "before": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 2
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.2
+      },
+      "unmitigatedDamage": 60,
+      "repairKindlingTheoretical": 15
+    },
+    {
+      "cycle": 32,
+      "before": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.2
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.4000000000000004
+      },
+      "unmitigatedDamage": 66,
+      "repairKindlingTheoretical": 16.5
+    },
+    {
+      "cycle": 33,
+      "before": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.4000000000000004
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.6000000000000005
+      },
+      "unmitigatedDamage": 72.00000000000001,
+      "repairKindlingTheoretical": 18.000000000000004
+    },
+    {
+      "cycle": 34,
+      "before": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.6000000000000005
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 4,
+        "currentIntensity": 2.8000000000000007
+      },
+      "unmitigatedDamage": 78.00000000000001,
+      "repairKindlingTheoretical": 19.500000000000004
+    },
+    {
+      "cycle": 35,
+      "before": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 4,
+        "currentIntensity": 2.8000000000000007
+      },
+      "change": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 5
+      },
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 3
+      },
+      "unmitigatedDamage": 84.00000000000003,
+      "repairKindlingTheoretical": 21.000000000000007
+    },
+    {
+      "cycle": 36,
+      "before": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 3
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 3
+      },
+      "unmitigatedDamage": 90,
+      "repairKindlingTheoretical": 22.5
+    },
+    {
+      "cycle": 37,
+      "before": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 3
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 2,
+        "currentIntensity": 3
+      },
+      "unmitigatedDamage": 90,
+      "repairKindlingTheoretical": 22.5
+    },
+    {
+      "cycle": 38,
+      "before": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 2,
+        "currentIntensity": 3
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 3,
+        "currentIntensity": 3
+      },
+      "unmitigatedDamage": 90,
+      "repairKindlingTheoretical": 22.5
+    },
+    {
+      "cycle": 39,
+      "before": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 3,
+        "currentIntensity": 3
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 4,
+        "currentIntensity": 3
+      },
+      "unmitigatedDamage": 90,
+      "repairKindlingTheoretical": 22.5
+    },
+    {
+      "cycle": 40,
+      "before": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 4,
+        "currentIntensity": 3
+      },
+      "change": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 5,
+        "currentIntensity": 3
+      },
+      "unmitigatedDamage": 90,
+      "repairKindlingTheoretical": 22.5
+    }
+  ],
+  "moduleRows": [
+    {
+      "hp": 0,
+      "modifiers": {
+        "chaosRateModifier": 1,
+        "kindlingValueModifier": 1,
+        "startingChaos": 50
+      }
+    },
+    {
+      "hp": 40,
+      "modifiers": {
+        "chaosRateModifier": 0.88,
+        "kindlingValueModifier": 1.2,
+        "startingChaos": 30
+      }
+    },
+    {
+      "hp": 70,
+      "modifiers": {
+        "chaosRateModifier": 0.79,
+        "kindlingValueModifier": 1.35,
+        "startingChaos": 15
+      }
+    },
+    {
+      "hp": 100,
+      "modifiers": {
+        "chaosRateModifier": 0.7,
+        "kindlingValueModifier": 1.5,
+        "startingChaos": 0
+      }
+    }
+  ],
+  "thicken": {
+    "preThicken": {
+      "chaosRateModifier": 0.7,
+      "kindlingValueModifier": 1.5,
+      "startingChaos": 0
+    },
+    "postThicken": {
+      "chaosRateModifier": 0.7,
+      "kindlingValueModifier": 1.5,
+      "startingChaos": 7
+    },
+    "currentHp": 100,
+    "maxHp": 115
+  }
+}
