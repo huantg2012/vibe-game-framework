@@ -7,6 +7,15 @@ note: Append-only. Do not modify historical entries.
 
 ---
 
+## DEC-174: 保存检查点并按完整污染物方案实施迭代28
+
+- Date: 2026-09-20
+- User decision: “提交，然后有计划的实施吧。”
+- Baseline: 当前游戏修复与污染物完整设计保存为32b8ae3；未推送，独立CLAUDE框架改动排除；原始录像本地保留，校验清单、截图和账本已保存。
+- Scope: 按DEC-173完整方案进入实施，合同 `docs/tasks/iteration-28.md`。A鉴定/目录/兼容→B共享能力与来源供给→C标杆到48件图标→D连续验证和正式切换。批次可并行但验收依赖保持，用户授权不等于视觉/平衡PASS。
+- Status: IMPLEMENTING。具体执行与未证项以合同为准，不扩到无关四B旧内容，不占用24/25。
+- Execution 2026-09-20: 迭代28正式实现和内部验证已交；48目录/12族/供奉鉴定/图标/旧档已切生产，真实核心生命周期及独立拒写回归通过。状态IMPLEMENTED / INTERNAL-VERIFIED-WITH-LIMITS；30真实选择与弱效/inert完整自然链、动态照明全矩阵及人审仍按合同保留，未代签COMPLETE。
+
 ## DEC-173: 污染物扩为装备体系，供奉完成揭晓出击能力
 
 - Date: 2026-09-19

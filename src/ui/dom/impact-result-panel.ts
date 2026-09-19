@@ -25,12 +25,23 @@ import { audioManager } from '@/managers/audio-manager';
  *  there is no local copy that can drift from the CSV. */
 export interface ChargeChangeEntry {
   slotIndex: number;
+  itemId?: string;
   type: ContaminantType | null;
   weaponDefinitionId?: string;
   before: number;
   after: number;
   threshold: number;
   transformed: boolean;
+  publicName?: string;
+  publicIcon?: string;
+  revealedName?: string;
+  revealedSummary?: string;
+  revealedIcon?: string;
+  revealedInert?: boolean;
+  revealedSlot?: 'active' | 'passive' | null;
+  revealedUses?: number;
+  /** Integer tenths, matching the public inventory projection. */
+  revealedWeight?: number;
 }
 
 export interface ImpactPanelOptions {
@@ -123,6 +134,31 @@ function severityColor(severity: ForecastSeverity): string {
   return '#cc3333';
 }
 
+function buildChargeChanges(chargeChanges: readonly ChargeChangeEntry[] | undefined): string {
+  let html = '';
+  if (chargeChanges && chargeChanges.length > 0) {
+    html += `<div class="section-title">供奉变化</div>`;
+    for (const c of chargeChanges) {
+      const name = c.publicName ?? (c.weaponDefinitionId ? WEAPON_DATA[c.weaponDefinitionId]?.name ?? '武器' : c.type ? getDefenseName(c.type) : '物件');
+      html += `<div class="stat-row">
+        <span class="stat-label">${name}</span>
+        <span class="stat-value">${c.before}</span>
+        <span>→</span>
+        <span class="stat-value">${c.after}</span>
+        <span>/</span>
+        <span class="stat-value">${c.threshold}</span>
+        ${c.transformed ? `<span>供奉完成</span><span class="stat-value" style="color:#729887;">${c.revealedName ?? (c.type ? getToolName(c.type) : name)}</span>` : ''}
+      </div>`;
+      if (c.transformed && c.revealedName) {
+        html += `<div class="stat-row">${c.revealedIcon ? `<img src="${c.revealedIcon}" width="48" height="48" alt="" style="image-rendering:pixelated;flex:none">` : ''}<span class="stat-label">${c.revealedInert ? '没有可用的裂隙能力，可留存或丢弃' : `${c.revealedSummary ?? ''} · 可在备行时装配`}</span></div>`;
+        html += `<div class="stat-row">${!c.revealedInert && c.revealedSlot ? `<span class="stat-label">${c.revealedSlot === 'passive' ? '被动' : '主动'}</span>${c.revealedUses !== undefined ? `<span class="stat-value">${c.revealedUses}</span><span>${c.revealedSlot === 'passive' ? '趟' : '次'}</span>` : ''}` : ''}${c.revealedWeight !== undefined ? `<span class="stat-label">重量</span><span class="stat-value">${c.revealedWeight / 10}</span>` : ''}</div>`;
+      }
+    }
+  }
+
+  return html;
+}
+
 function buildHtml(
   damages: readonly ImpactDamageEntry[],
   intensity: number,
@@ -136,7 +172,10 @@ function buildHtml(
   html += `<div class="readout-hero"><span class="readout-label">${worst ? MODULE_LABELS[worst.moduleId] ?? worst.moduleId : '装置'} · 最大损伤</span>
     <strong>${worst ? `−${worst.damage}` : '0'}</strong></div>
     <div class="readout-note">冲击强度 x${intensity.toFixed(2)}${severity ? ` / ${SEVERITY_LABEL[severity]}` : ''}</div>
-    <div class="section-title">装置完整度</div>`;
+    `;
+  const hasRevelation = options.chargeChanges?.some(change => change.transformed) ?? false;
+  if (hasRevelation) html += buildChargeChanges(options.chargeChanges);
+  html += `<div class="section-title">装置完整度</div>`;
 
   const base = options.baseDamagePerModule;
   const maxDmg = Math.max(
@@ -165,7 +204,7 @@ function buildHtml(
   const disclosures = defenseResult?.slotDisclosures ?? [];
   if (disclosures.length > 0) html += '<div class="section-title">供奉作用</div>';
   for (const sd of disclosures) {
-    const name = getDefenseName(sd.type);
+    const name = options.chargeChanges?.find(change => change.itemId === sd.contaminantId)?.publicName ?? getDefenseName(sd.type);
     const facts = buildSlotFacts(sd);
     html += `<div class="stat-row">
       <span class="stat-label">${name}</span>
@@ -173,22 +212,7 @@ function buildHtml(
     </div>`;
   }
 
-  const chargeChanges = options.chargeChanges;
-  if (chargeChanges && chargeChanges.length > 0) {
-    html += `<div class="separator"></div>`;
-    for (const c of chargeChanges) {
-      const name = c.weaponDefinitionId ? WEAPON_DATA[c.weaponDefinitionId]?.name ?? '武器' : c.type ? getDefenseName(c.type) : '物件';
-      html += `<div class="stat-row">
-        <span class="stat-label">${name}</span>
-        <span class="stat-value">${c.before}</span>
-        <span>→</span>
-        <span class="stat-value">${c.after}</span>
-        <span>/</span>
-        <span class="stat-value">${c.threshold}</span>
-        ${c.transformed ? `<span>供奉完成</span><span class="stat-value" style="color:#729887;">${c.type ? getToolName(c.type) : name}</span>` : ''}
-      </div>`;
-    }
-  }
+  if (!hasRevelation) html += buildChargeChanges(options.chargeChanges);
 
   if (defenseResult && defenseResult.sideEffects.length > 0) {
     const rows = defenseResult.sideEffects

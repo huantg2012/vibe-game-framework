@@ -235,6 +235,7 @@ export class VisibilitySystem {
 
   // --- runtime modulation ---
   private radiusScale = 1;
+  private abilityRadiusMultiplier = 1;
   private edgeCorruption = 0;
   private screenFlicker = 0;
 
@@ -275,6 +276,7 @@ export class VisibilitySystem {
     this.frameIndex = 0;
     this.elapsedMs = 0;
     this.radiusScale = 1;
+    this.abilityRadiusMultiplier = 1;
     this.edgeCorruption = 0;
     this.screenFlicker = 0;
     this.cacheValid = false;
@@ -402,6 +404,15 @@ export class VisibilitySystem {
     this.subdiv2RadiiDirty = true;
   }
 
+  /** Run-bound sight multiplies the chaos-clamped radius, including its safety floor. */
+  setAbilityRadiusMultiplier(multiplier: number): void {
+    if (!Number.isFinite(multiplier) || multiplier < 1) throw new Error('Invalid ability vision multiplier');
+    if (this.abilityRadiusMultiplier === multiplier) return;
+    this.abilityRadiusMultiplier = multiplier;
+    this.cacheValid = false;
+    this.subdiv2RadiiDirty = true;
+  }
+
   /** Teal creeping in from the edge: hue shift, inward bleed and edge jitter, one knob. */
   setEdgeCorruption(level: number): void {
     const next = clamp(level, 0, 1);
@@ -481,7 +492,7 @@ export class VisibilitySystem {
       }
     }
 
-    return Math.max(radius * this.radiusScale, config.minSolidRadius);
+    return Math.max(radius * this.radiusScale, config.minSolidRadius) * this.abilityRadiusMultiplier;
   }
 
   getStats(): VisibilityStats {
@@ -840,8 +851,8 @@ export class VisibilitySystem {
     const config = this.config;
     const omni = config.mode === 'omni';
     computeFieldBandRadii(SUBDIV2_LEVELS, this.rayOffsets, this.rayRange, {
-      radiusForward: config.radiusForward * this.radiusScale,
-      radiusAmbient: config.radiusAmbient * this.radiusScale,
+      radiusForward: Math.max(config.radiusForward * this.radiusScale, config.minSolidRadius) * this.abilityRadiusMultiplier,
+      radiusAmbient: Math.max(config.radiusAmbient * this.radiusScale, config.minSolidRadius) * this.abilityRadiusMultiplier,
       coneHalfAngleDeg: omni ? 180 : config.coneHalfAngleDeg,
       coneFalloffAngleDeg: omni ? 0 : config.coneFalloffAngleDeg,
     }, SUBDIV2_BAND_FLOOR_PX, this.subdiv2Radii);

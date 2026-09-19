@@ -4,7 +4,7 @@ import { ellipsoid, noise, roughMaterial, surfaceTexture } from './materials';
 import { renderCrowbarPixels } from '@/art/crowbar-pixels';
 import { contaminantWorldPixels, CONTAMINANT_ICON_IDS } from '@/art/contaminant-icons';
 import { WEAPON_DATA } from '@/generated/weapon-data';
-import type { ContaminantType } from '@/types/game-types';
+import type { LegacyContaminantType } from '@/types/game-types';
 
 interface PileModel { root:THREE.Group; pieces:THREE.Mesh[]; collectedAt:number; wasCollected:boolean; material:THREE.MeshStandardMaterial }
 interface ItemModel { root: THREE.Group; mesh: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>; signature: string; definitionId: string }
@@ -91,10 +91,10 @@ export class StageLoot {
   private itemGeometry(item: RiftPresentationView['groundItems'][number]): THREE.BufferGeometry {
     const definition = item.kind === 'weapon' ? WEAPON_DATA[item.definitionId] : null;
     if (item.kind === 'weapon' && !definition) throw new Error(`Unknown field weapon ${item.definitionId}`);
-    if (item.kind === 'contaminant' && !CONTAMINANT_ICON_IDS.includes(item.definitionId as ContaminantType))
+    if (item.kind === 'contaminant' && !CONTAMINANT_ICON_IDS.includes(item.definitionId as LegacyContaminantType))
       throw new Error(`Unknown field object ${item.definitionId}`);
     const pixels = definition ? renderCrowbarPixels(definition.quality, definition.variant, 'world')
-      : contaminantWorldPixels(item.definitionId as ContaminantType, item.quality ?? 'ordinary');
+      : contaminantWorldPixels(item.definitionId as LegacyContaminantType, item.quality ?? 'ordinary');
     const positions: number[] = [], colours: number[] = [], colour = new THREE.Color();
     const base = this.groundHeightAt(item.position.x, item.position.y);
     for (let y = 0; y < pixels.height; y++) for (let x = 0; x < pixels.width; x++) {

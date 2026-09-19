@@ -1,6 +1,11 @@
 /** Inventory uses the accepted report's shared scene material and typography. */
 const STYLE_ID = 'inventory-panel-styles';
 const CSS = `
+.inventory-wrap .inventory-native-item{width:24px;height:24px;display:block;margin:auto}
+.inventory-wrap .inventory-art .inventory-native-item{width:48px;height:48px}
+.inventory-wrap .inventory-slot-icon .inventory-native-item{width:24px;height:24px}
+.inventory-item-image:has(.inventory-native-item),.inventory-slot-icon:has(.inventory-native-item),.inventory-art:has(.inventory-native-item){display:flex;align-items:center;justify-content:center}
+
 .inventory-detail-column > .inventory-actions{flex:none;margin-top:0;padding:7px 0 0 18px;border-left:1px solid #263525;min-height:26px;gap:5px 12px}
 .inventory-detail-column > .inventory-actions:empty{display:none}
 .inventory-detail-meta{overflow-wrap:normal;word-break:keep-all}

@@ -1,10 +1,28 @@
 import type Phaser from 'phaser';
 import { contaminantWorldPixels } from '@/art/contaminant-icons';
-import type { ContaminantType, Vector2 } from '@/types/game-types';
+import { catalogGroundPixels } from '@/art/contaminant-catalog-icons';
+import type { LegacyContaminantType, Vector2 } from '@/types/game-types';
 
-const objects = new Map<ContaminantType, { x: number; y: number; color: number }[]>();
+const objects = new Map<LegacyContaminantType, { x: number; y: number; color: number }[]>();
+const catalogObjects = new Map<string, { x: number; y: number; color: number }[]>();
+/** Native 16px effect proxy, authored separately from the 24px inventory image. */
+export function drawCatalogToolObject(g: Phaser.GameObjects.Graphics, definitionId: string, p: Readonly<Vector2>, alpha: number): void {
+  let pixels = catalogObjects.get(definitionId);
+  if (!pixels) {
+    const source = catalogGroundPixels({ kind: 'item', definitionId });
+    if (!source) throw new Error(`Missing placed ability object: ${definitionId}`);
+    pixels = [];
+    for (let y = 0; y < source.height; y++) for (let x = 0; x < source.width; x++) {
+      const i = (y * source.width + x) * 4;
+      if (source.data[i + 3]) pixels.push({ x: x - source.width / 2, y: y - source.height / 2,
+        color: source.data[i]! * 65536 + source.data[i + 1]! * 256 + source.data[i + 2]! });
+    }
+    catalogObjects.set(definitionId, pixels);
+  }
+  for (const pixel of pixels) g.fillStyle(pixel.color, alpha).fillRect(Math.round(p.x) + pixel.x, Math.round(p.y) + pixel.y, 1, 1);
+}
 /** The same material silhouette as the inventory item, sampled on the world pixel grid. */
-export function drawToolObject(g: Phaser.GameObjects.Graphics, type: ContaminantType, p: Readonly<Vector2>, alpha: number): void {
+export function drawToolObject(g: Phaser.GameObjects.Graphics, type: LegacyContaminantType, p: Readonly<Vector2>, alpha: number): void {
   let pixels = objects.get(type);
   if (!pixels) {
     pixels = []; const source = contaminantWorldPixels(type);
@@ -19,7 +37,7 @@ export function drawToolObject(g: Phaser.GameObjects.Graphics, type: Contaminant
     .fillRect(Math.round(p.x) + pixel.x, Math.round(p.y) + pixel.y, 1, 1);
 }
 
-export function drawPressure(g: Phaser.GameObjects.Graphics, p: Readonly<Vector2>, radius: number, alpha: number): void {
+export function drawPressure(g: Phaser.GameObjects.Graphics, p: Readonly<Vector2>, radius: number, alpha: number, drawObject = true): void {
   g.clear();
   // Broken lips of compressed floor material make the reach legible in motion.
   // The gaps remain broad: this is a dent in the floor, not a luminous spell ring.
@@ -41,7 +59,7 @@ export function drawPressure(g: Phaser.GameObjects.Graphics, p: Readonly<Vector2
     g.fillRect(x, y, 2 + i % 4, 1);
     if (i % 4 === 0) g.fillRect(x + 2, y + 1, 2, 1);
   }
-  drawToolObject(g, 'compress', p, alpha);
+  if (drawObject) drawToolObject(g, 'compress', p, alpha);
 }
 
 export function drawFootDrag(g: Phaser.GameObjects.Graphics, p: Readonly<Vector2>, alpha: number): void {

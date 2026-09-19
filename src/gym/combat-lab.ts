@@ -16,7 +16,7 @@ import { motionChoicesFor } from '@/generation/contamination-draw';
 import { INSPECTOR_ENTRIES, inspectorForm, entryGroup } from './enemy-inspector-catalog';
 import { CombatLabScene } from './combat-lab-scene';
 import type { CombatLabConfig } from './combat-lab-types';
-import type { ContaminantType } from '@/types/game-types';
+import type { LegacyContaminantType } from '@/types/game-types';
 import './combat-lab.css';
 
 // game-config transitively imports production save wiring. Disconnect before any lab mutation.
@@ -82,9 +82,9 @@ function syncGear(): void {
   el('weapon-stats').textContent=`伤害 ${w.damageMin}–${w.damageMax}　负重 ${(w.weight/10).toFixed(1)}　抗性 ${w.pollutionResistance}%`;
   const toolIds=['tool-q','tool-f','tool-passive'].map(id=>select(id).value).filter(Boolean);
   const descriptions = toolIds.map(id => {
-    const def = CONTAMINANT_DATA[id as ContaminantType];
+    const def = CONTAMINANT_DATA[id as LegacyContaminantType];
     const row = document.createElement('span'); row.style.display = 'block';
-    const icon = document.createElement('img'); icon.src = contaminantIconUrl(id as ContaminantType, select('tool-quality').value as ContaminantQuality);
+    const icon = document.createElement('img'); icon.src = contaminantIconUrl(id as LegacyContaminantType, select('tool-quality').value as ContaminantQuality);
     icon.alt = ''; icon.width = 24; icon.height = 24; icon.style.imageRendering = 'pixelated'; icon.style.verticalAlign = 'middle';
     row.append(icon, document.createTextNode(`${def.displayNameTool}：${def.descriptionTool}`)); return row;
   });
@@ -97,7 +97,7 @@ function syncGear(): void {
 syncEnemy(false);syncGear();
 function config():CombatLabConfig {
   const e=entry(), base=inspectorForm(e,select('coverage').value as CoverageId);
-  const tool=(id:string):ContaminantType|null=>(select(id).value||null) as ContaminantType|null;
+  const tool=(id:string):LegacyContaminantType|null=>(select(id).value||null) as LegacyContaminantType|null;
   return {form:{...base,continuity:select('continuity').value as typeof base.continuity,lexemes:{...base.lexemes,motion:select('motion').value,sense:select('sense').value,rhythm:select('rhythm').value}},
     seed:e.variants[Number(select('variant').value)]!.seed,fragmentTypeId:select('fragment').value,weaponId:select('weapon').value,
     toolQuality:select('tool-quality').value as ContaminantQuality,tools:[tool('tool-q'),tool('tool-f'),tool('tool-passive')],

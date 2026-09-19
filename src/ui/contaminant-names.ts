@@ -20,17 +20,20 @@ import { getContaminantQualityRank } from '@/systems/contaminant-quality';
  * names anymore (V8 in `ui-art-overhaul.md` A1 is fully closed).
  */
 
+import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import type { Contaminant, ContaminantRarity, ContaminantStage, ContaminantType } from '@/types/game-types';
 
 /** The name a contaminant is known by while equipped as a sortie tool. */
-export function getToolName(type: ContaminantType): string {
-  return CONTAMINANT_DATA[type]?.displayNameTool ?? type;
+export function getToolName(type: ContaminantType | Contaminant): string {
+  if (typeof type !== 'string') return projectItemForPlayer(type).name;
+  return type === 'catalog' ? '未识别物件' : CONTAMINANT_DATA[type]?.displayNameTool ?? type;
 }
 
 /** The name a contaminant is known by while slotted as defense. */
-export function getDefenseName(type: ContaminantType): string {
-  return CONTAMINANT_DATA[type]?.displayNameDefense ?? type;
+export function getDefenseName(type: ContaminantType | Contaminant): string {
+  if (typeof type !== 'string') return projectItemForPlayer(type).name;
+  return type === 'catalog' ? '未识别物件' : CONTAMINANT_DATA[type]?.displayNameDefense ?? type;
 }
 
 const RARITY_STARS: Record<ContaminantRarity, string> = {
@@ -50,7 +53,7 @@ export function getRarityStars(rarity: ContaminantRarity): string {
 // "库存排序**固定**：阶段（防御 → 工具 → 已耗尽）→ 稀有度（稀有 → 精良 → 普通）→ 类型 id")
 // ---------------------------------------------------------------------------
 
-const STAGE_ORDER: Record<ContaminantStage, number> = { defense: 0, tool: 1, broken: 2 };
+const STAGE_ORDER: Record<ContaminantStage, number> = { defense: 0, tool: 1, inert: 2, broken: 3 };
 const TYPE_ORDER: Record<string, number> = Object.fromEntries(
   Object.keys(CONTAMINANT_DATA).map((id, index) => [id, index]),
 );

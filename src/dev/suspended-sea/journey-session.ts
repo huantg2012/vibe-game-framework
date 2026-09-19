@@ -41,7 +41,7 @@ export function assertSeaJourneyEquipment(state: InventoryState): void {
   for (const id of state.equipment.toolIds) {
     if (!id) continue;
     const item = byId.get(id);
-    if (!item || item.kind !== 'contaminant' || !STAGE_TOOL_TYPES.has(item.contaminant.type)) {
+    if (!item || item.kind !== 'contaminant' || (item.contaminant.type === 'catalog' || !STAGE_TOOL_TYPES.has(item.contaminant.type))) {
       throw new Error(`当前悬海支持：${[...STAGE_TOOL_TYPES].map(type => CONTAMINANT_DATA[type].displayNameTool).join('、')}。请调整备行物品。`);
     }
     items.push(item);

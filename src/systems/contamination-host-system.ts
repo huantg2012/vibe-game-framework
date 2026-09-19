@@ -99,6 +99,7 @@ export interface HostToolTarget extends HostSubject {
   /** Natural release state, even while temporarily suppressed. */
   readonly hazardReleased: boolean;
   readonly canSuppressHazard: boolean;
+  readonly canSuppressCatalogHazard?: boolean;
   readonly canDelayNextHazard: boolean;
   readonly suppressionRemainingMs: number;
   readonly delayRemainingMs: number;
@@ -275,6 +276,7 @@ export class ContaminationHostSystem {
   private readonly meleeTargetCache = new WeakMap<object, MeleeTarget>();
   private readonly coreFlashMs = new Map<string, number>();
   private readonly hazardControls = new Map<string, EnvironmentHazardControl>();
+  private controlProtectionEnabled = false;
   private volumeSight = 1;
   private lastPlayerTile = { col: -1, row: -1 };
   private lastDraw: SortieDraw | null = null;
@@ -337,7 +339,7 @@ export class ContaminationHostSystem {
       if (host.kind === 'ding') { host.reverseActivity.restoreRuntimeState(row.reverseActivity); this.refreshVolumePresence(host, host.elapsedMs, this.volumeActive(host)); }
       if (!host.alive) { host.gfx.clear(); host.marks?.clear(); if (host.kind === 'yi') host.telegraph.clear(); }
     }
-    this.hazardControls.clear(); for (const [id, state] of value.controls) { const control = new EnvironmentHazardControl(); control.restoreRuntimeState(state); this.hazardControls.set(id, control); }
+    this.hazardControls.clear(); for (const [id, state] of value.controls) { const control = new EnvironmentHazardControl(); control.setControlProtectionEnabled(this.controlProtectionEnabled); control.restoreRuntimeState(state); this.hazardControls.set(id, control); }
     this.coreFlashMs.clear(); for (const [id, remaining] of value.flashes) this.coreFlashMs.set(id, remaining);
   }
 
@@ -401,6 +403,7 @@ export class ContaminationHostSystem {
     this.spawnSeq = 0;
     this.skipPaint = false;
     this.liveMotion = false;
+    this.controlProtectionEnabled = false;
     this.paintFloors.clear();
     this.coreFlashMs.clear();
     this.hazardControls.clear();
@@ -503,6 +506,7 @@ export class ContaminationHostSystem {
         category: host.kind === 'bing' ? 'paint' : host.kind === 'ding' ? 'volume' : 'wall',
         hazardReleased: released,
         canSuppressHazard: this.canSuppressHazard(host),
+        canSuppressCatalogHazard: this.canSuppressHazard(host, true),
         canDelayNextHazard: this.hasDelayableHazard(host),
         suppressionRemainingMs: control?.suppressionRemainingMs ?? 0,
         delayRemainingMs: control?.delayRemainingMs ?? 0,
@@ -513,10 +517,11 @@ export class ContaminationHostSystem {
   }
 
   /** Suppress an active material source in any natural phase; never kills its core. */
-  suppressHazard(id: string, sourceId: string, durationMs: number): boolean {
+  suppressHazard(id: string, sourceId: string, durationMs: number, includeWall = false): boolean {
     const host = this.hosts.find(candidate => candidate.id === id && candidate.alive);
-    if (!host || !this.canSuppressHazard(host) || !EnvironmentHazardControl.valid(sourceId, durationMs)) return false;
+    if (!host || !this.canSuppressHazard(host, includeWall) || !EnvironmentHazardControl.valid(sourceId, durationMs)) return false;
     this.hazardControl(id).suppress(sourceId, durationMs);
+    if (host.kind === 'yi') { host.windupMs = -1; host.strikeThisFrame = false; host.telegraph.clear(); }
     if (host.kind === 'ding' && host.presence) host.presence.hazardActive = false;
     return true;
   }
@@ -533,15 +538,22 @@ export class ContaminationHostSystem {
     this.hazardControls.get(id)?.clear(sourceId);
   }
 
+  /** Versioned per departure; old in-flight worlds keep their original contract. */
+  setControlProtectionEnabled(enabled: boolean): void {
+    this.controlProtectionEnabled = enabled;
+    for (const control of this.hazardControls.values()) control.setControlProtectionEnabled(enabled);
+  }
+
   private hazardControl(id: string): EnvironmentHazardControl {
     let control = this.hazardControls.get(id);
-    if (!control) { control = new EnvironmentHazardControl(); this.hazardControls.set(id, control); }
+    if (!control) { control = new EnvironmentHazardControl(); control.setControlProtectionEnabled(this.controlProtectionEnabled); this.hazardControls.set(id, control); }
     return control;
   }
 
-  private canSuppressHazard(host: Host): boolean {
+  private canSuppressHazard(host: Host, includeWall = false): boolean {
     const control = this.hazardControls.get(host.id);
-    if (control && (control.suppressionRemainingMs > 0 || control.recoveryPending || control.delayRemainingMs > 0)) return false;
+    if (control && (control.suppressionRemainingMs > 0 || control.recoveryPending || control.delayRemainingMs > 0 || control.protectionRemainingMs > 0)) return false;
+    if (host.kind === 'yi') return includeWall && resolveContactChannel(host.form.portfolio, host.form.lexemes.contact) === 'adjacent_hp';
     if (host.kind === 'bing') {
       const floors = this.paintFloors.get(host.id);
       return (!floors || floors.size > 0) && resolveContactChannel(host.form.portfolio, host.form.lexemes.contact) === 'step_chaos';
@@ -990,13 +1002,16 @@ export class ContaminationHostSystem {
   }
 
   private tickYi(host: YiHost, col: number, row: number, dtMs: number): void {
+    const control = this.hazardControls.get(host.id);
+    control?.tick(dtMs);
+    control?.observeWallWindupReset();
     if (this.liveMotion) this.tickYiLive(host, col, row, dtMs);
     else this.tickYiSortie(host, col, row, dtMs);
   }
 
   /** Pre-R2-C2 body. Do not read lexemes. Do not move the core. */
   private tickYiSortie(host: YiHost, col: number, row: number, dtMs: number): void {
-    const onStrike = host.strikeFloors.some((f) => f.col === col && f.row === row);
+    const onStrike = !this.hazardControls.get(host.id)?.suppressed && host.strikeFloors.some((f) => f.col === col && f.row === row);
     host.telegraph.clear();
     if (onStrike) {
       if (host.windupMs < 0) host.windupMs = 0;
@@ -1034,7 +1049,7 @@ export class ContaminationHostSystem {
       host.moving = false;
     }
     const channel = resolveContactChannel(host.form.portfolio, host.form.lexemes.contact);
-    const canStrike = channel === 'adjacent_hp';
+    const canStrike = channel === 'adjacent_hp' && !this.hazardControls.get(host.id)?.suppressed;
     const adjacent = host.strikeFloors.some((f) => f.col === col && f.row === row);
     const committed = host.windupMs >= 0 && host.windupCol === col && host.windupRow === row;
     const hears = host.form.lexemes.sense !== 'sense_hear' || host.noiseRemainingMs > 0;

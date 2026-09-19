@@ -6,7 +6,7 @@ export type ItemLocation =
   | { kind: 'defense'; slot: number }
   | { kind: 'ground'; runId: string; position: Vector2 };
 export interface ItemSource { nodeId?: string; runId?: string; fragmentId?: string }
-export interface EquipmentLifecycle { stage: 'defense' | 'tool' | 'broken'; impactCharges: number; usesRemaining: number }
+export interface EquipmentLifecycle { stage: 'defense' | 'tool' | 'broken' | 'inert'; impactCharges: number; usesRemaining: number }
 export interface WeaponInstance extends EquipmentLifecycle { id: string; definitionId: string }
 export interface OfferingTransformResult { itemId: string; kind: 'weapon' | 'contaminant'; definitionId: string; slotIndex: number }
 export type InventoryItem = (
@@ -20,20 +20,29 @@ export interface RunInventoryLedger {
   carriedOutIds: string[];
   revealedNodes: Record<string, string[]>;
   destroyedIds: string[];
+  catalogVersion?: 'legacy-v1' | 'contaminant-v1';
+  lootAlgorithmVersion?: 1;
+  combatRulesVersion?: 1 | 2;
+  dropPlan?: import('@/systems/contaminant-drop-plan').ContaminantDropPlan;
+  actionReceipts?: Record<string,{itemId:string;broken:boolean;usesLeft:number;definitionId?:string;catalogVersion?:'contaminant-v1'}>;
   outcome?: 'extract' | 'death' | 'abandon' | 'abandon-keep';
   returnedIds?: string[];
   kindlingGained?: number;
   baseSettled?: boolean;
 }
 export interface InventoryState {
-  version: 1 | 2;
+  version: 1 | 2 | 3;
   items: InventoryItem[];
   equipment: InventoryEquipment;
   run: RunInventoryLedger | null;
   starterGranted: boolean;
   firstWeaponDiscovered: boolean;
+  discoveredCatalogIds?: string[];
+  catalogTutorialRevealed?: boolean;
+  offeringReceipts?: Record<string,OfferingTransformResult[]>;
+  nextAcquiredOrdinal?: number;
 }
-export type InventoryError = 'invalid-item' | 'duplicate-id' | 'wrong-location' | 'equipped' | 'incompatible' | 'overweight' | 'run-active' | 'no-active-run' | 'invalid-ground' | 'storage-failed' | 'missing-weapon' | 'not-ready';
+export type InventoryError = 'invalid-item' | 'duplicate-id' | 'duplicate-action' | 'wrong-location' | 'equipped' | 'incompatible' | 'overweight' | 'run-active' | 'no-active-run' | 'invalid-ground' | 'storage-failed' | 'missing-weapon' | 'not-ready';
 export type InventoryResult<T = undefined> = { ok: true; value: T } | { ok: false; error: InventoryError };
 export interface InventoryRules {
   capacity: number;

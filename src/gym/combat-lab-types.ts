@@ -1,5 +1,5 @@
 import type { ContaminationForm } from '@/generation/contamination-draw';
-import type { ContaminantType, ContaminantQuality } from '@/types/game-types';
+import type { LegacyContaminantType, ContaminantQuality } from '@/types/game-types';
 
 /** Review configuration; never loaded from or persisted to a player's save. */
 export interface CombatLabConfig {
@@ -8,7 +8,7 @@ export interface CombatLabConfig {
   fragmentTypeId: string;
   weaponId: string;
   toolQuality: ContaminantQuality;
-  tools: readonly [ContaminantType | null, ContaminantType | null, ContaminantType | null];
+  tools: readonly [LegacyContaminantType | null, LegacyContaminantType | null, LegacyContaminantType | null];
   count: 1 | 2 | 3;
   empty: boolean;
   protected: boolean;
@@ -40,7 +40,7 @@ export interface CombatLabState {
   hitsDealt: number;
   hitsTaken: number;
   subjects: CombatLabSubjectState[];
-  tools: { id: ContaminantType; remaining: number }[];
+  tools: { id: LegacyContaminantType; remaining: number }[];
   message: string;
   roundEnded: boolean;
   textureCount: number;

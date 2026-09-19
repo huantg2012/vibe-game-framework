@@ -1,3 +1,4 @@
+import { getCatalogMaxUses } from './contaminant-catalog';
 /** CSV-owned quality rules. Queries never mutate legacy instances or refill uses. */
 import { CONTAMINANT_DATA, ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
 import { CONTAMINANT_LOOT_PROFILES } from '@/generated/contaminant-economy-data';
@@ -8,7 +9,7 @@ import { CONTAMINANT_QUALITY_DATA, CONTAMINANT_QUALITY_ORDER } from '@/generated
 import type { Contaminant, ContaminantQuality, ContaminantRarity, ContaminantType } from '@/types/game-types';
 
 type QualityIdentity = Pick<Contaminant, 'rarity' | 'quality'>;
-type QualityItem = Pick<Contaminant, 'type' | 'rarity' | 'quality'>;
+type QualityItem = Pick<Contaminant, 'type' | 'rarity' | 'quality' | 'catalog'>;
 export type ContaminantQualityWeights = Readonly<Record<ContaminantQuality, number>>;
 
 const LEGACY_QUALITY: Readonly<Record<ContaminantRarity, ContaminantQuality>> = {
@@ -21,7 +22,7 @@ export function isContaminantQuality(value: unknown): value is ContaminantQualit
 }
 
 export function supportsContaminantQuality(type: ContaminantType): boolean {
-  return CONTAMINANT_QUALITY_DATA.ordinary.maxUses[type] !== undefined;
+  return type === 'catalog' || CONTAMINANT_QUALITY_DATA.ordinary.maxUses[type] !== undefined;
 }
 
 export function getContaminantQuality(item: QualityIdentity): ContaminantQuality {
@@ -37,6 +38,7 @@ export function getContaminantQualityRank(item: QualityIdentity): number {
 }
 
 export function getContaminantMaxUses(item: QualityItem): number {
+  if(item.type === 'catalog') return getCatalogMaxUses(item);
   return CONTAMINANT_QUALITY_DATA[getContaminantQuality(item)].maxUses[item.type]
     ?? CONTAMINANT_DATA[item.type].toolUses;
 }

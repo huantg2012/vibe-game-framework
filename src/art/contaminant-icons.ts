@@ -1,16 +1,16 @@
 /** Native 24px inventory objects. The residue and the tool share one material identity.
  * Hand-authored pixels, independent of Phaser/DOM. No generic bottle, rarity tint or glyph.
  */
-import type { ContaminantType } from '../types/game-types';
+import type { LegacyContaminantType } from '../types/game-types';
 
-export const CONTAMINANT_ICON_IDS = ['solidify','ruminate','scatter','retrograde','delay','siphon','expand','resonate','overwrite','erode','muffle','kindle','stitch','compress','mirror','echo','abyss','combust'] as const satisfies readonly ContaminantType[];
+export const CONTAMINANT_ICON_IDS = ['solidify','ruminate','scatter','retrograde','delay','siphon','expand','resonate','overwrite','erode','muffle','kindle','stitch','compress','mirror','echo','abyss','combust'] as const satisfies readonly LegacyContaminantType[];
 type Point = readonly [number, number];
 type Ink = 's'|'d'|'m'|'l'|'h'|'t'|'g'|'b';
 // Shared worn mineral/iron ramp and local contamination seams. Never an icon-wide glow.
 const PALETTE: Record<Ink, string> = { s:'#272d2b', d:'#444d47', m:'#687366', l:'#939b85', h:'#bdc2a4', t:'#245a50', g:'#398a72', b:'#78b79a' };
 export type ContaminantArtQuality = 'ordinary'|'good'|'fine'|'excellent';
 export const CONTAMINANT_ART_QUALITIES = ['ordinary','good','fine','excellent'] as const;
-export const CONTAMINANT_SAMPLE_IDS = ['solidify','scatter','retrograde','muffle','expand','mirror','kindle','combust','delay','siphon','stitch','compress','abyss'] as const satisfies readonly ContaminantType[];
+export const CONTAMINANT_SAMPLE_IDS = ['solidify','scatter','retrograde','muffle','expand','mirror','kindle','combust','delay','siphon','stitch','compress','abyss'] as const satisfies readonly LegacyContaminantType[];
 export interface ContaminantIconPixels { readonly width: 24; readonly height: 24; readonly data: Uint8ClampedArray }
 export interface ContaminantWorldPixels { readonly width: 32; readonly height: 32; readonly data: Uint8ClampedArray }
 class Pixels {
@@ -22,7 +22,7 @@ class Pixels {
   line(p:readonly Point[],c:Ink){for(let n=1;n<p.length;n++){let [x,y]=p[n-1]!;const [bx,by]=p[n]!;const dx=Math.abs(bx-x),sx=x<bx?1:-1,dy=-Math.abs(by-y),sy=y<by?1:-1;let e=dx+dy;for(;;){this.dot(x,y,c);if(x===bx&&y===by)break;const ee=2*e;if(ee>=dy){e+=dy;x+=sx;}if(ee<=dx){e+=dx;y+=sy;}}}}
   poly(points:readonly Point[],c:Ink){const p=points.map(([x,y])=>[this.coord(x),this.coord(y)] as const);for(let y=1;y<this.size-1;y++)for(let x=1;x<this.size-1;x++){let inside=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i]!,b=p[j]!;if((a[1]>y+.5)!==(b[1]>y+.5)&&x+.5<(b[0]-a[0])*(y+.5-a[1])/(b[1]-a[1])+a[0])inside=!inside;}if(inside)this.cells[y*this.size+x]=c;}}
 }
-const DRAW: Record<ContaminantType,(p:Pixels)=>void> = {
+const DRAW: Record<LegacyContaminantType,(p:Pixels)=>void> = {
   // A locked mineral cleft: broad sheared base, one long splinter, cold internal seam.
   solidify:p=>{p.poly([[4,17],[7,7],[11,3],[14,9],[18,6],[21,16],[16,21],[7,20]],'d');p.poly([[7,16],[8,8],[11,4],[12,15],[10,19]],'l');p.poly([[13,12],[17,8],[18,17],[14,19]],'m');p.line([[11,5],[12,11],[10,15],[12,18]],'h');p.line([[14,9],[13,15],[15,18]],'g');p.line([[5,18],[9,20],[16,20]],'s');p.dot(14,14,'b');},
   // Hollow grinding jaw: heavy stony outer curve with opposed tooth fragments.
@@ -63,7 +63,7 @@ const DRAW: Record<ContaminantType,(p:Pixels)=>void> = {
 
 /** The material survives every quality. Higher quality preserves a more complete
  * impossible structure: repeated edge, trapped interval, returning fold. No badges. */
-const SAMPLE_DRAW: Partial<Record<ContaminantType,(p:Pixels,q:number)=>void>> = {
+const SAMPLE_DRAW: Partial<Record<LegacyContaminantType,(p:Pixels,q:number)=>void>> = {
   solidify(p,q) {
     // A broken piece of cast stone; its falling shear remains attached out of alignment.
     p.poly([[5,8],[9,5],[15,6],[18,9],[17,17],[13,20],[5,18],[3,14]],'d');
@@ -261,7 +261,7 @@ const SAMPLE_DRAW: Partial<Record<ContaminantType,(p:Pixels,q:number)=>void>> = 
   },
 };
 const pixelsCache = new Map<string,Pixels>();
-function grid(type:ContaminantType,quality:ContaminantArtQuality='ordinary',size:24|32=24):Pixels {
+function grid(type:LegacyContaminantType,quality:ContaminantArtQuality='ordinary',size:24|32=24):Pixels {
   const key=`${type}:${quality}:${size}`;
   let p=pixelsCache.get(key);
   if(!p){p=new Pixels(size);const sample=SAMPLE_DRAW[type];if(sample)sample(p,CONTAMINANT_ART_QUALITIES.indexOf(quality));else DRAW[type](p);pixelsCache.set(key,p);}
@@ -272,19 +272,19 @@ function rgba(p:Pixels):Uint8ClampedArray {
   p.cells.forEach((ink,index)=>{if(!ink)return;const rgb=Number.parseInt(PALETTE[ink].slice(1),16);data[index*4]=rgb>>16;data[index*4+1]=(rgb>>8)&255;data[index*4+2]=rgb&255;data[index*4+3]=255;});
   return data;
 }
-export function contaminantIconPixels(type:ContaminantType,quality:ContaminantArtQuality='ordinary'):ContaminantIconPixels {
+export function contaminantIconPixels(type:LegacyContaminantType,quality:ContaminantArtQuality='ordinary'):ContaminantIconPixels {
   return {width:24,height:24,data:rgba(grid(type,quality))};
 }
 /** Native geometric rasterization at 32px; never enlarges the 24px image. */
-export function contaminantWorldPixels(type:ContaminantType,quality:ContaminantArtQuality='ordinary'):ContaminantWorldPixels {
+export function contaminantWorldPixels(type:LegacyContaminantType,quality:ContaminantArtQuality='ordinary'):ContaminantWorldPixels {
   return {width:32,height:32,data:rgba(grid(type,quality,32))};
 }
-export function contaminantIconSvg(type:ContaminantType,quality:ContaminantArtQuality='ordinary'):string {
+export function contaminantIconSvg(type:LegacyContaminantType,quality:ContaminantArtQuality='ordinary'):string {
   const cells=grid(type,quality).cells;let rects='';
   for(let y=0;y<24;y++)for(let x=0;x<24;){const ink=cells[y*24+x];if(!ink){x++;continue;}let end=x+1;while(end<24&&cells[y*24+end]===ink)end++;rects+=`<rect x="${x}" y="${y}" width="${end-x}" height="1" fill="${PALETTE[ink]}"/>`;x=end;}
   return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">${rects}</svg>`;
 }
 const urlCache=new Map<string,string>();
-export function contaminantIconUrl(type:ContaminantType,quality:ContaminantArtQuality='ordinary'):string {
+export function contaminantIconUrl(type:LegacyContaminantType,quality:ContaminantArtQuality='ordinary'):string {
   const key=`${type}:${quality}`;let url=urlCache.get(key);if(!url){url=`data:image/svg+xml;charset=utf-8,${encodeURIComponent(contaminantIconSvg(type,quality))}`;urlCache.set(key,url);}return url;
 }

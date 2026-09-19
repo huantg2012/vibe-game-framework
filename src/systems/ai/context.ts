@@ -63,6 +63,8 @@ export interface AIContext {
    * muffle is equipped and still has charges.
    */
   hearingSuppressed: boolean;
+  /** Active silence removes the player action channel, even after suspicion has begun. */
+  playerActionSilenced?: boolean;
   /**
    * Attempts to spend a charge before swallowing a would-be discovery; false leaves it intact,
    * so `ToolSystem.notifyProximityAvoid()` can spend one of muffle's charges. Never fires

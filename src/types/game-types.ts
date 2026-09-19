@@ -129,13 +129,28 @@ export enum TileType {
 // ─── Slice 3: Growth + Tide Economy types ───────────────────────────────────
 
 /** Contaminant type (18 kinds) */
-export type ContaminantType =
+export type LegacyContaminantType =
   | 'solidify' | 'ruminate' | 'scatter' | 'retrograde'
   | 'delay' | 'siphon' | 'expand'
   | 'resonate' | 'overwrite' | 'erode'
   | 'muffle' | 'kindle' | 'stitch'
   | 'compress' | 'mirror' | 'echo'
   | 'abyss' | 'combust';
+
+/** Legacy runtime handlers remain distinct from versioned catalog items. */
+export type ContaminantType = LegacyContaminantType | 'catalog';
+
+export interface CatalogIdentity {
+  catalogVersion: 'contaminant-v1';
+  definitionId: string;
+  appearanceId: string;
+  offeringProfileId: string;
+  acquiredOrdinal: number;
+  identification: 'unidentified' | 'revealed';
+  revealedAt?: number;
+  revealReceiptId?: string;
+  runBinding?: { runId: string; consumed: true; familyId: 'sight' | 'capacity'; benefit: number };
+}
 
 /** Contaminant rarity */
 export type ContaminantRarity = 'common' | 'fine' | 'rare';
@@ -144,12 +159,14 @@ export type ContaminantRarity = 'common' | 'fine' | 'rare';
 export type ContaminantQuality = 'ordinary' | 'good' | 'fine' | 'excellent';
 
 /** Contaminant lifecycle stage */
-export type ContaminantStage = 'defense' | 'tool' | 'broken';
+export type ContaminantStage = 'defense' | 'tool' | 'broken' | 'inert';
 
 /** A single contaminant instance */
 export interface Contaminant {
   id: string;
   type: ContaminantType;
+  /** Required for catalog instances; forbidden on legacy family instances. */
+  catalog?: CatalogIdentity;
   rarity: ContaminantRarity;
   /** Absent on legacy instances; display resolves a fallback without rewriting the save. */
   quality?: ContaminantQuality;

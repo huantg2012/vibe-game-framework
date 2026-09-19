@@ -192,6 +192,50 @@ export function findSoundLureLanding(
 }
 
 export interface ToolLine { readonly pointA: Vector2; readonly pointB: Vector2 }
+
+export interface GroundDashSweepInput {
+  readonly origin: Readonly<Vector2>;
+  readonly destination: Readonly<Vector2>;
+  readonly grid: ToolWalkGrid;
+  readonly bodyHalfWidth?: number;
+  readonly bodyHalfHeight?: number;
+  readonly bodies?: readonly { readonly position: Readonly<Vector2>; readonly halfWidth: number; readonly halfHeight: number }[];
+  readonly isVisible?: (point: Readonly<Vector2>) => boolean;
+}
+
+/** Continuous Minkowski sweep: the complete body stops before walls, void and actors. */
+export function sweepGroundDash(input: GroundDashSweepInput): Vector2 {
+  const { origin, destination, grid } = input;
+  const halfW = input.bodyHalfWidth ?? 10, halfH = input.bodyHalfHeight ?? 10;
+  const distance = Math.hypot(destination.x - origin.x, destination.y - origin.y);
+  if (!finitePoint(origin) || !finitePoint(destination) || !Number.isFinite(distance)
+    || distance === 0 || halfW <= 0 || halfH <= 0 || grid.tileSize <= 0
+    || !bodyFits(grid, origin.x, origin.y, halfW, halfH, 1e-6)) return { ...origin };
+  const dx = (destination.x - origin.x) / distance, dy = (destination.y - origin.y) / distance;
+  const interval: RayInterval = { enter: 0, exit: 0 };
+  let travel = distance;
+  const hitBox = (left: number, top: number, right: number, bottom: number): void => {
+    if (intersectRayBox(origin, dx, dy, left - halfW + 1e-6, top - halfH + 1e-6,
+      right + halfW - 1e-6, bottom + halfH - 1e-6, interval) && interval.exit > 1e-6) {
+      travel = Math.min(travel, Math.max(0, interval.enter - 1e-5));
+    }
+  };
+  const size = grid.tileSize;
+  for (let r = Math.max(-1, Math.floor((Math.min(origin.y, destination.y) - halfH) / size)); r <= Math.min(grid.rows, Math.floor((Math.max(origin.y, destination.y) + halfH) / size)); r++) {
+    for (let c = Math.max(-1, Math.floor((Math.min(origin.x, destination.x) - halfW) / size)); c <= Math.min(grid.cols, Math.floor((Math.max(origin.x, destination.x) + halfW) / size)); c++) {
+      if (c >= 0 && r >= 0 && c < grid.cols && r < grid.rows && grid.isWalkable(c, r)) continue;
+      hitBox(c * size, r * size, (c + 1) * size, (r + 1) * size);
+    }
+  }
+  for (const body of input.bodies ?? []) hitBox(body.position.x - body.halfWidth, body.position.y - body.halfHeight,
+    body.position.x + body.halfWidth, body.position.y + body.halfHeight);
+  // Optical admission cannot skip an unseen gap, even when the endpoint is visible.
+  if (input.isVisible) for (let step = 0; step <= Math.ceil(travel); step++) {
+    const d = Math.min(step, travel);
+    if (!input.isVisible({ x: origin.x + dx * d, y: origin.y + dy * d })) { travel = Math.max(0, d - 1); break; }
+  }
+  return { x: origin.x + dx * travel, y: origin.y + dy * travel };
+}
 export interface ToolRevealSnapshot { readonly enemyPositions: Vector2[]; readonly nodePositions: Vector2[]; readonly corePositions?: Vector2[] }
 
 /** Entire physical seam must lie on floor and be visible from its owner at placement. */

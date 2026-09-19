@@ -1,5 +1,5 @@
 // AUTO-GENERATED from contaminant-migrations.csv and contaminant-loot.csv — DO NOT EDIT
-import type { ContaminantType, ContaminantQuality } from '@/types/game-types';
+import type { LegacyContaminantType as ContaminantType, ContaminantQuality } from '@/types/game-types';
 import type { KindlingTier } from '@/types/map-types';
 export const CONTAMINANT_MIGRATIONS: Readonly<Partial<Record<ContaminantType, { readonly target: ContaminantType; readonly legacyUses: number }>>> = {
   "ruminate": {

@@ -1,10 +1,10 @@
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import type { ContaminationForm } from '@/generation/contamination-draw';
-import type { ContaminantType } from '@/types/game-types';
+import type { LegacyContaminantType } from '@/types/game-types';
 import type { RiftPresentationView } from './bridge';
 
 /** Explicit renderer capabilities, not a replacement gameplay catalogue. */
-export const STAGE_TOOL_TYPES: ReadonlySet<ContaminantType> = new Set(['stitch', 'compress', 'siphon', 'kindle', 'muffle']);
+export const STAGE_TOOL_TYPES: ReadonlySet<LegacyContaminantType> = new Set(['stitch', 'compress', 'siphon', 'kindle', 'muffle']);
 
 export function supportsStageForm(form: Pick<ContaminationForm, 'substrate' | 'coverage' | 'occupancy'>): boolean {
   return form.occupancy === 'floor' && form.substrate === 'insect_remnant' && form.coverage === 'infiltrate';
@@ -21,7 +21,7 @@ export function assertStagePresentationSupported(frame: RiftPresentationView): v
     throw new Error(`Stage has no held model for ${frame.player.weaponDefinitionId}`);
   for (const enemy of frame.enemies) if (enemy.substrate !== 'insect_remnant' || enemy.coverage !== 'infiltrate')
     throw new Error(`Stage has no actor model for ${enemy.substrate}/${enemy.coverage}`);
-  for (const type of frame.tools.loadoutTypes) if (type !== null && !STAGE_TOOL_TYPES.has(type))
+  for (const type of frame.tools.loadoutTypes) if (type !== null && (type === 'catalog' || !STAGE_TOOL_TYPES.has(type)))
     throw new Error(`Stage has no ability presentation for ${type}`);
 }
 

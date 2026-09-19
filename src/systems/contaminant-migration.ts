@@ -5,6 +5,7 @@ import { getContaminantMaxUses, getContaminantQuality } from './contaminant-qual
 import type { Contaminant } from '@/types/game-types';
 
 export function migrateContaminant(item: Contaminant): Contaminant {
+  if(item.type === 'catalog') return { ...item, catalog: item.catalog ? structuredClone(item.catalog) : undefined };
   const migration = CONTAMINANT_MIGRATIONS[item.type];
   if (!migration || (migration.target === item.type && item.quality !== undefined)) return { ...item };
   const target = migration.target;

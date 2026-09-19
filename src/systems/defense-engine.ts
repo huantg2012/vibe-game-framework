@@ -1,3 +1,4 @@
+import { getContaminantOffering } from './contaminant-catalog';
 /** Pure offering resolution for the thirteen current contaminant families.
  * CSV owns values. ImpactSystem applies this result before InventoryStore matures
  * the same offering snapshot. Legacy return fields remain empty for compatibility.
@@ -164,7 +165,7 @@ export function applyDefenseEffects(
   let runningTotal = Object.values(baseDamagePerModule).reduce((sum, damage) => sum + damage, 0);
   const scatterRedistributed = items.some(item => item.type === 'scatter');
   for (const item of items) {
-    const reduction = CONTAMINANT_DATA[item.type]?.defenseReduction ?? 0;
+    const reduction = getContaminantOffering(item).reduction;
     const blocked = Math.round(runningTotal * reduction);
     runningTotal -= blocked;
     totalReductionMult *= 1 - reduction;
@@ -183,6 +184,7 @@ export function applyDefenseEffects(
   }
   for (const item of items) {
     const disclosure = slotDisclosures.find(value => value.contaminantId === item.id)!;
+    if(item.type === 'catalog') continue;
     const def = CONTAMINANT_DATA[item.type];
     for (const id of moduleIds) {
       let localRemainder = 1;

@@ -1,0 +1,16 @@
+{
+  "disclosure": "Both frames use the same Esc-paused scene. Temporarily hide DOM overlay for world-only diagnostic; then hide only existing ground-item Graphics.visible for background-only diagnostic; restore both. No game-domain state, source, saved inventory, lighting, actor position or camera mutated.",
+  "pair": [
+    "08-paused-world-only-diagnostic.png",
+    "09-paused-background-only-diagnostic.png"
+  ],
+  "hiddenVisuals": [
+    {
+      "id": "CAT_8e981d14-cd94-4e94-801b-149ee5eabea1_CTM_NODE_02",
+      "was": true
+    }
+  ],
+  "rootBefore": {
+    "rootVisibility": ""
+  }
+}

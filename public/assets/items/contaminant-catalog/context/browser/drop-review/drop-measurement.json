@@ -1,0 +1,80 @@
+{
+  "url": "http://127.0.0.1:3017/",
+  "paused": true,
+  "scripts": [
+    "http://127.0.0.1:3017/@vite/client",
+    "http://127.0.0.1:3017/src/main.ts"
+  ],
+  "canvas": {
+    "width": 960,
+    "height": 640,
+    "left": 0,
+    "top": 0,
+    "cssWidth": 1440,
+    "cssHeight": 960
+  },
+  "camera": {
+    "zoom": 1.5,
+    "scrollX": 1006,
+    "scrollY": 557,
+    "x": 0,
+    "y": 0,
+    "width": 960,
+    "height": 640,
+    "matrix": {
+      "a": 1.5,
+      "b": 0,
+      "c": 0,
+      "d": 1.5,
+      "e": -240,
+      "f": -160
+    }
+  },
+  "worldPixelScale": 2.25,
+  "player": {
+    "x": 1486.3384382304814,
+    "y": 877.9154415918343
+  },
+  "ground": [
+    {
+      "id": "CAT_8e981d14-cd94-4e94-801b-149ee5eabea1_CTM_NODE_02",
+      "world": {
+        "x": 1486,
+        "y": 915
+      },
+      "visible": true,
+      "alpha": 1,
+      "depth": 16,
+      "visibility": 1,
+      "logicalScreen": {
+        "x": 480,
+        "y": 377
+      },
+      "screen": {
+        "x": 720,
+        "y": 565.5
+      }
+    }
+  ],
+  "nearby": [
+    {
+      "id": "CAT_8e981d14-cd94-4e94-801b-149ee5eabea1_CTM_NODE_02",
+      "location": {
+        "kind": "ground",
+        "runId": "8e981d14-cd94-4e94-801b-149ee5eabea1",
+        "position": {
+          "x": 1486.3384382304814,
+          "y": 914.6923749251686
+        }
+      },
+      "catalog": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "amber_beetle",
+        "appearanceId": "ceramic_seal",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 1,
+        "identification": "unidentified"
+      }
+    }
+  ]
+}

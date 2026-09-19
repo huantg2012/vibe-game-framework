@@ -1,5 +1,6 @@
-/** Finite suspended-sea recovery boundary. The outer checkpoint owns world identity,
+/** Shared finite Rift recovery boundary. The outer checkpoint owns world identity,
  * revision and elapsed time; the runtime validates the world-specific payload. */
+import { getBoundCatalogPassive, getContaminantSlot, getCatalogRuntimeAbility } from '@/systems/contaminant-catalog';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { WEAPON_DATA } from '@/generated/weapon-data';
@@ -18,7 +19,7 @@ import { runtimeInteger, runtimeNumber, runtimeRecord, runtimeStrings } from '@/
 import type { ContaminantRarity, ContaminantType } from '@/types/game-types';
 import type { InventoryState } from '@/types/inventory-types';
 
-const TOOL_TYPES = Object.keys(CONTAMINANT_DATA) as ContaminantType[];
+const TOOL_TYPES = [...Object.keys(CONTAMINANT_DATA), 'catalog'] as ContaminantType[];
 export interface RiftRecoveryConditions {
   readonly modifiers: SortieModifiers;
   readonly cycle: number;
@@ -105,6 +106,13 @@ function validateInventoryBindings(value: RiftRecoveryState, inventory: Readonly
       && ledger.kindlingGained === value.run.lastKindling;
   }
   if (ledger.status !== 'active' || ledger.baseSettled || ledger.outcome !== undefined) return false;
+  if (ledger.catalogVersion === 'contaminant-v1' && !ledger.dropPlan) return false;
+  if (ledger.combatRulesVersion !== 2) {
+    if (value.ai.enemies.some(enemy => (enemy.controlProtectionRemainingMs ?? 0) > 0)) return false;
+    const hostControls = runtimeRecord(value.world) && runtimeRecord(value.world.hosts) && Array.isArray(value.world.hosts.controls) ? value.world.hosts.controls : [];
+    if (hostControls.some(row => Array.isArray(row) && runtimeRecord(row[1])
+      && typeof row[1].protectionRemainingMs === 'number' && row[1].protectionRemainingMs > 0)) return false;
+  }
   const items = new Map(inventory.items.map(item => [item.id, item]));
   const weapon = inventory.equipment.weaponId ? items.get(inventory.equipment.weaponId) : null;
   if (weapon && (weapon.kind !== 'weapon' || !weapon.weapon || weapon.location.kind !== 'carried'
@@ -119,9 +127,12 @@ function validateInventoryBindings(value: RiftRecoveryState, inventory: Readonly
     if (id === null) continue;
     const item = items.get(id);
     if (item?.kind !== 'contaminant' || !item.contaminant || item.location.kind !== 'carried'
-      || item.contaminant.stage !== 'tool' || !runtimeInteger(item.contaminant.usesRemaining, 1)
+      || item.contaminant.stage !== 'tool' || (!runtimeInteger(item.contaminant.usesRemaining, 1)
+        && !(item.contaminant.usesRemaining === 0 && getBoundCatalogPassive(item.contaminant, ledger.id)))
       || !TOOL_TYPES.includes(item.contaminant.type)) return false;
-    const passive = CONTAMINANT_DATA[item.contaminant.type].toolType === 'passive';
+    const slot = getContaminantSlot(item.contaminant);
+    if (slot === null) return false;
+    const passive = slot === 'passive';
     if (passive !== (index === value.tools.loadoutIds.length - 1)) return false;
   }
   for (const type of ['muffle', 'siphon'] as const) {
@@ -129,10 +140,33 @@ function validateInventoryBindings(value: RiftRecoveryState, inventory: Readonly
       .find(candidate => candidate?.kind === 'contaminant' && candidate.contaminant.type === type);
     if (value.tools[type].triggersRemaining !== (item?.kind === 'contaminant' ? item.contaminant.usesRemaining : 0)) return false;
   }
+  const catalog = value.tools.catalog;
+  if (catalog) {
+    if (ledger.catalogVersion !== 'contaminant-v1' && (catalog.effects.length > 0 || catalog.serial > 0)) return false;
+    if (catalog.runId !== ledger.id && (ledger.catalogVersion === 'contaminant-v1' || catalog.runId !== '' || catalog.serial > 0 || catalog.effects.length > 0)) return false;
+    const receipts = ledger.actionReceipts ?? {};
+    if (catalog.completedActions.some(action => !receipts[action] || receipts[action]!.catalogVersion !== 'contaminant-v1'
+      || typeof receipts[action]!.definitionId !== 'string')) return false;
+    for (const effect of catalog.effects) {
+      const receipt = receipts[effect.actionId];
+      if (!receipt || receipt.itemId !== effect.sourceInstanceId || receipt.definitionId !== effect.definitionId || receipt.catalogVersion !== effect.catalogVersion) return false;
+      const source = items.get(effect.sourceInstanceId);
+      if (source) {
+        if (source.kind !== 'contaminant' || source.contaminant.type !== 'catalog') return false;
+        const ability = getCatalogRuntimeAbility(source.contaminant);
+        if (!ability || ability.definitionId !== effect.definitionId || ability.catalogVersion !== effect.catalogVersion) return false;
+      } else if (!ledger.destroyedIds.includes(effect.sourceInstanceId) || !receipt.broken) return false;
+    }
+  } else if (value.tools.loadoutIds.some(id => id && items.get(id)?.kind === 'contaminant'
+    && (items.get(id) as {contaminant?:{type:string}}).contaminant?.type === 'catalog')) return false;
   const nodeIds = new Set(value.search.nodes.map(node => node.id));
   if (Object.keys(ledger.revealedNodes).some(id => !nodeIds.has(id))) return false;
   for (const node of value.search.nodes) {
     const revealed = ledger.revealedNodes[node.id], cached = node.revealedItem;
+    const planned = ledger.dropPlan?.entries.find(entry => entry.nodeId === node.id)?.contaminant;
+    if (cached?.kind === 'contaminant' && (planned
+      ? JSON.stringify(cached.contaminant) !== JSON.stringify(planned)
+      : cached.contaminant.type === 'catalog')) return false;
     if (node.collected && cached) {
       if (!revealed || !orderedEqual(revealed, [cached.id])) return false;
       const actual = items.get(cached.id);
@@ -145,7 +179,11 @@ function validateInventoryBindings(value: RiftRecoveryState, inventory: Readonly
           && (!actual.weapon || actual.weapon.definitionId !== cached.weapon.definitionId)) return false;
         if (actual.kind === 'contaminant' && cached.kind === 'contaminant'
           && (!actual.contaminant || actual.contaminant.type !== cached.contaminant.type
-            || actual.contaminant.rarity !== cached.contaminant.rarity || actual.contaminant.quality !== cached.contaminant.quality)) return false;
+            || actual.contaminant.rarity !== cached.contaminant.rarity || actual.contaminant.quality !== cached.contaminant.quality
+            || actual.contaminant.catalog?.definitionId !== cached.contaminant.catalog?.definitionId
+            || actual.contaminant.catalog?.catalogVersion !== cached.contaminant.catalog?.catalogVersion
+            || actual.contaminant.catalog?.appearanceId !== cached.contaminant.catalog?.appearanceId
+            || actual.contaminant.catalog?.offeringProfileId !== cached.contaminant.catalog?.offeringProfileId)) return false;
       }
     } else if (revealed || (cached && items.has(cached.id))) return false;
   }
@@ -197,7 +235,9 @@ export function validateRiftRecoveryState(
   const chaosFactor = player.speedModifiers.find(([source]) => source === 'chaos')?.[1];
   if (chaosFactor !== undefined && !near(chaosFactor, getChaosModulators(chaos.lastModulated).speedMult)) return false;
   // create() leaves the initial hearing projection to the first Tool.update.
-  if (tools.elapsedMs > 0 && ai.hearingSuppressed !== (tools.muffle.episodeActive || tools.muffle.equipped)) return false;
+  if (tools.elapsedMs > 0 && ai.hearingSuppressed !== (tools.muffle.episodeActive || tools.muffle.equipped
+    || tools.catalog?.effects.some(effect => effect.resolvedParams.familyId === 'silence') === true)) return false;
+  if ((ai.playerActionSilenced ?? false) !== (tools.catalog?.effects.some(effect => effect.resolvedParams.familyId === 'silence') ?? false)) return false;
   // Historical crossing membership and independent stops can outlive a killed body.
   // The initial authored roster, never arbitrary IDs, remains their identity authority.
   if (tools.stitchStops.some(stop => !roster.has(stop.enemyId))
@@ -214,6 +254,45 @@ export function validateRiftRecoveryState(
       || [...extended.delays, ...extended.combusts].some(effect => !hostIds.has(effect.hostId))
       // A host can also report hearing through the scene's shared discovery gate.
       || extended.scatter.suppressedEnemyIds.some(id => !roster.has(id) && !hostIds.has(id))) return false;
+  }
+  if (tools.catalog) {
+    if (tools.catalog.controlRejections?.some(row => !roster.has(row.enemyId))) return false;
+    const hostIds = new Set(hosts.filter(runtimeRecord).map(host => host.id));
+    const hostControls = runtimeRecord(active.world) && runtimeRecord(active.world.hosts) && Array.isArray(active.world.hosts.controls) ? active.world.hosts.controls : [];
+    for (const row of hostControls) {
+      if (!Array.isArray(row) || row.length !== 2 || !runtimeRecord(row[1]) || !Array.isArray(row[1].suppressions)) return false;
+      for (const source of row[1].suppressions) {
+        if (!Array.isArray(source) || typeof source[0] !== 'string') return false;
+        if (source[0].startsWith('ability:') && !tools.catalog.effects.some(effect => effect.effectId === source[0]
+          && effect.resolvedParams.familyId === 'suppress' && effect.targetId === row[0])) return false;
+      }
+    }
+    for (const effect of tools.catalog.effects) {
+      const family = effect.resolvedParams.familyId;
+      if (effect.targetId !== null && !(family === 'suppress' ? hostIds : roster).has(effect.targetId)) return false;
+      if (effect.affectedEnemyIds.some(id => !roster.has(id)) || effect.previousPositions.some(row => !roster.has(row.enemyId))
+        || effect.stops.some(row => !roster.has(row.enemyId))) return false;
+      if (family === 'suppress') {
+        const host = hosts.find(host => runtimeRecord(host) && host.id === effect.targetId);
+        const control = hostControls.find(row => Array.isArray(row) && row[0] === effect.targetId)?.[1];
+        const source = runtimeRecord(control) && Array.isArray(control.suppressions)
+          ? control.suppressions.find(row => Array.isArray(row) && row[0] === effect.effectId) : undefined;
+        if (runtimeRecord(host) && runtimeRecord(host.state) && host.state.alive && (!Array.isArray(source)
+          || !runtimeNumber(source[1], effect.remainingTime - .001, effect.resolvedParams.durationMs + .001))) return false;
+      }
+      if (family === 'solidify' && effect.controlActive) {
+        const enemy = ai.enemies.find(enemy => enemy.id === effect.targetId);
+        if (!enemy || (enemy.controlProtectionRemainingMs ?? 0) > 0) return false;
+      }
+      for (const stop of effect.stops) {
+        const enemy = ai.enemies.find(enemy => enemy.id === stop.enemyId);
+        if (enemy && (enemy.controlProtectionRemainingMs ?? 0) > 0) return false;
+      }
+      if (family === 'image_lure') {
+        const decoy = ai.visualDecoys?.find(([source]) => source === effect.effectId)?.[1];
+        if (!decoy || !near(decoy.x, effect.position.x) || !near(decoy.y, effect.position.y)) return false;
+      }
+    }
   }
   if (trail.mapWidth !== minimap.mapWidth || trail.tileSize !== minimap.tileSize
     || trail.visited.some(entry => entry.tileKey >= minimap.mapWidth * minimap.mapHeight)) return false;

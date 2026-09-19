@@ -1,0 +1,5058 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-09-19T16:25:10.486Z",
+  "evidence": "headless-mechanic-ledger",
+  "seedSelection": "2026092000 through 2026092029, all 30 consecutive seeds retained",
+  "nodeSelection": "sorted actual contaminant node ID at sampleIndex modulo node count; no identity filtering",
+  "generation": "generateRiftLayout with production defaults; actual nodes, tiers and two source districts; no tutorial override",
+  "limitations": [
+    "Calls real inventory, defense and offering mechanisms without walking, threats, game clocks or human choices.",
+    "Not an economy balance, player pacing, visual or probability-distribution acceptance."
+  ],
+  "sourceSha256": {
+    "src/generated/contaminant-catalog-data.ts": "3e6751994c7c064dcfdc2178297b075db55ca06a35c0ae9f2a633a9abbc1b64d",
+    "src/systems/contaminant-drop-plan.ts": "a1e25d1c230cd5b3928c01832e9b37583d90eb34a4f12317dfee40887b100cae",
+    "src/systems/inventory-store.ts": "53ab2f0f05f8f04cd92d9ee7e4c9f8069b9a5df6a31690a2567c2e8e16da1299",
+    "src/generation/contaminant-source-regions.ts": "1e6ad9078ff6ccd143282e8d260dabb88b5817919d49afe10605d748cbbf437c",
+    "src/generation/rift-layout.ts": "9078088f7cee176f283140e8ba34ca45fb732c99b16e694f2b4faaef258bc498"
+  },
+  "counts": {
+    "core": 19,
+    "weak": 8,
+    "inert": 3
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "seed": 2026092000,
+      "recipeId": "ridge-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-1",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 848,
+          "y": 656
+        },
+        "tier": "deep",
+        "sourceTag": "optical",
+        "hint": "多见与观察有关的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-1_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ceramic_capsule",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-1_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "blind_needle_compass",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "contested",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-1_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "double_hole_token",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-1_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "盐壳匣",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "salt_case"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "ceramic_capsule",
+        "appearanceId": "salt_case",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "resistance",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-1:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-1:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-1:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-1_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "陶衣药丸",
+        "iconRef": {
+          "kind": "item",
+          "id": "ceramic_capsule",
+          "appearanceId": "salt_case"
+        },
+        "weight": 20,
+        "summary": "30秒内抗污增加10",
+        "description": "30秒内抗污增加10",
+        "acquiredOrdinal": 1,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 169.18,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 2,
+      "seed": 2026092001,
+      "recipeId": "hunks-metro",
+      "fragmentTypeId": "frag-metro",
+      "runId": "i28-natural-2",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 112,
+          "y": 624
+        },
+        "tier": "deep",
+        "sourceTag": "optical",
+        "hint": "多见与观察有关的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-2_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "blind_needle_compass",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-2_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "excellent",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "double_hole_token",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "quiet",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-2_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "milky_fish_eye",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-2_CTM_NODE_02",
+        "qualityId": "excellent",
+        "offeringSummary": "不提供供奉增益；仍可转化揭晓",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "陶封块",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "不提供供奉增益；仍可转化揭晓",
+        "description": "不提供供奉增益；仍可转化揭晓",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "double_hole_token",
+        "appearanceId": "ceramic_seal",
+        "offeringProfileId": "quiet",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "inert",
+      "familyId": null,
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-2:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-2:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-2:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 100,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-2_CTM_NODE_02",
+        "qualityId": "excellent",
+        "offeringSummary": "不提供供奉增益；仍可转化揭晓",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "双孔票牌",
+        "iconRef": {
+          "kind": "item",
+          "id": "double_hole_token",
+          "appearanceId": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "没有可用的裂隙能力",
+        "description": "没有可用的裂隙能力",
+        "acquiredOrdinal": 2,
+        "slot": null,
+        "inert": true
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 140,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 3,
+      "seed": 2026092002,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-3",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 1520,
+          "y": 496
+        },
+        "tier": "deep",
+        "sourceTag": "tension",
+        "hint": "多见改变牵拉与位移的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-3_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ash_tooth",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-3_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ceramic_capsule",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-3_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "coiled_tape_measure",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-3_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "盐壳匣",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "salt_case"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "coiled_tape_measure",
+        "appearanceId": "salt_case",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "dash",
+      "grade": 2,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-3:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-3:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-3:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-3_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "回卷尺",
+        "iconRef": {
+          "kind": "item",
+          "id": "coiled_tape_measure",
+          "appearanceId": "salt_case"
+        },
+        "weight": 20,
+        "summary": "沿可走地面短冲72像素",
+        "description": "沿可走地面短冲72像素",
+        "acquiredOrdinal": 3,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 3,
+        "maxUses": 3
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 160.87,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 4,
+      "seed": 2026092003,
+      "recipeId": "shear-clinic",
+      "fragmentTypeId": "frag-clinic",
+      "runId": "i28-natural-4",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1584,
+          "y": 400
+        },
+        "tier": "contested",
+        "sourceTag": "tension",
+        "hint": "多见改变牵拉与位移的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "contested",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-4_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "salted_vial",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "contested",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-4_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "split_heel_boot",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-4_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "scorched_scarf",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-4_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "陶封块",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少45%",
+        "description": "供奉期间冲击伤害减少45%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "salted_vial",
+        "appearanceId": "ceramic_seal",
+        "offeringProfileId": "resist_45",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "resistance",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-4:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-4:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-4:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 55,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-4_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "盐封药瓶",
+        "iconRef": {
+          "kind": "item",
+          "id": "salted_vial",
+          "appearanceId": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "30秒内抗污增加20",
+        "description": "30秒内抗污增加20",
+        "acquiredOrdinal": 4,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 52.03,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 5,
+      "seed": 2026092004,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-5",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 1392,
+          "y": 944
+        },
+        "tier": "deep",
+        "sourceTag": "density",
+        "hint": "多见改变重量的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-5_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "split_porcelain_spoon",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-5_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "bone_clasp_mask",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-5_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "hollow_eyelet",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-5_CTM_NODE_02",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "蜡封包",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "bone_clasp_mask",
+        "appearanceId": "wax_parcel",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "resistance",
+      "grade": 2,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-5:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-5:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-5:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-5_CTM_NODE_02",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "骨扣面罩",
+        "iconRef": {
+          "kind": "item",
+          "id": "bone_clasp_mask",
+          "appearanceId": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "30秒内抗污增加30",
+        "description": "30秒内抗污增加30",
+        "acquiredOrdinal": 5,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 146.65,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 6,
+      "seed": 2026092005,
+      "recipeId": "shear-metro",
+      "fragmentTypeId": "frag-metro",
+      "runId": "i28-natural-6",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 1584,
+          "y": 1008
+        },
+        "tier": "deep",
+        "sourceTag": "optical",
+        "hint": "多见与观察有关的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-6_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "creased_ticket_wallet",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "quiet",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-6_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "wax_sealed_button",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-6_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "one_eyed_puppet_head",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-6_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "蜡封包",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "one_eyed_puppet_head",
+        "appearanceId": "wax_parcel",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "survey",
+      "grade": 3,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-6:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-6:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-6:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-6_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "独目偶首",
+        "iconRef": {
+          "kind": "item",
+          "id": "one_eyed_puppet_head",
+          "appearanceId": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "探查6格内目标位置",
+        "description": "探查6格内目标位置",
+        "acquiredOrdinal": 6,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 37.95,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 7,
+      "seed": 2026092006,
+      "recipeId": "shear-clinic",
+      "fragmentTypeId": "frag-clinic",
+      "runId": "i28-natural-7",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1296,
+          "y": 304
+        },
+        "tier": "deep",
+        "sourceTag": "inhibition",
+        "hint": "多见压住侵蚀的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-7_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "coiled_tape_measure",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-7_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "excellent",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "wax_sealed_button",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "contested",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-7_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "double_hole_token",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-7_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "缝合布囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "自身供奉积累翻倍；不提供减伤",
+        "description": "自身供奉积累翻倍；不提供减伤",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "coiled_tape_measure",
+        "appearanceId": "stitched_pouch",
+        "offeringProfileId": "quickening",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "dash",
+      "grade": 2,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-7:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 2,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-7:impact:2",
+          "chargesBefore": 2,
+          "chargesAfter": 4,
+          "damageOn100": 100,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 2,
+      "result": {
+        "instanceId": "CAT_i28-natural-7_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 4,
+        "identification": "revealed",
+        "name": "回卷尺",
+        "iconRef": {
+          "kind": "item",
+          "id": "coiled_tape_measure",
+          "appearanceId": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "沿可走地面短冲72像素",
+        "description": "沿可走地面短冲72像素",
+        "acquiredOrdinal": 7,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 3,
+        "maxUses": 3
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 18.29,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 8,
+      "seed": 2026092007,
+      "recipeId": "rim-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-8",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 624,
+          "y": 336
+        },
+        "tier": "deep",
+        "sourceTag": "tension",
+        "hint": "多见改变牵拉与位移的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-8_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "frosted_furnace_core",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-8_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "brass_back_buckle",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-8_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "scorched_scarf",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-8_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "缝合布囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "brass_back_buckle",
+        "appearanceId": "stitched_pouch",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "capacity",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-8:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-8:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-8:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-8_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "黄铜背扣",
+        "iconRef": {
+          "kind": "item",
+          "id": "brass_back_buckle",
+          "appearanceId": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "本趟负重上限增加4",
+        "description": "本趟负重上限增加4",
+        "acquiredOrdinal": 8,
+        "slot": "passive",
+        "inert": false,
+        "usesRemaining": 2,
+        "maxUses": 2
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 482.71,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 9,
+      "seed": 2026092008,
+      "recipeId": "ridge-clinic",
+      "fragmentTypeId": "frag-clinic",
+      "runId": "i28-natural-9",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 1040,
+          "y": 592
+        },
+        "tier": "contested",
+        "sourceTag": "density",
+        "hint": "多见改变重量的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-9_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "wrinkled_bottom_satchel",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "contested",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-9_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ash_tooth",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "contested",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-9_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "sealed_flower_calyx",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-9_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "盐壳匣",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "salt_case"
+        },
+        "weight": 20,
+        "summary": "自身供奉积累翻倍；不提供减伤",
+        "description": "自身供奉积累翻倍；不提供减伤",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "sealed_flower_calyx",
+        "appearanceId": "salt_case",
+        "offeringProfileId": "quickening",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "inert",
+      "familyId": null,
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-9:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 2,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-9:impact:2",
+          "chargesBefore": 2,
+          "chargesAfter": 4,
+          "damageOn100": 100,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 2,
+      "result": {
+        "instanceId": "CAT_i28-natural-9_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 4,
+        "identification": "revealed",
+        "name": "封口花萼",
+        "iconRef": {
+          "kind": "item",
+          "id": "sealed_flower_calyx",
+          "appearanceId": "salt_case"
+        },
+        "weight": 20,
+        "summary": "没有可用的裂隙能力",
+        "description": "没有可用的裂隙能力",
+        "acquiredOrdinal": 9,
+        "slot": null,
+        "inert": true
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 58.46,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 10,
+      "seed": 2026092009,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-10",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1712,
+          "y": 496
+        },
+        "tier": "deep",
+        "sourceTag": "acoustic",
+        "hint": "多见会改变声音的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-10_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "hollow_reed_joint",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-10_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "double_clasp_strap",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-10_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ash_tooth",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-10_CTM_NODE_01",
+        "qualityId": "fine",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "缝合布囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "自身供奉积累翻倍；不提供减伤",
+        "description": "自身供奉积累翻倍；不提供减伤",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "hollow_reed_joint",
+        "appearanceId": "stitched_pouch",
+        "offeringProfileId": "quickening",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "sound_lure",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-10:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 2,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-10:impact:2",
+          "chargesBefore": 2,
+          "chargesAfter": 4,
+          "damageOn100": 100,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 2,
+      "result": {
+        "instanceId": "CAT_i28-natural-10_CTM_NODE_01",
+        "qualityId": "fine",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 4,
+        "identification": "revealed",
+        "name": "空节苇管",
+        "iconRef": {
+          "kind": "item",
+          "id": "hollow_reed_joint",
+          "appearanceId": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "抛出声诱饵持续2秒",
+        "description": "抛出声诱饵持续2秒",
+        "acquiredOrdinal": 10,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 7,
+        "maxUses": 7
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 177.54,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 11,
+      "seed": 2026092010,
+      "recipeId": "shear-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-11",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 1680,
+          "y": 496
+        },
+        "tier": "deep",
+        "sourceTag": "imprint",
+        "hint": "多见留住形迹的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "safe",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-11_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "split_heel_boot",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-11_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "creased_ticket_wallet",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-11_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "gray_felt_glove",
+              "appearanceId": "resin_nodule",
+              "offeringProfileId": "quiet",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-11_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "蜡封包",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少45%",
+        "description": "供奉期间冲击伤害减少45%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "creased_ticket_wallet",
+        "appearanceId": "wax_parcel",
+        "offeringProfileId": "resist_45",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "capacity",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-11:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-11:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-11:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 55,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-11_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "折页票夹",
+        "iconRef": {
+          "kind": "item",
+          "id": "creased_ticket_wallet",
+          "appearanceId": "wax_parcel"
+        },
+        "weight": 10,
+        "summary": "本趟负重上限增加2",
+        "description": "本趟负重上限增加2",
+        "acquiredOrdinal": 11,
+        "slot": "passive",
+        "inert": false,
+        "usesRemaining": 2,
+        "maxUses": 2
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 37.23,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 12,
+      "seed": 2026092011,
+      "recipeId": "shear-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-12",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 656,
+          "y": 624
+        },
+        "tier": "deep",
+        "sourceTag": "optical",
+        "hint": "多见与观察有关的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-12_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "sunken_inkstone",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-12_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "brass_back_buckle",
+              "appearanceId": "resin_nodule",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-12_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "brass_monocle",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-12_CTM_NODE_03",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "灰结茧",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "ash_cocoon"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "brass_monocle",
+        "appearanceId": "ash_cocoon",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "sight",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-12:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-12:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-12:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-12_CTM_NODE_03",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "铜框单镜",
+        "iconRef": {
+          "kind": "item",
+          "id": "brass_monocle",
+          "appearanceId": "ash_cocoon"
+        },
+        "weight": 20,
+        "summary": "本趟视距增加10%",
+        "description": "本趟视距增加10%",
+        "acquiredOrdinal": 12,
+        "slot": "passive",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 155.97,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 13,
+      "seed": 2026092012,
+      "recipeId": "shear-metro",
+      "fragmentTypeId": "frag-metro",
+      "runId": "i28-natural-13",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1584,
+          "y": 848
+        },
+        "tier": "deep",
+        "sourceTag": "inhibition",
+        "hint": "多见压住侵蚀的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-13_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ash_tooth",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-13_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "silver_back_hand_mirror",
+              "appearanceId": "resin_nodule",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-13_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "stopped_pocket_watch",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-13_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "蜡封包",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "ash_tooth",
+        "appearanceId": "wax_parcel",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "suppress",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-13:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-13:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-13:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-13_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "灰釉齿",
+        "iconRef": {
+          "kind": "item",
+          "id": "ash_tooth",
+          "appearanceId": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "压住一处污染源1秒",
+        "description": "压住一处污染源1秒",
+        "acquiredOrdinal": 13,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 3,
+        "maxUses": 3
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 16.36,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 14,
+      "seed": 2026092013,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-14",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 848,
+          "y": 944
+        },
+        "tier": "deep",
+        "sourceTag": "density",
+        "hint": "多见改变重量的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-14_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "broken_eye_scale_weight",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-14_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "inverted_face_mask",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-14_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "crooked_hook_needle",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-14_CTM_NODE_02",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "薄壳卵",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "thin_shell_ovoid"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "inverted_face_mask",
+        "appearanceId": "thin_shell_ovoid",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "image_lure",
+      "grade": 3,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-14:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-14:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-14:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-14_CTM_NODE_02",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "倒脸面具",
+        "iconRef": {
+          "kind": "item",
+          "id": "inverted_face_mask",
+          "appearanceId": "thin_shell_ovoid"
+        },
+        "weight": 20,
+        "summary": "原地留下假身11秒",
+        "description": "原地留下假身11秒",
+        "acquiredOrdinal": 14,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 6,
+        "maxUses": 6
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 480.14,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 15,
+      "seed": 2026092014,
+      "recipeId": "hunks-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-15",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 944,
+          "y": 944
+        },
+        "tier": "contested",
+        "sourceTag": "tension",
+        "hint": "多见改变牵拉与位移的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-15_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "split_porcelain_spoon",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-15_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ash_tooth",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "contested",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-15_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "split_heel_boot",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-15_CTM_NODE_03",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "叠皮囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "layered_hide"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "split_heel_boot",
+        "appearanceId": "layered_hide",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "dash",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-15:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-15:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-15:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-15_CTM_NODE_03",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "断跟短靴",
+        "iconRef": {
+          "kind": "item",
+          "id": "split_heel_boot",
+          "appearanceId": "layered_hide"
+        },
+        "weight": 20,
+        "summary": "沿可走地面短冲48像素",
+        "description": "沿可走地面短冲48像素",
+        "acquiredOrdinal": 15,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 5,
+        "maxUses": 5
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 114.82,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 16,
+      "seed": 2026092015,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-16",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1488,
+          "y": 880
+        },
+        "tier": "deep",
+        "sourceTag": "optical",
+        "hint": "多见与观察有关的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-16_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "crooked_hook_needle",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-16_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "lead_type_stamp",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "safe",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-16_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "creased_ticket_wallet",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-16_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "陶封块",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "crooked_hook_needle",
+        "appearanceId": "ceramic_seal",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "tripwire",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-16:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-16:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-16:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-16_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "弯头钩针",
+        "iconRef": {
+          "kind": "item",
+          "id": "crooked_hook_needle",
+          "appearanceId": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "铺线绊停跨线敌人1秒",
+        "description": "铺线绊停跨线敌人1秒",
+        "acquiredOrdinal": 16,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 5,
+        "maxUses": 5
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 53.81,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 17,
+      "seed": 2026092016,
+      "recipeId": "hunks-metro",
+      "fragmentTypeId": "frag-metro",
+      "runId": "i28-natural-17",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 1776,
+          "y": 624
+        },
+        "tier": "deep",
+        "sourceTag": "acoustic",
+        "hint": "多见会改变声音的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-17_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "clouded_lens",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-17_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "lead_type_stamp",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-17_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "coiled_tape_measure",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-17_CTM_NODE_02",
+        "qualityId": "good",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "缝合布囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "自身供奉积累翻倍；不提供减伤",
+        "description": "自身供奉积累翻倍；不提供减伤",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "lead_type_stamp",
+        "appearanceId": "stitched_pouch",
+        "offeringProfileId": "quickening",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "slow_zone",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-17:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 2,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-17:impact:2",
+          "chargesBefore": 2,
+          "chargesAfter": 4,
+          "damageOn100": 100,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 2,
+      "result": {
+        "instanceId": "CAT_i28-natural-17_CTM_NODE_02",
+        "qualityId": "good",
+        "offeringSummary": "自身供奉积累翻倍；不提供减伤",
+        "offeringCharges": 3,
+        "impactCharges": 4,
+        "identification": "revealed",
+        "name": "铅字印章",
+        "iconRef": {
+          "kind": "item",
+          "id": "lead_type_stamp",
+          "appearanceId": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "脚下重区使敌移速减30%",
+        "description": "脚下重区使敌移速减30%",
+        "acquiredOrdinal": 17,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 5,
+        "maxUses": 5
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 458.77,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 18,
+      "seed": 2026092017,
+      "recipeId": "ridge-clinic",
+      "fragmentTypeId": "frag-clinic",
+      "runId": "i28-natural-18",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 496,
+          "y": 624
+        },
+        "tier": "deep",
+        "sourceTag": "optical",
+        "hint": "多见与观察有关的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-18_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "empty_photo_frame",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-18_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "lead_type_stamp",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-18_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "double_hole_token",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-18_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "盐壳匣",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "salt_case"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "double_hole_token",
+        "appearanceId": "salt_case",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "inert",
+      "familyId": null,
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-18:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-18:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-18:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-18_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "双孔票牌",
+        "iconRef": {
+          "kind": "item",
+          "id": "double_hole_token",
+          "appearanceId": "salt_case"
+        },
+        "weight": 20,
+        "summary": "没有可用的裂隙能力",
+        "description": "没有可用的裂隙能力",
+        "acquiredOrdinal": 18,
+        "slot": null,
+        "inert": true
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 37.63,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 19,
+      "seed": 2026092018,
+      "recipeId": "shear-metro",
+      "fragmentTypeId": "frag-metro",
+      "runId": "i28-natural-19",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1232,
+          "y": 1040
+        },
+        "tier": "deep",
+        "sourceTag": "inhibition",
+        "hint": "多见压住侵蚀的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-19_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "sunken_inkstone",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-19_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ceramic_capsule",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "contested",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-19_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "waterlogged_spine",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-19_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "陶封块",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "sunken_inkstone",
+        "appearanceId": "ceramic_seal",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "slow_zone",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-19:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-19:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-19:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-19_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "凹心砚台",
+        "iconRef": {
+          "kind": "item",
+          "id": "sunken_inkstone",
+          "appearanceId": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "脚下重区使敌移速减10%",
+        "description": "脚下重区使敌移速减10%",
+        "acquiredOrdinal": 19,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 5,
+        "maxUses": 5
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 525.64,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 20,
+      "seed": 2026092019,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-20",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 1424,
+          "y": 816
+        },
+        "tier": "deep",
+        "sourceTag": "inhibition",
+        "hint": "多见压住侵蚀的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-20_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "frosted_furnace_core",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-20_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "cold_ash_pipe",
+              "appearanceId": "resin_nodule",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-20_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "blind_needle_compass",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "quiet",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-20_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "树脂团",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "resin_nodule"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "cold_ash_pipe",
+        "appearanceId": "resin_nodule",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "suppress",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-20:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-20:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-20:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-20_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "冷灰烟斗",
+        "iconRef": {
+          "kind": "item",
+          "id": "cold_ash_pipe",
+          "appearanceId": "resin_nodule"
+        },
+        "weight": 20,
+        "summary": "压住一处污染源3秒",
+        "description": "压住一处污染源3秒",
+        "acquiredOrdinal": 20,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 3,
+        "maxUses": 3
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 143.51,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 21,
+      "seed": 2026092020,
+      "recipeId": "rim-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-21",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 1040,
+          "y": 496
+        },
+        "tier": "deep",
+        "sourceTag": "density",
+        "hint": "多见改变重量的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "safe",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-21_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "wax_sealed_button",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "quickening",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "safe",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-21_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "brass_back_buckle",
+              "appearanceId": "resin_nodule",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-21_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "reverse_woven_basket",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-21_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "缝合布囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少45%",
+        "description": "供奉期间冲击伤害减少45%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "reverse_woven_basket",
+        "appearanceId": "stitched_pouch",
+        "offeringProfileId": "resist_45",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "capacity",
+      "grade": 3,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-21:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-21:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-21:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 55,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-21_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "反编藤篮",
+        "iconRef": {
+          "kind": "item",
+          "id": "reverse_woven_basket",
+          "appearanceId": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "本趟负重上限增加8",
+        "description": "本趟负重上限增加8",
+        "acquiredOrdinal": 21,
+        "slot": "passive",
+        "inert": false,
+        "usesRemaining": 2,
+        "maxUses": 2
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 68.17,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 22,
+      "seed": 2026092021,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-22",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1200,
+          "y": 656
+        },
+        "tier": "deep",
+        "sourceTag": "acoustic",
+        "hint": "多见会改变声音的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-22_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "split_heel_boot",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-22_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "double_hole_token",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-22_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "coiled_tape_measure",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-22_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "灰结茧",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "ash_cocoon"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "split_heel_boot",
+        "appearanceId": "ash_cocoon",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "dash",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-22:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-22:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-22:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-22_CTM_NODE_01",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "断跟短靴",
+        "iconRef": {
+          "kind": "item",
+          "id": "split_heel_boot",
+          "appearanceId": "ash_cocoon"
+        },
+        "weight": 20,
+        "summary": "沿可走地面短冲48像素",
+        "description": "沿可走地面短冲48像素",
+        "acquiredOrdinal": 22,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 113.44,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 23,
+      "seed": 2026092022,
+      "recipeId": "rim-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-23",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 1488,
+          "y": 816
+        },
+        "tier": "deep",
+        "sourceTag": "acoustic",
+        "hint": "多见会改变声音的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "safe",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-23_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "sunken_inkstone",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-23_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "creased_ticket_wallet",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "contested",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-23_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "excellent",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "split_tongue_bell",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-23_CTM_NODE_02",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "缝合布囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少45%",
+        "description": "供奉期间冲击伤害减少45%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "creased_ticket_wallet",
+        "appearanceId": "stitched_pouch",
+        "offeringProfileId": "resist_45",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "capacity",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-23:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-23:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-23:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 55,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-23_CTM_NODE_02",
+        "qualityId": "fine",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "折页票夹",
+        "iconRef": {
+          "kind": "item",
+          "id": "creased_ticket_wallet",
+          "appearanceId": "stitched_pouch"
+        },
+        "weight": 10,
+        "summary": "本趟负重上限增加2",
+        "description": "本趟负重上限增加2",
+        "acquiredOrdinal": 23,
+        "slot": "passive",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 205.05,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 24,
+      "seed": 2026092023,
+      "recipeId": "shear-clinic",
+      "fragmentTypeId": "frag-clinic",
+      "runId": "i28-natural-24",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 1360,
+          "y": 336
+        },
+        "tier": "deep",
+        "sourceTag": "density",
+        "hint": "多见改变重量的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-24_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "coiled_tape_measure",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-24_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "waterlogged_spine",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-24_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "brass_back_buckle",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "quiet",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-24_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "不提供供奉增益；仍可转化揭晓",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "盐壳匣",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "salt_case"
+        },
+        "weight": 20,
+        "summary": "不提供供奉增益；仍可转化揭晓",
+        "description": "不提供供奉增益；仍可转化揭晓",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "brass_back_buckle",
+        "appearanceId": "salt_case",
+        "offeringProfileId": "quiet",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "capacity",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-24:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-24:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 100,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-24:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 100,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-24_CTM_NODE_03",
+        "qualityId": "ordinary",
+        "offeringSummary": "不提供供奉增益；仍可转化揭晓",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "黄铜背扣",
+        "iconRef": {
+          "kind": "item",
+          "id": "brass_back_buckle",
+          "appearanceId": "salt_case"
+        },
+        "weight": 20,
+        "summary": "本趟负重上限增加4",
+        "description": "本趟负重上限增加4",
+        "acquiredOrdinal": 24,
+        "slot": "passive",
+        "inert": false,
+        "usesRemaining": 2,
+        "maxUses": 2
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 15.64,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 25,
+      "seed": 2026092024,
+      "recipeId": "hunks-metro",
+      "fragmentTypeId": "frag-metro",
+      "runId": "i28-natural-25",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1808,
+          "y": 1136
+        },
+        "tier": "deep",
+        "sourceTag": "acoustic",
+        "hint": "多见会改变声音的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-25_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "unlined_coat",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-25_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "sealed_flower_calyx",
+              "appearanceId": "ash_cocoon",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "safe",
+          "sourceTag": "acoustic",
+          "contaminant": {
+            "id": "CAT_i28-natural-25_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "silver_back_hand_mirror",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-25_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "缝合布囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "unlined_coat",
+        "appearanceId": "stitched_pouch",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "silence",
+      "grade": 3,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-25:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-25:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-25:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-25_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "脱衬风衣",
+        "iconRef": {
+          "kind": "item",
+          "id": "unlined_coat",
+          "appearanceId": "stitched_pouch"
+        },
+        "weight": 20,
+        "summary": "11秒内自身行动消声",
+        "description": "11秒内自身行动消声",
+        "acquiredOrdinal": 25,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 5,
+        "maxUses": 5
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 34.94,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 26,
+      "seed": 2026092025,
+      "recipeId": "shear-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-26",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 1712,
+          "y": 1200
+        },
+        "tier": "deep",
+        "sourceTag": "tension",
+        "hint": "多见改变牵拉与位移的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-26_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "hollow_reed_joint",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "tension",
+          "contaminant": {
+            "id": "CAT_i28-natural-26_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "creased_negative",
+              "appearanceId": "salt_case",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "contested",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-26_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ceramic_capsule",
+              "appearanceId": "stitched_pouch",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-26_CTM_NODE_02",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "盐壳匣",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "salt_case"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "creased_negative",
+        "appearanceId": "salt_case",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "survey",
+      "grade": 2,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-26:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-26:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-26:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-26_CTM_NODE_02",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "折角底片",
+        "iconRef": {
+          "kind": "item",
+          "id": "creased_negative",
+          "appearanceId": "salt_case"
+        },
+        "weight": 20,
+        "summary": "探查5格内目标位置",
+        "description": "探查5格内目标位置",
+        "acquiredOrdinal": 26,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 169.53,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 27,
+      "seed": 2026092026,
+      "recipeId": "ridge-clinic",
+      "fragmentTypeId": "frag-clinic",
+      "runId": "i28-natural-27",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 336,
+          "y": 1072
+        },
+        "tier": "deep",
+        "sourceTag": "imprint",
+        "hint": "多见留住形迹的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-27_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "excellent",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "sealed_hourglass",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-27_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "empty_photo_frame",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-27_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "silver_back_hand_mirror",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-27_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "薄壳卵",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "thin_shell_ovoid"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "silver_back_hand_mirror",
+        "appearanceId": "thin_shell_ovoid",
+        "offeringProfileId": "resist_35",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "image_lure",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-27:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-27:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 65,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-27:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 65,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-27_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少35%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "银背袖镜",
+        "iconRef": {
+          "kind": "item",
+          "id": "silver_back_hand_mirror",
+          "appearanceId": "thin_shell_ovoid"
+        },
+        "weight": 20,
+        "summary": "原地留下假身5秒",
+        "description": "原地留下假身5秒",
+        "acquiredOrdinal": 27,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 5,
+        "maxUses": 5
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 762.93,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 28,
+      "seed": 2026092027,
+      "recipeId": "ridge-library",
+      "fragmentTypeId": "frag-library",
+      "runId": "i28-natural-28",
+      "selectedNode": {
+        "id": "CTM_NODE_01",
+        "position": {
+          "x": 1904,
+          "y": 976
+        },
+        "tier": "deep",
+        "sourceTag": "density",
+        "hint": "多见改变重量的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-28_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "hollow_eyelet",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-28_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "reverse_woven_basket",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-28_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "brass_monocle",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-28_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "陶封块",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "hollow_eyelet",
+        "appearanceId": "ceramic_seal",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "survey",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-28:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-28:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-28:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-28_CTM_NODE_01",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "空眼铜环",
+        "iconRef": {
+          "kind": "item",
+          "id": "hollow_eyelet",
+          "appearanceId": "ceramic_seal"
+        },
+        "weight": 20,
+        "summary": "探查2格内目标位置",
+        "description": "探查2格内目标位置",
+        "acquiredOrdinal": 28,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 3,
+        "maxUses": 3
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 569,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 29,
+      "seed": 2026092028,
+      "recipeId": "shear-soil",
+      "fragmentTypeId": "frag-outdoor",
+      "runId": "i28-natural-29",
+      "selectedNode": {
+        "id": "CTM_NODE_02",
+        "position": {
+          "x": 1744,
+          "y": 976
+        },
+        "tier": "safe",
+        "sourceTag": "optical",
+        "hint": "多见与观察有关的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "deep",
+          "sourceTag": "inhibition",
+          "contaminant": {
+            "id": "CAT_i28-natural-29_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "amber_beetle",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "quiet",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "safe",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-29_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "wax_sealed_button",
+              "appearanceId": "layered_hide",
+              "offeringProfileId": "resist_45",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "deep",
+          "sourceTag": "optical",
+          "contaminant": {
+            "id": "CAT_i28-natural-29_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "fine",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "creased_negative",
+              "appearanceId": "ceramic_seal",
+              "offeringProfileId": "quiet",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-29_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "叠皮囊",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "layered_hide"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少45%",
+        "description": "供奉期间冲击伤害减少45%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "wax_sealed_button",
+        "appearanceId": "layered_hide",
+        "offeringProfileId": "resist_45",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "weak",
+      "familyId": "solidify",
+      "grade": 0,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-29:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-29:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 55,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-29:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 55,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-29_CTM_NODE_02",
+        "qualityId": "ordinary",
+        "offeringSummary": "供奉期间冲击伤害减少45%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "蜡封纽扣",
+        "iconRef": {
+          "kind": "item",
+          "id": "wax_sealed_button",
+          "appearanceId": "layered_hide"
+        },
+        "weight": 20,
+        "summary": "停住一敌1秒；受伤解除",
+        "description": "停住一敌1秒；受伤解除",
+        "acquiredOrdinal": 29,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 5,
+        "maxUses": 5
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 132.5,
+      "walkingCombatMs": null
+    },
+    {
+      "ordinal": 30,
+      "seed": 2026092029,
+      "recipeId": "shear-metro",
+      "fragmentTypeId": "frag-metro",
+      "runId": "i28-natural-30",
+      "selectedNode": {
+        "id": "CTM_NODE_03",
+        "position": {
+          "x": 1424,
+          "y": 784
+        },
+        "tier": "safe",
+        "sourceTag": "density",
+        "hint": "多见改变重量的残留"
+      },
+      "allPlannedNodes": [
+        {
+          "nodeId": "CTM_NODE_01",
+          "tier": "contested",
+          "sourceTag": "imprint",
+          "contaminant": {
+            "id": "CAT_i28-natural-30_CTM_NODE_01",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "wax_sealed_button",
+              "appearanceId": "thin_shell_ovoid",
+              "offeringProfileId": "resist_35",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_02",
+          "tier": "deep",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-30_CTM_NODE_02",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "ordinary",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "ceramic_capsule",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        },
+        {
+          "nodeId": "CTM_NODE_03",
+          "tier": "safe",
+          "sourceTag": "density",
+          "contaminant": {
+            "id": "CAT_i28-natural-30_CTM_NODE_03",
+            "type": "catalog",
+            "rarity": "common",
+            "quality": "good",
+            "stage": "defense",
+            "impactCharges": 0,
+            "usesRemaining": 0,
+            "catalog": {
+              "catalogVersion": "contaminant-v1",
+              "definitionId": "blind_needle_compass",
+              "appearanceId": "wax_parcel",
+              "offeringProfileId": "resist_25",
+              "acquiredOrdinal": 0,
+              "identification": "unidentified"
+            }
+          }
+        }
+      ],
+      "unknownPublicView": {
+        "instanceId": "CAT_i28-natural-30_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 0,
+        "identification": "unidentified",
+        "name": "蜡封包",
+        "iconRef": {
+          "kind": "appearance",
+          "id": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "供奉期间冲击伤害减少25%",
+        "description": "供奉期间冲击伤害减少25%",
+        "acquiredOrdinal": 0,
+        "slot": null,
+        "inert": false
+      },
+      "fixedIdentity": {
+        "catalogVersion": "contaminant-v1",
+        "definitionId": "blind_needle_compass",
+        "appearanceId": "wax_parcel",
+        "offeringProfileId": "resist_25",
+        "acquiredOrdinal": 0,
+        "identification": "unidentified"
+      },
+      "class": "core",
+      "familyId": "survey",
+      "grade": 1,
+      "cycles": [
+        {
+          "cycle": 1,
+          "receiptId": "i28-natural-30:impact:1",
+          "chargesBefore": 0,
+          "chargesAfter": 1,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 2,
+          "receiptId": "i28-natural-30:impact:2",
+          "chargesBefore": 1,
+          "chargesAfter": 2,
+          "damageOn100": 75,
+          "transformed": false
+        },
+        {
+          "cycle": 3,
+          "receiptId": "i28-natural-30:impact:3",
+          "chargesBefore": 2,
+          "chargesAfter": 3,
+          "damageOn100": 75,
+          "transformed": true
+        }
+      ],
+      "identificationImpactCount": 3,
+      "result": {
+        "instanceId": "CAT_i28-natural-30_CTM_NODE_03",
+        "qualityId": "good",
+        "offeringSummary": "供奉期间冲击伤害减少25%",
+        "offeringCharges": 3,
+        "impactCharges": 3,
+        "identification": "revealed",
+        "name": "盲针罗盘",
+        "iconRef": {
+          "kind": "item",
+          "id": "blind_needle_compass",
+          "appearanceId": "wax_parcel"
+        },
+        "weight": 20,
+        "summary": "探查4格内目标位置",
+        "description": "探查4格内目标位置",
+        "acquiredOrdinal": 30,
+        "slot": "active",
+        "inert": false,
+        "usesRemaining": 4,
+        "maxUses": 4
+      },
+      "finalLocation": "stash",
+      "offeringSlotCleared": true,
+      "discoveredPersisted": true,
+      "generationCpuMs": 57.85,
+      "walkingCombatMs": null
+    }
+  ]
+}

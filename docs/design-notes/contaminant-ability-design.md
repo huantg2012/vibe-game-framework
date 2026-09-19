@@ -1,7 +1,7 @@
 ---
-status: DESIGN-PROPOSAL / NOT-IMPLEMENTED
+status: IMPLEMENTED / INTERNAL-VERIFIED-WITH-LIMITS
 created-date: 2026-09-19
-last-modified-date: 2026-09-19
+last-modified-date: 2026-09-20
 scope: 污染异物的能力、装备目录、供奉鉴定、掉落、图标、周转、迁移与扩充
 user-accepted: 操作与效果简单直接；视野与负重维度；独立装备名；同功能多档装备；适量噪声；供奉完成才揭晓裂隙能力；认真重做图标
 ---
@@ -12,7 +12,7 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 
 用户本轮的“坚定”按上下文理解为“鉴定”。游戏内继续使用已存在的“残渣、供奉、转化、工具”；“鉴定”是这里对转化揭晓信息的设计称呼，不另设鉴定师、鉴定卷轴或付费鉴定菜单。
 
-**交付状态：完整设计及内容草案，未实施。** 用户要求是方向；48件清单、数值、比例、生命周期和实现批次是本次提出的具体方案，尚未经试玩验证。生产仍为13族、9主动4被动。本篇替换上一版“12功能＝12物件”的目录方案；[原13族审查快照](../qa/artifacts/contaminant-ability-review-2026-09-19.json)保留为有日期的审查证据，旧P01–P12不再是内容ID。未改正式CSV、代码或玩家存档；未自动开启实现迭代、提交或推送。
+**交付状态：迭代28实现与内部验证已交。** 用户已授权“提交，然后有计划的实施”，设计检查点为`32b8ae3`。正式CSV、48件目录、鉴定/版本/被动/共享能力与图标已接入，正式核心按键链和独立审查已完成；实际完成项以[唯一实施清单](../tasks/iteration-28.md)为准，不以本设计替代验收。旧13族继续服务旧物与在途局。
 
 ## 1. 设计目标与硬边界
 
@@ -28,7 +28,7 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 
 原角色、俯视2D、八向朝向与常态移动、现有探索/战斗/归来结构保留。空洞不是可照亮的石头；工具不把VOID变地面，不恢复已累积混乱，不永久净化地图，不提供无限免疫。武器仍是独立系统。所有能力面向共享空间/感知/污染/库存接口，不识别特定世界ID。
 
-现有容量16、异物统一2重、薪柴不计重；50%装载以下不减速，满载减速16%，不可超限拾取/出发。数值目前部分来自库存常量，后续接入必须收为CSV规则源；不能声称草案已经生产化。供奉基础3槽并沿既有成长扩槽；出击2主动＋1被动，成长后3主动＋1被动。本提案不另增槽。
+现有容量16、异物统一2重、薪柴不计重；50%装载以下不减速，满载减速16%，不可超限拾取/出发。容量及物重规则已收为正式 `data/inventory-rules.csv`；减速与抗污上限仍由正式 survival-rules CSV 提供。供奉基础3槽并沿既有成长扩槽；出击2主动＋1被动，成长后3主动＋1被动。本提案不另增槽。
 
 ## 2. 把“功能”和“装备”拆开
 
@@ -63,15 +63,15 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 
 ## 4. 完整内容目录与数值来源
 
-**所有以下CSV均为draft，尚未进codegen；不存在第二份硬编码运行目录。**
+**以下为迭代28正式CSV，由 `npm run codegen` 生成运行目录。历史draft仅保留为设计基线，不再作为运行来源。**
 
-- [12族能力合同](../../data/drafts/contaminant-ability-redesign.csv)：由旧12件候选表原地改为共享能力定义，目标/作用范围/叠加规则及基础余量。
-- [36件核心装备](../../data/drafts/contaminant-items.csv)：12族×3功能级，每件真名、短句、参数、图标构造与用途。
-- [12件噪声异物](../../data/drafts/contaminant-noise.csv)：8弱效＋4无能力，字段可归并到同一个生产物件schema。
-- [5类供奉反应](../../data/drafts/contaminant-offerings.csv)、[8种未鉴定外壳](../../data/drafts/contaminant-appearances.csv)。
-- [风险掉落档](../../data/drafts/contaminant-loot-profiles.csv)、[来源倾向](../../data/drafts/contaminant-source-affinities.csv)。
+- [12族能力合同](../../data/contaminant-abilities.csv)：目标、作用范围、叠加规则及基础余量。
+- [48件统一目录](../../data/contaminant-items.csv)：36核心＋8弱效＋4无能力，同一schema维护身份、参数、图标构造和用途。
+- [5类供奉反应](../../data/contaminant-offerings.csv)、[8种未鉴定外壳](../../data/contaminant-appearances.csv)。
+- [风险掉落档](../../data/contaminant-loot-profiles.csv)、[来源倾向](../../data/contaminant-source-affinities.csv)。
+- [品质与次数偏移](../../data/contaminant-qualities.csv)、[库存规则](../../data/inventory-rules.csv)。
 
-`duration_ms`单位毫秒，`range_px`为逻辑像素，1格32px；范围含义由族合同固定，不能把铺设距离当线长。品质量初值沿正式`contaminant-qualities.csv`的60/25/12/3；实施时将族专属宽表转换为通用品质偏移，不复制一套随代码漂移的品质规则。所有提案数值修改先改CSV。
+`duration_ms`单位毫秒，`range_px`为逻辑像素，1格32px；范围含义由族合同固定，不能把铺设距离当线长。品质权重60/25/12/3，次数偏移0/1/2/3；旧族宽表只服务旧物兼容。所有数值修改先改CSV。
 
 ### 4.1 十二族与三档装备（由CSV汇总）
 
@@ -244,7 +244,7 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 
 ### 10.1 静态定义
 
-生产计划拆为abilities / item-definitions / offering-profiles / appearances / source-affinities / loot-profiles / qualities。草案里的core与noise在codegen归并为同一`ItemDefinition`：`id, class, familyId|null, grade, name, description, params, slot, baseUses, weight, iconId, enabled, contentVersion`。`class`仅生成/统计使用；`enabled`用于整件启停而非运行时随机缺字段。
+生产已拆为abilities / item-definitions / offering-profiles / appearances / source-affinities / loot-profiles / qualities。core与noise已在正式CSV归并为同一`ItemDefinition`：`id, class, familyId|null, grade, name, description, params, slot, baseUses, weight, iconId, enabled, contentVersion`。`class`仅生成/统计使用；`enabled`用于整件启停而非运行时随机缺字段。
 
 初版稀有度不随机词缀。新增一行装备需要一份参数+图标，而不需要改tool handler。图标ID显式映射并有缺失校验，不能以生成ID字符串猜资源路径。
 
@@ -261,7 +261,7 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 
 出发意图`RiftDepartureIntent`必须在扣被动趟数的同一事务中锁定`runSeed / catalogVersion / lootAlgorithmVersion / combatRulesVersion`，再进入场景生成。退出发生于出发已提交但首帧尚未创建时，恢复仍使用所锁版本生成并保存plan；不能因内容更新而换一次掉落。版本注册表须支持当前有在途意图的旧版本。
 
-每个活动效果另存`effectId, actionId, sourceInstanceId, definitionId, catalogVersion, resolvedParams, startTime, remainingTime`以及必要目标/位置。最后一次主动物品删除后，效果仍有独立参数与恢复身份。恢复校验按版本化参数边界验证，不能把新5.5秒凝滞继续按旧族4秒上限拒绝；效果时钟沿当前暂停/离场合同。
+每个活动效果另存`effectId, actionId, sourceInstanceId, definitionId, catalogVersion, resolvedParams, startTime, remainingTime`以及必要目标/位置。最后一次主动物品删除后，效果仍有独立参数与恢复身份。恢复校验按已保存目录版本的参数边界验证，不能把新5.5秒凝滞继续按旧族4秒上限拒绝；效果时钟沿当前暂停/离场合同。
 
 `inventory schema v3`与`catalogVersion`分开：前者决定数据结构，后者决定内容解释。可继续使用外层SaveDataV2信封，不把改catalog误当每次大存档迁移。所有active恢复依赖的旧定义与handler要保留到旧局结束。
 
@@ -281,7 +281,7 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 
 ## 11. 实现落点与迭代顺序
 
-本节可直接用于开实施迭代，但本次只交计划；不占用/改写尚未开始的迭代24/25，不将旧四B扩产状态悄悄改为解锁。
+本节已由迭代28执行，完成证据与未证边界集中维护在实施清单及QA报告；不占用迭代24/25，不改变旧四B扩产状态。
 
 ### A. 数据与鉴定闭环（先做）
 
@@ -303,7 +303,7 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 
 ### D. 连续供给与正式切换
 
-最后进行多种风险/来源/地图、不同混乱、负重、成长和死亡条件下的自然长链测试；再启用新掉落并锁旧目录只读。正式规范在实现时**原地更新**：system-field-inventory、system-growth-tide、system-purification-impact及content/contaminants；不同时维护两篇声称生产有效的系统正文。发布/回退以catalogVersion和feature flag为边界，不回滚玩家新实例成未知字符串。
+最后进行多种风险/来源/地图、不同混乱、负重、成长和死亡条件下的自然长链测试；再启用新掉落并锁旧目录只读。正式规范在实现时**原地更新**：system-field-inventory、system-growth-tide、system-purification-impact及content/contaminants；不同时维护两篇声称生产有效的系统正文。发布以catalogVersion为边界；首轮正式新出发选择contaminant-v1，旧局保留legacy-v1。回退只能停止新目录的新出发，已存实例仍须保留对应解释器；不能删除版本支持。不得回滚玩家新实例成未知字符串。
 
 ## 12. 验证门槛与否决条件
 
@@ -346,3 +346,9 @@ user-accepted: 操作与效果简单直接；视野与负重维度；独立装�
 这段提示帮助明确交付深度，不免除设计者主动补全的责任。设计交叉反审已修正出发意图版本空档、0次被动恢复、效果参数独立保存、核心/弱效补给口径、无能力物带出规则、地图内来源选择、弱票夹负担反例、品质文案、首件具体教学及纯空签样本分离。静态表格与条件抽样诊断见[设计检查记录](../qa/artifacts/contaminant-system-design-check-2026-09-19.json)，不等同实际游戏已通过。
 
 本篇剩余风险集中在实际声诱/假身收益、供奉吞吐与构筑补给、48件像素资产完成度及品质/功能级是否足够易懂；下一步实现应按第11节验证，不能仅凭目录与参数通过就称游戏内容可交付。
+
+## 15. 实施后扩展入口（I28）
+
+现有族扩物：编辑正式item CSV → 新增24/32独立像素稿（需要落地才补16）→ `npm run codegen` → `npm run check:contaminant-catalog` → `npm run check:rift-recovery` → 图标导出与背景/正式场景检查。当前48件数量断言是首批内容合同，扩批时更新该合同与相应数量断言，不能删掉引用、单轴、弱效、隐藏投影和版本检查。codegen已有同族同档新增第49件的正向测试。
+
+掉率/来源扩池只影响新建plan；已经落盘的完整plan和sourceRegions是本趟权威。改变存量能力参数必须保留旧版本解释，不原地改变已有在途效果的resolvedParams。正式入口为主菜单→净化点→裂隙；旧combat-lab保留旧族对照，不代表新目录缺失。实际检测命令和证据见[迭代28](../tasks/iteration-28.md)。

@@ -90,7 +90,8 @@
     "check:suspended-sea-presentation": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/suspended-sea/check-presentation.ts",
     "check:suspended-sea-audio": "node tools/suspended-sea/check-audio-assets.mjs",
     "check:rift-recovery": "node tools/recovery/check.mjs",
-    "check:world-play": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-play-map.ts"
+    "check:world-play": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-play-map.ts",
+    "check:contaminant-catalog": "node tools/contaminant-catalog/check.mjs"
   },
   "dependencies": {
     "phaser": "^3.80.1",

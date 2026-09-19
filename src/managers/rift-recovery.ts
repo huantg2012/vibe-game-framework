@@ -67,7 +67,7 @@ export function createProceduralDeparture(): RiftCheckpoint['identity'] {
   const layout = generateRiftLayout(values[0]!);
   const identity = proceduralRiftIdentity(layout);
   layouts.clear(); layouts.set(`${identity.seed}:${identity.recipeId}`, layout);
-  return identity;
+  return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };
 }
 export function restoreProceduralLayout(identity: RiftCheckpoint['identity']): GeneratedRiftLayout {
   if (identity.worldId !== 'procedural-rift' || identity.layoutId !== 'procedural-rift') throw new Error('Unsupported procedural world');
@@ -94,6 +94,21 @@ export function validateProceduralRiftAdmission(checkpoint: unknown, inventory: 
     const layout = restoreProceduralLayout(checkpoint.identity), state = checkpoint.state;
     if (state.phase === 'settled') return true;
     const grid = new TileGrid(layout.tileMap);
+    const ledger = inventory.run!;
+    if (ledger.catalogVersion === 'contaminant-v1') {
+      if (checkpoint.identity.catalogVersion !== ledger.catalogVersion || checkpoint.identity.combatRulesVersion !== ledger.combatRulesVersion
+        || checkpoint.identity.lootAlgorithmVersion !== ledger.lootAlgorithmVersion || !ledger.dropPlan || ledger.dropPlan.runSeed !== layout.seed) return false;
+      // A stored result is authoritative. Weight/content expansion may never reroll a live journey.
+      if (ledger.dropPlan.entries.length !== layout.contaminantNodes.length || ledger.dropPlan.entries.some(entry => {
+        const node = layout.contaminantNodes.find(candidate => candidate.id === entry.nodeId);
+        return !node || entry.tier !== (node.tier ?? 'safe');
+      })) return false;
+      if (ledger.dropPlan.sourceRegions) {
+        const nodes = [...layout.kindlingNodes, ...layout.contaminantNodes];
+        if (Object.keys(ledger.dropPlan.sourceRegions).length !== nodes.length
+          || nodes.some(node => !ledger.dropPlan!.sourceRegions![node.id])) return false;
+      }
+    }
     let recipe = recipes.get(checkpoint.identity.signature);
     if (!recipe) { recipe = createAIRuntimeConfiguration(layout.enemySpawns, grid); if (recipes.size >= 4) recipes.clear(); recipes.set(checkpoint.identity.signature, recipe); }
     if (state.ai.signature !== checkpoint.identity.signature || state.ai.runSeed !== layout.seed

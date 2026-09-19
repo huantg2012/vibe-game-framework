@@ -82,6 +82,11 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
       if (data.riftCheckpoint !== undefined && (!validRiftCheckpoint(data.riftCheckpoint) || data.riftCheckpoint.runId !== data.inventory.run?.id)) return false;
       if (data.riftDeparture !== undefined && (!validRiftDeparture(data.riftDeparture) || data.riftDeparture.runId !== data.inventory.run?.id
         || data.inventory.run.status !== 'active' || data.riftDeparture.conditions.cycle !== data.cycle)) return false;
+      const identity = data.riftCheckpoint?.identity ?? data.riftDeparture?.identity;
+      const run = data.inventory.run;
+      if(run?.catalogVersion !== undefined && (identity?.catalogVersion !== run.catalogVersion
+        || identity.lootAlgorithmVersion !== run.lootAlgorithmVersion || identity.combatRulesVersion !== run.combatRulesVersion)) return false;
+      if(run?.dropPlan && identity?.seed !== run.dropPlan.runSeed) return false;
       const { checkpointChecksum: checksum, ...record } = data;
       if (checksum !== checkpointChecksum(record)) return false;
     } else if (data.checkpointChecksum !== undefined) return false;

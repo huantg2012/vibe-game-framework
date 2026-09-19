@@ -20,6 +20,7 @@ import { getContaminantQualityName, getContaminantMaxUses, supportsContaminantQu
  *               (IA's "纠结感的结构基础").
  */
 
+import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { getDefenseName, getRarityStars, getToolName } from '@/ui/contaminant-names';
 import type { Contaminant } from '@/types/game-types';
@@ -45,6 +46,16 @@ export interface DefenseInspectContext {
 
 /** Build the five-layer inspect content for an item read as its **defense** form. */
 export function buildDefenseInspectHtml(c: Contaminant, ctx: DefenseInspectContext): string {
+  if (c.type === 'catalog') {
+    const view = projectItemForPlayer(c);
+    const remaining = Math.max(0, view.offeringCharges - view.impactCharges);
+    return wrapInspectLines([
+      `${view.name} · 未鉴定`, view.offeringSummary,
+      `结构保持性 ${getContaminantQualityName(c)} · 供奉积累 ${view.impactCharges}/${view.offeringCharges}`,
+      ctx.slotState === 'slotted' ? '本轮供奉效果生效后，再积累鉴定进度' : ctx.readOnly ? '前往供奉台装填' : ctx.canEquip ? '可装填 · 自动放入空槽' : '槽位已满 · 先取下一件',
+      `完成供奉后揭晓真实物件与裂隙能力 · 尚需 ${remaining} 点积累`,
+    ]);
+  }
   const def = CONTAMINANT_DATA[c.type];
   const name = getDefenseName(c.type);
   const stars = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity);
@@ -78,6 +89,18 @@ export interface ToolInspectContext {
 
 /** Build the five-layer inspect content for an item read as its **tool** form. */
 export function buildToolInspectHtml(c: Contaminant, ctx: ToolInspectContext): string {
+  if (c.type === 'catalog') {
+    const view = projectItemForPlayer(c), passive = view.slot === 'passive';
+    if (view.identification === 'unidentified') return buildDefenseInspectHtml(c, { chargeThreshold: view.offeringCharges, slotState: 'unslotted', canEquip: false, readOnly: true });
+    if (view.inert) return wrapInspectLines([view.name, view.description, '无裂隙能力', '可留存或丢弃，不能装配出击', '已收入发现记录']);
+    return wrapInspectLines([
+      `${view.name} · ${getContaminantQualityName(c)} · ${passive ? '整趟被动' : '主动'}`, view.description,
+      `剩余 ${view.usesRemaining}/${view.maxUses} ${passive ? '趟' : '次'}`,
+      ctx.slotState === 'slotted' ? passive ? '已装填 · 确认出发消耗一趟' : `已装填 · [${ctx.hotkeyLabel ?? '?'}] 使用`
+        : ctx.readOnly ? '前往裂隙入口准备出击' : ctx.canEquip ? '可装填' : ctx.unavailableReason ?? '槽位已满',
+      passive ? '末趟依然全程生效；撤离后耗尽物件消散' : '合法施放才消耗；最后一次效果持续到结束',
+    ]);
+  }
   const def = CONTAMINANT_DATA[c.type];
   const name = getToolName(c.type);
   const stars = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity);

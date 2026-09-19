@@ -27,6 +27,15 @@ exposes:
   - 地图布局约束（薪柴分布原则 / 撤离点位置原则，供 T6 消费）
 ---
 
+
+## 迭代28 · 固定目录掉落与来源片区
+
+正式新出发在扣趟数的同一事务锁`seed/catalogVersion/lootAlgorithmVersion/combatRulesVersion`，进入地图后、完整首帧前创建并持久化`dropPlan`。翻找时只公布已经固定的外壳物件；完成供奉才揭晓真实身份。品质不再随节点风险变化；风险只改变核心的功能级比例。抽样规则和理论分布归[能力设计§6](../design-notes/contaminant-ability-design.md)，正式CSV为`contaminant-loot-profiles/source-affinities/items/qualities/offerings/appearances`。
+
+`contaminant-source-regions`按出生可达的全部翻堆（薪柴和污染物一同）做地面路径距离最远二点分区，抽取两个不同来源标签；不到两点用混杂。附近当前可见翻堆的提示显示同区线索，不改变堆外形，不泄露单堆产物或暗处区域。核心60%全局/40%来源抽族，再抽功能级及该级具体物件；新加同族同级装备不稀释能力族。
+
+下方迭代22的`lootPoolId`与规则15里完成时抽旧类型的路径，只为历史训练入口和旧在途记录保留。新catalog绝不从这条fallback抽取。
+
 # 系统设计：混乱值 + 搜刮 + 撤离
 
 ## 迭代22：按来源抽取，同一拾获事务

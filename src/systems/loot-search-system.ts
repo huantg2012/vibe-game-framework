@@ -1,3 +1,6 @@
+import { validateCatalogContaminant, projectItemForPlayer } from '@/systems/contaminant-catalog';
+import type { ContaminantDropPlan } from '@/systems/contaminant-drop-plan';
+import type { SourceRegionAssignment } from '@/generation/contaminant-source-regions';
 import { createWeaponInstance, rollWeaponDrop } from '@/systems/weapon-loot';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 /**
@@ -61,6 +64,8 @@ export interface LootSearchCreateConfig {
   /** Opt-in only after scene begin/settle/recovery ownership is connected. */
   readonly inventoryEnabled?: boolean;
   readonly runSeed?: number;
+  readonly dropPlan?: ContaminantDropPlan;
+  readonly sourceRegions?: ReadonlyMap<string, SourceRegionAssignment>;
   readonly kindlingValueModifier?: number;
   /** Permanent per-pile base gain, before the storage multiplier. */
   readonly kindlingAffinity?: number;
@@ -115,6 +120,7 @@ function validRevealedItem(value: unknown): value is NewInventoryItem {
   const body = value.kind === 'weapon' ? value.weapon : value.kind === 'contaminant' ? value.contaminant : null;
   if (!runtimeRecord(body) || body.id !== value.id || body.stage !== 'defense' || body.impactCharges !== 0 || body.usesRemaining !== 0) return false;
   if (value.kind === 'weapon') return typeof body.definitionId === 'string' && Object.prototype.hasOwnProperty.call(WEAPON_DATA, body.definitionId);
+  if (body.type === 'catalog') return validateCatalogContaminant(body as unknown as import('@/types/game-types').Contaminant);
   return typeof body.type === 'string' && Object.prototype.hasOwnProperty.call(CONTAMINANT_DATA, body.type)
     && (body.rarity === 'common' || body.rarity === 'fine' || body.rarity === 'rare')
     && (body.quality === undefined || (isContaminantQuality(body.quality) && supportsContaminantQuality(body.type as ContaminantType)));
@@ -180,6 +186,8 @@ export class LootSearchSystem {
   private preview = false;
   private inventoryEnabled = false;
   private runSeed = 0;
+  private dropPlan: ContaminantDropPlan | undefined;
+  private sourceRegions: ReadonlyMap<string, SourceRegionAssignment> | undefined;
   private fragmentTypeId = '';
   private kindlingValueModifier = 1;
   private kindlingAffinity = 0;
@@ -228,6 +236,10 @@ export class LootSearchSystem {
         || saved.value !== node.value || saved.tier !== (node.tier ?? null) || saved.lootPoolId !== (node.lootPoolId ?? null)
         || saved.allowWeapon !== (node.allowWeapon ?? null)) return false;
       const revealed = run.revealedNodes[saved.id], cached = saved.revealedItem;
+      const planned = this.dropPlan?.entries.find(entry => entry.nodeId === saved.id)?.contaminant;
+      if (cached?.kind === 'contaminant' && (planned
+        ? JSON.stringify(cached.contaminant) !== JSON.stringify(planned)
+        : cached.contaminant.type === 'catalog')) return false;
       if (saved.collected && cached) {
         if (!revealed || revealed.length !== 1 || revealed[0] !== cached.id) return false;
         const actual = inventoryStore.getItem(cached.id);
@@ -236,7 +248,11 @@ export class LootSearchSystem {
           || (actual.kind === 'weapon' && cached.kind === 'weapon' && actual.weapon.definitionId !== cached.weapon.definitionId)
           || (actual.kind === 'contaminant' && cached.kind === 'contaminant'
             && (actual.contaminant.type !== cached.contaminant.type || actual.contaminant.quality !== cached.contaminant.quality
-              || actual.contaminant.rarity !== cached.contaminant.rarity))) return false;
+              || actual.contaminant.rarity !== cached.contaminant.rarity
+              || (cached.contaminant.type === 'catalog' && (!actual.contaminant.catalog || !cached.contaminant.catalog
+                || actual.contaminant.catalog.definitionId !== cached.contaminant.catalog.definitionId
+                || actual.contaminant.catalog.appearanceId !== cached.contaminant.catalog.appearanceId
+                || actual.contaminant.catalog.offeringProfileId !== cached.contaminant.catalog.offeringProfileId))))) return false;
       } else if (revealed || (cached && inventoryStore.getItem(cached.id))) return false;
     }
     return true;
@@ -275,6 +291,11 @@ export class LootSearchSystem {
     this.preview = config.preview === true;
     this.inventoryEnabled = config.inventoryEnabled === true;
     this.runSeed = config.runSeed ?? 0;
+    this.dropPlan = config.dropPlan;
+    this.sourceRegions = config.sourceRegions;
+    if (this.dropPlan && (!this.inventoryEnabled || this.preview || this.dropPlan.runId !== inventoryStore.getRun()?.id)) throw Error('Catalog drops require the matching durable run');
+    if (this.dropPlan && (this.dropPlan.runSeed !== this.runSeed || this.dropPlan.entries.length !== contaminants.length
+      || contaminants.some(node => !this.dropPlan!.entries.some(entry => entry.nodeId === node.id && entry.tier === (node.tier ?? 'safe'))))) throw Error('Drop plan does not match map nodes');
     this.fragmentTypeId = config.fragmentTypeId;
     this.onMessage = config.onMessage;
     this.requiresRelease = false;
@@ -544,7 +565,7 @@ export class LootSearchSystem {
     if (Number.isFinite(nearbyItemDistance) && nearbyItemDistance >= 0
       && nearbyItemDistance <= searchRadius && nearbyItemDistance < selectedDistance) kind = 'pickup';
     this.prompt = kind;
-    this.hud.setPrompt(kind);
+    this.hud.setPrompt(kind, kind === 'search' && this.nearest ? this.sourceRegions?.get(this.nearest.id)?.hint : undefined);
   }
 
   private startChannel(node: SearchNode): void {
@@ -630,14 +651,18 @@ export class LootSearchSystem {
         if (supportsContaminantQuality(drop.type)) qualityLabel = getContaminantQualityName(drop);
       } else {
         if (!node.revealedItem) {
-          const drop = rollContaminantNodeDrop(this.runSeed, node.id, node.tier ?? 'safe', node.lootPoolId);
-          const contaminant = contaminantSystem.createUnowned(drop.type, drop.rarity, drop.quality);
+          const planned = this.dropPlan?.entries.find(entry => entry.nodeId === node.id);
+          if (this.dropPlan && !planned) throw Error('Missing fixed catalog drop');
+          const contaminant = planned ? structuredClone(planned.contaminant) : (() => {
+            const drop = rollContaminantNodeDrop(this.runSeed, node.id, node.tier ?? 'safe', node.lootPoolId);
+            return contaminantSystem.createUnowned(drop.type, drop.rarity, drop.quality);
+          })();
           node.revealedItem = { id: contaminant.id, kind: 'contaminant', contaminant, source: { fragmentId: this.fragmentTypeId } };
         }
         const item = node.revealedItem;
         if (item.kind !== 'contaminant') return;
         rarity = item.contaminant.rarity;
-        if (supportsContaminantQuality(item.contaminant.type)) qualityLabel = getContaminantQualityName(item.contaminant);
+        if (supportsContaminantQuality(item.contaminant.type)) qualityLabel = item.contaminant.type === 'catalog' ? `${projectItemForPlayer(item.contaminant).name} · 未鉴定 · 结构保持性 ${getContaminantQualityName(item.contaminant)}` : getContaminantQualityName(item.contaminant);
         if (!this.inventoryEnabled) {
           // The pre-W4 route still acquires directly, without a run/ground ledger.
           // Persist before consuming the pile, and retain this exact roll on failure.

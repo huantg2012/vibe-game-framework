@@ -1,0 +1,108 @@
+{
+  "status": "CAPTURED",
+  "loadedAt": "2026-09-19T16:49:28.393Z",
+  "completedAt": "2026-09-19T16:49:33.844Z",
+  "url": "http://127.0.0.1:3017/",
+  "fixture": "docs/qa/artifacts/iteration-28/browser/natural-current/03-carry.storage.json",
+  "fixtureSha256": "11714a2bb7beaa6fadc646e9bc15fb003c5f670963ccb8e72172eafe03dcc238",
+  "sourceFiles": [
+    {
+      "file": "src/art/contaminant-catalog-icons-ground.ts",
+      "mtime": "2026-09-19T16:12:11.039Z",
+      "sha256": "b9bf0762b83fd3b070b4ab39e4d209b7ca66a8d8c91e086be2fbbfd5cf5196ec"
+    },
+    {
+      "file": "src/art/contaminant-catalog-icons-objects.ts",
+      "mtime": "2026-09-19T16:16:29.955Z",
+      "sha256": "e661696c9c3861562ed056da733e9b1c5d8541c153f24dfdc41379f7c66df79e"
+    },
+    {
+      "file": "src/art/contaminant-catalog-icons-pixels.ts",
+      "mtime": "2026-09-19T16:04:39.067Z",
+      "sha256": "236f2feee19d92e62f59e3863a6fd75aab2a061d483e8f34e501f50229de657e"
+    },
+    {
+      "file": "src/art/contaminant-catalog-icons-secondary.ts",
+      "mtime": "2026-09-19T16:26:00.552Z",
+      "sha256": "f08c23209f48ee231433de5ed8529b2eb7850b36fbb464db1d10026ee753e1f5"
+    },
+    {
+      "file": "src/art/contaminant-catalog-icons-shells.ts",
+      "mtime": "2026-09-19T16:09:21.778Z",
+      "sha256": "91428c55e9a7d7458992d2bf188d844130f437ec71f60c6ea7019b367da4f5bf"
+    },
+    {
+      "file": "src/art/contaminant-catalog-icons-world-faces.ts",
+      "mtime": "2026-09-19T16:44:52.810Z",
+      "sha256": "6ae0c2ea19d3c356d7dbbeaed21332b739ced93623de456c0e38594ee95e1b70"
+    },
+    {
+      "file": "src/art/contaminant-catalog-icons.ts",
+      "mtime": "2026-09-19T16:43:30.773Z",
+      "sha256": "64b4fedd4a10cbaa8df949a6ecf661e00d36aa07b96b44d11d6e8dc378b15c37"
+    }
+  ],
+  "browserSource": {
+    "width": 32,
+    "height": 32,
+    "rgbaSha256": "259a84469d692f7dfe6af2985d588ea1fa1d4c26e11ef7039b42e9656699b3a7",
+    "module": "/src/art/contaminant-catalog-icons.ts",
+    "ref": {
+      "kind": "shell",
+      "appearanceId": "ceramic_seal"
+    }
+  },
+  "errors": [],
+  "disclosure": "Fresh isolated context, original fixture. Real Enter/Tab/click Drop/Esc/W/Esc inputs. Paired diagnostic temporarily hides DOM overlay and ground Graphics only, restored afterward; no game-domain state or source mutations.",
+  "measurementFile": "drop-measurement.json",
+  "localSource": {
+    "width": 32,
+    "height": 32,
+    "rgbaSha256": "259a84469d692f7dfe6af2985d588ea1fa1d4c26e11ef7039b42e9656699b3a7"
+  },
+  "browserLocalPixelsMatch": true,
+  "worldFacesMtime": "2026-09-19T16:44:52.810Z",
+  "loadedAfterWorldFacesMtime": true,
+  "formalFrame": "06-drop-world.png",
+  "diagnosticPair": [
+    "08-paused-world-only-diagnostic.png",
+    "09-paused-background-only-diagnostic.png"
+  ],
+  "difference": {
+    "changedPixels": 2020,
+    "outsideDrop80pxROI": 0,
+    "bbox": {
+      "minX": 693,
+      "minY": 542,
+      "maxX": 743,
+      "maxY": 590
+    },
+    "note": "Unedited screenshot RGB difference; hidden Graphics includes item and small ground shadow."
+  },
+  "captures": [
+    {
+      "name": "01-bag-before-drop.png",
+      "sha256": "527191fdaec2577615e81029bb99870ff89b837cff7a28809d91766df2515b20"
+    },
+    {
+      "name": "02-drop-committed-bag.png",
+      "sha256": "bb2089666ba509ab03769e0cec2eb99aa508301dab61b4edb9fbac880e22bfe1"
+    },
+    {
+      "name": "04-paused-drop.png",
+      "sha256": "bf50e7a2f3fda1c142bf1014cbbf8ffa8ca4e8bde1805d1d58251b0e9c837104"
+    },
+    {
+      "name": "06-drop-world.png",
+      "sha256": "6dd7ee602191b0a63a56fbdb56e6f5e7f45bffb14a106faa353475713031dcb9"
+    },
+    {
+      "name": "08-paused-world-only-diagnostic.png",
+      "sha256": "cbcfedd76d4833ee2ea931c4f6645575d4f8f7058dac8be838cacbd0a6b9a35e"
+    },
+    {
+      "name": "09-paused-background-only-diagnostic.png",
+      "sha256": "3dc44d57ef4d89c5cb40537649cdbde31bbdbdd42de28a75db229752a6a161a9"
+    }
+  ]
+}

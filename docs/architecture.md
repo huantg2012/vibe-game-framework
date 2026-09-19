@@ -1232,3 +1232,13 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 
 
 迭代27工具恢复：`systems/tool-runtime-extended.ts`是当前13族工具的JSON边界，作为既有`ToolRuntimeState.version=1`的可选扩展，旧五族包仍可读；独立时钟、控制来源和末次耗尽后的效果继续存在。`tool-body-echo.ts`在捕获时保存原姿态RGBA与锚点/比例，恢复重建同一残影，不从当前敌人/人物重新取图。延迟/压制的Host计时先由Host恢复，Tool重建表现与来源，不再施放或消费；正式2D入场接线与交叉校验由本节登记的`managers/rift-recovery.ts`和Scene负责。
+
+## 迭代28 · 鉴定目录与能力版本（DEC-174）
+
+- 正式内容：`data/contaminant-{abilities,items,offerings,appearances,source-affinities,loot-profiles}.csv`与quality.extra_uses、inventory-rules → `tools/csv-codegen/contaminant-catalog.mjs` → `generated/contaminant-catalog-data.ts`。扩池先CSV，generator验证引用、单轴档差、权重、壳独立性，不按能力件数写死runtime。旧contaminants.csv仅legacy。
+- `contaminant-catalog.ts`负责版本定义解析与唯一公开投影；`contaminant-drop-plan.ts`负责纯函数固定抽样；`contaminant-source-regions.ts`负责可达地理片区，与单堆隐藏内容独立。
+- InventoryStore仍唯一实例所有者，新增发现集合、供奉回执、出发被动绑定与节点计划。SaveManager保留world事务，场景只在提交成功后发布揭晓反馈。
+- ToolSystem持有`CatalogAbilityRuntime`，按族及resolvedParams执行；活动效果不以仍持有源物为生存条件。AI/Host拥有真实控制间隔、行动声音和危险时钟；Combat无无敌短冲特例。RiftScene接真实几何、子步和公共反馈。
+- RiftDeparture/Checkpoint与RunLedger锁目录/掉落/战斗版本；旧缺省是legacy。总恢复核对dropPlan地图身份、源参数、AI/Host与effect引用及一次动作回执，不只校验JSON形状。
+- UI经`projectItemForPlayer`→`contaminant-presentation`→原背包/供奉/报告/落地呈现。发现页只读公开定义，不能改变新实例的未知状态。`contaminant-catalog-icons*`为新独立24/32/16原帧，old icons专供旧物。
+- 迭代清单见`docs/tasks/iteration-28.md`；实现与内部证据不等于用户审美验收。

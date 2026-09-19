@@ -9,6 +9,8 @@ export interface InventoryPanelItem {
   id: string;
   kind: 'weapon' | 'contaminant';
   name: string;
+  /** A learned identity record, not an owned inventory instance. */
+  discovery?: boolean;
   quality?: string;
   qualityRank?: number;
   /** Integer tenths; presentation alone divides by ten. */
@@ -35,6 +37,7 @@ export interface InventoryPanelItem {
 export interface InventoryEquipmentSlot { id: string; label: string; itemId?: string | null; locked?: boolean }
 export interface InventoryPanelSnapshot {
   items: readonly InventoryPanelItem[];
+  discoveries?: readonly InventoryPanelItem[];
   equipment: readonly InventoryEquipmentSlot[];
   weight: number;
   capacity: number;
@@ -63,7 +66,7 @@ export interface InventoryPanelOptions {
   mount?: HTMLElement;
   portrait?: string;
 }
-type Filter = 'all' | 'weapon' | 'contaminant';
+type Filter = 'all' | 'weapon' | 'contaminant' | 'discovered';
 type Sort = 'kept' | 'name' | 'weight';
 type Lane = 'main' | 'nearby';
 interface ViewMemory { focus: string | null; scroll: number }
@@ -72,7 +75,7 @@ const CROWBAR = `<svg viewBox="0 0 48 100" aria-hidden="true"><path fill="#272e2
 const CONTAMINANT = `<svg viewBox="0 0 48 58" aria-hidden="true"><path fill="#262f29" d="M17 5h14v7h5v6h4v29h-5v7H12v-6H7V20h5v-8h5z"/><path fill="#5c6450" d="M19 8h10v7H16v6H11v24h6v6h15v-6h5V21h-7v-7H19z"/><path fill="#243e34" d="M17 21h15v20H15V27h-3v-4h5z"/><path fill="#759181" d="M18 25h9v4h-6v6h-5v-7h2zM27 34h5v5h-5z"/><path fill="#80745a" d="M8 20h29v4H8zM12 42h26v5H12zM22 8h4v42h-4z"/><path fill="#aaa080" d="M23 20h4v5h-4zM23 42h4v5h-4z"/></svg>`;
 const DISCARD_HOLD_MS = 1500;
 const formatWeight = (weight: number): string => (weight / 10).toLocaleString('en-US', { maximumFractionDigits: 1, useGrouping: false });
-const locationName = (item: InventoryPanelItem): string => item.equippedLabel || ({ stash: '留存', carried: '随身', ground: '附近', defense: '守护中' }[item.location]);
+const locationName = (item: InventoryPanelItem): string => item.discovery ? '发现记录' : item.equippedLabel || ({ stash: '留存', carried: '随身', ground: '附近', defense: '守护中' }[item.location]);
 function element<K extends keyof HTMLElementTagNameMap>(tag: K, className = '', text?: string): HTMLElementTagNameMap[K] {
   const node = document.createElement(tag);
   node.className = className;
@@ -89,7 +92,7 @@ function putIcon(target: HTMLElement, item?: InventoryPanelItem): void {
   target.replaceChildren();
   if (!item) return;
   if (item.icon) {
-    const img = element('img'); img.src = item.icon; img.alt = ''; img.draggable = false; target.append(img);
+    const img = element('img'); if (item.kind === 'contaminant') img.className = 'inventory-native-item'; img.src = item.icon; img.alt = ''; img.draggable = false; target.append(img);
   } else target.innerHTML = item.kind === 'weapon' ? CROWBAR : CONTAMINANT;
 }
 
@@ -191,7 +194,7 @@ class InventoryPanel {
 
   private get exchange(): boolean { return this.options?.mode === 'rift' && !!this.snapshot?.items.some(item => item.location === 'ground'); }
   private get items(): readonly InventoryPanelItem[] { return this.snapshot?.items ?? []; }
-  private item(id: string | null): InventoryPanelItem | undefined { return this.items.find(item => item.id === id); }
+  private item(id: string | null): InventoryPanelItem | undefined { return this.items.find(item => item.id === id) ?? this.snapshot?.discoveries?.find(item => item.id === id); }
   private isEquipped(item: InventoryPanelItem): boolean { return !!item.equippedLabel || !!this.snapshot?.equipment.some(slot => slot.itemId === item.id); }
   private memoryKey(lane = this.lane): string { return `${this.filter}:${this.sort}:${lane}`; }
 
@@ -210,6 +213,10 @@ class InventoryPanel {
     const filters = element('nav', 'inventory-filters'); filters.setAttribute('aria-label', '物件筛选');
     for (const [value, label] of [['all', '全部'], ['weapon', '武器'], ['contaminant', '污染物']] as const) {
       const control = button('inventory-filter', label, () => this.changeFilter(value)); this.filters.set(value, control); filters.append(control);
+    }
+    if (this.options!.mode === 'catalog') {
+      const control = button('inventory-filter', '已见物件', () => this.changeFilter('discovered'));
+      this.filters.set('discovered', control); filters.append(control);
     }
     const sort = element('select', 'inventory-sort'); sort.setAttribute('aria-label', '物件排序');
     for (const [value, label] of [['kept', '原来顺序'], ['name', '按名称'], ['weight', '按负重']] as const) {
@@ -255,7 +262,7 @@ class InventoryPanel {
   }
 
   private visibleItems(lane: Lane): InventoryPanelItem[] {
-    const list = this.items.filter(item => {
+    const list = this.filter === 'discovered' ? lane === 'main' ? [...this.snapshot?.discoveries ?? []] : [] : this.items.filter(item => {
       if (lane === 'nearby') return this.exchange && item.location === 'ground' && (this.filter === 'all' || item.kind === this.filter);
       if (item.location === 'ground') return false;
       if (this.options?.mode === 'rift' && this.isEquipped(item)) return false;
@@ -273,7 +280,7 @@ class InventoryPanel {
     this.lists.nearby!.column.hidden = !this.exchange;
     this.lists.nearby!.heading.textContent = '附近';
     this.lists.nearby!.list.setAttribute('aria-label', '附近物件');
-    this.lists.main!.heading.textContent = this.options?.mode === 'rift' ? '本趟拾获' : this.options?.mode === 'prepare' ? '选择装配' : '全部物件';
+    this.lists.main!.heading.textContent = this.options?.mode === 'rift' ? '本趟拾获' : this.options?.mode === 'prepare' ? '选择装配' : this.filter === 'discovered' ? '已见物件 · 不代表当前持有' : '全部物件';
     for (const [filter, control] of this.filters) { control.classList.toggle('is-current', filter === this.filter); control.setAttribute('aria-pressed', String(filter === this.filter)); }
     this.renderEquipment();
     const previousIds = this.lists[this.lane]?.ids ?? [];
@@ -414,7 +421,7 @@ class InventoryPanel {
         }
       }
       if (item.canOffer && this.options?.onOffering) action('前往供奉台', () => this.goToOffering());
-      if (this.options?.mode === 'catalog' && item.location === 'stash' && !this.isEquipped(item)) actions.append(this.makeDiscardControl(item));
+      if (this.options?.mode === 'catalog' && !item.discovery && item.location === 'stash' && !this.isEquipped(item)) actions.append(this.makeDiscardControl(item));
       if (item.location === 'defense') this.detail.append(element('p', 'inventory-locked-note', '正在净化点守护中'));
     } else if (this.exchange) {
       action(item.location === 'ground' ? (this.takes.has(item.id) ? '取消拿取' : '选为拿取') : (this.picks.has(item.id) ? '取消放下' : '选为放下'), () => this.togglePick(item), item.location !== 'ground' && (item.location !== 'carried' || this.isEquipped(item)));

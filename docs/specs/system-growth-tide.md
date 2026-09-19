@@ -19,6 +19,13 @@ exposes:
   - saveManager.save() / load() / hasSave()
 ---
 
+
+## 迭代28 · 污染物目录与版本边界
+
+新目录能力唯一正文迁入[污染物能力设计](../design-notes/contaminant-ability-design.md)；正式可读索引为[内容目录](../content/contaminants.md)。新物件采用12能力族、36核心＋8弱效＋4无能力；三功能级是不同实体，四品质只加余次。工具操作、成长槽数和潮汐继续共享本系统。
+
+`finishOfferingImpact(isHighTide,bonusCharges,snapshotIds,impactId)`新增持久幂等键。整趟视距/容量被动以有效出发扣一趟，生命周期与未知UI归`system-field-inventory`。以下迭代27/20的13族内容保持为legacy协议，不再充当新出发的掉落白名单。
+
 # 系统设计：成长 + 潮汐经济
 
 ## 迭代27：正式十三族在途恢复

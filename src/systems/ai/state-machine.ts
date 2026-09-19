@@ -57,6 +57,7 @@ export function stepFsm(enemy: Enemy, p: Perception, tickDtMs: number, ctx: AICo
 
   // Suppress the hearing channel before either confidence or the rewriter's direct
   // escalation can consume it. Sight, damage and explicit noise reports stay authoritative.
+  if (ctx.playerActionSilenced) p = { ...p, hearingHit: false, hearingRate: 0 };
   const calm = ai.state === AIState.PATROL || ai.state === AIState.RETURN;
   if (calm && !ai.pendingDamage && !ai.pendingNoiseLevel && !p.visible
     && (p.hearingHit || p.hearingRate > 0) && ctx.hearingSuppressed && ctx.onHearingAvoided(enemy)) {

@@ -29,7 +29,7 @@ export interface RiftResultData {
   peakChaos: number;
   elapsedMs: number;
   /** Every contaminant picked up this sortie, in pickup order. */
-  acquired: readonly { type: ContaminantType; rarity: ContaminantRarity; quality?: ContaminantQuality }[];
+  acquired: readonly { type: ContaminantType; rarity: ContaminantRarity; quality?: ContaminantQuality; publicName?: string }[];
   /** Passive tool trigger counts this sortie, keyed by contaminant type. */
   weapons?: readonly string[];
   passiveTriggers: ReadonlyMap<ContaminantType, number>;
@@ -103,7 +103,7 @@ export const riftResultPanel = {
       html += `<div class="section-title">实际带回</div>`;
       html += `<div class="tile-grid">`;
       for (const c of data.acquired) {
-        const name = getDefenseName(c.type);
+        const name = c.publicName ?? getDefenseName(c.type);
         const color = supportsContaminantQuality(c.type) ? '#a3b3a0' : RARITY_COLORS[c.rarity];
         const stars = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : RARITY_STARS[c.rarity];
         html += `<span class="pill" style="color:${color};">${name} ${stars}</span>`;

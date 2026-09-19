@@ -9,7 +9,7 @@ import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
 import { saveManager } from '@/managers/save-manager';
 import { GAME_CONSTANTS } from '@/config/constants';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { getContaminantSlot } from '@/systems/contaminant-catalog';
 import { getDefenseName, getRarityStars, getToolName, sortContaminants } from '@/ui/contaminant-names';
 import { buildToolInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import type { Contaminant } from '@/types/game-types';
@@ -247,7 +247,7 @@ function render(selectionOnly = false, revealSelection = false): void {
     const selected = cursorRegion === 'slots' && cursorSlot === i;
     const cursor = '';
     if (c) {
-      const name = getToolName(c.type);
+      const name = getToolName(c);
       const color = RARITY_COLORS[c.rarity];
       html += `<div class="slot-cell slot-filled loadout-remove-btn${selected ? ' slot-selected' : ''}" data-index="${i}">
         <div>${cursor}<span class="slot-label">${label}</span></div>
@@ -270,10 +270,10 @@ function render(selectionOnly = false, revealSelection = false): void {
     html += inventoryEmptyHtml();
   } else {
     inventory.forEach((c, idx) => {
-      const name = getToolName(c.type);
+      const name = getToolName(c);
       const stars = getRarityStars(c.rarity);
       const color = RARITY_COLORS[c.rarity];
-      const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+      const toolType = getContaminantSlot(c) ?? 'active';
       const typeLabel = toolType === 'passive' ? '被动' : '主动';
       const hasSlot = tileHasCompatibleSlot(slots, activeCount, passiveIndex, toolType);
       const selected = cursorRegion === 'inventory' && cursorInv === idx;
@@ -307,7 +307,7 @@ function buildKeyHintBar(
   } else if (cursorRegion === 'inventory') {
     const c = inventory[cursorInv];
     if (c) {
-      const type = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+      const type = getContaminantSlot(c) ?? 'active';
       if (tileHasCompatibleSlot(slots, activeCount, passiveIndex, type)) {
         contextAction = '<span><span class="key">Enter</span> 装填</span>';
       }
@@ -403,7 +403,7 @@ function confirmSortie(): void {
 }
 
 function equipTool(c: Contaminant, currentSlots: (Contaminant | null)[]): void {
-  const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+  const toolType = getContaminantSlot(c) ?? 'active';
   const activeCount = contaminantSystem.getSortieActiveSlotCount();
   const passiveIdx = contaminantSystem.getSortiePassiveSlotIndex();
   const emptySlots = currentSlots.map((s, idx) => s === null ? idx : -1).filter((x) => x >= 0);
@@ -440,7 +440,7 @@ function computeInspectHtml(
 
   const c = inventory[target.index];
   if (!c) return INSPECT_EMPTY_HTML;
-  const toolType = CONTAMINANT_DATA[c.type]?.toolType ?? 'active';
+  const toolType = getContaminantSlot(c) ?? 'active';
   const hasSlot = tileHasCompatibleSlot(slots, activeCount, passiveIndex, toolType);
   return buildToolInspectHtml(c, {
     slotState: 'unslotted',

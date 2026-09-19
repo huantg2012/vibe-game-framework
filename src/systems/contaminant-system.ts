@@ -1,3 +1,4 @@
+import { getContaminantSlot } from './contaminant-catalog';
 /**
  * ContaminantSystem — manages contaminant inventory and lifecycle.
  *
@@ -10,7 +11,6 @@
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { gameState } from '@/managers/game-state';
 import { growthSystem } from '@/systems/growth-system';
@@ -48,7 +48,7 @@ function slots() { return inventoryStore.getLegacySlots(); }
 inventoryStore.configure({
   weaponDefinition: id => WEAPON_DATA[id],
   starterDefinitionId: 'crowbar_plain',
-  isPassiveTool: c => CONTAMINANT_DATA[c.type]?.toolType === 'passive',
+  isPassiveTool: c => getContaminantSlot(c) === 'passive',
   toolSlotCount: computeSortieSlotCount,
   defenseSlotCount: computeDefenseSlotCount,
 });
@@ -154,6 +154,7 @@ export const contaminantSystem = {
    */
   /** Factory only: field reveal must decide ownership and burden before acquiring. */
   createUnowned(type: ContaminantType, rarity: ContaminantRarity, quality?: ContaminantQuality): Contaminant {
+    if(type==='catalog')throw new Error('Catalog identities must be created from a fixed drop plan');
     const supportsQuality = supportsContaminantQuality(type);
     if (quality !== undefined && (!isContaminantQuality(quality) || !supportsQuality)) {
       throw new Error(`Unsupported contaminant quality for ${type}`);
@@ -233,9 +234,9 @@ export const contaminantSystem = {
    */
   /** Finalize only after the same slot snapshot has defended the actual impact. */
   finishOfferingImpact(isHighTide: boolean, bonusCharges: Readonly<Record<string, number>> = {},
-    snapshotIds: readonly (string | null)[] = [...slots().defenseSlots]) {
+    snapshotIds: readonly (string | null)[] = [...slots().defenseSlots], impactId?: string) {
     const result = inventoryStore.finishOfferingImpact(snapshotIds,
-      isHighTide ? TIDE.CREST_CHARGE_COST : TIDE.NORMAL_CHARGE_COST, bonusCharges);
+      isHighTide ? TIDE.CREST_CHARGE_COST : TIDE.NORMAL_CHARGE_COST, bonusCharges, impactId);
     if (result.ok) {
       syncResonateBonus();
       for (const item of result.value) if (item.kind === 'contaminant') {
@@ -248,7 +249,7 @@ export const contaminantSystem = {
   applyImpactCharge(isHighTide: boolean): ContaminantTransformResult[] {
     const result = this.finishOfferingImpact(isHighTide);
     return result.ok ? result.value.flatMap(item => item.kind === 'contaminant'
-      ? [{ contaminantId: item.itemId, type: item.definitionId as ContaminantType, slotIndex: item.slotIndex }] : []) : [];
+      ? [{ contaminantId: item.itemId, type: findById(item.itemId)?.type ?? item.definitionId as ContaminantType, slotIndex: item.slotIndex }] : []) : [];
   },
 
   /**
@@ -261,9 +262,9 @@ export const contaminantSystem = {
   },
 
   /** Fallible consume entry point: callers must persist consumption before releasing effects. */
-  tryConsumeTool(contaminantId: string) {
+  tryConsumeTool(contaminantId: string, actionId?: string) {
     const c = findById(contaminantId);
-    const result = inventoryStore.consumeTool(contaminantId);
+    const result = inventoryStore.consumeTool(contaminantId, actionId);
     if (!result.ok || !c) return result;
     c.usesRemaining = result.value.usesLeft;
     if (result.value.broken) c.stage = 'broken';
@@ -290,7 +291,7 @@ export const contaminantSystem = {
     return result.value.flatMap(item => {
       if (item.kind !== 'contaminant') return [];
       eventBus.emit(GameEvent.CONTAMINANT_TRANSFORMED, { contaminantId: item.itemId });
-      return [{ contaminantId: item.itemId, type: item.definitionId as ContaminantType, slotIndex: item.slotIndex }];
+      return [{ contaminantId: item.itemId, type: findById(item.itemId)?.type ?? item.definitionId as ContaminantType, slotIndex: item.slotIndex }];
     });
   },
 

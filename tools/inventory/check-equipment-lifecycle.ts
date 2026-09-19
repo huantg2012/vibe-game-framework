@@ -63,7 +63,7 @@ const baseState = (items: InventoryItem[]): InventoryState => ({ version: 2, ite
   delete (weapon.weapon as Partial<typeof weapon.weapon>).stage;
   delete (weapon.weapon as Partial<typeof weapon.weapon>).impactCharges;
   delete (weapon.weapon as Partial<typeof weapon.weapon>).usesRemaining;
-  assert(s.loadState(legacy)); assert.equal(s.getState().version, 2);
+  assert(s.loadState(legacy)); assert.equal(s.getState().version, 3);
   assert.equal(getEquipmentLifecycle(s.getItem('w')!).stage, 'tool');
   assert.equal(getEquipmentLifecycle(s.getItem('w')!).usesRemaining, 75);
   const malformed = structuredClone(legacy); malformed.version = 2;

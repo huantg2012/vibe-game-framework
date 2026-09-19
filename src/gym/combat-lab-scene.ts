@@ -146,7 +146,7 @@ export class CombatLabScene extends Phaser.Scene {
     // This standalone entry has no save manager. Repeat defensively before any domain writes.
     inventoryStore.setPersistence(null);
     inventoryStore.configure({ weaponDefinition: id => WEAPON_DATA[id], toolSlotCount: () => 3,
-      defenseSlotCount: () => 3, isPassiveTool: c => CONTAMINANT_DATA[c.type].toolType === 'passive' });
+      defenseSlotCount: () => 3, isPassiveTool: c => c.type !== 'catalog' && CONTAMINANT_DATA[c.type].toolType === 'passive' });
     const items: InventoryItem[] = [{ id: 'lab-weapon', kind: 'weapon',
       weapon: createWeaponInstance(this.config.weaponId, true, 'lab-weapon'), location: { kind: 'carried' } }];
     const toolIds = this.config.tools.map((type, index) => {

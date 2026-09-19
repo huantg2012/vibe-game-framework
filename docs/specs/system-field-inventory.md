@@ -3,12 +3,25 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-09-19
+last-modified-date: 2026-09-20
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes]
 exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger]
 interface-changed: true
 note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入正式随机2D。旧active或损坏世界包只在基地/库存有效且玩家明确确认后安全弃局；不删除全档。
 ---
+
+
+## 迭代28 · 鉴定目录与整趟被动（DEC-174）
+
+新出发的正式2D Rift使用 `contaminant-v1`。物件目录/能力与数据数值的唯一正文为[污染物能力设计](../design-notes/contaminant-ability-design.md)，本节只定义本系统拥有的身份、持久化与UI边界。以下旧13族表述仅适用于旧物件和旧在途局。
+
+- 库存schema v3，外层存档包继续v2。`type:'catalog'`携带固定`catalogVersion/definitionId/appearanceId/offeringProfileId/acquiredOrdinal/identification`；不得借旧族ID模拟新物件。无能力揭晓进入`inert`，仅基地查看/留存/丢弃，不能携出。
+- `projectItemForPlayer`是场景UI唯一公开投影。未鉴定只公开外壳名/图、结构保持性、统一2负重、供奉反应与进度；不输出未来能力/功能级/槽位/余次。揭晓后的负重按定义（折页票夹1，其余2）。全表面包括排序、ARIA、DOM图像地址、归来报告及掉地像素。
+- `beginRun(runId,versions)`在有效出发事务里扣整趟被动一次并记录`runBinding`；零余次仍保留物件占重/效果至本趟结束，途中不能卸下。备行预览允许容量收益；撤离先无限基地回库，再解除绑定/清零物件。取消备行、拒写或续局不再扣。
+- 供奉按最后一轮防御→积累→揭晓/回库/清槽/发现/回执顺序在同一事务里持久化。`finishOfferingImpact(...,impactId)`幂等，重试不能重复推进；UI仅在持久成功后读取已揭晓实例呈现。
+- `discoveredCatalogIds`记录见过的真物件，与新实例的鉴定状态无关。“已见物件”只显示实际记录，无未见剪影或总数分母，耗尽或丢失不删除发现记录。
+- 所有翻堆固定于run的`dropPlan`；`revealBatch`必须匹配已计划节点，不允许空批消耗教学。新档首件教学首次成功翻出（包括超重留地）后消费资格；未搜到保留，死亡不重置；旧档默认不补教学。
+- 旧v1/v2实例保持已知，旧在途局继续旧catalog/loot/combat规则。内容升级须保留在途版本注册与参数解析，不能复用版本号改变其已承诺结果。
 
 # 统一物件、供奉与出击携带
 

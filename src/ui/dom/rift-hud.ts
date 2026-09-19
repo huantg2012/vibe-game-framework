@@ -134,6 +134,8 @@ export interface ActiveEffectInfo {
   /** Pre-formatted line, e.g. "移速 -10%". Resolved by the caller, which owns the
    *  CSV source name and the effect-specific phrasing. */
   label: string;
+  /** Effective current benefit, separate from the object name and remaining time. */
+  value?: string;
   /** ms remaining; omitted = lasts the whole sortie (no countdown shown). */
   remainingMs?: number;
 }
@@ -218,7 +220,7 @@ export class RiftHud {
   private readonly onToolUsed = (payload: { contaminantId: string; toolType: ContaminantType; usesLeft: number }): void => {
     if (commitEffects.defer(() => this.onToolUsed(payload))) return;
     const actual = this.equipmentData.find(slot => slot.itemId === payload.contaminantId);
-    const definition = CONTAMINANT_DATA[payload.toolType];
+    const definition = payload.toolType === 'catalog' ? undefined : CONTAMINANT_DATA[payload.toolType];
     // Consumption synchronously removes the last item before TOOL_USED is emitted.
     // Identity must therefore come from the event, not the now-empty equipment slot.
     if (definition?.toolType === 'passive') this.showPassiveFlash(actual?.name ?? definition.displayNameTool, payload.toolType);
@@ -626,7 +628,7 @@ export class RiftHud {
 
   private renderEffectsText(): void {
     const next = this.activeEffects
-      .map((e) => (e.remainingMs !== undefined ? `${e.label}\t${Math.ceil(e.remainingMs / 1000)}s` : e.label))
+      .map((e) => `${e.label}\t${e.value ?? ''}\t${e.remainingMs !== undefined ? Math.ceil(e.remainingMs / 1000) : ''}`)
       .join('\n');
     if (next === this.lastEffectsString) return;
     this.lastEffectsString = next;
@@ -638,6 +640,12 @@ export class RiftHud {
       name.className = 'device-effect-name';
       name.textContent = e.label;
       line.appendChild(name);
+      if (e.value) {
+        const value = document.createElement('span');
+        value.className = 'device-effect-time';
+        value.textContent = e.value;
+        line.appendChild(value);
+      }
       if (e.remainingMs !== undefined) {
         const time = document.createElement('span');
         time.className = 'device-effect-time';

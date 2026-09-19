@@ -1,3 +1,4 @@
+import { getContaminantLifecycleRules } from './contaminant-catalog';
 /** Definition-owned lifecycle rules, shared by inventory, migration and previews. */
 import { GAME_CONSTANTS } from '@/config/constants';
 import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
@@ -11,6 +12,7 @@ export function equipmentLifecycleDefinition(item: InventoryItem): { offeringCha
     if (!definition) throw new Error(`Unknown weapon definition: ${item.weapon.definitionId}`);
     return { offeringCharges: definition.offeringCharges, maxUses: definition.maxUses, chargeMultiplier: 1 };
   }
+  if(item.contaminant.type === 'catalog') return getContaminantLifecycleRules(item.contaminant);
   const definition = CONTAMINANT_DATA[item.contaminant.type];
   return { offeringCharges: GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD,
     maxUses: getContaminantMaxUses(item.contaminant), chargeMultiplier: definition.defenseChargeMult };

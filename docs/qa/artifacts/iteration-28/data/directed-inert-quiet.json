@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "evidence": "directed-headless-mechanic-ledger",
+  "excludedFromNatural30": true,
+  "selection": "seed scan above natural sequence; template-plan prefilter, then actual generateRiftLayout and actual source districts verified before selection",
+  "checkedRealMapCandidates": 1,
+  "sourceSha256": {
+    "src/generated/contaminant-catalog-data.ts": "3e6751994c7c064dcfdc2178297b075db55ca06a35c0ae9f2a633a9abbc1b64d",
+    "src/systems/contaminant-drop-plan.ts": "a1e25d1c230cd5b3928c01832e9b37583d90eb34a4f12317dfee40887b100cae",
+    "src/systems/inventory-store.ts": "53ab2f0f05f8f04cd92d9ee7e4c9f8069b9a5df6a31690a2567c2e8e16da1299",
+    "src/generation/contaminant-source-regions.ts": "1e6ad9078ff6ccd143282e8d260dabb88b5817919d49afe10605d748cbbf437c",
+    "src/generation/rift-layout.ts": "9078088f7cee176f283140e8ba34ca45fb732c99b16e694f2b4faaef258bc498"
+  },
+  "row": {
+    "ordinal": 1,
+    "seed": 2026092056,
+    "recipeId": "hunks-soil",
+    "fragmentTypeId": "frag-outdoor",
+    "runId": "i28-directed-inert-quiet",
+    "selectedNode": {
+      "id": "CTM_NODE_03",
+      "position": {
+        "x": 1200,
+        "y": 848
+      },
+      "tier": "deep",
+      "sourceTag": "tension",
+      "hint": "多见改变牵拉与位移的残留"
+    },
+    "allPlannedNodes": [
+      {
+        "nodeId": "CTM_NODE_01",
+        "tier": "deep",
+        "sourceTag": "tension",
+        "contaminant": {
+          "id": "CAT_i28-directed-inert-quiet_CTM_NODE_01",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "double_hole_token",
+            "appearanceId": "thin_shell_ovoid",
+            "offeringProfileId": "resist_45",
+            "acquiredOrdinal": 0,
+            "identification": "unidentified"
+          }
+        }
+      },
+      {
+        "nodeId": "CTM_NODE_02",
+        "tier": "deep",
+        "sourceTag": "acoustic",
+        "contaminant": {
+          "id": "CAT_i28-directed-inert-quiet_CTM_NODE_02",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "split_tongue_bell",
+            "appearanceId": "layered_hide",
+            "offeringProfileId": "resist_25",
+            "acquiredOrdinal": 0,
+            "identification": "unidentified"
+          }
+        }
+      },
+      {
+        "nodeId": "CTM_NODE_03",
+        "tier": "deep",
+        "sourceTag": "tension",
+        "contaminant": {
+          "id": "CAT_i28-directed-inert-quiet_CTM_NODE_03",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "excellent",
+          "stage": "defense",
+          "impactCharges": 0,
+          "usesRemaining": 0,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "split_porcelain_spoon",
+            "appearanceId": "thin_shell_ovoid",
+            "offeringProfileId": "quiet",
+            "acquiredOrdinal": 0,
+            "identification": "unidentified"
+          }
+        }
+      }
+    ],
+    "unknownPublicView": {
+      "instanceId": "CAT_i28-directed-inert-quiet_CTM_NODE_03",
+      "qualityId": "excellent",
+      "offeringSummary": "不提供供奉增益；仍可转化揭晓",
+      "offeringCharges": 3,
+      "impactCharges": 0,
+      "identification": "unidentified",
+      "name": "薄壳卵",
+      "iconRef": {
+        "kind": "appearance",
+        "id": "thin_shell_ovoid"
+      },
+      "weight": 20,
+      "summary": "不提供供奉增益；仍可转化揭晓",
+      "description": "不提供供奉增益；仍可转化揭晓",
+      "acquiredOrdinal": 0,
+      "slot": null,
+      "inert": false
+    },
+    "fixedIdentity": {
+      "catalogVersion": "contaminant-v1",
+      "definitionId": "split_porcelain_spoon",
+      "appearanceId": "thin_shell_ovoid",
+      "offeringProfileId": "quiet",
+      "acquiredOrdinal": 0,
+      "identification": "unidentified"
+    },
+    "class": "inert",
+    "familyId": null,
+    "grade": 0,
+    "cycles": [
+      {
+        "cycle": 1,
+        "receiptId": "i28-directed-inert-quiet:impact:1",
+        "chargesBefore": 0,
+        "chargesAfter": 1,
+        "damageOn100": 100,
+        "transformed": false
+      },
+      {
+        "cycle": 2,
+        "receiptId": "i28-directed-inert-quiet:impact:2",
+        "chargesBefore": 1,
+        "chargesAfter": 2,
+        "damageOn100": 100,
+        "transformed": false
+      },
+      {
+        "cycle": 3,
+        "receiptId": "i28-directed-inert-quiet:impact:3",
+        "chargesBefore": 2,
+        "chargesAfter": 3,
+        "damageOn100": 100,
+        "transformed": true
+      }
+    ],
+    "identificationImpactCount": 3,
+    "result": {
+      "instanceId": "CAT_i28-directed-inert-quiet_CTM_NODE_03",
+      "qualityId": "excellent",
+      "offeringSummary": "不提供供奉增益；仍可转化揭晓",
+      "offeringCharges": 3,
+      "impactCharges": 3,
+      "identification": "revealed",
+      "name": "分叉瓷匙",
+      "iconRef": {
+        "kind": "item",
+        "id": "split_porcelain_spoon",
+        "appearanceId": "thin_shell_ovoid"
+      },
+      "weight": 20,
+      "summary": "没有可用的裂隙能力",
+      "description": "没有可用的裂隙能力",
+      "acquiredOrdinal": 31,
+      "slot": null,
+      "inert": true
+    },
+    "finalLocation": "stash",
+    "offeringSlotCleared": true,
+    "discoveredPersisted": true,
+    "generationCpuMs": 91.49,
+    "walkingCombatMs": null
+  }
+}

@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code / director（DEC-155：开敞空洞视线与物理通行分离）
-last-modified-date: 2026-09-12
+last-modified-by: code / director（I28：参数化能力与版本控制保护）
+last-modified-date: 2026-09-20
 interface-changed: true
 slice: 8
 interfaces-with:
@@ -768,3 +768,16 @@ Slice 1 的 escalate（听觉是否看 `isMoving`、接敌分工、R4、事件�
 ## 迭代20：消声的旧布接管原始听觉
 
 PATROL/RETURN中，无视觉、无待处理真实伤害、无外报噪声而有近距/连续听觉时，先向ToolSystem请求接管本次听觉。只有消费事务成功或已有连续保护事件仍有效，才把本tick听觉Hit/Rate置零，再执行识别累计和改写体警戒推进。不能先累计再在怀疑入口返回；否则700ms连续听觉会绕过。真实视觉、受伤、外报suspicious/alert与诱饵声仍走原优先级。独立回归`check-muffle-live-perception.ts`覆盖两类敌人、末次、混合刺激与保存失败。
+
+
+## 迭代28：目录能力、行动消声与控制保护
+
+能力参数与物件身份由 `contaminant-catalog.ts` 解析；`CatalogAbilityRuntime` 只持有已提交动作的效果。AI 不读取物件品质、余次或目录真名，不消费污染物。场景通过 `setEnemyControl`、`setVisualDecoy`、`reportSoundLure`、`setPlayerActionSilenced` 接线。
+
+- `setControlProtectionEnabled(true)` 只由 `combatRulesVersion=2` 的新出发行程开启；旧在途包按原规则。凝滞/绊停结束（含真实伤害打破凝滞）后，目标拥有2000ms硬控制保护；已经受硬控或尚在保护期的目标不接受新的零移动控制。低速重区不触发该保护。旧工具在新版本行程也遵守这个共同限制。
+- `EnemyControlState` 仍按source保存控制来源。`movementGroup='heavy-zone'` 的移动系数取最小值；其他独立类别按已有规则组合。绊停只停移动，不能偷换为禁攻；凝滞同时停感知、移动和攻击，实际受伤可打破。
+- `setPlayerActionSilenced(true)` 在原始听觉感知入口屏蔽玩家行动声，覆盖已经处在SUSPICIOUS的敌人。不能仅复用旧muffle的PATROL/RETURN首次发现拦截，也不能把 `playerIsMoving` 改为false。视觉、真实伤害与其他噪声继续生效；既有追踪状态不会被消声重置。Host行动声入口使用同一个开关，而踩踏危险仍看到实际移动。
+- `reportSoundLure(position,radius,true)` 是新声诱：在既有听距、墙衰减和调查归属之外，要求连通地面路径不超过有效听距。旧调用省略第三参，维持历史效果。声诱不会覆盖真实CHASE、待处理伤害或更高级警报。假身仍必须经过敌人真实视距、视锥和遮挡检查。
+- AI运行快照新增可选 `playerActionSilenced` 与每敌 `controlProtectionRemainingMs`。恢复先清空控制投影，再由Tool重绑原source，最后恢复历史攻击打断序号与保护余时；不推进离线时间、不重施放或扣次。整帧校验同时约束原始敌人清单、效果来源及消声布尔值。
+
+验证：`tools/inventory/check-catalog-abilities.ts` 覆盖各档参数、真实伤害解除、保护与区域叠加；`check-catalog-world-contract.ts` 以12族普通档在两种构型、两档混乱、两档负重形成96个受控共享运行时比较，含已怀疑敌人的行动消声和跨断口声诱拒绝。它们不替代真实玩家的战术价值或长期平衡验证。

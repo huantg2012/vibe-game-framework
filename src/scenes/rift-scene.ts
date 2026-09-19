@@ -1,3 +1,8 @@
+import { createContaminantSourceRegions } from '@/generation/contaminant-source-regions';
+import { createContaminantDropPlan } from '@/systems/contaminant-drop-plan';
+import { projectItemForPlayer } from '@/systems/contaminant-catalog';
+import { CATALOG_ITEMS } from '@/generated/contaminant-catalog-data';
+import { sweepGroundDash } from '@/systems/tool-targeting';
 import { proceduralRiftIdentity, restoreProceduralLayout, installProceduralRiftRecovery } from '@/managers/rift-recovery';
 import type { RiftRecoveryConditions } from '@/systems/rift-recovery-state';
 import { RiftFrameCommit } from '@/systems/rift-frame-commit';
@@ -182,6 +187,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly toolSystem = new ToolSystem();
   private readonly extraction = new ExtractionSystem();
   private toolInputAllowed = true;
+  private dashHazardElapsedMs = 0;
   private unsubscribeInventory: (() => void) | null = null;
   private readonly fieldInventory = new FieldLootInventory();
   private devFixture: RiftDevFixture | null = null;
@@ -230,7 +236,7 @@ export class RiftScene extends Phaser.Scene {
 
   // --- Sortie result tracking (feeds the DOM result panel on exit, C2) ---
   private sortieKillCount = 0;
-  private sortieAcquired: { type: ContaminantType; rarity: ContaminantRarity }[] = [];
+  private sortieAcquired: { type: ContaminantType; rarity: ContaminantRarity; publicName?: string }[] = [];
   private sortiePassiveTriggers = new Map<ContaminantType, number>();
   /** Defense residue lines shown in the rift HUD; remainingMs ticked here, then
    *  merged with tool-system remaining each frame so tool rows are not double-counted. */
@@ -414,7 +420,24 @@ export class RiftScene extends Phaser.Scene {
       },
     });
 
+    const run = inventoryStore.getRun();
+    const newCatalogRun = run?.catalogVersion === 'contaminant-v1';
+    const sourceRegions = run?.dropPlan?.sourceRegions ? new Map(Object.entries(run.dropPlan.sourceRegions)) : newCatalogRun ? createContaminantSourceRegions({ grid, spawn: layout.spawnPoint,
+      nodes: [...layout.kindlingNodes, ...layout.contaminantNodes], seed }) : undefined;
+    if (newCatalogRun && !run.dropPlan) {
+      const tutorialNode = inventoryStore.isCatalogTutorialEligible() ? [...layout.contaminantNodes]
+        .sort((a, b) => Math.hypot(a.position.x - layout.spawnPoint.x, a.position.y - layout.spawnPoint.y)
+          - Math.hypot(b.position.x - layout.spawnPoint.x, b.position.y - layout.spawnPoint.y) || a.id.localeCompare(b.id))[0] : undefined;
+      const plan = createContaminantDropPlan({ runId: run.id, runSeed: seed, tutorialNodeId: tutorialNode?.id,
+        sourceRegions: sourceRegions ? Object.fromEntries(sourceRegions) : undefined,
+        nodes: layout.contaminantNodes.map(node => ({ id: node.id, tier: node.tier ?? 'safe', sourceTag: sourceRegions?.get(node.id)?.sourceTag })) });
+      const installed = inventoryStore.installDropPlan(plan);
+      if (!installed.ok) throw Error(`Cannot persist map drop plan: ${installed.error}`);
+    }
+    this.ai.setControlProtectionEnabled(run?.combatRulesVersion === 2);
+    this.hosts.setControlProtectionEnabled(run?.combatRulesVersion === 2);
     this.search.create(this, layout.kindlingNodes, layout.contaminantNodes, {
+      dropPlan: inventoryStore.getRun()?.dropPlan, sourceRegions,
       inventoryEnabled: true,
       runSeed: seed,
       onMessage: message => afterStateCommit(() => showToastInline(message, { channel: 'field-loot' })),
@@ -446,6 +469,17 @@ export class RiftScene extends Phaser.Scene {
       () => this.player.getPosition(),
       () => this.ai.getEnemies(),
       {
+        runId: run?.id ?? 'legacy-practice', combatRulesVersion: run?.combatRulesVersion ?? 1,
+        getFacingAngle: () => this.player.getFacingAngle(),
+        getBasePollutionResistance: () => getSurvivalAttributes().resistancePercent,
+        setPlayerActionSilenced: enabled => this.ai.setPlayerActionSilenced(enabled),
+        canApplyHardControl: id => this.ai.canApplyHardControl(id),
+        getDashDestination: distance => {
+          const pos = this.player.getPosition(), angle = this.player.getFacingAngle();
+          return this.sweepPlayerDash({ x: pos.x + Math.cos(angle) * distance, y: pos.y + Math.sin(angle) * distance });
+        },
+        advanceGroundDash: (target, dtMs) => this.advancePlayerDash(target, dtMs),
+        isGroundConnected: (from, to, range) => collectToolRevealSnapshot(from, range, grid, [to], []).enemyPositions.length > 0,
         getPlayerSprite: () => this.player.getSprite(),
         getPlayerGroundY: () => this.player.getGroundY(),
         getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
@@ -457,7 +491,7 @@ export class RiftScene extends Phaser.Scene {
         clearEnemyControl: (id, source) => this.ai.clearEnemyControl(id, source),
         hasEnemyControl: (id, source) => this.ai.hasEnemyControl(id, source),
         setVisualDecoy: (source, position) => this.ai.setVisualDecoy(source, position),
-        reportSoundLure: (position, radius) => this.ai.reportSoundLure(position, radius),
+        reportSoundLure: (position, radius, pathBounded) => this.ai.reportSoundLure(position, radius, pathBounded),
         getSoundLureDestination: maxDistance => {
           const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body | null;
           if (!body) return null;
@@ -475,7 +509,7 @@ export class RiftScene extends Phaser.Scene {
           this.search.getUncollectedSearchPositions(), this.hosts.getToolTargets().map(host => host.position)),
         delayEnvironmentHazard: (id, source, duration) => this.hosts.delayNextHazard(id, source, duration),
         getEnvironmentTargets: () => this.hosts.getToolTargets(),
-        suppressEnvironmentHazard: (id, source, duration) => this.hosts.suppressHazard(id, source, duration),
+        suppressEnvironmentHazard: (id, source, duration, includeWall) => this.hosts.suppressHazard(id, source, duration, includeWall),
         clearEnvironmentControl: (id, source) => this.hosts.clearToolControl(id, source),
         getPhaseDestination: () => {
           const sprite = this.player.getSprite();
@@ -657,8 +691,10 @@ export class RiftScene extends Phaser.Scene {
     if ((this.devFixture || this.recovery) && !this.runController.isRunEnded()) this.devElapsedMs += delta;
     this.devRuntime?.beforeCombat?.(this.devElapsedMs, this.runController.isRunEnded());
     this.player.update(delta);
+    const dashing = this.toolSystem.isGroundDashing();
+    this.dashHazardElapsedMs = 0;
     this.syncRiftAudio();
-    this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
+    if (!dashing) this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
 
     // Edge-triggered: holding the key does not chain swings.
     if (this.attackKey && Phaser.Input.Keyboard.JustDown(this.attackKey) && !inventoryPanel.isOpen() && !this.runController.isRunEnded()) {
@@ -667,8 +703,10 @@ export class RiftScene extends Phaser.Scene {
     // After the AI, always. Whether an enemy may swing is read from this frame's engaged
     // state; one frame of lag on that at 30 px reads as "it is right there and doing
     // nothing".
-    this.combat.update(delta);
-    this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
+    if (!dashing) {
+      this.combat.update(delta);
+      this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
+    }
     this.devRuntime?.update(this.devElapsedMs, this.runController.isRunEnded());
     this.toolSystem.syncHostVisuals();
 
@@ -706,7 +744,7 @@ export class RiftScene extends Phaser.Scene {
     this.search.update(delta, {
       playerPos: this.player.getPosition(),
       searchHeld: this.probeSearchHeld || Boolean(this.extractKey?.isDown),
-      moving: this.player.isMoving(),
+      moving: this.player.isMoving() || dashing,
       attacking: Boolean(this.attackKey?.isDown),
       toolPressed: toolJustDown.some(Boolean),
       hitThisFrame: this.hitThisFrame,
@@ -717,10 +755,16 @@ export class RiftScene extends Phaser.Scene {
     });
     this.fieldInventory.update(delta, {
       interactHeld: Boolean(this.extractKey?.isDown), pickupPriority: this.search.getPrompt() === 'pickup',
-      blocked: inventoryPanel.isOpen() || this.runController.isRunEnded() || this.hitThisFrame || this.player.isMoving() || Boolean(this.attackKey?.isDown) || toolJustDown.some(Boolean),
+      blocked: inventoryPanel.isOpen() || this.runController.isRunEnded() || this.hitThisFrame || this.player.isMoving() || dashing || Boolean(this.attackKey?.isDown) || toolJustDown.some(Boolean),
     });
     this.hitThisFrame = false;
     if (!this.runController.isRunEnded()) this.toolSystem.update(delta);
+    if (dashing && !this.runController.isRunEnded() && this.dashHazardElapsedMs < delta) {
+      const remainder = delta - this.dashHazardElapsedMs;
+      this.ai.update(remainder, this.player.getPosition(), false);
+      this.combat.update(remainder);
+      this.hosts.update(remainder, this.player.getPosition(), false, this.player.getFacingAngle());
+    }
     this.tickDefenseHudEffects(delta);
     this.syncHudActiveEffects();
     this.extraction.update(delta);
@@ -810,7 +854,7 @@ export class RiftScene extends Phaser.Scene {
     const playerPos = this.player.getPosition();
     const playerTileX = Math.floor(playerPos.x / tileSize);
     const playerTileY = Math.floor(playerPos.y / tileSize);
-    const range = Math.ceil(GAME_CONSTANTS.VISIBILITY.RADIUS_FORWARD / tileSize) + 1;
+    const range = Math.ceil(Math.max(GAME_CONSTANTS.VISIBILITY.RADIUS_FORWARD, this.visibility.getEffectiveRadius(0)) / tileSize) + 1;
 
     for (let dy = -range; dy <= range; dy++) {
       for (let dx = -range; dx <= range; dx++) {
@@ -959,13 +1003,13 @@ export class RiftScene extends Phaser.Scene {
   };
 
   private readonly onContaminantAcquired = ({ contaminant }: { contaminant: Contaminant }): void => {
-    this.sortieAcquired.push({ type: contaminant.type, rarity: contaminant.rarity });
+    this.sortieAcquired.push({ type: contaminant.type, rarity: contaminant.rarity, publicName: projectItemForPlayer(contaminant).name });
   };
 
   /** Passive tools (碎影/消声步/寄生引流) have no button - this is the only place
    *  their trigger count is captured for the result panel's "被动触发" line (S10). */
   private readonly onToolUsedForResult = ({ toolType }: { toolType: ContaminantType }): void => {
-    if (CONTAMINANT_DATA[toolType]?.toolType !== 'passive') return;
+    if (toolType === 'catalog' || CONTAMINANT_DATA[toolType]?.toolType !== 'passive') return;
     this.sortiePassiveTriggers.set(toolType, (this.sortiePassiveTriggers.get(toolType) ?? 0) + 1);
   };
 
@@ -980,7 +1024,7 @@ export class RiftScene extends Phaser.Scene {
       elapsedMs: this.runController.getElapsedMs(),
       acquired: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
         const item = inventoryStore.getItem(id);
-        return item?.kind === 'contaminant' ? [{ type: item.contaminant.type, rarity: item.contaminant.rarity, quality: item.contaminant.quality }] : [];
+        return item?.kind === 'contaminant' ? [{ type: item.contaminant.type, rarity: item.contaminant.rarity, quality: item.contaminant.quality, publicName: projectItemForPlayer(item.contaminant).name }] : [];
       }),
       weapons: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
         const item = inventoryStore.getItem(id);
@@ -1088,9 +1132,46 @@ export class RiftScene extends Phaser.Scene {
     radius: number,
     level: NoiseLevel
   ): void => {
+    if (this.toolSystem.isActionSilenced()) return;
     this.ai.reportNoise(pos, radius, level);
     this.hosts.reportNoise(pos, radius);
   };
+
+  /** Work in body-centre space, convert back to the unchanged character's sprite origin. */
+  private sweepPlayerDash(target: Readonly<Vector2>): Vector2 {
+    const sprite = this.player.getSprite(), body = sprite.body as Phaser.Physics.Arcade.Body;
+    const grid = this.formFloorGrid!;
+    const offset = { x: body.center.x - sprite.x, y: body.center.y - sprite.y };
+    const landing = sweepGroundDash({ origin: body.center, destination: { x: target.x + offset.x, y: target.y + offset.y },
+      grid, bodyHalfWidth: body.halfWidth, bodyHalfHeight: body.halfHeight,
+      isVisible: point => this.visibilityAt(point) > 0,
+      bodies: this.ai.getEnemies().flatMap(enemy => {
+        if (!(enemy instanceof Enemy) || !this.combat.isEnemyAlive(enemy.getId())) return [];
+        const enemyBody = enemy.getSprite().body as Phaser.Physics.Arcade.Body | null;
+        return enemyBody?.enable ? [{ position: enemyBody.center, halfWidth: enemyBody.halfWidth, halfHeight: enemyBody.halfHeight }] : [];
+      }),
+    });
+    return { x: landing.x - offset.x, y: landing.y - offset.y };
+  }
+
+  private advancePlayerDash(target: Readonly<Vector2>, dtMs: number): boolean {
+    const origin = { ...this.player.getPosition() }, landing = this.sweepPlayerDash(target);
+    const distance = Math.hypot(landing.x - origin.x, landing.y - origin.y);
+    const steps = Math.max(1, Math.ceil(distance / 4), Math.ceil(dtMs / 16));
+    const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+    for (let step = 1; step <= steps; step++) {
+      if (this.runController.isRunEnded()) return false;
+      const fraction = step / steps;
+      body.reset(origin.x + (landing.x - origin.x) * fraction, origin.y + (landing.y - origin.y) * fraction);
+      this.player.postUpdate();
+      // Contact, attacks, acoustics and contamination observe every traversed segment.
+      this.ai.update(dtMs / steps, this.player.getPosition(), true);
+      this.combat.update(dtMs / steps);
+      this.hosts.update(dtMs / steps, this.player.getPosition(), true, this.player.getFacingAngle());
+      this.dashHazardElapsedMs += dtMs / steps;
+    }
+    return Math.hypot(landing.x - target.x, landing.y - target.y) < .01;
+  }
 
   private startRiftAudio(enterCue = true): void {
     audioManager.playBGM('bgm-rift-base-drone', 3.5);
@@ -1111,7 +1192,7 @@ export class RiftScene extends Phaser.Scene {
   private syncRiftAudio(): void {
     const now = this.time.now;
     const playerPos = this.player.getPosition();
-    if (this.player.isMoving() && now - this.lastStepAt >= 400) {
+    if ((this.player.isMoving() || this.toolSystem.isGroundDashing()) && !this.toolSystem.isActionSilenced() && now - this.lastStepAt >= 400) {
       this.lastStepAt = now;
       audioManager.playSFX(this.stepKey(), { priority: 'low' });
     }
@@ -1217,7 +1298,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly onCombatCue = (cue: CombatCueId, pos: Readonly<Vector2>): void => {
     if (this.devRuntime?.handleCombatCue?.(cue, pos)) return;
     const playerPos = this.player.getPosition();
-    if (cue === 'combat.cue.swing') audioManager.playSFX('sfx-shared-player-attack');
+    if (cue === 'combat.cue.swing' && !this.toolSystem.isActionSilenced()) audioManager.playSFX('sfx-shared-player-attack');
     else if (cue === 'combat.cue.hit') audioManager.playSpatialSFX('sfx-rift-enemy-hit', pos, playerPos);
     else if (cue === 'combat.cue.enemyDeath') audioManager.playSpatialSFX('sfx-rift-enemy-die', pos, playerPos);
     else if (cue === 'combat.cue.enemyWindup') audioManager.playSpatialSFX('sfx-rift-enemy-alert', pos, playerPos);
@@ -1247,6 +1328,7 @@ export class RiftScene extends Phaser.Scene {
   /** Wired as the chaos system's onModulate callback. */
   private readonly applyChaosModulators = (mods: ChaosModulators): void => {
     this.visibility.setRadiusScale(mods.radiusScale * this.hosts.getVolumeSightMult());
+    this.visibility.setAbilityRadiusMultiplier(this.toolSystem.getVisionRadiusMultiplier());
     this.visibility.setEdgeCorruption(mods.edgeCorruption);
     this.visibility.setScreenFlicker(mods.screenFlicker);
     this.player.setSpeedModifier('chaos', mods.speedMult);
@@ -1320,7 +1402,14 @@ export class RiftScene extends Phaser.Scene {
       label: e.type === 'siphon' ? `抗污 +${resistanceBonus}` : e.type === 'expand' ? '身体归位' : e.type === 'abyss' ? '附近旧影 · 非实时' : getToolName(e.type),
       remainingMs: e.remainingMs,
     }));
-    this.hud.setActiveEffects([...this.defenseHudEffects, ...toolLines]);
+    const baseResistance = getSurvivalAttributes().resistancePercent;
+    const catalogLines = this.toolSystem.getActiveCatalogEffects().map(effect => {
+      const otherSources = baseResistance + resistanceBonus - (effect.resistanceBonus ?? 0);
+      const effectiveGain = sumPollutionResistance([baseResistance, resistanceBonus]) - sumPollutionResistance([otherSources]);
+      return { label: CATALOG_ITEMS[effect.definitionId]!.name, remainingMs: effect.remainingMs,
+        ...(effect.resistanceBonus !== undefined ? { value: `抗污 +${effectiveGain}` } : {}) };
+    });
+    this.hud.setActiveEffects([...this.defenseHudEffects, ...toolLines, ...catalogLines]);
   }
 
   /** Show a Channel-B toast (ui-art-overhaul.md §A4, C6 shared primitive) disclosing

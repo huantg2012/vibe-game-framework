@@ -11,6 +11,8 @@ import { tideSystem } from '../../src/systems/tide-system';
 import { stabilityTracker } from '../../src/systems/stability-tracker';
 import { getDefenseRuntimeState, resetDefenseEngine } from '../../src/systems/defense-engine';
 import type { SaveDataV1, SaveDataV2 } from '../../src/types/game-types';
+import { createCatalogContaminant, projectItemForPlayer } from '../../src/systems/contaminant-catalog';
+import { createContaminantDropPlan } from '../../src/systems/contaminant-drop-plan';
 
 const map = new Map<string, string>();
 let failWrites = false;
@@ -168,7 +170,7 @@ try {
     delete (weapon.weapon as Partial<typeof weapon.weapon>).impactCharges;
     delete (weapon.weapon as Partial<typeof weapon.weapon>).usesRemaining;
     memoryStorage.setItem(key, JSON.stringify(old)); assert(saveManager.load());
-    assert.equal(readV2().inventory.version, 2);
+    assert.equal(readV2().inventory.version, 3);
     const migratedWeapon = inventoryStore.getItem(id); assert(migratedWeapon?.kind === 'weapon');
     assert.equal(migratedWeapon.weapon.stage, 'tool'); assert.equal(migratedWeapon.weapon.usesRemaining, def.maxUses);
     assert(inventoryStore.consumeEquipmentUse(id).ok);
@@ -180,6 +182,50 @@ try {
     delete (bad.weapon as Partial<typeof bad.weapon>).usesRemaining;
     const before = snapshot(); memoryStorage.setItem(key, JSON.stringify(malformed));
     assert.equal(saveManager.load(), false); assert.deepEqual(snapshot(), before);
+  });
+  check('catalog identification is durable and failed offering never leaks or loses the fixed identity', () => {
+    saveManager.deleteSave(); resetRuntime(); saveManager.save();
+    const catalog = createCatalogContaminant({ id: 'save-catalog-passive', definitionId: 'reverse_woven_basket',
+      appearanceId: 'wax_parcel', offeringProfileId: 'resist_35', quality: 'ordinary', acquiredOrdinal: 0 });
+    assert(inventoryStore.addContaminant(catalog).ok);
+    assert(inventoryStore.slotOffering(catalog.id, 0).ok);
+    const before = snapshot(), bytes = memoryStorage.getItem(key);
+    failWrites = true;
+    assert.deepEqual(inventoryStore.finishOfferingImpact([catalog.id], 3, {}, 'catalog-impact'), { ok: false, error: 'storage-failed' });
+    assert.deepEqual(snapshot(), before); assert.equal(memoryStorage.getItem(key), bytes);
+    assert.equal(projectItemForPlayer(inventoryStore.getContaminants()[0]!).identification, 'unidentified');
+    failWrites = false; assert(inventoryStore.finishOfferingImpact([catalog.id], 3, {}, 'catalog-impact').ok);
+    const revealed = snapshot(); assert(saveManager.load()); assert.deepEqual(snapshot(), revealed);
+    assert.equal(projectItemForPlayer(inventoryStore.getContaminants()[0]!).name, '反编藤篮');
+    assert.deepEqual(inventoryStore.finishOfferingImpact([catalog.id], 3, {}, 'catalog-impact'), { ok: true, value: [] });
+    assert.deepEqual(inventoryStore.getDiscoveredCatalogIds(), ['reverse_woven_basket']);
+  });
+  check('catalog final passive departure, fixed plan and tutorial claim roundtrip atomically through real storage', () => {
+    const state = inventoryStore.getState();
+    const passive = state.items.find(item => item.id === 'save-catalog-passive'); assert(passive?.kind === 'contaminant');
+    passive.contaminant.usesRemaining = 1; assert(inventoryStore.loadState(state));
+    assert(inventoryStore.prepareTool(passive.id, 2).ok);
+    const before = snapshot(), bytes = memoryStorage.getItem(key);
+    const versions = { catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 } as const;
+    failWrites = true;
+    assert.deepEqual(inventoryStore.beginRun('catalog-save-run', versions), { ok: false, error: 'storage-failed' });
+    assert.deepEqual(snapshot(), before); assert.equal(memoryStorage.getItem(key), bytes);
+    failWrites = false; assert(inventoryStore.beginRun('catalog-save-run', versions).ok);
+    const plan = createContaminantDropPlan({ runId: 'catalog-save-run', runSeed: 28,
+      nodes: [{ id: 'teach', tier: 'safe' }], tutorialNodeId: 'teach' });
+    assert(inventoryStore.installDropPlan(plan).ok);
+    const c = plan.entries[0]!.contaminant;
+    assert(inventoryStore.revealBatch('teach', [{ id: c.id, kind: 'contaminant', contaminant: c }], { x: 32, y: 32 }).ok);
+    const active = snapshot(); assert(saveManager.load()); assert.deepEqual(snapshot(), active);
+    assert.equal(inventoryStore.getCapacity(), 240); assert(!inventoryStore.isCatalogTutorialEligible());
+    const malformed = readV2(); malformed.inventory.run!.dropPlan!.entries[0]!.contaminant.catalog!.definitionId = 'not-a-definition';
+    memoryStorage.setItem(key, JSON.stringify(malformed));
+    assert.equal(saveManager.load(), false); assert.deepEqual(snapshot(), active);
+    assert(saveManager.trySave()); assert(inventoryStore.settleRun('catalog-save-run', 'extract', 0).ok);
+    assert(saveManager.load()); assert.equal(inventoryStore.getCapacity(), 160);
+    assert.equal(inventoryStore.getItem(passive.id), undefined); assert.equal(inventoryStore.getItem(c.id)?.location.kind, 'stash');
+    assert.deepEqual(inventoryStore.getDiscoveredCatalogIds(), ['reverse_woven_basket']);
+    assert.equal(projectItemForPlayer(inventoryStore.getContaminants()[0]!).identification, 'unidentified');
   });
   console.log(`${checks} real SaveManager migration/integration checks passed.`);
 } finally {

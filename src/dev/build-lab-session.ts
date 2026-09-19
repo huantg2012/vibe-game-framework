@@ -12,7 +12,7 @@ import { impactSystem } from '@/systems/impact-system';
 import { inventoryStore } from '@/systems/inventory-store';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
-import type { ContaminantType } from '@/types/game-types';
+import type { LegacyContaminantType } from '@/types/game-types';
 import type { InventoryResult } from '@/types/inventory-types';
 
 export class BuildLabMemoryStorage implements SaveStorage {
@@ -40,7 +40,7 @@ export function prepareBuildLabRun(loadoutId: BuildLabLoadoutId): string {
   if (weapon?.kind !== 'weapon' || weapon.weapon.definitionId !== definition.weapon) throw new Error('Build-lab requires the production starter weapon');
   for (const [slot, type] of [definition.activeA, definition.activeB, definition.passive].entries()) {
     if (!type) continue;
-    const family = type as ContaminantType;
+    const family = type as LegacyContaminantType;
     const item = contaminantSystem.createUnowned(family, CONTAMINANT_DATA[family].rarity, 'ordinary');
     // A clearly declared training grant. Uses/threshold still come from their actual definitions.
     item.stage = 'tool'; item.impactCharges = GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD;

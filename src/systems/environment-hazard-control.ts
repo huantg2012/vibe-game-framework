@@ -1,15 +1,20 @@
 import { runtimeRecord, runtimeNumber } from './ai/runtime-validation';
-export interface HazardControlRuntimeState { suppressions: [string, number][]; delays: [string, number][]; recovery: 'none' | 'wait-rest' | 'warning'; paintInflated: boolean }
+export interface HazardControlRuntimeState { suppressions: [string, number][]; delays: [string, number][]; recovery: 'none' | 'wait-rest' | 'warning'; paintInflated: boolean; protectionRemainingMs?: number }
 /** Source-scoped temporary environmental controls; owns no damage, geometry or item uses. */
 export class EnvironmentHazardControl {
   private readonly suppressions = new Map<string, number>();
   private readonly delays = new Map<string, number>();
   private recovery: 'none' | 'wait-rest' | 'warning' = 'none';
   private paintInflated = false;
+  private protectionEnabled = false;
+  private protectionMs = 0;
+  get protectionRemainingMs(): number { return this.protectionMs; }
+  setControlProtectionEnabled(enabled: boolean): void { this.protectionEnabled = enabled; if (!enabled) this.protectionMs = 0; }
 
-  exportRuntimeState(): HazardControlRuntimeState { return { suppressions: [...this.suppressions], delays: [...this.delays], recovery: this.recovery, paintInflated: this.paintInflated }; }
+
+  exportRuntimeState(): HazardControlRuntimeState { return { suppressions: [...this.suppressions], delays: [...this.delays], recovery: this.recovery, paintInflated: this.paintInflated, protectionRemainingMs: this.protectionMs }; }
   static validateRuntimeState(value: unknown): value is HazardControlRuntimeState {
-    if (!runtimeRecord(value) || !['none', 'wait-rest', 'warning'].includes(value.recovery as string) || typeof value.paintInflated !== 'boolean') return false;
+    if (!runtimeRecord(value) || !['none', 'wait-rest', 'warning'].includes(value.recovery as string) || typeof value.paintInflated !== 'boolean' || (value.protectionRemainingMs !== undefined && !runtimeNumber(value.protectionRemainingMs, 0, 2000))) return false;
     return [value.suppressions, value.delays].every(rows => Array.isArray(rows) && rows.length < 1024 && rows.every(row => Array.isArray(row) && row.length === 2 && typeof row[0] === 'string' && row[0].length > 0 && runtimeNumber(row[1], 0)) && new Set(rows.map(row => row[0])).size === rows.length);
   }
   restoreRuntimeState(value: unknown): void {
@@ -17,7 +22,7 @@ export class EnvironmentHazardControl {
     this.suppressions.clear(); this.delays.clear();
     for (const [id, time] of value.suppressions) this.suppressions.set(id, time);
     for (const [id, time] of value.delays) this.delays.set(id, time);
-    this.recovery = value.recovery; this.paintInflated = value.paintInflated;
+    this.recovery = value.recovery; this.paintInflated = value.paintInflated; this.protectionMs = value.protectionRemainingMs ?? 0;
   }
 
   static valid(sourceId: string, durationMs: number): boolean {
@@ -43,16 +48,21 @@ export class EnvironmentHazardControl {
   clear(sourceId: string): void {
     const wasSuppressed = this.suppressions.delete(sourceId);
     this.delays.delete(sourceId);
-    if (wasSuppressed && this.suppressions.size === 0) this.recovery = 'wait-rest';
+    if (wasSuppressed && this.suppressions.size === 0) { this.recovery = 'wait-rest'; if (this.protectionEnabled) this.protectionMs = 2000; }
   }
 
   /** Returns the fraction of this frame free to advance the natural release clock. */
   tick(dtMs: number): number {
+    this.protectionMs = Math.max(0, this.protectionMs - dtMs);
+    const suppressionBefore = this.suppressionRemainingMs;
     const delayMs = this.delayRemainingMs;
     const suppressed = this.suppressions.size > 0;
     this.advance(this.delays, dtMs);
     this.advance(this.suppressions, dtMs);
-    if (suppressed && this.suppressions.size === 0) this.recovery = 'wait-rest';
+    if (suppressed && this.suppressions.size === 0) {
+      this.recovery = 'wait-rest';
+      if (this.protectionEnabled) this.protectionMs = Math.max(0, 2000 - Math.max(0, dtMs - suppressionBefore));
+    }
     return Math.max(0, dtMs - delayMs);
   }
 
@@ -67,6 +77,11 @@ export class EnvironmentHazardControl {
     if (this.recovery === 'wait-rest' && this.paintInflated && !inflated) this.recovery = 'warning';
     else if (this.recovery === 'warning' && !this.paintInflated && inflated) this.recovery = 'none';
     this.paintInflated = inflated;
+  }
+
+  /** Wall strikes own an explicit fresh windup, instead of a repeating volume phase. */
+  observeWallWindupReset(): void {
+    if (this.suppressions.size === 0) this.recovery = 'none';
   }
 
   private maximum(sources: ReadonlyMap<string, number>): number {

@@ -186,7 +186,10 @@ if (process.argv.includes('--child')) {
   check('failed base write preserves the settled record and reload produces identical impact, forecast and replacement ID', () => {
     const cut = processReload({ mode: 'terminal', offering: true, reason: 'death' });
     const failed = processReload({ mode: 'reload', raw: cut.raw, failure: true });
-    assert.equal(failed.error, null); assert(failed.pending && failed.retryRequested); assert.equal(failed.raw, cut.raw);
+    assert.equal(failed.error, null); assert(failed.pending); assert.equal(failed.raw, cut.raw);
+    // This adapter stops before rendering. Retry and reveal now wait until the
+    // scene is ready; their real DOM/input behavior is covered by
+    // tools/qa/check-i28-reveal-persistence.mjs, not this drawing-boundary fixture.
     const loaded = processReload({ mode: 'reload', raw: failed.raw });
     assert.equal(loaded.error, null); assert.deepEqual(loaded.after, failed.after);
     const replacement = loaded.after.inventory.items.find((item: any) => item.kind === 'weapon');

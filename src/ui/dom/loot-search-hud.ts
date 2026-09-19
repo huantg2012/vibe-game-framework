@@ -36,6 +36,7 @@ export class LootSearchHud {
   private kindlingValueEl: HTMLSpanElement | null = null;
   private promptKind: LootSearchPromptKind = null;
   private channelVisible = false;
+  private sourceHint = '';
 
   create(overlayRoot: HTMLElement, options?: LootSearchHudOptions): void {
     this.destroy();
@@ -86,8 +87,9 @@ export class LootSearchHud {
     this.fillEl = fill;
   }
 
-  setPrompt(kind: LootSearchPromptKind): void {
-    if (kind === this.promptKind) return;
+  setPrompt(kind: LootSearchPromptKind, sourceHint = ''): void {
+    if (kind === this.promptKind && sourceHint === this.sourceHint) return;
+    this.sourceHint = sourceHint;
     this.promptKind = kind;
     const prompt = this.promptEl;
     const key = this.promptKeyEl;
@@ -99,7 +101,7 @@ export class LootSearchHud {
     }
     key.textContent = '[E]';
     action.textContent = kind === 'extract' ? t('hud.prompt.extract')
-      : kind === 'pickup' ? t('hud.prompt.pickup') : t('hud.prompt.search');
+      : kind === 'pickup' ? t('hud.prompt.pickup') : `${t('hud.prompt.search')}${sourceHint ? ` · ${sourceHint}` : ''}`;
     prompt.style.display = 'block';
   }
 
@@ -167,6 +169,7 @@ export class LootSearchHud {
     this.fillEl = null;
     this.kindlingValueEl = null;
     this.promptKind = null;
+    this.sourceHint = '';
     this.channelVisible = false;
   }
 }

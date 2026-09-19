@@ -1,18 +1,20 @@
-import { getContaminantQuality, getContaminantQualityName, getContaminantQualityRank, getContaminantMaxUses, supportsContaminantQuality } from '@/systems/contaminant-quality';
+import { catalogIconUrl } from '@/art/contaminant-catalog-icons';
+import { getContaminantQualityName, getContaminantQualityRank, getContaminantMaxUses, supportsContaminantQuality } from '@/systems/contaminant-quality';
 /** Projects the one inventory owner into the shared base / field view. */
 import { GAME_CONSTANTS } from '@/config/constants';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { projectItemForPlayer, projectDiscoveredCatalogItems } from '@/systems/contaminant-catalog';
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
-import { contaminantIconUrl } from '@/art/contaminant-icons';
+import { itemIconUrl, itemStageLabel } from './contaminant-presentation';
 import { getSurvivalAttributes, sumPollutionResistance } from '@/systems/survival-attributes';
 import type { InventoryError, InventoryItem, InventoryResult } from '@/types/inventory-types';
 import type { Vector2 } from '@/types/game-types';
-import { getDefenseName, getRarityStars, getToolName } from './contaminant-names';
+import { getRarityStars } from './contaminant-names';
 import { inventoryPanel, type InventoryPanelAction, type InventoryPanelActionResult, type InventoryPanelItem, type InventoryPanelMode, type InventoryPanelSnapshot } from './dom/inventory-panel';
 
 const ERRORS: Record<InventoryError, string> = {
+  'duplicate-action': '这项操作已经完成。',
   'invalid-item': '这件物品已不可用。', 'duplicate-id': '同一件物品只能选择一次。',
   'wrong-location': '物品位置已变化，请重新选择。', equipped: '本趟已装配的物品不能卸下。',
   incompatible: '这件物品不能放在这个位置。', overweight: '超过负重上限，请减少携带。',
@@ -69,18 +71,26 @@ export function projectInventoryItem(item: InventoryItem, mode: InventoryPanelMo
 
     };
   }
-  const c = item.contaminant;
-  const def = CONTAMINANT_DATA[c.type];
+  const c = item.contaminant, view = projectItemForPlayer(c);
   const count = contaminantSystem.getSortieSlotCount();
-  const passive = def.toolType === 'passive';
-  const toolSlots = c.stage === 'tool' && c.usesRemaining > 0
+  const passive = view.slot === 'passive', unknown = view.identification === 'unidentified';
+  const toolSlots = canEquip && view.slot
     ? Array.from({ length: count }, (_, i) => i).filter(i => passive === (i === count - 1)).map(String) : [];
-  return { ...common, name: c.stage === 'tool' ? getToolName(c.type) : getDefenseName(c.type), quality: supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity), qualityRank: getContaminantQualityRank(c), toolSlots, icon: contaminantIconUrl(c.type, getContaminantQuality(c)),
-    description: c.stage === 'tool' ? def.summaryTool : c.stage === 'broken' ? '已耗尽。' : `供奉：${def.summaryDefense} 成熟后 · ${def.displayNameTool}：${def.summaryTool}`,
-    explanations: c.stage === 'tool' ? [{ label: '技能说明', text: def.descriptionTool }] : [
-      { label: '供奉说明', text: def.descriptionDefense }, { label: `成熟后 · ${def.displayNameTool}`, text: def.descriptionTool },
+  const qualityName = supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity);
+  const maxUses = view.maxUses ?? (unknown || view.inert ? 0 : getContaminantMaxUses(c));
+  return { ...common, name: view.name, stageLabel: itemStageLabel(c),
+    quality: view.inert ? undefined : unknown ? `结构保持性 · ${qualityName}` : qualityName,
+    qualityRank: view.inert ? 0 : getContaminantQualityRank(c), toolSlots, icon: itemIconUrl(c),
+    usesRemaining: view.usesRemaining, canEquip: canEquip && !view.inert, canOffer: common.canOffer && !view.inert,
+    description: view.inert ? `${view.summary} 可留存或丢弃，不能携入裂隙。` : unknown ? `供奉：${view.offeringSummary} 完成供奉后，揭晓真实物件及裂隙能力。` : view.summary,
+    explanations: [{ label: unknown ? '供奉说明' : '物件说明', text: view.description }],
+    stats: [
+      ...(view.inert ? [] : [{ label: unknown ? '结构保持性' : '品质', value: qualityName }]),
+      ...(unknown || c.stage === 'defense' ? [{ label: '供奉积累', value: `${view.impactCharges} / ${view.offeringCharges}` }]
+        : view.inert ? [] : [{ label: '类型', value: passive ? '整趟被动' : '主动' },
+          { label: passive ? '剩余趟数' : '余次', value: `${view.usesRemaining ?? 0} / ${maxUses}${c.catalog?.runBinding ? ' · 本趟已生效' : ''}` }]),
     ],
-    stats: [{ label: '品质', value: supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity) }, ...(c.stage === 'tool' ? [{ label: '类型', value: passive ? '被动' : '主动' }, { label: '余次', value: c.usesRemaining > getContaminantMaxUses(c) ? `${c.usesRemaining} 次 · 基准 ${getContaminantMaxUses(c)}` : `${c.usesRemaining} / ${getContaminantMaxUses(c)}` }] : [{ label: '供奉积累', value: `${c.impactCharges} / ${GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD}` }, { label: '成熟后次数', value: getContaminantMaxUses(c) }])] };
+  };
 }
 
 function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
@@ -92,14 +102,20 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   const misplaced = eq.toolIds.flatMap((id, index) => {
     const item = id ? inventoryStore.getItem(id) : undefined;
     if (item?.kind !== 'contaminant') return [];
-    const def = CONTAMINANT_DATA[item.contaminant.type];
-    return (def.toolType === 'passive') !== (index === count - 1) ? [`${def.displayNameTool}需放入${def.toolType === 'passive' ? '被动' : '主动'}挂位`] : [];
+    const view = projectItemForPlayer(item.contaminant);
+    return (view.slot === 'passive') !== (index === count - 1) ? [`${view.name}需放入${view.slot === 'passive' ? '被动' : '主动'}挂位`] : [];
   });
   const reason = inventoryStore.getRun()?.status === 'active' ? '本次出击尚未结算。'
     : !eq.weaponId ? '请先装上一把已成熟的撬棍。' : misplaced.length ? `${misplaced.join('；')}。` : '';
   const carriedOut = new Set(inventoryStore.getRun()?.carriedOutIds ?? []);
   const survival = getSurvivalAttributes();
   return {
+    discoveries: options.mode === 'catalog' ? projectDiscoveredCatalogItems(inventoryStore.getDiscoveredCatalogIds()).map(view => ({
+      id: `discovery:${view.definitionId}`, kind: 'contaminant' as const, discovery: true, name: view.name,
+      weight: 0, location: 'stash' as const, description: view.summary,
+      stageLabel: view.inert ? '无裂隙能力' : view.slot === 'passive' ? '整趟被动' : '主动',
+      icon: catalogIconUrl({ kind: 'item', definitionId: view.iconId }), canEquip: false, canOffer: false,
+    })) : undefined,
     items: inventoryStore.getItems().filter(item => options.mode === 'rift'
       ? (item.location.kind === 'carried' && !carriedOut.has(item.id) && !inventoryStore.isEquipped(item.id)) || nearby.has(item.id)
       : item.location.kind !== 'ground').map(item => projectInventoryItem(item, options.mode)),

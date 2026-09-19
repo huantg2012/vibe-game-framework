@@ -4,12 +4,14 @@
  * freeze, suspicion delay, stale lost-sight memory, sound suppression, safe wall crossing,
  * independent visual decoys, thrown sound sources, environment release controls,
  * crossing stops, local slowdown, damage-triggered resistance and bounded snapshots.
- * Legacy branches remain readable for compatibility; the catalogue uses thirteen families.
+ * Legacy branches retain thirteen families for compatibility; the current catalogue uses twelve parameterized families.
  */
 
 import Phaser from 'phaser';
+import { CatalogAbilityRuntime, validateCatalogAbilityRuntimeState, type CatalogAbilityRuntimeState, type CatalogAbilityPorts, type CatalogTargetPreview } from '@/systems/catalog-ability-runtime';
+import { getCatalogRuntimeAbility, getBoundCatalogPassive, getContaminantSlot, type CatalogAbilityFamily } from '@/systems/contaminant-catalog';
 import { captureBodyEcho, restoreBodyEcho, type BodyEcho, type BodyEchoSource } from '@/systems/tool-body-echo';
-import { drawToolObject, drawPressure, drawFootDrag, drawSeam, drawHostRestraint } from '@/systems/tool-ground-vfx';
+import { drawToolObject, drawCatalogToolObject, drawPressure, drawFootDrag, drawSeam, drawHostRestraint } from '@/systems/tool-ground-vfx';
 import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
 import { validateToolExtendedRuntimeState, type ToolExtendedRuntimeState } from '@/systems/tool-runtime-extended';
@@ -252,6 +254,7 @@ const RECOVERABLE_TOOLS: readonly ContaminantType[] = ACTIVE_CONTAMINANT_TYPES;
 export interface ToolRuntimeState {
   readonly version: 1;
   readonly extended?: ToolExtendedRuntimeState;
+  readonly catalog?: CatalogAbilityRuntimeState;
   readonly loadoutIds: readonly (string | null)[];
   readonly elapsedMs: number;
   readonly controlSerial: number;
@@ -299,6 +302,7 @@ export function validateToolRuntimeState(value: unknown): value is ToolRuntimeSt
   for (const key of ['stitches', 'stitchStops', 'anchors', 'lures']) {
     if (!Array.isArray(value[key]) || (value[key] as unknown[]).length > 512) return false;
   }
+  if (value.catalog !== undefined && (!validateCatalogAbilityRuntimeState(value.catalog) || Math.abs(value.catalog.elapsedMs - value.elapsedMs) > .001)) return false;
   const sources = new Set<string>(), presentations = new Set<number>();
   const source = (id: unknown): id is string => {
     if (typeof id !== 'string' || !/^tool:[1-9][0-9]*$/.test(id) || sources.has(id)
@@ -356,7 +360,63 @@ export function validateToolRuntimeState(value: unknown): value is ToolRuntimeSt
   return true;
 }
 
+export interface ToolCreateOptions extends CatalogAbilityPorts {
+      setEnemyControl?: (id: string, source: string, effect: EnemyControlEffect) => void;
+      clearEnemyControl?: (id: string, source: string) => void;
+      hasEnemyControl?: (id: string, source: string) => boolean;
+      isTargetAlive?: (id: string) => boolean;
+      isTargetVisible?: (position: Readonly<Vector2>) => boolean;
+      hasTargetLineOfSight?: (from: Readonly<Vector2>, to: Readonly<Vector2>) => boolean;
+      getPlayerGroundY?: () => number;
+      getGroundVisualDepth?: (groundY: number) => number;
+      captureEnemyVisual?: (id: string) => BodyEchoSource | undefined;
+      getPlayerSprite?: () => Phaser.GameObjects.Image | undefined;
+      getPhaseDestination?: () => Vector2 | null;
+      movePlayerTo?: (position: Vector2) => void;
+      setPlayerCollision?: (enabled: boolean) => void;
+      setPlayerInput?: (enabled: boolean) => void;
+      getCollectedNodes?: () => readonly Vector2[];
+      addKindling?: (n: number) => void;
+      // Slice 5 (T1/T2)
+      setEnemySpeedMultiplier?: (enemyId: string, mult: number) => void;
+      setEnemyMovementLocked?: (enemyId: string, locked: boolean) => void;
+      setEnemyPerceptionMultiplier?: (enemyId: string, mult: number) => void;
+      reverseEnemyPatrol?: (enemyId: string) => void;
+      forceEnemyReturn?: (enemyId: string) => void;
+      knockbackEnemy?: (enemyId: string, dx: number, dy: number) => void;
+      setDecoyPosition?: (pos: Vector2 | null) => void;
+      setVisualDecoy?: (source: string, pos: Vector2 | null) => void;
+      getSoundLureDestination?: (maxDistance: number) => Vector2 | null;
+      reportSoundLure?: (position: Vector2, radius: number, pathBounded?: boolean) => void;
+      getEnvironmentTargets?: () => readonly HostToolTarget[];
+      getStitchPlacement?: (length: number, distance: number) => ToolLine | null;
+      getRevealSnapshot?: (range: number) => ToolRevealSnapshot;
+      delayEnvironmentHazard?: (id: string, source: string, durationMs: number, includeWall?: boolean) => boolean;
+      suppressEnvironmentHazard?: (id: string, source: string, durationMs: number, includeWall?: boolean) => boolean;
+      clearEnvironmentControl?: (id: string, source: string) => void;
+      damageEnemy?: (enemyId: string, amount: number) => void;
+      showAbyssReveal?: (
+        enemyPositions: readonly Vector2[],
+        nodePositions: readonly Vector2[],
+        durationMs: number,
+        corePositions?: readonly Vector2[],
+      ) => void;
+      getKindlingPositions?: () => readonly Vector2[];
+      boostChaosRate?: (mult: number, durationMs: number) => void;
+      reduceChaosRate?: (mult: number, durationMs: number) => void;
+      // T7 rewire (Slice 4 tools)
+      setEnemyEscalationSuppressed?: (enemyId: string, suppressed: boolean) => void;
+      forceEnemyAlert?: (enemyId: string) => void;
+      demoteEnemyAlertLevel?: (enemyId: string) => void;
+      setEnemyDetectionFillRateMult?: (enemyId: string, mult: number) => void;
+      setHearingSuppressed?: (active: boolean) => void;
+}
+
 export class ToolSystem {
+  private catalogAbilities: CatalogAbilityRuntime | null = null;
+  private abilityOptions: ToolCreateOptions = {};
+  private previewGraphic: Phaser.GameObjects.Graphics | null = null;
+  private previewLabels: Phaser.GameObjects.Text[] = [];
   private readonly presentation = createToolPresentationFrame();
   private presentationIds = new WeakMap<object, number>();
   private presentationSerial = 0;
@@ -403,12 +463,12 @@ export class ToolSystem {
   private setDecoyPosition?: (pos: Vector2 | null) => void;
   private setVisualDecoy?: (source: string, pos: Vector2 | null) => void;
   private getSoundLureDestination?: (maxDistance: number) => Vector2 | null;
-  private reportSoundLure?: (position: Vector2, radius: number) => void;
+  private reportSoundLure?: (position: Vector2, radius: number, pathBounded?: boolean) => void;
   private getEnvironmentTargets?: () => readonly HostToolTarget[];
   private getStitchPlacement?: (length: number, distance: number) => ToolLine | null;
   private getRevealSnapshot?: (range: number) => ToolRevealSnapshot;
-  private delayEnvironmentHazard?: (id: string, source: string, durationMs: number) => boolean;
-  private suppressEnvironmentHazard?: (id: string, source: string, durationMs: number) => boolean;
+  private delayEnvironmentHazard?: (id: string, source: string, durationMs: number, includeWall?: boolean) => boolean;
+  private suppressEnvironmentHazard?: (id: string, source: string, durationMs: number, includeWall?: boolean) => boolean;
   private clearEnvironmentControl?: (id: string, source: string) => void;
   private readonly trackingEpisodes = new Map<string, TrackingEpisode>();
   private retrogradeEquipped = false;
@@ -492,7 +552,7 @@ export class ToolSystem {
 
   /** Retired abilities remain an explicit refusal; every current family is resumable. */
   private supportsRuntimeRecovery(): boolean {
-    return this.loadout.every(item => !item || RECOVERABLE_TOOLS.includes(item.type))
+    return this.loadout.every(item => !item || item.type === 'catalog' || RECOVERABLE_TOOLS.includes(item.type))
       && !this.erodeZones.length && !this.resonateStrings.length && !this.overwriteMarks.length
       && !this.resonatePendingPoint && !this.reclaimedNodes.size
       && this.stunnedEnemies.every(entry => entry.tag === 'echo');
@@ -501,7 +561,7 @@ export class ToolSystem {
   exportRuntimeState(): ToolRuntimeState {
     if (!this.supportsRuntimeRecovery()) throw new Error('Retired tool effects cannot be resumed');
     const value: ToolRuntimeState = {
-      version: 1, extended: this.exportExtendedRuntimeState(), loadoutIds: this.loadout.map(item => item?.id ?? null), elapsedMs: this.elapsedMs,
+      version: 1, extended: this.exportExtendedRuntimeState(), catalog: this.catalogAbilities?.exportRuntimeState(), loadoutIds: this.loadout.map(item => item?.id ?? null), elapsedMs: this.elapsedMs,
       controlSerial: this.controlSerial, presentationSerial: this.presentationSerial, lastUseFailure: this.lastUseFailure,
       muffle: { triggersRemaining: this.muffleTriggersRemaining, equipped: this.muffleEquipped,
         episodeActive: this.muffleEpisodeActive, lastSignalMs: Number.isFinite(this.muffleLastSignalMs) ? this.muffleLastSignalMs : null },
@@ -537,12 +597,14 @@ export class ToolSystem {
     if (value.loadoutIds.length !== contaminantSystem.getSortieLoadout().length
       || value.loadoutIds.some((id, i) => id !== (ids[i] ?? null))
       || ids.slice(value.loadoutIds.length).some(id => id !== null)) return false;
+    if (value.catalog && value.catalog.runId !== (this.abilityOptions.runId ?? '')) return false;
     const items: Contaminant[] = [];
     for (const id of value.loadoutIds) {
       if (id === null) continue;
       const item = inventoryStore.getItem(id);
       if (item?.kind !== 'contaminant' || item.location.kind !== 'carried' || item.contaminant.stage !== 'tool'
-        || item.contaminant.usesRemaining <= 0 || !RECOVERABLE_TOOLS.includes(item.contaminant.type)) return false;
+        || (item.contaminant.usesRemaining <= 0 && !getBoundCatalogPassive(item.contaminant, this.abilityOptions.runId ?? ''))
+        || (item.contaminant.type !== 'catalog' && !RECOVERABLE_TOOLS.includes(item.contaminant.type))) return false;
       items.push(item.contaminant);
     }
     for (const type of ['muffle', 'siphon'] as const) {
@@ -622,6 +684,9 @@ export class ToolSystem {
     // equipped muffle has not published it until the first real Tool.update.
     this.restoreExtendedRuntimeState(value.extended);
     this.updateSiphonEffect(0);
+    this.catalogAbilities?.restoreRuntimeState(value.catalog, value.elapsedMs);
+    this.abilityOptions.setPlayerActionSilenced?.(this.isActionSilenced());
+    if (value.catalog?.effects.some(effect => effect.resolvedParams.familyId === 'silence')) this.setHearingSuppressed?.(true);
   }
 
   private exportExtendedRuntimeState(): ToolExtendedRuntimeState {
@@ -722,60 +787,16 @@ export class ToolSystem {
     loadout: (Contaminant | null)[],
     getPlayerPos: () => Vector2,
     getEnemies: () => readonly EnemyView[],
-    options?: {
-      setEnemyControl?: (id: string, source: string, effect: EnemyControlEffect) => void;
-      clearEnemyControl?: (id: string, source: string) => void;
-      hasEnemyControl?: (id: string, source: string) => boolean;
-      isTargetAlive?: (id: string) => boolean;
-      isTargetVisible?: (position: Readonly<Vector2>) => boolean;
-      hasTargetLineOfSight?: (from: Readonly<Vector2>, to: Readonly<Vector2>) => boolean;
-      getPlayerGroundY?: () => number;
-      getGroundVisualDepth?: (groundY: number) => number;
-      captureEnemyVisual?: (id: string) => BodyEchoSource | undefined;
-      getPlayerSprite?: () => Phaser.GameObjects.Image | undefined;
-      getPhaseDestination?: () => Vector2 | null;
-      movePlayerTo?: (position: Vector2) => void;
-      setPlayerCollision?: (enabled: boolean) => void;
-      setPlayerInput?: (enabled: boolean) => void;
-      getCollectedNodes?: () => readonly Vector2[];
-      addKindling?: (n: number) => void;
-      // Slice 5 (T1/T2)
-      setEnemySpeedMultiplier?: (enemyId: string, mult: number) => void;
-      setEnemyMovementLocked?: (enemyId: string, locked: boolean) => void;
-      setEnemyPerceptionMultiplier?: (enemyId: string, mult: number) => void;
-      reverseEnemyPatrol?: (enemyId: string) => void;
-      forceEnemyReturn?: (enemyId: string) => void;
-      knockbackEnemy?: (enemyId: string, dx: number, dy: number) => void;
-      setDecoyPosition?: (pos: Vector2 | null) => void;
-      setVisualDecoy?: (source: string, pos: Vector2 | null) => void;
-      getSoundLureDestination?: (maxDistance: number) => Vector2 | null;
-      reportSoundLure?: (position: Vector2, radius: number) => void;
-      getEnvironmentTargets?: () => readonly HostToolTarget[];
-      getStitchPlacement?: (length: number, distance: number) => ToolLine | null;
-      getRevealSnapshot?: (range: number) => ToolRevealSnapshot;
-      delayEnvironmentHazard?: (id: string, source: string, durationMs: number) => boolean;
-      suppressEnvironmentHazard?: (id: string, source: string, durationMs: number) => boolean;
-      clearEnvironmentControl?: (id: string, source: string) => void;
-      damageEnemy?: (enemyId: string, amount: number) => void;
-      showAbyssReveal?: (
-        enemyPositions: readonly Vector2[],
-        nodePositions: readonly Vector2[],
-        durationMs: number,
-        corePositions?: readonly Vector2[],
-      ) => void;
-      getKindlingPositions?: () => readonly Vector2[];
-      boostChaosRate?: (mult: number, durationMs: number) => void;
-      reduceChaosRate?: (mult: number, durationMs: number) => void;
-      // T7 rewire (Slice 4 tools)
-      setEnemyEscalationSuppressed?: (enemyId: string, suppressed: boolean) => void;
-      forceEnemyAlert?: (enemyId: string) => void;
-      demoteEnemyAlertLevel?: (enemyId: string) => void;
-      setEnemyDetectionFillRateMult?: (enemyId: string, mult: number) => void;
-      setHearingSuppressed?: (active: boolean) => void;
-    },
+    options?: ToolCreateOptions,
   ): void {
     if (this.scene) this.releaseAllOverrides();
+    this.catalogAbilities?.destroy();
+    this.abilityOptions = options ?? {};
     this.scene = scene;
+    this.catalogAbilities = new CatalogAbilityRuntime(scene, getPlayerPos, getEnemies, {
+      drawCatalogToolObject, ...options, hasEquivalentLegacyEffect: family => this.hasEquivalentLegacyEffect(family), getBasePollutionResistance: () => (options?.getBasePollutionResistance?.() ?? 0)
+        + (this.siphonEffectRemainingMs > 0 ? CONTAMINANT_DATA.siphon.toolResistanceBonus : 0),
+    });
     this.setEnemyControl = options?.setEnemyControl;
     this.clearEnemyControl = options?.clearEnemyControl;
     this.hasEnemyControl = options?.hasEnemyControl;
@@ -863,6 +884,7 @@ export class ToolSystem {
       if (!contaminant) continue;
       if (contaminant.stage !== 'tool') continue;
 
+      if (contaminant.type === 'catalog') continue;
       const def = CONTAMINANT_DATA[contaminant.type];
       if (!def || def.toolType !== 'passive') continue;
 
@@ -898,9 +920,10 @@ export class ToolSystem {
 
   /** Aggregate actual applied sources; model feedback must not invent a new control. */
   getEnemyRestraintPose(id: string): import('@/entities/restraint-reaction').RestraintPose {
+    const catalog = this.catalogAbilities?.getRestraint(id);
     return {
-      pressure: this.compressAnchors.some(anchor => !anchor.dissolving && anchor.affectedEnemyIds.has(id)),
-      snared: this.stitchStops.some(stop => stop.enemyId === id && stop.remainingMs > 0),
+      pressure: !!catalog?.pressure || this.compressAnchors.some(anchor => !anchor.dissolving && anchor.affectedEnemyIds.has(id)),
+      snared: !!catalog?.snared || this.stitchStops.some(stop => stop.enemyId === id && stop.remainingMs > 0),
     };
   }
 
@@ -977,7 +1000,7 @@ export class ToolSystem {
     return source ? captureBodyEcho(this.scene, source, mode) : null;
   }
 
-  useSlot(slotIndex: number): boolean {
+  useSlot(slotIndex: number, actionId?: string): boolean {
     this.lastUseFailure = null;
     const contaminant = this.loadout[slotIndex];
     if (!contaminant) return false;
@@ -985,6 +1008,15 @@ export class ToolSystem {
     if (contaminant.usesRemaining <= 0) return false;
 
     // Skip passive tools on manual activation
+    if (contaminant.type === 'catalog') {
+      const ability = getCatalogRuntimeAbility(contaminant);
+      if (!ability || ability.slot !== 'active' || !this.catalogAbilities) return false;
+      const used = this.catalogAbilities.use(ability, contaminant.id, id => this.commitToolUse(slotIndex, id), actionId);
+      if (used) this.abilityOptions.setPlayerActionSilenced?.(this.isActionSilenced());
+      if (used) this.setHearingSuppressed?.(this.isActionSilenced() || this.muffleEpisodeActive || this.muffleEquipped);
+      if (!used && !this.lastUseFailure) this.lastUseFailure = this.catalogAbilities.getLastFailure() ?? '此处无法施放，未消耗次数。';
+      return used;
+    }
     const def = CONTAMINANT_DATA[contaminant.type];
     if (def && def.toolType === 'passive') return false;
 
@@ -1003,10 +1035,10 @@ export class ToolSystem {
     return used;
   }
 
-  private commitToolUse(slotIndex: number): boolean {
+  private commitToolUse(slotIndex: number, actionId?: string): boolean {
     const contaminant = this.loadout[slotIndex];
     if (!contaminant || contaminant.stage !== 'tool' || contaminant.usesRemaining <= 0) return false;
-    const result = contaminantSystem.tryConsumeTool(contaminant.id);
+    const result = contaminantSystem.tryConsumeTool(contaminant.id, actionId);
     if (!result.ok) { this.lastUseFailure = result.error === 'storage-failed' ? '未能保存，本次未施放，未消耗次数。' : '物品状态已改变，本次未施放。'; return false; }
     if (result.value.broken) this.loadout[slotIndex] = null;
     return true;
@@ -1020,6 +1052,8 @@ export class ToolSystem {
   /** Per-frame update of active tool effects. */
   update(deltaMs: number): void {
     this.elapsedMs += deltaMs;
+    this.catalogAbilities?.update(deltaMs);
+    this.abilityOptions.setPlayerActionSilenced?.(this.isActionSilenced());
     this.updateEchoPulses(deltaMs);
     this.updateFreezes(deltaMs);
     this.updateDelayDevices(deltaMs);
@@ -1046,6 +1080,7 @@ export class ToolSystem {
     // the above have had a chance to set/clear this frame's sources.
     const enemies = this.getEnemies();
     this.indicators.update(deltaMs, (id) => enemies.find((e) => e.getId() === id)?.getPosition());
+    this.updatePreview();
   }
 
   /** Re-seat body traces after the scene has resolved physics and painter order. */
@@ -1100,7 +1135,7 @@ export class ToolSystem {
     const maxByType = new Map<ContaminantType, number>();
     const consider = (type: ContaminantType, remainingMs: number, ended: boolean): void => {
       if (ended || remainingMs <= 0) return;
-      if ((CONTAMINANT_DATA[type]?.toolDurationMs ?? 0) === 0) return;
+      if (type === 'catalog' || (CONTAMINANT_DATA[type]?.toolDurationMs ?? 0) === 0) return;
       const prev = maxByType.get(type) ?? 0;
       if (remainingMs > prev) maxByType.set(type, remainingMs);
     };
@@ -1145,6 +1180,7 @@ export class ToolSystem {
 
   /** One continuous audible encounter spends once, including its complete final use. */
   notifyProximityAvoid(): boolean {
+    if (this.isActionSilenced()) return true;
     if (this.muffleEpisodeActive && this.elapsedMs - this.muffleLastSignalMs < CONTAMINANT_DATA.muffle.toolDurationMs) {
       this.muffleLastSignalMs = this.elapsedMs;
       return true;
@@ -1205,6 +1241,8 @@ export class ToolSystem {
    * are silently skipped by `AISystem`'s setters - safe to call unconditionally.
    */
   private releaseAllOverrides(): void {
+    this.catalogAbilities?.destroy();
+    this.abilityOptions.setPlayerActionSilenced?.(false);
     for (const [id, sources] of this.controlSources) {
       for (const source of [...sources.keys()]) this.releaseControl(id, source);
     }
@@ -1272,7 +1310,23 @@ export class ToolSystem {
 
   // ------------------------------------------------------------------ internal
 
+  private hasEquivalentLegacyEffect(family: CatalogAbilityFamily): boolean {
+    switch (family) {
+      case 'solidify': return this.freezeEffects.some(effect => !effect.dissolving);
+      case 'sound_lure': return this.kindleZones.length > 0;
+      case 'tripwire': return this.stitchStops.length > 0 || this.stitchBarriers.some(effect => !effect.dissolving);
+      case 'slow_zone': return this.compressAnchors.some(effect => !effect.dissolving);
+      case 'image_lure': return this.mirrorDecoys.some(effect => !effect.shattering);
+      case 'survey': return this.abyssRevealRemainingMs > 0;
+      case 'suppress': return this.combustFields.some(effect => !effect.dissolving);
+      default: return false;
+    }
+  }
+
   private applyEffect(type: ContaminantType, commit: () => boolean): boolean {
+    const equivalent: Partial<Record<ContaminantType,CatalogAbilityFamily>> = {solidify:'solidify',kindle:'sound_lure',stitch:'tripwire',compress:'slow_zone',mirror:'image_lure',abyss:'survey',combust:'suppress'};
+    const family = equivalent[type];
+    if (family && this.catalogAbilities?.isFamilyActive(family)) { this.lastUseFailure = '同类效果尚未结束，未消耗次数。'; return false; }
     switch (type) {
       case 'solidify': return this.applySolidify(commit);
       case 'delay': return this.applyDelay(commit);
@@ -1301,12 +1355,12 @@ export class ToolSystem {
   private applySolidify(commit: () => boolean): boolean {
     const nearest = selectNearestVisibleTarget(this.getPlayerPos(), this.getEnemies(), {
       getPosition: enemy => enemy.getPosition(),
-      isAlive: enemy => !this.freezeEffects.some(effect => effect.enemyId === enemy.getId() && !effect.dissolving),
+      isAlive: enemy => (this.abilityOptions.canApplyHardControl?.(enemy.getId()) ?? true) && !this.freezeEffects.some(effect => effect.enemyId === enemy.getId() && !effect.dissolving),
       isVisible: enemy => this.canTarget(enemy),
       hasLineOfSight: (from, to) => this.hasTargetLineOfSight?.(from, to) ?? true,
     });
 
-    if (!nearest) return false;
+    if (!nearest) { this.catalogAbilities?.showNearestControlRejection(); return false; }
     if (!commit()) return false;
 
     const id = nearest.getId();
@@ -1824,6 +1878,10 @@ export class ToolSystem {
             && crossesToolLine(previous, position, barrier)) {
             barrier.affectedEnemyIds.add(id);
             barrier.tensionMs = 320;
+            if (!(this.abilityOptions.canApplyHardControl?.(id) ?? true)) {
+              this.catalogAbilities?.showControlRejection(id);
+              if (previous) Object.assign(previous, position); continue;
+            }
             const stop = { enemyId: id, remainingMs: CONTAMINANT_DATA.stitch.toolStopMs, source: '' };
             stop.source = this.sourceFor(stop);
             this.stitchStops.push(stop);
@@ -2304,7 +2362,7 @@ export class ToolSystem {
     if (this.muffleEpisodeActive && this.elapsedMs - this.muffleLastSignalMs >= CONTAMINANT_DATA.muffle.toolDurationMs) {
       this.muffleEpisodeActive = false;
     }
-    this.setHearingSuppressed?.(this.muffleEpisodeActive || (this.muffleEquipped && this.muffleTriggersRemaining > 0));
+    this.setHearingSuppressed?.(this.isActionSilenced() || this.muffleEpisodeActive || (this.muffleEquipped && this.muffleTriggersRemaining > 0));
   }
 
   // --- Shared stun tracking (echo's stall + resonate's post-knockback stun + kindle's
@@ -2356,7 +2414,56 @@ export class ToolSystem {
 
   /** Timed source survives its final charge; effective cap is applied by the scene's attribute projection. */
   getPollutionResistanceBonus(): number {
-    return this.siphonEffectRemainingMs > 0 ? CONTAMINANT_DATA.siphon.toolResistanceBonus : 0;
+    return (this.siphonEffectRemainingMs > 0 ? CONTAMINANT_DATA.siphon.toolResistanceBonus : 0) + (this.catalogAbilities?.getResistanceBonus() ?? 0);
+  }
+
+  getCatalogTargetPreview(slot: number): CatalogTargetPreview | null {
+    const item = this.loadout[slot];
+    if (!item || item.usesRemaining <= 0) return null;
+    const ability = getCatalogRuntimeAbility(item);
+    return ability ? this.catalogAbilities?.getTargetPreview(ability) ?? null : null;
+  }
+  /** Quiet world-anchored marks; they share the exact selector used by useSlot. */
+  updatePreview(): void {
+    if (!this.loadout.some(item => item?.type === 'catalog')) {
+      this.previewGraphic?.clear(); for (const label of this.previewLabels) label?.setVisible(false); return;
+    }
+    const g = this.previewGraphic ??= this.scene.add.graphics().setDepth(26);
+    g.clear(); for (const label of this.previewLabels) label?.setVisible(false);
+    const dash = (a: Readonly<Vector2>, b: Readonly<Vector2>, alpha: number): void => {
+      const length = Math.hypot(b.x-a.x,b.y-a.y), segments = Math.max(1, Math.ceil(length/8));
+      for (let n=0;n<=segments;n++) {
+        const p=n/segments, point={ x:a.x+(b.x-a.x)*p, y:a.y+(b.y-a.y)*p };
+        if (this.isTargetVisible && !this.isTargetVisible(point)) continue;
+        g.fillStyle(GHOST_COLOR,alpha).fillRect(Math.round(point.x),Math.round(point.y),2,1);
+      }
+    };
+    for (let slot=0;slot<GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS.length;slot++) {
+      const preview = this.getCatalogTargetPreview(slot); if (!preview) continue;
+      if (preview.kind === 'area') continue; // Persistent full-range circles would overtake the terrain.
+      if (preview.kind === 'dash') dash(preview.origin,preview.position,.34);
+      else if (preview.kind === 'line' && preview.line) dash(preview.line.pointA,preview.line.pointB,.42);
+      else drawBracketMarker(g,preview.position,GHOST_COLOR,.46);
+      if (this.scene.add.text && (this.isTargetVisible?.(preview.position) ?? true)) {
+        const label=this.previewLabels[slot] ??= this.scene.add.text(0,0,GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[slot]!, {
+          fontFamily:'sans-serif',fontSize:'10px',color:'#b5c1b5',stroke:'#111817',strokeThickness:2,
+        }).setDepth(26).setOrigin(.5,1);
+        label.setPosition(Math.round(preview.position.x)+(slot-1)*8,Math.round(preview.position.y)-13).setAlpha(.7).setVisible(true);
+      }
+    }
+  }
+  getVisionRadiusMultiplier(): number { return this.getRunBenefit('sight') ?? 1; }
+  getCarryCapacityBonus(): number { return this.getRunBenefit('capacity') ?? 0; }
+  isActionSilenced(): boolean { return this.catalogAbilities?.isActionSilenced() ?? false; }
+  isGroundDashing(): boolean { return this.catalogAbilities?.isGroundDashing() ?? false; }
+  getActiveCatalogEffects(): ReturnType<CatalogAbilityRuntime['getActiveEffects']> { return this.catalogAbilities?.getActiveEffects() ?? []; }
+  private getRunBenefit(family: 'sight' | 'capacity'): number | null {
+    for (const item of this.loadout) {
+      if (!item || getContaminantSlot(item) !== 'passive') continue;
+      const binding = getBoundCatalogPassive(item, this.abilityOptions.runId ?? '');
+      if (binding?.consumed && binding.familyId === family) return binding.benefit;
+    }
+    return null;
   }
 
   /** Check if a point is within `threshold` px of a line segment. */
@@ -2381,6 +2488,8 @@ export class ToolSystem {
   }
 
   private cleanupVisuals(): void {
+    this.previewGraphic?.destroy(); this.previewGraphic = null;
+    for (const label of this.previewLabels) label?.destroy(); this.previewLabels = [];
     for (const pulse of this.echoPulses) pulse.visual.destroy();
     this.echoPulses = [];
     this.passiveVisual?.destroy(); this.passiveVisual = null;

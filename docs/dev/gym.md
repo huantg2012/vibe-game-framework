@@ -5,6 +5,10 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
+## I28 污染物新目录验证入口
+
+48件目录通过正式 `/` → 主菜单 → 净化点 → 裂隙获得、供奉揭晓、备行装配。完整机制测试：`npm run check:contaminant-catalog`；整帧/旧档：`npm run check:rift-recovery`。`tools/qa/i28-browser.mjs`和`check-i28-reveal-persistence.mjs`使用独立浏览器存档，后者是明确标注的拒写准备态，不是自然获取统计。图标导出：`node --import tsx tools/inventory/export-contaminant-catalog-icons.ts`；固定背景诊断：`node --import tsx tools/inventory/check-catalog-context.ts --strict`。原战斗试验场继续提供旧13族对照，没有暗中将旧type映射成新物件。
+
 ## 战斗试验场（迭代19）
 
 `http://127.0.0.1:3000/combat-lab.html`。用于直接体验攻击、接触和受伤手感，与敌人检视室互相导航。选择十款撬棍、两主动/一被动工具、全部正式敌人家族/主形/污染档/合法行为；普通敌人可1/2/3体，环境单体。可切四种场地材质、1.5×实战/3×近观、起始混乱与额外负重。

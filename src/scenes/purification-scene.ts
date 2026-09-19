@@ -1,3 +1,5 @@
+import { projectItemForPlayer } from '@/systems/contaminant-catalog';
+import { itemIconUrl } from '@/ui/contaminant-presentation';
 import { createProceduralDeparture, installProceduralRiftRecovery } from '@/managers/rift-recovery';
 import type { RiftCheckpoint } from '@/types/rift-checkpoint';
 import { mix32 } from '@/generation/seed-fork';
@@ -81,8 +83,7 @@ import type { ChargeChangeEntry } from '@/ui/dom/impact-result-panel';
 import type { PhaseChangeInfo } from '@/systems/tide-system';
 import { TileType } from '@/types/game-types';
 import type { ContaminantType } from '@/types/game-types';
-import { getToolName } from '@/ui/contaminant-names';
-import { getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
+import { createCrtPanel, getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
 import { GameEvent } from '@/types/events';
 import type { TileMapData, OccluderGrid } from '@/types/map-types';
 
@@ -428,7 +429,7 @@ export class PurificationScene extends Phaser.Scene {
       predictedForecast = impactSystem.getForecastDisplay();
       impactResult = impactSystem.run(contaminantSystem.getDefenseSlotted(), offeringIds, impactRandom ? () => impactRandom.next() : undefined, stabilityTracker.getProgress());
       if (!impactResult.skipped) {
-        const finished = contaminantSystem.finishOfferingImpact(isHighTide, impactResult.defenseResult?.bonusCharges ?? {}, offeringIds);
+        const finished = contaminantSystem.finishOfferingImpact(isHighTide, impactResult.defenseResult?.bonusCharges ?? {}, offeringIds, `impact:${ledger?.id ?? gameState.getCycle()}`);
         if (!finished.ok) throw new Error(`Offering settlement failed: ${finished.error}`);
         transformResults = finished.value;
         chargeChanges = this.computeChargeChanges(chargesBefore, transformResults);
@@ -456,7 +457,6 @@ export class PurificationScene extends Phaser.Scene {
     if (isReturnFromRift && ledger?.status === 'settled') inventoryStore.markBaseSettled();
     inventoryStore.ensureStarter(recoveryReturn ? `WPN_replacement:${ledger.id}` : undefined);
     });
-    if (!saved) this.requestSaveRetry();
 
     this.transitioning = false;
 
@@ -677,36 +677,47 @@ export class PurificationScene extends Phaser.Scene {
     // Slice 5.5 D5: the tide-phase-change and stability-milestone notices that used to
     // chain as separate "knowledge  " overlays after this panel are now rendered as a
     // trailing section INSIDE it — one blocking notification per return, not three.
-    if (!impactResult.skipped) {
-      this.playImpactAudio(impactResult);
-      this.player.setInputEnabled(false);
-      this.cameras.main.shake(300, 0.005);
-      impactResultPanel.show(impactResult.damages, impactResult.intensity, () => {
-        this.player.setInputEnabled(true);
-        purificationHud.refresh();
+    const publishArrival = () => {
+      if (this.shuttingDown) return;
+      if (!impactResult.skipped) {
+        this.playImpactAudio(impactResult);
+        this.player.setInputEnabled(false);
+        this.cameras.main.shake(300, 0.005);
+        impactResultPanel.show(impactResult.damages, impactResult.intensity, () => {
+          this.player.setInputEnabled(!this.menuEntry && !saveManager.hasPendingSave());
+          purificationHud.refresh();
+          this.startIsolationBed();
+          // B3: Show new tool toast after the merged panel is dismissed (Channel B —
+          // non-blocking, so it doesn't re-introduce a second confirmation step).
+          this.showNewToolToast(transformResults);
+        }, {
+          chargeChanges: chargeChanges.length > 0 ? chargeChanges : undefined,
+          defenseResult: impactResult.defenseResult,
+          baseDamagePerModule: impactResult.baseDamagePerModule,
+          forecastPrediction: predictedForecast,
+          actualPrimaryModuleId: impactResult.primaryModuleId,
+          actualSeverity: impactResult.trueSeverity,
+          phaseChange,
+          stabilityMilestoneMessage,
+        });
+      } else {
         this.startIsolationBed();
-        // B3: Show new tool toast after the merged panel is dismissed (Channel B —
-        // non-blocking, so it doesn't re-introduce a second confirmation step).
-        this.showNewToolToast(transformResults);
-      }, {
-        chargeChanges: chargeChanges.length > 0 ? chargeChanges : undefined,
-        defenseResult: impactResult.defenseResult,
-        baseDamagePerModule: impactResult.baseDamagePerModule,
-        forecastPrediction: predictedForecast,
-        actualPrimaryModuleId: impactResult.primaryModuleId,
-        actualSeverity: impactResult.trueSeverity,
-        phaseChange,
-        stabilityMilestoneMessage,
-      });
-    } else {
-      this.startIsolationBed();
+        if (!this.menuEntry) this.player.setInputEnabled(true);
+      }
+    };
+    // A reveal is knowledge the player cannot unlearn. Publish it only after the
+    // same settled candidate is durable; retry saving, never run the impact twice.
+    if (saved) publishArrival();
+    else {
+      this.player.setInputEnabled(false);
+      this.requestSaveRetry(publishArrival);
     }
     this.menuEntry?.arrive(this,
       () => purificationHud.setEntryVisible(true),
       () => {
         this.consumeEntryKeys();
         this.menuEntry = null;
-        this.player.setInputEnabled(true);
+        this.player.setInputEnabled(!saveManager.hasPendingSave() && !impactResultPanel.isOpen());
       },
     );
   }
@@ -1189,20 +1200,24 @@ export class PurificationScene extends Phaser.Scene {
 
   private requestSaveRetry(onSaved?: () => void): void {
     if (this.saveRetryTimer !== null) return;
+    const notice = createCrtPanel('save-retry-notice');
+    notice.style.cssText = 'left:360px;top:584px;width:240px;height:auto;padding:8px;z-index:3000;pointer-events:auto';
     const retry = document.createElement('button');
+    retry.type = 'button';
     retry.className = 'action-btn';
     retry.textContent = '尚未保存 · 点击重试';
-    retry.style.cssText = 'position:absolute;left:360px;top:590px;z-index:3000';
-    getDomUiRoot().append(retry);
-    retry.onclick = () => { if (saveManager.trySave()) { retry.remove(); this.saveRetryTimer = null; onSaved?.(); } };
+    notice.append(retry);
+    getDomUiRoot().append(notice);
+    retry.onclick = () => { if (saveManager.trySave()) { notice.remove(); this.saveRetryTimer = null; onSaved?.(); } };
     this.saveRetryTimer = 1;
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => { retry.remove(); this.saveRetryTimer = null; });
+    retry.focus();
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => { notice.remove(); this.saveRetryTimer = null; });
   }
 
   /** D4: Scene transition with narrative overlay + T10 radial glow. */
   private transitionToRift(): void {
     if (this.transitioning || saveManager.hasPendingSave()) return;
-    if (contaminantSystem.getSortieLoadout().some(item => item && !ACTIVE_CONTAMINANT_TYPES.includes(item.type))) {
+    if (contaminantSystem.getSortieLoadout().some(item => item && item.type !== 'catalog' && !ACTIVE_CONTAMINANT_TYPES.includes(item.type))) {
       showToastInline('行装中有已封存的旧式工具。请先将它卸下，再进入裂隙；物件仍会保留在储藏中。', {});
       return;
     }
@@ -1213,7 +1228,9 @@ export class PurificationScene extends Phaser.Scene {
     catch (reason) { showToastInline(reason instanceof Error ? reason.message : String(reason), {}); return; }
     let error: string | null = null;
     const saved = saveManager.commitWorldTransaction(() => {
-      const begun = inventoryStore.beginRun(crypto.randomUUID());
+      const begun = inventoryStore.beginRun(crypto.randomUUID(), this.productionDeparture ? {
+        catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2,
+      } : undefined);
       if (!begun.ok) { error = inventoryError(begun.error); return; }
       gameState.incrementCycle();
       const identity = this.devDeparture?.recoveryIdentity ?? this.productionDeparture;
@@ -1343,8 +1360,8 @@ export class PurificationScene extends Phaser.Scene {
   private showNewToolToast(transformResults: OfferingTransformResult[]): void {
     if (transformResults.length === 0) return;
 
-    const names = transformResults.map(r => r.kind === 'weapon' ? WEAPON_DATA[r.definitionId]?.name ?? '武器' : getToolName(r.definitionId as ContaminantType));
-    const text = `供奉完成：${names.join('、')}，可在备行时装配`;
+    const names = transformResults.map(r => { const item = inventoryStore.getItem(r.itemId); return item?.kind === 'contaminant' ? projectItemForPlayer(item.contaminant).name : WEAPON_DATA[r.definitionId]?.name ?? '物件'; });
+    const text = `供奉完成：${names.join('、')}。已揭晓并收入储藏。`;
 
     showToastInline(text, {
       color: '#2ae6c8',
@@ -1446,10 +1463,12 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   /** Snapshot current defense slot charge levels before impact application (D2). */
-  private snapshotDefenseCharges(): { slotIndex: number; id: string; type: ContaminantType | null; weaponDefinitionId?: string; charges: number; threshold: number }[] {
+  private snapshotDefenseCharges(): { slotIndex: number; id: string; type: ContaminantType | null; weaponDefinitionId?: string; publicName: string; publicIcon?: string; charges: number; threshold: number }[] {
     return inventoryStore.getOfferingItems().flatMap((item, slotIndex) => item ? [{
       slotIndex, id: item.id, type: item.kind === 'contaminant' ? item.contaminant.type : null,
       weaponDefinitionId: item.kind === 'weapon' ? item.weapon.definitionId : undefined,
+      publicName: item.kind === 'contaminant' ? projectItemForPlayer(item.contaminant).name : WEAPON_DATA[item.weapon.definitionId]!.name,
+      publicIcon: item.kind === 'contaminant' ? itemIconUrl(item.contaminant) : undefined,
       charges: getEquipmentLifecycle(item).impactCharges,
       threshold: item.kind === 'weapon' ? WEAPON_DATA[item.weapon.definitionId]!.offeringCharges : GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD,
     }] : []);
@@ -1463,7 +1482,13 @@ export class PurificationScene extends Phaser.Scene {
     return before.map(entry => {
       const current = inventoryStore.getItem(entry.id);
       const transformed = transformedIds.has(entry.id);
-      return { slotIndex: entry.slotIndex, type: entry.type, weaponDefinitionId: entry.weaponDefinitionId,
+      const revealed = transformed && current?.kind === 'contaminant' ? projectItemForPlayer(current.contaminant) : null;
+      return { itemId: entry.id, slotIndex: entry.slotIndex, type: entry.type, weaponDefinitionId: entry.weaponDefinitionId,
+        publicName: entry.publicName, publicIcon: entry.publicIcon,
+        revealedName: revealed?.name, revealedSummary: revealed?.summary,
+        revealedIcon: revealed && current?.kind === 'contaminant' ? itemIconUrl(current.contaminant) : undefined,
+        revealedInert: revealed?.inert,
+        revealedSlot: revealed?.slot, revealedUses: revealed?.usesRemaining, revealedWeight: revealed?.weight,
         before: entry.charges, after: transformed ? entry.threshold : current ? getEquipmentLifecycle(current).impactCharges : entry.charges,
         threshold: entry.threshold, transformed };
     });

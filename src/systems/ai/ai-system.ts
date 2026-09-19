@@ -47,6 +47,7 @@ import { hasLineOfSight } from '@/utils/grid-raycast';
 import { clamp, lerp, shortestArc } from '@/utils/math';
 import { separateContacts, type ContactBody } from '@/systems/ai/contact-separation';
 import { bodyDisplacementFraction, createMovementOccluders } from '@/systems/ai/physical-grid';
+import { collectToolRevealSnapshot } from '@/systems/tool-targeting';
 import type { EnemyControlEffect, EnemyControlSnapshot } from '@/systems/enemy-control-state';
 
 /** How the player's field of view rates a world position: 0 means "not drawn" (rule R4). */
@@ -195,7 +196,7 @@ export interface AISystemAPI {
   /** mirror's decoy position, or null while no decoy is active. */
   setDecoyPosition(pos: Readonly<Vector2> | null): void;
   setVisualDecoy(sourceId: string, pos: Readonly<Vector2> | null): void;
-  reportSoundLure(pos: Readonly<Vector2>, radius: number): void;
+  reportSoundLure(pos: Readonly<Vector2>, radius: number, pathBounded?: boolean): void;
   /** Tool displacement, swept against physical support so walls and chasms stop it. */
   knockbackEnemy(enemyId: string, dx: number, dy: number): void;
 
@@ -460,6 +461,7 @@ export class AISystem implements AISystemAPI {
     this.raysThisFrame = 0;
 
     for (const enemy of this.enemies) {
+      enemy.controls.tick(dtMs);
       this.context.decoyPos = this.visibleDecoyFor(enemy);
       if (enemy.ai.targetingDecoy && !this.context.decoyPos && enemy.ai.losGraceMs === 0) {
         enemy.ai.losGraceMs = 1;
@@ -569,10 +571,10 @@ export class AISystem implements AISystemAPI {
       previousPlayerPos: copyRuntimeVector(this.previousPlayerPos), playerVel: copyRuntimeVector(this.playerVel),
       playerIsMoving: this.playerIsMoving, hasPreviousPlayerPos: this.hasPreviousPlayerPos,
       physicsElapsedMs: this.physicsElapsedMs, hearingRangeMult: this.context.hearingRangeMult,
-      hearingSuppressed: this.context.hearingSuppressed,
+      hearingSuppressed: this.context.hearingSuppressed, playerActionSilenced: this.context.playerActionSilenced ?? false,
       visualDecoys: [...this.visualDecoys].map(([id, point]) => [id, { ...point }]),
       enemies: this.enemies.map(enemy => ({ id: enemy.id, entity: enemy.exportRuntimeState(),
-        state: exportEnemyAIState(enemy), attackInterruptRevision: enemy.controls.attackInterruptRevision })) };
+        state: exportEnemyAIState(enemy), attackInterruptRevision: enemy.controls.attackInterruptRevision, controlProtectionRemainingMs: enemy.controls.controlProtectionRemainingMs })) };
     if (!this.validateRuntimeState(value)) throw new Error('Invalid live AI recovery state');
     return value;
   }
@@ -627,6 +629,7 @@ export class AISystem implements AISystemAPI {
     this.context.playerIsMoving = state.playerIsMoving;
     this.context.hearingRangeMult = state.hearingRangeMult;
     this.context.hearingSuppressed = state.hearingSuppressed;
+    this.context.playerActionSilenced = state.playerActionSilenced ?? false;
     this.context.decoyPos = null;
     this.visualDecoys.clear();
     for (const [id, point] of state.visualDecoys ?? []) this.visualDecoys.set(id, { ...point });
@@ -641,6 +644,7 @@ export class AISystem implements AISystemAPI {
     for (const entry of state.enemies) {
       const enemy = this.findEnemy(entry.id)!;
       enemy.controls.restoreInterruptRevision(entry.attackInterruptRevision);
+      enemy.controls.restoreControlProtection(entry.controlProtectionRemainingMs ?? 0);
       this.syncControlMultipliers(enemy);
     }
     this.pendingRuntimeRestore = null;
@@ -661,6 +665,15 @@ export class AISystem implements AISystemAPI {
   setEnemySpeedMultiplier(enemyId: string, mult: number): void {
     if (mult === 1) this.clearEnemyControl(enemyId, 'legacy:movement');
     else this.setEnemyControl(enemyId, 'legacy:movement', { movementMultiplier: mult });
+  }
+
+  /** Set once from the departure's versioned combat rules, after create. */
+  setControlProtectionEnabled(enabled: boolean): void {
+    for (const enemy of this.enemies) enemy.controls.setControlProtectionEnabled(enabled);
+  }
+
+  canApplyHardControl(enemyId: string): boolean {
+    return this.findEnemy(enemyId)?.controls.canApplyHardControl() ?? false;
   }
 
   setEnemyControl(enemyId: string, sourceId: string, effect: EnemyControlEffect): void {
@@ -775,7 +788,7 @@ export class AISystem implements AISystemAPI {
   }
 
   /** A physical sound source: hearing range and wall attenuation apply, not player coordinates. */
-  reportSoundLure(pos: Readonly<Vector2>, radius: number): void {
+  reportSoundLure(pos: Readonly<Vector2>, radius: number, pathBounded = false): void {
     for (const enemy of this.enemies) {
       const ai = enemy.ai;
       // A lure never erases a confirmed chase, damage, or a higher-priority combat sound.
@@ -786,6 +799,7 @@ export class AISystem implements AISystemAPI {
       if (distance > range) continue;
       const audibleRange = range * (hasLineOfSight(this.occluders, ai.position, pos) ? 1 : enemy.config.hearing.wallFactor);
       if (distance > audibleRange) continue;
+      if (pathBounded && (!this.walk || !collectToolRevealSnapshot(pos, audibleRange, this.walk, [ai.position], []).enemyPositions.length)) continue;
       ai.pendingNoiseLevel = 'suspicious';
       ai.pendingNoiseIsLure = true;
       ai.pendingNoisePos.x = pos.x;
@@ -849,6 +863,8 @@ export class AISystem implements AISystemAPI {
     if (enemy) enemy.ai.detectionFillRateMult = mult;
   }
 
+  setPlayerActionSilenced(active: boolean): void { this.context.playerActionSilenced = active; }
+
   setHearingSuppressed(active: boolean): void {
     this.context.hearingSuppressed = active;
   }
@@ -865,6 +881,7 @@ export class AISystem implements AISystemAPI {
 
   /** Shared proximity-only muffle policy for sleeping bodies and wall hosts. */
   trySuppressHearingDiscovery(id: string): boolean {
+    if (this.context.playerActionSilenced) return true;
     if (!this.context.hearingSuppressed) return false;
     return this.hearingAvoidedListener?.(id) === true;
   }
@@ -1225,6 +1242,7 @@ export class AISystem implements AISystemAPI {
       dtMs: 0,
       decoyPos: null,
       hearingSuppressed: false,
+      playerActionSilenced: false,
       hearingRangeMult: 1.0,
       onHearingAvoided: (enemy) => this.hearingAvoidedListener?.(enemy.id) === true,
       requestState: (enemy, next) => transitionTo(enemy, next, this.context),

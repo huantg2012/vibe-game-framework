@@ -1,4 +1,4 @@
-import { getContaminantQuality, getContaminantQualityName, getContaminantQualityRank, supportsContaminantQuality } from '@/systems/contaminant-quality';
+import { getContaminantQualityName, getContaminantQualityRank, supportsContaminantQuality } from '@/systems/contaminant-quality';
 /**
  * 供奉：已装填槽和库存为主区、单项检视为从区；键鼠共享选择状态。
  * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
@@ -10,10 +10,10 @@ import { gameState } from '@/managers/game-state';
 import { inventoryStore } from '@/systems/inventory-store';
 import { getEquipmentLifecycle, type InventoryItem } from '@/types/inventory-types';
 import { WEAPON_DATA } from '@/generated/weapon-data';
-import { contaminantIconUrl } from '@/art/contaminant-icons';
+import { itemIconUrl } from '@/ui/contaminant-presentation';
+import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { GAME_CONSTANTS } from '@/config/constants';
-import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
-import { getDefenseName, getRarityStars } from '@/ui/contaminant-names';
+import { getRarityStars } from '@/ui/contaminant-names';
 import { buildDefenseInspectHtml, INSPECT_EMPTY_HTML } from './inspect-dock';
 import { renderPanelContent } from './panel-render-state';
 import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
@@ -47,10 +47,10 @@ function offeringMeta(item: InventoryItem) {
     const def = WEAPON_DATA[item.weapon.definitionId]!;
     return { name: def.name, rank: def.qualityRank, badge: def.qualityName, color: '#a3b3a0', threshold: def.offeringCharges, icon: `/assets/weapons/crowbars/${def.id}-icon.png`, summary: '承受冲击' };
   }
-  const c = item.contaminant, def = CONTAMINANT_DATA[c.type];
-  return { name: getDefenseName(c.type), rank: getContaminantQualityRank(c), badge: supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity), color: supportsContaminantQuality(c.type) ? '#a3b3a0' : RARITY_COLORS[c.rarity], threshold: GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD, icon: contaminantIconUrl(c.type, getContaminantQuality(c)), summary: def.summaryDefense };
+  const c = item.contaminant, view = projectItemForPlayer(c);
+  return { name: view.name, rank: getContaminantQualityRank(c), badge: supportsContaminantQuality(c.type) ? getContaminantQualityName(c) : getRarityStars(c.rarity), color: supportsContaminantQuality(c.type) ? '#a3b3a0' : RARITY_COLORS[c.rarity], threshold: GAME_CONSTANTS.TIDE.TRANSFORM_THRESHOLD, icon: itemIconUrl(c), summary: view.offeringSummary };
 }
-function offeringIcon(item: InventoryItem, size = 28): string { return `<img src="${escape(offeringMeta(item).icon)}" alt="" width="${size}" height="${size}" style="object-fit:contain;image-rendering:pixelated;flex:none;vertical-align:middle">`; }
+function offeringIcon(item: InventoryItem, size = 24): string { return `<img src="${escape(offeringMeta(item).icon)}" alt="" width="${size}" height="${size}" style="object-fit:contain;image-rendering:pixelated;flex:none;vertical-align:middle">`; }
 function changeSlot(id: string | null, slot: number): void {
   const result = inventoryStore.slotOffering(id, slot);
   actionError = result.ok ? '' : result.error === 'storage-failed' ? '未能保存，物件位置未改变。请重试。' : '物件或槽位已变化，请重新选择。';
