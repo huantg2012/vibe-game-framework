@@ -1,0 +1,401 @@
+[
+  {
+    "id": "COH-F019",
+    "title": "主动翻找与一次揭晓",
+    "domain": "items",
+    "summary": "按住 E 翻找，过程会发声且可被移动、攻击、受击打断；成功后固定物品身份和批次，容量不足则留地。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "Rift 靠近可翻堆 → 按住 E"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/loot-search-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/loot-search-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/field-loot-inventory.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/loot-search-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F007",
+      "COH-F023",
+      "COH-F024"
+    ],
+    "evidence": [
+      "COH-E-SRC-items",
+      "COH-E-HIST-CATALOG",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F020",
+    "title": "污染物目录与供奉鉴定",
+    "domain": "items",
+    "summary": "新污染物以未知外壳拾获，供奉期间只公开反应；完成后揭晓真实物件/能力并留发现记录，同壳其他实例继续未知；无能力物只在基地留存或丢弃。",
+    "delivery": "production",
+    "work": "paused",
+    "entryPoints": [
+      "翻堆拾获 → 带回 → 供奉台 → 达进度归来揭晓"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/contaminant-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contaminant-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/equipment-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminant-items.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-appearances.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-offerings.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/design-notes/contaminant-ability-design.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/content/contaminants.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F019",
+      "COH-F023",
+      "COH-F028"
+    ],
+    "evidence": [
+      "COH-E-SRC-items",
+      "COH-E-HIST-CATALOG",
+      "COH-E-HUMAN-CATALOG"
+    ],
+    "unknowns": [
+      "弱效/无能力全程真实按键样本、长期噪声占比与等待体验仍挂起；目录人 PASS 不代表这些项目已完成。"
+    ]
+  },
+  {
+    "id": "COH-F021",
+    "title": "主动工具与整趟被动能力",
+    "domain": "items",
+    "summary": "新目录共用能力执行器，包括控制、视距、抗污、短冲、消声、诱导、探查、压制和容量；主动有效才消费，整趟被动出发扣次且末次本趟有效。",
+    "delivery": "production",
+    "work": "paused",
+    "entryPoints": [
+      "备行装备 → Rift Q/F，成长后 G；被动随本趟生效"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/catalog-ability-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tool-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tool-runtime-extended.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tool-targeting.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminant-abilities.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/design-notes/contaminant-ability-design.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F007",
+      "COH-F008",
+      "COH-F010",
+      "COH-F015",
+      "COH-F016",
+      "COH-F020",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-items",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": [
+      "受控机制比较与一项凝滞自然链已记录，全部能力的持续选择价值尚未得到证明；长期平衡采样挂起。"
+    ]
+  },
+  {
+    "id": "COH-F022",
+    "title": "撬棍品质、倾向与耐久",
+    "domain": "items",
+    "summary": "武器目录通过品质和倾向表达伤害/生存差别，共享供奉和有限耐久生命周期；基地无就绪武器时沿既定基础替补避免死锁。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "翻堆武器 → 供奉 → 入口武器挂位；新档基础撬棍"
+    ],
+    "sources": [
+      {
+        "path": "data/weapons.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/weapon-qualities.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/weapon-loot.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/weapon-first-discovery.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/systems/weapon-loot.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/equipment-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-player-weapons.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/content/player-crowbars.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F023",
+      "COH-F028"
+    ],
+    "evidence": [
+      "COH-E-SRC-items",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "目录与基础替补规则已追踪；本轮未运行所有品质/倾向与耗尽组合。"
+    ]
+  },
+  {
+    "id": "COH-F023",
+    "title": "唯一库存与携带所有权",
+    "domain": "items",
+    "summary": "同一物件实例在基地、供奉、携带、地面间转移；装备引用实例，取放/交换、消耗与结算通过统一事务。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "基地存续报告物件页；入口装配；Rift 本趟拾获"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/field-loot-inventory.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/equipment-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/inventory-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/inventory-rules.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F044",
+      "COH-F045"
+    ],
+    "evidence": [
+      "COH-E-SRC-items",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F024",
+    "title": "来源片区、掉落与首件教学",
+    "domain": "items",
+    "summary": "出发固定掉落计划与来源片区，节点揭晓不因读档重抽；新档首件教学在实际揭出后消耗资格。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "新出击生成 dropPlan → 首次/后续翻堆"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/contaminant-drop-plan.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminant-loot-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-loot.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-source-affinities.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-sources.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-qualities.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/design-notes/contaminant-ability-design.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F011",
+      "COH-F013",
+      "COH-F020",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-items",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": [
+      "首件可取得和一次使用窗口已证，不代表无引导玩家已经理解供奉与技能。"
+    ]
+  },
+  {
+    "id": "COH-F025",
+    "title": "旧污染物与旧局版本兼容",
+    "domain": "items",
+    "summary": "旧物件保持已知身份，旧在途局保留原能力/掉落/战斗版本；目录升级不倒改已承诺结果。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "已有旧记录 → 标题继续；旧库存查看与合法配装"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/contaminant-migration.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contaminant-quality.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tool-runtime-extended.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminants.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-migrations.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/managers/save-manager.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F023",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-items",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": [
+      "兼容只覆盖当前注册版本；未来改参数仍须保留 resolver，不能复用旧版本号暗改。"
+    ]
+  }
+]

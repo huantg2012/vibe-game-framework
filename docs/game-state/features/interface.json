@@ -1,0 +1,322 @@
+[
+  {
+    "id": "COH-F032",
+    "title": "Rift 战况与装备 HUD",
+    "domain": "interface",
+    "summary": "随身界面显示生命、混乱、薪柴、装备余量/热键、效果和当前可执行提示；拾获入口打开场内物件管理。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "进入 Rift 自动显示；HUD 拾获入口"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/rift-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/loot-search-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/side-effect-labels.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F008",
+      "COH-F009",
+      "COH-F010",
+      "COH-F019",
+      "COH-F021",
+      "COH-F035"
+    ],
+    "evidence": [
+      "COH-E-SRC-interface",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F033",
+    "title": "净化点 HUD 与就近交互提示",
+    "domain": "interface",
+    "summary": "常驻显示薪柴与潮汐并提示最近合法交互；进入面板时收起提示，装置读数跟随真实交互位置。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点自由行走时自动显示；Tab/HUD 报告入口"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/purification-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/world-interaction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F026",
+      "COH-F030",
+      "COH-F034"
+    ],
+    "evidence": [
+      "COH-E-SRC-interface",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F034",
+    "title": "存续报告及已见物件",
+    "domain": "interface",
+    "summary": "基地 Tab 报告包含装置、物件、潮汐、蜕变四页；物件页统一查看库存与已见记录，供奉和装配各回到自己的入口。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点 Tab → 四页存续报告"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/status-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F020",
+      "COH-F023",
+      "COH-F027",
+      "COH-F029",
+      "COH-F030",
+      "COH-F031",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-interface",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F035",
+    "title": "本趟拾获、丢放与交换",
+    "domain": "interface",
+    "summary": "Rift Tab 查看携入重量及收获，管理附近实际可见物件的取放/交换；不能现场换装，打开界面时世界继续。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "Rift Tab 或 HUD 拾获入口；超重拾取进入整理"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F007",
+      "COH-F010",
+      "COH-F023",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-interface",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F036",
+    "title": "行动结果与归来侵蚀报告",
+    "domain": "interface",
+    "summary": "行动结束后呈现本趟结果；基地报告归来损伤、防御与供奉揭晓，首归零损伤也显示，保存失败留重试。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "死亡/撤离结果页；R 返回净化点后报告"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/rift-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/impact-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/run-controller.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F004",
+      "COH-F020",
+      "COH-F030",
+      "COH-F045",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-interface",
+      "COH-E-HIST-PRODUCTION",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F037",
+    "title": "暂停、记录菜单与失焦保护",
+    "domain": "interface",
+    "summary": "Esc 按当前场景显示记录/继续或明确放弃本趟；失焦自动暂停并要求玩家确认恢复，同时处理音频暂停。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "场景 Esc；浏览器失焦后点击/按键恢复"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/main.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F041",
+      "COH-F044",
+      "COH-F045",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-interface",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "暂停菜单不是设置页；未把“存在 Esc 菜单”解释成有音量、键位或显示设置。"
+    ]
+  },
+  {
+    "id": "COH-F038",
+    "title": "面板共同交互与信息呈现",
+    "domain": "interface",
+    "summary": "共享 overlay 根、尺寸、键鼠选择、检查详情和状态刷新服务于游戏内各面板，不构成独立玩法入口。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "各正式面板的键鼠操作、详情检查与关闭"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/panel-render-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inspect-dock.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/world-interaction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/module-identity-strip.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/ui-art-overhaul.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/architecture.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [],
+    "evidence": [
+      "COH-E-SRC-interface"
+    ],
+    "unknowns": [
+      "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。"
+    ]
+  }
+]

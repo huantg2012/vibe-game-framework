@@ -1,0 +1,50 @@
+[
+  {
+    "id": "COH-F043",
+    "title": "世界主题与游戏内叙事载体",
+    "domain": "narrative",
+    "summary": "世界以被改写的碎片、净化点和污染异物为语义基础，玩家通过场景、物件说明、遭遇低语和结果文本接触主题。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "标题、Rift 遭遇低语、物件详情、基地报告"
+    ],
+    "sources": [
+      {
+        "path": "docs/world.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/vision.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/dom/encounter-narration.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/i18n/locales/zh-CN.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contamination-observe-lines.csv",
+        "role": "data"
+      }
+    ],
+    "dependsOn": [
+      "COH-F018",
+      "COH-F020",
+      "COH-F034"
+    ],
+    "evidence": [
+      "COH-E-SRC-narrative"
+    ],
+    "unknowns": [
+      "世界设定不等于所有设定已进入游戏；未找到正式任务日志、NPC 对话树或剧情章节入口，不登记为已实现内容。"
+    ]
+  }
+]

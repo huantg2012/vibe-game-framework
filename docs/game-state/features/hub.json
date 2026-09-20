@@ -1,0 +1,298 @@
+[
+  {
+    "id": "COH-F026",
+    "title": "净化点步行与六处交互",
+    "domain": "progression",
+    "summary": "基地可步行，核心、储藏、净化器、供奉台、培养藏和裂隙入口依实际位置交互；统一边界供地表、碰撞与光域使用。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "归来或新游戏进入 PurificationScene → 就近 E"
+    ],
+    "sources": [
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/purification-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/purification-collision.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/boundary-shape.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-entrance-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/offering-stand-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/growth-console-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F006",
+      "COH-F007"
+    ],
+    "evidence": [
+      "COH-E-SRC-hub",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F027",
+    "title": "薪柴修复与装置出击收益",
+    "domain": "progression",
+    "summary": "薪柴可用于修复三模块，完整度反馈核心混乱、储藏收益和净化器起始条件；修复界面呈现预览再确认。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "靠近核心/储藏/净化器 E → 分配确认"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/allocation-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/module-identity-strip.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/game-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/impact-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F026",
+      "COH-F045",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-hub",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F028",
+    "title": "供奉槽、防御反应与成熟",
+    "domain": "progression",
+    "summary": "未成熟武器/污染物共用供奉槽；归来最后一轮先贡献防御再积累成熟；成熟回库清槽，鉴定结果待保存成功才发布。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点供奉台 E → 选择/取回供奉物"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/defense-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/offering-panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/offering-charge.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/defense-engine.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contaminant-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/impact-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F020",
+      "COH-F022",
+      "COH-F023",
+      "COH-F030",
+      "COH-F045",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-hub",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F029",
+    "title": "永久蜕变、扩槽与装置加厚",
+    "domain": "progression",
+    "summary": "薪柴投资生命、抗污、收益、工具/供奉槽及预告等成长；加厚增加装置上限，购买和保存为同一事务。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点培养藏 E → 蜕变界面选择并确认"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/growth-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/growth-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/growth-purchases.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/upgrades.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/content/progression.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F026",
+      "COH-F045",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-hub",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "成长兑现及拒写有历史专项，后期最优分配和长期经济不在本轮确认范围。"
+    ]
+  },
+  {
+    "id": "COH-F030",
+    "title": "潮汐、冲击与预告",
+    "domain": "progression",
+    "summary": "出击归来推进既有潮汐节奏，冲击扣模块状态并受供奉修正；预告为目标/强度信息，影响下一趟维持决策。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点 HUD / 报告潮汐页；每次有效归来"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/tide-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/impact-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/defense-engine.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F028",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-hub",
+      "COH-E-HIST-CYCLE",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F031",
+    "title": "净化稳定度与长期状态",
+    "domain": "progression",
+    "summary": "稳定度按真实撤离、成长、潮汐和模块归零事实变化，报告显示状态；达到上限只记录 reached，目前不触发终局内容。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点 Tab → 存续报告；归来与成长后更新"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/stability-tracker.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/status-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F004",
+      "COH-F029",
+      "COH-F030"
+    ],
+    "evidence": [
+      "COH-E-SRC-hub",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "已达状态不等于有可玩结局；终局内容另见 COH-F053。"
+    ]
+  }
+]

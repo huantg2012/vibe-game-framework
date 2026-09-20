@@ -1,0 +1,92 @@
+[
+  {
+    "id": "COH-F046",
+    "title": "语言资源与默认语言选择",
+    "domain": "accessibility",
+    "summary": "存在中文/英文资源和按浏览器或保存偏好选语言的模块，正式文本同时有未经过翻译键的中文字符串。",
+    "delivery": "unknown",
+    "work": "active",
+    "entryPoints": [
+      "启动时自动选择；未确认正式菜单有语言切换入口"
+    ],
+    "sources": [
+      {
+        "path": "src/i18n/index.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/i18n/locales/zh-CN.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/i18n/locales/en.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      }
+    ],
+    "dependsOn": [
+      "COH-F002"
+    ],
+    "evidence": [
+      "COH-E-SRC-accessibility"
+    ],
+    "unknowns": [
+      "本轮未完成全界面本地化覆盖核对；setLocale API 存在不等于玩家能从设置切换。"
+    ]
+  },
+  {
+    "id": "COH-F047",
+    "title": "设置与无障碍覆盖边界",
+    "domain": "accessibility",
+    "summary": "已定位固定逻辑尺寸、键盘入口、失焦暂停和标题 reduced-motion 响应；未确认统一设置页或全游戏无障碍选项。",
+    "delivery": "unknown",
+    "work": "active",
+    "entryPoints": [
+      "已确认标题读取系统减少动态偏好；其它设置入口待盘点"
+    ],
+    "sources": [
+      {
+        "path": "src/config/game-config.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-actor.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/player.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/main.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      }
+    ],
+    "dependsOn": [
+      "COH-F002",
+      "COH-F006",
+      "COH-F037"
+    ],
+    "evidence": [
+      "COH-E-SRC-accessibility"
+    ],
+    "unknowns": [
+      "音量/静音、重绑键位、手柄、字幕、色觉适配、字号与全游戏减少动态支持未系统盘点，不能从开发页功能推断正式游戏支持。"
+    ]
+  }
+]

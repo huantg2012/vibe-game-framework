@@ -1,0 +1,240 @@
+[
+  {
+    "id": "COH-F015",
+    "title": "地面敌人感知与行为",
+    "domain": "encounters",
+    "summary": "地面实体按污染句法组合感官、活动与攻击；AI 使用共同地形和控制状态，听觉与视觉存在不同应对条件。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "正式生成遭遇 → 进入感知范围、发声或交战"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/ai/ai-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/ai/behaviors.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/ai/state-machine.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/enemy-control-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/production-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/enemies.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-families.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-lexemes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-behavior-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-body-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-enemy-ai.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-contamination-lexicon.md",
+        "role": "spec"
+      },
+      {
+        "path": "data/contamination-dialects.csv",
+        "role": "data"
+      }
+    ],
+    "dependsOn": [
+      "COH-F006",
+      "COH-F007"
+    ],
+    "evidence": [
+      "COH-E-SRC-threat",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "具有听觉诱导行为不等于所有布置下都已验证稳定的诱离后搜取收益。"
+    ]
+  },
+  {
+    "id": "COH-F016",
+    "title": "占漆与占空环境危险",
+    "domain": "encounters",
+    "summary": "生产启用的占漆/占空 Host 在合法宿主区域执行活动与危险阶段，部分具有可攻击核心，并可按能力资格被压制或暂缓。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "正式生成的环境 Host 区域内靠近、穿越或攻击核心"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/contamination-host-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contamination-host-live.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/environment-hazard-control.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/volume-presence.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contamination-substrates.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-volume-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-stop-loss.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-contamination-lexicon.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F007",
+      "COH-F013"
+    ],
+    "evidence": [
+      "COH-E-SRC-threat",
+      "COH-E-HIST-CATALOG",
+      "COH-E-HIST-PAINT"
+    ],
+    "unknowns": [
+      "占墙门框/墙锈、占空散光/间距等当前 substrate 表仅 gym；不能因共用 Host 代码存在就称它们在正式新地图可遇。资格与部署以实际 CSV 和生成规则为准。"
+    ]
+  },
+  {
+    "id": "COH-F017",
+    "title": "漆面群落完整形体与局部受光",
+    "domain": "encounters",
+    "summary": "完整形体跨格展示并按真实地面支撑投放；旧局展示与原危险格/核心分离兼容，受光外围可独立显示。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "正式 Rift 中占漆群落；包括新出击及旧在途恢复"
+    ],
+    "sources": [
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/attach.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/legacy-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/visibility.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/contamination-forms.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/specs/system-contamination-lexicon.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F007",
+      "COH-F016",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-threat",
+      "COH-E-HIST-PAINT"
+    ],
+    "unknowns": [
+      "极窄旧图若在限定距离内找不到完整支撑，保留旧档与真实 VOID 遮罩并报告适配失败；没有证明任意旧图都能完整安放。"
+    ]
+  },
+  {
+    "id": "COH-F018",
+    "title": "遭遇低语与被发现提示",
+    "domain": "encounters",
+    "summary": "实际识别条件触发限频角色低语，发现压力以屏缘反馈表达，不以敌人名字和精确分类替代识别。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "Rift 观察新遭遇 / 被敌人发现时自动出现"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/dom/encounter-narration.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/detection-pulse.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contamination-display-tokens.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-observe-lines.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-utterances.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/ui-encounter-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/ui-detection-pulse.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F007",
+      "COH-F015",
+      "COH-F016"
+    ],
+    "evidence": [
+      "COH-E-SRC-threat"
+    ],
+    "unknowns": [
+      "ui-encounter-narration 的历史 frontmatter/注释仍含早期体验未验和旧发布边界，需按当前代码与适用决策辨别；本轮未复演所有文案触发。"
+    ]
+  }
+]

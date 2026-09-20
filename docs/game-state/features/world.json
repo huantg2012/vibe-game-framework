@@ -1,0 +1,268 @@
+[
+  {
+    "id": "COH-F011",
+    "title": "正式随机世界与空间配方池",
+    "domain": "world",
+    "summary": "新出击冻结世界、空间、内容方言和种子，经过共享生成与合法投放进入 Rift；旧在途局维持原地图。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点 → 备行 → 新出击（非 DEV 页面）"
+    ],
+    "sources": [
+      {
+        "path": "src/managers/rift-recovery.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-world-pool.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-spaces.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-map-generation.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/dev/rift-world-study.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F013",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-world",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": [
+      "当前池是有限已实现配方，不是设计提案中完整条件泛空间；rift-world-space 历史段仍有“未接生产”，以本条生产入口及正式 spec 为范围依据。"
+    ]
+  },
+  {
+    "id": "COH-F012",
+    "title": "共享多层地表与材料表现",
+    "domain": "world",
+    "summary": "世界/空间 CSV 供给共享地表场、材料形体和光响应；正式与研究页共用能力，不以世界 ID 单独补绘。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "正式新世界 Rift 地表；研究页可定向查看"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/world-space-surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/material-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/material-response.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/region-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/material-forms.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/procedural-surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/preview-paint.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/rift-world-space.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F011"
+    ],
+    "evidence": [
+      "COH-E-SRC-world",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": [
+      "旧地面路径保留给旧在途地图；不能把新地表的验证外推到未生成的新材质能力。"
+    ]
+  },
+  {
+    "id": "COH-F013",
+    "title": "遭遇、翻堆与撤离点投放",
+    "domain": "world",
+    "summary": "生成器在可达地面部署搜取点、撤离、地面敌人与环境 Host，保持既有听觉目标与路线约束；世界身份与内容方言分离。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "每次正式出击生成时自动部署"
+    ],
+    "sources": [
+      {
+        "path": "src/generation/rift-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/contamination-draw.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/dual-path.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/wall-host-placement.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-fragments.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-encounters.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-portfolios.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-map-generation.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/scenes/rift-map-data.ts",
+        "role": "code",
+        "note": "Slice 1 固定图未作为当前新出击布局；rift-layout 仍读取其旧撤离坐标作为禁止生成的参照，故不是完全死文件。"
+      }
+    ],
+    "dependsOn": [
+      "COH-F015",
+      "COH-F016",
+      "COH-F019"
+    ],
+    "evidence": [
+      "COH-E-SRC-world",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": [
+      "新世界配方不自动带来新敌人技能；候选当前沿用正式旧图书馆内容方言。"
+    ]
+  },
+  {
+    "id": "COH-F014",
+    "title": "探索记忆、小地图与已知退路",
+    "domain": "world",
+    "summary": "局部小地图记录实际观察到的地形；已见撤离方向可保留边缘刻记；探查为限时快照，不揭未知地形或跟踪实时敌人。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "Rift 右下小地图；已识别撤离点或使用探查工具"
+    ],
+    "sources": [
+      {
+        "path": "src/ui/minimap.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/trail-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      },
+      {
+        "path": "tools/recovery/check-minimap-world-scale.ts",
+        "role": "test"
+      }
+    ],
+    "dependsOn": [
+      "COH-F007",
+      "COH-F021",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-world",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": [
+      "全图只读导航的测试不代表普通玩家可凭局部记忆顺利找到出口。"
+    ]
+  },
+  {
+    "id": "COH-F052",
+    "title": "完整裂隙世界条件空间设计",
+    "domain": "world",
+    "summary": "设计提出跨多个维度的世界配方、条件组合与反常世界；当前只将其中已实现配方/空间/材料能力接入生产，完整设计仍未全部实现。",
+    "delivery": "design",
+    "work": "paused",
+    "entryPoints": [
+      "无完整系统独立玩家入口；已落地子集见 COH-F011/012"
+    ],
+    "sources": [
+      {
+        "path": "docs/design-notes/rift-world-space.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-map-generation.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/tasks/iteration-26.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F011",
+      "COH-F012",
+      "COH-F013"
+    ],
+    "evidence": [
+      "COH-E-SRC-world"
+    ],
+    "unknowns": [
+      "完整条件约束求解、改写算子、罕见世界供给及语义部署尚不能视为已实现。"
+    ]
+  }
+]

@@ -1,0 +1,284 @@
+[
+  {
+    "id": "COH-F001",
+    "title": "出击—搜取—归来—维持基地循环",
+    "domain": "loop",
+    "summary": "主菜单进入净化点，备行进入正式 2D Rift；带回资源后承受一次归来冲击并进行修复、供奉或成长，再次出击。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "/ → 主菜单 → 净化点入口 E → 备行出发"
+    ],
+    "sources": [
+      {
+        "path": "src/config/game-config.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/run-controller.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/vision.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/gdd-core.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F003",
+      "COH-F004",
+      "COH-F027",
+      "COH-F028",
+      "COH-F029",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-journey",
+      "COH-E-HIST-PRODUCTION",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "既有连续周转是限定样本；长期资源稳态、普通玩家学习与留存尚未验证，迭代 28 扩大采样挂起。"
+    ]
+  },
+  {
+    "id": "COH-F002",
+    "title": "标题菜单、新游戏与继续记录",
+    "domain": "loop",
+    "summary": "标题支持新记录、有效存档继续，以及覆盖/弃局的明确选择；菜单动作连到共享会话服务。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "/ → MainMenuScene；方向键、Enter/Space 或鼠标"
+    ],
+    "sources": [
+      {
+        "path": "src/scenes/main-menu-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-actor.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/ui-menu-entry-transition.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F044",
+      "COH-F045"
+    ],
+    "evidence": [
+      "COH-E-SRC-journey",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F003",
+    "title": "入口备行与出击配置",
+    "domain": "loop",
+    "summary": "在裂隙入口选择已完成供奉的武器及主/被动工具；出发先验证容量并保存出行意图，随后进入 Rift。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点裂隙入口 E → 备行；Shift+Enter 出发"
+    ],
+    "sources": [
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/loadout-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inspect-dock.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/equipment-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F020",
+      "COH-F022",
+      "COH-F023",
+      "COH-F044",
+      "COH-F038"
+    ],
+    "evidence": [
+      "COH-E-SRC-journey",
+      "COH-E-HIST-CATALOG",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": []
+  },
+  {
+    "id": "COH-F004",
+    "title": "撤离、死亡与归返结算",
+    "domain": "loop",
+    "summary": "撤离只结算实际携回物；死亡遗失随身装备和收获；结果页返回净化点后冲击只结算一次，首次归返免伤但仍显示报告。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "Rift 撤离点 E，或生命耗尽 → 结果页 R 返回"
+    ],
+    "sources": [
+      {
+        "path": "src/systems/extraction-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/run-controller.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/rift-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/impact-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F023",
+      "COH-F028",
+      "COH-F030",
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-journey",
+      "COH-E-HIST-PRODUCTION",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": [
+      "首归及结算有针对性证据；不等于每种死亡来源和全部物件组合都已自然实玩。"
+    ]
+  },
+  {
+    "id": "COH-F005",
+    "title": "资源加载与场景过渡",
+    "domain": "loop",
+    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "/ → BootScene → MainMenuScene；净化点出发"
+    ],
+    "sources": [
+      {
+        "path": "src/scenes/boot-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/placeholder-textures.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/menu-entry-transition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/config/game-config.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/ui-menu-entry-transition.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [
+      "COH-F002",
+      "COH-F003"
+    ],
+    "evidence": [
+      "COH-E-SRC-journey",
+      "COH-E-HIST-TRANSITION"
+    ],
+    "unknowns": [
+      "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。"
+    ]
+  },
+  {
+    "id": "COH-F053",
+    "title": "终局内容与后续持续供给",
+    "domain": "loop",
+    "summary": "稳定度达到上限目前只保留状态；终局内容、后续持续供给和扩产存在规划边界，未作为已发布玩法登记。",
+    "delivery": "design",
+    "work": "paused",
+    "entryPoints": [
+      "当前无已确认可玩终局入口"
+    ],
+    "sources": [
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/progress/content-expansion-plan.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/current-iteration.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F031"
+    ],
+    "evidence": [
+      "COH-E-SRC-journey"
+    ],
+    "unknowns": [
+      "稳定度文本“已完成”不等于终局可玩；后续 24/25 与旧四 A/四 B 规划不能自动复活被终止的 3D 路线。"
+    ]
+  }
+]

@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "id": "coh",
+    "title": "COH · 游戏现状地图",
+    "summary": "正式入口与实现证据驱动的首轮现状登记。基线 6332096；本轮只读源代码/文档，未运行游戏、未改功能状态或补签验收。源文档中的历史段落仍可能冲突，条目 unknowns 明示。"
+  },
+  "domains": [
+    {
+      "id": "loop",
+      "title": "核心循环与出入游戏",
+      "coverage": "mapped",
+      "note": "已对正式四场景注册和会话/出入链建立条目，明确区分终局设计；不代表长期循环或所有失败组合通过。"
+    },
+    {
+      "id": "controls",
+      "title": "操作、生存与视野",
+      "coverage": "mapped",
+      "note": "已对移动、光域、压力、近战和属性调用链建立条目；未在本轮运行交互。"
+    },
+    {
+      "id": "world",
+      "title": "地图、地表与探索",
+      "coverage": "mapped",
+      "note": "已追踪正式新出击、旧局兼容、共享绘制及探索入口；完整世界空间设计单列，历史设计段的生产边界冲突已标注。"
+    },
+    {
+      "id": "encounters",
+      "title": "敌人、危险与识别",
+      "coverage": "mapped",
+      "note": "已登记实体 AI、环境 Host、漆面及提示，并挂接生产词表；未逐一枚举每个合法随机组合。"
+    },
+    {
+      "id": "items",
+      "title": "物品、武器与能力",
+      "coverage": "mapped",
+      "note": "已登记新目录、旧兼容、武器、获取/鉴定/能力/所有权链；全量长期体验采样仍挂起。"
+    },
+    {
+      "id": "progression",
+      "title": "净化点、成长与经济",
+      "coverage": "mapped",
+      "note": "六交互点与修复、供奉、成长、潮汐和稳定度入口已静态追踪；不把历史标记完成等同当前全域验收。"
+    },
+    {
+      "id": "interface",
+      "title": "菜单、报告与 HUD",
+      "coverage": "mapped",
+      "note": "已将 src/ui/dom/*.ts 与标题/场景内入口归属，包含四页报告、备行、三装置分配、供奉、蜕变、场内拾获、两结果及暂停；未做全条件 UI 实测。"
+    },
+    {
+      "id": "presentation",
+      "title": "角色、美术与声音",
+      "coverage": "mapped",
+      "note": "已登记正式角色、敌人/物件、基地/标题表现与音频消费链；动态美术和听感证据限制保留。"
+    },
+    {
+      "id": "narrative",
+      "title": "世界观与叙事",
+      "coverage": "mapped",
+      "note": "已定位世界设定与实际玩家载体；任务日志、NPC 对话和章节内容未找到正式入口，不虚构实现。"
+    },
+    {
+      "id": "persistence",
+      "title": "存档、失败与恢复",
+      "coverage": "mapped",
+      "note": "已登记存档、整帧恢复、拒写、坏包与弃局；历史限定回归和当前静态调用链分开。"
+    },
+    {
+      "id": "accessibility",
+      "title": "语言、设置与可达性",
+      "coverage": "unreviewed",
+      "note": "只进行了入口级发现，确认语言模块/标题减少动态等片段；尚无统一设置、全量本地化和无障碍覆盖盘点，保持未审查。"
+    },
+    {
+      "id": "development",
+      "title": "开发入口与退役方向",
+      "coverage": "mapped",
+      "note": "已标注共享 DEV、地图研究、构筑实验与被终止的 3D 路线，开发数据不算正式玩家可用内容。"
+    }
+  ],
+  "featureFiles": [
+    "features/journey.json",
+    "features/control.json",
+    "features/world.json",
+    "features/threat.json",
+    "features/items.json",
+    "features/hub.json",
+    "features/interface.json",
+    "features/audiovisual.json",
+    "features/narrative.json",
+    "features/persistence.json",
+    "features/accessibility.json",
+    "features/development.json"
+  ],
+  "evidenceFile": "evidence.json",
+  "constraints": [
+    {
+      "id": "COH-C001",
+      "statement": "当前正式方向是俯视 2D 像素 Rift；三维/绘制式关卡重构已终止。",
+      "status": "active",
+      "source": {
+        "path": "docs/progress/current-iteration.md"
+      },
+      "featureIds": [
+        "COH-F001",
+        "COH-F011",
+        "COH-F039",
+        "COH-F050",
+        "COH-F053"
+      ]
+    },
+    {
+      "id": "COH-C002",
+      "statement": "地图表现改进必须沉淀为所有生成地图可复用的能力，不能依世界 ID 或单 seed 特供。",
+      "status": "active",
+      "source": {
+        "path": "docs/tasks/iteration-28.md"
+      },
+      "featureIds": [
+        "COH-F011",
+        "COH-F012",
+        "COH-F013",
+        "COH-F017",
+        "COH-F021"
+      ]
+    },
+    {
+      "id": "COH-C003",
+      "statement": "低饱和、矿物感和荒凉不是世界生成输出限制；世界色彩自由不改核心玩法语义。",
+      "status": "active",
+      "source": {
+        "path": "docs/design-notes/rift-world-space.md"
+      },
+      "featureIds": [
+        "COH-F011",
+        "COH-F012",
+        "COH-F052"
+      ]
+    },
+    {
+      "id": "COH-C004",
+      "statement": "保留原玩家、基本移动、既有光色与不可照亮的遮视空间空洞；新能力仍服从真实遮挡。",
+      "status": "active",
+      "source": {
+        "path": "docs/tasks/iteration-28.md"
+      },
+      "featureIds": [
+        "COH-F006",
+        "COH-F007",
+        "COH-F008",
+        "COH-F021",
+        "COH-F039"
+      ]
+    },
+    {
+      "id": "COH-C005",
+      "statement": "单物最多一个裂隙主效果和一个供奉效果，操作和反馈直接易懂，不增加鉴定币与词缀链。",
+      "status": "active",
+      "source": {
+        "path": "docs/tasks/iteration-28.md"
+      },
+      "featureIds": [
+        "COH-F020",
+        "COH-F021",
+        "COH-F028"
+      ]
+    },
+    {
+      "id": "COH-C006",
+      "statement": "目录及静态图标已获用户认可；扩大采样、长期平衡和剩余动态审美验收挂起，不得用实现或机器检查代勾。",
+      "status": "active",
+      "source": {
+        "path": "docs/tasks/iteration-28.md"
+      },
+      "featureIds": [
+        "COH-F020",
+        "COH-F021",
+        "COH-F040"
+      ]
+    },
+    {
+      "id": "COH-C007",
+      "statement": "旧物保持已知，旧在途局保留原版本；未来扩充不得修改已保存的掉落和能力承诺。",
+      "status": "active",
+      "source": {
+        "path": "docs/specs/system-field-inventory.md"
+      },
+      "featureIds": [
+        "COH-F020",
+        "COH-F024",
+        "COH-F025",
+        "COH-F044"
+      ]
+    },
+    {
+      "id": "COH-C008",
+      "statement": "所有策划定义以 CSV 为来源；一个逻辑系统一个 spec 原地维护，索引仅指向正文。",
+      "status": "active",
+      "source": {
+        "path": "CLAUDE.md"
+      },
+      "featureIds": [
+        "COH-F011",
+        "COH-F013",
+        "COH-F015",
+        "COH-F016",
+        "COH-F020",
+        "COH-F021",
+        "COH-F022",
+        "COH-F024",
+        "COH-F029"
+      ]
+    },
+    {
+      "id": "COH-C009",
+      "statement": "迭代 28 新目录授权不解锁不相关的旧四 B 扩产，也不自动启动后续 24/25。",
+      "status": "active",
+      "source": {
+        "path": "docs/tasks/iteration-28.md"
+      },
+      "featureIds": [
+        "COH-F050",
+        "COH-F052",
+        "COH-F053"
+      ]
+    }
+  ],
+  "inventory": [
+    {
+      "id": "scenes",
+      "title": "正式场景目录及其辅助实现",
+      "include": [
+        "src/scenes/*.ts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "dom-ui",
+      "title": "游戏 DOM 菜单/面板/HUD",
+      "include": [
+        "src/ui/dom/*.ts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "content-data",
+      "title": "根目录策划 CSV（含归档 DEV 数据，条目分流）",
+      "include": [
+        "data/*.csv"
+      ],
+      "exclude": []
+    }
+  ]
+}

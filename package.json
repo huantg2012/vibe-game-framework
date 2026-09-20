@@ -93,7 +93,13 @@
     "check:world-production": "node tools/map-preview/codegen-world-pool.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-production-map.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-production-recovery.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/recovery/check-minimap-world-scale.ts",
     "check:world-play": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-play-map.ts",
     "check:contaminant-catalog": "node tools/contaminant-catalog/check.mjs",
-    "check:paint-surface": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-full-footprint.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-partial-visibility.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-legacy-presentation.ts"
+    "check:paint-surface": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-full-footprint.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-partial-visibility.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-legacy-presentation.ts",
+    "state:check": "node .agents/skills/game-state/scripts/game-state.mjs check --root .",
+    "state:impact": "node .agents/skills/game-state/scripts/game-state.mjs impact --root .",
+    "state:baseline": "node .agents/skills/game-state/scripts/game-state.mjs baseline --root . --reviewed",
+    "state:index": "node .agents/skills/game-state/scripts/game-state.mjs render --root . --index-only",
+    "state:view": "node .agents/skills/game-state/scripts/game-state.mjs render --root .",
+    "check:game-state-tool": "node --test .agents/skills/game-state/scripts/check.test.mjs"
   },
   "dependencies": {
     "phaser": "^3.80.1",

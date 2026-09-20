@@ -1,0 +1,215 @@
+[
+  {
+    "id": "COH-F039",
+    "title": "原玩家像素、朝向与持物",
+    "domain": "presentation",
+    "summary": "正式净化点与 Rift 共用原玩家程序像素、移动方向、武器持物及受击反馈；地图风格变化不替换玩家身份。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "净化点与 Rift 中玩家角色"
+    ],
+    "sources": [
+      {
+        "path": "src/entities/player.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/crowbar-pixels.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/placeholder-textures.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/actor-pixels.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/tasks/iteration-28.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F006",
+      "COH-F009",
+      "COH-F022"
+    ],
+    "evidence": [
+      "COH-E-SRC-audiovisual",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "角色保留是当前有效约束；本轮未逐帧复核所有动作。"
+    ]
+  },
+  {
+    "id": "COH-F040",
+    "title": "敌人/污染形态与物件图标",
+    "domain": "presentation",
+    "summary": "生产敌人按家族/形态表现；新目录有独立真物件、外壳及必要落地稿，公开图像遵守未鉴定信息边界。",
+    "delivery": "production",
+    "work": "paused",
+    "entryPoints": [
+      "Rift 遭遇/拾获及库存、供奉、装备界面"
+    ],
+    "sources": [
+      {
+        "path": "src/entities/form-renderers/d/production-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/contaminant-catalog-icons.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/contaminant-catalog-icons-ground.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/contamination-forms.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/contaminant-item-icons.md",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/items/contaminant-catalog/catalog-manifest.json",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F015",
+      "COH-F016",
+      "COH-F017",
+      "COH-F020"
+    ],
+    "evidence": [
+      "COH-E-SRC-audiovisual",
+      "COH-E-HUMAN-CATALOG",
+      "COH-E-HIST-CATALOG"
+    ],
+    "unknowns": [
+      "静态目录图标已人 PASS；全体敌人和物件在所有世界/动态灯光下的辨识验收未完成且部分挂起。"
+    ]
+  },
+  {
+    "id": "COH-F041",
+    "title": "场景音乐、环境声与动作音效",
+    "domain": "presentation",
+    "summary": "AudioManager 管理标题/净化点/Rift 音乐、环境与移动/交互/战斗音效，并随场景和暂停处理生命周期。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "Boot 预载 → 玩家动作解锁声音 → 各正式场景事件"
+    ],
+    "sources": [
+      {
+        "path": "src/managers/audio-manager.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/audio-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/boot-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-audio.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/audio-direction.md",
+        "role": "audio"
+      }
+    ],
+    "dependsOn": [],
+    "evidence": [
+      "COH-E-SRC-audiovisual",
+      "COH-E-HIST-AUDIO"
+    ],
+    "unknowns": [
+      "历史报告仅有解码/非静音/峰值/生命周期与录音，未实际审听；不宣称声音成品质感 PASS。"
+    ]
+  },
+  {
+    "id": "COH-F042",
+    "title": "基地装置、边界与标题场景表现",
+    "domain": "presentation",
+    "summary": "三模块状态外观、入口/供奉/培养装置、基地地表维护痕迹和边界呼吸共同呈现；标题有角色与环境轻动效。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "主菜单；净化点自由移动/修复/交互"
+    ],
+    "sources": [
+      {
+        "path": "src/entities/purification-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-entrance-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/offering-stand-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/growth-console-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/procedural-purification-surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/boundary-breath.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/boundary-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-actor.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art-direction.md",
+        "role": "art"
+      }
+    ],
+    "dependsOn": [
+      "COH-F026",
+      "COH-F027"
+    ],
+    "evidence": [
+      "COH-E-SRC-audiovisual",
+      "COH-E-HIST-CYCLE"
+    ],
+    "unknowns": [
+      "旧锁定装置身份与最新状态外观的审美结论需分别看其验收范围，不能由本次登记代签。"
+    ]
+  }
+]

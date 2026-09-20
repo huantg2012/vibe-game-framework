@@ -1,0 +1,109 @@
+[
+  {
+    "id": "COH-F044",
+    "title": "正式存档与在途完整恢复",
+    "domain": "persistence",
+    "summary": "正式出发先存意图；运行保存版本化世界身份和完整帧，继续同一趟不重抽、不离线推进；已结算回执阻止重复归来收益。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "标题继续；Rift 刷新/关闭后继续记录"
+    ],
+    "sources": [
+      {
+        "path": "src/managers/save-manager.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/rift-recovery.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/rift-frame-commit.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/rift-recovery-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/rift-checkpoint.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/rift-interruption-recovery.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      }
+    ],
+    "dependsOn": [],
+    "evidence": [
+      "COH-E-SRC-persistence",
+      "COH-E-HIST-CATALOG",
+      "COH-E-HIST-PRODUCTION"
+    ],
+    "unknowns": [
+      "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。"
+    ]
+  },
+  {
+    "id": "COH-F045",
+    "title": "拒写重试、坏记录救援与明确弃局",
+    "domain": "persistence",
+    "summary": "存储失败冻结并重试同一候选，失败不假报收益；坏世界且基地有效时可明确弃局，坏基地保留原记录；错误入口回标题提供可见出口。",
+    "delivery": "production",
+    "work": "settled",
+    "entryPoints": [
+      "保存失败重试控件；标题恢复错误；Rift Esc → 放弃确认"
+    ],
+    "sources": [
+      {
+        "path": "src/managers/save-manager.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/rift-frame-commit.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/rift-interruption-recovery.md",
+        "role": "doc"
+      }
+    ],
+    "dependsOn": [
+      "COH-F044"
+    ],
+    "evidence": [
+      "COH-E-SRC-persistence",
+      "COH-E-HIST-CYCLE",
+      "COH-E-HIST-CATALOG",
+      "COH-E-HIST-TRANSITION"
+    ],
+    "unknowns": [
+      "历史 WG07 旧现场无栈，原触发器未被证实；保护与后续回归不能被写成已解释该旧事故。"
+    ]
+  }
+]

@@ -1,0 +1,1503 @@
+[
+  {
+    "id": "COH-E-SRC-journey",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "核心循环与出入游戏：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已对正式四场景注册和会话/出入链建立条目，明确区分终局设计；不代表长期循环或所有失败组合通过。",
+    "sources": [
+      {
+        "path": "src/config/game-config.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/run-controller.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/vision.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/gdd-core.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/scenes/main-menu-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-actor.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/ui-menu-entry-transition.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/ui/dom/loadout-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inspect-dock.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/equipment-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/systems/extraction-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/rift-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/impact-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/scenes/boot-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/placeholder-textures.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/menu-entry-transition.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/progress/content-expansion-plan.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/current-iteration.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-control",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "操作、生存与视野：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已对移动、光域、压力、近战和属性调用链建立条目；未在本轮运行交互。",
+    "sources": [
+      {
+        "path": "src/entities/player.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/config/constants.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-movement-vision.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/systems/visibility-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/vision-textures.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tile-grid.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/chaos-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/survival-attributes.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-survival-attributes.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/systems/combat-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/weapon-swing.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/weapon-attack-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-combat.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-player-weapons.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/survival-attributes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/inventory-rules.csv",
+        "role": "data"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-world",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "地图、地表与探索：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已追踪正式新出击、旧局兼容、共享绘制及探索入口；完整世界空间设计单列，历史设计段的生产边界冲突已标注。",
+    "sources": [
+      {
+        "path": "src/managers/rift-recovery.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-world-pool.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-spaces.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-map-generation.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/dev/rift-world-study.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/systems/world-space-surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/material-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/material-response.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/region-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/material-forms.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/procedural-surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/preview-paint.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/rift-world-space.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/rift-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/contamination-draw.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/dual-path.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/wall-host-placement.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-fragments.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-encounters.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-portfolios.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/scenes/rift-map-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/minimap.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/trail-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      },
+      {
+        "path": "tools/recovery/check-minimap-world-scale.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-26.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-threat",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "敌人、危险与识别：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已登记实体 AI、环境 Host、漆面及提示，并挂接生产词表；未逐一枚举每个合法随机组合。",
+    "sources": [
+      {
+        "path": "src/systems/ai/ai-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/ai/behaviors.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/ai/state-machine.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/enemy-control-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/production-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/enemies.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-families.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-lexemes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-behavior-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-body-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-enemy-ai.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-contamination-lexicon.md",
+        "role": "spec"
+      },
+      {
+        "path": "data/contamination-dialects.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/systems/contamination-host-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contamination-host-live.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/environment-hazard-control.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/volume-presence.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contamination-substrates.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-volume-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-stop-loss.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/attach.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/legacy-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/visibility.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/contamination-forms.md",
+        "role": "art"
+      },
+      {
+        "path": "src/ui/dom/encounter-narration.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/detection-pulse.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contamination-display-tokens.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-observe-lines.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contamination-utterances.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/ui-encounter-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/ui-detection-pulse.md",
+        "role": "spec"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-items",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "物品、武器与能力：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已登记新目录、旧兼容、武器、获取/鉴定/能力/所有权链；全量长期体验采样仍挂起。",
+    "sources": [
+      {
+        "path": "src/systems/loot-search-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/loot-search-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/field-loot-inventory.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/loot-search-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/systems/contaminant-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contaminant-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/equipment-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminant-items.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-appearances.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-offerings.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/design-notes/contaminant-ability-design.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/content/contaminants.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/systems/catalog-ability-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tool-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tool-runtime-extended.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/tool-targeting.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminant-abilities.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      },
+      {
+        "path": "data/weapons.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/weapon-qualities.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/weapon-loot.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/weapon-first-discovery.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/systems/weapon-loot.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-player-weapons.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/content/player-crowbars.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/inventory-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/inventory-rules.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/systems/contaminant-drop-plan.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminant-loot-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-loot.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-source-affinities.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-sources.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-qualities.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/systems/contaminant-migration.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contaminant-quality.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contaminants.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/contaminant-migrations.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/managers/save-manager.ts",
+        "role": "code"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-hub",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "净化点、成长与经济：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。六交互点与修复、供奉、成长、潮汐和稳定度入口已静态追踪；不把历史标记完成等同当前全域验收。",
+    "sources": [
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/purification-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/purification-collision.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/boundary-shape.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-entrance-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/offering-stand-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/growth-console-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/ui/dom/allocation-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/module-identity-strip.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/game-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/impact-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/defense-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/offering-panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/offering-charge.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/defense-engine.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/contaminant-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/ui/dom/growth-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/growth-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/growth-purchases.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/upgrades.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-growth-tide.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/content/progression.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/systems/tide-system.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/stability-tracker.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/status-panel.ts",
+        "role": "code"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-interface",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "菜单、报告与 HUD：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已将 src/ui/dom/*.ts 与标题/场景内入口归属，包含四页报告、备行、三装置分配、供奉、蜕变、场内拾获、两结果及暂停；未做全条件 UI 实测。",
+    "sources": [
+      {
+        "path": "src/ui/dom/rift-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/loot-search-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/side-effect-labels.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/ui/dom/purification-hud.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/world-interaction.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/ui/dom/status-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/rift-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/impact-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/run-controller.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/main.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/panel-render-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inspect-dock.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/module-identity-strip.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/ui-art-overhaul.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/architecture.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-audiovisual",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "角色、美术与声音：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已登记正式角色、敌人/物件、基地/标题表现与音频消费链；动态美术和听感证据限制保留。",
+    "sources": [
+      {
+        "path": "src/entities/player.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/crowbar-pixels.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/placeholder-textures.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/actor-pixels.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/tasks/iteration-28.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/entities/form-renderers/d/production-models.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/contaminant-catalog-icons.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/contaminant-catalog-icons-ground.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/contamination-forms.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/contaminant-item-icons.md",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/items/contaminant-catalog/catalog-manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "src/managers/audio-manager.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/audio-catalog.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/boot-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-audio.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/audio-direction.md",
+        "role": "audio"
+      },
+      {
+        "path": "src/entities/purification-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-entrance-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/offering-stand-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/growth-console-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/procedural-purification-surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/boundary-breath.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/boundary-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-actor.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art-direction.md",
+        "role": "art"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-narrative",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "世界观与叙事：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已定位世界设定与实际玩家载体；任务日志、NPC 对话和章节内容未找到正式入口，不虚构实现。",
+    "sources": [
+      {
+        "path": "docs/world.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/vision.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/dom/encounter-narration.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/contaminant-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/i18n/locales/zh-CN.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/contamination-observe-lines.csv",
+        "role": "data"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-persistence",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "存档、失败与恢复：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已登记存档、整帧恢复、拒写、坏包与弃局；历史限定回归和当前静态调用链分开。",
+    "sources": [
+      {
+        "path": "src/managers/save-manager.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/rift-recovery.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/rift-frame-commit.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/rift-recovery-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/rift-checkpoint.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/rift-interruption-recovery.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-accessibility",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "语言、设置与可达性：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。只进行了入口级发现，确认语言模块/标题减少动态等片段；尚无统一设置、全量本地化和无障碍覆盖盘点，保持未审查。",
+    "sources": [
+      {
+        "path": "src/i18n/index.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/i18n/locales/zh-CN.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/i18n/locales/en.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/config/game-config.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-actor.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/main-menu-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/player.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/main.ts",
+        "role": "code"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-SRC-development",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "开发入口与退役方向：本轮只读追踪入口、注册、关键调用和当前规则，登记所列功能与来源。",
+    "limitations": "静态盘点不是运行 PASS、完整代码审计或玩家体验验收；功能 delivery 仅表示已追踪的接入位置。引用文件中未逐行审查的部分及未覆盖组合不据此认可。已标注共享 DEV、地图研究、构筑实验与被终止的 3D 路线，开发数据不算正式玩家可用内容。",
+    "sources": [
+      {
+        "path": "docs/dev/gym.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/gym/gym-lesson.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/gym/gym-map-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/gym/enemy-inspector.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/gym/combat-lab.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/boot-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/world-play.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/world-study.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/dev/rift-world-study.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-world-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-spaces.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/dev/living-landmass.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/dev/suspended-sea.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/dev/spatial-study.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/current-iteration.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/living-landmass-stage/scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/living-landmass-placements.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-scenes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-supports.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-tension.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-connectors.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-holes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-outline.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-painted-footprints.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-regions.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-rocks.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-route-nodes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-sections.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/living-landmass-vista-strata.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-slice-ground.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-slice-openings.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-slice-placements.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-slice-scenes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-slice-water.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-study-placements.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-study-scenes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/spatial-study-water.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/stage-gameplay-ground.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/stage-gameplay-openings.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/stage-gameplay-placements.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/stage-gameplay-scenes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/stage-gameplay-water.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/suspended-sea-ground.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/suspended-sea-openings.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/suspended-sea-placements.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/suspended-sea-scenes.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/suspended-sea-water.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/dev/build-lab.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/build-lab-session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/build-lab-recorder.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/build-lab-loadouts.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/build-lab-placements.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/build-lab-scenes.csv",
+        "role": "data"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-HIST-PRODUCTION",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6017de0ff1b7f4cc2cf1773e2759c66735483977",
+    "scope": "历史：真实键盘新游戏/新版地图搜取撤离/首归报告与正式构建续局。",
+    "limitations": "有全图只读导航与暂停，失败尝试保留；仅有限地图和路径，不是首次玩家理解、全池长期平衡或本轮重跑。 版本为该批归档提交；不是当前 HEAD 重跑。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-28-production-fixes.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-HIST-CATALOG",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "归档实现 64a7da6；测试为 2026-09-20 多次修复工作树，具体阶段见报告",
+    "scope": "历史：新目录供奉鉴定、凝滞自然获取/装备/使用/耗尽/恢复，以及拒写/揭晓定向浏览器验证。",
+    "limitations": "早期截图和后期回归源版本不同；一件自然链不外推全目录；30 图为机制诊断、96 组为受控比较；长期和动态验收挂起。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-28.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-HUMAN-CATALOG",
+    "kind": "human",
+    "result": "pass",
+    "date": "2026-09-20",
+    "revision": "64a7da64ed8799e431c867336356a6703ffd9922",
+    "scope": "历史用户验收：展示的污染物目录与静态图标，以及配套规则/兼容说明获“这部分 pass”。",
+    "limitations": "仅限该次展示范围；不包含全量动态灯照、自然选择统计、长期平衡，不代表整迭代 COMPLETE。",
+    "sources": [
+      {
+        "path": "docs/tasks/iteration-28.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-HIST-PAINT",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "历史：同团完整/部分/隐藏、实际旧图群落适配与呼吸帧、旧局危险身份保留及对应自动回归。",
+    "limitations": "新图样本与旧图专项分开；窄旧图可能无完整适配；#rift=0 只作暂停几何检查，不作为完整持久首帧通过。 版本为保存该修复和报告的归档提交；实测在提交前同批工作树，报告中的各阶段限制继续适用。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-28-paint-fixes.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-HIST-TRANSITION",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-09-20",
+    "revision": "6332096ca15aa4ea293fe551f1160fa8e354ea18",
+    "scope": "历史：正常出击、重复输入、注入清理故障逐帧验证无裸地闪帧，过渡 DOM 清理。",
+    "limitations": "故障为明确测试注入；受控同实例重启仅验证可见性和角色，不代替自然返程/HUD；本轮未重跑。 版本为保存该修复和报告的归档提交；实测在提交前同批工作树，报告中的各阶段限制继续适用。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-28-production-fixes.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-HIST-CYCLE",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-19",
+    "revision": "历史工作树 / 2026-09-19；source-manifest 与 build7 分段见报告",
+    "scope": "历史：正式 2D 续局、成长/拒写、连续周转和限定自然经济链、战斗及界面表现。",
+    "limitations": "早于新目录和新版世界池；九趟跨修复构建，不是最终源从头无故障；诱饵稳定收益、旧 WG07 根因、听感与长期平衡未证。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-27.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-HIST-AUDIO",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-09-19",
+    "revision": "历史工作树 / 2026-09-19；音频信号与 lifecycle 记录见报告",
+    "scope": "历史：实际音源解码/非静音/无截断、真实混音录制和暂停/恢复生命周期检查。",
+    "limitations": "未实际审听；技术指标不能认可风格、听感或声音提示可读性。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-27.md",
+        "role": "doc"
+      }
+    ]
+  }
+]

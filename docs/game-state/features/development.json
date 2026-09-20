@@ -1,0 +1,345 @@
+[
+  {
+    "id": "COH-F048",
+    "title": "共享开发练习场、敌人检视与战斗场",
+    "domain": "development",
+    "summary": "独立 DEV 页面复用正式角色、生成、敌人/战斗能力用于定向体验；训练给装、无迷雾等差异不算正式生产体验。",
+    "delivery": "dev",
+    "work": "settled",
+    "entryPoints": [
+      "gym.html",
+      "enemy-inspector.html",
+      "combat-lab.html"
+    ],
+    "sources": [
+      {
+        "path": "docs/dev/gym.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/gym/gym-lesson.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/gym/gym-map-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/gym/enemy-inspector.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/gym/combat-lab.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/boot-scene.ts",
+        "role": "code"
+      }
+    ],
+    "dependsOn": [
+      "COH-F006",
+      "COH-F009",
+      "COH-F013",
+      "COH-F015",
+      "COH-F016"
+    ],
+    "evidence": [
+      "COH-E-SRC-development"
+    ],
+    "unknowns": [
+      "DEV #rift/#purif 深链与正式存档路径不是同等证据；旧 #rift=0 持久首帧限制仍见漆面专项报告。"
+    ]
+  },
+  {
+    "id": "COH-F049",
+    "title": "世界方向查看与隔离搜撤体验",
+    "domain": "development",
+    "summary": "地图查看器和隔离搜撤页用于选择世界/空间/种子，复用共享地表与正式 RiftScene；与首页生产存档入口分开。",
+    "delivery": "dev",
+    "work": "settled",
+    "entryPoints": [
+      "rift-worlds.html",
+      "rift-world-play.html",
+      "world-study.html"
+    ],
+    "sources": [
+      {
+        "path": "src/dev/world-play.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/world-study.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/dev/rift-world-study.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-world-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-spaces.csv",
+        "role": "data"
+      }
+    ],
+    "dependsOn": [
+      "COH-F011",
+      "COH-F012",
+      "COH-F013"
+    ],
+    "evidence": [
+      "COH-E-SRC-development"
+    ],
+    "unknowns": [
+      "研究页的特定光照或内存存档不能替代正式构建验证。"
+    ]
+  },
+  {
+    "id": "COH-F050",
+    "title": "已终止的三维/绘制式关卡探索",
+    "domain": "development",
+    "summary": "生命大陆、悬海与空间样板代码和数据保留作历史复盘；三维重构方向已由 DEC-169 终止，不列为待继续交付内容。",
+    "delivery": "retired",
+    "work": "settled",
+    "entryPoints": [
+      "历史 DEV：living-landmass-stage.html / living-landmass.html / suspended-sea.html / spatial-slices.html / spatial-study.html"
+    ],
+    "sources": [
+      {
+        "path": "docs/dev/living-landmass.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/dev/suspended-sea.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/dev/spatial-study.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/current-iteration.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/living-landmass-stage/scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/living-landmass-placements.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-scenes.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-supports.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-tension.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-connectors.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-holes.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-outline.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-painted-footprints.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-regions.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-rocks.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-route-nodes.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-sections.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/living-landmass-vista-strata.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-slice-ground.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-slice-openings.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-slice-placements.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-slice-scenes.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-slice-water.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-study-placements.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-study-scenes.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/spatial-study-water.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/stage-gameplay-ground.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/stage-gameplay-openings.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/stage-gameplay-placements.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/stage-gameplay-scenes.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/stage-gameplay-water.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/suspended-sea-ground.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/suspended-sea-openings.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/suspended-sea-placements.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/suspended-sea-scenes.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      },
+      {
+        "path": "data/suspended-sea-water.csv",
+        "role": "data",
+        "note": "已终止 3D/绘制式探索的历史数据，不计正式当前内容。"
+      }
+    ],
+    "dependsOn": [],
+    "evidence": [
+      "COH-E-SRC-development"
+    ],
+    "unknowns": [
+      "历史可打开页面或旧验收通过不表示当前正式出击采用该方向。"
+    ]
+  },
+  {
+    "id": "COH-F051",
+    "title": "构筑实验室与训练配置",
+    "domain": "development",
+    "summary": "独立开发入口组合已存在的装备、空间与遭遇进行对照，训练库存隔离，复用正式能力，不构成新世界内容。",
+    "delivery": "dev",
+    "work": "settled",
+    "entryPoints": [
+      "build-lab.html → 选择场地/配装并开始"
+    ],
+    "sources": [
+      {
+        "path": "docs/dev/build-lab.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/build-lab-session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/build-lab-recorder.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/build-lab-loadouts.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/build-lab-placements.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/build-lab-scenes.csv",
+        "role": "data"
+      }
+    ],
+    "dependsOn": [
+      "COH-F009",
+      "COH-F015",
+      "COH-F016",
+      "COH-F021",
+      "COH-F022"
+    ],
+    "evidence": [
+      "COH-E-SRC-development"
+    ],
+    "unknowns": [
+      "原训练配置主要面向既有工具；新污染物目录在该入口的完整配置覆盖本轮未核。"
+    ]
+  }
+]
