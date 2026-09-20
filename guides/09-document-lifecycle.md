@@ -8,6 +8,8 @@ note: 本文档写于 Sprint 模型时期。现已采用 Slice 模型。核心�
 
 # 进度文档生命周期
 
+> 状态机制已迁移：CLAUDE.md 不再存当前全景，执行 game-state 协议；文本源/证据/按需人读图的生命周期见 [12-project-state.md](12-project-state.md)。下文其他 Sprint 历史叙述仍按页首迁移说明阅读。
+
 ## 全部文档一览
 
 ```
@@ -205,7 +207,7 @@ Production 阶段开始
 每个 Sprint 循环
   ├── Sprint 开始 → 更新 current-sprint.md
   ├── Sprint 中   → 更新任务状态 + 追加 decisions-log
-  └── Sprint 结束 → 更新 roadmap 状态 + CLAUDE.md
+  └── Slice 结束 → 更新 roadmap 状态 + game-state 相关文本源/证据并刷新 INDEX.md
 ```
 
 ---
@@ -222,7 +224,8 @@ Production 阶段开始
 | current-sprint.md | 批准 | 读写 | 更新状态 | 更新状态 | 更新状态 | 读 |
 | decisions-log.md | 追加 | 追加 | 追加 | 追加 | 追加 | 追加 |
 | TASK-*.md | 审核 | 创建 | 读 | 读 | 读 | 读 |
-| CLAUDE.md | 写 | 更新状态段 | 读 | 读 | 读 | 读 |
+| CLAUDE.md | 写 | 维护约束/路由 | 读 | 读 | 读 | 读 |
+| game-state 文本源 | 审核 | 汇总/检查 | 所辖接入/证据 | 所辖设计指针 | 所辖视听指针/证据 | 验证证据 |
 
 关键区分：
 - **读** = 只能参考

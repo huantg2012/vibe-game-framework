@@ -7,13 +7,16 @@
 1. **AI agent 框架**（层 A）：用于 vibe coding 独立游戏的工作框架，由 agents（ideation/director/design/code/art/qa）+ 约束文档（`guides/**`、agent 定义、本文件的框架规则）组成。Agent 定义同时存在于 `.claude/agents/*` 与 `.cursor/agents/*`，两份**正文**必须逐字一致，frontmatter 的 `model` 按运行时取值。
 2. **dogfood 游戏项目**（层 B）：一个进行中的真实独立游戏，用来验证并打磨框架层 A。游戏活文档住在 `docs/**`，代码住在 `src/**`。
 
+项目 skill 的可移植正文位于 `.agents/skills/`，`.codex/skills/`、`.cursor/skills/` 为同内容镜像；`game-state` 可独立复制使用。
+
 两层同处一仓库但边界清晰：改框架（层 A）与做游戏（层 B）是两块独立工作，互不混入。**框架改动先上 `master`，再合并到本分支。**
 
-**当前阶段：**
-- 层 A（框架）：随 dogfooding 持续迭代（见"框架迭代协议"）。
-- 层 B（游戏）：**Foundation 已完成**（vision / world / architecture / art-direction[APPROVED] / audio-direction[APPROVED] 均就位，美术视觉方向已通过验证循环锁定）。**Iterative Development 进行中：Slice 1「裂隙潜行核心手感」COMPLETE（2026-08-07）。Slice 2「净化点闭环」COMPLETE（2026-08-08）。Slice 3「角色成长+潮汐经济」COMPLETE（2026-08-10）。Slice 3.5「UX 打磨」COMPLETE（2026-08-11）。Slice 4「Data Pipeline + Defense Engine + Common Tier」COMPLETE（2026-08-11，CSV管线+防御引擎+被动工具+净化点UX重构）。Slice 4.5「视觉与界面翻修 + 动态力场边界」COMPLETE（2026-08-12，UI Kit+右侧抽屉面板+4向角色贴图+程序化地表+潮汐驱动力场边界+BARRIER→CORE重命名）。Slice 5「工具库深度」COMPLETE（2026-08-12，Fine/Rare 11 种全量补完 + 工具 VFX + 改造深度 + 模块三态视觉 + 失效的工具 debuff 管线修复；**实现完成但体验未验证**——装配决策纠结感在 5.5 观察：机制上装防御不是放弃工具，界面已讲清；若要真实犹豫回 design）。Slice 5.5「UX 重构」COMPLETE（2026-08-16，打磨 Slice / 轻量路径；人诊断「不像游戏、不成体系」，范围 ALL UI 表面；收尾四项已登记）。**Slice 6「程序化地图」COMPLETE**（2026-08-19，DEC-055/064：每一次踏入生成布局；一个撤离点；换路硬保证；尘点沿风；年龄×残破。撤离多样性延后）。**Slice 7「净化点扩张」COMPLETE**（2026-08-19：净化器写入起始混乱；加厚三档）。**Slice 8「第二敌人」COMPLETE**（2026-08-19：改写体听觉为主 + 每图恰好 1 个 + 屏缘被发现脉冲 + `enemies.csv`）。**Slice 9「音乐 / 音效」COMPLETE**（2026-08-19：AudioManager + 39 个 OGG/MP3 占位 + 裂隙分层混音；同时 8 轨）。DEC-064 锁的 7/8/9 已完。Slice 10 不做。不规划 Slice 11，不把整盘标成 Polish / Launch。自 **DEC-072** 起层 B 进入**按需模块完善 / 游戏迭代**（对人说话用「游戏迭代」；需要时可写「下面称：迭代」。不要与层 A「框架迭代协议」混名）。当前为 **迭代 5（污染外形基因谱）**（DEC-087 / DEC-088 / DEC-098；合同 `docs/tasks/iteration-5.md`；设计正文 `docs/design-notes/contamination-form-genome.md`）与 **迭代 6（碎片配色 / 世界美术）**（DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094 / DEC-095 / DEC-096 / DEC-097，I6-A 已交；合同 `docs/tasks/iteration-6.md`；只开旧图书馆，四张标定；身份不靠底色色温；质量语法先等价再拆档；地铁次轴宽度 2）。**迭代 7（占墙 / 占漆 / 占空外形基因谱）COMPLETE（2026-08-28，人终审 PASS）。** 占漆（油膜三变体：聚珠成滩 / 沾抹拖尾 / 薄滩收边）已锁定并上线（DEC-101；I7-Q/R/S/T/U）。占墙 / 占空基因谱是立项范围内未开启的部分，收口为 deferred，将来要做时另开迭代。站着不计仍挂起（不在本次 PASS 范围）。氛围不收已由人确认。**迭代 8（占漆压力与识别面）COMPLETE（2026-08-28，人终审 PASS）。** 试玩四问全过：地面像不像裂隙 / 占漆够不够压 / 低语像不像人话 / 核读不读得出可以杀。合同 `docs/tasks/iteration-8.md`。不要塞进迭代 7。**迭代 9（rift 视野表现打磨）COMPLETE（2026-08-29，人终审 PASS）。** 选中分支 = 32 层等照线带（subdiv2）+ teal 软内缘；其余 spike 分支与对比课下线（DEC-107）。合同 `docs/tasks/iteration-9.md`。 **迭代 10（rift 拾取物读条与翻找）COMPLETE（2026-08-31，人终审 PASS）。** 触碰拾取下线；生产默认 = 翻堆（外观不泄露内容物；配色 v2 随碎片身份，DEC-110 残骸材质色三格 + `check:loot-pile-contrast` 对比度闸门）+ 按住 E 读条 1200ms（底部装置读数条）+ 打断清零 + 揭晓动画 + 音效四键；抽卡课已删（DEC-108 / DEC-109 / DEC-110）。合同 `docs/tasks/iteration-10.md`。**净化点世界内交互物已翻生产（DEC-111–117）**：核心 v6-B + 净化器 B1 + 储藏 C1 + 入口卡 5 + 供奉台卡 I + 培养藏卡 A；加厚并进蜕变。**迭代 11（净化点 UX 收口）进行中（DEC-118，2026-09-05）**：范围 = Findings P5 / P6 / P7（HUD + 提示条 + 面板信息架构）。机械层已交（I11-A/S/B3/IA/B4a/b/c/QA），I11-K 跳过，波 8 等人 `#purif` 四问；P3/P4 仍挂起；P8 不另派。不标 COMPLETE。合同 `docs/tasks/iteration-11.md`。in-game-ux skill 已按审查改口为三问结果。 活指针仍在迭代 5。交叉已锁：I5-P 已交；身份配方已复核，I5-A 已交；波 1（I5-A / I5-S / I6-Q / I6-B）已交；波 2：I5-B 已交，I6-C 整批已交（art 最短核合规过，好看不代勾），I6-F 已交；波 3：I5-D / I6-D / I6-E 已交；波 4：I5-E 整批已交（art 最短核已核）/ I6-QA 已交；波 5：热修画面人 PASS；四张是否可分未逐条回答。波 6：I5-F code 已交。波 7：I5-N 人过（2026-08-25）。**波 8：I5-G 人未过 / 热修 code 已交（2026-08-25）；人下令先这样继续。波 9：I5-K 人过（2026-08-26）。波 10：I5-L 暂过（2026-08-26）。波 11：I5-M 暂过（2026-08-26）。波 12：I5-H code 已交（2026-08-26）。波 14：I5-J code 已交（2026-08-26）。波 16：I5-T code 已交（2026-08-28），画面等人终审。不要写成整批已交。不要开 I5-C。** 不要开 I5-C。居民区公寓本迭代仍不启用（DEC-094：簇已吸收进参数化，不再当独立待开项）。迭代 4（污染句法陈列馆，DEC-085）**COMPLETE（2026-08-28，人再滚甲大厅 PASS）**。迭代 3（方案 D 接入出击，DEC-084）**COMPLETE（2026-08-28，人试玩裂隙 PASS）**。迭代 2 练习场探索 COMPLETE（DEC-079 / DEC-080）。迭代 1（敌人系统）污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**（体系入口 `docs/design-notes/contamination-lexicon.md`，再 `docs/specs/system-contamination-lexicon.md`，识别表面 `docs/specs/ui-encounter-narration.md`）。活状态：`docs/progress/current-iteration.md`。Slice 9 之后表现收口（仍用原 DEC，不改编号成迭代）：裂隙地面污染成品曾为崩坏簇并已接出击烤漆（DEC-069）；**DEC-104 / I8-G 已下线氛围簇生产签名**。整团胀缩呼吸技术已锁（DEC-070），出击与练习场同一套（DEC-071），应用改为丙漆活层。迷雾下亮度人终审 PASS（2026-08-28）。裂隙地图**活策略**正文：`docs/design-notes/slice-6-layered-generation.md`（找策略 / 扩空间先读该文「Agent 入口」）。地表污染画法：`docs/art/rift-fragment-surfaces.md`（DEC-104：成片青绿 = 有主占漆）。（见 `docs/progress/roadmap.md`）。
+## 游戏状态入口
 
-**Slice 编号（人拍板）**：2026-08-12 顺移——第二敌人独立、净化点扩张→7、程序化地图→8；撤离点多样性并入程序化地图同 Slice；音乐/音效→9；NPC→10；插入 5.5。**2026-08-16 对调（DEC-053）**：Slice 6 = 程序化地图 + 撤离点多样性；Slice 8 = 第二敌人（潜行轴，含「被发现」指示）。Slice 7 / 9 / 10 不变。**2026-08-20（DEC-072）**：本游戏不再开新 Slice 编号；完善按需走游戏迭代。
+- 全貌与证据：`docs/game-state/INDEX.md` → `atlas.json`、`features/*.json`、`evidence.json`；按需生成 `atlas.html` 给人浏览。
+- 当前工作：`docs/progress/current-iteration.md`；路线与范围：`docs/progress/roadmap.md`。进度不再复制到框架入口。
+- 本游戏自 DEC-072 起按需游戏迭代，不规划 Slice 11；通用框架继续支持 Slice 生命周期。
+- 历史完成、人审、暂过、挂起状态继续由原任务和 QA 证据承载；本索引迁移不提升验收，不重新开启被暂停的工作。
 
 ## 变更传播规则（强制）
 
@@ -33,7 +36,7 @@
 2. **搜索**：Grep 以下范围查找所有引用：
    - `.claude/agents/*.md`
    - `.cursor/agents/*.md`
-   - `.cursor/skills/**`
+   - `.agents/skills/**`、`.codex/skills/**`、`.cursor/skills/**`
    - `docs/**/*.md`
    - `guides/**`
    - `START-HERE.md`
@@ -55,6 +58,7 @@
                                             frontmatter 仅 model 允许按运行时差异）
 .cursor/skills/in-game-ux/               = in-game UI 的 HOW（三问结果：审美 / 读作游戏 UI / 与已锁装置同一世界；自定义 agent 必须显式 Read）
 .cursor/skills/pixel-models/             = 世界内像素模型的 HOW（自定义 agent 必须显式 Read）
+.agents/skills/game-state/              = 游戏现状索引、证据与离线浏览器（可独立使用）
 CLAUDE.md                                = 项目执行标准正文（阶段、硬约束、路由）
 AGENTS.md                                = Cursor 侧钩子（指向 CLAUDE.md + 硬约束摘要，不复制全文）
 START-HERE.md                            = 人的操作入口
@@ -73,6 +77,7 @@ guides/*.md                              = 人的参考资料（设计原理记�
 .cursor/skills/pixel-models/ → 世界内像素模型的 HOW（自定义 agent 不会自动加载，必须显式 Read）
 guides/                → 人的参考手册（00-overview ~ 14-docs-structure, 99-review）
 docs/                  → 游戏项目活文档（AI读写、人审核）
+.agents/skills/game-state/              = 游戏现状索引、证据与离线浏览器（可独立使用）
 tools/art-pipeline/    → 构建期美术资源后处理与机器验收工具（自包含）
 tools/agent-parity/    → 两份 agent 定义的一致性校验（无依赖，node 直接跑）
 START-HERE.md          → 用户入口
@@ -92,7 +97,8 @@ docs/
 ├── audio-direction.md     ← 音频方向
 ├── specs/system-*.md      ← 系统规则 + schema
 ├── content/*.md           ← 内容条目（物品/敌人/技能/关卡/进度曲线）
-├── progress/              ← 进度管理（roadmap/current-slice/decisions-log）
+├── game-state/            ← 当前全貌：文本源、证据、派生 INDEX.md；atlas.html 按需生成
+├── progress/              ← 进度管理（roadmap/current-slice 或 current-iteration/decisions-log）
 ├── tasks/                 ← Task Briefs（per-Slice 文件：slice-01.md, slice-02.md...）
 ├── qa/                    ← 验收报告
 ├── art/                   ← 资产规格 + 角色程序像素 HOW（`actor-pixels.md`）+ 生成 prompt 记录
@@ -101,7 +107,7 @@ docs/
 
 ## 开发练习场
 
-独立 HTML，用来体验/测试与出击同一套代码的基本功能，不进主菜单。地图课（`gym.html?lesson=map`）走出击同一套 `generateRiftLayout` + `bakeGround`（缺省不再铺氛围簇；**DEC-104 / I8-G 已下线**），不开视野迷雾。陈列馆课（`gym.html?lesson=lexicon-gallery`）一次一厅，合同 `docs/tasks/iteration-4.md`。油膜生产按种子采样三变体（DEC-101）；抽卡课 `?lesson=paint-vein-card` 是历史对照（A/B/C 树 tweak + 已被锁定为生产的三支原形），不要走句法课侧栏交差。迭代 5 甲基因谱（DEC-087 / DEC-088；合同 `docs/tasks/iteration-5.md`）I5-J 已交：出击默认占地走基因谱；I5-T 三种生物已翻出击（code 已交（2026-08-28），画面等人终审）。迭代 6 碎片配色 / 世界美术（DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094；合同 `docs/tasks/iteration-6.md`）验地面走地图课（与出击同一套烤漆；四张碎片一起标定；身份靠渍/纹理/结构，不靠底色落格）。**Agent 入口：** `docs/dev/gym.md`。打开：`npm run gym` 或 `npm run dev`，再用 Cursor Simple Browser 访问 `http://localhost:3000/gym.html`。禁止为练习场另写敌人移动或另画一套敌人外形。渗透体与改写体的成品画面是程序像素（DEC-066），不换精灵表。角色怎么画、怎么对照：`docs/art/actor-pixels.md`。**玩家加厚像素已接出击 `Player`（DEC-068）。** 裂隙地面污染生产不再铺氛围簇（DEC-069 签名已由 DEC-104 / I8-G 下线）。整团胀缩活层技术已锁（DEC-070），出击与练习场同一套（DEC-071），应用改为丙漆活层。迷雾下亮度人终审 PASS（2026-08-28）。
+开发入口、有效 lesson 与运行命令见 `docs/dev/gym.md`，接入范围见现状索引。练习场应复用正式玩法/生成/绘制能力，不能用独立演示实现冒充正式接入。正常玩家入口与 DEV 入口分开登记；具体内容进度不在框架入口重复维护。
 
 ## 开发模型
 
@@ -165,7 +171,18 @@ Slice-based iterative development：
 ### 分级加载协议（L0/L1/L2）
 - 每个 spec 的 frontmatter 必含 `interfaces-with`（声明依赖）和 `exposes`（声明对外输出）
 - 正文首行必须是 TL;DR（1-2 句系统摘要）
-- Agent 加载顺序：L0 读 CLAUDE.md → L1 Grep frontmatter 判断相关性 → L2 读完整 spec
+- Agent 加载顺序：L0 读 CLAUDE.md 路由 + `docs/game-state/INDEX.md` 全貌 + 当前工作指针 → L1 按 feature ID / 依赖定位，再读 spec frontmatter → L2 读相关正文与实现/验证证据
+
+## 游戏现状与长期记忆（所有 Agent 遵守）
+
+- **入口只管路由与约束**：本文件不再维护游戏系统全景、内容数量或累计进度。当前工作读 `docs/progress/current-iteration.md`（采用迭代制时）或 `current-slice.md`，路线读 `roadmap.md`。游戏分支若残留旧“当前阶段”长段，只作历史，不能覆盖这些活入口。
+- **先读全貌，再读局部**：`docs/game-state/INDEX.md` 是文本源生成的快捷索引；权威流程与字段约定在 `.agents/skills/game-state/SKILL.md` → `references/protocol.md`。涉及游戏状态的建立、查询、变更与收口时显式 Read；运行时可使用同内容镜像。索引不复制 spec、策划表或 QA 报告。
+- **三个事实分开**：设计意图、实现接入（`unknown/design/dev/production/retired`）、验证证据分别记录；工作状态（`active/paused/settled`）另列。文件存在、构建通过、指纹一致均不证明玩家可用，`production` 也不表示体验获人认可。
+- **任务绑定能力**：开工声明受影响的 feature ID，读取其依赖/有效约束；收尾更新所辖文本源、实际入口、证据与未知项，由 Director 汇总校验。共享系统变动检查下游证据是否仍适用；不静默删除挂起项或提升验证等级。
+- **渐进接入**：旧项目没有索引时，先按 skill 建覆盖全游戏的分类骨架，未核实项显式记为未知；当前任务只核实相关分支。紧急修复可先记录 feature ID / 待补项，再随该修复收口，不要求先全游戏考古。
+- **人读视图按需生成**：文本源日常增量维护，`INDEX.md` 随源刷新；`atlas.html` 由同一工具按需生成，不手改派生视图。快照/`baseline` 只记录文件指纹，不刷新验证结果或把旧证据变新。
+
+独立使用、迁移及刷新方式见 `guides/12-project-state.md`。框架角色负责分工；离开本框架，一个 Agent 可依次承担相同步骤。
 
 ---
 

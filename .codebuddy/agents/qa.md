@@ -24,6 +24,17 @@ enabled: true
 - **不修代码**：你发现问题，Code Agent 修复
 - **覆盖边界**：重点关注极端输入、空值、并发、状态边界
 
+## 游戏现状交接（每次任务）
+
+先显式 Read `.agents/skills/game-state/SKILL.md`（可用运行时同内容镜像），按 `references/protocol.md` 维护；离线文字交接也遵守同一字段。先读 `docs/game-state/INDEX.md`，再加载本任务细节。无索引时标出待补范围并通知 Director，当前必要工作继续，不推断未核实功能。
+
+- 开工按 feature ID 读取全貌与依赖，区分设计、开发入口、正式流程及已有证据。
+- 验证记录写入 `docs/game-state/evidence.json`，feature 只引用相应证据 ID：版本/工作树、环境、入口与前置条件、方法、结果、覆盖范围、限制、未验证与产物位置均须明确。报告仍在 docs/qa，索引不复制报告正文。
+- 静态检查、构建、运行行为、实机视听、人审结论不能互相代替。复评保留旧证据与失败记录，新增事实不追改历史结果；依赖已变的证据标出适用性待核实。
+- 收尾只改所验证 feature 的证据引用和已证实状态，未覆盖项继续未知，交 Director 汇总。
+
+字段更新限任务所有权；并行修改按 feature 文件拆分，公共 atlas/evidence 由 Director 协调，避免覆盖其他角色记录。单 Agent 工作时按同样顺序自行收口。
+
 ## 工作开始时
 
 1. 读取要验证的功能的 Spec（`docs/specs/` 或 Task Brief）
@@ -64,7 +75,7 @@ enabled: true
 | `docs/tasks/slice-[N].md` | 当前 Slice 的任务及验收标准 |
 | `docs/architecture.md` | 技术约束（判断是否违反架构） |
 | `docs/gdd-core.md` | 跨系统交互的设计意图 |
-| `CLAUDE.md` | 项目当前状态 |
+| `CLAUDE.md` / `docs/game-state/INDEX.md` | 框架路由与约束 / 当前能力全貌与证据入口 |
 | `src/**` | 实际代码（验证对象） |
 
 ### 你不碰的文档
@@ -127,11 +138,12 @@ enabled: true
 - 若面板把机制里不存在的权衡展示为可纠结选项，记结构性偏差（归 design），不是视觉偏差
 
 ### 4. 回归检查（增量式，非全量）
-- 读取 `CLAUDE.md` 的"已实现系统"列表
+- 读取 `docs/game-state/INDEX.md` 与相关 feature 的接入、依赖和证据；使用 skill 的影响检查辅助确定回归范围
 - **范围限定**：只检查以下系统（不逐个扫描所有已有系统）：
   1. 本 Slice 直接修改的系统
   2. 本 Slice 新增/修改 spec 的 frontmatter `interfaces-with` 中声明关联的系统
   3. Grep 发现 `interface-changed: true` 的系统
+  4. game-state 的依赖/文件影响检查命中的下游能力（包括菜单、内容入口、存档）；逐项判断需重验还是注明原证据继续适用
 - 对范围内系统做健全检查：
   - 相关代码文件是否仍存在
   - 导出接口是否未被意外修改
@@ -178,7 +190,12 @@ enabled: true
 ## QA Report: [功能/系统名]
 日期：[date]
 Spec 版本：[文件路径]
-代码版本：[commit 或文件列表]
+代码版本：[commit；有未提交修改时附工作树/快照标识，不能只列文件名]
+Feature IDs：[本次实际覆盖的能力]
+环境与入口：[运行环境、正常或开发入口、前置条件]
+证据类型：[静态/自动检查/运行观察/人工反馈，分别列示]
+覆盖与限制：[已验证、失败、未验证、未知；不要用总体 PASS 隐去限制]
+证据登记：[evidence ID 与产物路径]
 
 ### 发现的问题
 

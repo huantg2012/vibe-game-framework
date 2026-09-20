@@ -2,6 +2,14 @@
 
 本仓库同时包含两层内容：用于开发独立游戏的 AI agent 框架，以及一个用该框架持续验证和打磨流程的进行中游戏项目。框架规则与参考资料主要位于 `CLAUDE.md`、`guides/` 和 agent 定义中；游戏的活文档位于 `docs/`，运行时代码位于 `src/`。开始工作前先确认你要推进的是框架层还是游戏层。
 
+## 先了解全游戏，再看当前任务
+
+- 对 Agent 说：**“用 game-state 读取游戏全貌，定位当前任务涉及的能力、依据及未知项。”** 它先读 `docs/game-state/INDEX.md`，再按 feature ID 查细节。
+- 对人：**“用 game-state 刷新游戏全貌浏览图。”** 从同一文本源生成 `docs/game-state/atlas.html`，可离线打开；日常无需维护第二份图。
+- 自己刷新：`node .agents/skills/game-state/scripts/game-state.mjs render --root .`。日常只刷新 Agent 索引用 `--index-only`。
+- 当前工作仍看 `docs/progress/current-iteration.md` 或 `current-slice.md`，路线看 `roadmap.md`。接入生产、工作收口、验证通过是不同状态，不能只看一个 Done。
+- 另一款游戏可单独复制整个 `game-state` 技能，不必采用六个 Agent。首次初始化和迁移说明见 [游戏现状索引](guides/12-project-state.md)。
+
 ## 判断你现在在哪
 
 以下路由用于开始一个新的游戏项目，或判断本仓库中进行中游戏项目所处的阶段：
@@ -10,8 +18,8 @@
 | -------- | ------------ | ------ |
 | 什么都没有（空项目/只有框架文档） | → **Ideation** | 用 `ideation` agent 开始对话 |
 | 有 `docs/vision.md` 但缺架构/美术 | → **Foundation** | 见下方 Foundation 路由 |
-| 有 vision + architecture + CLAUDE.md | → **Iterative Development** | 用 `director` agent 看进度。**本仓库层 B** 自 DEC-072 起按需游戏迭代（不规划 Slice 11）；通用框架仍可用 Slice 生命周期 |
-| CLAUDE.md 标记 "Polish" | → **Polish** | 用 `qa` agent 做全面验收 |
+| 基础已验收，活路线图进入迭代 | → **Iterative Development** | 用 `director` agent 核对活进度；本游戏按需迭代、不规划 Slice 11，通用框架仍支持 Slice |
+| 活路线图标记 "Polish" | → **Polish** | 用 `qa` agent 做全面验收 |
 | 准备发布 | → **Launch** | 用 `code` agent 配置部署 |
 
 **本仓库层 B（进行中的游戏）**：Slice 1–9 已完，Slice 10 不做。自 DEC-072 起按需「游戏迭代」，不规划 Slice 11，不标 Polish / Launch。活状态见 `docs/progress/current-iteration.md`（当前：迭代 5 污染外形基因谱，DEC-087 / DEC-088 / DEC-092；合同 `docs/tasks/iteration-5.md`；I5-P 已交；迭代 6 碎片配色 / 世界美术 COMPLETE；迭代 7 COMPLETE（占漆已上线；占墙 / 占空 deferred）；迭代 8 COMPLETE；迭代 4 COMPLETE；迭代 3 COMPLETE；迭代 2 COMPLETE；迭代 1 COMPLETE（体验已验证））。体系入口：`docs/design-notes/contamination-lexicon.md`。外形基因谱：`docs/design-notes/contamination-form-genome.md`。
@@ -38,7 +46,7 @@
 | 2 | 第一个 Slice 的系统设计 | `design` | `docs/specs/system-*.md` |
 | 3 | 技术架构选型 + 项目脚手架 | `code` | `docs/architecture.md` + 初始代码 |
 | 4 | 美术方向 | `art` | `docs/art-direction.md` |
-| 5 | 整合 + 创建 roadmap | `director` | `docs/gdd-core.md` + `CLAUDE.md` + `roadmap.md` |
+| 5 | 整合 + 创建 roadmap | `director` | `docs/gdd-core.md` + 约束/路由入口 + `roadmap.md` + game-state 初始骨架 |
 
 > **Bootstrap 协议**：vision.md 允许最小形态（elevator pitch + 核心循环 + MVP 范围）就进入 Foundation。文档完整度是渐进目标，不是前置条件。
 
@@ -53,7 +61,7 @@
   3. Code/Art agent 实现
   4. QA agent 验收（含构建验证）
   5. 你试玩验证
-  6. Director 整合更新文档
+  6. Director 汇总 feature/证据、检查影响并刷新文本索引，更新进度
   7. Director 收集框架反馈（"流程有摩擦吗？"）
   → 游戏多了一层 + 框架持续进化
 ```
@@ -66,6 +74,11 @@
 - 做完登记已交
 
 通用 Slice 生命周期仍写在上方，给新项目或本游戏若再开 Slice 时用；**当前本游戏不用它开新 Slice**。
+
+**日常操作**：
+- 开 `director` agent → 它告诉你当前 Slice 进度和待做任务
+- 开对应 agent 窗口执行任务
+- 做完更新任务状态、相关 feature 与证据；未验证部分保留
 
 ### Polish / Launch
 

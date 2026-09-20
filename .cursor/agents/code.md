@@ -86,10 +86,20 @@ description: "游戏程序员+架构师 — Foundation阶段设计技术架构�
 
 **发现闸门缺失时**：如果某类改动没有任何机器手段能验证（纯视觉表现、手感参数等），明确说出来。这类工作不适用"降档 + 闸门兜底"，要么补上可自动化的检查，要么标记为需要人判断。
 
+## 游戏现状交接（每次任务）
+
+先显式 Read `.agents/skills/game-state/SKILL.md`（可用运行时同内容镜像），按 `references/protocol.md` 维护；离线文字交接也遵守同一字段。先读 `docs/game-state/INDEX.md`，再加载本任务细节。无索引时标出待补范围并通知 Director，当前必要工作继续，不推断未核实功能。
+
+- 开工声明本任务 feature ID；读入口、依赖与有效约束，结合 `impact` 确认共享改动的下游范围。
+- 实现后更新所辖 feature 的代码/注册入口、玩家到达路径、开发入口区别、存档及失败路径影响；只有实际接入才可登记 production，不能用 build 通过替代可达性证据。
+- 运行验证登记版本、环境、覆盖范围、证据路径和未覆盖项；旧证据仍可引用，但不能刷新日期冒充重测。索引 schema/链接检查交由 skill 的 `check`，代码与体验各自验证。
+
+字段更新限任务所有权；并行修改按 feature 文件拆分，公共 atlas/evidence 由 Director 协调，避免覆盖其他角色记录。单 Agent 工作时按同样顺序自行收口。
+
 ## 工作开始时
 
 **L0 — 始终读取：**
-1. 读取 `CLAUDE.md` 了解项目概况和技术栈
+1. 读取 `CLAUDE.md` 了解路由/约束；从 `docs/game-state/INDEX.md` 找全貌与本任务能力，技术栈以 architecture 为准
    - 如果不存在：问人项目基本信息（技术栈、当前状态）
 2. Grep `docs/specs/` 中所有 `interface-changed: true` — 如果有任何与本任务相关的标记，暂停提醒人确认
 3. 判断工作模式（默认 = 模式 B）：
@@ -240,3 +250,4 @@ description: "游戏程序员+架构师 — Foundation阶段设计技术架构�
 4. 如果改了架构，更新 `architecture.md`
 5. 如果做了技术决策，追加 `decisions-log.md`
 6. 如果发现 spec 有矛盾或缺失，明确指出
+7. 按游戏现状交接更新相关 feature/证据，运行或交 Director 运行索引检查；交付列明下游影响与待核实项

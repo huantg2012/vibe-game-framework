@@ -63,7 +63,7 @@ note: 已更新为 Slice 模型
 | 设计第一个系统 | `design` | B |
 | 设计技术架构+搭脚手架 | `code` | B |
 | 确定美术方向 | `art` | B |
-| 整合 GDD + CLAUDE.md | `director` | B |
+| 整合设计索引、game-state 与进度 | `director` | B |
 
 ### Iterative Development（每个 Slice）
 
@@ -93,7 +93,7 @@ note: 已更新为 Slice 模型
 ```
 你：开 director 窗口
 Director：
-  - 检查三个真相源一致性
+  - 检查相关 feature 的规则、接入、证据及依赖一致性
   - 确定下一个 Slice 的范围和验证问题
   - 输出任务清单 + Task Briefs
   - 标注 🟢/🔴
@@ -146,10 +146,12 @@ Director → Task Brief 文件 → Code Agent 读取执行
 Design  → Spec 文件       → Code Agent 按 Spec 实现
 Code    → 源代码文件      → QA Agent 读取验收
 QA      → Report 文件     → Code Agent 修复问题
-Director→ 更新 CLAUDE.md  → 下一个会话的任何 Agent 读取
+Director→ 更新 game-state 文本源/证据 → 生成 INDEX.md → 后续 Agent 按 ID 读取
 ```
 
 ---
+
+轻量任务也记录受影响的 feature ID 和实际证据；没有采用整套 Agent 分工时，可独立执行 `.agents/skills/game-state/SKILL.md`。同一文本源可按需生成 HTML，见 `guides/12-project-state.md`。
 
 ## 什么时候不需要正式用 Agent
 

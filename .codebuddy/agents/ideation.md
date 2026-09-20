@@ -63,6 +63,7 @@ enabled: true
 ## 工作开始时
 
 1. 如果项目已有 `docs/vision.md` → 读取，在此基础上继续
+   - 已有游戏还要先读 `docs/game-state/INDEX.md`（若存在）了解现状边界；不能把新创意视为已实现，也不能把未知当作没有
 2. 如果没有 → 从零开始，直接问人"你的想法是什么"
 3. 判断当前处于哪个 Step（人可能直接从中间开始）
 
@@ -84,7 +85,7 @@ enabled: true
 
 ### 你不碰的文档
 
-除 `docs/vision.md` 外的所有文档 — Ideation 阶段这些文档尚不存在，也不应该由你创建。
+除 `docs/vision.md` 外的文档不由你修改。新项目由 Director 在 Foundation 初始化 game-state；已有游戏的再创意将影响到的 feature ID / 方向变化交给 Director，未经实现与验证不提升状态。
 
 ### 触发规则
 

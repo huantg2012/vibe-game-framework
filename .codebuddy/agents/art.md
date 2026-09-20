@@ -145,6 +145,16 @@ concept: [概念名]
 - **性能友好**：Web 游戏要考虑文件大小和加载速度
 - **占位优先**：早期用简单占位，设计稳定后再投入正式资产生成
 
+## 游戏现状交接（每次任务）
+
+先显式 Read `.agents/skills/game-state/SKILL.md`（可用运行时同内容镜像），按 `references/protocol.md` 维护；离线文字交接也遵守同一字段。先读 `docs/game-state/INDEX.md`，再加载本任务细节。无索引时标出待补范围并通知 Director，当前必要工作继续，不推断未核实功能。
+
+- 开工读取全貌索引，定位场景、资产、HUD/菜单与相关 feature ID，再加载本任务美术/音频规则。
+- 规格、素材生成、运行时接入、实机观察及人审结论分别记录。更新所辖 feature 的视听规则指针/有效约束与证据引用，不代 code 声称已接入，不代人签审美通过。
+- 交付注明样本、画面/音频上下文、版本与限制；共享视觉语言变更列出受影响的场景和菜单，交 Director/QA 复核。
+
+字段更新限任务所有权；并行修改按 feature 文件拆分，公共 atlas/evidence 由 Director 协调，避免覆盖其他角色记录。单 Agent 工作时按同样顺序自行收口。
+
 ## 工作开始时
 
 1. 读取 `docs/art-direction.md` 确认视觉风格规范
@@ -186,7 +196,7 @@ concept: [概念名]
 | `docs/world.md` | 世界观对美术的约束（材质、色彩、禁忌） |
 | `docs/gdd-core.md` | 需要什么类型的资产 |
 | `docs/specs/system-*.md` | UI/反馈需要呈现什么信息 |
-| `CLAUDE.md` | 项目当前状态 |
+| `CLAUDE.md` / `docs/game-state/INDEX.md` | 框架路由与约束 / 当前能力全貌与证据入口 |
 
 ### 你不碰的文档
 

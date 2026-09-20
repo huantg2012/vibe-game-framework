@@ -95,7 +95,7 @@ Foundation 只做三件事：
 │  3. Implement→ Code/Art agent 执行                       │
 │  4. Verify   → QA 对照 spec 验收                         │
 │  5. Validate → 人试玩，回答本 Slice 的验证问题            │
-│  6. Integrate→ 更新 gdd-core / architecture / CLAUDE.md  │
+│  6. Integrate→ 更新 game-state / 规则索引 / 活进度      │
 │                                                          │
 │  → 游戏现在多了一层，所有文档与代码同步                    │
 └─────────────────────────────────────────────────────────┘
@@ -243,57 +243,17 @@ Human(体验) ──判断→ 有趣吗？ ──→ 没趣 → 改设计或实�
 
 ### 问题：项目渐进生长，状态越来越复杂。人和 AI 怎么保持同步？
 
-### 答案：三个真相源
+### 答案：覆盖全游戏的文本索引，有证据的增量更新
 
-| 真相源 | 回答什么问题 | 谁维护 |
-| ------ | ------------ | ------ |
-| `CLAUDE.md` | "项目现在是什么状态" | Director（每 Slice 结束时更新） |
-| `docs/gdd-core.md` | "游戏被设计成什么样" | Director + Design Agent（每 Slice 增量更新） |
-| 代码本身 | "实际上现在是什么" | Code Agent（持续维护） |
+执行 [game-state 技能](../.agents/skills/game-state/SKILL.md)，说明见 [游戏现状索引](12-project-state.md)。
 
-如果这三者不一致 → 有问题需要解决：
-- CLAUDE.md 说"战斗系统已完成"但代码里没有 → CLAUDE.md 过时了
-- gdd-core.md 的规则和代码实现不同 → 要么改代码、要么改设计
-- Director 在每个 Slice 开始时做一致性检查，发现偏差就上报
+- `CLAUDE.md` 只管约束和路由，`docs/game-state/INDEX.md` 提供当前全貌。
+- 文本 feature 记录能力、入口、接入、工作状态、依赖和证据指针；spec/CSV 仍是规则正文。
+- 新 Slice 先声明影响哪些 feature，查依赖与历史证据适用性；收尾只更新实际变更和验证范围。
+- 文件存在/构建成功不能直接标“已完成”；正常流程可达、行为验证、人审体验分开。
+- Agent 读取短索引再按需深入；人需要时从同源生成 `atlas.html`，不手工维护另一份图。
 
-### CLAUDE.md 的 Slice 模型格式
-
-```markdown
-# [游戏名]
-
-## 一句话描述
-[...]
-
-## 当前状态
-- 阶段：Iterative Development
-- 当前 Slice：Slice 4 - 经济系统
-- Slice 状态：Implementation（Design 已完成，正在编码）
-
-## 已完成的 Slices
-- Slice 1: 核心移动+攻击循环 ✓
-- Slice 2: 敌人AI+战斗完整循环 ✓
-- Slice 3: 关卡结构+进度保存 ✓
-
-## 已实现的系统
-- 移动系统 (spec: docs/specs/system-movement.md)
-- 战斗系统 (spec: docs/specs/system-combat.md)
-- 关卡系统 (spec: docs/specs/system-levels.md)
-- 存档系统 (spec: docs/specs/system-save.md)
-
-## 技术栈
-[...]
-
-## 关键约束
-[...]
-
-## 工作规范
-[...]
-```
-
-每个新会话的 Agent 读到这个文件，就知道：
-- 游戏现在有哪些系统在运行
-- 当前在做什么
-- 哪些 spec 是相关的
+当前 Slice/迭代和路线在 progress 活文件；旧决定、未解决缺口与挂起工作保留可追溯来源。
 
 ---
 

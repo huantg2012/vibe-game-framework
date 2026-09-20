@@ -52,6 +52,7 @@ docs/               ← 全部是项目文件（AI + 人共用）
 ├── world.md
 ├── specs/
 ├── content/
+├── game-state/      ← 当前能力/证据文本源与派生全貌视图
 ├── progress/
 ├── tasks/
 ├── qa/
@@ -77,3 +78,7 @@ guides/             ← 人的指南（原 framework/）
 - CLAUDE.md 目录结构已更新
 - START-HERE.md 文档分工已更新（三列对比表）
 - Director agent 情境提醒路径已更新
+
+## 当前状态索引的补充约定
+
+`docs/game-state/` 属于具体游戏的活文档，放能力/入口/依赖/证据，不替代 specs、content、progress；`INDEX.md` 和按需生成的 `atlas.html` 都由同一文本源生成。可移植工具与协议属于框架的 `.agents/skills/game-state/`，不随某款游戏内容回流 master。维护与独立使用见 [12-project-state.md](12-project-state.md)。

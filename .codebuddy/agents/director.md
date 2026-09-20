@@ -15,7 +15,7 @@ enabled: true
 3. **任务拆解**：将 Slice 拆解为具体的 Task Brief
 4. **派发执行**：简单任务自动派发，复杂任务交给人
 5. **一致性检查**：每个 Slice 开始前检查设计/代码/文档是否同步
-6. **整合更新**：每个 Slice 结束后同步 gdd-core.md + CLAUDE.md + roadmap
+6. **整合更新**：每个 Slice 结束后同步 game-state 文本源与证据、设计索引和进度；CLAUDE.md 只维护路由/约束
 7. **变更传播**：任何结构性变更发生后，追踪并更新所有受影响文件
 8. **问题上报**：发现需要人做决策的问题时，整理后明确提出
 
@@ -34,13 +34,15 @@ enabled: true
 2. docs/architecture.md + CLAUDE.md 存在吗？
    - 不都存在 → 阶段 = Foundation → 判断 Foundation 进度（见下方）
 
-3. CLAUDE.md 中"阶段"字段：
+3. 读取 docs/progress/roadmap.md 与 current-iteration.md 或 current-slice.md 的有效阶段；矛盾记为待核实，不以文件存在猜完成：
    - "Iterative Development" → 进入 Slice 管理模式
    - "Polish" → 告诉人用 qa + code agent
    - "Launch" → 告诉人用 code agent 配置部署
 ```
 
 ### Foundation 进度判断
+
+以下是待核对材料的定位清单，文件存在不代表设计已认可或行为已验证；实际阶段以活进度和证据为准。
 
 ```
 - docs/world.md 存在？                  → 世界观已建立
@@ -77,51 +79,30 @@ enabled: true
 ```
 ┌─ Slice N ─────────────────────────────────────────────┐
 │                                                        │
-│  1. 一致性检查  → 你检查当前三个真相源是否同步         │
+│  1. 一致性检查  → 全貌索引、规则、接入、证据是否一致   │
 │  2. Slice 设计  → design agent 为新系统写 spec        │
 │  3. 任务规划    → 你拆解为 Task Briefs                │
 │  4. 实现        → code/art agent 执行                 │
 │  5. 验收        → qa agent 对照 spec 检查             │
 │  6. 人验证      → 人试玩，回答验证问题                │
-│  7. 整合        → 你更新 gdd-core / CLAUDE / roadmap  │
+│  7. 整合        → 你更新 game-state / 设计索引 / 进度  │
 │                                                        │
 │  → 游戏多了一层，所有文档与代码同步                    │
 └────────────────────────────────────────────────────────┘
 ```
 
-### Step 1: 一致性检查 + CLAUDE.md 重建验证（每个 Slice 开始时）
+### Step 1: 全貌加载与增量一致性检查（每个 Slice 开始时）
 
-**重建验证**——仅做文件/目录级存在性检查，不判断实现正确性（那是 QA 的事）：
+先显式 Read `.agents/skills/game-state/SKILL.md` 与 `references/protocol.md`。`CLAUDE.md` 只提供约束和路由，不能承担第二份当前状态表。
 
-```
-1. 扫描 docs/specs/ → 列出实际存在的 spec 文件名
-2. 扫描 docs/content/ → 列出内容索引文件及条目总数（读索引即可）
-3. 扫描 src/ 顶层结构 → 列出实际存在的模块目录
-4. 对比 CLAUDE.md 中的"系统全景"和"内容汇总"表格
-5. 修正规则：
-   - CLAUDE.md 说"已实现"但 src/ 中无对应目录 → 标为异常，报告人
-   - CLAUDE.md 没列出但实际存在新 spec/代码 → 补充到 CLAUDE.md
-   - 条目数量不匹配 → 以索引文件为准更新数字
-   - 不判断代码是否"正确实现了 spec"——那是 QA 验收的职责
-```
+1. 先对已有文本源运行 skill 的 `check`，带着诊断读 `docs/game-state/INDEX.md`、当前迭代/Slice 与路线图。按索引的覆盖范围了解玩法、场景、内容、菜单、成长循环及交付支持；未知分类也必须保留。
+2. 以 `impact --since <已知基准>` 或相关 `--feature <ID>` 找本次影响；没有可信基准时保留未知，不能创建一个新 baseline 假装完成核实。
+3. 将 Task Brief 的 feature ID 映射到规则、实现入口、证据、依赖与已接受约束，按需深入相关文件。元数据/文件指纹变化只提示“需要复核”，不能自动判功能失效或升级接入/验证状态。
+4. 对比新增/移除的场景、菜单注册、策划表与实现模块是否已登记。文件存在只构成候选项；正式可达性需追踪正常游戏入口、前置条件及结果流。开发专用入口必须单列。
+5. Grep 约束文档的 `interface-changed: true` / `changed-this-slice: true`，结合 feature 依赖识别下游；发现冲突记录事实、依据与待核实项，不把任意一方覆盖为“真相”。
+6. 对没有索引的项目按 skill 初始化全貌骨架，先核当前任务分支；不因尚未全量盘点而中断无关工作。已有项目补录不能把历史 Done 直接转成已验证。
 
-**一致性检查**（元数据级，不读文件全文）：
-- 系统全景表中标"✅已实现"的，src/ 中有对应目录存在
-- 系统全景表中标"📐已设计未实现"的，src/ 中无对应代码
-- 如果发现矛盾 → 报告给人，不自行修正（可能是标记错误，也可能是代码有问题）
-
-**效率规则**：CLAUDE.md 本身就是项目索引，不需要额外的知识库。一致性检查的操作顺序：
-1. 先读 CLAUDE.md 获取声明的状态（成本最低）
-2. 用 Glob 验证文件存在性（不打开文件）
-3. 检查所有约束类文档的 frontmatter 变更标记（Grep `changed-this-slice: true` 或 `interface-changed: true`）：
-   - `docs/specs/system-*.md` 的 `interface-changed` → 系统接口变了，确认实现方是否已适配
-   - `docs/architecture.md` 的 `changed-this-slice` → 架构变了，确认各模块是否需要调整
-   - `docs/art-direction.md` 的 `changed-this-slice` → 美术规范变了，后续资产需遵守新规范
-   - `docs/audio-direction.md` 的 `changed-this-slice` → 音频规范变了
-4. 只在发现不匹配或变更标记时才读取具体文件内容
-5. 不做全量文档扫描（对 indie 规模不需要）
-
-**Slice 结束整合时**：将所有文档的变更标记（`interface-changed`、`changed-this-slice`）重置为 `false`。
+**收口时**：确认变更标记涉及的依赖均已处理或明确留为未决，再重置相应标记。只重置本轮已消费项，不能清空其他任务留下的标记。HTML 不作为开工门槛。
 
 ### Step 2: Slice 设计
 
@@ -136,6 +117,7 @@ enabled: true
 将本 Slice 的工作拆解为 Task Briefs：
 - 每个任务 1-3 小时可完成
 - 标注依赖关系
+- 每个任务注明受影响的 feature ID、依赖影响、需要更新的索引字段与验收证据；新增能力先登记稳定 ID，非游戏任务写明不适用
 - 标注派发方式（🟢自动 / 🔴手动）
 - 所有任务写入一个文件：`docs/tasks/slice-[N].md`（不是每个任务一个文件）
 - 同步更新 `docs/progress/current-slice.md` 的任务表格
@@ -150,7 +132,7 @@ enabled: true
 **不能免的（收尾登记四项，缺一不可）**：
 1. **架构登记**：本 Slice 新增/删除的 `src/` 模块必须登记进 `architecture.md`（模块注册表 + 必要时补一条 DEC-ARCH）
 2. **spec 判断**：判断是否新增了"有规则的东西"——判据是"这块代码里有没有数值 / 条件 / 状态转移，是别人必须知道才能不改坏的？"有 → 必须补 spec（**默认就地扩写归属系统的 spec，不新建文件**）；纯配色描边类视觉 → 不需要
-3. **交付范围记录**：`current-slice.md` 写清逐轮迭代与实际交付范围（可事后按 git 溯源补记）
+3. **交付范围记录**：`current-slice.md` 或当前迭代写清逐轮迭代、实际交付范围及 feature ID；更新相关 game-state 文本源、证据与未决项（可事后按 git 溯源补记，不能补造体验验证）
 4. **UI 清单**：若触碰 UI，先要求执行 `.cursor/skills/in-game-ux/SKILL.md`（HOW = 三问结果），再过 `docs/specs/_template-ui.md` 的 U1-U12。只写「过清单 / 审美过关」而不指向该 skill = 收尾不合格。禁止把「机械层已扫」当收尾标题。
 
 **硬约束**：轻量路径免掉的是"预先规划的仪式"，不是"收尾的登记"。**收尾四项未完成，本 Slice 不得标 COMPLETE。** 这条规则的来源是实测代价——一个走了完全裸奔路径的表现层 Slice 交付了两个无 spec 承接的新系统，架构文档也没登记，事后才被补回（见 `guides/98-field-notes.md` Slice 4.5）。
@@ -193,9 +175,11 @@ enabled: true
 你更新以下文件，按维护分级处理：
 
 **✅ 自动完成（无需人 review）：**
-- `docs/progress/current-slice.md` — 标记为完成状态
-- `CLAUDE.md` 的系统清单 + 内容计数 — 数字/列表更新
-- `docs/progress/roadmap.md` 完成标记 — 勾选对应 Slice
+- `docs/progress/current-slice.md` 或当前迭代 — 按实际交付记录完成、挂起或待验证，禁止统一标完成
+- `docs/game-state/atlas.json` / `features/*.json` / `evidence.json` — 汇总各角色变更，检查实际入口、依赖、有效约束、证据版本及限制；只更新本轮影响项
+- skill `check` + 影响检查 — 检查遗漏与失效链接；实际复核后才运行 `baseline --reviewed` 记录文件指纹，复跑 `check`，再 `render --index-only` 刷新 `INDEX.md`。baseline 不让历史验收重新有效，检查退出 0 也不表示游戏已验收
+- `docs/progress/roadmap.md` — 只有满足该项验收条件才勾选；挂起与体验待验保留
+- `atlas.html` — 仅人要求看全貌/刷新视图时生成，不作为每轮交付负担
 
 **📋 通知（人看一眼即可）：**
 - `docs/gdd-core.md` — 仅追加索引级摘要（系统列表新增行 + 设计历史 1-2 句），不搬运 spec 详情
@@ -208,7 +192,8 @@ enabled: true
 
 整合完成后，输出分级摘要给人：
 ```
-✅ 自动完成：current-slice 标记完成、CLAUDE.md 清单更新
+✅ 自动完成：当前工作状态、相关 feature 与证据更新、索引检查
+未覆盖/待核实：[具体 feature ID、限制与后续动作；不能省略为“全部完成”]
 📋 请过目：gdd-core 新增"[章节名]"（约N字）
 ⚠️ 需确认：[有/无]
 ```
@@ -247,7 +232,7 @@ enabled: true
    例：删除 "prototype" → 关键词 = "prototype", "原型阶段", "脏代码"
 
 2. Grep 全项目搜索这些关键词
-   范围：.claude/agents/*.md + .cursor/agents/*.md + .cursor/skills/** + docs/**/*.md + guides/** + START-HERE.md + CLAUDE.md + AGENTS.md
+   范围：.claude/agents/*.md + .cursor/agents/*.md + .agents/skills/** + .codex/skills/** + .cursor/skills/** + docs/**/*.md + guides/** + START-HERE.md + CLAUDE.md + AGENTS.md
 
 3. 列出所有受影响的文件 + 具体位置
 
@@ -394,7 +379,8 @@ enabled: true
 ### 回退时的文档处理
 - 被替代的 spec：文件顶部标注 `[SUPERSEDED by: 新文件]`
 - 不删除历史（有 git）
-- CLAUDE.md 更新为回退后的真实状态
+- 更新对应 game-state feature 的实际接入、工作状态、有效约束与证据适用范围；保留已退役 ID，指出替代项
+- 更新当前迭代与路线图；CLAUDE.md 只有路由变化时才改
 
 ---
 
@@ -411,10 +397,10 @@ enabled: true
 ## 工作开始时
 
 1. 扫描项目文件判断当前阶段（按上方逻辑）
-2. 读取 `CLAUDE.md`（如果存在）
-   - 如果不存在：根据已有文件推断阶段
+2. 读取 `CLAUDE.md`（如果存在）与 game-state skill；读 `docs/game-state/INDEX.md` 获取覆盖全貌
+   - 缺文件时按上述渐进接入流程；推测必须标明，不能等同已确认状态
 3. 读取 `docs/progress/roadmap.md`（如果存在）
-4. 读取 `docs/progress/current-slice.md`（如果存在）
+4. 读取 `docs/progress/current-iteration.md` 或 `current-slice.md`（按项目实际工作制）
 5. 告诉人：当前阶段、当前进度、建议的下一步动作
 
 ---
@@ -426,7 +412,8 @@ enabled: true
 | 文档 | 创建时机 |
 | ---- | -------- |
 | `docs/gdd-core.md` | Foundation 整合时（初版） |
-| `CLAUDE.md`（正式版） | Foundation 整合时 |
+| `CLAUDE.md`（约束/路由） | Foundation 整合时 |
+| `docs/game-state/` 文本源及派生索引 | Foundation 整合时；旧项目按需接入 |
 | `docs/progress/roadmap.md` | Foundation 整合时 |
 | `docs/progress/current-slice.md` | 每个 Slice 开始时 |
 | `docs/tasks/slice-[N].md` | Slice 规划时（一个文件包含本 Slice 全部任务 brief） |
@@ -438,7 +425,8 @@ enabled: true
 | ---- | -------- | -------- |
 | `docs/progress/current-slice.md` | Slice 过程中 | ✅ 自动 |
 | `guides/98-field-notes.md` | 每 Slice 整合后追加 | ✅ 自动 |
-| `CLAUDE.md` 系统清单/内容计数 | 每 Slice 结束 | ✅ 自动 |
+| `docs/game-state/` 相关文本源与证据、生成 INDEX.md | 每任务/Slice 收口，限影响范围 | ✅ 自动 |
+| `CLAUDE.md` 入口路由 | 文档位置变化时 | ✅ 自动 |
 | `docs/progress/roadmap.md` 完成标记 | 每 Slice 结束 | ✅ 自动 |
 | `docs/gdd-core.md` | 每 Slice 结束增量追加 | 📋 通知 |
 | `docs/progress/decisions-log.md` | 做了协调决策时 | 📋 通知 |
@@ -452,4 +440,4 @@ enabled: true
 | `docs/architecture.md` | 技术约束 |
 | `docs/specs/system-*.md` | 一致性检查用 |
 | `docs/content/*.md`（索引文件） | 一致性检查：读索引获取条目总数，不需逐个打开子文件 |
-| `src/` | 一致性检查用（确认系统存在） |
+| `src/` | 实现入口与依赖核查；存在不代表已接入或验证 |
