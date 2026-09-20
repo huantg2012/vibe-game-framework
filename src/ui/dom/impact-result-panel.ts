@@ -1,6 +1,6 @@
 import { WEAPON_DATA } from '@/generated/weapon-data';
 /**
- * ImpactResultPanel — 冲击结算墙机（载体 B）。
+ * ImpactResultPanel — 在当前场景展开的归来/冲击结算报告。
  *
  * I11-B4c：保持结果屏骨架（标题 + 逐模块基础/实际 + 逐槽归因 + 潮汐/稳定度并入）。
  * 不要身份带、顶 Tab、`.crt-focus`、空状态三件套、出击预估。挂 #dom-ui-root。
@@ -45,6 +45,8 @@ export interface ChargeChangeEntry {
 }
 
 export interface ImpactPanelOptions {
+  /** First return still has a report, but no impact, defense use or offering charge. */
+  firstReturnExempt?: boolean;
   chargeChanges?: readonly ChargeChangeEntry[];
   /** Full defense-engine output for this impact (undefined = no defense slots active). */
   defenseResult?: DefenseResult;
@@ -68,7 +70,6 @@ export interface ImpactPanelOptions {
 // ---------------------------------------------------------------------------
 
 let panel: HTMLDivElement | null = null;
-let timer: ReturnType<typeof setTimeout> | null = null;
 let onDoneCallback: (() => void) | null = null;
 
 const MODULE_LABELS: Record<string, string> = { CORE: '核心', STORAGE: '储藏', PURIFIER: '净化器' };
@@ -165,14 +166,17 @@ function buildHtml(
   options: ImpactPanelOptions,
 ): string {
   const severity = options.actualSeverity;
-  let html = `<div class="panel-title">冲击之后</div>`;
+  const exempt = options.firstReturnExempt;
+  let html = `<div class="panel-title">${exempt ? '归来之后' : '冲击之后'}</div>`;
   html += `<div class="scroll-area">`;
   const worst = damages.reduce<ImpactDamageEntry | undefined>((current, entry) =>
     !current || entry.damage > current.damage ? entry : current, undefined);
-  html += `<div class="readout-hero"><span class="readout-label">${worst ? MODULE_LABELS[worst.moduleId] ?? worst.moduleId : '装置'} · 最大损伤</span>
-    <strong>${worst ? `−${worst.damage}` : '0'}</strong></div>
-    <div class="readout-note">冲击强度 x${intensity.toFixed(2)}${severity ? ` / ${SEVERITY_LABEL[severity]}` : ''}</div>
-    `;
+  html += exempt
+    ? `<div class="readout-hero"><span class="readout-label">装置 · 本次损伤</span><strong>0</strong></div>
+      <div class="readout-note">首次归来，本次免受冲击；供奉积累不增加。</div>`
+    : `<div class="readout-hero"><span class="readout-label">${worst ? MODULE_LABELS[worst.moduleId] ?? worst.moduleId : '装置'} · 最大损伤</span>
+      <strong>${worst?.damage ? `−${worst.damage}` : '0'}</strong></div>
+      <div class="readout-note">冲击强度 x${intensity.toFixed(2)}${severity ? ` / ${SEVERITY_LABEL[severity]}` : ''}</div>`;
   const hasRevelation = options.chargeChanges?.some(change => change.transformed) ?? false;
   if (hasRevelation) html += buildChargeChanges(options.chargeChanges);
   html += `<div class="section-title">装置完整度</div>`;
@@ -192,7 +196,7 @@ function buildHtml(
       <span class="stat-value">${d.newHp + d.damage}</span>
       <span>→</span>
       <span class="stat-value">${d.newHp}</span>
-      <span class="readout-note">损伤</span><span class="stat-value">−${d.damage}</span>
+      <span class="readout-note">损伤</span><span class="stat-value">${d.damage ? `−${d.damage}` : '0'}</span>
       <div class="dmg-bar-wrap">
         <div class="dmg-bar-fill" style="width:${barPct}%;background:#9b6b5b;"></div>
       </div>
@@ -366,24 +370,21 @@ function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Escape' || e.key === 'Enter') {
     e.stopPropagation();
     e.preventDefault();
-    dismiss();
+    if (!e.repeat) dismiss();
   }
 }
 
 function dismiss(): void {
-  document.removeEventListener('keydown', onKeyDown);
+  if (!panel) return;
   audioManager.playSFX('sfx-ui-close');
   const cb = onDoneCallback;
-  onDoneCallback = null;
   destroyPanel();
   cb?.();
 }
 
 function destroyPanel(): void {
-  if (timer) {
-    clearTimeout(timer);
-    timer = null;
-  }
+  document.removeEventListener('keydown', onKeyDown);
+  onDoneCallback = null;
   if (panel) {
     panel.remove();
     panel = null;

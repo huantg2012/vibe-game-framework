@@ -1,7 +1,7 @@
 /**
  * Minimap - circular local fog-of-war window.
  *
- * 33-tile (66px) window follows the player's current tile. Explored tiles are
+ * A 1056-world-pixel (66px) window follows the player's current tile. Explored tiles are
  * accumulated by the scene from real visibility queries; this module does not
  * import VisibilitySystem. Player / extract / abyss marks use distinct shapes.
  *
@@ -58,6 +58,8 @@ export function validateMinimapRuntimeState(value: unknown): value is MinimapRun
 // ---------------------------------------------------------------------------
 
 const MINIMAP_SCALE = 2;
+/** Display scale stays independent from the physical support grid (8px or 32px). */
+const DISPLAY_TILE_SIZE = 32;
 /** 25 × 1.3 = 32.5, kept odd so the player stays on the center tile. */
 const WINDOW_TILES = 33;
 const WINDOW_RADIUS_TILES = (WINDOW_TILES - 1) / 2;
@@ -193,8 +195,9 @@ export class Minimap {
 
     const playerTileX = Math.floor(playerWorldPos.x / this.tileSize);
     const playerTileY = Math.floor(playerWorldPos.y / this.tileSize);
-    const originTileX = playerTileX - WINDOW_RADIUS_TILES;
-    const originTileY = playerTileY - WINDOW_RADIUS_TILES;
+    const radius = WINDOW_RADIUS_TILES * DISPLAY_TILE_SIZE / this.tileSize;
+    const originTileX = playerTileX - radius;
+    const originTileY = playerTileY - radius;
 
     this.drawFrame(originTileX, originTileY, facing);
   }
@@ -290,6 +293,8 @@ export class Minimap {
 
   private drawFrame(originTileX: number, originTileY: number, facing: Facing4): void {
     const ctx = this.ctx;
+    const scale = MINIMAP_SCALE * this.tileSize / DISPLAY_TILE_SIZE;
+    const windowTiles = WINDOW_TILES * DISPLAY_TILE_SIZE / this.tileSize;
     ctx.fillStyle = BG_COLOR;
     ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
@@ -298,12 +303,14 @@ export class Minimap {
     ctx.arc(CLIP_CX, CLIP_CY, CLIP_RADIUS, 0, Math.PI * 2);
     ctx.clip();
 
-    for (let wy = 0; wy < WINDOW_TILES; wy++) {
+    // Only the local display window is visited. Fine cells retain their own
+    // knowledge bit: seeing one 8px cell never reveals its unseen neighbours.
+    for (let wy = 0; wy < windowTiles; wy++) {
       const my = originTileY + wy;
       if (my < 0 || my >= this.mapHeight) continue;
       const row = this.tiles[my];
       if (!row) continue;
-      for (let wx = 0; wx < WINDOW_TILES; wx++) {
+      for (let wx = 0; wx < windowTiles; wx++) {
         const mx = originTileX + wx;
         if (mx < 0 || mx >= this.mapWidth) continue;
         if (!this.explored[my * this.mapWidth + mx]) continue;
@@ -311,7 +318,7 @@ export class Minimap {
         const tile = row[mx];
         if (tile === undefined || tile === TileType.VOID) continue;
         ctx.fillStyle = tile === TileType.WALL ? EXPLORED_WALL : EXPLORED_FLOOR;
-        ctx.fillRect(wx * MINIMAP_SCALE, wy * MINIMAP_SCALE, MINIMAP_SCALE, MINIMAP_SCALE);
+        ctx.fillRect(wx * scale, wy * scale, scale, scale);
       }
     }
 
@@ -328,9 +335,11 @@ export class Minimap {
   ): { cx: number; cy: number } | null {
     const wx = tileX - originTileX;
     const wy = tileY - originTileY;
-    if (wx < 0 || wx >= WINDOW_TILES || wy < 0 || wy >= WINDOW_TILES) return null;
-    const cx = wx * MINIMAP_SCALE + 1;
-    const cy = wy * MINIMAP_SCALE + 1;
+    const scale = MINIMAP_SCALE * this.tileSize / DISPLAY_TILE_SIZE;
+    const windowTiles = WINDOW_TILES * DISPLAY_TILE_SIZE / this.tileSize;
+    if (wx < 0 || wx >= windowTiles || wy < 0 || wy >= windowTiles) return null;
+    const cx = (wx + .5) * scale;
+    const cy = (wy + .5) * scale;
     return { cx, cy };
   }
 
@@ -419,8 +428,9 @@ export class Minimap {
         this.drawExtractSlit(cell.cx, cell.cy);
       } else {
         // Knowledge is earned by sight. A remembered bearing is not a path through unseen void.
-        const dx = this.extractionTile.x - originTileX - WINDOW_RADIUS_TILES;
-        const dy = this.extractionTile.y - originTileY - WINDOW_RADIUS_TILES;
+        const radius = WINDOW_RADIUS_TILES * DISPLAY_TILE_SIZE / this.tileSize;
+        const dx = this.extractionTile.x - originTileX - radius;
+        const dy = this.extractionTile.y - originTileY - radius;
         const length = Math.hypot(dx, dy);
         if (length > 0) {
           this.ctx.fillStyle = EXTRACTION_COLOR;

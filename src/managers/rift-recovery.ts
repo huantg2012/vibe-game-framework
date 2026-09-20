@@ -1,3 +1,5 @@
+import { createWorldProductionMap, type WorldProductionMap } from '@/generation/world-study/production-map';
+import { selectWorldProductionRecipe, validWorldProductionRecipe, type WorldProductionRecipe } from '@/generation/world-study/production-recipe';
 import { validateHostRuntimeSnapshot } from '@/systems/contamination-host-system';
 import { createCombatRuntimeConfigurationSignature } from '@/systems/combat-system';
 /** Formal 2D world admission. Generation is deterministic; no runtime is replayed on load. */
@@ -17,6 +19,8 @@ import { colonyNucleusSeatsInFloors, resolveStopLoss } from '@/systems/contamina
 import type { InventoryState } from '@/types/inventory-types';
 import { checkpointChecksum, validRiftCheckpoint, validRiftDeparture, type RiftCheckpoint } from '@/types/rift-checkpoint';
 
+const worlds = new WeakMap<GeneratedRiftLayout, WorldProductionMap>();
+const generationRecipes = new WeakMap<GeneratedRiftLayout, WorldProductionRecipe>();
 const layouts = new Map<string, GeneratedRiftLayout>();
 const recipes = new Map<string, ReturnType<typeof createAIRuntimeConfiguration>>();
 const signatures = new WeakMap<GeneratedRiftLayout, string>();
@@ -27,7 +31,7 @@ function hostManifest(layout: GeneratedRiftLayout): { targets: string[]; nucleus
   const cached = hostManifests.get(layout);
   if (cached) return cached;
   const manifest = { targets: [] as string[], nucleusCounts: new Map<string, number>() };
-  const grid = new TileGrid(layout.tileMap), tile = GAME_CONSTANTS.TILE_SIZE, c = GAME_CONSTANTS.CONTAMINATION;
+  const grid = new TileGrid(worlds.get(layout)?.hostTileMap ?? layout.tileMap), tile = GAME_CONSTANTS.TILE_SIZE, c = GAME_CONSTANTS.CONTAMINATION;
   let paintIndex = 0;
   for (const form of layout.contaminationDraw.forms) {
     if (form.portfolio === 'jia') continue;
@@ -57,30 +61,49 @@ export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpo
   let signature = signatures.get(layout);
   if (!signature) {
     signature = checkpointChecksum({ tileMap: layout.tileMap, spawns: layout.enemySpawns, pins: layout.contaminationPins, draw: layout.contaminationDraw, spawn: layout.spawnPoint, exit: layout.extractionPoint, fuel: layout.kindlingNodes, items: layout.contaminantNodes });
+    const generation = generationRecipes.get(layout);
+    if (generation) signature = checkpointChecksum({ layout: signature, generation, hostTileMap: worlds.get(layout)!.hostTileMap });
     signatures.set(layout, signature);
   }
   return { worldId: 'procedural-rift', layoutId: 'procedural-rift', seed: layout.seed, recipeId: layout.recipeId,
-    signature };
+    signature, ...(generationRecipes.has(layout) ? { generation: generationRecipes.get(layout)! } : {}) };
+}
+function rememberWorld(generation: WorldProductionRecipe): GeneratedRiftLayout {
+  if (!validWorldProductionRecipe(generation)) throw new Error('Invalid saved world recipe');
+  const world = createWorldProductionMap(generation.profile, generation.space, generation.requestedSeed,
+    { contentFragmentTypeId: generation.contentFragmentTypeId });
+  worlds.set(world.layout, world); generationRecipes.set(world.layout, generation);
+  return world.layout;
+}
+function layoutKey(identity: RiftCheckpoint['identity']): string {
+  return `${identity.seed}:${identity.recipeId}:${identity.generation ? checkpointChecksum(identity.generation) : 'legacy'}`;
 }
 export function createProceduralDeparture(): RiftCheckpoint['identity'] {
   const values = new Uint32Array(1); crypto.getRandomValues(values);
-  const layout = generateRiftLayout(values[0]!);
+  const layout = rememberWorld(selectWorldProductionRecipe(values[0]!));
   const identity = proceduralRiftIdentity(layout);
-  layouts.clear(); layouts.set(`${identity.seed}:${identity.recipeId}`, layout);
+  layouts.clear(); layouts.set(layoutKey(identity), layout);
   return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };
 }
 export function restoreProceduralLayout(identity: RiftCheckpoint['identity']): GeneratedRiftLayout {
   if (identity.worldId !== 'procedural-rift' || identity.layoutId !== 'procedural-rift') throw new Error('Unsupported procedural world');
-  const key = `${identity.seed}:${identity.recipeId}`;
+  const key = layoutKey(identity);
   let layout = layouts.get(key);
   if (!layout) {
-    layout = generateRiftLayout(identity.seed);
-    if (proceduralRiftIdentity(layout).signature !== identity.signature) throw new Error('Saved world does not match the current generation contract');
+    layout = identity.generation ? rememberWorld(identity.generation) : generateRiftLayout(identity.seed);
     if (layouts.size >= 4) layouts.clear(); layouts.set(key, layout);
   }
-  if (proceduralRiftIdentity(layout).signature !== identity.signature) throw new Error('World identity mismatch');
+  const actual = proceduralRiftIdentity(layout);
+  if (actual.signature !== identity.signature
+    || (identity.generation && (actual.seed !== identity.seed || actual.recipeId !== identity.recipeId)))
+    throw new Error('Saved world does not match the current generation contract');
   return layout;
 }
+/** Presentation/Host adapters have no separate save state; the shared gameplay owns it. */
+export function restoreProceduralWorld(identity: RiftCheckpoint['identity']): WorldProductionMap | null {
+  return worlds.get(restoreProceduralLayout(identity)) ?? null;
+}
+
 function finiteJson(value: unknown): boolean {
   if (typeof value === 'number') return Number.isFinite(value);
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return true;

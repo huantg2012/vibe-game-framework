@@ -20,6 +20,7 @@ import type {
   ContaminationAge,
   GeneratedRiftLayout,
   RuinSeverity,
+  RuinedMask,
   WalkableMask,
 } from '@/generation/types';
 import {
@@ -450,6 +451,7 @@ function placeOnIsland(
   walk: Uint8Array,
   walls: Uint8Array,
   rng: SeededRandom,
+  routePolicy: 'legacy' | 'open-world' = 'legacy',
 ): PlaceOk | string {
   const cols = grid.cols;
   const rows = grid.rows;
@@ -486,7 +488,9 @@ function placeOnIsland(
   if (path.length < 12) return `path too short (${path.length})`;
 
   const dual = evaluateDualPath(walk, walls, cols, rows, spawn, extract);
-  if (!dual.ok) return dual.reason;
+  // Broad open terrain admits equal-length alternatives. The old cavern-style
+  // length/exposure preferences remain unchanged for the legacy generator.
+  if (routePolicy === 'open-world' ? dual.altSteps < 0 : !dual.ok) return dual.reason;
 
   const extractPos = worldOf(colOf(cols, extract), rowOf(cols, extract));
   if (sameWorld(extractPos, forbiddenExtract)) return 'extract matches handwritten X';
@@ -716,6 +720,138 @@ function attachLexiconForms(
   };
 }
 
+/** Existing production content placement on an explicit 32px terrain draft. */
+export interface RiftContentPlacementOptions {
+  readonly recipeId: string;
+  readonly contaminationAge: ContaminationAge;
+  readonly ruinSeverity: RuinSeverity;
+  /** Preserve the legacy generator's island-specific deterministic random stream. */
+  readonly placementTag?: string;
+  /** Only the dual-route exposure gate uses this mask; geometry and Host pins do not. */
+  readonly routeObstructions?: Uint8Array;
+  readonly routePolicy?: 'legacy' | 'open-world';
+}
+
+export function deployRiftContents(
+  seed: number,
+  draft: RuinedMask,
+  options: RiftContentPlacementOptions,
+): GeneratedRiftLayout | string {
+  if (draft.tileMap.tileSize !== TILE) throw new Error('Production content placement requires 32px logical cells');
+  const inputSeed = seed >>> 0;
+  const roll = options;
+  let lastWhy = 'no placement';
+  const grid = new TileGrid(draft.tileMap);
+  const walk = walkBits(grid);
+  const walls = wallBits(grid);
+  let floorCount = 0;
+  for (let i = 0; i < walk.length; i++) if (walk[i]) floorCount++;
+  if (floorCount < 80) {
+    lastWhy = `too few floors (${floorCount})`;
+    return lastWhy;
+  }
+
+  for (let place = 0; place < MAX_PLACE_ATTEMPTS; place++) {
+    const rng = new SeededRandom(mix32(inputSeed, `${options.placementTag ?? 'place:0'}:${place}`));
+    const placed = placeOnIsland(grid, walk, options.routeObstructions ?? walls, rng, options.routePolicy);
+    if (typeof placed === 'string') {
+      lastWhy = placed;
+      continue;
+    }
+
+    const spawnPoint = worldOf(colOf(grid.cols, placed.spawn), rowOf(grid.cols, placed.spawn));
+    const extractionPoint = {
+      id: 'EXIT_01',
+      position: worldOf(colOf(grid.cols, placed.extract), rowOf(grid.cols, placed.extract)),
+      triggerRadius: GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS,
+    };
+    if (sameWorld(extractionPoint.position, forbiddenExtract)) {
+      lastWhy = 'extract matches handwritten X';
+      continue;
+    }
+
+    const paintCount = rollPaintHostCount(inputSeed, roll.contaminationAge);
+    const spawnCol = colOf(grid.cols, placed.spawn);
+    const spawnRow = rowOf(grid.cols, placed.spawn);
+    const extractCol = colOf(grid.cols, placed.extract);
+    const extractRow = rowOf(grid.cols, placed.extract);
+    let contaminationPins = collectContaminationPins(draft.tileMap, {
+      spawnCol,
+      spawnRow,
+      extractCol,
+      extractRow,
+      kindling: placed.kindling.map((node) => {
+        const col = Math.floor(node.position.x / TILE);
+        const row = Math.floor(node.position.y / TILE);
+        return { col, row, tier: node.tier };
+      }),
+      paintCount,
+    });
+    if (typeof contaminationPins === 'string') {
+      console.warn(`[contamination-pins] seed ${inputSeed} retry: ${contaminationPins}`);
+      lastWhy = contaminationPins;
+      continue;
+    }
+    const lexiconRng = new SeededRandom(mix32(inputSeed, 'lexicon'));
+    const drawn = drawSortie(lexiconRng, {
+      fragmentTypeId: draft.fragmentTypeId,
+      paintCount,
+      hasWallEdges: contaminationPins.wallEdges.length > 0,
+      hasWallOpenings: doorwayWallSeats(contaminationPins.wallEdges, grid).length > 0,
+      hasCorridors: contaminationPins.corridorAabbs.length > 0,
+    });
+    if (drawn.forms.some(form => form.portfolio === 'ding' && isMaterialVolume(form.substrate))) {
+      const seat = findTerrainSafeVolumeSeat(contaminationPins.corridorAabbs, (col, row) => grid.isWalkable(col, row));
+      if (!seat) { lastWhy = 'material volume has no legal 2x2 local corridor seat'; continue; }
+      contaminationPins = { ...contaminationPins, corridorAabbs: [seat] };
+    }
+    const bound = attachLexiconForms(
+      lexiconRng,
+      draft.fragmentTypeId,
+      placed.enemies,
+      drawn,
+    );
+
+    const safeEnemySpawns = ensureStaticBodyAccess({
+      grid, spawnPoint, enemySpawns: bound.enemySpawns,
+      targets: [
+        { id: extractionPoint.id, position: extractionPoint.position, radius: extractionPoint.triggerRadius },
+        ...placed.kindling.map((node) => ({ id: node.id, position: node.position, radius: GAME_CONSTANTS.LOOT.SEARCH_RADIUS })),
+        ...placed.contaminants.map((node) => ({ id: node.id, position: node.position, radius: GAME_CONSTANTS.LOOT.SEARCH_RADIUS })),
+      ],
+    }, lexiconRng, draft.fragmentTypeId);
+    if (!safeEnemySpawns) { lastWhy = 'static bodies block player access after legal redraw'; continue; }
+    const safeDraw = safeEnemySpawns === bound.enemySpawns ? bound.contaminationDraw : {
+      forms: [...safeEnemySpawns.map((enemy) => enemy.form!), ...bound.contaminationDraw.forms.filter((form) => form.portfolio !== 'jia')],
+      warnings: bound.contaminationDraw.warnings,
+    };
+
+    return {
+      seed: inputSeed,
+      fragmentTypeId: draft.fragmentTypeId,
+      recipeId: options.recipeId,
+      contaminationAge: roll.contaminationAge,
+      ruinSeverity: roll.ruinSeverity,
+      tileMap: draft.tileMap,
+      ruins: {
+        ...draft,
+        contaminationAge: roll.contaminationAge,
+        ruinSeverity: roll.ruinSeverity,
+      },
+      walkableMask: makeWalkableMask(grid),
+      spawnPoint,
+      extractionPoint,
+      kindlingNodes: placed.kindling,
+      contaminantNodes: placed.contaminants,
+      enemySpawns: safeEnemySpawns,
+      landmarks: placed.landmarks,
+      contaminationPins,
+      contaminationDraw: safeDraw,
+    };
+  }
+  return lastWhy;
+}
+
 export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): GeneratedRiftLayout {
   const inputSeed = seed >>> 0;
   const rolled = rollFragmentAxes(inputSeed);
@@ -736,114 +872,13 @@ export function generateRiftLayout(seed: number, options?: RiftLayoutOptions): G
       continue;
     }
 
-    const grid = new TileGrid(draft.tileMap);
-    const walk = walkBits(grid);
-    const walls = wallBits(grid);
-    let floorCount = 0;
-    for (let i = 0; i < walk.length; i++) if (walk[i]) floorCount++;
-    if (floorCount < 80) {
-      lastWhy = `too few floors (${floorCount})`;
-      continue;
-    }
-
-    for (let place = 0; place < MAX_PLACE_ATTEMPTS; place++) {
-      const rng = new SeededRandom(mix32(inputSeed, `place:${island}:${place}`));
-      const placed = placeOnIsland(grid, walk, walls, rng);
-      if (typeof placed === 'string') {
-        lastWhy = placed;
-        continue;
-      }
-
-      const spawnPoint = worldOf(colOf(grid.cols, placed.spawn), rowOf(grid.cols, placed.spawn));
-      const extractionPoint = {
-        id: 'EXIT_01',
-        position: worldOf(colOf(grid.cols, placed.extract), rowOf(grid.cols, placed.extract)),
-        triggerRadius: GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS,
-      };
-      if (sameWorld(extractionPoint.position, forbiddenExtract)) {
-        lastWhy = 'extract matches handwritten X';
-        continue;
-      }
-
-      const paintCount = rollPaintHostCount(inputSeed, roll.contaminationAge);
-      const spawnCol = colOf(grid.cols, placed.spawn);
-      const spawnRow = rowOf(grid.cols, placed.spawn);
-      const extractCol = colOf(grid.cols, placed.extract);
-      const extractRow = rowOf(grid.cols, placed.extract);
-      let contaminationPins = collectContaminationPins(draft.tileMap, {
-        spawnCol,
-        spawnRow,
-        extractCol,
-        extractRow,
-        kindling: placed.kindling.map((node) => {
-          const col = Math.floor(node.position.x / TILE);
-          const row = Math.floor(node.position.y / TILE);
-          return { col, row, tier: node.tier };
-        }),
-        paintCount,
-      });
-      if (typeof contaminationPins === 'string') {
-        console.warn(`[contamination-pins] seed ${inputSeed} retry: ${contaminationPins}`);
-        lastWhy = contaminationPins;
-        continue;
-      }
-      const lexiconRng = new SeededRandom(mix32(inputSeed, 'lexicon'));
-      const drawn = drawSortie(lexiconRng, {
-        fragmentTypeId: recipe.fragmentTypeId,
-        paintCount,
-        hasWallEdges: contaminationPins.wallEdges.length > 0,
-        hasWallOpenings: doorwayWallSeats(contaminationPins.wallEdges, grid).length > 0,
-        hasCorridors: contaminationPins.corridorAabbs.length > 0,
-      });
-      if (drawn.forms.some(form => form.portfolio === 'ding' && isMaterialVolume(form.substrate))) {
-        const seat = findTerrainSafeVolumeSeat(contaminationPins.corridorAabbs, (col, row) => grid.isWalkable(col, row));
-        if (!seat) { lastWhy = 'material volume has no legal 2x2 local corridor seat'; continue; }
-        contaminationPins = { ...contaminationPins, corridorAabbs: [seat] };
-      }
-      const bound = attachLexiconForms(
-        lexiconRng,
-        recipe.fragmentTypeId,
-        placed.enemies,
-        drawn,
-      );
-
-      const safeEnemySpawns = ensureStaticBodyAccess({
-        grid, spawnPoint, enemySpawns: bound.enemySpawns,
-        targets: [
-          { id: extractionPoint.id, position: extractionPoint.position, radius: extractionPoint.triggerRadius },
-          ...placed.kindling.map((node) => ({ id: node.id, position: node.position, radius: GAME_CONSTANTS.LOOT.SEARCH_RADIUS })),
-          ...placed.contaminants.map((node) => ({ id: node.id, position: node.position, radius: GAME_CONSTANTS.LOOT.SEARCH_RADIUS })),
-        ],
-      }, lexiconRng, recipe.fragmentTypeId);
-      if (!safeEnemySpawns) { lastWhy = 'static bodies block player access after legal redraw'; continue; }
-      const safeDraw = safeEnemySpawns === bound.enemySpawns ? bound.contaminationDraw : {
-        forms: [...safeEnemySpawns.map((enemy) => enemy.form!), ...bound.contaminationDraw.forms.filter((form) => form.portfolio !== 'jia')],
-        warnings: bound.contaminationDraw.warnings,
-      };
-
-      return {
-        seed: inputSeed,
-        fragmentTypeId: recipe.fragmentTypeId,
-        recipeId: recipe.id,
-        contaminationAge: roll.contaminationAge,
-        ruinSeverity: roll.ruinSeverity,
-        tileMap: draft.tileMap,
-        ruins: {
-          ...draft,
-          contaminationAge: roll.contaminationAge,
-          ruinSeverity: roll.ruinSeverity,
-        },
-        walkableMask: makeWalkableMask(grid),
-        spawnPoint,
-        extractionPoint,
-        kindlingNodes: placed.kindling,
-        contaminantNodes: placed.contaminants,
-        enemySpawns: safeEnemySpawns,
-        landmarks: placed.landmarks,
-        contaminationPins,
-        contaminationDraw: safeDraw,
-      };
-    }
+    const deployed = deployRiftContents(inputSeed, draft, {
+      recipeId: recipe.id,
+      ...roll,
+      placementTag: `place:${island}`,
+    });
+    if (typeof deployed !== 'string') return deployed;
+    lastWhy = deployed;
   }
 
   throw new Error(

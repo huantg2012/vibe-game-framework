@@ -12,9 +12,9 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 ## 正式生产主线：俯视2D（DEC-169，2026-09-16）
 
-`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；Rift 使用 `generateRiftLayout`、原生 `TileGrid`、Phaser 2D 地表、像素角色及正式视野/战斗/搜撤。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。当前启用碎片由 `data/rift-fragments.csv` 决定：户外土壤、医院实验室、地铁工业、旧图书馆；居民区未启用。
+`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；新出击经 `createProceduralDeparture` 选择 `rift-world-pool.csv` 的世界/空间候选，`createWorldProductionMap` 投放完整正式内容，原生 `TileGrid`、像素角色、视野/战斗/搜撤保持。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。旧在途存档没有generation快照，仍按 `generateRiftLayout` 与原地表恢复；返回后下一趟使用新世界。完整合同见 `specs/system-map-generation.md`。
 
-三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。本次无运行接口、玩法、CSV或存档格式变更；基线验证见 [2D记录](qa/rift-2d-baseline.md)。
+三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。2026-09-16回退时无运行接口、玩法、CSV或存档格式变更；其基线验证见 [2D记录](qa/rift-2d-baseline.md)。
 
 ## 归档DEV · 迭代23：连续三维地貌与绘制景物（DEC-168 / R8）
 
@@ -506,7 +506,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | AllocationPanel | src/ui/dom/allocation-panel.ts | 模块投入、实际效果预览。三装置场景交互接收真实投影锚点，贴近实体读数与右侧操作；提交650ms反馈并防重复，清理rAF/计时器。其他分配仍用普通面板 | isOpen(), open(moduleId, onClose?, CoreAllocationContext), close() | R4核心人PASS，R5六点推广；旧调用兼容 |
 | DefensePanel | src/ui/dom/defense-panel.ts | 供奉墙机：只读身份带（三格都暗）+ 上槽下库。无顶 Tab。库存空走空状态三件套 | isOpen(), open(onClose?), close() | 已实现（Slice 3+；I11-B4c 同族） |
 | GrowthPanel | src/ui/dom/growth-panel.ts | 蜕变墙机：只读身份带（三格都暗）+ 六张刻入 + 第七张加厚。无顶 Tab | isOpen(), open(onClose?), close() | 已实现（Slice 3+；DEC-117 并进加厚；I11-B4c 同族） |
-| ImpactResultPanel | src/ui/dom/impact-result-panel.ts | 冲击结果先显示最大损伤，再展示装置前后完整度、供奉与转化事实；Enter / Esc / 合上按钮共用消解出口 | isOpen(), show(damages, intensity, onDone, options?), close(), destroy() | DEC-119 结果层级与鼠标出口 |
+| ImpactResultPanel | src/ui/dom/impact-result-panel.ts | 保存成功后发布归来报告；正常冲击先读最大损伤，首次豁免通过 `options.firstReturnExempt` 读损伤0、完整度不变与供奉不积累；Enter / Esc / 合上共用一次消解出口，销毁清除旧监听/回调 | isOpen(), show(damages, intensity, onDone, options?), close(), destroy() | DEC-119 结果层级；2026-09-20 首归报告修复 |
 | LoadoutPanel | src/ui/dom/loadout-panel.ts | 出击装配墙机：只读身份带 + 工具槽 + 只读出击预估三项（表名薪柴价值）。无顶 Tab | isOpen(), open(onConfirm, onClose?), close() | 已实现（Slice 3+；I11-B4c 同族） |
 | StatusPanel | src/ui/dom/status-panel.ts | 存续报告墙机：身份带 + 顶 Tab（装置/残渣/潮汐/蜕变）+ 详情主-从。`open` 第二参是净化点最近 overlap 类型，用来亮走近的台 | isOpen(), open(onClose?, nearestOverlap?), close() | 已实现（Slice 3+；I11-B4a 主-从） |
 | ModuleIdentityStrip | src/ui/dom/module-identity-strip.ts | 三模块身份带 HTML helper（名 + 条 + hp/maxHp）。效果百分比不进带。供存续报告 / 分配 / 蜕变 / 供奉 / 出击装配同族 | identityBandHtml(opts) | 已实现（I11-B4c 抽出，不是新系统） |
@@ -518,8 +518,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 > - `src/types/map-types.ts`（T6 新增）持有地图侧数据契约：`TileMapData` / `OccluderGrid` / `WalkGrid` / `EnemySpawnData` / `PatrolRouteData` / `KindlingNodeDef` / `ExtractionPointDef` / `RiftLayoutData`。
 > - `src/types/ai-types.ts`（T7 新增）持有敌人 AI 契约：`EnemyView`（含 `getRole` / `getDetection`，T3/T4/屏缘脉冲/渲染层消费）/ `EnemyAIState`（可变运行时状态，仅 AI 系统写）/ `EnemyTypeConfig` / `Perception` / `AlertLevel` / `SightZone` / `AICueId`。剖面类型从 `src/generated/enemy-data.ts` 再导出。放在 `types/` 而非 `systems/ai/` 是为了打断循环依赖。
 > - `src/config/invariants.ts`（T7 新增）把设计所依赖的常量关系写成可执行断言，dev 构建在 `main.ts` 启动时校验（DEC-020）。Slice 1 覆盖敌人 AI 的 I1–I6 + 一条跨 spec 补充检查。T8/T9 的 spec 不变量应追加进同一文件。
-> - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**夹具**（ASCII tile 网格 + 布点），导出 `RIFT_MAP` 与 `validateRiftMap()`。运行时裂隙走 `generateRiftLayout`；夹具给对照 / 测试。
-> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成（`src/scenes/placeholder-textures.ts`，练习场共用）；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 每次踏入 `generateRiftLayout(seed)` + Player + VisibilitySystem + AISystem + Combat/ContaminationHostSystem/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse / EncounterNarration 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 培养藏卡 A + 六点安全区钳制 + 全部 DOM 面板编排。另有开发练习场 `gym.html`（`GymBootScene` / `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene` / `GymRiftEntranceCardScene` / `GymOfferingCardScene` / `GymGrowthCardScene`，见 `docs/dev/gym.md`；视野对比课已随 DEC-107 下线）。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
+> - `src/scenes/rift-map-data.ts`（T6 新增）是 Slice 1 手工编排的固定裂隙地图**夹具**（ASCII tile 网格 + 布点），导出 `RIFT_MAP` 与 `validateRiftMap()`。旧在途裂隙走 `generateRiftLayout`，新出击走世界空间生产适配；夹具给对照 / 测试。
+> - 四个场景均已是真实实现（Slice 5 T0 更新，此前本注仍称 `BootScene`/`MainMenuScene`/`PurificationScene` 为骨架，已过期）：`BootScene` 加载条 + dev 深链接（`#rift`/`#purif`）+ 占位纹理生成（`src/scenes/placeholder-textures.ts`，练习场共用）；`MainMenuScene` 新远征/继续（读写 SaveManager 与各系统 reset）；`RiftScene` 按出发身份恢复原生成器或世界空间生产布局 + Player + VisibilitySystem + AISystem + Combat/ContaminationHostSystem/Tool/Extraction/Loot/ContaminantNode/Trail/Minimap / DetectionPulse / EncounterNarration 等系统的场景层编排；`PurificationScene` 动态力场边界 + 三模块 + 培养藏卡 A + 六点安全区钳制 + 全部 DOM 面板编排。另有开发练习场 `gym.html`（`GymBootScene` / `GymScene` / `GymPlayerScene` / `GymMapScene` / `GymLexiconScene` / `GymLexiconGalleryScene` / `GymPaintVeinCardScene` / `GymRiftEntranceCardScene` / `GymOfferingCardScene` / `GymGrowthCardScene`，见 `docs/dev/gym.md`；视野对比课已随 DEC-107 下线）。场景层负责把战斗/流程事件翻译成 AI 的刺激入口（`bindAIStimuli()`：`ENEMY_DAMAGED → reportDamage`、`ENEMY_KILLED → despawn`、`PLAYER_DIED` / `RIFT_EXIT_REACHED → onPlayerLost`），并把敌人察觉度/方位翻译给屏缘脉冲。AI 与 Combat、AI 与 DetectionPulse 互不 import（DEC-002）。
 
 ## 关键架构决策
 
@@ -1181,7 +1181,7 @@ R3附墙可见投影补充（R4仅历史兼容）：门框/墙锈主体沿真实
 
 ## 裂隙图志：独立世界生成样板（2026-09-17）
 
-`rift-worlds.html` → `src/dev/world-study.ts` → `generation/world-study/`。独立Canvas入口纳入Vite构建；空间配方与材料配方分别编译、独立采样，再静态烘焙。完整设计仍为 `docs/design-notes/rift-world-space.md` 中的提案，实际范围见 `docs/dev/rift-world-study.md`。当前共享组织与正式DEV接线见下方迭代26节；正式地图随机池不变。
+`rift-worlds.html` → `src/dev/world-study.ts` → `generation/world-study/`。独立Canvas入口纳入Vite构建；空间配方与材料配方分别编译、独立采样，再静态烘焙。完整设计仍为 `docs/design-notes/rift-world-space.md` 中的提案，实际范围见 `docs/dev/rift-world-study.md`。当前共享组织见下方迭代26节；2026-09-20正式池接线见下方迭代28修复节。
 
 ### 空间数据与运行时质量
 
@@ -1213,17 +1213,17 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 - `generation/world-study/region-field.ts`：共享片区构成（patches/bands/clusters）、静区、强调色面积，接surface-field并服务地表及形体，不按世界ID选择算法。
 - `generation/world-study/support.ts`：8px最终支撑权威，`getWorldSupportGrid/worldSupportAt/canStandWorld`；20×20真实AABB，查看器／地表／正式TileGrid同源。
 - `generation/world-study/material-response.ts`：带像素写入版本的稀疏反射所有权，后绘同色也退役被盖材料；新增形体在完成自身绘制后登记反射。
-- `rift-world-play.html`及`dev/world-play*`、`generation/world-study/play-map.ts`：通过原RiftDevFixture进入原RiftScene，内存session，复用原角色／视野／AI／翻找／结算。适配结果和失败日志由DEV只读接口供检查；不会替换正式入口随机池。`dev/world-play-surface.ts`烘焙地面并以520px局部透明纹理、15Hz更新同源反射，原可见性再裁切。
+- `rift-world-play.html`及`dev/world-play*`、`generation/world-study/play-map.ts`：通过原RiftDevFixture进入原RiftScene，内存session，复用原角色／视野／AI／翻找／结算。适配结果和失败日志由DEV只读接口供检查；此入口仍是隔离体验，正式出击另由production-map投放完整内容。`systems/world-space-surface.ts`由DEV re-export与正式共用，烘焙地面并以520px局部透明纹理、15Hz更新同源反射，原可见性再裁切。
 
 实施状态和最终文件登记在[迭代26](tasks/iteration-26.md)回填。颜色自由不改变游戏动作和缺失空间语义；固定正式逻辑分辨率960×640。
 
-迭代26 DEV表现选项：`suppressVoidNoise`仅改变未知背景噪声／底色，未见地面与空洞同为黑色；`extractionGlowRadius=8`保住支持范围内提示，默认正式入口不变。`RiftResultData.returnLabel`／fixture同名字段选择真实返回目的地，缺省仍是“返回净化点”，现有面板样式和按键不变。
+迭代26 DEV表现选项：`suppressVoidNoise`仅改变未知背景噪声／底色，未见地面与空洞同为黑色；`extractionGlowRadius=8`保住支持范围内提示，旧在途地图不变，2026-09-20新世界正式接线也采用这两项呈现设置。`RiftResultData.returnLabel`／fixture同名字段选择真实返回目的地，缺省仍是“返回净化点”，现有面板样式和按键不变。
 
 
 ### 迭代27 · 购买、知识与恢复边界（DEC-171）
 
 - `managers/growth-purchases.ts`是成长/加厚的持久化应用服务：快照游戏、成长、稳定度，执行真实消费与升级，一次保存后发布成功事件；拒写完整回滚，活动出击/未结算纪录阻止购买。UI只消费结果，不自行扣资源或先发奖励。数据仍由CSV与既有系统常量定义。
-- `Minimap`保留同一局部33格窗与真实可见格累积，只为已见撤离口加圆外方向刻记；不生成通路/揭示未知。可选 `abyss` 保存旧目标位置及剩余/总时钟，恢复不重新查询目标。66px原生画布及简短已记状态挂原overlay根。
+- `Minimap`保留原66px显示窗与约1056世界像素范围（32px地图33格，8px地图132格）及真实可见细格累积，只为已见撤离口加圆外方向刻记；不生成通路/揭示未知。可选 `abyss` 保存旧目标位置及剩余/总时钟，恢复不重新查询目标。66px原生画布及简短已记状态挂原overlay根。
 - `RiftHud`首次显示12秒可收起输入说明，之后保留展开入口；说明位于左侧状态下方，底部翻找/撤离与遭遇读数不叠第三层。初始数值由场景在订阅后按真实系统状态hydrate，恢复也不重发拾取/阈值事件。
 - `managers/rift-recovery.ts`拥有正式随机2D的生成身份、有限布局缓存与入场预校验。最终recipe仅校准，不强制覆盖原seed生成器的重试分支。Host核清单复用生产油膜纯烘焙/可走裁切/核位选择，保持生成遍历顺序；固定搜寻节点绑定种类、位置、基础产值与来源，包不能自行定义合法对象。
 - `ContaminationHostSystem`导出活动/反相节律、受伤核、危险源与抑制时钟，先恢复Host权威时钟，再由Tool恢复来源和显示；不重演施放。AI恢复全体正式甲身体/活动及视觉诱饵，Combat绑定真实身体与Host核ID。临时效果可引用已死对象，但只能引用原始清单。Player/Search的maxHealth与kindlingAffinity同时受存档成长等级约束。
@@ -1242,3 +1242,14 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 - RiftDeparture/Checkpoint与RunLedger锁目录/掉落/战斗版本；旧缺省是legacy。总恢复核对dropPlan地图身份、源参数、AI/Host与effect引用及一次动作回执，不只校验JSON形状。
 - UI经`projectItemForPlayer`→`contaminant-presentation`→原背包/供奉/报告/落地呈现。发现页只读公开定义，不能改变新实例的未知状态。`contaminant-catalog-icons*`为新独立24/32/16原帧，old icons专供旧物。
 - 迭代清单见`docs/tasks/iteration-28.md`；实现与内部证据不等于用户审美验收。
+
+
+### 2026-09-20 · 首归报告与世界空间生产接线
+
+- `data/rift-world-pool.csv` → `tools/map-preview/codegen-world-pool.mjs` → `generated/rift-world-pool-data.ts`：当前5世界/2空间等权候选，以及独立的已有内容方言引用；新增配方必须经此表显式启用。
+- `generation/world-study/production-recipe.ts`：确定性选池及完整快照校验。`RiftCheckpoint.identity.generation` 可选，version1记录requestedSeed/profile/space/contentFragmentTypeId；旧identity不变。
+- `generation/world-study/production-map.ts`：复用 `deployRiftContents` 的完整投放；8px物理与32px保守Host图并存。开放地形保留可达/不同绕行路线门，不沿用旧洞穴长短/贴墙偏好；20px身体、静态敌人、巡逻折点、占漆烘焙核及原配额共同准入。失败最多8候选，不降配、不退回旧池。
+- `managers/rift-recovery.ts`：新出击选择并冻结配方，签名包括渲染配方和Host图；续局按快照重建，旧档仍用旧生成器。Host清单按32px裁切；AI、探索、翻找使用8px图。掉落方案继续使用run中已存结果。
+- `systems/world-space-surface.ts`：DEV与正式唯一地表实现；Scene独立管理两张纹理及反射时钟，不冒充DEV运行态，不添加新的游戏状态所有者。反射、基础地表裁切及碰撞同源，VOID和未知背景均黑。
+- `RiftScene`：新世界实际Host以32px范围运行、识别与裁切；人物/AI/灯光用8px物理支撑。原翻堆物件外形沿用体验场既有户外残骸材质，搜寻来源保留真实world-study ID。新世界撤离标识显示glow8px，交互距离不变。
+- 首归：真实返程即使ImpactSystem因cycle<=1豁免，持久化成功后仍打开既有 `ImpactResultPanel`；只显示真实0损伤与未积累，不播放冲击反馈。详见冲击系统正文和专项QA。

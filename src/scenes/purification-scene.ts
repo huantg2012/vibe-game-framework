@@ -677,13 +677,24 @@ export class PurificationScene extends Phaser.Scene {
     // Slice 5.5 D5: the tide-phase-change and stability-milestone notices that used to
     // chain as separate "knowledge  " overlays after this panel are now rendered as a
     // trailing section INSIDE it — one blocking notification per return, not three.
+    // Exemption suppresses damage, not the return report. Snapshot unchanged HP
+    // for the first return without asking the impact/defense systems to run again.
+    const reportDamages = impactResult.skipped
+      ? gameState.getModules().map(module => ({ moduleId: module.id, damage: 0, newHp: module.hp }))
+      : impactResult.damages;
+    let arrivalPublished = false;
     const publishArrival = () => {
-      if (this.shuttingDown) return;
-      if (!impactResult.skipped) {
-        this.playImpactAudio(impactResult);
+      if (this.shuttingDown || arrivalPublished) return;
+      arrivalPublished = true;
+      if (isReturnFromRift) {
+        if (!impactResult.skipped) {
+          this.playImpactAudio(impactResult);
+          this.cameras.main.shake(300, 0.005);
+        }
         this.player.setInputEnabled(false);
-        this.cameras.main.shake(300, 0.005);
-        impactResultPanel.show(impactResult.damages, impactResult.intensity, () => {
+        impactResultPanel.show(reportDamages, impactResult.intensity, () => {
+          this.consumeEntryKeys();
+          this.panelClosedAt = this.time.now;
           this.player.setInputEnabled(!this.menuEntry && !saveManager.hasPendingSave());
           purificationHud.refresh();
           this.startIsolationBed();
@@ -691,6 +702,7 @@ export class PurificationScene extends Phaser.Scene {
           // non-blocking, so it doesn't re-introduce a second confirmation step).
           this.showNewToolToast(transformResults);
         }, {
+          firstReturnExempt: impactResult.skipped,
           chargeChanges: chargeChanges.length > 0 ? chargeChanges : undefined,
           defenseResult: impactResult.defenseResult,
           baseDamagePerModule: impactResult.baseDamagePerModule,

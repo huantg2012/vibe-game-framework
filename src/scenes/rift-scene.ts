@@ -1,9 +1,11 @@
+import { createWorldPlaySurface, type WorldPlaySurface } from '@/systems/world-space-surface';
+import { createSearchObjectVisual, ensureLootSearchTextures } from '@/systems/loot-search-presentation';
 import { createContaminantSourceRegions } from '@/generation/contaminant-source-regions';
 import { createContaminantDropPlan } from '@/systems/contaminant-drop-plan';
 import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { CATALOG_ITEMS } from '@/generated/contaminant-catalog-data';
 import { sweepGroundDash } from '@/systems/tool-targeting';
-import { proceduralRiftIdentity, restoreProceduralLayout, installProceduralRiftRecovery } from '@/managers/rift-recovery';
+import { proceduralRiftIdentity, restoreProceduralLayout, restoreProceduralWorld, installProceduralRiftRecovery } from '@/managers/rift-recovery';
 import type { RiftRecoveryConditions } from '@/systems/rift-recovery-state';
 import { RiftFrameCommit } from '@/systems/rift-frame-commit';
 import { validateRiftRecoveryState, type RiftRecoveryState } from '@/systems/rift-recovery-state';
@@ -192,6 +194,8 @@ export class RiftScene extends Phaser.Scene {
   private readonly fieldInventory = new FieldLootInventory();
   private devFixture: RiftDevFixture | null = null;
   private devRuntime: RiftDevRuntime | null = null;
+  private worldSurface: WorldPlaySurface | null = null;
+  private hostFloorGrid: TileGrid | null = null;
   private readonly devEnemyVisuals: RiftDevActorVisuals[] = [];
   private devElapsedMs = 0;
   private devPresentation: RiftPresentationFrame | null = null;
@@ -306,10 +310,13 @@ export class RiftScene extends Phaser.Scene {
       installProceduralRiftRecovery();
       this.recovery = { identity: proceduralRiftIdentity(generated), externalTargetIds: [] };
     }
+    const productionWorld = !this.devFixture && this.recovery ? restoreProceduralWorld(this.recovery.identity) : null;
+    const suppressVoidNoise = !!productionWorld || !!this.devFixture?.suppressVoidNoise;
     const tileMap = generated.tileMap;
     const grid = new TileGrid(tileMap);
     const sightGrid = this.devFixture?.createSightGrid?.(generated, grid) ?? grid;
     this.formFloorGrid = grid;
+    this.hostFloorGrid = productionWorld ? new TileGrid(productionWorld.hostTileMap) : grid;
     const layout = generated;
     if (this.devPresentation) {
       Object.assign(this.devPresentation.exit.position, layout.extractionPoint.position);
@@ -333,7 +340,7 @@ export class RiftScene extends Phaser.Scene {
     if (this.devFixture?.worldSurface === 'runtime') {
       if (!this.devFixture.createRuntime) throw new Error('A runtime-owned world surface requires a complete presentation factory');
       if (!this.devFixture.footstepMaterial) throw new Error('A runtime-owned world must declare its footstep material');
-    } else this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface);
+    } else if (!productionWorld) this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface);
 
     this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
 
@@ -342,7 +349,7 @@ export class RiftScene extends Phaser.Scene {
     camera.setBounds(0, 0, grid.widthPx, grid.heightPx);
     camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM);
     this.devFixture?.configureCamera?.(camera);
-    camera.setBackgroundColor(this.devFixture?.suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
+    camera.setBackgroundColor(suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
 
     const beforePlayer = this.devFixture?.createRuntime ? new Set(this.children.list) : null;
     this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right' });
@@ -351,7 +358,7 @@ export class RiftScene extends Phaser.Scene {
     camera.startFollow(this.player.getSprite(), true);
 
     const visionConfig = createRiftVisionConfig(DEPTH.visionMask);
-    this.visibility.create(this, this.devFixture?.suppressVoidNoise
+    this.visibility.create(this, suppressVoidNoise
       ? { ...visionConfig, voidNoiseEnabled: false, voidColor: 0x000000 } : visionConfig, sightGrid);
     this.visibility.clipLightsToIsland(tileMap);
     this.visibility.setExtractionPosition(layout.extractionPoint.position);
@@ -413,7 +420,8 @@ export class RiftScene extends Phaser.Scene {
       startingValue: openingChaos,
       getPollutionResistance: () => sumPollutionResistance([getSurvivalAttributes().resistancePercent, this.toolSystem.getPollutionResistanceBonus()]),
     });
-    this.hosts.create(this, layout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: grid, sightGrid,
+    const hostLayout = productionWorld ? { ...layout, tileMap: productionWorld.hostTileMap } : layout;
+    this.hosts.create(this, hostLayout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: this.hostFloorGrid, sightGrid,
       hearingPolicy: {
         getRangeMultiplier: () => this.ai.getHearingRangeMultiplier(),
         suppressDiscovery: (id) => this.ai.trySuppressHearingDiscovery(id),
@@ -444,7 +452,13 @@ export class RiftScene extends Phaser.Scene {
       overlayRoot: getDomUiRoot(),
       getVisibilityAt: this.visibilityAt,
       fragmentTypeId: generated.fragmentTypeId,
-      createVisual: this.devFixture?.createSearchObjectVisual,
+      // The source identity remains the world profile; only the established wreckage
+      // model uses its existing outdoor material, just as in the accepted play scene.
+      createVisual: this.devFixture?.createSearchObjectVisual ?? (productionWorld
+        ? (scene, position, visualSeed, getPlayerPos) => {
+          const slots = ensureLootSearchTextures(scene, 'frag-outdoor');
+          return createSearchObjectVisual(scene, position.x, position.y, visualSeed, 'frag-outdoor', slots, getPlayerPos);
+        } : undefined),
       extraction: {
         position: layout.extractionPoint.position,
         radius: layout.extractionPoint.triggerRadius,
@@ -566,7 +580,7 @@ export class RiftScene extends Phaser.Scene {
       layout.extractionPoint,
       () => this.player.getPosition(),
       () => this.runController.isRunEnded(),
-      { registerGlowSource: (id, pos, r) => this.visibility.registerGlowSource(id, pos, this.devFixture?.extractionGlowRadius ?? r) },
+      { registerGlowSource: (id, pos, r) => this.visibility.registerGlowSource(id, pos, this.devFixture?.extractionGlowRadius ?? (productionWorld ? 8 : r)) },
     );
 
     this.runController.create(this, {
@@ -658,6 +672,15 @@ export class RiftScene extends Phaser.Scene {
       throw error;
     }
 
+    this.worldSurface = productionWorld ? createWorldPlaySurface({ scene: this,
+      player: { getPosition: () => this.player.getPosition() },
+      isRunEnded: () => this.runController.isRunEnded(), visibilityAt: this.visibilityAt,
+      getFootprint: () => {
+        const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+        return { x: body.x, y: body.y, width: body.width, height: body.height };
+      },
+    }, productionWorld.sample) : null;
+
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
@@ -710,7 +733,7 @@ export class RiftScene extends Phaser.Scene {
     this.devRuntime?.update(this.devElapsedMs, this.runController.isRunEnded());
     this.toolSystem.syncHostVisuals();
 
-    const tileSize = this.formFloorGrid!.tileSize;
+    const tileSize = this.hostFloorGrid!.tileSize;
     const p = this.player.getPosition();
     const pCol = Math.floor(p.x / tileSize);
     const pRow = Math.floor(p.y / tileSize);
@@ -769,7 +792,7 @@ export class RiftScene extends Phaser.Scene {
     this.syncHudActiveEffects();
     this.extraction.update(delta);
     this.hud.update(delta);
-    if (this.devFixture?.worldSurface !== 'runtime') this.riftSurface.update(delta);
+    if (!this.worldSurface && this.devFixture?.worldSurface !== 'runtime') this.riftSurface.update(delta);
 
     // Tool key input (edge-triggered), one entry per active sortie slot.
     for (let i = 0; i < this.toolKeys.length; i++) {
@@ -811,6 +834,7 @@ export class RiftScene extends Phaser.Scene {
       this.syncDevPresentation();
       if (!this.commitRuntimeFrame()) return;
       this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.worldSurface?.afterUpdate(this.devElapsedMs);
       this.frameCommit?.begin();
       return;
     }
@@ -819,6 +843,7 @@ export class RiftScene extends Phaser.Scene {
       this.syncDevPresentation();
       if (!this.commitRuntimeFrame()) return;
       this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.worldSurface?.afterUpdate(this.devElapsedMs);
       this.frameCommit?.begin();
       return;
     }
@@ -837,6 +862,7 @@ export class RiftScene extends Phaser.Scene {
     this.syncDevPresentation();
     if (!this.commitRuntimeFrame()) return;
     this.devRuntime?.afterUpdate(this.devElapsedMs);
+    this.worldSurface?.afterUpdate(this.devElapsedMs);
     this.frameCommit?.begin();
     if (this.debugPanel) this.updateDebugOverlay(delta);
   }
@@ -1771,7 +1797,7 @@ export class RiftScene extends Phaser.Scene {
         scene: this,
         form: subject.form,
         subjectId: subject.id,
-        isWalkableFloor: (col, row) => this.formFloorGrid?.isWalkable(col, row) ?? false,
+        isWalkableFloor: (col, row) => this.hostFloorGrid?.isWalkable(col, row) ?? false,
         seed: mix32(seedRoot, subject.id),
         depth: this.depthForHostPin(pin?.kind),
         fragmentTypeId,
@@ -1943,6 +1969,7 @@ export class RiftScene extends Phaser.Scene {
       this.syncHudActiveEffects();
       this.runController.finishRuntimeRestore();
       this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.worldSurface?.afterUpdate(this.devElapsedMs);
     }
     this.frameCommit = new RiftFrameCommit({ capture: sequence => this.captureRuntimeCheckpoint(sequence),
       onFailure: retry => {
@@ -2050,6 +2077,8 @@ export class RiftScene extends Phaser.Scene {
     window.removeEventListener('pagehide', this.onRecoveryPageHide);
     document.removeEventListener('visibilitychange', this.onRecoveryVisibility);
     this.frameCommit?.destroy(); this.frameCommit = null;
+    this.worldSurface?.destroy();
+    this.worldSurface = null;
     this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
     for (const unregister of this.devTargetDisposers) unregister();
     this.endEntryGate();
@@ -2101,6 +2130,7 @@ export class RiftScene extends Phaser.Scene {
     this.combat.destroy();
     this.hosts.destroy();
     this.formFloorGrid = null;
+    this.hostFloorGrid = null;
     this.detectionPulse.destroy();
     this.encounter.destroy();
     this.hud.destroy();

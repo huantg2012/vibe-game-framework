@@ -30,13 +30,21 @@ exposes:
 
 ## 正式生产主线：俯视2D（DEC-169，2026-09-16）
 
-`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；Rift 使用 `generateRiftLayout`、原生 `TileGrid`、Phaser 2D 地表、像素角色及正式视野/战斗/搜撤。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。当前启用碎片由 `data/rift-fragments.csv` 决定：户外土壤、医院实验室、地铁工业、旧图书馆；居民区未启用。
+`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。逻辑分辨率960×640，原像素角色、80px/s基础移动、八向视野、战斗、翻找和撤离保持生产系统所有权。
 
-三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。本次无运行接口、玩法、CSV或存档格式变更；基线验证见 [2D记录](../qa/rift-2d-baseline.md)。
+**2026-09-20 正式接线修复：** 新出击通过 `createProceduralDeparture` 从 `data/rift-world-pool.csv` 选择世界/空间配方；不再从旧碎片环境池抽取。当前为5种世界 × 2种开放空间，共10条等权候选；同配方仍用不同种子生成。候选不承诺五趟不重复。CSV的 `content_fragment_id` 独立选择既有污染句法方言，当前复用旧图书馆已上线的完整敌人组合，不把场景身份伪装成旧图书馆。人物、敌人机制、8堆薪柴/3个污染物翻堆、单听觉预算与按片龄的占漆配额继续复用生产规则。
 
-## 当前DEV · 裂隙世界空间（DEC-170 / 迭代26）
+旧在途存档的identity没有 `generation`，仍以原 `generateRiftLayout` 和原地表恢复该趟；返回后的下一次新出击进入世界空间池。三维/绘制式关卡探索仍归档，不进入正式池。
 
-正式随机池仍走上述旧生成器。新世界能力位于 `generation/world-study/`，通过两条DEV入口验证：`rift-worlds.html` 是材料／空间查看器；`rift-world-play.html` 通过现有 `RiftDevFixture` 注入原 `RiftScene`，验证正式视野、玩家、敌人、翻找与撤离。第二入口使用内存存储，不写正式存档；`suppressVoidNoise`只对本DEV关闭未知区域暗噪声并以黑色作为未知背景，避免未见地面与空洞不同底色泄露轮廓。正式入口缺省不传该选项，原光域／暖光／转向／玩法遮挡照旧。是否达到完整游戏内容质量仍需实景与人审。
+## 生产与DEV共享 · 裂隙世界空间（DEC-170 / 迭代26；2026-09-20接线）
+
+新世界能力位于 `generation/world-study/`。`rift-worlds.html` 仍是材料/空间查看器；`rift-world-play.html` 是隔离体验入口，保留内存存储。正式入口使用 `production-map.ts` 的生产内容投放，不能复用体验入口的2+2少量摆放。`systems/world-space-surface.ts` 由正式与DEV共同调用，不存在两份地面渲染实现；正式场景独立管理其创建/释放，游戏状态仍由原各玩法系统保存。
+
+新世界正式与DEV都把未见区域和VOID置黑，禁用会提前泄露轮廓的VOID底噪；原光域/暖光/转向/玩法遮挡保持一份实现。地表反射只能留在最终支撑且当前可视的像素；不提供第二套视野。不因这次接线代勾完整美术验收或长期体验采样。
+
+**存档身份：** `generation.version=1` 固定 requestedSeed、完整WorldProfile/SpaceProfile快照和contentFragmentTypeId；顶层seed为实际成功种子。身份签名覆盖地形、投放、快照与Host逻辑地形。续局按快照重建且核对签名，既不重新抽CSV，也不重掷已存污染物掉落方案。未知/损坏版本拒绝恢复并保留原记录，不静默切回旧地图。
+
+**两种网格的边界：** 渲染、移动、AI、视野、足迹、探索记忆用8px最终支撑。既有环境污染的锚点、扩散/核和接触单位保留32px；其投放图仅接纳完整受支撑的32px单元，并从该图计算Host裁切、可识别坐标和恢复清单。两者以世界像素对接，不把原范围缩小四倍。开放地形要求真实身体可达及不同的绕行路线，不套用旧洞穴“替代路线必须更长/更贴墙”的风格约束。旧生成器默认策略和存档结果保持原样。
 
 **有效数据合同：** 世界配方 `data/rift-world-profiles.csv` 与空间配方 `data/rift-world-spaces.csv` 独立编译。`WorldProfile` 提供角色色板、底材／覆盖材及材料过程。除了 coverage/wear/deposits/scale/relief/contrast，区域组织增加 organization（patches/bands/clusters）、regionScale、quietness、formScale、fragmentation、accentCoverage。三个尺度字段 scale/regionScale/formScale 范围 .5–2，其余数量型字段0–1。旧匿名配方缺省使用共享默认，不按ID补参数；新CSV记录必须显式给齐。色彩角色不设低饱和上限，也不强制矿物世界；色彩组织通过底材、覆盖材、局部强调及明度分工控制。
 
@@ -44,9 +52,9 @@ exposes:
 
 **组织与渲染：** region-field驱动片区、静区和稀疏强调；surface-field在此基础上组织覆盖、磨损、沉积及露底；ground-material与material-forms共享过程。形体尺度独立于微纹理尺度；破碎度不能退化为到处加噪点。面片反射在拥有该像素后登记，任何后续覆盖（包括同色）都退役旧反射，防止高光浮在错误材料或空洞上。
 
-**失败处理：** 原开放空间质量门保留并升级真实身体检查；确定性重试上限12，失败明确拒绝。正式适配另校核部署可达与完整身体净宽，并公开实际seed／重试原因。有限样本不是整个条件世界空间的证明；完整世界包、条件采样器、离线入库和大量内容扩产不属于本迭代。
+**失败处理：** 原开放空间质量门保留并升级真实身体检查；确定性重试上限12，失败明确拒绝。生产适配另以最多8个确定性候选校核部署、20px完整身体、静态敌人阻塞、巡逻转弯及占漆实际核落点；记录实际seed／重试原因。失败明确拒绝出击，不退回旧池。有限样本不是整个条件世界空间的证明；完整世界包、条件采样器、离线入库和大量内容扩产不属于本迭代。
 
-DEV结果文案通过fixture可选`returnLabel`明确返回配置，正式缺省仍返回净化点。撤离显示glow在该入口设8px以留在已支持落点，不改正式48px默认及撤离触发距离。
+DEV结果文案通过fixture可选`returnLabel`明确返回配置，正式缺省仍返回净化点。新世界撤离显示glow在正式/DEV均设8px以留在已支持落点；旧在途地图保持原48px默认，撤离触发距离不变。
 
 当前实施／证据以[迭代26合同](../tasks/iteration-26.md)与[开发入口](../dev/rift-world-study.md)为准。
 
