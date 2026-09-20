@@ -231,6 +231,7 @@ export class RiftScene extends Phaser.Scene {
   /** Seeded past the refresh interval so the panel has content on the first frame. */
   private debugAccumulatorMs = Number.POSITIVE_INFINITY;
   private layoutDebug = { seed: 0, fragmentTypeId: '', recipeId: '' };
+  private paintGeometryVersion: 1 | 2 = 1;
   private lastStepAt = -1000;
   private hitThisFrame = false;
   private probeSearchHeld = false;
@@ -327,6 +328,7 @@ export class RiftScene extends Phaser.Scene {
       fragmentTypeId: generated.fragmentTypeId,
       recipeId: generated.recipeId,
     };
+    this.paintGeometryVersion = generated.paintGeometryVersion ?? 1;
 
     // The tilemap layer stays for physics/collision but is made invisible: the visible
     // surface is a continuous procedural texture (DEC-018), not the flat placeholder tiles.
@@ -1798,6 +1800,12 @@ export class RiftScene extends Phaser.Scene {
         form: subject.form,
         subjectId: subject.id,
         isWalkableFloor: (col, row) => this.hostFloorGrid?.isWalkable(col, row) ?? false,
+        surfaceFloorAt: point => this.formFloorGrid?.isWalkableAt(point.x, point.y) ?? false,
+        surfaceFloorTileSize: this.formFloorGrid?.tileSize,
+        surfaceVisibilityAt: this.visibilityAt,
+        surfaceVisibilityRevision: () => this.visibility.getQueryRevision(),
+        surfaceIntersectsSight: bounds => this.visibility.maySeeBounds(bounds),
+        paintGeometryVersion: this.paintGeometryVersion,
         seed: mix32(seedRoot, subject.id),
         depth: this.depthForHostPin(pin?.kind),
         fragmentTypeId,

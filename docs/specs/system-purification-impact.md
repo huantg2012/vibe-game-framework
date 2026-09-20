@@ -269,6 +269,7 @@ interface SortieModifiers {
 
 30. **裂隙→净化点**：`RIFT_EXITED` → RunController 延迟 600ms → `scene.start('PurificationScene', { kindlingGained, survived })`。进入后立即结算冲击（规则 19）。
 31. **净化点→裂隙**：玩家在裂隙入口按 E → 打开出击装配面板 → 确认 → `cycle++` → 读取 `getSortieModifiers()`（此时 `moduleSwapActive` 已生效，规则 55；`startingChaos` 已按规则 27b 算好）→ 存档 → emit `RIFT_ENTERED { cycle }` → 0.3s 边缘内收辉光 + 0.5s 文字过场 → `scene.start('RiftScene', { modifiers, cycle, loadout })`。取消装配面板则留在净化点。
+    - 文字过场结束时，必须先立即停止旧净化点的绘制，再移除过渡层和卸载资源。`scene.start`进入下一帧队列，不能让当前帧显示已拆除角色/装置的旧地面；交接帧使用既有近黑画布底色。再次进入净化点由场景正常启动恢复可见，不延长过场或改变出击事务。
 31a. **出击初值合成**：RiftScene 创建 ChaosSystem 时一次写入
 
     ```

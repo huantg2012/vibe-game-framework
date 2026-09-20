@@ -75,6 +75,8 @@ export interface PaintField {
   readonly v: Float32Array;
   readonly w: number;
   readonly h: number;
+  /** Authored size, independent of the storage canvas and its breathing margin. */
+  readonly logicalSpan?: number;
 }
 
 export interface PaintFillOpts {
@@ -136,8 +138,12 @@ export function topologyOf(substrate: string): PaintTopology {
   return 'lobe_mass';
 }
 
-export function makePaintField(w: number, h: number): PaintField {
-  return { v: new Float32Array(w * h), w, h };
+export function makePaintField(w: number, h: number, logicalSpan?: number): PaintField {
+  return { v: new Float32Array(w * h), w, h, ...(logicalSpan === undefined ? {} : { logicalSpan }) };
+}
+
+function authoredSpan(field: PaintField): number {
+  return field.logicalSpan ?? Math.min(field.w, field.h);
 }
 
 function add(f: PaintField, x: number, y: number, amt: number): void {
@@ -273,7 +279,7 @@ function placementsOf(
 ): readonly Placement[] {
   const cx = f.w / 2;
   const cy = f.h / 2;
-  const span = Math.min(f.w, f.h);
+  const span = authoredSpan(f);
   const tree = topo === 'vein_tree';
   if (continuity === 'monolith') {
     return [{ cx, cy, scale: 1 }];
@@ -331,7 +337,7 @@ function lobeMass(
   senseAng: number,
   knobs: RhythmKnobs,
 ): void {
-  const R = Math.max(7, Math.min(f.w, f.h) * 0.33 * scale);
+  const R = Math.max(7, authoredSpan(f) * 0.33 * scale);
   const lobes = Math.max(3, 4 + knobs.lobeExtra);
   const amp = knobs.lobeAmp;
   const phi = senseAng;
@@ -394,7 +400,7 @@ function veinTree(
   }
   const thick = Math.max(0.85, 1.2 * scale);
   const loopR = Math.max(1.9, 2.15 * scale);
-  const baseLen = Math.min(f.w, f.h) * 0.34 * scale;
+  const baseLen = authoredSpan(f) * 0.34 * scale;
   const maxDepth = 2 + stage;
   const zigzag = knobs.zigzag;
   const ends: { x: number; y: number }[] = [];
@@ -470,7 +476,7 @@ function veinTreeFlat(
 ): void {
   const thick = Math.max(0.95, 1.15 * scale);
   const loopR = Math.max(1.1, 1.25 * scale);
-  const baseLen = Math.min(f.w, f.h) * 0.36 * scale;
+  const baseLen = authoredSpan(f) * 0.36 * scale;
   const maxDepth = 2 + stage;
   const zigzag = knobs.zigzag * 0.18;
   const ends: { x: number; y: number }[] = [];
@@ -560,7 +566,7 @@ function veinTreeConverge(
   knobs: RhythmKnobs,
 ): void {
   const thick = Math.max(1.05, 1.4 * scale);
-  const baseLen = Math.min(f.w, f.h) * 0.38 * scale;
+  const baseLen = authoredSpan(f) * 0.38 * scale;
   const maxDepth = 1 + (stage >= 1 ? 1 : 0);
   const zigzag = knobs.zigzag * 0.28;
   const trunk: { x: number; y: number }[] = [];
@@ -644,7 +650,7 @@ function oilFilmBeads(
   senseAng: number,
   knobs: RhythmKnobs,
 ): void {
-  const span = Math.min(f.w, f.h);
+  const span = authoredSpan(f);
   const s = scale * 1.35;
   const merge = stage >= 2 ? 1.32 : 1;
   const beads: { x: number; y: number; r: number; fine: boolean }[] = [];
@@ -733,7 +739,7 @@ function oilFilmSmear(
   senseAng: number,
   knobs: RhythmKnobs,
 ): void {
-  const span = Math.min(f.w, f.h);
+  const span = authoredSpan(f);
   const s = scale * 1.6;
   const strokes = 1 + stage;
   for (let i = 0; i < strokes; i++) {
@@ -776,7 +782,7 @@ function oilFilmRimPool(
   senseAng: number,
   knobs: RhythmKnobs,
 ): void {
-  const span = Math.min(f.w, f.h);
+  const span = authoredSpan(f);
   const s = scale * 1.35;
   const blobs = 1 + (stage >= 2 ? 1 : 0);
   const at = (x: number, y: number): number =>
@@ -885,7 +891,7 @@ function holedVeil(
   senseAng: number,
   knobs: RhythmKnobs,
 ): void {
-  const span = Math.min(f.w, f.h);
+  const span = authoredSpan(f);
   const grow = stage === 1 ? 1.28 : 1;
   const rx = Math.max(10, span * 0.42 * scale * grow);
   const ry = Math.max(8, span * (stage === 1 ? 0.24 : 0.3) * scale * (stage === 1 ? 1.08 : 1));
@@ -942,7 +948,7 @@ function drawUnit(
 
 /** R3: growing shelf colonies / torn ash deposits, each with its own mass. */
 function materialColony(f: PaintField, p: Placement, seed: number, stage: number, ash: boolean): void {
-  const span=Math.min(f.w,f.h)*p.scale;
+  const span=authoredSpan(f)*p.scale;
   const count=ash?4+stage:5+stage*2;
   const rng=new PaintRng(seed,ash?'ash-lamina':'fungal-shelves');
   for(let k=0;k<count;k++) {

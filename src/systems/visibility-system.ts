@@ -261,6 +261,11 @@ export class VisibilitySystem {
   /** Live copy of the last update origin; used by the query API. */
   private readonly origin: Vector2 = { x: 0, y: 0 };
   private readonly glowSources = new Map<string, GlowSource>();
+  private queryRevision = 0;
+  private readonly querySnapshot: {
+    x: number; y: number; facing: number; radiusScale: number; abilityScale: number;
+    gridVersion: number; grid?: OccluderGrid; config?: VisionConfig;
+  } = { x: NaN, y: NaN, facing: NaN, radiusScale: NaN, abilityScale: NaN, gridVersion: -1 };
 
   create(scene: Phaser.Scene, config: VisionConfig, occluders: OccluderGrid): void {
     this.scene = scene;
@@ -435,6 +440,34 @@ export class VisibilitySystem {
   }
 
   // ------------------------------------------------------------ queries
+
+  /** A stable revision of exactly the inputs read by getVisibilityAt. Surface
+   * renderers can reuse pixel queries while the player and sight are unchanged.
+   * Use the committed facingCache (including degradation), not input facing. */
+  getQueryRevision(): number {
+    const previous = this.querySnapshot;
+    if (previous.x !== this.origin.x || previous.y !== this.origin.y ||
+        previous.facing !== this.facingCache || previous.radiusScale !== this.radiusScale ||
+        previous.abilityScale !== this.abilityRadiusMultiplier ||
+        previous.grid !== this.occluders || previous.gridVersion !== this.occluders.version ||
+        previous.config !== this.config) {
+      previous.x = this.origin.x; previous.y = this.origin.y; previous.facing = this.facingCache;
+      previous.radiusScale = this.radiusScale; previous.abilityScale = this.abilityRadiusMultiplier;
+      previous.grid = this.occluders; previous.gridVersion = this.occluders.version; previous.config = this.config;
+      this.queryRevision++;
+    }
+    return this.queryRevision;
+  }
+
+  /** Conservative broad phase only. A surface outside the largest current
+   * sight radius cannot contribute; intersections still need normal pixel LOS.
+   * This never uses an enemy core, its cone direction or a tile-centre guess. */
+  maySeeBounds(bounds: Readonly<{ left: number; top: number; right: number; bottom: number }>): boolean {
+    const dx = Math.max(bounds.left - this.origin.x, 0, this.origin.x - bounds.right);
+    const dy = Math.max(bounds.top - this.origin.y, 0, this.origin.y - bounds.bottom);
+    const radius = Math.max(this.config.minSolidRadius, this.getEffectiveRadius(0), this.getEffectiveRadius(Math.PI));
+    return dx * dx + dy * dy <= radius * radius;
+  }
 
   isPointVisible(point: Vector2): boolean {
     return this.getVisibilityAt(point) > 0;

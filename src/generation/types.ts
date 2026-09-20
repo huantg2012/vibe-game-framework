@@ -202,6 +202,8 @@ export interface WalkableMask {
 /** One sortie of generated rift content. Unchanged until the player leaves. */
 export interface GeneratedRiftLayout {
   readonly seed: number;
+  /** Missing on historical layouts: preserve the original paint footprint. */
+  readonly paintGeometryVersion?: 1 | 2;
   readonly fragmentTypeId: string;
   readonly recipeId: string;
   readonly contaminationAge: ContaminationAge;

@@ -31,6 +31,8 @@ const DIRECTIONS = [[1, 0], [0, 1], [-1, 0], [0, -1]] as const;
 export interface WorldProductionOptions {
   /** Explicit CSV encounter dialect, independent from the world's visual identity. */
   readonly contentFragmentTypeId: string;
+  /** New maps use full geometry; saved unversioned recipes explicitly request 1. */
+  readonly paintGeometryVersion?: 1 | 2;
 }
 
 export interface WorldProductionMap {
@@ -132,16 +134,62 @@ function patrolRoute(grid: TileGrid, waypoints: readonly TileCoord[]): TileCoord
     .map(cell => ({ col: cell % grid.cols, row: Math.floor(cell / grid.cols) }));
 }
 
-/** Run the actual production crop/nucleus selection so no Host quota evaporates. */
+function bakeHost(layout: GeneratedRiftLayout, slot: number) {
+  const form = layout.contaminationDraw.forms.filter(form => form.portfolio === 'bing')[slot]!;
+  const seed = mix32(layout.seed, `ENM_BING_${String(slot + 1).padStart(2, '0')}`);
+  return bakePaintGenome({ substrate: form.substrate, coverage: form.coverage, seed,
+    continuity: form.continuity, sense: form.lexemes.sense, rhythm: form.lexemes.rhythm,
+    fragmentTypeId: layout.fragmentTypeId, veinVariant: resolvePaintVeinVariant(form.substrate, seed),
+    geometryVersion: layout.paintGeometryVersion ?? 1 });
+}
+
+/** Place the entire organism, including its breathing envelope. Never carve
+ * floor into the void or crop a shape to satisfy the requested Host quota. */
+function seatCompletePaint(layout: GeneratedRiftLayout, grid: TileGrid): GeneratedRiftLayout {
+  const tileAt = (point: Readonly<Vector2>): TileCoord => ({ col: Math.floor(point.x / HOST_TILE), row: Math.floor(point.y / HOST_TILE) });
+  const spawn = tileAt(layout.spawnPoint);
+  const exit = tileAt(layout.extractionPoint.position);
+  const fuel = new Set(layout.kindlingNodes.map(node => {
+    const cell = tileAt(node.position); return `${cell.col},${cell.row}`;
+  }));
+  const candidates: TileCoord[] = [];
+  for (let row = 0; row < grid.rows; row++) for (let col = 0; col < grid.cols; col++)
+    if (grid.isWalkable(col, row)) candidates.push({ col, row });
+  const occupied = new Set<string>();
+  const paintFloors = layout.contaminationPins.paintFloors.map((pin, slot) => {
+    const baked = bakeHost(layout, slot);
+    const cells = (field: Float32Array) => collectPaintGenomeFloorTiles(field, baked.canvasW, baked.canvasH,
+      HOST_TILE / 2, HOST_TILE / 2, HOST_TILE);
+    const support = cells(baked.terrainFootprintField), danger = cells(baked.field);
+    const allowed = candidates.filter(seat => support.every(offset => grid.isWalkable(seat.col + offset.col, seat.row + offset.row))
+      && danger.every(offset => {
+        const col = seat.col + offset.col, row = seat.row + offset.row;
+        return Math.max(Math.abs(col - spawn.col), Math.abs(row - spawn.row)) > 3
+          && Math.max(Math.abs(col - exit.col), Math.abs(row - exit.row)) > 3
+          && !fuel.has(`${col},${row}`) && !occupied.has(`${col},${row}`);
+      }));
+    allowed.sort((a, b) => {
+      const distance = (p: TileCoord) => (p.col - pin.floorCol) ** 2 + (p.row - pin.floorRow) ** 2;
+      return distance(a) - distance(b) || a.row - b.row || a.col - b.col;
+    });
+    const seat = allowed[0];
+    if (!seat) throw new Error(`No complete terrain footprint for paint Host ${slot + 1}`);
+    for (const offset of danger) occupied.add(`${seat.col + offset.col},${seat.row + offset.row}`);
+    return { ...pin, floorCol: seat.col, floorRow: seat.row };
+  });
+  return { ...layout, contaminationPins: { ...layout.contaminationPins, paintFloors } };
+}
+
+/** Run the actual production footprint/nucleus selection so no Host quota evaporates. */
 function admitPaintHosts(layout: GeneratedRiftLayout, hostGrid: TileGrid): void {
   const forms = layout.contaminationDraw.forms.filter(form => form.portfolio === 'bing');
   const config = GAME_CONSTANTS.CONTAMINATION;
   for (const [slot, form] of forms.entries()) {
     const pin = layout.contaminationPins.paintFloors[slot]!;
-    const seed = mix32(layout.seed, `ENM_BING_${String(slot + 1).padStart(2, '0')}`);
-    const baked = bakePaintGenome({ substrate: form.substrate, coverage: form.coverage, seed,
-      continuity: form.continuity, sense: form.lexemes.sense, rhythm: form.lexemes.rhythm,
-      fragmentTypeId: layout.fragmentTypeId, veinVariant: resolvePaintVeinVariant(form.substrate, seed) });
+    const baked = bakeHost(layout, slot);
+    if (layout.paintGeometryVersion === 2 && collectPaintGenomeFloorTiles(baked.terrainFootprintField, baked.canvasW, baked.canvasH,
+      (pin.floorCol + .5) * HOST_TILE, (pin.floorRow + .5) * HOST_TILE, HOST_TILE)
+      .some(point => !hostGrid.isWalkable(point.col, point.row))) throw new Error('Paint Host would be terrain-clipped');
     const floors = collectPaintGenomeFloorTiles(baked.field, baked.canvasW, baked.canvasH,
       (pin.floorCol + .5) * HOST_TILE, (pin.floorRow + .5) * HOST_TILE, HOST_TILE)
       .filter(point => hostGrid.isWalkable(point.col, point.row));
@@ -215,7 +263,8 @@ function admit(sample: WorldSample, space: SpaceProfile, options: WorldProductio
   // A common 4px translation keeps all native actors/nodes on integer 8px cells.
   // Every admitted 32px cell is entirely supported, including the 20px body.
   const finePoint = (point: Readonly<Vector2>): Vector2 => ({ x: point.x + support.tileSize / 2, y: point.y + support.tileSize / 2 });
-  const layout: GeneratedRiftLayout = { ...deployed, fragmentTypeId, tileMap, walkableMask: new TileGrid(tileMap),
+  let layout: GeneratedRiftLayout = { ...deployed, fragmentTypeId, tileMap, walkableMask: new TileGrid(tileMap),
+    ...((options.paintGeometryVersion ?? 2) === 2 ? { paintGeometryVersion: 2 as const } : {}),
     ruins: { ...ruinsOf(sample.seed, fragmentTypeId, tileMap, support.walkable.slice()), ...axes },
     spawnPoint: finePoint(deployed.spawnPoint), extractionPoint: { ...deployed.extractionPoint, position: finePoint(deployed.extractionPoint.position) },
     kindlingNodes: deployed.kindlingNodes.map(node => ({ ...node, position: finePoint(node.position) })),
@@ -224,6 +273,7 @@ function admit(sample: WorldSample, space: SpaceProfile, options: WorldProductio
       patrol: { ...enemy.patrol, waypoints: patrolRoute(hostGrid, enemy.patrol.waypoints).map(fineCell) } })),
     landmarks: deployed.landmarks.map(landmark => ({ ...landmark, ...fineCell(landmark) })),
   };
+  if (layout.paintGeometryVersion === 2) layout = seatCompletePaint(layout, hostGrid);
   const expectedPaint = rollPaintHostCount(sample.seed, axes.contaminationAge);
   if (layout.kindlingNodes.length !== 8 || layout.contaminantNodes.length !== 3
     || layout.enemySpawns.length < 3 || layout.enemySpawns.length > 4
@@ -254,6 +304,8 @@ export function createWorldProductionMap(world: string | WorldProfile, spaceInpu
   requestedSeed: number, options: WorldProductionOptions): WorldProductionMap {
   if (!Number.isSafeInteger(requestedSeed) || requestedSeed < 0 || requestedSeed > 0xffffffff)
     throw new Error('Production world seed must be an unsigned 32-bit integer');
+  if (options.paintGeometryVersion !== undefined && options.paintGeometryVersion !== 1 && options.paintGeometryVersion !== 2)
+    throw new Error('Unknown paint geometry contract');
   const profile = typeof world === 'string' ? worldProfileById(world) : world;
   const space = typeof spaceInput === 'string' ? SPACE_PROFILES.find(value => value.id === spaceInput) : spaceInput;
   if (!space) throw new Error(`Unknown space ${String(spaceInput)}`);

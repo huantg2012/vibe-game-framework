@@ -89,6 +89,20 @@ export interface FormAttachContext {
   /** Explicit world-floor constraint for surface-bound models. Omit in isolated
    * model inspection. False covers walls, void and out-of-map coordinates. */
   isWalkableFloor?: (col: number, row: number) => boolean;
+  /** Exact visible terrain support in world pixels. Independent of the legacy
+   * 32px contact grid, so an intact body can cross supported partial cells. */
+  surfaceFloorAt?: (point: Readonly<{ x: number; y: number }>) => boolean;
+  /** Native support grid spacing, used only to fit historical presentation. */
+  surfaceFloorTileSize?: number;
+  /** Surface-bound anatomy spans many positions: query the scene's authoritative
+   * sight field locally instead of hiding the whole surface with its core. */
+  surfaceVisibilityAt?: (point: Readonly<{ x: number; y: number }>) => number;
+  /** Optional sight-input revision, for reusing local samples on still frames. */
+  surfaceVisibilityRevision?: () => number;
+  /** Conservative bounds rejection only; any intersection still uses local LOS. */
+  surfaceIntersectsSight?: (bounds: Readonly<{ left: number; top: number; right: number; bottom: number }>) => boolean;
+  /** Persisted gameplay footprint/nucleus contract. Presentation is always complete. */
+  paintGeometryVersion?: 1 | 2;
   /** 观察院子当前碎片。方案 D 用来推配色。 */
   fragmentTypeId?: string;
   /**

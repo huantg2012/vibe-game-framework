@@ -50,3 +50,15 @@ scope: 首归报告与新版地图正式入口
 `tools/qa/check-world-production-build.mjs` 对实际Vite生产包执行隔离浏览器检查：载入上述首趟真实游玩产生的未经修改记录；不存在 `window.__game`。菜单继续→实际键盘移动→保存→刷新→继续，同一身份、位置及dropPlan恢复，页面错误0。[结果](artifacts/iteration-28/production-build/report.json)、[续局实帧](artifacts/iteration-28/production-build/02-production-resumed.png)。测试最初误用DOM文字定位Canvas菜单而超时，记录保留；修正测试等待后通过，无游戏代码补丁。
 
 扩大采样、长期平衡与动态审美验收仍ON-HOLD；没有代签用户美术PASS。2026-09-20用户授权提交本轮修复、挂起状态与验证记录；未推送。
+
+## 追加：进入裂隙前裸净化点闪帧（2026-09-20，本次提交检查点）
+
+**根因：** 500ms文字过场结束先移除黑幕并主动清理角色/装置/HUD，随后调用的`scene.start`只把切换排入下一帧。当前帧仍绘制留在显示列表中的净化点地表，与用户截图一致。修复在移除黑幕和资源清理前立即`sys.setVisible(false)`；当前帧只清为既有画布底色，下帧正常进入裂隙。Phaser的`Systems.start`会恢复可见性。原300/500ms节奏、外观、存档及出击事务不变。
+
+按`in-game-ux`核对：保持原场景入口与黑幕文字的注意力中心；没有新增面板或额外操作；沿用同一世界的现有色彩、字体和overlay根。本次只修中间帧生命周期，不代签新审美结果。
+
+`node tools/qa/check-rift-entry-transition.mjs`在独立空白浏览器执行新游戏、WASD到入口、E与Shift+Enter，观察每次真实`postrender`，不只比较最终截图。基线`--expect-flash`捕获到1帧已清理、仍可见、无遮罩的净化点；根代理查看截帧确认与反馈相同。修后正常出击、重复出发输入、一次明确注入的清理异常回主菜单三条路径均无裸地面帧，交接画布逐像素均为底色，过渡DOM无残留；重复输入只增加一次cycle，异常保留已保存的出行记录。正常/重复路径页面错误0，异常路径仅有预期注入错误。
+
+同一净化点实例另做隔离场景重启，验证`visible=true`与角色重建；这不是完整搜撤返程，其存档事务和HUD验收不计入本次结论。TypeScript及Vite构建通过，保留既有大包提示。未操作用户浏览器或正式存档。
+
+[基线记录](artifacts/iteration-28/rift-entry-transition/before-report.json) · [修后记录](artifacts/iteration-28/rift-entry-transition/report.json) · [基线异常帧](artifacts/iteration-28/rift-entry-transition/before/uncovered-cleaned-base.png) · [修后交接帧](artifacts/iteration-28/rift-entry-transition/normal/handoff-dark-frame.png)。长期挂起项不变；用户已授权将此追加修复保存为提交检查点，未推送。

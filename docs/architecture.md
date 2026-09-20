@@ -1037,7 +1037,7 @@ setLocale('en');
 
 `WorldInteractionContext` / `bindWorldInteraction` 位于 `src/ui/dom/world-interaction.ts`，只提供实际相机投影、面板局部class、独立实体名节点及rAF清理；列表重建不会移除实体名。三个分配复用实体读数；defense/growth的open可选第二参数context，loadout的open可选第三参数context。无context的旧调用仍兼容。
 
-`PurificationScene.openWorldInteraction(target)`是六点开发入口，也调用正式E路径。焦点状态持有world point和可选Module，退出守卫共用；`cancelWorldInteraction()`支持开发切屏。scene shutdown时相机已经销毁，丢弃快照而非setScroll。入口确认沿用原出击回调，不先恢复镜头；转场归scene Clock，shutdown取消计时器与过渡DOM。
+`PurificationScene.openWorldInteraction(target)`是六点开发入口，也调用正式E路径。焦点状态持有world point和可选Module，退出守卫共用；`cancelWorldInteraction()`支持开发切屏。scene shutdown时相机已经销毁，丢弃快照而非setScroll。入口确认沿用原出击回调，不先恢复镜头；转场归scene Clock，shutdown取消计时器与过渡DOM。出击交接在移除黑幕/主动资源清理之前立即`sys.setVisible(false)`，防止`scene.start`尚在队列时渲染半卸载的净化点；Phaser正常`Systems.start`恢复其可见性。
 
 `ui-review.html?sample=world`自动内存示例，支持六点切换/重置/零库存；普通开发页另有长库存。开发页运行时异常以可见文本显示，不向正式构建添加调试入口。
 

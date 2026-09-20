@@ -44,7 +44,7 @@ function hostManifest(layout: GeneratedRiftLayout): { targets: string[]; nucleus
       const seed = mix32(layout.seed, id);
       const baked = bakePaintGenome({ substrate: form.substrate, coverage: form.coverage, seed, continuity: form.continuity,
         sense: form.lexemes.sense, rhythm: form.lexemes.rhythm, fragmentTypeId: layout.fragmentTypeId,
-        veinVariant: resolvePaintVeinVariant(form.substrate, seed) });
+        veinVariant: resolvePaintVeinVariant(form.substrate, seed), geometryVersion: layout.paintGeometryVersion ?? 1 });
       const floors = collectPaintGenomeFloorTiles(baked.field, baked.canvasW, baked.canvasH,
         pin.floorCol * tile + tile / 2, pin.floorRow * tile + tile / 2, tile).filter(p => grid.isWalkable(p.col, p.row));
       const seats = stop.family === 'scatter_rejoin'
@@ -71,7 +71,7 @@ export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpo
 function rememberWorld(generation: WorldProductionRecipe): GeneratedRiftLayout {
   if (!validWorldProductionRecipe(generation)) throw new Error('Invalid saved world recipe');
   const world = createWorldProductionMap(generation.profile, generation.space, generation.requestedSeed,
-    { contentFragmentTypeId: generation.contentFragmentTypeId });
+    { contentFragmentTypeId: generation.contentFragmentTypeId, paintGeometryVersion: generation.paintGeometryVersion ?? 1 });
   worlds.set(world.layout, world); generationRecipes.set(world.layout, generation);
   return world.layout;
 }

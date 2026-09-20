@@ -1,7 +1,8 @@
 import { paintSurfaceMaterial } from './material';
 /**
  * 占漆拓扑烘焙。挂载与 `check:paint-genome-topology` 共用这一条。
- * 画布数字对齐 `bingRecipeFromForm`（场 144，否则 88），不用占地 32/48/64。
+ * 逻辑尺度对齐 `bingRecipeFromForm`（场 144，否则 88），不用占地 32/48/64。
+ * geometry 2 的存储画布另留完整形体/呼吸空间，不拿画布边界切模型。
  * 配色走 `deriveFragmentContamRamp`；core/glow 用现有青绿格 snap，不加新色。
  */
 import {
@@ -32,19 +33,25 @@ export interface PaintGenomeBakeRequest {
   readonly substrate: string;
   readonly coverage: CoverageId;
   readonly seed: number;
-  /** 缺省 colony（菌毯合法连续；非场 = 88）。场 = 144。 */
+  /** 缺省 colony（菌毯合法连续；非场逻辑尺度 = 88）。场 = 144。 */
   readonly continuity?: ContinuityId;
   readonly sense?: string;
   readonly rhythm?: string;
   readonly fragmentTypeId?: string;
   /** 缺省不传仍走树（闸门对照 / A/B/C）。生产挂载先采样再传入 3/4/5。 */
   readonly veinVariant?: PaintVeinVariant;
+  /** Old in-flight worlds explicitly retain 1; new authored surfaces use 2. */
+  readonly geometryVersion?: 1 | 2;
 }
 
 export interface PaintGenomeBakeResult {
   readonly buf: PaintGenomeBuf;
   /** Topology field after core dots, before colour. Live breath resamples this. */
   readonly field: Float32Array;
+  /** Conservative terrain reservation, including every breathing displacement.
+   * This is placement clearance, not a replacement for the visible danger field. */
+  readonly terrainFootprintField: Float32Array;
+  readonly geometryVersion: 1 | 2;
   readonly ramp: FragmentContamRamp;
   readonly topology: PaintTopology;
   /** Rest-pose growth axes for the live layer. Not a second topology. */
@@ -54,6 +61,10 @@ export interface PaintGenomeBakeResult {
 }
 
 const PAINT_GROWTH_UNIT_CAP = 12;
+// Kept next to the footprint contract to avoid a bake → live → bake cycle.
+// live.ts imports these same limits, so placement cannot lag behind animation.
+export const PAINT_IDLE_AMP = 0.08;
+export const PAINT_INFLATED_AMP = 0.18;
 
 /** Per-organism rest guide: live layer deforms along these axes, not the canvas. */
 export interface PaintGrowthGuide {
@@ -74,7 +85,8 @@ export interface PaintGrowthGuide {
 /** Glow / core band floor. Live layer pins these dots so inflated cannot smear into a teal flash. */
 export const PAINT_CORE_LO = 0.78;
 
-/** Same numbers as `bingRecipeFromForm` canvasW/H. Not occupancy 32/48/64. */
+/** Authored span / legacy canvas, matching `bingRecipeFromForm`. Geometry 2
+ * storage adds margin; this remains the organism's original physical scale. */
 export function paintGenomeCanvasOf(continuity: ContinuityId = 'colony'): {
   readonly w: number;
   readonly h: number;
@@ -111,6 +123,65 @@ export function collectPaintGenomeFloorTiles(
     }
   }
   return out;
+}
+
+/** Chebyshev dilation bounds bilinear sampling and all radial/axial deformation.
+ * O(canvas area), independent of organism size and clearance radius. */
+function reserveBreathingFootprint(field: Float32Array, w: number, h: number, radius: number): Float32Array {
+  const horizontal = new Uint8Array(field.length);
+  const result = new Float32Array(field.length);
+  for (let y = 0; y < h; y++) {
+    let count = 0;
+    for (let x = -radius; x < w; x++) {
+      const incoming = x + radius;
+      if (incoming < w && field[y * w + incoming]! >= 0.1) count++;
+      const outgoing = x - radius - 1;
+      if (outgoing >= 0 && field[y * w + outgoing]! >= 0.1) count--;
+      if (x >= 0) horizontal[y * w + x] = count > 0 ? 1 : 0;
+    }
+  }
+  for (let x = 0; x < w; x++) {
+    let count = 0;
+    for (let y = -radius; y < h; y++) {
+      const incoming = y + radius;
+      if (incoming < h) count += horizontal[incoming * w + x]!;
+      const outgoing = y - radius - 1;
+      if (outgoing >= 0) count -= horizontal[outgoing * w + x]!;
+      if (y >= 0 && count > 0) result[y * w + x] = 1;
+    }
+  }
+  return result;
+}
+
+function topologyCanvas(req: PaintGenomeBakeRequest): { field: PaintField; topology: PaintTopology } {
+  const continuity = req.continuity ?? 'colony';
+  const authored = paintGenomeCanvasOf(continuity);
+  const options = { substrate: req.substrate, coverage: req.coverage, seed: req.seed,
+    continuity, sense: req.sense ?? 'sense_touch', rhythm: req.rhythm ?? 'rhythm_open', veinVariant: req.veinVariant };
+  if (req.geometryVersion === 1) {
+    const field = makePaintField(authored.w, authored.h);
+    return { field, topology: fillPaintTopology(field, options) };
+  }
+  // Preserve the original authored distances/radii. Merely enlarging w/h would
+  // scale the organism as well and reproduce the same truncated satellites.
+  let padding = Math.max(authored.w, authored.h);
+  for (let attempt = 0; attempt < 4; attempt++, padding *= 2) {
+    const field = makePaintField(authored.w + padding * 2, authored.h + padding * 2,
+      Math.min(authored.w, authored.h));
+    const topology = fillPaintTopology(field, options);
+    let minX = field.w, minY = field.h, maxX = -1, maxY = -1;
+    for (let y = 0; y < field.h; y++) for (let x = 0; x < field.w; x++) {
+      if (field.v[y * field.w + x]! < 0.1) continue;
+      minX = Math.min(minX, x); minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+    }
+    // A growth unit's span/outer radius cannot exceed the full body diagonal.
+    // Four further pixels cover interpolation, the fixed core dots and rim flakes.
+    const clearance = Math.ceil(Math.hypot(maxX - minX + 1, maxY - minY + 1) * PAINT_INFLATED_AMP) + 4;
+    if (maxX < 0 || Math.min(minX, minY, field.w - 1 - maxX, field.h - 1 - maxY) >= clearance)
+      return { field, topology };
+  }
+  throw new Error(`[paint-genome] complete geometry exceeds bounded canvas: ${req.substrate}/${continuity}/${req.seed}`);
 }
 
 const CORE_TEALS: readonly Rgb[] = [
@@ -481,21 +552,41 @@ function buildPaintGrowthGuide(
   };
 }
 
+/** Bake with generous overscan, but do not pay for that empty margin every frame.
+ * The crop stays symmetric around the original world pin, so it changes storage
+ * only: no scaled body, moved core or shifted world occupancy. */
+function compactPaintCanvas(field: PaintField, growth: PaintGrowthGuide, continuity: ContinuityId):
+  { field: PaintField; growth: PaintGrowthGuide; clearance: number } {
+  const clearance = Math.ceil(Math.max(...growth.span, ...growth.outerR) * PAINT_INFLATED_AMP) + 2;
+  const minimum = paintGenomeCanvasOf(continuity);
+  let reachX = 0, reachY = 0;
+  for (let y = 0; y < field.h; y++) for (let x = 0; x < field.w; x++) {
+    if (field.v[y * field.w + x]! < 0.1) continue;
+    reachX = Math.max(reachX, Math.abs(x - field.w / 2), Math.abs(x + 1 - field.w / 2));
+    reachY = Math.max(reachY, Math.abs(y - field.h / 2), Math.abs(y + 1 - field.h / 2));
+  }
+  const w = Math.min(field.w, Math.max(minimum.w, 2 * Math.ceil(reachX + clearance + 2)));
+  const h = Math.min(field.h, Math.max(minimum.h, 2 * Math.ceil(reachY + clearance + 2)));
+  if (w === field.w && h === field.h) return { field, growth, clearance };
+  const shiftX = (field.w - w) / 2, shiftY = (field.h - h) / 2;
+  const cropped = makePaintField(w, h, field.logicalSpan);
+  const unitIndex = new Uint8Array(w * h);
+  for (let y = 0; y < h; y++) {
+    const begin = (y + shiftY) * field.w + shiftX;
+    cropped.v.set(field.v.subarray(begin, begin + w), y * w);
+    unitIndex.set(growth.unitIndex.subarray(begin, begin + w), y * w);
+  }
+  const ox = new Float32Array(growth.ox), oy = new Float32Array(growth.oy);
+  for (let i = 0; i < growth.unitCount; i++) { ox[i] = ox[i]! - shiftX; oy[i] = oy[i]! - shiftY; }
+  return { field: cropped, growth: { ...growth, ox, oy, unitIndex }, clearance };
+}
+
 export function bakePaintGenome(req: PaintGenomeBakeRequest): PaintGenomeBakeResult {
-  const continuity = req.continuity ?? 'colony';
   const sense = req.sense ?? 'sense_touch';
   const rhythm = req.rhythm ?? 'rhythm_open';
-  const { w, h } = paintGenomeCanvasOf(continuity);
-  const field = makePaintField(w, h);
-  const topology = fillPaintTopology(field, {
-    substrate: req.substrate,
-    coverage: req.coverage,
-    seed: req.seed,
-    continuity,
-    sense,
-    rhythm,
-    veinVariant: req.veinVariant,
-  });
+  const geometryVersion = req.geometryVersion ?? 2;
+  const { field, topology } = topologyCanvas(req);
+  const { w, h } = field;
   const stage = STAGE[req.coverage];
   const ramp = fragmentRamp(req.fragmentTypeId ?? LEXICON_DEFAULT_FRAGMENT);
   const veinTag = req.veinVariant === undefined ? '' : `:v${req.veinVariant}`;
@@ -531,11 +622,17 @@ export function bakePaintGenome(req: PaintGenomeBakeRequest): PaintGenomeBakeRes
     if (n % 3 === 0 && y + 1 < h) field.v[i + w] = 0.82;
   }
 
-  const growth =
+  const rawGrowth =
     beadGrowth ?? buildPaintGrowthGuide(field.v, w, h, topology, sense, rhythm, req.veinVariant);
-  const out = new Uint8ClampedArray(w * h * 4);
-  paintSurfaceMaterial(out, field.v, w, h, req.substrate,req.coverage,req.seed);
-  return { buf: { data: out, w, h }, field: field.v, ramp, topology, growth, canvasW: w, canvasH: h };
+  const compact = geometryVersion === 1 ? { field, growth: rawGrowth, clearance: 0 }
+    : compactPaintCanvas(field, rawGrowth, req.continuity ?? 'colony');
+  const body = compact.field, growth = compact.growth;
+  const out = new Uint8ClampedArray(body.w * body.h * 4);
+  paintSurfaceMaterial(out, body.v, body.w, body.h, req.substrate,req.coverage,req.seed);
+  const terrainFootprintField = geometryVersion === 1 ? body.v
+    : reserveBreathingFootprint(body.v, body.w, body.h, compact.clearance);
+  return { buf: { data: out, w: body.w, h: body.h }, field: body.v, terrainFootprintField, geometryVersion,
+    ramp, topology, growth, canvasW: body.w, canvasH: body.h };
 }
 
 /** Same ramp bands as the rest pose. Live colour must go through here so inflated cannot swap in a bright teal. */

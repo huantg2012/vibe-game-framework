@@ -23,8 +23,11 @@ for (const [worldId, spaceId, seed] of [
   ['crystal-fibre', 'fracture-fields', 175150],
   ['ivory-basin', 'open-scars', 0],
   ['ash-strata', 'open-scars', 5],
+  // A targeted footprint contract across every production recipe, not a balance sweep.
+  ...WORLD_PROFILES.flatMap(profile => SPACE_PROFILES.map(space => [profile.id, space.id, 1000] as const)),
 ] as const) {
   const map = createWorldProductionMap(worldId, spaceId, seed, options), { layout } = map;
+  assert.equal(layout.paintGeometryVersion, 2);
   const grid = new TileGrid(layout.tileMap), host = new TileGrid(map.hostTileMap), support = getWorldSupportGrid(map.sample);
   assert.equal(grid.tileSize, 8); assert.equal(host.tileSize, 32);
   assert.equal(layout.fragmentTypeId, `world-study:${worldId}`);
@@ -74,8 +77,12 @@ for (const [worldId, spaceId, seed] of [
       continuity: form.continuity, sense: form.lexemes.sense, rhythm: form.lexemes.rhythm,
       fragmentTypeId: layout.fragmentTypeId, veinVariant: resolvePaintVeinVariant(form.substrate, paintSeed) });
     const floors = collectPaintGenomeFloorTiles(baked.field, baked.canvasW, baked.canvasH,
-      (pin.floorCol + .5) * 32, (pin.floorRow + .5) * 32, 32).filter(point => host.isWalkable(point.col, point.row));
-    assert(floors.length > 0, 'Real production Host paint must survive its terrain crop');
+      (pin.floorCol + .5) * 32, (pin.floorRow + .5) * 32, 32);
+    const complete = collectPaintGenomeFloorTiles(baked.terrainFootprintField, baked.canvasW, baked.canvasH,
+      (pin.floorCol + .5) * 32, (pin.floorRow + .5) * 32, 32);
+    assert(complete.length > 0 && complete.every(point => host.isWalkable(point.col, point.row)),
+      'Complete anatomy and breathing envelope must survive without any terrain crop');
+    assert(floors.length > 0 && floors.every(point => host.isWalkable(point.col, point.row)));
     const stop = resolveStopLoss(form), c = GAME_CONSTANTS.CONTAMINATION;
     assert.notEqual(stop, 'illegal');
     if (stop !== 'illegal' && stop.family === 'scatter_rejoin')

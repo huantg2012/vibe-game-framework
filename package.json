@@ -92,7 +92,8 @@
     "check:rift-recovery": "node tools/recovery/check.mjs",
     "check:world-production": "node tools/map-preview/codegen-world-pool.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-production-map.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-production-recovery.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/recovery/check-minimap-world-scale.ts",
     "check:world-play": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-play-map.ts",
-    "check:contaminant-catalog": "node tools/contaminant-catalog/check.mjs"
+    "check:contaminant-catalog": "node tools/contaminant-catalog/check.mjs",
+    "check:paint-surface": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-full-footprint.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-partial-visibility.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/contamination-lexicon/check-paint-legacy-presentation.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1",

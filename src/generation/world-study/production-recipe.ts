@@ -13,6 +13,8 @@ export interface WorldProductionRecipe {
   readonly profile: WorldProfile;
   readonly space: SpaceProfile;
   readonly contentFragmentTypeId: string;
+  /** Missing on saved departures means the historical cropped geometry. */
+  readonly paintGeometryVersion?: 1 | 2;
 }
 const COLOR_ROLES = ['void','shadow','floorDeep','floor','floorLight','materialDark','materialMid','materialLight','faceLight','accentDim','peak','actorDark','actorMid','actorLight','ground','groundLight','groundDark','wall','wallLight','wallDark','accent','accentLight'] as const;
 const named = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.length <= 200;
@@ -20,7 +22,8 @@ export function validWorldProductionRecipe(value: unknown): value is WorldProduc
   try {
     if (!value || typeof value !== 'object') return false;
     const recipe = value as WorldProductionRecipe, profile = recipe.profile;
-    if (recipe.version !== 1 || !Number.isSafeInteger(recipe.requestedSeed) || recipe.requestedSeed < 0 || recipe.requestedSeed > 0xffffffff
+    if (recipe.version !== 1 || (recipe.paintGeometryVersion !== undefined && recipe.paintGeometryVersion !== 1 && recipe.paintGeometryVersion !== 2)
+      || !Number.isSafeInteger(recipe.requestedSeed) || recipe.requestedSeed < 0 || recipe.requestedSeed > 0xffffffff
       || !profile || !named(profile.id) || !named(profile.label) || typeof profile.description !== 'string' || profile.description.length > 2000
       || !['strata','crystal','glaze'].includes(profile.material) || !profile.palette
       || !COLOR_ROLES.every(key => Number.isSafeInteger(profile.palette[key]) && profile.palette[key] >= 0 && profile.palette[key] <= 0xffffff)
@@ -41,5 +44,5 @@ export function selectWorldProductionRecipe(requestedSeed: number): WorldProduct
   if (!space) throw new Error(`Missing world space ${chosen.spaceId}`);
   // No shared mutable references to generated config enter the save.
   return JSON.parse(JSON.stringify({ version: 1, requestedSeed, profile: worldProfileById(chosen.profileId),
-    space, contentFragmentTypeId: chosen.contentFragmentTypeId })) as WorldProductionRecipe;
+    space, contentFragmentTypeId: chosen.contentFragmentTypeId, paintGeometryVersion: 2 })) as WorldProductionRecipe;
 }

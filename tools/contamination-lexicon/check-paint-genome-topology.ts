@@ -15,8 +15,19 @@ type Bake=ReturnType<typeof bakePaintGenome>;
 function bake(substrate:string,coverage:CoverageId,seed:number,continuity:ContinuityId='colony',variant?:3|4|5):Bake {
  return bakePaintGenome({substrate,coverage,seed,continuity,sense:'sense_touch',rhythm:'rhythm_open',veinVariant:resolvePaintVeinVariant(substrate,seed,variant)});
 }
-function shapeDifference(a:Uint8Array,b:Uint8Array):number {
- let changed=0,occupied=0;for(let i=0;i<a.length;i++){if(a[i]||b[i])occupied++;if(a[i]!==b[i])changed++;}return changed/Math.max(1,occupied);
+function shapeDifference(a:Bake,b:Bake):number {
+ // Storage now trims unused breathing margin independently for each body.
+ // Compare occupied pixels at the same world-centred coordinates, not offsets
+ // in two arrays whose row strides and transparent padding may differ.
+ const am=occupancyMaskOf(a.buf),bm=occupancyMaskOf(b.buf);
+ const w=Math.max(a.canvasW,b.canvasW),h=Math.max(a.canvasH,b.canvasH);
+ const at=(mask:Uint8Array,row:Bake,x:number,y:number):number=>{
+  const rx=x-(w-row.canvasW)/2,ry=y-(h-row.canvasH)/2;
+  return rx>=0&&ry>=0&&rx<row.canvasW&&ry<row.canvasH?mask[ry*row.canvasW+rx]!:0;
+ };
+ let changed=0,occupied=0;
+ for(let y=0;y<h;y++)for(let x=0;x<w;x++){const av=at(am,a,x,y),bv=at(bm,b,x,y);if(av||bv)occupied++;if(av!==bv)changed++;}
+ return changed/Math.max(1,occupied);
 }
 function pixelDifference(a:Uint8ClampedArray,b:Uint8ClampedArray):number {
  let changed=0;for(let i=0;i<a.length;i+=4)if(a[i]!==b[i]||a[i+1]!==b[i+1]||a[i+2]!==b[i+2]||a[i+3]!==b[i+3])changed++;return changed;
@@ -63,19 +74,19 @@ for(const family of families)for(const seed of seeds)for(const continuity of ['c
   assert(!Buffer.from(peak.scratch.buffer).equals(Buffer.from(trough.scratch.buffer)),`${family} deforms geometry, not merely colour`);
  }
  for(let a=0;a<3;a++)for(let b=a+1;b<3;b++){
-  const delta=shapeDifference(occupancyMaskOf(rows[a]!.buf),occupancyMaskOf(rows[b]!.buf));minTierChange=Math.min(minTierChange,delta);
+  const delta=shapeDifference(rows[a]!,rows[b]!);minTierChange=Math.min(minTierChange,delta);
   assert(delta>.06,`${family} coverage ${a}/${b} must change occupied structure, not only RGB`);
  }
 }
 for(const seed of seeds)for(const tier of tiers){
  const rows=families.map(f=>bake(f,tier,seed));
  for(let a=0;a<3;a++)for(let b=a+1;b<3;b++){
-  const delta=shapeDifference(occupancyMaskOf(rows[a]!.buf),occupancyMaskOf(rows[b]!.buf));minFamilyChange=Math.min(minFamilyChange,delta);
+  const delta=shapeDifference(rows[a]!,rows[b]!);minFamilyChange=Math.min(minFamilyChange,delta);
   assert(delta>.2,'families retain separate footprint anatomy');
  }
  const variants=([3,4,5]as const).map(v=>bake('oil_film',tier,seed,'colony',v));
  for(let a=0;a<3;a++)for(let b=a+1;b<3;b++){
-  const delta=shapeDifference(occupancyMaskOf(variants[a]!.buf),occupancyMaskOf(variants[b]!.buf));minVariantChange=Math.min(minVariantChange,delta);
+  const delta=shapeDifference(variants[a]!,variants[b]!);minVariantChange=Math.min(minVariantChange,delta);
   assert(delta>.2,'beads, smear and rim-pool remain distinct bodies');
  }
 }

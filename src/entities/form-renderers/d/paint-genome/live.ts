@@ -7,6 +7,8 @@
 import {
   colorPaintField,
   PAINT_CORE_LO,
+  PAINT_IDLE_AMP,
+  PAINT_INFLATED_AMP,
   type PaintGrowthGuide,
 } from '@/entities/form-renderers/d/paint-genome/bake';
 import type { FragmentContamRamp, Rgb } from '@/entities/form-renderers/d/fragment-ramp';
@@ -21,9 +23,9 @@ export function isPaintInflated(phase: number): boolean {
   return Math.sin(phase) > PAINT_INFLATED_SIN;
 }
 /** Idle ~8% (DEC-070 5–20%). Not a coverage slider. */
-export const PAINT_IDLE_AMP = 0.08;
+export { PAINT_IDLE_AMP };
 /** Inflated ~18%, still under the 20% cap. Amplitude only — same ramp. */
-export const PAINT_INFLATED_AMP = 0.18;
+export { PAINT_INFLATED_AMP };
 
 /** Shared breath vs per-bead phase offset. t=0 stays rest (bead term subtracts sin(φ)). */
 const BEAD_GROUP_MIX = 0.58;

@@ -1298,6 +1298,10 @@ export class PurificationScene extends Phaser.Scene {
 
       this.transitionDelay = this.time.delayedCall(500, () => {
         this.transitionDelay = null;
+        // scene.start is queued until the next frame. Stop drawing this scene
+        // before removing the cover and disposing its actors, or the remaining
+        // ground renders alone for one frame. Systems.start restores visibility.
+        this.sys.setVisible(false);
         overlay.remove();
         this.transitionOverlay = null;
         const departure = this.devDeparture;
