@@ -1,0 +1,1507 @@
+{
+  "scope": "Read-only informed expert implementation/data audit; pure Node process and injected memory storage; no user save or browser",
+  "upgrades": [
+    {
+      "id": "growth_chaos_resist",
+      "axis": "出击效率",
+      "maxLevel": 5,
+      "effectPerLevel": 0.04,
+      "effectUnit": "混乱增速减免比例",
+      "costs": [
+        8,
+        12,
+        18,
+        25,
+        35
+      ],
+      "description": "反复暴露于异源模式后身体产生微量适应性",
+      "cumulativeCosts": [
+        8,
+        20,
+        38,
+        63,
+        98
+      ],
+      "totalCost": 98,
+      "totalEffect": 0.2
+    },
+    {
+      "id": "growth_kindling_affinity",
+      "axis": "资源效率",
+      "maxLevel": 3,
+      "effectPerLevel": 1,
+      "effectUnit": "每次拾取额外薪柴",
+      "costs": [
+        8,
+        12,
+        18
+      ],
+      "description": "辨识和提取残渣的能力增强",
+      "cumulativeCosts": [
+        8,
+        20,
+        38
+      ],
+      "totalCost": 38,
+      "totalEffect": 3
+    },
+    {
+      "id": "growth_vitality",
+      "axis": "生存韧性",
+      "maxLevel": 4,
+      "effectPerLevel": 15,
+      "effectUnit": "最大生命值增加",
+      "costs": [
+        8,
+        12,
+        18,
+        25
+      ],
+      "description": "核心抗性的物理表现增强",
+      "cumulativeCosts": [
+        8,
+        20,
+        38,
+        63
+      ],
+      "totalCost": 63,
+      "totalEffect": 60
+    },
+    {
+      "id": "growth_sortie_slot",
+      "axis": "出击扩展",
+      "maxLevel": 1,
+      "effectPerLevel": 1,
+      "effectUnit": "解锁第4个出击工具槽位",
+      "costs": [
+        40
+      ],
+      "description": "扩展出击工具携带上限——允许同时装备3个主动工具+1个被动工具",
+      "cumulativeCosts": [
+        40
+      ],
+      "totalCost": 40,
+      "totalEffect": 1
+    },
+    {
+      "id": "growth_defense_slot",
+      "axis": "防御扩展",
+      "maxLevel": 1,
+      "effectPerLevel": 1,
+      "effectUnit": "解锁第4个防御槽位",
+      "costs": [
+        35
+      ],
+      "description": "额外的防御容量允许更复杂的组合策略",
+      "cumulativeCosts": [
+        35
+      ],
+      "totalCost": 35,
+      "totalEffect": 1
+    },
+    {
+      "id": "growth_forecast_clarity",
+      "axis": "信息优势",
+      "maxLevel": 3,
+      "effectPerLevel": 0.05,
+      "effectUnit": "冲击预告可靠度提升",
+      "costs": [
+        10,
+        20,
+        30
+      ],
+      "description": "对边界扰动的感知增强——冲击目标与强度的播报更少出错",
+      "cumulativeCosts": [
+        10,
+        30,
+        60
+      ],
+      "totalCost": 60,
+      "totalEffect": 0.15000000000000002
+    }
+  ],
+  "totalPurchaseCount": 17,
+  "totalUpgradeCost": 334,
+  "purchases": [
+    {
+      "id": "growth_chaos_resist",
+      "level": 5,
+      "maxedPurchase": {
+        "ok": false,
+        "reason": "unavailable"
+      }
+    },
+    {
+      "id": "growth_kindling_affinity",
+      "level": 3,
+      "maxedPurchase": {
+        "ok": false,
+        "reason": "unavailable"
+      }
+    },
+    {
+      "id": "growth_vitality",
+      "level": 4,
+      "maxedPurchase": {
+        "ok": false,
+        "reason": "unavailable"
+      }
+    },
+    {
+      "id": "growth_sortie_slot",
+      "level": 1,
+      "maxedPurchase": {
+        "ok": false,
+        "reason": "unavailable"
+      }
+    },
+    {
+      "id": "growth_defense_slot",
+      "level": 1,
+      "maxedPurchase": {
+        "ok": false,
+        "reason": "unavailable"
+      }
+    },
+    {
+      "id": "growth_forecast_clarity",
+      "level": 3,
+      "maxedPurchase": {
+        "ok": false,
+        "reason": "unavailable"
+      }
+    }
+  ],
+  "maxState": {
+    "reserve": 666,
+    "modifiers": {
+      "chaosResist": 0.2,
+      "kindlingAffinity": 3,
+      "vitalityBonus": 60,
+      "forecastClarity": 0.15000000000000002
+    },
+    "sortieSlots": 4,
+    "activeSlots": 3,
+    "offeringSlots": 4,
+    "stability": 17
+  },
+  "thickenResult": {
+    "states": [
+      {
+        "tier": 0,
+        "max": 100,
+        "chaos": 0,
+        "modifiers": {
+          "chaosRateModifier": 0.7,
+          "kindlingValueModifier": 1.5,
+          "startingChaos": 0
+        }
+      },
+      {
+        "tier": 1,
+        "max": 115,
+        "chaos": 7,
+        "modifiers": {
+          "chaosRateModifier": 0.7,
+          "kindlingValueModifier": 1.5,
+          "startingChaos": 7
+        }
+      },
+      {
+        "tier": 2,
+        "max": 130,
+        "chaos": 12,
+        "modifiers": {
+          "chaosRateModifier": 0.7,
+          "kindlingValueModifier": 1.5,
+          "startingChaos": 12
+        }
+      },
+      {
+        "tier": 3,
+        "max": 145,
+        "chaos": 16,
+        "modifiers": {
+          "chaosRateModifier": 0.7,
+          "kindlingValueModifier": 1.5,
+          "startingChaos": 16
+        }
+      }
+    ],
+    "cost": 64,
+    "stability": 0
+  },
+  "tides": [
+    {
+      "cycle": 1,
+      "phaseBefore": "rise",
+      "tideBefore": 1,
+      "intensityBefore": 1,
+      "rawImpact": 0,
+      "offeringCharges": 0,
+      "transition": null,
+      "after": {
+        "tideNumber": 1,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.2
+      }
+    },
+    {
+      "cycle": 2,
+      "phaseBefore": "rise",
+      "tideBefore": 1,
+      "intensityBefore": 1.2,
+      "rawImpact": 36,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 1,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.4
+      }
+    },
+    {
+      "cycle": 3,
+      "phaseBefore": "rise",
+      "tideBefore": 1,
+      "intensityBefore": 1.4,
+      "rawImpact": 42,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 1,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 1,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.6,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 4,
+      "phaseBefore": "crest",
+      "tideBefore": 1,
+      "intensityBefore": 1.6,
+      "rawImpact": 48,
+      "offeringCharges": 3,
+      "transition": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 1,
+        "survivedCrest": true
+      },
+      "after": {
+        "tideNumber": 1,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.6,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 5,
+      "phaseBefore": "ebb",
+      "tideBefore": 1,
+      "intensityBefore": 1.6,
+      "rawImpact": 48,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 1,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.4,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 6,
+      "phaseBefore": "ebb",
+      "tideBefore": 1,
+      "intensityBefore": 1.4,
+      "rawImpact": 42,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 2,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.2,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 7,
+      "phaseBefore": "rise",
+      "tideBefore": 2,
+      "intensityBefore": 1.2,
+      "rawImpact": 36,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.4,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 8,
+      "phaseBefore": "rise",
+      "tideBefore": 2,
+      "intensityBefore": 1.4,
+      "rawImpact": 42,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.5999999999999999,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 9,
+      "phaseBefore": "rise",
+      "tideBefore": 2,
+      "intensityBefore": 1.5999999999999999,
+      "rawImpact": 47.99999999999999,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 1.7999999999999998,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 10,
+      "phaseBefore": "rise",
+      "tideBefore": 2,
+      "intensityBefore": 1.7999999999999998,
+      "rawImpact": 53.99999999999999,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 2,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 2,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 11,
+      "phaseBefore": "crest",
+      "tideBefore": 2,
+      "intensityBefore": 2,
+      "rawImpact": 60,
+      "offeringCharges": 3,
+      "transition": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 2,
+        "survivedCrest": true
+      },
+      "after": {
+        "tideNumber": 2,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 12,
+      "phaseBefore": "ebb",
+      "tideBefore": 2,
+      "intensityBefore": 2,
+      "rawImpact": 60,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 2,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.75,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 13,
+      "phaseBefore": "ebb",
+      "tideBefore": 2,
+      "intensityBefore": 1.75,
+      "rawImpact": 52.5,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 3,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.5,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 14,
+      "phaseBefore": "rise",
+      "tideBefore": 3,
+      "intensityBefore": 1.5,
+      "rawImpact": 45,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 1.725,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 15,
+      "phaseBefore": "rise",
+      "tideBefore": 3,
+      "intensityBefore": 1.725,
+      "rawImpact": 51.75,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 1.9500000000000002,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 16,
+      "phaseBefore": "rise",
+      "tideBefore": 3,
+      "intensityBefore": 1.9500000000000002,
+      "rawImpact": 58.50000000000001,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.1750000000000003,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 17,
+      "phaseBefore": "rise",
+      "tideBefore": 3,
+      "intensityBefore": 2.1750000000000003,
+      "rawImpact": 65.25000000000001,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 3,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 3,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.4,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 18,
+      "phaseBefore": "crest",
+      "tideBefore": 3,
+      "intensityBefore": 2.4,
+      "rawImpact": 72,
+      "offeringCharges": 3,
+      "transition": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.4,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 19,
+      "phaseBefore": "crest",
+      "tideBefore": 3,
+      "intensityBefore": 2.4,
+      "rawImpact": 72,
+      "offeringCharges": 3,
+      "transition": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 3,
+        "survivedCrest": true
+      },
+      "after": {
+        "tideNumber": 3,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.4,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 20,
+      "phaseBefore": "ebb",
+      "tideBefore": 3,
+      "intensityBefore": 2.4,
+      "rawImpact": 72,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 3,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.1,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 21,
+      "phaseBefore": "ebb",
+      "tideBefore": 3,
+      "intensityBefore": 2.1,
+      "rawImpact": 63,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 4,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 1.8,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 22,
+      "phaseBefore": "rise",
+      "tideBefore": 4,
+      "intensityBefore": 1.8,
+      "rawImpact": 54,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.05,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 23,
+      "phaseBefore": "rise",
+      "tideBefore": 4,
+      "intensityBefore": 2.05,
+      "rawImpact": 61.49999999999999,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.3,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 24,
+      "phaseBefore": "rise",
+      "tideBefore": 4,
+      "intensityBefore": 2.3,
+      "rawImpact": 69,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.55,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 25,
+      "phaseBefore": "rise",
+      "tideBefore": 4,
+      "intensityBefore": 2.55,
+      "rawImpact": 76.5,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 4,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 4,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.8,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 26,
+      "phaseBefore": "crest",
+      "tideBefore": 4,
+      "intensityBefore": 2.8,
+      "rawImpact": 84,
+      "offeringCharges": 3,
+      "transition": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.8,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 27,
+      "phaseBefore": "crest",
+      "tideBefore": 4,
+      "intensityBefore": 2.8,
+      "rawImpact": 84,
+      "offeringCharges": 3,
+      "transition": {
+        "from": "crest",
+        "to": "ebb",
+        "newTideNumber": 4,
+        "survivedCrest": true
+      },
+      "after": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 0,
+        "currentIntensity": 2.8,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 28,
+      "phaseBefore": "ebb",
+      "tideBefore": 4,
+      "intensityBefore": 2.8,
+      "rawImpact": 84,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.533333333333333,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 29,
+      "phaseBefore": "ebb",
+      "tideBefore": 4,
+      "intensityBefore": 2.533333333333333,
+      "rawImpact": 76,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 4,
+        "phase": "ebb",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.2666666666666666,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 30,
+      "phaseBefore": "ebb",
+      "tideBefore": 4,
+      "intensityBefore": 2.2666666666666666,
+      "rawImpact": 68,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "ebb",
+        "to": "rise",
+        "newTideNumber": 5,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 0,
+        "currentIntensity": 2,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 31,
+      "phaseBefore": "rise",
+      "tideBefore": 5,
+      "intensityBefore": 2,
+      "rawImpact": 60,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 1,
+        "currentIntensity": 2.2,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 32,
+      "phaseBefore": "rise",
+      "tideBefore": 5,
+      "intensityBefore": 2.2,
+      "rawImpact": 66,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 2,
+        "currentIntensity": 2.4000000000000004,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 33,
+      "phaseBefore": "rise",
+      "tideBefore": 5,
+      "intensityBefore": 2.4000000000000004,
+      "rawImpact": 72.00000000000001,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 3,
+        "currentIntensity": 2.6000000000000005,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 34,
+      "phaseBefore": "rise",
+      "tideBefore": 5,
+      "intensityBefore": 2.6000000000000005,
+      "rawImpact": 78.00000000000001,
+      "offeringCharges": 1,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "rise",
+        "cycleInPhase": 4,
+        "currentIntensity": 2.8000000000000007,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 35,
+      "phaseBefore": "rise",
+      "tideBefore": 5,
+      "intensityBefore": 2.8000000000000007,
+      "rawImpact": 84.00000000000003,
+      "offeringCharges": 1,
+      "transition": {
+        "from": "rise",
+        "to": "crest",
+        "newTideNumber": 5,
+        "survivedCrest": false
+      },
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 0,
+        "currentIntensity": 3,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 36,
+      "phaseBefore": "crest",
+      "tideBefore": 5,
+      "intensityBefore": 3,
+      "rawImpact": 90,
+      "offeringCharges": 3,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 1,
+        "currentIntensity": 3,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 37,
+      "phaseBefore": "crest",
+      "tideBefore": 5,
+      "intensityBefore": 3,
+      "rawImpact": 90,
+      "offeringCharges": 3,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 2,
+        "currentIntensity": 3,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 38,
+      "phaseBefore": "crest",
+      "tideBefore": 5,
+      "intensityBefore": 3,
+      "rawImpact": 90,
+      "offeringCharges": 3,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 3,
+        "currentIntensity": 3,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 39,
+      "phaseBefore": "crest",
+      "tideBefore": 5,
+      "intensityBefore": 3,
+      "rawImpact": 90,
+      "offeringCharges": 3,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 4,
+        "currentIntensity": 3,
+        "crestIntact": true
+      }
+    },
+    {
+      "cycle": 40,
+      "phaseBefore": "crest",
+      "tideBefore": 5,
+      "intensityBefore": 3,
+      "rawImpact": 90,
+      "offeringCharges": 3,
+      "transition": null,
+      "after": {
+        "tideNumber": 5,
+        "phase": "crest",
+        "cycleInPhase": 5,
+        "currentIntensity": 3,
+        "crestIntact": true
+      }
+    }
+  ],
+  "loot": [
+    {
+      "storageHp": 0,
+      "affinity": 0,
+      "multiplier": 1,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 1
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 2
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 4
+        }
+      ],
+      "fullMapYield": 17
+    },
+    {
+      "storageHp": 0,
+      "affinity": 1,
+      "multiplier": 1,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 2
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 3
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 5
+        }
+      ],
+      "fullMapYield": 25
+    },
+    {
+      "storageHp": 0,
+      "affinity": 2,
+      "multiplier": 1,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 3
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 6
+        }
+      ],
+      "fullMapYield": 33
+    },
+    {
+      "storageHp": 0,
+      "affinity": 3,
+      "multiplier": 1,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 5
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 7
+        }
+      ],
+      "fullMapYield": 41
+    },
+    {
+      "storageHp": 70,
+      "affinity": 0,
+      "multiplier": 1.35,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 1
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 2
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 5
+        }
+      ],
+      "fullMapYield": 19
+    },
+    {
+      "storageHp": 70,
+      "affinity": 1,
+      "multiplier": 1.35,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 2
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 6
+        }
+      ],
+      "fullMapYield": 30
+    },
+    {
+      "storageHp": 70,
+      "affinity": 2,
+      "multiplier": 1.35,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 5
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 8
+        }
+      ],
+      "fullMapYield": 43
+    },
+    {
+      "storageHp": 70,
+      "affinity": 3,
+      "multiplier": 1.35,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 5
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 6
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 9
+        }
+      ],
+      "fullMapYield": 51
+    },
+    {
+      "storageHp": 100,
+      "affinity": 0,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 1
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 3
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 6
+        }
+      ],
+      "fullMapYield": 24
+    },
+    {
+      "storageHp": 100,
+      "affinity": 1,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 3
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 7
+        }
+      ],
+      "fullMapYield": 35
+    },
+    {
+      "storageHp": 100,
+      "affinity": 2,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 6
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 9
+        }
+      ],
+      "fullMapYield": 48
+    },
+    {
+      "storageHp": 100,
+      "affinity": 3,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 6
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 7
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 10
+        }
+      ],
+      "fullMapYield": 59
+    },
+    {
+      "storageHp": 145,
+      "affinity": 0,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 1
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 3
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 6
+        }
+      ],
+      "fullMapYield": 24
+    },
+    {
+      "storageHp": 145,
+      "affinity": 1,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 3
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 7
+        }
+      ],
+      "fullMapYield": 35
+    },
+    {
+      "storageHp": 145,
+      "affinity": 2,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 4
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 6
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 9
+        }
+      ],
+      "fullMapYield": 48
+    },
+    {
+      "storageHp": 145,
+      "affinity": 3,
+      "multiplier": 1.5,
+      "tiers": [
+        {
+          "name": "safe",
+          "value": 1,
+          "count": 3,
+          "yield": 6
+        },
+        {
+          "name": "contested",
+          "value": 2,
+          "count": 3,
+          "yield": 7
+        },
+        {
+          "name": "deep",
+          "value": 4,
+          "count": 2,
+          "yield": 10
+        }
+      ],
+      "fullMapYield": 59
+    }
+  ],
+  "forecast": [
+    {
+      "bonus": 0,
+      "display": {
+        "targetId": "CORE",
+        "severity": "moderate"
+      },
+      "damages": [
+        {
+          "moduleId": "CORE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "STORAGE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "PURIFIER",
+          "damage": 41,
+          "newHp": 29
+        }
+      ]
+    },
+    {
+      "bonus": 0.05,
+      "display": {
+        "targetId": "CORE",
+        "severity": "moderate"
+      },
+      "damages": [
+        {
+          "moduleId": "CORE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "STORAGE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "PURIFIER",
+          "damage": 41,
+          "newHp": 29
+        }
+      ]
+    },
+    {
+      "bonus": 0.1,
+      "display": {
+        "targetId": "CORE",
+        "severity": "heavy"
+      },
+      "damages": [
+        {
+          "moduleId": "CORE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "STORAGE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "PURIFIER",
+          "damage": 41,
+          "newHp": 29
+        }
+      ]
+    },
+    {
+      "bonus": 0.15,
+      "display": {
+        "targetId": "CORE",
+        "severity": "heavy"
+      },
+      "damages": [
+        {
+          "moduleId": "CORE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "STORAGE",
+          "damage": 11,
+          "newHp": 59
+        },
+        {
+          "moduleId": "PURIFIER",
+          "damage": 41,
+          "newHp": 29
+        }
+      ]
+    }
+  ],
+  "passiveSlotUpgrade": {
+    "slotsBefore": {
+      "weaponId": "test-starter",
+      "toolIds": [
+        null,
+        null,
+        "test-passive"
+      ],
+      "defenseIds": [
+        null
+      ]
+    },
+    "slotPurchase": {
+      "ok": true,
+      "spent": 40,
+      "newLevel": 1
+    },
+    "slotsAfter": {
+      "weaponId": "test-starter",
+      "toolIds": [
+        null,
+        null,
+        "test-passive"
+      ],
+      "defenseIds": [
+        null
+      ]
+    },
+    "departureAfter": {
+      "ok": false,
+      "error": "incompatible"
+    },
+    "manualMove": {
+      "ok": true
+    },
+    "repairedDeparture": {
+      "ok": true
+    }
+  },
+  "hashes": {
+    "data/upgrades.csv": "73edb164384528ccff2d07a476165808bd70cda9ab719f8c6d9414e95f2fd6f4",
+    "src/generated/upgrade-data.ts": "72f42fb75ae6e792f3a893133571a3db33a014f9cabe198361b44c45c5887ae8",
+    "src/systems/growth-system.ts": "bb3e67a7019aa233ef5c1443f11466ded075bb01f4682feccd5a778283ff1d69",
+    "src/managers/growth-purchases.ts": "61b071bd1713115c8b6571941b122c27d280665795c4d2810b7ae7b657652ae0",
+    "src/managers/game-state.ts": "7a5bf79ec583c5d34085f3b919b590faa1441ad5029a5d121014c88148c8c58c",
+    "src/systems/impact-system.ts": "c9d3d1df24ac21b44781f0b1c80c845de84e35034bcbd6ea88d569c34cbe63a5",
+    "src/systems/tide-system.ts": "864f56cfa60a38643a565d8f1931cfcda6a8b710a4e4fba750eff8aa2d99be44",
+    "src/systems/inventory-store.ts": "f43c54eefe1947cc33c6687eb683868aa6d9cf1bbb7ca04a4f72ba41525f62e5",
+    "src/scenes/rift-scene.ts": "87d2fd66858fc645c2213dae307d1c429114c2594fd86414f78647b312b14dde",
+    "src/systems/loot-search-system.ts": "52e68b62fb5266c0ae863ce7264317ba27ac23a8ca04520b9dd739f710cf758b",
+    "src/config/constants.ts": "591aa03082d8220a3cd2ae806f606de1ec3805815866b9bdae92ff1e34f5c5ae"
+  }
+}

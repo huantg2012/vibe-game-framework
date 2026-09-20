@@ -1,0 +1,97 @@
+{
+  "version": 2,
+  "kindlingReserve": 100,
+  "repairBonusHp": 0,
+  "pendingSideEffects": [],
+  "upgradeDiscount": 0,
+  "moduleSwapActive": false,
+  "modules": [
+    {
+      "id": "CORE",
+      "type": "CORE",
+      "hp": 15,
+      "maxHp": 100
+    },
+    {
+      "id": "STORAGE",
+      "type": "STORAGE",
+      "hp": 22,
+      "maxHp": 100
+    },
+    {
+      "id": "PURIFIER",
+      "type": "PURIFIER",
+      "hp": 8,
+      "maxHp": 100
+    }
+  ],
+  "moduleMaxHpTier": 0,
+  "cycle": 0,
+  "tide": {
+    "tideNumber": 1,
+    "phase": "rise",
+    "cycleInPhase": 0,
+    "currentIntensity": 1
+  },
+  "inventory": {
+    "version": 3,
+    "items": [
+      {
+        "kind": "weapon",
+        "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+        "weapon": {
+          "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+          "definitionId": "crowbar_plain",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 60
+        },
+        "location": {
+          "kind": "carried"
+        }
+      }
+    ],
+    "equipment": {
+      "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+      "toolIds": [],
+      "defenseIds": []
+    },
+    "run": null,
+    "starterGranted": true,
+    "firstWeaponDiscovered": false,
+    "catalogTutorialRevealed": false,
+    "discoveredCatalogIds": [],
+    "offeringReceipts": {},
+    "nextAcquiredOrdinal": 1
+  },
+  "growth": {
+    "upgrades": {
+      "growth_chaos_resist": 0,
+      "growth_kindling_affinity": 0,
+      "growth_vitality": 0,
+      "growth_sortie_slot": 0,
+      "growth_defense_slot": 0,
+      "growth_forecast_clarity": 0
+    }
+  },
+  "stability": {
+    "progress": 0,
+    "reached": false
+  },
+  "contaminantRuntimeState": {},
+  "impactForecast": {
+    "version": 1,
+    "targetId": "CORE",
+    "committed": false,
+    "consumed": false,
+    "earnedPending": false,
+    "display": {
+      "targetId": "CORE",
+      "severity": "light"
+    },
+    "lookahead": null,
+    "queuedTargets": [],
+    "nextIntensity": 1,
+    "nextNextIntensity": 1.2
+  }
+}
