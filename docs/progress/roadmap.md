@@ -4,7 +4,7 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-09-21
 last-closed-slice: 9
-note: I30整体空间/模型三方向设计就绪，未选型未接生产；I29机制与局部UX收口，历史/挂起边界保持。
+note: I30侧视封闭净化点进入双层检修舱设计提案；Rift俯视和历史/挂起边界保持，未接生产。
 ---
 
 # Roadmap
@@ -13,7 +13,7 @@ note: I30整体空间/模型三方向设计就绪，未选型未接生产；I29�
 
 [执行清单](../tasks/iteration-29.md)落实用户指定的三项：入口公开预兆不泄露真实倍率；加厚只扩上限且不降低现有净化效能；全部22步费用按温和指数安排，首项8、末项38、总426。完整购买、旧档兼容、加厚实际出击与信息边界验证见[R3 QA](../qa/iteration-29-r3.md)。旧在途已冻结的条件保持；旧购不补扣或退款。
 
-[净化点空间、模型与成长获得感重构I30](../tasks/iteration-30.md)进入 DESIGNING / OPTIONS-READY。已提供[三个整体方向](../design-notes/purification-spatial-directions.md)，未选型、未接正式场景；后续先真实碰撞与原速路线，再共同制作场景与装置。I28长期采样/平衡/动态审美保持挂起；第三主动位库存前提、尾段价值、整数收益读法与手工坏档未被本轮替代。
+[净化点空间、模型与成长获得感重构I30](../tasks/iteration-30.md)进入 DESIGNING / CUTAWAY-PROPOSAL。用户要求侧视上下层与封闭场所；当前[双层检修舱提案](../design-notes/purification-spatial-directions.md)未定稿、未接正式场景。后续先原角色侧视动作与真实碰撞/原速路线，再共同制作场景与装置；Rift保持俯视。I28长期采样/平衡/动态审美保持挂起；第三主动位库存前提、尾段价值、整数收益读法与手工坏档未被本轮替代。
 
 R2实现和成长复评已保存于`5d5b5dc`。本轮按持续授权在检查后本地提交，不推送；具体保存节点以Git为准。当前规则与索引已同步，历史审查保留当时失败事实，HTML仍为上次按需快照。
 

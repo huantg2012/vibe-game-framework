@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><title>净化点 · 封闭双层检修舱</title>
+<style>
+:root{color-scheme:light;--bg:#f0eee8;--ink:#283233;--muted:#586362;--line:#c6cbc4;--accent:#3f5851}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 system-ui,-apple-system,"PingFang SC",sans-serif}main{max-width:1400px;margin:auto;padding:30px}h1{font-size:30px;margin:5px 0 10px}h2{font-size:23px;margin:0 0 10px}h3{font-size:18px;margin:12px 0 6px}p{margin:6px 0}a{color:var(--accent)}.meta,.muted{color:var(--muted)}.meta{font-size:12px;letter-spacing:.08em}.intro{max-width:1000px}.figure{margin:24px 0 8px;background:#1c2529}svg{width:100%;height:auto;display:block}svg text{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;fill:#d5d9d2;font-size:15px}.sv-muted{fill:#a2afa9}button{font:inherit;cursor:pointer;border:1px solid var(--line);background:transparent;padding:6px 12px;border-radius:3px;color:var(--ink)}button[aria-pressed=true]{color:#fff;background:var(--accent);border-color:var(--accent)}button:focus-visible,a:focus-visible{outline:3px solid #ac792e;outline-offset:3px}.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.controls span{font-size:14px;margin-right:8px}.layout{display:grid;grid-template-columns:1fr 1fr;gap:38px;margin-top:24px;border-top:1px solid var(--line);padding-top:24px}.layers{list-style:none;padding:0;margin:0}.layers li{border-top:1px solid var(--line);padding:12px 0}.layers li:first-child{border-top:0}.layers b{display:block}.object-bar{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.object-detail{min-height:110px}#state-note{font-size:14px;min-height:2em}.lower{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;border-top:1px solid var(--line);margin-top:26px;padding-top:18px}footer{margin-top:25px;border-top:1px solid var(--line);padding-top:18px;font-size:14px}.show-cut .cut-marker{opacity:1}.cut-marker{opacity:0}.show-routes .routes{opacity:1}.routes{opacity:0}.damage-mark{opacity:0}.damaged .damage-mark{opacity:1}.repair-mark{opacity:0}.repaired .repair-mark{opacity:1}.active-device{stroke:#dfc38d!important;stroke-width:3!important}.outline-label{paint-order:stroke;stroke:#1c2529;stroke-width:5px;stroke-linejoin:round}@media(max-width:850px){main{padding:18px}.layout,.lower{grid-template-columns:1fr;gap:20px}h1{font-size:26px}svg text{font-size:17px}}
+</style></head><body><main>
+<nav class="meta"><a href="index.html">设计与内容</a> / I30 / 2026-09-21 / 侧视封闭方向 · 具体布局待评审</nav>
+<header class="intro"><h1>封闭双层检修舱</h1><p><strong>人在结构内部活动，外界已经不再属于人。</strong> 借用侧视平台游戏的上下层空间：下层维持与出击，上层改造与供奉，双侧楼梯连接。封闭感来自有厚度的外壳、看得见的封堵与持续受压的接缝。</p><p class="muted">建筑剖面示意，不是最终像素图或已运行的关卡。净化点转为侧视是当前设计方向；裂隙保持俯视。双层、楼梯及具体形体是本轮提案。</p></header>
+<div class="figure">
+<svg id="section" viewBox="0 0 1000 620" role="img" aria-labelledby="section-title section-desc">
+<title id="section-title">封闭双层检修舱剖面：上层蜕变与供奉，下层储藏、核心、净化器与裂隙</title>
+<desc id="section-desc">顶板、左右端墙和基础封闭整个舱体；观察镜头省略了前墙。左右短楼梯形成上下环路，主层不需要爬楼即可再次出击。墙外已被改写，墙只限制活动，污染抵抗来自原有机制。</desc>
+<!-- Solid shell continues beyond the framing. The interior shape is a camera cutaway. -->
+<rect width="1000" height="620" fill="#293237"/>
+<path d="M0 67H187V41H515V70H773V100H1000M0 568H265V595H631V558H1000" fill="none" stroke="#414b4c" stroke-width="12"/>
+<path d="M84 194H166V138H231V95H653V131H788V173H915V482H840V512H125V479H84Z" fill="#171f23" stroke="#596059" stroke-width="14"/>
+<path d="M107 213H182V157H250V117H634V153H768V196H892V467H819V490H145V458H107Z" fill="#333d3c"/>
+<!-- Back walls: a small room on the left, an exposed high service bay to the right. -->
+<path d="M257 123V268H393V123M572 152V274H750M151 340H888M439 307V467" fill="none" stroke="#454f4a" stroke-width="4"/>
+<path d="M270 137H377V263H270Z" fill="#394240"/>
+<rect x="574" y="191" width="173" height="76" fill="#2a3434"/>
+<rect x="180" y="335" width="134" height="105" fill="#263132"/>
+<path d="M421 342H573V459H421Z" fill="#1e2b30"/>
+<!-- The two walkable levels and their real supporting beams. -->
+<path d="M240 285H748V300H240Z" fill="#8a826a"/>
+<path d="M245 301H748V315H245Z" fill="#4b5651"/>
+<path d="M380 315L434 366M602 366L652 315" stroke="#59645a" stroke-width="9"/>
+<rect x="128" y="458" width="752" height="17" fill="#827d67"/>
+<rect x="145" y="479" width="674" height="18" fill="#424e4e"/>
+<path d="M169 508V556M315 508V575M569 508V570M782 508V550" stroke="#171f23" stroke-width="15"/>
+<!-- Stairs are spatial links, not decorative painted lines. -->
+<path d="M125 458H145V433H165V408H185V383H205V358H225V333H245V308H265V285" fill="none" stroke="#b0a284" stroke-width="8"/>
+<path d="M730 285V308H750V333H770V358H790V383H810V408H830V433H850V458" fill="none" stroke="#b0a284" stroke-width="8"/>
+<path d="M132 437L253 268M741 268L854 437" stroke="#53635c" stroke-width="5"/>
+<!-- Six concept carriers. These are form studies, not replacement sprites. -->
+<g id="device-growth" class="device"><path d="M284 269L307 200H343L354 269Z" fill="#626e65" stroke="#1e292c" stroke-width="4"/><path d="M305 246L319 211H332L333 251Z" fill="#293f3c"/><path d="M310 218H340M299 240H338" stroke="#b3ab87" stroke-width="5"/><path d="M279 271H363" stroke="#9f9678" stroke-width="7"/></g>
+<g id="device-offering" class="device"><path d="M586 279V217H692V279" fill="none" stroke="#93977f" stroke-width="7"/><path d="M598 230V253H619V229M632 230V253H653V229M666 230V253H687V229" stroke="#99977c" stroke-width="4" fill="#4b5050"/><path d="M594 272H700" stroke="#77765e" stroke-width="7"/></g>
+<g id="device-storage" class="device"><path d="M218 392H286V450H210V409Z" fill="#596255" stroke="#1a272a" stroke-width="4"/><path d="M229 405H275V431H220Z" fill="#1c2a2b"/><path d="M210 438H286V451H210Z" fill="#898671"/></g>
+<g id="device-core" class="device"><path d="M470 450V352H539V450M459 362H550M457 450H552" fill="none" stroke="#889987" stroke-width="5"/><path d="M493 365V442M519 365V442" stroke="#526e67" stroke-width="3"/><rect x="490" y="399" width="32" height="14" fill="#a9b18c"/><path d="M477 481V526H533V481" fill="none" stroke="#53625b" stroke-width="10"/></g>
+<g id="device-purifier" class="device"><path d="M662 449L675 383M682 449L695 383M702 449L715 383" stroke="#8b9581" stroke-width="9"/><path d="M650 451H724M667 412H717" stroke="#515f56" stroke-width="7"/></g>
+<g id="device-rift" class="device"><path d="M769 457L784 447L793 456L811 440L826 449L841 445L830 465H783Z" fill="#101c20"/><path d="M783 454L794 458L811 447L825 455" fill="none" stroke="#7baba0" stroke-width="3"/></g>
+<!-- Closed observation slit: there is glass and a backing, not an open exit. -->
+<rect x="897" y="281" width="16" height="94" fill="#111d22" stroke="#6b766b" stroke-width="4"/><path d="M902 289V367" stroke="#7e9590" stroke-width="2"/>
+<path d="M929 270L951 298L944 339L966 375M942 281L936 311L955 347" fill="none" stroke="#49635b" stroke-width="4"/>
+<!-- Seals: isolated seams, never a luminous perimeter. -->
+<path d="M90 267H107V325M651 131V154H702M838 484V508H793" fill="none" stroke="#a18c67" stroke-width="5"/>
+<path d="M88 251H119V280H88M683 122V164H710V122M807 483H843V512H807" fill="#5f6559" stroke="#a38c65" stroke-width="3"/>
+<g class="damage-mark"><path d="M100 284L115 294L99 311L116 323M663 150L674 171L692 164M815 487L805 468L793 481" fill="none" stroke="#91ada0" stroke-width="4"/><path d="M448 386L462 400L451 416" fill="none" stroke="#a08763" stroke-width="4"/></g>
+<g class="repair-mark"><path d="M100 284V320M667 156H699M802 482H826" fill="none" stroke="#a89876" stroke-width="7"/></g>
+<!-- Scale figure only: explicitly not the player asset. -->
+<g fill="#d0c7aa" transform="translate(-360 0)"><circle cx="752" cy="419" r="7"/><path d="M744 428H760V445H756V457H751V443H748V457H743V434Z"/></g>
+<g class="routes" fill="none" stroke="#ddc293" stroke-width="4" stroke-dasharray="8 7"><path d="M158 443H851M257 273H740M151 432L256 273M740 273L845 432"/></g>
+<g class="cut-marker" stroke="#c5b799" stroke-width="3" stroke-dasharray="9 7" fill="none"><path d="M76 169H161V110H227V77H659V114H790V158H925V488H849V526H118V493H76Z"/></g>
+<g><text x="250" y="53" class="outline-label">厚顶板延出画面 · 不是可攀爬屋顶</text><text x="286" y="181">蜕变</text><text x="587" y="179">供奉</text><text x="211" y="372">储藏</text><text x="481" y="329">核心</text><text x="650" y="366">净化器</text><text x="773" y="402">裂隙</text><text x="397" y="243" class="sv-muted">上层维护步道</text><text x="329" y="395" class="sv-muted">归来 · 连续主廊</text><text x="626" y="559" class="sv-muted">承重基座 · 无可走第三层</text><text x="31" y="600" class="sv-muted">侧剖示意：墙在世界内闭合，镜头省略前墙。符号人物仅作尺度提示。</text><text x="919" y="410" class="outline-label" transform="rotate(90 919 410)">封闭窄窗</text></g>
+</svg></div>
+<div class="controls" aria-label="边界状态示意"><span>查看边界：</span><button data-state="normal" aria-pressed="true">日常</button><button data-state="damaged" aria-pressed="false">已经受损</button><button data-state="repaired" aria-pressed="false">注入修复后</button><button id="cut" aria-pressed="false">标出镜头剖切面</button><button id="routes" aria-pressed="false">标出两层通路</button></div>
+<p id="state-note" aria-live="polite">日常：完整外壳、稳定内壁、零散可辨的封堵接头。没有环形光罩。此页仅作设计演示，不读取游戏状态。</p>
+<section class="layout"><article><h2>封闭，靠三层关系成立</h2><ol class="layers"><li><b>01　实体外壳：人不能随意出去</b>顶板、墙体和厚地基真实围合；断处用压板和异规格构件封堵。活动区没有敞口悬崖、露天平台或可打开的外门。</li><li><b>02　抗侵蚀界面：墙本身也会被改写</b>维持现状仍消耗既有薪柴，读取既有模块状态。局部接缝承压、错位；修复后结构收敛。不能靠普通墙体解释“这里为何安全”。</li><li><b>03　墙外存在：让人感觉外界仍在压迫</b>封闭观察窄窗、壳外短暂失真的残留构件与接缝声传达外部。剖切黑面表示不可见的结构深处，不把整圈黑暗画成包裹据点的泡泡。</li></ol></article>
+<article><h2>六种功能，共同属于这个场所</h2><div class="object-bar" aria-label="装置形体说明"><button data-device="core" aria-pressed="true">核心</button><button data-device="storage" aria-pressed="false">储藏</button><button data-device="purifier" aria-pressed="false">净化器</button><button data-device="rift" aria-pressed="false">裂隙</button><button data-device="growth" aria-pressed="false">蜕变</button><button data-device="offering" aria-pressed="false">供奉</button></div><div class="object-detail" aria-live="polite"><h3 id="object-name">核心</h3><p id="object-copy"></p></div><h3>操作面在主廊后侧</h3><p>主层设备安装在后墙凹位，人物走在其前侧的连续检修带。核心的沉重支撑延入底座，细框保留脆弱感；人不会从实体机身里穿过去。</p><p class="muted">楼层形状、净空和装置细节均待原角色尺度灰盒校验。此图不提供碰撞或行走时长证据。</p></article></section>
+<section class="lower"><article><h3>上下层要服务日常节奏</h3><p>下层完成维持与再次出击，上层进行蜕变和供奉。两端短楼梯构成回路，不设置跳跃缺口、升降等待或坠落惩罚。平层用左右移动，楼梯口及阶梯上用上/下连续行走，松开可停、反向可退；E专用于装置。</p></article><article><h3>剖面是观察方式</h3><p>保留近景墙端截面、顶梁暗影与结构厚度。前墙只对镜头省略，人物所在的建筑仍然封闭。画面裁切进入壳体，不把完整小建筑摆在黑底中央供人观赏。</p></article><article><h3>视角改变，有实际制作成本</h3><p>原主角身份、衣装、面罩、灯和背负物保持，但要补侧视站立、步态和上下阶动作。净化点采用独立移动适配；裂隙的俯视操作、角色状态与装备权益保持。</p></article></section>
+<footer><p><strong>先做：</strong>一套原角色侧视动作＋双层碰撞灰盒＋完整外壳；验证上下层走法、归来短路和剖面封闭感，再共同制作六装置与边界状态。</p><p>不把受压特效变成免费预兆：只表现已发生的损伤和已公开状态，不提前泄露下一轮的真实强度或目标。</p><p>参考研究：<a href="https://deadcells.com/">Dead Cells 官方资料</a> · <a href="https://deepnight.net/tutorial/the-level-design-of-dead-cells-a-hybrid-approach/">原设计师的关卡设计说明</a>。本提案学习侧视层级与按用途组织空间，净化点保持固定布局。</p><p><a href="../design-notes/purification-spatial-directions.md">完整设计</a> · <a href="../tasks/iteration-30.md">I30 状态</a> · <a href="purification-spatial-directions.html">上一轮俯视候选（历史）</a></p></footer>
+</main><script>
+'use strict';
+const scene=document.getElementById('section');
+const notes={normal:'日常：完整外壳、稳定内壁、零散可辨的封堵接头。没有环形光罩。此页仅作设计演示，不读取游戏状态。',damaged:'已经受损：局部接缝错位、压条受力，异常留在结构连接处。墙仍闭合，不生成可出去的洞，不新增伤害；不泄露下一轮预兆。',repaired:'注入修复后：异常收敛，夹持和封堵重新稳定。此处只是说明变化落在哪里，不新增建筑施工或扩张安全区。'};
+document.querySelectorAll('[data-state]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-state]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));scene.classList.remove('damaged','repaired');if(b.dataset.state!=='normal')scene.classList.add(b.dataset.state);document.getElementById('state-note').textContent=notes[b.dataset.state]}));
+for(const [id,cls] of [['cut','show-cut'],['routes','show-routes']])document.getElementById(id).addEventListener('click',function(){const active=scene.classList.toggle(cls);this.setAttribute('aria-pressed',String(active))});
+const objects={core:['核心','嵌入挑高主舱的细框，借旧梁与厚基座承载；操作口留在主层，维护不必爬楼。巨构只是承载，不解释净化点的起源。'],storage:['储藏','主层宽口深斗，有厚侧壁和可见内腔。它帮助辨认“带回与收存”，不以摆件数量冒充实际库存或新增手动卸货。'],purifier:['净化器','裂隙旁的一组斜置薄板，人的出发位置在剥离作用范围的读图关系中。现有效果仍在出击结算，不要求额外按一次净化。'],rift:['裂隙','主层尽端的低矮地面伤口，地坪错位延及墙脚。外壳封闭与时空泄漏可以同时成立：它不是门框，也不是通向墙外的走廊。'],growth:['蜕变','上层左侧倾斜的人体接入架：头肩承托、束接臂和进入面可见。颜色服务于材料和作用部位，避免又用一罐亮液体代替功能。'],offering:['供奉','上层右侧横向夹架：收容、控制与暴露关系可读。未知包块保持遮护，槽位数量读取已有容量；图中夹位仅是形体研究，不是默认容量。']};
+function choose(id){document.querySelectorAll('[data-device]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.device===id)));document.querySelectorAll('.device').forEach(g=>g.classList.remove('active-device'));document.getElementById('device-'+id).classList.add('active-device');document.getElementById('object-name').textContent=objects[id][0];document.getElementById('object-copy').textContent=objects[id][1]}
+document.querySelectorAll('[data-device]').forEach(b=>b.addEventListener('click',()=>choose(b.dataset.device)));choose('core');
+</script></body></html>

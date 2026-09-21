@@ -29,6 +29,10 @@
       {
         "path": "docs/specs/system-movement-vision.md",
         "role": "spec"
+      },
+      {
+        "path": "docs/design-notes/purification-spatial-directions.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
@@ -36,7 +40,9 @@
       "COH-E-SRC-control",
       "COH-E-HIST-PRODUCTION"
     ],
-    "unknowns": []
+    "unknowns": [
+      "I30提议仅净化点采用侧视平层/短阶移动，尚未实现；现有正式净化点与Rift仍为原俯视。未来须回归场景切换后的输入/位置/角色表现。"
+    ]
   },
   {
     "id": "COH-F007",

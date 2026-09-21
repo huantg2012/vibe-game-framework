@@ -6,4 +6,4 @@
 
 阅读入口由 `tools/report-viewer` 生成，[刷新方式](../dev/report-viewer.md)。
 
-独立编写的设计阅读页通过 `tools/report-viewer/reading-links.json` 登记，刷新目录时保留，不冒充旧报告的导出来源。当前新增：[净化点三方向](purification-spatial-directions.html)，对应[设计正文](../design-notes/purification-spatial-directions.md)，未选型、未接生产。
+独立编写的设计阅读页通过 `tools/report-viewer/reading-links.json` 登记，刷新目录时保留，不冒充旧报告的导出来源。净化点当前为[封闭双层检修舱](purification-cutaway.html)，对应[设计正文](../design-notes/purification-spatial-directions.md)，具体布局待评审、未接生产；[原三方向](purification-spatial-directions.html)保留为已被取代的历史俯视候选。

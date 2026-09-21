@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-21
-note: I30净化点空间/模型三方向设计就绪，未选型未接生产；I29局部UX通过与I28挂起边界保持。
+note: I30按用户要求改为侧视上下层封闭净化点设计；双层检修舱待评审未接生产，Rift保持俯视。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -20,9 +20,9 @@ note: I30净化点空间/模型三方向设计就绪，未选型未接生产；I
 
 ## 当前设计 · 迭代30（2026-09-21，净化点整体重构）
 
-用户否定“膜包蛋”的边界与没有真实通行差异的平面，要求三个整体方向。已完成[残墙工作院 / 错层断崖站 / 剖开的巨械](../design-notes/purification-spatial-directions.md)，[空间图阅读页](../reading/purification-spatial-directions.html)可检查示意路线和实体范围。范围包括六对象与场所共同构建，允许移动原锚点和重设旧形体；原角色、俯视2D、六功能与既有机制保留。
+用户在三种俯视候选后明确要求《死亡细胞》式侧视上下层结构，且净化点必须封闭。当前[双层检修舱设计](../design-notes/purification-spatial-directions.md)与[剖面阅读页](../reading/purification-cutaway.html)覆盖六功能、短阶移动、实体外壳/抗侵蚀/外部改写、镜头剖切与原角色侧视适配。旧三卡成为[历史探索](../reading/purification-spatial-directions.html)，不再待选。
 
-[I30清单](../tasks/iteration-30.md)为 DESIGNING / OPTIONS-READY / NOT-IN-PRODUCTION。尚未选型、未做正式灰盒/像素美术，阅读页检查不提升场景验收。[限定检查](../qa/i30-spatial-directions.md)。下一步是选择主骨架，再检验原速短动线和真实碰撞。成长获得感仍在I30，I28长期采样继续挂起。
+[I30清单](../tasks/iteration-30.md)为 DESIGNING / CUTAWAY-PROPOSAL / NOT-IN-PRODUCTION。侧视封闭是用户方向，双层、短阶和具体形体仍是待评审提案。没有改正式游戏或Rift俯视；[阅读页检查](../qa/i30-cutaway-design.md)不提升碰撞/美术/动态验收。下一步是具体布局评审，再原角色动作样板与原速碰撞灰盒。成长获得感仍在I30，I28长期采样继续挂起。
 
 ## 历史交付 · 迭代29 R4（2026-09-21，蜕变UI细节）
 
