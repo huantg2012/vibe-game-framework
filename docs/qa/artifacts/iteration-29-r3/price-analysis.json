@@ -1,0 +1,672 @@
+{
+  "status": "adopted-by-coordinator-for-authorized-r3-implementation",
+  "feature": "COH-F029",
+  "scope": "22 global route orders including thicken; price arithmetic only, no natural economy or art review claim",
+  "formula": {
+    "base": 8,
+    "ratio": "1.077",
+    "index": "order - 1",
+    "rounding": "nearest integer, .5 upward; round once from full exponential, not previous rounded cost",
+    "pricesToBePersistedIn": "data/growth-route.csv:cost"
+  },
+  "total": 426,
+  "oldTotal": 428,
+  "delta": -2,
+  "deltaPercent": -0.46728971962616817,
+  "phaseTotals": {
+    "1-7": 71,
+    "8-14": 118,
+    "15-22": 237
+  },
+  "plateaus": [
+    {
+      "orders": [
+        2,
+        3
+      ],
+      "cost": 9
+    },
+    {
+      "orders": [
+        6,
+        7
+      ],
+      "cost": 12
+    }
+  ],
+  "maxAdjacentAbsoluteIncrease": 3,
+  "globalNondecreasing": true,
+  "perUnitStrictlyIncreasing": {
+    "growth_vitality": true,
+    "growth_kindling_affinity": true,
+    "growth_defense_slot": true,
+    "growth_chaos_resist": true,
+    "growth_forecast_clarity": true,
+    "thicken": true,
+    "growth_sortie_slot": true
+  },
+  "rows": [
+    {
+      "order": 1,
+      "unit": "growth_vitality",
+      "name": "生命强化",
+      "level": 1,
+      "phase": "立足",
+      "oldCost": 8,
+      "cost": 8,
+      "cumulative": 8,
+      "oldCumulative": 8,
+      "rawPrice": "8"
+    },
+    {
+      "order": 2,
+      "unit": "growth_kindling_affinity",
+      "name": "薪柴亲和",
+      "level": 1,
+      "phase": "立足",
+      "oldCost": 8,
+      "cost": 9,
+      "cumulative": 17,
+      "oldCumulative": 16,
+      "rawPrice": "8.616"
+    },
+    {
+      "order": 3,
+      "unit": "growth_defense_slot",
+      "name": "供奉扩容",
+      "level": 1,
+      "phase": "立足",
+      "oldCost": 10,
+      "cost": 9,
+      "cumulative": 26,
+      "oldCumulative": 26,
+      "rawPrice": "9.279432"
+    },
+    {
+      "order": 4,
+      "unit": "growth_chaos_resist",
+      "name": "渗透抗性",
+      "level": 1,
+      "phase": "立足",
+      "oldCost": 8,
+      "cost": 10,
+      "cumulative": 36,
+      "oldCumulative": 34,
+      "rawPrice": "9.993948264"
+    },
+    {
+      "order": 5,
+      "unit": "growth_forecast_clarity",
+      "name": "预兆洞察",
+      "level": 1,
+      "phase": "立足",
+      "oldCost": 10,
+      "cost": 11,
+      "cumulative": 47,
+      "oldCumulative": 44,
+      "rawPrice": "10.763482280328"
+    },
+    {
+      "order": 6,
+      "unit": "growth_vitality",
+      "name": "生命强化",
+      "level": 2,
+      "phase": "立足",
+      "oldCost": 12,
+      "cost": 12,
+      "cumulative": 59,
+      "oldCumulative": 56,
+      "rawPrice": "11.592270415913256"
+    },
+    {
+      "order": 7,
+      "unit": "thicken",
+      "name": "加厚",
+      "level": 1,
+      "phase": "立足",
+      "oldCost": 12,
+      "cost": 12,
+      "cumulative": 71,
+      "oldCumulative": 68,
+      "rawPrice": "12.484875237938576712"
+    },
+    {
+      "order": 8,
+      "unit": "growth_kindling_affinity",
+      "name": "薪柴亲和",
+      "level": 2,
+      "phase": "整备",
+      "oldCost": 12,
+      "cost": 13,
+      "cumulative": 84,
+      "oldCumulative": 80,
+      "rawPrice": "13.446210631259847118824"
+    },
+    {
+      "order": 9,
+      "unit": "growth_forecast_clarity",
+      "name": "预兆洞察",
+      "level": 2,
+      "phase": "整备",
+      "oldCost": 20,
+      "cost": 14,
+      "cumulative": 98,
+      "oldCumulative": 100,
+      "rawPrice": "14.481568849866855346973448"
+    },
+    {
+      "order": 10,
+      "unit": "growth_defense_slot",
+      "name": "供奉扩容",
+      "level": 2,
+      "phase": "整备",
+      "oldCost": 20,
+      "cost": 16,
+      "cumulative": 114,
+      "oldCumulative": 120,
+      "rawPrice": "15.59664965130660320869040350"
+    },
+    {
+      "order": 11,
+      "unit": "growth_chaos_resist",
+      "name": "渗透抗性",
+      "level": 2,
+      "phase": "整备",
+      "oldCost": 12,
+      "cost": 17,
+      "cumulative": 131,
+      "oldCumulative": 132,
+      "rawPrice": "16.79759167445721165575956457"
+    },
+    {
+      "order": 12,
+      "unit": "growth_sortie_slot",
+      "name": "出击扩容",
+      "level": 1,
+      "phase": "整备",
+      "oldCost": 40,
+      "cost": 18,
+      "cumulative": 149,
+      "oldCumulative": 172,
+      "rawPrice": "18.09100623339041695325305104"
+    },
+    {
+      "order": 13,
+      "unit": "growth_vitality",
+      "name": "生命强化",
+      "level": 3,
+      "phase": "整备",
+      "oldCost": 18,
+      "cost": 19,
+      "cumulative": 168,
+      "oldCumulative": 190,
+      "rawPrice": "19.48401371336147905865353597"
+    },
+    {
+      "order": 14,
+      "unit": "thicken",
+      "name": "加厚",
+      "level": 2,
+      "phase": "整备",
+      "oldCost": 20,
+      "cost": 21,
+      "cumulative": 189,
+      "oldCumulative": 210,
+      "rawPrice": "20.98428276929031294616985823"
+    },
+    {
+      "order": 15,
+      "unit": "growth_chaos_resist",
+      "name": "渗透抗性",
+      "level": 3,
+      "phase": "承压",
+      "oldCost": 18,
+      "cost": 23,
+      "cumulative": 212,
+      "oldCumulative": 228,
+      "rawPrice": "22.60007254252566704302493732"
+    },
+    {
+      "order": 16,
+      "unit": "growth_kindling_affinity",
+      "name": "薪柴亲和",
+      "level": 3,
+      "phase": "承压",
+      "oldCost": 18,
+      "cost": 24,
+      "cumulative": 236,
+      "oldCumulative": 246,
+      "rawPrice": "24.34027812830014340533785750"
+    },
+    {
+      "order": 17,
+      "unit": "growth_forecast_clarity",
+      "name": "预兆洞察",
+      "level": 3,
+      "phase": "承压",
+      "oldCost": 30,
+      "cost": 26,
+      "cumulative": 262,
+      "oldCumulative": 276,
+      "rawPrice": "26.21447954417925444754887252"
+    },
+    {
+      "order": 18,
+      "unit": "growth_defense_slot",
+      "name": "供奉扩容",
+      "level": 3,
+      "phase": "承压",
+      "oldCost": 35,
+      "cost": 28,
+      "cumulative": 290,
+      "oldCumulative": 311,
+      "rawPrice": "28.23299446908105704001013570"
+    },
+    {
+      "order": 19,
+      "unit": "growth_vitality",
+      "name": "生命强化",
+      "level": 4,
+      "phase": "承压",
+      "oldCost": 25,
+      "cost": 30,
+      "cumulative": 320,
+      "oldCumulative": 336,
+      "rawPrice": "30.40693504320029843209091615"
+    },
+    {
+      "order": 20,
+      "unit": "growth_chaos_resist",
+      "name": "渗透抗性",
+      "level": 4,
+      "phase": "承压",
+      "oldCost": 25,
+      "cost": 33,
+      "cumulative": 353,
+      "oldCumulative": 361,
+      "rawPrice": "32.74826904152672141136191670"
+    },
+    {
+      "order": 21,
+      "unit": "thicken",
+      "name": "加厚",
+      "level": 3,
+      "phase": "承压",
+      "oldCost": 32,
+      "cost": 35,
+      "cumulative": 388,
+      "oldCumulative": 393,
+      "rawPrice": "35.26988575772427896003678428"
+    },
+    {
+      "order": 22,
+      "unit": "growth_chaos_resist",
+      "name": "渗透抗性",
+      "level": 5,
+      "phase": "承压",
+      "oldCost": 35,
+      "cost": 38,
+      "cumulative": 426,
+      "oldCumulative": 428,
+      "rawPrice": "37.98566696106904843995961667"
+    }
+  ],
+  "perUnit": {
+    "growth_vitality": [
+      {
+        "level": 1,
+        "cost": 8
+      },
+      {
+        "level": 2,
+        "cost": 12
+      },
+      {
+        "level": 3,
+        "cost": 19
+      },
+      {
+        "level": 4,
+        "cost": 30
+      }
+    ],
+    "growth_kindling_affinity": [
+      {
+        "level": 1,
+        "cost": 9
+      },
+      {
+        "level": 2,
+        "cost": 13
+      },
+      {
+        "level": 3,
+        "cost": 24
+      }
+    ],
+    "growth_defense_slot": [
+      {
+        "level": 1,
+        "cost": 9
+      },
+      {
+        "level": 2,
+        "cost": 16
+      },
+      {
+        "level": 3,
+        "cost": 28
+      }
+    ],
+    "growth_chaos_resist": [
+      {
+        "level": 1,
+        "cost": 10
+      },
+      {
+        "level": 2,
+        "cost": 17
+      },
+      {
+        "level": 3,
+        "cost": 23
+      },
+      {
+        "level": 4,
+        "cost": 33
+      },
+      {
+        "level": 5,
+        "cost": 38
+      }
+    ],
+    "growth_forecast_clarity": [
+      {
+        "level": 1,
+        "cost": 11
+      },
+      {
+        "level": 2,
+        "cost": 14
+      },
+      {
+        "level": 3,
+        "cost": 26
+      }
+    ],
+    "thicken": [
+      {
+        "level": 1,
+        "cost": 12
+      },
+      {
+        "level": 2,
+        "cost": 21
+      },
+      {
+        "level": 3,
+        "cost": 35
+      }
+    ],
+    "growth_sortie_slot": [
+      {
+        "level": 1,
+        "cost": 18
+      }
+    ]
+  },
+  "comparisons": [
+    {
+      "ratio": "1.07",
+      "roundedPrices": [
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        21,
+        22,
+        24,
+        25,
+        27,
+        29,
+        31,
+        33
+      ],
+      "roundedTotal": 393,
+      "strictCorrectedPrices": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        27,
+        29,
+        31,
+        33
+      ],
+      "strictCorrectedTotal": 417
+    },
+    {
+      "ratio": "1.075",
+      "roundedPrices": [
+        8,
+        9,
+        9,
+        10,
+        11,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        22,
+        24,
+        25,
+        27,
+        29,
+        32,
+        34,
+        37
+      ],
+      "roundedTotal": 415,
+      "strictCorrectedPrices": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24,
+        25,
+        27,
+        29,
+        32,
+        34,
+        37
+      ],
+      "strictCorrectedTotal": 433
+    },
+    {
+      "ratio": "1.077",
+      "roundedPrices": [
+        8,
+        9,
+        9,
+        10,
+        11,
+        12,
+        12,
+        13,
+        14,
+        16,
+        17,
+        18,
+        19,
+        21,
+        23,
+        24,
+        26,
+        28,
+        30,
+        33,
+        35,
+        38
+      ],
+      "roundedTotal": 426,
+      "strictCorrectedPrices": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        26,
+        28,
+        30,
+        33,
+        35,
+        38
+      ],
+      "strictCorrectedTotal": 440
+    },
+    {
+      "ratio": "1.08",
+      "roundedPrices": [
+        8,
+        9,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        22,
+        23,
+        25,
+        27,
+        30,
+        32,
+        35,
+        37,
+        40
+      ],
+      "roundedTotal": 444,
+      "strictCorrectedPrices": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        25,
+        27,
+        30,
+        32,
+        35,
+        37,
+        40
+      ],
+      "strictCorrectedTotal": 453
+    }
+  ],
+  "strictIntegerMinimum": {
+    "firstCost": 8,
+    "prices": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ],
+    "total": 407
+  },
+  "compatibility": "Prices bind to fixed (unit, level) route rows, not owned-count, visit-count, or a new save price index; paid legacy nodes keep benefits and receive no refund/recharge.",
+  "implementation": {
+    "source": "data/growth-route.csv:cost",
+    "removedSources": [
+      "data/upgrades.csv:cost_1..cost_5",
+      "src/config/constants.ts:PURIFICATION.MODULE_MAX_HP_COST"
+    ],
+    "generatedRoute": "GROWTH_ROUTE_DATA includes cost",
+    "retainedApi": "UPGRADE_DATA.costs generated by unit and target level from route CSV",
+    "thicken": "reads cost from GROWTH_ROUTE_DATA for unit=thicken and target level",
+    "legacy": "no retroactive deductions or refunds; next unowned original route row uses its current CSV price"
+  }
+}

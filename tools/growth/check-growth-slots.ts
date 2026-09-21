@@ -80,13 +80,13 @@ check('purchase moves the existing passive, preserves every item and saves one c
     assert.equal(saved().growth.upgrades.growth_sortie_slot, 1);
   });
   const writes = primaryWrites;
-  assert.deepEqual(purchaseGrowth('growth_sortie_slot'), { ok: true, spent: 40, newLevel: 1 });
+  assert.deepEqual(purchaseGrowth('growth_sortie_slot'), { ok: true, spent: 18, newLevel: 1 });
   unsubscribe();
   assert.equal(primaryWrites, writes + 1);
   assert.equal(observations, 1);
   assert.deepEqual(inventoryStore.getEquipment().toolIds, ['active-a', 'active-b', null, 'passive']);
   assert.deepEqual(inventoryStore.getState().items, before.inventory.items);
-  assert.equal(gameState.getKindlingReserve(), before.game.kindlingReserve - 40);
+  assert.equal(gameState.getKindlingReserve(), before.game.kindlingReserve - 18);
   assert.equal(stabilityTracker.getProgress(), before.stability.progress + 1);
   const bought = snapshot();
   assert(saveManager.load()); assert.deepEqual(snapshot(), bought);

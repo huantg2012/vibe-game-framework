@@ -4,7 +4,7 @@ phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
 last-modified-date: 2026-09-21
-last-modified-by: design（迭代29 R2供奉容量与旧档合同同步）
+last-modified-by: design（迭代29 R3扩槽价格与冻结出击兼容同步）
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes]
 exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, inventoryStore.reconcileExpandedToolSlots(previousSlotCount)]
 interface-changed: true
@@ -12,15 +12,17 @@ note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入�
 ---
 
 
-## 迭代29 R2 · 线性扩槽、容量权益与被动迁移
+## 迭代29 R3 · 线性扩槽、容量权益与被动迁移
 
-出击扩容为`data/growth-route.csv`第12步，只有当前路线项可购买，不要求揭晓或拥有工具。购买与库存候选在同笔保存中发布：原三槽 `[主动A,主动B,被动P]` → `[主动A,主动B,空,被动P]`，被动身份、品质与余次保持；空槽补齐有效容量。`inventoryStore.reconcileExpandedToolSlots(previousSlotCount)`仅把旧末槽确认为被动、且新末槽为空的对象迁移，目标占用时拒绝，不能静默丢物。`saveManager.trySaveBaseInventoryFrame()`保存完整基地状态+库存候选，拒写先还原成长/薪柴/稳定度再取消库存候选，不发布中间成功。
+出击扩容为`data/growth-route.csv`第12步，费用18薪柴，只有当前路线项可购买，不要求揭晓或拥有工具。购买与库存候选在同笔保存中发布：原三槽 `[主动A,主动B,被动P]` → `[主动A,主动B,空,被动P]`，被动身份、品质与余次保持；空槽补齐有效容量。`inventoryStore.reconcileExpandedToolSlots(previousSlotCount)`仅把旧末槽确认为被动、且新末槽为空的对象迁移，目标占用时拒绝，不能静默丢物。`saveManager.trySaveBaseInventoryFrame()`保存完整基地状态+库存候选，拒写先还原成长/薪柴/稳定度再取消库存候选，不发布中间成功。
 
 已买扩容的旧基地档在无run或baseSettled时保守修复相同错位；active和未结算归来包保持原引用，不能改变在途技能槽。既有发现/供奉回执仍可恢复成长经历记录，但`offeringCompleted/toolRevealed`不再控制购买，不清空未知身份或增加余次。
 
-新档供奉为1格，`growth_defense_slot`共3级，路线第3/10/18步分别以10/20/35薪柴变为2/3/4格。所有放入/取下校验、槽位UI与防御快照使用同一动态容量。容量增加不赠送物件、成熟点或余次，最后一轮仍先防御→成熟→回库→清槽。
+新档供奉为1格，`growth_defense_slot`共3级，路线第3/10/18步分别以9/16/28薪柴变为2/3/4格。所有放入/取下校验、槽位UI与防御快照使用同一动态容量。容量增加不赠送物件、成熟点或余次，最后一轮仍先防御→成熟→回库→清槽。
 
 容量规则由`GrowthState.schemaVersion`区分，和库存schema不是同一个版本。新成长写2；缺版本的合法旧成长0/1级投影为新2/3级，保留原3/4格权益及全部实例、槽序、积累。不得截短槽数组丢物，重复读新版本不再补级。原成长更后等级和加厚仍生效；最早未达目标步骤继续，已满足步骤不重复收费。
+
+R3全22步（含加厚）以`round(8 * 1.077^(order - 1))`逐项取整，合计426；两处短取整平台允许，全程不下降、同类等级递增。费用唯一来源为`growth-route.csv.cost`；`upgrades.csv`只维护六轴效果定义等内容，生成的`UPGRADE_DATA.costs`按路线派生，库存/UI不另存价格。加厚第7/14/21步12/21/35，机制归净化点spec。旧已购不自动补扣、不追溯退款；新购买按对应原路线`unit/level`节点现价，不能用累计已购数重排旧非前缀等级的后续费用。
 
 ## 迭代28 · 鉴定目录与整趟被动（DEC-174）
 
@@ -119,6 +121,7 @@ Tab/Esc收起，Esc先取消交换草稿；移动意图退出并交回移动，�
 恢复适配的提交边界如下：
 
 - 出发前完成世界/能力校验，`beginRun + cycle + departure intent`一次写入。入场中断恢复该意图，不再开新趟；首个完整世界帧取代意图。
+- R3净化器新出击功效按`MODULE_EFFECT_HP_REF=100`固定基准封顶，加厚不回血，100/115起始混乱仍为0。已冻结出发意图的修正、起始条件及完整检查点运行态原样恢复，不按新公式重算；旧趟已保存的起始混乱7保持7，下一趟才读取当前基地规则。价格迁移也不改在途装备/能力或追加扣款。
 - RiftScene完成物理回写、伤害与技能、搜寻和探索记忆后提交完整帧。关键物件/伤害/结算变化当帧保存；普通移动自动保存间隔500ms。离线不推进；正常暂停、隐藏页面和退出尝试提交当前完整帧。
 - 库存领域草稿和模拟在帧内同步，机制事件仍即时执行以保留受伤被动链。库存观察者、音效、成功提示、结算面板/返回在保存后发布。存储失败保持候选、随机流和排队反馈，冻结场景；重试写相同bytes，不补发动作或再抽随机。
 - 一份SaveDataV2同时含基地、库存、run ID、递增序号、世界签名、起始条件、角色/战斗/AI/工具/混乱、节点与纯薪柴、留地UUID、环境危险时钟和探索记忆。物理步长余数也保存；世界专有壳片/镜头状态由对应适配器保存。当前视野恢复后重算，空洞不因记忆变地面。
@@ -137,6 +140,8 @@ Tab/Esc收起，Esc先取消交换草稿；移动意图退出并交回移动，�
 领域统一入口：getEquipmentLifecycle、getOfferingItems、slotOffering、finishOfferingImpact、prepareWeapon/Tool、beginRun、consumeEquipmentUse、reveal/take/drop/exchange/settleRun。旧污染物服务仅投影/派生，不另存第二套实例。
 
 验收必须覆盖供奉最后一轮、未供奉禁装、旧档不重置次数、有效命中扣一次/空挥零次/末次多目标、破碎HUD同步、两类同槽、基地无重量限制而出发校验、Tab入口无重复污染物库、Rift仅拾获与世界继续、全部图标、死亡全部携带清理及保存失败原子性。内部通过不能代替用户体验批准。
+
+R3兼容验收包含：第三主动位按路线扣18；供奉三档按9/16/28扣款并保留实例；拒写不发布扩槽；旧已购无补扣/退款，非前缀等级按原节点现价继续；旧出击意图与完整检查点不重算净化器初值，新出击100/115为0。自然掉落、成熟周转能否长期填充第三主动位与四格供奉仍待自然流程验证。
 
 ## 迭代20品质、归并与兼容边界
 

@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-19
+last-modified: 2026-09-21
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,11 +10,11 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代29：净化点投入表现与线性成长（R2）
+## 迭代29：净化点投入表现与线性成长（R3）
 
 `PurificationScene`依旧编排六处原锚点。`PurificationRenewalVisual`仅拥有静态承载补件/凹沟及状态覆盖，按真实加厚档、模块完整度和投资更新，储藏装饰随脚底排序；scene在购买、修复后同步，shutdown释放。供奉公开占用/潮汐压力驱动夹持内容，不读取未鉴定身份。培养藏内部改造按累计已购等级分阶段出现。地表共享基础见 `procedural-purification-surface.ts`，视觉合同见 `art/purification-renewal.md`。
 
-`data/upgrades.csv`提供名称、body/base/equipment职责、效果、上限和价格；`data/growth-route.csv`提供22步顺序、目标等级、阶段和至多一个经历条件。codegen校验每个等级唯一覆盖、无跳级、顺序连续并生成强类型定义。`GrowthSystem.getNextStep/getRouteProgress`纯读取当前节点与已购数量，`getAvailability`仅向当前节点开放购买；`purchaseGrowth`使加厚也走同一线性门禁，所有已购能力保留。UI只展示下一项和只读已有收益，各轴标当前/最大等级；不向DOM输出未来节点条件。
+`data/upgrades.csv`提供名称、body/base/equipment职责、效果与上限；`data/growth-route.csv`唯一提供22步顺序、目标等级、阶段、至多一个经历条件及各步费用。价格按`round(8 × 1.077^(n−1))`定稿为8至38、合计426；codegen校验覆盖、连续等级、正整数且非递减价格，并派生既有`UpgradeDef.costs`，加厚也直接读取路线费用，不留常量副本。`GrowthSystem.getNextStep/getRouteProgress`纯读取当前节点与已购数量，`getAvailability`仅向当前节点开放购买；`purchaseGrowth`使加厚也走同一线性门禁，所有已购能力保留。UI只展示下一项和只读已有收益，各轴标当前/最大等级；不向DOM输出未来节点条件。
 
 `recordReturn`聚合四种永久事实，但购买只在第5/17步分别使用真实冲击、退潮。`growth-evidence.ts`从有效旧记录保守补事实，不用随机物件阻断整条线。事件在归来整帧事务中记录，普通拒写保留候选、封锁交互并重试；不发新奖励。
 
@@ -22,7 +22,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `growth-purchases.ts`把扩槽库存草稿、等级、薪柴、稳定度和预告同笔保存；成功前不发布observer，拒写完整恢复。`InventoryStore.reconcileExpandedToolSlots`把旧最后被动位移到新最后位，不改物件和余次。`saveManager.trySaveBaseInventoryFrame`承接基地草稿存储。
 
-`ImpactForecastState` version2在生成时按原命中分布冻结实际重点，`getForecastReading(level)`纯投影公开信息，低层不泄露高层字段；原始压力分配与结算共用纯函数。version1及旧双轮承诺自然消费，无读取重抽。`growth-presentation.ts`用同一模块公式计算加厚代价，最少补满成本仅把一次修复额度用一次；`growth-panel`首屏展示，HUD与报告只消费公开读数。
+`ImpactForecastState` version2在生成时按原命中分布冻结实际重点，`getForecastReading(level)`纯投影公开信息，低层不泄露高层字段；原始压力分配与结算共用纯函数。version1及旧双轮承诺自然消费，无读取重抽。`growth-presentation.ts`用同一模块公式计算加厚代价，最少补满成本仅把一次修复额度用一次；`growth-panel`首屏展示；HUD、报告和裂隙入口提示统一消费公开读数，入口不直接读取真实潮汐倍率。R3将净化器起始混乱也按固定100点完整度封顶计算，与核心/储藏一致：加厚只扩容不回血，100/100→100/115仍从0混乱出击。旧已冻结的departure/checkpoint保留原条件，新出击使用新公式。已购成长不补扣、不退款。
 
 
 ## 正式生产主线：俯视2D（DEC-169，2026-09-16）
@@ -508,7 +508,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | RiftEntranceVisual | src/scenes/rift-entrance-visual.ts | 净化点北侧裂隙入口的世界内外形。**生产默认 = 卡 5 击裂**（DEC-114）：40×56 × 8 帧、6fps 的**地面裂缝贴花**，画在地面平面内，锚点中心、depth 1（地板0 / 动态实体[20,38)（DEC-120）），玩家能踩过去。`?entrance=4|7|8|9` 与场景内键 4/5/7/8/9 切对照（卡 4 地缝是 DEC-113 留下的另一张）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开出击装配）不因外形改变 | `ENTRANCE_FRAME_W/H` / `ENTRANCE_FRAMES` / `ENTRANCE_FPS` / `ENTRANCE_ORIGIN_Y` / `ENTRANCE_DEPTH` / `ENTRANCE_DEFAULT_VARIANT` / `entranceSheetKey` / `entranceSheetUrl` / `enqueueEntranceSheets` / `readEntranceVariantQuery` / `RiftEntranceVisual` | 已实现（DEC-113 / DEC-114） |
 | OfferingStandVisual | src/scenes/offering-stand-visual.ts | 净化点西南供奉台的世界内外形。**生产默认 = 卡 I 环**（DEC-115）：32×32 × 32 帧（4 档 × 8 帧、6fps），立着 45° 等距，锚点脚底；默认depth20，净化点由GroundDepthSorter覆盖（DEC-120）。装填档跟槽里残渣个数走（空 / 一 / 二 / 三 = 0 / 1 / 2 / 3+）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开防御槽）不因外形改变 | `OFFERING_FRAME_W/H` / `OFFERING_FRAMES` / `OFFERING_FPS` / `OFFERING_ORIGIN_Y` / `OFFERING_DEPTH` / `OFFERING_SHEET_KEY` / `enqueueOfferingSheet` / `OfferingStandVisual` / `offeringStandChargeFromSlots` | 已实现（DEC-115） |
 | GrowthConsoleVisual | src/scenes/growth-console-visual.ts | 净化点西侧培养藏的世界内外形。**生产默认 = 卡 A 立缸**（DEC-116）：40×42 × 8 帧、6fps，立着 45° 等距，锚点脚底；默认depth20，净化点由GroundDepthSorter覆盖（DEC-120）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开蜕变）不因外形改变 | `GROWTH_FRAME_W/H` / `GROWTH_FRAMES` / `GROWTH_FPS` / `GROWTH_ORIGIN_Y` / `GROWTH_DEPTH` / `GROWTH_SHEET_KEY` / `enqueueGrowthSheet` / `GrowthConsoleVisual` | 已实现（DEC-116） |
-| Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
+| Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv` + `data/growth-route.csv`；`growth-route-data.ts` ← `data/growth-route.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
 | InsectModel / InsectVisual | src/entities/form-renderers/d/insect-model.ts；insect-visual.ts | 迭代16独立虫模型、四向与动作投影；单实体单CanvasTexture，真实战斗相位驱动；生产与练习场共用，旧虫骨架不再驱动当前显示 | bakeInsectModel；attachInsectVisual；FormVisual.getFlashSource | R3用户PASS（2026-09-07） |
 | HumanModel / HumanVisual | src/entities/form-renderers/d/human-model.ts；human-visual.ts | I17独立人形残余三档四向六动作，64×64脚底锚(32,42)，单实体动态纹理；真实攻击时钟与当前轮廓闪白 | bakeHumanModel；attachHumanVisual；FormVisual.getFlashSource | 内部验证已交，待人审 |

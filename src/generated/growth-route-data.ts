@@ -10,6 +10,7 @@ export interface GrowthRouteStep {
   readonly requirement: GrowthUnlockRequirement;
   readonly requirementText: string;
   readonly phase: string;
+  readonly cost: number;
 }
 
 export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
@@ -19,7 +20,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 1,
     "requirement": "none",
     "requirementText": "",
-    "phase": "立足"
+    "phase": "立足",
+    "cost": 8
   },
   {
     "order": 2,
@@ -27,7 +29,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 1,
     "requirement": "none",
     "requirementText": "",
-    "phase": "立足"
+    "phase": "立足",
+    "cost": 9
   },
   {
     "order": 3,
@@ -35,7 +38,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 1,
     "requirement": "none",
     "requirementText": "",
-    "phase": "立足"
+    "phase": "立足",
+    "cost": 9
   },
   {
     "order": 4,
@@ -43,7 +47,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 1,
     "requirement": "none",
     "requirementText": "",
-    "phase": "立足"
+    "phase": "立足",
+    "cost": 10
   },
   {
     "order": 5,
@@ -51,7 +56,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 1,
     "requirement": "impactExperienced",
     "requirementText": "承受冲击",
-    "phase": "立足"
+    "phase": "立足",
+    "cost": 11
   },
   {
     "order": 6,
@@ -59,7 +65,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 2,
     "requirement": "none",
     "requirementText": "",
-    "phase": "立足"
+    "phase": "立足",
+    "cost": 12
   },
   {
     "order": 7,
@@ -67,7 +74,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 1,
     "requirement": "none",
     "requirementText": "",
-    "phase": "立足"
+    "phase": "立足",
+    "cost": 12
   },
   {
     "order": 8,
@@ -75,7 +83,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 2,
     "requirement": "none",
     "requirementText": "",
-    "phase": "整备"
+    "phase": "整备",
+    "cost": 13
   },
   {
     "order": 9,
@@ -83,7 +92,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 2,
     "requirement": "none",
     "requirementText": "",
-    "phase": "整备"
+    "phase": "整备",
+    "cost": 14
   },
   {
     "order": 10,
@@ -91,7 +101,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 2,
     "requirement": "none",
     "requirementText": "",
-    "phase": "整备"
+    "phase": "整备",
+    "cost": 16
   },
   {
     "order": 11,
@@ -99,7 +110,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 2,
     "requirement": "none",
     "requirementText": "",
-    "phase": "整备"
+    "phase": "整备",
+    "cost": 17
   },
   {
     "order": 12,
@@ -107,7 +119,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 1,
     "requirement": "none",
     "requirementText": "",
-    "phase": "整备"
+    "phase": "整备",
+    "cost": 18
   },
   {
     "order": 13,
@@ -115,7 +128,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 3,
     "requirement": "none",
     "requirementText": "",
-    "phase": "整备"
+    "phase": "整备",
+    "cost": 19
   },
   {
     "order": 14,
@@ -123,7 +137,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 2,
     "requirement": "none",
     "requirementText": "",
-    "phase": "整备"
+    "phase": "整备",
+    "cost": 21
   },
   {
     "order": 15,
@@ -131,7 +146,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 3,
     "requirement": "none",
     "requirementText": "",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 23
   },
   {
     "order": 16,
@@ -139,7 +155,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 3,
     "requirement": "none",
     "requirementText": "",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 24
   },
   {
     "order": 17,
@@ -147,7 +164,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 3,
     "requirement": "crestExperienced",
     "requirementText": "抵达退潮",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 26
   },
   {
     "order": 18,
@@ -155,7 +173,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 3,
     "requirement": "none",
     "requirementText": "",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 28
   },
   {
     "order": 19,
@@ -163,7 +182,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 4,
     "requirement": "none",
     "requirementText": "",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 30
   },
   {
     "order": 20,
@@ -171,7 +191,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 4,
     "requirement": "none",
     "requirementText": "",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 33
   },
   {
     "order": 21,
@@ -179,7 +200,8 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 3,
     "requirement": "none",
     "requirementText": "",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 35
   },
   {
     "order": 22,
@@ -187,6 +209,7 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "level": 5,
     "requirement": "none",
     "requirementText": "",
-    "phase": "承压"
+    "phase": "承压",
+    "cost": 38
   }
 ];

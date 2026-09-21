@@ -5,7 +5,7 @@
  * improve their character. Upgrades persist across sorties and are never reverted.
  *
  * Upgrade definitions (axis / maxLevel / effectPerLevel / per-level costs) are CSV-driven
- * (data/upgrades.csv -> src/generated/upgrade-data.ts, CLAUDE.md 策划数据源规则). This
+ * (data/upgrades.csv + data/growth-route.csv -> generated data, CLAUDE.md 策划数据源规则). This
  * module never hand-duplicates that data — it reads UPGRADE_DATA directly, so every
  * upgrade (however many CSV rows exist) is handled uniformly with no per-id branching.
  *
@@ -203,8 +203,8 @@ export const growthSystem = {
 
   /**
    * Get the cost (in kindling) to purchase the next level.
-   * Reads the upgrade's own cost ladder from CSV data (UPGRADE_DATA[id].costs) —
-   * each upgrade has its own per-level cost, not a shared ladder.
+   * Reads the per-upgrade projection of authored route prices. The route CSV
+   * is the only price source, shared with module thickening.
    * Returns Infinity if already at max level.
    */
   getCost(id: GrowthUpgradeId): number {

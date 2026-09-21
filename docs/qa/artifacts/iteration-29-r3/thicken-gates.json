@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-09-21T06:29:32.905Z",
+  "features": [
+    "COH-F029",
+    "COH-F027",
+    "COH-F044",
+    "COH-F045"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/growth/check-presentation.ts",
+      "exitCode": 0,
+      "states": 60,
+      "artifact": "thicken-preview.json"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/growth/check-thicken-recovery.ts",
+      "exitCode": 0,
+      "entries": [
+        "checkpoint",
+        "departure"
+      ],
+      "artifact": "thicken-recovery.json"
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/recovery/check-procedural-admission.ts",
+      "exitCode": 0,
+      "coverage": "two actual Host compositions plus 11 corrupt owner/identity/range counterexamples"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 1,
+      "result": "UNAVAILABLE: package has no lint script; not marked passed"
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 3199 --strictPort",
+      "result": "Vite ready in 82 ms; HTTP GET / returned 200; own server stopped afterwards"
+    }
+  ],
+  "limitations": [
+    "No browser rendering or player acceptance claimed by this agent.",
+    "Root owns simultaneous route-price changes and final integration/browser verification."
+  ],
+  "hashes": {
+    "src/managers/game-state.ts": "e20bf81d8ee8ed5aa1bc791b4c451d6a6bf64dd52fde1d44fa1aa5230c45e188",
+    "tools/growth/check-presentation.ts": "7e42e412879b19ca7691e41699a1b62ce4d84994a092c2fd9a3e66e90b909dfa",
+    "tools/growth/check-thicken-recovery.ts": "6f73e393c2e04960d81b8dec4b0e6eee101bcc5a7d432dbbdb87dfb32b0ed4df"
+  }
+}

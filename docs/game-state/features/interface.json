@@ -49,9 +49,9 @@
     "id": "COH-F033",
     "title": "净化点 HUD 与就近交互提示",
     "domain": "interface",
-    "summary": "净化点HUD使用分级预告；就近提示仍直接显示裂隙真实强度倍率，已确认旁路未购洞察的信息边界，待修复。",
+    "summary": "HUD与裂隙就近提示均读取分级公开预兆；未购时强度标疑问，不直接显示真实倍率；无预告时仅显示出击次数。原双行提示和界面层级保持。",
     "delivery": "production",
-    "work": "active",
+    "work": "settled",
     "entryPoints": [
       "净化点自由行走时自动显示；Tab/HUD 报告入口"
     ],
@@ -71,6 +71,14 @@
       {
         "path": "docs/specs/system-purification-impact.md",
         "role": "spec"
+      },
+      {
+        "path": "docs/qa/iteration-29-r3.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-forecast-hud.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -83,11 +91,11 @@
       "COH-E-HIST-CYCLE",
       "COH-E-I29-RUNTIME",
       "COH-E-I29-R2-REVIEW",
-      "COH-E-I29-R2-FORECAST-LEAK"
+      "COH-E-I29-R2-FORECAST-LEAK",
+      "COH-E-I29-R3-AUTO",
+      "COH-E-I29-R3-RUNTIME"
     ],
-    "unknowns": [
-      "2026-09-21复评GR-01：入口提示直接读取currentIntensity，0级洞察仍显示真倍率；同屏顶部预告仍未确定。缺陷已复现，未修复。"
-    ]
+    "unknowns": []
   },
   {
     "id": "COH-F034",

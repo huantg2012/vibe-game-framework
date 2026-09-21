@@ -5,9 +5,9 @@ import assert from 'node:assert/strict';
 import { chromium } from '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
 import { createJourneyDriver } from './i27-journey-driver.mjs';
 import { createCycleInputs } from './i27-cycle-inputs.mjs';
-const root='docs/qa/artifacts/iteration-29-r2/runtime';fs.mkdirSync(root,{recursive:true});
+const root=process.env.I29_OUT??'docs/qa/artifacts/iteration-29-r3/linear-runtime';fs.mkdirSync(root,{recursive:true});
 const seed=JSON.parse(JSON.parse(fs.readFileSync('docs/qa/artifacts/purification-growth-review-2026-09-20/runtime/walk-verified/fresh.storage.json'))['coh-save-v1']);
-const route=fs.readFileSync('data/growth-route.csv','utf8').trim().split('\n').slice(1).map(line=>{const [order,id,level]=line.split(',');return {order:+order,id,level:+level};});
+const route=fs.readFileSync('data/growth-route.csv','utf8').trim().split('\n').slice(1).map(line=>{const [order,id,level,,,,cost]=line.split(',');return {order:+order,id,level:+level,cost:+cost};});
 const facts={version:1,impactExperienced:false,offeringCompleted:false,toolRevealed:false,crestExperienced:false};
 const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
 const manifest={method:'isolated newContext; explicit controlled saves except fresh; real keyboard/clicks, read-only routing; not natural long-term economy',cases:[]};
@@ -67,7 +67,7 @@ try{for(const name of cases){
       await page.waitForTimeout(120);
     }
     await page.waitForTimeout(600);await d.snap('03-complete');assert.equal(await next.count(),0);assert((await panel.innerText()).includes('已刻入 22 / 22'));
-    const after=await read();assert.equal(after.kindlingReserve,before.kindlingReserve-428);assert.equal(after.growth.upgrades.growth_defense_slot,3);assert.equal(after.moduleMaxHpTier,3);
+    const after=await read();assert.equal(after.kindlingReserve,before.kindlingReserve-route.reduce((sum,step)=>sum+step.cost,0));assert.equal(after.growth.upgrades.growth_defense_slot,3);assert.equal(after.moduleMaxHpTier,3);
     assert(after.modules.every(m=>m.hp===100&&m.maxHp===145));
     await d.press('Enter');assert.deepEqual(await read(),after,'completed route never charges again');
   }

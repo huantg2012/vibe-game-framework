@@ -9,6 +9,7 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { GROWTH_ROUTE_DATA } from '@/generated/growth-route-data';
 import type { PendingSideEffect } from '@/systems/defense-engine';
 
 // ---------------------------------------------------------------------------
@@ -124,12 +125,14 @@ function ensurePurifier(hp = P.MODULE_INITIAL_HP): void {
 }
 
 /**
- * Starting chaos for a given purifier hp/maxHp (rule 27b). Used by GameState and by
- * the allocation wall-machine preview so the two cannot drift.
+ * Purifier effectiveness uses the same fixed HP reference as CORE/STORAGE.
+ * Thickening adds repair capacity without weakening an unchanged current HP.
+ * maxHp remains an input guard; saved sortie modifiers are never recomputed here.
+ * Shared by GameState and the allocation/thickening previews.
  */
 export function computeStartingChaos(hp: number, maxHp: number): number {
-  if (maxHp <= 0) return P.CHAOS_HARD_START;
-  const integrity = Math.max(0, Math.min(1, hp / maxHp));
+  if (!Number.isFinite(maxHp) || maxHp <= 0) return P.CHAOS_HARD_START;
+  const integrity = Math.max(0, Math.min(1, hp / P.MODULE_EFFECT_HP_REF));
   return Math.round(P.CHAOS_HARD_START * (1 - integrity));
 }
 
@@ -260,10 +263,7 @@ export const gameState = {
 
   /** Cost of the next thicken tier, or null if already at cap. */
   getNextModuleMaxHpCost(): number | null {
-    if (moduleMaxHpTier === 0) return P.MODULE_MAX_HP_COST[0];
-    if (moduleMaxHpTier === 1) return P.MODULE_MAX_HP_COST[1];
-    if (moduleMaxHpTier === 2) return P.MODULE_MAX_HP_COST[2];
-    return null;
+    return GROWTH_ROUTE_DATA.find(step => step.unit === 'thicken' && step.level === moduleMaxHpTier + 1)?.cost ?? null;
   },
 
   /** True when a thicken purchase can actually complete (not capped, enough kindling). */

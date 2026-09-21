@@ -315,11 +315,11 @@ export class PurificationHud {
   private buildPromptPreview(target: InteractionTarget): string | null {
     if (target.type === 'rift') {
       const cycle = gameState.getCycle();
-      const intensity = tideSystem.getState().currentIntensity.toFixed(1);
+      const forecast = impactSystem.getForecastReading(growthSystem.getLevel('growth_forecast_clarity'));
       return this.name('出击') +
         this.qty(`第 ${cycle + 1} 次`, COL.brightText) +
-        this.name('强度') +
-        this.qty(`x${intensity}`, COL.brightText);
+        (forecast ? this.name('强度') +
+          this.grade(`${SEVERITY_LABEL[forecast.severity]}${forecast.severityCertain ? '' : '？'}`, COL.brightText) : '');
     }
 
     const data = target.moduleData;

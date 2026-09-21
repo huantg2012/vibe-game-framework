@@ -309,9 +309,9 @@ export const GAME_CONSTANTS = {
     MODULE_MAX_HP_PER_TIER: 15,
     /** Highest purchasable thicken tier (maxHp = 100 + 15*3 = 145). */
     MODULE_MAX_HP_TIERS: 3,
-    /** Kindling cost to raise 0→1 / 1→2 / 2→3. Not an upgrade; no discount. */
-    MODULE_MAX_HP_COST: [12, 20, 32] as const,
-    /** CORE/STORAGE effect denominator; thicken does not raise this. */
+    // Thickening purchase costs are authored alongside all other growth steps
+    // in data/growth-route.csv, not a separate system-constant price ladder.
+    /** All three module effects use this HP reference; thickening does not raise it. */
     MODULE_EFFECT_HP_REF: 100,
     /** Starting chaos when purifier hp = 0 (full integrity → 0). */
     CHAOS_HARD_START: 50,
@@ -497,8 +497,9 @@ export const GAME_CONSTANTS = {
   },
 
   // Growth / permanent upgrades (docs/specs/system-growth-tide.md, section G):
-  // axis/maxLevel/effectPerLevel/costs are CSV-driven data (data/upgrades.csv ->
-  // src/generated/upgrade-data.ts, CLAUDE.md 策划数据源规则) — no constants block here
+  // Definitions come from data/upgrades.csv; all step costs come from
+  // data/growth-route.csv (including thickening). Both generate upgrade-data.ts
+  // under the CSV source rule — no constants block here
   // by design; growth-system.ts reads UPGRADE_DATA directly.
 
   /** Contaminant system (docs/specs/system-growth-tide.md, section CN) */

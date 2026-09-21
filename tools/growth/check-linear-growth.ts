@@ -42,7 +42,7 @@ function snapshot() {
     forecast: impactSystem.getForecastState(), stability: stabilityTracker.getState() };
 }
 
-check('CSV covers every level exactly once and retains the authored 22-step order and 428-kindling total', () => {
+check('CSV covers every level exactly once and retains the authored 22-step order and gently exponential 426-kindling total', () => {
   assert.deepEqual(GROWTH_ROUTE_DATA.map(step => `${step.unit}:${step.level}`), [
     'growth_vitality:1', 'growth_kindling_affinity:1', 'growth_defense_slot:1', 'growth_chaos_resist:1',
     'growth_forecast_clarity:1', 'growth_vitality:2', 'thicken:1', 'growth_kindling_affinity:2',
@@ -51,10 +51,19 @@ check('CSV covers every level exactly once and retains the authored 22-step orde
     'growth_forecast_clarity:3', 'growth_defense_slot:3', 'growth_vitality:4', 'growth_chaos_resist:4',
     'thicken:3', 'growth_chaos_resist:5',
   ]);
-  const total = GROWTH_ROUTE_DATA.reduce((sum, step) => sum + (step.unit === 'thicken'
-    ? GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_COST[step.level - 1]!
-    : UPGRADE_DATA[step.unit].costs[step.level - 1]!), 0);
-  assert.equal(total, 428);
+  const total = GROWTH_ROUTE_DATA.reduce((sum, step) => sum + step.cost, 0);
+  assert.equal(total, 426);
+  for (const [index, step] of GROWTH_ROUTE_DATA.entries()) {
+    assert.equal(step.cost, Math.round(8 * 1.077 ** index));
+    if (index > 0) {
+      const previous = GROWTH_ROUTE_DATA[index - 1]!.cost;
+      assert(step.cost >= previous, 'route price never falls');
+      // Integer rounding can turn 14→16 into 14.3% although the underlying
+      // authored curve grows 7.7%; the permitted rounded jump remains <=15%.
+      assert(step.cost / previous <= 1.15, 'rounded adjacent increase stays modest');
+    }
+    if (step.unit !== 'thicken') assert.equal(UPGRADE_DATA[step.unit].costs[step.level - 1], step.cost);
+  }
   assert.deepEqual(GROWTH_ROUTE_DATA.filter(step => step.requirement !== 'none').map(step => step.order), [5, 17]);
 });
 
@@ -64,6 +73,7 @@ check('all 22 real purchases reject skipped nodes, persist once, reload identica
   for (const authored of GROWTH_ROUTE_DATA) {
     const next = growthSystem.getNextStep(); assert(next);
     assert.equal(next.id, authored.unit); assert.equal(next.level, authored.level);
+    assert.equal(next.cost, authored.cost);
     assert.deepEqual(growthSystem.getRouteProgress(), { completed: authored.order - 1, total: 22 });
     const before = snapshot(), bytes = records.get(GAME_CONSTANTS.SAVE.KEY), writeCount = writes;
     for (const id of [...growthSystem.getAllUpgradeIds(), 'thicken'] as const) {
@@ -95,7 +105,7 @@ check('all 22 real purchases reject skipped nodes, persist once, reload identica
     assert.equal(growthSystem.getState().progression?.offeringCompleted, false);
     assert.equal(growthSystem.getState().progression?.toolRevealed, false);
   }
-  assert.equal(spent, 428); assert.equal(gameState.getKindlingReserve(), 572);
+  assert.equal(spent, 426); assert.equal(gameState.getKindlingReserve(), 574);
   assert.equal(stabilityTracker.getProgress(), 19);
   assert.equal(growthSystem.getNextStep(), null);
   assert.deepEqual(growthSystem.getRouteProgress(), { completed: 22, total: 22 });

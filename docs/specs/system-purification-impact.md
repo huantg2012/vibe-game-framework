@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: design（迭代29 R2路线、供奉与加厚合同同步）
+last-modified-by: design（迭代29 R3费用单源、净化器功效与预告合同同步）
 last-modified-date: 2026-09-21
 interface-changed: true
 interfaces-with:
@@ -12,17 +12,17 @@ interfaces-with:
   - system-growth-tide              # tide intensity/phase drives impact intensity + boundary shape; contaminant
                                     # defense slots feed the defense phase (slot count is growth-owned, not fixed);
                                     # growth_forecast_clarity sharpens the forecast; SaveManager persists both sides;
-                                    # 加厚费用仍为系统常量；thicken进入growth-route.csv同一路线（迭代29 R2）
+                                    # 全部成长含thicken的费用唯一来自growth-route.csv.cost（迭代29 R3）
 exposes:
   - GameState.getModuleEffect(type) / getSortieModifiers()
-  - GameState.getStartingChaos()
-  - GameState.getModuleMaxHpTier() / canRaiseModuleMaxHp() / raiseModuleMaxHp()（状态/费用；UI购买经purchaseGrowth与路线资格）
+  - GameState.getStartingChaos() / computeStartingChaos(hp, maxHp)（固定100基准的共享纯函数）
+  - GameState.getModuleMaxHpTier() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp()（状态/费用；UI购买经purchaseGrowth与路线资格）
   - GameState.getKindlingReserve() / healModule(id, amount)
   - GameState.getRepairBonusHp() / grantRepairBonus(hp) / getMaxUsefulRepairKindling(hp,maxHp) / previewModuleRepair(hp,maxHp,kindling)
   - SaveManager.allocateToModule(id, amount) -> number（保存失败完整回滚）
   - GameState.isModuleSwapActive() / setModuleSwapActive(active)
   - ImpactSystem.run(defenseSlots, offeringIds?) -> ImpactResult （含 defenseResult；Slice 5.5 增 primaryModuleId / trueSeverity / baseDamagePerModule）
-  - ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus, nextNextIntensity) / getForecastDisplay() / getForecastReading(level) / getForecastLookahead() -> ForecastDisplay / ForecastReading
+  - ImpactSystem.generateForecast(nextIntensity, _forecastReliabilityBonus, nextNextIntensity) / getForecastReading(level) / getForecastLookahead()（第二入参仅兼容；正式UI读ForecastReading）
   - ImpactSystem.getForecastState() / loadForecastState(state?) / resetForecastState()
   - applyDefenseEffects(baseDamage, slots, context, offeringIds?) -> DefenseResult
     （Slice 5 新增出口 healOut / bonusCharges / toolUseGrants / moduleSwapTriggered；
@@ -43,15 +43,17 @@ exposes:
 
 # 系统设计：净化点 + 冲击
 
-## 迭代29 R2 · 场所与投入的共同表现合同
+## 迭代29 R3 · 场所与投入的共同表现合同
 
 地面与装置共用三段错缝承载面、埋入检查沟/盖板、短补件和接地关系。六处锚点、碰撞、视野与走动距离保持；这些可走构造不添加出击前强制操作。核心与净化器共享维护结构，北沟接近地面裂隙伤口。供奉保留立环，占用只显示未知包块/承托，公开潮相驱动受压，无身份泄露；培养藏按已购总级0/1–4/5+显示持久接入构件。三模块加厚0–3级表现为地基补层，损伤/运转独立组合。储藏整理开口与侧壁大面，新增层跟随本体接地点排序。共享源与美术边界见 `docs/art/purification-renewal.md`；不把机制通过当审美通过。
 
+R3本轮只同步已授权机制与信息修复。净化点美术已标记为迭代30待独立审核/迭代，未开始；本节记录既有场景关系，不构成美术通过或新视觉方案授权。
+
 ### 当前成长路线与供奉容量
 
-`data/growth-route.csv`是22步（六轴19次＋加厚3次）的顺序、目标级与两处经历门槛唯一来源。培养藏只给当前下一项，已获能力只读，等级/总级及完成数/22独立展示；不能绕过路线购买加厚。第5步预兆1级缺经历时显示“承受冲击”，第17步预兆3级显示“抵达退潮”；已满足条件收起，薪柴支出独立。供奉完成与工具揭晓不再控制购买。
+`data/growth-route.csv`是22步（六轴19次＋加厚3次）的顺序、目标级、两处经历门槛和`cost`唯一来源。R3以`round(8 * 1.077^(order - 1))`逐项独立取整，费用总426；第2–3步和第6–7步允许短平台，全程不下降、同类等级递增。运行时读CSV，不重算曲线；`upgrades.csv`只拥有六轴效果定义等内容，生成的`UPGRADE_DATA.costs`按路线节点派生，不保留`cost_N`或加厚费用常量。培养藏只给当前下一项，已获能力只读，等级/总级及完成数/22独立展示；不能绕过路线购买加厚。第5步预兆1级缺经历时显示“承受冲击”，第17步预兆3级显示“抵达退潮”；已满足条件收起，薪柴支出独立。供奉完成与工具揭晓不再控制购买。
 
-新档1格供奉，扩容3级在第3/10/18步变为2/3/4格，不改每件物的防御/成熟速率。成长schemaVersion=2区分新规则；缺版本旧0/1级迁新2/3级，原3/4格、槽内物与进度保留。容量唯一查询为`contaminantSystem.getDefenseSlotCount()`。无就绪武器仍走基地白板替补，空工具/空供奉不阻止出击；完整线性与旧档规则归成长/库存spec。
+新档1格供奉，扩容3级在第3/10/18步花9/16/28薪柴变为2/3/4格，不改每件物的防御/成熟速率。第12步出击扩容花18薪柴增加第三主动位，被动仍1。成长schemaVersion=2区分新规则；缺版本旧0/1级迁新2/3级，原3/4格、槽内物与进度保留。R3旧已购不自动补扣、不追溯退款，下一未购项按对应原路线`unit/level`节点现价，不按累计已购数重排。容量唯一查询为`contaminantSystem.getDefenseSlotCount()`。无就绪武器仍走基地白板替补，空工具/空供奉不阻止出击；完整线性与旧档规则归成长/库存spec。
 
 ### 预告信息层（取代旧概率成长段）
 
@@ -59,11 +61,13 @@ exposes:
 
 `getForecastReading(level)`是正式UI公开入口：0层为模糊目标/强度；1层准确强度档；2层增加准确重点；3层增加三个装置的防御前压力（与真实分配同一纯函数），首趟免伤压力为0。低层不返回高层数字；不调用防御执行器，不预演隐藏物件，不把原始压力叫实际损伤。常驻HUD的问号与报告的“推测/已辨明”区分不确定字段，压力数字按需在报告潮汐页读取。
 
+R3入口近身提示与上述各表面统一读取该公开投影，沿相同字段标明不确定性；不能在入口另用`getCurrentIntensity()`显示真实倍率，使0级绕过预兆投资。潮位/潮相粗信息保持既有公开边界。`generateForecast`的第二入参`_forecastReliabilityBonus`仅兼容旧调用，不再用成长改变80%生成分布；成长只改变读取。
+
 既有挣得的准确预告/排队目标保持承诺。version1未消费的旧预告维持原规则直至真实消费；高等级也不把未冻结事实伪装确定，界面说明下一份预告生效。已承诺旧预告保留其确定性；不能免费得到3层压力。预告保存/拒写回滚与成长购买同笔，不先发布未保存真值。
 
 ### 加厚的完整代价
 
-加厚只在路线第7/14/21步轮到时可投入；仍只提高上限，不免费回血。购买前逐模块显示当前hp/max→原hp/新max，下次起始混乱前后，以及补满全部模块额外至少需要的薪柴。合计用纯函数求一次修复额度分配的最小总费：额度只用在一台的一次有效注入，不能各台重复扣减；实际维修不自动发生。满100/100第一档为100/115，起始混乱0→7，无额外修复额度时三台补满另需12。该预览与实际购买/维修同公式验证。
+加厚只在路线第7/14/21步轮到时可花12/21/35薪柴投入；仍只提高上限，不免费回血。购买前逐模块显示当前hp/max→原hp/新max，下次起始混乱前后，以及补满全部模块额外至少需要的薪柴。合计用纯函数求一次修复额度分配的最小总费：额度只用在一台的一次有效注入，不能各台重复扣减；实际维修不自动发生。R3净化器与核心/储藏统一以`MODULE_EFFECT_HP_REF=100`为功效基准并封顶：100/100变100/115后起始混乱仍为0；同样hp=70时，四档上限下都为15。无额外修复额度时三台从100补至115另需12，这是填充额外缓冲容量的可选支出，不是恢复被加厚削弱功效的费用。预览和新出击共用`computeStartingChaos`；已冻结的旧出击/检查点不重算。
 
 > **TL;DR**: 定义裂隙出击之外的"基地环"——净化点场景（可步行、潮汐驱动的动态力场边界、六个交互点）、GameState（内存 + `SaveManager` 持久化）、薪柴分配（修复模块 hp）、冲击结算（返回净化点时按潮汐强度扣模块 hp，经防御槽污染物修正）、非空间冲击预告（目标模块 + 强度档位）、三模块效果反馈到出击参数（核心减混乱增速、储藏加薪柴价值、净化器写起始混乱）、蜕变面板内加厚全局抬模块 maxHp。边界形状由 BoundaryShape 统一提供，被地表纹理、碰撞、可见性、氛围与呼吸层共用。
 
@@ -71,13 +75,13 @@ exposes:
 
 > **Slice 5 变更摘要**（细则见 D/V 组）：预告去掉方向、只报目标+档位（DEC-034）；防御侧 6 处未接线机制全部落地（DEC-029~033）；污染物运行时状态进存档（DEC-032）；模块受损三态视觉阈值登记（DEC-035）；防御槽位数不再固定 3。
 
-> **Slice 7 变更摘要**（DEC-064）：第三模块 = 净化器（完整度 → 出击起始混乱；满完整度起始 0；不改出击起始生命）。加厚：花薪柴全局抬全部模块 `maxHp`，3 档每档 +15（100→115→130→145），效果公式分母仍是基准 100。三模块均参与当前防御合同。**DEC-117：** 加厚并进蜕变面板内加厚项，不再是世界桩。
+> **Slice 7 变更摘要**（DEC-064）：引入净化器（完整度 → 出击起始混乱，不改出击起始生命）与全局加厚，3档每档+15（100→115→130→145）；核心/储藏效果以基准100封顶。**R3当前合同**将净化器功效也统一到100基准，hp≥100时起始混乱为0，见规则27b；保留旧已冻结出击。三模块均参与当前防御合同。**DEC-117：** 加厚并进蜕变面板内加厚项，不再是世界桩。
 
 ## 迭代27：教学首归、稳定度事实与购买持久性
 
 - cycle在出发时递增：出生0，第一趟归来1；仅这两个值跳过冲击，第二趟起恢复正常。跳过不充供奉计数，潮汐仍按归来推进。真实首归仍显示免冲击的归来报告，详见规则20。
 - `ImpactSystem.run(slots, offeringIds, random, stabilityProgress)`接收场景查询的当前稳定度供防御上下文；返回`newlyZeroModules`，只统计本次由正生命扣至0的模块，既有0不重复扣。场景在账本的一次归来事务中统一结算稳定度与供奉，不以重复读取面板为事件。
-- 成长/加厚统一使用`purchaseGrowth`持久购买事务；加厚拒写时薪柴、档位、所有模块上限还原，成功后才发GROWTH_PURCHASED。维持12/20/32费用和不回血规则。
+- 成长/加厚统一使用`purchaseGrowth`持久购买事务；加厚拒写时薪柴、档位、所有模块上限还原，成功后才发GROWTH_PURCHASED。不回血合同保留；当前费用已由R3路线CSV统一为12/21/35。
 
 ## 迭代12：世界内前后遮挡（DEC-120）
 
@@ -270,27 +274,29 @@ interface SortieModifiers {
 
 26. **CORE 效果**：提供混乱值 BASE_RATE 减免。公式：`chaosRateModifier = 1.0 - (min(coreHp, MODULE_EFFECT_HP_REF) / MODULE_EFFECT_HP_REF) * MAX_CORE_REDUCTION`。`MODULE_EFFECT_HP_REF = 100`，`MAX_CORE_REDUCTION = 0.3`（hp≥100 时 -30% 混乱值增速，再高的 hp 不额外减）。hp=0 时无减免。
 27. **STORAGE 效果**：提供薪柴拾取价值加成。公式：`kindlingValueModifier = 1.0 + (min(storageHp, MODULE_EFFECT_HP_REF) / MODULE_EFFECT_HP_REF) * MAX_STORAGE_BONUS`。`MAX_STORAGE_BONUS = 0.5`（hp≥100 时 +50% 每次拾取价值，再高的 hp 不额外加）。hp=0 时无加成。
-27a. **效果分母锁死基准 100（Slice 7，DEC-064）**：加厚只抬 `maxHp` 血池，**不抬效果上限**。分母永远是 `MODULE_EFFECT_HP_REF = 100`，分子 `min(hp, 100)`。若现实现是 `hp/100` 且未封顶，加厚后必须改成这条，禁止变成 `hp/maxHp`（那会在没灌满时偷偷削弱效果），也禁止把分母改成新 maxHp 或让 hp>100 继续加效果。
-27b. **PURIFIER 效果（Slice 7）**：不改混乱增速、不改薪柴价值。只写入出击起始混乱：
+27a. **效果分母固定基准100**：Slice 7（DEC-064）的CORE/STORAGE功效基准保留；R3将PURIFIER也统一到`MODULE_EFFECT_HP_REF = 100`。加厚只抬`maxHp`血池，不抬效果上限、不降低相同hp下的功效；hp≥100封顶。模块可修复容量、损伤外观及既有按当前血池判断的防御条件仍各按原规则，不把功效公式扩写成全局完整度比例变更。
+27b. **PURIFIER效果（R3）**：不改混乱增速、不改薪柴价值。只写入新出击起始混乱：
 
     ```
-    integrity = clamp(purifier.hp / purifier.maxHp, 0, 1)
+    integrity = clamp(purifier.hp / MODULE_EFFECT_HP_REF, 0, 1)
     startingChaos = round(CHAOS_HARD_START * (1 - integrity))
     ```
 
-    `CHAOS_HARD_START = 50`。满完整度（hp = maxHp）→ 起始混乱 = 0。hp = 0 → 起始混乱 = 50。开局 70/100 → 15。这是**比例**（对当前 maxHp），不是对基准 100——加厚后必须灌满血池，起始混乱才会回到 0。
-    `GameState.getStartingChaos()` 是该值的**唯一入口**。`overwrite` 互换（规则 55）只改 CORE↔STORAGE 的效果源 hp，**不**抽换净化器。防御残留 `initial_chaos` 在该值之上加算（规则 31a），不改本公式。
+    `CHAOS_HARD_START = 50`，`MODULE_EFFECT_HP_REF = 100`。hp≥100→起始混乱0；hp=0→50；hp=70→15，在maxHp为100/115/130/145时均相同。100/115仍为0，填充100以上容量只增加未来承伤缓冲。购买加厚不回血。
+    `computeStartingChaos(hp,maxHp)`是预览与实际出击共用的纯函数，`GameState.getStartingChaos()`查询当前净化器并调用它；`maxHp`只保留输入防护，非有限数或≤0时返回50，不作为功效分母。`overwrite`互换（规则55）只改CORE↔STORAGE的效果源hp，不抽换净化器。防御残留`initial_chaos`在该值之上加算（规则31a），不改本公式。
 27c. **不改出击起始生命**：玩家那条完整度（`growth_vitality` 等）的出击初值本 Slice 不动。净化器不读写玩家完整度。
 28. **效果计算时机**：在场景切换到裂隙前计算一次，作为 `SortieModifiers` 传递给 RiftScene。`GameState.getModuleEffect(type)` 仍是 CORE/STORAGE 效果的**唯一入口**——`overwrite` 的互换（规则 55）与 `resonate` 的上限提升（规则 59）都必须改在这里，不允许在消费方各自修正。PURIFIER 不走 `getModuleEffect`；走 `getStartingChaos()`。`getSortieModifiers()` 必须带上 `startingChaos`。
+    已保存的出发意图或完整检查点按原冻结修正与当前运行态恢复，不调用新公式重算。例如旧趟保存的起始混乱7仍保留7，不能在R3续局时自动降为0；下一趟新出发才按当前基地hp读取100基准。
 29. **裂隙侧应用**：
-    - ChaosSystem 的实际 rate = `BASE_RATE * chaosRateModifier`（在现有 rateMultiplier 之前相乘）
-    - LootSearchSystem（迭代 10 前为 LootSystem）的实际拾取价值 = `nodeValue * kindlingValueModifier`（向下取整，最低 1；翻找完成结算时应用）
+    - 自然时间混乱rate先按`BASE_RATE * chaosRateModifier * (1 - growthMods.chaosResist)`，再沿既有速率修正及武器/工具污染抗性处理。GR04成长渗透抗性仍只减缓自然增长，每级4%、上限20%；不减离散污染、不改起始混乱、不加入统一污染抗性。广谱减免改造未授权实施。
+    - LootSearchSystem（迭代10前为LootSystem）的实际拾取价值为`max(1,floor((nodeValue + growthMods.kindlingAffinity) * kindlingValueModifier))`，翻找完成结算时应用。
     - ChaosSystem 开局 `value` = `SortieModifiers.startingChaos` 再叠加防御残留（规则 31a）。**不改**基础上涨曲线、阈值、惩罚映射。
 
 ### F — 场景切换
 
 30. **裂隙→净化点**：`RIFT_EXITED` → RunController 延迟 600ms → `scene.start('PurificationScene', { kindlingGained, survived })`。进入后立即结算冲击（规则 19）。
 31. **净化点→裂隙**：玩家在裂隙入口按 E → 打开出击装配面板 → 确认 → `cycle++` → 读取 `getSortieModifiers()`（此时 `moduleSwapActive` 已生效，规则 55；`startingChaos` 已按规则 27b 算好）→ 存档 → emit `RIFT_ENTERED { cycle }` → 0.3s 边缘内收辉光 + 0.5s 文字过场 → `scene.start('RiftScene', { modifiers, cycle, loadout })`。取消装配面板则留在净化点。
+    - 上述计算只用于新出发。中断后恢复同一已保存出击意图/检查点，不再扣出发次数、不按当前模块或成长重建起始条件；完整事务归`system-field-inventory`。
     - 文字过场结束时，必须先立即停止旧净化点的绘制，再移除过渡层和卸载资源。`scene.start`进入下一帧队列，不能让当前帧显示已拆除角色/装置的旧地面；交接帧使用既有近黑画布底色。再次进入净化点由场景正常启动恢复可见，不延长过场或改变出击事务。
 31a. **出击初值合成**：RiftScene 创建 ChaosSystem 时一次写入
 
@@ -385,12 +391,13 @@ interface SortieModifiers {
     | 已买档 `moduleMaxHpTier` | 全部模块 `maxHp` | 下一档费用（薪柴） |
     | ------------------------ | ---------------- | ------------------ |
     | 0 | 100 | **12** |
-    | 1 | 115 | **20** |
-    | 2 | 130 | **32** |
+    | 1 | 115 | **21** |
+    | 2 | 130 | **35** |
     | 3 | 145 | 不可再买 |
 
-    每档+15。费用仍为既有系统常量12/20/32，不进`upgrades.csv`，不扩`GrowthUpgradeId`；`data/growth-route.csv`以`thicken`纳入同一顺序和资格校验。可负担节奏需按实际搜取、维修与死亡验证，不能从固定地图总价值推断。加厚眼前支出之外的起始混乱变化及补满费用必须首屏披露，不能作为独立可抢购项绕过前置路线。
+    每档+15。费用12/21/35唯一来自`data/growth-route.csv`对应`unit=thicken`及目标`level`的`cost`；`getNextModuleMaxHpCost()`从同一路线数据派生，不留系统费用常量，不进`upgrades.csv`也不扩`GrowthUpgradeId`。可负担节奏需按实际搜取、维修与死亡验证，不能从固定地图总价值推断。首屏说明当前hp不变、起始混乱不变与补满额外容量的可选费用；不能作为独立可抢购项绕过前置路线。
 65. **存档**：`moduleMaxHpTier` 必须写入存档。`maxHp` 可由档位重算（`MODULE_BASE_MAX_HP + MODULE_MAX_HP_PER_TIER * tier`），存档里的模块 `maxHp` 若与档位不一致，以档位为准并写回。抬档时**当前 hp 不变**（不免费回满）；若出现 hp > 新 maxHp（不应发生）则 clamp。蜕变折扣 `upgradeDiscount` **不**作用于加厚费用。
+    R3旧已购档位不自动补扣、不追溯退款，新购买按原路线目标档的当前CSV费用。此基地状态兼容不能改写已冻结的在途`SortieModifiers`或检查点混乱；恢复原出击承诺见规则28。
 66. **稳定度**：加厚虽计入路线22步，仍**不计**成长稳定度奖励；六轴刻入维持每次成功持久化后+1，不借排序改积分。
 67. **玩家可见名**：卡名与动作都叫 **加厚**。禁止「升级」「购买」「确认」「MAX」。世界装置仍是培养藏；走近提示「蜕变」。面板内用词见 UX 组。
 
@@ -453,14 +460,14 @@ interface SortieModifiers {
 | `MODULE_BASE_MAX_HP` | 100 | -- | 档位 0 的修复上限；取代旧名 `MODULE_MAX_HP` 作为**基准**血池 |
 | `MODULE_MAX_HP_PER_TIER` | 15 | -- | 每档加厚 +15 |
 | `MODULE_MAX_HP_TIERS` | 3 | -- | 最高档 3 → maxHp 145 |
-| `MODULE_MAX_HP_COST` | 12 / 20 / 32 | -- | 第 1 / 2 / 3 档费用（薪柴） |
-| `MODULE_EFFECT_HP_REF` | 100 | -- | CORE/STORAGE 效果分母；加厚后仍用它 |
+| `growth-route.csv`的`thicken.cost` | 12 / 21 / 35 | -- | 第7/14/21步，第1/2/3档费用；不再有费用常量 |
+| `MODULE_EFFECT_HP_REF` | 100 | -- | CORE/STORAGE/PURIFIER功效分母；hp≥100封顶，加厚后仍用它 |
 | `CHAOS_HARD_START` | 50 | 40-60 | 净化器 hp=0 时的出击起始混乱 |
 | `REPAIR_PER_KINDLING` | 4 | 3-10 | 1 薪柴=多少 hp（为稀缺感调低） |
 | `BASE_IMPACT_DAMAGE` | 30 | 15-40 | 每次冲击的基础总伤害 |
 | `THREAT_FOCUS_RATIO` | 0.65 | 0.55-0.75 | 重点目标承受的伤害比例 |
 | `FORECAST_ACCURACY` | 0.80 | 0.7-0.9 | ground-truth 预告与实际重点目标相符的概率 |
-| `MAX_CORE_REDUCTION` | 0.30 | 0.2-0.4 | CORE 在 hp≥100 时的混乱值减免（效果封顶，与 maxHp 无关） |
+| `MAX_CORE_REDUCTION` | 0.30 | 0.2-0.4 | CORE在hp≥100时的自然混乱增速减缓（效果封顶，与maxHp无关） |
 | `MAX_STORAGE_BONUS` | 0.50 | 0.3-0.7 | STORAGE 在 hp≥100 时的薪柴加成（效果封顶，与 maxHp 无关） |
 | `INTERACTION_RADIUS` | 32 | px | 交互点的走近判定半径 |
 | `APPARITION_INTERVAL_MIN` | 8000 | ms | 最短间隔 |
@@ -547,7 +554,10 @@ interface SortieModifiers {
 | 死亡返回净化点 | kindlingGained=0，但冲击照常结算（规则 19），可分配之前的 reserve |
 | reserve=0 且三模块 hp=0 | 不强制 game-over。玩家仍可出击：无核心/储藏加成，起始混乱 = 50（最难模式） |
 | 分配面板打开时冲击不会触发 | 冲击只在净化点场景 create 时结算一次，此时任何面板都还没打开 |
-| 加厚后未注入、净化器 100/115 | 起始混乱 = round(50 × (1 − 100/115)) = 7。CORE/STORAGE 效果仍按 min(hp,100)/100 封顶，不降 |
+| 加厚后未注入、净化器100/115 | 起始混乱=round(50 × (1 − clamp(100/100,0,1)))=0；三模块相同hp的功效均不降低，当前hp不变 |
+| 净化器hp=70，上限从100加厚至145 | 各档新出击起始混乱均为15；加厚后额外可修复容量不是免费回血 |
+| R3加载旧已冻结出发意图或检查点 | 继续原修正/运行态；即使旧起始混乱保存为7也不重算，新出击才读新公式 |
+| R3改价时已有成长/加厚等级 | 不自动补扣、不追溯退款；下一未购原路线节点按当前CSV费用 |
 | 当前路线项是加厚但薪柴不足 | 不扣、不抬档；当前项写 `还差 N` |
 | 加厚已至第3档 | 后续不再出现加厚购买项，只读已有能力保留3/3；路线继续最早未完成项 |
 | 老存档只有两个模块 | 补 PURIFIER 70 / 当前档位 maxHp，`moduleMaxHpTier` 缺省 0 |
@@ -572,12 +582,12 @@ interface SortieModifiers {
 | ------ | ---- | ---- |
 | RiftScene | `SortieModifiers { chaosRateModifier, kindlingValueModifier, startingChaos }` | scene data 传参 |
 | ChaosSystem | `chaosRateModifier`；开局 `value = startingChaos`（再叠加 `initial_chaos`） | 乘在 BASE_RATE 上；初值一次写入 |
-| LootSearchSystem（迭代 10 前为 LootSystem） | `kindlingValueModifier` | 乘在 node.value 上 |
+| LootSearchSystem（迭代10前为LootSystem） | `kindlingValueModifier` | 节点基值先加成长亲和，再乘储藏修正，向下取整且最低1 |
 | HUD / 结果面板 | `GameState.getKindlingReserve()` / `getModules()` / `getStartingChaos()` | 查询 |
-| GrowthPanel | `growthSystem.getNextStep/getRouteProgress()` / `purchaseGrowth(id)`；加厚读`getModuleMaxHpTier()` | 仅当前路线项可刻入/加厚；原子保存与完整预览 |
+| GrowthPanel | `growthSystem.getNextStep/getRouteProgress()` / `purchaseGrowth(id)`；加厚读`getModuleMaxHpTier/getNextModuleMaxHpCost()`，预览共用`computeStartingChaos(hp,maxHp)` | 仅当前路线项可刻入/加厚；费用同源、原子保存与完整预览 |
 | PurificationScene | `ImpactSystem.run(defenseSlots): ImpactResult` | 方法调用（槽位由场景传入，避免系统互相 import） |
-| 净化点 HUD | `ImpactSystem.getForecastDisplay()` / `getForecastLookahead()` | 查询（时机词 + 模块全称 + `SEVERITY_LABEL`；图标/pip 最多第二编码） |
-| PurificationScene | `ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus, nextNextIntensity)` | 方法调用（强度与改造等级由场景读取后传入） |
+| 净化点HUD、入口提示及报告 | `ImpactSystem.getForecastReading(growthForecastLevel)`；既有挣得前瞻沿`getForecastLookahead()` | 同一公开投影与不确定字段；不能绕过层级显示原始倍率或高层压力 |
+| PurificationScene | `ImpactSystem.generateForecast(nextIntensity, _forecastReliabilityBonus, nextNextIntensity)` | 建立一次；第二入参仅兼容，成长不改变生成分布/重抽事实 |
 | ContaminantSystem | `DefenseResult.bonusCharges` / `toolUseGrants` | 由 ImpactSystem 直接调用其 `applyBonusCharges()` / `grantRandomToolUse()` 消费 |
 | GameState | `DefenseResult.healOut` / `moduleSwapTriggered` | `healModule()` / `setModuleSwapActive()` |
 | 出击开局 toast | `PendingSideEffect{ type: 'module_swap' }` | 沿用 Slice 4 的防御副作用播报通道（规则 55 的硬要求） |
@@ -701,5 +711,5 @@ interface SortieModifiers {
 - [ ] **压力主方向现在是否成为唯一被读取的方向信号？** DEC-034 之后预告不再给方向，边界压力可视化独占这一维度——玩家是否真的会去看它，还是方向暗示就此变成无人消费的表现层。
 - [ ] **`abyss` 的"逆风守护"在三模块下是否成立？** 各模块冲击前40%及以下时该模块应读到50%；玩家是否感受到"越危急防御越强"。
 - [ ] **净化器是否被读作"在干活"？** 修满后起始混乱 0、残血带入部分混乱——连续两趟能否不看文档感到差别。
-- [ ] **线性第7/14/21步的加厚12/20/32是否合理？** 记录起始混乱暂升、额外修复与路线停滞；不能按自由选购时的购买优先级判断。
+- [ ] **线性第7/14/21步的加厚12/21/35是否合理？** 相同hp功效不降的前提下，记录额外缓冲实际吸收的冲击、后续可选维修支出与路线等待；不能按自由选购优先级判断，也不能将未测长线视作确定经济失效。
 - [ ] **冷却的余烬的承伤修复是否读得清？** 结算是否能解释本轮受损与随后回补，0承伤不会虚构收益。

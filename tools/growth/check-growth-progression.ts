@@ -20,9 +20,9 @@ function loadProgression(progression: unknown): void {
 }
 reset();
 const expectedCosts: Record<GrowthUpgradeId, readonly number[]> = {
-  growth_chaos_resist: [8, 12, 18, 25, 35], growth_kindling_affinity: [8, 12, 18],
-  growth_vitality: [8, 12, 18, 25], growth_sortie_slot: [40],
-  growth_defense_slot: [10, 20, 35], growth_forecast_clarity: [10, 20, 30],
+  growth_chaos_resist: [10, 17, 23, 33, 38], growth_kindling_affinity: [9, 13, 24],
+  growth_vitality: [8, 12, 19, 30], growth_sortie_slot: [18],
+  growth_defense_slot: [9, 16, 28], growth_forecast_clarity: [11, 14, 26],
 };
 for (const id of growthSystem.getAllUpgradeIds()) {
   assert.equal(growthSystem.getUpgradeDefinition(id), UPGRADE_DATA[id]);
@@ -32,7 +32,7 @@ for (const id of growthSystem.getAllUpgradeIds()) {
 }
 assert.equal(UPGRADE_DATA.growth_forecast_clarity.effectPerLevel, 1);
 assert.equal(UPGRADE_DATA.growth_forecast_clarity.effectUnit, '信息层');
-console.log('PASS six CSV axes retain prices; only the authored first step is public and purchasable');
+console.log('PASS six CSV axes project authored route prices; only the authored first step is public and purchasable');
 
 let notifications = 0;
 const onNotification = (): void => { notifications++; };

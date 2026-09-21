@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "正式出发先存意图；运行保存版本化世界身份和完整帧，继续同一趟不重抽、不离线推进；已结算回执阻止重复归来收益。",
+    "summary": "正式出发先存意图；运行保存版本化世界身份和完整帧，继续同一趟不重抽、不离线推进；已结算回执阻止重复归来收益。R3固定净化基准只影响新出击，旧departure/checkpoint冻结的起始混乱与已累计值保持。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -41,6 +41,14 @@
       {
         "path": "docs/specs/system-field-inventory.md",
         "role": "spec"
+      },
+      {
+        "path": "docs/qa/iteration-29-r3.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/growth/check-thicken-recovery.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -51,7 +59,8 @@
       "COH-E-I29-AUTO",
       "COH-E-I29-RUNTIME",
       "COH-E-I29-R2-AUTO",
-      "COH-E-I29-R2-RUNTIME"
+      "COH-E-I29-R2-RUNTIME",
+      "COH-E-I29-R3-AUTO"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。"
@@ -95,6 +104,10 @@
       {
         "path": "docs/design-notes/rift-interruption-recovery.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-29-r3.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -109,7 +122,8 @@
       "COH-E-I29-RUNTIME",
       "COH-E-I29-R2-AUTO",
       "COH-E-I29-R2-RUNTIME",
-      "COH-E-I29-R2-REVIEW"
+      "COH-E-I29-R2-REVIEW",
+      "COH-E-I29-R3-AUTO"
     ],
     "unknowns": [
       "历史 WG07 旧现场无栈，原触发器未被证实；保护与后续回归不能被写成已解释该旧事故。",
