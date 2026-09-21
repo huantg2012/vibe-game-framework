@@ -137,7 +137,6 @@ const CSS = `
 #growth-panel .growth-card-meta { display:flex; flex-wrap:wrap; gap:0 10px; }
 #growth-panel .upgrade-card { flex:0 0 auto; gap:8px; }
 #growth-panel .growth-card-state { font-size:11px; color:#7e8a7e; }
-#growth-panel .card-locked .growth-card-state { color:#ab9676; }
 #growth-panel .card-cost, #growth-panel .growth-cost { color:#b39b75; }
 #growth-panel .growth-gain { font-size:12px; line-height:24px; color:#b3baae; margin-bottom:5px; }
 #growth-panel .growth-gain strong, #growth-panel .growth-cost strong { font:16px/24px var(--ui-mono); }
@@ -152,7 +151,10 @@ const CSS = `
 #growth-panel .growth-payment { border-top:1px solid var(--ui-edge); padding-top:5px; margin-top:10px; }
 #growth-panel .growth-payment .stat-row { justify-content:space-between; }
 #growth-panel .growth-payment .readout-note { margin:0; }
-#growth-panel .growth-shortfall { color:#ab9676; }
+#growth-panel .growth-state-ready { color:#b3baae; }
+#growth-panel .growth-state-shortfall { color:#b89040; }
+#growth-panel .growth-state-locked, #growth-panel .growth-state-owned { color:#7e8a7e; }
+#growth-panel .key-hint-bar [data-growth-action-state] .key { color:inherit; border-bottom-color:currentColor; }
 #growth-panel .growth-consequences { border-top:1px solid var(--ui-edge); margin-top:8px; padding-top:5px; }
 #growth-panel .growth-consequences .readout-section { margin:0; }
 #growth-panel .growth-consequences .stat-row { justify-content:space-between; padding:1px 0; font-size:11px; line-height:18px; }

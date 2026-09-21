@@ -1,0 +1,140 @@
+{
+  "method": "Isolated controlled saves, real walking/E/Enter; explicit color and text semantics across list, payment and footer; no player save access.",
+  "cases": [
+    {
+      "name": "short",
+      "ok": true,
+      "before": {
+        "list": {
+          "text": "薪柴不足",
+          "color": "rgb(184, 144, 64)"
+        },
+        "funds": {
+          "text": "薪柴不足，还差 1。",
+          "color": "rgb(184, 144, 64)"
+        },
+        "footer": {
+          "text": "薪柴不足",
+          "color": "rgb(184, 144, 64)"
+        },
+        "confirm": false
+      },
+      "errors": []
+    },
+    {
+      "name": "exact",
+      "ok": true,
+      "before": {
+        "list": {
+          "text": "可刻入",
+          "color": "rgb(179, 186, 174)"
+        },
+        "funds": {
+          "text": "薪柴充足 · 刻入后剩余 0 薪柴",
+          "color": "rgb(179, 186, 174)"
+        },
+        "footer": {
+          "text": "Enter 刻入",
+          "color": "rgb(179, 186, 174)"
+        },
+        "confirm": true
+      },
+      "after": {
+        "list": {
+          "text": "薪柴不足",
+          "color": "rgb(184, 144, 64)"
+        },
+        "funds": {
+          "text": "薪柴不足，还差 9。",
+          "color": "rgb(184, 144, 64)"
+        },
+        "footer": {
+          "text": "薪柴不足",
+          "color": "rgb(184, 144, 64)"
+        },
+        "confirm": false
+      },
+      "errors": []
+    },
+    {
+      "name": "enough",
+      "ok": true,
+      "before": {
+        "list": {
+          "text": "可刻入",
+          "color": "rgb(179, 186, 174)"
+        },
+        "funds": {
+          "text": "薪柴充足 · 刻入后剩余 92 薪柴",
+          "color": "rgb(179, 186, 174)"
+        },
+        "footer": {
+          "text": "Enter 刻入",
+          "color": "rgb(179, 186, 174)"
+        },
+        "confirm": true
+      },
+      "errors": []
+    },
+    {
+      "name": "experience-funded",
+      "ok": true,
+      "before": {
+        "list": {
+          "text": "尚待经历",
+          "color": "rgb(126, 138, 126)"
+        },
+        "funds": {
+          "text": "薪柴充足",
+          "color": "rgb(179, 186, 174)"
+        },
+        "footer": {
+          "text": "尚待经历",
+          "color": "rgb(126, 138, 126)"
+        },
+        "confirm": false
+      },
+      "errors": []
+    },
+    {
+      "name": "experience-short",
+      "ok": true,
+      "before": {
+        "list": {
+          "text": "尚待经历",
+          "color": "rgb(126, 138, 126)"
+        },
+        "funds": {
+          "text": "薪柴不足，还差 11。",
+          "color": "rgb(184, 144, 64)"
+        },
+        "footer": {
+          "text": "尚待经历",
+          "color": "rgb(126, 138, 126)"
+        },
+        "confirm": false
+      },
+      "errors": []
+    },
+    {
+      "name": "thicken",
+      "ok": true,
+      "before": {
+        "list": {
+          "text": "可刻入",
+          "color": "rgb(179, 186, 174)"
+        },
+        "funds": {
+          "text": "薪柴充足 · 刻入后剩余 0 薪柴",
+          "color": "rgb(179, 186, 174)"
+        },
+        "footer": {
+          "text": "Enter 加厚",
+          "color": "rgb(179, 186, 174)"
+        },
+        "confirm": true
+      },
+      "errors": []
+    }
+  ]
+}

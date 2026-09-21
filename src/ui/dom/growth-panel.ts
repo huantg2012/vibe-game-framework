@@ -31,6 +31,12 @@ interface GrowthEntry {
 const RESPONSIBILITY: Record<string, string> = {
   body: '身体适应', base: '装置建设', equipment: '出击携带',
 };
+function actionState(entry: GrowthEntry, reserve: number): 'ready' | 'shortfall' | 'locked' | 'owned' {
+  if (!entry.next) return 'owned';
+  if (!entry.unlocked) return 'locked';
+  return reserve >= entry.cost! ? 'ready' : 'shortfall';
+}
+
 function entriesForDisplay(): GrowthEntry[] {
   const next = growthSystem.getNextStep();
   const entries: GrowthEntry[] = [];
@@ -211,14 +217,14 @@ function render(selectionOnly = false, revealSelection = false): void {
   cursorCard = Math.min(cursorCard, entries.length - 1);
   const selected = entries[cursorCard]!;
   const progress = growthSystem.getRouteProgress();
-  const available = selected.unlocked && selected.cost !== null && reserve >= selected.cost;
-  const reason = !selected.next ? (selected.level === selected.maxLevel ? '已至上限。' : '已永久生效。')
-    : !selected.unlocked ? '' : available ? ''
-    : `薪柴不足，还差 ${selected.cost! - reserve}。`;
+  const state = actionState(selected, reserve);
+  const available = state === 'ready';
+  const funded = selected.cost !== null && reserve >= selected.cost;
+  const reason = !selected.next ? (selected.level === selected.maxLevel ? '已至上限。' : '已永久生效。') : '';
   const list = entries.map((entry, index) => `${index === 0 && entry.next ? '<div class="readout-section">下一次蜕变</div>' : index === (entries[0]?.next ? 1 : 0) ? '<div class="readout-section">已刻入</div>' : ''}
     <div class="upgrade-card${index === cursorCard ? ' card-selected' : ''}${!entry.next ? ' card-maxed' : !entry.unlocked || entry.cost! > reserve ? ' card-locked' : ''}"
       data-id="${entry.id}" data-growth-next="${entry.next}">
-    <div class="card-body"><div class="card-name">${entry.name}</div><div class="growth-card-meta"><span class="growth-level">${formatGrowthLevel(entry.targetLevel)}</span>${entry.next ? `<span class="growth-card-state">${entry.unlocked ? entry.cost! <= reserve ? '可刻入' : '薪柴不足' : '尚待经历'}</span>` : ''}</div></div>
+    <div class="card-body"><div class="card-name">${entry.name}</div><div class="growth-card-meta"><span class="growth-level">${formatGrowthLevel(entry.targetLevel)}</span>${entry.next ? `<span class="growth-card-state growth-state-${actionState(entry, reserve)}">${entry.unlocked ? entry.cost! <= reserve ? '可刻入' : '薪柴不足' : '尚待经历'}</span>` : ''}</div></div>
     ${entry.cost !== null ? `<div class="card-cost">${entry.cost}<span class="readout-label"> 薪柴</span></div>` : ''}
   </div>`).join('');
   const html = `<div class="panel-heading"><div class="panel-title">蜕变</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>
@@ -228,14 +234,14 @@ function render(selectionOnly = false, revealSelection = false): void {
         <div class="growth-level-line"><span>${selected.next ? `${selected.level === 0 ? '首次刻入' : formatGrowthLevel(selected.level)} → ` : ''}<span class="growth-level">${formatGrowthLevel(selected.targetLevel)}</span></span><span class="readout-label">最高 ${formatGrowthLevel(selected.maxLevel)}</span></div>
         ${effectHtml(selected.effect)}
         ${selected.effect.flavor ? `<p class="readout-note growth-flavor">${escapeText(selected.effect.flavor)}</p>` : ''}
-        ${selected.requirement && !selected.unlocked ? `<p class="growth-condition" data-growth-requirement><span>尚待经历</span>${selected.requirement}</p>` : ''}
+        ${selected.requirement && !selected.unlocked ? `<p class="growth-condition growth-state-locked" data-growth-requirement><span>尚待经历</span>${selected.requirement}</p>` : ''}
         ${selected.cost === null ? '' : `<div class="growth-payment"><div class="stat-row"><span class="readout-label">本次消耗</span><span class="growth-cost"><strong>${selected.cost}</strong> 薪柴</span></div>
-          ${available ? `<div class="readout-note">刻入后剩余 ${reserve - selected.cost!} 薪柴</div>` : ''}</div>`}
-        ${!reason ? '' : `<p class="readout-note${selected.next ? ' growth-shortfall' : ''}">${reason}</p>`}
+          <div class="readout-note growth-state-${funded ? 'ready' : 'shortfall'}" data-growth-funds>${funded ? `薪柴充足${available ? ` · 刻入后剩余 ${reserve - selected.cost!} 薪柴` : ''}` : `薪柴不足，还差 ${selected.cost - reserve}。`}</div></div>`}
+        ${!reason ? '' : `<p class="readout-note">${reason}</p>`}
         ${thickenSelected() ? thickenConsequencesHtml() : ''}
       </div></div>
     <div class="key-hint-bar"><span><span class="key">↑ ↓</span> 选择</span>
-      ${available ? `<span id="growth-confirm-btn"><span class="key">Enter</span> ${thickenSelected() ? '加厚' : '刻入'}</span>` : `<span>${!selected.next ? '已刻入' : !selected.unlocked ? '尚待经历' : '薪柴不足'}</span>`}
+      ${available ? `<span id="growth-confirm-btn" class="growth-state-ready" data-growth-action-state><span class="key">Enter</span> ${thickenSelected() ? '加厚' : '刻入'}</span>` : `<span class="growth-state-${state}" data-growth-action-state>${!selected.next ? '已刻入' : !selected.unlocked ? '尚待经历' : '薪柴不足'}</span>`}
       <span id="growth-close-btn"><span class="key">Esc</span> 离开</span></div>`;
   renderPanelContent(panel, html, selectionOnly);
   if (revealSelection) scrollFocusedIntoView(panel);
