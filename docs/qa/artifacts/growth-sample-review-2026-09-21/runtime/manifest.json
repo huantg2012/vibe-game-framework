@@ -1,0 +1,659 @@
+{
+  "method": "informed expert controlled B/D review; isolated saves, real walking/inputs; read-only persisted production snapshots and DOM; no natural growth/economy claim",
+  "cases": [
+    {
+      "name": "body",
+      "before": {
+        "version": 2,
+        "kindlingReserve": 8,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 100,
+            "maxHp": 100
+          }
+        ],
+        "moduleMaxHpTier": 0,
+        "cycle": 1,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+              "weapon": {
+                "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": null,
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {},
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "CORE",
+          "actualPrimaryId": "CORE",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "CORE",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1,
+          "nextNextIntensity": 1.2
+        }
+      },
+      "after": {
+        "version": 2,
+        "kindlingReserve": 0,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 100,
+            "maxHp": 100
+          }
+        ],
+        "moduleMaxHpTier": 0,
+        "cycle": 1,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+              "weapon": {
+                "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": null,
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {},
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 1,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "stability": {
+          "progress": 1,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "CORE",
+          "actualPrimaryId": "CORE",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "CORE",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1,
+          "nextNextIntensity": 1.2
+        }
+      },
+      "beforeText": "蜕变\n薪柴\n8\n已刻入 0 / 22\n下一次蜕变\n生命强化\n刻入 1 / 4 · 可刻入\n8 薪柴\n身体适应 · 生命强化\n本次等级\n0 → 1 / 4\n延缓覆盖 → 完整度 +15\n本次消耗\n8\n薪柴\n完成后剩余 0 薪柴\n\n消耗薪柴后永久生效。\n\n↑ ↓ 选择\nEnter\n刻入\nEsc\n离开",
+      "ok": true,
+      "errors": []
+    },
+    {
+      "name": "thicken",
+      "before": {
+        "version": 2,
+        "kindlingReserve": 12,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 100,
+            "maxHp": 100
+          }
+        ],
+        "moduleMaxHpTier": 0,
+        "cycle": 1,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+              "weapon": {
+                "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": null,
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {},
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 1,
+            "growth_kindling_affinity": 1,
+            "growth_vitality": 2,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 1,
+            "growth_forecast_clarity": 1
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "CORE",
+          "actualPrimaryId": "CORE",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "CORE",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1,
+          "nextNextIntensity": 1.2
+        }
+      },
+      "after": {
+        "version": 2,
+        "kindlingReserve": 0,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 100,
+            "maxHp": 115
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 100,
+            "maxHp": 115
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 100,
+            "maxHp": 115
+          }
+        ],
+        "moduleMaxHpTier": 1,
+        "cycle": 1,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+              "weapon": {
+                "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": null,
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {},
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 1,
+            "growth_kindling_affinity": 1,
+            "growth_vitality": 2,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 1,
+            "growth_forecast_clarity": 1
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "CORE",
+          "actualPrimaryId": "CORE",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "CORE",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1,
+          "nextNextIntensity": 1.2
+        }
+      },
+      "beforeText": "蜕变\n薪柴\n12\n已刻入 6 / 22\n下一次蜕变\n加厚\n刻入 1 / 3 · 可刻入\n12 薪柴\n已刻入\n渗透抗性\n等级 1 / 5\n薪柴亲和\n等级 1 / 3\n生命强化\n等级 2 / 4\n供奉扩容\n等级 1 / 3\n预兆洞察\n等级 1 / 3\n装置建设 · 加厚\n本次等级\n0 → 1 / 3\n全部上限100→115\n本次消耗\n12\n薪柴\n完成后剩余 0 薪柴\n扩容后仍需修复\n起始混乱\n0 → 7\n\n当前完整度不增加。补满全部装置另需至少 12 薪柴。\n\n核心\n100 / 100 → 100 / 115\n储藏\n100 / 100 → 100 / 115\n净化器\n100 / 100 → 100 / 115\n↑ ↓ 选择\nEnter\n加厚\nEsc\n离开",
+      "ok": true,
+      "errors": []
+    },
+    {
+      "name": "forecast",
+      "before": {
+        "version": 2,
+        "kindlingReserve": 10,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 100,
+            "maxHp": 100
+          }
+        ],
+        "moduleMaxHpTier": 0,
+        "cycle": 1,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+              "weapon": {
+                "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": null,
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {},
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 1,
+            "growth_kindling_affinity": 1,
+            "growth_vitality": 1,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 1,
+            "growth_forecast_clarity": 0
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "PURIFIER",
+          "actualPrimaryId": "PURIFIER",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "PURIFIER",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1,
+          "nextNextIntensity": 1.2
+        }
+      },
+      "after": {
+        "version": 2,
+        "kindlingReserve": 0,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 100,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 100,
+            "maxHp": 100
+          }
+        ],
+        "moduleMaxHpTier": 0,
+        "cycle": 1,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 0,
+          "currentIntensity": 1
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+              "weapon": {
+                "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": null,
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {},
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 1,
+            "growth_kindling_affinity": 1,
+            "growth_vitality": 1,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 1,
+            "growth_forecast_clarity": 1
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "stability": {
+          "progress": 1,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "PURIFIER",
+          "actualPrimaryId": "PURIFIER",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "PURIFIER",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1,
+          "nextNextIntensity": 1.2
+        }
+      },
+      "beforeText": "蜕变\n薪柴\n10\n已刻入 4 / 22\n下一次蜕变\n预兆洞察\n刻入 1 / 3 · 可刻入\n10 薪柴\n已刻入\n渗透抗性\n等级 1 / 5\n薪柴亲和\n等级 1 / 3\n生命强化\n等级 1 / 4\n供奉扩容\n等级 1 / 3\n装置建设 · 预兆洞察\n本次等级\n0 → 1 / 3\n强度与重点仍可能误报 → 辨清下次冲击强度\n本次消耗\n10\n薪柴\n完成后剩余 0 薪柴\n\n消耗薪柴后永久生效。\n\n↑ ↓ 选择\nEnter\n刻入\nEsc\n离开",
+      "ok": true,
+      "errors": []
+    }
+  ]
+}

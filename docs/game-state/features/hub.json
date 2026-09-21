@@ -113,15 +113,18 @@
       "COH-E-SRC-hub",
       "COH-E-HIST-CYCLE",
       "COH-E-I29-AUTO",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E-I29-R2-REVIEW"
     ],
-    "unknowns": []
+    "unknowns": [
+      "2026-09-21成长复评GR-05：连续储藏倍率掩盖逐堆整数产出档位；修复耐久收益真实，收益读法待改善，未据此改经济。"
+    ]
   },
   {
     "id": "COH-F028",
     "title": "供奉槽、防御反应与成熟",
     "domain": "progression",
-    "summary": "未成熟武器/污染物共用供奉槽；归来最后一轮先贡献防御再积累成熟；成熟回库清槽，鉴定结果待保存成功才发布。",
+    "summary": "新档供奉容量1，线性路线中三次扩至4；武器/污染物共槽，归来最后一轮先贡献防御再成熟回库。旧3/4槽与物件权益保留。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -176,15 +179,17 @@
     "evidence": [
       "COH-E-SRC-hub",
       "COH-E-HIST-CATALOG",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E-I29-R2-AUTO",
+      "COH-E-I29-R2-RUNTIME"
     ],
     "unknowns": []
   },
   {
     "id": "COH-F029",
-    "title": "永久蜕变、扩槽与装置加厚",
+    "title": "永久蜕变、容量成长与装置加厚",
     "domain": "progression",
-    "summary": "6轴17次购买由真实冲击/供奉/工具揭晓/有限高潮经历展开，已购旧等级始终生效；扩槽迁移旧被动同笔保存，加厚首屏披露混乱及补满代价。",
+    "summary": "22步固定蜕变（6轴19级＋加厚3级），只可买下一项；第5/17步分别需真实冲击/退潮。等级上限与总进度外露，已购只读；供奉1→4、旧能力保留，加厚代价首屏。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -238,6 +243,26 @@
       {
         "path": "tools/csv-codegen/generate.mjs",
         "role": "code"
+      },
+      {
+        "path": "data/growth-route.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/growth-route-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/design-notes/purification-growth-renewal.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/growth/check-linear-growth.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/growth/check-offering-capacity.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -249,11 +274,16 @@
       "COH-E-SRC-hub",
       "COH-E-HIST-CYCLE",
       "COH-E-I29-AUTO",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E-I29-R2-AUTO",
+      "COH-E-I29-R2-RUNTIME",
+      "COH-E-I29-R2-REVIEW",
+      "COH-E-I29-R2-FORECAST-LEAK"
     ],
     "unknowns": [
-      "成长兑现及拒写有历史专项，后期最优分配和长期经济不在本轮确认范围。",
-      "迭代29样板已实现并作限定内部验证；场所/模型审美与成长价值待用户体验，池仍6轴，长期采样沿迭代28挂起。"
+      "R2实现与限定内部验证已交；22步顺序/428总价/单格开局/40薪柴中段等待/线性加厚时机仍待体验，长期自然采样沿I28挂起。",
+      "新UI已过内部实景复核，用户尚未终审；固定路线减少轴间自由排序，不表示新增完整终局。",
+      "2026-09-21成长复评：GR-01入口真倍率旁路已确认；GR-02必经加厚增加起始混乱已追到真实出击；GR-03第三主动位的库存前提与尾段节奏待验证；GR-04自然增速/统一污染抗性合同冲突未裁决。见本轮评审，尚未整改。"
     ]
   },
   {
@@ -262,7 +292,7 @@
     "domain": "progression",
     "summary": "归来消费预告并推进潮汐；新预告建立时冻结真实重点，成长逐层读清强度、重点及供奉前压力，不因购买/查看/读档重抽，旧预告保持原承诺。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "净化点 HUD / 报告潮汐页；每次有效归来"
     ],
@@ -301,9 +331,15 @@
       "COH-E-HIST-CYCLE",
       "COH-E-HIST-PRODUCTION",
       "COH-E-I29-AUTO",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E-I29-R2-AUTO",
+      "COH-E-I29-R2-RUNTIME",
+      "COH-E-I29-R2-REVIEW",
+      "COH-E-I29-R2-FORECAST-LEAK"
     ],
-    "unknowns": []
+    "unknowns": [
+      "2026-09-21复评GR-01：预告领域投影正确，但裂隙就近提示免费显示真实强度倍率；未购洞察的隔离实机已确认。信息公开边界尚未修复。"
+    ]
   },
   {
     "id": "COH-F031",

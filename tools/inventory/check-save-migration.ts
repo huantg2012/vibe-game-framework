@@ -72,7 +72,8 @@ try {
     assert.equal(inventoryStore.getItem('owned-active')?.location.kind, 'carried');
     assert.deepEqual(migrated.inventory.equipment.toolIds, legacy.sortieLoadout);
     assert.deepEqual(migrated.inventory.equipment.defenseIds, legacy.defenseSlots);
-    assert.deepEqual(migrated.growth.upgrades, legacy.growth.upgrades);
+    assert.equal(migrated.growth.schemaVersion, 2);
+    assert.deepEqual(migrated.growth.upgrades, { ...legacy.growth.upgrades, growth_defense_slot: 3 });
     assert.deepEqual(migrated.growth.progression, { version: 1, impactExperienced: false,
       offeringCompleted: false, toolRevealed: false, crestExperienced: false });
     assert.deepEqual(migrated.contaminantRuntimeState, legacy.contaminantRuntimeState);

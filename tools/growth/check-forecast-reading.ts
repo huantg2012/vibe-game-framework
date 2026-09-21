@@ -179,10 +179,15 @@ check('V2 save validation rejects absent/foreign/contradictory frozen targets be
 
 check('all three real information purchases preserve the actual impact; rejected writes expose no unpersisted tier', () => {
   reset();
+  gameState.addKindling(1000);
   impactSystem.generateForecast(1, 0, 1.2, sequence([0, .9, .99, .99]));
   assert(saveManager.trySave());
   const frozen = impactSystem.getForecastState();
   for (let level = 1; level <= 3; level++) {
+    while (growthSystem.getNextStep()?.id !== 'growth_forecast_clarity') {
+      const next = growthSystem.getNextStep();
+      assert(next && purchaseGrowth(next.id).ok);
+    }
     const before = snapshot(), bytes = records.get(key);
     const beforeReading = impactSystem.getForecastReading(growthSystem.getLevel('growth_forecast_clarity'));
     failWrites = true; assert.deepEqual(purchaseGrowth('growth_forecast_clarity'), { ok: false, reason: 'storage-failed' });

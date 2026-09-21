@@ -1387,8 +1387,8 @@ export class PurificationScene extends Phaser.Scene {
         return inventoryStore.getItems().some(item => item.location.kind === 'stash' && getEquipmentLifecycle(item).stage === 'defense');
       }
       case 'growth': {
-        const canInscribe = growthSystem.getAllUpgradeIds().some((id) => growthSystem.canAfford(id, reserve));
-        return canInscribe || gameState.canRaiseModuleMaxHp();
+        const next = growthSystem.getNextStep();
+        return next !== null && next.unlocked && reserve >= next.cost;
       }
     }
   }

@@ -505,9 +505,9 @@ export const GAME_CONSTANTS = {
   CONTAMINANT: {
     NODES_PER_MAP: 3,           // contaminant pickup nodes per rift map
     RARITY_WEIGHTS: { common: 60, fine: 30, rare: 10 },
-    DEFENSE_SLOTS: 3,           // base slots; growth_defense_slot (Slice 5 T5) adds +1
+    DEFENSE_SLOTS: 1,           // base slot; each growth_defense_slot level adds +1
     SORTIE_SLOTS: 3,            // base slots (2 active + 1 passive); growth_sortie_slot adds +1 active
-    MAX_DEFENSE_SLOTS: 4,       // DEFENSE_SLOTS + max growth_defense_slot bonus (maxLevel 1)
+    MAX_DEFENSE_SLOTS: 4,       // DEFENSE_SLOTS + max growth_defense_slot bonus (maxLevel 3)
     MAX_SORTIE_SLOTS: 4,        // SORTIE_SLOTS + max growth_sortie_slot bonus (maxLevel 1)
     USES: { common: 5, fine: 3, rare: 2 },  // uses remaining after transformation
     /** echo defense mechanic: "单件因此最多+2" — per-tool cap on echo bonus grants. */

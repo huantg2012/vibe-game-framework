@@ -259,11 +259,10 @@ function generateContaminantQualities() {
 function generateUpgrades() {
   const { header, rows } = readCsv('upgrades.csv');
   const idx = Object.fromEntries(header.map((h, i) => [h, i]));
-  const requirements = new Set(['none', 'impactExperienced', 'offeringCompleted', 'toolRevealed', 'crestExperienced']);
   const responsibilities = new Set(['body', 'base', 'equipment']);
   const ids = new Set();
   for (const key of ['id', 'name', 'axis', 'responsibility', 'max_level', 'effect_per_level', 'effect_unit', 'description',
-    ...Array.from({ length: 5 }, (_, i) => `cost_${i + 1}`), ...Array.from({ length: 5 }, (_, i) => `unlock_${i + 1}`)]) {
+    ...Array.from({ length: 5 }, (_, i) => `cost_${i + 1}`)]) {
     if (idx[key] === undefined) throw new Error(`[codegen] upgrades.csv missing column ${key}`);
   }
 
@@ -280,18 +279,15 @@ function generateUpgrades() {
       throw new Error(`[codegen] invalid upgrade definition ${id}`);
     }
     const costs = [];
-    const unlocks = [];
     for (let i = 1; i <= 5; i++) {
       const val = cols[idx[`cost_${i}`]].trim();
-      const requirement = cols[idx[`unlock_${i}`]].trim();
       if (i <= maxLevel) {
         const cost = Number(val);
-        if (!Number.isSafeInteger(cost) || cost <= 0 || !requirements.has(requirement)) {
-          throw new Error(`[codegen] invalid cost or unlock at ${id} level ${i}`);
+        if (!Number.isSafeInteger(cost) || cost <= 0) {
+          throw new Error(`[codegen] invalid cost at ${id} level ${i}`);
         }
         costs.push(cost);
-        unlocks.push(requirement);
-      } else if (val || requirement) {
+      } else if (val) {
         throw new Error(`[codegen] upgrade ${id} has data past max_level`);
       }
     }
@@ -304,7 +300,6 @@ function generateUpgrades() {
       effectPerLevel,
       effectUnit: cols[idx.effect_unit],
       costs,
-      unlocks,
       description: cols[idx.description]?.trim() ?? '',
     };
   });
@@ -325,7 +320,6 @@ function generateUpgrades() {
     '  readonly effectPerLevel: number;',
     '  readonly effectUnit: string;',
     '  readonly costs: readonly number[];',
-    '  readonly unlocks: readonly GrowthUnlockRequirement[];',
     '  readonly description: string;',
     '}',
     '',
@@ -342,7 +336,6 @@ function generateUpgrades() {
     lines.push(`    effectPerLevel: ${e.effectPerLevel},`);
     lines.push(`    effectUnit: '${escapeStr(e.effectUnit)}',`);
     lines.push(`    costs: [${e.costs.join(', ')}],`);
-    lines.push(`    unlocks: [${e.unlocks.map(requirement => `'${requirement}'`).join(', ')}],`);
     lines.push(`    description: '${escapeStr(e.description)}',`);
     lines.push('  },');
   }
@@ -352,6 +345,57 @@ function generateUpgrades() {
 
   writeFileSync(resolve(OUT_DIR, 'upgrade-data.ts'), lines.join('\n'), 'utf-8');
   console.log(`  upgrade-data.ts (${entries.length} entries)`);
+  generateGrowthRoute(entries);
+}
+
+/** Route order and experience gates belong to this CSV; prices remain in upgrades/constants. */
+function generateGrowthRoute(upgrades) {
+  const { header, rows } = readCsv('growth-route.csv');
+  const expected = ['order', 'unit', 'level', 'requirement', 'requirement_text', 'phase'];
+  if (header.join(',') !== expected.join(',')) throw new Error('[codegen] invalid growth-route.csv columns');
+  const requirements = new Set(['none', 'impactExperienced', 'offeringCompleted', 'toolRevealed', 'crestExperienced']);
+  const levels = new Map(upgrades.map(upgrade => [upgrade.id, 0]));
+  const maximums = new Map(upgrades.map(upgrade => [upgrade.id, upgrade.maxLevel]));
+  levels.set('thicken', 0);
+  // This is a system constant, not duplicated route data.
+  const constants = readFileSync(resolve(ROOT, 'src/config/constants.ts'), 'utf8');
+  const thickenMaximum = Number(constants.match(/MODULE_MAX_HP_TIERS:\s*(\d+)/)?.[1]);
+  if (!Number.isSafeInteger(thickenMaximum) || thickenMaximum < 1) throw new Error('[codegen] missing thicken limit');
+  maximums.set('thicken', thickenMaximum);
+  const entries = rows.map((row, index) => {
+    const [orderText, unit, levelText, requirement, requirementText, phase] = row;
+    const order = Number(orderText), level = Number(levelText);
+    if (row.length !== header.length || order !== index + 1 || !levels.has(unit)
+      || !Number.isSafeInteger(level) || level !== levels.get(unit) + 1 || level > maximums.get(unit)
+      || !requirements.has(requirement) || !phase.trim()
+      || (requirement === 'none' ? requirementText !== '' : !requirementText.trim())) {
+      throw new Error(`[codegen] invalid growth route step ${index + 1}`);
+    }
+    levels.set(unit, level);
+    return { order, unit, level, requirement, requirementText, phase };
+  });
+  for (const [unit, maximum] of maximums) {
+    if (levels.get(unit) !== maximum) throw new Error(`[codegen] incomplete growth route for ${unit}`);
+  }
+  writeFileSync(resolve(OUT_DIR, 'growth-route-data.ts'), [
+    '// AUTO-GENERATED from data/growth-route.csv — DO NOT EDIT',
+    "import type { GrowthUpgradeId } from '@/types/game-types';",
+    "import type { GrowthUnlockRequirement } from '@/generated/upgrade-data';",
+    '',
+    "export type GrowthRouteUnit = GrowthUpgradeId | 'thicken';",
+    'export interface GrowthRouteStep {',
+    '  readonly order: number;',
+    '  readonly unit: GrowthRouteUnit;',
+    '  readonly level: number;',
+    '  readonly requirement: GrowthUnlockRequirement;',
+    '  readonly requirementText: string;',
+    '  readonly phase: string;',
+    '}',
+    '',
+    `export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = ${JSON.stringify(entries, null, 2)};`,
+    '',
+  ].join('\n'));
+  console.log(`  growth-route-data.ts (${entries.length} ordered steps)`);
 }
 
 // ---------------------------------------------------------------------------

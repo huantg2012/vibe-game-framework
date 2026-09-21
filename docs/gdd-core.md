@@ -3,6 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
 last-modified: 2026-09-21
+last-modified-by: design（受Director委派同步迭代29 R2索引）
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,7 +18,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-**当前主线（2026-09-21，DEC-169/174/175）：** 正式方向为俯视2D像素Rift，三维关卡重构已终止。[迭代29](tasks/iteration-29.md)落实净化点与成长审查：场所结构、持久投入表现、经历展开、三层真实预兆、扩槽/加厚完整链。[迭代28](tasks/iteration-28.md)目录与静态图标获用户认可，扩大采样/长期平衡/动态审美保持挂起。现状与证据见[游戏索引](game-state/INDEX.md)，本轮美术与成长价值待人审。
+**当前主线（2026-09-21，DEC-169/174/175/176）：** 正式方向为俯视2D像素Rift，三维关卡重构已终止。[迭代29](tasks/iteration-29.md)落实净化点与成长审查：场所结构与持久投入表现；R2按路线CSV安排22步线性成长，只呈现下一项与只读已有能力，保留实际冲击/首次退潮两个经历节点，供奉1→2→3→4，三层真实预兆和加厚/出击扩容完整链。[迭代28](tasks/iteration-28.md)目录与静态图标获用户认可，扩大采样/长期平衡/动态审美保持挂起。现状与证据见[游戏索引](game-state/INDEX.md)，本轮美术与成长价值待人审。
 
 **迭代19实施记录（2026-09-09，DEC-138）**。四品质十撬棍、统一挥击与持武像素、库存整备、真实拾取、负重/抗性和死亡/撤离结算已接生产；内部验证见 docs/qa/iteration-19.md。中断出击政策待用户明确，完整恢复未交，体验与美术待人审；本批纳入阶段提交（DEC-139）。
 
@@ -40,13 +41,13 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 潮汐系统 (TideSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 5 Tide x 3 Phase 状态机，替代线性递增；低谷期给玩家积攒资源的窗口 |
 | 污染物系统 (ContaminantSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 污染物库存+防御slot+生命周期；3种污染物（固化/延时/侵蚀）覆盖三档rarity |
 | 出击工具系统 (ToolSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 污染物转化为主动出击工具（凝锁/时裂/侵蚀领域），Q/F键位触发 |
-| 永久改造系统 (GrowthSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 6条17次购买，由真实经历展开；身体、基地与装备分工，预兆分层读出强度/重点/压力 |
+| 永久改造系统 (GrowthSystem) | **已实现** (Slice 3；迭代29 R2调整) | `docs/specs/system-growth-tide.md` | 6轴19次＋加厚3次，CSV固定22步；两处非随机经历，供奉1→4；只看下一项、等级/总级与只读已有能力，旧档权益保留 |
 | 稳定度追踪 (StabilityTracker) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 长期进度条 0-100%，所有正向行为积分推向终点 |
 | 存档管理 (SaveManager) | **已实现** (Slice 3) | - (无独立 spec) | localStorage 持久存档，自动保存于返回净化点时 |
 | 裂隙污染物节点 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 裂隙中新拾取物类型，提供污染物来源 |
 | 防御slot管理面板 | **已实现** (Slice 3) | - (无独立 spec) | DOM面板：装备污染物到防御slot减伤 |
 | Loadout选择面板 | **已实现** (Slice 3) | - (无独立 spec) | 出击前选择携带的工具 |
-| 改造祭坛面板 (GrowthPanel) | **已实现** (Slice 3) | - (无独立 spec) | DOM面板：永久改造购买界面 |
+| 改造祭坛面板 (GrowthPanel) | **已实现** (Slice 3；迭代29 R2调整) | `docs/specs/system-growth-tide.md` | 培养藏当前一项刻入/加厚、单一未满足经历、等级/总级、22步进度；已有能力只读 |
 | 潮汐+稳定度 HUD | **已实现** (Slice 3；5.5 改展示；迭代11用户验收COMPLETE) | `docs/specs/system-growth-tide.md`；净化点 UX 节 `system-purification-impact.md` | 净化点贴顶装置读数：薪柴 / 潮汐 / 冲击预告。稳定度改存续报告陈述，不在常驻 HUD。迭代11轻量HUD与场景化界面已验收 |
 | GameState 管理器 | **已实现** (Slice 2) | - (无独立 spec) | session-only 内存状态管理，跨场景持久（薪柴/模块HP/冲击强度/sortie计数） |
 | 场景流转 | **已实现** (Slice 2) | - (无独立 spec) | Menu → PurificationScene ↔ RiftScene 双向切换 + 状态传递 |
@@ -89,11 +90,11 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 - 地图生成 → 每一次踏入提供 tilemap / 出生 / 一个撤离 / 薪柴 / 巡逻（`generateRiftLayout`；手写图仅夹具）
 - 混乱值 ← 时间 + 行为事件（被发现/战斗/接触高污染区）→ 触发惩罚（影响视野/移速）
 - 搜刮 → 薪柴 → GameState 持有 → 净化点分配面板消费
-- 分配面板 → 模块修复/防御/改造投资 → 三向纠结
+- 分配面板 → 模块修复；培养藏 → 当前线性成长投入；同一薪柴在眼前维持与下一步成长间分配
 - 冲击系统 ← TideSystem 驱动强度（Phase 决定伤害倍率）→ 模块受损 → 模块效果联动
 - 污染物节点(裂隙) → 拾取 → ContaminantSystem 库存 → 防御slot(减伤) / 转化为出击工具
 - 出击工具 → 裂隙内使用（凝锁敌人/时裂减速/侵蚀领域伤害）→ 提升出击效率
-- GrowthSystem → 永久改造（视野+/移速+/拾取+）→ 改变基础出击参数
+- GrowthSystem ← `growth-route.csv`固定22步＋冲击/退潮事实 → 身体、预兆、供奉1→4、第三主动与加厚；已购权益保留，具体规则见成长spec
 - StabilityTracker ← 正向行为积分 → 长期进度目标(0-100%)
 - SaveManager → localStorage 持久化全部进度（跨session）
 - 边界氛围 + 交互触发 → 净化点场景（与视野系统共用渲染管线）
@@ -107,7 +108,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 污染物类型 | 18（CSV 数据驱动，Common 7 + Fine 6 + Rare 5） | data/contaminants.csv → src/generated/contaminant-data.ts |
 | 出击工具 | 18 全部实现（主动 15 + 被动 3：scatter/muffle/siphon） | data/contaminants.csv 工具列 |
 | 防御效果 | 18 型全部接线（含副作用），Slice 5 起无未接线机制 | src/systems/defense-engine.ts |
-| 永久改造 | 6（出击效率/资源效率/生存韧性/出击扩展/防御扩展/信息优势） | data/upgrades.csv → src/generated/upgrade-data.ts |
+| 永久成长路线 | 6轴19次＋加厚3次，共22步 | `data/upgrades.csv`＋`data/growth-route.csv` → 成长spec；阶段边界见 `docs/content/progression.md` |
 | 敌人 / 关卡 | 2 种剖面共用一份五态（渗透体 + 改写体）；每图恰好 1 改写体。句法另接乙缝 / 丙漆 / 丁体积 | `data/enemies.csv` → `src/generated/enemy-data.ts`；句法见 `docs/specs/system-contamination-lexicon.md` |
 
 ## 设计历史（仅决策，不含详情）

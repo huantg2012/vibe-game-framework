@@ -1,0 +1,435 @@
+{
+  "checkedAt": "2026-09-21T03:37:28.852Z",
+  "reference": {
+    "path": "docs/qa/artifacts/iteration-29-r2/source-hashes.json",
+    "capturedAt": "2026-09-21T03:22:32.649725+00:00",
+    "baseline": "7a6752379198e2b5296a7b387bd8915dcd4ea144",
+    "scope": "R2 changed code/data/tools only; uncommitted working tree, independent CLAUDE excluded"
+  },
+  "productionVerification": {
+    "result": "NO_PRODUCTION_CHANGES_OBSERVED_SINCE_R2_SNAPSHOT",
+    "comparedR2ProductionCount": 15,
+    "r2ProductionComparisons": [
+      {
+        "path": "data/growth-route.csv",
+        "expectedSha256": "21860ba0f74f4fa267bc4309979e347903720c2cfae9d308513093650963f689",
+        "actualSha256": "21860ba0f74f4fa267bc4309979e347903720c2cfae9d308513093650963f689",
+        "match": true
+      },
+      {
+        "path": "data/upgrades.csv",
+        "expectedSha256": "e18e0da8875525a1097f28ae68b65c3da18157c2d5476c0f3073d59723a9a0cb",
+        "actualSha256": "e18e0da8875525a1097f28ae68b65c3da18157c2d5476c0f3073d59723a9a0cb",
+        "match": true
+      },
+      {
+        "path": "src/config/constants.ts",
+        "expectedSha256": "bdca54aab41e868a7bffc22e4d798cd29b5d86304d59d5d72effcbaa4e49f16e",
+        "actualSha256": "bdca54aab41e868a7bffc22e4d798cd29b5d86304d59d5d72effcbaa4e49f16e",
+        "match": true
+      },
+      {
+        "path": "src/config/growth-upgrade-display.ts",
+        "expectedSha256": "ef9f048c339ec2b82f8fb7153c2bfb974f44e1df699e94a26317f23d71b6d446",
+        "actualSha256": "ef9f048c339ec2b82f8fb7153c2bfb974f44e1df699e94a26317f23d71b6d446",
+        "match": true
+      },
+      {
+        "path": "src/generated/growth-route-data.ts",
+        "expectedSha256": "5b172ce08767bc7318012848be3ca6670fad66a792f33c139ba659644c67e7d2",
+        "actualSha256": "5b172ce08767bc7318012848be3ca6670fad66a792f33c139ba659644c67e7d2",
+        "match": true
+      },
+      {
+        "path": "src/generated/upgrade-data.ts",
+        "expectedSha256": "176b47b4762c5b182ea850c892bde1813181f7f953ff35983d5a59ae8eb121e1",
+        "actualSha256": "176b47b4762c5b182ea850c892bde1813181f7f953ff35983d5a59ae8eb121e1",
+        "match": true
+      },
+      {
+        "path": "src/managers/growth-purchases.ts",
+        "expectedSha256": "8d505a6ba37b0a3b36249971c2016e486feaf11d03d5c854e1603e275ea8eedd",
+        "actualSha256": "8d505a6ba37b0a3b36249971c2016e486feaf11d03d5c854e1603e275ea8eedd",
+        "match": true
+      },
+      {
+        "path": "src/managers/save-manager.ts",
+        "expectedSha256": "e155c1c1d78a17204a290298a4dcb5fc06e1833fce64d10520aede173e5465d0",
+        "actualSha256": "e155c1c1d78a17204a290298a4dcb5fc06e1833fce64d10520aede173e5465d0",
+        "match": true
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "expectedSha256": "e11e8606b8a1e3a331cdc35efd7e5b65758160909cda6c3b8aebee9d2e6531ae",
+        "actualSha256": "e11e8606b8a1e3a331cdc35efd7e5b65758160909cda6c3b8aebee9d2e6531ae",
+        "match": true
+      },
+      {
+        "path": "src/systems/contaminant-system.ts",
+        "expectedSha256": "d0b42b355052401b60c0ed954a55bb5d6cfc8b5bcaaa2a7f47c423ab3ca3f23c",
+        "actualSha256": "d0b42b355052401b60c0ed954a55bb5d6cfc8b5bcaaa2a7f47c423ab3ca3f23c",
+        "match": true
+      },
+      {
+        "path": "src/systems/growth-system.ts",
+        "expectedSha256": "3f3474ebf46c2b8f7524072f5104e6f13fe3207d5253e60c403c0fdd07327426",
+        "actualSha256": "3f3474ebf46c2b8f7524072f5104e6f13fe3207d5253e60c403c0fdd07327426",
+        "match": true
+      },
+      {
+        "path": "src/types/game-types.ts",
+        "expectedSha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19",
+        "actualSha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19",
+        "match": true
+      },
+      {
+        "path": "src/ui/dom/defense-panel.ts",
+        "expectedSha256": "6baa663b50b22688984fe9d7feb46f6cb3654e02c21897ef10a769ed3b49c494",
+        "actualSha256": "6baa663b50b22688984fe9d7feb46f6cb3654e02c21897ef10a769ed3b49c494",
+        "match": true
+      },
+      {
+        "path": "src/ui/dom/growth-panel.ts",
+        "expectedSha256": "8a56b8283b6cf57ae888b3ad2975ccf4e25744645f70bc25ca12ecf66d3da30f",
+        "actualSha256": "8a56b8283b6cf57ae888b3ad2975ccf4e25744645f70bc25ca12ecf66d3da30f",
+        "match": true
+      },
+      {
+        "path": "src/ui/dom/status-panel.ts",
+        "expectedSha256": "72abcd2b61bd934cdd98243f7da872e7a8028d7a0fd174eab09849eafd9f376c",
+        "actualSha256": "72abcd2b61bd934cdd98243f7da872e7a8028d7a0fd174eab09849eafd9f376c",
+        "match": true
+      }
+    ],
+    "otherTrackedProductionComparedAgainstBaselineCount": 511,
+    "trackedProductionChangedVsBaseline": [
+      "data/upgrades.csv",
+      "src/config/constants.ts",
+      "src/config/growth-upgrade-display.ts",
+      "src/generated/upgrade-data.ts",
+      "src/managers/growth-purchases.ts",
+      "src/managers/save-manager.ts",
+      "src/scenes/purification-scene.ts",
+      "src/systems/contaminant-system.ts",
+      "src/systems/growth-system.ts",
+      "src/types/game-types.ts",
+      "src/ui/dom/defense-panel.ts",
+      "src/ui/dom/growth-panel.ts",
+      "src/ui/dom/status-panel.ts"
+    ],
+    "trackedChangesNotCoveredByR2Reference": [],
+    "untrackedProductionFiles": [
+      "data/growth-route.csv",
+      "src/generated/growth-route-data.ts"
+    ],
+    "untrackedNotCoveredByR2Reference": [],
+    "reviewLocalHashComparisons": [
+      {
+        "path": "src/systems/growth-system.ts",
+        "expectedSha256": "3f3474ebf46c2b8f7524072f5104e6f13fe3207d5253e60c403c0fdd07327426",
+        "actualSha256": "3f3474ebf46c2b8f7524072f5104e6f13fe3207d5253e60c403c0fdd07327426",
+        "match": true
+      },
+      {
+        "path": "src/systems/chaos-system.ts",
+        "expectedSha256": "f85d0eae755d34a88c5e0d35de479565d48574b6879be1f81b240b2b1bf260be",
+        "actualSha256": "f85d0eae755d34a88c5e0d35de479565d48574b6879be1f81b240b2b1bf260be",
+        "match": true
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "expectedSha256": "87d2fd66858fc645c2213dae307d1c429114c2594fd86414f78647b312b14dde",
+        "actualSha256": "87d2fd66858fc645c2213dae307d1c429114c2594fd86414f78647b312b14dde",
+        "match": true
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "expectedSha256": "8611b0296721c7773bd3ae8574b4cb50c84270bbcf9e7637becadf4b08da450a",
+        "actualSha256": "8611b0296721c7773bd3ae8574b4cb50c84270bbcf9e7637becadf4b08da450a",
+        "match": true
+      },
+      {
+        "path": "src/managers/save-manager.ts",
+        "expectedSha256": "e155c1c1d78a17204a290298a4dcb5fc06e1833fce64d10520aede173e5465d0",
+        "actualSha256": "e155c1c1d78a17204a290298a4dcb5fc06e1833fce64d10520aede173e5465d0",
+        "match": true
+      },
+      {
+        "path": "src/managers/growth-purchases.ts",
+        "expectedSha256": "8d505a6ba37b0a3b36249971c2016e486feaf11d03d5c854e1603e275ea8eedd",
+        "actualSha256": "8d505a6ba37b0a3b36249971c2016e486feaf11d03d5c854e1603e275ea8eedd",
+        "match": true
+      },
+      {
+        "path": "src/config/growth-upgrade-display.ts",
+        "expectedSha256": "ef9f048c339ec2b82f8fb7153c2bfb974f44e1df699e94a26317f23d71b6d446",
+        "actualSha256": "ef9f048c339ec2b82f8fb7153c2bfb974f44e1df699e94a26317f23d71b6d446",
+        "match": true
+      },
+      {
+        "path": "src/ui/dom/loadout-panel.ts",
+        "expectedSha256": "711a55128d187baf8621798dbb7270573e36664090727652ec8dc4cd9d2fcdf3",
+        "actualSha256": "711a55128d187baf8621798dbb7270573e36664090727652ec8dc4cd9d2fcdf3",
+        "match": true
+      },
+      {
+        "path": "data/upgrades.csv",
+        "expectedSha256": "e18e0da8875525a1097f28ae68b65c3da18157c2d5476c0f3073d59723a9a0cb",
+        "actualSha256": "e18e0da8875525a1097f28ae68b65c3da18157c2d5476c0f3073d59723a9a0cb",
+        "match": true
+      },
+      {
+        "path": "data/growth-route.csv",
+        "expectedSha256": "21860ba0f74f4fa267bc4309979e347903720c2cfae9d308513093650963f689",
+        "actualSha256": "21860ba0f74f4fa267bc4309979e347903720c2cfae9d308513093650963f689",
+        "match": true
+      }
+    ],
+    "interpretation": "All R2-listed src/data match saved R2 working-tree SHA-256 hashes; git diff against the recorded baseline reports no other tracked src/data changes; all untracked src/data are covered by that R2 reference. This verifies final disk state, not whether any process temporarily touched a file."
+  },
+  "originalTestSourceVerification": {
+    "comparedCount": 10,
+    "allMatched": true,
+    "comparisons": [
+      {
+        "path": "tools/csv-codegen/generate.mjs",
+        "expectedSha256": "d89ce4a1c5648441f106dcc2ffa430e73df136f6df00af86c1d0b8473e76372d",
+        "actualSha256": "d89ce4a1c5648441f106dcc2ffa430e73df136f6df00af86c1d0b8473e76372d",
+        "match": true
+      },
+      {
+        "path": "tools/growth/check-forecast-reading.ts",
+        "expectedSha256": "5e94dfac492ca03ac5327c4c991e16dc01b721a09e23fb11441e15b15e4459b8",
+        "actualSha256": "5e94dfac492ca03ac5327c4c991e16dc01b721a09e23fb11441e15b15e4459b8",
+        "match": true
+      },
+      {
+        "path": "tools/growth/check-growth-loop.ts",
+        "expectedSha256": "970207493543fdbcd947808409fe6ed17b7994b698a0115d89959b67595bd9c3",
+        "actualSha256": "970207493543fdbcd947808409fe6ed17b7994b698a0115d89959b67595bd9c3",
+        "match": true
+      },
+      {
+        "path": "tools/growth/check-growth-progression.ts",
+        "expectedSha256": "0b3951332a2788bb24b8fd44ce8a7f9f235fa22c17e953cd9f15b982abd8835e",
+        "actualSha256": "0b3951332a2788bb24b8fd44ce8a7f9f235fa22c17e953cd9f15b982abd8835e",
+        "match": true
+      },
+      {
+        "path": "tools/growth/check-growth-slots.ts",
+        "expectedSha256": "b91b66624b167910f9e7a0809ea3b816619a82f9618eaba540852d16eab13d3c",
+        "actualSha256": "b91b66624b167910f9e7a0809ea3b816619a82f9618eaba540852d16eab13d3c",
+        "match": true
+      },
+      {
+        "path": "tools/growth/check-linear-growth.ts",
+        "expectedSha256": "1235cf09a3c028a9b281e5f0889582a7345bd90f7ba59600840645877f532e9f",
+        "actualSha256": "1235cf09a3c028a9b281e5f0889582a7345bd90f7ba59600840645877f532e9f",
+        "match": true
+      },
+      {
+        "path": "tools/growth/check-offering-capacity.ts",
+        "expectedSha256": "d5b8a936d98fe09d2d9ec7a02a66818ac3b8b172613bb4856d8fc193811cae14",
+        "actualSha256": "d5b8a936d98fe09d2d9ec7a02a66818ac3b8b172613bb4856d8fc193811cae14",
+        "match": true
+      },
+      {
+        "path": "tools/inventory/check-save-migration.ts",
+        "expectedSha256": "a2c8f334935c29909e5205b6ef17f65f5d24c2816fb442fe1b02f32df851dae2",
+        "actualSha256": "a2c8f334935c29909e5205b6ef17f65f5d24c2816fb442fe1b02f32df851dae2",
+        "match": true
+      },
+      {
+        "path": "tools/qa/i29-linear-runtime.mjs",
+        "expectedSha256": "c51b0445824d09e5f8f8e1ba41257a7b607d84a3f297dd55c8507554ddea4af9",
+        "actualSha256": "c51b0445824d09e5f8f8e1ba41257a7b607d84a3f297dd55c8507554ddea4af9",
+        "match": true
+      },
+      {
+        "path": "tools/qa/i29-return-journey.mjs",
+        "expectedSha256": "4040db16ef1a4c783a5f90ed6a634d869d5504282d0c20bbfe261548ed02a3a0",
+        "actualSha256": "4040db16ef1a4c783a5f90ed6a634d869d5504282d0c20bbfe261548ed02a3a0",
+        "match": true
+      }
+    ]
+  },
+  "runtimeSummary": {
+    "source": "docs/qa/artifacts/growth-sample-review-2026-09-21/runtime/manifest.json",
+    "sourceSha256": "0b01ba2c056cbd93f2e1fa7633db5189e24128d219fb21015c3ba910303a6500",
+    "method": "informed expert controlled B/D review; isolated saves, real walking/inputs; read-only persisted production snapshots and DOM; no natural growth/economy claim",
+    "caseCount": 3,
+    "passedCount": 3,
+    "cases": [
+      {
+        "name": "body",
+        "manifestOk": true,
+        "errors": [],
+        "reserveBefore": 8,
+        "reserveAfter": 0,
+        "spent": 8,
+        "growthChanges": [
+          {
+            "id": "growth_vitality",
+            "before": 0,
+            "after": 1
+          }
+        ],
+        "thickenTierBefore": 0,
+        "thickenTierAfter": 0,
+        "modules": [
+          {
+            "id": "CORE",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 100
+          },
+          {
+            "id": "STORAGE",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 100
+          },
+          {
+            "id": "PURIFIER",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 100
+          }
+        ],
+        "forecastUnchanged": true,
+        "purchaseSnapshotVerified": true,
+        "passed": true
+      },
+      {
+        "name": "thicken",
+        "manifestOk": true,
+        "errors": [],
+        "reserveBefore": 12,
+        "reserveAfter": 0,
+        "spent": 12,
+        "growthChanges": [],
+        "thickenTierBefore": 0,
+        "thickenTierAfter": 1,
+        "modules": [
+          {
+            "id": "CORE",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 115
+          },
+          {
+            "id": "STORAGE",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 115
+          },
+          {
+            "id": "PURIFIER",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 115
+          }
+        ],
+        "forecastUnchanged": true,
+        "purchaseSnapshotVerified": true,
+        "passed": true
+      },
+      {
+        "name": "forecast",
+        "manifestOk": true,
+        "errors": [],
+        "reserveBefore": 10,
+        "reserveAfter": 0,
+        "spent": 10,
+        "growthChanges": [
+          {
+            "id": "growth_forecast_clarity",
+            "before": 0,
+            "after": 1
+          }
+        ],
+        "thickenTierBefore": 0,
+        "thickenTierAfter": 0,
+        "modules": [
+          {
+            "id": "CORE",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 100
+          },
+          {
+            "id": "STORAGE",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 100
+          },
+          {
+            "id": "PURIFIER",
+            "hpBefore": 100,
+            "hpAfter": 100,
+            "maxHpBefore": 100,
+            "maxHpAfter": 100
+          }
+        ],
+        "forecastUnchanged": true,
+        "purchaseSnapshotVerified": true,
+        "passed": true
+      }
+    ],
+    "limitation": "Read and independently checked the three purchase snapshots and recorded ok/errors; no browser cases rerun and no natural growth/economy claim."
+  },
+  "regressionOutputAudit": {
+    "runs": [
+      {
+        "script": "tools/growth/check-linear-growth.ts",
+        "explicitOutputArgument": "docs/qa/artifacts/growth-sample-review-2026-09-21/tech-linear-regression.json",
+        "defaultOutput": "docs/qa/artifacts/iteration-29-r2/linear-growth.json",
+        "defaultOutputUsed": false,
+        "result": "PASS",
+        "checkCount": 4,
+        "verifiedAt": "2026-09-21T03:29:48.231Z",
+        "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/growth/check-linear-growth.ts docs/qa/artifacts/growth-sample-review-2026-09-21/tech-linear-regression.json"
+      },
+      {
+        "script": "tools/growth/check-offering-capacity.ts",
+        "explicitOutputArgument": "docs/qa/artifacts/growth-sample-review-2026-09-21/tech-capacity-regression.json",
+        "defaultOutput": "docs/qa/artifacts/iteration-29-r2/offering-capacity.json",
+        "defaultOutputUsed": false,
+        "result": "PASS",
+        "checkCount": 9,
+        "verifiedAt": "2026-09-21T03:29:48.610Z",
+        "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/growth/check-offering-capacity.ts docs/qa/artifacts/growth-sample-review-2026-09-21/tech-capacity-regression.json"
+      },
+      {
+        "script": "tools/growth/check-forecast-reading.ts",
+        "explicitOutputArgument": "docs/qa/artifacts/growth-sample-review-2026-09-21/tech-forecast-regression.json",
+        "defaultOutput": "docs/qa/artifacts/iteration-29/forecast-reading.json",
+        "defaultOutputUsed": false,
+        "result": "PASS",
+        "checkCount": 10,
+        "verifiedAt": "2026-09-21T03:31:31.561Z",
+        "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/growth/check-forecast-reading.ts docs/qa/artifacts/growth-sample-review-2026-09-21/tech-forecast-regression.json"
+      }
+    ],
+    "defaultEvidenceOverwrittenByTheseInvocations": false,
+    "basis": "Every review invocation supplied process.argv[2]; each script writes its sole JSON report to that argument. All three explicit review JSON outputs exist.",
+    "originalDefaultPathsNotUsed": [
+      "docs/qa/artifacts/iteration-29-r2/linear-growth.json",
+      "docs/qa/artifacts/iteration-29-r2/offering-capacity.json",
+      "docs/qa/artifacts/iteration-29/forecast-reading.json"
+    ],
+    "limitation": "No pre-review checksum of historical report JSON was available. This audits executed commands/write destinations rather than claiming before/after hashes for all historical evidence."
+  },
+  "followupScope": "Only this new review-source-verification.json written. No regressions rerun; no existing files edited.",
+  "verificationNotes": [
+    "Initial read-only attempt to hash every baseline blob hit Node spawnSync default buffer on a PNG before writing output; replaced redundant blob reads with git diff names for unlisted tracked files. No production/test mutation occurred."
+  ]
+}

@@ -13,7 +13,6 @@ export interface UpgradeDef {
   readonly effectPerLevel: number;
   readonly effectUnit: string;
   readonly costs: readonly number[];
-  readonly unlocks: readonly GrowthUnlockRequirement[];
   readonly description: string;
 }
 
@@ -27,7 +26,6 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     effectPerLevel: 0.04,
     effectUnit: '混乱增速减免比例',
     costs: [8, 12, 18, 25, 35],
-    unlocks: ['none', 'none', 'none', 'none', 'none'],
     description: '反复暴露于异源模式后身体产生微量适应性',
   },
   'growth_kindling_affinity': {
@@ -39,7 +37,6 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     effectPerLevel: 1,
     effectUnit: '每次拾取额外薪柴',
     costs: [8, 12, 18],
-    unlocks: ['none', 'none', 'none'],
     description: '辨识和提取残渣的能力增强',
   },
   'growth_vitality': {
@@ -51,7 +48,6 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     effectPerLevel: 15,
     effectUnit: '最大生命值增加',
     costs: [8, 12, 18, 25],
-    unlocks: ['none', 'none', 'none', 'none'],
     description: '核心抗性的物理表现增强',
   },
   'growth_sortie_slot': {
@@ -63,7 +59,6 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     effectPerLevel: 1,
     effectUnit: '解锁第4个出击工具槽位',
     costs: [40],
-    unlocks: ['toolRevealed'],
     description: '多携带一个主动工具——被动仍只能选一个且携带重量照常计入',
   },
   'growth_defense_slot': {
@@ -71,11 +66,10 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     name: '供奉扩容',
     axis: '防御扩展',
     responsibility: 'base',
-    maxLevel: 1,
+    maxLevel: 3,
     effectPerLevel: 1,
-    effectUnit: '解锁第4个供奉槽位',
-    costs: [35],
-    unlocks: ['offeringCompleted'],
+    effectUnit: '增加1个供奉槽位',
+    costs: [10, 20, 35],
     description: '同一次冲击可以再供奉一个物件——不增加成熟速度或物件供给',
   },
   'growth_forecast_clarity': {
@@ -87,7 +81,6 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     effectPerLevel: 1,
     effectUnit: '信息层',
     costs: [10, 20, 30],
-    unlocks: ['impactExperienced', 'offeringCompleted', 'crestExperienced'],
     description: '逐层辨清下次冲击的强度、重点模块及各模块防御前压力',
   },
 };

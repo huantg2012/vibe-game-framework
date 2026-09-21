@@ -18,6 +18,8 @@ export function purchaseGrowth(id: GrowthUpgradeId | 'thicken'): GrowthPurchaseR
   const run = inventoryStore.getRun();
   if (run?.status === 'active') return { ok: false, reason: 'unavailable' };
   if (run?.status === 'settled' && !run.baseSettled) return { ok: false, reason: 'pending-save' };
+  const nextStep = growthSystem.getNextStep();
+  if (!nextStep || nextStep.id !== id || !nextStep.unlocked) return { ok: false, reason: 'unavailable' };
   const beforeGame = gameState.getState();
   const beforeGrowth = growthSystem.getState();
   const beforeStability = stabilityTracker.getState();

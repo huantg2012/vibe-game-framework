@@ -49,7 +49,9 @@
       "COH-E-HIST-CATALOG",
       "COH-E-HIST-PRODUCTION",
       "COH-E-I29-AUTO",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E-I29-R2-AUTO",
+      "COH-E-I29-R2-RUNTIME"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。"
@@ -59,7 +61,7 @@
     "id": "COH-F045",
     "title": "拒写重试、坏记录救援与明确弃局",
     "domain": "persistence",
-    "summary": "存储失败冻结并重试同一候选，失败不假报收益；坏世界且基地有效时可明确弃局，坏基地保留原记录；错误入口回标题提供可见出口。",
+    "summary": "存储失败冻结重试同一候选，购买拒写回滚；坏包保留和救援沿原规则。growth schema2保留旧容量/物件权益，旧在途包到合法完整提交才落盘迁移。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -104,10 +106,14 @@
       "COH-E-HIST-CATALOG",
       "COH-E-HIST-TRANSITION",
       "COH-E-I29-AUTO",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E-I29-R2-AUTO",
+      "COH-E-I29-R2-RUNTIME",
+      "COH-E-I29-R2-REVIEW"
     ],
     "unknowns": [
-      "历史 WG07 旧现场无栈，原触发器未被证实；保护与后续回归不能被写成已解释该旧事故。"
+      "历史 WG07 旧现场无栈，原触发器未被证实；保护与后续回归不能被写成已解释该旧事故。",
+      "2026-09-21技术复评T-02：仅手工坏档可让非空供奉引用位于本档容量外，加载后暂不可见/取回；正常流程可达性未证，P3待处理。"
     ]
   }
 ]

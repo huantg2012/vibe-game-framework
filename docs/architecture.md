@@ -10,11 +10,15 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代29：净化点投入表现与经历驱动成长
+## 迭代29：净化点投入表现与线性成长（R2）
 
 `PurificationScene`依旧编排六处原锚点。`PurificationRenewalVisual`仅拥有静态承载补件/凹沟及状态覆盖，按真实加厚档、模块完整度和投资更新，储藏装饰随脚底排序；scene在购买、修复后同步，shutdown释放。供奉公开占用/潮汐压力驱动夹持内容，不读取未鉴定身份。培养藏内部改造按累计已购等级分阶段出现。地表共享基础见 `procedural-purification-surface.ts`，视觉合同见 `art/purification-renewal.md`。
 
-`data/upgrades.csv`提供名称、body/base/equipment职责与逐层展开条件，codegen生成强类型定义。`GrowthSystem.getAvailability/getUpgradeDefinition/recordReturn`聚合四种可持久经历；`growth-evidence.ts`只从有效旧记录保守补事实。真实冲击/供奉回执/有限高潮离开在归来整帧事务中记录，普通拒写保留候选、封锁交互并重试；不发新奖励。已购旧等级保持，active/未结基地不做槽位迁移。
+`data/upgrades.csv`提供名称、body/base/equipment职责、效果、上限和价格；`data/growth-route.csv`提供22步顺序、目标等级、阶段和至多一个经历条件。codegen校验每个等级唯一覆盖、无跳级、顺序连续并生成强类型定义。`GrowthSystem.getNextStep/getRouteProgress`纯读取当前节点与已购数量，`getAvailability`仅向当前节点开放购买；`purchaseGrowth`使加厚也走同一线性门禁，所有已购能力保留。UI只展示下一项和只读已有收益，各轴标当前/最大等级；不向DOM输出未来节点条件。
+
+`recordReturn`聚合四种永久事实，但购买只在第5/17步分别使用真实冲击、退潮。`growth-evidence.ts`从有效旧记录保守补事实，不用随机物件阻断整条线。事件在归来整帧事务中记录，普通拒写保留候选、封锁交互并重试；不发新奖励。
+
+新 `GrowthState.schemaVersion=2` 表示供奉基础1、扩容0–3级。缺schema的旧档按旧范围0/1验证后映射2/3，保留原3/4位及物件引用、充能、其他能力。`save-manager`先校验旧原始域与checksum，再加载迁移；基地可直接写新版本，active/未结算原字节保持到下一笔合法完整帧/基地结算。新快照保留departure/checkpoint条件并重新计算checksum；未知schema/超范围等级拒绝。缺预告的旧基地首次迁移建预告，已有预告保持原承诺。旧非前缀购买在路线上按已购级跳过，完成数量不冒充当前节点序号。
 
 `growth-purchases.ts`把扩槽库存草稿、等级、薪柴、稳定度和预告同笔保存；成功前不发布observer，拒写完整恢复。`InventoryStore.reconcileExpandedToolSlots`把旧最后被动位移到新最后位，不改物件和余次。`saveManager.trySaveBaseInventoryFrame`承接基地草稿存储。
 
@@ -478,7 +482,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ToolSystem | src/systems/tool-system.ts | 十三族非武器污染物的消费前验证、来源隔离控制、有限效果和VFX寿命；旧族仅兼容 | create, useSlot, getLastUseFailure, update, syncHostVisuals, syncBodyVisuals, getActiveTimedEffects, getPresentationState, notifyEnemySuspicious, notifyProximityAvoid, reset, destroy | 迭代20正式接线；迭代21 M新增借用只读呈现状态，不增加第二份机制时钟；末次效果完整 |
 | ToolBodyEcho | src/systems/tool-body-echo.ts | 真实姿态的独立像素快照；留影、记忆、凝滞、实体化 | captureBodyEcho → update / destroy | 三层缓存、源透明度/裁切/origin/scale保留、销毁幂等；不读失视目标实时姿态 |
 | ToolGroundVfx | src/systems/tool-ground-vfx.ts | 技能物件、压痕、纤维、砂灰与压制材质 | drawToolObject, drawPressure, drawFootDrag, drawSeam, drawHostRestraint, muteSuppressedMaterial | 视觉消费权威状态，不产生机制；具体语言见tool-vfx-spec |
-| GrowthSystem | src/systems/growth-system.ts | 永久改造购买、费用计算与效果聚合，module-level singleton | getLevel(id), getMaxLevel(id), getCost(id), canAfford(id, reserve), purchase(id), getModifiers(), getAvailability(id), getUpgradeDefinition(id), recordReturn(facts), getState(), loadState(), reset() | 已实现（迭代29，6轴17次购买；4种经历） |
+| GrowthSystem | src/systems/growth-system.ts | 永久改造购买、费用计算与效果聚合，module-level singleton | getLevel(id), getMaxLevel(id), getCost(id), canAfford(id, reserve), purchase(id), getModifiers(), getNextStep(), getRouteProgress(), getAvailability(id), getUpgradeDefinition(id), recordReturn(facts), getState(), loadState(), reset() | 已实现（迭代29 R2，6轴19级＋加厚3级，22步；2个定点经历门槛） |
 | TideSystem | src/systems/tide-system.ts | 潮汐冲击强度状态机（Rise→Crest→Ebb→下一 Tide），替代线性递增，module-level singleton | getState(), getCurrentIntensity(), isHighTide(), advanceCycle(), loadState(), reset() | 已实现（Slice 3） |
 | ImpactSystem | src/systems/impact-system.ts | 冲击伤害计算与结算（重点目标 + 其余承血模块均分残差、接入 DefenseEngine、写回 GameState），预告在全部三模块中抽 | getForecastDisplay(), getForecastLookahead(), resetForecastState(), run(defenseSlots?), generateForecast() | 已实现（Slice 2-4；Slice 7 三模块抽目标 + DefenseContext 三键） |
 | StabilityTracker | src/systems/stability-tracker.ts | 净化稳定度积分与进度追踪（0-100，到达后 `reached` 永久为真），module-level singleton | getProgress(), isReached(), addProgress(reason, amount), getState(), loadState(), reset() | 已实现（Slice 3） |

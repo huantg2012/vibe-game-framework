@@ -2,7 +2,7 @@
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
 last-modified-date: 2026-09-21
-last-modified-by: code（迭代27：成长兑现与回程稳定度）
+last-modified-by: design（迭代29 R2线性成长合同同步）
 interface-changed: true
 interfaces-with:
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
@@ -13,8 +13,10 @@ interfaces-with:
 exposes:
   - contaminantSystem.finishOfferingImpact(isHighTide, bonusCharges, snapshotIds?)
   - growthSystem.getAvailability(id) / getUpgradeDefinition(id) / recordReturn(facts)
+  - growthSystem.getNextStep() / getRouteProgress() / getState() / loadState(state)
+  - purchaseGrowth(id) -> GrowthPurchaseResult（包含thicken；只允许当前路线项）
   - tideSystem.getState() (含 phase / tideNumber / currentIntensity) / getCurrentIntensity() / isHighTide()
-  - contaminantSystem.getDefenseSlotted() / getSortieLoadout()
+  - contaminantSystem.getDefenseSlotted() / getDefenseSlotCount() / getSortieLoadout()
   - growthSystem.getLevel(id) / getModifiers()
   - stabilityTracker.getProgress()
   - saveManager.save() / load() / hasSave()
@@ -122,7 +124,15 @@ type ContaminantType =
 
 /** 永久改造 */
 interface GrowthState {
-  upgrades: Record<string, number>;  // upgradeId → 当前等级（0=未购买）
+  schemaVersion?: 2;              // 新写入为2；缺省是旧基础3格的成长合同
+  upgrades: Record<string, number>; // upgradeId → 当前等级；供奉扩容为0–3
+  progression?: {
+    version: 1;
+    impactExperienced: boolean;
+    offeringCompleted: boolean; // 只记录，不作路线门槛
+    toolRevealed: boolean;       // 只记录，不作路线门槛
+    crestExperienced: boolean;
+  };
 }
 
 /** 净化稳定度 */
@@ -140,7 +150,7 @@ interface SaveData {
   };
   tide: TideState;
   contaminants: Contaminant[];
-  defenseSlots: (string | null)[];   // 基础 3 slot（growth_defense_slot 解锁第 4），存 contaminant id 或 null
+  defenseSlots: (string | null)[];   // 新档基础1格，growth_defense_slot每级+1，最多4；实例id/null
   sortieLoadout: (string | null)[];  // 基础 3 slot（growth_sortie_slot 解锁第 4），存 contaminant id 或 null
   growth: GrowthState;
   stability: StabilityState;
@@ -185,7 +195,7 @@ interface SaveData {
 10. **库存（DEC-142）**：净化点统一物件库无负重上限，武器与技能污染物都由 `InventoryStore` 单一持有；`ContaminantSystem` 是技能效果适配器，不再拥有第二份可写 `contaminants[]`。裂隙装备和拾获共同计重，但拾获页只管理战利品，完整合同见 `system-field-inventory.md`。
 
 11. **防御阶段**：
-    - 净化点有 3 个防御 slot（等价，不分方向）。**Slice 5 起槽位数可变**：改造 `growth_defense_slot` 解锁第 4 槽，唯一真相是 `contaminantSystem.getDefenseSlotCount()`，任何地方都不得假定固定为 3
+    - 新档净化点有1个供奉槽，`growth_defense_slot`共3级，每级增加1格，容量1→2→3→4；路线第3/10/18步，费用10/20/35。槽位等价、不分方向。唯一真相是 `contaminantSystem.getDefenseSlotCount()`，界面、库存与防御结算不得写死长度。旧3/4格权益按成长schemaVersion迁移保留，见G组。
     - 玩家在净化点将库中 `stage === 'defense'` 的武器或技能污染物装入同一供奉 slot。武器占槽积累进度但不提供虚构的防御效果
     - 已装备的污染物在每次冲击时：(a) 执行其防御效果，(b) `impactCharges += chargeCost`（一般 1，高潮 3）
     - 本次冲击先完整结算防御效果，再应用一般/高潮及技能附加计数；达到定义阈值时 `stage = 'tool'`，设定定义余次、清槽回库。武器阈值3、余次60/75/90/110，技能沿原定义。跳过的冲击不充能
@@ -214,14 +224,18 @@ interface SaveData {
 
 15d. **库存排序**：按当前库存页所选排序稳定排序；同名物件优先高品质，余次与成熟状态独立展示，不在每帧重排。
 
-### G — 永久改造（迭代29）
+### G — 永久改造（迭代29 R2）
 
-16. **职责**：身体适应为抗性、生命、亲和；装置建设为预兆、供奉扩容及独立加厚；出击扩容改变主动携带位置。具体战术仍由可遗失的污染物承担。无新增货币、职业树、永久视距或永久负重覆盖。
-17. **唯一数据**：`data/upgrades.csv` → `UpgradeDef`；6条轴、17次购买、费用和上限沿各条 `costs`，不使用统一费用阶梯。名称、职责、逐层经历前置同源；预兆 `effectPerLevel=1` 表示信息层，不再是可靠度百分比。3身体轴保持原5/3/4级和原数值，扩容各1级，预兆3级。
-18. **经历与资格**：`GrowthState.progression` version1的4个布尔事实只由真实事件OR写入：实际非豁免冲击、任一真实供奉完成、供奉后揭晓可用污染物、离开有限潮峰。预兆1/2/3层分别需要冲击/供奉完成/离开潮峰；供奉扩容需完成供奉，出击扩容需揭晓可用工具。身体和加厚无经历门槛。旧档缺字段默认未记录；成熟旧工具、已见可用目录、非空供奉回执、已结算实际冲击账本和明确退潮/后续潮位可恢复对应事实，不由余额/稳定度猜成功撤离。开局白板不算。`recordReturn`放在既有基地结算事务内，不发奖励；归来普通拒写保留整帧候选、封锁交互并重试同一候选，购买拒写才恢复前态。
-19. **永久性与交易**：已购等级不因前置缺失而失效；尚未购得的下一层仍检查资格。`purchaseGrowth`在同笔保存中处理薪柴、成长、稳定度和必要库存迁移，成功后才发事件。扩容把原被动末槽移动到新的被动末槽，原ID/余次/品质保留；主动2→3，被动仍1，重量照常计入。供奉3→4，不改变物件来源、充能速度和防御计算。
-20. **效果应用**：`growthSystem.getModifiers()`提供原生命/亲和/抗性；`getLevel('growth_forecast_clarity')`供预告公开层读取。生命上限与搜寻、负重、出击快照沿既有共享入口；亲和按 `max(1,floor((node.value+kindlingAffinity)*storageModifier))` 先加基数再乘储藏。旧在途出击属性不变。预兆第1层准确强度档，第2层增加准确重点，第3层增加三个装置防御前压力，正式合同归 `system-purification-impact`。
-20a. **呈现**：培养藏世界内交互保留实体与无框主从读数。列表只展已购/首层前置满足项，其余合成“尚待经历”并说明真实条件，不捏造未知池子规模；已见项只显示当前和下一层效果。加厚完整代价见净化点spec。报告只陈述已刻入效果，不把下一层当已生效。真实成长而非余额驱动持久外显。
+16. **职责与线性边界**：身体适应为抗性、生命、亲和；装置能力为预兆、供奉扩容及加厚；出击扩容改变主动携带位置。6轴19次刻入＋3次加厚组成固定22步，费用共428薪柴。具体战术仍由可遗失、有限使用的污染物承担，无新增货币、职业树、永久视距或永久负重覆盖。玩家选择何时推进当前项或先修复，不能越步选另一轴。
+17. **数据唯一来源**：`data/upgrades.csv` → `UpgradeDef`拥有六轴名称、职责、效果、费用和总级数；`data/growth-route.csv` → `GrowthRouteStep`唯一拥有顺序、目标级、经历键及短文案、阶段。身体为抗性5级/亲和3级/生命4级；出击扩容1级、供奉扩容3级、预兆3级。`thicken`三档沿现有系统常量12/20/32，由路线安排第7/14/21步，不另开购买入口。路线连续1–22且覆盖全部目标级恰好一次；UI不抄第二套顺序、条件或价格。
+17a. **下一项与完成度**：`getNextStep()`返回按路线顺序最早未达到目标级的条目及当前级/总级/价格/唯一经历，全部达到时返回null；`getRouteProgress()`统计已达到的条目数/22，旧档继承级也按真实能力计。领域购买与`purchaseGrowth`都验证当前身份和资格，充足余额也不能越步；每次交易只完成一项。已有后项继续生效，不自动补齐中间缺项。
+18. **两个经历节点**：`GrowthState.progression` version1仍记录4个真实布尔事实，但只有路线第5步预兆1级需要`impactExperienced`（短文案“承受冲击”），第17步预兆3级需要`crestExperienced`（“抵达退潮”）。实际非豁免冲击才记录前者；真实有限潮峰进入退潮才记录后者。死亡/放弃可以经历冲击或退潮，不冒称成功撤离，也不要求模块无损。预兆2级、供奉扩容、出击扩容、身体及加厚无额外经历门槛；`offeringCompleted`与`toolRevealed`保留事实记录，不控制路线。随机掉落、物件成熟、持有量和填满槽位均不能卡整条路线。
+18a. **事实恢复与事务**：旧缺字段保持未记录；成熟旧工具、已见可用目录、非空供奉回执、已结算实际冲击账本和明确退潮/后续潮位可恢复对应事实，不从余额/稳定度/active的cycle数推断成功。开局白板不算供奉完成。`recordReturn`在既有基地结算事务内OR写入，不发奖励；归来拒写保留整帧候选并封锁交互，重试不重新冲击。节点到达前已经取得的事实直接满足，不要求再做一次。
+19. **永久性与交易**：已购等级不因前置缺失而失效。`purchaseGrowth`同笔处理薪柴、成长、稳定度、预告及必要库存迁移，成功后才发事件；拒写恢复全部相关状态，路线不前进。出击扩容把原被动末槽迁至新被动末槽，原ID/余次/品质保留；主动2→3，被动仍1，重量照常计入。供奉每次+1至4，不改变来源、充能速度、单件防御或次数。加厚同样只在轮到该步骤时可买，不回血且不增加成长稳定度。
+19a. **成长schema与旧容量权益**：新写入`GrowthState.schemaVersion=2`，供奉基础1格＋0–3级。缺schema的合法旧档基础3格＋旧0/1级，迁成新2/3级，保留3/4格、物件ID/槽序/积累；不扣款、不补物、不发稳定度。新档明确写2，不能误走旧迁移。重复读新档不再+2；旧非前缀等级与加厚保留，按最早缺项继续，已满足目标不重复收费。在途旧装备/能力快照保持原承诺。
+20. **效果应用**：`growthSystem.getModifiers()`提供生命/亲和/抗性；预兆等级供公开读取。生命上限与负重、出击快照沿共享入口，成长抗性在统一正向混乱通道只计一次；亲和按 `max(1,floor((node.value+kindlingAffinity)*storageModifier))` 先加基数再乘储藏。旧在途属性不变。预兆第1层准确强度档，第2层增加准确重点，第3层增加三个装置供奉前压力；购买只改变读取，不重抽冲击，正式合同归`system-purification-impact`。
+20a. **呈现**：培养藏世界内交互只呈现当前下一项与只读已获能力；当前级/总级、当前→下一效果、费用/余量、路线进度各自分开展示。至多显示当前项的一个未满足经历，已满足就收起；支出独立，不拼成组合任务。没有后续条目列表、并行轴选择或“尚待经历”总入口。Enter/点击执行同一当前动作，长按不连买；全部完成只保留真实完成态与已有能力。加厚完整代价首屏可读，见净化点spec。真实能力而非余额驱动持久外显。
+20b. **有限规模与验证**：完整路线及阶段因果见[成长设计](../design-notes/purification-growth-renewal.md)，节奏边界见[进度曲线](../content/progression.md)。22步含12次身体数值与3次加厚，不等于22个新玩法；自然1格压力、40薪柴中段峰值、三主动/四供奉长期供给和尾段体验仍待验证。空工具可以出击，无就绪武器沿基地白板替补；不能以随机物件门槛强迫刷取。
 
 ### S — 净化稳定度
 
@@ -274,11 +288,11 @@ interface SaveData {
 | ---- | -- | ---- |
 | 污染物节点/地图 | 2-3 | 裂隙中每次出击可获得 |
 | Rarity 权重 | 60/30/10 | common/fine/rare |
-| 防御 slot 数 | 3（改造后 4） | 净化点；`growth_defense_slot` 解锁第 4 槽 |
+| 供奉槽数 | 1→2→3→4 | 扩容3级；路线第3/10/18步，费用10/20/35 |
 | 出击 slot 数 | 3（改造后 4） | 出击前选装；`growth_sortie_slot` 解锁第 4 槽（3 主动 + 1 被动） |
 | 冲击点转化阈值 | 3 | 一般冲击 1 点，高潮 3 点 |
 | 工具使用次数 | 普通 4-5 / 精良 3 / 稀有 2 | 用完破碎 |
-| 改造 1 级费用 | 8 薪柴 | 递增到 35 |
+| 线性成长费用 | 22步共428薪柴 | 六轴19次364；加厚3档64；不含修复 |
 | 稳定度满值 | 100 | 到达后标记完成 |
 | 主动工具键位 | Q / F | 最多 2 个主动 |
 
@@ -307,13 +321,13 @@ interface SaveData {
 | 情况 | 处理 |
 | ---- | ---- |
 | 防御 slot 为空时冲击 | 该 slot 无减伤，全额打到模块 |
-| 库存中无 tool-stage 污染物 | 出击时 slot 可以为空（少于 3 件或 0 件），不阻止出击 |
+| 库存中无 tool-stage 污染物 | 主动/被动位均可为空，不阻止出击；成长不要求持有工具 |
 | 高潮冲击使 impactCharges 从 0 直接到 3 | 一次即转化，正确。该 slot 立刻空出 |
 | 转化发生在冲击中 | 本次冲击的防御效果仍然生效（先防御后转化） |
 | 改造效果 + 模块效果 + 出击工具叠加 | 乘法叠加：`finalRate = BASE_RATE * moduleCoreMod * growthChaosMod`。加法叠加薪柴：`value = base + growthAffinity`，再乘 `storageModifier` |
 | 存档损坏/版本不匹配 | 提示"存档无法读取"，提供"开始新游戏"选项 |
 | Final Tide 无限 Crest | 游戏不自动结束。玩家可以无限玩下去（但稳定度可能早已到 100%） |
-| 污染物库存膨胀 | 无上限，但每次出击只能带 3 件工具+损耗机制自然控制数量 |
+| 污染物库存膨胀 | 基地无上限；出击基础2主动+1被动，扩容后3主动+1被动，重量与有限次数共同约束 |
 
 ---
 
@@ -323,7 +337,7 @@ interface SaveData {
 | ------ | ---- | ---- |
 | RiftScene | `SortieModifiers`（扩展版：含改造效果+模块效果） | scene data |
 | RiftScene | 出击工具效果（冻结/领域/穿墙等） | ToolSystem API |
-| PurificationScene | TideState + Contaminant[] 库存 + GrowthState + StabilityState | tideSystem / contaminantSystem / growthSystem / stabilityTracker 查询 |
+| PurificationScene / GrowthPanel | 当前路线项、完成数/22、已有能力与等级、潮汐/库存/稳定度 | `growthSystem.getNextStep/getRouteProgress/getLevel/getState`；其余沿各系统查询 |
 | 净化点 HUD | `tideSystem.getState()`（`tideNumber` + `phase`） | 查询；潮汐行展示见规则 22 |
 | ImpactSystem | 防御 slot 内容 + 各污染物效果 | contaminantSystem 查询（实际效果计算在 defense-engine.ts） |
 | HUD | 工具剩余次数 + 冷却状态 | ToolSystem 查询 |
@@ -358,8 +372,8 @@ interface SaveData {
 
 ## 校准问题
 
-- [ ] 潮汐 Tide 1 的 Ebb 期是否足以让玩家买到第一个改造？（需要 8 薪柴余量 × 2 个 Ebb cycle）
-- [ ] 3 个污染物节点/出击是否让防御 slot 维持有续？（每 Tide 约 6-9 cycle = 12-27 个污染物获取机会，3 slot 各需 1 个转化 = 至少 3 个）
+- [ ] 新档1格供奉下，累计26薪柴取得第3步第二格前是否已被维修支出持续卡住？两次经历节点是否只随自然循环满足？
+- [ ] 自然来源、携回成功率与成熟周转能否支持1→4格供奉和第三主动？不以地图节点数或受控满库存代替持续供给证据。
 - [ ] 高潮冲击一次转化是否让 Crest 期防御 slot 快速清空？（是的——这是设计意图：Crest 期是"裸防"考验）
 - [ ] Final Tide 到达时玩家是否有足够工具库存？（取决于前 4 个 Tide 的积累）
 - [ ] 渗透抗性 -20%（满级）+ CORE -30% 叠加后 BASE_RATE 降到 0.5 × 0.7 × 0.8 = 0.28 — 是否让 Final Tide 的出击过于轻松？

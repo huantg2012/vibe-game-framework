@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: code（首归免冲击报告修复）
+last-modified-by: design（迭代29 R2路线、供奉与加厚合同同步）
 last-modified-date: 2026-09-21
 interface-changed: true
 interfaces-with:
@@ -12,11 +12,11 @@ interfaces-with:
   - system-growth-tide              # tide intensity/phase drives impact intensity + boundary shape; contaminant
                                     # defense slots feed the defense phase (slot count is growth-owned, not fixed);
                                     # growth_forecast_clarity sharpens the forecast; SaveManager persists both sides;
-                                    # 加厚不进 upgrades.csv；并进蜕变面板内加厚项（DEC-117）
+                                    # 加厚费用仍为系统常量；thicken进入growth-route.csv同一路线（迭代29 R2）
 exposes:
   - GameState.getModuleEffect(type) / getSortieModifiers()
   - GameState.getStartingChaos()
-  - GameState.getModuleMaxHpTier() / canRaiseModuleMaxHp() / raiseModuleMaxHp()
+  - GameState.getModuleMaxHpTier() / canRaiseModuleMaxHp() / raiseModuleMaxHp()（状态/费用；UI购买经purchaseGrowth与路线资格）
   - GameState.getKindlingReserve() / healModule(id, amount)
   - GameState.getRepairBonusHp() / grantRepairBonus(hp) / getMaxUsefulRepairKindling(hp,maxHp) / previewModuleRepair(hp,maxHp,kindling)
   - SaveManager.allocateToModule(id, amount) -> number（保存失败完整回滚）
@@ -43,9 +43,15 @@ exposes:
 
 # 系统设计：净化点 + 冲击
 
-## 迭代29 · 场所与投入的共同表现合同
+## 迭代29 R2 · 场所与投入的共同表现合同
 
 地面与装置共用三段错缝承载面、埋入检查沟/盖板、短补件和接地关系。六处锚点、碰撞、视野与走动距离保持；这些可走构造不添加出击前强制操作。核心与净化器共享维护结构，北沟接近地面裂隙伤口。供奉保留立环，占用只显示未知包块/承托，公开潮相驱动受压，无身份泄露；培养藏按已购总级0/1–4/5+显示持久接入构件。三模块加厚0–3级表现为地基补层，损伤/运转独立组合。储藏整理开口与侧壁大面，新增层跟随本体接地点排序。共享源与美术边界见 `docs/art/purification-renewal.md`；不把机制通过当审美通过。
+
+### 当前成长路线与供奉容量
+
+`data/growth-route.csv`是22步（六轴19次＋加厚3次）的顺序、目标级与两处经历门槛唯一来源。培养藏只给当前下一项，已获能力只读，等级/总级及完成数/22独立展示；不能绕过路线购买加厚。第5步预兆1级缺经历时显示“承受冲击”，第17步预兆3级显示“抵达退潮”；已满足条件收起，薪柴支出独立。供奉完成与工具揭晓不再控制购买。
+
+新档1格供奉，扩容3级在第3/10/18步变为2/3/4格，不改每件物的防御/成熟速率。成长schemaVersion=2区分新规则；缺版本旧0/1级迁新2/3级，原3/4格、槽内物与进度保留。容量唯一查询为`contaminantSystem.getDefenseSlotCount()`。无就绪武器仍走基地白板替补，空工具/空供奉不阻止出击；完整线性与旧档规则归成长/库存spec。
 
 ### 预告信息层（取代旧概率成长段）
 
@@ -57,7 +63,7 @@ exposes:
 
 ### 加厚的完整代价
 
-加厚仍只提高上限，不免费回血。购买前逐模块显示当前hp/max→原hp/新max，下次起始混乱前后，以及补满全部模块额外至少需要的薪柴。合计用纯函数求一次修复额度分配的最小总费：额度只用在一台的一次有效注入，不能各台重复扣减；实际维修不自动发生。满100/100第一档为100/115，起始混乱0→7，无额外修复额度时三台补满另需12。该预览与实际购买/维修同公式验证。
+加厚只在路线第7/14/21步轮到时可投入；仍只提高上限，不免费回血。购买前逐模块显示当前hp/max→原hp/新max，下次起始混乱前后，以及补满全部模块额外至少需要的薪柴。合计用纯函数求一次修复额度分配的最小总费：额度只用在一台的一次有效注入，不能各台重复扣减；实际维修不自动发生。满100/100第一档为100/115，起始混乱0→7，无额外修复额度时三台补满另需12。该预览与实际购买/维修同公式验证。
 
 > **TL;DR**: 定义裂隙出击之外的"基地环"——净化点场景（可步行、潮汐驱动的动态力场边界、六个交互点）、GameState（内存 + `SaveManager` 持久化）、薪柴分配（修复模块 hp）、冲击结算（返回净化点时按潮汐强度扣模块 hp，经防御槽污染物修正）、非空间冲击预告（目标模块 + 强度档位）、三模块效果反馈到出击参数（核心减混乱增速、储藏加薪柴价值、净化器写起始混乱）、蜕变面板内加厚全局抬模块 maxHp。边界形状由 BoundaryShape 统一提供，被地表纹理、碰撞、可见性、氛围与呼吸层共用。
 
@@ -204,7 +210,7 @@ interface SortieModifiers {
     | 改造祭坛 | 左 3.5 tile | **培养藏卡 A 立缸**（40×42 × 8 帧、6fps；生产默认 DEC-116）。立着、45° 等距，锚点脚底，层与读数桩同层。贴图缺失才回落呼吸圆点 | 打开蜕变面板（`system-growth-tide` G 组）。加厚是该面板内加厚项（U 组 / DEC-117），不是场上另一处 |
 
    同一时刻只对**最近的**可交互点显示提示条；优先级顺序为 CORE → STORAGE → PURIFIER → 防御点 → 改造祭坛 → 裂隙入口。任一面板打开期间提示条隐藏且 E 不再响应。六点同时是边界安全区钳制的约束源（规则 40）。
-3. **交互点的呼吸节奏**：**裂隙入口自 DEC-113 起不再走同心圆呼吸函数**——它是地面裂缝贴花；圆点只作贴图缺失时的回落。**防御点自 DEC-115 起也不再走这个函数**——它是立着的供奉台（卡 I 环）；圈心里那团装填光点是它的活层；圆点只作贴图缺失时的回落。**改造祭坛自 DEC-116 起也不再走这个函数**——它是立着的培养藏（卡 A 立缸）；圆点只作贴图缺失时的回落。呼吸速度有三档：常态 / 玩家靠近 / **待处理高亮**（如有未装配的残渣、可刻入的改造、或下一档加厚费用不超过当前薪柴）。高亮是"这里有事要做"的提示，不是装饰。裂隙入口永不高亮——它始终可用，高亮会变成噪音；改成贴花之后这条仍成立（贴花不做靠近强调）。防御点 / 改造祭坛贴图在时，待处理高亮走提示条，不在装置外再画圈。培养藏在「有可刻入的改造，或下一档加厚费用 ≤ 当前薪柴」时高亮；六卡与三档加厚都加尽后不再因它们高亮。
+3. **交互点的呼吸节奏**：**裂隙入口自 DEC-113 起不再走同心圆呼吸函数**——它是地面裂缝贴花；圆点只作贴图缺失时的回落。**防御点自 DEC-115 起也不再走这个函数**——它是立着的供奉台（卡 I 环）；圈心里那团装填光点是它的活层；圆点只作贴图缺失时的回落。**改造祭坛自 DEC-116 起也不再走这个函数**——它是立着的培养藏（卡 A 立缸）；圆点只作贴图缺失时的回落。呼吸速度有三档：常态 / 玩家靠近 / **待处理高亮**（如有未装配的残渣，或当前成长项资格与薪柴均满足）。高亮是"这里有事要做"的提示，不是装饰。裂隙入口永不高亮——它始终可用，高亮会变成噪音；改成贴花之后这条仍成立（贴花不做靠近强调）。防御点 / 改造祭坛贴图在时，待处理高亮走提示条，不在装置外再画圈。培养藏只在`getNextStep()`返回当前项、该项经历已满足且费用不超过薪柴时提示可刻入/加厚；不能因为某个后项便宜而高亮。22步全部达到后不再因成长高亮。
 4. **边界**：安全区外是虚空，但边界本身不是硬边——从内向外依次是变暗带、teal 膜带、虚空（梯度带定义见 B 组）。边界处有粒子系统：微粒在当前边界外 10-40px 处生成，缓慢向内漂移，越过该角度半径的 50% 或寿命耗尽后重新生成，常驻 `PARTICLE_COUNT` 个。颜色以暗 teal 为主（60%），亮 teal 与灰各占 20%。生成与消亡半径跟随当前边界形状，不是固定圆。
 5. **Apparition**：每 8-15 秒（随机），在当前边界外 40-80px 处出现一个模糊人形轮廓（alpha 0→0.3 淡入 0.5s → 持续 2s → 0.3→0 淡出 0.5s）。不移动，角度随机，生成距离以该角度的边界半径为基准，最多同时 3 个，颜色为暗青灰。纯氛围，无游戏功能。
 6. **视觉基调**：地面为冷蓝灰的程序化石板（中心略暖、向边缘转冷并逐级压暗），ambient 使用 omni 模式；玩家的肩灯是场景中唯一的暖色。
@@ -356,7 +362,7 @@ interface SortieModifiers {
 
 60. **持久化**：旧 `solidifyCounter` / `combustAccumulator` / `echoBonusGranted`仅兼容保留，不驱动当前防御。有限修复额度由GameState拥有，预告由ImpactSystem拥有，统一SaveManager落盘；不将额度绑在已成熟/撤下物件上。
 
-61. **槽数**：基础3、成长解锁第4，上限4。引擎遍历实际传入快照，不写死长度，不先成熟再算效果。
+61. **槽数**：新档基础1，`growth_defense_slot`每级+1、共3级，上限4；旧容量权益按成长schema迁移保留。引擎遍历实际传入快照，不写死长度，不先成熟再算效果。
 
 ### V — 模块受损三态（Slice 5）
 
@@ -374,7 +380,7 @@ interface SortieModifiers {
 
 ### U — 模块上限加厚（Slice 7）
 
-64. **全局抬上限**：蜕变面板内加厚项「加厚」花薪柴永久提高**全部**承血模块的 `maxHp`，不按模块分别升级。档位与费用：
+64. **全局抬上限**：`thicken`在同一22步路线第7/14/21步出现；当前轮到时，蜕变面板动作「加厚」花薪柴永久提高**全部**承血模块的 `maxHp`，不按模块分别升级。档位与费用：
 
     | 已买档 `moduleMaxHpTier` | 全部模块 `maxHp` | 下一档费用（薪柴） |
     | ------------------------ | ---------------- | ------------------ |
@@ -383,9 +389,9 @@ interface SortieModifiers {
     | 2 | 130 | **32** |
     | 3 | 145 | 不可再买 |
 
-    每档 +15。费用对照 `upgrades.csv`：单轴 3 级约 8/12/18、三层信息读取 10/20/30、第 4 槽一次性 35/40。加厚是三模块同涨的血池，略高于单轴蜕变、低于第 4 槽。一趟地图总价值 17（储藏满加成后约 25）；第 1 档 12 ≈ 大半趟保守搜刮，可负担、不白送。费用是系统常量，**不**进 `upgrades.csv`，**不是** `GrowthUpgradeId`。出现在蜕变面板内加厚项，哨兵 id `thicken`（DEC-117）。
+    每档+15。费用仍为既有系统常量12/20/32，不进`upgrades.csv`，不扩`GrowthUpgradeId`；`data/growth-route.csv`以`thicken`纳入同一顺序和资格校验。可负担节奏需按实际搜取、维修与死亡验证，不能从固定地图总价值推断。加厚眼前支出之外的起始混乱变化及补满费用必须首屏披露，不能作为独立可抢购项绕过前置路线。
 65. **存档**：`moduleMaxHpTier` 必须写入存档。`maxHp` 可由档位重算（`MODULE_BASE_MAX_HP + MODULE_MAX_HP_PER_TIER * tier`），存档里的模块 `maxHp` 若与档位不一致，以档位为准并写回。抬档时**当前 hp 不变**（不免费回满）；若出现 hp > 新 maxHp（不应发生）则 clamp。蜕变折扣 `upgradeDiscount` **不**作用于加厚费用。
-66. **稳定度**：加厚不是蜕变刻入，**不计**「购买任意改造升级 +3」。
+66. **稳定度**：加厚虽计入路线22步，仍**不计**成长稳定度奖励；六轴刻入维持每次成功持久化后+1，不借排序改积分。
 67. **玩家可见名**：卡名与动作都叫 **加厚**。禁止「升级」「购买」「确认」「MAX」。世界装置仍是培养藏；走近提示「蜕变」。面板内用词见 UX 组。
 
 ### UX — 全游戏界面重构（迭代 11，DEC-119）
@@ -432,8 +438,8 @@ interface SortieModifiers {
 - 装配无工具时解释供奉充能后转化；工具全部已装时显示“工具已全部装填”。始终明确空槽不阻止踏入，指向底部实际踏入动作，不在错误焦点承诺 Enter 立即出击。
 - 踏入准备固定底栏始终显示可点击“踏入裂隙”及全区有效的 `Shift+Enter`。普通 Enter 继续执行当前焦点的装填/取下/动作；三条踏入路径共用一次执行函数，不要求先切到动作区。
 - `Tab`/`Shift+Tab` 切槽位、库存与动作区；方向键浏览；`Enter`/空格执行当前区域动作；鼠标保留已装填槽点击取下、库存点击自动放入首个兼容空槽。槽满显示原因，不改变装备规则。
-- 蜕变用六个改造与加厚的列表、单项选中详情组织。列表显示名称、现有等级、费用；详情显示当前/上限、已有升级预览、消耗及完成后剩余。不可用写“薪柴不足，还差 N”或“已至上限”；不把所有卡的说明同权平铺。
-- 蜕变保留方向键选择、Enter/空格执行、鼠标点击卡执行，以及关闭动作；加厚仍是同一个面板内的既有动作，不开新确认窗、不改费用/折扣/稳定度机制。
+- 蜕变只呈现当前下一项，已有能力作为只读摘要，不再并列六轴/加厚选购。当前名称、等级/总级、效果变化、薪柴支出/余量与完成数/22分开；缺经历至多一行且满足后收起。纯薪柴不足写实际缺口；全部完成显示完成态。后续项名称、未来条件和旧“尚待经历”总入口不展开。
+- 蜕变以Enter/当前动作点击执行同一`purchaseGrowth`，Esc离开；没有切换轴的方向键提示。一次按下只完成一项，长按/键重复不连买；成功保存后接下一项，拒写保留原项。加厚仍在同一面板，不开新确认窗，费用与不回血/不奖稳定度保持。
 
 本节只约束 UI 表达与已有交互路径，不更改世界装置外观、冲击结算或玩法。完整回归覆盖零资源/可投入、空库存/已装备、满槽、成长不足/满级，以及键鼠切换后的选中详情一致性。
 
@@ -542,8 +548,8 @@ interface SortieModifiers {
 | reserve=0 且三模块 hp=0 | 不强制 game-over。玩家仍可出击：无核心/储藏加成，起始混乱 = 50（最难模式） |
 | 分配面板打开时冲击不会触发 | 冲击只在净化点场景 create 时结算一次，此时任何面板都还没打开 |
 | 加厚后未注入、净化器 100/115 | 起始混乱 = round(50 × (1 − 100/115)) = 7。CORE/STORAGE 效果仍按 min(hp,100)/100 封顶，不降 |
-| 加厚时薪柴不足 | 不扣、不抬档；蜕变第七张写 `还差 N` |
-| 加厚已至第 3 档 | Enter 无效果；卡上写 `已至上限` |
+| 当前路线项是加厚但薪柴不足 | 不扣、不抬档；当前项写 `还差 N` |
+| 加厚已至第3档 | 后续不再出现加厚购买项，只读已有能力保留3/3；路线继续最早未完成项 |
 | 老存档只有两个模块 | 补 PURIFIER 70 / 当前档位 maxHp，`moduleMaxHpTier` 缺省 0 |
 | `combust` 释放时最低 hp 模块已满血 | 修复量按 clamp 到 maxHp 计，多余部分不转移给另一个模块，直接丢弃 |
 | 老存档没有污染物运行时状态字段 | 以空态载入（规则 60），不视为损坏存档 |
@@ -568,7 +574,7 @@ interface SortieModifiers {
 | ChaosSystem | `chaosRateModifier`；开局 `value = startingChaos`（再叠加 `initial_chaos`） | 乘在 BASE_RATE 上；初值一次写入 |
 | LootSearchSystem（迭代 10 前为 LootSystem） | `kindlingValueModifier` | 乘在 node.value 上 |
 | HUD / 结果面板 | `GameState.getKindlingReserve()` / `getModules()` / `getStartingChaos()` | 查询 |
-| GrowthPanel | `GameState.raiseModuleMaxHp()` / `getModuleMaxHpTier()` | 加厚（蜕变第七张） |
+| GrowthPanel | `growthSystem.getNextStep/getRouteProgress()` / `purchaseGrowth(id)`；加厚读`getModuleMaxHpTier()` | 仅当前路线项可刻入/加厚；原子保存与完整预览 |
 | PurificationScene | `ImpactSystem.run(defenseSlots): ImpactResult` | 方法调用（槽位由场景传入，避免系统互相 import） |
 | 净化点 HUD | `ImpactSystem.getForecastDisplay()` / `getForecastLookahead()` | 查询（时机词 + 模块全称 + `SEVERITY_LABEL`；图标/pip 最多第二编码） |
 | PurificationScene | `ImpactSystem.generateForecast(nextIntensity, forecastReliabilityBonus, nextNextIntensity)` | 方法调用（强度与改造等级由场景读取后传入） |
@@ -659,7 +665,7 @@ interface SortieModifiers {
 | `src/systems/defense-engine.ts` | context包含三个模块；按当前逐模块低血减伤与安全伤害转移 |
 | `src/systems/chaos-system.ts` | 构造/reset 接受出击初值（增长曲线不改） |
 | `src/scenes/purification-scene.ts` | 净化器实体；培养藏卡 A；安全区钳制六点 |
-| `src/ui/dom/growth-panel.ts` | 蜕变六卡 + 第七张加厚 |
+| `src/ui/dom/growth-panel.ts` | 当前路线项（含轮到的加厚）＋只读已有能力，等级/总级与22步进度 |
 | `src/ui/dom/allocation-panel.ts` | 净化器效果行 `起始混乱`；机会成本其余两模块 |
 | `src/ui/dom/loadout-panel.ts` | 出击属性加 `起始混乱` 节点 |
 | `src/ui/dom/purification-hud.ts` | 预告目标名含 `净化器` |
@@ -695,5 +701,5 @@ interface SortieModifiers {
 - [ ] **压力主方向现在是否成为唯一被读取的方向信号？** DEC-034 之后预告不再给方向，边界压力可视化独占这一维度——玩家是否真的会去看它，还是方向暗示就此变成无人消费的表现层。
 - [ ] **`abyss` 的"逆风守护"在三模块下是否成立？** 各模块冲击前40%及以下时该模块应读到50%；玩家是否感受到"越危急防御越强"。
 - [ ] **净化器是否被读作"在干活"？** 修满后起始混乱 0、残血带入部分混乱——连续两趟能否不看文档感到差别。
-- [ ] **加厚 12/20/32 是否可负担但不白送？** 若没人买：费用过高或信号不足；若第一档出门就买：可能偏便宜。
+- [ ] **线性第7/14/21步的加厚12/20/32是否合理？** 记录起始混乱暂升、额外修复与路线停滞；不能按自由选购时的购买优先级判断。
 - [ ] **冷却的余烬的承伤修复是否读得清？** 结算是否能解释本轮受损与随后回补，0承伤不会虚构收益。

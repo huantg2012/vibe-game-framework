@@ -288,7 +288,7 @@ function growthDetailHtml(): string {
       const level = growthSystem.getLevel(id);
       body += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${i}">
         <span>${GROWTH_UPGRADE_NAMES[id]}</span>
-        <span>${level}</span>
+        <span>${level} / ${growthSystem.getMaxLevel(id)}</span>
       </div>`;
     });
     body += `</div>`;
@@ -357,6 +357,6 @@ function computeUpgradeInspectHtml(inscribed: GrowthUpgradeId[]): string {
   const name = display?.name ?? GROWTH_UPGRADE_NAMES[id];
   const effect = display?.effectLabel(level, level) ?? '';
   return `<div class="inspect-l1">${name}</div>
-    <div class="inspect-l2"><span>等级</span> <span>${level}</span></div>
+    <div class="inspect-l2"><span>等级</span> <span>${level} / ${growthSystem.getMaxLevel(id)}</span></div>
     <div class="inspect-l3">${effect}</div>`;
 }

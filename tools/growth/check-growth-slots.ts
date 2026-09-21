@@ -45,7 +45,13 @@ function reset(passive = true): void {
   // Controlled prior return evidence; qualification itself has its own C1 gate.
   growthSystem.recordReturn({ impactOccurred: true, offeringCompleted: true, toolRevealed: true, leftFiniteCrest: false });
   tideSystem.reset(); stabilityTracker.reset(); impactSystem.resetForecastState();
-  gameState.addKindling(100);
+  gameState.addKindling(1000);
+  // This suite targets the expansion transaction after the prior authored route nodes.
+  while (growthSystem.getNextStep()?.id !== 'growth_sortie_slot') {
+    const step = growthSystem.getNextStep();
+    assert(step && purchaseGrowth(step.id).ok);
+  }
+  gameState.spendKindling(gameState.getKindlingReserve() - 100);
   const tools: Contaminant[] = [
     { id: 'active-a', type: 'solidify', rarity: 'common', quality: 'ordinary', stage: 'tool', impactCharges: 3, usesRemaining: 2 },
     { id: 'active-b', type: 'delay', rarity: 'common', quality: 'ordinary', stage: 'tool', impactCharges: 3, usesRemaining: 1 },
@@ -204,7 +210,7 @@ check('active and unfinished-return records keep original equipment and bytes un
   }
 });
 
-const out = process.argv[2] ?? 'docs/qa/artifacts/iteration-29/growth-fixes.json';
+const out = process.argv[2] ?? 'docs/qa/artifacts/iteration-29-r2/growth-slots-linear.json';
 mkdirSync(out.slice(0, out.lastIndexOf('/')), { recursive: true });
 writeFileSync(out, JSON.stringify({ iteration: 29, issue: 'R02', verifiedAt: new Date().toISOString(),
   result: 'PASS', method: 'isolated memory storage; real purchaseGrowth, InventoryStore, SaveManager and beginRun',

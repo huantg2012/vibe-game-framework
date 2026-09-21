@@ -59,8 +59,12 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   const phaseLength = data.tide.phase === 'rise' ? tide.riseCycles : data.tide.phase === 'crest' ? tide.crestCycles : tide.ebbCycles;
   const minimumIntensity = data.tide.phase === 'crest' ? tide.peak : data.tide.phase === 'ebb' ? tide.ebbTarget : tide.floor;
   if (data.tide.cycleInPhase >= phaseLength || !runtimeNumber(data.tide.currentIntensity, minimumIntensity - 1e-9, tide.peak + 1e-9)) return false;
-  if (!runtimeRecord(data.growth?.upgrades) || Object.entries(data.growth.upgrades).some(([id, level]) =>
-    !Object.prototype.hasOwnProperty.call(UPGRADE_DATA, id) || !runtimeInteger(level, 0, UPGRADE_DATA[id as keyof typeof UPGRADE_DATA].maxLevel))
+  if (!runtimeRecord(data.growth?.upgrades)
+    || (data.growth.schemaVersion !== undefined && data.growth.schemaVersion !== 2)
+    || Object.entries(data.growth.upgrades).some(([id, level]) =>
+      !Object.prototype.hasOwnProperty.call(UPGRADE_DATA, id)
+      || !runtimeInteger(level, 0, id === 'growth_defense_slot' && data.growth.schemaVersion === undefined
+        ? 1 : UPGRADE_DATA[id as keyof typeof UPGRADE_DATA].maxLevel))
     || !validateGrowthProgressionState(data.growth.progression)
     || !data.stability || !runtimeNumber(data.stability.progress, 0, GAME_CONSTANTS.STABILITY.MAX)
     || typeof data.stability.reached !== 'boolean' || (data.stability.progress === GAME_CONSTANTS.STABILITY.MAX && !data.stability.reached)) return false;
@@ -417,9 +421,15 @@ export const saveManager = {
     gameState.setImpactIntensity(data.tide.currentIntensity);
     impactSystem.loadForecastState(data.impactForecast);
 
-    // Migration is durable immediately; failure leaves the readable V1 record intact.
-    if (data.version === 1 || data.inventory.version === 1 || repairedSlots) {
-      try { storage().setItem(SAVE.KEY, JSON.stringify(collectSave(inventoryStore.getState()))); } catch { /* trySave exposes retry; do not erase old save */ }
+    // Base migrations are durable immediately. An active or unfinished-return
+    // package retains its original bytes until its next complete frame/settlement
+    // commit; that commit includes schema 2 and the unchanged world conditions.
+    // Preserve existing forecasts/checkpoints. Older records without any forecast
+    // still initialize their first one, as the original V1 migration did.
+    if ((!loadedRun || loadedRun.baseSettled) && (data.version === 1 || data.inventory.version === 1
+      || data.growth.schemaVersion === undefined || repairedSlots)) {
+      try { writeRecord(JSON.stringify(attachCheckpoint(collectSave(inventoryStore.getState(), data.impactForecast === undefined)))); }
+      catch { /* trySave exposes retry; do not erase the readable old record */ }
     }
     enableInventoryPersistence();
     eventBus.emit(GameEvent.GAME_LOADED, { cycle: data.cycle });

@@ -6,7 +6,7 @@ import { chromium } from '/Users/yilungao/.cache/codex-runtimes/codex-primary-ru
 import { createJourneyDriver } from './i27-journey-driver.mjs';
 import { createCycleInputs } from './i27-cycle-inputs.mjs';
 import { createEconomyCycle } from './i27-economy-cycle.mjs';
-const out='docs/qa/artifacts/iteration-29/return-journey';fs.mkdirSync(out,{recursive:true});
+const out=process.env.I29_OUT??'docs/qa/artifacts/iteration-29/return-journey';fs.mkdirSync(out,{recursive:true});
 const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
 const context=await browser.newContext({viewport:{width:1440,height:960}}),page=await context.newPage();
 const errors=[],result={method:'fresh newContext; real keys for six hub interactions and two confirmed-abandon returns; no state mutations or balance/extraction claim',interactions:[],returns:[]};

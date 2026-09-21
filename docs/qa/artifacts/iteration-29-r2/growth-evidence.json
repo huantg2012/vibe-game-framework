@@ -1,0 +1,334 @@
+{
+  "iteration": 29,
+  "feature": "COH-F029",
+  "result": "PASS",
+  "verifiedAt": "2026-09-21T03:12:28.029Z",
+  "revision": "working-tree",
+  "method": "real InventoryStore mutations and validation; actual ImpactSystem first/second returns; repeated frozen-input evidence queries",
+  "checkCount": 26,
+  "purityReads": 52,
+  "checks": [
+    {
+      "name": "new empty record proves no experience",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "1179f6203bbd50d8aa047ad7e7d88dd19b21bee2015ccb54fd380f4d4b64274c"
+    },
+    {
+      "name": "large cycle count alone proves no impact or success",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 500,
+      "inventoryHash": "1179f6203bbd50d8aa047ad7e7d88dd19b21bee2015ccb54fd380f4d4b64274c"
+    },
+    {
+      "name": "granted ready starter weapon is not a completed offering",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "65c43cfe4b8e7f3a81a02fc37b039ae059023414d2525479c0029a3f04fe30fb"
+    },
+    {
+      "name": "active ledger never proves a settled impact",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 500,
+      "inventoryHash": "9711705adf26f12bd3f0a0c447a28149e3d29fb8eae3a3f4f1e68ca295073fa6"
+    },
+    {
+      "name": "settled ledger before base settlement proves no impact",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 500,
+      "inventoryHash": "92ab1b37d504c45105dbd479b49e6cc9e37b9618f37099d9cb9e017dd2a0db89"
+    },
+    {
+      "name": "real first return with base receipt remains impact-exempt",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 1,
+      "inventoryHash": "462fa3975e96faa07f1b55ceba1e0704666ff7255e3eb68c4bc671c4acc71b48"
+    },
+    {
+      "name": "real second impact without the base receipt is not yet historical proof",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 2,
+      "inventoryHash": "d53bd5fefb637007cf5e31c7a11b88ee8762c480cda9c968d5af8d17db520d2d"
+    },
+    {
+      "name": "real second return with completed base receipt proves impact",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": true,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 2,
+      "inventoryHash": "4cf1f4f339e8f318203c5cde37ec59ae0ae5e469264a976d607dfad061b4f75c"
+    },
+    {
+      "name": "death with completed base receipt proves impact but no successful-return fact",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": true,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 2,
+      "inventoryHash": "8050ff0129cab1a186c8a8bf2b2fc6b6f1e97e5b68c29cd8af2f78a9d2e6e92a"
+    },
+    {
+      "name": "abandon with completed base receipt proves impact but no successful-return fact",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": true,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 2,
+      "inventoryHash": "9306379f42bcda0f46c6cb2d1d1e60c2aa3213c24312f0455c5619ad6b0d9a89"
+    },
+    {
+      "name": "mature legacy tool proves only usable-tool revelation",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": true,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "8bd8ff9c4ae5c0b9de8bbda3d5e7ac5d31595786a79f64caabce91a30901fea6"
+    },
+    {
+      "name": "unknown catalog active tool proves no offering or revelation",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "edd68db85c0afaed680f0c4993fdeb1ec53e8ced4047fc77705c8b7738066627"
+    },
+    {
+      "name": "empty active offering receipt proves no completion",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "c4c72e449b7bd582d63c37f1e3507ab1fee81c1f7f57ee97e93d97436ac6531f"
+    },
+    {
+      "name": "mature catalog active tool and receipt prove offering and revelation",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": true,
+        "toolRevealed": true,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "352b8124683a5b4452124f811e36fb138a3601430f2ee87eaa1064c9885fb22b"
+    },
+    {
+      "name": "discovered active definition proves both facts after the item is lost",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": true,
+        "toolRevealed": true,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "5820aec3632ba0bd918faf9ee1a8695ab145792601c9eae9b94dd31daf1bd6e2"
+    },
+    {
+      "name": "unknown catalog passive tool proves no offering or revelation",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "4c9b502780931ad3b4df36bd169843ee24b9473e7ddf46a6f0bef7e6face9a04"
+    },
+    {
+      "name": "empty passive offering receipt proves no completion",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "f50170d82b9ee74846cdc30e5f0eeaf942ada15bd76a139debeac6248cd273f9"
+    },
+    {
+      "name": "mature catalog passive tool and receipt prove offering and revelation",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": true,
+        "toolRevealed": true,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "b11e3d76560ffe2e477bd0c5f2278d8f14e35d4dcdee616317a1d3db90c7b78c"
+    },
+    {
+      "name": "discovered passive definition proves both facts after the item is lost",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": true,
+        "toolRevealed": true,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "fe5aaf587438ca419fb8e4d18d379a071c0b0eba2e5c919d192e97c17cf595be"
+    },
+    {
+      "name": "completed inert offering proves completion but never a usable tool",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": true,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "6f9de7e64723b192d62e2044a88bac19f39a25be423e99223ddff18c26d5f873"
+    },
+    {
+      "name": "inert catalog discovery alone does not invent a usable-tool or offering fact",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "b993b8d6012200020226db5159ed8122a6d0c7c1320732c87a0b0dcfeb9a7603"
+    },
+    {
+      "name": "empty historic weapon receipt proves no completion",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "7f2d9cfd988eefe59e1cfc191733c0902061fc8e83094c22f7371835c0fcaaba"
+    },
+    {
+      "name": "nonempty historic weapon receipt proves completion even after item loss",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": true,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "4fd74f37a036dac2280f6b688e25be9663c9f5b809324f4c5bc2e2cd3252a226"
+    },
+    {
+      "name": "entering the first crest does not prove leaving it",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": false
+      },
+      "cycle": 0,
+      "inventoryHash": "1179f6203bbd50d8aa047ad7e7d88dd19b21bee2015ccb54fd380f4d4b64274c"
+    },
+    {
+      "name": "leaving a failed finite crest proves experience without intact-crest success",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": true
+      },
+      "cycle": 0,
+      "inventoryHash": "1179f6203bbd50d8aa047ad7e7d88dd19b21bee2015ccb54fd380f4d4b64274c"
+    },
+    {
+      "name": "later tide proves prior finite-crest experience without success inference",
+      "result": "PASS",
+      "facts": {
+        "impactOccurred": false,
+        "offeringCompleted": false,
+        "toolRevealed": false,
+        "leftFiniteCrest": true
+      },
+      "cycle": 0,
+      "inventoryHash": "1179f6203bbd50d8aa047ad7e7d88dd19b21bee2015ccb54fd380f4d4b64274c"
+    }
+  ],
+  "sourceSha256": {
+    "src/systems/growth-evidence.ts": "b947f8555d789003a5310ad30458db89dba85324fc9670bb8e61d5479413d175",
+    "src/systems/growth-system.ts": "3f3474ebf46c2b8f7524072f5104e6f13fe3207d5253e60c403c0fdd07327426",
+    "src/systems/inventory-store.ts": "8611b0296721c7773bd3ae8574b4cb50c84270bbcf9e7637becadf4b08da450a",
+    "src/systems/contaminant-catalog.ts": "9ed208132afd99cc1e17eb8b9bc10a9bf1cbd59377f111f1e6776b0694e27a4f",
+    "tools/growth/check-growth-evidence.ts": "40d51ae0ae665f2648baefc5953c0477f6a92e0a3b34d1805a8dd8fe1d9c9a4a"
+  },
+  "limitations": [
+    "Controlled automated records; no natural acquisition, browser interaction or player acceptance claimed."
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "date": "2026-09-21",
+  "scope": "Review only; production/CSV/formal player saves unchanged; no commit/push",
+  "report": "docs/qa/growth-sample-review-2026-09-21.md",
+  "findings": {
+    "p2": [
+      "GR-01",
+      "GR-02",
+      "GR-03",
+      "GR-04",
+      "GR-05",
+      "GR-06"
+    ],
+    "p3": [
+      "T-02"
+    ],
+    "notClaimed": [
+      "normal-flow softlock",
+      "long-term economic collapse",
+      "natural player acceptance",
+      "audio or continuous game-feel acceptance"
+    ]
+  },
+  "validation": {
+    "sourceVerification": "review-source-verification.json",
+    "controlledBrowserCases": 3,
+    "existingRegressionGroups": 23,
+    "typecheck": "pass",
+    "reportLinks": "all exist",
+    "gitDiffCheck": "pass",
+    "gameState": {
+      "featureCount": 53,
+      "evidenceCount": 25,
+      "structureErrors": 0,
+      "exitCode": 2,
+      "remainingDrift": [
+        "CLAUDE.md (independent framework change; retained original baseline)"
+      ],
+      "historicalEvidenceChanged": 12,
+      "historicalEvidenceUnversionable": 9,
+      "accessibility": "unreviewed"
+    }
+  },
+  "limits": [
+    "I28 sampling/balance/dynamic-art hold unchanged",
+    "Review recommendations unimplemented",
+    "Prior R2 worktree remains uncommitted"
+  ],
+  "subagentFinalCheck": "Technical reviewer found no material overclaim in synthesized report",
+  "canvas": {
+    "archive": "canvas/growth-sample-review-2026-09-21.canvas.tsx",
+    "validation": "canvas/validation.json",
+    "singleFileTypecheck": "pass",
+    "costData": "matches source",
+    "hostRender": "not verified"
+  }
+}

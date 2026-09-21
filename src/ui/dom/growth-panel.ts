@@ -22,46 +22,39 @@ const UPGRADES = GROWTH_UPGRADE_DISPLAY;
 /** Sentinel id for the thicken card. Not a GrowthUpgradeId. */
 const THICKEN_ID = 'thicken' as const;
 
-const PENDING_ID = 'pending' as const;
 interface GrowthEntry {
-  id: GrowthUpgradeId | typeof THICKEN_ID | typeof PENDING_ID;
-  name: string; level: number; cost: number | null; effect: string;
-  unlocked: boolean; reason: string | null; responsibility: string;
+  id: GrowthUpgradeId | typeof THICKEN_ID;
+  name: string; level: number; maxLevel: number; targetLevel: number;
+  cost: number | null; effect: string; next: boolean;
+  unlocked: boolean; requirement: string; responsibility: string;
 }
 const RESPONSIBILITY: Record<string, string> = {
   body: '身体适应', base: '装置建设', equipment: '出击携带',
 };
-const EXPERIENCE: Record<string, string> = {
-  impactExperienced: '需经历一次实际冲击（初次归来的免伤不计）',
-  offeringCompleted: '需让一个物件完成供奉',
-  toolRevealed: '需在供奉后揭晓一件可携入裂隙的污染物',
-  crestExperienced: '需经历一次潮峰，抵达退潮',
-};
 function entriesForDisplay(): GrowthEntry[] {
+  const next = growthSystem.getNextStep();
   const entries: GrowthEntry[] = [];
-  const pending = new Set<string>();
+  const add = (id: GrowthUpgradeId | typeof THICKEN_ID, isNext: boolean): void => {
+    const thicken = id === THICKEN_ID;
+    const level = thicken ? gameState.getModuleMaxHpTier() : growthSystem.getLevel(id);
+    const maxLevel = thicken ? GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_TIERS : growthSystem.getMaxLevel(id);
+    const display = UPGRADES.find(upgrade => upgrade.id === id);
+    const definition = thicken ? null : growthSystem.getUpgradeDefinition(id);
+    const maxHp = gameState.getModuleMaxHp();
+    entries.push({ id, name: definition?.name ?? '加厚', level, maxLevel,
+      targetLevel: isNext ? next!.level : level, next: isNext,
+      cost: isNext ? next!.cost : null, unlocked: isNext && next!.unlocked,
+      requirement: isNext ? next!.requirementText : '',
+      // Owned entries only describe existing effects, never another future node.
+      effect: thicken ? thickenEffectHtml(maxHp, isNext ? maxHp + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER : null, !isNext)
+        : display!.effectLabel(level, isNext ? maxLevel : level),
+      responsibility: RESPONSIBILITY[definition?.responsibility ?? 'base'] ?? '' });
+  };
+  if (next) add(next.id, true);
   for (const upgrade of UPGRADES) {
-    const availability = growthSystem.getAvailability(upgrade.id);
-    if (!availability.visible) {
-      if (availability.reason) pending.add(EXPERIENCE[availability.reason] ?? availability.reason);
-      continue;
-    }
-    const level = growthSystem.getLevel(upgrade.id);
-    const maxLevel = growthSystem.getMaxLevel(upgrade.id);
-    const definition = growthSystem.getUpgradeDefinition(upgrade.id);
-    entries.push({ id: upgrade.id, name: definition.name, level,
-      cost: level >= maxLevel ? null : growthSystem.getCost(upgrade.id),
-      effect: upgrade.effectLabel(level, maxLevel), unlocked: availability.unlocked,
-      reason: availability.reason ? EXPERIENCE[availability.reason] ?? availability.reason : null,
-      responsibility: RESPONSIBILITY[definition.responsibility] ?? '' });
+    if (growthSystem.getLevel(upgrade.id) > 0) add(upgrade.id, false);
   }
-  const max = gameState.getModuleMaxHp();
-  const cost = gameState.getNextModuleMaxHpCost();
-  entries.push({ id: THICKEN_ID, name: '加厚', level: gameState.getModuleMaxHpTier(), cost,
-    effect: thickenEffectHtml(max, cost === null ? null : max + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER, cost === null),
-    unlocked: cost !== null, reason: null, responsibility: '装置建设' });
-  if (pending.size) entries.push({ id: PENDING_ID, name: '尚待经历', level: 0, cost: null,
-    effect: [...pending].join('；'), unlocked: false, reason: '真实经历会让新的改造可被辨认。', responsibility: '未展开' });
+  if (gameState.getModuleMaxHpTier() > 0) add(THICKEN_ID, false);
   return entries;
 }
 
@@ -162,7 +155,7 @@ function onKeyDown(e: KeyboardEvent): void {
   if (e.key === 'Enter' || e.key === ' ') {
     e.stopPropagation();
     e.preventDefault();
-    commitSelectedCard();
+    if (!e.repeat) commitSelectedCard();
   }
 }
 
@@ -170,11 +163,12 @@ function commitSelectedCard(): void {
   const selected = entriesForDisplay()[cursorCard];
   if (!selected || !selected.unlocked) return;
   if (selected.id === THICKEN_ID) purchaseThicken();
-  else if (selected.id !== PENDING_ID) purchaseCard(selected.id);
+  else purchaseCard(selected.id);
 }
 
 function thickenSelected(): boolean {
-  return entriesForDisplay()[cursorCard]?.id === THICKEN_ID;
+  const selected = entriesForDisplay()[cursorCard];
+  return selected?.id === THICKEN_ID && selected.next;
 }
 
 // ---------------------------------------------------------------------------
@@ -205,27 +199,32 @@ function render(selectionOnly = false, revealSelection = false): void {
   const entries = entriesForDisplay();
   cursorCard = Math.min(cursorCard, entries.length - 1);
   const selected = entries[cursorCard]!;
-  const isPending = selected.id === PENDING_ID;
+  const progress = growthSystem.getRouteProgress();
   const available = selected.unlocked && selected.cost !== null && reserve >= selected.cost;
-  const reason = isPending ? selected.reason : selected.cost === null ? '已至上限。'
-    : !selected.unlocked ? selected.reason : available ? '消耗薪柴后永久生效。'
-    : `薪柴不足，还差 ${selected.cost - reserve}。`;
-  const list = entries.map((entry, index) => `<div class="upgrade-card${index === cursorCard ? ' card-selected' : ''}${entry.id === PENDING_ID ? ' card-locked' : entry.cost === null ? ' card-maxed' : !entry.unlocked ? ' card-locked' : entry.cost > reserve ? ' card-locked' : ''}" data-id="${entry.id}">
-    <div class="card-body"><div class="card-name">${entry.name}</div><div class="readout-note">${entry.id === PENDING_ID ? '随经历展开' : entry.level > 0 ? `已刻入 ${entry.level}${entry.cost === null ? ' · 已至上限' : ''}` : entry.responsibility}</div></div>
+  const reason = !selected.next ? (selected.level === selected.maxLevel ? '已至上限。' : '已永久生效。')
+    : !selected.unlocked ? '' : available ? '消耗薪柴后永久生效。'
+    : `薪柴不足，还差 ${selected.cost! - reserve}。`;
+  const list = entries.map((entry, index) => `${index === 0 && entry.next ? '<div class="readout-section">下一次蜕变</div>' : index === (entries[0]?.next ? 1 : 0) ? '<div class="readout-section">已刻入</div>' : ''}
+    <div class="upgrade-card${index === cursorCard ? ' card-selected' : ''}${!entry.next ? ' card-maxed' : !entry.unlocked || entry.cost! > reserve ? ' card-locked' : ''}"
+      data-id="${entry.id}" data-growth-next="${entry.next}">
+    <div class="card-body"><div class="card-name">${entry.name}</div><div class="readout-note">${entry.next ? '刻入' : '等级'} ${entry.targetLevel} / ${entry.maxLevel}${entry.next ? ` · ${entry.unlocked ? entry.cost! <= reserve ? '可刻入' : '薪柴不足' : '尚待经历'}` : ''}</div></div>
     ${entry.cost !== null ? `<div class="card-cost">${entry.cost}<span class="readout-label"> 薪柴</span></div>` : ''}
   </div>`).join('');
   const html = `<div class="panel-heading"><div class="panel-title">蜕变</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>
+    <div class="readout-note" data-growth-progress>已刻入 ${progress.completed} / ${progress.total}${progress.completed === progress.total ? ' · 全部完成' : ''}<span data-growth-feedback style="float:right;color:#b29a73;"></span></div>
     <div class="decision-layout"><div class="decision-main scroll-area readout-list">${list}</div>
       <div class="decision-aside readout-detail"><div class="readout-section">${selected.responsibility} · ${selected.name}</div>
-        ${isPending || thickenSelected() ? '' : `<div class="readout-hero"><span class="readout-label">已刻入等级</span><span class="readout-value">${selected.level}</span></div>`}
-        <div class="readout-copy">${selected.effect}</div><div class="separator"></div>
+        <div class="stat-row"><span class="readout-label">${selected.next ? '本次等级' : '当前等级'}</span><span>${selected.next ? `${selected.level} → ${selected.targetLevel}` : selected.level} / ${selected.maxLevel}</span></div>
+        <div class="readout-copy">${selected.effect}</div>
+        ${selected.requirement && !selected.unlocked ? `<p class="readout-note" data-growth-requirement>尚待经历 · ${selected.requirement}</p>` : ''}
+        ${thickenSelected() ? '' : '<div class="separator"></div>'}
         ${selected.cost === null ? '' : `<div class="stat-row"><span class="readout-label">本次消耗</span><span class="readout-value">${selected.cost}</span><span>薪柴</span></div>`}
         ${available ? `<div class="readout-note">完成后剩余 ${reserve - selected.cost!} 薪柴</div>` : ''}
-        ${thickenSelected() && available ? '' : `<p class="readout-note">${reason}</p>`}
+        ${thickenSelected() && available || !reason ? '' : `<p class="readout-note">${reason}</p>`}
         ${thickenSelected() ? thickenConsequencesHtml() : ''}
       </div></div>
     <div class="key-hint-bar"><span><span class="key">↑ ↓</span> 选择</span>
-      ${available ? `<span id="growth-confirm-btn"><span class="key">Enter</span> ${thickenSelected() ? '加厚' : '刻入'}</span>` : `<span>${isPending || !selected.unlocked && selected.cost !== null ? '尚待经历' : selected.cost === null ? '已至上限' : '薪柴不足'}</span>`}
+      ${available ? `<span id="growth-confirm-btn"><span class="key">Enter</span> ${thickenSelected() ? '加厚' : '刻入'}</span>` : `<span>${!selected.next ? '已刻入' : !selected.unlocked ? '尚待经历' : '薪柴不足'}</span>`}
       <span id="growth-close-btn"><span class="key">Esc</span> 离开</span></div>`;
   renderPanelContent(panel, html, selectionOnly);
   if (revealSelection) scrollFocusedIntoView(panel);
@@ -262,6 +261,7 @@ function wireEvents(selectionOnly = false): void {
 function purchaseCard(id: GrowthUpgradeId): void {
   const result = purchaseGrowth(id);
   if (result.ok) {
+    cursorCard = 0;
     render();
     showPurchaseFlash(GROWTH_UPGRADE_NAMES[id], result.newLevel, '级');
     checkFirstGrowthMilestone(id, result.newLevel);
@@ -276,8 +276,9 @@ function purchaseThicken(): void {
     showPurchaseFailure(result);
     return;
   }
+  cursorCard = 0;
   render();
-  showPurchaseFlash('加厚', result.newLevel, '档');
+  showPurchaseFlash('加厚', result.newLevel, '级');
 }
 
 function showPurchaseFailure(result: Extract<GrowthPurchaseResult, { ok: false }>): void {
@@ -293,28 +294,11 @@ function showPurchaseFailure(result: Extract<GrowthPurchaseResult, { ok: false }
 
 function showPurchaseFlash(name: string, newLevel: number, unit: '级' | '档'): void {
   if (!panel) return;
-
-  if (!document.getElementById('growth-flash-style')) {
-    const style = document.createElement('style');
-    style.id = 'growth-flash-style';
-    // Purchase = kindling spent on a permanent gain — human-side positive feedback
-    // uses the warm palette, never green (ui-art-overhaul.md A2/A6).
-    style.textContent = `@keyframes growth-flash { 0%{opacity:1;color:#e0a848;} 100%{opacity:0;} }`;
-    document.head.appendChild(style);
-  }
-
-  const flash = document.createElement('div');
-  flash.style.cssText = 'font-size:12px;color:#b29a73;text-align:center;padding:4px;animation:growth-flash 2s ease-out forwards;';
-  flash.textContent = `${name} → 第${newLevel}${unit}`;
-
-  const heading = panel.querySelector('.panel-heading');
-  if (heading) {
-    heading.after(flash);
-  } else {
-    panel.prepend(flash);
-  }
-
-  setTimeout(() => flash.remove(), 2000);
+  // Transient feedback must not push the next action or thickening costs down.
+  const feedback = panel.querySelector('[data-growth-feedback]');
+  if (!feedback) return;
+  feedback.textContent = `${name} · ${newLevel} ${unit} 已刻入`;
+  setTimeout(() => { feedback.textContent = ''; }, 2000);
 }
 
 // ---------------------------------------------------------------------------
@@ -333,7 +317,5 @@ function checkFirstGrowthMilestone(id: GrowthUpgradeId, newLevel: number): void 
 
   try { localStorage.setItem('coh_first_growth_done', '1'); } catch { return; }
 
-  // C6: migrated onto the shared `.toast-stamp` primitive (was a hand-rolled overlay
-  // with an equivalent but independently-maintained dismiss-on-click/key/timeout).
-  setTimeout(() => showToastStamp('已刻入'), 300);
+  // The same quiet result line also marks the first purchase; no second blocking toast.
 }

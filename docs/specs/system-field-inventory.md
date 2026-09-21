@@ -4,18 +4,23 @@ phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
 last-modified-date: 2026-09-21
+last-modified-by: design（迭代29 R2供奉容量与旧档合同同步）
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes]
-exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger]
+exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, inventoryStore.reconcileExpandedToolSlots(previousSlotCount)]
 interface-changed: true
 note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入正式随机2D。旧active或损坏世界包只在基地/库存有效且玩家明确确认后安全弃局；不删除全档。
 ---
 
 
-## 迭代29 · 扩槽购买与被动迁移
+## 迭代29 R2 · 线性扩槽、容量权益与被动迁移
 
-出击扩容购买与库存候选在同笔保存中发布：原三槽 `[主动A,主动B,被动P]` → `[主动A,主动B,空,被动P]`，被动身份、品质与余次保持；空槽补齐有效容量。`inventoryStore.reconcileExpandedToolSlots(previousSlotCount)`仅把旧末槽确认为被动、且新末槽为空的对象迁移，目标占用时拒绝，不能静默丢物。`saveManager.trySaveBaseInventoryFrame()`保存完整基地状态+库存候选，拒写先还原成长/薪柴/稳定度再取消库存候选，不发布中间成功。
+出击扩容为`data/growth-route.csv`第12步，只有当前路线项可购买，不要求揭晓或拥有工具。购买与库存候选在同笔保存中发布：原三槽 `[主动A,主动B,被动P]` → `[主动A,主动B,空,被动P]`，被动身份、品质与余次保持；空槽补齐有效容量。`inventoryStore.reconcileExpandedToolSlots(previousSlotCount)`仅把旧末槽确认为被动、且新末槽为空的对象迁移，目标占用时拒绝，不能静默丢物。`saveManager.trySaveBaseInventoryFrame()`保存完整基地状态+库存候选，拒写先还原成长/薪柴/稳定度再取消库存候选，不发布中间成功。
 
-已买扩容的旧基地档在无run或baseSettled时保守修复相同错位；active和未结算归来包保持原引用，不能改变在途技能槽。成长经历从既有发现/供奉回执读取，仅影响未购改造资格，不清空未知身份或增加余次。四供奉槽维持最后一轮防御→成熟→回库、无新增补给。
+已买扩容的旧基地档在无run或baseSettled时保守修复相同错位；active和未结算归来包保持原引用，不能改变在途技能槽。既有发现/供奉回执仍可恢复成长经历记录，但`offeringCompleted/toolRevealed`不再控制购买，不清空未知身份或增加余次。
+
+新档供奉为1格，`growth_defense_slot`共3级，路线第3/10/18步分别以10/20/35薪柴变为2/3/4格。所有放入/取下校验、槽位UI与防御快照使用同一动态容量。容量增加不赠送物件、成熟点或余次，最后一轮仍先防御→成熟→回库→清槽。
+
+容量规则由`GrowthState.schemaVersion`区分，和库存schema不是同一个版本。新成长写2；缺版本的合法旧成长0/1级投影为新2/3级，保留原3/4格权益及全部实例、槽序、积累。不得截短槽数组丢物，重复读新版本不再补级。原成长更后等级和加厚仍生效；最早未达目标步骤继续，已满足步骤不重复收费。
 
 ## 迭代28 · 鉴定目录与整趟被动（DEC-174）
 
@@ -47,9 +52,9 @@ InventoryStore是唯一物品及装配引用所有者。物品仍区分weapon和
 
 ## 2. 供奉共用槽与冲击顺序
 
-沿用净化点供奉台和已有槽数/成长扩槽。两类未成熟物品均可供奉，取下保留进度。成熟物品不可再次供奉补次数。
+新档净化点供奉台容量1格，沿成长路线每次+1至4，权威查询为`contaminantSystem.getDefenseSlotCount()`。两类未成熟物品均可供奉，取下保留进度，空置不充能。成熟物品不可再次供奉补次数；无物可放或槽空均不阻止出击。
 
-武器仅承受冲击完成供奉，不新增装置防御收益。技能污染物按当前CSV执行13族供奉反应；回声空壳自身积累倍率保留，旧侵蚀跨槽充能等退休机制移除；武器不会得到技能防御收益。有限修复与挣得预告规则归供奉冲击spec。
+武器仅承受冲击完成供奉，不新增装置防御收益。新目录技能污染物按`contaminant-offerings.csv`执行独立反应；旧13族按各自兼容定义执行，回声空壳自身积累倍率保留，旧侵蚀跨槽充能等退休机制移除；武器不会得到技能防御收益。有限修复与挣得预告规则归供奉冲击spec。
 
 沿用现有计数：一般冲击+1，高潮+3；污染物另乘自身倍率。武器阈值由weapon-qualities.csv指定，首版均3。界面称“供奉进度/冲击计数”，不将加权计数误称实际遭遇次数。
 
@@ -127,7 +132,7 @@ Tab/Esc收起，Esc先取消交换草稿；移动意图退出并交回移动，�
 
 ## 8. Schema、迁移与验收
 
-外层SaveDataV2保留，inventory内部schema升级2。旧inventory v1武器缺生命周期时，一次性迁为就绪且满初始余次，保留ID/位置/装备/账本；这是兼容补偿，重复读取不补满。已有污染物供奉进度/剩余次数原样保留。新v2武器缺字段、非法次数、未知定义或引用矛盾应拒绝加载，不以默认值暗自解锁。
+外层SaveDataV2保留；当前catalog库存内部schema为3（迭代19首次加入武器生命周期时为2）。旧inventory v1武器缺生命周期时，一次性迁为就绪且满初始余次，保留ID/位置/装备/账本；这是兼容补偿，重复读取不补满。已有污染物供奉进度/剩余次数原样保留。含生命周期合同的新v2/v3武器缺字段、非法次数、未知定义或引用矛盾应拒绝加载，不以默认值暗自解锁。
 
 领域统一入口：getEquipmentLifecycle、getOfferingItems、slotOffering、finishOfferingImpact、prepareWeapon/Tool、beginRun、consumeEquipmentUse、reveal/take/drop/exchange/settleRun。旧污染物服务仅投影/派生，不另存第二套实例。
 

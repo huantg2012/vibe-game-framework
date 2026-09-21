@@ -1,0 +1,20 @@
+{
+  "iteration": 29,
+  "verifiedAt": "2026-09-21T03:29:48.610Z",
+  "result": "PASS",
+  "method": "isolated memory storage; production purchases, save manager and procedural recovery admission with recorded formal world",
+  "checks": [
+    "new record starts at one slot; real linear purchases expand it exactly 1→2→3→4",
+    "rejected expansion saves restore exact capacity, items, reserve and growth before a successful retry",
+    "legacy base 3/4 slots migrate once to schema 2 levels 2/3, keeping weapon and contaminant references",
+    "legacy V1 and missing defense field retain the original three slots without creating purchases or rewards",
+    "a rejected legacy-base migration leaves old bytes intact and repeated loads/retry never add capacity twice",
+    "old active world loads unchanged, then a complete frame commits schema 2 and survives denywrite/reload",
+    "old departure intent preserves frozen modifiers and equipment while its next save adopts schema 2",
+    "an unfinished old return keeps its receipt until base settlement, then saves migration and settlement together",
+    "unsupported schemas and malformed levels reject before live state or stored bytes change"
+  ],
+  "limitations": [
+    "No player visual acceptance or browser input is claimed."
+  ]
+}

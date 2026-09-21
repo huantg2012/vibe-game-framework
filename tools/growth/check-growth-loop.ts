@@ -25,7 +25,10 @@ const snapshot=()=>({game:gameState.getState(),growth:growthSystem.getState(),st
 let purchaseEvents=0, stabilityEvents=0;
 eventBus.on(GameEvent.GROWTH_PURCHASED,()=>purchaseEvents++);eventBus.on(GameEvent.STABILITY_CHANGED,()=>stabilityEvents++);
 for (const id of ['growth_vitality','thicken'] as const) {
- reset(); gameState.addKindling(100); saveManager.save(); const before=snapshot(), bytes=records.get(GAME_CONSTANTS.SAVE.KEY), pe=purchaseEvents,se=stabilityEvents;
+ reset(); gameState.addKindling(1000);
+ growthSystem.recordReturn({impactOccurred:true,offeringCompleted:true,toolRevealed:true,leftFiniteCrest:true});
+ while (growthSystem.getNextStep()?.id !== id) { const step=growthSystem.getNextStep(); assert(step && purchaseGrowth(step.id).ok); }
+ gameState.spendKindling(gameState.getKindlingReserve()-100);stabilityTracker.reset();saveManager.save(); const before=snapshot(), bytes=records.get(GAME_CONSTANTS.SAVE.KEY), pe=purchaseEvents,se=stabilityEvents;
  fail=true; assert.deepEqual(purchaseGrowth(id),{ok:false,reason:'storage-failed'}); assert.deepEqual(snapshot(),before); assert.equal(records.get(GAME_CONSTANTS.SAVE.KEY),bytes); assert.equal(purchaseEvents,pe);assert.equal(stabilityEvents,se);
  fail=false; const result=purchaseGrowth(id); assert(result.ok); assert.equal(purchaseEvents,pe+1); assert.equal(gameState.getKindlingReserve(),100-result.spent);assert(saveManager.load());assert.equal(gameState.getKindlingReserve(),100-result.spent);
  assert.equal(stabilityTracker.getProgress(),id==='thicken'?0:1);
@@ -40,7 +43,7 @@ console.log('PASS base purchases reject active and not-yet-base-settled runs wit
 const graphic:any = new Proxy({}, {get:()=>()=>graphic});
 const image:any = new Proxy({}, {get:()=>()=>image});
 for(const level of [0,1,2,4]) {
- reset(); gameState.addKindling(1000); for(let n=0;n<level;n++)assert(purchaseGrowth('growth_vitality').ok);
+ reset(); const growth=growthSystem.getState(); growth.upgrades.growth_vitality=level; growthSystem.loadState(growth);
  const fixture=createNativeRecoveryFixture();
  const max=100+growthSystem.getModifiers().vitalityBonus;
  const combat=new CombatSystem(); combat.create({add:{graphics:()=>graphic,image:()=>image},textures:{remove(){},createCanvas:(key:string)=>({key,destroy(){}})}} as never,

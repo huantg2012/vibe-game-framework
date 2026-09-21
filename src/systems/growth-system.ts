@@ -13,7 +13,10 @@
  * Spec: docs/specs/system-growth-tide.md, section G (rules G16-G20).
  */
 
+import { GAME_CONSTANTS } from '@/config/constants';
 import { eventBus } from '@/core/event-bus';
+import { GROWTH_ROUTE_DATA } from '@/generated/growth-route-data';
+import type { GrowthRouteStep, GrowthRouteUnit } from '@/generated/growth-route-data';
 import { UPGRADE_DATA } from '@/generated/upgrade-data';
 import type { GrowthUnlockRequirement, UpgradeDef } from '@/generated/upgrade-data';
 import { gameState } from '@/managers/game-state';
@@ -33,6 +36,27 @@ export interface GrowthAvailability {
   /** Missing experience key. Affordability and max level are separate UI states. */
   readonly reason: Exclude<GrowthUnlockRequirement, 'none'> | null;
   readonly nextLevel: number | null;
+}
+
+export type { GrowthRouteUnit } from '@/generated/growth-route-data';
+
+/** Public projection contains only the current step, never later names or conditions. */
+export interface GrowthRouteStepView {
+  readonly id: GrowthRouteUnit;
+  readonly level: number;
+  readonly maxLevel: number;
+  readonly currentLevel: number;
+  readonly order: number;
+  readonly phase: string;
+  readonly requirement: GrowthUnlockRequirement;
+  readonly requirementText: string;
+  readonly unlocked: boolean;
+  readonly cost: number;
+}
+
+export interface GrowthRouteProgress {
+  readonly completed: number;
+  readonly total: number;
 }
 
 /** All upgrade ids, in CSV row order. Single source of truth for "which axes exist". */
@@ -90,8 +114,16 @@ function getEffectTotal(id: GrowthUpgradeId): number {
   return upgrades[id] * getUpgradeConfig(id).effectPerLevel;
 }
 
-function hasRequirement(requirement: GrowthUnlockRequirement | undefined): boolean {
-  return requirement === 'none' || (requirement !== undefined && progression[requirement]);
+function hasRequirement(requirement: GrowthUnlockRequirement): boolean {
+  return requirement === 'none' || progression[requirement];
+}
+
+function getRouteUnitLevel(unit: GrowthRouteUnit): number {
+  return unit === 'thicken' ? gameState.getModuleMaxHpTier() : upgrades[unit];
+}
+
+function getNextRouteStep(): GrowthRouteStep | undefined {
+  return GROWTH_ROUTE_DATA.find(step => getRouteUnitLevel(step.unit) < step.level);
 }
 
 // ---------------------------------------------------------------------------
@@ -108,17 +140,45 @@ export const growthSystem = {
     return getUpgradeConfig(id);
   },
 
-  /** Experiences qualify only the next purchase, never an already-purchased effect. */
+  /** Existing purchases skip route nodes; neither their benefits nor old saves are revoked. */
+  getNextStep(): GrowthRouteStepView | null {
+    const step = getNextRouteStep();
+    if (!step) return null;
+    const thicken = step.unit === 'thicken';
+    return {
+      id: step.unit,
+      level: step.level,
+      maxLevel: thicken ? GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_TIERS : getUpgradeConfig(step.unit).maxLevel,
+      currentLevel: getRouteUnitLevel(step.unit),
+      order: step.order,
+      phase: step.phase,
+      requirement: step.requirement,
+      requirementText: step.requirementText,
+      unlocked: hasRequirement(step.requirement),
+      cost: thicken ? gameState.getNextModuleMaxHpCost() ?? Infinity : growthSystem.getCost(step.unit),
+    };
+  },
+
+  getRouteProgress(): GrowthRouteProgress {
+    let completed = 0;
+    for (const step of GROWTH_ROUTE_DATA) {
+      if (getRouteUnitLevel(step.unit) >= step.level) completed++;
+    }
+    return { completed, total: GROWTH_ROUTE_DATA.length };
+  },
+
+  /** Only the first unpurchased route node can be bought, regardless of available money. */
   getAvailability(id: GrowthUpgradeId): GrowthAvailability {
     const config = getUpgradeConfig(id);
     const currentLevel = upgrades[id];
     const maxed = currentLevel >= config.maxLevel;
-    const requirement = maxed ? undefined : config.unlocks[currentLevel];
-    const unlocked = !maxed && hasRequirement(requirement);
+    const next = getNextRouteStep();
+    const current = next?.unit === id;
+    const unlocked = current && hasRequirement(next.requirement);
     return {
-      visible: currentLevel > 0 || hasRequirement(config.unlocks[0]),
+      visible: currentLevel > 0 || current,
       unlocked,
-      reason: !maxed && !unlocked && requirement !== undefined && requirement !== 'none' ? requirement : null,
+      reason: current && !unlocked && next.requirement !== 'none' ? next.requirement : null,
       nextLevel: maxed ? null : currentLevel + 1,
     };
   },
@@ -196,8 +256,9 @@ export const growthSystem = {
   },
 
   /**
-   * Slot-count bonuses (Slice 5 T5). Both upgrades are maxLevel 1, so these are 0 or 1 —
-   * consumed by contaminantSystem to compute effective slot counts. Kept as dedicated
+   * Slot-count bonuses consumed by contaminantSystem to compute effective counts.
+   * Offering capacity grows from 1 to 4; sortie capacity has one extra active slot.
+   * Kept as dedicated
    * methods (rather than folded into getModifiers()) because they are slot-capacity
    * facts, not sortie stat modifiers.
    */
@@ -211,7 +272,7 @@ export const growthSystem = {
 
   /** Serialize current state for saving. */
   getState(): GrowthState {
-    return { upgrades: { ...upgrades }, progression: { ...progression } };
+    return { schemaVersion: 2, upgrades: { ...upgrades }, progression: { ...progression } };
   },
 
   /**
@@ -221,6 +282,8 @@ export const growthSystem = {
    */
   loadState(saved: GrowthState): void {
     upgrades = { ...createInitialUpgrades(), ...saved.upgrades };
+    // Legacy base 3 + purchased 0/1 becomes base 1 + purchased 2/3, exactly once.
+    if (saved.schemaVersion === undefined) upgrades.growth_defense_slot += 2;
     progression = normalizeProgression(saved.progression);
   },
 

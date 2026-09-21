@@ -85,7 +85,7 @@ function syncResonateBonus(): void {
   gameState.setResonateBonusActive(active);
 }
 
-/** Effective defense slot count: base + growth_defense_slot bonus (0 or 1). */
+/** Effective defense slot count: one base slot plus three purchased expansions. */
 function computeDefenseSlotCount(): number {
   return CN.DEFENSE_SLOTS + growthSystem.getDefenseSlotBonus();
 }
@@ -120,7 +120,7 @@ export const contaminantSystem = {
     return inventoryStore.getItems().flatMap(item => item.kind === 'contaminant' && item.location.kind !== 'ground' ? [item.contaminant] : []);
   },
 
-  /** Effective number of defense slots (base 3 + growth_defense_slot bonus). */
+  /** Effective number of defense slots (base 1 + growth_defense_slot bonus). */
   getDefenseSlotCount(): number {
     return computeDefenseSlotCount();
   },

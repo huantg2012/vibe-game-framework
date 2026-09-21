@@ -242,6 +242,7 @@ function render(selectionOnly = false, revealSelection = false): void {
   let html = `<div class="panel-heading"><div class="panel-title">供奉</div><div class="panel-reserve"><span>薪柴</span><strong>${gameState.getKindlingReserve()}</strong></div></div>`;
 
   html += `<div class="decision-layout"><div class="decision-main scroll-area"><div class="panel-fixed">`;
+  html += `<div class="readout-section">供奉容量 ${slots.length} / ${GAME_CONSTANTS.CONTAMINANT.MAX_DEFENSE_SLOTS}</div>`;
   html += `<div class="slot-grid" style="grid-template-columns:repeat(${slots.length},minmax(0,1fr));">`;
   for (let i = 0; i < slots.length; i++) {
     const c = slots[i];

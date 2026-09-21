@@ -218,6 +218,8 @@ export interface GrowthProgressionState {
 
 /** Persistent growth state */
 export interface GrowthState {
+  /** Missing means the original 3-slot base; version 2 uses a 1-slot base. */
+  schemaVersion?: 2;
   /** upgradeId -> current level (0 = not purchased) */
   upgrades: Record<GrowthUpgradeId, number>;
   /** Older saves have no experience record; purchased levels remain effective. */

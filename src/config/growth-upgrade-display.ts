@@ -7,6 +7,7 @@
  * never hand-duplicated numbers.
  */
 
+import { GAME_CONSTANTS } from '@/config/constants';
 import { UPGRADE_DATA } from '@/generated/upgrade-data';
 import type { GrowthUpgradeId } from '@/types/game-types';
 
@@ -82,7 +83,11 @@ export const GROWTH_UPGRADE_DISPLAY: GrowthUpgradeDisplay[] = [
     id: 'growth_defense_slot',
     name: UPGRADE_DATA.growth_defense_slot.name,
     icon: '▤',
-    effectLabel: (level) => (level > 0 ? '可同时供奉 4 件物品。' : '供奉容量 3 → 4 件；成熟速度与物品供给不变。'),
+    effectLabel: (level, maxLevel) => {
+      const capacity = GAME_CONSTANTS.CONTAMINANT.DEFENSE_SLOTS + level;
+      return level >= maxLevel ? `可同时供奉 ${capacity} 件物品。`
+        : `同时供奉 ${capacity} → ${capacity + 1} 件；成熟速度不变。`;
+    },
   },
   {
     id: 'growth_forecast_clarity',
