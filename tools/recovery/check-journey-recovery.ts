@@ -71,7 +71,9 @@ async function child(input: ChildInput) {
   const settleBase = (initial: boolean) => {
     bases.push(initial);
     const scene = new PurificationScene();
-    Object.assign(scene, { textures: { exists() { throw drawnBoundary; } }, requestSaveRetry() { retryRequested = true; } });
+    // The chamber's first engine call follows the unchanged atomic settlement.
+    // Stop at that boundary; this fixture does not simulate a Phaser world.
+    Object.assign(scene, { physics: { world: { setBounds() { throw drawnBoundary; } } }, requestSaveRetry() { retryRequested = true; } });
     assert.throws(() => scene.create({ fromMenu: initial }), error => error === drawnBoundary);
   };
   const session = new SuspendedSeaJourneySession({ enterBase: settleBase,

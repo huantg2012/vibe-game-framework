@@ -9,17 +9,17 @@ import { getEquipmentLifecycle, type OfferingTransformResult } from '@/types/inv
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { openInventory, inventoryError } from '@/ui/inventory-presenter';
-import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH } from '@/systems/ground-depth';
+import { PurificationChamberVisual, type PurificationChamberState } from './purification-chamber-visual';
+import { CHAMBER_DEVICE_ANCHORS, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE } from '@/systems/purification-chamber-layout';
+import { PurificationChamberLocomotion } from '@/systems/purification-chamber-locomotion';
+import { ChamberModule } from '@/entities/purification-chamber-module';
 /**
  * Purification Scene - the base management walkable space.
  *
- * A small tilemap (~14x12 tiles) with a circular safe area. The player walks around,
- * interacts with three modules (CORE center, STORAGE right, PURIFIER south) via
- * allocation panels, inscribes upgrades and thickens maxHp at the west growth
- * console, and enters the rift via the north entrance. The boundary features
- * particle atmosphere and periodic apparitions.
- *
- * Reuses Player entity + VisibilitySystem (omni mode). Does NOT use: AI, combat, chaos.
+ * Two enclosed floors, connected by short stair tracks. Floors and fixtures use
+ * a shared shallow oblique projection; the exterior is rewritten matter beyond
+ * physical walls, not a magic dome. The rift retains independent top-down movement.
+ * Existing settlement, inventory and growth transactions remain scene owners.
  *
  * Scene data received: { kindlingGained: number, survived: boolean }
  * Scene data sent to RiftScene: { modifiers: SortieModifiers, cycle: number }
@@ -31,47 +31,22 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import { ACTIVE_CONTAMINANT_TYPES } from '@/generated/contaminant-data';
 import { eventBus } from '@/core/event-bus';
 import { Player } from '@/entities/player';
-import {
-  PurificationCollision, PURIFICATION_PLAYER_BODY,
-  PURIFICATION_DEVICE_ANCHORS, PURIFICATION_SPAWN_POINT, destroyStaticCollision,
-} from '@/systems/purification-collision';
-import {
-  CORE_SPRITE_VARIANTS,
-  PurificationModuleEntity,
-} from '@/entities/purification-module';
-import {
-  ENTRANCE_DEFAULT_VARIANT,
-  ENTRANCE_VARIANTS,
-  RiftEntranceVisual,
-  readEntranceVariantQuery,
-  writeEntranceVariantQuery,
-} from '@/scenes/rift-entrance-visual';
-import {
-  OfferingStandVisual,
-  offeringStandChargeFromSlots,
-} from '@/scenes/offering-stand-visual';
-import { GrowthConsoleVisual } from '@/scenes/growth-console-visual';
-import { PurificationRenewalVisual } from '@/scenes/purification-renewal-visual';
+import { PURIFICATION_PLAYER_BODY, PURIFICATION_DEVICE_ANCHORS } from '@/systems/purification-collision';
 import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
-import { BoundaryAtmosphere } from '@/systems/boundary-atmosphere';
-import { BoundaryBreath } from '@/systems/boundary-breath';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { growthSystem } from '@/systems/growth-system';
 import { recoverGrowthFacts } from '@/systems/growth-evidence';
 import { impactSystem } from '@/systems/impact-system';
 import type { ForecastDisplay, ImpactResult } from '@/systems/impact-system';
 import {
-  createBoundaryShape, BOUNDARY_COLLISION_INNER_SCALE,
-  BOUNDARY_COLLISION_SEGMENT_SIZE, BOUNDARY_COLLISION_SAMPLES,
+  createBoundaryShape,
 } from '@/systems/boundary-shape';
 import type { BoundaryShape } from '@/systems/boundary-shape';
 import { createPurificationSurfaceTexture } from '@/systems/procedural-purification-surface';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
-import { TilemapRenderer } from '@/systems/tilemap-renderer';
-import { createPurificationVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { allocationPanel } from '@/ui/dom/allocation-panel';
 import { defensePanel } from '@/ui/dom/defense-panel';
 import { growthPanel } from '@/ui/dom/growth-panel';
@@ -87,7 +62,7 @@ import { TileType } from '@/types/game-types';
 import type { ContaminantType } from '@/types/game-types';
 import { createCrtPanel, getDomUiRoot, showToastInline } from '@/ui/dom/panel-styles';
 import { GameEvent } from '@/types/events';
-import type { TileMapData, OccluderGrid } from '@/types/map-types';
+import type { TileMapData } from '@/types/map-types';
 
 // ---------------------------------------------------------------------------
 // Map layout constants
@@ -105,37 +80,13 @@ const CENTER_Y = HEIGHT_PX / 2;
 const ELLIPSE_RX = 5.2; // tiles
 const ELLIPSE_RY = 5.0; // tiles
 
-// Module positions (world px) — CORE at center, others radially around it
-const CORE_POS = PURIFICATION_DEVICE_ANCHORS.core;
-const STORAGE_POS = PURIFICATION_DEVICE_ANCHORS.storage;
-const PURIFIER_POS = PURIFICATION_DEVICE_ANCHORS.purifier;
-// 裂隙入口嵌在北侧内壁上。4.0 tile + 1.0 安全区 = 椭圆北沿，不把膜顶出一包。
-const RIFT_ENTRANCE_POS = { x: CENTER_X, y: CENTER_Y - 4.0 * TILE };
-// Defense management point (south-west)
-const DEFENSE_POS = PURIFICATION_DEVICE_ANCHORS.offering;
-// Growth altar (west)
-const GROWTH_POS = PURIFICATION_DEVICE_ANCHORS.growth;
-
-const INTERACTION_POINTS = [
-  CORE_POS, STORAGE_POS, PURIFIER_POS,
-  RIFT_ENTRANCE_POS, DEFENSE_POS, GROWTH_POS,
-] as const;
-
-const RIFT_CENTER = 0x1aad96;
-const RIFT_RING = 0x2ae6c8;
-const DEFENSE_CENTER = 0x6644aa;
-const DEFENSE_RING = 0x8866cc;
-const GROWTH_CENTER = 0xaa6622;
-const GROWTH_RING = 0xcc8844;
-
-// Breathing animation speeds (radians per ms)
-const BREATH_SPEED_NORMAL = (2 * Math.PI) / 2500;
-const BREATH_SPEED_NEAR = (2 * Math.PI) / 1200;
-const BREATH_SPEED_HIGHLIGHT = (2 * Math.PI) / 800;
-
-// ---------------------------------------------------------------------------
-// Build the static tilemap (for occluder grid / visibility only, NOT physics)
-// ---------------------------------------------------------------------------
+// Production lane anchors are distinct from the historical gym's floor example.
+const CORE_POS = CHAMBER_DEVICE_ANCHORS.core;
+const STORAGE_POS = CHAMBER_DEVICE_ANCHORS.storage;
+const PURIFIER_POS = CHAMBER_DEVICE_ANCHORS.purifier;
+const RIFT_ENTRANCE_POS = CHAMBER_DEVICE_ANCHORS.rift;
+const DEFENSE_POS = CHAMBER_DEVICE_ANCHORS.offering;
+const GROWTH_POS = CHAMBER_DEVICE_ANCHORS.growth;
 
 /**
  * Build the tilemap using the dynamic boundary shape.
@@ -147,7 +98,7 @@ const BREATH_SPEED_HIGHLIGHT = (2 * Math.PI) / 800;
  * 潮汐取常态（强度 1.0 / 满潮）以免对照图随存档变。只读，不改生产路径。
  */
 export function createPurificationFloorTexture(scene: Phaser.Scene, key: string): string {
-  const interactionPts = [...INTERACTION_POINTS];
+  const interactionPts = [...Object.values(PURIFICATION_DEVICE_ANCHORS), { x: CENTER_X, y: 64 }];
   const shape = createBoundaryShape({
     ellipseRx: ELLIPSE_RX,
     ellipseRy: ELLIPSE_RY,
@@ -180,108 +131,6 @@ function buildPurificationTileMap(shape: BoundaryShape): TileMapData {
 }
 
 // ---------------------------------------------------------------------------
-// Smooth blob collider (replaces tile-based collision)
-// ---------------------------------------------------------------------------
-
-/**
- * Creates a ring of small static bodies along the blob boundary at 98% radius.
- * Returns the static group so the scene can set up a collider with the player.
- */
-function createBlobCollider(
-  scene: Phaser.Scene,
-  shape: BoundaryShape,
-): Phaser.Physics.Arcade.StaticGroup {
-  const group = scene.physics.add.staticGroup();
-  const cx = shape.centerX;
-  const cy = shape.centerY;
-
-  // Also add world-bounds collider bodies along outer edges
-  // (in case blob doesn't cover corners)
-
-  for (let i = 0; i < BOUNDARY_COLLISION_SAMPLES; i++) {
-    const angle = (i / BOUNDARY_COLLISION_SAMPLES) * Math.PI * 2;
-    const r = shape.radiusAt(angle) * BOUNDARY_COLLISION_INNER_SCALE;
-
-    // Place collider blocks outward from the boundary point to form a wall
-    // We place 2 blocks deep (8px + 8px = 16px wall thickness) for reliability
-    for (let depth = 0; depth < 2; depth++) {
-      const rr = r + depth * BOUNDARY_COLLISION_SEGMENT_SIZE;
-      const bx = cx + Math.cos(angle) * rr;
-      const by = cy + Math.sin(angle) * rr;
-
-      // Create an invisible static rectangle
-      const block = scene.add.rectangle(bx, by, BOUNDARY_COLLISION_SEGMENT_SIZE, BOUNDARY_COLLISION_SEGMENT_SIZE);
-      block.setVisible(false);
-      group.add(block);
-    }
-  }
-
-  return group;
-}
-
-function buildOccluderGrid(tileMap: TileMapData): OccluderGrid {
-  return {
-    cols: tileMap.cols,
-    rows: tileMap.rows,
-    tileSize: tileMap.tileSize,
-    isOpaque(col: number, row: number): boolean {
-      if (col < 0 || col >= tileMap.cols || row < 0 || row >= tileMap.rows) return true;
-      return tileMap.tiles[row]![col] === TileType.WALL;
-    },
-    version: 1,
-  };
-}
-
-// ---------------------------------------------------------------------------
-// Purification tileset (cold grey tones - player is the only warm color here)
-// ---------------------------------------------------------------------------
-
-const PURIFICATION_TILESET_KEY = 'placeholder-purification-tileset';
-
-function ensurePurificationTileset(scene: Phaser.Scene): void {
-  if (scene.textures.exists(PURIFICATION_TILESET_KEY)) return;
-  const gfx = scene.make.graphics({ x: 0, y: 0 }, false);
-
-  // frame 0 - wall (dark void)
-  gfx.fillStyle(0x0a0a0a, 1);
-  gfx.fillRect(0, 0, TILE, TILE);
-
-  // frame 1 - floor (cold grey / concrete-dark)
-  gfx.fillStyle(0x2c2e33, 1);
-  gfx.fillRect(TILE, 0, TILE, TILE);
-  gfx.lineStyle(1, 0x3a3d42, 1);
-  gfx.strokeRect(TILE + 0.5, 0.5, TILE - 1, TILE - 1);
-
-  gfx.generateTexture(PURIFICATION_TILESET_KEY, TILE * 2, TILE);
-  gfx.destroy();
-}
-
-// ---------------------------------------------------------------------------
-// Unified interaction point drawing (spec B3)
-// ---------------------------------------------------------------------------
-
-function drawInteractionPoint(
-  graphics: Phaser.GameObjects.Graphics,
-  x: number, y: number,
-  centerColor: number, ringColor: number,
-  centerRadius: number, ringRadius: number,
-  pulse: number,
-  highlighted: boolean,
-  inRange: boolean,
-): void {
-  const baseAlpha = highlighted ? 0.55 : 0.4;
-  const pulseAmp = 0.25;
-  const alpha = baseAlpha + Math.sin(pulse) * pulseAmp;
-  const rBonus = inRange ? 3 : 0;
-
-  graphics.clear();
-  graphics.fillStyle(centerColor, Math.min(1, alpha + 0.15));
-  graphics.fillCircle(x, y, centerRadius);
-  graphics.lineStyle(2, ringColor, alpha);
-  graphics.strokeCircle(x, y, ringRadius + rBonus);
-}
-
-// ---------------------------------------------------------------------------
 // Scene
 // ---------------------------------------------------------------------------
 
@@ -305,53 +154,26 @@ export interface PurificationDevSession {
 }
 
 export class PurificationScene extends Phaser.Scene {
-  private readonly tilemapRenderer = new TilemapRenderer();
   private readonly player = new Player();
   private unsubscribeWeapon: (() => void) | null = null;
   private unsubscribeForecast: (() => void) | null = null;
-  private readonly visibility = new VisibilitySystem();
-  private groundDepthSorter: GroundDepthSorter | null = null;
-  private deviceCollision: PurificationCollision | null = null;
-  private boundaryBodies: Phaser.Physics.Arcade.StaticGroup | null = null;
-  private boundaryCollider: Phaser.Physics.Arcade.Collider | null = null;
-  private repairGlowModule: PurificationModuleEntity | null = null;
-  private readonly atmosphere = new BoundaryAtmosphere();
-  private readonly breath = new BoundaryBreath();
-
-  private boundaryShape!: BoundaryShape;
-
-  private coreModule!: PurificationModuleEntity;
-  private storageModule!: PurificationModuleEntity;
-  private purifierModule!: PurificationModuleEntity;
-
-  /** 贴图缺失时的回落：旧的呼吸圆点。生产外形是地面裂缝贴花（DEC-113）。 */
-  private riftEntranceGraphics!: Phaser.GameObjects.Graphics;
-  private riftEntrancePulse = 0;
-  private riftEntrance: RiftEntranceVisual | null = null;
-
-  // Defense management interaction point（生产外形 = 卡 I 环，DEC-115）
-  private defenseGraphics!: Phaser.GameObjects.Graphics;
-  private defensePulse = 0;
-  private offeringStand: OfferingStandVisual | null = null;
-
-  // Growth altar interaction point（生产外形 = 卡 A 立缸，DEC-116）
-  private growthGraphics!: Phaser.GameObjects.Graphics;
-  private growthPulse = 0;
-  private growthConsole: GrowthConsoleVisual | null = null;
-  private renewalVisual: PurificationRenewalVisual | null = null;
+  private chamber: PurificationChamberVisual | null = null;
+  private locomotion: PurificationChamberLocomotion | null = null;
+  private readonly chamberState: PurificationChamberState = {
+    moduleHealth: { core: 1, storage: 1, purifier: 1 }, thickenLevel: 0,
+    offeringCharge: 0, growthLevels: {}, activeTarget: null, player: { x: 224, y: 286 },
+  };
+  private coreModule!: ChamberModule;
+  private storageModule!: ChamberModule;
+  private purifierModule!: ChamberModule;
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
   private saveRetryTimer: number | null = null;
   private tabKey: Phaser.Input.Keyboard.Key | null = null;
-  // 核心抽卡方案切换（实测用）：1/2/3 -> A 敬畏 / B 仪式 / C 封印
-  private coreVariantKeys: Phaser.Input.Keyboard.Key[] = [];
-  // 裂隙入口外形对照（实测用）：4/5/7/8/9 -> 卡 4 地缝（对照）/ 5 击裂（生产默认）/ 7 错位 / 8 掀皮 / 9 网裂
-  private entranceVariantKeys: Phaser.Input.Keyboard.Key[] = [];
   private transitioning = false;
   private devSession: PurificationDevSession | null = null;
   private productionDeparture: RiftCheckpoint['identity'] | null = null;
-  private interactionPlayerAlpha: number | null = null;
   private devDeparture: PurificationDevDeparture | null = null;
   private menuEntry: MenuEntryTransition | null = null;
   private transitionDelay: Phaser.Time.TimerEvent | null = null;
@@ -359,8 +181,7 @@ export class PurificationScene extends Phaser.Scene {
   private interactionFocusReturn: { scrollX: number; scrollY: number; zoom: number } | null = null;
   private interactionFocusTween: Phaser.Tweens.Tween | null = null;
   private readonly interactionWorldPoint = { x: 0, y: 0 };
-  private interactionModule: PurificationModuleEntity | null = null;
-  private coreRepairGlow: Phaser.GameObjects.Image | null = null;
+  private interactionModule: ChamberModule | null = null;
   private readonly interactionScreenAnchor = { x: 0, y: 0 };
   private shuttingDown = false;
   private cleanupComplete = false;
@@ -385,6 +206,7 @@ export class PurificationScene extends Phaser.Scene {
     this.devDeparture = null;
     this.productionDeparture = null;
     this.menuEntry = data?.menuEntry ?? null;
+    this.lastOverlapType = null;
     // Determine if this is a return from rift (vs. menu/load entry)
     const ledger = inventoryStore.getRun();
     const isReturnFromRift = ledger?.status === 'settled' ? !ledger.baseSettled : !data?.fromMenu && data?.kindlingGained !== undefined;
@@ -476,59 +298,17 @@ export class PurificationScene extends Phaser.Scene {
     // E3: Initialize stability milestone tracker
     this.lastStabilityMilestone = Math.floor(stabilityTracker.getProgress() / 25) * 25;
 
-    // Build dynamic boundary shape from current tide state
-    const tideState = tideSystem.getState();
-    const interactionPts = [...INTERACTION_POINTS];
-    this.boundaryShape = createBoundaryShape({
-      ellipseRx: ELLIPSE_RX,
-      ellipseRy: ELLIPSE_RY,
-      tideIntensity: tideState.currentIntensity,
-      tidePhase: tideState.phase,
-      pressureSeed: gameState.getCycle() * 7919, // deterministic per-cycle
-      interactionPoints: interactionPts,
-      centerX: CENTER_X,
-      centerY: CENTER_Y,
-    });
-
-    // Build tilemap from boundary shape
-    const tileMap = buildPurificationTileMap(this.boundaryShape);
-    const grid = buildOccluderGrid(tileMap);
-
-    // Procedural surface texture (uses boundary shape for gradient bands)
-    // Remove stale texture from prior visit (boundary shape changes with tide)
-    const surfaceKey = 'purification-surface';
-    if (this.textures.exists(surfaceKey)) {
-      this.textures.remove(surfaceKey);
-    }
-    createPurificationSurfaceTexture(
-      this, tileMap, surfaceKey,
-      this.boundaryShape,
-      interactionPts,
-    );
-    this.add.image(0, 0, surfaceKey).setOrigin(0, 0).setDepth(0);
-
-    // Tilemap layer for visibility occluder only (no physics collision)
-    ensurePurificationTileset(this);
-    const layer = this.tilemapRenderer.create(this, tileMap, {
-      tilesetKey: PURIFICATION_TILESET_KEY,
-      collidingIndices: [],
-      depth: -1,
-    });
-    layer.setVisible(false);
-
-    // Smooth blob collider (replaces tile-based collision for curved boundary)
-    this.boundaryBodies = createBlobCollider(this, this.boundaryShape);
-
-    this.physics.world.setBounds(0, 0, WIDTH_PX, HEIGHT_PX);
-
-    // Camera — no bounds constraint; the visibility mask handles what's shown.
-    // Without this the camera can't center the map when viewport > map size.
+    // One layout contract drives drawing, route constraints and interaction anchors.
+    this.physics.world.setBounds(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
     const camera = this.cameras.main;
-    camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM);
-    camera.setBackgroundColor(0x0a0a0a);
-
-    // Player
-    this.player.create(this, { spawn: PURIFICATION_SPAWN_POINT, depth: 30, facing: 'up', body: PURIFICATION_PLAYER_BODY });
+    camera.setZoom(CHAMBER_CAMERA.zoom).setBackgroundColor(0x080a0c).setRoundPixels(true);
+    camera.centerOn(CHAMBER_CAMERA.x, CHAMBER_CAMERA.y);
+    this.chamber = new PurificationChamberVisual(this);
+    this.player.create(this, {
+      spawn: CHAMBER_SPAWN_POINT, depth: 40, facing: 'right',
+      body: PURIFICATION_PLAYER_BODY, movementMode: 'constrained',
+    });
+    this.locomotion = new PurificationChamberLocomotion(this.player);
     const syncWeapon = (): void => {
       const id = inventoryStore.getEquipment().weaponId;
       const item = id ? inventoryStore.getItem(id) : undefined;
@@ -537,109 +317,11 @@ export class PurificationScene extends Phaser.Scene {
     };
     syncWeapon();
     this.unsubscribeWeapon = inventoryStore.subscribe(syncWeapon);
-    this.boundaryCollider = this.physics.add.collider(this.player.getSprite(), this.boundaryBodies);
-    this.deviceCollision = new PurificationCollision(this, this.player.getSprite(), {
-      core: CORE_POS, storage: STORAGE_POS, purifier: PURIFIER_POS,
-      offering: DEFENSE_POS, growth: GROWTH_POS,
-    });
-    camera.centerOn(CENTER_X, CENTER_Y);
-
-    // Visibility (omni mode - smooth blob boundary instead of tile-based raycast)
-    const boundaryShape = this.boundaryShape;
-    const visionConfig = {
-      ...createPurificationVisionConfig(50),
-      rayDistanceOverride: (origin: { x: number; y: number }, angle: number, maxRange: number): number => {
-        // Ray-blob intersection: march along the ray until normalizedDist >= GRADIENT_OUTER_END.
-        // This lets the procedural texture's own vignette (membrane + fade) be the visual boundary,
-        // while the visibility mask only takes over where the texture has already faded to void.
-        const cutoff = GAME_CONSTANTS.PURIFICATION.BOUNDARY.GRADIENT_OUTER_END;
-        const dx = Math.cos(angle);
-        const dy = Math.sin(angle);
-        const step = 8;
-        let t = 0;
-        while (t < maxRange) {
-          const px = origin.x + dx * t;
-          const py = origin.y + dy * t;
-          if (boundaryShape.normalizedDist(px, py) >= cutoff) break;
-          t += step;
-        }
-        let lo = Math.max(0, t - step);
-        let hi = Math.min(t, maxRange);
-        for (let i = 0; i < 6; i++) {
-          const mid = (lo + hi) * 0.5;
-          const px = origin.x + dx * mid;
-          const py = origin.y + dy * mid;
-          if (boundaryShape.normalizedDist(px, py) >= cutoff) {
-            hi = mid;
-          } else {
-            lo = mid;
-          }
-        }
-        return Math.min(hi, maxRange);
-      },
-    };
-    this.visibility.create(this, visionConfig, grid);
-
-    // Module entities
-    this.coreModule = new PurificationModuleEntity({
-      id: 'CORE',
-      type: 'CORE',
-      x: CORE_POS.x,
-      y: CORE_POS.y,
-    });
-    this.coreModule.create(this);
-
-    this.storageModule = new PurificationModuleEntity({
-      id: 'STORAGE',
-      type: 'STORAGE',
-      x: STORAGE_POS.x,
-      y: STORAGE_POS.y,
-    });
-    this.storageModule.create(this);
-
-    this.purifierModule = new PurificationModuleEntity({
-      id: 'PURIFIER',
-      type: 'PURIFIER',
-      x: PURIFIER_POS.x,
-      y: PURIFIER_POS.y,
-    });
-    this.purifierModule.create(this);
-
-    // Interaction point graphics (unified circles, spec B3)
-    this.riftEntranceGraphics = this.add.graphics().setDepth(20);
-    // 裂隙入口 = 地面裂缝贴花（DEC-114，生产默认卡 5 击裂）。
-    // `?entrance=4|7|8|9` 只用来看对照，不改生产默认。
-    this.riftEntrance = new RiftEntranceVisual(this, RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y);
-    this.riftEntrance.mount(readEntranceVariantQuery() ?? ENTRANCE_DEFAULT_VARIANT);
-    this.defenseGraphics = this.add.graphics().setDepth(20);
-    this.offeringStand = new OfferingStandVisual(this, DEFENSE_POS.x, DEFENSE_POS.y);
-    this.offeringStand.mount(
-      offeringStandChargeFromSlots(inventoryStore.getOfferingItems()),
-    );
-    this.growthGraphics = this.add.graphics().setDepth(20);
-    this.growthConsole = new GrowthConsoleVisual(this, GROWTH_POS.x, GROWTH_POS.y);
-    this.growthConsole.mount();
-    this.renewalVisual = new PurificationRenewalVisual(this);
+    this.coreModule = new ChamberModule(this, 'CORE', CORE_POS);
+    this.storageModule = new ChamberModule(this, 'STORAGE', STORAGE_POS);
+    this.purifierModule = new ChamberModule(this, 'PURIFIER', PURIFIER_POS);
     this.syncInvestmentVisuals();
-    this.riftEntranceGraphics.setDepth(1);
-    this.groundDepthSorter = new GroundDepthSorter([
-      ...[this.coreModule, this.storageModule, this.purifierModule].map(mod => ({
-        id: mod.id, groundY: () => mod.y,
-        applyDepth: (depth: number) => {
-          mod.setGroundDepth(depth, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH);
-          if (mod === this.storageModule) this.renewalVisual?.setStorageDepth(depth);
-        },
-      })),
-      { id: 'offering', groundY: () => DEFENSE_POS.y, applyDepth: depth => {
-        this.offeringStand?.setDepth(depth); this.defenseGraphics.setDepth(depth);
-      } },
-      { id: 'growth', groundY: () => GROWTH_POS.y, applyDepth: depth => {
-        this.growthConsole?.setDepth(depth); this.growthGraphics.setDepth(depth);
-      } },
-      { id: 'player', groundY: () => this.player.getGroundY(),
-        applyDepth: depth => this.player.setGroundDepth(depth, GROUND_LIGHT_DEPTH) },
-    ]);
-    this.groundDepthSorter.update();
+    this.updateChamberVisuals(0, 0);
 
     // Purification HUD (DOM overlay)
     purificationHud.create(() => this.openStatusPanel());
@@ -655,29 +337,13 @@ export class PurificationScene extends Phaser.Scene {
       this.player.getSprite().setVelocity(0, 0);
     }
 
-    // Boundary atmosphere + breathing overlay
-    this.atmosphere.create(this, this.boundaryShape);
-    this.breath.create(this, this.boundaryShape, tideState.phase);
-
     // Input
     const keyboard = this.input.keyboard;
     if (keyboard) {
       this.interactKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
       this.escKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false);
       this.tabKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false);
-      // 1/2/3 切核心对照（生产默认 B）；4/5/7/8/9 切裂隙入口（生产默认卡 5）
-      this.coreVariantKeys = [
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false),
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false),
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false),
-      ];
-      this.entranceVariantKeys = [
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR, true, false),
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FIVE, true, false),
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SEVEN, true, false),
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.EIGHT, true, false),
-        keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NINE, true, false),
-      ];
+
     }
 
     // C2: Listen for allocation confirmed to flash modules
@@ -756,31 +422,31 @@ export class PurificationScene extends Phaser.Scene {
     if (this.interactKey) Phaser.Input.Keyboard.JustDown(this.interactKey);
     if (this.escKey) Phaser.Input.Keyboard.JustDown(this.escKey);
     if (this.tabKey) Phaser.Input.Keyboard.JustDown(this.tabKey);
-    for (const key of this.coreVariantKeys) Phaser.Input.Keyboard.JustDown(key);
-    for (const key of this.entranceVariantKeys) Phaser.Input.Keyboard.JustDown(key);
   }
 
   update(time: number, delta: number): void {
     if (this.transitioning || this.shuttingDown) return;
 
     this.player.update(delta);
+    this.locomotion?.update(delta);
 
     const pos = this.player.getPosition();
     this.tickPurificationAudio(time, pos);
 
     // Update modules (checks proximity)
-    this.coreModule.update(pos.x, pos.y);
-    this.storageModule.update(pos.x, pos.y);
-    this.purifierModule.update(pos.x, pos.y);
+    const canInteract = this.locomotion?.canInteract() ?? false;
+    this.coreModule.update(pos.x, pos.y, canInteract);
+    this.storageModule.update(pos.x, pos.y, canInteract);
+    this.purifierModule.update(pos.x, pos.y, canInteract);
 
     const riftDist = this.distTo(pos, RIFT_ENTRANCE_POS);
     const defDist = this.distTo(pos, DEFENSE_POS);
     const groDist = this.distTo(pos, GROWTH_POS);
     const radius = GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
 
-    const nearRift = riftDist <= radius;
-    const nearDefense = defDist <= radius;
-    const nearGrowth = groDist <= radius;
+    const nearRift = canInteract && riftDist <= radius;
+    const nearDefense = canInteract && defDist <= radius;
+    const nearGrowth = canInteract && groDist <= radius;
 
     const target = this.findNearestTarget(
       nearRift, nearDefense, nearGrowth,
@@ -792,76 +458,7 @@ export class PurificationScene extends Phaser.Scene {
     // Hide prompt when a panel is open
     purificationHud.setPromptVisible(!this.isAnyPanelOpen());
 
-    // --- Draw interaction points (unified breathing circles) ---
-
-    // Rift entrance：生产外形是地面裂缝贴花。只有贴图缺失才回落呼吸圆点。
-    const riftHighlight = false; // rift always available
-    const riftSpeed = nearRift ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL;
-    this.riftEntrancePulse += delta * riftSpeed;
-    if (this.riftEntrance?.isShowing()) {
-      this.riftEntranceGraphics.setVisible(false);
-      this.riftEntranceGraphics.clear();
-    } else {
-      this.riftEntranceGraphics.setVisible(true);
-      drawInteractionPoint(
-        this.riftEntranceGraphics,
-        RIFT_ENTRANCE_POS.x, RIFT_ENTRANCE_POS.y,
-        RIFT_CENTER, RIFT_RING,
-        8, 14,
-        this.riftEntrancePulse,
-        riftHighlight,
-        nearRift,
-      );
-    }
-
-    // Defense point：生产外形是卡 I 环。只有贴图缺失才回落呼吸圆点。
-    const defHighlight = this.shouldHighlight('defense');
-    const defSpeed = defHighlight ? BREATH_SPEED_HIGHLIGHT : (nearDefense ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
-    this.defensePulse += delta * defSpeed;
-    this.offeringStand?.setCharge(
-      offeringStandChargeFromSlots(inventoryStore.getOfferingItems()),
-    );
-    const tidePhase = tideSystem.getState().phase;
-    this.offeringStand?.setPressure(tidePhase === 'crest' ? 1 : tidePhase === 'rise' ? .5 : .1);
-    if (this.offeringStand?.isShowing()) {
-      this.defenseGraphics.setVisible(false);
-      this.defenseGraphics.clear();
-    } else {
-      this.defenseGraphics.setVisible(true);
-      drawInteractionPoint(
-        this.defenseGraphics,
-        DEFENSE_POS.x, DEFENSE_POS.y,
-        DEFENSE_CENTER, DEFENSE_RING,
-        7, 12,
-        this.defensePulse,
-        defHighlight,
-        nearDefense,
-      );
-    }
-
-    // Growth altar：生产外形是卡 A 立缸。只有贴图缺失才回落呼吸圆点。
-    const groHighlight = this.shouldHighlight('growth');
-    const groSpeed = groHighlight ? BREATH_SPEED_HIGHLIGHT : (nearGrowth ? BREATH_SPEED_NEAR : BREATH_SPEED_NORMAL);
-    this.growthPulse += delta * groSpeed;
-    if (this.growthConsole?.isShowing()) {
-      this.growthGraphics.setVisible(false);
-      this.growthGraphics.clear();
-    } else {
-      this.growthGraphics.setVisible(true);
-      drawInteractionPoint(
-        this.growthGraphics,
-        GROWTH_POS.x, GROWTH_POS.y,
-        GROWTH_CENTER, GROWTH_RING,
-        7, 12,
-        this.growthPulse,
-        groHighlight,
-        nearGrowth,
-      );
-    }
-
-    // Atmosphere + breathing overlay
-    this.atmosphere.update(delta);
-    this.breath.update(delta);
+    this.updateChamberVisuals(time, delta);
 
     // Keep the world alive while discarding button edges during the entry.
     // Retain held-key state so OS repeat cannot become a fresh E/Esc/Tab press.
@@ -897,25 +494,6 @@ export class PurificationScene extends Phaser.Scene {
           break;
       }
     }
-
-    // 1/2/3 切核心对照
-    for (let i = 0; i < this.coreVariantKeys.length; i++) {
-      const key = this.coreVariantKeys[i];
-      if (!key || !Phaser.Input.Keyboard.JustDown(key)) continue;
-      const coreVariant = CORE_SPRITE_VARIANTS[i];
-      if (coreVariant) this.coreModule?.setCoreVariant(coreVariant);
-    }
-
-    // 4/5/7/8/9 切裂隙入口外形对照（生产默认仍是卡 4，只改本次观看）
-    for (let i = 0; i < this.entranceVariantKeys.length; i++) {
-      const key = this.entranceVariantKeys[i];
-      const variant = ENTRANCE_VARIANTS[i];
-      if (!key || !variant || !this.riftEntrance) continue;
-      if (!Phaser.Input.Keyboard.JustDown(key)) continue;
-      this.riftEntrance.mount(variant);
-      writeEntranceVariantQuery(variant);
-    }
-
 
     // ESC
     if (this.escKey && Phaser.Input.Keyboard.JustDown(this.escKey)) {
@@ -957,7 +535,7 @@ export class PurificationScene extends Phaser.Scene {
   /** Isolated journey diagnostics only. No commands, inventory writes or position setters. */
   probeJourneyState(): Record<string, unknown> | null {
     if (!import.meta.env?.DEV || this.shuttingDown) return null;
-    return { player: { ...this.player.getPosition() }, transitioning: this.transitioning,
+    return { player: { ...this.player.getPosition() }, route: this.locomotion?.getRoute(), transitioning: this.transitioning,
       pendingSave: saveManager.hasPendingSave(),
       devices: { core: { ...CORE_POS }, storage: { ...STORAGE_POS }, purifier: { ...PURIFIER_POS },
         entrance: { ...RIFT_ENTRANCE_POS }, offering: { ...DEFENSE_POS }, growth: { ...GROWTH_POS } },
@@ -984,7 +562,7 @@ export class PurificationScene extends Phaser.Scene {
       const hpData = this.coreModule.getHpData();
       candidates.push({
         type: 'core',
-        distance: 0,
+        distance: this.distTo(this.player.getPosition(), CORE_POS),
         moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.coreModule.getEffectPct() } : undefined,
       });
     }
@@ -992,7 +570,7 @@ export class PurificationScene extends Phaser.Scene {
       const hpData = this.storageModule.getHpData();
       candidates.push({
         type: 'storage',
-        distance: 0,
+        distance: this.distTo(this.player.getPosition(), STORAGE_POS),
         moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.storageModule.getEffectPct() } : undefined,
       });
     }
@@ -1000,7 +578,7 @@ export class PurificationScene extends Phaser.Scene {
       const hpData = this.purifierModule.getHpData();
       candidates.push({
         type: 'purifier',
-        distance: 0,
+        distance: this.distTo(this.player.getPosition(), PURIFIER_POS),
         moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: 0 } : undefined,
       });
     }
@@ -1019,7 +597,7 @@ export class PurificationScene extends Phaser.Scene {
     const order: InteractionTarget['type'][] = [
       'core', 'storage', 'purifier', 'defense', 'growth', 'rift',
     ];
-    candidates.sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type));
+    candidates.sort((a, b) => a.distance - b.distance || order.indexOf(a.type) - order.indexOf(b.type));
     return candidates[0]!;
   }
 
@@ -1050,34 +628,24 @@ export class PurificationScene extends Phaser.Scene {
       this.lastStepAt = time;
       audioManager.playSFX('sfx-shared-player-step-metal', { priority: 'low' });
     }
-    const angle = Math.atan2(pos.y - CENTER_Y, pos.x - CENTER_X);
-    const radius = this.boundaryShape.radiusAt(angle);
-    const distPx = Math.hypot(pos.x - CENTER_X, pos.y - CENTER_Y);
-    const tiles = Math.abs(distPx - radius) / TILE;
-    if (tiles <= 2 && time - this.lastBoundaryPulseAt >= 10000) {
+    const edgeDistance = Math.min(Math.abs(pos.x - 68), Math.abs(572 - pos.x));
+    if (edgeDistance < 56 && time - this.lastBoundaryPulseAt >= 10000) {
       this.lastBoundaryPulseAt = time;
-      audioManager.playSpatialSFX(
-        'sfx-pp-boundary-pulse',
-        { x: CENTER_X + Math.cos(angle) * radius, y: CENTER_Y + Math.sin(angle) * radius },
-        pos,
-      );
+      audioManager.playSpatialSFX('sfx-pp-boundary-pulse',
+        { x: pos.x < 320 ? 68 : 572, y: pos.y }, pos);
     }
   }
 
-  private readonly onGrowthPurchased = (): void => {
+  private readonly onGrowthPurchased = (payload: { upgradeId: string; newLevel: number }): void => {
     audioManager.playSFX('sfx-ui-click');
+    this.chamber?.pulse('growth', payload.upgradeId === 'thicken' ? 'thicken' : 'player');
     this.syncInvestmentVisuals();
     purificationHud.refresh();
   };
 
-  private onPostUpdate(_time: number, delta: number): void {
+  private onPostUpdate(): void {
     if (this.shuttingDown) return;
     this.player.postUpdate();
-    this.groundDepthSorter?.update();
-    if (this.coreRepairGlow && this.repairGlowModule) {
-      this.coreRepairGlow.setDepth(this.repairGlowModule.getBodyDepth() + 0.4);
-    }
-    this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
   }
 
   private isAnyPanelOpen(): boolean {
@@ -1088,7 +656,9 @@ export class PurificationScene extends Phaser.Scene {
     if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     const mod = moduleId === 'CORE' ? this.coreModule : moduleId === 'STORAGE' ? this.storageModule : this.purifierModule;
     this.focusWorldInteraction(mod, 320, mod);
-    allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
+    allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), {
+      getAnchor: this.getInteractionScreenAnchor, integrityOffsetY: 138,
+    });
   }
 
   /** Review controls and proximity interaction share the same production paths. */
@@ -1124,14 +694,10 @@ export class PurificationScene extends Phaser.Scene {
     return this.interactionScreenAnchor;
   };
 
-  private focusWorldInteraction(point: Readonly<{ x: number; y: number }>, screenX: number, mod: PurificationModuleEntity | null = null): void {
+  private focusWorldInteraction(point: Readonly<{ x: number; y: number }>, screenX: number, mod: ChamberModule | null = null): void {
     this.player.setInputEnabled(false);
-    const actor = this.player.getSprite();
-    if (actor.y >= point.y && Math.hypot(actor.x - point.x, actor.y - point.y) < 48) {
-      this.interactionPlayerAlpha = actor.alpha; actor.setAlpha(.3);
-    }
     this.interactionWorldPoint.x = point.x;
-    this.interactionWorldPoint.y = point.y;
+    this.interactionWorldPoint.y = point.y - 24;
     this.interactionModule = mod;
     mod?.setInteractionReadoutActive(true);
     const camera = this.cameras.main;
@@ -1143,7 +709,7 @@ export class PurificationScene extends Phaser.Scene {
       targets: camera,
       zoom,
       scrollX: point.x - originX - (screenX - camera.x - originX) / zoom,
-      scrollY: point.y - originY - (330 - camera.y - originY) / zoom,
+      scrollY: point.y - 24 - originY - (330 - camera.y - originY) / zoom,
       duration: 260,
       ease: 'Sine.easeInOut',
       onComplete: () => { this.interactionFocusTween = null; },
@@ -1151,11 +717,6 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private restoreInteractionFocus(immediate = false): void {
-    if (this.interactionPlayerAlpha !== null) {
-      const actor = this.player.getSprite();
-      if (actor?.scene) actor.setAlpha(this.interactionPlayerAlpha);
-      this.interactionPlayerAlpha = null;
-    }
     // CameraManager handles SHUTDOWN before this scene listener. Its main camera
     // has already been removed; discard our snapshot instead of touching it.
     if (this.shuttingDown) {
@@ -1371,28 +932,6 @@ export class PurificationScene extends Phaser.Scene {
     document.head.appendChild(style);
   }
 
-  /** D1: Check whether an interaction point should pulse faster (has actionable content). */
-  private shouldHighlight(point: 'defense' | 'growth' | 'core' | 'storage'): boolean {
-    const reserve = gameState.getKindlingReserve();
-    switch (point) {
-      case 'core': {
-        const mod = gameState.getModule('CORE');
-        return reserve > 0 && mod !== undefined && mod.hp < mod.maxHp;
-      }
-      case 'storage': {
-        const mod = gameState.getModule('STORAGE');
-        return reserve > 0 && mod !== undefined && mod.hp < mod.maxHp;
-      }
-      case 'defense': {
-        return inventoryStore.getItems().some(item => item.location.kind === 'stash' && getEquipmentLifecycle(item).stage === 'defense');
-      }
-      case 'growth': {
-        const next = growthSystem.getNextStep();
-        return next !== null && next.unlocked && reserve >= next.cost;
-      }
-    }
-  }
-
   /** B3: Show a Channel-B toast (C6 shared primitive) when new tools are available
    *  from transformation. */
   private showNewToolToast(transformResults: OfferingTransformResult[]): void {
@@ -1433,45 +972,26 @@ export class PurificationScene extends Phaser.Scene {
       const module = gameState.getModule(id);
       return module && module.maxHp > 0 ? module.hp / module.maxHp : 0;
     };
-    this.renewalVisual?.setState({ moduleHealth: {
-      core: fraction('CORE'), purifier: fraction('PURIFIER'), storage: fraction('STORAGE'),
-    }, thickenLevel: gameState.getModuleMaxHpTier() });
-    this.growthConsole?.setInvestment(growthSystem.getState().upgrades);
+    this.chamberState.moduleHealth.core = fraction('CORE');
+    this.chamberState.moduleHealth.storage = fraction('STORAGE');
+    this.chamberState.moduleHealth.purifier = fraction('PURIFIER');
+    this.chamberState.thickenLevel = gameState.getModuleMaxHpTier();
+    this.chamberState.growthLevels = growthSystem.getState().upgrades;
   }
 
-  private pulseModuleRepair(mod: PurificationModuleEntity, tint = 0xc5a47a): void {
-    // Reuse the module's existing soft light texture; never redraw the device.
-    if (!this.textures.exists('fx-core-glow')) return;
-    if (this.coreRepairGlow) {
-      this.tweens.killTweensOf(this.coreRepairGlow);
-      this.coreRepairGlow.destroy();
-    }
-    const glow = this.add.image(mod.x, mod.y - 11, 'fx-core-glow')
-      .setDepth(mod.getBodyDepth() + 0.4).setBlendMode(Phaser.BlendModes.ADD).setTintFill(tint).setScale(0.45).setAlpha(0);
-    this.coreRepairGlow = glow;
-    this.repairGlowModule = mod;
-    this.tweens.add({
-      targets: glow,
-      alpha: 0.38,
-      scale: 0.7,
-      duration: 250,
-      yoyo: true,
-      hold: 60,
-      ease: 'Sine.easeInOut',
-      onComplete: () => {
-        glow.destroy();
-        if (this.coreRepairGlow === glow) this.coreRepairGlow = null;
-      },
-    });
+  private updateChamberVisuals(time: number, delta: number): void {
+    this.chamberState.offeringCharge = inventoryStore.getOfferingItems().filter(Boolean).length / 4;
+    this.chamberState.activeTarget = this.lastOverlapType;
+    const pos = this.player.getPosition();
+    this.chamberState.player.x = pos.x;
+    this.chamberState.player.y = pos.y;
+    this.chamber?.update(time, delta, this.chamberState);
   }
 
+  private pulseModuleRepair(mod: ChamberModule, _tint?: number): void {
+    this.chamber?.pulse('repair', mod.id);
+  }
 
-  /** E3: Show stability milestone notifications for changes NOT already folded into
-   *  the merged impact-result panel (Slice 5.5 D5) — e.g. buying an upgrade at the
-   *  growth altar while standing in the purification point. The extraction-triggered
-   *  crossing is handled separately in create() via `findCrossedStabilityMilestone()`,
-   *  since this listener is registered after that particular addProgress() call fires
-   *  (see the comment at its call site). */
   private readonly onStabilityChanged = (payload: { progress: number; delta: number }): void => {
     const message = this.findCrossedStabilityMilestone(this.lastStabilityMilestone, payload.progress);
     this.lastStabilityMilestone = Math.floor(payload.progress / 25) * 25;
@@ -1567,10 +1087,6 @@ export class PurificationScene extends Phaser.Scene {
     dispose('transition-delay', () => this.transitionDelay?.remove(false)); this.transitionDelay = null;
     dispose('transition-overlay', () => this.transitionOverlay?.remove()); this.transitionOverlay = null;
     dispose('interaction-focus', () => this.restoreInteractionFocus(true));
-    if (this.coreRepairGlow) {
-      dispose('repair-tween', () => this.tweens.killTweensOf(this.coreRepairGlow!));
-      dispose('repair-glow', () => this.coreRepairGlow?.destroy()); this.coreRepairGlow = null;
-    }
     dispose('audio', () => audioManager.haltNonBgm());
     for (const [name, close] of [
       ['allocation', () => allocationPanel.close()], ['defense', () => defensePanel.close()],
@@ -1578,24 +1094,16 @@ export class PurificationScene extends Phaser.Scene {
       ['inventory', () => inventoryPanel.close()], ['status', () => statusPanel.close()],
       ['impact-result', () => impactResultPanel.destroy()], ['pause', () => pauseMenu.discard()],
     ] as const) dispose(`panel:${name}`, close);
-    for (const key of [this.interactKey, this.escKey, this.tabKey, ...this.coreVariantKeys, ...this.entranceVariantKeys]) {
+    for (const key of [this.interactKey, this.escKey, this.tabKey]) {
       if (key) dispose(`input:${key.keyCode}`, () => this.input.keyboard?.removeKey(key, true));
     }
     this.interactKey = null; this.escKey = null; this.tabKey = null;
-    this.coreVariantKeys = []; this.entranceVariantKeys = [];
-    this.groundDepthSorter = null; this.repairGlowModule = null;
-    dispose('device-collision', () => this.deviceCollision?.destroy()); this.deviceCollision = null;
-    dispose('boundary-collision', () => destroyStaticCollision(this.boundaryCollider, this.boundaryBodies));
-    this.boundaryCollider = null; this.boundaryBodies = null;
+    this.locomotion = null;
     for (const [name, resource] of [
-      ['atmosphere', this.atmosphere], ['breath', this.breath], ['visibility', this.visibility],
       ['core', this.coreModule], ['storage', this.storageModule], ['purifier', this.purifierModule],
-      ['player', this.player], ['tilemap', this.tilemapRenderer], ['entrance', this.riftEntrance],
-      ['entrance-graphics', this.riftEntranceGraphics], ['offering', this.offeringStand],
-      ['defense-graphics', this.defenseGraphics], ['growth', this.growthConsole], ['growth-graphics', this.growthGraphics],
-      ['renewal', this.renewalVisual],
+      ['player', this.player], ['chamber', this.chamber],
     ] as const) dispose(`world:${name}`, () => resource?.destroy());
-    this.riftEntrance = null; this.offeringStand = null; this.growthConsole = null; this.renewalVisual = null;
+    this.chamber = null;
     dispose('hud', () => purificationHud.destroy());
     this.cleanupStage = failures.length ? failures.join('; ') : 'complete';
     if (!failures.length) return null;

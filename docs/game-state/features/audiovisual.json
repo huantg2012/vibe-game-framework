@@ -152,7 +152,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "三模块状态外观、入口/供奉/培养装置、基地地表维护痕迹和边界呼吸共同呈现；标题有角色与环境轻动效。",
+    "summary": "净化点以浅斜投影厚壳/楼板/双阶、重绘六模型与三层舱外结构呈现；模块损伤/加厚、匿名供奉及局部成长确认读取公开状态。标题场景保持。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -222,6 +222,22 @@
       {
         "path": "docs/qa/i30-cutaway-design.md",
         "role": "doc"
+      },
+      {
+        "path": "src/art/purification-chamber-pixels.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-chamber-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/purification-renewal.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -233,11 +249,11 @@
       "COH-E-HIST-CYCLE",
       "COH-E-I29-R2-REVIEW",
       "COH-E-I30-DIRECTIONS",
-      "COH-E-I30-CUTAWAY-DESIGN"
+      "COH-E-I30-CUTAWAY-DESIGN",
+      "COH-E-I30-RUNTIME"
     ],
     "unknowns": [
-      "旧锁定装置身份与最新状态外观的审美结论需分别看其验收范围，不能由本次登记代签。",
-      "GR-06成长作用对象与获得感、净化点场所/模型体系已列I30独立审核和迭代，DESIGNING / CUTAWAY-PROPOSAL；用户要求侧视封闭，双层检修舱具体布局和角色侧视补绘仍待评审/实现，未接生产。R3四张提示/预览静帧核对不代表整体美术或动态手感通过。"
+      "新场景经过内部截图复核与限定交互验证，尚无用户美术PASS；专门原速音频/满供奉全周期及长期身体获得感未全面验收。"
     ]
   }
 ]

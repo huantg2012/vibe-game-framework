@@ -23,27 +23,36 @@ async function fixture() {
   const context = await browser.newContext({ viewport: { width: 1440, height: 960 } });
   assert.deepEqual(await context.storageState(), { cookies: [], origins: [] });
   const page = await context.newPage();
+  await page.route('**/@vite/client', route => route.fulfill({ contentType: 'application/javascript', body: '' }));
   page.on('pageerror', error => errors.push(String(error)));
   await page.goto(`${process.env.GAME_URL ?? 'http://127.0.0.1:3021'}/#purif`);
   await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
   await page.evaluate(async () => {
+    // Vite may stamp a changed dependency URL even in a fresh page. Instrument
+    // the module instance the running scene loaded, not a second plain-URL copy.
+    const loadedModule = pathname => {
+      const request = performance.getEntriesByType('resource').reverse()
+        .find(entry => new URL(entry.name).pathname === pathname);
+      return import(request?.name ?? pathname);
+    };
     const [{ gameState }, { inventoryStore }, { saveManager }, { impactSystem },
       { tideSystem }, { stabilityTracker }, { impactResultPanel }, { createCatalogContaminant }, { pauseMenu }] = await Promise.all([
-      import('/src/managers/game-state.ts'), import('/src/systems/inventory-store.ts'),
-      import('/src/managers/save-manager.ts'), import('/src/systems/impact-system.ts'),
-      import('/src/systems/tide-system.ts'), import('/src/systems/stability-tracker.ts'),
-      import('/src/ui/dom/impact-result-panel.ts'), import('/src/systems/contaminant-catalog.ts'),
-      import('/src/ui/dom/pause-menu.ts'),
+      loadedModule('/src/managers/game-state.ts'), loadedModule('/src/systems/inventory-store.ts'),
+      loadedModule('/src/managers/save-manager.ts'), loadedModule('/src/systems/impact-system.ts'),
+      loadedModule('/src/systems/tide-system.ts'), loadedModule('/src/systems/stability-tracker.ts'),
+      loadedModule('/src/ui/dom/impact-result-panel.ts'), loadedModule('/src/systems/contaminant-catalog.ts'),
+      loadedModule('/src/ui/dom/pause-menu.ts'),
     ]);
     const q = window.__firstReturnCheck = {
       gameState, inventoryStore, saveManager, impactSystem, impactResultPanel, pauseMenu,
       createCatalogContaminant, shows: 0, impacts: 0, impactAudio: 0, failWrites: false,
-      failedWrites: 0, closed: 0,
+      failedWrites: 0, closed: 0, forecastConsumptions: [],
       read() {
         const scene = window.__game.scene.getScene('PurificationScene');
         return structuredClone({ modules: gameState.getModules(), reserve: gameState.getKindlingReserve(),
           cycle: gameState.getCycle(), tide: tideSystem.getState(), stability: stabilityTracker.getState(),
           inventory: inventoryStore.getState(), forecast: impactSystem.getForecastState(),
+          nextTideIntensity: tideSystem.peekNextIntensity(), forecastConsumptions: q.forecastConsumptions,
           input: scene.player.inputEnabled, panel: impactResultPanel.isOpen(), pause: pauseMenu.isOpen(),
           pending: saveManager.hasPendingSave(), shows: q.shows, impacts: q.impacts, impactAudio: q.impactAudio,
           text: document.querySelector('#impact-result-panel')?.textContent ?? '',
@@ -53,7 +62,13 @@ async function fixture() {
     const show = impactResultPanel.show;
     impactResultPanel.show = (...args) => { q.shows++; return show(...args); };
     const run = impactSystem.run;
-    impactSystem.run = (...args) => { q.impacts++; return run.apply(impactSystem, args); };
+    impactSystem.run = (...args) => {
+      q.impacts++;
+      const before = impactSystem.getForecastState();
+      const result = run.apply(impactSystem, args);
+      q.forecastConsumptions.push({ before, after: impactSystem.getForecastState() });
+      return result;
+    };
     const scene = window.__game.scene.getScene('PurificationScene');
     const audio = scene.playImpactAudio;
     scene.playImpactAudio = (...args) => { q.impactAudio++; return audio.apply(scene, args); };
@@ -113,7 +128,19 @@ try {
       const offered = state => state.inventory.items.find(item => item.id === 'first-return-offering');
       assert.deepEqual(offered(after), offered(before), 'no charge, transformation or reward on exemption');
       assert.notDeepEqual(after.tide, before.tide, 'normal return still advances tide');
-      assert.deepEqual(after.forecast, before.forecast, 'exemption never consumes the forecast');
+      // I29 R3: exemption suppresses damage/charges, but this returned trip's
+      // forecast is consumed. The next promise uses the advanced tide; targets
+      // may coincidentally repeat, so do not assert that the random ID changes.
+      assert.equal(after.forecastConsumptions.length, 1);
+      assert.deepEqual(after.forecastConsumptions[0].before, before.forecast);
+      assert.equal(after.forecastConsumptions[0].after.consumed, true, 'first return consumes its forecast');
+      assert.equal(after.forecast.consumed, false, 'the next forecast is ready and unconsumed');
+      assert.equal(after.forecast.version, 2);
+      assert(after.forecast.display, 'the next forecast has a player-facing reading');
+      assert(after.modules.some(module => module.id === after.forecast.actualPrimaryId), 'the next real target is frozen');
+      assert.equal(after.forecast.nextIntensity, after.tide.currentIntensity, 'next forecast uses the advanced tide');
+      assert.equal(after.forecast.nextNextIntensity, after.nextTideIntensity, 'lookahead uses the next tide preview');
+      assert.notEqual(after.forecast.nextIntensity, before.forecast.nextIntensity, 'first rise does not retain birth intensity');
       assert.match(after.text, /归来之后/); assert.match(after.text, /首次归来，本次免受冲击/);
       assert.match(after.text, /供奉积累不增加/); assert(!after.text.includes('冲击强度'));
       assert(!after.text.includes('最大损伤')); assert(!after.text.includes('−0'));
@@ -122,7 +149,7 @@ try {
       assert(fixed && fixed.y >= 0 && fixed.y + fixed.height <= 960, 'close is within view');
       if (outcome === 'extract') {
         await page.locator('#impact-result-panel').evaluate(element => Promise.all(element.getAnimations().map(animation => animation.finished)));
-        await page.screenshot({ path: path.join(out, 'first-return.png') });
+        await page.screenshot({ path: path.join(out, 'first-return.png'), timeout: 60000 });
       }
       await page.keyboard.down('Enter'); // ordinary keyboard path
       await page.keyboard.up('Enter');
@@ -130,7 +157,9 @@ try {
       const closed = await read(page); assert(!closed.panel); assert(closed.input); assert(!closed.pause);
       assert.equal(await page.locator('#impact-backdrop').count(), 0);
       await page.evaluate(() => { window.__firstReturnCheck.impactResultPanel.close(); window.__firstReturnCheck.impactResultPanel.close(); });
-      assert.deepEqual((await read(page)).inventory, after.inventory);
+      const closedTwice = await read(page);
+      assert.deepEqual(closedTwice.inventory, after.inventory);
+      assert.deepEqual(closedTwice.forecast, after.forecast, 'closing the report cannot reroll the next forecast');
     });
   }
 
@@ -165,6 +194,7 @@ try {
     assert.equal(after.shows, 1); assert.equal(after.impacts, 1); assert(!after.pending);
     assert.equal(after.reserve, before.reserve + 7); assert.deepEqual(after.tide, pending.tide);
     assert.deepEqual(after.modules, before.modules); assert.deepEqual(after.inventory, pending.inventory);
+    assert.deepEqual(after.forecast, pending.forecast, 'retry saves the same forecast candidate');
     await page.locator('#impact-close-btn').click();
     const saved = await read(page);
     await page.evaluate(() => window.__game.scene.getScene('PurificationScene').scene.restart({ kindlingGained: 7, survived: true }));
@@ -172,14 +202,26 @@ try {
     const duplicate = await read(page);
     assert.equal(duplicate.shows, 1); assert.equal(duplicate.impacts, 1); assert(!duplicate.panel);
     assert.deepEqual(duplicate.inventory, saved.inventory); assert.deepEqual(duplicate.tide, saved.tide);
+    assert.deepEqual(duplicate.forecast, saved.forecast, 'duplicate arrival does not consume or reroll the saved promise');
     assert.equal(duplicate.reserve, saved.reserve);
     await page.evaluate(() => history.replaceState({}, '', '/'));
     await page.reload(); await page.waitForFunction(() => window.__game?.scene.isActive('MainMenuScene'));
     await page.keyboard.press('Enter');
     await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
-    const reloaded = await page.evaluate(async () => (await import('/src/managers/game-state.ts')).gameState.getKindlingReserve());
+    const reloaded = await page.evaluate(async () => {
+      const loadedModule = pathname => {
+        const request = performance.getEntriesByType('resource').reverse()
+          .find(entry => new URL(entry.name).pathname === pathname);
+        return import(request?.name ?? pathname);
+      };
+      const [{ gameState }, { impactSystem }] = await Promise.all([
+        loadedModule('/src/managers/game-state.ts'), loadedModule('/src/systems/impact-system.ts'),
+      ]);
+      return { reserve: gameState.getKindlingReserve(), forecast: impactSystem.getForecastState() };
+    });
     await page.waitForTimeout(250); assert.equal(await page.locator('#impact-result-panel').count(), 0);
-    assert.equal(reloaded, saved.reserve);
+    assert.equal(reloaded.reserve, saved.reserve);
+    assert.deepEqual(reloaded.forecast, saved.forecast, 'reload preserves the committed next forecast');
   });
 
   await check('report ignores held-key repeats; destroy removes stale key listener and callback', async page => {

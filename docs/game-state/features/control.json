@@ -3,11 +3,11 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "WASD/方向键驱动移动，斜向归一；实际朝向随移动转向，角色贴图使用四向量化，朝向光场并非仅四向。",
+    "summary": "Rift保持WASD八向移动与朝向光域；净化点显式轨道模式：A/D平层、W/S楼梯，原人物左右帧，冻结共享键盘通道。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "净化点或 Rift 内 WASD/方向键"
+      "净化点：A/D或左右走动、W/S或上下在阶梯换层；Rift：原WASD/方向键"
     ],
     "sources": [
       {
@@ -33,15 +33,28 @@
       {
         "path": "docs/design-notes/purification-spatial-directions.md",
         "role": "doc"
+      },
+      {
+        "path": "src/systems/purification-chamber-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/purification-chamber-locomotion.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/iteration-30.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
     "evidence": [
       "COH-E-SRC-control",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E-I30-RUNTIME"
     ],
     "unknowns": [
-      "I30提议仅净化点采用侧视平层/短阶移动，尚未实现；现有正式净化点与Rift仍为原俯视。未来须回归场景切换后的输入/位置/角色表现。"
+      "I30双阶/面板冻结与正式切回Rift已实走；长期操作偏好与侧视导航初见可理解性仍待用户体验。"
     ]
   },
   {

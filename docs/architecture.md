@@ -10,6 +10,14 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+## 迭代30：侧视双层净化点
+
+`PurificationScene`继续拥有归来事务、库存、面板、保存和出击编排。新增`purification-chamber-layout.ts`作为六操作点、出生点、两层/双阶与常态相机唯一坐标源；`PurificationChamberLocomotion`以纯轨道求解约束Player位置。共享Player新增显式constrained模式，默认Rift路径不变。`ChamberModule`只负责接近与实际完整度读数，效果从GameState查询。`PurificationChamberVisual`负责缓存像素层、六对象及公开状态动效；不拥有资源/预告/战斗规则。
+
+正式净化点不再实例化旧TilemapRenderer、BoundaryShape/Atmosphere/Breath、VisibilitySystem、GroundDepthSorter和PurificationCollision；这些仍保留历史gym及其他现有调用。`createPurificationFloorTexture`明确只提供历史gym底图。新场所的设备后腔/行动前廊用固定层级，楼梯是唯一换层通道。菜单入场聚焦、面板恢复、出发隐藏scene及幂等清理保持。角色出生点不保存，旧基地存档无需迁移；旧Rift检查点仍走原Player恢复。
+
+以下迭代29/12的圆膜、原锚点和俯视排序描述是已被本节替代的历史实现说明，不作为当前净化点接入依据。
+
 ## 迭代29：净化点投入表现与线性成长（R3）
 
 `PurificationScene`依旧编排六处原锚点。`PurificationRenewalVisual`仅拥有静态承载补件/凹沟及状态覆盖，按真实加厚档、模块完整度和投资更新，储藏装饰随脚底排序；scene在购买、修复后同步，shutdown释放。供奉公开占用/潮汐压力驱动夹持内容，不读取未鉴定身份。培养藏内部改造按累计已购等级分阶段出现。地表共享基础见 `procedural-purification-surface.ts`，视觉合同见 `art/purification-renewal.md`。

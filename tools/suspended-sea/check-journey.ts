@@ -25,6 +25,7 @@ const { PurificationScene } = await import('../../src/scenes/purification-scene'
 const { RunController } = await import('../../src/systems/run-controller');
 const { saveManager } = await import('../../src/managers/save-manager');
 const { gameState } = await import('../../src/managers/game-state');
+const { growthSystem } = await import('../../src/systems/growth-system');
 const { contaminantSystem } = await import('../../src/systems/contaminant-system');
 const { inventoryStore } = await import('../../src/systems/inventory-store');
 const { getContaminantMaxUses, rollContaminantNodeDrop } = await import('../../src/systems/contaminant-quality');
@@ -40,15 +41,15 @@ class Storage extends BuildLabMemoryStorage {
   override setItem(key: string, value: string): void { if (this.fail) throw new Error('Expected test save failure'); super.setItem(key, value); }
 }
 const drawnBoundary = new Error('Engine rendering boundary');
-/** Execute the exact formal create() settlement, then stop at the first engine
- * texture access. No copied impact, tide or offering algorithm in the harness. */
+/** Execute the exact formal create() settlement, then stop at the chamber's first
+ * engine call. No copied impact, tide or offering algorithm in the harness. */
 function baseSettlement(initial: boolean, storage: Storage): () => void {
   const scene = new PurificationScene();
-  let retry: (() => void) | undefined;
-  Object.assign(scene, { textures: { exists() { throw drawnBoundary; } },
-    requestSaveRetry: () => { retry = () => { storage.fail = false; assert(saveManager.trySave()); }; } });
+  Object.assign(scene, { physics: { world: { setBounds() { throw drawnBoundary; } } } });
   assert.throws(() => scene.create({ fromMenu: initial }), error => error === drawnBoundary);
-  return () => { assert(retry); retry(); };
+  // Drawing stops before the DOM retry button is mounted. Exercise the same
+  // pending SaveManager transport here; real retry UI is covered in browser QA.
+  return () => { assert(saveManager.hasPendingSave()); storage.fail = false; assert(saveManager.trySave()); };
 }
 function fixture(enterThrows = false) {
   const storage = new Storage(); let bases = 0, starts = 0, retryBase: (() => void) | null = null;
@@ -156,6 +157,10 @@ check('source-derived items keep IDs through real scene offering, maturation and
     source: { runId: first.id, nodeId: node.id } }, { id: weapon.id, kind: 'weapon', weapon,
     source: { runId: first.id, nodeId: weaponNode.id } }], { x: 0, y: 0 }));
   let ended = endRun(f.session); ended.controller.restart(); ended.controller.destroy();
+  // This two-item lifecycle fixture requires the first earned offering expansion.
+  // Fresh production records now start with one slot (I29), not the old three.
+  const growth = growthSystem.getState();
+  growthSystem.loadState({ ...growth, upgrades: { ...growth.upgrades, growth_defense_slot: 1 } });
   success(inventoryStore.slotOffering(tool.id, 0)); success(inventoryStore.slotOffering(weapon.id, 1));
   assert.equal(getEquipmentLifecycle(inventoryStore.getItem(tool.id)!).impactCharges, 0);
   for (const [seed, expected] of [['7', 2], ['41', 4]] as const) {

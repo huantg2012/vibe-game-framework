@@ -26,6 +26,13 @@ exposes:
   - 新增事件：无（本系统对外为同步查询 API + setter，不进事件总线）
 ---
 
+## 迭代30：净化点的局部侧视适配
+
+净化点显式选择PlayerConfig.movementMode=`constrained`，共享原键盘、左右角色贴图、武器和冻结状态，由PurificationChamberLocomotion消费输入与有效速度；Arcade不再自行积分该场景角色。A/D走两条水平层，W/S走连接阶梯，可停/反向；所有通行坐标归`purification-chamber-layout.ts`。只有楼层允许交互，不能穿越楼板或自由纵移。输入冻结清零运动，单帧步长上限100ms。没有跳跃或坠落。
+
+默认`top-down`仍用于Rift，八向移动/加减速/朝向光域/存档恢复保持既有合同。Player新增getMovementInput与applyConstrainedMovement仅服务显式约束场景；后者根据实际移动控制左右步态，不将W/S画成俯视上下朝向。净化点视野不再使用旧气泡omni遮罩；Rift的VisibilitySystem完整保持。
+
+
 
 ## 迭代28 · 共享视距倍率与短冲
 

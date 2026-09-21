@@ -25,18 +25,20 @@ async function runCase(name) {
   const dir = path.join(out, name); fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'journey.jsonl'), '');
   const driver = createJourneyDriver(page, dir), cycle = createCycleInputs(page, driver);
-  const result = { name, errors, injection: name === 'cleanup-fault' ? 'Throw once after PurificationScene atmosphere.destroy completes. Production cleanup, catch, saved departure and MainMenu handoff otherwise unchanged.' : null };
+  const result = { name, errors, injection: name === 'cleanup-fault' ? 'Throw once after PurificationScene chamber.destroy completes. Production cleanup, catch, saved departure and MainMenu handoff otherwise unchanged.' : null };
   report.cases.push(result); persist();
   try {
     await page.goto(process.env.GAME_URL ?? 'http://127.0.0.1:3021/');
     await page.waitForFunction(() => window.__game?.scene.isActive('MainMenuScene'));
     await driver.press('Enter');
     await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
-    await page.waitForTimeout(1500);
+    await page.waitForFunction(() => !window.__game.scene.getScene('PurificationScene').menuEntry);
     const p = await page.evaluate(() => ({ ...window.__game.scene.getScene('PurificationScene').player.getPosition() }));
-    for (const point of [{ x: 272, y: p.y }, { x: 272, y: 112 }, { x: 248, y: 96 }, { x: 224, y: 88 }]) {
-      const arrival = await cycle.baseTo(point); assert(arrival.ok, JSON.stringify(arrival));
-    }
+    assert.deepEqual(p, { x: 224, y: 286 }, 'fresh chamber starts on the main floor');
+    // The new hub reaches the rift along the uninterrupted main-floor lane.
+    // baseTo sends real held keys; this does not teleport to the interaction.
+    const arrival = await cycle.baseTo({ x: 496, y: 286 });
+    assert(arrival.ok, JSON.stringify(arrival));
     await driver.press('e'); await page.waitForTimeout(350);
     await page.screenshot({ path: path.join(dir, 'prepare.png') });
     await page.evaluate(({ fault }) => {
@@ -60,8 +62,8 @@ async function runCase(name) {
       game.events.on('postrender', sample);
       observation.stop = () => game.events.off('postrender', sample);
       if (fault) {
-        const atmosphere = base.atmosphere, destroy = atmosphere.destroy.bind(atmosphere);
-        atmosphere.destroy = () => { atmosphere.destroy = destroy; destroy(); throw new Error('QA_ENTRY_CLEANUP_FAULT'); };
+        const chamber = base.chamber, destroy = chamber.destroy.bind(chamber);
+        chamber.destroy = () => { chamber.destroy = destroy; destroy(); throw new Error('QA_ENTRY_CLEANUP_FAULT'); };
       }
     }, { fault: name === 'cleanup-fault' });
     await driver.press('Shift+Enter');

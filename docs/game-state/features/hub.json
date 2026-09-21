@@ -3,11 +3,11 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "六处原锚点与短动线保持；维修地基/检修沟形成共同场所，供奉内容、培养改造与加厚承载随公开状态变化，伤痕限制在机壳内。",
+    "summary": "浅透视封闭双层净化点；A/D平层、W/S经两端楼梯换层，六操作点按同层接近E触发；外部三层改写残构与内部设备共同重绘。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "归来或新游戏进入 PurificationScene → 就近 E"
+      "新游戏/继续/归来→PurificationScene；主层储藏/核心/净化器/裂隙，上层蜕变/供奉"
     ],
     "sources": [
       {
@@ -73,6 +73,26 @@
       {
         "path": "docs/qa/i30-cutaway-design.md",
         "role": "doc"
+      },
+      {
+        "path": "src/systems/purification-chamber-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/purification-chamber-locomotion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/purification-chamber-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-chamber-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/iteration-30.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -84,11 +104,12 @@
       "COH-E-HIST-CYCLE",
       "COH-E-I29-RUNTIME",
       "COH-E-I30-DIRECTIONS",
-      "COH-E-I30-CUTAWAY-DESIGN"
+      "COH-E-I30-CUTAWAY-DESIGN",
+      "COH-E-I30-RUNTIME"
     ],
     "unknowns": [
-      "迭代29样板已实现并作限定内部验证；场所/模型审美与成长价值待用户体验，池仍6轴，长期采样沿迭代28挂起。",
-      "用户指出闭合膜和全平面通行不成立；I30当前为侧视封闭双层检修舱提案，旧俯视三候选退为历史；尚未接生产，角色侧视/真实碰撞/原速路线待实现验证。"
+      "I30已接入并限定运行验证；新美术、身体成长获得感和长期原速路线成本仍待玩家验收。出生到供奉约5.9秒，旧20%成本目标未满足。",
+      "I28长期采样/经济仍挂起，六轴成长池不由场景改造扩大。"
     ]
   },
   {
@@ -386,7 +407,7 @@
     "unknowns": [
       "R3限定验证通过；22步顺序/426总价/单格开局/线性加厚时机仍待自然体验，长期采样沿I28挂起。",
       "固定路线减少轴间自由排序，第三主动位库存前提和尾段能力转折仍待验证；降至18薪柴不代表GR-03整体解决。",
-      "GR-01/02已修；抗性正文同步当前仅减缓自然时间的实际能力，不扩大效果。整数产出读法GR-05待处理；GR-06及整体美术归I30；侧视封闭场所设计已就绪，成长获得感仍待制作和验证。",
+      "GR-01/02已修；抗性正文同步当前仅减缓自然时间的实际能力，不扩大效果。整数产出读法GR-05待处理；GR-06及整体美术归I30；侧视封闭场所和局部人物/装置确认已接入，长期身体获得感仍待验收。",
       "R4局部UX已通过受控浏览器和有限实景核对；未代签玩家审美，不消除既有成长池深度与长期经济问题。"
     ]
   },

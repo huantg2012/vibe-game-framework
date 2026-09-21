@@ -24,7 +24,10 @@ import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-sty
 // ---------------------------------------------------------------------------
 
 // Compatible alias for the accepted core sample; all three modules now share it.
-export type CoreAllocationContext = WorldInteractionContext;
+export type CoreAllocationContext = WorldInteractionContext & {
+  /** Scene layout clearance; default retains the historical top-down sample. */
+  readonly integrityOffsetY?: number;
+};
 
 let coreContext: CoreAllocationContext | null = null;
 let anchorFrame = 0;
@@ -92,7 +95,10 @@ function createPanel(): void {
   if (!mod) return;
 
   panel = createCrtPanel('allocation-panel');
-  if (coreContext) panel.classList.add('core-allocation', `allocation-${mod.type.toLowerCase()}`);
+  if (coreContext) {
+    panel.classList.add('core-allocation', `allocation-${mod.type.toLowerCase()}`);
+    panel.style.setProperty('--integrity-offset-y', `${coreContext.integrityOffsetY ?? 34}px`);
+  }
 
   const root = getDomUiRoot();
   const backdrop = document.createElement('div');

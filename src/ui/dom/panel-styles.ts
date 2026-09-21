@@ -223,7 +223,7 @@ const CSS = `
 #allocation-panel.core-allocation > * { position:absolute; opacity:0; transition:opacity 220ms ease-out; }
 #allocation-panel.core-present > * { opacity:1; }
 .core-identity { left:calc(var(--core-x) - 56px); top:calc(var(--core-y) - 144px); width:112px; text-align:center; font:16px/24px var(--ui-font); letter-spacing:4px; color:#aeb3a5; text-shadow:0 1px 5px #050907; }
-.core-integrity { left:calc(var(--core-x) - 62px); top:calc(var(--core-y) + 34px); width:124px; font:11px/18px var(--ui-font); text-shadow:0 1px 4px #050907; }
+.core-integrity { left:calc(var(--core-x) - 62px); top:calc(var(--core-y) + var(--integrity-offset-y, 34px)); width:124px; font:11px/18px var(--ui-font); text-shadow:0 1px 4px #050907; }
 .core-integrity-label { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; color:#788b7d; }
 .core-integrity-label > span { font:13px/18px var(--ui-mono); color:#a7b19e; }
 .core-integrity-label small { font-size:10px; color:#758072; }

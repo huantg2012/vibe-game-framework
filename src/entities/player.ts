@@ -45,6 +45,8 @@ export interface PlayerConfig {
   readonly facing?: Facing4;
   /** Optional scene footprint. Omitted: the shared centered 20px rift body. */
   readonly body?: PlayerBodyConfig;
+  /** Opt-in path controller; the default keeps the shared top-down Arcade movement. */
+  readonly movementMode?: 'top-down' | 'constrained';
 }
 
 
@@ -112,6 +114,7 @@ export class Player {
   private inputEnabled = true;
   private lastDeltaMs = 16;
   private motionElapsedMs = 0;
+  private movementMode: 'top-down' | 'constrained' = 'top-down';
   private shownFacing: Facing4 = 'right';
   private lag!: FacingLagGhost;
   private aura!: PlayerLampAura;
@@ -129,6 +132,7 @@ export class Player {
     this.burdenSpeedFactor = 1;
     this.weaponPose = null;
     this.baseSpeed = config.baseSpeed ?? GAME_CONSTANTS.PLAYER.SPEED;
+    this.movementMode = config.movementMode ?? 'top-down';
     this.facing4 = config.facing ?? 'right';
     this.facingAngle = FACING4_ANGLES[this.facing4];
 
@@ -154,6 +158,7 @@ export class Player {
     );
     body.setCollideWorldBounds(true);
     body.allowRotation = false;
+    body.moves = this.movementMode === 'top-down';
 
     this.lag = new FacingLagGhost(scene, idleKey, depth - 1, 0.5, 0.5);
     this.aura = new PlayerLampAura(scene, depth, this.lampLocal);
@@ -171,6 +176,13 @@ export class Player {
     this.lastDeltaMs = deltaMs;
     const dt = deltaMs / 1000;
     this.readInput();
+
+    // A scene-owned path controller resolves position and side-facing from actual
+    // travel. W/S on a landing must not turn this body into a top-down sprite.
+    if (this.movementMode === 'constrained') {
+      (this.image.body as Phaser.Physics.Arcade.Body).stop();
+      return;
+    }
 
     const targetFacing = this.resolveFacingTarget();
     if (this.weaponPose && this.weaponPose.phase !== 'idle') this.facingAngle = this.weaponPose.facing;
@@ -250,6 +262,31 @@ export class Player {
     return this.moving;
   }
 
+  /** The existing keyboard channel, including opposing keys and panel freezes. */
+  getMovementInput(): Readonly<Vector2> {
+    return this.inputVector;
+  }
+
+  /** A constrained scene's resolved body center; preserves the original actor rig. */
+  applyConstrainedMovement(x: number, y: number): void {
+    if (this.movementMode !== 'constrained') throw new Error('Player movement is not constrained');
+    if (!Number.isFinite(x) || !Number.isFinite(y)) throw new Error('Invalid constrained player position');
+    if (!this.inputEnabled) {
+      this.moving = false;
+      return;
+    }
+    const dx = x - this.image.x;
+    const dy = y - this.image.y;
+    this.moving = Math.abs(dx) + Math.abs(dy) > 0.000001;
+    if (Math.abs(dx) > 0.000001) {
+      this.facing4 = dx < 0 ? 'left' : 'right';
+      this.facingAngle = FACING4_ANGLES[this.facing4];
+    }
+    (this.image.body as Phaser.Physics.Arcade.Body).reset(x, y);
+    this.position.x = x;
+    this.position.y = y;
+  }
+
   /** Current speed in px/s after the modifier stack. */
   getEffectiveSpeed(): number {
     return this.baseSpeed * this.speedMultiplier * this.burdenSpeedFactor;
@@ -304,6 +341,9 @@ export class Player {
       this.inputVector.x = 0;
       this.inputVector.y = 0;
       this.moving = false;
+      if (this.movementMode === 'constrained') {
+        (this.image.body as Phaser.Physics.Arcade.Body).stop();
+      }
     }
   }
 
