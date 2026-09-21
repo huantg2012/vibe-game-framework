@@ -21,7 +21,7 @@ note: DEC-123；裂隙污染句法体系审查。只读分析已交，未实施�
 - I15-B art：读取像素模型 skill，审查当前模型结构、材料、辨识度和动作信号；区分实际画面判断与源码推断。已交。
 - I15-C qa：核查生成→行为→渲染链、确定性种子抽样与现有检查；说明预览与生产边界。已交。
 
-完整报告：[docs/qa/iteration-15.md](../qa/iteration-15.md)。证据：[说明与截图](../art/iteration-15-evidence/README.md)。本迭代不进入迭代5/6旧波次表，不重排已有任务。
+完整报告：[docs/reviews/iteration-15.md](../reviews/iteration-15.md)。证据：[说明与截图](../art/iteration-15-evidence/README.md)。本迭代不进入迭代5/6旧波次表，不重排已有任务。
 
 ## 后续验收目标（建议，尚未实施）
 

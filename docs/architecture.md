@@ -635,7 +635,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 ### DEC-ARCH-018: 净化点世界模块走贴图管线（purif-visual-pass）
 
 - **选择：** 核心、净化器、储藏不再以程序化几何体为生产默认。贴图住 `public/assets/sprites/modules/`，由 `BootScene.preload` 加载（核心三张静帧 + 净化器 8 帧图集 + 储藏 C1 8 帧图集）。`PurificationModuleEntity` 贴图缺失时回落到 Slice 7 几何体。
-- **理由：** 几何体只完成「标识」、没完成「存在」（`docs/art/review-2026-08-28/purification-presentation-findings-for-director.md` P1）。这是游戏首条世界实体图片资源管线——角色仍是程序像素，污染体仍是程序像素，只有净化点这三台装置改贴图。
+- **理由：** 几何体只完成「标识」、没完成「存在」（`docs/reviews/legacy-2026-08-28/purification-presentation-findings-for-director.md` P1）。这是游戏首条世界实体图片资源管线——角色仍是程序像素，污染体仍是程序像素，只有净化点这三台装置改贴图。
 - **不改：** 模块规则 / 数值 / HP 三态阈值 / 脚下完整度条 / 交互半径；裂隙实体不改加载策略。
 - **影响：** `purification-module.ts` 公开 `coreSpriteKey` / `PURIFIER_SHEET_KEY` / `STORAGE_SHEET_KEY` / `setCoreVariant`；场景键 1/2/3 切核心对照，生产默认 B。键 4/5/7/8/9 切裂隙入口外形对照（`rift-entrance-visual.ts`），生产默认卡 5 击裂（DEC-114）。Boot 另预加载供奉台 `offering-i-sheet.png`（DEC-115）与培养藏 `growth-a-sheet.png`（DEC-116）。DEC-111 / DEC-112 / DEC-113 / DEC-114 / DEC-115 / DEC-116 / DEC-117 / DEC-ARCH-019 / DEC-ARCH-020。
 

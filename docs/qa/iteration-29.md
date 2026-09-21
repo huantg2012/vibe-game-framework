@@ -7,7 +7,7 @@ iteration: 29
 
 # 迭代29：净化点场所与成长转折样板
 
-[执行清单](../tasks/iteration-29.md) / [审查基线](purification-growth-review-2026-09-20.md) / [设计与比较假设](../design-notes/purification-growth-renewal.md) / [美术HOW和自检](../art/purification-renewal.md)。本轮实现前两批样板，不把第一次内部验证写成整款游戏或长线成长完成。
+[执行清单](../tasks/iteration-29.md) / [审查基线](../reviews/purification-growth-review-2026-09-20.md) / [设计与比较假设](../design-notes/purification-growth-renewal.md) / [美术HOW和自检](../art/purification-renewal.md)。本轮实现前两批样板，不把第一次内部验证写成整款游戏或长线成长完成。
 
 ## 实现与评审回应
 

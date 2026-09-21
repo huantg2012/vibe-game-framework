@@ -1,6 +1,6 @@
 # 净化点视觉表现优化 · 执行计划
 
-分支：`purif-visual-pass`　工作对象：`docs/art/review-2026-08-28/report-purification.html`
+分支：`purif-visual-pass`　工作对象：`docs/reviews/legacy-2026-08-28/report-purification.html`
 
 ---
 

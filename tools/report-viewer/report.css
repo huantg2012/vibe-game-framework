@@ -154,6 +154,8 @@ button.report-pill:hover:not(:disabled) { background: var(--report-fill); }
 .report-index li > div > a { font-size: 16px; font-weight: 600; }
 .report-index time { color: var(--report-muted); font-size: 12px; white-space: nowrap; }
 .report-index li p { margin-top: 4px; }
+.report-index-links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 12px 0; font-size: 13px; }
+.report-index .report-history-note { border-left: 2px solid var(--report-stroke); padding-left: 12px; font-size: 13px; }
 .report-index code { font-size: 12px; overflow-wrap: anywhere; }
 @media (max-width: 900px) {
   .report-grid[data-columns='4'] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }

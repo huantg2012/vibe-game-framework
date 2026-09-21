@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><link rel="icon" href="data:,"><title>游戏阅读材料</title><style>:root {
+  color-scheme: light dark;
+  --report-bg: #fafbf9;
+  --report-surface: #ffffff;
+  --report-text: #232822;
+  --report-secondary: #515950;
+  --report-muted: #667064;
+  --report-stroke: #bfc9bd;
+  --report-stroke-soft: #dce2d9;
+  --report-fill-strong: #d5dfd2;
+  --report-fill: #e8ede5;
+  --report-subtle: #f0f3ed;
+  --report-accent: #346343;
+  --report-accent-hover: #294e35;
+  --report-on-accent: #ffffff;
+  --report-info: #356782;
+  --report-success: #346343;
+  --report-warning: #8a651e;
+  --report-danger: #a34238;
+  --report-chart-neutral: #69766b;
+  --report-chart-0: #356782;
+  --report-chart-1: #846134;
+  --report-chart-2: #726091;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --report-bg: #181c19;
+    --report-surface: #202621;
+    --report-text: #edf0e9;
+    --report-secondary: #b7c0b5;
+    --report-muted: #9ca898;
+    --report-stroke: #576352;
+    --report-stroke-soft: #343e32;
+    --report-fill-strong: #465440;
+    --report-fill: #303b2c;
+    --report-subtle: #242d22;
+    --report-accent: #a9cca3;
+    --report-accent-hover: #c3ddb8;
+    --report-on-accent: #182116;
+    --report-info: #95c4dc;
+    --report-success: #a9cca3;
+    --report-warning: #dec284;
+    --report-danger: #efa59a;
+    --report-chart-neutral: #a5b4a4;
+    --report-chart-0: #95c4dc;
+    --report-chart-1: #dec284;
+    --report-chart-2: #c1addd;
+  }
+}
+* { box-sizing: border-box; }
+html { background: var(--report-bg); color: var(--report-text); }
+body { margin: 0; font: 15px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+button, select { font: inherit; }
+button, a, select { -webkit-tap-highlight-color: transparent; }
+button, select { color: inherit; }
+button { cursor: pointer; }
+button:disabled, select:disabled { opacity: .5; cursor: not-allowed; }
+button:focus-visible, select:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--report-accent); outline-offset: 3px; }
+a { color: var(--report-accent); text-underline-offset: 3px; overflow-wrap: anywhere; }
+a:hover { text-decoration-thickness: 2px; }
+h1, h2, h3, p, figure { margin: 0; }
+h1 { font-size: 24px; line-height: 1.45; font-weight: 650; letter-spacing: -.02em; }
+h2 { font-size: 19px; line-height: 1.5; font-weight: 650; }
+h3 { font-size: 16px; line-height: 1.5; font-weight: 650; }
+img { max-width: 100%; height: auto; }
+svg { max-width: 100%; }
+[hidden] { display: none !important; }
+#root { width: 100%; min-width: 0; padding-bottom: 56px; }
+.report-stack, .report-row, .report-grid { min-width: 0; }
+.report-stack { display: flex; flex-direction: column; }
+.report-row { display: flex; }
+.report-row > *, .report-grid > *, .report-stack > * { min-width: 0; }
+.report-grid { display: grid; }
+.report-divider { width: 100%; border: 0; border-top: 1px solid var(--report-stroke-soft); margin: 5px 0; }
+.report-text { overflow-wrap: anywhere; }
+.report-text-small { font-size: 13px; line-height: 1.65; }
+.report-text-secondary { color: var(--report-secondary); }
+.report-text-tertiary, .report-text-quaternary { color: var(--report-muted); }
+.report-truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.report-button, .report-pill, .report-select { border: 1px solid var(--report-stroke); border-radius: 5px; min-height: 34px; padding: 5px 11px; line-height: 1.45; max-width: 100%; }
+.report-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: var(--report-surface); flex: 0 1 auto; width: fit-content; text-align: center; }
+.report-button:hover:not(:disabled) { background: var(--report-fill); }
+.report-button-primary { background: var(--report-accent); border-color: var(--report-accent); color: var(--report-on-accent); }
+.report-button-primary:hover:not(:disabled) { background: var(--report-accent-hover); }
+.report-button-ghost { border-color: transparent; background: transparent; color: var(--report-accent); }
+.report-pill { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-color: var(--report-stroke-soft); background: transparent; color: var(--report-secondary); width: fit-content; font-size: 13px; border-radius: 20px; text-align: center; }
+button.report-pill:hover:not(:disabled) { background: var(--report-fill); }
+.report-pill.is-active { background: var(--report-fill-strong); border-color: var(--report-stroke); color: var(--report-text); }
+.report-pill-sm { border: 0; padding: 2px 7px; min-height: 25px; font-size: 12px; }
+.report-pill kbd { color: var(--report-muted); font-size: .85em; }
+.report-select { width: fit-content; background: var(--report-surface); padding-right: 27px; text-overflow: ellipsis; }
+.report-card-body > .report-stack > .report-select { width: 100%; }
+.report-card { border: 1px solid var(--report-stroke-soft); border-radius: 6px; background: var(--report-surface); min-width: 0; }
+.report-card-borderless { border: 0; border-radius: 0; background: transparent; }
+.report-card-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 13px; font-weight: 600; background: var(--report-subtle); border: 0; border-bottom: 1px solid var(--report-stroke-soft); border-radius: 5px 5px 0 0; }
+.report-card-lg .report-card-header { padding: 12px 18px; }
+.report-card-header.is-sticky { position: sticky; top: 0; z-index: 1; }
+.report-card-body { padding: 16px; }
+.report-header-title { min-width: 0; overflow-wrap: anywhere; }
+.report-trailing { margin-left: auto; color: var(--report-secondary); font-size: 13px; min-width: 0; }
+.report-disclosure { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; color: inherit; }
+.report-disclosure:hover { background: var(--report-subtle); }
+.report-collapsible { min-width: 0; }
+.report-collapsible-heading { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.report-collapsible-heading > .report-disclosure { border: 0; border-radius: 4px; padding: 10px 2px; background: transparent; font-weight: 600; flex: 1; min-width: 0; }
+.report-collapsible-heading > .report-disclosure:hover { background: var(--report-subtle); }
+.report-collapsible-body { padding: 8px 0 14px 24px; }
+.report-collapsible-body > .report-text + .report-text { margin-top: 10px; }
+.report-chevron { display: inline-block; flex: 0 0 14px; width: 14px; height: 20px; font: 24px/18px sans-serif; text-align: center; transform: rotate(0deg); }
+.report-chevron.is-open { transform: rotate(90deg); }
+.report-count { color: var(--report-muted); font-size: 12px; }
+.report-table-scroll { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; }
+.report-table-framed { border: 1px solid var(--report-stroke-soft); border-radius: 5px; }
+.report-table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 580px; font-size: 14px; line-height: 1.65; text-align: left; }
+.report-table th, .report-table td { padding: 11px 13px; vertical-align: top; border-bottom: 1px solid var(--report-stroke-soft); overflow-wrap: anywhere; min-width: 70px; }
+.report-table th { color: var(--report-secondary); background: var(--report-subtle); font-weight: 600; white-space: nowrap; }
+.report-table tr:last-child td { border-bottom: 0; }
+.report-table.has-sticky-header th { position: sticky; top: 0; z-index: 1; }
+.report-table.is-striped tbody tr:nth-child(even) { background: var(--report-subtle); }
+.report-table td .report-button { white-space: nowrap; }
+.report-tone-dot { display: inline-block; width: 6px; height: 6px; background: currentColor; border-radius: 50%; margin: 0 7px 2px 0; }
+.report-tone-neutral { color: var(--report-secondary); }
+.report-tone-info { color: var(--report-info); }
+.report-tone-success { color: var(--report-success); }
+.report-tone-warning { color: var(--report-warning); }
+.report-tone-danger { color: var(--report-danger); }
+.report-callout { display: flex; gap: 12px; border-left: 3px solid currentColor; background: var(--report-subtle); padding: 12px 16px; }
+.report-callout > div { color: var(--report-text); min-width: 0; }
+.report-callout-title { font-weight: 600; margin-bottom: 4px; }
+.report-stat-value { font-size: 24px; font-weight: 650; line-height: 1.3; }
+.report-stat-label { font-size: 13px; color: var(--report-secondary); margin-top: 6px; }
+.report-chart { min-width: 0; width: 100%; }
+.report-chart-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 4px; color: var(--report-secondary); font-size: 12px; }
+.report-chart-legend > span { display: inline-flex; gap: 7px; align-items: center; }
+.report-chart-legend i { display: inline-block; height: 8px; width: 16px; border-radius: 1px; }
+.report-chart-scroll { width: 100%; min-width: 0; }
+.report-chart-svg { display: block; max-width: 100%; font-family: inherit; font-size: 12px; }
+.report-chart-tick line { stroke: var(--report-stroke-soft); }
+.report-chart-tick text, .report-chart-category { fill: var(--report-secondary); font-size: 12px; }
+.report-chart-value { fill: var(--report-text); font-size: 12px; }
+.report-chart-guide { stroke: var(--report-stroke); stroke-dasharray: 3 3; }
+.report-chart-hit:focus-visible { outline: none; stroke: var(--report-accent); stroke-width: 1; }
+.report-chart-tooltip { min-height: 28px; padding-top: 5px; font-size: 12px; color: var(--report-secondary); }
+.report-banner { max-width: 1200px; margin: 0 auto; padding: 16px 24px; border-bottom: 1px solid var(--report-stroke-soft); font-size: 13px; color: var(--report-secondary); }
+.report-banner p + p { margin-top: 6px; }
+.report-banner > a + span { margin-left: 14px; }
+.report-index { max-width: 1080px; margin: 0 auto; padding: 36px 24px 64px; }
+.report-index h1 { margin-bottom: 12px; }
+.report-index h2 { margin: 28px 0 12px; }
+.report-index p { color: var(--report-secondary); }
+.report-index ul, .report-index ol { list-style: none; padding: 0; }
+.report-index li { margin: 0; padding: 18px 0; border-bottom: 1px solid var(--report-stroke-soft); }
+.report-index li > div { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
+.report-index li > div > a { font-size: 16px; font-weight: 600; }
+.report-index time { color: var(--report-muted); font-size: 12px; white-space: nowrap; }
+.report-index li p { margin-top: 4px; }
+.report-index-links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 12px 0; font-size: 13px; }
+.report-index .report-history-note { border-left: 2px solid var(--report-stroke); padding-left: 12px; font-size: 13px; }
+.report-index code { font-size: 12px; overflow-wrap: anywhere; }
+@media (max-width: 900px) {
+  .report-grid[data-columns='4'] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 720px) {
+  .report-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .report-collapsible-heading { align-items: flex-start; }
+  .report-trailing { max-width: 40%; }
+  .report-collapsible-body { padding-left: 14px; }
+  h1 { font-size: 22px; }
+}
+@media print {
+  .report-banner, button, select, .report-chart-tooltip { display: none; }
+  .report-table-scroll, .report-chart-scroll { overflow: visible; }
+  .report-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .report-card, .report-callout { break-inside: avoid; }
+}
+</style></head><body><main class="report-index"><p class="eyebrow">那天之后 · 开发记录</p><h1>游戏阅读材料</h1><p>按用途分开的交互材料。审查结果统一收在<a href="../reviews/index.html">审查档案</a>；设计探索和内容目录保留在此。</p><p>各页保留生成时的数据与判断，页面顶部标明历史范围。</p><section aria-labelledby="review-heading"><h2 id="review-heading">审查报告</h2><p><a href="../reviews/index.html">完整审查档案：正文、交互摘要与后续处理</a></p><ul><li data-report-id="growth-sample-review-2026-09-21"><div><a href="../reviews/interactive/growth-sample-review-2026-09-21.html">成长样板：交互成本与发现摘要</a><time>2026-09-21</time></div><p>22 步路线、成本图表和六项审查发现。</p></li>
+<li data-report-id="purification-growth-review-2026-09-20"><div><a href="../reviews/interactive/purification-growth-review-2026-09-20.html">净化点与角色成长评审</a><time>2026-09-20</time></div><p>场所、模型、成长结构与实景证据。</p></li>
+<li data-report-id="game-wide-review-2026-09-18"><div><a href="../reviews/interactive/game-wide-review-2026-09-18.html">全游戏补充评审</a><time>2026-09-18</time></div><p>净化点、装备、角色成长与游戏循环。</p></li>
+<li data-report-id="contaminant-system-review"><div><a href="../reviews/interactive/contaminant-system-review.html">污染物系统审查</a><time>2026-09-10</time></div><p>早期物件审查、命名、品质与验收建议。</p></li></ul></section>
+<section aria-labelledby="design-heading"><h2 id="design-heading">设计与探索</h2><ul><li data-report-id="contaminant-ability-design"><div><a href="contaminant-ability-design.html">污染物能力系统设计</a><time>2026-09-19</time></div><p>功能族、分级、供奉鉴定和扩展设计。</p></li>
+<li data-report-id="rift-world-space"><div><a href="rift-world-space.html">裂隙世界空间</a><time>2026-09-16</time></div><p>地图信息维度、组合空间及约束。</p></li>
+<li data-report-id="rift-visual-directions"><div><a href="rift-visual-directions.html">裂隙环境表现方向</a><time>2026-09-11</time></div><p>环境方向对比与技术表现构想。</p></li></ul></section>
+<section aria-labelledby="catalog-heading"><h2 id="catalog-heading">内容目录</h2><ul><li data-report-id="contaminant-catalog"><div><a href="contaminant-catalog.html">污染物完整图文目录</a><time>2026-09-20</time></div><p>48 件污染物、图标、效果与分类筛选。</p></li></ul></section><footer>页面可直接用浏览器打开。阅读与交互不需要联网，也不会修改游戏存档。<br><a href="../dev/report-viewer.md">刷新与使用说明</a></footer></main></body></html>
