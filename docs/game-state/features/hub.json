@@ -203,7 +203,7 @@
     "id": "COH-F029",
     "title": "永久蜕变、容量成长与装置加厚",
     "domain": "progression",
-    "summary": "22步线性蜕变、只买下一项；第5/17步需真实冲击/退潮。全价格归路线CSV，8至38、总426，旧购不补扣退款；加厚不降低同当前HP效能，供奉1→4保持。",
+    "summary": "22步线性蜕变、只买下一项；Level/最高级与供奉件数独立，收益/成本/经历分层。R4明确自身上限、每次增量与累计效果；价格8至38总426、供奉1→4与加厚规则保持。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -313,6 +313,22 @@
       {
         "path": "docs/reviews/index.html",
         "role": "doc"
+      },
+      {
+        "path": "tools/growth/check-upgrade-display.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/i29-linear-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/i29-r4-detail-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-29-r4.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -330,12 +346,15 @@
       "COH-E-I29-R2-REVIEW",
       "COH-E-I29-R2-FORECAST-LEAK",
       "COH-E-I29-R3-AUTO",
-      "COH-E-I29-R3-RUNTIME"
+      "COH-E-I29-R3-RUNTIME",
+      "COH-E-I29-R4-AUTO",
+      "COH-E-I29-R4-RUNTIME"
     ],
     "unknowns": [
       "R3限定验证通过；22步顺序/426总价/单格开局/线性加厚时机仍待自然体验，长期采样沿I28挂起。",
       "固定路线减少轴间自由排序，第三主动位库存前提和尾段能力转折仍待验证；降至18薪柴不代表GR-03整体解决。",
-      "GR-01/02已修；抗性正文同步当前仅减缓自然时间的实际能力，不扩大效果。整数产出读法GR-05待处理；GR-06及净化点整体美术另列I30未启动。"
+      "GR-01/02已修；抗性正文同步当前仅减缓自然时间的实际能力，不扩大效果。整数产出读法GR-05待处理；GR-06及净化点整体美术另列I30未启动。",
+      "R4局部UX已通过受控浏览器和有限实景核对；未代签玩家审美，不消除既有成长池深度与长期经济问题。"
     ]
   },
   {

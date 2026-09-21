@@ -101,7 +101,7 @@
     "id": "COH-F034",
     "title": "存续报告及已见物件",
     "domain": "interface",
-    "summary": "四页存续报告沿原入口，已刻入能力显示当前等级/上限与当前效果；蜕变只披露下一项、条件及22步进度，潮汐按预兆级数公开信息。",
+    "summary": "四页存续报告沿原入口，已刻入能力显示当前等级/上限与当前效果；蜕变只披露下一项、条件及22步进度，潮汐按预兆级数公开信息。 蜕变报告采用Level与最高级，已购效果只读当前；R4与培养藏共享效果语义。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -147,7 +147,8 @@
       "COH-E-HIST-CATALOG",
       "COH-E-I29-RUNTIME",
       "COH-E-I29-R2-AUTO",
-      "COH-E-I29-R2-RUNTIME"
+      "COH-E-I29-R2-RUNTIME",
+      "COH-E-I29-R4-RUNTIME"
     ],
     "unknowns": []
   },
@@ -329,7 +330,8 @@
     ],
     "dependsOn": [],
     "evidence": [
-      "COH-E-SRC-interface"
+      "COH-E-SRC-interface",
+      "COH-E-I29-R4-RUNTIME"
     ],
     "unknowns": [
       "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。"

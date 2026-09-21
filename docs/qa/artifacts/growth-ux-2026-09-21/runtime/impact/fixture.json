@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "kindlingReserve": 1000,
+  "repairBonusHp": 0,
+  "pendingSideEffects": [],
+  "upgradeDiscount": 0,
+  "moduleSwapActive": false,
+  "modules": [
+    {
+      "id": "CORE",
+      "type": "CORE",
+      "hp": 100,
+      "maxHp": 100
+    },
+    {
+      "id": "STORAGE",
+      "type": "STORAGE",
+      "hp": 100,
+      "maxHp": 100
+    },
+    {
+      "id": "PURIFIER",
+      "type": "PURIFIER",
+      "hp": 100,
+      "maxHp": 100
+    }
+  ],
+  "moduleMaxHpTier": 0,
+  "cycle": 1,
+  "tide": {
+    "tideNumber": 1,
+    "phase": "rise",
+    "cycleInPhase": 0,
+    "currentIntensity": 1
+  },
+  "inventory": {
+    "version": 3,
+    "items": [
+      {
+        "kind": "weapon",
+        "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+        "weapon": {
+          "id": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+          "definitionId": "crowbar_plain",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 60
+        },
+        "location": {
+          "kind": "carried"
+        }
+      }
+    ],
+    "equipment": {
+      "weaponId": "WPN_0f9bbcbe-cf06-4870-a22a-a1e396dac02d",
+      "toolIds": [],
+      "defenseIds": []
+    },
+    "run": null,
+    "starterGranted": true,
+    "firstWeaponDiscovered": false,
+    "catalogTutorialRevealed": false,
+    "discoveredCatalogIds": [],
+    "offeringReceipts": {},
+    "nextAcquiredOrdinal": 1
+  },
+  "growth": {
+    "upgrades": {
+      "growth_chaos_resist": 1,
+      "growth_kindling_affinity": 1,
+      "growth_vitality": 1,
+      "growth_sortie_slot": 0,
+      "growth_defense_slot": 1,
+      "growth_forecast_clarity": 0
+    },
+    "schemaVersion": 2,
+    "progression": {
+      "version": 1,
+      "impactExperienced": false,
+      "offeringCompleted": false,
+      "toolRevealed": false,
+      "crestExperienced": false
+    }
+  },
+  "stability": {
+    "progress": 0,
+    "reached": false
+  },
+  "contaminantRuntimeState": {}
+}

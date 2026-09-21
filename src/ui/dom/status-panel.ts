@@ -4,7 +4,7 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
-import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
+import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES, formatGrowthLevel } from '@/config/growth-upgrade-display';
 import { gameState } from '@/managers/game-state';
 import type { ModuleType } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
@@ -272,10 +272,10 @@ function growthDetailHtml(): string {
 
   let body = `<div class="stat-row">
       <span class="stat-label">加厚</span>
-      <span>第 ${tier} 档</span>
+      <span>${formatGrowthLevel(tier)}</span>
     </div>
     <div class="stat-row">
-      <span class="stat-label">全部上限</span>
+      <span class="stat-label">每台装置完整度上限</span>
       <span class="stat-value">${maxHp}</span>
     </div>`;
 
@@ -288,7 +288,7 @@ function growthDetailHtml(): string {
       const level = growthSystem.getLevel(id);
       body += `<div class="item-tile${selected ? ' tile-selected' : ''}" data-inspect-index="${i}">
         <span>${GROWTH_UPGRADE_NAMES[id]}</span>
-        <span>${level} / ${growthSystem.getMaxLevel(id)}</span>
+        <span>${formatGrowthLevel(level)}</span>
       </div>`;
     });
     body += `</div>`;
@@ -357,6 +357,6 @@ function computeUpgradeInspectHtml(inscribed: GrowthUpgradeId[]): string {
   const name = display?.name ?? GROWTH_UPGRADE_NAMES[id];
   const effect = display?.effectLabel(level, level) ?? '';
   return `<div class="inspect-l1">${name}</div>
-    <div class="inspect-l2"><span>等级</span> <span>${level} / ${growthSystem.getMaxLevel(id)}</span></div>
+    <div class="inspect-l2">${formatGrowthLevel(level)} · 最高 ${formatGrowthLevel(growthSystem.getMaxLevel(id))}</div>
     <div class="inspect-l3">${effect}</div>`;
 }

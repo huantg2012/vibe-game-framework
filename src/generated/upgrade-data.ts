@@ -48,7 +48,7 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     effectPerLevel: 15,
     effectUnit: '最大生命值增加',
     costs: [8, 12, 19, 30],
-    description: '核心抗性的物理表现增强',
+    description: '厌恶污染覆盖，身体逐渐变得坚韧。',
   },
   'growth_sortie_slot': {
     id: 'growth_sortie_slot',

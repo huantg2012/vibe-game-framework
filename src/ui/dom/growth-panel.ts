@@ -4,7 +4,7 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
-import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES } from '@/config/growth-upgrade-display';
+import { GROWTH_UPGRADE_DISPLAY, GROWTH_UPGRADE_NAMES, formatGrowthLevel, type GrowthEffectPreview } from '@/config/growth-upgrade-display';
 import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
@@ -25,7 +25,7 @@ const THICKEN_ID = 'thicken' as const;
 interface GrowthEntry {
   id: GrowthUpgradeId | typeof THICKEN_ID;
   name: string; level: number; maxLevel: number; targetLevel: number;
-  cost: number | null; effect: string; next: boolean;
+  cost: number | null; effect: GrowthEffectPreview; next: boolean;
   unlocked: boolean; requirement: string; responsibility: string;
 }
 const RESPONSIBILITY: Record<string, string> = {
@@ -46,8 +46,11 @@ function entriesForDisplay(): GrowthEntry[] {
       cost: isNext ? next!.cost : null, unlocked: isNext && next!.unlocked,
       requirement: isNext ? next!.requirementText : '',
       // Owned entries only describe existing effects, never another future node.
-      effect: thicken ? thickenEffectHtml(maxHp, isNext ? maxHp + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER : null, !isNext)
-        : display!.effectLabel(level, isNext ? maxLevel : level),
+      effect: thicken ? {
+        label: '每台装置完整度上限', value: String(maxHp + (isNext ? GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER : 0)),
+        currentValue: isNext ? String(maxHp) : undefined,
+        gain: isNext ? `三台装置上限各 +${GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER}` : undefined,
+      } : display!.effectPreview(level, isNext ? next!.level : undefined),
       responsibility: RESPONSIBILITY[definition?.responsibility ?? 'base'] ?? '' });
   };
   if (next) add(next.id, true);
@@ -175,22 +178,30 @@ function thickenSelected(): boolean {
 // Rendering
 // ---------------------------------------------------------------------------
 
-function thickenEffectHtml(currentMax: number, nextMax: number | null, isMaxed: boolean): string {
-  const name = '<span>全部上限</span>';
-  const cur = `<span style="color:#b5bbaf;margin-left:6px;">${currentMax}</span>`;
-  if (isMaxed || nextMax === null) return `${name}${cur}`;
-  return `${name}${cur}<span style="color:#8a8f96;margin:0 4px;">→</span><span style="color:#b5bbaf;">${nextMax}</span>`;
+function escapeText(text: string): string {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function effectHtml(effect: GrowthEffectPreview): string {
+  const gain = effect.gain ? escapeText(effect.gain).replace(/([+−-]?\d+(?:\.\d+)?(?:%|个百分点)?)/g, '<strong>$1</strong>') : '';
+  const value = effect.value.split(' · ').map(term => `<span class="growth-term">${escapeText(term)}</span>`).join(' · ');
+  return `<div class="growth-effect">
+    ${gain ? `<div class="growth-gain" data-growth-gain>${gain}</div>` : ''}
+    <div class="growth-effect-total"><span class="readout-label">${escapeText(effect.label)}</span>
+      <span>${effect.currentValue === undefined ? '' : `<span class="growth-before">${escapeText(effect.currentValue)} → </span>`}<span class="growth-after">${value}</span></span></div>
+    ${effect.note ? `<p class="readout-note growth-mechanic-note">${escapeText(effect.note)}</p>` : ''}
+  </div>`;
 }
 
 function thickenConsequencesHtml(): string {
   if (gameState.getNextModuleMaxHpCost() === null) return '';
   const preview = previewThickening(gameState.getModules(), gameState.getRepairBonusHp());
   const names: Record<string, string> = { CORE: '核心', STORAGE: '储藏', PURIFIER: '净化器' };
-  return `<div class="separator"></div><div class="readout-section">扩容后仍需修复</div>
+  return `<div class="growth-consequences"><div class="readout-section">加厚后</div>
     <div class="stat-row" data-thicken-consequence="chaos"><span class="readout-label">起始混乱</span><span>${preview.startingChaos} → ${preview.nextStartingChaos}</span></div>
-    <p class="readout-note" data-thicken-consequence="refill">当前完整度不增加。补满全部装置另需至少 ${preview.refillKindling} 薪柴${gameState.getRepairBonusHp() > 0 ? '，已计一次修复余量' : ''}。</p>
+    <p class="readout-note" data-thicken-consequence="refill">当前完整度不增加。补满另需至少 <span class="growth-cost">${preview.refillKindling} 薪柴</span>${gameState.getRepairBonusHp() > 0 ? '，已计一次修复余量' : ''}。</p>
     ${preview.modules.map(module => `<div class="stat-row"><span class="readout-label">${names[module.id] ?? module.id}</span>
-      <span>${module.hp} / ${module.maxHp} → ${module.hp} / ${module.nextMaxHp}</span></div>`).join('')}`;
+      <span>${module.hp} / ${module.maxHp} → ${module.hp} / ${module.nextMaxHp}</span></div>`).join('')}</div>`;
 }
 
 function render(selectionOnly = false, revealSelection = false): void {
@@ -202,25 +213,25 @@ function render(selectionOnly = false, revealSelection = false): void {
   const progress = growthSystem.getRouteProgress();
   const available = selected.unlocked && selected.cost !== null && reserve >= selected.cost;
   const reason = !selected.next ? (selected.level === selected.maxLevel ? '已至上限。' : '已永久生效。')
-    : !selected.unlocked ? '' : available ? '消耗薪柴后永久生效。'
+    : !selected.unlocked ? '' : available ? ''
     : `薪柴不足，还差 ${selected.cost! - reserve}。`;
   const list = entries.map((entry, index) => `${index === 0 && entry.next ? '<div class="readout-section">下一次蜕变</div>' : index === (entries[0]?.next ? 1 : 0) ? '<div class="readout-section">已刻入</div>' : ''}
     <div class="upgrade-card${index === cursorCard ? ' card-selected' : ''}${!entry.next ? ' card-maxed' : !entry.unlocked || entry.cost! > reserve ? ' card-locked' : ''}"
       data-id="${entry.id}" data-growth-next="${entry.next}">
-    <div class="card-body"><div class="card-name">${entry.name}</div><div class="readout-note">${entry.next ? '刻入' : '等级'} ${entry.targetLevel} / ${entry.maxLevel}${entry.next ? ` · ${entry.unlocked ? entry.cost! <= reserve ? '可刻入' : '薪柴不足' : '尚待经历'}` : ''}</div></div>
+    <div class="card-body"><div class="card-name">${entry.name}</div><div class="growth-card-meta"><span class="growth-level">${formatGrowthLevel(entry.targetLevel)}</span>${entry.next ? `<span class="growth-card-state">${entry.unlocked ? entry.cost! <= reserve ? '可刻入' : '薪柴不足' : '尚待经历'}</span>` : ''}</div></div>
     ${entry.cost !== null ? `<div class="card-cost">${entry.cost}<span class="readout-label"> 薪柴</span></div>` : ''}
   </div>`).join('');
   const html = `<div class="panel-heading"><div class="panel-title">蜕变</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>
-    <div class="readout-note" data-growth-progress>已刻入 ${progress.completed} / ${progress.total}${progress.completed === progress.total ? ' · 全部完成' : ''}<span data-growth-feedback style="float:right;color:#b29a73;"></span></div>
+    <div class="growth-route-line"><span class="readout-note" data-growth-progress>已刻入 ${progress.completed} 项 · 共 ${progress.total} 项${progress.completed === progress.total ? ' · 全部完成' : ''}</span><span data-growth-feedback role="status"></span></div>
     <div class="decision-layout"><div class="decision-main scroll-area readout-list">${list}</div>
-      <div class="decision-aside readout-detail"><div class="readout-section">${selected.responsibility} · ${selected.name}</div>
-        <div class="stat-row"><span class="readout-label">${selected.next ? '本次等级' : '当前等级'}</span><span>${selected.next ? `${selected.level} → ${selected.targetLevel}` : selected.level} / ${selected.maxLevel}</span></div>
-        <div class="readout-copy">${selected.effect}</div>
-        ${selected.requirement && !selected.unlocked ? `<p class="readout-note" data-growth-requirement>尚待经历 · ${selected.requirement}</p>` : ''}
-        ${thickenSelected() ? '' : '<div class="separator"></div>'}
-        ${selected.cost === null ? '' : `<div class="stat-row"><span class="readout-label">本次消耗</span><span class="readout-value">${selected.cost}</span><span>薪柴</span></div>`}
-        ${available ? `<div class="readout-note">完成后剩余 ${reserve - selected.cost!} 薪柴</div>` : ''}
-        ${thickenSelected() && available || !reason ? '' : `<p class="readout-note">${reason}</p>`}
+      <div class="decision-aside readout-detail"><div class="growth-category">${selected.responsibility}</div><div class="growth-name">${selected.name}</div>
+        <div class="growth-level-line"><span>${selected.next ? `${selected.level === 0 ? '首次刻入' : formatGrowthLevel(selected.level)} → ` : ''}<span class="growth-level">${formatGrowthLevel(selected.targetLevel)}</span></span><span class="readout-label">最高 ${formatGrowthLevel(selected.maxLevel)}</span></div>
+        ${effectHtml(selected.effect)}
+        ${selected.effect.flavor ? `<p class="readout-note growth-flavor">${escapeText(selected.effect.flavor)}</p>` : ''}
+        ${selected.requirement && !selected.unlocked ? `<p class="growth-condition" data-growth-requirement><span>尚待经历</span>${selected.requirement}</p>` : ''}
+        ${selected.cost === null ? '' : `<div class="growth-payment"><div class="stat-row"><span class="readout-label">本次消耗</span><span class="growth-cost"><strong>${selected.cost}</strong> 薪柴</span></div>
+          ${available ? `<div class="readout-note">刻入后剩余 ${reserve - selected.cost!} 薪柴</div>` : ''}</div>`}
+        ${!reason ? '' : `<p class="readout-note${selected.next ? ' growth-shortfall' : ''}">${reason}</p>`}
         ${thickenSelected() ? thickenConsequencesHtml() : ''}
       </div></div>
     <div class="key-hint-bar"><span><span class="key">↑ ↓</span> 选择</span>
@@ -263,7 +274,7 @@ function purchaseCard(id: GrowthUpgradeId): void {
   if (result.ok) {
     cursorCard = 0;
     render();
-    showPurchaseFlash(GROWTH_UPGRADE_NAMES[id], result.newLevel, '级');
+    showPurchaseFlash(GROWTH_UPGRADE_NAMES[id], result.newLevel);
     checkFirstGrowthMilestone(id, result.newLevel);
   } else {
     showPurchaseFailure(result);
@@ -278,7 +289,7 @@ function purchaseThicken(): void {
   }
   cursorCard = 0;
   render();
-  showPurchaseFlash('加厚', result.newLevel, '级');
+  showPurchaseFlash('加厚', result.newLevel);
 }
 
 function showPurchaseFailure(result: Extract<GrowthPurchaseResult, { ok: false }>): void {
@@ -292,12 +303,12 @@ function showPurchaseFailure(result: Extract<GrowthPurchaseResult, { ok: false }
 // C1: Purchase flash animation
 // ---------------------------------------------------------------------------
 
-function showPurchaseFlash(name: string, newLevel: number, unit: '级' | '档'): void {
+function showPurchaseFlash(name: string, newLevel: number): void {
   if (!panel) return;
   // Transient feedback must not push the next action or thickening costs down.
   const feedback = panel.querySelector('[data-growth-feedback]');
   if (!feedback) return;
-  feedback.textContent = `${name} · ${newLevel} ${unit} 已刻入`;
+  feedback.textContent = `${name} · ${formatGrowthLevel(newLevel)} 已刻入`;
   setTimeout(() => { feedback.textContent = ''; }, 2000);
 }
 

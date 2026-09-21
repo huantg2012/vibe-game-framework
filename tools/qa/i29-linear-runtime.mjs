@@ -5,18 +5,18 @@ import assert from 'node:assert/strict';
 import { chromium } from '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
 import { createJourneyDriver } from './i27-journey-driver.mjs';
 import { createCycleInputs } from './i27-cycle-inputs.mjs';
-const root=process.env.I29_OUT??'docs/qa/artifacts/iteration-29-r3/linear-runtime';fs.mkdirSync(root,{recursive:true});
+const root=process.env.I29_OUT??'docs/qa/artifacts/growth-ux-2026-09-21/runtime';fs.mkdirSync(root,{recursive:true});
 const seed=JSON.parse(JSON.parse(fs.readFileSync('docs/qa/artifacts/purification-growth-review-2026-09-20/runtime/walk-verified/fresh.storage.json'))['coh-save-v1']);
 const route=fs.readFileSync('data/growth-route.csv','utf8').trim().split('\n').slice(1).map(line=>{const [order,id,level,,,,cost]=line.split(',');return {order:+order,id,level:+level,cost:+cost};});
 const facts={version:1,impactExperienced:false,offeringCompleted:false,toolRevealed:false,crestExperienced:false};
 const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
 const manifest={method:'isolated newContext; explicit controlled saves except fresh; real keyboard/clicks, read-only routing; not natural long-term economy',cases:[]};
-const cases=(process.env.I29_CASES??'fresh,impact,crest,linear,legacy').split(',');
+const cases=(process.env.I29_CASES??'fresh,poor,impact,crest,linear,legacy').split(',');
 try{for(const name of cases){
  const out=path.join(root,name);fs.mkdirSync(out,{recursive:true});
  const context=await browser.newContext({viewport:{width:1440,height:960}});
  if(name!=='fresh'){
-  const save=structuredClone(seed);save.kindlingReserve=1000;save.growth.schemaVersion=2;save.growth.progression={...facts};
+  const save=structuredClone(seed);save.kindlingReserve=name==='poor'?0:1000;save.growth.schemaVersion=2;save.growth.progression={...facts};
   for(const id in save.growth.upgrades)save.growth.upgrades[id]=0;
   save.moduleMaxHpTier=0;save.cycle=1;delete save.impactForecast;delete save.checkpointChecksum;
   const owned=name==='impact'?4:name==='crest'?16:0;
@@ -39,8 +39,15 @@ try{for(const name of cases){
   await d.press('e');await page.waitForTimeout(450);await d.snap('01-growth');
   const panel=page.locator('#growth-panel'),next=page.locator('[data-growth-next="true"]');
   assert.equal(await next.count(),1);assert(!(await panel.innerText()).includes('揭晓一件'));
+  assert(!(await panel.innerText()).includes('0 → 1 /'));
+  assert((await panel.innerText()).includes('Level 1'));
+  if(name==='poor'){
+    const before=await read();await d.press('Enter');assert.deepEqual(await read(),before);
+    assert((await panel.innerText()).includes('薪柴不足，还差 8'));
+    assert.equal(await panel.locator('#growth-confirm-btn').count(),0);
+  }
   if(name==='fresh'){
-    assert.equal(await panel.locator('.upgrade-card').count(),1);assert((await panel.innerText()).includes('已刻入 0 / 22'));
+    assert.equal(await panel.locator('.upgrade-card').count(),1);assert((await panel.innerText()).includes('已刻入 0 项 · 共 22 项'));
     assert.equal((await read()).growth.upgrades.growth_defense_slot,0);
   }
   if(name==='impact'||name==='crest'){
@@ -56,7 +63,7 @@ try{for(const name of cases){
     for(const step of route){
       assert.equal(await next.count(),1);assert.equal(await next.getAttribute('data-id'),step.id);
       assert.equal(await panel.locator('[data-growth-requirement]').count(),0,'completed facts not duplicated');
-      if([3,5,7,10,12,17,18].includes(step.order)){
+      if([1,3,5,7,10,12,17,18].includes(step.order)){
         await page.waitForTimeout(500);await d.snap(`step-${String(step.order).padStart(2,'0')}`);
       }
       if(step.id==='thicken')assert(await page.locator('.decision-aside .stat-row').last().evaluate(el=>{const a=el.getBoundingClientRect(),b=el.closest('.decision-aside').getBoundingClientRect();return a.top>=b.top&&a.bottom<=b.bottom;}),'all three module previews fit first screen');
@@ -66,17 +73,17 @@ try{for(const name of cases){
       else await d.press('Enter');
       await page.waitForTimeout(120);
     }
-    await page.waitForTimeout(600);await d.snap('03-complete');assert.equal(await next.count(),0);assert((await panel.innerText()).includes('已刻入 22 / 22'));
+    await page.waitForTimeout(600);await d.snap('03-complete');assert.equal(await next.count(),0);assert((await panel.innerText()).includes('已刻入 22 项 · 共 22 项'));
     const after=await read();assert.equal(after.kindlingReserve,before.kindlingReserve-route.reduce((sum,step)=>sum+step.cost,0));assert.equal(after.growth.upgrades.growth_defense_slot,3);assert.equal(after.moduleMaxHpTier,3);
     assert(after.modules.every(m=>m.hp===100&&m.maxHp===145));
     await d.press('Enter');assert.deepEqual(await read(),after,'completed route never charges again');
   }
   if(name==='legacy'){
     const saved=await read();assert.equal(saved.growth.schemaVersion,2);assert.equal(saved.growth.upgrades.growth_defense_slot,3);assert.equal(saved.growth.upgrades.growth_forecast_clarity,3);
-    assert((await panel.innerText()).includes('已刻入 6 / 22'));assert.equal(await next.getAttribute('data-id'),'growth_vitality');
+    assert((await panel.innerText()).includes('已刻入 6 项 · 共 22 项'));assert.equal(await next.getAttribute('data-id'),'growth_vitality');
   }
   await d.press('Escape');await page.waitForTimeout(400);assert((await c.baseTo({x:128,y:242})).ok);await d.press('e');await page.waitForTimeout(450);await d.snap('04-offering');
-  assert.equal(await page.locator('#defense-panel .slot-cell').count(),name==='fresh'?1:name==='impact'?2:name==='crest'?3:4);
+  assert.equal(await page.locator('#defense-panel .slot-cell').count(),name==='fresh'||name==='poor'?1:name==='impact'?2:name==='crest'?3:4);
   await d.press('Escape');await page.waitForTimeout(350);await d.ledger('end');
   if(name==='linear'||name==='legacy'){
    const before=await read();await page.reload();await page.waitForFunction(()=>window.__game?.scene.isActive('MainMenuScene'));await d.press('Enter');await page.waitForFunction(()=>window.__game?.scene.isActive('PurificationScene'));await page.waitForTimeout(1300);

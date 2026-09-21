@@ -1,0 +1,199 @@
+{
+  "method": "Isolated Playwright contexts and controlled saves; real walking/E/keyboard/click/wheel. Storage transport refusal only; no runtime game-state setters. Not natural economy or human art acceptance.",
+  "cases": [
+    {
+      "name": "vitality-save-rejection",
+      "ok": true,
+      "results": {
+        "styles": {
+          "name": {
+            "text": "生命强化",
+            "color": "rgb(181, 185, 174)",
+            "fontSize": "16px",
+            "lineHeight": "24px"
+          },
+          "gain": {
+            "text": "完整度上限 +15",
+            "color": "rgb(179, 186, 174)",
+            "fontSize": "12px",
+            "lineHeight": "24px"
+          },
+          "gainNumber": {
+            "text": "+15",
+            "color": "rgb(179, 186, 174)",
+            "fontSize": "16px",
+            "lineHeight": "24px"
+          },
+          "note": {
+            "text": "厌恶污染覆盖，身体逐渐变得坚韧。",
+            "color": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "lineHeight": "18px"
+          },
+          "cost": {
+            "text": "8 薪柴",
+            "color": "rgb(179, 155, 117)",
+            "fontSize": "12px",
+            "lineHeight": "20px"
+          }
+        },
+        "purchase": {
+          "beforeReserve": 1000,
+          "afterReserve": 992,
+          "targetLevel": 1,
+          "feedback": "生命强化 · Level 1 已刻入"
+        },
+        "exit": {
+          "positionBefore": {
+            "x": 111.27410350996227,
+            "y": 217.93747622509798
+          },
+          "positionAfter": {
+            "x": 146.154063141277,
+            "y": 232.46388353111377
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "thicken-save-rejection",
+      "ok": true,
+      "results": {
+        "styles": {
+          "name": {
+            "text": "加厚",
+            "color": "rgb(181, 185, 174)",
+            "fontSize": "16px",
+            "lineHeight": "24px"
+          },
+          "gain": {
+            "text": "三台装置上限各 +15",
+            "color": "rgb(179, 186, 174)",
+            "fontSize": "12px",
+            "lineHeight": "24px"
+          },
+          "gainNumber": {
+            "text": "+15",
+            "color": "rgb(179, 186, 174)",
+            "fontSize": "16px",
+            "lineHeight": "24px"
+          },
+          "note": {
+            "text": "当前完整度不增加。补满另需至少 12 薪柴。",
+            "color": "rgb(126, 138, 126)",
+            "fontSize": "11px",
+            "lineHeight": "18px"
+          },
+          "cost": {
+            "text": "12 薪柴",
+            "color": "rgb(179, 155, 117)",
+            "fontSize": "12px",
+            "lineHeight": "20px"
+          }
+        },
+        "purchase": {
+          "beforeReserve": 1000,
+          "afterReserve": 988,
+          "targetLevel": 1,
+          "feedback": "加厚 · Level 1 已刻入"
+        },
+        "exit": {
+          "positionBefore": {
+            "x": 112.91569961124712,
+            "y": 219.2070752957216
+          },
+          "positionAfter": {
+            "x": 146.62402650324404,
+            "y": 232.56244873335476
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "intermediate-navigation",
+      "ok": true,
+      "results": {
+        "layout": {
+          "list": {
+            "top": 295.5,
+            "bottom": 792,
+            "left": 516,
+            "right": 991.5
+          },
+          "footer": {
+            "top": 816,
+            "bottom": 882,
+            "left": 516,
+            "right": 1392
+          },
+          "aside": {
+            "top": 295.5,
+            "bottom": 792,
+            "left": 1024.5,
+            "right": 1392
+          },
+          "scrollTop": 95,
+          "scrollHeight": 426,
+          "clientHeight": 331
+        },
+        "ownedForecast": "装置建设\n预兆洞察\nLevel 2\n最高 Level 3\n现已辨明\n准确强度 · 重点装置\n\n已永久生效。",
+        "exit": {
+          "positionBefore": {
+            "x": 110.71247083198467,
+            "y": 218.5992652131151
+          },
+          "positionAfter": {
+            "x": 145.7279526769414,
+            "y": 233.43064802436982
+          }
+        },
+        "statusText": "存续报告\n薪柴\n1000\n装置\n物件\n潮汐\n蜕变\n加厚\nLevel 2\n每台装置完整度上限\n130\n渗透抗性 Level 3\n薪柴亲和 Level 3\n生命强化 Level 3\n出击扩容 Level 1\n供奉扩容 Level 2\n预兆洞察 Level 2\n预兆洞察\nLevel 2 · 最高 Level 3\n现已辨明 准确强度 · 重点装置\n[ ] 切页\n↑↓←→ 浏览\nTab\n/\nEsc\n合上"
+      },
+      "errors": []
+    },
+    {
+      "name": "completed-navigation",
+      "ok": true,
+      "results": {
+        "layout": {
+          "list": {
+            "top": 295.5,
+            "bottom": 792,
+            "left": 516,
+            "right": 991.5
+          },
+          "footer": {
+            "top": 816,
+            "bottom": 882,
+            "left": 516,
+            "right": 1392
+          },
+          "aside": {
+            "top": 295.5,
+            "bottom": 792,
+            "left": 1024.5,
+            "right": 1392
+          },
+          "scrollTop": 22,
+          "scrollHeight": 353,
+          "clientHeight": 331
+        },
+        "ownedForecast": "装置建设\n预兆洞察\nLevel 3\n最高 Level 3\n现已辨明\n准确强度 · 重点装置 · 供奉前压力\n\n压力为供奉抵消前的读数。\n\n已至上限。",
+        "exit": {
+          "positionBefore": {
+            "x": 110.10038395283395,
+            "y": 216.40927439315334
+          },
+          "positionAfter": {
+            "x": 144.30853262814398,
+            "y": 231.24450185176934
+          }
+        },
+        "statusText": "存续报告\n薪柴\n1000\n装置\n物件\n潮汐\n蜕变\n加厚\nLevel 3\n每台装置完整度上限\n145\n渗透抗性 Level 5\n薪柴亲和 Level 3\n生命强化 Level 4\n出击扩容 Level 1\n供奉扩容 Level 3\n预兆洞察 Level 3\n预兆洞察\nLevel 3 · 最高 Level 3\n现已辨明 准确强度 · 重点装置 · 供奉前压力；压力为供奉抵消前的读数。\n[ ] 切页\n↑↓←→ 浏览\nTab\n/\nEsc\n合上"
+      },
+      "errors": []
+    }
+  ]
+}

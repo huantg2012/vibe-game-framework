@@ -1,104 +1,153 @@
-/**
- * Growth upgrade display config for UI (growth-panel / status-panel).
- * Single source of truth for the "which axes exist, in what order, with what
- * name/icon/effect-label" question — growth-panel.ts and status-panel.ts both
- * previously hardcoded their own copy of the 3-id array; this consolidates them.
- * Player-facing effect magnitudes are computed from UPGRADE_DATA (CSV-driven),
- * never hand-duplicated numbers.
- */
-
+/** Shared player-facing growth semantics; values come from CSV and system constants. */
 import { GAME_CONSTANTS } from '@/config/constants';
 import { UPGRADE_DATA } from '@/generated/upgrade-data';
 import type { GrowthUpgradeId } from '@/types/game-types';
+
+export interface GrowthEffectPreview {
+  /** World-facing description, separate from the measurable effect. */
+  flavor?: string;
+  label: string;
+  /** Total effect at the target level, or the current level for a read-only view. */
+  value: string;
+  currentValue?: string;
+  /** This purchase's increase, never the accumulated bonus. */
+  gain?: string;
+  note?: string;
+}
 
 export interface GrowthUpgradeDisplay {
   id: GrowthUpgradeId;
   name: string;
   icon: string;
-  /** Player-facing effect description. `maxLevel` lets the label show "当前 → 下一级"
-   *  instead of only the current level's effect (IA §S7: "买了立刻变什么" was
-   *  previously unanswerable at level 0, since only the current — i.e. absent —
-   *  effect was rendered). At `level >= maxLevel` there is no "next" to show. */
+  /** Only the caller's actual next route step may provide targetLevel. */
+  effectPreview: (level: number, targetLevel?: number) => GrowthEffectPreview;
+  /** Plain-text compatibility for report/older consumers. Owned levels stay read-only. */
   effectLabel: (level: number, maxLevel: number) => string;
 }
 
-function pct(id: GrowthUpgradeId, level: number): number {
-  return Math.round(level * UPGRADE_DATA[id].effectPerLevel * 100);
+export function formatGrowthLevel(level: number): string {
+  return level === 0 ? '未刻入' : `Level ${level}`;
 }
 
-/** Shared "current → next" formatter for the four numeric (percent or flat) axes.
- *  The two slot-unlock axes below are single-level toggles where "next" is just
- *  "unlocked" — already conveyed by their own flavor text, so they don't use this. */
-function numericEffectLabel(
-  level: number,
-  maxLevel: number,
-  labelAt: (lvl: number) => string,
-  flavorText: string,
-): string {
-  if (level === 0) {
-    return level >= maxLevel ? flavorText : `${flavorText} → ${labelAt(1)}`;
-  }
-  if (level >= maxLevel) return labelAt(level);
-  return `${labelAt(level)} → ${labelAt(level + 1)}`;
+function total(id: GrowthUpgradeId, level: number): number {
+  return level * UPGRADE_DATA[id].effectPerLevel;
 }
+
+function percent(id: GrowthUpgradeId, level: number): number {
+  return Math.round(total(id, level) * 100);
+}
+
+function display(
+  id: GrowthUpgradeId,
+  icon: string,
+  effectPreview: GrowthUpgradeDisplay['effectPreview'],
+): GrowthUpgradeDisplay {
+  return {
+    id, name: UPGRADE_DATA[id].name, icon, effectPreview,
+    effectLabel: (level, maxLevel) => {
+      const effect = effectPreview(level, level === 0 && maxLevel > 0 ? 1 : undefined);
+      const change = effect.currentValue === undefined ? effect.value : `${effect.currentValue} → ${effect.value}`;
+      return `${effect.label} ${change}${effect.note ? `；${effect.note}` : ''}`;
+    },
+  };
+}
+
+// The final unlocked slot is passive; its count stays fixed when active capacity grows.
+const PASSIVE_SLOTS = GAME_CONSTANTS.CONTAMINANT.MAX_SORTIE_SLOTS
+  - GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS.length;
+
+const FORECAST_READINGS = [
+  '强度与重点可能误报',
+  '准确强度',
+  '准确强度 · 重点装置',
+  '准确强度 · 重点装置 · 供奉前压力',
+] as const;
+const FORECAST_GAINS = [
+  '', '辨清下次冲击强度', '辨清下次冲击的重点装置', '读取下次各装置的供奉前压力',
+] as const;
 
 export const GROWTH_UPGRADE_DISPLAY: GrowthUpgradeDisplay[] = [
-  {
-    id: 'growth_chaos_resist',
-    name: UPGRADE_DATA.growth_chaos_resist.name,
-    icon: '◈', // diamond
-    effectLabel: (level, maxLevel) => numericEffectLabel(
-      level, maxLevel,
-      (lvl) => `自然混乱增速 -${pct('growth_chaos_resist', lvl)}%`,
-      '自然混乱增速 -0%',
-    ),
-  },
-  {
-    id: 'growth_kindling_affinity',
-    name: UPGRADE_DATA.growth_kindling_affinity.name,
-    icon: '✦', // four-point star
-    effectLabel: (level, maxLevel) => numericEffectLabel(
-      level, maxLevel,
-      (lvl) => `每堆基础薪柴 +${lvl * UPGRADE_DATA.growth_kindling_affinity.effectPerLevel}`,
-      '每堆基础薪柴 +0',
-    ) + '；再受储藏增益。',
-  },
-  {
-    id: 'growth_vitality',
-    name: UPGRADE_DATA.growth_vitality.name,
-    icon: '♥', // heart
-    effectLabel: (level, maxLevel) => numericEffectLabel(
-      level, maxLevel,
-      (lvl) => `完整度 +${lvl * UPGRADE_DATA.growth_vitality.effectPerLevel}`,
-      '延缓覆盖',
-    ),
-  },
-  {
-    id: 'growth_sortie_slot',
-    name: UPGRADE_DATA.growth_sortie_slot.name,
-    icon: '▣',
-    effectLabel: (level) => (level > 0 ? '主动工具 3 位；被动工具 1 位。' : '主动工具 2 → 3 位；被动仍为 1 位，携带重量照常计入。'),
-  },
-  {
-    id: 'growth_defense_slot',
-    name: UPGRADE_DATA.growth_defense_slot.name,
-    icon: '▤',
-    effectLabel: (level, maxLevel) => {
-      const capacity = GAME_CONSTANTS.CONTAMINANT.DEFENSE_SLOTS + level;
-      return level >= maxLevel ? `可同时供奉 ${capacity} 件物品。`
-        : `同时供奉 ${capacity} → ${capacity + 1} 件；成熟速度不变。`;
-    },
-  },
-  {
-    id: 'growth_forecast_clarity',
-    name: UPGRADE_DATA.growth_forecast_clarity.name,
-    icon: '◎',
-    effectLabel: (level, maxLevel) => {
-      const readings = ['强度与重点仍可能误报', '辨清下次冲击强度', '辨清下次强度与重点装置', '读取下次各装置的防御前压力'];
-      const current = readings[Math.min(level, readings.length - 1)]!;
-      return level >= maxLevel ? current : `${current} → ${readings[level + 1]}`;
-    },
-  },
+  display('growth_chaos_resist', '◈', (level, targetLevel) => {
+    const id = 'growth_chaos_resist';
+    const valueAt = (at: number): string => `减缓 ${percent(id, at)}%`;
+    return {
+      flavor: UPGRADE_DATA[id].description,
+      label: '自然混乱增速',
+      value: valueAt(targetLevel ?? level),
+      ...(targetLevel === undefined ? {} : {
+        currentValue: valueAt(level),
+        gain: level === 0 ? `自然混乱增速减缓 ${percent(id, targetLevel)}%`
+          : `自然混乱增速再减缓 ${percent(id, targetLevel - level)} 个百分点`,
+      }),
+      note: '只影响随时间积累的混乱，不改变起始混乱。',
+    };
+  }),
+  display('growth_kindling_affinity', '✦', (level, targetLevel) => {
+    const id = 'growth_kindling_affinity';
+    const valueAt = (at: number): string => `+${total(id, at)}`;
+    return {
+      flavor: UPGRADE_DATA[id].description,
+      label: '每堆基础额外薪柴',
+      value: valueAt(targetLevel ?? level),
+      ...(targetLevel === undefined ? {} : {
+        currentValue: valueAt(level),
+        gain: `每堆基础额外薪柴 +${total(id, targetLevel - level)}`,
+      }),
+      note: '计入基础收获后，再受储藏效能影响。',
+    };
+  }),
+  display('growth_vitality', '♥', (level, targetLevel) => {
+    const id = 'growth_vitality';
+    const valueAt = (at: number): string => String(GAME_CONSTANTS.PLAYER.MAX_HEALTH + total(id, at));
+    return {
+      flavor: UPGRADE_DATA[id].description,
+      label: '自身完整度上限',
+      value: valueAt(targetLevel ?? level),
+      ...(targetLevel === undefined ? {} : {
+        currentValue: valueAt(level),
+        gain: `完整度上限 +${total(id, targetLevel - level)}`,
+      }),
+      note: '进入裂隙时生效，不改变装置完整度。',
+    };
+  }),
+  display('growth_sortie_slot', '▣', (level, targetLevel) => {
+    const id = 'growth_sortie_slot';
+    const valueAt = (at: number): string => `${GAME_CONSTANTS.CONTAMINANT.SORTIE_SLOTS - PASSIVE_SLOTS + total(id, at)} 位`;
+    return {
+      label: '主动工具携带位',
+      value: valueAt(targetLevel ?? level),
+      ...(targetLevel === undefined ? {} : {
+        currentValue: valueAt(level),
+        gain: `可多携带 ${total(id, targetLevel - level)} 件主动工具`,
+      }),
+      note: `被动工具仍为 ${PASSIVE_SLOTS} 位，携带重量照常计入。`,
+    };
+  }),
+  display('growth_defense_slot', '▤', (level, targetLevel) => {
+    const id = 'growth_defense_slot';
+    const valueAt = (at: number): string => `${GAME_CONSTANTS.CONTAMINANT.DEFENSE_SLOTS + total(id, at)} 件`;
+    return {
+      label: '同时供奉容量',
+      value: valueAt(targetLevel ?? level),
+      ...(targetLevel === undefined ? {} : {
+        currentValue: valueAt(level),
+        gain: `可多供奉 ${total(id, targetLevel - level)} 件物品`,
+      }),
+      note: '物件成熟速度不变。',
+    };
+  }),
+  display('growth_forecast_clarity', '◎', (level, targetLevel) => {
+    const readingAt = (at: number): string => FORECAST_READINGS[Math.min(at, FORECAST_READINGS.length - 1)]!;
+    return {
+      label: targetLevel === undefined ? level > 0 ? '现已辨明' : '当前预兆' : '刻入后可辨明',
+      value: readingAt(targetLevel ?? level),
+      ...(targetLevel === undefined ? {} : {
+        gain: FORECAST_GAINS[targetLevel],
+      }),
+      ...((targetLevel ?? level) === UPGRADE_DATA.growth_forecast_clarity.maxLevel
+        ? { note: '压力为供奉抵消前的读数。' } : {}),
+    };
+  }),
 ];
 
 export const GROWTH_UPGRADE_IDS: GrowthUpgradeId[] = GROWTH_UPGRADE_DISPLAY.map((u) => u.id);
