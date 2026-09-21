@@ -4,7 +4,7 @@
 
 方法：`game-review`。本报告是设计、美术与制作决策评审，不是整改完成报告。未改游戏代码、策划数据或正式存档；独立的 `CLAUDE.md` 工作区改动保留。长期平衡、污染物扩大采样和原挂起验收没有解挂。
 
-[可浏览摘要](/Users/yilungao/.cursor/projects/Users-yilungao-coh/canvases/purification-growth-review-2026-09-20.canvas.tsx)提供画面对照与成本表；[摘要源文件与恢复说明](artifacts/purification-growth-review-2026-09-20/canvas/README.md)一并归档。本文件和原始证据是完整审查正文。
+[可浏览摘要](reports/purification-growth-review-2026-09-20.html)提供画面对照与成本表；[摘要源文件与恢复说明](artifacts/purification-growth-review-2026-09-20/canvas/README.md)一并归档。本文件和原始证据是完整审查正文。
 
 ## 1. 结论
 

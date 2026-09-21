@@ -3,7 +3,7 @@
 2026-09-20；仅制作独立评审摘要，不是游戏 UI 或新设计实现。
 
 - Git归档：[评审摘要源文件](purification-growth-review-2026-09-20.canvas.tsx)，与已验证的managed文件逐字节一致。
-- 恢复浏览：把归档单文件复制到当前工作区的managed `canvases/`目录；其中证据按钮的 `ROOT` 为本次工作区绝对路径，换机器时按实际位置调整。内联画面和数据可独立保留。
+- 恢复浏览：[离线HTML阅读稿](../../../reports/purification-growth-review-2026-09-20.html)为当前阅读入口。2026-09-21用户环境打开managed TSX只显示源码；复制TSX不再被视为已恢复可读页面。源文件仍保留，[导出与刷新说明](../../../../dev/report-viewer.md)记录无需专用宿主的方式。
 - managed 单文件：`/Users/yilungao/.cursor/projects/Users-yilungao-coh/canvases/purification-growth-review-2026-09-20.canvas.tsx`
 - 单文件 TypeScript 检查通过（exit 0），只包含此新摘要，不纳入旧 canvas。检查使用已安装的 `cursor/canvas` 声明；SDK 最小 JSX 类型不接受组件上的 `key`，已用原生外层元素持有 key。
 - 内联 3 张 PNG 解码后逐字节等于原图；未编辑图片。
