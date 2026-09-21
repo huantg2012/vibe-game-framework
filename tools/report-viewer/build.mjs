@@ -7,6 +7,7 @@ import { build } from 'esbuild';
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '../..');
 const reports = JSON.parse(await readFile(resolve(here, 'reports.json'), 'utf8'));
+const readingLinks = JSON.parse(await readFile(resolve(here, 'reading-links.json'), 'utf8'));
 const catalog = JSON.parse(await readFile(resolve(root, 'docs/reviews/catalog.json'), 'utf8'));
 const relocations = JSON.parse(await readFile(resolve(root, 'docs/reviews/relocations.json'), 'utf8'));
 const css = await readFile(resolve(here, 'report.css'), 'utf8');
@@ -130,8 +131,15 @@ for (const report of reports) {
   console.log(`Exported ${report.output}`);
 }
 
+const readingIds = new Set(reports.map(report => report.id));
+for (const entry of readingLinks) {
+  if (!entry.id || !entry.title || !entry.date || !entry.summary || !['design','catalog'].includes(entry.kind)) throw new Error('Invalid standalone reading entry');
+  if (readingIds.has(entry.id)) throw new Error(`Duplicate reading entry: ${entry.id}`);
+  readingIds.add(entry.id);
+  await access(repoPath(entry.output));
+}
 const groups = Object.entries(kinds).map(([kind,label]) => {
-  const items = reports.filter(report => report.kind === kind).map(report => `<li data-report-id="${esc(report.id)}"><div>${link(readingIndex,report.output,report.title)}<time>${esc(report.date)}</time></div><p>${esc(report.summary)}</p></li>`).join('\n');
+  const items = [...readingLinks, ...reports].filter(report => report.kind === kind).map(report => `<li data-report-id="${esc(report.id)}"><div>${link(readingIndex,report.output,report.title)}<time>${esc(report.date)}</time></div><p>${esc(report.summary)}</p></li>`).join('\n');
   return `<section aria-labelledby="${kind}-heading"><h2 id="${kind}-heading">${label}</h2>${kind === 'review' ? `<p>${link(readingIndex,reviewIndex,'完整审查档案：正文、交互摘要与后续处理')}</p>` : ''}<ul>${items}</ul></section>`;
 }).join('\n');
 await output(readingIndex, `${head('游戏阅读材料')}<main class="report-index"><p class="eyebrow">那天之后 · 开发记录</p><h1>游戏阅读材料</h1><p>按用途分开的交互材料。审查结果统一收在${link(readingIndex,reviewIndex,'审查档案')}；设计探索和内容目录保留在此。</p><p>各页保留生成时的数据与判断，页面顶部标明历史范围。</p>${groups}<footer>页面可直接用浏览器打开。阅读与交互不需要联网，也不会修改游戏存档。<br>${link(readingIndex,'docs/dev/report-viewer.md','刷新与使用说明')}</footer></main></body></html>\n`);
