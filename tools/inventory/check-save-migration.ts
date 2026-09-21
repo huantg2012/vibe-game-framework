@@ -72,7 +72,10 @@ try {
     assert.equal(inventoryStore.getItem('owned-active')?.location.kind, 'carried');
     assert.deepEqual(migrated.inventory.equipment.toolIds, legacy.sortieLoadout);
     assert.deepEqual(migrated.inventory.equipment.defenseIds, legacy.defenseSlots);
-    assert.deepEqual(migrated.growth, legacy.growth); assert.deepEqual(migrated.contaminantRuntimeState, legacy.contaminantRuntimeState);
+    assert.deepEqual(migrated.growth.upgrades, legacy.growth.upgrades);
+    assert.deepEqual(migrated.growth.progression, { version: 1, impactExperienced: false,
+      offeringCompleted: false, toolRevealed: false, crestExperienced: false });
+    assert.deepEqual(migrated.contaminantRuntimeState, legacy.contaminantRuntimeState);
     assert.equal(migrated.inventory.items.filter(item => item.kind === 'weapon').length, 1);
     assert.equal(gameState.getKindlingReserve(), 117); assert.equal(gameState.getCycle(), 9);
   });

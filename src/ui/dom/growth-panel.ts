@@ -9,6 +9,7 @@ import { gameState } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { growthSystem } from '@/systems/growth-system';
 import { purchaseGrowth, type GrowthPurchaseResult } from '@/managers/growth-purchases';
+import { previewThickening } from '@/ui/growth-presentation';
 import type { GrowthUpgradeId } from '@/types/game-types';
 import { renderPanelContent } from './panel-render-state';
 import { bindWorldInteraction, type WorldInteractionContext } from './world-interaction';
@@ -21,7 +22,48 @@ const UPGRADES = GROWTH_UPGRADE_DISPLAY;
 /** Sentinel id for the thicken card. Not a GrowthUpgradeId. */
 const THICKEN_ID = 'thicken' as const;
 
-const PANEL_CARD_COUNT = UPGRADES.length + 1;
+const PENDING_ID = 'pending' as const;
+interface GrowthEntry {
+  id: GrowthUpgradeId | typeof THICKEN_ID | typeof PENDING_ID;
+  name: string; level: number; cost: number | null; effect: string;
+  unlocked: boolean; reason: string | null; responsibility: string;
+}
+const RESPONSIBILITY: Record<string, string> = {
+  body: '身体适应', base: '装置建设', equipment: '出击携带',
+};
+const EXPERIENCE: Record<string, string> = {
+  impactExperienced: '需经历一次实际冲击（初次归来的免伤不计）',
+  offeringCompleted: '需让一个物件完成供奉',
+  toolRevealed: '需在供奉后揭晓一件可携入裂隙的污染物',
+  crestExperienced: '需经历一次潮峰，抵达退潮',
+};
+function entriesForDisplay(): GrowthEntry[] {
+  const entries: GrowthEntry[] = [];
+  const pending = new Set<string>();
+  for (const upgrade of UPGRADES) {
+    const availability = growthSystem.getAvailability(upgrade.id);
+    if (!availability.visible) {
+      if (availability.reason) pending.add(EXPERIENCE[availability.reason] ?? availability.reason);
+      continue;
+    }
+    const level = growthSystem.getLevel(upgrade.id);
+    const maxLevel = growthSystem.getMaxLevel(upgrade.id);
+    const definition = growthSystem.getUpgradeDefinition(upgrade.id);
+    entries.push({ id: upgrade.id, name: definition.name, level,
+      cost: level >= maxLevel ? null : growthSystem.getCost(upgrade.id),
+      effect: upgrade.effectLabel(level, maxLevel), unlocked: availability.unlocked,
+      reason: availability.reason ? EXPERIENCE[availability.reason] ?? availability.reason : null,
+      responsibility: RESPONSIBILITY[definition.responsibility] ?? '' });
+  }
+  const max = gameState.getModuleMaxHp();
+  const cost = gameState.getNextModuleMaxHpCost();
+  entries.push({ id: THICKEN_ID, name: '加厚', level: gameState.getModuleMaxHpTier(), cost,
+    effect: thickenEffectHtml(max, cost === null ? null : max + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER, cost === null),
+    unlocked: cost !== null, reason: null, responsibility: '装置建设' });
+  if (pending.size) entries.push({ id: PENDING_ID, name: '尚待经历', level: 0, cost: null,
+    effect: [...pending].join('；'), unlocked: false, reason: '真实经历会让新的改造可被辨认。', responsibility: '未展开' });
+  return entries;
+}
 
 // ---------------------------------------------------------------------------
 // State
@@ -111,7 +153,8 @@ function onKeyDown(e: KeyboardEvent): void {
     e.stopPropagation();
     e.preventDefault();
     const dir = e.key === 'ArrowDown' ? 1 : -1;
-    cursorCard = (cursorCard + dir + PANEL_CARD_COUNT) % PANEL_CARD_COUNT;
+    const count = entriesForDisplay().length;
+    cursorCard = (cursorCard + dir + count) % count;
     render(true, true);
     return;
   }
@@ -124,16 +167,14 @@ function onKeyDown(e: KeyboardEvent): void {
 }
 
 function commitSelectedCard(): void {
-  if (cursorCard === UPGRADES.length) {
-    purchaseThicken();
-    return;
-  }
-  const upgrade = UPGRADES[cursorCard];
-  if (upgrade) purchaseCard(upgrade.id);
+  const selected = entriesForDisplay()[cursorCard];
+  if (!selected || !selected.unlocked) return;
+  if (selected.id === THICKEN_ID) purchaseThicken();
+  else if (selected.id !== PENDING_ID) purchaseCard(selected.id);
 }
 
 function thickenSelected(): boolean {
-  return cursorCard === UPGRADES.length;
+  return entriesForDisplay()[cursorCard]?.id === THICKEN_ID;
 }
 
 // ---------------------------------------------------------------------------
@@ -147,42 +188,44 @@ function thickenEffectHtml(currentMax: number, nextMax: number | null, isMaxed: 
   return `${name}${cur}<span style="color:#8a8f96;margin:0 4px;">→</span><span style="color:#b5bbaf;">${nextMax}</span>`;
 }
 
+function thickenConsequencesHtml(): string {
+  if (gameState.getNextModuleMaxHpCost() === null) return '';
+  const preview = previewThickening(gameState.getModules(), gameState.getRepairBonusHp());
+  const names: Record<string, string> = { CORE: '核心', STORAGE: '储藏', PURIFIER: '净化器' };
+  return `<div class="separator"></div><div class="readout-section">扩容后仍需修复</div>
+    <div class="stat-row" data-thicken-consequence="chaos"><span class="readout-label">起始混乱</span><span>${preview.startingChaos} → ${preview.nextStartingChaos}</span></div>
+    <p class="readout-note" data-thicken-consequence="refill">当前完整度不增加。补满全部装置另需至少 ${preview.refillKindling} 薪柴${gameState.getRepairBonusHp() > 0 ? '，已计一次修复余量' : ''}。</p>
+    ${preview.modules.map(module => `<div class="stat-row"><span class="readout-label">${names[module.id] ?? module.id}</span>
+      <span>${module.hp} / ${module.maxHp} → ${module.hp} / ${module.nextMaxHp}</span></div>`).join('')}`;
+}
+
 function render(selectionOnly = false, revealSelection = false): void {
   if (!panel) return;
   const reserve = gameState.getKindlingReserve();
-  const entries = UPGRADES.map((upgrade) => {
-    const level = growthSystem.getLevel(upgrade.id);
-    const maxLevel = growthSystem.getMaxLevel(upgrade.id);
-    return { id: upgrade.id as string, name: upgrade.name, level, maxLevel,
-      cost: level >= maxLevel ? null : growthSystem.getCost(upgrade.id),
-      effect: upgrade.effectLabel(level, maxLevel) };
-  });
-  const tier = gameState.getModuleMaxHpTier();
-  const maxHp = gameState.getModuleMaxHp();
-  const cost = gameState.getNextModuleMaxHpCost();
-  entries.push({ id: THICKEN_ID, name: '加厚', level: tier,
-    maxLevel: GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_TIERS, cost,
-    effect: thickenEffectHtml(maxHp, cost === null ? null : maxHp + GAME_CONSTANTS.PURIFICATION.MODULE_MAX_HP_PER_TIER, cost === null) });
+  const entries = entriesForDisplay();
+  cursorCard = Math.min(cursorCard, entries.length - 1);
   const selected = entries[cursorCard]!;
-  const available = selected.cost !== null && reserve >= selected.cost;
-  const reason = selected.cost === null ? '已至上限。' : available ? '消耗薪柴后永久生效。'
+  const isPending = selected.id === PENDING_ID;
+  const available = selected.unlocked && selected.cost !== null && reserve >= selected.cost;
+  const reason = isPending ? selected.reason : selected.cost === null ? '已至上限。'
+    : !selected.unlocked ? selected.reason : available ? '消耗薪柴后永久生效。'
     : `薪柴不足，还差 ${selected.cost - reserve}。`;
-  const list = entries.map((entry, index) => `<div class="upgrade-card${index === cursorCard ? ' card-selected' : ''}${entry.cost === null ? ' card-maxed' : entry.cost > reserve ? ' card-locked' : ''}" data-id="${entry.id}">
-    <div class="card-body"><div class="card-name">${entry.name}</div><div class="readout-note">${entry.level} / ${entry.maxLevel}${entry.cost === null ? ' · 已至上限' : ''}</div></div>
+  const list = entries.map((entry, index) => `<div class="upgrade-card${index === cursorCard ? ' card-selected' : ''}${entry.id === PENDING_ID ? ' card-locked' : entry.cost === null ? ' card-maxed' : !entry.unlocked ? ' card-locked' : entry.cost > reserve ? ' card-locked' : ''}" data-id="${entry.id}">
+    <div class="card-body"><div class="card-name">${entry.name}</div><div class="readout-note">${entry.id === PENDING_ID ? '随经历展开' : entry.level > 0 ? `已刻入 ${entry.level}${entry.cost === null ? ' · 已至上限' : ''}` : entry.responsibility}</div></div>
     ${entry.cost !== null ? `<div class="card-cost">${entry.cost}<span class="readout-label"> 薪柴</span></div>` : ''}
   </div>`).join('');
   const html = `<div class="panel-heading"><div class="panel-title">蜕变</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>
     <div class="decision-layout"><div class="decision-main scroll-area readout-list">${list}</div>
-      <div class="decision-aside readout-detail"><div class="readout-section">${selected.name}</div>
-        <div class="readout-hero"><span class="readout-label">${thickenSelected() ? '已加厚档位' : '已刻入等级'}</span><span class="readout-value">${selected.level} / ${selected.maxLevel}</span></div>
+      <div class="decision-aside readout-detail"><div class="readout-section">${selected.responsibility} · ${selected.name}</div>
+        ${isPending || thickenSelected() ? '' : `<div class="readout-hero"><span class="readout-label">已刻入等级</span><span class="readout-value">${selected.level}</span></div>`}
         <div class="readout-copy">${selected.effect}</div><div class="separator"></div>
         ${selected.cost === null ? '' : `<div class="stat-row"><span class="readout-label">本次消耗</span><span class="readout-value">${selected.cost}</span><span>薪柴</span></div>`}
         ${available ? `<div class="readout-note">完成后剩余 ${reserve - selected.cost!} 薪柴</div>` : ''}
-        <p class="readout-note">${reason}</p>
-        ${thickenSelected() ? '<p class="readout-note">提高全部装置的完整度上限。</p>' : ''}
+        ${thickenSelected() && available ? '' : `<p class="readout-note">${reason}</p>`}
+        ${thickenSelected() ? thickenConsequencesHtml() : ''}
       </div></div>
     <div class="key-hint-bar"><span><span class="key">↑ ↓</span> 选择</span>
-      ${available ? `<span id="growth-confirm-btn"><span class="key">Enter</span> ${thickenSelected() ? '加厚' : '刻入'}</span>` : `<span>${selected.cost === null ? '已至上限' : '薪柴不足'}</span>`}
+      ${available ? `<span id="growth-confirm-btn"><span class="key">Enter</span> ${thickenSelected() ? '加厚' : '刻入'}</span>` : `<span>${isPending || !selected.unlocked && selected.cost !== null ? '尚待经历' : selected.cost === null ? '已至上限' : '薪柴不足'}</span>`}
       <span id="growth-close-btn"><span class="key">Esc</span> 离开</span></div>`;
   renderPanelContent(panel, html, selectionOnly);
   if (revealSelection) scrollFocusedIntoView(panel);
@@ -207,19 +250,9 @@ function wireEvents(selectionOnly = false): void {
       render(true);
     });
     card.addEventListener('click', () => {
-      const el = card as HTMLElement;
       cursorCard = index;
-      if (el.classList.contains('card-maxed') || el.classList.contains('card-locked')) {
-        audioManager.playSFX('sfx-ui-error');
-        render();
-        return;
-      }
-      const id = el.dataset.id ?? '';
-      if (id === THICKEN_ID) {
-        purchaseThicken();
-        return;
-      }
-      purchaseCard(id as GrowthUpgradeId);
+      render(true);
+      commitSelectedCard();
     });
   });
 }

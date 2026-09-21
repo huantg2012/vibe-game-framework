@@ -14,7 +14,7 @@ import { eventBus } from '@/core/event-bus';
 import { gameState } from '@/managers/game-state';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { getDefenseRuntimeState, loadDefenseRuntimeState, type ContaminantRuntimeState } from '@/systems/defense-engine';
-import { growthSystem } from '@/systems/growth-system';
+import { growthSystem, validateGrowthProgressionState } from '@/systems/growth-system';
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { GameEvent } from '@/types/events';
@@ -61,6 +61,7 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
   if (data.tide.cycleInPhase >= phaseLength || !runtimeNumber(data.tide.currentIntensity, minimumIntensity - 1e-9, tide.peak + 1e-9)) return false;
   if (!runtimeRecord(data.growth?.upgrades) || Object.entries(data.growth.upgrades).some(([id, level]) =>
     !Object.prototype.hasOwnProperty.call(UPGRADE_DATA, id) || !runtimeInteger(level, 0, UPGRADE_DATA[id as keyof typeof UPGRADE_DATA].maxLevel))
+    || !validateGrowthProgressionState(data.growth.progression)
     || !data.stability || !runtimeNumber(data.stability.progress, 0, GAME_CONSTANTS.STABILITY.MAX)
     || typeof data.stability.reached !== 'boolean' || (data.stability.progress === GAME_CONSTANTS.STABILITY.MAX && !data.stability.reached)) return false;
   if (data.contaminantRuntimeState !== undefined && (!runtimeRecord(data.contaminantRuntimeState)
@@ -228,6 +229,27 @@ export const saveManager = {
 
   hasPendingSave(): boolean { return pendingWorldSave; },
 
+  /** Save an open base inventory draft together with the caller's base changes.
+   * Failure keeps the draft open so the caller can restore the other systems
+   * before cancelling it; no inventory observer sees a half-restored purchase. */
+  trySaveBaseInventoryFrame(): boolean {
+    const run = inventoryStore.getRun();
+    if (!inventoryStore.hasFrameTransaction() || worldTransaction || pendingWorldSave
+      || run?.status === 'active' || (run && !run.baseSettled)) return false;
+    const beforeForecast = impactSystem.getForecastState();
+    const committed = inventoryStore.commitFrameTransaction(inventory => {
+      writeRecord(JSON.stringify(attachCheckpoint(collectSave(inventory))));
+    });
+    if (!committed) {
+      impactSystem.loadForecastState(beforeForecast);
+      return false;
+    }
+    if (run?.baseSettled) { currentRiftCheckpoint = undefined; currentRiftDeparture = undefined; }
+    enableInventoryPersistence();
+    eventBus.emit(GameEvent.GAME_SAVED, { timestamp: Date.now() });
+    return true;
+  },
+
   /** The world adapter validates all domain DTOs before load mutates inventory,
    * base modules or the scene. Unsupported worlds remain intact in storage. */
   setRiftStateValidator(validate: ((checkpoint: RiftCheckpoint, inventory: InventoryState) => boolean) | null): void {
@@ -375,6 +397,15 @@ export const saveManager = {
     growthSystem.loadState(data.growth);
     stabilityTracker.loadState(data.stability);
 
+    // Older expanded base records left the passive in the former final slot.
+    // Do not alter any active or unfinished-return package; those keep their
+    // original equipment/world identity until their existing settlement ends.
+    const loadedRun = inventoryStore.getRun();
+    const slotRepair = !loadedRun || loadedRun.baseSettled
+      ? inventoryStore.reconcileExpandedToolSlots(GAME_CONSTANTS.CONTAMINANT.SORTIE_SLOTS)
+      : null;
+    const repairedSlots = slotRepair?.ok === true && slotRepair.value;
+
     // Contaminant runtime state (D3/DEC-032). Old saves without this field load as
     // empty for both owners — never "loaded, then immediately cleared" because this
     // runs on the load path only, not on the new-game reset path.
@@ -387,7 +418,7 @@ export const saveManager = {
     impactSystem.loadForecastState(data.impactForecast);
 
     // Migration is durable immediately; failure leaves the readable V1 record intact.
-    if (data.version === 1 || data.inventory.version === 1) {
+    if (data.version === 1 || data.inventory.version === 1 || repairedSlots) {
       try { storage().setItem(SAVE.KEY, JSON.stringify(collectSave(inventoryStore.getState()))); } catch { /* trySave exposes retry; do not erase old save */ }
     }
     enableInventoryPersistence();

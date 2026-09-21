@@ -14,23 +14,32 @@ export type GrowthPurchaseResult =
   | { readonly ok: false; readonly reason: 'unavailable' | 'pending-save' | 'storage-failed' };
 
 export function purchaseGrowth(id: GrowthUpgradeId | 'thicken'): GrowthPurchaseResult {
-  if (saveManager.hasPendingSave()) return { ok: false, reason: 'pending-save' };
+  if (saveManager.hasPendingSave() || inventoryStore.hasFrameTransaction()) return { ok: false, reason: 'pending-save' };
   const run = inventoryStore.getRun();
   if (run?.status === 'active') return { ok: false, reason: 'unavailable' };
   if (run?.status === 'settled' && !run.baseSettled) return { ok: false, reason: 'pending-save' };
   const beforeGame = gameState.getState();
   const beforeGrowth = growthSystem.getState();
   const beforeStability = stabilityTracker.getState();
+  const previousSlotCount = GAME_CONSTANTS.CONTAMINANT.SORTIE_SLOTS + growthSystem.getSortieSlotBonus();
   const cost = id === 'thicken' ? gameState.getNextModuleMaxHpCost() : growthSystem.getCost(id);
   const spent = id === 'thicken' ? (gameState.raiseModuleMaxHp() ? cost ?? 0 : 0) : growthSystem.purchase(id, false);
   if (spent <= 0) return { ok: false, reason: 'unavailable' };
   if (id !== 'thicken') stabilityTracker.addProgress('growth', GAME_CONSTANTS.STABILITY.GAIN_GROWTH, false);
-  if (!saveManager.trySave()) {
+  const expandsSlots = id === 'growth_sortie_slot';
+  let slotsCompatible = true;
+  if (expandsSlots) {
+    inventoryStore.beginFrameTransaction();
+    slotsCompatible = inventoryStore.reconcileExpandedToolSlots(previousSlotCount).ok;
+  }
+  const saved = slotsCompatible && (expandsSlots ? saveManager.trySaveBaseInventoryFrame() : saveManager.trySave());
+  if (!saved) {
     // trySave restores its forecast snapshot itself. No success event has escaped.
     gameState.loadState(beforeGame);
     growthSystem.loadState(beforeGrowth);
     stabilityTracker.loadState(beforeStability);
-    return { ok: false, reason: 'storage-failed' };
+    if (expandsSlots) inventoryStore.cancelFrameTransaction();
+    return { ok: false, reason: slotsCompatible ? 'storage-failed' : 'unavailable' };
   }
   const newLevel = id === 'thicken' ? gameState.getModuleMaxHpTier() : growthSystem.getLevel(id);
   eventBus.emit(GameEvent.GROWTH_PURCHASED, { upgradeId: id, newLevel });

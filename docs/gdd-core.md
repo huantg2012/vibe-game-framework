@@ -2,7 +2,7 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时（初版），随 Slice 增量生长
-last-modified: 2026-09-12
+last-modified: 2026-09-21
 role: 设计索引（保持简短，详情住在各自 spec 中）
 ---
 
@@ -17,7 +17,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 
 ## 系统列表
 
-**当前主线（2026-09-12，DEC-144–157）：** [内容扩展计划](progress/content-expansion-plan.md)阶段一已按范围交付；用户选择固定机位三维像素舞台，M游玩基础与长路线已提交`2ee0b2b`，正俯视R4冻结。阶段二由[迭代22](tasks/iteration-22.md)实施完整悬海：两种空间编排、可敲偏的承水壳片、来源物件池及原生音景，复用正式移动/战斗/库存，见[世界内容](content/suspended-sea.md)与[试玩入口](dev/suspended-sea.md)。当前实机验收中；净化点往返与长期记录尚未交付。四A持续供给未开始，必须在四B扩产前通过。
+**当前主线（2026-09-21，DEC-169/174/175）：** 正式方向为俯视2D像素Rift，三维关卡重构已终止。[迭代29](tasks/iteration-29.md)落实净化点与成长审查：场所结构、持久投入表现、经历展开、三层真实预兆、扩槽/加厚完整链。[迭代28](tasks/iteration-28.md)目录与静态图标获用户认可，扩大采样/长期平衡/动态审美保持挂起。现状与证据见[游戏索引](game-state/INDEX.md)，本轮美术与成长价值待人审。
 
 **迭代19实施记录（2026-09-09，DEC-138）**。四品质十撬棍、统一挥击与持武像素、库存整备、真实拾取、负重/抗性和死亡/撤离结算已接生产；内部验证见 docs/qa/iteration-19.md。中断出击政策待用户明确，完整恢复未交，体验与美术待人审；本批纳入阶段提交（DEC-139）。
 
@@ -40,7 +40,7 @@ role: 设计索引（保持简短，详情住在各自 spec 中）
 | 潮汐系统 (TideSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 5 Tide x 3 Phase 状态机，替代线性递增；低谷期给玩家积攒资源的窗口 |
 | 污染物系统 (ContaminantSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 污染物库存+防御slot+生命周期；3种污染物（固化/延时/侵蚀）覆盖三档rarity |
 | 出击工具系统 (ToolSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 污染物转化为主动出击工具（凝锁/时裂/侵蚀领域），Q/F键位触发 |
-| 永久改造系统 (GrowthSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 3个永久改造项（每轴1个）+ 费用曲线，薪柴的第三去处 |
+| 永久改造系统 (GrowthSystem) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 6条17次购买，由真实经历展开；身体、基地与装备分工，预兆分层读出强度/重点/压力 |
 | 稳定度追踪 (StabilityTracker) | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 长期进度条 0-100%，所有正向行为积分推向终点 |
 | 存档管理 (SaveManager) | **已实现** (Slice 3) | - (无独立 spec) | localStorage 持久存档，自动保存于返回净化点时 |
 | 裂隙污染物节点 | **已实现** (Slice 3) | `docs/specs/system-growth-tide.md` | 裂隙中新拾取物类型，提供污染物来源 |

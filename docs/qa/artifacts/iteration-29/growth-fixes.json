@@ -1,0 +1,21 @@
+{
+  "iteration": 29,
+  "issue": "R02",
+  "verifiedAt": "2026-09-21T02:32:16.099Z",
+  "result": "PASS",
+  "method": "isolated memory storage; real purchaseGrowth, InventoryStore, SaveManager and beginRun",
+  "checks": [
+    "purchase moves the existing passive, preserves every item and saves one complete record before notification",
+    "empty passive slot remains empty, active tools stay in place and the new active slot can be used",
+    "rejected storage restores slots, resources, growth, stability, forecast and original item references",
+    "insufficient funds and maxed purchases leave inventory and all base state unchanged",
+    "occupied destination fails without displacing either item or partially buying the upgrade",
+    "catalog whole-run passive keeps identity and uses during purchase, then consumes exactly once on real departure",
+    "old expanded base records repair once, preserve item payloads and can depart after repeated reload",
+    "old-record repair remains usable after a rejected migration write and retry never replenishes items",
+    "active and unfinished-return records keep original equipment and bytes unchanged"
+  ],
+  "limitations": [
+    "No player visual acceptance or browser input is claimed."
+  ]
+}

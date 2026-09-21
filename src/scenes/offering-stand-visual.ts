@@ -10,6 +10,7 @@
  */
 
 import Phaser from 'phaser';
+import { PURIFICATION_WORKS_COLORS as C } from '@/scenes/purification-renewal-visual';
 import {
   OFFERING_CHARGE_TIER_COUNT,
   offeringChargeTier,
@@ -101,7 +102,10 @@ export function ensureOfferingAnims(scene: Phaser.Scene): boolean {
 
 export class OfferingStandVisual {
   private sprite: Phaser.GameObjects.Sprite | null = null;
+  private cradle: Phaser.GameObjects.Graphics | null = null;
   private tier: OfferingChargeTier = 0;
+  private pressure = 0;
+  private cradleSignature = '';
 
   constructor(
     private readonly scene: Phaser.Scene,
@@ -120,10 +124,13 @@ export class OfferingStandVisual {
       this.sprite.setOrigin(0.5, OFFERING_ORIGIN_Y);
       this.sprite.setDepth(OFFERING_DEPTH);
       this.sprite.setRotation(0);
+      this.cradle = this.scene.add.graphics({ x: this.x, y: this.y });
+      this.cradle.setDepth(OFFERING_DEPTH + .05);
     } else {
       this.sprite.setVisible(true);
     }
     this.setCharge(tier);
+    this.drawCradle();
     return true;
   }
 
@@ -132,10 +139,50 @@ export class OfferingStandVisual {
     if (this.tier === tier && this.sprite.anims.isPlaying) return;
     this.tier = tier;
     this.sprite.play(offeringStandAnimKey(tier));
+    this.drawCradle();
+  }
+
+  /** Only public tide pressure is accepted, never item identity or maturity. */
+  setPressure(pressure: number): void {
+    const next = pressure >= .75 ? 2 : pressure >= .35 ? 1 : 0;
+    if (this.pressure === next) return;
+    this.pressure = next;
+    this.drawCradle();
+  }
+
+  private drawCradle(): void {
+    if (!this.cradle) return;
+    const signature = `${this.tier}:${this.pressure}`;
+    if (signature === this.cradleSignature) return;
+    this.cradleSignature = signature;
+    const g = this.cradle;
+    g.clear();
+    // The ring's lower inner lip is a bearing surface. Asymmetric jaws meet
+    // that material, preserving the upper hole and the locked ring silhouette.
+    g.fillStyle(C.metal).fillRect(-5,-12,3,2).fillRect(4,-11,3,2);
+    g.fillStyle(C.edge).fillRect(-5,-12,3,1).fillRect(4,-11,2,1);
+    g.fillStyle(C.repair).fillRect(-4,-9,9,2);
+    if (this.tier === 0) return;
+    // A shrouded unknown mass, never the identifiable icon of a hidden item.
+    const width = this.tier === 1 ? 4 : this.tier === 2 ? 6 : 7;
+    const left = 1-Math.ceil(width/2);
+    const compressed = this.pressure === 2;
+    const top = compressed ? -14 : -16;
+    g.fillStyle(C.concrete).fillRect(left,top,width,-9-top);
+    g.fillStyle(C.repair).fillRect(left,top,width-1,2).fillRect(left+1,top-1,width-3,1);
+    g.fillStyle(C.metal).fillRect(left,top+1,2,2);
+    g.fillStyle(C.shadow).fillRect(left+width-2,top+2,2,-11-top);
+    g.fillStyle(C.metal).fillRect(-4,-11,3,2).fillRect(3,-10,3,2);
+    // Pressure is held inside the clamp; no ring illumination or extra lights.
+    if (this.pressure > 0) {
+      g.fillStyle(C.deep).fillRect(left+2,-13,Math.max(1,width-3),2);
+      if (this.pressure === 2) g.fillStyle(C.medium).fillRect(1,-12,2,1);
+    }
   }
 
   setDepth(depth: number): void {
     this.sprite?.setDepth(depth);
+    this.cradle?.setDepth(depth + .05);
   }
 
   isShowing(): boolean {
@@ -145,6 +192,9 @@ export class OfferingStandVisual {
   clear(): void {
     this.sprite?.destroy();
     this.sprite = null;
+    this.cradle?.destroy();
+    this.cradle = null;
+    this.cradleSignature = '';
   }
 
   destroy(): void {

@@ -54,12 +54,13 @@ const fallback = sequence([0, .99]);
 assert.equal(impactSystem.run([], undefined, fallback.random).primaryModuleId, gameState.getModules().at(-1)!.id);
 assert.equal(fallback.draws, 2);
 
-// Forecast target, blur decision and blur direction all use the injected stream exactly once.
+// Forecast target, blur and frozen actual target use the injected stream once.
 reset();
-const blurred = sequence([.4, .1, .7]);
+const blurred = sequence([.4, .1, .7, .99, .99]);
 impactSystem.generateForecast(2.2, 0, 2.8, blurred.random);
 assert.deepEqual(impactSystem.getForecastDisplay(), { targetId: gameState.getModules()[1]!.id, severity: 'extreme' });
-assert.equal(blurred.draws, 3);
+assert.equal(blurred.draws, 5);
+assert.equal(impactSystem.getForecastState().actualPrimaryId, gameState.getModules().at(-1)!.id);
 const display = impactSystem.getForecastState();
 impactSystem.generateForecast(2.9, .99, 3, () => { throw new Error('already disclosed forecast must not reroll'); });
 assert.deepEqual(impactSystem.getForecastState(), display);

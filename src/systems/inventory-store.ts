@@ -288,6 +288,27 @@ export class InventoryStore {
       return success(undefined);
     });
   }
+  /** Preserve an equipped passive when a base upgrade moves the final slot.
+   * Only the old passive position may move; never displace another item. */
+  reconcileExpandedToolSlots(previousSlotCount: number): InventoryResult<boolean> {
+    if (this.state.run?.status === 'active') return fail('run-active');
+    const count = this.rules.toolSlotCount();
+    if (!Number.isSafeInteger(previousSlotCount) || previousSlotCount < 1 || count <= previousSlotCount) return success(false);
+    const previousSlot = previousSlotCount - 1;
+    const id = this.state.equipment.toolIds[previousSlot];
+    const item = id ? this.getItem(id) : undefined;
+    const movesPassive = item?.kind === 'contaminant' && getContaminantSlot(item.contaminant) === 'passive';
+    if (movesPassive && this.state.equipment.toolIds[count - 1]) return fail('incompatible');
+    if (!movesPassive && this.state.equipment.toolIds.length >= count) return success(false);
+    return this.transaction(state => {
+      while (state.equipment.toolIds.length < count) state.equipment.toolIds.push(null);
+      if (movesPassive && item) {
+        state.equipment.toolIds[previousSlot] = null;
+        state.equipment.toolIds[count - 1] = item.id;
+      }
+      return success(true);
+    });
+  }
   slotDefense(id: string | null, slot: number): InventoryResult { return this.slotOffering(id, slot); }
   slotOffering(id: string | null, slot: number): InventoryResult {
     return this.transaction(state => {

@@ -44,17 +44,17 @@ function numericEffectLabel(
 export const GROWTH_UPGRADE_DISPLAY: GrowthUpgradeDisplay[] = [
   {
     id: 'growth_chaos_resist',
-    name: '渗透抗性',
+    name: UPGRADE_DATA.growth_chaos_resist.name,
     icon: '◈', // diamond
     effectLabel: (level, maxLevel) => numericEffectLabel(
       level, maxLevel,
-      (lvl) => `混乱增速 -${pct('growth_chaos_resist', lvl)}%`,
-      '抵御裂隙侵蚀',
+      (lvl) => `自然混乱增速 -${pct('growth_chaos_resist', lvl)}%`,
+      '自然混乱增速 -0%',
     ),
   },
   {
     id: 'growth_kindling_affinity',
-    name: '薪柴亲和',
+    name: UPGRADE_DATA.growth_kindling_affinity.name,
     icon: '✦', // four-point star
     effectLabel: (level, maxLevel) => numericEffectLabel(
       level, maxLevel,
@@ -64,7 +64,7 @@ export const GROWTH_UPGRADE_DISPLAY: GrowthUpgradeDisplay[] = [
   },
   {
     id: 'growth_vitality',
-    name: '生命强化',
+    name: UPGRADE_DATA.growth_vitality.name,
     icon: '♥', // heart
     effectLabel: (level, maxLevel) => numericEffectLabel(
       level, maxLevel,
@@ -74,25 +74,25 @@ export const GROWTH_UPGRADE_DISPLAY: GrowthUpgradeDisplay[] = [
   },
   {
     id: 'growth_sortie_slot',
-    name: '出击扩容',
+    name: UPGRADE_DATA.growth_sortie_slot.name,
     icon: '▣',
-    effectLabel: (level) => (level > 0 ? '已解锁第4出击槽位' : '扩展出击工具携带上限 → 解锁第4槽位'),
+    effectLabel: (level) => (level > 0 ? '主动工具 3 位；被动工具 1 位。' : '主动工具 2 → 3 位；被动仍为 1 位，携带重量照常计入。'),
   },
   {
     id: 'growth_defense_slot',
-    name: '供奉扩容',
+    name: UPGRADE_DATA.growth_defense_slot.name,
     icon: '▤',
-    effectLabel: (level) => (level > 0 ? '已解锁第4供奉槽位' : '扩展供奉容量 → 解锁第4槽位'),
+    effectLabel: (level) => (level > 0 ? '可同时供奉 4 件物品。' : '供奉容量 3 → 4 件；成熟速度与物品供给不变。'),
   },
   {
     id: 'growth_forecast_clarity',
-    name: '预兆洞察',
+    name: UPGRADE_DATA.growth_forecast_clarity.name,
     icon: '◎',
-    effectLabel: (level, maxLevel) => numericEffectLabel(
-      level, maxLevel,
-      (lvl) => `预告可靠度 +${pct('growth_forecast_clarity', lvl)}%`,
-      '增强边界扰动感知',
-    ),
+    effectLabel: (level, maxLevel) => {
+      const readings = ['强度与重点仍可能误报', '辨清下次冲击强度', '辨清下次强度与重点装置', '读取下次各装置的防御前压力'];
+      const current = readings[Math.min(level, readings.length - 1)]!;
+      return level >= maxLevel ? current : `${current} → ${readings[level + 1]}`;
+    },
   },
 ];
 

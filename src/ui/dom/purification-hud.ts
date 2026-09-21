@@ -7,6 +7,7 @@ import { gameState } from '@/managers/game-state';
 import { impactSystem, SEVERITY_LABEL } from '@/systems/impact-system';
 import type { ForecastSeverity } from '@/systems/impact-system';
 import { tideSystem } from '@/systems/tide-system';
+import { growthSystem } from '@/systems/growth-system';
 import type { TidePhase } from '@/types/game-types';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
@@ -249,7 +250,7 @@ export class PurificationHud {
   }
 
   private buildForecastSlot(): string {
-    const forecast = impactSystem.getForecastDisplay();
+    const forecast = impactSystem.getForecastReading(growthSystem.getLevel('growth_forecast_clarity'));
     if (!forecast) return '';
 
     const targetName = MODULE_LABEL[forecast.targetId] ?? '?';
@@ -258,15 +259,15 @@ export class PurificationHud {
     if (!nearRift) {
       return this.wrapSlot(
         this.name('下次归来') +
-        this.span(targetName, COL.dimText, 11) +
-        this.span(SEVERITY_LABEL[forecast.severity], COL.dimText, 11),
+        this.span(`${targetName}${forecast.targetCertain ? '' : '？'}`, COL.dimText, 11) +
+        this.span(`${SEVERITY_LABEL[forecast.severity]}${forecast.severityCertain ? '' : '？'}`, COL.dimText, 11),
       );
     }
 
     return this.wrapSlot(
       this.name('下次归来') +
-      this.qty(targetName, this.targetColor(forecast.targetId)) +
-      this.grade(SEVERITY_LABEL[forecast.severity], this.gradeColor(forecast.severity)),
+      this.qty(`${targetName}${forecast.targetCertain ? '' : '？'}`, this.targetColor(forecast.targetId)) +
+      this.grade(`${SEVERITY_LABEL[forecast.severity]}${forecast.severityCertain ? '' : '？'}`, this.gradeColor(forecast.severity)),
       forecast.severity === 'extreme' ? 'border-left:2px solid #cc3333;padding-left:6px;' : '',
     );
   }

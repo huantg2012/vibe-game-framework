@@ -1,0 +1,12 @@
+PASS V1 migration preserves identity, locations, slots, remaining uses, growth and runtime counters
+PASS V2 repeated load and save roundtrip never duplicates the starter
+PASS malformed loads leave every live system and stored bytes intact
+PASS tool consumption persists before reload; active runs load without automatic loss or recovery
+PASS quota failure preserves live tool references and stored bytes
+PASS failed migration write preserves V1 bytes and retry saves exactly one starter
+PASS new record delete/reset cannot write a half-reset snapshot from starter creation
+PASS world settlement writes once and failed retry cannot replay rewards or tide
+PASS old V2 weapon lifecycle migrates once; spent uses survive reload and bad new lifecycle is rejected
+PASS catalog identification is durable and failed offering never leaks or loses the fixed identity
+PASS catalog final passive departure, fixed plan and tutorial claim roundtrip atomically through real storage
+11 real SaveManager migration/integration checks passed.

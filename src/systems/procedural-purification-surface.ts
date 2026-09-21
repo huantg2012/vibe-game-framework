@@ -24,13 +24,14 @@ import { GAME_CONSTANTS } from '@/config/constants';
 import type { BoundaryShape } from '@/systems/boundary-shape';
 import { TileType } from '@/types/game-types';
 import type { TileMapData } from '@/types/map-types';
+import { paintPurificationWorks } from '@/scenes/purification-renewal-visual';
 
 // --- Palette (subset from docs/art/palette.json relevant to purification) ---
 
 const PALETTE_HEX = [
-  '#080a0c', '#0a0a0c', '#0a0b0d', '#0d1114', '#151a1e', '#1a1c1f', '#1e2228',
+  '#080a0c', '#0a0b0d', '#0d1114', '#151a1e', '#1a1c1f', '#1e2228',
   '#2a2a2e', '#2c2e33', '#2e2d30', '#3a3d42', '#4a4e55', '#5a5f66',
-  '#8a6020', '#1aad96', '#0e4a3f', '#1a7a9a',
+  '#8a5c2a', '#1aad96', '#0e4a3f', '#1a7a9a',
 ];
 const PALETTE: ReadonlyArray<readonly [number, number, number]> = PALETTE_HEX.map((h) => [
   parseInt(h.slice(1, 3), 16),
@@ -44,13 +45,13 @@ const SURFACE = {
   /** Base brightness for concrete-dark (#2c2e33 ~ luminance 45) */
   baseBrightness: 45,
   /** Noise amplitude: brightness offset range +/- */
-  noiseAmp: 8,
+  noiseAmp: 4,
   /** Warm shift at ellipse center */
   warmR: 12, warmG: 6, warmB: -8,
   /** Cold shift at ellipse edge */
   coldR: -8, coldG: -3, coldB: 10,
   /** Worn path brightness bonus */
-  pathBrightness: 4,
+  pathBrightness: 2,
   /** Path width in pixels (half-width for falloff) */
   pathHalfWidth: 9,
   /** Joint line interval range (px) */
@@ -67,7 +68,7 @@ const SURFACE = {
   /** Teal seep distance from ellipse edge (px, inward) */
   tealBandInner: 8,
   /** Dither amplitude to prevent banding */
-  ditherAmp: 5,
+  ditherAmp: 2,
 } as const;
 
 // --- Deterministic value noise (mirrors procedural-surface.ts) ---
@@ -504,6 +505,9 @@ export function createPurificationSurfaceTexture(
     }
   }
 
+  // Construction carries the place's identity; grain remains the quiet substrate.
+  // The same plan is used by production and all existing scene comparison lessons.
+  paintPurificationWorks(image, shape);
   ctx.putImageData(image, 0, 0);
   canvas.refresh();
   return key;

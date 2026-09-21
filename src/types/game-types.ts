@@ -207,10 +207,21 @@ export type GrowthUpgradeId =
   | 'growth_defense_slot'
   | 'growth_forecast_clarity';
 
+/** Durable experiences used only to qualify future growth purchases. */
+export interface GrowthProgressionState {
+  version: 1;
+  impactExperienced: boolean;
+  offeringCompleted: boolean;
+  toolRevealed: boolean;
+  crestExperienced: boolean;
+}
+
 /** Persistent growth state */
 export interface GrowthState {
   /** upgradeId -> current level (0 = not purchased) */
   upgrades: Record<GrowthUpgradeId, number>;
+  /** Older saves have no experience record; purchased levels remain effective. */
+  progression?: GrowthProgressionState;
 }
 
 /** Purification stability tracker state */

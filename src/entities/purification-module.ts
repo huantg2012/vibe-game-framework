@@ -144,18 +144,68 @@ const INDICATOR_OFF_COLOR = 0x2a2d32; // 严重受损时熄灭，同时用作受
 const INDICATOR_SIZE = 3; // 3x3px 方点，避免圆形抗锯齿破坏像素风
 const INDICATOR_BLINK_INTERVAL_MS = 500;
 
-// 裂缝线色值与形状 (spec B3：受损 2-3 条 1px，严重受损同样的线加宽)
+// Damage sits on a module's casing; it is never a radius around its feet.
 const CRACK_COLOR = 0x151a1e;
-const CRACK_LINE_OFFSETS: ReadonlyArray<{ x1: number; y1: number; x2: number; y2: number }> = [
-  { x1: -0.55, y1: -0.65, x2: -0.15, y2: -0.1 },
-  { x1: 0.25, y1: -0.6, x2: 0.6, y2: -0.05 },
-  { x1: -0.2, y1: 0.15, x2: 0.35, y2: 0.7 },
-];
+const DAMAGE_SEAMS: Readonly<Record<ModuleType, ReadonlyArray<ReadonlyArray<readonly [number, number]>>>> = {
+  CORE: [[[10,19],[11,22],[10,25]], [[21,21],[20,24],[21,28]], [[13,31],[16,32],[17,33]]],
+  PURIFIER: [[[12,22],[16,23],[19,24]], [[11,27],[12,30],[11,34]], [[23,24],[24,28],[23,31]]],
+  STORAGE: [[[21,22],[20,25],[22,28]], [[9,22],[11,23],[13,23]], [[24,30],[22,31],[21,32]]],
+};
 
-// 边缘 teal 渗入点色值与位置 (spec B3：严重受损时出现)
-const SEEP_COLOR = 0x1aad96;
-const SEEP_SIZE = 3; // 2-3px 渗入点
-const SEEP_ANGLES = [Math.PI * (40 / 180), Math.PI * (165 / 180), Math.PI * (280 / 180)];
+export interface ModuleDamageMask {
+  readonly width: number;
+  readonly height: number;
+  /** Interior, opaque, non-teal material. Excludes the silhouette and floor shadow. */
+  readonly material: Uint8Array;
+}
+
+export interface ModuleDamagePixel { readonly x: number; readonly y: number; readonly color: number }
+
+/** Shared by the actual draw and its pixel audit. Coordinates are source-frame pixels. */
+export function buildModuleDamagePixels(
+  type: ModuleType,
+  health: 'healthy' | 'damaged' | 'critical',
+  mask: ModuleDamageMask,
+): ModuleDamagePixel[] {
+  if (health === 'healthy') return [];
+  const pixels = new Map<number, ModuleDamagePixel>();
+  const put = (x: number, y: number, color: number): void => {
+    if (x < 0 || y < 0 || x >= mask.width || y >= mask.height || !mask.material[y*mask.width+x]) return;
+    pixels.set(y*mask.width+x, {x,y,color});
+  };
+  for (const seam of DAMAGE_SEAMS[type]) {
+    const points: Array<readonly [number, number]> = [];
+    for (let i = 1; i < seam.length; i++) {
+      const a = seam[i-1]!, b = seam[i]!;
+      const steps = Math.max(Math.abs(b[0]-a[0]),Math.abs(b[1]-a[1]));
+      for (let step = 0; step <= steps; step++) {
+        const x = Math.round(a[0]+(b[0]-a[0])*step/steps);
+        const y = Math.round(a[1]+(b[1]-a[1])*step/steps);
+        points.push([x,y]); put(x,y,CRACK_COLOR);
+        if (health === 'critical') put(x+1,y,CRACK_COLOR);
+      }
+    }
+    if (health === 'critical') {
+      // Intrusion follows the existing fracture. No surface glow or loose chips.
+      const middle = points[Math.floor(points.length/2)]!;
+      put(middle[0],middle[1],0x0e4a3f);
+      put(middle[0],middle[1]+1,0x1a6b5c);
+    }
+  }
+  return [...pixels.values()];
+}
+
+/** A material stencil, including a one-pixel guard against painting an outline. */
+export function moduleDamageMaskFromRgba(width: number, height: number, rgba: Uint8ClampedArray): ModuleDamageMask {
+  const material = new Uint8Array(width*height);
+  for (let y = 1; y < height-1; y++) for (let x = 1; x < width-1; x++) {
+    const i = (y*width+x)*4, r=rgba[i]!, g=rgba[i+1]!, b=rgba[i+2]!;
+    if (rgba[i+3]! < 250 || (g > r+16 && b > r+7) || r*.299+g*.587+b*.114 < 30) continue;
+    if ([i-4,i+4,i-width*4,i+width*4].some(j=>rgba[j+3]! < 250)) continue;
+    material[y*width+x] = 1;
+  }
+  return {width,height,material};
+}
 
 function classifyModuleHealth(hpRatio: number): ModuleHealthState {
   if (hpRatio > MODULE_HEALTHY_HP_RATIO) return 'healthy';
@@ -206,6 +256,8 @@ function ensureCoreLightTextures(scene: Phaser.Scene): void {
 
 export class PurificationModuleEntity {
   private graphics!: Phaser.GameObjects.Graphics;
+  private damageGraphics!: Phaser.GameObjects.Graphics;
+  private damageMask: { key: string; mask: ModuleDamageMask } | null = null;
   private footing!: Phaser.GameObjects.Graphics;
   private hpBarBg!: Phaser.GameObjects.Graphics;
   private hpBarFill!: Phaser.GameObjects.Graphics;
@@ -271,6 +323,7 @@ export class PurificationModuleEntity {
   setGroundDepth(base: number, floorDepth: number, readoutDepth: number): void {
     this.footing.setDepth(floorDepth - 0.1);
     this.graphics.setDepth(base);
+    this.damageGraphics.setDepth(base + 0.12);
     for (const sprite of [this.coreSprite, this.purifierSprite, this.storageSprite]) sprite?.setDepth(base);
     this.indicatorLight.setDepth(base + 0.1);
     for (const glow of [this.coreGlow, this.purifierGlow, this.storageGlow]) glow?.setDepth(base + 0.2);
@@ -288,6 +341,7 @@ export class PurificationModuleEntity {
     // Module shape
     this.graphics = scene.add.graphics();
     this.graphics.setDepth(depth);
+    this.damageGraphics = scene.add.graphics().setDepth(depth + .12);
 
     // HP bar background
     const barY = this.getHpBarY();
@@ -543,6 +597,8 @@ export class PurificationModuleEntity {
     const key = coreSpriteKey(v);
     if (!this.scene?.textures.exists(key)) return;
     this.coreSprite.setTexture(key);
+    this.damageMask = null;
+    this.drawModule();
   }
 
   private mountStorageSprite(scene: Phaser.Scene, depth: number): void {
@@ -602,6 +658,8 @@ export class PurificationModuleEntity {
     this.blinkTimer?.remove();
     this.blinkTimer = undefined;
     this.graphics?.destroy();
+    this.damageGraphics?.destroy();
+    this.damageMask = null;
     this.footing?.destroy();
     this.hpBarBg?.destroy();
     this.hpBarFill?.destroy();
@@ -667,6 +725,7 @@ export class PurificationModuleEntity {
     }
 
     this.graphics.clear();
+    this.damageGraphics.clear();
     this.drawFooting();
 
     if (type === 'CORE') {
@@ -767,33 +826,40 @@ export class PurificationModuleEntity {
     g.fillRect(x + span - 2, y + 5, 5, 1);
     g.fillRect(x + span + 2, y + 6, 1, 3);
     g.fillRect(x - span - 3, y + 4, 2, 1);
-    if (this.healthState !== 'critical') return;
-    g.fillStyle(0x0e4a3f, 0.75);
-    g.fillRect(x + span + 1, y + 7, 2, 2);
-    g.fillRect(x + span + 2, y + 9, 4, 1);
+    // Ground damage is a dark local joint. Coloured intrusion belongs inside
+    // the masked casing, never a scatter of bright squares on the floor.
   }
 
   private drawDamageDecoration(size: number): void {
     if (this.healthState === 'healthy') return;
-
-    const { x, y } = this.config;
-    const crackWidth = this.healthState === 'critical' ? 2 : 1;
-
-    this.graphics.lineStyle(crackWidth, CRACK_COLOR, 1);
-    for (const line of CRACK_LINE_OFFSETS) {
-      this.graphics.beginPath();
-      this.graphics.moveTo(x + line.x1 * size, y + line.y1 * size);
-      this.graphics.lineTo(x + line.x2 * size, y + line.y2 * size);
-      this.graphics.strokePath();
-    }
-
-    if (this.healthState === 'critical') {
-      this.graphics.fillStyle(SEEP_COLOR, 1);
-      for (const angle of SEEP_ANGLES) {
-        const sx = x + size * Math.cos(angle);
-        const sy = y + size * Math.sin(angle);
-        this.graphics.fillRect(sx - SEEP_SIZE / 2, sy - SEEP_SIZE / 2, SEEP_SIZE, SEEP_SIZE);
+    const sprite = this.coreSprite ?? this.purifierSprite ?? this.storageSprite;
+    if (sprite) {
+      const frame = this.config.type === 'CORE' ? sprite.frame : sprite.texture.get(0);
+      if (this.damageMask?.key !== sprite.texture.key) {
+        const canvas = document.createElement('canvas');
+        canvas.width = frame.cutWidth; canvas.height = frame.cutHeight;
+        const context = canvas.getContext('2d', {willReadFrequently:true});
+        if (!context) return;
+        context.drawImage(frame.source.image as CanvasImageSource, frame.cutX, frame.cutY,
+          frame.cutWidth, frame.cutHeight, 0, 0, frame.cutWidth, frame.cutHeight);
+        this.damageMask = {key:sprite.texture.key, mask:moduleDamageMaskFromRgba(frame.cutWidth,
+          frame.cutHeight, context.getImageData(0,0,frame.cutWidth,frame.cutHeight).data)};
       }
+      const pixels = buildModuleDamagePixels(this.config.type,this.healthState,this.damageMask.mask);
+      // Source origin is deliberate (purifier y=37.9). Use exactly the sprite's
+      // transform so the damage raster remains registered at both camera zooms.
+      const left = sprite.x-sprite.displayOriginX, top = sprite.y-sprite.displayOriginY;
+      for (const pixel of pixels) this.damageGraphics.fillStyle(pixel.color,1)
+        .fillRect(left+pixel.x,top+pixel.y,1,1);
+      return;
+    }
+    // Missing-texture fallback: two short cuts well inside each geometric body.
+    const {x,y}=this.config;
+    this.damageGraphics.fillStyle(CRACK_COLOR,1);
+    const length = Math.max(3,Math.floor(size*.3));
+    for (let i=0;i<length;i++) {
+      this.damageGraphics.fillRect(x-3+Math.floor(i/3),y-4+i,1,1);
+      this.damageGraphics.fillRect(x+2+Math.floor(i/3),y-2+i,1,1);
     }
   }
 

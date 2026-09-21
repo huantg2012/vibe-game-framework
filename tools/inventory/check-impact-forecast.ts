@@ -54,7 +54,7 @@ try {
     assert(contaminantSystem.slotDefense(memory.id, 0));
     const snapshot = inventoryStore.getOfferingItems().map(entry => entry?.id ?? null);
     const result = impactSystem.run(contaminantSystem.getDefenseSlotted(), snapshot);
-    assert.notEqual(result.primaryModuleId, first.targetId);
+    assert.equal(result.primaryModuleId, first.actualPrimaryId, 'V2 keeps the actual target frozen before slotting memory');
     assert.equal(impactSystem.getForecastState().earnedPending, true);
     contaminantSystem.unslotDefense(0); tideSystem.advanceCycle(); generate();
     assert(impactSystem.getForecastState().committed);

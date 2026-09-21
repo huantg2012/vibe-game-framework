@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 slice: 3 (extended in 5, 5.5)
-last-modified-date: 2026-09-18
+last-modified-date: 2026-09-21
 last-modified-by: code（迭代27：成长兑现与回程稳定度）
 interface-changed: true
 interfaces-with:
@@ -12,6 +12,7 @@ interfaces-with:
   - system-enemy-ai              # 出击工具影响敌人状态（冻结/覆写/削弱）
 exposes:
   - contaminantSystem.finishOfferingImpact(isHighTide, bonusCharges, snapshotIds?)
+  - growthSystem.getAvailability(id) / getUpgradeDefinition(id) / recordReturn(facts)
   - tideSystem.getState() (含 phase / tideNumber / currentIntensity) / getCurrentIntensity() / isHighTide()
   - contaminantSystem.getDefenseSlotted() / getSortieLoadout()
   - growthSystem.getLevel(id) / getModifiers()
@@ -213,33 +214,14 @@ interface SaveData {
 
 15d. **库存排序**：按当前库存页所选排序稳定排序；同名物件优先高品质，余次与成熟状态独立展示，不在每帧重排。
 
-### G — 永久改造
+### G — 永久改造（迭代29）
 
-16. **改造交互**：净化点中"改造祭坛"交互点（走近按 E 打开蜕变面板）。**加厚**（全局抬模块 `maxHp`）并进该面板第七张，规则归 `system-purification-impact` U 组（DEC-117）。加厚不是蜕变刻入项：不进 `upgrades.csv`、不吃改造折扣、不计稳定度 +1。
-17. **改造项**：
-
-**Slice 3 实现（3 个，每轴 1 个）**：
-
-| ID | 名称 | 轴线 | 效果 | 上限 |
-| -- | ---- | ---- | ---- | ---- |
-| `growth_chaos_resist` | 渗透抗性 | 出击效率 | 混乱值 BASE_RATE 额外减免 -4%/级 | 5 级（-20%） |
-| `growth_kindling_affinity` | 薪柴亲和 | 资源效率 | 每次拾取薪柴额外 +1 | 3 级（+3） |
-| `growth_vitality` | 生命强化 | 生存韧性 | 最大生命值 +15/级 | 4 级（+60） |
-
-**Slice 4+ 扩展（设计已有，分批实现）**：行动效率、抗性缓冲、深度感知、模块协同、创伤适应、净化共振。
-
-18. **费用曲线**（统一所有改造项）：
-
-| 级别 | 费用（薪柴） |
-| ---- | ------------ |
-| 1 | 8 |
-| 2 | 12 |
-| 3 | 18 |
-| 4 | 25 |
-| 5 | 35 |
-
-19. **永久性**：改造一旦购买不可撤销、不可降级。效果在所有后续出击中生效。
-20. **效果应用**：`growthSystem.getModifiers()`为唯一成长读数。场景初始化时将 `100 + vitalityBonus` 传给真实战斗生命上限，并将亲和传给搜寻结算。薪柴按 `max(1, floor((node.value + kindlingAffinity) * storageModifier))` 结算；亲和先加到每堆基数，再受储藏倍率。准备、战斗、HUD和恢复校验使用相同上限。新局恢复合同记录最大生命/亲和；旧记录缺省100/0，不为仍在途的旧局突然加血或重算已得薪柴。
+16. **职责**：身体适应为抗性、生命、亲和；装置建设为预兆、供奉扩容及独立加厚；出击扩容改变主动携带位置。具体战术仍由可遗失的污染物承担。无新增货币、职业树、永久视距或永久负重覆盖。
+17. **唯一数据**：`data/upgrades.csv` → `UpgradeDef`；6条轴、17次购买、费用和上限沿各条 `costs`，不使用统一费用阶梯。名称、职责、逐层经历前置同源；预兆 `effectPerLevel=1` 表示信息层，不再是可靠度百分比。3身体轴保持原5/3/4级和原数值，扩容各1级，预兆3级。
+18. **经历与资格**：`GrowthState.progression` version1的4个布尔事实只由真实事件OR写入：实际非豁免冲击、任一真实供奉完成、供奉后揭晓可用污染物、离开有限潮峰。预兆1/2/3层分别需要冲击/供奉完成/离开潮峰；供奉扩容需完成供奉，出击扩容需揭晓可用工具。身体和加厚无经历门槛。旧档缺字段默认未记录；成熟旧工具、已见可用目录、非空供奉回执、已结算实际冲击账本和明确退潮/后续潮位可恢复对应事实，不由余额/稳定度猜成功撤离。开局白板不算。`recordReturn`放在既有基地结算事务内，不发奖励；归来普通拒写保留整帧候选、封锁交互并重试同一候选，购买拒写才恢复前态。
+19. **永久性与交易**：已购等级不因前置缺失而失效；尚未购得的下一层仍检查资格。`purchaseGrowth`在同笔保存中处理薪柴、成长、稳定度和必要库存迁移，成功后才发事件。扩容把原被动末槽移动到新的被动末槽，原ID/余次/品质保留；主动2→3，被动仍1，重量照常计入。供奉3→4，不改变物件来源、充能速度和防御计算。
+20. **效果应用**：`growthSystem.getModifiers()`提供原生命/亲和/抗性；`getLevel('growth_forecast_clarity')`供预告公开层读取。生命上限与搜寻、负重、出击快照沿既有共享入口；亲和按 `max(1,floor((node.value+kindlingAffinity)*storageModifier))` 先加基数再乘储藏。旧在途出击属性不变。预兆第1层准确强度档，第2层增加准确重点，第3层增加三个装置防御前压力，正式合同归 `system-purification-impact`。
+20a. **呈现**：培养藏世界内交互保留实体与无框主从读数。列表只展已购/首层前置满足项，其余合成“尚待经历”并说明真实条件，不捏造未知池子规模；已见项只显示当前和下一层效果。加厚完整代价见净化点spec。报告只陈述已刻入效果，不把下一层当已生效。真实成长而非余额驱动持久外显。
 
 ### S — 净化稳定度
 
@@ -267,7 +249,7 @@ interface SaveData {
 24. **保存时机**：每次返回净化点时自动保存（包括分配/改造操作后）。改造与加厚走 `purchaseGrowth` 购买事务：扣薪柴、成长/模块上限、成长稳定度共同写入；拒写时全部还原，成功事件与演出只在写入成功后发送。待保存的归来结算阻止购买。加厚不额外给稳定度，亦不回血。
 25. **存储**：`localStorage` key = `'coh-save-v1'`。
 26. **加载**：主菜单"Continue"按钮读取存档恢复全部状态。
-27. **版本迁移**：`SaveData.version` 字段。迭代19库存底座当前写入version=2（`SaveDataV2`）；旧version=1经统一库存导入保留污染物ID、阶段、次数、装配和成长，迁移增加普通白板。V2以`inventory`为唯一物品归属，旧污染物数组不重复写入。下文早期SaveData示意属于V1合同；实际字段以`src/types/game-types.ts`为准。正常出击、拾获、死亡/撤离、归来结算已接通；未完成出击的刷新/退出政策已在DEC-158锁为续原局、明确放弃才结损；完整恢复现仅接入悬海独立持久旅程（另加存储前缀），原随机世界未适配；active续同局、settled回执结一次基地冲击、baseSettled不重演。冲击/预告随机流与替补ID绑定run，失败重载结果不重抽，详见`system-field-inventory.md`。库存内部版本2保存武器供奉/余次；旧内部版本1无字段武器仅迁移一次，已消费的余次不因重载回满。
+27. **版本迁移**：`SaveData.version` 字段。迭代19库存底座当前写入version=2（`SaveDataV2`）；旧version=1经统一库存导入保留污染物ID、阶段、次数、装配和成长，迁移增加普通白板。V2以`inventory`为唯一物品归属，旧污染物数组不重复写入。下文早期SaveData示意属于V1合同；实际字段以`src/types/game-types.ts`为准。正常出击、拾获、死亡/撤离、归来结算已接通；未完成出击的刷新/退出政策已在DEC-158锁为续原局、明确放弃才结损；完整恢复现已接正式2D随机Rift；旧悬海独立持久旅程保留开发记录；active续同局、settled回执结一次基地冲击、baseSettled不重演。冲击/预告随机流与替补ID绑定run，失败重载结果不重抽，详见`system-field-inventory.md`。库存内部版本2保存武器供奉/余次；旧内部版本1无字段武器仅迁移一次，已消费的余次不因重载回满。
 28. **重置**："New Expedition" 清除存档重新开始。
 
 ### F — 场景流修改

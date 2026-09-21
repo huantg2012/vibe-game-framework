@@ -1,0 +1,10 @@
+PASS purchase moves the existing passive, preserves every item and saves one complete record before notification
+PASS empty passive slot remains empty, active tools stay in place and the new active slot can be used
+PASS rejected storage restores slots, resources, growth, stability, forecast and original item references
+PASS insufficient funds and maxed purchases leave inventory and all base state unchanged
+PASS occupied destination fails without displacing either item or partially buying the upgrade
+PASS catalog whole-run passive keeps identity and uses during purchase, then consumes exactly once on real departure
+PASS old expanded base records repair once, preserve item payloads and can depart after repeated reload
+PASS old-record repair remains usable after a rejected migration write and retry never replenishes items
+PASS active and unfinished-return records keep original equipment and bytes unchanged
+9 growth slot checks passed; docs/qa/artifacts/iteration-29/growth-fixes.json

@@ -1,0 +1,10 @@
+PASS slot/read/unslot never grants free current certainty or next reading
+PASS same-cycle redraw and departure cycle change never reroll a reading
+PASS actual offering impact earns the next record without rewriting current target
+PASS earned record survives removal/save/load and is consumed exactly once
+PASS last offering impact earns record before maturation; cycle-zero exemption earns none
+PASS failed slot persistence rolls back inventory without manufacturing memory
+PASS failed save preserves earned pending token; retry creates exactly one durable promise
+PASS previously published legacy double commitments remain valid naturally
+PASS old saves get stable baseline; malformed forecasts leave live state intact
+9 forecast contract checks passed

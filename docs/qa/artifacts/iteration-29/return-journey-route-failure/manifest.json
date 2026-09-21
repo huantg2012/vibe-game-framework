@@ -1,0 +1,195 @@
+{
+  "method": "fresh newContext; real keys; full read-only routing; no natural balance claim",
+  "interactions": [
+    {
+      "name": "core",
+      "ok": true
+    },
+    {
+      "name": "growth",
+      "ok": true
+    },
+    {
+      "name": "offering",
+      "ok": true
+    },
+    {
+      "name": "purifier",
+      "ok": true
+    },
+    {
+      "name": "storage",
+      "ok": true
+    },
+    {
+      "name": "rift",
+      "ok": true
+    }
+  ],
+  "returns": [
+    {
+      "n": 1,
+      "extraction": {
+        "ok": false,
+        "reason": "physical-obstacle",
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "paused": false,
+          "ended": false,
+          "pos": {
+            "x": 1530,
+            "y": 756
+          },
+          "hp": 100,
+          "chaos": 16.191474050000117,
+          "carried": 0,
+          "seed": {
+            "seed": 957411433,
+            "fragmentTypeId": "world-study:ivory-basin",
+            "recipeId": "world-space:fracture-fields"
+          },
+          "elapsedMs": 3016.3900000000044,
+          "exit": {
+            "id": "EXIT_01",
+            "position": {
+              "x": 212,
+              "y": 596
+            },
+            "triggerRadius": 32
+          },
+          "nodes": [
+            {
+              "id": "KDL_01",
+              "kind": "kindling",
+              "pos": {
+                "x": 1556,
+                "y": 692
+              },
+              "tier": "safe",
+              "value": 1,
+              "collected": false
+            },
+            {
+              "id": "KDL_02",
+              "kind": "kindling",
+              "pos": {
+                "x": 564,
+                "y": 468
+              },
+              "tier": "safe",
+              "value": 1,
+              "collected": false
+            },
+            {
+              "id": "KDL_03",
+              "kind": "kindling",
+              "pos": {
+                "x": 1588,
+                "y": 820
+              },
+              "tier": "safe",
+              "value": 1,
+              "collected": false
+            },
+            {
+              "id": "KDL_04",
+              "kind": "kindling",
+              "pos": {
+                "x": 1300,
+                "y": 660
+              },
+              "tier": "contested",
+              "value": 2,
+              "collected": false
+            },
+            {
+              "id": "KDL_05",
+              "kind": "kindling",
+              "pos": {
+                "x": 1428,
+                "y": 564
+              },
+              "tier": "contested",
+              "value": 2,
+              "collected": false
+            },
+            {
+              "id": "KDL_06",
+              "kind": "kindling",
+              "pos": {
+                "x": 1140,
+                "y": 692
+              },
+              "tier": "contested",
+              "value": 2,
+              "collected": false
+            },
+            {
+              "id": "KDL_07",
+              "kind": "kindling",
+              "pos": {
+                "x": 148,
+                "y": 788
+              },
+              "tier": "deep",
+              "value": 4,
+              "collected": false
+            },
+            {
+              "id": "KDL_08",
+              "kind": "kindling",
+              "pos": {
+                "x": 244,
+                "y": 884
+              },
+              "tier": "deep",
+              "value": 4,
+              "collected": false
+            },
+            {
+              "id": "CTM_NODE_01",
+              "kind": "contaminant",
+              "pos": {
+                "x": 1428,
+                "y": 244
+              },
+              "tier": "deep",
+              "value": 0,
+              "collected": false
+            },
+            {
+              "id": "CTM_NODE_02",
+              "kind": "contaminant",
+              "pos": {
+                "x": 276,
+                "y": 756
+              },
+              "tier": "safe",
+              "value": 0,
+              "collected": false
+            },
+            {
+              "id": "CTM_NODE_03",
+              "kind": "contaminant",
+              "pos": {
+                "x": 340,
+                "y": 372
+              },
+              "tier": "deep",
+              "value": 0,
+              "collected": false
+            }
+          ]
+        },
+        "goal": {
+          "x": 1524,
+          "y": 756
+        }
+      }
+    }
+  ],
+  "ok": false,
+  "error": "AssertionError [ERR_ASSERTION]: route/extraction failed; preserve evidence without forcing result",
+  "errors": []
+}

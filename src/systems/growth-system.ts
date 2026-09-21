@@ -15,9 +15,25 @@
 
 import { eventBus } from '@/core/event-bus';
 import { UPGRADE_DATA } from '@/generated/upgrade-data';
+import type { GrowthUnlockRequirement, UpgradeDef } from '@/generated/upgrade-data';
 import { gameState } from '@/managers/game-state';
 import { GameEvent } from '@/types/events';
-import type { GrowthState, GrowthUpgradeId } from '@/types/game-types';
+import type { GrowthProgressionState, GrowthState, GrowthUpgradeId } from '@/types/game-types';
+
+export interface GrowthReturnFacts {
+  readonly impactOccurred: boolean;
+  readonly offeringCompleted: boolean;
+  readonly toolRevealed: boolean;
+  readonly leftFiniteCrest: boolean;
+}
+
+export interface GrowthAvailability {
+  readonly visible: boolean;
+  readonly unlocked: boolean;
+  /** Missing experience key. Affordability and max level are separate UI states. */
+  readonly reason: Exclude<GrowthUnlockRequirement, 'none'> | null;
+  readonly nextLevel: number | null;
+}
 
 /** All upgrade ids, in CSV row order. Single source of truth for "which axes exist". */
 const UPGRADE_IDS = Object.keys(UPGRADE_DATA) as GrowthUpgradeId[];
@@ -34,6 +50,33 @@ function createInitialUpgrades(): Record<GrowthUpgradeId, number> {
 
 let upgrades: Record<GrowthUpgradeId, number> = createInitialUpgrades();
 
+function createInitialProgression(): GrowthProgressionState {
+  return { version: 1, impactExperienced: false, offeringCompleted: false, toolRevealed: false, crestExperienced: false };
+}
+
+let progression = createInitialProgression();
+
+/** Missing facts are compatible; malformed or unsupported facts are never trusted. */
+export function validateGrowthProgressionState(value: unknown): boolean {
+  if (value === undefined) return true;
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return false;
+  const candidate = value as Record<string, unknown>;
+  if (candidate.version !== 1) return false;
+  return ['impactExperienced', 'offeringCompleted', 'toolRevealed', 'crestExperienced']
+    .every(key => candidate[key] === undefined || typeof candidate[key] === 'boolean');
+}
+
+function normalizeProgression(value: unknown): GrowthProgressionState {
+  const normalized = createInitialProgression();
+  if (!validateGrowthProgressionState(value) || value === undefined) return normalized;
+  const candidate = value as Partial<GrowthProgressionState>;
+  normalized.impactExperienced = candidate.impactExperienced === true;
+  normalized.offeringCompleted = candidate.offeringCompleted === true;
+  normalized.toolRevealed = candidate.toolRevealed === true;
+  normalized.crestExperienced = candidate.crestExperienced === true;
+  return normalized;
+}
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -47,6 +90,10 @@ function getEffectTotal(id: GrowthUpgradeId): number {
   return upgrades[id] * getUpgradeConfig(id).effectPerLevel;
 }
 
+function hasRequirement(requirement: GrowthUnlockRequirement | undefined): boolean {
+  return requirement === 'none' || (requirement !== undefined && progression[requirement]);
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -55,6 +102,33 @@ export const growthSystem = {
   /** All upgrade ids, in CSV row order (single source for "which axes exist"). */
   getAllUpgradeIds(): readonly GrowthUpgradeId[] {
     return UPGRADE_IDS;
+  },
+
+  getUpgradeDefinition(id: GrowthUpgradeId): UpgradeDef {
+    return getUpgradeConfig(id);
+  },
+
+  /** Experiences qualify only the next purchase, never an already-purchased effect. */
+  getAvailability(id: GrowthUpgradeId): GrowthAvailability {
+    const config = getUpgradeConfig(id);
+    const currentLevel = upgrades[id];
+    const maxed = currentLevel >= config.maxLevel;
+    const requirement = maxed ? undefined : config.unlocks[currentLevel];
+    const unlocked = !maxed && hasRequirement(requirement);
+    return {
+      visible: currentLevel > 0 || hasRequirement(config.unlocks[0]),
+      unlocked,
+      reason: !maxed && !unlocked && requirement !== undefined && requirement !== 'none' ? requirement : null,
+      nextLevel: maxed ? null : currentLevel + 1,
+    };
+  },
+
+  /** Called inside the existing return transaction; no rewards, events or persistence. */
+  recordReturn(facts: GrowthReturnFacts): void {
+    progression.impactExperienced ||= facts.impactOccurred === true;
+    progression.offeringCompleted ||= facts.offeringCompleted === true;
+    progression.toolRevealed ||= facts.toolRevealed === true;
+    progression.crestExperienced ||= facts.leftFiniteCrest === true;
   },
 
   /** Get the current level of an upgrade (0 = not purchased). */
@@ -83,7 +157,7 @@ export const growthSystem = {
   /** Check whether the player can afford the next level of an upgrade. */
   canAfford(id: GrowthUpgradeId, reserve: number): boolean {
     const cost = growthSystem.getCost(id);
-    return cost !== Infinity && reserve >= cost;
+    return growthSystem.getAvailability(id).unlocked && cost !== Infinity && reserve >= cost;
   },
 
   /**
@@ -92,6 +166,7 @@ export const growthSystem = {
    * Emits GROWTH_PURCHASED on success.
    */
   purchase(id: GrowthUpgradeId, emitEvent = true): number {
+    if (!growthSystem.getAvailability(id).unlocked) return 0;
     const cost = growthSystem.getCost(id);
     if (cost === Infinity) return 0;
 
@@ -103,10 +178,8 @@ export const growthSystem = {
   },
 
   /**
-   * Compute aggregate modifiers from the original Slice 3 axes plus forecast clarity
-   * (Slice 5 T5). These are applied by the scene layer when constructing SortieModifiers,
-   * or consumed by the forecast system (growth_forecast_clarity's consumer is owned by
-   * another agent — this module only computes and exposes the value).
+   * Aggregate the purchased body modifiers and forecast information level (0–3).
+   * Forecast clarity is a layer of knowledge, never a probability bonus.
    */
   getModifiers(): {
     chaosResist: number;
@@ -138,7 +211,7 @@ export const growthSystem = {
 
   /** Serialize current state for saving. */
   getState(): GrowthState {
-    return { upgrades: { ...upgrades } };
+    return { upgrades: { ...upgrades }, progression: { ...progression } };
   },
 
   /**
@@ -148,10 +221,12 @@ export const growthSystem = {
    */
   loadState(saved: GrowthState): void {
     upgrades = { ...createInitialUpgrades(), ...saved.upgrades };
+    progression = normalizeProgression(saved.progression);
   },
 
   /** Reset to initial state (new game). */
   reset(): void {
     upgrades = createInitialUpgrades();
+    progression = createInitialProgression();
   },
 };

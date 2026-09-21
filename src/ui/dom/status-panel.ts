@@ -223,7 +223,7 @@ function deviceDetailHtml(): string {
   const mod = gameState.getModule(selectedModule);
   const mods = gameState.getSortieModifiers();
   const playerHp = GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus;
-  const forecast = impactSystem.getForecastDisplay();
+  const forecast = impactSystem.getForecastReading(growthSystem.getLevel('growth_forecast_clarity'));
   const list = MODULE_ORDER.map((id) => {
     const item = gameState.getModule(id);
     if (!item) return '';
@@ -250,11 +250,14 @@ function deviceDetailHtml(): string {
 
 function tideDetailHtml(): string {
   const state = tideSystem.getState();
-  const forecast = impactSystem.getForecastDisplay();
+  const forecast = impactSystem.getForecastReading(growthSystem.getLevel('growth_forecast_clarity'));
   const target = forecast ? MODULE_LABEL[forecast.targetId as ModuleType] : null;
   return `<div class="scroll-area">
     <div class="readout-section">下次归来</div>
-    ${forecast ? `<div class="readout-hero"><span class="readout-label">冲击预告目标</span><span class="readout-value">${target}</span><span>${SEVERITY_LABEL[forecast.severity]}</span></div>` : '<p class="readout-note">暂无冲击预告。</p>'}
+    ${forecast ? `<div class="readout-hero"><span class="readout-label">${forecast.targetCertain ? '重点已辨明' : '重点推测'}</span><span class="readout-value">${target}</span></div>
+      <div class="stat-row"><span class="readout-label">${forecast.severityCertain ? '强度已辨明' : '强度推测'}</span><span>${SEVERITY_LABEL[forecast.severity]}</span></div>
+      ${forecast.baseDamagePerModule ? `<div class="readout-section">供奉作用前</div>${MODULE_ORDER.map(id => `<div class="stat-row"><span class="readout-label">${MODULE_LABEL[id]}</span><span class="readout-value">${forecast.baseDamagePerModule![id] ?? 0}</span></div>`).join('')}<p class="readout-note">原始压力；供奉反应与当前完整度会改变实际损失。</p>` : ''}
+      ${forecast.legacy && !forecast.targetCertain && growthSystem.getLevel('growth_forecast_clarity') > 0 ? '<p class="readout-note">沿用上次留下的预告；新读取能力从下一份预告生效。</p>' : ''}` : '<p class="readout-note">暂无冲击预告。</p>'}
     <div class="stat-row"><span class="readout-label">潮汐</span><span>第 ${state.tideNumber} 潮</span><span>${PHASE_LABEL[state.phase]}</span></div>
     <div class="separator"></div><div class="readout-section">净化稳定度</div>
     <div class="readout-hero"><span class="readout-value">${Math.round(stabilityTracker.getProgress())}%</span><span>${stabilityTracker.isReached() ? '已完成' : '未完成'}</span></div>
@@ -351,9 +354,8 @@ function computeUpgradeInspectHtml(inscribed: GrowthUpgradeId[]): string {
   if (!id) return INSPECT_EMPTY_HTML;
   const display = GROWTH_UPGRADE_DISPLAY.find((u) => u.id === id);
   const level = growthSystem.getLevel(id);
-  const maxLevel = growthSystem.getMaxLevel(id);
   const name = display?.name ?? GROWTH_UPGRADE_NAMES[id];
-  const effect = display?.effectLabel(level, maxLevel) ?? '';
+  const effect = display?.effectLabel(level, level) ?? '';
   return `<div class="inspect-l1">${name}</div>
     <div class="inspect-l2"><span>等级</span> <span>${level}</span></div>
     <div class="inspect-l3">${effect}</div>`;

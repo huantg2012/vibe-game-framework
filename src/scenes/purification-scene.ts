@@ -51,6 +51,7 @@ import {
   offeringStandChargeFromSlots,
 } from '@/scenes/offering-stand-visual';
 import { GrowthConsoleVisual } from '@/scenes/growth-console-visual';
+import { PurificationRenewalVisual } from '@/scenes/purification-renewal-visual';
 import { gameState, type SortieModifiers } from '@/managers/game-state';
 import { audioManager } from '@/managers/audio-manager';
 import { saveManager } from '@/managers/save-manager';
@@ -58,6 +59,7 @@ import { BoundaryAtmosphere } from '@/systems/boundary-atmosphere';
 import { BoundaryBreath } from '@/systems/boundary-breath';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { growthSystem } from '@/systems/growth-system';
+import { recoverGrowthFacts } from '@/systems/growth-evidence';
 import { impactSystem } from '@/systems/impact-system';
 import type { ForecastDisplay, ImpactResult } from '@/systems/impact-system';
 import {
@@ -336,6 +338,7 @@ export class PurificationScene extends Phaser.Scene {
   private growthGraphics!: Phaser.GameObjects.Graphics;
   private growthPulse = 0;
   private growthConsole: GrowthConsoleVisual | null = null;
+  private renewalVisual: PurificationRenewalVisual | null = null;
 
   private interactKey: Phaser.Input.Keyboard.Key | null = null;
   private escKey: Phaser.Input.Keyboard.Key | null = null;
@@ -411,6 +414,7 @@ export class PurificationScene extends Phaser.Scene {
     const impactRandom = recoveryReturn ? new SeededRandom(mix32(0, `return:${ledger.id}:impact`)) : null;
     const forecastRandom = recoveryReturn ? new SeededRandom(mix32(0, `return:${ledger.id}:forecast`)) : null;
     const saved = saveManager.commitWorldTransaction(() => {
+    growthSystem.recordReturn(recoverGrowthFacts(inventoryStore.getState(), tideSystem.getState(), gameState.getCycle()));
     // Credit kindling from the rift run (spec rule 10)
     if (isReturnFromRift && survived && kindlingGained > 0) {
       gameState.addKindling(kindlingGained);
@@ -426,7 +430,7 @@ export class PurificationScene extends Phaser.Scene {
       // Every offered item participates in this impact before completing its offering.
       const offeringIds = inventoryStore.getOfferingItems().map(item => item?.id ?? null);
       const isHighTide = tideSystem.isHighTide();
-      predictedForecast = impactSystem.getForecastDisplay();
+      predictedForecast = impactSystem.getForecastReading(growthSystem.getLevel('growth_forecast_clarity'));
       impactResult = impactSystem.run(contaminantSystem.getDefenseSlotted(), offeringIds, impactRandom ? () => impactRandom.next() : undefined, stabilityTracker.getProgress());
       if (!impactResult.skipped) {
         const finished = contaminantSystem.finishOfferingImpact(isHighTide, impactResult.defenseResult?.bonusCharges ?? {}, offeringIds, `impact:${ledger?.id ?? gameState.getCycle()}`);
@@ -437,6 +441,15 @@ export class PurificationScene extends Phaser.Scene {
 
       // Advance tide cycle after impact resolves (E1: capture phase change)
       phaseChange = tideSystem.advanceCycle(gameState.getModules().every(module => module.hp > 0) && !(impactResult.newlyZeroModules ?? 0));
+      growthSystem.recordReturn({
+        impactOccurred: !impactResult.skipped,
+        offeringCompleted: transformResults.length > 0,
+        toolRevealed: transformResults.some(result => {
+          const item = inventoryStore.getItem(result.itemId);
+          return item?.kind === 'contaminant' && projectItemForPlayer(item.contaminant).slot !== null;
+        }),
+        leftFiniteCrest: phaseChange?.from === 'crest' && phaseChange.to !== 'crest',
+      });
       const beforeProgress = stabilityTracker.getProgress();
       stabilityTracker.recordReturn({ extracted: !!survived, newlyZeroModules: impactResult.newlyZeroModules ?? 0, phaseChange });
       stabilityMilestoneMessage = this.findCrossedStabilityMilestone(beforeProgress, stabilityTracker.getProgress());
@@ -606,11 +619,16 @@ export class PurificationScene extends Phaser.Scene {
     this.growthGraphics = this.add.graphics().setDepth(20);
     this.growthConsole = new GrowthConsoleVisual(this, GROWTH_POS.x, GROWTH_POS.y);
     this.growthConsole.mount();
+    this.renewalVisual = new PurificationRenewalVisual(this);
+    this.syncInvestmentVisuals();
     this.riftEntranceGraphics.setDepth(1);
     this.groundDepthSorter = new GroundDepthSorter([
       ...[this.coreModule, this.storageModule, this.purifierModule].map(mod => ({
         id: mod.id, groundY: () => mod.y,
-        applyDepth: (depth: number) => mod.setGroundDepth(depth, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH),
+        applyDepth: (depth: number) => {
+          mod.setGroundDepth(depth, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH);
+          if (mod === this.storageModule) this.renewalVisual?.setStorageDepth(depth);
+        },
       })),
       { id: 'offering', groundY: () => DEFENSE_POS.y, applyDepth: depth => {
         this.offeringStand?.setDepth(depth); this.defenseGraphics.setDepth(depth);
@@ -803,6 +821,8 @@ export class PurificationScene extends Phaser.Scene {
     this.offeringStand?.setCharge(
       offeringStandChargeFromSlots(inventoryStore.getOfferingItems()),
     );
+    const tidePhase = tideSystem.getState().phase;
+    this.offeringStand?.setPressure(tidePhase === 'crest' ? 1 : tidePhase === 'rise' ? .5 : .1);
     if (this.offeringStand?.isShowing()) {
       this.defenseGraphics.setVisible(false);
       this.defenseGraphics.clear();
@@ -1046,6 +1066,8 @@ export class PurificationScene extends Phaser.Scene {
 
   private readonly onGrowthPurchased = (): void => {
     audioManager.playSFX('sfx-ui-click');
+    this.syncInvestmentVisuals();
+    purificationHud.refresh();
   };
 
   private onPostUpdate(_time: number, delta: number): void {
@@ -1388,6 +1410,7 @@ export class PurificationScene extends Phaser.Scene {
 
   /** C2: Flash the module entity when repair is confirmed. */
   private readonly onAllocationConfirmed = (payload: { allocations: Record<string, number> }): void => {
+    this.syncInvestmentVisuals();
     const spent = Object.values(payload.allocations).reduce((sum, n) => sum + n, 0);
     if (spent > 0) {
       audioManager.playSFX('sfx-ui-allocate');
@@ -1403,6 +1426,18 @@ export class PurificationScene extends Phaser.Scene {
       }
     }
   };
+
+  /** Persistent additions update only after a saved investment/repair or scene creation. */
+  private syncInvestmentVisuals(): void {
+    const fraction = (id: string): number => {
+      const module = gameState.getModule(id);
+      return module && module.maxHp > 0 ? module.hp / module.maxHp : 0;
+    };
+    this.renewalVisual?.setState({ moduleHealth: {
+      core: fraction('CORE'), purifier: fraction('PURIFIER'), storage: fraction('STORAGE'),
+    }, thickenLevel: gameState.getModuleMaxHpTier() });
+    this.growthConsole?.setInvestment(growthSystem.getState().upgrades);
+  }
 
   private pulseModuleRepair(mod: PurificationModuleEntity, tint = 0xc5a47a): void {
     // Reuse the module's existing soft light texture; never redraw the device.
@@ -1558,8 +1593,9 @@ export class PurificationScene extends Phaser.Scene {
       ['player', this.player], ['tilemap', this.tilemapRenderer], ['entrance', this.riftEntrance],
       ['entrance-graphics', this.riftEntranceGraphics], ['offering', this.offeringStand],
       ['defense-graphics', this.defenseGraphics], ['growth', this.growthConsole], ['growth-graphics', this.growthGraphics],
+      ['renewal', this.renewalVisual],
     ] as const) dispose(`world:${name}`, () => resource?.destroy());
-    this.riftEntrance = null; this.offeringStand = null; this.growthConsole = null;
+    this.riftEntrance = null; this.offeringStand = null; this.growthConsole = null; this.renewalVisual = null;
     dispose('hud', () => purificationHud.destroy());
     this.cleanupStage = failures.length ? failures.join('; ') : 'complete';
     if (!failures.length) return null;

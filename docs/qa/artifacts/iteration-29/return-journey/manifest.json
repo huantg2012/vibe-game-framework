@@ -1,0 +1,529 @@
+{
+  "method": "fresh newContext; real keys for six hub interactions and two confirmed-abandon returns; no state mutations or balance/extraction claim",
+  "interactions": [
+    {
+      "name": "core",
+      "ok": true
+    },
+    {
+      "name": "growth",
+      "ok": true
+    },
+    {
+      "name": "offering",
+      "ok": true
+    },
+    {
+      "name": "purifier",
+      "ok": true
+    },
+    {
+      "name": "storage",
+      "ok": true
+    },
+    {
+      "name": "rift",
+      "ok": true
+    }
+  ],
+  "returns": [
+    {
+      "n": 1,
+      "route": "real pause menu -> confirm abandonment -> result -> return",
+      "save": {
+        "version": 2,
+        "kindlingReserve": 0,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 70,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 70,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 70,
+            "maxHp": 100
+          }
+        ],
+        "moduleMaxHpTier": 0,
+        "cycle": 1,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 1,
+          "currentIntensity": 1.2
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_replacement:528a4c6e-9fd5-4360-bc59-36b728f78b82",
+              "weapon": {
+                "id": "WPN_replacement:528a4c6e-9fd5-4360-bc59-36b728f78b82",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_replacement:528a4c6e-9fd5-4360-bc59-36b728f78b82",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": {
+            "id": "528a4c6e-9fd5-4360-bc59-36b728f78b82",
+            "status": "settled",
+            "carriedOutIds": [
+              "WPN_ada4c77a-6e02-4bed-a8bf-532950b8827b"
+            ],
+            "revealedNodes": {},
+            "destroyedIds": [],
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "combatRulesVersion": 2,
+            "actionReceipts": {},
+            "dropPlan": {
+              "sourceRegions": {
+                "CTM_NODE_01": {
+                  "sourceTag": "density",
+                  "hint": "多见改变重量的残留"
+                },
+                "CTM_NODE_02": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "CTM_NODE_03": {
+                  "sourceTag": "density",
+                  "hint": "多见改变重量的残留"
+                },
+                "KDL_01": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "KDL_02": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "KDL_03": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "KDL_04": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "KDL_05": {
+                  "sourceTag": "density",
+                  "hint": "多见改变重量的残留"
+                },
+                "KDL_06": {
+                  "sourceTag": "density",
+                  "hint": "多见改变重量的残留"
+                },
+                "KDL_07": {
+                  "sourceTag": "density",
+                  "hint": "多见改变重量的残留"
+                },
+                "KDL_08": {
+                  "sourceTag": "density",
+                  "hint": "多见改变重量的残留"
+                }
+              },
+              "version": 1,
+              "catalogVersion": "contaminant-v1",
+              "lootAlgorithmVersion": 1,
+              "runId": "528a4c6e-9fd5-4360-bc59-36b728f78b82",
+              "runSeed": 4213490958,
+              "tutorialNodeId": "CTM_NODE_02",
+              "entries": [
+                {
+                  "nodeId": "CTM_NODE_01",
+                  "tier": "deep",
+                  "sourceTag": "density",
+                  "contaminant": {
+                    "id": "CAT_528a4c6e-9fd5-4360-bc59-36b728f78b82_CTM_NODE_01",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "good",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "lead_type_stamp",
+                      "appearanceId": "ceramic_seal",
+                      "offeringProfileId": "quickening",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                },
+                {
+                  "nodeId": "CTM_NODE_02",
+                  "tier": "deep",
+                  "sourceTag": "tension",
+                  "contaminant": {
+                    "id": "CAT_528a4c6e-9fd5-4360-bc59-36b728f78b82_CTM_NODE_02",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "amber_beetle",
+                      "appearanceId": "stitched_pouch",
+                      "offeringProfileId": "resist_35",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                },
+                {
+                  "nodeId": "CTM_NODE_03",
+                  "tier": "deep",
+                  "sourceTag": "density",
+                  "contaminant": {
+                    "id": "CAT_528a4c6e-9fd5-4360-bc59-36b728f78b82_CTM_NODE_03",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "wooden_thread_spool",
+                      "appearanceId": "layered_hide",
+                      "offeringProfileId": "resist_25",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                }
+              ]
+            },
+            "outcome": "abandon",
+            "returnedIds": [],
+            "kindlingGained": 0,
+            "baseSettled": true
+          },
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {},
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": false,
+            "offeringCompleted": false,
+            "toolRevealed": false,
+            "crestExperienced": false
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "STORAGE",
+          "actualPrimaryId": "STORAGE",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "STORAGE",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1.2,
+          "nextNextIntensity": 1.4
+        }
+      }
+    },
+    {
+      "n": 2,
+      "route": "real pause menu -> confirm abandonment -> result -> return",
+      "save": {
+        "version": 2,
+        "kindlingReserve": 0,
+        "repairBonusHp": 0,
+        "pendingSideEffects": [],
+        "upgradeDiscount": 0,
+        "moduleSwapActive": false,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 63,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 47,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 64,
+            "maxHp": 100
+          }
+        ],
+        "moduleMaxHpTier": 0,
+        "cycle": 2,
+        "tide": {
+          "tideNumber": 1,
+          "phase": "rise",
+          "cycleInPhase": 2,
+          "currentIntensity": 1.4
+        },
+        "inventory": {
+          "version": 3,
+          "items": [
+            {
+              "kind": "weapon",
+              "id": "WPN_replacement:d3014abc-1e92-4c75-9f09-178922e4d53d",
+              "weapon": {
+                "id": "WPN_replacement:d3014abc-1e92-4c75-9f09-178922e4d53d",
+                "definitionId": "crowbar_plain",
+                "stage": "tool",
+                "impactCharges": 3,
+                "usesRemaining": 60
+              },
+              "location": {
+                "kind": "carried"
+              }
+            }
+          ],
+          "equipment": {
+            "weaponId": "WPN_replacement:d3014abc-1e92-4c75-9f09-178922e4d53d",
+            "toolIds": [],
+            "defenseIds": []
+          },
+          "run": {
+            "id": "d3014abc-1e92-4c75-9f09-178922e4d53d",
+            "status": "settled",
+            "carriedOutIds": [
+              "WPN_replacement:528a4c6e-9fd5-4360-bc59-36b728f78b82"
+            ],
+            "revealedNodes": {},
+            "destroyedIds": [],
+            "catalogVersion": "contaminant-v1",
+            "lootAlgorithmVersion": 1,
+            "combatRulesVersion": 2,
+            "actionReceipts": {},
+            "dropPlan": {
+              "sourceRegions": {
+                "CTM_NODE_01": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "CTM_NODE_02": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "CTM_NODE_03": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "KDL_01": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "KDL_02": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "KDL_03": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "KDL_04": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "KDL_05": {
+                  "sourceTag": "tension",
+                  "hint": "多见改变牵拉与位移的残留"
+                },
+                "KDL_06": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "KDL_07": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                },
+                "KDL_08": {
+                  "sourceTag": "inhibition",
+                  "hint": "多见压住侵蚀的残留"
+                }
+              },
+              "version": 1,
+              "catalogVersion": "contaminant-v1",
+              "lootAlgorithmVersion": 1,
+              "runId": "d3014abc-1e92-4c75-9f09-178922e4d53d",
+              "runSeed": 1528227384,
+              "tutorialNodeId": "CTM_NODE_03",
+              "entries": [
+                {
+                  "nodeId": "CTM_NODE_01",
+                  "tier": "deep",
+                  "sourceTag": "tension",
+                  "contaminant": {
+                    "id": "CAT_d3014abc-1e92-4c75-9f09-178922e4d53d_CTM_NODE_01",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "blind_needle_compass",
+                      "appearanceId": "resin_nodule",
+                      "offeringProfileId": "resist_25",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                },
+                {
+                  "nodeId": "CTM_NODE_02",
+                  "tier": "deep",
+                  "sourceTag": "tension",
+                  "contaminant": {
+                    "id": "CAT_d3014abc-1e92-4c75-9f09-178922e4d53d_CTM_NODE_02",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "split_porcelain_spoon",
+                      "appearanceId": "wax_parcel",
+                      "offeringProfileId": "resist_25",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                },
+                {
+                  "nodeId": "CTM_NODE_03",
+                  "tier": "deep",
+                  "sourceTag": "inhibition",
+                  "contaminant": {
+                    "id": "CAT_d3014abc-1e92-4c75-9f09-178922e4d53d_CTM_NODE_03",
+                    "type": "catalog",
+                    "rarity": "common",
+                    "quality": "ordinary",
+                    "stage": "defense",
+                    "impactCharges": 0,
+                    "usesRemaining": 0,
+                    "catalog": {
+                      "catalogVersion": "contaminant-v1",
+                      "definitionId": "amber_beetle",
+                      "appearanceId": "layered_hide",
+                      "offeringProfileId": "resist_35",
+                      "acquiredOrdinal": 0,
+                      "identification": "unidentified"
+                    }
+                  }
+                }
+              ]
+            },
+            "outcome": "abandon",
+            "returnedIds": [],
+            "kindlingGained": 0,
+            "baseSettled": true
+          },
+          "starterGranted": true,
+          "firstWeaponDiscovered": false,
+          "catalogTutorialRevealed": false,
+          "discoveredCatalogIds": [],
+          "offeringReceipts": {
+            "impact:d3014abc-1e92-4c75-9f09-178922e4d53d": []
+          },
+          "nextAcquiredOrdinal": 1
+        },
+        "growth": {
+          "upgrades": {
+            "growth_chaos_resist": 0,
+            "growth_kindling_affinity": 0,
+            "growth_vitality": 0,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 0,
+            "growth_forecast_clarity": 0
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": false,
+            "toolRevealed": false,
+            "crestExperienced": false
+          }
+        },
+        "stability": {
+          "progress": 0,
+          "reached": false
+        },
+        "contaminantRuntimeState": {},
+        "impactForecast": {
+          "version": 2,
+          "targetId": "STORAGE",
+          "actualPrimaryId": "PURIFIER",
+          "committed": false,
+          "consumed": false,
+          "earnedPending": false,
+          "display": {
+            "targetId": "STORAGE",
+            "severity": "light"
+          },
+          "lookahead": null,
+          "queuedTargets": [],
+          "nextIntensity": 1.4,
+          "nextNextIntensity": 1.6
+        }
+      }
+    }
+  ],
+  "ok": true,
+  "errors": []
+}

@@ -3,9 +3,9 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "基地可步行，核心、储藏、净化器、供奉台、培养藏和裂隙入口依实际位置交互；统一边界供地表、碰撞与光域使用。",
+    "summary": "六处原锚点与短动线保持；维修地基/检修沟形成共同场所，供奉内容、培养改造与加厚承载随公开状态变化，伤痕限制在机壳内。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "归来或新游戏进入 PurificationScene → 就近 E"
     ],
@@ -41,6 +41,18 @@
       {
         "path": "docs/specs/system-purification-impact.md",
         "role": "spec"
+      },
+      {
+        "path": "src/scenes/purification-renewal-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/procedural-purification-surface.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/purification-renewal.md",
+        "role": "art"
       }
     ],
     "dependsOn": [
@@ -49,9 +61,12 @@
     ],
     "evidence": [
       "COH-E-SRC-hub",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E-I29-RUNTIME"
     ],
-    "unknowns": []
+    "unknowns": [
+      "迭代29样板已实现并作限定内部验证；场所/模型审美与成长价值待用户体验，池仍6轴，长期采样沿迭代28挂起。"
+    ]
   },
   {
     "id": "COH-F027",
@@ -96,7 +111,9 @@
     ],
     "evidence": [
       "COH-E-SRC-hub",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E-I29-AUTO",
+      "COH-E-I29-RUNTIME"
     ],
     "unknowns": []
   },
@@ -142,6 +159,10 @@
       {
         "path": "docs/specs/system-field-inventory.md",
         "role": "spec"
+      },
+      {
+        "path": "src/scenes/offering-stand-visual.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -154,7 +175,8 @@
     ],
     "evidence": [
       "COH-E-SRC-hub",
-      "COH-E-HIST-CATALOG"
+      "COH-E-HIST-CATALOG",
+      "COH-E-I29-RUNTIME"
     ],
     "unknowns": []
   },
@@ -162,9 +184,9 @@
     "id": "COH-F029",
     "title": "永久蜕变、扩槽与装置加厚",
     "domain": "progression",
-    "summary": "薪柴投资生命、抗污、收益、工具/供奉槽及预告等成长；加厚增加装置上限，购买和保存为同一事务。",
+    "summary": "6轴17次购买由真实冲击/供奉/工具揭晓/有限高潮经历展开，已购旧等级始终生效；扩槽迁移旧被动同笔保存，加厚首屏披露混乱及补满代价。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "净化点培养藏 E → 蜕变界面选择并确认"
     ],
@@ -192,6 +214,30 @@
       {
         "path": "docs/content/progression.md",
         "role": "doc"
+      },
+      {
+        "path": "src/systems/growth-evidence.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/growth-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/config/growth-upgrade-display.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/upgrade-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/game-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/csv-codegen/generate.mjs",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -201,17 +247,20 @@
     ],
     "evidence": [
       "COH-E-SRC-hub",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E-I29-AUTO",
+      "COH-E-I29-RUNTIME"
     ],
     "unknowns": [
-      "成长兑现及拒写有历史专项，后期最优分配和长期经济不在本轮确认范围。"
+      "成长兑现及拒写有历史专项，后期最优分配和长期经济不在本轮确认范围。",
+      "迭代29样板已实现并作限定内部验证；场所/模型审美与成长价值待用户体验，池仍6轴，长期采样沿迭代28挂起。"
     ]
   },
   {
     "id": "COH-F030",
     "title": "潮汐、冲击与预告",
     "domain": "progression",
-    "summary": "出击归来推进既有潮汐节奏，冲击扣模块状态并受供奉修正；预告为目标/强度信息，影响下一趟维持决策。",
+    "summary": "归来消费预告并推进潮汐；新预告建立时冻结真实重点，成长逐层读清强度、重点及供奉前压力，不因购买/查看/读档重抽，旧预告保持原承诺。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -250,7 +299,9 @@
     "evidence": [
       "COH-E-SRC-hub",
       "COH-E-HIST-CYCLE",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E-I29-AUTO",
+      "COH-E-I29-RUNTIME"
     ],
     "unknowns": []
   },
@@ -289,7 +340,8 @@
     ],
     "evidence": [
       "COH-E-SRC-hub",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E-I29-AUTO"
     ],
     "unknowns": [
       "已达状态不等于有可玩结局；终局内容另见 COH-F053。"

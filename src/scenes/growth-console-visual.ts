@@ -10,6 +10,7 @@
  */
 
 import Phaser from 'phaser';
+import { PURIFICATION_WORKS_COLORS as C } from '@/scenes/purification-renewal-visual';
 
 export const GROWTH_FRAME_W = 40;
 export const GROWTH_FRAME_H = 42;
@@ -78,6 +79,9 @@ export function ensureGrowthAnim(scene: Phaser.Scene): boolean {
 
 export class GrowthConsoleVisual {
   private sprite: Phaser.GameObjects.Sprite | null = null;
+  private fittings: Phaser.GameObjects.Graphics | null = null;
+  private investment = 0;
+  private fittingsSignature = -1;
 
   constructor(
     private readonly scene: Phaser.Scene,
@@ -96,15 +100,57 @@ export class GrowthConsoleVisual {
       this.sprite.setOrigin(0.5, GROWTH_ORIGIN_Y);
       this.sprite.setDepth(GROWTH_DEPTH);
       this.sprite.setRotation(0);
+      this.fittings = this.scene.add.graphics({ x: this.x, y: this.y });
+      this.fittings.setDepth(GROWTH_DEPTH + .05);
     } else {
       this.sprite.setVisible(true);
     }
     this.sprite.play(growthConsoleAnimKey());
+    this.drawFittings();
     return true;
+  }
+
+  /** Already committed growth levels. Visual milestones, never a new upgrade. */
+  setInvestment(levels: Readonly<Record<string, number>>): void {
+    const total = Object.values(levels).reduce((sum, n) => sum + Math.max(0,n), 0);
+    const next = total === 0 ? 0 : total < 5 ? 1 : 2;
+    if (next === this.investment) return;
+    this.investment = next;
+    this.drawFittings();
+  }
+
+  private drawFittings(): void {
+    if (!this.fittings || this.fittingsSignature === this.investment) return;
+    this.fittingsSignature = this.investment;
+    const g = this.fittings;
+    g.clear();
+    // A suspended internal support ends inside the liquid; the empty body-sized
+    // middle stays liquid, not a painted second person or a transparent doorway.
+    g.fillStyle(C.deep).fillRect(-4,-30,2,18).fillRect(5,-28,2,16);
+    g.fillStyle(C.medium).fillRect(-3,-29,1,14);
+    g.fillStyle(C.concrete).fillRect(-5,-12,13,2);
+    g.fillStyle(C.metal).fillRect(4,-13,4,1);
+    // Connection at the actual bottom-right casing, aligned to the core light.
+    g.fillStyle(C.concrete).fillRect(8,-5,6,4);
+    g.fillStyle(C.metal).fillRect(9,-5,5,1);
+    if (this.investment === 0) return;
+    // First permanent intervention: thicker in-cavity restraints and a socket.
+    g.fillStyle(C.concrete).fillRect(-6,-24,3,3).fillRect(4,-23,4,3);
+    g.fillStyle(C.metal).fillRect(4,-23,3,1);
+    g.fillStyle(C.repair).fillRect(10,-9,4,6);
+    g.fillStyle(C.edge).fillRect(11,-9,3,1);
+    g.fillStyle(C.shadow).fillRect(11,-6,2,2);
+    if (this.investment < 2) return;
+    // Second intervention: paired lower contact; broad plate, not a level lamp.
+    g.fillStyle(C.repair).fillRect(-7,-18,4,3).fillRect(4,-17,5,3);
+    g.fillStyle(C.metal).fillRect(5,-17,3,1);
+    g.fillStyle(C.concrete).fillRect(-8,-7,5,5);
+    g.fillStyle(C.metal).fillRect(-8,-7,4,1);
   }
 
   setDepth(depth: number): void {
     this.sprite?.setDepth(depth);
+    this.fittings?.setDepth(depth + .05);
   }
 
   isShowing(): boolean {
@@ -114,6 +160,9 @@ export class GrowthConsoleVisual {
   clear(): void {
     this.sprite?.destroy();
     this.sprite = null;
+    this.fittings?.destroy();
+    this.fittings = null;
+    this.fittingsSignature = -1;
   }
 
   destroy(): void {

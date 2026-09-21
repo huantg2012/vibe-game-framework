@@ -49,7 +49,7 @@
     "id": "COH-F033",
     "title": "净化点 HUD 与就近交互提示",
     "domain": "interface",
-    "summary": "常驻显示薪柴与潮汐并提示最近合法交互；进入面板时收起提示，装置读数跟随真实交互位置。",
+    "summary": "净化点轻量HUD与就近提示沿原布局；预告使用同源公开读取，分别标明目标/强度尚不确定，不提前泄漏高层压力。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -80,7 +80,8 @@
     ],
     "evidence": [
       "COH-E-SRC-interface",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E-I29-RUNTIME"
     ],
     "unknowns": []
   },
@@ -88,7 +89,7 @@
     "id": "COH-F034",
     "title": "存续报告及已见物件",
     "domain": "interface",
-    "summary": "基地 Tab 报告包含装置、物件、潮汐、蜕变四页；物件页统一查看库存与已见记录，供奉和装配各回到自己的入口。",
+    "summary": "四页存续报告及已见物件沿原入口；成长显示已刻入真实效果，潮汐按信息层展示确定目标/强度和供奉作用前三模块压力。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -131,7 +132,8 @@
     ],
     "evidence": [
       "COH-E-SRC-interface",
-      "COH-E-HIST-CATALOG"
+      "COH-E-HIST-CATALOG",
+      "COH-E-I29-RUNTIME"
     ],
     "unknowns": []
   },

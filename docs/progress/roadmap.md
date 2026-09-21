@@ -2,12 +2,18 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-09-20
+last-modified: 2026-09-21
 last-closed-slice: 9
 note: DEC-171：迭代27全游戏补审整改实现与内部验证已交；原历史/体验边界保留，四B锁定。
 ---
 
 # Roadmap
+
+## 当前交付 · 迭代29（2026-09-21，DEC-175）
+
+[唯一清单](../tasks/iteration-29.md)状态 IMPLEMENTED / INTERNAL-VERIFIED-WITH-LIMITS。净化点共同承载/维修沟、供奉与培养使用结构、持久投入及机壳内损伤样板已接入；成长由CSV职责/经历展开，预兆逐层确定强度/重点/供奉前压力，扩槽原子迁位与加厚代价首屏已修。原六处短动线、角色与2D、单一薪柴保持。
+
+九组专项和构建通过，四组隔离浏览器含真实购买/重载/再出发；新档六处走访及两次正式确认放弃归来通过，首归免伤不误解锁。艺术六状态与逐帧损伤检查见[总QA](../qa/iteration-29.md)。用户审美、成长价值和长期曲线未代签；迭代28长期采样及其他原挂起项保持。当前未提交/推送，独立CLAUDE修改不混入。全貌索引已更新，HTML仍为上次按需生成快照。
 
 ## 当前交付 · 迭代28（2026-09-20，DEC-174）
 

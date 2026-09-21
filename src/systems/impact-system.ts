@@ -1,7 +1,7 @@
 /**
  * ImpactSystem - calculates and applies module damage each cycle.
  *
- * Called once per sortie entry (after allocation, before scene switch).
+ * Called once per returned run, inside the base settlement transaction.
  * Owns no rendering; the scene that calls `run()` is responsible for the
  *演出 (shake, particle surge, result panel).
  *
@@ -60,6 +60,16 @@ export interface ForecastDisplay {
   readonly severity: ForecastSeverity;
 }
 
+/** Pure player-facing projection; certainty never changes the frozen outcome. */
+export interface ForecastReading extends ForecastDisplay {
+  readonly targetCertain: boolean;
+  readonly severityCertain: boolean;
+  readonly intensity: number | null;
+  readonly baseDamagePerModule: Readonly<Record<string, number>> | null;
+  /** An older record keeps its original information/settlement contract. */
+  readonly legacy: boolean;
+}
+
 /** An already committed impact after the upcoming one. Removing the item does not revoke it. */
 export interface ForecastLookahead {
   readonly targetId: string;
@@ -67,8 +77,10 @@ export interface ForecastLookahead {
 }
 
 export interface ImpactForecastState {
-  version: 1;
+  version: 1 | 2;
   targetId: string | null;
+  /** V2 freezes the real target when the forecast is established. */
+  actualPrimaryId?: string | null;
   committed: boolean;
   consumed: boolean;
   display: ForecastDisplay | null;
@@ -91,12 +103,15 @@ export function validImpactForecastState(value: unknown, moduleIds: readonly str
       && SEVERITY_ORDER.includes(data.severity as ForecastSeverity);
   };
   if (state.earnedPending !== undefined && typeof state.earnedPending !== 'boolean') return false;
-  if (state.version !== 1 || typeof state.committed !== 'boolean' || typeof state.consumed !== 'boolean'
+  if ((state.version !== 1 && state.version !== 2) || typeof state.committed !== 'boolean' || typeof state.consumed !== 'boolean'
     || !validReading(state.display) || !validReading(state.lookahead)
     || !Array.isArray(state.queuedTargets) || state.queuedTargets.length > 1
     || !state.queuedTargets.every(id => typeof id === 'string' && moduleIds.includes(id))
     || typeof state.nextIntensity !== 'number' || !Number.isFinite(state.nextIntensity) || state.nextIntensity <= 0
     || typeof state.nextNextIntensity !== 'number' || !Number.isFinite(state.nextNextIntensity) || state.nextNextIntensity <= 0) return false;
+  if (state.version === 2 && (state.display === null ? state.actualPrimaryId !== null
+    : typeof state.actualPrimaryId !== 'string' || !moduleIds.includes(state.actualPrimaryId)
+      || (state.committed && state.actualPrimaryId !== state.targetId))) return false;
   return (state.display === null ? state.targetId === null : state.display.targetId === state.targetId)
     && (state.lookahead === null ? state.queuedTargets.length === 0 : state.queuedTargets[0] === state.lookahead.targetId);
 }
@@ -123,7 +138,6 @@ const SEVERITY_TIER_MAX: { max: number; tier: ForecastSeverity }[] = [
 
 /** Ambient forecast noise; retrograde commitments bypass it. */
 const SEVERITY_BLUR_BASE_CHANCE = 0.20;
-const SEVERITY_BLUR_FLOOR_CHANCE = 0.05;
 
 /** Chinese labels for the four severity tiers (Slice 5.5 D5 — these had never been
  *  named in the UI before; only the pip count rendered). Kept here since this module
@@ -185,6 +199,8 @@ function distributeThreatDamage<T extends { id: string }>(
 }
 
 let forecastTargetId: string | null = null;
+let actualPrimaryId: string | null = null;
+let forecastVersion: 1 | 2 = 2;
 let forecastDisplay: ForecastDisplay | null = null;
 let forecastCommitted = false;
 let memoryEarnedPending = false;
@@ -199,13 +215,36 @@ export const impactSystem = {
     return forecastDisplay;
   },
 
+  /** Reading a level reveals facts already frozen in V2, without rolling,
+   * committing a predicted target, or running offering-defense effects. */
+  getForecastReading(clarityLevel: number): ForecastReading | null {
+    if (!forecastDisplay) return null;
+    const legacy = forecastVersion === 1;
+    const level = Number.isFinite(clarityLevel) ? Math.max(0, Math.floor(clarityLevel)) : 0;
+    const severityCertain = forecastCommitted || (!legacy && level >= 1);
+    const targetCertain = forecastCommitted || (!legacy && level >= 2);
+    const targetId = !legacy && targetCertain ? actualPrimaryId! : forecastDisplay.targetId;
+    return {
+      targetId,
+      severity: severityCertain ? severityFromIntensity(forecastIntensity) : forecastDisplay.severity,
+      targetCertain, severityCertain,
+      intensity: !legacy && level >= 3 ? (gameState.getCycle() === 0 ? 0 : forecastIntensity) : null,
+      baseDamagePerModule: !legacy && level >= 3 && actualPrimaryId
+        ? distributeThreatDamage(gameState.getCycle() === 0 ? 0 : P.BASE_IMPACT_DAMAGE * forecastIntensity,
+          actualPrimaryId, gameState.getModules()) : null,
+      legacy,
+    };
+  },
+
   getForecastLookahead(): ForecastLookahead | null {
     return forecastLookahead;
   },
 
   /** Snapshot without mutation, also used to roll back a failed inventory save. */
   getForecastState(): ImpactForecastState {
-    return { version: 1, targetId: forecastTargetId, committed: forecastCommitted, consumed: forecastConsumed,
+    return { version: forecastVersion, targetId: forecastTargetId,
+      ...(forecastVersion === 2 ? { actualPrimaryId } : {}),
+      committed: forecastCommitted, consumed: forecastConsumed,
       earnedPending: memoryEarnedPending,
       display: forecastDisplay ? { ...forecastDisplay } : null,
       lookahead: forecastLookahead ? { ...forecastLookahead } : null,
@@ -216,7 +255,9 @@ export const impactSystem = {
   loadForecastState(state?: ImpactForecastState): void {
     this.resetForecastState();
     if (!state) return;
+    forecastVersion = state.version;
     forecastTargetId = state.targetId;
+    actualPrimaryId = state.version === 2 ? state.actualPrimaryId ?? null : null;
     forecastCommitted = state.committed;
     memoryEarnedPending = state.earnedPending ?? false;
     forecastConsumed = state.consumed;
@@ -229,6 +270,8 @@ export const impactSystem = {
 
   resetForecastState(): void {
     forecastTargetId = null;
+    actualPrimaryId = null;
+    forecastVersion = 2;
     forecastDisplay = null;
     forecastCommitted = false;
     memoryEarnedPending = false;
@@ -252,6 +295,9 @@ export const impactSystem = {
 
     // First sortie: no impact (spec rule 20)
     if (cycle <= 1) {
+      // The return still advances the tide. Retire the exempt event's reading
+      // so its intensity cannot leak into the next, damaging return.
+      forecastConsumed = true;
       return { damages: [], intensity: 0, skipped: true };
     }
 
@@ -268,10 +314,11 @@ export const impactSystem = {
     // Emit start
     eventBus.emit(GameEvent.IMPACT_STARTED, { intensity });
 
-    // Determine primary target (spec rule 22): 80% keep forecast, else pick uniformly
-    // among the remaining blood-bearing modules. Never hardcode modules[0]/[1].
+    // V2 selected the actual target at forecast creation. V1 records preserve
+    // their original settlement draw until consumed; memory promises stay exact.
     const modules = gameState.getModules();
-    const primary = (forecastCommitted ? modules.find(module => module.id === forecastTargetId) : undefined)
+    const frozenTarget = forecastVersion === 2 ? actualPrimaryId : forecastCommitted ? forecastTargetId : null;
+    const primary = (frozenTarget ? modules.find(module => module.id === frozenTarget) : undefined)
       ?? pickPrimaryModule(modules, forecastTargetId, random);
     const baseDamagePerModule = distributeThreatDamage(totalDamage, primary.id, modules);
 
@@ -389,12 +436,13 @@ export const impactSystem = {
     };
   },
 
-  /** Establish once per actual impact. Slot/read/unslot cannot earn information.
+  /** Establish once per returned event, including the first exempt return.
+   * Slot/read/unslot cannot earn information.
    * Old already-disclosed lookaheads still flow through the one-element queue.
    */
   generateForecast(
     nextIntensity: number,
-    forecastReliabilityBonus = 0,
+    _forecastReliabilityBonus = 0,
     nextNextIntensityEstimate: number,
     random: () => number = Math.random,
   ): void {
@@ -405,18 +453,21 @@ export const impactSystem = {
     forecastIntensity = nextIntensity;
     forecastNextNextIntensity = nextNextIntensityEstimate;
     forecastConsumed = false;
+    forecastVersion = 2;
     forecastCommitted = pendingTargetQueue.length > 0 || memoryEarnedPending;
     memoryEarnedPending = false;
     forecastTargetId = pendingTargetQueue.shift() ?? pickUniform(modules, random).id;
     forecastLookahead = null;
     const trueSeverity = severityFromIntensity(nextIntensity);
-    const blurChance = forecastCommitted ? 0 : Math.max(SEVERITY_BLUR_FLOOR_CHANCE,
-      SEVERITY_BLUR_BASE_CHANCE - Math.max(0, forecastReliabilityBonus));
+    // The old bonus parameter is retained for callers/save compatibility only.
+    // Growth now reveals facts through getForecastReading, never changes odds.
+    const blurChance = forecastCommitted ? 0 : SEVERITY_BLUR_BASE_CHANCE;
     let severity = trueSeverity;
     if (blurChance > 0 && random() < blurChance) {
       const direction = random() < .5 ? -1 : 1;
       severity = SEVERITY_ORDER[Math.min(SEVERITY_ORDER.length - 1, Math.max(0, SEVERITY_ORDER.indexOf(trueSeverity) + direction))]!;
     }
     forecastDisplay = { targetId: forecastTargetId, severity };
+    actualPrimaryId = forecastCommitted ? forecastTargetId : pickPrimaryModule(modules, forecastTargetId, random).id;
   },
 };

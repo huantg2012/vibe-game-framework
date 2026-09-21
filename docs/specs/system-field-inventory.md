@@ -3,13 +3,19 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-09-20
+last-modified-date: 2026-09-21
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes]
 exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger]
 interface-changed: true
 note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入正式随机2D。旧active或损坏世界包只在基地/库存有效且玩家明确确认后安全弃局；不删除全档。
 ---
 
+
+## 迭代29 · 扩槽购买与被动迁移
+
+出击扩容购买与库存候选在同笔保存中发布：原三槽 `[主动A,主动B,被动P]` → `[主动A,主动B,空,被动P]`，被动身份、品质与余次保持；空槽补齐有效容量。`inventoryStore.reconcileExpandedToolSlots(previousSlotCount)`仅把旧末槽确认为被动、且新末槽为空的对象迁移，目标占用时拒绝，不能静默丢物。`saveManager.trySaveBaseInventoryFrame()`保存完整基地状态+库存候选，拒写先还原成长/薪柴/稳定度再取消库存候选，不发布中间成功。
+
+已买扩容的旧基地档在无run或baseSettled时保守修复相同错位；active和未结算归来包保持原引用，不能改变在途技能槽。成长经历从既有发现/供奉回执读取，仅影响未购改造资格，不清空未知身份或增加余次。四供奉槽维持最后一轮防御→成熟→回库、无新增补给。
 
 ## 迭代28 · 鉴定目录与整趟被动（DEC-174）
 
