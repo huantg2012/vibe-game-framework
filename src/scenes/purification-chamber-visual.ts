@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { ChamberFloorLight } from '../art/chamber-floor-light';
 import {
   CHAMBER_DEVICE_ANCHORS,
   CHAMBER_DEVICE_BASES,
@@ -59,6 +60,17 @@ export class PurificationChamberVisual {
   private readonly groundEffects: Phaser.GameObjects.Graphics;
   private readonly bodyEffects: Phaser.GameObjects.Graphics;
   private readonly boundaryEffects: Phaser.GameObjects.Graphics;
+  private readonly floorLight = new ChamberFloorLight();
+  private readonly coreReflection = this.floorLight.compile(
+    CHAMBER_DEVICE_BASES.core.x, CHAMBER_DEVICE_BASES.core.y + 5, 45, 15);
+  private readonly growthReflection = this.floorLight.compile(
+    CHAMBER_DEVICE_BASES.growth.x, CHAMBER_DEVICE_BASES.growth.y + 8, 29, 13);
+  private readonly purifierReflection = this.floorLight.compile(
+    CHAMBER_DEVICE_BASES.purifier.x, CHAMBER_DEVICE_BASES.purifier.y + 9, 37, 12);
+  private readonly reflectedLight: Phaser.GameObjects.Graphics;
+  private readonly lampLight: Phaser.GameObjects.Graphics;
+  private lampX = Number.NaN;
+  private lampY = Number.NaN;
   private readonly resistanceTexture: Phaser.Textures.CanvasTexture;
   private readonly resistancePainter: ChamberPixels;
   private resistanceKey = -1;
@@ -79,6 +91,8 @@ export class PurificationChamberVisual {
     this.addCanvas(`purification-chamber-grounding-${id}`, 12, paintChamberGrounding);
     this.resistanceTexture = this.addCanvas(`purification-chamber-resistance-${id}`, 14);
     this.resistancePainter = new ChamberPixels(this.resistanceTexture.context);
+    this.reflectedLight = scene.add.graphics().setDepth(15).setBlendMode(Phaser.BlendModes.ADD);
+    this.lampLight = scene.add.graphics().setDepth(15.2).setBlendMode(Phaser.BlendModes.ADD);
     this.groundEffects = scene.add.graphics().setDepth(16);
     this.boundaryEffects = scene.add.graphics().setDepth(17);
     for (const device of DEVICE_IDS) {
@@ -146,6 +160,12 @@ export class PurificationChamberVisual {
     // The body attachment follows every player step even between animation ticks.
     this.bodyEffects.setPosition(Math.round(state.player.x), Math.round(state.player.y));
     this.bodyEffects.setDepth(110 + state.player.y + .5);
+    const lampX = Math.round(state.player.x - 4); const lampY = Math.round(state.player.y + 8);
+    if (lampX !== this.lampX || lampY !== this.lampY) {
+      this.lampX = lampX; this.lampY = lampY;
+      this.lampLight.clear();
+      this.floorLight.paintLamp(this.lampLight, lampX, lampY);
+    }
     if (this.lastFrame === frame) return;
     this.lastFrame = frame;
     this.paintActivity(timeMs, state);
@@ -176,16 +196,13 @@ export class PurificationChamberVisual {
     const active = normalizeTarget(state.activeTarget);
     const ground = this.groundEffects;
     ground.clear(); this.bodyEffects.clear(); this.boundaryEffects.clear();
-    // Material receives a little local light. No room-sized illumination dome.
-    ground.fillStyle(0x1a6b5c, (.065 + breath * .025) * Math.max(.18, state.moduleHealth.core));
-    ground.fillEllipse(253, 297, 61, 23);
-    ground.fillStyle(0x1aad96, (.025 + breath * .015) * Math.max(.18, state.moduleHealth.core));
-    ground.fillEllipse(253, 297, 39, 13);
-    ground.fillStyle(0x8a5c2a, .065);
-    ground.fillEllipse(204, 163, 24, 14);
-    // The original carried lamp has a small material receiver at the feet, not a world tint.
-    ground.fillStyle(0xc4873a, .045);
-    ground.fillEllipse(state.player.x - 4, state.player.y + 8, 30, 10);
+    // Small material receivers preserve the floor's authored shading. They never tint a wall/base.
+    this.reflectedLight.clear();
+    this.floorLight.paint(this.reflectedLight, this.coreReflection, 0x1aad96,
+      (.075 + breath * .025) * Math.max(.18, state.moduleHealth.core));
+    this.floorLight.paint(this.reflectedLight, this.growthReflection, 0x1a6b5c, .065 + breath * .01);
+    this.floorLight.paint(this.reflectedLight, this.purifierReflection, 0x1a6b5c,
+      (.06 + breath * .01) * Math.max(.18, state.moduleHealth.purifier));
 
     for (const device of this.devices) {
       const g = device.activity;
@@ -250,17 +267,32 @@ export class PurificationChamberVisual {
       ground.fillStyle(0x8a8f96, envelope * .09);
       ground.fillEllipse(x, y, halfWidth * 2 + 14, 9);
     }
-    // At the pressure sites, movement stays within foreign matter already visible in the joint.
-    this.boundaryEffects.fillStyle(0x1a6b5c, .26 + breath * .25);
-    this.boundaryEffects.fillRect(98, 226, 2, 5);
-    this.boundaryEffects.fillRect(318, 106, 2, 4);
-    this.boundaryEffects.fillRect(549, 214, 2, 4);
+    // Light stays in the existing material split. Damage changes how far the active seam escapes.
+    this.paintPressure(99, 240, state.moduleHealth.storage, 1, breath);
+    this.paintPressure(319, 121, state.moduleHealth.core, 0, .5 + .5 * Math.sin(time * .0011 + 1.7));
+    this.paintPressure(549, 228, state.moduleHealth.purifier, -1, .5 + .5 * Math.sin(time * .0013 + 3.1));
     if (pulsing && this.pulseTarget === 'player') {
       this.bodyEffects.fillStyle(0xc8cdd4, envelope * .45);
       this.bodyEffects.fillRect(-3, -7, 2, 3);
       this.bodyEffects.fillRect(4, -2, 1, 3);
       ground.fillStyle(0x8a8f96, envelope * .18);
       ground.fillEllipse(state.player.x, state.player.y + 10, 18, 4);
+    }
+  }
+
+  private paintPressure(x: number, y: number, health: number, direction: -1 | 0 | 1, phase: number): void {
+    const g = this.boundaryEffects;
+    g.fillStyle(0x1a6b5c, .22 + phase * .24);
+    g.fillRect(x - 1, y - 15, 2, 4);
+    if (health > .6) return;
+    g.fillStyle(0x1aad96, .11 + phase * .16);
+    if (direction === 0) {
+      g.fillRect(x, y - 2, 1, 3);
+      if (health < .3) g.fillRect(x + 2, y + 10, 1, 3);
+    } else {
+      const reach = direction * (health < .3 ? 13 : 8);
+      g.fillRect(x + Math.round(reach * .5), y - 1, 2, 1);
+      if (health < .3) g.fillRect(x + reach + direction * 3, y + 4, 1, 2);
     }
   }
 
@@ -276,6 +308,7 @@ export class PurificationChamberVisual {
     if (this.destroyed) return;
     this.destroyed = true;
     this.groundEffects.destroy(); this.bodyEffects.destroy(); this.boundaryEffects.destroy();
+    this.reflectedLight.destroy(); this.lampLight.destroy();
     for (const device of this.devices) device.activity.destroy();
     for (const image of this.images) image.destroy();
     for (const key of this.textures) if (this.scene.textures.exists(key)) this.scene.textures.remove(key);

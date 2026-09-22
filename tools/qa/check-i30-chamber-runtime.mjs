@@ -27,7 +27,7 @@ await page.route('**/@vite/client', route => route.fulfill({ contentType: 'appli
 const d = createJourneyDriver(page, out);
 const manifest = {
   at: new Date().toISOString(), version: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-  workingTree: 'I30 R2 changes under test', url,
+  workingTree: process.env.I30_LABEL ?? 'I30 R2 changes under test', url,
   method: 'Fresh isolated Playwright context; real keyboard; read-only diagnostics for routing; no save injection, teleport, clock change or grants.',
   scope: [], errors,
 };

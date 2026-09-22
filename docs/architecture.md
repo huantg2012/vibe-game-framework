@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-21
+last-modified: 2026-09-22
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,11 +10,13 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30 R2：浅透视错层净化点
+## 迭代30 R3：浅透视错层净化点
 
 `PurificationScene`拥有原归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口处才转换为中心坐标（脚底Y−10）。`PurificationChamberLocomotion`在两层与两宽坡道的联合边界、设备底座上做连续圆扫掠和滑动，不再是一维轨道。Player显式constrained模式复用键盘、原四向精灵、武器与冻结；Rift默认路径不变。
 
 `ChamberModule`提供当前完整度、接近读数与共享效果查询；场景先按楼层/直线可达资格筛选，再按24px距离确定E目标。`PurificationChamberVisual`缓存建筑/壳外/接地层，六物独立透明纹理按100+底座Y排序；人物/武器/灯使用同系脚底排序。公共HP/供奉占用/已购成长驱动有限状态层，不接隐藏预告。场景物体与操作锚分开，面板只聚焦本体。
+
+R3场景表现沿用以上几何与玩法接口。`chamber-floor-light.ts`从同源地面多边形减去装置底座生成像素接收掩膜；核心/培养藏/净化器的有限反光段在构建时编译，活动层重放Graphics而不上传Canvas。原人物灯随整数位置逐帧重绘接收范围，墙/高差立面/空洞和底座不会被地面光染色。局部加色低强度叠加，建筑主要明暗仍由静态材质面承担；三处接触活动仅读取当前公开模块完整度。新增Graphics跟随visual幂等释放，无新资产加载、存档字段、菜单或出击接口。
 
 旧TilemapRenderer、BoundaryShape/Atmosphere/Breath、VisibilitySystem、GroundDepthSorter、PurificationCollision仍保留其他现有调用但不在正式净化点实例化；`createPurificationFloorTexture`仅供历史gym。出击前隐藏scene、菜单入场、面板返回、幂等纹理/图形清理保持。净化点位置不入存档，不迁移旧坐标；Rift检查点与既有权益不变。
 
