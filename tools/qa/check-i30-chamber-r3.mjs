@@ -24,6 +24,7 @@ fs.mkdirSync(out, { recursive: true });
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE
   ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const sourcePaths = [
+  'src/art/chamber-pixel-helpers.ts', 'src/art/chamber-exterior-pixels.ts',
   'src/art/chamber-surface-map.ts',
   'src/art/purification-chamber-pixels.ts', 'src/scenes/purification-chamber-visual.ts',
   'src/art/chamber-floor-light.ts', 'src/art/chamber-light-field.ts',
@@ -123,7 +124,8 @@ function verifyTextures(snapshot) {
 function painterCounts(coverage) {
   const counts = Object.fromEntries(cachedPainters.map(name => [name, 0]));
   for (const script of coverage.result) {
-    if (!script.url.includes('/src/art/purification-chamber-pixels.ts')) continue;
+    if (!['purification-chamber-pixels.ts', 'chamber-exterior-pixels.ts']
+      .some(file => script.url.includes(`/src/art/${file}`))) continue;
     for (const fn of script.functions) {
       if (Object.hasOwn(counts, fn.functionName)) counts[fn.functionName] += fn.ranges[0]?.count ?? 0;
     }

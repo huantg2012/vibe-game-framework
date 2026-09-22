@@ -1,0 +1,296 @@
+{
+  "at": "2026-09-22T09:06:34.494Z",
+  "version": "da38e91787b48d96b98ab82fdc99537f3b6f1f22",
+  "url": "http://127.0.0.1:3025/",
+  "viewport": {
+    "width": 1440,
+    "height": 960
+  },
+  "sources": {
+    "src/art/chamber-pixel-helpers.ts": "b71bae2af83a26b31788f7316125db32e05a03d5280816ad650cce100c29e17b",
+    "src/art/chamber-exterior-pixels.ts": "6f9d9f7baedca19f71d2293675e5676acfda4ae6da1a6951d18551b94abaea7c",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/art/purification-chamber-pixels.ts": "0dc7e724e863fc3b58cb392a5a7118acde0060b265f6957ccdd982778988719e",
+    "src/scenes/purification-chamber-lighting.ts": "732a618656856aea6840d36a74e51a5ee4b5bf25b2cc32c22c65184a3e160454",
+    "src/scenes/purification-chamber-visual.ts": "09514968d9287a8ee6808529c0205d14094479426e82cc15e7c35f9f9d55f433",
+    "src/scenes/purification-scene.ts": "5177c7c397850f8649e99a1b1e02a1bd78e9245edc154cd44ce6e92e581d868c",
+    "src/entities/player.ts": "3f923416ddd24ece78076e94e8a79d8041f588a61724fd866c68a590a4f0266f",
+    "src/entities/player-lamp-aura.ts": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-light-runtime.mjs": "82e3c360eb0e744afecb964f9253a5b2d41cb84c17f4534e7f11df0f629b9e13",
+    "tools/qa/i30-chamber-driver.mjs": "362ffb46ce44d711f6d6a49dd1ff509e35a16bc163e670a3384730811d8c5d20",
+    "tools/qa/i27-journey-driver.mjs": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+  },
+  "errors": [],
+  "method": "Fresh isolated browser storage; production MainMenu -> Purification -> Rift. Real keyboard only. Read-only lamp/Graphics/texture observations and CDP precise coverage; no production method replacement.",
+  "scope": [
+    "Four finite sources and floor/wall/device Graphics animate during idle; calibrated CDP observes zero device repaints and six identical cached bitmaps",
+    "All four facings preserve the original animated lamp anchor with one hub floor pool; real travel to both sides of the core reverses a bounded integer-pixel shadow",
+    "Real entrance E/Shift+Enter enters Rift, restores the default original floor pool and releases hub device textures/light Graphics"
+  ],
+  "limitations": [
+    "Informed authored routes do not establish first-time navigation or aesthetic approval.",
+    "Command-buffer changes establish submitted Graphics activity, not perceptual quality of the final GPU composite.",
+    "No FPS benchmark, long-term leak certification, synthetic damage, purchases or hidden-state probes are included."
+  ],
+  "idle": {
+    "durationMs": 2366.5999999999995,
+    "calibrationDevicePaintCalls": 6,
+    "idleDevicePaintCalls": 0,
+    "energyRanges": {
+      "core": {
+        "min": 0.17328819204627374,
+        "max": 0.24141245103485806
+      },
+      "growth": {
+        "min": 0.09664649624351632,
+        "max": 0.12975495140476379
+      },
+      "purifier": {
+        "min": 0.12743194006448627,
+        "max": 0.1539858966912494
+      },
+      "wall-lamp": {
+        "min": 0.1110001783613887,
+        "max": 0.1287158720493745
+      }
+    },
+    "activity": {
+      "chamber-floor-light": {
+        "distinctBuffers": 11,
+        "commandCount": 47008,
+        "depth": 15
+      },
+      "chamber-wall-light": {
+        "distinctBuffers": 11,
+        "commandCount": 13070,
+        "depth": 15.05
+      },
+      "chamber-source-motes": {
+        "distinctBuffers": 11,
+        "commandCount": 24,
+        "depth": 407
+      },
+      "chamber-device-light-core": {
+        "distinctBuffers": 11,
+        "commandCount": 520,
+        "depth": 399.1
+      },
+      "chamber-device-light-growth": {
+        "distinctBuffers": 11,
+        "commandCount": 212,
+        "depth": 268.1
+      },
+      "chamber-device-light-purifier": {
+        "distinctBuffers": 11,
+        "commandCount": 903,
+        "depth": 370.1
+      }
+    },
+    "textures": [
+      {
+        "id": "rift",
+        "key": "purification-chamber-rift-1",
+        "hash": "223aa956",
+        "depth": 18,
+        "alpha": 1
+      },
+      {
+        "id": "growth",
+        "key": "purification-chamber-growth-1",
+        "hash": "cb54a782",
+        "depth": 268,
+        "alpha": 1
+      },
+      {
+        "id": "offering",
+        "key": "purification-chamber-offering-1",
+        "hash": "98135fa9",
+        "depth": 276,
+        "alpha": 1
+      },
+      {
+        "id": "purifier",
+        "key": "purification-chamber-purifier-1",
+        "hash": "845c6f1a",
+        "depth": 370,
+        "alpha": 1
+      },
+      {
+        "id": "storage",
+        "key": "purification-chamber-storage-1",
+        "hash": "7fef67b6",
+        "depth": 378,
+        "alpha": 1
+      },
+      {
+        "id": "core",
+        "key": "purification-chamber-core-1",
+        "hash": "899c3c41",
+        "depth": 399,
+        "alpha": 1
+      }
+    ]
+  },
+  "facings": [
+    {
+      "facing": "left",
+      "player": {
+        "x": 354.00079999999997,
+        "y": 289,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 346.00079999999997,
+        "y": 285
+      },
+      "originalGlow": {
+        "x": 346.00079999999997,
+        "y": 285,
+        "alpha": 0.6011629672379073
+      },
+      "chamberLamp": {
+        "x": 346,
+        "y": 285
+      },
+      "poolVisible": false
+    },
+    {
+      "facing": "up",
+      "player": {
+        "x": 354.00079999999997,
+        "y": 282.3328,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 346.00079999999997,
+        "y": 279.3328
+      },
+      "originalGlow": {
+        "x": 346.00079999999997,
+        "y": 279.3328,
+        "alpha": 0.23732518387456158
+      },
+      "chamberLamp": {
+        "x": 346,
+        "y": 279
+      },
+      "poolVisible": false
+    },
+    {
+      "facing": "right",
+      "player": {
+        "x": 360.66799999999995,
+        "y": 282.3328,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 368.66799999999995,
+        "y": 278.3328
+      },
+      "originalGlow": {
+        "x": 368.66799999999995,
+        "y": 278.3328,
+        "alpha": 0.33955894774752754
+      },
+      "chamberLamp": {
+        "x": 369,
+        "y": 278
+      },
+      "poolVisible": false
+    },
+    {
+      "facing": "down",
+      "player": {
+        "x": 360.66799999999995,
+        "y": 288.99840000000006,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 370.66799999999995,
+        "y": 284.99840000000006
+      },
+      "originalGlow": {
+        "x": 370.66799999999995,
+        "y": 284.99840000000006,
+        "alpha": 0.6838036227257833
+      },
+      "chamberLamp": {
+        "x": 371,
+        "y": 285
+      },
+      "poolVisible": false
+    }
+  ],
+  "coreShadows": [
+    {
+      "side": "right",
+      "foot": {
+        "x": 283,
+        "y": 312
+      },
+      "source": {
+        "x": 253,
+        "y": 299,
+        "radiusX": 105,
+        "radiusY": 43
+      },
+      "pixelCount": 56,
+      "centroid": {
+        "x": 287.01785714285717,
+        "y": 313.80357142857144
+      },
+      "scanlines": 56,
+      "maxAlpha": 0.27282405184163994
+    },
+    {
+      "side": "left",
+      "foot": {
+        "x": 218,
+        "y": 312
+      },
+      "source": {
+        "x": 253,
+        "y": 299,
+        "radiusX": 105,
+        "radiusY": 43
+      },
+      "pixelCount": 61,
+      "centroid": {
+        "x": 213.48360655737704,
+        "y": 313.6475409836066
+      },
+      "scanlines": 61,
+      "maxAlpha": 0.3189071445204808
+    }
+  ],
+  "movementDevicePaintCalls": 0,
+  "rift": {
+    "active": true,
+    "poolVisible": true,
+    "externalGround": false,
+    "playerAlpha": 1,
+    "oldDeviceTextures": [],
+    "remainingHubLightGraphics": []
+  },
+  "endingSources": {
+    "src/art/chamber-pixel-helpers.ts": "b71bae2af83a26b31788f7316125db32e05a03d5280816ad650cce100c29e17b",
+    "src/art/chamber-exterior-pixels.ts": "6f9d9f7baedca19f71d2293675e5676acfda4ae6da1a6951d18551b94abaea7c",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/art/purification-chamber-pixels.ts": "0dc7e724e863fc3b58cb392a5a7118acde0060b265f6957ccdd982778988719e",
+    "src/scenes/purification-chamber-lighting.ts": "732a618656856aea6840d36a74e51a5ee4b5bf25b2cc32c22c65184a3e160454",
+    "src/scenes/purification-chamber-visual.ts": "09514968d9287a8ee6808529c0205d14094479426e82cc15e7c35f9f9d55f433",
+    "src/scenes/purification-scene.ts": "5177c7c397850f8649e99a1b1e02a1bd78e9245edc154cd44ce6e92e581d868c",
+    "src/entities/player.ts": "3f923416ddd24ece78076e94e8a79d8041f588a61724fd866c68a590a4f0266f",
+    "src/entities/player-lamp-aura.ts": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-light-runtime.mjs": "82e3c360eb0e744afecb964f9253a5b2d41cb84c17f4534e7f11df0f629b9e13",
+    "tools/qa/i30-chamber-driver.mjs": "362ffb46ce44d711f6d6a49dd1ff509e35a16bc163e670a3384730811d8c5d20",
+    "tools/qa/i27-journey-driver.mjs": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+  },
+  "ok": true
+}

@@ -10,13 +10,15 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30 R5：浅透视错层净化点
+## 迭代30 R6：浅透视错层净化点
 
 `PurificationScene`拥有原归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口处才转换为中心坐标（脚底Y−10）。`PurificationChamberLocomotion`在两层与两宽坡道的联合边界、设备底座上做连续圆扫掠和滑动，不再是一维轨道。Player显式constrained模式复用键盘、原四向精灵、武器与冻结；Rift默认路径不变。
 
 `ChamberModule`提供当前完整度、接近读数与共享效果查询；场景先按楼层/直线可达资格筛选，再按24px距离确定E目标。`PurificationChamberVisual`缓存建筑/壳外/接地层，六物独立透明纹理按100+底座Y排序；人物/武器/灯使用同系脚底排序。公共HP/供奉占用/已购成长驱动有限状态层，不接隐藏预告。场景物体与操作锚分开，面板只聚焦本体。
 
 R5场景表现沿用以上几何与玩法接口。`chamber-light-field.ts`把实际地面/坡道减去底座，沿同源像素网格检测遮挡，编译24档受光扫描段；自发光底座只在该源的视线检测中豁免，仍不作为地面接收者。墙和设备面从实际透明纹理取接收掩膜，保留黑腔与自发光面，按原材亮度及显式表面方向分配响应。墙接收层排除可走地面，不把高差立面当作地面光池。
+
+R6将 `paintChamberExterior` 独立到 `chamber-exterior-pixels.ts`，色板与 horizontal/upright/materialFace 共用 `chamber-pixel-helpers.ts`；原 `purification-chamber-pixels.ts` 保留 `ChamberPixels`、室内/装置绘制，并 re-export 原出口，场景调用接口不变。新模块反向仅有 type import，运行时依赖无环。外景和室内独立施工，仍在同一套光照/面属性与缓存生命周期中；QA 指纹包含三个绘图源，绘制调用统计覆盖新外景模块。
 
 `chamber-surface-map.ts`增加与640×400色图同栅格的覆盖、法线、高度、遮蔽和粗糙度缓存。`ChamberPixels.rect/poly`在实际fillRect的同一扫描段写入面属性；局部设备坐标显式平移，高层32、主层0、坡面32→0连续，脚底已投影坐标不重复扣高度。材料补丁/磨损以null面继承宿主，不从裂纹颜色自动生成浮雕。可见面采用X=x、Y=y+height、Z=height；其他墙体高度是美术明确提供的有限近似，不推定完整闭合3D网格。
 

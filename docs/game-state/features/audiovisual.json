@@ -165,7 +165,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "净化点显式面方向/连续高程与色图同扫描段，固定面光/短接触遮蔽缓存烘焙，四源按面受光与同源设备投影；墙沿/薄修补台基及局部墙脚材质已收敛。黑隙、六物身份与原人物保持；标题不变。",
+    "summary": "净化点同栅格面方向/高程、静态烘焙与四源动态受光；R6墙皮接原构造、完整工作面朝通道磨开、左右厚断构围合深腔。六物/人物/黑隙保持，标题不变。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -323,6 +323,22 @@
       {
         "path": "docs/reviews/2026-09-22-purification-volume.md",
         "role": "doc"
+      },
+      {
+        "path": "src/art/chamber-pixel-helpers.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/chamber-exterior-pixels.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/iteration-30-r6.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-22-purification-material-depth.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -344,10 +360,13 @@
       "COH-E-I30-R4-REVIEW",
       "COH-E-I30-R4-RUNTIME",
       "COH-E-I30-R5-REVIEW",
-      "COH-E-I30-R5-RUNTIME"
+      "COH-E-I30-R5-RUNTIME",
+      "COH-E-I30-R5-HUMAN-FEEDBACK",
+      "COH-E-I30-R6-REVIEW",
+      "COH-E-I30-R6-RUNTIME"
     ],
     "unknowns": [
-      "R1已被否决；R2用户评分交互物80/100、结构75/100、场景模型渲染50/100保留。R3场景表现打磨已实现并有限验证，后墙大形及远端残构仍偏简化；等待用户复审，不推定整体或分项最终PASS，手感/初见导航/长期路线成本仍无专项人审。 用户另指出R3暖色过多，已参考旧净化点冷灰主面纠偏，修正版待人审。 R4材料/运行光影已完成一轮实帧修正与限定回归；墙与外残构仍偏概括，维护关系部分成立，待人审。 R5体积受光已实现并限定回归；独立复评确认面分离、墙沿与薄台接地改善，大面材料/外残构仍有品质缺口，不能称可发布或提升用户评分。",
+      "R1否决与R2分项80/75/50保留；R5获用户积极反馈，无新评分或整体PASS。R6材料接合/厚断构经一次修正与限定回归后冻结；薄皮/断芯精度、局部圆整材料边仍有限，待人审。初见导航、手感与长期路线成本无新增专项人审。",
       "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   }

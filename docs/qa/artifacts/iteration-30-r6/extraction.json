@@ -1,0 +1,49 @@
+{
+  "baseline": "da38e91",
+  "phase": "mechanical extraction before R6 authored material/geometry changes",
+  "surfaceRuntimeChecks": 118,
+  "sources": {
+    "src/art/chamber-pixel-helpers.ts": "b71bae2af83a26b31788f7316125db32e05a03d5280816ad650cce100c29e17b",
+    "src/art/chamber-exterior-pixels.ts": "1eeae0e05f3e1f028b9ead0ccb3346db4c47d7113b2229bd802b9722173a895d",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/purification-chamber-pixels.ts": "f978ee8a4e2dc75d59927b72684c079afdf39fd422a7c4d962ee6488ee393465",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/scenes/purification-chamber-visual.ts": "09514968d9287a8ee6808529c0205d14094479426e82cc15e7c35f9f9d55f433",
+    "src/scenes/purification-chamber-lighting.ts": "732a618656856aea6840d36a74e51a5ee4b5bf25b2cc32c22c65184a3e160454",
+    "src/scenes/purification-scene.ts": "5177c7c397850f8649e99a1b1e02a1bd78e9245edc154cd44ce6e92e581d868c",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-surface-runtime.mjs": "5779b96e3c9339d3535e549acae86c388f76ecac7e032ccecc3bb806ad98c437"
+  },
+  "comparisons": [
+    {
+      "image": "diagnostic-normal-albedo.png",
+      "baseline": "docs/qa/artifacts/iteration-30-r5/surface-runtime/diagnostic-normal-albedo.png",
+      "baselineSha256": "9d1ff93ed313dc26ad81d9b412a0b9da13c2d5c51c01a418fc4de55eb37992fd",
+      "extractedSha256": "9d1ff93ed313dc26ad81d9b412a0b9da13c2d5c51c01a418fc4de55eb37992fd",
+      "identical": true
+    },
+    {
+      "image": "diagnostic-normal-baked.png",
+      "baseline": "docs/qa/artifacts/iteration-30-r5/surface-runtime/diagnostic-normal-baked.png",
+      "baselineSha256": "70bda7df6ae2fa8b9c9772288d0366c3a985f96c6ca38bf0373bd4af6a96b069",
+      "extractedSha256": "70bda7df6ae2fa8b9c9772288d0366c3a985f96c6ca38bf0373bd4af6a96b069",
+      "identical": true
+    },
+    {
+      "image": "diagnostic-world-heights.png",
+      "baseline": "docs/qa/artifacts/iteration-30-r5/surface-runtime/diagnostic-world-heights.png",
+      "baselineSha256": "09ae6c06e8d50112db7fa2142252a98159239d71a191d0f513e181744c31ca9a",
+      "extractedSha256": "09ae6c06e8d50112db7fa2142252a98159239d71a191d0f513e181744c31ca9a",
+      "identical": true
+    },
+    {
+      "image": "diagnostic-world-normals.png",
+      "baseline": "docs/qa/artifacts/iteration-30-r5/surface-runtime/diagnostic-world-normals.png",
+      "baselineSha256": "3ebfc18889184fde638a85fdb688037762aff5ddb45477e7b3fed98c76a98244",
+      "extractedSha256": "3ebfc18889184fde638a85fdb688037762aff5ddb45477e7b3fed98c76a98244",
+      "identical": true
+    }
+  ],
+  "limitation": "Diagnostic render bytes, not a human quality assessment; later R6 art intentionally changes output."
+}

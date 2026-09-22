@@ -1,0 +1,2754 @@
+{
+  "at": "2026-09-22T09:05:30.060Z",
+  "version": "da38e91787b48d96b98ab82fdc99537f3b6f1f22",
+  "url": "http://127.0.0.1:3025/",
+  "sources": {
+    "src/art/chamber-pixel-helpers.ts": "b71bae2af83a26b31788f7316125db32e05a03d5280816ad650cce100c29e17b",
+    "src/art/chamber-exterior-pixels.ts": "6f9d9f7baedca19f71d2293675e5676acfda4ae6da1a6951d18551b94abaea7c",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/purification-chamber-pixels.ts": "0dc7e724e863fc3b58cb392a5a7118acde0060b265f6957ccdd982778988719e",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/scenes/purification-chamber-visual.ts": "09514968d9287a8ee6808529c0205d14094479426e82cc15e7c35f9f9d55f433",
+    "src/scenes/purification-chamber-lighting.ts": "732a618656856aea6840d36a74e51a5ee4b5bf25b2cc32c22c65184a3e160454",
+    "src/scenes/purification-scene.ts": "5177c7c397850f8649e99a1b1e02a1bd78e9245edc154cd44ce6e92e581d868c",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-surface-runtime.mjs": "5779b96e3c9339d3535e549acae86c388f76ecac7e032ccecc3bb806ad98c437"
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 960
+  },
+  "errors": [],
+  "method": "Fresh isolated browser context; production MainMenu -> Purification via real Enter. Read-only live scene probes. Actual production painters imported into separate offscreen Canvases without replacing production methods.",
+  "scope": [
+    "Calibrated production surface bake/response calls; a separate 1.5-second idle window observes zero rebakes/recompiles and identical cached textures/heights",
+    "Actual production painter with/without surface tracking gives identical unbaked RGBA; coverage/alpha, normals, two floors, both ramp height sequences and bake preservation are checked",
+    "Independent production-painter architecture data and all six baked device textures are compared against the live scene; nested device translation validates coordinate and elevation composition"
+  ],
+  "limitations": [
+    "Diagnostic PNGs show static production painting inputs/outputs without actor, dynamic light, HUD or final game compositing; they are not gameplay frames.",
+    "Normal diagnostic encodes world XYZ into RGB; height diagnostic uses a fixed -32..160 world-pixel scale. These colors are explanatory, not game art.",
+    "Per-layer bake durations describe one instrumented browser execution, not FPS, load-time targets or a statistical performance benchmark.",
+    "Height labels and visible-surface shading do not prove closed 3D meshes or hidden-surface light transport. Aesthetic approval remains separate."
+  ],
+  "productionSurfaceModuleUrls": [
+    "http://127.0.0.1:3025/src/art/chamber-surface-map.ts?t=1790063770445"
+  ],
+  "initialCalls": {
+    "bake": 9,
+    "receiverResponse": 57721
+  },
+  "idle": {
+    "durationMs": 1500,
+    "bakeCalls": 0,
+    "responseCalls": 0,
+    "before": {
+      "active": true,
+      "textures": [
+        {
+          "key": "purification-chamber-exterior-1",
+          "hash": "69ffb407"
+        },
+        {
+          "key": "purification-chamber-architecture-1",
+          "hash": "be19756c"
+        },
+        {
+          "key": "purification-chamber-grounding-1",
+          "hash": "5717c70d"
+        },
+        {
+          "key": "purification-chamber-resistance-1",
+          "hash": "99999923"
+        },
+        {
+          "key": "purification-chamber-rift-1",
+          "hash": "196f71e2"
+        },
+        {
+          "key": "purification-chamber-growth-1",
+          "hash": "b4cc2a3e"
+        },
+        {
+          "key": "purification-chamber-offering-1",
+          "hash": "c6cb4d65"
+        },
+        {
+          "key": "purification-chamber-purifier-1",
+          "hash": "d9416840"
+        },
+        {
+          "key": "purification-chamber-storage-1",
+          "hash": "4b4640f1"
+        },
+        {
+          "key": "purification-chamber-core-1",
+          "hash": "de4196c0"
+        },
+        {
+          "key": "purification-chamber-front-cut-1",
+          "hash": "352384c4"
+        }
+      ],
+      "surfaceHash": "7528b8ce",
+      "graphics": [
+        {
+          "name": "chamber-device-cast-rift",
+          "commands": 0,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-growth",
+          "commands": 367,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-offering",
+          "commands": 192,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-purifier",
+          "commands": 445,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-storage",
+          "commands": 508,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-core",
+          "commands": 336,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-floor-light",
+          "commands": 47008,
+          "depth": 15
+        },
+        {
+          "name": "chamber-wall-light",
+          "commands": 13070,
+          "depth": 15.05
+        },
+        {
+          "name": "chamber-directional-shadow",
+          "commands": 0,
+          "depth": 15.1
+        },
+        {
+          "name": "chamber-player-ground-light",
+          "commands": 328,
+          "depth": 15.2
+        },
+        {
+          "name": "chamber-device-light-rift",
+          "commands": 582,
+          "depth": 18.1
+        },
+        {
+          "name": "chamber-device-light-growth",
+          "commands": 212,
+          "depth": 268.1
+        },
+        {
+          "name": "chamber-device-light-offering",
+          "commands": 0,
+          "depth": 276.1
+        },
+        {
+          "name": "chamber-device-light-purifier",
+          "commands": 903,
+          "depth": 370.1
+        },
+        {
+          "name": "chamber-device-light-storage",
+          "commands": 895,
+          "depth": 378.1
+        },
+        {
+          "name": "chamber-device-light-core",
+          "commands": 520,
+          "depth": 399.1
+        },
+        {
+          "name": "chamber-source-motes",
+          "commands": 24,
+          "depth": 407
+        }
+      ]
+    },
+    "after": {
+      "active": true,
+      "textures": [
+        {
+          "key": "purification-chamber-exterior-1",
+          "hash": "69ffb407"
+        },
+        {
+          "key": "purification-chamber-architecture-1",
+          "hash": "be19756c"
+        },
+        {
+          "key": "purification-chamber-grounding-1",
+          "hash": "5717c70d"
+        },
+        {
+          "key": "purification-chamber-resistance-1",
+          "hash": "99999923"
+        },
+        {
+          "key": "purification-chamber-rift-1",
+          "hash": "196f71e2"
+        },
+        {
+          "key": "purification-chamber-growth-1",
+          "hash": "b4cc2a3e"
+        },
+        {
+          "key": "purification-chamber-offering-1",
+          "hash": "c6cb4d65"
+        },
+        {
+          "key": "purification-chamber-purifier-1",
+          "hash": "d9416840"
+        },
+        {
+          "key": "purification-chamber-storage-1",
+          "hash": "4b4640f1"
+        },
+        {
+          "key": "purification-chamber-core-1",
+          "hash": "de4196c0"
+        },
+        {
+          "key": "purification-chamber-front-cut-1",
+          "hash": "352384c4"
+        }
+      ],
+      "surfaceHash": "7528b8ce",
+      "graphics": [
+        {
+          "name": "chamber-device-cast-rift",
+          "commands": 0,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-growth",
+          "commands": 367,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-offering",
+          "commands": 192,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-purifier",
+          "commands": 445,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-storage",
+          "commands": 508,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-device-cast-core",
+          "commands": 336,
+          "depth": 14.8
+        },
+        {
+          "name": "chamber-floor-light",
+          "commands": 47008,
+          "depth": 15
+        },
+        {
+          "name": "chamber-wall-light",
+          "commands": 13070,
+          "depth": 15.05
+        },
+        {
+          "name": "chamber-directional-shadow",
+          "commands": 0,
+          "depth": 15.1
+        },
+        {
+          "name": "chamber-player-ground-light",
+          "commands": 328,
+          "depth": 15.2
+        },
+        {
+          "name": "chamber-device-light-rift",
+          "commands": 582,
+          "depth": 18.1
+        },
+        {
+          "name": "chamber-device-light-growth",
+          "commands": 212,
+          "depth": 268.1
+        },
+        {
+          "name": "chamber-device-light-offering",
+          "commands": 0,
+          "depth": 276.1
+        },
+        {
+          "name": "chamber-device-light-purifier",
+          "commands": 903,
+          "depth": 370.1
+        },
+        {
+          "name": "chamber-device-light-storage",
+          "commands": 895,
+          "depth": 378.1
+        },
+        {
+          "name": "chamber-device-light-core",
+          "commands": 520,
+          "depth": 399.1
+        },
+        {
+          "name": "chamber-source-motes",
+          "commands": 24,
+          "depth": 407
+        }
+      ]
+    }
+  },
+  "diagnostic": {
+    "checks": [
+      {
+        "ok": true,
+        "message": "A nested block restores the exact already-transformed host plane"
+      },
+      {
+        "ok": true,
+        "message": "Drawing after a translated block applies the outer elevation exactly once"
+      },
+      {
+        "ok": true,
+        "message": "A real null-plane finish preserves its painted host height"
+      },
+      {
+        "ok": true,
+        "message": "exterior: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "exterior: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "exterior: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "exterior: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "exterior: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 43547,
+          "eligibleLabelled": 43203
+        }
+      },
+      {
+        "ok": true,
+        "message": "exterior: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 214372,
+          "changedMaterial": 41627
+        }
+      },
+      {
+        "ok": true,
+        "message": "exterior: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "architecture: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "architecture: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "architecture: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "architecture: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "architecture: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 124609,
+          "eligibleLabelled": 124609
+        }
+      },
+      {
+        "ok": true,
+        "message": "architecture: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 131397,
+          "changedMaterial": 124603
+        }
+      },
+      {
+        "ok": true,
+        "message": "architecture: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "Architecture contains independently authored horizontal, front and side faces",
+        "details": {
+          "top": 58599,
+          "front": 51347,
+          "left": 4216,
+          "right": 6615,
+          "slope": 3978
+        }
+      },
+      {
+        "ok": true,
+        "message": "Main-floor open material is at world height 0",
+        "details": {
+          "x": 366,
+          "y": 300,
+          "covered": 1,
+          "z": 0,
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "Upper-floor open material is at world height 32",
+        "details": {
+          "x": 280,
+          "y": 199,
+          "covered": 1,
+          "z": 32,
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "central ramp has continuous interpolated height through its existing central lane",
+        "details": []
+      },
+      {
+        "ok": true,
+        "message": "central ramp normals agree with the reconstructed slope tangent",
+        "details": []
+      },
+      {
+        "ok": true,
+        "message": "east ramp has continuous interpolated height through its existing central lane",
+        "details": []
+      },
+      {
+        "ok": true,
+        "message": "east ramp normals agree with the reconstructed slope tangent",
+        "details": []
+      },
+      {
+        "ok": true,
+        "message": "Formal scene and direct import have identical surface constructor and method implementations",
+        "details": {
+          "constructorName": "ChamberSurfaceMap",
+          "sameConstructorSource": true,
+          "sameMethodSources": true,
+          "sharedClassIdentity": false
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live cached architecture RGBA exactly matches an independent production-painter bake",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live architecture coverage exactly matches independent authored data",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live architecture heights exactly matches independent authored data",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live architecture normalX exactly matches independent authored data",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live architecture normalY exactly matches independent authored data",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live architecture normalZ exactly matches independent authored data",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live architecture occlusion exactly matches independent authored data",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "Live architecture roughness exactly matches independent authored data",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "grounding: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "grounding: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "grounding: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "grounding: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "grounding: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 256000,
+          "changedMaterial": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "resistance: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "resistance: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "resistance: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "resistance: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "resistance: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 256000,
+          "changedMaterial": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 578,
+          "eligibleLabelled": 566
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 255457,
+          "changedMaterial": 543
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "rift: live device texture exactly matches the same state and production painter",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: surface coverage stays around its actual world-space device base",
+        "details": {
+          "base": {
+            "x": 512,
+            "y": 252
+          },
+          "bounds": [
+            487,
+            237,
+            536,
+            263
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: real painter composes screen translation +7,+9 and world elevation +5 without color/normal drift",
+        "details": {
+          "colorDrift": 0,
+          "surfaceDrift": 0,
+          "shiftedPixels": 689
+        }
+      },
+      {
+        "ok": true,
+        "message": "rift: nested translated painting restores the outer Canvas transform"
+      },
+      {
+        "ok": true,
+        "message": "growth: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 1702,
+          "eligibleLabelled": 1702
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 255078,
+          "changedMaterial": 922
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "growth: live device texture exactly matches the same state and production painter",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: surface coverage stays around its actual world-space device base",
+        "details": {
+          "base": {
+            "x": 169,
+            "y": 168
+          },
+          "bounds": [
+            151,
+            115,
+            189,
+            170
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: real painter composes screen translation +7,+9 and world elevation +5 without color/normal drift",
+        "details": {
+          "colorDrift": 0,
+          "surfaceDrift": 0,
+          "shiftedPixels": 1702
+        }
+      },
+      {
+        "ok": true,
+        "message": "growth: nested translated painting restores the outer Canvas transform"
+      },
+      {
+        "ok": true,
+        "message": "offering: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 1210,
+          "eligibleLabelled": 1124
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 254876,
+          "changedMaterial": 1124
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "offering: live device texture exactly matches the same state and production painter",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: surface coverage stays around its actual world-space device base",
+        "details": {
+          "base": {
+            "x": 355,
+            "y": 176
+          },
+          "bounds": [
+            336,
+            134,
+            379,
+            176
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: real painter composes screen translation +7,+9 and world elevation +5 without color/normal drift",
+        "details": {
+          "colorDrift": 0,
+          "surfaceDrift": 0,
+          "shiftedPixels": 1124
+        }
+      },
+      {
+        "ok": true,
+        "message": "offering: nested translated painting restores the outer Canvas transform"
+      },
+      {
+        "ok": true,
+        "message": "purifier: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 1690,
+          "eligibleLabelled": 1688
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 254500,
+          "changedMaterial": 1500
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "purifier: live device texture exactly matches the same state and production painter",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: surface coverage stays around its actual world-space device base",
+        "details": {
+          "base": {
+            "x": 451,
+            "y": 270
+          },
+          "bounds": [
+            424,
+            232,
+            479,
+            270
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: real painter composes screen translation +7,+9 and world elevation +5 without color/normal drift",
+        "details": {
+          "colorDrift": 0,
+          "surfaceDrift": 0,
+          "shiftedPixels": 1688
+        }
+      },
+      {
+        "ok": true,
+        "message": "purifier: nested translated painting restores the outer Canvas transform"
+      },
+      {
+        "ok": true,
+        "message": "storage: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 1317,
+          "eligibleLabelled": 1307
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 254721,
+          "changedMaterial": 1279
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "storage: live device texture exactly matches the same state and production painter",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: surface coverage stays around its actual world-space device base",
+        "details": {
+          "base": {
+            "x": 145,
+            "y": 278
+          },
+          "bounds": [
+            125,
+            239,
+            165,
+            278
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: real painter composes screen translation +7,+9 and world elevation +5 without color/normal drift",
+        "details": {
+          "colorDrift": 0,
+          "surfaceDrift": 0,
+          "shiftedPixels": 1307
+        }
+      },
+      {
+        "ok": true,
+        "message": "storage: nested translated painting restores the outer Canvas transform"
+      },
+      {
+        "ok": true,
+        "message": "core: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 1933,
+          "eligibleLabelled": 1926
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 254328,
+          "changedMaterial": 1672
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "core: live device texture exactly matches the same state and production painter",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: surface coverage stays around its actual world-space device base",
+        "details": {
+          "base": {
+            "x": 253,
+            "y": 299
+          },
+          "bounds": [
+            230,
+            239,
+            276,
+            300
+          ]
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: real painter composes screen translation +7,+9 and world elevation +5 without color/normal drift",
+        "details": {
+          "colorDrift": 0,
+          "surfaceDrift": 0,
+          "shiftedPixels": 1926
+        }
+      },
+      {
+        "ok": true,
+        "message": "core: nested translated painting restores the outer Canvas transform"
+      },
+      {
+        "ok": true,
+        "message": "foreground: enabling surface authoring leaves every unbaked RGBA byte unchanged",
+        "details": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      {
+        "ok": true,
+        "message": "foreground: painter restores the Canvas transform",
+        "details": {
+          "e": 0,
+          "f": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "foreground: no authored surface escapes actual painted alpha",
+        "details": {
+          "outsideAlpha": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "foreground: all authored normals and heights are finite and normalized",
+        "details": {
+          "badNormal": 0,
+          "badHeight": 0
+        }
+      },
+      {
+        "ok": true,
+        "message": "foreground: at least 90% of visible material has real surface authoring",
+        "details": {
+          "eligible": 2436,
+          "eligibleLabelled": 2281
+        }
+      },
+      {
+        "ok": true,
+        "message": "foreground: bake preserves every alpha byte, transparent RGB, black cavity, known emissive color and unlabelled pixel",
+        "details": {
+          "alphaChanged": 0,
+          "protectedChanged": 0,
+          "protectedCount": 253719,
+          "changedMaterial": 2281
+        }
+      },
+      {
+        "ok": true,
+        "message": "foreground: baked material actually consumes surface lighting"
+      },
+      {
+        "ok": true,
+        "message": "All production dynamic face sources provide real world elevation"
+      },
+      {
+        "ok": true,
+        "message": "All six production devices have compiled lighting receivers"
+      }
+    ],
+    "failures": [],
+    "layers": [
+      {
+        "id": "exterior",
+        "opaque": 256000,
+        "labelled": 67983,
+        "eligible": 43547,
+        "eligibleLabelled": 43203,
+        "bounds": [
+          0,
+          13,
+          639,
+          399
+        ],
+        "directions": {
+          "top": 34042,
+          "front": 14996,
+          "left": 8243,
+          "right": 1097,
+          "slope": 4309
+        },
+        "albedoHash": "f737b2f8",
+        "bakedHash": "69ffb407",
+        "bakeMs": 12.899999856948853
+      },
+      {
+        "id": "architecture",
+        "opaque": 124609,
+        "labelled": 124609,
+        "eligible": 124609,
+        "eligibleLabelled": 124609,
+        "bounds": [
+          68,
+          67,
+          580,
+          365
+        ],
+        "directions": {
+          "top": 58599,
+          "front": 51347,
+          "left": 4216,
+          "right": 6615,
+          "slope": 3978
+        },
+        "albedoHash": "bd3b0688",
+        "bakedHash": "be19756c",
+        "bakeMs": 26.200000047683716
+      },
+      {
+        "id": "grounding",
+        "opaque": 495,
+        "labelled": 0,
+        "eligible": 495,
+        "eligibleLabelled": 0,
+        "bounds": [
+          640,
+          400,
+          -1,
+          -1
+        ],
+        "directions": {
+          "top": 0,
+          "front": 0,
+          "left": 0,
+          "right": 0,
+          "slope": 0
+        },
+        "albedoHash": "5717c70d",
+        "bakedHash": "5717c70d",
+        "bakeMs": 0
+      },
+      {
+        "id": "resistance",
+        "opaque": 265,
+        "labelled": 0,
+        "eligible": 265,
+        "eligibleLabelled": 0,
+        "bounds": [
+          640,
+          400,
+          -1,
+          -1
+        ],
+        "directions": {
+          "top": 0,
+          "front": 0,
+          "left": 0,
+          "right": 0,
+          "slope": 0
+        },
+        "albedoHash": "99999923",
+        "bakedHash": "99999923",
+        "bakeMs": 0
+      },
+      {
+        "id": "rift",
+        "opaque": 701,
+        "labelled": 689,
+        "eligible": 578,
+        "eligibleLabelled": 566,
+        "bounds": [
+          487,
+          237,
+          536,
+          263
+        ],
+        "directions": {
+          "top": 689,
+          "front": 0,
+          "left": 0,
+          "right": 0,
+          "slope": 0
+        },
+        "albedoHash": "b54f104c",
+        "bakedHash": "196f71e2",
+        "bakeMs": 2.200000047683716
+      },
+      {
+        "id": "growth",
+        "opaque": 1702,
+        "labelled": 1702,
+        "eligible": 1702,
+        "eligibleLabelled": 1702,
+        "bounds": [
+          151,
+          115,
+          189,
+          170
+        ],
+        "directions": {
+          "top": 634,
+          "front": 864,
+          "left": 96,
+          "right": 108,
+          "slope": 0
+        },
+        "albedoHash": "25f31171",
+        "bakedHash": "b4cc2a3e",
+        "bakeMs": 1.9000000953674316
+      },
+      {
+        "id": "offering",
+        "opaque": 1210,
+        "labelled": 1124,
+        "eligible": 1210,
+        "eligibleLabelled": 1124,
+        "bounds": [
+          336,
+          134,
+          379,
+          176
+        ],
+        "directions": {
+          "top": 185,
+          "front": 534,
+          "left": 0,
+          "right": 169,
+          "slope": 236
+        },
+        "albedoHash": "91598ad5",
+        "bakedHash": "c6cb4d65",
+        "bakeMs": 2.3999998569488525
+      },
+      {
+        "id": "purifier",
+        "opaque": 1690,
+        "labelled": 1688,
+        "eligible": 1690,
+        "eligibleLabelled": 1688,
+        "bounds": [
+          424,
+          232,
+          479,
+          270
+        ],
+        "directions": {
+          "top": 672,
+          "front": 784,
+          "left": 0,
+          "right": 232,
+          "slope": 0
+        },
+        "albedoHash": "d7d6062e",
+        "bakedHash": "d9416840",
+        "bakeMs": 2.200000047683716
+      },
+      {
+        "id": "storage",
+        "opaque": 1317,
+        "labelled": 1307,
+        "eligible": 1317,
+        "eligibleLabelled": 1307,
+        "bounds": [
+          125,
+          239,
+          165,
+          278
+        ],
+        "directions": {
+          "top": 504,
+          "front": 595,
+          "left": 0,
+          "right": 208,
+          "slope": 0
+        },
+        "albedoHash": "cfe0c6b1",
+        "bakedHash": "4b4640f1",
+        "bakeMs": 2.799999952316284
+      },
+      {
+        "id": "core",
+        "opaque": 1933,
+        "labelled": 1926,
+        "eligible": 1933,
+        "eligibleLabelled": 1926,
+        "bounds": [
+          230,
+          239,
+          276,
+          300
+        ],
+        "directions": {
+          "top": 554,
+          "front": 967,
+          "left": 0,
+          "right": 209,
+          "slope": 0
+        },
+        "albedoHash": "8ceaa16e",
+        "bakedHash": "de4196c0",
+        "bakeMs": 2.3999998569488525
+      },
+      {
+        "id": "foreground",
+        "opaque": 2436,
+        "labelled": 2281,
+        "eligible": 2436,
+        "eligibleLabelled": 2281,
+        "bounds": [
+          95,
+          307,
+          547,
+          338
+        ],
+        "directions": {
+          "top": 2281,
+          "front": 0,
+          "left": 0,
+          "right": 0,
+          "slope": 0
+        },
+        "albedoHash": "6549ae1d",
+        "bakedHash": "352384c4",
+        "bakeMs": 2.200000047683716
+      }
+    ],
+    "state": {
+      "core": 0.7,
+      "storage": 0.7,
+      "purifier": 0.7,
+      "thickenLevel": 0,
+      "growthLevels": 0
+    },
+    "floorProbes": [
+      {
+        "x": 366,
+        "y": 300,
+        "covered": 1,
+        "z": 0,
+        "normal": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "x": 280,
+        "y": 199,
+        "covered": 1,
+        "z": 32,
+        "normal": [
+          0,
+          0,
+          1
+        ]
+      }
+    ],
+    "rampProbes": [
+      {
+        "id": "central",
+        "samples": [
+          {
+            "x": 283,
+            "y": 226,
+            "covered": 1,
+            "z": 30.4761905670166,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 30.476190476190474
+          },
+          {
+            "x": 284,
+            "y": 227,
+            "covered": 1,
+            "z": 29.714284896850586,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 29.714285714285715
+          },
+          {
+            "x": 284,
+            "y": 228,
+            "covered": 1,
+            "z": 28.952381134033203,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 28.952380952380953
+          },
+          {
+            "x": 285,
+            "y": 229,
+            "covered": 1,
+            "z": 28.190475463867188,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 28.19047619047619
+          },
+          {
+            "x": 285,
+            "y": 230,
+            "covered": 1,
+            "z": 27.428571701049805,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 27.42857142857143
+          },
+          {
+            "x": 286,
+            "y": 231,
+            "covered": 1,
+            "z": 26.66666603088379,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 26.666666666666668
+          },
+          {
+            "x": 286,
+            "y": 232,
+            "covered": 1,
+            "z": 25.904762268066406,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 25.904761904761905
+          },
+          {
+            "x": 287,
+            "y": 233,
+            "covered": 1,
+            "z": 25.14285659790039,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 25.142857142857142
+          },
+          {
+            "x": 287,
+            "y": 234,
+            "covered": 1,
+            "z": 24.380952835083008,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 24.38095238095238
+          },
+          {
+            "x": 288,
+            "y": 235,
+            "covered": 1,
+            "z": 23.619047164916992,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 23.61904761904762
+          },
+          {
+            "x": 288,
+            "y": 236,
+            "covered": 1,
+            "z": 22.85714340209961,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 22.857142857142858
+          },
+          {
+            "x": 289,
+            "y": 237,
+            "covered": 1,
+            "z": 22.095237731933594,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 22.095238095238095
+          },
+          {
+            "x": 289,
+            "y": 238,
+            "covered": 1,
+            "z": 21.33333396911621,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 21.333333333333336
+          },
+          {
+            "x": 290,
+            "y": 239,
+            "covered": 1,
+            "z": 20.571428298950195,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 20.57142857142857
+          },
+          {
+            "x": 290,
+            "y": 240,
+            "covered": 1,
+            "z": 19.809524536132812,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 19.80952380952381
+          },
+          {
+            "x": 291,
+            "y": 241,
+            "covered": 1,
+            "z": 19.047618865966797,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 19.047619047619047
+          },
+          {
+            "x": 291,
+            "y": 242,
+            "covered": 1,
+            "z": 18.285715103149414,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 18.285714285714285
+          },
+          {
+            "x": 292,
+            "y": 243,
+            "covered": 1,
+            "z": 17.5238094329834,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 17.523809523809526
+          },
+          {
+            "x": 292,
+            "y": 244,
+            "covered": 1,
+            "z": 16.761905670166016,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 16.761904761904763
+          },
+          {
+            "x": 293,
+            "y": 245,
+            "covered": 1,
+            "z": 16,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 16
+          },
+          {
+            "x": 294,
+            "y": 246,
+            "covered": 1,
+            "z": 15.2380952835083,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 15.238095238095237
+          },
+          {
+            "x": 294,
+            "y": 247,
+            "covered": 1,
+            "z": 14.476190567016602,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 14.476190476190474
+          },
+          {
+            "x": 295,
+            "y": 248,
+            "covered": 1,
+            "z": 13.714285850524902,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 13.714285714285715
+          },
+          {
+            "x": 295,
+            "y": 249,
+            "covered": 1,
+            "z": 12.952381134033203,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 12.952380952380953
+          },
+          {
+            "x": 296,
+            "y": 250,
+            "covered": 1,
+            "z": 12.190476417541504,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 12.19047619047619
+          },
+          {
+            "x": 296,
+            "y": 251,
+            "covered": 1,
+            "z": 11.428571701049805,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 11.428571428571427
+          },
+          {
+            "x": 297,
+            "y": 252,
+            "covered": 1,
+            "z": 10.666666984558105,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 10.666666666666668
+          },
+          {
+            "x": 297,
+            "y": 253,
+            "covered": 1,
+            "z": 9.904762268066406,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 9.904761904761905
+          },
+          {
+            "x": 298,
+            "y": 254,
+            "covered": 1,
+            "z": 9.142857551574707,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 9.142857142857142
+          },
+          {
+            "x": 298,
+            "y": 255,
+            "covered": 1,
+            "z": 8.380952835083008,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 8.38095238095238
+          },
+          {
+            "x": 299,
+            "y": 256,
+            "covered": 1,
+            "z": 7.61904764175415,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 7.61904761904762
+          },
+          {
+            "x": 299,
+            "y": 257,
+            "covered": 1,
+            "z": 6.857142925262451,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 6.857142857142858
+          },
+          {
+            "x": 300,
+            "y": 258,
+            "covered": 1,
+            "z": 6.095238208770752,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 6.095238095238095
+          },
+          {
+            "x": 300,
+            "y": 259,
+            "covered": 1,
+            "z": 5.333333492279053,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 5.333333333333332
+          },
+          {
+            "x": 301,
+            "y": 260,
+            "covered": 1,
+            "z": 4.5714287757873535,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 4.571428571428573
+          },
+          {
+            "x": 301,
+            "y": 261,
+            "covered": 1,
+            "z": 3.809523820877075,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 3.80952380952381
+          },
+          {
+            "x": 302,
+            "y": 262,
+            "covered": 1,
+            "z": 3.047619104385376,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 3.0476190476190474
+          },
+          {
+            "x": 302,
+            "y": 263,
+            "covered": 1,
+            "z": 2.2857143878936768,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 2.2857142857142847
+          },
+          {
+            "x": 303,
+            "y": 264,
+            "covered": 1,
+            "z": 1.523809552192688,
+            "normal": [
+              0,
+              0.954479992389679,
+              0.2982749938964844
+            ],
+            "expected": 1.5238095238095255
+          }
+        ]
+      },
+      {
+        "id": "east",
+        "samples": [
+          {
+            "x": 375,
+            "y": 208,
+            "covered": 1,
+            "z": 30.545454025268555,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 30.545454545454547
+          },
+          {
+            "x": 376,
+            "y": 209,
+            "covered": 1,
+            "z": 29.81818199157715,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 29.81818181818182
+          },
+          {
+            "x": 377,
+            "y": 210,
+            "covered": 1,
+            "z": 29.090909957885742,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 29.09090909090909
+          },
+          {
+            "x": 378,
+            "y": 211,
+            "covered": 1,
+            "z": 28.363636016845703,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 28.363636363636363
+          },
+          {
+            "x": 379,
+            "y": 212,
+            "covered": 1,
+            "z": 27.636363983154297,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 27.636363636363637
+          },
+          {
+            "x": 380,
+            "y": 213,
+            "covered": 1,
+            "z": 26.909090042114258,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 26.90909090909091
+          },
+          {
+            "x": 381,
+            "y": 214,
+            "covered": 1,
+            "z": 26.18181800842285,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 26.18181818181818
+          },
+          {
+            "x": 382,
+            "y": 215,
+            "covered": 1,
+            "z": 25.454545974731445,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 25.454545454545453
+          },
+          {
+            "x": 383,
+            "y": 216,
+            "covered": 1,
+            "z": 24.727272033691406,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 24.727272727272727
+          },
+          {
+            "x": 385,
+            "y": 217,
+            "covered": 1,
+            "z": 24,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 24
+          },
+          {
+            "x": 386,
+            "y": 218,
+            "covered": 1,
+            "z": 23.272727966308594,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 23.272727272727273
+          },
+          {
+            "x": 387,
+            "y": 219,
+            "covered": 1,
+            "z": 22.545454025268555,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 22.545454545454547
+          },
+          {
+            "x": 388,
+            "y": 220,
+            "covered": 1,
+            "z": 21.81818199157715,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 21.81818181818182
+          },
+          {
+            "x": 389,
+            "y": 221,
+            "covered": 1,
+            "z": 21.090909957885742,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 21.090909090909093
+          },
+          {
+            "x": 390,
+            "y": 222,
+            "covered": 1,
+            "z": 20.363636016845703,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 20.363636363636363
+          },
+          {
+            "x": 391,
+            "y": 223,
+            "covered": 1,
+            "z": 19.636363983154297,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 19.636363636363637
+          },
+          {
+            "x": 392,
+            "y": 224,
+            "covered": 1,
+            "z": 18.909090042114258,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 18.909090909090907
+          },
+          {
+            "x": 393,
+            "y": 225,
+            "covered": 1,
+            "z": 18.18181800842285,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 18.18181818181818
+          },
+          {
+            "x": 394,
+            "y": 226,
+            "covered": 1,
+            "z": 17.454545974731445,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 17.454545454545453
+          },
+          {
+            "x": 395,
+            "y": 227,
+            "covered": 1,
+            "z": 16.727272033691406,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 16.727272727272727
+          },
+          {
+            "x": 396,
+            "y": 228,
+            "covered": 1,
+            "z": 16,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 16
+          },
+          {
+            "x": 397,
+            "y": 229,
+            "covered": 1,
+            "z": 15.272727012634277,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 15.272727272727273
+          },
+          {
+            "x": 398,
+            "y": 230,
+            "covered": 1,
+            "z": 14.545454978942871,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 14.545454545454547
+          },
+          {
+            "x": 399,
+            "y": 231,
+            "covered": 1,
+            "z": 13.818181991577148,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 13.818181818181817
+          },
+          {
+            "x": 400,
+            "y": 232,
+            "covered": 1,
+            "z": 13.090909004211426,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 13.09090909090909
+          },
+          {
+            "x": 401,
+            "y": 233,
+            "covered": 1,
+            "z": 12.363636016845703,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 12.363636363636363
+          },
+          {
+            "x": 402,
+            "y": 234,
+            "covered": 1,
+            "z": 11.636363983154297,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 11.636363636363637
+          },
+          {
+            "x": 403,
+            "y": 235,
+            "covered": 1,
+            "z": 10.909090995788574,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 10.90909090909091
+          },
+          {
+            "x": 404,
+            "y": 236,
+            "covered": 1,
+            "z": 10.181818008422852,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 10.181818181818183
+          },
+          {
+            "x": 405,
+            "y": 237,
+            "covered": 1,
+            "z": 9.454545021057129,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 9.454545454545453
+          },
+          {
+            "x": 406,
+            "y": 238,
+            "covered": 1,
+            "z": 8.727272987365723,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 8.727272727272727
+          },
+          {
+            "x": 408,
+            "y": 239,
+            "covered": 1,
+            "z": 8,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 8
+          },
+          {
+            "x": 409,
+            "y": 240,
+            "covered": 1,
+            "z": 7.2727274894714355,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 7.272727272727273
+          },
+          {
+            "x": 410,
+            "y": 241,
+            "covered": 1,
+            "z": 6.545454502105713,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 6.545454545454547
+          },
+          {
+            "x": 411,
+            "y": 242,
+            "covered": 1,
+            "z": 5.818181991577148,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 5.818181818181817
+          },
+          {
+            "x": 412,
+            "y": 243,
+            "covered": 1,
+            "z": 5.090909004211426,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 5.09090909090909
+          },
+          {
+            "x": 413,
+            "y": 244,
+            "covered": 1,
+            "z": 4.363636493682861,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 4.363636363636363
+          },
+          {
+            "x": 414,
+            "y": 245,
+            "covered": 1,
+            "z": 3.6363637447357178,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 3.6363636363636367
+          },
+          {
+            "x": 415,
+            "y": 246,
+            "covered": 1,
+            "z": 2.909090995788574,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 2.90909090909091
+          },
+          {
+            "x": 416,
+            "y": 247,
+            "covered": 1,
+            "z": 2.1818182468414307,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 2.1818181818181834
+          },
+          {
+            "x": 417,
+            "y": 248,
+            "covered": 1,
+            "z": 1.454545497894287,
+            "normal": [
+              0,
+              0.936329185962677,
+              0.3511234521865845
+            ],
+            "expected": 1.4545454545454533
+          }
+        ]
+      }
+    ],
+    "deviceReports": [
+      {
+        "id": "rift",
+        "base": {
+          "x": 512,
+          "y": 252
+        },
+        "floor": "main",
+        "key": "purification-chamber-rift-1",
+        "depth": 18,
+        "colorDrift": 0,
+        "surfaceDrift": 0,
+        "shiftedPixels": 689
+      },
+      {
+        "id": "growth",
+        "base": {
+          "x": 169,
+          "y": 168
+        },
+        "floor": "upper",
+        "key": "purification-chamber-growth-1",
+        "depth": 268,
+        "colorDrift": 0,
+        "surfaceDrift": 0,
+        "shiftedPixels": 1702
+      },
+      {
+        "id": "offering",
+        "base": {
+          "x": 355,
+          "y": 176
+        },
+        "floor": "upper",
+        "key": "purification-chamber-offering-1",
+        "depth": 276,
+        "colorDrift": 0,
+        "surfaceDrift": 0,
+        "shiftedPixels": 1124
+      },
+      {
+        "id": "purifier",
+        "base": {
+          "x": 451,
+          "y": 270
+        },
+        "floor": "main",
+        "key": "purification-chamber-purifier-1",
+        "depth": 370,
+        "colorDrift": 0,
+        "surfaceDrift": 0,
+        "shiftedPixels": 1688
+      },
+      {
+        "id": "storage",
+        "base": {
+          "x": 145,
+          "y": 278
+        },
+        "floor": "main",
+        "key": "purification-chamber-storage-1",
+        "depth": 378,
+        "colorDrift": 0,
+        "surfaceDrift": 0,
+        "shiftedPixels": 1307
+      },
+      {
+        "id": "core",
+        "base": {
+          "x": 253,
+          "y": 299
+        },
+        "floor": "main",
+        "key": "purification-chamber-core-1",
+        "depth": 399,
+        "colorDrift": 0,
+        "surfaceDrift": 0,
+        "shiftedPixels": 1926
+      }
+    ],
+    "production": {
+      "architectureKey": "purification-chamber-architecture-1",
+      "architectureInstance": "ChamberSurfaceMap",
+      "dynamicSources": [
+        {
+          "id": "core",
+          "face": {
+            "x": 253,
+            "y": 261,
+            "radiusX": 112,
+            "radiusY": 70,
+            "elevation": 38
+          },
+          "wallSpans": 627,
+          "floorSpans": 2138
+        },
+        {
+          "id": "growth",
+          "face": {
+            "x": 169,
+            "y": 132,
+            "radiusX": 67,
+            "radiusY": 44,
+            "elevation": 68
+          },
+          "wallSpans": 650,
+          "floorSpans": 1449
+        },
+        {
+          "id": "purifier",
+          "face": {
+            "x": 451,
+            "y": 249,
+            "radiusX": 68,
+            "radiusY": 44,
+            "elevation": 21
+          },
+          "wallSpans": 318,
+          "floorSpans": 1560
+        },
+        {
+          "id": "wall-lamp",
+          "face": {
+            "x": 213,
+            "y": 140,
+            "radiusX": 23,
+            "radiusY": 20,
+            "elevation": 48
+          },
+          "wallSpans": 97,
+          "floorSpans": 813
+        }
+      ],
+      "deviceResponses": [
+        {
+          "id": "rift",
+          "responses": [
+            {
+              "emitter": "core",
+              "spans": 0
+            },
+            {
+              "emitter": "purifier",
+              "spans": 81
+            }
+          ]
+        },
+        {
+          "id": "growth",
+          "responses": [
+            {
+              "emitter": "growth",
+              "spans": 31
+            },
+            {
+              "emitter": "wall-lamp",
+              "spans": 0
+            }
+          ]
+        },
+        {
+          "id": "offering",
+          "responses": [
+            {
+              "emitter": "growth",
+              "spans": 0
+            },
+            {
+              "emitter": "wall-lamp",
+              "spans": 0
+            }
+          ]
+        },
+        {
+          "id": "purifier",
+          "responses": [
+            {
+              "emitter": "core",
+              "spans": 0
+            },
+            {
+              "emitter": "purifier",
+              "spans": 117
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "responses": [
+            {
+              "emitter": "core",
+              "spans": 119
+            },
+            {
+              "emitter": "purifier",
+              "spans": 0
+            }
+          ]
+        },
+        {
+          "id": "core",
+          "responses": [
+            {
+              "emitter": "core",
+              "spans": 68
+            },
+            {
+              "emitter": "purifier",
+              "spans": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "diagnosticImages": [
+    "diagnostic-normal-albedo.png",
+    "diagnostic-normal-baked.png",
+    "diagnostic-world-normals.png",
+    "diagnostic-world-heights.png"
+  ],
+  "endingSources": {
+    "src/art/chamber-pixel-helpers.ts": "b71bae2af83a26b31788f7316125db32e05a03d5280816ad650cce100c29e17b",
+    "src/art/chamber-exterior-pixels.ts": "6f9d9f7baedca19f71d2293675e5676acfda4ae6da1a6951d18551b94abaea7c",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/purification-chamber-pixels.ts": "0dc7e724e863fc3b58cb392a5a7118acde0060b265f6957ccdd982778988719e",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/scenes/purification-chamber-visual.ts": "09514968d9287a8ee6808529c0205d14094479426e82cc15e7c35f9f9d55f433",
+    "src/scenes/purification-chamber-lighting.ts": "732a618656856aea6840d36a74e51a5ee4b5bf25b2cc32c22c65184a3e160454",
+    "src/scenes/purification-scene.ts": "5177c7c397850f8649e99a1b1e02a1bd78e9245edc154cd44ce6e92e581d868c",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-surface-runtime.mjs": "5779b96e3c9339d3535e549acae86c388f76ecac7e032ccecc3bb806ad98c437"
+  },
+  "ok": true
+}

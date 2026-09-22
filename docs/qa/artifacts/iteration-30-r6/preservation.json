@@ -1,0 +1,54 @@
+{
+  "baseline": "da38e91 / R5 presentation",
+  "finalSources": {
+    "src/art/chamber-pixel-helpers.ts": "b71bae2af83a26b31788f7316125db32e05a03d5280816ad650cce100c29e17b",
+    "src/art/chamber-exterior-pixels.ts": "6f9d9f7baedca19f71d2293675e5676acfda4ae6da1a6951d18551b94abaea7c",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/purification-chamber-pixels.ts": "0dc7e724e863fc3b58cb392a5a7118acde0060b265f6957ccdd982778988719e",
+    "src/scenes/purification-chamber-visual.ts": "09514968d9287a8ee6808529c0205d14094479426e82cc15e7c35f9f9d55f433",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/scenes/purification-chamber-lighting.ts": "732a618656856aea6840d36a74e51a5ee4b5bf25b2cc32c22c65184a3e160454",
+    "src/entities/player.ts": "3f923416ddd24ece78076e94e8a79d8041f588a61724fd866c68a590a4f0266f",
+    "src/entities/player-lamp-aura.ts": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0",
+    "src/scenes/purification-scene.ts": "5177c7c397850f8649e99a1b1e02a1bd78e9245edc154cd44ce6e92e581d868c",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-chamber-r3.mjs": "6c91ad8080b731c9869afa872e8d00d3dfab006958d651008e5698b5bebdc99d",
+    "tools/qa/i30-chamber-driver.mjs": "362ffb46ce44d711f6d6a49dd1ff509e35a16bc163e670a3384730811d8c5d20"
+  },
+  "textures": [
+    {
+      "state": "normal",
+      "preservedTextureHashes": {
+        "core": true,
+        "front-cut": true,
+        "grounding": true,
+        "growth": true,
+        "offering": true,
+        "purifier": true,
+        "resistance": true,
+        "rift": true,
+        "storage": true
+      },
+      "changedArchitecture": true,
+      "changedExterior": true
+    },
+    {
+      "state": "synthetic-damage",
+      "preservedTextureHashes": {
+        "core": true,
+        "front-cut": true,
+        "grounding": true,
+        "growth": true,
+        "offering": true,
+        "purifier": true,
+        "resistance": true,
+        "rift": true,
+        "storage": true
+      },
+      "changedArchitecture": true,
+      "changedExterior": true
+    }
+  ],
+  "scope": "Normal and public-HP synthetic damage cached RGBA hashes; does not judge art or all possible device states. Normal/height diagnostic PNGs contain exterior as well as architecture and intentionally differ from R5; not used as an architecture-only equivalence check."
+}

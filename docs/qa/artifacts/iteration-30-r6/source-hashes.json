@@ -1,0 +1,36 @@
+{
+  "baseline": "da38e91",
+  "at": "2026-09-22T09:12:18.465659+00:00",
+  "scope": "Frozen R6 pass2 material/exterior artwork and final presentation, surface, light and six-point movement checks. Pure algorithm/layout sources unchanged after their checks.",
+  "sources": {
+    "src/art/chamber-exterior-pixels.ts": "6f9d9f7baedca19f71d2293675e5676acfda4ae6da1a6951d18551b94abaea7c",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-pixel-helpers.ts": "dd211dbf7e334cf4c3a5795aebebe4c33ddac2335a01568478c91bdff680b4af",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/purification-chamber-pixels.ts": "0dc7e724e863fc3b58cb392a5a7118acde0060b265f6957ccdd982778988719e",
+    "src/entities/player-lamp-aura.ts": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0",
+    "src/entities/player.ts": "3f923416ddd24ece78076e94e8a79d8041f588a61724fd866c68a590a4f0266f",
+    "src/scenes/purification-chamber-lighting.ts": "732a618656856aea6840d36a74e51a5ee4b5bf25b2cc32c22c65184a3e160454",
+    "src/scenes/purification-chamber-visual.ts": "09514968d9287a8ee6808529c0205d14094479426e82cc15e7c35f9f9d55f433",
+    "src/scenes/purification-scene.ts": "5177c7c397850f8649e99a1b1e02a1bd78e9245edc154cd44ce6e92e581d868c",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "src/systems/purification-chamber-locomotion.ts": "46edc17ef0616c0fef5aed18557adc580dc908e0ef69b7fc499c3cb1729bb248",
+    "tools/qa/check-i30-chamber-movement.ts": "916a42439a4c8a8111c3ebf977a356cdc2db2621b9b4fb64ec4f856745c412ec",
+    "tools/qa/check-i30-chamber-r3.mjs": "6c91ad8080b731c9869afa872e8d00d3dfab006958d651008e5698b5bebdc99d",
+    "tools/qa/check-i30-chamber-runtime.mjs": "2d5c17f12f9627ce12dab4adecae2e4d97d9222e16a0a1da4f63cb78768f8524",
+    "tools/qa/check-i30-floor-light.ts": "632c68d6d7ea50867730b1575e91d989baf163b91eef065a73f166b1a95b1a61",
+    "tools/qa/check-i30-light-field.ts": "a46d35dfd53675b3ec0c20cf5b17caa3d2f930036877291fcaef3a662c515e22",
+    "tools/qa/check-i30-light-runtime.mjs": "82e3c360eb0e744afecb964f9253a5b2d41cb84c17f4534e7f11df0f629b9e13",
+    "tools/qa/check-i30-surface-runtime.mjs": "5779b96e3c9339d3535e549acae86c388f76ecac7e032ccecc3bb806ad98c437",
+    "tools/qa/check-i30-volume-surfaces.ts": "03dff1d531f76dad959833b1177625e024740f557fd2c2a24183003b0d275758",
+    "tools/qa/i27-journey-driver.mjs": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914",
+    "tools/qa/i30-chamber-driver.mjs": "362ffb46ce44d711f6d6a49dd1ff509e35a16bc163e670a3384730811d8c5d20"
+  },
+  "postVerificationWhitespaceOnly": {
+    "path": "src/art/chamber-pixel-helpers.ts",
+    "testedSha256": "b71bae2af83a26b31788f7316125db32e05a03d5280816ad650cce100c29e17b",
+    "finalSha256": "dd211dbf7e334cf4c3a5795aebebe4c33ddac2335a01568478c91bdff680b4af",
+    "change": "Removed one extra blank line at EOF. Final bytes are the tested bytes with only trailing whitespace removed. Browser manifests preserve the actual tested fingerprint."
+  }
+}

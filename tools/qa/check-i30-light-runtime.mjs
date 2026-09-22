@@ -21,6 +21,7 @@ const { values } = parseArgs({ options: {
 const out = values.out;
 fs.mkdirSync(out, { recursive: true });
 const sourcePaths = [
+  'src/art/chamber-pixel-helpers.ts', 'src/art/chamber-exterior-pixels.ts',
   'src/art/chamber-surface-map.ts',
   'src/art/chamber-light-field.ts', 'src/art/chamber-floor-light.ts',
   'src/art/purification-chamber-pixels.ts', 'src/scenes/purification-chamber-lighting.ts',
