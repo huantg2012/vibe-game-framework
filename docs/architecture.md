@@ -10,13 +10,15 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30：侧视双层净化点
+## 迭代30 R2：浅透视错层净化点
 
-`PurificationScene`继续拥有归来事务、库存、面板、保存和出击编排。新增`purification-chamber-layout.ts`作为六操作点、出生点、两层/双阶与常态相机唯一坐标源；`PurificationChamberLocomotion`以纯轨道求解约束Player位置。共享Player新增显式constrained模式，默认Rift路径不变。`ChamberModule`只负责接近与实际完整度读数，效果从GameState查询。`PurificationChamberVisual`负责缓存像素层、六对象及公开状态动效；不拥有资源/预告/战斗规则。
+`PurificationScene`拥有原归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口处才转换为中心坐标（脚底Y−10）。`PurificationChamberLocomotion`在两层与两宽坡道的联合边界、设备底座上做连续圆扫掠和滑动，不再是一维轨道。Player显式constrained模式复用键盘、原四向精灵、武器与冻结；Rift默认路径不变。
 
-正式净化点不再实例化旧TilemapRenderer、BoundaryShape/Atmosphere/Breath、VisibilitySystem、GroundDepthSorter和PurificationCollision；这些仍保留历史gym及其他现有调用。`createPurificationFloorTexture`明确只提供历史gym底图。新场所的设备后腔/行动前廊用固定层级，楼梯是唯一换层通道。菜单入场聚焦、面板恢复、出发隐藏scene及幂等清理保持。角色出生点不保存，旧基地存档无需迁移；旧Rift检查点仍走原Player恢复。
+`ChamberModule`提供当前完整度、接近读数与共享效果查询；场景先按楼层/直线可达资格筛选，再按24px距离确定E目标。`PurificationChamberVisual`缓存建筑/壳外/接地层，六物独立透明纹理按100+底座Y排序；人物/武器/灯使用同系脚底排序。公共HP/供奉占用/已购成长驱动有限状态层，不接隐藏预告。场景物体与操作锚分开，面板只聚焦本体。
 
-以下迭代29/12的圆膜、原锚点和俯视排序描述是已被本节替代的历史实现说明，不作为当前净化点接入依据。
+旧TilemapRenderer、BoundaryShape/Atmosphere/Breath、VisibilitySystem、GroundDepthSorter、PurificationCollision仍保留其他现有调用但不在正式净化点实例化；`createPurificationFloorTexture`仅供历史gym。出击前隐藏scene、菜单入场、面板返回、幂等纹理/图形清理保持。净化点位置不入存档，不迁移旧坐标；Rift检查点与既有权益不变。
+
+下方I29/12圆膜、旧锚点/贴图和旧排序段仅作历史实现说明，当前接入以上述代码为准。R1 c3b1d9f 的灰钢轨道版已被用户否决（DEC-180）；新技术接入不等于审美通过。
 
 ## 迭代29：净化点投入表现与线性成长（R3）
 

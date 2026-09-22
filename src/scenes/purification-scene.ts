@@ -10,13 +10,13 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { openInventory, inventoryError } from '@/ui/inventory-presenter';
 import { PurificationChamberVisual, type PurificationChamberState } from './purification-chamber-visual';
-import { CHAMBER_DEVICE_ANCHORS, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE } from '@/systems/purification-chamber-layout';
+import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_INTERACTION_RADIUS, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/purification-chamber-layout';
 import { PurificationChamberLocomotion } from '@/systems/purification-chamber-locomotion';
 import { ChamberModule } from '@/entities/purification-chamber-module';
 /**
  * Purification Scene - the base management walkable space.
  *
- * Two enclosed floors, connected by short stair tracks. Floors and fixtures use
+ * Two enclosed walkable terraces, connected by broad ramps. Floors and fixtures use
  * a shared shallow oblique projection; the exterior is rewritten matter beyond
  * physical walls, not a magic dome. The rift retains independent top-down movement.
  * Existing settlement, inventory and growth transactions remain scene owners.
@@ -80,13 +80,14 @@ const CENTER_Y = HEIGHT_PX / 2;
 const ELLIPSE_RX = 5.2; // tiles
 const ELLIPSE_RY = 5.0; // tiles
 
-// Production lane anchors are distinct from the historical gym's floor example.
-const CORE_POS = CHAMBER_DEVICE_ANCHORS.core;
-const STORAGE_POS = CHAMBER_DEVICE_ANCHORS.storage;
-const PURIFIER_POS = CHAMBER_DEVICE_ANCHORS.purifier;
-const RIFT_ENTRANCE_POS = CHAMBER_DEVICE_ANCHORS.rift;
-const DEFENSE_POS = CHAMBER_DEVICE_ANCHORS.offering;
-const GROWTH_POS = CHAMBER_DEVICE_ANCHORS.growth;
+// Production operation anchors are distinct from the historical gym's floor example.
+// Movement/proximity uses actor centers; authored floor geometry uses feet.
+const CORE_POS = chamberFeetToPlayerPosition(CHAMBER_DEVICE_ANCHORS.core);
+const STORAGE_POS = chamberFeetToPlayerPosition(CHAMBER_DEVICE_ANCHORS.storage);
+const PURIFIER_POS = chamberFeetToPlayerPosition(CHAMBER_DEVICE_ANCHORS.purifier);
+const RIFT_ENTRANCE_POS = chamberFeetToPlayerPosition(CHAMBER_DEVICE_ANCHORS.rift);
+const DEFENSE_POS = chamberFeetToPlayerPosition(CHAMBER_DEVICE_ANCHORS.offering);
+const GROWTH_POS = chamberFeetToPlayerPosition(CHAMBER_DEVICE_ANCHORS.growth);
 
 /**
  * Build the tilemap using the dynamic boundary shape.
@@ -298,14 +299,14 @@ export class PurificationScene extends Phaser.Scene {
     // E3: Initialize stability milestone tracker
     this.lastStabilityMilestone = Math.floor(stabilityTracker.getProgress() / 25) * 25;
 
-    // One layout contract drives drawing, route constraints and interaction anchors.
+    // One sole-space layout drives drawing, solid boundaries and operation anchors.
     this.physics.world.setBounds(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
     const camera = this.cameras.main;
     camera.setZoom(CHAMBER_CAMERA.zoom).setBackgroundColor(0x080a0c).setRoundPixels(true);
     camera.centerOn(CHAMBER_CAMERA.x, CHAMBER_CAMERA.y);
     this.chamber = new PurificationChamberVisual(this);
     this.player.create(this, {
-      spawn: CHAMBER_SPAWN_POINT, depth: 40, facing: 'right',
+      spawn: chamberFeetToPlayerPosition(CHAMBER_SPAWN_POINT), depth: 100 + CHAMBER_SPAWN_POINT.y, facing: 'right',
       body: PURIFICATION_PLAYER_BODY, movementMode: 'constrained',
     });
     this.locomotion = new PurificationChamberLocomotion(this.player);
@@ -429,24 +430,25 @@ export class PurificationScene extends Phaser.Scene {
 
     this.player.update(delta);
     this.locomotion?.update(delta);
+    this.player.setGroundDepth(100 + this.player.getGroundY(), 20);
 
     const pos = this.player.getPosition();
     this.tickPurificationAudio(time, pos);
 
     // Update modules (checks proximity)
-    const canInteract = this.locomotion?.canInteract() ?? false;
-    this.coreModule.update(pos.x, pos.y, canInteract);
-    this.storageModule.update(pos.x, pos.y, canInteract);
-    this.purifierModule.update(pos.x, pos.y, canInteract);
+    const canInteract = (device: ChamberDevice): boolean => this.locomotion?.canInteract(device) ?? false;
+    this.coreModule.update(pos.x, pos.y, canInteract('core'));
+    this.storageModule.update(pos.x, pos.y, canInteract('storage'));
+    this.purifierModule.update(pos.x, pos.y, canInteract('purifier'));
 
     const riftDist = this.distTo(pos, RIFT_ENTRANCE_POS);
     const defDist = this.distTo(pos, DEFENSE_POS);
     const groDist = this.distTo(pos, GROWTH_POS);
-    const radius = GAME_CONSTANTS.PURIFICATION.INTERACTION_RADIUS;
+    const radius = CHAMBER_INTERACTION_RADIUS;
 
-    const nearRift = canInteract && riftDist <= radius;
-    const nearDefense = canInteract && defDist <= radius;
-    const nearGrowth = canInteract && groDist <= radius;
+    const nearRift = canInteract('rift') && riftDist <= radius;
+    const nearDefense = canInteract('offering') && defDist <= radius;
+    const nearGrowth = canInteract('growth') && groDist <= radius;
 
     const target = this.findNearestTarget(
       nearRift, nearDefense, nearGrowth,
@@ -655,7 +657,7 @@ export class PurificationScene extends Phaser.Scene {
   private openAllocationPanel(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER'): void {
     if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     const mod = moduleId === 'CORE' ? this.coreModule : moduleId === 'STORAGE' ? this.storageModule : this.purifierModule;
-    this.focusWorldInteraction(mod, 320, mod);
+    this.focusWorldInteraction(CHAMBER_DEVICE_BASES[moduleId.toLowerCase() as 'core' | 'storage' | 'purifier'], 320, mod);
     allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), {
       getAnchor: this.getInteractionScreenAnchor, integrityOffsetY: 138,
     });
@@ -755,13 +757,13 @@ export class PurificationScene extends Phaser.Scene {
 
   private openDefensePanel(): void {
     if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
-    this.focusWorldInteraction(DEFENSE_POS, 184);
+    this.focusWorldInteraction(CHAMBER_DEVICE_BASES.offering, 184);
     defensePanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
 
   private openGrowthPanel(): void {
     if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
-    this.focusWorldInteraction(GROWTH_POS, 184);
+    this.focusWorldInteraction(CHAMBER_DEVICE_BASES.growth, 184);
     growthPanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
 
@@ -776,7 +778,7 @@ export class PurificationScene extends Phaser.Scene {
 
   private enterRift(): void {
     if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
-    this.focusWorldInteraction(RIFT_ENTRANCE_POS, 184);
+    this.focusWorldInteraction(CHAMBER_DEVICE_BASES.rift, 184);
     const sprite = this.player.getSprite();
     const portrait = document.createElement('canvas'); portrait.width = sprite.frame.cutWidth; portrait.height = sprite.frame.cutHeight;
     portrait.getContext('2d')?.drawImage(sprite.texture.getSourceImage() as CanvasImageSource, sprite.frame.cutX, sprite.frame.cutY, portrait.width, portrait.height, 0, 0, portrait.width, portrait.height);

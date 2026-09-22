@@ -1900,5 +1900,39 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-R1-HUMAN-REJECTION",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-09-22",
+    "revision": "c3b1d9f324b9133a52bc6131c2be75274547c5ce",
+    "scope": "用户明确否决R1视觉/金属单色/细节、规整陈列、轨道操作与六模型身份，要求重做；透视优点保留。",
+    "limitations": "仅裁决该版净化点，不否决既有成长UI/经济或Rift；不表示已认可随后R2。",
+    "sources": [
+      {
+        "path": "docs/tasks/iteration-30.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R2-RUNTIME",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-22",
+    "revision": "c3b1d9f + I30 R2 working tree; source-hashes.json",
+    "scope": "隔离新档真实按键六点、坡道停/反/横移、底座与绕行、面板冻结/退出及Rift默认移动；受控修复/成长/损伤/重载；首次归来6组和出击逐帧3组。",
+    "limitations": "真实按键采用已知路线；投资/损伤为受控存档，首归为合成账本；没有自然长期采样、专门听感或用户审美/手感认可。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r2.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

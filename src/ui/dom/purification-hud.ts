@@ -294,8 +294,7 @@ export class PurificationHud {
 
   private buildIdlePrompt(): string {
     return `<div class="purif-prompt-hints">` +
-      this.span('A/D', COL.brightText, 11, 'font-family:var(--ui-mono);') + this.name('行走') + this.sep() +
-      this.span('W/S', COL.brightText, 11, 'font-family:var(--ui-mono);') + this.name('上下楼梯') + this.sep() +
+      this.span('WASD', COL.brightText, 11, 'font-family:var(--ui-mono);') + this.name('移动') + this.sep() +
       this.buildChromeHints() + '</div>';
   }
 

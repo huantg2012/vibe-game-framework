@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: code / director（DEC-168：连续自然地形的绕行与同源支持）
-last-modified-date: 2026-09-16
+last-modified-date: 2026-09-22
 interface-changed: true
 slice: 1
 interfaces-with:
@@ -26,13 +26,15 @@ exposes:
   - 新增事件：无（本系统对外为同步查询 API + setter，不进事件总线）
 ---
 
-## 迭代30：净化点的局部侧视适配
+## 迭代30 R2：净化点错层面内行走（DEC-180）
 
-净化点显式选择PlayerConfig.movementMode=`constrained`，共享原键盘、左右角色贴图、武器和冻结状态，由PurificationChamberLocomotion消费输入与有效速度；Arcade不再自行积分该场景角色。A/D走两条水平层，W/S走连接阶梯，可停/反向；所有通行坐标归`purification-chamber-layout.ts`。只有楼层允许交互，不能穿越楼板或自由纵移。输入冻结清零运动，单帧步长上限100ms。没有跳跃或坠落。
+净化点显式选择PlayerConfig.movementMode=`constrained`，共享原键盘、原四向角色/武器与冻结状态；Arcade不自行积分该场景角色。WASD/方向键始终是屏幕八方向，斜向归一，速度仍80px/s；不是按键切换的楼梯模式。两层有可前后绕行的实际面积，两条宽坡道自然衔接。没有跳跃、坠落或吸附到中线。
 
-默认`top-down`仍用于Rift，八向移动/加减速/朝向光域/存档恢复保持既有合同。Player新增getMovementInput与applyConstrainedMovement仅服务显式约束场景；后者根据实际移动控制左右步态，不将W/S画成俯视上下朝向。净化点视野不再使用旧气泡omni遮罩；Rift的VisibilitySystem完整保持。
+`purification-chamber-layout.ts`以已投影脚底坐标定义地面多边形、设备底座、操作点与出生点。角色中心在脚底上10px；高程只解释层间关系，不再做第二次位移。PurificationChamberLocomotion在地面联合外缘/高差侧边与底座上做半径6px连续圆扫掠和切向滑动：保留原净化点12px足宽，比原12×8碰撞体上下各保守2px，圆角避免斜碰卡角。共用坡道门户不作为墙。输入冻结清零意图，大帧最多消费100ms移动。
 
+两层互不重叠，设备与原人物按`100+脚底Y`排序，阴影/地面光独立低层。交互仅限设备所在层、24px操作范围且足部到操作点直线无实体阻挡；坡道中不打开装置。原人物根据实际(dx,dy)选择现有四向帧。
 
+默认`top-down`仍用于Rift，原移动/加减速/朝向光域/恢复不变。新增的getMovementInput与applyConstrainedMovement仍只服务显式约束场景。净化点不使用旧气泡omni遮罩；Rift的VisibilitySystem完整保持。
 
 ## 迭代28 · 共享视距倍率与短冲
 

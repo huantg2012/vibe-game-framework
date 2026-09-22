@@ -4,11 +4,12 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createJourneyDriver } from './i27-journey-driver.mjs';
+import { createChamberDriver } from './i30-chamber-driver.mjs';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE
   ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const url = process.env.I30_URL ?? 'http://127.0.0.1:3025/';
-const root = process.env.I30_INVESTMENT_OUT ?? 'docs/qa/artifacts/iteration-30/investment';
+const root = process.env.I30_INVESTMENT_OUT ?? 'docs/qa/artifacts/iteration-30-r2/investment';
 const source = 'docs/qa/artifacts/purification-growth-review-2026-09-20/runtime/walk-verified/fresh.storage.json';
 const original = JSON.parse(JSON.parse(fs.readFileSync(source, 'utf8'))['coh-save-v1']);
 const browser = await chromium.launch({ headless: true,
@@ -54,26 +55,7 @@ try {
     const d = createJourneyDriver(page, out);
     const stored = () => page.evaluate(() => JSON.parse(localStorage.getItem('coh-save-v1')));
     const pos = async () => (await d.state()).player;
-    async function walkTo(x) {
-      for (let step = 0; step < 90; step++) {
-        const state = await d.state();
-        assert.equal(state.scene, 'base');
-        assert(['main', 'upper'].includes(state.route));
-        const dx = x - state.player.x;
-        if (Math.abs(dx) < 3) return;
-        await d.hold([dx > 0 ? 'd' : 'a'], Math.max(20, Math.min(160, Math.abs(dx) / 80 * 1000)));
-      }
-      assert.fail(`Cannot walk to x=${x}`);
-    }
-    async function climbUpper() {
-      await walkTo(88);
-      await page.keyboard.down('w');
-      try {
-        await page.waitForFunction(() => window.__game.scene.getScene('PurificationScene').probeJourneyState().route === 'upper',
-          null, { timeout: 7000 });
-      } finally { await page.keyboard.up('w'); }
-      await page.waitForTimeout(80);
-    }
+    const chamber = createChamberDriver(page, d);
     async function exclusionCheck() {
       const result = await page.evaluate(() => {
         const scene = window.__game.scene.getScene('PurificationScene');
@@ -106,7 +88,7 @@ try {
       await d.snap('01-main');
       if (name === 'purchase') {
         assert.equal((await stored()).kindlingReserve, 100);
-        await walkTo(276); await d.press('e');
+        await chamber.walkFeet(284, 313); await d.press('e');
         await page.locator('#allocation-panel').waitFor({ state: 'visible' });
         await page.waitForTimeout(420);
         await exclusionCheck();
@@ -124,8 +106,8 @@ try {
         await d.snap('04-after-repair');
       }
 
-      await climbUpper();
-      await walkTo(262);
+      await chamber.climbCenter();
+      await chamber.via([[231, 203], [183, 202]]);
       await d.snap('05-upper');
       await d.press('e');
       await page.locator('#growth-panel').waitFor({ state: 'visible' });

@@ -1,115 +1,208 @@
-/** Pure chamber locomotion contracts; deliberately does not load Phaser or a DOM. */
+/** Chamber geometry/locomotion contracts: no renderer or browser is required. */
 import assert from 'node:assert/strict';
 import {
-  CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_FLOORS, CHAMBER_FLOORS,
-  CHAMBER_MAX_STEP_MS, CHAMBER_ROUTE_LENGTHS, CHAMBER_SPAWN_POINT,
-  type ChamberPoint, type ChamberRoute,
+  CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_DEVICE_FLOORS,
+  CHAMBER_DEVICE_FOOTPRINTS, CHAMBER_FEET_RADIUS, CHAMBER_GROUND_OFFSET_Y,
+  CHAMBER_MAX_STEP_MS, CHAMBER_SPAWN_POINT, CHAMBER_WALK_POLYGONS,
+  chamberFeetToPlayerPosition, type ChamberDevice, type ChamberPoint, type ChamberPolygon,
 } from '../../src/systems/purification-chamber-layout';
 import {
-  createChamberMovementState, getChamberMovementPosition, isChamberFloor,
-  stepChamberMovement, type ChamberMovementState,
+  canInteractWithChamberDevice, canStandInChamber, createChamberMovementState,
+  getChamberMovementPosition, PurificationChamberLocomotion, stepChamberMovement,
+  type ChamberMovementState,
 } from '../../src/systems/purification-chamber-locomotion';
+import type { Player } from '../../src/entities/player';
 
 const SPEED = 80;
-let assertions = 0;
-const near = (actual: number, expected: number, label: string): void => {
-  assert(Math.abs(actual - expected) < 1e-7, `${label}: ${actual} != ${expected}`);
-  assertions++;
-};
 const up = { x: 0, y: -1 }, down = { x: 0, y: 1 };
 const left = { x: -1, y: 0 }, right = { x: 1, y: 0 }, still = { x: 0, y: 0 };
-const position = (state: ChamberMovementState): { x: number; y: number } => {
-  const out = { x: 0, y: 0 };
-  getChamberMovementPosition(state, out);
-  return out;
-};
+let checks = 0;
+function near(actual: number, expected: number, label: string): void {
+  assert(Math.abs(actual - expected) < 1e-6, `${label}: ${actual} != ${expected}`);
+  checks++;
+}
+
+// Independent polygon winding and perimeter sampling verify actual feet support,
+// including shared floor/ramp seams, rather than trusting the solver's own query.
+function windingContains(polygon: ChamberPolygon, x: number, y: number): boolean {
+  let winding = 0;
+  for (let i = 0; i < polygon.length; i++) {
+    const a = polygon[i], b = polygon[(i + 1) % polygon.length];
+    const cross = (b.x - a.x) * (y - a.y) - (x - a.x) * (b.y - a.y);
+    if (a.y <= y && b.y > y && cross > 0) winding++;
+    if (a.y > y && b.y <= y && cross < 0) winding--;
+  }
+  return winding !== 0;
+}
+
+function assertSupported(state: ChamberMovementState): void {
+  assert(canStandInChamber(state), `Full feet clearance at (${state.x},${state.y})`);
+  const radius = CHAMBER_FEET_RADIUS - 1e-5;
+  for (let sample = 0; sample < 48; sample++) {
+    const angle = sample / 48 * Math.PI * 2;
+    const x = state.x + Math.cos(angle) * radius, y = state.y + Math.sin(angle) * radius;
+    assert(Object.values(CHAMBER_WALK_POLYGONS).some(polygon => windingContains(polygon, x, y)),
+      `Foot perimeter outside visible walk support at (${x},${y})`);
+    assert(!Object.values(CHAMBER_DEVICE_FOOTPRINTS).some(polygon => windingContains(polygon, x, y)),
+      `Foot perimeter penetrated a device at (${x},${y})`);
+  }
+  checks++;
+}
+
+function tick(state: ChamberMovementState, input: ChamberPoint, dt: number, speed = SPEED): void {
+  const beforeX = state.x, beforeY = state.y;
+  stepChamberMovement(state, input, dt, speed);
+  assert(Math.hypot(state.x - beforeX, state.y - beforeY) <= speed * Math.min(dt, CHAMBER_MAX_STEP_MS) / 1000 + 1e-6,
+    'Collisions and landings never add speed');
+  assertSupported(state);
+}
+
 function advance(state: ChamberMovementState, input: ChamberPoint, durationMs: number, frameMs = 1000 / 60): void {
-  let remaining = durationMs;
-  while (remaining > 1e-7) {
+  for (let remaining = durationMs; remaining > 1e-7;) {
     const dt = Math.min(frameMs, remaining);
-    const before = position(state);
-    stepChamberMovement(state, input, dt, SPEED);
-    const after = position(state);
-    assert(Math.hypot(after.x - before.x, after.y - before.y) <= SPEED * Math.min(dt, CHAMBER_MAX_STEP_MS) / 1000 + 1e-7,
-      'Travel may never exceed the shared 80px/s path budget, including landings');
+    tick(state, input, dt);
     remaining -= dt;
   }
 }
 
-// The entry position projects to a supported floor without drifting vertically.
+function walkTo(state: ChamberMovementState, target: ChamberPoint, frameMs = 1000 / 60): void {
+  for (let step = 0; step < 1200; step++) {
+    const dx = target.x - state.x, dy = target.y - state.y;
+    const distance = Math.hypot(dx, dy);
+    if (distance < 1e-6) return;
+    tick(state, { x: dx / distance, y: dy / distance }, Math.min(frameMs, distance / SPEED * 1000));
+  }
+  assert.fail(`Continuous walk did not reach (${target.x},${target.y}) from (${state.x},${state.y})`);
+}
+
+assert.equal(CHAMBER_FEET_RADIUS, 6, 'Original hub body width remains 12px with rounded feet');
 const spawn = createChamberMovementState();
-assert.deepEqual(position(spawn), CHAMBER_SPAWN_POINT);
-assert.equal(spawn.route, 'main');
-advance(spawn, up, 500);
-assert.deepEqual(position(spawn), CHAMBER_SPAWN_POINT, 'W away from a staircase is not free vertical movement');
-advance(spawn, { x: Math.SQRT1_2, y: -Math.SQRT1_2 }, 500);
-near(position(spawn).x, CHAMBER_SPAWN_POINT.x + 40, 'Holding W+D does not slow/speed the horizontal track');
-near(position(spawn).y, CHAMBER_SPAWN_POINT.y, 'Diagonal input cannot enter the rear wall');
+const output = { x: 0, y: 0 };
+getChamberMovementPosition(spawn, output);
+assert.deepEqual(output, CHAMBER_SPAWN_POINT);
+assert.deepEqual(chamberFeetToPlayerPosition(output), { x: output.x, y: output.y - CHAMBER_GROUND_OFFSET_Y });
 
+// Every direction changes the corresponding screen axes on visible deep floor.
+for (const direction of [up, down, left, right, { x: 1, y: -1 }, { x: -1, y: 1 }]) {
+  const state = createChamberMovementState();
+  tick(state, direction, 100);
+  near(Math.hypot(state.x - spawn.x, state.y - spawn.y), 8, 'All directions share the 80px/s budget');
+  near(state.x - spawn.x, direction.x / Math.hypot(direction.x, direction.y) * 8, 'Input X follows screen X');
+  near(state.y - spawn.y, direction.y / Math.hypot(direction.x, direction.y) * 8, 'Input Y follows screen Y');
+}
+
+// Actor center alone cannot stand six pixels from an exposed wall or solid device.
+assert(!canStandInChamber({ x: 350, y: 270 }), 'A supported center with hanging feet is illegal');
+assert(canStandInChamber({ x: 350, y: 272 }), 'Exact wall clearance is legal');
+for (const base of Object.values(CHAMBER_DEVICE_BASES)) assert(!canStandInChamber(base), 'Every device base is solid');
+assert(!canStandInChamber({ x: 273, y: 299 }), 'Feet cannot intersect the core footprint');
+assert(canStandInChamber({ x: 276, y: 299 }), 'Feet can contact the core without penetration');
+assert.throws(() => createChamberMovementState({ x: 350, y: 240 }), /clearance/);
+
+// The visible central cliff blocks a direct cross-floor route, including huge input frames.
+const cliff = createChamberMovementState({ x: 350, y: 300 });
+advance(cliff, up, 2500);
+near(cliff.x, 350, 'Cliff collision does not auto-route sideways');
+near(cliff.y, 272, 'Circle stops at the true step face');
+assert.equal(cliff.route, 'main');
+tick(cliff, up, 100, 10000);
+near(cliff.y, 272, 'Continuous sweep prevents tunneling across a narrow unsupported gap');
+
+// Tangential input remains responsive on both room edges and device bodies.
+const wallSlide = createChamberMovementState({ x: 300, y: 320 });
+advance(wallSlide, { x: 1, y: 1 }, 850);
+assert(wallSlide.x > 345, 'Diagonal pressure slides along the foreground wall');
+near(wallSlide.y, 328, 'Sliding retains full body clearance');
+const deviceSlide = createChamberMovementState({ x: 290, y: 305 });
+advance(deviceSlide, { x: -1, y: -1 }, 270);
+near(deviceSlide.x, 276, 'Sliding never cuts inside the core side');
+advance(deviceSlide, { x: -1, y: -1 }, 80);
+assert(deviceSlide.y < 286, 'Pressure against a device continues along its side');
+assert(deviceSlide.x < 276, 'Rounded feet continue smoothly around the cleared corner');
+
+// Both broad ramps have free lateral space, stop/reverse, and form one full loop.
 for (const fps of [30, 60, 120]) {
-  const state = createChamberMovementState(CHAMBER_FLOORS.main.start);
-  const dt = 1000 / fps;
-  advance(state, up, 500, dt);
+  const state = createChamberMovementState();
+  const frameMs = 1000 / fps;
+  walkTo(state, { x: 304, y: 282 }, frameMs);
+  walkTo(state, { x: 293, y: 245 }, frameMs);
   assert.equal(state.route, 'left-stair');
-  assert.equal(isChamberFloor(state.route), false, 'Devices cannot be used between floors');
-  near(state.distance, 40, `Constant path speed ascending at ${fps} FPS`);
-  const stopped = { ...state };
-  advance(state, still, 700, dt);
-  assert.deepEqual(state, stopped, 'Letting go on a stair stops exactly');
-  advance(state, down, 250, dt);
-  near(state.distance, 20, 'Mid-stair direction reverses without snapping to an endpoint');
-  advance(state, down, 400, dt);
-  assert.equal(state.route, 'main');
-  assert.deepEqual(position(state), CHAMBER_FLOORS.main.start);
-
-  // Travel the complete loop using only floor/stair controls.
-  advance(state, up, 2000, dt);
+  const midRamp = { ...state };
+  advance(state, still, 300, frameMs);
+  assert.deepEqual(state, midRamp, 'Releasing input stops on the ramp');
+  advance(state, right, 50, frameMs);
+  near(state.y, midRamp.y, 'D is screen-horizontal even on a ramp');
+  advance(state, left, 50, frameMs);
+  near(state.x, midRamp.x, 'Ramp direction reverses without a rail snap');
+  assert(!canInteractWithChamberDevice(state, 'growth'), 'Ramp has no floor interaction authority');
+  walkTo(state, { x: 282, y: 208 }, frameMs);
   assert.equal(state.route, 'upper');
-  assert.deepEqual(position(state), CHAMBER_FLOORS.upper.start);
-  advance(state, right, 4000, dt);
-  assert.deepEqual(position(state), CHAMBER_FLOORS.upper.end, 'Upper edge is solid, not a fall/drop');
-  advance(state, down, 2000, dt);
+  walkTo(state, CHAMBER_DEVICE_ANCHORS.growth, frameMs);
+  walkTo(state, { x: 282, y: 208 }, frameMs);
+  walkTo(state, CHAMBER_DEVICE_ANCHORS.offering, frameMs);
+  walkTo(state, { x: 373, y: 196 }, frameMs);
+  walkTo(state, { x: 396, y: 228 }, frameMs);
+  assert.equal(state.route, 'right-stair');
+  const eastRamp = { ...state };
+  advance(state, down, 50, frameMs);
+  advance(state, up, 50, frameMs);
+  near(state.x, eastRamp.x, 'Second ramp does not force lateral travel');
+  near(state.y, eastRamp.y, 'Second ramp reverses exactly');
+  walkTo(state, { x: 419, y: 259 }, frameMs);
   assert.equal(state.route, 'main');
-  assert.deepEqual(position(state), CHAMBER_FLOORS.main.end);
-  advance(state, left, 6500, dt);
-  assert.deepEqual(position(state), CHAMBER_FLOORS.main.start, 'Main route is fully connected');
+  walkTo(state, { x: 412, y: 301 }, frameMs);
+  walkTo(state, CHAMBER_DEVICE_ANCHORS.purifier, frameMs);
+  walkTo(state, CHAMBER_DEVICE_ANCHORS.rift, frameMs);
+  walkTo(state, { x: 360, y: 318 }, frameMs);
+  walkTo(state, CHAMBER_DEVICE_ANCHORS.core, frameMs);
+  walkTo(state, { x: 218, y: 320 }, frameMs);
+  walkTo(state, CHAMBER_DEVICE_ANCHORS.storage, frameMs);
 }
 
-// Enter a staircase from the forgiving landing zone without teleporting sideways.
-const landing = createChamberMovementState({ x: 96, y: 286 });
-advance(landing, up, 50);
-near(position(landing).x, 92, 'First traverse the last four pixels to the stair');
-near(position(landing).y, 286, 'Landing approach remains on its floor');
-advance(landing, up, 100);
-assert.equal(landing.route, 'left-stair');
-near(landing.distance, 4, 'Only the remaining movement budget climbs');
-
-// All six interaction anchors are on the declared floor, reachable with short walks.
-for (const [device, anchor] of Object.entries(CHAMBER_DEVICE_ANCHORS)) {
-  const state = createChamberMovementState(anchor);
-  const floor = CHAMBER_DEVICE_FLOORS[device as keyof typeof CHAMBER_DEVICE_ANCHORS];
-  assert.equal(state.route, floor);
-  near(position(state).x, anchor.x, `${device} X`);
-  near(position(state).y, anchor.y, `${device} Y`);
+for (const device of Object.keys(CHAMBER_DEVICE_ANCHORS) as ChamberDevice[]) {
+  const state = createChamberMovementState(CHAMBER_DEVICE_ANCHORS[device]);
+  assert.equal(state.route, CHAMBER_DEVICE_FLOORS[device]);
+  assert(canInteractWithChamberDevice(state, device), `${device} operation point is usable`);
+  assert(!canInteractWithChamberDevice(state, device === 'growth' || device === 'offering' ? 'core' : 'growth'),
+    'Different floors never authorize each other');
 }
+const behindCore = createChamberMovementState({ x: 224, y: 299 });
+assert(!canInteractWithChamberDevice(behindCore, 'core'), 'Solid device footprints block direct access');
 
-// Long background frames cannot teleport to a different floor; invalid time/speed freeze.
+// Bounded delta, invalid input and adapter freeze preserve exact state.
 const delayed = createChamberMovementState();
 stepChamberMovement(delayed, right, 10000, SPEED);
-near(position(delayed).x, CHAMBER_SPAWN_POINT.x + 8, 'Hidden-tab time is clamped to 100ms');
-const beforeInvalid = { ...delayed };
-for (const duration of [NaN, Infinity, -1, 0]) stepChamberMovement(delayed, right, duration, SPEED);
-for (const speed of [NaN, Infinity, -1, 0]) stepChamberMovement(delayed, right, 100, speed);
-assert.deepEqual(delayed, beforeInvalid);
-
-// Recovery projection and every endpoint remain within support; floors win exact ties.
-for (const route of ['main', 'upper', 'left-stair', 'right-stair'] as ChamberRoute[]) {
-  const state = { route, distance: CHAMBER_ROUTE_LENGTHS[route] / 2 };
-  const projected = createChamberMovementState(position(state));
-  assert.equal(projected.route, route);
-  near(projected.distance, state.distance, `${route} recovery projection`);
+near(delayed.x, CHAMBER_SPAWN_POINT.x + 8, 'Hidden-tab delta is clamped');
+const frozen = { ...delayed };
+for (const value of [NaN, Infinity, -1, 0]) {
+  stepChamberMovement(delayed, right, value, SPEED);
+  stepChamberMovement(delayed, right, 100, value);
 }
-assert.equal(createChamberMovementState(CHAMBER_FLOORS.upper.start).route, 'upper');
-assert.equal(createChamberMovementState(CHAMBER_FLOORS.main.end).route, 'main');
+stepChamberMovement(delayed, { x: NaN, y: 1 }, 100, SPEED);
+assert.deepEqual(delayed, frozen);
+let enabled = true;
+const playerPosition = chamberFeetToPlayerPosition(CHAMBER_SPAWN_POINT);
+const fakePlayer = {
+  getPosition: () => playerPosition,
+  getMovementInput: () => enabled ? right : still,
+  getEffectiveSpeed: () => SPEED,
+  applyConstrainedMovement: (x: number, y: number) => { playerPosition.x = x; playerPosition.y = y; },
+} as unknown as Player;
+const adapter = new PurificationChamberLocomotion(fakePlayer);
+adapter.update(100);
+near(playerPosition.x, CHAMBER_SPAWN_POINT.x + 8, 'Adapter consumes original Player input');
+near(playerPosition.y, CHAMBER_SPAWN_POINT.y - 10, 'Adapter converts sole to actor center exactly once');
+enabled = false;
+const pausedPosition = { ...playerPosition };
+adapter.update(1000);
+assert.deepEqual(playerPosition, pausedPosition, 'Panel freeze does not accumulate hidden travel');
 
-console.log(`I30 chamber movement: ${assertions} numeric contracts plus loop, stop/reverse, landing, interaction-floor and freeze assertions passed; no Phaser/DOM imported.`);
+// A deterministic long input stream challenges rounded corners and both seams.
+let seed = 0x31415926;
+const fuzz = createChamberMovementState();
+for (let frame = 0; frame < 5000; frame++) {
+  seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+  const angle = (seed & 255) / 256 * Math.PI * 2;
+  tick(fuzz, { x: Math.cos(angle), y: Math.sin(angle) }, [16, 33, 100][seed % 3]);
+}
+console.log(`I30 chamber movement: ${checks} movement/clearance checks passed; eight-way input, solid-device sliding, both ramp loops, six operation points, floor legality, freeze and no-tunneling verified.`);

@@ -1,10 +1,19 @@
 import Phaser from 'phaser';
-import { CHAMBER_DEVICE_ANCHORS, CHAMBER_SIZE } from '@/systems/purification-chamber-layout';
+import {
+  CHAMBER_DEVICE_ANCHORS,
+  CHAMBER_DEVICE_BASES,
+  CHAMBER_SIZE,
+  type ChamberDevice,
+} from '@/systems/purification-chamber-layout';
 import {
   ChamberPixels,
   paintChamberArchitecture,
-  paintChamberDevices,
+  paintChamberDevice,
   paintChamberExterior,
+  paintChamberForeground,
+  paintChamberGrounding,
+  paintChamberResistance,
+  type ChamberDeviceState,
 } from '../art/purification-chamber-pixels';
 
 export interface PurificationChamberState {
@@ -14,40 +23,52 @@ export interface PurificationChamberState {
   offeringCharge: number;
   growthLevels: Readonly<Record<string, number>>;
   activeTarget: string | null;
+  /** Actor image centre. The foot is ten world pixels below this point. */
   player: { x: number; y: number };
 }
 
 type PulseKind = 'repair' | 'growth' | 'offering';
-
-const DEVICE_POSITIONS: Readonly<Record<string, readonly [number, number]>> = Object.fromEntries(
-  Object.entries(CHAMBER_DEVICE_ANCHORS).map(([id, point]) => [id, [point.x, point.y - (point.y === 180 ? 9 : 8)]]),
-);
-
-
+interface DeviceLayer {
+  readonly id: ChamberDevice;
+  readonly texture: Phaser.Textures.CanvasTexture;
+  readonly painter: ChamberPixels;
+  readonly activity: Phaser.GameObjects.Graphics;
+  readonly image: Phaser.GameObjects.Image;
+  /** Actual painted bounds relative to the foot; the texture itself is world-sized. */
+  readonly bounds: readonly [left: number, top: number, right: number, bottom: number];
+  opacity: number;
+  key: number;
+}
+const DEVICE_IDS: readonly ChamberDevice[] = ['rift', 'growth', 'offering', 'purifier', 'storage', 'core'];
+const MODULE_IDS = ['core', 'storage', 'purifier'] as const;
+const DEVICE_BOUNDS: Readonly<Record<ChamberDevice, readonly [number, number, number, number]>> = {
+  core: [-25, -63, 26, 3], storage: [-22, -42, 23, 3],
+  purifier: [-29, -41, 31, 3], growth: [-20, -57, 22, 3],
+  offering: [-21, -45, 27, 3], rift: [-26, -17, 26, 13],
+};
 let chamberId = 0;
 
 /**
- * Production, pixel-native side-oblique hub. Static material layers are uploaded once;
- * only module-state changes rebuild devices. A tiny 12 Hz layer owns local active matter.
- * Its input deliberately excludes the next impact, hidden offering identity and future route.
+ * One material texture and one tiny live layer per device: a player can circle either side.
+ * Structure is cached by public state; only captive matter is redrawn at 12 Hz.
  */
 export class PurificationChamberVisual {
   private readonly textures: string[] = [];
   private readonly images: Phaser.GameObjects.Image[] = [];
-  private readonly effects: Phaser.GameObjects.Graphics;
+  private readonly devices: DeviceLayer[] = [];
+  private readonly groundEffects: Phaser.GameObjects.Graphics;
   private readonly bodyEffects: Phaser.GameObjects.Graphics;
-  private readonly foreground: Phaser.GameObjects.Graphics;
-  private readonly deviceTexture: Phaser.Textures.CanvasTexture;
-  private readonly devicePainter: ChamberPixels;
-  private deviceKey = '';
+  private readonly boundaryEffects: Phaser.GameObjects.Graphics;
+  private readonly resistanceTexture: Phaser.Textures.CanvasTexture;
+  private readonly resistancePainter: ChamberPixels;
+  private resistanceKey = -1;
+  private readonly deviceState: ChamberDeviceState = {
+    core: 1, storage: 1, purifier: 1, thickenLevel: 0, growthLevels: 0,
+  };
   private lastFrame = -1;
   private pulseStart = -10000;
-  private pulseX = 276;
-  private pulseY = 278;
   private pulseKind: PulseKind = 'repair';
   private pulseTarget = 'core';
-  private playerX = 276;
-  private playerY = 286;
   private time = 0;
   private destroyed = false;
 
@@ -55,25 +76,26 @@ export class PurificationChamberVisual {
     const id = ++chamberId;
     this.addCanvas(`purification-chamber-exterior-${id}`, -50, paintChamberExterior);
     this.addCanvas(`purification-chamber-architecture-${id}`, 10, paintChamberArchitecture);
-    this.deviceTexture = this.addCanvas(`purification-chamber-devices-${id}`, 28);
-    this.devicePainter = new ChamberPixels(this.deviceTexture.context);
-    this.effects = scene.add.graphics().setDepth(29);
-    this.bodyEffects = scene.add.graphics().setDepth(41);
-    this.foreground = scene.add.graphics().setDepth(45);
-    // The low front lip makes the floor read as a solid without occluding the torso.
-    this.foreground.fillStyle(0x4a4e55, 1);
-    this.foreground.fillRect(78, 297, 484, 2);
-    this.foreground.fillRect(174, 191, 292, 2);
-    this.foreground.fillStyle(0x2c2e33, 1);
-    this.foreground.fillRect(82, 300, 476, 2);
-    this.foreground.fillRect(178, 194, 284, 2);
+    this.addCanvas(`purification-chamber-grounding-${id}`, 12, paintChamberGrounding);
+    this.resistanceTexture = this.addCanvas(`purification-chamber-resistance-${id}`, 14);
+    this.resistancePainter = new ChamberPixels(this.resistanceTexture.context);
+    this.groundEffects = scene.add.graphics().setDepth(16);
+    this.boundaryEffects = scene.add.graphics().setDepth(17);
+    for (const device of DEVICE_IDS) {
+      const base = CHAMBER_DEVICE_BASES[device];
+      const depth = device === 'rift' ? 18 : 100 + base.y;
+      const texture = this.addCanvas(`purification-chamber-${device}-${id}`, depth);
+      this.devices.push({
+        id: device, texture, painter: new ChamberPixels(texture.context), key: -1,
+        activity: scene.add.graphics().setDepth(depth + .2),
+        image: this.images[this.images.length - 1]!, bounds: DEVICE_BOUNDS[device], opacity: 1,
+      });
+    }
+    this.addCanvas(`purification-chamber-front-cut-${id}`, 460, paintChamberForeground);
+    this.bodyEffects = scene.add.graphics().setDepth(410);
   }
 
-  private addCanvas(
-    key: string,
-    depth: number,
-    paint?: (pixels: ChamberPixels) => void,
-  ): Phaser.Textures.CanvasTexture {
+  private addCanvas(key: string, depth: number, paint?: (pixels: ChamberPixels) => void): Phaser.Textures.CanvasTexture {
     const texture = this.scene.textures.createCanvas(key, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
     if (!texture) throw new Error(`Unable to allocate purification chamber texture: ${key}`);
     texture.setFilter(Phaser.Textures.FilterMode.NEAREST);
@@ -84,119 +106,161 @@ export class PurificationChamberVisual {
     return texture;
   }
 
-  update(timeMs: number, _deltaMs: number, state: PurificationChamberState): void {
+  update(timeMs: number, deltaMs: number, state: PurificationChamberState): void {
     if (this.destroyed) return;
     this.time = timeMs;
-    this.playerX = state.player.x;
-    this.playerY = state.player.y;
     const health = state.moduleHealth;
+    let growth = 0;
+    for (const id in state.growthLevels) growth += state.growthLevels[id] ?? 0;
     const core = healthTier(health.core);
     const storage = healthTier(health.storage);
     const purifier = healthTier(health.purifier);
-    let growth = 0;
-    for (const id in state.growthLevels) growth += state.growthLevels[id] ?? 0;
-    const key = `${core}/${storage}/${purifier}/${state.thickenLevel}/${Math.min(growth, 12)}`;
-    if (key !== this.deviceKey) {
-      this.deviceKey = key;
-      this.deviceTexture.context.clearRect(0, 0, 640, 400);
-      paintChamberDevices(this.devicePainter, {
-        core: health.core, storage: health.storage, purifier: health.purifier,
-        thickenLevel: state.thickenLevel, growthLevels: growth,
-      });
-      this.deviceTexture.refresh();
+    const resistanceKey = core + storage * 3 + purifier * 9;
+    // Nothing is allocated on ordinary motion/animation frames. State uploads are rare.
+    this.deviceState.core = health.core;
+    this.deviceState.storage = health.storage;
+    this.deviceState.purifier = health.purifier;
+    this.deviceState.thickenLevel = state.thickenLevel;
+    this.deviceState.growthLevels = growth;
+    if (this.resistanceKey !== resistanceKey) {
+      this.resistanceKey = resistanceKey;
+      this.resistanceTexture.context.clearRect(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
+      paintChamberResistance(this.resistancePainter, this.deviceState);
+      this.resistanceTexture.refresh();
+    }
+    for (const device of this.devices) {
+      this.updateOcclusion(device, state.player, deltaMs);
+      let key = 0;
+      if (device.id === 'core' || device.id === 'storage' || device.id === 'purifier') {
+        key = healthTier(health[device.id]) + Math.min(3, state.thickenLevel) * 3;
+      } else if (device.id === 'growth') {
+        key = Number(growth > 0) + Number(growth >= 5) * 2 + Number(growth >= 12) * 4;
+      }
+      if (device.key === key) continue;
+      device.key = key;
+      device.texture.context.clearRect(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
+      paintChamberDevice(device.painter, device.id, this.deviceState);
+      device.texture.refresh();
     }
     const frame = Math.floor(timeMs / 80);
+    // The body attachment follows every player step even between animation ticks.
+    this.bodyEffects.setPosition(Math.round(state.player.x), Math.round(state.player.y));
+    this.bodyEffects.setDepth(110 + state.player.y + .5);
     if (this.lastFrame === frame) return;
     this.lastFrame = frame;
-    this.paintActivity(timeMs, state, growth);
+    this.paintActivity(timeMs, state);
   }
 
-  private paintActivity(time: number, state: PurificationChamberState, growth: number): void {
-    const g = this.effects;
-    g.clear();
-    this.bodyEffects.clear();
+  private updateOcclusion(device: DeviceLayer, player: { x: number; y: number }, deltaMs: number): void {
+    if (device.id === 'rift') return;
+    const base = CHAMBER_DEVICE_BASES[device.id];
+    const bounds = device.bounds;
+    const feet = player.y + 10;
+    // Test the dense character's body against this device, never the full canvas extent.
+    const behind = feet < base.y - 1;
+    const overlaps = player.x + 11 > base.x + bounds[0] && player.x - 11 < base.x + bounds[2]
+      && player.y + 8 > base.y + bounds[1] && player.y - 15 < base.y + bounds[3];
+    const target = behind && overlaps ? .44 : 1;
+    const step = Math.min(50, Math.max(0, deltaMs)) * .56 / 80;
+    device.opacity += Math.max(-step, Math.min(step, target - device.opacity));
+    device.image.setAlpha(device.opacity);
+    device.activity.setAlpha(device.opacity);
+  }
+
+  private paintActivity(time: number, state: PurificationChamberState): void {
     const breath = .5 + .5 * Math.sin(time * .0014);
-    // Colored matter is confined to the exposed feed and the actual world wound.
-    g.fillStyle(0x1aad96, .36 + .22 * breath);
-    g.fillRect(274, 236, 3, 6);
-    g.fillRect(271, 250, 2, 6);
-    g.fillStyle(0x2ae6c8, .35 + .20 * breath);
-    g.fillRect(274, 240, 2, 2);
-    g.fillStyle(0x1a6b5c, .4 + .22 * breath);
-    g.fillRect(489, 274, 7, 1);
-    g.fillRect(501, 272, 4, 1);
-    g.fillRect(507, 268, 4, 1);
-    // Light reaches a short patch of material, never a room-sized visibility dome.
-    g.fillStyle(0x1a6b5c, .045 + breath * .025);
-    g.fillEllipse(494, 278, 38, 10);
-    g.fillStyle(0xc4873a, .065);
-    g.fillEllipse(323, 251, 34, 18);
-    g.fillEllipse(440, 264, 30, 15);
-    g.fillEllipse(215, 120, 22, 12);
-
-    if (state.offeringCharge > 0) {
-      const amount = Math.max(0, Math.min(1, state.offeringCharge));
-      g.fillStyle(0x0e4a3f, 1);
-      g.fillRect(371, 151, 13, 6);
-      g.fillStyle(0x1a6b5c, .5 + breath * .25);
-      g.fillRect(374, 152, 3, 3);
-      g.fillRect(380, 153, 2, 2);
-      g.fillStyle(0x1aad96, .25 + amount * .35);
-      g.fillRect(375, 151, 2, 1);
-    }
-    if (growth > 0) {
-      g.fillStyle(0x8a8f96, .35 + .12 * breath);
-      g.fillRect(263, 130, 2, 8);
-      g.fillRect(284, 150, 2, 2);
-    }
-    // Exterior slow changes belong to the foreign material, not a particle snowfall.
-    g.fillStyle(0x1a6b5c, .2 + breath * .2);
-    g.fillRect(51, 124, 4, 1);
-    g.fillRect(583, 176, 5, 1);
-    g.fillRect(123, 113, 5, 1);
-    g.fillRect(449, 117, 4, 1);
-
-    const target = state.activeTarget === 'defense' ? 'offering' : state.activeTarget?.toLowerCase();
-    const position = target ? DEVICE_POSITIONS[target] : undefined;
-    if (position) {
-      // A local contact cue belongs to the device; the HUD remains the action label.
-      const [x, y] = position;
-      g.fillStyle(0x8a8f96, .64);
-      g.fillRect(x - 21, y + 4, 5, 1);
-      g.fillRect(x + 18, y + 4, 5, 1);
-      g.fillRect(x - 21, y + 2, 1, 3);
-      g.fillRect(x + 22, y + 2, 1, 3);
-    }
-
+    const slowFrame = Math.floor(time / 230);
     const elapsed = time - this.pulseStart;
-    if (elapsed >= 0 && elapsed < 1100) {
-      const envelope = Math.sin(Math.PI * elapsed / 1100);
-      const color = this.pulseKind === 'offering' ? 0x1aad96 : 0x8a8f96;
-      if (this.pulseTarget === 'player') {
-        // Brief material response on the existing sleeve/chest, never a replacement skin.
-        this.bodyEffects.fillStyle(0xc8cdd4, envelope * .45);
-        this.bodyEffects.fillRect(Math.round(state.player.x) - 3, Math.round(state.player.y) - 7, 2, 3);
-        this.bodyEffects.fillRect(Math.round(state.player.x) + 4, Math.round(state.player.y) - 2, 1, 3);
-        g.fillStyle(0x8a8f96, envelope * .25);
-        g.fillEllipse(state.player.x, state.player.y + 10, 18, 4);
-        return;
+    const pulsing = elapsed >= 0 && elapsed < 1000;
+    const envelope = pulsing ? Math.sin(Math.PI * elapsed / 1000) : 0;
+    const active = normalizeTarget(state.activeTarget);
+    const ground = this.groundEffects;
+    ground.clear(); this.bodyEffects.clear(); this.boundaryEffects.clear();
+    // Material receives a little local light. No room-sized illumination dome.
+    ground.fillStyle(0x1a6b5c, (.065 + breath * .025) * Math.max(.18, state.moduleHealth.core));
+    ground.fillEllipse(253, 297, 61, 23);
+    ground.fillStyle(0x1aad96, (.025 + breath * .015) * Math.max(.18, state.moduleHealth.core));
+    ground.fillEllipse(253, 297, 39, 13);
+    ground.fillStyle(0x8a5c2a, .065);
+    ground.fillEllipse(204, 163, 24, 14);
+    // The original carried lamp has a small material receiver at the feet, not a world tint.
+    ground.fillStyle(0xc4873a, .045);
+    ground.fillEllipse(state.player.x - 4, state.player.y + 8, 30, 10);
+
+    for (const device of this.devices) {
+      const g = device.activity;
+      g.clear();
+      const { x, y } = CHAMBER_DEVICE_BASES[device.id];
+      if (device.id === 'core') {
+        const health = Math.max(.15, state.moduleHealth.core);
+        g.fillStyle(0x1aad96, (.42 + breath * .30) * health);
+        g.fillRect(x - 2, y - 42, 3, 5);
+        g.fillRect(x + 1, y - 27, 2, 4);
+        g.fillStyle(0x2ae6c8, (.26 + breath * .38) * health);
+        g.fillRect(x - 1, y - 38, 2, 2);
+      } else if (device.id === 'growth') {
+        // Independent, small rising bubbles within the full liquid cylinder.
+        g.fillStyle(0x1aad96, .38 + .16 * breath);
+        const rise = slowFrame % 24;
+        g.fillRect(x - 7, y - 14 - rise, 2, 2);
+        g.fillRect(x + 7, y - 15 - ((rise + 11) % 23), 2, 1);
+        g.fillStyle(0x2ae6c8, .25 + .12 * breath);
+        g.fillRect(x - 6, y - 15 - rise, 1, 1);
+      } else if (device.id === 'purifier') {
+        const health = Math.max(.15, state.moduleHealth.purifier);
+        g.fillStyle(0x1aad96, (.28 + breath * .2) * health);
+        g.fillRect(x - 9, y - 23, 2, 4);
+        g.fillRect(x + 4, y - 15, 3, 1);
+      } else if (device.id === 'storage') {
+        g.fillStyle(0x1a6b5c, .38 + breath * .15);
+        g.fillRect(x - 3, y - 33, 4, 1);
+      } else if (device.id === 'offering' && state.offeringCharge > 0) {
+        // Same anonymous captive mass for all hidden identities; no countable world slots.
+        const amount = Math.max(0, Math.min(1, state.offeringCharge));
+        g.fillStyle(0x0e4a3f, 1);
+        g.fillRect(x - 5, y - 20, 11, 4);
+        g.fillRect(x - 2, y - 23, 6, 3);
+        g.fillStyle(0x1a6b5c, .64 + breath * .2);
+        g.fillRect(x - 3, y - 21, 4, 3);
+        g.fillRect(x + 1, y - 18, 4, 2);
+        g.fillStyle(0x1aad96, .2 + amount * .35);
+        g.fillRect(x - 1, y - 22, 2, 1);
+      } else if (device.id === 'rift') {
+        g.fillStyle(0x1a6b5c, .42 + breath * .25);
+        g.fillRect(x - 4, y - 3, 3, 1);
+        g.fillRect(x, y - 3, 3, 1);
+        g.fillStyle(0x1aad96, .25 + breath * .3);
+        g.fillRect(x - 1, y - 2, 2, 1);
       }
-      if (this.pulseTarget === 'thicken') {
-        g.fillStyle(color, envelope * .65);
-        for (const x of [166, 276, 386]) {
-          g.fillRect(x - 23, 272, 5, 2);
-          g.fillRect(x + 20, 272, 5, 2);
-        }
-        return;
+      if (active === device.id) {
+        // Two short scuffed contact marks on the actual operator position, below the actor.
+        const at = CHAMBER_DEVICE_ANCHORS[device.id];
+        ground.fillStyle(0x8a8f96, .45);
+        ground.fillRect(Math.round(at.x) - 10, Math.round(at.y) + 1, 4, 1);
+        ground.fillRect(Math.round(at.x) + 6, Math.round(at.y) + 1, 4, 1);
       }
-      const rise = Math.floor(elapsed / 1100 * 32);
-      g.fillStyle(color, envelope * .35);
-      g.fillRect(this.pulseX - 17, this.pulseY - rise, 34, 2);
-      g.fillStyle(color, envelope * .12);
-      g.fillEllipse(this.pulseX + 3, this.pulseY + 2, 48, 10);
-      g.fillStyle(color, envelope * .7);
-      g.fillRect(this.pulseX - 15, this.pulseY - rise, 4, 1);
-      g.fillRect(this.pulseX + 9, this.pulseY - rise, 3, 1);
+      if (!pulsing || (this.pulseTarget !== device.id && this.pulseTarget !== 'thicken')) continue;
+      if (this.pulseTarget === 'thicken' && !MODULE_IDS.includes(device.id as typeof MODULE_IDS[number])) continue;
+      // Material response at real clamps, not a floating horizontal scan line.
+      g.fillStyle(this.pulseKind === 'offering' ? 0x1aad96 : 0x8a8f96, envelope * .62);
+      const halfWidth = device.id === 'purifier' ? 22 : 16;
+      g.fillRect(x - halfWidth, y - 7, 3, 3);
+      g.fillRect(x + halfWidth - 2, y - 5, 3, 2);
+      if (device.id === 'core') g.fillRect(x - 2, y - 25, 3, 3);
+      ground.fillStyle(0x8a8f96, envelope * .09);
+      ground.fillEllipse(x, y, halfWidth * 2 + 14, 9);
+    }
+    // At the pressure sites, movement stays within foreign matter already visible in the joint.
+    this.boundaryEffects.fillStyle(0x1a6b5c, .26 + breath * .25);
+    this.boundaryEffects.fillRect(98, 226, 2, 5);
+    this.boundaryEffects.fillRect(318, 106, 2, 4);
+    this.boundaryEffects.fillRect(549, 214, 2, 4);
+    if (pulsing && this.pulseTarget === 'player') {
+      this.bodyEffects.fillStyle(0xc8cdd4, envelope * .45);
+      this.bodyEffects.fillRect(-3, -7, 2, 3);
+      this.bodyEffects.fillRect(4, -2, 1, 3);
+      ground.fillStyle(0x8a8f96, envelope * .18);
+      ground.fillEllipse(state.player.x, state.player.y + 10, 18, 4);
     }
   }
 
@@ -204,26 +268,18 @@ export class PurificationChamberVisual {
     if (this.destroyed) return;
     this.pulseKind = kind;
     this.pulseStart = this.time;
-    const key = target?.toLowerCase() ?? (kind === 'repair' ? 'core' : kind);
-    this.pulseTarget = key;
-    const position = DEVICE_POSITIONS[key] ?? DEVICE_POSITIONS.core!;
-    this.pulseX = key === 'player' ? this.playerX : position[0];
-    this.pulseY = key === 'player' ? this.playerY : position[1];
+    this.pulseTarget = normalizeTarget(target) ?? (kind === 'repair' ? 'core' : kind);
     this.lastFrame = -1;
   }
 
   destroy(): void {
     if (this.destroyed) return;
     this.destroyed = true;
-    this.effects.destroy();
-    this.bodyEffects.destroy();
-    this.foreground.destroy();
+    this.groundEffects.destroy(); this.bodyEffects.destroy(); this.boundaryEffects.destroy();
+    for (const device of this.devices) device.activity.destroy();
     for (const image of this.images) image.destroy();
-    for (const key of this.textures) {
-      if (this.scene.textures.exists(key)) this.scene.textures.remove(key);
-    }
-    this.images.length = 0;
-    this.textures.length = 0;
+    for (const key of this.textures) if (this.scene.textures.exists(key)) this.scene.textures.remove(key);
+    this.devices.length = 0; this.images.length = 0; this.textures.length = 0;
   }
 }
 
@@ -231,4 +287,11 @@ function healthTier(health: number): number {
   if (health < .3) return 2;
   if (health <= .6) return 1;
   return 0;
+}
+function normalizeTarget(target?: string | null): string | null {
+  if (!target) return null;
+  const id = target.toLowerCase();
+  if (id === 'defense') return 'offering';
+  if (id === 'entrance') return 'rift';
+  return id;
 }

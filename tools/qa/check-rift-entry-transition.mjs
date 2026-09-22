@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 import { createJourneyDriver } from './i27-journey-driver.mjs';
-import { createCycleInputs } from './i27-cycle-inputs.mjs';
+import { createChamberDriver } from './i30-chamber-driver.mjs';
 
 const expectFlash = process.argv.includes('--expect-flash');
 const out = path.resolve(process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/iteration-28/rift-entry-transition');
@@ -24,7 +24,7 @@ async function runCase(name) {
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   const dir = path.join(out, name); fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'journey.jsonl'), '');
-  const driver = createJourneyDriver(page, dir), cycle = createCycleInputs(page, driver);
+  const driver = createJourneyDriver(page, dir), chamber = createChamberDriver(page, driver);
   const result = { name, errors, injection: name === 'cleanup-fault' ? 'Throw once after PurificationScene chamber.destroy completes. Production cleanup, catch, saved departure and MainMenu handoff otherwise unchanged.' : null };
   report.cases.push(result); persist();
   try {
@@ -34,11 +34,14 @@ async function runCase(name) {
     await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
     await page.waitForFunction(() => !window.__game.scene.getScene('PurificationScene').menuEntry);
     const p = await page.evaluate(() => ({ ...window.__game.scene.getScene('PurificationScene').player.getPosition() }));
-    assert.deepEqual(p, { x: 224, y: 286 }, 'fresh chamber starts on the main floor');
-    // The new hub reaches the rift along the uninterrupted main-floor lane.
-    // baseTo sends real held keys; this does not teleport to the interaction.
-    const arrival = await cycle.baseTo({ x: 496, y: 286 });
-    assert(arrival.ok, JSON.stringify(arrival));
+    assert.deepEqual(p, { x: 366, y: 289 }, 'fresh chamber starts on the main floor');
+    // Follow the open front side of the purifier, then approach the rift console.
+    // The route is in sole coordinates and sends real keys; it never teleports.
+    await chamber.via([[415, 303], [492, 303], [507, 287]]);
+    const arrival = await driver.state();
+    assert.equal(arrival.route, 'main');
+    assert(Math.hypot(arrival.player.x - 507, arrival.player.y + 10 - 287) < 3,
+      `Actual keyboard route must reach the rift operation point: ${JSON.stringify(arrival)}`);
     await driver.press('e'); await page.waitForTimeout(350);
     await page.screenshot({ path: path.join(dir, 'prepare.png') });
     await page.evaluate(({ fault }) => {

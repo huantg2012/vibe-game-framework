@@ -177,8 +177,8 @@ export class Player {
     const dt = deltaMs / 1000;
     this.readInput();
 
-    // A scene-owned path controller resolves position and side-facing from actual
-    // travel. W/S on a landing must not turn this body into a top-down sprite.
+    // A scene-owned collision controller resolves position and facing from actual
+    // travel; the default top-down movement path below remains independent.
     if (this.movementMode === 'constrained') {
       (this.image.body as Phaser.Physics.Arcade.Body).stop();
       return;
@@ -278,9 +278,9 @@ export class Player {
     const dx = x - this.image.x;
     const dy = y - this.image.y;
     this.moving = Math.abs(dx) + Math.abs(dy) > 0.000001;
-    if (Math.abs(dx) > 0.000001) {
-      this.facing4 = dx < 0 ? 'left' : 'right';
-      this.facingAngle = FACING4_ANGLES[this.facing4];
+    if (this.moving) {
+      this.facingAngle = Math.atan2(dy, dx);
+      this.updateFacing4();
     }
     (this.image.body as Phaser.Physics.Arcade.Body).reset(x, y);
     this.position.x = x;

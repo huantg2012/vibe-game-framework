@@ -3,11 +3,11 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "Rift保持WASD八向移动与朝向光域；净化点显式轨道模式：A/D平层、W/S楼梯，原人物左右帧，冻结共享键盘通道。",
+    "summary": "Rift保持原WASD八向/光域；净化点同样按屏幕八向在两层地面和宽坡道自由行走，圆足扫掠/沿墙滑动，原人物四向与输入冻结共享。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "净化点：A/D或左右走动、W/S或上下在阶梯换层；Rift：原WASD/方向键"
+      "净化点与Rift：WASD/方向键；净化点上下层沿宽坡道直接移动，无楼梯模式或跳跃。"
     ],
     "sources": [
       {
@@ -45,16 +45,23 @@
       {
         "path": "docs/qa/iteration-30.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r2.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
     "evidence": [
       "COH-E-SRC-control",
       "COH-E-HIST-PRODUCTION",
-      "COH-E-I30-RUNTIME"
+      "COH-E-I30-RUNTIME",
+      "COH-E-I30-R1-HUMAN-REJECTION",
+      "COH-E-I30-R2-RUNTIME"
     ],
     "unknowns": [
-      "I30双阶/面板冻结与正式切回Rift已实走；长期操作偏好与侧视导航初见可理解性仍待用户体验。"
+      "R1已被用户否决；R2实际动作与限定状态验证不代签新场景审美、初见导航、长期重复路线成本和身体成长获得感。",
+      "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   },
   {

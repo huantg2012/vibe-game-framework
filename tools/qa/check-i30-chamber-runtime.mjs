@@ -8,11 +8,12 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createJourneyDriver } from './i27-journey-driver.mjs';
+import { createChamberDriver } from './i30-chamber-driver.mjs';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE
   ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const url = process.env.I30_URL ?? 'http://127.0.0.1:3025/';
-const out = process.env.I30_OUT ?? 'docs/qa/artifacts/iteration-30/runtime';
+const out = process.env.I30_OUT ?? 'docs/qa/artifacts/iteration-30-r2/runtime';
 fs.mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
@@ -26,7 +27,7 @@ await page.route('**/@vite/client', route => route.fulfill({ contentType: 'appli
 const d = createJourneyDriver(page, out);
 const manifest = {
   at: new Date().toISOString(), version: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-  workingTree: 'I30 changes under test', url,
+  workingTree: 'I30 R2 changes under test', url,
   method: 'Fresh isolated Playwright context; real keyboard; read-only diagnostics for routing; no save injection, teleport, clock change or grants.',
   scope: [], errors,
 };
@@ -42,36 +43,10 @@ const base = async () => {
   return state;
 };
 
-async function walkTo(x) {
-  for (let count = 0; count < 90; count++) {
-    const state = await base();
-    assert(['main', 'upper'].includes(state.route), `Horizontal walk began on ${state.route}`);
-    const gap = x - state.player.x;
-    // A real rendered frame can advance several pixels on a slow test host;
-    // device approach is not a subpixel-placement test (endpoints clamp below).
-    if (Math.abs(gap) < 3) return state;
-    await d.hold([gap > 0 ? 'd' : 'a'], Math.max(20, Math.min(160, Math.abs(gap) / 80 * 1000)));
-  }
-  assert.fail(`Could not reach x=${x}: ${JSON.stringify(await base())}`);
-}
+const chamber = createChamberDriver(page, d);
 
-async function reachFloor(route, key) {
-  d.log({ event: 'stairs-to-floor', route, key });
-  await page.keyboard.down(key);
-  try {
-    await page.waitForFunction(expected => {
-      const scene = window.__game?.scene.getScene('PurificationScene');
-      return scene?.probeJourneyState()?.route === expected;
-    }, route, { timeout: 7000 });
-  } finally {
-    await page.keyboard.up(key);
-  }
-  await page.waitForTimeout(80);
-  return base();
-}
-
-async function verifyPanel({ name, x, floor, selector, text, shot }) {
-  const arrival = await walkTo(x);
+async function verifyPanel({ name, x, y, floor, selector, text, shot }) {
+  const arrival = await chamber.walkFeet(x, y);
   assert.equal(arrival.route, floor, `${name} must be reached on its own floor`);
   await page.waitForTimeout(80);
   assert((await page.locator('#purif-prompt').innerText()).includes(text), `${name} prompt must identify the local device`);
@@ -97,73 +72,66 @@ try {
   await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
   await page.waitForTimeout(1800);
   const start = await base();
-  near(start.player.x, 224, 'Spawn X'); near(start.player.y, 286, 'Spawn Y');
+  near(start.player.x, 366, 'Spawn X'); near(start.player.y, 289, 'Spawn Y');
   assert.equal(start.route, 'main');
   await d.snap('01-hub-main');
+  await d.hold(['w'], 220);
+  assert((await base()).player.y < start.player.y - 8, 'W must move into floor depth');
+  await chamber.walkFeet(366, 299);
+  manifest.scope.push('Fresh production entry; W independently moves through depth on main floor');
 
-  await d.hold(['w'], 350);
-  samePosition((await base()).player, start.player, 'W away from a staircase');
-  manifest.scope.push('Fresh MainMenu Enter -> production hub; W on the main floor cannot walk into the rear wall');
+  await verifyPanel({ name: '核心', x: 284, y: 313, floor: 'main', selector: '#allocation-panel', text: '核心', shot: '02-repair-core' });
+  await chamber.via([[285, 322], [180, 322]]);
+  await verifyPanel({ name: '储藏', x: 162, y: 304, floor: 'main', selector: '#allocation-panel', text: '储藏', shot: '03-storage' });
+  // Walk behind the core, then around its front. The model's base blocks its center.
+  await chamber.via([[188, 300], [216, 281], [253, 280]]);
+  await page.waitForTimeout(160);
+  const occlusion = await page.evaluate(() => {
+    const scene = window.__game.scene.getScene('PurificationScene');
+    const devices = scene.children.list.filter(object => object.texture?.key?.startsWith('purification-chamber-core-'));
+    return { coreAlpha: devices[0]?.alpha, playerAlpha: scene.player.getSprite().alpha };
+  });
+  assert(occlusion.coreAlpha <= .5, 'Only the occluding device fades so the original player remains findable');
+  assert.equal(occlusion.playerAlpha, 1, 'Occlusion must not fade the player');
+  await d.snap('04-behind-core');
+  await d.hold(['s'], 450);
+  const blocked = await base();
+  assert(blocked.player.y + 10 <= 283.1, 'Core footprint blocks feet entering the solid base');
+  await chamber.via([[284, 281], [296, 318]]);
+  await page.waitForTimeout(160);
+  assert.equal(await page.evaluate(() => window.__game.scene.getScene('PurificationScene').children.list
+    .find(object => object.texture?.key?.startsWith('purification-chamber-core-')).alpha), 1,
+  'Device opacity restores after the player passes in front');
+  await d.snap('05-front-core');
+  await chamber.via([[350, 310], [413, 302]]);
+  await verifyPanel({ name: '净化器', x: 458, y: 301, floor: 'main', selector: '#allocation-panel', text: '净化器', shot: '06-purifier' });
+  await chamber.via([[498, 302]]);
+  await verifyPanel({ name: '裂隙备行', x: 507, y: 287, floor: 'main', selector: '#inventory-panel', text: '踏入裂隙', shot: '07-prepare' });
 
-  await verifyPanel({ name: '储藏', x: 166, floor: 'main', selector: '#allocation-panel', text: '储藏', shot: '02-storage' });
-  await verifyPanel({ name: '核心', x: 276, floor: 'main', selector: '#allocation-panel', text: '核心', shot: '03-repair-core' });
-  await walkTo(262);
-  assert(!(await page.locator('#purif-prompt').innerText()).includes('蜕变'), 'Upper growth must not be prompted directly below it');
-  await verifyPanel({ name: '净化器', x: 386, floor: 'main', selector: '#allocation-panel', text: '净化器', shot: '04-repair-purifier' });
-  await walkTo(378);
-  assert(!(await page.locator('#purif-prompt').innerText()).includes('供奉'), 'Upper offering must not be prompted directly below it');
-  await verifyPanel({ name: '裂隙备行', x: 496, floor: 'main', selector: '#inventory-panel', text: '踏入裂隙', shot: '05-prepare' });
-
-  await walkTo(88);
-  await d.hold(['a'], 350);
-  near((await base()).player.x, 88, 'Main left boundary clamp', .001);
-  await d.hold(['w'], 500);
-  const stair = await base();
-  assert.equal(stair.route, 'left-stair');
-  assert(stair.player.x > 88 && stair.player.x < 184 && stair.player.y < 286 && stair.player.y > 180);
-  // Both feet and center travel continuously along the same visible stair slope.
-  near((stair.player.x - 88) / 96, (286 - stair.player.y) / 106, 'Left stair support', .00001);
-  await page.waitForTimeout(250);
-  samePosition((await base()).player, stair.player, 'Released stair input');
+  await chamber.via([[501, 308], [411, 307], [366, 300], [304, 278], [298, 253]]);
+  const ramp = await base();
+  assert.equal(ramp.route, 'left-stair');
+  await page.waitForTimeout(160);
+  samePosition((await base()).player, ramp.player, 'Released ramp input');
+  await d.hold(['a'], 90);
+  assert((await base()).player.x < ramp.player.x - 3, 'Ramp has usable width, not a center rail');
+  const beforeReverse = await base();
+  await d.hold(['s'], 100);
+  assert((await base()).player.y > beforeReverse.player.y + 3, 'Ramp permits immediate reversal');
   await d.press('e');
   assert.equal(await page.locator('#allocation-panel, #growth-panel, #defense-panel, #inventory-panel').count(), 0,
-    'No device interaction is available halfway up a stair');
-  await d.hold(['s'], 200);
-  const reversed = await base();
-  assert(reversed.player.x < stair.player.x && reversed.player.y > stair.player.y, 'S must reverse a partial stair ascent');
-  await d.snap('06-stair-stop-reverse');
-  const upper = await reachFloor('upper', 'w');
-  near(upper.player.x, 184, 'Left upper landing X', .001); near(upper.player.y, 180, 'Upper Y', .001);
-  await d.hold(['a'], 350);
-  near((await base()).player.x, 184, 'Upper left edge clamp', .001);
-  await d.snap('07-hub-upper');
-  manifest.scope.push('Left staircase: continuous ascent, stop, reverse, E blocked mid-stair, upper landing and edge clamp');
+    'No device can be operated from a connecting ramp');
+  await d.snap('08-ramp-width-stop-reverse');
+  await chamber.via([[294, 246], [281, 218], [233, 203]]);
+  await verifyPanel({ name: '蜕变', x: 183, y: 202, floor: 'upper', selector: '#growth-panel', text: '蜕变', shot: '09-growth' });
+  await chamber.via([[222, 203], [315, 198]]);
+  await verifyPanel({ name: '供奉', x: 348, y: 198, floor: 'upper', selector: '#defense-panel', text: '供奉', shot: '10-offering' });
+  await d.snap('11-upper');
+  await chamber.descendEast();
+  await d.snap('12-loop-complete');
+  manifest.scope.push('All six devices by real movement; behind/front core and solid base; central ramp transverse move/stop/reverse; east ramp descent; no teleport');
 
-  await verifyPanel({ name: '蜕变', x: 262, floor: 'upper', selector: '#growth-panel', text: '蜕变', shot: '08-growth' });
-  assert(!(await page.locator('#purif-prompt').innerText()).includes('核心'), 'Lower core is not the target above it');
-  await verifyPanel({ name: '供奉', x: 378, floor: 'upper', selector: '#defense-panel', text: '供奉', shot: '09-offering' });
-
-  await walkTo(456);
-  await d.hold(['d'], 350);
-  near((await base()).player.x, 456, 'Upper right edge clamp', .001);
-  await d.hold(['s'], 420);
-  const rightStair = await base();
-  assert.equal(rightStair.route, 'right-stair');
-  near((rightStair.player.x - 456) / 96, (rightStair.player.y - 180) / 106, 'Right stair support', .00001);
-  await page.waitForTimeout(200);
-  samePosition((await base()).player, rightStair.player, 'Released descending input');
-  const main = await reachFloor('main', 's');
-  near(main.player.x, 552, 'Right lower landing X', .001); near(main.player.y, 286, 'Main Y', .001);
-  await d.hold(['d'], 300);
-  near((await base()).player.x, 552, 'Main right edge clamp', .001);
-  // Traverse the same right stair upwards too, proving both links are bidirectional.
-  await reachFloor('upper', 'w');
-  near((await base()).player.x, 456, 'Right upper landing X', .001);
-  await reachFloor('main', 's');
-  await d.snap('10-hub-loop-complete');
-  manifest.scope.push('Right staircase: descent, stop, return ascent, both landing clamps; all six devices reached without teleport');
-
-  await walkTo(496);
+  await chamber.via([[460, 303], [503, 300], [507, 287]]);
   await d.press('e');
   await page.locator('#inventory-panel').waitFor({ state: 'visible' });
   await page.waitForTimeout(300);
@@ -180,7 +148,7 @@ try {
   await d.hold(['d'], 250);
   const afterD = await d.state();
   assert(afterD.pos.x > afterW.pos.x + 3, 'Rift D must still move on the top-down X axis');
-  await d.snap('11-rift-topdown-regression');
+  await d.snap('13-rift-topdown-regression');
   await d.press('Escape');
   await d.ledger('fresh-session-end');
   manifest.scope.push('Production entrance -> fresh Rift via Shift+Enter; W and D retain top-down movement');

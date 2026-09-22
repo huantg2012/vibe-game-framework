@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "全游戏文本索引；I30浅透视双层封闭净化点及舱外重构已正式接入并限定验证，待用户审美/动线反馈；Rift俯视与I29成长机制保持，I28长期采样仍挂起。"
+    "summary": "全游戏文本索引；I30 R1灰钢轨道版已被用户否决，R2错层自由行走与场所/六模型重做已接入，待玩家复审；Rift及I29成长保持，I28长期采样仍挂起。"
   },
   "domains": [
     {
@@ -16,7 +16,7 @@
       "id": "controls",
       "title": "操作、生存与视野",
       "coverage": "mapped",
-      "note": "I30净化点上下层与楼梯实走、冻结/面板/出击回归通过；Rift默认移动与原角色保留。"
+      "note": "I30 R2净化点八向面内移动、宽坡道、底座与交互已有限运行验证；Rift默认操作/原角色保持，手感不代签用户认可。"
     },
     {
       "id": "world",
@@ -52,7 +52,7 @@
       "id": "presentation",
       "title": "角色、美术与声音",
       "coverage": "mapped",
-      "note": "I30新净化点空间/六模型/三层外部与局部状态反馈已实装；限定截图/交互检查不代签玩家审美和专门音频验收。"
+      "note": "I30 R1被用户否决，R2不规则厚壳/六物身份/接触侵蚀已重做；技术/截图复核不等于审美通过，专门音频未验。"
     },
     {
       "id": "narrative",
@@ -243,7 +243,7 @@
     {
       "id": "COH-C-HUB-CUTAWAY-DIRECTION",
       "statement": "I30净化点采用略有透视的侧视双层封闭场所，内部/边界/外部一体重构；仅净化点显式适配，原角色与Rift俯视保持，不因建筑新增抗污染机制。",
-      "status": "active",
+      "status": "superseded",
       "source": {
         "path": "docs/progress/decisions-log.md",
         "note": "DEC-179：用户授权实施浅透视与舱外重构；接入不等于用户审美通过。"
@@ -252,6 +252,22 @@
         "COH-F026",
         "COH-F042",
         "COH-F006"
+      ],
+      "supersededBy": "COH-C-HUB-TERRACED-REWORK"
+    },
+    {
+      "id": "COH-C-HUB-TERRACED-REWORK",
+      "statement": "DEC-180用户否决灰钢两排陈列与一维轨道；保留封闭/多高程/少许透视，R2面内八向行走、宽坡道、功能性装置身份与外部侵蚀/抵抗一体重做。取消单色冷灰输出限制；不新增建筑防御或改变Rift/原人物。",
+      "status": "active",
+      "source": {
+        "path": "docs/progress/decisions-log.md",
+        "note": "DEC-180；用户否决R1，不意味着已认可R2具体实现。"
+      },
+      "featureIds": [
+        "COH-F026",
+        "COH-F006",
+        "COH-F042",
+        "COH-F043"
       ]
     }
   ],
