@@ -137,6 +137,26 @@
       {
         "path": "tools/qa/check-i30-light-field.ts",
         "role": "test"
+      },
+      {
+        "path": "src/art/chamber-surface-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i30-volume-surfaces.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-surface-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r5.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-22-purification-volume.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -156,10 +176,12 @@
       "COH-E-I30-R3-PRESENTATION",
       "COH-E-I30-PALETTE",
       "COH-E-I30-R4-REVIEW",
-      "COH-E-I30-R4-RUNTIME"
+      "COH-E-I30-R4-RUNTIME",
+      "COH-E-I30-R5-REVIEW",
+      "COH-E-I30-R5-RUNTIME"
     ],
     "unknowns": [
-      "R1已被否决；R2用户评分交互物80/100、结构75/100、场景模型渲染50/100保留。R3场景表现打磨已实现并有限验证，后墙大形及远端残构仍偏简化；等待用户复审，不推定整体或分项最终PASS，手感/初见导航/长期路线成本仍无专项人审。 用户另指出R3暖色过多，已参考旧净化点冷灰主面纠偏，修正版待人审。 R4材料/运行光影已完成一轮实帧修正与限定回归；墙与外残构仍偏概括，维护关系部分成立，待人审。",
+      "R1已被否决；R2用户评分交互物80/100、结构75/100、场景模型渲染50/100保留。R3场景表现打磨已实现并有限验证，后墙大形及远端残构仍偏简化；等待用户复审，不推定整体或分项最终PASS，手感/初见导航/长期路线成本仍无专项人审。 用户另指出R3暖色过多，已参考旧净化点冷灰主面纠偏，修正版待人审。 R4材料/运行光影已完成一轮实帧修正与限定回归；墙与外残构仍偏概括，维护关系部分成立，待人审。 R5体积受光已实现并限定回归；独立复评确认面分离、墙沿与薄台接地改善，大面材料/外残构仍有品质缺口，不能称可发布或提升用户评分。",
       "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   },

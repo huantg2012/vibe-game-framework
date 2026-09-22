@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import type { ChamberSurfaceMap } from '../art/chamber-surface-map';
 import { ChamberLightField, type FieldSource, type LightSpan } from '../art/chamber-light-field';
 import { ChamberFloorLight } from '../art/chamber-floor-light';
 import { getChamberRouteAtPosition } from '../systems/purification-chamber-locomotion';
@@ -8,11 +9,12 @@ import type { PurificationChamberState } from './purification-chamber-visual';
 
 type SourceId = 'core' | 'growth' | 'purifier' | 'wall-lamp';
 interface Emitter {
-  id: SourceId; floor: ChamberFloor; color: number; face: FieldSource; ground: FieldSource;
+  id: SourceId; floor: ChamberFloor; color: number; face: FieldSource & { elevation: number }; ground: FieldSource;
   floorSpans: readonly LightSpan[]; wallSpans: readonly LightSpan[]; energy: number;
 }
 interface DeviceReceiver {
   id: ChamberDevice; graphics: Phaser.GameObjects.Graphics;
+  cast: Phaser.GameObjects.Graphics;
   responses: { emitter: Emitter; spans: readonly LightSpan[] }[];
 }
 const FULL_FACE: readonly ChamberPolygon[] = [[{ x: 0, y: 0 }, { x: 640, y: 0 },
@@ -38,7 +40,8 @@ export class PurificationChamberLighting {
   private lampX = Number.NaN;
   private lampY = Number.NaN;
 
-  constructor(private readonly scene: Phaser.Scene, architecture: Phaser.Textures.CanvasTexture) {
+  constructor(private readonly scene: Phaser.Scene, architectureAlbedo: Uint8ClampedArray,
+    surfaces: ChamberSurfaceMap) {
     this.ground = scene.add.graphics().setName('chamber-floor-light').setDepth(15).setBlendMode(Phaser.BlendModes.ADD);
     this.walls = scene.add.graphics().setName('chamber-wall-light').setDepth(15.05).setBlendMode(Phaser.BlendModes.ADD);
     this.shadow = scene.add.graphics().setName('chamber-directional-shadow').setDepth(15.1);
@@ -46,7 +49,7 @@ export class PurificationChamberLighting {
     this.motes = scene.add.graphics().setName('chamber-source-motes').setDepth(407).setBlendMode(Phaser.BlendModes.ADD);
     // Derive wall receivers from the exact baked architecture, removing actual floor polygons.
     // No approximate duplicate room geometry and no light in transparent/black cutout pixels.
-    const pixels = architecture.context.getImageData(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height).data;
+    const pixels = architectureAlbedo.slice();
     const point = { x: 0, y: 0 };
     for (let y = 0; y < CHAMBER_SIZE.height; y++) {
       for (let x = 0; x < CHAMBER_SIZE.width; x++) {
@@ -54,37 +57,42 @@ export class PurificationChamberLighting {
         if (getChamberRouteAtPosition(point)) pixels[(y * CHAMBER_SIZE.width + x) * 4 + 3] = 0;
       }
     }
-    const specs: { id: SourceId; color: number; face: FieldSource; ground: FieldSource; floor: ChamberFloor }[] = [
+    const specs: { id: SourceId; color: number; face: FieldSource & { elevation: number }; ground: FieldSource; floor: ChamberFloor }[] = [
       { id: 'core', color: 0x2ae6c8, floor: 'main',
-        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 38, radiusX: 112, radiusY: 70 },
+        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 38, radiusX: 112, radiusY: 70, elevation: 38 },
         ground: { ...CHAMBER_DEVICE_BASES.core, radiusX: 105, radiusY: 43 } },
       { id: 'growth', color: 0x1aad96, floor: 'upper',
-        face: { x: CHAMBER_DEVICE_BASES.growth.x, y: CHAMBER_DEVICE_BASES.growth.y - 36, radiusX: 67, radiusY: 44 },
+        face: { x: CHAMBER_DEVICE_BASES.growth.x, y: CHAMBER_DEVICE_BASES.growth.y - 36, radiusX: 67, radiusY: 44, elevation: 68 },
         ground: { ...CHAMBER_DEVICE_BASES.growth, radiusX: 76, radiusY: 40 } },
       { id: 'purifier', color: 0x1aad96, floor: 'main',
-        face: { x: CHAMBER_DEVICE_BASES.purifier.x, y: CHAMBER_DEVICE_BASES.purifier.y - 21, radiusX: 68, radiusY: 44 },
+        face: { x: CHAMBER_DEVICE_BASES.purifier.x, y: CHAMBER_DEVICE_BASES.purifier.y - 21, radiusX: 68, radiusY: 44, elevation: 21 },
         ground: { ...CHAMBER_DEVICE_BASES.purifier, radiusX: 74, radiusY: 39 } },
       { id: 'wall-lamp', color: 0xc4873a, floor: 'upper',
-        face: { x: 213, y: 140, radiusX: 23, radiusY: 20 },
+        face: { x: 213, y: 140, radiusX: 23, radiusY: 20, elevation: 48 },
         ground: { x: 213, y: 153, radiusX: 27, radiusY: 16 } },
     ];
     this.emitters = specs.map(spec => ({ ...spec, energy: 0,
-      floorSpans: this.field.compileFloor(spec.ground, spec.floor, spec.id === 'wall-lamp' ? undefined : spec.id),
-      wallSpans: this.field.compileFace(spec.face, pixels, FULL_FACE),
+      floorSpans: this.field.compileFloor(spec.ground, spec.floor, spec.id === 'wall-lamp' ? undefined : spec.id,
+        { map: surfaces, light: spec.face }),
+      wallSpans: this.field.compileFace(spec.face, pixels, FULL_FACE, { surface: { map: surfaces, light: spec.face } }),
     }));
   }
 
   /** Called only when a device's public-state bitmap has actually been repainted. */
-  syncDevice(id: ChamberDevice, texture: Phaser.Textures.CanvasTexture, depth: number): void {
+  syncDevice(id: ChamberDevice, pixels: Uint8ClampedArray, depth: number, surfaces: ChamberSurfaceMap): void {
     let receiver = this.devices.find(device => device.id === id);
     if (!receiver) {
       receiver = { id, graphics: this.scene.add.graphics().setName(`chamber-device-light-${id}`)
-        .setDepth(depth + .1).setBlendMode(Phaser.BlendModes.ADD), responses: [] };
+        .setDepth(depth + .1).setBlendMode(Phaser.BlendModes.ADD),
+        cast: this.scene.add.graphics().setName(`chamber-device-cast-${id}`).setDepth(14.8), responses: [] };
       this.devices.push(receiver);
     }
-    const pixels = texture.context.getImageData(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height).data;
+    receiver.cast.clear();
+    if (id !== 'rift') this.field.paint(receiver.cast,
+      this.field.compileDeviceShadow(surfaces, pixels, CHAMBER_DEVICE_FLOORS[id]), 0x080a0c, .16);
     receiver.responses = this.emitters.filter(emitter => emitter.floor === CHAMBER_DEVICE_FLOORS[id])
-      .map(emitter => ({ emitter, spans: this.field.compileFace(emitter.face, pixels, FULL_FACE) }));
+      .map(emitter => ({ emitter, spans: this.field.compileFace(emitter.face, pixels, FULL_FACE,
+        { surface: { map: surfaces, light: emitter.face } }) }));
     this.tick = -1;
   }
 
@@ -156,7 +164,7 @@ export class PurificationChamberLighting {
 
   destroy(): void {
     this.ground.destroy(); this.walls.destroy(); this.shadow.destroy(); this.lamp.destroy(); this.motes.destroy();
-    for (const device of this.devices) device.graphics.destroy();
+    for (const device of this.devices) { device.graphics.destroy(); device.cast.destroy(); }
     this.devices.length = 0;
   }
 }

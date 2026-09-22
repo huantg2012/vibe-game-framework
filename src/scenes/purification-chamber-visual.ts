@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { ChamberSurfaceMap } from '../art/chamber-surface-map';
 import { PurificationChamberLighting } from './purification-chamber-lighting';
 import {
   CHAMBER_DEVICE_ANCHORS,
@@ -58,6 +59,9 @@ export class PurificationChamberVisual {
   private readonly textures: string[] = [];
   private readonly images: Phaser.GameObjects.Image[] = [];
   private readonly devices: DeviceLayer[] = [];
+  private readonly architectureSurfaces = new ChamberSurfaceMap();
+  /** All six state bakes share one scratch atlas; compiled light spans own no atlas references. */
+  private readonly deviceSurfaces = new ChamberSurfaceMap();
   private readonly groundEffects: Phaser.GameObjects.Graphics;
   private readonly bodyEffects: Phaser.GameObjects.Graphics;
   private readonly boundaryEffects: Phaser.GameObjects.Graphics;
@@ -77,9 +81,13 @@ export class PurificationChamberVisual {
 
   constructor(private readonly scene: Phaser.Scene) {
     const id = ++chamberId;
-    this.addCanvas(`purification-chamber-exterior-${id}`, -50, paintChamberExterior);
-    const architecture = this.addCanvas(`purification-chamber-architecture-${id}`, 10, paintChamberArchitecture);
-    this.lighting = new PurificationChamberLighting(scene, architecture);
+    const shellSurfaces = new ChamberSurfaceMap();
+    this.addCanvas(`purification-chamber-exterior-${id}`, -50, paintChamberExterior, shellSurfaces);
+    const architecture = this.addCanvas(`purification-chamber-architecture-${id}`, 10);
+    paintChamberArchitecture(new ChamberPixels(architecture.context, this.architectureSurfaces));
+    const architectureAlbedo = this.architectureSurfaces.bake(architecture.context);
+    architecture.refresh();
+    this.lighting = new PurificationChamberLighting(scene, architectureAlbedo, this.architectureSurfaces);
     this.addCanvas(`purification-chamber-grounding-${id}`, 12, paintChamberGrounding);
     this.resistanceTexture = this.addCanvas(`purification-chamber-resistance-${id}`, 14);
     this.resistancePainter = new ChamberPixels(this.resistanceTexture.context);
@@ -90,20 +98,25 @@ export class PurificationChamberVisual {
       const depth = device === 'rift' ? 18 : 100 + base.y;
       const texture = this.addCanvas(`purification-chamber-${device}-${id}`, depth);
       this.devices.push({
-        id: device, texture, painter: new ChamberPixels(texture.context), key: -1,
+        id: device, texture, painter: new ChamberPixels(texture.context, this.deviceSurfaces), key: -1,
         activity: scene.add.graphics().setDepth(depth + .2),
         image: this.images[this.images.length - 1]!, bounds: DEVICE_BOUNDS[device], opacity: 1,
       });
     }
-    this.addCanvas(`purification-chamber-front-cut-${id}`, 460, paintChamberForeground);
+    shellSurfaces.clear();
+    this.addCanvas(`purification-chamber-front-cut-${id}`, 460, paintChamberForeground, shellSurfaces);
     this.bodyEffects = scene.add.graphics().setDepth(410);
   }
 
-  private addCanvas(key: string, depth: number, paint?: (pixels: ChamberPixels) => void): Phaser.Textures.CanvasTexture {
+  private addCanvas(key: string, depth: number, paint?: (pixels: ChamberPixels) => void,
+    surfaces?: ChamberSurfaceMap): Phaser.Textures.CanvasTexture {
     const texture = this.scene.textures.createCanvas(key, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
     if (!texture) throw new Error(`Unable to allocate purification chamber texture: ${key}`);
     texture.setFilter(Phaser.Textures.FilterMode.NEAREST);
-    if (paint) paint(new ChamberPixels(texture.context));
+    if (paint) {
+      paint(new ChamberPixels(texture.context, surfaces));
+      surfaces?.bake(texture.context);
+    }
     texture.refresh();
     this.textures.push(key);
     this.images.push(this.scene.add.image(0, 0, key).setOrigin(0).setDepth(depth));
@@ -143,9 +156,11 @@ export class PurificationChamberVisual {
       if (device.key === key) continue;
       device.key = key;
       device.texture.context.clearRect(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
+      this.deviceSurfaces.clear();
       paintChamberDevice(device.painter, device.id, this.deviceState);
+      const albedo = this.deviceSurfaces.bake(device.texture.context);
       device.texture.refresh();
-      this.lighting.syncDevice(device.id, device.texture, device.image.depth);
+      this.lighting.syncDevice(device.id, albedo, device.image.depth, this.deviceSurfaces);
     }
     const frame = Math.floor(timeMs / 80);
     // The body attachment follows every player step even between animation ticks.

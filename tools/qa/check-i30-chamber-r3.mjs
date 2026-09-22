@@ -24,6 +24,7 @@ fs.mkdirSync(out, { recursive: true });
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE
   ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const sourcePaths = [
+  'src/art/chamber-surface-map.ts',
   'src/art/purification-chamber-pixels.ts', 'src/scenes/purification-chamber-visual.ts',
   'src/art/chamber-floor-light.ts', 'src/art/chamber-light-field.ts',
   'src/scenes/purification-chamber-lighting.ts', 'src/entities/player.ts', 'src/entities/player-lamp-aura.ts',

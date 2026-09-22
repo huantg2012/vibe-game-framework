@@ -1,3 +1,4 @@
+import { CHAMBER_KEY_DIRECTION, type ChamberSurfaceMap } from './chamber-surface-map';
 import {
   CHAMBER_DEVICE_FOOTPRINTS,
   CHAMBER_SIZE,
@@ -20,6 +21,11 @@ export interface FieldSource {
   readonly y: number;
   readonly radiusX: number;
   readonly radiusY: number;
+}
+
+export interface SurfaceReceiver {
+  readonly map: ChamberSurfaceMap;
+  readonly light: Readonly<{ x: number; y: number; elevation: number }>;
 }
 
 interface LightPainter {
@@ -65,14 +71,16 @@ export class ChamberLightField {
 
   /** Never receives on a base, even when that emitter's own base is ignored by rays.
    * A floor can illuminate its adjacent ramps but cannot continue onto the other floor. */
-  compileFloor(source: FieldSource, floor: ChamberFloor, ignoreDevice?: ChamberDevice): readonly LightSpan[] {
+  compileFloor(source: FieldSource, floor: ChamberFloor, ignoreDevice?: ChamberDevice,
+    receiver?: SurfaceReceiver): readonly LightSpan[] {
     const allowed = (floor === 'main' ? MAIN : UPPER) | STAIRS;
     const ignored = ignoreDevice === undefined ? 0 : 1 << deviceIds.indexOf(ignoreDevice);
     if (!validSource(source) || !this.passable(Math.floor(source.x), Math.floor(source.y), allowed, ignored)) return [];
     return this.compile(source, (x, y) => {
       const index = y * width + x;
       if (!(this.routes[index]! & allowed) || this.solids[index]) return 0;
-      const band = radialBand(source, x + .5, y + .5);
+      const response = receiver ? receiver.map.receiverResponse(x, y, receiver.light) : 1;
+      const band = Math.ceil(radialStrength(source, x + .5, y + .5) * response * BANDS);
       return band > 0 && this.visible(source.x, source.y, x + .5, y + .5, allowed, ignored) ? band : 0;
     });
   }
@@ -80,7 +88,7 @@ export class ChamberLightField {
   /** The named faces narrow the receiver; real texture alpha and material colors then
    * preserve holes, seams and emissive apertures. Pixels are full-room RGBA coordinates. */
   compileFace(source: FieldSource, pixels: Uint8ClampedArray, regions: readonly ChamberPolygon[],
-    options?: { excludeEmission?: boolean }): readonly LightSpan[] {
+    options?: { excludeEmission?: boolean; surface?: SurfaceReceiver }): readonly LightSpan[] {
     if (pixels.length !== width * height * 4) throw new RangeError('Chamber face pixels must be 640×400 RGBA');
     if (!validSource(source)) return [];
     return this.compile(source, (x, y) => {
@@ -92,8 +100,37 @@ export class ChamberLightField {
       const radial = radialStrength(source, x + .5, y + .5);
       // Dark concrete remains darker than exposed edges when the same light crosses both.
       const response = Math.min(1, Math.max(.15, (luminance - 20) / 80));
-      return Math.ceil(radial * response * pixels[index + 3]! / 255 * BANDS);
+      const direction = options?.surface
+        ? options.surface.map.receiverResponse(x, y, options.surface.light) : 1;
+      return Math.ceil(radial * response * direction * pixels[index + 3]! / 255 * BANDS);
     });
+  }
+
+  /** Project actual opaque device samples along the baked key onto their own
+   * horizontal landing. Ramps/other floors/solid bases are deliberately not
+   * receivers: this is a bounded cast, not hidden-volume reconstruction. */
+  compileDeviceShadow(surfaces: ChamberSurfaceMap, pixels: Uint8ClampedArray,
+    floor: ChamberFloor): readonly LightSpan[] {
+    if (pixels.length !== width * height * 4) throw new RangeError('Device shadow pixels must be 640×400 RGBA');
+    const mask = new Uint8Array(width * height);
+    const elevation = floor === 'upper' ? 32 : 0;
+    const allowed = floor === 'upper' ? UPPER : MAIN;
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const index = y * width + x;
+        if (!surfaces.coverage[index] || pixels[index * 4 + 3]! < 128) continue;
+        const lift = surfaces.heights[index]! - elevation;
+        if (lift <= 1 || lift > 100) continue;
+        const sx = Math.round(x - CHAMBER_KEY_DIRECTION.x / CHAMBER_KEY_DIRECTION.z * lift);
+        const sy = Math.round(y + (1 - CHAMBER_KEY_DIRECTION.y / CHAMBER_KEY_DIRECTION.z) * lift);
+        if (sx < 0 || sy < 0 || sx >= width || sy >= height) continue;
+        const target = sy * width + sx;
+        if (!(this.routes[target]! & allowed) || this.routes[target]! & STAIRS || this.solids[target]) continue;
+        mask[target] = Math.max(mask[target]!, Math.ceil(BANDS * (1 - .6 * Math.min(lift / 65, 1))));
+      }
+    }
+    return this.compile({ x: width / 2, y: height / 2, radiusX: width / 2, radiusY: height / 2 },
+      (x, y) => mask[y * width + x]!);
   }
 
   paint(painter: LightPainter, spans: readonly LightSpan[], color: number, intensity: number): void {
@@ -214,10 +251,6 @@ function radialStrength(source: FieldSource, x: number, y: number): number {
   const dx = (x - source.x) / source.radiusX; const dy = (y - source.y) / source.radiusY;
   const r2 = dx * dx + dy * dy;
   return r2 >= 1 ? 0 : Math.pow(1 - r2, 1.3);
-}
-
-function radialBand(source: FieldSource, x: number, y: number): number {
-  return Math.ceil(radialStrength(source, x, y) * BANDS);
 }
 
 function emissive(red: number, green: number, blue: number): boolean {

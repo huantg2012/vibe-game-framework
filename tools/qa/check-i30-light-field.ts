@@ -1,3 +1,4 @@
+import { ChamberSurfaceMap } from '../../src/art/chamber-surface-map';
 import assert from 'node:assert/strict';
 import { ChamberLightField, type FieldSource, type LightSpan } from '../../src/art/chamber-light-field';
 import { CHAMBER_DEVICE_FOOTPRINTS, CHAMBER_SIZE, CHAMBER_WALK_POLYGONS,
@@ -146,6 +147,56 @@ for (const probe of [castRight, castLeft, baseClip, edgeClip]) {
     assert(inside(CHAMBER_WALK_POLYGONS.main, x, y));
     assert(Object.values(CHAMBER_DEVICE_FOOTPRINTS).every(polygon => !inside(polygon, x, y)));
   }
+}
+checks++;
+
+// Material eligibility is determined before static shading. A darkened solid
+// still receives a light facing it, while the original cavity remains absent.
+const shadedSurface = new ChamberSurfaceMap();
+shadedSurface.setPlane({ normal: [1, 0, 0], elevation: 0, occlusion: .92 });
+shadedSurface.stamp(210, 110, 2, 1);
+let bakedPixels = new Uint8ClampedArray(width * height * 4);
+bakedPixels.set([30, 34, 40, 255], (110 * width + 210) * 4);
+bakedPixels.set([13, 17, 20, 255], (110 * width + 211) * 4);
+const original = shadedSurface.bake({ canvas: { width, height },
+  getImageData: () => ({ data: bakedPixels.slice() }),
+  putImageData: (image: { data: Uint8ClampedArray }) => { bakedPixels = image.data; },
+} as unknown as CanvasRenderingContext2D);
+expect(original[(110 * width + 210) * 4] === 30 && bakedPixels[(110 * width + 210) * 4]! < 20,
+  'Bake returns the original reflectance separately from a dark fixed-key shade');
+const relit = field.compileFace(source(220, 110, 30, 30), original, [face],
+  { surface: { map: shadedSurface, light: { x: 220, y: 110, elevation: 0 } } });
+expect(at(relit, 210, 110) > 0, 'A solid shaded by the fixed key can receive the opposite local source');
+expect(at(relit, 211, 110) === 0, 'Keeping albedo does not light the original black cavity');
+
+// Fixed key: a 20px elevated sample casts down/right onto main; zero-height
+// paint and transparency must not invent a solid. A separate fixture crosses
+// boundaries and checks each receiver against public geometry, not the cache.
+const solid = new ChamberSurfaceMap();
+const silhouette = new Uint8ClampedArray(width * height * 4);
+solid.setPlane({ normal: [0, 1, 0], elevation: 20 });
+solid.stamp(340, 270, 1, 1);
+silhouette.set([80, 80, 80, 255], (270 * width + 340) * 4);
+const fixed = field.compileDeviceShadow(solid, silhouette, 'main');
+expect(at(fixed, 352, 282) > 0 && at(fixed, 340, 270) === 0, 'Raised sample casts on the ground away from the upper-left key');
+silhouette[(270 * width + 340) * 4 + 3] = 0;
+expect(field.compileDeviceShadow(solid, silhouette, 'main').length === 0, 'Transparent cutout cannot cast a solid shadow');
+silhouette[(270 * width + 340) * 4 + 3] = 255;
+solid.setPlane({ normal: [0, 0, 1], elevation: 0 }); solid.stamp(340, 270, 1, 1);
+expect(field.compileDeviceShadow(solid, silhouette, 'main').length === 0, 'Floor marking cannot become an elevated caster');
+solid.setPlane({ normal: [0, 1, 0], elevation: 52 }); solid.stamp(260, 160, 1, 1);
+silhouette.set([80, 80, 80, 255], (160 * width + 260) * 4);
+const raised = field.compileDeviceShadow(solid, silhouette, 'upper');
+expect(at(raised, 272, 172) > 0, 'Upper device projects its 20px relative height, not its absolute 52px');
+solid.setPlane({ normal: [0, 1, 0], elevation: 35 }); solid.stamp(0, 0, width, height);
+for (let index = 3; index < silhouette.length; index += 4) silhouette[index] = 255;
+const broad = field.compileDeviceShadow(solid, silhouette, 'main');
+expect(broad.length > 0, 'Boundary fixture actually submits shadow receivers');
+for (const span of broad) for (let x = span.x; x < span.x + span.width; x++) {
+  assert(inside(CHAMBER_WALK_POLYGONS.main, x + .5, span.y + .5));
+  assert(!inside(CHAMBER_WALK_POLYGONS['left-stair'], x + .5, span.y + .5));
+  assert(!inside(CHAMBER_WALK_POLYGONS['right-stair'], x + .5, span.y + .5));
+  assert(Object.values(CHAMBER_DEVICE_FOOTPRINTS).every(poly => !inside(poly, x + .5, span.y + .5)));
 }
 checks++;
 
