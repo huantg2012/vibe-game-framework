@@ -1,8 +1,11 @@
 ---
-status: R2-IMPLEMENTED / HUMAN-REVIEW-PENDING
+status: R2-IMPLEMENTED / HUMAN-SCORED / POLISH-PENDING
 date: 2026-09-22
 features: [COH-F026, COH-F027, COH-F028, COH-F029, COH-F030, COH-F042]
 ---
+
+> 2026-09-22 用户对 `f9eb02d` 评分：交互物建模80/100、场景结构75/100、场景模型与渲染50/100。已收到评价，未记整体PASS；后续重点与未实施清单见 [I30任务](../tasks/iteration-30.md)。正文的当前实现保持。
+
 
 # 净化点：有纵深的封闭错层遗存
 
