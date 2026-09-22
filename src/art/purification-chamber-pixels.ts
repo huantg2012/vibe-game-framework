@@ -16,6 +16,16 @@ export const CHAMBER_PALETTE = {
 } as const;
 const c = CHAMBER_PALETTE;
 
+/** Building-only allocation follows the old hub's cool concrete and repaired cast surfaces.
+ * Device palettes stay independent: correcting the room must not recolor its six identities. */
+const building = {
+  ground: c.concrete,
+  coating: c.plane,
+  undercoat: c.concrete,
+  section: c.plane,
+  patch: c.concrete,
+} as const;
+
 export class ChamberPixels {
   constructor(readonly ctx: CanvasRenderingContext2D) { ctx.imageSmoothingEnabled = false; }
   rect(x: number, y: number, w: number, h: number, color: string): void {
@@ -214,27 +224,27 @@ export function paintChamberArchitecture(p: ChamberPixels): void {
   p.poly([[93,125],[127,83],[230,70],[283,88],[359,86],[411,116],[421,153],[489,165],[559,187],[581,230],[581,313],[559,348],[382,364],[114,366],[69,328],[68,198]],c.shadow);
   // Upper wall under the broken cap. The broad wall is matte; reflected edges are interrupted.
   materialFace(p, [[106,124],[139,96],[229,85],[277,103],[359,100],[397,125],[401,169],[370,174],[139,159],[112,196]],
-    [c.concrete,c.plaster,c.plane], 204, 34, 18);
+    [c.recess,c.concrete,building.coating], 204, 34, 18);
   materialFace(p, [[139,111],[230,102],[274,118],[358,117],[382,133],[383,173],[370,154],[274,154],[234,138],[142,146],[128,183],[129,129]],
-    [c.ash,c.concrete,c.plaster], 207, 38, 10);
+    [c.recess,c.concrete,building.coating], 207, 38, 10);
   // Deep ceiling return and rear corner: shadow is caused by thickness, not an outline.
   p.poly([[135,106],[230,96],[274,113],[358,111],[387,129],[384,132],[356,115],[274,117],[230,101],[138,111],[133,131]],c.recess);
   p.poly([[143,116],[231,107],[274,124],[352,123],[352,127],[273,128],[230,112],[145,121]],c.concrete);
   p.poly([[132,133],[139,120],[139,145],[135,163],[128,177]],c.shadow);
   p.poly([[369,126],[380,131],[381,166],[373,161],[372,145]],c.concrete);
-  // Surviving warm-grey skim coat sits over colder structural cast material.
+  // Surviving cool-grey skim coat sits over colder structural cast material.
   materialFace(p, [[143,115],[181,110],[205,111],[202,119],[193,121],[187,132],[174,134],[170,142],[150,144],[142,139]],
-    [c.plaster,c.earth,c.plaster], 221, 14, 8);
-  p.poly([[155,120],[178,116],[191,117],[184,121],[182,130],[170,132],[165,139],[151,138]],c.plaster);
+    [building.coating,building.patch,building.coating], 221, 14, 8);
+  p.poly([[155,120],[178,116],[191,117],[184,121],[182,130],[170,132],[165,139],[151,138]],building.coating);
   p.poly([[187,125],[192,122],[196,124],[192,129],[190,136],[182,140],[175,140],[177,136],[186,133]],c.concrete);
   p.line(190,124,187,131,c.plane);
   materialFace(p, [[278,123],[298,120],[308,124],[313,121],[336,123],[346,132],[340,140],[322,141],[314,147],[291,149],[278,143]],
-    [c.concrete,c.plaster,c.plane], 229, 19, 10);
-  p.poly([[300,142],[311,139],[319,141],[316,145],[305,148],[292,148]],c.ash);
+    [c.concrete,building.coating,c.plane], 229, 19, 10);
+  p.poly([[300,142],[311,139],[319,141],[316,145],[305,148],[292,148]],building.ground);
   // Roof cut carries aggregate and several differently aged repairs, with a dark underside.
   materialFace(p, [[108,124],[136,93],[230,80],[278,99],[360,96],[403,121],[411,112],[363,83],[282,85],[232,66],[126,80],[94,117]],
-    [c.plaster,c.earth,c.plane], 237, 27, 7);
-  p.poly([[129,85],[229,73],[279,91],[279,95],[229,79],[135,92],[110,120],[102,120]],c.plaster);
+    [building.undercoat,building.section,c.steel], 237, 27, 7);
+  p.poly([[129,85],[229,73],[279,91],[279,95],[229,79],[135,92],[110,120],[102,120]],building.coating);
   p.poly([[237,75],[254,80],[252,85],[242,82],[239,84],[229,80],[215,82],[215,77]],c.concrete);
   p.poly([[294,90],[316,87],[328,92],[324,101],[307,102],[304,96]],c.concrete);
   p.poly([[337,87],[358,87],[380,101],[374,104],[354,95],[341,96]],c.plane);
@@ -243,58 +253,58 @@ export function paintChamberArchitecture(p: ChamberPixels): void {
   p.rect(313,90,6,12,c.steel);
   // Left wall: exterior fracture, wall thickness, interior face and foot each have their own value.
   materialFace(p, [[94,117],[111,124],[109,222],[100,259],[104,316],[118,346],[90,340],[72,316],[73,208]],
-    [c.plaster,c.earth,c.plane], 249, 14, 35);
+    [building.undercoat,building.section,c.concrete], 249, 14, 35);
   p.poly([[100,131],[108,127],[106,215],[99,241],[96,263],[100,313],[93,310],[89,265],[94,237]],c.concrete);
   p.poly([[105,162],[111,155],[109,214],[116,232],[110,251],[103,253],[103,239],[107,217]],c.recess);
   p.poly([[102,251],[111,250],[111,270],[106,296],[110,318],[121,330],[116,336],[99,319],[97,293]],c.shadow);
   p.poly([[82,278],[86,271],[92,293],[89,309],[84,305]],c.plane);
-  p.poly([[83,217],[89,198],[91,196],[90,218],[85,235],[84,252],[80,255]],c.plaster);
+  p.poly([[83,217],[89,198],[91,196],[90,218],[85,235],[84,252],[80,255]],building.coating);
   // Rear wall of the lower work recess. It turns physically into the right shell.
   materialFace(p, [[401,151],[478,165],[553,188],[564,232],[547,259],[431,260],[411,234],[400,210]],
-    [c.concrete,c.plaster,c.plane], 256, 31, 16);
-  p.poly([[409,156],[477,171],[550,194],[550,201],[476,179],[415,166],[410,177]],c.plaster);
+    [c.concrete,building.coating,c.plane], 256, 31, 16);
+  p.poly([[409,156],[477,171],[550,194],[550,201],[476,179],[415,166],[410,177]],building.coating);
   materialFace(p, [[416,166],[476,180],[540,199],[545,231],[530,243],[444,245],[419,221]],
-    [c.ash,c.concrete,c.plaster], 259, 34, 14);
+    [c.recess,c.concrete,building.coating], 259, 34, 14);
   p.poly([[418,173],[430,176],[430,215],[423,222],[418,217]],c.recess);
   p.poly([[427,225],[445,240],[480,242],[531,238],[540,230],[542,233],[533,241],[480,245],[443,243]],c.recess);
   // A horizontal spalled area cannot be mistaken for a door.
-  p.poly([[433,192],[448,194],[452,196],[471,198],[482,204],[478,209],[462,207],[455,204],[440,205],[430,201]],c.earth);
-  p.poly([[436,195],[448,197],[453,199],[467,200],[474,204],[463,203],[454,202],[443,202]],c.plaster);
+  p.poly([[433,192],[448,194],[452,196],[471,198],[482,204],[478,209],[462,207],[455,204],[440,205],[430,201]],building.patch);
+  p.poly([[436,195],[448,197],[453,199],[467,200],[474,204],[463,203],[454,202],[443,202]],building.coating);
   p.poly([[470,205],[478,206],[481,211],[475,211],[467,208]],c.concrete);
   // An open-ended service channel is bedded in the wall, without a screen or control panel.
   p.poly([[475,213],[506,221],[505,226],[473,218]],c.recess);
   p.line(477,212,506,220,c.plane);
   p.line(479,215,502,221,c.shadow);
   materialFace(p, [[557,188],[575,211],[576,295],[562,326],[548,322],[556,274],[549,237]],
-    [c.plaster,c.earth,c.plane], 263, 10, 29);
-  p.poly([[554,202],[563,211],[567,225],[566,277],[559,304],[553,312],[555,288],[560,267],[559,232]],c.plaster);
+    [building.undercoat,building.section,c.concrete], 263, 10, 29);
+  p.poly([[554,202],[563,211],[567,225],[566,277],[559,304],[553,312],[555,288],[560,267],[559,232]],building.coating);
   p.poly([[552,243],[558,250],[557,276],[550,300],[547,316],[541,320],[542,302],[550,271]],c.recess);
   // Upper terrace has a continuous load-bearing front, interrupted only by the two real ramps.
   materialFace(p, [[132,205],[206,215],[262,224],[302,224],[328,218],[350,206],[396,206],[396,250],[386,266],[241,267],[211,246],[124,252]],
-    [c.recess,c.concrete,c.ash], 273, 35, 18);
+    [c.recess,c.concrete,building.ground], 273, 35, 18);
   materialFace(p, [[132,214],[190,214],[208,224],[262,224],[270,242],[213,240],[199,232],[130,233]],
-    [c.ash,c.concrete,c.plaster], 279, 26, 8);
+    [building.ground,c.concrete,building.coating], 279, 26, 8);
   p.poly([[132,232],[198,230],[214,240],[268,240],[277,256],[240,257],[210,241],[131,248]],c.concrete);
   p.poly([[130,247],[208,244],[239,262],[279,262],[282,266],[239,267],[209,248],[124,253]],c.recess);
-  p.poly([[144,222],[162,220],[172,223],[171,227],[165,228],[164,234],[147,234]],c.earth);
-  p.poly([[146,224],[160,223],[163,225],[158,229],[148,230]],c.plaster);
+  p.poly([[144,222],[162,220],[172,223],[171,227],[165,228],[164,234],[147,234]],building.patch);
+  p.poly([[146,224],[160,223],[163,225],[158,229],[148,230]],building.coating);
   p.poly([[185,220],[192,221],[195,229],[188,228]],c.concrete);
-  p.poly([[217,231],[241,231],[245,235],[253,235],[258,239],[236,240],[222,236]],c.ash);
+  p.poly([[217,231],[241,231],[245,235],[253,235],[258,239],[236,240],[222,236]],building.ground);
   // The exposed support between ramps needs a front/return pair distinct from the lower floor.
   // Floors/ramp tops paint later and preserve their legal silhouettes; only this solid face changes.
   p.poly([[304,224],[328,218],[350,206],[350,231],[339,239],[333,258],[324,263],[315,256]],c.recess);
-  p.poly([[344,235],[382,220],[388,252],[379,266],[337,266]],c.plaster);
+  p.poly([[344,235],[382,220],[388,252],[379,266],[337,266]],building.coating);
   p.poly([[338,262],[379,262],[388,255],[386,266],[336,269],[333,266]],c.recess);
-  p.poly([[332,240],[340,233],[339,240],[334,247],[332,255],[328,256]],c.ash);
+  p.poly([[332,240],[340,233],[339,240],[334,247],[332,255],[328,256]],building.ground);
   // Deep foundation projects below the legal foot contour. It is not a walkable third floor.
   materialFace(p, [[94,306],[126,334],[368,334],[392,324],[548,318],[556,338],[391,346],[371,356],[121,356],[87,326]],
-    [c.concrete,c.plaster,c.plane], 295, 31, 9);
+    [c.concrete,building.coating,c.plane], 295, 31, 9);
   materialFace(p, [[126,342],[366,342],[390,332],[548,326],[547,343],[393,350],[369,360],[122,360],[93,334]],
-    [c.recess,c.concrete,c.ash], 296, 24, 6);
+    [c.recess,c.concrete,building.ground], 296, 24, 6);
   p.poly([[121,358],[368,358],[393,348],[548,342],[547,345],[394,351],[370,361],[121,361],[93,338],[93,335]],c.recess);
-  p.poly([[147,343],[192,343],[199,347],[190,351],[176,350],[173,357],[150,352]],c.earth);
-  p.poly([[154,345],[175,345],[182,347],[171,349],[171,353],[157,350]],c.plaster);
-  p.poly([[434,334],[474,332],[482,337],[472,341],[459,339],[450,343],[436,339]],c.ash);
+  p.poly([[147,343],[192,343],[199,347],[190,351],[176,350],[173,357],[150,352]],building.patch);
+  p.poly([[154,345],[175,345],[182,347],[171,349],[171,353],[157,350]],building.coating);
+  p.poly([[434,334],[474,332],[482,337],[472,341],[459,339],[450,343],[436,339]],building.ground);
   paintWalkSurfaces(p);
   paintRamp(p, 'left-stair');
   paintRamp(p, 'right-stair');
@@ -312,33 +322,33 @@ export function paintChamberArchitecture(p: ChamberPixels): void {
 function paintWalkSurfaces(p: ChamberPixels): void {
   // Floors are quiet, maintained material planes. Grain belongs to the narrow layer losses,
   // not a screen-wide three-tone noise field. Upper plaster catches more light than the lower hall.
-  p.poly(walkPoly('main'),c.ash);
+  p.poly(walkPoly('main'),building.ground);
   // One older skim coat in the receiving bay, stopped at the original construction joint.
-  p.poly([[99,258],[151,251],[191,248],[206,265],[215,288],[199,302],[157,317],[111,311],[99,297]],c.plaster);
-  p.poly([[104,263],[151,257],[187,254],[199,267],[208,286],[194,297],[155,311],[116,308],[106,296]],c.ash);
+  p.poly([[99,258],[151,251],[191,248],[206,265],[215,288],[199,302],[157,317],[111,311],[99,297]],building.coating);
+  p.poly([[104,263],[151,257],[187,254],[199,267],[208,286],[194,297],[155,311],[116,308],[106,296]],building.ground);
   p.poly([[116,308],[155,311],[179,303],[176,308],[157,316],[119,314]],c.concrete);
   p.poly([[191,250],[197,254],[205,266],[209,284],[207,288],[203,279],[201,268]],c.concrete);
   // Broad poured repair at the active foundation, with a swept finish along its use direction.
   p.poly([[219,285],[251,276],[276,279],[302,294],[305,315],[281,327],[220,320]],c.concrete);
-  p.poly([[230,314],[277,321],[291,314],[292,308],[275,314],[238,310]],c.ash);
+  p.poly([[230,314],[277,321],[291,314],[292,308],[275,314],[238,310]],building.ground);
   // The purifier/entrance recess has the same original floor as the hall, not a separate pedestal.
   p.poly([[437,259],[461,236],[540,237],[549,263],[540,296],[494,305],[447,290]],c.concrete);
-  p.poly([[442,266],[464,246],[535,246],[541,263],[532,290],[493,298],[454,285]],c.ash);
-  p.poly([[489,299],[531,290],[539,283],[537,293],[514,301],[495,304]],c.plaster);
+  p.poly([[442,266],[464,246],[535,246],[541,263],[532,290],[493,298],[454,285]],building.ground);
+  p.poly([[489,299],[531,290],[539,283],[537,293],[514,301],[495,304]],building.coating);
   p.poly([[496,300],[516,296],[521,298],[511,301]],c.concrete);
   // Upper floor is a different illuminated plane, not a second pattern sample.
-  p.poly(walkPoly('upper'),c.plaster);
-  p.poly([[143,153],[186,147],[204,153],[204,178],[187,192],[155,193],[136,183]],c.ash);
+  p.poly(walkPoly('upper'),building.coating);
+  p.poly([[143,153],[186,147],[204,153],[204,178],[187,192],[155,193],[136,183]],building.ground);
   p.poly([[145,157],[183,151],[199,156],[198,176],[184,186],[156,188],[143,179]],c.concrete);
   p.poly([[334,165],[367,162],[393,179],[386,199],[353,202],[328,190]],c.concrete);
   // A repaired contraction joint connects different age coats; worn edges are narrow and broken.
   p.poly([[229,147],[235,145],[264,158],[273,161],[273,164],[261,163],[244,155]],c.concrete);
-  p.poly([[226,179],[236,188],[256,195],[283,191],[286,193],[257,198],[237,192],[230,186]],c.ash);
+  p.poly([[226,179],[236,188],[256,195],[283,191],[286,193],[257,198],[237,192],[230,186]],building.ground);
   p.poly([[238,192],[245,194],[246,197],[242,197],[238,194]],c.concrete);
   p.poly([[255,199],[270,197],[274,198],[263,202],[257,202]],c.concrete);
   // Narrow wall-contact shade keeps volume without resembling a traversable black channel.
   p.poly([[142,146],[234,138],[274,154],[370,154],[399,171],[397,174],[369,157],[273,157],[234,141],[144,149],[136,170],[132,184],[129,183]],c.concrete);
-  p.poly([[143,147],[234,139],[272,154],[271,156],[234,142],[143,150]],c.ash);
+  p.poly([[143,147],[234,139],[272,154],[271,156],[234,142],[143,150]],building.ground);
   p.poly([[98,260],[101,260],[101,296],[110,316],[124,330],[123,333],[108,318],[98,297]],c.recess);
   p.poly([[448,253],[463,235],[540,237],[548,256],[546,260],[541,250],[538,241],[464,239],[452,254]],c.concrete);
   p.poly([[464,237],[538,239],[541,243],[537,242],[464,240]],c.recess);
@@ -349,7 +359,7 @@ function paintWalkSurfaces(p: ChamberPixels): void {
   p.line(193,255,206,268,c.concrete);
   p.line(206,268,215,288,c.recess);
   p.line(214,287,205,295,c.recess);
-  p.line(209,277,214,286,c.plaster);
+  p.line(209,277,214,286,building.coating);
   p.line(222,160,220,173,c.concrete);
   p.line(220,173,232,184,c.recess);
   p.line(227,181,237,181,c.concrete);
@@ -360,13 +370,13 @@ function paintWalkSurfaces(p: ChamberPixels): void {
   p.line(354,316,368,304,c.recess);
   p.line(363,308,373,309,c.concrete);
   p.line(429,299,457,310,c.recess);
-  p.line(429,301,451,309,c.plaster);
+  p.line(429,301,451,309,building.coating);
   p.line(476,288,505,281,c.concrete);
   // Surface abrasion is directional and clustered at landings, with intact quiet ground between.
   for (const [x,y,w] of [[198,282,11],[202,286,7],[176,307,10],[219,207,14],
     [229,203,9],[315,204,12],[303,267,14],[311,273,10],[416,252,14],
     [419,257,9],[399,297,14],[409,292,8],[474,299,12],[486,295,8]] as const) {
-    p.line(x,y,x+w,y-2,c.plaster);
+    p.line(x,y,x+w,y-2,building.coating);
     p.line(x+3,y+3,x+w-2,y+2,c.concrete);
   }
 }
@@ -374,24 +384,24 @@ function paintWalkSurfaces(p: ChamberPixels): void {
 function paintMaintenanceFootings(p: ChamberPixels): void {
   // Cast-on-site bases have a broken skin and a clean working edge, not glowing target discs.
   materialFace(p, [[218,297],[232,282],[267,279],[279,292],[272,309],[232,313]],
-    [c.concrete,c.plaster,c.plane], 358, 11, 5);
+    [c.concrete,building.coating,c.plane], 358, 11, 5);
   p.poly([[224,300],[234,306],[266,303],[275,296],[273,306],[268,310],[233,313],[221,307]],c.concrete);
   p.line(237,310,257,308,c.plane);
   materialFace(p, [[423,270],[435,253],[469,256],[479,273],[464,283],[432,282]],
-    [c.concrete,c.plaster,c.plane], 364, 12, 5);
+    [c.concrete,building.coating,c.plane], 364, 12, 5);
   p.poly([[425,275],[434,280],[463,281],[476,273],[472,280],[465,285],[432,284]],c.concrete);
   p.line(434,282,449,283,c.plane);
   // Short protected service trenches have exposed depth and several irregular salvaged covers.
   p.poly([[274,291],[306,294],[327,281],[352,281],[356,286],[330,286],[308,300],[273,297]],c.shadow);
   p.poly([[277,290],[306,293],[327,280],[351,280],[351,282],[327,283],[307,296],[277,293]],c.concrete);
   p.poly([[287,293],[304,295],[304,298],[286,296]],c.earth);
-  p.line(289,293,301,295,c.plaster);
+  p.line(289,293,301,295,building.coating);
   p.poly([[315,291],[326,284],[329,286],[318,293]],c.plane);
   p.line(318,290,325,286,c.steel);
   p.poly([[349,281],[373,276],[399,278],[423,269],[425,273],[400,283],[374,281],[350,285]],c.recess);
   p.poly([[353,281],[374,279],[399,280],[416,274],[415,277],[400,283],[374,281]],c.concrete);
   p.poly([[382,279],[395,280],[394,283],[382,282]],c.earth);
-  p.line(384,280,391,281,c.plaster);
+  p.line(384,280,391,281,building.coating);
 }
 
 /** Secondary detail follows only existing material losses, pours and support contacts. */
@@ -401,16 +411,16 @@ function paintMaterialFinish(p: ChamberPixels): void {
   p.line(223,113,223,125,c.plane);
   p.poly([[219,127],[224,127],[228,135],[227,143],[223,141],[220,136]],c.concrete);
   p.line(264,125,269,140,c.concrete);
-  p.line(266,126,270,138,c.plaster);
+  p.line(266,126,270,138,building.coating);
   p.poly([[264,141],[270,140],[274,144],[273,151],[269,151]],c.concrete);
   p.line(467,185,469,199,c.recess);
   p.line(469,186,471,197,c.plane);
-  p.poly([[491,201],[512,207],[519,212],[513,212],[501,208],[490,205]],c.plaster);
+  p.poly([[491,201],[512,207],[519,212],[513,212],[501,208],[490,205]],building.coating);
   p.poly([[523,216],[530,217],[534,225],[529,230],[525,223],[520,222]],c.concrete);
   // Exposed aggregate exists inside four chipped regions, not distributed as confetti.
   for (const [x,y] of [[187,132],[192,124],[302,144],[335,134],[468,205],[523,219],
     [148,228],[158,230],[234,237],[335,232],[172,351],[278,349],[464,341]] as const) aggregate(p,x,y);
-  p.poly([[332,130],[338,126],[344,128],[344,134],[338,137],[333,135]],c.ash);
+  p.poly([[332,130],[338,126],[344,128],[344,134],[338,137],[333,135]],building.ground);
   p.poly([[336,129],[340,128],[341,131],[337,133]],c.plane);
   // Top slab thickness is more than a dark line; small broken segments expose mineral matter.
   p.line(135,214,184,214,c.plane,2);
@@ -422,13 +432,13 @@ function paintMaterialFinish(p: ChamberPixels): void {
   p.line(307,222,325,217,c.plane,2);
   p.line(309,226,324,222,c.concrete,2);
   // Ramp landing transitions continue the exact legal walk polygons, never an added obstacle.
-  p.poly([[284,266],[324,266],[324,269],[286,269]],c.plaster);
+  p.poly([[284,266],[324,266],[324,269],[286,269]],building.coating);
   p.line(288,269,308,269,c.concrete);
-  p.poly([[396,250],[442,250],[442,253],[398,253]],c.plaster);
+  p.poly([[396,250],[442,250],[442,253],[398,253]],building.coating);
   p.line(400,253,434,253,c.concrete);
   // Footing faces include broken coarse material and short, partially buried reinforcement.
-  p.poly([[244,343],[253,342],[259,345],[257,350],[248,349]],c.ash);
-  p.poly([[281,345],[287,344],[290,347],[286,351],[280,350]],c.plaster);
+  p.poly([[244,343],[253,342],[259,345],[257,350],[248,349]],building.ground);
+  p.poly([[281,345],[287,344],[290,347],[286,351],[280,350]],building.coating);
   p.line(312,346,327,346,c.recess,2);
   p.line(314,346,324,346,c.steel);
   p.line(500,334,516,333,c.recess,2);
@@ -451,8 +461,8 @@ function paintRamp(p: ChamberPixels, route: 'left-stair' | 'right-stair'): void 
   // A full load-bearing side cheek joins the raised slab to the lower landing.
   p.poly([[a[0]-7,a[1]-1],[a[0]-1,a[1]-1],[d[0]-1,d[1]+3],[d[0]-7,d[1]+5],[a[0]-7,a[1]+29]],c.concrete);
   p.poly([[a[0]-7,a[1]+4],[a[0]-4,a[1]+6],[d[0]-4,d[1]+3],[d[0]-7,d[1]+5]],c.plane);
-  p.poly([[a[0]-7,a[1]+24],[a[0]-4,a[1]+27],[d[0]-7,d[1]+5],[d[0]-10,d[1]+2]],c.ash);
-  materialFace(p, points, [c.concrete,c.plaster,c.plane], route === 'left-stair' ? 381 : 389, 17, 6);
+  p.poly([[a[0]-7,a[1]+24],[a[0]-4,a[1]+27],[d[0]-7,d[1]+5],[d[0]-10,d[1]+2]],building.ground);
+  materialFace(p, points, [c.concrete,building.coating,c.plane], route === 'left-stair' ? 381 : 389, 17, 6);
   for (let step = 1; step < 7; step++) {
     const t = step / 7;
     const x1 = a[0] + (d[0] - a[0]) * t;
@@ -460,16 +470,16 @@ function paintRamp(p: ChamberPixels, route: 'left-stair' | 'right-stair'): void 
     const x2 = b[0] + (e[0] - b[0]) * t;
     const y2 = b[1] + (e[1] - b[1]) * t;
     p.poly([[x1,y1],[x2,y2],[x2+1,y2+3],[x1+1,y1+3]],c.concrete);
-    p.line(x1+1, y1+2, x2-1, y2+2, c.ash);
+    p.line(x1+1, y1+2, x2-1, y2+2, building.ground);
     p.line(x1+1, y1-1, x2-1, y2-1, c.plane);
-    p.line(x1+8,y1-1,x1+15,y1-1,c.plaster);
+    p.line(x1+8,y1-1,x1+15,y1-1,building.coating);
     if (step === 2 || step === 5) {
-      p.poly([[x1+6,y1-2],[x1+10,y1-2],[x1+12,y1],[x1+8,y1]],c.plaster);
+      p.poly([[x1+6,y1-2],[x1+10,y1-2],[x1+12,y1],[x1+8,y1]],building.coating);
       p.line(x1+16,y1+1,x1+21,y1+1,c.recess);
     }
   }
   // Low cast curb lives just outside the traversable side, never across the opening.
-  p.poly([[a[0] - 5, a[1] - 3], [a[0] - 1, a[1] - 3], [d[0] - 1, d[1] - 2], [d[0] - 5, d[1] - 2]], c.earth);
+  p.poly([[a[0] - 5, a[1] - 3], [a[0] - 1, a[1] - 3], [d[0] - 1, d[1] - 2], [d[0] - 5, d[1] - 2]], building.patch);
 }
 
 function paintJointHousing(p: ChamberPixels, x: number, y: number, side: 'left' | 'top' | 'right'): void {
@@ -495,10 +505,10 @@ function paintJointHousing(p: ChamberPixels, x: number, y: number, side: 'left' 
 /** Front cut wall is low; its silhouette never rises into a legal walking torso. */
 export function paintChamberForeground(p: ChamberPixels): void {
   materialFace(p, [[126,334],[368,334],[392,324],[548,318],[548,323],[393,329],[369,339],[126,339],[95,312],[94,306]],
-    [c.concrete,c.plaster,c.plane], 402, 24, 3);
-  p.poly([[130,337],[168,337],[176,339],[177,341],[151,340],[143,341],[130,340]],c.earth);
-  p.poly([[187,337],[209,337],[213,339],[208,341],[196,340]],c.plaster);
-  p.poly([[451,325],[471,324],[480,326],[474,328],[459,327]],c.earth);
+    [c.concrete,building.coating,c.plane], 402, 24, 3);
+  p.poly([[130,337],[168,337],[176,339],[177,341],[151,340],[143,341],[130,340]],building.patch);
+  p.poly([[187,337],[209,337],[213,339],[208,341],[196,340]],building.coating);
+  p.poly([[451,325],[471,324],[480,326],[474,328],[459,327]],building.patch);
   p.line(245,336,270,336,c.plane);
   p.line(285,337,298,337,c.concrete);
   p.poly([[342,334],[347,334],[350,337],[347,339],[342,338]],c.concrete);

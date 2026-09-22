@@ -1,0 +1,36 @@
+{
+  "baseRevision": "42894d7",
+  "method": "Same-state texture hash comparison against R3 final runtime manifest; current source color literals checked against existing palette. Not aesthetic acceptance.",
+  "checks": [
+    {
+      "state": "normal",
+      "changedTextureLayers": [
+        "architecture",
+        "front-cut"
+      ],
+      "sixDevicesUnchanged": true,
+      "exteriorGroundingResistanceUnchanged": true
+    },
+    {
+      "state": "synthetic-damage",
+      "changedTextureLayers": [
+        "architecture",
+        "front-cut"
+      ],
+      "sixDevicesUnchanged": true,
+      "exteriorGroundingResistanceUnchanged": true
+    }
+  ],
+  "sourceRgbCount": 22,
+  "paletteRgbCount": 39,
+  "colorsWithinExistingPalette": true,
+  "finalSources": {
+    "src/art/purification-chamber-pixels.ts": "bc2e7137ec43aad222e64f4495aa8a33f3894ae4b0d596a07b1e2e18bdd7540d",
+    "src/scenes/purification-chamber-visual.ts": "6b90667d3e419f894798f128c4f3eb9b1eccee0da5c4f185ca5dd985056d5c99",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/scenes/purification-scene.ts": "f78f5b469c95cabf70e89b16715cdf6979ae49e1731b81aee0fa47a1f3428b84",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-chamber-r3.mjs": "72ae5e2a1f2edc6fd8cb9248536fafe88f52f671836a71b96d320a44409e9597",
+    "tools/qa/i30-chamber-driver.mjs": "362ffb46ce44d711f6d6a49dd1ff509e35a16bc163e670a3384730811d8c5d20"
+  }
+}
