@@ -3,7 +3,7 @@
     "id": "COH-F039",
     "title": "原玩家像素、朝向与持物",
     "domain": "presentation",
-    "summary": "正式净化点与 Rift 共用原玩家程序像素、移动方向、武器持物及受击反馈；地图风格变化不替换玩家身份。",
+    "summary": "正式净化点与 Rift 共用原玩家程序像素、移动方向、武器持物及受击反馈；地图风格变化不替换玩家身份。 I30 R4只新增只读灯锚与净化点地面光池委派；原像素/持物保持，Rift默认灯池恢复已实测。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -29,6 +29,18 @@
       {
         "path": "docs/tasks/iteration-28.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r4.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-light-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/entities/player-lamp-aura.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -38,10 +50,11 @@
     ],
     "evidence": [
       "COH-E-SRC-audiovisual",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E-I30-R4-RUNTIME"
     ],
     "unknowns": [
-      "角色保留是当前有效约束；本轮未逐帧复核所有动作。"
+      "原角色身份保持；I30 R4已实测四向动画灯锚及入Rift原灯池，未逐帧复核所有受击/武器动作。"
     ]
   },
   {
@@ -152,7 +165,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "净化点错层厚壳按旧版冷灰主地坪/涂层/断面配色，青绿集中介质与侵蚀，小暖灯保持；六物脚底排序与局部淡出，地面反光按同源边界裁切，公开损伤驱动接触。标题保持。",
+    "summary": "净化点错层厚壳以冷灰承载，局部涂层/旧粘结/回收件/磨耗区分材料；四源驱动地坪、墙、六物接收与局部活动，公开HP调制源强，短方向影和原灯锚接入。黑隙、六物身份与原人物保持；标题不变。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -262,6 +275,34 @@
       {
         "path": "docs/qa/iteration-30-palette.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r4.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-light-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/entities/player-lamp-aura.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/reviews/2026-09-22-purification-light-material.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/scenes/purification-chamber-lighting.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/chamber-light-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i30-light-field.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -279,10 +320,12 @@
       "COH-E-I30-R2-RUNTIME",
       "COH-E-I30-R2-HUMAN-SCORES",
       "COH-E-I30-R3-PRESENTATION",
-      "COH-E-I30-PALETTE"
+      "COH-E-I30-PALETTE",
+      "COH-E-I30-R4-REVIEW",
+      "COH-E-I30-R4-RUNTIME"
     ],
     "unknowns": [
-      "R1已被否决；R2用户评分交互物80/100、结构75/100、场景模型渲染50/100保留。R3场景表现打磨已实现并有限验证，后墙大形及远端残构仍偏简化；等待用户复审，不推定整体或分项最终PASS，手感/初见导航/长期路线成本仍无专项人审。 用户另指出R3暖色过多，已参考旧净化点冷灰主面纠偏，修正版待人审。",
+      "R1已被否决；R2用户评分交互物80/100、结构75/100、场景模型渲染50/100保留。R3场景表现打磨已实现并有限验证，后墙大形及远端残构仍偏简化；等待用户复审，不推定整体或分项最终PASS，手感/初见导航/长期路线成本仍无专项人审。 用户另指出R3暖色过多，已参考旧净化点冷灰主面纠偏，修正版待人审。 R4材料/运行光影已完成一轮实帧修正与限定回归；墙与外残构仍偏概括，维护关系部分成立，待人审。",
       "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   }

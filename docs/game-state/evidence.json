@@ -2003,5 +2003,55 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-R4-REVIEW",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-22",
+    "revision": "09d37a9 baseline -> R4; presentation and lighting-runtime source fingerprints",
+    "scope": "知情独立美术基线/首轮/修后静帧复核与技术诊断；材料身份、光源主次、使用痕迹和新光圈/补块回归。一次实帧修正后建议冻结供人审。",
+    "limitations": "非真人或盲测；静帧不能证明动态/长期观感，厚壳及外残构仍偏概括。旧80/75/50不提升。",
+    "sources": [
+      {
+        "path": "docs/reviews/2026-09-22-purification-light-material.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/artifacts/2026-09-22-purification-light-material/art-r4-final.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R4-RUNTIME",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-22",
+    "revision": "09d37a9 + R4; docs/qa/artifacts/iteration-30-r4/source-hashes.json",
+    "scope": "正常/公开HP合成损伤实帧、三次重入与缓存；真实六点/双坡/设备遮挡/入Rift；四源动态及四向原灯锚、核心两侧方向影和Rift原灯池恢复；51光场+19旧灯池+8024运动检查及build通过。",
+    "limitations": "隔离存档、已知路线；合成损伤不代表自然成长，短时帧样本非全硬件保证。未复跑自然归来/购买/长期循环，审美待人审，I28挂起不解除。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r4.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r4/presentation/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r4/lighting-runtime/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r4/runtime/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r4/source-hashes.json",
+        "role": "doc"
+      }
+    ]
   }
 ]

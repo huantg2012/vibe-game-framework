@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { ChamberFloorLight } from '../art/chamber-floor-light';
+import { PurificationChamberLighting } from './purification-chamber-lighting';
 import {
   CHAMBER_DEVICE_ANCHORS,
   CHAMBER_DEVICE_BASES,
@@ -26,6 +26,7 @@ export interface PurificationChamberState {
   activeTarget: string | null;
   /** Actor image centre. The foot is ten world pixels below this point. */
   player: { x: number; y: number };
+  lamp: { x: number; y: number };
 }
 
 type PulseKind = 'repair' | 'growth' | 'offering';
@@ -60,17 +61,7 @@ export class PurificationChamberVisual {
   private readonly groundEffects: Phaser.GameObjects.Graphics;
   private readonly bodyEffects: Phaser.GameObjects.Graphics;
   private readonly boundaryEffects: Phaser.GameObjects.Graphics;
-  private readonly floorLight = new ChamberFloorLight();
-  private readonly coreReflection = this.floorLight.compile(
-    CHAMBER_DEVICE_BASES.core.x, CHAMBER_DEVICE_BASES.core.y + 5, 45, 15);
-  private readonly growthReflection = this.floorLight.compile(
-    CHAMBER_DEVICE_BASES.growth.x, CHAMBER_DEVICE_BASES.growth.y + 8, 29, 13);
-  private readonly purifierReflection = this.floorLight.compile(
-    CHAMBER_DEVICE_BASES.purifier.x, CHAMBER_DEVICE_BASES.purifier.y + 9, 37, 12);
-  private readonly reflectedLight: Phaser.GameObjects.Graphics;
-  private readonly lampLight: Phaser.GameObjects.Graphics;
-  private lampX = Number.NaN;
-  private lampY = Number.NaN;
+  private readonly lighting: PurificationChamberLighting;
   private readonly resistanceTexture: Phaser.Textures.CanvasTexture;
   private readonly resistancePainter: ChamberPixels;
   private resistanceKey = -1;
@@ -87,12 +78,11 @@ export class PurificationChamberVisual {
   constructor(private readonly scene: Phaser.Scene) {
     const id = ++chamberId;
     this.addCanvas(`purification-chamber-exterior-${id}`, -50, paintChamberExterior);
-    this.addCanvas(`purification-chamber-architecture-${id}`, 10, paintChamberArchitecture);
+    const architecture = this.addCanvas(`purification-chamber-architecture-${id}`, 10, paintChamberArchitecture);
+    this.lighting = new PurificationChamberLighting(scene, architecture);
     this.addCanvas(`purification-chamber-grounding-${id}`, 12, paintChamberGrounding);
     this.resistanceTexture = this.addCanvas(`purification-chamber-resistance-${id}`, 14);
     this.resistancePainter = new ChamberPixels(this.resistanceTexture.context);
-    this.reflectedLight = scene.add.graphics().setDepth(15).setBlendMode(Phaser.BlendModes.ADD);
-    this.lampLight = scene.add.graphics().setDepth(15.2).setBlendMode(Phaser.BlendModes.ADD);
     this.groundEffects = scene.add.graphics().setDepth(16);
     this.boundaryEffects = scene.add.graphics().setDepth(17);
     for (const device of DEVICE_IDS) {
@@ -155,17 +145,13 @@ export class PurificationChamberVisual {
       device.texture.context.clearRect(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
       paintChamberDevice(device.painter, device.id, this.deviceState);
       device.texture.refresh();
+      this.lighting.syncDevice(device.id, device.texture, device.image.depth);
     }
     const frame = Math.floor(timeMs / 80);
     // The body attachment follows every player step even between animation ticks.
     this.bodyEffects.setPosition(Math.round(state.player.x), Math.round(state.player.y));
     this.bodyEffects.setDepth(110 + state.player.y + .5);
-    const lampX = Math.round(state.player.x - 4); const lampY = Math.round(state.player.y + 8);
-    if (lampX !== this.lampX || lampY !== this.lampY) {
-      this.lampX = lampX; this.lampY = lampY;
-      this.lampLight.clear();
-      this.floorLight.paintLamp(this.lampLight, lampX, lampY);
-    }
+    this.lighting.update(timeMs, state);
     if (this.lastFrame === frame) return;
     this.lastFrame = frame;
     this.paintActivity(timeMs, state);
@@ -185,6 +171,7 @@ export class PurificationChamberVisual {
     device.opacity += Math.max(-step, Math.min(step, target - device.opacity));
     device.image.setAlpha(device.opacity);
     device.activity.setAlpha(device.opacity);
+    this.lighting.setDeviceOpacity(device.id, device.opacity);
   }
 
   private paintActivity(time: number, state: PurificationChamberState): void {
@@ -196,36 +183,28 @@ export class PurificationChamberVisual {
     const active = normalizeTarget(state.activeTarget);
     const ground = this.groundEffects;
     ground.clear(); this.bodyEffects.clear(); this.boundaryEffects.clear();
-    // Small material receivers preserve the floor's authored shading. They never tint a wall/base.
-    this.reflectedLight.clear();
-    this.floorLight.paint(this.reflectedLight, this.coreReflection, 0x1aad96,
-      (.075 + breath * .025) * Math.max(.18, state.moduleHealth.core));
-    this.floorLight.paint(this.reflectedLight, this.growthReflection, 0x1a6b5c, .065 + breath * .01);
-    this.floorLight.paint(this.reflectedLight, this.purifierReflection, 0x1a6b5c,
-      (.06 + breath * .01) * Math.max(.18, state.moduleHealth.purifier));
-
     for (const device of this.devices) {
       const g = device.activity;
       g.clear();
       const { x, y } = CHAMBER_DEVICE_BASES[device.id];
       if (device.id === 'core') {
-        const health = Math.max(.15, state.moduleHealth.core);
-        g.fillStyle(0x1aad96, (.42 + breath * .30) * health);
+        const energy = this.lighting.energy('core');
+        const health = energy / .29;
+        g.fillStyle(0x1aad96, Math.min(.88, .76 * health));
         g.fillRect(x - 2, y - 42, 3, 5);
         g.fillRect(x + 1, y - 27, 2, 4);
-        g.fillStyle(0x2ae6c8, (.26 + breath * .38) * health);
+        g.fillStyle(0x2ae6c8, Math.min(.92, .83 * health));
         g.fillRect(x - 1, y - 38, 2, 2);
       } else if (device.id === 'growth') {
         // Independent, small rising bubbles within the full liquid cylinder.
-        g.fillStyle(0x1aad96, .38 + .16 * breath);
+        g.fillStyle(0x1aad96, this.lighting.energy('growth') * 4.0);
         const rise = slowFrame % 24;
         g.fillRect(x - 7, y - 14 - rise, 2, 2);
         g.fillRect(x + 7, y - 15 - ((rise + 11) % 23), 2, 1);
-        g.fillStyle(0x2ae6c8, .25 + .12 * breath);
+        g.fillStyle(0x2ae6c8, this.lighting.energy('growth') * 2.7);
         g.fillRect(x - 6, y - 15 - rise, 1, 1);
       } else if (device.id === 'purifier') {
-        const health = Math.max(.15, state.moduleHealth.purifier);
-        g.fillStyle(0x1aad96, (.28 + breath * .2) * health);
+        g.fillStyle(0x1aad96, this.lighting.energy('purifier') * 2.6);
         g.fillRect(x - 9, y - 23, 2, 4);
         g.fillRect(x + 4, y - 15, 3, 1);
       } else if (device.id === 'storage') {
@@ -296,11 +275,16 @@ export class PurificationChamberVisual {
     }
   }
 
+  syncPlayerLight(player: Readonly<{ x: number; y: number }>, lamp: Readonly<{ x: number; y: number }>): void {
+    if (!this.destroyed) this.lighting.syncPlayer(player, lamp);
+  }
+
   pulse(kind: PulseKind, target?: string): void {
     if (this.destroyed) return;
     this.pulseKind = kind;
     this.pulseStart = this.time;
     this.pulseTarget = normalizeTarget(target) ?? (kind === 'repair' ? 'core' : kind);
+    this.lighting.pulse(this.pulseTarget, this.time);
     this.lastFrame = -1;
   }
 
@@ -308,7 +292,7 @@ export class PurificationChamberVisual {
     if (this.destroyed) return;
     this.destroyed = true;
     this.groundEffects.destroy(); this.bodyEffects.destroy(); this.boundaryEffects.destroy();
-    this.reflectedLight.destroy(); this.lampLight.destroy();
+    this.lighting.destroy();
     for (const device of this.devices) device.activity.destroy();
     for (const image of this.images) image.destroy();
     for (const key of this.textures) if (this.scene.textures.exists(key)) this.scene.textures.remove(key);

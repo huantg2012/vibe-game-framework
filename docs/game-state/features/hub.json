@@ -109,6 +109,34 @@
       {
         "path": "docs/qa/iteration-30-palette.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r4.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-light-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "src/entities/player-lamp-aura.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/reviews/2026-09-22-purification-light-material.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/scenes/purification-chamber-lighting.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/chamber-light-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i30-light-field.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -126,10 +154,12 @@
       "COH-E-I30-R2-RUNTIME",
       "COH-E-I30-R2-HUMAN-SCORES",
       "COH-E-I30-R3-PRESENTATION",
-      "COH-E-I30-PALETTE"
+      "COH-E-I30-PALETTE",
+      "COH-E-I30-R4-REVIEW",
+      "COH-E-I30-R4-RUNTIME"
     ],
     "unknowns": [
-      "R1已被否决；R2用户评分交互物80/100、结构75/100、场景模型渲染50/100保留。R3场景表现打磨已实现并有限验证，后墙大形及远端残构仍偏简化；等待用户复审，不推定整体或分项最终PASS，手感/初见导航/长期路线成本仍无专项人审。 用户另指出R3暖色过多，已参考旧净化点冷灰主面纠偏，修正版待人审。",
+      "R1已被否决；R2用户评分交互物80/100、结构75/100、场景模型渲染50/100保留。R3场景表现打磨已实现并有限验证，后墙大形及远端残构仍偏简化；等待用户复审，不推定整体或分项最终PASS，手感/初见导航/长期路线成本仍无专项人审。 用户另指出R3暖色过多，已参考旧净化点冷灰主面纠偏，修正版待人审。 R4材料/运行光影已完成一轮实帧修正与限定回归；墙与外残构仍偏概括，维护关系部分成立，待人审。",
       "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   },

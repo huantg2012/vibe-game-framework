@@ -13,6 +13,7 @@ interfaces-with:
   - tilemap-renderer           # T6：提供 OccluderGrid（哪些 tile 遮挡视线）
 exposes:
   - Player.getPosition() / getFacingAngle() / getFacing4() / isMoving()
+  - Player.getLampWorldPosition(out) # 只读动画后的灯锚，不推进时钟
   - Player.setSpeedModifier(source, mult) / clearSpeedModifier(source)
   - Player.setInputEnabled(enabled)
   - Player.getGroundY() / setGroundDepth(base, floorDepth) # DEC-120：净化点显式接入
@@ -35,6 +36,8 @@ exposes:
 两层互不重叠，设备与原人物按`100+脚底Y`排序，阴影/地面光独立低层。交互仅限设备所在层、24px操作范围且足部到操作点直线无实体阻挡；坡道中不打开装置。原人物根据实际(dx,dy)选择现有四向帧。
 
 默认`top-down`仍用于Rift，原移动/加减速/朝向光域/恢复不变。新增的getMovementInput与applyConstrainedMovement仍只服务显式约束场景。净化点不使用旧气泡omni遮罩；Rift的VisibilitySystem完整保持。
+
+I30 R4补充纯表现接口：`getLampWorldPosition(out)`写入原角色当前四向灯锚的世界坐标，不改变朝向或动画。净化点显式`externalLampGround=true`，由场景按真实脚底/灯锚绘制裁切光池，原Aura只关闭自己的地面池；其他场景默认false。此选项不影响VisibilitySystem、移动速度、角色图像或灯光玩法范围。
 
 ## 迭代28 · 共享视距倍率与短冲
 

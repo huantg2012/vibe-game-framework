@@ -10,13 +10,17 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30 R3：浅透视错层净化点
+## 迭代30 R4：浅透视错层净化点
 
 `PurificationScene`拥有原归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口处才转换为中心坐标（脚底Y−10）。`PurificationChamberLocomotion`在两层与两宽坡道的联合边界、设备底座上做连续圆扫掠和滑动，不再是一维轨道。Player显式constrained模式复用键盘、原四向精灵、武器与冻结；Rift默认路径不变。
 
 `ChamberModule`提供当前完整度、接近读数与共享效果查询；场景先按楼层/直线可达资格筛选，再按24px距离确定E目标。`PurificationChamberVisual`缓存建筑/壳外/接地层，六物独立透明纹理按100+底座Y排序；人物/武器/灯使用同系脚底排序。公共HP/供奉占用/已购成长驱动有限状态层，不接隐藏预告。场景物体与操作锚分开，面板只聚焦本体。
 
-R3场景表现沿用以上几何与玩法接口。`chamber-floor-light.ts`从同源地面多边形减去装置底座生成像素接收掩膜；核心/培养藏/净化器的有限反光段在构建时编译，活动层重放Graphics而不上传Canvas。原人物灯随整数位置逐帧重绘接收范围，墙/高差立面/空洞和底座不会被地面光染色。局部加色低强度叠加，建筑主要明暗仍由静态材质面承担；三处接触活动仅读取当前公开模块完整度。新增Graphics跟随visual幂等释放，无新资产加载、存档字段、菜单或出击接口。
+R4场景表现沿用以上几何与玩法接口。`chamber-light-field.ts`把实际地面/坡道减去底座，沿同源像素网格检测遮挡，编译24档受光扫描段；自发光底座只在该源的视线检测中豁免，仍不作为地面接收者。墙和设备面从实际透明纹理取接收掩膜，保留黑腔与自发光面，按原材亮度分配响应。墙接收层排除可走地面，不把高差立面当作地面光池。它是2D投影近似，不是完整3D法线或全场光线追踪。
+
+`purification-chamber-lighting.ts`统一核心、培养藏、净化器和小壁灯的源强、地面/墙/设备受光与人物短方向影。源按80ms节奏更新，核心/净化器取当前公开HP，不读取未来冲击；培养藏独立慢节奏。一次源强驱动接收面及源上的活动像素；加厚只脉冲核心/净化器，其他视觉反馈仍归原装置。静态场在创建/公开状态变更时编译，平时重放Graphics，不逐帧重绘或上传Canvas。光层与设备淡出同步，随visual幂等释放。
+
+原`chamber-floor-light.ts`仅继续承接人物小灯池的同源地面裁切。净化点通过PlayerConfig.externalLampGround=true关闭原Aura的地面池，保留原人物、灯点和尘粒，避免两池叠加；其他场景默认false。新增Player.getLampWorldPosition(out)读取原四向灯锚及真实动画位置，POST_UPDATE在player.postUpdate后同步投影，不重复推进动画时钟。人物投影的格线检测使用像素中心，避免负向整数端点越界导致短影断续。无新资产、存档字段、菜单、碰撞或出击机制。
 
 旧TilemapRenderer、BoundaryShape/Atmosphere/Breath、VisibilitySystem、GroundDepthSorter、PurificationCollision仍保留其他现有调用但不在正式净化点实例化；`createPurificationFloorTexture`仅供历史gym。出击前隐藏scene、菜单入场、面板返回、幂等纹理/图形清理保持。净化点位置不入存档，不迁移旧坐标；Rift检查点与既有权益不变。
 

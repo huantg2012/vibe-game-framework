@@ -51,7 +51,7 @@ export class PlayerLampAura {
   private readonly lampLocal: LampLocal;
   private elapsedMs = 0;
 
-  constructor(scene: Phaser.Scene, depth: number, lampLocal: LampLocal) {
+  constructor(scene: Phaser.Scene, depth: number, lampLocal: LampLocal, private readonly externalGround = false) {
     this.lampLocal = lampLocal;
     this.pool = scene.add.image(0, 0, PLAYER_AURA_POOL_KEY);
     this.pool.setDepth(depth - 2);
@@ -89,7 +89,7 @@ export class PlayerLampAura {
 
     this.pool.setPosition(x, y + 10);
     this.pool.setAlpha(walking ? 0.55 : 0.4);
-    this.pool.setVisible(true);
+    this.pool.setVisible(!this.externalGround);
 
     const rise = walking ? 16 : 11;
     for (let i = 0; i < this.motes.length; i++) {

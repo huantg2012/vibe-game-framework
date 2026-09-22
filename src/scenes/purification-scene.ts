@@ -162,7 +162,7 @@ export class PurificationScene extends Phaser.Scene {
   private locomotion: PurificationChamberLocomotion | null = null;
   private readonly chamberState: PurificationChamberState = {
     moduleHealth: { core: 1, storage: 1, purifier: 1 }, thickenLevel: 0,
-    offeringCharge: 0, growthLevels: {}, activeTarget: null, player: { x: 224, y: 286 },
+    offeringCharge: 0, growthLevels: {}, activeTarget: null, player: { x: 224, y: 286 }, lamp: { x: 232, y: 282 },
   };
   private coreModule!: ChamberModule;
   private storageModule!: ChamberModule;
@@ -307,7 +307,7 @@ export class PurificationScene extends Phaser.Scene {
     this.chamber = new PurificationChamberVisual(this);
     this.player.create(this, {
       spawn: chamberFeetToPlayerPosition(CHAMBER_SPAWN_POINT), depth: 100 + CHAMBER_SPAWN_POINT.y, facing: 'right',
-      body: PURIFICATION_PLAYER_BODY, movementMode: 'constrained',
+      body: PURIFICATION_PLAYER_BODY, movementMode: 'constrained', externalLampGround: true,
     });
     this.locomotion = new PurificationChamberLocomotion(this.player);
     const syncWeapon = (): void => {
@@ -648,6 +648,8 @@ export class PurificationScene extends Phaser.Scene {
   private onPostUpdate(): void {
     if (this.shuttingDown) return;
     this.player.postUpdate();
+    this.player.getLampWorldPosition(this.chamberState.lamp);
+    this.chamber?.syncPlayerLight(this.player.getPosition(), this.chamberState.lamp);
   }
 
   private isAnyPanelOpen(): boolean {
@@ -987,6 +989,7 @@ export class PurificationScene extends Phaser.Scene {
     const pos = this.player.getPosition();
     this.chamberState.player.x = pos.x;
     this.chamberState.player.y = pos.y;
+    this.player.getLampWorldPosition(this.chamberState.lamp);
     this.chamber?.update(time, delta, this.chamberState);
   }
 

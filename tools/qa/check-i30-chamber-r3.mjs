@@ -25,7 +25,8 @@ const { chromium } = await import(process.env.PLAYWRIGHT_MODULE
   ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const sourcePaths = [
   'src/art/purification-chamber-pixels.ts', 'src/scenes/purification-chamber-visual.ts',
-  'src/art/chamber-floor-light.ts',
+  'src/art/chamber-floor-light.ts', 'src/art/chamber-light-field.ts',
+  'src/scenes/purification-chamber-lighting.ts', 'src/entities/player.ts', 'src/entities/player-lamp-aura.ts',
   'src/scenes/purification-scene.ts', 'src/systems/purification-chamber-layout.ts',
   'tools/qa/check-i30-chamber-r3.mjs', 'tools/qa/i30-chamber-driver.mjs',
 ];

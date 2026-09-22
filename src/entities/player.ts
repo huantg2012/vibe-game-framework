@@ -47,6 +47,8 @@ export interface PlayerConfig {
   readonly body?: PlayerBodyConfig;
   /** Opt-in path controller; the default keeps the shared top-down Arcade movement. */
   readonly movementMode?: 'top-down' | 'constrained';
+  /** Scene supplies a clipped floor receiver; lamp sprite and dust remain unchanged. */
+  readonly externalLampGround?: boolean;
 }
 
 
@@ -161,7 +163,7 @@ export class Player {
     body.moves = this.movementMode === 'top-down';
 
     this.lag = new FacingLagGhost(scene, idleKey, depth - 1, 0.5, 0.5);
-    this.aura = new PlayerLampAura(scene, depth, this.lampLocal);
+    this.aura = new PlayerLampAura(scene, depth, this.lampLocal, config.externalLampGround ?? false);
     this.shownFacing = this.facing4;
     this.weaponRig = new PlayerWeaponRig(scene, this.image);
 
@@ -248,6 +250,13 @@ export class Player {
 
   getPosition(): Readonly<Vector2> {
     return this.position;
+  }
+
+  /** Writes the actual animated lamp anchor without advancing its clock or allocating. */
+  getLampWorldPosition(out: Vector2): void {
+    const lamp = this.lampLocal[this.facing4];
+    out.x = this.image.x + lamp.x;
+    out.y = this.image.y + lamp.y;
   }
 
   getFacingAngle(): number {
