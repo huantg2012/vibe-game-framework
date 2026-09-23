@@ -51,7 +51,7 @@
     "domain": "interface",
     "summary": "HUD与裂隙就近提示均读取分级公开预兆；未购时强度标疑问，不直接显示真实倍率；无预告时仅显示出击次数。原双行提示和界面层级保持。 R7三模块世界完整度为骨白/危险红侧置细竖规，按角色/持具/灯芯避让，交互范围不变。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "净化点自由行走时自动显示；Tab/HUD 报告入口"
     ],
@@ -107,6 +107,16 @@
       {
         "path": "docs/qa/iteration-30-r7.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/design-notes/purification-scene-art-plan.md",
+        "role": "doc",
+        "note": "R8设计方案，未接入，不替代当前实现合同"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
+        "role": "doc",
+        "note": "R7用户整改反馈与静态根因核实"
       }
     ],
     "dependsOn": [
@@ -122,9 +132,13 @@
       "COH-E-I29-R2-FORECAST-LEAK",
       "COH-E-I29-R3-AUTO",
       "COH-E-I29-R3-RUNTIME",
-      "COH-E-I30-R7-RUNTIME"
+      "COH-E-I30-R7-RUNTIME",
+      "COH-E-I30-R7-HUMAN-CHANGES",
+      "COH-E-I30-R8-DESIGN"
     ],
-    "unknowns": []
+    "unknowns": [
+      "2026-09-23用户要求优化R7七项表现；R8仅设计未实施。完整度范围/硬切、墙构/核心/活动/外景待修；旧技术证据不代表品质通过。"
+    ]
   },
   {
     "id": "COH-F034",
@@ -323,7 +337,7 @@
     "domain": "interface",
     "summary": "共享 overlay 根、尺寸、键鼠选择、检查详情和状态刷新服务于游戏内各面板，不构成独立玩法入口。 R7修复读数侧置，同帧相机投影避让人物/标题/投入列，名称随真实模型顶缘；危险阈值取hp/maxHp<25%。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "各正式面板的键鼠操作、详情检查与关闭"
     ],
@@ -379,6 +393,16 @@
       {
         "path": "docs/qa/iteration-30-r7.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/design-notes/purification-scene-art-plan.md",
+        "role": "doc",
+        "note": "R8设计方案，未接入，不替代当前实现合同"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
+        "role": "doc",
+        "note": "R7用户整改反馈与静态根因核实"
       }
     ],
     "dependsOn": [],
@@ -387,9 +411,12 @@
       "COH-E-I29-R4-RUNTIME",
       "COH-E-GROWTH-RESOURCE-STATES",
       "COH-E-GROWTH-RESOURCE-STATES-HUMAN",
-      "COH-E-I30-R7-RUNTIME"
+      "COH-E-I30-R7-RUNTIME",
+      "COH-E-I30-R7-HUMAN-CHANGES",
+      "COH-E-I30-R8-DESIGN"
     ],
     "unknowns": [
+      "2026-09-23用户要求优化R7七项表现；R8仅设计未实施。完整度范围/硬切、墙构/核心/活动/外景待修；旧技术证据不代表品质通过。",
       "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。"
     ]
   }
