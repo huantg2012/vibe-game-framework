@@ -2300,5 +2300,213 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-R8-INTEGRATION",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R8 working tree on ca1bdf385363c35c12eaa8c27913f95f739c97cf; per-report source hashes/batches",
+    "scope": "R8正式PurificationScene接入作者环境、六设备活动与同源光、观察/操作分离及世界/DOM生命周期。核心保留原主层底座(253,299)、操作锚(284,313)与双坡；效能固定100，容量单列。Rift玩法与原角色绘制不改。",
+    "limitations": "静态入口/调用链事实及已归档专项的范围汇总；真实交易与短窗性能另有记录，最终全场/构建已由总QA封存。production不表示美术或用户验收通过。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-chamber-visual.ts",
+        "role": "code"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-ROUTES",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "ca1bdf385363c35c12eaa8c27913f95f739c97cf plus route report source hashes (2026-09-23)",
+    "scope": "1px八向Dijkstra图每边调用生产stepChamberMovement，保留6px脚底与24px合法操作区。上层后置候选出生→核心+107.151%、核心→储藏+120.357%，均超10%预算；前移候选亦失败，因此保留主层原几何。",
+    "limitations": "通过的是路线比较和主层fallback判定，不是上层方案。距离为离散图结果、秒数按80px/s推算；未测人类走路时间、首次导航或画面品质。改变地面/底座/锚点必须重测。",
+    "sources": [
+      {
+        "path": "tools/qa/measure-i30-r8-routes.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/routes.json",
+        "role": "doc",
+        "note": "生产运动函数的离散路线比较；主层 fallback，非人类走路计时"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-ENVIRONMENT",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R8 working tree on ca1bdf385363c35c12eaa8c27913f95f739c97cf; per-report source hashes/batches",
+    "scope": "正式painter离屏导出environment-03；地坪alpha逐像素等于两层与双坡并集，建筑/前缘/外景作者面关联normal与height。三层外景及材质纹理有可复查导出。",
+    "limitations": "只证明所记导出批次的覆盖/面属性与资产生成；早期构图含施工中核心，不能验证最终主体/光照/观感。环境后续最终导出及整景品质由总QA和独立复评分别记录。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r8-environment.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/environment-03/summary.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/environment-03/surface-manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/art-pipeline/purification-r8.ts",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-INTEGRITY",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R8 working tree; integrity report records base 50a1935, exact batch in final manifest",
+    "scope": "隔离正式首页→净化点：真实WASD到核心正前可观察而不可E；核心E/Esc三轮、储藏/净化器各一轮，283渲染帧/13项限定检查无世界DOM双显、无角色/持具/灯/设备/控件覆盖。UI夹具核0/24/25/70/100/115、真容量比例、失效端帽和100/115稳定状态。",
+    "limitations": "报告另存15198位置、91早期生命周期及21观察纯检查；不均匀delta双显在独立技术复核后另修复。UI夹具未广播全场损伤视效，不能证明真实加厚支付或核心损伤光；测试批次以manifest/hash为准，不代用户审美。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r8-integrity.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/integrity-runtime-final/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-integrity-runtime.mjs",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-MOTION",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R8 working tree on ca1bdf385363c35c12eaa8c27913f95f739c97cf; per-report source hashes/batches",
+    "scope": "六atlas由活动层拥有，纯采样/像素约束与隔离纹理生命周期检查已报告。正式场景正常31.2秒、真实启动24/0/70损伤31秒待机，真实修复CORE24→28；暂停/减动/三次重入有记录。后续110次真实采样补证核心/培养藏/净化器活动与源光同源。",
+    "limitations": "早期31秒录像早于最后次光与供奉完成接线，后续paired-light与真实交易分别标批次。帧变化不等于每个工作动词成熟；纹理RGBA估算不等于显存峰值，无声录屏不验证音频。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r8-motion.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/motion-play/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/motion-runtime/allocation.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/motion-light/phase.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-TECHNICAL",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R8 working tree on ca1bdf385363c35c12eaa8c27913f95f739c97cf; per-report source hashes/batches",
+    "scope": "独立复现不均匀delta[100,100,50,100,84,16]使两世界条双显；修复改为真实开始退场后累加180ms。原生产Selection+两个Lifecycle反例重放并续16帧，旧条归零后新条才显示，最终新条达1。有限源码复核覆盖时间、纹理所有权、观察墙面、同帧投影、关闭销毁与固定100效能。",
+    "limitations": "pass只覆盖实际反例修后重放；未重跑根新增整套113检查，未开浏览器/重建全部艺术产物；静态未见其他确定P1/P2不是全轮无缺陷保证。报告保留初查与修后hash。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r8-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/chamber-integrity-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-lifecycle.ts",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-REVIEW",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R8 working tree on ca1bdf385363c35c12eaa8c27913f95f739c97cf; per-report source hashes/batches",
+    "scope": "独立艺术代理按原尺度全景、聚焦帧与分批无声视频时间采样复评：大墙形、材料、核心主焦点/活腔、状态端帽与供奉空/有/返空因果已有可见改善。保留V01核心后景/坡道相切、V02右墙承接、V03外景近中远关系三个P2。",
+    "limitations": "这是知情专家视觉复评，不是人类认可、盲测或全连续观看；没有签可发布美术完成。储藏/净化器/供奉常态轻动作不能凭帧号签收，入口仍有放射倾向；音频与自然长期循环未审。",
+    "sources": [
+      {
+        "path": "docs/reviews/2026-09-23-purification-r8-implementation.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-TRANSACTIONS",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R8 working tree on ca1bdf385363c35c12eaa8c27913f95f739c97cf; controlled transaction fixture and journal",
+    "scope": "启动前受控成长阶段与近成熟供物夹具，随后真实WASD/E：加厚三模块100/100→100/115、消费12薪柴，公开health均1且同静置相位coreLight前后均0.457；真实放入供奉、出击、放弃、归来冲击后成熟，关报告后释放表现。manifest ok:true、errors为空。",
+    "limitations": "不是自然获得物品或完整三次供奉进度：供物在启动前预置近成熟。只验证所记真实输入/交易和结果反馈，不证明长期经济、所有成长路径或用户美术通过。最终总QA已封存。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/transactions/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-transactions.mjs",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R8-PERFORMANCE",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-23",
+    "revision": "R7 50a1935 vs 2026-09-23 R8 working tree; exact R8 source hashes in performance manifest",
+    "scope": "同一headless Chrome/WebGL进程、1440×960、独立context串行各10秒待机：R7/R8均601帧、median/p95均16.7ms；CPU Task1.245094→1.978217秒（约+58.9%，每帧2.07→3.29ms）。纹理2,816,000→3,958,784像素，RGBA单份估算增加4,571,136字节（约4.36MiB）；两次无页面错误。",
+    "limitations": "单次短窗，非长期p95、硬件CPU/GPU性能认证或内存泄漏证明；帧周期受60Hz上限约束，不能据相同帧时间声称无成本。RGBA估算不含驱动padding与其他surface buffer。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/performance/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/measure-i30-r8-performance.mjs",
+        "role": "test"
+      }
+    ]
   }
 ]

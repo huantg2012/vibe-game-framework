@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-22
+last-modified: 2026-09-23
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,33 +10,29 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30 R7：浅透视错层净化点
+## 迭代30 R8：作者分层场景、装置活层与可观察读数
 
-`PurificationScene`拥有原归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口处才转换为中心坐标（脚底Y−10）。`PurificationChamberLocomotion`在两层与两宽坡道的联合边界、设备底座上做连续圆扫掠和滑动，不再是一维轨道。Player显式constrained模式复用键盘、原四向精灵、武器与冻结；Rift默认路径不变。
+`PurificationScene`仍拥有归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口才转换为中心坐标（脚底Y−10）。两层、双宽坡的连续圆足扫掠与滑动归`PurificationChamberLocomotion`；原人物/武器/灯、八向输入与Rift默认路径保持。核心留在主层(253,299)，操作点(284,313)，新壳最高91px，轮廓bounds为[-30,-92,32,3]，34×20底座不变；路线成本核查使上移构图退回主层。
 
-`ChamberModule`提供当前完整度、接近读数与共享效果查询；场景先按楼层/直线可达资格筛选，再按24px距离确定E目标。`PurificationChamberVisual`缓存建筑/壳外/接地层，六物独立透明纹理按100+底座Y排序；人物/武器/灯使用同系脚底排序。公共HP/供奉占用/已购成长驱动有限状态层，不接隐藏预告。场景物体与操作锚分开，面板只聚焦本体。
+**场景资产。** `assets/source/purification-r8/environment.ts`是640×400具名面源，含室内architecture/floor/foreground与壳外far/middle/near；`chamber-authored-architecture.ts`把这些面和既有可走多边形栅格化为色图与表面图。材质的大尺度矿物场、定向层积与稀疏骨料只改同一宿主的色；不根据亮度生成浮雕。`tools/art-pipeline/purification-r8.ts`输出同源分层SVG、albedo/baked/normals/height PNG与面清单；无需维护另一套预览绘制。历史R7鼠啃缺口与22格色板冻结不再限制专用作者资产，角色像素尺度不改。
 
-R5场景表现沿用以上几何与玩法接口。`chamber-light-field.ts`把实际地面/坡道减去底座，沿同源像素网格检测遮挡，编译24档受光扫描段；自发光底座只在该源的视线检测中豁免，仍不作为地面接收者。墙和设备面从实际透明纹理取接收掩膜，保留黑腔与自发光面，按原材亮度及显式表面方向分配响应。墙接收层排除可走地面，不把高差立面当作地面光池。
+`purification-chamber-pixels.ts`保留`ChamberPixels`、静态装置壳与兼容出口，完整建筑转发给新作者资产。`chamber-exterior-pixels.ts`提供三层生产入口与整图兼容入口。三层depth−60/−55/−50、相机跟随率.12/.52/1，在真实camera平移时补偿位置，不自行漂移。`ChamberExteriorAtmosphere`编译近处接触实体的冷面光/有限输运，另画中层局部遮蔽；动态只重放Graphics，远层无粒子，减少动态时保留稳态反射。visual统一负责创建、更新、幂等释放。
 
-R6将 `paintChamberExterior` 独立到 `chamber-exterior-pixels.ts`，色板与 horizontal/upright/materialFace 共用 `chamber-pixel-helpers.ts`；原 `purification-chamber-pixels.ts` 保留 `ChamberPixels`、室内/装置绘制，并 re-export 原出口，场景调用接口不变。新模块反向仅有 type import，运行时依赖无环。外景和室内独立施工，仍在同一套光照/面属性与缓存生命周期中；QA 指纹包含三个绘图源，绘制调用统计覆盖新外景模块。
+**表面与光。** `chamber-surface-map.ts`提供与颜色同栅格的覆盖、法线、高程、遮蔽、粗糙度。`ChamberPixels.rect/poly`在实际整数fillRect处写面；局部设备平移包含主层0/上层32，坡面32→0连续，脚底不重复投影。`setPlane(null)`保留宿主表面；可见面约定X=x、Y=y+height、Z=height，是作者提供的有限2.5D数据，不是完整闭合模型。
 
-R7新增 `ChamberExteriorAtmosphere`：从壳外原材色与临时表面图编译三处低能冷面光；不保留临时图引用，光层depth−49/粒子depth−48，均在建筑/人物后。12个碎屑固定在外部四条区域，100ms更新Graphics、无Canvas上传或新纹理。壳外和前切继续复用临时表面图。visual创建、update和destroy统一管理，出击及重入必须无残留。
+固定方向光和接触遮蔽在新绘原材色上缓存烘焙；动态光消费原始albedo，保留透明孔/黑腔/发光像素，避免将烘焙后的暗材误判成空洞。`chamber-light-field.ts`由实际地面、坡道、底座与面数据编译24档受光扫描段；同源设备alpha/高度提供所在水平面的短投影。建筑表面图常驻，六设备状态烘焙共享scratch，壳外/前景复用创建期临时表面图。
 
-核心开腔增高后，光源改为(253,253)、Z46，常态源强.43±.06（仍随当前完整度衰减）；其他源退到次级。内芯活动坐标、人物遮挡范围与交互投影边界同步，底座/可走位置不动。新的材料面和真实边缘缺口仍由同一扫描线写入RGBA与面数据，不新增碰撞地形。
+`purification-chamber-lighting.ts`统一核心、培养藏、净化器、壁灯和人物短影。核心源(253,240)、Z59，源强读取`sampleCoreMotion`，主体姿态与光共享一次动作；培养藏/净化器读`sampleDeviceLight`，不另写不同相位的sin。动态面光按80ms重放缓存，设备淡出与对应光层同步。公开运行效能使用min(1,hp/100)，不再用hp/maxHp削弱加厚后的活动和光；无未来冲击数据。`chamber-floor-light.ts`继续只承担原人物灯池的地面裁切；Player.externalLampGround关闭原Aura重复地面池，其他场景默认路径不动。
 
-`chamber-surface-map.ts`增加与640×400色图同栅格的覆盖、法线、高度、遮蔽和粗糙度缓存。`ChamberPixels.rect/poly`在实际fillRect的同一扫描段写入面属性；局部设备坐标显式平移，高层32、主层0、坡面32→0连续，脚底已投影坐标不重复扣高度。材料补丁/磨损以null面继承宿主，不从裂纹颜色自动生成浮雕。可见面采用X=x、Y=y+height、Z=height；其他墙体高度是美术明确提供的有限近似，不推定完整闭合3D网格。
+**装置活动。** `chamber-device-motion.ts`拥有确定性姿态/光采样、局部像素绘制、静态裂岸与沿缝活动的共享几何；`ChamberDeviceActivity`拥有6张裁切图集。核心36帧、供奉32帧、其余各24帧，共630,784像素，RGBA约2.41MiB（canvas与GPU各一份约4.82MiB，不含驱动开销）。正常更新只切帧，健康档位或空/有供物改变才局部重建；实例销毁删除所有图集与Image。视效不消费玩法RNG。
 
-固定方向主光、少量方向填光与短程邻面接触遮蔽，在新绘原材色上一次性烘焙，保留透明孔、黑腔和发光像素。建筑、外残构、前景断面与六设备共用此能力；建筑表面图常驻，六设备公态更新共用一张scratch表面图，外部/前景共用创建期临时图。四个动态源以自身位置/高度计算Lambert方向响应，再编译现有24档扫描段；材质资格来自烘焙返回的原始albedo，不把固定主光压暗的实体误判为黑腔，不逐帧重算整张图。固定主光方向另从真实设备alpha/高度投影到其所在水平地坪，排除坡道、异层、墙与底座，公开形态改变时重编译、独立Graphics缓存。这是有限2.5D照明和短投影，不宣称全场阴影或光线追踪。
+修复成功才触发对应1–2秒动作，成长成功触发培养藏；新供奉由成功库存提交的槽位变化触发锁合，`offering-complete`只由已持久化、报告结束后的实际转化结果触发释放。占槽比例仅为占用，不是充能/成熟。重复脉冲替换表现而不排队、不延迟权益；减少动态保留固定主体与简化结果，暂停/销毁不留额外循环。原六装置壳仍独立按100+底座Y排序，裂隙在地面18层，活层沿同一排序并随设备遮挡淡出。
 
-`purification-chamber-lighting.ts`统一核心、培养藏、净化器和小壁灯的源强、地面/墙/设备受光与人物短方向影。源按80ms节奏更新，核心/净化器取当前公开HP，不读取未来冲击；培养藏独立慢节奏。一次源强驱动接收面及源上的活动像素；加厚只脉冲核心/净化器，其他视觉反馈仍归原装置。静态场在创建/公开状态变更时编译，平时重放Graphics，不逐帧重绘或上传Canvas。光层与设备淡出同步，随visual幂等释放。
+**观察和读数。** `ChamberModule`保留原E资格；场景操作仍要求同层、24px操作锚距离与足部直达。`chamber-observation.ts`另算脚底到实际底座的最近距离，并从人物眼高向机体九个采样点检测同源建筑/前沿作者面；至少一个可见则允许观察。它不复用足部圆扫掠，也不凭route名否决坡口可见对象；建筑被实际地坪覆盖的understructure不误算遮挡，不把外景或纯装饰当墙。
 
-R7完整度读数共用 `ui/chamber-integrity-placement.ts`：三装置实际轮廓同时供绘图遮挡和UI投影使用；候选优先人物反侧、中心8px迟滞，遮挡立即换侧，再尝试垂直避让。`Player.getVisualBounds(out)`聚合身体/上身/旋转持具/灯芯，只读不变更玩法。世界2×24竖规在POST_UPDATE姿态同步后绘制；聚焦104px DOM读数由`game.events`的`Core.PRE_RENDER`订阅跟随本帧镜头，避免独立rAF慢一拍。关闭和shutdown解绑；历史无订阅context仍用rAF，普通无context面板保持原路径。可见范围/修复条件不变，固定overlay坐标与状态色见UI Kit。
+`ChamberIntegritySelection`按44进入/58退出、120ms候选稳定与单一拥有者选择；`ChamberIntegrityLifecycle`让世界条和聚焦DOM共享160ms淡入、250ms离开保留＋180ms淡出、60ms换侧退场＋140ms入场。遮人立即隐去，安全侧稳定后原地出现，不让读数穿过人物。`chamber-integrity-placement.ts`共用真实轮廓、人物/持具/灯的`Player.getVisualBounds(out)`、其他设备、视口与面板保留区；世界条在POST_UPDATE后绘制，DOM在game PRE_RENDER按本帧镜头投影，关闭/shutdown解绑。仅hp/maxHp决定条长；稳定/受损/危险/失效按100/25/0固定HP阈值，颜色与文字归UI Kit。Tab完整报告和真实修复资格不扩大。
 
-原`chamber-floor-light.ts`仅继续承接人物小灯池的同源地面裁切。净化点通过PlayerConfig.externalLampGround=true关闭原Aura的地面池，保留原人物、灯点和尘粒，避免两池叠加；其他场景默认false。新增Player.getLampWorldPosition(out)读取原四向灯锚及真实动画位置，POST_UPDATE在player.postUpdate后同步投影，不重复推进动画时钟。人物投影的格线检测使用像素中心，避免负向整数端点越界导致短影断续。无新资产、存档字段、菜单、碰撞或出击机制。
-
-旧TilemapRenderer、BoundaryShape/Atmosphere/Breath、VisibilitySystem、GroundDepthSorter、PurificationCollision仍保留其他现有调用但不在正式净化点实例化；`createPurificationFloorTexture`仅供历史gym。出击前隐藏scene、菜单入场、面板返回、幂等纹理/图形清理保持。净化点位置不入存档，不迁移旧坐标；Rift检查点与既有权益不变。
-
-下方I29/12圆膜、旧锚点/贴图和旧排序段仅作历史实现说明，当前接入以上述代码为准。R1 c3b1d9f 的灰钢轨道版已被用户否决（DEC-180）；新技术接入不等于审美通过。
+没有新增存档字段、价格、成长、碰撞或出击机制。旧TilemapRenderer、Boundary系统、VisibilitySystem、GroundDepthSorter、PurificationCollision不在正式净化点实例化；仍有其他调用或历史gym。下方I29/12圆膜与旧排序只记录历史实现，不能覆盖本节。R8接入与有限测试不代表用户审美通过；现状与未覆盖证据归任务/QA索引。
 
 ## 迭代29：净化点投入表现与线性成长（R3）
 
@@ -470,8 +466,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | PlayerSpriteDense | src/entities/player-sprite-dense.ts | 玩家加厚工业像素（面罩/背包/分腿/灯壳体；侧影加厚、暖灰）。出击成品（DEC-068） | generateDensePlayerPlaceholders, densePlayerMotionTexture | 已实现（2026-08-20） |
 | PlayerLampAura | src/entities/player-lamp-aura.ts | 灯尘、脚底暖斑。叠在加厚玩家上（出击与练习场） | generatePlayerLampAuraTextures, PlayerLampAura | 已实现（2026-08-20） |
 | ActorMotion | src/entities/actor-motion.ts | 步态帧选取与转向滞后剪影。不写 facingAngle、不转 GameObject | pingPongFrame, FacingLagGhost, isActorWalking | 已实现（2026-08-20） |
-| GroundDepthSorter | src/systems/ground-depth.ts | 净化点地面接触点排序，受限层段及稳定同y次序 | constructor(targets), update() | 已实现（DEC-120） |
-| PurificationCollision | src/systems/purification-collision.ts | 五台装置薄底座、共享物理锚点和净化点脚底体；场景生命周期清理 | PURIFICATION_PLAYER_BODY / DEVICE_FOOTPRINTS / DEVICE_ANCHORS / SPAWN_POINT, constructor(scene,player,anchors), destroy() | 已实现（I12-C） |
+| GroundDepthSorter | src/systems/ground-depth.ts | Rift与练习场地面接触点排序，受限层段及稳定同y次序；I30净化点改由独立设备脚底深度负责 | constructor(targets), update() | 已实现（DEC-120） |
+| PurificationCollision | src/systems/purification-collision.ts | 历史平面净化点薄底座与物理锚点；I30正式场景已改用ChamberLocomotion圆足扫掠 | PURIFICATION_PLAYER_BODY / DEVICE_FOOTPRINTS / DEVICE_ANCHORS / SPAWN_POINT, constructor(scene,player,anchors), destroy() | 已实现（I12-C） |
 | VisibilitySystem | src/systems/visibility-system.ts | 玩家视野 raycasting + 32 层等照线带遮罩（带半径 = 参考光场等照线 ∩ 射程曲线，逐射线墙截断）+ teal 软内缘（v3 几何环）+ 双八度迷雾颗粒 + 热核光池曲线 + 混乱值调制（Rift+Purification 共用）。纹理与曲线纯函数 `src/systems/vision-textures.ts`（闸门共用，不是新运行时系统） | create(scene, config, occluders), update(origin, facing, dt), setRadiusScale(), setEdgeCorruption(), setScreenFlicker(), isPointVisible(), getVisibilityAt(), getEffectiveRadius(), registerGlowSource(), unregisterGlowSource(), getStats(), destroy() | 已实现（T5；I9-FINAL / DEC-107 表现层终审定版 2026-08-29） |
 | GridRaycast | src/utils/grid-raycast.ts | 网格 DDA 射线（含对角缝隙规则）；无状态纯函数，视野与敌人 AI 共用同一套遮挡判定。`hasClearPath()` 是同一射线的双侧偏移版，回答"这么宽的身体过不过得去"（DEC-021），**不是视线判定，禁止用于感知** | castRay(), castRayDirection(), hasLineOfSight(), hasClearPath(), createRayHit() | 已实现（T5，T7 增 hasClearPath） |
 | TileGrid | src/systems/tile-grid.ts | tile 数据的唯一真相，同时实现 OccluderGrid（视线）与 WalkGrid（寻路）；纯数据无 Phaser 依赖 | getTile(), isOpaque(), isWalkable(), isWalkableAt(), setTile(), tileToWorld(), worldToTile(), version | 已实现（T6） |
@@ -518,9 +514,9 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ExtractionSystem | src/systems/extraction-system.ts | 撤离点脉冲标记渲染与撤离请求判定（不 import 其他系统，视野 glow 源经注入回调注册） | create(scene, extractionPoint, getPlayerPosition, isRunEnded, config?), update(deltaMs), canExtract(), requestExtract(), reset(), destroy() | 已实现 |
 | LootSystem | src/systems/loot-system.ts | **已退役（迭代 10）**。overlap 触碰拾取与金色晶体外观由 `LootSearchSystem` 取代 | — | SUPERSEDED |
 | TrailSystem | src/systems/trail-system.ts | 玩家足迹余迹渲染（仅视野内可见，随混乱值加速消退，仅绘制相机视口内 tile） | create(scene, mapWidth, tileSize, getVisibility), update(playerTileX, playerTileY, chaosValue, deltaMs), reset(), destroy() | 已实现 |
-| BoundaryShape | src/systems/boundary-shape.ts | 净化点边界几何的唯一真相：潮汐驱动的极坐标压力 blob（椭圆 × 潮汐缩放 × 方向压力叶 × 交互点安全钳制）。每次 scene create 构建一次，构建后为无状态廉价查询 | `createBoundaryShape(config)`：radiusAt(angle), normalizedDist(x,y), isInside(x,y), pressureAt(angle), pressureDirection, tideScale, centerX/centerY | 已实现（Slice 4.5） |
+| BoundaryShape | src/systems/boundary-shape.ts | 旧平面/练习场兼容几何：潮汐驱动的极坐标压力 blob（椭圆 × 潮汐缩放 × 方向压力叶 × 交互点安全钳制）。每次 scene create 构建一次，构建后为无状态廉价查询 | `createBoundaryShape(config)`：radiusAt(angle), normalizedDist(x,y), isInside(x,y), pressureAt(angle), pressureDirection, tideScale, centerX/centerY | 已实现（Slice 4.5） |
 | BoundaryBreath | src/systems/boundary-breath.ts | 边界局部压力冲击与膜变形的纯视觉叠加层（并发短弧向内扫入 + 虚空侵入楔形 + 膜线内凹）。不参与碰撞/可见性/gameplay | create(scene, shape, tidePhase), update(dt), destroy() | 已实现（Slice 4.5） |
-| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外粒子与 apparition 氛围渲染；生成/消亡半径跟随 BoundaryShape 而非固定圆 | create(scene, shape), update(dt), destroy() | 已实现（Slice 2，Slice 4.5 改为跟随 blob） |
+| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 旧平面净化点边界外粒子与apparition；I30正式场景由ChamberExteriorAtmosphere替代 | create(scene, shape), update(dt), destroy() | 已实现（Slice 2，Slice 4.5 改为跟随 blob） |
 | ProceduralSurface | src/systems/procedural-surface.ts | 每次出击烤一次地表（含雾；尘点不烤死）；天空+尘点低分辨率叠层只改 phase，沿本趟 windX/Y。**氛围簇应用已下线（DEC-104 / I8-G）：** `bakeGround` 缺省不铺无主簇；出击与地图课不传整图呼吸。晶结 / 溶蚀 / 平涂只练习场对照。L1 渍/纹理/划痕仍在。`deriveContamRamp` 仍服务敌人四档与占漆配色。DEC-097：最终量化不再把虚空/暗地吸进青绿亮端 | RiftSurfacePainter.mount(scene, ruins, key, depth, opts?) / update / destroy | 已实现（Slice 6；尘点跟天空同一份 AtmosphereField；DEC-104 氛围簇下线；DEC-070/071 活层技术转占漆宿主；I6-C / I6-D / DEC-097 仍在） |
 | ClusterPulse | src/systems/cluster-pulse.ts | **对照用。** 菌毯 / 灰幕旧皮仍可走 `paintClusterBreath`。出击地面不再挂整图呼吸（DEC-104） | paintClusterBreath(out, width, height, field, elapsedMs) | 已实现（氛围应用已下线；旧皮对照保留；迷雾下亮度人终审 PASS） |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素程序化生成（7 层：石板噪声/冷暖径向/踩踏痕/接缝/暖屑/边界 vignette/teal 渗点）；vignette 直接读 BoundaryShape 的梯度带，软过渡替代硬墙 | createPurificationSurfaceTexture(scene, map, key, shape, interactionPoints) | 已实现（Slice 4.5） |
@@ -803,7 +799,7 @@ MainMenuScene (标题/开始/继续)
 
 > 图中箭头是**数据流向**，不是调用关系。Combat → AI 的两条事件由 `RiftScene` 转译为 `reportDamage()` / `despawn()`；战斗的噪声（挥空也会发出，因此没有对应事件）走 `create()` 注入的 `CombatHooks.onNoise` 回调，同样由场景层转调 `AISystem.reportNoise()`。两个系统互不 import。
 
-## 净化点场景技术方案 (PurificationScene)
+## 历史平面净化点方案（I30已替代，不作为当前合同）
 
 ### 设计概述
 
@@ -903,9 +899,9 @@ Slice 4.5 前，净化点的边界是"tile 判定出的固定圆 + 边界外粒�
 
 | 模块 | 路径 | 职责 |
 | ---- | ---- | ---- |
-| BoundaryShape | src/systems/boundary-shape.ts | 边界几何唯一真相（潮汐驱动的压力 blob） |
+| BoundaryShape | src/systems/boundary-shape.ts | 历史平面/练习场兼容几何（I30不用作正式碰撞） |
 | BoundaryBreath | src/systems/boundary-breath.ts | 边界局部压力冲击与膜变形（纯视觉） |
-| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 净化点边界外的黑暗+模糊内容周期性渲染 |
+| BoundaryAtmosphere | src/systems/boundary-atmosphere.ts | 历史平面外部模糊内容；I30已换三层作者资产与局部接触活动 |
 | ProceduralPurificationSurface | src/systems/procedural-purification-surface.ts | 净化点地表逐像素生成 + 边界 vignette |
 | InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互（overlap 检测 + 提示 + 面板激活） |
 

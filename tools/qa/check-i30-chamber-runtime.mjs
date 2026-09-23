@@ -141,17 +141,37 @@ try {
   const riftStart = await d.state();
   assert.equal(riftStart.scene, 'rift');
   assert.equal(riftStart.active, true);
-  const movementBefore = { ...riftStart.pos };
-  await d.hold(['w'], 250);
-  const afterW = await d.state();
-  assert(afterW.pos.y < movementBefore.y - 3, 'Rift W must still move freely on the top-down Y axis');
-  await d.hold(['d'], 250);
-  const afterD = await d.state();
-  assert(afterD.pos.x > afterW.pos.x + 3, 'Rift D must still move on the top-down X axis');
+  // The new random world may spawn beside a void. Choose an actually clear
+  // direction on each axis, using the original body and floor grid read-only.
+  manifest.riftMovement = [];
+  for (const axis of ['y', 'x']) {
+    const direction = await page.evaluate(axis => {
+      const scene = window.__game.scene.getScene('RiftScene');
+      const body = scene.player.getSprite().body, grid = scene.formFloorGrid;
+      for (const sign of axis === 'y' ? [-1,1] : [1,-1]) {
+        let clear = true;
+        for (let step=0;step<=20&&clear;step+=2) {
+          const x=body.center.x+(axis==='x'?step*sign:0), y=body.center.y+(axis==='y'?step*sign:0);
+          for (const dx of [-body.halfWidth,0,body.halfWidth])
+            for (const dy of [-body.halfHeight,0,body.halfHeight])
+              if(!grid.isWalkableAt(x+dx,y+dy)) clear=false;
+        }
+        if(clear) return sign;
+      }
+      return 0;
+    },axis);
+    assert(direction!==0,`Rift spawn lacks a clear ${axis}-axis probe; choose a real floor route before asserting movement`);
+    const before=(await d.state()).pos;
+    const key=axis==='x'?(direction>0?'d':'a'):(direction>0?'s':'w');
+    await d.hold([key],180);
+    const after=(await d.state()).pos;
+    assert((after[axis]-before[axis])*direction>3,`Rift ${key} must move on clear ${axis} axis`);
+    manifest.riftMovement.push({axis,key,before,after});
+  }
   await d.snap('13-rift-topdown-regression');
   await d.press('Escape');
   await d.ledger('fresh-session-end');
-  manifest.scope.push('Production entrance -> fresh Rift via Shift+Enter; W and D retain top-down movement');
+  manifest.scope.push('Production entrance -> fresh Rift via Shift+Enter; Both axes retain top-down movement on read-only verified floor clearance');
   assert.deepEqual(errors, [], 'No browser runtime errors');
   manifest.ok = true;
 } catch (error) {

@@ -1,0 +1,4874 @@
+{
+  "revision": "r8-authored-01",
+  "source": "assets/source/purification-r8/environment.ts",
+  "projection": "X=x, Y=y+Z, Z=elevation",
+  "size": {
+    "width": 640,
+    "height": 400
+  },
+  "heightEncoding": "R*256+G; elevation=(value-32768)/32; alpha=coverage",
+  "normalEncoding": "RGB=(normal+1)*127.5; alpha=coverage",
+  "note": "No dynamic light. Device comparison uses current production painter. Human art judgment remains open.",
+  "layers": [
+    {
+      "layer": "far",
+      "opaque": 256000,
+      "mapped": 0,
+      "hash": "f9d49c8f3e0d432a89bed55de7e5e24bbf585082e46b25210134a5a9bf68b4cf"
+    },
+    {
+      "layer": "middle",
+      "opaque": 29430,
+      "mapped": 29430,
+      "hash": "2570f5b37508513a2319c828dcecc0074bcab18d310c150bfdb7b0010da63bea"
+    },
+    {
+      "layer": "near",
+      "opaque": 20797,
+      "mapped": 20578,
+      "hash": "4cb728c558250ee247865055046476fd3fcdaff24d99b42b9e5c074f517212dd"
+    },
+    {
+      "layer": "architecture",
+      "opaque": 128160,
+      "mapped": 128160,
+      "hash": "32e81c080fd9d4cf2347cbc9b5d185454bf13bfc381fd315c2392c66d519b7f7"
+    },
+    {
+      "layer": "floor",
+      "opaque": 56901,
+      "mapped": 56901,
+      "hash": "e0bd8d8b437cff1d9368bef63ae9f3ce6c145df6e5080df09024349fe2c9d9d8"
+    },
+    {
+      "layer": "foreground",
+      "opaque": 2253,
+      "mapped": 2253,
+      "hash": "d6e71a6558f221ecd93711a5c69a461a2a1572fb2bcdcca141cb18c6c78647eb"
+    }
+  ],
+  "materials": {
+    "void": "#080b10",
+    "far": "#111922",
+    "farTop": "#19212c",
+    "farReturn": "#0d121a",
+    "distant": "#202b37",
+    "distantTop": "#303f4b",
+    "distantSide": "#141e29",
+    "outer": "#293440",
+    "outerTop": "#44515b",
+    "outerShade": "#1a2330",
+    "cavity": "#151b23",
+    "deep": "#10161d",
+    "underside": "#1c202b",
+    "concrete": "#4b515b",
+    "concreteDark": "#333d48",
+    "cap": "#65717a",
+    "capWorn": "#788088",
+    "slate": "#455461",
+    "slateShade": "#354450",
+    "slateWorn": "#56636b",
+    "plaster": "#716c65",
+    "plasterShade": "#55524f",
+    "plasterWorn": "#898177",
+    "binder": "#665347",
+    "binderShade": "#443a35",
+    "lime": "#a19482",
+    "floor": "#414d57",
+    "floorOld": "#4a555d",
+    "floorWear": "#556068",
+    "floorShade": "#353f49",
+    "upper": "#535d65",
+    "upperWear": "#626b70",
+    "upperOld": "#5e605e",
+    "steel": "#343b43",
+    "steelEdge": "#626d77",
+    "steelSide": "#252c35",
+    "intrusion": "#15473f",
+    "intrusionDim": "#12302f"
+  },
+  "faces": [
+    {
+      "id": "unbounded-dark",
+      "layer": "far",
+      "color": "#080b10",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          640,
+          0
+        ],
+        [
+          640,
+          400
+        ],
+        [
+          0,
+          400
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "remote-west-return",
+      "layer": "far",
+      "color": "#0d121a",
+      "points": [
+        [
+          0,
+          36
+        ],
+        [
+          83,
+          4
+        ],
+        [
+          207,
+          4
+        ],
+        [
+          237,
+          24
+        ],
+        [
+          193,
+          31
+        ],
+        [
+          88,
+          20
+        ],
+        [
+          0,
+          68
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "remote-west-mass",
+      "layer": "far",
+      "color": "#111922",
+      "points": [
+        [
+          0,
+          48
+        ],
+        [
+          89,
+          13
+        ],
+        [
+          173,
+          18
+        ],
+        [
+          207,
+          42
+        ],
+        [
+          129,
+          38
+        ],
+        [
+          41,
+          81
+        ],
+        [
+          0,
+          91
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "remote-west-plane",
+      "layer": "far",
+      "color": "#19212c",
+      "points": [
+        [
+          0,
+          48
+        ],
+        [
+          89,
+          13
+        ],
+        [
+          173,
+          18
+        ],
+        [
+          183,
+          27
+        ],
+        [
+          91,
+          23
+        ],
+        [
+          0,
+          63
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "remote-east-pier",
+      "layer": "far",
+      "color": "#111922",
+      "points": [
+        [
+          449,
+          0
+        ],
+        [
+          482,
+          0
+        ],
+        [
+          507,
+          42
+        ],
+        [
+          565,
+          57
+        ],
+        [
+          640,
+          35
+        ],
+        [
+          640,
+          119
+        ],
+        [
+          575,
+          128
+        ],
+        [
+          535,
+          107
+        ],
+        [
+          496,
+          96
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "remote-east-underface",
+      "layer": "far",
+      "color": "#0d121a",
+      "points": [
+        [
+          507,
+          58
+        ],
+        [
+          555,
+          78
+        ],
+        [
+          640,
+          56
+        ],
+        [
+          640,
+          107
+        ],
+        [
+          576,
+          116
+        ],
+        [
+          537,
+          96
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "dropped-remote-beam",
+      "layer": "far",
+      "color": "#111922",
+      "points": [
+        [
+          0,
+          377
+        ],
+        [
+          46,
+          350
+        ],
+        [
+          100,
+          366
+        ],
+        [
+          132,
+          399
+        ],
+        [
+          76,
+          399
+        ],
+        [
+          39,
+          375
+        ],
+        [
+          0,
+          400
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "remote-below-room",
+      "layer": "far",
+      "color": "#111922",
+      "points": [
+        [
+          390,
+          400
+        ],
+        [
+          448,
+          363
+        ],
+        [
+          506,
+          363
+        ],
+        [
+          541,
+          388
+        ],
+        [
+          601,
+          372
+        ],
+        [
+          640,
+          379
+        ],
+        [
+          640,
+          400
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "east-displaced-body",
+      "layer": "middle",
+      "color": "#141e29",
+      "points": [
+        [
+          482,
+          36
+        ],
+        [
+          510,
+          43
+        ],
+        [
+          546,
+          107
+        ],
+        [
+          605,
+          120
+        ],
+        [
+          640,
+          102
+        ],
+        [
+          640,
+          321
+        ],
+        [
+          609,
+          332
+        ],
+        [
+          582,
+          280
+        ],
+        [
+          578,
+          220
+        ],
+        [
+          557,
+          167
+        ],
+        [
+          533,
+          138
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -42,
+        "originY": 337,
+        "riseY": -1,
+        "occlusion": 0.65,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-displaced-receiving-face",
+      "layer": "middle",
+      "color": "#202b37",
+      "points": [
+        [
+          494,
+          43
+        ],
+        [
+          510,
+          48
+        ],
+        [
+          545,
+          111
+        ],
+        [
+          585,
+          123
+        ],
+        [
+          584,
+          153
+        ],
+        [
+          558,
+          162
+        ],
+        [
+          543,
+          140
+        ],
+        [
+          532,
+          102
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -22,
+        "originY": 285,
+        "riseY": -1,
+        "occlusion": 0.75,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-displaced-cap",
+      "layer": "middle",
+      "color": "#303f4b",
+      "points": [
+        [
+          484,
+          36
+        ],
+        [
+          504,
+          31
+        ],
+        [
+          520,
+          39
+        ],
+        [
+          555,
+          101
+        ],
+        [
+          605,
+          115
+        ],
+        [
+          640,
+          96
+        ],
+        [
+          640,
+          108
+        ],
+        [
+          605,
+          128
+        ],
+        [
+          544,
+          112
+        ],
+        [
+          508,
+          47
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 127,
+        "occlusion": 0.68,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-displaced-fold",
+      "layer": "middle",
+      "color": "#202b37",
+      "points": [
+        [
+          605,
+          129
+        ],
+        [
+          640,
+          109
+        ],
+        [
+          640,
+          265
+        ],
+        [
+          619,
+          276
+        ],
+        [
+          613,
+          246
+        ],
+        [
+          616,
+          194
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": -22,
+        "originY": 301,
+        "riseY": -1,
+        "occlusion": 0.7,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-displaced-underhang",
+      "layer": "middle",
+      "color": "#141e29",
+      "points": [
+        [
+          545,
+          112
+        ],
+        [
+          605,
+          128
+        ],
+        [
+          605,
+          140
+        ],
+        [
+          557,
+          137
+        ],
+        [
+          549,
+          129
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0.2,
+          -1
+        ],
+        "elevation": 115,
+        "occlusion": 0.5
+      }
+    },
+    {
+      "id": "east-lower-shear-return",
+      "layer": "middle",
+      "color": "#303f4b",
+      "points": [
+        [
+          589,
+          260
+        ],
+        [
+          611,
+          274
+        ],
+        [
+          640,
+          266
+        ],
+        [
+          640,
+          288
+        ],
+        [
+          610,
+          302
+        ],
+        [
+          593,
+          283
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": -27,
+        "occlusion": 0.7,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-lower-shear-front",
+      "layer": "middle",
+      "color": "#202b37",
+      "points": [
+        [
+          610,
+          302
+        ],
+        [
+          640,
+          288
+        ],
+        [
+          640,
+          329
+        ],
+        [
+          623,
+          341
+        ],
+        [
+          610,
+          327
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -34,
+        "originY": 344,
+        "riseY": -1,
+        "occlusion": 0.65,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "west-displaced-pier",
+      "layer": "middle",
+      "color": "#141e29",
+      "points": [
+        [
+          0,
+          99
+        ],
+        [
+          31,
+          82
+        ],
+        [
+          51,
+          111
+        ],
+        [
+          53,
+          175
+        ],
+        [
+          39,
+          208
+        ],
+        [
+          41,
+          299
+        ],
+        [
+          13,
+          322
+        ],
+        [
+          0,
+          315
+        ]
+      ],
+      "plane": {
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "elevation": -12,
+        "originY": 325,
+        "riseY": -1,
+        "occlusion": 0.66,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-displaced-plane",
+      "layer": "middle",
+      "color": "#202b37",
+      "points": [
+        [
+          0,
+          110
+        ],
+        [
+          24,
+          99
+        ],
+        [
+          35,
+          117
+        ],
+        [
+          35,
+          174
+        ],
+        [
+          22,
+          206
+        ],
+        [
+          22,
+          295
+        ],
+        [
+          0,
+          308
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -12,
+        "originY": 325,
+        "riseY": -1,
+        "occlusion": 0.68,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "west-displaced-cap",
+      "layer": "middle",
+      "color": "#303f4b",
+      "points": [
+        [
+          0,
+          99
+        ],
+        [
+          31,
+          82
+        ],
+        [
+          47,
+          94
+        ],
+        [
+          26,
+          106
+        ],
+        [
+          0,
+          120
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 157,
+        "occlusion": 0.68,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-displaced-basal-return",
+      "layer": "middle",
+      "color": "#202b37",
+      "points": [
+        [
+          0,
+          265
+        ],
+        [
+          23,
+          247
+        ],
+        [
+          48,
+          257
+        ],
+        [
+          55,
+          283
+        ],
+        [
+          29,
+          311
+        ],
+        [
+          0,
+          315
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": -20,
+        "occlusion": 0.63,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-near-bearing",
+      "layer": "near",
+      "color": "#1a2330",
+      "points": [
+        [
+          57,
+          157
+        ],
+        [
+          75,
+          141
+        ],
+        [
+          102,
+          177
+        ],
+        [
+          102,
+          300
+        ],
+        [
+          81,
+          351
+        ],
+        [
+          64,
+          336
+        ],
+        [
+          61,
+          276
+        ],
+        [
+          47,
+          243
+        ]
+      ],
+      "plane": {
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "elevation": -14,
+        "originY": 349,
+        "riseY": -1,
+        "occlusion": 0.73,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-near-contact-top",
+      "layer": "near",
+      "color": "#44515b",
+      "points": [
+        [
+          46,
+          149
+        ],
+        [
+          69,
+          136
+        ],
+        [
+          84,
+          149
+        ],
+        [
+          105,
+          181
+        ],
+        [
+          90,
+          190
+        ],
+        [
+          70,
+          160
+        ],
+        [
+          59,
+          164
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 103,
+        "occlusion": 0.83,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-near-contact-face",
+      "layer": "near",
+      "color": "#293440",
+      "points": [
+        [
+          46,
+          149
+        ],
+        [
+          59,
+          164
+        ],
+        [
+          70,
+          160
+        ],
+        [
+          90,
+          190
+        ],
+        [
+          84,
+          215
+        ],
+        [
+          65,
+          194
+        ],
+        [
+          53,
+          181
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -4,
+        "originY": 251,
+        "riseY": -1,
+        "occlusion": 0.79,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "west-contact-underfold",
+      "layer": "near",
+      "color": "#10161d",
+      "points": [
+        [
+          54,
+          180
+        ],
+        [
+          66,
+          195
+        ],
+        [
+          83,
+          214
+        ],
+        [
+          78,
+          231
+        ],
+        [
+          62,
+          215
+        ],
+        [
+          50,
+          203
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0.4,
+          -1
+        ],
+        "elevation": 50,
+        "occlusion": 0.48
+      }
+    },
+    {
+      "id": "east-near-shoulder",
+      "layer": "near",
+      "color": "#1a2330",
+      "points": [
+        [
+          581,
+          159
+        ],
+        [
+          609,
+          170
+        ],
+        [
+          614,
+          231
+        ],
+        [
+          638,
+          259
+        ],
+        [
+          640,
+          307
+        ],
+        [
+          609,
+          318
+        ],
+        [
+          579,
+          286
+        ],
+        [
+          566,
+          229
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": -9,
+        "originY": 336,
+        "riseY": -1,
+        "occlusion": 0.77,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-near-thick-cap",
+      "layer": "near",
+      "color": "#44515b",
+      "points": [
+        [
+          578,
+          154
+        ],
+        [
+          599,
+          146
+        ],
+        [
+          614,
+          158
+        ],
+        [
+          611,
+          176
+        ],
+        [
+          586,
+          181
+        ],
+        [
+          572,
+          169
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 109,
+        "occlusion": 0.8,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-near-thick-face",
+      "layer": "near",
+      "color": "#293440",
+      "points": [
+        [
+          586,
+          181
+        ],
+        [
+          611,
+          176
+        ],
+        [
+          614,
+          219
+        ],
+        [
+          640,
+          255
+        ],
+        [
+          640,
+          279
+        ],
+        [
+          611,
+          254
+        ],
+        [
+          595,
+          227
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -8,
+        "originY": 316,
+        "riseY": -1,
+        "occlusion": 0.81,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-near-return",
+      "layer": "near",
+      "color": "#1a2330",
+      "points": [
+        [
+          572,
+          169
+        ],
+        [
+          586,
+          181
+        ],
+        [
+          595,
+          227
+        ],
+        [
+          611,
+          254
+        ],
+        [
+          609,
+          270
+        ],
+        [
+          584,
+          249
+        ],
+        [
+          574,
+          212
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": -5,
+        "originY": 292,
+        "riseY": -1,
+        "occlusion": 0.72,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-contact-long-shear",
+      "layer": "near",
+      "color": "#12302f",
+      "points": [
+        [
+          586,
+          185
+        ],
+        [
+          591,
+          189
+        ],
+        [
+          588,
+          219
+        ],
+        [
+          578,
+          232
+        ],
+        [
+          560,
+          231
+        ],
+        [
+          551,
+          220
+        ],
+        [
+          554,
+          216
+        ],
+        [
+          565,
+          226
+        ],
+        [
+          578,
+          225
+        ],
+        [
+          583,
+          216
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "east-contact-loaded-tip",
+      "layer": "near",
+      "color": "#15473f",
+      "points": [
+        [
+          578,
+          225
+        ],
+        [
+          585,
+          217
+        ],
+        [
+          586,
+          211
+        ],
+        [
+          589,
+          212
+        ],
+        [
+          588,
+          220
+        ],
+        [
+          580,
+          230
+        ],
+        [
+          565,
+          230
+        ],
+        [
+          557,
+          224
+        ],
+        [
+          558,
+          221
+        ],
+        [
+          566,
+          226
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "west-contact-loaded-tip",
+      "layer": "near",
+      "color": "#15473f",
+      "points": [
+        [
+          69,
+          197
+        ],
+        [
+          73,
+          199
+        ],
+        [
+          78,
+          224
+        ],
+        [
+          94,
+          235
+        ],
+        [
+          92,
+          240
+        ],
+        [
+          75,
+          229
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "rear-compression-root",
+      "layer": "near",
+      "color": "#1a2330",
+      "points": [
+        [
+          254,
+          0
+        ],
+        [
+          273,
+          0
+        ],
+        [
+          293,
+          25
+        ],
+        [
+          308,
+          54
+        ],
+        [
+          307,
+          103
+        ],
+        [
+          294,
+          119
+        ],
+        [
+          283,
+          111
+        ],
+        [
+          287,
+          70
+        ],
+        [
+          276,
+          50
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 28,
+        "originY": 136,
+        "riseY": -1,
+        "occlusion": 0.64,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "rear-compression-return",
+      "layer": "near",
+      "color": "#293440",
+      "points": [
+        [
+          271,
+          0
+        ],
+        [
+          280,
+          0
+        ],
+        [
+          303,
+          29
+        ],
+        [
+          318,
+          52
+        ],
+        [
+          317,
+          101
+        ],
+        [
+          307,
+          112
+        ],
+        [
+          307,
+          68
+        ],
+        [
+          307,
+          53
+        ],
+        [
+          291,
+          29
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 20,
+        "originY": 144,
+        "riseY": -1,
+        "occlusion": 0.71,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "rear-compression-contact",
+      "layer": "near",
+      "color": "#12302f",
+      "points": [
+        [
+          296,
+          94
+        ],
+        [
+          303,
+          99
+        ],
+        [
+          308,
+          117
+        ],
+        [
+          303,
+          125
+        ],
+        [
+          297,
+          115
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "west-wall-outer-foot",
+      "layer": "architecture",
+      "color": "#1c202b",
+      "points": [
+        [
+          75,
+          116
+        ],
+        [
+          114,
+          71
+        ],
+        [
+          196,
+          52
+        ],
+        [
+          242,
+          63
+        ],
+        [
+          260,
+          88
+        ],
+        [
+          349,
+          89
+        ],
+        [
+          402,
+          121
+        ],
+        [
+          427,
+          155
+        ],
+        [
+          561,
+          183
+        ],
+        [
+          583,
+          220
+        ],
+        [
+          580,
+          314
+        ],
+        [
+          551,
+          344
+        ],
+        [
+          123,
+          361
+        ],
+        [
+          85,
+          331
+        ],
+        [
+          75,
+          263
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -7,
+        "originY": 352,
+        "riseY": -1,
+        "occlusion": 0.7,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "west-load-wall",
+      "layer": "architecture",
+      "color": "#354450",
+      "points": [
+        [
+          83,
+          125
+        ],
+        [
+          113,
+          92
+        ],
+        [
+          134,
+          102
+        ],
+        [
+          124,
+          165
+        ],
+        [
+          117,
+          226
+        ],
+        [
+          119,
+          318
+        ],
+        [
+          126,
+          337
+        ],
+        [
+          98,
+          326
+        ],
+        [
+          85,
+          300
+        ]
+      ],
+      "plane": {
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 335,
+        "riseY": -1,
+        "occlusion": 0.82,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-load-wall-return",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          111,
+          101
+        ],
+        [
+          133,
+          102
+        ],
+        [
+          139,
+          137
+        ],
+        [
+          126,
+          186
+        ],
+        [
+          132,
+          214
+        ],
+        [
+          112,
+          244
+        ],
+        [
+          104,
+          284
+        ],
+        [
+          100,
+          311
+        ],
+        [
+          94,
+          298
+        ],
+        [
+          99,
+          241
+        ],
+        [
+          113,
+          182
+        ]
+      ],
+      "plane": {
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 316,
+        "riseY": -1,
+        "occlusion": 0.74,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-shoulder-front",
+      "layer": "architecture",
+      "color": "#55524f",
+      "points": [
+        [
+          121,
+          85
+        ],
+        [
+          195,
+          68
+        ],
+        [
+          231,
+          77
+        ],
+        [
+          231,
+          115
+        ],
+        [
+          213,
+          137
+        ],
+        [
+          143,
+          145
+        ],
+        [
+          125,
+          169
+        ],
+        [
+          129,
+          120
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 32,
+        "originY": 148,
+        "riseY": -1,
+        "occlusion": 0.89,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "west-shoulder-coat",
+      "layer": "architecture",
+      "color": "#716c65",
+      "points": [
+        [
+          138,
+          91
+        ],
+        [
+          194,
+          79
+        ],
+        [
+          213,
+          83
+        ],
+        [
+          213,
+          126
+        ],
+        [
+          199,
+          134
+        ],
+        [
+          144,
+          140
+        ],
+        [
+          137,
+          131
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 32,
+        "originY": 148,
+        "riseY": -1,
+        "occlusion": 0.93,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "west-shoulder-cap",
+      "layer": "architecture",
+      "color": "#65717a",
+      "points": [
+        [
+          83,
+          115
+        ],
+        [
+          114,
+          71
+        ],
+        [
+          196,
+          52
+        ],
+        [
+          239,
+          65
+        ],
+        [
+          231,
+          79
+        ],
+        [
+          195,
+          68
+        ],
+        [
+          126,
+          85
+        ],
+        [
+          105,
+          114
+        ],
+        [
+          101,
+          132
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 118,
+        "occlusion": 0.98,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-shoulder-cap-worn",
+      "layer": "architecture",
+      "color": "#788088",
+      "points": [
+        [
+          112,
+          80
+        ],
+        [
+          126,
+          72
+        ],
+        [
+          194,
+          58
+        ],
+        [
+          230,
+          68
+        ],
+        [
+          226,
+          71
+        ],
+        [
+          194,
+          63
+        ],
+        [
+          126,
+          79
+        ],
+        [
+          108,
+          102
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 119,
+        "occlusion": 0.96,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-cap-end-return",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          231,
+          79
+        ],
+        [
+          239,
+          65
+        ],
+        [
+          245,
+          90
+        ],
+        [
+          245,
+          119
+        ],
+        [
+          231,
+          115
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 32,
+        "originY": 153,
+        "riseY": -1,
+        "occlusion": 0.79,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-coping-underhang",
+      "layer": "architecture",
+      "color": "#151b23",
+      "points": [
+        [
+          106,
+          114
+        ],
+        [
+          126,
+          85
+        ],
+        [
+          195,
+          68
+        ],
+        [
+          231,
+          79
+        ],
+        [
+          231,
+          84
+        ],
+        [
+          194,
+          74
+        ],
+        [
+          129,
+          91
+        ],
+        [
+          109,
+          122
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0.2,
+          -1
+        ],
+        "elevation": 106,
+        "occlusion": 0.62
+      }
+    },
+    {
+      "id": "rear-middle-setback",
+      "layer": "architecture",
+      "color": "#354450",
+      "points": [
+        [
+          236,
+          89
+        ],
+        [
+          266,
+          101
+        ],
+        [
+          300,
+          99
+        ],
+        [
+          307,
+          110
+        ],
+        [
+          349,
+          109
+        ],
+        [
+          380,
+          128
+        ],
+        [
+          380,
+          165
+        ],
+        [
+          370,
+          154
+        ],
+        [
+          274,
+          154
+        ],
+        [
+          234,
+          138
+        ],
+        [
+          223,
+          138
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 32,
+        "originY": 154,
+        "riseY": -1,
+        "occlusion": 0.86,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "rear-middle-plaster",
+      "layer": "architecture",
+      "color": "#455461",
+      "points": [
+        [
+          247,
+          103
+        ],
+        [
+          266,
+          112
+        ],
+        [
+          300,
+          110
+        ],
+        [
+          308,
+          119
+        ],
+        [
+          347,
+          118
+        ],
+        [
+          365,
+          129
+        ],
+        [
+          365,
+          151
+        ],
+        [
+          277,
+          150
+        ],
+        [
+          237,
+          134
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 32,
+        "originY": 155,
+        "riseY": -1,
+        "occlusion": 0.91,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "rear-middle-cap",
+      "layer": "architecture",
+      "color": "#4b515b",
+      "points": [
+        [
+          239,
+          78
+        ],
+        [
+          269,
+          88
+        ],
+        [
+          301,
+          87
+        ],
+        [
+          310,
+          98
+        ],
+        [
+          351,
+          98
+        ],
+        [
+          390,
+          120
+        ],
+        [
+          380,
+          132
+        ],
+        [
+          347,
+          113
+        ],
+        [
+          305,
+          113
+        ],
+        [
+          298,
+          103
+        ],
+        [
+          265,
+          105
+        ],
+        [
+          239,
+          95
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 89,
+        "occlusion": 0.93,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "rear-cap-retained-ridge",
+      "layer": "architecture",
+      "color": "#65717a",
+      "points": [
+        [
+          244,
+          82
+        ],
+        [
+          269,
+          91
+        ],
+        [
+          300,
+          90
+        ],
+        [
+          308,
+          102
+        ],
+        [
+          350,
+          102
+        ],
+        [
+          382,
+          121
+        ],
+        [
+          380,
+          124
+        ],
+        [
+          348,
+          108
+        ],
+        [
+          307,
+          108
+        ],
+        [
+          298,
+          98
+        ],
+        [
+          267,
+          99
+        ],
+        [
+          242,
+          91
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 92,
+        "occlusion": 0.95,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-bay-return",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          380,
+          132
+        ],
+        [
+          390,
+          120
+        ],
+        [
+          405,
+          143
+        ],
+        [
+          407,
+          176
+        ],
+        [
+          396,
+          193
+        ],
+        [
+          396,
+          174
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 32,
+        "originY": 181,
+        "riseY": -1,
+        "occlusion": 0.81,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-wall-full-bearing",
+      "layer": "architecture",
+      "color": "#4b515b",
+      "points": [
+        [
+          82,
+          139
+        ],
+        [
+          90,
+          138
+        ],
+        [
+          98,
+          155
+        ],
+        [
+          89,
+          240
+        ],
+        [
+          92,
+          297
+        ],
+        [
+          108,
+          326
+        ],
+        [
+          101,
+          329
+        ],
+        [
+          86,
+          307
+        ],
+        [
+          82,
+          279
+        ],
+        [
+          80,
+          217
+        ]
+      ],
+      "plane": {
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 332,
+        "riseY": -1,
+        "occlusion": 0.86,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "west-bearing-lime-loss",
+      "layer": "architecture",
+      "color": "#55524f",
+      "points": [
+        [
+          85,
+          249
+        ],
+        [
+          91,
+          238
+        ],
+        [
+          90,
+          278
+        ],
+        [
+          96,
+          302
+        ],
+        [
+          92,
+          303
+        ],
+        [
+          86,
+          286
+        ]
+      ],
+      "plane": {
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 332,
+        "riseY": -1,
+        "occlusion": 0.88,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-wall-understructure",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          403,
+          151
+        ],
+        [
+          484,
+          160
+        ],
+        [
+          528,
+          177
+        ],
+        [
+          557,
+          188
+        ],
+        [
+          570,
+          219
+        ],
+        [
+          562,
+          269
+        ],
+        [
+          550,
+          270
+        ],
+        [
+          541,
+          232
+        ],
+        [
+          460,
+          232
+        ],
+        [
+          442,
+          250
+        ],
+        [
+          407,
+          245
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 245,
+        "riseY": -1,
+        "occlusion": 0.88,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-wall-main-face",
+      "layer": "architecture",
+      "color": "#55524f",
+      "points": [
+        [
+          413,
+          163
+        ],
+        [
+          483,
+          176
+        ],
+        [
+          505,
+          184
+        ],
+        [
+          499,
+          216
+        ],
+        [
+          463,
+          218
+        ],
+        [
+          442,
+          238
+        ],
+        [
+          418,
+          228
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 245,
+        "riseY": -1,
+        "occlusion": 0.89,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-wall-retained-plaster",
+      "layer": "architecture",
+      "color": "#716c65",
+      "points": [
+        [
+          423,
+          176
+        ],
+        [
+          481,
+          186
+        ],
+        [
+          494,
+          190
+        ],
+        [
+          491,
+          210
+        ],
+        [
+          463,
+          211
+        ],
+        [
+          442,
+          229
+        ],
+        [
+          426,
+          225
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 245,
+        "riseY": -1,
+        "occlusion": 0.92,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-wall-sheared-plane",
+      "layer": "architecture",
+      "color": "#455461",
+      "points": [
+        [
+          514,
+          172
+        ],
+        [
+          549,
+          183
+        ],
+        [
+          566,
+          209
+        ],
+        [
+          555,
+          236
+        ],
+        [
+          526,
+          231
+        ],
+        [
+          511,
+          221
+        ],
+        [
+          505,
+          214
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 241,
+        "riseY": -1,
+        "occlusion": 0.93,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-shear-true-return",
+      "layer": "architecture",
+      "color": "#151b23",
+      "points": [
+        [
+          506,
+          166
+        ],
+        [
+          516,
+          171
+        ],
+        [
+          511,
+          199
+        ],
+        [
+          510,
+          216
+        ],
+        [
+          518,
+          229
+        ],
+        [
+          510,
+          232
+        ],
+        [
+          499,
+          216
+        ],
+        [
+          503,
+          187
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 240,
+        "riseY": -1,
+        "occlusion": 0.7,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-wall-continuous-cap",
+      "layer": "architecture",
+      "color": "#65717a",
+      "points": [
+        [
+          403,
+          145
+        ],
+        [
+          483,
+          155
+        ],
+        [
+          507,
+          164
+        ],
+        [
+          505,
+          180
+        ],
+        [
+          481,
+          172
+        ],
+        [
+          410,
+          160
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 85,
+        "occlusion": 0.95,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-wall-displaced-cap",
+      "layer": "architecture",
+      "color": "#4b515b",
+      "points": [
+        [
+          517,
+          157
+        ],
+        [
+          554,
+          170
+        ],
+        [
+          577,
+          201
+        ],
+        [
+          568,
+          212
+        ],
+        [
+          549,
+          185
+        ],
+        [
+          513,
+          172
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 88,
+        "occlusion": 0.97,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-wall-displaced-edge",
+      "layer": "architecture",
+      "color": "#65717a",
+      "points": [
+        [
+          521,
+          159
+        ],
+        [
+          553,
+          173
+        ],
+        [
+          571,
+          196
+        ],
+        [
+          568,
+          200
+        ],
+        [
+          550,
+          178
+        ],
+        [
+          519,
+          165
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 90,
+        "occlusion": 0.98,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-wall-outward-face",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          577,
+          201
+        ],
+        [
+          584,
+          219
+        ],
+        [
+          580,
+          290
+        ],
+        [
+          566,
+          329
+        ],
+        [
+          547,
+          333
+        ],
+        [
+          548,
+          316
+        ],
+        [
+          556,
+          277
+        ],
+        [
+          552,
+          236
+        ],
+        [
+          568,
+          212
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 335,
+        "riseY": -1,
+        "occlusion": 0.89,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-wall-outward-return",
+      "layer": "architecture",
+      "color": "#354450",
+      "points": [
+        [
+          577,
+          218
+        ],
+        [
+          580,
+          220
+        ],
+        [
+          574,
+          289
+        ],
+        [
+          561,
+          323
+        ],
+        [
+          554,
+          322
+        ],
+        [
+          562,
+          286
+        ],
+        [
+          565,
+          248
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 333,
+        "riseY": -1,
+        "occlusion": 0.94,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-shear-upper-restraint",
+      "layer": "architecture",
+      "color": "#252c35",
+      "points": [
+        [
+          489,
+          191
+        ],
+        [
+          526,
+          202
+        ],
+        [
+          527,
+          209
+        ],
+        [
+          488,
+          199
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 247,
+        "riseY": -1,
+        "occlusion": 0.88,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-shear-upper-edge",
+      "layer": "architecture",
+      "color": "#626d77",
+      "points": [
+        [
+          489,
+          190
+        ],
+        [
+          527,
+          201
+        ],
+        [
+          527,
+          204
+        ],
+        [
+          489,
+          193
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 53,
+        "occlusion": 0.9,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "east-shear-low-restraint",
+      "layer": "architecture",
+      "color": "#343b43",
+      "points": [
+        [
+          494,
+          212
+        ],
+        [
+          524,
+          221
+        ],
+        [
+          525,
+          226
+        ],
+        [
+          493,
+          218
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 245,
+        "riseY": -1,
+        "occlusion": 0.88,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "east-shear-bonding",
+      "layer": "architecture",
+      "color": "#665347",
+      "points": [
+        [
+          489,
+          194
+        ],
+        [
+          495,
+          196
+        ],
+        [
+          495,
+          201
+        ],
+        [
+          489,
+          199
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "east-shear-bonding-east",
+      "layer": "architecture",
+      "color": "#665347",
+      "points": [
+        [
+          520,
+          203
+        ],
+        [
+          526,
+          205
+        ],
+        [
+          526,
+          209
+        ],
+        [
+          520,
+          207
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "terrace-bearing-body",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          132,
+          207
+        ],
+        [
+          190,
+          207
+        ],
+        [
+          211,
+          217
+        ],
+        [
+          263,
+          221
+        ],
+        [
+          279,
+          262
+        ],
+        [
+          239,
+          267
+        ],
+        [
+          210,
+          245
+        ],
+        [
+          124,
+          253
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 264,
+        "riseY": -1,
+        "occlusion": 0.9,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "terrace-bearing-left-face",
+      "layer": "architecture",
+      "color": "#55524f",
+      "points": [
+        [
+          132,
+          215
+        ],
+        [
+          189,
+          215
+        ],
+        [
+          209,
+          225
+        ],
+        [
+          223,
+          240
+        ],
+        [
+          211,
+          241
+        ],
+        [
+          197,
+          232
+        ],
+        [
+          130,
+          238
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 250,
+        "riseY": -1,
+        "occlusion": 0.9,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "terrace-bearing-load-plate",
+      "layer": "architecture",
+      "color": "#354450",
+      "points": [
+        [
+          211,
+          225
+        ],
+        [
+          234,
+          226
+        ],
+        [
+          239,
+          237
+        ],
+        [
+          242,
+          263
+        ],
+        [
+          239,
+          264
+        ],
+        [
+          211,
+          244
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 266,
+        "riseY": -1,
+        "occlusion": 0.88,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "core-recess-back",
+      "layer": "architecture",
+      "color": "#10161d",
+      "points": [
+        [
+          231,
+          224
+        ],
+        [
+          259,
+          224
+        ],
+        [
+          274,
+          262
+        ],
+        [
+          242,
+          264
+        ],
+        [
+          239,
+          245
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 267,
+        "riseY": -1,
+        "occlusion": 0.51,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "core-recess-left-return",
+      "layer": "architecture",
+      "color": "#252c35",
+      "points": [
+        [
+          223,
+          224
+        ],
+        [
+          231,
+          224
+        ],
+        [
+          239,
+          245
+        ],
+        [
+          242,
+          264
+        ],
+        [
+          235,
+          261
+        ],
+        [
+          232,
+          244
+        ]
+      ],
+      "plane": {
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 265,
+        "riseY": -1,
+        "occlusion": 0.73,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "core-bearing-right-return",
+      "layer": "architecture",
+      "color": "#4b515b",
+      "points": [
+        [
+          259,
+          224
+        ],
+        [
+          263,
+          226
+        ],
+        [
+          282,
+          264
+        ],
+        [
+          274,
+          266
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 266,
+        "riseY": -1,
+        "occlusion": 0.92,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "core-recess-underside",
+      "layer": "architecture",
+      "color": "#151b23",
+      "points": [
+        [
+          229,
+          224
+        ],
+        [
+          260,
+          224
+        ],
+        [
+          264,
+          231
+        ],
+        [
+          233,
+          231
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0.25,
+          -1
+        ],
+        "elevation": 29,
+        "occlusion": 0.48
+      }
+    },
+    {
+      "id": "terrace-east-between-ramps",
+      "layer": "architecture",
+      "color": "#354450",
+      "points": [
+        [
+          305,
+          225
+        ],
+        [
+          328,
+          218
+        ],
+        [
+          350,
+          206
+        ],
+        [
+          350,
+          233
+        ],
+        [
+          334,
+          258
+        ],
+        [
+          326,
+          265
+        ]
+      ],
+      "plane": {
+        "normal": [
+          -1,
+          0,
+          0
+        ],
+        "elevation": 0,
+        "originY": 265,
+        "riseY": -1,
+        "occlusion": 0.77,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "terrace-east-front-face",
+      "layer": "architecture",
+      "color": "#55524f",
+      "points": [
+        [
+          350,
+          218
+        ],
+        [
+          382,
+          219
+        ],
+        [
+          388,
+          248
+        ],
+        [
+          379,
+          265
+        ],
+        [
+          334,
+          265
+        ],
+        [
+          340,
+          248
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 267,
+        "riseY": -1,
+        "occlusion": 0.9,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "terrace-east-front-coat",
+      "layer": "architecture",
+      "color": "#4b515b",
+      "points": [
+        [
+          350,
+          229
+        ],
+        [
+          377,
+          225
+        ],
+        [
+          382,
+          247
+        ],
+        [
+          375,
+          258
+        ],
+        [
+          342,
+          258
+        ],
+        [
+          346,
+          244
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 267,
+        "riseY": -1,
+        "occlusion": 0.92,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foundation-long-slab",
+      "layer": "architecture",
+      "color": "#354450",
+      "points": [
+        [
+          94,
+          306
+        ],
+        [
+          126,
+          334
+        ],
+        [
+          368,
+          334
+        ],
+        [
+          392,
+          324
+        ],
+        [
+          548,
+          318
+        ],
+        [
+          551,
+          336
+        ],
+        [
+          396,
+          343
+        ],
+        [
+          371,
+          355
+        ],
+        [
+          121,
+          355
+        ],
+        [
+          88,
+          326
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": 0,
+        "originY": 335,
+        "riseY": -1,
+        "occlusion": 0.92,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foundation-main-fascia",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          126,
+          342
+        ],
+        [
+          367,
+          342
+        ],
+        [
+          393,
+          332
+        ],
+        [
+          548,
+          326
+        ],
+        [
+          546,
+          342
+        ],
+        [
+          393,
+          349
+        ],
+        [
+          370,
+          361
+        ],
+        [
+          124,
+          361
+        ],
+        [
+          94,
+          337
+        ],
+        [
+          93,
+          326
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -6,
+        "originY": 341,
+        "riseY": -1,
+        "occlusion": 0.84,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foundation-left-loaded-heel",
+      "layer": "architecture",
+      "color": "#1c202b",
+      "points": [
+        [
+          121,
+          355
+        ],
+        [
+          177,
+          355
+        ],
+        [
+          177,
+          372
+        ],
+        [
+          158,
+          380
+        ],
+        [
+          129,
+          370
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -20,
+        "originY": 355,
+        "riseY": -1,
+        "occlusion": 0.76,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foundation-left-heel-face",
+      "layer": "architecture",
+      "color": "#354450",
+      "points": [
+        [
+          129,
+          355
+        ],
+        [
+          168,
+          355
+        ],
+        [
+          168,
+          369
+        ],
+        [
+          154,
+          373
+        ],
+        [
+          130,
+          366
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -20,
+        "originY": 355,
+        "riseY": -1,
+        "occlusion": 0.83,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foundation-east-dropped-section",
+      "layer": "architecture",
+      "color": "#1c202b",
+      "points": [
+        [
+          396,
+          343
+        ],
+        [
+          465,
+          340
+        ],
+        [
+          484,
+          354
+        ],
+        [
+          478,
+          371
+        ],
+        [
+          446,
+          381
+        ],
+        [
+          404,
+          367
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -17,
+        "originY": 345,
+        "riseY": -1,
+        "occlusion": 0.72,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foundation-east-section-face",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          404,
+          345
+        ],
+        [
+          462,
+          342
+        ],
+        [
+          476,
+          354
+        ],
+        [
+          468,
+          364
+        ],
+        [
+          447,
+          372
+        ],
+        [
+          406,
+          361
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -16,
+        "originY": 345,
+        "riseY": -1,
+        "occlusion": 0.87,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foundation-east-exposed-core",
+      "layer": "architecture",
+      "color": "#55524f",
+      "points": [
+        [
+          451,
+          344
+        ],
+        [
+          462,
+          342
+        ],
+        [
+          476,
+          354
+        ],
+        [
+          469,
+          361
+        ],
+        [
+          458,
+          351
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0.6,
+          0.8,
+          0
+        ],
+        "elevation": -9,
+        "originY": 345,
+        "riseY": -1,
+        "occlusion": 0.82
+      }
+    },
+    {
+      "id": "foundation-long-underface",
+      "layer": "architecture",
+      "color": "#10161d",
+      "points": [
+        [
+          179,
+          355
+        ],
+        [
+          371,
+          355
+        ],
+        [
+          395,
+          345
+        ],
+        [
+          404,
+          346
+        ],
+        [
+          404,
+          354
+        ],
+        [
+          374,
+          369
+        ],
+        [
+          179,
+          368
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0.4,
+          -1
+        ],
+        "elevation": -22,
+        "occlusion": 0.48
+      }
+    },
+    {
+      "id": "west-pour-joint",
+      "layer": "architecture",
+      "color": "#443a35",
+      "points": [
+        [
+          174,
+          84
+        ],
+        [
+          177,
+          83
+        ],
+        [
+          177,
+          131
+        ],
+        [
+          174,
+          133
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "west-pour-joint-fill",
+      "layer": "architecture",
+      "color": "#665347",
+      "points": [
+        [
+          175,
+          85
+        ],
+        [
+          177,
+          84
+        ],
+        [
+          177,
+          105
+        ],
+        [
+          176,
+          106
+        ],
+        [
+          177,
+          127
+        ],
+        [
+          176,
+          131
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "rear-old-sheet-joint",
+      "layer": "architecture",
+      "color": "#333d48",
+      "points": [
+        [
+          297,
+          112
+        ],
+        [
+          299,
+          112
+        ],
+        [
+          301,
+          120
+        ],
+        [
+          301,
+          151
+        ],
+        [
+          298,
+          151
+        ],
+        [
+          298,
+          121
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "west-plaster-bottom-loss",
+      "layer": "architecture",
+      "color": "#443a35",
+      "points": [
+        [
+          143,
+          128
+        ],
+        [
+          151,
+          129
+        ],
+        [
+          158,
+          126
+        ],
+        [
+          173,
+          129
+        ],
+        [
+          173,
+          133
+        ],
+        [
+          146,
+          137
+        ],
+        [
+          139,
+          133
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "west-plaster-exposed-lime",
+      "layer": "architecture",
+      "color": "#898177",
+      "points": [
+        [
+          144,
+          128
+        ],
+        [
+          151,
+          130
+        ],
+        [
+          161,
+          128
+        ],
+        [
+          166,
+          130
+        ],
+        [
+          165,
+          132
+        ],
+        [
+          149,
+          134
+        ],
+        [
+          143,
+          132
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "east-plaster-bottom-wear",
+      "layer": "architecture",
+      "color": "#443a35",
+      "points": [
+        [
+          426,
+          217
+        ],
+        [
+          442,
+          222
+        ],
+        [
+          458,
+          208
+        ],
+        [
+          464,
+          208
+        ],
+        [
+          454,
+          218
+        ],
+        [
+          443,
+          227
+        ],
+        [
+          430,
+          224
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "east-plaster-lime-contact",
+      "layer": "architecture",
+      "color": "#898177",
+      "points": [
+        [
+          428,
+          216
+        ],
+        [
+          441,
+          220
+        ],
+        [
+          455,
+          209
+        ],
+        [
+          459,
+          210
+        ],
+        [
+          442,
+          225
+        ],
+        [
+          430,
+          222
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "foundation-construction-joint",
+      "layer": "architecture",
+      "color": "#252c35",
+      "points": [
+        [
+          325,
+          343
+        ],
+        [
+          328,
+          343
+        ],
+        [
+          328,
+          361
+        ],
+        [
+          325,
+          361
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "foundation-joint-fill",
+      "layer": "architecture",
+      "color": "#443a35",
+      "points": [
+        [
+          328,
+          344
+        ],
+        [
+          330,
+          344
+        ],
+        [
+          330,
+          360
+        ],
+        [
+          328,
+          360
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-west-working-surface",
+      "layer": "floor",
+      "color": "#4a555d",
+      "points": [
+        [
+          102,
+          260
+        ],
+        [
+          194,
+          254
+        ],
+        [
+          230,
+          278
+        ],
+        [
+          233,
+          308
+        ],
+        [
+          190,
+          322
+        ],
+        [
+          130,
+          325
+        ],
+        [
+          101,
+          302
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-west-traffic-wear",
+      "layer": "floor",
+      "color": "#556068",
+      "points": [
+        [
+          113,
+          289
+        ],
+        [
+          171,
+          282
+        ],
+        [
+          206,
+          289
+        ],
+        [
+          207,
+          306
+        ],
+        [
+          176,
+          315
+        ],
+        [
+          130,
+          315
+        ],
+        [
+          113,
+          303
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-west-contact-wear",
+      "layer": "floor",
+      "color": "#4a555d",
+      "points": [
+        [
+          116,
+          300
+        ],
+        [
+          148,
+          304
+        ],
+        [
+          180,
+          302
+        ],
+        [
+          194,
+          303
+        ],
+        [
+          178,
+          309
+        ],
+        [
+          145,
+          313
+        ],
+        [
+          121,
+          307
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-front-old-pour",
+      "layer": "floor",
+      "color": "#4a555d",
+      "points": [
+        [
+          297,
+          311
+        ],
+        [
+          357,
+          312
+        ],
+        [
+          394,
+          305
+        ],
+        [
+          445,
+          309
+        ],
+        [
+          447,
+          321
+        ],
+        [
+          392,
+          324
+        ],
+        [
+          368,
+          334
+        ],
+        [
+          299,
+          334
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-front-pour-contact",
+      "layer": "floor",
+      "color": "#353f49",
+      "points": [
+        [
+          297,
+          311
+        ],
+        [
+          300,
+          310
+        ],
+        [
+          300,
+          334
+        ],
+        [
+          297,
+          334
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-right-maintenance-coat",
+      "layer": "floor",
+      "color": "#4a555d",
+      "points": [
+        [
+          461,
+          240
+        ],
+        [
+          536,
+          240
+        ],
+        [
+          545,
+          263
+        ],
+        [
+          535,
+          295
+        ],
+        [
+          486,
+          298
+        ],
+        [
+          454,
+          282
+        ],
+        [
+          443,
+          261
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-right-sole-wear",
+      "layer": "floor",
+      "color": "#556068",
+      "points": [
+        [
+          458,
+          263
+        ],
+        [
+          478,
+          252
+        ],
+        [
+          521,
+          253
+        ],
+        [
+          533,
+          266
+        ],
+        [
+          526,
+          281
+        ],
+        [
+          495,
+          287
+        ],
+        [
+          469,
+          280
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "hall-right-wear-soft-stop",
+      "layer": "floor",
+      "color": "#4a555d",
+      "points": [
+        [
+          485,
+          253
+        ],
+        [
+          523,
+          257
+        ],
+        [
+          529,
+          267
+        ],
+        [
+          521,
+          277
+        ],
+        [
+          497,
+          282
+        ],
+        [
+          479,
+          276
+        ],
+        [
+          473,
+          268
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "upper-central-working-plane",
+      "layer": "floor",
+      "color": "#626b70",
+      "points": [
+        [
+          208,
+          148
+        ],
+        [
+          233,
+          144
+        ],
+        [
+          274,
+          160
+        ],
+        [
+          315,
+          160
+        ],
+        [
+          321,
+          181
+        ],
+        [
+          309,
+          205
+        ],
+        [
+          277,
+          215
+        ],
+        [
+          225,
+          215
+        ],
+        [
+          212,
+          207
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "upper-central-wear",
+      "layer": "floor",
+      "color": "#535d65",
+      "points": [
+        [
+          234,
+          155
+        ],
+        [
+          273,
+          168
+        ],
+        [
+          296,
+          168
+        ],
+        [
+          302,
+          184
+        ],
+        [
+          294,
+          205
+        ],
+        [
+          274,
+          210
+        ],
+        [
+          231,
+          210
+        ],
+        [
+          223,
+          201
+        ],
+        [
+          224,
+          173
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "upper-west-bay",
+      "layer": "floor",
+      "color": "#5e605e",
+      "points": [
+        [
+          143,
+          151
+        ],
+        [
+          197,
+          147
+        ],
+        [
+          202,
+          177
+        ],
+        [
+          187,
+          196
+        ],
+        [
+          151,
+          201
+        ],
+        [
+          135,
+          189
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "upper-east-bay",
+      "layer": "floor",
+      "color": "#5e605e",
+      "points": [
+        [
+          334,
+          162
+        ],
+        [
+          369,
+          160
+        ],
+        [
+          398,
+          177
+        ],
+        [
+          391,
+          199
+        ],
+        [
+          352,
+          201
+        ],
+        [
+          328,
+          190
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "upper-long-pour-joint",
+      "layer": "floor",
+      "color": "#353f49",
+      "points": [
+        [
+          214,
+          152
+        ],
+        [
+          216,
+          152
+        ],
+        [
+          216,
+          177
+        ],
+        [
+          225,
+          191
+        ],
+        [
+          227,
+          211
+        ],
+        [
+          225,
+          213
+        ],
+        [
+          223,
+          192
+        ],
+        [
+          213,
+          178
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "upper-long-joint-worn-lip",
+      "layer": "floor",
+      "color": "#626b70",
+      "points": [
+        [
+          211,
+          178
+        ],
+        [
+          213,
+          178
+        ],
+        [
+          223,
+          193
+        ],
+        [
+          224,
+          207
+        ],
+        [
+          222,
+          205
+        ],
+        [
+          220,
+          194
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "upper-east-joint",
+      "layer": "floor",
+      "color": "#353f49",
+      "points": [
+        [
+          317,
+          164
+        ],
+        [
+          319,
+          164
+        ],
+        [
+          323,
+          180
+        ],
+        [
+          319,
+          194
+        ],
+        [
+          312,
+          202
+        ],
+        [
+          310,
+          201
+        ],
+        [
+          317,
+          193
+        ],
+        [
+          321,
+          180
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "floor-west-expansion-joint",
+      "layer": "floor",
+      "color": "#353f49",
+      "points": [
+        [
+          177,
+          319
+        ],
+        [
+          191,
+          315
+        ],
+        [
+          204,
+          316
+        ],
+        [
+          206,
+          318
+        ],
+        [
+          191,
+          317
+        ],
+        [
+          178,
+          321
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "floor-east-expansion-joint",
+      "layer": "floor",
+      "color": "#353f49",
+      "points": [
+        [
+          437,
+          291
+        ],
+        [
+          456,
+          304
+        ],
+        [
+          472,
+          307
+        ],
+        [
+          472,
+          309
+        ],
+        [
+          455,
+          306
+        ],
+        [
+          436,
+          293
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "floor-use-worn-seam",
+      "layer": "floor",
+      "color": "#556068",
+      "points": [
+        [
+          440,
+          294
+        ],
+        [
+          456,
+          304
+        ],
+        [
+          466,
+          306
+        ],
+        [
+          465,
+          307
+        ],
+        [
+          455,
+          305
+        ],
+        [
+          440,
+          296
+        ]
+      ],
+      "plane": null
+    },
+    {
+      "id": "foreground-slab-top",
+      "layer": "foreground",
+      "color": "#4b515b",
+      "points": [
+        [
+          94,
+          306
+        ],
+        [
+          126,
+          334
+        ],
+        [
+          368,
+          334
+        ],
+        [
+          392,
+          324
+        ],
+        [
+          548,
+          318
+        ],
+        [
+          548,
+          322
+        ],
+        [
+          393,
+          328
+        ],
+        [
+          369,
+          339
+        ],
+        [
+          126,
+          339
+        ],
+        [
+          95,
+          312
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 3,
+        "occlusion": 0.94,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "foreground-west-cut-end",
+      "layer": "foreground",
+      "color": "#455461",
+      "points": [
+        [
+          95,
+          312
+        ],
+        [
+          126,
+          339
+        ],
+        [
+          126,
+          344
+        ],
+        [
+          96,
+          317
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "elevation": -1,
+        "originY": 343,
+        "riseY": -1,
+        "occlusion": 0.94,
+        "roughness": 0.95
+      }
+    },
+    {
+      "id": "foreground-long-worn-top",
+      "layer": "foreground",
+      "color": "#65717a",
+      "points": [
+        [
+          129,
+          335
+        ],
+        [
+          207,
+          335
+        ],
+        [
+          207,
+          337
+        ],
+        [
+          129,
+          337
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 3,
+        "occlusion": 0.96,
+        "roughness": 0.96
+      }
+    },
+    {
+      "id": "foreground-east-worn-top",
+      "layer": "foreground",
+      "color": "#56636b",
+      "points": [
+        [
+          420,
+          324
+        ],
+        [
+          471,
+          322
+        ],
+        [
+          471,
+          324
+        ],
+        [
+          420,
+          326
+        ]
+      ],
+      "plane": {
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "elevation": 3,
+        "occlusion": 0.95,
+        "roughness": 0.96
+      }
+    }
+  ]
+}

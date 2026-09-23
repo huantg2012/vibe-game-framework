@@ -1,9 +1,9 @@
 ---
-status: R2-GEOMETRY-IMPLEMENTED / R3-PRESENTATION-IMPLEMENTED / HUMAN-REVIEW-PENDING
+status: R2-GEOMETRY-IMPLEMENTED / R8-PRESENTATION-IMPLEMENTED / HUMAN-REVIEW-PENDING
 created-by: design agent
 created-date: 2026-09-21
 last-modified-by: design agent
-last-modified-date: 2026-09-22
+last-modified-date: 2026-09-23
 iteration: 30
 features: [COH-F026, COH-F006, COH-F042]
 related-features: [COH-F027, COH-F028, COH-F029, COH-F038, COH-F044]
@@ -20,6 +20,12 @@ production: R2已接入正式净化点；限定运行证据见R2 QA，用户审�
 > **TL;DR**：保留封闭外壳、多层和少许透视，改为有实际进深的双高程平台、中央及东侧两条宽坡道。屏幕八方向移动贯穿全场，真实高差与底座阻挡仍成立；六处功能围绕维护、供奉和出行形成短动线。
 
 本文件是当前空间与邻接合同，旧方向由 Git 保存，不再并列有效。机制唯一正文仍为 [净化点与冲击 spec](../specs/system-purification-impact.md)，具体像素视觉由 [净化点美术合同](../art/purification-renewal.md) 承接；实施和验证状态以 [I30任务](../tasks/iteration-30.md) 与 [R2 QA](../qa/iteration-30-r2.md) 的限定范围为准。旧阅读图和 c3b1d9f 截图只证明其当时布局，不能作为 R2 实景或验收。
+
+## R8 当前构造与观察补充
+
+原双层/双坡的实际通行图、6px脚底、24px操作锚点保持。上层核心候选超出10%动线预算，按制作方案回退原下层253/299基座；模型重画至约91px高，真实底座未增加阻路面积。后部错落厚肩、东侧成段剪切墙和前沿厚板由同一作者面源绘制；外景为远/中/近三层。见[R8 QA](../qa/iteration-30-r8.md)。
+
+观察完整度独立于E操作：脚底至真实占地最近距离44px驻留120ms进入，58px退出，离开宽限250ms后淡出180ms；按当前可见作者面与设备体积采样遮挡，隔墙不显示。它不是放宽操作或改变碰撞。聚焦和世界读数共用生命周期，换主对象要等实际淡出完成，掉帧不允许双显。具体UI见Kit与唯一机制spec。
 
 ## 1. 用户反馈与本轮处置
 

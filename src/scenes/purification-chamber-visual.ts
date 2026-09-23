@@ -1,19 +1,21 @@
 import Phaser from 'phaser';
+import { ChamberDeviceActivity } from './chamber-device-activity';
 import { CHAMBER_MODULE_BOUNDS } from '../ui/chamber-integrity-placement';
 import { ChamberSurfaceMap } from '../art/chamber-surface-map';
 import { ChamberExteriorAtmosphere } from './chamber-exterior-atmosphere';
+import { CHAMBER_EXTERIOR_LAYERS, paintChamberExteriorLayer } from '../art/chamber-exterior-pixels';
 import { PurificationChamberLighting } from './purification-chamber-lighting';
 import {
   CHAMBER_DEVICE_ANCHORS,
   CHAMBER_DEVICE_BASES,
   CHAMBER_SIZE,
+  CHAMBER_CAMERA,
   type ChamberDevice,
 } from '@/systems/purification-chamber-layout';
 import {
   ChamberPixels,
   paintChamberArchitecture,
   paintChamberDevice,
-  paintChamberExterior,
   paintChamberForeground,
   paintChamberGrounding,
   paintChamberResistance,
@@ -21,7 +23,7 @@ import {
 } from '../art/purification-chamber-pixels';
 
 export interface PurificationChamberState {
-  /** Actual public integrity, normalized hp / maxHp. No forecast is accepted here. */
+  /** Public operating efficacy, normalized min(hp / 100, 1). Capacity is separate. No forecast is accepted here. */
   moduleHealth: { core: number; storage: number; purifier: number };
   thickenLevel: number;
   offeringCharge: number;
@@ -32,7 +34,7 @@ export interface PurificationChamberState {
   lamp: { x: number; y: number };
 }
 
-type PulseKind = 'repair' | 'growth' | 'offering';
+type PulseKind = 'repair' | 'growth' | 'offering' | 'offering-complete';
 interface DeviceLayer {
   readonly id: ChamberDevice;
   readonly texture: Phaser.Textures.CanvasTexture;
@@ -46,7 +48,7 @@ interface DeviceLayer {
 }
 const DEVICE_IDS: readonly ChamberDevice[] = ['rift', 'growth', 'offering', 'purifier', 'storage', 'core'];
 const MODULE_IDS = ['core', 'storage', 'purifier'] as const;
-const DEVICE_BOUNDS: Readonly<Record<ChamberDevice, readonly [number, number, number, number]>> = {
+export const CHAMBER_DEVICE_VISUAL_BOUNDS: Readonly<Record<ChamberDevice, readonly [number, number, number, number]>> = {
   core: CHAMBER_MODULE_BOUNDS.CORE, storage: CHAMBER_MODULE_BOUNDS.STORAGE,
   purifier: CHAMBER_MODULE_BOUNDS.PURIFIER, growth: [-20, -57, 22, 3],
   offering: [-21, -45, 27, 3], rift: [-26, -17, 26, 13],
@@ -61,12 +63,15 @@ export class PurificationChamberVisual {
   private readonly textures: string[] = [];
   private readonly images: Phaser.GameObjects.Image[] = [];
   private readonly devices: DeviceLayer[] = [];
+  private readonly exteriorLayers: { image: Phaser.GameObjects.Image; scrollFactor: number }[] = [];
   private readonly architectureSurfaces = new ChamberSurfaceMap();
   /** All six state bakes share one scratch atlas; compiled light spans own no atlas references. */
   private readonly deviceSurfaces = new ChamberSurfaceMap();
   private readonly groundEffects: Phaser.GameObjects.Graphics;
   private readonly bodyEffects: Phaser.GameObjects.Graphics;
   private readonly boundaryEffects: Phaser.GameObjects.Graphics;
+  private readonly activity: ChamberDeviceActivity;
+  private readonly motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   private readonly lighting: PurificationChamberLighting;
   private readonly exteriorAtmosphere: ChamberExteriorAtmosphere;
   private readonly resistanceTexture: Phaser.Textures.CanvasTexture;
@@ -85,11 +90,17 @@ export class PurificationChamberVisual {
   constructor(private readonly scene: Phaser.Scene) {
     const id = ++chamberId;
     const shellSurfaces = new ChamberSurfaceMap();
-    const exterior = this.addCanvas(`purification-chamber-exterior-${id}`, -50);
-    paintChamberExterior(new ChamberPixels(exterior.context, shellSurfaces));
-    const exteriorAlbedo = shellSurfaces.bake(exterior.context);
-    exterior.refresh();
-    this.exteriorAtmosphere = new ChamberExteriorAtmosphere(scene, exteriorAlbedo, shellSurfaces);
+    let nearAlbedo!: Uint8ClampedArray;
+    for (const layer of CHAMBER_EXTERIOR_LAYERS) {
+      shellSurfaces.clear();
+      const texture = this.addCanvas(`purification-chamber-exterior-${layer.id}-${id}`, layer.depth);
+      paintChamberExteriorLayer(new ChamberPixels(texture.context, shellSurfaces), layer.id);
+      const albedo = shellSurfaces.bake(texture.context);
+      texture.refresh();
+      this.exteriorLayers.push({ image: this.images[this.images.length - 1]!, scrollFactor: layer.scrollFactor });
+      if (layer.id === 'near') nearAlbedo = albedo;
+    }
+    this.exteriorAtmosphere = new ChamberExteriorAtmosphere(scene, nearAlbedo, shellSurfaces);
     const architecture = this.addCanvas(`purification-chamber-architecture-${id}`, 10);
     paintChamberArchitecture(new ChamberPixels(architecture.context, this.architectureSurfaces));
     const architectureAlbedo = this.architectureSurfaces.bake(architecture.context);
@@ -107,9 +118,10 @@ export class PurificationChamberVisual {
       this.devices.push({
         id: device, texture, painter: new ChamberPixels(texture.context, this.deviceSurfaces), key: -1,
         activity: scene.add.graphics().setDepth(depth + .2),
-        image: this.images[this.images.length - 1]!, bounds: DEVICE_BOUNDS[device], opacity: 1,
+        image: this.images[this.images.length - 1]!, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS[device], opacity: 1,
       });
     }
+    this.activity = new ChamberDeviceActivity(scene);
     shellSurfaces.clear();
     this.addCanvas(`purification-chamber-front-cut-${id}`, 460, paintChamberForeground, shellSurfaces);
     this.bodyEffects = scene.add.graphics().setDepth(410);
@@ -132,8 +144,15 @@ export class PurificationChamberVisual {
 
   update(timeMs: number, deltaMs: number, state: PurificationChamberState): void {
     if (this.destroyed) return;
-    this.time = timeMs;
-    this.exteriorAtmosphere.update(timeMs);
+    // Visual time advances only with this active scene; pause/resume never jumps a pose.
+    this.time += Math.max(0, Math.min(100, deltaMs));
+    timeMs = this.time;
+    for (const layer of this.exteriorLayers) {
+      const camera = this.scene.cameras.main;
+      layer.image.setPosition(Math.round((camera.midPoint.x - CHAMBER_CAMERA.x) * (1 - layer.scrollFactor)),
+        Math.round((camera.midPoint.y - CHAMBER_CAMERA.y) * (1 - layer.scrollFactor)));
+    }
+    this.exteriorAtmosphere.update(timeMs, this.motionQuery.matches);
     const health = state.moduleHealth;
     let growth = 0;
     for (const id in state.growthLevels) growth += state.growthLevels[id] ?? 0;
@@ -174,7 +193,8 @@ export class PurificationChamberVisual {
     // The body attachment follows every player step even between animation ticks.
     this.bodyEffects.setPosition(Math.round(state.player.x), Math.round(state.player.y));
     this.bodyEffects.setDepth(110 + state.player.y + .5);
-    this.lighting.update(timeMs, state);
+    this.activity.update(timeMs, { ...state.moduleHealth, offeringOccupancy: state.offeringCharge }, this.motionQuery.matches);
+    this.lighting.update(timeMs, state, this.motionQuery.matches);
     if (this.lastFrame === frame) return;
     this.lastFrame = frame;
     this.paintActivity(timeMs, state);
@@ -194,12 +214,13 @@ export class PurificationChamberVisual {
     device.opacity += Math.max(-step, Math.min(step, target - device.opacity));
     device.image.setAlpha(device.opacity);
     device.activity.setAlpha(device.opacity);
+    this.activity.setOpacity(device.id, device.opacity);
     this.lighting.setDeviceOpacity(device.id, device.opacity);
   }
 
   private paintActivity(time: number, state: PurificationChamberState): void {
-    const breath = .5 + .5 * Math.sin(time * .0014);
-    const slowFrame = Math.floor(time / 230);
+    const motionTime = this.motionQuery.matches ? 0 : time;
+    const breath = .5 + .5 * Math.sin(motionTime * .0014);
     const elapsed = time - this.pulseStart;
     const pulsing = elapsed >= 0 && elapsed < 1000;
     const envelope = pulsing ? Math.sin(Math.PI * elapsed / 1000) : 0;
@@ -210,47 +231,6 @@ export class PurificationChamberVisual {
       const g = device.activity;
       g.clear();
       const { x, y } = CHAMBER_DEVICE_BASES[device.id];
-      if (device.id === 'core') {
-        const energy = this.lighting.energy('core');
-        const health = energy / .43;
-        g.fillStyle(0x1aad96, Math.min(.88, .76 * health));
-        g.fillRect(x - 2, y - 50, 3, 6);
-        g.fillRect(x + 1, y - 35, 2, 5);
-        g.fillStyle(0x2ae6c8, Math.min(.92, .83 * health));
-        g.fillRect(x - 1, y - 46, 2, 2);
-      } else if (device.id === 'growth') {
-        // Independent, small rising bubbles within the full liquid cylinder.
-        g.fillStyle(0x1aad96, this.lighting.energy('growth') * 4.0);
-        const rise = slowFrame % 24;
-        g.fillRect(x - 7, y - 14 - rise, 2, 2);
-        g.fillRect(x + 7, y - 15 - ((rise + 11) % 23), 2, 1);
-        g.fillStyle(0x2ae6c8, this.lighting.energy('growth') * 2.7);
-        g.fillRect(x - 6, y - 15 - rise, 1, 1);
-      } else if (device.id === 'purifier') {
-        g.fillStyle(0x1aad96, this.lighting.energy('purifier') * 2.6);
-        g.fillRect(x - 9, y - 23, 2, 4);
-        g.fillRect(x + 4, y - 15, 3, 1);
-      } else if (device.id === 'storage') {
-        g.fillStyle(0x1a6b5c, .38 + breath * .15);
-        g.fillRect(x - 3, y - 33, 4, 1);
-      } else if (device.id === 'offering' && state.offeringCharge > 0) {
-        // Same anonymous captive mass for all hidden identities; no countable world slots.
-        const amount = Math.max(0, Math.min(1, state.offeringCharge));
-        g.fillStyle(0x0e4a3f, 1);
-        g.fillRect(x - 5, y - 20, 11, 4);
-        g.fillRect(x - 2, y - 23, 6, 3);
-        g.fillStyle(0x1a6b5c, .64 + breath * .2);
-        g.fillRect(x - 3, y - 21, 4, 3);
-        g.fillRect(x + 1, y - 18, 4, 2);
-        g.fillStyle(0x1aad96, .2 + amount * .35);
-        g.fillRect(x - 1, y - 22, 2, 1);
-      } else if (device.id === 'rift') {
-        g.fillStyle(0x1a6b5c, .42 + breath * .25);
-        g.fillRect(x - 4, y - 3, 3, 1);
-        g.fillRect(x, y - 3, 3, 1);
-        g.fillStyle(0x1aad96, .25 + breath * .3);
-        g.fillRect(x - 1, y - 2, 2, 1);
-      }
       if (active === device.id) {
         // Two short scuffed contact marks on the actual operator position, below the actor.
         const at = CHAMBER_DEVICE_ANCHORS[device.id];
@@ -271,8 +251,8 @@ export class PurificationChamberVisual {
     }
     // Light stays in the existing material split. Damage changes how far the active seam escapes.
     this.paintPressure(99, 240, state.moduleHealth.storage, 1, breath);
-    this.paintPressure(319, 121, state.moduleHealth.core, 0, .5 + .5 * Math.sin(time * .0011 + 1.7));
-    this.paintPressure(549, 228, state.moduleHealth.purifier, -1, .5 + .5 * Math.sin(time * .0013 + 3.1));
+    this.paintPressure(319, 121, state.moduleHealth.core, 0, .5 + .5 * Math.sin(motionTime * .0011 + 1.7));
+    this.paintPressure(549, 228, state.moduleHealth.purifier, -1, .5 + .5 * Math.sin(motionTime * .0013 + 3.1));
     if (pulsing && this.pulseTarget === 'player') {
       this.bodyEffects.fillStyle(0xc8cdd4, envelope * .45);
       this.bodyEffects.fillRect(-3, -7, 2, 3);
@@ -286,15 +266,15 @@ export class PurificationChamberVisual {
     const g = this.boundaryEffects;
     g.fillStyle(0x1a6b5c, .22 + phase * .24);
     g.fillRect(x - 1, y - 15, 2, 4);
-    if (health > .6) return;
+    if (health >= 1) return;
     g.fillStyle(0x1aad96, .11 + phase * .16);
     if (direction === 0) {
       g.fillRect(x, y - 2, 1, 3);
-      if (health < .3) g.fillRect(x + 2, y + 10, 1, 3);
+      if (health < .25) g.fillRect(x + 2, y + 10, 1, 3);
     } else {
-      const reach = direction * (health < .3 ? 13 : 8);
+      const reach = direction * (health < .25 ? 13 : 8);
       g.fillRect(x + Math.round(reach * .5), y - 1, 2, 1);
-      if (health < .3) g.fillRect(x + reach + direction * 3, y + 4, 1, 2);
+      if (health < .25) g.fillRect(x + reach + direction * 3, y + 4, 1, 2);
     }
   }
 
@@ -307,7 +287,8 @@ export class PurificationChamberVisual {
     this.pulseKind = kind;
     this.pulseStart = this.time;
     this.pulseTarget = normalizeTarget(target) ?? (kind === 'repair' ? 'core' : kind);
-    this.lighting.pulse(this.pulseTarget, this.time);
+    this.activity.pulse(kind, this.pulseTarget);
+    this.lighting.pulse(kind === 'growth' ? 'growth' : this.pulseTarget, this.time);
     this.lastFrame = -1;
   }
 
@@ -316,6 +297,7 @@ export class PurificationChamberVisual {
     this.destroyed = true;
     this.groundEffects.destroy(); this.bodyEffects.destroy(); this.boundaryEffects.destroy();
     this.lighting.destroy();
+    this.activity.destroy();
     this.exteriorAtmosphere.destroy();
     for (const device of this.devices) device.activity.destroy();
     for (const image of this.images) image.destroy();
@@ -325,8 +307,8 @@ export class PurificationChamberVisual {
 }
 
 function healthTier(health: number): number {
-  if (health < .3) return 2;
-  if (health <= .6) return 1;
+  if (health < .25) return 2;
+  if (health < 1) return 1;
   return 0;
 }
 function normalizeTarget(target?: string | null): string | null {

@@ -1,0 +1,1739 @@
+{
+  "generatedAt": "2026-09-23T08:40:47.117Z",
+  "features": [
+    "COH-F026",
+    "COH-F006",
+    "COH-F042"
+  ],
+  "sourceRevision": "ca1bdf385363c35c12eaa8c27913f95f739c97cf",
+  "sourceSha256": {
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "src/systems/purification-chamber-locomotion.ts": "46edc17ef0616c0fef5aed18557adc580dc908e0ef69b7fc499c3cb1729bb248",
+    "src/entities/player.ts": "247e6d6afb2c4a9b1af0ccddb881ddf126a8750fc717683081391ff459b3f9c9",
+    "src/scenes/purification-scene.ts": "d3c42d09c9e28ab0cb2531e31814ca8c77dbf537a4d27c4a82cf4c7a302c181d",
+    "src/config/constants.ts": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+  },
+  "command": "node --import tsx tools/qa/measure-i30-r8-routes.ts",
+  "method": "Dijkstra shortest paths on a 1-world-pixel grid with eight normalized movement directions. Every graph edge is accepted only if production stepChamberMovement reaches its endpoint at original speed and the full 6px circular sole is supported. Device-operation sets also require production same-floor/swept-clearance permission and the unchanged 24px proximity radius.",
+  "limitations": [
+    "Distances are exact for this discrete graph, an approximation of continuous keyboard paths. Seconds are distance / unchanged 80px/s, not measured human or browser traversal time.",
+    "Operation-zone routes are independently minimized between any legal operation points; successive routes need not share the same endpoint. Anchor routes retain fixed reference endpoints for comparison.",
+    "Hypothetical upper layouts retain current walk polygons, ramps, other five devices and original core collision footprint size. This favors the upper candidate; larger collision geometry or additional architecture cannot shorten its paths.",
+    "The forward-workband sensitivity case moves the hypothetical upper core base to (286,181) and operation anchor to (286,216), retaining their 35px separation, 24px reach and upper-floor authority.",
+    "No rendered scene, runtime keyboard traversal, aesthetics, or redesigned full-floor topology is validated here."
+  ],
+  "decision": "KEEP_CORE_ON_MAIN_FLOOR. Both upper placements exceed the 10% budget on spawn-to-core and core-to-storage. Retain the existing main-floor base, anchor, collision footprint and ramps; establish hierarchy with a dark rear support/niche and architectural shoulders outside walk clearance. Changing the entire upper-floor outline is beyond this bounded gate.",
+  "speedPxPerSecond": 80,
+  "interactionRadiusPx": 24,
+  "feetRadiusPx": 6,
+  "budgetMaximumIncreasePercent": 10,
+  "spawnEvidence": "PurificationScene player creation consumes chamberFeetToPlayerPosition(CHAMBER_SPAWN_POINT); sole point (366,299), actor position (366,289).",
+  "existingUpperFloorLowerBound": {
+    "explanation": "Every same-floor upper interaction requires feet y <= 224. Spawn y = 299 therefore requires at least 75px of continuous movement, even with all walls and devices removed. The measured legal baseline route is only 62.071px, so 75px already exceeds its 68.278px budget. No anchor-only adjustment anywhere on the existing upper polygon can pass the spawn-to-core budget.",
+    "minimumContinuousDistancePx": 75,
+    "baselineLegalGraphPathPx": 62.071,
+    "allowedDistancePx": 68.278
+  },
+  "scenarios": [
+    {
+      "name": "baseline-main",
+      "coreBase": {
+        "x": 253,
+        "y": 299
+      },
+      "coreAnchor": {
+        "x": 284,
+        "y": 313
+      },
+      "coreFloor": "main",
+      "validGridPointCount": 39042,
+      "routes": [
+        {
+          "id": "spawn-to-core-operation-zone",
+          "graphDistancePx": 62.071,
+          "estimatedSecondsAtOriginalSpeed": 0.776,
+          "start": {
+            "x": 366,
+            "y": 299
+          },
+          "end": {
+            "x": 306,
+            "y": 304
+          },
+          "startRoute": "main",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 60,
+          "turnPoints": [
+            {
+              "x": 366,
+              "y": 299
+            },
+            {
+              "x": 311,
+              "y": 299
+            },
+            {
+              "x": 306,
+              "y": 304
+            }
+          ]
+        },
+        {
+          "id": "core-operation-zone-to-storage-operation-zone",
+          "graphDistancePx": 78.657,
+          "estimatedSecondsAtOriginalSpeed": 0.983,
+          "start": {
+            "x": 261,
+            "y": 317
+          },
+          "end": {
+            "x": 184,
+            "y": 313
+          },
+          "startRoute": "main",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 77,
+          "turnPoints": [
+            {
+              "x": 261,
+              "y": 317
+            },
+            {
+              "x": 188,
+              "y": 317
+            },
+            {
+              "x": 184,
+              "y": 313
+            }
+          ]
+        },
+        {
+          "id": "offering-operation-zone-to-rift-operation-zone",
+          "graphDistancePx": 159.439,
+          "estimatedSecondsAtOriginalSpeed": 1.993,
+          "start": {
+            "x": 370,
+            "y": 206
+          },
+          "end": {
+            "x": 483,
+            "y": 287
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 135,
+          "turnPoints": [
+            {
+              "x": 370,
+              "y": 206
+            },
+            {
+              "x": 370,
+              "y": 215
+            },
+            {
+              "x": 402,
+              "y": 247
+            },
+            {
+              "x": 402,
+              "y": 260
+            },
+            {
+              "x": 427,
+              "y": 285
+            },
+            {
+              "x": 481,
+              "y": 285
+            },
+            {
+              "x": 483,
+              "y": 287
+            }
+          ]
+        },
+        {
+          "id": "spawn-to-core-anchor",
+          "graphDistancePx": 87.799,
+          "estimatedSecondsAtOriginalSpeed": 1.097,
+          "start": {
+            "x": 366,
+            "y": 299
+          },
+          "end": {
+            "x": 284,
+            "y": 313
+          },
+          "startRoute": "main",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 82,
+          "turnPoints": [
+            {
+              "x": 366,
+              "y": 299
+            },
+            {
+              "x": 298,
+              "y": 299
+            },
+            {
+              "x": 284,
+              "y": 313
+            }
+          ]
+        },
+        {
+          "id": "core-anchor-to-storage-anchor",
+          "graphDistancePx": 127.385,
+          "estimatedSecondsAtOriginalSpeed": 1.592,
+          "start": {
+            "x": 284,
+            "y": 313
+          },
+          "end": {
+            "x": 162,
+            "y": 304
+          },
+          "startRoute": "main",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 122,
+          "turnPoints": [
+            {
+              "x": 284,
+              "y": 313
+            },
+            {
+              "x": 275,
+              "y": 313
+            },
+            {
+              "x": 273,
+              "y": 315
+            },
+            {
+              "x": 173,
+              "y": 315
+            },
+            {
+              "x": 162,
+              "y": 304
+            }
+          ]
+        },
+        {
+          "id": "offering-anchor-to-rift-anchor",
+          "graphDistancePx": 203.48,
+          "estimatedSecondsAtOriginalSpeed": 2.544,
+          "start": {
+            "x": 348,
+            "y": 198
+          },
+          "end": {
+            "x": 507,
+            "y": 287
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 172,
+          "turnPoints": [
+            {
+              "x": 348,
+              "y": 198
+            },
+            {
+              "x": 353,
+              "y": 198
+            },
+            {
+              "x": 402,
+              "y": 247
+            },
+            {
+              "x": 402,
+              "y": 260
+            },
+            {
+              "x": 427,
+              "y": 285
+            },
+            {
+              "x": 505,
+              "y": 285
+            },
+            {
+              "x": 507,
+              "y": 287
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "candidate-upper-back",
+      "coreBase": {
+        "x": 270,
+        "y": 160
+      },
+      "coreAnchor": {
+        "x": 270,
+        "y": 195
+      },
+      "coreFloor": "upper",
+      "validGridPointCount": 39596,
+      "routes": [
+        {
+          "id": "spawn-to-core-operation-zone",
+          "graphDistancePx": 128.581,
+          "estimatedSecondsAtOriginalSpeed": 1.607,
+          "start": {
+            "x": 366,
+            "y": 299
+          },
+          "end": {
+            "x": 279,
+            "y": 217
+          },
+          "startRoute": "main",
+          "endRoute": "upper",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 100,
+          "turnPoints": [
+            {
+              "x": 366,
+              "y": 299
+            },
+            {
+              "x": 348,
+              "y": 299
+            },
+            {
+              "x": 318,
+              "y": 269
+            },
+            {
+              "x": 318,
+              "y": 268
+            },
+            {
+              "x": 317,
+              "y": 267
+            },
+            {
+              "x": 317,
+              "y": 266
+            },
+            {
+              "x": 316,
+              "y": 265
+            },
+            {
+              "x": 316,
+              "y": 264
+            },
+            {
+              "x": 315,
+              "y": 263
+            },
+            {
+              "x": 315,
+              "y": 262
+            },
+            {
+              "x": 314,
+              "y": 261
+            },
+            {
+              "x": 314,
+              "y": 260
+            },
+            {
+              "x": 313,
+              "y": 259
+            },
+            {
+              "x": 313,
+              "y": 258
+            },
+            {
+              "x": 311,
+              "y": 256
+            },
+            {
+              "x": 311,
+              "y": 255
+            },
+            {
+              "x": 310,
+              "y": 254
+            },
+            {
+              "x": 310,
+              "y": 253
+            },
+            {
+              "x": 309,
+              "y": 252
+            },
+            {
+              "x": 309,
+              "y": 251
+            },
+            {
+              "x": 308,
+              "y": 250
+            },
+            {
+              "x": 308,
+              "y": 249
+            },
+            {
+              "x": 307,
+              "y": 248
+            },
+            {
+              "x": 307,
+              "y": 247
+            },
+            {
+              "x": 306,
+              "y": 246
+            },
+            {
+              "x": 306,
+              "y": 245
+            },
+            {
+              "x": 305,
+              "y": 244
+            },
+            {
+              "x": 305,
+              "y": 243
+            },
+            {
+              "x": 279,
+              "y": 217
+            }
+          ]
+        },
+        {
+          "id": "core-operation-zone-to-storage-operation-zone",
+          "graphDistancePx": 173.326,
+          "estimatedSecondsAtOriginalSpeed": 2.167,
+          "start": {
+            "x": 279,
+            "y": 217
+          },
+          "end": {
+            "x": 184,
+            "y": 295
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 158,
+          "turnPoints": [
+            {
+              "x": 279,
+              "y": 217
+            },
+            {
+              "x": 279,
+              "y": 243
+            },
+            {
+              "x": 280,
+              "y": 244
+            },
+            {
+              "x": 280,
+              "y": 245
+            },
+            {
+              "x": 281,
+              "y": 246
+            },
+            {
+              "x": 281,
+              "y": 247
+            },
+            {
+              "x": 282,
+              "y": 248
+            },
+            {
+              "x": 282,
+              "y": 249
+            },
+            {
+              "x": 283,
+              "y": 250
+            },
+            {
+              "x": 283,
+              "y": 251
+            },
+            {
+              "x": 284,
+              "y": 252
+            },
+            {
+              "x": 284,
+              "y": 253
+            },
+            {
+              "x": 286,
+              "y": 255
+            },
+            {
+              "x": 286,
+              "y": 256
+            },
+            {
+              "x": 287,
+              "y": 257
+            },
+            {
+              "x": 287,
+              "y": 258
+            },
+            {
+              "x": 288,
+              "y": 259
+            },
+            {
+              "x": 288,
+              "y": 260
+            },
+            {
+              "x": 289,
+              "y": 261
+            },
+            {
+              "x": 289,
+              "y": 262
+            },
+            {
+              "x": 290,
+              "y": 263
+            },
+            {
+              "x": 290,
+              "y": 269
+            },
+            {
+              "x": 287,
+              "y": 272
+            },
+            {
+              "x": 207,
+              "y": 272
+            },
+            {
+              "x": 184,
+              "y": 295
+            }
+          ]
+        },
+        {
+          "id": "offering-operation-zone-to-rift-operation-zone",
+          "graphDistancePx": 159.439,
+          "estimatedSecondsAtOriginalSpeed": 1.993,
+          "start": {
+            "x": 370,
+            "y": 206
+          },
+          "end": {
+            "x": 483,
+            "y": 287
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 135,
+          "turnPoints": [
+            {
+              "x": 370,
+              "y": 206
+            },
+            {
+              "x": 370,
+              "y": 215
+            },
+            {
+              "x": 402,
+              "y": 247
+            },
+            {
+              "x": 402,
+              "y": 260
+            },
+            {
+              "x": 427,
+              "y": 285
+            },
+            {
+              "x": 481,
+              "y": 285
+            },
+            {
+              "x": 483,
+              "y": 287
+            }
+          ]
+        },
+        {
+          "id": "spawn-to-core-anchor",
+          "graphDistancePx": 154.309,
+          "estimatedSecondsAtOriginalSpeed": 1.929,
+          "start": {
+            "x": 366,
+            "y": 299
+          },
+          "end": {
+            "x": 270,
+            "y": 195
+          },
+          "startRoute": "main",
+          "endRoute": "upper",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 122,
+          "turnPoints": [
+            {
+              "x": 366,
+              "y": 299
+            },
+            {
+              "x": 348,
+              "y": 299
+            },
+            {
+              "x": 318,
+              "y": 269
+            },
+            {
+              "x": 318,
+              "y": 268
+            },
+            {
+              "x": 317,
+              "y": 267
+            },
+            {
+              "x": 317,
+              "y": 266
+            },
+            {
+              "x": 316,
+              "y": 265
+            },
+            {
+              "x": 316,
+              "y": 264
+            },
+            {
+              "x": 315,
+              "y": 263
+            },
+            {
+              "x": 315,
+              "y": 262
+            },
+            {
+              "x": 314,
+              "y": 261
+            },
+            {
+              "x": 314,
+              "y": 260
+            },
+            {
+              "x": 313,
+              "y": 259
+            },
+            {
+              "x": 313,
+              "y": 258
+            },
+            {
+              "x": 311,
+              "y": 256
+            },
+            {
+              "x": 311,
+              "y": 255
+            },
+            {
+              "x": 310,
+              "y": 254
+            },
+            {
+              "x": 310,
+              "y": 253
+            },
+            {
+              "x": 309,
+              "y": 252
+            },
+            {
+              "x": 309,
+              "y": 251
+            },
+            {
+              "x": 308,
+              "y": 250
+            },
+            {
+              "x": 308,
+              "y": 249
+            },
+            {
+              "x": 307,
+              "y": 248
+            },
+            {
+              "x": 307,
+              "y": 247
+            },
+            {
+              "x": 306,
+              "y": 246
+            },
+            {
+              "x": 306,
+              "y": 245
+            },
+            {
+              "x": 305,
+              "y": 244
+            },
+            {
+              "x": 305,
+              "y": 243
+            },
+            {
+              "x": 304,
+              "y": 242
+            },
+            {
+              "x": 304,
+              "y": 241
+            },
+            {
+              "x": 303,
+              "y": 240
+            },
+            {
+              "x": 303,
+              "y": 239
+            },
+            {
+              "x": 302,
+              "y": 238
+            },
+            {
+              "x": 302,
+              "y": 237
+            },
+            {
+              "x": 300,
+              "y": 235
+            },
+            {
+              "x": 300,
+              "y": 234
+            },
+            {
+              "x": 299,
+              "y": 233
+            },
+            {
+              "x": 299,
+              "y": 232
+            },
+            {
+              "x": 298,
+              "y": 231
+            },
+            {
+              "x": 298,
+              "y": 230
+            },
+            {
+              "x": 297,
+              "y": 229
+            },
+            {
+              "x": 297,
+              "y": 228
+            },
+            {
+              "x": 296,
+              "y": 227
+            },
+            {
+              "x": 296,
+              "y": 221
+            },
+            {
+              "x": 270,
+              "y": 195
+            }
+          ]
+        },
+        {
+          "id": "core-anchor-to-storage-anchor",
+          "graphDistancePx": 224.782,
+          "estimatedSecondsAtOriginalSpeed": 2.81,
+          "start": {
+            "x": 270,
+            "y": 195
+          },
+          "end": {
+            "x": 162,
+            "y": 304
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 202,
+          "turnPoints": [
+            {
+              "x": 270,
+              "y": 195
+            },
+            {
+              "x": 270,
+              "y": 226
+            },
+            {
+              "x": 271,
+              "y": 227
+            },
+            {
+              "x": 271,
+              "y": 228
+            },
+            {
+              "x": 272,
+              "y": 229
+            },
+            {
+              "x": 272,
+              "y": 230
+            },
+            {
+              "x": 273,
+              "y": 231
+            },
+            {
+              "x": 273,
+              "y": 232
+            },
+            {
+              "x": 275,
+              "y": 234
+            },
+            {
+              "x": 275,
+              "y": 235
+            },
+            {
+              "x": 276,
+              "y": 236
+            },
+            {
+              "x": 276,
+              "y": 237
+            },
+            {
+              "x": 277,
+              "y": 238
+            },
+            {
+              "x": 277,
+              "y": 239
+            },
+            {
+              "x": 278,
+              "y": 240
+            },
+            {
+              "x": 278,
+              "y": 241
+            },
+            {
+              "x": 279,
+              "y": 242
+            },
+            {
+              "x": 279,
+              "y": 243
+            },
+            {
+              "x": 280,
+              "y": 244
+            },
+            {
+              "x": 280,
+              "y": 245
+            },
+            {
+              "x": 281,
+              "y": 246
+            },
+            {
+              "x": 281,
+              "y": 247
+            },
+            {
+              "x": 282,
+              "y": 248
+            },
+            {
+              "x": 282,
+              "y": 249
+            },
+            {
+              "x": 283,
+              "y": 250
+            },
+            {
+              "x": 283,
+              "y": 251
+            },
+            {
+              "x": 284,
+              "y": 252
+            },
+            {
+              "x": 284,
+              "y": 253
+            },
+            {
+              "x": 286,
+              "y": 255
+            },
+            {
+              "x": 286,
+              "y": 256
+            },
+            {
+              "x": 287,
+              "y": 257
+            },
+            {
+              "x": 287,
+              "y": 258
+            },
+            {
+              "x": 288,
+              "y": 259
+            },
+            {
+              "x": 288,
+              "y": 260
+            },
+            {
+              "x": 289,
+              "y": 261
+            },
+            {
+              "x": 289,
+              "y": 262
+            },
+            {
+              "x": 290,
+              "y": 263
+            },
+            {
+              "x": 290,
+              "y": 269
+            },
+            {
+              "x": 287,
+              "y": 272
+            },
+            {
+              "x": 194,
+              "y": 272
+            },
+            {
+              "x": 162,
+              "y": 304
+            }
+          ]
+        },
+        {
+          "id": "offering-anchor-to-rift-anchor",
+          "graphDistancePx": 203.48,
+          "estimatedSecondsAtOriginalSpeed": 2.544,
+          "start": {
+            "x": 348,
+            "y": 198
+          },
+          "end": {
+            "x": 507,
+            "y": 287
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 172,
+          "turnPoints": [
+            {
+              "x": 348,
+              "y": 198
+            },
+            {
+              "x": 353,
+              "y": 198
+            },
+            {
+              "x": 402,
+              "y": 247
+            },
+            {
+              "x": 402,
+              "y": 260
+            },
+            {
+              "x": 427,
+              "y": 285
+            },
+            {
+              "x": 505,
+              "y": 285
+            },
+            {
+              "x": 507,
+              "y": 287
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "candidate-upper-forward-workband",
+      "coreBase": {
+        "x": 286,
+        "y": 181
+      },
+      "coreAnchor": {
+        "x": 286,
+        "y": 216
+      },
+      "coreFloor": "upper",
+      "validGridPointCount": 39042,
+      "routes": [
+        {
+          "id": "spawn-to-core-operation-zone",
+          "graphDistancePx": 114.539,
+          "estimatedSecondsAtOriginalSpeed": 1.432,
+          "start": {
+            "x": 366,
+            "y": 299
+          },
+          "end": {
+            "x": 296,
+            "y": 224
+          },
+          "startRoute": "main",
+          "endRoute": "upper",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 93,
+          "turnPoints": [
+            {
+              "x": 366,
+              "y": 299
+            },
+            {
+              "x": 348,
+              "y": 299
+            },
+            {
+              "x": 318,
+              "y": 269
+            },
+            {
+              "x": 318,
+              "y": 268
+            },
+            {
+              "x": 317,
+              "y": 267
+            },
+            {
+              "x": 317,
+              "y": 266
+            },
+            {
+              "x": 316,
+              "y": 265
+            },
+            {
+              "x": 316,
+              "y": 264
+            },
+            {
+              "x": 315,
+              "y": 263
+            },
+            {
+              "x": 315,
+              "y": 262
+            },
+            {
+              "x": 314,
+              "y": 261
+            },
+            {
+              "x": 314,
+              "y": 260
+            },
+            {
+              "x": 313,
+              "y": 259
+            },
+            {
+              "x": 313,
+              "y": 258
+            },
+            {
+              "x": 311,
+              "y": 256
+            },
+            {
+              "x": 311,
+              "y": 255
+            },
+            {
+              "x": 310,
+              "y": 254
+            },
+            {
+              "x": 310,
+              "y": 253
+            },
+            {
+              "x": 309,
+              "y": 252
+            },
+            {
+              "x": 309,
+              "y": 251
+            },
+            {
+              "x": 308,
+              "y": 250
+            },
+            {
+              "x": 308,
+              "y": 249
+            },
+            {
+              "x": 307,
+              "y": 248
+            },
+            {
+              "x": 307,
+              "y": 247
+            },
+            {
+              "x": 306,
+              "y": 246
+            },
+            {
+              "x": 306,
+              "y": 245
+            },
+            {
+              "x": 305,
+              "y": 244
+            },
+            {
+              "x": 305,
+              "y": 243
+            },
+            {
+              "x": 304,
+              "y": 242
+            },
+            {
+              "x": 304,
+              "y": 241
+            },
+            {
+              "x": 303,
+              "y": 240
+            },
+            {
+              "x": 303,
+              "y": 239
+            },
+            {
+              "x": 302,
+              "y": 238
+            },
+            {
+              "x": 302,
+              "y": 237
+            },
+            {
+              "x": 300,
+              "y": 235
+            },
+            {
+              "x": 300,
+              "y": 234
+            },
+            {
+              "x": 299,
+              "y": 233
+            },
+            {
+              "x": 299,
+              "y": 232
+            },
+            {
+              "x": 298,
+              "y": 231
+            },
+            {
+              "x": 298,
+              "y": 230
+            },
+            {
+              "x": 297,
+              "y": 229
+            },
+            {
+              "x": 297,
+              "y": 228
+            },
+            {
+              "x": 296,
+              "y": 227
+            },
+            {
+              "x": 296,
+              "y": 224
+            }
+          ]
+        },
+        {
+          "id": "core-operation-zone-to-storage-operation-zone",
+          "graphDistancePx": 161.77,
+          "estimatedSecondsAtOriginalSpeed": 2.022,
+          "start": {
+            "x": 290,
+            "y": 224
+          },
+          "end": {
+            "x": 184,
+            "y": 295
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 151,
+          "turnPoints": [
+            {
+              "x": 290,
+              "y": 224
+            },
+            {
+              "x": 290,
+              "y": 269
+            },
+            {
+              "x": 287,
+              "y": 272
+            },
+            {
+              "x": 207,
+              "y": 272
+            },
+            {
+              "x": 184,
+              "y": 295
+            }
+          ]
+        },
+        {
+          "id": "offering-operation-zone-to-rift-operation-zone",
+          "graphDistancePx": 159.439,
+          "estimatedSecondsAtOriginalSpeed": 1.993,
+          "start": {
+            "x": 370,
+            "y": 206
+          },
+          "end": {
+            "x": 483,
+            "y": 287
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 135,
+          "turnPoints": [
+            {
+              "x": 370,
+              "y": 206
+            },
+            {
+              "x": 370,
+              "y": 215
+            },
+            {
+              "x": 402,
+              "y": 247
+            },
+            {
+              "x": 402,
+              "y": 260
+            },
+            {
+              "x": 427,
+              "y": 285
+            },
+            {
+              "x": 481,
+              "y": 285
+            },
+            {
+              "x": 483,
+              "y": 287
+            }
+          ]
+        },
+        {
+          "id": "spawn-to-core-anchor",
+          "graphDistancePx": 126.681,
+          "estimatedSecondsAtOriginalSpeed": 1.584,
+          "start": {
+            "x": 366,
+            "y": 299
+          },
+          "end": {
+            "x": 286,
+            "y": 216
+          },
+          "startRoute": "main",
+          "endRoute": "upper",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 101,
+          "turnPoints": [
+            {
+              "x": 366,
+              "y": 299
+            },
+            {
+              "x": 348,
+              "y": 299
+            },
+            {
+              "x": 318,
+              "y": 269
+            },
+            {
+              "x": 318,
+              "y": 268
+            },
+            {
+              "x": 317,
+              "y": 267
+            },
+            {
+              "x": 317,
+              "y": 266
+            },
+            {
+              "x": 316,
+              "y": 265
+            },
+            {
+              "x": 316,
+              "y": 264
+            },
+            {
+              "x": 315,
+              "y": 263
+            },
+            {
+              "x": 315,
+              "y": 262
+            },
+            {
+              "x": 314,
+              "y": 261
+            },
+            {
+              "x": 314,
+              "y": 260
+            },
+            {
+              "x": 313,
+              "y": 259
+            },
+            {
+              "x": 313,
+              "y": 258
+            },
+            {
+              "x": 311,
+              "y": 256
+            },
+            {
+              "x": 311,
+              "y": 255
+            },
+            {
+              "x": 310,
+              "y": 254
+            },
+            {
+              "x": 310,
+              "y": 253
+            },
+            {
+              "x": 309,
+              "y": 252
+            },
+            {
+              "x": 309,
+              "y": 251
+            },
+            {
+              "x": 308,
+              "y": 250
+            },
+            {
+              "x": 308,
+              "y": 249
+            },
+            {
+              "x": 307,
+              "y": 248
+            },
+            {
+              "x": 307,
+              "y": 247
+            },
+            {
+              "x": 306,
+              "y": 246
+            },
+            {
+              "x": 306,
+              "y": 245
+            },
+            {
+              "x": 305,
+              "y": 244
+            },
+            {
+              "x": 305,
+              "y": 243
+            },
+            {
+              "x": 304,
+              "y": 242
+            },
+            {
+              "x": 304,
+              "y": 241
+            },
+            {
+              "x": 303,
+              "y": 240
+            },
+            {
+              "x": 303,
+              "y": 239
+            },
+            {
+              "x": 302,
+              "y": 238
+            },
+            {
+              "x": 302,
+              "y": 237
+            },
+            {
+              "x": 300,
+              "y": 235
+            },
+            {
+              "x": 300,
+              "y": 234
+            },
+            {
+              "x": 299,
+              "y": 233
+            },
+            {
+              "x": 299,
+              "y": 232
+            },
+            {
+              "x": 298,
+              "y": 231
+            },
+            {
+              "x": 298,
+              "y": 230
+            },
+            {
+              "x": 297,
+              "y": 229
+            },
+            {
+              "x": 297,
+              "y": 228
+            },
+            {
+              "x": 296,
+              "y": 227
+            },
+            {
+              "x": 296,
+              "y": 226
+            },
+            {
+              "x": 286,
+              "y": 216
+            }
+          ]
+        },
+        {
+          "id": "core-anchor-to-storage-anchor",
+          "graphDistancePx": 197.154,
+          "estimatedSecondsAtOriginalSpeed": 2.464,
+          "start": {
+            "x": 286,
+            "y": 216
+          },
+          "end": {
+            "x": 162,
+            "y": 304
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 181,
+          "turnPoints": [
+            {
+              "x": 286,
+              "y": 216
+            },
+            {
+              "x": 286,
+              "y": 256
+            },
+            {
+              "x": 287,
+              "y": 257
+            },
+            {
+              "x": 287,
+              "y": 258
+            },
+            {
+              "x": 288,
+              "y": 259
+            },
+            {
+              "x": 288,
+              "y": 260
+            },
+            {
+              "x": 289,
+              "y": 261
+            },
+            {
+              "x": 289,
+              "y": 262
+            },
+            {
+              "x": 290,
+              "y": 263
+            },
+            {
+              "x": 290,
+              "y": 269
+            },
+            {
+              "x": 287,
+              "y": 272
+            },
+            {
+              "x": 194,
+              "y": 272
+            },
+            {
+              "x": 162,
+              "y": 304
+            }
+          ]
+        },
+        {
+          "id": "offering-anchor-to-rift-anchor",
+          "graphDistancePx": 203.48,
+          "estimatedSecondsAtOriginalSpeed": 2.544,
+          "start": {
+            "x": 348,
+            "y": 198
+          },
+          "end": {
+            "x": 507,
+            "y": 287
+          },
+          "startRoute": "upper",
+          "endRoute": "main",
+          "productionSweepReplayPassed": true,
+          "graphEdgeCount": 172,
+          "turnPoints": [
+            {
+              "x": 348,
+              "y": 198
+            },
+            {
+              "x": 353,
+              "y": 198
+            },
+            {
+              "x": 402,
+              "y": 247
+            },
+            {
+              "x": 402,
+              "y": 260
+            },
+            {
+              "x": 427,
+              "y": 285
+            },
+            {
+              "x": 505,
+              "y": 285
+            },
+            {
+              "x": 507,
+              "y": 287
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "comparison": [
+    {
+      "scenario": "candidate-upper-back",
+      "routes": [
+        {
+          "id": "spawn-to-core-operation-zone",
+          "baselinePx": 62.071,
+          "candidatePx": 128.581,
+          "increasePercent": 107.151,
+          "withinTenPercent": false
+        },
+        {
+          "id": "core-operation-zone-to-storage-operation-zone",
+          "baselinePx": 78.657,
+          "candidatePx": 173.326,
+          "increasePercent": 120.357,
+          "withinTenPercent": false
+        },
+        {
+          "id": "offering-operation-zone-to-rift-operation-zone",
+          "baselinePx": 159.439,
+          "candidatePx": 159.439,
+          "increasePercent": 0,
+          "withinTenPercent": true
+        },
+        {
+          "id": "spawn-to-core-anchor",
+          "baselinePx": 87.799,
+          "candidatePx": 154.309,
+          "increasePercent": 75.753,
+          "withinTenPercent": false
+        },
+        {
+          "id": "core-anchor-to-storage-anchor",
+          "baselinePx": 127.385,
+          "candidatePx": 224.782,
+          "increasePercent": 76.459,
+          "withinTenPercent": false
+        },
+        {
+          "id": "offering-anchor-to-rift-anchor",
+          "baselinePx": 203.48,
+          "candidatePx": 203.48,
+          "increasePercent": 0,
+          "withinTenPercent": true
+        }
+      ]
+    },
+    {
+      "scenario": "candidate-upper-forward-workband",
+      "routes": [
+        {
+          "id": "spawn-to-core-operation-zone",
+          "baselinePx": 62.071,
+          "candidatePx": 114.539,
+          "increasePercent": 84.529,
+          "withinTenPercent": false
+        },
+        {
+          "id": "core-operation-zone-to-storage-operation-zone",
+          "baselinePx": 78.657,
+          "candidatePx": 161.77,
+          "increasePercent": 105.665,
+          "withinTenPercent": false
+        },
+        {
+          "id": "offering-operation-zone-to-rift-operation-zone",
+          "baselinePx": 159.439,
+          "candidatePx": 159.439,
+          "increasePercent": 0,
+          "withinTenPercent": true
+        },
+        {
+          "id": "spawn-to-core-anchor",
+          "baselinePx": 87.799,
+          "candidatePx": 126.681,
+          "increasePercent": 44.285,
+          "withinTenPercent": false
+        },
+        {
+          "id": "core-anchor-to-storage-anchor",
+          "baselinePx": 127.385,
+          "candidatePx": 197.154,
+          "increasePercent": 54.77,
+          "withinTenPercent": false
+        },
+        {
+          "id": "offering-anchor-to-rift-anchor",
+          "baselinePx": 203.48,
+          "candidatePx": 203.48,
+          "increasePercent": 0,
+          "withinTenPercent": true
+        }
+      ]
+    }
+  ],
+  "mainFloorFallback": {
+    "geometry": "identical to baseline-main",
+    "increasePercentForEveryRoute": 0,
+    "condition": "Visual shell/support work must keep this floor union, all operation anchors and all six collision footprints unchanged, or rerun the route gate."
+  }
+}

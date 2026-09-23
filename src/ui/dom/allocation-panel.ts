@@ -4,7 +4,9 @@
  */
 
 import type { WorldInteractionContext } from './world-interaction';
-import { integrityFillColor, placeIntegrityReadout, type IntegrityRect, type IntegritySide } from '@/ui/chamber-integrity-placement';
+import { integrityCapacityRatio, integrityCondition, integrityConditionLabel, integrityFillColor,
+  placeIntegrityReadout, type IntegrityPlacementInput, type IntegrityRect, type IntegritySide } from '@/ui/chamber-integrity-placement';
+import { INTEGRITY_TIMING, type IntegrityPresentation } from '@/ui/chamber-integrity-lifecycle';
 import { eventBus } from '@/core/event-bus';
 import { computeStartingChaos, gameState } from '@/managers/game-state';
 import type { EffectModuleType, ModuleType, SortieModifiers } from '@/managers/game-state';
@@ -29,7 +31,10 @@ export type CoreAllocationContext = WorldInteractionContext & {
   /** Run after scene animation updates and before the same browser paint. */
   readonly subscribeFrame?: (update: () => void) => () => void;
   /** Current camera projection, including all player equipment. */
-  readonly getIntegrityGeometry?: () => { device: IntegrityRect; player: IntegrityRect; playerX: number; hysteresis: number };
+  readonly getIntegrityGeometry?: () => { device: IntegrityRect; player: IntegrityRect; playerX: number; hysteresis: number; reserved?: readonly IntegrityRect[] };
+  /** The module owns both surfaces; the DOM never starts a separate opacity clock. */
+  readonly getIntegrityPresentation?: (input: IntegrityPlacementInput) => IntegrityPresentation;
+  readonly onIntegrityClose?: () => void;
 };
 
 let coreContext: CoreAllocationContext | null = null;
@@ -37,6 +42,8 @@ let anchorFrame = 0;
 let stopFollowing: (() => void) | null = null;
 let integritySide: IntegritySide | undefined;
 let commitTimer: ReturnType<typeof setTimeout> | null = null;
+let closeTimer: ReturnType<typeof setTimeout> | null = null;
+let closing = false;
 let committing = false;
 let saveFailed = false;
 let panel: HTMLDivElement | null = null;
@@ -77,18 +84,30 @@ export const allocationPanel = {
     coreContext = context ?? null;
     selectedAmount = 0;
     integritySide = undefined;
+    closing = false;
     saveFailed = false;
     onCloseCallback = onClose ?? null;
     createPanel();
     audioManager.playSFX('sfx-ui-open');
   },
 
-  close(): void {
+  close(immediate = false): void {
     if (!panel) return;
+    if (closing && !immediate) return;
+    const finish = (): void => {
+      const onClose = onCloseCallback;
+      onCloseCallback = null;
+      destroyPanel();
+      onClose?.();
+    };
+    if (immediate) { coreContext?.onIntegrityClose?.(); finish(); return; }
     audioManager.playSFX('sfx-ui-close');
-    destroyPanel();
-    onCloseCallback?.();
-    onCloseCallback = null;
+    if (coreContext?.onIntegrityClose) {
+      closing = true;
+      panel.classList.add('core-closing');
+      coreContext.onIntegrityClose();
+      closeTimer = setTimeout(finish, INTEGRITY_TIMING.sideOutMs);
+    } else finish();
   },
 };
 
@@ -151,18 +170,21 @@ function positionIntegrityReadout(): void {
     // A cropped transition must not force the title back onto the device.
     identity.style.visibility = top + height <= geometry.device.top - 8 ? 'visible' : 'hidden';
   }
-  const placement = placeIntegrityReadout({
+  const input: IntegrityPlacementInput = {
     ...geometry, previousSide: integritySide, width: readout.offsetWidth,
     height: readout.offsetHeight, gap: 14, clearance: 8,
     viewport: { left: 16, top: 16, right: 944, bottom: 624 },
-    reserved: [work, identity].filter((element): element is HTMLElement => element !== null && element.style.visibility !== 'hidden')
+    reserved: [...(geometry.reserved ?? []), ...[work, identity].filter((element): element is HTMLElement => element !== null && element.style.visibility !== 'hidden')
       .map(element => ({ left: element.offsetLeft, top: element.offsetTop,
-        right: element.offsetLeft + element.offsetWidth, bottom: element.offsetTop + element.offsetHeight })),
-  });
+        right: element.offsetLeft + element.offsetWidth, bottom: element.offsetTop + element.offsetHeight }))],
+  };
+  const presentation = coreContext.getIntegrityPresentation?.(input);
+  const placement = presentation?.placement ?? placeIntegrityReadout(input);
   integritySide = placement.side;
   readout.dataset.side = placement.side;
-  readout.style.left = `${placement.rect.left}px`;
-  readout.style.top = `${placement.rect.top}px`;
+  readout.style.left = `${Math.round(placement.rect.left)}px`;
+  readout.style.top = `${Math.round(placement.rect.top)}px`;
+  if (presentation) readout.style.opacity = String(presentation.opacity);
   readout.style.visibility = placement.visible ? 'visible' : 'hidden';
 }
 
@@ -171,7 +193,10 @@ function destroyPanel(): void {
   stopFollowing?.();
   stopFollowing = null;
   if (commitTimer) clearTimeout(commitTimer);
+  if (closeTimer) clearTimeout(closeTimer);
   commitTimer = null;
+  closeTimer = null;
+  closing = false;
   committing = false;
   coreContext = null;
   document.removeEventListener('keydown', onKeyDown);
@@ -196,7 +221,7 @@ function onKeyDown(e: KeyboardEvent): void {
     return;
   }
 
-  if (committing) { e.preventDefault(); e.stopPropagation(); return; }
+  if (committing || closing) { e.preventDefault(); e.stopPropagation(); return; }
   const mod = currentModuleId ? gameState.getModule(currentModuleId) : null;
   if (!mod) return;
   const maxAllocatable = getMaxAllocatable(mod.hp, mod.maxHp);
@@ -235,7 +260,7 @@ function onKeyDown(e: KeyboardEvent): void {
 }
 
 function confirmAllocation(): void {
-  if (committing) return;
+  if (committing || closing) return;
   if (selectedAmount > 0 && currentModuleId) {
     const spent = saveManager.allocateToModule(currentModuleId, selectedAmount);
     if (spent <= 0) {
@@ -344,9 +369,9 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const repairBonus = gameState.getRepairBonusHp();
   const maxAllocatable = getMaxAllocatable(hp, maxHp);
 
-  const hpPct = Math.round((hp / maxHp) * 100);
+  const hpPct = integrityCapacityRatio(hp, maxHp) * 100;
   const repairedHp = gameState.previewModuleRepair(hp, maxHp, selectedAmount);
-  const repairedPct = Math.round((repairedHp / maxHp) * 100);
+  const repairedPct = integrityCapacityRatio(repairedHp, maxHp) * 100;
   const previewPct = Math.max(0, repairedPct - hpPct);
   const remaining = reserve - selectedAmount;
 
@@ -367,8 +392,8 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     // drawn beside it; the readout remains anchored to its real ground contact.
     panel.innerHTML = `
       <div class="core-identity"><span>${MODULE_LABEL[type]}</span></div>
-      <div class="core-integrity" aria-live="polite">
-        <div class="core-integrity-label">完整度</div>
+      <div class="core-integrity" data-condition="${integrityCondition(hp)}" style="--integrity-color:${barColor};" aria-live="polite">
+        <div class="core-integrity-label"><span>完整度</span><span class="core-integrity-condition">${integrityConditionLabel(hp)}</span></div>
         <div class="core-integrity-value" style="color:${barColor};">${hp}<small> / ${maxHp}</small></div>
         <div class="pbar-wrap"><div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div><div class="pbar-fill" style="width:${hpPct}%;background:${barColor};"></div></div>
         <div class="core-repair-preview">${committing ? '修复已生效' : selectedAmount > 0 ? `修复至 ${repairedHp} <span>+${repairedHp - hp}</span>` : ' '}</div>
@@ -424,21 +449,21 @@ function bindEvents(maxAllocatable: number): void {
   if (!panel) return;
 
   panel.querySelector('#alloc-minus')?.addEventListener('click', () => {
-    if (selectedAmount > 0) {
+    if (!closing && !committing && selectedAmount > 0) {
       selectedAmount--;
       rerender();
     }
   });
 
   panel.querySelector('#alloc-plus')?.addEventListener('click', () => {
-    if (selectedAmount < maxAllocatable) {
+    if (!closing && !committing && selectedAmount < maxAllocatable) {
       selectedAmount++;
       rerender();
     }
   });
 
   panel.querySelector('#alloc-confirm')?.addEventListener('click', confirmAllocation);
-  panel.querySelector('#alloc-close')?.addEventListener('click', allocationPanel.close);
+  panel.querySelector('#alloc-close')?.addEventListener('click', () => allocationPanel.close());
 }
 
 function rerender(): void {

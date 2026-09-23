@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
-last-modified-by: code / director（DEC-168：连续自然地形的绕行与同源支持）
-last-modified-date: 2026-09-22
+last-modified-by: code / art（I30 R8：净化点可观察资格与实体操作分离）
+last-modified-date: 2026-09-23
 interface-changed: true
 slice: 1
 interfaces-with:
@@ -11,10 +11,12 @@ interfaces-with:
   - system-chaos-scavenge-extract  # T3：混乱值经场景层调用本系统的视野调制器 / 玩家移速调制器
   - system-combat              # T4：共享同一 Player 实体（本 spec 只拥有移动/朝向/碰撞体）
   - tilemap-renderer           # T6：提供 OccluderGrid（哪些 tile 遮挡视线）
+  - system-purification-impact # R8净化点观察与E操作资格分离，非Rift战术视野
 exposes:
   - Player.getPosition() / getFacingAngle() / getFacing4() / isMoving()
   - Player.getLampWorldPosition(out) # 只读动画后的灯锚，不推进时钟
   - Player.getVisualBounds(out) # 只读身体/持具/灯芯当前世界包围盒，用于提示避让
+  - getChamberObservation(feet,moduleId) / isChamberObservationRayClear(eye,target) # 同源作者面的净化点观察，不是战术FOV
   - Player.setSpeedModifier(source, mult) / clearSpeedModifier(source)
   - Player.setInputEnabled(enabled)
   - Player.getGroundY() / setGroundDepth(base, floorDepth) # DEC-120：净化点显式接入
@@ -28,7 +30,7 @@ exposes:
   - 新增事件：无（本系统对外为同步查询 API + setter，不进事件总线）
 ---
 
-## 迭代30 R2：净化点错层面内行走（DEC-180）
+## 迭代30 R8：净化点错层移动与可观察资格（承接DEC-180）
 
 净化点显式选择PlayerConfig.movementMode=`constrained`，共享原键盘、原四向角色/武器与冻结状态；Arcade不自行积分该场景角色。WASD/方向键始终是屏幕八方向，斜向归一，速度仍80px/s；不是按键切换的楼梯模式。两层有可前后绕行的实际面积，两条宽坡道自然衔接。没有跳跃、坠落或吸附到中线。
 
@@ -40,7 +42,11 @@ exposes:
 
 I30 R4补充纯表现接口：`getLampWorldPosition(out)`写入原角色当前四向灯锚的世界坐标，不改变朝向或动画。净化点显式`externalLampGround=true`，由场景按真实脚底/灯锚绘制裁切光池，原Aura只关闭自己的地面池；其他场景默认false。此选项不影响VisibilitySystem、移动速度、角色图像或灯光玩法范围。
 
-I30 R7补充`getVisualBounds(out)`：聚合当前身体、持具/分段上身和灯芯的实际世界包围盒，只读不推进动画；净化点在原POST_UPDATE姿态同步后读取，供完整度条避让。聚焦DOM再用当前相机投影到overlay逻辑坐标；这不是碰撞范围，不改变武器命中或视野。
+I30 R8沿用`getVisualBounds(out)`：聚合当前身体、持具/分段上身和灯芯的实际世界包围盒，只读不推进动画；净化点在原POST_UPDATE姿态同步后读取，供完整度条避让。聚焦DOM在game PRE_RENDER用当前相机投影到overlay逻辑坐标；这不是碰撞范围，不改变武器命中或Rift视野。
+
+**观察与操作分离。** `chamber-observation.ts`从脚底到真实设备底座计算最近距离，向核心/储藏/净化器可见机体取九个内部样点；眼高为所在主层/上层/连续坡面＋16。射线与同一`environment.ts`的architecture/foreground不透明作者面相交，目标/观察者贴面不算中途遮挡；被实际walk面覆写的底部承托不算裸露墙，外景和无物理面的装饰不挡这条射线。至少一处可见即可观察，不复用脚圆扫掠或route名称否决。此为限定三设备的近处表现资格，不新增可见地图/穿墙信息或通用战术视野。
+
+读数44px进入、58px退出，候选稳定120ms；单一观察拥有者及world/DOM共享淡入/退出/换侧归`system-purification-impact`和UI Kit。站在可见坡口/设备侧面可能能读完整度却不能按E，这是既有操作触达与新增观察的明确区别；E提示必须继续只由同层、24px锚距与足部直达资格提供。真实主体/武器/灯、其他实体和视口参与提示避让，不用扩大碰撞或玩家包围盒来掩盖UI问题。
 
 ## 迭代28 · 共享视距倍率与短冲
 
@@ -172,7 +178,7 @@ interface OccluderGrid {
 }
 ```
 
-裂隙 tile 网格（`TileGrid`）的遮挡口径：WALL 与 VOID 均挡视线（DEC-106 虚空吞光，2026-08-29 翻转 Slice 6 的「VOID 不挡」默认）；FLOOR / FRACTURE 不挡。净化点场景自带遮挡网格（只认 WALL、无 VOID 瓦片），不受 DEC-106 影响。
+裂隙 tile 网格（`TileGrid`）的遮挡口径：WALL 与 VOID 均挡视线（DEC-106 虚空吞光，2026-08-29 翻转 Slice 6 的「VOID 不挡」默认）；FLOOR / FRACTURE 不挡。历史净化点/gym的自带WALL网格不受DEC-106影响；I30正式净化点不实例化VisibilitySystem，其近设备观察另按本spec的作者面合同。
 
 ---
 
@@ -186,7 +192,7 @@ interface OccluderGrid {
 4. **朝向**：`facingAngle` 由**最近一次非零输入方向**决定，静止时保持不变（松开按键不会重置朝向）。玩家无法在不改变朝向的前提下改变移动方向——**朝哪走就朝哪看**。
 5. **转向不瞬移**：`facingAngle` 以 `FACING_TURN_RATE`（度/秒）向目标角度插值，走最短弧。这只影响视野锥的转动平滑度，不影响移动方向（移动立即响应输入）。
 6. **四方向量化**：`facing4` 取 `facingAngle` 最近的正交方向（边界按 45° 划分，量化带 ±5° 迟滞防止斜向抖动切帧）。sprite 只用 `facing4`，视野只用 `facingAngle`。
-7. **碰撞**：Arcade Physics AABB。玩家碰撞体为居中的正方形（`BODY_SIZE`），小于 tile 宽度，保证 1 tile 宽通道可通行且不卡角。开启 `collideWorldBounds`。**I12-C例外**：净化点通过PlayerConfig的可选矩形碰撞配置使用12×8、offset(10,22)，中心等于groundY，既用于五台底座也用于场地边界；裂隙/练习场默认20×20、offset(6,6)不变。
+7. **碰撞**：Arcade Physics AABB。玩家碰撞体为居中的正方形（`BODY_SIZE`），小于 tile 宽度，保证 1 tile 宽通道可通行且不卡角。开启 `collideWorldBounds`。**历史I12-C配置**：旧净化点/gym使用12×8、offset(10,22)的矩形足体。I30正式净化点改用本spec开头的constrained半径6圆足扫掠；裂隙/一般练习场默认20×20、offset(6,6)不变。
 8. **沿墙滑动**：斜向撞墙时，被阻挡的轴清零、另一轴保留 —— 即 Arcade 的默认分轴解算行为，必须保留。贴墙绕行是潜行的基本操作，不允许因碰撞而"粘住"。
 9. **输入开关**：`inputEnabled = false` 时立即清零输入向量（速度按规则 2 正常减速到 0），朝向冻结。用于净化点 DOM 面板打开、出击结算等状态。
 10. **移动不产生噪音语义**：本 slice 不做"潜行/疾跑"双速。敌人听觉（若 T2 采用）以距离而非玩家速度为准。移速调制栈已为未来的潜行速度预留位置。
@@ -230,7 +236,7 @@ interface OccluderGrid {
     - `setEdgeCorruption(L)`：`L ∈ [0,1]`，同时驱动三件事——外带色相向 contam-core(#1aad96) 混合、teal 噪点自边缘向内渗透、边缘半径抖动（三者用同一个 L 驱动，保证"污染在吃掉视野"读作一件事而不是三个特效）。
     - `setScreenFlicker(i)`：周期性全屏微闪（art §7.2 的最高档表现）。
 23. **调制不改变几何契约**：调制只影响渲染与射程，不改变 `isPointVisible` 的语义——被缩小后看不见的地方，查询也必须返回不可见。视觉与逻辑必须一致，否则玩家会被"我明明看见了却打不到"骗。
-24. **净化点差异靠配置**：`mode: 'omni'` 时忽略朝向，全角使用同一射程，`voidNoiseEnabled = false`（边界外由 BoundaryAtmosphere 负责）。其余规则不变。
+24. **历史净化点/gym的omni配置（I30正式场景不使用）**：`mode: 'omni'` 时忽略朝向，全角使用同一射程，`voidNoiseEnabled = false`（边界外由 BoundaryAtmosphere 负责）。其余规则不变。
 25. **小地图已探索集合的真相来源**：裂隙小地图的「已探索格子」与主画面同一套可见性（遮挡 + 前向锥 ∪ 环身圈，见规则 11–16、23）。一格被记为已探索，当且仅当该格上一点曾被 `isPointVisible` / `getVisibilityAt` 判为当前可见。禁止用环身灯半径近似圆单独代替视锥与遮挡。本系统不持久保存已见集合、**不新增「已见格子」只读接口**；场景层每帧用既有查询累积，再交给小地图。小地图不 import VisibilitySystem。`system-chaos-scavenge-extract` 规则 18「没有记忆标记」约束的是薪柴节点不在视野外留 HUD 标记，不禁止小地图记住已探索格子。净化点没有小地图，本条只约束裂隙。
 
 ### 边缘渐变的推导（为什么是固定带宽而非半径百分比）
@@ -320,7 +326,7 @@ art-direction 两处给出的分级不一致，本 spec 的取舍如下（同时
 | `GLOW_LEAK_ALPHA` | 视野外发光点 alpha | 0.15 | 0.08–0.25 | 太亮 = 导航过于轻松；太暗 = 找不到撤离点导致烦躁 | 建议值 |
 | `GLOW_LEAK_RADIUS` | 视野外发光点绘制半径 | 12 px | 8–24 | art §7.1「2-3 tile 范围内可见微弱光点」 | 建议值 |
 
-### 视野（净化点 / omni 模式）
+### 历史视野配置（旧净化点 / gym omni；I30正式场景不使用）
 
 | 参数 | 建议初值 | 说明 | 状态 |
 | ---- | -------- | ---- | ---- |
@@ -454,7 +460,7 @@ Stage地层断面的感知约束：仅真实FLOOR/VOID边界可生成下沉断�
 | 相机移动导致遮罩边缘露出场景 | 遮罩尺寸 = viewport + 2 tile 外扩，且每帧跟随相机 |
 | 场景切换 / shutdown | `destroy()` 释放 RenderTexture、噪点纹理、glow source 注册表，解绑相机事件（架构风险表：Phaser 场景切换内存泄漏） |
 | 玩家死亡 | 输入禁用（`setInputEnabled(false)`）；视野是否收黑由 T4 死亡表现定义，本系统只保证接口可用 |
-| 净化点 DOM 面板打开 | 输入禁用；视野继续每帧更新（画面不冻结），命中静止缓存后开销接近 0 |
+| 净化点 DOM 面板打开 | 输入禁用，装置/光与提示投影继续；I30无omni VisibilitySystem。Esc暂停才冻结场景，二者不可混用 |
 | 斜向输入同时按下相反键（A+D） | 该轴输入判为 0；朝向保持上一次有效值 |
 
 ---

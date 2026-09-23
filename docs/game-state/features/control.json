@@ -3,7 +3,7 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "Rift保持原WASD八向/光域；净化点同样按屏幕八向在两层地面和宽坡道自由行走，圆足扫掠/沿墙滑动，原人物四向与输入冻结共享。",
+    "summary": "Rift保持原WASD八向/光域；净化点按屏幕八向在两层与宽坡道行走，圆足扫掠/沿墙滑动，原人物四向与输入冻结共享。R8保留原六底座、操作锚和路线；上层核心候选因常用路线代价超预算退回主层。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -61,6 +61,19 @@
       {
         "path": "src/entities/player-lamp-aura.ts",
         "role": "code"
+      },
+      {
+        "path": "tools/qa/measure-i30-r8-routes.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/routes.json",
+        "role": "doc",
+        "note": "生产运动函数的离散路线比较；主层 fallback，非人类走路计时"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
@@ -70,11 +83,14 @@
       "COH-E-I30-RUNTIME",
       "COH-E-I30-R1-HUMAN-REJECTION",
       "COH-E-I30-R2-RUNTIME",
-      "COH-E-I30-R4-RUNTIME"
+      "COH-E-I30-R4-RUNTIME",
+      "COH-E-I30-R8-ROUTES",
+      "COH-E-I30-R8-INTEGRATION"
     ],
     "unknowns": [
-      "R1已被用户否决；R2实际动作与限定状态验证不代签新场景审美、初见导航、长期重复路线成本和身体成长获得感。",
-      "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
+      "R8离散生产路径测量只比较当前地面/碰撞合同与上层候选，非人类导航或实机行走计时；最终键盘路线及入Rift回归已由总QA封存。",
+      "R1已被用户否决；历史限定移动验证不代签新场景初见导航、长期重复路线成本和身体成长获得感。",
+      "专门音频及自然满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   },
   {

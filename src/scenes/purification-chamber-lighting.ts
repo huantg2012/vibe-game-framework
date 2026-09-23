@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { sampleCoreMotion, sampleDeviceLight } from '../art/chamber-device-motion';
 import type { ChamberSurfaceMap } from '../art/chamber-surface-map';
 import { ChamberLightField, type FieldSource, type LightSpan } from '../art/chamber-light-field';
 import { ChamberFloorLight } from '../art/chamber-floor-light';
@@ -59,8 +60,8 @@ export class PurificationChamberLighting {
     }
     const specs: { id: SourceId; color: number; face: FieldSource & { elevation: number }; ground: FieldSource; floor: ChamberFloor }[] = [
       { id: 'core', color: 0x2ae6c8, floor: 'main',
-        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 46, radiusX: 112, radiusY: 78, elevation: 46 },
-        ground: { ...CHAMBER_DEVICE_BASES.core, radiusX: 105, radiusY: 43 } },
+        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 59, radiusX: 112, radiusY: 88, elevation: 59 },
+        ground: { ...CHAMBER_DEVICE_BASES.core, radiusX: 92, radiusY: 36 } },
       { id: 'growth', color: 0x1aad96, floor: 'upper',
         face: { x: CHAMBER_DEVICE_BASES.growth.x, y: CHAMBER_DEVICE_BASES.growth.y - 36, radiusX: 67, radiusY: 44, elevation: 68 },
         ground: { ...CHAMBER_DEVICE_BASES.growth, radiusX: 76, radiusY: 40 } },
@@ -102,21 +103,20 @@ export class PurificationChamberLighting {
 
   energy(id: SourceId): number { return this.emitters.find(emitter => emitter.id === id)!.energy; }
 
-  update(time: number, state: PurificationChamberState): void {
+  update(time: number, state: PurificationChamberState, reducedMotion = false): void {
     const tick = Math.floor(time / 80);
     if (tick === this.tick) return;
     this.tick = tick;
     this.ground.clear(); this.walls.clear(); this.motes.clear();
     for (const emitter of this.emitters) {
-      if (emitter.id === 'core') emitter.energy = (.43 + .060 * Math.sin(time * .00135)) * Math.max(.12, state.moduleHealth.core);
-      else if (emitter.id === 'growth') emitter.energy = .078 + .014 * Math.sin(time * .00083 + 1.8);
-      else if (emitter.id === 'purifier') emitter.energy = (.125 + .023 * Math.sin(time * .00103 + 3.1)) * Math.max(.1, state.moduleHealth.purifier);
-      else emitter.energy = .12 + .009 * Math.sin(time * .0017 + .8);
-      const sincePulse = time - this.pulseTime;
-      if (sincePulse >= 0 && sincePulse < 900
-        && (this.pulseTarget === emitter.id || (this.pulseTarget === 'thicken' && (emitter.id === 'core' || emitter.id === 'purifier')))) {
-        emitter.energy += .045 * Math.sin(Math.PI * sincePulse / 900);
-      }
+      const motionTime = reducedMotion ? 0 : time;
+      if (emitter.id === 'core') emitter.energy = sampleCoreMotion(time, state.moduleHealth.core, reducedMotion,
+        this.pulseTarget === 'core' ? time - this.pulseTime : Infinity).light;
+      else if (emitter.id === 'growth') emitter.energy = sampleDeviceLight('growth', time, 1, reducedMotion,
+        this.pulseTarget === 'growth' ? time - this.pulseTime : Infinity);
+      else if (emitter.id === 'purifier') emitter.energy = sampleDeviceLight('purifier', time, state.moduleHealth.purifier, reducedMotion,
+        this.pulseTarget === 'purifier' ? time - this.pulseTime : Infinity);
+      else emitter.energy = .12 + .009 * Math.sin(motionTime * .0017 + .8);
       this.field.paint(this.ground, emitter.floorSpans, emitter.color, emitter.energy);
       this.field.paint(this.walls, emitter.wallSpans, emitter.color, emitter.energy * .92);
     }
@@ -129,7 +129,7 @@ export class PurificationChamberLighting {
     }
     // Three sparse flakes near the active core, visible only in its light, never full-room confetti.
     const core = this.emitters[0]!;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; !reducedMotion && i < 3; i++) {
       const phase = (time * .00016 + i * .31) % 1;
       this.motes.fillStyle(0x8a8f96, Math.sin(phase * Math.PI) * core.energy * .8);
       this.motes.fillRect(Math.round(248 + i * 5 + Math.sin(phase * 6 + i) * 4),

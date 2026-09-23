@@ -224,13 +224,17 @@ const CSS = `
 #allocation-panel.core-present > * { opacity:1; }
 .core-identity { left:calc(var(--core-x) - 56px); top:calc(var(--core-y) - 144px); width:112px; text-align:center; font:16px/24px var(--ui-font); letter-spacing:4px; color:#aeb3a5; text-shadow:0 1px 5px #050907; }
 .core-integrity { left:calc(var(--core-x) - 196px); top:calc(var(--core-y) - 66px); width:104px; font:11px/18px var(--ui-font); text-shadow:0 1px 4px #050907; }
-.core-integrity-label { margin-bottom:2px; color:#8a8f96; }
-.core-integrity-value { margin-bottom:6px; font:13px/18px var(--ui-mono); color:#c8cdd4; }
+.core-integrity-label { display:flex; justify-content:space-between; gap:12px; margin-bottom:2px; color:#8a8f96; }
+.core-integrity-condition { color:var(--integrity-color); }
+.core-integrity-value { margin-bottom:6px; font:13px/18px var(--ui-mono); color:#9eaaa8; }
 .core-integrity-value small { font-size:10px; color:#8a8f96; }
 .core-repair-preview { min-height:20px; margin-top:8px; font:11px/18px var(--ui-font); color:#9ba38c; }
 .core-repair-preview span { float:right; font-family:var(--ui-mono); color:#b19c76; }
-#allocation-panel .core-integrity .pbar-wrap { height:2px; background:#2a2d32; }
+#allocation-panel.core-allocation > .core-integrity { transition:none; }
+#allocation-panel.core-closing .core-work { pointer-events:none; }
+#allocation-panel .core-integrity .pbar-wrap { height:2px; background:#2a2d32; outline:1px solid #101716; overflow:visible; }
 #allocation-panel .core-integrity .pbar-fill { opacity:1; }
+#allocation-panel .core-integrity[data-condition="failed"] .pbar-wrap::after { content:''; position:absolute; left:0; top:-1px; width:2px; height:4px; background:var(--integrity-color); }
 .core-work { left:clamp(400px, calc(var(--core-x) + 200px), 700px); top:calc(var(--core-y) - 118px); width:260px; color:#a0aa9c; text-shadow:0 1px 4px #050907; }
 .core-work-heading { display:flex; justify-content:space-between; align-items:baseline; font:16px/24px var(--ui-font); color:#b2b5a6; }
 .core-reserve { font:10px/18px var(--ui-font); color:#7c8677; }

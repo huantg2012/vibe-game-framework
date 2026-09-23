@@ -1,14 +1,14 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: code（迭代30 R7侧置完整度与同帧投影合同同步）
+last-modified-by: code / art（迭代30 R8观察、装置活动与固定100效能语义）
 last-modified-date: 2026-09-23
 interface-changed: true
 interfaces-with:
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
   - system-chaos-scavenge-extract   # consumes RIFT_EXITED; feeds chaosRateModifier + kindlingValueModifier
                                     # + startingChaos (Slice 7 净化器完整度写入出击初值)
-  - system-movement-vision          # purification scene reuses Player + VisibilitySystem (DEC-ARCH-008)
+  - system-movement-vision          # 正式净化点共享Player；R8观察射线独立于Rift VisibilitySystem
   - system-growth-tide              # tide intensity/phase drives impact intensity + boundary shape; contaminant
                                     # defense slots feed the defense phase (slot count is growth-owned, not fixed);
                                     # growth_forecast_clarity sharpens the forecast; SaveManager persists both sides;
@@ -31,6 +31,8 @@ exposes:
   - AllocationPanel.open(moduleId)
   - PurificationChamberLocomotion.update(delta) / getRoute() / canInteract(device)
   - PurificationChamberVisual.update(time,delta,state) / pulse(kind,target) / destroy()
+  - getChamberObservation(feet,moduleId) / isChamberObservationRayClear(eye,target)（只读可观察资格）
+  - ChamberIntegritySelection / ChamberIntegrityLifecycle（单一读数与world/focused交接）
 ---
 
 
@@ -42,13 +44,13 @@ exposes:
 
 # 系统设计：净化点 + 冲击
 
-## 迭代30 R2 · 封闭错层场所（DEC-180）
+## 迭代30 R8 · 封闭错层场所与观察（承接DEC-180）
 
-净化点是具有少许俯视进深的封闭像素室内：不规则的主地面与后退夹层、两条可横移的宽坡道，厚墙回转面和基础形成边界。镜头省略面向观察者的遮蔽构件，不代表世界内露天。外部少量巨大错位残构在壳体接触处形成压迫，内侧约束件与修补材料形成抵抗关系。
+净化点是具有少许俯视进深的封闭像素室内：不规则的主地面与后退夹层、两条可横移的宽坡道，厚墙回转面和基础形成边界。镜头省略面向观察者的遮蔽构件，不代表世界内露天。外部近侧支承/接触、中层连续错位残构、远层暗影分层呈现，内侧约束件与修补材料形成抵抗关系。后墙承重肩、东墙整段剪切、前基础向下展开，不能仅在原整圈墙缘加齿缺。
 
-`purification-chamber-layout.ts`拥有唯一脚底几何、设备底座和独立操作点；`purification-chamber-locomotion.ts`连续求解面内八向移动；`purification-chamber-visual.ts`绘制场所、独立排序的六设备及公开状态。R1灰钢双层轨道版`c3b1d9f`已被用户否决，不能作为审美基准。历史圆形地表、Boundary系统与旧等距绘制仍供gym，不参与正式净化点。Rift保持俯视移动/视野/碰撞。
+`purification-chamber-layout.ts`拥有唯一脚底几何、设备底座和独立操作点；`purification-chamber-locomotion.ts`连续求解面内八向移动；`purification-chamber-visual.ts`接入同源作者面场所、独立排序的六设备壳与局部活动图集。核心仍在下层(253,299)，最高91px，操作点/底座不变；上移方案因路线成本回退。R1灰钢双层轨道版`c3b1d9f`已被用户否决，不能作为审美基准。历史圆形地表、Boundary系统与旧等距绘制仍供gym，不参与正式净化点。Rift保持俯视移动/视野/碰撞。
 
-身体成长确认落在原人物，加厚才在模块留下永久承载补件；当前HP影响自身与相应壳体接触处，不改变通行。供奉只画公开占用，不能显示未鉴定身份或未来冲击目标。材料与模型合同见`art/purification-renewal.md`；实施接入不表示用户认可。
+身体成长确认落在原人物，加厚才在模块留下永久承载补件；当前HP影响自身与相应壳体接触处，不改变通行。主体活动与投光效能取min(1,hp/100)，100/100→100/115不变暗；条长仍取hp/maxHp。供奉公开占用不是充能：成功库存提交的新入槽物触发锁合，已持久化、结果报告结束后的实际转化事件才触发释放；不能显示未鉴定身份或未来冲击目标。材料与模型合同见`art/purification-renewal.md`；实施接入不表示用户认可。
 
 ### 当前成长路线与供奉容量
 
@@ -335,19 +337,20 @@ interface SortieModifiers {
 
 61. **槽数**：新档基础1，`growth_defense_slot`每级+1、共3级，上限4；旧容量权益按成长schema迁移保留。引擎遍历实际传入快照，不写死长度，不先成熟再算效果。
 
-### V — 模块受损三态（Slice 5）
+### V — 当前完整度状态与表现（I30 R8覆盖旧Slice 5比例阈值）
 
-62. **三态阈值**（按 hp / maxHp 比值）：
+62. **状态阈值**（按固定当前HP，maxHp仅用于容量条）：
 
     | 状态 | 区间 | 含义 |
     | ---- | ---- | ---- |
-    | 健康 | > 60% | 装置正常运转 |
-    | 受损 | 30% ~ 60%（含两端） | 结构出现裂缝，但仍在工作 |
-    | 严重受损 | < 30% | 濒临失效，力场开始渗入 |
+    | 稳定 | hp ≥ 100 | 运行效能封顶；额外maxHp是缓冲容量 |
+    | 受损 | 25 ≤ hp < 100 | 当前公开损伤对应结构/活动衰减 |
+    | 危险 | 0 < hp < 25 | 局部活动滞留与泄散，不增强亮度 |
+    | 失效 | hp = 0 | 危险端帽与状态字保留，不能读成无信息黑条 |
 
-63. **状态机与重绘纪律**：三态只在跨越阈值时切换并重绘模块主体，不逐帧重绘。指示灯用独立图层 + 500ms 定时器闪烁。
-    - 三态裂缝 / 灯座 / 渗入点的**共享纪律**在 `docs/design-notes/ui-art-overhaul.md` B3。净化器复用同一套阈值与重绘；几何与身份色的像素死约束在本文件 UX「视觉规格」，与 Kit B3 净化器小节同一份，不新造色。
-    - 旧的"hp < 25% 时框架红环闪烁"已移除（DEC-035）：它从未写入任何 spec，且与三态是两套并存的低血警告语言，多重告警色叠加是典型的后台管理系统味。hp 数值条本身在 < 25% 时仍变红，这一条保留。
+63. **状态与缓存纪律**：主体静态损伤缓存按固定100/25两档边界区分稳定、受损、危险；0HP在危险外观中保留明确的失效读数，不创造新的效果。活层采用独立局部图集，仅公态跨档/供奉空有变化重建，平时换帧；不逐帧重绘整个模块。
+    - 核心、储藏、净化器使用同一HP效能投影；加厚100/100→100/115不改变运行效能、活动档或光强。条长变短只表达新增容量，不能再套旧60%/30%容量比例状态。
+    - 核心收束与投光共源，其余装置各有不同待机与真实成功动作；不保留统一500ms闪灯或框架红环。0HP世界规有危险端帽、近景有“失效”；颜色与生命周期归UI Kit的I30 R8节，当前模型/活动归`art/purification-renewal.md`。旧Kit B3/历史gym模型不覆盖此合同。
 
 ### U — 模块上限加厚（Slice 7）
 
@@ -398,9 +401,9 @@ interface SortieModifiers {
 #### 场景交互正式接入（R4核心人PASS；R5六点推广）
 
 - 六点E交互走同一场景聚焦路径；核心、储藏、净化器接地点目标(320,330)，供奉/蜕变/入口为(184,330)。260ms聚焦至zoom3，核心接地点目标(320,330)；实际相机投影每帧提供给DOM，适配固定画布缩放。真实核心贴图、呼吸、场景与玩家仍可见。
-- 交互只暂停玩家输入，场景持续运行。所操作模块的世界HP条临时隐藏，场景交互显示唯一完整度/修复预览；关闭镜头恢复后原HP条恢复。
-- **I30 R7侧置完整度：**核心/储藏/净化器沿原接近资格显示侧腰竖规；聚焦时整组标签、当前/上限、细横条及修复预览侧置。人物在右优先置左，反之亦然；8世界像素中心迟滞仅抑制无冲突抖动，遮挡必须当帧让开。判定包含身体、当前上身/持具与灯芯真实包围盒；世界条在POST_UPDATE的角色姿态同步后绘制。近景由当前场景的game PRE_RENDER订阅读取本帧camera投影，关闭/销毁解除订阅，装置名先按真实模型投影顶缘居中置于上方至少8逻辑UI像素，固定画布裁切时不压回模型，然后完整度读数避开已定位装置名与既有投入操作列；上下让位或过渡暂隐均不得盖玩家。三模块同用正常/危险语义色，不用装置身份色充当生命条，危险阈值为当前完整度低于实际容量25%；条尺寸、排字、色值与避让余量唯一由UI Kit的I30 R7节定义。玩法范围、底座碰撞、修复资格与信息暴露时机均不扩大。
-- 确认复用原allocateToModule及ALLOCATION_CONFIRMED，即时扣资源/修复；三装置复用已有柔光纹理呈一次短呼吸，核心/储藏暖色，净化器灰绿。650ms展示已生效结果，阻止重复确认，再用180ms镜头恢复原视角，恢复完成才启用玩家输入。Esc可提前离开，已结算资源不会回滚。
+- 交互只暂停玩家输入，场景持续运行。观察世界规与聚焦DOM读数共享生命周期，至多一个载体可见；打开/关闭时按同一退场—入场过程交接，镜头恢复不强制重启或硬闪世界规。
+- **I30 R8侧置完整度：**观察取脚底到实际底座轮廓距离（44px进入、58px退出、120ms候选稳定），且机体至少一处在同源建筑/前沿作者面的视线检测中可见。当前操作优先，其次保持原可观察对象，再取最近候选；同一时刻只有一个主要读数。坡口可见不被同层E资格否决，E仍保持原同层/24px操作锚与直达要求。读数淡入160ms，离开保留250ms后淡出180ms；换侧60ms退场/140ms入场、不穿越人物；实际遮人或不透明墙立即掩去，无安全位置暂隐。world/DOM共用生命周期，前者在POST_UPDATE后避让真实人物/武器/灯，后者game PRE_RENDER按本帧camera投影并避让设备名/其他装置/投入列/视口，销毁解绑。状态按固定HP：≥100稳定、25–99受损、1–24危险、0失效；长度才按hp/maxHp，100/115稳定，0HP端帽与近景状态字保留。唯一尺寸、排字、颜色与余量见UI Kit的I30 R8节。观察范围拓宽不改变修复资格、碰撞、隐藏信息与出击机制。
+- 确认复用原allocateToModule及ALLOCATION_CONFIRMED，即时扣资源/修复；只有正数实际修复成功才触发对应装置动作：核心闭合—聚集—归稳1.68秒，储藏封口归位、净化器分相回流；主体与局部投光共源，不再把三物统一画成暖色呼吸。650ms展示已生效结果，阻止重复确认，再用180ms镜头恢复原视角，恢复完成才启用玩家输入。Esc可提前离开，已结算资源不会回滚。
 - 退出期间E/Tab/暂停不抢开；开发切屏即时恢复镜头；scene shutdown只丢弃焦点状态，因为CameraManager先销毁相机，不再触碰main。DOM跟踪/提交计时器清理。入口确认不先恢复镜头，直接出击；转场300/500ms计时器归场景Clock并在shutdown移除，防止旧回调拉走新场景。
 - 开发直达 `ui-review.html?sample=world`，六点切换保留资源，独立重置85薪柴/零库存；原sample=core仍可用。示例不读写正式存档。复用生产交互，不加入生产HTML构建。
 
@@ -455,8 +458,8 @@ interface SortieModifiers {
 | 档位模糊概率（0层） | 0.20 | -- | impact-system 内联 | v2强度1层起公开真档位；不再按百分比成长 |
 | 档位分界 | 1.5 / 2.0 / 2.5 | -- | impact-system 内联 | 潮汐强度 [1.0, 3.0] 四等分 |
 | `growth_forecast_clarity` | 3层信息 | -- | `upgrades.csv` | 强度→重点→防御前压力；原已挣得准确承诺保持 |
-| 防御槽位数 | 3（基础）/ 4（上限） | -- | `CONTAMINANT` | `DEFENSE_SLOTS` / `MAX_DEFENSE_SLOTS` |
-| 三态阈值 | 0.60 / 0.30 | 0.5-0.7 / 0.2-0.4 | `purification-module.ts` 局部常量 | 未进 `constants.ts`（DEC-035） |
+| 供奉槽位数 | 1（新档基础）/ 4（上限） | -- | `contaminantSystem.getDefenseSlotCount()` | 扩容3级；旧档容量按成长schema迁移保留 |
+| 当前装置状态阈值 | 固定HP 100 / 25 / 0 | -- | `chamber-integrity-placement.ts`及当前场景状态投影 | R8取代旧DEC-035的容量60%/30%；maxHp只影响条长 |
 
 ### 边界形态（`PURIFICATION.BOUNDARY`，Slice 4.5）
 

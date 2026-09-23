@@ -1,0 +1,169 @@
+{
+  "at": "2026-09-23T08:53:57.079Z",
+  "method": "Fresh isolated browser context, real WASD/E/Esc; HP matrix uses declared in-memory public module fixtures. No human aesthetic verdict.",
+  "checks": [
+    {
+      "label": "front-observation-without-e",
+      "time": 6147.2,
+      "world": [
+        {
+          "id": "CORE",
+          "alpha": 1,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          },
+          "overlap": false,
+          "dangerPaint": false,
+          "commands": 24
+        }
+      ],
+      "dom": null,
+      "focused": null
+    },
+    {
+      "label": "core-open-close-repeat-1",
+      "frameCount": 54,
+      "passed": true
+    },
+    {
+      "label": "core-open-close-repeat-2",
+      "frameCount": 54,
+      "passed": true
+    },
+    {
+      "label": "core-open-close-repeat-3",
+      "frameCount": 54,
+      "passed": true
+    },
+    {
+      "label": "explicit-hp-fixture",
+      "hp": 0,
+      "maxHp": 100,
+      "time": 10980.3,
+      "world": [],
+      "dom": {
+        "opacity": 1,
+        "rect": {
+          "left": 113,
+          "top": 234,
+          "right": 217,
+          "bottom": 308
+        },
+        "overlap": false,
+        "inViewport": true,
+        "condition": "failed",
+        "text": "完整度\n失效\n0 / 100",
+        "color": "rgb(189, 104, 94)",
+        "fill": 0,
+        "cap": "\"\""
+      },
+      "focused": "CORE",
+      "scope": "UI-only; device/light state not refreshed"
+    },
+    {
+      "label": "explicit-hp-fixture",
+      "hp": 24,
+      "maxHp": 100,
+      "time": 12246.9,
+      "world": [],
+      "dom": {
+        "opacity": 1,
+        "rect": {
+          "left": 113,
+          "top": 234,
+          "right": 217,
+          "bottom": 308
+        },
+        "overlap": false,
+        "inViewport": true,
+        "condition": "danger",
+        "text": "完整度\n危险\n24 / 100",
+        "color": "rgb(189, 104, 94)",
+        "fill": 24,
+        "cap": "none"
+      },
+      "focused": "CORE",
+      "scope": "UI-only; device/light state not refreshed"
+    },
+    {
+      "label": "explicit-hp-fixture",
+      "hp": 25,
+      "maxHp": 100,
+      "time": 13363.6,
+      "world": [],
+      "dom": {
+        "opacity": 1,
+        "rect": {
+          "left": 113,
+          "top": 234,
+          "right": 217,
+          "bottom": 308
+        },
+        "overlap": false,
+        "inViewport": true,
+        "condition": "damaged",
+        "text": "完整度\n受损\n25 / 100",
+        "color": "rgb(191, 150, 91)",
+        "fill": 25,
+        "cap": "none"
+      },
+      "focused": "CORE",
+      "scope": "UI-only; device/light state not refreshed"
+    },
+    {
+      "label": "explicit-hp-fixture",
+      "hp": 70,
+      "maxHp": 115,
+      "time": 14630.2,
+      "world": [],
+      "dom": {
+        "opacity": 1,
+        "rect": {
+          "left": 113,
+          "top": 234,
+          "right": 217,
+          "bottom": 308
+        },
+        "overlap": false,
+        "inViewport": true,
+        "condition": "damaged",
+        "text": "完整度\n受损\n70 / 115",
+        "color": "rgb(191, 150, 91)",
+        "fill": 60.8696,
+        "cap": "none"
+      },
+      "focused": "CORE",
+      "scope": "UI-only; device/light state not refreshed"
+    },
+    {
+      "label": "explicit-hp-fixture",
+      "hp": 100,
+      "maxHp": 100,
+      "time": 15730.2,
+      "world": [],
+      "dom": {
+        "opacity": 1,
+        "rect": {
+          "left": 113,
+          "top": 234,
+          "right": 217,
+          "bottom": 308
+        },
+        "overlap": false,
+        "inViewport": true,
+        "condition": "stable",
+        "text": "完整度\n稳定\n100 / 100",
+        "color": "rgb(158, 170, 168)",
+        "fill": 100,
+        "cap": "none"
+      },
+      "focused": "CORE",
+      "scope": "UI-only; device/light state not refreshed"
+    }
+  ],
+  "errors": [],
+  "result": "FAIL",
+  "failure": "TypeError: Cannot read properties of null (reading 'condition')",
+  "fixtureScope": "HP fixtures change only the isolated public module records; world visual refresh is intentionally not broadcast. HP screenshots verify UI only, not device activity/light. Root seed-before-boot runtime evidence verifies full-world damaged state."
+}

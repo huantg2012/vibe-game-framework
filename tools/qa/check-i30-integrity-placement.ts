@@ -1,22 +1,40 @@
 import assert from 'node:assert/strict';
-import { CHAMBER_MODULE_BOUNDS, INTEGRITY_COLORS, integrityFillColor, integrityRectsOverlap,
+import { CHAMBER_MODULE_BOUNDS, INTEGRITY_COLORS, integrityCapacityRatio, integrityCondition, integrityConditionLabel, integrityFillColor, integrityRectsOverlap,
   moduleIntegrityBounds, placeIntegrityReadout, type IntegrityRect } from '../../src/ui/chamber-integrity-placement.ts';
 
 let checks = 0;
 const check = (condition: unknown, message: string) => { checks++; assert(condition, message); };
 const device = moduleIntegrityBounds('CORE', 253, 299);
 const actor = (x: number, y: number): IntegrityRect => ({ left: x - 22, right: x + 22, top: y - 17, bottom: y + 18 });
-const base = { device, player: actor(284, 303), width: 2, height: 24, gap: 7, clearance: 5, hysteresis: 8 };
+const base = { device, player: actor(284, 303), width: 4, height: 26, gap: 7, clearance: 5, hysteresis: 8 };
 check(placeIntegrityReadout(base).side === 'left', 'Actor to right puts world gauge on left');
 check(placeIntegrityReadout({ ...base, player: actor(217, 279) }).side === 'right', 'Actor to left puts world gauge on right');
 check(placeIntegrityReadout({ ...base, player: actor(251, 319), previousSide: 'left' }).side === 'left', 'Center dead band retains last side');
 const crossing = placeIntegrityReadout({ ...base, player: { left: 211, right: 296, top: 232, bottom: 285 }, previousSide: 'left' });
 check(!integrityRectsOverlap(crossing.rect, { left: 211, right: 296, top: 232, bottom: 285 }, 5), 'A wide held tool overrides hysteresis and forces immediate clearance');
 check(crossing.rect.bottom <= 227 || crossing.rect.top >= 290, 'Both sides occupied moves outside actor vertical band');
-check(integrityFillColor(25, 100) === INTEGRITY_COLORS.normal, '25% is not below danger threshold');
-check(integrityFillColor(24, 100) === INTEGRITY_COLORS.danger, 'Below25% is danger');
-check(integrityFillColor(40, 200) === INTEGRITY_COLORS.danger, 'Danger follows actual upgraded capacity');
-check(integrityFillColor(0, 100) === INTEGRITY_COLORS.danger, 'Broken module retains danger cue');
+for (const maxHp of [100, 115, 130, 145, 200]) {
+  for (const hp of [0, 24, 25, 70, 100, 115]) {
+    const expected = hp <= 0 ? 'failed' : hp < 25 ? 'danger' : hp < 100 ? 'damaged' : 'stable';
+    check(integrityCondition(hp) === expected, `${hp}/${maxHp} fixed-100 performance condition`);
+    check(integrityFillColor(hp, maxHp) === (hp < 25 ? INTEGRITY_COLORS.danger : hp < 100 ? INTEGRITY_COLORS.damaged : INTEGRITY_COLORS.normal), 'Capacity does not change performance color');
+    check(integrityCapacityRatio(hp, maxHp) === Math.min(1, hp / maxHp), 'Gauge length alone uses actual capacity');
+  }
+}
+check(integrityConditionLabel(0) === '失效', 'Zero HP retains a failure word as well as the danger cap');
+check(integrityFillColor(100, 100) === integrityFillColor(100, 115), 'Real 100/100 → 100/115 thickening cannot imply lost efficacy');
+check(integrityCapacityRatio(100, 115) < integrityCapacityRatio(100, 100), 'Thickening still displays extra buffer capacity');
+const luminance = (hex: string): number => {
+  const values = hex.slice(1).match(/../g)!.map(channel => {
+    const c = parseInt(channel, 16) / 255;
+    return c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4;
+  });
+  return values[0]! * .2126 + values[1]! * .7152 + values[2]! * .0722;
+};
+for (const color of [INTEGRITY_COLORS.normal, INTEGRITY_COLORS.damaged, INTEGRITY_COLORS.danger]) {
+  check((luminance(color) + .05) / (luminance(INTEGRITY_COLORS.track) + .05) >= 3, 'Every condition has at least 3:1 internal track contrast');
+  check((luminance(color) + .05) / (luminance(INTEGRITY_COLORS.outline) + .05) >= 4.5, 'Condition remains legible against its thin dark edge');
+}
 
 // Sweep the entire authored approach area for all three silhouettes. This checks
 // the user's invariant, not a snapshot of the candidate-selection algorithm.

@@ -49,11 +49,11 @@
     "id": "COH-F033",
     "title": "净化点 HUD 与就近交互提示",
     "domain": "interface",
-    "summary": "HUD与裂隙就近提示均读取分级公开预兆；未购时强度标疑问，不直接显示真实倍率；无预告时仅显示出击次数。原双行提示和界面层级保持。 R7三模块世界完整度为骨白/危险红侧置细竖规，按角色/持具/灯芯避让，交互范围不变。",
+    "summary": "HUD与裂隙就近提示继续读取分级公开预兆。R8三模块完整度观察按真实占地距离与作者墙面可见性选择单目标，与 E 操作解耦；世界侧置窄规与聚焦读数共享显隐/换侧时序，避让完整人物、持具和灯，0HP保留端帽与失效文字。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点自由行走时自动显示；Tab/HUD 报告入口"
+      "净化点自由行走→可见且近身的三模块观察读数；E→原近距合格目标的聚焦读数；Tab/HUD 报告入口保持"
     ],
     "sources": [
       {
@@ -111,12 +111,59 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R8设计方案，未接入，不替代当前实现合同"
+        "note": "R8实施方案与批准范围；核心位置以路线 gate 的主层 fallback 为准"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
         "role": "doc",
         "note": "R7用户整改反馈与静态根因核实"
+      },
+      {
+        "path": "src/systems/chamber-observation.ts",
+        "role": "code",
+        "note": "观察复用作者建筑面与眼点高程；与原 E 操作资格分开"
+      },
+      {
+        "path": "src/ui/chamber-integrity-lifecycle.ts",
+        "role": "code",
+        "note": "单观察目标、世界/聚焦交接、退出与安全换侧时序"
+      },
+      {
+        "path": "tools/qa/check-i30-observation.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-lifecycle.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-integrity-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-integrity.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r8-implementation.md",
+        "role": "doc",
+        "note": "独立专家复评：改善可读，V01–V03 P2 保留；不代用户美术终审"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/transactions/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-transactions.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -134,10 +181,16 @@
       "COH-E-I29-R3-RUNTIME",
       "COH-E-I30-R7-RUNTIME",
       "COH-E-I30-R7-HUMAN-CHANGES",
-      "COH-E-I30-R8-DESIGN"
+      "COH-E-I30-R8-DESIGN",
+      "COH-E-I30-R8-INTEGRATION",
+      "COH-E-I30-R8-INTEGRITY",
+      "COH-E-I30-R8-TECHNICAL",
+      "COH-E-I30-R8-REVIEW",
+      "COH-E-I30-R8-TRANSACTIONS"
     ],
     "unknowns": [
-      "2026-09-23用户要求优化R7七项表现；R8仅设计未实施。完整度范围/硬切、墙构/核心/活动/外景待修；旧技术证据不代表品质通过。"
+      "R8限定观察/避让/开关证据已登记；不均匀帧退场双显问题已修复并独立重放。所有墙角、快速跨界和长期读色仍未穷尽，用户美术终审待定。",
+      "真实100/115加厚、固定100效能与供奉事件另有交易实录；隔离UI数值帧仍不能作为全场损伤视效证据。所有明暗地面读色与用户终审未穷尽。"
     ]
   },
   {
@@ -335,7 +388,7 @@
     "id": "COH-F038",
     "title": "面板共同交互与信息呈现",
     "domain": "interface",
-    "summary": "共享 overlay 根、尺寸、键鼠选择、检查详情和状态刷新服务于游戏内各面板，不构成独立玩法入口。 R7修复读数侧置，同帧相机投影避让人物/标题/投入列，名称随真实模型顶缘；危险阈值取hp/maxHp<25%。",
+    "summary": "共享 overlay 根、固定逻辑尺寸、键鼠选择、检查详情和状态刷新服务于正式面板。R8修复读数与世界条共享生命周期，PRE_RENDER按同帧投影避让；关闭交接及销毁清理计时器/订阅。完整度状态按固定100效能条件，容量条仍为hp/maxHp，0HP保留端帽。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -397,12 +450,59 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R8设计方案，未接入，不替代当前实现合同"
+        "note": "R8实施方案与批准范围；核心位置以路线 gate 的主层 fallback 为准"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
         "role": "doc",
         "note": "R7用户整改反馈与静态根因核实"
+      },
+      {
+        "path": "src/systems/chamber-observation.ts",
+        "role": "code",
+        "note": "观察复用作者建筑面与眼点高程；与原 E 操作资格分开"
+      },
+      {
+        "path": "src/ui/chamber-integrity-lifecycle.ts",
+        "role": "code",
+        "note": "单观察目标、世界/聚焦交接、退出与安全换侧时序"
+      },
+      {
+        "path": "tools/qa/check-i30-observation.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-lifecycle.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-integrity-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-integrity.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r8-implementation.md",
+        "role": "doc",
+        "note": "独立专家复评：改善可读，V01–V03 P2 保留；不代用户美术终审"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/transactions/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-transactions.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -413,10 +513,15 @@
       "COH-E-GROWTH-RESOURCE-STATES-HUMAN",
       "COH-E-I30-R7-RUNTIME",
       "COH-E-I30-R7-HUMAN-CHANGES",
-      "COH-E-I30-R8-DESIGN"
+      "COH-E-I30-R8-DESIGN",
+      "COH-E-I30-R8-INTEGRATION",
+      "COH-E-I30-R8-INTEGRITY",
+      "COH-E-I30-R8-TECHNICAL",
+      "COH-E-I30-R8-REVIEW",
+      "COH-E-I30-R8-TRANSACTIONS"
     ],
     "unknowns": [
-      "2026-09-23用户要求优化R7七项表现；R8仅设计未实施。完整度范围/硬切、墙构/核心/活动/外景待修；旧技术证据不代表品质通过。",
+      "R8读数限定范围已验证，用户美术终审待定；不均匀帧间隔双显反例已修复并独立重放，不据此声称所有 UI 时序组合无缺陷。",
       "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。"
     ]
   }

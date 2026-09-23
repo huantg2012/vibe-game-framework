@@ -1,0 +1,50 @@
+{
+  "revision": "r8-authored-02",
+  "source": "assets/source/purification-r8/environment.ts",
+  "projection": "X=x, Y=y+Z, Z=elevation",
+  "size": {
+    "width": 640,
+    "height": 400
+  },
+  "heightEncoding": "R*256+G; elevation=(value-32768)/32; alpha=coverage",
+  "normalEncoding": "RGB=(normal+1)*127.5; alpha=coverage",
+  "note": "No dynamic light. Device comparison uses current production painter. Human art judgment remains open.",
+  "layers": [
+    {
+      "layer": "far",
+      "opaque": 256000,
+      "mapped": 0,
+      "hash": "f9d49c8f3e0d432a89bed55de7e5e24bbf585082e46b25210134a5a9bf68b4cf"
+    },
+    {
+      "layer": "middle",
+      "opaque": 29430,
+      "mapped": 29430,
+      "hash": "2570f5b37508513a2319c828dcecc0074bcab18d310c150bfdb7b0010da63bea"
+    },
+    {
+      "layer": "near",
+      "opaque": 20797,
+      "mapped": 20578,
+      "hash": "4cb728c558250ee247865055046476fd3fcdaff24d99b42b9e5c074f517212dd"
+    },
+    {
+      "layer": "architecture",
+      "opaque": 128160,
+      "mapped": 128160,
+      "hash": "7e6e7ce4107f9e7c8d995c38bc27912c9a05b12c1354c2ad3bfb1b153ed7f454"
+    },
+    {
+      "layer": "floor",
+      "opaque": 56901,
+      "mapped": 56901,
+      "hash": "e3c7eedece04e8a235529b33b63686b0b4c03631ed36e201711108ee9ac838eb"
+    },
+    {
+      "layer": "foreground",
+      "opaque": 2253,
+      "mapped": 2253,
+      "hash": "d6e71a6558f221ecd93711a5c69a461a2a1572fb2bcdcca141cb18c6c78647eb"
+    }
+  ]
+}

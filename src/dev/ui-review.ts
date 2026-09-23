@@ -96,7 +96,7 @@ if (import.meta.env.DEV) {
     });
   }
   function closeScreens(): void {
-    statusPanel.close(); allocationPanel.close(); defensePanel.close();
+    statusPanel.close(); allocationPanel.close(true); defensePanel.close();
     growthPanel.close(); loadoutPanel.close(); pauseMenu.close();
     riftResultPanel.close();
     // Impact has an intentionally keyboard-owned dismissal. Its development

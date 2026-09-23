@@ -3,7 +3,7 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "浅透视封闭错层净化点，WASD八向绕行与两宽坡道；六操作点与实体底座分开，同层/24px/无遮挡才E，厚壳与外部接触侵蚀共同呈现。 R7保持几何与原人物，完善场景层级；完整度提示在装置侧面按真实角色和镜头避让。",
+    "summary": "浅透视错层净化点，八向绕行与两宽坡道；六操作点保持同层/24px/无遮挡才可 E。R8作者建筑、三层外景与六物活动正式接入；完整度观察独立于操作并在世界/聚焦间单显。核心保留原主层底座与操作锚点，上移路线代价超预算。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -193,12 +193,128 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R8设计方案，未接入，不替代当前实现合同"
+        "note": "R8实施方案与批准范围；核心位置以路线 gate 的主层 fallback 为准"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
         "role": "doc",
         "note": "R7用户整改反馈与静态根因核实"
+      },
+      {
+        "path": "src/systems/chamber-observation.ts",
+        "role": "code",
+        "note": "观察复用作者建筑面与眼点高程；与原 E 操作资格分开"
+      },
+      {
+        "path": "src/ui/chamber-integrity-lifecycle.ts",
+        "role": "code",
+        "note": "单观察目标、世界/聚焦交接、退出与安全换侧时序"
+      },
+      {
+        "path": "tools/qa/check-i30-observation.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-lifecycle.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-integrity-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-integrity.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/art/chamber-device-motion.ts",
+        "role": "code",
+        "note": "六物活动像素、公开效能档、结果帧与同源光采样"
+      },
+      {
+        "path": "src/scenes/chamber-device-activity.ts",
+        "role": "code",
+        "note": "正式场景六 atlas 的创建、状态重建、选帧与销毁"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-motion.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-motion-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-motion-play.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-motion-light.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-motion.md",
+        "role": "doc"
+      },
+      {
+        "path": "assets/source/purification-r8/environment.ts",
+        "role": "art",
+        "note": "建筑/地坪/前缘及近中远作者面；几何、材料、面向与高程共源"
+      },
+      {
+        "path": "assets/source/purification-r8/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/art/chamber-authored-architecture.ts",
+        "role": "code",
+        "note": "正式作者建筑/地坪/前缘 painter"
+      },
+      {
+        "path": "tools/art-pipeline/purification-r8.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-environment.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/measure-i30-r8-routes.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/routes.json",
+        "role": "doc",
+        "note": "生产运动函数的离散路线比较；主层 fallback，非人类走路计时"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r8-implementation.md",
+        "role": "doc",
+        "note": "独立专家复评：改善可读，V01–V03 P2 保留；不代用户美术终审"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/transactions/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-transactions.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/performance/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/measure-i30-r8-performance.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -227,18 +343,28 @@
       "COH-E-I30-R7-RUNTIME",
       "COH-E-I30-R7-REVIEW",
       "COH-E-I30-R7-HUMAN-CHANGES",
-      "COH-E-I30-R8-DESIGN"
+      "COH-E-I30-R8-DESIGN",
+      "COH-E-I30-R8-INTEGRATION",
+      "COH-E-I30-R8-ROUTES",
+      "COH-E-I30-R8-ENVIRONMENT",
+      "COH-E-I30-R8-INTEGRITY",
+      "COH-E-I30-R8-MOTION",
+      "COH-E-I30-R8-TECHNICAL",
+      "COH-E-I30-R8-REVIEW",
+      "COH-E-I30-R8-TRANSACTIONS",
+      "COH-E-I30-R8-PERFORMANCE"
     ],
     "unknowns": [
-      "2026-09-23用户要求优化R7七项表现；R8仅设计未实施。完整度范围/硬切、墙构/核心/活动/外景待修；旧技术证据不代表品质通过。",
-      "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
+      "R8已正式接入，用户美术终审待定；独立复评仍留核心后景/坡道相切、右墙承接和外景近中远关系三个 P2，技术证据不代签品质。",
+      "真实加厚/供奉事务和 R7/R8 各10秒性能比较已有限定实录；最终场景回归与构建汇总已由总QA封存，不扩展为硬件长稳或自然经济验证。",
+      "专门音频及自然满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   },
   {
     "id": "COH-F027",
     "title": "薪柴修复与装置出击收益",
     "domain": "progression",
-    "summary": "薪柴修复三模块；三者效能均按固定100完整度封顶。加厚100/100→100/115不回血，也不把起始混乱从0抬高；修复/加厚预览与出击同源。 R7仅调整修复场景的完整度读数位置/状态色与名称定位，费用及效能保持。",
+    "summary": "薪柴修复三模块，效能按固定100完整度封顶；加厚100/100→100/115不回血、不降低既有效能，修复/加厚预览与出击同源。R8完整度条按真实容量填充、状态按固定100判定，成功修复触发活层响应；费用和机制保持。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -304,6 +430,34 @@
       {
         "path": "docs/qa/iteration-30-r7.md",
         "role": "doc"
+      },
+      {
+        "path": "src/ui/chamber-integrity-lifecycle.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/chamber-device-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-integrity.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8-motion.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r8/transactions/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r8-transactions.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -319,10 +473,15 @@
       "COH-E-I29-R2-REVIEW",
       "COH-E-I29-R3-AUTO",
       "COH-E-I29-R3-RUNTIME",
-      "COH-E-I30-R7-RUNTIME"
+      "COH-E-I30-R7-RUNTIME",
+      "COH-E-I30-R8-INTEGRATION",
+      "COH-E-I30-R8-INTEGRITY",
+      "COH-E-I30-R8-MOTION",
+      "COH-E-I30-R8-TRANSACTIONS"
     ],
     "unknowns": [
-      "2026-09-21成长复评GR-05：连续储藏倍率掩盖逐堆整数产出档位；修复耐久收益真实，收益读法待改善，未据此改经济。"
+      "2026-09-21成长复评GR-05：连续储藏倍率掩盖逐堆整数产出档位；修复耐久收益真实，收益读法待改善，未据此改经济。",
+      "R8真实加厚事务已记录100/100→100/115、消费12且三模块效能与核心静置光不降；此证据与先前隔离读数夹具分开。启动前成长/供物条件受控，不能证明自然获得或长期经济。"
     ]
   },
   {
@@ -562,7 +721,7 @@
     "id": "COH-F030",
     "title": "潮汐、冲击与预告",
     "domain": "progression",
-    "summary": "预告冻结事实，成长逐层读清强度、重点、供奉前压力；HUD/报告/入口只消费同一公开投影，购买/查看/读档不重抽，旧承诺保留。",
+    "summary": "预告冻结事实，成长逐层读清强度、重点、供奉前压力；HUD/报告/入口消费同一公开投影，购买/查看/读档不重抽。R8改变净化点入口裂缝表现与活动接线，保留既有预告和出击机制。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -600,6 +759,10 @@
       {
         "path": "tools/qa/check-forecast-hud.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r8.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -617,9 +780,12 @@
       "COH-E-I29-R2-REVIEW",
       "COH-E-I29-R2-FORECAST-LEAK",
       "COH-E-I29-R3-AUTO",
-      "COH-E-I29-R3-RUNTIME"
+      "COH-E-I29-R3-RUNTIME",
+      "COH-E-I30-R8-INTEGRATION"
     ],
-    "unknowns": []
+    "unknowns": [
+      "R8已记录真实出入场和交易，未专门重复全部预告承诺排列；总QA不将这部分推定为全面通过；既有 I29 证据按原版本/范围保留，不冒充本轮重跑。"
+    ]
   },
   {
     "id": "COH-F031",

@@ -1,124 +1,20 @@
 import type { ChamberPixels } from './purification-chamber-pixels';
-import { CHAMBER_PALETTE as c, horizontal, upright, materialFace } from './chamber-pixel-helpers';
+import { paintAuthoredEnvironmentLayer } from './chamber-authored-architecture';
 
-/** Displaced cold cast masses. Deep gaps separate planes; the room keeps the light. */
+export type ChamberExteriorLayer = 'far' | 'middle' | 'near';
+/** More distant mass moves less than the room under a real camera translation.
+ * No autonomous drifting wallpaper. Fixed pixel art silhouettes remain rigid. */
+export const CHAMBER_EXTERIOR_LAYERS = [
+  { id: 'far', depth: -60, scrollFactor: .12 },
+  { id: 'middle', depth: -55, scrollFactor: .52 },
+  { id: 'near', depth: -50, scrollFactor: 1 },
+] as const;
+
+export function paintChamberExteriorLayer(p: ChamberPixels, layer: ChamberExteriorLayer): void {
+  paintAuthoredEnvironmentLayer(p, layer);
+}
+
+/** Compatible still-image compositor. Runtime allocates the three independent plates. */
 export function paintChamberExterior(p: ChamberPixels): void {
-  p.setPlane(null);
-  p.rect(0, 0, 640, 400, c.void);
-  // Remote underfaces: broken bearing planes, not a second wall around the room.
-  upright(p, 96, 10, [0, 1, 0], .55);
-  materialFace(p, [[0,49],[72,20],[119,25],[142,16],[191,20],[215,32],[175,41],[131,38],[97,61],[54,67],[0,106]],
-    [c.black,c.shadow,c.black], 31, 32, 17);
-  horizontal(p, 88, .64);
-  p.poly([[0,49],[72,20],[118,25],[140,17],[191,20],[204,26],[141,24],[119,34],[75,29],[0,61]],c.shadow);
-  upright(p, 105, -4, [.6,.8,0], .44);
-  p.poly([[0,86],[39,65],[69,67],[58,87],[36,91],[22,113],[0,122]],c.black);
-  p.setPlane(null);
-  p.poly([[79,31],[94,32],[88,39],[72,44],[60,51],[64,43]],c.recess);
-  p.poly([[148,27],[179,25],[175,28],[156,31]],c.recess);
-  upright(p, 99, 18, [-.7,.7,0], .57);
-  p.poly([[464,8],[498,15],[519,47],[560,43],[581,53],[640,40],[640,116],[618,99],[594,104],[580,93],[547,99],[526,78],[503,81]],c.black);
-  horizontal(p, 82, .62);
-  p.poly([[506,42],[521,49],[561,46],[581,56],[622,48],[640,51],[640,63],[579,67],[559,56],[527,60]],c.shadow);
-  p.setPlane(null);
-  p.poly([[569,56],[578,59],[600,56],[598,60],[580,64]],c.recess);
-  p.poly([[454,34],[467,39],[479,56],[474,63],[461,56]],c.black);
-
-  // West: a tilted transverse slab has exposed cold aggregate and a lost corner.
-  // The lower vertical mass is offset, with a deep shadow between the two.
-  upright(p, 284, -12, [.65,.76,0], .71, -.65/.76);
-  p.poly([[0,119],[24,108],[45,119],[51,139],[66,158],[60,184],[70,211],[54,236],[44,273],[24,286],[0,278]],c.recess);
-  horizontal(p, 138, .76);
-  p.poly([[0,119],[24,108],[45,119],[41,130],[29,128],[18,140],[0,146]],c.concrete);
-  p.setPlane(null);
-  p.poly([[2,123],[22,114],[29,119],[24,124],[15,127],[9,134],[0,136]],c.plane);
-  p.poly([[37,124],[42,124],[40,130],[35,134],[30,133]],c.shadow);
-  upright(p, 201, 45, [.72,.68,0], .43, -.72/.68, 30);
-  p.poly([[18,142],[34,133],[43,143],[43,159],[35,169],[39,184],[31,199],[20,201],[12,178]],c.black);
-  p.poly([[18,142],[25,138],[24,161],[20,172],[25,194],[20,201],[12,178]],c.shadow);
-  p.setPlane(null);
-  p.line(31,143,28,157,c.recess);
-  p.poly([[46,164],[50,174],[46,185],[47,197],[42,204],[41,186]],c.shadow);
-  // A broad broken face remains legible without the invasion seam.
-  p.setPlane({ normal: [-.36,.35,.74], elevation: 0, originX: 14, originY: 279,
-    riseX: .36, riseY: -.35, occlusion: .70, roughness: .98 });
-  p.poly([[0,232],[17,216],[37,215],[47,203],[58,212],[61,229],[47,253],[45,263],[25,280],[0,269]],c.concrete);
-  p.setPlane(null);
-  p.poly([[0,234],[17,220],[33,221],[27,232],[17,237],[18,248],[8,256],[0,252]],c.plane);
-  p.poly([[34,225],[45,214],[51,219],[47,230],[38,235],[39,242],[30,250],[21,251],[22,241]],c.recess);
-  p.poly([[29,258],[41,247],[41,258],[25,272],[14,268],[18,263]],c.shadow);
-  p.rect(6,239,4,2,c.steel); p.rect(21,225,5,2,c.steel);
-  upright(p, 290, -14, [0,1,0], .63);
-  p.poly([[0,265],[23,278],[43,261],[46,267],[26,289],[12,286],[0,281]],c.shadow);
-  // Severed overhanging block, broken asymmetrically rather than a repeated stripe.
-  horizontal(p, 70, .66);
-  p.poly([[0,184],[14,174],[28,184],[40,184],[48,194],[42,206],[28,210],[18,199],[0,205]],c.concrete);
-  upright(p, 223, 45, [0,1,0], .56);
-  p.poly([[0,205],[18,199],[28,210],[42,206],[40,216],[30,223],[14,214],[0,220]],c.shadow);
-  p.setPlane(null);
-  p.poly([[0,184],[14,177],[20,181],[13,186],[11,191],[0,195]],c.plane);
-  p.poly([[29,188],[36,188],[40,193],[36,198],[32,197]],c.recess);
-  // Invasion is narrow and intermittent. Endpoints remain aligned to repair sites.
-  p.poly([[50,133],[56,140],[52,163],[64,181],[61,193],[66,207],[82,217],[94,236],[88,242],[78,222],[59,215],[55,191],[57,180],[47,160]],c.deep);
-  p.line(53,149,51,162,c.teal); p.line(51,162,62,178,c.teal);
-  p.line(65,210,82,219,c.teal); p.line(82,219,88,230,c.teal);
-
-  // East: a fractured buttress, dark inset rear plane and a jutting bottom section.
-  upright(p, 303, -8, [-.65,.76,0], .67, .65/.76, 613);
-  p.poly([[587,130],[601,119],[621,118],[629,126],[640,123],[640,294],[622,300],[609,280],[604,265],[591,253],[577,211],[581,174]],c.recess);
-  horizontal(p, 136, .72);
-  p.poly([[581,151],[587,130],[601,119],[621,118],[629,126],[640,123],[640,139],[624,141],[617,133],[604,137],[596,135],[589,158]],c.concrete);
-  p.setPlane(null);
-  p.poly([[600,124],[616,123],[619,128],[610,130],[602,129],[596,135],[591,134]],c.plane);
-  upright(p, 222, 34, [0,1,0], .34);
-  p.poly([[602,149],[622,145],[633,153],[633,202],[621,221],[604,211],[595,187]],c.black);
-  upright(p, 217, 34, [-.7,.7,0], .51, 1, 625);
-  p.poly([[622,145],[633,153],[633,202],[621,217],[614,215],[623,197],[625,166],[620,155]],c.shadow);
-  horizontal(p, 28, .39);
-  p.poly([[604,208],[615,210],[625,203],[621,221],[608,218]],c.shadow);
-  upright(p, 296, -8, [0,1,0], .69);
-  p.poly([[634,148],[640,145],[640,272],[630,269],[620,250],[618,228],[630,209]],c.concrete);
-  p.setPlane(null);
-  p.poly([[636,160],[640,158],[640,230],[634,221],[635,198],[632,194]],c.plane);
-  p.poly([[631,235],[638,241],[640,253],[636,253],[629,242]],c.shadow);
-  // One broad inward fracture keeps the buttress solid at the normal camera.
-  // Its interrupted edge is not a second outline around the entire dark cavity.
-  upright(p, 230, 24, [-.8,.6,0], .72, .8/.6, 595);
-  p.poly([[588,154],[597,143],[603,148],[599,160],[596,180],[601,195],[607,207],[608,221],[600,229],[594,211],[587,194],[584,175]],c.concrete);
-  p.setPlane(null);
-  p.poly([[591,157],[595,153],[594,171],[590,181],[592,191],[589,195],[587,181]],c.plane);
-  p.poly([[599,202],[604,208],[604,217],[600,221],[597,212]],c.recess);
-  horizontal(p, 30, .74);
-  p.poly([[591,233],[608,225],[619,233],[630,232],[640,239],[640,256],[628,251],[616,255],[610,246],[599,249]],c.concrete);
-  p.setPlane(null);
-  p.poly([[595,234],[607,229],[613,235],[609,238],[601,237],[599,243]],c.plane);
-  p.poly([[622,238],[628,236],[637,242],[630,241],[626,246]],c.recess);
-  upright(p, 296, -8, [-.5,.86,0], .60, .5/.86, 610);
-  p.poly([[599,249],[610,246],[616,255],[628,251],[640,256],[640,279],[629,278],[623,291],[613,296],[604,275]],c.shadow);
-  p.setPlane(null);
-  p.poly([[616,260],[625,258],[629,263],[623,270],[623,281],[617,285],[615,274]],c.recess);
-  p.poly([[599,180],[605,185],[590,202],[579,206],[573,224],[556,231],[550,228],[561,221],[568,219],[573,201],[586,195]],c.deep);
-  p.line(596,187,587,196,c.teal); p.line(587,196,579,202,c.teal);
-  p.line(577,210,574,219,c.teal);
-
-  // Rear compression contact has a broad severed root and a narrow loaded end.
-  upright(p, 110, 43, [0,1,0], .58);
-  p.poly([[267,9],[290,13],[306,33],[318,39],[314,63],[326,83],[325,105],[314,110],[307,88],[292,72],[295,48],[278,35]],c.black);
-  upright(p, 110, 43, [1,0,0], .66);
-  p.poly([[291,16],[301,21],[312,35],[321,38],[318,63],[331,81],[327,103],[321,103],[322,84],[308,66],[310,42]],c.shadow);
-  p.setPlane(null);
-  p.poly([[311,46],[316,47],[312,66],[317,76],[314,78],[306,66]],c.recess);
-  p.poly([[315,88],[320,91],[320,106],[315,103]],c.deep);
-  p.rect(317,97,1,5,c.teal);
-
-  // Below the shelter: detached, unequal sections and enough black to read depth.
-  horizontal(p, -30, .55);
-  p.poly([[0,363],[49,343],[80,347],[113,369],[104,381],[82,376],[51,357],[22,373],[0,380]],c.black);
-  p.poly([[424,379],[467,354],[492,356],[502,368],[520,370],[550,357],[574,364],[589,354],[640,364],[640,390],[589,381],[566,390],[532,385],[510,400],[477,385],[450,393]],c.black);
-  horizontal(p, -20, .67);
-  p.poly([[438,378],[467,360],[486,359],[491,365],[481,368],[469,366],[451,382]],c.shadow);
-  p.poly([[552,369],[571,366],[581,369],[576,375],[562,374],[551,379],[539,377]],c.recess);
-  p.setPlane(null);
-  p.line(457,373,467,366,c.concrete);
-  p.poly([[41,351],[49,347],[65,350],[69,355],[52,353]],c.shadow);
+  for (const layer of CHAMBER_EXTERIOR_LAYERS) paintChamberExteriorLayer(p, layer.id);
 }

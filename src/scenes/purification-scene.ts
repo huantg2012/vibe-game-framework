@@ -9,10 +9,12 @@ import { getEquipmentLifecycle, type OfferingTransformResult } from '@/types/inv
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { openInventory, inventoryError } from '@/ui/inventory-presenter';
-import { PurificationChamberVisual, type PurificationChamberState } from './purification-chamber-visual';
+import { PurificationChamberVisual, CHAMBER_DEVICE_VISUAL_BOUNDS, type PurificationChamberState } from './purification-chamber-visual';
 import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_INTERACTION_RADIUS, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/purification-chamber-layout';
 import { PurificationChamberLocomotion } from '@/systems/purification-chamber-locomotion';
 import { ChamberModule } from '@/entities/purification-chamber-module';
+import { ChamberIntegritySelection } from '@/ui/chamber-integrity-lifecycle';
+import { getChamberObservation } from '@/systems/chamber-observation';
 /**
  * Purification Scene - the base management walkable space.
  *
@@ -159,12 +161,15 @@ export class PurificationScene extends Phaser.Scene {
   private readonly player = new Player();
   private unsubscribeWeapon: (() => void) | null = null;
   private unsubscribeForecast: (() => void) | null = null;
+  private unsubscribeOffering: (() => void) | null = null;
   private chamber: PurificationChamberVisual | null = null;
   private locomotion: PurificationChamberLocomotion | null = null;
   private readonly chamberState: PurificationChamberState = {
     moduleHealth: { core: 1, storage: 1, purifier: 1 }, thickenLevel: 0,
     offeringCharge: 0, growthLevels: {}, activeTarget: null, player: { x: 224, y: 286 }, lamp: { x: 232, y: 282 },
   };
+  private readonly integritySelection = new ChamberIntegritySelection<'CORE' | 'STORAGE' | 'PURIFIER'>();
+  private observationDelta = 0;
   private coreModule!: ChamberModule;
   private storageModule!: ChamberModule;
   private purifierModule!: ChamberModule;
@@ -210,6 +215,8 @@ export class PurificationScene extends Phaser.Scene {
     this.productionDeparture = null;
     this.menuEntry = data?.menuEntry ?? null;
     this.lastOverlapType = null;
+    this.integritySelection.reset();
+    this.observationDelta = 0;
     // Determine if this is a return from rift (vs. menu/load entry)
     const ledger = inventoryStore.getRun();
     const isReturnFromRift = ledger?.status === 'settled' ? !ledger.baseSettled : !data?.fromMenu && data?.kindlingGained !== undefined;
@@ -325,6 +332,13 @@ export class PurificationScene extends Phaser.Scene {
     this.purifierModule = new ChamberModule(this, 'PURIFIER', PURIFIER_POS);
     this.syncInvestmentVisuals();
     this.updateChamberVisuals(0, 0);
+    let offeredIds = inventoryStore.getOfferingItems().flatMap(item => item ? [item.id] : []);
+    this.unsubscribeOffering = inventoryStore.subscribe(() => {
+      const next = inventoryStore.getOfferingItems().flatMap(item => item ? [item.id] : []);
+      // Inventory observers publish only after its transaction is durable.
+      if (next.some(id => !offeredIds.includes(id))) this.chamber?.pulse('offering', 'offering');
+      offeredIds = next;
+    });
 
     // Purification HUD (DOM overlay)
     purificationHud.create(() => this.openStatusPanel());
@@ -428,6 +442,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   update(time: number, delta: number): void {
+    this.observationDelta = delta;
     if (this.transitioning || this.shuttingDown) return;
 
     this.player.update(delta);
@@ -651,9 +666,26 @@ export class PurificationScene extends Phaser.Scene {
     if (this.shuttingDown) return;
     this.player.postUpdate();
     const actorBounds = this.player.getVisualBounds(this.interactionPlayerBounds);
-    this.coreModule.syncIntegrityReadout(actorBounds, this.player.getPosition().x);
-    this.storageModule.syncIntegrityReadout(actorBounds, this.player.getPosition().x);
-    this.purifierModule.syncIntegrityReadout(actorBounds, this.player.getPosition().x);
+    const player = this.player.getPosition();
+    const feet = { x: player.x, y: player.y + 10 };
+    const modules = [this.coreModule, this.storageModule, this.purifierModule];
+    const focused = this.interactionModule?.id ?? null;
+    const masked = this.transitioning || !!this.menuEntry || pauseMenu.isOpen()
+      || (this.isAnyPanelOpen() && focused === null);
+    const candidates = modules.map(mod => ({ id: mod.id, ...getChamberObservation(feet, mod.id) }));
+    const observation = this.integritySelection.update(this.observationDelta,
+      masked ? [] : candidates, masked ? null : focused);
+    const camera = this.cameras.main;
+    const left = camera.scrollX + camera.width * camera.originX * (1 - 1 / camera.zoom);
+    const top = camera.scrollY + camera.height * camera.originY * (1 - 1 / camera.zoom);
+    const viewport = { left: left + 8 / camera.zoom, top: top + 8 / camera.zoom,
+      right: left + (camera.width - 8) / camera.zoom, bottom: top + (camera.height - 8) / camera.zoom };
+    for (const mod of modules) {
+      const blocked = masked || !candidates.find(candidate => candidate.id === mod.id)?.visible
+        || (focused !== null && focused !== mod.id);
+      mod.setObservationActive(!blocked && observation.selectedId === mod.id && observation.active, blocked);
+      mod.syncIntegrityReadout(actorBounds, player.x, { viewport, reserved: this.integrityReservedBounds(mod.id) });
+    }
     this.player.getLampWorldPosition(this.chamberState.lamp);
     this.chamber?.syncPlayerLight(this.player.getPosition(), this.chamberState.lamp);
   }
@@ -669,6 +701,8 @@ export class PurificationScene extends Phaser.Scene {
     allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), {
       getAnchor: this.getInteractionScreenAnchor,
       getIntegrityGeometry: () => this.getIntegrityScreenGeometry(moduleId),
+      getIntegrityPresentation: input => mod.getFocusedIntegrityPresentation(input),
+      onIntegrityClose: () => mod.setInteractionReadoutActive(false),
       subscribeFrame: update => {
         this.game.events.on(Phaser.Core.Events.PRE_RENDER, update);
         return () => this.game.events.off(Phaser.Core.Events.PRE_RENDER, update);
@@ -709,6 +743,14 @@ export class PurificationScene extends Phaser.Scene {
     return this.interactionScreenAnchor;
   };
 
+  private integrityReservedBounds(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER'): IntegrityRect[] {
+    return (Object.entries(CHAMBER_DEVICE_VISUAL_BOUNDS) as [ChamberDevice, readonly [number,number,number,number]][])
+      .filter(([id]) => id !== moduleId.toLowerCase()).map(([id,b]) => {
+        const base = CHAMBER_DEVICE_BASES[id];
+        return { left: base.x+b[0], top: base.y+b[1], right: base.x+b[2], bottom: base.y+b[3] };
+      });
+  }
+
   /** Project the actual module silhouette and complete actor into DOM logical pixels. */
   private getIntegrityScreenGeometry(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER') {
     const camera = this.cameras.main;
@@ -725,6 +767,7 @@ export class PurificationScene extends Phaser.Scene {
       player: project(this.player.getVisualBounds(this.interactionPlayerBounds)),
       playerX: camera.x + ox + (this.player.getPosition().x - camera.scrollX - ox) * camera.zoom,
       hysteresis: 8 * camera.zoom,
+      reserved: this.integrityReservedBounds(moduleId).map(project),
     };
   }
 
@@ -970,6 +1013,8 @@ export class PurificationScene extends Phaser.Scene {
    *  from transformation. */
   private showNewToolToast(transformResults: OfferingTransformResult[]): void {
     if (transformResults.length === 0) return;
+    // Completion is known only after the saved return and its report are resolved.
+    this.chamber?.pulse('offering-complete', 'offering');
 
     const names = transformResults.map(r => { const item = inventoryStore.getItem(r.itemId); return item?.kind === 'contaminant' ? projectItemForPlayer(item.contaminant).name : WEAPON_DATA[r.definitionId]?.name ?? '物件'; });
     const text = `供奉完成：${names.join('、')}。已揭晓并收入储藏。`;
@@ -990,8 +1035,9 @@ export class PurificationScene extends Phaser.Scene {
       audioManager.playSFX('sfx-shared-module-repair');
     }
     for (const moduleId of Object.keys(payload.allocations)) {
+      if ((payload.allocations[moduleId] ?? 0) <= 0) continue;
       if (moduleId === 'CORE') {
-        if ((payload.allocations[moduleId] ?? 0) > 0) this.pulseModuleRepair(this.coreModule);
+        this.pulseModuleRepair(this.coreModule);
       } else if (moduleId === 'STORAGE') {
         this.pulseModuleRepair(this.storageModule);
       } else if (moduleId === 'PURIFIER') {
@@ -1004,7 +1050,7 @@ export class PurificationScene extends Phaser.Scene {
   private syncInvestmentVisuals(): void {
     const fraction = (id: string): number => {
       const module = gameState.getModule(id);
-      return module && module.maxHp > 0 ? module.hp / module.maxHp : 0;
+      return module ? Math.max(0, Math.min(1, module.hp / 100)) : 0;
     };
     this.chamberState.moduleHealth.core = fraction('CORE');
     this.chamberState.moduleHealth.storage = fraction('STORAGE');
@@ -1117,6 +1163,7 @@ export class PurificationScene extends Phaser.Scene {
     });
     dispose('departure', () => this.devDeparture?.cancel()); this.devDeparture = null; this.devSession = null;
     dispose('weapon-observer', () => this.unsubscribeWeapon?.()); this.unsubscribeWeapon = null;
+    dispose('offering-observer', () => this.unsubscribeOffering?.()); this.unsubscribeOffering = null;
     dispose('forecast-observer', () => this.unsubscribeForecast?.()); this.unsubscribeForecast = null;
     dispose('entry', () => this.menuEntry?.destroy()); this.menuEntry = null;
     dispose('transition-delay', () => this.transitionDelay?.remove(false)); this.transitionDelay = null;
@@ -1124,7 +1171,7 @@ export class PurificationScene extends Phaser.Scene {
     dispose('interaction-focus', () => this.restoreInteractionFocus(true));
     dispose('audio', () => audioManager.haltNonBgm());
     for (const [name, close] of [
-      ['allocation', () => allocationPanel.close()], ['defense', () => defensePanel.close()],
+      ['allocation', () => allocationPanel.close(true)], ['defense', () => defensePanel.close()],
       ['growth', () => growthPanel.close()], ['loadout', () => loadoutPanel.close()],
       ['inventory', () => inventoryPanel.close()], ['status', () => statusPanel.close()],
       ['impact-result', () => impactResultPanel.destroy()], ['pause', () => pauseMenu.discard()],
@@ -1134,6 +1181,7 @@ export class PurificationScene extends Phaser.Scene {
     }
     this.interactKey = null; this.escKey = null; this.tabKey = null;
     this.locomotion = null;
+    this.integritySelection.reset();
     for (const [name, resource] of [
       ['core', this.coreModule], ['storage', this.storageModule], ['purifier', this.purifierModule],
       ['player', this.player], ['chamber', this.chamber],
