@@ -3,7 +3,7 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "浅透视封闭错层净化点，WASD八向绕行与两宽坡道；六操作点与实体底座分开，同层/24px/无遮挡才E，厚壳与外部接触侵蚀共同呈现。",
+    "summary": "浅透视封闭错层净化点，WASD八向绕行与两宽坡道；六操作点与实体底座分开，同层/24px/无遮挡才E，厚壳与外部接触侵蚀共同呈现。 R7保持几何与原人物，完善场景层级；完整度提示在装置侧面按真实角色和镜头避让。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -173,6 +173,22 @@
       {
         "path": "docs/reviews/2026-09-22-purification-material-depth.md",
         "role": "doc"
+      },
+      {
+        "path": "src/scenes/chamber-exterior-atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/chamber-integrity-placement.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/iteration-30-r7.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-22-purification-focus.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -197,10 +213,12 @@
       "COH-E-I30-R5-RUNTIME",
       "COH-E-I30-R5-HUMAN-FEEDBACK",
       "COH-E-I30-R6-REVIEW",
-      "COH-E-I30-R6-RUNTIME"
+      "COH-E-I30-R6-RUNTIME",
+      "COH-E-I30-R7-RUNTIME",
+      "COH-E-I30-R7-REVIEW"
     ],
     "unknowns": [
-      "R1否决与R2分项80/75/50保留；R5获用户积极反馈，无新评分或整体PASS。R6材料接合/厚断构经一次修正与限定回归后冻结；薄皮/断芯精度、局部圆整材料边仍有限，待人审。初见导航、手感与长期路线成本无新增专项人审。",
+      "R1否决与R2分项80/75/50保留。R7五项反馈已实现；一次世界实帧修正与UI时序/标题修复后限定检查通过。材料断面细度、长期外部活动节奏与初见辨识仍待人审，不登记新评分。",
       "专门音频及满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
     ]
   },
@@ -208,7 +226,7 @@
     "id": "COH-F027",
     "title": "薪柴修复与装置出击收益",
     "domain": "progression",
-    "summary": "薪柴修复三模块；三者效能均按固定100完整度封顶。加厚100/100→100/115不回血，也不把起始混乱从0抬高；修复/加厚预览与出击同源。",
+    "summary": "薪柴修复三模块；三者效能均按固定100完整度封顶。加厚100/100→100/115不回血，也不把起始混乱从0抬高；修复/加厚预览与出击同源。 R7仅调整修复场景的完整度读数位置/状态色与名称定位，费用及效能保持。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -250,6 +268,30 @@
       {
         "path": "tools/growth/check-presentation.ts",
         "role": "test"
+      },
+      {
+        "path": "src/ui/chamber-integrity-placement.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/purification-chamber-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-placement.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r7.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -264,7 +306,8 @@
       "COH-E-I29-RUNTIME",
       "COH-E-I29-R2-REVIEW",
       "COH-E-I29-R3-AUTO",
-      "COH-E-I29-R3-RUNTIME"
+      "COH-E-I29-R3-RUNTIME",
+      "COH-E-I30-R7-RUNTIME"
     ],
     "unknowns": [
       "2026-09-21成长复评GR-05：连续储藏倍率掩盖逐堆整数产出档位；修复耐久收益真实，收益读法待改善，未据此改经济。"

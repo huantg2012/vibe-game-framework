@@ -1,0 +1,352 @@
+{
+  "at": "2026-09-23T03:12:17.912Z",
+  "method": "Isolated new save, genuine keyboard movement/E/Escape, read-only frame probes. Art source may be undergoing separate R7 correction; these fingerprints lock the UI/player scope only.",
+  "sources": {
+    "src/entities/purification-chamber-module.ts": "d357d3432126135494bbcff126479bcd1354143ceee30e86bb70d8b8dc31fa41",
+    "src/ui/chamber-integrity-placement.ts": "4f65c251649c20e3fbd8918679c223c9314f08dcfd04fc599a35d32f44041bc2",
+    "src/ui/dom/allocation-panel.ts": "f2dddc27b177e899a07b65be96f1381d6cc7b836eb123148cdf1102003c7c9f9",
+    "src/ui/dom/panel-styles.ts": "17aea3b322b0b4055c9bb662da286b54321fa2b74cf4d8ec81fcb1e413b362b1",
+    "src/scenes/purification-scene.ts": "d3c42d09c9e28ab0cb2531e31814ca8c77dbf537a4d27c4a82cf4c7a302c181d",
+    "src/entities/player.ts": "247e6d6afb2c4a9b1af0ccddb881ddf126a8750fc717683081391ff459b3f9c9",
+    "src/entities/player-weapon-rig.ts": "6e8400625ab97bc59e21419b3a9af156049ff2e7670aa3e92f166480370351d4"
+  },
+  "checks": [
+    {
+      "label": "01-core-approach-right",
+      "player": {
+        "left": 260.6130650972541,
+        "right": 302.13822766508406,
+        "top": 281.63512473792053,
+        "bottom": 319.53217233491574
+      },
+      "bars": [
+        {
+          "id": "CORE",
+          "side": "left",
+          "rect": {
+            "left": 219,
+            "top": 251.5,
+            "right": 221,
+            "bottom": 275.5
+          },
+          "visible": true,
+          "overlapsPlayer": false,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          }
+        }
+      ],
+      "dom": null
+    },
+    {
+      "label": "02-core-focus-right",
+      "frames": 20,
+      "player": {
+        "left": 260.59008946177454,
+        "right": 302.13822766508406,
+        "top": 281.3836293794754,
+        "bottom": 319.53217233491574
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 128,
+          "top": 261,
+          "right": 232,
+          "bottom": 335
+        },
+        "side": "left",
+        "visible": "visible",
+        "player": {
+          "left": 343.7702683853236,
+          "right": 468.4146829952522,
+          "top": 351.1508881384262,
+          "bottom": 465.5965170047472
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(200, 205, 212)",
+        "width": 104,
+        "text": "完整度\n70 / 100"
+      }
+    },
+    {
+      "label": "03-storage-approach-right",
+      "player": {
+        "left": 146.87125058904311,
+        "right": 179.2872697098264,
+        "top": 267.77784743508465,
+        "bottom": 310.00761437965775
+      },
+      "bars": [
+        {
+          "id": "STORAGE",
+          "side": "left",
+          "rect": {
+            "left": 114,
+            "top": 246.5,
+            "right": 116,
+            "bottom": 270.5
+          },
+          "visible": true,
+          "overlapsPlayer": false,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          }
+        }
+      ],
+      "dom": null
+    },
+    {
+      "label": "04-storage-focus-right",
+      "frames": 20,
+      "player": {
+        "left": 146.6251626213725,
+        "right": 179.2872697098264,
+        "top": 267.7734022287352,
+        "bottom": 310.00761437965775
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 137,
+          "top": 309,
+          "right": 241,
+          "bottom": 383
+        },
+        "side": "left",
+        "visible": "visible",
+        "player": {
+          "left": 325.87548786411753,
+          "right": 423.8618091294793,
+          "top": 373.32020668620567,
+          "bottom": 500.02284313897326
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(200, 205, 212)",
+        "width": 104,
+        "text": "完整度\n70 / 100"
+      }
+    },
+    {
+      "label": "05-storage-approach-left",
+      "player": {
+        "left": 124.55319019185922,
+        "right": 162.43040599186116,
+        "top": 266.4902239464268,
+        "bottom": 309.06701677626734
+      },
+      "bars": [
+        {
+          "id": "STORAGE",
+          "side": "right",
+          "rect": {
+            "left": 175,
+            "top": 246.5,
+            "right": 177,
+            "bottom": 270.5
+          },
+          "visible": true,
+          "overlapsPlayer": false,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          }
+        }
+      ],
+      "dom": null
+    },
+    {
+      "label": "06-storage-focus-left",
+      "frames": 20,
+      "player": {
+        "left": 124.55319019185922,
+        "right": 162.58393992205703,
+        "top": 266.4918617189776,
+        "bottom": 309.06701677626734
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 404,
+          "top": 309,
+          "right": 508,
+          "bottom": 383
+        },
+        "side": "right",
+        "visible": "visible",
+        "player": {
+          "left": 259.65957057557773,
+          "right": 373.7518197661711,
+          "top": 369.47558515693277,
+          "bottom": 497.201050328802
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(200, 205, 212)",
+        "width": 104,
+        "text": "完整度\n70 / 100"
+      }
+    },
+    {
+      "label": "07-purifier-approach-left",
+      "player": {
+        "left": 420.5326811660908,
+        "right": 462.07514201388244,
+        "top": 276.12571622915175,
+        "bottom": 312.2051067332723
+      },
+      "bars": [
+        {
+          "id": "PURIFIER",
+          "side": "right",
+          "rect": {
+            "left": 489,
+            "top": 239,
+            "right": 491,
+            "bottom": 263
+          },
+          "visible": true,
+          "overlapsPlayer": false,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          }
+        }
+      ],
+      "dom": null
+    },
+    {
+      "label": "08-purifier-focus-left",
+      "frames": 20,
+      "player": {
+        "left": 420.5326811660908,
+        "right": 462.0567118889239,
+        "top": 276.12571622915175,
+        "bottom": 312.01193673345097
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 116,
+          "top": 310,
+          "right": 220,
+          "bottom": 384
+        },
+        "side": "left",
+        "visible": "visible",
+        "player": {
+          "left": 229.59804349827243,
+          "right": 354.1701356667718,
+          "top": 422.37714868745525,
+          "bottom": 530.0358102003529
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(200, 205, 212)",
+        "width": 104,
+        "text": "完整度\n70 / 100"
+      }
+    },
+    {
+      "label": "09-purifier-approach-right",
+      "player": {
+        "left": 460.3308710393142,
+        "right": 501.90589127360187,
+        "top": 275.18215294033644,
+        "bottom": 311.8702737072154
+      },
+      "bars": [
+        {
+          "id": "PURIFIER",
+          "side": "left",
+          "rect": {
+            "left": 413,
+            "top": 239,
+            "right": 415,
+            "bottom": 263
+          },
+          "visible": true,
+          "overlapsPlayer": false,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          }
+        }
+      ],
+      "dom": null
+    },
+    {
+      "label": "10-purifier-focus-right",
+      "frames": 20,
+      "player": {
+        "left": 460.3308710393142,
+        "right": 501.90688895347137,
+        "top": 275.18215294033644,
+        "bottom": 312.16136206460516
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 116,
+          "top": 310,
+          "right": 220,
+          "bottom": 384
+        },
+        "side": "left",
+        "visible": "visible",
+        "player": {
+          "left": 348.99261311794265,
+          "right": 473.7206668604141,
+          "top": 419.5464588210093,
+          "bottom": 530.4840861938155
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(200, 205, 212)",
+        "width": 104,
+        "text": "完整度\n70 / 100"
+      }
+    },
+    {
+      "label": "four-facing-after-post-update",
+      "passed": true
+    },
+    {
+      "label": "explicit-public-state-danger-fixture",
+      "player": {
+        "left": 432.11764682092206,
+        "right": 473.6660710393142,
+        "top": 269.03075962155356,
+        "bottom": 307.18295294033635
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 116,
+          "top": 310,
+          "right": 220,
+          "bottom": 384
+        },
+        "side": "left",
+        "visible": "visible",
+        "player": {
+          "left": 264.3529404627662,
+          "right": 388.9982131179426,
+          "top": 401.09227886466067,
+          "bottom": 515.548858821009
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(204, 51, 51)",
+        "width": 104,
+        "text": "完整度\n0 / 100"
+      }
+    }
+  ],
+  "errors": [],
+  "result": "PASS"
+}

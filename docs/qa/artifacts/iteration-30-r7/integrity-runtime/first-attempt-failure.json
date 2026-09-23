@@ -1,0 +1,138 @@
+{
+  "at": "2026-09-23T03:10:45.835Z",
+  "method": "Isolated new save, genuine keyboard movement/E/Escape, read-only frame probes. Art source may be undergoing separate R7 correction; these fingerprints lock the UI/player scope only.",
+  "sources": {
+    "src/entities/purification-chamber-module.ts": "52582c1f3c15eeaaa0de64df42c14c40536fb458083bc477063e908f199bed9c",
+    "src/ui/chamber-integrity-placement.ts": "4f65c251649c20e3fbd8918679c223c9314f08dcfd04fc599a35d32f44041bc2",
+    "src/ui/dom/allocation-panel.ts": "f2dddc27b177e899a07b65be96f1381d6cc7b836eb123148cdf1102003c7c9f9",
+    "src/ui/dom/panel-styles.ts": "17aea3b322b0b4055c9bb662da286b54321fa2b74cf4d8ec81fcb1e413b362b1",
+    "src/scenes/purification-scene.ts": "d3c42d09c9e28ab0cb2531e31814ca8c77dbf537a4d27c4a82cf4c7a302c181d",
+    "src/entities/player.ts": "247e6d6afb2c4a9b1af0ccddb881ddf126a8750fc717683081391ff459b3f9c9",
+    "src/entities/player-weapon-rig.ts": "6e8400625ab97bc59e21419b3a9af156049ff2e7670aa3e92f166480370351d4"
+  },
+  "checks": [
+    {
+      "label": "01-core-approach-right",
+      "player": {
+        "left": 260.61307014451836,
+        "right": 302.1382276650841,
+        "top": 280.30157326757865,
+        "bottom": 318.19857233491575
+      },
+      "bars": [
+        {
+          "id": "CORE",
+          "side": "left",
+          "rect": {
+            "left": 219,
+            "top": 251.5,
+            "right": 221,
+            "bottom": 275.5
+          },
+          "visible": true,
+          "overlapsPlayer": false,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          }
+        }
+      ],
+      "dom": null
+    },
+    {
+      "label": "02-core-focus-right",
+      "frames": 20,
+      "player": {
+        "left": 260.59010134941235,
+        "right": 302.1382276650841,
+        "top": 280.0501807201291,
+        "bottom": 318.19857233491575
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 128,
+          "top": 261,
+          "right": 232,
+          "bottom": 335
+        },
+        "side": "left",
+        "visible": "visible",
+        "player": {
+          "left": 343.77030404823705,
+          "right": 468.41468299525235,
+          "top": 347.1505421603873,
+          "bottom": 461.59571700474726
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(200, 205, 212)",
+        "width": 104,
+        "text": "完整度\n70 / 100"
+      }
+    },
+    {
+      "label": "03-storage-approach-right",
+      "player": {
+        "left": 145.13227778618176,
+        "right": 177.56076436949198,
+        "top": 267.388621183253,
+        "bottom": 309.618709039323
+      },
+      "bars": [
+        {
+          "id": "STORAGE",
+          "side": "left",
+          "rect": {
+            "left": 114,
+            "top": 246.5,
+            "right": 116,
+            "bottom": 270.5
+          },
+          "visible": true,
+          "overlapsPlayer": false,
+          "hp": {
+            "hp": 70,
+            "maxHp": 100
+          }
+        }
+      ],
+      "dom": null
+    },
+    {
+      "label": "04-storage-focus-right",
+      "frames": 20,
+      "player": {
+        "left": 144.89590343524122,
+        "right": 177.56076436949198,
+        "top": 267.3844700171063,
+        "bottom": 309.618709039323
+      },
+      "bars": [],
+      "dom": {
+        "rect": {
+          "left": 137,
+          "top": 309,
+          "right": 241,
+          "bottom": 383
+        },
+        "side": "left",
+        "visible": "visible",
+        "player": {
+          "left": 320.68771030572367,
+          "right": 418.68229310847585,
+          "top": 372.15341005131893,
+          "bottom": 498.856127117969
+        },
+        "overlapsPlayer": false,
+        "overlapsControls": false,
+        "color": "rgb(200, 205, 212)",
+        "width": 104,
+        "text": "完整度\n70 / 100"
+      }
+    }
+  ],
+  "errors": [],
+  "result": "FAIL",
+  "failure": "AssertionError [ERR_ASSERTION]: 05-storage-approach-left nearby readout appears"
+}

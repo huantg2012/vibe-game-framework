@@ -49,7 +49,7 @@
     "id": "COH-F033",
     "title": "净化点 HUD 与就近交互提示",
     "domain": "interface",
-    "summary": "HUD与裂隙就近提示均读取分级公开预兆；未购时强度标疑问，不直接显示真实倍率；无预告时仅显示出击次数。原双行提示和界面层级保持。",
+    "summary": "HUD与裂隙就近提示均读取分级公开预兆；未购时强度标疑问，不直接显示真实倍率；无预告时仅显示出击次数。原双行提示和界面层级保持。 R7三模块世界完整度为骨白/危险红侧置细竖规，按角色/持具/灯芯避让，交互范围不变。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -79,6 +79,34 @@
       {
         "path": "tools/qa/check-forecast-hud.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/ui/chamber-integrity-placement.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/purification-chamber-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/allocation-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-placement.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r7.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -93,7 +121,8 @@
       "COH-E-I29-R2-REVIEW",
       "COH-E-I29-R2-FORECAST-LEAK",
       "COH-E-I29-R3-AUTO",
-      "COH-E-I29-R3-RUNTIME"
+      "COH-E-I29-R3-RUNTIME",
+      "COH-E-I30-R7-RUNTIME"
     ],
     "unknowns": []
   },
@@ -292,7 +321,7 @@
     "id": "COH-F038",
     "title": "面板共同交互与信息呈现",
     "domain": "interface",
-    "summary": "共享 overlay 根、尺寸、键鼠选择、检查详情和状态刷新服务于游戏内各面板，不构成独立玩法入口。",
+    "summary": "共享 overlay 根、尺寸、键鼠选择、检查详情和状态刷新服务于游戏内各面板，不构成独立玩法入口。 R7修复读数侧置，同帧相机投影避让人物/标题/投入列，名称随真实模型顶缘；危险阈值取hp/maxHp<25%。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -326,6 +355,30 @@
       {
         "path": "docs/architecture.md",
         "role": "doc"
+      },
+      {
+        "path": "src/ui/chamber-integrity-placement.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/purification-chamber-module.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/allocation-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-placement.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-integrity-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r7.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
@@ -333,7 +386,8 @@
       "COH-E-SRC-interface",
       "COH-E-I29-R4-RUNTIME",
       "COH-E-GROWTH-RESOURCE-STATES",
-      "COH-E-GROWTH-RESOURCE-STATES-HUMAN"
+      "COH-E-GROWTH-RESOURCE-STATES-HUMAN",
+      "COH-E-I30-R7-RUNTIME"
     ],
     "unknowns": [
       "所有面板在长名、大库存、缩放、连续重开等组合下的完整可达性矩阵未在本轮运行。"

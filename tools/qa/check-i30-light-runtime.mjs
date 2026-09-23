@@ -21,6 +21,9 @@ const { values } = parseArgs({ options: {
 const out = values.out;
 fs.mkdirSync(out, { recursive: true });
 const sourcePaths = [
+  'src/ui/chamber-integrity-placement.ts', 'src/entities/purification-chamber-module.ts',
+  'src/ui/dom/allocation-panel.ts', 'src/ui/dom/panel-styles.ts', 'src/entities/player-weapon-rig.ts',
+  'src/scenes/chamber-exterior-atmosphere.ts',
   'src/art/chamber-pixel-helpers.ts', 'src/art/chamber-exterior-pixels.ts',
   'src/art/chamber-surface-map.ts',
   'src/art/chamber-light-field.ts', 'src/art/chamber-floor-light.ts',
@@ -184,6 +187,13 @@ try {
     assert(emitter.energy > 0 && emitter.floorSpanCount > 0 && emitter.wallSpanCount > 0,
       `${emitter.id} must have real active floor and wall receivers`);
   }
+  assert(initial.emitters.find(source => source.id === 'core').energy >
+    Math.max(...initial.emitters.filter(source => source.id !== 'core').map(source => source.energy)),
+    'The healthy core is the strongest operating light');
+  for (const name of ['chamber-exterior-light', 'chamber-exterior-dust']) {
+    assert(initial.graphics.find(graphics => graphics.name === name)?.depth < 0,
+      `${name} must remain behind the complete room and actor`);
+  }
   const idle = [initial];
   for (let index = 0; index < 10; index++) {
     await page.waitForTimeout(210);
@@ -201,7 +211,8 @@ try {
     return [emitter.id, { min, max }];
   }));
   const activityNames = ['chamber-floor-light', 'chamber-wall-light', 'chamber-source-motes',
-    'chamber-device-light-core', 'chamber-device-light-growth', 'chamber-device-light-purifier'];
+    'chamber-device-light-core', 'chamber-device-light-growth', 'chamber-device-light-purifier',
+    'chamber-exterior-light', 'chamber-exterior-dust'];
   const activity = Object.fromEntries(activityNames.map(name => {
     const samples = idle.map(sample => sample.graphics.find(graphics => graphics.name === name));
     assert(samples.every(graphics => graphics?.visible && graphics.commands > 0), `${name} must submit live Graphics`);
@@ -212,6 +223,7 @@ try {
   manifest.idle = { durationMs: idle.at(-1).time - initial.time, calibrationDevicePaintCalls: calibration,
     idleDevicePaintCalls: idlePaintCalls, energyRanges, activity, textures: initial.textures };
   manifest.scope.push('Four finite sources and floor/wall/device Graphics animate during idle; calibrated CDP observes zero device repaints and six identical cached bitmaps');
+  manifest.scope.push('Healthy core has the strongest live source; exterior receiver light and bounded dust actually animate behind the room, and are included in departure cleanup checks');
   await journey.snap('01-idle-lighting');
 
   manifest.facings = [];

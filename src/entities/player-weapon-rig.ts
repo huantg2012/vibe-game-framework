@@ -149,6 +149,18 @@ export class PlayerWeaponRig {
     this.arm.fillRect(Math.round(x + pose.handX) - 1, Math.round(y + pose.handY) - 1, 3, 3);
   }
 
+  private readonly boundsScratch = new Phaser.Geom.Rectangle();
+
+  /** Include actual rotated tool and torso bounds; only reads the current pose. */
+  includeVisualBounds(out: Phaser.Geom.Rectangle): void {
+    if (!this.equipped) return;
+    for (const image of [this.upper, this.weapon]) {
+      if (!image.visible) continue;
+      image.getBounds(this.boundsScratch);
+      Phaser.Geom.Rectangle.Union(out, this.boundsScratch, out);
+    }
+  }
+
   /** The shoulder lamp follows the chest transform while the sole light stays grounded. */
   getTorsoOffset(): Readonly<{ x: number; y: number; rotation: number }> {
     return this.torsoOffset;

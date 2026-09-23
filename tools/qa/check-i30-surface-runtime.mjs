@@ -20,6 +20,9 @@ const { values } = parseArgs({ options: {
 const out = values.out;
 fs.mkdirSync(out, { recursive: true });
 const sourcePaths = [
+  'src/ui/chamber-integrity-placement.ts', 'src/entities/purification-chamber-module.ts',
+  'src/ui/dom/allocation-panel.ts', 'src/ui/dom/panel-styles.ts', 'src/entities/player-weapon-rig.ts',
+  'src/scenes/chamber-exterior-atmosphere.ts',
   'src/art/chamber-pixel-helpers.ts', 'src/art/chamber-exterior-pixels.ts',
   'src/art/chamber-surface-map.ts', 'src/art/purification-chamber-pixels.ts',
   'src/art/chamber-light-field.ts', 'src/art/chamber-floor-light.ts',

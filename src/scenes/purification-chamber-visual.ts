@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
+import { CHAMBER_MODULE_BOUNDS } from '../ui/chamber-integrity-placement';
 import { ChamberSurfaceMap } from '../art/chamber-surface-map';
+import { ChamberExteriorAtmosphere } from './chamber-exterior-atmosphere';
 import { PurificationChamberLighting } from './purification-chamber-lighting';
 import {
   CHAMBER_DEVICE_ANCHORS,
@@ -45,8 +47,8 @@ interface DeviceLayer {
 const DEVICE_IDS: readonly ChamberDevice[] = ['rift', 'growth', 'offering', 'purifier', 'storage', 'core'];
 const MODULE_IDS = ['core', 'storage', 'purifier'] as const;
 const DEVICE_BOUNDS: Readonly<Record<ChamberDevice, readonly [number, number, number, number]>> = {
-  core: [-25, -63, 26, 3], storage: [-22, -42, 23, 3],
-  purifier: [-29, -41, 31, 3], growth: [-20, -57, 22, 3],
+  core: CHAMBER_MODULE_BOUNDS.CORE, storage: CHAMBER_MODULE_BOUNDS.STORAGE,
+  purifier: CHAMBER_MODULE_BOUNDS.PURIFIER, growth: [-20, -57, 22, 3],
   offering: [-21, -45, 27, 3], rift: [-26, -17, 26, 13],
 };
 let chamberId = 0;
@@ -66,6 +68,7 @@ export class PurificationChamberVisual {
   private readonly bodyEffects: Phaser.GameObjects.Graphics;
   private readonly boundaryEffects: Phaser.GameObjects.Graphics;
   private readonly lighting: PurificationChamberLighting;
+  private readonly exteriorAtmosphere: ChamberExteriorAtmosphere;
   private readonly resistanceTexture: Phaser.Textures.CanvasTexture;
   private readonly resistancePainter: ChamberPixels;
   private resistanceKey = -1;
@@ -82,7 +85,11 @@ export class PurificationChamberVisual {
   constructor(private readonly scene: Phaser.Scene) {
     const id = ++chamberId;
     const shellSurfaces = new ChamberSurfaceMap();
-    this.addCanvas(`purification-chamber-exterior-${id}`, -50, paintChamberExterior, shellSurfaces);
+    const exterior = this.addCanvas(`purification-chamber-exterior-${id}`, -50);
+    paintChamberExterior(new ChamberPixels(exterior.context, shellSurfaces));
+    const exteriorAlbedo = shellSurfaces.bake(exterior.context);
+    exterior.refresh();
+    this.exteriorAtmosphere = new ChamberExteriorAtmosphere(scene, exteriorAlbedo, shellSurfaces);
     const architecture = this.addCanvas(`purification-chamber-architecture-${id}`, 10);
     paintChamberArchitecture(new ChamberPixels(architecture.context, this.architectureSurfaces));
     const architectureAlbedo = this.architectureSurfaces.bake(architecture.context);
@@ -126,6 +133,7 @@ export class PurificationChamberVisual {
   update(timeMs: number, deltaMs: number, state: PurificationChamberState): void {
     if (this.destroyed) return;
     this.time = timeMs;
+    this.exteriorAtmosphere.update(timeMs);
     const health = state.moduleHealth;
     let growth = 0;
     for (const id in state.growthLevels) growth += state.growthLevels[id] ?? 0;
@@ -204,12 +212,12 @@ export class PurificationChamberVisual {
       const { x, y } = CHAMBER_DEVICE_BASES[device.id];
       if (device.id === 'core') {
         const energy = this.lighting.energy('core');
-        const health = energy / .29;
+        const health = energy / .43;
         g.fillStyle(0x1aad96, Math.min(.88, .76 * health));
-        g.fillRect(x - 2, y - 42, 3, 5);
-        g.fillRect(x + 1, y - 27, 2, 4);
+        g.fillRect(x - 2, y - 50, 3, 6);
+        g.fillRect(x + 1, y - 35, 2, 5);
         g.fillStyle(0x2ae6c8, Math.min(.92, .83 * health));
-        g.fillRect(x - 1, y - 38, 2, 2);
+        g.fillRect(x - 1, y - 46, 2, 2);
       } else if (device.id === 'growth') {
         // Independent, small rising bubbles within the full liquid cylinder.
         g.fillStyle(0x1aad96, this.lighting.energy('growth') * 4.0);
@@ -308,6 +316,7 @@ export class PurificationChamberVisual {
     this.destroyed = true;
     this.groundEffects.destroy(); this.bodyEffects.destroy(); this.boundaryEffects.destroy();
     this.lighting.destroy();
+    this.exteriorAtmosphere.destroy();
     for (const device of this.devices) device.activity.destroy();
     for (const image of this.images) image.destroy();
     for (const key of this.textures) if (this.scene.textures.exists(key)) this.scene.textures.remove(key);

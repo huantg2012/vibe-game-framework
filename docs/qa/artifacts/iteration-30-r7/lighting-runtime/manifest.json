@@ -1,0 +1,319 @@
+{
+  "at": "2026-09-23T03:20:45.111Z",
+  "version": "8a4cadb361329ead1d88e53dd2ca008130f7190c",
+  "url": "http://127.0.0.1:3025/",
+  "viewport": {
+    "width": 1440,
+    "height": 960
+  },
+  "sources": {
+    "src/ui/chamber-integrity-placement.ts": "4f65c251649c20e3fbd8918679c223c9314f08dcfd04fc599a35d32f44041bc2",
+    "src/entities/purification-chamber-module.ts": "d357d3432126135494bbcff126479bcd1354143ceee30e86bb70d8b8dc31fa41",
+    "src/ui/dom/allocation-panel.ts": "e15a2db50d7173cde8538d0937a31c657c79a15cc7b766a7985402bc9fe55161",
+    "src/ui/dom/panel-styles.ts": "17aea3b322b0b4055c9bb662da286b54321fa2b74cf4d8ec81fcb1e413b362b1",
+    "src/entities/player-weapon-rig.ts": "6e8400625ab97bc59e21419b3a9af156049ff2e7670aa3e92f166480370351d4",
+    "src/scenes/chamber-exterior-atmosphere.ts": "f32ac3d01987821240c8775e89be4b4e912cd86f04221ca7cd7e87185d60453a",
+    "src/art/chamber-pixel-helpers.ts": "dd211dbf7e334cf4c3a5795aebebe4c33ddac2335a01568478c91bdff680b4af",
+    "src/art/chamber-exterior-pixels.ts": "6abc31b03914c99eeca3c6830f7899d9add1ccef71e69d9756c7cdc91c2eb290",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/art/purification-chamber-pixels.ts": "d654f57c80b7f16d7c8583b6acf5991e98715f38ace68e0144728bffa8dbf628",
+    "src/scenes/purification-chamber-lighting.ts": "172b3c27790f6ed3708adf59e0e30e8c72a17b192356b0ec4e94d0b78994ad34",
+    "src/scenes/purification-chamber-visual.ts": "d7ea9966aaf18e6bde0ee61ca9ee51e24a13a0f0396ef95eb7f4f22db0e07b19",
+    "src/scenes/purification-scene.ts": "d3c42d09c9e28ab0cb2531e31814ca8c77dbf537a4d27c4a82cf4c7a302c181d",
+    "src/entities/player.ts": "247e6d6afb2c4a9b1af0ccddb881ddf126a8750fc717683081391ff459b3f9c9",
+    "src/entities/player-lamp-aura.ts": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-light-runtime.mjs": "c8f9cab7f09005b27e510d47694c83f1b952f0def31112fab6675cf84ed0b35b",
+    "tools/qa/i30-chamber-driver.mjs": "362ffb46ce44d711f6d6a49dd1ff509e35a16bc163e670a3384730811d8c5d20",
+    "tools/qa/i27-journey-driver.mjs": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+  },
+  "errors": [],
+  "method": "Fresh isolated browser storage; production MainMenu -> Purification -> Rift. Real keyboard only. Read-only lamp/Graphics/texture observations and CDP precise coverage; no production method replacement.",
+  "scope": [
+    "Four finite sources and floor/wall/device Graphics animate during idle; calibrated CDP observes zero device repaints and six identical cached bitmaps",
+    "Healthy core has the strongest live source; exterior receiver light and bounded dust actually animate behind the room, and are included in departure cleanup checks",
+    "All four facings preserve the original animated lamp anchor with one hub floor pool; real travel to both sides of the core reverses a bounded integer-pixel shadow",
+    "Real entrance E/Shift+Enter enters Rift, restores the default original floor pool and releases hub device textures/light Graphics"
+  ],
+  "limitations": [
+    "Informed authored routes do not establish first-time navigation or aesthetic approval.",
+    "Command-buffer changes establish submitted Graphics activity, not perceptual quality of the final GPU composite.",
+    "No FPS benchmark, long-term leak certification, synthetic damage, purchases or hidden-state probes are included."
+  ],
+  "idle": {
+    "durationMs": 2366.6000000000004,
+    "calibrationDevicePaintCalls": 6,
+    "idleDevicePaintCalls": 0,
+    "energyRanges": {
+      "core": {
+        "min": 0.27501135286002826,
+        "max": 0.34297524084197795
+      },
+      "growth": {
+        "min": 0.0659950379548001,
+        "max": 0.08902006830336859
+      },
+      "purifier": {
+        "min": 0.08177992507654572,
+        "max": 0.1035736857701531
+      },
+      "wall-lamp": {
+        "min": 0.11111909996882793,
+        "max": 0.12899853906271244
+      }
+    },
+    "activity": {
+      "chamber-floor-light": {
+        "distinctBuffers": 11,
+        "commandCount": 47421,
+        "depth": 15
+      },
+      "chamber-wall-light": {
+        "distinctBuffers": 11,
+        "commandCount": 13453,
+        "depth": 15.05
+      },
+      "chamber-source-motes": {
+        "distinctBuffers": 11,
+        "commandCount": 24,
+        "depth": 407
+      },
+      "chamber-device-light-core": {
+        "distinctBuffers": 11,
+        "commandCount": 488,
+        "depth": 399.1
+      },
+      "chamber-device-light-growth": {
+        "distinctBuffers": 11,
+        "commandCount": 212,
+        "depth": 268.1
+      },
+      "chamber-device-light-purifier": {
+        "distinctBuffers": 11,
+        "commandCount": 903,
+        "depth": 370.1
+      },
+      "chamber-exterior-light": {
+        "distinctBuffers": 11,
+        "commandCount": 7638,
+        "depth": -49
+      },
+      "chamber-exterior-dust": {
+        "distinctBuffers": 11,
+        "commandCount": 96,
+        "depth": -48
+      }
+    },
+    "textures": [
+      {
+        "id": "rift",
+        "key": "purification-chamber-rift-1",
+        "hash": "223aa956",
+        "depth": 18,
+        "alpha": 1
+      },
+      {
+        "id": "growth",
+        "key": "purification-chamber-growth-1",
+        "hash": "cb54a782",
+        "depth": 268,
+        "alpha": 1
+      },
+      {
+        "id": "offering",
+        "key": "purification-chamber-offering-1",
+        "hash": "98135fa9",
+        "depth": 276,
+        "alpha": 1
+      },
+      {
+        "id": "purifier",
+        "key": "purification-chamber-purifier-1",
+        "hash": "845c6f1a",
+        "depth": 370,
+        "alpha": 1
+      },
+      {
+        "id": "storage",
+        "key": "purification-chamber-storage-1",
+        "hash": "7fef67b6",
+        "depth": 378,
+        "alpha": 1
+      },
+      {
+        "id": "core",
+        "key": "purification-chamber-core-1",
+        "hash": "0104600f",
+        "depth": 399,
+        "alpha": 1
+      }
+    ]
+  },
+  "facings": [
+    {
+      "facing": "left",
+      "player": {
+        "x": 350.0008,
+        "y": 289,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 342.0008,
+        "y": 285
+      },
+      "originalGlow": {
+        "x": 342.0008,
+        "y": 285,
+        "alpha": 0.6011677082062048
+      },
+      "chamberLamp": {
+        "x": 342,
+        "y": 285
+      },
+      "poolVisible": false
+    },
+    {
+      "facing": "up",
+      "player": {
+        "x": 350.0008,
+        "y": 282.3336,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 342.0008,
+        "y": 279.3336
+      },
+      "originalGlow": {
+        "x": 342.0008,
+        "y": 279.3336,
+        "alpha": 0.23733770037953625
+      },
+      "chamberLamp": {
+        "x": 342,
+        "y": 279
+      },
+      "poolVisible": false
+    },
+    {
+      "facing": "right",
+      "player": {
+        "x": 356.66640000000007,
+        "y": 282.3336,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 364.66640000000007,
+        "y": 278.3336
+      },
+      "originalGlow": {
+        "x": 364.66640000000007,
+        "y": 278.3336,
+        "alpha": 0.3669274087046042
+      },
+      "chamberLamp": {
+        "x": 365,
+        "y": 278
+      },
+      "poolVisible": false
+    },
+    {
+      "facing": "down",
+      "player": {
+        "x": 356.66640000000007,
+        "y": 289.0008,
+        "alpha": 1
+      },
+      "lamp": {
+        "x": 366.66640000000007,
+        "y": 285.0008
+      },
+      "originalGlow": {
+        "x": 366.66640000000007,
+        "y": 285.0008,
+        "alpha": 0.6926491891309939
+      },
+      "chamberLamp": {
+        "x": 367,
+        "y": 285
+      },
+      "poolVisible": false
+    }
+  ],
+  "coreShadows": [
+    {
+      "side": "right",
+      "foot": {
+        "x": 285,
+        "y": 313
+      },
+      "source": {
+        "x": 253,
+        "y": 299,
+        "radiusX": 105,
+        "radiusY": 43
+      },
+      "pixelCount": 59,
+      "centroid": {
+        "x": 289.2118644067797,
+        "y": 314.9406779661017
+      },
+      "scanlines": 59,
+      "maxAlpha": 0.32230952699359794
+    },
+    {
+      "side": "left",
+      "foot": {
+        "x": 219,
+        "y": 313
+      },
+      "source": {
+        "x": 253,
+        "y": 299,
+        "radiusX": 105,
+        "radiusY": 43
+      },
+      "pixelCount": 59,
+      "centroid": {
+        "x": 214.73728813559322,
+        "y": 314.6525423728813
+      },
+      "scanlines": 59,
+      "maxAlpha": 0.31606157318685774
+    }
+  ],
+  "movementDevicePaintCalls": 0,
+  "rift": {
+    "active": true,
+    "poolVisible": true,
+    "externalGround": false,
+    "playerAlpha": 1,
+    "oldDeviceTextures": [],
+    "remainingHubLightGraphics": []
+  },
+  "endingSources": {
+    "src/ui/chamber-integrity-placement.ts": "4f65c251649c20e3fbd8918679c223c9314f08dcfd04fc599a35d32f44041bc2",
+    "src/entities/purification-chamber-module.ts": "d357d3432126135494bbcff126479bcd1354143ceee30e86bb70d8b8dc31fa41",
+    "src/ui/dom/allocation-panel.ts": "e15a2db50d7173cde8538d0937a31c657c79a15cc7b766a7985402bc9fe55161",
+    "src/ui/dom/panel-styles.ts": "17aea3b322b0b4055c9bb662da286b54321fa2b74cf4d8ec81fcb1e413b362b1",
+    "src/entities/player-weapon-rig.ts": "6e8400625ab97bc59e21419b3a9af156049ff2e7670aa3e92f166480370351d4",
+    "src/scenes/chamber-exterior-atmosphere.ts": "f32ac3d01987821240c8775e89be4b4e912cd86f04221ca7cd7e87185d60453a",
+    "src/art/chamber-pixel-helpers.ts": "dd211dbf7e334cf4c3a5795aebebe4c33ddac2335a01568478c91bdff680b4af",
+    "src/art/chamber-exterior-pixels.ts": "6abc31b03914c99eeca3c6830f7899d9add1ccef71e69d9756c7cdc91c2eb290",
+    "src/art/chamber-surface-map.ts": "a422b5bb2895fad9bc40dc7eb9db3685be13550a63b88a8d0716389dc08504dd",
+    "src/art/chamber-light-field.ts": "fc8a66c42e0267f8e38cb4be7674a6d692b12a50b8d6e24c7631a052d5415bbb",
+    "src/art/chamber-floor-light.ts": "77266161635a4eed798dcefbda3bbf7f0ce4dbac4c0efc8c09c95c12d15ad604",
+    "src/art/purification-chamber-pixels.ts": "d654f57c80b7f16d7c8583b6acf5991e98715f38ace68e0144728bffa8dbf628",
+    "src/scenes/purification-chamber-lighting.ts": "172b3c27790f6ed3708adf59e0e30e8c72a17b192356b0ec4e94d0b78994ad34",
+    "src/scenes/purification-chamber-visual.ts": "d7ea9966aaf18e6bde0ee61ca9ee51e24a13a0f0396ef95eb7f4f22db0e07b19",
+    "src/scenes/purification-scene.ts": "d3c42d09c9e28ab0cb2531e31814ca8c77dbf537a4d27c4a82cf4c7a302c181d",
+    "src/entities/player.ts": "247e6d6afb2c4a9b1af0ccddb881ddf126a8750fc717683081391ff459b3f9c9",
+    "src/entities/player-lamp-aura.ts": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0",
+    "src/systems/purification-chamber-layout.ts": "4dc6cd15792e53ea196391a3673c2d86050c05bd5b24c09c2d3881d7ffbd4880",
+    "tools/qa/check-i30-light-runtime.mjs": "c8f9cab7f09005b27e510d47694c83f1b952f0def31112fab6675cf84ed0b35b",
+    "tools/qa/i30-chamber-driver.mjs": "362ffb46ce44d711f6d6a49dd1ff509e35a16bc163e670a3384730811d8c5d20",
+    "tools/qa/i27-journey-driver.mjs": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+  },
+  "ok": true
+}

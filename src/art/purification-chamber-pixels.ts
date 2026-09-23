@@ -125,7 +125,12 @@ function walkPoly(route: keyof typeof CHAMBER_WALK_POLYGONS): ChamberPoint[] {
 /** A cast enclosure: cap, vertical faces and bearing feet are separate physical surfaces. */
 export function paintChamberArchitecture(p: ChamberPixels): void {
   upright(p, 342, -8, [0, 1, 0], .60);
-  p.poly([[93,125],[127,83],[230,70],[283,88],[359,86],[411,116],[421,153],[489,165],[559,187],[581,230],[581,313],[559,348],[382,364],[114,366],[69,328],[68,198]],c.shadow);
+  p.poly([[93,125],[127,83],[170,77],[176,82],[188,78],[191,75],[230,70],
+    [283,88],[339,86],[344,91],[355,88],[359,86],[411,116],[421,153],
+    [463,161],[468,168],[478,169],[481,164],[489,165],[524,177],[530,184],
+    [537,180],[559,187],[581,230],[581,313],[559,348],[485,354],[477,352],
+    [470,357],[442,358],[437,354],[425,359],[382,364],[324,364],[313,360],
+    [302,365],[114,366],[69,328],[68,198]],c.shadow);
   // Upper wall under the broken cap. The broad wall is matte; reflected edges are interrupted.
   upright(p, 154, 32, [0, 1, 0], .88);
   p.poly([[106,124],[139,96],[229,85],[277,103],[359,100],[397,125],[401,169],[370,174],[139,159],[112,196]],c.concrete);
@@ -145,17 +150,34 @@ export function paintChamberArchitecture(p: ChamberPixels): void {
   // The existing two broken bends divide substantial cast sections. Keep one primary
   // receiving face and a sheltered return, rather than three matching luminous ribbons.
   horizontal(p, 91, .95);
-  materialFace(p, [[108,124],[136,93],[230,80],[232,66],[126,80],[94,117]],
+  materialFace(p, [[108,124],[136,93],[230,80],[232,66],[202,69],[199,75],
+    [190,77],[186,71],[153,76],[148,81],[139,79],[126,80],[115,94],[119,99],[112,105],[108,104],[94,117]],
     [building.undercoat,building.section,c.steel], 237, 27, 7);
   p.setPlane({ normal: [.16, 0, 1], elevation: 91, originX: 232, riseX: -.16,
     occlusion: .87, roughness: .96 });
   materialFace(p, [[230,80],[278,99],[282,85],[232,66]],
     [building.undercoat,building.undercoat,building.section], 237, 27, 7);
   horizontal(p, 83, .82);
-  materialFace(p, [[278,99],[360,96],[403,121],[411,112],[363,83],[282,85]],
+  materialFace(p, [[278,99],[360,96],[403,121],[411,112],[396,101],[392,105],
+    [385,99],[386,95],[363,83],[349,84],[348,89],[340,90],[334,84],[282,85]],
     [building.undercoat,building.section,building.section], 237, 27, 7);
   p.setPlane(null);
-  p.poly([[129,85],[229,73],[279,91],[279,95],[229,79],[135,92],[110,120],[102,120]],building.coating);
+  p.poly([[129,85],[184,78],[190,82],[201,79],[207,76],[229,73],
+    [279,91],[279,95],[229,79],[207,83],[198,86],[186,83],[135,92],[110,120],[102,120]],building.coating);
+  // Large missing bites interrupt the silhouette. Their inward break exposes depth,
+  // while the long retained cap still carries the wall rather than becoming teeth.
+  upright(p, 163, 0, [0, 1, 0], .79);
+  p.poly([[186,71],[190,77],[199,75],[202,69],[201,77],[195,83],[188,81]],c.concrete);
+  upright(p, 163, 0, [1, .3, 0], .70);
+  p.poly([[190,77],[195,83],[188,81],[184,77],[186,71]],c.recess);
+  horizontal(p, 91, .91);
+  p.poly([[198,76],[204,71],[209,71],[207,76],[201,79]],c.plane);
+  upright(p, 173, 0, [0, 1, 0], .75);
+  p.poly([[334,84],[340,90],[348,89],[349,84],[351,92],[345,96],[339,95]],c.concrete);
+  p.setPlane(null);
+  p.line(192,78,196,77,c.steel);
+  p.poly([[189,80],[193,80],[195,83],[191,83]],c.plane);
+  p.poly([[339,91],[342,90],[345,92],[343,94]],c.plane);
   p.poly([[237,75],[254,80],[252,85],[242,82],[239,84],[229,80],[215,82],[215,77]],c.concrete);
   p.poly([[294,90],[316,87],[328,92],[324,101],[307,102],[304,96]],c.concrete);
   p.poly([[337,87],[358,87],[380,101],[374,104],[354,95],[341,96]],c.plane);
@@ -177,10 +199,21 @@ export function paintChamberArchitecture(p: ChamberPixels): void {
   p.poly([[83,217],[89,198],[91,196],[90,218],[85,235],[84,252],[80,255]],building.coating);
   // Rear wall of the lower work recess. It turns physically into the right shell.
   upright(p, 241, 0, [-.3, .954, 0], .93, .24, 430);
-  materialFace(p, [[401,151],[478,165],[553,188],[564,232],[547,259],[431,260],[411,234],[400,210]],
+  materialFace(p, [[401,151],[447,159],[450,163],[459,164],[462,160],
+    [478,165],[512,175],[516,182],[524,184],[527,180],[553,188],[564,232],
+    [547,259],[431,260],[411,234],[400,210]],
     [c.concrete,building.coating,c.plane], 256, 31, 16);
   horizontal(p, 83, .88);
-  p.poly([[409,156],[477,171],[550,194],[550,201],[476,179],[415,166],[410,177]],building.coating);
+  p.poly([[409,156],[447,164],[450,169],[458,172],[464,167],[477,171],
+    [512,182],[516,189],[525,192],[530,187],[550,194],[550,201],
+    [529,195],[522,198],[513,194],[508,188],[476,179],[462,176],
+    [457,178],[448,174],[445,170],[415,166],[410,177]],building.coating);
+  upright(p, 241, 0, [-.3, .954, 0], .73, .24, 430);
+  p.poly([[447,159],[450,163],[459,164],[462,160],[464,167],[458,174],[450,171]],c.concrete);
+  p.poly([[512,175],[516,182],[524,184],[527,180],[530,187],[524,193],[516,190]],c.recess);
+  p.setPlane(null);
+  p.poly([[515,183],[519,186],[523,186],[524,189],[519,188]],c.plane);
+  p.line(452,165,458,167,c.plane);
   upright(p, 241, 0, [-.3, .954, 0], .87, .03, 444);
   materialFace(p, [[416,166],[476,180],[540,199],[545,231],[530,243],[444,245],[419,221]],
     [c.recess,c.concrete,building.coating], 259, 34, 14);
@@ -232,11 +265,33 @@ export function paintChamberArchitecture(p: ChamberPixels): void {
   p.poly([[332,240],[340,233],[339,240],[334,247],[332,255],[328,256]],building.ground);
   // Deep foundation projects below the legal foot contour. It is not a walkable third floor.
   upright(p, 334, 0, [0, 1, 0], .88);
-  p.poly([[94,306],[126,334],[368,334],[392,324],[548,318],[556,338],[391,346],[371,356],[121,356],[87,326]],building.coating);
+  p.poly([[94,306],[126,334],[368,334],[392,324],[548,318],[551,327],
+    [545,331],[550,334],[556,338],[496,342],[490,338],[480,340],[477,345],
+    [444,345],[434,340],[424,344],[421,348],[391,346],[371,356],
+    [324,356],[315,351],[307,351],[301,356],[121,356],[87,326]],building.coating);
   upright(p, 334, 0, [0, 1, 0], .75);
-  p.poly([[126,342],[366,342],[390,332],[548,326],[547,343],[393,350],[369,360],[122,360],[93,334]],c.concrete);
+  p.poly([[126,342],[366,342],[390,332],[548,326],[545,331],[550,334],
+    [547,343],[496,346],[490,341],[481,343],[477,349],[445,349],
+    [434,343],[425,347],[421,352],[393,350],[369,360],[326,360],
+    [316,354],[309,354],[302,360],[122,360],[93,334]],c.concrete);
   upright(p, 334, 0, [0, 1, 0], .58);
-  p.poly([[121,358],[368,358],[393,348],[548,342],[547,345],[394,351],[370,361],[121,361],[93,338],[93,335]],c.recess);
+  p.poly([[121,358],[301,358],[308,352],[316,352],[327,358],[368,358],
+    [393,348],[421,350],[424,345],[434,341],[445,347],[477,347],
+    [481,341],[490,340],[497,344],[548,342],[547,345],[497,347],
+    [490,343],[482,344],[478,351],[444,351],[434,345],[427,348],
+    [423,354],[394,351],[370,361],[326,361],[315,356],[310,356],
+    [303,362],[121,361],[93,338],[93,335]],c.recess);
+  // The broken underside exposes slanted aggregate faces below the legal foot line.
+  upright(p, 356, -18, [.5, 1, 0], .91, .25, 425);
+  p.poly([[424,344],[434,340],[444,345],[440,348],[434,345],[427,348],[423,352]],c.plane);
+  upright(p, 356, -18, [1, .3, 0], .70);
+  p.poly([[434,340],[440,342],[445,346],[445,350],[434,345]],c.concrete);
+  upright(p, 356, -18, [-.4, 1, 0], .84);
+  p.poly([[481,341],[490,338],[496,342],[496,346],[490,342],[483,344],[478,349]],c.plane);
+  p.setPlane(null);
+  p.line(428,345,432,344,c.plaster);
+  p.line(435,343,440,344,c.steel);
+  p.poly([[484,341],[488,341],[490,343],[486,343]],c.plaster);
   p.setPlane(null);
   paintWalkSurfaces(p);
   paintRamp(p, 'left-stair');
@@ -290,6 +345,7 @@ function paintWalkSurfaces(p: ChamberPixels): void {
   horizontal(p, 0);
   p.poly(walkPoly('main'),building.ground);
   p.setPlane(null);
+  paintHallFloorLayers(p);
   // Receiving bay: an intact, level old working coat meets the original joint.
   // Its interior is material, not an empty centre surrounded by a decorative ring.
   p.poly([[99,258],[151,251],[191,248],[206,265],[215,288],[199,302],
@@ -330,6 +386,7 @@ function paintWalkSurfaces(p: ChamberPixels): void {
   horizontal(p, 32);
   p.poly(walkPoly('upper'),building.coating);
   p.setPlane(null);
+  paintUpperFloorLayers(p);
   p.poly([[143,153],[186,147],[204,153],[204,178],[187,192],[155,193],[136,183]],building.ground);
   p.poly([[145,157],[183,151],[199,156],[198,176],[184,186],[156,188],[143,179]],c.concrete);
   p.poly([[334,165],[367,162],[393,179],[386,199],[353,202],[328,190]],c.concrete);
@@ -362,6 +419,54 @@ function paintWalkSurfaces(p: ChamberPixels): void {
   p.poly([[417,255],[430,252],[433,254],[424,257],[419,257]],building.coating);
   p.poly([[401,294],[411,290],[416,291],[409,295],[402,296]],c.plaster);
 
+}
+
+/** Working coats are broad, connected pieces of construction rather than tile noise.
+ * Every mark inherits its horizontal host; polish/loss does not invent a step. */
+function paintUpperFloorLayers(p: ChamberPixels): void {
+  // One broad working coat joins the real rear construction seam. Its angular
+  // infill edge, open worn breaks and uninterrupted interior describe a flat
+  // material sheet; paired dark lips would make it read as stacked paving.
+  p.poly([[220,149],[234,142],[264,155],[274,160],[295,160],[299,175],
+    [291,178],[291,192],[279,199],[263,198],[252,191],[237,190],
+    [234,178],[223,174]],c.plaster);
+  // Wear opens into the old seam rather than closing around the retained sheet.
+  p.poly([[221,161],[224,169],[231,172],[230,178],[235,185],[238,195],
+    [244,201],[240,204],[233,194],[230,184],[223,177],[219,171]],c.concrete);
+  p.poly([[276,195],[283,191],[284,183],[291,178],[294,180],[288,185],
+    [289,193],[281,199],[273,198]],c.plane);
+  // On the west the original wearing layer is lost all the way to the slab cut.
+  // It has no enclosed outline, shadow rail or island centred on the body chamber.
+  p.poly([[132,197],[145,195],[157,198],[163,196],[176,199],[181,204],
+    [193,208],[204,216],[208,224],[198,219],[190,214],[163,211],
+    [156,214],[132,214]],c.plaster);
+  p.poly([[164,208],[173,209],[182,206],[186,209],[179,212],[176,214],
+    [163,212],[156,214],[149,214],[153,210]],c.plane);
+  // The east repair also ends at the real front edge. The landing remains an
+  // intact, same-height surface without a third enclosed decorative patch.
+  p.poly([[302,209],[315,207],[323,210],[328,206],[337,205],[343,207],
+    [328,218],[302,224],[282,224],[286,218],[300,217]],c.plaster);
+  p.poly([[287,220],[299,220],[301,214],[306,212],[309,213],[305,218],
+    [303,223],[284,224]],c.plane);
+}
+
+function paintHallFloorLayers(p: ChamberPixels): void {
+  // Older exposed substrate runs into the foundation and disappears beneath
+  // the thin front cut. A square-ended infill is part of that same working slab;
+  // there are no repeated closed ribbons or parallel dark/light outlines.
+  p.poly([[298,316],[321,313],[337,318],[367,319],[390,313],[399,314],
+    [392,324],[368,334],[306,334],[306,326],[298,326]],c.ash);
+  p.poly([[307,320],[322,318],[330,321],[336,321],[337,326],[329,326],
+    [329,334],[310,334],[310,326],[306,325]],c.plaster);
+  // Broad wear emerges from the existing trench; muted raw material, not a
+  // highlighted track on top of the floor. The middle of the hall stays open.
+  p.poly([[327,283],[348,286],[361,290],[379,287],[395,288],[421,279],
+    [426,280],[408,293],[388,295],[377,293],[360,297],[344,293],
+    [334,288],[324,288]],c.ash);
+  // Eastern loss reaches the actual perimeter instead of becoming a second
+  // freestanding strip beside the pre-existing drain and entrance wound.
+  p.poly([[479,310],[496,308],[507,311],[519,307],[536,305],[546,307],
+    [548,318],[501,320],[492,317],[478,318],[469,320],[464,318]],c.ash);
 }
 
 function paintMaintenanceFootings(p: ChamberPixels): void {
@@ -731,12 +836,12 @@ function finishDevice(p: ChamberPixels, id: ChamberDevice): void {
     p.poly([[-15,-5],[-11,-6],[-8,-4],[-10,-2],[-15,-3]],c.plane);
     p.rect(6,-4,4,1,c.plaster);
   } else if (id === 'core') {
-    p.line(-9,-51,-11,-40,c.edge); p.rect(-11,-39,2,2,c.steel);
+    p.line(-10,-62,-12,-54,c.edge); p.rect(-12,-52,2,2,c.steel);
     p.poly([[-12,-31],[-8,-30],[-9,-25],[-12,-24]],c.concrete);
     p.rect(-10,-30,2,2,c.steel); p.rect(-11,-23,1,3,c.plaster);
-    p.poly([[11,-44],[14,-40],[14,-34],[12,-35]],c.steel);
+    p.poly([[13,-43],[15,-40],[15,-34],[13,-36]],c.steel);
     p.rect(14,-22,2,3,c.steel); p.rect(12,-19,2,2,c.plane);
-    p.line(-7,-54,1,-55,c.glint); p.rect(6,-53,3,1,c.plane);
+    p.line(-8,-69,-4,-70,c.glint); p.rect(11,-60,2,1,c.edge);
     p.poly([[-10,-14],[-5,-12],[4,-12],[8,-15],[8,-10],[-2,-8],[-10,-10]],c.concrete);
     p.line(-9,-12,-4,-11,c.steel); p.rect(1,-10,3,1,c.plane);
     p.bolt(-16,-12); p.bolt(14,-8);
@@ -807,32 +912,46 @@ function storage(p: ChamberPixels): void {
 }
 
 function core(p: ChamberPixels): void {
-  // Upright open feed: the contained foreign matter is the centre, with unequal cast cheeks.
+  // The same contained active feed, now read as the heart of the room: unequal
+  // cast cheeks rise beyond the living matter, without a lamp-like closing cap.
   horizontal(p, 4, .91);
-  p.poly([[-23, -5], [-14, -12], [17, -9], [24, -3], [14, 2], [-18, 1]], c.plaster);
+  p.poly([[-23,-5],[-14,-12],[17,-9],[24,-3],[14,2],[-18,1]],c.plaster);
   upright(p, 0, 0, [0, 1, 0], .92);
-  p.poly([[-17, -12], [-14, -46], [-9, -57], [-3, -57], [-5, -13]], c.plane);
-  upright(p, 0, 0, [-.65, .76, 0], .95);
-  p.poly([[-14, -46], [-9, -55], [-7, -53], [-10, -14], [-14, -14]], c.steel);
-  upright(p, 0, 0, [1, 0, 0], .90);
-  p.poly([[10, -53], [15, -48], [18, -11], [11, -10], [7, -44]], c.concrete);
-  upright(p, 0, 0, [0, 1, 0], .93);
-  p.poly([[12, -46], [16, -42], [18, -15], [15, -14]], c.plane);
-  upright(p, 0, 0, [0, 1, 0], .58);
-  p.poly([[-7, -50], [7, -50], [11, -17], [5, -9], [-7, -13]], c.shadow);
-  p.poly([[-4, -47], [4, -45], [2, -37], [7, -34], [3, -25], [6, -20], [1, -13], [-5, -18], [-2, -29], [-5, -36]], c.deep);
-  p.poly([[-2, -43], [2, -40], [0, -34], [4, -33], [1, -28], [-2, -29]], c.teal);
-  p.poly([[1, -24], [4, -22], [1, -18], [-2, -20]], c.live);
-  horizontal(p, 54, .98, .68);
-  p.poly([[-11, -57], [-4, -61], [9, -57], [13, -52], [4, -53], [-3, -54]], c.steel);
+  p.poly([[-17,-12],[-17,-49],[-13,-62],[-8,-68],[-3,-67],[-6,-50],[-5,-13]],c.plane);
+  upright(p, 0, 0, [-.65, .76, 0], .96);
+  p.poly([[-13,-60],[-8,-66],[-6,-63],[-9,-43],[-10,-15],[-14,-14]],c.steel);
+  horizontal(p, 68, .98, .74);
+  p.poly([[-13,-63],[-8,-71],[-3,-72],[0,-68],[-4,-64],[-8,-65],[-10,-61]],c.edge);
+  upright(p, 0, 0, [1, 0, 0], .88);
+  p.poly([[8,-58],[13,-62],[17,-56],[17,-44],[19,-12],[11,-10],[7,-43]],c.concrete);
+  upright(p, 0, 0, [0, 1, 0], .94);
+  p.poly([[11,-57],[14,-54],[15,-43],[17,-38],[18,-15],[15,-14],[12,-38]],c.plane);
+  horizontal(p, 61, .96, .76);
+  p.poly([[8,-59],[11,-64],[15,-62],[18,-57],[14,-55]],c.steel);
+  // Recess carries an irregular, joined living mass. Its brightest cells are
+  // concentrated in one exposed knot, never in a screen, full strip or ring.
+  upright(p, 0, 0, [0, 1, 0], .55);
+  p.poly([[-7,-61],[0,-58],[6,-56],[10,-49],[12,-22],[7,-12],[-5,-10],[-9,-20]],c.shadow);
+  p.poly([[-5,-55],[0,-58],[4,-53],[3,-50],[8,-45],[7,-35],[3,-31],
+    [7,-24],[4,-17],[0,-13],[-5,-18],[-3,-28],[-7,-36],[-5,-43],[-7,-49]],c.deep);
+  p.poly([[-4,-52],[0,-55],[3,-50],[1,-47],[5,-44],[5,-40],[1,-36],
+    [0,-31],[-3,-34],[-2,-40],[-5,-44]],c.teal);
+  p.poly([[-2,-49],[1,-51],[3,-47],[1,-44],[4,-42],[2,-38],[-1,-41],[-3,-44]],c.live);
+  p.poly([[-1,-48],[1,-47],[2,-45],[0,-44],[-2,-45]],c.light);
+  p.rect(0,-46,1,1,c.pale);
+  p.poly([[-2,-28],[2,-26],[3,-23],[1,-20],[-2,-21],[-4,-24]],c.teal);
+  p.poly([[0,-25],[2,-24],[1,-22],[-1,-23]],c.live);
+  // Two repaired constraints fasten to the solid sides at different heights.
   p.setPlane(null);
-  p.poly([[-11, -39], [-5, -38], [-5, -34], [-12, -35]], c.earth);
-  p.poly([[7, -31], [17, -29], [18, -25], [8, -27]], c.earth);
-  p.block(-18, -17, 9, 8, 2, c.concrete, c.plane, c.shadow);
-  p.block(10, -12, 10, 7, 3, c.plane, c.steel, c.concrete);
-  p.rect(-16, -16, 2, 2, c.warm);
-  p.line(-12, -6, 13, -5, c.steel, 2);
-  p.bolt(-10, -37); p.bolt(12, -28);
+  p.poly([[-15,-41],[-6,-40],[-6,-35],[-15,-37]],c.earth);
+  p.poly([[8,-33],[17,-31],[18,-26],[8,-29]],c.earth);
+  p.poly([[-10,-52],[-7,-53],[-6,-49],[-8,-47]],c.edge);
+  p.poly([[8,-45],[11,-43],[11,-39],[9,-40]],c.teal);
+  p.block(-18,-17,9,8,2,c.concrete,c.plane,c.shadow);
+  p.block(10,-12,10,7,3,c.plane,c.steel,c.concrete);
+  p.rect(-16,-16,2,2,c.warm);
+  p.line(-12,-6,13,-5,c.steel,2);
+  p.bolt(-11,-39); p.bolt(12,-30);
 }
 
 function purifier(p: ChamberPixels): void {

@@ -4,6 +4,7 @@
  */
 
 import type { WorldInteractionContext } from './world-interaction';
+import { integrityFillColor, placeIntegrityReadout, type IntegrityRect, type IntegritySide } from '@/ui/chamber-integrity-placement';
 import { eventBus } from '@/core/event-bus';
 import { computeStartingChaos, gameState } from '@/managers/game-state';
 import type { EffectModuleType, ModuleType, SortieModifiers } from '@/managers/game-state';
@@ -25,12 +26,16 @@ import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-sty
 
 // Compatible alias for the accepted core sample; all three modules now share it.
 export type CoreAllocationContext = WorldInteractionContext & {
-  /** Scene layout clearance; default retains the historical top-down sample. */
-  readonly integrityOffsetY?: number;
+  /** Run after scene animation updates and before the same browser paint. */
+  readonly subscribeFrame?: (update: () => void) => () => void;
+  /** Current camera projection, including all player equipment. */
+  readonly getIntegrityGeometry?: () => { device: IntegrityRect; player: IntegrityRect; playerX: number; hysteresis: number };
 };
 
 let coreContext: CoreAllocationContext | null = null;
 let anchorFrame = 0;
+let stopFollowing: (() => void) | null = null;
+let integritySide: IntegritySide | undefined;
 let commitTimer: ReturnType<typeof setTimeout> | null = null;
 let committing = false;
 let saveFailed = false;
@@ -71,6 +76,7 @@ export const allocationPanel = {
     currentModuleId = moduleId;
     coreContext = context ?? null;
     selectedAmount = 0;
+    integritySide = undefined;
     saveFailed = false;
     onCloseCallback = onClose ?? null;
     createPanel();
@@ -97,7 +103,7 @@ function createPanel(): void {
   panel = createCrtPanel('allocation-panel');
   if (coreContext) {
     panel.classList.add('core-allocation', `allocation-${mod.type.toLowerCase()}`);
-    panel.style.setProperty('--integrity-offset-y', `${coreContext.integrityOffsetY ?? 34}px`);
+
   }
 
   const root = getDomUiRoot();
@@ -116,17 +122,54 @@ function createPanel(): void {
         element.style.setProperty('--core-x', `${anchor.x}px`);
         element.style.setProperty('--core-y', `${anchor.y}px`);
       }
+      positionIntegrityReadout();
       panel.classList.add('core-present');
-      anchorFrame = requestAnimationFrame(followCore);
+      if (!coreContext.subscribeFrame) anchorFrame = requestAnimationFrame(followCore);
     };
-    anchorFrame = requestAnimationFrame(followCore);
+    if (coreContext.subscribeFrame) stopFollowing = coreContext.subscribeFrame(followCore);
+    followCore();
   }
 
   document.addEventListener('keydown', onKeyDown);
 }
 
+/** Uses logical overlay coordinates; CSS only fades opacity, never crosses the actor. */
+function positionIntegrityReadout(): void {
+  if (!panel || !coreContext?.getIntegrityGeometry) return;
+  const readout = panel.querySelector<HTMLElement>('.core-integrity');
+  const work = panel.querySelector<HTMLElement>('.core-work');
+  if (!readout || !work) return;
+  const geometry = coreContext.getIntegrityGeometry();
+  const identity = panel.querySelector<HTMLElement>('.core-identity');
+  if (identity) {
+    const width = identity.offsetWidth, height = identity.offsetHeight;
+    identity.style.left = `${Math.round(Math.max(16, Math.min(944 - width,
+      (geometry.device.left + geometry.device.right - width) / 2)))}px`;
+    const top = Math.max(16, Math.min(624 - height, Math.floor(geometry.device.top - height - 8)));
+    identity.style.top = `${top}px`;
+    identity.style.textAlign = 'center';
+    // A cropped transition must not force the title back onto the device.
+    identity.style.visibility = top + height <= geometry.device.top - 8 ? 'visible' : 'hidden';
+  }
+  const placement = placeIntegrityReadout({
+    ...geometry, previousSide: integritySide, width: readout.offsetWidth,
+    height: readout.offsetHeight, gap: 14, clearance: 8,
+    viewport: { left: 16, top: 16, right: 944, bottom: 624 },
+    reserved: [work, identity].filter((element): element is HTMLElement => element !== null && element.style.visibility !== 'hidden')
+      .map(element => ({ left: element.offsetLeft, top: element.offsetTop,
+        right: element.offsetLeft + element.offsetWidth, bottom: element.offsetTop + element.offsetHeight })),
+  });
+  integritySide = placement.side;
+  readout.dataset.side = placement.side;
+  readout.style.left = `${placement.rect.left}px`;
+  readout.style.top = `${placement.rect.top}px`;
+  readout.style.visibility = placement.visible ? 'visible' : 'hidden';
+}
+
 function destroyPanel(): void {
   cancelAnimationFrame(anchorFrame);
+  stopFollowing?.();
+  stopFollowing = null;
   if (commitTimer) clearTimeout(commitTimer);
   commitTimer = null;
   committing = false;
@@ -313,7 +356,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const afterEffect = formatEffectValue(type, previewMods);
   const effectColor = EFFECT_NUM[type];
   const numColor = NUM_ACTIVE[type];
-  const barColor = BAR_COLOR[type];
+  const barColor = coreContext ? integrityFillColor(hp, maxHp) : BAR_COLOR[type];
   const siphonNote = repairBonus > 0 ? ` · 下次注入另修复至多 ${repairBonus} 完整度（仅一次）` : '';
 
   const reason = saveFailed ? '记录未能保存，注入未扣除。请重试。' : hp >= maxHp ? '装置已完整，无需注入。' : reserve <= 0
@@ -325,7 +368,8 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     panel.innerHTML = `
       <div class="core-identity"><span>${MODULE_LABEL[type]}</span></div>
       <div class="core-integrity" aria-live="polite">
-        <div class="core-integrity-label">完整度 <span>${hp}<small> / ${maxHp}</small></span></div>
+        <div class="core-integrity-label">完整度</div>
+        <div class="core-integrity-value" style="color:${barColor};">${hp}<small> / ${maxHp}</small></div>
         <div class="pbar-wrap"><div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div><div class="pbar-fill" style="width:${hpPct}%;background:${barColor};"></div></div>
         <div class="core-repair-preview">${committing ? '修复已生效' : selectedAmount > 0 ? `修复至 ${repairedHp} <span>+${repairedHp - hp}</span>` : ' '}</div>
       </div>
@@ -347,6 +391,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
         <div class="core-controls">← → 调整 · Shift ×5<br>Home 归零 · End 拉满</div>
       </div>`;
     bindEvents(maxAllocatable);
+    positionIntegrityReadout();
     return;
   }
   let html = `<div class="panel-heading"><div class="panel-title">分配 · ${MODULE_LABEL[type]}</div><div class="panel-reserve"><span>薪柴</span><strong>${reserve}</strong></div></div>`;

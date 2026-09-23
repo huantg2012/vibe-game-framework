@@ -14,6 +14,7 @@ interfaces-with:
 exposes:
   - Player.getPosition() / getFacingAngle() / getFacing4() / isMoving()
   - Player.getLampWorldPosition(out) # 只读动画后的灯锚，不推进时钟
+  - Player.getVisualBounds(out) # 只读身体/持具/灯芯当前世界包围盒，用于提示避让
   - Player.setSpeedModifier(source, mult) / clearSpeedModifier(source)
   - Player.setInputEnabled(enabled)
   - Player.getGroundY() / setGroundDepth(base, floorDepth) # DEC-120：净化点显式接入
@@ -38,6 +39,8 @@ exposes:
 默认`top-down`仍用于Rift，原移动/加减速/朝向光域/恢复不变。新增的getMovementInput与applyConstrainedMovement仍只服务显式约束场景。净化点不使用旧气泡omni遮罩；Rift的VisibilitySystem完整保持。
 
 I30 R4补充纯表现接口：`getLampWorldPosition(out)`写入原角色当前四向灯锚的世界坐标，不改变朝向或动画。净化点显式`externalLampGround=true`，由场景按真实脚底/灯锚绘制裁切光池，原Aura只关闭自己的地面池；其他场景默认false。此选项不影响VisibilitySystem、移动速度、角色图像或灯光玩法范围。
+
+I30 R7补充`getVisualBounds(out)`：聚合当前身体、持具/分段上身和灯芯的实际世界包围盒，只读不推进动画；净化点在原POST_UPDATE姿态同步后读取，供完整度条避让。聚焦DOM再用当前相机投影到overlay逻辑坐标；这不是碰撞范围，不改变武器命中或视野。
 
 ## 迭代28 · 共享视距倍率与短冲
 

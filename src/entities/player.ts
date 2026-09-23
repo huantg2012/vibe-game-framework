@@ -318,6 +318,18 @@ export class Player {
     return this.image;
   }
 
+  private readonly boundsLamp = { x: 0, y: 0 };
+  private readonly lampBounds = new Phaser.Geom.Rectangle();
+
+  /** Read-only visual extent for nearby UI avoidance, including held equipment. */
+  getVisualBounds(out: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle {
+    this.image.getBounds(out);
+    this.weaponRig.includeVisualBounds(out);
+    this.getLampWorldPosition(this.boundsLamp);
+    this.lampBounds.setTo(this.boundsLamp.x - 3, this.boundsLamp.y - 3, 6, 6);
+    return Phaser.Geom.Rectangle.Union(out, this.lampBounds, out);
+  }
+
   // ------------------------------------------------------------------ setters
 
   setWeaponVisual(quality: CrowbarQuality | null, variant: CrowbarVariant = 'standard'): void {

@@ -48,6 +48,7 @@ import { createPurificationSurfaceTexture } from '@/systems/procedural-purificat
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { allocationPanel } from '@/ui/dom/allocation-panel';
+import { moduleIntegrityBounds, type IntegrityRect } from '@/ui/chamber-integrity-placement';
 import { defensePanel } from '@/ui/dom/defense-panel';
 import { growthPanel } from '@/ui/dom/growth-panel';
 import { loadoutPanel } from '@/ui/dom/loadout-panel';
@@ -184,6 +185,7 @@ export class PurificationScene extends Phaser.Scene {
   private readonly interactionWorldPoint = { x: 0, y: 0 };
   private interactionModule: ChamberModule | null = null;
   private readonly interactionScreenAnchor = { x: 0, y: 0 };
+  private readonly interactionPlayerBounds = new Phaser.Geom.Rectangle();
   private shuttingDown = false;
   private cleanupComplete = false;
   private cleanupStage = 'ready';
@@ -648,6 +650,10 @@ export class PurificationScene extends Phaser.Scene {
   private onPostUpdate(): void {
     if (this.shuttingDown) return;
     this.player.postUpdate();
+    const actorBounds = this.player.getVisualBounds(this.interactionPlayerBounds);
+    this.coreModule.syncIntegrityReadout(actorBounds, this.player.getPosition().x);
+    this.storageModule.syncIntegrityReadout(actorBounds, this.player.getPosition().x);
+    this.purifierModule.syncIntegrityReadout(actorBounds, this.player.getPosition().x);
     this.player.getLampWorldPosition(this.chamberState.lamp);
     this.chamber?.syncPlayerLight(this.player.getPosition(), this.chamberState.lamp);
   }
@@ -661,7 +667,12 @@ export class PurificationScene extends Phaser.Scene {
     const mod = moduleId === 'CORE' ? this.coreModule : moduleId === 'STORAGE' ? this.storageModule : this.purifierModule;
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES[moduleId.toLowerCase() as 'core' | 'storage' | 'purifier'], 320, mod);
     allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), {
-      getAnchor: this.getInteractionScreenAnchor, integrityOffsetY: 138,
+      getAnchor: this.getInteractionScreenAnchor,
+      getIntegrityGeometry: () => this.getIntegrityScreenGeometry(moduleId),
+      subscribeFrame: update => {
+        this.game.events.on(Phaser.Core.Events.PRE_RENDER, update);
+        return () => this.game.events.off(Phaser.Core.Events.PRE_RENDER, update);
+      },
     });
   }
 
@@ -697,6 +708,25 @@ export class PurificationScene extends Phaser.Scene {
     this.interactionScreenAnchor.y = camera.y + originY + (this.interactionWorldPoint.y - camera.scrollY - originY) * camera.zoom;
     return this.interactionScreenAnchor;
   };
+
+  /** Project the actual module silhouette and complete actor into DOM logical pixels. */
+  private getIntegrityScreenGeometry(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER') {
+    const camera = this.cameras.main;
+    const ox = camera.width * camera.originX, oy = camera.height * camera.originY;
+    const project = (rect: IntegrityRect): IntegrityRect => ({
+      left: camera.x + ox + (rect.left - camera.scrollX - ox) * camera.zoom,
+      right: camera.x + ox + (rect.right - camera.scrollX - ox) * camera.zoom,
+      top: camera.y + oy + (rect.top - camera.scrollY - oy) * camera.zoom,
+      bottom: camera.y + oy + (rect.bottom - camera.scrollY - oy) * camera.zoom,
+    });
+    const base = CHAMBER_DEVICE_BASES[moduleId.toLowerCase() as 'core' | 'storage' | 'purifier'];
+    return {
+      device: project(moduleIntegrityBounds(moduleId, base.x, base.y)),
+      player: project(this.player.getVisualBounds(this.interactionPlayerBounds)),
+      playerX: camera.x + ox + (this.player.getPosition().x - camera.scrollX - ox) * camera.zoom,
+      hysteresis: 8 * camera.zoom,
+    };
+  }
 
   private focusWorldInteraction(point: Readonly<{ x: number; y: number }>, screenX: number, mod: ChamberModule | null = null): void {
     this.player.setInputEnabled(false);

@@ -10,7 +10,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30 R6：浅透视错层净化点
+## 迭代30 R7：浅透视错层净化点
 
 `PurificationScene`拥有原归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口处才转换为中心坐标（脚底Y−10）。`PurificationChamberLocomotion`在两层与两宽坡道的联合边界、设备底座上做连续圆扫掠和滑动，不再是一维轨道。Player显式constrained模式复用键盘、原四向精灵、武器与冻结；Rift默认路径不变。
 
@@ -20,11 +20,17 @@ R5场景表现沿用以上几何与玩法接口。`chamber-light-field.ts`把实
 
 R6将 `paintChamberExterior` 独立到 `chamber-exterior-pixels.ts`，色板与 horizontal/upright/materialFace 共用 `chamber-pixel-helpers.ts`；原 `purification-chamber-pixels.ts` 保留 `ChamberPixels`、室内/装置绘制，并 re-export 原出口，场景调用接口不变。新模块反向仅有 type import，运行时依赖无环。外景和室内独立施工，仍在同一套光照/面属性与缓存生命周期中；QA 指纹包含三个绘图源，绘制调用统计覆盖新外景模块。
 
+R7新增 `ChamberExteriorAtmosphere`：从壳外原材色与临时表面图编译三处低能冷面光；不保留临时图引用，光层depth−49/粒子depth−48，均在建筑/人物后。12个碎屑固定在外部四条区域，100ms更新Graphics、无Canvas上传或新纹理。壳外和前切继续复用临时表面图。visual创建、update和destroy统一管理，出击及重入必须无残留。
+
+核心开腔增高后，光源改为(253,253)、Z46，常态源强.43±.06（仍随当前完整度衰减）；其他源退到次级。内芯活动坐标、人物遮挡范围与交互投影边界同步，底座/可走位置不动。新的材料面和真实边缘缺口仍由同一扫描线写入RGBA与面数据，不新增碰撞地形。
+
 `chamber-surface-map.ts`增加与640×400色图同栅格的覆盖、法线、高度、遮蔽和粗糙度缓存。`ChamberPixels.rect/poly`在实际fillRect的同一扫描段写入面属性；局部设备坐标显式平移，高层32、主层0、坡面32→0连续，脚底已投影坐标不重复扣高度。材料补丁/磨损以null面继承宿主，不从裂纹颜色自动生成浮雕。可见面采用X=x、Y=y+height、Z=height；其他墙体高度是美术明确提供的有限近似，不推定完整闭合3D网格。
 
 固定方向主光、少量方向填光与短程邻面接触遮蔽，在新绘原材色上一次性烘焙，保留透明孔、黑腔和发光像素。建筑、外残构、前景断面与六设备共用此能力；建筑表面图常驻，六设备公态更新共用一张scratch表面图，外部/前景共用创建期临时图。四个动态源以自身位置/高度计算Lambert方向响应，再编译现有24档扫描段；材质资格来自烘焙返回的原始albedo，不把固定主光压暗的实体误判为黑腔，不逐帧重算整张图。固定主光方向另从真实设备alpha/高度投影到其所在水平地坪，排除坡道、异层、墙与底座，公开形态改变时重编译、独立Graphics缓存。这是有限2.5D照明和短投影，不宣称全场阴影或光线追踪。
 
 `purification-chamber-lighting.ts`统一核心、培养藏、净化器和小壁灯的源强、地面/墙/设备受光与人物短方向影。源按80ms节奏更新，核心/净化器取当前公开HP，不读取未来冲击；培养藏独立慢节奏。一次源强驱动接收面及源上的活动像素；加厚只脉冲核心/净化器，其他视觉反馈仍归原装置。静态场在创建/公开状态变更时编译，平时重放Graphics，不逐帧重绘或上传Canvas。光层与设备淡出同步，随visual幂等释放。
+
+R7完整度读数共用 `ui/chamber-integrity-placement.ts`：三装置实际轮廓同时供绘图遮挡和UI投影使用；候选优先人物反侧、中心8px迟滞，遮挡立即换侧，再尝试垂直避让。`Player.getVisualBounds(out)`聚合身体/上身/旋转持具/灯芯，只读不变更玩法。世界2×24竖规在POST_UPDATE姿态同步后绘制；聚焦104px DOM读数由`game.events`的`Core.PRE_RENDER`订阅跟随本帧镜头，避免独立rAF慢一拍。关闭和shutdown解绑；历史无订阅context仍用rAF，普通无context面板保持原路径。可见范围/修复条件不变，固定overlay坐标与状态色见UI Kit。
 
 原`chamber-floor-light.ts`仅继续承接人物小灯池的同源地面裁切。净化点通过PlayerConfig.externalLampGround=true关闭原Aura的地面池，保留原人物、灯点和尘粒，避免两池叠加；其他场景默认false。新增Player.getLampWorldPosition(out)读取原四向灯锚及真实动画位置，POST_UPDATE在player.postUpdate后同步投影，不重复推进动画时钟。人物投影的格线检测使用像素中心，避免负向整数端点越界导致短影断续。无新资产、存档字段、菜单、碰撞或出击机制。
 

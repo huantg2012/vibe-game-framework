@@ -59,7 +59,7 @@ export class PurificationChamberLighting {
     }
     const specs: { id: SourceId; color: number; face: FieldSource & { elevation: number }; ground: FieldSource; floor: ChamberFloor }[] = [
       { id: 'core', color: 0x2ae6c8, floor: 'main',
-        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 38, radiusX: 112, radiusY: 70, elevation: 38 },
+        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 46, radiusX: 112, radiusY: 78, elevation: 46 },
         ground: { ...CHAMBER_DEVICE_BASES.core, radiusX: 105, radiusY: 43 } },
       { id: 'growth', color: 0x1aad96, floor: 'upper',
         face: { x: CHAMBER_DEVICE_BASES.growth.x, y: CHAMBER_DEVICE_BASES.growth.y - 36, radiusX: 67, radiusY: 44, elevation: 68 },
@@ -108,9 +108,9 @@ export class PurificationChamberLighting {
     this.tick = tick;
     this.ground.clear(); this.walls.clear(); this.motes.clear();
     for (const emitter of this.emitters) {
-      if (emitter.id === 'core') emitter.energy = (.29 + .055 * Math.sin(time * .00135)) * Math.max(.12, state.moduleHealth.core);
-      else if (emitter.id === 'growth') emitter.energy = .115 + .02 * Math.sin(time * .00083 + 1.8);
-      else if (emitter.id === 'purifier') emitter.energy = (.19 + .03 * Math.sin(time * .00103 + 3.1)) * Math.max(.1, state.moduleHealth.purifier);
+      if (emitter.id === 'core') emitter.energy = (.43 + .060 * Math.sin(time * .00135)) * Math.max(.12, state.moduleHealth.core);
+      else if (emitter.id === 'growth') emitter.energy = .078 + .014 * Math.sin(time * .00083 + 1.8);
+      else if (emitter.id === 'purifier') emitter.energy = (.125 + .023 * Math.sin(time * .00103 + 3.1)) * Math.max(.1, state.moduleHealth.purifier);
       else emitter.energy = .12 + .009 * Math.sin(time * .0017 + .8);
       const sincePulse = time - this.pulseTime;
       if (sincePulse >= 0 && sincePulse < 900
