@@ -1,5 +1,5 @@
 ---
-status: R9-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-REVIEW-PENDING / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-23
 owner: director
@@ -7,6 +7,18 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 ---
 
 # 迭代30：净化点空间、模型与成长获得感重构
+
+## R10：外景三层纵深与行走视差（2026-09-23）
+
+用户反馈：R9虽改变构图，外景仍没有纵深，画面质量不接受；要求逐项处理，先只处理外景。主COH-F042，关联COH-F026；室内布局、人物、六物及玩法保持。旧R9独立静帧复评不能替代此次用户裁决。
+
+- [x] 原生像素重画近／中／远：近处混乱构造接住净化点；中景隐约可见；远景大多被黑暗吞没，偶尔存在不明活动。
+- [x] 人物真实八向移动驱动三层不同透视位移；近处接根稳定、层间遮挡与暗隙在移动中成立，不能只依赖聚焦相机。
+- [x] 远景活动在近中景之后，不构成敌人、预告或新增交互；暂停与减少动态、聚焦切换、销毁重入有完整生命周期。
+- [x] 同源静帧与真实按键连续画面、层间位移/接根/边界、六点/双坡与Rift入口相关回归；独立检查与最多两轮定点修正。
+- [x] 架构/spec与现状证据同步、记录验收边界、必要检查后本地提交，不推送。
+
+R10已接正式入口，三层原生像素重绘、人物驱动层差、近根锁定与远景偶发存在完成；扩边条纹修复为固定世界画幅裁切，东根按独立反馈补一个横断芯。真实行走与生命周期结果归[R10 QA](../qa/iteration-30-r10.md)，视觉判断归[限定复核](../reviews/2026-09-23-purification-r10-exterior.md)。勾选只表示本轮施工与有限验证，不代用户给画质或纵深通过。
 
 ## R9：偏置据点与外景纵深（2026-09-23）
 
@@ -18,7 +30,7 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 - [x] 光源/接触/受损/观察与新结构同源，保护既有玩家和玩法。
 - [x] 真实运行、独立实帧复评、必要回归、状态证据更新、本地提交。
 
-合同见[构图归档](../art/demos/purification-r9/README.md)。实现、限定验证与独立复评已完成，证据见[R9 QA](../qa/iteration-30-r9.md)。厚体承接、暗龛封闭和远层遮挡已修正；地坪补片P2与整体美术人审保留。不能沿用R8内部积极评价为人审通过。
+合同见[构图归档](../art/demos/purification-r9/README.md)。实现、限定验证与独立复评已完成，证据见[R9 QA](../qa/iteration-30-r9.md)。厚体承接、暗龛封闭和远层遮挡已修正；随后用户否定R9外景纵深与画质，由R10接替；地坪补片P2仍保留。不能沿用R8/R9内部积极评价为人审通过。
 
 ## 历史裁决（R8及以前）
 

@@ -139,7 +139,7 @@ for (const [sourceIndex, source] of CHAMBER_EXTERIOR_CONTACTS.entries()) {
 }
 
 // Drive the actual production update() in Node. Only the Phaser import and
-// Graphics container are replaced; the production constructor, masks, envelope,
+// Graphics/Image/Canvas containers are replaced; the production constructor, masks, envelope,
 // interpolation and emission guard execute unchanged. This catches a reflected
 // light mask accidentally replacing the self-emissive transport's host mask.
 const compiled = await build({
@@ -148,7 +148,7 @@ const compiled = await build({
   plugins: [{ name: 'graphics-container-only', setup(builder) {
     builder.onResolve({ filter: /^phaser$/ }, () => ({ path: 'phaser', namespace: 'fixture' }));
     builder.onLoad({ filter: /.*/, namespace: 'fixture' }, () => ({
-      contents: 'export default { BlendModes: { ADD: 1 } };', loader: 'js',
+      contents: 'export default { BlendModes: { ADD: 1 }, Textures: { FilterMode: { NEAREST: 0 } } };', loader: 'js',
     }));
   } }],
 });
@@ -169,7 +169,28 @@ class GraphicsRecorder {
   destroy(): void { this.destroyed = true; }
 }
 const graphics: GraphicsRecorder[] = [];
-const scene = { add: { graphics() {
+class ImageRecorder {
+  visible = true; destroyed = false; alpha = 1; x = 0; y = 0;
+  setName(): this { return this; }
+  setDepth(): this { return this; }
+  setAlpha(alpha: number): this { this.alpha = alpha; return this; }
+  setVisible(visible: boolean): this { this.visible = visible; return this; }
+  setPosition(x: number, y: number): this { this.x = x; this.y = y; return this; }
+  destroy(): void { this.destroyed = true; }
+}
+const images: ImageRecorder[] = [];
+const textures = new Set<string>();
+const scene = { textures: {
+  createCanvas(key: string, width: number, height: number) {
+    textures.add(key);
+    return { context: { canvas: { width, height }, fillStyle: '', fillRect() {} },
+      setFilter() {}, refresh() {} };
+  },
+  exists(key: string) { return textures.has(key); },
+  remove(key: string) { textures.delete(key); },
+}, add: { image() {
+  const image = new ImageRecorder(); images.push(image); return image;
+}, graphics() {
   const graphic = new GraphicsRecorder(); graphics.push(graphic); return graphic;
 } } };
 const atmosphere = new ChamberExteriorAtmosphere(scene, near.albedo, near.surfaces);
@@ -207,6 +228,8 @@ atmosphere.update(19000, true);
 check(transport.draws.length === 0 && lights.draws.length > 0, 'Reduced motion retains contact reflection and suppresses moving transport/dust');
 atmosphere.destroy();
 check(graphics.every(graphic => graphic.destroyed), 'Production destroys both owned Graphics containers');
+check(images.every(image => image.destroyed) && textures.size === 0,
+  'Production releases the additional R10 distant-presence Image and Canvas texture');
 
 graphics.length = 0;
 const missingHost = new ChamberExteriorAtmosphere(scene, empty, new ChamberSurfaceMap());

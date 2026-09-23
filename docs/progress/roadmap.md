@@ -2,12 +2,16 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-09-22
+last-modified: 2026-09-23
 last-closed-slice: 9
-note: I30 R1已被用户否决；R2用户评分80/75/50，下一轮重点为场景模型与渲染，Rift及既有挂起保持。
+note: I30 R10外景三层与人物视差已实现并有限验证、待人审；R9外景整改记录、Rift及既有挂起保持。
 ---
 
 # Roadmap
+
+## 当前工作 · 迭代30 R10（2026-09-23，DEC-182）
+
+R9虽改变构图，用户仍明确指出外景无纵深、画质不接受。先只处理外景：混乱相连的近层、隐约中景、近乎不可视且偶有存在的远景，并由人物行走驱动距离不同的透视位移。已实现并限定验证，等待用户看画面；当前明细以[活进度](current-iteration.md)和[I30清单](../tasks/iteration-30.md)为准。室内、六物、原人物和Rift保持，I28长期采样/平衡等挂起不解锁。下方旧“当前主线/交付”标题均保留历史语境，不覆盖本节。
 
 ## 当前交付 · 迭代29 R3（2026-09-21，DEC-177）
 

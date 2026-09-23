@@ -1,5 +1,5 @@
 ---
-status: REVIEW-COMPLETE / SPATIAL-TARGETS-VERIFIED-IN-STATIC-FRAMES / ART-PRECISION-REMAINS / HUMAN-REVIEW-PENDING
+status: HISTORICAL-STATIC-REVIEW / HUMAN-CHANGES-REQUESTED / R10-EXTERIOR-FOLLOWUP
 date: 2026-09-23
 reviewer: independent spatial art critic
 features: [COH-F042, COH-F026]
@@ -8,6 +8,8 @@ scope: R9 final-composition initial review and review-corrections incremental st
 ---
 
 # 净化点 R9 空间与外景实帧复评
+
+> **后续用户裁决（2026-09-23）：** 用户明确指出构图虽改，但外景仍没有纵深，画面质量不接受；要求先重做近中远三层及人物行走视差。下文保留当时静帧判断，不作为当前艺术通过。后续见[I30 R10](../tasks/iteration-30.md)与DEC-182。
 
 ## 当前结论（实际修正后）
 

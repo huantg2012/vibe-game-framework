@@ -4,13 +4,15 @@ import { CHAMBER_MODULE_BOUNDS } from '../ui/chamber-integrity-placement';
 import { ChamberSurfaceMap } from '../art/chamber-surface-map';
 import { ChamberExteriorAtmosphere } from './chamber-exterior-atmosphere';
 import { CHAMBER_EXTERIOR_LAYERS, paintChamberExteriorLayer } from '../art/chamber-exterior-pixels';
+import { MATERIAL } from '../../assets/source/purification-r9/environment';
+import { ChamberExteriorMotion, chamberNearParallaxWeight, CHAMBER_EXTERIOR_REFERENCE,
+  type ChamberExteriorLayer, type ChamberDistantPresence } from './chamber-exterior-motion';
 import { PurificationChamberLighting } from './purification-chamber-lighting';
 import {
   CHAMBER_DEVICE_ANCHORS,
   CHAMBER_DEVICE_BASES,
   CHAMBER_CONTACTS,
   CHAMBER_SIZE,
-  CHAMBER_CAMERA,
   type ChamberDevice,
 } from '@/systems/purification-chamber-layout';
 import {
@@ -47,8 +49,23 @@ interface DeviceLayer {
   opacity: number;
   key: number;
 }
+export interface ChamberExteriorState {
+  elapsedMs: number;
+  reducedMotion: boolean;
+  reference: { x: number; y: number };
+  observer: { x: number; y: number };
+  layers: { id: ChamberExteriorLayer; depth: number; parallaxWeight: number;
+    offset: { x: number; y: number }; renderedOffset: { x: number; y: number } }[];
+  anchors: { id: string; x: number; y: number; weight: number; offset: { x: number; y: number } }[];
+  presence: ChamberDistantPresence & { visible: boolean; depth: number };
+  clip: { x: number; y: number; width: number; height: number; worldSpace: true; maskedPlates: number };
+  resources: { textures: number; plates: number; nearVertices: number; atmosphereTextures: number; geometryMasks: number };
+}
 const DEVICE_IDS: readonly ChamberDevice[] = ['rift', 'growth', 'offering', 'purifier', 'storage', 'core'];
 const MODULE_IDS = ['core', 'storage', 'purifier'] as const;
+const EXTERIOR_PADDING = 32;
+const EXTERIOR_TEXTURE_WIDTH = CHAMBER_SIZE.width + EXTERIOR_PADDING * 2;
+const EXTERIOR_TEXTURE_HEIGHT = CHAMBER_SIZE.height + EXTERIOR_PADDING * 2;
 export const CHAMBER_DEVICE_VISUAL_BOUNDS: Readonly<Record<ChamberDevice, readonly [number, number, number, number]>> = {
   core: CHAMBER_MODULE_BOUNDS.CORE, storage: CHAMBER_MODULE_BOUNDS.STORAGE,
   purifier: CHAMBER_MODULE_BOUNDS.PURIFIER, growth: [-20, -57, 22, 3],
@@ -64,7 +81,13 @@ export class PurificationChamberVisual {
   private readonly textures: string[] = [];
   private readonly images: Phaser.GameObjects.Image[] = [];
   private readonly devices: DeviceLayer[] = [];
-  private readonly exteriorLayers: { image: Phaser.GameObjects.Image; scrollFactor: number }[] = [];
+  private readonly exteriorLayers: { id: ChamberExteriorLayer; image: Phaser.GameObjects.Image; parallaxWeight: number }[] = [];
+  private readonly exteriorMotion = new ChamberExteriorMotion();
+  private readonly exteriorNearMesh: Phaser.GameObjects.Mesh;
+  private readonly exteriorNearWeights: Float32Array;
+  private readonly exteriorVoid: Phaser.GameObjects.Rectangle;
+  private readonly exteriorClipGraphics: Phaser.GameObjects.Graphics;
+  private readonly exteriorClipMask: Phaser.Display.Masks.GeometryMask;
   private readonly architectureSurfaces = new ChamberSurfaceMap();
   /** All six state bakes share one scratch atlas; compiled light spans own no atlas references. */
   private readonly deviceSurfaces = new ChamberSurfaceMap();
@@ -90,17 +113,40 @@ export class PurificationChamberVisual {
 
   constructor(private readonly scene: Phaser.Scene) {
     const id = ++chamberId;
+    // A stationary, overdrawn void prevents a shifted far plate exposing the
+    // canvas colour at any of the four edges (including interaction zooms).
+    this.exteriorVoid = scene.add.rectangle(320, 200, 1280, 800,
+      Number.parseInt(MATERIAL.void.slice(1), 16)).setDepth(-61).setName('chamber-exterior-void');
+    // Overscan only supplies pixels inside the original authored frame. The
+    // shared world-space stencil follows camera focus/zoom, never the plates'
+    // parallax, and never exposes the extruded texels beyond the frame.
+    this.exteriorClipGraphics = scene.make.graphics({ x: 0, y: 0 }, false)
+      .setName('chamber-exterior-authored-clip').fillStyle(0xffffff)
+      .fillRect(0, 0, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
+    this.exteriorClipMask = this.exteriorClipGraphics.createGeometryMask();
     const shellSurfaces = new ChamberSurfaceMap();
     let nearAlbedo!: Uint8ClampedArray;
+    let nearTexture!: Phaser.Textures.CanvasTexture;
     for (const layer of CHAMBER_EXTERIOR_LAYERS) {
       shellSurfaces.clear();
       const texture = this.addCanvas(`purification-chamber-exterior-${layer.id}-${id}`, layer.depth);
       paintChamberExteriorLayer(new ChamberPixels(texture.context, shellSurfaces), layer.id);
       const albedo = shellSurfaces.bake(texture.context);
+      this.extendExteriorEdges(texture);
       texture.refresh();
-      this.exteriorLayers.push({ image: this.images[this.images.length - 1]!, scrollFactor: layer.scrollFactor });
-      if (layer.id === 'near') nearAlbedo = albedo;
+      const image = this.images[this.images.length - 1]!.setName(`chamber-exterior-${layer.id}`)
+        .setPosition(-EXTERIOR_PADDING, -EXTERIOR_PADDING).setMask(this.exteriorClipMask);
+      this.exteriorLayers.push({ id: layer.id, image, parallaxWeight: layer.parallaxWeight });
+      if (layer.id === 'near') {
+        nearAlbedo = albedo;
+        nearTexture = texture;
+        image.setVisible(false);
+      }
     }
+    this.exteriorNearMesh = this.createNearExteriorMesh(nearTexture.key).setMask(this.exteriorClipMask);
+    this.exteriorNearWeights = Float32Array.from(this.exteriorNearMesh.vertices,
+      vertex => chamberNearParallaxWeight(vertex.u * EXTERIOR_TEXTURE_WIDTH - EXTERIOR_PADDING,
+        vertex.v * EXTERIOR_TEXTURE_HEIGHT - EXTERIOR_PADDING));
     this.exteriorAtmosphere = new ChamberExteriorAtmosphere(scene, nearAlbedo, shellSurfaces);
     const architecture = this.addCanvas(`purification-chamber-architecture-${id}`, 10);
     paintChamberArchitecture(new ChamberPixels(architecture.context, this.architectureSurfaces));
@@ -128,6 +174,47 @@ export class PurificationChamberVisual {
     this.bodyEffects = scene.add.graphics().setDepth(410);
   }
 
+  /** Creation-only edge extrusion preserves the scale and continuation of all
+   * authored off-screen masses as the viewpoint changes. Transparent intervals
+   * stay transparent; no world-coloured rectangular plate becomes visible. */
+  private extendExteriorEdges(texture: Phaser.Textures.CanvasTexture): void {
+    const p = EXTERIOR_PADDING, width = CHAMBER_SIZE.width, height = CHAMBER_SIZE.height;
+    const source = texture.context.getImageData(0, 0, width, height);
+    texture.setSize(EXTERIOR_TEXTURE_WIDTH, EXTERIOR_TEXTURE_HEIGHT);
+    const ctx = texture.context;
+    ctx.imageSmoothingEnabled = false;
+    ctx.putImageData(source, p, p);
+    ctx.drawImage(ctx.canvas, p, p, width, 1, p, 0, width, p);
+    ctx.drawImage(ctx.canvas, p, p + height - 1, width, 1, p, p + height, width, p);
+    ctx.drawImage(ctx.canvas, p, 0, 1, EXTERIOR_TEXTURE_HEIGHT, 0, 0, p, EXTERIOR_TEXTURE_HEIGHT);
+    ctx.drawImage(ctx.canvas, p + width - 1, 0, 1, EXTERIOR_TEXTURE_HEIGHT,
+      p + width, 0, p, EXTERIOR_TEXTURE_HEIGHT);
+  }
+
+  private createNearExteriorMesh(textureKey: string): Phaser.GameObjects.Mesh {
+    const width = EXTERIOR_TEXTURE_WIDTH, height = EXTERIOR_TEXTURE_HEIGHT;
+    const columns = width / 16, rows = height / 16;
+    const vertices: number[] = [], uvs: number[] = [], indices: number[] = [];
+    for (let row = 0; row <= rows; row++) {
+      for (let column = 0; column <= columns; column++) {
+        const u = column / columns, v = row / rows;
+        vertices.push((u - .5) * width, (.5 - v) * height);
+        uvs.push(u, v);
+        if (row < rows && column < columns) {
+          const a = row * (columns + 1) + column, b = a + columns + 1;
+          indices.push(a, b, a + 1, b, b + 1, a + 1);
+        }
+      }
+    }
+    const mesh = this.scene.add.mesh(CHAMBER_SIZE.width / 2, CHAMBER_SIZE.height / 2, textureKey)
+      .setName('chamber-exterior-near-projection').setDepth(-50);
+    mesh.addVertices(vertices, uvs, indices);
+    mesh.hideCCW = false;
+    mesh.setOrtho(mesh.width, mesh.height);
+    mesh.ignoreDirtyCache = true;
+    return mesh;
+  }
+
   private addCanvas(key: string, depth: number, paint?: (pixels: ChamberPixels) => void,
     surfaces?: ChamberSurfaceMap): Phaser.Textures.CanvasTexture {
     const texture = this.scene.textures.createCanvas(key, CHAMBER_SIZE.width, CHAMBER_SIZE.height);
@@ -148,12 +235,20 @@ export class PurificationChamberVisual {
     // Visual time advances only with this active scene; pause/resume never jumps a pose.
     this.time += Math.max(0, Math.min(100, deltaMs));
     timeMs = this.time;
+    this.exteriorMotion.update(deltaMs, state.player.x, state.player.y, this.motionQuery.matches);
     for (const layer of this.exteriorLayers) {
-      const camera = this.scene.cameras.main;
-      layer.image.setPosition(Math.round((camera.midPoint.x - CHAMBER_CAMERA.x) * (1 - layer.scrollFactor)),
-        Math.round((camera.midPoint.y - CHAMBER_CAMERA.y) * (1 - layer.scrollFactor)));
+      const offset = this.exteriorMotion.offsets[layer.id];
+      if (layer.id !== 'near') layer.image.setPosition(Math.round(offset.x) - EXTERIOR_PADDING,
+        Math.round(offset.y) - EXTERIOR_PADDING);
     }
-    this.exteriorAtmosphere.update(timeMs, this.motionQuery.matches);
+    const nearOffset = this.exteriorMotion.offsets.near;
+    for (let i = 0; i < this.exteriorNearMesh.vertices.length; i++) {
+      const vertex = this.exteriorNearMesh.vertices[i]!;
+      const weight = this.exteriorNearWeights[i]!;
+      vertex.x = (vertex.u - .5) * EXTERIOR_TEXTURE_WIDTH + nearOffset.x * weight;
+      vertex.y = (.5 - vertex.v) * EXTERIOR_TEXTURE_HEIGHT - nearOffset.y * weight;
+    }
+    this.exteriorAtmosphere.update(timeMs, this.motionQuery.matches, this.exteriorMotion.offsets.far);
     const health = state.moduleHealth;
     let growth = 0;
     for (const id in state.growthLevels) growth += state.growthLevels[id] ?? 0;
@@ -283,6 +378,35 @@ export class PurificationChamberVisual {
     if (!this.destroyed) this.lighting.syncPlayer(player, lamp);
   }
 
+  /** Read-only diagnostics. Normal frames never allocate this snapshot. */
+  getExteriorState(): ChamberExteriorState {
+    return {
+      elapsedMs: this.time, reducedMotion: this.motionQuery.matches,
+      reference: { ...CHAMBER_EXTERIOR_REFERENCE }, observer: { ...this.exteriorMotion.observer },
+      layers: this.exteriorLayers.map(layer => ({ id: layer.id, depth: layer.image.depth,
+        parallaxWeight: layer.parallaxWeight, offset: { ...this.exteriorMotion.offsets[layer.id] },
+        renderedOffset: layer.id === 'near' ? { ...this.exteriorMotion.offsets.near }
+          : { x: layer.image.x + EXTERIOR_PADDING, y: layer.image.y + EXTERIOR_PADDING } })),
+      anchors: (['rear', 'east'] as const).map(id => {
+        const root = CHAMBER_CONTACTS[id];
+        const weight = chamberNearParallaxWeight(root.x, root.y);
+        const offset = { x: this.exteriorMotion.offsets.near.x * weight,
+          y: this.exteriorMotion.offsets.near.y * weight };
+        return { id, x: root.x + offset.x, y: root.y + offset.y, weight, offset };
+      }),
+      presence: this.exteriorAtmosphere.getPresenceState(),
+      clip: { x: this.exteriorClipGraphics.x, y: this.exteriorClipGraphics.y,
+        width: CHAMBER_SIZE.width, height: CHAMBER_SIZE.height, worldSpace: true,
+        maskedPlates: this.destroyed ? 0 : this.exteriorLayers.reduce((count, layer) =>
+          count + Number(layer.id === 'near' ? this.exteriorNearMesh.mask === this.exteriorClipMask
+            : layer.image.mask === this.exteriorClipMask), 0) },
+      resources: { textures: this.destroyed ? 0 : this.textures.length,
+        plates: this.destroyed ? 0 : this.exteriorLayers.length,
+        nearVertices: this.destroyed ? 0 : this.exteriorNearMesh.vertices.length,
+        atmosphereTextures: this.destroyed ? 0 : 1, geometryMasks: this.destroyed ? 0 : 1 },
+    };
+  }
+
   pulse(kind: PulseKind, target?: string): void {
     if (this.destroyed) return;
     this.pulseKind = kind;
@@ -300,6 +424,13 @@ export class PurificationChamberVisual {
     this.lighting.destroy();
     this.activity.destroy();
     this.exteriorAtmosphere.destroy();
+    // This mask is shared: borrowers must detach before its single owner frees
+    // the stencil and the Graphics object (which is not on the display list).
+    for (const layer of this.exteriorLayers) layer.image.clearMask();
+    this.exteriorNearMesh.clearMask().destroy();
+    this.exteriorClipMask.destroy();
+    this.exteriorClipGraphics.destroy();
+    this.exteriorVoid.destroy();
     for (const device of this.devices) device.activity.destroy();
     for (const image of this.images) image.destroy();
     for (const key of this.textures) if (this.scene.textures.exists(key)) this.scene.textures.remove(key);

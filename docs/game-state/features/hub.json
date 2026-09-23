@@ -3,7 +3,7 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "R9左置紧凑双层净化点，原尺度八向与双宽坡；六物及操作点迁移，E仍同层/24px/无遮挡。地坪33620世界像素²，出生243/315；完整度观察与操作分离，声光接触同源。R8整景人审否决，R9已有限运行验证、审美待定。",
+    "summary": "R9左置紧凑双层与原尺度六物保持，八向/双宽坡/E同层24px无遮挡。R10新增三层人物驱动外景，接根锁定；六交互/双坡/Rift及生命周期已增量验证。R9外景获用户整改，R10审美待定。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -373,6 +373,38 @@
       {
         "path": "docs/qa/artifacts/iteration-30-r9/final-source-manifest.json",
         "role": "doc"
+      },
+      {
+        "path": "src/scenes/chamber-exterior-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/purification-exterior-r10.md",
+        "role": "art"
+      },
+      {
+        "path": "tools/qa/check-i30-exterior-motion.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r10-exterior-runtime.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r10.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r10-exterior.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r10/runtime/manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r10/art/art-check.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -415,11 +447,15 @@
       "COH-E-I30-R9-GEOMETRY",
       "COH-E-I30-R9-MOTION",
       "COH-E-I30-R9-FINAL",
-      "COH-E-I30-R9-REVIEW"
+      "COH-E-I30-R9-REVIEW",
+      "COH-E-I30-R9-HUMAN-CHANGES",
+      "COH-E-I30-R10-RUNTIME",
+      "COH-E-I30-R10-AUTOMATED",
+      "COH-E-I30-R10-REVIEW"
     ],
     "unknowns": [
-      "R8整景被用户否决；R9复评提出的承接/纵深P1与暗龛P2已修正并复看，地坪局部补片仍P2；未获用户整体艺术终审。",
-      "六处真实交互、双坡、原Rift入口、暂停/减动/3次载入及受控24→28修复已有限验证；不等于长期性能、全成长/供奉或自然经济复验。",
+      "R9外景纵深和画质获用户整改要求；R10已重绘并有限验证，近根局部纸带读法按一次专家反馈补横断芯。旧地坪P2、整体美术/纵深的人审仍保留，专家复核不代用户终审。",
+      "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]
   },

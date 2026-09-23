@@ -2603,5 +2603,81 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-R9-HUMAN-CHANGES",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-09-23",
+    "revision": "21a70b9",
+    "scope": "用户明确指出R9构图虽改但外景没有纵深，画面质量不接受；先只重做外景近中远三层与人物行走视差。",
+    "limitations": "用户反馈针对外景与画面，不据此取消既有功能测试；不提升其他室内/玩法的验收。",
+    "sources": [
+      {
+        "path": "docs/tasks/iteration-30.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R10-RUNTIME",
+    "kind": "runtime",
+    "result": "pass",
+    "scope": "最终冻结源码、正式/→Enter隔离新档，真实WASD横纵层差/双坡、六E开关、根部真实Mesh顶点与室内稳定、自然远景窗口、聚焦/暂停/減动、三载入与Rift释放；原画幅外条纹修复后像素边带及遮罩所有权检查。37.36秒录像含约31秒正常游戏。",
+    "limitations": "已知路线导航，非初见测试；仅自然一次存在窗口，不认证长时节奏/性能、全部浏览器、音频或用户审美。修前证据另归pre-mask，不混作最终源码验证。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r10.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r10/runtime/manifest.json",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R10 final working tree on 21a70b9; runtime/manifest.json records exact source hashes"
+  },
+  {
+    "id": "COH-E-I30-R10-AUTOMATED",
+    "kind": "automated",
+    "result": "pass",
+    "scope": "纯人物视差/接根/远景时间采样5349项、既有移动7811项、最终同源外接宿主1544项；TypeScript与生产构建通过，最终差异空白检查通过。",
+    "limitations": "离散算法与模拟宿主断言不是画面质量或真人手感；接触脚本使用生产类及场景mock，真实运行另记。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r10.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-exterior-motion.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i30-r9-exterior-contacts.ts",
+        "role": "test"
+      }
+    ],
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R10 final working tree on 21a70b9; runtime/manifest.json records exact source hashes"
+  },
+  {
+    "id": "COH-E-I30-R10-REVIEW",
+    "kind": "source",
+    "result": "partial",
+    "scope": "独立知情专家亲看出生/左坡/上层/返回实帧，核近根接续、明暗、遮挡及远层可见限度；东根平行折边按唯一反馈补横断芯，一次定向复看记为已改善，不追加修改。",
+    "limitations": "静帧和帧间比较，未播放视频，不签连续动态体验、整体美术可发布或用户通过；旧分项评分不变。",
+    "sources": [
+      {
+        "path": "docs/reviews/2026-09-23-purification-r10-exterior.md",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R10 final working tree on 21a70b9; runtime/manifest.json records exact source hashes"
   }
 ]

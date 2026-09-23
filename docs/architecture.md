@@ -10,13 +10,17 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30 R9：偏置结构、作者分层场景与可观察读数
+## 迭代30：偏置结构、R10外景视差与可观察读数
 
 `PurificationScene`仍拥有归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口才转换为中心坐标（脚底Y−10）。两层、双宽坡的连续圆足扫掠与滑动归`PurificationChamberLocomotion`；原人物/武器/灯、八向输入与Rift默认路径保持。核心留在主层(141,305)，操作点(175,320)，新壳最高91px，轮廓bounds为[-30,-92,32,3]，34×20底座不变；R9地坪33620世界像素²、出生243/315，保持人物尺度并将房间左置。
 
 **场景资产。** `assets/source/purification-r9/environment.ts`汇合`interior.ts/exterior.ts/schema.ts`，构成640×400具名面源，含室内architecture/floor/foreground与壳外far/middle/near；`chamber-authored-architecture.ts`把这些面和既有可走多边形栅格化为色图与表面图。铺砌/层积/接合以具名面制作，有限5阶底层色簇只改同一宿主的色；不根据亮度生成浮雕。`tools/art-pipeline/purification-chamber.ts`输出同源分层SVG、albedo/baked/normals/height PNG与面清单；无需维护另一套预览绘制。历史R7鼠啃缺口与22格色板冻结不再限制专用作者资产，角色像素尺度不改。
 
-`purification-chamber-pixels.ts`保留`ChamberPixels`、静态装置壳与兼容出口，完整建筑转发给新作者资产。`chamber-exterior-pixels.ts`提供三层生产入口与整图兼容入口。三层depth−60/−55/−50、相机跟随率.12/.52/1，在真实camera平移时补偿位置，不自行漂移。`ChamberExteriorAtmosphere`编译近处接触实体的冷面光/有限输运；接触位置与内侧公开损伤、边界声音共用layout的CHAMBER_CONTACTS；自发输运用近层albedo alpha实体掩膜；反射与反光尘用受光扫描段，二者不可互换。动态只重放Graphics，远层无粒子，减少动态时保留稳态反射。visual统一负责创建、更新、幂等释放。
+`purification-chamber-pixels.ts`保留`ChamberPixels`、静态装置壳与兼容出口，完整建筑转发给作者资产。`chamber-exterior-pixels.ts`提供三层生产入口、整图兼容入口与远景暗轮廓画法；`src/scenes/chamber-exterior-motion.ts`拥有纯人物视差、近侧接根权重与远景时间采样。三层depth−60/−55/−50，人物位移相对固定室内的补偿率为远.14/中.09/近.04；130ms平滑、±170px输入边界。旧仅camera平移驱动方案已被DEC-182替代，聚焦镜头不再拖动层差。`PurificationChamberVisual`持有三张缓存plate及近侧连续16px网格投影，接根/外接触周围48px固定、向外72px平滑到完整近层位移；固定加宽暗底防图层平移露边。`getExteriorState()`只读诊断，不改变表现或玩法。
+
+三张外景plate在创建时沿原画幅边缘外扩32px，缓存为704×464；原画布仍640×400，室内/角色比例不变。近侧网格UV先还原到原画布再计算接根权重，避免有padding时锚点错位。三张Image（近层缓存Image隐藏）与近侧Mesh共借用一个固定在世界坐标0,0–640,400的GeometryMask，只让扩边补偿原画幅内的位移，画幅外不显示边缘重复条纹；遮罩跟随聚焦相机投影而不跟随视差。销毁先解除借用再释放mask与离屏Graphics。普通帧不上传纹理。
+
+`ChamberExteriorAtmosphere`编译近处接触实体的冷面光/有限输运；接触位置与内侧公开损伤、边界声音共用layout的CHAMBER_CONTACTS；自发输运用近层albedo alpha实体掩膜；反射与反光尘用受光扫描段，二者不可互换。新增80×96缓存远景不完整暗影，位于−57.5，跟随远层偏移并按37秒中的6.2秒窗口缓显，近/中层实际遮挡；不产生敌人、玩法随机数或存档。正常帧只变换缓存对象，接触只重放Graphics。减少动态冻结当前视差并隐藏暗影，场景暂停冻结视觉时钟。visual统一负责创建、更新、幂等释放网格、Image、Graphics及纹理。
 
 **表面与光。** `chamber-surface-map.ts`提供与颜色同栅格的覆盖、法线、高程、遮蔽、粗糙度。`ChamberPixels.rect/poly`在实际整数fillRect处写面；局部设备平移包含主层0/上层32，坡面32→0连续，脚底不重复投影。`setPlane(null)`保留宿主表面；可见面约定X=x、Y=y+height、Z=height，是作者提供的有限2.5D数据，不是完整闭合模型。
 
@@ -32,7 +36,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `ChamberIntegritySelection`按44进入/58退出、120ms候选稳定与单一拥有者选择；`ChamberIntegrityLifecycle`让世界条和聚焦DOM共享160ms淡入、250ms离开保留＋180ms淡出、60ms换侧退场＋140ms入场。遮人立即隐去，安全侧稳定后原地出现，不让读数穿过人物。`chamber-integrity-placement.ts`共用真实轮廓、人物/持具/灯的`Player.getVisualBounds(out)`、其他设备、视口与面板保留区；世界条在POST_UPDATE后绘制，DOM在game PRE_RENDER按本帧镜头投影，关闭/shutdown解绑。仅hp/maxHp决定条长；稳定/受损/危险/失效按100/25/0固定HP阈值，颜色与文字归UI Kit。Tab完整报告和真实修复资格不扩大。
 
-没有新增存档字段、价格、成长、碰撞或出击机制。旧TilemapRenderer、Boundary系统、VisibilitySystem、GroundDepthSorter、PurificationCollision不在正式净化点实例化；仍有其他调用或历史gym。下方I29/12圆膜与旧排序只记录历史实现，不能覆盖本节。R8整景已被用户否决；R9接入与有限测试不代表用户审美通过；现状与未覆盖证据归任务/QA索引。
+没有新增存档字段、价格、成长、碰撞或出击机制。旧TilemapRenderer、Boundary系统、VisibilitySystem、GroundDepthSorter、PurificationCollision不在正式净化点实例化；仍有其他调用或历史gym。下方I29/12圆膜与旧排序只记录历史实现，不能覆盖本节。R8整景已被用户否决，R9外景纵深与画质被用户要求整改；R10接入与有限测试不代表用户审美通过，现状与未覆盖证据归任务/QA索引。
 
 ## 迭代29：净化点投入表现与线性成长（R3）
 
@@ -456,6 +460,7 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 
 | 模块 | 路径 | 职责 | 对外接口 | 状态 |
 | ---- | ---- | ---- | -------- | ---- |
+| ChamberExteriorMotion | src/scenes/chamber-exterior-motion.ts | I30 R10纯人物视差、稳定接根权重与远层存在时间采样；不依赖相机或玩法RNG | ChamberExteriorMotion.update() / offsets；chamberNearParallaxWeight()；sampleChamberDistantPresence() | 已接正式PurificationChamberVisual，验证状态见R10清单 |
 | EventBus | src/core/event-bus.ts | 类型安全的发布/订阅系统 | emit(), on(), off(), once(), destroy() | 已实现 |
 | I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() | 已实现 |
 | GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
