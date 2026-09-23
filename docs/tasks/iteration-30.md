@@ -1,5 +1,5 @@
 ---
-status: R8-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R9-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-23
 owner: director
@@ -8,9 +8,21 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 
 # 迭代30：净化点空间、模型与成长获得感重构
 
-## 当前裁决
+## R9：偏置据点与外景纵深（2026-09-23）
 
-**2026-09-23：用户在设计提交ca1bdf3后明确“实施”，R8已接入正式游戏并完成限定验证。** 本轮施工结果以R8独立清单与证据为准，历史勾选不作为本轮验收；R7质量标记 HUMAN-CHANGES-REQUESTED。唯一新方案见[整体场景制作方案](../design-notes/purification-scene-art-plan.md)，核实证据见[R8诊断](../reviews/2026-09-23-purification-r8-diagnosis.md)。实施证据与交接见[R8 QA](../qa/iteration-30-r8.md)。
+用户明确否决R8整景表现，先要求静态构图，随后接受偏置与集中外景并授权实施。原画只提供布景/分层，不照搬画风渲染。当前主功能COH-F026/F042，关联F006/F033/F039。
+
+- [x] 归档静态稿与用户选择边界，核实原R8没有扩大物理地面而是扩大视觉壳体；不能据此否定人的占比体验。
+- [x] 左置紧凑双层与原尺度六物、真实两坡/碰撞/交互接线。
+- [x] 原生像素建筑与内外两处实体承接；右侧外景大/中/小构造及遮挡纵深。
+- [x] 光源/接触/受损/观察与新结构同源，保护既有玩家和玩法。
+- [x] 真实运行、独立实帧复评、必要回归、状态证据更新、本地提交。
+
+合同见[构图归档](../art/demos/purification-r9/README.md)。实现、限定验证与独立复评已完成，证据见[R9 QA](../qa/iteration-30-r9.md)。厚体承接、暗龛封闭和远层遮挡已修正；地坪补片P2与整体美术人审保留。不能沿用R8内部积极评价为人审通过。
+
+## 历史裁决（R8及以前）
+
+**R8历史记录：实施与限定验证完成后，用户明确否决整景表现；当前由上方R9接替。** 本轮施工结果以R8独立清单与证据为准，历史勾选不作为本轮验收；R7质量标记 HUMAN-CHANGES-REQUESTED。唯一新方案见[整体场景制作方案](../design-notes/purification-scene-art-plan.md)，核实证据见[R8诊断](../reviews/2026-09-23-purification-r8-diagnosis.md)。实施证据与交接见[R8 QA](../qa/iteration-30-r8.md)。
 
 `c3b1d9f` 的 R1 已被用户明确否决，不能继续记为等待反馈，也不能沿用内部截图复核的积极结论。既有技术检查仍是该版功能事实，不是艺术或体验通过。五条原意：
 
@@ -20,7 +32,7 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 4. 透视与左右轨道移动冲突，操作不顺滑。
 5. 装置含义不清、特点不突出，较旧版退步。
 
-本轮执行 R2：有实际纵深的错层室内，屏幕八向行走、宽坡道自然衔接，厚混凝土/旧灰泥壳体和功能性金属，六物身份恢复，壳外压力在真实接触处表现。唯一布局设计为[净化点空间设计](../design-notes/purification-spatial-directions.md)。主功能 COH-F026/F006/F042，联动 F005/F027/F028/F029/F038/F044。
+该历史阶段执行 R2：有实际纵深的错层室内，屏幕八向行走、宽坡道自然衔接，厚混凝土/旧灰泥壳体和功能性金属，六物身份恢复，壳外压力在真实接触处表现。唯一布局设计为[净化点空间设计](../design-notes/purification-spatial-directions.md)。主功能 COH-F026/F006/F042，联动 F005/F027/F028/F029/F038/F044。
 
 ## R2 用户评分与下一轮重点（2026-09-22）
 
@@ -108,7 +120,7 @@ R5完成两轮有依据的实帧修正，另修动态壁灯位置错误；详细
 
 ## R8：整体构图、资产制作与活动体验（2026-09-23）
 
-主F042，关联F026/F033/F038；联动F006/F027/F030/F039。**设计ca1bdf3已实施，状态IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** 核心位置/大小可按用户本次授权重组，不再受R7位置冻结限制。既有自由八向、原角色、封闭浅透视、成长/供奉/价格/存档及I28挂起保持。
+主F042，关联F026/F033/F038；联动F006/F027/F030/F039。**设计ca1bdf3已实施，状态IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REJECTED。** 核心位置/大小可按用户本次授权重组，不再受R7位置冻结限制。既有自由八向、原角色、封闭浅透视、成长/供奉/价格/存档及I28挂起保持。
 
 ### 已完成的设计工作
 

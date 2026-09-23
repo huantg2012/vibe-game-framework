@@ -79,7 +79,8 @@
       "COH-E-I30-R7-RUNTIME",
       "COH-E-I30-R8-INTEGRATION",
       "COH-E-I30-R8-INTEGRITY",
-      "COH-E-I30-R8-TECHNICAL"
+      "COH-E-I30-R8-TECHNICAL",
+      "COH-E-I30-R9-GEOMETRY"
     ],
     "unknowns": [
       "原角色身份保持；I30 R4已实测四向动画灯锚及入Rift原灯池，未逐帧复核所有受击/武器动作。"
@@ -193,7 +194,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "净化点R8正式接入作者建筑/地坪/前缘、近中远三层外景和实体面受光；核心留在原主层锚点，以新壳/活腔与同源光建立主焦点。六物使用缓存活动atlas并由真实结果触发反馈；入口恢复低位分支裂缝，Rift玩法与原角色保持。独立复评确认部分改善，三项P2及用户终审仍待处理。",
+    "summary": "R9左置紧凑封闭据点与右侧集中外景已接入。原人物/六物尺度不变，真实地坪约减41%，双层双宽坡八向保持；内外承托、原生像素构造与同源观察/受光迁移。R8人审否决，R9结构复评修正已完成、整体美术待人审，不以接入或概念图代签品质。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -387,7 +388,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R8实施方案与批准范围；核心位置以路线 gate 的主层 fallback 为准"
+        "note": "R9偏置布景/分层授权；原画不得决定画风渲染"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -397,11 +398,12 @@
       {
         "path": "assets/source/purification-r8/environment.ts",
         "role": "art",
-        "note": "建筑/地坪/前缘及近中远作者面；几何、材料、面向与高程共源"
+        "note": "历史R8作者源/兼容命令，不是当前R9生产资产；旧视觉证据不提升验收"
       },
       {
         "path": "assets/source/purification-r8/README.md",
-        "role": "doc"
+        "role": "doc",
+        "note": "历史R8作者源/兼容命令，不是当前R9生产资产；旧视觉证据不提升验收"
       },
       {
         "path": "src/art/chamber-authored-architecture.ts",
@@ -410,7 +412,8 @@
       },
       {
         "path": "tools/art-pipeline/purification-r8.ts",
-        "role": "test"
+        "role": "test",
+        "note": "历史R8作者源/兼容命令，不是当前R9生产资产；旧视觉证据不提升验收"
       },
       {
         "path": "docs/qa/iteration-30-r8-environment.md",
@@ -487,6 +490,62 @@
       {
         "path": "tools/qa/measure-i30-r8-performance.mjs",
         "role": "test"
+      },
+      {
+        "path": "assets/source/purification-r9/environment.ts",
+        "role": "art"
+      },
+      {
+        "path": "assets/source/purification-r9/interior.ts",
+        "role": "art"
+      },
+      {
+        "path": "assets/source/purification-r9/exterior.ts",
+        "role": "art"
+      },
+      {
+        "path": "assets/source/purification-r9/schema.ts",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-r9/README.md",
+        "role": "decision"
+      },
+      {
+        "path": "tools/art-pipeline/purification-chamber.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-i30-composition.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r9-geometry.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r9-spatial.md",
+        "role": "doc"
+      },
+      {
+        "path": "assets/source/purification-r9/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r9.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r9-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r9-exterior-contacts.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r9/final-source-manifest.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -523,13 +582,17 @@
       "COH-E-I30-R8-TECHNICAL",
       "COH-E-I30-R8-REVIEW",
       "COH-E-I30-R8-TRANSACTIONS",
-      "COH-E-I30-R8-PERFORMANCE"
+      "COH-E-I30-R8-PERFORMANCE",
+      "COH-E-I30-R8-HUMAN-REJECTION",
+      "COH-E-I30-R9-GEOMETRY",
+      "COH-E-I30-R9-MOTION",
+      "COH-E-I30-R9-FINAL",
+      "COH-E-I30-R9-REVIEW"
     ],
     "unknowns": [
-      "用户美术终审待定；独立复评 V01 核心后景与坡道相切、V02 右墙剪切承接、V03 外景近中远关系仍为 P2，未关闭整场品质项。",
-      "常态储藏/净化器/供奉细动作在已看原像素采样中很轻，不能以 atlas 帧号变化代签各自工作动作成熟；入口主轮廓仍有放射倾向。",
-      "早期待机录屏、后续同源光补证与真实交易素材属于不同源批次，不把旧片冒充最终补丁。短窗性能显示CPU Task约+58.9%、RGBA单份估算约+4.36MiB，未有硬件长稳认证；最终全场回归已由总QA封存。",
-      "专门音频及自然满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
+      "R8整景被用户否决；R9复评提出的承接/纵深P1与暗龛P2已修正并复看，地坪局部补片仍P2；未获用户整体艺术终审。",
+      "六处真实交互、双坡、原Rift入口、暂停/减动/3次载入及受控24→28修复已有限验证；不等于长期性能、全成长/供奉或自然经济复验。",
+      "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]
   }
 ]

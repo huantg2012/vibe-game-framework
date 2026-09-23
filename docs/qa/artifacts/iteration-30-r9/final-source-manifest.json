@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-23T11:06:19.099766+00:00",
+  "baseRevision": "22cf10fe5b695b69e6db5433903a05686d720508",
+  "scope": "Final R9 production authoring and QA inputs; runtime/motion batches retain their own earlier hashes. No future commit hash inferred.",
+  "files": {
+    "assets/source/purification-r9/README.md": "7003cd8714b205faecd03eb51e16cb3f219e1a1a4607e62abde6ea9fd57f48ee",
+    "assets/source/purification-r9/environment.ts": "4264315f8e3573c1ce151dfffd04898ddf350c101da0086bc5444a02cd34fca3",
+    "assets/source/purification-r9/exterior.ts": "065a1ce42befe27ca2f13793879ef261720445ddd0a9eec15a66d741886e7470",
+    "assets/source/purification-r9/interior.ts": "1c01cd02b4e2fda807556f0ef13bbcc3a349d30b3d335e3457c12f5bdc89fd05",
+    "assets/source/purification-r9/schema.ts": "499463ed448ca3a624f8baea7c3e308cfa8f3f9f5c78d2a7ffe1a359ec915e43",
+    "src/art/chamber-authored-architecture.ts": "91d5c1ac7ba75931e1fd1875447355e05cb5125f5d04e4768f2406c16e5b3fdb",
+    "src/art/purification-chamber-pixels.ts": "5cc8c6095e91746373f79e690c5cd8c8078ec796579cdcf1524cfe15ca544f1d",
+    "src/scenes/chamber-exterior-atmosphere.ts": "c81798ad47de4bf97fb74e77f1cd85a3c7e2b014697330d24bc54bd0eab2f5da",
+    "src/scenes/purification-chamber-lighting.ts": "e3cb89c15dcf319f74d546dfa7725290bb8545eea9228a146c46fb859eb7d3d8",
+    "src/scenes/purification-chamber-visual.ts": "194571258cf6150c80aafc80dcfe538fa1ccc211b390040a44eca812684f1246",
+    "src/scenes/purification-scene.ts": "fe00919aaa0f9f94696ddbbb7e425feb025e4c8b5722ac1dff59fe3e62932cbf",
+    "src/systems/chamber-observation.ts": "290e93aea0f325c4393aa590d792d4ea68ea2cd3a5a24cdd2c63d1764db4fbd2",
+    "src/systems/purification-chamber-layout.ts": "9e679d73232591eed2644983cdc725f0fd55f0af2013ba1b55f4c52f16582050",
+    "tools/art-pipeline/purification-chamber.ts": "3da8f0e9df759540be31a9b5b2f4154557df4178e2264e222004e0a1433a871a",
+    "tools/art-pipeline/purification-r8.ts": "87c456061da644dd08b9be5ec9d83538ce39a454c6fc5a8f26e376b6164ea0c8",
+    "tools/qa/capture-i30-composition.mjs": "9dc074cbc2424bd169ff48bd6f01532c9ca8d542f2e9a182cd52d6cf08515598",
+    "tools/qa/check-i30-chamber-movement.ts": "c2f1cfd91e88f6e4816a8597d47ab05eb0e4c6ecfab3c9450ae3548746e4f9fb",
+    "tools/qa/check-i30-chamber-runtime.mjs": "cc307d13888a58011312934300c4185dc5a5210d3a7176bd06f6c03b015157de",
+    "tools/qa/check-i30-observation.ts": "befda141a4379aa8b4ad88a6b8ddc190a4e9bb072a714d49e0749a034a6f63dd",
+    "tools/qa/check-i30-r8-motion-play.mjs": "c3e5ea6c7780997767dfdfea5ed60e2f5c1e725563ca79fd16aef41427742253",
+    "tools/qa/check-i30-r9-exterior-contacts.ts": "4023fffdc32f0e9c34c6413fc4caccf53be6ab867a645e4c7dec7f1c9f50fee1",
+    "tools/qa/i30-chamber-driver.mjs": "97f42aa2a365d4cf99f7a755ac922f986919cf1e7efda56fcbaecd97ec9173dc"
+  },
+  "finalCapture": {
+    "scope": "Fresh isolated normal entry. Diagnostic hides only named dynamic light/mote graphics via render visibility; retains authored/baked materials, contact shadows and device body atlas. No gameplay, save, camera or movement mutation. Quarter images are nearest-neighbor reductions of unedited screenshots.",
+    "hidden": [
+      "chamber-exterior-contact-light",
+      "chamber-exterior-seam-transport",
+      "chamber-floor-light",
+      "chamber-wall-light",
+      "chamber-player-ground-light",
+      "chamber-device-light-rift",
+      "chamber-device-light-growth",
+      "chamber-device-light-offering",
+      "chamber-device-light-purifier",
+      "chamber-device-light-storage",
+      "chamber-device-light-core",
+      "chamber-source-motes"
+    ],
+    "errors": []
+  },
+  "checks": {
+    "build": "pass",
+    "exteriorContacts": 1625,
+    "observation": 22,
+    "volumeSurfaces": 98,
+    "floorRasterPixels": 33592,
+    "geometricFloorArea": 33620,
+    "earlierMovement": 7811
+  },
+  "limitations": "Full keyboard/motion runs precede final art/contact corrections; see scoped reports. User art acceptance pending."
+}

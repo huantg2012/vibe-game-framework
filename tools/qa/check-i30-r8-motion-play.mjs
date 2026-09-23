@@ -4,11 +4,13 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {createJourneyDriver} from './i27-journey-driver.mjs';
-import {createChamberDriver} from './i30-chamber-driver.mjs';
+import {createChamberDriver,CHAMBER_TEST_POINTS as CHAMBER_QA_POINTS} from './i30-chamber-driver.mjs';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const root=process.env.ARTIFACT_DIR??'docs/qa/artifacts/iteration-30-r8/motion-play';
 const url=process.env.I30_URL??'http://127.0.0.1:3025/';fs.mkdirSync(root,{recursive:true});
-const sources=['src/art/chamber-device-motion.ts','src/scenes/chamber-device-activity.ts','src/scenes/purification-chamber-visual.ts','src/scenes/purification-chamber-lighting.ts'];
+const sources=['src/art/chamber-device-motion.ts','src/scenes/chamber-device-activity.ts','src/scenes/purification-chamber-visual.ts','src/scenes/purification-chamber-lighting.ts',
+ 'assets/source/purification-r9/environment.ts','assets/source/purification-r9/interior.ts','assets/source/purification-r9/exterior.ts','assets/source/purification-r9/schema.ts',
+ 'src/systems/purification-chamber-layout.ts','src/scenes/chamber-exterior-atmosphere.ts','src/art/chamber-authored-architecture.ts'];
 const fingerprints=()=>Object.fromEntries(sources.map(file=>[file,createHash('sha256').update(fs.readFileSync(file)).digest('hex')]));
 const manifest={started:new Date().toISOString(),sources:fingerprints(),cases:[],limitations:['The damaged save is an isolated controlled fixture, not naturally earned damage.','Frame/cache readings corroborate submitted motion and allocation, not artistic approval.','No audio evaluation. Video is muted browser output.']};
 const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
@@ -39,7 +41,7 @@ try {for(const name of (process.env.I30_MOTION_CASES??'normal,damaged').split(',
   for(let n=0;n<3;n++) {await d.press('Escape');await page.locator('.pause-menu-row').filter({hasText:'载入已保存的记录'}).click();await page.waitForFunction(()=>window.__game.scene.isActive('PurificationScene'));await page.waitForTimeout(1800);const s=await snapshot(page);assert.equal(s.allActivityTextures.length,6);assert.equal(s.stats.textures,6);item.reentries.push(s);}
   await d.snap('04-third-reentry');
  } else {
-  await chamber.walkFeet(284,313);await d.press('e');await page.locator('#allocation-panel').waitFor({state:'visible'});await page.waitForTimeout(420);
+  await chamber.walkFeet(...CHAMBER_QA_POINTS.core);await d.press('e');await page.locator('#allocation-panel').waitFor({state:'visible'});await page.waitForTimeout(420);
   await d.snap('03-repair-ready');const storedBefore=await page.evaluate(()=>JSON.parse(localStorage.getItem('coh-save-v1')));
   await d.press('ArrowRight');await d.press('Enter',20);item.repair=[];
   const onset=Date.now();while(Date.now()-onset<2100){item.repair.push(await snapshot(page));await page.waitForTimeout(65);}
@@ -52,4 +54,4 @@ try {for(const name of (process.env.I30_MOTION_CASES??'normal,damaged').split(',
   manifest.cases.push(item);fs.writeFileSync(path.join(out,'observations.json'),JSON.stringify(item,null,2));const video=page.video();await context.close();if(video){await video.saveAs(path.join(out,`${name}.webm`));fs.unlinkSync(await video.path());item.video=`${name}/${name}.webm`;}
  }
  }}finally{manifest.finalSources=fingerprints();fs.writeFileSync(path.join(root,'manifest.json'),JSON.stringify(manifest,null,2));await browser.close();}
-console.log(`R8 live motion capture completed: ${root}`);
+console.log(`Chamber live motion capture completed: ${root}`);

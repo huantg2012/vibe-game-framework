@@ -12,6 +12,7 @@ import {
   type ChamberMovementState,
 } from '../../src/systems/purification-chamber-locomotion';
 import type { Player } from '../../src/entities/player';
+import { CHAMBER_TEST_ROUTES } from './i30-chamber-driver.mjs';
 
 const SPEED = 80;
 const up = { x: 0, y: -1 }, down = { x: 0, y: 1 };
@@ -74,6 +75,9 @@ function walkTo(state: ChamberMovementState, target: ChamberPoint, frameMs = 100
   }
   assert.fail(`Continuous walk did not reach (${target.x},${target.y}) from (${state.x},${state.y})`);
 }
+function via(state: ChamberMovementState, points: readonly (readonly number[])[], frameMs = 1000 / 60): void {
+  for (const [x, y] of points) walkTo(state, { x, y }, frameMs);
+}
 
 assert.equal(CHAMBER_FEET_RADIUS, 6, 'Original hub body width remains 12px with rounded feet');
 const spawn = createChamberMovementState();
@@ -83,7 +87,7 @@ assert.deepEqual(output, CHAMBER_SPAWN_POINT);
 assert.deepEqual(chamberFeetToPlayerPosition(output), { x: output.x, y: output.y - CHAMBER_GROUND_OFFSET_Y });
 
 // Every direction changes the corresponding screen axes on visible deep floor.
-for (const direction of [up, down, left, right, { x: 1, y: -1 }, { x: -1, y: 1 }]) {
+for (const direction of [up, down, left, right, { x: 1, y: -1 }, { x: -1, y: 1 }, { x: 1, y: 1 }, { x: -1, y: -1 }]) {
   const state = createChamberMovementState();
   tick(state, direction, 100);
   near(Math.hypot(state.x - spawn.x, state.y - spawn.y), 8, 'All directions share the 80px/s budget');
@@ -92,40 +96,39 @@ for (const direction of [up, down, left, right, { x: 1, y: -1 }, { x: -1, y: 1 }
 }
 
 // Actor center alone cannot stand six pixels from an exposed wall or solid device.
-assert(!canStandInChamber({ x: 350, y: 270 }), 'A supported center with hanging feet is illegal');
-assert(canStandInChamber({ x: 350, y: 272 }), 'Exact wall clearance is legal');
+assert(!canStandInChamber({ x: 243, y: 235 }), 'A supported center with hanging feet is illegal');
+assert(canStandInChamber({ x: 243, y: 233 }), 'Exact wall clearance is legal');
 for (const base of Object.values(CHAMBER_DEVICE_BASES)) assert(!canStandInChamber(base), 'Every device base is solid');
-assert(!canStandInChamber({ x: 273, y: 299 }), 'Feet cannot intersect the core footprint');
-assert(canStandInChamber({ x: 276, y: 299 }), 'Feet can contact the core without penetration');
-assert.throws(() => createChamberMovementState({ x: 350, y: 240 }), /clearance/);
+assert(!canStandInChamber({ x: 161, y: 305 }), 'Feet cannot intersect the core footprint');
+assert(canStandInChamber({ x: 164, y: 305 }), 'Feet can contact the core without penetration');
+assert.throws(() => createChamberMovementState({ x: 243, y: 255 }), /clearance/);
 
 // The visible central cliff blocks a direct cross-floor route, including huge input frames.
-const cliff = createChamberMovementState({ x: 350, y: 300 });
-advance(cliff, up, 2500);
-near(cliff.x, 350, 'Cliff collision does not auto-route sideways');
-near(cliff.y, 272, 'Circle stops at the true step face');
-assert.equal(cliff.route, 'main');
-tick(cliff, up, 100, 10000);
-near(cliff.y, 272, 'Continuous sweep prevents tunneling across a narrow unsupported gap');
+const cliff = createChamberMovementState({ x: 243, y: 226 });
+advance(cliff, down, 2500);
+near(cliff.x, 243, 'Cliff collision does not auto-route sideways');
+near(cliff.y, 233, 'Circle stops at the true step face');
+assert.equal(cliff.route, 'upper');
+tick(cliff, down, 100, 10000);
+near(cliff.y, 233, 'Continuous sweep prevents tunneling across a narrow unsupported gap');
 
 // Tangential input remains responsive on both room edges and device bodies.
-const wallSlide = createChamberMovementState({ x: 300, y: 320 });
-advance(wallSlide, { x: 1, y: 1 }, 850);
-assert(wallSlide.x > 345, 'Diagonal pressure slides along the foreground wall');
-near(wallSlide.y, 328, 'Sliding retains full body clearance');
-const deviceSlide = createChamberMovementState({ x: 290, y: 305 });
+const wallSlide = createChamberMovementState({ x: 230, y: 226 });
+advance(wallSlide, { x: 1, y: 1 }, 400);
+assert(wallSlide.x > 250, 'Diagonal pressure slides along the terrace edge');
+near(wallSlide.y, 233, 'Sliding retains full body clearance');
+const deviceSlide = createChamberMovementState({ x: 178, y: 311 });
 advance(deviceSlide, { x: -1, y: -1 }, 270);
-near(deviceSlide.x, 276, 'Sliding never cuts inside the core side');
-advance(deviceSlide, { x: -1, y: -1 }, 80);
-assert(deviceSlide.y < 286, 'Pressure against a device continues along its side');
-assert(deviceSlide.x < 276, 'Rounded feet continue smoothly around the cleared corner');
+near(deviceSlide.x, 164, 'Sliding never cuts inside the core side');
+advance(deviceSlide, { x: -1, y: -1 }, 150);
+assert(deviceSlide.y < 289, 'Pressure against a device continues along its side');
+assert(deviceSlide.x < 164, 'Rounded feet continue smoothly around the cleared corner');
 
 // Both broad ramps have free lateral space, stop/reverse, and form one full loop.
 for (const fps of [30, 60, 120]) {
   const state = createChamberMovementState();
   const frameMs = 1000 / fps;
-  walkTo(state, { x: 304, y: 282 }, frameMs);
-  walkTo(state, { x: 293, y: 245 }, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.mainToClimb, frameMs);
   assert.equal(state.route, 'left-stair');
   const midRamp = { ...state };
   advance(state, still, 300, frameMs);
@@ -135,28 +138,27 @@ for (const fps of [30, 60, 120]) {
   advance(state, left, 50, frameMs);
   near(state.x, midRamp.x, 'Ramp direction reverses without a rail snap');
   assert(!canInteractWithChamberDevice(state, 'growth'), 'Ramp has no floor interaction authority');
-  walkTo(state, { x: 282, y: 208 }, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.climbToUpper, frameMs);
   assert.equal(state.route, 'upper');
   walkTo(state, CHAMBER_DEVICE_ANCHORS.growth, frameMs);
-  walkTo(state, { x: 282, y: 208 }, frameMs);
-  walkTo(state, CHAMBER_DEVICE_ANCHORS.offering, frameMs);
-  walkTo(state, { x: 373, y: 196 }, frameMs);
-  walkTo(state, { x: 396, y: 228 }, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.upperToOffering, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.descendEast.slice(0, 3), frameMs);
   assert.equal(state.route, 'right-stair');
   const eastRamp = { ...state };
   advance(state, down, 50, frameMs);
   advance(state, up, 50, frameMs);
   near(state.x, eastRamp.x, 'Second ramp does not force lateral travel');
   near(state.y, eastRamp.y, 'Second ramp reverses exactly');
-  walkTo(state, { x: 419, y: 259 }, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.descendEast.slice(3), frameMs);
   assert.equal(state.route, 'main');
-  walkTo(state, { x: 412, y: 301 }, frameMs);
   walkTo(state, CHAMBER_DEVICE_ANCHORS.purifier, frameMs);
   walkTo(state, CHAMBER_DEVICE_ANCHORS.rift, frameMs);
-  walkTo(state, { x: 360, y: 318 }, frameMs);
+  walkTo(state, { x: 329, y: 320 }, frameMs);
+  walkTo(state, CHAMBER_SPAWN_POINT, frameMs);
   walkTo(state, CHAMBER_DEVICE_ANCHORS.core, frameMs);
-  walkTo(state, { x: 218, y: 320 }, frameMs);
-  walkTo(state, CHAMBER_DEVICE_ANCHORS.storage, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.coreToStorage, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.storageToBehindCore, frameMs);
+  via(state, CHAMBER_TEST_ROUTES.behindToFrontCore, frameMs);
 }
 
 for (const device of Object.keys(CHAMBER_DEVICE_ANCHORS) as ChamberDevice[]) {
@@ -166,7 +168,7 @@ for (const device of Object.keys(CHAMBER_DEVICE_ANCHORS) as ChamberDevice[]) {
   assert(!canInteractWithChamberDevice(state, device === 'growth' || device === 'offering' ? 'core' : 'growth'),
     'Different floors never authorize each other');
 }
-const behindCore = createChamberMovementState({ x: 224, y: 299 });
+const behindCore = createChamberMovementState({ x: 112, y: 305 });
 assert(!canInteractWithChamberDevice(behindCore, 'core'), 'Solid device footprints block direct access');
 
 // Bounded delta, invalid input and adapter freeze preserve exact state.

@@ -10,19 +10,19 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30 R8：作者分层场景、装置活层与可观察读数
+## 迭代30 R9：偏置结构、作者分层场景与可观察读数
 
-`PurificationScene`仍拥有归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口才转换为中心坐标（脚底Y−10）。两层、双宽坡的连续圆足扫掠与滑动归`PurificationChamberLocomotion`；原人物/武器/灯、八向输入与Rift默认路径保持。核心留在主层(253,299)，操作点(284,313)，新壳最高91px，轮廓bounds为[-30,-92,32,3]，34×20底座不变；路线成本核查使上移构图退回主层。
+`PurificationScene`仍拥有归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口才转换为中心坐标（脚底Y−10）。两层、双宽坡的连续圆足扫掠与滑动归`PurificationChamberLocomotion`；原人物/武器/灯、八向输入与Rift默认路径保持。核心留在主层(141,305)，操作点(175,320)，新壳最高91px，轮廓bounds为[-30,-92,32,3]，34×20底座不变；R9地坪33620世界像素²、出生243/315，保持人物尺度并将房间左置。
 
-**场景资产。** `assets/source/purification-r8/environment.ts`是640×400具名面源，含室内architecture/floor/foreground与壳外far/middle/near；`chamber-authored-architecture.ts`把这些面和既有可走多边形栅格化为色图与表面图。材质的大尺度矿物场、定向层积与稀疏骨料只改同一宿主的色；不根据亮度生成浮雕。`tools/art-pipeline/purification-r8.ts`输出同源分层SVG、albedo/baked/normals/height PNG与面清单；无需维护另一套预览绘制。历史R7鼠啃缺口与22格色板冻结不再限制专用作者资产，角色像素尺度不改。
+**场景资产。** `assets/source/purification-r9/environment.ts`汇合`interior.ts/exterior.ts/schema.ts`，构成640×400具名面源，含室内architecture/floor/foreground与壳外far/middle/near；`chamber-authored-architecture.ts`把这些面和既有可走多边形栅格化为色图与表面图。铺砌/层积/接合以具名面制作，有限5阶底层色簇只改同一宿主的色；不根据亮度生成浮雕。`tools/art-pipeline/purification-chamber.ts`输出同源分层SVG、albedo/baked/normals/height PNG与面清单；无需维护另一套预览绘制。历史R7鼠啃缺口与22格色板冻结不再限制专用作者资产，角色像素尺度不改。
 
-`purification-chamber-pixels.ts`保留`ChamberPixels`、静态装置壳与兼容出口，完整建筑转发给新作者资产。`chamber-exterior-pixels.ts`提供三层生产入口与整图兼容入口。三层depth−60/−55/−50、相机跟随率.12/.52/1，在真实camera平移时补偿位置，不自行漂移。`ChamberExteriorAtmosphere`编译近处接触实体的冷面光/有限输运，另画中层局部遮蔽；动态只重放Graphics，远层无粒子，减少动态时保留稳态反射。visual统一负责创建、更新、幂等释放。
+`purification-chamber-pixels.ts`保留`ChamberPixels`、静态装置壳与兼容出口，完整建筑转发给新作者资产。`chamber-exterior-pixels.ts`提供三层生产入口与整图兼容入口。三层depth−60/−55/−50、相机跟随率.12/.52/1，在真实camera平移时补偿位置，不自行漂移。`ChamberExteriorAtmosphere`编译近处接触实体的冷面光/有限输运；接触位置与内侧公开损伤、边界声音共用layout的CHAMBER_CONTACTS；自发输运用近层albedo alpha实体掩膜；反射与反光尘用受光扫描段，二者不可互换。动态只重放Graphics，远层无粒子，减少动态时保留稳态反射。visual统一负责创建、更新、幂等释放。
 
 **表面与光。** `chamber-surface-map.ts`提供与颜色同栅格的覆盖、法线、高程、遮蔽、粗糙度。`ChamberPixels.rect/poly`在实际整数fillRect处写面；局部设备平移包含主层0/上层32，坡面32→0连续，脚底不重复投影。`setPlane(null)`保留宿主表面；可见面约定X=x、Y=y+height、Z=height，是作者提供的有限2.5D数据，不是完整闭合模型。
 
 固定方向光和接触遮蔽在新绘原材色上缓存烘焙；动态光消费原始albedo，保留透明孔/黑腔/发光像素，避免将烘焙后的暗材误判成空洞。`chamber-light-field.ts`由实际地面、坡道、底座与面数据编译24档受光扫描段；同源设备alpha/高度提供所在水平面的短投影。建筑表面图常驻，六设备状态烘焙共享scratch，壳外/前景复用创建期临时表面图。
 
-`purification-chamber-lighting.ts`统一核心、培养藏、净化器、壁灯和人物短影。核心源(253,240)、Z59，源强读取`sampleCoreMotion`，主体姿态与光共享一次动作；培养藏/净化器读`sampleDeviceLight`，不另写不同相位的sin。动态面光按80ms重放缓存，设备淡出与对应光层同步。公开运行效能使用min(1,hp/100)，不再用hp/maxHp削弱加厚后的活动和光；无未来冲击数据。`chamber-floor-light.ts`继续只承担原人物灯池的地面裁切；Player.externalLampGround关闭原Aura重复地面池，其他场景默认路径不动。
+`purification-chamber-lighting.ts`统一核心、培养藏、净化器、壁灯和人物短影。核心源(141,246)、Z59，源强读取`sampleCoreMotion`，主体姿态与光共享一次动作；培养藏/净化器读`sampleDeviceLight`，不另写不同相位的sin。动态面光按80ms重放缓存，设备淡出与对应光层同步。公开运行效能使用min(1,hp/100)，不再用hp/maxHp削弱加厚后的活动和光；无未来冲击数据。`chamber-floor-light.ts`继续只承担原人物灯池的地面裁切；Player.externalLampGround关闭原Aura重复地面池，其他场景默认路径不动。
 
 **装置活动。** `chamber-device-motion.ts`拥有确定性姿态/光采样、局部像素绘制、静态裂岸与沿缝活动的共享几何；`ChamberDeviceActivity`拥有6张裁切图集。核心36帧、供奉32帧、其余各24帧，共630,784像素，RGBA约2.41MiB（canvas与GPU各一份约4.82MiB，不含驱动开销）。正常更新只切帧，健康档位或空/有供物改变才局部重建；实例销毁删除所有图集与Image。视效不消费玩法RNG。
 
@@ -32,7 +32,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `ChamberIntegritySelection`按44进入/58退出、120ms候选稳定与单一拥有者选择；`ChamberIntegrityLifecycle`让世界条和聚焦DOM共享160ms淡入、250ms离开保留＋180ms淡出、60ms换侧退场＋140ms入场。遮人立即隐去，安全侧稳定后原地出现，不让读数穿过人物。`chamber-integrity-placement.ts`共用真实轮廓、人物/持具/灯的`Player.getVisualBounds(out)`、其他设备、视口与面板保留区；世界条在POST_UPDATE后绘制，DOM在game PRE_RENDER按本帧镜头投影，关闭/shutdown解绑。仅hp/maxHp决定条长；稳定/受损/危险/失效按100/25/0固定HP阈值，颜色与文字归UI Kit。Tab完整报告和真实修复资格不扩大。
 
-没有新增存档字段、价格、成长、碰撞或出击机制。旧TilemapRenderer、Boundary系统、VisibilitySystem、GroundDepthSorter、PurificationCollision不在正式净化点实例化；仍有其他调用或历史gym。下方I29/12圆膜与旧排序只记录历史实现，不能覆盖本节。R8接入与有限测试不代表用户审美通过；现状与未覆盖证据归任务/QA索引。
+没有新增存档字段、价格、成长、碰撞或出击机制。旧TilemapRenderer、Boundary系统、VisibilitySystem、GroundDepthSorter、PurificationCollision不在正式净化点实例化；仍有其他调用或历史gym。下方I29/12圆膜与旧排序只记录历史实现，不能覆盖本节。R8整景已被用户否决；R9接入与有限测试不代表用户审美通过；现状与未覆盖证据归任务/QA索引。
 
 ## 迭代29：净化点投入表现与线性成长（R3）
 

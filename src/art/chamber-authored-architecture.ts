@@ -1,4 +1,4 @@
-import { ENVIRONMENT_FACES, MATERIAL, type Layer, type Face } from '../../assets/source/purification-r8/environment';
+import { ENVIRONMENT_FACES, MATERIAL, type Layer, type Face } from '../../assets/source/purification-r9/environment';
 import { CHAMBER_WALK_POLYGONS } from '../systems/purification-chamber-layout';
 import type { ChamberPixels, ChamberPoint } from './purification-chamber-pixels';
 import type { SurfacePlane } from './chamber-surface-map';
@@ -26,12 +26,8 @@ export function paintAuthoredChamberFloor(p: ChamberPixels): void {
   paintAuthoredEnvironmentLayer(p, 'floor');
   paintRamp(p, 'left-stair');
   paintRamp(p, 'right-stair');
-  // Wall contact belongs to the floor. It never adds a false walkable face.
+  // Contact shadows are authored in the R9 floor plate at the actual wall feet.
   p.setPlane(null);
-  p.poly([[142,146],[234,138],[274,154],[370,154],[402,174],[400,176],
-    [369,157],[274,157],[234,141],[145,150],[135,178],[131,183],[128,184]], MATERIAL.floorShade);
-  p.poly([[97,255],[101,257],[101,300],[110,315],[125,330],[123,331],[108,317],[97,302]], MATERIAL.floorShade);
-  p.poly([[444,250],[460,232],[542,232],[551,250],[548,252],[540,237],[462,237],[448,252]], MATERIAL.floorShade);
 }
 
 export function paintAuthoredChamberForeground(p: ChamberPixels): void {
@@ -54,8 +50,8 @@ function paintRamp(p: ChamberPixels, route: 'left-stair' | 'right-stair'): void 
   paintMaterial(p, [[a[0]+8,a[1]],[b[0]-9,b[1]],[e[0]-9,e[1]],[d[0]+8,d[1]]], MATERIAL.concrete, 'floor', 73);
   for (let step = 1; step < 7; step++) {
     const t = step / 7;
-    const x1 = a[0] + (d[0] - a[0]) * t;
-    const x2 = b[0] + (e[0] - b[0]) * t;
+    const x1 = a[0] + (d[0] - a[0]) * t + 1;
+    const x2 = b[0] + (e[0] - b[0]) * t - 1;
     const y = a[1] + (d[1] - a[1]) * t;
     const treadShift = (d[0]-a[0]) / (d[1]-a[1]) * 2;
     p.poly([[x1,y],[x2,y],[x2+treadShift,y+2],[x1+treadShift,y+2]], MATERIAL.floorShade);
@@ -92,8 +88,7 @@ function paintMaterial(p: ChamberPixels, points: readonly ChamberPoint[], base: 
   const rgb = parseInt(base.slice(1),16);
   const red=rgb>>16, green=(rgb>>8)&255, blue=rgb&255;
   // Deliberate stepped pigment ramps retain pixel clusters without a washed gradient.
-  const ramp=Array.from({length:11},(_,i)=> {
-    const change=(i-5)*2;
+  const ramp=[-5, -2, 0, 2, 5].map(change=> {
     return '#'+[red+change,green+change,blue+change].map(v=>Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('');
   });
   const y0=Math.ceil(Math.min(...points.map(v=>v[1]))), y1=Math.ceil(Math.max(...points.map(v=>v[1])));
@@ -109,20 +104,16 @@ function paintMaterial(p: ChamberPixels, points: readonly ChamberPoint[], base: 
       const start=Math.ceil(intersections[segment]!),end=Math.ceil(intersections[segment+1]!);
       let previous=-1,run=start;
       for(let x=start;x<end;x++) {
-        const body=field(x/scaleX,y/scaleY,seed);
-        const mineral=field(x/8,y/3.7,seed+101);
-        // Bed direction is material-specific: plaster drains down; floors abrade across.
-        const stratum=finish==='lime' ? field(x/3.6,y/22,seed+31)
-          : field((x+y*.26)/19,y/2.5,seed+31);
-        let delta=(body-.5)*contrast*2.5;
-        // Mid-scale eroded edges remain contiguous, rooted in the same mineral field.
-        if(body<.40 && mineral<.37) delta -= grain*.75;
-        if(stratum>.67 && mineral>.52) delta += grain*.65;
-        // A few two-pixel aggregate clusters sit inside an existing exposed area.
-        const inclusion=noise(Math.floor(x/2),Math.floor(y/2),seed+413);
-        if(mineral<.35 && inclusion>.9) delta -= grain;
-        else if(mineral>.66 && inclusion<.055) delta += grain;
-        const at=Math.max(0,Math.min(10,5+Math.round(delta/2)));
+        const body=field(Math.floor(x/2)*2/scaleX,Math.floor(y/2)*2/scaleY,seed);
+        const stratum=finish==='lime' ? field(x/5,y/24,seed+31)
+          : field((x+y*.26)/22,Math.floor(y/2)*2/5,seed+31);
+        // Large authored slabs/joints carry the design. Sparse connected pigment
+        // clusters only vary intact material; no per-pixel aggregate noise.
+        const emphasis = contrast >= 7 && grain >= 4;
+        const at = body < .24 ? (emphasis ? 0 : 1)
+          : body < .37 && stratum < .5 ? 1
+          : body > .77 ? (emphasis ? 4 : 3)
+          : body > .62 && stratum > .65 ? 3 : 2;
         if(at!==previous) {
           if(x>run) p.rect(run,y,x-run,1,ramp[previous]!);
           run=x; previous=at;

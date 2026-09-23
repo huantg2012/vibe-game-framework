@@ -2508,5 +2508,100 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-R8-HUMAN-REJECTION",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-09-23",
+    "revision": "22cf10f",
+    "scope": "用户明确否决R8整景表现，要求重审安全区/外景占比、内外关系与纵深；后接受静态稿偏置构图，并授权原生像素R9实施。",
+    "limitations": "否决针对R8艺术/结构成熟度，不撤销其当时有限功能验证；接受构图思路不等于接受概念图画风或R9人审通过。",
+    "sources": [
+      {
+        "path": "docs/tasks/iteration-30.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R9-GEOMETRY",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R9 working tree on 22cf10f; scoped manifests and source fingerprints",
+    "scope": "新地坪/双坡/六锚，7811纯运动+22观察检查；隔离新游戏真实键盘六点/E开关/冻结、核心遮挡与碰撞、坡道停反向横移、坡上E拒绝、正式Shift+Enter入Rift与原双轴移动，无页面错误。",
+    "limitations": "知情机器人导航，不是人的初见理解或手感验收；墙后观察探针为非法站位射线反例。未全面重跑其他随机地图/战斗/经济。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r9-geometry.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r9/runtime/manifest.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R9-MOTION",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R9 working tree on 22cf10f; scoped manifests and source fingerprints; BEFORE final niche/outer-junction/contact adjustment",
+    "scope": "正常/受控损伤各31秒驻留，六活动图集变帧且缓存不变；Esc暂停、减少动态、3次菜单载入仍6活动纹理；启动前HP24/0/70与薪柴100夹具后真实键盘修复核心24→28、薪柴100→99，两例pageerror为空，11项源hash起止一致。",
+    "limitations": "受控损伤不代表自然游戏获得；本批在最终暗龛/外接厚体/外部接缝位置修正前封存，不能用此视频冒充最终环境画面。没有专门听音、自然供奉全周期或长期性能认证。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r9-geometry.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r9/motion-play/manifest.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R9-FINAL",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R9 working tree on 22cf10f; final-source-manifest.json records exact source hashes",
+    "scope": "最终生产外景活动类19秒190tick，1625检查验证实体宿主、真实发射、遮挡、减动/空宿主/销毁；98表面、22观察、同源导出alpha33592与行走并集一致；构建、最终隔离实帧零页面错误。",
+    "limitations": "运动7811和六交互/暂停/交易运行批次另存，最后静态及外接修正未冒充全玩法重跑。检查通过不是人的审美/手感验收，未验长期性能及音频。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-r9.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r9-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r9/final-source-manifest.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-R9-REVIEW",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-23",
+    "revision": "2026-09-23 R9 working tree on 22cf10f; final-source-manifest.json records exact source hashes",
+    "scope": "独立代理亲看正常/无新增光结构修正实帧：内外厚承托与远层收敛遮挡链成立，暗龛封闭读法成立；建议结束本轮结构返工，地坪孤立补片仍P2。",
+    "limitations": "知情专家静帧复评，不是人类盲测或用户通过，未签整体美术成熟或成熟作品同等品质；最终外接微光修正另由技术专项验证。",
+    "sources": [
+      {
+        "path": "docs/reviews/2026-09-23-purification-r9-spatial.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

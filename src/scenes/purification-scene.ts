@@ -10,7 +10,7 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { openInventory, inventoryError } from '@/ui/inventory-presenter';
 import { PurificationChamberVisual, CHAMBER_DEVICE_VISUAL_BOUNDS, type PurificationChamberState } from './purification-chamber-visual';
-import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_INTERACTION_RADIUS, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/purification-chamber-layout';
+import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_CONTACTS, CHAMBER_INTERACTION_RADIUS, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/purification-chamber-layout';
 import { PurificationChamberLocomotion } from '@/systems/purification-chamber-locomotion';
 import { ChamberModule } from '@/entities/purification-chamber-module';
 import { ChamberIntegritySelection } from '@/ui/chamber-integrity-lifecycle';
@@ -647,11 +647,12 @@ export class PurificationScene extends Phaser.Scene {
       this.lastStepAt = time;
       audioManager.playSFX('sfx-shared-player-step-metal', { priority: 'low' });
     }
-    const edgeDistance = Math.min(Math.abs(pos.x - 68), Math.abs(572 - pos.x));
-    if (edgeDistance < 56 && time - this.lastBoundaryPulseAt >= 10000) {
+    const contact = Object.values(CHAMBER_CONTACTS).reduce((nearest, candidate) =>
+      Math.hypot(candidate.x - pos.x, candidate.y - pos.y)
+      < Math.hypot(nearest.x - pos.x, nearest.y - pos.y) ? candidate : nearest);
+    if (Math.hypot(pos.x - contact.x, pos.y - contact.y) < 56 && time - this.lastBoundaryPulseAt >= 10000) {
       this.lastBoundaryPulseAt = time;
-      audioManager.playSpatialSFX('sfx-pp-boundary-pulse',
-        { x: pos.x < 320 ? 68 : 572, y: pos.y }, pos);
+      audioManager.playSpatialSFX('sfx-pp-boundary-pulse', contact, pos);
     }
   }
 

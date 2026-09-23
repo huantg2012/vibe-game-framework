@@ -3,7 +3,7 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "浅透视错层净化点，八向绕行与两宽坡道；六操作点保持同层/24px/无遮挡才可 E。R8作者建筑、三层外景与六物活动正式接入；完整度观察独立于操作并在世界/聚焦间单显。核心保留原主层底座与操作锚点，上移路线代价超预算。",
+    "summary": "R9左置紧凑双层净化点，原尺度八向与双宽坡；六物及操作点迁移，E仍同层/24px/无遮挡。地坪33620世界像素²，出生243/315；完整度观察与操作分离，声光接触同源。R8整景人审否决，R9已有限运行验证、审美待定。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -193,7 +193,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R8实施方案与批准范围；核心位置以路线 gate 的主层 fallback 为准"
+        "note": "R9偏置布景/分层授权；原画不得决定画风渲染"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -263,11 +263,12 @@
       {
         "path": "assets/source/purification-r8/environment.ts",
         "role": "art",
-        "note": "建筑/地坪/前缘及近中远作者面；几何、材料、面向与高程共源"
+        "note": "历史R8作者源/兼容命令，不是当前R9生产资产；旧视觉证据不提升验收"
       },
       {
         "path": "assets/source/purification-r8/README.md",
-        "role": "doc"
+        "role": "doc",
+        "note": "历史R8作者源/兼容命令，不是当前R9生产资产；旧视觉证据不提升验收"
       },
       {
         "path": "src/art/chamber-authored-architecture.ts",
@@ -276,7 +277,8 @@
       },
       {
         "path": "tools/art-pipeline/purification-r8.ts",
-        "role": "test"
+        "role": "test",
+        "note": "历史R8作者源/兼容命令，不是当前R9生产资产；旧视觉证据不提升验收"
       },
       {
         "path": "docs/qa/iteration-30-r8-environment.md",
@@ -315,6 +317,62 @@
       {
         "path": "tools/qa/measure-i30-r8-performance.mjs",
         "role": "test"
+      },
+      {
+        "path": "assets/source/purification-r9/environment.ts",
+        "role": "art"
+      },
+      {
+        "path": "assets/source/purification-r9/interior.ts",
+        "role": "art"
+      },
+      {
+        "path": "assets/source/purification-r9/exterior.ts",
+        "role": "art"
+      },
+      {
+        "path": "assets/source/purification-r9/schema.ts",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-r9/README.md",
+        "role": "decision"
+      },
+      {
+        "path": "tools/art-pipeline/purification-chamber.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-i30-composition.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-r9-geometry.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-09-23-purification-r9-spatial.md",
+        "role": "doc"
+      },
+      {
+        "path": "assets/source/purification-r9/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r9.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-30-r9-technical-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-i30-r9-exterior-contacts.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-30-r9/final-source-manifest.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -352,12 +410,17 @@
       "COH-E-I30-R8-TECHNICAL",
       "COH-E-I30-R8-REVIEW",
       "COH-E-I30-R8-TRANSACTIONS",
-      "COH-E-I30-R8-PERFORMANCE"
+      "COH-E-I30-R8-PERFORMANCE",
+      "COH-E-I30-R8-HUMAN-REJECTION",
+      "COH-E-I30-R9-GEOMETRY",
+      "COH-E-I30-R9-MOTION",
+      "COH-E-I30-R9-FINAL",
+      "COH-E-I30-R9-REVIEW"
     ],
     "unknowns": [
-      "R8已正式接入，用户美术终审待定；独立复评仍留核心后景/坡道相切、右墙承接和外景近中远关系三个 P2，技术证据不代签品质。",
-      "真实加厚/供奉事务和 R7/R8 各10秒性能比较已有限定实录；最终场景回归与构建汇总已由总QA封存，不扩展为硬件长稳或自然经济验证。",
-      "专门音频及自然满供奉全周期未全面验证；I28长期采样/经济继续挂起。"
+      "R8整景被用户否决；R9复评提出的承接/纵深P1与暗龛P2已修正并复看，地坪局部补片仍P2；未获用户整体艺术终审。",
+      "六处真实交互、双坡、原Rift入口、暂停/减动/3次载入及受控24→28修复已有限验证；不等于长期性能、全成长/供奉或自然经济复验。",
+      "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]
   },
   {

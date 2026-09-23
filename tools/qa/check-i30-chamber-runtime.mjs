@@ -8,12 +8,12 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createJourneyDriver } from './i27-journey-driver.mjs';
-import { createChamberDriver } from './i30-chamber-driver.mjs';
+import { createChamberDriver, CHAMBER_TEST_POINTS as P, CHAMBER_TEST_ROUTES as R } from './i30-chamber-driver.mjs';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE
   ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
 const url = process.env.I30_URL ?? 'http://127.0.0.1:3025/';
-const out = process.env.I30_OUT ?? 'docs/qa/artifacts/iteration-30-r2/runtime';
+const out = process.env.I30_OUT ?? 'docs/qa/artifacts/iteration-30-r9/runtime';
 fs.mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
@@ -27,7 +27,7 @@ await page.route('**/@vite/client', route => route.fulfill({ contentType: 'appli
 const d = createJourneyDriver(page, out);
 const manifest = {
   at: new Date().toISOString(), version: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
-  workingTree: process.env.I30_LABEL ?? 'I30 R2 changes under test', url,
+  workingTree: process.env.I30_LABEL ?? 'I30 R9 changes under test', url,
   method: 'Fresh isolated Playwright context; real keyboard; read-only diagnostics for routing; no save injection, teleport, clock change or grants.',
   scope: [], errors,
 };
@@ -45,7 +45,8 @@ const base = async () => {
 
 const chamber = createChamberDriver(page, d);
 
-async function verifyPanel({ name, x, y, floor, selector, text, shot }) {
+async function verifyPanel({ name, device, floor, selector, text, shot }) {
+  const [x, y] = P[device];
   const arrival = await chamber.walkFeet(x, y);
   assert.equal(arrival.route, floor, `${name} must be reached on its own floor`);
   await page.waitForTimeout(80);
@@ -72,19 +73,19 @@ try {
   await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
   await page.waitForTimeout(1800);
   const start = await base();
-  near(start.player.x, 366, 'Spawn X'); near(start.player.y, 289, 'Spawn Y');
+  near(start.player.x, P.spawn[0], 'Spawn X'); near(start.player.y, P.spawn[1] - 10, 'Spawn Y');
   assert.equal(start.route, 'main');
   await d.snap('01-hub-main');
   await d.hold(['w'], 220);
   assert((await base()).player.y < start.player.y - 8, 'W must move into floor depth');
-  await chamber.walkFeet(366, 299);
+  await chamber.walkFeet(...P.spawn);
   manifest.scope.push('Fresh production entry; W independently moves through depth on main floor');
 
-  await verifyPanel({ name: '核心', x: 284, y: 313, floor: 'main', selector: '#allocation-panel', text: '核心', shot: '02-repair-core' });
-  await chamber.via([[285, 322], [180, 322]]);
-  await verifyPanel({ name: '储藏', x: 162, y: 304, floor: 'main', selector: '#allocation-panel', text: '储藏', shot: '03-storage' });
+  await verifyPanel({ name: '核心', device: 'core', floor: 'main', selector: '#allocation-panel', text: '核心', shot: '02-repair-core' });
+  await chamber.via(R.coreToStorage);
+  await verifyPanel({ name: '储藏', device: 'storage', floor: 'main', selector: '#allocation-panel', text: '储藏', shot: '03-storage' });
   // Walk behind the core, then around its front. The model's base blocks its center.
-  await chamber.via([[188, 300], [216, 281], [253, 280]]);
+  await chamber.via(R.storageToBehindCore);
   await page.waitForTimeout(160);
   const occlusion = await page.evaluate(() => {
     const scene = window.__game.scene.getScene('PurificationScene');
@@ -96,19 +97,18 @@ try {
   await d.snap('04-behind-core');
   await d.hold(['s'], 450);
   const blocked = await base();
-  assert(blocked.player.y + 10 <= 283.1, 'Core footprint blocks feet entering the solid base');
-  await chamber.via([[284, 281], [296, 318]]);
+  assert(blocked.player.y + 10 <= 289.1, 'Core footprint blocks feet entering the solid base');
+  await chamber.via(R.behindToFrontCore);
   await page.waitForTimeout(160);
   assert.equal(await page.evaluate(() => window.__game.scene.getScene('PurificationScene').children.list
     .find(object => object.texture?.key?.startsWith('purification-chamber-core-')).alpha), 1,
   'Device opacity restores after the player passes in front');
   await d.snap('05-front-core');
-  await chamber.via([[350, 310], [413, 302]]);
-  await verifyPanel({ name: '净化器', x: 458, y: 301, floor: 'main', selector: '#allocation-panel', text: '净化器', shot: '06-purifier' });
-  await chamber.via([[498, 302]]);
-  await verifyPanel({ name: '裂隙备行', x: 507, y: 287, floor: 'main', selector: '#inventory-panel', text: '踏入裂隙', shot: '07-prepare' });
+  await chamber.via([P.spawn]);
+  await verifyPanel({ name: '净化器', device: 'purifier', floor: 'main', selector: '#allocation-panel', text: '净化器', shot: '06-purifier' });
+  await verifyPanel({ name: '裂隙备行', device: 'rift', floor: 'main', selector: '#inventory-panel', text: '踏入裂隙', shot: '07-prepare' });
 
-  await chamber.via([[501, 308], [411, 307], [366, 300], [304, 278], [298, 253]]);
+  await chamber.via([[329, 320], ...R.mainToClimb]);
   const ramp = await base();
   assert.equal(ramp.route, 'left-stair');
   await page.waitForTimeout(160);
@@ -122,16 +122,16 @@ try {
   assert.equal(await page.locator('#allocation-panel, #growth-panel, #defense-panel, #inventory-panel').count(), 0,
     'No device can be operated from a connecting ramp');
   await d.snap('08-ramp-width-stop-reverse');
-  await chamber.via([[294, 246], [281, 218], [233, 203]]);
-  await verifyPanel({ name: '蜕变', x: 183, y: 202, floor: 'upper', selector: '#growth-panel', text: '蜕变', shot: '09-growth' });
-  await chamber.via([[222, 203], [315, 198]]);
-  await verifyPanel({ name: '供奉', x: 348, y: 198, floor: 'upper', selector: '#defense-panel', text: '供奉', shot: '10-offering' });
+  await chamber.via(R.climbToUpper);
+  await verifyPanel({ name: '蜕变', device: 'growth', floor: 'upper', selector: '#growth-panel', text: '蜕变', shot: '09-growth' });
+  await chamber.via(R.upperToOffering);
+  await verifyPanel({ name: '供奉', device: 'offering', floor: 'upper', selector: '#defense-panel', text: '供奉', shot: '10-offering' });
   await d.snap('11-upper');
   await chamber.descendEast();
   await d.snap('12-loop-complete');
   manifest.scope.push('All six devices by real movement; behind/front core and solid base; central ramp transverse move/stop/reverse; east ramp descent; no teleport');
 
-  await chamber.via([[460, 303], [503, 300], [507, 287]]);
+  await chamber.via([P.rift]);
   await d.press('e');
   await page.locator('#inventory-panel').waitFor({ state: 'visible' });
   await page.waitForTimeout(300);

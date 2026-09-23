@@ -4,7 +4,7 @@ import type { ChamberSurfaceMap } from '../art/chamber-surface-map';
 import { ChamberLightField, type FieldSource, type LightSpan } from '../art/chamber-light-field';
 import { ChamberFloorLight } from '../art/chamber-floor-light';
 import { getChamberRouteAtPosition } from '../systems/purification-chamber-locomotion';
-import { CHAMBER_DEVICE_BASES, CHAMBER_DEVICE_FLOORS, CHAMBER_SIZE,
+import { CHAMBER_DEVICE_BASES, CHAMBER_DEVICE_FLOORS, CHAMBER_SIZE, CHAMBER_WALL_LAMP,
   type ChamberDevice, type ChamberFloor, type ChamberPolygon } from '../systems/purification-chamber-layout';
 import type { PurificationChamberState } from './purification-chamber-visual';
 
@@ -60,17 +60,17 @@ export class PurificationChamberLighting {
     }
     const specs: { id: SourceId; color: number; face: FieldSource & { elevation: number }; ground: FieldSource; floor: ChamberFloor }[] = [
       { id: 'core', color: 0x2ae6c8, floor: 'main',
-        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 59, radiusX: 112, radiusY: 88, elevation: 59 },
-        ground: { ...CHAMBER_DEVICE_BASES.core, radiusX: 92, radiusY: 36 } },
+        face: { x: CHAMBER_DEVICE_BASES.core.x, y: CHAMBER_DEVICE_BASES.core.y - 59, radiusX: 94, radiusY: 83, elevation: 59 },
+        ground: { ...CHAMBER_DEVICE_BASES.core, radiusX: 76, radiusY: 30 } },
       { id: 'growth', color: 0x1aad96, floor: 'upper',
         face: { x: CHAMBER_DEVICE_BASES.growth.x, y: CHAMBER_DEVICE_BASES.growth.y - 36, radiusX: 67, radiusY: 44, elevation: 68 },
-        ground: { ...CHAMBER_DEVICE_BASES.growth, radiusX: 76, radiusY: 40 } },
+        ground: { ...CHAMBER_DEVICE_BASES.growth, radiusX: 53, radiusY: 30 } },
       { id: 'purifier', color: 0x1aad96, floor: 'main',
         face: { x: CHAMBER_DEVICE_BASES.purifier.x, y: CHAMBER_DEVICE_BASES.purifier.y - 21, radiusX: 68, radiusY: 44, elevation: 21 },
-        ground: { ...CHAMBER_DEVICE_BASES.purifier, radiusX: 74, radiusY: 39 } },
+        ground: { ...CHAMBER_DEVICE_BASES.purifier, radiusX: 56, radiusY: 29 } },
       { id: 'wall-lamp', color: 0xc4873a, floor: 'upper',
-        face: { x: 213, y: 140, radiusX: 23, radiusY: 20, elevation: 48 },
-        ground: { x: 213, y: 153, radiusX: 27, radiusY: 16 } },
+        face: { ...CHAMBER_WALL_LAMP, radiusX: 23, radiusY: 20 },
+        ground: { x: CHAMBER_WALL_LAMP.x, y: CHAMBER_WALL_LAMP.y + 13, radiusX: 27, radiusY: 16 } },
     ];
     this.emitters = specs.map(spec => ({ ...spec, energy: 0,
       floorSpans: this.field.compileFloor(spec.ground, spec.floor, spec.id === 'wall-lamp' ? undefined : spec.id,
@@ -121,7 +121,7 @@ export class PurificationChamberLighting {
       this.field.paint(this.walls, emitter.wallSpans, emitter.color, emitter.energy * .92);
     }
     this.walls.fillStyle(0xc4873a, this.energy('wall-lamp') * 3);
-    this.walls.fillRect(213, 140, 1, 1);
+    this.walls.fillRect(CHAMBER_WALL_LAMP.x, CHAMBER_WALL_LAMP.y, 1, 1);
     for (const device of this.devices) {
       device.graphics.clear();
       for (const response of device.responses) this.field.paint(device.graphics, response.spans,
@@ -132,8 +132,8 @@ export class PurificationChamberLighting {
     for (let i = 0; !reducedMotion && i < 3; i++) {
       const phase = (time * .00016 + i * .31) % 1;
       this.motes.fillStyle(0x8a8f96, Math.sin(phase * Math.PI) * core.energy * .8);
-      this.motes.fillRect(Math.round(248 + i * 5 + Math.sin(phase * 6 + i) * 4),
-        Math.round(278 - phase * 25), 1, 1);
+      this.motes.fillRect(Math.round(CHAMBER_DEVICE_BASES.core.x - 5 + i * 5 + Math.sin(phase * 6 + i) * 4),
+        Math.round(CHAMBER_DEVICE_BASES.core.y - 27 - phase * 25), 1, 1);
     }
     this.playerX = Number.NaN; // Energy changed; refresh shadow without changing player animation.
     this.syncPlayer(state.player, state.lamp);

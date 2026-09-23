@@ -1,4 +1,4 @@
-import { ENVIRONMENT_FACES, type Face } from '../../assets/source/purification-r8/environment';
+import { ENVIRONMENT_FACES, type Face } from '../../assets/source/purification-r9/environment';
 import { CHAMBER_DEVICE_BASES, CHAMBER_DEVICE_FOOTPRINTS, CHAMBER_WALK_POLYGONS,
   type ChamberPoint, type ChamberPolygon } from './purification-chamber-layout';
 import { CHAMBER_MODULE_BOUNDS, distanceToIntegrityFootprint } from '../ui/chamber-integrity-placement';

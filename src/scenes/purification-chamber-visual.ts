@@ -8,6 +8,7 @@ import { PurificationChamberLighting } from './purification-chamber-lighting';
 import {
   CHAMBER_DEVICE_ANCHORS,
   CHAMBER_DEVICE_BASES,
+  CHAMBER_CONTACTS,
   CHAMBER_SIZE,
   CHAMBER_CAMERA,
   type ChamberDevice,
@@ -250,9 +251,9 @@ export class PurificationChamberVisual {
       ground.fillEllipse(x, y, halfWidth * 2 + 14, 9);
     }
     // Light stays in the existing material split. Damage changes how far the active seam escapes.
-    this.paintPressure(99, 240, state.moduleHealth.storage, 1, breath);
-    this.paintPressure(319, 121, state.moduleHealth.core, 0, .5 + .5 * Math.sin(motionTime * .0011 + 1.7));
-    this.paintPressure(549, 228, state.moduleHealth.purifier, -1, .5 + .5 * Math.sin(motionTime * .0013 + 3.1));
+    this.paintPressure(CHAMBER_CONTACTS.west.x, CHAMBER_CONTACTS.west.y, state.moduleHealth.storage, 1, breath);
+    this.paintPressure(CHAMBER_CONTACTS.rear.x, CHAMBER_CONTACTS.rear.y, state.moduleHealth.core, 0, .5 + .5 * Math.sin(motionTime * .0011 + 1.7));
+    this.paintPressure(CHAMBER_CONTACTS.east.x, CHAMBER_CONTACTS.east.y, state.moduleHealth.purifier, -1, .5 + .5 * Math.sin(motionTime * .0013 + 3.1));
     if (pulsing && this.pulseTarget === 'player') {
       this.bodyEffects.fillStyle(0xc8cdd4, envelope * .45);
       this.bodyEffects.fillRect(-3, -7, 2, 3);

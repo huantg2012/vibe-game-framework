@@ -1,5 +1,5 @@
 ---
-status: REVIEW-COMPLETE / HUMAN-ART-REVIEW-PENDING
+status: REVIEW-COMPLETE / HUMAN-REJECTED
 date: 2026-09-23
 reviewer: independent art agent
 features: [COH-F042, COH-F026, COH-F033, COH-F038]
@@ -9,7 +9,11 @@ scope: R8 purification scene implementation; no production edits
 
 # 净化点 R8 实施视觉复评
 
-## 当前结论
+## 后续用户裁决（2026-09-23）
+
+用户评价R8整景“非常差”，要求先静态重审安全区/外景占比与结构。随后接受偏置与集中外景的布景思路，授权R9重构，且明确原画渲染画风不得照搬。以下独立复评是历史内部判断，不能覆盖用户否决；原功能验证也不表示艺术通过。新工作见[当前方案](../design-notes/purification-scene-art-plan.md)。
+
+## 当时独立结论
 
 **R8 的改善可读：墙体大形、材料区分、核心主次、核心活动与状态反馈均有直接视觉证据。尚不建议记为可发布美术完成。** 核心背后的空间组织、右墙断构的承接、外景的尺度与遮挡关系仍有三个 P2 品质差距；本次未确认 P1 视觉阻断。最终源帧、灯光补片与真实交易已经有限复核。供奉空/有/成熟返空的因果可读；六物动作的沉浸程度不等齐，不能从技术接入齐全推成艺术完成。
 

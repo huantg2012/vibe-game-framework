@@ -1,5 +1,24 @@
 import assert from 'node:assert/strict';
 
+/** R9 route fixtures shared by pure movement and real-key production checks.
+ * Coordinates are sole positions. Junction points keep 6px clearance from the
+ * authored edges and unchanged device bodies; they are not teleport targets. */
+export const CHAMBER_TEST_POINTS = {
+  spawn: [243, 315], core: [175, 320], storage: [79, 322], purifier: [288, 320],
+  rift: [364, 309], growth: [185, 226], offering: [283, 224],
+  behindCore: [141, 283], frontCore: [175, 320],
+  leftRamp: [193.5, 258.5], rightRamp: [321, 251.5],
+};
+export const CHAMBER_TEST_ROUTES = {
+  coreToStorage: [[175, 327], [103, 327], CHAMBER_TEST_POINTS.storage],
+  storageToBehindCore: [[105, 324], [110, 287], CHAMBER_TEST_POINTS.behindCore],
+  behindToFrontCore: [[171, 283], CHAMBER_TEST_POINTS.frontCore],
+  mainToClimb: [[243, 315], [205, 293], [200, 278], CHAMBER_TEST_POINTS.leftRamp],
+  climbToUpper: [CHAMBER_TEST_POINTS.leftRamp, [187, 239], CHAMBER_TEST_POINTS.growth],
+  upperToOffering: [[232, 226], CHAMBER_TEST_POINTS.offering],
+  descendEast: [[312, 220], [311, 229], CHAMBER_TEST_POINTS.rightRamp, [331, 274], [330, 306], [329, 320]],
+};
+
 /** Known-safe authored routes, genuine keys. No position setters or time scaling.
  * This is an informed navigation harness, not evidence of first-time readability. */
 export function createChamberDriver(page, journey) {
@@ -28,11 +47,11 @@ export function createChamberDriver(page, journey) {
     for (const [x, y] of points) await walkFeet(x, y);
   }
   async function climbCenter() {
-    await via([[366, 304], [312, 288], [304, 270], [293, 246], [281, 218]]);
+    await via([...CHAMBER_TEST_ROUTES.mainToClimb, ...CHAMBER_TEST_ROUTES.climbToUpper]);
     assert.equal((await journey.state()).route, 'upper');
   }
   async function descendEast() {
-    await via([[374, 199], [382, 215], [405, 238], [421, 258], [413, 297]]);
+    await via(CHAMBER_TEST_ROUTES.descendEast);
     assert.equal((await journey.state()).route, 'main');
   }
   return { walkFeet, via, climbCenter, descendEast };

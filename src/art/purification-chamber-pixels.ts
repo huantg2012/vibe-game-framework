@@ -1,5 +1,6 @@
 import {
   CHAMBER_DEVICE_BASES,
+  CHAMBER_CONTACTS,
   CHAMBER_DEVICE_FLOORS,
   type ChamberDevice,
 } from '../systems/purification-chamber-layout';
@@ -122,7 +123,9 @@ export interface ChamberDeviceState {
 /** These are public damage states of three local stops, never a prediction of the next impact. */
 export function paintChamberResistance(p: ChamberPixels, state: ChamberDeviceState): void {
   for (const [x, y, health, direction] of [
-    [99, 240, state.storage, 1], [319, 121, state.core, 0], [549, 228, state.purifier, -1],
+    [CHAMBER_CONTACTS.west.x, CHAMBER_CONTACTS.west.y, state.storage, 1],
+    [CHAMBER_CONTACTS.rear.x, CHAMBER_CONTACTS.rear.y, state.core, 0],
+    [CHAMBER_CONTACTS.east.x, CHAMBER_CONTACTS.east.y, state.purifier, -1],
   ] as const) {
     const bad = health < .25; const worn = health < 1;
     if (direction === 0) {
