@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-24
-note: I30 R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED；系统美术设计集中于docs/art-direction.md，首版色板与实际像素样板待验证；生图效果稿不作为渲染母版，R10整改及I28挂起保持。
+note: I30 R11-C-SAMPLE-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED；首个局部实际像素样板已制作并限定技术验证，待用户艺术验收；R10整改及I28挂起保持。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -20,11 +20,11 @@ note: I30 R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED；系统�
 
 ## 当前工作 · 迭代30 R11（2026-09-24，原始 C 构图已锁定）
 
-用户取消 A 及其调整，直接选择最初的 C，且不调整构图。原始 `c.png` 是唯一构图基准，见[看图入口](../art/demos/purification-r11/README.md)；当前状态 **R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED**。后续[生图画风效果稿展示与参考图](../art/demos/purification-r11/c-sample.html)仅验证了 PNG 显示和原人物叠加，未解决画风、材质与渲染体系，不作为渲染母版。用户认可空间构图，并要求记录本次系统美术设计；正文统一维护于[美术方向·当前美术设计](../art-direction.md#current-art-design)，首版色板与实际样板待验证。A 布局与通行校核仅保留历史，不迁移为 C 的验证。
+用户取消 A 及其调整，直接选择最初的 C，且不调整构图。原始 `c.png` 是唯一构图基准，当前状态 **R11-C-SAMPLE-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。[首个实际像素样板](../art/demos/purification-r11/c-pixel-sample.html)已制作：960×640 内 442×290 局部、11 分层、三态和原人物同框；核心旁高台承托已按 C 纠正。确定性源码手工组织轮廓、色块与材质细节，不生图、不采图像素。系统设计仍统一维护于[美术方向·当前美术设计](../art-direction.md#current-art-design)；旧生图效果稿不作渲染母版，A 校核仅保留历史。
 
-下一步按[统一美术设计](../art-direction.md#current-art-design)与[执行计划](../design-notes/purification-scene-art-plan.md)，在 C 原构图内实际制作局部像素样板，验证普通照明、核心受光、侵蚀变化三态。工程拆分与通行校核服务这张画面；不能先改成另一张线稿，再据它重新制作场景。保留六功能和双层可达，A 的扩地与双坡外形不自动带入 C；通路有歧义时在原图上精确指出并解决，不擅改构图。
+样板运行源码的严格 TypeScript 检查、栅格运行及导出色板／透明度／裁切／三态同遮罩检查通过，三态 PNG、11 层及材质／法线图已导出；入口与复现命令见[样板记录](../art/demos/purification-r11/README.md)。下一步是用户看图与修订，特别核对原人物和新资产的颗粒协调；技术通过不代表艺术成品。继续按[执行计划](../design-notes/purification-scene-art-plan.md)推进，工程拆分与通行校核服务 C 原构图，不擅自替换构图。
 
-随后依次完成前景室内、三层外景与整体光影、正式动态接入、整景验收。主 COH-F042，关联 F026/F033/F039；[任务清单](../tasks/iteration-30.md)与[DEC-186](decisions-log.md)同步。C 的成品画质、可达性和正式运行均未验；R10技术证据保留、美术整改，I28挂起保持。按用户要求不使用项目内 skill；生成式全貌页仍为旧快照。
+随后依次完成前景室内、三层外景与整体光影、正式动态接入、整景验收。主 COH-F042，关联 F026/F033/F039；[任务清单](../tasks/iteration-30.md)同步。尚无 C 的 `src` 接入、通行、动态遮挡、三层视差或全景完成，也未获用户艺术验收；R10技术证据保留、美术整改，I28挂起保持。按用户要求不使用项目内 skill；生成式全貌页仍为旧快照。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，用户要求美术整改）
 

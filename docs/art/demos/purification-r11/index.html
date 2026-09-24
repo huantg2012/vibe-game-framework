@@ -88,7 +88,8 @@
   <main class="page">
     <header class="masthead">
       <h1>净化场景 · C 已选定</h1>
-      <p class="stage-note"><span id="stage-label">C 原构图保持 · 下一步成品样板</span> · 非实机 · 非成品画质样板</p>
+      <p class="stage-note"><span id="stage-label">C 原构图保持 · 局部像素样板待确认</span> · 本页为构图参照</p>
+      <a class="tool-button" href="./c-pixel-sample.html">查看首个实际像素样板 →</a>
     </header>
     <p id="load-warning" class="load-warning" role="status" hidden></p>
     <nav class="variants" aria-label="构图方案">
@@ -335,7 +336,7 @@
       $("recommendation").hidden = !data.selection && !data.recommendation;
       const choiceText = data.selection ? (rec.id === selected ? "用户已选定此方案" : "用户已选定 " + rec.id.toUpperCase()) : (rec.id === selected ? "制作者主推此方案" : "制作者主推 " + rec.id.toUpperCase());
       $("recommendation").textContent = rec.id ? choiceText + (rec.reason ? " · " + rec.reason : "") : String(rec.reason || "");
-      $("selection-note").textContent = data.selection ? "C 已按用户选择作为唯一构图基准；A 调整已停止。下一步是在 C 完整视口内制作实际游戏尺度的局部成品样板。" : "仅用于比较构图、空间层级与操作关系。主推提示是制作者建议，尚不代表方案已选定。";
+      $("selection-note").textContent = data.selection ? "C 已按用户选择作为唯一构图基准；A 调整已停止。首个局部实际像素样板已制作，入口在页首，画面待确认。" : "仅用于比较构图、空间层级与操作关系。主推提示是制作者建议，尚不代表方案已选定。";
       $("route-link").hidden = selected !== "a" || !data.routePreview;
       $("space-section").hidden = mode !== "space";
       $("check-section").hidden = mode !== "check";

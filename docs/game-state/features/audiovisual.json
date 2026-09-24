@@ -194,12 +194,13 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "R11锁定原始C空间构图；系统美术设计集中维护于docs/art-direction.md#current-art-design，首版色板与实际像素样板待验证。后续生图仅为效果稿，不作为渲染母版。A校核仅历史，C通行及画质未验；生产仍为R10，美术整改。",
+    "summary": "R11锁定原始C构图；首个442×290局部实际像素样板候选已制作，11分层、三态及原人物同框，限定技术检查通过，待用户艺术验收。系统设计集中于docs/art-direction.md#current-art-design；无C正式接入或全景完成，生产仍为R10，美术整改。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "主菜单；净化点自由移动/修复/交互",
-      "R11原始C构图与计划：docs/art/demos/purification-r11/index.html；非正式游戏入口"
+      "R11原始C构图与计划：docs/art/demos/purification-r11/index.html；非正式游戏入口",
+      "R11首个实际像素样板候选：docs/art/demos/purification-r11/c-pixel-sample.html；三态/原人物/局部或全C查看，非正式游戏入口"
     ],
     "sources": [
       {
@@ -389,7 +390,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R11原始C只锁定构图；美术设计正文在docs/art-direction.md#current-art-design，执行计划仅引用；实际像素样板与正式接入未完成"
+        "note": "R11原始C只锁定构图；美术设计正文在docs/art-direction.md#current-art-design，首个局部像素样板候选已制作、待艺术验收；正式接入未完成"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -621,6 +622,51 @@
         "path": "docs/art/demos/purification-r11/c.png",
         "role": "doc",
         "note": "当前唯一构图基准；不作构图调整"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/c-pixel-sample.html",
+        "role": "doc",
+        "note": "首个局部实际像素样板候选；限定技术通过，尚未用户艺术验收或src接入"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/viewer.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/scene.ts",
+        "role": "code",
+        "note": "960×640中442×290局部、11分层及三态组合；样板外为C构图参照"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/architecture.ts",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/devices.ts",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/palette.ts",
+        "role": "art",
+        "note": "每材质8个绘制色阶、相邻档间4步光照LUT，待共同样板艺术验收"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/raster.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/check-raster.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/export.mjs",
+        "role": "test",
+        "note": "导出时检查色板、alpha、crop、三态同mask及三态不同输出；不作艺术验收"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/assets/manifest.json",
+        "role": "doc",
+        "note": "三态PNG、11层及材质/法线图的导出清单与遮罩/像素指纹"
       }
     ],
     "dependsOn": [
@@ -675,7 +721,7 @@
       "COH-E-I30-R11-C-DIRECTION"
     ],
     "unknowns": [
-      "原始C仅锁定构图；六功能与双层可达需在原图内落实，歧义不得以擅改构图解决。成品画法、通行、正式遮挡/相机/面板均未验；A扩地、双坡外形及11项灰盒证据不迁入C。",
+      "首个局部实际像素样板仍待用户艺术验收，人物与新资产颗粒协调需看图；样板运行源码严格TS、栅格运行与导出检查通过不代表美术PASS。C尚无src接入、通行、动态遮挡、三层视差或全景完成；A扩地、双坡外形及11项灰盒证据不迁入C。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

@@ -1,5 +1,5 @@
 ---
-status: R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R11-C-SAMPLE-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-24
 owner: director
@@ -15,13 +15,14 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 - [x] 归纳问题、制定六阶段计划并交付首批三张构图。
 - [x] 记录原始 C 构图锁定、A 调整取消，以及本轮仅澄清计划的边界。
 - [x] 集中记录系统美术设计，明确生图效果稿性质与旧规则适用范围；设计记录不等于画面通过。
-- [ ] 按统一美术设计，在 C 全景内实际制作局部像素样板：原人物、核心附近地面/墙面、建筑转折及其后中景，验证普通照明、核心受光、侵蚀变化三态。
+- [x] 首个局部实际像素样板候选：960×640 内 442×290、11 分层、原人物同框及普通照明／核心受光／侵蚀变化三态；核心旁高台承托按 C 纠正。样板运行源码的严格 TypeScript 检查、栅格运行和导出色板／透明度／裁切／三态同遮罩检查通过，三态 PNG、11 层和材质／法线图已导出，见[样板记录与复现](../art/demos/purification-r11/README.md)。
+- [ ] 首个样板用户艺术验收及修订，特别核对人物与新资产颗粒协调；限定技术通过不代表美术 PASS。
 - [ ] 前景、室内及六处装置环境接口扩展。
 - [ ] 三层外景和整体光影静态成稿。
 - [ ] 正式动态接入、真实移动视差与连续运行核对。
 - [ ] 整景验收与用户画面确认。
 
-工程拆分与通行校核服务 C 原画，不能先重画另一张线稿再继承。六功能和双层可达保留；A 的扩地与双坡外形不自动带入 C，通路歧义在原图上精确指出并解决，不擅改构图。A 的确定性布局和独立灰盒检查仅为历史证据，不证明 C 可达；C 的成品画法、通行及正式接入均未验。[看图入口](../art/demos/purification-r11/README.md)以原始 C 为准，R10美术整改与已有技术证据保持原范围。
+工程拆分与通行校核服务 C 原画，不能先重画另一张线稿再继承。六功能和双层可达保留；A 的扩地与双坡外形不自动带入 C，通路歧义在原图上精确指出并解决，不擅改构图。A 的灰盒检查仅为历史证据，不证明 C 可达。本次只交付独立局部候选，尚无 `src` 接入、通行、动态遮挡、三层视差或全景完成；R10美术整改与已有技术证据保持原范围。
 
 ## R10：外景三层纵深与行走视差（2026-09-23，后续美术整改）
 
