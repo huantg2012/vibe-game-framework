@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-24
-note: I30 R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED；静态画法样板与官方参考图已提供、待看图确认，原始C为唯一构图基准，A转历史，R10整改及I28挂起保持。
+note: I30 R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED；系统美术设计集中于docs/art-direction.md，首版色板与实际像素样板待验证；生图效果稿不作为渲染母版，R10整改及I28挂起保持。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -20,9 +20,9 @@ note: I30 R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED；静态�
 
 ## 当前工作 · 迭代30 R11（2026-09-24，原始 C 构图已锁定）
 
-用户取消 A 及其调整，直接选择最初的 C，且不调整构图。原始 `c.png` 是唯一构图基准，见[看图入口](../art/demos/purification-r11/README.md)；当前状态 **R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED**。后续已授权制作：[静态画法样板与官方参考图](../art/demos/purification-r11/c-sample.html)已提供，960×640 显示与原人物叠加已核对，待看图确认。A 布局与通行校核仅保留历史，不迁移为 C 的验证。
+用户取消 A 及其调整，直接选择最初的 C，且不调整构图。原始 `c.png` 是唯一构图基准，见[看图入口](../art/demos/purification-r11/README.md)；当前状态 **R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED**。后续[生图画风效果稿展示与参考图](../art/demos/purification-r11/c-sample.html)仅验证了 PNG 显示和原人物叠加，未解决画风、材质与渲染体系，不作为渲染母版。用户认可空间构图，并要求记录本次系统美术设计；正文统一维护于[美术方向·当前美术设计](../art-direction.md#current-art-design)，首版色板与实际样板待验证。A 布局与通行校核仅保留历史，不迁移为 C 的验证。
 
-下一步按[唯一美术计划](../design-notes/purification-scene-art-plan.md)，在 C 原构图内制作实际游戏尺度的局部成品样板：原人物、核心附近地面/墙面、一处建筑转折及其后中景。工程拆分与通行校核服务这张画面；不能先改成另一张线稿，再据它重新制作场景。保留六功能和双层可达，A 的扩地与双坡外形不自动带入 C；通路有歧义时在原图上精确指出并解决，不擅改构图。
+下一步按[统一美术设计](../art-direction.md#current-art-design)与[执行计划](../design-notes/purification-scene-art-plan.md)，在 C 原构图内实际制作局部像素样板，验证普通照明、核心受光、侵蚀变化三态。工程拆分与通行校核服务这张画面；不能先改成另一张线稿，再据它重新制作场景。保留六功能和双层可达，A 的扩地与双坡外形不自动带入 C；通路有歧义时在原图上精确指出并解决，不擅改构图。
 
 随后依次完成前景室内、三层外景与整体光影、正式动态接入、整景验收。主 COH-F042，关联 F026/F033/F039；[任务清单](../tasks/iteration-30.md)与[DEC-186](decisions-log.md)同步。C 的成品画质、可达性和正式运行均未验；R10技术证据保留、美术整改，I28挂起保持。按用户要求不使用项目内 skill；生成式全貌页仍为旧快照。
 
