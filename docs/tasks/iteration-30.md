@@ -1,5 +1,5 @@
 ---
-status: R11-C-FOUNDATION-REBUILD / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R11-LAST-LIGHT-REBUILD / R11-C-HUMAN-REJECTED / ART-CANDIDATE / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-24
 owner: director
@@ -8,9 +8,24 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 
 # 迭代30：净化点空间、模型与成长获得感重构
 
-## R11：整景美术重构（2026-09-24，原始 C 构图已锁定）
+## R11：启动页原画像素重建（2026-09-24，完整构图与六交互物）
 
-原始 `c.png` 是唯一构图基准（DEC-186），A 及其调整已取消；生图效果稿不作绘制母版。用户已否决 `8ef1366` 的墙地、金属与配色，仅认可污染芯形态。本轮结构/材质重构以[唯一设计正文与恢复指针](../art-direction.md#resume-art-rebuild)为准，施工状态见[当前步骤](../design-notes/purification-scene-art-plan.md#当前执行状态)。
+用户明确否决 `6127218` C 母版，评价“令人绝望”，随后要求找回启动页原画；已展示的 [menu-last-light.png](../../public/assets/art/menu-last-light.png)成为直接参照。最新要求“用像素技术尽可能还原这个原画效果，扩充完整内容，包括构图、交互物模型”已替代 DEC-186 阶段 C 构图锁定和仅做连续局部的范围。主 COH-F042，关联 F026/F033/F039；本轮以[唯一设计正文与恢复指针](../art-direction.md#resume-art-rebuild)为准，施工状态见[当前步骤](../design-notes/purification-scene-art-plan.md#当前执行状态)。
+
+- [x] 找回并展示启动页原画；记录 `6127218` 明确否决，更新当前方向与恢复入口。
+- [x] 新建 `docs/art/demos/purification-last-light/` 作者源与查看页，采用确定性可编辑 3D 辅助构型和 960×640 CPU 像素栅格；不采样原画、不使用 imagegen。
+- [x] 完整破裂书库环境与六处模型候选制作/导出：核心、储藏、净化器、供奉、蜕变、裂隙。
+- [x] 上下层/两坡联通与六处可接近站位的几何验证；记录实际限界。
+- [x] 整景、六单体 PNG、可见深度/图层编码、对象信息与装置范围导出及可复现检查。
+- [x] 正常尺度原画对照、原人物同框、六模型可见性及查看页浏览器验证。
+- [ ] 完整样景用户画面确认与必要修订；技术检查不得代签艺术 PASS。
+- [ ] 后续正式 `src`、碰撞、装置状态、动态遮挡及人物驱动视差接入与运行核对。
+
+活跃查看页：[微光中的据点](../art/demos/purification-last-light/index.html)，本地地址 `http://127.0.0.1:3026/docs/art/demos/purification-last-light/index.html`。六站/双坡布局与浏览器八视图检查通过，证据见新目录 assets/layout-check.json、browser-check.json；画面待用户判断。仅艺术样景，未接正式碰撞/经济/实时视差。3D 辅助构型只服务像素生产，不恢复已终止的三维游戏路线。R10生产、美术整改与既有技术证据保持原范围，I28挂起不变。
+
+### R11 旧 C 阶段（历史，已否决并替代）
+
+以下只记录旧 C 的施工与技术事实。`8ef1366` 的墙地/金属/配色已被否决，仅污染芯形态曾获肯定；后续 `6127218` 重构仍被否决。原始 C、生图效果稿、局部样板和技术通过记录都不再是当前视觉基准，也不证明新样景已通过。
 
 - [x] 归纳问题、制定六阶段计划并交付首批三张构图。
 - [x] 记录原始 C 构图锁定、A 调整取消，以及本轮仅澄清计划的边界。
@@ -20,13 +35,9 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 - [x] 接入 `surface()` 及 normal/roughness/occlusion/specular 参数，`construction-surfaces.ts` 替代旧 `surface-paint.ts`；新增参数图导出。
 - [x] 本轮栅格行为与参数/色阶/透明轮廓导出检查实测通过，见[复现入口](../art/demos/purification-r11/README.md)；不代表画面通过。
 - [x] [局部候选](../art/demos/purification-r11/c-pixel-sample.html)结构、材质与照明重构已导出；项目严格TS检查通过，本轮浏览器三态/人物/五视图已验，无error/warn。
-- [ ] 局部母版用户艺术验收与修订；技术通过不代表美术 PASS。
-- [ ] 前景、室内及六处装置环境接口扩展。
-- [ ] 三层外景和整体光影静态成稿。
-- [ ] 正式动态接入、真实移动视差与连续运行核对。
-- [ ] 整景验收与用户画面确认。
+- [x] `6127218` 用户明确否决；旧“局部艺术验收后才全场扩展”路线退出当前工作。
 
-工程拆分与通行校核服务 C 原画，不能先重画另一张线稿再继承。六功能和双层可达保留；A 的扩地与双坡外形不自动带入 C，通路歧义在原图上精确指出并解决，不擅改构图。A 的灰盒检查仅为历史证据，不证明 C 可达。本次只交付独立局部候选，尚无 `src` 接入、通行、动态遮挡、三层视差或全景完成；R10美术整改与已有技术证据保持原范围。
+旧 C 仅交付独立局部候选，没有正式 `src`、通行、动态遮挡、三层视差或全景接入；A 灰盒证据也不证明 C 可达。此前构图约束与阶段门槛只在旧阶段有效，新制作由上方启动页原画方向接替。
 
 ## R10：外景三层纵深与行走视差（2026-09-23，后续美术整改）
 

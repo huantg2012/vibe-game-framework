@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-24
-note: I30 R11-C-FOUNDATION-REBUILD；建筑/金属/照明重构候选已导出并技术检查，艺术待审；持久工作记忆见art-direction文首。8ef1366已否定，仅保留获肯定的核心芯形态。
+note: I30 R11-LAST-LIGHT-REBUILD；6127218 C母版已被明确否决，改以启动页menu-last-light原画为参照扩充完整构图和六交互物。完整艺术候选已导出，技术检查通过、艺术待审，未接正式生产；恢复指针见art-direction文首。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -18,13 +18,13 @@ note: I30 R11-C-FOUNDATION-REBUILD；建筑/金属/照明重构候选已导出�
 
 旧正文路径保留迁移指针，旧网页链接保留跳转；正文引用、现状索引和阅读器已同步。范围和证据边界见[归档验证](../qa/review-archive-2026-09-21.md)。此任务不改变审查结论、游戏或挂起状态。后续可读交付按[阅读器说明](../dev/report-viewer.md)实际打开验证。
 
-## 当前工作 · 迭代30 R11（2026-09-24，C构图锁定、绘画底层重构）
+## 当前工作 · 迭代30 R11（2026-09-24，启动页原画像素重建与完整场景）
 
-用户否定 `8ef1366` 的材质、土黄环境和鲜绿核心色，仅认可核心芯形态，授权彻底重构并要求持久记忆。**恢复必读：[美术工作记忆与当前设计](../art-direction.md#resume-art-rebuild) → [当前步骤/下一步](../design-notes/purification-scene-art-plan.md#当前执行状态) → 当前实图。** 不依据旧“母版”称呼或技术通过推断艺术成立。
+用户明确否决 `6127218` C 母版，评价“令人绝望”，随后找回并展示[启动页原画](../../public/assets/art/menu-last-light.png)，要求“用像素技术尽可能还原这个原画效果，扩充完整内容，包括构图、交互物模型”。旧 C 构图锁定和局部母版范围已被替代；`8ef1366` 及 `6127218` 均保持 HUMAN-REJECTED。**恢复必读：[美术工作记忆与当前设计](../art-direction.md#resume-art-rebuild) → [当前步骤/下一步](../design-notes/purification-scene-art-plan.md#当前执行状态) → 当前实图。**
 
-当前 **R11-C-FOUNDATION-REBUILD / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。建筑、完整平台断面和三件金属装置已重画，旧斑块场删除，方向光/材料反射重做；暖棕角色与灰冷污染绿同框。以确定性源码绘制。[重构候选](../art/demos/purification-r11/c-pixel-sample.html)已导出；真实项目严格TS、栅格、导出及浏览器三态/人物/五视图检查通过，无页面error/warn。技术通过不等于艺术通过。
+当前 **R11-LAST-LIGHT-REBUILD / ART-CANDIDATE / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。活跃入口为[微光中的据点](../art/demos/purification-last-light/index.html)，本地查看 `http://127.0.0.1:3026/docs/art/demos/purification-last-light/index.html`。采用确定性可编辑 3D 辅助构型与 960×640 CPU 像素栅格，制作破裂书库、厚断面、深空、微暖炉光和六处模型；真实几何用于遮挡、受光、材质和 AO，导出整景/单体 PNG、深度/图层编码。原画只作参照，不采样为场景贴图，不调用 imagegen。
 
-主COH-F042，关联F026/F033/F039；实际范围是C内连续局部。下一步根据用户实图反馈继续修订，局部获认可后才扩展；中尺度像素塑造与场所气质仍须盯紧。尚无C正式通行、动态遮挡、三层视差或全景完成；R10技术证据、美术整改和I28挂起保持。按持续授权检查后本地提交，不推送，独立CLAUDE.md修改排除。
+主COH-F042，关联F026/F033/F039。完整整景与六模型候选已导出。strict TS、六操作点/双坡布局连通及真实浏览器八视图检查通过，证据在新目录 assets/layout-check.json、browser-check.json；不沿用旧 C 的通过记录。当前仅艺术样景，未接正式 `src`、碰撞、经济或实时视差；不标艺术 PASS 或用户认可。R10生产与技术证据、美术整改和I28挂起保持。按持续授权检查后本地提交，不推送，独立CLAUDE.md修改排除。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，用户要求美术整改）
 

@@ -194,13 +194,14 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "R11保留原始C；8ef1366的墙地、金属与配色已被用户否决，仅认可污染芯形态。本轮以docs/art-direction.md#resume-art-rebuild为唯一恢复指针，结构/材质与方向照明重构已导出，艺术待审。项目严格TS、surface栅格与参数/色阶/轮廓导出通过，浏览器三态/人物/五视图已验，无error/warn；无C正式src/三层视差或全景接入，生产仍为R10。",
+    "summary": "6127218 C母版已被用户明确否决；本轮以启动页menu-last-light原画为参照，完成完整像素场景与六模型候选。确定性3D辅助构型经960×640 CPU像素栅格绘制；strict TS、六站/双坡布局连通与浏览器八视图检查通过，艺术待审。正式生产仍为R10，新样景未接src、碰撞、经济或实时视差。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "主菜单；净化点自由移动/修复/交互",
-      "R11原始C构图与计划：docs/art/demos/purification-r11/index.html；非正式游戏入口",
-      "R11结构/材质重构局部候选：docs/art/demos/purification-r11/c-pixel-sample.html；三态/原人物/已否决上一版及首版对照/全C查看，非正式游戏入口"
+      "正式生产仍为R10：主菜单；净化点自由移动/修复/交互",
+      "当前R11启动页原画像素样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3026/docs/art/demos/purification-last-light/index.html；独立艺术查看入口，非正式游戏",
+      "恢复工作：docs/art-direction.md#resume-art-rebuild → docs/design-notes/purification-scene-art-plan.md#当前执行状态",
+      "旧A/C构图与局部样板仅历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；6127218已明确否决，不再是活跃入口"
     ],
     "sources": [
       {
@@ -391,7 +392,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R11原始C锁定构图；8ef1366已否决，本轮结构/材质重构候选已导出、艺术待审；设计与恢复指针为docs/art-direction.md#resume-art-rebuild，正式接入未完成"
+        "note": "当前完整候选与验证边界；6127218被否决，旧C锁定被替代，正式接入未完成"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -584,15 +585,18 @@
       },
       {
         "path": "docs/art/demos/purification-r11/README.md",
-        "role": "doc"
+        "role": "doc",
+        "note": "历史C阶段，已退出当前制作路线；对应旧构图或被否决局部样板，保留追溯，不作新样景证据"
       },
       {
         "path": "docs/art/demos/purification-r11/index.html",
-        "role": "doc"
+        "role": "doc",
+        "note": "历史C阶段，已退出当前制作路线；对应旧构图或被否决局部样板，保留追溯，不作新样景证据"
       },
       {
         "path": "docs/art/demos/purification-r11/compositions.json",
-        "role": "doc"
+        "role": "doc",
+        "note": "历史C阶段，已退出当前制作路线；对应旧构图或被否决局部样板，保留追溯，不作新样景证据"
       },
       {
         "path": "docs/art/demos/purification-r11/a-layout.svg",
@@ -622,68 +626,122 @@
       {
         "path": "docs/art/demos/purification-r11/c.png",
         "role": "doc",
-        "note": "当前唯一构图基准；不作构图调整"
+        "note": "历史C构图参照；原锁定已被启动页menu-last-light原画与完整内容要求替代"
       },
       {
         "path": "docs/art/demos/purification-r11/c-pixel-sample.html",
         "role": "doc",
-        "note": "结构/材质重构局部候选；保留已否决8ef1366及首版对照；本轮严格TS、栅格/导出与浏览器三态/人物/五视图检查通过，无页面error/warn；艺术待审、未接src"
+        "note": "历史C局部候选；8ef1366与6127218均被用户否决。旧TS/栅格/导出/浏览器检查只记录当时技术结果，不证明艺术通过"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/viewer.ts",
-        "role": "code"
+        "role": "code",
+        "note": "历史C阶段，已退出当前制作路线；对应旧构图或被否决局部样板，保留追溯，不作新样景证据"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/scene.ts",
         "role": "code",
-        "note": "960×640中442×290局部、11分层及三态组合；方向光分布与法线/材质响应，样板外为C构图参照"
+        "note": "历史C阶段，已退出当前制作路线；960×640中442×290局部、11分层及三态组合；方向光分布与法线/材质响应，样板外为C构图参照"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/lighting.ts",
         "role": "code",
-        "note": "局部母版的连续受光、接收面遮光/软投影及独立空气散射；未接正式游戏"
+        "note": "历史C阶段，已退出当前制作路线；局部母版的连续受光、接收面遮光/软投影及独立空气散射；未接正式游戏"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/player.ts",
         "role": "code",
-        "note": "原角色up/idle、33px本体受光同框；无移动接入"
+        "note": "历史C阶段，已退出当前制作路线；原角色up/idle、33px本体受光同框；无移动接入"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/architecture.ts",
-        "role": "art"
+        "role": "art",
+        "note": "历史C阶段，已退出当前制作路线；对应旧构图或被否决局部样板，保留追溯，不作新样景证据"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/construction-surfaces.ts",
         "role": "art",
-        "note": "替代旧斑块场，以surface绘制对象构造、材质与局部法线/粗糙度/遮蔽/镜面响应；精修中，待艺术审阅"
+        "note": "历史C对象构造、材质与局部法线/粗糙度/遮蔽/镜面实现；6127218画面被用户明确否决"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/devices.ts",
-        "role": "art"
+        "role": "art",
+        "note": "历史C阶段，已退出当前制作路线；对应旧构图或被否决局部样板，保留追溯，不作新样景证据"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/palette.ts",
         "role": "art",
-        "note": "冷中性建筑与灰冷污染绿色阶；当前规则见集中设计，未获人审锁定"
+        "note": "历史C冷中性建筑与灰冷污染绿色阶；未获人审锁定，新样景不以此文件为色板来源"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/raster.ts",
         "role": "code",
-        "note": "surface回调使用C坐标像素中心；保存Float32明度、法线及roughness/occlusion/specular字节通道"
+        "note": "历史C阶段，已退出当前制作路线；surface回调使用C坐标像素中心；保存Float32明度、法线及roughness/occlusion/specular字节通道"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/check-raster.ts",
-        "role": "test"
+        "role": "test",
+        "note": "历史C阶段，已退出当前制作路线；对应旧构图或被否决局部样板，保留追溯，不作新样景证据"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/export.mjs",
         "role": "test",
-        "note": "逐占用像素参数、色阶、透明轮廓及三态检查；新增roughness-occlusion-specular.png及量化/源TS权威说明，支持临时输出；不作艺术验收"
+        "note": "历史C阶段，已退出当前制作路线；逐占用像素参数、色阶、透明轮廓及三态检查；新增roughness-occlusion-specular.png及量化/源TS权威说明，支持临时输出；不作艺术验收"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/assets/manifest.json",
         "role": "doc",
-        "note": "三态PNG、11层、材质/法线/粗糙度-遮蔽-镜面参数图与阴影蒙版；记录量化和源码权威性及遮罩/像素指纹"
+        "note": "历史C阶段，已退出当前制作路线；三态PNG、11层、材质/法线/粗糙度-遮蔽-镜面参数图与阴影蒙版；记录量化和源码权威性及遮罩/像素指纹"
+      },
+      {
+        "path": "public/assets/art/menu-last-light.png",
+        "role": "art",
+        "note": "用户本轮指定的启动页原画；直接视觉参照，不采样为场景贴图"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/index.html",
+        "role": "doc",
+        "note": "完整整景/原画/六模型查看，真实浏览器八视图检查通过；艺术待审"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/model.ts",
+        "role": "code",
+        "note": "可编辑几何与光源定义；辅助像素制作，非正式3D游戏路线"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/render.ts",
+        "role": "code",
+        "note": "960×640 CPU像素栅格、几何遮挡、材料响应、光源投影与接触AO"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/environment.ts",
+        "role": "art",
+        "note": "完整环境与实际上下层/双坡顶面，六站/双坡布局连通检查通过"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/devices.ts",
+        "role": "art",
+        "note": "核心/储藏/净化器/供奉/蜕变/裂隙六模型与操作站位定义，候选迭代中"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/scene.ts",
+        "role": "code",
+        "note": "环境和六交互物艺术构型组装，未接正式场景"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/export.mjs",
+        "role": "test",
+        "note": "同源整景、六单体PNG、可见深度/图层编码与参数导出入口"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/viewer.ts",
+        "role": "code",
+        "note": "静态艺术图与六模型查看，不构成正式游戏交互"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/check.mjs",
+        "role": "test",
+        "note": "样景几何及六站位检查入口；最终运行结果待记录，不代正式碰撞/通行证据"
       }
     ],
     "dependsOn": [
@@ -735,10 +793,12 @@
       "COH-E-I30-R11-COMPOSITION",
       "COH-E-I30-R11-A-DIRECTION",
       "COH-E-I30-R11-A-ROUTES",
-      "COH-E-I30-R11-C-DIRECTION"
+      "COH-E-I30-R11-C-DIRECTION",
+      "COH-E-I30-LAST-LIGHT-DIRECTION",
+      "COH-E-I30-LAST-LIGHT-CANDIDATE"
     ],
     "unknowns": [
-      "8ef1366已被用户否决，仅污染芯形态获认可；当前结构/材质重构候选未获人审，中尺度像素塑造与场所气质仍须复看。本轮严格TS、surface栅格与导出检查通过，浏览器三态/人物/五视图已验，无error/warn；技术通过不等于艺术通过。C正式src、通行、移动遮挡、三层视差及全景未接入/完成，A灰盒证据不迁入C。",
+      "完整像素候选尚无用户艺术认可；深度编码不含隐藏层内容，尚未接正式src、碰撞、经济或实时视差。布局连通与浏览器查看证据仅对新样景有效，不代签正式游戏可玩性或成品画质。8ef1366和6127218均为历史人审否决。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

@@ -2813,5 +2813,51 @@
     ],
     "date": "2026-09-24",
     "revision": "R11 C selection and plan clarification; production unchanged"
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-DIRECTION",
+    "kind": "human",
+    "result": "partial",
+    "date": "2026-09-24",
+    "revision": "User direction after rejection of 6127218",
+    "scope": "用户明确否决旧C重构，转以启动页menu-last-light原画为直接参照，要求像素技术与完整构图/六模型。",
+    "limitations": "方向授权，不是新候选的艺术验收。",
+    "sources": [
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      },
+      {
+        "path": "public/assets/art/menu-last-light.png",
+        "role": "art"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-CANDIDATE",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-24",
+    "revision": "last-light art worktree after 6127218",
+    "scope": "严格TS、有限几何、六站/双坡顶面布局连通；实际浏览器整景/原画/六模型八视图点击及标签检查，无error/warn。同源导出完整PNG和六单体。",
+    "limitations": "技术范围通过；艺术待用户判断。站位检查为离线样景保守脚印校核，不是正式游戏碰撞。深度/层编码不含隐藏内容，未接正式经济/交互/视差。",
+    "sources": [
+      {
+        "path": "docs/art/demos/purification-last-light/assets/layout-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/browser-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/export.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/manifest.json",
+        "role": "doc"
+      }
+    ]
   }
 ]
