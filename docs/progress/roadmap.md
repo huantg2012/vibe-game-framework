@@ -4,14 +4,14 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-09-24
 last-closed-slice: 9
-note: I30 R11整景美术重构计划完成、实施未开始；R10美术整改，Rift及既有挂起保持。
+note: I30 R11第一阶段三张构图与叠图已交付，推荐C待选择；成品样板/正式接入未开始，Rift及既有挂起保持。
 ---
 
 # Roadmap
 
 ## 当前工作 · 迭代30 R11（2026-09-24，DEC-183）
 
-用户认可对构图、前景构造、外景、氛围与画法断裂的独立分析，要求制定重构计划。[唯一计划](../design-notes/purification-scene-art-plan.md)按完整构图→成品样板→前景扩展→外景及光影→正式接入与动态→整景验收推进；当前仅完成计划，首批三张构图尚未开始。R10技术证据保留，美术进入整改；Rift及I28等挂起保持。当前明细以[活进度](current-iteration.md)和[I30清单](../tasks/iteration-30.md)为准，下方旧“当前”标题保留历史语境。
+用户认可对构图、前景构造、外景、氛围与画法断裂的独立分析，要求制定重构计划。[唯一计划](../design-notes/purification-scene-art-plan.md)按完整构图→成品样板→前景扩展→外景及光影→正式接入与动态→整景验收推进；用户授权逐步推进后，首批[三张构图与叠图](../art/demos/purification-r11/README.md)已交付，主推 C 待选择；同源成品样板和正式接入未开始。R10技术证据保留，美术进入整改；Rift及I28等挂起保持。当前明细以[活进度](current-iteration.md)和[I30清单](../tasks/iteration-30.md)为准，下方旧“当前”标题保留历史语境。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，DEC-182）
 

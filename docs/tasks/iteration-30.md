@@ -1,5 +1,5 @@
 ---
-status: R11-PLANNED / R11-IMPLEMENTATION-NOT-STARTED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R11-STAGE1-DRAFTS-DELIVERED / R11-COMPOSITION-NOT-SELECTED / R11-PRODUCTION-NOT-STARTED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-24
 owner: director
@@ -8,21 +8,21 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 
 # 迭代30：净化点空间、模型与成长获得感重构
 
-## R11：整景美术重构计划（2026-09-24，实施未开始）
+## R11：整景美术重构（2026-09-24，第一阶段草案已交付）
 
 用户认为最近几版美术表现严重退步，要求脱离项目内skill与既有制作自述独立评价，随后认可关于构图、前景构造、外景纵深、光影氛围、细节尺度及制作流程的全部分析，并要求制定重构计划。R10美术进入整改，已有运行证据保留原范围。
 
-唯一计划为[净化点美术重构计划](../design-notes/purification-scene-art-plan.md)。从完整静帧到成品样板，再扩展全场与接入动态；各阶段交付物、通过条件、保留范围和返工条件均在正文。本次只制定计划，未制作构图、样板或改动生产代码。
+唯一计划为[净化点美术重构计划](../design-notes/purification-scene-art-plan.md)。从完整静帧到成品样板，再扩展全场与接入动态；各阶段交付物、通过条件、保留范围和返工条件均在正文。用户随后授权逐步推进，现已完成首批三张灰阶构图、空间与操作示意叠图；推荐 C，尚未选择最终构图、制作成品样板或改动生产代码。
 
 - [x] 归纳已获认可的问题，制定六阶段重构计划。
-- [ ] 三张同尺度完整构图与一张推荐稿。
+- [x] 三张统一视口构图与一张推荐稿，附原人物比例、六功能和路线叠图；生成稿本身的比例误差单列。
 - [ ] 全景内的成品质量样板与最小显示验证。
 - [ ] 前景、室内及六处装置环境接口扩展。
 - [ ] 三层外景和整场光影静态成稿。
 - [ ] 正式接入、真实移动视差与连续运行核对。
 - [ ] 整景验收与用户画面确认。
 
-首批拟执行范围只有三张构图与推荐稿，未在本次规划中启动；具体画面尚未选定。旧布局冻结与内部积极评价不作为新美术必须继承的条件。
+[首批构图与看图页](../art/demos/purification-r11/README.md)已交付。C 的前景—场所—远处断面关系获两次独立读图推荐；后台连接不明确、图中人物/装置比例误差、通路去向未定仍保留，未把示意路线当实机通行通过。具体构图尚未获用户选择。旧布局冻结与内部积极评价不作为新美术必须继承的条件。
 
 ## R10：外景三层纵深与行走视差（2026-09-23，后续美术整改）
 

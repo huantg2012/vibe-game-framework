@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>净化场景 · 三张构图草案</title>
+  <style>
+    :root { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; color: #deded8; background: #151617; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    button:focus-visible { outline: 2px solid #e1d8b8; outline-offset: 4px; }
+    button:disabled { cursor: default; opacity: .45; }
+    .page { max-width: 1664px; margin: 0 auto; padding: 28px 32px 42px; }
+    .masthead { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 18px; }
+    h1 { font-size: 20px; letter-spacing: .04em; font-weight: 550; margin: 0; }
+    .stage-note { font-size: 12px; color: #a7a89f; line-height: 1.6; margin: 0; }
+    .variants { display: flex; gap: 12px; margin-bottom: 18px; }
+    .variant { display: flex; align-items: center; gap: 12px; padding: 6px 15px 6px 6px; border: 1px solid #3a3b39; background: transparent; min-width: 0; text-align: left; border-radius: 3px; }
+    .variant:hover { background: #242525; }
+    .variant[aria-pressed="true"] { background: #2b2c29; border-color: #c9c1a5; }
+    .variant img { display: block; width: 90px; height: 60px; object-fit: cover; background: #242526; color: #a0a09a; }
+    .variant-text { display: flex; flex-direction: column; gap: 5px; white-space: nowrap; }
+    .variant-title { font-size: 14px; }
+    .variant-hint { color: #93958c; font-size: 11px; }
+    .variant[aria-pressed="true"] .variant-hint { color: #c9c1a5; }
+    .toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px 20px; margin-bottom: 10px; }
+    .button-group { display: flex; flex-wrap: wrap; gap: 4px; }
+    .tool-button { border: 1px solid transparent; border-radius: 3px; background: transparent; color: #9fa199; padding: 7px 10px; font-size: 12px; line-height: 1.4; }
+    .tool-button:hover { color: #efeee5; }
+    .tool-button[aria-pressed="true"] { color: #e1dccb; background: #2b2d2b; border-color: #44463f; }
+    .image-scroll { overflow: auto; width: 100%; background: #0d0e0f; border: 1px solid #30322f; scrollbar-color: #55574f #171819; }
+    .artboard { position: relative; width: 100%; aspect-ratio: 3 / 2; flex: none; margin: 0 auto; background: #1c1d1e; }
+    .image-scroll.actual .artboard { width: 960px; height: 640px; }
+    .artboard > img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .artboard > svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .image-error { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; color: #b6b7ae; background: #1c1d1e; padding: 24px; line-height: 1.8; }
+    .image-error[hidden], [hidden] { display: none !important; }
+    .caption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 9px 0 0; color: #8f9389; font-size: 11px; line-height: 1.65; }
+    .caption strong { color: #babbb1; font-weight: 400; }
+    .details { padding-top: 22px; max-width: 1200px; }
+    .summary-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; }
+    h2 { font-size: 17px; font-weight: 500; margin: 0; letter-spacing: .02em; }
+    .recommendation { font-size: 12px; color: #d0c6a7; margin: 0; }
+    .summary { font-size: 14px; color: #c7c8bf; line-height: 1.8; margin: 10px 0 17px; max-width: 85ch; }
+    .notes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; }
+    h3 { margin: 0 0 7px; color: #a6aa9d; font-size: 12px; font-weight: 500; }
+    .notes ul { padding-left: 17px; margin: 0; color: #babdb1; font-size: 13px; line-height: 1.8; }
+    .notes li + li { margin-top: 4px; }
+    .mode-section { margin-top: 22px; padding-top: 18px; border-top: 1px solid #333630; }
+    .section-header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
+    .section-header h3 { margin: 0; color: #c5c8bb; font-size: 13px; }
+    .section-header p { margin: 0; color: #909589; font-size: 11px; line-height: 1.7; }
+    .diagram { display: block; width: min(100%, 960px); height: auto; background: #191b1a; border: 1px solid #30352e; }
+    .diagram-legend { display: flex; flex-wrap: wrap; gap: 12px; color: #a7ad9c; font-size: 11px; margin-top: 8px; }
+    .diagram-legend span::before { content: ""; display: inline-block; width: 7px; height: 7px; background: var(--layer-color); margin-right: 6px; border-radius: 50%; }
+    .device-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; padding: 0; margin: 0 0 14px; gap: 10px 22px; }
+    .device-list li { display: flex; align-items: baseline; gap: 9px; font-size: 13px; line-height: 1.7; color: #c5c9bc; }
+    .number { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 21px; height: 21px; border: 1px solid #a9b39d; border-radius: 50%; font: 11px ui-monospace, monospace; color: #e0e8d1; }
+    .scale-note { font-size: 12px; line-height: 1.75; color: #a4ad9d; margin: 0; }
+    .key-legend { display: flex; flex-wrap: wrap; gap: 16px; color: #abb6a4; font-size: 11px; margin-top: 10px; }
+    .key-legend span { display: flex; align-items: center; gap: 6px; }
+    .swatch { display: inline-block; width: 18px; height: 10px; border: 1px solid #b6ded2; background: #b6ded235; }
+    .dash { display: inline-block; width: 18px; border-top: 2px dashed #ecdbaf; }
+    .ruler { display: inline-block; width: 9px; height: 14px; border-block: 1px solid #f1e8bd; position: relative; }
+    .ruler::after { content: ""; position: absolute; left: 4px; inset-block: 0; border-left: 1px solid #f1e8bd; }
+    .load-warning { color: #cbbd99; background: #302c22; padding: 11px 14px; font-size: 12px; line-height: 1.7; margin: 0 0 16px; border-radius: 3px; }
+    footer { color: #777e70; margin-top: 26px; font-size: 11px; line-height: 1.7; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (max-width: 700px) {
+      .page { padding: 18px 14px 30px; }
+      .masthead { margin-bottom: 14px; }
+      .variants { gap: 7px; }
+      .variant { flex: 1; flex-direction: column; align-items: stretch; gap: 8px; padding: 5px; }
+      .variant img { width: 100%; height: auto; aspect-ratio: 3 / 2; }
+      .variant-text { padding: 0 3px 4px; white-space: normal; }
+      .variant-title { font-size: 12px; }
+      .variant-hint { font-size: 10px; }
+      .tool-button { padding-inline: 8px; }
+      .notes { grid-template-columns: 1fr; }
+      .device-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .details { padding-top: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <h1>净化场景 · 三张构图草案</h1>
+      <p class="stage-note"><span id="stage-label">第一阶段 · 灰阶构图草案</span> · 非实机 · 非成品画质样板</p>
+    </header>
+    <p id="load-warning" class="load-warning" role="status" hidden></p>
+    <nav class="variants" aria-label="构图方案">
+      <button class="variant" type="button" data-variant="a" aria-pressed="true"><img src="a.png" alt=""><span class="variant-text"><span class="variant-title">A 断壁深隙</span><span class="variant-hint">按 1 查看</span></span></button>
+      <button class="variant" type="button" data-variant="b" aria-pressed="false"><img src="b.png" alt=""><span class="variant-text"><span class="variant-title">B 覆顶竖井</span><span class="variant-hint">按 2 查看</span></span></button>
+      <button class="variant" type="button" data-variant="c" aria-pressed="false"><img src="c.png" alt=""><span class="variant-text"><span class="variant-title">C 错位深廊</span><span class="variant-hint">按 3 查看</span></span></button>
+    </nav>
+    <div class="toolbar">
+      <div class="button-group" role="group" aria-label="查看模式">
+        <button class="tool-button" data-mode="clean" aria-pressed="true" type="button">纯画面</button>
+        <button class="tool-button" data-mode="space" aria-pressed="false" type="button">空间标注</button>
+        <button class="tool-button" data-mode="check" aria-pressed="false" type="button">操作校核</button>
+      </div>
+      <div class="button-group" role="group" aria-label="图像显示尺寸">
+        <button class="tool-button" data-size="fit" aria-pressed="true" type="button">适配窗口</button>
+        <button class="tool-button" data-size="actual" aria-pressed="false" type="button">960 × 640 视口</button>
+      </div>
+    </div>
+    <div class="image-scroll" id="image-scroll" tabindex="0" aria-label="构图大图；固定视口模式下可横向滚动">
+      <div class="artboard" id="artboard">
+        <img id="main-image" src="a.png" alt="A 断壁深隙，第一阶段灰阶构图草案">
+        <svg id="overlay" viewBox="0 0 1536 1024" aria-hidden="true"></svg>
+        <div id="image-error" class="image-error" hidden>图像尚未就绪。</div>
+      </div>
+    </div>
+    <div class="caption"><span><strong id="caption-title">A 断壁深隙</strong><span id="mode-caption"> · 纯画面</span></span><span id="size-caption">原图 1536 × 1024 · 适配窗口</span></div>
+    <section class="details" aria-labelledby="current-title">
+      <div class="summary-line"><h2 id="current-title">A 断壁深隙</h2><p id="recommendation" class="recommendation" hidden></p></div>
+      <p id="summary" class="summary"></p>
+      <div class="notes" id="notes"><div><h3>优点</h3><ul id="strengths"></ul></div><div><h3>保留问题</h3><ul id="risks"></ul></div></div>
+      <section id="space-section" class="mode-section" aria-labelledby="space-heading" hidden>
+        <div class="section-header"><h3 id="space-heading">独立层级示意</h3><p>节点位置为关系示意；画面中的深度标注用于对照。</p></div>
+        <svg id="diagram" class="diagram" viewBox="0 0 960 280" role="img" aria-label="当前构图的空间层级关系示意图"></svg>
+        <div id="diagram-legend" class="diagram-legend"></div>
+      </section>
+      <section id="check-section" class="mode-section" aria-labelledby="check-heading" hidden>
+        <div class="section-header"><h3 id="check-heading">装置与通行关系</h3><p>编号对应图中位置；色块与虚线均为校核标注。</p></div>
+        <ol id="device-list" class="device-list"></ol>
+        <p id="scale-note" class="scale-note"></p>
+        <div class="key-legend"><span><i class="swatch" aria-hidden="true"></i>可行走区域</span><span><i class="dash" aria-hidden="true"></i>连接路线</span><span><i class="ruler" aria-hidden="true"></i>人物统一标尺 · 原图 53 px</span></div>
+        <p class="scale-note" style="margin-top: 10px">交互圈以原图半径约 58 px 表示现有 24 世界 px 交互距离的构图参照，仅作示意，不代表实际碰撞或可达检查。</p>
+      </section>
+    </section>
+    <footer>仅用于比较构图、空间层级与操作关系。主推提示是制作者建议，尚不代表方案已选定。</footer>
+    <p id="announcement" class="sr-only" aria-live="polite"></p>
+  </main>
+  <script>
+    "use strict";
+    const IMAGE_WIDTH = 1536;
+    const IMAGE_HEIGHT = 1024;
+    const ACTOR_HEIGHT = 53;
+    const NS = "http://www.w3.org/2000/svg";
+    const fallbackVariants = [
+      { id: "a", title: "A 断壁深隙", image: "a.png" },
+      { id: "b", title: "B 覆顶竖井", image: "b.png" },
+      { id: "c", title: "C 错位深廊", image: "c.png" }
+    ];
+    let data = { variants: fallbackVariants };
+    let selected = "a";
+    let mode = "clean";
+    let size = "fit";
+    let ready = false;
+    const $ = id => document.getElementById(id);
+    const array = value => Array.isArray(value) ? value : [];
+    const finite = value => value !== null && value !== "" && Number.isFinite(Number(value));
+    const point = value => Array.isArray(value) && finite(value[0]) && finite(value[1]);
+    const hasCoordinates = item => item && finite(item.x) && finite(item.y);
+    const validPoints = values => array(values).filter(point).map(([x, y]) => [Number(x), Number(y)]);
+    function el(name, attributes = {}, content) {
+      const node = document.createElementNS(NS, name);
+      for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, String(value));
+      if (content !== undefined) node.textContent = String(content);
+      return node;
+    }
+    function textList(id, items) {
+      $(id).replaceChildren(...array(items).map(item => {
+        const li = document.createElement("li");
+        li.textContent = String(item);
+        return li;
+      }));
+    }
+    function variantTitle(variant) {
+      const title = String(variant.title || "");
+      return new RegExp("^" + variant.id + "(?:[\\s、：:.-]|$)", "i").test(title) ? title : variant.id.toUpperCase() + " " + title;
+    }
+    function recommendation() {
+      const value = data.recommendation;
+      if (!value) return { id: "", reason: "" };
+      if (typeof value === "string") {
+        const match = value.match(/^\s*(?:主推\s*)?([abc])(?:\b|[\s（(:：、—-])/i);
+        return { id: match ? match[1].toLowerCase() : "", reason: /^[abc]$/i.test(value.trim()) ? "" : value };
+      }
+      return { id: String(value.id || value.variant || "").toLowerCase(), reason: String(value.reason || value.summary || "") };
+    }
+    function drawLabel(svg, item, color = "#e2e1cf") {
+      const x = Number(item.x), y = Number(item.y);
+      const label = String(item.label || "");
+      const onRight = x > IMAGE_WIDTH * .76;
+      const tx = x + (onRight ? -20 : 20);
+      svg.append(el("circle", { cx: x, cy: y, r: 5, fill: color, stroke: "#171a17", "stroke-width": 2 }));
+      svg.append(el("path", { d: `M${x} ${y} L${tx} ${y - 18}`, stroke: color, "stroke-width": 2, fill: "none" }));
+      svg.append(el("text", { x: tx + (onRight ? -5 : 5), y: Math.max(25, y - 22), fill: color, "font-size": 22, "font-weight": 550, "text-anchor": onRight ? "end" : "start", stroke: "#141914", "stroke-width": 6, "stroke-linejoin": "round", "paint-order": "stroke" }, label));
+    }
+    function drawOverlay(variant) {
+      const svg = $("overlay");
+      svg.replaceChildren();
+      svg.hidden = mode === "clean";
+      if (mode === "space") {
+        array(variant.depth).filter(hasCoordinates).forEach(item => drawLabel(svg, item));
+      }
+      if (mode !== "check") return;
+      array(variant.walkable).forEach(area => {
+        const points = validPoints(area.points);
+        if (points.length < 3) return;
+        const polygon = el("polygon", { points: points.map(p => p.join(",")).join(" "), fill: "#b6ded2", "fill-opacity": .17, stroke: "#b6ded2", "stroke-opacity": .9, "stroke-width": 2.5, "stroke-linejoin": "round" });
+        polygon.append(el("title", {}, area.label || "可行走区域"));
+        svg.append(polygon);
+      });
+      array(variant.routes).forEach(route => {
+        const points = validPoints(route.points);
+        if (points.length < 2) return;
+        const path = points.map((p, index) => (index ? "L" : "M") + p.join(" ")).join(" ");
+        svg.append(el("path", { d: path, fill: "none", stroke: "#172018", "stroke-width": 7, "stroke-opacity": .75 }));
+        svg.append(el("path", { d: path, fill: "none", stroke: "#ecdbaf", "stroke-width": 3, "stroke-dasharray": "12 10", "stroke-linecap": "round" }));
+      });
+      array(variant.devices).forEach((device, index) => {
+        if (!hasCoordinates(device)) return;
+        svg.append(el("circle", { cx: device.x, cy: device.y, r: 58, fill: "none", stroke: "#d3dec7", "stroke-opacity": .5, "stroke-width": 1.8, "stroke-dasharray": "5 7" }));
+        svg.append(el("circle", { cx: device.x, cy: device.y, r: 18, fill: "#182018", "fill-opacity": .95, stroke: "#e0e8d1", "stroke-width": 2.5 }));
+        svg.append(el("text", { x: device.x, y: Number(device.y) + 7, fill: "#edf4df", "font-size": 21, "font-weight": 650, "text-anchor": "middle", "font-family": "ui-monospace, monospace" }, index + 1));
+      });
+      if (hasCoordinates(variant.actor)) {
+        const x = Number(variant.actor.x), y = Number(variant.actor.y);
+        const path = `M${x - 9} ${y} H${x + 9} M${x} ${y} V${y - ACTOR_HEIGHT} M${x - 9} ${y - ACTOR_HEIGHT} H${x + 9}`;
+        svg.append(el("path", { d: path, stroke: "#131a14", "stroke-width": 7, fill: "none" }));
+        svg.append(el("path", { d: path, stroke: "#f1e8bd", "stroke-width": 3, fill: "none" }));
+        svg.append(el("text", { x: x + 17, y: y - 21, fill: "#f1e8bd", "font-size": 19, stroke: "#131a14", "stroke-width": 5, "paint-order": "stroke" }, "53 px"));
+        svg.append(el("image", { href: "player-reference.png", x: x + 78 - 25.2, y: y - 52.8, width: 50.4, height: 52.8, style: "image-rendering: pixelated; filter: grayscale(1);" }));
+        svg.append(el("text", { x: x + 114, y: y - 17, fill: "#f1e8bd", "font-size": 19, stroke: "#131a14", "stroke-width": 5, "paint-order": "stroke" }, "原人物比例"));
+      }
+    }
+    function drawDiagram(variant) {
+      const svg = $("diagram");
+      const nodes = array(variant.diagram?.nodes).filter(hasCoordinates);
+      svg.replaceChildren();
+      $("diagram-legend").replaceChildren();
+      if (!nodes.length) {
+        svg.append(el("text", { x: 480, y: 144, "text-anchor": "middle", fill: "#a5ad9b", "font-size": 17 }, "此方案尚未提供层级关系数据"));
+        return;
+      }
+      const defs = el("defs");
+      const marker = el("marker", { id: "diagram-arrow", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 5, markerHeight: 5, orient: "auto-start-reverse" });
+      marker.append(el("path", { d: "M0 0 L10 5 L0 10 Z", fill: "#7f8c76" }));
+      defs.append(marker); svg.append(defs);
+      const xs = nodes.map(n => Number(n.x)), ys = nodes.map(n => Number(n.y));
+      const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+      const colors = ["#e1dcc5", "#b7cbb8", "#91a8ab", "#ad9eb5", "#bca486"];
+      const layers = [...new Set(nodes.map(n => String(n.layer ?? "空间节点")))];
+      const positions = new Map(nodes.map(n => [String(n.id), { x: maxX === minX ? 480 : 110 + (Number(n.x) - minX) / (maxX - minX) * 740, y: maxY === minY ? 140 : 55 + (Number(n.y) - minY) / (maxY - minY) * 170 }]));
+      array(variant.diagram?.links).forEach(link => {
+        if (!Array.isArray(link)) return;
+        const from = positions.get(String(link[0])), to = positions.get(String(link[1]));
+        if (!from || !to) return;
+        const dx = to.x - from.x, dy = to.y - from.y, distance = Math.hypot(dx, dy) || 1;
+        svg.append(el("path", { d: `M${from.x + dx / distance * 10} ${from.y + dy / distance * 10} L${to.x - dx / distance * 13} ${to.y - dy / distance * 13}`, stroke: "#7f8c76", "stroke-width": 2, fill: "none", "marker-end": "url(#diagram-arrow)" }));
+      });
+      nodes.forEach(node => {
+        const p = positions.get(String(node.id));
+        const color = colors[layers.indexOf(String(node.layer ?? "空间节点")) % colors.length];
+        svg.append(el("circle", { cx: p.x, cy: p.y, r: 8, fill: color, stroke: "#191b1a", "stroke-width": 2 }));
+        const label = String(node.label || node.id);
+        const lines = label.match(/.{1,12}/gu) || [""];
+        lines.forEach((line, index) => svg.append(el("text", { x: p.x, y: p.y + 27 + index * 18, "text-anchor": "middle", fill: color, "font-size": 15, stroke: "#191b1a", "stroke-width": 5, "paint-order": "stroke" }, line)));
+      });
+      layers.forEach((layer, index) => {
+        const span = document.createElement("span");
+        span.style.setProperty("--layer-color", colors[index % colors.length]);
+        span.textContent = layer;
+        $("diagram-legend").append(span);
+      });
+    }
+    function fitImage() {
+      const board = $("artboard");
+      if (size === "actual") { board.style.width = "960px"; return; }
+      const imageTop = $("image-scroll").getBoundingClientRect().top + window.scrollY;
+      const availableHeight = Math.max(260, window.innerHeight - imageTop - 42);
+      board.style.width = Math.floor(Math.min($("image-scroll").clientWidth, availableHeight * IMAGE_WIDTH / IMAGE_HEIGHT)) + "px";
+    }
+    function render() {
+      const variant = data.variants.find(item => item.id === selected) || fallbackVariants[0];
+      const title = variantTitle(variant);
+      const rec = recommendation();
+      document.querySelectorAll("[data-variant]").forEach(button => {
+        const entry = data.variants.find(item => item.id === button.dataset.variant);
+        button.setAttribute("aria-pressed", String(button.dataset.variant === selected));
+        if (!entry) return;
+        button.querySelector(".variant-title").textContent = variantTitle(entry);
+        button.querySelector(".variant-hint").textContent = (entry.id === rec.id ? "制作者主推 · " : "") + "按 " + ({ a: 1, b: 2, c: 3 }[entry.id]) + " 查看";
+        button.querySelector("img").setAttribute("src", entry.image);
+      });
+      document.querySelectorAll("[data-mode]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.mode === mode));
+        button.disabled = button.dataset.mode !== "clean" && !ready;
+      });
+      document.querySelectorAll("[data-size]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.size === size)));
+      const image = $("main-image");
+      if (image.getAttribute("src") !== variant.image) {
+        $("image-error").hidden = true;
+        image.setAttribute("src", variant.image);
+      }
+      image.alt = title + "，第一阶段灰阶构图草案";
+      $("caption-title").textContent = title;
+      $("current-title").textContent = title;
+      $("mode-caption").textContent = " · " + ({ clean: "纯画面", space: "空间标注", check: "操作校核" }[mode]);
+      $("size-caption").textContent = "原图 1536 × 1024 · " + (size === "actual" ? "当前视口 960 × 640；窄窗口可横向滚动" : "适配窗口");
+      $("summary").textContent = variant.summary || "";
+      $("summary").hidden = !variant.summary;
+      $("notes").hidden = !array(variant.strengths).length && !array(variant.risks).length;
+      textList("strengths", variant.strengths);
+      textList("risks", variant.risks);
+      $("recommendation").hidden = !data.recommendation;
+      $("recommendation").textContent = rec.id ? (rec.id === selected ? "制作者主推此方案" : "制作者主推 " + rec.id.toUpperCase()) + (rec.reason ? " · " + rec.reason : "") : String(rec.reason || "");
+      $("space-section").hidden = mode !== "space";
+      $("check-section").hidden = mode !== "check";
+      $("image-scroll").classList.toggle("actual", size === "actual");
+      $("device-list").replaceChildren(...array(variant.devices).map((device, index) => {
+        const li = document.createElement("li");
+        const number = document.createElement("span");
+        number.className = "number"; number.textContent = index + 1;
+        const label = document.createElement("span"); label.textContent = device.label || device.id || "装置";
+        li.append(number, label); return li;
+      }));
+      $("scale-note").textContent = "统一人物标尺为图高约 5.2%：原图 53 px，960 × 640 视口约 33 px。生成稿人物为近似；叠图按原人物实际比例。" + (data.scaleNote ? " " + String(data.scaleNote) : "");
+      drawOverlay(variant);
+      if (mode === "space") drawDiagram(variant);
+      fitImage();
+    }
+    function selectVariant(id) {
+      if (!fallbackVariants.some(variant => variant.id === id)) return;
+      selected = id;
+      render();
+      $("announcement").textContent = "已切换至 " + variantTitle(data.variants.find(item => item.id === selected));
+    }
+    document.querySelectorAll("[data-variant]").forEach(button => button.addEventListener("click", () => selectVariant(button.dataset.variant)));
+    document.querySelectorAll("[data-mode]").forEach(button => button.addEventListener("click", () => { mode = button.dataset.mode; render(); }));
+    document.querySelectorAll("[data-size]").forEach(button => button.addEventListener("click", () => { size = button.dataset.size; render(); }));
+    document.addEventListener("keydown", event => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest("input, textarea, select, [contenteditable]")) return;
+      const id = { 1: "a", 2: "b", 3: "c" }[event.key];
+      if (id) { event.preventDefault(); selectVariant(id); }
+    });
+    $("main-image").addEventListener("load", () => { $("image-error").hidden = true; });
+    $("main-image").addEventListener("error", () => {
+      $("image-error").textContent = "图像尚未就绪：" + $("main-image").getAttribute("src");
+      $("image-error").hidden = false;
+    });
+    window.addEventListener("resize", fitImage);
+    new ResizeObserver(fitImage).observe($("image-scroll"));
+    render();
+    fetch("./compositions.json", { cache: "no-store" })
+      .then(response => { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
+      .then(source => {
+        if (!Array.isArray(source.variants)) throw new Error("缺少 variants 数组");
+        data = { ...source, variants: fallbackVariants.map(fallback => ({ ...fallback, ...source.variants.find(item => String(item.id).toLowerCase() === fallback.id), id: fallback.id })) };
+        const recommended = recommendation().id;
+        if (["a", "b", "c"].includes(recommended)) selected = recommended;
+        if (source.stage) $("stage-label").textContent = String(source.stage);
+        ready = true;
+        render();
+      })
+      .catch(error => {
+        $("load-warning").textContent = "标注数据未加载。请通过本地 HTTP 服务打开此页，并确认同目录存在 compositions.json。仍可切换查看三张原图。";
+        $("load-warning").hidden = false;
+        console.warn("构图标注读取失败：", error.message);
+        render();
+      });
+  </script>
+</body>
+</html>

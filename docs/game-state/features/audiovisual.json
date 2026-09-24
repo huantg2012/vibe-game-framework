@@ -194,7 +194,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "用户否定近期整景美术并认可独立根因分析，R10美术要求整改；技术实现和有限验证保留。R11规划完整构图→成品样板→前景→外景与光影→动态接入→整景验收，尚未制作新资产或改动生产。",
+    "summary": "R11首批三张灰阶构图、原人物比例与六功能/路线叠图已交付，主推C待用户选择；同源成品样板和正式接入未开始。生产仍为R10，原有限功能验证保留，美术整改。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -388,7 +388,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R11整景美术重构计划；实施未开始，旧版本经Git查阅"
+        "note": "R11整景重构计划；第一阶段草案已交付，后续未开始"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -578,6 +578,18 @@
       {
         "path": "docs/qa/artifacts/iteration-30-r10/art/art-check.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/compositions.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -625,10 +637,11 @@
       "COH-E-I30-R10-AUTOMATED",
       "COH-E-I30-R10-REVIEW",
       "COH-E-I30-R10-HUMAN-CHANGES",
-      "COH-E-I30-R11-PLAN"
+      "COH-E-I30-R11-PLAN",
+      "COH-E-I30-R11-COMPOSITION"
     ],
     "unknowns": [
-      "R10整体美术已被用户要求整改，不再记人审待定。R11仅完成重构计划；新构图、成品画法、整场美术及动态效果均未实施或通过。旧内部积极评价不覆盖此次反馈。",
+      "R11只是构图草案：生成稿人物/装置有比例误差，后台连接与通路去向尚未落实。叠图是容量校核假设，不是碰撞/可达通过；下一阶段同源样板必须解决。具体构图与全场美术均未获用户通过。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]
