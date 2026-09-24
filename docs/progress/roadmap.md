@@ -4,14 +4,14 @@ created-by: director agent
 created-when: Foundation 整合时
 last-modified: 2026-09-24
 last-closed-slice: 9
-note: I30 R11已选原始A，确定性布局与独立通行校核已交付；成品样板/正式接入未开始，Rift及既有挂起保持。
+note: I30 R11已选原始C并锁定构图；本轮仅澄清计划，成品样板/正式接入未开始，A转历史，Rift及既有挂起保持。
 ---
 
 # Roadmap
 
-## 当前工作 · 迭代30 R11（2026-09-24，DEC-183～185）
+## 当前工作 · 迭代30 R11（2026-09-24，DEC-186）
 
-用户认可对构图、前景构造、外景、氛围与画法断裂的独立分析，要求制定重构计划。[唯一计划](../design-notes/purification-scene-art-plan.md)按完整构图→成品样板→前景扩展→外景及光影→正式接入与动态→整景验收推进；用户授权逐步推进后，首批[三张构图与叠图](../art/demos/purification-r11/README.md)已交付，用户随后选 A，要求核心周围略扩地面及双层路线可用，反复生图引起材质/内容漂移后，按用户要求改用原始 A 参照下的确定性脚本布局；核心扩地、双坡连通及独立灰盒校核已交付（11项、13,461运动帧）。画风和细节到实际开发雕琢；成品样板和正式接入未开始。R10技术证据保留，美术进入整改；Rift及I28等挂起保持。当前明细以[活进度](current-iteration.md)和[I30清单](../tasks/iteration-30.md)为准，下方旧“当前”标题保留历史语境。
+用户取消 A 及其调整，直接选最初 C 并保持原构图；原始 `c.png` 为唯一基准。本轮只澄清计划，状态 **R11-C-SELECTED / COMPOSITION-LOCKED / PRODUCTION-NOT-STARTED**。下一步在 C 全景内做实际游戏尺度的局部成品样板，再完成前景室内→三层外景与整体光影→正式动态接入→整景验收，见[唯一计划](../design-notes/purification-scene-art-plan.md)。工程与通行校核服务原画，不先重画另一套构图；A 的扩地、双坡外形及灰盒证据不迁入 C。六功能和双层可达保留，C 画质/通行未验。R10整改及 I28 挂起保持；明细见[活进度](current-iteration.md)与[I30清单](../tasks/iteration-30.md)，下方旧“当前”标题保留历史语境。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，DEC-182）
 

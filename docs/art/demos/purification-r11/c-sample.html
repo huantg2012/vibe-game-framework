@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C · 成品样板</title>
+    <style>
+      :root { color-scheme: dark; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #101113; color: #dcdad5; }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      main { width: 1008px; margin: 28px auto 44px; padding: 0 24px; }
+      header { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+      h1 { font-size: 21px; font-weight: 550; margin: 0 0 10px; }
+      p { line-height: 1.65; margin: 8px 0; }
+      a { color: #b2babd; text-underline-offset: 3px; }
+      .muted { color: #919593; font-size: 13px; }
+      .controls { display: flex; align-items: center; gap: 18px; padding: 14px 0; flex-wrap: wrap; }
+      .views { display: inline-flex; gap: 4px; }
+      button { font: inherit; font-size: 13px; color: #c5c8c5; border: 1px solid #414648; border-radius: 3px; background: #202326; padding: 7px 12px; cursor: pointer; }
+      button[aria-pressed="true"] { border-color: #c9c4b7; background: #343737; color: #fffdf4; }
+      button:disabled { opacity: .42; cursor: default; }
+      label { display: inline-flex; gap: 7px; align-items: center; font-size: 13px; }
+      input { accent-color: #c9c4b7; }
+      #game-container { width: 960px; height: 640px; background: #0a0b0d; }
+      #game-container canvas { display: block; width: 960px !important; height: 640px !important; image-rendering: pixelated; }
+      #game-container canvas:focus-visible { outline: 1px solid #989486; outline-offset: 3px; }
+      #asset-status { color: #c0bdaF; min-height: 22px; font-size: 13px; }
+      footer { border-top: 1px solid #2e3335; margin-top: 18px; padding-top: 8px; }
+      #movement-status { font-variant-numeric: tabular-nums; }
+      .references { margin-top: 28px; border-top: 1px solid #2e3335; padding-top: 18px; }
+      .references h2 { margin: 0 0 8px; font-size: 16px; font-weight: 550; }
+      .reference-images { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 16px; }
+      .reference-images figure { margin: 0; }
+      .reference-images img { display: block; width: 100%; height: 170px; object-fit: contain; background: #080a0c; }
+      .reference-images figcaption { padding-top: 9px; font-size: 13px; line-height: 1.6; }
+      .reference-images figcaption p { margin-top: 5px; color: #a4a8a5; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>C · 成品样板</h1>
+        <a href="./index.html">构图对照</a>
+      </header>
+      <p class="muted">原始 C 的构图与透视保持不变。下方按游戏实际画幅 960 × 640 显示。</p>
+      <div class="controls" aria-label="样板查看选项">
+        <div class="views" role="group" aria-label="查看画面">
+          <button id="show-sample" type="button" aria-pressed="false" disabled>成品样板</button>
+          <button id="show-original" type="button" aria-pressed="true">C 原图</button>
+        </div>
+        <label><input id="show-player" type="checkbox" />叠加原人物</label>
+        <label><input id="allow-movement" type="checkbox" disabled />键盘移动观察</label>
+        <button id="reset-player" type="button" disabled>人物复位</button>
+      </div>
+      <div id="game-container" aria-label="C 构图与成品样板的 Phaser 显示区域"></div>
+      <p id="asset-status" role="status" aria-live="polite">正在载入 C 原图；成品样板状态待检查。</p>
+      <p id="movement-status" class="muted">人物叠加已关闭。</p>
+      <footer class="muted">
+        <p>人物使用游戏原 Player、原像素模型与原速度。开启移动后，点击画面，再用 WASD / 方向键观察；离开画面焦点会停止。</p>
+        <p>本页检验实际显示尺度与人物同框效果。移动没有场景碰撞、层间通路和遮挡判断，不代表上下层可达或六处交互已通过。原图自带的灰色人形仅为构图参照。</p>
+      </footer>
+      <section class="references" aria-labelledby="reference-heading">
+        <h2 id="reference-heading">画法与参考</h2>
+        <p>推荐方向：细像素、厚重体积、低饱和材质、小范围暖光。</p>
+        <p class="muted">本轮成品样板用于确定画法，不代表可玩场景已接入，也不代表已经获得你的认可。下列截图直接引用官方来源。</p>
+        <div class="reference-images">
+          <figure>
+            <a href="https://deathtrash.com/press/sheet.php?p=death_trash#images" target="_blank" rel="noopener noreferrer">
+              <img src="https://deathtrash.com/press/death_trash/images/screenshot_2021-04-26_11-23-40.png" alt="Death Trash 官方游戏截图" loading="lazy" />
+            </a>
+            <figcaption>
+              <a href="https://deathtrash.com/press/sheet.php?p=death_trash#images" target="_blank" rel="noopener noreferrer">Death Trash · 官方截图</a>
+              <p>借鉴成组像素、金属接缝与局部磨损；不借血肉题材。</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a href="https://rose-engine.org/press/Presskit_SIGNALIS.html#img2" target="_blank" rel="noopener noreferrer">
+              <img src="https://rose-engine.org/signalis/images/screens/2.png" alt="SIGNALIS 官方游戏截图" loading="lazy" />
+            </a>
+            <figcaption>
+              <a href="https://rose-engine.org/press/Presskit_SIGNALIS.html#img2" target="_blank" rel="noopener noreferrer">SIGNALIS · 官方截图</a>
+              <p>借鉴厚实体积与一致投影；不借滤镜和警示条纹。</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a href="https://www.heartmachine.com/hyper-light-drifter" target="_blank" rel="noopener noreferrer">
+              <img src="https://images.squarespace-cdn.com/content/v1/619478d0d2aca04773e62fb7/31583314-aa81-45d4-b814-6317a10e8270/STORE_ScreenShot_06.png" alt="Hyper Light Drifter 官方游戏截图" loading="lazy" />
+            </a>
+            <figcaption>
+              <a href="https://www.heartmachine.com/hyper-light-drifter" target="_blank" rel="noopener noreferrer">Hyper Light Drifter · 官方截图</a>
+              <p>借鉴空地留白与结构节点的细节密度；不借高饱和色。</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./c-sample.ts"></script>
+  </body>
+</html>

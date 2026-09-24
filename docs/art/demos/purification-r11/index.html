@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>净化场景 · A 布局定稿</title>
+  <title>净化场景 · C 已选定</title>
   <style>
     :root { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; color: #deded8; background: #151617; font-synthesis: none; }
     * { box-sizing: border-box; }
@@ -87,8 +87,8 @@
 <body>
   <main class="page">
     <header class="masthead">
-      <h1>净化场景 · A 布局定稿</h1>
-      <p class="stage-note"><span id="stage-label">第一阶段 · 灰阶构图草案</span> · 非实机 · 非成品画质样板</p>
+      <h1>净化场景 · C 已选定</h1>
+      <p class="stage-note"><span id="stage-label">C 原构图保持 · 下一步成品样板</span> · 非实机 · 非成品画质样板</p>
     </header>
     <p id="load-warning" class="load-warning" role="status" hidden></p>
     <nav class="variants" aria-label="构图方案">
@@ -109,18 +109,18 @@
     </div>
     <div class="image-scroll" id="image-scroll" tabindex="0" aria-label="构图大图；固定视口模式下可横向滚动">
       <div class="artboard" id="artboard">
-        <img id="main-image" src="a.png" alt="A 断壁深隙，第一阶段灰阶构图草案">
+        <img id="main-image" src="c.png" alt="C 错位深廊，用户已选定原构图">
         <svg id="overlay" viewBox="0 0 1536 1024" aria-hidden="true"></svg>
         <div id="image-error" class="image-error" hidden>图像尚未就绪。</div>
       </div>
     </div>
-    <div class="caption"><span><strong id="caption-title">A 断壁深隙</strong><span id="mode-caption"> · 纯画面</span></span><span id="size-caption">原图 1536 × 1024 · 适配窗口</span></div>
+    <div class="caption"><span><strong id="caption-title">C 错位深廊</strong><span id="mode-caption"> · 纯画面</span></span><span id="size-caption">原图 1536 × 1024 · 适配窗口</span></div>
     <section id="source-reference" style="display:flex;gap:24px;align-items:center;margin-top:20px">
       <a href="a.png" target="_blank" rel="noopener"><img src="a.png" alt="用户最初选中的 A 原图，保持不变" style="display:block;width:300px;height:200px"></a>
       <div><h2>原始 A · 构图参照</h2><p class="summary">保留左侧双层据点、厚断壁与右侧深隙。<br>上图只定地面、坡道、装置占位；不重绘材质，不扩充场景内容。</p><a href="a-route-preview.html" style="color:#d4dabe">进入通行灰盒，实际走一圈 →</a></div>
     </section>
     <section class="details" aria-labelledby="current-title">
-      <div class="summary-line"><h2 id="current-title">A 断壁深隙</h2><p id="recommendation" class="recommendation" hidden></p></div>
+      <div class="summary-line"><h2 id="current-title">C 错位深廊</h2><p id="recommendation" class="recommendation" hidden></p></div>
       <p id="summary" class="summary"></p>
       <div class="notes" id="notes"><div><h3>优点</h3><ul id="strengths"></ul></div><div><h3>保留问题</h3><ul id="risks"></ul></div></div>
       <section id="space-section" class="mode-section" aria-labelledby="space-heading" hidden>
@@ -137,7 +137,7 @@
       </section>
     </section>
     <footer id="selection-note">仅用于比较构图、空间层级与操作关系。</footer>
-    <p id="route-link" hidden><a href="a-route-preview.html" style="color:#d4dabe">A · 路线试走与几何校核 →</a></p>
+    <p id="route-link" hidden><a href="a-route-preview.html" style="color:#d4dabe">A 历史灰盒 · 已停止 →</a></p>
     <p id="announcement" class="sr-only" aria-live="polite"></p>
   </main>
   <script type="module">
@@ -168,7 +168,7 @@
       };
     }
     let data = { variants: fallbackVariants };
-    let selected = "a";
+    let selected = "c";
     let mode = "clean";
     let size = "fit";
     let ready = false;
@@ -321,7 +321,7 @@
         $("image-error").hidden = true;
         image.setAttribute("src", variant.image);
       }
-      image.alt = title + (selected === "a" ? "，确定性结构与通行布局" : "，历史灰阶构图草案");
+      image.alt = title + (selected === "a" ? "，确定性结构与通行布局" : "，原始灰阶构图");
       $("source-reference").hidden = selected !== "a";
       $("caption-title").textContent = title;
       $("current-title").textContent = title;
@@ -335,8 +335,8 @@
       $("recommendation").hidden = !data.selection && !data.recommendation;
       const choiceText = data.selection ? (rec.id === selected ? "用户已选定此方案" : "用户已选定 " + rec.id.toUpperCase()) : (rec.id === selected ? "制作者主推此方案" : "制作者主推 " + rec.id.toUpperCase());
       $("recommendation").textContent = rec.id ? choiceText + (rec.reason ? " · " + rec.reason : "") : String(rec.reason || "");
-      $("selection-note").textContent = data.selection ? "A 已按用户选择落实为确定性布局。B / C 保留为历史备选。当前定结构，材质和细节在实际开发时制作。" : "仅用于比较构图、空间层级与操作关系。主推提示是制作者建议，尚不代表方案已选定。";
-      $("route-link").hidden = !data.routePreview;
+      $("selection-note").textContent = data.selection ? "C 已按用户选择作为唯一构图基准；A 调整已停止。下一步是在 C 完整视口内制作实际游戏尺度的局部成品样板。" : "仅用于比较构图、空间层级与操作关系。主推提示是制作者建议，尚不代表方案已选定。";
+      $("route-link").hidden = selected !== "a" || !data.routePreview;
       $("space-section").hidden = mode !== "space";
       $("check-section").hidden = mode !== "check";
       $("image-scroll").classList.toggle("actual", size === "actual");
