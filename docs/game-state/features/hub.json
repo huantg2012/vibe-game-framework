@@ -3,11 +3,12 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "R11首批三张灰阶构图、原人物比例与六功能/路线叠图已交付，主推C待用户选择；同源成品样板和正式接入未开始。生产仍为R10，原有限功能验证保留，美术整改。",
+    "summary": "R11用户已选原始A；核心扩地、双坡和平台由共源脚本定布局，独立灰盒11项/13,461运动帧校核通过。画风细节留到实际开发，成品样板/正式接入未开始。生产仍为R10，美术整改。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "新游戏/继续/归来→PurificationScene；主层储藏/核心/净化器/裂隙，上层蜕变/供奉"
+      "新游戏/继续/归来→PurificationScene；主层储藏/核心/净化器/裂隙，上层蜕变/供奉",
+      "独立布局/通行灰盒：docs/art/demos/purification-r11/a-route-preview.html；非正式游戏入口"
     ],
     "sources": [
       {
@@ -193,7 +194,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R11整景重构计划；第一阶段草案已交付，后续未开始"
+        "note": "R11整景重构计划；原始A已选，确定性布局/独立校核已交付，成品样板及正式接入未开始"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -417,6 +418,26 @@
       {
         "path": "docs/art/demos/purification-r11/compositions.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-layout.svg",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-layout-render.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-route-model.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-route-preview.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-route-check.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -466,10 +487,12 @@
       "COH-E-I30-R10-REVIEW",
       "COH-E-I30-R10-HUMAN-CHANGES",
       "COH-E-I30-R11-PLAN",
-      "COH-E-I30-R11-COMPOSITION"
+      "COH-E-I30-R11-COMPOSITION",
+      "COH-E-I30-R11-A-DIRECTION",
+      "COH-E-I30-R11-A-ROUTES"
     ],
     "unknowns": [
-      "R11只是构图草案：生成稿人物/装置有比例误差，后台连接与通路去向尚未落实。叠图是容量校核假设，不是碰撞/可达通过；下一阶段同源样板必须解决。具体构图与全场美术均未获用户通过。",
+      "A选择只确认构图方向；确定性布局/通行灰盒只校核候选几何。正式遮挡、相机、设备面板与生产接入未验，成品画法及全场美术仍待制作与用户判断。后续生成微调稿不作为材质或内容依据。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

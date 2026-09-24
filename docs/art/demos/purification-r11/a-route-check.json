@@ -1,0 +1,950 @@
+{
+  "kind": "R11 A independent candidate geometry",
+  "status": "pass",
+  "coordinateSpace": "1536×1024 image pixels; 2.4 image pixels = 1 world pixel",
+  "productionSceneVerified": false,
+  "actorHeight": 52.8,
+  "feetRadius": 14.4,
+  "interactionRadius": 57.6,
+  "sourceAlgorithm": "src/systems/purification-chamber-locomotion.ts",
+  "algorithmDelta": "Candidate sweep advances 0.0001 image pixels less at contact to avoid floating-point negative-time corner escape; production source unchanged.",
+  "motion": "Same module as browser; A* chooses directions, every position update is a continuous swept-circle movement step.",
+  "checks": [
+    {
+      "name": "All floor patches, operation anchors and spawn have circular-foot clearance",
+      "status": "pass",
+      "anchorClearance": [
+        {
+          "id": "core",
+          "clearance": 16.6
+        },
+        {
+          "id": "storage",
+          "clearance": 11.6
+        },
+        {
+          "id": "purifier",
+          "clearance": 4.6
+        },
+        {
+          "id": "growth",
+          "clearance": 15.6
+        },
+        {
+          "id": "offering",
+          "clearance": 12.6
+        },
+        {
+          "id": "rift",
+          "clearance": 15.011
+        }
+      ]
+    },
+    {
+      "name": "One continuous journey reaches and operates all six devices",
+      "status": "pass",
+      "visited": [
+        {
+          "id": "core",
+          "position": {
+            "x": 386,
+            "y": 730
+          },
+          "frames": 24,
+          "distance": 74.108,
+          "routeSequence": [
+            "main"
+          ]
+        },
+        {
+          "id": "storage",
+          "position": {
+            "x": 223,
+            "y": 773
+          },
+          "frames": 54,
+          "distance": 168.817,
+          "routeSequence": [
+            "main"
+          ]
+        },
+        {
+          "id": "growth",
+          "position": {
+            "x": 230,
+            "y": 453
+          },
+          "frames": 134,
+          "distance": 420.928,
+          "routeSequence": [
+            "main",
+            "leftRamp",
+            "upper"
+          ]
+        },
+        {
+          "id": "offering",
+          "position": {
+            "x": 535,
+            "y": 451
+          },
+          "frames": 96,
+          "distance": 305.007,
+          "routeSequence": [
+            "upper"
+          ]
+        },
+        {
+          "id": "purifier",
+          "position": {
+            "x": 650,
+            "y": 674
+          },
+          "frames": 176,
+          "distance": 554.183,
+          "routeSequence": [
+            "upper",
+            "rightRamp",
+            "main"
+          ]
+        },
+        {
+          "id": "rift",
+          "position": {
+            "x": 785,
+            "y": 695
+          },
+          "frames": 51,
+          "distance": 156.341,
+          "routeSequence": [
+            "main"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Adjacent lower-floor devices connect both ways without using either ramp",
+      "status": "pass",
+      "journeys": [
+        {
+          "from": "purifier",
+          "to": "rift",
+          "maxDistance": 200,
+          "frames": 51,
+          "distance": 156.341,
+          "routeSequence": [
+            "main"
+          ]
+        },
+        {
+          "from": "rift",
+          "to": "purifier",
+          "maxDistance": 200,
+          "frames": 50,
+          "distance": 154.926,
+          "routeSequence": [
+            "main"
+          ]
+        },
+        {
+          "from": "core",
+          "to": "rift",
+          "maxDistance": 450,
+          "frames": 127,
+          "distance": 402.119,
+          "routeSequence": [
+            "main"
+          ]
+        },
+        {
+          "from": "rift",
+          "to": "core",
+          "maxDistance": 450,
+          "frames": 126,
+          "distance": 400.784,
+          "routeSequence": [
+            "main"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Both ramps in both directions, whole loop clockwise and counterclockwise",
+      "status": "pass",
+      "journeys": [
+        {
+          "name": "clockwise",
+          "frames": 549,
+          "routeSequence": [
+            "main",
+            "leftRamp",
+            "upper",
+            "rightRamp",
+            "main"
+          ]
+        },
+        {
+          "name": "counterclockwise",
+          "frames": 573,
+          "routeSequence": [
+            "main",
+            "rightRamp",
+            "upper",
+            "leftRamp",
+            "main"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ramp mouths have multiple usable lines and room for turning",
+      "status": "pass",
+      "mouths": [
+        {
+          "id": "leftTop",
+          "clearanceAtCenter": 22.223,
+          "testedCenterSpan": 20
+        },
+        {
+          "id": "leftBottom",
+          "clearanceAtCenter": 19.277,
+          "testedCenterSpan": 20
+        },
+        {
+          "id": "rightTop",
+          "clearanceAtCenter": 15.46,
+          "testedCenterSpan": 20
+        },
+        {
+          "id": "rightBottom",
+          "clearanceAtCenter": 28.831,
+          "testedCenterSpan": 20
+        }
+      ],
+      "rightBottomTurnFrames": 634
+    },
+    {
+      "name": "Upper cross passage supports three parallel walked lanes",
+      "status": "pass",
+      "lanes": [
+        {
+          "y": 445,
+          "frames": 91,
+          "distance": 290,
+          "routeSequence": [
+            "upper"
+          ]
+        },
+        {
+          "y": 455,
+          "frames": 91,
+          "distance": 290,
+          "routeSequence": [
+            "upper"
+          ]
+        },
+        {
+          "y": 465,
+          "frames": 91,
+          "distance": 290,
+          "routeSequence": [
+            "upper"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Devices reject sustained direct movement through their solid feet",
+      "status": "pass",
+      "results": [
+        {
+          "id": "core",
+          "blockedAt": {
+            "x": 386,
+            "y": 713.4
+          },
+          "clearance": 0
+        },
+        {
+          "id": "storage",
+          "blockedAt": {
+            "x": 223,
+            "y": 761.4
+          },
+          "clearance": 0
+        },
+        {
+          "id": "purifier",
+          "blockedAt": {
+            "x": 654.837,
+            "y": 659.4
+          },
+          "clearance": 0
+        },
+        {
+          "id": "growth",
+          "blockedAt": {
+            "x": 230,
+            "y": 437.4
+          },
+          "clearance": 0
+        },
+        {
+          "id": "offering",
+          "blockedAt": {
+            "x": 535,
+            "y": 438.4
+          },
+          "clearance": 0
+        },
+        {
+          "id": "rift",
+          "blockedAt": {
+            "x": 715.001,
+            "y": 700.4
+          },
+          "clearance": 0
+        }
+      ]
+    },
+    {
+      "name": "Exposed edges block outward input and allow tangent sliding without sticking",
+      "status": "pass",
+      "testedEdges": 14,
+      "edges": [
+        {
+          "midpoint": {
+            "x": 200.6029411764706,
+            "y": 620
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 346.5,
+            "y": 613.5
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 920.5,
+            "y": 669
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 715.5,
+            "y": 745
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 387.5,
+            "y": 803
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 196,
+            "y": 805.5
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 123.5,
+            "y": 758.5
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 367.5,
+            "y": 391
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 647.5,
+            "y": 421
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 380.5439398394411,
+            "y": 489.9773358400233
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 168.0368331690218,
+            "y": 559.0235878336437
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 80.70839658853878,
+            "y": 552.1794858740327
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 806.0955478755845,
+            "y": 533.7560479772311
+          },
+          "slide": 18.101
+        },
+        {
+          "midpoint": {
+            "x": 681.5161526698101,
+            "y": 550.8545224289537
+          },
+          "slide": 18.101
+        }
+      ]
+    },
+    {
+      "name": "100ms and large-delta movement stays bounded; paused and unfocused inputs stop",
+      "status": "pass",
+      "largeDeltaDisplacement": 19.2,
+      "maxAllowed": 19.200000000000003
+    },
+    {
+      "name": "Seeded varied-direction / large-frame collision stress",
+      "status": "pass",
+      "frames": 6000,
+      "seed": 17123
+    },
+    {
+      "name": "Rounded solid corner contact never starts a following sweep behind the boundary",
+      "status": "pass",
+      "results": [
+        {
+          "start": {
+            "x": 740,
+            "y": 632.5
+          },
+          "inputs": [
+            {
+              "x": -0.6563625718646435,
+              "y": -0.7544456072211108
+            },
+            {
+              "x": -0.9953545828130752,
+              "y": -0.09627696751045443
+            }
+          ],
+          "deltaMs": 100,
+          "clearance": 0,
+          "final": {
+            "x": 739.4,
+            "y": 632.306
+          }
+        },
+        {
+          "start": {
+            "x": 185.6,
+            "y": 425.0363200403388
+          },
+          "inputs": [
+            {
+              "x": 0,
+              "y": -1
+            },
+            {
+              "x": 1,
+              "y": -1
+            }
+          ],
+          "deltaMs": 100,
+          "clearance": 0,
+          "final": {
+            "x": 185.6,
+            "y": 409.642
+          }
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "metrics": {
+    "frames": 13461,
+    "distance": 66374.728,
+    "minClearance": 0,
+    "interactions": [
+      "core",
+      "storage",
+      "growth",
+      "offering",
+      "purifier",
+      "rift"
+    ],
+    "routes": [
+      "main",
+      "leftRamp",
+      "upper",
+      "rightRamp"
+    ],
+    "teleports": 0
+  },
+  "limitations": [
+    "Independent candidate only; production camera, occlusion, device panels and scene integration are not tested.",
+    "Image is a concept reference. Greybox floor polygons and device footprints are the precise candidate geometry.",
+    "Automated geometry evidence does not approve visual quality or human movement feel."
+  ],
+  "geometry": {
+    "floors": {
+      "main": [
+        {
+          "x": 45,
+          "y": 640
+        },
+        {
+          "x": 145,
+          "y": 620
+        },
+        {
+          "x": 252,
+          "y": 620
+        },
+        {
+          "x": 441,
+          "y": 607
+        },
+        {
+          "x": 797,
+          "y": 620
+        },
+        {
+          "x": 935,
+          "y": 610
+        },
+        {
+          "x": 950,
+          "y": 638
+        },
+        {
+          "x": 891,
+          "y": 700
+        },
+        {
+          "x": 540,
+          "y": 790
+        },
+        {
+          "x": 235,
+          "y": 816
+        },
+        {
+          "x": 157,
+          "y": 795
+        },
+        {
+          "x": 90,
+          "y": 722
+        }
+      ],
+      "upper": [
+        {
+          "x": 110,
+          "y": 397
+        },
+        {
+          "x": 625,
+          "y": 385
+        },
+        {
+          "x": 670,
+          "y": 457
+        },
+        {
+          "x": 620,
+          "y": 480
+        },
+        {
+          "x": 140,
+          "y": 500
+        },
+        {
+          "x": 100,
+          "y": 458
+        }
+      ],
+      "leftRamp": [
+        {
+          "x": 45,
+          "y": 666
+        },
+        {
+          "x": 135,
+          "y": 666
+        },
+        {
+          "x": 198,
+          "y": 462
+        },
+        {
+          "x": 109,
+          "y": 462
+        }
+      ],
+      "rightRamp": [
+        {
+          "x": 574,
+          "y": 482
+        },
+        {
+          "x": 643,
+          "y": 453
+        },
+        {
+          "x": 952,
+          "y": 606
+        },
+        {
+          "x": 866,
+          "y": 669
+        }
+      ]
+    },
+    "devices": [
+      {
+        "id": "core",
+        "label": "核心",
+        "floor": "main",
+        "x": 386,
+        "y": 676,
+        "rx": 77,
+        "ry": 23,
+        "anchor": {
+          "x": 386,
+          "y": 730
+        },
+        "footprint": [
+          {
+            "x": 317,
+            "y": 653
+          },
+          {
+            "x": 455,
+            "y": 653
+          },
+          {
+            "x": 463,
+            "y": 661
+          },
+          {
+            "x": 463,
+            "y": 691
+          },
+          {
+            "x": 455,
+            "y": 699
+          },
+          {
+            "x": 317,
+            "y": 699
+          },
+          {
+            "x": 309,
+            "y": 691
+          },
+          {
+            "x": 309,
+            "y": 661
+          }
+        ]
+      },
+      {
+        "id": "storage",
+        "label": "储藏",
+        "floor": "main",
+        "x": 223,
+        "y": 727,
+        "rx": 58,
+        "ry": 20,
+        "anchor": {
+          "x": 223,
+          "y": 773
+        },
+        "footprint": [
+          {
+            "x": 173,
+            "y": 707
+          },
+          {
+            "x": 273,
+            "y": 707
+          },
+          {
+            "x": 281,
+            "y": 715
+          },
+          {
+            "x": 281,
+            "y": 739
+          },
+          {
+            "x": 273,
+            "y": 747
+          },
+          {
+            "x": 173,
+            "y": 747
+          },
+          {
+            "x": 165,
+            "y": 739
+          },
+          {
+            "x": 165,
+            "y": 715
+          }
+        ]
+      },
+      {
+        "id": "purifier",
+        "label": "净化器",
+        "floor": "main",
+        "x": 663,
+        "y": 627,
+        "rx": 62,
+        "ry": 18,
+        "anchor": {
+          "x": 650,
+          "y": 674
+        },
+        "footprint": [
+          {
+            "x": 609,
+            "y": 609
+          },
+          {
+            "x": 717,
+            "y": 609
+          },
+          {
+            "x": 725,
+            "y": 617
+          },
+          {
+            "x": 725,
+            "y": 637
+          },
+          {
+            "x": 717,
+            "y": 645
+          },
+          {
+            "x": 609,
+            "y": 645
+          },
+          {
+            "x": 601,
+            "y": 637
+          },
+          {
+            "x": 601,
+            "y": 617
+          }
+        ]
+      },
+      {
+        "id": "growth",
+        "label": "蜕变",
+        "floor": "upper",
+        "x": 230,
+        "y": 410,
+        "rx": 30,
+        "ry": 13,
+        "anchor": {
+          "x": 230,
+          "y": 453
+        },
+        "footprint": [
+          {
+            "x": 208,
+            "y": 397
+          },
+          {
+            "x": 252,
+            "y": 397
+          },
+          {
+            "x": 260,
+            "y": 405
+          },
+          {
+            "x": 260,
+            "y": 415
+          },
+          {
+            "x": 252,
+            "y": 423
+          },
+          {
+            "x": 208,
+            "y": 423
+          },
+          {
+            "x": 200,
+            "y": 415
+          },
+          {
+            "x": 200,
+            "y": 405
+          }
+        ]
+      },
+      {
+        "id": "offering",
+        "label": "供奉",
+        "floor": "upper",
+        "x": 535,
+        "y": 410,
+        "rx": 45,
+        "ry": 14,
+        "anchor": {
+          "x": 535,
+          "y": 451
+        },
+        "footprint": [
+          {
+            "x": 498,
+            "y": 396
+          },
+          {
+            "x": 572,
+            "y": 396
+          },
+          {
+            "x": 580,
+            "y": 404
+          },
+          {
+            "x": 580,
+            "y": 416
+          },
+          {
+            "x": 572,
+            "y": 424
+          },
+          {
+            "x": 498,
+            "y": 424
+          },
+          {
+            "x": 490,
+            "y": 416
+          },
+          {
+            "x": 490,
+            "y": 404
+          }
+        ]
+      },
+      {
+        "id": "rift",
+        "label": "裂隙",
+        "floor": "main",
+        "x": 715,
+        "y": 670,
+        "rx": 46,
+        "ry": 16,
+        "anchor": {
+          "x": 785,
+          "y": 695
+        },
+        "footprint": [
+          {
+            "x": 677,
+            "y": 654
+          },
+          {
+            "x": 753,
+            "y": 654
+          },
+          {
+            "x": 761,
+            "y": 662
+          },
+          {
+            "x": 761,
+            "y": 678
+          },
+          {
+            "x": 753,
+            "y": 686
+          },
+          {
+            "x": 677,
+            "y": 686
+          },
+          {
+            "x": 669,
+            "y": 678
+          },
+          {
+            "x": 669,
+            "y": 662
+          }
+        ]
+      }
+    ],
+    "waypoints": {
+      "leftBottom": {
+        "x": 90,
+        "y": 652
+      },
+      "leftMiddle": {
+        "x": 120,
+        "y": 562
+      },
+      "leftTop": {
+        "x": 155,
+        "y": 480
+      },
+      "upperMiddle": {
+        "x": 370,
+        "y": 458
+      },
+      "rightTop": {
+        "x": 620,
+        "y": 476
+      },
+      "rightMiddle": {
+        "x": 762,
+        "y": 554
+      },
+      "rightBottom": {
+        "x": 897,
+        "y": 629
+      },
+      "coreFront": {
+        "x": 386,
+        "y": 757
+      },
+      "mainRight": {
+        "x": 818,
+        "y": 665
+      }
+    },
+    "spawn": {
+      "x": 460,
+      "y": 734
+    }
+  },
+  "fingerprints": {
+    "model": "2be87de86fc5bc9345fe256c5736fb69082c637ffe0b2f388da8d40326bf68f0",
+    "checker": "a2c598be731c2c19c2f27bb45ea5bfa39c686156580580f56f973e15a118c37d"
+  }
+}

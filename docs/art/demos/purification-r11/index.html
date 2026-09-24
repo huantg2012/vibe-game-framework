@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>净化场景 · 三张构图草案</title>
+  <title>净化场景 · A 布局定稿</title>
   <style>
     :root { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; color: #deded8; background: #151617; font-synthesis: none; }
     * { box-sizing: border-box; }
@@ -87,7 +87,7 @@
 <body>
   <main class="page">
     <header class="masthead">
-      <h1>净化场景 · 三张构图草案</h1>
+      <h1>净化场景 · A 布局定稿</h1>
       <p class="stage-note"><span id="stage-label">第一阶段 · 灰阶构图草案</span> · 非实机 · 非成品画质样板</p>
     </header>
     <p id="load-warning" class="load-warning" role="status" hidden></p>
@@ -115,6 +115,10 @@
       </div>
     </div>
     <div class="caption"><span><strong id="caption-title">A 断壁深隙</strong><span id="mode-caption"> · 纯画面</span></span><span id="size-caption">原图 1536 × 1024 · 适配窗口</span></div>
+    <section id="source-reference" style="display:flex;gap:24px;align-items:center;margin-top:20px">
+      <a href="a.png" target="_blank" rel="noopener"><img src="a.png" alt="用户最初选中的 A 原图，保持不变" style="display:block;width:300px;height:200px"></a>
+      <div><h2>原始 A · 构图参照</h2><p class="summary">保留左侧双层据点、厚断壁与右侧深隙。<br>上图只定地面、坡道、装置占位；不重绘材质，不扩充场景内容。</p><a href="a-route-preview.html" style="color:#d4dabe">进入通行灰盒，实际走一圈 →</a></div>
+    </section>
     <section class="details" aria-labelledby="current-title">
       <div class="summary-line"><h2 id="current-title">A 断壁深隙</h2><p id="recommendation" class="recommendation" hidden></p></div>
       <p id="summary" class="summary"></p>
@@ -129,13 +133,15 @@
         <ol id="device-list" class="device-list"></ol>
         <p id="scale-note" class="scale-note"></p>
         <div class="key-legend"><span><i class="swatch" aria-hidden="true"></i>可行走区域</span><span><i class="dash" aria-hidden="true"></i>连接路线</span><span><i class="ruler" aria-hidden="true"></i>人物统一标尺 · 原图 53 px</span></div>
-        <p class="scale-note" style="margin-top: 10px">交互圈以原图半径约 58 px 表示现有 24 世界 px 交互距离的构图参照，仅作示意，不代表实际碰撞或可达检查。</p>
+        <p class="scale-note" style="margin-top: 10px">A 的圈位于同层操作锚点；独立灰盒包含实体碰撞与逐帧通行。B/C 叠图仍仅是未经碰撞验证的示意。</p>
       </section>
     </section>
-    <footer>仅用于比较构图、空间层级与操作关系。主推提示是制作者建议，尚不代表方案已选定。</footer>
+    <footer id="selection-note">仅用于比较构图、空间层级与操作关系。</footer>
+    <p id="route-link" hidden><a href="a-route-preview.html" style="color:#d4dabe">A · 路线试走与几何校核 →</a></p>
     <p id="announcement" class="sr-only" aria-live="polite"></p>
   </main>
-  <script>
+  <script type="module">
+    import { SPACE, FLOORS, DEVICES, SPAWN, WAYPOINTS, planPath } from "./a-route-model.mjs";
     "use strict";
     const IMAGE_WIDTH = 1536;
     const IMAGE_HEIGHT = 1024;
@@ -146,6 +152,21 @@
       { id: "b", title: "B 覆顶竖井", image: "b.png" },
       { id: "c", title: "C 错位深廊", image: "c.png" }
     ];
+    function withLayout(variant) {
+      if (variant.id !== 'a') return variant;
+      const stops = [SPAWN, WAYPOINTS.coreFront, WAYPOINTS.leftBottom, WAYPOINTS.leftMiddle,
+        WAYPOINTS.leftTop, WAYPOINTS.upperMiddle, WAYPOINTS.rightTop, WAYPOINTS.rightMiddle,
+        WAYPOINTS.rightBottom, WAYPOINTS.mainRight, SPAWN];
+      const points = [SPAWN];
+      for (let i = 1; i < stops.length; i++) points.push(...planPath(stops[i - 1], stops[i]));
+      return { ...variant,
+        actor: { ...SPAWN, height: SPACE.actorHeight },
+        devices: DEVICES.map(d => ({ id: d.id, label: d.label, ...d.anchor })),
+        walkable: Object.entries(FLOORS).map(([label, poly]) => ({ label, points: poly.map(p => [p.x, p.y]) })),
+        routes: [{ points: points.map(p => [p.x, p.y]) }],
+        depth: [], diagram: { nodes: [] }
+      };
+    }
     let data = { variants: fallbackVariants };
     let selected = "a";
     let mode = "clean";
@@ -175,7 +196,7 @@
       return new RegExp("^" + variant.id + "(?:[\\s、：:.-]|$)", "i").test(title) ? title : variant.id.toUpperCase() + " " + title;
     }
     function recommendation() {
-      const value = data.recommendation;
+      const value = data.selection || data.recommendation;
       if (!value) return { id: "", reason: "" };
       if (typeof value === "string") {
         const match = value.match(/^\s*(?:主推\s*)?([abc])(?:\b|[\s（(:：、—-])/i);
@@ -220,7 +241,7 @@
         svg.append(el("circle", { cx: device.x, cy: device.y, r: 18, fill: "#182018", "fill-opacity": .95, stroke: "#e0e8d1", "stroke-width": 2.5 }));
         svg.append(el("text", { x: device.x, y: Number(device.y) + 7, fill: "#edf4df", "font-size": 21, "font-weight": 650, "text-anchor": "middle", "font-family": "ui-monospace, monospace" }, index + 1));
       });
-      if (hasCoordinates(variant.actor)) {
+      if (hasCoordinates(variant.actor) && variant.id !== "a") {
         const x = Number(variant.actor.x), y = Number(variant.actor.y);
         const path = `M${x - 9} ${y} H${x + 9} M${x} ${y} V${y - ACTOR_HEIGHT} M${x - 9} ${y - ACTOR_HEIGHT} H${x + 9}`;
         svg.append(el("path", { d: path, stroke: "#131a14", "stroke-width": 7, fill: "none" }));
@@ -286,12 +307,13 @@
         button.setAttribute("aria-pressed", String(button.dataset.variant === selected));
         if (!entry) return;
         button.querySelector(".variant-title").textContent = variantTitle(entry);
-        button.querySelector(".variant-hint").textContent = (entry.id === rec.id ? "制作者主推 · " : "") + "按 " + ({ a: 1, b: 2, c: 3 }[entry.id]) + " 查看";
+        const choiceLabel = data.selection ? (entry.id === rec.id ? "已选定 · " : "历史备选 · ") : (entry.id === rec.id ? "制作者主推 · " : "");
+        button.querySelector(".variant-hint").textContent = choiceLabel + "按 " + ({ a: 1, b: 2, c: 3 }[entry.id]) + " 查看";
         button.querySelector("img").setAttribute("src", entry.image);
       });
       document.querySelectorAll("[data-mode]").forEach(button => {
         button.setAttribute("aria-pressed", String(button.dataset.mode === mode));
-        button.disabled = button.dataset.mode !== "clean" && !ready;
+        button.disabled = (button.dataset.mode !== "clean" && !ready) || (selected === "a" && button.dataset.mode === "space");
       });
       document.querySelectorAll("[data-size]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.size === size)));
       const image = $("main-image");
@@ -299,7 +321,8 @@
         $("image-error").hidden = true;
         image.setAttribute("src", variant.image);
       }
-      image.alt = title + "，第一阶段灰阶构图草案";
+      image.alt = title + (selected === "a" ? "，确定性结构与通行布局" : "，历史灰阶构图草案");
+      $("source-reference").hidden = selected !== "a";
       $("caption-title").textContent = title;
       $("current-title").textContent = title;
       $("mode-caption").textContent = " · " + ({ clean: "纯画面", space: "空间标注", check: "操作校核" }[mode]);
@@ -309,8 +332,11 @@
       $("notes").hidden = !array(variant.strengths).length && !array(variant.risks).length;
       textList("strengths", variant.strengths);
       textList("risks", variant.risks);
-      $("recommendation").hidden = !data.recommendation;
-      $("recommendation").textContent = rec.id ? (rec.id === selected ? "制作者主推此方案" : "制作者主推 " + rec.id.toUpperCase()) + (rec.reason ? " · " + rec.reason : "") : String(rec.reason || "");
+      $("recommendation").hidden = !data.selection && !data.recommendation;
+      const choiceText = data.selection ? (rec.id === selected ? "用户已选定此方案" : "用户已选定 " + rec.id.toUpperCase()) : (rec.id === selected ? "制作者主推此方案" : "制作者主推 " + rec.id.toUpperCase());
+      $("recommendation").textContent = rec.id ? choiceText + (rec.reason ? " · " + rec.reason : "") : String(rec.reason || "");
+      $("selection-note").textContent = data.selection ? "A 已按用户选择落实为确定性布局。B / C 保留为历史备选。当前定结构，材质和细节在实际开发时制作。" : "仅用于比较构图、空间层级与操作关系。主推提示是制作者建议，尚不代表方案已选定。";
+      $("route-link").hidden = !data.routePreview;
       $("space-section").hidden = mode !== "space";
       $("check-section").hidden = mode !== "check";
       $("image-scroll").classList.toggle("actual", size === "actual");
@@ -321,7 +347,7 @@
         const label = document.createElement("span"); label.textContent = device.label || device.id || "装置";
         li.append(number, label); return li;
       }));
-      $("scale-note").textContent = "统一人物标尺为图高约 5.2%：原图 53 px，960 × 640 视口约 33 px。生成稿人物为近似；叠图按原人物实际比例。" + (data.scaleNote ? " " + String(data.scaleNote) : "");
+      $("scale-note").textContent = "原人物 52.8 图 px 高，脚半径 14.4 图 px，操作半径 57.6 图 px。" + (data.scaleNote ? " " + String(data.scaleNote) : "");
       drawOverlay(variant);
       if (mode === "space") drawDiagram(variant);
       fitImage();
@@ -329,6 +355,7 @@
     function selectVariant(id) {
       if (!fallbackVariants.some(variant => variant.id === id)) return;
       selected = id;
+      if (selected === "a" && mode === "space") mode = "clean";
       render();
       $("announcement").textContent = "已切换至 " + variantTitle(data.variants.find(item => item.id === selected));
     }
@@ -352,7 +379,7 @@
       .then(response => { if (!response.ok) throw new Error("HTTP " + response.status); return response.json(); })
       .then(source => {
         if (!Array.isArray(source.variants)) throw new Error("缺少 variants 数组");
-        data = { ...source, variants: fallbackVariants.map(fallback => ({ ...fallback, ...source.variants.find(item => String(item.id).toLowerCase() === fallback.id), id: fallback.id })) };
+        data = { ...source, variants: fallbackVariants.map(fallback => ({ ...fallback, ...source.variants.find(item => String(item.id).toLowerCase() === fallback.id), id: fallback.id })).map(withLayout) };
         const recommended = recommendation().id;
         if (["a", "b", "c"].includes(recommended)) selected = recommended;
         if (source.stage) $("stage-label").textContent = String(source.stage);

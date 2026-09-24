@@ -2740,5 +2740,55 @@
     ],
     "date": "2026-09-24",
     "revision": "stage-1 composition worktree on e420917"
+  },
+  {
+    "id": "COH-E-I30-R11-A-DIRECTION",
+    "kind": "human",
+    "result": "partial",
+    "scope": "用户选择原始A，要求核心周围略扩地面并确保双层连通；随后指出反复生图导致材质/内容漂移，明确改用确定性方式定布局，画风细节留到实际开发。",
+    "limitations": "方向与制作方法的选择，不是成品美术、手感或正式接入通过；此前C推荐和首批构图证据保留历史范围。",
+    "sources": [
+      {
+        "path": "docs/progress/decisions-log.md",
+        "role": "decision"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a.png",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-09-24",
+    "revision": "R11 A selection and deterministic layout worktree on e98e649"
+  },
+  {
+    "id": "COH-E-I30-R11-A-ROUTES",
+    "kind": "automated",
+    "result": "pass",
+    "scope": "独立候选几何11项检查通过，共13,461运动帧、零瞬移：六操作点连续可达，下层核心/净化器至裂隙双向短路不经上层，两坡双向，上层三条横通线，坡口/右下转弯、实体与边缘碰撞、暂停/失焦；布局图与灰盒共用a-route-model.mjs。",
+    "limitations": "仅独立灰盒。装置使用保守占位；候选扫掠算法加接触微量退让，正式源码未改。未验证生产遮挡、相机、设备面板、整场美术或人类操作感；未接入正式场景。",
+    "sources": [
+      {
+        "path": "docs/art/demos/purification-r11/a-route-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/check-a-routes.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-route-model.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-layout-render.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/a-route-browser-check.md",
+        "role": "doc"
+      }
+    ],
+    "date": "2026-09-24",
+    "revision": "R11 A worktree on e98e649; a-route-check.json records model and checker SHA256"
   }
 ]

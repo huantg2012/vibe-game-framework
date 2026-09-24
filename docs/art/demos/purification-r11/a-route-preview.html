@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A · 两层通行校核</title>
+  <style>
+    :root{color-scheme:dark;font:14px/1.65 system-ui,sans-serif;background:#181a19;color:#e4e5df}
+    *{box-sizing:border-box}body{margin:0;padding:24px;min-width:1280px}main{width:1256px;margin:auto}
+    h1{font-size:23px;margin:0 0 4px;font-weight:550}p{margin:5px 0 15px;color:#b7bbb3}
+    a{color:#d8ddd2}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+    .workspace{display:grid;grid-template-columns:960px 280px;gap:16px;align-items:start}
+    canvas{display:block;width:960px;height:640px;background:#222522;border:1px solid #575d54;outline:none}
+    canvas:focus{border-color:#c0cbb9}aside{padding:14px;background:#242823;border:1px solid #41473e;min-height:640px}
+    button{font:inherit;color:#e2e7dd;background:#343b30;border:1px solid #5c6655;padding:6px 10px;cursor:pointer}
+    button:hover,button:focus-visible{background:#495340;outline:1px solid #c4d0ba}button[aria-pressed=true]{background:#56634c}
+    .buttons{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 17px}.devices{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:18px}
+    .devices button[data-visited=true]{border-color:#9bba83}.field{border-top:1px solid #434a3e;padding:9px 0}
+    .field small{display:block;color:#a1aa99}.field output{display:block;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+    #interaction-message{min-height:48px;color:#d8e5cf}label{display:block;cursor:pointer;margin:10px 0}
+    #visited{line-height:1.7;min-height:48px}#movement-log{font-size:12px;color:#aeb8a4;max-height:90px;overflow:auto}
+    .caption{width:960px;font-size:13px;color:#a9b1a1;margin:8px 0 18px}.bottom{display:flex;align-items:center;gap:18px}
+    details{margin:20px 0;border-top:1px solid #434b3c;padding-top:12px}summary{cursor:pointer;color:#d8ded2}
+    .reference{display:block;width:960px;height:640px;object-fit:contain;background:#151614;margin-top:12px}
+    #check-summary{color:#bfcfb3}code{color:#bec8b5}footer{color:#9da494;font-size:13px;margin-top:18px}
+  </style>
+</head>
+<body>
+<main>
+  <header><div><h1>A · 两层通行校核</h1><p>独立候选灰盒 · 方向键 / WASD 行走，靠近装置后按 E。</p></div><a href="./index.html">返回构图对比</a></header>
+  <div class="workspace">
+    <section>
+      <canvas id="world" width="1536" height="1024" tabindex="0" aria-label="净化点A候选可走地面。支持方向键或WASD；点击地面可自动逐帧走到目标，E操作。"></canvas>
+      <p class="caption">点击地面或右侧目标后，寻路只产生方向输入，人物逐帧走过去。图中块面为实体脚底，操作锚点在同层地面。灰盒是本次验证依据；概念图在下方单独对照。</p>
+      <div class="bottom"><button id="reset">复位到起点</button><button id="pause" aria-pressed="false">暂停</button><span id="check-summary">正在读取自动校核记录…</span></div>
+    </section>
+    <aside>
+      <div class="devices" id="device-buttons"></div>
+      <div class="buttons"><button id="loop-forward">顺时针走环路</button><button id="loop-reverse">逆时针走环路</button></div>
+      <div class="field"><small>当前位置 / 地面</small><output id="position"></output></div>
+      <div class="field"><small>输入来源 / 状态</small><output id="input-source"></output></div>
+      <div class="field"><small>脚底碰撞</small><output id="collision-state"></output></div>
+      <div class="field"><small>可操作 · 按 E</small><output id="nearby"></output><div id="interaction-message" aria-live="polite">操作后会记录到下面的六点清单。</div></div>
+      <div class="field"><small>已实际按 E 操作</small><output id="visited">0 / 6</output></div>
+      <label><input id="show-collision" type="checkbox" checked> 显示脚底、边界和操作范围</label>
+      <label><input id="show-trail" type="checkbox" checked> 显示已经走过的轨迹</label>
+      <div id="movement-log" aria-live="polite"></div>
+    </aside>
+  </div>
+  <details id="concept"><summary>原始 A · 构图参照，保持不变</summary>
+    <img class="reference" src="./a.png" alt="用户最初选中的 A 构图。扩地与连通以通行灰盒的确定性几何为准。">
+    <p class="caption">原始 A 只提供构图方向。布局已用脚本定稿：核心扩地、左右坡道及上层通廊共用精确几何。材质和细节在实际开发时制作；当前尚未接入正式场景。</p>
+  </details>
+  <footer>角色直接使用原人物参考：52.8 图 px 高；脚半径 14.4 图 px（6 世界 px）；操作半径 57.6 图 px（24 世界 px）。<br>
+    <a href="./a-route-check.json">查看自动校核明细</a> · <a href="./a-route-model.mjs">查看精确几何与同源移动实现</a> · <code>node docs/art/demos/purification-r11/check-a-routes.mjs</code>
+  </footer>
+</main>
+<script type="module" src="./a-route-preview.mjs"></script>
+</body>
+</html>
