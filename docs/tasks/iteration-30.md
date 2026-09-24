@@ -1,5 +1,5 @@
 ---
-status: R11-C-SAMPLE-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-24
 owner: director
@@ -15,8 +15,10 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 - [x] 归纳问题、制定六阶段计划并交付首批三张构图。
 - [x] 记录原始 C 构图锁定、A 调整取消，以及本轮仅澄清计划的边界。
 - [x] 集中记录系统美术设计，明确生图效果稿性质与旧规则适用范围；设计记录不等于画面通过。
-- [x] 首个局部实际像素样板候选：960×640 内 442×290、11 分层、原人物同框及普通照明／核心受光／侵蚀变化三态；核心旁高台承托按 C 纠正。样板运行源码的严格 TypeScript 检查、栅格运行和导出色板／透明度／裁切／三态同遮罩检查通过，三态 PNG、11 层和材质／法线图已导出，见[样板记录与复现](../art/demos/purification-r11/README.md)。
-- [ ] 首个样板用户艺术验收及修订，特别核对人物与新资产颗粒协调；限定技术通过不代表美术 PASS。
+- [x] 首版局部像素样板已制作；用户指出交付过早，要求继续做美术母版，未作艺术验收。
+- [x] 参考用户三张截图的像素氛围表达能力继续精修，保留 C 原图与自身配色；材质、连续受光、接收面遮光／软投影、独立空气及原人物同框已更新，三态与首版对照见[局部母版](../art/demos/purification-r11/c-pixel-sample.html)。运行模块严格 TS、栅格及导出像素／透明轮廓一致性检查通过，见[复现入口](../art/demos/purification-r11/README.md)。
+- [x] 浏览器三态、人物、全 C／原 C 与首版对照已验，无页面错误；参照模式的状态与下载禁用正确。
+- [ ] 局部母版用户艺术验收与修订；技术通过不代表美术 PASS。
 - [ ] 前景、室内及六处装置环境接口扩展。
 - [ ] 三层外景和整体光影静态成稿。
 - [ ] 正式动态接入、真实移动视差与连续运行核对。

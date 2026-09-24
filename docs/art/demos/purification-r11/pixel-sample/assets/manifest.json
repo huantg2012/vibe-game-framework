@@ -1,5 +1,5 @@
 {
-  "authoring": "indexed pixel shapes; no generated image sampled",
+  "authoring": "authored indexed pixel painting; material lighting, receiver shadows and separate atmospheric scattering; no generated image sampled",
   "width": 960,
   "height": 640,
   "crop": {
@@ -12,17 +12,17 @@
     "ambient": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "3709e8d256f2834ef8941c9e374f577f20e3c402910e1c571565bd11b543af7b"
+      "rgbaHash": "52299f99e94eda43b1adcf0ffd6427a28f3c2e206af6ac5f388dfce2dff9a9ce"
     },
     "core": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "f7d45d038697c98d0b86a40d6f883386ffe318f05245729a948a1a553ceaddd5"
+      "rgbaHash": "d516ba8889958a8f0fd8d54191c03720237c7d7c25c54a6aaa40d9d639cb8b71"
     },
     "intrusion": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "e0ade0e9e70ee37202b060c5c351fa56eee7c80b8edc315680733c65139b918f"
+      "rgbaHash": "c4db12b39ae09608c542e30db59eece047db4f76a6b9435afc975b1a1142a5f8"
     }
   },
   "layers": [
@@ -37,5 +37,15 @@
     "right-wall-and-front-edge",
     "approach-mouth",
     "intrusion"
+  ],
+  "lightMasks": [
+    "cast-shadow-mask.png",
+    "contact-shadow-mask.png",
+    "wall-shadow-mask.png"
+  ],
+  "passes": [
+    "surface-{state}.png: lit materials before air",
+    "sample-{state}.png: final light and air",
+    "master-with-player.png: cropped core state with existing actor"
   ]
 }

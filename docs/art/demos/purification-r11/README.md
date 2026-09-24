@@ -1,25 +1,21 @@
-# R11 · C 首个实际像素样板候选
+# R11 · C 局部美术母版
 
-用户停止 A 及其全部调整，直接选择最初的 **C · 错位深廊**，不再调整构图。当前唯一基准为 [c.png](c.png)。
+[查看母版](http://127.0.0.1:3026/docs/art/demos/purification-r11/c-pixel-sample.html) · [C 原构图](c.png) · [集中美术设计与用户参考](../../../art-direction.md#current-art-design) · [后续计划](../../../design-notes/purification-scene-art-plan.md)
 
-[查看实际像素样板](http://127.0.0.1:3026/docs/art/demos/purification-r11/c-pixel-sample.html) · [查看 C 原图](http://127.0.0.1:3026/docs/art/demos/purification-r11/index.html) · [美术设计集中正文](../../../art-direction.md#current-art-design) · [后续唯一计划](../../../design-notes/purification-scene-art-plan.md)
+用户确认首版交付过早，要求继续优化为美术母版。当前在 C 原位置、透视内精修了核心工作区、高台坡口、厚墙和开口后的空间；以源码绘制实际像素资产，未生图、未采参考图像素。参考其像素氛围表达能力，不照抄配色。视觉修订包含材质重画、连续受光、接收面投影/遮光、独立空气散射，以及原人物同场受光。
 
-首个 **C 完整视口中的局部实际像素样板**已制作，状态为 **SAMPLE-CANDIDATE / LIMITED-TECHNICAL-VERIFIED / HUMAN-REVIEW-PENDING**。[查看页](./c-pixel-sample.html)默认核心受光、局部 2×、原人物同框，可切普通照明／侵蚀变化、完整 C／原 C；样板外仍是构图参照。核心旁高台承托已按 C 纠正。人物与新资产的颗粒协调、材料与画面层级尚待用户艺术验收，通过后再扩展全景。本页不另立色板或画法规则。
+页面默认核心受光、母版 2×、人物同框；可切普通照明／侵蚀变化、完整 C／原 C 和首版对照。下载当前状态的透明 960×640 PNG，人物是否包含跟随开关。原图与首版对照模式禁用状态、人物与下载，避免把参照误当母版。C 原图不变，样板外仍是构图参照。
 
-[pixel-sample](./pixel-sample/scene.ts) 以确定性源码手工组织轮廓、色块和材质细节，不生图、不采图像素；960×640 中制作区域为 `(158,202,442,290)`。已有 11 分层、每材质 8 个绘制色阶、相邻档之间 4 步光照 LUT；[导出清单](./pixel-sample/assets/manifest.json)包含三态原尺寸 PNG、对应局部裁切、11 层及材质／法线图。查看页下载的是透明原尺寸样板，不含 C 参照和人物。
+源码在 [pixel-sample](./pixel-sample/scene.ts)，制作区域为 `(158,202,442,290)`。[导出清单](./pixel-sample/assets/manifest.json)记录三态成图、照明后/空气前的表面图、原人物同框图、11 个绘制层，以及材质、法线和三个阴影蒙版。`contact-shadows` 绘制层用作接触遮蔽蒙版源，不作为黑色地面贴片合成。灯光和空气分工详见集中设计；固定构图下的阴影绘制不能直接宣称已实现可移动灯光/物体的动态投影。
 
-样板运行源码的严格 TypeScript 检查、栅格运行及导出色板／alpha／crop／三态同 mask 检查通过；这是限定技术验证，**不记美术 PASS**。复现检查与导出：
+运行模块严格 TypeScript、栅格边界检查、材质色阶和最终透明轮廓/裁切/状态差异检查通过；导出图与内存渲染一致，浏览器检查三态、人物及对照切换。以上是技术事实，用户尚未艺术验收；C 的正式通行、动态遮挡、三层视差和全景制作未接入，不能沿用 A 的通行验证。
 
 ```sh
 node --import tsx docs/art/demos/purification-r11/pixel-sample/check-raster.ts
 node --import tsx docs/art/demos/purification-r11/pixel-sample/export.mjs
 ```
 
-尚无 `src` 接入、通行、动态遮挡、三层视差或全景完成。后续顺序与看图条件见上述执行计划。
-
-C 只锁定空间构图，保留主要轮廓、透视、内外占比和构图上的明暗重心。工程图只辅助实现；不再用重画的线稿或白模替换 C。六功能、原人物尺度与上下层可达仍需落实；A 的扩地和坡形不自动迁入 C。C 精确通路尚未验证，原图有歧义的连接应在图上指出后解决。
-
-历史效果稿：[c-finish-sample.png](./c-finish-sample.png) 是生图制作的画风效果稿，[c-sample.html](./c-sample.html) 提供效果稿及参考图展示。该稿不是本次实际分层像素资产，不能作为渲染母版，也不表示画风已经确认。原始三方案及提示词保留为历史探索资料。
+[首版](./pixel-sample/assets/first-study.png)保留供同尺度对照。更早的 [c-finish-sample.png](./c-finish-sample.png) 仍是生图画风效果稿，不是本母版资产或渲染依据。
 
 ---
 

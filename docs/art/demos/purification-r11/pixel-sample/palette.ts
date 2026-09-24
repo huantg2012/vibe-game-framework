@@ -3,13 +3,13 @@ import type { Material } from './raster';
 /** Authored ramps: index is a paint tone, never inferred from RGB. */
 export const PALETTE: Record<Material, readonly string[]> = {
   void: ['#0B1016', '#11141A', '#191E26', '#242932', '#303039', '#3D434B', '#4B555D', '#5F6A71'],
-  concrete: ['#1A2026', '#303039', '#454D49', '#626961', '#747C6C', '#90937D', '#ABA58F', '#C2B99E'],
+  concrete: ['#1A2026', '#303039', '#454D49', '#626961', '#7B806E', '#94977E', '#ABA58F', '#D6CBB1'],
   chalk: ['#20242C', '#393D42', '#555C56', '#787D70', '#9C9E89', '#BBB69D', '#D1C6AC', '#E0D3B8'],
-  steel: ['#11141A', '#222A31', '#354149', '#4C595B', '#697574', '#92988B', '#B3B5A3', '#D2CDB6'],
+  steel: ['#11141A', '#202B35', '#334651', '#4B636C', '#738E94', '#A0AFAB', '#C5CBBA', '#E1DBC1'],
   paint: ['#17272B', '#253B3C', '#354E49', '#4E6F66', '#718C7A', '#96A58C', '#B7BEA0', '#CDD0AD'],
   rust: ['#291F25', '#3B2B2F', '#603E39', '#8A574A', '#A27158', '#B99370', '#C5AA87', '#D9C7A5'],
   glass: ['#111C23', '#1D3235', '#2D4544', '#435D54', '#62796A', '#859887', '#B6BFA6', '#DFD9BD'],
-  light: ['#343737', '#555E58', '#7D8672', '#A3AA8A', '#C2C4A0', '#D8D3AB', '#E8DCB7', '#F3EACB'],
+  light: ['#343737', '#555E58', '#7D8672', '#A3AA8A', '#C2C4A0', '#D8D3AB', '#E8DCB7', '#FFF5D8'],
   alien: ['#15252B', '#233E43', '#345D61', '#527E80', '#77A5A0', '#9ABFB0', '#B9D4BD', '#D5E3CA'],
 };
 
@@ -23,13 +23,14 @@ export const RGB: Record<Material, readonly (readonly [number, number, number])[
   glass: colors('glass'), light: colors('light'), alien: colors('alien'),
 };
 
-/** Four fixed light samples between authored paint tones; evaluated once, never RGB-additive. */
+/** Material ramps remain authored; fine light sampling prevents contour bands on a flat floor. */
+export const LIGHT_STEPS = 64;
 function lightColors(material: Material): readonly (readonly number[])[] {
   const ramp = RGB[material];
-  return Array.from({ length: 29 }, (_, i) => {
-    const a = ramp[Math.floor(i / 4)]!;
-    const b = ramp[Math.min(7, Math.floor(i / 4) + 1)]!;
-    const t = (i % 4) / 4;
+  return Array.from({ length: 7 * LIGHT_STEPS + 1 }, (_, i) => {
+    const a = ramp[Math.floor(i / LIGHT_STEPS)]!;
+    const b = ramp[Math.min(7, Math.floor(i / LIGHT_STEPS) + 1)]!;
+    const t = (i % LIGHT_STEPS) / LIGHT_STEPS;
     return a.map((channel, c) => Math.round(channel + (b[c]! - channel) * t));
   });
 }

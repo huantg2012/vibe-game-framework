@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-24
-note: I30 R11-C-SAMPLE-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED；首个局部实际像素样板已制作并限定技术验证，待用户艺术验收；R10整改及I28挂起保持。
+note: I30 R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED；用户要求首版继续精修，局部美术母版已更新，浏览器三态、人物与对照切换已验，无页面错误；R10整改及I28挂起保持。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -20,9 +20,9 @@ note: I30 R11-C-SAMPLE-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / P
 
 ## 当前工作 · 迭代30 R11（2026-09-24，原始 C 构图已锁定）
 
-用户取消 A 及其调整，直接选择最初的 C，且不调整构图。原始 `c.png` 是唯一构图基准，当前状态 **R11-C-SAMPLE-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。[首个实际像素样板](../art/demos/purification-r11/c-pixel-sample.html)已制作：960×640 内 442×290 局部、11 分层、三态和原人物同框；核心旁高台承托已按 C 纠正。确定性源码手工组织轮廓、色块与材质细节，不生图、不采图像素。系统设计仍统一维护于[美术方向·当前美术设计](../art-direction.md#current-art-design)；旧生图效果稿不作渲染母版，A 校核仅保留历史。
+用户明确首版交付过早，要求继续制作美术母版；本轮参考用户三张截图的像素氛围表达能力，不照抄配色。当前 **R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。[局部母版](../art/demos/purification-r11/c-pixel-sample.html)已精修材质、连续受光、接收面遮光与软投影、独立空气散射，原角色 `up/idle`、33px 本体受光同框，可看三态与首版对照。仍以确定性脚本绘制，原始 C 不变、无生图；设计正文见[当前美术设计](../art-direction.md#current-art-design)。
 
-样板运行源码的严格 TypeScript 检查、栅格运行及导出色板／透明度／裁切／三态同遮罩检查通过，三态 PNG、11 层及材质／法线图已导出；入口与复现命令见[样板记录](../art/demos/purification-r11/README.md)。下一步是用户看图与修订，特别核对原人物和新资产的颗粒协调；技术通过不代表艺术成品。继续按[执行计划](../design-notes/purification-scene-art-plan.md)推进，工程拆分与通行校核服务 C 原构图，不擅自替换构图。
+运行模块严格 TypeScript、栅格及导出像素／透明轮廓一致性检查通过，浏览器三态、人物与对照切换已验，无页面错误；复现与素材见[样板记录](../art/demos/purification-r11/README.md)。仅局部母版，尚未用户艺术验收；后续仍按[执行计划](../design-notes/purification-scene-art-plan.md)看图修订，技术通过不代表艺术成品。
 
 随后依次完成前景室内、三层外景与整体光影、正式动态接入、整景验收。主 COH-F042，关联 F026/F033/F039；[任务清单](../tasks/iteration-30.md)同步。尚无 C 的 `src` 接入、通行、动态遮挡、三层视差或全景完成，也未获用户艺术验收；R10技术证据保留、美术整改，I28挂起保持。按用户要求不使用项目内 skill；生成式全貌页仍为旧快照。
 

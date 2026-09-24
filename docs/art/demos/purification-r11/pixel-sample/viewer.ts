@@ -1,12 +1,9 @@
-import { renderDensePlayerFrame } from '../../../../../src/entities/player-sprite-dense';
 import { renderSample, SAMPLE_CROP, type SampleState } from './scene';
 
-type View = 'crop' | 'full' | 'original';
+type View = 'crop' | 'full' | 'original' | 'study';
 
 const WIDTH = 960;
 const HEIGHT = 640;
-const PLAYER_SIZE = 48;
-const PLAYER_FEET = { x: 496 * .625, y: 623 * .625 };
 
 function element<T extends HTMLElement>(id: string): T {
   const found = document.getElementById(id);
@@ -46,23 +43,24 @@ const sampleCanvas = makeCanvas(WIDTH, HEIGHT);
 const sampleContext = context(sampleCanvas);
 const composedCanvas = makeCanvas(WIDTH, HEIGHT);
 const composedContext = context(composedCanvas);
-const playerCanvas = makeCanvas(32, 32);
-putPixels(context(playerCanvas), renderDensePlayerFrame('right', 'idle', 0), 32, 32);
 
 let state: SampleState = 'core';
 let view: View = 'crop';
 let showPlayer = true;
 let ready = false;
 const reference = new Image();
+const firstStudy = new Image();
 
 function syncControls(): void {
+  const referenceOnly = view === 'original' || view === 'study';
   for (const button of stateButtons) {
     button.setAttribute('aria-pressed', String(button.dataset.state === state));
-    button.disabled = view === 'original';
+    button.disabled = referenceOnly;
   }
   for (const button of viewButtons) button.setAttribute('aria-pressed', String(button.dataset.view === view));
-  playerToggle.disabled = view === 'original';
-  playerToggle.checked = view !== 'original' && showPlayer;
+  playerToggle.disabled = referenceOnly;
+  playerToggle.checked = !referenceOnly && showPlayer;
+  downloadButton.disabled = !ready || referenceOnly;
 }
 
 function render(): void {
@@ -70,25 +68,22 @@ function render(): void {
   if (!ready) return;
 
   // The sample is raw, transparent scene pixels. C is only the surrounding reference.
-  putPixels(sampleContext, renderSample(state), WIDTH, HEIGHT);
+  putPixels(sampleContext, renderSample(state, { player: showPlayer }), WIDTH, HEIGHT);
   composedContext.clearRect(0, 0, WIDTH, HEIGHT);
   composedContext.drawImage(reference, 0, 0, WIDTH, HEIGHT);
-  if (view !== 'original') {
+  if (view === 'study') {
+    if (firstStudy.complete && firstStudy.naturalWidth) composedContext.drawImage(firstStudy, 0, 0);
+  } else if (view !== 'original') {
     composedContext.drawImage(sampleCanvas, 0, 0);
-    if (showPlayer) {
-      composedContext.drawImage(playerCanvas,
-        PLAYER_FEET.x - PLAYER_SIZE / 2, PLAYER_FEET.y - 26 * 1.5,
-        PLAYER_SIZE, PLAYER_SIZE);
-    }
   }
 
   display.fillStyle = '#0b0d0e';
   display.fillRect(0, 0, WIDTH, HEIGHT);
-  if (view === 'crop') {
+  if (view === 'crop' || view === 'study') {
     const { x, y, width, height } = SAMPLE_CROP;
     display.drawImage(composedCanvas, x, y, width, height,
       (WIDTH - width * 2) / 2, (HEIGHT - height * 2) / 2, width * 2, height * 2);
-    canvas.setAttribute('aria-label', 'C 实际像素样板，局部两倍显示');
+    canvas.setAttribute('aria-label', view === 'study' ? '第一版画法试作，两倍对照' : 'C 美术母版，局部两倍显示');
   } else {
     display.drawImage(composedCanvas, 0, 0);
     canvas.setAttribute('aria-label', view === 'original' ? '仅 C 原始构图参照' : 'C 完整构图中的实际像素样板');
@@ -117,7 +112,7 @@ for (const button of stateButtons) {
 for (const button of viewButtons) {
   button.addEventListener('click', () => {
     const next = button.dataset.view;
-    if (next !== 'crop' && next !== 'full' && next !== 'original') return;
+    if (next !== 'crop' && next !== 'full' && next !== 'original' && next !== 'study') return;
     view = next;
     renderSafely();
   });
@@ -136,7 +131,7 @@ downloadButton.addEventListener('click', () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `c-pixel-sample-${exportedState}.png`;
+    link.download = `c-art-master-${exportedState}.png`;
     link.click();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }, 'image/png');
@@ -151,4 +146,6 @@ reference.onerror = () => {
   status.textContent = 'C 构图参照未能载入，请刷新后重试。';
 };
 reference.src = new URL('../c.png', import.meta.url).href;
+firstStudy.onload = () => { if (view === 'study') renderSafely(); };
+firstStudy.src = new URL('./assets/first-study.png', import.meta.url).href;
 syncControls();
