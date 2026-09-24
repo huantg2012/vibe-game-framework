@@ -1,5 +1,5 @@
 ---
-status: R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R11-C-FOUNDATION-REBUILD / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-24
 owner: director
@@ -10,17 +10,16 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 
 ## R11：整景美术重构（2026-09-24，原始 C 构图已锁定）
 
-用户认可整景分析并要求逐步重构，首批三张构图已交付。构图选择见 DEC-186：取消 A 及其调整，直接选择最初 C，不调整构图。原始 `c.png` 是唯一构图基准；后续生图效果稿不作为画法与渲染母版。系统美术设计集中于[美术方向·当前美术设计](../art-direction.md#current-art-design)，记录见 DEC-187；施工顺序为[净化点美术重构计划](../design-notes/purification-scene-art-plan.md)。
+原始 `c.png` 是唯一构图基准（DEC-186），A 及其调整已取消；生图效果稿不作绘制母版。用户已否决 `8ef1366` 的墙地、金属与配色，仅认可污染芯形态。本轮结构/材质重构以[唯一设计正文与恢复指针](../art-direction.md#resume-art-rebuild)为准，施工状态见[当前步骤](../design-notes/purification-scene-art-plan.md#当前执行状态)。
 
 - [x] 归纳问题、制定六阶段计划并交付首批三张构图。
 - [x] 记录原始 C 构图锁定、A 调整取消，以及本轮仅澄清计划的边界。
 - [x] 集中记录系统美术设计，明确生图效果稿性质与旧规则适用范围；设计记录不等于画面通过。
 - [x] 首版局部像素样板已制作；用户指出交付过早，要求继续做美术母版，未作艺术验收。
-- [x] 参考用户三张截图的像素氛围表达能力完成前轮局部精修，保留 C 原图与自身配色、连续受光、接收面遮光／软投影、独立空气及原人物同框。
-- [x] 记录用户“明显进步但仍不满意”，继续修订核心身份：撤去灯管表达，恢复从 Rift 收集并被强行约束的污染实体、暗质与受压折缝。
-- [x] 补强墙地内部材料、剥落与使用痕迹的描绘；绿色集中承担污染、侵蚀及其局部反射，普通混凝土与旧漆去绿。
-- [x] [局部母版](../art/demos/purification-r11/c-pixel-sample.html)新增“上一版对照”，保留首版、原 C、三态与原人物同框；本轮导出/栅格已通过，见[复现入口](../art/demos/purification-r11/README.md)。
-- [x] 本轮最终严格 TS、栅格与导出检查通过；浏览器三态、人物与五种视图切换已验，无页面错误。
+- [x] 记录 `8ef1366` 用户否决，保存为上一版对照；保留首版、原 C、三态与原人物同框。
+- [x] 接入 `surface()` 及 normal/roughness/occlusion/specular 参数，`construction-surfaces.ts` 替代旧 `surface-paint.ts`；新增参数图导出。
+- [x] 本轮栅格行为与参数/色阶/透明轮廓导出检查实测通过，见[复现入口](../art/demos/purification-r11/README.md)；不代表画面通过。
+- [x] [局部候选](../art/demos/purification-r11/c-pixel-sample.html)结构、材质与照明重构已导出；项目严格TS检查通过，本轮浏览器三态/人物/五视图已验，无error/warn。
 - [ ] 局部母版用户艺术验收与修订；技术通过不代表美术 PASS。
 - [ ] 前景、室内及六处装置环境接口扩展。
 - [ ] 三层外景和整体光影静态成稿。

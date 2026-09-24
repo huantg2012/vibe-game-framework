@@ -1,113 +1,194 @@
 import { PixelLayer, type Ink, type Point, type Material } from './raster';
 
-type Tone = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+type Tone = number;
 const TOP = [0, 0, 1] as const;
 const FRONT = [0, 1, .12] as const;
 const RIGHT = [.85, .25, .12] as const;
 const LEFT = [-.65, .45, .12] as const;
-const ink = (material: Material, tone: Tone, normal: Ink['normal'] = FRONT, light = .65): Ink => ({ material, tone, normal, light });
-const metal = (tone: Tone, normal: Ink['normal'] = FRONT, light = .65): Ink => ink('steel', tone, normal, light);
-const cavity = ink('void', 0, FRONT, 0);
+const clamp = (n: number, low = 0, high = 1): number => Math.min(high, Math.max(low, n));
+const bump = (n: number, center: number, width: number): number => Math.exp(-(((n-center)/width)**2));
+const normal = (x: number, y: number, z: number): NonNullable<Ink['normal']> => {
+  const d = Math.hypot(x,y,z) || 1;
+  return [x/d,y/d,z/d];
+};
+const ink = (material: Material, tone: Tone, n: Ink['normal'] = FRONT, light = .65): Ink => ({
+  material, tone, normal:n, light,
+  roughness: material === 'paint' ? .74 : material === 'rust' ? .94 : material === 'steel' ? .42 : .78,
+  specular: material === 'steel' ? .68 : material === 'paint' ? .17 : .08,
+});
+const metal = (tone: Tone, n: Ink['normal'] = FRONT, light = .65): Ink => ink('steel', tone, n, light);
+const cavity: Ink = {...ink('steel',.65,FRONT,.1),roughness:.83,specular:.08,occlusion:.3};
 
-/** Deliberate contour samples retain the ellipse's oblique depth at display scale. */
-function oval(cx: number, cy: number, rx: number, ry: number, count = 24): Point[] {
-  return Array.from({ length: count }, (_, i) => {
-    const a = i / count * Math.PI * 2;
-    return [cx + Math.cos(a) * rx, cy + Math.sin(a) * ry] as const;
+/** C-space contours stay unchanged; the section beneath each contour is now curved. */
+function oval(cx: number, cy: number, rx: number, ry: number, count = 40): Point[] {
+  return Array.from({length:count},(_,i) => {
+    const a = i/count*Math.PI*2;
+    return [cx+Math.cos(a)*rx,cy+Math.sin(a)*ry] as const;
+  });
+}
+function arc(cx: number, cy: number, rx: number, ry: number, from: number, to: number, count = 18): Point[] {
+  return Array.from({length:count+1},(_,i) => {
+    const a = (from+(to-from)*i/count)*Math.PI/180;
+    return [cx+Math.cos(a)*rx,cy+Math.sin(a)*ry] as const;
+  });
+}
+function annulus(cx:number,cy:number,rx:number,ry:number,ix:number,iy:number,from:number,to:number):Point[] {
+  return [...arc(cx,cy,rx,ry,from,to),...arc(cx,cy,ix,iy,to,from)];
+}
+
+/** A recessed head has a seated socket, sloped crown and interrupted contact edge. */
+function fastener(p:PixelLayer,x:number,y:number,r=3):void {
+  p.poly(oval(x,y,r+1,r*.78+1,8),{...metal(.7,FRONT,.2),occlusion:.4,specular:.18});
+  p.surface(oval(x,y,r,r*.76,6),(px,py) => ({
+    ...metal(2.9,normal((px-x)/r*.5,1,(y-py)/r*.7),.55),roughness:.32,specular:.72,
+  }));
+  p.line([[x-1,y+.3],[x+1,y+.3]],metal(1.1,FRONT,.15),1);
+}
+
+/** Vertical cast section: a broad cheek turns through a soft corner, not flat strips. */
+function castCheek(p:PixelLayer,outline:readonly Point[],x0:number,x1:number,y0:number,y1:number,
+  tone:number,turn0:number,turn1:number):void {
+  p.surface(outline,(x,y) => {
+    const u=clamp((x-x0)/(x1-x0)), v=clamp((y-y0)/(y1-y0));
+    const a=turn0+(turn1-turn0)*(u*u*(3-2*u));
+    const cap=bump(v,0,.033)*.6, foot=bump(v,.98,.06)*.28;
+    // The cast skin is planished along the load axis. Broad, shallow facets bend
+    // a reflection in coherent clusters; they never paint grime over the metal.
+    const worked=Math.sin(y*.17+Math.sin(x*.082)*2.1)*.055
+      + Math.sin(x*.29+y*.037)*.025;
+    const shoulder=bump(u,.26+.022*Math.sin(y*.09),.11);
+    const finish=.5+.5*Math.sin(y*.12+Math.sin(x*.11)*1.4);
+    return {
+      ...metal(tone+.13*bump(v,.24,.26)-.18*bump(v,.88,.12),normal(Math.sin(a)+worked,Math.cos(a),.055+cap+foot+worked*.42),.68),
+      roughness:.50-shoulder*.17+finish*.085,specular:.68+shoulder*.08,
+      occlusion:1-.12*bump(v,.98,.025),
+    };
   });
 }
 
-function bolts(p: PixelLayer, points: readonly Point[], tone: Tone = 4): void {
-  for (const [x, y] of points) {
-    p.rect(x, y, 3, 3, metal(1));
-    p.rect(x, y, 2, 1, metal(tone));
-  }
-}
-
-function arc(cx: number, cy: number, rx: number, ry: number, from: number, to: number, count = 10): Point[] {
-  return Array.from({ length: count + 1 }, (_, i) => {
-    const angle = (from + (to - from) * i / count) * Math.PI / 180;
-    return [cx + Math.cos(angle) * rx, cy + Math.sin(angle) * ry] as const;
+/** Cast-in relief: bevel normals and a deeper back wall carry the shape without dirt. */
+function longPocket(p:PixelLayer,x:number,y:number,w:number,h:number,slant=0):void {
+  const outline:Point[]=[[x+3,y],[x+w-3,y+slant],[x+w,y+5+slant],[x+w,y+h-5+slant],
+    [x+w-4,y+h+slant],[x+3,y+h],[x,y+h-5],[x,y+5]];
+  p.surface(outline,(px,py)=>{
+    const u=clamp((px-x)/w), v=clamp((py-y-slant*u)/h);
+    const edge=Math.min(u,1-u,v*h/w,(1-v)*h/w);
+    const lip=bump(edge,.045,.05), back=clamp((edge-.075)/.08);
+    const nx=u<.5?1:-1;
+    const nz=v<.12?-.75:v>.88?.85:0;
+    return {
+      ...metal(1.65+lip*.62-back*.16,normal(nx*(1-back)*.78,.35+back*.65,nz*(1-back)),.34+.2*lip),
+      roughness:.56,specular:.43,occlusion:.52+.35*(1-back),
+    };
   });
-}
-
-function ringArc(p: PixelLayer, from: number, to: number, outerX: number, outerY: number,
-  innerX: number, innerY: number, paint: Ink): void {
-  p.poly([...arc(582,453,outerX,outerY,from,to),
-    ...arc(582,453,innerX,innerY,to,from)], paint);
+  // Lower recess edge receives a reflected sliver, while the upper edge stays seated.
+  p.line([[x+4,y+h-2],[x+w-4,y+h-2+slant]],metal(2.5,normal(0,.6,.8),.42),1);
 }
 
 function buildOffering(): PixelLayer {
   const p = new PixelLayer('offering');
-  // Back casting and its short feet, kept within C's existing footprint.
-  p.poly([[541,471],[549,463],[558,485],[555,514],[541,512]], metal(1));
-  p.poly([[617,478],[632,475],[638,509],[626,513]], metal(2, RIGHT));
-  p.poly([[535,492],[546,493],[544,514],[521,510],[522,497]], metal(2));
-  p.poly([[534,491],[546,492],[550,497],[536,499],[522,497]], metal(4, TOP));
-  p.poly([[609,487],[624,484],[633,512],[619,517]], metal(2, RIGHT));
-  p.poly([[608,487],[616,484],[623,506],[619,517],[612,507]], metal(3));
-  p.poly(oval(602, 453, 55, 54), metal(1, RIGHT));
-  p.poly([[590,400],[610,401],[628,408],[641,423],[651,443],[654,466],[647,485],
-    [634,502],[615,509],[602,506],[621,490],[632,471],[633,444],[621,420]], metal(2, RIGHT));
-  p.poly([[605,404],[623,411],[635,426],[638,433],[627,428],[620,417]], metal(3, TOP));
-  // Front iron ring: one broad body, a lit upper arc, dark returning lower arc.
-  p.poly(oval(582, 453, 49, 54), metal(3));
-  p.poly([[533,451],[536,431],[547,413],[565,402],[582,399],[601,403],[616,416],
-    [611,427],[599,417],[582,412],[568,415],[553,425],[547,440],[546,453]], metal(4, LEFT));
-  p.poly([[536,469],[547,481],[563,491],[582,495],[600,489],[613,476],[623,454],
-    [631,454],[627,479],[615,496],[600,505],[582,508],[563,504],[547,494]], metal(2));
-  // Cut through both the extruded casting and front disc; no painted black plug.
-  const hole = oval(581, 454, 34, 39);
-  p.clearPoly(hole);
-  p.poly([[558,426],[569,419],[582,416],[595,419],[603,425],[596,425],[584,422],
-    [572,425],[564,432],[558,445],[556,456],[551,467],[548,455],[550,439]], metal(1, RIGHT));
-  p.poly([[559,478],[571,488],[584,491],[597,486],[608,474],[614,455],[613,442],
-    [609,451],[608,465],[600,478],[588,484],[577,484],[566,479]], metal(4, TOP));
-  // Casting seams and a small maintained paint patch define manufacture.
-  p.line([[582,400],[582,411]], metal(2), 2);
-  p.line([[616,417],[608,426]], metal(2), 2);
-  p.line([[538,435],[549,439]], metal(2), 2);
-  p.line([[541,478],[552,473]], metal(1), 2);
-  p.line([[580,496],[580,507]], metal(1), 2);
-  p.poly([[546,417],[552,412],[559,415],[555,421],[550,422]], ink('paint', 3, LEFT));
-  p.poly([[603,496],[612,491],[616,493],[607,501]], ink('rust', 2));
-  p.line([[539,435],[542,425],[547,417]], metal(5, LEFT), 1);
-  p.line([[565,403],[576,400]], metal(5, TOP), 1);
-  bolts(p, [[540,451],[549,486],[612,435],[603,501]], 4);
-
-  // A recessed bore has its own cylindrical wall and a smaller rear aperture.
-  // Looking through the front opening exposes the left and lower inner wall;
-  // the visible aperture is offset toward the receding right-hand casting.
-  p.poly(oval(581,454,34,39), metal(1,RIGHT,.24));
-  p.poly([[552,434],[561,421],[578,416],[594,419],[606,430],[612,444],[611,460],
-    [600,476],[582,482],[566,475],[558,463],[555,448]], metal(2,LEFT,.35));
-  p.poly([[551,450],[554,469],[566,484],[582,492],[598,486],[608,472],[605,465],
-    [596,479],[581,483],[568,477],[560,466],[557,452]], metal(2,TOP,.4));
+  // Load goes from the barrel into two thick, splayed cast feet.
+  p.surface([[540,472],[550,469],[559,489],[554,513],[540,512]],(x,y)=>({
+    ...metal(2.2+.3*bump(y,491,13),normal(-.5+(x-540)/27,.8,.12),.48),roughness:.58,
+  }));
+  p.surface([[616,475],[632,474],[638,508],[626,514],[616,505]],(x,y)=>({
+    ...metal(2.1,normal(.35+(x-616)/31,.7,(501-y)/95),.45),roughness:.58,
+  }));
+  p.surface([[525,492],[546,491],[551,498],[546,513],[521,510],[521,498]],(_x,y)=>({
+    ...metal(2.3,normal(-.15,.86,bump(y,496,3)*.85),.5),roughness:.55,
+  }));
+  p.surface([[608,487],[622,484],[631,511],[619,518],[611,509]],(_x,y)=>({
+    ...metal(2.4,normal(.42,.78,bump(y,491,5)*.55),.5),roughness:.53,
+  }));
+  // Receding barrel has a convex sidewall and two casting flanges. It is one volume.
+  p.surface(oval(602,453,54,55),(x,y)=>{
+    const a=Math.atan2((y-453)/55,(x-602)/54);
+    return {...metal(2.45+.12*Math.cos(a+1.2),normal(.68,Math.cos(a)*.25+.4,-Math.sin(a)*.7),.55),
+      roughness:.48,specular:.6};
+  });
+  p.surface([[588,400],[610,400],[627,407],[640,421],[650,442],[654,463],[648,483],
+    [634,500],[615,509],[600,507],[621,488],[632,469],[633,444],[621,421]],(x,y)=>{
+    const a=Math.atan2((y-453)/55,(x-598)/54);
+    const flange=bump(x,641,3);
+    return {...metal(2.28+.18*flange,normal(.68+flange*.12,.38,-Math.sin(a)*.8),.55),roughness:.5,specular:.58};
+  });
+  // Circular bearing section. Radial normal changes through the rounded casting,
+  // so the broad sheen, dark middle band and thin return belong to the same metal.
+  const ringSurface=(x:number,y:number):Ink=>{
+    const dx=(x-582)/49,dy=(y-453)/54,r=Math.hypot(dx,dy);
+    const section=clamp((r-.655)/.345);
+    // The broad machined face is very slightly crowned. Most of the curvature
+    // belongs to its two substantial corner radii, not an inflated torus.
+    const q=section<.23 ? -.88+section/.23*.62
+      : section>.78 ? .26+.61*((section-.78)/.22) : -.26+(section-.23)*(.52/.55);
+    const front=Math.sqrt(1-q*q);
+    const az=Math.atan2(dy,dx);
+    const corner=section<.23||section>.78;
+    const tool=.038*Math.sin(r*128+Math.sin(az*7)*.7);
+    const crown=q+tool*(corner?.2:1);
+    const burnish=bump(az,-2.22,.5)+bump(az,1.9,.27);
+    return {...metal(2.93-.10*Math.sin(az),normal(Math.cos(az)*crown,front,-Math.sin(az)*crown),.61),
+      roughness:corner?.48:.39-burnish*.12,specular:corner?.63:.8,occlusion:section<.13?.8:1};
+  };
+  p.surface(oval(582,453,49,54),ringSurface);
+  // The bore is displaced backward, exposing an actual inner cylinder. Only the
+  // rear aperture is transparent; no black disc or illustrated ring outline.
+  p.surface(oval(581,454,34,39),(x,y)=>{
+    const dx=(x-581)/34,dy=(y-454)/39,a=Math.atan2(dy,dx);
+    const exposed=clamp((589-x)/38);
+    return {...metal(1.9+.3*exposed,normal(-Math.cos(a)*.8,.32,Math.sin(a)*.8),.38),
+      roughness:.54,specular:.48,occlusion:.45+.3*exposed};
+  });
   p.clearPoly(oval(589,450,25,32));
-  p.line(arc(589,450,26,33,132,246,9), metal(1,RIGHT,.1), 2);
-  p.line(arc(589,450,26,33,17,76,6), metal(3,TOP,.3), 1);
-  // Broad front annulus stays quiet; these are bevels and seated segments,
-  // not a luminous outline around both sides of the cast metal.
-  ringArc(p,185,251,49,54,46,51,metal(4,LEFT,.5));
-  ringArc(p,251,281,49,54,46,51,metal(5,TOP,.45));
-  ringArc(p,281,315,49,54,46,51,metal(3,TOP,.4));
-  ringArc(p,4,76,48,53,45,50,metal(1,RIGHT,.12));
-  ringArc(p,84,153,48,53,45,50,metal(2,FRONT,.28));
-  ringArc(p,153,223,36,41,34,39,metal(1,RIGHT,.15));
-  ringArc(p,40,119,36,41,34,39,metal(4,TOP,.45));
-  // The receding body is three connected cast segments, each with a return.
-  p.poly([[628,417],[635,420],[646,439],[649,449],[643,448],[638,432]], metal(2,RIGHT,.22));
-  p.poly([[644,452],[653,451],[653,465],[648,480],[641,488],[639,481],[645,466]], metal(1,RIGHT,.12));
-  p.line([[627,417],[637,426],[643,438]], metal(3,RIGHT,.3), 1);
-  p.line([[639,450],[650,451]], metal(0,RIGHT,0), 2);
-  p.line([[631,482],[641,488]], metal(0,RIGHT,0), 2);
-  p.poly([[550,409],[558,405],[567,406],[565,411],[557,415],[553,415]], ink('paint',3,TOP,.4));
-  p.poly([[555,410],[559,409],[560,412],[557,414],[554,414]], metal(4,TOP,.4));
-  p.line([[543,418],[546,415]], metal(5,LEFT,.3), 1);
-  p.poly([[547,492],[554,495],[555,501],[551,500],[550,497],[547,496]], ink('rust',2,FRONT,.18));
-  p.poly([[536,497],[545,498],[543,504],[535,503]], metal(1,FRONT,.2));
-  p.line([[523,498],[534,500]], metal(3,TOP,.25), 1);
-  p.line([[616,507],[619,511]], metal(4,TOP,.25), 1);
+  p.surface(annulus(581,454,35,40,32.5,37.5,17,148),(x,y)=>{
+    const a=Math.atan2((y-454)/40,(x-581)/35);
+    return {...metal(3.0,normal(-Math.cos(a)*.65,.62,Math.sin(a)*.65),.57),roughness:.31,specular:.79};
+  });
+  // A parting seam separates two bolted half castings. The seam is a cut, not a
+  // full perimeter outline; only the lower mating edge picks up a reflection.
+  p.line([[546,416],[552,421]],{...metal(.95,FRONT,.18),occlusion:.4},1);
+  p.line([[606,488],[613,496]],{...metal(.9,FRONT,.15),occlusion:.4},1);
+  p.line([[607,490],[611,495]],metal(3.2,TOP,.4),1);
+  fastener(p,542,449,3);
+  fastener(p,619,457,3);
+  fastener(p,537,502,2.5);
+  // A narrow machined socket cuts into the rear shoulder of the casting.
+  p.poly([[640,437],[648,441],[651,454],[646,457],[641,451]],{...metal(.75,RIGHT,.1),occlusion:.35});
+  p.surface([[642,438],[647,440],[649,450],[646,452],[643,448]],(_x,y)=>({
+    ...metal(2.7,normal(.8,.3,(448-y)/15),.4),roughness:.3,specular:.7,
+  }));
+  // Replaceable bore liner: three seated sectors have inward-facing walls and
+  // a thin machined landing. The interruptions are assembly gaps, not an icon.
+  for(const [from,to] of [[146,232],[244,317],[329,438]] as const) {
+    p.surface(annulus(581,454,36,41,32.8,37.6,from,to),(x,y)=>{
+      const a=Math.atan2((y-454)/41,(x-581)/36);
+      const r=Math.hypot((x-581)/36,(y-454)/41);
+      return {...metal(2.2+(r>.972?.55:0),normal(-Math.cos(a)*.62,.56,Math.sin(a)*.72),.52),
+        roughness:.3,specular:.78,occlusion:r>.972?.96:.76};
+    });
+  }
+  // Two mating tongues at the split make the front ring a compressed assembly.
+  p.poly([[543,420],[548,414],[559,421],[555,427]],{...metal(.92,FRONT,.18),occlusion:.45});
+  p.surface([[545,420],[549,416],[557,421],[553,425]],(_x,_y)=>({
+    ...metal(3.05,normal(-.6,.55,.55),.56),roughness:.32,specular:.71,
+  }));
+  p.surface([[552,425],[556,422],[560,425],[557,429]],(_x,_y)=>({
+    ...metal(2.08,normal(.57,.64,-.2),.4),roughness:.4,specular:.54,occlusion:.77,
+  }));
+  // One over-centre lock seats in a recess at the right-hand split. A cast upper
+  // lug, lower striker and articulated link physically bridge the divided ring.
+  p.poly([[615,434],[621,433],[632,446],[633,461],[622,471],[615,464]],
+    {...metal(.76,FRONT,.15),occlusion:.32});
+  p.surface([[614,435],[620,436],[627,443],[622,448],[615,445]],(_x,y)=>({
+    ...metal(2.65,normal(.3,.8,(444-y)/12),.55),roughness:.43,specular:.62,
+  }));
+  p.surface([[617,460],[624,456],[631,460],[626,467],[620,470],[616,467]],(_x,y)=>({
+    ...metal(2.28,normal(.46,.78,(464-y)/12),.48),roughness:.45,specular:.62,
+  }));
+  p.surface([[621,443],[625,442],[630,451],[628,458],[623,464],[620,462],[625,454],[626,451]],(x,_y)=>({
+    ...metal(3.0,normal((x-624)/8,.77,.35),.64),roughness:.27,specular:.8,
+  }));
+  fastener(p,626,453,2.7);
   return p;
 }
 
@@ -219,215 +300,300 @@ function paintConstrainedCore(p: PixelLayer): void {
   p.line([[404,570],[414,566]], metal(4,TOP,.65),1);
 }
 
+
 function buildCore(): PixelLayer {
   const p = new PixelLayer('core');
-  // The base follows the original elliptical polygon and its lower, dark return.
-  p.poly([[301,579],[327,569],[413,567],[453,580],[476,601],[476,615],[454,627],
-    [417,634],[330,630],[292,620],[279,608],[281,597]], metal(1));
-  p.poly([[292,594],[329,581],[415,578],[454,590],[469,605],[452,615],[416,622],
-    [330,620],[294,609]], metal(3, TOP));
-  p.poly([[280,599],[293,607],[330,617],[416,619],[453,610],[469,600],[475,603],
-    [469,615],[449,624],[414,630],[329,627],[291,616],[281,609]], metal(2));
-  p.line([[289,612],[328,625],[367,628]], metal(3), 2);
-  p.poly([[290,581],[322,572],[412,571],[445,579],[456,589],[452,604],[418,614],
-    [326,611],[289,600]], metal(2));
-  p.poly([[291,579],[323,568],[407,567],[446,578],[456,587],[420,599],[326,597],
-    [291,589]], metal(4, TOP));
-  p.poly([[302,583],[328,575],[407,574],[435,581],[443,586],[416,593],[329,592]], metal(3, TOP));
-  p.line([[291,590],[324,601],[362,603]], metal(1), 2);
-  p.line([[420,602],[449,592]], metal(1), 2);
-  p.line([[366,603],[366,627]], metal(1), 2);
-  p.line([[326,601],[323,623]], metal(1), 2);
-  p.line([[452,596],[458,612]], metal(1), 2);
-  p.poly([[299,600],[317,605],[316,613],[300,608]], ink('paint', 2));
-  p.poly([[344,600],[356,601],[356,605],[344,605]], ink('rust', 2));
+  // A cast plinth has a continuous rounded apron, a heavy horizontal flange and
+  // an inset mounting bed. Its front is a section of the same load-bearing body.
+  p.surface([[301,579],[327,569],[413,567],[453,580],[476,601],[476,615],[454,627],
+    [417,634],[330,630],[292,620],[279,608],[281,597]],(x,y)=>{
+    const nx=clamp((x-380)/105,-1,1), lower=clamp((y-596)/34);
+    return {...metal(2.45-.3*lower,normal(nx*.74,.9-nx*nx*.25,.22-lower*.2),.54),
+      roughness:.5,specular:.63,occlusion:1-lower*.2};
+  });
+  p.surface([[289,593],[329,579],[415,576],[453,589],[470,602],[452,615],[416,623],
+    [330,620],[293,609]],(x,y)=>{
+    const nx=clamp((x-380)/108,-1,1),front=clamp((y-590)/31);
+    return {...metal(2.64,normal(nx*.32,front*.6,.93-front*.45),.6),roughness:.49,specular:.64};
+  });
+  p.surface([[290,581],[322,572],[412,571],[445,579],[456,589],[452,604],[418,614],
+    [326,611],[289,600]],(x,y)=>({
+    ...metal(2.6,normal((x-377)/145,.92,.05),.54),roughness:.46,specular:.68,
+    occlusion:.9-.2*bump(y,600,2),
+  }));
+  p.surface([[291,579],[323,568],[407,567],[446,578],[456,587],[420,600],[326,598],
+    [291,589]],(x,y)=>({
+    ...metal(2.7,normal((x-375)/380,.1+bump(y,594,5)*.4,.98),.6),roughness:.58,specular:.57,
+  }));
+  // The machine bed is machined lower than its surrounding rim. This annular
+  // ledge changes height and gloss; it is not a painted panel on the plinth.
+  p.surface([[306,582],[330,574],[405,573],[433,581],[441,587],[416,594],[332,593]],(x,_y)=>({
+    ...metal(2.45,normal((x-376)/400,.06,1),.54),roughness:.36,specular:.73,occlusion:.82,
+  }));
+  p.line([[304,583],[330,575],[407,574]],{...metal(1.2,TOP,.3),occlusion:.5},1);
+  p.line([[331,593],[415,595],[440,587]],metal(3.1,TOP,.5),1);
+  p.line([[294,606],[330,617],[415,620],[451,611]],{...metal(1.3,FRONT,.25),occlusion:.6},1);
 
+  // The accepted reclaimed Rift mass and unequal restraint jaws remain intact.
   paintConstrainedCore(p);
 
-  // Left load-bearing shoulder: silhouette and plane breaks copied from C.
-  p.poly([[303,397],[322,379],[344,378],[367,384],[368,404],[360,412],[360,565],
-    [373,579],[365,588],[342,587],[320,579],[303,558]], metal(2));
-  p.poly([[303,397],[322,379],[344,378],[330,397]], metal(5,TOP));
-  p.poly([[331,397],[345,379],[365,383],[354,397]], metal(4,TOP));
-  p.poly([[304,398],[331,399],[334,560],[347,580],[341,585],[321,576],[304,557]], metal(3,LEFT));
-  p.poly([[333,399],[349,399],[349,563],[362,581],[348,583],[336,567]], metal(2));
-  p.poly([[349,400],[362,399],[361,414],[355,415],[355,560],[367,578],[361,581],[349,562]], metal(1,RIGHT));
-  p.poly([[306,408],[328,408],[328,431],[307,429]], ink('paint',3,LEFT));
-  p.poly([[307,433],[320,433],[320,437],[311,436],[311,440],[307,438]], ink('rust',2,LEFT));
-  p.poly([[307,444],[324,445],[326,465],[321,466],[321,451],[307,450]], metal(2,LEFT));
-  p.line([[305,433],[330,435]], metal(1), 2);
-  p.line([[306,506],[331,510]], metal(1), 2);
-  p.line([[337,438],[347,438]], metal(1), 2);
-  p.line([[337,506],[347,508]], metal(1), 2);
-  p.line([[306,399],[321,383]], metal(6,TOP), 1);
-  p.line([[309,455],[309,476]], metal(4,LEFT), 1);
-  p.line([[338,566],[347,579]], metal(4,LEFT), 1);
-  bolts(p, [[310,417],[322,421],[310,515],[322,519],[341,545]], 4);
+  // Both uprights are thick castings with rolled cheeks and returning inner
+  // flanges. Curvature exists over the whole clean face, before any small detail.
+  castCheek(p,[[303,397],[322,379],[344,378],[367,384],[368,404],[360,413],
+    [360,564],[373,579],[365,588],[342,587],[320,579],[303,558]],303,367,398,583,2.9,-1.17,1.13);
+  castCheek(p,[[304,398],[331,399],[340,407],[339,551],[345,570],[351,581],
+    [341,585],[321,576],[304,557]],304,343,398,578,3.05,-.9,.48);
+  // The inner flange faces the restrained mass, then rolls away into a deep bus slot.
+  p.surface([[344,401],[361,399],[361,414],[357,415],[357,558],[368,577],[361,581],
+    [347,563],[344,550]],(x,y)=>{
+    const u=clamp((x-344)/17), bend=bump(y,562,17);
+    return {...metal(2.45,normal(Math.sin(u*1.4+.05),Math.cos(u*1.4+.05),bend*.4),.69),
+      roughness:.36,specular:.72};
+  });
+  p.surface([[303,397],[322,379],[344,378],[367,384],[355,399],[331,404]],(x,y)=>{
+    const edge=bump(y,399,4);
+    return {...metal(3.12,normal((x-334)/85,edge*.5,.92),.6),roughness:.52,specular:.59};
+  });
+  // A dovetailed keeper is let into the cap, exposing its seating walls and
+  // a raised curved back. Its interruption explains the cap's thickness.
+  p.poly([[322,385],[334,382],[348,388],[335,395],[316,394]],{...metal(1.13,TOP,.25),occlusion:.46});
+  p.surface([[323,386],[334,383],[345,388],[334,393],[318,392]],(_x,y)=>({
+    ...metal(2.7,normal(-.12,(y-388)/10,.92),.44),roughness:.39,specular:.61,occlusion:.76,
+  }));
+  p.surface([[321,394],[334,396],[349,389],[347,392],[335,399],[321,397]],(_x,_y)=>({
+    ...metal(2.8,normal(-.08,.85,.42),.46),roughness:.34,specular:.65,
+  }));
+  p.poly([[310,405],[332,407],[339,405],[340,410],[331,412],[310,410]],{...metal(1.3,FRONT,.28),occlusion:.6});
+  p.surface([[313,405],[330,407],[336,406],[331,409],[313,408]],(_x,_y)=>({
+    ...metal(3.05,normal(-.2,.62,.76),.5),roughness:.33,specular:.74,
+  }));
+  // A structural recess leaves metal webs above and below; its backing is inset,
+  // its long sides are concave, and its foot can receive reflected light.
+  longPocket(p,309,431,21,73,2);
+  p.surface([[317,446],[322,447],[323,487],[320,493],[316,491]],(_x,_y)=>({
+    ...metal(2.3,normal(-.15,.92,.08),.32),roughness:.6,specular:.32,occlusion:.66,
+  }));
+  // Shielded bus channel, separate from the load bearing casting around it.
+  p.poly([[349,418],[356,416],[356,550],[351,562],[349,556]],{...metal(.7,RIGHT,.12),occlusion:.36});
+  p.surface([[351,422],[354,420],[354,551],[351,558]],(_x,_y)=>({
+    ...metal(1.6,normal(.6,.5,.04),.45),roughness:.34,specular:.66,occlusion:.6,
+  }));
+  for(const [top,bottom] of [[431,474],[481,527],[535,551]] as const) {
+    p.surface([[356,top],[359,top-2],[359,bottom],[356,bottom+3]],(_x,_y)=>({
+      ...metal(2.4,normal(-.85,.5,.03),.8),roughness:.3,specular:.77,occlusion:.85,
+    }));
+  }
+  p.line([[350,476],[358,475]],{...metal(.45,TOP,.12),occlusion:.4},2);
+  p.line([[350,530],[359,530]],{...metal(.45,TOP,.12),occlusion:.4},2);
+  // Compression shoe is an actual thicker saddle around the foot of the casting.
+  p.surface([[307,519],[331,523],[335,550],[344,565],[336,576],[321,569],[308,552]],(x,y)=>{
+    const u=clamp((x-307)/37);
+    return {...metal(2.78,normal(Math.sin(-.7+u),Math.cos(-.7+u),bump(y,523,6)*.6),.57),roughness:.47,specular:.65};
+  });
+  longPocket(p,314,530,13,20,2);
+  p.surface([[309,554],[320,566],[337,575],[343,572],[345,579],[338,583],[319,573]],(_x,_y)=>({
+    ...metal(3.1,normal(-.4,.65,.6),.65),roughness:.35,specular:.73,
+  }));
+  fastener(p,317,417,2.5);
+  fastener(p,319,511,2.6);
+  fastener(p,333,564,2.4);
 
-  // Right shoulder returns into shadow; its inward lip catches the vessel light.
-  p.poly([[405,381],[425,377],[446,380],[468,399],[469,559],[452,582],[435,587],
-    [416,585],[406,578],[419,565],[419,399],[406,397]], metal(2));
-  p.poly([[406,381],[425,377],[438,381],[447,399],[420,399],[419,386]], metal(4,TOP));
-  p.poly([[438,380],[447,381],[468,399],[455,400]], metal(3,TOP));
-  p.poly([[447,400],[467,401],[467,557],[450,579],[437,583],[447,562]], metal(2,RIGHT));
-  p.poly([[430,402],[445,402],[445,562],[433,580],[420,581],[430,564]], metal(3));
-  p.poly([[421,401],[430,402],[430,565],[419,579],[409,577],[420,564]], metal(1));
-  p.poly([[423,412],[427,412],[427,553],[423,561]], metal(4,LEFT,.95));
-  p.poly([[433,408],[443,408],[443,430],[433,428]], ink('paint',2));
-  p.poly([[433,433],[442,434],[442,441],[437,438],[433,439]], ink('rust',2));
-  p.line([[450,435],[465,435]], metal(1), 2);
-  p.line([[431,434],[444,436]], metal(1), 2);
-  p.line([[432,508],[445,508],[466,506]], metal(1), 2);
-  p.line([[407,381],[424,380],[437,383]], metal(5,TOP), 1);
-  bolts(p, [[435,416],[435,517],[450,552]], 4);
+  castCheek(p,[[405,381],[425,377],[446,380],[468,399],[469,559],[452,582],
+    [435,587],[416,585],[406,578],[419,565],[419,399],[406,397]],419,469,399,582,2.65,-.37,1.24);
+  castCheek(p,[[430,402],[446,401],[451,411],[450,548],[445,563],[433,581],
+    [420,583],[420,576],[430,562]],430,450,402,579,2.9,-.24,.68);
+  p.surface([[405,381],[425,377],[446,380],[468,399],[448,403],[420,400],[420,389]],(x,y)=>({
+    ...metal(2.95,normal((x-425)/80,.12+bump(y,400,3)*.55,.93),.55),roughness:.53,specular:.59,
+  }));
+  p.poly([[425,382],[436,382],[452,394],[441,396],[433,389]],{...metal(1.18,TOP,.25),occlusion:.47});
+  p.surface([[426,383],[435,383],[449,393],[442,394],[434,388]],(_x,y)=>({
+    ...metal(2.7,normal(.1,(y-386)/19,.91),.43),roughness:.4,specular:.61,occlusion:.77,
+  }));
+  // A left facing inner return catches only localized pollution bounce.
+  p.surface([[420,402],[431,402],[431,561],[421,578],[410,579],[418,569],[421,559]],(x,y)=>{
+    const u=clamp((x-420)/11);
+    return {...metal(2.15,normal(-Math.cos(u*.85),.27+u*.5,bump(y,568,10)*.3),.72),roughness:.35,specular:.7};
+  });
+  p.poly([[421,414],[427,413],[427,552],[421,565],[417,569],[421,552]],{...metal(.65,LEFT,.15),occlusion:.33});
+  for(const [top,bottom] of [[431,474],[481,527],[535,550]] as const) {
+    p.surface([[423,top],[426,top+1],[426,bottom],[423,bottom+3]],()=>({
+      ...metal(2.5,normal(-.8,.6,.02),.82),roughness:.3,specular:.75,occlusion:.83,
+    }));
+  }
+  longPocket(p,434,433,11,70,0);
+  p.surface([[432,518],[445,518],[447,546],[439,563],[430,571],[425,569],[433,553]],(_x,y)=>({
+    ...metal(2.66,normal(.3,.86,bump(y,520,4)*.45),.56),roughness:.48,specular:.62,
+  }));
+  longPocket(p,434,531,8,17,0);
+  p.surface([[445,550],[451,546],[451,555],[438,579],[431,580],[435,573]],(_x,_y)=>({
+    ...metal(2.5,normal(.7,.48,.42),.53),roughness:.42,specular:.63,
+  }));
+  fastener(p,438,416,2.4);
+  fastener(p,438,510,2.3);
+  // Only selected assembly seams interrupt the reflected vertical body.
+  p.line([[450,407],[464,407]],{...metal(1.25,RIGHT,.25),occlusion:.7},1);
+  p.line([[450,511],[466,508]],{...metal(1.3,RIGHT,.24),occlusion:.68},1);
 
-  // Pressed service plates are middle-sized forms within the load-bearing metal.
-  // Their paint survives on protected faces; wear belongs to fasteners and lips.
-  p.poly([[308,441],[323,443],[327,448],[328,495],[324,502],[310,499]], metal(1,LEFT,.35));
-  p.poly([[310,443],[322,445],[325,449],[326,493],[323,498],[312,497]], ink('paint',2,LEFT,.5));
-  p.poly([[310,443],[322,445],[323,450],[322,489],[319,494],[312,494]], ink('paint',3,LEFT,.5));
-  p.poly([[311,452],[314,453],[314,470],[312,468]], ink('paint',4,LEFT,.3));
-  p.poly([[312,476],[315,477],[315,486],[319,489],[318,492],[312,490]], metal(3,LEFT,.4));
-  p.line([[310,498],[322,500]], metal(3,LEFT,.4), 1);
-  // Recessed high-current bus runs up the inward return, behind the lit lip.
-  p.poly([[350,417],[356,416],[356,554],[352,563],[350,560]], metal(0,RIGHT,0));
-  p.rect(352,425,2,23,metal(2,RIGHT,.35));
-  p.rect(352,480,2,20,metal(2,RIGHT,.35));
-  p.poly([[351,522],[356,520],[356,538],[352,542]], metal(2,LEFT,.5));
-  p.poly([[356,436],[360,434],[359,477],[357,479]], metal(2,RIGHT,1));
-  p.poly([[356,480],[360,478],[360,532],[357,536]], metal(3,RIGHT,1));
-  p.poly([[357,538],[360,536],[360,562],[366,573],[363,575],[357,564]], metal(3,RIGHT,1));
-  p.line([[358,492],[358,513]], metal(4,RIGHT,1), 1);
-  p.line([[359,547],[360,558]], metal(4,RIGHT,1), 1);
-  // The cap joint has a seated dark seam, machined upper lip, and one worn corner.
-  p.poly([[322,379],[326,379],[311,397],[307,397]], metal(3,TOP,.35));
-  p.line([[335,384],[346,382],[358,385]], metal(5,TOP,.3), 1);
-  p.poly([[342,390],[352,390],[355,395],[338,395]], metal(2,TOP,.25));
-  p.poly([[306,402],[328,403],[328,407],[307,406]], metal(1,LEFT,.2));
-  p.line([[308,400],[321,400]], metal(4,LEFT,.25), 1);
-  p.poly([[325,405],[328,406],[328,413],[325,411]], ink('rust',2,LEFT,.2));
-  // Lower access cover and mechanically clamped foot leave the large middle calm.
-  p.poly([[309,519],[324,522],[326,549],[320,554],[311,548]], metal(2,LEFT,.35));
-  p.poly([[312,522],[322,524],[323,546],[319,548],[313,545]], metal(3,LEFT,.4));
-  p.poly([[313,526],[320,528],[320,532],[313,530]], metal(1,LEFT,.2));
-  p.poly([[319,550],[324,550],[331,565],[327,568],[321,560]], ink('rust',2,LEFT,.2));
-  p.poly([[316,562],[323,565],[332,575],[329,578],[319,573]], metal(2,LEFT,.4));
-  p.line([[319,564],[326,568]], metal(4,LEFT,.35), 1);
-  bolts(p,[[311,445],[321,494],[314,539]],3);
+  // The long cast cheeks terminate in transverse bearing saddles. Each saddle
+  // has a recessed joint and a pressure key carried by the metal beneath it;
+  // it interrupts the clean plane by changing construction, not by surface wear.
+  p.poly([[305,505],[327,508],[340,507],[343,514],[329,518],[307,514]],
+    {...metal(.95,FRONT,.2),occlusion:.48});
+  p.surface([[305,501],[327,504],[339,503],[341,510],[327,513],[306,509]],(x,y)=>{
+    const u=clamp((x-305)/36);
+    return {...metal(2.95,normal(Math.sin(-.8+u),Math.cos(-.8+u),bump(y,505,3)*.65),.62),
+      roughness:.4,specular:.68};
+  });
+  p.surface([[308,513],[327,516],[340,513],[340,518],[328,522],[309,518]],(_x,_y)=>({
+    ...metal(2.12,normal(-.25,.9,-.1),.4),roughness:.52,specular:.5,occlusion:.76,
+  }));
+  // Small tapered key sits in the saddle's pocket, with its head above the seat.
+  p.poly([[317,504],[324,505],[325,519],[318,517]],{...metal(.7,FRONT,.18),occlusion:.35});
+  p.surface([[318,505],[323,506],[323,515],[319,514]],(_x,_y)=>({
+    ...metal(2.85,normal(-.4,.74,.24),.54),roughness:.31,specular:.7,
+  }));
+  p.surface([[432,503],[446,503],[465,500],[465,509],[446,513],[432,511]],(x,y)=>({
+    ...metal(2.63,normal(.32+(x-432)/80,.8,bump(y,505,3)*.48),.54),roughness:.43,specular:.63,
+  }));
+  p.poly([[432,511],[446,514],[466,510],[466,514],[446,518],[432,515]],
+    {...metal(1.04,FRONT,.24),occlusion:.55});
+  p.poly([[443,505],[448,504],[448,518],[443,519]],{...metal(.76,RIGHT,.2),occlusion:.4});
+  p.surface([[444,506],[447,505],[447,515],[444,516]],()=>({
+    ...metal(2.7,normal(.48,.75,.24),.49),roughness:.32,specular:.67,
+  }));
 
-  // Opposite shoulder has the same fabrication, but most detail disappears into its return.
-  p.poly([[432,443],[442,443],[443,495],[435,501],[432,497]], metal(1,FRONT,.3));
-  p.poly([[433,446],[440,446],[441,492],[436,497],[433,495]], ink('paint',2,FRONT,.4));
-  p.line([[435,449],[435,470]], ink('paint',3,LEFT,.4),1);
-  p.poly([[420,411],[424,411],[424,552],[420,565],[417,568],[421,551]], metal(0,RIGHT,0));
-  p.poly([[423,436],[426,437],[426,477],[423,474]], metal(2,LEFT,1));
-  p.poly([[423,478],[426,480],[426,532],[423,535]], metal(3,LEFT,1));
-  p.poly([[423,537],[426,535],[426,554],[420,568],[417,570],[423,553]], metal(3,LEFT,1));
-  p.line([[424,493],[424,514]], metal(4,LEFT,1),1);
-  p.line([[422,554],[419,562]], metal(4,LEFT,1),1);
-  p.poly([[432,520],[441,520],[441,545],[436,552],[432,550]], metal(2,FRONT,.4));
-  p.line([[434,524],[439,524]], metal(1,FRONT,.2),1);
-  p.poly([[449,407],[455,407],[454,552],[450,557]], metal(1,RIGHT,.15));
-  p.line([[455,408],[464,408]], metal(2,RIGHT,.2),1);
-  p.poly([[431,383],[438,384],[447,396],[440,396]], metal(2,TOP,.3));
-  p.line([[413,384],[424,383]], metal(5,TOP,.3),1);
-  p.poly([[435,558],[440,554],[442,556],[438,565],[433,568]], ink('rust',2,FRONT,.3));
-
-  // Recessed pedestal panels, hinge brackets and a single inset service plaque.
-  p.poly([[296,593],[319,599],[318,605],[298,600]], metal(2,FRONT,.3));
-  p.poly([[299,594],[310,597],[310,600],[299,597]], ink('paint',3,FRONT,.35));
-  p.poly([[331,602],[358,604],[358,612],[331,609]], metal(1,FRONT,.2));
-  p.poly([[334,604],[353,605],[353,609],[334,608]], metal(2,FRONT,.3));
-  p.line([[333,605],[341,606]], metal(4,FRONT,.2),1);
-  p.poly([[377,606],[399,605],[399,615],[378,617]], metal(1,FRONT,.2));
-  p.poly([[380,608],[397,607],[397,613],[380,615]], ink('paint',2,FRONT,.35));
-  p.poly([[306,610],[312,612],[312,620],[307,618]], metal(1,FRONT,.2));
-  p.poly([[341,617],[347,618],[347,627],[341,626]], metal(1,FRONT,.2));
-  p.line([[301,585],[313,581]], metal(5,TOP,.3),1);
-  p.line([[328,591],[350,593]], metal(4,TOP,.4),1);
-  p.poly([[450,585],[453,587],[451,593],[448,594],[448,590]], ink('rust',2,TOP,.25));
-  // C's short access steps remain on the front right of the base.
-  p.poly([[402,586],[428,582],[442,622],[422,629],[413,612]], metal(1));
-  p.poly([[404,584],[427,581],[431,590],[408,594]], metal(4,TOP));
-  p.poly([[409,596],[432,591],[436,600],[413,605]], metal(3,TOP));
-  p.poly([[414,608],[437,602],[440,612],[419,618]], metal(4,TOP));
-  p.line([[408,594],[430,590]], metal(5,TOP), 1);
-  p.line([[413,605],[435,600]], metal(4,TOP), 1);
+  // Plinth joint and access stair: tread thickness and nosing reflections replace
+  // labels, arbitrary scratches and decorative outlined panels.
+  p.poly([[331,602],[356,604],[356,611],[331,609]],{...metal(1.0,FRONT,.15),occlusion:.4});
+  p.surface([[334,604],[354,605],[354,609],[334,608]],(_x,_y)=>({
+    ...metal(2.6,normal(-.1,.9,.3),.36),roughness:.4,specular:.6,
+  }));
+  p.surface([[402,586],[428,582],[442,622],[422,629],[413,612]],(_x,_y)=>({
+    ...metal(2.2,normal(.12,.9,.2),.46),roughness:.6,specular:.45,
+  }));
+  const steps:readonly (readonly Point[])[]=[
+    [[404,584],[427,581],[431,590],[408,594]],
+    [[409,596],[432,591],[436,600],[413,605]],
+    [[414,608],[437,602],[440,612],[419,618]],
+  ];
+  for(const points of steps) {
+    const frontY=(points[2]![1]+points[3]![1])*.5;
+    p.surface(points,(_x,y)=>({
+      ...metal(2.88,normal(.06,bump(y,frontY,2.7)*.5,.94),.6),roughness:.58,specular:.55,
+    }));
+    p.line([points[3]!,points[2]!],metal(3.35,normal(.1,.6,.8),.62),1);
+  }
+  fastener(p,310,591,2.5);
+  fastener(p,386,608,2.2);
   return p;
 }
 
 function buildPurifier(): PixelLayer {
   const p = new PixelLayer('purifier');
-  p.poly([[612,548],[643,536],[741,543],[746,553],[750,612],[717,625],[608,612]], metal(1));
-  p.poly([[615,545],[642,535],[741,543],[716,554]], metal(4,TOP));
-  p.poly([[719,554],[744,546],[749,611],[719,621]], metal(2,RIGHT));
-  p.poly([[615,546],[717,555],[718,620],[615,610]], metal(3));
-  p.poly([[621,557],[708,563],[709,610],[622,603]], cavity);
-  p.poly([[621,557],[630,559],[629,602],[622,603]], metal(1,RIGHT));
-  // The manifold sits behind the replaceable filters and vanishes beneath the header.
-  p.poly([[627,558],[704,564],[704,573],[628,568]], metal(0,FRONT,0));
-  p.line([[629,565],[704,571]], metal(1,TOP,.15),1);
-  p.poly([[700,563],[708,563],[709,610],[703,609]], metal(0,RIGHT,0));
-  p.poly([[625,602],[708,608],[708,613],[625,607]], metal(2,TOP,.3));
-  p.poly([[621,549],[708,557],[708,563],[621,557]], ink('paint',3));
-  p.poly([[722,561],[740,555],[741,579],[724,585]], ink('paint',2,RIGHT));
-  p.line([[724,588],[741,582]], metal(1,RIGHT), 2);
-  p.line([[622,547],[646,540],[665,542]], metal(5,TOP), 1);
-  // Glazed ceramic filter bodies have broad matte bands; machined steel belongs
-  // to the cap and retaining collar. No texture is spread over these small forms.
-  const tanks = [{x:632,y:565,h:38},{x:660,y:568,h:38},{x:687,y:571,h:37}];
-  for (const {x,y,h} of tanks) {
-    p.rect(x+7,y-6,5,7,metal(1,FRONT,.2));
-    p.rect(x+8,y-5,2,5,metal(3,LEFT,.25));
-    p.poly([[x,y],[x+5,y-3],[x+14,y-2],[x+18,y+2],[x+18,y+h],[x+12,y+h+4],
-      [x+3,y+h+2],[x,y+h-1]], ink('chalk',1,RIGHT,.25));
-    p.poly([[x+3,y+4],[x+8,y+5],[x+13,y+4],[x+13,y+h-3],[x+9,y+h],[x+3,y+h-2]], ink('chalk',3,FRONT,.65));
-    p.poly([[x+4,y+7],[x+8,y+8],[x+8,y+h-7],[x+5,y+h-5],[x+3,y+h-7]], ink('chalk',4,LEFT,.7));
-    p.poly([[x+12,y+5],[x+16,y+3],[x+16,y+h-2],[x+12,y+h]], ink('chalk',2,RIGHT,.25));
-    p.ellipse(x+9,y+1,9,3,metal(3,TOP,.45));
-    p.ellipse(x+9,y-1,6,2,metal(2,TOP,.2));
-    p.poly([[x+1,y+4],[x+7,y+6],[x+13,y+6],[x+17,y+4],[x+17,y+6],[x+13,y+8],
-      [x+7,y+8],[x+1,y+6]], metal(1,FRONT,.15));
-    p.line([[x+3,y+5],[x+8,y+7],[x+12,y+7]], metal(2,TOP,.25),1);
-    // The cap throws a short soft-value band onto the otherwise uninterrupted cylinder.
-    p.poly([[x+3,y+8],[x+8,y+9],[x+13,y+8],[x+13,y+11],[x+7,y+12],[x+3,y+10]], ink('chalk',2,FRONT,.3));
-    p.poly([[x+1,y+h-3],[x+7,y+h-1],[x+13,y+h-1],[x+17,y+h-3],[x+17,y+h],
-      [x+12,y+h+3],[x+5,y+h+2],[x+1,y+h]], metal(2,FRONT,.25));
-    p.line([[x+3,y+h-2],[x+8,y+h],[x+12,y+h-1]], metal(3,TOP,.35),1);
+  // Deep pressed-steel enclosure. Side, roof and folded mouth are separate pieces
+  // of one shell with rounded returns, never a bright outline on a flat rectangle.
+  p.surface([[612,548],[643,536],[741,543],[746,553],[750,612],[717,625],[608,612]],(_x,_y)=>({
+    ...metal(2.32,normal(.12,.95,.08),.5),roughness:.54,specular:.5,
+  }));
+  p.surface([[718,554],[744,545],[750,611],[718,623]],(x,y)=>{
+    const u=clamp((x-718)/31), top=clamp((y-552)/65);
+    return {...metal(2.52-.18*top,normal(.38+u*.45,.8-u*.52,.05+bump(y,553,5)*.35),.52),
+      roughness:.55,specular:.5};
+  });
+  p.surface([[614,545],[642,535],[741,543],[716,555]],(x,y)=>{
+    const along=(x-615)/120, front=clamp((y-(545+along*8))/7);
+    return {...metal(3.27,normal(.05,.15+front*.45,1-front*.3),.62),roughness:.47,specular:.65};
+  });
+  // Rolled front fascia turns continuously from the roof into its vertical face.
+  p.surface([[615,546],[717,555],[718,621],[615,610]],(x,y)=>{
+    const top=547+(x-615)*.088, d=y-top;
+    const lip=Math.exp(-Math.max(0,d)/3.5);
+    return {...metal(2.98,normal((x-665)/900,.95-lip*.33,.08+lip*.83),.6),roughness:.45,specular:.65};
+  });
+  // Offset cavity has side jambs, a rear manifold and a return sill.
+  p.poly([[622,557],[708,564],[709,610],[622,603]],{...cavity,occlusion:.2});
+  p.surface([[622,557],[630,560],[630,600],[622,604]],(_x,_y)=>({
+    ...metal(1.77,normal(.83,.28,.06),.29),roughness:.56,specular:.45,occlusion:.56,
+  }));
+  p.surface([[628,560],[707,566],[704,572],[630,566]],(_x,_y)=>({
+    ...metal(1.18,normal(0,.2,-1),.21),roughness:.6,specular:.36,occlusion:.3,
+  }));
+  p.surface([[704,565],[708,564],[709,610],[703,607]],(_x,_y)=>({
+    ...metal(1.66,normal(-.86,.35,.05),.32),roughness:.53,specular:.48,occlusion:.49,
+  }));
+  p.surface([[623,602],[703,607],[709,610],[706,614],[623,607]],(_x,_y)=>({
+    ...metal(2.62,normal(0,.22,.98),.48),roughness:.48,specular:.57,occlusion:.73,
+  }));
+  // The roof inspection hatch is recessed into a pressed seat. The edge is a
+  // shallow change in plane; the large lid reflects as one slightly bowed sheet.
+  p.poly([[648,539],[726,545],[709,553],[632,547]],{...metal(1.22,TOP,.35),occlusion:.57});
+  p.surface([[649,540],[721,546],[708,551],[637,546]],(x,_y)=>{
+    const bow=clamp((x-641)/77);
+    return {...metal(3.05,normal((bow-.5)*.3,.08+.17*Math.sin(bow*Math.PI),.98),.56),
+      roughness:.6,specular:.48};
+  });
+  p.line([[640,546],[708,552],[723,546]],metal(2.2,normal(.05,.65,.76),.4),1);
+  // Vertical filter cartridges retain the accepted three-cylinder read. Their
+  // ceramic bodies turn continuously, while machined collars have narrow sheen.
+  const tanks=[{x:632,y:565,h:38},{x:660,y:568,h:38},{x:687,y:571,h:37}];
+  for(const {x,y,h} of tanks) {
+    p.surface([[x+7,y-7],[x+12,y-6],[x+12,y+1],[x+7,y]],(px,_py)=>({
+      ...metal(2.2,normal((px-x-9)/4,.9,.05),.33),roughness:.32,specular:.7,occlusion:.65,
+    }));
+    p.surface([[x,y],[x+5,y-3],[x+14,y-2],[x+18,y+2],[x+18,y+h],[x+12,y+h+4],
+      [x+3,y+h+2],[x,y+h-1]],(px,py)=>{
+      const u=clamp((px-x)/18), a=-1.38+u*2.75;
+      const capShadow=.6*bump(py,y+7,4);
+      return {...ink('chalk',3.18-capShadow,normal(Math.sin(a),Math.cos(a),.04),.6),
+        roughness:.6,specular:.22,occlusion:.86};
+    });
+    p.surface(oval(x+9,y+1,9,3,16),(px,py)=>({
+      ...metal(3.25,normal((px-x-9)/20,.2+(py-y)/5,.8),.49),roughness:.3,specular:.76,occlusion:.9,
+    }));
+    p.surface(oval(x+9,y-1,6,2,12),(_px,_py)=>({
+      ...metal(2.4,normal(0,.2,1),.38),roughness:.42,specular:.55,occlusion:.63,
+    }));
+    p.surface([[x+1,y+3],[x+7,y+5],[x+13,y+5],[x+17,y+3],[x+17,y+7],
+      [x+13,y+9],[x+7,y+9],[x+1,y+7]],(px,_py)=>{
+      const a=-1.3+clamp((px-x)/18)*2.6;
+      return {...metal(2.55,normal(Math.sin(a),Math.cos(a),.12),.46),roughness:.29,specular:.76,occlusion:.78};
+    });
+    p.surface([[x+1,y+h-3],[x+7,y+h-1],[x+13,y+h-1],[x+17,y+h-3],[x+17,y+h],
+      [x+12,y+h+3],[x+5,y+h+2],[x+1,y+h]],(px,_py)=>{
+      const a=-1.3+clamp((px-x)/18)*2.6;
+      return {...metal(2.75,normal(Math.sin(a),Math.cos(a),.26),.53),roughness:.32,specular:.7,occlusion:.81};
+    });
   }
-  p.poly([[610,596],[619,597],[620,611],[613,616],[606,612],[606,603]], metal(2));
-  p.poly([[609,596],[615,593],[622,596],[619,601],[609,600]], metal(4,TOP));
-  p.poly([[701,606],[709,606],[715,610],[715,623],[704,624],[698,620],[698,612]], metal(2));
-  p.poly([[700,606],[706,603],[714,607],[710,612],[699,611]], metal(4,TOP));
-  p.poly([[724,600],[730,599],[730,605],[725,608]], ink('rust',2,RIGHT));
-  p.poly([[628,550],[637,551],[637,554],[631,553],[628,555]], ink('rust',2));
-  bolts(p, [[617,551],[710,560],[720,609]], 5);
-  // Top inspection lid: one seated plate, four protected fasteners, one worn lip.
-  p.poly([[647,540],[722,546],[708,552],[632,546]], metal(2,TOP,.35));
-  p.poly([[648,541],[718,547],[708,550],[638,545]], ink('paint',3,TOP,.45));
-  p.line([[641,545],[682,548]], metal(4,TOP,.4),1);
-  p.poly([[650,541],[657,542],[653,543],[650,543]], metal(4,TOP,.3));
-  p.poly([[698,546],[704,546],[705,548],[699,548]], ink('rust',2,TOP,.2));
-  p.line([[664,547],[675,548]], metal(1,TOP,.2),1);
-  // A single lower drain and a side access hatch make the box serviceable.
-  p.poly([[726,563],[739,559],[742,590],[728,595]], metal(1,RIGHT,.12));
-  p.poly([[728,565],[737,562],[739,587],[729,591]], ink('paint',2,RIGHT,.22));
-  p.line([[730,568],[736,566]], metal(2,RIGHT,.15),1);
-  p.poly([[730,576],[734,575],[735,581],[731,582]], metal(0,RIGHT,0));
-  p.line([[729,591],[738,588]], metal(2,TOP,.2),1);
-  p.poly([[672,610],[679,611],[679,615],[674,616]], metal(1,FRONT,.2));
-  p.rect(674,612,3,2,metal(3,TOP,.25));
-  p.line([[627,612],[648,615]], metal(1,FRONT,.2),1);
-  p.line([[649,613],[668,615]], metal(3,TOP,.3),1);
-  p.poly([[638,603],[642,604],[642,608],[639,607]], ink('rust',2,FRONT,.25));
-  // Clamps remain behind the necks, leaving the three principal ceramic curves intact.
-  p.poly([[632,568],[635,569],[635,574],[632,573]], metal(1,FRONT,.15));
-  p.poly([[660,571],[663,572],[663,577],[660,576]], metal(1,FRONT,.15));
-  p.poly([[687,574],[690,575],[690,580],[687,579]], metal(1,FRONT,.15));
-  p.line([[695,592],[698,592]], ink('chalk',2,FRONT,.3),1);
+  // Side service hatch: an inset shell with a dished center, not another decal.
+  p.surface([[726,563],[739,559],[742,590],[728,595]],(x,y)=>{
+    const u=clamp((x-726)/16), v=clamp((y-560)/35), edge=Math.min(u,1-u,v*2,(1-v)*2);
+    const lip=bump(edge,.09,.08),depth=clamp((edge-.1)/.18);
+    return {...metal(2.2+lip*.35-depth*.3,normal(.75,.48+(u-.5)*.15,.05),.4),
+      roughness:.59,specular:.43,occlusion:.75-depth*.15};
+  });
+  p.poly([[731,573],[735,572],[736,580],[732,581]],{...metal(.62,RIGHT,.1),occlusion:.35});
+  p.surface([[732,573],[734,573],[735,578],[733,579]],()=>({
+    ...metal(2.35,normal(.85,.2,.3),.35),roughness:.33,specular:.58,
+  }));
+  // Two service latches are thick enough to stand proud of the housing.
+  for(const points of [
+    [[610,596],[619,597],[620,611],[613,616],[606,612],[606,603]],
+    [[701,606],[709,606],[715,610],[715,623],[704,624],[698,620],[698,612]],
+  ] as const) {
+    const x0=points[0][0],y0=points[0][1];
+    p.surface(points,(x,y)=>({
+      ...metal(2.64,normal((x-x0-2)/15,.8,bump(y,y0+2,3)*.7),.51),roughness:.4,specular:.7,
+    }));
+  }
+  fastener(p,619,551,2.2);
+  fastener(p,712,560,2.2);
+  fastener(p,739,604,2.1);
+  // One drain beneath the lowest receiver; its darkness is a through opening.
+  p.poly([[672,611],[680,612],[679,616],[674,617]],{...metal(.6,FRONT,.14),occlusion:.35});
+  p.line([[673,611],[679,612]],metal(3.05,TOP,.42),1);
   return p;
 }
 
 export function buildDeviceLayers(): PixelLayer[] {
-  return [buildOffering(), buildCore(), buildPurifier()];
+  return [buildOffering(),buildCore(),buildPurifier()];
 }

@@ -3,14 +3,14 @@ import type { Material } from './raster';
 /** Authored ramps: index is a paint tone, never inferred from RGB. */
 export const PALETTE: Record<Material, readonly string[]> = {
   void: ['#0B1016', '#11141A', '#191E26', '#242932', '#303039', '#3D434B', '#4B555D', '#5F6A71'],
-  concrete: ['#191C25', '#302E37', '#4A4549', '#686162', '#81796F', '#9A9082', '#B7AA94', '#D6C7AB'],
-  chalk: ['#24232B', '#3D3A40', '#595358', '#7C7573', '#9F9589', '#BDB09B', '#D4C4A8', '#E5D3B6'],
-  steel: ['#11141D', '#232A38', '#374454', '#526574', '#81929F', '#ACB8BE', '#D0D2CE', '#E8DFCA'],
-  paint: ['#1A1E2B', '#2A3345', '#404B5E', '#596779', '#7B8693', '#A0A7AE', '#C0C1BD', '#D9D6C8'],
+  concrete: ['#141A25', '#282D3B', '#424754', '#666C79', '#90969F', '#B0B6B9', '#CDD0CC', '#E3E2D6'],
+  chalk: ['#212633', '#373D4B', '#545D6C', '#76838F', '#9FAAB1', '#C2CACC', '#D9DEDA', '#EBEDE1'],
+  steel: ['#0C141F', '#1C2935', '#334450', '#526571', '#80949D', '#AFBBC0', '#D6DBD9', '#F0EDE0'],
+  paint: ['#191F2B', '#2B3443', '#404E60', '#5D6E81', '#8595A3', '#ADB8C0', '#CCD1D0', '#E2E3D8'],
   rust: ['#291F25', '#3B2B2F', '#603E39', '#8A574A', '#A27158', '#B99370', '#C5AA87', '#D9C7A5'],
   glass: ['#111C27', '#20303F', '#344756', '#4E6371', '#718897', '#98ACB5', '#C3CED0', '#E1E1D4'],
   light: ['#393036', '#605153', '#8A766A', '#AD9981', '#CAB99C', '#E0CFAC', '#EEE0BE', '#FFF5D8'],
-  alien: ['#0B1F20', '#123B30', '#185B3C', '#228A4D', '#40B966', '#72E091', '#AEF2B7', '#E1FFD6'],
+  alien: ['#101C20', '#253937', '#3C5650', '#5C7869', '#849D7D', '#B0BF94', '#D1D6AD', '#E8E7C9'],
 };
 
 function colors(material: Material): readonly (readonly [number, number, number])[] {
@@ -48,9 +48,9 @@ function pollutionColors(material: Material): readonly (readonly (readonly numbe
   return Array.from({ length: POLLUTION_STEPS + 1 }, (_, step) => LIGHT_RGB[material].map(rgb => {
     const amount = step / POLLUTION_STEPS;
     return [
-      Math.round(rgb[0]! * (1 - amount * .54)),
-      Math.round(rgb[1]! + (255 - rgb[1]!) * amount * .29),
-      Math.round(rgb[2]! * (1 - amount * .24)),
+      Math.round(rgb[0]! * (1 - amount * .26)),
+      Math.round(rgb[1]! + (210 - rgb[1]!) * amount * .15),
+      Math.round(rgb[2]! * (1 - amount * .20)),
     ];
   }));
 }

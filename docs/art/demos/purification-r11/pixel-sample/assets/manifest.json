@@ -1,5 +1,5 @@
 {
-  "authoring": "authored pixel painting with fractional pigment tones; material lighting, localized pollutant reflections, receiver shadows and separate atmospheric scattering; no generated image sampled",
+  "authoring": "authored pixel surfaces with fractional pigment tones, normals and material parameters; directed material lighting, receiver shadows and separate atmospheric scattering; no generated image sampled",
   "width": 960,
   "height": 640,
   "crop": {
@@ -12,17 +12,17 @@
     "ambient": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "9b91c71c4cdc53914c63f7c3b6c49a932502918fe785b0147cdd028a0c35516c"
+      "rgbaHash": "af319b8abc95f5cb9b8d803d82620ef7871f20f0bcac3b0d1a9f4fdb78815d84"
     },
     "core": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "96a560b0ca8154fa5c6cf3baee96c892c39bdadb47db529e64ed4e6dd38f1e16"
+      "rgbaHash": "49cecb4709ad3c6fc9151deb1ccd6e0028a38b5e4efdd91a0015beab6b63e4cc"
     },
     "intrusion": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "933dd9f00fbc1eaaeaf5ccfc127c05564489679cfdcb52fa4a5a0a23000190df"
+      "rgbaHash": "b9ab549c92348ed813103068811dcb95128e8a708670a173a7fcabfea90f658b"
     }
   },
   "layers": [
@@ -38,6 +38,7 @@
     "approach-mouth",
     "intrusion"
   ],
+  "sourceAuthority": "The TypeScript surface definitions and renderer are authoritative. PNG maps are quantized interchange/debug views, not source data for reconstructing the authored surfaces.",
   "lightMasks": [
     "cast-shadow-mask.png",
     "contact-shadow-mask.png",
@@ -48,9 +49,22 @@
     "sample-{state}.png: final light and air",
     "master-with-player.png: cropped core state with existing actor"
   ],
+  "mapCoverage": "Topmost occupied base surface in layer order; intrusion and contact-shadow receiver masks are excluded. Alpha is 255 for occupied pixels and 0 elsewhere.",
   "materialMap": {
+    "file": "material-tone-emission.png",
     "red": "material index, 1-based",
-    "green": "paint tone: byte × 7 / 255",
+    "green": "Float32 paint tone quantized to round(tone / 7 × 255); decode byte × 7 / 255, maximum quantization error 7 / 510",
     "blue": "emission flag 0 or 1"
+  },
+  "normalMap": {
+    "file": "surface-normals.png",
+    "rgb": "Signed normal components quantized to round(component × 127), then offset by 128. Decode (byte - 128) / 127 and normalize the resulting vector as the renderer does."
+  },
+  "surfaceParameters": {
+    "file": "roughness-occlusion-specular.png",
+    "red": "roughness",
+    "green": "occlusion visibility: 0 fully occluded, 1 unoccluded",
+    "blue": "specular response",
+    "quantization": "The rasterizer stores round(clamp(source, 0, 1) × 255); decode byte / 255. The PNG preserves those stored unsigned bytes exactly."
   }
 }

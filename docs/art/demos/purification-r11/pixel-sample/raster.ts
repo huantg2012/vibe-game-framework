@@ -12,9 +12,13 @@ export interface Ink {
   light?: number;
   emission?: boolean;
   shade?: number;
+  roughness?: number;
+  occlusion?: number;
+  specular?: number;
 }
 
-type PixelInk = readonly [number, number, number, number, number, number, number];
+export type SurfacePainter = (x: number, y: number) => Ink;
+type PixelInk = readonly [number, number, number, number, number, number, number, number, number, number];
 
 const clamp = (value: number, low: number, high: number): number =>
   Math.min(high, Math.max(low, Number.isFinite(value) ? value : low));
@@ -31,6 +35,9 @@ export class PixelLayer {
   readonly normalZ: Int8Array;
   readonly light: Uint8Array;
   readonly emission: Uint8Array;
+  readonly roughness: Uint8Array;
+  readonly occlusion: Uint8Array;
+  readonly specular: Uint8Array;
   private readonly scale: number;
 
   constructor(name: string, width = 960, height = 640, scale = 0.625) {
@@ -50,14 +57,24 @@ export class PixelLayer {
     this.normalZ = new Int8Array(size);
     this.light = new Uint8Array(size);
     this.emission = new Uint8Array(size);
+    this.roughness = new Uint8Array(size);
+    this.occlusion = new Uint8Array(size);
+    this.specular = new Uint8Array(size);
   }
 
   poly(points: readonly Point[], ink: Ink): void {
     this.fillPolygon(points, this.encode(ink));
   }
 
+  /** A shaped material surface, sampled at pixel centres in original C coordinates.
+   * Curvature, finish and cavities are painted together with pigment, before lighting.
+   */
+  surface(points: readonly Point[], painter: SurfacePainter): void {
+    this.fillPolygon(points, painter);
+  }
+
   clearPoly(points: readonly Point[]): void {
-    this.fillPolygon(points, [0, 0, 0, 0, 0, 0, 0]);
+    this.fillPolygon(points, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   }
 
   rect(x: number, y: number, width: number, height: number, ink: Ink): void {
@@ -137,6 +154,9 @@ export class PixelLayer {
       Math.round(clamp(normal[2], -1, 1) * 127),
       Math.round(clamp(ink.light ?? 1, 0, 1) * 255),
       ink.emission ? 1 : 0,
+      Math.round(clamp(ink.roughness ?? (ink.material === 'steel' ? .38 : ink.material === 'glass' ? .2 : .83), 0, 1) * 255),
+      Math.round(clamp(ink.occlusion ?? 1, 0, 1) * 255),
+      Math.round(clamp(ink.specular ?? (ink.material === 'steel' ? .7 : ink.material === 'glass' ? .45 : .06), 0, 1) * 255),
     ];
   }
 
@@ -152,9 +172,12 @@ export class PixelLayer {
     this.normalZ.fill(ink[4], start, end);
     this.light.fill(ink[5], start, end);
     this.emission.fill(ink[6], start, end);
+    this.roughness.fill(ink[7], start, end);
+    this.occlusion.fill(ink[8], start, end);
+    this.specular.fill(ink[9], start, end);
   }
 
-  private fillPolygon(points: readonly Point[], ink: PixelInk): void {
+  private fillPolygon(points: readonly Point[], ink: PixelInk | SurfacePainter): void {
     if (points.length < 3 || points.some(([x, y]) => !Number.isFinite(x) || !Number.isFinite(y))) return;
     const vertices = points.map(([x, y]): Point => [Math.round(x * this.scale), Math.round(y * this.scale)]);
     const firstRow = Math.max(0, Math.min(...vertices.map((point) => point[1])));
@@ -171,7 +194,13 @@ export class PixelLayer {
       }
       intersections.sort((a, b) => a - b);
       for (let index = 0; index + 1 < intersections.length; index += 2) {
-        this.span(y, Math.ceil(intersections[index]! - 0.5), Math.ceil(intersections[index + 1]! - 0.5) - 1, ink);
+        const left = Math.max(0, Math.ceil(intersections[index]! - .5));
+        const right = Math.min(this.width - 1, Math.ceil(intersections[index + 1]! - .5) - 1);
+        if (typeof ink === 'function') {
+          for (let x = left; x <= right; x++) {
+            this.span(y, x, x, this.encode(ink((x + .5) / this.scale, (y + .5) / this.scale)));
+          }
+        } else this.span(y, left, right, ink);
       }
     }
   }

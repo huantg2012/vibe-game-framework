@@ -33,7 +33,7 @@ export function paintSamplePlayer(pixels: Uint8ClampedArray, owners: Uint8Array,
     pixels[p + 2] = Math.round(frame[from + 2]! * (1.21 + gain) + 12 * gain);
     pixels[p + 3] = 255;
     if (topEdge && sourceLum > 40) blend(pixels, p, [156, 157, 159], .18);
-    if (state !== 'ambient' && nearEdge && sourceLum > 35) blend(pixels, p, [97, 166, 116], .14);
+    if (state !== 'ambient' && nearEdge && sourceLum > 35) blend(pixels, p, [130, 157, 124], .14);
     owners[i] = 255;
   }
 }

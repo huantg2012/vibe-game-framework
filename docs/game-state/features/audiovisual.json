@@ -194,13 +194,13 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "R11保留原始C；用户反馈“明显进步但仍不满意”，局部母版本轮修订被强行约束的污染核心、墙地内部描绘与绿色职责，新增上一版对照并保留首版、三态及原人物。导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；仍母版修订、待人审、未接生产，无C正式接入或全景完成，生产仍为R10。",
+    "summary": "R11保留原始C；8ef1366的墙地、金属与配色已被用户否决，仅认可污染芯形态。本轮以docs/art-direction.md#resume-art-rebuild为唯一恢复指针，结构/材质与方向照明重构已导出，艺术待审。项目严格TS、surface栅格与参数/色阶/轮廓导出通过，浏览器三态/人物/五视图已验，无error/warn；无C正式src/三层视差或全景接入，生产仍为R10。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "主菜单；净化点自由移动/修复/交互",
       "R11原始C构图与计划：docs/art/demos/purification-r11/index.html；非正式游戏入口",
-      "R11精修局部美术母版：docs/art/demos/purification-r11/c-pixel-sample.html；三态/原人物/上一版及首版对照/全C查看，非正式游戏入口"
+      "R11结构/材质重构局部候选：docs/art/demos/purification-r11/c-pixel-sample.html；三态/原人物/已否决上一版及首版对照/全C查看，非正式游戏入口"
     ],
     "sources": [
       {
@@ -241,7 +241,8 @@
       },
       {
         "path": "docs/art-direction.md",
-        "role": "art"
+        "role": "art",
+        "note": "当前唯一美术设计正文；恢复先读#resume-art-rebuild，不从旧技术通过推定艺术验收"
       },
       {
         "path": "docs/tasks/iteration-30.md",
@@ -390,7 +391,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R11原始C只锁定构图；用户反馈明显进步但仍不满意，局部母版继续修订；设计正文在docs/art-direction.md#current-art-design，正式接入未完成"
+        "note": "R11原始C锁定构图；8ef1366已否决，本轮结构/材质重构候选已导出、艺术待审；设计与恢复指针为docs/art-direction.md#resume-art-rebuild，正式接入未完成"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -626,7 +627,7 @@
       {
         "path": "docs/art/demos/purification-r11/c-pixel-sample.html",
         "role": "doc",
-        "note": "修订中局部母版；新增上一版对照并保留首版，导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；待用户艺术审阅，未接src"
+        "note": "结构/材质重构局部候选；保留已否决8ef1366及首版对照；本轮严格TS、栅格/导出与浏览器三态/人物/五视图检查通过，无页面error/warn；艺术待审、未接src"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/viewer.ts",
@@ -635,7 +636,7 @@
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/scene.ts",
         "role": "code",
-        "note": "960×640中442×290局部、11分层及三态组合；样板外为C构图参照"
+        "note": "960×640中442×290局部、11分层及三态组合；方向光分布与法线/材质响应，样板外为C构图参照"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/lighting.ts",
@@ -652,9 +653,9 @@
         "role": "art"
       },
       {
-        "path": "docs/art/demos/purification-r11/pixel-sample/surface-paint.ts",
+        "path": "docs/art/demos/purification-r11/pixel-sample/construction-surfaces.ts",
         "role": "art",
-        "note": "墙地内部材料、剥落与使用痕迹的局部绘制；母版修订，待艺术审阅"
+        "note": "替代旧斑块场，以surface绘制对象构造、材质与局部法线/粗糙度/遮蔽/镜面响应；精修中，待艺术审阅"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/devices.ts",
@@ -663,11 +664,12 @@
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/palette.ts",
         "role": "art",
-        "note": "母版材质色阶；当前光照采样规则见集中设计，待艺术验收"
+        "note": "冷中性建筑与灰冷污染绿色阶；当前规则见集中设计，未获人审锁定"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/raster.ts",
-        "role": "code"
+        "role": "code",
+        "note": "surface回调使用C坐标像素中心；保存Float32明度、法线及roughness/occlusion/specular字节通道"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/check-raster.ts",
@@ -676,12 +678,12 @@
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/export.mjs",
         "role": "test",
-        "note": "导出像素、透明轮廓一致性及三态差异检查；不作艺术验收"
+        "note": "逐占用像素参数、色阶、透明轮廓及三态检查；新增roughness-occlusion-specular.png及量化/源TS权威说明，支持临时输出；不作艺术验收"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/assets/manifest.json",
         "role": "doc",
-        "note": "三态PNG、11层及材质/法线图的导出清单与遮罩/像素指纹"
+        "note": "三态PNG、11层、材质/法线/粗糙度-遮蔽-镜面参数图与阴影蒙版；记录量化和源码权威性及遮罩/像素指纹"
       }
     ],
     "dependsOn": [
@@ -736,7 +738,7 @@
       "COH-E-I30-R11-C-DIRECTION"
     ],
     "unknowns": [
-      "用户反馈明显进步但仍不满意；本轮核心身份、墙地内部描绘与绿色职责修订仍待人审。导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误，技术通过不代表美术PASS；C正式src、通行、移动遮挡、三层视差及全景未接入/完成，A灰盒证据不迁入C。",
+      "8ef1366已被用户否决，仅污染芯形态获认可；当前结构/材质重构候选未获人审，中尺度像素塑造与场所气质仍须复看。本轮严格TS、surface栅格与导出检查通过，浏览器三态/人物/五视图已验，无error/warn；技术通过不等于艺术通过。C正式src、通行、移动遮挡、三层视差及全景未接入/完成，A灰盒证据不迁入C。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

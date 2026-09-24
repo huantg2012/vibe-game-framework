@@ -1,21 +1,21 @@
-# R11 · C 局部美术母版
+# R11 · C 局部美术重构候选
 
-[查看母版](http://127.0.0.1:3026/docs/art/demos/purification-r11/c-pixel-sample.html) · [C 原构图](c.png) · [集中美术设计与用户参考](../../../art-direction.md#current-art-design) · [后续计划](../../../design-notes/purification-scene-art-plan.md)
+[查看候选](http://127.0.0.1:3026/docs/art/demos/purification-r11/c-pixel-sample.html) · [C 原构图](c.png) · [唯一设计正文与恢复指针](../../../art-direction.md#resume-art-rebuild) · [当前步骤](../../../design-notes/purification-scene-art-plan.md#当前执行状态)
 
-用户评价上一版明显进步但仍不满意。本次纠正三项：核心内质为受约束的异界污染物；墙地从平涂补丁继续深入材料内部；绿色归污染与侵蚀，普通建材退出绿色。仍在 C 原位置和透视内，以可编辑源码绘制实际像素资产，未生图、未采参考图像素。具体设计只维护于文首链接的集中美术设计。
+用户已否决 `8ef1366` 的墙地、金属与配色，仅认可污染芯形态，未认可其鲜绿颜色。本轮重构对象结构与材质绘制，采用冷中性建筑、灰冷污染绿及有方向的照明分布；候选已导出，未获人审。C 构图不变，继续确定性源码绘制，未生图、未采参考图像素；设计只维护于文首链接。
 
 页面默认核心受光、母版 2×、人物同框；可切普通照明／侵蚀变化、完整 C／原 C、上一版与首版对照。下载当前状态的透明 960×640 PNG，人物是否包含跟随开关。原图和历史对照模式禁用状态、人物与下载，避免把参照误当母版。C 原图不变，样板外仍是构图参照。
 
-源码在 [pixel-sample](./pixel-sample/scene.ts)，制作区域为 `(158,202,442,290)`。[导出清单](./pixel-sample/assets/manifest.json)记录三态成图、照明后/空气前的表面图、原人物同框图、11 个绘制层，以及材质、法线和三个阴影蒙版。[surface-paint.ts](./pixel-sample/surface-paint.ts)在绘定区域内组织材料笔触，受基材及平面限制；底画明度保留小数。材质图 G 通道现在将 0–7 明度编码为 0–255，R 为材质序号、B 为发光标志。`contact-shadows` 层用作接触遮蔽蒙版源，不作为黑色地面贴片合成。污染反光与普通照明分别处理；固定构图阴影不是正式动态投影系统。
+源码在 [pixel-sample](./pixel-sample/scene.ts)，制作区域为 `(158,202,442,290)`。[construction-surfaces.ts](./pixel-sample/construction-surfaces.ts)替代旧斑块场，以 `surface()` 同时绘制材质、明度、法线、粗糙度、遮蔽及镜面响应。[导出器](./pixel-sample/export.mjs)保留三态、11 层及原人物同框图，新增 `roughness-occlusion-specular.png`；量化方式及源码权威性写入[导出清单](./pixel-sample/assets/manifest.json)。固定构图阴影仍仅服务静态候选。
 
-本次严格 TypeScript、栅格、材质色阶、透明轮廓与导出一致性检查通过；浏览器三态、人物及五种视图切换已验，无页面错误。技术检查不代替艺术验收；C 的正式通行、动态遮挡、三层视差和全景制作未接入，不能沿用 A 的通行验证。
+本轮 `surface()` 栅格行为、参数及色阶/透明轮廓导出检查已实测通过；真实项目配置下严格 TypeScript（含 noUnused/noUncheckedIndexedAccess）0 diagnostics；浏览器三态、人物开关及五种视图本轮已验，无error/warn。技术检查不代替艺术验收；C 的正式 `src`、通行、动态遮挡、三层视差和全景制作未接入，不能沿用 A 的通行验证。
 
 ```sh
 node --import tsx docs/art/demos/purification-r11/pixel-sample/check-raster.ts
-node --import tsx docs/art/demos/purification-r11/pixel-sample/export.mjs
+node --import tsx docs/art/demos/purification-r11/pixel-sample/export.mjs --output /tmp/coh-c-sample-check
 ```
 
-[上一版](./pixel-sample/assets/previous-master.png)与[首版](./pixel-sample/assets/first-study.png)保留供同尺度对照。更早的 [c-finish-sample.png](./c-finish-sample.png) 仍是生图画风效果稿，不是本母版资产或渲染依据。
+[上一版](./pixel-sample/assets/previous-master.png)保存已否决的 `8ef1366`，与[首版](./pixel-sample/assets/first-study.png)仅供同尺度对照。更早的 [c-finish-sample.png](./c-finish-sample.png) 仍是生图画风效果稿，不是本母版资产或渲染依据。
 
 ---
 

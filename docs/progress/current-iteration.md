@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-24
-note: I30 R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED；用户反馈“明显进步但仍不满意”，本轮修订核心身份、墙地内部描绘与绿色职责；导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；R10整改及I28挂起保持。
+note: I30 R11-C-FOUNDATION-REBUILD；建筑/金属/照明重构候选已导出并技术检查，艺术待审；持久工作记忆见art-direction文首。8ef1366已否定，仅保留获肯定的核心芯形态。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -18,13 +18,13 @@ note: I30 R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PR
 
 旧正文路径保留迁移指针，旧网页链接保留跳转；正文引用、现状索引和阅读器已同步。范围和证据边界见[归档验证](../qa/review-archive-2026-09-21.md)。此任务不改变审查结论、游戏或挂起状态。后续可读交付按[阅读器说明](../dev/report-viewer.md)实际打开验证。
 
-## 当前工作 · 迭代30 R11（2026-09-24，原始 C 构图已锁定）
+## 当前工作 · 迭代30 R11（2026-09-24，C构图锁定、绘画底层重构）
 
-用户反馈“明显进步但仍不满意”，要求继续修订美术母版。当前 **R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。[局部母版](../art/demos/purification-r11/c-pixel-sample.html)本轮完成三点修订：核心恢复为从 Rift 收集并被强行约束的污染实体；墙地补内部材料、剥落与使用痕迹的描绘；绿色集中承担污染本体、侵蚀及其局部反射，普通混凝土与旧漆去绿。页面新增“上一版对照”，保留首版、原 C、三态及原人物同框。确定性脚本绘制，原始 C 不变、无生图；设计正文见[当前美术设计](../art-direction.md#current-art-design)。
+用户否定 `8ef1366` 的材质、土黄环境和鲜绿核心色，仅认可核心芯形态，授权彻底重构并要求持久记忆。**恢复必读：[美术工作记忆与当前设计](../art-direction.md#resume-art-rebuild) → [当前步骤/下一步](../design-notes/purification-scene-art-plan.md#当前执行状态) → 当前实图。** 不依据旧“母版”称呼或技术通过推断艺术成立。
 
-本轮导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；复现与素材见[样板记录](../art/demos/purification-r11/README.md)。仍为局部母版修订，待用户艺术审阅，未接生产；后续按[执行计划](../design-notes/purification-scene-art-plan.md)看图修订，技术通过不代表艺术成品。
+当前 **R11-C-FOUNDATION-REBUILD / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。建筑、完整平台断面和三件金属装置已重画，旧斑块场删除，方向光/材料反射重做；暖棕角色与灰冷污染绿同框。以确定性源码绘制。[重构候选](../art/demos/purification-r11/c-pixel-sample.html)已导出；真实项目严格TS、栅格、导出及浏览器三态/人物/五视图检查通过，无页面error/warn。技术通过不等于艺术通过。
 
-随后依次完成前景室内、三层外景与整体光影、正式动态接入、整景验收。主 COH-F042，关联 F026/F033/F039；[任务清单](../tasks/iteration-30.md)同步。尚无 C 的 `src` 接入、通行、动态遮挡、三层视差或全景完成，也未获用户艺术验收；R10技术证据保留、美术整改，I28挂起保持。按用户要求不使用项目内 skill；生成式全貌页仍为旧快照。
+主COH-F042，关联F026/F033/F039；实际范围是C内连续局部。下一步根据用户实图反馈继续修订，局部获认可后才扩展；中尺度像素塑造与场所气质仍须盯紧。尚无C正式通行、动态遮挡、三层视差或全景完成；R10技术证据、美术整改和I28挂起保持。按持续授权检查后本地提交，不推送，独立CLAUDE.md修改排除。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，用户要求美术整改）
 

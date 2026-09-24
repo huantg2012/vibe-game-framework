@@ -13,6 +13,16 @@ export const HEIGHT = 640;
 const SIZE = WIDTH * HEIGHT;
 
 let cached: { layers: PixelLayer[]; fields: LightFields } | undefined;
+
+/** One overhead opening, interrupted by its lintel. Its footprint continues
+ * from the back wall onto the working floor rather than spotlighting each prop. */
+function openingLight(x: number, y: number, floor: boolean): number {
+  const cross = x - (y - (floor ? 340 : 230)) * (floor ? .74 : .14);
+  const enter = clamp((cross - 159) / 12);
+  const leave = clamp((280 - cross) / 20);
+  const lintel = 1 - .58 * Math.exp(-.5 * ((cross - 211) / 6) ** 2);
+  return enter * leave * lintel;
+}
 export function buildSample(): { layers: PixelLayer[]; fields: LightFields } {
   if (!cached) {
     const architecture = buildArchitectureLayers();
@@ -26,69 +36,96 @@ export function buildSample(): { layers: PixelLayer[]; fields: LightFields } {
   return cached;
 }
 
+/** Surface construction precedes this lighting pass. Every material can carry a
+ * continuous authored normal, finish and cavity value; decorative paint is not relief.
+ */
 function surfaceColor(layer: PixelLayer, i: number, x: number, y: number, state: SampleState): readonly number[] {
   const material = MATERIALS[layer.mat[i]! - 1]!;
   const name = layer.name;
   let tone = layer.tone[i]!;
   let pollution = 0;
+  if (material === 'void') return LIGHT_RGB.void[Math.round(clamp(tone, 0, 7) * LIGHT_STEPS)]!;
+  if (material === 'alien') {
+    if (layer.emission[i]) tone = state === 'ambient' ? Math.min(tone, 4.5) : tone;
+    else if (state !== 'ambient' && tone >= 2) tone += .22;
+    return LIGHT_RGB.alien[Math.round(clamp(tone, 0, 7) * LIGHT_STEPS)]!;
+  }
+  if (layer.emission[i]) return LIGHT_RGB[material][Math.round(clamp(tone, 0, 7) * LIGHT_STEPS)]!;
+
   const { fields } = buildSample();
-  const floor = layer.normalZ[i]! / 127 > 0.7;
+  const nx0 = layer.normalX[i]! / 127, ny0 = layer.normalY[i]! / 127, nz0 = layer.normalZ[i]! / 127;
+  const length = Math.hypot(nx0, ny0, nz0) || 1;
+  const nx = nx0 / length, ny = ny0 / length, nz = nz0 / length;
+  const floor = nz > .72;
   const response = layer.light[i]! / 255;
-  if (layer.emission[i]) {
-    tone = state === 'ambient' ? Math.min(4.2, tone) : tone;
-  } else if (material === 'alien') {
-    // The compressed substance has its own green body. Illumination must not
-    // turn its dark folds into a white lamp, or erase its identity when subdued.
-    if (state !== 'ambient' && tone >= 2) tone += .42;
-  } else if (material !== 'void' && name !== 'intrusion') {
-    // Broad value design: dark enclosing structure, a readable working plane, sparse bright metal.
-    const ambient = name === 'rear-masonry' ? -0.62 - 0.55 * clamp((292 - y) / 100)
-      : name === 'right-wall-and-front-edge' ? -1.25
-      : name === 'opening-midground' ? -0.8
-      : name === 'approach-mouth' ? -1.05
-      : name === 'offering' ? -0.85
-      : floor ? -0.48 : -0.55;
-    tone += ambient;
-    if (name === 'core' && y > 355) tone -= .42;
-    // Ordinary diffuse room illumination stays present when the contained mass is subdued.
-    tone += gauss(x, y, 308, 367, 150, 116) * (floor ? .42 : .12) * response;
-    // Cool indirect opening light reaches the upper ramp and wall return, with distance falloff.
-    const opening = gauss(x, y, 490, 276, 74, 110);
-    tone += opening * (floor ? 0.36 : 0.22) * response;
-    if (name === 'rear-masonry') tone -= fields.wall[i]! * (state === 'ambient' ? 0.35 : 0.72);
-    if (name === 'floor-and-upper-platform' || name === 'approach-mouth') {
-      tone -= fields.contact[i]! * 1.20;
-      if (floor && y > 355) tone -= fields.cast[i]! * (state === 'ambient' ? 0.22 : 0.85);
-      // Architectural contact strips sit at actual floor/wall joints, not around every polygon.
-      if (floor && x > 295 && x < 400) {
-        const wallFoot = 364 + (x - 297) * 0.15;
-        tone -= gauss(x, y, x, wallFoot, 1, 4) * 0.48;
-      }
-    }
-    if (state !== 'ambient' && response) {
-      const dx = (244 - x) / (floor ? 64 : 68);
-      const dy = ((floor ? 378 : 318) - y) / (floor ? 42 : 85);
-      const distance = dx * dx + dy * dy;
-      const falloff = 1 / Math.pow(1 + distance * 1.7, 1.5);
-      const nx = layer.normalX[i]! / 127;
-      const ny = layer.normalY[i]! / 127;
-      const nz = layer.normalZ[i]! / 127;
-      const incidence = floor ? 1 : 0.28 + 0.72 * Math.max(0, (nx * dx + ny * 0.65 + nz * 0.85) / Math.sqrt(dx * dx + 1.15));
-      let visible = 1;
-      if (floor && y > 355) visible *= 1 - fields.cast[i]! * 0.65;
-      if (name === 'rear-masonry') visible *= 1 - fields.wall[i]! * 0.48;
-      const received = falloff * incidence * response * visible;
-      tone += received * (floor ? 2.1 : 1.65);
-      pollution = received * (name === 'core' ? .76 : floor ? .42 : .38);
-      // The pollutant illuminates pressure jaws and inner faces, leaving a solid dark exterior.
-      if (name === 'core') tone += gauss(x, y, 244, 318, 21, 41) * response * 0.65;
-    }
+  const ao = layer.occlusion[i]! / 255;
+  const roughness = layer.roughness[i]! / 255;
+  const specular = layer.specular[i]! / 255;
+
+  // Broken overhead light has a finite reach. The standing area receives the
+  // main pool; deep wall bays and the camera-side wall retain their own values.
+  // This is illumination of authored material, never a whole-frame vignette.
+  const roomPool = gauss(x, y, 224, 294, 117, 96);
+  const groundPool = gauss(x, y, 254, 383, 119, 51);
+  const upperPool = gauss(x, y, 361, 331, 62, 26);
+  const aperture = openingLight(x, y, floor);
+  let ordinary = .18 + roomPool * .25 + aperture * .57;
+  if (name === 'floor-and-upper-platform') ordinary = floor ? .16 + groundPool * .25 + aperture * .59 + upperPool * .19 : .22 + groundPool * .2;
+  if (name === 'right-wall-and-front-edge') ordinary = .16 + roomPool * .3;
+  if (name === 'approach-mouth') ordinary = .12 + groundPool * .18 + aperture * .25;
+  if (name === 'opening-midground') ordinary = .14;
+
+  // Broad ordinary light from the broken overhead opening; no beige room wash.
+  // Local normals carry curved casting, beveled slab lips and exposed broken aggregate.
+  const diffuse = Math.max(0, nx * -.46 + ny * .29 + nz * .838);
+  const sideFill = Math.max(0, nx * .72 + ny * .56 + nz * .4);
+  tone += ((diffuse - .46) * 1.85 + sideFill * .12) * response;
+  tone -= (1 - ordinary) * 2.1;
+  tone -= (1 - ao) * 2.8;
+  if (name === 'rear-masonry') tone -= .32 + clamp((260 - y) / 80) * .3;
+  if (name === 'opening-midground') tone -= .68;
+  if (name === 'right-wall-and-front-edge') tone -= .38;
+  if (name === 'approach-mouth') tone -= .28;
+
+  // A shaped environment is reflected by the metal. A broad overhead strip,
+  // dark chamber band and side aperture bend around each authored normal.
+  // Roughness widens reflections; specular controls their contribution independently
+  // from the broad diffuse paint. This is a 2D directed material renderer, not a scene PBR solver.
+  if (specular > .08) {
+    const ndv = Math.max(0, ny * .8 + nz * .6);
+    const rx = 2 * ndv * nx;
+    const rz = 2 * ndv * nz - .6;
+    const width = .08 + roughness * .37;
+    const window = Math.exp(-.5 * ((rx + .40) / width) ** 2) * (.42 + .58 * clamp((rz + 1) / 2));
+    const sky = Math.pow(clamp((rz + .08) / 1.08), 1.3);
+    const darkBand = Math.exp(-.5 * ((rz + .29) / (.15 + roughness * .24)) ** 2);
+    const reflection = window * 2.75 + sky * 1.12 - darkBand * 1.6;
+    tone += reflection * specular * (.65 + .35 * (1 - roughness)) * Math.sqrt(ao) * (.58 + ordinary * .42);
   }
+
+  if (name === 'rear-masonry') tone -= fields.wall[i]! * .48;
+  if (name === 'floor-and-upper-platform' || name === 'approach-mouth') {
+    tone -= fields.contact[i]! * .88;
+    if (floor && y > 355) tone -= fields.cast[i]! * (state === 'ambient' ? .24 : .55);
+  }
+
+  if (state !== 'ambient' && response) {
+    const dx = (244 - x) / (floor ? 59 : 58);
+    const dy = ((floor ? 378 : 316) - y) / (floor ? 36 : 74);
+    const falloff = 1 / Math.pow(1 + (dx * dx + dy * dy) * 1.8, 1.5);
+    const inward = floor ? 1 : .2 + .8 * Math.max(0, (nx * dx + ny * .64 + nz * .62) / Math.sqrt(dx * dx + .8));
+    let visible = ao;
+    if (floor && y > 355) visible *= 1 - fields.cast[i]! * .72;
+    if (name === 'rear-masonry') visible *= 1 - fields.wall[i]! * .6;
+    const received = falloff * inward * response * visible;
+    tone += received * (floor ? 1.36 : 1.12);
+    pollution = received * (name === 'core' ? .67 : floor ? .28 : .24);
+  }
+
   const toneIndex = Math.round(clamp(tone, 0, 7) * LIGHT_STEPS);
-  if (material !== 'alien' && material !== 'void' && pollution > 0) {
-    return POLLUTION_RGB[material][Math.round(clamp(pollution) * POLLUTION_STEPS)]![toneIndex]!;
-  }
-  return LIGHT_RGB[material][toneIndex]!;
+  return pollution > 0
+    ? POLLUTION_RGB[material][Math.round(clamp(pollution) * POLLUTION_STEPS)]![toneIndex]!
+    : LIGHT_RGB[material][toneIndex]!;
 }
 
 /** The paint remains sharp. Only its illumination traverses the material's bounded color ramp. */
@@ -108,7 +145,7 @@ export function renderLayer(layer: PixelLayer, state: SampleState): Uint8Clamped
 // A few suspended motes chosen for the light volume, never a full-screen particle/noise overlay.
 const MOTES = [[352,440,.40],[402,422,.16],[378,594,.30],[451,562,.25],[340,513,.30],
   [309,489,.20],[437,465,.28],[479,527,.16],[731,372,.15],[780,395,.20],[794,414,.12]] as const;
-const POLLUTED_AIR = [68, 159, 102] as const;
+const POLLUTED_AIR = [101, 137, 120] as const;
 const COOL_AIR = [73, 80, 101] as const;
 
 export function renderSample(state: SampleState, options: RenderOptions = {}): Uint8ClampedArray {
@@ -145,6 +182,10 @@ export function renderSample(state: SampleState, options: RenderOptions = {}): U
     // The opening has air between separate masses; the near wall remains opaque and crisp.
     const cool = distance * gauss(x, y, 478, 260, 66, 99) * 0.48;
     blend(pixels, p, COOL_AIR, cool);
+    if (name === 'rear-masonry') {
+      const shaft = openingLight(x, y, false) * gauss(x, y, 249, 282, 87, 83);
+      blend(pixels, p, [121, 132, 148], shaft * .055);
+    }
     if (state !== 'ambient') {
       const plume = gauss(x, y, 243 + Math.sin(y / 39) * 5, 303, 23, 49);
       const chamber = Math.max(gauss(x, y, 244, 320, 24, 36), plume * 0.65);
@@ -155,20 +196,20 @@ export function renderSample(state: SampleState, options: RenderOptions = {}): U
       const foreground = name === 'right-wall-and-front-edge' || name === 'approach-mouth';
       if (!foreground) {
         const bloom = clamp(air.nearBloom[i]! * 1.5 + air.farBloom[i]! * 2.1, 0, .34);
-        blend(pixels, p, [88, 212, 130], bloom);
+        blend(pixels, p, [150, 180, 152], bloom);
         const neutralBloom = clamp(ordinaryAir.nearBloom[i]! * 1.4 + ordinaryAir.farBloom[i]! * 1.8, 0, .36);
         blend(pixels, p, [249, 231, 189], neutralBloom);
       }
       if (state === 'intrusion') {
         const cold = gauss(x, y, 547, 325, 17, 69);
-        if (name === 'intrusion' || name === 'right-wall-and-front-edge') blend(pixels, p, [48, 164, 82], cold * 0.07);
+        if (name === 'intrusion' || name === 'right-wall-and-front-edge') blend(pixels, p, [83, 136, 112], cold * 0.07);
       }
     }
   }
   if (state !== 'ambient') for (const [cx, cy, alpha] of MOTES) {
     const x = Math.round(cx * .625), y = Math.round(cy * .625), i = y * WIDTH + x;
     const name = layers[owners[i]! - 1]?.name;
-    if (name === 'rear-masonry' || name === 'opening-midground') blend(pixels, i * 4, [158, 176, 144], alpha * .6);
+    if (name === 'rear-masonry' || name === 'opening-midground') blend(pixels, i * 4, [160, 178, 174], alpha * .45);
   }
   return pixels;
 }

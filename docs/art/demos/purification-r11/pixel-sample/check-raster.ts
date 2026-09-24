@@ -1,10 +1,11 @@
 import assert from 'node:assert/strict';
-import { MATERIALS, PixelLayer, type Ink } from './raster.ts';
+import { MATERIALS, PixelLayer, type Ink, type Point } from './raster.ts';
 
 const ink: Ink = { material: 'concrete', tone: 4 };
 const count = (layer: PixelLayer): number => layer.mat.reduce((total, material) => total + Number(material !== 0), 0);
 const channels = (layer: PixelLayer): readonly (Uint8Array | Int8Array | Float32Array)[] => [
   layer.mat, layer.tone, layer.normalX, layer.normalY, layer.normalZ, layer.light, layer.emission,
+  layer.roughness, layer.occlusion, layer.specular,
 ];
 
 const defaults = new PixelLayer('defaults', 8, 8, 1);
@@ -15,10 +16,11 @@ assert.equal(defaults.normalZ[0], 127);
 assert.equal(defaults.light[0], 255);
 defaults.rect(0, 0, 1, 1, {
   material: 'alien', tone: 9, shade: 3, normal: [-1, 0.5, 0], light: 0.25, emission: true,
+  roughness: .25, occlusion: .5, specular: .75,
 });
-assert.deepEqual(channels(defaults).map((channel) => channel[0]), [9, 6, -127, 64, 0, 64, 1]);
+assert.deepEqual(channels(defaults).map((channel) => channel[0]), [9, 6, -127, 64, 0, 64, 1, 64, 128, 191]);
 defaults.clearPoly([[0, 0], [1, 0], [1, 1], [0, 1]]);
-assert.deepEqual(channels(defaults).map((channel) => channel[0]), [0, 0, 0, 0, 0, 0, 0]);
+assert.deepEqual(channels(defaults).map((channel) => channel[0]), Array(10).fill(0));
 assert.deepEqual(MATERIALS, ['void', 'concrete', 'chalk', 'steel', 'paint', 'rust', 'glass', 'light', 'alien']);
 defaults.rect(2, 2, 1, 1, { material: 'chalk', tone: 3.625, shade: 0.25 });
 assert.equal(defaults.tone[18], 3.375, 'painted midtones must survive rasterization without whole-step rounding');
@@ -37,6 +39,50 @@ for (let y = 0; y < 8; y++) {
 const reversed = new PixelLayer('reversed', 8, 8, 1);
 reversed.poly([[7, 7], [7, 1], [1, 1]], ink);
 assert.deepEqual(reversed.mat, upper.mat, 'winding must not change filled coverage');
+
+// Surface callbacks receive original C-space pixel centres, once per owned pixel,
+// even for clipped/concave faces and reversed winding at the production scale.
+const surfaceShape: readonly Point[] = [[-3.2, 1.6], [9.6, 1.6], [9.6, 4.8], [6.4, 4.8], [6.4, 11.2], [-3.2, 11.2]];
+for (const shape of [surfaceShape, [...surfaceShape].reverse()]) {
+  const polygon = new PixelLayer('surface coverage', 8, 8, .625);
+  const surface = new PixelLayer('surface', 8, 8, .625);
+  const visits = new Uint8Array(64);
+  polygon.poly(shape, ink);
+  surface.surface(shape, (x, y) => {
+    const px = Math.floor(x * .625), py = Math.floor(y * .625);
+    assert.ok(px >= 0 && px < 8 && py >= 0 && py < 8, 'callback must only visit canvas pixels');
+    assert.ok(Math.abs(x - (px + .5) / .625) < 1e-12);
+    assert.ok(Math.abs(y - (py + .5) / .625) < 1e-12);
+    visits[py * 8 + px] = visits[py * 8 + px]! + 1;
+    return {
+      material: px % 2 ? 'steel' : 'chalk', tone: 1 + px / 8 + py / 16,
+      normal: [(px - 4) / 4, (py - 4) / 4, .75], light: px / 8,
+      emission: py % 2 === 0, roughness: px / 8, occlusion: py / 8, specular: .25,
+    };
+  });
+  for (let i = 0; i < 64; i++) {
+    const occupied = Number(polygon.mat[i] !== 0), px = i % 8, py = Math.floor(i / 8);
+    assert.equal(visits[i], occupied, `surface coverage at ${px},${py}`);
+    if (!occupied) {
+      assert.deepEqual(channels(surface).map(channel => channel[i]), Array(10).fill(0));
+      continue;
+    }
+    assert.deepEqual(channels(surface).map(channel => channel[i]), [
+      px % 2 ? 4 : 3, 1 + px / 8 + py / 16,
+      Math.round((px - 4) / 4 * 127), Math.round((py - 4) / 4 * 127), 95,
+      Math.round(px / 8 * 255), py % 2 === 0 ? 1 : 0,
+      Math.round(px / 8 * 255), Math.round(py / 8 * 255), 64,
+    ], `surface channels at ${px},${py}`);
+  }
+  surface.clearPoly(shape);
+  for (const channel of channels(surface)) assert.ok(channel.every(value => value === 0), 'clear must remove every surface channel');
+}
+
+const bounded = new PixelLayer('bounded material parameters', 2, 1, 1);
+bounded.rect(0, 0, 1, 1, { ...ink, roughness: -1, occlusion: 2, specular: Number.NaN });
+bounded.rect(1, 0, 1, 1, { material: 'steel', tone: 4 });
+assert.deepEqual([bounded.roughness[0], bounded.occlusion[0], bounded.specular[0]], [0, 255, 0]);
+assert.deepEqual([bounded.roughness[1], bounded.occlusion[1], bounded.specular[1]], [97, 255, 179]);
 
 const clipped = new PixelLayer('clipped', 8, 8, 1);
 clipped.rect(-3, -4, 6, 7, ink);
@@ -80,6 +126,9 @@ malformed.poly([[1, 1]], ink);
 malformed.poly([[1, 1], [2, 2]], ink);
 malformed.poly([[1, 1], [2, 2], [3, 3]], ink);
 malformed.poly([[0, 0], [Number.NaN, 1], [1, 1]], ink);
+for (const shape of [[], [[1, 1], [2, 2], [3, 3]], [[0, 0], [Number.NaN, 1], [1, 1]], [[-8, -8], [-4, -8], [-4, -4]]] as readonly (readonly Point[])[]) {
+  malformed.surface(shape, () => { throw new Error('empty surface must not call the painter'); });
+}
 malformed.line([[Number.NaN, 1], [4, 4]], ink);
 malformed.line([[-100, -100], [-10, -10]], ink);
 malformed.rect(100, 100, 10, 10, ink);
@@ -88,4 +137,4 @@ assert.equal(count(malformed), 0, 'degenerate and fully clipped primitives must 
 assert.throws(() => new PixelLayer('invalid', 0, 1, 1), RangeError);
 assert.throws(() => new PixelLayer('invalid', 1, 1, 0), RangeError);
 
-console.log('Pixel raster: material channels, shared edges, clipping, line widths, ellipse symmetry and degenerate input passed.');
+console.log('Pixel raster: surface coordinates/coverage, material channels/clear, shared edges, clipping, line widths, ellipse symmetry and degenerate input passed.');
