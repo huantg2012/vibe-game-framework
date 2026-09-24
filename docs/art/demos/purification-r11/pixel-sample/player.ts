@@ -25,14 +25,15 @@ export function paintSamplePlayer(pixels: Uint8ClampedArray, owners: Uint8Array,
     const i = dy * W + dx, p = i * 4;
     const nearEdge = sx > 0 && !frame[(sy * 32 + sx - 1) * 4 + 3];
     const topEdge = sy > 0 && !frame[((sy - 1) * 32 + sx) * 4 + 3];
-    const light = state === 'ambient' ? .10 : .37 + (nearEdge ? .16 : 0);
+    const light = state === 'ambient' ? .17 : .24 + (nearEdge ? .10 : 0);
     const sourceLum = (frame[from]! + frame[from + 1]! + frame[from + 2]!) / 3;
     const gain = sourceLum > 35 ? light : light * .22;
     pixels[p] = Math.round(frame[from]! * (1.02 + gain) + 8 * gain);
     pixels[p + 1] = Math.round(frame[from + 1]! * (1.10 + gain) + 9 * gain);
     pixels[p + 2] = Math.round(frame[from + 2]! * (1.21 + gain) + 12 * gain);
     pixels[p + 3] = 255;
-    if (topEdge && sourceLum > 40) blend(pixels, p, [133, 149, 144], .18);
+    if (topEdge && sourceLum > 40) blend(pixels, p, [156, 157, 159], .18);
+    if (state !== 'ambient' && nearEdge && sourceLum > 35) blend(pixels, p, [97, 166, 116], .14);
     owners[i] = 255;
   }
 }

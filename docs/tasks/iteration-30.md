@@ -1,5 +1,5 @@
 ---
-status: R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
+status: R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED / R10-IMPLEMENTED / R10-LIMITED-VERIFIED / R10-HUMAN-CHANGES-REQUESTED / R9-HUMAN-CHANGES-REQUESTED / R8-HUMAN-REJECTED / R7-HUMAN-CHANGES-REQUESTED / R5-HUMAN-POSITIVE / R2-HUMAN-SCORED / R1-HUMAN-REJECTED
 created-date: 2026-09-21
 last-modified-date: 2026-09-24
 owner: director
@@ -16,8 +16,11 @@ trigger: 用户要求整体重做灰钢双层舱，保留透视优势并解决�
 - [x] 记录原始 C 构图锁定、A 调整取消，以及本轮仅澄清计划的边界。
 - [x] 集中记录系统美术设计，明确生图效果稿性质与旧规则适用范围；设计记录不等于画面通过。
 - [x] 首版局部像素样板已制作；用户指出交付过早，要求继续做美术母版，未作艺术验收。
-- [x] 参考用户三张截图的像素氛围表达能力继续精修，保留 C 原图与自身配色；材质、连续受光、接收面遮光／软投影、独立空气及原人物同框已更新，三态与首版对照见[局部母版](../art/demos/purification-r11/c-pixel-sample.html)。运行模块严格 TS、栅格及导出像素／透明轮廓一致性检查通过，见[复现入口](../art/demos/purification-r11/README.md)。
-- [x] 浏览器三态、人物、全 C／原 C 与首版对照已验，无页面错误；参照模式的状态与下载禁用正确。
+- [x] 参考用户三张截图的像素氛围表达能力完成前轮局部精修，保留 C 原图与自身配色、连续受光、接收面遮光／软投影、独立空气及原人物同框。
+- [x] 记录用户“明显进步但仍不满意”，继续修订核心身份：撤去灯管表达，恢复从 Rift 收集并被强行约束的污染实体、暗质与受压折缝。
+- [x] 补强墙地内部材料、剥落与使用痕迹的描绘；绿色集中承担污染、侵蚀及其局部反射，普通混凝土与旧漆去绿。
+- [x] [局部母版](../art/demos/purification-r11/c-pixel-sample.html)新增“上一版对照”，保留首版、原 C、三态与原人物同框；本轮导出/栅格已通过，见[复现入口](../art/demos/purification-r11/README.md)。
+- [x] 本轮最终严格 TS、栅格与导出检查通过；浏览器三态、人物与五种视图切换已验，无页面错误。
 - [ ] 局部母版用户艺术验收与修订；技术通过不代表美术 PASS。
 - [ ] 前景、室内及六处装置环境接口扩展。
 - [ ] 三层外景和整体光影静态成稿。

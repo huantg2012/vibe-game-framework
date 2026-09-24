@@ -194,13 +194,13 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "R11保留原始C；用户要求首版继续精修，局部母版已重画材质并加入连续受光、接收面遮光/软投影、独立空气及原人物受光，支持三态和首版对照。限定技术检查通过，浏览器三态、人物与对照切换已验，无页面错误、未获用户艺术验收；无C正式接入或全景完成，生产仍为R10。",
+    "summary": "R11保留原始C；用户反馈“明显进步但仍不满意”，局部母版本轮修订被强行约束的污染核心、墙地内部描绘与绿色职责，新增上一版对照并保留首版、三态及原人物。导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；仍母版修订、待人审、未接生产，无C正式接入或全景完成，生产仍为R10。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "主菜单；净化点自由移动/修复/交互",
       "R11原始C构图与计划：docs/art/demos/purification-r11/index.html；非正式游戏入口",
-      "R11精修局部美术母版：docs/art/demos/purification-r11/c-pixel-sample.html；三态/原人物/首版对照/全C查看，非正式游戏入口"
+      "R11精修局部美术母版：docs/art/demos/purification-r11/c-pixel-sample.html；三态/原人物/上一版及首版对照/全C查看，非正式游戏入口"
     ],
     "sources": [
       {
@@ -390,7 +390,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R11原始C只锁定构图；局部母版按用户首版反馈继续精修，设计正文在docs/art-direction.md#current-art-design；正式接入未完成"
+        "note": "R11原始C只锁定构图；用户反馈明显进步但仍不满意，局部母版继续修订；设计正文在docs/art-direction.md#current-art-design，正式接入未完成"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -626,7 +626,7 @@
       {
         "path": "docs/art/demos/purification-r11/c-pixel-sample.html",
         "role": "doc",
-        "note": "精修局部美术母版；限定技术通过、浏览器三态、人物与对照切换已验，无页面错误，尚未用户艺术验收或src接入"
+        "note": "修订中局部母版；新增上一版对照并保留首版，导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；待用户艺术审阅，未接src"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/viewer.ts",
@@ -650,6 +650,11 @@
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/architecture.ts",
         "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-r11/pixel-sample/surface-paint.ts",
+        "role": "art",
+        "note": "墙地内部材料、剥落与使用痕迹的局部绘制；母版修订，待艺术审阅"
       },
       {
         "path": "docs/art/demos/purification-r11/pixel-sample/devices.ts",
@@ -731,7 +736,7 @@
       "COH-E-I30-R11-C-DIRECTION"
     ],
     "unknowns": [
-      "用户指出首版交付过早；精修局部母版仍未获艺术验收，浏览器三态、人物与对照切换已验，无页面错误。运行模块严格TS、栅格与导出检查不代表美术PASS；C正式src、通行、移动遮挡、三层视差及全景未接入/完成，A灰盒证据不迁入C。",
+      "用户反馈明显进步但仍不满意；本轮核心身份、墙地内部描绘与绿色职责修订仍待人审。导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误，技术通过不代表美术PASS；C正式src、通行、移动遮挡、三层视差及全景未接入/完成，A灰盒证据不迁入C。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

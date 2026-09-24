@@ -25,7 +25,7 @@ export class PixelLayer {
   readonly width: number;
   readonly height: number;
   readonly mat: Uint8Array;
-  readonly tone: Uint8Array;
+  readonly tone: Float32Array;
   readonly normalX: Int8Array;
   readonly normalY: Int8Array;
   readonly normalZ: Int8Array;
@@ -44,7 +44,7 @@ export class PixelLayer {
     this.scale = scale;
     const size = width * height;
     this.mat = new Uint8Array(size);
-    this.tone = new Uint8Array(size);
+    this.tone = new Float32Array(size);
     this.normalX = new Int8Array(size);
     this.normalY = new Int8Array(size);
     this.normalZ = new Int8Array(size);
@@ -131,7 +131,7 @@ export class PixelLayer {
     const normal = ink.normal ?? [0, 0, 1];
     return [
       MATERIALS.indexOf(ink.material) + 1,
-      Math.round(clamp(ink.tone - (ink.shade ?? 0), 0, 7)),
+      clamp(ink.tone - (ink.shade ?? 0), 0, 7),
       Math.round(clamp(normal[0], -1, 1) * 127),
       Math.round(clamp(normal[1], -1, 1) * 127),
       Math.round(clamp(normal[2], -1, 1) * 127),

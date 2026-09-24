@@ -4,14 +4,14 @@ import { fileURLToPath } from 'node:url';
 import crypto from 'node:crypto';
 import sharp from 'sharp';
 import { buildSample, renderSample, renderLayer, SAMPLE_CROP, WIDTH, HEIGHT } from './scene.ts';
-import { LIGHT_RGB } from './palette.ts';
+import { LIGHT_RGB, POLLUTION_RGB } from './palette.ts';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const output = path.join(dir, 'assets');
 await fs.mkdir(path.join(output, 'layers'), { recursive: true });
 const format = { raw: { width: WIDTH, height: HEIGHT, channels: 4 } };
-const manifest = { authoring: 'authored indexed pixel painting; material lighting, receiver shadows and separate atmospheric scattering; no generated image sampled', width: WIDTH, height: HEIGHT, crop: SAMPLE_CROP, states: {}, layers: [] };
-const palette = new Set(Object.values(LIGHT_RGB).flat().map(rgb => '#' + rgb.map(v => v.toString(16).padStart(2, '0')).join('')));
+const manifest = { authoring: 'authored pixel painting with fractional pigment tones; material lighting, localized pollutant reflections, receiver shadows and separate atmospheric scattering; no generated image sampled', width: WIDTH, height: HEIGHT, crop: SAMPLE_CROP, states: {}, layers: [] };
+const palette = new Set([...Object.values(LIGHT_RGB).flat(), ...Object.values(POLLUTION_RGB).flat(2)].map(rgb => '#' + rgb.map(v => v.toString(16).padStart(2, '0')).join('')));
 let baseMask;
 for (const state of ['ambient', 'core', 'intrusion']) {
   const rgba = renderSample(state);
@@ -68,13 +68,14 @@ for (const layer of layers) {
     for (let x = SAMPLE_CROP.x; x < SAMPLE_CROP.x + SAMPLE_CROP.width; x++) {
       const i = y * WIDTH + x, p = i * 4;
       if (!layer.mat[i]) continue;
-      indices.set([layer.mat[i], layer.tone[i], layer.emission[i], 255], p);
+      indices.set([layer.mat[i], Math.round(layer.tone[i] / 7 * 255), layer.emission[i], 255], p);
       normals.set([layer.normalX[i] + 128, layer.normalY[i] + 128, layer.normalZ[i] + 128, 255], p);
     }
   }
 }
 await sharp(Buffer.from(indices), format).png().toFile(path.join(output, 'material-tone-emission.png'));
 await sharp(Buffer.from(normals), format).png().toFile(path.join(output, 'surface-normals.png'));
+manifest.materialMap = { red: 'material index, 1-based', green: 'paint tone: byte × 7 / 255', blue: 'emission flag 0 or 1' };
 if (new Set(Object.values(manifest.states).map(state => state.rgbaHash)).size !== 3) throw new Error('Three states are not distinct');
 await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log(`Exported 3 states, ${layers.length} authored layers, material/normal/shadow maps and actor composite; surface ramps and final masks checked.`);

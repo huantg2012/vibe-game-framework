@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-24
-note: I30 R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED；用户要求首版继续精修，局部美术母版已更新，浏览器三态、人物与对照切换已验，无页面错误；R10整改及I28挂起保持。
+note: I30 R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED；用户反馈“明显进步但仍不满意”，本轮修订核心身份、墙地内部描绘与绿色职责；导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；R10整改及I28挂起保持。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -20,9 +20,9 @@ note: I30 R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / P
 
 ## 当前工作 · 迭代30 R11（2026-09-24，原始 C 构图已锁定）
 
-用户明确首版交付过早，要求继续制作美术母版；本轮参考用户三张截图的像素氛围表达能力，不照抄配色。当前 **R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。[局部母版](../art/demos/purification-r11/c-pixel-sample.html)已精修材质、连续受光、接收面遮光与软投影、独立空气散射，原角色 `up/idle`、33px 本体受光同框，可看三态与首版对照。仍以确定性脚本绘制，原始 C 不变、无生图；设计正文见[当前美术设计](../art-direction.md#current-art-design)。
+用户反馈“明显进步但仍不满意”，要求继续修订美术母版。当前 **R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。[局部母版](../art/demos/purification-r11/c-pixel-sample.html)本轮完成三点修订：核心恢复为从 Rift 收集并被强行约束的污染实体；墙地补内部材料、剥落与使用痕迹的描绘；绿色集中承担污染本体、侵蚀及其局部反射，普通混凝土与旧漆去绿。页面新增“上一版对照”，保留首版、原 C、三态及原人物同框。确定性脚本绘制，原始 C 不变、无生图；设计正文见[当前美术设计](../art-direction.md#current-art-design)。
 
-运行模块严格 TypeScript、栅格及导出像素／透明轮廓一致性检查通过，浏览器三态、人物与对照切换已验，无页面错误；复现与素材见[样板记录](../art/demos/purification-r11/README.md)。仅局部母版，尚未用户艺术验收；后续仍按[执行计划](../design-notes/purification-scene-art-plan.md)看图修订，技术通过不代表艺术成品。
+本轮导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；复现与素材见[样板记录](../art/demos/purification-r11/README.md)。仍为局部母版修订，待用户艺术审阅，未接生产；后续按[执行计划](../design-notes/purification-scene-art-plan.md)看图修订，技术通过不代表艺术成品。
 
 随后依次完成前景室内、三层外景与整体光影、正式动态接入、整景验收。主 COH-F042，关联 F026/F033/F039；[任务清单](../tasks/iteration-30.md)同步。尚无 C 的 `src` 接入、通行、动态遮挡、三层视差或全景完成，也未获用户艺术验收；R10技术证据保留、美术整改，I28挂起保持。按用户要求不使用项目内 skill；生成式全貌页仍为旧快照。
 

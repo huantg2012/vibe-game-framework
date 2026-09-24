@@ -1,6 +1,6 @@
 import { renderSample, SAMPLE_CROP, type SampleState } from './scene';
 
-type View = 'crop' | 'full' | 'original' | 'study';
+type View = 'crop' | 'full' | 'original' | 'study' | 'previous';
 
 const WIDTH = 960;
 const HEIGHT = 640;
@@ -50,9 +50,10 @@ let showPlayer = true;
 let ready = false;
 const reference = new Image();
 const firstStudy = new Image();
+const previousMaster = new Image();
 
 function syncControls(): void {
-  const referenceOnly = view === 'original' || view === 'study';
+  const referenceOnly = view === 'original' || view === 'study' || view === 'previous';
   for (const button of stateButtons) {
     button.setAttribute('aria-pressed', String(button.dataset.state === state));
     button.disabled = referenceOnly;
@@ -71,7 +72,9 @@ function render(): void {
   putPixels(sampleContext, renderSample(state, { player: showPlayer }), WIDTH, HEIGHT);
   composedContext.clearRect(0, 0, WIDTH, HEIGHT);
   composedContext.drawImage(reference, 0, 0, WIDTH, HEIGHT);
-  if (view === 'study') {
+  if (view === 'previous') {
+    if (previousMaster.complete && previousMaster.naturalWidth) composedContext.drawImage(previousMaster, 0, 0);
+  } else if (view === 'study') {
     if (firstStudy.complete && firstStudy.naturalWidth) composedContext.drawImage(firstStudy, 0, 0);
   } else if (view !== 'original') {
     composedContext.drawImage(sampleCanvas, 0, 0);
@@ -79,11 +82,11 @@ function render(): void {
 
   display.fillStyle = '#0b0d0e';
   display.fillRect(0, 0, WIDTH, HEIGHT);
-  if (view === 'crop' || view === 'study') {
+  if (view === 'crop' || view === 'study' || view === 'previous') {
     const { x, y, width, height } = SAMPLE_CROP;
     display.drawImage(composedCanvas, x, y, width, height,
       (WIDTH - width * 2) / 2, (HEIGHT - height * 2) / 2, width * 2, height * 2);
-    canvas.setAttribute('aria-label', view === 'study' ? '第一版画法试作，两倍对照' : 'C 美术母版，局部两倍显示');
+    canvas.setAttribute('aria-label', view === 'previous' ? '上一版母版，两倍对照' : view === 'study' ? '第一版画法试作，两倍对照' : 'C 美术母版，局部两倍显示');
   } else {
     display.drawImage(composedCanvas, 0, 0);
     canvas.setAttribute('aria-label', view === 'original' ? '仅 C 原始构图参照' : 'C 完整构图中的实际像素样板');
@@ -112,7 +115,7 @@ for (const button of stateButtons) {
 for (const button of viewButtons) {
   button.addEventListener('click', () => {
     const next = button.dataset.view;
-    if (next !== 'crop' && next !== 'full' && next !== 'original' && next !== 'study') return;
+    if (next !== 'crop' && next !== 'full' && next !== 'original' && next !== 'study' && next !== 'previous') return;
     view = next;
     renderSafely();
   });
@@ -148,4 +151,6 @@ reference.onerror = () => {
 reference.src = new URL('../c.png', import.meta.url).href;
 firstStudy.onload = () => { if (view === 'study') renderSafely(); };
 firstStudy.src = new URL('./assets/first-study.png', import.meta.url).href;
+previousMaster.onload = () => { if (view === 'previous') renderSafely(); };
+previousMaster.src = new URL('./assets/previous-master.png', import.meta.url).href;
 syncControls();

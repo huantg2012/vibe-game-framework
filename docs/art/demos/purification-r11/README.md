@@ -2,20 +2,20 @@
 
 [查看母版](http://127.0.0.1:3026/docs/art/demos/purification-r11/c-pixel-sample.html) · [C 原构图](c.png) · [集中美术设计与用户参考](../../../art-direction.md#current-art-design) · [后续计划](../../../design-notes/purification-scene-art-plan.md)
 
-用户确认首版交付过早，要求继续优化为美术母版。当前在 C 原位置、透视内精修了核心工作区、高台坡口、厚墙和开口后的空间；以源码绘制实际像素资产，未生图、未采参考图像素。参考其像素氛围表达能力，不照抄配色。视觉修订包含材质重画、连续受光、接收面投影/遮光、独立空气散射，以及原人物同场受光。
+用户评价上一版明显进步但仍不满意。本次纠正三项：核心内质为受约束的异界污染物；墙地从平涂补丁继续深入材料内部；绿色归污染与侵蚀，普通建材退出绿色。仍在 C 原位置和透视内，以可编辑源码绘制实际像素资产，未生图、未采参考图像素。具体设计只维护于文首链接的集中美术设计。
 
-页面默认核心受光、母版 2×、人物同框；可切普通照明／侵蚀变化、完整 C／原 C 和首版对照。下载当前状态的透明 960×640 PNG，人物是否包含跟随开关。原图与首版对照模式禁用状态、人物与下载，避免把参照误当母版。C 原图不变，样板外仍是构图参照。
+页面默认核心受光、母版 2×、人物同框；可切普通照明／侵蚀变化、完整 C／原 C、上一版与首版对照。下载当前状态的透明 960×640 PNG，人物是否包含跟随开关。原图和历史对照模式禁用状态、人物与下载，避免把参照误当母版。C 原图不变，样板外仍是构图参照。
 
-源码在 [pixel-sample](./pixel-sample/scene.ts)，制作区域为 `(158,202,442,290)`。[导出清单](./pixel-sample/assets/manifest.json)记录三态成图、照明后/空气前的表面图、原人物同框图、11 个绘制层，以及材质、法线和三个阴影蒙版。`contact-shadows` 绘制层用作接触遮蔽蒙版源，不作为黑色地面贴片合成。灯光和空气分工详见集中设计；固定构图下的阴影绘制不能直接宣称已实现可移动灯光/物体的动态投影。
+源码在 [pixel-sample](./pixel-sample/scene.ts)，制作区域为 `(158,202,442,290)`。[导出清单](./pixel-sample/assets/manifest.json)记录三态成图、照明后/空气前的表面图、原人物同框图、11 个绘制层，以及材质、法线和三个阴影蒙版。[surface-paint.ts](./pixel-sample/surface-paint.ts)在绘定区域内组织材料笔触，受基材及平面限制；底画明度保留小数。材质图 G 通道现在将 0–7 明度编码为 0–255，R 为材质序号、B 为发光标志。`contact-shadows` 层用作接触遮蔽蒙版源，不作为黑色地面贴片合成。污染反光与普通照明分别处理；固定构图阴影不是正式动态投影系统。
 
-运行模块严格 TypeScript、栅格边界检查、材质色阶和最终透明轮廓/裁切/状态差异检查通过；导出图与内存渲染一致，浏览器检查三态、人物及对照切换。以上是技术事实，用户尚未艺术验收；C 的正式通行、动态遮挡、三层视差和全景制作未接入，不能沿用 A 的通行验证。
+本次严格 TypeScript、栅格、材质色阶、透明轮廓与导出一致性检查通过；浏览器三态、人物及五种视图切换已验，无页面错误。技术检查不代替艺术验收；C 的正式通行、动态遮挡、三层视差和全景制作未接入，不能沿用 A 的通行验证。
 
 ```sh
 node --import tsx docs/art/demos/purification-r11/pixel-sample/check-raster.ts
 node --import tsx docs/art/demos/purification-r11/pixel-sample/export.mjs
 ```
 
-[首版](./pixel-sample/assets/first-study.png)保留供同尺度对照。更早的 [c-finish-sample.png](./c-finish-sample.png) 仍是生图画风效果稿，不是本母版资产或渲染依据。
+[上一版](./pixel-sample/assets/previous-master.png)与[首版](./pixel-sample/assets/first-study.png)保留供同尺度对照。更早的 [c-finish-sample.png](./c-finish-sample.png) 仍是生图画风效果稿，不是本母版资产或渲染依据。
 
 ---
 

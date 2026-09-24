@@ -111,6 +111,114 @@ function buildOffering(): PixelLayer {
   return p;
 }
 
+/** The contained substance is reclaimed Rift matter, not a manufactured lamp.
+ * Draw the restraint behind the mass first; the front jaws interrupt it later. */
+function paintConstrainedCore(p: PixelLayer): void {
+  const matter = (tone: Tone, normal: Ink['normal'] = FRONT, response = .28): Ink =>
+    ink('alien',tone,normal,response);
+  const stressed = (tone: Tone = 6): Ink => ({ material:'alien',tone,normal:FRONT,light:0,emission:true });
+
+  // Open receiving well and contact shoes replace the former sealed glass tube.
+  p.poly([[351,563],[365,554],[408,554],[425,565],[419,579],[362,580],[349,573]], metal(2));
+  p.poly([[353,562],[367,553],[408,554],[422,563],[413,572],[363,570]], metal(4,TOP,.8));
+  p.poly([[365,559],[376,554],[400,555],[411,562],[405,569],[374,568],[363,565]], metal(0,TOP,0));
+  p.poly([[369,562],[382,558],[400,561],[403,565],[391,569],[375,566]], matter(0,TOP,.1));
+  p.poly([[354,480],[360,475],[374,482],[374,490],[367,493],[355,488]], metal(1,RIGHT,.35));
+  p.poly([[353,477],[358,473],[374,480],[369,484],[356,482]], metal(3,TOP,.6));
+  p.poly([[405,459],[420,451],[426,455],[426,463],[410,473],[405,469]], metal(1,LEFT,.35));
+  p.poly([[407,458],[420,451],[424,454],[410,463]], metal(3,TOP,.65));
+  p.poly([[404,517],[420,508],[426,511],[425,520],[410,531]], metal(1,LEFT,.3));
+
+  // Uneven lobes are being pulled into one another. The silhouette is offset,
+  // interrupted and blunt; it has neither crystal facets nor a regular emblem.
+  p.poly([[386,427],[393,431],[393,441],[402,445],[408,452],[406,463],[414,467],
+    [412,478],[418,489],[411,499],[413,508],[405,515],[408,526],[402,535],
+    [400,545],[392,551],[381,542],[378,533],[367,529],[370,519],[361,509],
+    [366,499],[361,485],[366,476],[360,464],[368,456],[365,446],[377,442],[379,433]], matter(1));
+  // The far return stays almost black, making the green matter a solid volume.
+  p.poly([[397,447],[407,453],[406,464],[414,468],[411,479],[417,489],[409,500],
+    [411,508],[402,515],[405,526],[399,536],[395,539],[397,523],[389,514],
+    [394,504],[398,496],[400,485],[395,474],[399,464]], matter(0,RIGHT,.05));
+  // Wide incompatible pieces interpenetrate. Dark material cuts through the upper
+  // fold, preventing a self-contained bright diamond or upward flame silhouette.
+  p.poly([[375,444],[385,445],[388,448],[399,447],[405,453],[401,460],
+    [403,467],[394,469],[389,465],[380,470],[369,464],[370,454]], matter(2,FRONT,.15));
+  p.poly([[373,451],[384,452],[391,456],[401,453],[405,457],[401,462],
+    [390,464],[383,458],[371,457]], matter(0,FRONT,.03));
+  p.poly([[376,451],[384,453],[390,457],[397,456],[398,459],[391,460],[383,456],[375,454]], matter(1,TOP,.08));
+  p.poly([[370,456],[374,454],[380,457],[380,460],[374,459],[371,462]], matter(3,LEFT,.15));
+  p.poly([[395,448],[401,450],[404,454],[400,453],[396,451]], matter(3,TOP,.1));
+  p.poly([[371,465],[378,466],[381,470],[377,473],[373,472]], matter(2,FRONT,.12));
+  // One broad, low-value mass crosses the middle, rather than a bright winding
+  // ribbon surrounding a black hole. Its blunt overlap is the dominant shape.
+  p.poly([[369,477],[379,476],[384,480],[395,478],[403,485],[402,490],
+    [407,496],[401,507],[393,509],[386,505],[375,508],[368,501],[370,492],[366,486]], matter(1,FRONT,.12));
+  p.poly([[372,485],[382,484],[388,487],[396,485],[400,490],[397,498],
+    [390,501],[382,498],[375,501],[371,494]], matter(2,FRONT,.09));
+  p.poly([[372,486],[377,487],[379,490],[376,494],[373,492]], matter(3,LEFT,.15));
+  p.poly([[392,485],[399,486],[397,493],[401,496],[397,502],[389,499],[390,491]], matter(0,RIGHT,.02));
+  p.poly([[393,488],[397,489],[395,494],[398,497],[395,499],[392,496]], matter(1,FRONT,.04));
+  p.poly([[379,477],[385,479],[392,477],[400,480],[402,484],[395,482],
+    [388,484],[381,482]], matter(0,FRONT,0));
+  p.line([[380,483],[384,484],[388,487]], matter(3,TOP,.12),1);
+  p.poly([[397,505],[403,503],[403,507],[398,511],[393,510]], matter(2,TOP,.1));
+  p.poly([[370,514],[379,511],[384,515],[394,514],[399,519],[399,527],
+    [395,534],[397,540],[391,545],[384,540],[382,532],[373,530]], matter(1,FRONT,.1));
+  p.poly([[375,516],[381,516],[386,520],[394,518],[396,521],[393,526],
+    [387,527],[384,534],[379,530],[377,524]], matter(2,LEFT,.12));
+  p.poly([[377,516],[381,517],[384,520],[383,523],[380,521]], matter(3,TOP,.1));
+
+  // Actual gaps split the visible matter. Rear wall remains visible between the pieces.
+  p.clearPoly([[370,477],[375,476],[380,480],[383,481],[380,484],[375,481],[371,481]]);
+  p.clearPoly([[394,518],[403,515],[407,516],[405,520],[398,522],[394,521]]);
+  p.poly([[400,432],[407,434],[410,440],[408,445],[403,443],[404,438]], matter(1,RIGHT,.15));
+  p.poly([[404,435],[407,436],[407,440],[405,439]], matter(2,LEFT,.1));
+  p.poly([[366,438],[370,435],[373,439],[372,444],[369,445]], matter(1,LEFT,.1));
+  p.poly([[415,491],[419,488],[422,492],[421,497],[417,499]], matter(2,RIGHT,.2));
+  p.poly([[372,536],[376,538],[378,543],[375,548],[371,544]], matter(1,LEFT,.15));
+
+  // A few stressed seams and stretched contact ribbons carry the emission.
+  // The large dark heart and most green surfaces are expressly non-emissive.
+  p.line([[371,457],[375,457],[378,459]], matter(4,LEFT,.1),1);
+  p.line([[396,451],[400,452]], matter(4,TOP,.1),1);
+  p.line([[373,492],[376,495],[379,496]], stressed(5),1);
+  p.line([[381,520],[384,522]], matter(4,TOP,.1),1);
+  p.poly([[360,487],[368,489],[374,493],[370,495],[366,492],[359,491]], matter(3,LEFT,.25));
+  p.line([[361,489],[366,490],[370,493]], stressed(6),1);
+  p.poly([[402,468],[410,461],[416,460],[413,465],[407,468],[406,473]], matter(3,TOP,.3));
+  p.line([[406,469],[410,465],[414,464]], stressed(6),1);
+  p.poly([[400,520],[407,523],[418,517],[417,522],[408,529],[402,527]], matter(2,TOP,.2));
+  p.line([[405,524],[409,526],[414,523]], stressed(5),1);
+
+  // Front jaws visibly overlap and compress the matter at unequal heights.
+  p.poly([[353,486],[362,488],[369,486],[375,491],[373,497],[366,498],[360,495],[353,495]], metal(1,FRONT,.45));
+  p.poly([[354,485],[361,487],[368,485],[375,490],[371,492],[367,490],[361,492],[354,490]], metal(3,TOP,1));
+  p.line([[362,488],[367,488],[371,490]], metal(5,TOP,1),1);
+  p.poly([[368,491],[373,492],[373,496],[369,495]], metal(2,RIGHT,.6));
+  p.rect(374,493,2,2,stressed(7));
+  p.poly([[409,459],[419,455],[426,457],[426,465],[420,468],[411,471],[407,468]], metal(1,FRONT,.4));
+  p.poly([[408,459],[419,454],[425,457],[418,460],[413,465],[408,466]], metal(3,TOP,1));
+  p.line([[409,460],[414,458],[418,457]], metal(4,TOP,1),1);
+  p.poly([[407,464],[410,463],[412,467],[408,470],[405,468]], metal(2,LEFT,.8));
+  p.rect(405,469,2,2,stressed(7));
+  p.poly([[411,520],[422,514],[425,517],[423,524],[412,532],[406,529],[406,525]], metal(1,FRONT,.35));
+  p.poly([[410,520],[421,513],[425,516],[420,520],[411,525],[407,524]], metal(3,TOP,.75));
+  p.line([[410,522],[416,519]], metal(4,TOP,.9),1);
+
+  // Two grounded restraint fingers clasp the lower mass instead of enclosing a tube.
+  p.poly([[361,559],[365,544],[373,534],[381,537],[381,542],[375,546],[373,559],[367,566]], metal(1,FRONT,.35));
+  p.poly([[363,557],[368,545],[374,538],[379,539],[374,543],[370,556],[369,563]], metal(3,LEFT,.8));
+  p.line([[367,546],[372,540],[376,540]], metal(4,LEFT,1),1);
+  p.poly([[404,561],[402,547],[395,538],[396,531],[402,531],[410,542],[415,558],[410,566]], metal(1,RIGHT,.35));
+  p.poly([[405,556],[404,545],[398,538],[399,533],[404,538],[412,557],[408,563]], metal(3,TOP,.75));
+  p.line([[399,535],[403,540],[405,546]], metal(4,LEFT,1),1);
+  p.rect(381,539,2,2,stressed(6));
+  p.poly([[377,558],[382,553],[389,555],[391,560],[386,565],[380,563]], matter(1,TOP,.1));
+  p.line([[380,562],[385,563],[388,561]], matter(3,TOP,.15),1);
+  p.line([[355,564],[363,561]], metal(4,TOP,.6),1);
+  p.line([[404,570],[414,566]], metal(4,TOP,.65),1);
+}
+
 function buildCore(): PixelLayer {
   const p = new PixelLayer('core');
   // The base follows the original elliptical polygon and its lower, dark return.
@@ -134,50 +242,7 @@ function buildCore(): PixelLayer {
   p.poly([[299,600],[317,605],[316,613],[300,608]], ink('paint', 2));
   p.poly([[344,600],[356,601],[356,605],[344,605]], ink('rust', 2));
 
-  // Core cradle and glass: the dark internal structure remains visible around the light.
-  p.poly([[351,563],[365,554],[408,554],[425,565],[419,579],[362,580],[349,573]], metal(2));
-  p.poly([[353,562],[367,554],[406,554],[422,563],[411,569],[366,570]], metal(4, TOP));
-  p.ellipse(386,564,24,8,metal(5,TOP));
-  p.ellipse(386,561,19,6,metal(2,TOP));
-  p.poly([[372,475],[379,469],[398,469],[404,477],[404,554],[396,561],[378,558],[371,553]], ink('glass',1,FRONT,.25));
-  p.poly([[374,479],[379,481],[379,550],[375,551]], ink('glass',3,LEFT,1));
-  p.poly([[398,479],[402,476],[402,551],[397,554]], ink('glass',1,RIGHT,.2));
-  // Inner ceramic carrier and its steel spine are visible through the vessel.
-  p.poly([[379,481],[384,483],[384,548],[380,547]], metal(2,LEFT,.4));
-  p.poly([[392,481],[396,479],[396,548],[391,551]], metal(1,RIGHT,.2));
-  p.poly([[383,480],[389,481],[392,485],[392,548],[389,552],[382,548]], ink('glass',4,FRONT,1));
-  p.poly([[392,485],[396,482],[397,507],[397,535],[393,543]], ink('glass',3,LEFT,1));
-  p.poly([[393,498],[395,495],[396,510],[395,528],[393,531]], ink('glass',4,LEFT,1));
-  p.rect(384,487,5,58,{material:'light',tone:6,emission:true,light:0});
-  p.rect(385,496,3,40,{material:'light',tone:7,emission:true,light:0});
-  p.rect(385,507,2,19,{material:'light',tone:7,emission:true,light:0});
-  // Two small carrier saddles interrupt the core; glass reflections sit in front.
-  p.poly([[381,493],[384,494],[390,493],[393,491],[393,495],[390,497],[384,497],[381,496]], ink('glass',2,FRONT,.45));
-  p.poly([[382,536],[387,538],[391,536],[394,534],[394,538],[389,541],[383,540]], ink('glass',2,FRONT,.45));
-  p.line([[375,484],[375,500],[376,503]], ink('glass',5,LEFT,1), 1);
-  p.line([[376,508],[376,521],[377,524]], {...ink('glass',6,LEFT,1),emission:true}, 1);
-  p.line([[376,529],[377,535]], ink('glass',5,LEFT,1), 1);
-  p.line([[400,486],[400,503]], ink('glass',2,RIGHT,.25), 1);
-  p.poly([[397,541],[400,538],[400,548],[396,551]], ink('glass',3,RIGHT,.5));
-  // Short clamps interrupt the vessel rather than outlining every glass edge.
-  p.poly([[370,472],[378,470],[397,470],[405,473],[405,479],[397,483],[377,481],[371,479]], metal(3));
-  p.ellipse(387,472,18,6,metal(5,TOP));
-  p.ellipse(387,469,12,6,metal(3,TOP));
-  p.line([[379,464],[388,462],[396,466]], metal(5,TOP), 2);
-  p.poly([[372,548],[379,552],[399,550],[404,546],[404,553],[397,559],[378,558],[372,554]], metal(3));
-  p.line([[375,550],[382,553],[390,553]], metal(5,TOP,1), 2);
-  p.line([[381,553],[387,554],[392,553]], {...metal(5,TOP,1),emission:true}, 1);
-  p.rect(379,560,4,8,metal(2));
-  p.rect(393,559,4,8,metal(2));
-  p.poly([[368,466],[373,463],[377,464],[376,472],[372,475],[368,474]], metal(2));
-  p.poly([[399,464],[404,466],[407,470],[406,478],[401,479],[401,471]], metal(1,RIGHT,.2));
-  p.line([[370,465],[374,465]], metal(4,TOP,.4), 1);
-  p.line([[401,468],[404,469]], metal(3,TOP,.3), 1);
-  p.ellipse(386,561,13,3,metal(1,TOP,.15));
-  p.line([[377,560],[382,562],[391,562],[395,560]], metal(4,TOP,1), 1);
-  p.poly([[362,566],[369,564],[378,568],[387,570],[398,568],[406,565],[414,566],
-    [407,570],[398,573],[384,575],[373,572]], metal(3,TOP,1));
-  p.line([[375,571],[384,573],[395,571]], metal(5,TOP,1), 1);
+  paintConstrainedCore(p);
 
   // Left load-bearing shoulder: silhouette and plane breaks copied from C.
   p.poly([[303,397],[322,379],[344,378],[367,384],[368,404],[360,412],[360,565],

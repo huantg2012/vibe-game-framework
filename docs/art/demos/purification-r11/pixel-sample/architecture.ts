@@ -1,4 +1,5 @@
 import { PixelLayer, type Ink, type Point } from './raster';
+import { paintApproach, paintFloorAndLedge, paintMasonry, paintNearMasonry } from './surface-paint';
 
 const UP = [0, 0, 1] as const;
 const FRONT = [0, 0.92, 0.28] as const;
@@ -384,7 +385,10 @@ export function buildArchitectureLayers(): PixelLayer[] {
     [[647, 666], [631, 683], [616, 685]],
     [[660, 666], [675, 684], [697, 688]],
     [[625, 660], [601, 655], [578, 660]],
-  ] as const).entries()) fissure.line(points, ink(i < 2 ? 'concrete' : 'void', i < 2 ? 1 : 0, UP, 0), 2);
+  ] as const).entries()) {
+    fissure.line(points, ink('concrete', i < 2 ? 1.7 : 1.4, UP, .2), 2);
+    fissure.line(points.slice(0, 2), ink(i < 2 ? 'concrete' : 'void', i < 2 ? 1 : .3, UP, 0), 2);
+  }
   // A continuous far cut face descends into the wound. Branches stay narrow;
   // the centre has an actual mouth, visible stone thickness and a darker bottom.
   fissure.poly([[620, 651], [641, 648], [649, 642], [652, 651], [672, 652], [663, 658],
@@ -412,6 +416,10 @@ export function buildArchitectureLayers(): PixelLayer[] {
   fissure.line([[671, 664], [677, 666]], ink('concrete', 3, FRONT, .4), 1);
   fissure.line([[629, 681], [635, 676]], ink('concrete', 2, FRONT, .25), 1);
   fissure.line([[605, 647], [614, 644]], ink('concrete', 3, UP, .6), 1);
+  paintMasonry(room);
+  paintFloorAndLedge(ground);
+  paintNearMasonry(foreground);
+  paintApproach(approach);
   return [distance, room, ground, contacts, fissure, foreground, approach];
 }
 

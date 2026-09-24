@@ -3,7 +3,7 @@ import { MATERIALS, PixelLayer, type Ink } from './raster.ts';
 
 const ink: Ink = { material: 'concrete', tone: 4 };
 const count = (layer: PixelLayer): number => layer.mat.reduce((total, material) => total + Number(material !== 0), 0);
-const channels = (layer: PixelLayer): readonly (Uint8Array | Int8Array)[] => [
+const channels = (layer: PixelLayer): readonly (Uint8Array | Int8Array | Float32Array)[] => [
   layer.mat, layer.tone, layer.normalX, layer.normalY, layer.normalZ, layer.light, layer.emission,
 ];
 
@@ -20,6 +20,8 @@ assert.deepEqual(channels(defaults).map((channel) => channel[0]), [9, 6, -127, 6
 defaults.clearPoly([[0, 0], [1, 0], [1, 1], [0, 1]]);
 assert.deepEqual(channels(defaults).map((channel) => channel[0]), [0, 0, 0, 0, 0, 0, 0]);
 assert.deepEqual(MATERIALS, ['void', 'concrete', 'chalk', 'steel', 'paint', 'rust', 'glass', 'light', 'alien']);
+defaults.rect(2, 2, 1, 1, { material: 'chalk', tone: 3.625, shade: 0.25 });
+assert.equal(defaults.tone[18], 3.375, 'painted midtones must survive rasterization without whole-step rounding');
 
 // Neighboring faces must tile without missing or double-owned pixels along their diagonal.
 const upper = new PixelLayer('upper', 8, 8, 1);

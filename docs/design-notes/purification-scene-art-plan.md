@@ -1,5 +1,5 @@
 ---
-status: R11-C-MASTER-CANDIDATE / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED
+status: R11-C-MASTER-REVISING / COMPOSITION-LOCKED / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED
 created-date: 2026-09-23
 last-modified-date: 2026-09-24
 owner: director
@@ -27,7 +27,7 @@ C 只决定构图与空间关系。实际游戏的美术制作遵循集中设计
 
 ## 第一步：C 原构图内的局部美术母版
 
-**当前进度**：用户指出首版交付过早，要求继续制作母版。本轮参考三张用户截图的像素氛围表达能力，不照抄配色；[精修局部母版](../art/demos/purification-r11/c-pixel-sample.html)已重画材质并加入连续受光、接收面遮光／软投影、独立空气散射、原角色 `up/idle` 33px 本体受光同框，支持三态与首版对照。确定性脚本绘制，C 原图不变、无生图。运行模块严格 TS、栅格与导出像素／透明轮廓一致性检查通过，浏览器三态、人物与对照切换已验，无页面错误；素材与复现见[样板记录](../art/demos/purification-r11/README.md)。仅局部母版，尚未用户艺术验收，不标美术 PASS。
+**当前进度**：用户反馈“明显进步但仍不满意”，局部母版继续修订。本轮恢复核心“从 Rift 收集、被强行约束的污染实体”身份，补强墙地内部材料与使用痕迹的描绘，并明确绿色集中用于污染、侵蚀及其局部反射，普通混凝土与旧漆去绿。[精修局部母版](../art/demos/purification-r11/c-pixel-sample.html)新增“上一版对照”，首版、原 C、三态与原人物同框仍保留。确定性脚本绘制，C 原图不变、无生图。导出、栅格与严格 TS 检查通过，浏览器三态、人物及对照切换已验，无页面错误；素材与复现见[样板记录](../art/demos/purification-r11/README.md)。仍为局部母版修订、待人审、未接生产，不标美术 PASS。
 
 **工作范围**：原人物、核心周围活动地面、一段后部高台/坡口、一处厚墙转面，以及该开口之后可见的中景。选择连续区域，样板始终放在完整 C 视口里判断；不先另画一张全场灰盒构图。
 

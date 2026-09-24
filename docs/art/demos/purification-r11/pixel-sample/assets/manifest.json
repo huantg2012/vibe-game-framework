@@ -1,5 +1,5 @@
 {
-  "authoring": "authored indexed pixel painting; material lighting, receiver shadows and separate atmospheric scattering; no generated image sampled",
+  "authoring": "authored pixel painting with fractional pigment tones; material lighting, localized pollutant reflections, receiver shadows and separate atmospheric scattering; no generated image sampled",
   "width": 960,
   "height": 640,
   "crop": {
@@ -12,17 +12,17 @@
     "ambient": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "52299f99e94eda43b1adcf0ffd6427a28f3c2e206af6ac5f388dfce2dff9a9ce"
+      "rgbaHash": "9b91c71c4cdc53914c63f7c3b6c49a932502918fe785b0147cdd028a0c35516c"
     },
     "core": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "d516ba8889958a8f0fd8d54191c03720237c7d7c25c54a6aaa40d9d639cb8b71"
+      "rgbaHash": "96a560b0ca8154fa5c6cf3baee96c892c39bdadb47db529e64ed4e6dd38f1e16"
     },
     "intrusion": {
       "occupied": 128180,
       "maskHash": "9e9740573255c9633e3bf8fe885b9a8a9e51257129b29288bc401b0178379fc5",
-      "rgbaHash": "c4db12b39ae09608c542e30db59eece047db4f76a6b9435afc975b1a1142a5f8"
+      "rgbaHash": "933dd9f00fbc1eaaeaf5ccfc127c05564489679cfdcb52fa4a5a0a23000190df"
     }
   },
   "layers": [
@@ -47,5 +47,10 @@
     "surface-{state}.png: lit materials before air",
     "sample-{state}.png: final light and air",
     "master-with-player.png: cropped core state with existing actor"
-  ]
+  ],
+  "materialMap": {
+    "red": "material index, 1-based",
+    "green": "paint tone: byte × 7 / 255",
+    "blue": "emission flag 0 or 1"
+  }
 }
