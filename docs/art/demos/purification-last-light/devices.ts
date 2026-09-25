@@ -465,24 +465,31 @@ function rift(m: Model): void {
 }
 
 export function buildDevices(m: Model): Station[] {
+  // Keep the two west-side workstations against the perimeter, addressing
+  // the open floor. Their local +Z is the actual operating face; lights and
+  // mounting geometry inherit the same transform as the complete assembly.
+  const purifierPosition: V3 = [-1.5, 0, 3], purifierYaw = Math.PI / 2;
+  const offeringPosition: V3 = [-3, 0, -3.85], offeringYaw = Math.atan2(19, 30);
+  const inFront = (position: V3, yaw: number, distance: number): V3 =>
+    [position[0] + Math.sin(yaw) * distance, position[1], position[2] + Math.cos(yaw) * distance];
   const stations: Station[] = [
-    { id: 1, key: 'core', name: '核心', position: CORE_POSITION, approach: CORE_APPROACH, radius: .92,
+    { id: 1, key: 'core', name: '核心', position: CORE_POSITION, yaw: CORE_YAW, approach: CORE_APPROACH, radius: .92,
       description: '右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；受约束的能量团内部翻涌，灰绿光向四周辐射，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。' },
-    { id: 2, key: 'storage', name: '储藏', position: [10.5, 2.6, -3.2], approach: [9.02, 2.6, -3.55], radius: .8,
+    { id: 2, key: 'storage', name: '储藏', position: [10.5, 2.6, -3.2], yaw: 0, approach: [9.02, 2.6, -3.55], radius: .8,
       description: '封闭的顶压观察井，窄缝下可见被关物抵压；承压盖、螺杆与深收容腔构成完整机体。修复提高薪柴价值。' },
-    { id: 3, key: 'purifier', name: '净化器', position: [-.8, 0, 2], approach: [-.8, 0, 3.83], radius: .83,
+    { id: 3, key: 'purifier', name: '净化器', position: purifierPosition, yaw: purifierYaw, approach: inFront(purifierPosition, purifierYaw, 1.83), radius: .83,
       description: '两只深浅不同的分离腔由管路相接，内部填料、低液面与收集槽可见。修复降低踏入裂隙时的起始混乱。' },
-    { id: 4, key: 'offering', name: '供奉', position: [-2.2, 0, -2.1], approach: [-2.2, 0, -.24], radius: .82,
+    { id: 4, key: 'offering', name: '供奉', position: offeringPosition, yaw: offeringYaw, approach: inFront(offeringPosition, offeringYaw, 1.86), radius: .82,
       description: '厚壁回收管环的偏心孔贯通前后，下沿夹件暴露并控制残渣；压力穿孔而过。装入物件供其抵御冲击并转化。' },
-    { id: 5, key: 'growth', name: '蜕变', position: [6, 2.6, -5.2], approach: [6, 2.6, -3.33], radius: .83,
+    { id: 5, key: 'growth', name: '蜕变', position: [6, 2.6, -5.2], yaw: 0, approach: [6, 2.6, -3.33], radius: .83,
       description: '可容人体的旧式立缸，暗色半透明介质中隐约有躯体般的物质与稀少气泡。通过培养藏刻入永久成长和模块加厚。' },
-    { id: 6, key: 'rift', name: '裂隙', position: [9.4, 0, 4.2], approach: [9.4, 0, 6.07], radius: .92,
+    { id: 6, key: 'rift', name: '裂隙', position: [9.4, 0, 4.2], yaw: 0, approach: [9.4, 0, 6.07], radius: .92,
       description: '地面上由内向外分叉的时空伤口，裂口粗细不等，仅断续渗出异源颜色；并非门或机械装置。由此准备出击。' },
   ];
   const builders = [core, storage, purifier, offering, growth, rift] as const;
   for (let i = 0; i < stations.length; i++) {
     const station = stations[i]!;
-    m.at(station.position, station.key === 'core' ? CORE_YAW : 0, station.id, () => builders[i]!(m));
+    m.at(station.position, station.yaw, station.id, () => builders[i]!(m));
   }
   return stations;
 }

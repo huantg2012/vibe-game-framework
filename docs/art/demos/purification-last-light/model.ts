@@ -7,7 +7,7 @@ export type Layer = 'far' | 'middle' | 'near' | 'haven';
 export interface Triangle { a: V3; b: V3; c: V3; normal: V3; material: Material; tint: number; object: number; layer: Layer; }
 export type LightKind = 'pollution' | 'furnace' | 'shoulder';
 export interface Light { position: V3; color: V3; power: number; radius: number; kind: LightKind; id: string; }
-export interface Station { id: number; key: string; name: string; position: V3; approach: V3; radius: number; description: string; }
+export interface Station { id: number; key: string; name: string; position: V3; yaw: number; approach: V3; radius: number; description: string; }
 export interface EnergyVolume { center:V3; radii:V3; yaw:number; seed:number; object:number; layer:Layer; }
 export const add = (a: V3,b: V3): V3 => [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
 export const sub = (a: V3,b: V3): V3 => [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
