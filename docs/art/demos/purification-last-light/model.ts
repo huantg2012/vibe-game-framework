@@ -2,7 +2,7 @@ import { ShapeUtils, Vector2 } from 'three';
 
 export type V3 = readonly [number, number, number];
 export type V2 = readonly [number, number];
-export type Material = 'stone' | 'cutstone' | 'iron' | 'steel' | 'bronze' | 'wood' | 'paper' | 'cloth' | 'glass' | 'liquid' | 'pollutant' | 'ember' | 'lamp' | 'black';
+export type Material = 'stone' | 'cutstone' | 'iron' | 'steel' | 'bronze' | 'wood' | 'paper' | 'cloth' | 'glass' | 'liquid' | 'pollutant' | 'energy' | 'ember' | 'lamp' | 'black';
 export type Layer = 'far' | 'middle' | 'near' | 'haven';
 export interface Triangle { a: V3; b: V3; c: V3; normal: V3; material: Material; tint: number; object: number; layer: Layer; }
 export type LightKind = 'pollution' | 'furnace' | 'shoulder';

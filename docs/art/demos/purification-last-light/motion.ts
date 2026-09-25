@@ -131,7 +131,7 @@ void main() {
     float air = cloud(p + vec2(time * 0.007, -time * 0.009)) - cloud(p);
     vec2 p2 = p * vec2(0.38, 1.7) + vec2(9.4, 3.8);
     air += (noise(p2 + vec2(-time * 0.0023, -time * 0.006)) - noise(p2)) * 0.5;
-    color += vec3(0.009, 0.014, 0.016) * air * presence;
+    color += vec3(0.005, 0.006, 0.006) * air * presence;
   }
 
   vec2 encoded = floor(texture2D(uDepth, uv).rg * 255.0 + 0.5);

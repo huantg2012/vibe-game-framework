@@ -13,9 +13,10 @@ export function buildHaven():Haven {
   // Source powers are balanced in the full scene; the three families remain
   // individually recoverable for source-aware motion and material response.
   for(const light of model.lights){
-    if(light.kind==='shoulder'){light.power=1.65;light.radius=4.1;}
-    if(light.kind==='furnace'){light.power=3.6;light.radius=6.4;}
-    if(light.id==='core-heart'){light.power=3.0;light.radius=8.6;}
+    if(light.kind==='shoulder'){light.power=3.2;light.radius=6.2;}
+    if(light.kind==='furnace'){light.power=5.2;light.radius=8.4;}
+    if(['storage-well','purifier-inlet','purifier-sump','offering-residue','growth-medium','rift-wound'].includes(light.id)){light.power*=2.5;light.radius*=1.2;}
+    if(light.id==='core-heart'){light.power=9.0;light.radius=15.5;}
   }
   return {model,stations};
 }

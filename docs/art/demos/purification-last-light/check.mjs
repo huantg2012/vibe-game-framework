@@ -8,7 +8,8 @@ import sharp from 'sharp';
 import {buildHaven} from './scene.ts';
 import {WALK_SURFACES} from './environment.ts';
 import {ACTOR_OBJECT_ID,actorLampAnchor} from './actor.ts';
-import {project} from './render.ts';
+import {project,render} from './render.ts';
+import {Model} from './model.ts';
 import {ShapeUtils,Vector2} from 'three';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
@@ -16,6 +17,43 @@ const files=fs.readdirSync(here).filter(x=>x.endsWith('.ts')).map(x=>path.join(h
 const program=ts.createProgram(files,{strict:true,noEmit:true,noUnusedLocals:true,noUnusedParameters:true,noUncheckedIndexedAccess:true,target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,lib:['lib.es2022.d.ts','lib.dom.d.ts'],skipLibCheck:true});
 const diagnostics=ts.getPreEmitDiagnostics(program);
 if(diagnostics.length){console.error(ts.formatDiagnosticsWithColorAndContext(diagnostics,{getCanonicalFileName:x=>x,getCurrentDirectory:()=>process.cwd(),getNewLine:()=> '\n'}));process.exit(1);}
+// A small physical fixture catches a broken source/receiver or shadow path
+// without depending on this scene's artistic brightness or its exported PNGs.
+function verifySourceAndShadow(){
+ const camera={width:128,height:112,origin:[64,56],scale:13,target:[0,0,0],direction:[0,10,.001]};
+ const fixture=(blocked,lit)=>{
+  const m=new Model();m.layer='haven';m.object=1;
+  m.slab([[-4,-4],[4,-4],[4,4],[-4,4]],0,-.1,'cutstone');
+  if(blocked){m.object=2;m.box([0,.8,0],[.7,1.6,1.2],'iron');}
+  if(lit)m.light([-2,3,0],[.42,.62,.49],2,8,{kind:'pollution',id:'fixture-source'});
+  return render(m,camera);
+ };
+ const off=fixture(true,false),on=fixture(true,true),unblocked=fixture(false,true);
+ const sample=(result,point,field)=>{
+  const p=project(point,camera),x=Math.floor(p[0]),y=Math.floor(p[1]);let sum=0;
+  for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+   const i=(y+dy)*camera.width+x+dx;
+   assert.equal(result.objects[i],1,'Regression sample must hit the receiving floor, never the blocker');
+   sum+=(field?result.lightFields.pollution:result.rgba)[i*4+1];
+  }return sum/9;
+ };
+ const receivingPoint=[1.3,0,1.9],shadowPoint=[1.3,0,0];
+ const litGain=sample(on,receivingPoint,false)-sample(off,receivingPoint,false);
+ const clearContribution=sample(unblocked,shadowPoint,true),blockedContribution=sample(on,shadowPoint,true);
+ const clearValue=sample(unblocked,shadowPoint,false),shadowValue=sample(on,shadowPoint,false);
+ assert(litGain>0,'Switching on a real source must brighten a visible receiving face');
+ assert(clearContribution>0,'Removing the blocker must expose the formerly shadowed receiver to the source');
+ assert(blockedContribution<clearContribution*.15,'An opaque blocker must suppress direct light in its umbra');
+ assert(clearValue-shadowValue>clearContribution*.5,'The source occlusion must produce a visible cast shadow in the final render');
+ for(const result of [off,on,unblocked])for(const family of ['furnace','shoulder']){
+  const data=result.lightFields[family];
+  for(let i=0;i<data.length;i+=4)assert.equal(data[i]+data[i+1]+data[i+2],0,`Fixture leaked light into ${family}`);
+ }
+ for(let i=0;i<off.lightFields.pollution.length;i+=4)assert.equal(off.lightFields.pollution[i]+off.lightFields.pollution[i+1]+off.lightFields.pollution[i+2],0,'A source-free fixture must have no direct light contribution');
+ return {camera:[camera.width,camera.height],sourceFamily:'pollution',receivingFaceGain:litGain,unblockedContribution:clearContribution,blockedContribution,castShadowDifference:clearValue-shadowValue};
+}
+const rendererRegression=verifySourceAndShadow();
+if(process.argv.includes('--renderer-only')){console.log(JSON.stringify({rendererRegression},null,2));process.exit(0);}
 const {model,stations}=buildHaven();
 assert.deepEqual(stations.map(s=>s.key),['core','storage','purifier','offering','growth','rift']);
 for(const t of model.triangles)for(const v of [...t.a,...t.b,...t.c,...t.normal,t.tint])assert(Number.isFinite(v));
@@ -68,12 +106,13 @@ for(let i=0;i<N;i++){
 }
 for(const family of families)assert(visibleSources[family]>0,`${family}: no visible emitting material`);
 const stationPollution=stations.map(s=>{
- const geometry=model.triangles.filter(t=>t.object===s.id&&t.material==='pollutant').length,visible=visiblePollution.get(s.id)??0;
- assert(geometry>0,`${s.key}: missing contained pollutant geometry`);
+ const pollutant=model.triangles.filter(t=>t.object===s.id&&t.material==='pollutant').length;
+ const energy=model.triangles.filter(t=>t.object===s.id&&t.material==='energy').length,visible=visiblePollution.get(s.id)??0;
+ assert(pollutant+energy>0,`${s.key}: missing contained pollutant/energy geometry`);
  assert(visible>0,`${s.key}: its pollution is absent from the exported source mask`);
- return {key:s.key,id:s.id,pollutantTriangles:geometry,emittingPixels:visible};
+ return {key:s.key,id:s.id,pollutantTriangles:pollutant,energyTriangles:energy,emittingPixels:visible};
 });
-assert(model.triangles.some(t=>t.material==='pollutant'&&t.layer!=='haven'),'Missing exterior contamination geometry');
+assert(model.triangles.some(t=>(t.material==='pollutant'||t.material==='energy')&&t.layer!=='haven'),'Missing exterior contamination geometry');
 assert(Object.values(outsidePollution).some(n=>n>0),'Exterior contamination is absent from the source mask');
 
 // A necessary spatial bound, independent of the shader's attenuation and ray
@@ -145,6 +184,6 @@ const riftSourceHashes=Object.fromEntries(['player-sprite-dense.ts','player-spri
  const source=`src/entities/${name}`,filename=path.resolve(here,'../../../..',source);
  return [source,createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
 }));
-const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution},scope:'Source definitions, exported masks and finite source support; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
+const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,rendererRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution},scope:'Source definitions, exported masks, finite source support and an independent receiver/occluder fixture; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--write'))fs.writeFileSync(path.join(here,'assets','layout-check.json'),JSON.stringify(result,null,2)+'\n');

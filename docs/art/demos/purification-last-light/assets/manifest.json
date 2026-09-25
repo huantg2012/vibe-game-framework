@@ -106,7 +106,7 @@
         "width": 120,
         "height": 165
       },
-      "triangles": 7312,
+      "triangles": 6766,
       "modelAsset": "model-core.png",
       "modelCamera": {
         "width": 384,
@@ -891,7 +891,7 @@
       ]
     }
   ],
-  "triangles": 52382,
+  "triangles": 51836,
   "lights": [
     {
       "position": [
@@ -1261,8 +1261,8 @@
         0.5,
         0.16
       ],
-      "power": 3.6,
-      "radius": 6.4,
+      "power": 5.2,
+      "radius": 8.4,
       "kind": "furnace",
       "id": "haven-furnace",
       "screen": [
@@ -1273,44 +1273,65 @@
     },
     {
       "position": [
-        12.635325550890398,
+        12.610261410610784,
         2.83,
-        4.0815294020146515
+        4.219267519004989
       ],
       "color": [
         0.36,
         0.49,
         0.425
       ],
-      "power": 3,
-      "radius": 8.6,
+      "power": 9,
+      "radius": 15.5,
       "kind": "pollution",
       "id": "core-heart",
       "screen": [
-        703.0044311320733,
-        378.35147995342754,
-        10.042806288040858
+        700.4903302877443,
+        379.8791946392127,
+        10.128105040833765
       ]
     },
     {
       "position": [
-        12.728355412187515,
-        1.32,
-        4.017144272465668
+        12.69254949750235,
+        1.36,
+        4.213913011023292
       ],
       "color": [
         0.315,
         0.42,
         0.365
       ],
-      "power": 0.63,
-      "radius": 3.4,
+      "power": 1.05,
+      "radius": 4.3,
       "kind": "pollution",
       "id": "core-lower-seal",
       "screen": [
-        706.0000653051088,
-        411.43617971112695,
-        9.193441276678552
+        702.4084926703532,
+        412.74039812568344,
+        9.337695020208734
+      ]
+    },
+    {
+      "position": [
+        12.598665436390801,
+        3.83,
+        4.003708864848193
+      ],
+      "color": [
+        0.35,
+        0.465,
+        0.405
+      ],
+      "power": 0.94,
+      "radius": 3.6,
+      "kind": "pollution",
+      "id": "core-upper-seal",
+      "screen": [
+        703.2871033547794,
+        355.12906033839784,
+        10.532043928709097
       ]
     },
     {
@@ -1324,8 +1345,8 @@
         0.435,
         0.38
       ],
-      "power": 0.65,
-      "radius": 2.6,
+      "power": 1.625,
+      "radius": 3.12,
       "kind": "pollution",
       "id": "storage-well",
       "screen": [
@@ -1345,8 +1366,8 @@
         0.415,
         0.363
       ],
-      "power": 0.56,
-      "radius": 2.25,
+      "power": 1.4000000000000001,
+      "radius": 2.6999999999999997,
       "kind": "pollution",
       "id": "purifier-inlet",
       "screen": [
@@ -1366,8 +1387,8 @@
         0.39,
         0.35
       ],
-      "power": 0.24,
-      "radius": 1.45,
+      "power": 0.6,
+      "radius": 1.74,
       "kind": "pollution",
       "id": "purifier-sump",
       "screen": [
@@ -1387,8 +1408,8 @@
         0.435,
         0.375
       ],
-      "power": 0.52,
-      "radius": 2.45,
+      "power": 1.3,
+      "radius": 2.94,
       "kind": "pollution",
       "id": "offering-residue",
       "screen": [
@@ -1408,8 +1429,8 @@
         0.425,
         0.375
       ],
-      "power": 0.67,
-      "radius": 2.75,
+      "power": 1.675,
+      "radius": 3.3,
       "kind": "pollution",
       "id": "growth-medium",
       "screen": [
@@ -1429,8 +1450,8 @@
         0.4,
         0.345
       ],
-      "power": 0.64,
-      "radius": 2.5,
+      "power": 1.6,
+      "radius": 3,
       "kind": "pollution",
       "id": "rift-wound",
       "screen": [
@@ -1450,8 +1471,8 @@
         0.83,
         0.55
       ],
-      "power": 1.65,
-      "radius": 4.1,
+      "power": 3.2,
+      "radius": 6.2,
       "kind": "shoulder",
       "id": "actor-shoulder",
       "screen": [
@@ -1463,8 +1484,8 @@
   ],
   "lightStats": {
     "pollution": {
-      "receivingPixels": 24835,
-      "maximum": 213,
+      "receivingPixels": 45349,
+      "maximum": 255,
       "objects": [
         0,
         1,
@@ -1472,22 +1493,25 @@
         3,
         4,
         5,
-        6
+        6,
+        7
       ]
     },
     "furnace": {
-      "receivingPixels": 5687,
+      "receivingPixels": 7395,
       "maximum": 255,
       "objects": [
-        0
+        0,
+        1
       ]
     },
     "shoulder": {
-      "receivingPixels": 11197,
+      "receivingPixels": 25330,
       "maximum": 255,
       "objects": [
         0,
         3,
+        6,
         7
       ]
     }

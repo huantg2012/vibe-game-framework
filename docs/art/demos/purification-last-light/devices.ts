@@ -126,48 +126,39 @@ function collar(m: Model, y: number, outer: number, inner: number, height: numbe
   }
 }
 
-type FoldKnot = readonly [x: number, y: number, z: number, width: number, thickness: number, roll: number];
+type EnergyKnot = readonly [x: number, y: number, z: number, width: number, roll: number];
 
-/** A bent, creased body of matter, not a painted line. The asymmetric closed
- * cross-section turns through the curved path and has both a deep return and
- * an indented front fold. Separate bodies can occlude one another naturally. */
-function constrainedFold(m: Model, knots: readonly FoldKnot[], tint: number): void {
-  const samples: FoldKnot[] = [];
+/** Open, twisted energy membranes. No closed rounded volume, end caps or
+ * diffuse solid body: each current is two thin sheets meeting at a sharp
+ * luminous crest, leaving actual dark air between the currents. */
+function energyCurrent(m: Model, knots: readonly EnergyKnot[], tint: number): void {
+  const samples: EnergyKnot[] = [];
   const interpolate = (a: number, b: number, c: number, d: number, t: number): number =>
     .5 * ((2 * b) + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
   for (let segment = 0; segment < knots.length - 1; segment++) {
     const a = knots[Math.max(0, segment - 1)]!, b = knots[segment]!,
       c = knots[segment + 1]!, d = knots[Math.min(knots.length - 1, segment + 2)]!;
-    for (let step = 0; step < 4; step++) {
-      const t = step / 4;
-      samples.push(a.map((value, k) => interpolate(value, b[k]!, c[k]!, d[k]!, t)) as unknown as FoldKnot);
+    for (let step = 0; step < 6; step++) {
+      const t = step / 6;
+      samples.push(a.map((value, k) => interpolate(value, b[k]!, c[k]!, d[k]!, t)) as unknown as EnergyKnot);
     }
   }
   samples.push(knots[knots.length - 1]!);
-  const profile: readonly (readonly [number, number])[] = [
-    [-1, 0], [-.94, .55], [-.67, .94], [-.25, 1], [.03, .73],
-    [.3, .85], [.73, .59], [1, .02], [.73, -.61], [.05, -.9], [-.66, -.58],
-  ];
-  const rings = samples.map((s, i): V3[] => {
+  const bands = samples.map((s, i): readonly [V3,V3,V3] => {
     const before = samples[Math.max(0, i - 1)]!, after = samples[Math.min(samples.length - 1, i + 1)]!;
-    const axis = unit([after[0] - before[0], after[1] - before[1], after[2] - before[2]]);
-    const across = unit(cross(axis, [0, 0, 1])), front = unit(cross(across, axis));
-    const widthAxis = add(mul(across, Math.cos(s[5])), mul(front, Math.sin(s[5])));
-    const deepAxis = add(mul(front, Math.cos(s[5])), mul(across, -Math.sin(s[5])));
-    return profile.map(([w, d]) => add([s[0], s[1], s[2]], add(mul(widthAxis, w * s[3]), mul(deepAxis, d * s[4]))));
+    const axis = unit([after[0]-before[0],after[1]-before[1],after[2]-before[2]]);
+    const side = unit(cross(axis,[0,0,1])), front=unit(cross(side,axis));
+    const widthAxis=add(mul(side,Math.cos(s[4])),mul(front,Math.sin(s[4])));
+    const center:V3=[s[0],s[1],s[2]];
+    return [add(center,mul(widthAxis,-s[3]*1.55)),add(center,mul(front,.014)),add(center,mul(widthAxis,s[3]*.96))];
   });
-  for (let k = 1; k < rings.length; k++) for (let i = 0; i < profile.length; i++) {
-    const next = (i + 1) % profile.length;
-    const convex = Math.max(0, (profile[i]![1] + profile[next]![1]) * .5);
-    const localTint = tint * (.64 + convex * .33);
-    m.quad(rings[k - 1]![i]!, rings[k]![i]!, rings[k]![next]!, rings[k - 1]![next]!, 'pollutant', localTint);
-  }
-  for (const index of [0, rings.length - 1]) {
-    const s = samples[index]!, center: V3 = [s[0], s[1], s[2]];
-    for (let i = 0; i < profile.length; i++) {
-      const next = (i + 1) % profile.length;
-      m.triangle(center, rings[index]![i]!, rings[index]![next]!, 'pollutant', tint * .52);
-    }
+  for(let i=1;i<bands.length;i++) {
+    const a=bands[i-1]!,b=bands[i]!;
+    m.quad(a[0],b[0],b[1],a[1],'energy',tint*.63);
+    m.quad(a[1],b[1],b[2],a[2],'energy',tint*.95);
+    // A sharply focused inner ridge supplies the brightest pixels. Irregular
+    // short interruptions prevent a continuous decorative neon outline.
+    if(i%13!==0)m.beam(a[1],b[1],.021,.008,'energy',tint*1.72);
   }
 }
 
@@ -191,42 +182,32 @@ function coreAssembly(m: Model): void {
   m.beam([-.59, 2.59, .12], [-.34, 3.24, .025], .08, .048, 'steel', .66);
   m.beam([.54, .62, .31], [.41, 2.6, .075], .069, .056, 'steel', .61);
   for (const [x, y, z] of [[-.93, .68, .48], [-.9, 1.4, .405], [-.82, 2.32, .26], [.88, .7, .44], [.77, 1.49, .34], [.63, 2.42, .2]]) frontBolt(m, x!, y!, z!, .052);
-  // A narrow dark spine recedes behind five unequal, mutually compressed folds.
-  // The three long negative spaces are actual gaps between the bodies, not
-  // isolated black patches on one oval front surface.
-  casting(m, [{ y: .76, x: .03, z: -.26, width: .2, depth: .19 },
-    { y: 1.37, x: -.09, z: -.27, width: .27, depth: .23 },
-    { y: 2.09, x: .025, z: -.3, width: .22, depth: .2 },
-    { y: 2.95, x: -.1, z: -.27, width: .17, depth: .16 }], 'black', .85);
-  constrainedFold(m, [
-    [-.3, 2.98, -.1, .095, .09, -.25], [-.4, 2.76, .06, .22, .125, -.17],
-    [-.27, 2.54, .22, .21, .15, .14], [.02, 2.51, .25, .2, .15, .31],
-    [.3, 2.34, .13, .14, .13, .08], [.27, 2.17, -.05, .055, .08, -.25],
-  ], .99);
-  constrainedFold(m, [
-    [.14, 2.94, -.09, .12, .09, .34], [.23, 2.69, .09, .2, .125, .11],
-    [.17, 2.47, .255, .18, .12, -.3], [-.035, 2.32, .35, .155, .11, -.39],
-    [-.27, 2.27, .17, .17, .105, -.1], [-.35, 2.07, -.09, .08, .08, .28],
-  ], .84);
-  constrainedFold(m, [
-    [.27, 2.3, -.12, .08, .09, .2], [.4, 2.12, .06, .19, .13, .21],
-    [.27, 1.95, .22, .245, .16, -.17], [.02, 1.79, .31, .205, .14, -.31],
-    [-.23, 1.6, .15, .17, .11, -.11], [-.38, 1.43, -.06, .1, .085, .19],
-  ], 1.04);
-  constrainedFold(m, [
-    [-.38, 2.15, -.09, .09, .08, -.28], [-.33, 1.99, .13, .2, .13, -.1],
-    [-.16, 1.8, .35, .19, .12, .24], [.045, 1.59, .3, .23, .15, .4],
-    [.3, 1.37, .09, .18, .125, .15], [.23, 1.21, -.06, .07, .075, -.17],
-  ], .88);
-  constrainedFold(m, [
-    [-.28, 1.53, -.11, .1, .07, .06], [-.25, 1.3, .12, .24, .14, -.21],
-    [-.12, 1.13, .27, .2, .15, -.3], [.1, 1.02, .24, .2, .12, .27],
-    [.2, .81, .02, .07, .06, .14],
-  ], .95);
-  // The small strained contact edges belong to the folds and clamps. They do
-  // not trace all five silhouettes or reintroduce a uniformly lit green mass.
-  m.cable([[-.235, 2.38, .36], [-.17, 2.365, .405]], .014, 'pollutant', 1.41);
-  m.cable([[.19, 1.34, .21], [.14, 1.3, .28]], .014, 'pollutant', 1.35);
+  // The restrained payload is a vertically stretched, uneven circulation of
+  // foreign energy. Thin intersecting currents surround open black voids;
+  // nothing seals those holes with opaque green matter.
+  energyCurrent(m, [
+    [-.12,3.04,-.11,.014,-.42],[-.34,2.84,.01,.073,-.21],
+    [-.45,2.51,.15,.097,.21],[-.32,2.17,.30,.076,.42],
+    [-.06,1.98,.35,.092,.12],[.19,1.86,.19,.061,-.33],
+    [.28,1.65,.015,.029,-.56],[.12,1.51,-.12,.006,-.42],
+  ],1.05);
+  energyCurrent(m, [
+    [.12,2.99,-.13,.009,.31],[.31,2.77,.06,.045,.11],
+    [.33,2.44,.25,.080,-.32],[.10,2.12,.385,.069,-.54],
+    [-.17,1.84,.24,.063,-.17],[-.30,1.49,.025,.088,.29],
+    [-.13,1.09,.13,.051,.43],[.16,.82,-.08,.008,-.1],
+  ],1.18);
+  energyCurrent(m, [
+    [-.24,1.79,-.13,.008,.31],[-.39,1.5,.025,.057,.43],
+    [-.24,1.22,.235,.085,.12],[.035,1.12,.25,.071,-.31],
+    [.29,1.35,.07,.045,-.52],[.26,1.63,-.13,.006,-.11],
+  ],.95);
+  // Smaller branching filaments are rooted in those currents and terminate
+  // against the opposed constraint pads. They are not detached shiny flecks.
+  m.cable([[-.37,2.45,.19],[-.28,2.40,.29],[-.22,2.33,.46]],.018,'energy',1.81);
+  m.cable([[.19,1.22,.17],[.22,1.17,.31],[.23,1.16,.47]],.017,'energy',1.74);
+  m.cable([[.25,2.66,.13],[.085,2.59,.20],[-.03,2.41,.24],[-.04,2.26,.31]],.012,'energy',1.37);
+  m.cable([[-.18,1.76,.23],[.015,1.65,.22],[.1,1.47,.16]],.014,'energy',1.43);
   // Opposed clamps have a carriage, threaded shaft, shoe and replaceable pads.
   for (const [side, y] of [[-1, 2.36], [1, 1.2]] as const) {
     const x = side * .73;
@@ -293,14 +274,12 @@ function core(m: Model): void {
     topBolt(m, side * 1.35, .458, -.89, .071);
     m.beam([side * 1.38, .52, -.95], [side * .88, 2.82, -.91], .13, .13, 'iron', .68);
   }
-  // Compressed contact seams are the only bright living-looking lines. The
-  // broad folds stay dense and dark while their restrained light touches the
-  // shrine, nearby floor and the person standing before it.
-  m.cable([[-.43, 3.57, .095], [-.35, 3.49, .23], [-.18, 3.43, .36]], .022, 'pollutant', 1.72);
-  m.cable([[.23, 2.82, .245], [.13, 2.70, .43], [-.005, 2.58, .48]], .021, 'pollutant', 1.63);
-  m.cable([[-.25, 1.78, .26], [-.13, 1.65, .39], [.035, 1.58, .40]], .019, 'pollutant', 1.57);
-  m.light([-.04, 2.83, .7], [.36, .49, .425], 2.2, 6.3, { kind: 'pollution', id: 'core-heart' });
-  m.light([.04, 1.32, .62], [.315, .42, .365], .63, 3.4, { kind: 'pollution', id: 'core-lower-seal' });
+  // Three real spill sources sit in open air in front of the thin membranes,
+  // clear of the rear plate and their own emissive geometry. Their shared
+  // source identity drives the same restrained, irregular energy breathing.
+  m.light([-.04, 2.83, .84], [.36, .49, .425], 3.2, 6.8, { kind: 'pollution', id: 'core-heart' });
+  m.light([.04, 1.36, .82], [.315, .42, .365], 1.05, 4.3, { kind: 'pollution', id: 'core-lower-seal' });
+  m.light([-.09, 3.83, .63], [.35, .465, .405], .94, 3.6, { kind: 'pollution', id: 'core-upper-seal' });
 }
 
 function storage(m: Model): void {

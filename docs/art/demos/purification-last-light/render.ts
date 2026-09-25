@@ -39,7 +39,7 @@ class BVH {
   }
 }
 
-const BASE:Record<Material,V3>={stone:[69,73,75],cutstone:[83,86,86],iron:[83,86,84],steel:[116,121,119],bronze:[103,79,51],wood:[73,58,44],paper:[137,128,104],cloth:[70,57,42],glass:[73,90,88],liquid:[48,69,64],pollutant:[64,80,62],ember:[244,154,57],lamp:[237,209,158],black:[12,17,19]};
+const BASE:Record<Material,V3>={stone:[69,73,75],cutstone:[83,86,86],iron:[83,86,84],steel:[116,121,119],bronze:[103,79,51],wood:[73,58,44],paper:[137,128,104],cloth:[70,57,42],glass:[73,90,88],liquid:[48,69,64],pollutant:[64,80,62],energy:[107,140,112],ember:[244,154,57],lamp:[237,209,158],black:[12,17,19]};
 const transparent=(t:Triangle):boolean=>t.material==='glass'||t.material==='liquid';
 function hash(x:number,y:number,z:number):number {let h=Math.imul(x|0,374761393)+Math.imul(y|0,668265263)+Math.imul(z|0,1442695041);h=Math.imul(h^h>>>13,1274126177);return ((h^h>>>16)>>>0)/4294967296;}
 function noise(x:number,y:number,z:number):number {
@@ -74,6 +74,12 @@ function sampleSurface(t:Triangle,p:V3,n:V3):Surface {
   } else if(t.material==='paper')value=.78+coarse*.25+grain*.09;
   else if(t.material==='glass'){roughness=.2;specular=.8;value=.55+medium*.35;}
   else if(t.material==='pollutant'){value=.48+medium*.43+grain*.075;emission=.64+Math.max(0,t.tint-1)*1.9+Math.max(0,medium-.53)*.7;specular=.24;roughness=.47;}
+  else if(t.material==='energy'){
+    // Radiation has optical density and bright internal seams, no diffuse solid skin.
+    const filament=Math.pow(clamp((medium-.35)*2.1),2);
+    value=.43+filament*.71;emission=1.3+Math.max(0,t.tint-.7)*1.8;
+    specular=0;roughness=1;
+  }
   else if(t.material==='ember'){value=.83+medium*.17;emission=1.5;}
   else if(t.material==='lamp'){value=.9;emission=1.22;roughness=.22;specular=.6;}
   return {color:mul(color,value*t.tint),normal:n,roughness,specular,emission};
@@ -88,7 +94,7 @@ export interface Rendered {
 }
 const LIGHT_KINDS:readonly LightKind[]=['pollution','furnace','shoulder'];
 const LIGHT_COLORS:Record<LightKind,V3>={pollution:[.57,.76,.62],furnace:[1,.48,.15],shoulder:[1,.84,.6]};
-const sourceKind=(material:Material):LightKind|undefined=>material==='pollutant'?'pollution':material==='ember'?'furnace':material==='lamp'?'shoulder':undefined;
+const sourceKind=(material:Material):LightKind|undefined=>(material==='pollutant'||material==='energy')?'pollution':material==='ember'?'furnace':material==='lamp'?'shoulder':undefined;
 
 /** Fixed camera geometry is lit once into additive source fields. The viewer
  * varies these physically occluded contributions, not a screen-wide colour wash. */
@@ -114,21 +120,21 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     }
   });
   onProgress?.(`Rasterized ${model.triangles.length} triangles; building shadow acceleration.`);
-  const bvh=new BVH(model.triangles.filter(t=>!transparent(t)));
+  const bvh=new BVH(model.triangles.filter(t=>!transparent(t)&&t.material!=='energy'));
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){
     const i=y*W+x,o=i*4,id=indices[i]!;
-    // Soft scattering belongs to empty space and is progressively occluded by
-    // the surviving architecture. Its blue-grey base is not a fourth key light.
+    // Empty-space scattering stays near charcoal; depth is carried by occluding
+    // silhouettes, not a raised blue screen-wide veil.
     const cloud=Math.exp(-(((x-W*.38)/(W*.48))**2+((y-H*.46)/(H*.69))**2));
     const current=noise(x*.008,3,y*.006)*.7+noise(x*.017,1,y*.012)*.3;
     const veil=cloud*(.45+current*.8);
-    rgba.set([5+veil*6,9+veil*10,12+veil*13,255],o);
+    rgba.set([3+veil*3,5+veil*4,6+veil*4.5,255],o);
     motion.set([layers[i]!,objects[i]!,0,Math.round(noise(x*.03,4,y*.03)*255)],o);
     if(id<0)continue;
     const t=model.triangles[id]!,p:V3=[positions[i*3]!,positions[i*3+1]!,positions[i*3+2]!];
     let n=t.normal;if(dot(n,basis.back)<0)n=mul(n,-1);
-    const surf=sampleSurface(t,p,n);n=surf.normal;
     const start=add(p,mul(n,.035));
+    const surf=sampleSurface(t,p,n);n=surf.normal;
     let ao=1;
     if(t.layer==='haven'||t.layer==='near'){
       const tangent=unit(cross(n,Math.abs(n[1])>.93?[1,0,0]:[0,1,0])),bitangent=unit(cross(n,tangent));
@@ -139,35 +145,39 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     }
     // Low diffuse return preserves the objects' material identity in shadow.
     // All coloured/direct/specular light below has one of the three real sources.
-    const ambient=(.32+.24*Math.max(n[1],0)+.21*Math.max(0,dot(n,basis.back)))*ao;
+    const ambient=(t.layer==='haven'
+      ? .18+.12*Math.max(n[1],0)+.19*Math.max(0,dot(n,basis.back))
+      : .32+.24*Math.max(n[1],0)+.21*Math.max(0,dot(n,basis.back)))*ao;
     const fog=t.layer==='far'?.55:t.layer==='middle'?.26:t.layer==='near'?.07:0;
     const farDim=t.layer==='far'?.69:t.layer==='middle'?.88:t.layer==='near'?.93:1;
     const distanceFactor=farDim*(1-fog);
     const floorMask=(t.material==='cutstone'||t.material==='stone')&&Math.abs(t.normal[1])>.65&&t.object===0
       ? .76+.16*Math.exp(-(((p[0]-3)/6)**2+((p[2]-3)/5)**2))+.06*noise(p[0]*.23,0,p[2]*.23):1;
     const rgb:[number,number,number]=[0,0,0];
-    for(let k=0;k<3;k++)rgb[k]=surf.color[k]!*ambient*[.93,1,1.075][k]!*floorMask*distanceFactor+[17,29,35][k]!*fog;
+    for(let k=0;k<3;k++)rgb[k]=surf.color[k]!*ambient*[.97,1,1.025][k]!*floorMask*distanceFactor+[8,12,13][k]!*fog;
     for(const light of model.lights){
       const diff=sub(light.position,p),distance=Math.hypot(...diff);if(distance>light.radius)continue;
       const ld=mul(diff,1/Math.max(.01,distance)),nd=Math.max(0,dot(n,ld));if(nd<.012)continue;
       const attenuation=light.power/(1+distance*distance*.27)*clamp(1-(distance/light.radius)**4);
       if(attenuation<.009)continue;
-      let visibility=bvh.blocked(start,ld,distance-.055)?0:1;
-      // The shoulder aperture has finite width. Three samples soften the
-      // worker's cast-shadow boundary without blurring a single material pixel.
-      if(light.kind==='shoulder'){
+      const shadowDelta=sub(light.position,start),shadowDistance=Math.hypot(...shadowDelta);
+      let visibility=bvh.blocked(start,mul(shadowDelta,1/shadowDistance),shadowDistance-.025)?0:1;
+      // A finite emitting aperture creates a real penumbra on receiving geometry.
+      // Every sample belongs to the same source and carries the same animation.
+      const aperture=light.kind==='shoulder'?.085:light.kind==='furnace'?.19:light.id==='core-heart'?.14:0;
+      if(aperture){
         visibility*=.5;
         for(const sign of [-1,1]){
-          const offset:V3=[light.position[0]+sign*.085,light.position[1]+.035,light.position[2]+sign*.055];
-          const delta=sub(offset,p),length=Math.hypot(...delta);
-          if(!bvh.blocked(start,mul(delta,1/length),length-.055))visibility+=.25;
+          const offset:V3=[light.position[0]+sign*aperture,light.position[1]+.035,light.position[2]+sign*aperture*.55];
+          const delta=sub(offset,start),length=Math.hypot(...delta);
+          if(!bvh.blocked(start,mul(delta,1/length),length-.025))visibility+=.25;
         }
       }
       if(!visibility)continue;
       const half=unit(add(ld,basis.back));
       const spec=Math.pow(Math.max(0,dot(n,half)),10+(1-surf.roughness)*56)*surf.specular*attenuation*54;
       for(let k=0;k<3;k++){
-        const selfResponse=t.material==='pollutant'?.46:1;
+        const selfResponse=t.material==='energy'?0:t.material==='pollutant'?.46:1;
         const value=(surf.color[k]!*nd*attenuation*selfResponse+spec)*light.color[k]!*distanceFactor*visibility;
         fields[light.kind][i*3+k]!+=value;rgb[k]!+=value;
       }
