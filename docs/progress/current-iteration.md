@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
-last-modified: 2026-09-24
-note: I30 R11-LAST-LIGHT-REBUILD；6127218 C母版已被明确否决，改以启动页menu-last-light原画为参照扩充完整构图和六交互物。完整艺术候选已导出，技术检查通过、艺术待审，未接正式生产；恢复指针见art-direction文首。
+last-modified: 2026-09-25
+note: I30 R11-LAST-LIGHT-LIVING；获赞35f17ba基线上完成七项修订及限定验证：核心圣龛、污染混光、依托和外景、新角色及动态景观。新修订待人审，正式生产未变。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -18,13 +18,15 @@ note: I30 R11-LAST-LIGHT-REBUILD；6127218 C母版已被明确否决，改以启
 
 旧正文路径保留迁移指针，旧网页链接保留跳转；正文引用、现状索引和阅读器已同步。范围和证据边界见[归档验证](../qa/review-archive-2026-09-21.md)。此任务不改变审查结论、游戏或挂起状态。后续可读交付按[阅读器说明](../dev/report-viewer.md)实际打开验证。
 
-## 当前工作 · 迭代30 R11（2026-09-24，启动页原画像素重建与完整场景）
+## 当前工作 · 迭代30 R11（2026-09-25，获赞基线七项动态修订）
 
-用户明确否决 `6127218` C 母版，评价“令人绝望”，随后找回并展示[启动页原画](../../public/assets/art/menu-last-light.png)，要求“用像素技术尽可能还原这个原画效果，扩充完整内容，包括构图、交互物模型”。旧 C 构图锁定和局部母版范围已被替代；`8ef1366` 及 `6127218` 均保持 HUMAN-REJECTED。**恢复必读：[美术工作记忆与当前设计](../art-direction.md#resume-art-rebuild) → [当前步骤/下一步](../design-notes/purification-scene-art-plan.md#当前执行状态) → 当前实图。**
+`35f17ba` 完整像素场景获用户“惊艳到我了”“整体效果飞跃式提升”的明确反馈。用户要求保持这一画法和构图，一次性完成核心仪式感、污染微光、三源混光、右侧建筑依托、外景层次、新人物及景观动效。本轮已实施并逐项限定验证；新修订待人审，不能把基线肯定自动转成新版艺术PASS。
 
-当前 **R11-LAST-LIGHT-REBUILD / ART-CANDIDATE / HUMAN-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED**。活跃入口为[微光中的据点](../art/demos/purification-last-light/index.html)，本地查看 `http://127.0.0.1:3026/docs/art/demos/purification-last-light/index.html`。采用确定性可编辑 3D 辅助构型与 960×640 CPU 像素栅格，制作破裂书库、厚断面、深空、微暖炉光和六处模型；真实几何用于遮挡、受光、材质和 AO，导出整景/单体 PNG、深度/图层编码。原画只作参照，不采样为场景贴图，不调用 imagegen。
+**恢复入口：[集中美术设计](../art-direction.md#resume-art-rebuild) → [七项执行记录](../design-notes/purification-scene-art-plan.md#当前执行状态) → [动态样景](../art/demos/purification-last-light/index.html)。** 当前本地地址 `http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html`，支持修改前/原画、六模型/人物和暂停对照。
 
-主COH-F042，关联F026/F033/F039。完整整景与六模型候选已导出。strict TS、六操作点/双坡布局连通及真实浏览器八视图检查通过，证据在新目录 assets/layout-check.json、browser-check.json；不沿用旧 C 的通过记录。当前仅艺术样景，未接正式 `src`、碰撞、经济或实时视差；不标艺术 PASS 或用户认可。R10生产与技术证据、美术整改和I28挂起保持。按持续授权检查后本地提交，不推送，独立CLAUDE.md修改排除。
+主COH-F042，关联F026/F039。8模块strict、三源/掩码/光贡献检查、六点/双坡与7,311全站位连通通过；实际浏览器检查见[本轮验证](../qa/iteration-30-last-light-living.md)。原Rift人物源码未改。完整动态美术样景未接正式碰撞、交互、经济或人物驱动视差；R10生产和I28挂起保持。按持续授权本地提交、不推送，排除独立CLAUDE.md修改。
+
+旧`8ef1366`/`6127218`仍为历史人审否决，旧A/C约束及证据不迁入当前版本。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，用户要求美术整改）
 

@@ -171,7 +171,7 @@ function constrainedFold(m: Model, knots: readonly FoldKnot[], tint: number): vo
   }
 }
 
-function core(m: Model): void {
+function coreAssembly(m: Model): void {
   plinth(m, 2.46, 1.92, 'cast-feet');
   m.box([0, .39, -.12], [1.88, .28, 1.37], 'iron', .075, .76);
   // Recessed back and cheeks hold the foreign body; the open front is deep.
@@ -243,7 +243,64 @@ function core(m: Model): void {
   m.ring([-.67, .81, .833], .108, .03, .025, 'bronze', 16, .58);
   rod(m, [-.67, .81, .8], [-.67, .81, .828], .08, 'black', 16);
   m.beam([-.67, .81, .838], [-.715, .86, .838], .012, .015, 'steel');
-  m.light([0, 1.7, .4], [.48, .61, .54], .8, 4);
+}
+
+/** A place to approach and revere, built around the same compressed foreign
+ * matter. The open crown and salvaged buttresses magnify the act of restraint;
+ * they never enclose a lamp, gem or luminous portal in a decorative frame. */
+function core(m: Model): void {
+  // The low sanctuary grows out of the old floor in three genuinely separate
+  // courses. Its forward stones provide a clear ceremonial approach without a
+  // fence or object in the standing space.
+  m.slab([[-1.72, -1.05], [-.91, -1.25], [1.19, -1.14], [1.66, -.66],
+    [1.58, 1.17], [1.14, 1.7], [-1.13, 1.75], [-1.75, 1.04]], .12, .018, 'stone', .79);
+  m.slab([[-1.47, -.97], [1.4, -.94], [1.49, .8], [.94, 1.37],
+    [-.99, 1.41], [-1.51, .83]], .235, .123, 'cutstone', .82);
+  m.box([-.59, .298, -.015], [1.13, .125, 1.98], 'cutstone', .048, .86);
+  m.box([.61, .298, -.015], [1.18, .125, 1.98], 'cutstone', .043, .77);
+  // Flush, worn approach stones continue the axial pause onto the existing
+  // ground. Their joints and chipped returns remain visible at the main camera.
+  m.box([-.39, .063, 1.79], [.72, .095, .44], 'cutstone', .052, .77);
+  m.box([.385, .06, 1.80], [.72, .09, .42], 'cutstone', .041, .80);
+
+  const assembly = new Model();
+  coreAssembly(assembly);
+  const lift = .36, scale = 1.18;
+  const p = (v: V3): V3 => [v[0] * scale, v[1] * scale + lift, v[2] * scale];
+  for (const t of assembly.triangles) m.triangle(p(t.a), p(t.b), p(t.c), t.material, t.tint);
+
+  // Two unequal remnant jambs carry the restrained body. Deep shoulders, rear
+  // anchors and broken crown make an architectural silhouette, not a pedestal
+  // display. The crown's missing center preserves sky and void behind the core.
+  casting(m, [{ y: .24, x: -1.36, z: -.47, width: .54, depth: 1.14 },
+    { y: .74, x: -1.34, z: -.48, width: .43, depth: .97 },
+    { y: 3.31, x: -1.13, z: -.64, width: .36, depth: .76 },
+    { y: 4.11, x: -.84, z: -.67, width: .33, depth: .64 },
+    { y: 4.65, x: -.39, z: -.69, width: .3, depth: .51 },
+    { y: 4.93, x: -.2, z: -.67, width: .2, depth: .39 }], 'iron', .73);
+  casting(m, [{ y: .24, x: 1.34, z: -.46, width: .53, depth: 1.1 },
+    { y: .78, x: 1.29, z: -.49, width: .44, depth: .95 },
+    { y: 3.29, x: 1.05, z: -.65, width: .34, depth: .72 },
+    { y: 4.00, x: .73, z: -.69, width: .31, depth: .59 },
+    { y: 4.61, x: .26, z: -.71, width: .27, depth: .48 }], 'iron', .65);
+  // Physical inset rebates in the side buttresses catch only partial cold
+  // reflections. No ornamental outline competes with the matter in the center.
+  m.beam([-1.46, .6, .085], [-1.23, 3.3, -.23], .072, .09, 'steel', .56);
+  m.beam([1.39, .64, .05], [1.12, 3.21, -.245], .067, .086, 'steel', .51);
+  for (const side of [-1, 1]) {
+    m.box([side * 1.35, .36, -.49], [.59, .14, 1.24], 'iron', .025, .86);
+    topBolt(m, side * 1.35, .458, -.10, .071);
+    topBolt(m, side * 1.35, .458, -.89, .071);
+    m.beam([side * 1.38, .52, -.95], [side * .88, 2.82, -.91], .13, .13, 'iron', .68);
+  }
+  // Compressed contact seams are the only bright living-looking lines. The
+  // broad folds stay dense and dark while their restrained light touches the
+  // shrine, nearby floor and the person standing before it.
+  m.cable([[-.43, 3.57, .095], [-.35, 3.49, .23], [-.18, 3.43, .36]], .022, 'pollutant', 1.72);
+  m.cable([[.23, 2.82, .245], [.13, 2.70, .43], [-.005, 2.58, .48]], .021, 'pollutant', 1.63);
+  m.cable([[-.25, 1.78, .26], [-.13, 1.65, .39], [.035, 1.58, .40]], .019, 'pollutant', 1.57);
+  m.light([-.04, 2.83, .7], [.36, .49, .425], 2.2, 6.3, { kind: 'pollution', id: 'core-heart' });
+  m.light([.04, 1.32, .62], [.315, .42, .365], .63, 3.4, { kind: 'pollution', id: 'core-lower-seal' });
 }
 
 function storage(m: Model): void {
@@ -285,6 +342,8 @@ function storage(m: Model): void {
   m.box([-1.065, 1.03, -.3], [.18, .29, .31], 'iron', .026, .85);
   rod(m, [-1.18, .88, -.3], [-1.18, 1.28, -.3], .032, 'steel', 10, .032, .8);
   rod(m, [-1.18, 1.03, -.3], [-.97, 1.03, -.3], .045, 'iron', 10);
+  m.cable([[-.2, 1.518, -.15], [-.09, 1.541, .04], [-.13, 1.513, .20]], .022, 'pollutant', 1.48);
+  m.light([-.11, 1.73, .065], [.34, .435, .38], .65, 2.6, { kind: 'pollution', id: 'storage-well' });
 }
 
 function purifier(m: Model): void {
@@ -318,7 +377,12 @@ function purifier(m: Model): void {
     m.beam([-1.28, 1.02, .57], [-1.28 + Math.cos(a) * .145, 1.02 + Math.sin(a) * .145, .57], .027, .028, 'iron');
   }
   m.box([.04, .63, .51], [.13, .3, .1], 'iron', .018, .85);
-  m.box([.04, .7, .573], [.045, .05, .02], 'ember', .005, .23);
+  // This small telltale exposes the same polluted sump, not a fourth lamp type.
+  m.box([.04, .7, .573], [.045, .05, .02], 'pollutant', .005, 1.35);
+  m.cable([[-.69, .747, .255], [-.55, .76, .23], [-.44, .736, .21]], .025, 'pollutant', 1.5);
+  m.cable([[.42, .741, .25], [.57, .752, .265]], .023, 'pollutant', 1.39);
+  m.light([-.53, .86, .47], [.315, .415, .363], .56, 2.25, { kind: 'pollution', id: 'purifier-inlet' });
+  m.light([.53, .78, .43], [.30, .39, .35], .24, 1.45, { kind: 'pollution', id: 'purifier-sump' });
 }
 
 function offering(m: Model): void {
@@ -347,6 +411,8 @@ function offering(m: Model): void {
   }
   // A broken rib on the outer casting is a replacement joint, not ornament.
   m.beam([.77, 2.27, -.035], [.89, 2.03, -.035], .12, .57, 'iron', .82);
+  m.cable([[-.24, 1.138, .215], [-.135, 1.17, .23], [-.025, 1.135, .205]], .025, 'pollutant', 1.49);
+  m.light([-.09, 1.19, .37], [.33, .435, .375], .52, 2.45, { kind: 'pollution', id: 'offering-residue' });
 }
 
 function growth(m: Model): void {
@@ -396,7 +462,8 @@ function growth(m: Model): void {
   m.ring([.714, .83, .397], .09, .025, .028, 'bronze', 16, .52);
   rod(m, [.714, .83, .37], [.714, .83, .4], .059, 'black', 14);
   m.beam([.714, .83, .414], [.688, .862, .414], .009, .012, 'steel');
-  m.light([-.17, 1.52, .22], [.33, .46, .4], .54, 1.2);
+  m.cable([[-.19, 1.77, .045], [-.16, 1.53, .14], [-.22, 1.38, .12]], .028, 'pollutant', 1.42);
+  m.light([-.17, 1.52, .40], [.315, .425, .375], .67, 2.75, { kind: 'pollution', id: 'growth-medium' });
 }
 
 function rift(m: Model): void {
@@ -428,7 +495,7 @@ function rift(m: Model): void {
       if ((i + branch) % 3 === 0) {
         const start: V3 = [a[0] + dx * .18, .017, a[1] + dz * .18];
         const end: V3 = [a[0] + dx * .63, .018, a[1] + dz * .63];
-        m.beam(start, end, width * .15, .012, 'pollutant', .48);
+        m.beam(start, end, width * .18, .012, 'pollutant', 1.41);
       }
     }
   }
@@ -436,12 +503,14 @@ function rift(m: Model): void {
   m.rock([-.69, .055, .34], [.19, .12, .2], 'stone', 1191, .85);
   m.rock([.5, .067, -.57], [.22, .12, .18], 'stone', 1193, .84);
   m.rock([.77, .04, .51], [.11, .077, .13], 'cutstone', 1197, .9);
+  m.cable([[-.24, .021, -.08], [-.13, .023, -.127], [-.055, .019, -.102]], .018, 'pollutant', 1.51);
+  m.light([-.13, .12, -.06], [.29, .40, .345], .64, 2.5, { kind: 'pollution', id: 'rift-wound' });
 }
 
 export function buildDevices(m: Model): Station[] {
   const stations: Station[] = [
-    { id: 1, key: 'core', name: '核心', position: [4.7, 0, 1], approach: [4.7, 0, 2.92], radius: .85,
-      description: '不对称铁肩与对置夹具束住异源污染暗质；受压裂隙仅露出微弱灰绿。注入薪柴修复，降低出击混乱增速。' },
+    { id: 1, key: 'core', name: '核心', position: [12.8, 0, 3.4], approach: [10.8, 0, 5], radius: .92,
+      description: '右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；折层深处的灰绿光洒向朝拜前场，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。' },
     { id: 2, key: 'storage', name: '储藏', position: [10.5, 2.6, -3.2], approach: [9.02, 2.6, -3.55], radius: .8,
       description: '封闭的顶压观察井，窄缝下可见被关物抵压；承压盖、螺杆与深收容腔构成完整机体。修复提高薪柴价值。' },
     { id: 3, key: 'purifier', name: '净化器', position: [-.8, 0, 2], approach: [-.8, 0, 3.83], radius: .83,
@@ -456,7 +525,7 @@ export function buildDevices(m: Model): Station[] {
   const builders = [core, storage, purifier, offering, growth, rift] as const;
   for (let i = 0; i < stations.length; i++) {
     const station = stations[i]!;
-    m.at(station.position, 0, station.id, () => builders[i]!(m));
+    m.at(station.position, station.key === 'core' ? -.18 : 0, station.id, () => builders[i]!(m));
   }
   return stations;
 }

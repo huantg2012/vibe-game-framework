@@ -2859,5 +2859,47 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-APPRECIATED",
+    "kind": "human",
+    "result": "partial",
+    "date": "2026-09-25",
+    "revision": "35f17ba",
+    "scope": "用户对完整像素场景明确反馈惊艳、整体效果飞跃式提升；随后要求七项细化并保持成功画法和构图。",
+    "limitations": "肯定基线，不自动验收后续修订或正式玩法集成。",
+    "sources": [
+      {
+        "path": "docs/art-direction.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/baseline-35f17ba.png",
+        "role": "art"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-LIVING",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-25",
+    "revision": "seven requested revisions after 35f17ba",
+    "scope": "8模块strict、有限几何、三类源/唯一ID、六站/三层污染掩码、光贡献支持、7311全站位连通；实际浏览器10视图/暂停继续/确定时刻；Rift源码不变。",
+    "limitations": "仅限定技术检查；新版艺术待人审，固定相机动画不等于动态几何阴影/正式行走/经济/人物驱动视差。系统减动与隐藏处理为代码检查。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-last-light-living.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/layout-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/browser-check.json",
+        "role": "test"
+      }
+    ]
   }
 ]

@@ -1,32 +1,39 @@
 {
-  "date": "2026-09-24",
-  "url": "http://127.0.0.1:3026/docs/art/demos/purification-last-light/index.html",
-  "viewport": {
-    "width": 1052,
-    "height": 997
-  },
-  "canvas": {
-    "width": 960,
-    "height": 640
-  },
-  "checkedViews": [
+  "date": "2026-09-25",
+  "url": "http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html",
+  "method": "Codex in-app browser via cua_repl; DOM-backed controls and actual screenshots",
+  "renderer": "webgl",
+  "views": [
     "完整场景",
     "启动页原画",
+    "修改前",
     "核心",
     "储藏",
     "净化器",
     "供奉",
     "蜕变",
-    "裂隙"
+    "裂隙",
+    "归来者"
   ],
-  "checks": [
-    "All eight views switched through real browser button clicks; captions and canvas accessible labels matched.",
-    "Full scene screenshot visually inspected.",
-    "All scene, object-ID and six model images loaded before buttons became available.",
-    "After final core/material export: reloaded viewer, inspected scene/model comparison, returned to full scene; no errors or warnings."
-  ],
+  "checks": {
+    "viewsAndCaptions": true,
+    "actorAndRiftComparisonViewed": true,
+    "sourceAwareAnimationLoaded": true,
+    "pauseAndResume": true,
+    "pausedTimeBeforeModelSwitch": "91.058",
+    "pausedTimeAfterModelSwitch": "91.058",
+    "fixedTimeEightSecondView": true,
+    "finalSourceAndAssetChecksums": true,
+    "riftSourcesUnchanged": true,
+    "baselineExactCopy": true,
+    "finalObservedPlaybackSeconds": 80.741,
+    "finalPlaybackState": "playing"
+  },
   "consoleErrors": [],
   "consoleWarnings": [],
-  "scope": "Independent art viewer only. No claim of production gameplay or artistic acceptance.",
-  "sceneSha256": "527ce9dd385b8a71326a5d7c2288d491b800fbf05bc9efb2ae3117db3538aebe"
+  "limitations": [
+    "System reduced-motion default and hidden/pagehide cleanup reviewed in source; OS preference was not changed.",
+    "Fixed-camera art viewer only; geometry-shadow shapes are baked, not moving-player gameplay shadows.",
+    "Latest art revision remains human-review-pending."
+  ]
 }

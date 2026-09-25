@@ -1,18 +1,16 @@
 # 微光中的据点
 
-用户改选启动页原画 `public/assets/art/menu-last-light.png` 后制作的完整艺术样景。旧 C 已被否决。活跃设计与恢复方向集中在 `docs/art-direction.md#resume-art-rebuild`。
+以启动页原画为参照的完整像素艺术样景。`35f17ba` 已获用户明确赞许；当前为其七项反馈修订：核心圣龛、灰绿污染、三源混光、右侧建筑依托、外景层次、同身份新人物和动态景观。
 
-打开 `/docs/art/demos/purification-last-light/index.html`，查看整景、原画及六个模型。模型视图左侧为整景原像素放大，右侧为相同几何/材料在更近像素网格上的单体绘制。
+打开 `/docs/art/demos/purification-last-light/index.html`。整景默认播放；可暂停，切换修改前/原画，查看六装置与归来者。模型视图左侧为实际整景像素放大，右侧为同源构造的近距离像素绘制；人物页另有保留的Rift原精灵。`?t=8&still=1` 复现第八秒。
 
-制作方法：可编辑三角构型辅助固定 960×640 像素绘制；世界尺度材料、实际投影、接触阴影、前后玻璃/液体与有限光源分别计算。没有采样或覆盖原画，没有调用生图。原人物来自现有 production sprite。
+可编辑三角构型直接在960×640像素网格绘制，世界尺度材料、遮挡、接触阴影与透明层共用几何。三类光贡献分别烘焙；实时模块变化真实受光、污染材质、层间空气和深处局部轮廓。未采样原画作贴图，未调用生图，未改Rift角色。
 
 ```sh
 node --import tsx docs/art/demos/purification-last-light/export.mjs
 node --import tsx docs/art/demos/purification-last-light/check.mjs --write
 ```
 
-产物在 `assets/`：整景（含/不含人物）、最近邻 2× 图、六个透明模型 PNG、深度/图层编码、对象 ID 与参数。深度图是可见像素的辅助数据；不是带完整被遮挡内容的实时视差资产。
+`assets/` 包含整景（有/无角色）、2×图、七模型、原Rift人物、基线、三类光贡献、可见深度/图层、对象ID、动效掩码和源参数。`check.mjs` 校验strict TS、有限几何、三类源、可见污染/光贡献和六站/双坡保守站位连通。
 
-`check.mjs` 检查 strict TypeScript、有限几何、六站内容、实际顶面和设备/暖炉脚印上的站位连通。双坡连通仅对样景布局有效，不代表正式游戏碰撞已接入。
-
-当前为艺术待审候选；未接正式场景、交互、经济或动态视差。技术检查通过不表示用户认可画面。
+这是动态艺术样景，尚未接正式游戏。阴影几何已烘焙，深度数据不包含被遮挡内容；不宣称实时行走、游戏交互、经济或人物驱动视差已接入。艺术修订待人审。集中方向与当前步骤分别见 `docs/art-direction.md#resume-art-rebuild`、`docs/design-notes/purification-scene-art-plan.md`。

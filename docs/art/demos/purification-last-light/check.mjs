@@ -2,9 +2,13 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
 import ts from 'typescript';
+import sharp from 'sharp';
 import {buildHaven} from './scene.ts';
 import {WALK_SURFACES} from './environment.ts';
+import {ACTOR_OBJECT_ID,actorLampAnchor} from './actor.ts';
+import {project} from './render.ts';
 import {ShapeUtils,Vector2} from 'three';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
@@ -15,6 +19,97 @@ if(diagnostics.length){console.error(ts.formatDiagnosticsWithColorAndContext(dia
 const {model,stations}=buildHaven();
 assert.deepEqual(stations.map(s=>s.key),['core','storage','purifier','offering','growth','rift']);
 for(const t of model.triangles)for(const v of [...t.a,...t.b,...t.c,...t.normal,t.tint])assert(Number.isFinite(v));
+const assetDir=path.join(here,'assets'),manifest=JSON.parse(fs.readFileSync(path.join(assetDir,'manifest.json'),'utf8'));
+const families=['pollution','furnace','shoulder'],sourceCode={pollution:1,furnace:2,shoulder:3};
+assert.deepEqual([...new Set(model.lights.map(l=>l.kind))].sort(),[...families].sort(),'Only the three authored source families may emit direct light');
+assert.equal(new Set(model.lights.map(l=>l.id)).size,model.lights.length,'Light ids must be unique');
+for(const light of model.lights){
+ assert.equal(typeof light.id,'string');assert(light.id.length>0,'A light needs an authored id');
+ assert.equal(light.position.length,3);assert.equal(light.color.length,3);
+ for(const n of [...light.position,...light.color,light.power,light.radius])assert(Number.isFinite(n),`${light.id}: non-finite source parameter`);
+ assert(light.power>0&&light.radius>0,`${light.id}: nonpositive light strength or reach`);
+ assert(light.color.every(n=>n>=0&&n<=1)&&light.color.some(n=>n>0),`${light.id}: invalid light colour`);
+}
+const shoulder=model.lights.filter(l=>l.kind==='shoulder');
+assert.equal(shoulder.length,1,'The actor carries exactly one shoulder light');
+assert.equal(shoulder[0].id,'actor-shoulder');
+assert.deepEqual(shoulder[0].position,actorLampAnchor(),'The shoulder source must follow the actual actor anchor');
+const lamps=model.triangles.filter(t=>t.material==='lamp');
+assert(lamps.length>0&&lamps.every(t=>t.object===ACTOR_OBJECT_ID),'Shoulder emission belongs only to the actor lantern');
+assert.deepEqual(manifest.lights.map(({screen,...light})=>light),model.lights,'Exported light definitions are stale');
+assert.deepEqual(manifest.walkSurfaces,WALK_SURFACES,'Exported walking surfaces are stale');
+assert.equal(manifest.triangles,model.triangles.length,'Exported geometry is stale');
+
+async function pixels(filename){
+ const {data,info}=await sharp(path.join(assetDir,filename)).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ assert.equal(info.width,manifest.camera.width,`${filename}: wrong width`);
+ assert.equal(info.height,manifest.camera.height,`${filename}: wrong height`);
+ assert.equal(info.channels,4,`${filename}: not RGBA`);
+ return data;
+}
+const [motion,objects,depth,...contributions]=await Promise.all(['motion-map.png','object-ids.png','depth-layers.png',...families.map(k=>`light-${k}.png`)].map(pixels));
+const W=manifest.camera.width,H=manifest.camera.height,N=W*H;
+const visibleSources={pollution:0,furnace:0,shoulder:0},visiblePollution=new Map(),outsidePollution={far:0,middle:0,near:0};
+for(let i=0;i<N;i++){
+ const o=i*4,layer=motion[o],object=motion[o+1],source=motion[o+2];
+ assert(layer<=4&&object<=ACTOR_OBJECT_ID&&source<=3,`Invalid motion code at ${i}`);
+ assert.equal(object,objects[o],`Motion/object masks disagree at ${i}`);
+ assert.equal(layer,depth[o+2],`Motion/depth layers disagree at ${i}`);
+ if(!source)continue;
+ assert(layer>0,`A material emitter cannot exist in empty sky at ${i}`);
+ visibleSources[families[source-1]]++;
+ if(source===1){
+  assert(object<=6,`Pollution emitter assigned to the player at ${i}`);
+  visiblePollution.set(object,(visiblePollution.get(object)??0)+1);
+  if(layer<4)outsidePollution[['far','middle','near'][layer-1]]++;
+ }
+ if(source===2)assert.equal(object,0,'Furnace emission must belong to the environment hearth');
+ if(source===3)assert.equal(object,ACTOR_OBJECT_ID,'Shoulder emission escaped the actor');
+}
+for(const family of families)assert(visibleSources[family]>0,`${family}: no visible emitting material`);
+const stationPollution=stations.map(s=>{
+ const geometry=model.triangles.filter(t=>t.object===s.id&&t.material==='pollutant').length,visible=visiblePollution.get(s.id)??0;
+ assert(geometry>0,`${s.key}: missing contained pollutant geometry`);
+ assert(visible>0,`${s.key}: its pollution is absent from the exported source mask`);
+ return {key:s.key,id:s.id,pollutantTriangles:geometry,emittingPixels:visible};
+});
+assert(model.triangles.some(t=>t.material==='pollutant'&&t.layer!=='haven'),'Missing exterior contamination geometry');
+assert(Object.values(outsidePollution).some(n=>n>0),'Exterior contamination is absent from the source mask');
+
+// A necessary spatial bound, independent of the shader's attenuation and ray
+// tests: a contribution must be near a finite source sphere or an emitting
+// material's small scatter footprint. This catches an accidental screen wash
+// without setting a brightness or artistic-quality threshold.
+const fieldChecks={};
+for(const [familyIndex,family] of families.entries()){
+ const data=contributions[familyIndex],support=new Uint8Array(N),code=sourceCode[family];
+ const circle=(x,y,r)=>{
+  const xx0=Math.max(0,Math.floor(x-r)),xx1=Math.min(W-1,Math.ceil(x+r)),yy0=Math.max(0,Math.floor(y-r)),yy1=Math.min(H-1,Math.ceil(y+r));
+  for(let yy=yy0;yy<=yy1;yy++)for(let xx=xx0;xx<=xx1;xx++)if((xx+.5-x)**2+(yy+.5-y)**2<=r*r)support[yy*W+xx]=1;
+ };
+ for(const light of model.lights.filter(l=>l.kind===family)){const p=project(light.position,manifest.camera);circle(p[0],p[1],light.radius*manifest.camera.scale+12);}
+ for(let i=0;i<N;i++)if(motion[i*4+2]===code)circle(i%W+.5,Math.floor(i/W)+.5,12);
+ let active=0,receivers=0,maximum=0,outsideSupport=0,unaffected=0,recordedReceivers=0;
+ const receiverObjects=new Set();
+ for(let i=0;i<N;i++){
+  const o=i*4,value=Math.max(data[o],data[o+1],data[o+2]);
+  assert.equal(data[o+3],255,`${family}: contribution alpha must be opaque data`);
+  if(!value){unaffected++;continue;}
+  active++;maximum=Math.max(maximum,value);
+  // Manifest statistics omit one-byte rounding remnants; support validation
+  // above zero still includes those remnants.
+  if(value>1){recordedReceivers++;receiverObjects.add(objects[o]);}
+  if(motion[o]>0&&motion[o+2]!==code)receivers++;
+  if(!support[i])outsideSupport++;
+ }
+ assert(receivers>0,`${family}: source has no receiving surface`);
+ assert(unaffected>0,`${family}: contribution has become a full-screen wash`);
+ assert.equal(outsideSupport,0,`${family}: light appears beyond every corresponding source`);
+ assert.equal(recordedReceivers,manifest.lightStats[family].receivingPixels,`${family}: exported light stats are stale`);
+ assert.equal(maximum,manifest.lightStats[family].maximum,`${family}: exported light maximum is stale`);
+ assert.deepEqual([...receiverObjects].sort((a,b)=>a-b),manifest.lightStats[family].objects,`${family}: exported receiver ids are stale`);
+ fieldChecks[family]={sourceCount:model.lights.filter(l=>l.kind===family).length,contributingPixels:active,nonEmitterReceivingPixels:receivers,maximum,outsideSupport};
+}
 const triangles=WALK_SURFACES.flatMap(surface=>ShapeUtils.triangulateShape(surface.points.map(p=>new Vector2(p[0],p[2])),[]).map(face=>({points:face.map(i=>surface.points[i]),id:surface.id})));
 function elevation(x,z){
   let height=-Infinity,id='';
@@ -45,6 +140,11 @@ for(let q=0;q<queue.length;q++){
 }
 const reached=stations.map(s=>{const i=nearest(s.approach);assert(seen.has(i),`${s.key}: disconnected approach`);return s.key;});
 for(const id of ['west-ramp','east-ramp'])assert([...seen].some(i=>nodes.get(i).id===id),`${id}: unreachable`);
-const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],scope:'Art layout with conservative station/furnace footprints. Does not claim production collision or gameplay integration.'};
+assert.equal(seen.size,nodes.size,'Standable samples contain a disconnected floor island');
+const riftSourceHashes=Object.fromEntries(['player-sprite-dense.ts','player-sprite.ts'].map(name=>{
+ const source=`src/entities/${name}`,filename=path.resolve(here,'../../../..',source);
+ return [source,createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
+}));
+const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution},scope:'Source definitions, exported masks and finite source support; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--write'))fs.writeFileSync(path.join(here,'assets','layout-check.json'),JSON.stringify(result,null,2)+'\n');

@@ -1,6 +1,6 @@
 {
-  "strictModules": 6,
-  "finiteTriangles": 43594,
+  "strictModules": 8,
+  "finiteTriangles": 52382,
   "stations": [
     "core",
     "storage",
@@ -9,13 +9,104 @@
     "growth",
     "rift"
   ],
-  "reachableSamples": 7622,
-  "totalStandableSamples": 7622,
+  "reachableSamples": 7311,
+  "totalStandableSamples": 7311,
+  "allStandableSamplesConnected": true,
   "footRadius": 0.22,
   "samplingStep": 0.16,
   "ramps": [
     "west-ramp",
     "east-ramp"
   ],
-  "scope": "Art layout with conservative station/furnace footprints. Does not claim production collision or gameplay integration."
+  "sourceChecks": {
+    "families": [
+      "pollution",
+      "furnace",
+      "shoulder"
+    ],
+    "uniqueSourceIds": 27,
+    "actorShoulderSources": 1,
+    "fields": {
+      "pollution": {
+        "sourceCount": 25,
+        "contributingPixels": 31821,
+        "nonEmitterReceivingPixels": 29740,
+        "maximum": 213,
+        "outsideSupport": 0
+      },
+      "furnace": {
+        "sourceCount": 1,
+        "contributingPixels": 5964,
+        "nonEmitterReceivingPixels": 5934,
+        "maximum": 255,
+        "outsideSupport": 0
+      },
+      "shoulder": {
+        "sourceCount": 1,
+        "contributingPixels": 13066,
+        "nonEmitterReceivingPixels": 13062,
+        "maximum": 255,
+        "outsideSupport": 0
+      }
+    },
+    "riftSourceHashes": {
+      "src/entities/player-sprite-dense.ts": "8f6be3b3bf11983d479f1e57ebaac55fba31a5d81ba9b0663257941f4f2a8531",
+      "src/entities/player-sprite.ts": "f831463f47f7afe733160d6ffa1364bd8c3404d89481103072ba25170cfdc227"
+    }
+  },
+  "motionMasks": {
+    "dimensions": [
+      960,
+      640
+    ],
+    "visibleSources": {
+      "pollution": 2022,
+      "furnace": 30,
+      "shoulder": 4
+    },
+    "stationPollution": [
+      {
+        "key": "core",
+        "id": 1,
+        "pollutantTriangles": 2318,
+        "emittingPixels": 1042
+      },
+      {
+        "key": "storage",
+        "id": 2,
+        "pollutantTriangles": 59,
+        "emittingPixels": 49
+      },
+      {
+        "key": "purifier",
+        "id": 3,
+        "pollutantTriangles": 170,
+        "emittingPixels": 85
+      },
+      {
+        "key": "offering",
+        "id": 4,
+        "pollutantTriangles": 71,
+        "emittingPixels": 43
+      },
+      {
+        "key": "growth",
+        "id": 5,
+        "pollutantTriangles": 171,
+        "emittingPixels": 432
+      },
+      {
+        "key": "rift",
+        "id": 6,
+        "pollutantTriangles": 108,
+        "emittingPixels": 14
+      }
+    ],
+    "outsidePollution": {
+      "far": 23,
+      "middle": 263,
+      "near": 71
+    }
+  },
+  "scope": "Source definitions, exported masks and finite source support; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration."
 }

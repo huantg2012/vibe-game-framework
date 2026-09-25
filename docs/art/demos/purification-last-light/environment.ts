@@ -178,14 +178,12 @@ function inhabitedRemnant(m: Model): void {
   // Broken high lintel and dangling stays are a silhouette, not a roof.
   m.beam([4.19,5.38,-7.14],[7.71,5.40,-7.62],.46,.40,'wood',.7);
   m.cable([[7.6,5.43,-7.59],[7.49,4.7,-7.62],[7.52,3.61,-7.60]],.045,'iron',.66);
-  // The foreground wall return frames the haven without closing its approach.
-  // Deep shelf cells face the camera; the outer pier is a torn wall, not a
-  // fourth identical vertical post beside the devices.
-  m.at([14.12,0,2.9],1.22,0,()=>bookcase(m,3.5,3.52,.78,221,true));
-  brokenSlab(m,[[14.38,3.91],[14.96,3.8],[14.24,5.00],[13.89,4.67]],3.78,5.10,2201,.67);
-  m.rock([14.40,3.81,4.17],[.83,.62,1.10],'stone',2218,.74);
-  m.beam([14.36,3.67,4.10],[14.74,4.28,3.92],.058,.069,'iron',.71);
-  m.beam([13.70,3.39,1.26],[14.41,3.63,4.0],.18,.25,'wood',.6);
+  // The right foreground is the core's open precinct. Only a knee-high torn
+  // parapet remains here; the load-bearing building continues BEHIND it, in
+  // attachedRemains, rather than closing the shrine with a tall bookcase.
+  brokenSlab(m,[[14.64,3.85],[14.94,3.69],[14.24,5.00],[13.89,4.67]],.44,1.68,2201,.67);
+  m.rock([14.51,.44,4.02],[.61,.31,.72],'stone',2218,.74);
+  m.beam([14.62,.32,3.91],[14.74,.77,3.92],.058,.069,'iron',.71);
   // Detritus has causes and collection points: the broken wall joint, the
   // foot of the remaining shelves, and the place where someone tends a fire.
   rubblePocket(m,[13.52,.025,4.75],[.75,.33],9,2312,.78);
@@ -302,7 +300,7 @@ function furnace(m:Model,origin:V3):void {
     m.box([0,1.44,0],[1.19,.08,.75],'iron',.022,.68);
     m.cylinder([.43,1.84,-.22],.135,.70,'iron',14,.135,.6);
     m.cylinder([.43,2.19,-.22],.16,.07,'iron',14,.16,.72);
-    m.light([0,.72,.62],[1,.50,.16],3,5);
+    m.light([0,.72,.62],[1,.50,.16],3,5,{kind:'furnace',id:'haven-furnace'});
     m.at([-.35,1.51,-.06],.15,0,()=>{
       cuboid(m,[0,.03,0],[.43,.05,.36],'paper',.68);
       cuboid(m,[.06,.07,.025],[.40,.026,.30],'paper',.59);
@@ -311,6 +309,7 @@ function furnace(m:Model,origin:V3):void {
 }
 
 function attachedRemains(m:Model):void {
+  rightAbutment(m);
   // This torn edge belongs to the playable remnant. The diagonal member
   // continues down into the void, connecting foreground and middle distance.
   brokenSlab(m,[[-7.34,-1.45],[-5.09,-2.78],[-4.8,-2.1],[-5.1,.2],[-4.83,1],[-5.5,1.30],[-5.73,.72],[-6.1,.81],[-7.5,-.74]],-.23,.97,773,.78);
@@ -334,6 +333,75 @@ function attachedRemains(m:Model):void {
   m.rock([12.17,-1.70,6.58],[.85,1.65,.9],'stone',3527,.64);
   m.rock([12.84,-.83,5.81],[.75,1.13,.72],'stone',3529,.71);
   m.beam([12.33,-.48,6.21],[12.46,-1.61,6.33],.075,.095,'iron',.68);
+}
+
+/** A surviving structural shoulder runs continuously from the east edge into
+ * an enormous wall beyond the frame. The broken upper face is too narrow and
+ * obstructed to become another playable route. Its thickness, two joists and
+ * the diagonal masonry haunch explain what still holds the haven in place. */
+function rightAbutment(m:Model):void {
+  brokenSlab(m,[[13.52,-2.34],[15.52,-3.39],[17.57,-3.98],[19.82,-4.44],[21.64,-3.52],[21.71,-2.07],[19.69,-1.68],[17.05,-.61],[14.37,.43]],-.18,1.35,4101,.74);
+  m.beam([12.93,-.86,-1.37],[22.55,-1.06,-3.66],.59,.87,'iron',.61);
+  m.beam([13.71,-.86,-2.24],[23.4,-1.03,-4.79],.39,.75,'iron',.55);
+  // This haunch is a deep, solid shear wall, not a few cables spanning the void.
+  // The surviving haunch has two old construction lifts. One has slipped
+  // inward; the narrow returns and exposed stones are actual volume, not a
+  // painted contour or surface-wide dirt stippling.
+  m.quad([14.30,-1.13,-.14],[15.98,-3.73,-1.04],[21.77,-3.82,-2.91],[21.64,-1.04,-2.57],'stone',.54);
+  m.quad([15.98,-3.73,-1.04],[16.04,-3.87,-1.18],[21.78,-3.96,-3.07],[21.77,-3.82,-2.91],'stone',.43);
+  m.quad([16.04,-3.87,-1.18],[17.54,-6.00,-1.93],[21.91,-6.25,-3.44],[21.78,-3.96,-3.07],'stone',.50);
+  m.quad([17.54,-6.00,-1.93],[17.58,-6.15,-1.85],[21.91,-6.38,-3.34],[21.91,-6.25,-3.44],'stone',.43);
+  m.quad([17.58,-6.15,-1.85],[18.85,-8.17,-2.58],[22.02,-8.60,-3.56],[21.91,-6.38,-3.34],'stone',.47);
+  m.quad([14.30,-1.13,-.14],[14.57,-1.02,-1.03],[19.31,-8.24,-3.24],[18.85,-8.17,-2.58],'stone',.64);
+  m.quad([18.85,-8.17,-2.58],[19.31,-8.24,-3.24],[22.51,-8.60,-4.22],[22.02,-8.60,-3.56],'stone',.44);
+  // The former wall root began outside the picture, leaving only its thin
+  // horizontal shoulder visible. Bring the same broken wall's return inward:
+  // it rises above that shoulder and remains solid all the way below the frame.
+  // Four overlapping construction lifts have different torn profiles and a
+  // slipped face. Their real ledges/returns reveal masonry thickness rather
+  // than drawing a large dark rectangle behind the connecting slab.
+  brokenSlab(m,[[16.36,-2.93],[18.26,-3.64],[23.58,-4.77],[25.35,-3.01],
+    [24.84,-1.44],[21.7,-.62],[18.2,.12],[16.62,-.25]],2.72,3.8,4111,.69);
+  brokenSlab(m,[[16.42,-2.86],[18.22,-3.5],[23.81,-4.64],[25.55,-2.96],
+    [25.01,-1.2],[21.72,-.38],[18.02,.39],[16.53,.015]],-.12,4.85,4112,.64);
+  brokenSlab(m,[[16.53,-2.76],[18.18,-3.46],[24.1,-4.4],[25.8,-2.81],
+    [25.23,-1.10],[21.65,-.27],[18.17,.40],[16.71,-.04]],-4.15,5.0,4113,.61);
+  brokenSlab(m,[[16.71,-2.9],[18.44,-3.63],[24.12,-4.63],[25.92,-2.79],
+    [25.30,-.97],[21.75,-.12],[18.03,.61],[16.83,.045]],-8.45,7.1,4114,.59);
+
+  // A broken engaged pier is bonded to the wall, not a free-standing post.
+  // Staggered blocks and the broad foot carry the visible shoulder into the
+  // masonry. Each course overlaps the wall and has a short lit end face.
+  m.box([17.28,1.23,.085],[1.06,2.96,.97],'cutstone',.075,.65);
+  m.box([17.24,-1.92,.265],[1.24,3.23,1.09],'stone',.09,.71);
+  m.box([17.36,-5.21,.26],[1.15,3.23,1.16],'stone',.075,.65);
+  m.box([17.26,-8.55,.39],[1.47,3.36,1.29],'stone',.095,.62);
+  m.box([17.38,-11.91,.48],[1.82,3.46,1.45],'stone',.11,.60);
+  m.rock([16.49,2.76,-1.25],[1.09,.78,1.08],'stone',4127,.73);
+  m.rock([17.02,2.82,-.18],[.94,.61,.85],'cutstone',4128,.76);
+  // The shoulder's steel joists disappear into separate load-bearing sockets.
+  // Stone pads stand proud of the return; the dark mortar gaps and displaced
+  // facing stones show where the connection is carrying weight and failing.
+  m.box([16.49,-.58,-1.35],[.66,.57,1.12],'cutstone',.055,.76);
+  m.box([16.47,-.69,-2.03],[.54,.44,.79],'stone',.04,.69);
+  m.beam([16.185,-.31,-1.92],[16.185,-.32,-.89],.067,.062,'black',.69);
+  m.rock([16.18,-1.37,-.46],[.92,1.12,.72],'stone',4117,.70);
+  m.rock([16.62,-3.26,.20],[.65,1.02,.69],'stone',4118,.67);
+  m.beam([16.43,-.87,-.19],[16.58,-3.1,.23],.064,.072,'iron',.62);
+  m.beam([17.04,-.89,-.76],[19.37,-5.15,-2.72],.20,.31,'iron',.65);
+  m.rock([16.04,-3.65,-1.05],[.73,.83,.54],'stone',4129,.56);
+  m.rock([17.52,-5.96,-1.83],[.61,.69,.47],'stone',4130,.51);
+  m.beam([15.11,-1.81,-.47],[16.22,-3.58,-.99],.068,.082,'iron',.49);
+  m.beam([16.22,-3.58,-.99],[16.02,-4.75,-.77],.068,.082,'iron',.47);
+  m.cable([[14.02,-.45,-.45],[16.38,-1.78,-.59],[18.36,-2.1,-1.37],[20.15,-1.01,-2.18]],.084,'black',.68);
+  // Fallen masonry closes off the structural neck without creating a tall
+  // screen in front of the core. Shelves remain deep in the surviving wall.
+  m.rock([15.14,.11,-2.04],[1.62,.69,1.06],'stone',4133,.71);
+  m.rock([16.06,.02,-2.63],[.93,.61,.90],'cutstone',4137,.70);
+  rubblePocket(m,[16.77,-.10,-2.16],[1.47,.63],13,4141,.63);
+  m.at([19.70,-.17,-4.47],-.30,0,()=>bookcase(m,2.17,2.62,.61,4147,false));
+  fracture(m,[[14.28,-1.96],[15.59,-2.19],[16.16,-2.04],[17.04,-2.25]],-.18,4151);
+  contaminatedAttachment(m,[17.78,-.15,-1.67],[1,0,-.25],[0,0,1],.84,.43,4157,.67);
 }
 
 function fallenLibrary(m:Model):void {
@@ -380,6 +448,35 @@ function fallenLibrary(m:Model):void {
   m.beam([-12.62,-1.82,-1.83],[-13.49,-5.65,-1.21],.71,.89,'stone',.48);
   m.beam([-11.15,-1.55,-1.40],[-10.00,-2.75,-.37],.83,.64,'stone',.50);
   contaminatedAttachment(m,[-12.05,-1.18,-1.43],[1,0,0],[0,0,1],.68,.47,3767,.93);
+  lowerCrossing(m);
+}
+
+/** Three differently oriented remnants step down through the left abyss. A
+ * broad gallery, its broken rib and a hanging fragment give scale changes;
+ * none repeats the upright-post silhouette of the existing near ruin. */
+function lowerCrossing(m:Model):void {
+  brokenSlab(m,[[-14.38,4.91],[-12.95,4.29],[-7.10,7.91],[-7.03,8.92],[-7.78,9.41],[-12.97,6.42]],-6.57,.86,4201,.52);
+  m.beam([-13.83,-7.18,5.57],[-8.06,-7.35,8.83],.37,.54,'iron',.48);
+  m.beam([-12.76,-7.26,6.33],[-15.42,-12.58,5.80],.64,.86,'stone',.47);
+  m.beam([-8.21,-7.28,8.70],[-6.81,-12.71,10.04],.56,.69,'stone',.45);
+  m.beam([-13.59,-6.52,5.03],[-13.52,-5.66,5.02],.09,.12,'iron',.55);
+  m.beam([-11.94,-6.54,6.08],[-11.89,-5.65,6.06],.073,.084,'iron',.53);
+  m.beam([-13.54,-5.66,5.02],[-10.63,-5.84,6.90],.084,.1,'iron',.55);
+  // A half-room remains below the crossing, with its rear plane visible
+  // through a crooked doorway instead of a flat silhouette behind it.
+  m.beam([-14.26,-12.32,2.11],[-13.88,-4.52,1.83],.80,1.11,'stone',.47);
+  m.beam([-13.88,-4.65,1.83],[-10.70,-4.24,1.37],.72,1.05,'stone',.55);
+  m.beam([-10.70,-4.30,1.37],[-10.19,-9.85,1.26],.66,.95,'stone',.48);
+  m.quad([-14.30,-11.38,.77],[-14.03,-5.06,.50],[-10.76,-4.79,.14],[-10.19,-10.45,.32],'stone',.39);
+  m.beam([-13.83,-7.77,1.60],[-11.57,-8.05,1.15],.21,.40,'wood',.43);
+  m.cable([[-11.39,-4.51,1.28],[-11.22,-6.72,1.33],[-11.62,-9.44,1.56],[-11.16,-11.75,1.43]],.046,'iron',.50);
+  m.rock([-9.28,-8.51,6.80],[.63,.43,.92],'stone',4217,.48);
+  m.rock([-11.11,-10.05,8.64],[.40,.35,.47],'stone',4219,.41);
+  brokenSlab(m,[[-6.71,10.27],[-5.23,9.28],[-3.91,9.86],[-4.12,11.50],[-5.28,11.97],[-6.30,11.45]],-10.22,.63,4223,.41);
+  m.beam([-5.90,-10.65,10.93],[-3.97,-15.42,12.20],.44,.54,'stone',.43);
+  m.cable([[-8.98,-6.61,8.27],[-8.61,-9.28,8.82],[-7.68,-11.44,9.94],[-5.34,-10.27,11.32]],.066,'iron',.48);
+  contaminatedAttachment(m,[-12.76,-6.54,5.83],[1,0,.59],[-.51,0,1],1.14,.43,4231,.71);
+  pollutionSeam(m,[[-13.69,-5.51,1.82],[-13.79,-6.07,1.94],[-13.70,-6.59,2.04]],.047,.37);
 }
 
 function distantFabric(m:Model):void {
@@ -403,6 +500,33 @@ function distantFabric(m:Model):void {
   brokenSlab(m,[[-9.97,-20.23],[-7.4,-20.78],[-6.93,-18.39],[-9.73,-17.72]],6.64,.81,721,.36);
   pollutionSeam(m,[[-17.2,9.61,-12.86],[-16.46,9.84,-13.2],[-15.7,10.02,-13.51],[-15.27,10.1,-13.43]],.085,.28);
   pollutionSeam(m,[[-20.68,4.35,-5.71],[-19.9,4.35,-5.93],[-19.26,4.35,-6.17]],.08,.24);
+  // An immense broken apse sits BEHIND the middle fragments. Its thick
+  // battered arch gives a single slow contour through the upper-left air;
+  // irregular voids between its ribs remain available for distant movement.
+  m.beam([-22.5,-13.3,-8.30],[-21.67,-1.25,-8.65],1.31,1.63,'stone',.42);
+  m.beam([-21.67,-1.25,-8.65],[-18.36,2.34,-10.89],1.17,1.48,'stone',.43);
+  m.beam([-18.36,2.34,-10.89],[-14.52,3.21,-12.68],1.21,1.42,'stone',.42);
+  m.beam([-14.52,3.21,-12.68],[-12.92,1.70,-13.00],.91,1.13,'stone',.39);
+  m.rock([-18.42,2.60,-10.85],[1.51,.80,1.76],'stone',4301,.46);
+  brokenSlab(m,[[-24.09,-6.69],[-22.58,-7.46],[-17.95,-5.27],[-16.81,-4.19],[-17.67,-3.07],[-22.11,-4.83]],-8.94,1.14,4307,.40);
+  m.beam([-22.73,-9.78,-6.21],[-19.25,-14.17,-3.54],.94,1.21,'stone',.36);
+  m.beam([-18.52,-9.54,-4.56],[-17.28,-17.14,-3.69],.86,1.08,'stone',.36);
+  // A rear gallery seen between the upper landing and the near broken frame.
+  // Its shallow rail and interrupted cornice establish a different scale.
+  brokenSlab(m,[[-9.63,-15.10],[-8.02,-16.37],[.28,-13.48],[.13,-12.35],[-2.83,-12.96],[-3.64,-12.79],[-8.11,-14.46]],-1.65,.96,4321,.42);
+  m.beam([-8.46,-2.51,-15.17],[-8.19,-10.94,-15.15],.91,1.18,'stone',.36);
+  m.beam([-2.20,-2.35,-13.17],[-.83,-10.21,-12.81],.70,.93,'stone',.35);
+  m.beam([-7.75,-1.62,-14.45],[-7.72,-.69,-14.43],.07,.09,'iron',.44);
+  m.beam([-5.43,-1.61,-13.61],[-5.43,-.72,-13.64],.074,.10,'iron',.44);
+  m.beam([-7.72,-.69,-14.43],[-4.05,-.82,-13.17],.077,.096,'iron',.44);
+  m.cable([[-4.76,-1.57,-13.42],[-4.92,-4.73,-13.17],[-5.34,-7.70,-13.21]],.057,'iron',.40);
+  contaminatedAttachment(m,[-5.57,-1.60,-13.59],[1,0,.3],[0,0,1],.86,.37,4333,.44);
+  // Smaller fragments below the apse are offset in depth and scale. Avoid a
+  // regular field of debris: these belong to its two specific fractures.
+  m.rock([-18.06,-6.12,-7.01],[1.47,.63,1.07],'stone',4341,.39);
+  m.rock([-19.18,-10.05,-5.78],[.58,.39,.64],'stone',4343,.35);
+  m.rock([-15.75,-7.19,-8.79],[.76,.80,.67],'stone',4347,.36);
+  pollutionSeam(m,[[-18.12,2.65,-10.67],[-17.68,2.85,-10.96],[-17.24,2.89,-11.24]],.064,.30);
 }
 
 function pollutionSeam(m:Model,path:readonly V3[],width:number,tint:number):void {
@@ -412,6 +536,8 @@ function pollutionSeam(m:Model,path:readonly V3[],width:number,tint:number):void
     const p=path[i]!;
     m.rock(p,[width*2.7,width*1.3,width*2.4],'pollutant',997+i,tint*.87);
   }
+  const p=path[Math.floor(path.length/2)]!;
+  m.light([p[0],p[1]+.13,p[2]],[.38,.52,.39],.055+tint*.11,.92+width*7,{kind:'pollution',id:`seam-${p.map(n=>n.toFixed(2)).join('-')}`});
 }
 
 /** A rooted, broken group of accretions on a real receiving plane. Gaps between
@@ -421,6 +547,7 @@ function contaminatedAttachment(m:Model,origin:V3,u:V3,v:V3,length:number,width:
   let normal=unit(cross(u,v));
   if(normal[0]*19+normal[1]*24+normal[2]*30<0)normal=mul(normal,-1);
   const pos=(x:number,y:number,lift=.006):V3=>add(origin,add(add(mul(u,x),mul(v,y)),mul(normal,lift)));
+  m.light(add(origin,mul(normal,.14)),[.38,.52,.39],.13*tint,1.15+length*.46,{kind:'pollution',id:`attachment-${seed}`});
   for(let k=0;k<9;k++) {
     const x=(rng()-.5)*length,y=(rng()-.5)*width;
     const rx=length*(.035+rng()*.07),ry=width*(.075+rng()*.16);

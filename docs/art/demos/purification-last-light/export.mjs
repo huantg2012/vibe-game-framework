@@ -5,87 +5,71 @@ import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { renderDensePlayerFrame } from '../../../../src/entities/player-sprite-dense.ts';
 import { buildHaven } from './scene.ts';
-import { CAMERA, cameraBasis, project, render } from './render.ts';
-import { dot, Model } from './model.ts';
+import { CAMERA, project, render } from './render.ts';
+import { Model } from './model.ts';
+import { ACTOR_POSITION, ACTOR_FACING, ACTOR_HEIGHT, ACTOR_OBJECT_ID, actorLampAnchor } from './actor.ts';
 import { WALK_SURFACES } from './environment.ts';
-const here = path.dirname(fileURLToPath(import.meta.url));
-const output = process.argv[2] ? path.resolve(process.argv[2]) : path.join(here, 'assets');
-await fs.mkdir(output, { recursive: true });
-const { model, stations } = buildHaven();
-console.log(`Scene: ${model.triangles.length} triangles, ${stations.length} stations, ${model.lights.length} local lights.`);
-const result = render(model, CAMERA, console.log);
-const format = { raw: { width: CAMERA.width, height: CAMERA.height, channels: 4 } };
-await sharp(Buffer.from(result.rgba), format).png().toFile(path.join(output, 'haven-clean.png'));
-/** Same original production actor, same 33px body. Scene geometry can occlude
- * the actor by its pixel depth; the painted background is not a clickable mock. */
-function player(r, feet) {
-    const pixels = r.rgba.slice(), frame = renderDensePlayerFrame('up', 'idle', 0), screen = project(feet), basis = cameraBasis(CAMERA), s = 1.5;
-    const left = Math.round(screen[0] - 24), top = Math.round(screen[1] - 39);
-    const actorDepth = dot(feet, basis.back) + .28;
-    // A contact shadow anchors the sprite to the baked floor, before its body.
-    for(let dy=-5;dy<=5;dy++)for(let dx=-15;dx<=15;dx++){
-        const x=Math.round(screen[0])+dx,y=Math.round(screen[1])+dy;
-        if(x<0||x>=CAMERA.width||y<0||y>=CAMERA.height)continue;
-        const falloff=Math.exp(-((dx/7)**2+(dy/2.6)**2))*.28,p=(y*CAMERA.width+x)*4;
-        for(let k=0;k<3;k++)pixels[p+k]=Math.round(pixels[p+k]*(1-falloff));
-    }
-    for (let y = 0; y < 48; y++)
-        for (let x = 0; x < 48; x++) {
-            const sx = Math.floor(x / s), sy = Math.floor(y / s), source = (sy * 32 + sx) * 4;
-            if (!frame[source + 3])
-                continue;
-            const xx = left + x, yy = top + y;
-            if (xx < 0 || xx >= CAMERA.width || yy < 0 || yy >= CAMERA.height)
-                continue;
-            const i = yy * CAMERA.width + xx, bodyHeight = (39 - y) / CAMERA.scale / Math.max(.1, basis.up[1]);
-            if (r.depth[i] > actorDepth + Math.max(0, bodyHeight) * basis.back[1] + .38)
-                continue;
-            const p = i * 4;
-            pixels[p] = Math.round(frame[source] * .93);
-            pixels[p + 1] = Math.round(frame[source + 1] * .96);
-            pixels[p + 2] = Math.round(frame[source + 2] * 1.01);
-            pixels[p + 3] = 255;
-        }
-    return pixels;
+const here=path.dirname(fileURLToPath(import.meta.url));
+const output=process.argv[2]?path.resolve(process.argv[2]):path.join(here,'assets');
+await fs.mkdir(output,{recursive:true});
+const {model,stations}=buildHaven();
+console.log(`Scene: ${model.triangles.length} triangles, ${stations.length} stations, ${model.lights.length} emitters in three source families.`);
+const result=render(model,CAMERA,console.log);
+const format={raw:{width:CAMERA.width,height:CAMERA.height,channels:4}};
+const save=(name,data)=>sharp(Buffer.from(data),format).png().toFile(path.join(output,name));
+await save('haven.png',result.rgba);
+await sharp(path.join(output,'haven.png')).resize(1920,1280,{kernel:'nearest'}).png().toFile(path.join(output,'haven-2x.png'));
+for(const kind of ['pollution','furnace','shoulder'])await save(`light-${kind}.png`,result.lightFields[kind]);
+await save('motion-map.png',result.motion);
+const emptyHaven=new Model();
+emptyHaven.triangles.push(...model.triangles.filter(t=>t.object!==ACTOR_OBJECT_ID));
+emptyHaven.lights.push(...model.lights.filter(l=>l.kind!=='shoulder'));
+await save('haven-clean.png',render(emptyHaven,CAMERA).rgba);
+const depthImage=new Uint8ClampedArray(CAMERA.width*CAMERA.height*4),objectImage=depthImage.slice();
+for(let i=0;i<result.depth.length;i++){
+  const value=Number.isFinite(result.depth[i])?Math.max(0,Math.min(65535,Math.round((result.depth[i]+80)*256))):0;
+  depthImage.set([value>>8,value&255,result.layers[i],255],i*4);
+  objectImage.set([result.objects[i],0,0,255],i*4);
 }
-const actorPosition = [3.8, 0, 3.8];
-await sharp(Buffer.from(player(result, actorPosition)), format).png().toFile(path.join(output, 'haven.png'));
-await sharp(path.join(output, 'haven.png')).resize(1920, 1280, { kernel: 'nearest' }).png().toFile(path.join(output, 'haven-2x.png'));
-const depthImage = new Uint8ClampedArray(CAMERA.width * CAMERA.height * 4), objectImage = depthImage.slice();
-for (let i = 0; i < result.depth.length; i++) {
-    const value = Number.isFinite(result.depth[i]) ? Math.max(0, Math.min(65535, Math.round((result.depth[i] + 80) * 256))) : 0;
-    depthImage.set([value >> 8, value & 255, result.layers[i], 255], i * 4);
-    objectImage.set([result.objects[i], 0, 0, 255], i * 4);
+await save('depth-layers.png',depthImage);await save('object-ids.png',objectImage);
+function getBounds(object){
+  const vertices=model.triangles.filter(t=>t.object===object).flatMap(t=>[t.a,t.b,t.c]).map(p=>project(p));
+  const left=Math.floor(Math.min(...vertices.map(v=>v[0])))-7,top=Math.floor(Math.min(...vertices.map(v=>v[1])))-7;
+  const right=Math.ceil(Math.max(...vertices.map(v=>v[0])))+7,bottom=Math.ceil(Math.max(...vertices.map(v=>v[1])))+7;
+  const x=Math.max(0,left),y=Math.max(0,top),width=Math.min(CAMERA.width,right)-x,height=Math.min(CAMERA.height,bottom)-y;
+  if(width<=0||height<=0)throw new Error(`Object outside camera: ${object}`);
+  return {x,y,width,height};
 }
-await sharp(Buffer.from(depthImage), format).png().toFile(path.join(output, 'depth-layers.png'));
-await sharp(Buffer.from(objectImage), format).png().toFile(path.join(output, 'object-ids.png'));
-const projected = stations.map(station => {
-    const triangles = model.triangles.filter(t => t.object === station.id);
-    const vertices = triangles.flatMap(t => [t.a, t.b, t.c]).map(p => project(p));
-    const bounds = { x: Math.floor(Math.min(...vertices.map(v => v[0]))) - 7, y: Math.floor(Math.min(...vertices.map(v => v[1]))) - 7, right: Math.ceil(Math.max(...vertices.map(v => v[0]))) + 7, bottom: Math.ceil(Math.max(...vertices.map(v => v[1]))) + 7 };
-    const x = Math.max(0, bounds.x), y = Math.max(0, bounds.y), width = Math.min(CAMERA.width, bounds.right) - x, height = Math.min(CAMERA.height, bounds.bottom) - y;
-    if (width <= 0 || height <= 0)
-        throw new Error(`Station outside camera: ${station.key}`);
-    return { ...station, screen: project(station.position), approachScreen: project(station.approach), bounds: { x, y, width, height }, triangles: triangles.length };
-});
-// Individual models use the same authored geometry and light directions. A
-// closer fixed pixel grid reveals construction; these are separate art views,
-// not enlarged scene crops or claims about the production sprite resolution.
-for(const station of projected){
-    const isolated=new Model();isolated.triangles.push(...model.triangles.filter(t=>t.object===station.id));isolated.lights.push(...model.lights);
-    const points=isolated.triangles.flatMap(t=>[t.a,t.b,t.c]).map(p=>project(p,{...CAMERA,scale:1,origin:[0,0]}));
-    const minX=Math.min(...points.map(p=>p[0])),maxX=Math.max(...points.map(p=>p[0])),minY=Math.min(...points.map(p=>p[1])),maxY=Math.max(...points.map(p=>p[1]));
-    const scale=Math.min(74,278/Math.max(maxX-minX,maxY-minY));
-    const camera={...CAMERA,width:384,height:384,scale,origin:[192-(minX+maxX)/2*scale,192-(minY+maxY)/2*scale]};
-    const portrait=render(isolated,camera);
-    for(let i=0;i<portrait.objects.length;i++)if(!portrait.objects[i])portrait.rgba[i*4+3]=0;
-    station.modelAsset=`model-${station.key}.png`;station.modelCamera=camera;
-    await sharp(Buffer.from(portrait.rgba),{raw:{width:384,height:384,channels:4}}).png().toFile(path.join(output,station.modelAsset));
-    console.log(`Exported ${station.key} model.`);
+const projected=stations.map(station=>({...station,screen:project(station.position),approachScreen:project(station.approach),bounds:getBounds(station.id),triangles:model.triangles.filter(t=>t.object===station.id).length}));
+const actor={id:ACTOR_OBJECT_ID,key:'actor',name:'归来者',position:ACTOR_POSITION,screen:project(ACTOR_POSITION),facing:ACTOR_FACING,height:ACTOR_HEIGHT,lamp:actorLampAnchor(),bounds:getBounds(ACTOR_OBJECT_ID),source:'actor.ts',riftSource:'src/entities/player-sprite-dense.ts',description:'同一位戴圆顶护帽、负背包、携侧肩灯的归来者。据点用同源构型和混合光照塑造，裂隙内保留原低精度角色。',triangles:model.triangles.filter(t=>t.object===ACTOR_OBJECT_ID).length};
+// A close fixed pixel grid reveals construction; it never replaces the actual
+// scene-scale crop alongside it in the viewer.
+for(const object of [...projected,actor]){
+  const isolated=new Model();isolated.triangles.push(...model.triangles.filter(t=>t.object===object.id));isolated.lights.push(...model.lights);
+  const points=isolated.triangles.flatMap(t=>[t.a,t.b,t.c]).map(p=>project(p,{...CAMERA,scale:1,origin:[0,0]}));
+  const minX=Math.min(...points.map(p=>p[0])),maxX=Math.max(...points.map(p=>p[0])),minY=Math.min(...points.map(p=>p[1])),maxY=Math.max(...points.map(p=>p[1]));
+  const scale=Math.min(object.id===7?154:74,278/Math.max(maxX-minX,maxY-minY));
+  const camera={...CAMERA,width:384,height:384,scale,origin:[192-(minX+maxX)/2*scale,192-(minY+maxY)/2*scale]};
+  const portrait=render(isolated,camera);
+  for(let i=0;i<portrait.objects.length;i++)if(!portrait.objects[i])portrait.rgba[i*4+3]=0;
+  object.modelAsset=`model-${object.key}.png`;object.modelCamera=camera;
+  await sharp(Buffer.from(portrait.rgba),{raw:{width:384,height:384,channels:4}}).png().toFile(path.join(output,object.modelAsset));
+  console.log(`Exported ${object.key} model.`);
 }
-await fs.writeFile(path.join(output, 'manifest.json'), JSON.stringify({ reference: 'public/assets/art/menu-last-light.png', method: 'Deterministic authored geometry rasterized directly to a fixed pixel grid; world-scale material paint, ray-tested direct light and four-ray contact occlusion. No generated image sampled as scene artwork.', camera: CAMERA, actor: { position: actorPosition,screen:project(actorPosition),source:'src/entities/player-sprite-dense.ts',bodyPixels:33 }, stations: projected, walkSurfaces:WALK_SURFACES,triangles: model.triangles.length, depthEncoding: 'RG = round((cameraDepth + 80) * 256), B = far 1 / middle 2 / near 3 / haven 4; zero RG is empty.', status: 'ART-CANDIDATE / NOT-PRODUCTION-INTEGRATED / HUMAN-REVIEW-PENDING' }, null, 2) + '\n');
-console.log(`Exported full scene and six station bounds to ${output}.`);
-const checksums={method:'SHA-256',sources:{},outputs:{}};
-for(const filename of ['model.ts','render.ts','environment.ts','devices.ts','scene.ts','export.mjs','viewer.ts','index.html','check.mjs'])checksums.sources[filename]=createHash('sha256').update(await fs.readFile(path.join(here,filename))).digest('hex');
+await sharp(Buffer.from(renderDensePlayerFrame('up','idle',0)),{raw:{width:32,height:32,channels:4}}).png().toFile(path.join(output,'rift-actor.png'));
+const lightStats={};
+for(const kind of ['pollution','furnace','shoulder']){
+  let receivingPixels=0,maximum=0;const objects=new Set();
+  for(let i=0;i<result.objects.length;i++){const strength=Math.max(...result.lightFields[kind].subarray(i*4,i*4+3));maximum=Math.max(maximum,strength);if(strength>1){receivingPixels++;objects.add(result.objects[i]);}}
+  lightStats[kind]={receivingPixels,maximum,objects:[...objects].sort()};
+}
+const manifest={reference:'public/assets/art/menu-last-light.png',baseline:'35f17ba',method:'Authored geometry rasterized at 960×640. Shared materials, source-tested shadows, ambient occlusion and transparent layers. Three additive source families drive live light/erosion/air/deep-presence motion. No generated image sampled as scene artwork.',camera:CAMERA,actor,stations:projected,walkSurfaces:WALK_SURFACES,triangles:model.triangles.length,lights:model.lights.map(l=>({...l,screen:project(l.position)})),lightStats,depthEncoding:'RG = round((cameraDepth + 80) * 256), B = far 1 / middle 2 / near 3 / haven 4; zero RG is empty.',motionEncoding:'R layer 0..4; G object 0..7; B source material 0 none / 1 pollution / 2 furnace / 3 shoulder; A stable material phase. Additive light PNGs already occur once in haven.png; animate with field × (factor - 1).',status:'ART-REVISION / BASELINE-HUMAN-APPRECIATED / NEW-REVISION-REVIEW-PENDING / NOT-PRODUCTION-INTEGRATED'};
+await fs.writeFile(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
+const checksums={method:'SHA-256',sources:{},outputs:{},unchangedRift:{}};
+for(const filename of ['model.ts','render.ts','environment.ts','devices.ts','actor.ts','scene.ts','export.mjs','viewer.ts','motion.ts','index.html','check.mjs']){
+  try{checksums.sources[filename]=createHash('sha256').update(await fs.readFile(path.join(here,filename))).digest('hex');}catch(error){if(error.code!=='ENOENT')throw error;}
+}
 for(const filename of (await fs.readdir(output)).filter(f=>f.endsWith('.png')||f==='manifest.json'))checksums.outputs[filename]=createHash('sha256').update(await fs.readFile(path.join(output,filename))).digest('hex');
+for(const filename of ['src/entities/player-sprite-dense.ts','src/entities/player-sprite.ts'])checksums.unchangedRift[filename]=createHash('sha256').update(await fs.readFile(filename)).digest('hex');
 await fs.writeFile(path.join(output,'checksums.json'),JSON.stringify(checksums,null,2)+'\n');
+console.log(`Exported art, actor, seven models and three source fields to ${output}.`);

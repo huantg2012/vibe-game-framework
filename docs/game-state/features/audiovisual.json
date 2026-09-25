@@ -3,7 +3,7 @@
     "id": "COH-F039",
     "title": "原玩家像素、朝向与持物",
     "domain": "presentation",
-    "summary": "正式净化点与 Rift 共用原玩家程序像素、四向动作、武器持物及受击反馈；地图风格不替换玩家身份。R4只读灯锚与地面光池委派、R7完整visualBounds在R8继续用于照明和提示避让，角色绘图、移动与 Rift 玩法代码保持。",
+    "summary": "正式净化点与 Rift 共用原玩家程序像素、四向动作、武器持物及受击反馈；地图风格不替换玩家身份。R4只读灯锚与地面光池委派、R7完整visualBounds在R8继续用于照明和提示避让，角色绘图、移动与 Rift 玩法代码保持。 2026-09-25艺术样景单独以同源几何重画据点人物（护帽/背包/侧肩灯），原Rift两份人物源码未变；未接正式Player。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -65,6 +65,11 @@
       {
         "path": "docs/qa/iteration-30-r8.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/actor.ts",
+        "role": "art",
+        "note": "据点新人物样景，正式Rift仍原精灵"
       }
     ],
     "dependsOn": [
@@ -80,10 +85,12 @@
       "COH-E-I30-R8-INTEGRATION",
       "COH-E-I30-R8-INTEGRITY",
       "COH-E-I30-R8-TECHNICAL",
-      "COH-E-I30-R9-GEOMETRY"
+      "COH-E-I30-R9-GEOMETRY",
+      "COH-E-I30-LAST-LIGHT-LIVING"
     ],
     "unknowns": [
-      "原角色身份保持；I30 R4已实测四向动画灯锚及入Rift原灯池，未逐帧复核所有受击/武器动作。"
+      "原角色身份保持；I30 R4已实测四向动画灯锚及入Rift原灯池，未逐帧复核所有受击/武器动作。",
+      "新据点人物仅固定样景姿态，尚未接正式动作/八向行走；同身份最终判断仍待用户看实尺。"
     ]
   },
   {
@@ -194,12 +201,12 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "6127218 C母版已被用户明确否决；本轮以启动页menu-last-light原画为参照，完成完整像素场景与六模型候选。确定性3D辅助构型经960×640 CPU像素栅格绘制；strict TS、六站/双坡布局连通与浏览器八视图检查通过，艺术待审。正式生产仍为R10，新样景未接src、碰撞、经济或实时视差。",
+    "summary": "I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类污染/炉火/肩灯混光、右侧建筑依托、分层外景、同身份新人物与动态景观。六站双坡及全部7311可站样本连通，查看页限定验证通过；新版待人审，正式生产仍R10、Rift人物未变、I28挂起。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式生产仍为R10：主菜单；净化点自由移动/修复/交互",
-      "当前R11启动页原画像素样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3026/docs/art/demos/purification-last-light/index.html；独立艺术查看入口，非正式游戏",
+      "当前动态艺术样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html；含修改前/原画、六模型/人物及暂停查看，非正式游戏",
       "恢复工作：docs/art-direction.md#resume-art-rebuild → docs/design-notes/purification-scene-art-plan.md#当前执行状态",
       "旧A/C构图与局部样板仅历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；6127218已明确否决，不再是活跃入口"
     ],
@@ -731,17 +738,29 @@
       {
         "path": "docs/art/demos/purification-last-light/export.mjs",
         "role": "test",
-        "note": "同源整景、六单体PNG、可见深度/图层编码与参数导出入口"
+        "note": "同源整景、七模型、三类光贡献、掩码、可见深度与参数导出"
       },
       {
         "path": "docs/art/demos/purification-last-light/viewer.ts",
         "role": "code",
-        "note": "静态艺术图与六模型查看，不构成正式游戏交互"
+        "note": "动态艺术图、基线/原画和六模型/人物查看；不构成正式游戏交互"
       },
       {
         "path": "docs/art/demos/purification-last-light/check.mjs",
         "role": "test",
-        "note": "样景几何及六站位检查入口；最终运行结果待记录，不代正式碰撞/通行证据"
+        "note": "strict、源/掩码/光贡献与六站双坡保守站位检查；不代正式碰撞"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/actor.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-living.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -795,10 +814,12 @@
       "COH-E-I30-R11-A-ROUTES",
       "COH-E-I30-R11-C-DIRECTION",
       "COH-E-I30-LAST-LIGHT-DIRECTION",
-      "COH-E-I30-LAST-LIGHT-CANDIDATE"
+      "COH-E-I30-LAST-LIGHT-CANDIDATE",
+      "COH-E-I30-LAST-LIGHT-APPRECIATED",
+      "COH-E-I30-LAST-LIGHT-LIVING"
     ],
     "unknowns": [
-      "完整像素候选尚无用户艺术认可；深度编码不含隐藏层内容，尚未接正式src、碰撞、经济或实时视差。布局连通与浏览器查看证据仅对新样景有效，不代签正式游戏可玩性或成品画质。8ef1366和6127218均为历史人审否决。",
+      "35f17ba整体画面已获用户明确赞许；最新七项艺术修订待人审。仅固定相机动态样景，尚未接正式src、碰撞、经济或人物驱动视差；投影形状烘焙、可见深度不补全隐藏内容。8ef1366/6127218仍为历史否决。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

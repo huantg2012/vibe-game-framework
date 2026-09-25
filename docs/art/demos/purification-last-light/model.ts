@@ -2,10 +2,11 @@ import { ShapeUtils, Vector2 } from 'three';
 
 export type V3 = readonly [number, number, number];
 export type V2 = readonly [number, number];
-export type Material = 'stone' | 'cutstone' | 'iron' | 'steel' | 'bronze' | 'wood' | 'paper' | 'cloth' | 'glass' | 'liquid' | 'pollutant' | 'ember' | 'black';
+export type Material = 'stone' | 'cutstone' | 'iron' | 'steel' | 'bronze' | 'wood' | 'paper' | 'cloth' | 'glass' | 'liquid' | 'pollutant' | 'ember' | 'lamp' | 'black';
 export type Layer = 'far' | 'middle' | 'near' | 'haven';
 export interface Triangle { a: V3; b: V3; c: V3; normal: V3; material: Material; tint: number; object: number; layer: Layer; }
-export interface Light { position: V3; color: V3; power: number; radius: number; }
+export type LightKind = 'pollution' | 'furnace' | 'shoulder';
+export interface Light { position: V3; color: V3; power: number; radius: number; kind: LightKind; id: string; }
 export interface Station { id: number; key: string; name: string; position: V3; approach: V3; radius: number; description: string; }
 export const add = (a: V3,b: V3): V3 => [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
 export const sub = (a: V3,b: V3): V3 => [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
@@ -87,5 +88,7 @@ export class Model {
     for(let i=0;i<7;i++){const j=(i+1)%7;this.quad(lo[i]!,mid[i]!,mid[j]!,lo[j]!,material,tint*(.86+rng()*.25));this.quad(mid[i]!,hi[i]!,hi[j]!,mid[j]!,material,tint*(.87+rng()*.2));this.triangle(hi[i]!,[cx,cy+size[1]*.47,cz],hi[j]!,material,tint);}
   }
   cable(points:readonly V3[],width:number,material:Material,tint=1):void { for(let i=1;i<points.length;i++)this.beam(points[i-1]!,points[i]!,width,width,material,tint); }
-  light(position:V3,color:V3,power:number,radius:number):void {this.lights.push({position:this.transform(position),color,power,radius});}
+  light(position:V3,color:V3,power:number,radius:number,source?:{kind:LightKind;id:string}):void {
+    this.lights.push({position:this.transform(position),color,power,radius,kind:source?.kind??'pollution',id:source?.id??`pollution-${this.lights.length}`});
+  }
 }
