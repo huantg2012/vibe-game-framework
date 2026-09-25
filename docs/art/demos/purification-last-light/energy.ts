@@ -16,9 +16,19 @@ function noise(x:number,y:number,z:number):number {
 
 /** Density emits throughout a real three-dimensional region. There is no
  * opaque surface or lit mesh shell. Looped advection moves the internal
- * concentrations while the enclosing pressure field remains stable. */
+ * concentrations inside a slow expansion and a faster forced compression. */
 function sample(x:number,y:number,z:number,phase:number,seed:number):readonly[number,number] {
   const ca=Math.cos(phase),sa=Math.sin(phase);
+  const cycle=phase/(Math.PI*2);
+  const expansion=cycle<.7?(1-Math.cos(Math.PI*cycle/.7))*.5:(1+Math.cos(Math.PI*(cycle-.7)/.3))*.5;
+  // The core pushes sideways and swells between the restraint heights. During
+  // compression its volume narrows, stretches upward and becomes denser. This
+  // changes the actual occupied region, not just its light or texture phase.
+  const neck=1-.10*Math.exp(-(((y-.44)/.15)**2))-.08*Math.exp(-(((y+.80)/.17)**2));
+  const sx=(.79+.43*expansion)*neck,sy=1.08-.12*expansion,sz=.84+.36*expansion;
+  x=(x-.055*expansion*Math.sin(y*3.8+phase))/sx;
+  y/=sy;
+  z=(z-.045*expansion*Math.sin(y*4.3-phase))/sz;
   const twist=y*2.7;
   const xx=x+Math.sin(twist+z*2)*.14,zz=z+Math.cos(twist+x*2)*.11;
   const radius=Math.sqrt(xx*xx*(1.07+.16*Math.sin(y*4.6))+y*y+zz*zz);
@@ -30,7 +40,7 @@ function sample(x:number,y:number,z:number,phase:number,seed:number):readonly[nu
   const vein=Math.pow(Math.max(0,1-Math.abs(fold)),5);
   const valley=xx+y*.42+Math.sin(y*4.1+sa*.35)*.13+zz*.18;
   const cavity=(.20+.80*clamp((a-.25)*3.4))*(1-.88*Math.exp(-valley*valley/.022));
-  return [envelope*cavity*(.38+a*.83+b*.38+vein*.5),clamp(vein*.88+a*.44+b*.12)];
+  return [envelope*cavity*(.38+a*.83+b*.38+vein*.5)/(sx*sy*sz),clamp(vein*.88+a*.44+b*.12+.045*(1-expansion))];
 }
 
 export interface VolumeFrames {
@@ -52,32 +62,33 @@ export function renderEnergy(volumes:readonly EnergyVolume[],camera:Camera,opaqu
     const local=(p:V3):V3=>[(p[0]*cs-p[2]*sn)/volume.radii[0],p[1]/volume.radii[1],(p[0]*sn+p[2]*cs)/volume.radii[2]];
     const dir=local(back),A=dot(dir,dir),relative=sub(volume.center,camera.target);
     const centerX=camera.origin[0]+dot(relative,right)*camera.scale,centerY=camera.origin[1]-dot(relative,up)*camera.scale;
-    const extent=Math.max(...volume.radii)*camera.scale+3;
+    const bound=1.45,extent=Math.max(...volume.radii)*camera.scale*bound+3;
     const x0=Math.max(0,Math.floor(centerX-extent)),x1=Math.min(W-1,Math.ceil(centerX+extent));
     const y0=Math.max(0,Math.floor(centerY-extent)),y1=Math.min(H-1,Math.ceil(centerY+extent));
     for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){
       const i=y*W+x;
       const plane=add(camera.target,add(mul(right,(x+.5-camera.origin[0])/camera.scale),mul(up,(camera.origin[1]-y-.5)/camera.scale)));
       const origin=local(sub(plane,volume.center));
-      const B=2*dot(origin,dir),C=dot(origin,origin)-1,disc=B*B-4*A*C;if(disc<=0)continue;
+      const B=2*dot(origin,dir),C=dot(origin,origin)-bound*bound,disc=B*B-4*A*C;if(disc<=0)continue;
       const near=(-B+Math.sqrt(disc))/(2*A),far=Math.max((-B-Math.sqrt(disc))/(2*A),opaqueDepth[i]!+.015);
       if(near<=far)continue;
-      const steps=40,ds=(near-far)/steps;
+      const steps=56,ds=(near-far)/steps;
       for(let frame=0;frame<ENERGY_FRAMES;frame++){
         const phase=frame/ENERGY_FRAMES*Math.PI*2;
-        let transmission=1,r=0,g=0,b=0;
+        let transmission=1,r=0,g=0,b=0,firstDepth=-Infinity;
         for(let step=0;step<steps;step++){
           const d=near-(step+.5)*ds;
           const [density,hot]=sample(origin[0]+dir[0]*d,origin[1]+dir[1]*d,origin[2]+dir[2]*d,phase,volume.seed);
+          if(density>.012&&firstDepth===-Infinity)firstDepth=d;
           const alpha=1-Math.exp(-density*ds*3.4),weight=transmission*alpha;
-          // Grey, mineral green warms toward pale sulphurous light at the
-          // concentrated filaments. No saturated emerald skin.
+          // Cold, muted green density; deep blue-green remains in the body,
+          // with pale cold emission reserved for its concentrated currents.
           const radiance=hot*hot;
-          r+=weight*(27+radiance*355)*1.42;g+=weight*(47+radiance*365)*1.42;b+=weight*(28+radiance*292)*1.42;
+          r+=weight*(24+radiance*285)*1.42;g+=weight*(45+radiance*385)*1.42;b+=weight*(36+radiance*331)*1.42;
           transmission*=1-alpha;
         }
         const o=i*4;frames[frame]![o]=r;frames[frame]![o+1]=g;frames[frame]![o+2]=b;frames[frame]![o+3]=(1-transmission)*255;
-        if(g>12){body[i]=1;depth[i]=near;objects[i]=volume.object;}
+        if(g>12){body[i]=1;depth[i]=Math.max(depth[i]!,firstDepth);objects[i]=volume.object;}
       }
     }
   }

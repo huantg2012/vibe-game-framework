@@ -8,6 +8,8 @@ import sharp from 'sharp';
 import {buildHaven} from './scene.ts';
 import {WALK_SURFACES} from './environment.ts';
 import {ACTOR_OBJECT_ID,actorLampAnchor} from './actor.ts';
+import {CORE_FACING_TARGET,CORE_YAW} from './devices.ts';
+import {renderEnergy} from './energy.ts';
 import {project,render} from './render.ts';
 import {Model,add,cross,dot,mul,sub,unit} from './model.ts';
 import {ShapeUtils,Vector2} from 'three';
@@ -54,6 +56,60 @@ function verifySourceAndShadow(){
 }
 const rendererRegression=verifySourceAndShadow();
 const {model,stations}=buildHaven();
+function verifyCoreFacing(){
+ const core=stations.find(s=>s.key==='core');assert(core,'Missing core station');
+ const floors=WALK_SURFACES.filter(s=>s.id==='main'||s.id==='upper');
+ assert.equal(floors.length,2,'Facing target requires the two inhabited floor polygons');
+ let weightedCenter=[0,0,0],areaSum=0;
+ // Integrate triangulated floor areas independently of the authored target's
+ // polygon-moment calculation. Neither actor nor camera enters this target.
+ for(const floor of floors){
+  const faces=ShapeUtils.triangulateShape(floor.points.map(p=>new Vector2(p[0],p[2])),[]);
+  for(const face of faces){
+   const [a,b,c]=face.map(i=>floor.points[i]);
+   const area=Math.abs((b[0]-a[0])*(c[2]-a[2])-(c[0]-a[0])*(b[2]-a[2]))/2;
+   weightedCenter=add(weightedCenter,mul(add(add(a,b),c),area/3));areaSum+=area;
+  }
+ }
+ const expected=mul(weightedCenter,1/areaSum);
+ assert(Math.hypot(...sub(expected,CORE_FACING_TARGET))<1e-7,'Core target must be the area-weighted center of the inhabited floors');
+ const toward=unit([expected[0]-core.position[0],0,expected[2]-core.position[2]]);
+ const facing=[Math.sin(CORE_YAW),0,Math.cos(CORE_YAW)],alignment=dot(toward,facing);
+ assert(alignment>1-1e-9,'The core opening must face the floor center');
+ const front=model.lights.find(l=>l.id==='core-front-seal'),rear=model.lights.find(l=>l.id==='core-rear-seal');
+ assert(front&&rear,'Core facing requires its real front and rear anchors');
+ const actual=unit([front.position[0]-rear.position[0],0,front.position[2]-rear.position[2]]);
+ assert(dot(actual,toward)>1-1e-9,'The built core did not use the intended floor-facing transform');
+ assert(model.volumes.filter(v=>v.object===core.id).every(v=>Math.abs(v.yaw-CORE_YAW)<1e-9),'The volume must use the housing orientation');
+ const approach=unit([core.approach[0]-core.position[0],0,core.approach[2]-core.position[2]]);
+ assert(dot(approach,toward)>.99,'The interaction approach must remain in front of the opening');
+ return {target:CORE_FACING_TARGET,yaw:CORE_YAW,alignment,builtAlignment:dot(actual,toward),approach:core.approach};
+}
+const facingRegression=verifyCoreFacing();
+function verifyEnergyDeformation(){
+ const volume=model.volumes.find(v=>v.object===1);
+ assert(volume,'A core volume is required for the isolated deformation fixture');
+ const camera={width:128,height:128,origin:[64,64],scale:32,target:volume.center,direction:[19,24,30]};
+ const result=renderEnergy([volume],camera,new Float32Array(128*128).fill(-Infinity));
+ const densityAreas=[],densityHashes=[],bounds=[];
+ for(const frame of result.frames){
+  const mask=Buffer.alloc(128*128);let area=0,x0=128,y0=128,x1=-1,y1=-1;
+  for(let y=0;y<128;y++)for(let x=0;x<128;x++){
+   const i=y*128+x;if(frame[i*4+3]===0)continue;
+   mask[i]=1;area++;x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);
+  }
+  assert(area>0,'Every phase must retain a visible energy density');
+  assert(x0>0&&y0>0&&x1<127&&y1<127,'The deformation fixture clips its density at an image edge');
+  densityAreas.push(area);bounds.push([x0,y0,x1,y1]);densityHashes.push(createHash('sha256').update(mask).digest('hex'));
+ }
+ const minArea=Math.min(...densityAreas),maxArea=Math.max(...densityAreas),relativeAreaChange=(maxArea-minArea)/minArea;
+ // This is the authored expansion/compression contract, measured on density
+ // with no housing, colour or halo. It is not a visual-quality score.
+ assert(relativeAreaChange>.15,'Energy density must expand/compress by more than raster noise, not merely change RGB inside a fixed silhouette');
+ assert(new Set(densityHashes).size>1,'Energy phases must change spatial occupancy');
+ return {camera:[128,128],densityAreas,relativeAreaChange,bounds,unclipped:true};
+}
+const deformationRegression=verifyEnergyDeformation();
 function verifyOmniCore(){
  const volumes=model.volumes.filter(v=>v.object===1),sources=model.lights.filter(l=>l.id.startsWith('core-'));
  assert(volumes.length>0,'The core must contain a real energy volume');
@@ -82,7 +138,7 @@ function verifyOmniCore(){
  return {canonicalDirections:['+X','-X','+Y','-Y','+Z','-Z'],receiverValues,coreRadianceBudget:corePower,strongestOtherBudget:otherPower,coreReach,strongestOtherReach:otherReach,volumeCount:volumes.length};
 }
 const omniRegression=verifyOmniCore();
-if(process.argv.includes('--renderer-only')){console.log(JSON.stringify({rendererRegression,omniRegression},null,2));process.exit(0);}
+if(process.argv.includes('--renderer-only')){console.log(JSON.stringify({rendererRegression,omniRegression,facingRegression,deformationRegression},null,2));process.exit(0);}
 assert.deepEqual(stations.map(s=>s.key),['core','storage','purifier','offering','growth','rift']);
 for(const t of model.triangles)for(const v of [...t.a,...t.b,...t.c,...t.normal,t.tint])assert(Number.isFinite(v));
 const assetDir=path.join(here,'assets'),manifest=JSON.parse(fs.readFileSync(path.join(assetDir,'manifest.json'),'utf8'));
@@ -176,7 +232,7 @@ for(let i=0;i<N;i++){
 assert(coreBodyPixels>0&&changingInteriorPixels>0,'The volume must animate its visible interior, not only an outline or whole-scene tint');
 assert(densityPixels>0&&densityPixels<N,'Density opacity must be spatially bounded, not opaque across the full frame');
 assert(activeAtlasPixels<N,'Energy animation must leave pixels outside its bounded volume unchanged');
-const energyAtlasChecks={dimensions:[atlas.info.width,atlas.info.height],frames:8,distinctFrames:new Set(frameHashes).size,coreBodyPixels,changingInteriorPixels,densityPixels,transparentHaloPixels,boundedSupport:true,staticCompositeMatches:true};
+const energyAtlasChecks={dimensions:[atlas.info.width,atlas.info.height],frames:8,distinctFrames:new Set(frameHashes).size,coreBodyPixels,changingInteriorPixels,densityPixels,transparentHaloPixels,boundedSupport:true,staticCompositeMatches:true,deformationRegression};
 
 // A necessary spatial bound, independent of the shader's attenuation and ray
 // tests: a contribution must be near a finite source sphere or an emitting
@@ -247,6 +303,6 @@ const riftSourceHashes=Object.fromEntries(['player-sprite-dense.ts','player-spri
  const source=`src/entities/${name}`,filename=path.resolve(here,'../../../..',source);
  return [source,createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
 }));
-const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,rendererRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
+const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],coreFacing:facingRegression,sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,rendererRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--write'))fs.writeFileSync(path.join(here,'assets','layout-check.json'),JSON.stringify(result,null,2)+'\n');

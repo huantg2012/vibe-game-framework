@@ -12,42 +12,50 @@ let paused=reduced.matches||params.has('still'),lastTime:number|undefined,frame=
 let motion:ReturnType<typeof createHavenMotion>|undefined,picking:Uint8ClampedArray|undefined;
 const buttons=new Map<number,HTMLButtonElement>(),models=new Map<number,HTMLImageElement>();
 const load=(image:HTMLImageElement,url:string):Promise<void>=>new Promise((resolve,reject)=>{image.onload=()=>resolve();image.onerror=()=>reject(new Error(`Unable to load ${url}`));image.src=url;});
+const motionView=():boolean=>view==='scene'||view===1;
 function updateControls():void{
   sceneButton.setAttribute('aria-pressed',String(view==='scene'));referenceButton.setAttribute('aria-pressed',String(view==='reference'));baselineButton.setAttribute('aria-pressed',String(view==='baseline'));
   for(const[id,button]of buttons)button.setAttribute('aria-pressed',String(view===id));
-  motionButton.disabled=view!=='scene'||!motion;motionButton.textContent=paused?'继续景观':'暂停景观';motionButton.setAttribute('aria-pressed',String(!paused&&view==='scene'));
-  canvas.dataset.animation=motion&&!paused&&view==='scene'&&!document.hidden?'playing':'paused';
+  motionButton.disabled=!motionView()||!motion;motionButton.textContent=paused?'继续景观':'暂停景观';motionButton.setAttribute('aria-pressed',String(!!motion&&!paused&&motionView()));
+  canvas.dataset.animation=motion&&!paused&&motionView()&&!document.hidden?'playing':'paused';
 }
 function draw():void{
   ctx.imageSmoothingEnabled=false;ctx.fillStyle='#070c0e';ctx.fillRect(0,0,960,640);
+  let sceneFrame:CanvasImageSource=scene;
+  if(motion&&motionView()){
+    try{motion.draw(elapsed);sceneFrame=motion.canvas;}
+    catch(error){motion.dispose();motion=undefined;paused=true;canvas.dataset.renderer='static-fallback';status.textContent='当前以静态画面展示。';updateControls();console.warn(error);}
+  }
   if(view==='scene'){
-    if(motion){
-      try{motion.draw(elapsed);ctx.drawImage(motion.canvas,0,0);}
-      catch(error){motion.dispose();motion=undefined;paused=true;canvas.dataset.renderer='static-fallback';status.textContent='当前以静态画面展示。';updateControls();ctx.drawImage(scene,0,0);console.warn(error);}
-    }else ctx.drawImage(scene,0,0);
+    ctx.drawImage(sceneFrame,0,0);
     description.textContent='炉火、肩灯与被约束的微光。深处的东西偶尔经过；点击装置或人物查看细部。';caption.textContent='微光中的据点';canvas.setAttribute('aria-label','右侧依托残建筑的据点，核心圣龛、归来者与缓慢活动的深景');
   }else if(view==='reference'||view==='baseline'){
     ctx.drawImage(view==='reference'?reference:baseline,0,0,960,640);
     description.textContent=view==='reference'?'启动页原画：空间、材料、光与氛围的直接参照。':'35f17ba：本轮修改前、已获认可的完整像素场景。';caption.textContent=view==='reference'?'原画参照':'获认可基线';canvas.setAttribute('aria-label',description.textContent);
   }else{
     const object=[...manifest.stations,manifest.actor].find(s=>s.id===view)!;const b=object.bounds;
-    const zoom=Math.max(1,Math.min(4,Math.floor(Math.min(420/b.width,470/b.height))));
-    ctx.drawImage(scene,b.x,b.y,b.width,b.height,Math.floor((480-b.width*zoom)/2),Math.floor((640-b.height*zoom)/2),b.width*zoom,b.height*zoom);
+    // Core motion is inspected at a true integer 4×. Focus the upper chamber;
+    // the complete shrine remains visible in the static model alongside it.
+    const core=object.id===1,width=core?Math.min(105,b.width):b.width,height=core?Math.min(117,b.height):b.height;
+    const cropX=core?b.x+Math.floor((b.width-width)/2):b.x;
+    const cropY=core?b.y+Math.max(0,Math.floor(b.height*.40-height/2)):b.y;
+    const zoom=core?4:Math.max(1,Math.min(4,Math.floor(Math.min(420/b.width,470/b.height))));
+    ctx.drawImage(core?sceneFrame:scene,cropX,cropY,width,height,Math.floor((480-width*zoom)/2),Math.floor((640-height*zoom)/2),width*zoom,height*zoom);
     ctx.drawImage(models.get(object.id)!,528,128);
-    ctx.fillStyle='#798481';ctx.font='12px system-ui';ctx.fillText(`整景局部 · ${zoom}× 原像素`,28,57);ctx.fillText('同源模型 · 近距离像素绘制',542,57);
+    ctx.fillStyle='#798481';ctx.font='12px system-ui';ctx.fillText(core?`${motion?'动态':'静态'}芯体局部 · 4× 原像素`:`整景局部 · ${zoom}× 原像素`,28,57);ctx.fillText(core?'完整模型 · 静态参照':'同源模型 · 近距离像素绘制',542,57);
     if(object.id===7){ctx.drawImage(riftActor,30,473,96,96);ctx.fillText('裂隙内：保留原角色',30,592);}
-    description.textContent=object.description;caption.textContent=object.name;canvas.setAttribute('aria-label',`${object.name}，场景局部与同源模型对照`);
+    description.textContent=object.description;caption.textContent=object.name;canvas.setAttribute('aria-label',core?'核心，左侧四倍场景芯体动效与右侧完整静态模型对照':`${object.name}，场景局部与同源模型对照`);
   }
   canvas.dataset.artTime=elapsed.toFixed(3);
 }
 function tick(time:number):void{
-  frame=0;if(disposed||paused||view!=='scene'||document.hidden)return;
+  frame=0;if(disposed||paused||!motion||!motionView()||document.hidden)return;
   if(lastTime!==undefined)elapsed+=Math.min(.08,(time-lastTime)/1000);
-  lastTime=time;draw();frame=requestAnimationFrame(tick);
+  lastTime=time;draw();if(motion&&!paused)frame=requestAnimationFrame(tick);
 }
 function schedule():void{
   if(frame)cancelAnimationFrame(frame);frame=0;lastTime=undefined;updateControls();draw();
-  if(motion&&!paused&&view==='scene'&&!document.hidden)frame=requestAnimationFrame(tick);
+  if(motion&&!paused&&motionView()&&!document.hidden)frame=requestAnimationFrame(tick);
 }
 sceneButton.onclick=()=>{view='scene';schedule();};referenceButton.onclick=()=>{view='reference';schedule();};baselineButton.onclick=()=>{view='baseline';schedule();};
 motionButton.onclick=()=>{paused=!paused;schedule();};
@@ -59,7 +67,7 @@ canvas.addEventListener('click',event=>{
 });
 document.addEventListener('visibilitychange',()=>{if(manifest)schedule();});
 reduced.addEventListener('change',event=>{if(event.matches){paused=true;if(manifest)schedule();}});
-document.addEventListener('keydown',event=>{if(event.code==='Space'&&(event.target===document.body||event.target===canvas)&&view==='scene'){event.preventDefault();paused=!paused;schedule();}});
+document.addEventListener('keydown',event=>{if(event.code==='Space'&&(event.target===document.body||event.target===canvas)&&motion&&motionView()){event.preventDefault();paused=!paused;schedule();}});
 window.addEventListener('pagehide',event=>{if(frame)cancelAnimationFrame(frame);frame=0;lastTime=undefined;if(!event.persisted){disposed=true;motion?.dispose();}});
 window.addEventListener('pageshow',event=>{if(event.persisted&&manifest){disposed=false;schedule();}});
 try{

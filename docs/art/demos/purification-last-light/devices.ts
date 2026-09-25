@@ -1,4 +1,26 @@
 import { Model, add, cross, mul, sub, unit, type Material, type Station, type V3 } from './model';
+import { WALK_SURFACES } from './environment';
+
+const CORE_POSITION: V3 = [12.8, 0, 3.4];
+/** The sanctuary addresses the inhabited architecture, irrespective of where
+ * the current actor or camera happens to be. Polygon areas weight both floors. */
+export const CORE_FACING_TARGET: V3 = (() => {
+  let areaSum=0, weightedX=0, weightedY=0, weightedZ=0;
+  for(const surface of WALK_SURFACES.filter(s=>s.id==='main'||s.id==='upper')) {
+    let twiceArea=0,xMoment=0,zMoment=0;
+    for(let i=0;i<surface.points.length;i++) {
+      const a=surface.points[i]!,b=surface.points[(i+1)%surface.points.length]!;
+      const wedge=a[0]*b[2]-b[0]*a[2];
+      twiceArea+=wedge;xMoment+=(a[0]+b[0])*wedge;zMoment+=(a[2]+b[2])*wedge;
+    }
+    const area=Math.abs(twiceArea)*.5;
+    areaSum+=area;weightedX+=xMoment/(3*twiceArea)*area;
+    weightedZ+=zMoment/(3*twiceArea)*area;weightedY+=surface.points[0]![1]*area;
+  }
+  return [weightedX/areaSum,weightedY/areaSum,weightedZ/areaSum];
+})();
+export const CORE_YAW = Math.atan2(CORE_FACING_TARGET[0]-CORE_POSITION[0],CORE_FACING_TARGET[2]-CORE_POSITION[2]);
+export const CORE_APPROACH: V3 = [CORE_POSITION[0]+Math.sin(CORE_YAW)*2.45,0,CORE_POSITION[2]+Math.cos(CORE_YAW)*2.45];
 
 /** Six independent, full-depth study models. Nothing here samples a reference
  * bitmap: seams, lips, braces, bores and pipe connections are physical meshes. */
@@ -135,29 +157,31 @@ function coreAssembly(m: Model): void {
   m.beam([-.53,3.12,-.60],[.32,3.12,-.60],.095,.13,'iron',.67);
   m.beam([-.77,.68,-.65],[-.65,1.02,-.68],.085,.105,'steel',.61);
   m.beam([.72,.68,-.65],[.59,1.02,-.68],.085,.105,'steel',.58);
-  casting(m, [{ y: .43, x: -.84, z: -.02, width: .55, depth: 1.13 },
-    { y: .71, x: -.91, z: -.04, width: .47, depth: .97 },
-    { y: 2.63, x: -.81, z: -.16, width: .42, depth: .77 },
-    { y: 3.31, x: -.56, z: -.23, width: .42, depth: .6 },
-    { y: 3.56, x: -.32, z: -.22, width: .33, depth: .52 }], 'iron', .98);
-  casting(m, [{ y: .43, x: .8, z: -.04, width: .65, depth: 1.05 },
-    { y: .88, x: .79, z: -.04, width: .48, depth: .89 },
-    { y: 2.57, x: .62, z: -.2, width: .47, depth: .67 },
-    { y: 3.1, x: .41, z: -.25, width: .37, depth: .56 }], 'iron', .83);
+  // Discrete load-bearing ribs replace deep cheeks: the energy must remain
+  // legible through the rear and lateral apertures as well as the open front.
+  casting(m, [{ y: .43, x: -.88, z: -.02, width: .34, depth: .49 },
+    { y: .71, x: -.94, z: -.04, width: .26, depth: .37 },
+    { y: 2.63, x: -.86, z: -.16, width: .21, depth: .25 },
+    { y: 3.31, x: -.58, z: -.23, width: .24, depth: .27 },
+    { y: 3.56, x: -.32, z: -.22, width: .21, depth: .27 }], 'iron', .98);
+  casting(m, [{ y: .43, x: .86, z: -.04, width: .36, depth: .48 },
+    { y: .88, x: .87, z: -.04, width: .27, depth: .35 },
+    { y: 2.57, x: .72, z: -.2, width: .22, depth: .23 },
+    { y: 3.1, x: .47, z: -.25, width: .22, depth: .25 }], 'iron', .83);
   // Narrow inner liners and recessed assembly channels continue around the turn.
-  m.beam([-.62, .67, .34], [-.59, 2.59, .12], .087, .055, 'steel', .66);
-  m.beam([-.59, 2.59, .12], [-.34, 3.24, .025], .08, .048, 'steel', .66);
-  m.beam([.54, .62, .31], [.41, 2.6, .075], .069, .056, 'steel', .61);
-  for (const [x, y, z] of [[-.93, .68, .48], [-.9, 1.4, .405], [-.82, 2.32, .26], [.88, .7, .44], [.77, 1.49, .34], [.63, 2.42, .2]]) frontBolt(m, x!, y!, z!, .052);
+  m.beam([-.79, .67, .13], [-.74, 2.59, -.022], .063, .04, 'steel', .66);
+  m.beam([-.74, 2.59, -.022], [-.43, 3.24, -.085], .059, .04, 'steel', .66);
+  m.beam([.74, .62, .15], [.62, 2.6, -.075], .058, .04, 'steel', .61);
+  for (const [x, y, z] of [[-.94, .68, .155], [-.91, 1.4, .088], [-.87, 2.32, -.001], [.88, .7, .157], [.81, 1.49, .074], [.73, 2.42, -.060]]) frontBolt(m, x!, y!, z!, .044);
   // Opposed clamps have a carriage, threaded shaft, shoe and replaceable pads.
   for (const [side, y] of [[-1, 2.36], [1, 1.2]] as const) {
     const x = side * .73;
-    m.box([x, y, .4], [.61, .31, .47], 'iron', .045, .73);
-    m.box([side * .43, y - .03, .47], [.34, .19, .28], 'steel', .025, .8);
-    m.box([side * .24, y - .04, .46], [.13, .3, .37], 'iron', .025, .8);
-    rod(m, [side * 1.01, y + .015, .4], [side * .3, y + .015, .4], .073, 'steel', 10, .073, .72);
-    for (let i = 0; i < 5; i++) rod(m, [side * (.87 - i * .061), y + .015, .4], [side * (.85 - i * .061), y + .015, .4], .086, 'iron', 10, .086, .82);
-    frontBolt(m, side * .87, y, .65, .06);
+    m.box([x, y, .105], [.45, .23, .27], 'iron', .035, .73);
+    m.box([side * .49, y - .03, .21], [.25, .14, .23], 'steel', .02, .8);
+    m.box([side * .34, y - .04, .24], [.095, .23, .26], 'iron', .018, .8);
+    rod(m, [side * .96, y + .015, .16], [side * .37, y + .015, .16], .061, 'steel', 10, .061, .72);
+    for (let i = 0; i < 5; i++) rod(m, [side * (.84 - i * .052), y + .015, .16], [side * (.82 - i * .052), y + .015, .16], .071, 'iron', 10, .071, .82);
+    frontBolt(m, side * .85, y, .253, .048);
   }
   pipe(m, [[-.96, .54, -.57], [-1.04, 1.29, -.54], [-1.01, 2.22, -.46], [-.7, 2.71, -.4]], .043, .8);
   pipe(m, [[.99, .51, -.51], [1.09, .61, -.45], [1.08, .9, -.3], [.9, 1.03, -.24]], .071, .72);
@@ -194,21 +218,21 @@ function core(m: Model): void {
   // Two unequal remnant jambs carry the restrained body. Deep shoulders, rear
   // anchors and broken crown make an architectural silhouette, not a pedestal
   // display. The crown's missing center preserves sky and void behind the core.
-  casting(m, [{ y: .24, x: -1.36, z: -.47, width: .54, depth: 1.14 },
-    { y: .74, x: -1.34, z: -.48, width: .43, depth: .97 },
-    { y: 3.31, x: -1.13, z: -.64, width: .36, depth: .76 },
-    { y: 4.11, x: -.84, z: -.67, width: .33, depth: .64 },
-    { y: 4.65, x: -.39, z: -.69, width: .3, depth: .51 },
-    { y: 4.93, x: -.2, z: -.67, width: .2, depth: .39 }], 'iron', .73);
-  casting(m, [{ y: .24, x: 1.34, z: -.46, width: .53, depth: 1.1 },
-    { y: .78, x: 1.29, z: -.49, width: .44, depth: .95 },
-    { y: 3.29, x: 1.05, z: -.65, width: .34, depth: .72 },
-    { y: 4.00, x: .73, z: -.69, width: .31, depth: .59 },
-    { y: 4.61, x: .26, z: -.71, width: .27, depth: .48 }], 'iron', .65);
+  casting(m, [{ y: .24, x: -1.36, z: -.47, width: .37, depth: .55 },
+    { y: .74, x: -1.34, z: -.48, width: .28, depth: .34 },
+    { y: 3.31, x: -1.13, z: -.64, width: .22, depth: .26 },
+    { y: 4.11, x: -.84, z: -.67, width: .24, depth: .30 },
+    { y: 4.65, x: -.39, z: -.69, width: .23, depth: .29 },
+    { y: 4.93, x: -.2, z: -.67, width: .17, depth: .26 }], 'iron', .73);
+  casting(m, [{ y: .24, x: 1.34, z: -.46, width: .36, depth: .53 },
+    { y: .78, x: 1.29, z: -.49, width: .28, depth: .33 },
+    { y: 3.29, x: 1.10, z: -.65, width: .21, depth: .25 },
+    { y: 4.00, x: .77, z: -.69, width: .23, depth: .29 },
+    { y: 4.61, x: .26, z: -.71, width: .22, depth: .27 }], 'iron', .65);
   // Physical inset rebates in the side buttresses catch only partial cold
   // reflections. No ornamental outline competes with the matter in the center.
-  m.beam([-1.46, .6, .085], [-1.23, 3.3, -.23], .072, .09, 'steel', .56);
-  m.beam([1.39, .64, .05], [1.12, 3.21, -.245], .067, .086, 'steel', .51);
+  m.beam([-1.47, .6, -.285], [-1.25, 3.3, -.50], .061, .067, 'steel', .56);
+  m.beam([1.40, .64, -.305], [1.20, 3.21, -.505], .059, .065, 'steel', .51);
   for (const side of [-1, 1]) {
     m.box([side * 1.35, .36, -.49], [.59, .14, 1.24], 'iron', .025, .86);
     topBolt(m, side * 1.35, .458, -.10, .071);
@@ -221,7 +245,7 @@ function core(m: Model): void {
   // Distributed samples lie INSIDE that same mass. Their omnidirectional spill
   // can escape through front, rear and crown apertures; no light is pushed in
   // front of the shrine just to paint a cone on the floor.
-  const radiance:V3=[.36,.49,.425];
+  const radiance:V3=[.32,.49,.43];
   m.light([0,2.66,.02],radiance,5,14,{kind:'pollution',id:'core-heart'});
   m.light([0,2.66,.39],radiance,1,14,{kind:'pollution',id:'core-front-seal'});
   m.light([0,2.66,-.36],radiance,1,14,{kind:'pollution',id:'core-rear-seal'});
@@ -437,7 +461,7 @@ function rift(m: Model): void {
 
 export function buildDevices(m: Model): Station[] {
   const stations: Station[] = [
-    { id: 1, key: 'core', name: '核心', position: [12.8, 0, 3.4], approach: [10.8, 0, 5], radius: .92,
+    { id: 1, key: 'core', name: '核心', position: CORE_POSITION, approach: CORE_APPROACH, radius: .92,
       description: '右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；受约束的能量团内部翻涌，灰绿光向四周辐射，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。' },
     { id: 2, key: 'storage', name: '储藏', position: [10.5, 2.6, -3.2], approach: [9.02, 2.6, -3.55], radius: .8,
       description: '封闭的顶压观察井，窄缝下可见被关物抵压；承压盖、螺杆与深收容腔构成完整机体。修复提高薪柴价值。' },
@@ -453,7 +477,7 @@ export function buildDevices(m: Model): Station[] {
   const builders = [core, storage, purifier, offering, growth, rift] as const;
   for (let i = 0; i < stations.length; i++) {
     const station = stations[i]!;
-    m.at(station.position, station.key === 'core' ? -.18 : 0, station.id, () => builders[i]!(m));
+    m.at(station.position, station.key === 'core' ? CORE_YAW : 0, station.id, () => builders[i]!(m));
   }
   return stations;
 }

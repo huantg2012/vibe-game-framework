@@ -17,11 +17,13 @@ features: COH-F042 / COH-F026 / COH-F039
 
 ## 当前执行状态
 
+**最新四项细化已实现**：27a927b获用户“这次好多了”；在此基础上调冷并加深能量色、增加扩张/压缩、减薄承力框架遮蔽面，并将开放面朝两层活动地面的几何中心。核心详情左侧新增4×真实动态裁切，右侧保留完整静态模型。新一轮视觉待人审。
+
 **当前只重做核心及其光效。** 按用户认可的能量聚集体、全向最强辐射定义，已替换 `8d5f3a9` 的细线/薄膜：三维发光密度、内部涌流、开放后部约束架及体内分布光源。集中定义见美术设计核心段；本次视觉待人审。
 
 入口：[微光中的据点](../art/demos/purification-last-light/index.html)，本地 `http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html`。固定960×640；默认动态播放，有暂停、修改前/原画对照、六装置与归来者模型。`?t=8&still=1` 可复现动态第八秒。
 
-- [x] **核心（本次重做，视觉待人审）**：移到下层右沿 `[12.8,0,3.4]`，约4.93m高，开放铁冠/约束肋/低阶前场；内芯改为有内部明暗涌流的发光密度体，朝拜站位 `[10.8,0,5]` 可达。
+- [x] **核心（本次重做，视觉待人审）**：移到下层右沿 `[12.8,0,3.4]`，约4.93m高，开放铁冠/约束肋/低阶前场；内芯改为有内部明暗涌流的发光密度体，朝拜站位 `[10.63414,0,2.25476]` 可达。
 - [x] **污染**：六装置与三层外景的污染都有灰绿发光；区分自身微光和照到邻近材料的贡献，压低污染自反射，避免绿上叠绿。
 - [x] **混光**：肩灯、炉火、污染三类源；共32个物理采样源（1肩灯、1炉子、30处污染），核心占7个体内样本。几何遮挡与材质共用，三类贡献分别导出，动态源与接收面同步。
 - [x] **依托**：移除挡核心的高书柜，右侧连接颈经铁梁/承压石垫咬入连续厚断墙，向画外和下方延伸；原双层双坡保持。
@@ -48,7 +50,7 @@ node --import tsx docs/art/demos/purification-last-light/export.mjs
 node --import tsx docs/art/demos/purification-last-light/check.mjs --write
 ```
 
-[本轮限定验证](../qa/iteration-30-last-light-living.md)和目录内 `assets/layout-check.json`、`browser-check.json` 保留结果。8模块strict、有限几何、源类型/唯一ID、六物和外景污染掩码、光贡献空间支持检查通过；7,311个可站样本全部连通，六点/双坡可达。浏览器检查10视图、暂停/继续、模型切换停时、确定时刻与无error/warn。
+[本轮限定验证](../qa/iteration-30-last-light-living.md)和目录内 `assets/layout-check.json`、`browser-check.json` 保留结果。8模块strict、有限几何、源类型/唯一ID、六物和外景污染掩码、光贡献空间支持检查通过；7,176个可站样本全部连通，六点/双坡可达。浏览器检查10视图、暂停/继续、模型切换停时、确定时刻与无error/warn。
 
 产物：`haven.png` / `haven-clean.png` / `haven-2x.png`；六装置与人物的 `model-*.png`；`rift-actor.png`；`light-{pollution,furnace,shoulder}.png`；`motion-map.png` / `depth-layers.png` / `object-ids.png`；`manifest.json` / `checksums.json`。基线PNG为原提交字节副本。
 
