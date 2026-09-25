@@ -1,5 +1,5 @@
 import {renderEnergy} from './energy';
-import { add, clamp, cross, dot, mul, sub, unit, type V3, type Triangle, type Model, type Material, type LightKind } from './model';
+import { add, clamp, cross, dot, mul, sub, unit, type V3, type Triangle, type Model, type Material, type LightKind, type Light } from './model';
 
 export interface Camera { width:number; height:number; origin:readonly[number,number]; scale:number; target:V3; direction:V3; }
 export const CAMERA:Camera={width:960,height:640,origin:[478,289],scale:26.5,target:[0,0,0],direction:[19,24,30]};
@@ -88,6 +88,9 @@ function sampleSurface(t:Triangle,p:V3,n:V3):Surface {
 
 export interface Rendered {
   energyFrames:Uint8ClampedArray[]; energyBase:Uint8ClampedArray;
+  /** Core-only environment contribution, before energy-volume transmission.
+   * This is a subset of lightFields.pollution, never an extra fourth source. */
+  coreLight:Uint8ClampedArray;
   rgba:Uint8ClampedArray; depth:Float32Array; objects:Uint8Array; layers:Uint8Array;
   emission:Float32Array; triangleCount:number;
   lightFields:Record<LightKind,Uint8ClampedArray>;
@@ -97,6 +100,12 @@ export interface Rendered {
 const LIGHT_KINDS:readonly LightKind[]=['pollution','furnace','shoulder'];
 const LIGHT_COLORS:Record<LightKind,V3>={pollution:[.57,.76,.62],furnace:[1,.48,.15],shoulder:[1,.84,.6]};
 const sourceKind=(material:Material):LightKind|undefined=>(material==='pollutant'||material==='energy')?'pollution':material==='ember'?'furnace':material==='lamp'?'shoulder':undefined;
+function lightFalloff(light:Light,distance:number):number {
+  // The broad core emitter has a softened near field. More of its output
+  // reaches the inhabited floor instead of clipping the adjacent iron white.
+  const core=light.id.startsWith('core-');
+  return light.power/((core?2.2:1)+distance*distance*(core?.13:.27))*clamp(1-(distance/light.radius)**4);
+}
 
 /** Fixed camera geometry is lit once into additive source fields. The viewer
  * varies these physically occluded contributions, not a screen-wide colour wash. */
@@ -104,7 +113,12 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
   const {width:W,height:H}=camera,N=W*H,basis=cameraBasis(camera);
   const depth=new Float32Array(N).fill(-Infinity),indices=new Int32Array(N).fill(-1),positions=new Float32Array(N*3);
   const objects=new Uint8Array(N),layers=new Uint8Array(N),emission=new Float32Array(N),rgba=new Uint8ClampedArray(N*4),motion=new Uint8ClampedArray(N*4);
+  // A parallel unlit-by-core value preserves the actual source difference
+  // through byte clipping, glass and scattering. Subtracting raw HDR energy
+  // from an already clipped pixel would erase unrelated light in the review.
+  const withoutCore=new Uint8ClampedArray(N*4);
   const fields:Record<LightKind,Float32Array>={pollution:new Float32Array(N*3),furnace:new Float32Array(N*3),shoulder:new Float32Array(N*3)};
+  const coreField=new Float32Array(N*3);
   const layerIndex={far:1,middle:2,near:3,haven:4};
   model.triangles.forEach((t,id)=>{
     if(transparent(t))return;
@@ -131,6 +145,7 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     const current=noise(x*.008,3,y*.006)*.7+noise(x*.017,1,y*.012)*.3;
     const veil=cloud*(.45+current*.8);
     rgba.set([3+veil*3,5+veil*4,6+veil*4.5,255],o);
+    withoutCore.set(rgba.subarray(o,o+4),o);
     motion.set([layers[i]!,objects[i]!,0,Math.round(noise(x*.03,4,y*.03)*255)],o);
     if(id<0)continue;
     const t=model.triangles[id]!,p:V3=[positions[i*3]!,positions[i*3+1]!,positions[i*3+2]!];
@@ -160,7 +175,7 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     for(const light of model.lights){
       const diff=sub(light.position,p),distance=Math.hypot(...diff);if(distance>light.radius)continue;
       const ld=mul(diff,1/Math.max(.01,distance)),nd=Math.max(0,dot(n,ld));if(nd<.012)continue;
-      const attenuation=light.power/(1+distance*distance*.27)*clamp(1-(distance/light.radius)**4);
+      const attenuation=lightFalloff(light,distance);
       if(attenuation<.009)continue;
       const shadowDelta=sub(light.position,start),shadowDistance=Math.hypot(...shadowDelta);
       let visibility=bvh.blocked(start,mul(shadowDelta,1/shadowDistance),shadowDistance-.025)?0:1;
@@ -182,6 +197,7 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
         const selfResponse=t.material==='energy'?0:t.material==='pollutant'?.46:1;
         const value=(surf.color[k]!*nd*attenuation*selfResponse+spec)*light.color[k]!*distanceFactor*visibility;
         fields[light.kind][i*3+k]!+=value;rgb[k]!+=value;
+        if(light.id.startsWith('core-'))coreField[i*3+k]!+=value;
       }
     }
     const kind=sourceKind(t.material);
@@ -195,7 +211,10 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
       motion[o+2]=kind==='pollution'?1:kind==='furnace'?2:3;
       motion[o+3]=Math.round(clamp(noise(p[0]*1.5,p[1]*1.5,p[2]*1.5))*255);
     }
-    for(let k=0;k<3;k++)rgba[o+k]=Math.round(clamp(rgb[k]!,0,250)/2)*2;
+    for(let k=0;k<3;k++){
+      rgba[o+k]=Math.round(clamp(rgb[k]!,0,250)/2)*2;
+      withoutCore[o+k]=Math.round(clamp(rgb[k]!-coreField[i*3+k]!,0,250)/2)*2;
+    }
   }
   // Both sides of glass and its contents preserve depth and source-dependent
   // reflections. Light fields are transmitted through the same alpha layers.
@@ -216,18 +235,25 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
       const alpha=liquid?.32:.09+fresnel*.34;
       const body=(liquid?.38:.30)+.08*noise(p[0]*9,p[1]*8,p[2]*9);
       const glass:Record<LightKind,number[]>={pollution:[0,0,0],furnace:[0,0,0],shoulder:[0,0,0]};
+      const glassCore=[0,0,0];
       for(const light of model.lights){
         const diff=sub(light.position,p),dist=Math.hypot(...diff);if(dist>light.radius)continue;
         const ld=mul(diff,1/Math.max(.01,dist)),half=unit(add(ld,basis.back));
-        const strength=light.power/(1+dist*dist*.27)*clamp(1-(dist/light.radius)**4);
+        const strength=lightFalloff(light,dist);
         if(bvh.blocked(add(p,mul(n,.03)),ld,dist-.05))continue;
         const spec=Math.pow(Math.max(0,dot(n,half)),36)*(liquid?27:81)*strength;
-        for(let k=0;k<3;k++)glass[light.kind][k]!+=(BASE[t.material][k]!*.12*strength+spec)*light.color[k]!;
+        for(let k=0;k<3;k++){
+          const value=(BASE[t.material][k]!*.12*strength+spec)*light.color[k]!;
+          glass[light.kind][k]!+=value;
+          if(light.id.startsWith('core-'))glassCore[k]!+=value;
+        }
       }
       for(let k=0;k<3;k++){
         let value=BASE[t.material][k]!*body*t.tint+fresnel*15;
         for(const kind of LIGHT_KINDS){fields[kind][i*3+k]=fields[kind][i*3+k]!*(1-alpha)+glass[kind][k]!*alpha;value+=glass[kind][k]!;}
+        coreField[i*3+k]=coreField[i*3+k]!*(1-alpha)+glassCore[k]!*alpha;
         rgba[i*4+k]=Math.round(rgba[i*4+k]!*(1-alpha)+value*alpha);
+        withoutCore[i*4+k]=Math.round(withoutCore[i*4+k]!*(1-alpha)+(value-glassCore[k]!)*alpha);
       }
       objects[i]=t.object;layers[i]=layerIndex[t.layer];motion[i*4]=layers[i]!;motion[i*4+1]=t.object;
     }
@@ -246,7 +272,47 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
       for(let k=0;k<3;k++){const value=LIGHT_COLORS[kind][k]!*g*66;fields[kind][j*3+k]!+=value;scatter[j*3+k]!+=value;}
     }
   }
-  for(let i=0;i<N;i++)for(let k=0;k<3;k++)rgba[i*4+k]=clamp(rgba[i*4+k]!+scatter[i*3+k]!,0,255);
+  for(let i=0;i<N;i++)for(let k=0;k<3;k++){
+    rgba[i*4+k]=clamp(rgba[i*4+k]!+scatter[i*3+k]!,0,255);
+    withoutCore[i*4+k]=clamp(withoutCore[i*4+k]!+scatter[i*3+k]!,0,255);
+  }
+  // Local single-scattering air, integrated in world space up to the first
+  // solid surface. The source-to-air rays use the same occluding architecture
+  // as the floors: this is not a screen disc or a global coloured fog layer.
+  const heart=model.lights.find(l=>l.id==='core-heart');
+  if(heart&&model.volumes.some(v=>v.object===1)){
+    const reach=3.4,center=project(heart.position,camera),extent=Math.ceil(reach*camera.scale);
+    const x0=Math.max(0,Math.floor(center[0]-extent)),x1=Math.min(W-1,Math.ceil(center[0]+extent));
+    const y0=Math.max(0,Math.floor(center[1]-extent)),y1=Math.min(H-1,Math.ceil(center[1]+extent));
+    const coreSources=model.lights.filter(l=>l.id.startsWith('core-'));
+    const radiantPower=coreSources.reduce((n,l)=>n+l.power,0);
+    const airAnchors=coreSources.filter(l=>l.id==='core-heart'||l.id==='core-front-seal'||l.id==='core-rear-seal');
+    for(let y=y0;y<y1;y++)for(let x=x0;x<x1;x++){
+      const i=y*W+x;
+      const plane=add(camera.target,add(mul(basis.right,(x+.5-camera.origin[0])/camera.scale),mul(basis.up,(camera.origin[1]-y-.5)/camera.scale)));
+      const offset=sub(plane,heart.position),along=dot(offset,basis.back);
+      const disc=along*along-dot(offset,offset)+reach*reach;if(disc<=0)continue;
+      const near=-along+Math.sqrt(disc),far=Math.max(-along-Math.sqrt(disc),depth[i]!+.02);
+      if(far>=near)continue;
+      const ds=(near-far)/12;let air=0;
+      for(let step=0;step<12;step++){
+        const p=add(plane,mul(basis.back,near-(step+.5)*ds));
+        const distance=Math.hypot(...sub(p,heart.position));
+        const density=.032*(1-distance/reach)**2*(.78+.22*noise(p[0]*1.2,p[1]*1.2,p[2]*1.2));
+        if(density<.0002)continue;
+        let visibility=0;
+        for(const anchor of airAnchors){
+          const delta=sub(anchor.position,p),length=Math.hypot(...delta);
+          if(length<.02||!bvh.blocked(p,mul(delta,1/length),length-.02))visibility+=1/airAnchors.length;
+        }
+        air+=density*ds*visibility*radiantPower/(2.2+distance*distance*.13)*30;
+      }
+      for(let k=0;k<3;k++){
+        const value=air*heart.color[k]!;
+        rgba[i*4+k]!+=value;fields.pollution[i*3+k]!+=value;
+      }
+    }
+  }
   const energyBase=rgba.slice();
   const volume=renderEnergy(model.volumes,camera,depth);
   const energyFrame=volume.frames[0]!;
@@ -262,5 +328,14 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
   }
   const lightFields={} as Record<LightKind,Uint8ClampedArray>;
   for(const kind of LIGHT_KINDS){const out=new Uint8ClampedArray(N*4);for(let i=0;i<N;i++){for(let k=0;k<3;k++)out[i*4+k]=fields[kind][i*3+k]!;out[i*4+3]=255;}lightFields[kind]=out;}
-  return {energyFrames:volume.frames,energyBase,rgba,depth,objects,layers,emission,triangleCount:model.triangles.length,lightFields,motion};
+  const coreLight=new Uint8ClampedArray(N*4);
+  for(let i=0;i<N;i++){
+    for(let k=0;k<3;k++){
+      coreLight[i*4+k]=Math.max(0,energyBase[i*4+k]!-withoutCore[i*4+k]!);
+      // Retain a nonnegative residual after two-level surface quantization.
+      lightFields.pollution[i*4+k]=Math.max(lightFields.pollution[i*4+k]!,coreLight[i*4+k]!);
+    }
+    coreLight[i*4+3]=255;
+  }
+  return {energyFrames:volume.frames,energyBase,coreLight,rgba,depth,objects,layers,emission,triangleCount:model.triangles.length,lightFields,motion};
 }

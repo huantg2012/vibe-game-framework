@@ -4,8 +4,8 @@
 
 I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类污染/炉火/肩灯混光、右侧建筑依托、分层外景、同身份新人物与动态景观。六站双坡及全部7311可站样本连通，查看页限定验证通过；新版待人审，正式生产仍R10、Rift人物未变、I28挂起。
 
-- 生成：2026-09-25T14:38:55.396Z；版本：edc722329e99134b7c2a8123798afce3284ca0be
-- 来源基线：2026-09-23T11:42:33.716Z；指纹：25e64e8e6a2476d534c811d72d93c8a8cac07bfa752995710f79b655538bb9b8
+- 生成：2026-09-25T14:53:58.788Z；版本：347d55a23907f4c3ef07049b2b29b74b81e3da40
+- 来源基线：2026-09-23T11:42:33.716Z；指纹：72933fcba515c3cb7ffa4bfcd3ae9d977570177dab50cf88a8abee135742235c
 - 登记源：[docs/game-state/atlas.json](../../docs/game-state/atlas.json)
 - 53 项登记功能 / 45 项声明正式接入 / 53 项有待核实信息
 
@@ -15,7 +15,7 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 
 ## 来源与覆盖提醒
 
-共 56 条提醒，以下预览最多 8 条；完整结果运行 check 或查看地图。
+共 57 条提醒，以下预览最多 8 条；完整结果运行 check 或查看地图。
 
 - 来源变化：CLAUDE.md
 - 来源变化：docs/art-direction.md
@@ -23,8 +23,8 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 - 来源变化：docs/art/demos/purification-last-light/assets/baseline-35f17ba.png
 - 来源变化：docs/art/demos/purification-last-light/assets/browser-check.json
 - 来源变化：docs/art/demos/purification-last-light/assets/layout-check.json
+- 来源变化：docs/art/demos/purification-last-light/assets/light-core.png
 - 来源变化：docs/art/demos/purification-last-light/assets/manifest.json
-- 来源变化：docs/art/demos/purification-last-light/check.mjs
 - 此索引不会自动感知之后的修改；开工运行 check，需要最新索引时重新生成。
 
 ## 领域与功能
@@ -190,8 +190,8 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 - [**COH-F041 · 场景音乐、环境声与动作音效**](../../docs/game-state/features/audiovisual.json)：AudioManager 管理标题/净化点/Rift 音乐、环境与移动/交互/战斗音效，并随场景和暂停处理生命周期。
   接入：正式流程已接入 · 工作：本轮已收口 · 验证：2 条：静态核查、自动检查 · **待核实**
 
-- [**COH-F042 · 基地装置、边界与标题场景表现**](../../docs/game-state/features/audiovisual.json)：用户指出edc7223核心内质像薄片；本轮以实际三维浓缩团块、前后冷密层遮蔽和透射替代平面亮层及均匀填充，保留受压伸缩，7个全向照明样本同步中心。9模块/8帧/六轴照明/7176站位检查通过；新版视觉待人审，正式R10和Rift人物未变。
-  接入：正式流程已接入 · 工作：推进中 · 验证：52 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
+- [**COH-F042 · 基地装置、边界与标题场景表现**](../../docs/game-state/features/audiovisual.json)：347d55a核心体积获用户认可；本轮分离核心环境贡献、校准中远程照明/局部散射，并与4.8秒内质伸缩同相，提供同帧照明开关。来源/裁切/投影和原9模块/7176站位回归通过，浏览器实测开关；照明新版待人审，正式生产未变。
+  接入：正式流程已接入 · 工作：推进中 · 验证：54 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
 
 ### 世界观与叙事 · 已登记
 

@@ -2958,5 +2958,39 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-CORE-DEPTH-APPROVED",
+    "kind": "human",
+    "result": "pass",
+    "date": "2026-09-25",
+    "revision": "347d55a",
+    "scope": "用户对核心内质体积版本回复“很好”，随后单独要求增强核心投向场景的光。",
+    "limitations": "认可限于此次核心内质，不自动通过后续照明调整或正式玩法集成。",
+    "sources": [
+      {
+        "path": "docs/art-direction.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-CORE-LIGHT",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-25",
+    "revision": "core lighting after 347d55a",
+    "scope": "核心贡献与真实开关差/裁切/遮挡夹具，导出来源子集与有限支持，9模块/8帧/六轴和7176站位回归；浏览器27.267秒同帧开关、恢复动态、最终无error/warn。",
+    "limitations": "独立整景复核不代替用户照明审美验收；固定相机美术样景，未接正式玩法。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-last-light-living.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/layout-check.json",
+        "role": "test"
+      }
+    ]
   }
 ]

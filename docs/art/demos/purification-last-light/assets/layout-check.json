@@ -44,8 +44,8 @@
     "fields": {
       "pollution": {
         "sourceCount": 30,
-        "contributingPixels": 98434,
-        "nonEmitterReceivingPixels": 96243,
+        "contributingPixels": 112041,
+        "nonEmitterReceivingPixels": 109821,
         "maximum": 255,
         "outsideSupport": 0
       },
@@ -64,6 +64,23 @@
         "outsideSupport": 0
       }
     },
+    "coreField": {
+      "sourceCount": 7,
+      "contributingPixels": 92097,
+      "nonEmitterReceivingPixels": 90462,
+      "receiverObjects": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7
+      ],
+      "maximum": 242,
+      "outsideSupport": 0,
+      "pollutionSubset": true
+    },
     "rendererRegression": {
       "camera": [
         128,
@@ -75,6 +92,19 @@
       "blockedContribution": 0,
       "castShadowDifference": 9.111111111111114
     },
+    "coreContributionRegression": {
+      "camera": [
+        128,
+        112
+      ],
+      "maximumDifferenceError": 2,
+      "clippedChannels": 18889,
+      "otherPollutionPixels": 5383,
+      "receivingValue": 11.555555555555555,
+      "shadowValue": 0,
+      "unblockedValue": 14.88888888888889,
+      "onOffDifferenceMatches": true
+    },
     "omniRegression": {
       "canonicalDirections": [
         "+X",
@@ -85,14 +115,14 @@
         "-Z"
       ],
       "receiverValues": [
-        74,
-        83,
-        74.75,
-        81.25,
-        83.25,
-        79.25
+        147.5,
+        165.5,
+        148.5,
+        161.5,
+        166.25,
+        158.25
       ],
-      "coreRadianceBudget": 4.944786,
+      "coreRadianceBudget": 7.911657600000001,
       "strongestOtherBudget": 3.0251104000000004,
       "coreReach": 14,
       "strongestOtherReach": 8.4,

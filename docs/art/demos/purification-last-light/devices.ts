@@ -250,13 +250,14 @@ function core(m: Model): void {
   // can escape through front, rear and crown apertures; no light is pushed in
   // front of the shrine just to paint a cone on the floor.
   const radiance:V3=[.32,.49,.43];
-  m.light(heart,radiance,5,14,{kind:'pollution',id:'core-heart'});
-  m.light(add(heart,[0,0,.36]),radiance,1,14,{kind:'pollution',id:'core-front-seal'});
-  m.light(add(heart,[0,0,-.36]),radiance,1,14,{kind:'pollution',id:'core-rear-seal'});
-  m.light(add(heart,[-.36,0,0]),radiance,1,14,{kind:'pollution',id:'core-left-seal'});
-  m.light(add(heart,[.36,0,0]),radiance,1,14,{kind:'pollution',id:'core-right-seal'});
-  m.light(add(heart,[0,.55,0]),radiance,1,14,{kind:'pollution',id:'core-upper-seal'});
-  m.light(add(heart,[0,-.55,0]),radiance,1,14,{kind:'pollution',id:'core-lower-seal'});
+  const output=1.6;
+  m.light(heart,radiance,5*output,14,{kind:'pollution',id:'core-heart'});
+  m.light(add(heart,[0,0,.36]),radiance,output,14,{kind:'pollution',id:'core-front-seal'});
+  m.light(add(heart,[0,0,-.36]),radiance,output,14,{kind:'pollution',id:'core-rear-seal'});
+  m.light(add(heart,[-.36,0,0]),radiance,output,14,{kind:'pollution',id:'core-left-seal'});
+  m.light(add(heart,[.36,0,0]),radiance,output,14,{kind:'pollution',id:'core-right-seal'});
+  m.light(add(heart,[0,.55,0]),radiance,output,14,{kind:'pollution',id:'core-upper-seal'});
+  m.light(add(heart,[0,-.55,0]),radiance,output,14,{kind:'pollution',id:'core-lower-seal'});
 }
 
 function storage(m: Model): void {

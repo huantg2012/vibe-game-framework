@@ -55,6 +55,57 @@ function verifySourceAndShadow(){
  return {camera:[camera.width,camera.height],sourceFamily:'pollution',receivingFaceGain:litGain,unblockedContribution:clearContribution,blockedContribution,castShadowDifference:clearValue-shadowValue};
 }
 const rendererRegression=verifySourceAndShadow();
+// The core field is the visible LDR difference made by just the core sources,
+// not their unclamped radiance or a duplicate of the whole pollution family.
+// Keep a second pollution source present in both renders to detect that mix-up.
+function verifyCoreContribution(){
+ const camera={width:128,height:112,origin:[64,56],scale:13,target:[0,0,0],direction:[0,10,.001]};
+ const fixture=(blocked,corePower)=>{
+  const m=new Model();m.layer='haven';m.object=1;
+  m.slab([[-4,-4],[4,-4],[4,4],[-4,4]],0,-.1,'cutstone');
+  if(blocked){m.object=2;m.box([0,.8,0],[.7,1.6,1.2],'iron');}
+  m.light([2.8,2.4,2.5],[.28,.42,.36],.8,6,{kind:'pollution',id:'fixture-other-pollution'});
+  if(corePower)m.light([-2,3,0],[.32,.49,.43],corePower,8,{kind:'pollution',id:'core-heart'});
+  return render(m,camera);
+ };
+ const off=fixture(true,0),on=fixture(true,3),unblocked=fixture(false,3),saturated=fixture(true,70);
+ let maximumDifferenceError=0,clippedChannels=0,otherPollutionPixels=0;
+ for(const result of [on,saturated]){
+  assert(result.coreLight instanceof Uint8ClampedArray,'Renderer must expose the separate core contribution');
+  assert.equal(result.coreLight.length,result.energyBase.length,'Core contribution dimensions differ from its base');
+  for(let i=0;i<result.coreLight.length;i+=4){
+   assert.equal(result.coreLight[i+3],255,'Core contribution must be opaque RGBA data');
+   for(let k=0;k<3;k++){
+    const expected=Math.max(0,result.energyBase[i+k]-off.energyBase[i+k]);
+    const error=Math.abs(result.coreLight[i+k]-expected);
+    maximumDifferenceError=Math.max(maximumDifferenceError,error);
+    assert(error<=2,`Core field differs from its actual on/off base difference at ${i/4}, channel ${k}: ${error}`);
+    assert(result.coreLight[i+k]<=result.lightFields.pollution[i+k]+2,'Core contribution escaped its pollution-family parent');
+    if(result===saturated&&result.energyBase[i+k]>=250&&expected>0)clippedChannels++;
+   }
+  }
+ }
+ for(let i=0;i<off.coreLight.length;i+=4){
+  assert.equal(off.coreLight[i]+off.coreLight[i+1]+off.coreLight[i+2],0,'Removing core sources must remove their entire field');
+  if(off.lightFields.pollution[i]+off.lightFields.pollution[i+1]+off.lightFields.pollution[i+2]>0)otherPollutionPixels++;
+ }
+ assert(otherPollutionPixels>0,'The independence fixture must retain non-core pollution');
+ assert(clippedChannels>0,'The core subtraction fixture must exercise LDR clipping');
+ const sample=(result,point)=>{
+  const p=project(point,camera),x=Math.floor(p[0]),y=Math.floor(p[1]);let sum=0;
+  for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){
+   const i=(y+dy)*camera.width+x+dx;
+   assert.equal(result.objects[i],1,'Core fixture probe must sample its non-emitting receiver');
+   sum+=result.coreLight[i*4+1];
+  }return sum/9;
+ };
+ const receivingValue=sample(on,[1.3,0,1.9]),shadowValue=sample(on,[1.3,0,0]),unblockedValue=sample(unblocked,[1.3,0,0]);
+ assert(receivingValue>0,'Core field must contain actual reflected light on a non-emitting face');
+ assert(unblockedValue>0,'Removing the blocker must expose the core to the receiver');
+ assert(shadowValue<unblockedValue*.3,'Core-specific extraction must preserve an opaque blocker\'s umbra');
+ return {camera:[camera.width,camera.height],maximumDifferenceError,clippedChannels,otherPollutionPixels,receivingValue,shadowValue,unblockedValue,onOffDifferenceMatches:true};
+}
+const coreContributionRegression=verifyCoreContribution();
 const {model,stations}=buildHaven();
 function verifyCoreFacing(){
  const core=stations.find(s=>s.key==='core');assert(core,'Missing core station');
@@ -138,7 +189,7 @@ function verifyOmniCore(){
  return {canonicalDirections:['+X','-X','+Y','-Y','+Z','-Z'],receiverValues,coreRadianceBudget:corePower,strongestOtherBudget:otherPower,coreReach,strongestOtherReach:otherReach,volumeCount:volumes.length};
 }
 const omniRegression=verifyOmniCore();
-if(process.argv.includes('--renderer-only')){console.log(JSON.stringify({rendererRegression,omniRegression,facingRegression,deformationRegression},null,2));process.exit(0);}
+if(process.argv.includes('--renderer-only')){console.log(JSON.stringify({rendererRegression,coreContributionRegression,omniRegression,facingRegression,deformationRegression},null,2));process.exit(0);}
 assert.deepEqual(stations.map(s=>s.key),['core','storage','purifier','offering','growth','rift']);
 for(const t of model.triangles)for(const v of [...t.a,...t.b,...t.c,...t.normal,t.tint])assert(Number.isFinite(v));
 const assetDir=path.join(here,'assets'),manifest=JSON.parse(fs.readFileSync(path.join(assetDir,'manifest.json'),'utf8'));
@@ -170,6 +221,7 @@ async function pixels(filename){
  return data;
 }
 const [motion,objects,depth,...contributions]=await Promise.all(['motion-map.png','object-ids.png','depth-layers.png',...families.map(k=>`light-${k}.png`)].map(pixels));
+const coreContribution=await pixels('light-core.png');
 const W=manifest.camera.width,H=manifest.camera.height,N=W*H;
 const visibleSources={pollution:0,furnace:0,shoulder:0},visiblePollution=new Map(),outsidePollution={far:0,middle:0,near:0};
 for(let i=0;i<N;i++){
@@ -268,6 +320,27 @@ for(const [familyIndex,family] of families.entries()){
  assert.deepEqual([...receiverObjects].sort((a,b)=>a-b),manifest.lightStats[family].objects,`${family}: exported receiver ids are stale`);
  fieldChecks[family]={sourceCount:model.lights.filter(l=>l.kind===family).length,contributingPixels:active,nonEmitterReceivingPixels:receivers,maximum,outsideSupport};
 }
+// Core illumination remains a bounded subset of pollution. This presence /
+// support check is structural evidence, not a score for artistic brightness.
+const coreSources=model.lights.filter(l=>l.id.startsWith('core-'));
+const coreSupport=coreSources.map(l=>{const p=project(l.position,manifest.camera);return {x:p[0],y:p[1],r:l.radius*manifest.camera.scale+12};});
+let coreActive=0,coreReceivers=0,coreUnchanged=0,coreMaximum=0,coreOutsideSupport=0;
+const coreReceiverObjects=new Set();
+for(let i=0;i<N;i++){
+ const o=i*4,value=Math.max(coreContribution[o],coreContribution[o+1],coreContribution[o+2]);
+ assert.equal(coreContribution[o+3],255,'Core contribution alpha must be opaque data');
+ for(let k=0;k<3;k++)assert(coreContribution[o+k]<=contributions[0][o+k]+2,`Core light is not a pollution subset at ${i}, channel ${k}`);
+ if(!value){coreUnchanged++;continue;}
+ coreActive++;coreMaximum=Math.max(coreMaximum,value);
+ const x=i%W+.5,y=Math.floor(i/W)+.5;
+ if(!coreSupport.some(s=>(x-s.x)**2+(y-s.y)**2<=s.r*s.r))coreOutsideSupport++;
+ if(motion[o]>0&&motion[o+2]===0){coreReceivers++;coreReceiverObjects.add(objects[o]);}
+}
+assert(coreSources.length>0&&coreActive>0,'Exported core illumination is empty');
+assert(coreReceivers>0,'Core export must illuminate non-emitting geometry, not merely its energy body');
+assert(coreUnchanged>0,'Core contribution must not become a full-screen wash');
+assert.equal(coreOutsideSupport,0,'Core illumination escaped every core source support');
+const coreFieldChecks={sourceCount:coreSources.length,contributingPixels:coreActive,nonEmitterReceivingPixels:coreReceivers,receiverObjects:[...coreReceiverObjects].sort((a,b)=>a-b),maximum:coreMaximum,outsideSupport:coreOutsideSupport,pollutionSubset:true};
 const triangles=WALK_SURFACES.flatMap(surface=>ShapeUtils.triangulateShape(surface.points.map(p=>new Vector2(p[0],p[2])),[]).map(face=>({points:face.map(i=>surface.points[i]),id:surface.id})));
 function elevation(x,z){
   let height=-Infinity,id='';
@@ -303,6 +376,6 @@ const riftSourceHashes=Object.fromEntries(['player-sprite-dense.ts','player-spri
  const source=`src/entities/${name}`,filename=path.resolve(here,'../../../..',source);
  return [source,createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
 }));
-const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],coreFacing:facingRegression,sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,rendererRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
+const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],coreFacing:facingRegression,sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,coreField:coreFieldChecks,rendererRegression,coreContributionRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--write'))fs.writeFileSync(path.join(here,'assets','layout-check.json'),JSON.stringify(result,null,2)+'\n');

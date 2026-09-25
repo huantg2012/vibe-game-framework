@@ -5,6 +5,8 @@ export interface HavenMotionImages {
   /** haven-energy-base.png: the lit scene before core volume compositing. */
   scene: HTMLImageElement;
   pollution: HTMLImageElement;
+  /** Core lighting is already contained in pollution; never add it twice. */
+  coreLight: HTMLImageElement;
   furnace: HTMLImageElement;
   shoulder: HTMLImageElement;
   motion: HTMLImageElement;
@@ -16,7 +18,7 @@ export interface HavenMotionImages {
 
 export interface HavenMotion {
   readonly canvas: HTMLCanvasElement;
-  draw(seconds: number): void;
+  draw(seconds: number, options?: { coreLighting?: boolean }): void;
   dispose(): void;
 }
 
@@ -42,7 +44,9 @@ uniform sampler2D uShoulder;
 uniform sampler2D uMotion;
 uniform sampler2D uDepth;
 uniform sampler2D uEnergy;
+uniform sampler2D uCoreLight;
 uniform float uSeconds;
+uniform float uCoreLighting;
 varying vec2 vUv;
 
 vec4 energyFrame(vec2 uv, float frame) {
@@ -66,6 +70,12 @@ float cloud(vec2 p) {
 float pulse(float time, float phase) {
   return 0.105 * sin(time * 0.61 + phase)
        + 0.038 * sin(time * 0.213 + phase * 1.73);
+}
+float coreExpansion(float time) {
+  float cycle = mod(time / 4.8, 1.0);
+  return cycle < 0.7
+    ? (1.0 - cos(3.14159265359 * cycle / 0.7)) * 0.5
+    : (1.0 + cos(3.14159265359 * (cycle - 0.7) / 0.3)) * 0.5;
 }
 float fire(float time) {
   return 0.072 * sin(time * 4.31) + 0.035 * sin(time * 11.73)
@@ -110,6 +120,8 @@ void main() {
   vec2 uv = vec2(pixel.x / 960.0, 1.0 - pixel.y / 640.0);
   vec3 base = texture2D(uScene, uv).rgb;
   vec3 pollution = texture2D(uPollution, uv).rgb;
+  vec3 coreLight = texture2D(uCoreLight, uv).rgb;
+  vec3 otherPollution = max(pollution - coreLight, vec3(0.0));
   vec3 furnace = texture2D(uFurnace, uv).rgb;
   vec3 shoulder = texture2D(uShoulder, uv).rgb;
   vec4 data = texture2D(uMotion, uv);
@@ -121,8 +133,9 @@ void main() {
   // receiving surfaces. Local erosion below may vary, but receiver IDs cannot
   // arbitrarily change the timing of physically shared illumination.
   float pollutionChange = pulse(time, 0.0) - pulse(0.0, 0.0);
+  float coreChange = 0.22 * coreExpansion(time);
   float shoulderChange = 0.012 * sin(time * 1.71) + 0.005 * sin(time * 0.43);
-  vec3 color = base + pollution * pollutionChange
+  vec3 color = base + otherPollution * pollutionChange + coreLight * coreChange
                    + furnace * fire(time) + shoulder * shoulderChange;
   // The dynamic scene is the pre-volume base. Frame RGB is premultiplied
   // radiance plus additive halo; alpha is density, including zero-alpha halo.
@@ -139,7 +152,7 @@ void main() {
     float seed = data.a * 19.0 + pixel.y * 0.009;
     float now = smoothstep(0.64, 0.93, sin(seed - time * 0.31));
     float before = smoothstep(0.64, 0.93, sin(seed));
-    color -= pollution * ((now - before) * 0.058);
+    color -= otherPollution * ((now - before) * 0.058);
   }
 
   if (layer < 3.5 && objectId < 0.5) {
@@ -153,7 +166,10 @@ void main() {
     color += vec3(0.005, 0.006, 0.006) * air * presence;
   }
 
-  color = color * (1.0 - energyNow.a) + energyNow.rgb * (1.0 + pollutionChange);
+  // Core lighting illuminates the receiving scene before volume absorption.
+  // Only that field is hidden; the volume's own radiance remains unchanged.
+  color -= coreLight * (1.0 + coreChange) * (1.0 - uCoreLighting);
+  color = color * (1.0 - energyNow.a) + energyNow.rgb * (1.0 + coreChange);
   vec2 encoded = floor(texture2D(uDepth, uv).rg * 255.0 + 0.5);
   float encodedDepth = encoded.x * 256.0 + encoded.y;
   float depth = encodedDepth / 256.0 - 80.0;
@@ -227,6 +243,7 @@ export function createHavenMotion(images: HavenMotionImages): HavenMotion {
       ['uScene', images.scene], ['uPollution', images.pollution], ['uFurnace', images.furnace],
       ['uShoulder', images.shoulder], ['uMotion', images.motion], ['uDepth', images.depth],
       ['uEnergy', images.energy],
+      ['uCoreLight', images.coreLight],
     ];
     for (const [unit, [name, image]] of inputs.entries()) {
       const expectedWidth = name === 'uEnergy' ? WIDTH * 4 : WIDTH;
@@ -252,15 +269,17 @@ export function createHavenMotion(images: HavenMotionImages): HavenMotion {
       gl.uniform1i(gl.getUniformLocation(program, name), unit);
     }
     const secondsUniform = gl.getUniformLocation(program, 'uSeconds');
+    const coreLightingUniform = gl.getUniformLocation(program, 'uCoreLighting');
     gl.disable(gl.BLEND);
     gl.disable(gl.DITHER);
     gl.viewport(0, 0, WIDTH, HEIGHT);
-    const draw = (seconds: number): void => {
+    const draw = (seconds: number, options: { coreLighting?: boolean } = {}): void => {
       if (disposed) throw new Error('Haven motion has already been disposed.');
       if (!Number.isFinite(seconds) || seconds < 0) throw new Error('Haven motion time must be finite and non-negative.');
       if (gl.isContextLost()) throw new Error('Haven motion WebGL context was lost; use the static scene.');
       gl.useProgram(program);
       gl.uniform1f(secondsUniform, seconds);
+      gl.uniform1f(coreLightingUniform, options.coreLighting === false ? 0 : 1);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
     draw(0);

@@ -4,11 +4,12 @@ interface Manifest {stations:ArtObject[];actor:ArtObject;}
 function el<T extends HTMLElement>(id:string):T{const n=document.getElementById(id);if(!n)throw new Error(`Missing ${id}`);return n as T;}
 const canvas=el<HTMLCanvasElement>('art'),ctx=canvas.getContext('2d')!;
 const status=el<HTMLParagraphElement>('status'),description=el<HTMLParagraphElement>('description'),caption=el<HTMLSpanElement>('caption');
-const sceneButton=el<HTMLButtonElement>('scene'),referenceButton=el<HTMLButtonElement>('reference'),baselineButton=el<HTMLButtonElement>('baseline'),motionButton=el<HTMLButtonElement>('motion');
+const sceneButton=el<HTMLButtonElement>('scene'),referenceButton=el<HTMLButtonElement>('reference'),baselineButton=el<HTMLButtonElement>('baseline'),motionButton=el<HTMLButtonElement>('motion'),coreLightButton=el<HTMLButtonElement>('core-light');
 const scene=new Image(),reference=new Image(),baseline=new Image(),ids=new Image(),riftActor=new Image();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)'),params=new URLSearchParams(location.search);
 let manifest:Manifest,view:'scene'|'reference'|'baseline'|number='scene',elapsed=Math.max(0,Number(params.get('t'))||0);
 let paused=reduced.matches||params.has('still'),lastTime:number|undefined,frame=0,disposed=false;
+let coreLighting=true;
 let motion:ReturnType<typeof createHavenMotion>|undefined,picking:Uint8ClampedArray|undefined;
 const buttons=new Map<number,HTMLButtonElement>(),models=new Map<number,HTMLImageElement>();
 const load=(image:HTMLImageElement,url:string):Promise<void>=>new Promise((resolve,reject)=>{image.onload=()=>resolve();image.onerror=()=>reject(new Error(`Unable to load ${url}`));image.src=url;});
@@ -17,13 +18,18 @@ function updateControls():void{
   sceneButton.setAttribute('aria-pressed',String(view==='scene'));referenceButton.setAttribute('aria-pressed',String(view==='reference'));baselineButton.setAttribute('aria-pressed',String(view==='baseline'));
   for(const[id,button]of buttons)button.setAttribute('aria-pressed',String(view===id));
   motionButton.disabled=!motionView()||!motion;motionButton.textContent=paused?'继续景观':'暂停景观';motionButton.setAttribute('aria-pressed',String(!!motion&&!paused&&motionView()));
+  coreLightButton.disabled=view!=='scene'||!motion;
+  coreLightButton.textContent=motion?`核心照明：${view==='scene'&&!coreLighting?'关':'开'}`:'核心照明 · 静态';
+  coreLightButton.setAttribute('aria-pressed',String(view==='scene'&&motion?coreLighting:true));
+  coreLightButton.title=motion?'比较核心投向环境的光；关闭时芯体自身仍然发光。':'静态回退中无法单独比较核心照明。';
   canvas.dataset.animation=motion&&!paused&&motionView()&&!document.hidden?'playing':'paused';
+  canvas.dataset.coreLighting=view==='scene'&&motion?(coreLighting?'on':'off'):'unavailable';
 }
 function draw():void{
   ctx.imageSmoothingEnabled=false;ctx.fillStyle='#070c0e';ctx.fillRect(0,0,960,640);
   let sceneFrame:CanvasImageSource=scene;
   if(motion&&motionView()){
-    try{motion.draw(elapsed);sceneFrame=motion.canvas;}
+    try{motion.draw(elapsed,{coreLighting:view==='scene'?coreLighting:true});sceneFrame=motion.canvas;}
     catch(error){motion.dispose();motion=undefined;paused=true;canvas.dataset.renderer='static-fallback';status.textContent='当前以静态画面展示。';updateControls();console.warn(error);}
   }
   if(view==='scene'){
@@ -59,6 +65,9 @@ function schedule():void{
 }
 sceneButton.onclick=()=>{view='scene';schedule();};referenceButton.onclick=()=>{view='reference';schedule();};baselineButton.onclick=()=>{view='baseline';schedule();};
 motionButton.onclick=()=>{paused=!paused;schedule();};
+// Repaint the exact current art time. The ongoing animation schedule and pause
+// state do not change merely because the user compares this source.
+coreLightButton.onclick=()=>{if(view!=='scene'||!motion)return;coreLighting=!coreLighting;updateControls();draw();};
 canvas.addEventListener('click',event=>{
   if(view!=='scene'){view='scene';schedule();return;}
   if(!picking)return;const rect=canvas.getBoundingClientRect(),x=Math.floor((event.clientX-rect.left)*960/rect.width),y=Math.floor((event.clientY-rect.top)*640/rect.height);
@@ -75,13 +84,13 @@ try{
   await Promise.all([load(scene,'./assets/haven.png'),load(reference,'/assets/art/menu-last-light.png'),load(baseline,'./assets/baseline-35f17ba.png'),load(ids,'./assets/object-ids.png'),load(riftActor,'./assets/rift-actor.png')]);
   await Promise.all([...manifest.stations,manifest.actor].map(async object=>{const image=new Image();await load(image,`./assets/${object.modelAsset}`);models.set(object.id,image);}));
   try{
-    const pollution=new Image(),furnace=new Image(),shoulder=new Image(),motionMap=new Image(),depth=new Image(),energyBase=new Image();
-    await Promise.all([load(pollution,'./assets/light-pollution.png'),load(furnace,'./assets/light-furnace.png'),load(shoulder,'./assets/light-shoulder.png'),load(motionMap,'./assets/motion-map.png'),load(depth,'./assets/depth-layers.png'),load(energyBase,'./assets/haven-energy-base.png')]);
+    const pollution=new Image(),coreLight=new Image(),furnace=new Image(),shoulder=new Image(),motionMap=new Image(),depth=new Image(),energyBase=new Image();
+    await Promise.all([load(pollution,'./assets/light-pollution.png'),load(coreLight,'./assets/light-core.png'),load(furnace,'./assets/light-furnace.png'),load(shoulder,'./assets/light-shoulder.png'),load(motionMap,'./assets/motion-map.png'),load(depth,'./assets/depth-layers.png'),load(energyBase,'./assets/haven-energy-base.png')]);
     const energyResponse=await fetch('./assets/core-energy-atlas.png');if(!energyResponse.ok)throw new Error('Missing core energy atlas');
     // Decode straight data channels. The halo intentionally retains RGB where
     // density alpha is zero, so ordinary canvas/image premultiplication loses it.
     const energy=await createImageBitmap(await energyResponse.blob(),{imageOrientation:'flipY',premultiplyAlpha:'none',colorSpaceConversion:'none'});
-    try{motion=createHavenMotion({scene:energyBase,pollution,furnace,shoulder,motion:motionMap,depth,energy});}
+    try{motion=createHavenMotion({scene:energyBase,pollution,coreLight,furnace,shoulder,motion:motionMap,depth,energy});}
     finally{energy.close();}
     canvas.dataset.renderer='webgl';
   }catch(error){status.textContent='当前以静态画面展示。';canvas.dataset.renderer='static-fallback';console.warn(error);}
