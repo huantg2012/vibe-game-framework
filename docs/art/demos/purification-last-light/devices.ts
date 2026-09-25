@@ -241,18 +241,22 @@ function core(m: Model): void {
   }
   // One three-dimensional energy mass carries continuous internal density and
   // flow. It is neither a bundle of emissive mesh ribbons nor a lit solid prop.
-  m.energyVolume([0,2.66,.02],[.62,1.10,.61],73021);
+  // The mass occupies the depth BETWEEN the restraint layers. Its swollen
+  // lobes can project beyond a jamb; the whole silhouette must not sit in the
+  // same aperture plane like a portal screen.
+  const heart:V3=[0,2.66,-.44];
+  m.energyVolume(heart,[.76,1.10,1.18],73021);
   // Distributed samples lie INSIDE that same mass. Their omnidirectional spill
   // can escape through front, rear and crown apertures; no light is pushed in
   // front of the shrine just to paint a cone on the floor.
   const radiance:V3=[.32,.49,.43];
-  m.light([0,2.66,.02],radiance,5,14,{kind:'pollution',id:'core-heart'});
-  m.light([0,2.66,.39],radiance,1,14,{kind:'pollution',id:'core-front-seal'});
-  m.light([0,2.66,-.36],radiance,1,14,{kind:'pollution',id:'core-rear-seal'});
-  m.light([-.46,2.66,.02],radiance,1,14,{kind:'pollution',id:'core-left-seal'});
-  m.light([.46,2.66,.02],radiance,1,14,{kind:'pollution',id:'core-right-seal'});
-  m.light([0,3.57,.02],radiance,1,14,{kind:'pollution',id:'core-upper-seal'});
-  m.light([0,1.75,.02],radiance,1,14,{kind:'pollution',id:'core-lower-seal'});
+  m.light(heart,radiance,5,14,{kind:'pollution',id:'core-heart'});
+  m.light(add(heart,[0,0,.36]),radiance,1,14,{kind:'pollution',id:'core-front-seal'});
+  m.light(add(heart,[0,0,-.36]),radiance,1,14,{kind:'pollution',id:'core-rear-seal'});
+  m.light(add(heart,[-.36,0,0]),radiance,1,14,{kind:'pollution',id:'core-left-seal'});
+  m.light(add(heart,[.36,0,0]),radiance,1,14,{kind:'pollution',id:'core-right-seal'});
+  m.light(add(heart,[0,.55,0]),radiance,1,14,{kind:'pollution',id:'core-upper-seal'});
+  m.light(add(heart,[0,-.55,0]),radiance,1,14,{kind:'pollution',id:'core-lower-seal'});
 }
 
 function storage(m: Model): void {

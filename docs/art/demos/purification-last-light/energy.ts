@@ -29,18 +29,33 @@ function sample(x:number,y:number,z:number,phase:number,seed:number):readonly[nu
   x=(x-.055*expansion*Math.sin(y*3.8+phase))/sx;
   y/=sy;
   z=(z-.045*expansion*Math.sin(y*4.3-phase))/sz;
-  const twist=y*2.7;
-  const xx=x+Math.sin(twist+z*2)*.14,zz=z+Math.cos(twist+x*2)*.11;
-  const radius=Math.sqrt(xx*xx*(1.07+.16*Math.sin(y*4.6))+y*y+zz*zz);
-  const envelope=clamp((1-radius)*2.7);
+  // Advect a deep, irregular mass. The old sin(ax+by+cz) ridges were sheets
+  // through the volume: integrating them still produced a luminous curtain.
+  // Here broad concentrations wrap around one another in all three axes.
+  const turn=y*1.5+sa*.32,ct=Math.cos(turn),st=Math.sin(turn);
+  const xx=x*ct-z*st,zz=x*st+z*ct;
+  const a=noise(xx*2.4+ca*.34+seed,y*2.8+sa*.38,zz*2.4+sa*.34);
+  const b=noise(xx*5.3+sa*.40,y*4.7-ca*.32+seed,zz*5.1+ca*.32);
+  const radius=Math.sqrt(xx*xx+y*y+zz*zz);
+  const envelope=clamp((1-radius+(a-.5)*.52)*4.2);
   if(envelope===0)return [0,0];
-  const a=noise(xx*3.1+ca*.6+seed,y*3.5+sa*.65,zz*3.1+sa*.5);
-  const b=noise(xx*6.2+sa*.5,y*5.4-ca*.4+seed,zz*5.2+ca*.4);
-  const fold=Math.sin(xx*7.3+y*4.1+zz*5.7+(a-.5)*7+sa*.9);
-  const vein=Math.pow(Math.max(0,1-Math.abs(fold)),5);
-  const valley=xx+y*.42+Math.sin(y*4.1+sa*.35)*.13+zz*.18;
-  const cavity=(.20+.80*clamp((a-.25)*3.4))*(1-.88*Math.exp(-valley*valley/.022));
-  return [envelope*cavity*(.38+a*.83+b*.38+vein*.5)/(sx*sy*sz),clamp(vein*.88+a*.44+b*.12+.045*(1-expansion))];
+  const lobe=(cx:number,cy:number,cz:number,rx:number,ry:number,rz:number):number=>
+    Math.exp(-2.6*(((xx-cx)/rx)**2+((y-cy)/ry)**2+((zz-cz)/rz)**2));
+  const upper=lobe(.21+sa*.08,.34,-.18+ca*.12,.57,.56,.58);
+  const lower=lobe(-.24-ca*.07,-.35,.19+sa*.09,.59,.53,.55);
+  const middle=lobe(.06,-.02,-.04,.77,.70,.77);
+  const concentration=clamp(upper*.45+lower*.45+middle*1.15);
+  // Cooler, optically dense folds pass IN FRONT of the emitting pockets.
+  // Their attenuation, rather than a painted dark side, reveals depth.
+  const fold=clamp((noise(xx*3.1+3+ca*.2,y*3.6+seed,zz*3.1-sa*.24)-.40)*4.8);
+  const mantle=lobe(.32+sa*.10,.02,-.35+ca*.06,.46,.55,.38)
+    +lobe(-.27,-.43,.31,.42,.30,.39);
+  const occupied=clamp((concentration-.12+(a-.5)*.13)*2.8);
+  const density=envelope*occupied*(.42+a*.35+fold*.55+mantle*1.5)/(sx*sy*sz);
+  // Small high-energy currents are subordinate to the broad luminous body.
+  const current=Math.pow(clamp(1-Math.abs(b-.51)*11),3)*Math.sqrt(concentration);
+  const hot=clamp(.22+concentration*.58+current*.78-fold*.22-mantle*.42+.045*(1-expansion));
+  return [density,hot];
 }
 
 export interface VolumeFrames {
@@ -87,7 +102,12 @@ export function renderEnergy(volumes:readonly EnergyVolume[],camera:Camera,opaqu
           r+=weight*(24+radiance*285)*1.42;g+=weight*(45+radiance*385)*1.42;b+=weight*(36+radiance*331)*1.42;
           transmission*=1-alpha;
         }
-        const o=i*4;frames[frame]![o]=r;frames[frame]![o+1]=g;frames[frame]![o+2]=b;frames[frame]![o+3]=(1-transmission)*255;
+        // Compress the shared radiance peak before byte conversion. Independent
+        // channel clipping turned overlapping concentrations into a flat white
+        // bulb and discarded precisely the depth variation we need to retain.
+        const peak=Math.max(r,g,b),mapped=peak<=185?peak:185+65*(1-Math.exp(-(peak-185)/125));
+        const exposure=peak>0?mapped/peak:1;
+        const o=i*4;frames[frame]![o]=r*exposure;frames[frame]![o+1]=g*exposure;frames[frame]![o+2]=b*exposure;frames[frame]![o+3]=(1-transmission)*255;
         if(g>12){body[i]=1;depth[i]=Math.max(depth[i]!,firstDepth);objects[i]=volume.object;}
       }
     }

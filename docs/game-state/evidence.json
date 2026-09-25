@@ -2939,5 +2939,24 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-CORE-DEPTH",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-25",
+    "revision": "core depth reconstruction after edc7223",
+    "scope": "9模块strict、8帧合成和真实密度形变、六轴全向照明、7176站位/六站双坡连通；实看整景与核心实际像素4倍近景、3秒峰值，WebGL动态及暂停/恢复，无error/warn。",
+    "limitations": "技术回归和内部画面复核不代替用户审美验收。固定几何投影烘焙，动态样景未接正式玩法；原Rift人物未改。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-last-light-living.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/layout-check.json",
+        "role": "test"
+      }
+    ]
   }
 ]
