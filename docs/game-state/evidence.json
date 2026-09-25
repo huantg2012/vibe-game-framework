@@ -2901,5 +2901,24 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-CORE-VOLUME",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-25",
+    "revision": "core volume after 2086930",
+    "scope": "9模块strict，体积与8帧密度图集、逐像素静态合成、六轴受光及核心最大辐射预算，7311站位连通；实际浏览器WebGL播放；核心单体以实际导出图检查。",
+    "limitations": "艺术待人审；全向fixture验证源照射方向，具体场景遮挡仍由实帧判断；固定相机投影几何不随时间变形。",
+    "sources": [
+      {
+        "path": "docs/art/demos/purification-last-light/assets/layout-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-living.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

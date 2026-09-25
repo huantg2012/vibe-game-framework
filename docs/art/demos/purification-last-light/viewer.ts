@@ -67,9 +67,14 @@ try{
   await Promise.all([load(scene,'./assets/haven.png'),load(reference,'/assets/art/menu-last-light.png'),load(baseline,'./assets/baseline-35f17ba.png'),load(ids,'./assets/object-ids.png'),load(riftActor,'./assets/rift-actor.png')]);
   await Promise.all([...manifest.stations,manifest.actor].map(async object=>{const image=new Image();await load(image,`./assets/${object.modelAsset}`);models.set(object.id,image);}));
   try{
-    const pollution=new Image(),furnace=new Image(),shoulder=new Image(),motionMap=new Image(),depth=new Image();
-    await Promise.all([load(pollution,'./assets/light-pollution.png'),load(furnace,'./assets/light-furnace.png'),load(shoulder,'./assets/light-shoulder.png'),load(motionMap,'./assets/motion-map.png'),load(depth,'./assets/depth-layers.png')]);
-    motion=createHavenMotion({scene,pollution,furnace,shoulder,motion:motionMap,depth});
+    const pollution=new Image(),furnace=new Image(),shoulder=new Image(),motionMap=new Image(),depth=new Image(),energyBase=new Image();
+    await Promise.all([load(pollution,'./assets/light-pollution.png'),load(furnace,'./assets/light-furnace.png'),load(shoulder,'./assets/light-shoulder.png'),load(motionMap,'./assets/motion-map.png'),load(depth,'./assets/depth-layers.png'),load(energyBase,'./assets/haven-energy-base.png')]);
+    const energyResponse=await fetch('./assets/core-energy-atlas.png');if(!energyResponse.ok)throw new Error('Missing core energy atlas');
+    // Decode straight data channels. The halo intentionally retains RGB where
+    // density alpha is zero, so ordinary canvas/image premultiplication loses it.
+    const energy=await createImageBitmap(await energyResponse.blob(),{imageOrientation:'flipY',premultiplyAlpha:'none',colorSpaceConversion:'none'});
+    try{motion=createHavenMotion({scene:energyBase,pollution,furnace,shoulder,motion:motionMap,depth,energy});}
+    finally{energy.close();}
     canvas.dataset.renderer='webgl';
   }catch(error){status.textContent='当前以静态画面展示。';canvas.dataset.renderer='static-fallback';console.warn(error);}
   const off=document.createElement('canvas');off.width=960;off.height=640;const c=off.getContext('2d')!;c.drawImage(ids,0,0);picking=c.getImageData(0,0,960,640).data;

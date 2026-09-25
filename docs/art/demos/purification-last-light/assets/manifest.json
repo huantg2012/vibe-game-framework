@@ -89,7 +89,7 @@
         5
       ],
       "radius": 0.92,
-      "description": "右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；折层深处的灰绿光洒向朝拜前场，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。",
+      "description": "右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；受约束的能量团内部翻涌，灰绿光向四周辐射，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。",
       "screen": [
         716.3544379132849,
         433.24998652289094,
@@ -106,7 +106,7 @@
         "width": 120,
         "height": 165
       },
-      "triangles": 6766,
+      "triangles": 4850,
       "modelAsset": "model-core.png",
       "modelCamera": {
         "width": 384,
@@ -891,7 +891,7 @@
       ]
     }
   ],
-  "triangles": 51836,
+  "triangles": 49920,
   "lights": [
     {
       "position": [
@@ -1273,65 +1273,149 @@
     },
     {
       "position": [
-        12.610261410610784,
-        2.83,
-        4.219267519004989
+        12.796419408531484,
+        2.66,
+        3.4196768738557624
       ],
       "color": [
         0.36,
         0.49,
         0.425
       ],
-      "power": 9,
-      "radius": 15.5,
+      "power": 5,
+      "radius": 14,
       "kind": "pollution",
       "id": "core-heart",
       "screen": [
-        700.4903302877443,
-        379.8791946392127,
-        10.128105040833765
+        715.9952806498093,
+        375.0658608964233,
+        9.555762969297852
       ]
     },
     {
       "position": [
-        12.69254949750235,
-        1.36,
-        4.213913011023292
+        12.73017846636393,
+        2.66,
+        3.783699040187367
       ],
       "color": [
-        0.315,
-        0.42,
-        0.365
+        0.36,
+        0.49,
+        0.425
       ],
-      "power": 1.05,
-      "radius": 4.3,
+      "power": 1,
+      "radius": 14,
       "kind": "pollution",
-      "id": "core-lower-seal",
+      "id": "core-front-seal",
       "screen": [
-        702.4084926703532,
-        412.74039812568344,
-        9.337695020208734
+        709.3508712755113,
+        379.1033925659983,
+        9.781195387393389
       ]
     },
     {
       "position": [
-        12.598665436390801,
-        3.83,
-        4.003708864848193
+        12.864450646433298,
+        2.66,
+        3.0458162705962764
       ],
       "color": [
-        0.35,
-        0.465,
-        0.405
+        0.36,
+        0.49,
+        0.425
       ],
-      "power": 0.94,
-      "radius": 3.6,
+      "power": 1,
+      "radius": 14,
+      "kind": "pollution",
+      "id": "core-rear-seal",
+      "screen": [
+        722.8192686558451,
+        370.91920674929224,
+        9.324237783145682
+      ]
+    },
+    {
+      "position": [
+        12.343851309848949,
+        2.66,
+        3.3373232700798834
+      ],
+      "color": [
+        0.36,
+        0.49,
+        0.425
+      ],
+      "power": 1,
+      "radius": 14,
+      "kind": "pollution",
+      "id": "core-left-seal",
+      "screen": [
+        707.0310012147928,
+        370.44024940273636,
+        9.297495574877114
+      ]
+    },
+    {
+      "position": [
+        13.24898750721402,
+        2.66,
+        3.5020304776316413
+      ],
+      "color": [
+        0.36,
+        0.49,
+        0.425
+      ],
+      "power": 1,
+      "radius": 14,
+      "kind": "pollution",
+      "id": "core-right-seal",
+      "screen": [
+        724.9595600848259,
+        379.6914723901103,
+        9.814030363718592
+      ]
+    },
+    {
+      "position": [
+        12.796419408531484,
+        3.57,
+        3.4196768738557624
+      ],
+      "color": [
+        0.36,
+        0.49,
+        0.425
+      ],
+      "power": 1,
+      "radius": 14,
       "kind": "pollution",
       "id": "core-upper-seal",
       "screen": [
-        703.2871033547794,
-        355.12906033839784,
-        10.532043928709097
+        715.9952806498093,
+        355.0861025395671,
+        10.065326168840077
+      ]
+    },
+    {
+      "position": [
+        12.796419408531484,
+        1.75,
+        3.4196768738557624
+      ],
+      "color": [
+        0.36,
+        0.49,
+        0.425
+      ],
+      "power": 1,
+      "radius": 14,
+      "kind": "pollution",
+      "id": "core-lower-seal",
+      "screen": [
+        715.9952806498093,
+        395.04561925327954,
+        9.04619976975563
       ]
     },
     {
@@ -1484,7 +1568,7 @@
   ],
   "lightStats": {
     "pollution": {
-      "receivingPixels": 45349,
+      "receivingPixels": 50530,
       "maximum": 255,
       "objects": [
         0,
@@ -1517,6 +1601,7 @@
     }
   },
   "depthEncoding": "RG = round((cameraDepth + 80) * 256), B = far 1 / middle 2 / near 3 / haven 4; zero RG is empty.",
-  "motionEncoding": "R layer 0..4; G object 0..7; B source material 0 none / 1 pollution / 2 furnace / 3 shoulder; A stable material phase. Additive light PNGs already occur once in haven.png; animate with field × (factor - 1).",
+  "motionEncoding": "R layer 0..4; G object 0..7; B source material 0 none / 1 pollution / 2 furnace / 3 shoulder; A stable material phase. Additive surface-light PNGs already occur once in haven-energy-base.png; animate with field × (factor - 1).",
+  "energyEncoding": "core-energy-atlas.png: 8 frames, 4 columns × 2 rows, 960×640 each; RGB premultiplied emission plus additive halo, A opacity. Keep RGB at A=0. Interpolate over 4.8 seconds and composite base × (1-alpha) + emission. haven.png is the static frame-0 composite.",
   "status": "ART-REVISION / BASELINE-HUMAN-APPRECIATED / NEW-REVISION-REVIEW-PENDING / NOT-PRODUCTION-INTEGRATED"
 }

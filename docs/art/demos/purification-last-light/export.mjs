@@ -21,9 +21,23 @@ await save('haven.png',result.rgba);
 await sharp(path.join(output,'haven.png')).resize(1920,1280,{kernel:'nearest'}).png().toFile(path.join(output,'haven-2x.png'));
 for(const kind of ['pollution','furnace','shoulder'])await save(`light-${kind}.png`,result.lightFields[kind]);
 await save('motion-map.png',result.motion);
+await save('haven-energy-base.png',result.energyBase);
+// Eight premultiplied radiance/density frames in a 4 × 2 atlas. Copy raw
+// channels: RGB can contain halo even at zero alpha and must survive unchanged.
+if(result.energyFrames.length!==8)throw new Error('Core energy renderer must supply exactly eight frames.');
+const energyWidth=CAMERA.width*4,energyHeight=CAMERA.height*2,energyAtlas=new Uint8ClampedArray(energyWidth*energyHeight*4);
+for(const [frameIndex,frame] of result.energyFrames.entries()){
+  if(frame.length!==CAMERA.width*CAMERA.height*4)throw new Error(`Incorrect core energy frame dimensions: ${frameIndex}`);
+  for(let row=0;row<CAMERA.height;row++){
+    const from=row*CAMERA.width*4,to=((Math.floor(frameIndex/4)*CAMERA.height+row)*energyWidth+(frameIndex%4)*CAMERA.width)*4;
+    energyAtlas.set(frame.subarray(from,from+CAMERA.width*4),to);
+  }
+}
+await sharp(Buffer.from(energyAtlas),{raw:{width:energyWidth,height:energyHeight,channels:4}}).png().toFile(path.join(output,'core-energy-atlas.png'));
 const emptyHaven=new Model();
 emptyHaven.triangles.push(...model.triangles.filter(t=>t.object!==ACTOR_OBJECT_ID));
 emptyHaven.lights.push(...model.lights.filter(l=>l.kind!=='shoulder'));
+emptyHaven.volumes.push(...model.volumes);
 await save('haven-clean.png',render(emptyHaven,CAMERA).rgba);
 const depthImage=new Uint8ClampedArray(CAMERA.width*CAMERA.height*4),objectImage=depthImage.slice();
 for(let i=0;i<result.depth.length;i++){
@@ -45,7 +59,7 @@ const actor={id:ACTOR_OBJECT_ID,key:'actor',name:'归来者',position:ACTOR_POSI
 // A close fixed pixel grid reveals construction; it never replaces the actual
 // scene-scale crop alongside it in the viewer.
 for(const object of [...projected,actor]){
-  const isolated=new Model();isolated.triangles.push(...model.triangles.filter(t=>t.object===object.id));isolated.lights.push(...model.lights);
+  const isolated=new Model();isolated.triangles.push(...model.triangles.filter(t=>t.object===object.id));isolated.lights.push(...model.lights);isolated.volumes.push(...model.volumes.filter(v=>v.object===object.id));
   const points=isolated.triangles.flatMap(t=>[t.a,t.b,t.c]).map(p=>project(p,{...CAMERA,scale:1,origin:[0,0]}));
   const minX=Math.min(...points.map(p=>p[0])),maxX=Math.max(...points.map(p=>p[0])),minY=Math.min(...points.map(p=>p[1])),maxY=Math.max(...points.map(p=>p[1]));
   const scale=Math.min(object.id===7?154:74,278/Math.max(maxX-minX,maxY-minY));
@@ -63,10 +77,10 @@ for(const kind of ['pollution','furnace','shoulder']){
   for(let i=0;i<result.objects.length;i++){const strength=Math.max(...result.lightFields[kind].subarray(i*4,i*4+3));maximum=Math.max(maximum,strength);if(strength>1){receivingPixels++;objects.add(result.objects[i]);}}
   lightStats[kind]={receivingPixels,maximum,objects:[...objects].sort()};
 }
-const manifest={reference:'public/assets/art/menu-last-light.png',baseline:'35f17ba',method:'Authored geometry rasterized at 960×640. Shared materials, source-tested shadows, ambient occlusion and transparent layers. Three additive source families drive live light/erosion/air/deep-presence motion. No generated image sampled as scene artwork.',camera:CAMERA,actor,stations:projected,walkSurfaces:WALK_SURFACES,triangles:model.triangles.length,lights:model.lights.map(l=>({...l,screen:project(l.position)})),lightStats,depthEncoding:'RG = round((cameraDepth + 80) * 256), B = far 1 / middle 2 / near 3 / haven 4; zero RG is empty.',motionEncoding:'R layer 0..4; G object 0..7; B source material 0 none / 1 pollution / 2 furnace / 3 shoulder; A stable material phase. Additive light PNGs already occur once in haven.png; animate with field × (factor - 1).',status:'ART-REVISION / BASELINE-HUMAN-APPRECIATED / NEW-REVISION-REVIEW-PENDING / NOT-PRODUCTION-INTEGRATED'};
+const manifest={reference:'public/assets/art/menu-last-light.png',baseline:'35f17ba',method:'Authored geometry rasterized at 960×640. Shared materials, source-tested shadows, ambient occlusion and transparent layers. Three additive source families drive live light/erosion/air/deep-presence motion. No generated image sampled as scene artwork.',camera:CAMERA,actor,stations:projected,walkSurfaces:WALK_SURFACES,triangles:model.triangles.length,lights:model.lights.map(l=>({...l,screen:project(l.position)})),lightStats,depthEncoding:'RG = round((cameraDepth + 80) * 256), B = far 1 / middle 2 / near 3 / haven 4; zero RG is empty.',motionEncoding:'R layer 0..4; G object 0..7; B source material 0 none / 1 pollution / 2 furnace / 3 shoulder; A stable material phase. Additive surface-light PNGs already occur once in haven-energy-base.png; animate with field × (factor - 1).',energyEncoding:'core-energy-atlas.png: 8 frames, 4 columns × 2 rows, 960×640 each; RGB premultiplied emission plus additive halo, A opacity. Keep RGB at A=0. Interpolate over 4.8 seconds and composite base × (1-alpha) + emission. haven.png is the static frame-0 composite.',status:'ART-REVISION / BASELINE-HUMAN-APPRECIATED / NEW-REVISION-REVIEW-PENDING / NOT-PRODUCTION-INTEGRATED'};
 await fs.writeFile(path.join(output,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 const checksums={method:'SHA-256',sources:{},outputs:{},unchangedRift:{}};
-for(const filename of ['model.ts','render.ts','environment.ts','devices.ts','actor.ts','scene.ts','export.mjs','viewer.ts','motion.ts','index.html','check.mjs']){
+for(const filename of ['model.ts','render.ts','energy.ts','environment.ts','devices.ts','actor.ts','scene.ts','export.mjs','viewer.ts','motion.ts','index.html','check.mjs']){
   try{checksums.sources[filename]=createHash('sha256').update(await fs.readFile(path.join(here,filename))).digest('hex');}catch(error){if(error.code!=='ENOENT')throw error;}
 }
 for(const filename of (await fs.readdir(output)).filter(f=>f.endsWith('.png')||f==='manifest.json'))checksums.outputs[filename]=createHash('sha256').update(await fs.readFile(path.join(output,filename))).digest('hex');

@@ -1,3 +1,4 @@
+import {renderEnergy} from './energy';
 import { add, clamp, cross, dot, mul, sub, unit, type V3, type Triangle, type Model, type Material, type LightKind } from './model';
 
 export interface Camera { width:number; height:number; origin:readonly[number,number]; scale:number; target:V3; direction:V3; }
@@ -86,6 +87,7 @@ function sampleSurface(t:Triangle,p:V3,n:V3):Surface {
 }
 
 export interface Rendered {
+  energyFrames:Uint8ClampedArray[]; energyBase:Uint8ClampedArray;
   rgba:Uint8ClampedArray; depth:Float32Array; objects:Uint8Array; layers:Uint8Array;
   emission:Float32Array; triangleCount:number;
   lightFields:Record<LightKind,Uint8ClampedArray>;
@@ -245,7 +247,20 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     }
   }
   for(let i=0;i<N;i++)for(let k=0;k<3;k++)rgba[i*4+k]=clamp(rgba[i*4+k]!+scatter[i*3+k]!,0,255);
+  const energyBase=rgba.slice();
+  const volume=renderEnergy(model.volumes,camera,depth);
+  const energyFrame=volume.frames[0]!;
+  for(let i=0;i<N;i++){
+    for(let k=0;k<3;k++){
+      rgba[i*4+k]=rgba[i*4+k]!*(1-energyFrame[i*4+3]!/255)+energyFrame[i*4+k]!;
+    }
+    if(volume.body[i]){
+      objects[i]=volume.objects[i]!;layers[i]=4;depth[i]=volume.depth[i]!;
+      motion[i*4]=4;motion[i*4+1]=objects[i]!;motion[i*4+2]=1;
+      emission[i]=Math.max(emission[i]!,energyFrame[i*4+1]!/255);
+    }
+  }
   const lightFields={} as Record<LightKind,Uint8ClampedArray>;
   for(const kind of LIGHT_KINDS){const out=new Uint8ClampedArray(N*4);for(let i=0;i<N;i++){for(let k=0;k<3;k++)out[i*4+k]=fields[kind][i*3+k]!;out[i*4+3]=255;}lightFields[kind]=out;}
-  return {rgba,depth,objects,layers,emission,triangleCount:model.triangles.length,lightFields,motion};
+  return {energyFrames:volume.frames,energyBase,rgba,depth,objects,layers,emission,triangleCount:model.triangles.length,lightFields,motion};
 }

@@ -8,6 +8,7 @@ export interface Triangle { a: V3; b: V3; c: V3; normal: V3; material: Material;
 export type LightKind = 'pollution' | 'furnace' | 'shoulder';
 export interface Light { position: V3; color: V3; power: number; radius: number; kind: LightKind; id: string; }
 export interface Station { id: number; key: string; name: string; position: V3; approach: V3; radius: number; description: string; }
+export interface EnergyVolume { center:V3; radii:V3; yaw:number; seed:number; object:number; layer:Layer; }
 export const add = (a: V3,b: V3): V3 => [a[0]+b[0],a[1]+b[1],a[2]+b[2]];
 export const sub = (a: V3,b: V3): V3 => [a[0]-b[0],a[1]-b[1],a[2]-b[2]];
 export const mul = (a: V3,n: number): V3 => [a[0]*n,a[1]*n,a[2]*n];
@@ -22,10 +23,14 @@ export function random(seed: number): () => number { let n=seed|0; return ()=>{ 
 export class Model {
   readonly triangles: Triangle[]=[];
   readonly lights: Light[]=[];
+  readonly volumes: EnergyVolume[]=[];
   object=0;
   layer: Layer='haven';
   private origin: V3=[0,0,0];
   private angle=0;
+  energyVolume(center:V3,radii:V3,seed:number):void {
+    this.volumes.push({center:this.transform(center),radii,yaw:this.angle,seed,object:this.object,layer:this.layer});
+  }
   at(origin: V3,angle: number,object: number,draw:()=>void):void {
     const oldOrigin=this.origin,oldAngle=this.angle,oldObject=this.object;
     this.origin=this.transform(origin);this.angle+=angle;this.object=object;

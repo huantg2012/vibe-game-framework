@@ -9,7 +9,7 @@ import {buildHaven} from './scene.ts';
 import {WALK_SURFACES} from './environment.ts';
 import {ACTOR_OBJECT_ID,actorLampAnchor} from './actor.ts';
 import {project,render} from './render.ts';
-import {Model} from './model.ts';
+import {Model,add,cross,dot,mul,sub,unit} from './model.ts';
 import {ShapeUtils,Vector2} from 'three';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
@@ -53,8 +53,36 @@ function verifySourceAndShadow(){
  return {camera:[camera.width,camera.height],sourceFamily:'pollution',receivingFaceGain:litGain,unblockedContribution:clearContribution,blockedContribution,castShadowDifference:clearValue-shadowValue};
 }
 const rendererRegression=verifySourceAndShadow();
-if(process.argv.includes('--renderer-only')){console.log(JSON.stringify({rendererRegression},null,2));process.exit(0);}
 const {model,stations}=buildHaven();
+function verifyOmniCore(){
+ const volumes=model.volumes.filter(v=>v.object===1),sources=model.lights.filter(l=>l.id.startsWith('core-'));
+ assert(volumes.length>0,'The core must contain a real energy volume');
+ for(const v of model.volumes){
+  for(const n of [...v.center,...v.radii,v.yaw,v.seed])assert(Number.isFinite(n),'Invalid energy volume parameter');
+  assert(v.radii.every(n=>n>0),'Energy radii must define a nonzero three-dimensional region');
+ }
+ assert.equal(model.triangles.filter(t=>t.object===1&&t.material==='energy').length,0,'Core energy must not regress to emissive mesh ribbons');
+ assert(sources.length>0,'Missing core illumination');
+ const center=volumes[0].center,weights=[.2126,.7152,.0722];
+ const corePower=sources.reduce((s,l)=>s+l.power*dot(l.color,weights),0);
+ const otherPower=Math.max(...model.lights.filter(l=>!l.id.startsWith('core-')).map(l=>l.power*dot(l.color,weights)));
+ const coreReach=Math.max(...sources.map(l=>l.radius)),otherReach=Math.max(...model.lights.filter(l=>!l.id.startsWith('core-')).map(l=>l.radius));
+ assert(corePower>otherPower,'Core radiance budget must exceed every other individual source');
+ assert(coreReach>otherReach,'The core must have the largest illumination reach');
+ const receiverValues=[];
+ for(const direction of [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]]){
+  const point=mul(direction,4),normal=mul(direction,-1),u=unit(cross(normal,Math.abs(normal[1])>.9?[1,0,0]:[0,1,0])),v=unit(cross(normal,u));
+  const m=new Model();m.object=1;m.quad(add(point,add(mul(u,-.55),mul(v,-.55))),add(point,add(mul(u,.55),mul(v,-.55))),add(point,add(mul(u,.55),mul(v,.55))),add(point,add(mul(u,-.55),mul(v,.55))),'cutstone');
+  m.lights.push(...sources.map(l=>({...l,position:sub(l.position,center)})));
+  const camera={width:48,height:48,origin:[24,24],scale:20,target:point,direction:Math.abs(normal[1])>.9?[.001,normal[1],.001]:normal};
+  const output=render(m,camera);let value=0;
+  for(let y=23;y<=24;y++)for(let x=23;x<=24;x++){const i=y*48+x;assert.equal(output.objects[i],1,'Omni probe must hit its receiving face');value+=output.lightFields.pollution[i*4+1]/4;}
+  assert(value>0,`Core failed to illuminate canonical direction ${direction}`);receiverValues.push(value);
+ }
+ return {canonicalDirections:['+X','-X','+Y','-Y','+Z','-Z'],receiverValues,coreRadianceBudget:corePower,strongestOtherBudget:otherPower,coreReach,strongestOtherReach:otherReach,volumeCount:volumes.length};
+}
+const omniRegression=verifyOmniCore();
+if(process.argv.includes('--renderer-only')){console.log(JSON.stringify({rendererRegression,omniRegression},null,2));process.exit(0);}
 assert.deepEqual(stations.map(s=>s.key),['core','storage','purifier','offering','growth','rift']);
 for(const t of model.triangles)for(const v of [...t.a,...t.b,...t.c,...t.normal,t.tint])assert(Number.isFinite(v));
 const assetDir=path.join(here,'assets'),manifest=JSON.parse(fs.readFileSync(path.join(assetDir,'manifest.json'),'utf8'));
@@ -107,13 +135,48 @@ for(let i=0;i<N;i++){
 for(const family of families)assert(visibleSources[family]>0,`${family}: no visible emitting material`);
 const stationPollution=stations.map(s=>{
  const pollutant=model.triangles.filter(t=>t.object===s.id&&t.material==='pollutant').length;
- const energy=model.triangles.filter(t=>t.object===s.id&&t.material==='energy').length,visible=visiblePollution.get(s.id)??0;
- assert(pollutant+energy>0,`${s.key}: missing contained pollutant/energy geometry`);
+ const energy=model.triangles.filter(t=>t.object===s.id&&t.material==='energy').length,volumes=model.volumes.filter(v=>v.object===s.id).length,visible=visiblePollution.get(s.id)??0;
+ assert(pollutant+energy+volumes>0,`${s.key}: missing contained pollutant/energy geometry or volume`);
  assert(visible>0,`${s.key}: its pollution is absent from the exported source mask`);
- return {key:s.key,id:s.id,pollutantTriangles:pollutant,energyTriangles:energy,emittingPixels:visible};
+ return {key:s.key,id:s.id,pollutantTriangles:pollutant,energyTriangles:energy,volumes,emittingPixels:visible};
 });
 assert(model.triangles.some(t=>(t.material==='pollutant'||t.material==='energy')&&t.layer!=='haven'),'Missing exterior contamination geometry');
 assert(Object.values(outsidePollution).some(n=>n>0),'Exterior contamination is absent from the source mask');
+
+const atlas=await sharp(path.join(assetDir,'core-energy-atlas.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+assert.equal(atlas.info.width,W*4,'Energy atlas must hold four full-resolution columns');
+assert.equal(atlas.info.height,H*2,'Energy atlas must hold two full-resolution rows');
+const frames=Array.from({length:8},()=>Buffer.alloc(N*4));
+for(let frame=0;frame<8;frame++)for(let y=0;y<H;y++){
+ const from=((Math.floor(frame/4)*H+y)*W*4+(frame%4)*W)*4;
+ atlas.data.copy(frames[frame],y*W*4,from,from+W*4);
+}
+const frameHashes=frames.map(f=>createHash('sha256').update(f).digest('hex'));
+assert.equal(new Set(frameHashes).size,8,'Energy atlas must contain eight distinct internal states');
+let coreBodyPixels=0,changingInteriorPixels=0,activeAtlasPixels=0,densityPixels=0,transparentHaloPixels=0;
+const [energyBase,staticComposite]=await Promise.all(['haven-energy-base.png','haven.png'].map(pixels));
+const volumeBounds=model.volumes.map(v=>{const p=project(v.center,manifest.camera);return {x:p[0],y:p[1],r:Math.max(...v.radii)*manifest.camera.scale+12};});
+for(let i=0;i<N;i++){
+ const o=i*4,x=i%W,y=Math.floor(i/W),isCore=motion[o+1]===1&&motion[o+2]===1;
+ const values=frames.map(f=>f[o+1]),maximum=Math.max(...values),minimum=Math.min(...values);
+ const maximumAlpha=Math.max(...frames.map(f=>f[o+3]));
+ if(maximumAlpha>0)densityPixels++;
+ if(frames.some(f=>f[o+3]===0&&f[o]+f[o+1]+f[o+2]>0))transparentHaloPixels++;
+ if(maximum>0||maximumAlpha>0){activeAtlasPixels++;assert(volumeBounds.some(b=>Math.abs(x+.5-b.x)<=b.r&&Math.abs(y+.5-b.y)<=b.r),'Energy animation paints outside its volume/scatter support');}
+ for(let k=0;k<3;k++){
+  const expected=Math.min(255,Math.max(0,energyBase[o+k]*(1-frames[0][o+3]/255)+frames[0][o+k]));
+  assert(Math.abs(staticComposite[o+k]-expected)<=.51,'Static energy composite disagrees with radiance plus density opacity');
+ }
+ if(isCore){
+  coreBodyPixels++;assert(maximum>=12&&maximumAlpha>0,'The union source mask has a core pixel absent from all volume density states');
+  const interior=x>0&&x<W-1&&y>0&&y<H-1&&[-1,1,-W,W].every(d=>motion[(i+d)*4+1]===1&&motion[(i+d)*4+2]===1);
+  if(interior&&maximum>minimum)changingInteriorPixels++;
+ }
+}
+assert(coreBodyPixels>0&&changingInteriorPixels>0,'The volume must animate its visible interior, not only an outline or whole-scene tint');
+assert(densityPixels>0&&densityPixels<N,'Density opacity must be spatially bounded, not opaque across the full frame');
+assert(activeAtlasPixels<N,'Energy animation must leave pixels outside its bounded volume unchanged');
+const energyAtlasChecks={dimensions:[atlas.info.width,atlas.info.height],frames:8,distinctFrames:new Set(frameHashes).size,coreBodyPixels,changingInteriorPixels,densityPixels,transparentHaloPixels,boundedSupport:true,staticCompositeMatches:true};
 
 // A necessary spatial bound, independent of the shader's attenuation and ray
 // tests: a contribution must be near a finite source sphere or an emitting
@@ -184,6 +247,6 @@ const riftSourceHashes=Object.fromEntries(['player-sprite-dense.ts','player-spri
  const source=`src/entities/${name}`,filename=path.resolve(here,'../../../..',source);
  return [source,createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
 }));
-const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,rendererRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution},scope:'Source definitions, exported masks, finite source support and an independent receiver/occluder fixture; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
+const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,rendererRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--write'))fs.writeFileSync(path.join(here,'assets','layout-check.json'),JSON.stringify(result,null,2)+'\n');

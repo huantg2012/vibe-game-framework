@@ -126,48 +126,15 @@ function collar(m: Model, y: number, outer: number, inner: number, height: numbe
   }
 }
 
-type EnergyKnot = readonly [x: number, y: number, z: number, width: number, roll: number];
-
-/** Open, twisted energy membranes. No closed rounded volume, end caps or
- * diffuse solid body: each current is two thin sheets meeting at a sharp
- * luminous crest, leaving actual dark air between the currents. */
-function energyCurrent(m: Model, knots: readonly EnergyKnot[], tint: number): void {
-  const samples: EnergyKnot[] = [];
-  const interpolate = (a: number, b: number, c: number, d: number, t: number): number =>
-    .5 * ((2 * b) + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
-  for (let segment = 0; segment < knots.length - 1; segment++) {
-    const a = knots[Math.max(0, segment - 1)]!, b = knots[segment]!,
-      c = knots[segment + 1]!, d = knots[Math.min(knots.length - 1, segment + 2)]!;
-    for (let step = 0; step < 6; step++) {
-      const t = step / 6;
-      samples.push(a.map((value, k) => interpolate(value, b[k]!, c[k]!, d[k]!, t)) as unknown as EnergyKnot);
-    }
-  }
-  samples.push(knots[knots.length - 1]!);
-  const bands = samples.map((s, i): readonly [V3,V3,V3] => {
-    const before = samples[Math.max(0, i - 1)]!, after = samples[Math.min(samples.length - 1, i + 1)]!;
-    const axis = unit([after[0]-before[0],after[1]-before[1],after[2]-before[2]]);
-    const side = unit(cross(axis,[0,0,1])), front=unit(cross(side,axis));
-    const widthAxis=add(mul(side,Math.cos(s[4])),mul(front,Math.sin(s[4])));
-    const center:V3=[s[0],s[1],s[2]];
-    return [add(center,mul(widthAxis,-s[3]*1.55)),add(center,mul(front,.014)),add(center,mul(widthAxis,s[3]*.96))];
-  });
-  for(let i=1;i<bands.length;i++) {
-    const a=bands[i-1]!,b=bands[i]!;
-    m.quad(a[0],b[0],b[1],a[1],'energy',tint*.63);
-    m.quad(a[1],b[1],b[2],a[2],'energy',tint*.95);
-    // A sharply focused inner ridge supplies the brightest pixels. Irregular
-    // short interruptions prevent a continuous decorative neon outline.
-    if(i%13!==0)m.beam(a[1],b[1],.021,.008,'energy',tint*1.72);
-  }
-}
-
 function coreAssembly(m: Model): void {
   plinth(m, 2.46, 1.92, 'cast-feet');
   m.box([0, .39, -.12], [1.88, .28, 1.37], 'iron', .075, .76);
-  // Recessed back and cheeks hold the foreign body; the open front is deep.
-  m.box([0, 1.78, -.51], [1.4, 2.44, .19], 'black', .035, .9);
-  m.box([0, 1.7, -.64], [1.85, 2.37, .17], 'iron', .045, .6);
+  // The cage has no opaque backing. Lower and upper ties hold the side
+  // castings together while the whole rear aperture remains open to radiation.
+  m.beam([-.77,.61,-.65],[.72,.61,-.65],.13,.16,'iron',.70);
+  m.beam([-.53,3.12,-.60],[.32,3.12,-.60],.095,.13,'iron',.67);
+  m.beam([-.77,.68,-.65],[-.65,1.02,-.68],.085,.105,'steel',.61);
+  m.beam([.72,.68,-.65],[.59,1.02,-.68],.085,.105,'steel',.58);
   casting(m, [{ y: .43, x: -.84, z: -.02, width: .55, depth: 1.13 },
     { y: .71, x: -.91, z: -.04, width: .47, depth: .97 },
     { y: 2.63, x: -.81, z: -.16, width: .42, depth: .77 },
@@ -182,32 +149,6 @@ function coreAssembly(m: Model): void {
   m.beam([-.59, 2.59, .12], [-.34, 3.24, .025], .08, .048, 'steel', .66);
   m.beam([.54, .62, .31], [.41, 2.6, .075], .069, .056, 'steel', .61);
   for (const [x, y, z] of [[-.93, .68, .48], [-.9, 1.4, .405], [-.82, 2.32, .26], [.88, .7, .44], [.77, 1.49, .34], [.63, 2.42, .2]]) frontBolt(m, x!, y!, z!, .052);
-  // The restrained payload is a vertically stretched, uneven circulation of
-  // foreign energy. Thin intersecting currents surround open black voids;
-  // nothing seals those holes with opaque green matter.
-  energyCurrent(m, [
-    [-.12,3.04,-.11,.014,-.42],[-.34,2.84,.01,.073,-.21],
-    [-.45,2.51,.15,.097,.21],[-.32,2.17,.30,.076,.42],
-    [-.06,1.98,.35,.092,.12],[.19,1.86,.19,.061,-.33],
-    [.28,1.65,.015,.029,-.56],[.12,1.51,-.12,.006,-.42],
-  ],1.05);
-  energyCurrent(m, [
-    [.12,2.99,-.13,.009,.31],[.31,2.77,.06,.045,.11],
-    [.33,2.44,.25,.080,-.32],[.10,2.12,.385,.069,-.54],
-    [-.17,1.84,.24,.063,-.17],[-.30,1.49,.025,.088,.29],
-    [-.13,1.09,.13,.051,.43],[.16,.82,-.08,.008,-.1],
-  ],1.18);
-  energyCurrent(m, [
-    [-.24,1.79,-.13,.008,.31],[-.39,1.5,.025,.057,.43],
-    [-.24,1.22,.235,.085,.12],[.035,1.12,.25,.071,-.31],
-    [.29,1.35,.07,.045,-.52],[.26,1.63,-.13,.006,-.11],
-  ],.95);
-  // Smaller branching filaments are rooted in those currents and terminate
-  // against the opposed constraint pads. They are not detached shiny flecks.
-  m.cable([[-.37,2.45,.19],[-.28,2.40,.29],[-.22,2.33,.46]],.018,'energy',1.81);
-  m.cable([[.19,1.22,.17],[.22,1.17,.31],[.23,1.16,.47]],.017,'energy',1.74);
-  m.cable([[.25,2.66,.13],[.085,2.59,.20],[-.03,2.41,.24],[-.04,2.26,.31]],.012,'energy',1.37);
-  m.cable([[-.18,1.76,.23],[.015,1.65,.22],[.1,1.47,.16]],.014,'energy',1.43);
   // Opposed clamps have a carriage, threaded shaft, shoe and replaceable pads.
   for (const [side, y] of [[-1, 2.36], [1, 1.2]] as const) {
     const x = side * .73;
@@ -274,12 +215,20 @@ function core(m: Model): void {
     topBolt(m, side * 1.35, .458, -.89, .071);
     m.beam([side * 1.38, .52, -.95], [side * .88, 2.82, -.91], .13, .13, 'iron', .68);
   }
-  // Three real spill sources sit in open air in front of the thin membranes,
-  // clear of the rear plate and their own emissive geometry. Their shared
-  // source identity drives the same restrained, irregular energy breathing.
-  m.light([-.04, 2.83, .84], [.36, .49, .425], 3.2, 6.8, { kind: 'pollution', id: 'core-heart' });
-  m.light([.04, 1.36, .82], [.315, .42, .365], 1.05, 4.3, { kind: 'pollution', id: 'core-lower-seal' });
-  m.light([-.09, 3.83, .63], [.35, .465, .405], .94, 3.6, { kind: 'pollution', id: 'core-upper-seal' });
+  // One three-dimensional energy mass carries continuous internal density and
+  // flow. It is neither a bundle of emissive mesh ribbons nor a lit solid prop.
+  m.energyVolume([0,2.66,.02],[.62,1.10,.61],73021);
+  // Distributed samples lie INSIDE that same mass. Their omnidirectional spill
+  // can escape through front, rear and crown apertures; no light is pushed in
+  // front of the shrine just to paint a cone on the floor.
+  const radiance:V3=[.36,.49,.425];
+  m.light([0,2.66,.02],radiance,5,14,{kind:'pollution',id:'core-heart'});
+  m.light([0,2.66,.39],radiance,1,14,{kind:'pollution',id:'core-front-seal'});
+  m.light([0,2.66,-.36],radiance,1,14,{kind:'pollution',id:'core-rear-seal'});
+  m.light([-.46,2.66,.02],radiance,1,14,{kind:'pollution',id:'core-left-seal'});
+  m.light([.46,2.66,.02],radiance,1,14,{kind:'pollution',id:'core-right-seal'});
+  m.light([0,3.57,.02],radiance,1,14,{kind:'pollution',id:'core-upper-seal'});
+  m.light([0,1.75,.02],radiance,1,14,{kind:'pollution',id:'core-lower-seal'});
 }
 
 function storage(m: Model): void {
@@ -489,7 +438,7 @@ function rift(m: Model): void {
 export function buildDevices(m: Model): Station[] {
   const stations: Station[] = [
     { id: 1, key: 'core', name: '核心', position: [12.8, 0, 3.4], approach: [10.8, 0, 5], radius: .92,
-      description: '右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；折层深处的灰绿光洒向朝拜前场，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。' },
+      description: '右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；受约束的能量团内部翻涌，灰绿光向四周辐射，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。' },
     { id: 2, key: 'storage', name: '储藏', position: [10.5, 2.6, -3.2], approach: [9.02, 2.6, -3.55], radius: .8,
       description: '封闭的顶压观察井，窄缝下可见被关物抵压；承压盖、螺杆与深收容腔构成完整机体。修复提高薪柴价值。' },
     { id: 3, key: 'purifier', name: '净化器', position: [-.8, 0, 2], approach: [-.8, 0, 3.83], radius: .83,

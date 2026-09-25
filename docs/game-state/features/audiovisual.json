@@ -201,7 +201,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类污染/炉火/肩灯混光、右侧建筑依托、分层外景、同身份新人物与动态景观。六站双坡及全部7311可站样本连通，查看页限定验证通过；新版待人审，正式生产仍R10、Rift人物未变、I28挂起。",
+    "summary": "获赞35f17ba基线上逐项修订；最新仅重做核心：三维发光密度体、内部涌流、全向最强照明和开放约束背架。固定相机动态样景，视觉待人审；正式生产仍R10，Rift人物和I28挂起不变。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -761,6 +761,10 @@
       {
         "path": "docs/qa/iteration-30-last-light-living.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/energy.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -816,10 +820,11 @@
       "COH-E-I30-LAST-LIGHT-DIRECTION",
       "COH-E-I30-LAST-LIGHT-CANDIDATE",
       "COH-E-I30-LAST-LIGHT-APPRECIATED",
-      "COH-E-I30-LAST-LIGHT-LIVING"
+      "COH-E-I30-LAST-LIGHT-LIVING",
+      "COH-E-I30-CORE-VOLUME"
     ],
     "unknowns": [
-      "35f17ba整体画面已获用户明确赞许；最新七项艺术修订待人审。仅固定相机动态样景，尚未接正式src、碰撞、经济或人物驱动视差；投影形状烘焙、可见深度不补全隐藏内容。8ef1366/6127218仍为历史否决。",
+      "35f17ba为获赞基线；其后蓝雾/光影/内芯均收到纠偏，最新密度核心与全向照明待人审。仍为固定相机动态样景，投影形状烘焙，未接正式玩法及人物驱动视差。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

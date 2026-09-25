@@ -1,6 +1,6 @@
 {
-  "strictModules": 8,
-  "finiteTriangles": 51836,
+  "strictModules": 9,
+  "finiteTriangles": 49920,
   "stations": [
     "core",
     "storage",
@@ -24,13 +24,13 @@
       "furnace",
       "shoulder"
     ],
-    "uniqueSourceIds": 28,
+    "uniqueSourceIds": 32,
     "actorShoulderSources": 1,
     "fields": {
       "pollution": {
-        "sourceCount": 26,
-        "contributingPixels": 55968,
-        "nonEmitterReceivingPixels": 54449,
+        "sourceCount": 30,
+        "contributingPixels": 64354,
+        "nonEmitterReceivingPixels": 62435,
         "maximum": 255,
         "outsideSupport": 0
       },
@@ -60,6 +60,29 @@
       "blockedContribution": 0,
       "castShadowDifference": 9.111111111111114
     },
+    "omniRegression": {
+      "canonicalDirections": [
+        "+X",
+        "-X",
+        "+Y",
+        "-Y",
+        "+Z",
+        "-Z"
+      ],
+      "receiverValues": [
+        73.75,
+        82.5,
+        75.5,
+        82,
+        82.25,
+        78.25
+      ],
+      "coreRadianceBudget": 5.034359,
+      "strongestOtherBudget": 3.0251104000000004,
+      "coreReach": 14,
+      "strongestOtherReach": 8.4,
+      "volumeCount": 1
+    },
     "riftSourceHashes": {
       "src/entities/player-sprite-dense.ts": "8f6be3b3bf11983d479f1e57ebaac55fba31a5d81ba9b0663257941f4f2a8531",
       "src/entities/player-sprite.ts": "f831463f47f7afe733160d6ffa1364bd8c3404d89481103072ba25170cfdc227"
@@ -71,7 +94,7 @@
       640
     ],
     "visibleSources": {
-      "pollution": 1470,
+      "pollution": 1880,
       "furnace": 30,
       "shoulder": 4
     },
@@ -80,14 +103,16 @@
         "key": "core",
         "id": 1,
         "pollutantTriangles": 0,
-        "energyTriangles": 1836,
-        "emittingPixels": 490
+        "energyTriangles": 0,
+        "volumes": 1,
+        "emittingPixels": 900
       },
       {
         "key": "storage",
         "id": 2,
         "pollutantTriangles": 59,
         "energyTriangles": 0,
+        "volumes": 0,
         "emittingPixels": 49
       },
       {
@@ -95,6 +120,7 @@
         "id": 3,
         "pollutantTriangles": 170,
         "energyTriangles": 0,
+        "volumes": 0,
         "emittingPixels": 85
       },
       {
@@ -102,6 +128,7 @@
         "id": 4,
         "pollutantTriangles": 71,
         "energyTriangles": 0,
+        "volumes": 0,
         "emittingPixels": 43
       },
       {
@@ -109,6 +136,7 @@
         "id": 5,
         "pollutantTriangles": 171,
         "energyTriangles": 0,
+        "volumes": 0,
         "emittingPixels": 432
       },
       {
@@ -116,6 +144,7 @@
         "id": 6,
         "pollutantTriangles": 108,
         "energyTriangles": 0,
+        "volumes": 0,
         "emittingPixels": 14
       }
     ],
@@ -123,7 +152,21 @@
       "far": 23,
       "middle": 263,
       "near": 71
+    },
+    "energyAtlas": {
+      "dimensions": [
+        3840,
+        1280
+      ],
+      "frames": 8,
+      "distinctFrames": 8,
+      "coreBodyPixels": 900,
+      "changingInteriorPixels": 779,
+      "densityPixels": 928,
+      "transparentHaloPixels": 274,
+      "boundedSupport": true,
+      "staticCompositeMatches": true
     }
   },
-  "scope": "Source definitions, exported masks, finite source support and an independent receiver/occluder fixture; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration."
+  "scope": "Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration."
 }

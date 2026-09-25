@@ -2,12 +2,16 @@
  * the renderer's actual, occluded contribution; this never relights flat screen
  * circles or displaces the approved architectural pixels. */
 export interface HavenMotionImages {
+  /** haven-energy-base.png: the lit scene before core volume compositing. */
   scene: HTMLImageElement;
   pollution: HTMLImageElement;
   furnace: HTMLImageElement;
   shoulder: HTMLImageElement;
   motion: HTMLImageElement;
   depth: HTMLImageElement;
+  /** Data atlas. ImageBitmap inputs must use imageOrientation: 'flipY',
+   * premultiplyAlpha: 'none' and colorSpaceConversion: 'none'. */
+  energy: HTMLImageElement | ImageBitmap;
 }
 
 export interface HavenMotion {
@@ -37,8 +41,15 @@ uniform sampler2D uFurnace;
 uniform sampler2D uShoulder;
 uniform sampler2D uMotion;
 uniform sampler2D uDepth;
+uniform sampler2D uEnergy;
 uniform float uSeconds;
 varying vec2 vUv;
+
+vec4 energyFrame(vec2 uv, float frame) {
+  // The PNG stores frame 0 in its TOP-left tile; all uploads use flipped Y.
+  vec2 tile = vec2(mod(frame, 4.0), 1.0 - floor(frame / 4.0));
+  return texture2D(uEnergy, (tile + uv) / vec2(4.0, 2.0));
+}
 
 float hash(vec2 p) {
   return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -113,8 +124,16 @@ void main() {
   float shoulderChange = 0.012 * sin(time * 1.71) + 0.005 * sin(time * 0.43);
   vec3 color = base + pollution * pollutionChange
                    + furnace * fire(time) + shoulder * shoulderChange;
+  // The dynamic scene is the pre-volume base. Frame RGB is premultiplied
+  // radiance plus additive halo; alpha is density, including zero-alpha halo.
+  // Opaque geometry and shaded architectural pixels remain stationary.
+  float energyPosition = mod(time / 4.8 * 8.0, 8.0);
+  float energyIndex = floor(energyPosition);
+  vec4 energyNow = mix(energyFrame(uv, energyIndex),
+                       energyFrame(uv, mod(energyIndex + 1.0, 8.0)),
+                       fract(energyPosition));
 
-  if (source > 0.5 && source < 1.5) {
+  if (source > 0.5 && source < 1.5 && (objectId < 0.5 || objectId > 1.5)) {
     // The slow constriction follows the material's authored world phase. It
     // leaves silhouette, stone, metal and neighbouring non-polluted pixels intact.
     float seed = data.a * 19.0 + pixel.y * 0.009;
@@ -134,6 +153,7 @@ void main() {
     color += vec3(0.005, 0.006, 0.006) * air * presence;
   }
 
+  color = color * (1.0 - energyNow.a) + energyNow.rgb * (1.0 + pollutionChange);
   vec2 encoded = floor(texture2D(uDepth, uv).rg * 255.0 + 0.5);
   float encodedDepth = encoded.x * 256.0 + encoded.y;
   float depth = encodedDepth / 256.0 - 80.0;
@@ -203,13 +223,21 @@ export function createHavenMotion(images: HavenMotionImages): HavenMotion {
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
     gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE);
-    const inputs: readonly (readonly [string, HTMLImageElement])[] = [
+    const inputs: readonly (readonly [string, HTMLImageElement | ImageBitmap])[] = [
       ['uScene', images.scene], ['uPollution', images.pollution], ['uFurnace', images.furnace],
       ['uShoulder', images.shoulder], ['uMotion', images.motion], ['uDepth', images.depth],
+      ['uEnergy', images.energy],
     ];
     for (const [unit, [name, image]] of inputs.entries()) {
-      if (!image.complete || image.naturalWidth !== WIDTH || image.naturalHeight !== HEIGHT) {
-        throw new Error(`Haven motion ${name} must be a loaded ${WIDTH} × ${HEIGHT} image.`);
+      const expectedWidth = name === 'uEnergy' ? WIDTH * 4 : WIDTH;
+      const expectedHeight = name === 'uEnergy' ? HEIGHT * 2 : HEIGHT;
+      const imageWidth = image instanceof HTMLImageElement ? image.naturalWidth : image.width;
+      const imageHeight = image instanceof HTMLImageElement ? image.naturalHeight : image.height;
+      if ((image instanceof HTMLImageElement && !image.complete) || imageWidth !== expectedWidth || imageHeight !== expectedHeight) {
+        throw new Error(`Haven motion ${name} must be a loaded ${expectedWidth} × ${expectedHeight} image.`);
+      }
+      if (Math.max(expectedWidth, expectedHeight) > Number(gl.getParameter(gl.MAX_TEXTURE_SIZE))) {
+        throw new Error(`Haven motion ${name} exceeds this device's texture limit; use the static scene.`);
       }
       const texture = gl.createTexture();
       if (!texture) throw new Error(`Unable to allocate haven motion texture ${name}.`);
