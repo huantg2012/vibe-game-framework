@@ -306,18 +306,43 @@ function storage(m: Model): void {
 function purifier(m: Model): void {
   plinth(m, 2.95, 1.48, 'rails');
   m.box([0, .37, -.05], [2.66, .18, 1.2], 'iron', .042, .85);
-  // Two separation chambers differ in width and packing. Deep open windows,
-  // a raised sump and an inter-chamber neck are all visible from the front.
+  // The operating face remains +Z. A recessed inspection window in each -X
+  // end casting and a glazed roof slot expose the real chamber from the side.
+  // The rear shell, far wall and load-bearing corner posts stay substantial.
   for (const [x, width, height, tint] of [[-.66, .92, 1.08, .9], [.48, 1, .86, .8]] as const) {
-    m.box([x - width / 2, .45 + height / 2, -.07], [.12, height, 1.04], 'iron', .034, tint);
+    const end = x - width / 2, roof = .51 + height;
+    for (const z of [-.52, .38]) {
+      m.box([end, .45 + height / 2, z], [.18, height, .16], 'iron', .035, tint);
+    }
+    m.box([end, .53, -.07], [.21, .16, 1.04], 'iron', .035, tint * .84);
+    m.box([end, roof - .075, -.07], [.18, .19, 1.04], 'iron', .035, tint);
+    // Recessed glass and an inner seating lip leave a visible wall thickness.
+    for (const z of [-.42, .28]) m.box([end + .07, .48 + height / 2, z], [.045, height - .25, .035], 'steel', .008, .62);
+    m.quad([end + .055, .63, -.4], [end + .055, roof - .18, -.4],
+      [end + .055, roof - .18, .26], [end + .055, .63, .26], 'glass', .69);
     m.box([x + width / 2, .45 + height / 2, -.07], [.12, height, 1.04], 'iron', .034, tint * .83);
     m.box([x, .51, -.04], [width, .18, .96], 'steel', .025, tint * .78);
-    m.box([x, .51 + height, -.1], [width + .18, .13, 1.17], 'iron', .041, tint * 1.05);
+    // A deep service spine carries the pipe; the remaining top is a framed
+    // sight slot, so the farther chamber is readable above the near housing.
+    m.box([x, roof, -.46], [width + .18, .13, .45], 'iron', .041, tint * 1.05);
+    m.box([x, roof, .405], [width + .18, .13, .16], 'iron', .029, tint);
+    for (const xx of [end, x + width / 2]) m.box([xx, roof, .04], [.14, .13, .60], 'iron', .026, tint * .92);
+    m.quad([end + .08, roof, -.23], [end + .08, roof, .32],
+      [x + width / 2 - .08, roof, .32], [x + width / 2 - .08, roof, -.23], 'glass', .68);
     m.box([x, .48 + height / 2, -.53], [width, height, .12], 'black', .018, .85);
     // The rear spindle/packing sits well behind the glass lip.
     rod(m, [x - .13, .63, -.07], [x - .13, height + .33, -.07], .14, 'steel', 14, .14, .65);
     for (let i = 0; i < 5; i++) m.cylinder([x - .13, .71 + i * height * .13, -.07], .22, .043, 'iron', 16, .22, .78);
-    m.rock([x + .12, .66, .01], [.43, .2, .5], 'pollutant', Math.round(x * 10 + 812), .72);
+    // Contamination rests in the recessed collection tray, ahead of the
+    // filter stack from the inspection side; it does not coat the outer frame.
+    const residue = x - width * .32;
+    for (const z of [-.33, .26]) m.box([x - .05, .625, z], [width * .79, .10, .045], 'steel', .009, .64);
+    m.rock([residue, .675, .01], [.31, .21, .48], 'pollutant', Math.round(x * 10 + 812), .72);
+    m.cable([[residue - .055, .754, -.12], [residue + .016, .77, .01], [residue - .025, .741, .14]], .025, 'pollutant', 1.4);
+    // Four end-facing bolts fasten the removable inspection casting.
+    for (const z of [-.52, .38]) for (const y of [.65, roof - .17]) {
+      rod(m, [end - .095, y, z], [end - .12, y, z], .043, 'steel', 6, .043, .75);
+    }
     m.box([x - width * .31, .65 + height * .3, .475], [.11, height * .55, .038], 'glass', .013, .6);
     for (const xx of [x - width / 2, x + width / 2]) {
       frontBolt(m, xx, .65, .5, .04); frontBolt(m, xx, height + .32, .5, .04);
@@ -338,8 +363,8 @@ function purifier(m: Model): void {
   m.box([.04, .7, .573], [.045, .05, .02], 'pollutant', .005, 1.35);
   m.cable([[-.69, .747, .255], [-.55, .76, .23], [-.44, .736, .21]], .025, 'pollutant', 1.5);
   m.cable([[.42, .741, .25], [.57, .752, .265]], .023, 'pollutant', 1.39);
-  m.light([-.53, .86, .47], [.315, .415, .363], .56, 2.25, { kind: 'pollution', id: 'purifier-inlet' });
-  m.light([.53, .78, .43], [.30, .39, .35], .24, 1.45, { kind: 'pollution', id: 'purifier-sump' });
+  m.light([-.99, .84, .01], [.315, .415, .363], .56, 2.25, { kind: 'pollution', id: 'purifier-inlet' });
+  m.light([.14, .81, .01], [.30, .39, .35], .24, 1.45, { kind: 'pollution', id: 'purifier-sump' });
 }
 
 function offering(m: Model): void {
@@ -480,7 +505,7 @@ export function buildDevices(m: Model): Station[] {
     { id: 2, key: 'storage', name: '储藏', position: [10.5, 2.6, -3.2], yaw: 0, approach: [9.02, 2.6, -3.55], radius: .8,
       description: '封闭的顶压观察井，窄缝下可见被关物抵压；承压盖、螺杆与深收容腔构成完整机体。修复提高薪柴价值。' },
     { id: 3, key: 'purifier', name: '净化器', position: purifierPosition, yaw: purifierYaw, approach: inFront(purifierPosition, purifierYaw, 1.83), radius: .83,
-      description: '两只深浅不同的分离腔由管路相接，内部填料、低液面与收集槽可见。修复降低踏入裂隙时的起始混乱。' },
+      description: '两只分离腔由管路相接；厚壁端侧检视窗与顶部观察缝露出层叠滤芯、内壁和低位污染收集槽。修复降低踏入裂隙时的起始混乱。' },
     { id: 4, key: 'offering', name: '供奉', position: offeringPosition, yaw: offeringYaw, approach: inFront(offeringPosition, offeringYaw, 1.86), radius: .82,
       description: '厚壁回收管环的偏心孔贯通前后，下沿夹件暴露并控制残渣；压力穿孔而过。装入物件供其抵御冲击并转化。' },
     { id: 5, key: 'growth', name: '蜕变', position: [6, 2.6, -5.2], yaw: 0, approach: [6, 2.6, -3.33], radius: .83,
