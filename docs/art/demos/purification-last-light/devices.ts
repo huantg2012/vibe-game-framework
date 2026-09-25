@@ -468,7 +468,9 @@ export function buildDevices(m: Model): Station[] {
   // Keep the two west-side workstations against the perimeter, addressing
   // the open floor. Their local +Z is the actual operating face; lights and
   // mounting geometry inherit the same transform as the complete assembly.
-  const purifierPosition: V3 = [-1.5, 0, 3], purifierYaw = Math.PI / 2;
+  // The marked operating direction is screen-right. Do not cant the housing
+  // back toward the camera merely to expose the two chambers.
+  const purifierPosition: V3 = [-2.35, 0, 2.7], purifierYaw = Math.atan2(30, -19);
   const offeringPosition: V3 = [-3, 0, -3.85], offeringYaw = Math.atan2(19, 30);
   const inFront = (position: V3, yaw: number, distance: number): V3 =>
     [position[0] + Math.sin(yaw) * distance, position[1], position[2] + Math.cos(yaw) * distance];

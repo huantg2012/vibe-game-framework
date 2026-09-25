@@ -3011,5 +3011,39 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-OFFERING-APPROVED",
+    "kind": "human",
+    "result": "pass",
+    "date": "2026-09-25",
+    "revision": "d74e5b2",
+    "scope": "用户明确“供奉：正确”，认可供奉本轮位置及朝向。",
+    "limitations": "不含同时被否定的净化器位置/角度；不批准中央空地或壁炉的新方案。",
+    "sources": [
+      {
+        "path": "docs/art-direction.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-PURIFIER-ALIGN",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-25",
+    "revision": "purifier alignment after d74e5b2",
+    "scope": "净化器红框位置/正右朝向校正，底脚13776点全部受支撑；9模块strict/32源/8帧/六轴和6988站位、六点双坡连通通过；浏览器整景实看。",
+    "limitations": "技术检查不替代用户对新标注落实效果的判断。供奉保持已认可版本，壁炉仅讨论未实施；非正式玩法接入。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-last-light-living.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/assets/layout-check.json",
+        "role": "test"
+      }
+    ]
   }
 ]
