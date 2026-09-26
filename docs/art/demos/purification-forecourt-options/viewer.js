@@ -1,11 +1,11 @@
 const $ = id => document.getElementById(id);
 const whole = $('whole'), focus = $('focus');
 const wholeContext = whole.getContext('2d'), focusContext = focus.getContext('2d');
-const compare = $('compare'), annotations = $('annotations'), holdButton = $('hold-current'), split = $('split');
-const crop = {x:440,y:210,width:390,height:300};
+const compare = $('compare'), annotations = $('annotations'), holdButton = $('hold-current'), split = $('split'), routeSelect = $('route-select');
+const crop = {x:430,y:170,width:420,height:330};
 const allowedIds = ['current','a','b','c'];
 const images = new Map(), options = new Map(), buttons = new Map();
-let selected = 'a', held = false, dragging = false, ready = false;
+let selected = 'b', held = false, dragging = false, ready = false;
 const clamp = (value,min,max) => Math.max(min,Math.min(max,value));
 const label = id => id === 'current' ? '当前版' : `方案 ${id.toUpperCase()}`;
 
@@ -13,17 +13,33 @@ function polygon(ctx, points) {
   if (!points?.length) return;
   ctx.beginPath();points.forEach((point,index) => index ? ctx.lineTo(point[0],point[1]) : ctx.moveTo(point[0],point[1]));ctx.closePath();
 }
+function selectedRoute() {
+  if(routeSelect.value==='')return undefined;
+  return options.get(selected)?.routes?.[Number(routeSelect.value)];
+}
+function updateLegend() {
+  const route=selectedRoute();
+  $('legend').hidden=!annotations.checked&&!route;
+  $('legend-footprint').hidden=!annotations.checked;
+  $('legend-stop').hidden=!annotations.checked;
+  $('legend-route').hidden=!route;
+  $('legend-route').textContent=route ? `${route.label} · 示意路径 ${Number(route.distance).toFixed(1)} m` : '选中路线';
+}
+function drawRoute(ctx, route, region) {
+  if(!route?.points||route.points.length<2)return;
+  ctx.save();ctx.translate(-region.x,-region.y);
+  ctx.strokeStyle='#d5b179';ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();
+  route.points.forEach((point,index)=>index?ctx.lineTo(...point):ctx.moveTo(...point));ctx.stroke();
+  const start=route.points[0],tip=route.points.at(-1),before=route.points.at(-2),angle=Math.atan2(tip[1]-before[1],tip[0]-before[0]);
+  ctx.beginPath();ctx.moveTo(tip[0]-8*Math.cos(angle-.45),tip[1]-8*Math.sin(angle-.45));ctx.lineTo(...tip);ctx.lineTo(tip[0]-8*Math.cos(angle+.45),tip[1]-8*Math.sin(angle+.45));ctx.stroke();
+  ctx.fillStyle='#e2cea8';ctx.beginPath();ctx.arc(...start,2.5,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+}
 function drawAnnotations(ctx, option, region) {
   ctx.save();ctx.translate(-region.x,-region.y);
   if (option.footprint?.length) {
     polygon(ctx,option.footprint);ctx.fillStyle='#a1bfc521';ctx.fill();
     ctx.strokeStyle='#a1bfc5b8';ctx.lineWidth=1.3;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);
-  }
-  if (option.route?.length>1) {
-    ctx.strokeStyle='#d5b179';ctx.lineWidth=2;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();
-    option.route.forEach((point,index)=>index?ctx.lineTo(...point):ctx.moveTo(...point));ctx.stroke();
-    const tip=option.route.at(-1),before=option.route.at(-2),angle=Math.atan2(tip[1]-before[1],tip[0]-before[0]);
-    ctx.beginPath();ctx.moveTo(tip[0]-8*Math.cos(angle-.45),tip[1]-8*Math.sin(angle-.45));ctx.lineTo(...tip);ctx.lineTo(tip[0]-8*Math.cos(angle+.45),tip[1]-8*Math.sin(angle+.45));ctx.stroke();
   }
   if (option.stop) {
     ctx.strokeStyle='#e2cea8';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(...option.stop,7,0,Math.PI*2);ctx.stroke();
@@ -46,6 +62,7 @@ function drawCanvas(canvas,ctx,region) {
   ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.drawImage(image,region.x,region.y,region.width,region.height,0,0,canvas.width,canvas.height);
   if(annotations.checked&&!held)drawAnnotations(ctx,options.get(selected),region);
+  if(!held)drawRoute(ctx,selectedRoute(),region);
   if(compare.checked&&!held&&selected!=='current') {
     const line=canvas.width*Number(split.value)/100;
     ctx.save();ctx.beginPath();ctx.rect(0,0,line,canvas.height);ctx.clip();
@@ -55,6 +72,8 @@ function drawCanvas(canvas,ctx,region) {
     ctx.strokeStyle='#d5d9c6';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(line-3,canvas.height/2-5);ctx.lineTo(line-6,canvas.height/2);ctx.lineTo(line-3,canvas.height/2+5);ctx.moveTo(line+4,canvas.height/2-5);ctx.lineTo(line+7,canvas.height/2);ctx.lineTo(line+4,canvas.height/2+5);ctx.stroke();
   }
   canvas.dataset.option=actual;canvas.dataset.swipe=String(compare.checked&&!held&&selected!=='current');
+  canvas.dataset.route=held?'':selectedRoute()?.label??'';
+  canvas.dataset.annotations=String(annotations.checked&&!held);
 }
 function draw() {
   if(!ready)return;
@@ -62,19 +81,26 @@ function draw() {
   const comparing=compare.checked&&selected!=='current';
   $('whole-state').textContent=held?'当前版 · 松开返回':comparing?`左：当前版 / 右：${label(selected)}`:label(selected);
   whole.setAttribute('aria-label',`${label(held?'current':selected)}完整场景${comparing?'，可拖动分界线与当前版比较':''}`);
-  focus.setAttribute('aria-label',`${label(held?'current':selected)}右侧前庭，同一固定裁切与比例`);
+  focus.setAttribute('aria-label',`${label(held?'current':selected)}核心与上下层，同一固定裁切与比例`);
 }
 function select(id) {
   if(!options.has(id))return;
-  selected=id;held=false;
+  selected=id;held=false;dragging=false;
   for(const [key,button]of buttons)button.setAttribute('aria-pressed',String(key===id));
   const option=options.get(id);
   $('title').textContent=option.title;$('summary').textContent=option.summary??'';
   $('tradeoff').textContent=option.tradeoff??'';
+  $('design').replaceChildren(...(option.design??[]).slice(0,3).map(fact=>{const item=document.createElement('li');item.textContent=fact;return item;}));
+  $('design').hidden=!option.design?.length;
+  // Route coordinates belong to this exact alternative. Never carry an old
+  // selection across a changed floor plan, even if the numeric index matches.
+  const none=document.createElement('option');none.value='';none.textContent='不显示';
+  routeSelect.replaceChildren(none,...(option.routes??[]).map((route,index)=>{const item=document.createElement('option');item.value=String(index);item.textContent=route.label;return item;}));
+  routeSelect.value='';routeSelect.disabled=!option.routes?.length;
   holdButton.disabled=id==='current';compare.disabled=id==='current';
   holdButton.setAttribute('aria-pressed','false');
   $('swipe-control').hidden=!compare.checked||id==='current';$('split-name').textContent=label(id);
-  $('legend').hidden=!annotations.checked;
+  updateLegend();
   draw();
 }
 function setHeld(value) {
@@ -99,7 +125,8 @@ holdButton.addEventListener('keydown',event=>{if(event.code==='Space'||event.cod
 holdButton.addEventListener('keyup',event=>{if(event.code==='Space'||event.code==='Enter'){event.preventDefault();setHeld(false);}});
 window.addEventListener('blur',()=>{dragging=false;setHeld(false);});
 compare.addEventListener('change',()=>{$('swipe-control').hidden=!compare.checked||selected==='current';draw();});
-annotations.addEventListener('change',()=>{$('legend').hidden=!annotations.checked;draw();});split.addEventListener('input',draw);
+annotations.addEventListener('change',()=>{updateLegend();draw();});split.addEventListener('input',draw);
+routeSelect.addEventListener('change',()=>{updateLegend();draw();});
 
 try {
   const response=await fetch('./assets/options.json');if(!response.ok)throw new Error(`Options: ${response.status}`);

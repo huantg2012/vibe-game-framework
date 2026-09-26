@@ -1,83 +1,61 @@
-import { type V3, type Model } from '../purification-last-light/model';
-import { base, type Option } from './shared';
+import {CORE_FACING_TARGET} from '../purification-last-light/devices';
+import {base,relocate,type Option} from './shared';
+import {type V3} from '../purification-last-light/model';
 
-/** A surviving wall section: the crown is a broken volume, not a dark line
- * pasted onto the walking surface. Each station describes a real cross-section. */
-function brokenWall(m:Model, points:readonly {x:number;z:number;height:number;width:number}[], tint:number):void {
-  for(let i=0;i<points.length-1;i++) {
-    const a=points[i]!,b=points[i+1]!;
-    const dx=b.x-a.x,dz=b.z-a.z,len=Math.hypot(dx,dz),nx=-dz/len,nz=dx/len;
-    const side=(p:typeof a,s:number,y:number):V3=>[p.x+nx*p.width*s,y,p.z+nz*p.width*s];
-    const al=side(a,-.5,.08),ar=side(a,.5,.08),bl=side(b,-.5,.08),br=side(b,.5,.08);
-    const at=side(a,-.5,a.height),au=side(a,.5,a.height+.035);
-    const bt=side(b,-.5,b.height),bu=side(b,.5,b.height-.027);
-    m.quad(al,at,bt,bl,'stone',tint);
-    m.quad(ar,br,bu,au,'stone',tint*.95);
-    m.quad(at,au,bu,bt,'cutstone',tint*1.03);
-    if(i===0)m.quad(al,ar,au,at,'stone',tint*.92);
-    if(i===points.length-2)m.quad(bl,bt,bu,br,'stone',tint*.92);
-  }
-}
-
+/** Repair on the inhabited floor; the upper library becomes an optional,
+ * lower-frequency growth destination. This changes adjacency, not mechanics. */
 export function buildOption():Option {
-  const {model,core,world}=base();
-  model.at(core.position,core.yaw,0,()=>{
-    // This single L-shaped remnant joins the surviving upper-storey masonry.
-    // Its open side faces the crossing; the shrine's front is never fenced in.
-    model.slab([[-2.34,.58],[-1.71,.69],[-1.66,6.12],[-3.88,6.12],[-4.00,5.47],[-2.36,5.48]],.145,-.12,'cutstone',.75);
-    brokenWall(model,[
-      {x:-2.01,z:.73,height:.41,width:.50},
-      {x:-2.00,z:1.14,height:.67,width:.52},
-      {x:-2.03,z:1.62,height:.92,width:.52},
-      {x:-2.02,z:2.18,height:.87,width:.55},
-      {x:-2.00,z:2.66,height:1.01,width:.54},
-      {x:-2.01,z:3.21,height:.96,width:.58},
-      {x:-2.01,z:3.74,height:.90,width:.56},
-      {x:-2.01,z:4.36,height:.99,width:.58},
-      {x:-2.01,z:4.80,height:.74,width:.56},
-      {x:-2.03,z:5.31,height:.91,width:.57},
-      {x:-2.01,z:5.81,height:.83,width:.58},
-    ],.80);
-    brokenWall(model,[
-      {x:-2.04,z:5.80,height:.83,width:.57},
-      {x:-2.43,z:5.80,height:1.03,width:.57},
-      {x:-2.81,z:5.80,height:1.02,width:.58},
-      {x:-3.11,z:5.81,height:1.25,width:.59},
-      {x:-3.42,z:5.82,height:1.35,width:.60},
-      {x:-3.73,z:5.80,height:1.78,width:.61},
-    ],.78);
-    // A recessed bedding course and two surviving facing stones reveal how
-    // the wall was made; chipped ends expose the rough body underneath.
-    model.box([-1.711,.205,2.26],[.055,.115,1.68],'cutstone',.014,.75);
-    model.box([-1.745,.64,2.52],[.09,.39,.91],'cutstone',.024,.81);
-    model.box([-1.755,.61,1.64],[.095,.36,.66],'cutstone',.024,.76);
-    model.box([-1.736,.65,3.56],[.075,.41,.83],'cutstone',.024,.78);
-    model.box([-1.748,.37,4.92],[.074,.37,1.12],'cutstone',.024,.77);
-    model.box([-2.86,.195,5.487],[1.30,.105,.075],'cutstone',.014,.72);
-    model.box([-2.59,.66,5.51],[.58,.53,.10],'cutstone',.026,.76);
-    model.box([-3.25,.76,5.497],[.53,.72,.115],'cutstone',.025,.80);
-    // The fracture exposes a small amount of aggregate at the crown, rather
-    // than distributing decorative stones across the otherwise clear floor.
-    model.rock([-1.99,.94,1.60],[.24,.16,.38],'stone',8171,.87);
-    model.rock([-2.03,1.025,2.67],[.34,.13,.29],'stone',8172,.82);
-    model.rock([-3.12,1.25,5.80],[.35,.17,.35],'stone',8173,.78);
-    model.rock([-3.72,1.78,5.77],[.48,.21,.46],'stone',8174,.78);
-    // A partly surviving return ties into the pier underneath the upper floor.
-    model.beam([-3.78,.22,5.78],[-3.79,2.37,5.82],.39,.46,'stone',.72);
-    model.beam([-3.97,1.79,5.65],[-4.28,2.30,5.68],.115,.14,'iron',.57);
+  const haven=base(),{model}=haven;
+  const storage=relocate(haven,'storage',[8.10,0,-.55],.68);
+  const corePosition:V3=[12.90,0,1.70];
+  const core=relocate(haven,'core',corePosition,Math.atan2(CORE_FACING_TARGET[0]-corePosition[0],CORE_FACING_TARGET[2]-corePosition[2]));
+  const purifier=haven.stations.find(s=>s.key==='purifier')!;
+  const rift=haven.stations.find(s=>s.key==='rift')!;
+  const growth=haven.stations.find(s=>s.key==='growth')!;
+  // A surviving machine bay has a structural back, thick fractured feet and
+  // inset masonry faces. Its front remains open to the shared working aisle.
+  // It reconnects to the exposed lower-storey piers, not a freestanding fence.
+  model.at([8.1,0,-.55],0,0,()=>{
+    model.slab([[-2.1,-1.05],[-1.95,-1.67],[1.99,-1.73],[2.32,-1.35],[2.21,-.60],[1.77,-.55],[1.70,-1.13],[-1.60,-1.09]],.095,-.23,'stone',.76);
+    model.box([-1.77,.24,-1.31],[.62,.48,.59],'cutstone',.035,.81);
+    model.rock([-1.78,.49,-1.31],[.61,.28,.57],'stone',4321,.8);
+    model.box([1.84,.31,-1.20],[.61,.61,.66],'cutstone',.037,.76);
+    model.rock([1.92,.61,-1.23],[.59,.32,.64],'stone',4328,.8);
+    model.slab([[-1.94,-1.70],[1.98,-1.73],[2.11,-1.43],[1.73,-1.31],[-1.90,-1.29]],.59,.06,'stone',.77);
+    for(const [x,width,tint] of [[-1.12,1.12,.81],[.12,1.24,.76],[1.18,.73,.82]] as const){
+      model.box([x,.28,-1.26],[width,.37,.09],'cutstone',.022,tint);
+    }
+    // One torn jamb below the upper fabric reveals the old room's boundary.
+    model.beam([1.87,.10,-1.51],[1.87,1.54,-1.61],.48,.55,'stone',.74);
+    model.rock([1.85,1.57,-1.61],[.57,.29,.58],'stone',4333,.77);
+    model.beam([1.90,1.36,-1.69],[2.94,1.88,-1.92],.20,.24,'iron',.65);
+    // Original machine skids are supported by two buried structural footings.
+    // The operating patch stays flat; no decorative carpet occupies the aisle.
+    model.box([-.60,.015,.04],[.30,.04,2.46],'stone',.014,.72);
+    model.box([.69,.017,.04],[.31,.044,2.45],'stone',.015,.74);
   });
+  // The core's eastern abutment continues back into the attached building.
+  // Its irregular low crown catches the real all-direction core light.
+  model.slab([[14.17,-.43],[14.45,-.29],[14.73,1.46],[14.86,2.24],[14.49,2.47],[14.17,1.23]],.32,-.31,'stone',.68);
+  model.box([14.31,.37,.16],[.30,.38,.89],'cutstone',.033,.73);
+  model.rock([14.36,.57,.09],[.34,.29,.67],'stone',4342,.74);
+  const start:V3=[3.8,.035,3.8];
+  const storageRoute:V3[]=[start,[4.5,.035,1.3],[5.7,.035,.54],storage.approach];
+  const coreRoute:V3[]=[start,[4.6,.035,1.8],[7.1,.035,1.60],[9.5,.035,1.60],core.approach];
   return {
-    id:'b',title:'残墙围合',
-    summary:'沿上层遗构接出一段低残墙，把核心前方变成单侧有依托、正面敞开的静室。',
-    tradeoff:'空间归属最清楚；右侧视野会收拢，遗迹的体量也会增加。',
-    model,
-    route:[[2,.035,-.5],[5.1,.035,.10],[7.30,.035,.72],world(0,.035,3.90),world(0,.035,2.45)],
-    stop:world(0,.035,2.45),
-    footprint:[world(-1.66,.03,.57),world(-1.66,.03,6.14),world(-4.01,.03,6.14),world(-4.01,.03,5.45),world(-2.35,.03,5.45),world(-2.35,.03,.57)],
-    callouts:[
-      {text:'残墙与上层遗构衔接',point:world(-3.78,1.50,5.80)},
-      {text:'低墙形成单侧边界',point:world(-1.72,.68,3.95)},
-      {text:'正面保留宽阔入口',point:world(0,.05,3.58)},
+    id:'b',title:'下层检修厅',
+    summary:'储藏落入下层旧墙龛，核心后靠右侧承托。三个可修复模块同层，上层留给成长；中央成为连接各操作位的工作前厅。',
+    tradeoff:'直接改善装置邻接，少一次为储藏上下楼；生活区会更像维持据点运转的工作场所，核心的独立静谧感稍弱。',
+    model,stations:haven.stations,changedObjects:[0,1,2],
+    route:coreRoute,stop:core.approach,
+    footprint:[[5.8,.035,-2.45],[10.4,.035,-2.45],[11.2,.035,.75],[9.5,.035,1.55],[6.3,.035,1.1]],
+    callouts:[{text:'储藏操作面朝工作路',point:storage.approach},{text:'核心靠右承托，前场敞开',point:core.approach},{text:'上层专供可选成长',point:growth.approach}],
+    routes:[
+      {label:'检修储藏 · 取消上下楼',points:storageRoute},
+      {label:'修复核心 · 从炉背直达',points:coreRoute},
+      {label:'净化器 · 西侧直接往返',points:[start,[2.1,.035,2.3],purifier.approach]},
+      {label:'准备出击 · 不穿检修工位',points:[start,[4.6,.035,1.9],[6.8,.035,2.15],rift.approach]},
     ],
+    design:['把空地变成真实操作空间，承担已存在的检修用途。','同层三模块各有可站的正面，经过路线与操作位置分开。','不增加卸货、维护工序或强制参拜；只改变可选行动的距离。'],
   };
 }

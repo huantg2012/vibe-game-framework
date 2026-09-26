@@ -3197,9 +3197,9 @@
     "kind": "runtime",
     "result": "partial",
     "date": "2026-09-26",
-    "revision": "a818049 + isolated forecourt candidate working tree",
+    "revision": "2f4c199",
     "scope": "A/B/C同源几何实图，960×640固定镜头/像素时刻；current与现样景坐姿整景逐像素一致；严格TS、有限值、非目标对象不变通过。浏览器方案切换、划线与构思标注已检查，无warning/error。",
-    "limitations": "仅空间视觉候选，用户未选择，未改原样景；标注路线不是生产碰撞或实际移动验收。C存在上层储藏/核心的视觉堆叠代价。",
+    "limitations": "仅空间视觉候选，用户未选择，未改原样景；标注路线不是生产碰撞或实际移动验收。C存在上层储藏/核心的视觉堆叠代价。 后续用户否定三方案“不够好”；当前路径内容已被R2覆盖，旧产物须按此revision查Git。",
     "sources": [
       {
         "path": "docs/art/demos/purification-forecourt-options/assets/check.json",
@@ -3212,6 +3212,29 @@
       {
         "path": "docs/art/demos/purification-forecourt-options/assets/comparison.png",
         "role": "art"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-FORECOURT-OPTIONS-R2",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-26",
+    "revision": "2f4c199 + second-round spatial-option working tree",
+    "scope": "A断裂回廊/B下层检修厅/C核心中枢，沿用同源完整渲染。严格TS、光源参数及非目标对象/外景保持、当前站立图逐像素一致；638个路线站点按半径.22m足印采样地面支撑通过。限定浏览器验证方案切换、路线切换清理与示意长度、划线对照及无warning/error。",
+    "limitations": "用户尚未选择。路线检查为地面支撑，不是完整碰撞或真实游玩；路线长度是图示折线并非实测耗时。当前动态样景与正式生产未修改。",
+    "sources": [
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/comparison.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/README.md",
+        "role": "doc"
       }
     ]
   }

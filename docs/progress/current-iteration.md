@@ -20,7 +20,7 @@ note: I30 R11的007554c布局获用户CHANGES-REQUESTED；炉挡西侧工作路�
 
 ## 当前工作 · 迭代30 R11（2026-09-26，平台使用空间优化）
 
-追加：用户要求右侧空地的多个精确视觉方案。已交付[核心前庭三方案比较](../art/demos/purification-forecourt-options/index.html)，状态为候选待选；当前场景未替换。美术原则、各方向与取舍统一在 `docs/art-direction.md`，不继承旧 A/C 选择。
+追加：用户否定 `2f4c199` 三候选“不够好”，旧三案记HUMAN-REJECTED。[第二轮空间重组比较](../art/demos/purification-forecourt-options/index.html)现为断裂回廊/下层检修厅/中心圣龛与边缘出发，同源整景、逐条路线和划线对照已完成并限定检查；三案待选，原场景未替换。空间与玩法取舍集中在 `docs/art-direction.md`，不以内部推荐冒充人审。
 
 用户要求修正`007554c`的两处布局问题，状态 **HUMAN-CHANGES-REQUESTED**：炉挡楼梯去供奉/净化器的工作路，核心前留下无效大空地。技术连通不等于舒适通行，上轮内部“可收敛”判断不能代替人审。
 

@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>核心前庭 · 三种空间方案</title>
+  <title>第二轮 · 空间重组</title>
   <link rel="stylesheet" href="./viewer.css" />
 </head>
 <body>
   <main>
     <header>
-      <div><p class="eyebrow">净化点 / 空间比较</p><h1>核心前庭</h1></div>
-      <p class="method">同一镜头、材质与光照时刻 · 待选方案</p>
+      <div><p class="eyebrow">净化点 / 新方案比较</p><h1>第二轮 · 空间重组</h1></div>
+      <p class="method">同一镜头、材质与光照时刻 · 静态空间方案</p>
     </header>
     <nav class="toolbar" aria-label="方案比较">
       <div id="options" class="options" role="group" aria-label="选择方案"></div>
       <div class="tools">
         <button id="hold-current" disabled title="按住鼠标、空格或 Enter 查看当前版，松开返回方案">按住看当前版</button>
+        <label class="route-choice" for="route-select">路线<select id="route-select" disabled><option value="">不显示</option></select></label>
         <label><input id="compare" type="checkbox" disabled />划线对照</label>
         <label><input id="annotations" type="checkbox" disabled />构思标注</label>
       </div>
@@ -27,13 +28,14 @@
       </figure>
       <aside>
         <figure class="focus">
-          <figcaption><span>核心前庭</span><span class="subtle">固定裁切 · 原像素</span></figcaption>
-          <div class="image-wrap"><canvas id="focus" width="390" height="300" aria-label="选中方案右侧前庭的固定局部"></canvas></div>
+          <figcaption><span>核心与上下层</span><span class="subtle">固定裁切 · 原像素</span></figcaption>
+          <div class="image-wrap"><canvas id="focus" width="420" height="330" aria-label="选中方案核心与上下层的固定局部"></canvas></div>
         </figure>
         <div class="option-copy" aria-live="polite" aria-atomic="true">
           <h2 id="title">正在载入场景</h2>
           <p id="summary"></p>
           <p id="tradeoff"></p>
+          <ul id="design" class="design-facts" hidden></ul>
         </div>
       </aside>
     </section>
@@ -41,7 +43,7 @@
       <div id="swipe-control" class="swipe-control" hidden>
         <span>当前版</span><input id="split" type="range" min="0" max="100" value="50" aria-label="当前版与选中方案的分界位置" /><span id="split-name">方案 A</span>
       </div>
-      <p id="legend" hidden><span class="legend-footprint">改动范围</span><span class="legend-route">进入路线</span><span class="legend-stop">停驻位置</span><span class="subtle">构思标注，尚未接入角色移动</span></p>
+      <p id="legend" hidden><span id="legend-footprint" class="legend-footprint">改动范围</span><span id="legend-route" class="legend-route">选中路线</span><span id="legend-stop" class="legend-stop">停驻位置</span><span class="subtle">空间构思，尚未接入角色移动</span></p>
       <p id="status" role="status">正在读取四张同视角场景。</p>
     </footer>
   </main>
