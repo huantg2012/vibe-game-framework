@@ -201,12 +201,12 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "供奉摆放获认可，净化器保持2b404d2位置/正右朝向，改厚框端侧检视窗/顶部观察缝与腔内受光以露出内部。9模块strict/6988站位/六点双坡通过，浏览器整景及模型已实看；视觉待人审，中央空地/壁炉仅讨论，正式生产未变。",
+    "summary": "建筑断墙基/石压顶组成可坐残骸，旧炉内移。真实坐姿与肩灯光场、1.18×镜头、一句文案及起身/Esc已接样景；10模块strict、6739站位/六站双坡及限定浏览器检查通过。净化器/供奉保持，艺术待人审，未接正式生产。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式生产仍为R10：主菜单；净化点自由移动/修复/交互",
-      "当前动态艺术样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html；含修改前/原画、六模型/人物及暂停查看，非正式游戏",
+      "当前动态艺术样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html；含修改前/原画、六模型/人物及炉边断墙坐下体验，非正式游戏",
       "恢复工作：docs/art-direction.md#resume-art-rebuild → docs/design-notes/purification-scene-art-plan.md#当前执行状态",
       "旧A/C构图与局部样板仅历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；6127218已明确否决，不再是活跃入口"
     ],
@@ -770,6 +770,11 @@
         "path": "docs/art/demos/purification-last-light/assets/light-core.png",
         "role": "art",
         "note": "核心投向环境的有效贡献；污染光场子集，体积合成前，供来源分离与同帧对照"
+      },
+      {
+        "path": "docs/art/demos/purification-last-light/rest.ts",
+        "role": "code",
+        "note": "建筑残骸、坐席锚及独立休息操作点；不属于六功能站"
       }
     ],
     "dependsOn": [
@@ -834,10 +839,11 @@
       "COH-E-I30-WEST-STATIONS",
       "COH-E-I30-OFFERING-APPROVED",
       "COH-E-I30-PURIFIER-ALIGN",
-      "COH-E-I30-PURIFIER-WINDOW"
+      "COH-E-I30-PURIFIER-WINDOW",
+      "COH-E-I30-REST"
     ],
     "unknowns": [
-      "35f17ba整景、347d55a核心内质获用户认可；本轮核心投光调整视觉待人审。固定相机样景，投影几何烘焙，未接正式玩法和人物驱动视差。",
+      "35f17ba整景、347d55a核心内质获用户认可；残骸休息点与内移炉火待人审。固定相机样景，站/坐阴影分别烘焙，未接正式玩法和人物驱动视差。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

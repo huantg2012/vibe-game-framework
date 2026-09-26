@@ -6,13 +6,14 @@
   <title>存续 · 微光中的据点</title>
   <style>
     :root{color-scheme:dark;font-family:system-ui,-apple-system,sans-serif;background:#070b0d;color:#b4b8b7}*{box-sizing:border-box}body{margin:0}main{width:1008px;margin:20px auto;padding:0 24px}header{display:flex;align-items:baseline;justify-content:space-between}h1{font-size:18px;font-weight:500;letter-spacing:.12em;color:#c3c4bb;margin:0}a{font-size:12px;color:#878e8c;text-underline-offset:4px}nav{display:flex;gap:5px;margin:15px 0 11px}button{font:inherit;font-size:12px;background:#101718;color:#9ea8a5;border:1px solid #293437;padding:7px 9px;cursor:pointer}button[aria-pressed=true]{color:#e4d8b8;border-color:#85765a;background:#292921}button:focus-visible,a:focus-visible{outline:2px solid #bbaa7b;outline-offset:3px}.stations{margin-left:auto;display:flex;gap:5px}.stations button{padding:7px 8px}button:disabled{opacity:.4;cursor:default}canvas{display:block;width:960px;height:640px;image-rendering:pixelated;background:#05090b}footer{display:flex;align-items:baseline;justify-content:space-between;gap:30px;margin:12px 0;font-size:12px;line-height:1.65;color:#818a87}#description{max-width:650px;margin:0}#status{color:#c5a474;font-size:12px}#status:empty{display:none}
+    .scene-stage{position:relative;width:960px;height:640px;isolation:isolate}#rest-line{position:absolute;left:100px;right:100px;bottom:35px;margin:0;text-align:center;color:#cac6b6;font-size:15px;line-height:1.8;letter-spacing:.12em;text-shadow:0 2px 5px #000,0 0 12px #000;pointer-events:none;opacity:0;transform:translateY(3px);transition:opacity 900ms ease 450ms,transform 900ms ease 450ms}#rest-line.visible{opacity:1;transform:none}#rest-action{padding:4px 10px;background:transparent;border-color:#454b43;color:#c0bfaf;white-space:nowrap}#rest-action[aria-pressed=true]{border-color:#817b61;color:#e0d8bf}#rest-action[hidden]{display:none}footer .quiet-actions{display:flex;align-items:center;gap:14px} @media(prefers-reduced-motion:reduce){#rest-line{transition:none;transform:none}}
   </style>
 </head>
 <body><main>
   <header><h1>微光中的据点</h1><a href="./assets/haven.png" download="存续-微光据点.png">保存整景 PNG</a></header>
   <nav aria-label="画面查看"><button id="scene" aria-pressed="true">完整场景</button><button id="reference" aria-pressed="false">启动页原画</button><button id="baseline" aria-pressed="false">修改前</button><button id="motion" aria-pressed="true">暂停景观</button><button id="core-light" aria-pressed="true" aria-controls="art" disabled>核心照明：开</button><div class="stations" aria-label="查看交互物模型"></div></nav>
-  <canvas id="art" width="960" height="640" aria-label="微光据点，完整像素场景"></canvas>
-  <footer><p id="description">炉火、肩灯与被约束的微光。点击装置或人物查看细部。</p><span id="caption">整景 · 六处功能</span></footer>
+  <div class="scene-stage"><canvas id="art" width="960" height="640" tabindex="0" aria-label="微光据点，完整像素场景"></canvas><p id="rest-line" role="status" aria-live="polite" aria-atomic="true"></p></div>
+  <footer><p id="description">炉火、肩灯与被约束的微光。点击装置或人物查看细部。</p><div class="quiet-actions"><button id="rest-action" aria-controls="art rest-line" aria-pressed="false" hidden disabled>坐下</button><span id="caption">整景 · 六处功能</span></div></footer>
   <p id="status" role="status">正在载入画面。</p>
 </main><script type="module" src="./viewer.ts"></script></body>
 </html>

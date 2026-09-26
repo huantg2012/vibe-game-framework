@@ -1,7 +1,7 @@
 ---
-status: R11-LAST-LIGHT-LIVING / CORE-REVISION-IN-PROGRESS / VERIFICATION-PENDING / REVISION-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED
+status: R11-LAST-LIGHT-LIVING / REST-IMPLEMENTED / LIMITED-VERIFIED / REVISION-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED
 created-date: 2026-09-23
-last-modified-date: 2026-09-25
+last-modified-date: 2026-09-26
 owner: director
 baseline: 35f17ba（用户明确赞许的完整像素场景）
 features: COH-F042 / COH-F026 / COH-F039
@@ -11,19 +11,21 @@ features: COH-F042 / COH-F026 / COH-F039
 
 ## 当前决定
 
-`35f17ba` 的完整像素场景获用户“惊艳到我了”“整体效果飞跃式提升”的明确反馈。七项修订后核心持续细化；用户指出 `edc7223` “有点感觉但内质像薄片”，已认可有内部前后遮蔽、透射与密度的污染团块方向并授权制作。
+`35f17ba` 的完整像素场景获用户“惊艳到我了”“整体效果飞跃式提升”的明确反馈。核心内质`347d55a`已获认可。最新授权把中央休息点做成可坐的建筑残骸，旧炉内移，接入坐下、轻推镜头与一句氛围文案；此前“中央空地/壁炉仅讨论”的边界已被本轮制作要求替代。
 
 设计与恢复原则统一在[美术设计集中正文](../art-direction.md#resume-art-rebuild)。本文件只记执行状态、入口与证据。旧 A/C 构图不再约束本轮；`8ef1366`、`6127218` 仍是历史人审否决。获认可基线保存在 `assets/baseline-35f17ba.png`，查看页可直接切换对照。
 
 ## 当前执行状态
 
-**当前小改：净化器侧视内腔已通过结构露出，待人审。** 位置/朝向/操作点保持2b404d2；近端厚框检视窗与顶部观察缝替换遮挡板，保留重壳与管路。两个污染光样本进入腔内，颜色/功率/范围保持。整景和模型已实看，9模块strict及6988站位/六点双坡回归通过；供奉保留，中央空地/壁炉仍仅讨论。
+**当前工作：中央休息残骸与坐下体验已实现，技术与限定浏览器验证通过、人审待定。** 断墙基、石压顶与单侧断柱置于`[1,0,1.5]`，座面0.48m，朝向移入的旧炉`[3.8,0,.5]`；灰石不新增发光绿。真实坐姿与肩灯随动烘焙，坐下后1.18×轻推镜头并出现“石头还是冷的。火还没有熄。”，Esc/起身恢复原视角。唯一功能是坐下，不加回血、时间流逝或经济；原六站保持六站。美术构造原则统一见集中正文。
+
+**前轮净化器内腔结构保持。** 位置/朝向/操作点保持2b404d2；厚框检视窗、顶部观察缝及腔内污染光沿用fded271。前轮整景和模型实看、9模块strict及6988站位/六点双坡回归只证明当时结果，不替代本轮布置的重新验证；供奉保留已获认可的摆放。
 
 **核心内质347d55a已获用户“很好”评价；本轮投光可辨识性已实现，技术回归通过、照明视觉待人审。** 保留内质和构图，强化核心向主地面/右坡/墙柱的受光，分离核心贡献并与4.8秒内质伸缩同步；有限范围空气散射共用几何遮挡。新增默认开启的“核心照明”同帧对照开关，关闭只移除环境贡献。
 
 设定来源与当前画法见[集中正文](../art-direction.md#世界观形体与构造)：腔内物的身份来自近期用户补全；原世界规则未规定其物态，未将其等同薪柴。`edc7223` 已实现的冷深色、伸缩、减遮蔽与内向开口是本轮基础，不表示内质厚度已获认可。
 
-入口：[微光中的据点](../art/demos/purification-last-light/index.html)，本地 `http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html`。固定960×640；默认动态播放，有暂停、修改前/原画对照、六装置与归来者模型。`?t=8&still=1` 可复现动态第八秒。
+入口：[微光中的据点](../art/demos/purification-last-light/index.html)，本地 `http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html`。固定960×640；默认动态播放，有暂停、修改前/原画对照、六装置与归来者模型，本轮新增残骸坐下体验。`?t=8&still=1` 可复现动态第八秒。
 
 - [x] **核心内质（347d55a用户认可）**：三维浓缩团块、前后遮蔽/透射和受压形变已导出到整景、动态8帧及模型；技术检查通过，保留下层右沿位置、内向开口、框架及操作站位。
 - [x] **污染**：六装置与三层外景的污染都有灰绿发光；区分自身微光和照到邻近材料的贡献，压低污染自反射，避免绿上叠绿。
@@ -39,7 +41,7 @@ features: COH-F042 / COH-F026 / COH-F039
 
 ## 制作与修正
 
-`model.ts`/`environment.ts`/`devices.ts`/`actor.ts` 提供可编辑构造；`render.ts` 在像素网格计算可见性、材质、光源遮挡、接触遮蔽和透明叠层；`export.mjs` 导出完整素材、源贡献和掩码。`motion.ts` 只在这些受光关系上演变；`viewer.ts` 负责同场展示及生命周期。
+`model.ts`/`environment.ts`/`devices.ts`/`rest.ts`/`actor.ts` 提供可编辑构造；`render.ts` 在像素网格计算可见性、材质、光源遮挡、接触遮蔽和透明叠层；`export.mjs` 导出完整素材、源贡献和掩码。`motion.ts` 只在这些受光关系上演变；`viewer.ts` 负责同场展示、坐下/起身、轻推镜头及生命周期。
 
 第一次取消旧无来源方向主灯后，书架和断面被压得过暗；依据整景复核恢复暗部的漫反射层次。核心绿上叠绿偏薄荷，压低污染材质自身的受光响应并改为灰绿。右侧首版连接读成另一块薄板，补成连续墙根和承压关系。肩灯硬切阴影增加有限灯口采样。以上均用实际画面定位，不继续堆纹理或改变已获认可的基本画法。
 
@@ -52,12 +54,12 @@ node --import tsx docs/art/demos/purification-last-light/export.mjs
 node --import tsx docs/art/demos/purification-last-light/check.mjs --write
 ```
 
-[前轮限定验证](../qa/iteration-30-last-light-living.md)和目录内 `assets/layout-check.json`、`browser-check.json` 保留当时结果；不覆盖本轮尚在修改的内质。当前重新导出、技术检查与视觉核对待完成，结果由本轮实际执行后更新。
+[限定验证](../qa/iteration-30-last-light-living.md)已追加本轮结果：10模块strict、6739/6739站位连通、真实坐姿/光场与核心合成检查通过。浏览器实测画内点击/按钮坐下、1.18×镜头、文案、起身/Esc及暂停时间保持；记录见 `assets/layout-check.json` 和 `browser-check.json` 的 restRevision。艺术待人审。
 
-产物：`haven.png` / `haven-clean.png` / `haven-2x.png`；六装置与人物的 `model-*.png`；`rift-actor.png`；`light-{pollution,furnace,shoulder}.png`；`motion-map.png` / `depth-layers.png` / `object-ids.png`；`manifest.json` / `checksums.json`。基线PNG为原提交字节副本。
+产物：`assets/rest/` 保存坐姿整景、体积底图及三类光场/核心光/动效/深度/对象掩码；`haven.png` / `haven-clean.png` / `haven-2x.png`；六装置与人物的 `model-*.png`；`rift-actor.png`；`light-{pollution,furnace,shoulder}.png`；`motion-map.png` / `depth-layers.png` / `object-ids.png`；`manifest.json` / `checksums.json`。基线PNG为原提交字节副本。
 
 ## 当前边界
 
-完成的是动态美术样景。几何阴影形状固定，实时变化是实际受光贡献、污染/空气及独立深处存在；不冒充任意人物移动的实时阴影。可见深度不补全被遮挡内容，尚未成为人物驱动视差资产。没有接正式 `src`、碰撞、六站游戏交互、经济、存档或动作系统。原Rift低精度人物和R10生产保持，I28长期采样/平衡继续挂起。
+完成的是动态美术样景及查看器内的坐下体验。站立与坐姿分别烘焙几何和肩灯光场，实时变化是实际受光贡献、污染/空气及独立深处存在；不冒充任意人物移动的实时阴影。休息轻推镜头不补全被遮挡内容，也不是人物驱动视差。没有接正式 `src`、碰撞、六站游戏交互、经济、存档或动作系统；残骸不计为第七功能站，不增加任何恢复或时间机制。原Rift低精度人物和R10生产保持，I28长期采样/平衡继续挂起。
 
 不因内部复核提升新版为人审PASS。按持续授权检查后本地提交，不推送，独立 `CLAUDE.md` 修改排除。

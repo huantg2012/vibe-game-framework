@@ -1,6 +1,6 @@
 {
-  "strictModules": 9,
-  "finiteTriangles": 51448,
+  "strictModules": 10,
+  "finiteTriangles": 52077,
   "stations": [
     "core",
     "storage",
@@ -9,8 +9,8 @@
     "growth",
     "rift"
   ],
-  "reachableSamples": 6988,
-  "totalStandableSamples": 6988,
+  "reachableSamples": 6739,
+  "totalStandableSamples": 6739,
   "allStandableSamplesConnected": true,
   "footRadius": 0.22,
   "samplingStep": 0.16,
@@ -18,6 +18,55 @@
     "west-ramp",
     "east-ramp"
   ],
+  "rest": {
+    "objectId": 8,
+    "emittingMaterials": 0,
+    "addedLightSources": 0,
+    "standingTop": 1.665,
+    "sittingTop": 1.4649999999999999,
+    "standingLamp": [
+      3.99045643212608,
+      1.296,
+      3.4682164147191665
+    ],
+    "sittingLamp": [
+      1.0279159209508468,
+      1.096,
+      1.1470485849901346
+    ],
+    "bentKnees": true,
+    "pelvisMeetsSeat": true,
+    "staticGeometryUnchanged": true,
+    "approach": [
+      2.0830031983340627,
+      0,
+      1.1132131434521202
+    ],
+    "reachable": true,
+    "supportSamples": 72,
+    "bootFloorSamples": 96,
+    "exports": {
+      "dimensions": [
+        960,
+        640
+      ],
+      "actorPixels": 581,
+      "seatPixels": 950,
+      "shoulderEmissionPixels": 0,
+      "shoulderLensVisible": false,
+      "shoulderWorldReceiversRequired": true,
+      "vacatedActorPixels": 542,
+      "clearedActorPixels": 542,
+      "changedVacatedPixels": 542,
+      "changedShoulderPixels": 42294,
+      "receivingPixels": {
+        "pollution": 111194,
+        "furnace": 16456,
+        "shoulder": 25138
+      },
+      "sharedCoreCompositeMatches": true
+    }
+  },
   "coreFacing": {
     "target": [
       5.452553203517105,
@@ -44,37 +93,38 @@
     "fields": {
       "pollution": {
         "sourceCount": 30,
-        "contributingPixels": 111289,
-        "nonEmitterReceivingPixels": 109066,
+        "contributingPixels": 112863,
+        "nonEmitterReceivingPixels": 110640,
         "maximum": 255,
         "outsideSupport": 0
       },
       "furnace": {
         "sourceCount": 1,
-        "contributingPixels": 8075,
-        "nonEmitterReceivingPixels": 8045,
+        "contributingPixels": 15900,
+        "nonEmitterReceivingPixels": 15868,
         "maximum": 255,
         "outsideSupport": 0
       },
       "shoulder": {
         "sourceCount": 1,
-        "contributingPixels": 28951,
-        "nonEmitterReceivingPixels": 28947,
+        "contributingPixels": 26101,
+        "nonEmitterReceivingPixels": 26097,
         "maximum": 255,
         "outsideSupport": 0
       }
     },
     "coreField": {
       "sourceCount": 7,
-      "contributingPixels": 91648,
-      "nonEmitterReceivingPixels": 90013,
+      "contributingPixels": 93358,
+      "nonEmitterReceivingPixels": 91723,
       "receiverObjects": [
         0,
         1,
         2,
         5,
         6,
-        7
+        7,
+        8
       ],
       "maximum": 242,
       "outsideSupport": 0,
@@ -122,9 +172,9 @@
         158.25
       ],
       "coreRadianceBudget": 7.911657600000001,
-      "strongestOtherBudget": 3.0251104000000004,
+      "strongestOtherBudget": 2.7069632,
       "coreReach": 14,
-      "strongestOtherReach": 8.4,
+      "strongestOtherReach": 6.2,
       "volumeCount": 1
     },
     "riftSourceHashes": {
@@ -139,7 +189,7 @@
     ],
     "visibleSources": {
       "pollution": 2162,
-      "furnace": 30,
+      "furnace": 32,
       "shoulder": 4
     },
     "stationPollution": [
@@ -280,5 +330,5 @@
       }
     }
   },
-  "scope": "Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration."
+  "scope": "Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station, rest-remnant and furnace footprints, seated geometry and light anchors. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration."
 }

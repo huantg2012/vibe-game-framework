@@ -6,8 +6,9 @@ import {createHash} from 'node:crypto';
 import ts from 'typescript';
 import sharp from 'sharp';
 import {buildHaven} from './scene.ts';
-import {WALK_SURFACES} from './environment.ts';
-import {ACTOR_OBJECT_ID,actorLampAnchor} from './actor.ts';
+import {WALK_SURFACES,FURNACE_BOUNDS} from './environment.ts';
+import {ACTOR_OBJECT_ID,actorLampAnchor,seatedActorLampAnchor} from './actor.ts';
+import {REST_OBJECT_ID,REST_POSITION,REST_YAW,REST_SEAT_HEIGHT,buildRestRemnant} from './rest.ts';
 import {CORE_FACING_TARGET,CORE_YAW} from './devices.ts';
 import {renderEnergy} from './energy.ts';
 import {project,render} from './render.ts';
@@ -106,7 +107,7 @@ function verifyCoreContribution(){
  return {camera:[camera.width,camera.height],maximumDifferenceError,clippedChannels,otherPollutionPixels,receivingValue,shadowValue,unblockedValue,onOffDifferenceMatches:true};
 }
 const coreContributionRegression=verifyCoreContribution();
-const {model,stations}=buildHaven();
+const {model,stations,rest}=buildHaven();
 function verifyCoreFacing(){
  const core=stations.find(s=>s.key==='core');assert(core,'Missing core station');
  const floors=WALK_SURFACES.filter(s=>s.id==='main'||s.id==='upper');
@@ -213,6 +214,44 @@ assert.deepEqual(manifest.lights.map(({screen,...light})=>light),model.lights,'E
 assert.deepEqual(manifest.walkSurfaces,WALK_SURFACES,'Exported walking surfaces are stale');
 assert.equal(manifest.triangles,model.triangles.length,'Exported geometry is stale');
 
+// The seat is ordinary surviving architecture. Sitting replaces the actor,
+// never adds a seventh station, a new emitter or a second hidden character.
+const resting=buildHaven({resting:true}),restOnly=new Model();
+buildRestRemnant(restOnly);
+assert(restOnly.triangles.length>0,'Missing architectural rest remnant');
+assert(restOnly.triangles.every(t=>t.object===REST_OBJECT_ID),'Rest geometry needs its own stable object id');
+assert(restOnly.triangles.every(t=>!['pollutant','energy','ember','lamp'].includes(t.material)),'The rest remnant must not emit or contain pollution');
+assert.equal(restOnly.lights.length,0,'The rest remnant must not introduce a light');
+assert.equal(restOnly.volumes.length,0,'The rest remnant must not contain an energy volume');
+assert.deepEqual(resting.stations,stations,'Sitting must leave all six interaction stations unchanged');
+assert.deepEqual(resting.model.triangles.filter(t=>t.object!==ACTOR_OBJECT_ID),model.triangles.filter(t=>t.object!==ACTOR_OBJECT_ID),'Sitting must not move, erase or replace the surrounding architecture');
+assert.deepEqual(resting.model.lights.filter(l=>l.kind!=='shoulder'),model.lights.filter(l=>l.kind!=='shoulder'),'Sitting must not alter unrelated sources');
+assert.deepEqual(resting.model.volumes,model.volumes,'Sitting must leave the core volume unchanged');
+const sittingActor=resting.model.triangles.filter(t=>t.object===ACTOR_OBJECT_ID).flatMap(t=>[t.a,t.b,t.c]);
+const standingActor=model.triangles.filter(t=>t.object===ACTOR_OBJECT_ID).flatMap(t=>[t.a,t.b,t.c]);
+assert(sittingActor.length>0&&standingActor.length>0,'Both poses need actual actor geometry');
+assert(sittingActor.every(p=>Math.hypot(p[0]-REST_POSITION[0],p[2]-REST_POSITION[2])<1.6),'The seated model still contains actor geometry away from the seat');
+const standingTop=Math.max(...standingActor.map(p=>p[1])),sittingTop=Math.max(...sittingActor.map(p=>p[1]));
+assert(sittingTop<standingTop-.15,'Sitting must lower the body instead of placing an unchanged standing sprite on the seat');
+const restingShoulder=resting.model.lights.filter(l=>l.kind==='shoulder');
+assert.equal(restingShoulder.length,1,'The sitting actor must carry exactly one shoulder light');
+assert.equal(restingShoulder[0].id,'actor-shoulder','Sitting must retain the same shoulder emitter identity');
+assert(Math.hypot(...sub(restingShoulder[0].position,seatedActorLampAnchor(REST_POSITION,REST_YAW,REST_SEAT_HEIGHT)))<1e-9,'The shoulder source must follow the seated actor anchor');
+assert(Math.hypot(...sub(restingShoulder[0].position,shoulder[0].position))>1,'The shoulder source was left at the standing position');
+const sittingLampVertices=resting.model.triangles.filter(t=>t.material==='lamp').flatMap(t=>[t.a,t.b,t.c]);
+assert(sittingLampVertices.length>0,'Sitting removed the visible lamp');
+assert(Math.min(...sittingLampVertices.map(p=>Math.hypot(...sub(p,restingShoulder[0].position))))<.25,'The seated shoulder source is detached from the actual lamp mesh');
+assert(resting.model.triangles.filter(t=>t.material==='lamp').every(t=>t.object===ACTOR_OBJECT_ID),'Sitting created a second luminous object');
+const seatLocal=p=>{const dx=p[0]-REST_POSITION[0],dz=p[2]-REST_POSITION[2];return [dx*Math.cos(REST_YAW)-dz*Math.sin(REST_YAW),p[1]-REST_POSITION[1],dx*Math.sin(REST_YAW)+dz*Math.cos(REST_YAW)];};
+const cloth=resting.model.triangles.filter(t=>t.object===ACTOR_OBJECT_ID&&t.material==='cloth').flatMap(t=>[t.a,t.b,t.c]).map(seatLocal);
+const thighBand=cloth.filter(p=>p[1]>=REST_SEAT_HEIGHT-.04&&p[1]<=REST_SEAT_HEIGHT+.18);
+assert(thighBand.some(p=>p[2]>.3)&&thighBand.some(p=>Math.abs(p[2])<.12),'The seated legs need horizontal thighs connecting the seat to the bent knees');
+assert(cloth.some(p=>p[1]>=REST_SEAT_HEIGHT&&p[1]<REST_SEAT_HEIGHT+.07&&Math.abs(p[0])<.24&&Math.abs(p[2])<.19),'The pelvis must reach the seat instead of floating above it');
+const bootVertices=resting.model.triangles.filter(t=>t.object===ACTOR_OBJECT_ID&&t.material==='black').flatMap(t=>[t.a,t.b,t.c]).filter(p=>p[1]<REST_POSITION[1]+.12);
+assert(bootVertices.length>0,'The seated actor needs visible floor-level boot geometry');
+assert(bootVertices.map(seatLocal).every(p=>p[2]>.3),'The feet must project forward of the pelvis instead of hanging underneath an unchanged standing body');
+const restGeometryChecks={objectId:REST_OBJECT_ID,emittingMaterials:0,addedLightSources:0,standingTop,sittingTop,standingLamp:shoulder[0].position,sittingLamp:restingShoulder[0].position,bentKnees:true,pelvisMeetsSeat:true,staticGeometryUnchanged:true};
+
 async function pixels(filename){
  const {data,info}=await sharp(path.join(assetDir,filename)).ensureAlpha().raw().toBuffer({resolveWithObject:true});
  assert.equal(info.width,manifest.camera.width,`${filename}: wrong width`);
@@ -226,14 +265,14 @@ const W=manifest.camera.width,H=manifest.camera.height,N=W*H;
 const visibleSources={pollution:0,furnace:0,shoulder:0},visiblePollution=new Map(),outsidePollution={far:0,middle:0,near:0};
 for(let i=0;i<N;i++){
  const o=i*4,layer=motion[o],object=motion[o+1],source=motion[o+2];
- assert(layer<=4&&object<=ACTOR_OBJECT_ID&&source<=3,`Invalid motion code at ${i}`);
+ assert(layer<=4&&object<=Math.max(ACTOR_OBJECT_ID,REST_OBJECT_ID)&&source<=3,`Invalid motion code at ${i}`);
  assert.equal(object,objects[o],`Motion/object masks disagree at ${i}`);
  assert.equal(layer,depth[o+2],`Motion/depth layers disagree at ${i}`);
  if(!source)continue;
  assert(layer>0,`A material emitter cannot exist in empty sky at ${i}`);
  visibleSources[families[source-1]]++;
  if(source===1){
-  assert(object<=6,`Pollution emitter assigned to the player at ${i}`);
+  assert(object<=6,`Pollution emitter assigned to the player or rest remnant at ${i}`);
   visiblePollution.set(object,(visiblePollution.get(object)??0)+1);
   if(layer<4)outsidePollution[['far','middle','near'][layer-1]]++;
  }
@@ -285,6 +324,58 @@ assert(coreBodyPixels>0&&changingInteriorPixels>0,'The volume must animate its v
 assert(densityPixels>0&&densityPixels<N,'Density opacity must be spatially bounded, not opaque across the full frame');
 assert(activeAtlasPixels<N,'Energy animation must leave pixels outside its bounded volume unchanged');
 const energyAtlasChecks={dimensions:[atlas.info.width,atlas.info.height],frames:8,distinctFrames:new Set(frameHashes).size,coreBodyPixels,changingInteriorPixels,densityPixels,transparentHaloPixels,boundedSupport:true,staticCompositeMatches:true,deformationRegression};
+
+// Sitting is a separately lit scene state. Its masks and base must replace the
+// old actor together; changing only the object id would leave a painted ghost.
+const [restMotion,restObjects,restDepth,restBase,restComposite,...restFields]=await Promise.all([
+ 'motion-map.png','object-ids.png','depth-layers.png','haven-energy-base.png','haven.png',
+ ...families.map(k=>`light-${k}.png`),'light-core.png',
+].map(name=>pixels(`rest/${name}`)));
+const projectedSittingActor=sittingActor.map(p=>project(p,manifest.camera));
+const seatedBounds={x0:Math.floor(Math.min(...projectedSittingActor.map(p=>p[0])))-1,x1:Math.ceil(Math.max(...projectedSittingActor.map(p=>p[0])))+1,y0:Math.floor(Math.min(...projectedSittingActor.map(p=>p[1])))-1,y1:Math.ceil(Math.max(...projectedSittingActor.map(p=>p[1])))+1};
+let restActorPixels=0,restSeatPixels=0,standingSeatPixels=0,restLampPixels=0,vacatedActorPixels=0,clearedActorPixels=0,changedVacatedPixels=0,changedShoulderPixels=0;
+const restReceiverPixels={pollution:0,furnace:0,shoulder:0};
+for(let i=0;i<N;i++){
+ const o=i*4,object=restMotion[o+1],source=restMotion[o+2],x=i%W,y=Math.floor(i/W);
+ assert(restMotion[o]<=4&&object<=Math.max(ACTOR_OBJECT_ID,REST_OBJECT_ID)&&source<=3,`Invalid seated motion code at ${i}`);
+ assert.equal(object,restObjects[o],`Seated motion/object masks disagree at ${i}`);
+ assert.equal(restMotion[o],restDepth[o+2],`Seated motion/depth layers disagree at ${i}`);
+ if(objects[o]===REST_OBJECT_ID)standingSeatPixels++;
+ if(object===REST_OBJECT_ID){restSeatPixels++;assert.equal(source,0,'The seat must remain non-emitting while occupied');}
+ if(object===ACTOR_OBJECT_ID){
+  restActorPixels++;
+  assert(x>=seatedBounds.x0&&x<=seatedBounds.x1&&y>=seatedBounds.y0&&y<=seatedBounds.y1,'The seated export contains actor pixels outside its actual geometry');
+ }
+ if(source===1)assert(object<=6,'Sitting assigns pollution to the actor or architectural seat');
+ if(source===2)assert.equal(object,0,'Sitting reassigns the furnace to a device');
+ if(source===3){restLampPixels++;assert.equal(object,ACTOR_OBJECT_ID,'Seated shoulder emission escaped the actor');}
+ if(objects[o]===ACTOR_OBJECT_ID){
+  vacatedActorPixels++;
+  if(object!==ACTOR_OBJECT_ID)clearedActorPixels++;
+  if([0,1,2].some(k=>Math.abs(restBase[o+k]-energyBase[o+k])>2))changedVacatedPixels++;
+ }
+ if([0,1,2].some(k=>restFields[2][o+k]!==contributions[2][o+k]))changedShoulderPixels++;
+ for(const [j,family]of families.entries()){
+  assert.equal(restFields[j][o+3],255,`${family}: seated light field must be opaque data`);
+  if(restMotion[o]>0&&source!==sourceCode[family]&&(family!=='shoulder'||object!==ACTOR_OBJECT_ID)&&Math.max(restFields[j][o],restFields[j][o+1],restFields[j][o+2])>0)restReceiverPixels[family]++;
+ }
+ assert.equal(restFields[3][o+3],255,'Seated core field must be opaque data');
+ for(let k=0;k<3;k++){
+  assert(restFields[3][o+k]<=restFields[0][o+k]+2,'Seated core field escaped the pollution family');
+  const expected=Math.min(255,Math.max(0,restBase[o+k]*(1-frames[0][o+3]/255)+frames[0][o+k]));
+  assert(Math.abs(restComposite[o+k]-expected)<=.51,'The seated frame must composite its own base with the shared core atlas');
+ }
+}
+assert(standingSeatPixels>0&&restSeatPixels>0,'The architectural seat must be visible in both scene states');
+assert(restActorPixels>0,'The seated export must include the actor body');
+// A physical lamp can face away or be occluded by its housing/owner. Preserve
+// its geometry/anchor checks and require real world receivers below; do not
+// turn the lens toward the camera solely to manufacture an emissive pixel.
+assert(vacatedActorPixels>0&&clearedActorPixels===vacatedActorPixels,'The seated mask retains the old standing actor');
+assert(changedVacatedPixels>vacatedActorPixels*.65,'The seated base retains the painted standing actor after its mask changed');
+assert(changedShoulderPixels>0,'The seated light field still uses the standing shoulder source');
+for(const family of families)assert(restReceiverPixels[family]>0,`${family}: sitting removed its light from all receiving surfaces`);
+const restExportChecks={dimensions:[W,H],actorPixels:restActorPixels,seatPixels:restSeatPixels,shoulderEmissionPixels:restLampPixels,shoulderLensVisible:restLampPixels>0,shoulderWorldReceiversRequired:true,vacatedActorPixels,clearedActorPixels,changedVacatedPixels,changedShoulderPixels,receivingPixels:restReceiverPixels,sharedCoreCompositeMatches:true};
 
 // A necessary spatial bound, independent of the shader's attenuation and ray
 // tests: a contribution must be near a finite source sphere or an emitting
@@ -349,14 +440,36 @@ function elevation(x,z){
     if(u<0||v<0||w<0)continue;const y=u*a[1]+v*b[1]+w*c[1];if(y>height){height=y;id=t.id;}
   }return {height,id};
 }
-// Conservative foot clearance against six station mounting footprints, the
-// furnace and the shelf returns. This checks this art layout, not game physics.
-const obstacles=stations.filter(s=>s.key!=='rift').map(s=>{
+// Conservative foot clearance includes the seat itself and the moved furnace,
+// not just the old station layout. This is still an art-layout check.
+const obstacles=[...stations.filter(s=>s.key!=='rift'),{id:REST_OBJECT_ID,position:REST_POSITION}].map(s=>{
  const ts=model.triangles.filter(t=>t.object===s.id&&Math.min(t.a[1],t.b[1],t.c[1])<s.position[1]+.65);
  const ps=ts.flatMap(t=>[t.a,t.b,t.c]);
  return {x0:Math.min(...ps.map(p=>p[0])),x1:Math.max(...ps.map(p=>p[0])),z0:Math.min(...ps.map(p=>p[2])),z1:Math.max(...ps.map(p=>p[2])),y:s.position[1]};
 });
-obstacles.push({x0:7.15,x1:8.85,z0:5.35,z1:6.65,y:0});
+obstacles.push(FURNACE_BOUNDS);
+const restTriangles=model.triangles.filter(t=>t.object===REST_OBJECT_ID);
+const restBottom=Math.min(...restTriangles.flatMap(t=>[t.a[1],t.b[1],t.c[1]]));
+// Slabs omit the invisible buried underside. Their actual bottom perimeter,
+// rather than a nonexistent cap, defines the foundation's support footprint.
+const restContacts=restTriangles.map(t=>[t.a,t.b,t.c].filter(p=>Math.abs(p[1]-restBottom)<1e-7)).filter(points=>points.length>=2);
+assert(restContacts.length>0,'The architectural seat needs an actual foundation footprint');
+let supportSamples=0;
+for(const [a,b] of restContacts){
+ for(let step=0;step<=8;step++){
+  const p=a.map((n,k)=>n+(b[k]-n)*step/8),ground=elevation(p[0],p[2]);
+  assert(Number.isFinite(ground.height)&&p[1]-ground.height>=-.25&&p[1]-ground.height<=.10,'A rest-remnant foundation is unsupported by the actual floor');
+  supportSamples++;
+ }
+}
+const bootBottom=Math.min(...bootVertices.map(p=>p[1]));
+let bootFloorSamples=0;
+for(const p of bootVertices.filter(p=>Math.abs(p[1]-bootBottom)<1e-7)){
+ const ground=elevation(p[0],p[2]);
+ assert(Number.isFinite(ground.height)&&Math.abs(p[1]-ground.height)<.10,'A seated boot floats above or clips deeply into the floor');
+ bootFloorSamples++;
+}
+assert(bootFloorSamples>0,'Missing seated sole/floor checks');
 const step=.16,radius=.22,x0=-5.2,z0=-8.2,nx=128,nz=104,nodes=new Map();
 for(let iz=0;iz<nz;iz++)for(let ix=0;ix<nx;ix++){
  const x=x0+ix*step,z=z0+iz*step,h=elevation(x,z);if(!Number.isFinite(h.height))continue;
@@ -370,12 +483,14 @@ for(let q=0;q<queue.length;q++){
  const i=queue[q],a=nodes.get(i);for(const d of [-nx,nx,-1,1]){const next=i+d,b=nodes.get(next);if(!b||seen.has(next)||Math.hypot(a.x-b.x,a.z-b.z)>step*1.1||Math.abs(a.y-b.y)>.25)continue;seen.add(next);queue.push(next);}
 }
 const reached=stations.map(s=>{const i=nearest(s.approach);assert(seen.has(i),`${s.key}: disconnected approach`);return s.key;});
+const restNode=nearest(rest.approach);
+assert(seen.has(restNode),'The rest approach must remain connected to the actor and six stations');
 for(const id of ['west-ramp','east-ramp'])assert([...seen].some(i=>nodes.get(i).id===id),`${id}: unreachable`);
 assert.equal(seen.size,nodes.size,'Standable samples contain a disconnected floor island');
 const riftSourceHashes=Object.fromEntries(['player-sprite-dense.ts','player-sprite.ts'].map(name=>{
  const source=`src/entities/${name}`,filename=path.resolve(here,'../../../..',source);
  return [source,createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
 }));
-const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],coreFacing:facingRegression,sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,coreField:coreFieldChecks,rendererRegression,coreContributionRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station/furnace footprints. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
+const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],rest:{...restGeometryChecks,approach:rest.approach,reachable:true,supportSamples,bootFloorSamples,exports:restExportChecks},coreFacing:facingRegression,sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,coreField:coreFieldChecks,rendererRegression,coreContributionRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station, rest-remnant and furnace footprints, seated geometry and light anchors. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--write'))fs.writeFileSync(path.join(here,'assets','layout-check.json'),JSON.stringify(result,null,2)+'\n');

@@ -128,6 +128,104 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
   m.layer=previousLayer;
 }
 
+/** The seated pose uses the same helmet, work coat, pack and shoulder lantern.
+ * Its anchor is on the floor below the pelvis, with local +Z towards the toes.
+ * seatHeight is the actual stone surface: the pelvis bears on that surface,
+ * while knees and boots form a separate bent-leg silhouette. */
+export const SEATED_ACTOR_HEAD_ABOVE_SEAT= .985;
+export function seatedActorLampAnchor(position:V3,facing:number,seatHeight=.48):V3 {
+  const c=Math.cos(facing),s=Math.sin(facing);
+  const p:V3=[ACTOR_LAMP_LOCAL[0],ACTOR_LAMP_LOCAL[1]+seatHeight-.68,ACTOR_LAMP_LOCAL[2]-.06];
+  return [position[0]+p[0]*c+p[2]*s,position[1]+p[1],position[2]-p[0]*s+p[2]*c];
+}
+
+export function buildSeatedActor(m:Model,position:V3,facing:number,seatHeight=.48):void {
+  const previousLayer=m.layer,h=seatHeight;
+  m.layer='haven';
+  try {
+    m.at(position,facing,ACTOR_OBJECT_ID,()=>{
+      // A broad compressed seat, then two almost-horizontal thighs. The knees
+      // are staggered slightly, so both folded legs remain readable in profile.
+      loaf(m,[[0,h+.018,-.004,.218,.145],[0,h+.083,.016,.234,.165],[0,h+.149,.007,.216,.149]],'cloth',1.06,12);
+      for(const [x,kneeZ,ankleZ,t] of [[-.146,.385,.505,.92],[.151,.425,.560,1.04]] as const) {
+        const hip:V3=[x*.88,h+.096,.042],knee:V3=[x,h+.018,kneeZ],ankle:V3=[x,.179,ankleZ];
+        limb(m,hip,knee,.105,.099,'cloth',t*1.14);
+        loaf(m,[[x,h-.061,kneeZ,.080,.074],[x,h+.016,kneeZ+.015,.100,.088],[x,h+.088,kneeZ-.002,.077,.076]],'cloth',t,10);
+        limb(m,[x,h-.011,kneeZ+.014],ankle,.083,.080,'cloth',t);
+        m.beam([x-.065,h+.051,kneeZ+.074],[x+.062,h+.067,kneeZ+.071],.024,.018,'cloth',t*1.17);
+        m.beam([x-.067,.223,ankleZ+.063],[x+.068,.217,ankleZ+.060],.024,.020,'cloth',t*.62);
+        m.box([x,.055,ankleZ+.077],[.184,.105,.286],'black',.038,.96);
+        loaf(m,[[x,.09,ankleZ+.077,.093,.133],[x,.16,ankleZ+.025,.094,.119],[x,.225,ankleZ-.018,.084,.090]],'cloth',t*.80,10);
+      }
+
+      // The cloth gathers over the loaded hips; the chest settles back, rather
+      // than shortening a standing body or burying its straight legs in stone.
+      loaf(m,[
+        [0,h+.040,.008,.246,.164],
+        [0,h+.133,-.013,.249,.166],
+        [0,h+.230,-.047,.223,.159],
+        [0,h+.420,-.066,.260,.178],
+        [0,h+.500,-.077,.273,.160],
+        [0,h+.565,-.065,.202,.134],
+      ],'cloth',1.48,12);
+      m.beam([-.217,h+.176,.105],[.209,h+.179,.114],.047,.038,'cloth',.58);
+      m.box([.022,h+.185,.164],[.056,.052,.023],'bronze',.008,.78);
+      m.beam([.023,h+.235,.113],[.022,h+.512,.096],.020,.015,'black',.85);
+      m.box([-.126,h+.356,.108],[.129,.126,.043],'cloth',.022,.98);
+      m.beam([-.190,h+.418,.118],[-.068,h+.418,.118],.027,.018,'cloth',1.23);
+      m.beam([-.210,h+.079,.162],[-.054,h+.066,.184],.030,.023,'cloth',.96);
+      m.beam([.043,h+.066,.184],[.204,h+.090,.167],.029,.021,'cloth',1.07);
+
+      // Upper arms rest beside the ribcage; forearms reach forward onto the
+      // thighs. Small asymmetry reads as released weight, not a formal squat.
+      limb(m,[-.273,h+.474,-.061],[-.301,h+.231,.058],.101,.088,'cloth',1.38);
+      limb(m,[-.301,h+.231,.058],[-.161,h+.173,.320],.083,.074,'cloth',1.20);
+      limb(m,[.271,h+.473,-.065],[.305,h+.218,.080],.099,.087,'cloth',1.40);
+      limb(m,[.305,h+.218,.080],[.161,h+.159,.353],.082,.073,'cloth',1.25);
+      loaf(m,[[-.151,h+.108,.338,.063,.079],[-.151,h+.161,.332,.074,.084],[-.159,h+.190,.314,.064,.063]],'cloth',.56,10);
+      loaf(m,[[.154,h+.097,.369,.063,.079],[.155,h+.148,.360,.074,.084],[.162,h+.178,.345,.063,.065]],'cloth',.60,10);
+
+      // Keep equipment at its original physical scale. Only its placement
+      // follows the lowered, slightly reclined shoulders.
+      m.at([0,h-.68,-.06],0,ACTOR_OBJECT_ID,()=>{
+        m.beam([-.175,.707,-.231],[-.180,1.223,-.218],.036,.043,'iron',.56);
+        m.beam([.175,.707,-.231],[.180,1.223,-.218],.036,.043,'iron',.56);
+        loaf(m,[[0,.701,-.254,.166,.104],[0,.761,-.283,.206,.132],[0,1.12,-.274,.209,.133],[0,1.206,-.257,.179,.113]],'cloth',1.41,12);
+        loaf(m,[[0,1.134,-.278,.219,.14],[0,1.195,-.274,.216,.141],[0,1.227,-.255,.175,.102]],'cloth',1.50,12);
+        for(const x of [-.11,.11]) {
+          m.cable([[x,1.232,-.259],[x,1.195,-.404],[x,.811,-.417],[x,.748,-.365]],.032,'cloth',.53);
+          m.box([x,.871,-.42],[.052,.048,.024],'iron',.007,.90);
+          m.cable([[x*1.45,1.222,-.16],[x*1.52,1.248,.005],[x*1.52,1.157,.143],[x*1.17,.954,.184]],.044,'cloth',.60);
+        }
+        m.box([-.237,.932,-.277],[.106,.214,.145],'cloth',.034,.93);
+        m.beam([.252,.70,-.29],[.267,1.035,-.29],.033,.038,'wood',.78);
+        m.beam([.209,1.056,-.293],[.313,1.039,-.293],.042,.049,'iron',.7);
+        m.beam([.257,.827,-.335],[.262,.897,-.335],.045,.028,'cloth',.55);
+
+        loaf(m,[[0,1.211,.021,.148,.123],[0,1.292,.015,.151,.122],[0,1.337,.016,.117,.102]],'cloth',.63,12);
+        loaf(m,[[0,1.307,.007,.142,.120],[0,1.381,.011,.185,.160],[0,1.472,.014,.197,.176],[0,1.566,.003,.176,.157],[0,1.632,-.006,.118,.107],[0,ACTOR_HEIGHT,-.009,.046,.050]],'iron',1.18,16);
+        ovalBand(m,[0,1.382,.011],.191,.168,.029,'iron',1.02,16);
+        for(let j=0;j<7;j++) {
+          const a=Math.PI*.19+j/7*Math.PI*.62,b=Math.PI*.19+(j+1)/7*Math.PI*.62;
+          m.quad([Math.cos(a)*.199,1.438,.014+Math.sin(a)*.178],[Math.cos(b)*.199,1.438,.014+Math.sin(b)*.178],[Math.cos(b)*.198,1.485,.014+Math.sin(b)*.178],[Math.cos(a)*.198,1.485,.014+Math.sin(a)*.178],'black',.91);
+        }
+        m.beam([-.066,1.638,-.078],[.040,1.651,-.039],.020,.016,'iron',1.07);
+        m.box([-.176,1.423,-.003],[.052,.099,.093],'iron',.015,.66);
+        m.box([.176,1.423,-.003],[.052,.099,.093],'iron',.015,.69);
+
+        m.beam([.24,1.179,.017],[.37,1.179,.043],.042,.051,'iron',.68);
+        m.box([.401,1.211,.101],[.152,.140,.177],'iron',.023,.95);
+        m.box([.401,1.211,.195],[.108,.081,.017],'lamp',.006,1);
+        m.box([.480,1.211,.132],[.012,.053,.065],'lamp',.004,.61);
+        m.box([.401,1.211,.006],[.082,.056,.010],'lamp',.003,.54);
+        m.beam([.353,1.17,.207],[.451,1.17,.207],.020,.017,'iron',.6);
+        m.cable([[.356,1.199,.055],[.306,1.14,-.067],[.264,1.018,-.206]],.022,'black',.9);
+        m.light(ACTOR_LAMP_LOCAL,[1,.83,.55],.65,2.6,{kind:'shoulder',id:'actor-shoulder'});
+      });
+    });
+  } finally { m.layer=previousLayer; }
+}
+
 type Ring=readonly[cx:number,y:number,cz:number,rx:number,rz:number];
 function loaf(m:Model,rings:readonly Ring[],material:Material,tint:number,segments:number):void {
   const pts=rings.map(([cx,y,cz,rx,rz])=>Array.from({length:segments},(_,i)=>{const a=i/segments*Math.PI*2;return [cx+Math.cos(a)*rx,y,cz+Math.sin(a)*rz] as V3;}));

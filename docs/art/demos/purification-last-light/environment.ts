@@ -6,6 +6,8 @@ const UPPER_PATH:V2[]=[[2.6,-6.8],[4.2,-8.05],[7.37,-7.9],[7.63,-7.66],[8.08,-7.
 const MAIN_PATH:V2[]=[[-5,-4],[-2.9,-5.08],[-2.72,-4.88],[-2.4,-5.32],[2,-7],[5.7,-6.5],[5.88,-6.24],[6.28,-6.42],[9,-5],[14,-2],[14.4,.30],[14.23,.60],[14.63,1.02],[15,4],[13.76,5.26],[13.45,5.21],[13.42,5.60],[12,7],[9.45,7.42],[9.19,7.19],[8.95,7.50],[7.9,7.6],[7.67,7.40],[7.42,7.73],[5,8],[2.43,6.93],[2.41,6.66],[2.02,6.74],[-2,5],[-3.12,3.39],[-2.92,3.11],[-3.35,2.95],[-5,1],[-4.82,.44],[-5.1,.19]];
 
 export interface WalkSurface { readonly id: string; readonly points: readonly V3[]; }
+export const FURNACE_POSITION:V3=[3.8,0,.5];
+export const FURNACE_BOUNDS={x0:2.97,x1:4.63,z0:-.13,z1:1.13,y:0};
 function tiltedLayer(path:readonly V2[],height:number,slopeX:number,slopeZ:number):readonly V3[] {
   const cx=path.reduce((a,p)=>a+p[0],0)/path.length,cz=path.reduce((a,p)=>a+p[1],0)/path.length;
   return path.map(([x,z])=>[x,height+(x-cx)*slopeX+(z-cz)*slopeZ,z] as V3);
@@ -190,7 +192,7 @@ function inhabitedRemnant(m: Model): void {
   rubblePocket(m,[5.25,.032,7.50],[.58,.22],7,2317,.83);
   rubblePocket(m,[-2.31,.016,4.40],[.50,.22],6,2321,.75);
   rubblePocket(m,[8.85,2.62,-2.98],[.42,.27],5,2327,.74);
-  furnace(m,[8,0,6]);
+  furnace(m,FURNACE_POSITION);
   m.at([8.95,.02,5.78],-.25,0,()=>{
     cuboid(m,[0,.27,0],[.64,.54,.65],'wood',.66);
     for(const x of [-.28,.28])cuboid(m,[x,.31,.332],[.047,.48,.035],'iron',.66);
