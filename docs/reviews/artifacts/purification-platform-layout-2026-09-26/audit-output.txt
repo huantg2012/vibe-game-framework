@@ -1,0 +1,1746 @@
+{
+  "sceneBaseline": "e243381",
+  "currentHead": "6cbdaf643383df5747cd1eb94a199a211765b763",
+  "files": [
+    {
+      "path": "docs/art/demos/purification-last-light/scene.ts",
+      "sha256": "39df57b292db557391897e4fb772ca8a65a553aca4c409d2d4b2d7825eb535b8",
+      "matchesSceneBaseline": true
+    },
+    {
+      "path": "docs/art/demos/purification-last-light/environment.ts",
+      "sha256": "6f5245e9a5a40cf922644ce3c592ab02a82d7c71e06615abcd7e45f593924b1b",
+      "matchesSceneBaseline": true
+    },
+    {
+      "path": "docs/art/demos/purification-last-light/devices.ts",
+      "sha256": "c1488d525fede7e68e4a346270497a21163e1eb7d57d2bb750474bbedbd5d57a",
+      "matchesSceneBaseline": true
+    },
+    {
+      "path": "docs/art/demos/purification-last-light/rest.ts",
+      "sha256": "bc23568bf7137e21ebb09e89a6dcb30ac770ce049d9a1c23a4a9c88cf8e29c55",
+      "matchesSceneBaseline": true
+    },
+    {
+      "path": "docs/art/demos/purification-last-light/actor.ts",
+      "sha256": "dc6e2ca91626b196e1ea8bddee668276165083f7603ab0db35d8811d62ca5d92",
+      "matchesSceneBaseline": true
+    },
+    {
+      "path": "docs/art/demos/purification-last-light/model.ts",
+      "sha256": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
+      "matchesSceneBaseline": true
+    },
+    {
+      "path": "docs/art/demos/purification-last-light/check.mjs",
+      "sha256": "9ca81d9d1087eaa6828205726da0ee2cfc6cf024a6e64fe5ad4fcc57d49849fc",
+      "matchesSceneBaseline": true
+    }
+  ],
+  "scope": "Read-only art-layout measurement. No production movement, collision, interaction or gameplay is executed."
+}
+
+{
+  "count": 6739,
+  "stations": [
+    {
+      "id": 1,
+      "key": "core",
+      "name": "核心",
+      "position": [
+        12.8,
+        0,
+        3.4
+      ],
+      "yaw": -2.057193082703316,
+      "approach": [
+        10.634143877674493,
+        0,
+        2.254763230862231
+      ],
+      "radius": 0.92,
+      "description": "右沿圣龛中，不闭合的铁冠与重夹具收束异界暗质；受约束的能量团内部翻涌，灰绿光向四周辐射，成为破碎世界里的灯塔。注入薪柴修复，降低出击混乱增速。"
+    },
+    {
+      "id": 2,
+      "key": "storage",
+      "name": "储藏",
+      "position": [
+        10.5,
+        2.6,
+        -3.2
+      ],
+      "yaw": 0,
+      "approach": [
+        9.02,
+        2.6,
+        -3.55
+      ],
+      "radius": 0.8,
+      "description": "封闭的顶压观察井，窄缝下可见被关物抵压；承压盖、螺杆与深收容腔构成完整机体。修复提高薪柴价值。"
+    },
+    {
+      "id": 3,
+      "key": "purifier",
+      "name": "净化器",
+      "position": [
+        -2.35,
+        0,
+        2.7
+      ],
+      "yaw": 2.135365720462997,
+      "approach": [
+        -0.8039810917357622,
+        0,
+        1.7208546914326486
+      ],
+      "radius": 0.83,
+      "description": "两只分离腔由管路相接；厚壁端侧检视窗与顶部观察缝露出层叠滤芯、内壁和低位污染收集槽。修复降低踏入裂隙时的起始混乱。"
+    },
+    {
+      "id": 4,
+      "key": "offering",
+      "name": "供奉",
+      "position": [
+        -3,
+        0,
+        -3.85
+      ],
+      "yaw": 0.5645693936681,
+      "approach": [
+        -2.0048031289971187,
+        0,
+        -2.278636519469135
+      ],
+      "radius": 0.82,
+      "description": "厚壁回收管环的偏心孔贯通前后，下沿夹件暴露并控制残渣；压力穿孔而过。装入物件供其抵御冲击并转化。"
+    },
+    {
+      "id": 5,
+      "key": "growth",
+      "name": "蜕变",
+      "position": [
+        6,
+        2.6,
+        -5.2
+      ],
+      "yaw": 0,
+      "approach": [
+        6,
+        2.6,
+        -3.33
+      ],
+      "radius": 0.83,
+      "description": "可容人体的旧式立缸，暗色半透明介质中隐约有躯体般的物质与稀少气泡。通过培养藏刻入永久成长和模块加厚。"
+    },
+    {
+      "id": 6,
+      "key": "rift",
+      "name": "裂隙",
+      "position": [
+        9.4,
+        0,
+        4.2
+      ],
+      "yaw": 0,
+      "approach": [
+        9.4,
+        0,
+        6.07
+      ],
+      "radius": 0.92,
+      "description": "地面上由内向外分叉的时空伤口，裂口粗细不等，仅断续渗出异源颜色；并非门或机械装置。由此准备出击。"
+    }
+  ],
+  "points": {
+    "actor": {
+      "p": [
+        3.8,
+        0,
+        3.8
+      ],
+      "index": 9656,
+      "sample": {
+        "x": 3.7600000000000007,
+        "z": 3.8000000000000007,
+        "y": 0,
+        "id": "main"
+      }
+    },
+    "core": {
+      "p": [
+        10.634143877674493,
+        0,
+        2.254763230862231
+      ],
+      "index": 8417,
+      "sample": {
+        "x": 10.32,
+        "z": 2.200000000000001,
+        "y": 0,
+        "id": "main"
+      }
+    },
+    "storage": {
+      "p": [
+        9.02,
+        2.6,
+        -3.55
+      ],
+      "index": 3801,
+      "sample": {
+        "x": 9.04,
+        "z": -3.5599999999999996,
+        "y": 2.6,
+        "id": "upper"
+      }
+    },
+    "purifier": {
+      "p": [
+        -0.8039810917357622,
+        0,
+        1.7208546914326486
+      ],
+      "index": 7964,
+      "sample": {
+        "x": -0.7199999999999998,
+        "z": 1.7200000000000006,
+        "y": 0,
+        "id": "main"
+      }
+    },
+    "offering": {
+      "p": [
+        -2.0048031289971187,
+        0,
+        -2.278636519469135
+      ],
+      "index": 4756,
+      "sample": {
+        "x": -2,
+        "z": -2.2799999999999994,
+        "y": 0,
+        "id": "main"
+      }
+    },
+    "growth": {
+      "p": [
+        6,
+        2.6,
+        -3.33
+      ],
+      "index": 3910,
+      "sample": {
+        "x": 6.000000000000001,
+        "z": -3.3999999999999995,
+        "y": 2.5999999999999996,
+        "id": "upper"
+      }
+    },
+    "rift": {
+      "p": [
+        9.4,
+        0,
+        6.07
+      ],
+      "index": 11483,
+      "sample": {
+        "x": 9.36,
+        "z": 6.040000000000001,
+        "y": 0,
+        "id": "main"
+      }
+    },
+    "rest": {
+      "p": [
+        2.0830031983340627,
+        0,
+        1.1132131434521202
+      ],
+      "index": 7470,
+      "sample": {
+        "x": 2.16,
+        "z": 1.08,
+        "y": 0,
+        "id": "main"
+      }
+    }
+  },
+  "obstacles": [
+    {
+      "x0": 10.68748946689176,
+      "x1": 14.538524025218164,
+      "z0": 1.3668185902151353,
+      "z1": 5.361393965608139,
+      "y": 0
+    },
+    {
+      "x0": 9.405,
+      "x1": 11.565,
+      "z0": -3.956382902954327,
+      "z1": -2.3920000000000003,
+      "y": 2.6
+    },
+    {
+      "x0": -3.686165849896568,
+      "x1": -1.040586754162649,
+      "z0": 1.098363835928442,
+      "z1": 4.259395210293847,
+      "y": 0
+    },
+    {
+      "x0": -4.088943627753549,
+      "x1": -1.953860538741199,
+      "z0": -4.82897634475224,
+      "z1": -2.9386091812920987,
+      "y": 0
+    },
+    {
+      "x0": 5.11,
+      "x1": 6.89,
+      "z0": -6.09,
+      "z1": -4.3100000000000005,
+      "y": 2.6
+    },
+    {
+      "x0": 0.10530394114840957,
+      "x1": 1.6484565734124454,
+      "z0": 0.19725224572787203,
+      "z1": 3.2009006961926185,
+      "y": 0
+    },
+    {
+      "x0": 2.97,
+      "x1": 4.63,
+      "z0": -0.13,
+      "z1": 1.13,
+      "y": 0
+    }
+  ],
+  "routes": {
+    "actor->core": {
+      "length": 7.223,
+      "direct": 7.007,
+      "ramps": []
+    },
+    "actor->storage": {
+      "length": 14.756,
+      "direct": 9.382,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "actor->purifier": {
+      "length": 6.122,
+      "direct": 5.052,
+      "ramps": []
+    },
+    "actor->offering": {
+      "length": 9.497,
+      "direct": 8.405,
+      "ramps": []
+    },
+    "actor->growth": {
+      "length": 11.782,
+      "direct": 7.902,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "actor->rift": {
+      "length": 6.536,
+      "direct": 6.043,
+      "ramps": []
+    },
+    "actor->rest": {
+      "length": 3.383,
+      "direct": 3.189,
+      "ramps": []
+    },
+    "core->storage": {
+      "length": 19.903,
+      "direct": 6.562,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "core->purifier": {
+      "length": 13.08,
+      "direct": 11.451,
+      "ramps": []
+    },
+    "core->offering": {
+      "length": 14.644,
+      "direct": 13.427,
+      "ramps": []
+    },
+    "core->growth": {
+      "length": 16.93,
+      "direct": 7.709,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "core->rift": {
+      "length": 4.238,
+      "direct": 4.01,
+      "ramps": []
+    },
+    "core->rest": {
+      "length": 8.624,
+      "direct": 8.627,
+      "ramps": []
+    },
+    "purifier->storage": {
+      "length": 14.054,
+      "direct": 11.448,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "purifier->rift": {
+      "length": 12.65,
+      "direct": 11.092,
+      "ramps": []
+    },
+    "purifier->rest": {
+      "length": 5.385,
+      "direct": 2.95,
+      "ramps": []
+    },
+    "offering->storage": {
+      "length": 14,
+      "direct": 11.398,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "offering->purifier": {
+      "length": 4.53,
+      "direct": 4.176,
+      "ramps": []
+    },
+    "offering->rift": {
+      "length": 15.275,
+      "direct": 14.134,
+      "ramps": []
+    },
+    "offering->rest": {
+      "length": 6.114,
+      "direct": 5.312,
+      "ramps": []
+    },
+    "growth->storage": {
+      "length": 3.106,
+      "direct": 3.028,
+      "ramps": []
+    },
+    "growth->purifier": {
+      "length": 11.08,
+      "direct": 8.864,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "growth->offering": {
+      "length": 11.026,
+      "direct": 8.482,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "growth->rift": {
+      "length": 17.56,
+      "direct": 10.329,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "growth->rest": {
+      "length": 8.783,
+      "direct": 6.469,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "rift->storage": {
+      "length": 20.534,
+      "direct": 9.972,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "rest->storage": {
+      "length": 11.756,
+      "direct": 8.754,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "rest->rift": {
+      "length": 9.254,
+      "direct": 8.838,
+      "ramps": []
+    }
+  }
+}
+
+ADDED STATIC PROPS {
+  "count": 6268,
+  "removed": 471,
+  "endpointClearances": {
+    "actor": [
+      {
+        "id": "crate",
+        "distance": 5.138
+      },
+      {
+        "id": "canister",
+        "distance": 6.217
+      }
+    ],
+    "core": [
+      {
+        "id": "canister",
+        "distance": 2.738
+      },
+      {
+        "id": "crate",
+        "distance": 3.501
+      }
+    ],
+    "storage": [
+      {
+        "id": "shelf-east",
+        "distance": 2.437
+      },
+      {
+        "id": "shelf-middle",
+        "distance": 2.751
+      }
+    ],
+    "purifier": [
+      {
+        "id": "pier-under-west",
+        "distance": 8.452
+      },
+      {
+        "id": "pier-under-middle",
+        "distance": 9.928
+      }
+    ],
+    "offering": [
+      {
+        "id": "pier-under-west",
+        "distance": 7.017
+      },
+      {
+        "id": "pier-under-middle",
+        "distance": 9.893
+      }
+    ],
+    "growth": [
+      {
+        "id": "shelf-west",
+        "distance": 3.189
+      },
+      {
+        "id": "shelf-middle",
+        "distance": 3.412
+      }
+    ],
+    "rift": [
+      {
+        "id": "crate",
+        "distance": 0.158
+      },
+      {
+        "id": "canister",
+        "distance": 0.85
+      }
+    ],
+    "rest": [
+      {
+        "id": "pier-under-west",
+        "distance": 6.432
+      },
+      {
+        "id": "pier-under-middle",
+        "distance": 7.169
+      }
+    ]
+  },
+  "routes": {
+    "actor->core": {
+      "length": 7.223,
+      "direct": 7.007,
+      "ramps": []
+    },
+    "actor->storage": {
+      "length": 14.756,
+      "direct": 9.382,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "actor->purifier": {
+      "length": 6.122,
+      "direct": 5.052,
+      "ramps": []
+    },
+    "actor->offering": {
+      "length": 9.497,
+      "direct": 8.405,
+      "ramps": []
+    },
+    "actor->growth": {
+      "length": 11.782,
+      "direct": 7.902,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "actor->rift": {
+      "blockedEndpoint": "rift"
+    },
+    "actor->rest": {
+      "length": 3.383,
+      "direct": 3.189,
+      "ramps": []
+    },
+    "core->storage": {
+      "length": 19.903,
+      "direct": 6.562,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "core->purifier": {
+      "length": 13.08,
+      "direct": 11.451,
+      "ramps": []
+    },
+    "core->offering": {
+      "length": 14.644,
+      "direct": 13.427,
+      "ramps": []
+    },
+    "core->growth": {
+      "length": 16.93,
+      "direct": 7.709,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "core->rift": {
+      "blockedEndpoint": "rift"
+    },
+    "core->rest": {
+      "length": 8.624,
+      "direct": 8.627,
+      "ramps": []
+    },
+    "purifier->storage": {
+      "length": 14.054,
+      "direct": 11.448,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "purifier->rift": {
+      "blockedEndpoint": "rift"
+    },
+    "purifier->rest": {
+      "length": 5.385,
+      "direct": 2.95,
+      "ramps": []
+    },
+    "offering->storage": {
+      "length": 14,
+      "direct": 11.398,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "offering->purifier": {
+      "length": 4.53,
+      "direct": 4.176,
+      "ramps": []
+    },
+    "offering->rift": {
+      "blockedEndpoint": "rift"
+    },
+    "offering->rest": {
+      "length": 6.114,
+      "direct": 5.312,
+      "ramps": []
+    },
+    "growth->storage": {
+      "length": 3.106,
+      "direct": 3.028,
+      "ramps": []
+    },
+    "growth->purifier": {
+      "length": 11.08,
+      "direct": 8.864,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "growth->offering": {
+      "length": 11.026,
+      "direct": 8.482,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "growth->rift": {
+      "blockedEndpoint": "rift"
+    },
+    "growth->rest": {
+      "length": 8.783,
+      "direct": 6.469,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "rift->storage": {
+      "blockedEndpoint": "rift"
+    },
+    "rest->storage": {
+      "length": 11.756,
+      "direct": 8.754,
+      "ramps": [
+        "west-ramp"
+      ]
+    },
+    "rest->rift": {
+      "blockedEndpoint": "rift"
+    }
+  }
+}
+
+NO WEST {
+  "upper": {
+    "total": 1351,
+    "reachable": 0
+  },
+  "main": {
+    "total": 3900,
+    "reachable": 3900
+  },
+  "west-ramp": {
+    "total": 0,
+    "reachable": 0
+  },
+  "old-floor-layer-3": {
+    "total": 269,
+    "reachable": 269
+  },
+  "east-ramp": {
+    "total": 169,
+    "reachable": 169
+  },
+  "old-floor-layer-1": {
+    "total": 300,
+    "reachable": 300
+  },
+  "old-floor-layer-2": {
+    "total": 507,
+    "reachable": 507
+  },
+  "old-floor-layer-4": {
+    "total": 29,
+    "reachable": 29
+  }
+}
+
+EAST ROWS {
+  "-2.12": [
+    [
+      11.28,
+      2.353,
+      "A"
+    ],
+    [
+      11.44,
+      2.353,
+      "A"
+    ],
+    [
+      11.6,
+      2.353,
+      "A"
+    ],
+    [
+      11.76,
+      2.353,
+      "A"
+    ],
+    [
+      11.92,
+      2.353,
+      "A"
+    ],
+    [
+      12.08,
+      2.353,
+      "A"
+    ],
+    [
+      12.24,
+      2.353,
+      "A"
+    ],
+    [
+      12.4,
+      2.353,
+      "A"
+    ],
+    [
+      12.56,
+      2.353,
+      "A"
+    ]
+  ],
+  "-1.96": [
+    [
+      11.44,
+      2.234,
+      "A"
+    ],
+    [
+      11.6,
+      2.234,
+      "A"
+    ],
+    [
+      11.76,
+      2.234,
+      "A"
+    ],
+    [
+      11.92,
+      2.234,
+      "A"
+    ],
+    [
+      12.08,
+      2.234,
+      "A"
+    ],
+    [
+      12.24,
+      2.234,
+      "A"
+    ],
+    [
+      12.4,
+      2.234,
+      "A"
+    ],
+    [
+      12.56,
+      2.234,
+      "A"
+    ]
+  ],
+  "-1.80": [
+    [
+      11.44,
+      2.115,
+      "A"
+    ],
+    [
+      11.6,
+      2.115,
+      "A"
+    ],
+    [
+      11.76,
+      2.115,
+      "A"
+    ],
+    [
+      11.92,
+      2.115,
+      "A"
+    ],
+    [
+      12.08,
+      2.115,
+      "A"
+    ],
+    [
+      12.24,
+      2.115,
+      "A"
+    ],
+    [
+      12.4,
+      2.115,
+      "A"
+    ],
+    [
+      12.56,
+      2.115,
+      "A"
+    ]
+  ],
+  "-1.64": [
+    [
+      11.44,
+      1.996,
+      "A"
+    ],
+    [
+      11.6,
+      1.996,
+      "A"
+    ],
+    [
+      11.76,
+      1.996,
+      "A"
+    ],
+    [
+      11.92,
+      1.996,
+      "A"
+    ],
+    [
+      12.08,
+      1.996,
+      "A"
+    ],
+    [
+      12.24,
+      1.996,
+      "A"
+    ],
+    [
+      12.4,
+      1.996,
+      "A"
+    ],
+    [
+      12.56,
+      1.996,
+      "A"
+    ]
+  ],
+  "-1.48": [
+    [
+      11.44,
+      1.877,
+      "A"
+    ],
+    [
+      11.6,
+      1.877,
+      "A"
+    ],
+    [
+      11.76,
+      1.877,
+      "A"
+    ],
+    [
+      11.92,
+      1.877,
+      "A"
+    ],
+    [
+      12.08,
+      1.877,
+      "A"
+    ],
+    [
+      12.24,
+      1.877,
+      "A"
+    ],
+    [
+      12.4,
+      1.877,
+      "A"
+    ],
+    [
+      12.56,
+      1.877,
+      "A"
+    ]
+  ],
+  "-1.32": [
+    [
+      11.44,
+      1.758,
+      "A"
+    ],
+    [
+      11.6,
+      1.758,
+      "A"
+    ],
+    [
+      11.76,
+      1.758,
+      "A"
+    ],
+    [
+      11.92,
+      1.758,
+      "A"
+    ],
+    [
+      12.08,
+      1.758,
+      "A"
+    ],
+    [
+      12.24,
+      1.758,
+      "A"
+    ],
+    [
+      12.4,
+      1.758,
+      "A"
+    ],
+    [
+      12.56,
+      1.758,
+      "A"
+    ]
+  ],
+  "-1.16": [
+    [
+      11.44,
+      1.64,
+      "A"
+    ],
+    [
+      11.6,
+      1.64,
+      "A"
+    ],
+    [
+      11.76,
+      1.64,
+      "A"
+    ],
+    [
+      11.92,
+      1.64,
+      "A"
+    ],
+    [
+      12.08,
+      1.64,
+      "A"
+    ],
+    [
+      12.24,
+      1.64,
+      "A"
+    ],
+    [
+      12.4,
+      1.64,
+      "A"
+    ],
+    [
+      12.56,
+      1.64,
+      "A"
+    ]
+  ],
+  "-1.00": [
+    [
+      11.44,
+      1.521,
+      "A"
+    ],
+    [
+      11.6,
+      1.521,
+      "A"
+    ],
+    [
+      11.76,
+      1.521,
+      "A"
+    ],
+    [
+      11.92,
+      1.521,
+      "A"
+    ],
+    [
+      12.08,
+      1.521,
+      "A"
+    ],
+    [
+      12.24,
+      1.521,
+      "A"
+    ],
+    [
+      12.4,
+      1.521,
+      "A"
+    ],
+    [
+      12.56,
+      1.521,
+      "A"
+    ]
+  ],
+  "-0.84": [
+    [
+      11.44,
+      1.402,
+      "A"
+    ],
+    [
+      11.6,
+      1.402,
+      "A"
+    ],
+    [
+      11.76,
+      1.402,
+      "A"
+    ],
+    [
+      11.92,
+      1.402,
+      "A"
+    ],
+    [
+      12.08,
+      1.402,
+      "A"
+    ],
+    [
+      12.24,
+      1.402,
+      "A"
+    ],
+    [
+      12.4,
+      1.402,
+      "A"
+    ],
+    [
+      12.56,
+      1.402,
+      "A"
+    ]
+  ],
+  "-0.68": [
+    [
+      11.44,
+      1.283,
+      "A"
+    ],
+    [
+      11.6,
+      1.283,
+      "A"
+    ],
+    [
+      11.76,
+      1.283,
+      "A"
+    ],
+    [
+      11.92,
+      1.283,
+      "A"
+    ],
+    [
+      12.08,
+      1.283,
+      "A"
+    ],
+    [
+      12.24,
+      1.283,
+      "A"
+    ],
+    [
+      12.4,
+      1.283,
+      "A"
+    ],
+    [
+      12.56,
+      1.283,
+      "A"
+    ]
+  ],
+  "-0.52": [
+    [
+      11.44,
+      1.164,
+      "A"
+    ],
+    [
+      11.6,
+      1.164,
+      "A"
+    ],
+    [
+      11.76,
+      1.164,
+      "A"
+    ],
+    [
+      11.92,
+      1.164,
+      "A"
+    ],
+    [
+      12.08,
+      1.164,
+      "A"
+    ],
+    [
+      12.24,
+      1.164,
+      "A"
+    ],
+    [
+      12.4,
+      1.164,
+      "A"
+    ],
+    [
+      12.56,
+      1.164,
+      "A"
+    ]
+  ],
+  "-0.36": [
+    [
+      11.44,
+      1.045,
+      "A"
+    ],
+    [
+      11.6,
+      1.045,
+      "A"
+    ],
+    [
+      11.76,
+      1.045,
+      "A"
+    ],
+    [
+      11.92,
+      1.045,
+      "A"
+    ],
+    [
+      12.08,
+      1.045,
+      "A"
+    ],
+    [
+      12.24,
+      1.045,
+      "A"
+    ],
+    [
+      12.4,
+      1.045,
+      "A"
+    ],
+    [
+      12.56,
+      1.045,
+      "A"
+    ]
+  ],
+  "-0.20": [
+    [
+      11.44,
+      0.926,
+      "A"
+    ],
+    [
+      11.6,
+      0.926,
+      "A"
+    ],
+    [
+      11.76,
+      0.926,
+      "A"
+    ],
+    [
+      11.92,
+      0.926,
+      "A"
+    ],
+    [
+      12.08,
+      0.926,
+      "A"
+    ],
+    [
+      12.24,
+      0.926,
+      "A"
+    ],
+    [
+      12.4,
+      0.926,
+      "A"
+    ],
+    [
+      12.56,
+      0.926,
+      "A"
+    ]
+  ],
+  "-0.04": [
+    [
+      11.44,
+      0.808,
+      "A"
+    ],
+    [
+      11.6,
+      0.808,
+      "A"
+    ],
+    [
+      11.76,
+      0.808,
+      "A"
+    ],
+    [
+      11.92,
+      0.808,
+      "A"
+    ],
+    [
+      12.08,
+      0.808,
+      "A"
+    ],
+    [
+      12.24,
+      0.808,
+      "A"
+    ],
+    [
+      12.4,
+      0.808,
+      "A"
+    ],
+    [
+      12.56,
+      0.808,
+      "A"
+    ]
+  ],
+  "0.12": [
+    [
+      11.44,
+      0.689,
+      "A"
+    ],
+    [
+      11.6,
+      0.689,
+      "A"
+    ],
+    [
+      11.76,
+      0.689,
+      "A"
+    ],
+    [
+      11.92,
+      0.689,
+      "A"
+    ],
+    [
+      12.08,
+      0.689,
+      "A"
+    ],
+    [
+      12.24,
+      0.689,
+      "A"
+    ],
+    [
+      12.4,
+      0.689,
+      "A"
+    ],
+    [
+      12.56,
+      0.689,
+      "A"
+    ]
+  ],
+  "0.28": [
+    [
+      11.44,
+      0.57,
+      "A"
+    ],
+    [
+      11.6,
+      0.57,
+      "A"
+    ],
+    [
+      11.76,
+      0.57,
+      "A"
+    ],
+    [
+      11.92,
+      0.57,
+      "A"
+    ],
+    [
+      12.08,
+      0.57,
+      "A"
+    ],
+    [
+      12.24,
+      0.57,
+      "A"
+    ],
+    [
+      12.4,
+      0.57,
+      "A"
+    ],
+    [
+      12.56,
+      0.57,
+      "A"
+    ]
+  ],
+  "0.44": [
+    [
+      11.44,
+      0.451,
+      "A"
+    ],
+    [
+      11.6,
+      0.451,
+      "A"
+    ],
+    [
+      11.76,
+      0.451,
+      "A"
+    ],
+    [
+      11.92,
+      0.451,
+      "A"
+    ],
+    [
+      12.08,
+      0.451,
+      "A"
+    ],
+    [
+      12.24,
+      0.451,
+      "A"
+    ],
+    [
+      12.4,
+      0.451,
+      "A"
+    ],
+    [
+      12.56,
+      0.451,
+      "A"
+    ]
+  ],
+  "0.60": [
+    [
+      11.44,
+      0.332,
+      "A"
+    ],
+    [
+      11.6,
+      0.332,
+      "A"
+    ],
+    [
+      11.76,
+      0.332,
+      "A"
+    ],
+    [
+      11.92,
+      0.332,
+      "A"
+    ],
+    [
+      12.08,
+      0.332,
+      "A"
+    ],
+    [
+      12.24,
+      0.332,
+      "A"
+    ],
+    [
+      12.4,
+      0.332,
+      "A"
+    ],
+    [
+      12.56,
+      0.332,
+      "A"
+    ]
+  ],
+  "0.76": [
+    [
+      11.12,
+      0.213,
+      "A"
+    ],
+    [
+      11.28,
+      0.213,
+      "A"
+    ],
+    [
+      11.44,
+      0.213,
+      "A"
+    ],
+    [
+      11.6,
+      0.213,
+      "A"
+    ],
+    [
+      11.76,
+      0.213,
+      "A"
+    ],
+    [
+      11.92,
+      0.213,
+      "A"
+    ],
+    [
+      12.08,
+      0.213,
+      "A"
+    ],
+    [
+      12.24,
+      0.213,
+      "A"
+    ],
+    [
+      12.4,
+      0.213,
+      "A"
+    ],
+    [
+      12.56,
+      0.213,
+      "A"
+    ],
+    [
+      12.72,
+      0.213,
+      "A"
+    ],
+    [
+      12.88,
+      0.213,
+      "A"
+    ]
+  ],
+  "0.92": [
+    [
+      11.12,
+      0.094,
+      "A"
+    ],
+    [
+      11.28,
+      0.094,
+      "A"
+    ],
+    [
+      11.44,
+      0.094,
+      "A"
+    ],
+    [
+      11.6,
+      0.094,
+      "A"
+    ],
+    [
+      11.76,
+      0.094,
+      "A"
+    ],
+    [
+      11.92,
+      0.094,
+      "A"
+    ],
+    [
+      12.08,
+      0.094,
+      "A"
+    ],
+    [
+      12.24,
+      0.094,
+      "A"
+    ],
+    [
+      12.4,
+      0.094,
+      "A"
+    ],
+    [
+      12.56,
+      0.094,
+      "A"
+    ],
+    [
+      12.72,
+      0.094,
+      "A"
+    ],
+    [
+      12.88,
+      0.094,
+      "A"
+    ]
+  ]
+}
+
+EAST TOP NO OBSTACLES [
+  {
+    "x": 12.08,
+    "z": -2.6,
+    "y": 2.6,
+    "surface": "upper",
+    "maximumFootHeightDifference": 0,
+    "valid": true
+  },
+  {
+    "x": 12.08,
+    "z": -2.44,
+    "y": 2.6,
+    "surface": "upper",
+    "maximumFootHeightDifference": 0.173,
+    "valid": true
+  },
+  {
+    "x": 12.08,
+    "z": -2.32,
+    "y": 2.6,
+    "surface": "upper",
+    "maximumFootHeightDifference": 0.2621,
+    "valid": true
+  },
+  {
+    "x": 12.08,
+    "z": -2.28,
+    "y": 2.6,
+    "surface": "upper",
+    "maximumFootHeightDifference": 0.2919,
+    "valid": false
+  },
+  {
+    "x": 12.08,
+    "z": -2.24,
+    "y": 2.6,
+    "surface": "upper",
+    "maximumFootHeightDifference": 0.3216,
+    "valid": false
+  },
+  {
+    "x": 12.08,
+    "z": -2.2,
+    "y": 2.4121,
+    "surface": "east-ramp",
+    "maximumFootHeightDifference": 0.1879,
+    "valid": true
+  },
+  {
+    "x": 12.08,
+    "z": -2.16,
+    "y": 2.3824,
+    "surface": "east-ramp",
+    "maximumFootHeightDifference": 0.2176,
+    "valid": true
+  },
+  {
+    "x": 12.08,
+    "z": -2.12,
+    "y": 2.3527,
+    "surface": "east-ramp",
+    "maximumFootHeightDifference": 0.2473,
+    "valid": true
+  }
+]
+
+RIFT SHIFT {
+  "x": 9.52,
+  "z": 6.040000000000001,
+  "y": 0,
+  "id": "main"
+} offset 0.1236931687685289
+
+RIFT ALTERNATIVE ROUTES {
+  "actor": {
+    "length": 7.375,
+    "direct": 6.043,
+    "ramps": []
+  },
+  "core": {
+    "length": 6.848,
+    "direct": 4.01,
+    "ramps": []
+  },
+  "storage": {
+    "length": 21.38,
+    "direct": 9.972,
+    "ramps": [
+      "west-ramp"
+    ]
+  },
+  "growth": {
+    "length": 18.406,
+    "direct": 10.329,
+    "ramps": [
+      "west-ramp"
+    ]
+  }
+}
