@@ -209,7 +209,8 @@
       "当前动态艺术样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html；含修改前/原画、六模型/人物及炉边断墙坐下体验，非正式游戏",
       "恢复工作：docs/art-direction.md#resume-art-rebuild → docs/design-notes/purification-scene-art-plan.md#当前执行状态",
       "平台布局审查：docs/reviews/2026-09-26-purification-platform-layout.md；交互可读版 docs/reviews/interactive/purification-platform-layout-2026-09-26.html；历史审查；用户补充后已实施单西坡与休息组优化，最新验证见 docs/qa/iteration-30-last-light-living.md",
-      "旧A/C构图与局部样板仅历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；6127218已明确否决，不再是活跃入口"
+      "旧A/C构图与局部样板仅历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；6127218已明确否决，不再是活跃入口",
+      "2026-09-26核心前庭三候选：docs/art/demos/purification-forecourt-options/index.html；同源实图、当前逐像素对照、路线标注，仅待选视觉方案"
     ],
     "sources": [
       {
@@ -786,6 +787,34 @@
         "path": "docs/reviews/interactive/purification-platform-layout-2026-09-26.html",
         "role": "doc",
         "note": "同一平台布局审查的交互可读版"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/shared.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/option-a.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/option-b.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/option-c.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/comparison.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/check.json",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -855,7 +884,8 @@
       "COH-E-I30-REST-APPRECIATED",
       "COH-E-I30-PLATFORM-LAYOUT-REVIEW",
       "COH-E-I30-PLATFORM-LAYOUT",
-      "COH-E-I30-HEARTH-CIRCULATION"
+      "COH-E-I30-HEARTH-CIRCULATION",
+      "COH-E-I30-FORECOURT-OPTIONS"
     ],
     "unknowns": [
       "007554c经用户指出西路受炉阻碍、核心前空地无效，HUMAN-CHANGES-REQUESTED；新炉席布置已实现且限定验证通过，仍待人审。技术连通不等于舒服的路线。",
