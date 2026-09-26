@@ -14,15 +14,50 @@ const diagnostics=ts.getPreEmitDiagnostics(program);
 assert.equal(diagnostics.length,0,ts.formatDiagnosticsWithColorAndContext(diagnostics,{getCanonicalFileName:x=>x,getCurrentDirectory:()=>process.cwd(),getNewLine:()=> '\n'}));
 const baseline=base().model;
 const report={scope:'COH-F042: isolated visual alternatives; no production movement or human art acceptance claimed',strictTypecheck:true,options:{},sources:{},outputs:{}};
+const keyedLights=(lights,label)=>{
+  const result=new Map();
+  for(const light of lights){
+    assert.equal(typeof light.id,'string',`${label} light needs an id`);
+    assert(light.id.length>0,`${label} light needs a nonempty id`);
+    assert(!result.has(light.id),`${label} duplicate light id ${light.id}`);
+    assert([...light.position,...light.color,light.power,light.radius].every(Number.isFinite),`${label} nonfinite light ${light.id}`);
+    result.set(light.id,light);
+  }
+  return result;
+};
+const baselineLights=keyedLights(baseline.lights,'baseline');
 for(const id of ['a','b','c']){
   const option=(await import(`./option-${id}.ts`)).buildOption();
   const {model,route,stop}=option;
   const changed=new Set(option.changedObjects??[]);
-  assert.deepEqual(model.lights.map(({position,...l})=>l),baseline.lights.map(({position,...l})=>l),'Source parameters must not drift');
-  for(const object of [1,2,3,4,5,6,7,8])if(!changed.has(object))assert.deepEqual(model.triangles.filter(t=>t.object===object),baseline.triangles.filter(t=>t.object===object),`${id} modified unrelated object ${object}`);
+  // A's selected Rift redesign can replace its radiation samples. Every other
+  // source keeps its identity and parameters; B/C still permit relocation only.
+  // Source order is not identity: removing a Rift light must not shift the
+  // comparisons for all following lights.
+  if(id==='a')assert([...changed].every(object=>object===0||object===6),'A may only redesign the architecture and Rift');
+  const lights=keyedLights(model.lights,id);
+  const mutableRift=key=>id==='a'&&key.startsWith('rift-');
+  const stableIds=map=>[...map.keys()].filter(key=>!mutableRift(key)).sort();
+  assert.deepEqual(stableIds(lights),stableIds(baselineLights),`${id} added or removed an unrelated light`);
+  for(const [key,light] of lights){
+    if(mutableRift(key)){
+      assert.equal(light.kind,'pollution',`A Rift light ${key} must remain pollution`);
+      continue;
+    }
+    const {position:actualPosition,...actual}=light;
+    const {position:originalPosition,...original}=baselineLights.get(key);
+    assert.deepEqual(actual,original,`${id} source parameters drifted: ${key}`);
+  }
+  for(const object of [1,2,3,4,5,6,7,8])if(!changed.has(object)){
+    assert.deepEqual(model.triangles.filter(t=>t.object===object),baseline.triangles.filter(t=>t.object===object),`${id} modified unrelated object ${object}`);
+    assert.deepEqual(model.volumes.filter(v=>v.object===object),baseline.volumes.filter(v=>v.object===object),`${id} modified an unrelated energy volume ${object}`);
+  }
   assert.deepEqual(model.triangles.filter(t=>t.layer!=='haven'),baseline.triangles.filter(t=>t.layer!=='haven'),'Exterior may not drift');
   const keys={1:'core',2:'storage',3:'purifier',4:'offering',5:'growth',6:'rift',7:'shoulder'};
-  for(let i=0;i<baseline.lights.length;i++)if(![...changed].some(n=>keys[n]&&baseline.lights[i].id.startsWith(`${keys[n]}-`)))assert.deepEqual(model.lights[i],baseline.lights[i],`${id} moved an unrelated light`);
+  for(const [key,original] of baselineLights){
+    if(mutableRift(key))continue;
+    if(![...changed].some(n=>keys[n]&&key.startsWith(`${keys[n]}-`)))assert.deepEqual(lights.get(key),original,`${id} moved an unrelated light ${key}`);
+  }
   for(const t of model.triangles)assert([...t.a,...t.b,...t.c,...t.normal,t.tint].every(Number.isFinite));
   assert([...route.flat(),...stop].every(Number.isFinite));
   const floor=model.triangles.filter(t=>t.layer==='haven'&&t.object===0&&Math.abs(t.normal[1])>.55).map(t=>({...t,minX:Math.min(t.a[0],t.b[0],t.c[0]),maxX:Math.max(t.a[0],t.b[0],t.c[0]),minZ:Math.min(t.a[2],t.b[2],t.c[2]),maxZ:Math.max(t.a[2],t.b[2],t.c[2])}));
@@ -45,9 +80,9 @@ for(const id of ['a','b','c']){
     }
   }
   assert.equal(failures.length,0,`${id} routes lack physical supporting ground: ${JSON.stringify(failures.slice(0,8))}`);
-  report.options[id]={triangles:model.triangles.length,lights:model.lights.length,unchangedExteriorAndUnrelatedObjects:true,routeSupportSamples:samples,footRadius:.22,heightTolerance:.24,routeSupport:true,routeLimit:'support at 0.12m samples, not complete collision or player experience approval'};
+  report.options[id]={triangles:model.triangles.length,lights:model.lights.length,lightIdentity:'id',lightParameterException:id==='a'?'rift-* pollution lights only':null,unchangedExteriorAndUnrelatedObjects:true,routeSupportSamples:samples,footRadius:.22,heightTolerance:.24,routeSupport:true,routeLimit:'support at 0.12m samples, not complete collision or player experience approval'};
 }
-for(const id of ['current','a','b','c']){
+for(const id of ['current','a','b','c','a-before-rift']){
   const file=path.join(here,'assets',`${id}.png`),meta=await sharp(file).metadata();
   assert.equal(meta.width,960);assert.equal(meta.height,640);
   report.outputs[`${id}.png`]=createHash('sha256').update(await fs.readFile(file)).digest('hex');
@@ -56,7 +91,11 @@ const current=await sharp(path.join(here,'assets/current.png')).raw().toBuffer()
 const accepted=await sharp(path.join(here,'../purification-last-light/assets/haven.png')).raw().toBuffer();
 assert(current.equals(accepted),'Current comparison must exactly match the unchanged standing source image');
 report.currentPixelExact=true;
-for(const name of ['shared.ts','option-a.ts','option-b.ts','option-c.ts','export.mjs','viewer.js','viewer.css','index.html'])report.sources[name]=createHash('sha256').update(await fs.readFile(path.join(here,name))).digest('hex');
+const riftLighting=JSON.parse(await fs.readFile(path.join(here,'assets/rift-light-check.json'),'utf8'));
+assert.equal(riftLighting.renderSha256,report.outputs['a.png'],'Rift receiver-light evidence must match the current A render');
+assert.equal(report.outputs['a-before-rift.png'],'3d334e8660c34a353e7e1cbf39ce8dce9225e0ea8abfedb2ec250862d3ef42c2','The user-selected A reference must remain frozen');
+report.riftReceiverLighting={pixels:riftLighting.receiverPixels,maxChannelIncrease:riftLighting.maxChannelIncrease,matchedRender:true};
+for(const name of ['shared.ts','option-a.ts','option-b.ts','option-c.ts','rift-a.ts','export.mjs','check.mjs','check-rift-light.mjs','viewer.js','viewer.css','index.html','assets/a-before-rift.json','assets/rift-light-check.json'])report.sources[name]=createHash('sha256').update(await fs.readFile(path.join(here,name))).digest('hex');
 await fs.writeFile(path.join(here,'assets/check.json'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report.options));
 console.log('Strict TS, source invariance, finite geometry, image dimensions and pixel-exact current baseline passed.');

@@ -1,5 +1,6 @@
 import {base,carveFloor,type Option} from './shared';
 import {type Model,type V2,type V3} from '../purification-last-light/model';
+import { rebuildRift, RIFT_APPROACH, RIFT_FOOTPRINT } from './rift-a';
 
 // The building has lost this floor, rather than acquiring a painted dark patch.
 // All corners stay convex so the shared clipping operation has one clear solid.
@@ -70,31 +71,35 @@ function crossing(m:Model):void {
 }
 
 export function buildOption():Option {
-  const {model,core,stations}=base();
+  const haven=base();
+  const {model,core,stations}=haven;
   carveFloor(model,BREACH,.25);
   section(model,BREACH);
   crossing(model);
+  rebuildRift(haven);
   return {
-    id:'a',title:'断裂回廊',
-    summary:'撤去右侧大片空地，露出建筑断面和深处残构；保留一条由真实钢梁承重的宽石回廊，核心仍立在右侧依托上。',
-    tradeoff:'用建筑缺损形成负空间；可走面积减少，必须保留洞前的出击快线。',
-    model,stations,changedObjects:[0],carved:BREACH,
+    id:'a',title:'断裂回廊 · 断沿裂隙',
+    summary:'保留 A 的断口与宽回廊。裂隙移到左前断沿，竖向撕开空间并贯穿楼板剖面；备行站位留在内侧完整地坪。',
+    tradeoff:'出发与朝拜各有接近路线。边缘伤口朝外延伸，不侵占炉边休息或西侧设备的操作面。',
+    model,stations,changedObjects:[0,6],carved:BREACH,
     design:[
-      '核心、储藏、裂隙及炉席均保留原位；变化来自地面的拓扑与可见建筑断面。',
-      '2.26米宽回廊连接两端完整地坪，供西楼梯方向直达核心；不强迫每次出击走桥。',
-      '共同起点到裂隙走洞前侧，核心的主要接近线改走回廊；这些是布局路线，非已接入的角色寻路。',
+      '左前出发、右侧朝拜；核心、炉席与四个设备保持原位。',
+      '裂隙采用不对称的深色内喉、错层薄边与断续灰绿微光，光落在地坪和建筑切面上。',
+      '备行点位于完整地坪，离开休息区后可直接接近；功能仍是准备出发。',
     ],
     route:[[3.8,.035,3.8],[4.10,.035,1.15],[3.70,.035,-.77],[4.80,.07,-1.48],[8.40,.07,-.325],[12.00,.07,.83],core.approach],
     routes:[
       {label:'从西楼梯直达核心',points:[[2,.035,-.5],[3.2,.035,-1.25],[4.80,.07,-1.48],[8.40,.07,-.325],[12.00,.07,.83],core.approach]},
-      {label:'保留出击快线',points:[[3.8,.035,3.8],[4.6,.035,2.25],[6.30,.035,2.80],[7.8,.035,3.45]]},
+      {label:'站立参考点 → 裂隙备行',points:[[3.8,.035,3.8],[2.25,.06,4.08],RIFT_APPROACH]},
+      {label:'西楼梯 → 净化器',points:[[2,.035,-.5],[1.0,.05,.8],[-.803981,.07,1.720855]]},
     ],
-    stop:core.approach,
-    footprint:BREACH.map(([x,z])=>[x,.06,z] as V3),
+    stop:RIFT_APPROACH,
+    footprint:RIFT_FOOTPRINT,
     callouts:[
       {text:'真实断口：可见多层剖面',point:[7.84,-.54,1.59]},
       {text:'宽石回廊 · 2.26m',point:[8.40,.09,-.325]},
-      {text:'洞前出击路线保持开放',point:[7.00,.05,3.05]},
+      {text:'时空伤口贯穿前断沿',point:[.6,1.25,5.94]},
+      {text:'内侧完整地坪备行',point:RIFT_APPROACH},
     ],
   };
 }

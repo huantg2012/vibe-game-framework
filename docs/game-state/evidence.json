@@ -3220,9 +3220,9 @@
     "kind": "runtime",
     "result": "partial",
     "date": "2026-09-26",
-    "revision": "2f4c199 + second-round spatial-option working tree",
+    "revision": "5c44af8",
     "scope": "A断裂回廊/B下层检修厅/C核心中枢，沿用同源完整渲染。严格TS、光源参数及非目标对象/外景保持、当前站立图逐像素一致；638个路线站点按半径.22m足印采样地面支撑通过。限定浏览器验证方案切换、路线切换清理与示意长度、划线对照及无warning/error。",
-    "limitations": "用户尚未选择。路线检查为地面支撑，不是完整碰撞或真实游玩；路线长度是图示折线并非实测耗时。当前动态样景与正式生产未修改。",
+    "limitations": "后续用户明确很喜欢 A，要求重做裂隙位置/外观；A 方向已选，原裂隙不通过。路线检查为地面支撑，不是完整碰撞或真实游玩；当前路径页面聚焦 A 修订，历史三案见此 revision。动态样景与正式生产未修改。",
     "sources": [
       {
         "path": "docs/art/demos/purification-forecourt-options/assets/check.json",
@@ -3234,6 +3234,37 @@
       },
       {
         "path": "docs/art/demos/purification-forecourt-options/README.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-FORECOURT-A-RIFT",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-26",
+    "revision": "5c44af8 + selected-A Rift revision working tree",
+    "scope": "用户选 A；保留宽回廊与真实断口。裂隙迁左前断沿、重建空间伤口及剖面、内侧备行站位。严格TS/非目标对象及源光/外景/原图基线检查通过；A 171 个路线支撑样点；移除裂隙灯但保留相同几何与自发光后对照，4734 个建筑像素得到其真实照明，最大单通道增加34。浏览器检查新旧A、路线、标注与划线。",
+    "limitations": "仅静态艺术样板；用户选择的是 A 方向，新裂隙仍待人审。未验证真实行走或改变动态 Last Light / R10正式生产。正常镜头下细小内缘不如主轮廓清楚。",
+    "sources": [
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/rift-light-check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/a.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/a-before-rift.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/index.html",
         "role": "doc"
       }
     ]
