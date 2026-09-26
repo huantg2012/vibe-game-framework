@@ -1,5 +1,5 @@
 ---
-status: R11-LAST-LIGHT-LIVING / REST-IMPLEMENTED / LIMITED-VERIFIED / REVISION-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED
+status: R11-LAST-LIGHT-LIVING / REST-USER-APPRECIATED / LIMITED-VERIFIED / REVISION-REVIEW-PENDING / PRODUCTION-NOT-INTEGRATED
 created-date: 2026-09-23
 last-modified-date: 2026-09-26
 owner: director
@@ -17,7 +17,7 @@ features: COH-F042 / COH-F026 / COH-F039
 
 ## 当前执行状态
 
-**当前工作：中央休息残骸与坐下体验已实现，技术与限定浏览器验证通过、人审待定。** 断墙基、石压顶与单侧断柱置于`[1,0,1.5]`，座面0.48m，朝向移入的旧炉`[3.8,0,.5]`；灰石不新增发光绿。真实坐姿与肩灯随动烘焙，坐下后1.18×轻推镜头并出现“石头还是冷的。火还没有熄。”，Esc/起身恢复原视角。唯一功能是坐下，不加回血、时间流逝或经济；原六站保持六站。美术构造原则统一见集中正文。
+**当前工作：中央休息残骸与坐下体验已实现，技术与限定浏览器验证通过，休息点版本e243381已获用户“很好”认可。** 断墙基、石压顶与单侧断柱置于`[1,0,1.5]`，座面0.48m，朝向移入的旧炉`[3.8,0,.5]`；灰石不新增发光绿。真实坐姿与肩灯随动烘焙，坐下后1.18×轻推镜头并出现“石头还是冷的。火还没有熄。”，Esc/起身恢复原视角。唯一功能是坐下，不加回血、时间流逝或经济；原六站保持六站。美术构造原则统一见集中正文。
 
 **前轮净化器内腔结构保持。** 位置/朝向/操作点保持2b404d2；厚框检视窗、顶部观察缝及腔内污染光沿用fded271。前轮整景和模型实看、9模块strict及6988站位/六点双坡回归只证明当时结果，不替代本轮布置的重新验证；供奉保留已获认可的摆放。
 
@@ -54,7 +54,7 @@ node --import tsx docs/art/demos/purification-last-light/export.mjs
 node --import tsx docs/art/demos/purification-last-light/check.mjs --write
 ```
 
-[限定验证](../qa/iteration-30-last-light-living.md)已追加本轮结果：10模块strict、6739/6739站位连通、真实坐姿/光场与核心合成检查通过。浏览器实测画内点击/按钮坐下、1.18×镜头、文案、起身/Esc及暂停时间保持；记录见 `assets/layout-check.json` 和 `browser-check.json` 的 restRevision。艺术待人审。
+[限定验证](../qa/iteration-30-last-light-living.md)已追加本轮结果：10模块strict、6739/6739站位连通、真实坐姿/光场与核心合成检查通过。浏览器实测画内点击/按钮坐下、1.18×镜头、文案、起身/Esc及暂停时间保持；记录见 `assets/layout-check.json` 和 `browser-check.json` 的 restRevision。休息点版本e243381已获用户“很好”认可；其他未单独认可部分保持原状态。
 
 产物：`assets/rest/` 保存坐姿整景、体积底图及三类光场/核心光/动效/深度/对象掩码；`haven.png` / `haven-clean.png` / `haven-2x.png`；六装置与人物的 `model-*.png`；`rift-actor.png`；`light-{pollution,furnace,shoulder}.png`；`motion-map.png` / `depth-layers.png` / `object-ids.png`；`manifest.json` / `checksums.json`。基线PNG为原提交字节副本。
 
