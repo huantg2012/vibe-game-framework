@@ -3243,9 +3243,9 @@
     "kind": "runtime",
     "result": "partial",
     "date": "2026-09-26",
-    "revision": "5c44af8 + selected-A Rift revision working tree",
+    "revision": "5445d15",
     "scope": "用户选 A；保留宽回廊与真实断口。裂隙迁左前断沿、重建空间伤口及剖面、内侧备行站位。严格TS/非目标对象及源光/外景/原图基线检查通过；A 171 个路线支撑样点；移除裂隙灯但保留相同几何与自发光后对照，4734 个建筑像素得到其真实照明，最大单通道增加34。浏览器检查新旧A、路线、标注与划线。",
-    "limitations": "仅静态艺术样板；用户选择的是 A 方向，新裂隙仍待人审。未验证真实行走或改变动态 Last Light / R10正式生产。正常镜头下细小内缘不如主轮廓清楚。",
+    "limitations": "用户2026-09-27认可“很棒”，仅要求裂口收小一点；后续收口见 COH-E-I30-RIFT-MOUTH。原图/检查按5445d15查Git；仅静态样板，未接动态场景或正式生产。",
     "sources": [
       {
         "path": "docs/art/demos/purification-forecourt-options/assets/check.json",
@@ -3266,6 +3266,33 @@
       {
         "path": "docs/art/demos/purification-forecourt-options/index.html",
         "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-RIFT-MOUTH",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-27",
+    "revision": "5445d15 + Rift mouth narrowing working tree",
+    "scope": "按用户微调要求将左右边围绕原曲折中心线收至72%，最宽1.32m→.9504m；高度、位置、楼板缺口、站位和灯参数保持。同源重烤、实图与浏览器复核通过；灯关闭对照确认5025个周边建筑像素实际受光，最大单通道增量36；沿用严格TS及来源/几何/路线支撑检查。",
+    "limitations": "收口幅度待用户看；仍为静态样板，未接正式移动或动态Last Light。",
+    "sources": [
+      {
+        "path": "docs/art/demos/purification-forecourt-options/rift-a.ts",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/a.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/check.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/assets/rift-light-check.json",
+        "role": "test"
       }
     ]
   }

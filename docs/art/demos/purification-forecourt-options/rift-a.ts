@@ -19,7 +19,11 @@ function wound(m:Model):void {
   const right=[.03,.15,.29,.43,.61,.70,.49,.54,.44,.36,.42];
   const bend=[.04,.08,.02,-.01,.05,.16,.11,.06,.01,-.04,-.11];
   const p=(i:number,side:number,depth=0):V3=>{
-    const x=side<0?left[i]!:side>0?right[i]!:(left[i]!+right[i]!)*.5;
+    // Narrow the mouth around its existing crooked centerline. Keep the tear's
+    // height, twist, position and the building fracture unchanged.
+    const center=(left[i]!+right[i]!)*.5;
+    const edge=side<0?left[i]!:side>0?right[i]!:center;
+    const x=center+(edge-center)*.72;
     // The tear rolls toward the camera above the stone. Its broad opening is
     // visible without turning the floor break away from the building's edge.
     return [x,y[i]!,bend[i]!+depth-x*Math.max(0,Math.min(.64,y[i]!*.85))];
