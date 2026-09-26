@@ -6,8 +6,8 @@ import {createHash} from 'node:crypto';
 import ts from 'typescript';
 import sharp from 'sharp';
 import {buildHaven} from './scene.ts';
-import {WALK_SURFACES,FURNACE_BOUNDS} from './environment.ts';
-import {ACTOR_OBJECT_ID,actorLampAnchor,seatedActorLampAnchor} from './actor.ts';
+import {WALK_SURFACES,LAYOUT_OBSTACLES,FURNACE_POSITION,FURNACE_YAW} from './environment.ts';
+import {ACTOR_OBJECT_ID,ACTOR_POSITION,actorLampAnchor,seatedActorLampAnchor} from './actor.ts';
 import {REST_OBJECT_ID,REST_POSITION,REST_YAW,REST_SEAT_HEIGHT,buildRestRemnant} from './rest.ts';
 import {CORE_FACING_TARGET,CORE_YAW} from './devices.ts';
 import {renderEnergy} from './energy.ts';
@@ -108,6 +108,7 @@ function verifyCoreContribution(){
 }
 const coreContributionRegression=verifyCoreContribution();
 const {model,stations,rest}=buildHaven();
+if(process.argv.includes('--layout-only')){console.log(JSON.stringify({strictModules:files.length,...verifyLayout()},null,2));process.exit(0);}
 function verifyCoreFacing(){
  const core=stations.find(s=>s.key==='core');assert(core,'Missing core station');
  const floors=WALK_SURFACES.filter(s=>s.id==='main'||s.id==='upper');
@@ -432,22 +433,7 @@ assert(coreReceivers>0,'Core export must illuminate non-emitting geometry, not m
 assert(coreUnchanged>0,'Core contribution must not become a full-screen wash');
 assert.equal(coreOutsideSupport,0,'Core illumination escaped every core source support');
 const coreFieldChecks={sourceCount:coreSources.length,contributingPixels:coreActive,nonEmitterReceivingPixels:coreReceivers,receiverObjects:[...coreReceiverObjects].sort((a,b)=>a-b),maximum:coreMaximum,outsideSupport:coreOutsideSupport,pollutionSubset:true};
-const triangles=WALK_SURFACES.flatMap(surface=>ShapeUtils.triangulateShape(surface.points.map(p=>new Vector2(p[0],p[2])),[]).map(face=>({points:face.map(i=>surface.points[i]),id:surface.id})));
-function elevation(x,z){
-  let height=-Infinity,id='';
-  for(const t of triangles){const [a,b,c]=t.points,det=(b[2]-c[2])*(a[0]-c[0])+(c[0]-b[0])*(a[2]-c[2]);if(Math.abs(det)<1e-9)continue;
-    const u=((b[2]-c[2])*(x-c[0])+(c[0]-b[0])*(z-c[2]))/det,v=((c[2]-a[2])*(x-c[0])+(a[0]-c[0])*(z-c[2]))/det,w=1-u-v;
-    if(u<0||v<0||w<0)continue;const y=u*a[1]+v*b[1]+w*c[1];if(y>height){height=y;id=t.id;}
-  }return {height,id};
-}
-// Conservative foot clearance includes the seat itself and the moved furnace,
-// not just the old station layout. This is still an art-layout check.
-const obstacles=[...stations.filter(s=>s.key!=='rift'),{id:REST_OBJECT_ID,position:REST_POSITION}].map(s=>{
- const ts=model.triangles.filter(t=>t.object===s.id&&Math.min(t.a[1],t.b[1],t.c[1])<s.position[1]+.65);
- const ps=ts.flatMap(t=>[t.a,t.b,t.c]);
- return {x0:Math.min(...ps.map(p=>p[0])),x1:Math.max(...ps.map(p=>p[0])),z0:Math.min(...ps.map(p=>p[2])),z1:Math.max(...ps.map(p=>p[2])),y:s.position[1]};
-});
-obstacles.push(FURNACE_BOUNDS);
+const elevation=createElevationQuery(WALK_SURFACES);
 const restTriangles=model.triangles.filter(t=>t.object===REST_OBJECT_ID);
 const restBottom=Math.min(...restTriangles.flatMap(t=>[t.a[1],t.b[1],t.c[1]]));
 // Slabs omit the invisible buried underside. Their actual bottom perimeter,
@@ -470,27 +456,222 @@ for(const p of bootVertices.filter(p=>Math.abs(p[1]-bootBottom)<1e-7)){
  bootFloorSamples++;
 }
 assert(bootFloorSamples>0,'Missing seated sole/floor checks');
-const step=.16,radius=.22,x0=-5.2,z0=-8.2,nx=128,nz=104,nodes=new Map();
-for(let iz=0;iz<nz;iz++)for(let ix=0;ix<nx;ix++){
- const x=x0+ix*step,z=z0+iz*step,h=elevation(x,z);if(!Number.isFinite(h.height))continue;
- let clear=true;for(let k=0;k<8;k++){const a=k*Math.PI/4,q=elevation(x+Math.cos(a)*radius,z+Math.sin(a)*radius);if(!Number.isFinite(q.height)||Math.abs(q.height-h.height)>.27){clear=false;break;}}
- if(!clear||obstacles.some(b=>Math.abs(h.height-b.y)<.3&&x>b.x0-radius&&x<b.x1+radius&&z>b.z0-radius&&z<b.z1+radius))continue;
- nodes.set(iz*nx+ix,{x,z,y:h.height,id:h.id});
-}
-function nearest(p){let best,dist=Infinity;for(const [i,n]of nodes){const d=(n.x-p[0])**2+(n.z-p[2])**2+(n.y-p[1])**2*3;if(d<dist){best=i;dist=d;}}assert(dist<.2,`No clear standing location near ${p}; squared distance ${dist}`);return best;}
-const start=nearest([3.8,0,3.8]),queue=[start],seen=new Set(queue);
-for(let q=0;q<queue.length;q++){
- const i=queue[q],a=nodes.get(i);for(const d of [-nx,nx,-1,1]){const next=i+d,b=nodes.get(next);if(!b||seen.has(next)||Math.hypot(a.x-b.x,a.z-b.z)>step*1.1||Math.abs(a.y-b.y)>.25)continue;seen.add(next);queue.push(next);}
-}
-const reached=stations.map(s=>{const i=nearest(s.approach);assert(seen.has(i),`${s.key}: disconnected approach`);return s.key;});
-const restNode=nearest(rest.approach);
-assert(seen.has(restNode),'The rest approach must remain connected to the actor and six stations');
-for(const id of ['west-ramp','east-ramp'])assert([...seen].some(i=>nodes.get(i).id===id),`${id}: unreachable`);
-assert.equal(seen.size,nodes.size,'Standable samples contain a disconnected floor island');
+const layoutChecks=verifyLayout();
 const riftSourceHashes=Object.fromEntries(['player-sprite-dense.ts','player-sprite.ts'].map(name=>{
  const source=`src/entities/${name}`,filename=path.resolve(here,'../../../..',source);
  return [source,createHash('sha256').update(fs.readFileSync(filename)).digest('hex')];
 }));
-const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:reached,reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:true,footRadius:radius,samplingStep:step,ramps:['west-ramp','east-ramp'],rest:{...restGeometryChecks,approach:rest.approach,reachable:true,supportSamples,bootFloorSamples,exports:restExportChecks},coreFacing:facingRegression,sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,coreField:coreFieldChecks,rendererRegression,coreContributionRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with conservative station, rest-remnant and furnace footprints, seated geometry and light anchors. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
+const result={strictModules:files.length,finiteTriangles:model.triangles.length,stations:layoutChecks.stations,reachableSamples:layoutChecks.reachableSamples,totalStandableSamples:layoutChecks.totalStandableSamples,allStandableSamplesConnected:layoutChecks.allStandableSamplesConnected,footRadius:layoutChecks.footRadius,samplingStep:layoutChecks.samplingStep,ramps:layoutChecks.ramps,layout:layoutChecks,rest:{...restGeometryChecks,approach:rest.approach,reachable:true,supportSamples,bootFloorSamples,exports:restExportChecks},coreFacing:facingRegression,sourceChecks:{families,uniqueSourceIds:model.lights.length,actorShoulderSources:shoulder.length,fields:fieldChecks,coreField:coreFieldChecks,rendererRegression,coreContributionRegression,omniRegression,riftSourceHashes},motionMasks:{dimensions:[W,H],visibleSources,stationPollution,outsidePollution,energyAtlas:energyAtlasChecks},scope:'Source definitions, exported masks, finite source support and independent receiver/occluder and omnidirectional fixtures; art layout with oriented station/remnant and authored environment footprints, exact operation anchors, sole west-ramp transitions and routes outside the seat/fire space, seated geometry and light anchors. Pixel counts record presence, not artistic quality. Does not claim production collision or gameplay integration.'};
 console.log(JSON.stringify(result,null,2));
 if(process.argv.includes('--write'))fs.writeFileSync(path.join(here,'assets','layout-check.json'),JSON.stringify(result,null,2)+'\n');
+
+function createElevationQuery(surfaces){
+ const faces=surfaces.flatMap(surface=>ShapeUtils.triangulateShape(surface.points.map(p=>new Vector2(p[0],p[2])),[]).map(face=>({points:face.map(i=>surface.points[i]),id:surface.id})));
+ return (x,z)=>{
+  let height=-Infinity,id='';
+  for(const t of faces){
+   const [a,b,c]=t.points,det=(b[2]-c[2])*(a[0]-c[0])+(c[0]-b[0])*(a[2]-c[2]);
+   if(Math.abs(det)<1e-9)continue;
+   const u=((b[2]-c[2])*(x-c[0])+(c[0]-b[0])*(z-c[2]))/det;
+   const v=((c[2]-a[2])*(x-c[0])+(a[0]-c[0])*(z-c[2]))/det,w=1-u-v;
+   if(u<0||v<0||w<0)continue;
+   const y=u*a[1]+v*b[1]+w*c[1];if(y>height){height=y;id=t.id;}
+  }
+  return {height,id};
+ };
+}
+
+/** Art-layout checks only. Footprints and routes do not implement gameplay. */
+function verifyLayout(){
+ const elevation=createElevationQuery(WALK_SURFACES),step=.16,radius=.22,maxSnap=step/Math.SQRT2+.02;
+ const rampIds=WALK_SURFACES.filter(s=>s.id.endsWith('-ramp')).map(s=>s.id);
+ assert.deepEqual(rampIds,['west-ramp'],'The authored layout must contain only the west ramp');
+ const local=(p,origin,yaw)=>{const dx=p[0]-origin[0],dz=p[2]-origin[2];return [dx*Math.cos(yaw)-dz*Math.sin(yaw),dx*Math.sin(yaw)+dz*Math.cos(yaw)];};
+ // Work in each object's authored orientation. World AABBs wrongly occupied
+ // the empty corners beside rotated devices and hid that error by snapping.
+ function clipHeight(points,height,above){
+  const clipped=[];
+  for(let i=0;i<points.length;i++){
+   const a=points[i],b=points[(i+1)%points.length],insideA=above?a[1]>=height:a[1]<=height,insideB=above?b[1]>=height:b[1]<=height;
+   if(insideA)clipped.push(a);
+   if(insideA!==insideB){const t=(height-a[1])/(b[1]-a[1]);clipped.push(a.map((v,k)=>v+(b[k]-v)*t));}
+  }
+  return clipped;
+ }
+ const deviceObstacles=[...stations.filter(s=>s.key!=='rift'),rest].map(s=>{
+  // Flush traces below 12cm remain floor details; crop taller triangles to
+  // the actual low body band so a high leaning brace cannot enlarge its foot.
+  const vertices=model.triangles.filter(t=>t.object===s.id).flatMap(t=>clipHeight(clipHeight([t.a,t.b,t.c],s.position[1]+.12,true),s.position[1]+.65,false));
+  assert(vertices.length>0,`${s.key}: no low assembly geometry`);
+  const ps=vertices.map(p=>local(p,s.position,s.yaw));
+  return {id:s.key,kind:'obb',position:s.position,yaw:s.yaw,x0:Math.min(...ps.map(p=>p[0])),x1:Math.max(...ps.map(p=>p[0])),z0:Math.min(...ps.map(p=>p[1])),z1:Math.max(...ps.map(p=>p[1])),height:.65};
+ });
+ // The environment owns placement and footprint data, including the furnace.
+ const environmentObstacles=LAYOUT_OBSTACLES.map(o=>{
+  assert(['box','circle'].includes(o.kind),`${o.id}: unknown footprint shape`);
+  assert(o.position.every(Number.isFinite),`${o.id}: invalid footprint position`);
+  if(o.kind==='circle'){assert(o.radius>0,`${o.id}: invalid footprint radius`);return {...o,height:.65};}
+  assert(o.half.every(n=>Number.isFinite(n)&&n>0)&&Number.isFinite(o.yaw),`${o.id}: invalid oriented footprint`);
+  return {...o,kind:'obb',x0:-o.half[0],x1:o.half[0],z0:-o.half[1],z1:o.half[1],height:.65};
+ });
+ assert(new Set(environmentObstacles.map(o=>o.id)).size===environmentObstacles.length,'Environment obstacle ids must be unique');
+ for(const id of ['furnace','supply-crate','supply-can','shelf-west','shelf-middle','shelf-east','pier-east','pier-middle','pier-under-west','pier-under-middle','pier-under-east'])assert(environmentObstacles.some(o=>o.id===id),`Layout missing the ${id} footprint`);
+ const obstacles=[...deviceObstacles,...environmentObstacles];
+ function clearance(p,o){
+  if(p[1]<o.position[1]-.1||p[1]>o.position[1]+o.height+.1)return Infinity;
+  const [x,z]=local(p,o.position,o.yaw??0);
+  if(o.kind==='circle')return Math.hypot(x,z)-o.radius;
+  const dx=Math.max(o.x0-x,0,x-o.x1),dz=Math.max(o.z0-z,0,z-o.z1);
+  return dx||dz?Math.hypot(dx,dz):-Math.min(x-o.x0,o.x1-x,z-o.z0,o.z1-z);
+ }
+ function standing(x,z){
+  const h=elevation(x,z);if(!Number.isFinite(h.height))return {clear:false,reason:'outside floor'};
+  for(let k=0;k<16;k++){
+   const a=k*Math.PI/8,q=elevation(x+Math.cos(a)*radius,z+Math.sin(a)*radius);
+   if(!Number.isFinite(q.height)||Math.abs(q.height-h.height)>.27)return {clear:false,reason:'foot crosses edge or excessive height change'};
+  }
+  const p=[x,h.height,z],hit=obstacles.find(o=>clearance(p,o)<radius-1e-8);
+  return hit?{clear:false,reason:`foot overlaps ${hit.id}`}:{clear:true,x,z,y:h.height,id:h.id};
+ }
+ const vertices=WALK_SURFACES.flatMap(s=>s.points);
+ const x0=Math.floor(Math.min(...vertices.map(p=>p[0]))/step)*step,z0=Math.floor(Math.min(...vertices.map(p=>p[2]))/step)*step;
+ const nx=Math.ceil((Math.max(...vertices.map(p=>p[0]))-x0)/step)+1,nz=Math.ceil((Math.max(...vertices.map(p=>p[2]))-z0)/step)+1,nodes=new Map();
+ for(let iz=0;iz<nz;iz++)for(let ix=0;ix<nx;ix++){const n=standing(x0+ix*step,z0+iz*step);if(n.clear)nodes.set(iz*nx+ix,n);}
+ const links=new Map([...nodes.keys()].map(i=>[i,[]]));
+ function clearSegment(a,b){
+  const count=Math.ceil(Math.hypot(a.x-b.x,a.z-b.z)/.04);
+  for(let j=1;j<count;j++)if(!standing(a.x+(b.x-a.x)*j/count,a.z+(b.z-a.z)*j/count).clear)return false;
+  return true;
+ }
+ for(const [i,a]of nodes)for(const [dx,dz]of [[1,0],[0,1],[1,1],[-1,1]]){
+  const j=i+dx+dz*nx,b=nodes.get(j);
+  if(!b||Math.hypot(a.x-b.x,a.z-b.z)>step*1.5||Math.abs(a.y-b.y)>.25)continue;
+  if(dx&&dz&&(!nodes.has(i+dx)||!nodes.has(i+dz*nx)))continue;
+  if(!clearSegment(a,b))continue;
+  const length=Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z);
+  links.get(i).push([j,length]);links.get(j).push([i,length]);
+ }
+ const anchors={actor:ACTOR_POSITION,...Object.fromEntries(stations.map(s=>[s.key,s.approach])),rest:rest.approach};
+ const anchorNodes={},anchorChecks={};
+ for(const [key,p]of Object.entries(anchors)){
+  const actual=standing(p[0],p[2]);
+  assert(actual.clear,`${key}: authored anchor is not clear: ${actual.reason}`);
+  assert(Math.abs(actual.y-p[1])<=.10,`${key}: anchor is not on its authored floor`);
+  let nearest,minimum=Infinity;
+  for(const [i,n]of nodes){const d=Math.hypot(n.x-p[0],n.z-p[2]);if(Math.abs(n.y-p[1])<=.10&&d<minimum&&clearSegment(actual,n)){nearest=i;minimum=d;}}
+  assert(minimum<=maxSnap,`${key}: needs ${minimum.toFixed(3)}m snap; maximum ${maxSnap.toFixed(3)}m`);
+  anchorNodes[key]=nearest;
+  anchorChecks[key]={position:p,sampled:[nodes.get(nearest).x,nodes.get(nearest).y,nodes.get(nearest).z],snap:minimum,nearestObstacle:Math.min(...obstacles.map(o=>clearance(p,o))),exactFootClear:true};
+ }
+ function flood(start,allowed=()=>true){
+  const seen=new Set(allowed(start)?[start]:[]),queue=[...seen];
+  for(let q=0;q<queue.length;q++)for(const [next]of links.get(queue[q]))if(allowed(next)&&!seen.has(next)){seen.add(next);queue.push(next);}
+  return seen;
+ }
+ const seen=flood(anchorNodes.actor);
+ for(const [key,node]of Object.entries(anchorNodes))assert(seen.has(node),`${key}: disconnected authored anchor`);
+ // This is the deliberately open common floor between the arrival, hearth
+ // bypass, core approach and departure forecourt, not the inaccessible backs
+ // of shelves or the shrine's torn perimeter. Assert every sampled foot here,
+ // so adding a prop cannot silently erase a public corridor from the graph.
+ const publicFloor=[[2.8,.8],[9.3,.8],[10,2.4],[7.4,3.8],[3.3,3.8]];
+ function insidePublic(x,z){
+  let inside=false;
+  for(let i=0,j=publicFloor.length-1;i<publicFloor.length;j=i++){
+   const a=publicFloor[i],b=publicFloor[j];
+   if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])inside=!inside;
+  }
+  return inside;
+ }
+ let publicFloorSamples=0;
+ for(let iz=0;iz<nz;iz++)for(let ix=0;ix<nx;ix++){
+  const x=x0+ix*step,z=z0+iz*step;if(!insidePublic(x,z))continue;
+  const n=standing(x,z);assert(n.clear&&Math.abs(n.y)<.1,`Public main-floor corridor is blocked at ${x},${z}: ${n.reason}`);
+  assert(seen.has(iz*nx+ix),`Public main-floor corridor is disconnected at ${x},${z}`);publicFloorSamples++;
+ }
+ assert(publicFloorSamples>0,'The common-floor contract must include actual samples');
+ const unreachable=[...nodes].filter(([i])=>!seen.has(i));
+ const unreachableBySurface=Object.fromEntries([...new Set(unreachable.map(([,n])=>n.id))].map(id=>{
+  const ns=unreachable.filter(([,n])=>n.id===id).map(([,n])=>n);
+  return [id,{count:ns.length,x:[Math.min(...ns.map(n=>n.x)),Math.max(...ns.map(n=>n.x))],z:[Math.min(...ns.map(n=>n.z)),Math.max(...ns.map(n=>n.z))]}];
+ }));
+ // Prop backs and torn slab tips may have standable but inaccessible samples.
+ // Report them explicitly; only actual operation anchors and the authored
+ // crossing are required to belong to the player's connected floor component.
+ const rampNodes=[...nodes.keys()].filter(i=>nodes.get(i).id==='west-ramp');
+ assert(rampNodes.length>0,'Missing west ramp samples');
+ const rampStart=rampNodes.find(i=>seen.has(i));
+ assert(rampStart!==undefined,'The west ramp must be accessible from the actor');
+ const rampComponent=flood(rampStart,i=>nodes.get(i).id==='west-ramp');
+ const boundary={main:[],upper:[]};
+ for(const i of rampComponent)for(const [j]of links.get(i)){
+  const layer=nodes.get(j).id;if(layer==='main'||layer==='upper')boundary[layer].push({ramp:[nodes.get(i).x,nodes.get(i).y,nodes.get(i).z],floor:[nodes.get(j).x,nodes.get(j).y,nodes.get(j).z]});
+ }
+ assert(boundary.main.length>0&&boundary.upper.length>0,'One connected west ramp component must join both main and upper floors');
+ const withoutRamp=flood(anchorNodes.actor,i=>nodes.get(i).id!=='west-ramp');
+ assert(![...withoutRamp].some(i=>nodes.get(i).id==='upper'),'Upper floor remains reachable without the sole west ramp');
+ for(const key of ['growth','storage'])assert(!withoutRamp.has(anchorNodes[key]),`${key}: upper station bypasses the sole ramp`);
+
+ const hearthVector=[FURNACE_POSITION[0]-rest.position[0],FURNACE_POSITION[2]-rest.position[2]],hearthDistance=Math.hypot(...hearthVector),hearthHalfWidth=.55;
+ assert(hearthDistance>0,'Seat and furnace must have distinct positions');
+ const forward=[Math.sin(rest.yaw),Math.cos(rest.yaw)],seatAlignment=(forward[0]*hearthVector[0]+forward[1]*hearthVector[1])/hearthDistance;
+ const fireAlignment=-(Math.sin(FURNACE_YAW)*hearthVector[0]+Math.cos(FURNACE_YAW)*hearthVector[1])/hearthDistance;
+ assert(seatAlignment>.98,'The seated actor must face the furnace');
+ assert(fireAlignment>.98,'The furnace opening must face the seat');
+ function alongExtents(o){
+  assert(o.kind==='obb',`${o.id}: hearth bounds require an oriented box`);
+  const values=[];
+  for(const x of [o.x0,o.x1])for(const z of [o.z0,o.z1]){
+   const wx=o.position[0]+x*Math.cos(o.yaw)+z*Math.sin(o.yaw)-rest.position[0];
+   const wz=o.position[2]-x*Math.sin(o.yaw)+z*Math.cos(o.yaw)-rest.position[2];
+   values.push((wx*hearthVector[0]+wz*hearthVector[1])/hearthDistance);
+  }
+  return [Math.min(...values),Math.max(...values)];
+ }
+ const furnaceObstacle=environmentObstacles.find(o=>o.id==='furnace');
+ assert(furnaceObstacle,'The furnace footprint needs its stable id');
+ const hearthRange=[alongExtents(deviceObstacles.find(o=>o.id==='rest'))[1],alongExtents(furnaceObstacle)[0]];
+ assert(hearthRange[1]-hearthRange[0]>radius*2,'The seat/fire gap must leave room for seated feet');
+ function inHearth(p){
+  if(Math.abs(p.y-rest.position[1])>.3)return false;
+  const x=p.x-rest.position[0],z=p.z-rest.position[2],along=(x*hearthVector[0]+z*hearthVector[1])/hearthDistance;
+  const across=Math.abs(x*hearthVector[1]-z*hearthVector[0])/hearthDistance;
+  return along>hearthRange[0]&&along<hearthRange[1]&&across<hearthHalfWidth;
+ }
+ const protectedNodes=new Set([...nodes.keys()].filter(i=>inHearth(nodes.get(i))));
+ assert(protectedNodes.size>0,'The seated feet/fire space must include usable floor, not overlapping solid footprints');
+ class MinHeap{
+  values=[];
+  push(value){this.values.push(value);let i=this.values.length-1;while(i){const p=(i-1)>>1;if(this.values[p][0]<=value[0])break;this.values[i]=this.values[p];i=p;}this.values[i]=value;}
+  pop(){const first=this.values[0],last=this.values.pop();if(this.values.length){let i=0;while(i*2+1<this.values.length){let j=i*2+1;if(j+1<this.values.length&&this.values[j+1][0]<this.values[j][0])j++;if(this.values[j][0]>=last[0])break;this.values[i]=this.values[j];i=j;}this.values[i]=last;}return first;}
+ }
+ function shortest(start,avoidHearth=false){
+  const queue=new MinHeap(),distances=new Map([[start,0]]),previous=new Map();queue.push([0,start]);
+  while(queue.values.length){
+   const [distance,node]=queue.pop();if(distance!==distances.get(node))continue;
+   for(const [next,length]of links.get(node)){
+    if(avoidHearth&&(protectedNodes.has(next)||inHearth({x:(nodes.get(node).x+nodes.get(next).x)/2,y:(nodes.get(node).y+nodes.get(next).y)/2,z:(nodes.get(node).z+nodes.get(next).z)/2})))continue;
+    const d=distance+length;if(d<(distances.get(next)??Infinity)){distances.set(next,d);previous.set(next,node);queue.push([d,next]);}
+   }
+  }
+  return {distances,previous};
+ }
+ const routeSources=['actor','core','rift','offering','purifier'],routeTargets=['growth','storage'];
+ const routeCache=new Map([...new Set([...routeSources,...routeTargets])].map(key=>[key,shortest(anchorNodes[key])]));
+ const routeChecks=[];
+ for(const from of routeSources){
+  const normal=routeCache.get(from),outside=shortest(anchorNodes[from],true);
+  for(const to of routeTargets){
+   const goal=anchorNodes[to],length=normal.distances.get(goal),outsideLength=outside.distances.get(goal);
+   assert(Number.isFinite(length)&&Number.isFinite(outsideLength),`${from} → ${to}: needs a route outside the seat/fire space`);
+   let bestViaHearth=Infinity;
+   for(const i of protectedNodes)bestViaHearth=Math.min(bestViaHearth,(normal.distances.get(i)??Infinity)+(routeCache.get(to).distances.get(i)??Infinity));
+   assert(bestViaHearth>length+1e-6,`${from} → ${to}: a shortest route still cuts through the seat/fire space`);
+   assert(Math.abs(outsideLength-length)<1e-6,`${from} → ${to}: normal shortest route requires the seat/fire space`);
+   const route=[];for(let i=goal;i!==undefined;i=normal.previous.get(i))route.push(i);route.reverse();
+   assert(route.some(i=>nodes.get(i).id==='west-ramp'),`${from} → ${to}: route skipped the only ramp`);
+   routeChecks.push({from,to,length,outsideLength,bestViaHearth,ramps:['west-ramp']});
+  }
+ }
+ return {stations:stations.map(s=>s.key),reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:seen.size===nodes.size,unreachableBySurface,footRadius:radius,samplingStep:step,maxAnchorSnap:maxSnap,anchorChecks,publicFloor:{polygon:publicFloor,samples:publicFloorSamples,allClearAndReachable:true},obstacles,ramps:rampIds,westRamp:{samples:rampNodes.length,connectedCrossingSamples:rampComponent.size,isolatedTipSamples:rampNodes.length-rampComponent.size,mainConnections:boundary.main.length,upperConnections:boundary.upper.length,mainExample:boundary.main[0],upperExample:boundary.upper[0],removalDisconnectsUpper:true},hearth:{seat:rest.position,furnace:FURNACE_POSITION,halfWidth:hearthHalfWidth,alongRange:hearthRange,protectedSamples:protectedNodes.size,seatAlignment,fireAlignment},routes:routeChecks,scope:'Art-layout geometry with oriented conservative device/remnant footprints and authored environment footprints; exact anchor foot clearance, short sampled routes and sole-ramp connectivity. Not production movement or collision.'};
+}

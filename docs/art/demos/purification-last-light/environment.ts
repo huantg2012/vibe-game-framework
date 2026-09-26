@@ -6,8 +6,28 @@ const UPPER_PATH:V2[]=[[2.6,-6.8],[4.2,-8.05],[7.37,-7.9],[7.63,-7.66],[8.08,-7.
 const MAIN_PATH:V2[]=[[-5,-4],[-2.9,-5.08],[-2.72,-4.88],[-2.4,-5.32],[2,-7],[5.7,-6.5],[5.88,-6.24],[6.28,-6.42],[9,-5],[14,-2],[14.4,.30],[14.23,.60],[14.63,1.02],[15,4],[13.76,5.26],[13.45,5.21],[13.42,5.60],[12,7],[9.45,7.42],[9.19,7.19],[8.95,7.50],[7.9,7.6],[7.67,7.40],[7.42,7.73],[5,8],[2.43,6.93],[2.41,6.66],[2.02,6.74],[-2,5],[-3.12,3.39],[-2.92,3.11],[-3.35,2.95],[-5,1],[-4.82,.44],[-5.1,.19]];
 
 export interface WalkSurface { readonly id: string; readonly points: readonly V3[]; }
-export const FURNACE_POSITION:V3=[3.8,0,.5];
-export const FURNACE_BOUNDS={x0:2.97,x1:4.63,z0:-.13,z1:1.13,y:0};
+export const FURNACE_POSITION:V3=[.5,0,.4];
+export const FURNACE_YAW=Math.atan2(.4,2.3);
+export const SUPPLY_CRATE_POSITION:V3=[10.45,0,6.2];
+export const SUPPLY_CAN_POSITION:V3=[11.25,0,5.8];
+export type LayoutObstacle =
+  | {readonly id:string;readonly kind:'box';readonly position:V3;readonly half:readonly [number,number];readonly yaw:number}
+  | {readonly id:string;readonly kind:'circle';readonly position:V3;readonly radius:number};
+/** Large authored props only. Paper, aggregate and high hanging members are
+ * deliberately not walls; their height must matter when collision is ported. */
+export const LAYOUT_OBSTACLES:readonly LayoutObstacle[]=[
+  {id:'furnace',kind:'box',position:FURNACE_POSITION,half:[.81,.55],yaw:FURNACE_YAW},
+  {id:'supply-crate',kind:'box',position:SUPPLY_CRATE_POSITION,half:[.35,.355],yaw:-.25},
+  {id:'supply-can',kind:'circle',position:SUPPLY_CAN_POSITION,radius:.27},
+  {id:'shelf-west',kind:'box',position:[4.13,2.6,-6.55],half:[.88,.345],yaw:.19},
+  {id:'shelf-middle',kind:'box',position:[8.8,2.6,-6.76],half:[1.63,.41],yaw:-.12},
+  {id:'shelf-east',kind:'box',position:[12.32,2.6,-5.13],half:[1.315,.45],yaw:-.28},
+  {id:'pier-east',kind:'box',position:[13.28,2.6,-5.2],half:[.29,.355],yaw:0},
+  {id:'pier-middle',kind:'box',position:[9.53,2.6,-7.2],half:[.245,.305],yaw:0},
+  {id:'pier-under-west',kind:'box',position:[4.7,0,-5.04],half:[.17,.205],yaw:0},
+  {id:'pier-under-middle',kind:'box',position:[8.07,0,-3.39],half:[.22,.245],yaw:0},
+  {id:'pier-under-east',kind:'box',position:[12.65,0,-2.7],half:[.205,.24],yaw:0},
+];
 function tiltedLayer(path:readonly V2[],height:number,slopeX:number,slopeZ:number):readonly V3[] {
   const cx=path.reduce((a,p)=>a+p[0],0)/path.length,cz=path.reduce((a,p)=>a+p[1],0)/path.length;
   return path.map(([x,z])=>[x,height+(x-cx)*slopeX+(z-cz)*slopeZ,z] as V3);
@@ -22,12 +42,11 @@ function rampTop(a:V3,b:V3,width:number):readonly V3[] {
   const dx=b[0]-a[0],dz=b[2]-a[2],len=Math.hypot(dx,dz),px=-dz/len*width/2,pz=dx/len*width/2;
   return [[a[0]-px,a[1]+.035,a[2]-pz],[b[0]-px,b[1]+.035,b[2]-pz],[b[0]+px,b[1]+.035,b[2]+pz],[a[0]+px,a[1]+.035,a[2]+pz]];
 }
-/** Exact top polygons of the four intentionally traversable structures. */
+/** Exact top polygons of both floors and the one surviving west access. */
 export const WALK_SURFACES: readonly WalkSurface[] = [
   {id:'main',points:MAIN_PATH.map(([x,z])=>[x,0,z] as V3)},
   {id:'upper',points:UPPER_PATH.map(([x,z])=>[x,2.6,z] as V3)},
   {id:'west-ramp',points:rampTop([2,0,-.5],[3.5,2.6,-4],1.9)},
-  {id:'east-ramp',points:rampTop([12,0,1],[12,2.6,-2.5],1.8)},
   ...FLOOR_LAYERS.map((points,i)=>({id:`old-floor-layer-${i+1}`,points})),
 ];
 
@@ -164,7 +183,12 @@ function inhabitedRemnant(m: Model): void {
   m.beam([8.05,2.1,-3.4],[8.07,.06,-3.39],.44,.49,'stone',.8);
   m.beam([12.65,2.02,-2.7],[12.65,.08,-2.7],.41,.48,'stone',.75);
   ramp(m,[2,0,-.5],[3.5,2.6,-4],1.9,true);
-  ramp(m,[12,0,1],[12,2.6,-2.5],1.8,false);
+  // The east side ends as a broken upper storey, not a second exit. Recessed
+  // masonry and the existing pier explain the weight above the core precinct.
+  brokenSlab(m,[[11.43,-2.37],[12.57,-2.36],[13.16,-2.33],[13.17,-2.63],[12.41,-2.70],[11.55,-2.65]],2.41,.49,7419,.74);
+  m.beam([11.60,1.93,-2.51],[12.81,1.93,-2.49],.20,.24,'iron',.57);
+  m.beam([12.57,.13,-2.68],[13.02,1.83,-2.64],.20,.23,'stone',.69);
+  m.rock([12.81,.055,-2.49],[.31,.15,.27],'stone',7422,.69);
   fracture(m,[[7.5,-7.77],[7.41,-6.83],[7.9,-6.3]],2.6,56);
 
   // The upper landing is backed by a remaining library wall, with big empty
@@ -192,26 +216,36 @@ function inhabitedRemnant(m: Model): void {
   rubblePocket(m,[5.25,.032,7.50],[.58,.22],7,2317,.83);
   rubblePocket(m,[-2.31,.016,4.40],[.50,.22],6,2321,.75);
   rubblePocket(m,[8.85,2.62,-2.98],[.42,.27],5,2327,.74);
+  // Two worn surviving flags make a hearth footing, with the working opening
+  // directed toward the seat. The public route passes to its east.
+  m.at(FURNACE_POSITION,FURNACE_YAW,0,()=>{
+    m.slab([[-.96,-.65],[.77,-.68],[.96,-.46],[.94,.78],[.66,.90],[-.95,.79]],.021,-.04,'cutstone',.68);
+    m.rock([.72,.028,.78],[.14,.04,.10],'stone',7633,.51);
+    m.rock([.86,.024,.59],[.09,.035,.09],'stone',7634,.46);
+  });
   furnace(m,FURNACE_POSITION);
-  m.at([8.95,.02,5.78],-.25,0,()=>{
+  m.at([SUPPLY_CRATE_POSITION[0],.02,SUPPLY_CRATE_POSITION[2]],-.25,0,()=>{
     cuboid(m,[0,.27,0],[.64,.54,.65],'wood',.66);
     for(const x of [-.28,.28])cuboid(m,[x,.31,.332],[.047,.48,.035],'iron',.66);
     cuboid(m,[0,.56,0],[.7,.08,.71],'wood',.87);
   });
-  m.cylinder([10.13,.44,5.22],.27,.86,'iron',16,.21,.67);
-  m.cylinder([10.13,.92,5.22],.14,.13,'iron',12,.14,.75);
+  m.cylinder([SUPPLY_CAN_POSITION[0],.44,SUPPLY_CAN_POSITION[2]],.27,.86,'iron',16,.21,.67);
+  m.cylinder([SUPPLY_CAN_POSITION[0],.92,SUPPLY_CAN_POSITION[2]],.14,.13,'iron',12,.14,.75);
   // Loose folios gather against furniture rather than carpeting the floor.
-  for(const [x,z,a] of [[7.12,6.17,.13],[8.73,6.85,-.23],[11.85,-5.84,.21],[10.57,-6.35,-.14]] as const) {
+  for(const [x,z,a] of [[11.85,-5.84,.21],[10.57,-6.35,-.14]] as const) {
     m.at([x,z<0?2.61:.015,z],a,0,()=>cuboid(m,[0,0,0],[.36,.018,.48],'paper',.6));
   }
-  m.cable([[8.57,.04,5.80],[9.34,.07,5.28],[9.9,.04,4.58],[10.44,.04,3.32],[10.06,.04,1.74],[9.56,.04,.65]],.078,'black',.9);
-  m.cable([[8.87,.06,5.11],[8.46,.055,4.93],[7.84,.07,4.99],[7.39,.08,5.27],[7.14,.065,5.85],[7.28,.062,6.48],[7.75,.067,6.79],[8.35,.045,6.75],[8.72,.03,6.48]],.055,'iron',.57);
+  // Salvaged cable is coiled against supplies, away from the living fissure.
+  // The loose end terminates visibly at a coupling rather than inventing a
+  // platform-wide power network between unrelated objects.
+  m.cable([[10.57,.09,6.55],[10.91,.07,6.60],[11.17,.07,6.46],[11.18,.075,6.17],[10.99,.08,6.01],[10.78,.08,6.12],[10.73,.08,6.39],[10.94,.075,6.48],[11.28,.06,6.34],[11.55,.07,6.10]],.055,'iron',.57);
+  m.beam([11.55,.07,6.10],[11.64,.072,6.03],.105,.105,'iron',.71);
   m.at([13.65,.025,3.31],.12,0,()=>{
     cuboid(m,[0,.062,0],[.35,.12,.47],'cloth',.55);
     cuboid(m,[.014,.123,-.015],[.32,.018,.42],'paper',.61);
     cuboid(m,[-.08,.18,.04],[.38,.078,.5],'wood',.54);
   });
-  for(const [x,z,a] of [[13.15,3.92,-.23],[13.44,3.71,.18],[7.31,6.58,.48]] as const)m.at([x,.025,z],a,0,()=>{
+  for(const [x,z,a] of [[13.15,3.92,-.23],[13.44,3.71,.18]] as const)m.at([x,.025,z],a,0,()=>{
     m.quad([-.14,.004,-.18],[.17,.004,-.18],[.17,.036,.19],[-.14,.02,.19],'paper',.62);
   });
 }
@@ -287,7 +321,7 @@ function bookcase(m:Model,width:number,height:number,depth:number,seed:number,fu
 }
 
 function furnace(m:Model,origin:V3):void {
-  m.at(origin,-.12,0,()=>{
+  m.at(origin,FURNACE_YAW,0,()=>{
     for(const x of [-.6,.6])for(const z of [-.32,.34])m.box([x,.19,z],[.19,.36,.2],'iron',.035,.6);
     m.box([0,.36,0],[1.51,.21,1.05],'iron',.065,.72);
     m.box([0,1.31,0],[1.53,.20,1.03],'iron',.07,.8);
@@ -303,10 +337,6 @@ function furnace(m:Model,origin:V3):void {
     m.cylinder([.43,1.84,-.22],.135,.70,'iron',14,.135,.6);
     m.cylinder([.43,2.19,-.22],.16,.07,'iron',14,.16,.72);
     m.light([0,.72,.62],[1,.50,.16],3,5,{kind:'furnace',id:'haven-furnace'});
-    m.at([-.35,1.51,-.06],.15,0,()=>{
-      cuboid(m,[0,.03,0],[.43,.05,.36],'paper',.68);
-      cuboid(m,[.06,.07,.025],[.40,.026,.30],'paper',.59);
-    });
   });
 }
 

@@ -201,14 +201,14 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "断墙坐席、内移炉火及坐下体验已接样景，休息点e243381获用户“很好”认可。平台布局审查已交、尚未实施：整体分区保留，东坡上口与裂隙前场待修，旧炉杂物待归组；6739站位全网连通不证明两坡分别贯通。正式生产仍R10。",
+    "summary": "单西坡、正对炉火的残墙坐席、中央来路裂隙操作锚及储藏西侧工作面已实现。8精确锚、737公共走廊点、单坡跨层及10条绕开休息区的最短路通过；站坐烘焙及限定浏览器通过，边缝不可达如实保留。新版本待人审，正式生产仍R10。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "正式生产仍为R10：主菜单；净化点自由移动/修复/交互",
       "当前动态艺术样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html；含修改前/原画、六模型/人物及炉边断墙坐下体验，非正式游戏",
       "恢复工作：docs/art-direction.md#resume-art-rebuild → docs/design-notes/purification-scene-art-plan.md#当前执行状态",
-      "平台布局审查：docs/reviews/2026-09-26-purification-platform-layout.md；交互可读版 docs/reviews/interactive/purification-platform-layout-2026-09-26.html；仅审查未实施",
+      "平台布局审查：docs/reviews/2026-09-26-purification-platform-layout.md；交互可读版 docs/reviews/interactive/purification-platform-layout-2026-09-26.html；历史审查；用户补充后已实施单西坡与休息组优化，最新验证见 docs/qa/iteration-30-last-light-living.md",
       "旧A/C构图与局部样板仅历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；6127218已明确否决，不再是活跃入口"
     ],
     "sources": [
@@ -724,7 +724,7 @@
       {
         "path": "docs/art/demos/purification-last-light/environment.ts",
         "role": "art",
-        "note": "完整环境与实际上下层/双坡顶面；全网连通不证明两坡分别贯通，2026-09-26审查发现东坡上口接合缺口，未修"
+        "note": "单西坡通行面、二层右沿断面与承托、正对坐席的炉及归组备品；大静物旋转占地供布局检查共用"
       },
       {
         "path": "docs/art/demos/purification-last-light/devices.ts",
@@ -749,7 +749,7 @@
       {
         "path": "docs/art/demos/purification-last-light/check.mjs",
         "role": "test",
-        "note": "strict、源/掩码/光贡献与全网保守站位检查；只要求两个坡各有节点可达，未证明独立跨层，未覆盖箱罐/书架/建筑柱；不代正式碰撞"
+        "note": "光照/体积/站坐导出及精确锚净空；大静物足印、单西坡真实跨层、公共走廊和休息区外路线；边缝不可达保留，不代正式碰撞"
       },
       {
         "path": "docs/art/demos/purification-last-light/actor.ts",
@@ -775,7 +775,7 @@
       {
         "path": "docs/art/demos/purification-last-light/rest.ts",
         "role": "code",
-        "note": "建筑残骸、坐席锚及独立休息操作点；不属于六功能站"
+        "note": "残墙坐席移至[.9,0,2.7]并正对炉火；埋地墙基延续、冷石端折页；唯一坐下功能不变"
       },
       {
         "path": "docs/reviews/2026-09-26-purification-platform-layout.md",
@@ -853,11 +853,13 @@
       "COH-E-I30-PURIFIER-WINDOW",
       "COH-E-I30-REST",
       "COH-E-I30-REST-APPRECIATED",
-      "COH-E-I30-PLATFORM-LAYOUT-REVIEW"
+      "COH-E-I30-PLATFORM-LAYOUT-REVIEW",
+      "COH-E-I30-PLATFORM-LAYOUT"
     ],
     "unknowns": [
+      "2026-09-26单西坡/炉席/裂隙前场/储藏操作面已实施，技术与限定浏览器通过，人审待定；e243381的旧休息点认可不继承为本轮PASS。艺术样景未接正式移动、碰撞、经济或存档。",
+      "布局6833候选中6663可达；书架后、核心边缘与坡尖等170处不可达点保留诊断。8精确操作锚和737公共走廊点可达，10条自然最短路不穿休息区；净化器路线切入休息区仅多0.0982单位，不代表绝对人流隔离。",
       "35f17ba整景、347d55a核心内质获用户认可；e243381残骸休息点与内移炉火获用户认可，其他未单独认可部分保持原状态。固定相机样景，站/坐阴影分别烘焙，未接正式玩法和人物驱动视差。",
-      "2026-09-26平台布局审查仅提出建议，未实施。当前网格去掉西坡后上层不可达，东坡上口约0.168竖槛；裂隙操作锚距箱盖约0.158小于0.22足半径，但约0.124位移有备选空点。原6739全网连通只证明存在总体路径，且未包含全部静物占地，不证明双坡独立跨层或精确锚净空。净化器与坐席净空成立，无需搬动；储藏西侧已有操作杆，需强化读法。",
       "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
       "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
     ]

@@ -294,11 +294,27 @@ function storage(m: Model): void {
   m.beam([.72, .95, .91], [.72, 1.35, .91], .05, .05, 'steel', .72);
   pipe(m, [[-.76, .55, -.7], [-.97, .63, -.7], [-1.015, 1.09, -.62], [-.9, 1.33, -.54]], .045);
   m.box([.49, .59, .743], [.11, .084, .048], 'bronze', .01, .55);
-  // Operation is from the safe west side; no actor needs to stand beyond the
-  // narrow upper slab's front edge or inside the machine's footprint.
-  m.box([-1.065, 1.03, -.3], [.18, .29, .31], 'iron', .026, .85);
-  rod(m, [-1.18, .88, -.3], [-1.18, 1.28, -.3], .032, 'steel', 10, .032, .8);
-  rod(m, [-1.18, 1.03, -.3], [-.97, 1.03, -.3], .045, 'iron', 10);
+  // The west-side operator stays on the upper floor. A braced rocker projects
+  // above the near casting instead of hiding a short handle behind the shell.
+  // Its load returns to the skid; no second console or emissive marker is added.
+  for (const z of [-.51, -.09]) {
+    m.box([-1.02, .38, z], [.32, .14, .19], 'iron', .023, .8);
+    m.beam([-.99, .4, z], [-1.075, 1.04, z], .10, .095, 'iron', .87);
+    m.beam([-.89, .93, z], [-1.075, 1.04, z], .075, .09, 'steel', .66);
+  }
+  m.box([-1.065, 1.03, -.3], [.22, .27, .29], 'iron', .033, .87);
+  rod(m, [-1.09, 1.045, -.54], [-1.09, 1.045, -.06], .075, 'iron', 12, .075, .85);
+  rod(m, [-1.09, 1.045, -.57], [-1.09, 1.045, -.53], .098, 'steel', 8, .098, .74);
+  m.beam([-1.09, 1.045, -.3], [-1.35, 1.5, -.3], .070, .085, 'iron', .91);
+  rod(m, [-1.35, 1.5, -.47], [-1.35, 1.5, -.13], .048, 'steel', 12, .048, .84);
+  // A linked pushrod acts on the existing pressure-lid carriage.
+  rod(m, [-1.15, 1.16, -.3], [-.98, 1.64, -.3], .031, 'steel', 10, .031, .67);
+  m.box([-.98, 1.64, -.3], [.18, .14, .16], 'iron', .022, .84);
+  // Low heel of the assembly, with worn contact metal only where boots brace.
+  // It stays beside the standing patch rather than occupying it like a dais.
+  m.box([-1.145, .075, -.3], [.15, .10, .94], 'iron', .022, .74);
+  m.box([-1.16, .13, -.30], [.11, .018, .58], 'steel', .006, .7);
+  for (const z of [-.66, .06]) topBolt(m, -1.145, .135, z, .035);
   m.cable([[-.2, 1.518, -.15], [-.09, 1.541, .04], [-.13, 1.513, .20]], .022, 'pollutant', 1.48);
   m.light([-.11, 1.73, .065], [.34, .435, .38], .65, 2.6, { kind: 'pollution', id: 'storage-well' });
 }
@@ -510,7 +526,9 @@ export function buildDevices(m: Model): Station[] {
       description: '厚壁回收管环的偏心孔贯通前后，下沿夹件暴露并控制残渣；压力穿孔而过。装入物件供其抵御冲击并转化。' },
     { id: 5, key: 'growth', name: '蜕变', position: [6, 2.6, -5.2], yaw: 0, approach: [6, 2.6, -3.33], radius: .83,
       description: '可容人体的旧式立缸，暗色半透明介质中隐约有躯体般的物质与稀少气泡。通过培养藏刻入永久成长和模块加厚。' },
-    { id: 6, key: 'rift', name: '裂隙', position: [9.4, 0, 4.2], yaw: 0, approach: [9.4, 0, 6.07], radius: .92,
+    // Arrive from the inhabited center, outside the northwest fork. The old
+    // front-edge anchor made the player pass the wound before turning to use it.
+    { id: 6, key: 'rift', name: '裂隙', position: [9.4, 0, 4.2], yaw: 0, approach: [7.8, 0, 3.45], radius: .92,
       description: '地面上由内向外分叉的时空伤口，裂口粗细不等，仅断续渗出异源颜色；并非门或机械装置。由此准备出击。' },
   ];
   const builders = [core, storage, purifier, offering, growth, rift] as const;
