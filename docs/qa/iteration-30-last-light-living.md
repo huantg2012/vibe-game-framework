@@ -2,7 +2,7 @@
 
 2026-09-25。基线 `35f17ba` 已获用户明确赞许，本轮为随后七项修改。结果：IMPLEMENTED / INTERNAL-VERIFIED / NEW-ART-REVIEW-PENDING。主F042，关联F026/F039；正式生产仍R10。
 
-**最新空间优化（2026-09-26）**：用户补充明确东坡可取消，并授权一并优化；单西坡、炉席组合、裂隙前场及储藏工作面已实施，见本文末节。前文各轮数字是历史结果，不代表当前仍有双坡或全部边缝可达。
+**最新空间纠偏（2026-09-26）**：用户指出007554c炉挡西侧工作路、核心前无效空地；该轮布局为HUMAN-CHANGES-REQUESTED。炉席现整体移至中央偏前，新增真实通路宽度与全组路线验证，见本文末节。前文各轮结果属于当时版本，不自动覆盖新布局。
 
 ## 实施覆盖
 
@@ -144,3 +144,18 @@ Codex in-app browser，`http://127.0.0.1:3027/docs/art/demos/purification-last-l
 浏览器实测坐下按钮、点击新残墙的对象ID区域、1.180镜头、文案、Esc起身；坐姿可暂停及切换核心环境照明，储藏模型页可打开，返回整景后恢复播放与核心照明。renderer为webgl，console warn/error为空。没有重复宣称本轮已测所有设备玩法、时间推进或正式Rift。见[浏览器记录](artifacts/purification-platform-layout-2026-09-26/browser-check.json)。
 
 修改前[站立](artifacts/purification-platform-layout-2026-09-26/before-standing.png) / [坐姿](artifacts/purification-platform-layout-2026-09-26/before-rest.png)与当前[站立](../art/demos/purification-last-light/assets/haven.png) / [坐姿](../art/demos/purification-last-light/assets/rest/haven.png)可对照。历史审查与原测量冻结保留，本轮没有扩大旧基线或解除既有挂起。
+
+
+## 炉席位置与核心前场纠偏（007554c之后，2026-09-26）
+
+**IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** 用户指出炉阻碍楼梯至供奉/净化器的通行，核心前空地无效。007554c的连通检查没有证明舒服的动线；此前“可收敛”的内部判断不再作为该布局通过依据。
+
+炉席整体移入中央偏前：炉`[5.8,0,3.95]`、朝向`atan2(-.9,2)`；席`[4.9,0,5.95]`、朝向相反。西側工作路展开，通往核心/裂隙的正常路线留在炉背后，炉前与座者之间专供停留。席后低埋墙尾缩短到原地坪以内，不扩大平台。其他六站、人物站立点、材质、照明参数、核心与渲染方法保持；站/坐阴影及光贡献重新烘焙。
+
+检查不再将大片中央地面锁定为空地，而是核实际出行：坡脚至两西站的直线路带要求1.50场景单位净宽；测得供奉2.710、净化器2.404。坡脚回转空间在平面上检查，不能把这些平面宽度误称真实台阶上的圆形活动面；真实跨层另由西坡图检查。
+
+完整`check.mjs --write`通过10模块strict、光照/遮挡/体积与站坐导出。8个设备/人物/休息锚直接净空，加坡脚作为真实路线起点；20条主要路线均不穿人炉间，绕行优势至少0.32。10条下层路线还须存在1.20场景单位净宽的可行通路；实际最大加长约10.54%。人物至裂隙外绕4.663、穿休息区5.395，不再用网格几乎打平的差异声称合理。浅埋墙尾在内的5118个低位支撑采样均落在原平台。6833候选中6663可达、170边缝点仍保留，未宣称全部地面可通行。
+
+浏览器实测按钮和新位置画内点击坐下，renderer=webgl、镜头1.180、原氛围文案正确；Esc起身、坐姿核心环境光开关通过，恢复站立/播放/核心光开启，warn/error为空。独立实图复核认为西路展开、核心前由休息区与接近区分出尺度；坐席已较靠前，不宜继续前推。以上仍是艺术样景的技术与内部画面复核，不代表正式移动/碰撞验收或用户美术认可。
+
+[本轮布局](artifacts/purification-hearth-circulation-2026-09-26/layout-check.json)、[完整检查](artifacts/purification-hearth-circulation-2026-09-26/full-check.txt)、[浏览器](artifacts/purification-hearth-circulation-2026-09-26/browser-check.json)、[指纹](artifacts/purification-hearth-circulation-2026-09-26/integrity.json)。渲染/材质/核心能量图集、六站与人物源码均与007554c一致；变更的炉席与新受光由同一管线重算。修改前[站立](artifacts/purification-hearth-circulation-2026-09-26/before-standing.png)/[坐姿](artifacts/purification-hearth-circulation-2026-09-26/before-rest.png)，当前[站立](../art/demos/purification-last-light/assets/haven.png)/[坐姿](../art/demos/purification-last-light/assets/rest/haven.png)。

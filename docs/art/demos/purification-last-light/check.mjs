@@ -570,26 +570,68 @@ function verifyLayout(){
  }
  const seen=flood(anchorNodes.actor);
  for(const [key,node]of Object.entries(anchorNodes))assert(seen.has(node),`${key}: disconnected authored anchor`);
- // This is the deliberately open common floor between the arrival, hearth
- // bypass, core approach and departure forecourt, not the inaccessible backs
- // of shelves or the shrine's torn perimeter. Assert every sampled foot here,
- // so adding a prop cannot silently erase a public corridor from the graph.
- const publicFloor=[[2.8,.8],[9.3,.8],[10,2.4],[7.4,3.8],[3.3,3.8]];
- function insidePublic(x,z){
+ // Reserve actual journeys, not a large empty central polygon. Width here
+ // is plan-view room for a person to pass comfortably; the separate movement
+ // graph still checks the real foot heights. The descending ramp itself is
+ // not an obstacle to its own landing's turning space.
+ const mainSurface=WALK_SURFACES.find(surface=>surface.id==='main');
+ const rampSurface=WALK_SURFACES.find(surface=>surface.id==='west-ramp');
+ const bottomY=Math.min(...rampSurface.points.map(p=>p[1]));
+ const lowerEdge=rampSurface.points.filter(p=>Math.abs(p[1]-bottomY)<1e-7);
+ assert.equal(lowerEdge.length,2,'The ramp needs a two-corner lower edge');
+ const stairFoot=lowerEdge[0].map((v,k)=>(v+lowerEdge[1][k])/2);
+ const stairStanding=standing(stairFoot[0],stairFoot[2]);
+ assert(stairStanding.clear,'The exact ramp foot must be standable');
+ let stairNode,stairSnap=Infinity;
+ for(const [i,n]of nodes){const d=Math.hypot(n.x-stairFoot[0],n.z-stairFoot[2]);if(Math.abs(n.y-stairFoot[1])<=.1&&d<stairSnap&&clearSegment(stairStanding,n)){stairNode=i;stairSnap=d;}}
+ assert(stairSnap<=maxSnap&&seen.has(stairNode),'The ramp-foot route origin must be reachable without a large snap');
+ anchorNodes.stair=stairNode;
+ function pointEdgeDistance(x,z,a,b){
+  const dx=b[0]-a[0],dz=b[2]-a[2],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[2])*dz)/(dx*dx+dz*dz)));
+  return Math.hypot(x-a[0]-dx*t,z-a[2]-dz*t);
+ }
+ function mainEdgeDistance(x,z){return Math.min(...mainSurface.points.map((a,i)=>pointEdgeDistance(x,z,a,mainSurface.points[(i+1)%mainSurface.points.length])));}
+ function insideMain(x,z){
+  if(mainEdgeDistance(x,z)<1e-8)return true;
   let inside=false;
-  for(let i=0,j=publicFloor.length-1;i<publicFloor.length;j=i++){
-   const a=publicFloor[i],b=publicFloor[j];
-   if((a[1]>z)!==(b[1]>z)&&x<(b[0]-a[0])*(z-a[1])/(b[1]-a[1])+a[0])inside=!inside;
+  for(let i=0,j=mainSurface.points.length-1;i<mainSurface.points.length;j=i++){
+   const a=mainSurface.points[i],b=mainSurface.points[j];
+   if((a[2]>z)!==(b[2]>z)&&x<(b[0]-a[0])*(z-a[2])/(b[2]-a[2])+a[0])inside=!inside;
   }
   return inside;
  }
- let publicFloorSamples=0;
- for(let iz=0;iz<nz;iz++)for(let ix=0;ix<nx;ix++){
-  const x=x0+ix*step,z=z0+iz*step;if(!insidePublic(x,z))continue;
-  const n=standing(x,z);assert(n.clear&&Math.abs(n.y)<.1,`Public main-floor corridor is blocked at ${x},${z}: ${n.reason}`);
-  assert(seen.has(iz*nx+ix),`Public main-floor corridor is disconnected at ${x},${z}`);publicFloorSamples++;
+ function mainPlanClearance(p){
+  if(!insideMain(p[0],p[2]))return -Infinity;
+  const edgeDistance=mainEdgeDistance(p[0],p[2]);
+  return Math.min(edgeDistance,...obstacles.map(o=>clearance([p[0],0,p[2]],o)));
  }
- assert(publicFloorSamples>0,'The common-floor contract must include actual samples');
+ const directCorridors=[];
+ for(const key of ['offering','purifier']){
+  const to=anchors[key],length=Math.hypot(to[0]-stairFoot[0],to[2]-stairFoot[2]),samples=Math.ceil(length/.04);
+  let minimum=Infinity,tightest;
+  for(let j=0;j<=samples;j++){
+   const p=stairFoot.map((v,k)=>v+(to[k]-v)*j/samples),d=mainPlanClearance(p);
+   if(d<minimum){minimum=d;tightest=p;}
+  }
+  assert(minimum>=.75,`Ramp foot → ${key}: 1.50m direct corridor narrows to ${(minimum*2).toFixed(3)}m at ${tightest}`);
+  directCorridors.push({from:'stair',to:key,centerline:[stairFoot,to],length,requiredWidth:1.5,minimumClearWidth:minimum*2,tightest,samples:samples+1});
+ }
+ const turningClearance=mainPlanClearance(stairFoot);
+ assert(turningClearance>=.9,`Ramp-foot turning area needs a clear 1.80m diameter; current ${(turningClearance*2).toFixed(3)}m`);
+ // Include every low remnant polygon, including the shallow buried return.
+ // The old lowest-course check alone missed a floating tail at another depth.
+ let lowRestSupportSamples=0;
+ for(const triangle of model.triangles.filter(t=>t.object===rest.id)){
+  const polygon=clipHeight([triangle.a,triangle.b,triangle.c],rest.position[1]+.1,false);
+  if(!polygon.length)continue;
+  const probes=[polygon.reduce((sum,p)=>sum.map((v,k)=>v+p[k]/polygon.length),[0,0,0])];
+  for(let i=0;i<polygon.length;i++){
+   const a=polygon[i],b=polygon[(i+1)%polygon.length],count=Math.max(1,Math.ceil(Math.hypot(a[0]-b[0],a[2]-b[2])/.08));
+   for(let j=0;j<=count;j++)probes.push(a.map((v,k)=>v+(b[k]-v)*j/count));
+  }
+  for(const p of probes){assert(insideMain(p[0],p[2]),`Low rest remnant extends beyond the actual main slab at ${p.map(n=>n.toFixed(3))}`);lowRestSupportSamples++;}
+ }
+ assert(lowRestSupportSamples>0,'Missing low remnant support coverage');
  const unreachable=[...nodes].filter(([i])=>!seen.has(i));
  const unreachableBySurface=Object.fromEntries([...new Set(unreachable.map(([,n])=>n.id))].map(id=>{
   const ns=unreachable.filter(([,n])=>n.id===id).map(([,n])=>n);
@@ -645,33 +687,56 @@ function verifyLayout(){
   push(value){this.values.push(value);let i=this.values.length-1;while(i){const p=(i-1)>>1;if(this.values[p][0]<=value[0])break;this.values[i]=this.values[p];i=p;}this.values[i]=value;}
   pop(){const first=this.values[0],last=this.values.pop();if(this.values.length){let i=0;while(i*2+1<this.values.length){let j=i*2+1;if(j+1<this.values.length&&this.values[j+1][0]<this.values[j][0])j++;if(this.values[j][0]>=last[0])break;this.values[i]=this.values[j];i=j;}this.values[i]=last;}return first;}
  }
- function shortest(start,avoidHearth=false){
+ const comfortableEdges=new Map();
+ function hasComfortWidth(a,b){
+  const key=a<b?`${a}:${b}`:`${b}:${a}`;
+  if(comfortableEdges.has(key))return comfortableEdges.get(key);
+  const from=nodes.get(a),to=nodes.get(b),count=Math.ceil(Math.hypot(from.x-to.x,from.z-to.z)/.04);
+  let clear=true;
+  for(let j=0;j<=count;j++){
+   const x=from.x+(to.x-from.x)*j/count,z=from.z+(to.z-from.z)*j/count,h=elevation(x,z).height;
+   if(h>.15||mainPlanClearance([x,0,z])<.6){clear=false;break;}
+  }
+  comfortableEdges.set(key,clear);return clear;
+ }
+ function shortest(start,avoidHearth=false,comfortable=false){
   const queue=new MinHeap(),distances=new Map([[start,0]]),previous=new Map();queue.push([0,start]);
   while(queue.values.length){
    const [distance,node]=queue.pop();if(distance!==distances.get(node))continue;
    for(const [next,length]of links.get(node)){
+    if(comfortable&&!hasComfortWidth(node,next))continue;
     if(avoidHearth&&(protectedNodes.has(next)||inHearth({x:(nodes.get(node).x+nodes.get(next).x)/2,y:(nodes.get(node).y+nodes.get(next).y)/2,z:(nodes.get(node).z+nodes.get(next).z)/2})))continue;
     const d=distance+length;if(d<(distances.get(next)??Infinity)){distances.set(next,d);previous.set(next,node);queue.push([d,next]);}
    }
   }
   return {distances,previous};
  }
- const routeSources=['actor','core','rift','offering','purifier'],routeTargets=['growth','storage'];
- const routeCache=new Map([...new Set([...routeSources,...routeTargets])].map(key=>[key,shortest(anchorNodes[key])]));
+ const upperPairs=['actor','core','rift','offering','purifier'].flatMap(from=>['growth','storage'].map(to=>({from,to,upper:true})));
+ const mainPairs=[...['actor','purifier','offering','stair'].flatMap(from=>['core','rift'].map(to=>({from,to,upper:false}))),...['offering','purifier'].map(to=>({from:'stair',to,upper:false}))];
+ const routePairs=[...upperPairs,...mainPairs],routeKeys=[...new Set(routePairs.flatMap(p=>[p.from,p.to]))];
+ const routeCache=new Map(routeKeys.map(key=>[key,shortest(anchorNodes[key])]));
+ const outsideCache=new Map(routeKeys.map(key=>[key,shortest(anchorNodes[key],true)]));
+ const comfortableCache=new Map([...new Set(mainPairs.map(p=>p.from))].map(key=>[key,shortest(anchorNodes[key],true,true)]));
  const routeChecks=[];
- for(const from of routeSources){
-  const normal=routeCache.get(from),outside=shortest(anchorNodes[from],true);
-  for(const to of routeTargets){
-   const goal=anchorNodes[to],length=normal.distances.get(goal),outsideLength=outside.distances.get(goal);
-   assert(Number.isFinite(length)&&Number.isFinite(outsideLength),`${from} → ${to}: needs a route outside the seat/fire space`);
-   let bestViaHearth=Infinity;
-   for(const i of protectedNodes)bestViaHearth=Math.min(bestViaHearth,(normal.distances.get(i)??Infinity)+(routeCache.get(to).distances.get(i)??Infinity));
-   assert(bestViaHearth>length+1e-6,`${from} → ${to}: a shortest route still cuts through the seat/fire space`);
-   assert(Math.abs(outsideLength-length)<1e-6,`${from} → ${to}: normal shortest route requires the seat/fire space`);
-   const route=[];for(let i=goal;i!==undefined;i=normal.previous.get(i))route.push(i);route.reverse();
-   assert(route.some(i=>nodes.get(i).id==='west-ramp'),`${from} → ${to}: route skipped the only ramp`);
-   routeChecks.push({from,to,length,outsideLength,bestViaHearth,ramps:['west-ramp']});
+ for(const {from,to,upper} of routePairs){
+  const normal=routeCache.get(from),outside=outsideCache.get(from),goal=anchorNodes[to];
+  const length=normal.distances.get(goal),outsideLength=outside.distances.get(goal);
+  assert(Number.isFinite(length)&&Number.isFinite(outsideLength),`${from} → ${to}: needs a route outside the seat/fire space`);
+  let bestViaHearth=Infinity;
+  for(const i of protectedNodes)bestViaHearth=Math.min(bestViaHearth,(normal.distances.get(i)??Infinity)+(routeCache.get(to).distances.get(i)??Infinity));
+  const hearthDetour=bestViaHearth-length;
+  assert(hearthDetour>=step*2,`${from} → ${to}: hearth bypass wins by only ${hearthDetour.toFixed(3)}m; require a two-grid-step margin, not a sampling tie`);
+  assert(Math.abs(outsideLength-length)<1e-6,`${from} → ${to}: normal shortest route requires the seat/fire space`);
+  const route=[];for(let i=goal;i!==undefined;i=normal.previous.get(i))route.push(i);route.reverse();
+  if(upper)assert(route.some(i=>nodes.get(i).id==='west-ramp'),`${from} → ${to}: route skipped the only ramp`);
+  const record={from,to,length,outsideLength,bestViaHearth,hearthDetour,minimumHearthDetour:step*2,ramps:upper?['west-ramp']:[]};
+  if(!upper){
+   const comfortableLength=comfortableCache.get(from).distances.get(goal);
+   assert(Number.isFinite(comfortableLength),`${from} → ${to}: no 1.20m corridor outside the hearth`);
+   assert(comfortableLength<=length*1.35,`${from} → ${to}: keeping a 1.20m corridor adds more than 35% detour`);
+   Object.assign(record,{requiredCorridorWidth:1.2,comfortableLength,comfortableDetourRatio:comfortableLength/length});
   }
+  routeChecks.push(record);
  }
- return {stations:stations.map(s=>s.key),reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:seen.size===nodes.size,unreachableBySurface,footRadius:radius,samplingStep:step,maxAnchorSnap:maxSnap,anchorChecks,publicFloor:{polygon:publicFloor,samples:publicFloorSamples,allClearAndReachable:true},obstacles,ramps:rampIds,westRamp:{samples:rampNodes.length,connectedCrossingSamples:rampComponent.size,isolatedTipSamples:rampNodes.length-rampComponent.size,mainConnections:boundary.main.length,upperConnections:boundary.upper.length,mainExample:boundary.main[0],upperExample:boundary.upper[0],removalDisconnectsUpper:true},hearth:{seat:rest.position,furnace:FURNACE_POSITION,halfWidth:hearthHalfWidth,alongRange:hearthRange,protectedSamples:protectedNodes.size,seatAlignment,fireAlignment},routes:routeChecks,scope:'Art-layout geometry with oriented conservative device/remnant footprints and authored environment footprints; exact anchor foot clearance, short sampled routes and sole-ramp connectivity. Not production movement or collision.'};
+ return {stations:stations.map(s=>s.key),reachableSamples:seen.size,totalStandableSamples:nodes.size,allStandableSamplesConnected:seen.size===nodes.size,unreachableBySurface,footRadius:radius,samplingStep:step,maxAnchorSnap:maxSnap,anchorChecks,publicRoutes:{stairFoot,snap:stairSnap,directCorridors,turning:{center:stairFoot,requiredDiameter:1.8,clearDiameter:turningClearance*2},mainCorridorWidth:1.2},lowRestSupportSamples,obstacles,ramps:rampIds,westRamp:{samples:rampNodes.length,connectedCrossingSamples:rampComponent.size,isolatedTipSamples:rampNodes.length-rampComponent.size,mainConnections:boundary.main.length,upperConnections:boundary.upper.length,mainExample:boundary.main[0],upperExample:boundary.upper[0],removalDisconnectsUpper:true},hearth:{seat:rest.position,furnace:FURNACE_POSITION,halfWidth:hearthHalfWidth,alongRange:hearthRange,protectedSamples:protectedNodes.size,seatAlignment,fireAlignment},routes:routeChecks,scope:'Art-layout geometry with oriented conservative device/remnant footprints and authored environment footprints; exact anchor foot clearance, 1.50m direct western work corridors, a 1.80m landing turn, 1.20m common-route alternatives, robust hearth detour margins, complete low remnant support and sole-ramp connectivity. Not production movement or collision.'};
 }

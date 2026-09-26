@@ -1,8 +1,8 @@
 import {Model,type V3} from './model';
 
 export const REST_OBJECT_ID=8;
-export const REST_POSITION:V3=[.9,0,2.7];
-export const REST_YAW=Math.atan2(-.4,-2.3);
+export const REST_POSITION:V3=[4.9,0,5.95];
+export const REST_YAW=Math.atan2(.9,-2);
 export const REST_SEAT_HEIGHT=.48;
 export const REST_APPROACH:V3=[REST_POSITION[0]+Math.sin(REST_YAW)*1.15,0,REST_POSITION[2]+Math.cos(REST_YAW)*1.15];
 export interface RestPoint {id:number;key:string;name:string;position:V3;yaw:number;approach:V3;description:string;}
@@ -38,10 +38,10 @@ export function buildRestRemnant(m:Model):RestPoint {
     // The same lost wall continues behind the seat as a buried, interrupted
     // footing. Its broken courses dissolve into the old floor instead of
     // outlining a freestanding bench or fencing the public route.
-    m.slab([[-1.41,-.99],[-.99,-1.08],[-1.02,-1.76],[-1.15,-2.13],[-1.48,-2.02]],.033,-.075,'stone',.61);
-    m.box([-1.19,.032,-1.38],[.37,.046,.38],'cutstone',.026,.67);
-    m.rock([-1.27,.020,-1.99],[.29,.072,.35],'cutstone',7427,.72);
-    m.rock([-.97,.018,-1.78],[.17,.052,.19],'stone',7428,.62);
+    m.slab([[-1.41,-.99],[-.99,-1.08],[-1.02,-1.36],[-1.15,-1.48],[-1.48,-1.40]],.033,-.075,'stone',.61);
+    m.box([-1.19,.032,-1.24],[.37,.046,.28],'cutstone',.026,.67);
+    m.rock([-1.27,.020,-1.39],[.24,.072,.20],'cutstone',7427,.72);
+    m.rock([-.97,.018,-1.30],[.17,.052,.15],'stone',7428,.62);
     // One folded folio on the unused cool end, not on the hot iron stove.
     m.box([.76,REST_SEAT_HEIGHT+.013,-.08],[.25,.018,.28],'paper',.008,.58);
   });

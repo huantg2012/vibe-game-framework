@@ -6,8 +6,8 @@ const UPPER_PATH:V2[]=[[2.6,-6.8],[4.2,-8.05],[7.37,-7.9],[7.63,-7.66],[8.08,-7.
 const MAIN_PATH:V2[]=[[-5,-4],[-2.9,-5.08],[-2.72,-4.88],[-2.4,-5.32],[2,-7],[5.7,-6.5],[5.88,-6.24],[6.28,-6.42],[9,-5],[14,-2],[14.4,.30],[14.23,.60],[14.63,1.02],[15,4],[13.76,5.26],[13.45,5.21],[13.42,5.60],[12,7],[9.45,7.42],[9.19,7.19],[8.95,7.50],[7.9,7.6],[7.67,7.40],[7.42,7.73],[5,8],[2.43,6.93],[2.41,6.66],[2.02,6.74],[-2,5],[-3.12,3.39],[-2.92,3.11],[-3.35,2.95],[-5,1],[-4.82,.44],[-5.1,.19]];
 
 export interface WalkSurface { readonly id: string; readonly points: readonly V3[]; }
-export const FURNACE_POSITION:V3=[.5,0,.4];
-export const FURNACE_YAW=Math.atan2(.4,2.3);
+export const FURNACE_POSITION:V3=[5.8,0,3.95];
+export const FURNACE_YAW=Math.atan2(-.9,2);
 export const SUPPLY_CRATE_POSITION:V3=[10.45,0,6.2];
 export const SUPPLY_CAN_POSITION:V3=[11.25,0,5.8];
 export type LayoutObstacle =
@@ -217,7 +217,8 @@ function inhabitedRemnant(m: Model): void {
   rubblePocket(m,[-2.31,.016,4.40],[.50,.22],6,2321,.75);
   rubblePocket(m,[8.85,2.62,-2.98],[.42,.27],5,2327,.74);
   // Two worn surviving flags make a hearth footing, with the working opening
-  // directed toward the seat. The public route passes to its east.
+  // directed toward the seat. Cross-platform traffic passes behind the hearth;
+  // the west landing and both west workstations share an unobstructed forecourt.
   m.at(FURNACE_POSITION,FURNACE_YAW,0,()=>{
     m.slab([[-.96,-.65],[.77,-.68],[.96,-.46],[.94,.78],[.66,.90],[-.95,.79]],.021,-.04,'cutstone',.68);
     m.rock([.72,.028,.78],[.14,.04,.10],'stone',7633,.51);
