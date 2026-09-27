@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-27
-note: 用户选择A断裂回廊并授权正式入游戏；裂隙再收至原52%，Last Light已正式接入并完成限定内部验证，等待用户实玩审美终审。
+note: e05e9a8后的阴影/外景/太空步整改已 IMPLEMENTED / LIMITED-VERIFIED；正式入口短验与同正式渲染器动态页实帧限定通过，人审仍HUMAN-CHANGES-REQUESTED，未重做六站业务/坐下UI/Rift全回归。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -18,13 +18,19 @@ note: 用户选择A断裂回廊并授权正式入游戏；裂隙再收至原52%�
 
 旧正文路径保留迁移指针，旧网页链接保留跳转；正文引用、现状索引和阅读器已同步。范围和证据边界见[归档验证](../qa/review-archive-2026-09-21.md)。此任务不改变审查结论、游戏或挂起状态。后续可读交付按[阅读器说明](../dev/report-viewer.md)实际打开验证。
 
-## 当前工作 · 迭代30 R11（2026-09-27，Last Light正式接入）
+## 当前工作 · 迭代30 R11（2026-09-27，Last Light阴影/外景/步态整改）
 
 用户已选择A“断裂回廊”并认可新版左前裂隙，最新要求“再窄一些，然后直接做正式版本入游戏”。裂隙沿原中心线由72%进一步收至52%，同源像素画法、A布局、真实分层移动、六站业务、坐下及动态光照已接入正式`PurificationScene`。
 
-恢复入口：[集中美术设计](../art-direction.md#resume-art-rebuild) → [执行状态](../design-notes/purification-scene-art-plan.md#当前执行状态) → [生产QA](../qa/iteration-30-last-light-production.md)。正式入口为根页面`http://127.0.0.1:3027/`。比较页与Last Light查看器保留作者/历史用途，不能混称正式游戏。
+恢复入口：[集中美术设计](../art-direction.md#resume-art-rebuild) → [执行状态](../design-notes/purification-scene-art-plan.md#当前执行状态) → [本轮动态QA](../qa/iteration-30-last-light-motion.md)。正式入口为根页面`http://127.0.0.1:3027/`；[动态复现页](../art/demos/purification-motion-review/index.html)用正式Renderer/素材/step/gait，不写存档，不替代正式业务流程。原[生产QA](../qa/iteration-30-last-light-production.md)保留历史功能范围，旧比较页与作者查看器不混称正式游戏。
 
-当前 IMPLEMENTED / LIMITED-VERIFIED：构建、资源/共享Player/七组导航回归通过；真实按键完成六站、上层与断桥、坐下/起身、出击放弃归返、暂停和读档重入。GPU采用视差后的逐像素遮挡与当前密度体积透明合成。无WebGL2降级画质、长期经济、完整购买与成长组合未扩验；正式新场景审美仍待用户实玩终审。主COH-F042，关联F026/F006/F039；Rift与经济/存档机制不改，I28挂起。人审认可仍按具体版本/范围记录。完成必要检查后本地提交，不推送，排除独立`CLAUDE.md`改动。
+`e05e9a8`完成的是限定功能接入：当时构建、资源/共享Player/七组导航回归及真实六站、坐下、出击放弃归返、暂停/读档通过。用户随后明确指出**阴影、外景内容/氛围/随动和太空步**问题，当前 **HUMAN-CHANGES-REQUESTED**；不能把旧功能检查视为正式画面人审通过。
+
+本轮已实现：near固定0、middle≤3.5px/far≤6px，XZ观察140ms平滑，各层颜色/深度/光场同UV；肩灯512 cubemap随移动刷新、固定灯192阵列逐像素可见性、人物每姿态11胶囊；实际XZ世界步速1.8m/s，位移驱动12行走相位与24收步，8方向共312帧。assets/exterior/8组movement/gait/Player及构建通过，坐下起身锚点误算走路已helper专项回归。当前 **IMPLEMENTED / LIMITED-VERIFIED**。
+
+浏览器限定范围：新GPU编译运行，正式根游戏WebGL2无fallback，主菜单继续重入和W短移可用，本机短样约120fps。动态复现页实帧检查坡脚/坡中、上层书架设备、净化器、炉旁混光、核心及外景左右极端；近层不拉开、方块阴影消失、抬脚支撑收步可见；默认坡道连续超过23秒，八向连续超过30秒。它不等于正式键盘六站完整复走，本轮未重新做业务交易、坐下UI或Rift全流程；短样也不证明长时稳定性。
+
+获选A布局、52%裂隙、六站/坐下及Rift原玩法保持。无WebGL2 fallback实机、修复/购买交易、全成长/供奉组合、长期经济未扩验，I28挂起。主COH-F042，关联F026/F006/F039；新版本具体浏览器范围与人审必须单独记录。完成必要检查后本地提交，不推送，排除独立`CLAUDE.md`改动。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，用户要求美术整改）
 

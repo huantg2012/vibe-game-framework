@@ -3301,9 +3301,9 @@
     "kind": "runtime",
     "result": "partial",
     "date": "2026-09-27",
-    "revision": "731be73 + Last Light A production integration working tree",
+    "revision": "e05e9a8",
     "scope": "F006/F026/F039/F042：用户选A后，52%裂隙、断口宽桥、单西坡、六站和炉边坐下接入正式净化点。check-movement七组纯运行通过：六站/坐席接近点、核心宽桥往返、单西坡上下层往返、缺口/裂隙切口与越层限制、平地/坡地八向屏幕速度、冻结/卡帧上限、3D观察遮挡。check-player覆盖共享输入、外部呈现所有权、冻结和销毁/重入及Rift默认呈现。check-assets核对同源指纹、960×640资源、52%裂隙、56人物帧、深度与发光数据；export-layout --check、TypeScript及生产构建通过。 正式WebGL2浏览器真实WASD/E：六站全部可达并打开原面板，单西坡上层、断桥到核心；备行→进入Rift原人物→暂停→两次明确放弃→R返回→归来结算；净化点暂停→载入记录→重建。坐下1.18倍镜头、氛围文案与起身已限定验证。最新全新页无error/warn；约119–121fps为运行样点。状态 IMPLEMENTED / LIMITED-VERIFIED。",
-    "limitations": "艺术整体人审仍待用户，本条不标整体USER-PASS。西坡下行与桥返回只在纯移动回归通过，浏览器未逐条回走；运行帧率样点不是性能基准。无WebGL2 fallback未做实机验证，人物阴影为有限体积近似。未覆盖修复/购买交易、全成长/供奉组合、全随机Rift世界、人的初见与长期体验；I28长期经济/采样及原未评审项保持。浏览器详细步骤及限定范围以统一QA正文为准。",
+    "limitations": "艺术整体人审仍待用户，本条不标整体USER-PASS。西坡下行与桥返回只在纯移动回归通过，浏览器未逐条回走；运行帧率样点不是性能基准。无WebGL2 fallback未做实机验证，人物阴影为有限体积近似。未覆盖修复/购买交易、全成长/供奉组合、全随机Rift世界、人的初见与长期体验；I28长期经济/采样及原未评审项保持。浏览器详细步骤及限定范围以统一QA正文为准。 后续用户明确指出此正式版本的阴影、外景与太空步问题；本条只保留当时限定功能证据，不代表人审视觉通过，整改见COH-E-I30-LAST-LIGHT-RENDER-REPAIR。",
     "sources": [
       {
         "path": "docs/qa/iteration-30-last-light-production.md",
@@ -3367,6 +3367,148 @@
       },
       {
         "path": "docs/qa/artifacts/last-light-production/rest.png",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
+    "kind": "human",
+    "result": "fail",
+    "date": "2026-09-27",
+    "revision": "e05e9a8",
+    "scope": "用户在正式Last Light A入游戏后明确指出阴影、外景内容/氛围/随动及人物太空步存在问题，要求修复。",
+    "limitations": "针对正式动态呈现要求整改，不抹除e05e9a8的六站/出入/坐下等限定功能记录，也不撤销此前对像素画法、A构图及裂隙方向的具体认可。不能将旧功能检查视作人审画质通过。",
+    "sources": [
+      {
+        "path": "docs/design-notes/purification-scene-art-plan.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/current-iteration.md",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-27",
+    "revision": "e05e9a8 + shadow/exterior/gait repair working tree",
+    "scope": "F042/F039/F006/F026，IMPLEMENTED / LIMITED-VERIFIED：外景近层固定0，中层≤3.5px/远层≤6px，XZ观察140ms平滑，同层颜色/深度/光场/侵蚀共UV，保留平台及层色图。肩灯512 cubemap随移动刷新、固定灯192阵列逐像素可见性、人物每姿态11胶囊；XZ世界1.8m/s，1.05m步幅、12行走相位与24收步、8方向312帧。assets/exterior/8组movement/gait/Player及构建通过；坐下起身锚点误算步行已helper专项回归。新GPU编译运行，正式根游戏WebGL2无fallback，MainMenu继续重入和W短移动可用，本机短样约120fps。可复现motion-review使用正式Renderer/素材/真实step/gait且不写存档；实帧覆盖坡脚/坡中/上层书架设备/净化器/炉旁混光/核心及外景左右极端，近层不拉开、方块阴影消失、抬脚支撑收步可见；默认坡道连续超过23秒，八向连续超过30秒。",
+    "limitations": "人审仍HUMAN-CHANGES-REQUESTED；内部限定实帧不是用户画质认可。可复现验证页不等于正式键盘完整六站复走；本轮未重新做业务交易、坐下UI、Rift全流程。胶囊不等于完整人体网格光追，约120fps只是本机短样，未完成长时负载/GPU内存画像；fallback实机、全成长/供奉/随机世界、长期经济与I28不在本轮覆盖。",
+    "sources": [
+      {
+        "path": "src/art/last-light-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-shadows.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-gait.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/last-light-locomotion.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/exterior-check.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-assets.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-gait.ts",
+        "role": "test"
+      },
+      {
+        "path": "public/assets/last-light/exterior-fields.json",
+        "role": "test"
+      },
+      {
+        "path": "public/assets/last-light/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-motion.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/viewer.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-player.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/ramp-foot.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/ramp-middle.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/upper.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/purifier.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/hearth.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/exterior-left.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/exterior-core.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/step-detail.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/game.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/assets.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/exterior.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/movement.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-motion/gait.txt",
         "role": "test"
       }
     ]

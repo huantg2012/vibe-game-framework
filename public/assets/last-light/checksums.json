@@ -14,12 +14,12 @@
     "tools/last-light/export.mjs": "a0d648c6c13ff936e2d38bf14e38226534d805b286c1a1cc42ff3d87bebc0456"
   },
   "outputs": {
-    "actor-albedo.png": "92e751bf4bc757c07fe234f489b684576dd83e865c39ce29af588a7702901c0c",
-    "actor-color.png": "6d57480777dbe1ec7e0654512fa57613a16980e9e860acff89d5b6cf1a2a4461",
-    "actor-contact.png": "8c4467844e893e720cec5fb9433d4411f3ea9be529e078ddc2e688a0997764ef",
-    "actor-depth.png": "a1393fdf6a0f6a637ed34617772f78db1ea5d0ec49553a4a7e5efebbf67990e1",
-    "actor-normal.png": "b3a48b692b11517562ec09b597e79f5eac5826548b27a44f7028fe683fbd6331",
-    "actor-rough-spec.png": "e8ebf5d9d0501c70bbec614ca2a275730bd80da7dd8a8f4513f62d3c2a281c04",
+    "actor-albedo.png": "c0c0f65b1b40e97f2cb73a1de19eb0e8cd4c582751ea9291a851729662e25053",
+    "actor-color.png": "8fdd53295191071aad7668f727e9b90a22ff3cd3036e706126de36f96829a938",
+    "actor-contact.png": "d8972b66ccc9e4c5cf74c65c33d86333440641f9b04b52516823eabc554dbee7",
+    "actor-depth.png": "8e0e56ad04def7037f4940a4728e0cc14afde6b2c4e7121d3eb1f90e166a3782",
+    "actor-normal.png": "92bdf6d636f92d4c3bf73664ecc6ebe6fad03a973789b329434302be54a857b8",
+    "actor-rough-spec.png": "76d18edc50acfe09b5f197414e09569fac86058f2bc2008c8976fca2048682ba",
     "albedo.png": "e61fd53be9d48eecd3f7a3fefcceee43fe6e0de712d4ec4e2800cdabafc74e42",
     "background.png": "a7614ce8797c921a67733724a098edc48a5444d9262ec8f5e6827d41d3ae7b2d",
     "base-before-energy.png": "03212396f6f1bcf5a98aa12b72137a96c48b19d01ebdaf05dc8447763ada585d",
@@ -36,12 +36,33 @@
     "light-pollution.png": "fcd768cf75112b59b3261a4d1cfcc998807a9ae24a9ff6aeb7c3ed0d5cf50331",
     "light-purifier.png": "b1664e5409523d0ade896835cf90f2020d7fa395ab675a134f5d6385e90f3041",
     "light-storage.png": "1504308d64f9407cba08bb06892e090f0c50c77938681ae840f805454a015b66",
-    "manifest.json": "339e68d7c73346d143acfc252a510dc8e5d265dec8d8bbdd7cb6c67ca19c480a",
+    "manifest.json": "6c67c3deaa8ac3f7b68fbb0601427b0dc1893d494a813a21a88cc23ce73b64a6",
     "motion.png": "b01d84c51bfce63f5372630b4e3913369ade790405eec8917ca68a7c0f091bf5",
     "normal.png": "3e9f001abfa6f80604371a8fe2d26653020703a06775e46d9138c982e5d83ac5",
     "objects.png": "b071908ed98ffb653089d73e999a431022494710fd918b372428031390511388",
     "occluders.json": "6b322d0bcac66afc3a9fc68c2398694c8c23b472cab7da5441f3c2f0c15e1a98",
     "reference.png": "31af0319f4dfcd0ba7af764219bf234e71bcc933adae089e617f8e809f1b961c",
-    "rough-spec.png": "5b45ef27b75388e396c82f85cc0686048603092efdbc793cabbe2b9eb681aa2b"
+    "rough-spec.png": "5b45ef27b75388e396c82f85cc0686048603092efdbc793cabbe2b9eb681aa2b",
+    "exterior-fields.json": "096c4c693eb75e3e113c199098146ffb80e93a089ef77c3e4299fec20ec79e56",
+    "exterior-fields.png": "790fd61315dc5506a2a63d6df34ca3fde6b5766541fd4c2cddb8a13ea2d9ef52"
+  },
+  "actorSources": {
+    "docs/art/demos/purification-last-light/actor.ts": "0ee3e72cfccdef5f360334f69a6fbf144161faeaf7c7e19aca88679adf03a185",
+    "docs/art/demos/purification-last-light/model.ts": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
+    "docs/art/demos/purification-last-light/render.ts": "f24698f6c46521af58a198075a9aad38c5804cd01e918572fc4b4cd2395df48d",
+    "src/art/last-light-gait.ts": "c31050d179a8aa81fa7410d48ae01dabea9349c8f9ae2c72601ec788e820486e",
+    "tools/last-light/export.mjs": "e589fd6b3d7961227cb1711a3c633238dbf300b90cb5b180c8d2d61fb96f0936"
+  },
+  "exteriorSources": {
+    "tools/last-light/exterior-export.mjs": "77ca759cc386c22b3e6d47acb9eb253a159df2eae642937039c5419338b5feea",
+    "docs/art/demos/purification-forecourt-options/option-a.ts": "669993706e5d522ba1b4693bf00fbfc2cb77a5d3f912019939351b9caefb2f70",
+    "docs/art/demos/purification-forecourt-options/rift-a.ts": "a4459d0aae007cb1be53524ac5c361599c488cde02d788b6b50183e267945c33",
+    "docs/art/demos/purification-forecourt-options/shared.ts": "a819a26f935c2b6b0c36880d4da5ac23880f8237abe9552f128f6dbed1b31c83",
+    "docs/art/demos/purification-last-light/model.ts": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
+    "docs/art/demos/purification-last-light/render.ts": "f24698f6c46521af58a198075a9aad38c5804cd01e918572fc4b4cd2395df48d",
+    "docs/art/demos/purification-last-light/environment.ts": "821a68faa06d4a38c71660f7039b7cceba5aefbe64104bfb1596b7fd8c1faa7a",
+    "docs/art/demos/purification-last-light/devices.ts": "5d5d9c3bf0c2728fe6a71841ce7ac0edafd926e5ed7e4105857122861d8c24b9",
+    "docs/art/demos/purification-last-light/rest.ts": "7dc1136fe1a9b44aaf1b58d7cb20098f2523d76c01df1c1073c72103fdd83e29",
+    "docs/art/demos/purification-last-light/scene.ts": "39df57b292db557391897e4fb772ca8a65a553aca4c409d2d4b2d7825eb535b8"
   }
 }

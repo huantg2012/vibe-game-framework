@@ -1,5 +1,5 @@
 ---
-status: R11-LAST-LIGHT-PRODUCTION / IMPLEMENTED / LIMITED-VERIFIED
+status: R11-LAST-LIGHT-RENDER-REPAIR / IMPLEMENTED / LIMITED-VERIFIED / HUMAN-CHANGES-REQUESTED
 created-date: 2026-09-23
 last-modified-date: 2026-09-27
 owner: director
@@ -13,9 +13,23 @@ features: COH-F042 / COH-F026 / COH-F006 / COH-F039
 
 用户已选择 A 断裂回廊，认可左前断沿竖向裂隙，最新授权：“再窄一些，然后直接做正式版本入游戏”。裂隙相对原始中心线收至52%（上一版72%），最宽0.6864m；位置、高度、操作点、楼板断口、A回廊及其他设备保持。
 
+`e05e9a8` 已完成上述正式接入的限定功能检查。用户随后明确指出**阴影、外景内容/氛围/随动及人物太空步**问题，当前是 **HUMAN-CHANGES-REQUESTED**。旧六站、出入与坐下检查仍是当时功能证据，不能改写为正式画面获得人审通过。本轮修复继续沿用已选画法和A构图。
+
 美术原则与世界观只维护在[集中美术正文](../art-direction.md#resume-art-rebuild)。必须沿用获认可的源模型、材料、光照与固定像素采样，不用另一套简化几何冒充正式版本。旧A/C、R10及被否决版本不约束当前画法；既有人审认可不等于本次正式接入的人审通过。
 
 ## 当前执行状态
+
+- [x] 外景：近层整体固定，锁住真实接根；中层/远层连续软限幅≤3.5/6原生像素。观察只取XZ投影，140ms平滑，不随上楼高度牵扯周边建筑。
+- [x] 各层颜色、深度、光场与侵蚀同UV；独立导出字段atlas。按真实远景法线/深度恢复转面与消隐，不抬蓝背景，不改获认可的平台原色图。
+- [x] 灯影：肩灯512 cubemap随移动刷新；固定灯192阵列逐像素判断可见性；人物每姿态11胶囊投影替代单一躯干近似。
+- [x] 步态：净化点实际XZ世界步速1.8m/s；真实位移推进1.05m步幅，12行走相位、24收步，8方向共312帧，撞停后不继续踩步。
+- [x] 本轮assets、exterior、8组movement、gait、Player及构建通过；坐下/起身呈现锚点误算走路已由helper专项回归修复。
+- [x] 正式根游戏：新GPU编译/运行，WebGL2无fallback，主菜单继续重入和W短移动可用；本机短样约120fps。
+- [x] 同正式Renderer/素材/真实step/gait的可复现页完成限定实帧检查：坡脚/坡中、上层书架设备、净化器、炉旁混光、核心和外景左右极端，近层不拉开、方块阴影消失、抬脚支撑收步可见；默认坡道连续超过23秒及八向连续超过30秒。
+- [ ] 本轮未重新做正式键盘六站完整复走、业务交易、坐下UI与Rift全流程；历史功能证据与当前验证分开。
+- [ ] 修订版实尺美术/动态体验人审。
+
+以下为 `e05e9a8` 正式接入时完成的历史限定范围，不代签上述整改：
 
 - [x] 裂隙由72%再收至52%。
 - [x] `PurificationScene`切换新场景，六处原业务保留；共享Player新增显式外部呈现选项，Rift默认路径保持。
@@ -32,10 +46,14 @@ features: COH-F042 / COH-F026 / COH-F006 / COH-F039
 
 `LastLightVisual`负责Phaser资源/纹理生命周期；`LastLightRenderer`消费材质、法线和深度计算移动肩灯与人物受光，组合核心能量、污染/炉光及分层景观；`LastLightLocomotion`保有真实世界位置与所在楼层，只把投影脚底转换为原业务角色坐标。六处经济、保存及出击事务仍由原场景负责。
 
-正常入口为项目根`index.html`（本地 `http://127.0.0.1:3027/`）。原比较页与动态查看页保留为历史作者样景，不能再被称为正式入口。验证与边界统一记录在[生产QA](../qa/iteration-30-last-light-production.md)。
+本轮外景抽为`src/art/last-light-exterior.ts`，`tools/last-light/exterior-export.mjs --install`只补各层光场/材质字段，独立登记exterior来源，不篡改旧静态资源烤制来源。灯影由`last-light-shadows.ts`、步态由`last-light-gait.ts`负责；各自通过与整景体验通过分开记。
+
+正常入口为项目根`index.html`（本地 `http://127.0.0.1:3027/`）。[动态复现页](../art/demos/purification-motion-review/index.html)使用正式Renderer、素材、真实step和gait，不写存档；它用于复现动作/灯影/外景，不替代正式入口或六站业务验证。原比较页与作者查看页保留历史用途。当前整改证据见[动态QA](../qa/iteration-30-last-light-motion.md)，原接入功能范围见[生产QA](../qa/iteration-30-last-light-production.md)。
 
 ## 边界
 
 本次只把获选据点场景做正式接入；Rift低精度角色、俯视地图、战斗和既有经济/存档字段保持。I28长期供给/平衡仍挂起。残骸仅供坐下，无第七个功能站、恢复收益或等待玩法。兼容降级若启用必须可诊断，不能宣称与正常GPU画面一致。
+
+当前整改不扩验修复/购买交易、全成长/供奉组合及全随机Rift世界。11胶囊仍是人物体积近似，不称完整人体网格光追；fallback未实机覆盖。外景atlas磁盘约2MB，解码单份约80.7MB，本轮约120fps为本机短时样点，不是性能基准或长期稳定性证明，GPU内存画像仍未完成。
 
 必要检查后依持续授权本地提交，不推送，不纳入独立`CLAUDE.md`改动。

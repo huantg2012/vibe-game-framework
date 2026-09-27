@@ -48,13 +48,11 @@ export class LastLightFallback {
     this.energyBounds = { x: left, y: top, width: Math.max(0, right - left), height: Math.max(0, bottom - top) };
   }
   draw(state: LastLightRenderState): void {
-    const pose = state.resting ? 'sit' : state.walking ? 'walk' : 'idle';
-    const phase = Math.floor(state.seconds * (state.walking ? 8 : 2));
+    const pose=state.gaitPose,phase=state.gaitFrame;
     const candidates = this.pack.frames.filter(frame => frame.pose === pose);
     let score = Infinity, selected = candidates[0]!;
     for (const frame of candidates) {
-      const count = candidates.filter(f => f.yaw === frame.yaw).length;
-      const rank = Math.abs(Math.atan2(Math.sin(frame.yaw - state.yaw), Math.cos(frame.yaw - state.yaw))) * 100 + Math.abs(frame.phase - phase % Math.max(1, count));
+      const rank = Math.abs(Math.atan2(Math.sin(frame.yaw - state.yaw), Math.cos(frame.yaw - state.yaw))) * 100 + Math.abs(frame.phase - phase);
       if (rank < score) { score = rank; selected = frame; }
     }
     this.current = selected;

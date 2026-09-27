@@ -1,5 +1,7 @@
 # I30 Last Light 正式接入验证
 
+> 后续用户指出阴影、外景与太空步问题；本页保留 e05e9a8 接入时的功能检查，不代表画质通过。当前修复和新版 312 帧/GPU 管线验证见[动态整改 QA](iteration-30-last-light-motion.md)。
+
 2026-09-27 · **IMPLEMENTED / LIMITED-VERIFIED**。主 COH-F042，关联 F026/F006/F039。既有母版认可不自动等于本次正式游戏的人审通过。
 
 ## 授权与实现

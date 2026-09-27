@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { LastLightRenderer, type LastLightFrame, type LastLightImage, type LastLightLight,
   type LastLightRenderImages, type LastLightRenderState } from '../art/last-light-renderer';
 import { LastLightFallback } from '../art/last-light-fallback';
+import { LastLightGait } from '../art/last-light-gait';
 import type { LastLightCamera, LightVector } from '../art/last-light-spatial';
 
 /** Public present-tense operating state. Never accepts hidden forecasts. */
@@ -22,6 +23,7 @@ interface PackedFrame {
   pose: 'idle' | 'walk' | 'sit'; direction: number; frame: number; yaw: number;
   rect: { x: number; y: number; width: number; height: number };
   anchor: readonly [number, number]; lamp: LightVector;
+  shadowCapsules: readonly (readonly number[])[];
 }
 interface RuntimeManifest {
   version: number; canvas: { width: number; height: number }; camera: LastLightCamera;
@@ -38,7 +40,7 @@ const IMAGE_FILES = [
   'base-before-energy.png', 'background.png', 'haven.png', 'albedo.png', 'normal.png', 'rough-spec.png',
   'depth.png', 'energy-depth.png', 'reference.png', 'motion.png', 'objects.png', 'core-energy.png', 'light-pollution.png',
   'light-core.png', 'light-storage.png', 'light-purifier.png', 'light-furnace.png', 'exterior-far.png', 'exterior-middle.png', 'exterior-near.png',
-  'exterior-depth.png', 'actor-color.png', 'actor-albedo.png', 'actor-normal.png', 'actor-rough-spec.png', 'actor-depth.png',
+  'exterior-depth.png', 'exterior-fields.png', 'actor-color.png', 'actor-albedo.png', 'actor-normal.png', 'actor-rough-spec.png', 'actor-depth.png',
 ] as const;
 
 /** PNG data includes radiance at alpha zero. HTML image/canvas decoding can
@@ -77,8 +79,9 @@ export class LastLightVisual {
   private readonly renderState: LastLightRenderState = {
     seconds: 0, world: [0, 0, 0], yaw: 0, walking: false, resting: false,
     health: [1, 1, 1], charge: 0, growth: 0, thicken: 0, pulses: this.pulses,
-    reducedMotion: false,
+    reducedMotion: false, gaitPose: 'idle', gaitFrame: 0,
   };
+  private readonly gait = new LastLightGait();
   private elapsed = 0;
   private disposed = false;
 
@@ -102,13 +105,13 @@ export class LastLightVisual {
     const images: LastLightRenderImages = {
       scene: image(t.haven), background: image(t.background), far: exterior('far'), middle: exterior('middle'), near: exterior('near'),
       pollution: image(t.pollution), coreLight: image(t.coreLight), storageLight: image(t.storageLight), purifierLight: image(t.purifierLight), furnace: image(t.furnace),
-      motion: image(t.motion), depth: image(t.depth), volumeDepth: image(t.volumeDepth), exteriorDepth: image(t.exteriorDepth), energy: image(t.coreEnergy),
+      motion: image(t.motion), depth: image(t.depth), volumeDepth: image(t.volumeDepth), exteriorDepth: image(t.exteriorDepth), exteriorFields: image(t.exteriorFields??'exterior-fields.png'), energy: image(t.coreEnergy),
       normal: image(t.normal), albedo: image(t.albedo), rough: image(t.roughSpec),
       actorColor: image(a.albedo), actorNormal: image(a.normal), actorDepth: image(a.depth), actorRough: image(a.roughSpec),
     };
     const occluders = scene.cache.json.get(KEY + 'occluders') as { triangles: number[] } | number[];
     const frames: LastLightFrame[] = manifest.actor.frames.map(frame => ({
-      ...frame.rect, anchor: frame.anchor, yaw: frame.yaw, pose: frame.pose, phase: frame.frame, lamp: frame.lamp,
+      ...frame.rect, anchor: frame.anchor, yaw: frame.yaw, pose: frame.pose, phase: frame.frame, lamp: frame.lamp, shadowCapsules: frame.shadowCapsules,
     }));
     this.pack = { camera: manifest.camera, frames, lights: manifest.lights,
       occluders: Array.isArray(occluders) ? occluders : occluders.triangles,
@@ -138,7 +141,9 @@ export class LastLightVisual {
     for (let i = 0; i < this.pulses.length; i++) this.pulses[i] = Math.max(0, this.pulses[i]! - step * .75);
     const s = this.renderState;
     s.seconds = this.elapsed; s.world = [state.worldPlayer.x, state.worldPlayer.y, state.worldPlayer.z];
-    s.yaw = state.facingYaw; s.walking = state.walking; s.resting = state.resting;
+    const gait=this.gait.update(s.world,step,state.resting);
+    s.gaitPose=gait.pose; s.gaitFrame=gait.frame;
+    s.yaw = state.facingYaw; s.walking = gait.moving; s.resting = state.resting;
     s.health = [clamp(state.moduleHealth.core), clamp(state.moduleHealth.storage), clamp(state.moduleHealth.purifier)];
     s.charge = clamp(state.offeringCharge); s.growth = Object.values(state.growthLevels).reduce((sum, level) => sum + Math.max(0, level), 0);
     s.thicken = Math.max(0, state.thickenLevel); s.reducedMotion = this.reducedMotion.matches;

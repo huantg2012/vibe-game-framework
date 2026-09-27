@@ -6,7 +6,7 @@ import {
  type WorldPoint,type ChamberDevice,type LastLightRoute,
 } from '../../src/systems/last-light-layout.ts';
 import {
- createLastLightMovementState,stepLastLightMovement,canStandLastLight,
+ createLastLightMovementState,stepLastLightMovement,canStandLastLight,lastLightProjectedWalkingSpeed,
  canInteractLastLight,getLastLightObservation,isLastLightSightClear,
  type LastLightMovementState,
 } from '../../src/systems/last-light-locomotion.ts';
@@ -70,6 +70,12 @@ for(const input of [{x:1,y:0},{x:0,y:1},{x:-1,y:0},{x:0,y:-1},{x:1,y:1},{x:-1,y:
 const frozen=createLastLightMovementState(),before={...frozen};stepLastLightMovement(frozen,{x:0,y:0},100,speed);assert.deepEqual(frozen,before);stepLastLightMovement(frozen,{x:NaN,y:1},100,speed);assert.deepEqual(frozen,before);
 const one=createLastLightMovementState(),long=createLastLightMovementState();stepLastLightMovement(one,{x:1,y:0},100,speed);stepLastLightMovement(long,{x:1,y:0},2000,speed);assert.deepEqual(long,one);
 results.push('normalized eight-way screen-relative speed on floor and slope, zero/invalid input freeze, 100ms stall cap');
+for(const route of ['main','west-ramp'] as const)for(const input of [{x:1,y:0},{x:0,y:1},{x:1,y:1},{x:-1,y:1}]){
+ const s=route==='main'?stateAt(0,0):stateAt(2.75,-2.25,route),before={...s};
+ const pixels=lastLightProjectedWalkingSpeed(s,input,1.8);stepLastLightMovement(s,input,100,pixels);
+ assert(Math.abs(Math.hypot(s.x-before.x,s.z-before.z)-.18)<.0002,'world walking pace must match gait across projection/slope');
+}
+results.push('production world walking speed is 1.8m/s across input axes and ramp, independent of foreshortening');
 
 for(const key of ['core','storage','purifier'] as const){const state=createLastLightMovementState(CHAMBER_DEVICE_WORLD_ANCHORS[key],CHAMBER_DEVICE_FLOORS[key]);const observation=getLastLightObservation(state,key.toUpperCase() as 'CORE'|'STORAGE'|'PURIFIER');assert(observation.visible,`${key}: approach can observe own device`);assert(observation.distance<58,`${key}: observation distance native pixels`);}
 assert(!isLastLightSightClear({x:10,y:1,z:-4},{x:10,y:3.5,z:-4}),'upper floor physically occludes vertical sight');

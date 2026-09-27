@@ -1,0 +1,5 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Last Light · 连续运动检查</title>
+<style>body{margin:0;background:#080a0a;color:#aaa;font:14px/1.6 monospace}header{padding:12px 24px;display:flex;gap:16px;align-items:center}button,select{color:#ccc;background:#1b201e;border:1px solid #414a46;padding:7px 12px}main{width:960px;margin:0 auto}canvas{display:block;image-rendering:pixelated}#detail{border-top:1px solid #27312d}output{font-size:12px}footer{padding:8px 24px}</style>
+<header><select id="case"><option value="ramp">坡脚阴影与近墙行走</option><option value="eight">八向落足与走停</option><option value="exterior">外景全程随动</option><option value="core">核心受光与人影</option><option value="purifier">净化器与裂隙</option><option value="upper">上层柱墙与设备</option><option value="hearth">炉旁混合光</option></select><button id="play">暂停</button><button id="restart">从头</button><label>时间 <input id="seek" type="range" min="0" max="32" step="0.016" value="0"></label><output id="state">加载正式资源…</output></header>
+<main id="scene"></main><footer>直接使用正式 GPU 渲染器、正式动作图集与真实移动代码。拖动时间检查稳定站位，播放检查连续随动。此验证页不写游戏存档。</footer>
+<script type="module" src="./viewer.ts"></script></html>

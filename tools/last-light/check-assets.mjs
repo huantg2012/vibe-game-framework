@@ -9,7 +9,18 @@ const checksums=JSON.parse(await fs.readFile(path.join(dir,'checksums.json'),'ut
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 assert.equal(manifest.status,'complete');assert.equal(manifest.source.riftOpeningScale,.52);
 assert.deepEqual(manifest.canvas,{width:960,height:640});
-for(const [file,value] of Object.entries(checksums.sources))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale source ${file}`);
+// Scene provenance is the recipe used for the last scene bake. An actor-only
+// bake must preserve it, even when the actor/tool source has since changed.
+const actorOnlySourceChanges=new Set(['docs/art/demos/purification-last-light/actor.ts','src/art/last-light-gait.ts','tools/last-light/export.mjs']);
+assert.deepEqual(checksums.actorSources,manifest.actor.sourceHashes,'Actor provenance must agree with manifest');
+for(const [file,value] of Object.entries(checksums.actorSources??{}))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale actor source ${file}`);
+assert.ok(manifest.exteriorFields,'Per-layer exterior light/material contract missing');
+assert.deepEqual(checksums.exteriorSources,manifest.exteriorFields.sourceHashes,'Exterior provenance must agree with manifest');
+for(const [file,value] of Object.entries(checksums.exteriorSources??{}))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale exterior source ${file}`);
+for(const [file,value] of Object.entries(checksums.sources)){
+ if(actorOnlySourceChanges.has(file)&&checksums.actorSources?.[file])continue;
+ assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale scene source ${file}`);
+}
 for(const [file,value] of Object.entries(checksums.outputs))assert.equal(hash(await fs.readFile(path.join(dir,file))),value,`Stale output ${file}`);
 const required=new Set([...Object.values(manifest.textures),...Object.values(manifest.actor.textures),...manifest.exteriorLayers.map(x=>x.color)]);
 const images=new Map();
@@ -19,6 +30,14 @@ for(const name of ['base','haven','background','normal','albedo','roughSpec','de
  const {info}=pixels(name);assert.equal(info.width,960,name);assert.equal(info.height,640,name);
 }
 for(const layer of manifest.exteriorLayers){const {info}=images.get(layer.color);assert.equal(info.width,layer.width);assert.equal(info.height,layer.height);assert.deepEqual(layer.offset,[-32,-32]);}
+const exteriorMetadata=JSON.parse(await fs.readFile(path.join(dir,manifest.exteriorFields.metadata),'utf8'));
+assert.deepEqual(exteriorMetadata.sourceHashes,manifest.exteriorFields.sourceHashes);
+assert.deepEqual(exteriorMetadata.columns,['far','middle','near','haven']);
+assert.deepEqual(exteriorMetadata.rows,['otherPollution','core','storage','purifier','furnace','motion','normal']);
+assert.equal(manifest.textures.exteriorFields,exteriorMetadata.texture);
+const exteriorPixels=pixels('exteriorFields');
+assert.equal(exteriorPixels.info.width,4096);assert.equal(exteriorPixels.info.height,4928);
+assert.equal(hash(await fs.readFile(path.join(dir,exteriorMetadata.texture))),exteriorMetadata.textureHash);
 const ids=new Set(),objects=pixels('objects').data,depth=pixels('depth').data,normal=pixels('normal').data;
 let coverage=0;
 for(let i=0;i<objects.length;i+=4){ids.add(objects[i]);if(depth[i+3]){coverage++;assert.equal(normal[i+3],255,'Opaque pixel lost its normal');assert.ok(depth[i]+depth[i+1]>0);}}
@@ -33,9 +52,13 @@ const energy=pixels('coreEnergy');assert.equal(energy.info.width,3840);assert.eq
 let additiveHalo=0;for(let i=0;i<energy.data.length;i+=4)if(!energy.data[i+3]&&(energy.data[i]||energy.data[i+1]||energy.data[i+2]))additiveHalo++;
 assert.ok(additiveHalo>100,'Core radiance at zero alpha must survive export');
 const a=manifest.actor,atlas=images.get(a.textures.color),ad=images.get(a.textures.depth),an=images.get(a.textures.normal);
-assert.equal(a.frames.length,56);assert.equal(atlas.info.width,512);assert.equal(atlas.info.height,560);
+assert.equal(a.gait.cycleFrames,12);assert.equal(a.gait.settleStages,2);assert.equal(a.gait.strideMetres,1.05);
+const walkingRows=a.gait.cycleFrames*(1+a.gait.settleStages),actorRows=2+walkingRows+1;
+assert.equal(a.frames.length,actorRows*8);assert.equal(atlas.info.width,512);assert.equal(atlas.info.height,actorRows*80);
 const frameChecks=[];
 for(const frame of a.frames){
+ assert.equal(frame.shadowCapsules.length,11,`Incomplete pose shadow rig ${frame.pose}/${frame.direction}/${frame.frame}`);
+ for(const capsule of frame.shadowCapsules){assert.equal(capsule.length,7);assert.ok(capsule.every(Number.isFinite));assert.ok(capsule[6]>.03&&capsule[6]<.3);}
  const {x,y,width,height}=frame.rect;const bytes=[];let n=0;
  for(let yy=0;yy<height;yy++)for(let xx=0;xx<width;xx++){
   const offset=((y+yy)*a.width+x+xx)*4;
@@ -46,8 +69,9 @@ for(const frame of a.frames){
  frameChecks.push({pose:frame.pose,direction:frame.direction,frame:frame.frame,pixels:n,hash:hash(Buffer.from(bytes))});
 }
 for(let direction=0;direction<8;direction++){
- const gait=frameChecks.filter(f=>f.direction===direction&&f.pose==='walk');assert.equal(gait.length,4);
- assert.ok(new Set(gait.map(f=>f.hash)).size>=3,`Missing real walk poses for direction ${direction}`);
+ const gait=frameChecks.filter(f=>f.direction===direction&&f.pose==='walk');assert.equal(gait.length,walkingRows);
+ const stride=gait.filter(f=>f.frame<a.gait.cycleFrames);
+ assert.equal(new Set(stride.map(f=>f.hash)).size,a.gait.cycleFrames,`Collapsed walk poses for direction ${direction}`);
  assert.equal(frameChecks.filter(f=>f.direction===direction&&f.pose==='sit').length,1);
  const idle=frameChecks.filter(f=>f.direction===direction&&f.pose==='idle');assert.equal(new Set(idle.map(f=>f.hash)).size,2,`Idle breathing collapsed for direction ${direction}`);
 }

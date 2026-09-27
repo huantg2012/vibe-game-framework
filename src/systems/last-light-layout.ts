@@ -15,7 +15,8 @@ export const CHAMBER_GROUND_OFFSET_Y=10;
 export const CHAMBER_INTERACTION_RADIUS=24;
 export const LAST_LIGHT_FOOT_RADIUS=LAST_LIGHT_DATA.footRadius;
 export const LAST_LIGHT_MAX_STEP_MS=100;
-export const LAST_LIGHT_HUB_SPEED_MULTIPLIER=1.5;
+/** World metres per second: fixed screen speed made depth-axis travel sprint. */
+export const LAST_LIGHT_WORLD_WALK_SPEED=1.8;
 export const LAST_LIGHT_CAMERA=LAST_LIGHT_DATA.camera;
 const direction=LAST_LIGHT_CAMERA.direction;
 const norm=Math.hypot(...direction),horizontal=Math.hypot(direction[0]!,direction[2]!);

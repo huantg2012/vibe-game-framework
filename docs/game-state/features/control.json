@@ -3,7 +3,7 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "正式净化点改用 Last Light A 源几何生成的米制分层移动：主层真实断口保留宽桥、单西坡连接上层，0.22m 圆足碰撞及局部逆投影保持屏幕相对八向操作。Player 继续拥有输入与冻结；Rift 原俯视移动不变。 正常入口真实键盘已到六站、沿单西坡上层和宽桥到核心；本轮为 IMPLEMENTED / LIMITED-VERIFIED。",
+    "summary": "Last Light A真实断口宽桥、单西坡和分层足迹保持；净化点按实际XZ世界1.8m/s行走并以真实位移推进步态、停止收步。8组纯移动/gait检查、正式W短移及同正式step的动态验证页限定检查通过。IMPLEMENTED / LIMITED-VERIFIED；Rift移动不变，人审仍HUMAN-CHANGES-REQUESTED。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -105,6 +105,26 @@
       {
         "path": "tools/last-light/check-player.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/art/last-light-gait.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-gait.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-motion.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/viewer.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -118,12 +138,14 @@
       "COH-E-I30-R8-ROUTES",
       "COH-E-I30-R8-INTEGRATION",
       "COH-E-I30-R9-GEOMETRY",
-      "COH-E-I30-LAST-LIGHT-PRODUCTION"
+      "COH-E-I30-LAST-LIGHT-PRODUCTION",
+      "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
+      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR"
     ],
     "unknowns": [
-      "7组纯移动检查通过，包含桥/西坡双向、六站与休息接近点、缺口边沿、八向速度及观察遮挡；浏览器真实WASD已覆盖六站、西坡上行、桥到核心。下坡和桥返回未在浏览器逐条回走，仅有纯回归覆盖。",
-      "本轮验证是限定路线与生命周期检查，不证明人的初见导航、所有边缝手感或长期往返体验；具体范围见 docs/qa/iteration-30-last-light-production.md。",
-      "I28 长期体验与平衡仍挂起，原 Rift 全量世界组合未重验。"
+      "e05e9a8的六站与路线记录为历史功能证据，不能视为当前人物动作或整体画质人审通过。",
+      "本轮正式根游戏只确认WebGL2主菜单继续重入与W短移。动态验证页使用真实step与gait，覆盖坡脚/坡中/上层实帧、默认坡道连续超过23秒和八向连续超过30秒；不等于正式键盘完整六站复走。",
+      "坐下/起身呈现锚点被误算为步行的helper问题已专项回归修复；坐下UI本轮未复走。人的初见导航、全边缝手感与长期往返体验未完成，I28及原Rift全世界组合边界保持。"
     ]
   },
   {

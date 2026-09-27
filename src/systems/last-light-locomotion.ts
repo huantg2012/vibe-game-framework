@@ -1,8 +1,9 @@
 import type {Player} from '../entities/player';
+import {GAME_CONSTANTS} from '../config/constants';
 import {LAST_LIGHT_OCCLUSION_BASE64} from '../generated/last-light-layout';
 import {
  LAST_LIGHT_WALK,LAST_LIGHT_OBSTACLES,LAST_LIGHT_STATIONS,LAST_LIGHT_SPAWN,LAST_LIGHT_FOOT_RADIUS,
- LAST_LIGHT_CAMERA,LAST_LIGHT_BASIS,LAST_LIGHT_MAX_STEP_MS,LAST_LIGHT_HUB_SPEED_MULTIPLIER,
+ LAST_LIGHT_CAMERA,LAST_LIGHT_BASIS,LAST_LIGHT_MAX_STEP_MS,LAST_LIGHT_WORLD_WALK_SPEED,
  CHAMBER_GROUND_OFFSET_Y,CHAMBER_INTERACTION_RADIUS,CHAMBER_DEVICE_WORLD_ANCHORS,CHAMBER_DEVICE_FLOORS,REST_WORLD_APPROACH,
  projectLastLight,sampleLastLightSurface,worldPoint,
  type WorldPoint,type ChamberPoint,type ChamberDevice,type LastLightRoute,
@@ -106,6 +107,14 @@ export function lastLightWorldDelta(route:LastLightRoute,p:WorldPoint,sx:number,
  const a=S*b.right[0],c=S*b.right[2],d=-S*(b.up[0]+b.up[1]*(h?.dx??0)),e=-S*(b.up[2]+b.up[1]*(h?.dz??0));
  const det=a*e-c*d;return{x:(sx*e-c*sy)/det,z:(a*sy-sx*d)/det};
 }
+/** Keep keyboard direction screen-relative while giving the body a consistent
+ * physical walking speed. Perspective foreshortening must not become a sprint. */
+export function lastLightProjectedWalkingSpeed(state:Readonly<LastLightMovementState>,input:ChamberPoint,worldSpeed:number):number{
+ const length=Math.hypot(input.x,input.y);
+ if(!Number.isFinite(length)||length<EPS||!Number.isFinite(worldSpeed)||worldSpeed<=0)return 0;
+ const world=lastLightWorldDelta(state.route,state,input.x/length,input.y/length);
+ return worldSpeed/Math.max(EPS,Math.hypot(world.x,world.z));
+}
 function slideCandidate(state:LastLightMovementState,dx:number,dz:number):LastLightMovementState|null{
  let best:LastLightMovementState|null=null,bestProgress=0;
  const edges=[...BOUNDARIES[state.route]];
@@ -201,7 +210,9 @@ export class LastLightLocomotion{
   prepareSight();
  }
  update(deltaMs:number):void{
-  stepLastLightMovement(this.state,this.player.getMovementInput(),deltaMs,this.player.getEffectiveSpeed()*LAST_LIGHT_HUB_SPEED_MULTIPLIER);
+  const input=this.player.getMovementInput();
+  const speed=lastLightProjectedWalkingSpeed(this.state,input,LAST_LIGHT_WORLD_WALK_SPEED*this.player.getEffectiveSpeed()/GAME_CONSTANTS.PLAYER.SPEED);
+  stepLastLightMovement(this.state,input,deltaMs,speed);
   const feet=projectLastLight(this.state);this.player.applyConstrainedMovement(feet.x,feet.y-CHAMBER_GROUND_OFFSET_Y);
  }
  getRoute():LastLightRoute{return this.state.route;}

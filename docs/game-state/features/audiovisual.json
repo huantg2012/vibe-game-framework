@@ -3,7 +3,7 @@
     "id": "COH-F039",
     "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "正式净化点采用 Last Light 同身份人物：护帽、背包与侧肩灯，8向共56帧静立/行走/坐姿图集；场景依据真实世界脚点与朝向合成人物、遮挡和受光。共享 Player 保持输入、业务位置与冻结；Rift 默认原像素、持具和灯晕呈现不变。 正式浏览器已验证新净化点人物、进入Rift后原人物以及归来/载入重建；状态 IMPLEMENTED / LIMITED-VERIFIED。",
+    "summary": "针对e05e9a8太空步，净化点改为1.8m/s实际XZ位移驱动1.05m步幅，12行走相位与24收步，8方向共312帧；每姿态11胶囊投影。CPU及同正式Renderer/step/gait验证页已限定检查抬脚、支撑与收步，正式W短移可用。IMPLEMENTED / LIMITED-VERIFIED；Rift原低精度呈现保持，人审仍HUMAN-CHANGES-REQUESTED。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -130,6 +130,46 @@
       {
         "path": "tools/last-light/check-player.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/art/last-light-gait.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-gait.ts",
+        "role": "test"
+      },
+      {
+        "path": "src/art/last-light-shadows.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/exterior-export.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/exterior-check.mjs",
+        "role": "test"
+      },
+      {
+        "path": "public/assets/last-light/exterior-fields.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-motion.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/viewer.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -147,12 +187,14 @@
       "COH-E-I30-R8-TECHNICAL",
       "COH-E-I30-R9-GEOMETRY",
       "COH-E-I30-LAST-LIGHT-LIVING",
-      "COH-E-I30-LAST-LIGHT-PRODUCTION"
+      "COH-E-I30-LAST-LIGHT-PRODUCTION",
+      "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
+      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR"
     ],
     "unknowns": [
-      "check-player隔离运行覆盖输入冻结、外部呈现所有权和销毁/重入；浏览器已完成Rift原人物、归来与净化点载入重建。未逐帧验所有武器、受击动作或全部失败流程。",
-      "角色图集56帧与8方向独立动作已过资源检查；同身份一致性、实尺观感和动态品质待用户体验，本轮限定验证不是整体美术人审通过。",
-      "净化点人物投影采用有限体积近似，不能称完整实时三角形阴影；无WebGL2兼容路径未做实机验证，必须标明降级质量。"
+      "新验证页实帧显示抬脚、支撑与收步，默认坡道连续超过23秒，八向走停连续超过30秒；这是可复现内部动态检查，不是用户对足底接触、动作重量或实尺画风的认可。",
+      "312帧、真实位移推进、停步相位、8组移动及Player检查通过，坐下/起身锚点误算步行已有helper专项回归；本轮没有重做正式坐下UI、六站键盘全程或所有武器/受击回归。",
+      "人物阴影由每姿态11个胶囊近似，不等于完整人体三角网格光追；无WebGL2 fallback、Rift全量动作和长期体验仍未覆盖。"
     ]
   },
   {
@@ -263,7 +305,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "用户已选 A 断裂回廊并认可左前断沿裂隙方向；裂口进一步收至原始宽度52%（最宽0.6864m），现由同源材质/深度/动态资源接入正式净化点。保留核心能量体、单西坡、真实断口宽桥、六站及炉边坐席；正式角色移动驱动画面，源资源/导航/Player检查与构建通过；WebGL2正式浏览器已限定验证六站、备行/Rift归来、载入重建及坐下。状态 IMPLEMENTED / LIMITED-VERIFIED，当前动态艺术品质仍待用户。",
+    "summary": "e05e9a8后用户要求阴影/外景/太空步整改。固定近景接根、受限中远景与同UV光场/深度、移动肩灯和固定灯逐像素遮挡、姿态投影已实现；A构图、52%裂隙与平台原色图保持。新GPU和正式入口可用；同正式渲染器验证页实帧见近层不拉开、方块阴影消失，状态IMPLEMENTED / LIMITED-VERIFIED，人审仍HUMAN-CHANGES-REQUESTED。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -945,6 +987,46 @@
       {
         "path": "tools/last-light/check-player.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/art/last-light-gait.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-gait.ts",
+        "role": "test"
+      },
+      {
+        "path": "src/art/last-light-shadows.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/exterior-export.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/exterior-check.mjs",
+        "role": "test"
+      },
+      {
+        "path": "public/assets/last-light/exterior-fields.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-motion.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/purification-motion-review/viewer.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1019,14 +1101,16 @@
       "COH-E-I30-FORECOURT-OPTIONS-R2",
       "COH-E-I30-FORECOURT-A-RIFT",
       "COH-E-I30-RIFT-MOUTH",
-      "COH-E-I30-LAST-LIGHT-PRODUCTION"
+      "COH-E-I30-LAST-LIGHT-PRODUCTION",
+      "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
+      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR"
     ],
     "unknowns": [
-      "A方向与5445d15裂隙位置/形态获用户认可；52%收口与本次正式动态呈现仍待实尺人审，不将方向认可扩张为整体质量通过。",
-      "WebGL2正式入口六站、坐下、Rift明确放弃归来和载入重建已限定验证；最新全新页无error/warn，约119–121fps只是在场运行样点，不是性能基准或长期稳定性证明。",
-      "西坡下行和桥返回仅有纯移动回归覆盖，浏览器未逐条回走；历史动线问题和否决记录保留，初见空间理解、长期往返效率及外景节奏仍待体验。",
-      "人物实时阴影采用有限体积近似；无WebGL2 fallback未做实机验证，兼容呈现不得冒充正常艺术质量。",
-      "修复/购买交易、全成长/供奉组合、全随机Rift世界、专门音频及既有未审查项未在本轮重验；I28长期采样/经济和动态审美仍保留边界。"
+      "获赞原画方向、A布局和裂隙形态不构成生产画面认可；本轮内部动态复核不代替用户审美终审。",
+      "外景near=0、middle≤3.5px、far≤6px，XZ观察140ms平滑，各层颜色/深度/光场/侵蚀共UV。CPU原点对照平台/近景/空背景0改动；验证页左右极端实帧近层不拉开。空气递进与动态节奏仍待用户体验。",
+      "肩灯512 cubemap随移动刷新，固定灯192阵列逐像素可见性，每姿态11胶囊。新GPU已编译运行，实帧覆盖坡脚/坡中、上层书架设备、净化器、炉旁混光、核心及外景极端，方块阴影消失；不宣称完整人体网格光追。",
+      "正式根游戏WebGL2无fallback、主菜单继续重入与W短移通过，本机短样约120fps；不是性能基准或长时稳定性证明。外景atlas单份解码约80.7MB，未做完整GPU内存画像或fallback实机验证。",
+      "同正式Renderer/素材/step/gait的可复现页不写存档，不等于正式键盘完整六站复走；本轮未重验业务交易、坐下UI、Rift全流程、全成长/供奉/随机世界、专门音频、无障碍和长期体验。I28及原未评审项保持。"
     ]
   }
 ]

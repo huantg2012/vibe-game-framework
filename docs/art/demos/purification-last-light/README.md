@@ -15,4 +15,4 @@ node --import tsx docs/art/demos/purification-last-light/check.mjs --write
 
 `assets/` 保存整景、站/坐光场与掩码、模型、核心密度图集和参数。导出与验证状态只查[统一QA](../../../qa/iteration-30-last-light-living.md)及[证据目录](../../../qa/artifacts/purification-hearth-circulation-2026-09-26/)；旧结果不证明新位置通过，连通数字也不替代舒适通行。
 
-这是动态艺术样景，尚未接正式游戏。阴影几何已烘焙，深度数据不包含被遮挡内容；不宣称实时行走、游戏交互、经济或人物驱动视差已接入。艺术修订待人审。集中方向与当前步骤分别见 `docs/art-direction.md#resume-art-rebuild`、`docs/design-notes/purification-scene-art-plan.md`。
+本目录入口保留作者动态艺术样景，用于离线制作；正式游戏现已由根入口接入 Last Light A。正式版的 GPU 灯影、分层字段与路程步态见[动态整改 QA](../../../qa/iteration-30-last-light-motion.md)及[连续运动检查](../purification-motion-review/index.html)。作者 viewer 的旧实现不作为正式运行效果。艺术修订仍待人审。集中方向与当前步骤分别见 `docs/art-direction.md#resume-art-rebuild`、`docs/design-notes/purification-scene-art-plan.md`。
