@@ -23,7 +23,7 @@ function wound(m:Model):void {
     // height, twist, position and the building fracture unchanged.
     const center=(left[i]!+right[i]!)*.5;
     const edge=side<0?left[i]!:side>0?right[i]!:center;
-    const x=center+(edge-center)*.72;
+    const x=center+(edge-center)*.52;
     // The tear rolls toward the camera above the stone. Its broad opening is
     // visible without turning the floor break away from the building's edge.
     return [x,y[i]!,bend[i]!+depth-x*Math.max(0,Math.min(.64,y[i]!*.85))];

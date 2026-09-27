@@ -49,6 +49,9 @@ export interface PlayerConfig {
   readonly movementMode?: 'top-down' | 'constrained';
   /** Scene supplies a clipped floor receiver; lamp sprite and dust remain unchanged. */
   readonly externalLampGround?: boolean;
+  /** A scene may own the complete actor presentation while retaining shared
+   * input, facing, speed modifiers, save state and constrained movement. */
+  readonly externalPresentation?: boolean;
 }
 
 
@@ -107,7 +110,7 @@ export class Player {
   private readonly speedModifiers = new Map<string, number>();
   private speedMultiplier = 1;
   private burdenSpeedFactor = 1;
-  private weaponRig!: PlayerWeaponRig;
+  private weaponRig: PlayerWeaponRig | null = null;
   private weaponPose: Readonly<WeaponAttackPose> | null = null;
 
   private facingAngle = 0;
@@ -117,9 +120,10 @@ export class Player {
   private lastDeltaMs = 16;
   private motionElapsedMs = 0;
   private movementMode: 'top-down' | 'constrained' = 'top-down';
+  private externalPresentation = false;
   private shownFacing: Facing4 = 'right';
-  private lag!: FacingLagGhost;
-  private aura!: PlayerLampAura;
+  private lag: FacingLagGhost | null = null;
+  private aura: PlayerLampAura | null = null;
   private readonly lampLocal = {
     up: { ...DENSE_PLAYER_LAMP_LOCAL.up }, down: { ...DENSE_PLAYER_LAMP_LOCAL.down },
     left: { ...DENSE_PLAYER_LAMP_LOCAL.left }, right: { ...DENSE_PLAYER_LAMP_LOCAL.right },
@@ -135,6 +139,7 @@ export class Player {
     this.weaponPose = null;
     this.baseSpeed = config.baseSpeed ?? GAME_CONSTANTS.PLAYER.SPEED;
     this.movementMode = config.movementMode ?? 'top-down';
+    this.externalPresentation = config.externalPresentation ?? false;
     this.facing4 = config.facing ?? 'right';
     this.facingAngle = FACING4_ANGLES[this.facing4];
 
@@ -162,10 +167,12 @@ export class Player {
     body.allowRotation = false;
     body.moves = this.movementMode === 'top-down';
 
-    this.lag = new FacingLagGhost(scene, idleKey, depth - 1, 0.5, 0.5);
-    this.aura = new PlayerLampAura(scene, depth, this.lampLocal, config.externalLampGround ?? false);
+    if (!this.externalPresentation) {
+      this.lag = new FacingLagGhost(scene, idleKey, depth - 1, 0.5, 0.5);
+      this.aura = new PlayerLampAura(scene, depth, this.lampLocal, config.externalLampGround ?? false);
+      this.weaponRig = new PlayerWeaponRig(scene, this.image);
+    } else this.image.setVisible(false);
     this.shownFacing = this.facing4;
-    this.weaponRig = new PlayerWeaponRig(scene, this.image);
 
     this.bindKeys(scene);
     this.position.x = config.spawn.x;
@@ -308,9 +315,9 @@ export class Player {
 
   /** Opt-in painter order shared by purification and ground-sorted rift bodies. */
   setGroundDepth(base: number, floorDepth: number): void {
-    this.lag.setDepth(base);
+    this.lag?.setDepth(base);
     this.image.setDepth(base + 0.1);
-    this.aura.setGroundDepth(base, floorDepth);
+    this.aura?.setGroundDepth(base, floorDepth);
   }
 
   /** The physics image, for colliders and camera follow. */
@@ -324,7 +331,7 @@ export class Player {
   /** Read-only visual extent for nearby UI avoidance, including held equipment. */
   getVisualBounds(out: Phaser.Geom.Rectangle): Phaser.Geom.Rectangle {
     this.image.getBounds(out);
-    this.weaponRig.includeVisualBounds(out);
+    this.weaponRig?.includeVisualBounds(out);
     this.getLampWorldPosition(this.boundsLamp);
     this.lampBounds.setTo(this.boundsLamp.x - 3, this.boundsLamp.y - 3, 6, 6);
     return Phaser.Geom.Rectangle.Union(out, this.lampBounds, out);
@@ -382,6 +389,7 @@ export class Player {
     this.weaponRig?.destroy();
     this.aura?.destroy();
     this.lag?.destroy();
+    this.weaponRig = null; this.aura = null; this.lag = null;
     this.image?.destroy();
   }
 
@@ -491,12 +499,16 @@ export class Player {
 
   private syncVisuals(deltaMs = this.lastDeltaMs): void {
     this.motionElapsedMs += deltaMs;
+    if (this.externalPresentation) {
+      this.image.setVisible(false);
+      return;
+    }
     if (this.facing4 !== this.shownFacing) {
-      this.lag.trigger(this.shownFacing, this.image.texture.key);
+      this.lag?.trigger(this.shownFacing, this.image.texture.key);
       this.shownFacing = this.facing4;
     }
 
-    const turning = this.lag.isTurning;
+    const turning = this.lag?.isTurning ?? false;
     const gait = this.moving || turning ? 'walk' : 'idle';
     const fps =
       gait === 'walk'
@@ -510,14 +522,14 @@ export class Player {
     }
     this.image.setRotation(0);
     this.weaponRig?.sync(this.facing4, this.facingAngle, this.weaponPose, this.motionElapsedMs, this.moving, deltaMs);
-    this.lag.sync(this.image.x, this.image.y, true, deltaMs);
+    this.lag?.sync(this.image.x, this.image.y, true, deltaMs);
     const torso = this.weaponRig?.getTorsoOffset();
     const originalLamp = DENSE_PLAYER_LAMP_LOCAL[this.facing4];
     const lamp = this.lampLocal[this.facing4];
     const rotation = torso?.rotation ?? 0;
     lamp.x = (torso?.x ?? 0) + originalLamp.x * Math.cos(rotation) - (originalLamp.y - 6) * Math.sin(rotation);
     lamp.y = 6 + (torso?.y ?? 0) + originalLamp.x * Math.sin(rotation) + (originalLamp.y - 6) * Math.cos(rotation);
-    this.aura.sync(
+    this.aura?.sync(
       this.image.x,
       this.image.y,
       this.facing4,

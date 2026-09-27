@@ -91,11 +91,31 @@ export interface Rendered {
   /** Core-only environment contribution, before energy-volume transmission.
    * This is a subset of lightFields.pollution, never an extra fourth source. */
   coreLight:Uint8ClampedArray;
+  /** Module-specific received light, before energy transmission. These are
+   * subsets of pollution, allowing health to affect the same source on actors
+   * and architecture without double-adding the baked illumination. */
+  storageLight:Uint8ClampedArray; purifierLight:Uint8ClampedArray;
   rgba:Uint8ClampedArray; depth:Float32Array; objects:Uint8Array; layers:Uint8Array;
   emission:Float32Array; triangleCount:number;
   lightFields:Record<LightKind,Uint8ClampedArray>;
   /** R = depth layer, G = object, B = source kind, A = local material phase. */
   motion:Uint8ClampedArray;
+  /** Production G-buffer, captured before transparent energy volume compositing.
+   * RGB normal is world-space [-1,1] encoded to [0,255]. Material RGBA stores
+   * roughness / specular / ambient occlusion / emission divided by two.
+   * Albedo and normal alpha carry opaque surface coverage. */
+  albedo:Uint8ClampedArray; normal:Uint8ClampedArray; roughSpec:Uint8ClampedArray;
+  opaqueDepth:Float32Array;
+}
+export interface RenderOptions {
+  /** Render only model's visible geometry, but retain the full world's shadows. */
+  shadowModel?:Model;
+  /** Premultiplied layer output. Additive air intentionally survives at alpha zero. */
+  transparentBackground?:boolean;
+  /** Plates and actor atlases do not each need eight copies of core integration. */
+  skipEnergy?:boolean;
+  /** Overdraw plates retain the native camera's screen-locked AO sample pattern. */
+  sampleOffset?:readonly[number,number];
 }
 const LIGHT_KINDS:readonly LightKind[]=['pollution','furnace','shoulder'];
 const LIGHT_COLORS:Record<LightKind,V3>={pollution:[.57,.76,.62],furnace:[1,.48,.15],shoulder:[1,.84,.6]};
@@ -109,16 +129,19 @@ function lightFalloff(light:Light,distance:number):number {
 
 /** Fixed camera geometry is lit once into additive source fields. The viewer
  * varies these physically occluded contributions, not a screen-wide colour wash. */
-export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:string)=>void):Rendered {
+export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:string)=>void,options:RenderOptions={}):Rendered {
   const {width:W,height:H}=camera,N=W*H,basis=cameraBasis(camera);
   const depth=new Float32Array(N).fill(-Infinity),indices=new Int32Array(N).fill(-1),positions=new Float32Array(N*3);
   const objects=new Uint8Array(N),layers=new Uint8Array(N),emission=new Float32Array(N),rgba=new Uint8ClampedArray(N*4),motion=new Uint8ClampedArray(N*4);
+  const albedo=new Uint8ClampedArray(N*4),normal=new Uint8ClampedArray(N*4),roughSpec=new Uint8ClampedArray(N*4);
   // A parallel unlit-by-core value preserves the actual source difference
   // through byte clipping, glass and scattering. Subtracting raw HDR energy
   // from an already clipped pixel would erase unrelated light in the review.
   const withoutCore=new Uint8ClampedArray(N*4);
+  const withoutStorage=new Uint8ClampedArray(N*4),withoutPurifier=new Uint8ClampedArray(N*4);
   const fields:Record<LightKind,Float32Array>={pollution:new Float32Array(N*3),furnace:new Float32Array(N*3),shoulder:new Float32Array(N*3)};
   const coreField=new Float32Array(N*3);
+  const storageField=new Float32Array(N*3),purifierField=new Float32Array(N*3);
   const layerIndex={far:1,middle:2,near:3,haven:4};
   model.triangles.forEach((t,id)=>{
     if(transparent(t))return;
@@ -136,7 +159,7 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     }
   });
   onProgress?.(`Rasterized ${model.triangles.length} triangles; building shadow acceleration.`);
-  const bvh=new BVH(model.triangles.filter(t=>!transparent(t)&&t.material!=='energy'));
+  const bvh=new BVH((options.shadowModel??model).triangles.filter(t=>!transparent(t)&&t.material!=='energy'));
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){
     const i=y*W+x,o=i*4,id=indices[i]!;
     // Empty-space scattering stays near charcoal; depth is carried by occluding
@@ -144,10 +167,12 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     const cloud=Math.exp(-(((x-W*.38)/(W*.48))**2+((y-H*.46)/(H*.69))**2));
     const current=noise(x*.008,3,y*.006)*.7+noise(x*.017,1,y*.012)*.3;
     const veil=cloud*(.45+current*.8);
-    rgba.set([3+veil*3,5+veil*4,6+veil*4.5,255],o);
+    rgba.set(options.transparentBackground?[0,0,0,0]:[3+veil*3,5+veil*4,6+veil*4.5,255],o);
     withoutCore.set(rgba.subarray(o,o+4),o);
+    withoutStorage.set(rgba.subarray(o,o+4),o);withoutPurifier.set(rgba.subarray(o,o+4),o);
     motion.set([layers[i]!,objects[i]!,0,Math.round(noise(x*.03,4,y*.03)*255)],o);
     if(id<0)continue;
+    rgba[o+3]=255;withoutCore[o+3]=255;withoutStorage[o+3]=255;withoutPurifier[o+3]=255;
     const t=model.triangles[id]!,p:V3=[positions[i*3]!,positions[i*3+1]!,positions[i*3+2]!];
     let n=t.normal;if(dot(n,basis.back)<0)n=mul(n,-1);
     const start=add(p,mul(n,.035));
@@ -155,11 +180,17 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     let ao=1;
     if(t.layer==='haven'||t.layer==='near'){
       const tangent=unit(cross(n,Math.abs(n[1])>.93?[1,0,0]:[0,1,0])),bitangent=unit(cross(n,tangent));
-      const angle=hash(x>>1,y>>1,41)*Math.PI*2;
+      const angle=hash((x-(options.sampleOffset?.[0]??0))>>1,(y-(options.sampleOffset?.[1]??0))>>1,41)*Math.PI*2;
       let block=0;
       for(let k=0;k<4;k++){const a=angle+k*Math.PI/2,ray=unit(add(mul(n,.65),add(mul(tangent,Math.cos(a)*.76),mul(bitangent,Math.sin(a)*.76))));if(bvh.blocked(start,ray,1.05))block++;}
       ao=1-block*.155;
     }
+    for(let k=0;k<3;k++){
+      albedo[o+k]=surf.color[k]!;
+      normal[o+k]=(n[k]!*.5+.5)*255;
+    }
+    albedo[o+3]=255;normal[o+3]=255;
+    roughSpec.set([surf.roughness*255,surf.specular*255,ao*255,clamp(surf.emission/2)*255],o);
     // Low diffuse return preserves the objects' material identity in shadow.
     // All coloured/direct/specular light below has one of the three real sources.
     const ambient=(t.layer==='haven'
@@ -198,6 +229,8 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
         const value=(surf.color[k]!*nd*attenuation*selfResponse+spec)*light.color[k]!*distanceFactor*visibility;
         fields[light.kind][i*3+k]!+=value;rgb[k]!+=value;
         if(light.id.startsWith('core-'))coreField[i*3+k]!+=value;
+        if(light.id.startsWith('storage-'))storageField[i*3+k]!+=value;
+        if(light.id.startsWith('purifier-'))purifierField[i*3+k]!+=value;
       }
     }
     const kind=sourceKind(t.material);
@@ -214,6 +247,8 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
     for(let k=0;k<3;k++){
       rgba[o+k]=Math.round(clamp(rgb[k]!,0,250)/2)*2;
       withoutCore[o+k]=Math.round(clamp(rgb[k]!-coreField[i*3+k]!,0,250)/2)*2;
+      withoutStorage[o+k]=Math.round(clamp(rgb[k]!-storageField[i*3+k]!,0,250)/2)*2;
+      withoutPurifier[o+k]=Math.round(clamp(rgb[k]!-purifierField[i*3+k]!,0,250)/2)*2;
     }
   }
   // Both sides of glass and its contents preserve depth and source-dependent
@@ -236,6 +271,7 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
       const body=(liquid?.38:.30)+.08*noise(p[0]*9,p[1]*8,p[2]*9);
       const glass:Record<LightKind,number[]>={pollution:[0,0,0],furnace:[0,0,0],shoulder:[0,0,0]};
       const glassCore=[0,0,0];
+      const glassStorage=[0,0,0],glassPurifier=[0,0,0];
       for(const light of model.lights){
         const diff=sub(light.position,p),dist=Math.hypot(...diff);if(dist>light.radius)continue;
         const ld=mul(diff,1/Math.max(.01,dist)),half=unit(add(ld,basis.back));
@@ -246,14 +282,25 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
           const value=(BASE[t.material][k]!*.12*strength+spec)*light.color[k]!;
           glass[light.kind][k]!+=value;
           if(light.id.startsWith('core-'))glassCore[k]!+=value;
+          if(light.id.startsWith('storage-'))glassStorage[k]!+=value;
+          if(light.id.startsWith('purifier-'))glassPurifier[k]!+=value;
         }
       }
       for(let k=0;k<3;k++){
         let value=BASE[t.material][k]!*body*t.tint+fresnel*15;
         for(const kind of LIGHT_KINDS){fields[kind][i*3+k]=fields[kind][i*3+k]!*(1-alpha)+glass[kind][k]!*alpha;value+=glass[kind][k]!;}
         coreField[i*3+k]=coreField[i*3+k]!*(1-alpha)+glassCore[k]!*alpha;
+        storageField[i*3+k]=storageField[i*3+k]!*(1-alpha)+glassStorage[k]!*alpha;
+        purifierField[i*3+k]=purifierField[i*3+k]!*(1-alpha)+glassPurifier[k]!*alpha;
         rgba[i*4+k]=Math.round(rgba[i*4+k]!*(1-alpha)+value*alpha);
         withoutCore[i*4+k]=Math.round(withoutCore[i*4+k]!*(1-alpha)+(value-glassCore[k]!)*alpha);
+        withoutStorage[i*4+k]=Math.round(withoutStorage[i*4+k]!*(1-alpha)+(value-glassStorage[k]!)*alpha);
+        withoutPurifier[i*4+k]=Math.round(withoutPurifier[i*4+k]!*(1-alpha)+(value-glassPurifier[k]!)*alpha);
+      }
+      if(options.transparentBackground){
+        rgba[i*4+3]=255*alpha+rgba[i*4+3]!*(1-alpha);
+        withoutCore[i*4+3]=rgba[i*4+3]!;
+        withoutStorage[i*4+3]=rgba[i*4+3]!;withoutPurifier[i*4+3]=rgba[i*4+3]!;
       }
       objects[i]=t.object;layers[i]=layerIndex[t.layer];motion[i*4]=layers[i]!;motion[i*4+1]=t.object;
     }
@@ -275,6 +322,8 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
   for(let i=0;i<N;i++)for(let k=0;k<3;k++){
     rgba[i*4+k]=clamp(rgba[i*4+k]!+scatter[i*3+k]!,0,255);
     withoutCore[i*4+k]=clamp(withoutCore[i*4+k]!+scatter[i*3+k]!,0,255);
+    withoutStorage[i*4+k]=clamp(withoutStorage[i*4+k]!+scatter[i*3+k]!,0,255);
+    withoutPurifier[i*4+k]=clamp(withoutPurifier[i*4+k]!+scatter[i*3+k]!,0,255);
   }
   // Local single-scattering air, integrated in world space up to the first
   // solid surface. The source-to-air rays use the same occluding architecture
@@ -310,13 +359,15 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
       for(let k=0;k<3;k++){
         const value=air*heart.color[k]!;
         rgba[i*4+k]!+=value;fields.pollution[i*3+k]!+=value;
+        withoutStorage[i*4+k]!+=value;withoutPurifier[i*4+k]!+=value;
       }
     }
   }
   const energyBase=rgba.slice();
-  const volume=renderEnergy(model.volumes,camera,depth);
+  const opaqueDepth=depth.slice();
+  const volume=renderEnergy(options.skipEnergy?[]:model.volumes,camera,depth);
   const energyFrame=volume.frames[0]!;
-  for(let i=0;i<N;i++){
+  for(let i=0;i<N&&!options.skipEnergy;i++){
     for(let k=0;k<3;k++){
       rgba[i*4+k]=rgba[i*4+k]!*(1-energyFrame[i*4+3]!/255)+energyFrame[i*4+k]!;
     }
@@ -329,13 +380,17 @@ export function render(model:Model,camera:Camera=CAMERA,onProgress?:(message:str
   const lightFields={} as Record<LightKind,Uint8ClampedArray>;
   for(const kind of LIGHT_KINDS){const out=new Uint8ClampedArray(N*4);for(let i=0;i<N;i++){for(let k=0;k<3;k++)out[i*4+k]=fields[kind][i*3+k]!;out[i*4+3]=255;}lightFields[kind]=out;}
   const coreLight=new Uint8ClampedArray(N*4);
+  const storageLight=new Uint8ClampedArray(N*4),purifierLight=new Uint8ClampedArray(N*4);
   for(let i=0;i<N;i++){
     for(let k=0;k<3;k++){
       coreLight[i*4+k]=Math.max(0,energyBase[i*4+k]!-withoutCore[i*4+k]!);
+      storageLight[i*4+k]=Math.max(0,energyBase[i*4+k]!-withoutStorage[i*4+k]!);
+      purifierLight[i*4+k]=Math.max(0,energyBase[i*4+k]!-withoutPurifier[i*4+k]!);
       // Retain a nonnegative residual after two-level surface quantization.
       lightFields.pollution[i*4+k]=Math.max(lightFields.pollution[i*4+k]!,coreLight[i*4+k]!);
     }
     coreLight[i*4+3]=255;
+    storageLight[i*4+3]=255;purifierLight[i*4+3]=255;
   }
-  return {energyFrames:volume.frames,energyBase,coreLight,rgba,depth,objects,layers,emission,triangleCount:model.triangles.length,lightFields,motion};
+  return {energyFrames:volume.frames,energyBase,coreLight,storageLight,purifierLight,rgba,depth,objects,layers,emission,triangleCount:model.triangles.length,lightFields,motion,albedo,normal,roughSpec,opaqueDepth};
 }

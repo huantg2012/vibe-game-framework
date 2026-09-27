@@ -2,10 +2,10 @@
 
 > 由文本登记源生成，请勿手工编辑本索引。先读全貌，再按功能 ID 打开模块正文；验证详单保留在证据文件和可视地图。
 
-I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类污染/炉火/肩灯混光、右侧建筑依托、分层外景、同身份新人物与动态景观。六站双坡及全部7311可站样本连通，查看页限定验证通过；新版待人审，正式生产仍R10、Rift人物未变、I28挂起。
+Last Light A 已正式接入：52%裂隙、断口宽桥、单西坡、六站及炉边坐下。源资源、7组纯移动、Player与构建通过；真实WASD/E六站、备行入Rift与归来、载入重建及坐下已限定验证，状态 IMPLEMENTED / LIMITED-VERIFIED。当前动态美术待人审；fallback实机、修复/购买交易和长期经济未覆盖，I28保持挂起。
 
-- 生成：2026-09-26T13:59:42.598Z；版本：007554cf85820f31345cd198a998e91dd5f8aba7
-- 来源基线：2026-09-23T11:42:33.716Z；指纹：a0914044768fd9b04c4a61b4c9a68b4173f58fa2eaf437c787a3295b1b2f3cc8
+- 生成：2026-09-27T13:09:27.365Z；版本：731be7323758a9742698cead24c6f4e50c7a3220
+- 来源基线：2026-09-23T11:42:33.716Z；指纹：d37d40434622dcab453c869c2df91358063f3583c24f786b0949ad5d20ebdb3c
 - 登记源：[docs/game-state/atlas.json](../../docs/game-state/atlas.json)
 - 53 项登记功能 / 45 项声明正式接入 / 53 项有待核实信息
 
@@ -15,16 +15,16 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 
 ## 来源与覆盖提醒
 
-共 69 条提醒，以下预览最多 8 条；完整结果运行 check 或查看地图。
+共 113 条提醒，以下预览最多 8 条；完整结果运行 check 或查看地图。
 
 - 来源变化：CLAUDE.md
+- 来源变化：docs/architecture.md
 - 来源变化：docs/art-direction.md
-- 来源变化：docs/art/demos/purification-last-light/actor.ts
-- 来源变化：docs/art/demos/purification-last-light/assets/baseline-35f17ba.png
-- 来源变化：docs/art/demos/purification-last-light/assets/browser-check.json
-- 来源变化：docs/art/demos/purification-last-light/assets/layout-check.json
-- 来源变化：docs/art/demos/purification-last-light/assets/light-core.png
-- 来源变化：docs/art/demos/purification-last-light/assets/manifest.json
+- 来源变化：docs/art/demos/purification-forecourt-options/README.md
+- 来源变化：docs/art/demos/purification-forecourt-options/assets/a-before-rift.png
+- 来源变化：docs/art/demos/purification-forecourt-options/assets/a.png
+- 来源变化：docs/art/demos/purification-forecourt-options/assets/check.json
+- 来源变化：docs/art/demos/purification-forecourt-options/assets/comparison.png
 - 此索引不会自动感知之后的修改；开工运行 check，需要最新索引时重新生成。
 
 ## 领域与功能
@@ -53,10 +53,10 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 
 ### 操作、生存与视野 · 已登记
 
-R9紧凑双层保持原人物、八向移动、双宽坡及六操作锚；R10外景视差消费真实人物移动，六点/双坡/Rift与聚焦已按正式入口增量回归。按已知路线走动不等于初见导航或人类手感通过。（5 项）
+Last Light米制分层导航与0.22m足印已接生产；纯检查覆盖单西坡/宽桥双向，真实键盘覆盖六站、西坡上行和桥到核心。浏览器未逐条回走下坡/桥返回；初见理解、全边缝与长期手感未由机器通过代验。（5 项）
 
-- [**COH-F006 · 玩家移动、转向与碰撞**](../../docs/game-state/features/control.json)：原Player输入/速度保持，R9净化点以新左置双层/双宽坡和6px圆足连续扫掠八向行走；六处同层24px操作。Rift仍用原俯视路径。
-  接入：正式流程已接入 · 工作：推进中 · 验证：9 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
+- [**COH-F006 · 玩家移动、转向与碰撞**](../../docs/game-state/features/control.json)：正式净化点改用 Last Light A 源几何生成的米制分层移动：主层真实断口保留宽桥、单西坡连接上层，0.22m 圆足碰撞及局部逆投影保持屏幕相对八向操作。Player 继续拥有输入与冻结；Rift 原俯视移动不变。 正常入口真实键盘已到六站、沿单西坡上层和宽桥到核心；本轮为 IMPLEMENTED / LIMITED-VERIFIED。
+  接入：正式流程已接入 · 工作：推进中 · 验证：10 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
 
 - [**COH-F007 · 有限视野与不可照亮的空间空洞**](../../docs/game-state/features/control.json)：朝向视域与环身弱光按地图遮挡求可见性；空间空洞不产生可照亮表面，局部照到群落时只显示受光部分。
   接入：正式流程已接入 · 工作：本轮已收口 · 验证：2 条：静态核查、运行验证 · **待核实**
@@ -132,10 +132,10 @@ R9紧凑双层保持原人物、八向移动、双宽坡及六操作锚；R10外
 
 ### 净化点、成长与经济 · 已登记
 
-I29 R3信息边界/固定100净化基准/全22步价格已实现并限定验证，旧购及旧在途保留；自然供给、后段深度、整数收益读法仍未解决，长期经济挂起。（6 项）
+Last Light A 六站与炉边坐下已接生产，原业务/存档和价格保持；真实六站面板、备行/Rift归来、载入重建和坐下完成限定验证。未回归修复/购买交易及全成长/供奉组合；自然供给、后段深度、整数收益与I28长期经济仍保留边界。（6 项）
 
-- [**COH-F026 · 净化点步行与六处交互**](../../docs/game-state/features/hub.json)：正式六站/净化点仍R10。当前艺术样景为单西坡、右沿核心、前部炉席；西侧直达路带、20组主要路线与有限净宽检查通过。按用户对007554c的两处布局反馈完成纠偏，待人审，未接正式行走/碰撞。
-  接入：正式流程已接入 · 工作：推进中 · 验证：48 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
+- [**COH-F026 · 净化点步行与六处交互**](../../docs/game-state/features/hub.json)：Last Light A 已接入正式 PurificationScene：主层核心/净化器/供奉/裂隙，上层储藏/蜕变，单西坡跨层，核心由断口上的宽桥接近。左前裂隙为原始宽度52%；炉边建筑残骸可坐下，轻拉近镜头并显示氛围文案。六站沿用原业务；真实WASD/E已逐站打开原面板，并完成备行入Rift、明确放弃归来与载入重建。坐下1.18倍镜头/文案及起身已限定验证；状态 IMPLEMENTED / LIMITED-VERIFIED。
+  接入：正式流程已接入 · 工作：推进中 · 验证：49 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
 
 - [**COH-F027 · 薪柴修复与装置出击收益**](../../docs/game-state/features/hub.json)：薪柴修复三模块，效能按固定100完整度封顶；加厚100/100→100/115不回血、不降低既有效能，修复/加厚预览与出击同源。R8完整度条按真实容量填充、状态按固定100判定，成功修复触发活层响应；费用和机制保持。
   接入：正式流程已接入 · 工作：本轮已收口 · 验证：12 条：静态核查、运行验证、自动检查 · **待核实**
@@ -179,10 +179,10 @@ R8完整度观察与E操作分开，世界/聚焦共享时序与同帧避让，�
 
 ### 角色、美术与声音 · 已登记
 
-I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类污染/炉火/肩灯混光、右侧建筑依托、分层外景、同身份新人物与动态景观。六站双坡及全部7311可站样本连通，查看页限定验证通过；新版待人审，正式生产仍R10、Rift人物未变、I28挂起。（4 项）
+Last Light A 已正式接入：52%裂隙、断口宽桥、单西坡、六站及炉边坐下。源资源、7组纯移动、Player与构建通过；真实WASD/E六站、备行入Rift与归来、载入重建及坐下已限定验证，状态 IMPLEMENTED / LIMITED-VERIFIED。当前动态美术待人审；fallback实机、修复/购买交易和长期经济未覆盖，I28保持挂起。（4 项）
 
-- [**COH-F039 · 原玩家像素、朝向与持物**](../../docs/game-state/features/audiovisual.json)：正式净化点与 Rift 共用原玩家程序像素、四向动作、武器持物及受击反馈；地图风格不替换玩家身份。R4只读灯锚与地面光池委派、R7完整visualBounds在R8继续用于照明和提示避让，角色绘图、移动与 Rift 玩法代码保持。 2026-09-25艺术样景单独以同源几何重画据点人物（护帽/背包/侧肩灯），原Rift两份人物源码未变；未接正式Player。
-  接入：正式流程已接入 · 工作：本轮已收口 · 验证：9 条：静态核查、运行验证、自动检查 · **待核实**
+- [**COH-F039 · 玩家身份、净化点人物与裂隙像素呈现**](../../docs/game-state/features/audiovisual.json)：正式净化点采用 Last Light 同身份人物：护帽、背包与侧肩灯，8向共56帧静立/行走/坐姿图集；场景依据真实世界脚点与朝向合成人物、遮挡和受光。共享 Player 保持输入、业务位置与冻结；Rift 默认原像素、持具和灯晕呈现不变。 正式浏览器已验证新净化点人物、进入Rift后原人物以及归来/载入重建；状态 IMPLEMENTED / LIMITED-VERIFIED。
+  接入：正式流程已接入 · 工作：推进中 · 验证：10 条：静态核查、运行验证、自动检查 · **待核实**
 
 - [**COH-F040 · 敌人/污染形态与物件图标**](../../docs/game-state/features/audiovisual.json)：生产敌人按家族/形态表现；新目录有独立真物件、外壳及必要落地稿，公开图像遵守未鉴定信息边界。
   接入：正式流程已接入 · 工作：已挂起 · 验证：3 条：静态核查、人工体验、运行验证 · **待核实**
@@ -190,8 +190,8 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 - [**COH-F041 · 场景音乐、环境声与动作音效**](../../docs/game-state/features/audiovisual.json)：AudioManager 管理标题/净化点/Rift 音乐、环境与移动/交互/战斗音效，并随场景和暂停处理生命周期。
   接入：正式流程已接入 · 工作：本轮已收口 · 验证：2 条：静态核查、自动检查 · **待核实**
 
-- [**COH-F042 · 基地装置、边界与标题场景表现**](../../docs/game-state/features/audiovisual.json)：007554c炉挡西路与核心前空地获用户修改要求；炉席现移至中央偏前，西站直达，核心/裂隙来路走炉背。实际路带净宽、20组路线、低位墙基支撑与站坐浏览器通过；艺术待人审，正式生产仍R10。
-  接入：正式流程已接入 · 工作：推进中 · 验证：63 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
+- [**COH-F042 · 基地装置、边界与标题场景表现**](../../docs/game-state/features/audiovisual.json)：用户已选 A 断裂回廊并认可左前断沿裂隙方向；裂口进一步收至原始宽度52%（最宽0.6864m），现由同源材质/深度/动态资源接入正式净化点。保留核心能量体、单西坡、真实断口宽桥、六站及炉边坐席；正式角色移动驱动画面，源资源/导航/Player检查与构建通过；WebGL2正式浏览器已限定验证六站、备行/Rift归来、载入重建及坐下。状态 IMPLEMENTED / LIMITED-VERIFIED，当前动态艺术品质仍待用户。
+  接入：正式流程已接入 · 工作：推进中 · 验证：68 条：静态核查、运行验证、人工体验、自动检查 · **待核实**
 
 ### 世界观与叙事 · 已登记
 
@@ -241,7 +241,7 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 - **COH-C001 · 有效**：当前正式方向是俯视 2D 像素 Rift；三维/绘制式关卡重构已终止。 — [docs/progress/current-iteration.md](../../docs/progress/current-iteration.md)
 - **COH-C002 · 有效**：地图表现改进必须沉淀为所有生成地图可复用的能力，不能依世界 ID 或单 seed 特供。 — [docs/tasks/iteration-28.md](../../docs/tasks/iteration-28.md)
 - **COH-C003 · 有效**：低饱和、矿物感和荒凉不是世界生成输出限制；世界色彩自由不改核心玩法语义。 — [docs/design-notes/rift-world-space.md](../../docs/design-notes/rift-world-space.md)
-- **COH-C004 · 有效**：保留原玩家、基本移动、既有光色与不可照亮的遮视空间空洞；新能力仍服从真实遮挡。 — [docs/tasks/iteration-28.md](../../docs/tasks/iteration-28.md)
+- **COH-C004 · 有效**：Rift 保留原玩家、基本移动、既有光色与不可照亮的遮视空间空洞；新能力仍服从真实遮挡。净化点人物与空间已获单独重构授权，当前约束见 COH-C-HUB-LAST-LIGHT-A。 — [docs/tasks/iteration-28.md](../../docs/tasks/iteration-28.md)
 - **COH-C005 · 有效**：单物最多一个裂隙主效果和一个供奉效果，操作和反馈直接易懂，不增加鉴定币与词缀链。 — [docs/tasks/iteration-28.md](../../docs/tasks/iteration-28.md)
 - **COH-C006 · 有效**：目录及静态图标已获用户认可；扩大采样、长期平衡和剩余动态审美验收挂起，不得用实现或机器检查代勾。 — [docs/tasks/iteration-28.md](../../docs/tasks/iteration-28.md)
 - **COH-C007 · 有效**：旧物保持已知，旧在途局保留原版本；未来扩充不得修改已保存的掉落和能力承诺。 — [docs/specs/system-field-inventory.md](../../docs/specs/system-field-inventory.md)
@@ -249,12 +249,13 @@ I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类�
 - **COH-C009 · 有效**：迭代 28 新目录授权不解锁不相关的旧四 B 扩产，也不自动启动后续 24/25。 — [docs/tasks/iteration-28.md](../../docs/tasks/iteration-28.md)
 - **COH-C010 · 有效**：迭代29仅交付净化点/成长样板：保持原玩家、2D、六处短动线与单薪柴；新预告读取不改未来冲击，旧已购保持；不以隐藏条目代替池深度。 — [docs/tasks/iteration-29.md](../../docs/tasks/iteration-29.md)
 - **COH-C-HUB-CUTAWAY-DIRECTION · 已替代**：I30净化点采用略有透视的侧视双层封闭场所，内部/边界/外部一体重构；仅净化点显式适配，原角色与Rift俯视保持，不因建筑新增抗污染机制。 — [docs/progress/decisions-log.md](../../docs/progress/decisions-log.md)；替代：COH-C-HUB-TERRACED-REWORK
-- **COH-C-HUB-TERRACED-REWORK · 有效**：DEC-180用户否决灰钢两排陈列与一维轨道；保留封闭/多高程/少许透视，R2面内八向行走、宽坡道、功能性装置身份与外部侵蚀/抵抗一体重做。取消单色冷灰输出限制；不新增建筑防御或改变Rift/原人物。 — [docs/progress/decisions-log.md](../../docs/progress/decisions-log.md)
-- **COH-C-PURIFICATION-R9-COMPOSITION · 有效**：净化点左置紧凑结构/集中外景；原画仅提供布景与分层，不照搬画风渲染，不缩原人物/六装置以伪造空间。保持封闭据点、原像素风与八向双坡。 — [docs/progress/decisions-log.md](../../docs/progress/decisions-log.md)
+- **COH-C-HUB-TERRACED-REWORK · 已替代**：DEC-180用户否决灰钢两排陈列与一维轨道；保留封闭/多高程/少许透视，R2面内八向行走、宽坡道、功能性装置身份与外部侵蚀/抵抗一体重做。取消单色冷灰输出限制；不新增建筑防御或改变Rift/原人物。 — [docs/progress/decisions-log.md](../../docs/progress/decisions-log.md)；替代：COH-C-HUB-LAST-LIGHT-A
+- **COH-C-PURIFICATION-R9-COMPOSITION · 已替代**：净化点左置紧凑结构/集中外景；原画仅提供布景与分层，不照搬画风渲染，不缩原人物/六装置以伪造空间。保持封闭据点、原像素风与八向双坡。 — [docs/progress/decisions-log.md](../../docs/progress/decisions-log.md)；替代：COH-C-HUB-LAST-LIGHT-A
+- **COH-C-HUB-LAST-LIGHT-A · 有效**：净化点采用用户选中的 Last Light A 原画同源像素画法及断裂回廊：保留真实断口宽桥、单西坡、六站与建筑残骸坐席；左前裂隙按授权进一步收至原始宽度52%。实际移动、遮挡与光照必须消费同一源几何；净化点人物可重构但须与Rift原人物同身份，不新增休息回复或建筑抗污染机制。 — [docs/art-direction.md](../../docs/art-direction.md)
 
 ## 实现覆盖清单
 
-- 正式场景目录及其辅助实现：19 个文件 / 0 个未归属功能；细目见 check。
+- 正式场景目录及其辅助实现：20 个文件 / 0 个未归属功能；细目见 check。
 - 游戏 DOM 菜单/面板/HUD：21 个文件 / 0 个未归属功能；细目见 check。
 - 根目录策划 CSV（含归档 DEV 数据，条目分流）：72 个文件 / 0 个未归属功能；细目见 check。
 

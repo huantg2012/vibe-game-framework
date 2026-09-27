@@ -8,35 +8,41 @@ export const ACTOR_LAMP_LOCAL:V3=[.323,1.296,.205];
 export const ACTOR_HEIGHT=1.665;
 export const ACTOR_OBJECT_ID=7;
 
-export function actorLampAnchor(position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0):V3 {
+export function actorLampAnchor(position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0,walkPhase?:number):V3 {
   const c=Math.cos(facing),s=Math.sin(facing),p=ACTOR_LAMP_LOCAL;
-  return [position[0]+p[0]*c+p[2]*s,position[1]+p[1]+Math.sin(breath)*.008,position[2]-p[0]*s+p[2]*c];
+  const strideLift=walkPhase===undefined?0:.018*(1-Math.cos(walkPhase*2));
+  return [position[0]+p[0]*c+p[2]*s,position[1]+p[1]+Math.sin(breath)*.008+strideLift,position[2]-p[0]*s+p[2]*c];
 }
 
 /** Facing is yaw in radians; local +Z is the face, local +X the lamp shoulder.
  * A tiny breath moves the coat, pack and lamp together while the soles stay put. */
-export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0):void {
+export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0,walkPhase?:number):void {
   const previousLayer=m.layer;
   m.layer='haven';
   m.at(position,facing,ACTOR_OBJECT_ID,()=>{
-    const lift=Math.sin(breath)*.008;
+    const walking=walkPhase!==undefined;
+    const lift=Math.sin(breath)*.008+(walking?.018*(1-Math.cos(walkPhase*2)):0);
     // Separated, weight-bearing legs. The right boot is half a pace forward.
     for(const [x,z,t] of [[-.148,-.075,.88],[.143,.080,1.04]] as const) {
-      m.box([x,.055,z+.047],[.184,.105,.286],'black',.038,.96);
+      const phase=(walkPhase??0)+(x<0?0:Math.PI);
+      const stride=walking?Math.sin(phase)*.29:0;
+      const rise=walking?Math.max(0,Math.cos(phase))*.115:0;
+      const ankle=z+stride,knee=z+stride*.38;
+      m.box([x,.055+rise,ankle+.047],[.184,.105,.286],'black',.038,.96);
       loaf(m,[
-        [x,.09,z+.047,.093,.133],
-        [x,.16,z+.025,.094,.119],
-        [x,.235,z-.020,.086,.092],
+        [x,.09+rise,ankle+.047,.093,.133],
+        [x,.16+rise,ankle+.025,.094,.119],
+        [x,.235+rise,ankle-.020,.086,.092],
       ],'cloth',t*.80,10);
       loaf(m,[
-        [x,.203,z-.018,.079,.079],
-        [x,.38,z-.017,.077,.078],
-        [x+(x<0?.008:-.008),.52,z-.028,.084,.098],
-        [x*.87,.735,z-.041,.099,.104],
+        [x,.203+rise,ankle-.018,.079,.079],
+        [x,.38+rise*.38,knee-.017,.077,.078],
+        [x+(x<0?.008:-.008),.52+lift*.3,z-.028+stride*.17,.084,.098],
+        [x*.87,.735+lift,z-.041,.099,.104],
       ],'cloth',t,10);
       // Cloth folds follow the knee and boot cuff, not armour kneepads.
-      m.beam([x-.065,.392,z+.055],[x+.055,.405,z+.061],.024,.018,'cloth',t*1.18);
-      m.beam([x-.069,.209,z+.063],[x+.070,.214,z+.062],.024,.021,'cloth',t*.62);
+      m.beam([x-.065,.392+rise*.38,knee+.055],[x+.055,.405+rise*.38,knee+.061],.024,.018,'cloth',t*1.18);
+      m.beam([x-.069,.209+rise,ankle+.063],[x+.070,.214+rise,ankle+.062],.024,.021,'cloth',t*.62);
     }
 
     m.at([0,lift,0],0,ACTOR_OBJECT_ID,()=>{
@@ -83,12 +89,13 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
 
       // Relaxed arms break away from the torso. Their cuffs and gloves are soft
       // shapes; there are no large pauldrons, metal biceps or luminous trim.
-      limb(m,[-.279,1.142,.012],[-.328,.943,.041],.103,.095,'cloth',1.38);
-      limb(m,[-.328,.943,.041],[-.312,.758,.083],.086,.079,'cloth',1.20);
-      limb(m,[.276,1.145,.008],[.331,.955,.006],.099,.094,'cloth',1.40);
-      limb(m,[.331,.955,.006],[.328,.775,.066],.084,.078,'cloth',1.25);
-      loaf(m,[[-.311,.707,.083,.073,.062],[-.316,.757,.082,.078,.067],[-.318,.80,.076,.067,.059]],'cloth',.56,10);
-      loaf(m,[[.328,.723,.063,.070,.061],[.329,.775,.065,.076,.068],[.329,.814,.060,.067,.06]],'cloth',.60,10);
+      const swing=walking?Math.sin(walkPhase)*.14:0;
+      limb(m,[-.279,1.142,.012],[-.328,.943,.041-swing*.55],.103,.095,'cloth',1.38);
+      limb(m,[-.328,.943,.041-swing*.55],[-.312,.758,.083-swing],.086,.079,'cloth',1.20);
+      limb(m,[.276,1.145,.008],[.331,.955,.006+swing*.55],.099,.094,'cloth',1.40);
+      limb(m,[.331,.955,.006+swing*.55],[.328,.775,.066+swing],.084,.078,'cloth',1.25);
+      loaf(m,[[-.311,.707,.083-swing,.073,.062],[-.316,.757,.082-swing,.078,.067],[-.318,.80,.076-swing,.067,.059]],'cloth',.56,10);
+      loaf(m,[[.328,.723,.063+swing,.070,.061],[.329,.775,.065+swing,.076,.068],[.329,.814,.060+swing,.067,.06]],'cloth',.60,10);
 
       // The round protective hood/helmet and one black visor slit carry the
       // strongest facial identity from the production sprite. Never paired eyes.

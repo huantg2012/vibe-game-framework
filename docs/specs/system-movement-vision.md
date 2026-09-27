@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: code / art（I30 R8：净化点可观察资格与实体操作分离）
-last-modified-date: 2026-09-23
+last-modified-date: 2026-09-27
 interface-changed: true
 slice: 1
 interfaces-with:
@@ -29,6 +29,20 @@ exposes:
   - OccluderGrid 接口契约（由地图侧实现）
   - 新增事件：无（本系统对外为同步查询 API + setter，不进事件总线）
 ---
+
+## 迭代30 R11 · Last Light 分层行走与外部人物呈现
+
+正式净化点由`LastLightLocomotion`维护`{x,y,z,route,facing}`。主层真实扣除A断口与裂隙切口，2.26m回廊有实体支撑；上层及西坡分别采样高度，仅通过坡端受支撑接缝切层。投影重叠不能成为上下层瞬移或隔层互动。角色0.22m完整脚圆必须有支持并避开低位实体，以0.5原生像素子步滑墙，帧时间最多100ms。作者几何由`export-layout.mjs`导出，不能手抄另一份轮廓。
+
+WASD/方向键仍按屏幕方向八向归一；输入通过所在三角形的投影Jacobian逆变换到世界XZ。仅净化点将共享有效速度乘1.5，配合新镜头1倍保持原屏幕速度；Rift默认80速度与1.5镜头不改。碰撞以世界米为权威，业务`Player.getPosition()`继续等于投影脚底减10px。
+
+六站操作同时要求所在楼层、24原生像素操作锚距离及完整脚圆直达；先距离早退再检测路径。核心/储藏/净化器观察采用人物眼高到真实机体采样点的3D静态BVH，距离仍以原生投影像素供44/58px读数选择。旧`chamber-observation.ts`不再服务本正式场景。
+
+`PlayerConfig.externalPresentation`默认false；据点显式开启后不创建旧人物图、灯晕、残影和持具呈现，输入/冻结/速度叠加/受约束移动仍由共享Player负责。`LastLightVisual`提供据点当前身体alpha轮廓、肩灯锚和8向动作；Rift默认呈现保持。
+
+休息点必须从合法站位触达，只切换渲染姿态，不传送物理脚底；E坐下后冻结移动、镜头1.18倍、显示氛围句，E或Esc起身并恢复镜头/行走。无恢复、资源或时间机制。
+
+旧I30合同如下保留历史语境，现役净化点以本节为准；Rift合同仍有效。
 
 ## 迭代30 R9：净化点错层移动与可观察资格（DEC-180/181）
 

@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-09-27
-note: I30 R11的007554c布局获用户CHANGES-REQUESTED；炉挡西侧工作路，核心前空地无效。炉席已整体移入中央偏前，新位置已完整导出、路线及限定浏览器验证通过，人审待定，未接正式生产。
+note: 用户选择A断裂回廊并授权正式入游戏；裂隙再收至原52%，Last Light已正式接入并完成限定内部验证，等待用户实玩审美终审。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -18,21 +18,13 @@ note: I30 R11的007554c布局获用户CHANGES-REQUESTED；炉挡西侧工作路�
 
 旧正文路径保留迁移指针，旧网页链接保留跳转；正文引用、现状索引和阅读器已同步。范围和证据边界见[归档验证](../qa/review-archive-2026-09-21.md)。此任务不改变审查结论、游戏或挂起状态。后续可读交付按[阅读器说明](../dev/report-viewer.md)实际打开验证。
 
-## 当前工作 · 迭代30 R11（2026-09-26，平台使用空间优化）
+## 当前工作 · 迭代30 R11（2026-09-27，Last Light正式接入）
 
-追加：用户已选择第二轮 A“断裂回廊”，要求重做裂隙位置与外观。[当前 A 修订对照](../art/demos/purification-forecourt-options/index.html)保留宽回廊与断口，裂隙改至左前断沿、竖向撕口贯穿建筑剖面，内侧站位备行。新旧 A 同镜头对照、路线与光照实效检查已完成；用户现认可 `5445d15` 裂隙修订，仅要求口子收小；已沿原中心线收窄28%，其余位置/高度/路线/光源参数保持。收口微调待看，原动态样景及生产未替换。位置、造型和边界集中在 `docs/art-direction.md`。
+用户已选择A“断裂回廊”并认可新版左前裂隙，最新要求“再窄一些，然后直接做正式版本入游戏”。裂隙沿原中心线由72%进一步收至52%，同源像素画法、A布局、真实分层移动、六站业务、坐下及动态光照已接入正式`PurificationScene`。
 
-用户要求修正`007554c`的两处布局问题，状态 **HUMAN-CHANGES-REQUESTED**：炉挡楼梯去供奉/净化器的工作路，核心前留下无效大空地。技术连通不等于舒适通行，上轮内部“可收敛”判断不能代替人审。
+恢复入口：[集中美术设计](../art-direction.md#resume-art-rebuild) → [执行状态](../design-notes/purification-scene-art-plan.md#当前执行状态) → [生产QA](../qa/iteration-30-last-light-production.md)。正式入口为根页面`http://127.0.0.1:3027/`。比较页与Last Light查看器保留作者/历史用途，不能混称正式游戏。
 
-当前仅将原炉席整体移入中央偏前，释放西侧工作路、赋予原空地休息用途，并保留核心短接近通道；坐标见[集中正文](../art-direction.md#世界观形体与构造)。**新位置已实现，完整导出、路线及限定浏览器验证通过，人审待定。** 单西坡、六站及其余场景保持，坐姿/肩灯随新锚点；坐下功能、源光参数与材料不变。主COH-F042，关联F026/F006/F039。
-
-**恢复入口：[集中美术设计](../art-direction.md#resume-art-rebuild) → [当前执行记录](../design-notes/purification-scene-art-plan.md#当前执行状态) → [动态样景](../art/demos/purification-last-light/index.html)。** 当前本地地址 `http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html`，支持修改前/原画、六模型/人物、暂停对照和本轮坐下体验。
-
-[统一QA](../qa/iteration-30-last-light-living.md)与[证据目录](../qa/artifacts/purification-hearth-circulation-2026-09-26/)按版本保留技术结果；新位置不继承`007554c`检查或`e243381`认可。样景未接正式碰撞、六站玩法、经济或人物驱动视差；原Rift、R10生产和I28挂起保持。必要检查后按持续授权本地提交，不推送，排除独立CLAUDE.md修改。
-
-**审查依据（2026-09-26）：** [正文](../reviews/2026-09-26-purification-platform-layout.md) / [交互可读版](../reviews/interactive/purification-platform-layout-2026-09-26.html)保留当时的东坡接合、裂隙锚与箱盖冲突、储藏侧杆及旧炉杂物发现。审查时仅提出建议；当前用户已授权实施，上述单西坡与炉席重排取代原“保留双坡并修东口”的建议，历史报告不反写为新方案。
-
-旧`8ef1366`/`6127218`仍为历史人审否决，旧A/C约束及证据不迁入当前版本。
+当前 IMPLEMENTED / LIMITED-VERIFIED：构建、资源/共享Player/七组导航回归通过；真实按键完成六站、上层与断桥、坐下/起身、出击放弃归返、暂停和读档重入。GPU采用视差后的逐像素遮挡与当前密度体积透明合成。无WebGL2降级画质、长期经济、完整购买与成长组合未扩验；正式新场景审美仍待用户实玩终审。主COH-F042，关联F026/F006/F039；Rift与经济/存档机制不改，I28挂起。人审认可仍按具体版本/范围记录。完成必要检查后本地提交，不推送，排除独立`CLAUDE.md`改动。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，用户要求美术整改）
 

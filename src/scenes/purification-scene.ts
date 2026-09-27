@@ -9,18 +9,17 @@ import { getEquipmentLifecycle, type OfferingTransformResult } from '@/types/inv
 import { WEAPON_DATA } from '@/generated/weapon-data';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { openInventory, inventoryError } from '@/ui/inventory-presenter';
-import { PurificationChamberVisual, CHAMBER_DEVICE_VISUAL_BOUNDS, type PurificationChamberState } from './purification-chamber-visual';
-import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_CONTACTS, CHAMBER_INTERACTION_RADIUS, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/purification-chamber-layout';
-import { PurificationChamberLocomotion } from '@/systems/purification-chamber-locomotion';
+import { LastLightVisual, type LastLightState } from './last-light-visual';
+import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_CONTACTS, CHAMBER_INTERACTION_RADIUS, CHAMBER_DEVICE_VISUAL_BOUNDS, REST_POSITION, REST_YAW, REST_APPROACH, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/last-light-layout';
+import { LastLightLocomotion } from '@/systems/last-light-locomotion';
 import { ChamberModule } from '@/entities/purification-chamber-module';
 import { ChamberIntegritySelection } from '@/ui/chamber-integrity-lifecycle';
-import { getChamberObservation } from '@/systems/chamber-observation';
 /**
  * Purification Scene - the base management walkable space.
  *
- * Two enclosed walkable terraces, connected by broad ramps. Floors and fixtures use
- * a shared shallow oblique projection; the exterior is rewritten matter beyond
- * physical walls, not a magic dome. The rift retains independent top-down movement.
+ * The authored Last Light geometry supplies the two terraces, west ramp, broken
+ * forecourt and surviving gallery. Movement remains three-dimensional; projected
+ * feet adapt the existing business/UI contracts. Rift movement stays top-down.
  * Existing settlement, inventory and growth transactions remain scene owners.
  *
  * Scene data received: { kindlingGained: number, survived: boolean }
@@ -50,7 +49,7 @@ import { createPurificationSurfaceTexture } from '@/systems/procedural-purificat
 import { stabilityTracker } from '@/systems/stability-tracker';
 import { tideSystem } from '@/systems/tide-system';
 import { allocationPanel } from '@/ui/dom/allocation-panel';
-import { moduleIntegrityBounds, type IntegrityRect } from '@/ui/chamber-integrity-placement';
+import { type IntegrityRect } from '@/ui/chamber-integrity-placement';
 import { defensePanel } from '@/ui/dom/defense-panel';
 import { growthPanel } from '@/ui/dom/growth-panel';
 import { loadoutPanel } from '@/ui/dom/loadout-panel';
@@ -162,14 +161,20 @@ export class PurificationScene extends Phaser.Scene {
   private unsubscribeWeapon: (() => void) | null = null;
   private unsubscribeForecast: (() => void) | null = null;
   private unsubscribeOffering: (() => void) | null = null;
-  private chamber: PurificationChamberVisual | null = null;
-  private locomotion: PurificationChamberLocomotion | null = null;
-  private readonly chamberState: PurificationChamberState = {
+  private chamber: LastLightVisual | null = null;
+  private locomotion: LastLightLocomotion | null = null;
+  private readonly chamberState: LastLightState = {
     moduleHealth: { core: 1, storage: 1, purifier: 1 }, thickenLevel: 0,
-    offeringCharge: 0, growthLevels: {}, activeTarget: null, player: { x: 224, y: 286 }, lamp: { x: 232, y: 282 },
+    offeringCharge: 0, growthLevels: {}, activeTarget: null, player: { x: 0, y: 0 }, lamp: { x: 0, y: 0 },
+    worldPlayer: { x: 3.8, y: 0, z: 3.8 }, facingYaw: 0, walking: false, resting: false,
   };
   private readonly integritySelection = new ChamberIntegritySelection<'CORE' | 'STORAGE' | 'PURIFIER'>();
   private observationDelta = 0;
+  private lastDiagnosticAt = -Infinity;
+  private resting = false;
+  private restLine: HTMLDivElement | null = null;
+  private restCamera: { scrollX: number; scrollY: number; zoom: number } | null = null;
+  private restTween: Phaser.Tweens.Tween | null = null;
   private coreModule!: ChamberModule;
   private storageModule!: ChamberModule;
   private purifierModule!: ChamberModule;
@@ -207,9 +212,17 @@ export class PurificationScene extends Phaser.Scene {
     super({ key: 'PurificationScene' });
   }
 
+  preload(): void {
+    LastLightVisual.preload(this);
+  }
+
   create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean; menuEntry?: MenuEntryTransition; devSession?: PurificationDevSession }): void {
     this.shuttingDown = false;
     this.cleanupComplete = false;
+    this.resting = false;
+    this.restCamera = null;
+    this.lastOverlapType = null;
+    this.lastDiagnosticAt = -Infinity;
     this.devSession = import.meta.env?.DEV ? data?.devSession ?? null : null;
     this.devDeparture = null;
     this.productionDeparture = null;
@@ -313,12 +326,12 @@ export class PurificationScene extends Phaser.Scene {
     const camera = this.cameras.main;
     camera.setZoom(CHAMBER_CAMERA.zoom).setBackgroundColor(0x080a0c).setRoundPixels(true);
     camera.centerOn(CHAMBER_CAMERA.x, CHAMBER_CAMERA.y);
-    this.chamber = new PurificationChamberVisual(this);
+    this.chamber = new LastLightVisual(this);
     this.player.create(this, {
       spawn: chamberFeetToPlayerPosition(CHAMBER_SPAWN_POINT), depth: 100 + CHAMBER_SPAWN_POINT.y, facing: 'right',
-      body: PURIFICATION_PLAYER_BODY, movementMode: 'constrained', externalLampGround: true,
+      body: PURIFICATION_PLAYER_BODY, movementMode: 'constrained', externalLampGround: true, externalPresentation: true,
     });
-    this.locomotion = new PurificationChamberLocomotion(this.player);
+    this.locomotion = new LastLightLocomotion(this.player);
     const syncWeapon = (): void => {
       const id = inventoryStore.getEquipment().weaponId;
       const item = id ? inventoryStore.getItem(id) : undefined;
@@ -327,9 +340,15 @@ export class PurificationScene extends Phaser.Scene {
     };
     syncWeapon();
     this.unsubscribeWeapon = inventoryStore.subscribe(syncWeapon);
-    this.coreModule = new ChamberModule(this, 'CORE', CORE_POS);
-    this.storageModule = new ChamberModule(this, 'STORAGE', STORAGE_POS);
-    this.purifierModule = new ChamberModule(this, 'PURIFIER', PURIFIER_POS);
+    this.coreModule = new ChamberModule(this, 'CORE', CORE_POS, {
+      base: CHAMBER_DEVICE_BASES.core, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.core, interactionRadius: CHAMBER_INTERACTION_RADIUS,
+    });
+    this.storageModule = new ChamberModule(this, 'STORAGE', STORAGE_POS, {
+      base: CHAMBER_DEVICE_BASES.storage, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.storage, interactionRadius: CHAMBER_INTERACTION_RADIUS,
+    });
+    this.purifierModule = new ChamberModule(this, 'PURIFIER', PURIFIER_POS, {
+      base: CHAMBER_DEVICE_BASES.purifier, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.purifier, interactionRadius: CHAMBER_INTERACTION_RADIUS,
+    });
     this.syncInvestmentVisuals();
     this.updateChamberVisuals(0, 0);
     let offeredIds = inventoryStore.getOfferingItems().flatMap(item => item ? [item.id] : []);
@@ -447,7 +466,6 @@ export class PurificationScene extends Phaser.Scene {
 
     this.player.update(delta);
     this.locomotion?.update(delta);
-    this.player.setGroundDepth(100 + this.player.getGroundY(), 20);
 
     const pos = this.player.getPosition();
     this.tickPurificationAudio(time, pos);
@@ -467,7 +485,7 @@ export class PurificationScene extends Phaser.Scene {
     const nearDefense = canInteract('offering') && defDist <= radius;
     const nearGrowth = canInteract('growth') && groDist <= radius;
 
-    const target = this.findNearestTarget(
+    const target: InteractionTarget | null = this.resting ? { type: 'stand', distance: 0 } : this.findNearestTarget(
       nearRift, nearDefense, nearGrowth,
       riftDist, defDist, groDist,
     );
@@ -478,6 +496,12 @@ export class PurificationScene extends Phaser.Scene {
     purificationHud.setPromptVisible(!this.isAnyPanelOpen());
 
     this.updateChamberVisuals(time, delta);
+    if (import.meta.env.DEV && time - this.lastDiagnosticAt >= 200) {
+      this.lastDiagnosticAt = time;
+      // Read-only, DOM-backed diagnostics for browser verification. No command
+      // bridge, position setters or save-state editing is exposed.
+      getDomUiRoot().dataset.lastLightState = JSON.stringify(this.probeJourneyState());
+    }
 
     // Keep the world alive while discarding button edges during the entry.
     // Retain held-key state so OS repeat cannot become a fresh E/Esc/Tab press.
@@ -488,7 +512,7 @@ export class PurificationScene extends Phaser.Scene {
 
     // Interaction key (edge-triggered)
     if (this.interactKey && Phaser.Input.Keyboard.JustDown(this.interactKey)) {
-      if (this.isAnyPanelOpen()) return;
+      if (this.isAnyPanelOpen() || (!this.resting && this.restTween)) return;
 
       switch (target?.type) {
         case 'core':
@@ -506,6 +530,12 @@ export class PurificationScene extends Phaser.Scene {
         case 'growth':
           this.openGrowthPanel();
           break;
+        case 'rest':
+          this.sitDown();
+          break;
+        case 'stand':
+          this.standUp();
+          break;
         case 'rift':
           this.enterRift();
           break;
@@ -516,7 +546,9 @@ export class PurificationScene extends Phaser.Scene {
 
     // ESC
     if (this.escKey && Phaser.Input.Keyboard.JustDown(this.escKey)) {
-      if (impactResultPanel.isOpen()) {
+      if (this.resting) {
+        this.standUp();
+      } else if (impactResultPanel.isOpen()) {
         impactResultPanel.close();
         this.panelClosedAt = this.time.now;
       } else if (allocationPanel.isOpen()) {
@@ -535,7 +567,7 @@ export class PurificationScene extends Phaser.Scene {
       } else if (statusPanel.isOpen()) {
         statusPanel.close();
         this.panelClosedAt = this.time.now;
-      } else if (!this.interactionFocusReturn && !pauseMenu.isOpen() && this.time.now - this.panelClosedAt > 150) {
+      } else if (!this.restTween && !this.interactionFocusReturn && !pauseMenu.isOpen() && this.time.now - this.panelClosedAt > 150) {
         if (this.devSession?.onPause) this.devSession.onPause();
         else pauseMenu.open(this);
       }
@@ -545,7 +577,7 @@ export class PurificationScene extends Phaser.Scene {
     if (this.tabKey && Phaser.Input.Keyboard.JustDown(this.tabKey)) {
       if (statusPanel.isOpen()) {
         statusPanel.close();
-      } else if (!this.isAnyPanelOpen()) {
+      } else if (!this.resting && !this.restTween && !this.isAnyPanelOpen()) {
         this.openStatusPanel();
       }
     }
@@ -555,7 +587,9 @@ export class PurificationScene extends Phaser.Scene {
   probeJourneyState(): Record<string, unknown> | null {
     if (!import.meta.env?.DEV || this.shuttingDown) return null;
     return { player: { ...this.player.getPosition() }, route: this.locomotion?.getRoute(), transitioning: this.transitioning,
-      pendingSave: saveManager.hasPendingSave(),
+      pendingSave: saveManager.hasPendingSave(), worldPlayer: this.locomotion?.getWorldPosition(),
+      resting: this.resting, rest: REST_APPROACH, nearTarget: this.lastOverlapType, fps: this.game.loop.actualFps,
+      camera: { zoom: this.cameras.main.zoom, scrollX: this.cameras.main.scrollX, scrollY: this.cameras.main.scrollY },
       devices: { core: { ...CORE_POS }, storage: { ...STORAGE_POS }, purifier: { ...PURIFIER_POS },
         entrance: { ...RIFT_ENTRANCE_POS }, offering: { ...DEFENSE_POS }, growth: { ...GROWTH_POS } },
       panels: { inventory: inventoryPanel.isOpen(), status: statusPanel.isOpen(), offering: defensePanel.isOpen(),
@@ -611,13 +645,58 @@ export class PurificationScene extends Phaser.Scene {
       candidates.push({ type: 'rift', distance: riftDist });
     }
 
+    if (this.locomotion?.canRest()) {
+      candidates.push({ type: 'rest', distance: this.distTo(this.player.getPosition(), chamberFeetToPlayerPosition(REST_APPROACH)) });
+    }
+
     if (candidates.length === 0) return null;
 
     const order: InteractionTarget['type'][] = [
-      'core', 'storage', 'purifier', 'defense', 'growth', 'rift',
+      'core', 'storage', 'purifier', 'defense', 'growth', 'rift', 'rest', 'stand',
     ];
     candidates.sort((a, b) => a.distance - b.distance || order.indexOf(a.type) - order.indexOf(b.type));
     return candidates[0]!;
+  }
+
+  private sitDown(): void {
+    if (this.resting || this.restTween || this.isAnyPanelOpen() || !this.locomotion?.canRest()) return;
+    this.resting = true;
+    this.player.setInputEnabled(false);
+    const camera = this.cameras.main;
+    this.restCamera = { scrollX: camera.scrollX, scrollY: camera.scrollY, zoom: camera.zoom };
+    const zoom = CHAMBER_CAMERA.zoom * 1.18;
+    // A gentle move toward the hearth retains the surrounding broken world.
+    const centerX = CHAMBER_CAMERA.x * .7 + REST_APPROACH.x * .3;
+    const centerY = CHAMBER_CAMERA.y * .7 + REST_APPROACH.y * .3;
+    this.restTween = this.tweens.add({ targets: camera, zoom,
+      scrollX: centerX - camera.width / 2, scrollY: centerY - camera.height / 2,
+      duration: 700, ease: 'Sine.easeInOut', onComplete: () => { this.restTween = null; } });
+    this.restLine?.remove();
+    const line = document.createElement('div');
+    line.id = 'purification-rest-line';
+    line.textContent = '石头还是冷的。火还没有熄。';
+    line.style.cssText = 'position:absolute;left:180px;top:534px;width:600px;text-align:center;pointer-events:none;color:#bbb9ab;font:14px/24px monospace;letter-spacing:2px;text-shadow:0 2px 4px #000;z-index:30';
+    getDomUiRoot().append(line);
+    this.restLine = line;
+  }
+
+  private standUp(): void {
+    if (!this.resting) return;
+    this.resting = false;
+    this.restLine?.remove(); this.restLine = null;
+    this.restTween?.stop(); this.restTween = null;
+    const previous = this.restCamera;
+    this.restCamera = null;
+    const finish = (): void => {
+      this.restTween = null;
+      if (this.shuttingDown) return;
+      this.consumeEntryKeys();
+      this.panelClosedAt = this.time.now;
+      this.player.setInputEnabled(!this.isAnyPanelOpen());
+    };
+    if (previous) this.restTween = this.tweens.add({ targets: this.cameras.main, ...previous,
+      duration: 350, ease: 'Sine.easeInOut', onComplete: finish });
+    else finish();
   }
 
   private startIsolationBed(): void {
@@ -666,14 +745,13 @@ export class PurificationScene extends Phaser.Scene {
   private onPostUpdate(): void {
     if (this.shuttingDown) return;
     this.player.postUpdate();
-    const actorBounds = this.player.getVisualBounds(this.interactionPlayerBounds);
+    const actorBounds = this.chamber?.getActorBounds(this.interactionPlayerBounds) ?? this.player.getVisualBounds(this.interactionPlayerBounds);
     const player = this.player.getPosition();
-    const feet = { x: player.x, y: player.y + 10 };
     const modules = [this.coreModule, this.storageModule, this.purifierModule];
     const focused = this.interactionModule?.id ?? null;
-    const masked = this.transitioning || !!this.menuEntry || pauseMenu.isOpen()
+    const masked = this.resting || this.transitioning || !!this.menuEntry || pauseMenu.isOpen()
       || (this.isAnyPanelOpen() && focused === null);
-    const candidates = modules.map(mod => ({ id: mod.id, ...getChamberObservation(feet, mod.id) }));
+    const candidates = modules.map(mod => ({ id: mod.id, ...(this.locomotion?.getObservation(mod.id) ?? { distance: Infinity, visible: false }) }));
     const observation = this.integritySelection.update(this.observationDelta,
       masked ? [] : candidates, masked ? null : focused);
     const camera = this.cameras.main;
@@ -687,7 +765,7 @@ export class PurificationScene extends Phaser.Scene {
       mod.setObservationActive(!blocked && observation.selectedId === mod.id && observation.active, blocked);
       mod.syncIntegrityReadout(actorBounds, player.x, { viewport, reserved: this.integrityReservedBounds(mod.id) });
     }
-    this.player.getLampWorldPosition(this.chamberState.lamp);
+    this.chamber?.getLampPosition(this.chamberState.lamp);
     this.chamber?.syncPlayerLight(this.player.getPosition(), this.chamberState.lamp);
   }
 
@@ -696,7 +774,7 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private openAllocationPanel(moduleId: 'CORE' | 'STORAGE' | 'PURIFIER'): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
+    if (this.resting || this.restTween || this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     const mod = moduleId === 'CORE' ? this.coreModule : moduleId === 'STORAGE' ? this.storageModule : this.purifierModule;
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES[moduleId.toLowerCase() as 'core' | 'storage' | 'purifier'], 320, mod);
     allocationPanel.open(moduleId, () => this.restoreInteractionFocus(), {
@@ -762,10 +840,10 @@ export class PurificationScene extends Phaser.Scene {
       top: camera.y + oy + (rect.top - camera.scrollY - oy) * camera.zoom,
       bottom: camera.y + oy + (rect.bottom - camera.scrollY - oy) * camera.zoom,
     });
-    const base = CHAMBER_DEVICE_BASES[moduleId.toLowerCase() as 'core' | 'storage' | 'purifier'];
+    const mod = moduleId === 'CORE' ? this.coreModule : moduleId === 'STORAGE' ? this.storageModule : this.purifierModule;
     return {
-      device: project(moduleIntegrityBounds(moduleId, base.x, base.y)),
-      player: project(this.player.getVisualBounds(this.interactionPlayerBounds)),
+      device: project(mod.getWorldBounds()),
+      player: project(this.chamber?.getActorBounds(this.interactionPlayerBounds) ?? this.player.getVisualBounds(this.interactionPlayerBounds)),
       playerX: camera.x + ox + (this.player.getPosition().x - camera.scrollX - ox) * camera.zoom,
       hysteresis: 8 * camera.zoom,
       reserved: this.integrityReservedBounds(moduleId).map(project),
@@ -775,19 +853,21 @@ export class PurificationScene extends Phaser.Scene {
   private focusWorldInteraction(point: Readonly<{ x: number; y: number }>, screenX: number, mod: ChamberModule | null = null): void {
     this.player.setInputEnabled(false);
     this.interactionWorldPoint.x = point.x;
-    this.interactionWorldPoint.y = point.y - 24;
+    const device = (Object.keys(CHAMBER_DEVICE_BASES) as ChamberDevice[]).find(id => CHAMBER_DEVICE_BASES[id] === point);
+    const bounds = device ? CHAMBER_DEVICE_VISUAL_BOUNDS[device] : undefined;
+    this.interactionWorldPoint.y = point.y + (bounds ? (bounds[1] + bounds[3]) / 2 : -24);
     this.interactionModule = mod;
     mod?.setInteractionReadoutActive(true);
     const camera = this.cameras.main;
     this.interactionFocusReturn = { scrollX: camera.scrollX, scrollY: camera.scrollY, zoom: camera.zoom };
-    const zoom = 3;
+    const zoom = 2.2;
     const originX = camera.width * camera.originX;
     const originY = camera.height * camera.originY;
     this.interactionFocusTween = this.tweens.add({
       targets: camera,
       zoom,
       scrollX: point.x - originX - (screenX - camera.x - originX) / zoom,
-      scrollY: point.y - 24 - originY - (330 - camera.y - originY) / zoom,
+      scrollY: this.interactionWorldPoint.y - originY - (330 - camera.y - originY) / zoom,
       duration: 260,
       ease: 'Sine.easeInOut',
       onComplete: () => { this.interactionFocusTween = null; },
@@ -832,20 +912,20 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private openDefensePanel(): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
+    if (this.resting || this.restTween || this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES.offering, 184);
     defensePanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
 
   private openGrowthPanel(): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
+    if (this.resting || this.restTween || this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES.growth, 184);
     growthPanel.open(() => this.restoreInteractionFocus(), { getAnchor: this.getInteractionScreenAnchor });
   }
 
   /** A1 + B1: Open the combined status & inventory panel. */
   private openStatusPanel(): void {
-    if (this.isAnyPanelOpen() || pauseMenu.isOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
+    if (this.resting || this.restTween || this.isAnyPanelOpen() || pauseMenu.isOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.player.setInputEnabled(false);
     statusPanel.open(() => {
       this.player.setInputEnabled(true);
@@ -853,12 +933,9 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   private enterRift(): void {
-    if (this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
+    if (this.resting || this.restTween || this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES.rift, 184);
-    const sprite = this.player.getSprite();
-    const portrait = document.createElement('canvas'); portrait.width = sprite.frame.cutWidth; portrait.height = sprite.frame.cutHeight;
-    portrait.getContext('2d')?.drawImage(sprite.texture.getSourceImage() as CanvasImageSource, sprite.frame.cutX, sprite.frame.cutY, portrait.width, portrait.height, 0, 0, portrait.width, portrait.height);
-    openInventory({ mode: 'prepare', portrait: portrait.toDataURL(), onClose: () => this.restoreInteractionFocus(),
+    openInventory({ mode: 'prepare', portrait: this.chamber?.getPortrait(), onClose: () => this.restoreInteractionFocus(),
       onDepart: () => this.transitionToRift(),
       onOffering: () => this.openOfferingFromInventory(),
     });
@@ -1066,7 +1143,12 @@ export class PurificationScene extends Phaser.Scene {
     const pos = this.player.getPosition();
     this.chamberState.player.x = pos.x;
     this.chamberState.player.y = pos.y;
-    this.player.getLampWorldPosition(this.chamberState.lamp);
+    this.chamber?.getLampPosition(this.chamberState.lamp);
+    const world = this.resting ? REST_POSITION : this.locomotion?.getWorldPosition();
+    if (world) Object.assign(this.chamberState.worldPlayer, world);
+    this.chamberState.facingYaw = this.resting ? REST_YAW : this.locomotion?.getWorldFacing() ?? 0;
+    this.chamberState.walking = !this.resting && this.player.isMoving();
+    this.chamberState.resting = this.resting;
     this.chamber?.update(time, delta, this.chamberState);
   }
 
@@ -1169,6 +1251,7 @@ export class PurificationScene extends Phaser.Scene {
     dispose('entry', () => this.menuEntry?.destroy()); this.menuEntry = null;
     dispose('transition-delay', () => this.transitionDelay?.remove(false)); this.transitionDelay = null;
     dispose('transition-overlay', () => this.transitionOverlay?.remove()); this.transitionOverlay = null;
+    dispose('rest', () => { this.restTween?.stop(); this.restTween = null; this.restLine?.remove(); this.restLine = null; this.restCamera = null; this.resting = false; });
     dispose('interaction-focus', () => this.restoreInteractionFocus(true));
     dispose('audio', () => audioManager.haltNonBgm());
     for (const [name, close] of [
@@ -1188,7 +1271,7 @@ export class PurificationScene extends Phaser.Scene {
       ['player', this.player], ['chamber', this.chamber],
     ] as const) dispose(`world:${name}`, () => resource?.destroy());
     this.chamber = null;
-    dispose('hud', () => purificationHud.destroy());
+    dispose('hud', () => { purificationHud.destroy(); delete getDomUiRoot().dataset.lastLightState; });
     this.cleanupStage = failures.length ? failures.join('; ') : 'complete';
     if (!failures.length) return null;
     const error = new Error(`Purification cleanup: ${this.cleanupStage}`);

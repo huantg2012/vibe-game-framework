@@ -15,7 +15,7 @@ import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 // Types
 // ---------------------------------------------------------------------------
 
-export type InteractionTargetType = 'core' | 'storage' | 'purifier' | 'rift' | 'defense' | 'growth';
+export type InteractionTargetType = 'core' | 'storage' | 'purifier' | 'rift' | 'defense' | 'growth' | 'rest' | 'stand';
 
 export interface InteractionTarget {
   type: InteractionTargetType;
@@ -52,6 +52,8 @@ const ACTION_LABEL: Record<InteractionTargetType, string> = {
   rift: '踏入裂隙',
   defense: '供奉',
   growth: '蜕变',
+  rest: '坐下',
+  stand: '起身',
 };
 
 // ---------------------------------------------------------------------------

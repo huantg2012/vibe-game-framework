@@ -3,11 +3,12 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "原Player输入/速度保持，R9净化点以新左置双层/双宽坡和6px圆足连续扫掠八向行走；六处同层24px操作。Rift仍用原俯视路径。",
+    "summary": "正式净化点改用 Last Light A 源几何生成的米制分层移动：主层真实断口保留宽桥、单西坡连接上层，0.22m 圆足碰撞及局部逆投影保持屏幕相对八向操作。Player 继续拥有输入与冻结；Rift 原俯视移动不变。 正常入口真实键盘已到六站、沿单西坡上层和宽桥到核心；本轮为 IMPLEMENTED / LIMITED-VERIFIED。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点与Rift：WASD/方向键；净化点上下层沿宽坡道直接移动，无楼梯模式或跳跃。"
+      "主菜单新游戏/继续/归来→净化点：WASD/方向键；单西坡上下层、宽桥到核心，无跳跃或楼梯模式。",
+      "进入 Rift 后使用既有俯视移动与原角色呈现。"
     ],
     "sources": [
       {
@@ -36,11 +37,13 @@
       },
       {
         "path": "src/systems/purification-chamber-layout.ts",
-        "role": "code"
+        "role": "code",
+        "note": "历史净化点实现；本轮正式入口改由 Last Light 模块负责，保留旧版本取证路径。"
       },
       {
         "path": "src/systems/purification-chamber-locomotion.ts",
-        "role": "code"
+        "role": "code",
+        "note": "历史净化点实现；本轮正式入口改由 Last Light 模块负责，保留旧版本取证路径。"
       },
       {
         "path": "docs/qa/iteration-30.md",
@@ -74,6 +77,34 @@
       {
         "path": "docs/qa/iteration-30-r8.md",
         "role": "doc"
+      },
+      {
+        "path": "src/systems/last-light-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/last-light-locomotion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/last-light-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export-layout.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/last-light/check-player.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -86,11 +117,13 @@
       "COH-E-I30-R4-RUNTIME",
       "COH-E-I30-R8-ROUTES",
       "COH-E-I30-R8-INTEGRATION",
-      "COH-E-I30-R9-GEOMETRY"
+      "COH-E-I30-R9-GEOMETRY",
+      "COH-E-I30-LAST-LIGHT-PRODUCTION"
     ],
     "unknowns": [
-      "R9真实键盘六点/双坡/遮挡/原Rift移动已有限验证；纯运动与机器人知情路线不证明人的初见导航和长期动线体验。",
-      "R1/R8整景均被用户否决，不沿用其内部检查代签R9品质；I28长期体验/平衡仍挂起。"
+      "7组纯移动检查通过，包含桥/西坡双向、六站与休息接近点、缺口边沿、八向速度及观察遮挡；浏览器真实WASD已覆盖六站、西坡上行、桥到核心。下坡和桥返回未在浏览器逐条回走，仅有纯回归覆盖。",
+      "本轮验证是限定路线与生命周期检查，不证明人的初见导航、所有边缝手感或长期往返体验；具体范围见 docs/qa/iteration-30-last-light-production.md。",
+      "I28 长期体验与平衡仍挂起，原 Rift 全量世界组合未重验。"
     ]
   },
   {

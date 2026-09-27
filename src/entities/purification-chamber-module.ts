@@ -6,6 +6,12 @@ import { INTEGRITY_COLORS, integrityCapacityRatio, integrityFillColor, moduleInt
   type IntegrityPlacementInput, type IntegrityRect } from '@/ui/chamber-integrity-placement';
 import { ChamberIntegrityLifecycle, type IntegrityPresentation } from '@/ui/chamber-integrity-lifecycle';
 
+export interface ChamberModuleGeometry {
+  readonly base: Readonly<{x:number;y:number}>;
+  readonly bounds: readonly [number,number,number,number];
+  readonly interactionRadius: number;
+}
+
 export class ChamberModule {
   readonly x: number;
   readonly y: number;
@@ -13,16 +19,23 @@ export class ChamberModule {
   private inRange = false;
   private readonly integrity = new ChamberIntegrityLifecycle();
   private readonly visualBase: Readonly<{ x: number; y: number }>;
+  private readonly authoredGeometry?: ChamberModuleGeometry;
 
-  constructor(private readonly scene: Phaser.Scene, readonly id: ModuleType, point: Readonly<{ x: number; y: number }>) {
+  constructor(private readonly scene: Phaser.Scene, readonly id: ModuleType, point: Readonly<{ x: number; y: number }>, geometry?:ChamberModuleGeometry) {
     this.x = point.x;
     this.y = point.y;
-    this.visualBase = CHAMBER_DEVICE_BASES[id.toLowerCase() as 'core' | 'storage' | 'purifier'];
+    this.authoredGeometry = geometry;
+    this.visualBase = geometry?.base ?? CHAMBER_DEVICE_BASES[id.toLowerCase() as 'core' | 'storage' | 'purifier'];
     this.readout = scene.add.graphics().setDepth(550);
   }
 
   update(x: number, y: number, canInteract: boolean): void {
-    this.inRange = canInteract && Math.hypot(x - this.x, y - this.y) <= CHAMBER_INTERACTION_RADIUS;
+    this.inRange = canInteract && Math.hypot(x - this.x, y - this.y) <= (this.authoredGeometry?.interactionRadius ?? CHAMBER_INTERACTION_RADIUS);
+  }
+
+  getWorldBounds():IntegrityRect {
+    const {x,y}=this.visualBase,b=this.authoredGeometry?.bounds;
+    return b ? {left:x+b[0],top:y+b[1],right:x+b[2],bottom:y+b[3]} : moduleIntegrityBounds(this.id,x,y);
   }
 
   /** Observation is selected by the scene, independently of existing E eligibility. */
@@ -37,10 +50,9 @@ export class ChamberModule {
     const hp = this.getHpData();
     if (!hp) return;
     const ratio = integrityCapacityRatio(hp.hp, hp.maxHp);
-    const { x: baseX, y: baseY } = this.visualBase;
     // Include the one-pixel dark edge in the reserved rectangle, not only fill.
     const presentation = this.integrity.sample('world', {
-      device: moduleIntegrityBounds(this.id, baseX, baseY), player: playerBounds, playerX,
+      device: this.getWorldBounds(), player: playerBounds, playerX,
       width: 4, height: 26, gap: 7, hysteresis: 8, clearance: 5, ...geometry,
     }, this.scene.time.now);
     if (!presentation.placement.visible || presentation.opacity <= 0) return;

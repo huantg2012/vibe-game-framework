@@ -4,6 +4,7 @@
  */
 
 import Phaser from 'phaser';
+import { LastLightVisual } from './last-light-visual';
 import { AUDIO_ASSETS, audioUrlsFor } from '@/managers/audio-catalog';
 import { audioManager } from '@/managers/audio-manager';
 import {
@@ -30,6 +31,7 @@ export class BootScene extends Phaser.Scene {
 
   preload(): void {
     injectPanelStyles();
+    LastLightVisual.preload(this);
     this.load.image('menu-last-light', 'assets/art/menu-last-light.png');
     this.load.image('menu-last-light-clean-plate', 'assets/art/menu-last-light-clean-plate.png');
     // Create loading bar

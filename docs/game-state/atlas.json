@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类污染/炉火/肩灯混光、右侧建筑依托、分层外景、同身份新人物与动态景观。六站双坡及全部7311可站样本连通，查看页限定验证通过；新版待人审，正式生产仍R10、Rift人物未变、I28挂起。"
+    "summary": "Last Light A 已正式接入：52%裂隙、断口宽桥、单西坡、六站及炉边坐下。源资源、7组纯移动、Player与构建通过；真实WASD/E六站、备行入Rift与归来、载入重建及坐下已限定验证，状态 IMPLEMENTED / LIMITED-VERIFIED。当前动态美术待人审；fallback实机、修复/购买交易和长期经济未覆盖，I28保持挂起。"
   },
   "domains": [
     {
@@ -16,7 +16,7 @@
       "id": "controls",
       "title": "操作、生存与视野",
       "coverage": "mapped",
-      "note": "R9紧凑双层保持原人物、八向移动、双宽坡及六操作锚；R10外景视差消费真实人物移动，六点/双坡/Rift与聚焦已按正式入口增量回归。按已知路线走动不等于初见导航或人类手感通过。"
+      "note": "Last Light米制分层导航与0.22m足印已接生产；纯检查覆盖单西坡/宽桥双向，真实键盘覆盖六站、西坡上行和桥到核心。浏览器未逐条回走下坡/桥返回；初见理解、全边缝与长期手感未由机器通过代验。"
     },
     {
       "id": "world",
@@ -40,7 +40,7 @@
       "id": "progression",
       "title": "净化点、成长与经济",
       "coverage": "mapped",
-      "note": "I29 R3信息边界/固定100净化基准/全22步价格已实现并限定验证，旧购及旧在途保留；自然供给、后段深度、整数收益读法仍未解决，长期经济挂起。"
+      "note": "Last Light A 六站与炉边坐下已接生产，原业务/存档和价格保持；真实六站面板、备行/Rift归来、载入重建和坐下完成限定验证。未回归修复/购买交易及全成长/供奉组合；自然供给、后段深度、整数收益与I28长期经济仍保留边界。"
     },
     {
       "id": "interface",
@@ -52,7 +52,7 @@
       "id": "presentation",
       "title": "角色、美术与声音",
       "coverage": "mapped",
-      "note": "I30获赞35f17ba像素场景基线上完成七项修订：核心圣龛、三类污染/炉火/肩灯混光、右侧建筑依托、分层外景、同身份新人物与动态景观。六站双坡及全部7311可站样本连通，查看页限定验证通过；新版待人审，正式生产仍R10、Rift人物未变、I28挂起。"
+      "note": "Last Light A 已正式接入：52%裂隙、断口宽桥、单西坡、六站及炉边坐下。源资源、7组纯移动、Player与构建通过；真实WASD/E六站、备行入Rift与归来、载入重建及坐下已限定验证，状态 IMPLEMENTED / LIMITED-VERIFIED。当前动态美术待人审；fallback实机、修复/购买交易和长期经济未覆盖，I28保持挂起。"
     },
     {
       "id": "narrative",
@@ -140,7 +140,7 @@
     },
     {
       "id": "COH-C004",
-      "statement": "保留原玩家、基本移动、既有光色与不可照亮的遮视空间空洞；新能力仍服从真实遮挡。",
+      "statement": "Rift 保留原玩家、基本移动、既有光色与不可照亮的遮视空间空洞；新能力仍服从真实遮挡。净化点人物与空间已获单独重构授权，当前约束见 COH-C-HUB-LAST-LIGHT-A。",
       "status": "active",
       "source": {
         "path": "docs/tasks/iteration-28.md"
@@ -258,7 +258,7 @@
     {
       "id": "COH-C-HUB-TERRACED-REWORK",
       "statement": "DEC-180用户否决灰钢两排陈列与一维轨道；保留封闭/多高程/少许透视，R2面内八向行走、宽坡道、功能性装置身份与外部侵蚀/抵抗一体重做。取消单色冷灰输出限制；不新增建筑防御或改变Rift/原人物。",
-      "status": "active",
+      "status": "superseded",
       "source": {
         "path": "docs/progress/decisions-log.md",
         "note": "DEC-180；用户否决R1，不意味着已认可R2具体实现。"
@@ -268,12 +268,13 @@
         "COH-F006",
         "COH-F042",
         "COH-F043"
-      ]
+      ],
+      "supersededBy": "COH-C-HUB-LAST-LIGHT-A"
     },
     {
       "id": "COH-C-PURIFICATION-R9-COMPOSITION",
       "statement": "净化点左置紧凑结构/集中外景；原画仅提供布景与分层，不照搬画风渲染，不缩原人物/六装置以伪造空间。保持封闭据点、原像素风与八向双坡。",
-      "status": "active",
+      "status": "superseded",
       "source": {
         "path": "docs/progress/decisions-log.md",
         "note": "DEC-181"
@@ -282,6 +283,22 @@
         "COH-F026",
         "COH-F042",
         "COH-F006"
+      ],
+      "supersededBy": "COH-C-HUB-LAST-LIGHT-A"
+    },
+    {
+      "id": "COH-C-HUB-LAST-LIGHT-A",
+      "statement": "净化点采用用户选中的 Last Light A 原画同源像素画法及断裂回廊：保留真实断口宽桥、单西坡、六站与建筑残骸坐席；左前裂隙按授权进一步收至原始宽度52%。实际移动、遮挡与光照必须消费同一源几何；净化点人物可重构但须与Rift原人物同身份，不新增休息回复或建筑抗污染机制。",
+      "status": "active",
+      "source": {
+        "path": "docs/art-direction.md",
+        "note": "2026-09-27用户要求选定A、继续收窄裂隙并直接入游戏；接入不等于当前动态品质已获人审。"
+      },
+      "featureIds": [
+        "COH-F006",
+        "COH-F026",
+        "COH-F039",
+        "COH-F042"
       ]
     }
   ],

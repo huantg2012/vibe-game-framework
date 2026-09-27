@@ -1,13 +1,13 @@
 [
   {
     "id": "COH-F039",
-    "title": "原玩家像素、朝向与持物",
+    "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "正式净化点与 Rift 共用原玩家程序像素、四向动作、武器持物及受击反馈；地图风格不替换玩家身份。R4只读灯锚与地面光池委派、R7完整visualBounds在R8继续用于照明和提示避让，角色绘图、移动与 Rift 玩法代码保持。 2026-09-25艺术样景单独以同源几何重画据点人物（护帽/背包/侧肩灯），原Rift两份人物源码未变；未接正式Player。",
+    "summary": "正式净化点采用 Last Light 同身份人物：护帽、背包与侧肩灯，8向共56帧静立/行走/坐姿图集；场景依据真实世界脚点与朝向合成人物、遮挡和受光。共享 Player 保持输入、业务位置与冻结；Rift 默认原像素、持具和灯晕呈现不变。 正式浏览器已验证新净化点人物、进入Rift后原人物以及归来/载入重建；状态 IMPLEMENTED / LIMITED-VERIFIED。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "净化点与 Rift 中玩家角色"
+      "正式净化点：新人物随实际行走与坐下状态呈现；进入 Rift 后沿用原低精度玩家、持具与灯晕。"
     ],
     "sources": [
       {
@@ -69,7 +69,67 @@
       {
         "path": "docs/art/demos/purification-last-light/actor.ts",
         "role": "art",
-        "note": "据点新人物样景，正式Rift仍原精灵"
+        "note": "正式净化点人物图集的同源几何；Rift 仍用原像素呈现。"
+      },
+      {
+        "path": "src/systems/last-light-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/last-light-locomotion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/last-light-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export-layout.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-spatial.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-fallback.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export.mjs",
+        "role": "code"
+      },
+      {
+        "path": "public/assets/last-light/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/last-light/checksums.json",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-assets.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-player.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -86,11 +146,13 @@
       "COH-E-I30-R8-INTEGRITY",
       "COH-E-I30-R8-TECHNICAL",
       "COH-E-I30-R9-GEOMETRY",
-      "COH-E-I30-LAST-LIGHT-LIVING"
+      "COH-E-I30-LAST-LIGHT-LIVING",
+      "COH-E-I30-LAST-LIGHT-PRODUCTION"
     ],
     "unknowns": [
-      "原角色身份保持；I30 R4已实测四向动画灯锚及入Rift原灯池，未逐帧复核所有受击/武器动作。",
-      "新据点人物仅固定样景姿态，尚未接正式动作/八向行走；同身份最终判断仍待用户看实尺。"
+      "check-player隔离运行覆盖输入冻结、外部呈现所有权和销毁/重入；浏览器已完成Rift原人物、归来与净化点载入重建。未逐帧验所有武器、受击动作或全部失败流程。",
+      "角色图集56帧与8方向独立动作已过资源检查；同身份一致性、实尺观感和动态品质待用户体验，本轮限定验证不是整体美术人审通过。",
+      "净化点人物投影采用有限体积近似，不能称完整实时三角形阴影；无WebGL2兼容路径未做实机验证，必须标明降级质量。"
     ]
   },
   {
@@ -201,16 +263,15 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "用户选择第二轮 A 断裂回廊，要求重做裂隙。静态样板已保留 A 断口/宽回廊，重建左前断沿的竖向时空伤口与内侧备行站位；新旧同镜头对照、来源不漂移、路线支撑与真实受光检查通过，用户认可裂隙修订后要求口子小一点，现沿原中心线收窄28%，微调待看。动态 Last Light 未替换，正式生产仍 R10。",
+    "summary": "用户已选 A 断裂回廊并认可左前断沿裂隙方向；裂口进一步收至原始宽度52%（最宽0.6864m），现由同源材质/深度/动态资源接入正式净化点。保留核心能量体、单西坡、真实断口宽桥、六站及炉边坐席；正式角色移动驱动画面，源资源/导航/Player检查与构建通过；WebGL2正式浏览器已限定验证六站、备行/Rift归来、载入重建及坐下。状态 IMPLEMENTED / LIMITED-VERIFIED，当前动态艺术品质仍待用户。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "正式生产仍为R10：主菜单；净化点自由移动/修复/交互",
-      "当前动态艺术样景：docs/art/demos/purification-last-light/index.html；http://127.0.0.1:3027/docs/art/demos/purification-last-light/index.html；含修改前/原画、六模型/人物及炉边断墙坐下体验，非正式游戏",
-      "恢复工作：docs/art-direction.md#resume-art-rebuild → docs/design-notes/purification-scene-art-plan.md#当前执行状态",
-      "平台布局审查：docs/reviews/2026-09-26-purification-platform-layout.md；交互可读版 docs/reviews/interactive/purification-platform-layout-2026-09-26.html；历史审查；用户补充后已实施单西坡与休息组优化，最新验证见 docs/qa/iteration-30-last-light-living.md",
-      "旧A/C构图与局部样板仅历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；6127218已明确否决，不再是活跃入口",
-      "2026-09-26当前已选 A 裂隙修订：docs/art/demos/purification-forecourt-options/index.html；冻结旧 A、静态新旧实图与备行路线，修订待人审"
+      "正式入口：项目根 index.html 主菜单→新游戏/继续/归来→Last Light A 净化点。",
+      "当前实现及验证：src/scenes/last-light-visual.ts、src/systems/last-light-locomotion.ts；docs/qa/iteration-30-last-light-production.md。",
+      "集中美术设计：docs/art-direction.md；已选 A 源几何：docs/art/demos/purification-forecourt-options/option-a.ts 与 rift-a.ts。",
+      "历史参照：docs/art/demos/purification-last-light/index.html、purification-forecourt-options/index.html；样景及历史候选的验收不等同本次正式接入。",
+      "旧 A/C 构图与局部样板仅作历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；被用户否决的6127218不再是当前画法。"
     ],
     "sources": [
       {
@@ -219,15 +280,18 @@
       },
       {
         "path": "src/scenes/rift-entrance-visual.ts",
-        "role": "code"
+        "role": "code",
+        "note": "历史净化点实现；本轮正式入口改由 Last Light 模块负责，保留旧版本取证路径。"
       },
       {
         "path": "src/scenes/offering-stand-visual.ts",
-        "role": "code"
+        "role": "code",
+        "note": "历史净化点实现；本轮正式入口改由 Last Light 模块负责，保留旧版本取证路径。"
       },
       {
         "path": "src/scenes/growth-console-visual.ts",
-        "role": "code"
+        "role": "code",
+        "note": "历史净化点实现；本轮正式入口改由 Last Light 模块负责，保留旧版本取证路径。"
       },
       {
         "path": "src/systems/procedural-purification-surface.ts",
@@ -284,7 +348,8 @@
       },
       {
         "path": "src/scenes/purification-chamber-visual.ts",
-        "role": "code"
+        "role": "code",
+        "note": "历史净化点实现；本轮正式入口改由 Last Light 模块负责，保留旧版本取证路径。"
       },
       {
         "path": "docs/art/purification-renewal.md",
@@ -820,6 +885,66 @@
         "path": "docs/art/demos/purification-forecourt-options/rift-a.ts",
         "role": "art",
         "note": "A 独立裂隙模型、断沿位置与源光"
+      },
+      {
+        "path": "src/systems/last-light-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/last-light-locomotion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/last-light-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export-layout.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-spatial.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-fallback.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export.mjs",
+        "role": "code"
+      },
+      {
+        "path": "public/assets/last-light/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/last-light/checksums.json",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-assets.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-player.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -893,15 +1018,15 @@
       "COH-E-I30-FORECOURT-OPTIONS",
       "COH-E-I30-FORECOURT-OPTIONS-R2",
       "COH-E-I30-FORECOURT-A-RIFT",
-      "COH-E-I30-RIFT-MOUTH"
+      "COH-E-I30-RIFT-MOUTH",
+      "COH-E-I30-LAST-LIGHT-PRODUCTION"
     ],
     "unknowns": [
-      "用户已认可5445d15裂隙位置与形态，仅要求口子缩小；现收窄28%，微调待看。仍为静态样板，未接动态场景或正式移动。",
-      "007554c经用户指出西路受炉阻碍、核心前空地无效，HUMAN-CHANGES-REQUESTED；新炉席布置已实现且限定验证通过，仍待人审。技术连通不等于舒服的路线。",
-      "本轮20条主要自然路线避开炉席且10条下层路线存在1.20净宽选择；6833候选中6663可达，170边缝仍保留。未接正式行走/碰撞/经济；坐席已接近前沿，不宜继续前推。",
-      "35f17ba整景、347d55a核心内质获用户认可；e243381残骸休息点与内移炉火获用户认可，其他未单独认可部分保持原状态。固定相机样景，站/坐阴影分别烘焙，未接正式玩法和人物驱动视差。",
-      "R10真实六交互、双坡、聚焦、暂停/减动/三次载入及Rift释放已限定验证；一段约31秒自然走路不是长期性能或远景节奏认证，未重验全成长/供奉/自然经济。",
-      "专门音频、初见空间理解与长期审美未驗；I28长期采样/平衡保持挂起。"
+      "A方向与5445d15裂隙位置/形态获用户认可；52%收口与本次正式动态呈现仍待实尺人审，不将方向认可扩张为整体质量通过。",
+      "WebGL2正式入口六站、坐下、Rift明确放弃归来和载入重建已限定验证；最新全新页无error/warn，约119–121fps只是在场运行样点，不是性能基准或长期稳定性证明。",
+      "西坡下行和桥返回仅有纯移动回归覆盖，浏览器未逐条回走；历史动线问题和否决记录保留，初见空间理解、长期往返效率及外景节奏仍待体验。",
+      "人物实时阴影采用有限体积近似；无WebGL2 fallback未做实机验证，兼容呈现不得冒充正常艺术质量。",
+      "修复/购买交易、全成长/供奉组合、全随机Rift世界、专门音频及既有未审查项未在本轮重验；I28长期采样/经济和动态审美仍保留边界。"
     ]
   }
 ]

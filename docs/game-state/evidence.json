@@ -3295,5 +3295,80 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-PRODUCTION",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-27",
+    "revision": "731be73 + Last Light A production integration working tree",
+    "scope": "F006/F026/F039/F042：用户选A后，52%裂隙、断口宽桥、单西坡、六站和炉边坐下接入正式净化点。check-movement七组纯运行通过：六站/坐席接近点、核心宽桥往返、单西坡上下层往返、缺口/裂隙切口与越层限制、平地/坡地八向屏幕速度、冻结/卡帧上限、3D观察遮挡。check-player覆盖共享输入、外部呈现所有权、冻结和销毁/重入及Rift默认呈现。check-assets核对同源指纹、960×640资源、52%裂隙、56人物帧、深度与发光数据；export-layout --check、TypeScript及生产构建通过。 正式WebGL2浏览器真实WASD/E：六站全部可达并打开原面板，单西坡上层、断桥到核心；备行→进入Rift原人物→暂停→两次明确放弃→R返回→归来结算；净化点暂停→载入记录→重建。坐下1.18倍镜头、氛围文案与起身已限定验证。最新全新页无error/warn；约119–121fps为运行样点。状态 IMPLEMENTED / LIMITED-VERIFIED。",
+    "limitations": "艺术整体人审仍待用户，本条不标整体USER-PASS。西坡下行与桥返回只在纯移动回归通过，浏览器未逐条回走；运行帧率样点不是性能基准。无WebGL2 fallback未做实机验证，人物阴影为有限体积近似。未覆盖修复/购买交易、全成长/供奉组合、全随机Rift世界、人的初见与长期体验；I28长期经济/采样及原未评审项保持。浏览器详细步骤及限定范围以统一QA正文为准。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-last-light-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/movement.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/assets.json",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-player.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-assets.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/export-layout.mjs",
+        "role": "test"
+      },
+      {
+        "path": "public/assets/last-light/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/core.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/storage.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/preparation.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/rift.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/pause.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-production/rest.png",
+        "role": "test"
+      }
+    ]
   }
 ]

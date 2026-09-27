@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-23
+last-modified: 2026-09-27
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -10,7 +10,23 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-## 迭代30：偏置结构、R10外景视差与可观察读数
+## 迭代30 R11：Last Light 正式场景
+
+正式 `PurificationScene` 使用 `LastLightVisual`、`LastLightLocomotion`。作者几何仍在Last Light目录与已选`purification-forecourt-options/option-a.ts`；构建期`tools/last-light/export.mjs`导出`public/assets/last-light/`，运行时不导入作者模型或执行离线光线烘焙。逻辑画布960×640、默认镜头1倍。`BootScene`预载，场景preload补齐缓存；现有菜单/出击/归返事务归原场景。
+
+资源包含：无参考人物/肩灯的建筑与外景、固定光源贡献、真实法线/材质/相机深度、核心体积八帧、完整三层外景及四板独立深度、8向站立/行走/坐姿图集。透明RGB保留加性空气与能量晕光，PNG解码不预乘；不能用Canvas普通alpha覆盖丢掉这部分颜色。外景与haven存在交叉遮挡，不能固定haven最后覆盖，必须按各像素深度排序。
+
+环境合成同时输出视差移动后的真实不透明深度，人物使用该深度而非旧屏幕坐标的静态G-buffer。核心体积另按当前帧密度透明合成到人物前后，不把八帧体积外包络当成实心遮挡。肩灯只作用于当前可见且材质一致的据点表面；培养藏与净化器各有独立源光贡献图，完整度变化同时作用于场景和人物。
+
+`LastLightRenderer`离屏WebGL2完成分层景观、体积能量、人物及真实受光组合，经一张场景纹理交给Phaser镜头。核心/炉火/灰绿污染源读导出参数；肩灯挂接当前人物姿态，光作用到真实接收表面，BVH检查静态遮挡。人物逐像素深度与场景比较；人物投影采用有限胶囊近似，不能称为实时完整模型阴影。装饰时钟只消费场景delta，减少动态冻结装饰但保留人物移动/实时灯；无独立RAF。无WebGL2时使用明确Canvas兼容呈现并标`lastLightRenderer=canvas-degraded`，不宣称视觉等价。
+
+`export-layout.mjs`从同一A几何生成`last-light-layout.ts`的数据源：主层扣除断口/裂隙切口并保留回廊，上层单独建面，单西坡仅通过端部接缝切层。真实位置以米与楼层存储；每个局部表面反解投影输入，脚半径0.22m，半原生像素子步防穿透，最长消费100ms。净化点局部输入速度乘1.5以保持原80×1.5镜头的屏幕行走速度，不影响Rift。
+
+`Player.externalPresentation=true`保留共享按键、移动冻结、速度与位置契约，但不创建旧身体呈现/灯晕/残影/持具；场景拥有新角色全部像素与灯锚。业务仍读投影脚底减10px的原角色中心。三模块观察沿真实3D作者面检测，44/58px选择与原完整度生命周期保持；读数避让使用新模型轮廓和实际人物alpha包围盒。
+
+六处业务及原经济/存档字段不变。建筑残骸仅新增坐下/起身：冻结行走，切同身份坐姿，1.18倍轻推镜头，显示“石头还是冷的。火还没有熄。”；无回复、加速或等待机制。起身返回原合法站位，场景关闭清除文案/镜头tween/新图形资源。当前验证见[生产QA](qa/iteration-30-last-light-production.md)，历史R10结果不覆盖新接入。
+
+## 历史实现 · 迭代30 R10：偏置结构、外景视差与可观察读数
 
 `PurificationScene`仍拥有归来事务、库存、面板、保存和出击编排。`purification-chamber-layout.ts`为已投影脚底多边形/底座/操作点/出生点/相机单源；角色接口才转换为中心坐标（脚底Y−10）。两层、双宽坡的连续圆足扫掠与滑动归`PurificationChamberLocomotion`；原人物/武器/灯、八向输入与Rift默认路径保持。核心留在主层(141,305)，操作点(175,320)，新壳最高91px，轮廓bounds为[-30,-92,32,3]，34×20底座不变；R9地坪33620世界像素²、出生243/315，保持人物尺度并将房间左置。
 
