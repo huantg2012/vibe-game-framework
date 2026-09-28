@@ -18,6 +18,7 @@ import { audioManager } from '@/managers/audio-manager';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
 import { notifyFieldAcquisition } from '@/systems/field-loot-inventory';
+import { calculateKindlingYield } from '@/systems/kindling-yield';
 import {
   createSearchObjectVisual,
   ensureLootSearchTextures,
@@ -633,7 +634,7 @@ export class LootSearchSystem {
         }
       }
       node.collected = true;
-      const value = Math.max(1, Math.floor((node.value + this.kindlingAffinity) * this.kindlingValueModifier));
+      const value = calculateKindlingYield(node.value, this.kindlingAffinity, this.kindlingValueModifier);
       this.carried += value;
       this.hud.setKindling(this.carried);
       node.visual.playReveal({ kind: 'kindling', playerPos: player });

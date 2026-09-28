@@ -1,0 +1,10 @@
+PASS starter is unique and equipped weight counts once
+PASS mixed batch takes all or leaves all; reveal cannot reroll
+PASS exchange atomic, equipped drop forbidden, ground ownership reversible
+PASS write failure rolls back ownership and tool consumption, no notifications
+PASS tool identity stays live, final use clears references and burden
+PASS death loses every carried item, preserves stash and defense, is idempotent
+PASS extraction returns only final loot; legacy migration preserves IDs/uses/slots
+PASS interrupted load is inert until explicit recovery policy
+PASS invalid nested save leaves the active state untouched
+9 inventory contract checks passed.

@@ -12,6 +12,8 @@
 
 测试通过不等于审美、好玩或长期平衡通过；审查建议也不等于整改已验收。两类记录通过链接关联，各自保留范围与时点。
 
-当前净化点偏置结构与外景纵深交付：[I30 R9](iteration-30-r9.md)，附[几何与真实按键验证](iteration-30-r9-geometry.md)、[接触活动技术复核](iteration-30-r9-technical-review.md)。[独立空间复评](../reviews/2026-09-23-purification-r9-spatial.md)在实际修正后确认本轮静态结构目标成立，保留地坪P2精度余量与用户审美边界；不与运行测试混为整体美术通过。R8随后被用户否决，其验证与评审仍按原时点保留。
+历史净化点偏置结构与外景纵深交付：[I30 R9](iteration-30-r9.md)，附[几何与真实按键验证](iteration-30-r9-geometry.md)、[接触活动技术复核](iteration-30-r9-technical-review.md)。[独立空间复评](../reviews/2026-09-23-purification-r9-spatial.md)在实际修正后确认本轮静态结构目标成立，保留地坪P2精度余量与用户审美边界；不与运行测试混为整体美术通过。R8随后被用户否决，其验证与评审仍按原时点保留。
 
 当前正式净化点：Last Light A 已接入；接入后的阴影、外景与步态整改见[I30 动态整改](iteration-30-last-light-motion.md)，原业务验证见[正式接入](iteration-30-last-light-production.md)。旧艺术样景的七项修订见[I30 微光据点](iteration-30-last-light-living.md)，不覆盖当前生产质量。
+
+当前迭代：[I31 修复与能力收益兑现](iteration-31.md)。整数收益/下一阈值、被动伴随事实及旧记录安全替换已接入；专项、回归、生产UI夹具和真实SaveManager内存后端的浏览器范围分开记录。I28长期采样与I30整体人审不由本次通过升级。

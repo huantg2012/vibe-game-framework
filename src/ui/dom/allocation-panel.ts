@@ -8,12 +8,14 @@ import { integrityCapacityRatio, integrityCondition, integrityConditionLabel, in
   placeIntegrityReadout, type IntegrityPlacementInput, type IntegrityRect, type IntegritySide } from '@/ui/chamber-integrity-placement';
 import { INTEGRITY_TIMING, type IntegrityPresentation } from '@/ui/chamber-integrity-lifecycle';
 import { eventBus } from '@/core/event-bus';
-import { computeStartingChaos, gameState } from '@/managers/game-state';
-import type { EffectModuleType, ModuleType, SortieModifiers } from '@/managers/game-state';
+import { gameState } from '@/managers/game-state';
+import type { ModuleType, SortieModifiers } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
 import { audioManager } from '@/managers/audio-manager';
 import { GameEvent } from '@/types/events';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { growthSystem } from '@/systems/growth-system';
+import { calculateKindlingYieldExamples } from '@/systems/kindling-yield';
 import { formatChaosRateDelta } from '@/ui/side-effect-labels';
 import {
   BAR_COLOR,
@@ -50,8 +52,6 @@ let panel: HTMLDivElement | null = null;
 let currentModuleId: string | null = null;
 let selectedAmount = 0;
 let onCloseCallback: (() => void) | null = null;
-
-const P = GAME_CONSTANTS.PURIFICATION;
 
 const MODULE_HP_LABEL: Record<ModuleType, string> = {
   CORE: '核心完整度',
@@ -159,6 +159,9 @@ function positionIntegrityReadout(): void {
   const work = panel.querySelector<HTMLElement>('.core-work');
   if (!readout || !work) return;
   const geometry = coreContext.getIntegrityGeometry();
+  // Keep the complete decision, including long yield/bonus notes and key hints,
+  // inside the fixed 960×640 overlay as the device camera finishes moving.
+  work.style.top = `${Math.round(Math.max(16, Math.min(624 - work.offsetHeight, coreContext.getAnchor().y - 118)))}px`;
   const identity = panel.querySelector<HTMLElement>('.core-identity');
   if (identity) {
     const width = identity.offsetWidth, height = identity.offsetHeight;
@@ -290,62 +293,17 @@ function confirmAllocation(): void {
 }
 
 // ---------------------------------------------------------------------------
-// Effect helpers — same formulas as GameState; do not mutate modules
+// Effect readouts; all repair projections come from GameState.
 // ---------------------------------------------------------------------------
 
-function effectHp(hp: number): number {
-  return Math.min(hp, P.MODULE_EFFECT_HP_REF);
-}
-
-/** Mirrors `gameState.getModuleEffect` with a substituted source hp. Denominator stays 100. */
-function moduleEffectFromHp(type: EffectModuleType, sourceHp: number): number {
-  const resonateBonus = gameState.isResonateBonusActive() ? P.RESONATE_MODULE_CAP_BONUS : 0;
-  const ratio = effectHp(sourceHp) / P.MODULE_EFFECT_HP_REF;
-  if (type === 'CORE') {
-    return 1.0 - ratio * (P.MAX_CORE_REDUCTION + resonateBonus);
-  }
-  return 1.0 + ratio * (P.MAX_STORAGE_BONUS + resonateBonus);
-}
-
-function hpNow(type: ModuleType): { hp: number; maxHp: number } {
-  const mod = gameState.getModule(type);
-  return { hp: mod?.hp ?? 0, maxHp: mod?.maxHp ?? 1 };
-}
-
-/**
- * selectedAmount === 0 → exact current getSortieModifiers().
- * selectedAmount > 0 → only the open module's hp becomes repairedHp; others stay current.
- * overwrite still swaps CORE/STORAGE read source; resonate still raises the cap.
- */
-function previewSortieModifiers(
-  openType: ModuleType,
-  repairedHp: number,
-): SortieModifiers {
-  if (selectedAmount === 0) {
-    return gameState.getSortieModifiers();
-  }
-
-  const core = hpNow('CORE');
-  const storage = hpNow('STORAGE');
-  const purifier = hpNow('PURIFIER');
-  const coreHp = openType === 'CORE' ? repairedHp : core.hp;
-  const storageHp = openType === 'STORAGE' ? repairedHp : storage.hp;
-  const purifierHp = openType === 'PURIFIER' ? repairedHp : purifier.hp;
-
-  const swap = gameState.isModuleSwapActive();
-  const coreSource = swap ? storageHp : coreHp;
-  const storageSource = swap ? coreHp : storageHp;
-
-  return {
-    chaosRateModifier: moduleEffectFromHp('CORE', coreSource),
-    kindlingValueModifier: moduleEffectFromHp('STORAGE', storageSource),
-    startingChaos: computeStartingChaos(purifierHp, purifier.maxHp),
-  };
+function affectedEffect(type: ModuleType): ModuleType {
+  if (type === 'PURIFIER' || !gameState.isModuleSwapActive()) return type;
+  return type === 'CORE' ? 'STORAGE' : 'CORE';
 }
 
 function formatEffectValue(type: ModuleType, mods: SortieModifiers): string {
   if (type === 'CORE') return formatChaosRateDelta(mods.chaosRateModifier);
-  if (type === 'STORAGE') return `x${mods.kindlingValueModifier.toFixed(2)}`;
+  if (type === 'STORAGE') return calculateKindlingYieldExamples(growthSystem.getModifiers().kindlingAffinity, mods.kindlingValueModifier).join(' / ');
   return String(mods.startingChaos);
 }
 
@@ -376,9 +334,24 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
   const remaining = reserve - selectedAmount;
 
   const currentMods = gameState.getSortieModifiers();
-  const previewMods = previewSortieModifiers(type, repairedHp);
-  const currentEffect = formatEffectValue(type, currentMods);
-  const afterEffect = formatEffectValue(type, previewMods);
+  const previewMods = gameState.getSortieModifiersAfterRepair(type, selectedAmount);
+  const effectType = affectedEffect(type);
+  const currentEffect = formatEffectValue(effectType, currentMods);
+  const afterEffect = formatEffectValue(effectType, previewMods);
+  const isYield = effectType === 'STORAGE';
+  const affinity = growthSystem.getModifiers().kindlingAffinity;
+  const beforeYields = calculateKindlingYieldExamples(affinity, currentMods.kindlingValueModifier);
+  const afterYields = calculateKindlingYieldExamples(affinity, previewMods.kindlingValueModifier);
+  const nextYield = isYield ? gameState.getNextKindlingYieldRepair(type, affinity) : null;
+  const yieldLabels = ['小份', '中份', '大份'];
+  const yieldRows = `<div class="core-yield-heading">每堆所得 · 示例</div><div class="core-yields">${beforeYields.map((value, index) =>
+    `<div><span>${yieldLabels[index]}</span><b>${value}${selectedAmount > 0 ? ` <i>→</i> <strong>${afterYields[index]}</strong>` : ''}</b></div>`).join('')}</div>`;
+  const thresholdNote = !isYield ? '' : nextYield
+    ? `从当前投入 ${nextYield.kindlingCost} 薪柴：${nextYield.yields.flatMap((value, index) => value !== beforeYields[index] ? [`${yieldLabels[index]} ${beforeYields[index]}→${value}`] : []).join('，')}${nextYield.kindlingCost > reserve ? `（尚缺 ${nextYield.kindlingCost - reserve}）` : ''}`
+    : hp >= maxHp ? '装置已完整，示例所得已达上限。' : '继续修复不再增加示例所得。';
+  const swapNote = type !== 'PURIFIER' && gameState.isModuleSwapActive() ? `作用互换：${MODULE_LABEL[type]}影响${isYield ? '薪柴所得' : '混乱增速'}。` : '';
+  const unchangedNote = hp >= GAME_CONSTANTS.PURIFICATION.MODULE_EFFECT_HP_REF ? '效能已满，本次增加承压余量。'
+    : isYield ? '本次增加完整度，示例产出不变。' : `本次修复不改变${EFFECT_LABEL[effectType]}。`;
   const effectColor = EFFECT_NUM[type];
   const numColor = NUM_ACTIVE[type];
   const barColor = coreContext ? integrityFillColor(hp, maxHp) : BAR_COLOR[type];
@@ -398,7 +371,7 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
         <div class="pbar-wrap"><div class="pbar-preview" style="left:${hpPct}%;width:${previewPct}%;"></div><div class="pbar-fill" style="width:${hpPct}%;background:${barColor};"></div></div>
         <div class="core-repair-preview">${committing ? '修复已生效' : selectedAmount > 0 ? `修复至 ${repairedHp} <span>+${repairedHp - hp}</span>` : ' '}</div>
       </div>
-      <div class="core-work">
+      <div class="core-work${isYield ? ' core-work-yield' : ''}">
         <div class="core-work-heading"><span>${committing ? '已投入' : '投入薪柴'}</span><span class="core-reserve">储备 ${reserve}</span></div>
         <div class="core-amount">
           <button class="allocation-step" id="alloc-minus" aria-label="减少一份薪柴" ${selectedAmount <= 0 || committing ? 'disabled' : ''}>−</button>
@@ -406,9 +379,11 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
           <button class="allocation-step" id="alloc-plus" aria-label="增加一份薪柴" ${selectedAmount >= maxAllocatable || committing ? 'disabled' : ''}>+</button>
         </div>
         <div class="core-efficiency">每份修复 ${repairPer} 完整度${siphonNote}</div>
-        <div class="core-outcome"><span>${EFFECT_LABEL[type]}</span><span>${currentEffect}${selectedAmount > 0 ? ` <i>→</i> <strong>${afterEffect}</strong>` : ''}</span></div>
+        ${isYield ? yieldRows : `<div class="core-outcome"><span>${EFFECT_LABEL[effectType]}</span><span>${currentEffect}${selectedAmount > 0 ? ` <i>→</i> <strong>${afterEffect}</strong>` : ''}</span></div>`}
+        ${isYield ? `<div class="core-yield-note">已含薪柴亲和 · 每堆单独取整<br>${thresholdNote}</div>` : ''}
+        ${swapNote ? `<div class="core-yield-note">${swapNote}</div>` : ''}
         <div class="core-outcome core-remaining"><span>余下薪柴</span><span>${remaining}</span></div>
-        <div class="core-reason" role="status">${saveFailed ? reason : committing ? '修复已生效。' : selectedAmount > 0 && currentEffect === afterEffect ? `本次修复不改变${EFFECT_LABEL[type]}。` : hp >= maxHp ? `${MODULE_LABEL[type]}已完整。` : reserve <= 0 ? '暂无薪柴。撤离裂隙可带回薪柴。' : selectedAmount === 0 ? '选择这次投入的份数。' : ''}</div>
+        <div class="core-reason" role="status">${saveFailed ? reason : committing ? '修复已生效。' : selectedAmount > 0 && currentEffect === afterEffect ? unchangedNote : hp >= maxHp ? `${MODULE_LABEL[type]}已完整。` : reserve <= 0 ? '暂无薪柴。撤离裂隙可带回薪柴。' : selectedAmount === 0 ? '选择这次投入的份数。' : ''}</div>
         <div class="core-actions">
           <button id="alloc-confirm" ${selectedAmount <= 0 || committing ? 'disabled' : ''}><span>Enter</span> 投入</button>
           <button id="alloc-close"><span>Esc</span> 离开</button>
@@ -429,8 +404,10 @@ function render(type: ModuleType, hp: number, maxHp: number): void {
     <div class="readout-note">← → ±1 · Shift+←→ ±5 · Home 归零 · End 拉满</div>
     <div class="readout-section">注入结果</div>
     <div class="stat-row"><span class="readout-label">装置完整度</span><span>${hp}</span><span>→</span><span>${repairedHp} / ${maxHp}</span></div>
-    <div class="stat-row"><span class="readout-label">${EFFECT_LABEL[type]}</span><span style="color:${effectColor};">${currentEffect}</span><span>→</span><span style="color:${effectColor};">${afterEffect}</span></div>
-    ${selectedAmount > 0 && currentEffect === afterEffect ? '<div class="readout-note">本次修复不改变该项出击效果。</div>' : ''}
+    <div class="stat-row"><span class="readout-label">${isYield ? '每堆所得示例（小 / 中 / 大份）' : EFFECT_LABEL[effectType]}</span><span style="color:${effectColor};">${currentEffect}</span><span>→</span><span style="color:${effectColor};">${afterEffect}</span></div>
+    ${isYield ? `<div class="readout-note">已含薪柴亲和 · 每堆单独取整。${thresholdNote}</div>` : ''}
+    ${swapNote ? `<div class="readout-note">${swapNote}</div>` : ''}
+    ${selectedAmount > 0 && currentEffect === afterEffect ? `<div class="readout-note">${unchangedNote}</div>` : ''}
     <div class="stat-row"><span class="readout-label">注入后剩余薪柴</span><span class="readout-value">${remaining}</span><span class="readout-note">/ 储备 ${reserve}</span></div>
     <div class="readout-note">1 薪柴 = ${repairPer} 完整度${siphonNote}</div>
     ${reason ? `<p class="readout-note" role="status">${reason}</p>` : ''}

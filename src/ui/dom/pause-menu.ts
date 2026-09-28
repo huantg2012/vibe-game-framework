@@ -70,13 +70,32 @@ function onNewSave(): void {
     if (note) note.textContent = '结算尚未保存。请合上菜单，重试保存。';
     return;
   }
-  if (hasReadableSave()) {
+  const presence = saveManager.getRecordPresence();
+  if (presence === 'unavailable') {
+    showNewRecordFailure();
+    return;
+  }
+  if (presence === 'present') {
     mode = 'confirmOverwrite';
     buildOverwriteItems();
     paint();
     return;
   }
-  leaveForSession(beginNewExpedition);
+  startNewRecord();
+}
+
+function showNewRecordFailure(): void {
+  const note = panel?.querySelector('.readout-note');
+  if (note) note.textContent = '无法安全创建新记录。请检查浏览器存储后重试；当前进度未重置。';
+}
+
+function startNewRecord(confirmedReplacement = false): void {
+  if (!host) return;
+  // Keep the paused scene and its controls until the new-record guard has admitted a complete reset candidate.
+  const started = beginNewExpedition(host, () => {
+    leaveForSession(scene => scene.scene.start('PurificationScene', { fromMenu: true }));
+  }, confirmedReplacement);
+  if (!started) showNewRecordFailure();
 }
 
 function onLoadSave(): void {
@@ -111,8 +130,10 @@ function buildRootItems(): void {
 
 function buildOverwriteItems(): void {
   items = [
-    { label: t('menu.overwriteClear'), action: () => leaveForSession(beginNewExpedition) },
-    { label: '载入已保存的记录', action: onLoadSave },
+    { label: t('menu.overwriteClear'), action: () => startNewRecord(true) },
+    hasReadableSave()
+      ? { label: '载入已保存的记录', action: onLoadSave }
+      : { label: '保留记录，返回', action: () => { mode = 'root'; buildRootItems(); paint(); } },
   ];
   selectedIndex = 1;
 }
@@ -120,9 +141,11 @@ function buildOverwriteItems(): void {
 function paint(): void {
   if (!panel) return;
 
+  const tideNumber = mode === 'confirmOverwrite' ? saveManager.peekTideNumber() : null;
   const warning = mode === 'confirmOverwrite'
     ? `<div class="hint" style="text-align:left;margin:0 0 12px;">${
-        t('menu.overwriteWarning', { tideNumber: saveManager.peekTideNumber() ?? 1 })
+        tideNumber === null ? '已有记录暂时无法读取。清除后将永久替换这份记录。'
+          : t('menu.overwriteWarning', { tideNumber })
       }</div>`
     : mode === 'confirmAbandon' ? '<div class="hint" style="text-align:left;margin:0 0 12px;">带入装备与本趟拾获全部遗失，不给予携回奖励。返回净化点后结算一次既有冲击，基地库存保留。</div>' : '';
 

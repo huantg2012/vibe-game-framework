@@ -33,9 +33,9 @@ export function hasReadableSave(): boolean {
   return saveManager.peekRecordSummary() !== null;
 }
 
-/** Wipe runtime + save, then enter the purification point as a new record. */
-export function beginNewExpedition(host: Phaser.Scene, enter?: ExpeditionEntry): void {
-  saveManager.deleteSave();
+/** Reset only after storage is accessible and replacement is explicit; old bytes survive until the new save. */
+export function beginNewExpedition(host: Phaser.Scene, enter?: ExpeditionEntry, confirmedReplacement = false): boolean {
+  if (!saveManager.prepareNewRecord(confirmedReplacement)) return false;
   gameState.reset();
   tideSystem.reset();
   contaminantSystem.reset();
@@ -44,6 +44,7 @@ export function beginNewExpedition(host: Phaser.Scene, enter?: ExpeditionEntry):
   resetDefenseEngine();
   impactSystem.resetForecastState();
   enterPurification(host, 'new', enter);
+  return true;
 }
 
 /** Preserve unreadable or unsupported records until the player explicitly replaces them. */
@@ -70,7 +71,9 @@ export function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry, onIn
   } else if (saveManager.canAbandonInterruptedRun() && onInterrupted) {
     onInterrupted();
   } else if (!saveManager.hasSave()) {
-    beginNewExpedition(host, enter);
+    if (!beginNewExpedition(host, enter)) {
+      showToastInline('无法安全创建新记录。请检查浏览器存储后重试；当前进度未重置。', {});
+    }
   } else {
     showToastInline('这份记录暂时无法读取，原记录已保留。', {});
   }

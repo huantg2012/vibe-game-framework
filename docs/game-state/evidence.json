@@ -3571,5 +3571,107 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E101",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-29",
+    "revision": "94faa33 + iteration-31 working tree",
+    "scope": "I31专项：363真实翻堆结算、1800纯预览/实际修复对照、94最小阈值、2拒写回滚→修复持久化→真实重载→冻结翻堆链；6回执合同、11新记录替换合同。19脚本恢复、catalog全回归及11真实SaveManager集成、9库存合同、TypeScript/Vite构建通过。",
+    "limitations": "受控状态和真实领域代码，不是新档自然完整周转或长期经济；构建保留原大chunk提醒。I28扩大采样仍挂起，不替I30美术/动态人审签字。证据采样在所述工作树，基线更新不扩大历史测试。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-iteration-31.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-i31-kindling-yield.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/contaminant-catalog/check-passive-receipt.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-save-replacement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/focused.txt",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/recovery.txt",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/catalog.txt",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/inventory.txt",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/build.txt",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E102",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-29",
+    "revision": "94faa33 + iteration-31 working tree",
+    "scope": "Chrome有限实机：正式场景/UI夹具修复70→98未跨档、互换共振额度70→88实际确认、足额70→100、零储备、100以上承压；正式inventory备行3列、27件两完整项/长详情滚到底、被动报告呈现。真实SaveManager页内Map后端：坏JSON/未来记录标题确认与保留、首写及重试拒写保留原字节、恢复写入一次成功、暂停菜单取消与明确替换成功。最终控制台无warning/error。",
+    "limitations": "UI-review替代save/load/commit，只证布局与交互；被动报告使用明确固定DTO。独立record-review仅换Storage后端，保存/菜单/会话/场景是真实代码，但并非浏览器持久localStorage或自然新档周转；正式127.0.0.1用户记录未触碰。长期体验/审美/声音/全平台性能未验。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/ui-review.ts",
+        "role": "test"
+      },
+      {
+        "path": "src/dev/iteration31-record-review.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/interactive/iteration31-record-review.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/repair-below-threshold.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/repair-swap-bonus.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/passive-result.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/new-record-write-failure.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/departure-conditions.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/iteration-31/departure-conditions-final.png",
+        "role": "test"
+      }
+    ]
   }
 ]

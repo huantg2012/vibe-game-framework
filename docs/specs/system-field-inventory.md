@@ -3,8 +3,8 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-09-21
-last-modified-by: design（迭代29 R3扩槽价格与冻结出击兼容同步）
+last-modified-date: 2026-09-29
+last-modified-by: design（迭代31整趟被动真实回执与受损纪录替换保护）
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes]
 exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, inventoryStore.reconcileExpandedToolSlots(previousSlotCount)]
 interface-changed: true
@@ -31,6 +31,7 @@ R3全22步（含加厚）以`round(8 * 1.077^(order - 1))`逐项取整，合计4
 - 库存schema v3，外层存档包继续v2。`type:'catalog'`携带固定`catalogVersion/definitionId/appearanceId/offeringProfileId/acquiredOrdinal/identification`；不得借旧族ID模拟新物件。无能力揭晓进入`inert`，仅基地查看/留存/丢弃，不能携出。
 - `projectItemForPlayer`是场景UI唯一公开投影。未鉴定只公开外壳名/图、结构保持性、统一2负重、供奉反应与进度；不输出未来能力/功能级/槽位/余次。揭晓后的负重按定义（折页票夹1，其余2）。全表面包括排序、ARIA、DOM图像地址、归来报告及掉地像素。
 - `beginRun(runId,versions)`在有效出发事务里扣整趟被动一次并记录`runBinding`；零余次仍保留物件占重/效果至本趟结束，途中不能卸下。备行预览允许容量收益；撤离先无限基地回库，再解除绑定/清零物件。取消备行、拒写或续局不再扣。
+- **迭代31本趟伴随回执**：catalog整趟被动的报告依据是本趟已提交的有效绑定，展示已揭晓物件名及本趟实际能力说明，语义为“本趟伴随 / 整趟生效”。它不是事件触发型被动，不能由出发扣一次而伪造“触发1次”，也不能因旧`passiveTriggers`无计数而隐去。run账本可选回执冻结已揭晓公开名称、能力族和该趟收益事实；结算解除绑定、末次破碎或死亡后仍能解释已经伴随该趟的能力，但不声称仍有余次、成功撤离或获得奖励。回执须与出发/本趟事实同一持久事务，续局不追加；旧档无记录时不补造历史。旧事件型被动仍按已有实际计数显示，两类不相互转义。此为报告事实，不增加属性、次数或独立消费。
 - 供奉按最后一轮防御→积累→揭晓/回库/清槽/发现/回执顺序在同一事务里持久化。`finishOfferingImpact(...,impactId)`幂等，重试不能重复推进；UI仅在持久成功后读取已揭晓实例呈现。
 - `discoveredCatalogIds`记录见过的真物件，与新实例的鉴定状态无关。“已见物件”只显示实际记录，无未见剪影或总数分母，耗尽或丢失不删除发现记录。
 - 所有翻堆固定于run的`dropPlan`；`revealBatch`必须匹配已计划节点，不允许空批消耗教学。新档首件教学首次成功翻出（包括超重留地）后消费资格；未搜到保留，死亡不重置；旧档默认不补教学。
@@ -86,6 +87,10 @@ InventoryStore是唯一物品及装配引用所有者。物品仍区分weapon和
 
 ## 5. 入口备行与装备HUD
 
+正式入口为`PurificationScene.enterRift()`→`openInventory({ mode: 'prepare' })`→`inventory-presenter.ts`→`inventoryPanel`；`loadout-panel.ts`为遗留组件，不以其改动证明当前入口生效。I31在既有装备行下、筛选行上增加最小48px高的静默出击条件，仅prepare模式呈现：三列独立标签“混乱增速 / 每堆所得示例 / 起始混乱”与各自数值，薪柴列附“小/中/大份、已含亲和”辅助说明。值由GameState及共享逐堆取整函数投射，示例不泄露地图隐藏内容；精确收益规则仍归`system-purification-impact`。
+
+载体与视觉沿现有备行场景，挂`#dom-ui-root`，646×524面板及960×640逻辑画面保持；新读数只读、无焦点和新操作。装备选择及踏入是P0，出击条件是P1，示例注记是P2；沿当前inventory字体/色阶，不增加底板、图标或另一个面板。筛选、详情和固定footer保持，读数高度与既有间距从可滚动列表/详情的可视区域取得；有限实帧须确认至少两条完整库存项可见、长详情可滚至末尾、动作和退出始终可达、滚动/选择驻留。catalog与rift共用模式不出现此行。本小变体的实际可读性与审美仍待人审，不扩大I28长期采样范围。
+
 备行围绕实际玩家形象呈现一个武器挂位、现有两主动/一被动位置；成长后沿用三主动/一被动。武器/技能污染物从同一物品库选择，只有完成供奉且有余次的物品可进入兼容位置。换装将旧件留在基地，引用唯一；空技能位可出发。
 
 品质、伤害区间、抗性、余次独立可读。准备是基地操作，不显示基地负重；出发事务校验实际将带入裂隙的装备是否满足裂隙容量，失败留在准备界面说明，不静默卸装或丢物。先保存beginRun，成功才转换场景。
@@ -117,6 +122,8 @@ Tab/Esc收起，Esc先取消交换草稿；移动意图退出并交回移动，�
 **DEC-158中断政策已锁。** 正常退出、刷新、崩溃后继续同一趟最近完整保存的状态，离线不推进模拟；血量、混乱、耐久、技能余次和世界状态续接，不结撤离奖励、供奉或基地冲击。只有玩家明确选择“放弃本趟”才丢失全部携入及拾获物、不获携回奖励，并结算一次既有基地冲击；基地收存与供奉物保留，放弃单独记录，不伪造战斗死亡。
 
 恢复必须让库存、纯薪柴、节点揭晓、真实战斗/技能结果、敌人及环境危险状态对应同一完整提交。版本不兼容或损坏时保留原纪录，不能自动覆盖为新纪录或擅自退回旧消耗前的状态。迭代27为正式随机2D建立`procedural-rift`恢复适配：以原始seed重建地形并校验签名，再恢复完整运行态；最终recipe是校验信息，不作为强制生成参数改变重试过程。悬海独立适配继续保留，但不作为正式入口。
+
+**迭代31受损纪录替换保护**：存储中存在纪录字节与“能够完整加载”是两件事实。主菜单发起新游戏时，有效、损坏或不兼容纪录均必须经过现有明确替换确认；不能因`hasSave`校验失败就当作空档无声覆盖。取消/Esc保持原字节；未经明确替换不得删除或自动修复；确认后才走原新游戏建立流程。准备新游戏不删除旧字节；由新局首个完整帧的一次写入原子替换。首次写入失败时保留原存储字节，新局候选进入既有冻结/重试流程，不能宣称新纪录已建立；此保证不等于自动恢复旧内存状态。此修复不新增自动抢救、云备份或新损失政策；旧有效基地可确认放弃坏在途局的规则保持。
 
 恢复适配的提交边界如下：
 

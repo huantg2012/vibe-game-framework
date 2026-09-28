@@ -249,6 +249,16 @@ const CSS = `
 .core-outcome > span:last-child { font-family:var(--ui-mono); }
 .core-outcome i { font-style:normal; color:#647765; padding:0 5px; }
 .core-outcome strong { color:#b1b99f; }
+/* Same device readout, with three integer-yield examples instead of a multiplier. */
+.core-work-yield .core-efficiency { margin-bottom:10px; }
+.core-yield-heading, .core-yield-note { font:10px/18px var(--ui-font); color:#7c8979; }
+.core-yield-note { margin:5px 0; }
+.core-yields { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:4px 0; }
+.core-yields > div { display:flex; flex-direction:column; gap:2px; }
+.core-yields > div > span { font:10px/18px var(--ui-font); color:#7e8c7e; }
+.core-yields b { font:12px/20px var(--ui-mono); font-weight:normal; color:#a0aa9c; }
+.core-yields i { font-style:normal; color:#647765; }
+.core-yields strong { color:#b1b99f; font-weight:normal; }
 .core-remaining { font-size:11px; }
 .core-remaining > span:last-child { color:#a69473; }
 .core-reason { min-height:36px; margin-top:10px; font:10px/18px var(--ui-font); color:#7c8979; }

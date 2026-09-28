@@ -14,6 +14,17 @@ export type InventoryItem = (
   | { kind: 'contaminant'; contaminant: Contaminant }
 ) & { id: string; location: ItemLocation; source?: ItemSource };
 export interface InventoryEquipment { weaponId: string | null; toolIds: (string | null)[]; defenseIds: (string | null)[] }
+/** Durable facts paid at departure; these are not event trigger counts. */
+export interface RunPassiveReceipt {
+  itemId: string;
+  catalogVersion: 'contaminant-v1';
+  definitionId: string;
+  publicName: string;
+  familyId: 'sight' | 'capacity';
+  benefit: number;
+  usesConsumed: 1;
+  usesRemaining: number;
+}
 export interface RunInventoryLedger {
   id: string;
   status: 'active' | 'settled';
@@ -25,6 +36,8 @@ export interface RunInventoryLedger {
   combatRulesVersion?: 1 | 2;
   dropPlan?: import('@/systems/contaminant-drop-plan').ContaminantDropPlan;
   actionReceipts?: Record<string,{itemId:string;broken:boolean;usesLeft:number;definitionId?:string;catalogVersion?:'contaminant-v1'}>;
+  /** Missing on historical settled records means unknown, not an empty receipt. */
+  passiveReceipts?: RunPassiveReceipt[];
   outcome?: 'extract' | 'death' | 'abandon' | 'abandon-keep';
   returnedIds?: string[];
   kindlingGained?: number;

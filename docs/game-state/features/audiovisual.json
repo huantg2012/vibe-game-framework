@@ -3,7 +3,7 @@
     "id": "COH-F039",
     "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "3cd4372获好多了后，全身步态接续修复已实现：关键姿态承重、仅接地腿限身体、早收膝/自然送脚、髋胸反向与分部动作。保持1.25m/1.8m/s/12walk及idle/recovery；1035帧、全部自动检查、正式Renderer左右各30帧及四斜向各6连续walk帧通过。IMPLEMENTED / LOCAL-VERIFIED，正式根页新开继续、A短键移动后站稳，WebGL2且控制台空；22张静态PNG保持。整体自然度待用户；此前局部认可保持。",
+    "summary": "当前净化点角色为15朝向1035帧：1.25m距离步态、12行走/48收步/8静息/1坐姿，全身承重、早收膝、髋胸反向及分部动作同源。角色专项已有限验证左右/斜向/归位与根页A短移；94faa33边界修复保持角色资产，仅纠正位移预算与步频。Rift保留原角色，局部改善认可不等于整体自然度验收。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -381,7 +381,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "西坡顶上层前缘改为2.6m共线完整承接边，1.9m坡/0.22m脚圆保持。整景与外景光场重导完成，人物六图SHA与2b2b98a一致；正式移动10组含原W卡点、13全宽双向与两翼转身通过，旧layout被新用例拦截。正式Renderer受控真实movement25实帧验证上/下坡和上层转身，IMPLEMENTED / LOCAL-VERIFIED；根游戏继续当前进行中Rift且无控制台错误，不计正式净化点跨坡，未扩大六站业务或人审。",
+    "summary": "Last Light A同源像素场景已正式接入：断口回廊、52%裂隙、三层外景及真实源光/阴影，西坡顶以2.6m共线承接边覆盖1.9m坡和脚圆余量。当前几何/资源已有10组导航及25实帧受控跨坡证据，94faa33随后补贴边节奏；1035帧角色见独立角色QA。接入与局部验证不代签整体画面、外景动态和通行手感人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -584,7 +584,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "当前完整候选与验证边界；6127218被否决，旧C锁定被替代，正式接入未完成"
+        "note": "美术执行计划与历史候选边界；早期C构图已被Last Light A取代，A已正式接入，当前实现与验证范围见Last Light生产/角色QA，整体人审未通过。"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",

@@ -36,6 +36,7 @@ export interface InventoryPanelItem {
 }
 export interface InventoryEquipmentSlot { id: string; label: string; itemId?: string | null; locked?: boolean }
 export interface InventoryPanelSnapshot {
+  departureConditions?: readonly { label: string; value: string | number; note?: string }[];
   items: readonly InventoryPanelItem[];
   discoveries?: readonly InventoryPanelItem[];
   equipment: readonly InventoryEquipmentSlot[];
@@ -110,6 +111,7 @@ class InventoryPanel {
   private memory = new Map<string, ViewMemory>();
   private lists: Partial<Record<Lane, ListElements>> = {};
   private equipment!: HTMLDivElement;
+  private conditions!: HTMLDivElement;
   private detail!: HTMLElement;
   private detailActions!: HTMLElement;
   private detailHint!: HTMLElement;
@@ -207,6 +209,8 @@ class InventoryPanel {
     header.hidden = embedded;
     header.append(element('span', 'inventory-context', this.options!.mode === 'rift' ? '只收好这次带回的物件' : '沿旧路出发'));
     this.equipment = element('div', 'inventory-equipment');
+    this.conditions = element('div', 'inventory-departure-conditions');
+    this.conditions.setAttribute('aria-label', '下次踏入条件');
     this.weight = element('div', 'inventory-weight'); header.append(this.weight);
     const close = button('inventory-close', 'Esc 收起', () => this.close()); close.setAttribute('aria-label', this.options!.mode === 'prepare' ? '离开备行' : '合上拾获'); header.append(close);
     this.equipment.setAttribute('aria-label', '本趟装备'); this.equipment.hidden = this.options!.mode !== 'prepare';
@@ -243,7 +247,7 @@ class InventoryPanel {
     const help = element('span', 'inventory-key-help', embedded ? '↑↓ 查看 · Enter 操作' : this.options!.mode === 'prepare' ? '↑↓ 查看 · Tab 移步 · Esc 离开' : '↑↓ 查看 · Enter 操作 · Tab / Esc 合上');
     this.primary = button('inventory-primary', '', () => this.primaryAction());
     bottomRow.append(help, this.primary); bottom.append(this.message, bottomRow);
-    panel.append(header, this.equipment, filters, this.exchangeInspect, body, bottom);
+    panel.append(header, this.equipment, this.conditions, filters, this.exchangeInspect, body, bottom);
     panel.addEventListener('pointerdown', event => event.stopPropagation());
     panel.addEventListener('click', event => event.stopPropagation());
     panel.addEventListener('wheel', event => event.stopPropagation(), { passive: true });
@@ -283,6 +287,14 @@ class InventoryPanel {
     this.lists.main!.heading.textContent = this.options?.mode === 'rift' ? '本趟拾获' : this.options?.mode === 'prepare' ? '选择装配' : this.filter === 'discovered' ? '已见物件 · 不代表当前持有' : '全部物件';
     for (const [filter, control] of this.filters) { control.classList.toggle('is-current', filter === this.filter); control.setAttribute('aria-pressed', String(filter === this.filter)); }
     this.renderEquipment();
+    this.conditions.replaceChildren();
+    this.conditions.hidden = this.options?.mode !== 'prepare' || !this.snapshot.departureConditions?.length;
+    if (!this.conditions.hidden) for (const condition of this.snapshot.departureConditions ?? []) {
+      const column = element('div');
+      column.append(element('span', '', condition.label), element('strong', '', String(condition.value)));
+      if (condition.note) column.append(element('small', '', condition.note));
+      this.conditions.append(column);
+    }
     const previousIds = this.lists[this.lane]?.ids ?? [];
     const oldIndex = Math.max(0, previousIds.indexOf(this.focusId ?? ''));
     this.renderList('nearby'); this.renderList('main');

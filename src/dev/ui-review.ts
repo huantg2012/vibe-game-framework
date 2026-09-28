@@ -28,6 +28,7 @@ if (import.meta.env.DEV) {
   const sample = new URLSearchParams(window.location.search).get('sample');
   const entrySample = sample === 'entry';
   let unreadableRecordFixture = false;
+  let savedRecordFixture = new URLSearchParams(window.location.search).get('record') === 'saved';
   const saveCalls = { load: 0, remove: 0 };
   // Keep runtime failures visible in this isolated review surface.
   const reportError = (message: string): void => {
@@ -56,6 +57,15 @@ if (import.meta.env.DEV) {
   }
 
   // Isolation belongs to this development entry, never to the save system.
+  // Inject the backend as well as the presentation fixtures: newly added save
+  // operations must never fall through to the player's browser record.
+  saveManager.setStorage({
+    getItem: () => !savedRecordFixture ? null : unreadableRecordFixture ? '{unreadable' : JSON.stringify({
+      version: 2, tide: { tideNumber: 3, phase: 'ebb' }, cycle: 2, stability: { progress: 4, reached: false },
+    }),
+    setItem: () => {},
+    removeItem: () => { saveCalls.remove++; savedRecordFixture = false; unreadableRecordFixture = false; },
+  });
   saveManager.save = () => {};
   saveManager.commitWorldTransaction = change => { change(); return true; };
   saveManager.load = () => {
@@ -66,12 +76,9 @@ if (import.meta.env.DEV) {
     gameState.addKindling(37);
     return true;
   };
-  saveManager.deleteSave = () => { saveCalls.remove++; };
-  saveManager.hasSave = () => false;
-  let savedRecordFixture = new URLSearchParams(window.location.search).get('record') === 'saved';
-  saveManager.peekRecordSummary = () => savedRecordFixture
+  saveManager.peekRecordSummary = () => savedRecordFixture && !unreadableRecordFixture
     ? { tideNumber: 3, phase: 'ebb', cycle: 2, progress: 4, reached: false } : null;
-  saveManager.peekTideNumber = () => savedRecordFixture ? 3 : null;
+  saveManager.peekTideNumber = () => savedRecordFixture && !unreadableRecordFixture ? 3 : null;
   window.location.hash = 'purif';
   const game = new Phaser.Game(gameConfig);
   bindDomUiRootToGame(game);
@@ -140,6 +147,22 @@ if (import.meta.env.DEV) {
     switchScene('PurificationScene');
     paintControls();
   }
+  /** Fixed memory-only edge cases; not an earned gameplay record. */
+  function yieldFixture(mode: 'threshold' | 'swap' | 'buffer'): void {
+    closeScreens(); gameState.reset(); growthSystem.reset();
+    gameState.addKindling(mode === 'threshold' ? 7 : mode === 'swap' ? 3 : 12);
+    if (mode === 'buffer') {
+      const state = gameState.getState(); state.moduleMaxHpTier = 1;
+      for (const module of state.modules) { module.maxHp = 115; module.hp = 100; }
+      gameState.loadState(state);
+    }
+    if (mode === 'swap') {
+      gameState.setModuleSwapActive(true); gameState.setResonateBonusActive(true);
+      gameState.grantRepairBonus(6);
+    }
+    openWorldTarget(mode === 'swap' ? 'CORE' : 'STORAGE');
+  }
+
   function openWorldTarget(target: WorldInteractionTarget): void {
     closeScreens();
     selectedWorldTarget = target;
@@ -385,6 +408,13 @@ if (import.meta.env.DEV) {
       for (const [text, action] of [
         ['重置 / 85薪柴', () => startWorldSample(true)],
         ['零库存', () => startWorldSample(false)],
+        ['收益门槛 / 7薪柴', () => yieldFixture('threshold')],
+        ['互换 / 共鸣 / 额度', () => yieldFixture('swap')],
+        ['满效 / 承压余量', () => yieldFixture('buffer')],
+        ['被动归来样例', () => open(() => riftResultPanel.show({ survived: true, kindlingGained: 7,
+          killCount: 0, peakChaos: 32, elapsedMs: 46000, acquired: [], passiveTriggers: new Map(),
+          passiveCompanions: [{ name: '反编藤篮', effect: '负重上限 +8', consumption: '消耗 1 趟' }],
+        }, closeScreens))],
         ['退回场景', closeScreens],
       ] as const) {
         const button = document.createElement('button');

@@ -1,0 +1,24 @@
+
+> coh@0.1.0 check:iteration-31
+> node tools/qa/check-iteration-31.mjs
+
+PASS I31 yield: 363 actual pile settlements, 1800 pure/committed repair comparisons, 94 minimum thresholds, 2 controlled durable-repair/reload/search connections; affinity, swap, resonate, finite bonus, 100 effect cap / 115 HP and frozen sortie covered.
+PASS no companion and historical settled record do not fabricate facts
+PASS sight and capacity freeze real parameters and pay only once on departure
+PASS failed departure and canceled world frame preserve both charge and receipt
+PASS final use remains truthful through extract, death, abandon, reload and cleanup
+PASS old active records derive only the existing consumed binding without spending again
+PASS forged, inconsistent, hidden, duplicate or missing companion receipts are rejected
+Passive receipt: 6 contract groups passed
+PASS absent storage starts a new record and normal saves remain loadable
+PASS valid: no reset, entry or deletion without explicit replacement
+PASS malformed JSON: no reset, entry or deletion without explicit replacement
+PASS future version: no reset, entry or deletion without explicit replacement
+PASS empty stored string: no reset, entry or deletion without explicit replacement
+PASS JSON null: no reset, entry or deletion without explicit replacement
+PASS inaccessible storage is not treated as an empty slot, even after confirmation
+PASS confirmed replacement never deletes the old record, including a read-only deletion backend
+PASS first replacement write failure retains the exact old bytes; retry commits one complete new record
+PASS pending settlement and open inventory frames cannot be erased by new-record entry
+PASS title new-game enters confirmation for damaged/future/empty records; cancel and Escape preserve bytes
+11 save replacement checks passed. Browser layout and the in-game pause menu require runtime verification.

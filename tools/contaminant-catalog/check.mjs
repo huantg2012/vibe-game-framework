@@ -3,6 +3,7 @@ import { spawnSync } from 'node:child_process';
 const checks = [
   'tools/contaminant-catalog/check-codegen.mjs',
   'tools/contaminant-catalog/check-catalog.ts',
+  'tools/contaminant-catalog/check-passive-receipt.ts',
   'tools/inventory/check-source-regions.ts',
   'tools/inventory/check-catalog-abilities.ts',
   'tools/inventory/check-catalog-world-contract.ts',

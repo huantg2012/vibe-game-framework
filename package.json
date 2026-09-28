@@ -99,7 +99,8 @@
     "state:baseline": "node .agents/skills/game-state/scripts/game-state.mjs baseline --root . --reviewed",
     "state:index": "node .agents/skills/game-state/scripts/game-state.mjs render --root . --index-only",
     "state:view": "node .agents/skills/game-state/scripts/game-state.mjs render --root .",
-    "check:game-state-tool": "node --test .agents/skills/game-state/scripts/check.test.mjs"
+    "check:game-state-tool": "node --test .agents/skills/game-state/scripts/check.test.mjs",
+    "check:iteration-31": "node tools/qa/check-iteration-31.mjs"
   },
   "dependencies": {
     "phaser": "^3.80.1",

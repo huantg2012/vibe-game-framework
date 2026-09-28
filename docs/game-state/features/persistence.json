@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "正式出发先存意图；运行保存版本化世界身份和完整帧，继续同一趟不重抽、不离线推进；已结算回执阻止重复归来收益。R3固定净化基准只影响新出击，旧departure/checkpoint冻结的起始混乱与已累计值保持。",
+    "summary": "正式出发先存意图，运行保存版本化世界身份和完整帧；继续同一趟不重抽、不离线推进，已结算回执阻止重复归来收益。I31出发账本可选保存整趟被动收益事实，随同一库存事务持久化；旧active记录可由仍在的已消费绑定派生，旧settled记录缺字段保持历史未知。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -49,6 +49,34 @@
       {
         "path": "tools/growth/check-thicken-recovery.ts",
         "role": "test"
+      },
+      {
+        "path": "src/systems/run-passive-receipt.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/inventory-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/contaminant-catalog/check-passive-receipt.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-save-replacement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
@@ -60,7 +88,9 @@
       "COH-E-I29-RUNTIME",
       "COH-E-I29-R2-AUTO",
       "COH-E-I29-R2-RUNTIME",
-      "COH-E-I29-R3-AUTO"
+      "COH-E-I29-R3-AUTO",
+      "COH-E101",
+      "COH-E102"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。"
@@ -70,7 +100,7 @@
     "id": "COH-F045",
     "title": "拒写重试、坏记录救援与明确弃局",
     "domain": "persistence",
-    "summary": "存储失败冻结重试同一候选，购买拒写回滚；坏包保留和救援沿原规则。growth schema2保留旧容量/物件权益，旧在途包到合法完整提交才落盘迁移。",
+    "summary": "存储失败冻结重试同一候选，购买拒写回滚，旧在途包到合法完整提交才迁移。I31新记录须按原bytes存在性明确替换；准备阶段保留旧bytes，首笔完整写入成功后替换。拒写时保留旧记录并冻结新候选重试，不承诺恢复旧运行内存；存储不可读时禁止开始重置。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -108,6 +138,26 @@
       {
         "path": "docs/qa/iteration-29-r3.md",
         "role": "doc"
+      },
+      {
+        "path": "src/scenes/main-menu-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "tools/recovery/check-save-replacement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -123,7 +173,9 @@
       "COH-E-I29-R2-AUTO",
       "COH-E-I29-R2-RUNTIME",
       "COH-E-I29-R2-REVIEW",
-      "COH-E-I29-R3-AUTO"
+      "COH-E-I29-R3-AUTO",
+      "COH-E101",
+      "COH-E102"
     ],
     "unknowns": [
       "历史 WG07 旧现场无栈，原触发器未被证实；保护与后续回归不能被写成已解释该旧事故。",

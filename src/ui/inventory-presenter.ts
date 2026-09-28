@@ -1,3 +1,7 @@
+import { gameState } from '@/managers/game-state';
+import { growthSystem } from '@/systems/growth-system';
+import { calculateKindlingYieldExamples } from '@/systems/kindling-yield';
+import { formatChaosRateDelta } from './side-effect-labels';
 import { catalogIconUrl } from '@/art/contaminant-catalog-icons';
 import { getContaminantQualityName, getContaminantQualityRank, getContaminantMaxUses, supportsContaminantQuality } from '@/systems/contaminant-quality';
 /** Projects the one inventory owner into the shared base / field view. */
@@ -109,7 +113,13 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
     : !eq.weaponId ? '请先装上一把已成熟的撬棍。' : misplaced.length ? `${misplaced.join('；')}。` : '';
   const carriedOut = new Set(inventoryStore.getRun()?.carriedOutIds ?? []);
   const survival = getSurvivalAttributes();
+  const modifiers = gameState.getSortieModifiers();
   return {
+    departureConditions: options.mode === 'prepare' ? [
+      { label: '装置·混乱增速', value: formatChaosRateDelta(modifiers.chaosRateModifier) },
+      { label: '每堆所得示例', value: calculateKindlingYieldExamples(growthSystem.getModifiers().kindlingAffinity, modifiers.kindlingValueModifier).join(' / '), note: '小 / 中 / 大份 · 已含亲和' },
+      { label: '装置·初始混乱', value: modifiers.startingChaos },
+    ] : undefined,
     discoveries: options.mode === 'catalog' ? projectDiscoveredCatalogItems(inventoryStore.getDiscoveredCatalogIds()).map(view => ({
       id: `discovery:${view.definitionId}`, kind: 'contaminant' as const, discovery: true, name: view.name,
       weight: 0, location: 'stash' as const, description: view.summary,

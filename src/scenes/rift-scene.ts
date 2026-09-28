@@ -3,6 +3,7 @@ import { createSearchObjectVisual, ensureLootSearchTextures } from '@/systems/lo
 import { createContaminantSourceRegions } from '@/generation/contaminant-source-regions';
 import { createContaminantDropPlan } from '@/systems/contaminant-drop-plan';
 import { projectItemForPlayer } from '@/systems/contaminant-catalog';
+import { projectRunPassiveReceipts } from '@/systems/run-passive-receipt';
 import { CATALOG_ITEMS } from '@/generated/contaminant-catalog-data';
 import { sweepGroundDash } from '@/systems/tool-targeting';
 import { proceduralRiftIdentity, restoreProceduralLayout, restoreProceduralWorld, installProceduralRiftRecovery } from '@/managers/rift-recovery';
@@ -1059,6 +1060,7 @@ export class RiftScene extends Phaser.Scene {
         return item?.kind === 'weapon' ? [WEAPON_DATA[item.weapon.definitionId]?.name ?? '撬棍'] : [];
       }),
       passiveTriggers: this.sortiePassiveTriggers,
+      passiveCompanions: projectRunPassiveReceipts(inventoryStore.getRun()?.passiveReceipts),
     }, () => this.requestRunReturn());
   };
 

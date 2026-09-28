@@ -3,7 +3,7 @@
     "id": "COH-F019",
     "title": "主动翻找与一次揭晓",
     "domain": "items",
-    "summary": "按住 E 翻找，过程会发声且可被移动、攻击、受击打断；成功后固定物品身份和批次，容量不足则留地。",
+    "summary": "按住 E 翻找，过程发声且可被移动、攻击、受击打断；成功后固定物品身份和批次，容量不足留地。I31实际薪柴入账与修复、备行和报告共用逐堆取整函数，未改基值、亲和、倍率或掉率。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -33,6 +33,34 @@
       {
         "path": "docs/specs/system-chaos-scavenge-extract.md",
         "role": "spec"
+      },
+      {
+        "path": "src/systems/kindling-yield.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i31-kindling-yield.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -43,7 +71,8 @@
     "evidence": [
       "COH-E-SRC-items",
       "COH-E-HIST-CATALOG",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E101"
     ],
     "unknowns": []
   },
@@ -117,7 +146,7 @@
     "id": "COH-F021",
     "title": "主动工具与整趟被动能力",
     "domain": "items",
-    "summary": "新目录共用能力执行器，包括控制、视距、抗污、短冲、消声、诱导、探查、压制和容量；主动有效才消费，整趟被动出发扣次且末次本趟有效。",
+    "summary": "新目录共用能力执行器，主动有效才消费，整趟被动出发扣次且末次本趟有效。I31将已消费的catalog被动绑定冻结为本趟收益回执，结算解除绑定或死亡后仍能诚实报告整趟生效；不改效果/扣趟，不伪造事件次数。",
     "delivery": "production",
     "work": "paused",
     "entryPoints": [
@@ -155,6 +184,38 @@
       {
         "path": "docs/specs/system-growth-tide.md",
         "role": "spec"
+      },
+      {
+        "path": "src/systems/run-passive-receipt.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/inventory-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/rift-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "tools/contaminant-catalog/check-passive-receipt.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -168,7 +229,9 @@
     ],
     "evidence": [
       "COH-E-SRC-items",
-      "COH-E-HIST-CATALOG"
+      "COH-E-HIST-CATALOG",
+      "COH-E101",
+      "COH-E102"
     ],
     "unknowns": [
       "受控机制比较与一项凝滞自然链已记录，全部能力的持续选择价值尚未得到证明；长期平衡采样挂起。"

@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "eb0c527后角色静息/斜向修复已IMPLEMENTED / LIMITED-VERIFIED：停止0.44秒逐脚归位后进入8帧/3.2秒idle，真实相机反解水平面/西坡八向并导出15朝向1035帧。assets/gait/facing/movement/Player及构建通过；正式Renderer走停/四斜向/坡面及根页W/A短移动已限定复核。Rift与静态场景保持，未重验六站/场景重入，人审仍HUMAN-CHANGES-REQUESTED。"
+    "summary": "核心搜撤—归来—维护闭环、5世界×2空间、污染物目录与22步成长已接正式流程。I30 Last Light A已正式接入，94faa33包含1035帧全身步态、西坡顶全宽承接及贴边速度修复；最近专项为限定自动检查与正式Renderer受控回放，整体美术、动态和手感仍待用户完整验收。I31修复整数收益、整趟被动回执与受损记录替换保护已接入，验证范围见迭代31 QA；I28长期采样继续挂起，四B不解锁。"
   },
   "domains": [
     {
@@ -16,7 +16,7 @@
       "id": "controls",
       "title": "操作、生存与视野",
       "coverage": "mapped",
-      "note": "Last Light世界1.8m/s与A路线保持；独立idle及真实屏幕八向修复已通过gait/facing/8组movement与限定浏览器四斜向/坡面。正式根页W/A短移后站稳；未复走六站或场景重入，待人审。"
+      "note": "Last Light保持1.8m/s世界步速与1.25m距离步态，15朝向1035帧含独立静息/停止归位。94faa33已含2.6m坡顶承接与贴边速度修复；10组导航、7851帧边界回归及正式Renderer受控回放各有范围，不等于根游戏全程/FPS或整体手感人审。Rift原移动保持。"
     },
     {
       "id": "world",
@@ -34,25 +34,25 @@
       "id": "items",
       "title": "物品、武器与能力",
       "coverage": "mapped",
-      "note": "已登记新目录、旧兼容、武器、获取/鉴定/能力/所有权链；全量长期体验采样仍挂起。"
+      "note": "新目录、旧兼容、武器、获取/鉴定/能力/所有权链已登记；I31为整趟被动新增持久化真实回执，效果与扣趟规则不改。目录和静态图标的既有认可保留，持续选择价值、长期供给和动态审美仍沿I28挂起。"
     },
     {
       "id": "progression",
       "title": "净化点、成长与经济",
       "coverage": "mapped",
-      "note": "Last Light六站、坐下及原经济业务保持；本轮人物修复已限定验证，根页继续存档与W/A短移停下可用。未重做交易、坐下UI、场景重入或Rift全流程，I28与长期经济边界保留。"
+      "note": "Last Light A六站、断口回廊、单西坡及炉边坐席已正式接入；I31修复展示真实整数所得与下一收益阈值，价格、成长和修复机制保持。I30当前角色/坡顶/边界专项与早期六站功能证据分开；长期成长体验和I28经济采样继续挂起。"
     },
     {
       "id": "interface",
       "title": "菜单、报告与 HUD",
       "coverage": "mapped",
-      "note": "R8完整度观察与E操作分开，世界/聚焦共享时序与同帧避让，固定100状态和真实容量条并存；隔离实机及不均匀帧反例修复证据已登记。原蜕变资源状态USER-PASS保留，R8已人审否决；R9外景整改不改变原UI局部验收。"
+      "note": "正式备行使用inventoryPanel的prepare模式，I31新增与修复、报告同源的整数所得示例；行动结果以本趟伴随呈现整趟被动，不伪造事件次数。既有完整度观察与交互合同保持；旧蜕变资源状态局部USER-PASS不扩为新增读数或I30整体画面人审。"
     },
     {
       "id": "presentation",
       "title": "角色、美术与声音",
       "coverage": "mapped",
-      "note": "eb0c527后角色静息/斜向修复已IMPLEMENTED / LIMITED-VERIFIED：停止0.44秒逐脚归位后进入8帧/3.2秒idle，真实相机反解水平面/西坡八向并导出15朝向1035帧。assets/gait/facing/movement/Player及构建通过；正式Renderer走停/四斜向/坡面及根页W/A短移动已限定复核。Rift与静态场景保持，未重验六站/场景重入，人审仍HUMAN-CHANGES-REQUESTED。"
+      "note": "当前净化点为Last Light A与15朝向1035帧角色；全身承重/摆腿、独立静息、逐像素光影与分层外景已接入。94faa33最近修复仅调整贴边移动节奏，角色资源保持；历史312帧方案不代表当前实现。限定QA不能代签动作自然度、外景氛围或全场景审美，HUMAN-CHANGES-REQUESTED保持。"
     },
     {
       "id": "narrative",
@@ -64,7 +64,7 @@
       "id": "persistence",
       "title": "存档、失败与恢复",
       "coverage": "mapped",
-      "note": "已登记存档、整帧恢复、拒写、坏包与弃局；历史限定回归和当前静态调用链分开。"
+      "note": "已登记正式2D整帧恢复、拒写、坏包与弃局。I31新记录先按bytes存在性明确替换，首完整保存前保留旧bytes，拒写冻结新候选重试；整趟被动回执随原账本保存，旧active可凭绑定派生、旧settled缺字段保持未知。限定检查与历史证据分开。"
     },
     {
       "id": "accessibility",

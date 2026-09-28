@@ -61,7 +61,7 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续，以及覆盖/弃局的明确选择；菜单动作连到共享会话服务。",
+    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -87,6 +87,26 @@
       {
         "path": "docs/specs/ui-menu-entry-transition.md",
         "role": "spec"
+      },
+      {
+        "path": "src/managers/save-manager.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/pause-menu.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/recovery/check-save-replacement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -95,7 +115,9 @@
     ],
     "evidence": [
       "COH-E-SRC-journey",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E101",
+      "COH-E102"
     ],
     "unknowns": []
   },
@@ -103,19 +125,15 @@
     "id": "COH-F003",
     "title": "入口备行与出击配置",
     "domain": "loop",
-    "summary": "在裂隙入口选择已完成供奉的武器及主/被动工具；出发先验证容量并保存出行意图，随后进入 Rift。",
+    "summary": "在裂隙入口经inventory-presenter打开inventoryPanel的prepare备行，选择已成熟武器及主/被动工具；出发先验证容量并保存出行意图。I31装备下静默条件行展示混乱增速、已含亲和的每堆整数所得示例与起始混乱，实际翻找同源；legacy loadoutPanel不是正式入口。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "净化点裂隙入口 E → 备行；Shift+Enter 出发"
+      "净化点裂隙入口 E → inventoryPanel(prepare)备行；Shift+Enter 出发"
     ],
     "sources": [
       {
         "path": "src/scenes/purification-scene.ts",
-        "role": "code"
-      },
-      {
-        "path": "src/ui/dom/loadout-panel.ts",
         "role": "code"
       },
       {
@@ -129,6 +147,47 @@
       {
         "path": "docs/specs/system-field-inventory.md",
         "role": "spec"
+      },
+      {
+        "path": "src/systems/kindling-yield.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/game-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-purification-impact.md",
+        "role": "spec"
+      },
+      {
+        "path": "tools/qa/check-i31-kindling-yield.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/loadout-panel.ts",
+        "role": "code",
+        "note": "保留的legacy备行面板；当前正式入口由inventory-presenter→inventoryPanel(prepare)提供，本轮不修改或以此验证。"
       }
     ],
     "dependsOn": [
@@ -142,9 +201,13 @@
       "COH-E-SRC-journey",
       "COH-E-HIST-CATALOG",
       "COH-E-HIST-PRODUCTION",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E101",
+      "COH-E102"
     ],
-    "unknowns": []
+    "unknowns": [
+      "I31每堆整数所得示例已接入，新的收益读法仍待玩家人审；不代表长期经济或成长体验已通过。"
+    ]
   },
   {
     "id": "COH-F004",

@@ -1,3 +1,4 @@
+import { calculateKindlingYieldExamples } from '@/systems/kindling-yield';
 /**
  * 存续报告：四分页、模块列表与单项详情；出击条件与自身完整度明确归属。
  * 迭代 11 DEC-119；共享终端样式，挂 #dom-ui-root。
@@ -241,10 +242,10 @@ function deviceDetailHtml(): string {
     <div class="readout-section">下次踏入</div>
     <div class="stat-row"><span class="readout-label">自身完整度</span><span class="readout-value">${playerHp}</span></div>
     <div class="readout-metrics">
-      <div class="readout-metric"><span class="readout-label">混乱增速</span><span class="readout-value">${formatChaosRateDelta(mods.chaosRateModifier)}</span></div>
-      <div class="readout-metric"><span class="readout-label">薪柴价值</span><span class="readout-value">x${mods.kindlingValueModifier.toFixed(2)}</span></div>
-      <div class="readout-metric"><span class="readout-label">起始混乱</span><span class="readout-value">${mods.startingChaos}</span></div>
-    </div>` : '';
+      <div class="readout-metric"><span class="readout-label">装置·混乱增速</span><span class="readout-value">${formatChaosRateDelta(mods.chaosRateModifier)}</span></div>
+      <div class="readout-metric"><span class="readout-label">每堆所得示例</span><span class="readout-value">${calculateKindlingYieldExamples(growthSystem.getModifiers().kindlingAffinity, mods.kindlingValueModifier).join(' / ')}</span></div>
+      <div class="readout-metric"><span class="readout-label">装置·初始混乱</span><span class="readout-value">${mods.startingChaos}</span></div>
+    </div><div class="readout-note">小 / 中 / 大份 · 已含薪柴亲和，每堆单独取整。</div>` : '';
   return `<div class="module-report-layout"><div class="module-report-list">${list}</div><div class="readout-detail">${body}</div></div>`;
 }
 

@@ -3,7 +3,7 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "Last Light A保留52%左前裂隙、断口宽桥、单西坡、六站及炉边坐下。本轮人物静息/斜向已修复，1035帧及限定浏览器通过；正式根页继续存档后W/A短移松手站稳。原业务与经济不变，未重做六站/坐下UI/场景重入，人审待复看。",
+    "summary": "Last Light A已正式接入：52%左前裂隙、断口宽桥、单西坡、六站及炉边坐下。94faa33包含1035帧全身动作、独立静息、西坡2.6m承接与贴边速度修复；近期移动专项有自动检查和正式Renderer受控回放，六站业务仍按各次实际证据区分。原业务与经济保持，整体环境与手感未获完整人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -206,7 +206,7 @@
       {
         "path": "docs/design-notes/purification-scene-art-plan.md",
         "role": "doc",
-        "note": "R11原始C只锁定构图；美术设计正文在docs/art-direction.md#current-art-design，执行计划仅引用；实际像素样板与正式接入未完成"
+        "note": "美术执行计划与历史候选边界；早期C构图已被Last Light A取代，A已正式接入，当前实现与验证范围见Last Light生产/角色QA，整体人审未通过。"
       },
       {
         "path": "docs/reviews/2026-09-23-purification-r8-diagnosis.md",
@@ -627,7 +627,7 @@
     "id": "COH-F027",
     "title": "薪柴修复与装置出击收益",
     "domain": "progression",
-    "summary": "薪柴修复三模块，效能按固定100完整度封顶；加厚100/100→100/115不回血、不降低既有效能，修复/加厚预览与出击同源。R8完整度条按真实容量填充、状态按固定100判定，成功修复触发活层响应；费用和机制保持。",
+    "summary": "薪柴修复三模块，效能按固定100完整度封顶；加厚不回血、不降低效能。I31修复展示小/中/大份每堆整数所得、当前→修复后及下一收益阈值；预览与实际出击共用GameState投射并正确处理作用互换、共鸣与单笔修复加成，费用和规则保持。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -721,6 +721,22 @@
       {
         "path": "tools/qa/check-i30-r8-transactions.mjs",
         "role": "test"
+      },
+      {
+        "path": "src/systems/kindling-yield.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i31-kindling-yield.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -740,10 +756,12 @@
       "COH-E-I30-R8-INTEGRATION",
       "COH-E-I30-R8-INTEGRITY",
       "COH-E-I30-R8-MOTION",
-      "COH-E-I30-R8-TRANSACTIONS"
+      "COH-E-I30-R8-TRANSACTIONS",
+      "COH-E101",
+      "COH-E102"
     ],
     "unknowns": [
-      "2026-09-21成长复评GR-05：连续储藏倍率掩盖逐堆整数产出档位；修复耐久收益真实，收益读法待改善，未据此改经济。",
+      "I31已实现GR-05整数产出读法与下一收益阈值；玩家是否更容易判断修复收益尚待人审，未据此改经济或重启I28长期采样。",
       "R8真实加厚事务已记录100/100→100/115、消费12且三模块效能与核心静置光不降；此证据与先前隔离读数夹具分开。启动前成长/供物条件受控，不能证明自然获得或长期经济。"
     ]
   },
@@ -816,7 +834,7 @@
     "id": "COH-F029",
     "title": "永久蜕变、容量成长与装置加厚",
     "domain": "progression",
-    "summary": "22步线性蜕变、只买下一项；Level/最高级与供奉件数独立，收益/成本/经历分层。R4明确自身上限、每次增量与累计效果；价格8至38总426、供奉1→4与加厚规则保持。",
+    "summary": "22步线性蜕变、只买下一项；Level/最高级、单次与累计效果独立。价格8至38总426、供奉1→4与加厚规则保持。I31在修复、备行和报告中将薪柴亲和计入实际每堆整数所得，不改成长路线或经济。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -950,6 +968,42 @@
       {
         "path": "docs/qa/growth-resource-states-2026-09-21.md",
         "role": "doc"
+      },
+      {
+        "path": "src/systems/kindling-yield.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/allocation-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/status-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i31-kindling-yield.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/inventory-presenter.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -971,12 +1025,14 @@
       "COH-E-I29-R4-AUTO",
       "COH-E-I29-R4-RUNTIME",
       "COH-E-GROWTH-RESOURCE-STATES",
-      "COH-E-GROWTH-RESOURCE-STATES-HUMAN"
+      "COH-E-GROWTH-RESOURCE-STATES-HUMAN",
+      "COH-E101",
+      "COH-E102"
     ],
     "unknowns": [
       "R3限定验证通过；22步顺序/426总价/单格开局/线性加厚时机仍待自然体验，长期采样沿I28挂起。",
       "固定路线减少轴间自由排序，第三主动位库存前提和尾段能力转折仍待验证；降至18薪柴不代表GR-03整体解决。",
-      "GR-01/02已修；抗性正文同步当前仅减缓自然时间的实际能力，不扩大效果。整数产出读法GR-05待处理；GR-06及整体美术归I30；I30 R2错层场所和局部人物/装置确认已接入，长期身体获得感仍待验收。",
+      "GR-01/02已修；抗性正文同步当前仅减缓自然时间的实际能力，不扩大效果。I31已实现整数产出读法GR-05，玩家可读性尚待人审；GR-06及整体美术归I30；I30 R2错层场所和局部人物/装置确认已接入，长期身体获得感仍待验收。",
       "R4局部UX已通过受控浏览器和有限实景核对；未代签玩家审美，不消除既有成长池深度与长期经济问题。"
     ]
   },

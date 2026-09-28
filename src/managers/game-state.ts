@@ -11,6 +11,7 @@
 import { GAME_CONSTANTS } from '@/config/constants';
 import { GROWTH_ROUTE_DATA } from '@/generated/growth-route-data';
 import type { PendingSideEffect } from '@/systems/defense-engine';
+import { calculateKindlingYieldExamples, type KindlingYieldExamples } from '@/systems/kindling-yield';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -31,6 +32,13 @@ export interface SortieModifiers {
   readonly chaosRateModifier: number;
   readonly kindlingValueModifier: number;
   readonly startingChaos: number;
+}
+
+export interface KindlingYieldRepair {
+  /** Total kindling in one injection from the current state, not extra after a preview. */
+  readonly kindlingCost: number;
+  readonly repairedHp: number;
+  readonly yields: KindlingYieldExamples;
 }
 
 export interface GameStateSnapshot {
@@ -140,6 +148,32 @@ function effectHp(hp: number): number {
   return Math.min(hp, P.MODULE_EFFECT_HP_REF);
 }
 
+/** Shared by live effects and non-mutating repair projections, including overwrite. */
+function moduleEffect(type: EffectModuleType, repairedType?: ModuleType, repairedHp?: number): number {
+  const sourceType: EffectModuleType = moduleSwapActive
+    ? (type === 'CORE' ? 'STORAGE' : 'CORE')
+    : type;
+  const mod = modules.find((m) => m.type === sourceType);
+  if (!mod) return 1;
+  const hp = sourceType === repairedType ? repairedHp ?? mod.hp : mod.hp;
+  const resonateBonus = resonateBonusActive ? P.RESONATE_MODULE_CAP_BONUS : 0;
+  const ratio = effectHp(hp) / P.MODULE_EFFECT_HP_REF;
+  return type === 'CORE'
+    ? 1 - ratio * (P.MAX_CORE_REDUCTION + resonateBonus)
+    : 1 + ratio * (P.MAX_STORAGE_BONUS + resonateBonus);
+}
+
+function sortieModifiers(repairedType?: ModuleType, repairedHp?: number): SortieModifiers {
+  const purifier = modules.find((m) => m.type === 'PURIFIER');
+  return {
+    chaosRateModifier: moduleEffect('CORE', repairedType, repairedHp),
+    kindlingValueModifier: moduleEffect('STORAGE', repairedType, repairedHp),
+    startingChaos: purifier
+      ? computeStartingChaos(repairedType === 'PURIFIER' ? repairedHp ?? purifier.hp : purifier.hp, purifier.maxHp)
+      : P.CHAOS_HARD_START,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -224,26 +258,7 @@ export const gameState = {
 
   /** CORE/STORAGE only. Purifier does not go through this entry. */
   getModuleEffect(type: EffectModuleType): number {
-    // overwrite (DEC-031): swap which module's HP feeds this stat, but keep the
-    // formula tied to `type` — this is what makes the swap sometimes favour the
-    // player (whichever module is currently healthier ends up feeding the stat).
-    const sourceType: EffectModuleType = moduleSwapActive
-      ? (type === 'CORE' ? 'STORAGE' : 'CORE')
-      : type;
-    const mod = modules.find((m) => m.type === sourceType);
-    if (!mod) return 1.0;
-
-    // resonate (DEC-039): raises the CAP, not the current value - at low module hp the
-    // bonus is barely noticeable, same as the rest of these formulas scaling with hp.
-    const resonateBonus = resonateBonusActive ? P.RESONATE_MODULE_CAP_BONUS : 0;
-    const ratio = effectHp(mod.hp) / P.MODULE_EFFECT_HP_REF;
-
-    if (type === 'CORE') {
-      // chaosRateModifier: lower is better; at hp>=100 = 1 - 0.30 = 0.70
-      return 1.0 - ratio * (P.MAX_CORE_REDUCTION + resonateBonus);
-    }
-    // STORAGE: kindlingValueModifier; at hp>=100 = 1 + 0.50 = 1.50
-    return 1.0 + ratio * (P.MAX_STORAGE_BONUS + resonateBonus);
+    return moduleEffect(type);
   },
 
   /** Unique entry for sortie starting chaos (rule 27b). */
@@ -306,11 +321,36 @@ export const gameState = {
   },
 
   getSortieModifiers(): SortieModifiers {
-    return {
-      chaosRateModifier: gameState.getModuleEffect('CORE'),
-      kindlingValueModifier: gameState.getModuleEffect('STORAGE'),
-      startingChaos: gameState.getStartingChaos(),
-    };
+    return sortieModifiers();
+  },
+
+  /**
+   * One-injection projection. Does not consume reserve or the finite repair bonus.
+   * Reserve is deliberately not a cap: callers may explain a still-unaffordable repair.
+   */
+  getSortieModifiersAfterRepair(type: ModuleType, kindling: number): SortieModifiers {
+    const mod = modules.find((m) => m.type === type);
+    if (!mod) return sortieModifiers();
+    return sortieModifiers(type, gameState.previewModuleRepair(mod.hp, mod.maxHp, kindling));
+  },
+
+  /** The first affordable-or-not single injection that changes any whole-pile yield. */
+  getNextKindlingYieldRepair(type: ModuleType, affinity: number): KindlingYieldRepair | null {
+    const sourceType = moduleSwapActive ? 'CORE' : 'STORAGE';
+    if (type !== sourceType) return null;
+    const mod = modules.find((m) => m.type === type);
+    if (!mod || mod.hp >= P.MODULE_EFFECT_HP_REF) return null;
+    const before = calculateKindlingYieldExamples(affinity, moduleEffect('STORAGE'));
+    const maxUseful = gameState.getMaxUsefulRepairKindling(mod.hp, mod.maxHp);
+    for (let kindlingCost = 1; kindlingCost <= maxUseful; kindlingCost++) {
+      const repairedHp = gameState.previewModuleRepair(mod.hp, mod.maxHp, kindlingCost);
+      const yields = calculateKindlingYieldExamples(affinity, moduleEffect('STORAGE', type, repairedHp));
+      if (yields.some((value, index) => value !== before[index])) {
+        return { kindlingCost, repairedHp, yields };
+      }
+      if (repairedHp >= P.MODULE_EFFECT_HP_REF) break;
+    }
+    return null;
   },
 
   // --- Cycle ---
@@ -399,7 +439,7 @@ export const gameState = {
   },
 
   previewModuleRepair(hp: number, maxHp: number, kindling: number): number {
-    if (kindling <= 0) return hp;
+    if (!Number.isFinite(kindling) || Math.floor(kindling) <= 0) return hp;
     return Math.min(maxHp, hp + Math.floor(kindling) * P.REPAIR_PER_KINDLING + repairBonusHp);
   },
 

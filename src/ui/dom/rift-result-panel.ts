@@ -14,6 +14,7 @@ import type { ContaminantQuality } from '@/types/game-types';
 import type { ContaminantRarity, ContaminantType } from '@/types/game-types';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
+import type { RunPassiveReceiptView } from '@/systems/run-passive-receipt';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -33,6 +34,7 @@ export interface RiftResultData {
   /** Passive tool trigger counts this sortie, keyed by contaminant type. */
   weapons?: readonly string[];
   passiveTriggers: ReadonlyMap<ContaminantType, number>;
+  passiveCompanions?: readonly RunPassiveReceiptView[];
 }
 
 // Same rarity ramp as loadout/defense/status/impact panels (Degree not Kind,
@@ -121,6 +123,14 @@ export const riftResultPanel = {
       html += `<div class="tile-grid">`;
       for (const [type, count] of data.passiveTriggers) {
         html += `<span class="pill">${getToolName(type)} x${count}</span>`;
+      }
+      html += `</div>`;
+    }
+    if (data.passiveCompanions?.length) {
+      html += `<div class="section-title">本趟伴随</div><div class="readout-note">整趟生效</div><div class="tile-grid">`;
+      for (const companion of data.passiveCompanions) {
+        const text = `${companion.name} · ${companion.effect} · ${companion.consumption}`;
+        html += `<span class="pill">${text.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]!))}</span>`;
       }
       html += `</div>`;
     }

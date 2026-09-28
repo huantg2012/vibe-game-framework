@@ -951,7 +951,15 @@ export class PurificationScene extends Phaser.Scene {
   private requestSaveRetry(onSaved?: () => void): void {
     if (this.saveRetryTimer !== null) return;
     const notice = createCrtPanel('save-retry-notice');
-    notice.style.cssText = 'left:360px;top:584px;width:240px;height:auto;padding:8px;z-index:3000;pointer-events:auto';
+    notice.style.cssText = 'left:310px;bottom:24px;top:auto;width:340px;height:auto;padding:8px;z-index:3000;pointer-events:auto';
+    if (saveManager.hasUncommittedNewRecord()) {
+      const explanation = document.createElement('div');
+      explanation.className = 'readout-note';
+      explanation.textContent = saveManager.getRecordPresence() === 'present'
+        ? '新记录尚未保存，存储中的原记录仍保留。'
+        : '新记录尚未保存。保存成功前不会替换已有记录。';
+      notice.append(explanation);
+    }
     const retry = document.createElement('button');
     retry.type = 'button';
     retry.className = 'action-btn';

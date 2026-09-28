@@ -370,7 +370,7 @@ export class RiftHud {
     root.id = 'rift-hud';
     const controls = document.createElement('details');
     controls.id = 'rift-hud-help';
-    controls.innerHTML = '<summary>操作 · 展开 / 收起</summary><div><span class="rift-control-key">WASD / 方向键</span> 移动与转向</div><div><span class="rift-control-key">Space</span> 朝面向挥击 · 走位避开攻击</div><div><span class="rift-control-key">E</span> 按住翻找 · 退路处按下撤离</div><div><span class="rift-control-key">B</span> 随身物品 · <span class="rift-control-key">Esc</span> 暂停</div><div>右下刻记只记已见地形与退路方向</div>';
+    controls.innerHTML = '<summary>操作 · 展开 / 收起</summary><div><span class="rift-control-key">WASD / 方向键</span> 移动与转向</div><div><span class="rift-control-key">Space</span> 朝面向挥击 · 走位避开攻击</div><div><span class="rift-control-key">E</span> 按住翻找 · 退路处按下撤离</div><div><span class="rift-control-key">Tab</span> 随身物品 · <span class="rift-control-key">Esc</span> 暂停</div><div>右下刻记只记已见地形与退路方向</div>';
     controls.open = !controlsIntroduced;
     this.controlsIntroRemainingMs = controls.open ? 12_000 : 0;
     controlsIntroduced = true;

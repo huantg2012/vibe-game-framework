@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: director / code / art（迭代30 R10外景层次、人物视差与远景活动）
-last-modified-date: 2026-09-23
+last-modified-by: design（迭代31真实薪柴收益与同源修复预览）
+last-modified-date: 2026-09-29
 interface-changed: true
 interfaces-with:
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
@@ -15,6 +15,7 @@ interfaces-with:
                                     # 全部成长含thicken的费用唯一来自growth-route.csv.cost（迭代29 R3）
 exposes:
   - GameState.getModuleEffect(type) / getSortieModifiers()
+  - GameState.getSortieModifiersAfterRepair(moduleType,kindlingAmount) / getNextKindlingYieldRepair(moduleType,affinity)
   - GameState.getStartingChaos() / computeStartingChaos(hp, maxHp)（固定100基准的共享纯函数）
   - GameState.getModuleMaxHpTier() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp()（状态/费用；UI购买经purchaseGrowth与路线资格）
   - GameState.getKindlingReserve() / healModule(id, amount)
@@ -225,7 +226,7 @@ interface SortieModifiers {
 ### A — 分配系统
 
 13. **触发**：玩家走到模块交互点按 E → 打开 DOM overlay 分配面板。
-14. **面板内容**：显示当前 `kindlingReserve`、目标模块 `hp/maxHp`、滑块或 +/- 按钮选择分配数量。效果预览按模块类型分开展示表名与数值：核心 = 表名 `混乱增速` + 减免百分数；储藏 = 表名 `薪柴价值` + 倍率；净化器 = 表名 `起始混乱` + 整数（当前 → 注入后）。当前操作只展示该装置的修复与出击效果，其他装置现状保留在报告。
+14. **面板内容**：显示当前 `kindlingReserve`、目标模块 `hp/maxHp`、+/- 选择投入数量。完整度、投入量、出击收益与余款分开。通常核心对应混乱增速，储藏对应每堆实际薪柴，净化器对应起始混乱；功能互换时按真实效果来源显示：核心修复改变薪柴收益，储藏修复改变混乱增速，短注说明互换，不能仅按设备名称选效果。薪柴主读数为三组已知基础量的整数所得示例（当前→本次注入后），不再以连续倍率代替实际产出。规则与UI细则见下方“迭代31：投入与实际所得”。当前操作只展示该装置的修复与有效出击收益，其他装置现状保留在报告。
 15. **修复公式与有限额度**：每1薪柴修复 `REPAIR_PER_KINDLING` 完整度（4）。附着的空壳在实际承伤后令 `repairBonusHp = max(已有额度, defense_repair_bonus_hp)`（6），下一次有效薪柴注入额外修复至多此额度；一笔注入后归零，多余修复不返还、不分次囤积，不能超过maxHp。未受伤、0薪柴、无库存或无效模块不消费额度，直接 `healModule` 不消费。放入/取下供奉本身不授予或撤回额度，没有常驻修复倍率。
     - 当缺血时，最大有用薪柴为 `max(1, ceil((maxHp-hp-repairBonusHp)/4))`，再受库存限制；满血为0。预览和实算读同一GameState方法。
     - `repairBonusHp`写入同一存档，旧档缺省0；非法负数或非整数拒绝整体加载。出击不凭空清除已挣得额度。
@@ -274,6 +275,9 @@ interface SortieModifiers {
     `computeStartingChaos(hp,maxHp)`是预览与实际出击共用的纯函数，`GameState.getStartingChaos()`查询当前净化器并调用它；`maxHp`只保留输入防护，非有限数或≤0时返回50，不作为功效分母。`overwrite`互换（规则55）只改CORE↔STORAGE的效果源hp，不抽换净化器。防御残留`initial_chaos`在该值之上加算（规则31a），不改本公式。
 27c. **不改出击起始生命**：玩家那条完整度（`growth_vitality` 等）的出击初值本 Slice 不动。净化器不读写玩家完整度。
 28. **效果计算时机**：在场景切换到裂隙前计算一次，作为 `SortieModifiers` 传递给 RiftScene。`GameState.getModuleEffect(type)` 仍是 CORE/STORAGE 效果的**唯一入口**——`overwrite` 的互换（规则 55）与 `resonate` 的上限提升（规则 59）都必须改在这里，不允许在消费方各自修正。PURIFIER 不走 `getModuleEffect`；走 `getStartingChaos()`。`getSortieModifiers()` 必须带上 `startingChaos`。
+    - **迭代31同源预览**：`getSortieModifiersAfterRepair(moduleType,kindlingAmount)`只投射一笔注入后的当前模块HP，再用与实际出击同一计算函数得出三项修正；0投入等于当前值，计入一次修复额度与当前上限，不能改变live状态、消费额度或写存档。投射不按当前储备裁剪，UI的可投入上限另行限制。
+    - **实际薪柴与下一台阶**：`calculateKindlingYield(baseValue,affinity,modifier)`保留既有`max(1,floor((baseValue+affinity)*modifier))`；`calculateKindlingYieldExamples(affinity,modifier)`按正式`LOOT.VALUE_SAFE/CONTESTED/DEEP`返回三组，当前基数1/2/4，不能在UI复制公式或硬编码另一套产出。亲和使用当前已刻入值；旧在途仍读自己的冻结值。
+    - `getNextKindlingYieldRepair(moduleType,affinity)`返回从**当前实际状态一次注入**使至少一组示例增加的最小整数薪柴及投射HP、三组所得；无下一档返回null。一次额度只在该笔计算一次，不能把当前选择预览当新起点再领额度。成本不按储备截断，资金缺口由UI说明；修复非薪柴来源装置、已达到效能上限、剩余容量无法跨档时不伪造台阶。该查询不预测具体未揭晓翻堆或一趟总收入。
     已保存的出发意图或完整检查点按原冻结修正与当前运行态恢复，不调用新公式重算。例如旧趟保存的起始混乱7仍保留7，不能在R3续局时自动降为0；下一趟新出发才按当前基地hp读取100基准。
 29. **裂隙侧应用**：
     - 自然时间混乱rate先按`BASE_RATE * chaosRateModifier * (1 - growthMods.chaosResist)`，再沿既有速率修正及武器/工具污染抗性处理。GR04成长渗透抗性仍只减缓自然增长，每级4%、上限20%；不减离散污染、不改起始混乱、不加入统一污染抗性。广谱减免改造未授权实施。
@@ -387,7 +391,7 @@ interface SortieModifiers {
 
 屏幕空间仍挂 `#dom-ui-root`，随960×640逻辑画布统一缩放。普通交互沿用当前UI Kit：主面板680×468、分配450×452，正文12px、标题20px，同族无衬线与半透明暗色材质。HUD已获人95分PASS。R4核心样板已获用户接受，R5将其场景构图推广到六个交互点：核心实体位于镜头左侧，读数贴近实体，投入及效果在右侧渐隐暗处展开，没有矩形底板。
 
-装置完整度必须限定核心/储藏/净化器，自身完整度必须写出“自身”。出击条件只读取已有 `getSortieModifiers()` 三项：混乱增速、薪柴价值、起始混乱。不得新增风险分、生存评分或无机制支撑的收益。
+装置完整度必须限定核心/储藏/净化器，自身完整度必须写出“自身”。出击条件读取 `getSortieModifiers()`：混乱增速、薪柴修正、起始混乱；薪柴修正以同源整数所得示例呈现，不只显示倍率。不得新增风险分、生存评分或无机制支撑的收益。
 
 #### 存续报告
 
@@ -406,7 +410,30 @@ interface SortieModifiers {
 - `Enter` 或点击注入执行原分配流程；只有投入大于0时可执行；核心样板保留禁用按钮表示当前不可投入。`Esc` 或点击离开取消。
 - 不可注入原因按真实状态显示：装置已完整、暂无薪柴、尚未选择数量。无薪柴时解释翻找并撤离的来源；有修复但效果未变化时直说本次不改变该项出击效果。
 - 剩余薪柴与兑换效率紧随修复结果。不重复列出其他装置完整度和最便宜蜕变价格，相关信息仍在报告/蜕变页。
-- 预览保持 0 投入等于当前 `getSortieModifiers()`；功能互换、共振与净化器比例均沿用已有公式，不改系统接口。
+- 预览保持 0 投入等于当前 `getSortieModifiers()`；功能互换、共振与净化器固定100效能基准均沿用已有公式。迭代31将UI内重复投射迁入本系统公开只读接口，机制与持久化协议不变。
+
+#### 迭代31：投入与实际所得（结构与最短视觉合规合同）
+
+**载体与打开方式**：仍是玩家走近装置按E后，真实装置旁展开的功能读数；同一`core-work`无框投入列，挂`#dom-ui-root`并对齐960×640画布。Tab报告与裂隙备行只复用所得示例，不新增入口、焦点、菜单层或常驻HUD。修复前后不改变现有镜头/装置动作/退出流程。
+
+**参考锚点**：沿当前UI Kit的Signalis克制读数、Darkwood世界留白、Hyper Light Drifter信号主次；学习信息分量与保留环境，不照搬其皮肤、图标或HUD。当前六点装置交互是实际视觉基线，本批不重开风格选择。
+
+**信息层级**：P0为本次投入、修复后完整度和余款；P1为有效出击收益；P2为下一产出档及短说明。薪柴区标题用“每堆所得 · 示例”，“小份 / 中份 / 大份”三组是已知基值示例，不承诺地图外观能辨别大小或预知隐藏内容。标签、当前整数、箭头、修复后整数独立排字，未选择投入时只显示当前所得；“已含薪柴亲和”不重复叠加奖励。倍率可留为从属规则说明，不能占据主收益位置。
+
+**状态与诚实边界**：
+
+- 示例未跨档时说明“本次增加完整度，示例产出不变”，不宣称修复无价值；HP≥100的有效加厚容量修复说明效能已满、增加承压余量。
+- 下一档描述为“从当前状态投入N薪柴……”；N是一笔总数，不能写成在当前选择之上“再投入N”。只在本装置实际控制薪柴收益且存在更高档时显示；资金不足单独说明差额，不修改台阶。满效能/无下一档不画空进度或虚假解锁。
+- 互换生效时装置名保持真实，收益按来源交换并注明事实；不得显示本次根本未改变的原身份收益。共振与有限额度沿同源投射，额度不在三组示例或多个模块中重复发放。
+- 保存失败保留原HP、薪柴和额度，显示可重试原因；不得出现“已生效”或成功动作。取消、0投入不消费任何事实。
+
+**视觉最短核对**：复用Kit当前正文12px、辅助11px及原数值样式；灰绿读数与薪柴暖褐保持，不增加新色、底板、卡片或装饰刻度。保持`core-work`宽260px，位于960×640固定逻辑画面内；以三横列替换倍率行，各列上方标签、下方当前→预览，约增加30px内容高度。只在有薪柴示例时将原效率说明下方间隔24px压至10px；示例标题与阈值维持辅助字级，不挤掉固定动作行、不遮住人物、主体装置与其完整度读数。该变体不增加新的视觉类别，须以最长阈值/不足提示实帧核对底部余量。保留一个投入焦点，键鼠同一操作，数值变化靠位置/箭头/文字共同表达。设计三问的回答是：有场景实体承载、只有当前投入需要决策、完成后收起交还世界；实际可读与审美仍须生产实帧检查，不能由此文代签。
+
+混乱两项在备行与报告中标为“装置·混乱增速 / 装置·初始混乱”，仅表示装置贡献；不宣称已合并成长抗性和初始混乱残余。薪柴示例则已计亲和并逐堆取整。
+
+**正式备行接线**：裂隙入口实际使用`inventory-presenter.ts`→`inventory-panel.ts`的prepare模式，非遗留`loadout-panel.ts`。本批所得示例须进入该正式路径：装备行下/筛选行上48px只读三列，标签/值独立，沿inventory现有字体色阶；P0装备与固定“踏入裂隙”动作保持。空间占用、模式隔离、列表/详情滚动及固定操作合同归`system-field-inventory`第5节，验收从正式入口按E进入。
+
+**本批验证边界**：亲和0/1/3，HP 0/70/99/100/115，互换/共振/一次额度、零储备/恰好足够/不足下一档；比较预览与实际翻找发放，并核对修复拒写与取消。按U1/U5/U6/U7/U8/U9/U12审视载体、焦点/按键、退出、状态、分开读数与参考；属于局部收益表达验证，不解除I28扩大采样或长期平衡挂起。
 
 #### 场景交互正式接入（R4核心人PASS；R5六点推广）
 

@@ -6,6 +6,7 @@ import { createWeaponInstance, equipmentLifecycleDefinition } from './equipment-
 import { getEquipmentLifecycle, type OfferingTransformResult } from '../types/inventory-types';
 import { CONTAMINANT_DATA } from '../generated/contaminant-data';
 import { isContaminantQuality, supportsContaminantQuality } from './contaminant-quality';
+import { createRunPassiveReceipt, restoreRunPassiveReceipts } from './run-passive-receipt';
 /** Single inventory owner. Pure and Phaser-free; all field mutations persist before publishing. */
 import type { Contaminant, Vector2 } from '../types/game-types';
 import type { InventoryEquipment, InventoryError, InventoryGroundValidation, InventoryItem, InventoryResult, InventoryRules, InventoryState, NewInventoryItem, RunInventoryLedger } from '../types/inventory-types';
@@ -217,6 +218,7 @@ export class InventoryStore {
       if(meta.runBinding&&(state.run?.status!=='active'||meta.runBinding.runId!==state.run.id||item.location.kind!=='carried'||!state.equipment.toolIds.includes(item.id)))return false;
     }
     for(const [key,receipts] of Object.entries(state.offeringReceipts!))if(!key||!Array.isArray(receipts)||receipts.some(r=>!r||typeof r.itemId!=='string'||!['weapon','contaminant'].includes(r.kind)||typeof r.definitionId!=='string'||!Number.isInteger(r.slotIndex)||r.slotIndex<0))return false;
+    if (!restoreRunPassiveReceipts(state)) return false;
     this.publish(copy(state));
     return true;
   }
@@ -349,7 +351,11 @@ export class InventoryStore {
           c.usesRemaining--; c.catalog.runBinding={runId,consumed:true,familyId:ability.familyId,benefit:ability.paramValue};
         }
       }
-      state.run = { id: runId, status: 'active', carriedOutIds: state.items.filter(item => item.location.kind === 'carried').map(item => item.id), revealedNodes: {}, destroyedIds: [], ...versions, actionReceipts: {} };
+      const passiveReceipts = state.items.flatMap(item => {
+        const receipt = item.kind === 'contaminant' ? createRunPassiveReceipt(item.contaminant, runId) : null;
+        return receipt ? [receipt] : [];
+      });
+      state.run = { id: runId, status: 'active', carriedOutIds: state.items.filter(item => item.location.kind === 'carried').map(item => item.id), revealedNodes: {}, destroyedIds: [], ...versions, actionReceipts: {}, passiveReceipts };
       return success(undefined);
     });
   }

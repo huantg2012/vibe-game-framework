@@ -66,11 +66,25 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   private onSelectNewSave(): void {
-    if (this.canContinue) {
+    const presence = saveManager.getRecordPresence();
+    if (presence === 'present') {
       this.renderConfirmOverwrite();
       return;
     }
-    beginNewExpedition(this, this.startEntry);
+    if (presence === 'unavailable') {
+      this.showNewRecordFailure();
+      return;
+    }
+    this.startNewRecord();
+  }
+
+  private startNewRecord(confirmedReplacement = false): void {
+    if (!beginNewExpedition(this, this.startEntry, confirmedReplacement)) this.showNewRecordFailure();
+  }
+
+  private showNewRecordFailure(): void {
+    this.subtitleText.setVisible(false);
+    this.warningText.setY(268).setText('无法安全创建新记录。请检查浏览器存储后重试；当前进度未重置。').setVisible(true);
   }
 
   create(data?: { recoveryError?: string }): void {
@@ -236,6 +250,7 @@ export class MainMenuScene extends Phaser.Scene {
 
   private renderRoot(): void {
     this.mode = 'root';
+    this.canContinue = hasReadableSave();
     this.warningText.setVisible(false);
     this.backHint.setVisible(false);
     this.subtitleText.setVisible(true);
@@ -270,16 +285,20 @@ export class MainMenuScene extends Phaser.Scene {
   private renderConfirmOverwrite(): void {
     this.mode = 'confirmOverwrite';
     this.clearSummary();
-    const tideNumber = saveManager.peekTideNumber() ?? 1;
-    this.warningText.setText(t('menu.overwriteWarning', { tideNumber }));
+    const tideNumber = saveManager.peekTideNumber();
+    this.warningText.setText(tideNumber === null
+      ? '已有记录暂时无法读取。清除后将永久替换这份记录。'
+      : t('menu.overwriteWarning', { tideNumber }));
     this.warningText.setY(268);
     this.backHint.setVisible(true);
     this.subtitleText.setVisible(false);
     this.warningText.setVisible(true);
 
     this.items = [
-      { label: '继续已保存的记录', action: () => loadExpedition(this, this.startEntry, () => this.renderConfirmAbandon()) },
-      { label: t('menu.overwriteClear'), action: () => beginNewExpedition(this, this.startEntry) },
+      hasReadableSave()
+        ? { label: '继续已保存的记录', action: () => loadExpedition(this, this.startEntry, () => this.renderConfirmAbandon()) }
+        : { label: '保留记录，返回', action: () => this.renderRoot() },
+      { label: t('menu.overwriteClear'), action: () => this.startNewRecord(true) },
     ];
     this.selectedIndex = 0;
     this.layoutItems();

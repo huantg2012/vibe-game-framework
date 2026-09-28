@@ -2,13 +2,23 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-28
+last-modified: 2026-09-29
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
+
+## 迭代31：修复收益、整趟回执与记录替换
+
+`kindling-yield.ts`是实际翻找入账与修复、备行、存续报告的共同整数计算入口：`max(1, floor((baseValue + affinity) × modifier))`；三档示例读取现有LOOT基值。`GameState`复用同一装置效能函数生成当前与修复后出击条件，`getSortieModifiersAfterRepair()`为不消费资源的单笔投射，`getNextKindlingYieldRepair()`返回从当前状态一次注入、首次改变任一示例所得的最小总费用或null。投射计入作用互换、共鸣、一次性修复加成及固定100效能上限，不用当前储备限制远处阈值。界面按真正受该装置影响的效果显示；三列“小份 / 中份 / 大份”是收益示例，不承诺翻堆外观泄露内容。价格、掉率、修复和成长规则保持。
+
+`InventoryStore`在出发消费catalog被动的同一事务中，将已揭晓名称、family、真实benefit与消耗/余次冻结为可选`RunInventoryLedger.passiveReceipts`。`run-passive-receipt.ts`负责创建、载入校验及结果投影；结算清除绑定或死亡遗失物件不会清除这份本趟事实。旧active档仍有已消费绑定时才可派生，旧settled档缺字段保持历史未知。结果页“本趟伴随 / 整趟生效”说明整趟被动，不转换成虚构触发次数，也不表示物件已存活带回。实际被动效果及扣次规则保持。
+
+`SaveManager.getRecordPresence()`区分absent/present/unavailable，不把坏包或读取失败当作无记录。`prepareNewRecord()`只准备经明确授权的新候选，保留旧bytes并暂挂库存独立持久化；`session.beginNewExpedition()`成功准备后才重置运行态。新净化点首笔完整`setItem`成功时原子替换旧记录；拒写保留旧bytes、新候选进入既有冻结重试闸门。此保证是磁盘旧记录可保留，不承诺运行内存回退旧世界。标题和暂停菜单按存在性要求替换选择；不可访问存储不开始重置。
+
+上述路径已接入正式场景，限定验证见[迭代31 QA](qa/iteration-31.md)，玩家对新读法的验收仍未知。I28经济长采样继续挂起，I30整体美术与动态待人审的边界保持。
 
 ## 迭代30 R11：Last Light 正式场景
 
@@ -483,8 +493,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | ChamberExteriorMotion | src/scenes/chamber-exterior-motion.ts | I30 R10纯人物视差、稳定接根权重与远层存在时间采样；不依赖相机或玩法RNG | ChamberExteriorMotion.update() / offsets；chamberNearParallaxWeight()；sampleChamberDistantPresence() | 已接正式PurificationChamberVisual，验证状态见R10清单 |
 | EventBus | src/core/event-bus.ts | 类型安全的发布/订阅系统 | emit(), on(), off(), once(), destroy() | 已实现 |
 | I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() | 已实现 |
-| GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
-| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | hasSave(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
+| GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getSortieModifiersAfterRepair(type, kindling), getNextKindlingYieldRepair(type, affinity), getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
+| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | getRecordPresence(), hasSave(), prepareNewRecord(confirmedReplacement?), hasUncommittedNewRecord(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/分层混音/空间衰减 | playBGM(), stopBGM(), playSFX(), playAmbient(), stopAmbient(), setLayerVolume(), playSpatialSFX(), pauseAll(), resumeAll(), unlock() | 已实现（Slice 9） |
 | Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用）。贴图为加厚程序像素 + 灯尘（DEC-068）。转向滞后剪影不改玩法朝向 | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getGroundY(), setGroundDepth(base, floorDepth), getSprite(), destroy() | 已实现（T5；2026-08-20 步态帧；DEC-068 接线） |
 | PlayerSprite | src/entities/player-sprite.ts | 旧 32×32 方块人。boot 仍画别名贴图；不再驱动 Player | generatePlayerPlaceholders(scene), playerMotionTexture(facing, gait, frame) | 已实现（档案） |
@@ -524,6 +534,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | RewriterSprite | src/entities/rewriter-sprite.ts | 改写体程序绘制 32×48 四向 + 步态帧（右侧崩坏、teal 簇 17）。成品，不换精灵表 | generateRewriterPlaceholders(scene), rewriterTextureFor | 已实现（DEC-066） |
 | DetectionPulse | src/ui/dom/detection-pulse.ts | 裂隙屏缘干涉：`#rift-detection-rim` 挂 `#dom-ui-root`。16px 边带矩形齿，最多 2 方位，无数字。场景层翻译察觉度/方位，不 import AI | create(), update(dt, view, player, threats), destroy() | 已实现（Slice 8 C1） |
 | ContaminantSystem | src/systems/contaminant-system.ts | 污染物库存管理与生命周期（防御 slot 承伤 → 冲击点数满 3 转化为工具 → 出击使用 → 耗尽破碎），module-level singleton | getAll(), getDefenseSlotted(), getSortieLoadout(), acquire(type, rarity), slotDefense(id, slotIndex), unslotDefense(slotIndex), slotSortie(id, slotIndex), unslotSortie(slotIndex), applyImpactCharge(isHighTide), useTool(id), getState(), loadState(), reset() | 已实现（Slice 3） |
+| KindlingYield | src/systems/kindling-yield.ts | 实际翻找与收益读数的逐堆整数计算；三档示例读取现有LOOT基值 | calculateKindlingYield(baseValue, affinity, modifier), calculateKindlingYieldExamples(affinity, modifier) | 已接正式流程（I31；不改经济） |
+| RunPassiveReceipt | src/systems/run-passive-receipt.ts | catalog整趟被动事实的创建、旧档校验/有限派生及结果投影；账本由InventoryStore唯一持有 | createRunPassiveReceipt(), restoreRunPassiveReceipts(), projectRunPassiveReceipts() | 已接正式流程（I31；旧settled缺字段仍未知） |
 | LootSearchSystem | src/systems/loot-search-system.ts | 裂隙可翻找对象读条：按住 E 1200ms、48px、打断清零、开始一次 suspicious 噪音、揭晓入账。外观不泄露内容物。取代 LootSystem / ContaminantNodeSystem 的 overlap 触碰拾取 | create(scene, kindling, contaminants, config), update(delta, input), getCarriedKindling(), addBonusKindling(n), getUncollectedSearchPositions(), getCollectedContaminantPositions(), destroy() | 已实现（迭代 10 / DEC-109；I10-FINAL 翻生产） |
 | LootSearchPresentation | src/systems/loot-search-presentation.ts | 统一残骸堆外观 + 翻找微动 + 揭晓粒子。堆色四槽查表（DEC-110 v2）：主体按 fragmentTypeId 查残骸格，渍缝 stainKey，底影 void-black，高光 metal-light。墙模拟 RGB 量化已退役。每碎片 3 个排布变体预生成 | ensureLootSearchTextures / createSearchObjectVisual / derivePileSlots | 已实现（迭代 10；I10-HOTFIX-1 配色 v2） |
 | LootSearchHud | src/ui/dom/loot-search-hud.ts | `[E] 翻找` / `[E] 撤离` 提示、底部装置读数条、残渣 toast-inline。挂调用方 overlay 根 | create(overlayRoot, opts?), setPrompt, setChannel, flashResidue | 已实现（迭代 10） |

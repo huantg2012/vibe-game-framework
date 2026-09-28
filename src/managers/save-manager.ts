@@ -29,7 +29,9 @@ const SAVE = GAME_CONSTANTS.SAVE;
 
 /** Defaults to browser storage; isolated development sessions inject their own backend. */
 export type SaveStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
+export type SaveRecordPresence = 'absent' | 'present' | 'unavailable';
 let injectedStorage: SaveStorage | null = null;
+let newRecordPending = false;
 let currentRiftCheckpoint: RiftCheckpoint | undefined;
 let currentRiftDeparture: RiftDepartureIntent | undefined;
 let validateDeparture: ((intent: RiftDepartureIntent) => boolean) | null = null;
@@ -105,9 +107,9 @@ function validSaveEnvelope(data: ExpeditionSaveData): boolean {
 }
 
 function readSaveJson(): ExpeditionSaveData | null {
-  const raw = storage().getItem(SAVE.KEY);
-  if (!raw) return null;
   try {
+    const raw = storage().getItem(SAVE.KEY);
+    if (!raw) return null;
     const data = JSON.parse(raw) as ExpeditionSaveData;
     if (data.version !== 1 && data.version !== 2) return null;
     return data;
@@ -206,6 +208,7 @@ export const saveManager = {
   setStorage(backend: SaveStorage | null): void {
     if (worldTransaction || pendingWorldSave || inventoryStore.hasFrameTransaction()) throw new Error('Cannot replace storage during a pending settlement');
     injectedStorage = backend;
+    newRecordPending = false;
     currentRiftCheckpoint = undefined;
     currentRiftDeparture = undefined;
     enableInventoryPersistence();
@@ -232,6 +235,7 @@ export const saveManager = {
   },
 
   hasPendingSave(): boolean { return pendingWorldSave; },
+  hasUncommittedNewRecord(): boolean { return newRecordPending; },
 
   /** Save an open base inventory draft together with the caller's base changes.
    * Failure keeps the draft open so the caller can restore the other systems
@@ -299,9 +303,15 @@ export const saveManager = {
     };
   },
 
-  /** Check if a save file exists in localStorage. */
+  /** Existence is independent of parsing, version support or recoverability. */
+  getRecordPresence(): SaveRecordPresence {
+    try { return storage().getItem(SAVE.KEY) === null ? 'absent' : 'present'; }
+    catch { return 'unavailable'; }
+  },
+
+  /** Unavailable storage is never evidence that the previous record is absent. */
   hasSave(): boolean {
-    return storage().getItem(SAVE.KEY) !== null;
+    return this.getRecordPresence() !== 'absent';
   },
 
   /**
@@ -323,6 +333,7 @@ export const saveManager = {
       if (pendingWorldBytes) impactSystem.loadForecastState((JSON.parse(bytes) as SaveDataV2).impactForecast);
     } catch (error) { impactSystem.loadForecastState(beforeForecast); throw error; }
     pendingWorldSave = false;
+    newRecordPending = false;
     pendingWorldBytes = null;
     if (inventoryStore.getRun()?.baseSettled) { currentRiftCheckpoint = undefined; currentRiftDeparture = undefined; }
     enableInventoryPersistence();
@@ -336,7 +347,9 @@ export const saveManager = {
    */
   load(mode?: 'abandon-active'): boolean {
     if (pendingWorldSave || inventoryStore.hasFrameTransaction()) return false;
-    const raw = storage().getItem(SAVE.KEY);
+    let raw: string | null;
+    try { raw = storage().getItem(SAVE.KEY); }
+    catch { return false; }
     if (!raw) return false;
 
     let data: ExpeditionSaveData;
@@ -432,6 +445,7 @@ export const saveManager = {
       catch { /* trySave exposes retry; do not erase the readable old record */ }
     }
     enableInventoryPersistence();
+    newRecordPending = false;
     eventBus.emit(GameEvent.GAME_LOADED, { cycle: data.cycle });
     return true;
   },
@@ -448,12 +462,29 @@ export const saveManager = {
     try { this.save(); return true; } catch { return false; }
   },
 
-  /** Delete the save from localStorage. */
+  /** Authorize a fresh candidate, retaining the old bytes until the first atomic
+   * complete save succeeds. Purification's existing pending-save gate owns retry. */
+  prepareNewRecord(confirmedReplacement = false): boolean {
+    if (worldTransaction || pendingWorldSave || inventoryStore.hasFrameTransaction()) return false;
+    const presence = this.getRecordPresence();
+    if (presence === 'unavailable' || (presence === 'present' && !confirmedReplacement)) return false;
+    currentRiftCheckpoint = undefined;
+    currentRiftDeparture = undefined;
+    newRecordPending = true;
+    // Reset/startup transactions must not persist a partially reset world.
+    // Never remove the old record: setItem replaces it only after initialization.
+    inventoryStore.setPersistence(null);
+    return true;
+  },
+
+  /** Low-level deletion for explicit reset/isolated fixtures; can throw. */
   deleteSave(): void {
     storage().removeItem(SAVE.KEY);
+    if (storage().getItem(SAVE.KEY) !== null) throw new Error('Save record was not removed');
     currentRiftCheckpoint = undefined;
     currentRiftDeparture = undefined;
     pendingWorldSave = false;
+    newRecordPending = false;
     pendingWorldBytes = null;
     // Starter creation happens before the other systems finish resetting.
     // Do not let that transaction save a half-reset record.
@@ -463,10 +494,8 @@ export const saveManager = {
   /**
    * Peek at a save's tide number without loading it into any system (no side
    * effects). Used by the main menu to phrase the overwrite-confirmation warning
-   * and to tell an unparsable save apart from a genuinely absent one — a save
-   * that exists but fails this check is treated as "no continuable record"
-   * rather than surfaced as a distinct corrupted-save state (main-menu-scene.ts,
-   * Slice 5.5 C1).
+   * only. A missing summary does not authorize replacing a record; callers use
+   * getRecordPresence() for that independent decision.
    */
   peekTideNumber(): number | null {
     const data = readSaveJson();

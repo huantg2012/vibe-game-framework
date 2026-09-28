@@ -198,7 +198,7 @@
     "id": "COH-F034",
     "title": "存续报告及已见物件",
     "domain": "interface",
-    "summary": "四页存续报告沿原入口，已刻入能力显示当前等级/上限与当前效果；蜕变只披露下一项、条件及22步进度，潮汐按预兆级数公开信息。 蜕变报告采用Level与最高级，已购效果只读当前；R4与培养藏共享效果语义。",
+    "summary": "四页存续报告沿原入口；已刻入能力显示当前等级/上限与当前效果，蜕变只披露下一项、条件及22步进度，潮汐按预兆级数公开。I31装置报告使用已含亲和的小/中/大份每堆整数所得，与备行和翻找结算一致。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -228,6 +228,30 @@
       {
         "path": "docs/specs/system-purification-impact.md",
         "role": "spec"
+      },
+      {
+        "path": "src/systems/kindling-yield.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/game-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-i31-kindling-yield.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/ui/dom/inventory-panel-styles.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -245,9 +269,13 @@
       "COH-E-I29-RUNTIME",
       "COH-E-I29-R2-AUTO",
       "COH-E-I29-R2-RUNTIME",
-      "COH-E-I29-R4-RUNTIME"
+      "COH-E-I29-R4-RUNTIME",
+      "COH-E101",
+      "COH-E102"
     ],
-    "unknowns": []
+    "unknowns": [
+      "I31每堆整数所得示例已接入，新的收益读法仍待玩家人审；不代表长期经济或成长体验已通过。"
+    ]
   },
   {
     "id": "COH-F035",
@@ -297,7 +325,7 @@
     "id": "COH-F036",
     "title": "行动结果与归来侵蚀报告",
     "domain": "interface",
-    "summary": "行动结束后呈现本趟结果；基地报告归来损伤、防御与供奉揭晓，首归零损伤也显示，保存失败留重试。",
+    "summary": "行动结束后呈现本趟结果；基地报告归来损伤、防御与供奉揭晓，首归零损伤也显示，保存失败留重试。I31用出发时冻结的catalog被动回执展示“本趟伴随 / 整趟生效”、公开名称、效果与消耗1趟；与真实事件触发次数分开，死亡或结算清除绑定后仍可报告。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -323,6 +351,38 @@
       {
         "path": "docs/specs/system-purification-impact.md",
         "role": "spec"
+      },
+      {
+        "path": "src/systems/run-passive-receipt.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/inventory-types.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-field-inventory.md",
+        "role": "spec"
+      },
+      {
+        "path": "tools/contaminant-catalog/check-passive-receipt.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/iteration-31.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/iteration-31.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -335,9 +395,13 @@
     "evidence": [
       "COH-E-SRC-interface",
       "COH-E-HIST-PRODUCTION",
-      "COH-E-HIST-CATALOG"
+      "COH-E-HIST-CATALOG",
+      "COH-E101",
+      "COH-E102"
     ],
-    "unknowns": []
+    "unknowns": [
+      "旧已结算记录未保存整趟被动回执时，不倒推或伪造历史作用；I31结果页的新收益表达仍待玩家人审。"
+    ]
   },
   {
     "id": "COH-F037",
