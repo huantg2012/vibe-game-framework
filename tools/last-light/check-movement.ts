@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {performance} from 'node:perf_hooks';
 import {
  CHAMBER_DEVICE_WORLD_ANCHORS,CHAMBER_DEVICE_FLOORS,LAST_LIGHT_SPAWN,
+ LAST_LIGHT_WALK,LAST_LIGHT_FOOT_RADIUS,LAST_LIGHT_WORLD_WALK_SPEED,
  REST_WORLD_APPROACH,projectLastLight,sampleLastLightSurface,
  type WorldPoint,type ChamberDevice,type LastLightRoute,
 } from '../../src/systems/last-light-layout.ts';
@@ -52,6 +53,75 @@ walk(upperState,CHAMBER_DEVICE_WORLD_ANCHORS.storage,'storage');assert(canIntera
 via(upperState,[[4.4,-4.2,'upper'],[3.76,-4.6,'upper'],[3.3,-3.53,'west-ramp'],[2.75,-2.25,'west-ramp'],[2,-.5],[2.05,.3]],'west descent');
 walk(upperState,LAST_LIGHT_SPAWN,'ramp return spawn');assert.equal(upperState.route,'main');
 results.push('spawn → single west ramp → growth → storage → west ramp → spawn');
+
+// The former irregular landing passed the single right-biased waypoint route
+// above, while the left half of the real ramp stopped short of the upper floor.
+// Derive its complete cross-section from production triangles instead of
+// blessing another hand-picked centre path or reducing the actor's foot radius.
+const rampVertices=LAST_LIGHT_WALK.filter(t=>t.route==='west-ramp').flatMap(t=>t.points)
+ .filter((point,index,points)=>points.findIndex(other=>Math.hypot(point[0]!-other[0]!,point[1]!-other[1]!,point[2]!-other[2]!)<1e-7)===index);
+const bottomHeight=Math.min(...rampVertices.map(p=>p[1]!)),topHeight=Math.max(...rampVertices.map(p=>p[1]!));
+const bottom=rampVertices.filter(p=>Math.abs(p[1]!-bottomHeight)<1e-7);
+const top=rampVertices.filter(p=>Math.abs(p[1]!-topHeight)<1e-7).sort((a,b)=>a[0]!-b[0]!);
+assert.equal(bottom.length,2,'west ramp must retain its full-width bottom');
+assert.equal(top.length,2,'west ramp must retain its full-width top');
+const bottomCentre={x:(bottom[0]![0]!+bottom[1]![0]!)/2,z:(bottom[0]![2]!+bottom[1]![2]!)/2};
+const topCentre={x:(top[0]![0]!+top[1]![0]!)/2,z:(top[0]![2]!+top[1]![2]!)/2};
+const rampWidth=Math.hypot(top[1]![0]!-top[0]![0]!,top[1]![2]!-top[0]![2]!);
+const across={x:(top[1]![0]!-top[0]![0]!)/rampWidth,z:(top[1]![2]!-top[0]![2]!)/rampWidth};
+const rampPoint=(progress:number,offset:number)=>({
+ x:bottomCentre.x+(topCentre.x-bottomCentre.x)*progress+across.x*offset,
+ z:bottomCentre.z+(topCentre.z-bottomCentre.z)*progress+across.z*offset,
+});
+const onFloor=(point:{x:number;z:number},route:LastLightRoute):WorldPoint=>{
+ const h=sampleLastLightSurface(route,point.x,point.z);assert(h,`landing target has no ${route} surface`);
+ return{...point,y:h.height};
+};
+
+// Real screen-up input formerly stuck at world (2.746, 2.482, -4.080).
+// This is keyboard movement, not a waypoint path steered around the bad join.
+const naturalAscent=createLastLightMovementState(onFloor(rampPoint(.5,0),'west-ramp'),'west-ramp');
+for(let tick=0;tick<240&&naturalAscent.route!=='upper';tick++){
+ const input={x:0,y:-1},beforeHeight=naturalAscent.y;
+ const pixels=lastLightProjectedWalkingSpeed(naturalAscent,input,LAST_LIGHT_WORLD_WALK_SPEED);
+ stepLastLightMovement(naturalAscent,input,1000/60,pixels);
+ assert(canStandLastLight(naturalAscent,naturalAscent.route),'screen-up ascent must retain full foot support');
+ assert(Math.abs(naturalAscent.y-beforeHeight)<=.16,'screen-up ascent may not teleport between storeys');
+}
+assert.equal(naturalAscent.route,'upper','holding screen-up from the ramp centre still catches the broken landing');
+results.push('real screen-up input clears the previously blocked west-ramp landing');
+
+const centreHalfWidth=rampWidth/2-LAST_LIGHT_FOOT_RADIUS-.005;
+let crossingLanes=0;
+for(let lane=0;lane<=12;lane++){
+ const offset=-centreHalfWidth+2*centreHalfWidth*lane/12;
+ const below=onFloor(rampPoint(.8,offset),'west-ramp'),above=onFloor(rampPoint(1.15,offset),'upper');
+ const state=createLastLightMovementState(below,'west-ramp');
+ walk(state,above,`full-width ascent lane ${lane}`);assert.equal(state.route,'upper');
+ walk(state,below,`full-width descent lane ${lane}`);assert.equal(state.route,'west-ramp');
+ // The join must support the entire foot disk from either side, not merely
+ // permit one substep to hop over a small unsupported or collider-only seam.
+ for(const progress of [.94,.98,.9999,1.0001,1.02,1.05]){
+  const route=progress<=1?'west-ramp':'upper',point=onFloor(rampPoint(progress,offset),route);
+  assert(canStandLastLight(point,route),`unsupported landing cross-section t=${progress}, offset=${offset}`);
+ }
+ crossingLanes++;
+}
+for(const side of [-1,1]){
+ // Approach the landing sideways from its two wings, turn down the ramp, then
+ // reverse into the upper floor without using the old corrective waypoint.
+ const wing=onFloor(rampPoint(1.15,side*(rampWidth/2+.15)),'upper');
+ const turn=onFloor(rampPoint(1.10,side*.30),'upper');
+ const below=onFloor(rampPoint(.75,side*.30),'west-ramp');
+ const state=createLastLightMovementState(wing,'upper');
+ walk(state,turn,`landing wing ${side} turn`);
+ walk(state,below,`landing wing ${side} descent`);assert.equal(state.route,'west-ramp');
+ walk(state,turn,`landing wing ${side} return ascent`);assert.equal(state.route,'upper');
+ walk(state,wing,`landing wing ${side} return turn`);
+ const outside=rampPoint(.8,side*(rampWidth/2+.05));
+ assert(!canStandLastLight({...outside,y:topHeight},'west-ramp'),'opening the landing must not open the ramp sides');
+}
+results.push(`${crossingLanes} full-width landing lanes ascend/descend with supported cross-sections; both wings turn down/back up; ramp sides remain closed`);
 
 assert(!canStandLastLight({x:7.7,y:0,z:1.6},'main'),'breach must be empty');
 assert(!canStandLastLight({x:.6,y:0,z:5.94},'main'),'Rift notch must be empty');

@@ -32,6 +32,10 @@ const lateralCenter={x:0,y:0,z:.3};
 const lateralPoint=(distance:number):Waypoint=>[lateralCenter.x+Math.sin(flatFacings[0]!)*distance,lateralCenter.z+Math.cos(flatFacings[0]!)*distance];
 const lateralLeft=lateralPoint(-1.3),lateralRight=lateralPoint(1.3);
 paths.lateral=[lateralLeft,lateralRight,lateralLeft];
+// Traverse both edges of the landing, then turn on the real upper floor.
+// This deliberately avoids the old hand-picked, right-biased ascent waypoint.
+const landingPoint=(t:number,side:number):Waypoint=>[2+1.5*t+3.5/Math.sqrt(14.5)*side,-.5-3.5*t+1.5/Math.sqrt(14.5)*side,t<1?'west-ramp':'upper'];
+paths.landing=[landingPoint(.75,-.65),landingPoint(1.2,-.65),[4.5,-4.35,'upper'],landingPoint(1.2,.65),landingPoint(.75,.65),landingPoint(.75,0),landingPoint(1.2,0),[4.5,-4.35,'upper'],landingPoint(1.2,-.65),landingPoint(.75,-.65)];
 const DIRECTIONS=['E','SE','S','SW','W','NW','N','NE'];
 const KEYS=['D','D+S','S','S+A','A','A+W','W','W+D'];
 const HOLD_SECONDS:Record<string,number>={eight:1.4,idle:6.4,lateral:1.3};

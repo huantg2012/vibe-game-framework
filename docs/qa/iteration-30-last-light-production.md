@@ -1,6 +1,21 @@
 # I30 Last Light 正式接入验证
 
-> 后续用户指出阴影、外景与太空步问题；本页保留 e05e9a8 接入时的功能检查，不代表画质通过。当前修复和新版 312 帧/GPU 管线验证见[动态整改 QA](iteration-30-last-light-motion.md)。
+> 后续用户指出阴影、外景与太空步问题；本页保留 e05e9a8 接入时的功能检查，不代表画质通过。阴影/外景的历史整改见[动态整改 QA](iteration-30-last-light-motion.md)，当前人物与步态证据见[角色 QA](iteration-30-last-light-actor.md)。
+
+## 2026-09-28：西坡顶全宽通行修复
+
+主 COH-F006，关联 F042。用户截图指出坡顶通行区太窄、角色卡住。**IMPLEMENTED / LOCAL-VERIFIED**：作者几何、导航与整景/外景光场重烘焙完成，正式移动回归和正式Renderer受控实景通过；根游戏入口仅检查加载继续，当前存档进入Rift，不计净化点跨坡验证。
+
+根因是旧上层最后一块三角面斜切侵占西坡顶部左半。坡宽1.9m、角色脚圆半径0.22m，沿坡向参数t=0.95时合法横向范围只剩u∈[−0.30, 0.70]，顶后t=1.01左侧仅到−0.10；自然屏幕W可在世界(2.746, 2.4823, −4.0798)卡住。旧沿中线到达上层的检查漏掉了完整脚圆在坡顶全宽的支持。
+
+作者`environment.ts`已把上层前缘改为与坡顶共线的2.6m完整承接边，覆盖1.9m坡宽及左右各0.35m余量，重新导出同源导航。坡度、角色及设备保持，不以缩脚圆、传送或吸附中线绕过缺面。正式导航为249个行走三角形、29285个观察遮挡三角形，仍6站、17障碍。
+
+- 完整`export`→`exterior-export --install`已完成，随后`check-assets`、`check-facing`、`export-layout --check`、`exterior-check`、类型检查及构建通过；构建仅保留既有大chunk提示。角色六张PNG的SHA与`2b2b98a`完全一致，人物metadata除来源哈希外深比较相同，角色动作未因场景重导发生变化。
+- `check-movement`共10组通过，新增自然屏幕W原卡点反例及13条覆盖约1.45m可用中心宽度的双向通路，包含两翼转身、完整脚圆截面支持与坡侧不可穿越。旧layout在同一新增W用例中失败，确认检查能拦截原缺陷；见[正式导航回归](artifacts/last-light-landing/navigation.json)。早期9路/147点内存实验由这份正式检查替代，不混称为浏览器键盘通行。
+- 正式Renderer、正式资源及真实movement的`landing`受控回放，0–11.52秒每0.48秒取样，共25实帧；复看左右上坡、下坡及上层转身的跨层状态与画面，控制台warning/error为空。它不写存档，是受控真实移动回放，不能冒称正式根游戏键盘全程。证据：[通行回放](artifacts/last-light-landing/traversal.webp)、[同帧状态](artifacts/last-light-landing/states.json)、[坡顶承接](artifacts/last-light-landing/upper-landing.png)。
+- 正式根页加载并点击继续无控制台错误；用户最新存档是进行中的Rift，因此继续后进入Rift。未放弃或重置存档，本轮没有正式根页净化点键盘跨坡证据；所有新浏览器跨坡结论只归上述受控回放。六站业务与Rift全链未重验，历史中线或业务通过不代签本轮范围。
+
+## e05e9a8 正式接入（历史）
 
 2026-09-27 · **IMPLEMENTED / LIMITED-VERIFIED**。主 COH-F042，关联 F026/F006/F039。既有母版认可不自动等于本次正式游戏的人审通过。
 

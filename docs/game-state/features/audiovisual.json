@@ -381,7 +381,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "Last Light A保持已选画法、回廊、52%裂隙及阴影/外景修复；本轮人物静息/斜向1035帧已接入，自动检查及限定浏览器通过。22张静态PNG与原静态来源保持；Rift不变，人审仍HUMAN-CHANGES-REQUESTED，未扩验六站/重入。",
+    "summary": "西坡顶上层前缘改为2.6m共线完整承接边，1.9m坡/0.22m脚圆保持。整景与外景光场重导完成，人物六图SHA与2b2b98a一致；正式移动10组含原W卡点、13全宽双向与两翼转身通过，旧layout被新用例拦截。正式Renderer受控真实movement25实帧验证上/下坡和上层转身，IMPLEMENTED / LOCAL-VERIFIED；根游戏继续当前进行中Rift且无控制台错误，不计正式净化点跨坡，未扩大六站业务或人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1115,6 +1115,22 @@
       {
         "path": "tools/last-light/check-facing.ts",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-landing/navigation.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-landing/states.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-landing/traversal.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-landing/upper-landing.png",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1195,6 +1211,7 @@
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
+      "西坡顶修复已完成新资源、正式移动回归及正式Renderer受控25实帧回放；根游戏加载继续无错误但当前存档进入Rift，未放弃/重置，所以没有正式净化点键盘跨坡证据。受控回放不写存档，不等于正式键盘全程；六站业务、Rift全链与整体美术人审不扩验。",
       "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
       "获赞原画方向、A布局和裂隙形态不构成生产画面认可；本轮内部动态复核不代替用户审美终审。",
       "外景near=0、middle≤3.5px、far≤6px，XZ观察140ms平滑，各层颜色/深度/光场/侵蚀共UV。CPU原点对照平台/近景/空背景0改动；验证页左右极端实帧近层不拉开。空气递进与动态节奏仍待用户体验。",

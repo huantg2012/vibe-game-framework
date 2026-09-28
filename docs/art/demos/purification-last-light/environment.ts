@@ -1,7 +1,13 @@
 import { ShapeUtils, Vector2 } from 'three';
 import { Model, add, cross, mul, random, sub, unit, type Material, type V2, type V3 } from './model';
 
-const UPPER_PATH:V2[]=[[2.6,-6.8],[4.2,-8.05],[7.37,-7.9],[7.63,-7.66],[8.08,-7.82],[11.35,-7.2],[13.4,-5.54],[13.22,-2.2],[11.38,-2.24],[11.18,-2.01],[9.14,-2.33],[8.98,-2.91],[8.56,-3.13],[8.42,-2.63],[7.62,-2.60],[7.37,-3.16],[6.96,-3.08],[6.7,-2.83],[5.52,-2.75],[3.65,-3.58],[3.46,-3.95],[2.8,-4.39]];
+const WEST_RAMP_BOTTOM:V3=[2,0,-.5],WEST_RAMP_TOP:V3=[3.5,2.6,-4],WEST_RAMP_WIDTH=1.9;
+// A full-width landing meets the exact ramp end plane. Its 0.35m shoulders
+// support the foot circle at both corners without covering the sloped deck.
+const landingHalfWidth=WEST_RAMP_WIDTH/2+.35;
+const rampLength=Math.hypot(WEST_RAMP_TOP[0]-WEST_RAMP_BOTTOM[0],WEST_RAMP_TOP[2]-WEST_RAMP_BOTTOM[2]);
+const landingSide:V2=[-(WEST_RAMP_TOP[2]-WEST_RAMP_BOTTOM[2])/rampLength*landingHalfWidth,(WEST_RAMP_TOP[0]-WEST_RAMP_BOTTOM[0])/rampLength*landingHalfWidth];
+const UPPER_PATH:V2[]=[[2.6,-6.8],[4.2,-8.05],[7.37,-7.9],[7.63,-7.66],[8.08,-7.82],[11.35,-7.2],[13.4,-5.54],[13.22,-2.2],[11.38,-2.24],[11.18,-2.01],[9.14,-2.33],[8.98,-2.91],[8.56,-3.13],[8.42,-2.63],[7.62,-2.60],[7.37,-3.16],[6.96,-3.08],[6.7,-2.83],[5.52,-2.75],[WEST_RAMP_TOP[0]+landingSide[0],WEST_RAMP_TOP[2]+landingSide[1]],[WEST_RAMP_TOP[0]-landingSide[0],WEST_RAMP_TOP[2]-landingSide[1]]];
 
 const MAIN_PATH:V2[]=[[-5,-4],[-2.9,-5.08],[-2.72,-4.88],[-2.4,-5.32],[2,-7],[5.7,-6.5],[5.88,-6.24],[6.28,-6.42],[9,-5],[14,-2],[14.4,.30],[14.23,.60],[14.63,1.02],[15,4],[13.76,5.26],[13.45,5.21],[13.42,5.60],[12,7],[9.45,7.42],[9.19,7.19],[8.95,7.50],[7.9,7.6],[7.67,7.40],[7.42,7.73],[5,8],[2.43,6.93],[2.41,6.66],[2.02,6.74],[-2,5],[-3.12,3.39],[-2.92,3.11],[-3.35,2.95],[-5,1],[-4.82,.44],[-5.1,.19]];
 
@@ -46,7 +52,7 @@ function rampTop(a:V3,b:V3,width:number):readonly V3[] {
 export const WALK_SURFACES: readonly WalkSurface[] = [
   {id:'main',points:MAIN_PATH.map(([x,z])=>[x,0,z] as V3)},
   {id:'upper',points:UPPER_PATH.map(([x,z])=>[x,2.6,z] as V3)},
-  {id:'west-ramp',points:rampTop([2,0,-.5],[3.5,2.6,-4],1.9)},
+  {id:'west-ramp',points:rampTop(WEST_RAMP_BOTTOM,WEST_RAMP_TOP,WEST_RAMP_WIDTH)},
   ...FLOOR_LAYERS.map((points,i)=>({id:`old-floor-layer-${i+1}`,points})),
 ];
 
@@ -182,7 +188,7 @@ function inhabitedRemnant(m: Model): void {
   m.beam([4.7,2.08,-6.61],[4.70,.02,-5.04],.34,.41,'stone',.84);
   m.beam([8.05,2.1,-3.4],[8.07,.06,-3.39],.44,.49,'stone',.8);
   m.beam([12.65,2.02,-2.7],[12.65,.08,-2.7],.41,.48,'stone',.75);
-  ramp(m,[2,0,-.5],[3.5,2.6,-4],1.9,true);
+  ramp(m,WEST_RAMP_BOTTOM,WEST_RAMP_TOP,WEST_RAMP_WIDTH,true);
   // The east side ends as a broken upper storey, not a second exit. Recessed
   // masonry and the existing pier explain the weight above the core precinct.
   brokenSlab(m,[[11.43,-2.37],[12.57,-2.36],[13.16,-2.33],[13.17,-2.63],[12.41,-2.70],[11.55,-2.65]],2.41,.49,7419,.74);
