@@ -1,7 +1,8 @@
 import {LastLightRenderer,type LastLightFrame,type LastLightRenderImages,type LastLightRenderPack,type LastLightRenderState} from '../../../../src/art/last-light-renderer';
 import {LastLightGait} from '../../../../src/art/last-light-gait';
+import {lastLightScreenFacingYaws} from '../../../../src/art/last-light-facing';
 import {createLastLightMovementState,stepLastLightMovement,lastLightProjectedWalkingSpeed,type LastLightMovementState} from '../../../../src/systems/last-light-locomotion';
-import {sampleLastLightSurface,projectLastLight,type LastLightRoute} from '../../../../src/systems/last-light-layout';
+import {LAST_LIGHT_WORLD_WALK_SPEED,sampleLastLightSurface,projectLastLight,type LastLightRoute} from '../../../../src/systems/last-light-layout';
 const root='/assets/last-light/';
 const manifest=await(await fetch(root+'manifest.json')).json();
 const image=async(file:string)=>createImageBitmap(await(await fetch(root+file)).blob(),{imageOrientation:'flipY',premultiplyAlpha:'none',colorSpaceConversion:'none'});
@@ -14,15 +15,78 @@ const renderer=new LastLightRenderer(pack),host=document.querySelector('#scene')
 const detail=document.createElement('canvas');detail.width=960;detail.height=240;detail.id='detail';host.append(detail);const detailContext=detail.getContext('2d')!;detailContext.imageSmoothingEnabled=false;
 const state:LastLightRenderState={seconds:0,world:[0,0,0],yaw:0,walking:false,resting:false,health:[.7,.7,.7],charge:0,growth:0,thicken:0,pulses:new Float32Array(6),reducedMotion:false,gaitPose:'idle',gaitFrame:0};
 const selector=document.querySelector('#case') as HTMLSelectElement,seek=document.querySelector('#seek') as HTMLInputElement,output=document.querySelector('#state') as HTMLOutputElement,play=document.querySelector('#play') as HTMLButtonElement;
-let elapsed=0,last=performance.now(),running=true,gait=new LastLightGait(),movement:LastLightMovementState,segment=0,hold=0;
+let elapsed=0,last=performance.now(),running=true,gait=new LastLightGait(),movement:LastLightMovementState,segment=0,hold=0,cycle=0;
+let screenDirection='—',screenKeys='—',screenInput={x:0,y:0};
 type Waypoint=readonly[number,number,LastLightRoute?];
-const paths:Record<string,readonly Waypoint[]>={purifier:[[-1,1.7],[-.2,2.8],[1.15,4.3],[-.2,2.8],[-1,1.7],[0,0],[-1,1.7]],upper:[[6,-3.33,'upper'],[9.02,-3.55,'upper'],[6,-3.33,'upper'],[3.76,-4.6,'upper'],[6,-3.33,'upper']],hearth:[[3.8,3.8],[4.2,4.9],[5.3,4.9],[4.2,4.9],[3.8,3.8],[2.3,3.2],[3.8,3.8]],ramp:[[1.4,.4],[2.05,.30],[2,-.5],[2.75,-2.25,'west-ramp'],[3.76,-4.6,'upper'],[4.4,-4.2,'upper'],[3.76,-4.6,'upper'],[3.3,-3.53,'west-ramp'],[2.75,-2.25,'west-ramp'],[2,-.5],[1.4,.4]],eight:[[0,0],[1.2,0],[0,0],[0,1.2],[0,0],[-1.2,0],[0,0],[0,-1.2],[0,0],[.9,.9],[0,0],[-.9,.9],[0,0],[-.9,-.9],[0,0],[.9,-.9],[0,0]],exterior:[[-2,-2],[2.05,.3],[4.1,1.15],[3.7,-.77],[4.8,-1.48],[8.4,-.325],[12,.83],[10.7,2.1],[12,.83],[8.4,-.325],[4.8,-1.48],[3.7,-.77],[2.05,.3],[-2,-2]],core:[[10.7,2.1],[11.4,1.3],[12,.83],[11.4,1.3],[10.7,2.1],[9.6,2.9],[10.7,2.1]]};
-function reset(){const start=paths[selector.value]![0]!;movement=createLastLightMovementState({x:start[0],y:0,z:start[1]},start[2]??'main');gait=new LastLightGait();segment=1;hold=.45;elapsed=0;state.seconds=0;gait.update([movement.x,movement.y,movement.z],0,false);update(0);renderer.settleExteriorObserver(state.world,0);}
-function update(dt:number){elapsed+=dt;state.seconds=elapsed;const path=paths[selector.value]!;
- if(hold>0)hold-=dt;else{const target=path[segment]!;const dx=target[0]-movement.x,dz=target[1]-movement.z,dist=Math.hypot(dx,dz);
-  if(dist<.025){segment=(segment+1)%path.length;hold=selector.value==='eight'?.34:.25;}else{const h=sampleLastLightSurface(movement.route,movement.x,movement.z)!;const p=projectLastLight(movement),q=projectLastLight({x:target[0],z:target[1],y:movement.y+h.dx*dx+h.dz*dz});const length=Math.hypot(q.x-p.x,q.y-p.y),input={x:(q.x-p.x)/length,y:(q.y-p.y)/length};stepLastLightMovement(movement,input,Math.min(dt,dist/1.8)*1000,lastLightProjectedWalkingSpeed(movement,input,1.8));}}
- state.world=[movement.x,movement.y,movement.z];state.yaw=movement.facing;const pose=gait.update(state.world,dt,false);state.gaitPose=pose.pose;state.gaitFrame=pose.frame;state.walking=pose.moving;}
-function draw(){renderer.draw(state);const b=renderer.actorBounds;detailContext.fillStyle='#080a0a';detailContext.fillRect(0,0,960,240);detailContext.drawImage(renderer.canvas,Math.round(b.x+b.width/2-40),Math.round(b.y+b.height/2-30),80,60,0,0,320,240);detailContext.drawImage(renderer.canvas,450,190,160,120,350,0,320,240);output.value=`${elapsed.toFixed(2)}s · ${movement.route} · ${state.gaitPose} ${state.gaitFrame}`;output.dataset.state=JSON.stringify({elapsed,world:state.world,route:movement.route,frame:state.gaitFrame,pose:state.gaitPose});seek.value=String(elapsed%32);}
-play.onclick=()=>{running=!running;play.textContent=running?'暂停':'播放';};document.querySelector('#restart')!.addEventListener('click',()=>{reset();draw();});selector.onchange=()=>{reset();draw();};seek.oninput=()=>{running=false;play.textContent='播放';const target=Number(seek.value);reset();for(let time=0;time<target;time+=1/60)update(Math.min(1/60,target-time));renderer.settleExteriorObserver(state.world,state.seconds);draw();};
-reset();function animate(now:number){const dt=Math.min(.05,(now-last)/1000);last=now;if(running)update(dt);draw();requestAnimationFrame(animate);}requestAnimationFrame(animate);
-window.addEventListener('pagehide',()=>renderer.destroy(),{once:true});
+const paths:Record<string,readonly Waypoint[]>={purifier:[[-1,1.7],[-.2,2.8],[1.15,4.3],[-.2,2.8],[-1,1.7],[0,0],[-1,1.7]],upper:[[6,-3.33,'upper'],[9.02,-3.55,'upper'],[6,-3.33,'upper'],[3.76,-4.6,'upper'],[6,-3.33,'upper']],hearth:[[3.8,3.8],[4.2,4.9],[5.3,4.9],[4.2,4.9],[3.8,3.8],[2.3,3.2],[3.8,3.8]],ramp:[[1.4,.4],[2.05,.30],[2,-.5],[2.75,-2.25,'west-ramp'],[3.76,-4.6,'upper'],[4.4,-4.2,'upper'],[3.76,-4.6,'upper'],[3.3,-3.53,'west-ramp'],[2.75,-2.25,'west-ramp'],[2,-.5],[1.4,.4]],exterior:[[-2,-2],[2.05,.3],[4.1,1.15],[3.7,-.77],[4.8,-1.48],[8.4,-.325],[12,.83],[10.7,2.1],[12,.83],[8.4,-.325],[4.8,-1.48],[3.7,-.77],[2.05,.3],[-2,-2]],core:[[10.7,2.1],[11.4,1.3],[12,.83],[11.4,1.3],[10.7,2.1],[9.6,2.9],[10.7,2.1]]};
+// Build the spokes from the actual screen-key inverse, not world-XZ diagonals.
+// Returning from each spoke also exercises the opposite screen direction.
+const flatFacings=lastLightScreenFacingYaws(manifest.camera);
+const spoke=(yaw:number,distance:number):Waypoint=>[Math.sin(yaw)*distance,Math.cos(yaw)*distance];
+paths.eight=[[0,0],...flatFacings.flatMap(yaw=>[spoke(yaw,1.2),[0,0] as Waypoint])];
+paths.idle=[[0,0],spoke(flatFacings[1]!, .54),[0,0]];
+const DIRECTIONS=['E','SE','S','SW','W','NW','N','NE'];
+const KEYS=['D','D+S','S','S+A','A','A+W','W','W+D'];
+const HOLD_SECONDS:Record<string,number>={eight:1.4,idle:6.4};
+const firstHold=()=>selector.value==='idle'?1:.45;
+
+function reset(){
+  const start=paths[selector.value]![0]!;
+  movement=createLastLightMovementState({x:start[0],y:0,z:start[1]},start[2]??'main');
+  gait=new LastLightGait();segment=1;hold=firstHold();elapsed=0;state.seconds=0;
+  screenDirection='—';screenKeys='—';screenInput={x:0,y:0};
+  gait.update([movement.x,movement.y,movement.z],0,false);
+  update(0);renderer.settleExteriorObserver(state.world,0);
+}
+function update(dt:number){
+  elapsed+=dt;state.seconds=elapsed;const path=paths[selector.value]!;
+  if(hold>0)hold=Math.max(0,hold-dt);
+  else{
+    const target=path[segment]!,dx=target[0]-movement.x,dz=target[1]-movement.z,dist=Math.hypot(dx,dz);
+    const arrivalDistance=selector.value==='eight'||selector.value==='idle'?.000001:.025;
+    if(dist<arrivalDistance){
+      // The final point is already the first one. Skip the duplicate on wrap
+      // so every endpoint has exactly one intentional rest interval.
+      segment=segment===path.length-1?1:segment+1;
+      hold=HOLD_SECONDS[selector.value]??.25;
+    }else{
+      const h=sampleLastLightSurface(movement.route,movement.x,movement.z)!;
+      const p=projectLastLight(movement),q=projectLastLight({x:target[0],z:target[1],y:movement.y+h.dx*dx+h.dz*dz});
+      const length=Math.hypot(q.x-p.x,q.y-p.y),input={x:(q.x-p.x)/length,y:(q.y-p.y)/length};
+      const sector=(Math.round(Math.atan2(input.y,input.x)/(Math.PI/4))+8)%8;
+      screenDirection=DIRECTIONS[sector]!;screenKeys=KEYS[sector]!;screenInput=input;
+      stepLastLightMovement(movement,input,Math.min(dt,dist/LAST_LIGHT_WORLD_WALK_SPEED)*1000,
+        lastLightProjectedWalkingSpeed(movement,input,LAST_LIGHT_WORLD_WALK_SPEED));
+    }
+  }
+  state.world=[movement.x,movement.y,movement.z];state.yaw=movement.facing;
+  const pose=gait.update(state.world,dt,false);
+  state.gaitPose=pose.pose;state.gaitFrame=pose.frame;state.walking=pose.moving;cycle=pose.cycle;
+}
+function draw(){
+  renderer.draw(state);const b=renderer.actorBounds;
+  detailContext.fillStyle='#080a0a';detailContext.fillRect(0,0,960,240);
+  detailContext.drawImage(renderer.canvas,Math.round(b.x+b.width/2-40),Math.round(b.y+b.height/2-30),80,60,0,0,320,240);
+  detailContext.drawImage(renderer.canvas,450,190,160,120,350,0,320,240);
+  const yawDegrees=state.yaw*180/Math.PI;
+  output.value=`${elapsed.toFixed(2)}s · ${movement.route} · ${screenKeys} ${screenDirection} · yaw ${yawDegrees.toFixed(2)}° · ${state.gaitPose} ${state.gaitFrame}`;
+  output.dataset.state=JSON.stringify({case:selector.value,elapsed,world:state.world,route:movement.route,
+    frame:state.gaitFrame,pose:state.gaitPose,moving:state.walking,cycle,yaw:state.yaw,yawDegrees,
+    screenDirection,screenKeys,screenInput,segment,hold});
+  seek.value=String(Math.min(elapsed,Number(seek.max)));
+}
+play.onclick=()=>{running=!running;play.textContent=running?'暂停':'播放';};
+document.querySelector('#restart')!.addEventListener('click',()=>{reset();draw();});
+selector.onchange=()=>{reset();draw();};
+seek.oninput=()=>{
+  running=false;play.textContent='播放';const target=Number(seek.value);reset();
+  for(let time=0;time<target;time+=1/60)update(Math.min(1/60,target-time));
+  renderer.settleExteriorObserver(state.world,state.seconds);draw();
+};
+reset();let request=0;
+function animate(now:number){
+  const dt=Math.min(.05,(now-last)/1000);last=now;
+  if(running)update(dt);draw();request=requestAnimationFrame(animate);
+}
+request=requestAnimationFrame(animate);
+window.addEventListener('pagehide',()=>{cancelAnimationFrame(request);renderer.destroy();},{once:true});

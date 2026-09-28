@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "e05e9a8正式接入后用户要求阴影、外景与太空步整改；本轮 IMPLEMENTED / LIMITED-VERIFIED，人审仍 HUMAN-CHANGES-REQUESTED。固定接根/受限分层、逐像素灯影、1.8m/s世界步速和312帧距离步态已实现。CPU及构建通过；正式WebGL2主菜单继续重入与W短移动、同正式渲染器的动态验证页实帧已限定检查，不能扩张为六站业务重走或用户画质通过。I28与原未评审边界保持。"
+    "summary": "eb0c527后角色静息/斜向修复已IMPLEMENTED / LIMITED-VERIFIED：停止0.44秒逐脚归位后进入8帧/3.2秒idle，真实相机反解水平面/西坡八向并导出15朝向1035帧。assets/gait/facing/movement/Player及构建通过；正式Renderer走停/四斜向/坡面及根页W/A短移动已限定复核。Rift与静态场景保持，未重验六站/场景重入，人审仍HUMAN-CHANGES-REQUESTED。"
   },
   "domains": [
     {
@@ -16,7 +16,7 @@
       "id": "controls",
       "title": "操作、生存与视野",
       "coverage": "mapped",
-      "note": "Last Light保留真实断口宽桥和单西坡，XZ世界步速1.8m/s，实际位移驱动步态和收步。8组移动/gait通过；正式W短移及验证页坡脚/坡中/上层、连续坡道与八向动态限定验证，未重新正式键盘走完六站。"
+      "note": "Last Light世界1.8m/s与A路线保持；独立idle及真实屏幕八向修复已通过gait/facing/8组movement与限定浏览器四斜向/坡面。正式根页W/A短移后站稳；未复走六站或场景重入，待人审。"
     },
     {
       "id": "world",
@@ -40,7 +40,7 @@
       "id": "progression",
       "title": "净化点、成长与经济",
       "coverage": "mapped",
-      "note": "Last Light六站与坐下原业务保持；本轮正式主菜单继续重入可用，坐下/起身锚点误算为步行已由helper专项回归修复。本轮未重新验证六站业务、坐下UI与Rift全流程；e05e9a8功能记录为历史证据，I28与交易/长期经济边界保留。"
+      "note": "Last Light六站、坐下及原经济业务保持；本轮人物修复已限定验证，根页继续存档与W/A短移停下可用。未重做交易、坐下UI、场景重入或Rift全流程，I28与长期经济边界保留。"
     },
     {
       "id": "interface",
@@ -52,7 +52,7 @@
       "id": "presentation",
       "title": "角色、美术与声音",
       "coverage": "mapped",
-      "note": "e05e9a8正式接入后用户要求阴影、外景与太空步整改；本轮 IMPLEMENTED / LIMITED-VERIFIED，人审仍 HUMAN-CHANGES-REQUESTED。固定接根/受限分层、逐像素灯影、1.8m/s世界步速和312帧距离步态已实现。CPU及构建通过；正式WebGL2主菜单继续重入与W短移动、同正式渲染器的动态验证页实帧已限定检查，不能扩张为六站业务重走或用户画质通过。I28与原未评审边界保持。"
+      "note": "eb0c527后角色静息/斜向修复已IMPLEMENTED / LIMITED-VERIFIED：停止0.44秒逐脚归位后进入8帧/3.2秒idle，真实相机反解水平面/西坡八向并导出15朝向1035帧。assets/gait/facing/movement/Player及构建通过；正式Renderer走停/四斜向/坡面及根页W/A短移动已限定复核。Rift与静态场景保持，未重验六站/场景重入，人审仍HUMAN-CHANGES-REQUESTED。"
     },
     {
       "id": "narrative",

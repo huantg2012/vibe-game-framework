@@ -3,7 +3,7 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "Last Light A真实断口宽桥、单西坡和分层足迹保持；净化点按实际XZ世界1.8m/s行走并以真实位移推进步态、停止收步。8组纯移动/gait检查、正式W短移及同正式step的动态验证页限定检查通过。IMPLEMENTED / LIMITED-VERIFIED；Rift移动不变，人审仍HUMAN-CHANGES-REQUESTED。",
+    "summary": "Last Light保持1.8m/s实际XZ步速与现有碰撞路线；停止归位进入idle，图集朝向与水平面/坡面真实屏幕输入一致。gait/facing/8组movement及正式Renderer四斜向、根页W/A短移动通过限定复核；未重走六站或重入，Rift移动不变，人审待复看。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -125,6 +125,18 @@
       {
         "path": "docs/art/demos/purification-motion-review/viewer.ts",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-actor.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/art/last-light-facing.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-facing.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -140,9 +152,11 @@
       "COH-E-I30-R9-GEOMETRY",
       "COH-E-I30-LAST-LIGHT-PRODUCTION",
       "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
-      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR"
+      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
+      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
+      "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
       "e05e9a8的六站与路线记录为历史功能证据，不能视为当前人物动作或整体画质人审通过。",
       "本轮正式根游戏只确认WebGL2主菜单继续重入与W短移。动态验证页使用真实step与gait，覆盖坡脚/坡中/上层实帧、默认坡道连续超过23秒和八向连续超过30秒；不等于正式键盘完整六站复走。",
       "坐下/起身呈现锚点被误算为步行的helper问题已专项回归修复；坐下UI本轮未复走。人的初见导航、全边缝手感与长期往返体验未完成，I28及原Rift全世界组合边界保持。"

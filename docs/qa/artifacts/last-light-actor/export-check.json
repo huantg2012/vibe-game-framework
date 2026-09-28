@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "sourceBaseline": "eb0c527",
+  "actorFrames": 1035,
+  "actorDirections": 15,
+  "actorAtlas": [
+    960,
+    5520
+  ],
+  "idleFrames": 8,
+  "settleStages": 4,
+  "stopToIdleSeamChecks": 180,
+  "facingMovementChecks": 16,
+  "facingAssetChecks": 1035,
+  "unchangedStaticPngs": 22,
+  "staticProvenance": "Unchanged from HEAD",
+  "actorPngBytes": 4598423,
+  "manifestBytes": 3002428,
+  "commands": [
+    "node --import tsx tools/last-light/export.mjs --actors-only",
+    "node tools/last-light/check-assets.mjs",
+    "node --import tsx tools/last-light/check-facing.ts"
+  ],
+  "boundaries": "Resource contracts and static preservation only; browser animation inspection is owned by the root task."
+}

@@ -11,7 +11,7 @@ assert.equal(manifest.status,'complete');assert.equal(manifest.source.riftOpenin
 assert.deepEqual(manifest.canvas,{width:960,height:640});
 // Scene provenance is the recipe used for the last scene bake. An actor-only
 // bake must preserve it, even when the actor/tool source has since changed.
-const actorOnlySourceChanges=new Set(['docs/art/demos/purification-last-light/actor.ts','src/art/last-light-gait.ts','tools/last-light/export.mjs']);
+const actorOnlySourceChanges=new Set(['docs/art/demos/purification-last-light/actor.ts','src/art/last-light-gait.ts','src/art/last-light-facing.ts','src/art/last-light-spatial.ts','tools/last-light/export.mjs']);
 assert.deepEqual(checksums.actorSources,manifest.actor.sourceHashes,'Actor provenance must agree with manifest');
 for(const [file,value] of Object.entries(checksums.actorSources??{}))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale actor source ${file}`);
 assert.ok(manifest.exteriorFields,'Per-layer exterior light/material contract missing');
@@ -52,31 +52,65 @@ const energy=pixels('coreEnergy');assert.equal(energy.info.width,3840);assert.eq
 let additiveHalo=0;for(let i=0;i<energy.data.length;i+=4)if(!energy.data[i+3]&&(energy.data[i]||energy.data[i+1]||energy.data[i+2]))additiveHalo++;
 assert.ok(additiveHalo>100,'Core radiance at zero alpha must survive export');
 const a=manifest.actor,atlas=images.get(a.textures.color),ad=images.get(a.textures.depth),an=images.get(a.textures.normal);
-assert.equal(a.gait.cycleFrames,12);assert.equal(a.gait.settleStages,2);assert.equal(a.gait.strideMetres,1.05);
-const walkingRows=a.gait.cycleFrames*(1+a.gait.settleStages),actorRows=2+walkingRows+1;
-assert.equal(a.frames.length,actorRows*8);assert.equal(atlas.info.width,512);assert.equal(atlas.info.height,actorRows*80);
+assert.equal(a.gait.cycleFrames,12);assert.equal(a.gait.settleStages,4);assert.equal(a.gait.strideMetres,1.05);
+assert.equal(a.gait.idleFrames,8);assert.equal(a.gait.idlePeriodSeconds,3.2);
+assert.equal(a.fps.idle,a.gait.idleFrames/a.gait.idlePeriodSeconds);
+assert.deepEqual(a.directions.screenOrder,['E','SE','S','SW','W','NW','N','NE']);
+assert.deepEqual(a.directions.groups.map(group=>group.surface),['main','west-ramp']);
+const directionCount=a.directions.worldYaws.length,angleDifference=(x,y)=>Math.abs(Math.atan2(Math.sin(x-y),Math.cos(x-y)));
+assert.equal(directionCount,15,'Expected fourteen screen-key headings and the exact seated heading');
+for(let i=0;i<directionCount;i++){
+ assert.ok(Number.isFinite(a.directions.worldYaws[i]));
+ for(let j=0;j<i;j++)assert.ok(angleDifference(a.directions.worldYaws[i],a.directions.worldYaws[j])>1e-6,'Duplicate actor heading');
+}
+for(const group of a.directions.groups){assert.equal(group.worldYaws.length,8);assert.ok(Number.isFinite(group.plane.dx)&&Number.isFinite(group.plane.dz));for(const yaw of group.worldYaws)assert.ok(a.directions.worldYaws.some(value=>angleDifference(value,yaw)<1e-6),'Missing camera-correct heading');}
+assert.equal(a.directions.restYaw,manifest.rest.yaw);
+assert.ok(a.directions.worldYaws.some(yaw=>angleDifference(yaw,manifest.rest.yaw)<1e-6),'Seat direction was approximated');
+const walkingRows=a.gait.cycleFrames*(1+a.gait.settleStages),actorRows=a.gait.idleFrames+walkingRows+1;
+assert.equal(a.frames.length,actorRows*directionCount);assert.equal(atlas.info.width,directionCount*64);assert.equal(atlas.info.height,actorRows*80);
+assert.equal(a.width,atlas.info.width);assert.equal(a.height,atlas.info.height);assert.ok(a.width<=8192&&a.height<=8192);
+for(const file of Object.values(a.textures)){const {info}=images.get(file);assert.equal(info.width,a.width);assert.equal(info.height,a.height);}
 const frameChecks=[];
+const frameKeys=new Set();
+const frameHash=(image,rect)=>{
+ const bytes=Buffer.alloc(rect.width*rect.height*4);
+ for(let y=0;y<rect.height;y++)image.data.copy(bytes,y*rect.width*4,((rect.y+y)*a.width+rect.x)*4,((rect.y+y)*a.width+rect.x+rect.width)*4);
+ return hash(bytes);
+};
 for(const frame of a.frames){
+ const frameKey=`${frame.pose}/${frame.direction}/${frame.frame}`;assert.ok(!frameKeys.has(frameKey),`Duplicate actor frame ${frameKey}`);frameKeys.add(frameKey);
+ assert.ok(Number.isInteger(frame.direction)&&frame.direction>=0&&frame.direction<directionCount);assert.ok(angleDifference(frame.yaw,a.directions.worldYaws[frame.direction])<1e-9);
+ const row=frame.pose==='idle'?frame.frame:frame.pose==='walk'?a.gait.idleFrames+frame.frame:a.gait.idleFrames+walkingRows;
+ assert.ok(['idle','walk','sit'].includes(frame.pose));assert.ok(Number.isInteger(frame.frame)&&frame.frame>=0&&frame.frame<(frame.pose==='idle'?a.gait.idleFrames:frame.pose==='walk'?walkingRows:1));
+ assert.deepEqual(frame.rect,{x:frame.direction*64,y:row*80,width:64,height:80});assert.deepEqual(frame.anchor,[32,66]);
  assert.equal(frame.shadowCapsules.length,11,`Incomplete pose shadow rig ${frame.pose}/${frame.direction}/${frame.frame}`);
  for(const capsule of frame.shadowCapsules){assert.equal(capsule.length,7);assert.ok(capsule.every(Number.isFinite));assert.ok(capsule[6]>.03&&capsule[6]<.3);}
- const {x,y,width,height}=frame.rect;const bytes=[];let n=0;
+ const {x,y,width,height}=frame.rect;let n=0;
  for(let yy=0;yy<height;yy++)for(let xx=0;xx<width;xx++){
   const offset=((y+yy)*a.width+x+xx)*4;
   if(atlas.data[offset+3]){n++;assert.ok(xx>0&&xx<width-1&&yy>0&&yy<height-1,`Actor clipped ${frame.pose}/${frame.direction}/${frame.frame}`);assert.equal(ad.data[offset+3],255);assert.equal(an.data[offset+3],255);}
-  bytes.push(...atlas.data.subarray(offset,offset+4));
  }
  assert.ok(n>140&&n<1500,`Unexpected actor silhouette ${n}`);
- frameChecks.push({pose:frame.pose,direction:frame.direction,frame:frame.frame,pixels:n,hash:hash(Buffer.from(bytes))});
+ const hashes=Object.fromEntries(Object.entries(a.textures).map(([key,file])=>[key,frameHash(images.get(file),frame.rect)]));
+ frameChecks.push({pose:frame.pose,direction:frame.direction,frame:frame.frame,pixels:n,hash:hashes.color,hashes});
 }
-for(let direction=0;direction<8;direction++){
+for(let direction=0;direction<directionCount;direction++){
  const gait=frameChecks.filter(f=>f.direction===direction&&f.pose==='walk');assert.equal(gait.length,walkingRows);
  const stride=gait.filter(f=>f.frame<a.gait.cycleFrames);
  assert.equal(new Set(stride.map(f=>f.hash)).size,a.gait.cycleFrames,`Collapsed walk poses for direction ${direction}`);
  assert.equal(frameChecks.filter(f=>f.direction===direction&&f.pose==='sit').length,1);
- const idle=frameChecks.filter(f=>f.direction===direction&&f.pose==='idle');assert.equal(new Set(idle.map(f=>f.hash)).size,2,`Idle breathing collapsed for direction ${direction}`);
+ const idle=frameChecks.filter(f=>f.direction===direction&&f.pose==='idle');assert.equal(idle.length,a.gait.idleFrames);assert.ok(new Set(idle.map(f=>f.hash)).size>=3,`Idle breathing collapsed for direction ${direction}`);
+ const idleZero=idle.find(f=>f.frame===0),idlePose=a.frames.find(f=>f.direction===direction&&f.pose==='idle'&&f.frame===0);
+ for(let phase=0;phase<a.gait.cycleFrames;phase++){
+  const finalFrame=a.gait.cycleFrames+phase*a.gait.settleStages+a.gait.settleStages-1;
+  const final=gait.find(f=>f.frame===finalFrame),pose=a.frames.find(f=>f.direction===direction&&f.pose==='walk'&&f.frame===finalFrame);
+  assert.deepEqual(final.hashes,idleZero.hashes,`Stop-to-idle pixel jump for direction ${direction}, phase ${phase}`);
+  assert.deepEqual(pose.shadowCapsules,idlePose.shadowCapsules,`Stop-to-idle shadow jump for direction ${direction}, phase ${phase}`);
+  assert.deepEqual(pose.lamp,idlePose.lamp,`Stop-to-idle lamp jump for direction ${direction}, phase ${phase}`);
+ }
 }
 const occluders=JSON.parse(await fs.readFile(path.join(dir,manifest.occluders.url),'utf8'));
 assert.equal(occluders.triangles.length,occluders.count*9);assert.ok(occluders.count>45000);assert.ok(occluders.triangles.every(Number.isFinite));
-const stats={status:'PASS',width:960,height:640,riftOpeningScale:.52,opaquePixels:coverage,sourceLights:manifest.lights.length,coreEmitters:7,riftEmitters:3,additiveHaloPixels:additiveHalo,staticOccluders:occluders.count,actorFrames:frameChecks.map(({hash,...f})=>f),checksums:hash(await fs.readFile(path.join(dir,'checksums.json')))};
+const stats={status:'PASS',width:960,height:640,riftOpeningScale:.52,opaquePixels:coverage,sourceLights:manifest.lights.length,coreEmitters:7,riftEmitters:3,additiveHaloPixels:additiveHalo,staticOccluders:occluders.count,actorDirections:directionCount,idleFrames:a.gait.idleFrames,settleStages:a.gait.settleStages,stopToIdleSeamChecks:directionCount*a.gait.cycleFrames,actorFrames:frameChecks.map(({hash,hashes,...f})=>f),checksums:hash(await fs.readFile(path.join(dir,'checksums.json')))};
 if(process.argv.includes('--write')){const out='docs/qa/artifacts/last-light-production/assets.json';await fs.mkdir(path.dirname(out),{recursive:true});await fs.writeFile(out,JSON.stringify(stats,null,2)+'\n');}
 console.log(JSON.stringify({...stats,actorFrames:a.frames.length},null,2));

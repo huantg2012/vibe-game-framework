@@ -49,10 +49,11 @@ export class LastLightFallback {
   }
   draw(state: LastLightRenderState): void {
     const pose=state.gaitPose,phase=state.gaitFrame;
-    const candidates = this.pack.frames.filter(frame => frame.pose === pose);
+    const candidates = this.pack.frames.filter(frame => frame.pose === pose && frame.phase === phase);
+    if (!candidates.length) throw new Error(`Last Light actor is missing ${pose} frame ${phase}.`);
     let score = Infinity, selected = candidates[0]!;
     for (const frame of candidates) {
-      const rank = Math.abs(Math.atan2(Math.sin(frame.yaw - state.yaw), Math.cos(frame.yaw - state.yaw))) * 100 + Math.abs(frame.phase - phase);
+      const rank = Math.abs(Math.atan2(Math.sin(frame.yaw - state.yaw), Math.cos(frame.yaw - state.yaw)));
       if (rank < score) { score = rank; selected = frame; }
     }
     this.current = selected;

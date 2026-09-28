@@ -1,7 +1,7 @@
 ---
-status: R11-LAST-LIGHT-RENDER-REPAIR / IMPLEMENTED / LIMITED-VERIFIED / HUMAN-CHANGES-REQUESTED
+status: R11-LAST-LIGHT-ACTOR-REPAIR / IMPLEMENTED / LIMITED-VERIFIED / HUMAN-CHANGES-REQUESTED
 created-date: 2026-09-23
-last-modified-date: 2026-09-27
+last-modified-date: 2026-09-28
 owner: director
 baseline: 35f17ba（完整像素画法） / 5445d15（A与裂隙方向认可）
 features: COH-F042 / COH-F026 / COH-F006 / COH-F039
@@ -19,13 +19,24 @@ features: COH-F042 / COH-F026 / COH-F006 / COH-F039
 
 ## 当前执行状态
 
+2026-09-28用户复看指出停止仍卡移动帧、斜向表现异常。本次聚焦人物，静态场景和已选画法保持。已确认旧状态机不返回idle，图集世界等分方向也不等于屏幕输入方向；此前“收步/八向”验证范围不足，详见[角色QA](../qa/iteration-30-last-light-actor.md)。
+
+- [x] 状态修复：停止0.44秒四阶段依次抬脚归位，明确进入8帧/3.2秒独立静息；最终收步与idle 0姿态一致。
+- [x] 朝向修复代码：水平面/西坡真实屏幕八向逆投影，合并14朝向加精确坐姿，共15列。12行走、48收步加静息/坐姿共1035帧，960×5520。
+- [x] `check-gait`已通过；1.05m步周期及1.8m/s实际XZ步速保持，最高摆脚抬升降至0.105m。
+- [x] 最终1035帧人物烘焙；assets/gait/facing/8组movement/Player/构建通过。180组终止姿态六图/rig/灯锚与idle 0相等；22张静态PNG及其来源哈希保持。
+- [x] 正式Renderer走停36帧、四个真实屏幕斜向各12帧及坡面实帧检查；停止后位置固定并进入独立呼吸静息。正式根页刷新→继续存档→W/A短键移动→松手站稳，WebGL2且控制台无warning/error；本轮不含完整六站或场景重入，证据见角色QA。
+- [ ] 本轮人审；不能用机器通过代签动作自然度。
+
+以下是上一轮 `eb0c527` 阴影/外景修复的限定范围，动作结论由本轮重验：
+
 - [x] 外景：近层整体固定，锁住真实接根；中层/远层连续软限幅≤3.5/6原生像素。观察只取XZ投影，140ms平滑，不随上楼高度牵扯周边建筑。
 - [x] 各层颜色、深度、光场与侵蚀同UV；独立导出字段atlas。按真实远景法线/深度恢复转面与消隐，不抬蓝背景，不改获认可的平台原色图。
 - [x] 灯影：肩灯512 cubemap随移动刷新；固定灯192阵列逐像素判断可见性；人物每姿态11胶囊投影替代单一躯干近似。
-- [x] 步态：净化点实际XZ世界步速1.8m/s；真实位移推进1.05m步幅，12行走相位、24收步，8方向共312帧，撞停后不继续踩步。
+- [x] 历史步态：世界1.8m/s、实际位移推进1.05m步周期已接入；旧312帧只落脚而不返回idle，本次替换，不再作为动作合格结论。
 - [x] 本轮assets、exterior、8组movement、gait、Player及构建通过；坐下/起身呈现锚点误算走路已由helper专项回归修复。
 - [x] 正式根游戏：新GPU编译/运行，WebGL2无fallback，主菜单继续重入和W短移动可用；本机短样约120fps。
-- [x] 同正式Renderer/素材/真实step/gait的可复现页完成限定实帧检查：坡脚/坡中、上层书架设备、净化器、炉旁混光、核心和外景左右极端，近层不拉开、方块阴影消失、抬脚支撑收步可见；默认坡道连续超过23秒及八向连续超过30秒。
+- [x] 上一轮同正式Renderer/素材/step/gait复现页检查过坡脚/坡中、设备/混光/核心及外景极端；世界等分八向回放并未覆盖屏幕八向错配，也未验证停步真正返回idle。阴影/外景结果保留，人物由本轮重验。
 - [ ] 本轮未重新做正式键盘六站完整复走、业务交易、坐下UI与Rift全流程；历史功能证据与当前验证分开。
 - [ ] 修订版实尺美术/动态体验人审。
 
@@ -48,7 +59,7 @@ features: COH-F042 / COH-F026 / COH-F006 / COH-F039
 
 本轮外景抽为`src/art/last-light-exterior.ts`，`tools/last-light/exterior-export.mjs --install`只补各层光场/材质字段，独立登记exterior来源，不篡改旧静态资源烤制来源。灯影由`last-light-shadows.ts`、步态由`last-light-gait.ts`负责；各自通过与整景体验通过分开记。
 
-正常入口为项目根`index.html`（本地 `http://127.0.0.1:3027/`）。[动态复现页](../art/demos/purification-motion-review/index.html)使用正式Renderer、素材、真实step和gait，不写存档；它用于复现动作/灯影/外景，不替代正式入口或六站业务验证。原比较页与作者查看页保留历史用途。当前整改证据见[动态QA](../qa/iteration-30-last-light-motion.md)，原接入功能范围见[生产QA](../qa/iteration-30-last-light-production.md)。
+正常入口为项目根`index.html`（本地 `http://127.0.0.1:3027/`）。[动态复现页](../art/demos/purification-motion-review/index.html)使用正式Renderer、素材、真实step和gait，不写存档；它用于复现动作/灯影/外景，不替代正式入口或六站业务验证。原比较页与作者查看页保留历史用途。本轮人物修复见[角色QA](../qa/iteration-30-last-light-actor.md)，上一轮阴影/外景记录见[动态QA](../qa/iteration-30-last-light-motion.md)，原接入功能范围见[生产QA](../qa/iteration-30-last-light-production.md)。
 
 ## 边界
 

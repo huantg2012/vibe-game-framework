@@ -1,5 +1,5 @@
 import { Model, add, cross, mul, sub, unit, type Material, type V3 } from './model';
-import { lastLightWalkBodyLift, lastLightWalkLeg } from '../../../../src/art/last-light-gait';
+import { lastLightWalkBodyLift, lastLightWalkLeg, lastLightIdleLift } from '../../../../src/art/last-light-gait';
 
 /** This is the same warm-grey worker as player-sprite-dense.ts, reconstructed
  * for the haven's fixed pixel grid. Rift continues using its existing sprite. */
@@ -10,20 +10,22 @@ export const ACTOR_HEIGHT=1.665;
 export const ACTOR_OBJECT_ID=7;
 
 export function actorLampAnchor(position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0,walkPhase?:number,settle=0):V3 {
+  if(settle>=1){walkPhase=undefined;breath=0;settle=0;}
   const c=Math.cos(facing),s=Math.sin(facing),p=ACTOR_LAMP_LOCAL;
   const strideLift=walkPhase===undefined?0:lastLightWalkBodyLift(walkPhase/(Math.PI*2),settle);
-  return [position[0]+p[0]*c+p[2]*s,position[1]+p[1]+Math.sin(breath)*.008+strideLift,position[2]-p[0]*s+p[2]*c];
+  return [position[0]+p[0]*c+p[2]*s,position[1]+p[1]+lastLightIdleLift(breath)+strideLift,position[2]-p[0]*s+p[2]*c];
 }
 
 /** Facing is yaw in radians; local +Z is the face, local +X the lamp shoulder.
  * A tiny breath moves the coat, pack and lamp together while the soles stay put. */
 export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0,walkPhase?:number,settle=0):void {
+  if(settle>=1){walkPhase=undefined;breath=0;settle=0;}
   const previousLayer=m.layer;
   m.layer='haven';
   m.at(position,facing,ACTOR_OBJECT_ID,()=>{
     const walking=walkPhase!==undefined;
     const cycle=(walkPhase??0)/(Math.PI*2);
-    const lift=Math.sin(breath)*.008+(walking?lastLightWalkBodyLift(cycle,settle):0);
+    const lift=lastLightIdleLift(breath)+(walking?lastLightWalkBodyLift(cycle,settle):0);
     // Separated, weight-bearing legs. The right boot is half a pace forward.
     for(const [x,z,t] of [[-.148,-.075,.88],[.143,.080,1.04]] as const) {
       if(walking){
@@ -247,6 +249,7 @@ export function buildSeatedActor(m:Model,position:V3,facing:number,seatHeight=.4
 /** Eleven closed capsules follow the same pose joints as the drawn body.
  * Endpoints are yaw-rotated world offsets from the actor anchor, like lamp. */
 export function actorShadowCapsules(pose:'idle'|'walk'|'sit',facing:number,phase=0,settle=0,seatHeight=.48):number[][] {
+  if(pose==='walk'&&settle>=1){pose='idle';phase=0;settle=0;}
   const result:number[][]=[],c=Math.cos(facing),s=Math.sin(facing);
   const rotate=(p:V3):V3=>[p[0]*c+p[2]*s,p[1],-p[0]*s+p[2]*c];
   const capsule=(a:V3,b:V3,r:number):void=>{result.push([...rotate(a),...rotate(b),r]);};
@@ -265,7 +268,7 @@ export function actorShadowCapsules(pose:'idle'|'walk'|'sit',facing:number,phase
     capsule([.305,h+.218,.080],[.155,h+.148,.369],.072);
   }else{
     const walking=pose==='walk',cycle=phase/(Math.PI*2);
-    const lift=walking?lastLightWalkBodyLift(cycle,settle):Math.sin(phase)*.008;
+    const lift=walking?lastLightWalkBodyLift(cycle,settle):lastLightIdleLift(phase);
     const swing=walking?lastLightWalkLeg(cycle,false,settle).footZ/.315*.14*(1-settle):0;
     capsule([0,.72+lift,0],[0,1.14+lift,.01],.218);
     capsule([0,1.405+lift,.01],[0,1.545+lift,0],.170);

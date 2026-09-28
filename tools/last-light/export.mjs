@@ -8,7 +8,9 @@ import {buildOption} from '../../docs/art/demos/purification-forecourt-options/o
 import {Model} from '../../docs/art/demos/purification-last-light/model.ts';
 import {CAMERA,project,render} from '../../docs/art/demos/purification-last-light/render.ts';
 import {ACTOR_HEIGHT,ACTOR_OBJECT_ID,buildActor,buildSeatedActor,actorLampAnchor,seatedActorLampAnchor,actorShadowCapsules} from '../../docs/art/demos/purification-last-light/actor.ts';
-import {LAST_LIGHT_STRIDE_METRES,LAST_LIGHT_WALK_FRAMES,LAST_LIGHT_SETTLE_STAGES,LAST_LIGHT_STANCE_FRACTION} from '../../src/art/last-light-gait.ts';
+import {LAST_LIGHT_STRIDE_METRES,LAST_LIGHT_WALK_FRAMES,LAST_LIGHT_SETTLE_STAGES,LAST_LIGHT_STANCE_FRACTION,LAST_LIGHT_IDLE_FRAMES,LAST_LIGHT_IDLE_PERIOD_SECONDS} from '../../src/art/last-light-gait.ts';
+import {lastLightScreenFacingYaws,mergeLastLightFacingYaws} from '../../src/art/last-light-facing.ts';
+import {WALK_SURFACES} from '../../docs/art/demos/purification-last-light/environment.ts';
 import {REST_OBJECT_ID,REST_POSITION,REST_YAW,REST_SEAT_HEIGHT,REST_APPROACH} from '../../docs/art/demos/purification-last-light/rest.ts';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
@@ -17,15 +19,27 @@ await fs.mkdir(output,{recursive:true});
 const actorsOnly=process.argv.includes('--actors-only'),sceneOnly=process.argv.includes('--scene-only');
 const W=CAMERA.width,H=CAMERA.height,OVER=32;
 const WALK_ROWS=LAST_LIGHT_WALK_FRAMES*(1+LAST_LIGHT_SETTLE_STAGES);
-const FW=64,FH=80,COLS=8,ROWS=2+WALK_ROWS+1,AW=FW*COLS,AH=FH*ROWS,ANCHOR=[32,66];
+const slope=WALK_SURFACES.find(surface=>surface.id==='west-ramp');
+if(!slope)throw new Error('Actor facing bake requires the authored west ramp.');
+const [a,b,c]=slope.points,dx1=b[0]-a[0],dz1=b[2]-a[2],dy1=b[1]-a[1],dx2=c[0]-a[0],dz2=c[2]-a[2],dy2=c[1]-a[1];
+const determinant=dx1*dz2-dx2*dz1;
+if(Math.abs(determinant)<1e-9)throw new Error('Actor facing bake found a degenerate walking plane.');
+const rampPlane={dx:(dy1*dz2-dy2*dz1)/determinant,dz:(dx1*dy2-dx2*dy1)/determinant};
+const facingGroups=[{surface:'main',plane:{dx:0,dz:0}},{surface:'west-ramp',plane:rampPlane}]
+  .map(group=>({...group,worldYaws:lastLightScreenFacingYaws(CAMERA,group.plane)}));
+const facingYaws=mergeLastLightFacingYaws(...facingGroups.map(group=>group.worldYaws),[REST_YAW]);
+const FW=64,FH=80,COLS=facingYaws.length,ROWS=LAST_LIGHT_IDLE_FRAMES+WALK_ROWS+1,AW=FW*COLS,AH=FH*ROWS,ANCHOR=[32,66];
+if(AW>8192||AH>8192)throw new Error(`Actor atlas exceeds the supported texture limit: ${AW} × ${AH}`);
 const DEPTH_OFFSET=80,DEPTH_SCALE=256;
 const AUTHOR_SOURCES=[
   ...['option-a.ts','rift-a.ts','shared.ts'].map(f=>`docs/art/demos/purification-forecourt-options/${f}`),
   ...['model.ts','render.ts','energy.ts','environment.ts','devices.ts','actor.ts','rest.ts','scene.ts'].map(f=>`docs/art/demos/purification-last-light/${f}`),
   'tools/last-light/export.mjs',
   'src/art/last-light-gait.ts',
+  'src/art/last-light-facing.ts',
+  'src/art/last-light-spatial.ts',
 ];
-const ACTOR_SOURCES=['actor.ts','model.ts','render.ts'].map(f=>`docs/art/demos/purification-last-light/${f}`).concat(['src/art/last-light-gait.ts','tools/last-light/export.mjs']);
+const ACTOR_SOURCES=['actor.ts','model.ts','render.ts','environment.ts','rest.ts'].map(f=>`docs/art/demos/purification-last-light/${f}`).concat(['src/art/last-light-gait.ts','src/art/last-light-facing.ts','src/art/last-light-spatial.ts','tools/last-light/export.mjs']);
 const save=(name,data,width=W,height=H)=>sharp(Buffer.from(data),{raw:{width,height,channels:4}}).png().toFile(path.join(output,name));
 const round=n=>Math.round(n*1e5)/1e5;
 const author=buildOption();
@@ -52,12 +66,13 @@ function bounds(id){
   return {x,y,width:right-x,height:bottom-y};
 }
 const frames=[];
-for(let row=0;row<ROWS;row++)for(let direction=0;direction<8;direction++){
-  const yaw=direction*Math.PI/4;
-  const pose=row<2?'idle':row<2+WALK_ROWS?'walk':'sit',frame=row<2?row:row<2+WALK_ROWS?row-2:0;
+for(let row=0;row<ROWS;row++)for(let direction=0;direction<COLS;direction++){
+  const yaw=facingYaws[direction];
+  const pose=row<LAST_LIGHT_IDLE_FRAMES?'idle':row<LAST_LIGHT_IDLE_FRAMES+WALK_ROWS?'walk':'sit';
+  const frame=pose==='idle'?row:pose==='walk'?row-LAST_LIGHT_IDLE_FRAMES:0;
   const stepFrame=frame<LAST_LIGHT_WALK_FRAMES?frame:Math.floor((frame-LAST_LIGHT_WALK_FRAMES)/LAST_LIGHT_SETTLE_STAGES);
   const settle=pose==='walk'&&frame>=LAST_LIGHT_WALK_FRAMES?((frame-LAST_LIGHT_WALK_FRAMES)%LAST_LIGHT_SETTLE_STAGES+1)/LAST_LIGHT_SETTLE_STAGES:0;
-  const phase=pose==='walk'?stepFrame/LAST_LIGHT_WALK_FRAMES*Math.PI*2:pose==='idle'?Math.PI/2+frame*Math.PI:0;
+  const phase=pose==='walk'?stepFrame/LAST_LIGHT_WALK_FRAMES*Math.PI*2:pose==='idle'?frame/LAST_LIGHT_IDLE_FRAMES*Math.PI*2:0;
   const lamp=pose==='sit'?seatedActorLampAnchor([0,0,0],yaw,REST_SEAT_HEIGHT)
     :actorLampAnchor([0,0,0],yaw,pose==='idle'?phase:0,pose==='walk'?phase:undefined,settle);
   frames.push({pose,direction,frame,yaw,phase,settle,rect:{x:direction*FW,y:row*FH,width:FW,height:FH},anchor:ANCHOR,lamp,
@@ -65,8 +80,10 @@ for(let row=0;row<ROWS;row++)for(let direction=0;direction<8;direction++){
 }
 const actor={id:7,width:AW,height:AH,frameWidth:FW,frameHeight:FH,anchor:ANCHOR,worldHeight:ACTOR_HEIGHT,seatHeight:REST_SEAT_HEIGHT,
   textures:{color:'actor-color.png',albedo:'actor-albedo.png',normal:'actor-normal.png',roughSpec:'actor-rough-spec.png',depth:'actor-depth.png',contact:'actor-contact.png'},
-  frames,fps:{idle:2,sit:1},gait:{strideMetres:LAST_LIGHT_STRIDE_METRES,cycleFrames:LAST_LIGHT_WALK_FRAMES,settleStages:LAST_LIGHT_SETTLE_STAGES,stanceFraction:LAST_LIGHT_STANCE_FRACTION,
-    progress:'Walk frames 0..11 advance by actual XZ displacement / strideMetres, never by elapsed time. Frames 12..35 lower the suspended foot at each cycle pose in two stages; planted-foot XZ remains fixed.'},
+  directions:{worldYaws:facingYaws,screenOrder:['E','SE','S','SW','W','NW','N','NE'],groups:facingGroups,restYaw:REST_YAW,
+    encoding:'Columns are camera-correct inverse screen-key headings for the main plane and west ramp, merged by wrapped world yaw. The exact seated yaw is included. Direction indices are not equal world-angle increments.'},
+  frames,fps:{idle:LAST_LIGHT_IDLE_FRAMES/LAST_LIGHT_IDLE_PERIOD_SECONDS,sit:1},gait:{strideMetres:LAST_LIGHT_STRIDE_METRES,cycleFrames:LAST_LIGHT_WALK_FRAMES,settleStages:LAST_LIGHT_SETTLE_STAGES,stanceFraction:LAST_LIGHT_STANCE_FRACTION,idleFrames:LAST_LIGHT_IDLE_FRAMES,idlePeriodSeconds:LAST_LIGHT_IDLE_PERIOD_SECONDS,
+    progress:`Walk frames 0..${LAST_LIGHT_WALK_FRAMES-1} advance by actual XZ displacement / strideMetres, never by elapsed time. Frames ${LAST_LIGHT_WALK_FRAMES}..${WALK_ROWS-1} return both feet to the resting stance in ${LAST_LIGHT_SETTLE_STAGES} stages per cycle pose. Each final stage exactly matches idle phase zero; then the ${LAST_LIGHT_IDLE_FRAMES}-frame breathing loop takes over.`},
   depth:'Same RG encoding as scene, but camera depth relative to the actor world origin. Add dot(actorWorld-camera.target,cameraBack).',
   shadowEncoding:'Per-frame shadowCapsules contain [ax,ay,az,bx,by,bz,radius]. Endpoints are yaw-rotated world-axis offsets from actor origin; add world position without another rotation.',
   contact:'Local floor-contact alpha only; not a replacement for directional shadows. Relative-depth atlas can reconstruct the full pose caster.',
@@ -166,7 +183,7 @@ if(!sceneOnly){
     paste(buffers.color,frame.rgba,entry.rect);paste(buffers.albedo,frame.albedo,entry.rect);
     paste(buffers.normal,frame.normal,entry.rect);paste(buffers.roughSpec,frame.roughSpec,entry.rect);
     paste(buffers.depth,depth,entry.rect);paste(buffers.contact,contact,entry.rect);
-    if(entry.direction===7)console.log(`Actor ${entry.pose} frame ${entry.frame}: eight native-scale facings complete.`);
+    if(entry.direction===COLS-1)console.log(`Actor ${entry.pose} frame ${entry.frame}: ${COLS} camera-correct native-scale facings complete.`);
   }
   for(const [key,data] of Object.entries(buffers))await save(actor.textures[key],data,AW,AH);
   // Merge at write time so an actor bake cannot replace newer scene metadata.

@@ -268,12 +268,12 @@ export class LastLightRenderer {
     const pose=state.gaitPose,phase=state.gaitFrame;
     let best = Infinity, selected: LastLightFrame | undefined;
     for (const frame of this.pack.frames) {
-      if (frame.pose !== pose) continue;
+      if (frame.pose !== pose || frame.phase !== phase) continue;
       const angle = Math.abs(Math.atan2(Math.sin(frame.yaw - state.yaw), Math.cos(frame.yaw - state.yaw)));
-      const score = angle * 100 + Math.abs(frame.phase - phase);
+      const score = angle;
       if (score < best) { best = score; selected = frame; }
     }
-    if (!selected) throw new Error(`Last Light actor is missing ${pose} frames.`);
+    if (!selected) throw new Error(`Last Light actor is missing ${pose} frame ${phase}.`);
     return selected;
   }
   /** Discontinuous replay seeks use a settled observer, not the previous

@@ -3,7 +3,7 @@
     "id": "COH-F039",
     "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "针对e05e9a8太空步，净化点改为1.8m/s实际XZ位移驱动1.05m步幅，12行走相位与24收步，8方向共312帧；每姿态11胶囊投影。CPU及同正式Renderer/step/gait验证页已限定检查抬脚、支撑与收步，正式W短移可用。IMPLEMENTED / LIMITED-VERIFIED；Rift原低精度呈现保持，人审仍HUMAN-CHANGES-REQUESTED。",
+    "summary": "eb0c527后角色静息/斜向修复已IMPLEMENTED / LIMITED-VERIFIED：停止0.44秒逐脚归位后进入8帧/3.2秒idle，真实相机反解水平面/西坡八向并导出15朝向1035帧。assets/gait/facing/movement/Player及构建通过；正式Renderer走停/四斜向/坡面及根页W/A短移动已限定复核。Rift与静态场景保持，未重验六站/场景重入，人审仍HUMAN-CHANGES-REQUESTED。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -170,6 +170,18 @@
       {
         "path": "docs/art/demos/purification-motion-review/viewer.ts",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-actor.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/art/last-light-facing.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-facing.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -189,11 +201,11 @@
       "COH-E-I30-LAST-LIGHT-LIVING",
       "COH-E-I30-LAST-LIGHT-PRODUCTION",
       "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
-      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR"
+      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
+      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
-      "新验证页实帧显示抬脚、支撑与收步，默认坡道连续超过23秒，八向走停连续超过30秒；这是可复现内部动态检查，不是用户对足底接触、动作重量或实尺画风的认可。",
-      "312帧、真实位移推进、停步相位、8组移动及Player检查通过，坐下/起身锚点误算步行已有helper专项回归；本轮没有重做正式坐下UI、六站键盘全程或所有武器/受击回归。",
+      "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
       "人物阴影由每姿态11个胶囊近似，不等于完整人体三角网格光追；无WebGL2 fallback、Rift全量动作和长期体验仍未覆盖。"
     ]
   },
@@ -305,7 +317,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "e05e9a8后用户要求阴影/外景/太空步整改。固定近景接根、受限中远景与同UV光场/深度、移动肩灯和固定灯逐像素遮挡、姿态投影已实现；A构图、52%裂隙与平台原色图保持。新GPU和正式入口可用；同正式渲染器验证页实帧见近层不拉开、方块阴影消失，状态IMPLEMENTED / LIMITED-VERIFIED，人审仍HUMAN-CHANGES-REQUESTED。",
+    "summary": "Last Light A保持已选画法、回廊、52%裂隙及阴影/外景修复；本轮人物静息/斜向1035帧已接入，自动检查及限定浏览器通过。22张静态PNG与原静态来源保持；Rift不变，人审仍HUMAN-CHANGES-REQUESTED，未扩验六站/重入。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1027,6 +1039,18 @@
       {
         "path": "docs/art/demos/purification-motion-review/viewer.ts",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-actor.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/art/last-light-facing.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-facing.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1103,9 +1127,11 @@
       "COH-E-I30-RIFT-MOUTH",
       "COH-E-I30-LAST-LIGHT-PRODUCTION",
       "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
-      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR"
+      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
+      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
+      "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
       "获赞原画方向、A布局和裂隙形态不构成生产画面认可；本轮内部动态复核不代替用户审美终审。",
       "外景near=0、middle≤3.5px、far≤6px，XZ观察140ms平滑，各层颜色/深度/光场/侵蚀共UV。CPU原点对照平台/近景/空背景0改动；验证页左右极端实帧近层不拉开。空气递进与动态节奏仍待用户体验。",
       "肩灯512 cubemap随移动刷新，固定灯192阵列逐像素可见性，每姿态11胶囊。新GPU已编译运行，实帧覆盖坡脚/坡中、上层书架设备、净化器、炉旁混光、核心及外景极端，方块阴影消失；不宣称完整人体网格光追。",

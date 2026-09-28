@@ -2,8 +2,8 @@
 status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
-last-modified: 2026-09-27
-note: e05e9a8后的阴影/外景/太空步整改已 IMPLEMENTED / LIMITED-VERIFIED；正式入口短验与同正式渲染器动态页实帧限定通过，人审仍HUMAN-CHANGES-REQUESTED，未重做六站业务/坐下UI/Rift全回归。
+last-modified: 2026-09-28
+note: eb0c527后角色静息/真实屏幕朝向修复已 IMPLEMENTED / LIMITED-VERIFIED；1035帧、自动检查和限定浏览器走停/四斜向/坡面及正式根页短键移动已验证。未扩验六站/重入，旧动态页不足已纠正，人审仍HUMAN-CHANGES-REQUESTED。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -18,19 +18,23 @@ note: e05e9a8后的阴影/外景/太空步整改已 IMPLEMENTED / LIMITED-VERIFI
 
 旧正文路径保留迁移指针，旧网页链接保留跳转；正文引用、现状索引和阅读器已同步。范围和证据边界见[归档验证](../qa/review-archive-2026-09-21.md)。此任务不改变审查结论、游戏或挂起状态。后续可读交付按[阅读器说明](../dev/report-viewer.md)实际打开验证。
 
-## 当前工作 · 迭代30 R11（2026-09-27，Last Light阴影/外景/步态整改）
+## 当前工作 · 迭代30 R11（2026-09-28，Last Light角色静息/斜向修复）
 
 用户已选择A“断裂回廊”并认可新版左前裂隙，最新要求“再窄一些，然后直接做正式版本入游戏”。裂隙沿原中心线由72%进一步收至52%，同源像素画法、A布局、真实分层移动、六站业务、坐下及动态光照已接入正式`PurificationScene`。
 
-恢复入口：[集中美术设计](../art-direction.md#resume-art-rebuild) → [执行状态](../design-notes/purification-scene-art-plan.md#当前执行状态) → [本轮动态QA](../qa/iteration-30-last-light-motion.md)。正式入口为根页面`http://127.0.0.1:3027/`；[动态复现页](../art/demos/purification-motion-review/index.html)用正式Renderer/素材/step/gait，不写存档，不替代正式业务流程。原[生产QA](../qa/iteration-30-last-light-production.md)保留历史功能范围，旧比较页与作者查看器不混称正式游戏。
+恢复入口：[集中美术设计](../art-direction.md#resume-art-rebuild) → [执行状态](../design-notes/purification-scene-art-plan.md#当前执行状态) → [本轮角色QA](../qa/iteration-30-last-light-actor.md)。正式入口为根页面`http://127.0.0.1:3027/`；[动态复现页](../art/demos/purification-motion-review/index.html)用正式Renderer/素材/step/gait，不写存档，不替代正式业务流程。原[生产QA](../qa/iteration-30-last-light-production.md)保留历史功能范围，旧比较页与作者查看器不混称正式游戏。
 
 `e05e9a8`完成的是限定功能接入：当时构建、资源/共享Player/七组导航回归及真实六站、坐下、出击放弃归返、暂停/读档通过。用户随后明确指出**阴影、外景内容/氛围/随动和太空步**问题，当前 **HUMAN-CHANGES-REQUESTED**；不能把旧功能检查视为正式画面人审通过。
 
-本轮已实现：near固定0、middle≤3.5px/far≤6px，XZ观察140ms平滑，各层颜色/深度/光场同UV；肩灯512 cubemap随移动刷新、固定灯192阵列逐像素可见性、人物每姿态11胶囊；实际XZ世界步速1.8m/s，位移驱动12行走相位与24收步，8方向共312帧。assets/exterior/8组movement/gait/Player及构建通过，坐下起身锚点误算走路已helper专项回归。当前 **IMPLEMENTED / LIMITED-VERIFIED**。
+`eb0c527` 后用户再次指出停止保持迈步、斜向动作奇怪。已确认两个根因：旧状态机在收步后永久返回walk，旧测试还把它写成预期；图集世界等分45°与屏幕八向逆相机后的真实方向不符，水平面最大屏幕角差约23.15°，坡面还需独立朝向。
 
-浏览器限定范围：新GPU编译运行，正式根游戏WebGL2无fallback，主菜单继续重入和W短移可用，本机短样约120fps。动态复现页实帧检查坡脚/坡中、上层书架设备、净化器、炉旁混光、核心及外景左右极端；近层不拉开、方块阴影消失、抬脚支撑收步可见；默认坡道连续超过23秒，八向连续超过30秒。它不等于正式键盘六站完整复走，本轮未重新做业务交易、坐下UI或Rift全流程；短样也不证明长时稳定性。
+本轮代码已实现：停止0.44秒四阶段依次抬脚归位，随后8帧/3.2秒独立静息；真实屏幕水平面/西坡八向合并14朝向，加精确坐姿共15列；12行走、48收步与静息/坐姿共1035帧，atlas 960×5520。1.05m步周期与1.8m/s世界XZ步速保持，摆脚最高抬升降至0.105m。1035帧已导出；assets/gait/facing/8组movement/Player及构建通过，22张静态PNG与原静态来源保持。当前 **IMPLEMENTED / LIMITED-VERIFIED**。
 
-获选A布局、52%裂隙、六站/坐下及Rift原玩法保持。无WebGL2 fallback实机、修复/购买交易、全成长/供奉组合、长期经济未扩验，I28挂起。主COH-F042，关联F026/F006/F039；新版本具体浏览器范围与人审必须单独记录。完成必要检查后本地提交，不推送，排除独立`CLAUDE.md`改动。
+浏览器限定复核：正式Renderer走停片段36帧确认约1.3秒停止后脚底世界位置不变、1.824秒进入idle 0、2.4秒idle 1；四个真实屏幕斜向各12连续帧及坡面复看。正式根页刷新后继续存档，W/A短键移动后松手站稳，WebGL2且无warning/error；没有把短键移动或刷新当成完整六站/重入验证。具体动画与同帧状态见[角色QA](../qa/iteration-30-last-light-actor.md)。
+
+上一轮阴影/外景与正式入口短验记录留在[历史动态QA](../qa/iteration-30-last-light-motion.md)：近层固定、中远层受限连续观察，逐像素灯影和姿态胶囊已经接入。其“八向”回放实际是世界等分方向，没有覆盖本次真实屏幕输入错配；“收步可见”也没验证返回静息，不能沿用为本轮动作正确证据。正式业务六站、坐下UI和Rift全流程未在本轮重新扩验。
+
+获选A布局、52%裂隙、六站/坐下及Rift原玩法保持。无WebGL2 fallback实机、修复/购买交易、全成长/供奉组合、长期经济未扩验，I28挂起。本轮主COH-F039，关联F006/F026/F042；新版本具体浏览器范围与人审必须单独记录。完成必要检查后本地提交，不推送，排除独立`CLAUDE.md`改动。
 
 ## 历史交付 · 迭代30 R10（2026-09-23，用户要求美术整改）
 

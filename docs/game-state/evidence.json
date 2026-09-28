@@ -3397,7 +3397,7 @@
     "date": "2026-09-27",
     "revision": "e05e9a8 + shadow/exterior/gait repair working tree",
     "scope": "F042/F039/F006/F026，IMPLEMENTED / LIMITED-VERIFIED：外景近层固定0，中层≤3.5px/远层≤6px，XZ观察140ms平滑，同层颜色/深度/光场/侵蚀共UV，保留平台及层色图。肩灯512 cubemap随移动刷新、固定灯192阵列逐像素可见性、人物每姿态11胶囊；XZ世界1.8m/s，1.05m步幅、12行走相位与24收步、8方向312帧。assets/exterior/8组movement/gait/Player及构建通过；坐下起身锚点误算步行已helper专项回归。新GPU编译运行，正式根游戏WebGL2无fallback，MainMenu继续重入和W短移动可用，本机短样约120fps。可复现motion-review使用正式Renderer/素材/真实step/gait且不写存档；实帧覆盖坡脚/坡中/上层书架设备/净化器/炉旁混光/核心及外景左右极端，近层不拉开、方块阴影消失、抬脚支撑收步可见；默认坡道连续超过23秒，八向连续超过30秒。",
-    "limitations": "人审仍HUMAN-CHANGES-REQUESTED；内部限定实帧不是用户画质认可。可复现验证页不等于正式键盘完整六站复走；本轮未重新做业务交易、坐下UI、Rift全流程。胶囊不等于完整人体网格光追，约120fps只是本机短样，未完成长时负载/GPU内存画像；fallback实机、全成长/供奉/随机世界、长期经济与I28不在本轮覆盖。",
+    "limitations": "2026-09-28用户复看及代码确认：旧状态机收步后不进入idle，旧测试把walk作为结束预期；旧八向回放是世界等分方向，未覆盖真实屏幕输入的朝向错配。故本记录不证明停步静息或斜向正确，当前动作合同/证据转到COH-E-I30-LAST-LIGHT-ACTOR-REPAIR。人审仍HUMAN-CHANGES-REQUESTED；内部限定实帧不是用户画质认可。可复现验证页不等于正式键盘完整六站复走；本轮未重新做业务交易、坐下UI、Rift全流程。胶囊不等于完整人体网格光追，约120fps只是本机短样，未完成长时负载/GPU内存画像；fallback实机、全成长/供奉/随机世界、长期经济与I28不在本轮覆盖。",
     "sources": [
       {
         "path": "src/art/last-light-exterior.ts",
@@ -3509,6 +3509,65 @@
       },
       {
         "path": "docs/qa/artifacts/last-light-motion/gait.txt",
+        "role": "test"
+      }
+    ]
+  },
+  {
+    "id": "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-28",
+    "revision": "eb0c527 + actor idle/screen-facing repair working tree",
+    "scope": "F039/F006/F026/F042，IMPLEMENTED / LIMITED-VERIFIED。0.44秒四阶段归位、8帧3.2秒idle，水平面/西坡14移动朝向加精确sit，15列1035帧完成。assets180组端点六图/rig/lamp等价，gait1442支撑/1212收步、facing16真实输入/1035帧、movement8组、Player及build通过；22静态PNG和静态来源与HEAD一致。Chrome正式Renderer走停36帧确认停止后位置固定且进入idle，四斜向各12帧、坡面复看；正式根页刷新后继续存档、W/A短移松手站稳，WebGL2且warning/error为空。",
+    "limitations": "浏览器范围限上述回放与根页短键移动，不等于六站业务、坐下UI、场景关闭后重入、全部武器/受击或Rift全链。旧世界八向回放不复用；用户动作自然度/画质人审仍待复看。静态场景、Rift及经济保持，I28挂起。",
+    "sources": [
+      {
+        "path": "docs/qa/iteration-30-last-light-actor.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/art/last-light-gait.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-facing.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-gait.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-facing.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-assets.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/stop-idle.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/diagonal.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/recovery-states.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/diagonal-states.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/game-idle.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/export-check.json",
         "role": "test"
       }
     ]

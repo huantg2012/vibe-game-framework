@@ -3,7 +3,7 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "Last Light A正式净化点保留52%左前裂隙、真实断口宽桥、单西坡、六站及炉边坐下。阴影/外景/步态整改 IMPLEMENTED / LIMITED-VERIFIED：正式根游戏WebGL2、主菜单继续重入与W短移已验证；详细动态由同正式渲染器的可复现页检查。未重新做六站业务、坐下UI或Rift全流程，人审仍HUMAN-CHANGES-REQUESTED。",
+    "summary": "Last Light A保留52%左前裂隙、断口宽桥、单西坡、六站及炉边坐下。本轮人物静息/斜向已修复，1035帧及限定浏览器通过；正式根页继续存档后W/A短移松手站稳。原业务与经济不变，未重做六站/坐下UI/场景重入，人审待复看。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -544,6 +544,18 @@
       {
         "path": "docs/art/demos/purification-motion-review/viewer.ts",
         "role": "test"
+      },
+      {
+        "path": "docs/qa/iteration-30-last-light-actor.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/art/last-light-facing.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-facing.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -601,9 +613,11 @@
       "COH-E-I30-HEARTH-CIRCULATION",
       "COH-E-I30-LAST-LIGHT-PRODUCTION",
       "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
-      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR"
+      "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
+      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
+      "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
       "e05e9a8的真实六站面板、备行/Rift明确放弃归来、载入重建与坐下起身为历史限定功能证据；本轮不重写为重新通过，也不代签用户提出的视觉整改。",
       "本轮正式入口只确认WebGL2无fallback、主菜单继续重入和W短移；可复现验证页不写存档。坐下/起身锚点误算走路已有helper专项回归，未重新验坐下UI或完整业务路径。",
       "修复/购买交易、全成长/供奉组合、Rift全流程、无WebGL2 fallback、自然供给及长期经济未扩验；I28和原未审查项保持。"
