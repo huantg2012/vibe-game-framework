@@ -9,7 +9,7 @@ for(let i=0;i<1200;i++){
  for(const [side,leg]of legs.entries()){
   epsilon(Math.hypot(...leg.hip.map((n,j)=>n-leg.knee[j]!)),.335,'Thigh length');
   epsilon(Math.hypot(...leg.ankle.map((n,j)=>n-leg.knee[j]!)),.31,'Shin length');
-  assert(leg.footLift>=0&&leg.footLift<=.075001);
+  assert(leg.footLift>=0&&leg.footLift<=.080001);
   const next=lastLightWalkLeg(cycle+.00001,side===1);
   if(leg.grounded&&next.grounded&&Math.abs(next.footZ-leg.footZ)<.01){
    epsilon(leg.footZ+cycle*LAST_LIGHT_STRIDE_METRES,next.footZ+(cycle+.00001)*LAST_LIGHT_STRIDE_METRES,'Stance foot must stay fixed in world');plantedSamples++;

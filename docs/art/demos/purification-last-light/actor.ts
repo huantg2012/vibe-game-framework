@@ -1,5 +1,5 @@
-import { Model, add, cross, mul, sub, unit, type Material, type V3 } from './model';
-import { lastLightWalkLeg, lastLightIdleLift, lastLightFootPoint, lastLightWalkTorsoPoint, lastLightWalkArmSwing } from '../../../../src/art/last-light-gait';
+import { Model, add, cross, dot, mul, sub, unit, type Material, type V3 } from './model';
+import { lastLightWalkLeg, lastLightIdleLift, lastLightFootPoint, lastLightWalkTorsoPoint, lastLightWalkUpperPoint, lastLightWalkArm } from '../../../../src/art/last-light-gait';
 
 /** This is the same warm-grey worker as player-sprite-dense.ts, reconstructed
  * for the haven's fixed pixel grid. Rift continues using its existing sprite. */
@@ -13,7 +13,7 @@ export function actorLampAnchor(position:V3=ACTOR_POSITION,facing=ACTOR_FACING,b
   if(settle>=1){walkPhase=undefined;breath=0;settle=0;}
   const c=Math.cos(facing),s=Math.sin(facing);
   const p:V3=walkPhase===undefined?add(ACTOR_LAMP_LOCAL,[0,lastLightIdleLift(breath),0])
-    :lastLightWalkTorsoPoint(ACTOR_LAMP_LOCAL,walkPhase/(Math.PI*2),settle);
+    :lastLightWalkUpperPoint(ACTOR_LAMP_LOCAL,walkPhase/(Math.PI*2),settle,'chest');
   return [position[0]+p[0]*c+p[2]*s,position[1]+p[1],position[2]-p[0]*s+p[2]*c];
 }
 
@@ -80,7 +80,9 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
       torso.beam([.023,.847,.16],[.022,1.18,.165],.020,.015,'black',.85);
       torso.box([-.126,1.033,.176],[.129,.126,.043],'cloth',.022,.98);
       torso.beam([-.190,1.095,.185],[-.068,1.095,.185],.027,.018,'cloth',1.23);
+    });
 
+    posePart(m,point=>walking?lastLightWalkUpperPoint(point,cycle,settle,'pack'):add(point,[0,lift,0]),torso=>{
       // The pack is a recognizable silhouette from behind and from either side:
       // a rounded canvas body, folded lid, two straps and an iron carrying frame.
       torso.beam([-.175,.707,-.231],[-.180,1.223,-.218],.036,.043,'iron',.56);
@@ -102,17 +104,33 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
       torso.beam([.252,.70,-.29],[.267,1.035,-.29],.033,.038,'wood',.78);
       torso.beam([.209,1.056,-.293],[.313,1.039,-.293],.042,.049,'iron',.7);
       torso.beam([.257,.827,-.335],[.262,.897,-.335],.045,.028,'cloth',.55);
+    });
 
-      // Relaxed arms break away from the torso. Their cuffs and gloves are soft
-      // shapes; there are no large pauldrons, metal biceps or luminous trim.
-      const swing=walking?lastLightWalkArmSwing(cycle,settle):0;
-      limb(torso,[-.279,1.142,.012],[-.328,.943,.041-swing*.55],.103,.095,'cloth',1.38);
-      limb(torso,[-.328,.943,.041-swing*.55],[-.312,.758,.083-swing],.086,.079,'cloth',1.20);
-      limb(torso,[.276,1.145,.008],[.331,.955,.006+swing*.55],.099,.094,'cloth',1.40);
-      limb(torso,[.331,.955,.006+swing*.55],[.328,.775,.066+swing],.084,.078,'cloth',1.25);
-      loaf(torso,[[-.311,.707,.083-swing,.073,.062],[-.316,.757,.082-swing,.078,.067],[-.318,.80,.076-swing,.067,.059]],'cloth',.56,10);
-      loaf(torso,[[.328,.723,.063+swing,.070,.061],[.329,.775,.065+swing,.076,.068],[.329,.814,.060+swing,.067,.06]],'cloth',.60,10);
+    // The shoulder/elbow/wrist chain is already posed by the shared body rig.
+    // Build those joints directly; mapping them through the chest again would
+    // rotate twice and pull the elbows and hands away from the sleeves.
+    if(walking){
+      const left=lastLightWalkArm(false,cycle,settle),right=lastLightWalkArm(true,cycle,settle);
+      limb(m,left.shoulder,left.elbow,.103,.095,'cloth',1.38);
+      limb(m,left.elbow,left.wrist,.086,.079,'cloth',1.20);
+      limb(m,right.shoulder,right.elbow,.099,.094,'cloth',1.40);
+      limb(m,right.elbow,right.wrist,.084,.078,'cloth',1.25);
+      posePart(m,handPoint([-.328,.943,.041],[-.312,.758,.083],left.elbow,left.wrist),hand=>{
+        loaf(hand,[[-.311,.707,.083,.073,.062],[-.316,.757,.082,.078,.067],[-.318,.80,.076,.067,.059]],'cloth',.56,10);
+      });
+      posePart(m,handPoint([.331,.955,.006],[.328,.775,.066],right.elbow,right.wrist),hand=>{
+        loaf(hand,[[.328,.723,.063,.070,.061],[.329,.775,.065,.076,.068],[.329,.814,.060,.067,.06]],'cloth',.60,10);
+      });
+    }else posePart(m,point=>add(point,[0,lift,0]),torso=>{
+      limb(torso,[-.279,1.142,.012],[-.328,.943,.041],.103,.095,'cloth',1.38);
+      limb(torso,[-.328,.943,.041],[-.312,.758,.083],.086,.079,'cloth',1.20);
+      limb(torso,[.276,1.145,.008],[.331,.955,.006],.099,.094,'cloth',1.40);
+      limb(torso,[.331,.955,.006],[.328,.775,.066],.084,.078,'cloth',1.25);
+      loaf(torso,[[-.311,.707,.083,.073,.062],[-.316,.757,.082,.078,.067],[-.318,.80,.076,.067,.059]],'cloth',.56,10);
+      loaf(torso,[[.328,.723,.063,.070,.061],[.329,.775,.065,.076,.068],[.329,.814,.060,.067,.06]],'cloth',.60,10);
+    });
 
+    posePart(m,point=>walking?lastLightWalkUpperPoint(point,cycle,settle,'head'):add(point,[0,lift,0]),torso=>{
       // The round protective hood/helmet and one black visor slit carry the
       // strongest facial identity from the production sprite. Never paired eyes.
       loaf(torso,[[0,1.211,.021,.148,.123],[0,1.292,.015,.151,.122],[0,1.337,.016,.117,.102]],'cloth',.63,12);
@@ -133,7 +151,9 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
       torso.beam([-.066,1.638,-.078],[.040,1.651,-.039],.020,.016,'iron',1.07);
       torso.box([-.176,1.423,-.003],[.052,.099,.093],'iron',.015,.66);
       torso.box([.176,1.423,-.003],[.052,.099,.093],'iron',.015,.69);
+    });
 
+    posePart(m,point=>walking?lastLightWalkUpperPoint(point,cycle,settle,'chest'):add(point,[0,lift,0]),torso=>{
       // One compact lamp on the character's right shoulder. The lens and a tiny
       // side window emit; the housing remains opaque and casts real shadows.
       torso.beam([.24,1.179,.017],[.37,1.179,.043],.042,.051,'iron',.68);
@@ -271,22 +291,43 @@ export function actorShadowCapsules(pose:'idle'|'walk'|'sit',facing:number,phase
     capsule([.305,h+.218,.080],[.155,h+.148,.369],.072);
   }else{
     const walking=pose==='walk',cycle=phase/(Math.PI*2),lift=lastLightIdleLift(phase);
-    const swing=walking?lastLightWalkArmSwing(cycle,settle):0;
     const torsoPoint=(point:V3):V3=>walking?lastLightWalkTorsoPoint(point,cycle,settle):add(point,[0,lift,0]);
+    const upperPoint=(point:V3,part:'head'|'pack'):V3=>walking?lastLightWalkUpperPoint(point,cycle,settle,part):add(point,[0,lift,0]);
     const torsoCapsule=(a:V3,b:V3,r:number):void=>capsule(torsoPoint(a),torsoPoint(b),r);
     torsoCapsule([0,.72,0],[0,1.14,.01],.218);
-    torsoCapsule([0,1.405,.01],[0,1.545,0],.170);
-    torsoCapsule([0,.82,-.28],[0,1.12,-.27],.188);
+    capsule(upperPoint([0,1.405,.01],'head'),upperPoint([0,1.545,0],'head'),.170);
+    capsule(upperPoint([0,.82,-.28],'pack'),upperPoint([0,1.12,-.27],'pack'),.188);
     for(const [x,z]of[[-.148,-.075],[.143,.080]]as const){
       if(walking){const leg=lastLightWalkLeg(cycle,x>0,settle);capsule(leg.hip,leg.knee,.091);capsule(leg.knee,lastLightFootPoint(leg,[x,.13,.025]),.079);}
       else{capsule([x*.87,.735+lift,z-.041],[x,.38,z-.017],.091);capsule([x,.38,z-.017],[x,.13,z+.025],.079);}
     }
-    torsoCapsule([-.279,1.142,.012],[-.328,.943,.041-swing*.55],.090);
-    torsoCapsule([-.328,.943,.041-swing*.55],[-.312,.745,.083-swing],.073);
-    torsoCapsule([.276,1.145,.008],[.331,.955,.006+swing*.55],.089);
-    torsoCapsule([.331,.955,.006+swing*.55],[.328,.752,.066+swing],.073);
+    if(walking){
+      const left=lastLightWalkArm(false,cycle,settle),right=lastLightWalkArm(true,cycle,settle);
+      capsule(left.shoulder,left.elbow,.090);capsule(left.elbow,left.wrist,.073);
+      capsule(right.shoulder,right.elbow,.089);capsule(right.elbow,right.wrist,.073);
+    }else{
+      torsoCapsule([-.279,1.142,.012],[-.328,.943,.041],.090);
+      torsoCapsule([-.328,.943,.041],[-.312,.745,.083],.073);
+      torsoCapsule([.276,1.145,.008],[.331,.955,.006],.089);
+      torsoCapsule([.331,.955,.006],[.328,.752,.066],.073);
+    }
   }
   return result;
+}
+
+/** Move a rigid glove with the forearm's rotation, anchored at its posed wrist.
+ * Inputs are already in actor-local posed space; never apply a torso map here. */
+function handPoint(restElbow:V3,restWrist:V3,elbow:V3,wrist:V3):(point:V3)=>V3 {
+  const from=unit(sub(restWrist,restElbow)),to=unit(sub(wrist,elbow));
+  const axis=cross(from,to),cosine=dot(from,to);
+  if(cosine<-.999999){
+    const halfTurn=unit(cross(from,Math.abs(from[0])<.8?[1,0,0]:[0,1,0]));
+    return point=>{const relative=sub(point,restWrist);return add(wrist,sub(mul(halfTurn,2*dot(halfTurn,relative)),relative));};
+  }
+  return point=>{
+    const relative=sub(point,restWrist),first=cross(axis,relative);
+    return add(wrist,add(relative,add(first,mul(cross(axis,first),1/(1+cosine)))));
+  };
 }
 
 /** Bake a rigid articulated part in local space, then recompute transformed

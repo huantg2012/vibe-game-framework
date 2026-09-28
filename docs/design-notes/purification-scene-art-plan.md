@@ -1,5 +1,5 @@
 ---
-status: R11-LAST-LIGHT-ACTOR-SUPPORT / IMPLEMENTED / LOCAL-VERIFIED / HUMAN-CHANGES-REQUESTED
+status: R11-LAST-LIGHT-ACTOR-FULL-BODY / IMPLEMENTED / LOCAL-VERIFIED / HUMAN-CHANGES-REQUESTED
 created-date: 2026-09-23
 last-modified-date: 2026-09-28
 owner: director
@@ -19,17 +19,16 @@ features: COH-F042 / COH-F026 / COH-F006 / COH-F039
 
 ## 当前执行状态
 
-用户确认 `3f4efc3` 解决静息与斜向问题，继续指出左右行走像脚总在身体前。本次只处理人物承重姿态，保持1035帧方向布局、已修静息/斜向及场景画法。旧踝轨迹本已半周期在后，不能整体后移脚轨迹治表象；靴筒口当踝关节、固定骨盆及前弯膝导致半蹲前凸，另有约206步/分钟碎步。
+用户评价 `3cd4372` “好多了”并授权继续全身步态，不代表自然度验收。本轮修复刚体胸头背包、固定4.297°前倾、离地先伸膝再收膝、摆动脚参与骨盆可达约束四处问题。`3f4efc3`静息/斜向确认保持，场景画法和布局不变。
 
-- [x] 实现1.25m完整周期/支撑比0.56，保留世界1.8m/s，步频172.8步/分钟。
-- [x] 踝点回到0.13m；刚体靴绕后跟/脚趾滚动；骨盆按两腿真实可达求解，躯干轻前倾0.075rad，人物/灯锚/rig同源，骨长保持。
-- [x] 新增独立12000相位/24000腿采样：平均支撑屈膝54.37°→21.22°、中支撑60.50°→14.52°、有效后支撑9.58%→41.35%；旧版被新检查拒绝，结构指标不代签整体美术。
-- [x] 最终1035帧重导；gait/lateral-gait/assets/facing/movement/Player/类型与构建通过；180组收步端点六图/rig/灯锚等价，22张非人物静态PNG保持。
-- [x] 正式Renderer左右各30帧、每向2.6m两个周期及停止归位，四斜向定点和idle 2秒复核，复现页控制台无warning/error。
-- [x] 正式根页最新版刷新继续存档、A短键真实位移后松手静息；WebGL2、控制台无warning/error。D短按未覆盖移动帧，不计正式页右走验证；两向完整循环由正式Renderer复现页验证。独立代码审查未发现确定缺陷。
-- [ ] 当前左右步态及整体动作人审。
+- [x] 用完整步态关键姿态组织承重，仅接地腿约束身体；早收膝、小腿自然送脚。
+- [x] 髋胸反向微转与侧移、头部稳定、背包微滞后、真实摆臂；模型/灯锚/rig同源。
+- [x] 最终参数和1035帧已重导，gait/lateral/whole-body/assets/facing/movement/Player/类型及构建通过；保持1.25m周期、1.8m/s、12行走帧、方向图集及独立idle/recovery。
+- [x] 正式Renderer左右各30帧、四斜向各6连续walk帧、idle 2秒复看；复现页控制台无warning/error。
+- [x] 正式根页新开继续存档、A短键真实位移后松手站稳，WebGL2且控制台无warning/error；D短按无位移不计验证。22张非人物静态PNG与3cd4372一致。
+- [ ] 当前全身动作与整体自然度待用户复看。
 
-`3f4efc3`静息/斜向修复已获用户确认，历史机器与浏览器限定范围见[角色QA](../qa/iteration-30-last-light-actor.md)。它不覆盖本次踝、骨盆与靴滚动修改。
+当前 **IMPLEMENTED / LOCAL-VERIFIED**。此前横向承重的数学、图集与浏览器范围保留在[角色QA](../qa/iteration-30-last-light-actor.md)，不能沿用为全身动作通过。
 
 以下是上一轮 `eb0c527` 阴影/外景修复的限定范围，动作结论由本轮重验：
 

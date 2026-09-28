@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "sampledPhases": 2400,
+  "pelvisYawRangeDegrees": 8.01931,
+  "chestYawRangeDegrees": 7.40229,
+  "shoulderPelvisCorrelation": -0.98024,
+  "pelvisRollRangeDegrees": 3.21382,
+  "chestPitchRangeDegrees": 2.86478,
+  "averageSupportSideTransfer": [
+    0.02517,
+    0.02517
+  ],
+  "armLegCorrelation": [
+    -0.93034,
+    -0.93702
+  ],
+  "armLengthRanges": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "maximumLegLengthError": 2.7755575615628914e-16,
+  "worstLeg": {
+    "cycle": 0.0525,
+    "side": 0,
+    "grounded": true,
+    "reach": 0.622386779033338,
+    "boneLengthError": 2.7755575615628914e-16
+  },
+  "maximumMotionStep": 0.001263792314789089,
+  "maximumContactSeamDifference": 4.083005683139342e-7,
+  "maximumEndpointDifference": 2.7755575615628914e-17,
+  "swing": [
+    {
+      "side": "left",
+      "departureFlexionDegrees": 27.94177,
+      "minimumEarlyFlexionDegrees": 26.96695,
+      "firstThirdFlexionDegrees": 73.31388,
+      "peakFlexionDegrees": 78.86941,
+      "peakAtSwingFraction": 0.42,
+      "minimumAirborneReachReserve": 0.07049
+    },
+    {
+      "side": "right",
+      "departureFlexionDegrees": 27.82897,
+      "minimumEarlyFlexionDegrees": 26.84859,
+      "firstThirdFlexionDegrees": 73.28971,
+      "peakFlexionDegrees": 78.85568,
+      "peakAtSwingFraction": 0.42,
+      "minimumAirborneReachReserve": 0.07035
+    }
+  ],
+  "checks": [
+    "early knee recovery before shin release",
+    "airborne recovery reach reserve",
+    "shoulder/pelvis counter-rotation",
+    "support-side weight transfer",
+    "varying torso pitch and pelvis roll",
+    "fixed arm/leg lengths",
+    "contralateral arm swing",
+    "continuous cycle and common idle endpoint"
+  ],
+  "failures": []
+}
