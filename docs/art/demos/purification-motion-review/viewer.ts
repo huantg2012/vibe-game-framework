@@ -25,10 +25,17 @@ const flatFacings=lastLightScreenFacingYaws(manifest.camera);
 const spoke=(yaw:number,distance:number):Waypoint=>[Math.sin(yaw)*distance,Math.cos(yaw)*distance];
 paths.eight=[[0,0],...flatFacings.flatMap(yaw=>[spoke(yaw,1.2),[0,0] as Waypoint])];
 paths.idle=[[0,0],spoke(flatFacings[1]!, .54),[0,0]];
+// A 2.6m straight screen-horizontal pass lasts 1.44 seconds at production speed:
+// more than two complete strides before the actor rests and reverses.
+// Offset away from the ramp-side clearance band before extending the pass.
+const lateralCenter={x:0,y:0,z:.3};
+const lateralPoint=(distance:number):Waypoint=>[lateralCenter.x+Math.sin(flatFacings[0]!)*distance,lateralCenter.z+Math.cos(flatFacings[0]!)*distance];
+const lateralLeft=lateralPoint(-1.3),lateralRight=lateralPoint(1.3);
+paths.lateral=[lateralLeft,lateralRight,lateralLeft];
 const DIRECTIONS=['E','SE','S','SW','W','NW','N','NE'];
 const KEYS=['D','D+S','S','S+A','A','A+W','W','W+D'];
-const HOLD_SECONDS:Record<string,number>={eight:1.4,idle:6.4};
-const firstHold=()=>selector.value==='idle'?1:.45;
+const HOLD_SECONDS:Record<string,number>={eight:1.4,idle:6.4,lateral:1.3};
+const firstHold=()=>selector.value==='idle'?1:selector.value==='lateral'?1.3:.45;
 
 function reset(){
   const start=paths[selector.value]![0]!;
@@ -43,7 +50,7 @@ function update(dt:number){
   if(hold>0)hold=Math.max(0,hold-dt);
   else{
     const target=path[segment]!,dx=target[0]-movement.x,dz=target[1]-movement.z,dist=Math.hypot(dx,dz);
-    const arrivalDistance=selector.value==='eight'||selector.value==='idle'?.000001:.025;
+    const arrivalDistance=['eight','idle','lateral'].includes(selector.value)?.000001:.025;
     if(dist<arrivalDistance){
       // The final point is already the first one. Skip the duplicate on wrap
       // so every endpoint has exactly one intentional rest interval.
@@ -67,7 +74,8 @@ function draw(){
   renderer.draw(state);const b=renderer.actorBounds;
   detailContext.fillStyle='#080a0a';detailContext.fillRect(0,0,960,240);
   detailContext.drawImage(renderer.canvas,Math.round(b.x+b.width/2-40),Math.round(b.y+b.height/2-30),80,60,0,0,320,240);
-  detailContext.drawImage(renderer.canvas,450,190,160,120,350,0,320,240);
+  const contextOrigin=selector.value==='lateral'?projectLastLight(lateralCenter):null;
+  detailContext.drawImage(renderer.canvas,contextOrigin?Math.round(contextOrigin.x-80):450,contextOrigin?Math.round(contextOrigin.y-80):190,160,120,350,0,320,240);
   const yawDegrees=state.yaw*180/Math.PI;
   output.value=`${elapsed.toFixed(2)}s · ${movement.route} · ${screenKeys} ${screenDirection} · yaw ${yawDegrees.toFixed(2)}° · ${state.gaitPose} ${state.gaitFrame}`;
   output.dataset.state=JSON.stringify({case:selector.value,elapsed,world:state.world,route:movement.route,

@@ -1,5 +1,5 @@
 import { Model, add, cross, mul, sub, unit, type Material, type V3 } from './model';
-import { lastLightWalkBodyLift, lastLightWalkLeg, lastLightIdleLift } from '../../../../src/art/last-light-gait';
+import { lastLightWalkLeg, lastLightIdleLift, lastLightFootPoint, lastLightWalkTorsoPoint, lastLightWalkArmSwing } from '../../../../src/art/last-light-gait';
 
 /** This is the same warm-grey worker as player-sprite-dense.ts, reconstructed
  * for the haven's fixed pixel grid. Rift continues using its existing sprite. */
@@ -11,9 +11,10 @@ export const ACTOR_OBJECT_ID=7;
 
 export function actorLampAnchor(position:V3=ACTOR_POSITION,facing=ACTOR_FACING,breath=0,walkPhase?:number,settle=0):V3 {
   if(settle>=1){walkPhase=undefined;breath=0;settle=0;}
-  const c=Math.cos(facing),s=Math.sin(facing),p=ACTOR_LAMP_LOCAL;
-  const strideLift=walkPhase===undefined?0:lastLightWalkBodyLift(walkPhase/(Math.PI*2),settle);
-  return [position[0]+p[0]*c+p[2]*s,position[1]+p[1]+lastLightIdleLift(breath)+strideLift,position[2]-p[0]*s+p[2]*c];
+  const c=Math.cos(facing),s=Math.sin(facing);
+  const p:V3=walkPhase===undefined?add(ACTOR_LAMP_LOCAL,[0,lastLightIdleLift(breath),0])
+    :lastLightWalkTorsoPoint(ACTOR_LAMP_LOCAL,walkPhase/(Math.PI*2),settle);
+  return [position[0]+p[0]*c+p[2]*s,position[1]+p[1],position[2]-p[0]*s+p[2]*c];
 }
 
 /** Facing is yaw in radians; local +Z is the face, local +X the lamp shoulder.
@@ -25,19 +26,21 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
   m.at(position,facing,ACTOR_OBJECT_ID,()=>{
     const walking=walkPhase!==undefined;
     const cycle=(walkPhase??0)/(Math.PI*2);
-    const lift=lastLightIdleLift(breath)+(walking?lastLightWalkBodyLift(cycle,settle):0);
+    const lift=lastLightIdleLift(breath);
     // Separated, weight-bearing legs. The right boot is half a pace forward.
     for(const [x,z,t] of [[-.148,-.075,.88],[.143,.080,1.04]] as const) {
       if(walking){
-        const leg=lastLightWalkLeg(cycle,x>0,settle),rise=leg.footLift,z0=leg.footZ;
+        const leg=lastLightWalkLeg(cycle,x>0,settle);
         const hip=leg.hip as V3,knee=leg.knee as V3,ankle=leg.ankle as V3;
-        m.box([x,.055+rise,z0+.047],[.184,.105,.286],'black',.038,.96);
-        loaf(m,[[x,.09+rise,z0+.047,.093,.133],[x,.16+rise,z0+.025,.094,.119],[x,.235+rise,z0-.020,.086,.092]],'cloth',t*.80,10);
+        posePart(m,point=>lastLightFootPoint(leg,point),boot=>{
+          boot.box([x,.055,.047],[.184,.105,.286],'black',.038,.96);
+          loaf(boot,[[x,.09,.047,.093,.133],[x,.16,.025,.094,.119],[x,.235,-.020,.086,.092]],'cloth',t*.80,10);
+          boot.beam([x-.069,.209,.063],[x+.070,.214,.062],.024,.021,'cloth',t*.62);
+        });
         limb(m,hip,knee,.100,.083,'cloth',t);
         limb(m,knee,ankle,.082,.078,'cloth',t);
         loaf(m,[[knee[0],knee[1]-.055,knee[2],.076,.073],[knee[0],knee[1],knee[2]+.009,.086,.089],[knee[0],knee[1]+.050,knee[2],.078,.073]],'cloth',t,10);
         m.beam([knee[0]-.063,knee[1]+.012,knee[2]+.065],[knee[0]+.054,knee[1]+.025,knee[2]+.064],.024,.018,'cloth',t*1.18);
-        m.beam([x-.069,.209+rise,z0+.063],[x+.070,.214+rise,z0+.062],.024,.021,'cloth',t*.62);
         continue;
       }
       const stride=0,rise=0,ankle=z,knee=z;
@@ -58,10 +61,10 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
       m.beam([x-.069,.209+rise,ankle+.063],[x+.070,.214+rise,ankle+.062],.024,.021,'cloth',t*.62);
     }
 
-    m.at([0,lift,0],0,ACTOR_OBJECT_ID,()=>{
+    posePart(m,point=>walking?lastLightWalkTorsoPoint(point,cycle,settle):add(point,[0,lift,0]),torso=>{
       // A worn canvas work coat: broad shoulders narrow into the waist, then
       // loosen at the hem. It has curved cloth mass, not a plated torso box.
-      loaf(m,[
+      loaf(torso,[
         [0,.63,0,.252,.169],
         [0,.73,-.008,.258,.166],
         [0,.83,-.003,.227,.161],
@@ -70,50 +73,50 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
         [0,1.245,.015,.202,.134],
       ],'cloth',1.48,12);
       // Short split tails leave the two legs legible at the actual 38px scale.
-      m.quad([-.234,.71,.134],[-.033,.701,.164],[-.037,.615,.175],[-.214,.636,.16],'cloth',.86);
-      m.quad([.023,.705,.163],[.234,.721,.131],[.218,.638,.155],[.036,.616,.176],'cloth',.96);
-      m.beam([-.222,.792,.108],[.213,.795,.116],.047,.038,'cloth',.58);
-      m.box([.022,.80,.171],[.056,.052,.023],'bronze',.008,.78);
-      m.beam([.023,.847,.16],[.022,1.18,.165],.020,.015,'black',.85);
-      m.box([-.126,1.033,.176],[.129,.126,.043],'cloth',.022,.98);
-      m.beam([-.190,1.095,.185],[-.068,1.095,.185],.027,.018,'cloth',1.23);
+      torso.quad([-.234,.71,.134],[-.033,.701,.164],[-.037,.615,.175],[-.214,.636,.16],'cloth',.86);
+      torso.quad([.023,.705,.163],[.234,.721,.131],[.218,.638,.155],[.036,.616,.176],'cloth',.96);
+      torso.beam([-.222,.792,.108],[.213,.795,.116],.047,.038,'cloth',.58);
+      torso.box([.022,.80,.171],[.056,.052,.023],'bronze',.008,.78);
+      torso.beam([.023,.847,.16],[.022,1.18,.165],.020,.015,'black',.85);
+      torso.box([-.126,1.033,.176],[.129,.126,.043],'cloth',.022,.98);
+      torso.beam([-.190,1.095,.185],[-.068,1.095,.185],.027,.018,'cloth',1.23);
 
       // The pack is a recognizable silhouette from behind and from either side:
       // a rounded canvas body, folded lid, two straps and an iron carrying frame.
-      m.beam([-.175,.707,-.231],[-.180,1.223,-.218],.036,.043,'iron',.56);
-      m.beam([.175,.707,-.231],[.180,1.223,-.218],.036,.043,'iron',.56);
-      loaf(m,[
+      torso.beam([-.175,.707,-.231],[-.180,1.223,-.218],.036,.043,'iron',.56);
+      torso.beam([.175,.707,-.231],[.180,1.223,-.218],.036,.043,'iron',.56);
+      loaf(torso,[
         [0,.701,-.254,.166,.104],
         [0,.761,-.283,.206,.132],
         [0,1.12,-.274,.209,.133],
         [0,1.206,-.257,.179,.113],
       ],'cloth',1.41,12);
-      loaf(m,[[0,1.134,-.278,.219,.14],[0,1.195,-.274,.216,.141],[0,1.227,-.255,.175,.102]],'cloth',1.50,12);
+      loaf(torso,[[0,1.134,-.278,.219,.14],[0,1.195,-.274,.216,.141],[0,1.227,-.255,.175,.102]],'cloth',1.50,12);
       for(const x of [-.11,.11]) {
-        m.cable([[x,1.232,-.259],[x,1.195,-.404],[x,.811,-.417],[x,.748,-.365]],.032,'cloth',.53);
-        m.box([x,.871,-.42],[.052,.048,.024],'iron',.007,.90);
-        m.cable([[x*1.45,1.222,-.16],[x*1.52,1.248,.005],[x*1.52,1.157,.143],[x*1.17,.954,.184]],.044,'cloth',.60);
+        torso.cable([[x,1.232,-.259],[x,1.195,-.404],[x,.811,-.417],[x,.748,-.365]],.032,'cloth',.53);
+        torso.box([x,.871,-.42],[.052,.048,.024],'iron',.007,.90);
+        torso.cable([[x*1.45,1.222,-.16],[x*1.52,1.248,.005],[x*1.52,1.157,.143],[x*1.17,.954,.184]],.044,'cloth',.60);
       }
-      m.box([-.237,.932,-.277],[.106,.214,.145],'cloth',.034,.93);
+      torso.box([-.237,.932,-.277],[.106,.214,.145],'cloth',.034,.93);
       // A compact field tool hangs at the pack edge, as equipment, not a weapon.
-      m.beam([.252,.70,-.29],[.267,1.035,-.29],.033,.038,'wood',.78);
-      m.beam([.209,1.056,-.293],[.313,1.039,-.293],.042,.049,'iron',.7);
-      m.beam([.257,.827,-.335],[.262,.897,-.335],.045,.028,'cloth',.55);
+      torso.beam([.252,.70,-.29],[.267,1.035,-.29],.033,.038,'wood',.78);
+      torso.beam([.209,1.056,-.293],[.313,1.039,-.293],.042,.049,'iron',.7);
+      torso.beam([.257,.827,-.335],[.262,.897,-.335],.045,.028,'cloth',.55);
 
       // Relaxed arms break away from the torso. Their cuffs and gloves are soft
       // shapes; there are no large pauldrons, metal biceps or luminous trim.
-      const swing=walking?lastLightWalkLeg(cycle,false,settle).footZ/.315*.14*(1-settle):0;
-      limb(m,[-.279,1.142,.012],[-.328,.943,.041-swing*.55],.103,.095,'cloth',1.38);
-      limb(m,[-.328,.943,.041-swing*.55],[-.312,.758,.083-swing],.086,.079,'cloth',1.20);
-      limb(m,[.276,1.145,.008],[.331,.955,.006+swing*.55],.099,.094,'cloth',1.40);
-      limb(m,[.331,.955,.006+swing*.55],[.328,.775,.066+swing],.084,.078,'cloth',1.25);
-      loaf(m,[[-.311,.707,.083-swing,.073,.062],[-.316,.757,.082-swing,.078,.067],[-.318,.80,.076-swing,.067,.059]],'cloth',.56,10);
-      loaf(m,[[.328,.723,.063+swing,.070,.061],[.329,.775,.065+swing,.076,.068],[.329,.814,.060+swing,.067,.06]],'cloth',.60,10);
+      const swing=walking?lastLightWalkArmSwing(cycle,settle):0;
+      limb(torso,[-.279,1.142,.012],[-.328,.943,.041-swing*.55],.103,.095,'cloth',1.38);
+      limb(torso,[-.328,.943,.041-swing*.55],[-.312,.758,.083-swing],.086,.079,'cloth',1.20);
+      limb(torso,[.276,1.145,.008],[.331,.955,.006+swing*.55],.099,.094,'cloth',1.40);
+      limb(torso,[.331,.955,.006+swing*.55],[.328,.775,.066+swing],.084,.078,'cloth',1.25);
+      loaf(torso,[[-.311,.707,.083-swing,.073,.062],[-.316,.757,.082-swing,.078,.067],[-.318,.80,.076-swing,.067,.059]],'cloth',.56,10);
+      loaf(torso,[[.328,.723,.063+swing,.070,.061],[.329,.775,.065+swing,.076,.068],[.329,.814,.060+swing,.067,.06]],'cloth',.60,10);
 
       // The round protective hood/helmet and one black visor slit carry the
       // strongest facial identity from the production sprite. Never paired eyes.
-      loaf(m,[[0,1.211,.021,.148,.123],[0,1.292,.015,.151,.122],[0,1.337,.016,.117,.102]],'cloth',.63,12);
-      loaf(m,[
+      loaf(torso,[[0,1.211,.021,.148,.123],[0,1.292,.015,.151,.122],[0,1.337,.016,.117,.102]],'cloth',.63,12);
+      loaf(torso,[
         [0,1.307,.007,.142,.120],
         [0,1.381,.011,.185,.160],
         [0,1.472,.014,.197,.176],
@@ -122,27 +125,27 @@ export function buildActor(m:Model,position:V3=ACTOR_POSITION,facing=ACTOR_FACIN
         [0,ACTOR_HEIGHT,-.009,.046,.050],
       ],'iron',1.18,16);
       // Rolled lower rim of the helmet; only actual exposed metal catches light.
-      ovalBand(m,[0,1.382,.011],.191,.168,.029,'iron',1.02,16);
+      ovalBand(torso,[0,1.382,.011],.191,.168,.029,'iron',1.02,16);
       for(let j=0;j<7;j++) {
         const a=Math.PI*.19+j/7*Math.PI*.62,b=Math.PI*.19+(j+1)/7*Math.PI*.62;
-        m.quad([Math.cos(a)*.199,1.438,.014+Math.sin(a)*.178],[Math.cos(b)*.199,1.438,.014+Math.sin(b)*.178],[Math.cos(b)*.198,1.485,.014+Math.sin(b)*.178],[Math.cos(a)*.198,1.485,.014+Math.sin(a)*.178],'black',.91);
+        torso.quad([Math.cos(a)*.199,1.438,.014+Math.sin(a)*.178],[Math.cos(b)*.199,1.438,.014+Math.sin(b)*.178],[Math.cos(b)*.198,1.485,.014+Math.sin(b)*.178],[Math.cos(a)*.198,1.485,.014+Math.sin(a)*.178],'black',.91);
       }
-      m.beam([-.066,1.638,-.078],[.040,1.651,-.039],.020,.016,'iron',1.07);
-      m.box([-.176,1.423,-.003],[.052,.099,.093],'iron',.015,.66);
-      m.box([.176,1.423,-.003],[.052,.099,.093],'iron',.015,.69);
+      torso.beam([-.066,1.638,-.078],[.040,1.651,-.039],.020,.016,'iron',1.07);
+      torso.box([-.176,1.423,-.003],[.052,.099,.093],'iron',.015,.66);
+      torso.box([.176,1.423,-.003],[.052,.099,.093],'iron',.015,.69);
 
       // One compact lamp on the character's right shoulder. The lens and a tiny
       // side window emit; the housing remains opaque and casts real shadows.
-      m.beam([.24,1.179,.017],[.37,1.179,.043],.042,.051,'iron',.68);
-      m.box([.401,1.211,.101],[.152,.140,.177],'iron',.023,.95);
-      m.box([.401,1.211,.195],[.108,.081,.017],'lamp',.006,1);
-      m.box([.480,1.211,.132],[.012,.053,.065],'lamp',.004,.61);
+      torso.beam([.24,1.179,.017],[.37,1.179,.043],.042,.051,'iron',.68);
+      torso.box([.401,1.211,.101],[.152,.140,.177],'iron',.023,.95);
+      torso.box([.401,1.211,.195],[.108,.081,.017],'lamp',.006,1);
+      torso.box([.480,1.211,.132],[.012,.053,.065],'lamp',.004,.61);
       // A small rear aperture keeps the single shoulder lantern recognizable
       // in the default back-facing stance without turning the helmet into eyes.
-      m.box([.401,1.211,.006],[.082,.056,.010],'lamp',.003,.54);
-      m.beam([.353,1.17,.207],[.451,1.17,.207],.020,.017,'iron',.6);
-      m.cable([[.356,1.199,.055],[.306,1.14,-.067],[.264,1.018,-.206]],.022,'black',.9);
-      m.light(ACTOR_LAMP_LOCAL,[1,.83,.55],.65,2.6,{kind:'shoulder',id:'actor-shoulder'});
+      torso.box([.401,1.211,.006],[.082,.056,.010],'lamp',.003,.54);
+      torso.beam([.353,1.17,.207],[.451,1.17,.207],.020,.017,'iron',.6);
+      torso.cable([[.356,1.199,.055],[.306,1.14,-.067],[.264,1.018,-.206]],.022,'black',.9);
+      torso.light(ACTOR_LAMP_LOCAL,[1,.83,.55],.65,2.6,{kind:'shoulder',id:'actor-shoulder'});
     });
   });
   m.layer=previousLayer;
@@ -267,22 +270,31 @@ export function actorShadowCapsules(pose:'idle'|'walk'|'sit',facing:number,phase
     capsule([.271,h+.473,-.065],[.305,h+.218,.080],.087);
     capsule([.305,h+.218,.080],[.155,h+.148,.369],.072);
   }else{
-    const walking=pose==='walk',cycle=phase/(Math.PI*2);
-    const lift=walking?lastLightWalkBodyLift(cycle,settle):lastLightIdleLift(phase);
-    const swing=walking?lastLightWalkLeg(cycle,false,settle).footZ/.315*.14*(1-settle):0;
-    capsule([0,.72+lift,0],[0,1.14+lift,.01],.218);
-    capsule([0,1.405+lift,.01],[0,1.545+lift,0],.170);
-    capsule([0,.82+lift,-.28],[0,1.12+lift,-.27],.188);
+    const walking=pose==='walk',cycle=phase/(Math.PI*2),lift=lastLightIdleLift(phase);
+    const swing=walking?lastLightWalkArmSwing(cycle,settle):0;
+    const torsoPoint=(point:V3):V3=>walking?lastLightWalkTorsoPoint(point,cycle,settle):add(point,[0,lift,0]);
+    const torsoCapsule=(a:V3,b:V3,r:number):void=>capsule(torsoPoint(a),torsoPoint(b),r);
+    torsoCapsule([0,.72,0],[0,1.14,.01],.218);
+    torsoCapsule([0,1.405,.01],[0,1.545,0],.170);
+    torsoCapsule([0,.82,-.28],[0,1.12,-.27],.188);
     for(const [x,z]of[[-.148,-.075],[.143,.080]]as const){
-      if(walking){const leg=lastLightWalkLeg(cycle,x>0,settle);capsule(leg.hip,leg.knee,.091);capsule(leg.knee,[x,.13+leg.footLift,leg.footZ+.025],.079);}
+      if(walking){const leg=lastLightWalkLeg(cycle,x>0,settle);capsule(leg.hip,leg.knee,.091);capsule(leg.knee,lastLightFootPoint(leg,[x,.13,.025]),.079);}
       else{capsule([x*.87,.735+lift,z-.041],[x,.38,z-.017],.091);capsule([x,.38,z-.017],[x,.13,z+.025],.079);}
     }
-    capsule([-.279,1.142+lift,.012],[-.328,.943+lift,.041-swing*.55],.090);
-    capsule([-.328,.943+lift,.041-swing*.55],[-.312,.745+lift,.083-swing],.073);
-    capsule([.276,1.145+lift,.008],[.331,.955+lift,.006+swing*.55],.089);
-    capsule([.331,.955+lift,.006+swing*.55],[.328,.752+lift,.066+swing],.073);
+    torsoCapsule([-.279,1.142,.012],[-.328,.943,.041-swing*.55],.090);
+    torsoCapsule([-.328,.943,.041-swing*.55],[-.312,.745,.083-swing],.073);
+    torsoCapsule([.276,1.145,.008],[.331,.955,.006+swing*.55],.089);
+    torsoCapsule([.331,.955,.006+swing*.55],[.328,.752,.066+swing],.073);
   }
   return result;
+}
+
+/** Bake a rigid articulated part in local space, then recompute transformed
+ * triangle normals through the ordinary model path. Lamps use the same map. */
+function posePart(target:Model,point:(p:V3)=>V3,draw:(part:Model)=>void):void {
+  const part=new Model();draw(part);
+  for(const t of part.triangles)target.triangle(point(t.a),point(t.b),point(t.c),t.material,t.tint);
+  for(const l of part.lights)target.light(point(l.position),l.color,l.power,l.radius,{kind:l.kind,id:l.id});
 }
 
 type Ring=readonly[cx:number,y:number,cz:number,rx:number,rz:number];

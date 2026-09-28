@@ -3,7 +3,7 @@
     "id": "COH-F039",
     "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "eb0c527后角色静息/斜向修复已IMPLEMENTED / LIMITED-VERIFIED：停止0.44秒逐脚归位后进入8帧/3.2秒idle，真实相机反解水平面/西坡八向并导出15朝向1035帧。assets/gait/facing/movement/Player及构建通过；正式Renderer走停/四斜向/坡面及根页W/A短移动已限定复核。Rift与静态场景保持，未重验六站/场景重入，人审仍HUMAN-CHANGES-REQUESTED。",
+    "summary": "用户确认3f4efc3解决静息/斜向；左右半蹲前凸接续修复为1.25m周期、真实踝/靴滚动与可达骨盆，仍1.8m/s及1035帧。新图集、独立12000相位承重检查与既有自动检查通过；正式Renderer左右各30帧/每向2.6m两个周期、停步idle及四斜向定点限定复核完成。正式根页A短键移动后静息、WebGL2且控制台无错误。IMPLEMENTED / LOCAL-VERIFIED，整体动作待人审；Rift及静态场景不变。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -182,6 +182,30 @@
       {
         "path": "tools/last-light/check-facing.ts",
         "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-lateral-gait.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/kinematics.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/states.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/left-right.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/game-idle.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/game-smoke.json",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -205,7 +229,7 @@
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
-      "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
+      "3f4efc3静息/斜向认可保留；本轮横向承重完成新图集、自动及左右连续复现页限定验证，四斜向仅定点。正式根页仅A短键真实位移和松手静息，工具D短按未覆盖移动帧，不计正式页右走验证；六站/坐下UI/重入/Rift全链未扩验，数学通过不等于整体美术或动作自然度通过。",
       "人物阴影由每姿态11个胶囊近似，不等于完整人体三角网格光追；无WebGL2 fallback、Rift全量动作和长期体验仍未覆盖。"
     ]
   },

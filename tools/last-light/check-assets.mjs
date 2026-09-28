@@ -52,7 +52,7 @@ const energy=pixels('coreEnergy');assert.equal(energy.info.width,3840);assert.eq
 let additiveHalo=0;for(let i=0;i<energy.data.length;i+=4)if(!energy.data[i+3]&&(energy.data[i]||energy.data[i+1]||energy.data[i+2]))additiveHalo++;
 assert.ok(additiveHalo>100,'Core radiance at zero alpha must survive export');
 const a=manifest.actor,atlas=images.get(a.textures.color),ad=images.get(a.textures.depth),an=images.get(a.textures.normal);
-assert.equal(a.gait.cycleFrames,12);assert.equal(a.gait.settleStages,4);assert.equal(a.gait.strideMetres,1.05);
+assert.equal(a.gait.cycleFrames,12);assert.equal(a.gait.settleStages,4);assert.equal(a.gait.strideMetres,1.25);assert.equal(a.gait.stanceFraction,.56);
 assert.equal(a.gait.idleFrames,8);assert.equal(a.gait.idlePeriodSeconds,3.2);
 assert.equal(a.fps.idle,a.gait.idleFrames/a.gait.idlePeriodSeconds);
 assert.deepEqual(a.directions.screenOrder,['E','SE','S','SW','W','NW','N','NE']);

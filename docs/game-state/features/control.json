@@ -3,7 +3,7 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "Last Light保持1.8m/s实际XZ步速与现有碰撞路线；停止归位进入idle，图集朝向与水平面/坡面真实屏幕输入一致。gait/facing/8组movement及正式Renderer四斜向、根页W/A短移动通过限定复核；未重走六站或重入，Rift移动不变，人审待复看。",
+    "summary": "用户确认3f4efc3解决静息/斜向；左右半蹲前凸接续修复为1.25m周期、真实踝/靴滚动与可达骨盆，仍1.8m/s及1035帧。新图集、独立12000相位承重检查与既有自动检查通过；正式Renderer左右各30帧/每向2.6m两个周期、停步idle及四斜向定点限定复核完成。正式根页A短键移动后静息、WebGL2且控制台无错误。IMPLEMENTED / LOCAL-VERIFIED，整体动作待人审；Rift及静态场景不变。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -137,6 +137,30 @@
       {
         "path": "tools/last-light/check-facing.ts",
         "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-lateral-gait.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/kinematics.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/states.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/left-right.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/game-idle.png",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-actor/lateral/game-smoke.json",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -156,7 +180,7 @@
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
-      "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
+      "3f4efc3静息/斜向认可保留；本轮横向承重完成新图集、自动及左右连续复现页限定验证，四斜向仅定点。正式根页仅A短键真实位移和松手静息，工具D短按未覆盖移动帧，不计正式页右走验证；六站/坐下UI/重入/Rift全链未扩验，数学通过不等于整体美术或动作自然度通过。",
       "e05e9a8的六站与路线记录为历史功能证据，不能视为当前人物动作或整体画质人审通过。",
       "本轮正式根游戏只确认WebGL2主菜单继续重入与W短移。动态验证页使用真实step与gait，覆盖坡脚/坡中/上层实帧、默认坡道连续超过23秒和八向连续超过30秒；不等于正式键盘完整六站复走。",
       "坐下/起身呈现锚点被误算为步行的helper问题已专项回归修复；坐下UI本轮未复走。人的初见导航、全边缝手感与长期往返体验未完成，I28及原Rift全世界组合边界保持。"
