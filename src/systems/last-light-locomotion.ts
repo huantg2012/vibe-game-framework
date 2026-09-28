@@ -115,17 +115,72 @@ export function lastLightProjectedWalkingSpeed(state:Readonly<LastLightMovementS
  const world=lastLightWorldDelta(state.route,state,input.x/length,input.y/length);
  return worldSpeed/Math.max(EPS,Math.hypot(world.x,world.z));
 }
-function slideCandidate(state:LastLightMovementState,dx:number,dz:number):LastLightMovementState|null{
- let best:LastLightMovementState|null=null,bestProgress=0;
- const edges=[...BOUNDARIES[state.route]];
- for(const o of POLYGON_OBSTACLES)if(obstacleClearance(state,o)<RADIUS+.09)edges.push(...o.edges);
- for(const e of edges){const q=closest(state,e);if(q.distance>RADIUS+.075||q.distance<EPS)continue;
-  const nx=(state.x-q.x)/q.distance,nz=(state.z-q.z)/q.distance,dot=dx*nx+dz*nz;if(dot>=0)continue;
-  const vx=dx-dot*nx,vz=dz-dot*nz;if(Math.hypot(vx,vz)<EPS)continue;
-  const next=candidate(state,state.x+vx,state.z+vz);if(!next)continue;
-  const progress=(next.x-state.x)*dx+(next.z-state.z)*dz;if(progress>bestProgress){best=next;bestProgress=progress;}
+interface Contact {time:number;nx:number;nz:number}
+/** Earliest foot-circle contact, including real rounded corners. Using an
+ * obstacle's bounding-box edges for a circular base gives false slide normals. */
+function sweepContact(state:LastLightMovementState,dx:number,dz:number):Contact|null{
+ let hit:Contact|null=null;
+ const accept=(time:number,nx:number,nz:number)=>{
+  if(time>=-EPS&&time<=1&&dx*nx+dz*nz< -EPS&&(!hit||time<hit.time))hit={time:Math.max(0,time),nx,nz};
+ };
+ const circle=(x:number,z:number,radius:number)=>{
+  const ox=state.x-x,oz=state.z-z,a=dx*dx+dz*dz,b=ox*dx+oz*dz,c=ox*ox+oz*oz-radius*radius;
+  if(a<EPS*EPS||b>=0)return;
+  const discriminant=b*b-a*c;if(discriminant<0)return;
+  const time=c<=0?0:(-b-Math.sqrt(discriminant))/a;
+  const nx=ox+dx*time,nz=oz+dz*time,length=Math.hypot(nx,nz);
+  if(length>EPS)accept(time,nx/length,nz/length);
+ };
+ const segment=(e:Edge)=>{
+  // Reject distant edges before the line and rounded-end sweep.
+  if(closest(state,e).distance>RADIUS+Math.hypot(dx,dz)+EPS)return;
+  const length=Math.sqrt(e.length2),tx=e.dx/length,tz=e.dz/length;
+  const signed=(state.x-e.ax)*-tz+(state.z-e.az)*tx,side=signed<0?-1:1;
+  const nx=-tz*side,nz=tx*side,approach=dx*nx+dz*nz;
+  if(approach< -EPS){
+   const time=Math.max(0,(RADIUS-Math.abs(signed))/approach);
+   const along=(state.x+dx*time-e.ax)*tx+(state.z+dz*time-e.az)*tz;
+   if(along>=0&&along<=length)accept(time,nx,nz);
+  }
+  circle(e.ax,e.az,RADIUS);circle(e.bx,e.bz,RADIUS);
+ };
+ for(const e of BOUNDARIES[state.route])segment(e);
+ for(const o of POLYGON_OBSTACLES){
+  if(obstacleClearance(state,o)>RADIUS+Math.hypot(dx,dz)+EPS)continue;
+  if(o.kind==='circle')circle(o.position[0]!,o.position[2]!,o.bounds[2]!+RADIUS);
+  else for(const e of o.edges)segment(e);
  }
- return best;
+ return hit;
+}
+/** Preserve the free part of a blocked step before resolving its remaining
+ * tangent. Do not choose one arbitrary nearby edge or discard the whole step. */
+function moveCandidate(state:LastLightMovementState,dx:number,dz:number):LastLightMovementState|null{
+ let current=state,vx=dx,vz=dz;
+ for(let contact=0;contact<4&&Math.hypot(vx,vz)>EPS;contact++){
+  const direct=candidate(current,current.x+vx,current.z+vz);if(direct)return direct;
+  const hit=sweepContact(current,vx,vz);
+  // A tiny separation keeps repeated tangent steps on the legal side of a
+  // contact. It is not a reduced collider or a visible push away from the wall.
+  const travel=hit?Math.max(0,hit.time-.00001/Math.max(EPS,-vx*hit.nx-vz*hit.nz)):1;
+  let next=travel>EPS?candidate(current,current.x+vx*travel,current.z+vz*travel):null;
+  let advanced=next?travel:0;
+  if(!next&&travel>EPS){
+   // Supported-floor/height checks remain authoritative at open seams.
+   let low=0,high=travel;
+   for(let i=0;i<14;i++){
+    const mid=(low+high)/2,probe=candidate(current,current.x+vx*mid,current.z+vz*mid);
+    if(probe){low=mid;next=probe;}else high=mid;
+   }
+   advanced=low;
+  }
+  if(next)current=next;
+  if(!hit)break;
+  vx*=1-advanced;vz*=1-advanced;
+  const inward=vx*hit.nx+vz*hit.nz;
+  if(inward>=-EPS)break;
+  vx-=inward*hit.nx;vz-=inward*hit.nz;
+ }
+ return current===state?null:current;
 }
 /** Substeps are bounded in metres; even an extreme speed cannot tunnel through
  * an edge. No floor snapping, waypoint teleport, or scripted walking is used. */
@@ -133,16 +188,20 @@ export function stepLastLightMovement(state:LastLightMovementState,input:Chamber
  if(![deltaMs,speed,input.x,input.y].every(Number.isFinite)||deltaMs<=0||speed<=0)return;
  const length=Math.hypot(input.x,input.y);if(length<EPS)return;
  const ux=input.x/Math.max(1,length),uy=input.y/Math.max(1,length);
+ const startX=state.x,startZ=state.z;
  let remaining=Math.min(deltaMs,LAST_LIGHT_MAX_STEP_MS)*speed/1000;
  // A 0.5 native-pixel budget is < 4cm on the steepest authored chart.
  let attempts=0;
  while(remaining>EPS&&attempts++<10000){const pixels=Math.min(remaining,.5);remaining-=pixels;
   const d=lastLightWorldDelta(state.route,state,ux*pixels,uy*pixels);
-  const next=candidate(state,state.x+d.x,state.z+d.z)??slideCandidate(state,d.x,d.z);
+  const next=moveCandidate(state,d.x,d.z);
   if(!next)continue;
-  const dx=next.x-state.x,dz=next.z-state.z;if(Math.hypot(dx,dz)>EPS)next.facing=Math.atan2(dx,dz);
   Object.assign(state,next);
  }
+ // A last, fractional substep can point along either side of a corner even
+ // though the frame's actual travel is steady. The body follows that travel.
+ const dx=state.x-startX,dz=state.z-startZ;
+ if(Math.hypot(dx,dz)>.00001)state.facing=Math.atan2(dx,dz);
 }
 export function getLastLightMovementPosition(state:Readonly<LastLightMovementState>):ReturnType<typeof projectLastLight>{return projectLastLight(state);}
 export function canInteractLastLight(state:Readonly<LastLightMovementState>,device:ChamberDevice):boolean{

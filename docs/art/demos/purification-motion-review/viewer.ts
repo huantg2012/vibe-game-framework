@@ -36,13 +36,22 @@ paths.lateral=[lateralLeft,lateralRight,lateralLeft];
 // This deliberately avoids the old hand-picked, right-biased ascent waypoint.
 const landingPoint=(t:number,side:number):Waypoint=>[2+1.5*t+3.5/Math.sqrt(14.5)*side,-.5-3.5*t+1.5/Math.sqrt(14.5)*side,t<1?'west-ramp':'upper'];
 paths.landing=[landingPoint(.75,-.65),landingPoint(1.2,-.65),[4.5,-4.35,'upper'],landingPoint(1.2,.65),landingPoint(.75,.65),landingPoint(.75,0),landingPoint(1.2,0),[4.5,-4.35,'upper'],landingPoint(1.2,-.65),landingPoint(.75,-.65)];
+// Hold actual screen-key diagonals into a boundary: no waypoint steering can
+// quietly turn away from the contact whose movement/facing we are reviewing.
+const PRESSES:Record<string,{start:Waypoint;input:{x:number;y:number}}>={
+  'edge-outer':{start:[4.8,7.6],input:{x:1,y:1}},
+  'edge-ramp':{start:[2.1062174142785115,-3.7687639653092098],input:{x:1,y:-1}},
+  'edge-prop':{start:[11.004217905218487,6.341515064693588],input:{x:1,y:-1}},
+  'edge-slope':{start:[1.783619853,-1.835591491,'west-ramp'],input:{x:-1,y:-1}},
+};
+let movedMetres=0,facingTravelErrorDegrees=0;
 const DIRECTIONS=['E','SE','S','SW','W','NW','N','NE'];
 const KEYS=['D','D+S','S','S+A','A','A+W','W','W+D'];
 const HOLD_SECONDS:Record<string,number>={eight:1.4,idle:6.4,lateral:1.3};
 const firstHold=()=>selector.value==='idle'?1:selector.value==='lateral'?1.3:.45;
 
 function reset(){
-  const start=paths[selector.value]![0]!;
+  const start=PRESSES[selector.value]?.start??paths[selector.value]![0]!;
   movement=createLastLightMovementState({x:start[0],y:0,z:start[1]},start[2]??'main');
   gait=new LastLightGait();segment=1;hold=firstHold();elapsed=0;state.seconds=0;
   screenDirection='—';screenKeys='—';screenInput={x:0,y:0};
@@ -50,8 +59,15 @@ function reset(){
   update(0);renderer.settleExteriorObserver(state.world,0);
 }
 function update(dt:number){
-  elapsed+=dt;state.seconds=elapsed;const path=paths[selector.value]!;
-  if(hold>0)hold=Math.max(0,hold-dt);
+  elapsed+=dt;state.seconds=elapsed;const path=paths[selector.value]!,press=PRESSES[selector.value];
+  const before={x:movement.x,z:movement.z};
+  if(press){
+    const input=elapsed>.45&&elapsed<3.45?press.input:{x:0,y:0};
+    screenInput=input;hold=0;
+    const sector=(Math.round(Math.atan2(input.y,input.x)/(Math.PI/4))+8)%8;
+    screenDirection=input.x||input.y?DIRECTIONS[sector]!:'—';screenKeys=input.x||input.y?KEYS[sector]!:'—';
+    stepLastLightMovement(movement,input,dt*1000,lastLightProjectedWalkingSpeed(movement,input,LAST_LIGHT_WORLD_WALK_SPEED));
+  }else if(hold>0)hold=Math.max(0,hold-dt);
   else{
     const target=path[segment]!,dx=target[0]-movement.x,dz=target[1]-movement.z,dist=Math.hypot(dx,dz);
     const arrivalDistance=['eight','idle','lateral'].includes(selector.value)?.000001:.025;
@@ -70,6 +86,9 @@ function update(dt:number){
         lastLightProjectedWalkingSpeed(movement,input,LAST_LIGHT_WORLD_WALK_SPEED));
     }
   }
+  const dx=movement.x-before.x,dz=movement.z-before.z;
+  movedMetres=Math.hypot(dx,dz);
+  facingTravelErrorDegrees=movedMetres>.00001?Math.abs(Math.atan2(Math.sin(movement.facing-Math.atan2(dx,dz)),Math.cos(movement.facing-Math.atan2(dx,dz))))*180/Math.PI:0;
   state.world=[movement.x,movement.y,movement.z];state.yaw=movement.facing;
   const pose=gait.update(state.world,dt,false);
   state.gaitPose=pose.pose;state.gaitFrame=pose.frame;state.walking=pose.moving;cycle=pose.cycle;
@@ -84,7 +103,7 @@ function draw(){
   output.value=`${elapsed.toFixed(2)}s · ${movement.route} · ${screenKeys} ${screenDirection} · yaw ${yawDegrees.toFixed(2)}° · ${state.gaitPose} ${state.gaitFrame}`;
   output.dataset.state=JSON.stringify({case:selector.value,elapsed,world:state.world,route:movement.route,
     frame:state.gaitFrame,pose:state.gaitPose,moving:state.walking,cycle,yaw:state.yaw,yawDegrees,
-    screenDirection,screenKeys,screenInput,segment,hold});
+    screenDirection,screenKeys,screenInput,segment,hold,movedMetres,facingTravelErrorDegrees});
   seek.value=String(Math.min(elapsed,Number(seek.max)));
 }
 play.onclick=()=>{running=!running;play.textContent=running?'暂停':'播放';};
@@ -92,7 +111,11 @@ document.querySelector('#restart')!.addEventListener('click',()=>{reset();draw()
 selector.onchange=()=>{reset();draw();};
 seek.oninput=()=>{
   running=false;play.textContent='播放';const target=Number(seek.value);reset();
-  for(let time=0;time<target;time+=1/60)update(Math.min(1/60,target-time));
+  const frames=Math.floor(target*60),remainder=target-frames/60;
+  for(let frame=0;frame<frames;frame++)update(1/60);
+  // Do not append a floating-point epsilon frame: it would replace the last
+  // real movement sample with a false "stationary" diagnostic while seeking.
+  if(remainder>1e-9)update(remainder);
   renderer.settleExteriorObserver(state.world,state.seconds);draw();
 };
 reset();let request=0;

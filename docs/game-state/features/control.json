@@ -3,7 +3,7 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "西坡顶上层前缘改为2.6m共线完整承接边，1.9m坡/0.22m脚圆保持。整景与外景光场重导完成，人物六图SHA与2b2b98a一致；正式移动10组含原W卡点、13全宽双向与两翼转身通过，旧layout被新用例拦截。正式Renderer受控真实movement25实帧验证上/下坡和上层转身，IMPLEMENTED / LOCAL-VERIFIED；根游戏继续当前进行中Rift且无控制台错误，不计正式净化点跨坡，未扩大六站业务或人审。",
+    "summary": "边界斜向runtime修复为连续脚圆首触/保留自由段/剩余切线滑动、真实圆接触及整帧净位移朝向。6683帧边界、10组导航及gait/facing/类型/构建通过，旧runtime以154.592°误差被拦截；四例正式Renderer各32实帧和20状态样点验证移动朝向/正常阻挡静息。IMPLEMENTED / LOCAL-VERIFIED，步态/资产/几何保持；不等于正式根游戏业务全程，手感待用户复看。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -217,6 +217,42 @@
       {
         "path": "docs/qa/artifacts/last-light-landing/upper-landing.png",
         "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-boundary-motion.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/motion.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/navigation.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/browser-states.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/outer.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/ramp.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/prop.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/slope.webp",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-boundary/contact-sheet.jpg",
+        "role": "test"
       }
     ],
     "dependsOn": [],
@@ -236,6 +272,7 @@
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
     ],
     "unknowns": [
+      "本轮边界四例正式Renderer受控回放已限定验证：外沿/坡侧持续滑动，箱角被挡后稳定idle；坡下结构遮住身体，只确认灯光连续，不能声称完整角色可见。无正式根游戏键盘/六站业务全程覆盖，用户整体手感待复看；旧744轨迹未见gait重启不是全量体验通过。",
       "西坡顶修复已完成新资源、正式移动回归及正式Renderer受控25实帧回放；根游戏加载继续无错误但当前存档进入Rift，未放弃/重置，所以没有正式净化点键盘跨坡证据。受控回放不写存档，不等于正式键盘全程；六站业务、Rift全链与整体美术人审不扩验。",
       "本轮全身动作已有新图集、全身/接地/模型同源及实景连续片段证据；正式根页仅新开继续、A短键真实移动与松手站稳；D短按无位移不计验证，完整左右周期只归正式Renderer复现页。不能以数学通过代签自然度，3cd4372好多了的改善评价不升级成整体验收；六站/坐下UI/重入/Rift全链未扩验。",
       "e05e9a8的六站与路线记录为历史功能证据，不能视为当前人物动作或整体画质人审通过。",

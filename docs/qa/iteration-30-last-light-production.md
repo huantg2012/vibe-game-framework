@@ -2,6 +2,21 @@
 
 > 后续用户指出阴影、外景与太空步问题；本页保留 e05e9a8 接入时的功能检查，不代表画质通过。阴影/外景的历史整改见[动态整改 QA](iteration-30-last-light-motion.md)，当前人物与步态证据见[角色 QA](iteration-30-last-light-actor.md)。
 
+## 2026-09-28：边界斜向移动与朝向修复
+
+主 COH-F006。用户指出净化点各边界和坡侧斜向移动卡帧；**IMPLEMENTED / LOCAL-VERIFIED**，已修正运行时碰撞和朝向计算，不改步态、图集资产或场景几何。
+
+独立固定60Hz的744组轨迹复现没有发现反复零/非零位移造成的gait重启；已找到外沿实例的整帧净位移方向139.25°、人物朝向却为−15.35°，相差154.6°。旧实现让最后0.5原生像素子步覆盖整帧朝向，碰撞时还丢弃触碰前本可自由行走的距离，造成朝向错位与速度不均；不能因用户描述为“卡帧”就直接改动画时钟。
+
+当前修正保留子步和真实楼层/完整脚圆候选检查，脚圆连续求首触点，先消费自由行走段，再沿接触切线消费剩余位移；圆形设备按真实圆形求接触，最终朝向统一取整帧实际净位移。坡侧、外沿和障碍仍不可穿越，不缩碰撞体或吸附角色。
+
+- `check-boundary-motion`覆盖6683帧通过，包含主层/坡面/上层/圆设备、固定和不均匀帧时间、整帧朝向、完整脚圆、直边分帧稳定、持续顶住后静息及真实屏幕八键；最大朝向误差0°。旧runtime在同一新回归中以154.592°错位失败。独立11365个合法移动步骤未发现不安全终点、NaN或逆输入倒退；见[边界回归](artifacts/last-light-boundary/motion.json)。
+- 原`check-movement`10组通过，包括坡顶13条全宽双向通路；`gait`、`facing`、类型检查及生产构建通过，见[导航回归](artifacts/last-light-boundary/navigation.json)。没有改步态、资产或几何，也没有借改动画掩盖碰撞问题。
+- 正式Renderer/真实movement受控复现共4例（外沿、坡下结构边、箱角、坡侧），每例从0.8到3.28秒每80ms取样32实帧。这些是确定性时间seek回放，使用正式movement/gait/Renderer/资源；动画播放速度不是实时帧率测量，见[证据说明](artifacts/last-light-boundary/README.md)。[接触对照](artifacts/last-light-boundary/contact-sheet.jpg)已实际复看；动画：[外沿](artifacts/last-light-boundary/outer.webp)、[坡下结构边](artifacts/last-light-boundary/ramp.webp)、[箱角](artifacts/last-light-boundary/prop.webp)、[坡侧](artifacts/last-light-boundary/slope.webp)。坡下结构遮住身体，该例只确认灯光连续，不声称完整角色动作可见。
+- [浏览器状态](artifacts/last-light-boundary/browser-states.json)含4例各0.8/1.6/2.4/3.2/4.032秒共20样点：外沿、坡下结构边和坡侧前4点持续移动、朝向与整帧净位移误差0；4例在4.032秒均idle/moving=false。箱角例持续顶住后在1.6秒前进入稳定idle，不能把正常被箱角挡住说成继续滑行。复现页seek的极小尾帧覆盖诊断问题也已修正，状态保留最后真实步进帧。
+
+复现页warning/error为空。本轮边界实景证据全部属于正式Renderer受控回放，不写存档、不等于正式根游戏键盘/六站业务全程；用户整体手感仍待复看。旧坡顶和角色动画验证只保留各自历史范围。
+
 ## 2026-09-28：西坡顶全宽通行修复
 
 主 COH-F006，关联 F042。用户截图指出坡顶通行区太窄、角色卡住。**IMPLEMENTED / LOCAL-VERIFIED**：作者几何、导航与整景/外景光场重烘焙完成，正式移动回归和正式Renderer受控实景通过；根游戏入口仅检查加载继续，当前存档进入Rift，不计净化点跨坡验证。

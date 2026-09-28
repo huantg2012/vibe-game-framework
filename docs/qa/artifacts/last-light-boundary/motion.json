@@ -1,0 +1,251 @@
+{
+  "status": "PASS",
+  "framesChecked": 6683,
+  "maximumFacingErrorDegrees": 0,
+  "maximumSingleFrameDistance": 0.0612,
+  "maximumFramePartitionDrift": 0,
+  "sustainedBlockedIdleFrames": 90,
+  "checks": [
+    "visible fractional-substep flip",
+    "main/ramp/upper/circle boundaries",
+    "fixed and variable frame times",
+    "whole-frame facing",
+    "full foot clearance and bounded travel",
+    "straight-contact partition stability",
+    "held head-on collision settles to idle without walking phase",
+    "all eight real screen keys"
+  ],
+  "cases": [
+    {
+      "name": "visible front-edge flip",
+      "endpoints": [
+        {
+          "framePatternMs": [
+            16.666667
+          ],
+          "x": 9.754762,
+          "z": 7.14683,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8.333333
+          ],
+          "x": 9.793261,
+          "z": 7.140489,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8,
+            25,
+            12,
+            21,
+            34
+          ],
+          "x": 9.766854,
+          "z": 7.144838,
+          "route": "main"
+        }
+      ]
+    },
+    {
+      "name": "whole front-edge approach",
+      "endpoints": [
+        {
+          "framePatternMs": [
+            16.666667
+          ],
+          "x": 7.56136,
+          "z": 7.20868,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8.333333
+          ],
+          "x": 7.549863,
+          "z": 7.215565,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8,
+            25,
+            12,
+            21,
+            34
+          ],
+          "x": 7.557064,
+          "z": 7.211163,
+          "route": "main"
+        }
+      ]
+    },
+    {
+      "name": "west-ramp inner wall",
+      "endpoints": [
+        {
+          "framePatternMs": [
+            16.666667
+          ],
+          "x": 3.718455,
+          "z": -1.53955,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8.333333
+          ],
+          "x": 3.718455,
+          "z": -1.53955,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8,
+            25,
+            12,
+            21,
+            34
+          ],
+          "x": 3.718455,
+          "z": -1.53955,
+          "route": "main"
+        }
+      ]
+    },
+    {
+      "name": "west-ramp walking edge",
+      "endpoints": [
+        {
+          "framePatternMs": [
+            16.666667
+          ],
+          "x": 1.908401,
+          "z": -2.139414,
+          "route": "west-ramp"
+        },
+        {
+          "framePatternMs": [
+            8.333333
+          ],
+          "x": 1.908401,
+          "z": -2.139414,
+          "route": "west-ramp"
+        },
+        {
+          "framePatternMs": [
+            8,
+            25,
+            12,
+            21,
+            34
+          ],
+          "x": 1.908401,
+          "z": -2.139414,
+          "route": "west-ramp"
+        }
+      ]
+    },
+    {
+      "name": "growth machine front",
+      "endpoints": [
+        {
+          "framePatternMs": [
+            16.666667
+          ],
+          "x": 5.703813,
+          "z": -4.11999,
+          "route": "upper"
+        },
+        {
+          "framePatternMs": [
+            8.333333
+          ],
+          "x": 5.703813,
+          "z": -4.11999,
+          "route": "upper"
+        },
+        {
+          "framePatternMs": [
+            8,
+            25,
+            12,
+            21,
+            34
+          ],
+          "x": 5.703813,
+          "z": -4.11999,
+          "route": "upper"
+        }
+      ]
+    },
+    {
+      "name": "rounded supply can",
+      "endpoints": [
+        {
+          "framePatternMs": [
+            16.666667
+          ],
+          "x": 7.331949,
+          "z": 3.121264,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8.333333
+          ],
+          "x": 7.328198,
+          "z": 3.1194,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8,
+            25,
+            12,
+            21,
+            34
+          ],
+          "x": 7.331024,
+          "z": 3.120486,
+          "route": "main"
+        }
+      ]
+    },
+    {
+      "name": "pier corner",
+      "endpoints": [
+        {
+          "framePatternMs": [
+            16.666667
+          ],
+          "x": 4.232637,
+          "z": -6.247231,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8.333333
+          ],
+          "x": 4.232225,
+          "z": -6.262192,
+          "route": "main"
+        },
+        {
+          "framePatternMs": [
+            8,
+            25,
+            12,
+            21,
+            34
+          ],
+          "x": 4.232842,
+          "z": -6.250682,
+          "route": "main"
+        }
+      ]
+    }
+  ]
+}
