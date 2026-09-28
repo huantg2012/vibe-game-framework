@@ -43,8 +43,10 @@ const PRESSES:Record<string,{start:Waypoint;input:{x:number;y:number}}>={
   'edge-ramp':{start:[2.1062174142785115,-3.7687639653092098],input:{x:1,y:-1}},
   'edge-prop':{start:[11.004217905218487,6.341515064693588],input:{x:1,y:-1}},
   'edge-slope':{start:[1.783619853,-1.835591491,'west-ramp'],input:{x:-1,y:-1}},
+  'edge-pressure':{start:[3.416380147,-1.964408509,'west-ramp'],input:{x:1,y:1}},
+  'edge-stride':{start:[3.416380147,-1.964408509,'west-ramp'],input:{x:1,y:0}},
 };
-let movedMetres=0,facingTravelErrorDegrees=0;
+let movedMetres=0,facingTravelErrorDegrees=0,worldSpeed=0,walkFrameSeconds=0,previousWalkFrame=-1;
 const DIRECTIONS=['E','SE','S','SW','W','NW','N','NE'];
 const KEYS=['D','D+S','S','S+A','A','A+W','W','W+D'];
 const HOLD_SECONDS:Record<string,number>={eight:1.4,idle:6.4,lateral:1.3};
@@ -54,6 +56,7 @@ function reset(){
   const start=PRESSES[selector.value]?.start??paths[selector.value]![0]!;
   movement=createLastLightMovementState({x:start[0],y:0,z:start[1]},start[2]??'main');
   gait=new LastLightGait();segment=1;hold=firstHold();elapsed=0;state.seconds=0;
+  walkFrameSeconds=0;previousWalkFrame=-1;
   screenDirection='—';screenKeys='—';screenInput={x:0,y:0};
   gait.update([movement.x,movement.y,movement.z],0,false);
   update(0);renderer.settleExteriorObserver(state.world,0);
@@ -88,10 +91,13 @@ function update(dt:number){
   }
   const dx=movement.x-before.x,dz=movement.z-before.z;
   movedMetres=Math.hypot(dx,dz);
+  worldSpeed=dt>0?movedMetres/dt:0;
   facingTravelErrorDegrees=movedMetres>.00001?Math.abs(Math.atan2(Math.sin(movement.facing-Math.atan2(dx,dz)),Math.cos(movement.facing-Math.atan2(dx,dz))))*180/Math.PI:0;
   state.world=[movement.x,movement.y,movement.z];state.yaw=movement.facing;
   const pose=gait.update(state.world,dt,false);
   state.gaitPose=pose.pose;state.gaitFrame=pose.frame;state.walking=pose.moving;cycle=pose.cycle;
+  walkFrameSeconds=pose.moving&&pose.pose==='walk'?(pose.frame===previousWalkFrame?walkFrameSeconds+dt:dt):0;
+  previousWalkFrame=pose.moving?pose.frame:-1;
 }
 function draw(){
   renderer.draw(state);const b=renderer.actorBounds;
@@ -100,10 +106,10 @@ function draw(){
   const contextOrigin=selector.value==='lateral'?projectLastLight(lateralCenter):null;
   detailContext.drawImage(renderer.canvas,contextOrigin?Math.round(contextOrigin.x-80):450,contextOrigin?Math.round(contextOrigin.y-80):190,160,120,350,0,320,240);
   const yawDegrees=state.yaw*180/Math.PI;
-  output.value=`${elapsed.toFixed(2)}s · ${movement.route} · ${screenKeys} ${screenDirection} · yaw ${yawDegrees.toFixed(2)}° · ${state.gaitPose} ${state.gaitFrame}`;
+  output.value=`${elapsed.toFixed(2)}s · ${movement.route} · ${screenKeys} ${screenDirection} · yaw ${yawDegrees.toFixed(2)}° · ${state.gaitPose} ${state.gaitFrame} · ${worldSpeed.toFixed(2)}m/s · 帧驻留 ${(walkFrameSeconds*1000).toFixed(0)}ms`;
   output.dataset.state=JSON.stringify({case:selector.value,elapsed,world:state.world,route:movement.route,
     frame:state.gaitFrame,pose:state.gaitPose,moving:state.walking,cycle,yaw:state.yaw,yawDegrees,
-    screenDirection,screenKeys,screenInput,segment,hold,movedMetres,facingTravelErrorDegrees});
+    screenDirection,screenKeys,screenInput,segment,hold,movedMetres,facingTravelErrorDegrees,worldSpeed,walkFrameSeconds});
   seek.value=String(Math.min(elapsed,Number(seek.max)));
 }
 play.onclick=()=>{running=!running;play.textContent=running?'暂停':'播放';};

@@ -12,6 +12,10 @@ import {
 export interface LastLightMovementState {x:number;y:number;z:number;route:LastLightRoute;facing:number}
 interface Edge {ax:number;az:number;bx:number;bz:number;dx:number;dz:number;length2:number}
 const EPS=1e-7,RADIUS=LAST_LIGHT_FOOT_RADIUS;
+// Keyboard pressure almost normal to a wall is a stop, not a microscopic
+// sidestep. A deliberate along-edge component keeps the requested walk speed.
+// Otherwise the fixed-stride actor spends a second or more on each walk frame.
+const MIN_SLIDE_INTENT=.20;
 const edge=(ax:number,az:number,bx:number,bz:number):Edge=>({ax,az,bx,bz,dx:bx-ax,dz:bz-az,length2:(bx-ax)**2+(bz-az)**2});
 function closest(p:{x:number;z:number},e:Edge):{x:number;z:number;distance:number}{
  const t=Math.max(0,Math.min(1,((p.x-e.ax)*e.dx+(p.z-e.az)*e.dz)/e.length2));
@@ -152,10 +156,11 @@ function sweepContact(state:LastLightMovementState,dx:number,dz:number):Contact|
  }
  return hit;
 }
-/** Preserve the free part of a blocked step before resolving its remaining
- * tangent. Do not choose one arbitrary nearby edge or discard the whole step. */
+/** Preserve the free part of a blocked step, then redirect the remaining
+ * walking budget along a deliberate tangent. Near-normal pressure stops. */
 function moveCandidate(state:LastLightMovementState,dx:number,dz:number):LastLightMovementState|null{
  let current=state,vx=dx,vz=dz;
+ const requested=Math.hypot(dx,dz);
  for(let contact=0;contact<4&&Math.hypot(vx,vz)>EPS;contact++){
   const direct=candidate(current,current.x+vx,current.z+vz);if(direct)return direct;
   const hit=sweepContact(current,vx,vz);
@@ -178,7 +183,17 @@ function moveCandidate(state:LastLightMovementState,dx:number,dz:number):LastLig
   vx*=1-advanced;vz*=1-advanced;
   const inward=vx*hit.nx+vz*hit.nz;
   if(inward>=-EPS)break;
+  const budget=Math.hypot(vx,vz);
   vx-=inward*hit.nx;vz-=inward*hit.nz;
+  const tangent=Math.hypot(vx,vz);
+  if(tangent<budget*MIN_SLIDE_INTENT)break;
+  // A second wall must not redirect us back against the held key. At a
+  // concave corner the legal response may simply be to stop and gather feet.
+  if(vx*dx+vz*dz<tangent*requested*MIN_SLIDE_INTENT)break;
+  // Reallocate, never add distance. Gait can remain tied to real displacement
+  // with planted feet, instead of playing a full stride in slow motion or
+  // artificially accelerating the animation over a creeping root.
+  vx*=budget/tangent;vz*=budget/tangent;
  }
  return current===state?null:current;
 }
