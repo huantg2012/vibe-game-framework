@@ -24,6 +24,8 @@ note: 2026-09-30裂隙空间重构与七处交互整改已IMPLEMENTED / LOCAL-VE
 
 **IMPLEMENTED / LOCAL-VERIFIED，整体美术仍待用户复看。** 具体检查与有限真实场景验收归[QA](../qa/last-light-rift-interaction-2026-09-30.md)，美术原则归[集中正文](../art-direction.md#resume-art-rebuild)。I31交付、I28挂起与长期证据边界保持。按持续授权本地提交，不推送；独立CLAUDE.md不纳入。
 
+同日补充：[七处交互区域实图](../qa/interactive/last-light-interaction-regions.html)由实际生产资格采样，提供逐项设计意图及俯视切换；生成与验证边界归[本轮QA](../qa/last-light-rift-interaction-2026-09-30.md#七处交互区域可视化同日补充)，不改玩法判定。
+
 ## 历史交付 · 迭代31（2026-09-29，修复与能力收益兑现）
 
 **IMPLEMENTED / LOCAL-VERIFIED**。用户授权整体盘点并自主裁决下一迭代。正式搜撤/归来/修复/供奉/成长循环已接入，5世界×2空间、48件目录和22步成长已有入口；当前瓶颈是投入与真实收益不易读懂，以及受损记录存在被新游戏覆盖的风险。完整进度及未完成边界归[路线图](roadmap.md)，本轮选择依据与清单归[I31](../tasks/iteration-31.md)。未新增目录、改变经济或重开场景画法。

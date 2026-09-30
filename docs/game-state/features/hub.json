@@ -10,7 +10,8 @@
       "主菜单新游戏/继续/归来→PurificationScene；主层核心/净化器/供奉/裂隙，上层储藏/蜕变，靠近后 E 操作。",
       "炉边残骸：靠近后 E 坐下；轻拉近镜头与氛围文案，不增加回复或其他经济机制。",
       "历史艺术样景 docs/art/demos/purification-last-light/index.html 与方案对照页保留为制作参照；正式入口为项目根 index.html。",
-      "限定DEV验收：docs/qa/interactive/last-light-interaction-review.html；真实生产场景，页内Map存档，六站合法脚点按钮与WASD/E/Esc；不是正式存档入口。"
+      "限定DEV验收：docs/qa/interactive/last-light-interaction-review.html；真实生产场景，页内Map存档，六站合法脚点按钮与WASD/E/Esc；不是正式存档入口。",
+      "只读区域查看器：docs/qa/interactive/last-light-interaction-regions.html；从正式判定采样的七处脚底资格叠图与设计意图，不是游戏入口或存档会话。"
     ],
     "sources": [
       {
@@ -590,6 +591,26 @@
         "path": "docs/art/demos/purification-forecourt-options/rift-a.ts",
         "role": "art",
         "note": "ground-throat-v2作者源：地坪狭口、深断面、内腔源光与显式内侧阈边；2026-09-30替代竖立黑膜"
+      },
+      {
+        "path": "tools/last-light/interaction-regions.mjs",
+        "role": "test",
+        "note": "调用正式站立/交互判定生成0.06m采样轮廓与深度遮挡叠图；不修改生产规则"
+      },
+      {
+        "path": "docs/qa/interactive/last-light-interaction-regions.html",
+        "role": "doc",
+        "note": "只读场景/俯视区域查看器，七处切换及设计意图；浏览器验证见本轮QA的实际补录"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/regions.json",
+        "role": "doc",
+        "note": "采样计数、轮廓与5份生产来源SHA256；不是自然行走验收"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/regions.svg",
+        "role": "doc",
+        "note": "当前参考图上的脚底资格叠图；不把烘焙参考当运行时截图"
       }
     ],
     "dependsOn": [
@@ -650,7 +671,8 @@
       "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
       "COH-E103",
-      "COH-E104"
+      "COH-E104",
+      "COH-E105"
     ],
     "unknowns": [
       "2026-09-30改动仅已确认净化器原approach及圆角E、裂口E进正式备行的受控实机链；坐下和其余站点、从出生完整自然往返等新增证据由本轮QA限定，不能把作者定位按钮当通路人审。整体美术待人审，I28维持挂起。",

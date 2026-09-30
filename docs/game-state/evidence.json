@@ -3739,5 +3739,50 @@
         "role": "art"
       }
     ]
+  },
+  {
+    "id": "COH-E105",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-09-30",
+    "revision": "381b989 + interaction-regions visualization working tree (2026-09-30)",
+    "scope": "只读核对区域生成脚本、生产7处profile与作者操作面；确认0.06m网格直接调用canStandLastLight及lastLightInteractionDistance，记录23024个可站样本和12455个取得资格的样本。执行SHA256核对，regions.json的5份生产来源指纹均与当前文件一致；7处均有非空轮廓。已登记场景/俯视查看器、逐项操作面意图及采样产物。 协调者重新执行生成器成功，并通过浏览器核对全部叠图、储藏单独选择/意图、俯视切换和恢复总览。",
+    "limitations": "仅只读诊断图的生成与浏览器显示/部分控件验证，未运行正式游戏会话或自然行走。0.06m网格近似与最近沿点直达的保守裁切保留；静态图不表达0.16m目标切换的历史。生产规则、存档及整体人审状态不变。",
+    "sources": [
+      {
+        "path": "docs/qa/last-light-rift-interaction-2026-09-30.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/last-light/interaction-regions.mjs",
+        "role": "test",
+        "note": "调用正式站立/交互判定生成0.06m采样轮廓与深度遮挡叠图；不修改生产规则"
+      },
+      {
+        "path": "docs/qa/interactive/last-light-interaction-regions.html",
+        "role": "doc",
+        "note": "只读场景/俯视区域查看器，七处切换及设计意图；浏览器验证见本轮QA的实际补录"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/regions.json",
+        "role": "doc",
+        "note": "采样计数、轮廓与5份生产来源SHA256；不是自然行走验收"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/regions.svg",
+        "role": "doc",
+        "note": "当前参考图上的脚底资格叠图；不把烘焙参考当运行时截图"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/regions-preview.png",
+        "role": "doc",
+        "note": "实际浏览器视口截图；不代表正式游戏运行验收"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/regions.png",
+        "role": "doc",
+        "note": "由同一SVG渲染的高清静态叠图"
+      }
+    ]
   }
 ]

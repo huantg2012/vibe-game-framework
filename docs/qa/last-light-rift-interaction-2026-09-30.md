@@ -36,3 +36,11 @@ COH-F042 / F026，关联 F006 / F003。**IMPLEMENTED / LOCAL-VERIFIED；局部�
 已确认净化器原操作面、贴边圆角`(-2.398684584, 0, 1.037882015)`都有提示且真实E打开净化器；核心E打开修复，裂口新操作点E进入正式备行并正常离开。储藏/供奉/蜕变及坐席提示已逐项看到；其余站点业务开启未记通过，范围判定另有上述全部几何/连续采样覆盖。最终刷新后控制台warning/error为空。浏览器自动化短键存在未触发的尝试，没有把发送过按键当成功，也不把控件定位当自然行走路线。
 
 本轮没有扩验交易/自然搜撤整趟/全部业务组合、跨GPU性能或整体美术终审。I28挂起、I31历史交付和其他未验边界保持。
+
+## 七处交互区域可视化（同日补充）
+
+[场景叠图与逐项查看器](interactive/last-light-interaction-regions.html)以正式判定采样绘制色块，可切单对象、俯视图与色块强度，并逐项解释操作面方向；[原始叠图](artifacts/last-light-rift-interaction/regions.svg)和[采样记录](artifacts/last-light-rift-interaction/regions.json)留存。生成入口为`TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/last-light/interaction-regions.mjs`，不修改生产规则或存档。
+
+0.06m网格调用实际`canStandLastLight`与`lastLightInteractionDistance`，23024个可站样本中12455个获得相应对象资格；七处均有非空轮廓。已核记录的5份生产源码/布局/参考图/深度图SHA256与当前文件一致。场景叠图按实际深度遮挡色块，上层按2.6m地坪投影；色块表示角色脚底中心的位置，不是鼠标热区、装置占地或自动导航目标。
+
+边缘仍是网格近似，不能把轮廓平滑成跨断口的通路；储藏断沿及最近操作沿直达路径的保守裁切照实显示。多色重叠表示多项同时有资格，实际E仍有最近目标与0.16m切换滞回，静态图不表达来向历史。已重新运行生成器，并在浏览器确认全部叠图、储藏单独选择与意图、俯视切换及恢复总览；[页面截图](artifacts/last-light-rift-interaction/regions-preview.png)与[高清静态叠图](artifacts/last-light-rift-interaction/regions.png)留存。此次没有运行游戏会话，不改变上述整体验收边界。
