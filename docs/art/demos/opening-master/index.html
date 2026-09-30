@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>开场母版 · 静态审查</title>
+    <style>
+      :root { color-scheme: dark; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #101113; color: #c4c6c9; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-width: 320px; height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
+      header { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 15px 22px; border-bottom: 1px solid #242529; }
+      h1 { margin: 0; font-size: 14px; font-weight: 500; letter-spacing: .04em; }
+      h1 span { color: #777c83; margin-left: 12px; font-size: 12px; font-weight: 400; letter-spacing: 0; }
+      nav { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+      .group { display: flex; gap: 3px; }
+      button { appearance: none; border: 1px solid transparent; border-radius: 4px; padding: 6px 9px; color: #8b9097; background: transparent; font: inherit; font-size: 12px; cursor: pointer; }
+      button:hover { color: #d0d3d7; background: #1d1f23; }
+      button[aria-pressed="true"] { color: #e0e2e5; background: #292c31; border-color: #34383f; }
+      button:focus-visible { outline: 1px solid #b0b7c1; outline-offset: 3px; }
+      #viewport { min-height: 0; flex: 1 1 auto; overflow: auto; padding: 20px 22px; }
+      #gallery { display: flex; align-items: flex-start; gap: 20px; width: max-content; min-width: 100%; min-height: 100%; justify-content: center; }
+      #gallery.native { justify-content: flex-start; }
+      #gallery.native:not(.compare) { justify-content: center; }
+      figure { margin: 0; width: var(--frame-width, 960px); flex: 0 0 var(--frame-width, 960px); }
+      figure[hidden] { display: none; }
+      .frame { position: relative; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; background: #08090a; }
+      .art { display: block; width: 100%; height: 100%; object-fit: contain; }
+      #master-image { image-rendering: pixelated; }
+      .frame[data-state="error"] .art { visibility: hidden; }
+      .missing { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; color: #6f747b; font-size: 13px; }
+      .frame[data-state="error"] .missing { display: flex; }
+      .title-overlay { display: none; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+      #gallery.titled .frame[data-state="ready"] .title-overlay { display: block; }
+      figcaption { display: flex; justify-content: space-between; gap: 12px; padding-top: 10px; color: #777d84; font-size: 11px; line-height: 1.5; }
+      figcaption span:last-child { color: #585e65; }
+      footer { flex: 0 0 auto; padding: 0 22px 14px; color: #646a72; font-size: 11px; line-height: 1.6; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>开场母版<span>静态 · 待审</span></h1>
+      <nav aria-label="审查显示选项">
+        <div class="group" aria-label="构图显示">
+          <button id="plain" type="button" aria-pressed="true">纯画面</button>
+          <button id="titled" type="button" aria-pressed="false">标题套版</button>
+        </div>
+        <button id="compare" type="button" aria-pressed="false">原画并排</button>
+        <div class="group" aria-label="显示尺寸">
+          <button id="fit" type="button" aria-pressed="true">适配</button>
+          <button id="native" type="button" aria-pressed="false" title="母版按 960 × 640 原生尺寸显示">原生 1×</button>
+        </div>
+      </nav>
+    </header>
+    <main id="viewport" aria-label="静态母版审查">
+      <div id="gallery">
+        <figure id="master">
+          <div class="frame" data-state="loading">
+            <img id="master-image" class="art" src="./assets/master.png" width="960" height="640" alt="待审开场静态母版">
+            <div class="missing" role="status">母版尚未导出</div>
+          </div>
+          <figcaption><span>新母版</span><span>960 × 640</span></figcaption>
+        </figure>
+        <figure id="original" hidden>
+          <div class="frame" data-state="loading">
+            <img class="art" src="/assets/art/menu-last-light.png" width="960" height="640" alt="现行开场背景原画，按同一逻辑画框显示">
+            <div class="missing" role="status">原画未载入</div>
+          </div>
+          <figcaption><span>现行原画</span><span>同画框对照</span></figcaption>
+        </figure>
+      </div>
+    </main>
+    <footer>仅审查画面与既有标题位置；尚未正式接入，动态、声音及转场未完成。</footer>
+    <template id="title-template">
+      <!-- Existing 960 × 640 menu positions; this is a noninteractive composition overlay. -->
+      <svg class="title-overlay" viewBox="0 0 960 640" aria-hidden="true">
+        <g font-family="&quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif" font-weight="400" dominant-baseline="central">
+          <text x="176" y="212" fill="#c8cdd4" font-size="36">那天之后</text>
+          <text x="176" y="250" fill="#8a8f96" font-size="13">边界仍在，光尚未熄</text>
+          <rect x="156" y="325.5" width="7" height="1" fill="#c8cdd4" />
+          <text x="176" y="326" fill="#c8cdd4" font-size="13">进入净化点</text>
+        </g>
+      </svg>
+    </template>
+    <script>
+      const LOGICAL_WIDTH = 960;
+      const LOGICAL_HEIGHT = 640;
+      const GAP = 20;
+      const CAPTION_HEIGHT = 27;
+      const viewport = document.querySelector('#viewport');
+      const gallery = document.querySelector('#gallery');
+      const original = document.querySelector('#original');
+      const buttons = Object.fromEntries(['plain', 'titled', 'compare', 'fit', 'native'].map(id => [id, document.getElementById(id)]));
+      const state = { titled: false, compare: false, native: false };
+
+      for (const frame of document.querySelectorAll('.frame')) {
+        frame.append(document.querySelector('#title-template').content.cloneNode(true));
+        const image = frame.querySelector('.art');
+        image.addEventListener('load', () => { frame.dataset.state = 'ready'; });
+        image.addEventListener('error', () => { frame.dataset.state = 'error'; });
+        if (image.complete) frame.dataset.state = image.naturalWidth ? 'ready' : 'error';
+      }
+
+      function resize() {
+        const style = getComputedStyle(viewport);
+        const availableWidth = viewport.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        const availableHeight = viewport.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) - CAPTION_HEIGHT;
+        const columns = state.compare ? 2 : 1;
+        const scale = state.native ? 1 : Math.max(0.05, Math.min(1,
+          (availableWidth - (columns - 1) * GAP) / (columns * LOGICAL_WIDTH),
+          availableHeight / LOGICAL_HEIGHT));
+        gallery.style.setProperty('--frame-width', `${LOGICAL_WIDTH * scale}px`);
+        // Keep the left edge reachable when a native-size frame exceeds the viewport.
+        gallery.style.justifyContent = state.native && (LOGICAL_WIDTH * columns + GAP * (columns - 1)) > availableWidth ? 'flex-start' : 'center';
+      }
+
+      function update() {
+        gallery.classList.toggle('titled', state.titled);
+        gallery.classList.toggle('compare', state.compare);
+        gallery.classList.toggle('native', state.native);
+        original.hidden = !state.compare;
+        buttons.plain.setAttribute('aria-pressed', String(!state.titled));
+        buttons.titled.setAttribute('aria-pressed', String(state.titled));
+        buttons.compare.setAttribute('aria-pressed', String(state.compare));
+        buttons.fit.setAttribute('aria-pressed', String(!state.native));
+        buttons.native.setAttribute('aria-pressed', String(state.native));
+        resize();
+      }
+
+      buttons.plain.addEventListener('click', () => { state.titled = false; update(); });
+      buttons.titled.addEventListener('click', () => { state.titled = true; update(); });
+      buttons.compare.addEventListener('click', () => { state.compare = !state.compare; update(); });
+      buttons.fit.addEventListener('click', () => { state.native = false; update(); });
+      buttons.native.addEventListener('click', () => { state.native = true; update(); });
+      new ResizeObserver(resize).observe(viewport);
+      update();
+    </script>
+  </body>
+</html>

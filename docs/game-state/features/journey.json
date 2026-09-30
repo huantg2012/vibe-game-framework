@@ -111,7 +111,42 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "用户要求制定的开场重构提案；未实施，独立相机及匹配剪辑须以样片验证，不覆盖现行规格或人审结论。"
+        "note": "开场重构提案及独立静态母版试作；未正式接入，静态图不覆盖动态衔接或人审结论。"
+      },
+      {
+        "path": "tools/last-light/opening-shot.ts",
+        "role": "code",
+        "note": "独立开场静态试作：相机、角色朝向/布料校准与不相连中景平移；正式实现保持。"
+      },
+      {
+        "path": "tools/last-light/export-opening.mjs",
+        "role": "code",
+        "note": "独立母版导出器；含第零帧能量增益和源指纹，不导正式生产包。"
+      },
+      {
+        "path": "docs/art/demos/opening-master/index.html",
+        "role": "art",
+        "note": "静态母版审查入口；非正式菜单或转场。"
+      },
+      {
+        "path": "docs/qa/2026-09-30-opening-master.md",
+        "role": "doc",
+        "note": "静态候选的导出/合成/几何及查看页限定检查；艺术差距与未验动态明确保留，不提升正式或人审状态。"
+      },
+      {
+        "path": "tools/last-light/opening-exterior.ts",
+        "role": "code",
+        "note": "开场镜头深处扩展作者几何；独立试作，正式场景未接入。"
+      },
+      {
+        "path": "docs/art/demos/opening-master/assets/master.png",
+        "role": "art",
+        "note": "独立静态美术母版候选；限定导出/查看检查完成，艺术仍有差距、待人审，未正式接入。"
+      },
+      {
+        "path": "docs/art/demos/opening-master/assets/manifest.json",
+        "role": "art",
+        "note": "母版相机/锚点/能量增益与来源、产物指纹；静态导出合同。"
       }
     ],
     "dependsOn": [
@@ -125,7 +160,9 @@
       "COH-E102",
       "COH-E107"
     ],
-    "unknowns": []
+    "unknowns": [
+      "独立开场仅为静态美术母版候选，未正式接入；基地展示感、近梁遮挡和材质差距仍在，角色朝向/材料校准衔接、连续动态及人审未验。"
+    ]
   },
   {
     "id": "COH-F003",
@@ -343,7 +380,42 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "用户要求制定的开场重构提案；未实施，独立相机及匹配剪辑须以样片验证，不覆盖现行规格或人审结论。"
+        "note": "开场重构提案及独立静态母版试作；未正式接入，静态图不覆盖动态衔接或人审结论。"
+      },
+      {
+        "path": "tools/last-light/opening-shot.ts",
+        "role": "code",
+        "note": "独立开场静态试作：相机、角色朝向/布料校准与不相连中景平移；正式实现保持。"
+      },
+      {
+        "path": "tools/last-light/export-opening.mjs",
+        "role": "code",
+        "note": "独立母版导出器；含第零帧能量增益和源指纹，不导正式生产包。"
+      },
+      {
+        "path": "docs/art/demos/opening-master/index.html",
+        "role": "art",
+        "note": "静态母版审查入口；非正式菜单或转场。"
+      },
+      {
+        "path": "docs/qa/2026-09-30-opening-master.md",
+        "role": "doc",
+        "note": "静态候选的导出/合成/几何及查看页限定检查；艺术差距与未验动态明确保留，不提升正式或人审状态。"
+      },
+      {
+        "path": "tools/last-light/opening-exterior.ts",
+        "role": "code",
+        "note": "开场镜头深处扩展作者几何；独立试作，正式场景未接入。"
+      },
+      {
+        "path": "docs/art/demos/opening-master/assets/master.png",
+        "role": "art",
+        "note": "独立静态美术母版候选；限定导出/查看检查完成，艺术仍有差距、待人审，未正式接入。"
+      },
+      {
+        "path": "docs/art/demos/opening-master/assets/manifest.json",
+        "role": "art",
+        "note": "母版相机/锚点/能量增益与来源、产物指纹；静态导出合同。"
       }
     ],
     "dependsOn": [
@@ -356,7 +428,8 @@
       "COH-E107"
     ],
     "unknowns": [
-      "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。"
+      "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",
+      "独立开场仅为静态美术母版候选，未正式接入；基地展示感、近梁遮挡和材质差距仍在，角色朝向/材料校准衔接、连续动态及人审未验。"
     ]
   },
   {
