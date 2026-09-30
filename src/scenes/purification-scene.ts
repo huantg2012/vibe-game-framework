@@ -10,8 +10,9 @@ import { WEAPON_DATA } from '@/generated/weapon-data';
 import { inventoryPanel } from '@/ui/dom/inventory-panel';
 import { openInventory, inventoryError } from '@/ui/inventory-presenter';
 import { LastLightVisual, type LastLightState } from './last-light-visual';
-import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_CONTACTS, CHAMBER_INTERACTION_RADIUS, CHAMBER_DEVICE_VISUAL_BOUNDS, REST_POSITION, REST_YAW, REST_APPROACH, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/last-light-layout';
+import { CHAMBER_DEVICE_ANCHORS, CHAMBER_DEVICE_BASES, CHAMBER_SPAWN_POINT, CHAMBER_CAMERA, CHAMBER_SIZE, CHAMBER_CONTACTS, CHAMBER_DEVICE_VISUAL_BOUNDS, REST_POSITION, REST_YAW, REST_APPROACH, chamberFeetToPlayerPosition, type ChamberDevice } from '@/systems/last-light-layout';
 import { LastLightLocomotion } from '@/systems/last-light-locomotion';
+import type { LastLightInteractionKey } from '@/systems/last-light-interaction';
 import { ChamberModule } from '@/entities/purification-chamber-module';
 import { ChamberIntegritySelection } from '@/ui/chamber-integrity-lifecycle';
 /**
@@ -341,13 +342,13 @@ export class PurificationScene extends Phaser.Scene {
     syncWeapon();
     this.unsubscribeWeapon = inventoryStore.subscribe(syncWeapon);
     this.coreModule = new ChamberModule(this, 'CORE', CORE_POS, {
-      base: CHAMBER_DEVICE_BASES.core, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.core, interactionRadius: CHAMBER_INTERACTION_RADIUS,
+      base: CHAMBER_DEVICE_BASES.core, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.core,
     });
     this.storageModule = new ChamberModule(this, 'STORAGE', STORAGE_POS, {
-      base: CHAMBER_DEVICE_BASES.storage, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.storage, interactionRadius: CHAMBER_INTERACTION_RADIUS,
+      base: CHAMBER_DEVICE_BASES.storage, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.storage,
     });
     this.purifierModule = new ChamberModule(this, 'PURIFIER', PURIFIER_POS, {
-      base: CHAMBER_DEVICE_BASES.purifier, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.purifier, interactionRadius: CHAMBER_INTERACTION_RADIUS,
+      base: CHAMBER_DEVICE_BASES.purifier, bounds: CHAMBER_DEVICE_VISUAL_BOUNDS.purifier,
     });
     this.syncInvestmentVisuals();
     this.updateChamberVisuals(0, 0);
@@ -470,30 +471,19 @@ export class PurificationScene extends Phaser.Scene {
     const pos = this.player.getPosition();
     this.tickPurificationAudio(time, pos);
 
-    // Update modules (checks proximity)
+    // Modules consume the same physical eligibility as the prompt and E action.
     const canInteract = (device: ChamberDevice): boolean => this.locomotion?.canInteract(device) ?? false;
-    this.coreModule.update(pos.x, pos.y, canInteract('core'));
-    this.storageModule.update(pos.x, pos.y, canInteract('storage'));
-    this.purifierModule.update(pos.x, pos.y, canInteract('purifier'));
+    this.coreModule.update(canInteract('core'));
+    this.storageModule.update(canInteract('storage'));
+    this.purifierModule.update(canInteract('purifier'));
 
-    const riftDist = this.distTo(pos, RIFT_ENTRANCE_POS);
-    const defDist = this.distTo(pos, DEFENSE_POS);
-    const groDist = this.distTo(pos, GROWTH_POS);
-    const radius = CHAMBER_INTERACTION_RADIUS;
-
-    const nearRift = canInteract('rift') && riftDist <= radius;
-    const nearDefense = canInteract('offering') && defDist <= radius;
-    const nearGrowth = canInteract('growth') && groDist <= radius;
-
-    const target: InteractionTarget | null = this.resting ? { type: 'stand', distance: 0 } : this.findNearestTarget(
-      nearRift, nearDefense, nearGrowth,
-      riftDist, defDist, groDist,
-    );
+    const target: InteractionTarget | null = this.resting ? { type: 'stand', distance: 0 } : this.findNearestTarget();
     this.lastOverlapType = target?.type ?? null;
     purificationHud.updatePrompt(target);
 
-    // Hide prompt when a panel is open
-    purificationHud.setPromptVisible(!this.isAnyPanelOpen());
+    // During the standing-up camera return E is intentionally blocked; do not
+    // advertise another action until that same input gate has reopened.
+    purificationHud.setPromptVisible(!this.isAnyPanelOpen() && (this.resting || !this.restTween));
 
     this.updateChamberVisuals(time, delta);
     if (import.meta.env.DEV && time - this.lastDiagnosticAt >= 200) {
@@ -598,64 +588,21 @@ export class PurificationScene extends Phaser.Scene {
 
   // ------------------------------------------------------------------ private
 
-  private distTo(pos: { x: number; y: number }, target: { x: number; y: number }): number {
-    const dx = pos.x - target.x;
-    const dy = pos.y - target.y;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
-
-  /** Find the nearest in-range interaction target for the prompt bar. */
-  private findNearestTarget(
-    nearRift: boolean, nearDefense: boolean, nearGrowth: boolean,
-    riftDist: number, defDist: number, groDist: number,
-  ): InteractionTarget | null {
-    const candidates: InteractionTarget[] = [];
-
-    if (this.coreModule.isInRange()) {
-      const hpData = this.coreModule.getHpData();
-      candidates.push({
-        type: 'core',
-        distance: this.distTo(this.player.getPosition(), CORE_POS),
-        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.coreModule.getEffectPct() } : undefined,
-      });
-    }
-    if (this.storageModule.isInRange()) {
-      const hpData = this.storageModule.getHpData();
-      candidates.push({
-        type: 'storage',
-        distance: this.distTo(this.player.getPosition(), STORAGE_POS),
-        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: this.storageModule.getEffectPct() } : undefined,
-      });
-    }
-    if (this.purifierModule.isInRange()) {
-      const hpData = this.purifierModule.getHpData();
-      candidates.push({
-        type: 'purifier',
-        distance: this.distTo(this.player.getPosition(), PURIFIER_POS),
-        moduleData: hpData ? { hp: hpData.hp, maxHp: hpData.maxHp, effectPct: 0 } : undefined,
-      });
-    }
-    if (nearDefense) {
-      candidates.push({ type: 'defense', distance: defDist });
-    }
-    if (nearGrowth) {
-      candidates.push({ type: 'growth', distance: groDist });
-    }
-    if (nearRift) {
-      candidates.push({ type: 'rift', distance: riftDist });
-    }
-
-    if (this.locomotion?.canRest()) {
-      candidates.push({ type: 'rest', distance: this.distTo(this.player.getPosition(), chamberFeetToPlayerPosition(REST_APPROACH)) });
-    }
-
-    if (candidates.length === 0) return null;
-
-    const order: InteractionTarget['type'][] = [
-      'core', 'storage', 'purifier', 'defense', 'growth', 'rift', 'rest', 'stand',
-    ];
-    candidates.sort((a, b) => a.distance - b.distance || order.indexOf(a.type) - order.indexOf(b.type));
-    return candidates[0]!;
+  /** One physical candidate drives both the visible prompt and this frame's E action. */
+  private findNearestTarget(): InteractionTarget | null {
+    if (!this.locomotion) return null;
+    const previous: LastLightInteractionKey | null = this.lastOverlapType === 'defense' ? 'offering'
+      : this.lastOverlapType === 'stand' ? null : this.lastOverlapType;
+    const key = this.locomotion.getNearestInteraction(previous);
+    if (!key) return null;
+    const type = key === 'offering' ? 'defense' : key;
+    const distance = this.locomotion.getInteractionDistance(key);
+    const module = key === 'core' ? this.coreModule : key === 'storage' ? this.storageModule
+      : key === 'purifier' ? this.purifierModule : null;
+    const hp = module?.getHpData();
+    return { type, distance, moduleData: hp && module
+      ? { hp: hp.hp, maxHp: hp.maxHp, effectPct: key === 'purifier' ? 0 : module.getEffectPct() }
+      : undefined };
   }
 
   private sitDown(): void {

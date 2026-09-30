@@ -1,6 +1,6 @@
 /** Hub module interaction/readout. Device bodies belong to the chamber renderer. */
 import Phaser from 'phaser';
-import { CHAMBER_DEVICE_BASES, CHAMBER_INTERACTION_RADIUS } from '@/systems/purification-chamber-layout';
+import { CHAMBER_DEVICE_BASES } from '@/systems/purification-chamber-layout';
 import { gameState, type ModuleType } from '@/managers/game-state';
 import { INTEGRITY_COLORS, integrityCapacityRatio, integrityFillColor, moduleIntegrityBounds,
   type IntegrityPlacementInput, type IntegrityRect } from '@/ui/chamber-integrity-placement';
@@ -9,7 +9,6 @@ import { ChamberIntegrityLifecycle, type IntegrityPresentation } from '@/ui/cham
 export interface ChamberModuleGeometry {
   readonly base: Readonly<{x:number;y:number}>;
   readonly bounds: readonly [number,number,number,number];
-  readonly interactionRadius: number;
 }
 
 export class ChamberModule {
@@ -29,8 +28,9 @@ export class ChamberModule {
     this.readout = scene.add.graphics().setDepth(550);
   }
 
-  update(x: number, y: number, canInteract: boolean): void {
-    this.inRange = canInteract && Math.hypot(x - this.x, y - this.y) <= (this.authoredGeometry?.interactionRadius ?? CHAMBER_INTERACTION_RADIUS);
+  /** The physical scene owns eligibility; presentation must not add a second radius. */
+  update(canInteract: boolean): void {
+    this.inRange = canInteract;
   }
 
   getWorldBounds():IntegrityRect {

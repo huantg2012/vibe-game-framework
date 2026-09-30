@@ -3,13 +3,14 @@
     "id": "COH-F026",
     "title": "净化点步行与六处交互",
     "domain": "progression",
-    "summary": "Last Light A已正式接入：52%左前裂隙、断口宽桥、单西坡、六站及炉边坐下。94faa33包含1035帧全身动作、独立静息、西坡2.6m承接与贴边速度修复；近期移动专项有自动检查和正式Renderer受控回放，六站业务仍按各次实际证据区分。原业务与经济保持，整体环境与手感未获完整人审。",
+    "summary": "Last Light A已正式接入：断口回廊、单西坡、六站及炉边坐下。2026-09-30裂隙改为穿过地坪与断面的深狭口；七处交互按正面和前半侧沿1.4m世界距离、同层脚圆可达与0.16m目标滞回判定，提示与E同源。原业务、经济、存档和1035帧角色保持；已完成范围见本轮QA，整体环境与手感未获完整人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "主菜单新游戏/继续/归来→PurificationScene；主层核心/净化器/供奉/裂隙，上层储藏/蜕变，靠近后 E 操作。",
       "炉边残骸：靠近后 E 坐下；轻拉近镜头与氛围文案，不增加回复或其他经济机制。",
-      "历史艺术样景 docs/art/demos/purification-last-light/index.html 与方案对照页保留为制作参照；正式入口为项目根 index.html。"
+      "历史艺术样景 docs/art/demos/purification-last-light/index.html 与方案对照页保留为制作参照；正式入口为项目根 index.html。",
+      "限定DEV验收：docs/qa/interactive/last-light-interaction-review.html；真实生产场景，页内Map存档，六站合法脚点按钮与WASD/E/Esc；不是正式存档入口。"
     ],
     "sources": [
       {
@@ -556,6 +557,39 @@
       {
         "path": "tools/last-light/check-facing.ts",
         "role": "test"
+      },
+      {
+        "path": "src/systems/last-light-interaction.ts",
+        "role": "code",
+        "note": "七处真实操作边与世界距离、同层脚圆短路径资格、主目标滞回；正式场景提示/E同源"
+      },
+      {
+        "path": "docs/qa/last-light-rift-interaction-2026-09-30.md",
+        "role": "doc",
+        "note": "2026-09-30工作树限定验收，自动/实机/未验证分别记录；非整体人审"
+      },
+      {
+        "path": "tools/last-light/check-interaction.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-rift-throat.ts",
+        "role": "test"
+      },
+      {
+        "path": "src/dev/last-light-interaction-review.ts",
+        "role": "test",
+        "note": "仅DEV真实scene/SaveManager＋页内Map；脚点夹具不伪造目标或E资格"
+      },
+      {
+        "path": "docs/qa/interactive/last-light-interaction-review.html",
+        "role": "test",
+        "note": "仅DEV真实scene/SaveManager＋页内Map；脚点夹具不伪造目标或E资格"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/rift-a.ts",
+        "role": "art",
+        "note": "ground-throat-v2作者源：地坪狭口、深断面、内腔源光与显式内侧阈边；2026-09-30替代竖立黑膜"
       }
     ],
     "dependsOn": [
@@ -614,13 +648,16 @@
       "COH-E-I30-LAST-LIGHT-PRODUCTION",
       "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
       "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
-      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
+      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
+      "COH-E103",
+      "COH-E104"
     ],
     "unknowns": [
-      "2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
-      "e05e9a8的真实六站面板、备行/Rift明确放弃归来、载入重建与坐下起身为历史限定功能证据；本轮不重写为重新通过，也不代签用户提出的视觉整改。",
-      "本轮正式入口只确认WebGL2无fallback、主菜单继续重入和W短移；可复现验证页不写存档。坐下/起身锚点误算走路已有helper专项回归，未重新验坐下UI或完整业务路径。",
-      "修复/购买交易、全成长/供奉组合、Rift全流程、无WebGL2 fallback、自然供给及长期经济未扩验；I28和原未审查项保持。"
+      "2026-09-30改动仅已确认净化器原approach及圆角E、裂口E进正式备行的受控实机链；坐下和其余站点、从出生完整自然往返等新增证据由本轮QA限定，不能把作者定位按钮当通路人审。整体美术待人审，I28维持挂起。",
+      "历史截至2026-09-28的覆盖限制：2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",
+      "历史截至2026-09-28的覆盖限制：e05e9a8的真实六站面板、备行/Rift明确放弃归来、载入重建与坐下起身为历史限定功能证据；本轮不重写为重新通过，也不代签用户提出的视觉整改。",
+      "历史截至2026-09-28的覆盖限制：本轮正式入口只确认WebGL2无fallback、主菜单继续重入和W短移；可复现验证页不写存档。坐下/起身锚点误算走路已有helper专项回归，未重新验坐下UI或完整业务路径。",
+      "历史截至2026-09-28的覆盖限制：修复/购买交易、全成长/供奉组合、Rift全流程、无WebGL2 fallback、自然供给及长期经济未扩验；I28和原未审查项保持。"
     ]
   },
   {

@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-29
+last-modified: 2026-09-30
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -35,6 +35,10 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 装饰时钟只消费场景delta，减少动态冻结装饰但保留人物移动/实时灯；无独立RAF。无WebGL2时使用明确Canvas兼容呈现并标`lastLightRenderer=canvas-degraded`，不宣称视觉等价。当前GPU路径已在限定浏览器编译和运行，画面复核仍在进行；这不代表人审通过或跨设备性能结论。
 
 `export-layout.mjs`从同一A几何生成`last-light-layout.ts`的数据源：主层扣除断口/裂隙切口并保留回廊，上层单独建面，单西坡仅通过端部接缝切层。真实位置以米与楼层存储；每个局部表面反解投影输入后在世界XZ归一化，基础步速1.8m/s，不因投影方向改变，并保留共享速度修正。脚半径0.22m，半原生像素子步内连续求首触点并保留自由段；首触后切向比例<0.20时停止，足够切向意图则重分配剩余路程预算沿切线行走，保留请求步速而不增加总路程，避免距离步态被微小切向速度拖慢；每次切线重定向还须与原始子步输入归一化点积≥0.20，凹角不满足则停止而非倒退。圆障碍用真实圆求接触；最终candidate仍检查楼层/高差/完整脚圆支持，facing由整帧净位移统一更新而非末子步。最长消费100ms，不影响Rift原速度契约。
+
+**2026-09-30操作面交互。** `src/systems/last-light-interaction.ts`负责七处profile与统一候选选择：同源底座的操作正面＋左右前半侧沿，脚点到边的世界XZ距离≤1.4m；approach仅选正面与推荐站位，不再要求到唯一点24px内。非实心裂隙从generated station的`interaction.edge/outward`读取显式内侧阈边。route必须相同，脚点与操作边及短路径采样的高差≤0.16m；从脚点到边外0.245m安全点每≤0.06m检查同层地表与`canStandLastLight`完整脚圆，拒绝背面、隔物、断沿及跨层。纯函数`lastLightInteractionDistance`返回米制最近距离或Infinity，`chooseLastLightInteraction`在原目标仍合法时保留0.16m距离滞回，失格立即清除；无历史同距按固定七项顺序选择。
+
+`LastLightLocomotion.update`在移动后缓存七项实际距离，`canInteract`、`canRest`、`getInteractionDistance`和`getNearestInteraction`读同一帧结果。`PurificationScene`将选中候选同时交给HUD提示与E分发，三模块不再自行追加24px屏幕圆；供奉与业务key的映射仅在场景适配层。观察读数仍走独立可见性合同，镜头聚焦和业务面板不改变本轮判定。`docs/qa/interactive/last-light-interaction-review.html` / `src/dev/last-light-interaction-review.ts`是DEV限定实机场景入口：页内Map替换storage后端，真实新记录、场景和E操作保持；只接受合法world脚点夹具并同步Player/locomotion，DOM读取正式诊断，不提供window命令桥，不进入生产构建。
 
 `Player.externalPresentation=true`保留共享按键、移动冻结、速度与位置契约，但不创建旧身体呈现/灯晕/残影/持具；场景拥有新角色全部像素与灯锚。`LastLightGait`以碰撞后实际XZ位移推进1.25m完整步周期，单脚支撑比0.56；1.8m/s对应172.8步/分钟，不按全局时间循环走路。作者两节腿保持0.335m/0.31m骨长，踝点为靴内0.13m而非靴筒口0.203m；刚体靴绕后跟/脚趾滚动。`bodyAt`按contact/down/passing/up关键高度组织承重，只有接地腿可以限制骨盆高度；`footAt`单独修正摆动脚可达，早收膝、末摆保留余量并连续接地。骨盆/胸部反向微转并承重侧移，躯干穿过腰部渐变，头部稳定与背包滞后作为刚体分部处理，肩肘腕按固定骨长摆臂；模型/手套/rig/实际肩灯共用各自分部函数。足底接点保持独立，不后移整条足迹或拉长腿骨掩盖半蹲。原地顶墙不推进步相；停止在0.44秒内经四阶段依次抬脚归位，最终进入8帧/3.2秒独立静息循环。最后收步帧与静息0帧的图像、灯锚和胶囊一致，不能把收步结束当永久行走姿态；坐下/起身或场景位移不累计成步幅。`last-light-facing.ts`由同一相机及水平面/坡面的Jacobian反解屏幕八向，离线朝向与真实移动一致，禁止把方向索引当世界yaw/45°。业务仍读投影脚底减10px的原角色中心。三模块观察沿真实3D作者面检测，44/58px选择与原完整度生命周期保持；读数避让使用新模型轮廓和实际人物alpha包围盒。
 
@@ -342,7 +346,8 @@ src/
 │   ├── procedural-surface.ts             # 裂隙地表逐像素程序化生成（DEC-018）；氛围簇应用已下线（DEC-104）
 │   ├── cluster-pulse.ts          # 对照用：菌毯/灰幕旧皮呼吸；出击地面不再挂整图呼吸
 │   ├── procedural-purification-surface.ts # 净化点地表逐像素程序化生成 + 边界 vignette
-│   ├── interaction-trigger.ts  # 接近触发交互（overlap检测+提示+面板激活）
+│   ├── last-light-interaction.ts # 正式净化点七处世界操作边、可达资格与主目标滞回
+│   ├── interaction-trigger.ts  # 历史通用overlap抽象规划，非正式Last Light入口
 │   ├── ai/
 │   │   ├── state-machine.ts    # 通用 FSM 框架
 │   │   └── behaviors.ts        # 具体行为（巡逻/警觉/追击）
@@ -570,7 +575,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | OfferingStandVisual | src/scenes/offering-stand-visual.ts | 净化点西南供奉台的世界内外形。**生产默认 = 卡 I 环**（DEC-115）：32×32 × 32 帧（4 档 × 8 帧、6fps），立着 45° 等距，锚点脚底；默认depth20，净化点由GroundDepthSorter覆盖（DEC-120）。装填档跟槽里残渣个数走（空 / 一 / 二 / 三 = 0 / 1 / 2 / 3+）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开防御槽）不因外形改变 | `OFFERING_FRAME_W/H` / `OFFERING_FRAMES` / `OFFERING_FPS` / `OFFERING_ORIGIN_Y` / `OFFERING_DEPTH` / `OFFERING_SHEET_KEY` / `enqueueOfferingSheet` / `OfferingStandVisual` / `offeringStandChargeFromSlots` | 已实现（DEC-115） |
 | GrowthConsoleVisual | src/scenes/growth-console-visual.ts | 净化点西侧培养藏的世界内外形。**生产默认 = 卡 A 立缸**（DEC-116）：40×42 × 8 帧、6fps，立着 45° 等距，锚点脚底；默认depth20，净化点由GroundDepthSorter覆盖（DEC-120）。贴图缺失回落旧呼吸圆点。不进 `PurificationModuleEntity`；交互（32px → 按 E 开蜕变）不因外形改变 | `GROWTH_FRAME_W/H` / `GROWTH_FRAMES` / `GROWTH_FPS` / `GROWTH_ORIGIN_Y` / `GROWTH_DEPTH` / `GROWTH_SHEET_KEY` / `enqueueGrowthSheet` / `GrowthConsoleVisual` | 已实现（DEC-116） |
 | Generated CSV Data | src/generated/ | CSV→TS 构建期产物（策划数据源规则强制，`npm run codegen` 生成，不手写）：`contaminant-data.ts` ← `data/contaminants.csv`；`upgrade-data.ts` ← `data/upgrades.csv` + `data/growth-route.csv`；`growth-route-data.ts` ← `data/growth-route.csv`；`rift-fragment-data.ts` ← `data/rift-fragments.csv`；`enemy-data.ts` ← `data/enemies.csv` | `CONTAMINANT_DATA`；`UPGRADE_DATA`；`RIFT_FRAGMENT_DATA` / `ENABLED_RIFT_FRAGMENTS`；`ENEMY_DATA` / `ENEMY_ROLES` | 已实现（Slice 4；Slice 6 C2 加碎片表；Slice 8 C1 敌人表） |
-| InteractionTrigger | src/systems/interaction-trigger.ts | 接近触发交互检测与面板激活 | register(entity, callback) | 规划中（当前由各 Scene 直接实现 overlap 检测 + 面板调用，未抽出独立模块） |
+| LastLightInteraction | src/systems/last-light-interaction.ts | 正式净化点七处操作边profile、1.4m世界距离、同层/高差/脚圆短路径资格，0.16m主目标切换滞回 | LAST_LIGHT_INTERACTION_PROFILES, lastLightInteractionDistance(), chooseLastLightInteraction()；Locomotion缓存后由Scene同帧提供提示与E | 2026-09-30已接正式流程；不改业务与存档 |
+| InteractionTrigger | src/systems/interaction-trigger.ts | 历史通用接近触发抽象规划，不是Last Light正式实现 | register(entity, callback)（规划） | 未实现；正式净化点空间判定已由LastLightInteraction承担，面板编排仍在Scene |
 | InsectModel / InsectVisual | src/entities/form-renderers/d/insect-model.ts；insect-visual.ts | 迭代16独立虫模型、四向与动作投影；单实体单CanvasTexture，真实战斗相位驱动；生产与练习场共用，旧虫骨架不再驱动当前显示 | bakeInsectModel；attachInsectVisual；FormVisual.getFlashSource | R3用户PASS（2026-09-07） |
 | HumanModel / HumanVisual | src/entities/form-renderers/d/human-model.ts；human-visual.ts | I17独立人形残余三档四向六动作，64×64脚底锚(32,42)，单实体动态纹理；真实攻击时钟与当前轮廓闪白 | bakeHumanModel；attachHumanVisual；FormVisual.getFlashSource | 内部验证已交，待人审 |
 | PollutionReview | src/dev/pollution-review.ts；pollution-review.html | DEV隔离存档入口，调用正式RiftScene、可见输入按钮与只读轨迹；不进入生产构建 | probeEnemyReview；probeInspectEnemy；probeReviewHit | 迭代16验证入口 |
@@ -922,7 +928,9 @@ Slice 4.5 前，净化点的边界是"tile 判定出的固定圆 + 边界外粒�
 - 所有边界外内容在屏幕外不渲染（Phaser 自动裁剪）
 - 不使用实时 blur shader（用预模糊的 sprite 资产代替）
 
-### 模块交互机制
+### 历史平面模块交互机制
+
+以下overlap zone仅记录旧平面方案。正式Last Light以本文件R11的2026-09-30操作面交互及`system-purification-impact.md`的P2为准，不能按旧1.5 tile圆回退。
 
 - 每个功能模块是一个带碰撞体的 Sprite（有视觉状态：健康/受损/严重受损）
 - 玩家进入模块周围的触发区（overlap zone，约 1.5 tile 半径）时：

@@ -7,7 +7,7 @@ const root=process.cwd(),dir=path.join(root,'public/assets/last-light');
 const manifest=JSON.parse(await fs.readFile(path.join(dir,'manifest.json'),'utf8'));
 const checksums=JSON.parse(await fs.readFile(path.join(dir,'checksums.json'),'utf8'));
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
-assert.equal(manifest.status,'complete');assert.equal(manifest.source.riftOpeningScale,.52);
+assert.equal(manifest.status,'complete');assert.deepEqual(manifest.source.riftForm,{shape:'ground-throat-v2',mouthWidth:.75,depth:2.12});
 assert.deepEqual(manifest.canvas,{width:960,height:640});
 // Scene provenance is the recipe used for the last scene bake. An actor-only
 // bake must preserve it, even when the actor/tool source has since changed.
@@ -111,6 +111,6 @@ for(let direction=0;direction<directionCount;direction++){
 }
 const occluders=JSON.parse(await fs.readFile(path.join(dir,manifest.occluders.url),'utf8'));
 assert.equal(occluders.triangles.length,occluders.count*9);assert.ok(occluders.count>45000);assert.ok(occluders.triangles.every(Number.isFinite));
-const stats={status:'PASS',width:960,height:640,riftOpeningScale:.52,opaquePixels:coverage,sourceLights:manifest.lights.length,coreEmitters:7,riftEmitters:3,additiveHaloPixels:additiveHalo,staticOccluders:occluders.count,actorDirections:directionCount,idleFrames:a.gait.idleFrames,settleStages:a.gait.settleStages,stopToIdleSeamChecks:directionCount*a.gait.cycleFrames,actorFrames:frameChecks.map(({hash,hashes,...f})=>f),checksums:hash(await fs.readFile(path.join(dir,'checksums.json')))};
+const stats={status:'PASS',width:960,height:640,riftForm:manifest.source.riftForm,opaquePixels:coverage,sourceLights:manifest.lights.length,coreEmitters:7,riftEmitters:3,additiveHaloPixels:additiveHalo,staticOccluders:occluders.count,actorDirections:directionCount,idleFrames:a.gait.idleFrames,settleStages:a.gait.settleStages,stopToIdleSeamChecks:directionCount*a.gait.cycleFrames,actorFrames:frameChecks.map(({hash,hashes,...f})=>f),checksums:hash(await fs.readFile(path.join(dir,'checksums.json')))};
 if(process.argv.includes('--write')){const out='docs/qa/artifacts/last-light-production/assets.json';await fs.mkdir(path.dirname(out),{recursive:true});await fs.writeFile(out,JSON.stringify(stats,null,2)+'\n');}
 console.log(JSON.stringify({...stats,actorFrames:a.frames.length},null,2));

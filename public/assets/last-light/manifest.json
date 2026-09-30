@@ -128582,7 +128582,7 @@
       "src/art/last-light-gait.ts": "feaa5dce24f0610950f9bd8e9910b6918e04c0af1bd097ddd8c1301485e32509",
       "src/art/last-light-facing.ts": "ffecd34ce3a2d04ca8f0998291f9efa7a85a2507eeb1f59f8c649544d60a74bd",
       "src/art/last-light-spatial.ts": "748755124e53d1e3894e36f8691a8e2c2c9373c6b5756888ebb3f45dd399a32d",
-      "tools/last-light/export.mjs": "b37bf39fce255c0c7049ffd032c3e488b063cacb5e36aab1718900bba7d31ab4"
+      "tools/last-light/export.mjs": "053b86944450fba682f4ebf8189725fe3bfc7f07354d1cb3010127745a231fc5"
     }
   },
   "lights": [
@@ -129218,65 +129218,65 @@
     },
     {
       "position": [
-        0.24592363105270026,
-        0.91,
-        6.179018670720712
+        1.6044375238827104,
+        -0.18,
+        5.020558109217212
       ],
       "color": [
-        0.26,
-        0.37,
-        0.31
+        0.25,
+        0.36,
+        0.3
       ],
-      "power": 1.3,
-      "radius": 2.9,
+      "power": 1.35,
+      "radius": 2.05,
       "kind": "pollution",
       "id": "rift-torn-edge",
       "screen": [
-        395.8941006427163,
-        348.4342507049047,
-        4.943582189005154
+        442.73378305768875,
+        368.6294008344165,
+        4.12459343549264
       ]
     },
     {
       "position": [
-        0.9405159973705945,
-        0.66,
-        5.455387932945631
+        1.5515882910239287,
+        0.18,
+        4.306830599178375
       ],
       "color": [
-        0.26,
-        0.37,
-        0.32
+        0.25,
+        0.36,
+        0.31
       ],
-      "power": 1.2,
-      "radius": 3.2,
+      "power": 0.7,
+      "radius": 1.85,
       "kind": "pollution",
       "id": "rift-inland-spill",
       "screen": [
-        421.70470348867985,
-        350.3663938164805,
-        4.605001073827774
+        451.67046682201703,
+        351.35828111359115,
+        3.803177564428327
       ]
     },
     {
       "position": [
-        0.4860380893755693,
-        -0.68,
-        6.2284660862680905
+        1.9764750574026784,
+        -0.45,
+        6.302193031358606
       ],
       "color": [
-        0.24,
+        0.23,
         0.35,
-        0.3
+        0.29
       ],
-      "power": 0.75,
+      "power": 1.8,
       "radius": 1.9,
       "kind": "pollution",
       "id": "rift-underfloor",
       "screen": [
-        400.56860344362383,
-        385.87023418566355,
-        4.194300235931841
+        432.89070183502116,
+        393.57813418732576,
+        5.0354087421219145
       ]
     }
   ],
@@ -129465,33 +129465,33 @@
       "key": "rift",
       "name": "裂隙",
       "position": [
-        0.6,
+        1.55,
         0,
-        5.94
+        4.45
       ],
-      "yaw": -0.4084888930726273,
+      "yaw": 0.2,
       "approach": [
-        1.15,
+        1.37,
         0.07,
-        4.3
+        3.57
       ],
       "radius": 0.92,
-      "description": "左前断沿中的时空伤口；从内侧完整地坪靠近并备行。",
+      "description": "左前地坪撕裂并贯穿建筑断沿的狭长裂隙；从内侧完整地坪靠近。",
       "screen": [
-        407.2100752020845,
-        368.22884543667476,
-        4.423680523498427
+        449.6049268547261,
+        357.0925124678595,
+        3.801892095485594
       ],
       "approachScreen": [
-        442.776676676559,
-        350.49933672473674,
-        3.5587763198798257
+        458.0525543975513,
+        343.09461551620365,
+        3.145339511460036
       ],
       "bounds": {
-        "x": 382,
-        "y": 307,
-        "width": 63,
-        "height": 109
+        "x": 411,
+        "y": 341,
+        "width": 52,
+        "height": 102
       }
     }
   ],
@@ -129527,11 +129527,15 @@
   },
   "source": {
     "entry": "docs/art/demos/purification-forecourt-options/option-a.ts",
-    "triangles": 53055,
-    "riftOpeningScale": 0.52,
+    "triangles": 53111,
+    "riftForm": {
+      "shape": "ground-throat-v2",
+      "mouthWidth": 0.75,
+      "depth": 2.12
+    },
     "hashes": {
-      "docs/art/demos/purification-forecourt-options/option-a.ts": "669993706e5d522ba1b4693bf00fbfc2cb77a5d3f912019939351b9caefb2f70",
-      "docs/art/demos/purification-forecourt-options/rift-a.ts": "a4459d0aae007cb1be53524ac5c361599c488cde02d788b6b50183e267945c33",
+      "docs/art/demos/purification-forecourt-options/option-a.ts": "d138d45b23dc5b245b67bd9e90ce5e0f143755761d4153ccdbd3a112f1791f84",
+      "docs/art/demos/purification-forecourt-options/rift-a.ts": "551be6ceed33e220bb43778301df359586e1a5fbbec6f8b896a9410d98f257c1",
       "docs/art/demos/purification-forecourt-options/shared.ts": "a819a26f935c2b6b0c36880d4da5ac23880f8237abe9552f128f6dbed1b31c83",
       "docs/art/demos/purification-last-light/model.ts": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
       "docs/art/demos/purification-last-light/render.ts": "f24698f6c46521af58a198075a9aad38c5804cd01e918572fc4b4cd2395df48d",
@@ -129541,7 +129545,7 @@
       "docs/art/demos/purification-last-light/actor.ts": "c8d895f0772a48b9bc751d93813bb8da5450bf127912b46668eb769bb3440842",
       "docs/art/demos/purification-last-light/rest.ts": "7dc1136fe1a9b44aaf1b58d7cb20098f2523d76c01df1c1073c72103fdd83e29",
       "docs/art/demos/purification-last-light/scene.ts": "39df57b292db557391897e4fb772ca8a65a553aca4c409d2d4b2d7825eb535b8",
-      "tools/last-light/export.mjs": "b37bf39fce255c0c7049ffd032c3e488b063cacb5e36aab1718900bba7d31ab4",
+      "tools/last-light/export.mjs": "053b86944450fba682f4ebf8189725fe3bfc7f07354d1cb3010127745a231fc5",
       "src/art/last-light-gait.ts": "feaa5dce24f0610950f9bd8e9910b6918e04c0af1bd097ddd8c1301485e32509",
       "src/art/last-light-facing.ts": "ffecd34ce3a2d04ca8f0998291f9efa7a85a2507eeb1f59f8c649544d60a74bd",
       "src/art/last-light-spatial.ts": "748755124e53d1e3894e36f8691a8e2c2c9373c6b5756888ebb3f45dd399a32d"
@@ -129560,7 +129564,7 @@
     ],
     "actorPixels": 0,
     "shoulderLights": 0,
-    "triangles": 53055,
+    "triangles": 53111,
     "lights": 33,
     "actorFrames": 1035
   },
@@ -129590,8 +129594,8 @@
     ],
     "sourceHashes": {
       "tools/last-light/exterior-export.mjs": "77ca759cc386c22b3e6d47acb9eb253a159df2eae642937039c5419338b5feea",
-      "docs/art/demos/purification-forecourt-options/option-a.ts": "669993706e5d522ba1b4693bf00fbfc2cb77a5d3f912019939351b9caefb2f70",
-      "docs/art/demos/purification-forecourt-options/rift-a.ts": "a4459d0aae007cb1be53524ac5c361599c488cde02d788b6b50183e267945c33",
+      "docs/art/demos/purification-forecourt-options/option-a.ts": "d138d45b23dc5b245b67bd9e90ce5e0f143755761d4153ccdbd3a112f1791f84",
+      "docs/art/demos/purification-forecourt-options/rift-a.ts": "551be6ceed33e220bb43778301df359586e1a5fbbec6f8b896a9410d98f257c1",
       "docs/art/demos/purification-forecourt-options/shared.ts": "a819a26f935c2b6b0c36880d4da5ac23880f8237abe9552f128f6dbed1b31c83",
       "docs/art/demos/purification-last-light/model.ts": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
       "docs/art/demos/purification-last-light/render.ts": "f24698f6c46521af58a198075a9aad38c5804cd01e918572fc4b4cd2395df48d",

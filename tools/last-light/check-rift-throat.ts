@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import { buildOption } from '../../docs/art/demos/purification-forecourt-options/option-a.ts';
+import { RIFT_POSITION, RIFT_YAW, RIFT_APPROACH, RIFT_FORM, RIFT_FOOTPRINT, RIFT_INTERACTION } from '../../docs/art/demos/purification-forecourt-options/rift-a.ts';
+import { LAST_LIGHT_DATA } from '../../src/generated/last-light-layout.ts';
+import { canStandLastLight, createLastLightMovementState, canInteractLastLight } from '../../src/systems/last-light-locomotion.ts';
+const { model } = buildOption();
+const triangles = model.triangles.filter(t => t.object === 6);
+const points = triangles.flatMap(t => [t.a,t.b,t.c]);
+assert(points.length > 300, 'Actual cut strata must be present');
+assert(Math.max(...points.map(p=>p[1])) < .25, 'Rift must not become an upright portal sheet');
+assert(Math.min(...points.map(p=>p[1])) < -2, 'Wound must descend through the structural section');
+assert(triangles.some(t=>t.material==='energy' && Math.max(t.a[1],t.b[1],t.c[1]) < 0), 'Radiance must originate inside the throat');
+const area=(t:typeof triangles[number])=>{const u=t.b.map((v,i)=>v-t.a[i]!);const v=t.c.map((v,i)=>v-t.a[i]!);return Math.hypot(u[1]!*v[2]!-u[2]!*v[1]!,u[2]!*v[0]!-u[0]!*v[2]!,u[0]!*v[1]!-u[1]!*v[0]!)/2;};
+assert(!triangles.some(t=>area(t)>.04 && t.material==='black' && Math.min(t.a[1],t.b[1],t.c[1]) > -.25 && Math.abs(t.normal[1])>.9), 'Do not close the top with a black floor decal');
+const station = LAST_LIGHT_DATA.stations.find(s=>s.key==='rift')!;
+assert.deepEqual(station.position,RIFT_POSITION);
+assert.deepEqual(station.approach,RIFT_APPROACH);
+assert.deepEqual(station.interaction,RIFT_INTERACTION);
+assert.equal(station.yaw,RIFT_YAW);
+assert.deepEqual(LAST_LIGHT_DATA.riftCut,RIFT_FOOTPRINT.map(p=>[p[0],p[2]]));
+const approach = {x:RIFT_APPROACH[0],y:0,z:RIFT_APPROACH[2]};
+assert(canStandLastLight(approach,'main'), 'Approach must support the full actor foot circle');
+assert(canInteractLastLight(createLastLightMovementState(approach,'main'),'rift'));
+for(const along of [.15,.55,1,1.4,1.9,2.3]){
+ const point={x:RIFT_POSITION[0]+Math.sin(RIFT_YAW)*along,y:0,z:RIFT_POSITION[2]+Math.cos(RIFT_YAW)*along};
+ assert(!canStandLastLight(point,'main'), 'Visual opening and collision must describe the same missing floor');
+}
+const lights=model.lights.filter(l=>l.id.startsWith('rift-'));
+assert.equal(lights.length,3);
+assert(lights.filter(l=>l.position[1]<0).length>=2,'Depth needs actual recessed lights');
+assert(Math.max(...lights.map(l=>l.power)) < Math.max(...model.lights.filter(l=>l.id.startsWith('core-')).map(l=>l.power)), 'Core keeps the strongest source');
+console.log(JSON.stringify({status:'PASS',form:RIFT_FORM,triangles:triangles.length,checks:['no upright sheet','real below-grade strata','recessed radiance','authored geometry/navigation/interaction agree','six void samples blocked','legal reachable threshold','core source hierarchy']},null,2));

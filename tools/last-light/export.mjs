@@ -1,3 +1,4 @@
+import {RIFT_FORM} from '../../docs/art/demos/purification-forecourt-options/rift-a.ts';
 /** Production-only resource bake. Runtime must not import the authoring models. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -102,7 +103,7 @@ let manifest={version:1,status:'exporting',canvas:{width:W,height:H},camera:CAME
   stations:author.stations.map(s=>({...s,screen:project(s.position),approachScreen:project(s.approach),bounds:bounds(s.id)})),
   rest:{id:REST_OBJECT_ID,position:REST_POSITION,yaw:REST_YAW,seatHeight:REST_SEAT_HEIGHT,approach:REST_APPROACH,screen:project(REST_POSITION),bounds:bounds(REST_OBJECT_ID)},
   occluders:{url:'occluders.json',encoding:'triangles is flat XYZ vertices: nine float values per triangle. Exact authored static opaque triangles; actor geometry excluded.'},
-  source:{entry:'docs/art/demos/purification-forecourt-options/option-a.ts',triangles:world.triangles.length,riftOpeningScale:.52},
+  source:{entry:'docs/art/demos/purification-forecourt-options/option-a.ts',triangles:world.triangles.length,riftForm:RIFT_FORM},
 };
 manifest.source.hashes={};
 for(const filename of AUTHOR_SOURCES)manifest.source.hashes[filename]=createHash('sha256').update(await fs.readFile(path.join(root,filename))).digest('hex');

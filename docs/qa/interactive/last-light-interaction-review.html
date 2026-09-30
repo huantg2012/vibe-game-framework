@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+  <title>COH · Last Light 真实交互验收</title>
+  <style>
+    html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #0a0b0d; color: #c8cdd4; font: 12px/18px sans-serif; }
+    #interaction-review-toolbar { position: absolute; inset: 0 0 auto; height: 124px; padding: 7px 12px; box-sizing: border-box; background: #151a1e; z-index: 20000; }
+    #interaction-review-toolbar button, #interaction-review-toolbar input, #interaction-review-toolbar select { margin: 2px; padding: 3px 7px; font: inherit; color: #c8cdd4; background: #242930; border: 1px solid #454b52; }
+    #interaction-review-toolbar button { cursor: pointer; }
+    #interaction-review-toolbar input { width: 72px; }
+    #interaction-review-status { color: #b5c9b0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #interaction-review-toolbar details { position: absolute; right: 12px; top: 95px; background: #151a1e; border: 1px solid #454b52; padding: 3px 8px; max-width: 600px; }
+    #interaction-review-report { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 520px; overflow: auto; font: 11px/16px monospace; }
+    #game-container { position: absolute; inset: 124px 0 0; display: flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+  <div id="interaction-review-toolbar">
+    <div>DEV · 真实净化点 / 保存系统，存档仅在本页内存 · 站点按钮只定位合法脚点，不开启交互 · WASD 移动，E 交互，Esc 返回</div>
+    <div id="interaction-review-stations"></div>
+    <form id="interaction-review-position">
+      <label>世界 X <input id="interaction-review-x" type="number" step="any" value="3.8" required /></label>
+      <label>Z <input id="interaction-review-z" type="number" step="any" value="3.8" required /></label>
+      <label>地层 <select id="interaction-review-route"><option value="main">下层 main</option><option value="upper">上层 upper</option><option value="west-ramp">西坡 west-ramp</option></select></label>
+      <button type="submit">定位合法脚点</button>
+      <button type="button" id="interaction-review-read-position">读取当前位置</button>
+    </form>
+    <div id="interaction-review-status" role="status">启动中</div>
+    <details><summary>实际交互与位置诊断</summary><pre id="interaction-review-report"></pre></details>
+  </div>
+  <div id="game-container"></div>
+  <script type="module" src="/src/dev/last-light-interaction-review.ts"></script>
+</body>
+</html>

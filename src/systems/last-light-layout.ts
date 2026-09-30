@@ -12,7 +12,6 @@ export const LAST_LIGHT_STATIONS=LAST_LIGHT_DATA.stations;
 export const CHAMBER_SIZE={width:960,height:640} as const;
 export const CHAMBER_CAMERA={x:480,y:320,zoom:1} as const;
 export const CHAMBER_GROUND_OFFSET_Y=10;
-export const CHAMBER_INTERACTION_RADIUS=24;
 export const LAST_LIGHT_FOOT_RADIUS=LAST_LIGHT_DATA.footRadius;
 export const LAST_LIGHT_MAX_STEP_MS=100;
 /** World metres per second: fixed screen speed made depth-axis travel sprint. */

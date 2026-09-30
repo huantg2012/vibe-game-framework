@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {ShapeUtils,Vector2} from 'three';
 import {buildOption} from '../../docs/art/demos/purification-forecourt-options/option-a.ts';
 import {carveFloor} from '../../docs/art/demos/purification-forecourt-options/shared.ts';
-import {RIFT_FOOTPRINT} from '../../docs/art/demos/purification-forecourt-options/rift-a.ts';
+import {RIFT_FOOTPRINT,RIFT_INTERACTION} from '../../docs/art/demos/purification-forecourt-options/rift-a.ts';
 import {WALK_SURFACES,LAYOUT_OBSTACLES} from '../../docs/art/demos/purification-last-light/environment.ts';
 import {REST_POSITION,REST_YAW,REST_APPROACH,REST_OBJECT_ID} from '../../docs/art/demos/purification-last-light/rest.ts';
 import {ACTOR_POSITION} from '../../docs/art/demos/purification-last-light/actor.ts';
@@ -39,7 +39,7 @@ const obstacles=[...stations.filter(s=>s.key!=='rift'),rest].map(s=>{
 for(const o of LAYOUT_OBSTACLES)obstacles.push({id:o.id,position:o.position,yaw:o.kind==='box'?o.yaw:0,kind:o.kind,bounds:o.kind==='box'?[-o.half[0],-o.half[1],o.half[0],o.half[1]]:[-o.radius,-o.radius,o.radius,o.radius],height:.65});
 const deviceData=stations.map(s=>{
  const tris=model.triangles.filter(t=>t.object===s.id),ps=tris.flatMap(t=>[t.a,t.b,t.c]),screen=ps.map(p=>project(p));
- const base=project(s.position);return{...s,floor:s.position[1]>1?'upper':'main',screen:base,approachScreen:project(s.approach),visualBounds:[Math.min(...screen.map(p=>p[0]))-base[0],Math.min(...screen.map(p=>p[1]))-base[1],Math.max(...screen.map(p=>p[0]))-base[0],Math.max(...screen.map(p=>p[1]))-base[1]],height:Math.max(...ps.map(p=>p[1]))-s.position[1]};
+ const base=project(s.position);return{...s,...(s.key==='rift'?{interaction:RIFT_INTERACTION}:{}),floor:s.position[1]>1?'upper':'main',screen:base,approachScreen:project(s.approach),visualBounds:[Math.min(...screen.map(p=>p[0]))-base[0],Math.min(...screen.map(p=>p[1]))-base[1],Math.max(...screen.map(p=>p[0]))-base[0],Math.max(...screen.map(p=>p[1]))-base[1]],height:Math.max(...ps.map(p=>p[1]))-s.position[1]};
 });
 // Exact opaque authored surfaces. A compact binary literal avoids enormous TS
 // tuple types; a BVH is compiled once by the runtime, never once per observation.

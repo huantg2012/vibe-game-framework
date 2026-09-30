@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {performance} from 'node:perf_hooks';
+import {LAST_LIGHT_DATA} from '../../src/generated/last-light-layout.ts';
 import {
  CHAMBER_DEVICE_WORLD_ANCHORS,CHAMBER_DEVICE_FLOORS,LAST_LIGHT_SPAWN,
  LAST_LIGHT_WALK,LAST_LIGHT_FOOT_RADIUS,LAST_LIGHT_WORLD_WALK_SPEED,
@@ -124,7 +125,8 @@ for(const side of [-1,1]){
 results.push(`${crossingLanes} full-width landing lanes ascend/descend with supported cross-sections; both wings turn down/back up; ramp sides remain closed`);
 
 assert(!canStandLastLight({x:7.7,y:0,z:1.6},'main'),'breach must be empty');
-assert(!canStandLastLight({x:.6,y:0,z:5.94},'main'),'Rift notch must be empty');
+const riftCenter=LAST_LIGHT_DATA.riftCut.reduce((p,q)=>({x:p.x+q[0]!/LAST_LIGHT_DATA.riftCut.length,y:0,z:p.z+q[1]!/LAST_LIGHT_DATA.riftCut.length}),{x:0,y:0,z:0});
+assert(!canStandLastLight(riftCenter,'main'),'Rift notch must be empty');
 assert.throws(()=>stateAt(7.7,1.6),'invalid spawn must not snap across hole');
 assert.throws(()=>stateAt(3,-2),'main cannot enter solid ramp volume');
 const upperAnchor=createLastLightMovementState(CHAMBER_DEVICE_WORLD_ANCHORS.storage,'upper');assert(!canInteractLastLight(upperAnchor,'core'),'no cross-floor interaction');

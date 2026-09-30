@@ -1,8 +1,8 @@
 ---
 status: ACTIVE
 slice: 2 (extended in 4.5, 5, 5.5, 7)
-last-modified-by: design（迭代31真实薪柴收益与同源修复预览）
-last-modified-date: 2026-09-29
+last-modified-by: qa（同步2026-09-30已实现的Last Light操作面交互合同）
+last-modified-date: 2026-09-30
 interface-changed: true
 interfaces-with:
   - system-field-inventory         # 统一物件供奉、实例归属、使用与装配
@@ -30,7 +30,9 @@ exposes:
      Slice 5.5 新增 slotDisclosures 供结算面板逐槽归因）
   - getDefenseRuntimeState() / loadDefenseRuntimeState(state) / ContaminantRuntimeState
   - AllocationPanel.open(moduleId)
-  - PurificationChamberLocomotion.update(delta) / getRoute() / canInteract(device)
+  - LastLightLocomotion.update(delta) / getRoute() / canInteract(device) / getInteractionDistance(key) / getNearestInteraction(previous)
+  - lastLightInteractionDistance(state,profile,canStand) / chooseLastLightInteraction(distances,previous)
+  - PurificationChamberLocomotion.update(delta) / getRoute() / canInteract(device)（历史R10兼容）
   - PurificationChamberVisual.update(time,delta,state) / pulse(kind,target) / destroy()
   - getChamberObservation(feet,moduleId) / isChamberObservationRayClear(eye,target)（只读可观察资格）
   - ChamberIntegritySelection / ChamberIntegrityLifecycle（单一读数与world/focused交接）
@@ -45,7 +47,9 @@ exposes:
 
 # 系统设计：净化点 + 冲击
 
-## 迭代30 · 偏置封闭场所与观察（DEC-180/181/182）
+## 历史场所方案 · 迭代30 R10（DEC-180/181/182）
+
+本段场所尺寸、双坡、作者像素层与R10外景参数仅保留历史实现；正式场景已转为Last Light，当前运行架构见`architecture.md`的“迭代30 R11：Last Light 正式场景”。本系统的当前交互规则以P1–P3与下方操作面合同为准，不能用本段旧操作点或24px判定覆盖。
 
 净化点是具有少许俯视进深的封闭像素室内：不规则的主地面与后退夹层、两条可横移的宽坡道，厚墙回转面和基础形成边界。镜头省略面向观察者的遮蔽构件，不代表世界内露天。外部近侧支承/接触、中层连续错位残构、远层暗影分层呈现，内侧约束件与修补材料形成抵抗关系。后墙承重肩、东墙整段剪切、前基础向下展开，不能仅在原整圈墙缘加齿缺。
 
@@ -201,9 +205,9 @@ interface SortieModifiers {
 
 ### P — 净化点场景
 
-1. **空间**：640×400世界像素，960×640逻辑画面，常态相机中心(320,200)、zoom1.5。两层与坡道是有面积的多边形，所有形状归layout单源；高差不允许在坡道之外跨越。出生足点(243,315)，角色中心在足点上10px。
-2. **六处交互**：主层储藏/核心/净化器/裂隙，上层蜕变/供奉。底座和操作位置分开，详见layout与空间设计；相同层、操作点24px内且直线无实体阻挡才能E，坡道禁交互。最近合法目标优先，仅等距用原核心/储藏/净化器/供奉/蜕变/裂隙顺序。
-3. **通行**：WASD或方向键始终对应屏幕八方向，按原80px/s、斜向归一。圆足连续碰撞与贴边滑动，宽坡道不吸附中线、不换按键模式；可停/反向。大帧最多消费100ms，面板/入场/重试/结算冻结。
+1. **空间**：Last Light正式场景使用960×640逻辑画面、常态镜头中心(480,320)、zoom1；真实脚点以世界米制XYZ和所在层存储。主层、上层、单西坡来自同一作者几何导出的`last-light-layout`，上下层只经西坡端部接缝连通；出生点读取`LAST_LIGHT_SPAWN`。共享Player仍接收世界脚点投影后Y−10px的中心，不混用屏幕位置与真实楼层。
+2. **七处交互（2026-09-30替换旧操作点判定）**：主层核心/净化器/供奉/裂隙入口/可坐残骸，上层储藏/蜕变。六项业务与坐下均使用真实操作边的1.4m世界距离、同层/高差/脚圆可达规则；不再使用到唯一approach点的24px圆或强制通向该点的直线。目标选择与E行为共用同一候选，细则见下方“Last Light操作面合同”。
+3. **通行**：WASD或方向键对应屏幕八方向；各层按真实投影反解后在世界XZ归一，基础步速1.8m/s并保留共享速度修正，不因斜向或透视缩短改变世界步速。0.22m圆足连续碰撞与贴边滑动，西坡不吸附中线、不换按键模式；可停/反向。大帧最多消费100ms，面板/入场/重试/结算冻结。
 4. **边界与外部**：不规则厚混凝土/灰泥壳体、承载基座、可见进深和外部残構共同表现封闭；边界外不可通行。外部改写在接触处受约束，不用整圈膜、不新增建筑防御机制。裂隙仍是地面空间伤口。
 5. **场景内界面**：保留DOM根、成本/资格、E/Esc/Tab流程；镜头聚焦本体而不是操作点，退出恢复常态。闲置提示WASD移动。已认可成长UI保持。
 6. **状态表现**：实际损伤、已购加厚及公开供奉占用驱动表现；修复/成长反馈局部发生，不延长强制停留。恢复六种功能剪影，使用相容的投影与有区别的材质，不替换角色。
@@ -215,6 +219,15 @@ interface SortieModifiers {
     - 预告仅在首次建立或实际归来消费（含教学免冲击）后生成，用潮汐推进后的真实下一轮强度；同轮菜单/读档/重复进入只恢复原读数，不重抽。
     - 档位分界按潮汐强度区间 [1.0, 3.0] 四等分：< 1.5 light / < 2.0 moderate / < 2.5 heavy / 其余 extreme。extreme 档的临界脉动（300ms）可留作第二编码，不能代替可见词「极端」。边界粒子恢复各角度均匀生成，不再做方向暗示。
 
+#### Last Light操作面合同（2026-09-30）
+
+- **区域来源**：`last-light-interaction.ts`从同源`LAST_LIGHT_OBSTACLES`与`LAST_LIGHT_STATIONS`建立七处profile。实体装置及可坐残骸取底座操作正面和左右前半段侧沿；原approach仅用于辨认正面和作者推荐站位，不再是玩家必须靠近的唯一点。后半空间不可交互，不新增面对方向按键要求。
+- **裂隙阈边**：非实心入口使用作者数据导出的`station.interaction.edge`和`outward`明确内侧阈边与可站方向，沿边最近点计算；不按画面中发光像素、空洞中心或镜头朝向推导。旧未带该字段的非实体数据可由approach派生兼容阈边，正式新入口必须带显式阈边。
+- **距离与可达**：脚点到任一合法操作边的XZ最近距离≤1.4m，且位于该边朝外可站的半空间；玩家route须与装置一致，脚点与边的高差≤0.16m。最近边点向外偏移脚半径0.22m＋0.025m后，连接当前脚点与该安全站位的短直线路径每≤0.06m采样：每点同层有地表、相对当前脚点高差≤0.16m，并满足`canStandLastLight`完整脚圆支撑与障碍净空。任何失败都无资格；背面、隔物、跨层、跨断沿不因屏幕看起来接近而触发。西坡不属于任何装置profile所在层，不能隔坡操作。
+- **唯一主目标**：取上述世界距离最近者；无历史目标且同距时按核心、储藏、净化器、供奉、蜕变、裂隙、坐下排序。现有目标仍合法且比新最近者最多远0.16m时保留，避免邻接处轻微位移跳提示；原目标一旦失去资格立即清除或切换，不延长其范围。
+- **同帧同源**：`LastLightLocomotion.update`在真实位移后统一刷新七处距离，三模块range、坐下资格及`PurificationScene`主目标共用该结果。底部提示和当帧E分发消费同一个target；业务面板、成本、保存与镜头聚焦流程不变，不保留第二层24px过滤。坐下后E显示起身；不可因为扩大观察读数而授予操作资格。
+- **验证入口**：`docs/qa/interactive/last-light-interaction-review.html`仅DEV，真实`gameConfig`、`PurificationScene`及`SaveManager`配页内Map；六站/出生点按钮和手工世界脚点只做合法位置夹具，禁止强制target、打开面板或替换资格函数。实际WASD/E/Esc和DOM只读诊断用于复看；定位夹具本身不证明自然路线通畅，自动检查也不代替用户手感判断。
+
 ### G — GameState
 
 8. **初始状态**：`kindlingReserve = 0`，`cycle = 0`，`impactIntensity = 1.0`，`moduleMaxHpTier = 0`，三个模块（CORE / STORAGE / PURIFIER）各自 `hp = MODULE_INITIAL_HP = 70`，`maxHp = MODULE_BASE_MAX_HP = 100`。老存档缺 PURIFIER 或缺 `moduleMaxHpTier` 时：补第三个模块为 `70 / 当前档位 maxHp`，档位缺省 0；不得把老档判损坏。
@@ -225,7 +238,7 @@ interface SortieModifiers {
 
 ### A — 分配系统
 
-13. **触发**：玩家走到模块交互点按 E → 打开 DOM overlay 分配面板。
+13. **触发**：玩家进入模块合法操作面区域，底部主目标为该模块时按 E → 打开 DOM overlay 分配面板；资格和主目标遵守P2的Last Light操作面合同。
 14. **面板内容**：显示当前 `kindlingReserve`、目标模块 `hp/maxHp`、+/- 选择投入数量。完整度、投入量、出击收益与余款分开。通常核心对应混乱增速，储藏对应每堆实际薪柴，净化器对应起始混乱；功能互换时按真实效果来源显示：核心修复改变薪柴收益，储藏修复改变混乱增速，短注说明互换，不能仅按设备名称选效果。薪柴主读数为三组已知基础量的整数所得示例（当前→本次注入后），不再以连续倍率代替实际产出。规则与UI细则见下方“迭代31：投入与实际所得”。当前操作只展示该装置的修复与有效出击收益，其他装置现状保留在报告。
 15. **修复公式与有限额度**：每1薪柴修复 `REPAIR_PER_KINDLING` 完整度（4）。附着的空壳在实际承伤后令 `repairBonusHp = max(已有额度, defense_repair_bonus_hp)`（6），下一次有效薪柴注入额外修复至多此额度；一笔注入后归零，多余修复不返还、不分次囤积，不能超过maxHp。未受伤、0薪柴、无库存或无效模块不消费额度，直接 `healModule` 不消费。放入/取下供奉本身不授予或撤回额度，没有常驻修复倍率。
     - 当缺血时，最大有用薪柴为 `max(1, ceil((maxHp-hp-repairBonusHp)/4))`，再受库存限制；满血为0。预览和实算读同一GameState方法。
@@ -439,7 +452,7 @@ interface SortieModifiers {
 
 - 六点E交互走同一场景聚焦路径；核心、储藏、净化器接地点目标(320,330)，供奉/蜕变/入口为(184,330)。260ms聚焦至zoom3，核心接地点目标(320,330)；实际相机投影每帧提供给DOM，适配固定画布缩放。真实核心贴图、呼吸、场景与玩家仍可见。
 - 交互只暂停玩家输入，场景持续运行。观察世界规与聚焦DOM读数共享生命周期，至多一个载体可见；打开/关闭时按同一退场—入场过程交接，镜头恢复不强制重启或硬闪世界规。
-- **I30 R8侧置完整度：**观察取脚底到实际底座轮廓距离（44px进入、58px退出、120ms候选稳定），且机体至少一处在同源建筑/前沿作者面的视线检测中可见。当前操作优先，其次保持原可观察对象，再取最近候选；同一时刻只有一个主要读数。坡口可见不被同层E资格否决，E仍保持原同层/24px操作锚与直达要求。读数淡入160ms，离开保留250ms后淡出180ms；换侧60ms退场/140ms入场、不穿越人物；实际遮人或不透明墙立即掩去，无安全位置暂隐。world/DOM共用生命周期，前者在POST_UPDATE后避让真实人物/武器/灯，后者game PRE_RENDER按本帧camera投影并避让设备名/其他装置/投入列/视口，销毁解绑。状态按固定HP：≥100稳定、25–99受损、1–24危险、0失效；长度才按hp/maxHp，100/115稳定，0HP端帽与近景状态字保留。唯一尺寸、排字、颜色与余量见UI Kit的I30 R8节。观察范围拓宽不改变修复资格、碰撞、隐藏信息与出击机制。
+- **I30 R8侧置完整度：**观察取脚底到实际底座轮廓距离（44px进入、58px退出、120ms候选稳定），且机体至少一处在同源建筑/前沿作者面的视线检测中可见。当前操作优先，其次保持原可观察对象，再取最近候选；同一时刻只有一个主要读数。坡口可见不被同层E资格否决；当前E资格按P2的Last Light操作面合同（同层、1.4m边距与脚圆短路径），历史R8的24px操作锚规则自2026-09-30起不再适用于正式场景。读数淡入160ms，离开保留250ms后淡出180ms；换侧60ms退场/140ms入场、不穿越人物；实际遮人或不透明墙立即掩去，无安全位置暂隐。world/DOM共用生命周期，前者在POST_UPDATE后避让真实人物/武器/灯，后者game PRE_RENDER按本帧camera投影并避让设备名/其他装置/投入列/视口，销毁解绑。状态按固定HP：≥100稳定、25–99受损、1–24危险、0失效；长度才按hp/maxHp，100/115稳定，0HP端帽与近景状态字保留。唯一尺寸、排字、颜色与余量见UI Kit的I30 R8节。观察范围拓宽不改变修复资格、碰撞、隐藏信息与出击机制。
 - 确认复用原allocateToModule及ALLOCATION_CONFIRMED，即时扣资源/修复；只有正数实际修复成功才触发对应装置动作：核心闭合—聚集—归稳1.68秒，储藏封口归位、净化器分相回流；主体与局部投光共源，不再把三物统一画成暖色呼吸。650ms展示已生效结果，阻止重复确认，再用180ms镜头恢复原视角，恢复完成才启用玩家输入。Esc可提前离开，已结算资源不会回滚。
 - 退出期间E/Tab/暂停不抢开；开发切屏即时恢复镜头；scene shutdown只丢弃焦点状态，因为CameraManager先销毁相机，不再触碰main。DOM跟踪/提交计时器清理。入口确认不先恢复镜头，直接出击；转场300/500ms计时器归场景Clock并在shutdown移除，防止旧回调拉走新场景。
 - 开发直达 `ui-review.html?sample=world`，六点切换保留资源，独立重置85薪柴/零库存；原sample=core仍可用。示例不读写正式存档。复用生产交互，不加入生产HTML构建。
@@ -475,7 +488,9 @@ interface SortieModifiers {
 | `FORECAST_ACCURACY` | 0.80 | 0.7-0.9 | ground-truth 预告与实际重点目标相符的概率 |
 | `MAX_CORE_REDUCTION` | 0.30 | 0.2-0.4 | CORE在hp≥100时的自然混乱增速减缓（效果封顶，与maxHp无关） |
 | `MAX_STORAGE_BONUS` | 0.50 | 0.3-0.7 | STORAGE 在 hp≥100 时的薪柴加成（效果封顶，与 maxHp 无关） |
-| `INTERACTION_RADIUS` | 32 | px | 交互点的走近判定半径 |
+| `LAST_LIGHT_INTERACTION_REACH` | 1.4 | m | 正式净化点脚点到合法操作边的最大世界距离 |
+| `LAST_LIGHT_INTERACTION_SWITCH_MARGIN` | 0.16 | m | 原目标仍合法时的主目标切换差值 |
+| `INTERACTION_RADIUS` | 32 | px | 历史平面/练习场兼容，不参与Last Light正式交互资格 |
 | `APPARITION_INTERVAL_MIN` | 8000 | ms | 最短间隔 |
 | `APPARITION_INTERVAL_MAX` | 15000 | ms | 最长间隔 |
 | `APPARITION_DURATION` | 3000 | ms | 0.5s 淡入 + 2s 保持 + 0.5s 淡出 |

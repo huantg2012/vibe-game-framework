@@ -2,74 +2,92 @@ import { type Haven } from '../purification-last-light/scene';
 import { type Model, type V2, type V3 } from '../purification-last-light/model';
 import { carveFloor } from './shared';
 
-export const RIFT_POSITION:V3=[.6,0,5.94];
-export const RIFT_APPROACH:V3=[1.15,.07,4.30];
-export const RIFT_YAW=-Math.atan2(1.74,4.02);
+export const RIFT_POSITION:V3=[1.55,0,4.45];
+export const RIFT_APPROACH:V3=[1.37,.07,3.57];
+export const RIFT_YAW=.20;
 const c=Math.cos(RIFT_YAW),s=Math.sin(RIFT_YAW);
-const world=(x:number,y:number,z:number):V3=>[RIFT_POSITION[0]+x*c+z*s,y,RIFT_POSITION[2]-x*s+z*c];
-const NOTCH:V2[]=[[-.86,-.12],[-.47,-.42],[.36,-.38],[.97,.09],[.95,.82],[-.74,.76]];
+const world=(x:number,y:number,z:number):V3=>[RIFT_POSITION[0]+x*c+z*s,y,RIFT_POSITION[2]+z*c-x*s];
+// One convex physical cut drives both the architecture and navigation. The
+// throat crosses the platform's outer edge; it is not a black decal on a floor.
+const NOTCH:V2[]=[[-.05,-.29],[.18,-.11],[.36,.65],[.29,2.52],[-.25,2.61],[-.39,.66]];
 export const RIFT_FOOTPRINT:V3[]=NOTCH.map(([x,z])=>world(x,.08,z));
+export const RIFT_INTERACTION={
+  edge:[world(-.49,.07,-.43),world(.49,.07,-.43)],
+  outward:[-s,-c],
+};
+export const RIFT_FORM={shape:'ground-throat-v2',mouthWidth:.75,depth:2.12};
 
-/** A wound in space and the building's edge, not a constructed portal.
- * Its irregular aperture bends in depth; only interrupted torn layers emit.
- * The physical void continues below the floor into the exposed building. */
+/** A narrow tear shears the floor, its structural bed and the hanging wall.
+ * There is no above-ground portal plane. Interrupted inner radiance reveals
+ * displaced strata, then disappears into a deeper opening below the building. */
 function wound(m:Model):void {
-  const y=[-1.57,-1.05,-.42,.08,.57,1.02,1.39,1.74,2.06,2.37,2.64];
-  const left=[-.02,-.23,-.39,-.38,-.69,-.62,-.44,-.38,-.13,.15,.41];
-  const right=[.03,.15,.29,.43,.61,.70,.49,.54,.44,.36,.42];
-  const bend=[.04,.08,.02,-.01,.05,.16,.11,.06,.01,-.04,-.11];
-  const p=(i:number,side:number,depth=0):V3=>{
-    // Narrow the mouth around its existing crooked centerline. Keep the tear's
-    // height, twist, position and the building fracture unchanged.
-    const center=(left[i]!+right[i]!)*.5;
-    const edge=side<0?left[i]!:side>0?right[i]!:center;
-    const x=center+(edge-center)*.52;
-    // The tear rolls toward the camera above the stone. Its broad opening is
-    // visible without turning the floor break away from the building's edge.
-    return [x,y[i]!,bend[i]!+depth-x*Math.max(0,Math.min(.64,y[i]!*.85))];
-  };
-  for(let i=0;i<y.length-1;i++) {
-    // A recessed throat, with asymmetrical folded skins in front of it.
-    m.quad(p(i,-1,-.17),p(i+1,-1,-.19),p(i+1,1,-.19),p(i,1,-.17),'black',.51);
-    for(const side of [-1,1]) {
-      const a=p(i,side),b=p(i+1,side);
-      const inset=(q:V3,n:number,d:number):V3=>[q[0]-side*n,q[1],q[2]+d];
-      const width=(i===0||i===y.length-2)?.006:(side<0?.065:.092);
-      m.quad(a,b,inset(b,width,.026),inset(a,width,.026),'pollutant',.82+(i%3)*.055);
-      m.quad(inset(a,width,.026),inset(b,width,.026),inset(b,width+.060,-.11),inset(a,width+.060,-.11),'pollutant',.49);
-      m.quad(inset(a,width+.060,-.11),inset(b,width+.060,-.11),p(i+1,side,-.19),p(i,side,-.17),'black',.66);
-      // No closed neon outline: some edges disappear completely into darkness.
-      if((side<0?[2,3,5,6,8]:[1,4,7]).includes(i)) {
-        const d=side<0?.027:.034;
-        m.quad(inset(a,width*.28,.044),inset(b,width*.28,.044),inset(b,width*.28+d,.049),inset(a,width*.28+d,.049),'energy',.84);
+  const z=[-.20,.08,.65,1.19,1.72,2.26,2.54];
+  const left=[-.09,-.25,-.39,-.37,-.34,-.30,-.25];
+  const right=[.07,.22,.36,.34,.32,.30,.28];
+  for(const side of [-1,1]){
+    const xs=side<0?left:right;
+    const bank=(i:number,level:number):V3=>{
+      const x=xs[i]!;
+      // Successive broken courses shift sideways as well as downwards. The
+      // near bank drops out early so it cannot cover the deeper rear wall.
+      const offsets=[0,side*.045,side*.065+.10,side*.08+.19];
+      const lip=side<0&&i>=3?[-.18,-.48,-.28,-.44][i-3]!:.055;
+      const heights=[lip,Math.min(lip-.19,-.24),-.91,-2.12];
+      return[x+offsets[level]!,heights[level]!+(level>0?Math.sin(i*2.4+side)*.065:0),z[i]!+level*.055];
+    };
+    for(let i=0;i<z.length-1;i++){
+      const a=bank(i,0),b=bank(i+1,0);
+      const width=(i===0?.09:.16)+(i%2)*.04;
+      const outer=(p:V3):V3=>[p[0]+side*width,p[1]+(i%2?.025:0),p[2]];
+      if(!(side>0&&i>=3))m.quad(outer(a),outer(b),b,a,'cutstone',side<0?.83:.72);
+      // Separate stone lip, coarse construction core, and recessed masonry.
+      for(let level=0;level<3;level++){
+        if((side>0&&i>=3)||(side<0&&i===4&&level>0))continue;
+        const aa=bank(i,level),bb=bank(i+1,level),cc=bank(i+1,level+1),dd=bank(i,level+1);
+        m.quad(aa,bb,cc,dd,level===0?'cutstone':'stone',level===0?.85:level===1?.72:.48);
+        if(level>0&&i>0){
+          const mid:V3=[(aa[0]+dd[0])*.5,(aa[1]+dd[1])*.5,(aa[2]+bb[2])*.5];
+          m.rock([mid[0]-side*.022,mid[1],mid[2]],[.085,.12+(i%2)*.08,.25],'cutstone',9810+i+level*11+(side+1)*40,.72);
+        }
+      }
+      // Sparse, recessed living fractures: the cut is not edged with neon.
+      if((side<0?[1,2,4]:[0,3]).includes(i)){
+        const aa=bank(i,1),bb=bank(i+1,1);
+        m.cable([[aa[0]-side*.013,aa[1]-.04,aa[2]+.04],[(aa[0]+bb[0])*.5-side*.04,-.44,(aa[2]+bb[2])*.5],[bb[0]-side*.03,bb[1]-.18,bb[2]-.04]],.023,'pollutant',.82);
+        if(side<0&&i===2)m.beam([aa[0]+.025,-.47,aa[2]+.07],[bb[0]+.03,-.69,bb[2]-.08],.018,.023,'energy',.68);
+      }
+      if(side<0&&[2,4].includes(i)){
+        const p=bank(i,2);
+        m.beam([p[0]+.05,p[1]-.18,p[2]+.07],[p[0]+.10,p[1]-.49,p[2]+.18],.027,.03,'pollutant',.68);
       }
     }
-    // A few displaced inner echoes imply a depth discontinuity, not a lens fill.
-    if([3,5,7].includes(i)) {
-      const a=p(i,-1,-.10),b=p(i+1,-1,-.09);
-      m.beam([a[0]+.18,a[1]+.11,a[2]],[b[0]+.13,b[1]-.13,b[2]],.034,.037,'energy',.57);
-    }
   }
-  // Local bed, structural core and separated hanging masonry remain one break.
-  m.slab([[-1.0,-.18],[-.49,-.54],[-.37,-.33],[-.67,.18],[-.93,.26]],.074,-.23,'cutstone',.86);
-  m.slab([[.37,-.47],[.99,-.01],[1.13,.24],[.70,.32],[.47,.04]],.072,-.29,'cutstone',.82);
-  m.rock([-.73,-.62,.15],[.47,1.05,.51],'stone',9731,.76);
-  m.rock([.63,-.87,.12],[.42,1.38,.48],'stone',9732,.77);
-  m.rock([-.52,-1.46,.21],[.29,.53,.35],'stone',9733,.69);
-  m.beam([-.92,-.27,-.03],[-.38,-.34,.24],.06,.08,'iron',.62);
-  m.beam([.72,-.36,.02],[.37,-.55,.32],.05,.075,'iron',.58);
-  // Stress traces continue inland, below ankle height and outside the stand pad.
-  m.cable([[-.47,.085,-.35],[-.72,.085,-.65],[-1.03,.085,-.67],[-1.32,.085,-.96]],.019,'black',.6);
-  m.cable([[.43,.08,-.32],[.82,.08,-.68],[1.22,.08,-.72]],.017,'black',.6);
-  m.cable([[-.46,.09,-.31],[-.58,.09,-.43],[-.70,.09,-.56]],.026,'pollutant',.70);
-  m.rock([-.89,.15,-.26],[.29,.24,.31],'stone',9734,.78);
-  m.rock([.86,.12,-.09],[.23,.18,.30],'stone',9735,.8);
-  // Broken matter is displaced along the tear, never in a symmetrical halo.
-  m.rock([-.68,.80,.04],[.14,.23,.09],'stone',9736,.78);
-  m.rock([.68,1.60,.02],[.10,.20,.07],'stone',9737,.70);
-  m.light([-.23,.91,.36],[.26,.37,.31],1.30,2.9,{kind:'pollution',id:'rift-torn-edge'});
-  m.light([.12,.66,-.58],[.26,.37,.32],1.20,3.2,{kind:'pollution',id:'rift-inland-spill'});
-  m.light([.01,-.68,.31],[.24,.35,.30],.75,1.9,{kind:'pollution',id:'rift-underfloor'});
+  // The inland tip is a broken wedge, not an erected frame or plinth.
+  m.quad([-.09,.055,-.20],[.07,.055,-.20],[.10,-.30,-.12],[-.07,-.30,-.12],'cutstone',.86);
+  m.quad([-.07,-.30,-.12],[.10,-.30,-.12],[.21,-1.1,.08],[.06,-1.1,.08],'stone',.6);
+  // Exposed reinforcement belongs to the ripped structural bed. Neither bar
+  // bridges the mouth or reads as a walkable strip.
+  m.beam([-.57,-.20,.78],[-.20,-.24,.85],.037,.046,'iron',.72);
+  m.beam([.52,-.27,1.59],[.21,-.38,1.70],.032,.041,'iron',.64);
+  m.rock([-.47,-1.20,1.92],[.25,.45,.39],'stone',9851,.65);
+  m.rock([.51,-.83,2.25],[.23,.49,.32],'stone',9852,.60);
+  m.rock([-.52,.09,.62],[.19,.15,.31],'cutstone',9853,.86);
+  m.rock([.46,-.65,1.76],[.18,.35,.25],'stone',9854,.68);
+  m.slab([[-.37,1.45],[-.21,1.51],[-.20,1.85],[-.34,1.94]],-.57,-.70,'cutstone',.73);
+  m.cable([[-.27,-.72,1.51],[-.20,-.90,1.71],[-.26,-1.04,1.84]],.032,'pollutant',.86);
+  // At the production 26.5px/m scale, each short fold owns 1–2 pixels.
+  // Detached depths, dark gaps and unequal bends rule out a neon perimeter.
+  m.cable([[-.24,-.15,.39],[-.20,-.24,.54],[-.24,-.34,.69]],.055,'energy',.90);
+  m.cable([[-.23,-.43,1.14],[-.17,-.53,1.25],[-.21,-.59,1.43]],.068,'energy',.86);
+  m.cable([[-.10,-.85,1.99],[-.04,-.93,2.11],[-.08,-1.06,2.29]],.06,'energy',.81);
+  // Short stress seams continue the architecture into the approaching floor.
+  m.cable([[-.05,.079,-.29],[-.16,.079,-.55],[-.10,.079,-.71]],.014,'black',.62);
+  m.cable([[-.43,.08,.70],[-.67,.08,.62],[-.81,.08,.44]],.015,'black',.64);
+  // Radiance escapes from the interior. A faint spill above the tip lets the
+  // player identify the wound before the shoulder lamp reveals its sections.
+  m.light([-.06,-.18,.57],[.25,.36,.30],1.35,2.05,{kind:'pollution',id:'rift-torn-edge'});
+  m.light([.03,.18,-.14],[.25,.36,.31],.70,1.85,{kind:'pollution',id:'rift-inland-spill'});
+  m.light([.05,-.45,1.90],[.23,.35,.29],1.8,1.9,{kind:'pollution',id:'rift-underfloor'});
 }
 
 export function rebuildRift(haven:Haven):void {
@@ -81,5 +99,5 @@ export function rebuildRift(haven:Haven):void {
   carveFloor(model,NOTCH.map(([x,z])=>{const p=world(x,0,z);return [p[0],p[2]] as V2;}),.25);
   model.at(RIFT_POSITION,RIFT_YAW,station.id,()=>wound(model));
   station.position=RIFT_POSITION;station.yaw=RIFT_YAW;station.approach=RIFT_APPROACH;
-  station.description='左前断沿中的时空伤口；从内侧完整地坪靠近并备行。';
+  station.description='左前地坪撕裂并贯穿建筑断沿的狭长裂隙；从内侧完整地坪靠近。';
 }

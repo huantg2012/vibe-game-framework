@@ -1,10 +1,11 @@
 import type {Player} from '../entities/player';
 import {GAME_CONSTANTS} from '../config/constants';
 import {LAST_LIGHT_OCCLUSION_BASE64} from '../generated/last-light-layout';
+import { LAST_LIGHT_INTERACTION_PROFILES, lastLightInteractionDistance, chooseLastLightInteraction, type LastLightInteractionKey } from './last-light-interaction';
 import {
  LAST_LIGHT_WALK,LAST_LIGHT_OBSTACLES,LAST_LIGHT_STATIONS,LAST_LIGHT_SPAWN,LAST_LIGHT_FOOT_RADIUS,
  LAST_LIGHT_CAMERA,LAST_LIGHT_BASIS,LAST_LIGHT_MAX_STEP_MS,LAST_LIGHT_WORLD_WALK_SPEED,
- CHAMBER_GROUND_OFFSET_Y,CHAMBER_INTERACTION_RADIUS,CHAMBER_DEVICE_WORLD_ANCHORS,CHAMBER_DEVICE_FLOORS,REST_WORLD_APPROACH,
+ CHAMBER_GROUND_OFFSET_Y,
  projectLastLight,sampleLastLightSurface,worldPoint,
  type WorldPoint,type ChamberPoint,type ChamberDevice,type LastLightRoute,
 } from './last-light-layout';
@@ -219,15 +220,12 @@ export function stepLastLightMovement(state:LastLightMovementState,input:Chamber
  if(Math.hypot(dx,dz)>.00001)state.facing=Math.atan2(dx,dz);
 }
 export function getLastLightMovementPosition(state:Readonly<LastLightMovementState>):ReturnType<typeof projectLastLight>{return projectLastLight(state);}
+export function getLastLightInteractionDistance(state:Readonly<LastLightMovementState>,key:LastLightInteractionKey):number{
+ const profile=LAST_LIGHT_INTERACTION_PROFILES.find(profile=>profile.key===key);
+ return profile?lastLightInteractionDistance(state,profile,canStandLastLight):Infinity;
+}
 export function canInteractLastLight(state:Readonly<LastLightMovementState>,device:ChamberDevice):boolean{
- if(state.route!==CHAMBER_DEVICE_FLOORS[device])return false;
- const feet=projectLastLight(state),approach=projectLastLight(CHAMBER_DEVICE_WORLD_ANCHORS[device]);
- if(Math.hypot(feet.x-approach.x,feet.y-approach.y)>CHAMBER_INTERACTION_RADIUS)return false;
- const target=CHAMBER_DEVICE_WORLD_ANCHORS[device],distance=Math.hypot(target.x-state.x,target.z-state.z);
- const count=Math.max(1,Math.ceil(distance/.06));
- for(let i=1;i<=count;i++){const t=i/count,x=state.x+(target.x-state.x)*t,z=state.z+(target.z-state.z)*t;
-  const surface=sampleLastLightSurface(state.route,x,z);if(!surface||!canStandLastLight({x,y:surface.height,z},state.route))return false;
- }return true;
+ return Number.isFinite(getLastLightInteractionDistance(state,device));
 }
 
 // Compact exact-triangle BVH for physical observation. Constructed lazily once.
@@ -278,27 +276,35 @@ export function getLastLightObservation(state:Readonly<LastLightMovementState>,m
 
 export class LastLightLocomotion{
  private readonly state:LastLightMovementState;
+ private readonly interactionDistances:Record<LastLightInteractionKey,number>={core:Infinity,storage:Infinity,purifier:Infinity,offering:Infinity,growth:Infinity,rift:Infinity,rest:Infinity};
+ private readonly interactionPosition={x:NaN,y:NaN,z:NaN,route:null as LastLightRoute|null};
+ private updateInteractions():void{
+  const current=this.state,previous=this.interactionPosition;
+  // Authored geometry is immutable. Facing and camera motion do not change
+  // reach, so standing still (including panel/rest time) reuses all seven values.
+  if(current.x===previous.x&&current.y===previous.y&&current.z===previous.z&&current.route===previous.route)return;
+  for(const profile of LAST_LIGHT_INTERACTION_PROFILES)this.interactionDistances[profile.key]=lastLightInteractionDistance(current,profile,canStandLastLight);
+  previous.x=current.x;previous.y=current.y;previous.z=current.z;previous.route=current.route;
+ }
  constructor(private readonly player:Player){
   this.state=createLastLightMovementState();
   // Build the immutable sight tree during scene setup, before live movement.
   prepareSight();
+  this.updateInteractions();
  }
  update(deltaMs:number):void{
   const input=this.player.getMovementInput();
   const speed=lastLightProjectedWalkingSpeed(this.state,input,LAST_LIGHT_WORLD_WALK_SPEED*this.player.getEffectiveSpeed()/GAME_CONSTANTS.PLAYER.SPEED);
   stepLastLightMovement(this.state,input,deltaMs,speed);
   const feet=projectLastLight(this.state);this.player.applyConstrainedMovement(feet.x,feet.y-CHAMBER_GROUND_OFFSET_Y);
+  this.updateInteractions();
  }
  getRoute():LastLightRoute{return this.state.route;}
- canInteract(device:ChamberDevice):boolean{return canInteractLastLight(this.state,device);}
+ canInteract(device:ChamberDevice):boolean{return Number.isFinite(this.interactionDistances[device]);}
+ getInteractionDistance(key:LastLightInteractionKey):number{return this.interactionDistances[key];}
+ getNearestInteraction(previous:LastLightInteractionKey|null):LastLightInteractionKey|null{return chooseLastLightInteraction(this.interactionDistances,previous);}
  getWorldPosition():Readonly<WorldPoint>{return{x:this.state.x,y:this.state.y,z:this.state.z};}
  getWorldFacing():number{return this.state.facing;}
- canRest():boolean{
-  if(this.state.route!=='main')return false;
-  const a=projectLastLight(this.state),b=projectLastLight(REST_WORLD_APPROACH);if(Math.hypot(a.x-b.x,a.y-b.y)>24)return false;
-  const distance=Math.hypot(this.state.x-REST_WORLD_APPROACH.x,this.state.z-REST_WORLD_APPROACH.z),steps=Math.max(1,Math.ceil(distance/.06));
-  for(let i=1;i<=steps;i++){const t=i/steps,x=this.state.x+(REST_WORLD_APPROACH.x-this.state.x)*t,z=this.state.z+(REST_WORLD_APPROACH.z-this.state.z)*t,h=sampleLastLightSurface('main',x,z);if(!h||!canStandLastLight({x,y:h.height,z},'main'))return false;}
-  return true;
- }
+ canRest():boolean{return Number.isFinite(this.interactionDistances.rest);}
  getObservation(moduleId:'CORE'|'STORAGE'|'PURIFIER'):{distance:number;visible:boolean}{return getLastLightObservation(this.state,moduleId);}
 }

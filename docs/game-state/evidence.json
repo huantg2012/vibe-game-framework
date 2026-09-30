@@ -3673,5 +3673,71 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E103",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-09-30",
+    "revision": "35973b3 + last-light-rift-interaction working tree (2026-09-30)",
+    "scope": "本轮实际执行三个脚本：check-interaction.ts通过6组检查，覆盖7个approach、73正面/129侧面合法位置、12背面拒绝、264接触至距离上限的连续样本，以及楼层/高差/断沿/主目标滞回；check-rift-throat.ts通过7项几何链检查、966三角形，确认无竖立黑膜、真实下切断层、内腔光源及作者/导航/显式阈边一致；check-movement.ts原10组移动和观察检查通过。执行命令为node --import tsx tools/last-light/check-interaction.ts、node --import tsx tools/last-light/check-rift-throat.ts、node --import tsx tools/last-light/check-movement.ts。",
+    "limitations": "受控几何/领域代码测试，不是自然键盘完整路线、实帧审美或性能验收。本条暂不包含根协调者后续运行的脚圆边界全回归、资产校验与build；其结果以本轮QA新增实录为准，不提前记pass。I28长期采样继续挂起，整体美术和手感待人审。",
+    "sources": [
+      {
+        "path": "docs/qa/last-light-rift-interaction-2026-09-30.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/last-light/check-interaction.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-rift-throat.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/interaction.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/rift-throat.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/movement.json",
+        "role": "doc"
+      }
+    ]
+  },
+  {
+    "id": "COH-E104",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-30",
+    "revision": "35973b3 + last-light-rift-interaction working tree (2026-09-30)",
+    "scope": "根协调者在独立DEV入口运行真实gameConfig/PurificationScene/SaveManager，页内Map隔离用户记录。已确认净化器原approach及贴边圆角位置真实E可交互；新裂隙内侧阈边真实E进入正式inventoryPanel(prepare)。角色定位需完整脚圆合法，场景实际nearTarget与可见提示由生产状态读取，不覆盖canInteract、不强制target或打开面板。 补充：核心E打开修复；其余储藏/供奉/蜕变与出生点坐席提示已逐项查看，控制台warning/error为空；最终裂口runtime-rift.png为实际运行时截图。",
+    "limitations": "这是合法位置夹具后的真实交互，不是从出生自然走遍七站或完整游戏周转；未据此宣称其余站点业务开启、坐下起身、场景重入、Rift全链或真实浏览器持久存储通过。整体视觉、氛围和手感仍待用户复看；后续新增浏览器范围须在本轮QA有实际记录后再补。",
+    "sources": [
+      {
+        "path": "docs/qa/last-light-rift-interaction-2026-09-30.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/last-light-interaction-review.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/interactive/last-light-interaction-review.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/runtime-rift.png",
+        "role": "art"
+      }
+    ]
   }
 ]
