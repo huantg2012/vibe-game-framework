@@ -18,6 +18,8 @@ export interface LastLightInteractionProfile {
   readonly route: LastLightRoute;
   readonly edges: readonly LastLightInteractionEdge[];
   readonly reach: number;
+  /** Openings allow access around the physical perimeter, without a back face. */
+  readonly perimeter?: boolean;
   readonly backstop?: { readonly x: number; readonly z: number; readonly nx: number; readonly nz: number };
 }
 export type LastLightStandQuery = (point: WorldPoint, route: LastLightRoute) => boolean;
@@ -36,8 +38,8 @@ interface StationGeometry {
   readonly yaw: number;
   readonly approach: readonly number[];
   readonly floor: LastLightRoute;
-  /** Optional authored threshold for non-solid objects such as the Rift. */
-  readonly interaction?: {
+  /** Authored open-object perimeter, or a legacy one-sided threshold. */
+  readonly interaction?: { readonly perimeter: readonly (readonly number[])[] } | {
     readonly edge: readonly [readonly number[], readonly number[]];
     readonly outward: readonly [number, number];
   };
@@ -56,11 +58,29 @@ function profileFor(station: StationGeometry): LastLightInteractionProfile {
   const obstacle = LAST_LIGHT_OBSTACLES.find(item => item.id === key);
   let edges: readonly LastLightInteractionEdge[];
   let backstop: LastLightInteractionProfile['backstop'];
+  let perimeter = false;
   if (station.interaction) {
-    const authored = station.interaction, length = Math.hypot(...authored.outward);
-    if (length < EPSILON) throw new Error(`Invalid ${key} interaction normal`);
+    const authored = station.interaction;
     const point = (p: readonly number[]): WorldPoint => ({ x: p[0]!, y: p[1]!, z: p[2]! });
-    edges = [{ a: point(authored.edge[0]), b: point(authored.edge[1]), nx: authored.outward[0] / length, nz: authored.outward[1] / length }];
+    if ('perimeter' in authored) {
+      const boundary = authored.perimeter.map(point);
+      const area = boundary.reduce((sum, a, i) => {
+        const b = boundary[(i + 1) % boundary.length]!;
+        return sum + a.x * b.z - b.x * a.z;
+      }, 0);
+      if (boundary.length < 3 || !Number.isFinite(area) || Math.abs(area) < EPSILON) throw new Error(`Invalid ${key} interaction perimeter`);
+      edges = boundary.map((a, i) => {
+        const b = boundary[(i + 1) % boundary.length]!, dx = b.x - a.x, dz = b.z - a.z;
+        const length = Math.hypot(dx, dz), winding = Math.sign(area);
+        if (length < EPSILON) throw new Error(`Invalid ${key} interaction perimeter edge`);
+        return { a, b, nx: winding * dz / length, nz: -winding * dx / length };
+      });
+      perimeter = true;
+    } else {
+      const length = Math.hypot(...authored.outward);
+      if (length < EPSILON) throw new Error(`Invalid ${key} interaction normal`);
+      edges = [{ a: point(authored.edge[0]), b: point(authored.edge[1]), nx: authored.outward[0] / length, nz: authored.outward[1] / length }];
+    }
   } else if (obstacle) {
     // The physical base comes from the authored mesh. The approved approach
     // chooses its operating face; it is no longer a compulsory parking point.
@@ -89,7 +109,7 @@ function profileFor(station: StationGeometry): LastLightInteractionProfile {
     edges = [{ a: { x: x - nz * .46, y: position[1]!, z: z + nx * .46 },
       b: { x: x + nz * .46, y: position[1]!, z: z - nx * .46 }, nx, nz }];
   }
-  return { key, route: station.floor, edges, backstop, reach: LAST_LIGHT_INTERACTION_REACH };
+  return { key, route: station.floor, edges, backstop, perimeter, reach: LAST_LIGHT_INTERACTION_REACH };
 }
 export const LAST_LIGHT_INTERACTION_PROFILES: readonly LastLightInteractionProfile[] = [
   ...LAST_LIGHT_STATIONS.map(station => profileFor(station as StationGeometry)),
@@ -136,7 +156,39 @@ export function lastLightInteractionDistance(
     const x = edge.a.x + ex * fraction, z = edge.a.z + ez * fraction;
     const distance = Math.hypot(state.x - x, state.z - z);
     if (distance > profile.reach || distance >= nearest) continue;
-    if (reachableStandingEdge(state, x + edge.nx * STAND_OFF, z + edge.nz * STAND_OFF, canStand)) nearest = distance;
+    // At a convex opening corner, offset toward the player rather than along
+    // one face normal: the latter can put the foot circle across the next bank.
+    // A player already close to the bank need not step farther toward the void.
+    const offset = profile.perimeter ? Math.min(1, STAND_OFF / Math.max(distance, EPSILON)) : 0;
+    const standX = profile.perimeter ? x + (state.x - x) * offset : x + edge.nx * STAND_OFF;
+    const standZ = profile.perimeter ? z + (state.z - z) * offset : z + edge.nz * STAND_OFF;
+    if (reachableStandingEdge(state, standX, standZ, canStand)) {
+      nearest = distance;
+    } else if (profile.perimeter) {
+      // Where a bank meets the platform rim, the geometrically closest point
+      // can have no room for feet, while a neighbouring bank point is usable.
+      // Search that same edge without relaxing reach, support or obstruction.
+      const divisions = Math.ceil(Math.sqrt(lengthSquared) / .06);
+      for (const direction of [-1, 1]) {
+        for (let index = 1; index <= divisions; index++) {
+          const candidate = Math.max(0, Math.min(1, fraction + direction * index / divisions));
+          const cx = edge.a.x + ex * candidate, cz = edge.a.z + ez * candidate;
+          const candidateDistance = Math.hypot(state.x - cx, state.z - cz);
+          if (candidateDistance > profile.reach || candidateDistance >= nearest) break;
+          const candidateOffset = Math.min(1, STAND_OFF / Math.max(candidateDistance, EPSILON));
+          const endpoint = candidate === 0 || candidate === 1;
+          // A shifted point inside a bank must retain perpendicular foot
+          // clearance; a radial offset there would graze the bank itself.
+          const sx = endpoint ? cx + (state.x - cx) * candidateOffset : cx + edge.nx * STAND_OFF;
+          const sz = endpoint ? cz + (state.z - cz) * candidateOffset : cz + edge.nz * STAND_OFF;
+          if (reachableStandingEdge(state, sx, sz, canStand)) {
+            nearest = candidateDistance;
+            break;
+          }
+          if (candidate === 0 || candidate === 1) break;
+        }
+      }
+    }
   }
   return nearest;
 }

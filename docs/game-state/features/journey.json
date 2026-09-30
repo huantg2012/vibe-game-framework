@@ -125,11 +125,11 @@
     "id": "COH-F003",
     "title": "入口备行与出击配置",
     "domain": "loop",
-    "summary": "新地坪裂隙入口的同源内侧阈边与统一世界操作面判定选择rift目标，E经inventory-presenter打开inventoryPanel(prepare)；已实际验证这段入口链。备行仍选择已成熟武器及主/被动工具，出发验证容量并保存意图；I31只读出击条件与逐堆整数所得保持，legacy loadoutPanel不是正式入口。",
+    "summary": "新地坪裂隙入口按同源闭合周边与统一世界操作面判定选择rift目标：内陆端、两岸完整可达地面均可操作，不再限定单条内侧阈边。E经inventory-presenter打开inventoryPanel(prepare)；入口链历史限定验证与本次周边修正证据分别归QA。备行仍选择已成熟武器及主/被动工具，出发验证容量并保存意图；I31只读出击条件与逐堆整数所得保持，legacy loadoutPanel不是正式入口。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "净化点左前地坪深狭口：同层走近内侧阈边，提示踏入裂隙时 E → inventoryPanel(prepare)备行；Shift+Enter 出发"
+      "净化点左前地坪深狭口：同层走近裂口周边的完整可达地面，提示踏入裂隙时 E → inventoryPanel(prepare)备行；Shift+Enter 出发"
     ],
     "sources": [
       {
@@ -236,10 +236,11 @@
       "COH-E-I29-RUNTIME",
       "COH-E101",
       "COH-E102",
-      "COH-E104"
+      "COH-E104",
+      "COH-E106"
     ],
     "unknowns": [
-      "2026-09-30受控实机仅验证新裂口E打开正式备行；本轮未据此重验Shift+Enter实际出击、Rift全程、结算归来、持久localStorage或长期经济。",
+      "2026-09-30旧阈边受控实机仅验证裂口E打开正式备行，不自动覆盖本次全周交互区；新范围验证由本轮QA单独记录。未据此重验Shift+Enter实际出击、Rift全程、结算归来、持久localStorage或长期经济。",
       "I31每堆整数所得示例已接入，新的收益读法仍待玩家人审；不代表长期经济或成长体验已通过。"
     ]
   },

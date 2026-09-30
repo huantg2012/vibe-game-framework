@@ -12,8 +12,9 @@ const world=(x:number,y:number,z:number):V3=>[RIFT_POSITION[0]+x*c+z*s,y,RIFT_PO
 const NOTCH:V2[]=[[-.05,-.29],[.18,-.11],[.36,.65],[.29,2.52],[-.25,2.61],[-.39,.66]];
 export const RIFT_FOOTPRINT:V3[]=NOTCH.map(([x,z])=>world(x,.08,z));
 export const RIFT_INTERACTION={
-  edge:[world(-.49,.07,-.43),world(.49,.07,-.43)],
-  outward:[-s,-c],
+  // The tear has no machine front: every bank with supporting floor is usable.
+  // Share the physical cut, so moving or reshaping it cannot detach access.
+  perimeter:RIFT_FOOTPRINT.map(([x,,z])=>[x,.07,z] as V3),
 };
 export const RIFT_FORM={shape:'ground-throat-v2',mouthWidth:.75,depth:2.12};
 

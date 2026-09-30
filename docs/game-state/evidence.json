@@ -3784,5 +3784,56 @@
         "note": "由同一SVG渲染的高清静态叠图"
       }
     ]
+  },
+  {
+    "id": "COH-E106",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-09-30",
+    "revision": "5c68127 + rift perimeter interaction fix working tree (2026-09-30)",
+    "scope": "裂隙单阈边改为真实cut闭合周边，凸角安全点朝玩家径向偏移。类型/生产构建、movement 10组、rift-throat通过；layout除rift.interaction外一致，其余6区域采样记录一致。裂隙资格采样1229→2311；浏览器真实PurificationScene的页内Map夹具在两岸固定合法脚点均显示rift目标和E提示，区域图已更新并核对。 独立QA执行check-interaction共8组通过，含274连续岸线/内端/凸角正例及脚圆/断口/平台外/障碍/异层负例；旧5c68127隔离回放失败在新增左岸断言。最近边点无净空时沿同段搜索可用点，保持完整路径限制，最终movement与构建重新通过。",
+    "limitations": "IAB短按E未触发业务面板，不计本次E流程通过；受控脚点提示与自动检查不等于自然完整往返或人审。用户存档、其他交互范围和几何未改。",
+    "sources": [
+      {
+        "path": "src/systems/last-light-interaction.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/purification-forecourt-options/rift-a.ts",
+        "role": "art"
+      },
+      {
+        "path": "src/generated/last-light-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/check-interaction.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-rift-throat.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/last-light-rift-interaction-2026-09-30.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/rift-wrap-preview.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/rift-wrap-runtime.png",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/last-light-rift-interaction/regions.json",
+        "role": "doc"
+      }
+    ]
   }
 ]

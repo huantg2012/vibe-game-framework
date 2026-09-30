@@ -44,3 +44,13 @@ COH-F042 / F026，关联 F006 / F003。**IMPLEMENTED / LOCAL-VERIFIED；局部�
 0.06m网格调用实际`canStandLastLight`与`lastLightInteractionDistance`，23024个可站样本中12455个获得相应对象资格；七处均有非空轮廓。已核记录的5份生产源码/布局/参考图/深度图SHA256与当前文件一致。场景叠图按实际深度遮挡色块，上层按2.6m地坪投影；色块表示角色脚底中心的位置，不是鼠标热区、装置占地或自动导航目标。
 
 边缘仍是网格近似，不能把轮廓平滑成跨断口的通路；储藏断沿及最近操作沿直达路径的保守裁切照实显示。多色重叠表示多项同时有资格，实际E仍有最近目标与0.16m切换滞回，静态图不表达来向历史。已重新运行生成器，并在浏览器确认全部叠图、储藏单独选择与意图、俯视切换及恢复总览；[页面截图](artifacts/last-light-rift-interaction/regions-preview.png)与[高清静态叠图](artifacts/last-light-rift-interaction/regions.png)留存。此次没有运行游戏会话，不改变上述整体验收边界。
+
+## 裂隙包裹式交互修复（同日补充）
+
+用户指出仅内陆端的单阈边不符合裂隙的周边接近方式。`RIFT_INTERACTION`现从真实`RIFT_FOOTPRINT`导出闭合perimeter，正式profile逐段生成外法线；两岸和内端的可达地坪均有资格，完整脚圆/同层/1.4m/障碍与断口短路径检查保持。凸角的安全点沿最近边点朝玩家偏移最多0.245m，不再被某一面的法线推入相邻边。
+
+已重导生产layout和区域图，裂隙0.06m采样取得资格的脚点从1229增至2311；其余六处区域记录逐项一致。对比生成layout，除rift.interaction外导航、遮挡数据和其他站点完全一致。类型/生产构建、10组movement和rift-throat检查通过；构建只有既有chunk体积提示。
+
+[修复后的包裹区域](artifacts/last-light-rift-interaction/rift-wrap-preview.png)已在只读查看器单独核对。另在真实PurificationScene、页内Map存档的DEV夹具中定位原先无资格的左岸(1.072,5.363)与右岸(2.346,5.105)，两处均显示target=rift与“[E]踏入裂隙”；[右岸运行截图](artifacts/last-light-rift-interaction/rift-wrap-runtime.png)留存，控制台无warning/error。IAB短按E未打开业务面板，因此本次仅记新增区域的正式目标/提示验证，不记E业务、自然整趟或人审通过；未改用户存档。
+
+独立QA已执行`check-interaction.ts`，8组检查通过：274个两岸/内端/凸角连续脚点、7推荐站位、61正面及129前侧样本、12背面拒绝、217连续接近点，另含洞内/跨洞脚圆/平台外/残骸障碍/异层与高度负例。同一新增回归隔离回放旧`5c68127`在左岸断言失败。该回归先发现右岸外端最近点不可用，最终通过同段≤0.06m邻边点搜索修复（段内法线净空、凸角径向偏移），没有放松直达脚圆规则；最终movement和构建已重新通过。
