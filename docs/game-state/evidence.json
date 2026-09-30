@@ -3835,5 +3835,41 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E107",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-09-30",
+    "revision": "15ed7bfff2a2e5a250f07c7e93ab1df3e385c8e5",
+    "scope": "知情专家评审标题背景与当前Last Light净化点的衔接：只读观察正式根页面标题；另通过独立页内Map存档后端启动正式Boot/MainMenu，在真实标题点击“进入净化点”进入正式PurificationScene，留存标题与净化点首屏静帧；另以源码核对新档2100ms配置、黑场切场、镜头与输入交还、音频提前进入及无独立开场叙事/分步教程的实现链。评审认为原画美术方向成立，建议依据当前净化点的人物—炉火—残墙座席—核心重构开场取景及空间衔接，属于同画风内的构图建议。",
+    "limitations": "知情专家判断，非盲测或普通玩家测试；静帧与源码时序不证明连续转场节奏自然，音频未试听。仅验证真实标题进入净化点，未扩验继续存档、自然六站路线或完整搜撤循环；Map入口不读写用户正式存档。没有正式实现变更，也没有用户接受建议或美术人审通过；既有工作状态与验收结论不升级。",
+    "sources": [
+      {
+        "path": "docs/reviews/2026-09-30-opening-haven-experience.md",
+        "role": "doc",
+        "note": "本次评审正文、建议与未验证范围；不作为已实施或人审接受记录"
+      },
+      {
+        "path": "docs/reviews/artifacts/opening-haven-2026-09-30/title.png",
+        "role": "doc",
+        "note": "正常根页面的正式标题浏览器静帧；仅观察，无存档操作"
+      },
+      {
+        "path": "docs/reviews/artifacts/opening-haven-2026-09-30/haven-first.png",
+        "role": "doc",
+        "note": "经真实标题点击进入后净化点首屏；不证明连续转场节奏"
+      },
+      {
+        "path": "docs/qa/interactive/iteration31-record-review.html",
+        "role": "test",
+        "note": "现有隔离Map入口，保留正式标题，刷新清空测试记录"
+      },
+      {
+        "path": "src/dev/iteration31-record-review.ts",
+        "role": "test",
+        "note": "在正式Phaser场景创建前注入Map存储，不自动跳过标题"
+      }
+    ]
   }
 ]
