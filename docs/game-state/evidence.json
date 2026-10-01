@@ -4036,5 +4036,55 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E113",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-01",
+    "revision": "ed5a07ae653ed20b10d2ca7c61ff56616feae0a7之后的联合外景动态工作树（2026-10-01）",
+    "scope": "用户认可F增强近处动效并批准外景续作。静态核对两端四类表现：深井灰雾、不完整巨大暗影跨柱隙、已有污染局部迁移与稀疏落屑。F首页以作者空间窗口及逐处前景轮廓遮罩实现；joint实景通过显式DEV exteriorMotion profile启用GLSL，以世界射线和视差调整后的真实不透明深度裁切，使用原污染材质/灯场及真实断沿。两端延用Scene时间，各自保留暂停、减动及清理合同。",
+    "limitations": "本条为代码与设计事实登记，不冒充本代理运行验证。首页遮罩不是三维深度；实景限定受控帧、原shader关闭分支对照及自然浏览器观察须分别按统一QA实际范围判断，不等于完整正式入口或业务流程验证。新增外景动态、两端整体连续性及跨设备表现仍待审；生产入口不启用该profile，静态资源/导航/人物未据此替换。",
+    "sources": [
+      {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc",
+        "note": "标题opening-title-exterior与实景opening-exterior-runtime两端实际执行结果；旧近处证据保持历史范围。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/title-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-joint-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-opening-title-exterior.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-opening-exterior.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-title-exterior/result.json",
+        "role": "doc",
+        "note": "主线程/QA记录的最终首页专项及自然录屏范围，按源码指纹判读。"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-exterior-runtime/result.json",
+        "role": "doc",
+        "note": "受控真实Renderer的深度保护、关闭分支与减动对照，不冒充正式全程。"
+      }
+    ]
   }
 ]

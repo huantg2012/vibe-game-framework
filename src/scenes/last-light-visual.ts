@@ -36,7 +36,7 @@ interface RuntimeManifest {
 type PulseKind = 'repair' | 'growth' | 'offering' | 'offering-complete';
 const ROOT = 'assets/last-light/';
 const KEY = 'last-light:';
-interface LastLightAssetProfile { root: string; cachePrefix: string; }
+interface LastLightAssetProfile { root: string; cachePrefix: string; exteriorMotion?: 'joint-depth'; }
 const PRODUCTION_ASSETS: LastLightAssetProfile = { root: ROOT, cachePrefix: KEY };
 
 /** An explicit DEV fixture may own a complete asset pack. Never replace a
@@ -52,7 +52,8 @@ function assetProfile(scene: Phaser.Scene): LastLightAssetProfile {
     || profile.cachePrefix === KEY || profile.cachePrefix.length < 2) {
     throw new Error('A DEV Last Light asset profile needs an absolute root ending in / and a unique cachePrefix ending in :.');
   }
-  return { root: profile.root, cachePrefix: profile.cachePrefix };
+  if(profile.exteriorMotion !== undefined && profile.exteriorMotion !== 'joint-depth')throw new Error('Unknown DEV Last Light exterior motion profile.');
+  return { root: profile.root, cachePrefix: profile.cachePrefix, exteriorMotion: profile.exteriorMotion };
 }
 const IMAGE_FILES = [
   'base-before-energy.png', 'background.png', 'haven.png', 'albedo.png', 'normal.png', 'rough-spec.png',
@@ -112,7 +113,7 @@ export class LastLightVisual {
     }
   }
   constructor(private readonly scene: Phaser.Scene) {
-    const { root, cachePrefix } = assetProfile(scene);
+    const { root, cachePrefix, exteriorMotion } = assetProfile(scene);
     const manifest = scene.cache.json.get(cachePrefix + 'manifest') as RuntimeManifest | undefined;
     if (!manifest?.camera || !manifest.actor?.frames?.length) throw new Error('Last Light production assets are missing; preload must finish before creating the scene.');
     const image = (filename: string | undefined): LastLightImage => {
@@ -138,6 +139,7 @@ export class LastLightVisual {
       images, actorPortrait: image(a.color), actorDepthOffset: 80, actorDepthScale: 256,
       exteriorParallax: ['far', 'middle', 'near'].map(id => manifest.exteriorLayers.find(layer => layer.id === id)!.parallax) as [number, number, number],
       exteriorPadding: manifest.exteriorPadding ?? manifest.exteriorLayers[0]?.padding ?? -(manifest.exteriorLayers[0]?.offset?.[0] ?? 0),
+      exteriorMotion,
     };
     this.fallbackBase = image(t.base); this.fallbackActor = image(a.color);
     try { this.renderer = new LastLightRenderer(this.pack); }
@@ -148,6 +150,7 @@ export class LastLightVisual {
     scene.game.canvas.dataset.lastLightRenderer = this.renderer instanceof LastLightRenderer ? 'webgl2' : 'canvas-degraded';
     scene.game.canvas.dataset.lastLightAssetRoot = root;
     scene.game.canvas.dataset.lastLightAssetCache = cachePrefix;
+    scene.game.canvas.dataset.lastLightExteriorMotion = exteriorMotion ?? 'production';
     this.textureKey = `last-light-composite-${++visualId}`;
     // TextureSource natively accepts canvas sources. addCanvas would force a
     // 2D context and CPU readback, so use TextureSource's WebGL upload path.

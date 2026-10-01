@@ -26,6 +26,8 @@ export interface LastLightRenderPack {
   actorDepthOffset: number; actorDepthScale: number;
   /** Full hidden exterior plates include a guard band on every side. */
   exteriorPadding: number; exteriorParallax: readonly [number, number, number];
+  /** Explicitly opt-in DEV pack; absent for the production asset root. */
+  exteriorMotion?: 'joint-depth';
 }
 export interface LastLightRenderState {
   seconds: number; world: LightVector; yaw: number; walking: boolean; resting: boolean;
@@ -298,6 +300,12 @@ export class LastLightRenderer {
     const p = this.environment;
     this.begin(p, [['uScene',image('scene')],['uBackground',image('background')],['uFar',image('far')],['uMiddle',image('middle')],['uNear',image('near')],['uExteriorDepth',image('exteriorDepth')],['uExteriorFields',image('exteriorFields')]]);
     gl.uniform1f(this.uniform(p, 'uSeconds'), state.reducedMotion ? 0 : state.seconds);
+    gl.uniform1f(this.uniform(p, 'uJointExterior'), this.pack.exteriorMotion === 'joint-depth' ? 1 : 0);
+    if(this.pack.exteriorMotion === 'joint-depth'){
+      for(const [name,value] of [['uExteriorRight',this.basis.right],['uExteriorUp',this.basis.up],['uExteriorBack',this.basis.back],['uExteriorTarget',this.pack.camera.target]] as const)gl.uniform3fv(this.uniform(p,name),value);
+      gl.uniform2fv(this.uniform(p,'uExteriorOrigin'),this.pack.camera.origin);
+      gl.uniform1f(this.uniform(p,'uExteriorScale'),this.pack.camera.scale);
+    }
     const target=getLastLightExteriorObserver(state.world,this.pack.camera);
     const dt=Math.max(0,Math.min(.1,state.seconds-this.lastSeconds));this.lastSeconds=state.seconds;
     if(!state.reducedMotion){const gain=1.-Math.exp(-dt/.14);this.observer[0]+=(target[0]-this.observer[0])*gain;this.observer[1]+=(target[1]-this.observer[1])*gain;}

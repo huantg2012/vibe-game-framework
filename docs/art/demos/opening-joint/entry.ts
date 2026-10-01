@@ -26,7 +26,7 @@ const TITLE_CANDIDATE = !import.meta.env.DEV || requestedTitle === '0' ? null
 const TITLE_URL = TITLE_CANDIDATE
   ? `/docs/art/demos/opening-joint/assets/title/candidates/${TITLE_CANDIDATE}.png`
   : '/docs/art/demos/opening-joint/assets/title/master.png';
-const ASSETS = { root: '/docs/art/demos/opening-joint/assets/haven/', cachePrefix: 'opening-joint:' };
+const ASSETS = { root: '/docs/art/demos/opening-joint/assets/haven/', cachePrefix: 'opening-joint:', exteriorMotion: 'joint-depth' as const };
 const status = document.querySelector<HTMLSpanElement>('#joint-status')!;
 const returnButton = document.querySelector<HTMLButtonElement>('#return-title')!;
 const compareButton = document.querySelector<HTMLButtonElement>('#compare-frames')!;

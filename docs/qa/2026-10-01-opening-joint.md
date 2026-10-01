@@ -73,3 +73,20 @@
 证据：[增强版8秒实录](artifacts/opening-title-motion-strong/f-title-motion.webm) · [增强版首页](artifacts/opening-title-motion-strong/f-title-start.png) · [旧新版视频实帧对照](artifacts/opening-title-motion-strong/comparison-to-previous.json)。旧弱版证据保持原样。[比较脚本](../../tools/qa/compare-opening-title-motion.mjs)对两段960×640视频各取39帧，每200ms的区域平均RGB绝对变化量：核心3.37→6.95，炉栅2.18→5.79，烟区0.76→1.37，远空气0.37→0.41；静态菜单编码噪声对照0.167→0.162。该数字只证明这两段8秒录制中的时间变化增强，不代表感知强度倍率、整周期平均亮度或美术验收；两段起始相位未同步且有视频压缩误差。
 
 本轮仅为DEV联合样片强度修订，正式生产首页和资源未替换；F绘制方向继续为HUMAN-SELECTED，增强动效观感仍待用户审查。其余限定验证与未验收范围沿用上一节。
+
+## 同日：外景动态与实景连续性
+
+用户认可增强后的近处动效，并批准外景四方向：柱间灰雾、远处庞大局部暗影、已有污染迁移、断沿坠屑。新增表现仅接联合DEV；F静图、人物/建筑轮廓、已认可核心炉火参数、实景资产和导航均保持。实现合同已原地更新到同一spec。
+
+首页新增[title-exterior.ts](../art/demos/opening-joint/title-exterior.ts)：作者标定的三处空间窗口与梁柱/前景轮廓遮罩提供图像域遮挡，输运多尺度密度形成可见雾流；暗影首次7–19秒经过，之后是不等间隔序列；污染只改已有材质像素，碎屑从六处断沿下坠。不能将首页遮罩称为真实三维深度。实景通过显式DEV `exteriorMotion: joint-depth` 接入相同动态语言，雾体沿相机射线积分、由逐像素实际胜出深度截断；侵蚀绑定已有中远层材质，坠屑用世界投影和深度遮挡。
+
+最终限定验证：
+
+- [首页专项](../../tools/qa/check-opening-title-exterior.mjs)复用原12项生命周期并通过5项新增外景检查：[结果](artifacts/opening-title-exterior/result.json)。20.03秒真实F＋实际动效画布录像的Scene时钟连续，前三秒三处外景均有变化；17相位中菜单、人物、炉、核心、前地坪与主柱的保护采样区均零外景alpha。远柱廊暗化像素常态最多49，首次事件中达9303，证明局部暗影确实输出，不以时钟或参数变化代替图像证据。没有页面/请求异常。
+- [实景专项](../../tools/qa/check-opening-exterior.mjs)使用真实Renderer和联合资产：[结果](artifacts/opening-exterior-runtime/result.json)。新增动态对207594个实际近层/据点像素零差；每个时间点减去同刻关闭profile的输出后，五组外景差分仍有63361–103766像素变化，排除了旧核心/炉火变化的干扰。减少动态两时刻零差；关闭profile的新shader与`ed5a07a`旧shader在相同联合资产、固定状态下全帧零差。该证据是受控渲染器回放，不是全场自然操作或正式包完整回归。
+- 本机20秒headless录制同时采集rAF，均值16.67ms、p95 21.90ms、p99 22.50ms，最大26.1ms，未出现超过33.4ms的间隔；含录制及采样开销，无持续低帧率现象，不构成低端或长期性能认证。实景CPU提交均值0.04ms不含GPU完成成本，不能当端到端帧率。
+- 主线程在内置浏览器正常尺寸查看首页，点击开始进入实际净化点，再返回首页；[实际入场截图](artifacts/opening-exterior-runtime/browser-entry.png)。目标TypeScript、生产构建和差异检查通过；构建保留既有大chunk警告。
+
+复验前修正三项真实缺口：首页核心顶部金属弧超出原前景遮罩，新增轮廓保护后窄实体采样零覆盖；实景作者层索引与合成层索引不同，初版误将近层纳入侵蚀，收紧到far/middle后真实近层/据点全样本零差；首页碎屑从只检查锚点改成每个像素都裁切，避免2×3像素碎片跨越前景边缘。最后改动后完整重跑首页专项并更新录像和SHA，首次失败录制不混入最终证据。
+
+审查入口：[20秒首页连续录像](artifacts/opening-title-exterior/f-title-exterior.webm) · [13.3秒经过画面](artifacts/opening-title-exterior/f-title-exterior-frame-3.png) · [实景13秒受控帧](artifacts/opening-exterior-runtime/runtime-13s.png)。技术验证不代签暗影形态、雾的可读性及两端动态连续性的用户审美验收。正式默认首页、正式资产未替换；导航、交易、Rift、Canvas降级和长期性能本轮未扩验。

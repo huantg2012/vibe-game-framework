@@ -1,5 +1,6 @@
 /** Living illustration for selected F. All coordinates use the 960×640 title.
  * Architecture, actor and camera stay fixed. Scene delta owns every effect. */
+import { JointTitleExterior } from './title-exterior';
 const W = 960, H = 640, TAU = Math.PI * 2;
 const clamp = (n: number): number => Math.max(0, Math.min(1, n));
 const wave = (t: number): number => .5 + .5 * Math.sin(t);
@@ -28,9 +29,7 @@ export class JointTitleMotion {
   private readonly fire: LightMask;
   private readonly grille = surface();
   private readonly flames = surface();
-  private readonly mist = surface();
-  private readonly mistMask = surface();
-  private readonly airVisibility = new Uint8ClampedArray(W * H);
+  private readonly exterior: JointTitleExterior;
   private readonly energy = document.createElement('canvas');
   private readonly energyPixels: ImageData;
   private readonly pixels: Uint8ClampedArray;
@@ -44,7 +43,7 @@ export class JointTitleMotion {
   constructor(image: HTMLImageElement) {
     this.canvas.className = 'joint-title-motion';
     this.canvas.setAttribute('aria-hidden', 'true');
-    this.canvas.dataset.motionProfile = 'selected-f-readable-motion';
+    this.canvas.dataset.motionProfile = 'selected-f-living-exterior';
     this.canvas.dataset.motionTime = '0.000';
     this.canvas.style.pointerEvents = 'none';
     this.context = this.canvas.getContext('2d')!;
@@ -53,8 +52,9 @@ export class JointTitleMotion {
     source.imageSmoothingEnabled = false;
     source.drawImage(image, 0, 0, W, H);
     this.pixels = source.getImageData(0, 0, W, H).data;
+    this.exterior = new JointTitleExterior(this.pixels);
     this.core = this.buildLight('core'); this.fire = this.buildLight('fire');
-    this.buildGrilleAndAir();
+    this.buildGrille();
     this.energy.width = this.energyRect.w; this.energy.height = this.energyRect.h;
     this.energyPixels = this.energy.getContext('2d')!.createImageData(this.energy.width, this.energy.height);
     this.reduced.addEventListener('change', this.onMotionPreference);
@@ -90,29 +90,17 @@ export class JointTitleMotion {
     return { bright, dark };
   }
 
-  private buildGrilleAndAir(): void {
+  private buildGrille(): void {
     const ctx = this.grille.getContext('2d')!, data = ctx.createImageData(W, H);
-    const air = ctx.createImageData(W, H);
-    const gaps: readonly (readonly Point[])[] = [
-      [[522, 70], [596, 83], [604, 223], [637, 295], [587, 357], [522, 404]],
-      [[444, 431], [507, 409], [550, 532], [565, 640], [426, 640], [410, 555]],
-    ];
-    for (let y = 50; y < H; y++) for (let x = 400; x < 730; x++) {
+    for (let y = 354; y < 406; y++) for (let x = 661; x < 705; x++) {
       const i = (y * W + x) * 4;
       const r = this.pixels[i]!, g = this.pixels[i + 1]!, b = this.pixels[i + 2]!;
       if (x > 661 && x < 704 && y > 354 && y < 405 && r > 110 && r > g * 1.3 && g > b * 1.4) {
         data.data[i] = 255; data.data[i + 1] = 255; data.data[i + 2] = 255;
         data.data[i + 3] = Math.round(clamp((r - 90) / 90) * 255);
       }
-      if (gaps.some(shape => polygon(x, y, shape))) {
-        const luminosity = Math.max(r, g, b);
-        const edge = clamp((x - 405) / 25) * clamp((640 - y) / 25);
-        air.data[i] = 255; air.data[i + 1] = 255; air.data[i + 2] = 255;
-        air.data[i + 3] = Math.round(255 * clamp((35 - luminosity) / 22) * edge);
-        this.airVisibility[y * W + x] = air.data[i + 3]!;
-      }
     }
-    ctx.putImageData(data, 0, 0); this.mistMask.getContext('2d')!.putImageData(air, 0, 0);
+    ctx.putImageData(data, 0, 0);
   }
 
   update(delta: number): void {
@@ -177,27 +165,16 @@ export class JointTitleMotion {
   }
 
   private drawAir(t: number): void {
-    const ctx = this.mist.getContext('2d')!;
-    ctx.clearRect(0, 0, W, H); ctx.globalCompositeOperation = 'source-over';
-    for (let y = 55; y < H; y += 6) for (let x = 405; x < 640; x += 6) {
-      const field = wave(x * .023 + y * .018 - t * .21 + Math.sin(y * .031 + t * .19));
-      const layer = wave(x * .012 - y * .027 + t * .13);
-      ctx.fillStyle = `rgba(57,66,62,${field * layer * .14})`; ctx.fillRect(x, y, 6, 6);
-    }
-    ctx.globalCompositeOperation = 'destination-in'; ctx.drawImage(this.mistMask, 0, 0);
-    ctx.globalCompositeOperation = 'source-over'; this.context.drawImage(this.mist, 0, 0);
-    for (let i = 0; i < 34; i++) {
-      const near = i < 20;
-      const lifetime = near ? 4.2 + random(i) * 3.8 : 11 + random(i) * 8;
+    this.exterior.draw(t); this.context.drawImage(this.exterior.canvas, 0, 0);
+    for (let i = 0; i < 20; i++) {
+      const lifetime = 4.2 + random(i) * 3.8;
       const p = fract(t / lifetime + random(i + 71));
-      const x = near ? 607 + random(i + 12) * 126 + Math.sin(t * .35 + i) * 9
-        : 442 + random(i + 12) * 180 + Math.sin(t * .14 + i) * 5;
-      const y = near ? 433 - p * 104 : 135 + p * 360;
+      const x = 607 + random(i + 12) * 126 + Math.sin(t * .35 + i) * 9;
+      const y = 433 - p * 104;
       const fade = Math.sin(p * Math.PI) ** 2;
-      const light = near ? clamp(1 - Math.hypot((x - 675) / 97, (y - 386) / 73))
-        : .35 * this.airVisibility[Math.round(y) * W + Math.round(x)]! / 255;
-      this.context.fillStyle = near ? `rgba(204,177,127,${fade * light * .82})` : `rgba(102,116,107,${fade * light})`;
-      this.context.fillRect(Math.round(x), Math.round(y), near && i % 3 === 0 ? 2 : 1, near && i % 2 === 0 ? 2 : 1);
+      const light = clamp(1 - Math.hypot((x - 675) / 97, (y - 386) / 73));
+      this.context.fillStyle = `rgba(204,177,127,${fade * light * .82})`;
+      this.context.fillRect(Math.round(x), Math.round(y), i % 3 === 0 ? 2 : 1, i % 2 === 0 ? 2 : 1);
     }
     this.drawSmoke(t);
   }
@@ -238,9 +215,10 @@ export class JointTitleMotion {
   destroy(): void {
     if (this.disposed) return;
     this.disposed = true; this.reduced.removeEventListener('change', this.onMotionPreference);
+    this.exterior.destroy();
     this.canvas.remove();
     for (const canvas of [this.canvas, this.source, this.core.bright, this.core.dark,
-      this.fire.bright, this.fire.dark, this.grille, this.flames, this.mist, this.mistMask, this.energy]) {
+      this.fire.bright, this.fire.dark, this.grille, this.flames, this.energy]) {
       canvas.width = 0; canvas.height = 0;
     }
   }

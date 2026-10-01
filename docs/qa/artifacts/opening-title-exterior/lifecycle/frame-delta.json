@@ -1,0 +1,79 @@
+{
+  "method": "Actual animated browser screenshot versus initially reduced-motion screenshot with independently verified zero-alpha motion canvas. Absolute RGB differences (0-255).",
+  "crop": {
+    "left": 70,
+    "top": 82,
+    "width": 960,
+    "height": 640
+  },
+  "sources": {
+    "animated": "f-title-after-8s.png",
+    "still": "f-title-initial-reduced.png"
+  },
+  "measurements": {
+    "scene": {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 640
+      },
+      "changedPixels": 112919,
+      "totalPixels": 614400,
+      "meanChannelDeltaOnChangedPixels": 4.446373063877647,
+      "maxChannelDelta": 188
+    },
+    "menuSafety": {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 360,
+        "h": 640
+      },
+      "changedPixels": 0,
+      "totalPixels": 230400,
+      "meanChannelDeltaOnChangedPixels": 0,
+      "maxChannelDelta": 0
+    },
+    "coreInterior": {
+      "bounds": {
+        "x": 794,
+        "y": 237,
+        "w": 47,
+        "h": 67
+      },
+      "changedPixels": 2156,
+      "totalPixels": 3149,
+      "meanChannelDeltaOnChangedPixels": 26.177798392084107,
+      "maxChannelDelta": 188
+    },
+    "furnaceGrille": {
+      "bounds": {
+        "x": 662,
+        "y": 354,
+        "w": 42,
+        "h": 51
+      },
+      "changedPixels": 1009,
+      "totalPixels": 2142,
+      "meanChannelDeltaOnChangedPixels": 8.841096795507102,
+      "maxChannelDelta": 81
+    },
+    "distantAir": {
+      "bounds": {
+        "x": 405,
+        "y": 55,
+        "w": 235,
+        "h": 585
+      },
+      "changedPixels": 57529,
+      "totalPixels": 137475,
+      "meanChannelDeltaOnChangedPixels": 4.373214668543981,
+      "maxChannelDelta": 60
+    }
+  },
+  "limitations": [
+    "One observed phase, not a visibility or aesthetic acceptance threshold.",
+    "Regions measure the composite and may overlap scene details; they do not isolate individual effect layers."
+  ]
+}

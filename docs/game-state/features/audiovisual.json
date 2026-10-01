@@ -381,7 +381,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "Last Light A正式场景保留断口回廊、单西坡、三层外景与真实光影。2026-09-30入口改为ground-throat-v2：左前地坪0.75m狭口穿建筑断面向下2.12m，移除竖立黑膜；作者几何、碰撞切口、显式交互阈边与烘焙资源同源。七处操作改为世界操作边资格。限定几何/交互测试与真实场景局部E流程不代签整体画面、动态和手感人审。 2026-10-01 opening-joint的巨构/深井空气/地坪断面仍是独立DEV。用户已选首页F画法，默认F加入专属炉火、核心密度流动/胀缩及同步受光、烟灰和深层空气；用户认可动效选点，上一版强度不足；当前原位增强，观感待审，不替换正式首页或实景。",
+    "summary": "Last Light A正式场景保留断口回廊、单西坡、三层外景与真实光影。2026-09-30入口改为ground-throat-v2：左前地坪0.75m狭口穿建筑断面向下2.12m，移除竖立黑膜；作者几何、碰撞切口、显式交互阈边与烘焙资源同源。七处操作改为世界操作边资格。限定几何/交互测试与真实场景局部E流程不代签整体画面、动态和手感人审。 2026-10-01 F画法与增强近处动效获认可；新增灰雾、柱隙后不完整巨大暗影、已有污染局部迁移及断沿落屑仅接首页与joint DEV实景。首页按作者遮罩，实景按世界射线和真实深度裁切，新增外景待审；正式入口与资产保持。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1034,7 +1034,8 @@
       },
       {
         "path": "src/scenes/last-light-visual.ts",
-        "role": "code"
+        "role": "code",
+        "note": "DEV-only资产profile验证与exteriorMotion可选字段传递；生产构建忽略DEV profile。"
       },
       {
         "path": "src/art/last-light-renderer.ts",
@@ -1167,7 +1168,7 @@
       {
         "path": "docs/specs/art-opening-haven-continuity.md",
         "role": "spec",
-        "note": "联合视觉唯一规格；F画法HUMAN-SELECTED，DEV默认F与专属动态，动画观感及两端连续性待审。"
+        "note": "F画法及增强近处动效获认可；本轮首页图像域遮罩与joint实景深度动态的唯一规格，新增外景待审。"
       },
       {
         "path": "docs/art/demos/opening-joint/assets/haven/manifest.json",
@@ -1262,6 +1263,26 @@
         "path": "tools/qa/compare-opening-title-motion.mjs",
         "role": "test",
         "note": "增强版与旧弱版同输入时序像素对照；实际结果和限制见统一QA。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/title-exterior.ts",
+        "role": "code",
+        "note": "F原画专属空间窗口/前景轮廓遮罩，灰雾、巨大不完整暗影、已有污染与断沿落屑；非3D重建。"
+      },
+      {
+        "path": "tools/qa/check-opening-title-exterior.mjs",
+        "role": "test",
+        "note": "F首页外景专项及原画保护；实际执行与限制归统一QA。"
+      },
+      {
+        "path": "src/art/last-light-joint-exterior.ts",
+        "role": "code",
+        "note": "joint-depth显式DEV动态GLSL；世界射线空气与resolved opaque depth裁切，原有污染材质和真实断沿落屑。"
+      },
+      {
+        "path": "tools/qa/check-opening-exterior.mjs",
+        "role": "test",
+        "note": "joint实景受控WebGL2帧、关闭分支与旧shader对照、深度/近景保护及减动检查；不等于完整正式游玩。"
       }
     ],
     "dependsOn": [
@@ -1345,7 +1366,8 @@
       "COH-E109",
       "COH-E110",
       "COH-E111",
-      "COH-E112"
+      "COH-E112",
+      "COH-E113"
     ],
     "unknowns": [
       "2026-09-30新裂隙与七处操作区域尚无用户审美/手感终审；限定浏览器证据先覆盖净化器原approach与圆角E、裂口E进备行，其余完整动线/动态/跨设备与业务回归只按本轮QA实际记录，不由旧渲染证据推定通过。I28继续挂起。",
@@ -1357,7 +1379,7 @@
       "历史截至2026-09-28的覆盖限制：正式根游戏WebGL2无fallback、主菜单继续重入与W短移通过，本机短样约120fps；不是性能基准或长时稳定性证明。外景atlas单份解码约80.7MB，未做完整GPU内存画像或fallback实机验证。",
       "历史截至2026-09-28的覆盖限制：同正式Renderer/素材/step/gait的可复现页不写存档，不等于正式键盘完整六站复走；本轮未重验业务交易、坐下UI、Rift全流程、全成长/供奉/随机世界、专门音频、无障碍和长期体验。I28及原未评审项保持。",
       "联合样片独立DEV资源包不构成正式外景替换或用户美术通过；新的深度层次、角色炉边受光和标题连续性须在实际操作中审查。",
-      "2026-10-01用户已选F画法（HUMAN-SELECTED），用户认可动效选点但不认可上一轮强度，当前增强版仍待人审；旧弱版证据不作为新强度通过依据。F静图本轮未重绘；生成提示不是精确网格/色数的已验收规格，已有对象描绘差异不因加动效而自动消失。动画观感、两端连续性和正式生产替换分别确认。"
+      "2026-10-01用户已选F画法并认可增强后的近处动效；本轮新增首页与joint DEV实景外景仍待人审。首页是作者空间/前景轮廓遮罩，实景是世界射线与真实解析深度裁切，不相互冒充。未重绘F或替换生产资产；两端整体连续性、跨设备/Canvas动态与完整搜撤未由本轮自动扩大验收。"
     ]
   }
 ]

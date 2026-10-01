@@ -1,4 +1,5 @@
 import { lastLightBasis, type LastLightCamera, type LightVector } from './last-light-spatial';
+import { LAST_LIGHT_JOINT_EXTERIOR_GLSL } from './last-light-joint-exterior';
 
 /** Camera-relative displacement of an anchored foreground. Values are native
  * art pixels, not a fraction of the player's entire walk across the room. */
@@ -47,6 +48,7 @@ uniform float uPadding;
 uniform vec3 uHealth;
 uniform float uCharge,uGrowth,uThicken;
 uniform float uPulses[6];
+${LAST_LIGHT_JOINT_EXTERIOR_GLSL}
 
 vec2 plateUv(vec2 pixel,vec2 offset){
   vec2 p=pixel+vec2(uPadding)-offset;
@@ -88,6 +90,7 @@ vec4 exterior(vec4 plate,vec2 uv,float layer,vec4 encodedDepth){
   vec4 data=exteriorField(uv,layer,5.);
   vec2 sourcePixel=vec2(uv.x,1.-uv.y)*uPlateSize-uPadding;
   plate.rgb+=erosion(other,data,sourcePixel);
+  if(uJointExterior>.5&&layer<1.5)plate.rgb+=jointWound(plate.rgb,other,data,sourcePixel,uSeconds);
   // Preserve every near joint and its contact shadow exactly. Depth comes from
   // the middle and remote fabric behind it, not a moving or rubber-like root.
   if(layer>1.5||encodedDepth.a<.5)return plate;
@@ -169,7 +172,9 @@ void main(){
   color=far.rgb+color*(1.-far.a);color=middle.rgb+color*(1.-middle.a);
   color=near.rgb+color*(1.-near.a);color=haven.rgb+color*(1.-haven.a);
   float visibleLayer=floor(resolved.b*255.+.5);
-  if(visibleLayer<2.5){
+  if(uJointExterior>.5&&visibleLayer<2.5){
+    color=jointExteriorAtmosphere(color,pixel,closest,farOffset,middleOffset,uSeconds);
+  }else if(visibleLayer<2.5){
     // Air and the unplaceable passing contour are tied to the deep field and
     // hidden by the actual winning depth. Near joints/platform stay untouched.
     vec2 deepPixel=pixel-farOffset,p=deepPixel*vec2(.0067,.0048);

@@ -1,0 +1,975 @@
+{
+  "ok": true,
+  "started": "2026-10-01T14:51:22.403Z",
+  "revision": "ed5a07ae653ed20b10d2ca7c61ff56616feae0a7",
+  "url": "http://127.0.0.1:3027/docs/art/demos/opening-joint/index.html",
+  "sourceFingerprints": {
+    "docs/art/demos/opening-joint/entry.ts": "01a26928c4ab6390d196d446577d25c6a4dcd39a1a69f69297ac6eff4d22dd5d",
+    "docs/art/demos/opening-joint/title-motion.ts": "6e3d2f26774445a651e5325f6763b646b7a970f3e17a75e74fa88f4bec448c85",
+    "docs/art/demos/opening-joint/title-exterior.ts": "3d8577b0e47ece3f3786953d7fea942e8b04b8fdb86acb12699a2f18d989f620",
+    "docs/art/demos/opening-joint/style.css": "8f3f07b164562ae313e2d75ddbce7067762885b2eb07134a38f429d6a0bd2f19",
+    "docs/art/demos/opening-joint/assets/title/candidates/f.png": "3d7ab12956aab13cab7331b66572331c52ddb99b55565ce10005fcb55bc04564"
+  },
+  "lifecycle": {
+    "result": "lifecycle/result.json",
+    "checks": [
+      "default entry loads F and exactly one motion canvas",
+      "scene time advances and real canvas RGBA pixels change",
+      "8-second WebM captures actual artwork plus live motion",
+      "dispatched browser blur freezes clock and pixels",
+      "keyboard resume restores actual animation",
+      "reduced-motion clears the overlay to the original F illustration and freezes its clock",
+      "restoring motion preference resumes pixels and clock",
+      "real haven entry removes the original motion instance and stops its clock",
+      "return creates exactly one new F motion instance and playback resumes",
+      "initial reduced-motion load has a zero-alpha overlay and finite zero clock; disabling it restores motion",
+      "original-origin storage sentinel remains untouched",
+      "every sampled frame leaves the x < 360 menu safety region fully transparent"
+    ]
+  },
+  "checks": [
+    "actual default F playback changes in all three exterior depth regions within the first three seconds",
+    "at least 19 seconds of natural playback includes the first event window, with real scene-clock and frame evidence",
+    "actual exported exterior layer remains transparent over menu, seated actor, furnace, core, foreground floor and main column in 17 sampled phases",
+    "isolated actual exterior renderer changes before the first event and repeats deterministically at identical scene time",
+    "first event measurably darkens the far corridor beyond pre/post-event phases"
+  ],
+  "regions": {
+    "farCorridor": {
+      "x": 690,
+      "y": 40,
+      "w": 100,
+      "h": 160
+    },
+    "middleGap": {
+      "x": 545,
+      "y": 260,
+      "w": 75,
+      "h": 70
+    },
+    "deepWell": {
+      "x": 490,
+      "y": 510,
+      "w": 60,
+      "h": 110
+    }
+  },
+  "recording": {
+    "supported": true,
+    "mimeType": "video/webm;codecs=vp9",
+    "durationMs": 20033.10000014305,
+    "frames": 1202,
+    "bytes": 8475950,
+    "requestedCaptureFps": 30,
+    "width": 960,
+    "height": 640,
+    "startSceneTime": 0.283,
+    "endSceneTime": 20.313,
+    "frameCadence": {
+      "sampleCount": 1201,
+      "meanMs": 16.66794338055594,
+      "approximateFps": 59.995404182051296,
+      "p95Ms": 21.90000009536743,
+      "p99Ms": 22.5,
+      "maxMs": 26.09999990463257,
+      "above33ms": 0,
+      "above50ms": 0
+    },
+    "samples": [
+      {
+        "elapsedMs": 15.100000143051147,
+        "sceneTime": 0.283,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 0,
+            "meanChannelDelta": 0,
+            "maxChannelDelta": 0
+          },
+          "middleGap": {
+            "changedPixels": 0,
+            "meanChannelDelta": 0,
+            "maxChannelDelta": 0
+          },
+          "deepWell": {
+            "changedPixels": 0,
+            "meanChannelDelta": 0,
+            "maxChannelDelta": 0
+          }
+        }
+      },
+      {
+        "elapsedMs": 519.3000001907349,
+        "sceneTime": 0.816,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 8758,
+            "meanChannelDelta": 0.3716041666666667,
+            "maxChannelDelta": 29
+          },
+          "middleGap": {
+            "changedPixels": 2816,
+            "meanChannelDelta": 0.42025396825396827,
+            "maxChannelDelta": 41
+          },
+          "deepWell": {
+            "changedPixels": 4045,
+            "meanChannelDelta": 0.6626767676767676,
+            "maxChannelDelta": 37
+          }
+        }
+      },
+      {
+        "elapsedMs": 1019.1000001430511,
+        "sceneTime": 1.315,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7159,
+            "meanChannelDelta": 0.24258333333333335,
+            "maxChannelDelta": 2
+          },
+          "middleGap": {
+            "changedPixels": 2400,
+            "meanChannelDelta": 0.2988571428571429,
+            "maxChannelDelta": 42
+          },
+          "deepWell": {
+            "changedPixels": 3572,
+            "meanChannelDelta": 0.4534343434343434,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 1518.3000001907349,
+        "sceneTime": 1.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7144,
+            "meanChannelDelta": 0.24016666666666667,
+            "maxChannelDelta": 2
+          },
+          "middleGap": {
+            "changedPixels": 2465,
+            "meanChannelDelta": 0.3211428571428571,
+            "maxChannelDelta": 54
+          },
+          "deepWell": {
+            "changedPixels": 3672,
+            "meanChannelDelta": 0.47883838383838384,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 2019.2000000476837,
+        "sceneTime": 2.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7133,
+            "meanChannelDelta": 0.239625,
+            "maxChannelDelta": 2
+          },
+          "middleGap": {
+            "changedPixels": 2462,
+            "meanChannelDelta": 0.32425396825396824,
+            "maxChannelDelta": 57
+          },
+          "deepWell": {
+            "changedPixels": 3726,
+            "meanChannelDelta": 0.5033838383838384,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 2518.4000000953674,
+        "sceneTime": 2.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7172,
+            "meanChannelDelta": 0.24239583333333334,
+            "maxChannelDelta": 2
+          },
+          "middleGap": {
+            "changedPixels": 2487,
+            "meanChannelDelta": 0.3326984126984127,
+            "maxChannelDelta": 57
+          },
+          "deepWell": {
+            "changedPixels": 3839,
+            "meanChannelDelta": 0.5313636363636364,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 3018.600000143051,
+        "sceneTime": 3.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7168,
+            "meanChannelDelta": 0.24060416666666667,
+            "maxChannelDelta": 2
+          },
+          "middleGap": {
+            "changedPixels": 2566,
+            "meanChannelDelta": 0.31092063492063493,
+            "maxChannelDelta": 57
+          },
+          "deepWell": {
+            "changedPixels": 3799,
+            "meanChannelDelta": 0.5387878787878788,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 3518.7000000476837,
+        "sceneTime": 3.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7168,
+            "meanChannelDelta": 0.2433125,
+            "maxChannelDelta": 8
+          },
+          "middleGap": {
+            "changedPixels": 2663,
+            "meanChannelDelta": 0.2876825396825397,
+            "maxChannelDelta": 12
+          },
+          "deepWell": {
+            "changedPixels": 3719,
+            "meanChannelDelta": 0.5353535353535354,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 4018.600000143051,
+        "sceneTime": 4.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7082,
+            "meanChannelDelta": 0.2386875,
+            "maxChannelDelta": 15
+          },
+          "middleGap": {
+            "changedPixels": 2709,
+            "meanChannelDelta": 0.2923174603174603,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3689,
+            "meanChannelDelta": 0.5313636363636364,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 4518.5,
+        "sceneTime": 4.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7136,
+            "meanChannelDelta": 0.24404166666666666,
+            "maxChannelDelta": 16
+          },
+          "middleGap": {
+            "changedPixels": 2714,
+            "meanChannelDelta": 0.29263492063492064,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3628,
+            "meanChannelDelta": 0.5243939393939394,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 5019.200000047684,
+        "sceneTime": 5.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7105,
+            "meanChannelDelta": 0.24660416666666668,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 2695,
+            "meanChannelDelta": 0.29149206349206347,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3672,
+            "meanChannelDelta": 0.5324747474747474,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 5518.700000047684,
+        "sceneTime": 5.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7142,
+            "meanChannelDelta": 0.2516875,
+            "maxChannelDelta": 16
+          },
+          "middleGap": {
+            "changedPixels": 2760,
+            "meanChannelDelta": 0.29638095238095236,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3611,
+            "meanChannelDelta": 0.5242929292929293,
+            "maxChannelDelta": 6
+          }
+        }
+      },
+      {
+        "elapsedMs": 6018.700000047684,
+        "sceneTime": 6.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7157,
+            "meanChannelDelta": 0.2558125,
+            "maxChannelDelta": 14
+          },
+          "middleGap": {
+            "changedPixels": 2754,
+            "meanChannelDelta": 0.29784126984126985,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3597,
+            "meanChannelDelta": 0.4860606060606061,
+            "maxChannelDelta": 6
+          }
+        }
+      },
+      {
+        "elapsedMs": 6518.200000047684,
+        "sceneTime": 6.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7087,
+            "meanChannelDelta": 0.2551875,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 2862,
+            "meanChannelDelta": 0.30946031746031744,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3566,
+            "meanChannelDelta": 0.45984848484848484,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 7021.200000047684,
+        "sceneTime": 7.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7082,
+            "meanChannelDelta": 0.2511875,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 2972,
+            "meanChannelDelta": 0.31885714285714284,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3487,
+            "meanChannelDelta": 0.43313131313131314,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 7521.100000143051,
+        "sceneTime": 7.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6986,
+            "meanChannelDelta": 0.24752083333333333,
+            "maxChannelDelta": 16
+          },
+          "middleGap": {
+            "changedPixels": 3076,
+            "meanChannelDelta": 0.3312380952380952,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3509,
+            "meanChannelDelta": 0.40095959595959596,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 8020.400000095367,
+        "sceneTime": 8.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7020,
+            "meanChannelDelta": 0.24997916666666667,
+            "maxChannelDelta": 12
+          },
+          "middleGap": {
+            "changedPixels": 3111,
+            "meanChannelDelta": 0.3433650793650794,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3460,
+            "meanChannelDelta": 0.38242424242424244,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 8520.200000047684,
+        "sceneTime": 8.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6950,
+            "meanChannelDelta": 0.24666666666666667,
+            "maxChannelDelta": 11
+          },
+          "middleGap": {
+            "changedPixels": 3148,
+            "meanChannelDelta": 0.3533968253968254,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3387,
+            "meanChannelDelta": 0.3692929292929293,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 9021.100000143051,
+        "sceneTime": 9.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6848,
+            "meanChannelDelta": 0.238,
+            "maxChannelDelta": 10
+          },
+          "middleGap": {
+            "changedPixels": 3200,
+            "meanChannelDelta": 0.37098412698412697,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3348,
+            "meanChannelDelta": 0.3704545454545455,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 9520.600000143051,
+        "sceneTime": 9.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7046,
+            "meanChannelDelta": 0.24814583333333334,
+            "maxChannelDelta": 7
+          },
+          "middleGap": {
+            "changedPixels": 3218,
+            "meanChannelDelta": 0.37866666666666665,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3394,
+            "meanChannelDelta": 0.39131313131313133,
+            "maxChannelDelta": 6
+          }
+        }
+      },
+      {
+        "elapsedMs": 10020.900000095367,
+        "sceneTime": 10.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7459,
+            "meanChannelDelta": 0.44225,
+            "maxChannelDelta": 11
+          },
+          "middleGap": {
+            "changedPixels": 3135,
+            "meanChannelDelta": 0.3707936507936508,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3403,
+            "meanChannelDelta": 0.4101010101010101,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 10520.400000095367,
+        "sceneTime": 10.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7701,
+            "meanChannelDelta": 0.7271458333333334,
+            "maxChannelDelta": 15
+          },
+          "middleGap": {
+            "changedPixels": 3138,
+            "meanChannelDelta": 0.36717460317460315,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3431,
+            "meanChannelDelta": 0.4354545454545454,
+            "maxChannelDelta": 6
+          }
+        }
+      },
+      {
+        "elapsedMs": 11019.700000047684,
+        "sceneTime": 11.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7381,
+            "meanChannelDelta": 0.82475,
+            "maxChannelDelta": 15
+          },
+          "middleGap": {
+            "changedPixels": 3182,
+            "meanChannelDelta": 0.3768888888888889,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3385,
+            "meanChannelDelta": 0.44651515151515153,
+            "maxChannelDelta": 6
+          }
+        }
+      },
+      {
+        "elapsedMs": 11520.900000095367,
+        "sceneTime": 11.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7083,
+            "meanChannelDelta": 0.8351666666666666,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 3098,
+            "meanChannelDelta": 0.36558730158730157,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3344,
+            "meanChannelDelta": 0.4454040404040404,
+            "maxChannelDelta": 6
+          }
+        }
+      },
+      {
+        "elapsedMs": 12020.100000143051,
+        "sceneTime": 12.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 7065,
+            "meanChannelDelta": 0.9089375,
+            "maxChannelDelta": 18
+          },
+          "middleGap": {
+            "changedPixels": 3088,
+            "meanChannelDelta": 0.3638095238095238,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3348,
+            "meanChannelDelta": 0.44267676767676767,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 12520.300000190735,
+        "sceneTime": 12.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6699,
+            "meanChannelDelta": 0.9168333333333333,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 3182,
+            "meanChannelDelta": 0.3702857142857143,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3393,
+            "meanChannelDelta": 0.4263131313131313,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 13020.100000143051,
+        "sceneTime": 13.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6439,
+            "meanChannelDelta": 0.8872291666666666,
+            "maxChannelDelta": 14
+          },
+          "middleGap": {
+            "changedPixels": 3197,
+            "meanChannelDelta": 0.3782857142857143,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3424,
+            "meanChannelDelta": 0.4084848484848485,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 13520.900000095367,
+        "sceneTime": 13.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6476,
+            "meanChannelDelta": 0.804375,
+            "maxChannelDelta": 14
+          },
+          "middleGap": {
+            "changedPixels": 3217,
+            "meanChannelDelta": 0.388,
+            "maxChannelDelta": 20
+          },
+          "deepWell": {
+            "changedPixels": 3486,
+            "meanChannelDelta": 0.3898989898989899,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 14020.800000190735,
+        "sceneTime": 14.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6521,
+            "meanChannelDelta": 0.8031458333333333,
+            "maxChannelDelta": 14
+          },
+          "middleGap": {
+            "changedPixels": 3115,
+            "meanChannelDelta": 0.39244444444444443,
+            "maxChannelDelta": 35
+          },
+          "deepWell": {
+            "changedPixels": 3585,
+            "meanChannelDelta": 0.3888888888888889,
+            "maxChannelDelta": 3
+          }
+        }
+      },
+      {
+        "elapsedMs": 14520.400000095367,
+        "sceneTime": 14.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6362,
+            "meanChannelDelta": 0.8285416666666666,
+            "maxChannelDelta": 16
+          },
+          "middleGap": {
+            "changedPixels": 3114,
+            "meanChannelDelta": 0.4066031746031746,
+            "maxChannelDelta": 45
+          },
+          "deepWell": {
+            "changedPixels": 3658,
+            "meanChannelDelta": 0.39666666666666667,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 15020.800000190735,
+        "sceneTime": 15.314,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6151,
+            "meanChannelDelta": 0.8572708333333333,
+            "maxChannelDelta": 15
+          },
+          "middleGap": {
+            "changedPixels": 3148,
+            "meanChannelDelta": 0.42577777777777776,
+            "maxChannelDelta": 52
+          },
+          "deepWell": {
+            "changedPixels": 3625,
+            "meanChannelDelta": 0.38267676767676767,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 15520.700000047684,
+        "sceneTime": 15.814,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 5987,
+            "meanChannelDelta": 0.9305416666666667,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 3083,
+            "meanChannelDelta": 0.42793650793650795,
+            "maxChannelDelta": 53
+          },
+          "deepWell": {
+            "changedPixels": 3779,
+            "meanChannelDelta": 0.4071717171717172,
+            "maxChannelDelta": 3
+          }
+        }
+      },
+      {
+        "elapsedMs": 16020.600000143051,
+        "sceneTime": 16.313,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 8950,
+            "meanChannelDelta": 1.1695833333333334,
+            "maxChannelDelta": 18
+          },
+          "middleGap": {
+            "changedPixels": 2986,
+            "meanChannelDelta": 0.41149206349206346,
+            "maxChannelDelta": 53
+          },
+          "deepWell": {
+            "changedPixels": 3900,
+            "meanChannelDelta": 0.4446464646464646,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 16520.200000047684,
+        "sceneTime": 16.813,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 12095,
+            "meanChannelDelta": 1.8988125,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 3038,
+            "meanChannelDelta": 0.38526984126984126,
+            "maxChannelDelta": 50
+          },
+          "deepWell": {
+            "changedPixels": 3883,
+            "meanChannelDelta": 0.4603030303030303,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 17019.800000190735,
+        "sceneTime": 17.313,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 11501,
+            "meanChannelDelta": 1.9594166666666666,
+            "maxChannelDelta": 15
+          },
+          "middleGap": {
+            "changedPixels": 3010,
+            "meanChannelDelta": 0.3619047619047619,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3932,
+            "meanChannelDelta": 0.4853030303030303,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 17519.700000047684,
+        "sceneTime": 17.813,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 10454,
+            "meanChannelDelta": 1.5451666666666666,
+            "maxChannelDelta": 17
+          },
+          "middleGap": {
+            "changedPixels": 2962,
+            "meanChannelDelta": 0.35053968253968254,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3932,
+            "meanChannelDelta": 0.49823232323232325,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 18020,
+        "sceneTime": 18.313,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 9506,
+            "meanChannelDelta": 0.8556458333333333,
+            "maxChannelDelta": 13
+          },
+          "middleGap": {
+            "changedPixels": 2920,
+            "meanChannelDelta": 0.3429206349206349,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3794,
+            "meanChannelDelta": 0.5021212121212121,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 18519.5,
+        "sceneTime": 18.813,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 8164,
+            "meanChannelDelta": 0.3695,
+            "maxChannelDelta": 11
+          },
+          "middleGap": {
+            "changedPixels": 2879,
+            "meanChannelDelta": 0.3354920634920635,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3735,
+            "meanChannelDelta": 0.4911111111111111,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 19018.400000095367,
+        "sceneTime": 19.313,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6455,
+            "meanChannelDelta": 0.21639583333333334,
+            "maxChannelDelta": 9
+          },
+          "middleGap": {
+            "changedPixels": 2857,
+            "meanChannelDelta": 0.3328888888888889,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3644,
+            "meanChannelDelta": 0.47515151515151516,
+            "maxChannelDelta": 5
+          }
+        }
+      },
+      {
+        "elapsedMs": 19518.800000190735,
+        "sceneTime": 19.813,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6043,
+            "meanChannelDelta": 0.196625,
+            "maxChannelDelta": 7
+          },
+          "middleGap": {
+            "changedPixels": 2918,
+            "meanChannelDelta": 0.34615873015873017,
+            "maxChannelDelta": 2
+          },
+          "deepWell": {
+            "changedPixels": 3625,
+            "meanChannelDelta": 0.47964646464646465,
+            "maxChannelDelta": 4
+          }
+        }
+      },
+      {
+        "elapsedMs": 20018.5,
+        "sceneTime": 20.313,
+        "measures": {
+          "farCorridor": {
+            "changedPixels": 6046,
+            "meanChannelDelta": 0.19120833333333334,
+            "maxChannelDelta": 3
+          },
+          "middleGap": {
+            "changedPixels": 2880,
+            "meanChannelDelta": 0.342031746031746,
+            "maxChannelDelta": 3
+          },
+          "deepWell": {
+            "changedPixels": 3549,
+            "meanChannelDelta": 0.4635858585858586,
+            "maxChannelDelta": 5
+          }
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "elapsedMs": 2019.2000000476837,
+        "sceneTime": 2.314,
+        "file": "f-title-exterior-frame-1.png"
+      },
+      {
+        "elapsedMs": 9021.100000143051,
+        "sceneTime": 9.314,
+        "file": "f-title-exterior-frame-2.png"
+      },
+      {
+        "elapsedMs": 13020.100000143051,
+        "sceneTime": 13.314,
+        "file": "f-title-exterior-frame-3.png"
+      },
+      {
+        "elapsedMs": 19018.400000095367,
+        "sceneTime": 19.313,
+        "file": "f-title-exterior-frame-4.png"
+      }
+    ]
+  },
+  "isolatedEvidence": "exterior-layer.json",
+  "errors": [],
+  "failedRequests": [],
+  "method": "Actual default DEV scene in a fresh headless context; real image+motion canvas captured naturally. A separate offscreen instance of the actual exported exterior renderer receives the same F pixels for layer-isolation checks.",
+  "limitations": [
+    "Pixel changes establish animation, not human aesthetic approval or guaranteed subjective visibility.",
+    "Offscreen phase samples directly render known scene times; they are not a second natural playback or gameplay session.",
+    "Protected rectangles sample important foreground and architectural surfaces; they are not a semantic proof for every source-image pixel.",
+    "Frame cadence is a finite local headless capture with recorder, image composition and pixel-probe overhead, not a low-end performance certification.",
+    "Video omits DOM menu and audio; dispatched blur and business-entry checks are reused from the linked lifecycle result."
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "status": "PASS",
+  "timestamp": "2026-10-01T14:45:11.628Z",
+  "url": "http://127.0.0.1:3027/docs/art/demos/opening-joint/index.html",
+  "baseline": "ed5a07a",
+  "sources": {
+    "src/art/last-light-exterior.ts": "3f5bab475f89f2c68742d7fef7807f49e908aaa0c169fe05b65223d4e931f1aa",
+    "src/art/last-light-joint-exterior.ts": "bb19dffd268f8c1c69e155aaa20e0335f26ef1f126fc956119a08fa1dee47172",
+    "src/art/last-light-renderer.ts": "b7aefffbd1ce72b15ff7545e271a563a1766846eaa3054885e0ad103eef85c13",
+    "src/scenes/last-light-visual.ts": "cda5f8c9cc82c535c5eb23344897f241d27b617afe3b5e9164fe46203af8de5d",
+    "docs/art/demos/opening-joint/entry.ts": "01a26928c4ab6390d196d446577d25c6a4dcd39a1a69f69297ac6eff4d22dd5d"
+  },
+  "protectedCount": 207594,
+  "foreground": {
+    "changedPixels": 0,
+    "maxChannelDelta": 0,
+    "sumMaximumChannelDelta": 0
+  },
+  "effects": {
+    "changedPixels": 111799,
+    "maxChannelDelta": 73,
+    "sumMaximumChannelDelta": 328333
+  },
+  "reduced": {
+    "changedPixels": 0,
+    "maxChannelDelta": 0,
+    "sumMaximumChannelDelta": 0
+  },
+  "productionParity": {
+    "changedPixels": 0,
+    "maxChannelDelta": 0,
+    "sumMaximumChannelDelta": 0
+  },
+  "deltas": [
+    {
+      "from": 0,
+      "to": 4,
+      "changedPixels": 144002,
+      "maxChannelDelta": 106,
+      "sumMaximumChannelDelta": 305412
+    },
+    {
+      "from": 4,
+      "to": 9,
+      "changedPixels": 162841,
+      "maxChannelDelta": 93,
+      "sumMaximumChannelDelta": 309118
+    },
+    {
+      "from": 9,
+      "to": 13,
+      "changedPixels": 184213,
+      "maxChannelDelta": 107,
+      "sumMaximumChannelDelta": 462751
+    },
+    {
+      "from": 13,
+      "to": 17,
+      "changedPixels": 158929,
+      "maxChannelDelta": 94,
+      "sumMaximumChannelDelta": 335437
+    },
+    {
+      "from": 17,
+      "to": 23,
+      "changedPixels": 143130,
+      "maxChannelDelta": 88,
+      "sumMaximumChannelDelta": 245403
+    }
+  ],
+  "effectMotionDeltas": [
+    {
+      "from": 0,
+      "to": 4,
+      "changedPixels": 63361,
+      "maxChannelDelta": 72,
+      "sumMaximumChannelDelta": 90527
+    },
+    {
+      "from": 4,
+      "to": 9,
+      "changedPixels": 89217,
+      "maxChannelDelta": 71,
+      "sumMaximumChannelDelta": 198778
+    },
+    {
+      "from": 9,
+      "to": 13,
+      "changedPixels": 103766,
+      "maxChannelDelta": 72,
+      "sumMaximumChannelDelta": 245257
+    },
+    {
+      "from": 13,
+      "to": 17,
+      "changedPixels": 98660,
+      "maxChannelDelta": 70,
+      "sumMaximumChannelDelta": 202691
+    },
+    {
+      "from": 17,
+      "to": 23,
+      "changedPixels": 87577,
+      "maxChannelDelta": 68,
+      "sumMaximumChannelDelta": 138069
+    }
+  ],
+  "cpuDrawSubmission": {
+    "count": 50,
+    "meanMs": 0.04,
+    "maxMs": 0.10000014305114746,
+    "note": "CPU submission, not GPU completion or end-to-end frame rate."
+  },
+  "note": "Fixed actor and observer, actual renderer with Scene paused. effectMotionDeltas subtract the no-profile frame at each same time so pre-existing core/fire cannot prove exterior motion. Prior/new production shader parity uses identical joint assets and state.",
+  "errors": [],
+  "failed": []
+}
