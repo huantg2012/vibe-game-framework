@@ -10,11 +10,13 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+下一轮 [首页与净化点联合视觉规格](specs/art-opening-haven-continuity.md)已落盘，实施未开始。本轮未新增渲染模块或改写入场运行时合同；新管线及接入事实须随实际实施更新，不能由计划推定。
+
 ## 2026-10-01：三版首页DEV比较
 
 `docs/art/demos/opening-three/index.html`、`entry.ts`、`style.css`组成独立DEV入口；`assets/a.png`、`b.png`、`c.png`为image_gen生成的1536×1024首页位图，生成提示保存于`prompts.json`。它不注册为生产默认首页，旧opening-master的同源几何换镜头候选已HUMAN-REJECTED，不再作为当前构图合同。
 
-`index.html`在任何游戏模块导入前将当前页`localStorage`替换为Map内存实现，`entry.ts`再将其注入SaveManager；正式记录隔离须由专项QA实测。DEV标题复用`MenuEntryTransition`和`beginNewExpedition`进入真实`PurificationScene`，三版采用相同初始场景、时序与WASD/E/Tab操作，返回时只清临时记录。尚未实现每张首页到游戏的同位几何匹配或坐姿起身动画。当前IMPLEMENTED / VERIFICATION-PENDING，用户选择待定；实际结果与限制集中于[本轮QA](qa/2026-10-01-opening-three.md)，不以源码接线代替运行通过。
+`index.html`在任何游戏模块导入前将当前页`localStorage`替换为Map内存实现，`entry.ts`再将其注入SaveManager；正式记录隔离须由专项QA实测。DEV标题复用`MenuEntryTransition`和`beginNewExpedition`进入真实`PurificationScene`，三版采用相同初始场景、时序与WASD/E/Tab操作，返回时只清临时记录。尚未实现每张首页到游戏的同位几何匹配或坐姿起身动画。当前DEV-IMPLEMENTED / LIMITED-VERIFIED / USER-NOT-SATISFIED，三版均未获选、不作定稿推进；实际结果与限制集中于[本轮QA](qa/2026-10-01-opening-three.md)，不以源码接线代替运行通过。
 
 ## 迭代31：修复收益、整趟回执与记录替换
 

@@ -61,9 +61,9 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。 2026-10-01另有三版独立首页DEV比较，接同一真实净化点；A/C进入与切换有限验证，用户仍不满意连续性，生产默认未替换。",
+    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。 2026-10-01首页与净化点联合重构规格已落盘，下一轮实施未开始、美术未验收；旧三版均未获选，仅有A/C限定验证，生产默认未替换。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "/ → MainMenuScene；方向键、Enter/Space 或鼠标",
       "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。"
@@ -90,6 +90,11 @@
         "role": "spec"
       },
       {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec",
+        "note": "下一轮联合视觉制作与验收唯一规格；PLANNED，实施未开始、美术未验收，不改变现行入场行为合同。"
+      },
+      {
         "path": "src/managers/save-manager.ts",
         "role": "code"
       },
@@ -112,7 +117,7 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "当前三版独立首页设计；旧同源几何换镜头路线已HUMAN-REJECTED，新候选未选中或接生产。"
+        "note": "设计入口与历史记录；旧静态路线被否决、三版均未获选，下一轮按联合视觉规格推进。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
@@ -152,12 +157,12 @@
       {
         "path": "docs/art/demos/opening-three/index.html",
         "role": "art",
-        "note": "三版首页独立DEV入口；当前已制作，运行验证与用户选择待定，非生产默认。"
+        "note": "三版历史DEV探索，用户均未选中，不作定稿推进；A/C运行检查有限，非生产默认。"
       },
       {
         "path": "docs/art/demos/opening-three/entry.ts",
         "role": "code",
-        "note": "DEV标题经既有MenuEntryTransition进入同一真实PurificationScene；页内临时记录，隔离与操作待QA实测。"
+        "note": "历史DEV通过既有MenuEntryTransition进入同一真实PurificationScene；页内临时记录，限定验证见旧轮QA。"
       },
       {
         "path": "docs/art/demos/opening-three/style.css",
@@ -172,17 +177,17 @@
       {
         "path": "docs/art/demos/opening-three/assets/a.png",
         "role": "art",
-        "note": "A还能停留：炉边坐姿；1536×1024生成候选，待选择。"
+        "note": "A还能停留：炉边坐姿；1536×1024历史生成候选，用户未选中，不作定稿推进。"
       },
       {
         "path": "docs/art/demos/opening-three/assets/b.png",
         "role": "art",
-        "note": "B借来的庇护：核心与人依存；1536×1024生成候选，待选择。"
+        "note": "B借来的庇护：核心与人依存；1536×1024历史生成候选，用户未选中，不作定稿推进。"
       },
       {
         "path": "docs/art/demos/opening-three/assets/c.png",
         "role": "art",
-        "note": "C再次出发：地坪狭裂口边；1536×1024生成候选，待选择。"
+        "note": "C再次出发：地坪狭裂口边；1536×1024历史生成候选，用户未选中，不作定稿推进。"
       },
       {
         "path": "docs/qa/2026-10-01-opening-three.md",
@@ -204,7 +209,8 @@
     ],
     "unknowns": [
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
-      "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。"
+      "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
+      "2026-10-01联合视觉规格仅落盘：最终构图、新母版、实景提升与衔接尚未实施；旧DEV证据和迭代14入场验收不能代作本轮验证。"
     ]
   },
   {
@@ -389,9 +395,9 @@
     "id": "COH-F005",
     "title": "资源加载与场景过渡",
     "domain": "loop",
-    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。 2026-10-01另有三版独立首页DEV比较，接同一真实净化点；A/C进入与切换有限验证，用户仍不满意连续性，生产默认未替换。",
+    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。 2026-10-01首页与净化点联合重构规格已落盘，下一轮实施未开始、美术未验收；旧三版均未获选，仅有A/C限定验证，生产默认未替换。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "/ → BootScene → MainMenuScene；净化点出发",
       "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。"
@@ -422,9 +428,14 @@
         "role": "spec"
       },
       {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec",
+        "note": "下一轮联合视觉制作与验收唯一规格；PLANNED，实施未开始、美术未验收，不改变现行入场行为合同。"
+      },
+      {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "当前三版独立首页设计；旧同源几何换镜头路线已HUMAN-REJECTED，新候选未选中或接生产。"
+        "note": "设计入口与历史记录；旧静态路线被否决、三版均未获选，下一轮按联合视觉规格推进。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
@@ -464,12 +475,12 @@
       {
         "path": "docs/art/demos/opening-three/index.html",
         "role": "art",
-        "note": "三版首页独立DEV入口；当前已制作，运行验证与用户选择待定，非生产默认。"
+        "note": "三版历史DEV探索，用户均未选中，不作定稿推进；A/C运行检查有限，非生产默认。"
       },
       {
         "path": "docs/art/demos/opening-three/entry.ts",
         "role": "code",
-        "note": "DEV标题经既有MenuEntryTransition进入同一真实PurificationScene；页内临时记录，隔离与操作待QA实测。"
+        "note": "历史DEV通过既有MenuEntryTransition进入同一真实PurificationScene；页内临时记录，限定验证见旧轮QA。"
       },
       {
         "path": "docs/art/demos/opening-three/style.css",
@@ -484,17 +495,17 @@
       {
         "path": "docs/art/demos/opening-three/assets/a.png",
         "role": "art",
-        "note": "A还能停留：炉边坐姿；1536×1024生成候选，待选择。"
+        "note": "A还能停留：炉边坐姿；1536×1024历史生成候选，用户未选中，不作定稿推进。"
       },
       {
         "path": "docs/art/demos/opening-three/assets/b.png",
         "role": "art",
-        "note": "B借来的庇护：核心与人依存；1536×1024生成候选，待选择。"
+        "note": "B借来的庇护：核心与人依存；1536×1024历史生成候选，用户未选中，不作定稿推进。"
       },
       {
         "path": "docs/art/demos/opening-three/assets/c.png",
         "role": "art",
-        "note": "C再次出发：地坪狭裂口边；1536×1024生成候选，待选择。"
+        "note": "C再次出发：地坪狭裂口边；1536×1024历史生成候选，用户未选中，不作定稿推进。"
       },
       {
         "path": "docs/qa/2026-10-01-opening-three.md",
@@ -515,7 +526,8 @@
     "unknowns": [
       "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
-      "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。"
+      "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
+      "2026-10-01联合视觉规格仅落盘：最终构图、新母版、实景提升与衔接尚未实施；旧DEV证据和迭代14入场验收不能代作本轮验证。"
     ]
   },
   {

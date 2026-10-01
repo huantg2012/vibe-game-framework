@@ -1,8 +1,16 @@
 ---
 status: APPROVED
 iteration: 14
-last-modified: 2026-09-07
+last-modified: 2026-10-01
+last-modified-date: 2026-10-01
+interfaces-with:
+  - art-opening-haven-continuity
+exposes:
+  - 首页新建与继续的入场时序、输入锁及生命周期合同
+interface-changed: false
 ---
+
+**TL;DR：现行首页进入净化点的短过渡合同，管理新建/继续、存档安全、输入锁和生命周期。下一轮视觉制作另见 [联合视觉规格](art-opening-haven-continuity.md)，本轮未改变以下运行时行为。**
 
 # 首页 → 净化点入场
 
@@ -37,3 +45,5 @@ last-modified: 2026-09-07
 ## 用户验收
 
 2026-09-07，用户体验后明确“结案，提交”。本规格已获接受，迭代14 COMPLETE；机器验证边界仍按 docs/qa/iteration-14.md 保留。
+
+2026-10-01说明：上述验收仅覆盖迭代14对应实现。[首页与净化点联合重构](art-opening-haven-continuity.md)目前为待实施计划，未继承该美术验收；新衔接若改变时序或镜头，须在本规格原地修订后另行验证。
