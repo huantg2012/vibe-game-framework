@@ -17,3 +17,5 @@
 当前正式净化点：Last Light A 已接入；接入后的阴影、外景与步态整改见[I30 动态整改](iteration-30-last-light-motion.md)，原业务验证见[正式接入](iteration-30-last-light-production.md)。旧艺术样景的七项修订见[I30 微光据点](iteration-30-last-light-living.md)，不覆盖当前生产质量。
 
 当前迭代：[I31 修复与能力收益兑现](iteration-31.md)。整数收益/下一阈值、被动伴随事实及旧记录安全替换已接入；专项、回归、生产UI夹具和真实SaveManager内存后端的浏览器范围分开记录。I28长期采样与I30整体人审不由本次通过升级。
+
+首页与净化点联合样片：[opening-joint 限定验证](2026-10-01-opening-joint.md)。一个独立 DEV 方向、真实操作与截帧对照；等待用户美术审查，正式默认未替换。

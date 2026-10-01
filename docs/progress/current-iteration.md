@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-10-01
-note: 2026-10-01首页与净化点联合重构规格已落盘，PLANNED，实施未开始、美术未验收；旧静态候选被否决，三版探索均未获选。生产首页、I31交付及I28等挂起保持。
+note: 2026-10-01首页与净化点单方向联合样片已接DEV，LIMITED-VERIFIED，HUMAN-REVIEW-PENDING；旧静态候选被否决，三版探索均未获选。生产首页、I31交付及I28等挂起保持。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -18,13 +18,13 @@ note: 2026-10-01首页与净化点联合重构规格已落盘，PLANNED，实施
 
 旧正文路径保留迁移指针，旧网页链接保留跳转；正文引用、现状索引和阅读器已同步。范围和证据边界见[归档验证](../qa/review-archive-2026-09-21.md)。此任务不改变审查结论、游戏或挂起状态。后续可读交付按[阅读器说明](../dev/report-viewer.md)实际打开验证。
 
-## 当前工作 · 首页与净化点联合重构规格（2026-10-01）
+## 当前工作 · 首页与净化点联合样片（2026-10-01）
 
-**PLANNED / IMPLEMENTATION-NOT-STARTED / HUMAN-ART-NOT-REVIEWED。** 主 COH-F002 / COH-F005。用户要求将下一轮计划落为 [正式 spec](../specs/art-opening-haven-continuity.md)：只推进一个联合方向，同步制作首页、对应真实净化点和可操作的进入过程；首页吸引力与入场后的内容、风格连续必须同时成立。允许微细节降级，不允许视觉身份、建筑重量、光源关系和纵深丢失。
+**DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** 主 COH-F002 / COH-F005。[正式 spec](../specs/art-opening-haven-continuity.md)对应的[单方向可操作样片](../art/demos/opening-joint/index.html)已接入：独立1536×1024首页母版及弱光源动态、对应巨构外景与局部建筑层次、真实净化点及原入场流程。人物、核心身份及已有导航/交互保持；首页吸引力和两端视觉连续性待用户审查。
 
-本轮仅文档落盘；未制作新资产、修改转场或替换生产默认。下一步按 spec 的制作顺序，从固定两端依据与共同画面内容开始；内部逐步验证，最终交完整样片供用户审查。现行 [入场行为合同](../specs/ui-menu-entry-transition.md)保持有效，不能把未来转场设想写成已实现。
+首页由 image_gen 在本轮真实实景和人物/核心参考约束下独立创作；实景由可编辑几何导出独立 DEV 资产包，复用正式场景与渲染器。1035帧人物原样复用，生产资源未替换。坐姿首页到炉边站姿为剪辑，不是起身表演或一镜到底；现行[入场合同](../specs/ui-menu-entry-transition.md)的时序保持。限定实测覆盖真实位移、E坐下/起身、Tab报告、返回继续、覆盖取消、失焦/减少动态、真实截帧对照及正式存储隔离，范围详见[本轮QA](../qa/2026-10-01-opening-joint.md)。
 
-[设计记录](../design-notes/opening-haven-reconstruction.md)保留旧方案状态与证据边界。静态换镜头候选为 HUMAN-REJECTED；[三版DEV探索](../art/demos/opening-three/index.html)均未获选、不作定稿推进。旧 A/C 入场与切换的有限验证仍只属于 [旧轮QA](../qa/2026-10-01-opening-three.md)，不证明新方案已接入或认可；[此前体验评审](../reviews/2026-09-30-opening-haven-experience.md)保留观察依据。I31交付、现有业务与I28等挂起状态保持。
+[设计记录](../design-notes/opening-haven-reconstruction.md)保留旧方案状态与证据边界。静态换镜头候选为 HUMAN-REJECTED；[三版DEV探索](../art/demos/opening-three/index.html)均未获选、不作定稿推进。旧 A/C 入场与切换的有限验证仍只属于 [旧轮QA](../qa/2026-10-01-opening-three.md)，不证明本轮的操作通过或美术认可；[此前体验评审](../reviews/2026-09-30-opening-haven-experience.md)保留观察依据。I31交付、现有业务与I28等挂起状态保持。
 
 ## 当前交付 · 净化点裂隙与交互整改（2026-09-30）
 

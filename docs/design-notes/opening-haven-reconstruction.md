@@ -2,7 +2,7 @@
 
 当前规格：[首页与净化点视觉连续性](../specs/art-opening-haven-continuity.md)。日期：2026-10-01。主关联 COH-F002 / COH-F005。
 
-**下一轮状态：PLANNED / IMPLEMENTATION-NOT-STARTED / HUMAN-ART-NOT-REVIEWED。** 用户要求把计划落为 spec；下一轮推进一个联合方向，同时交付首页、对应真实净化点及可操作的进入过程。完整设计、制作顺序、合理降级边界和验收条件统一维护在上述规格，不在本笔记重复。生产默认首页未替换。
+**当前状态：DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** [单方向可操作样片](../art/demos/opening-joint/index.html)已将独立首页母版与对应巨构外景接到真实净化点，可进入、移动、坐下、返回及继续，并以真实渲染帧直接对照。首页由 image_gen 创作，实景由可编辑几何与正式渲染器呈现；[来源](../art/demos/opening-joint/assets/title/source.json)和[本轮QA](../qa/2026-10-01-opening-joint.md)分别记录制作与验证。坐姿首页至站姿实景沿用原短过渡剪辑，没有起身动画。完整设计及验收仍统一维护在上述规格；生产默认首页未替换，视觉连续性待用户审查。
 
 ## 已否决的静态路线
 
@@ -20,4 +20,4 @@
 
 比较页 `index.html` → `entry.ts` / `style.css` 复用既有 `MenuEntryTransition` 进入同一个真实 `PurificationScene` 初始场景，未做每张的同位几何匹配或A坐姿起身衔接。页内采用内存存储；A/C入场、切换与报告清理已有限验证，WASD/E/Tab及B完整到场未验。该证据不能迁移为下一轮实现或验收。
 
-用户要求首页一眼惊艳或勾起好奇，实景保持风格与内容连续；可接受静态/半静态到实时的微细节减少，不接受视觉身份、建筑重量、光源关系和世界纵深消失。下一轮以[联合制作规格](../specs/art-opening-haven-continuity.md)为准，旧探索保留作对照。I31既有交付、Rift低精度角色和I28等挂起状态保持。
+用户要求首页一眼惊艳或勾起好奇，实景保持风格与内容连续；可接受静态/半静态到实时的微细节减少，不接受视觉身份、建筑重量、光源关系和世界纵深消失。当前以[联合制作规格](../specs/art-opening-haven-continuity.md)为准，旧探索保留作对照。I31既有交付、Rift低精度角色和I28等挂起状态保持。

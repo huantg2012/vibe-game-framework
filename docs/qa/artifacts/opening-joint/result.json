@@ -1,0 +1,413 @@
+{
+  "ok": true,
+  "started": "2026-10-01T13:08:31.258Z",
+  "revision": "ea1a0a9d901c62dfe8c14beadb157c7e5c595a97",
+  "url": "http://127.0.0.1:3027/docs/art/demos/opening-joint/index.html",
+  "captureOnly": false,
+  "sourceFingerprints": {
+    "docs/art/demos/opening-joint/entry.ts": "a2ffdb29ab242e2192a6688628a84fa599013ada378960295512323ee1c6b2bd",
+    "docs/art/demos/opening-joint/title-motion.ts": "6303d3f66c2176fe77946f0a6058d9b7a2809bce3bc06b46de2774631c495709",
+    "src/scenes/last-light-visual.ts": "11da2b62598233f0b5f079f18c714566f74109b0a869b3a4b5635d131ab6018b",
+    "src/art/last-light-renderer.ts": "b8882dd5ff17792b41880b9b7bcafefbc5852f8ae4b85aca90807b7df05ae2b4",
+    "docs/art/demos/opening-joint/assets/title/master.png": "c457d02286b9dc4be1d0d27f4a54d85ec0be1038c3ed528a9dcad762b93c939b",
+    "docs/art/demos/opening-joint/assets/haven/manifest.json": "87b7bd4be68bff7a37172c4a57a30dd0eb7894e98e82babdf7d4183a5db1d076",
+    "public/assets/last-light/manifest.json": "72ebb3107ece2129dbcb8ce2cf6c010bbfb3f20043e13df3b0a6f617e08add10"
+  },
+  "scope": "Actual joint master and complete joint haven pack; real native input and read-only diagnostics. Temporary renderer.draw wrapper measures CPU submission only.",
+  "limitations": [
+    "Five-second headless local samples are diagnostics, not sustained performance acceptance or a GPU timing benchmark.",
+    "Art quality and continuity remain pending human review. No natural Rift sortie/recovery or browser matrix certification."
+  ],
+  "checks": [
+    "title clock advances",
+    "title clock freezes on blur",
+    "reduced-motion freezes title",
+    "limited 5-second stationary frame sample (not a performance acceptance)",
+    "keyboard movement changes actual coordinates",
+    "native E sit and stand, atmospheric line and modest zoom",
+    "Tab opens actual report and Escape closes",
+    "live-render snapshot comparison",
+    "comparison pauses title clock",
+    "overwrite safe default and cancel",
+    "actual continue after return",
+    "native purifier E allocation panel and Escape; no transaction made",
+    "production storage untouched",
+    "same-context original-pack baseline, same entry and camera"
+  ],
+  "states": [
+    {
+      "at": "spawn",
+      "player": {
+        "x": 509.1935363330473,
+        "y": 356.8080750016289
+      },
+      "route": "main",
+      "transitioning": false,
+      "pendingSave": false,
+      "worldPlayer": {
+        "x": 3.8,
+        "y": 0,
+        "z": 3.8
+      },
+      "resting": false,
+      "rest": {
+        "x": 528.7701417249435,
+        "y": 391.868164617227,
+        "depth": 5.843310565925061
+      },
+      "nearTarget": "rest",
+      "fps": 58.984375,
+      "camera": {
+        "zoom": 1,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "devices": {
+        "core": {
+          "x": 684.1171244047266,
+          "y": 391.69284342892763
+        },
+        "storage": {
+          "x": 730.2721281671445,
+          "y": 249.0266190132017
+        },
+        "purifier": {
+          "x": 435.60091566112055,
+          "y": 294.1897074452697
+        },
+        "entrance": {
+          "x": 458.0525543975513,
+          "y": 334.63152000519256
+        },
+        "offering": {
+          "x": 465.42557207627164,
+          "y": 234.51720081356174
+        },
+        "growth": {
+          "x": 659.5419039172348,
+          "y": 227.8069946921345
+        }
+      },
+      "panels": {
+        "inventory": false,
+        "status": false,
+        "offering": false,
+        "impact": false,
+        "allocation": false,
+        "growth": false
+      }
+    },
+    {
+      "at": "after-right-300ms",
+      "player": {
+        "x": 523.4812763330472,
+        "y": 356.8080750016288
+      },
+      "route": "main",
+      "transitioning": false,
+      "pendingSave": false,
+      "worldPlayer": {
+        "x": 4.2554926527758115,
+        "y": 0,
+        "z": 3.511521319908647
+      },
+      "resting": false,
+      "rest": {
+        "x": 528.7701417249435,
+        "y": 391.868164617227,
+        "depth": 5.843310565925061
+      },
+      "nearTarget": null,
+      "fps": 60.17153549194336,
+      "camera": {
+        "zoom": 1,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "devices": {
+        "core": {
+          "x": 684.1171244047266,
+          "y": 391.69284342892763
+        },
+        "storage": {
+          "x": 730.2721281671445,
+          "y": 249.0266190132017
+        },
+        "purifier": {
+          "x": 435.60091566112055,
+          "y": 294.1897074452697
+        },
+        "entrance": {
+          "x": 458.0525543975513,
+          "y": 334.63152000519256
+        },
+        "offering": {
+          "x": 465.42557207627164,
+          "y": 234.51720081356174
+        },
+        "growth": {
+          "x": 659.5419039172348,
+          "y": 227.8069946921345
+        }
+      },
+      "panels": {
+        "inventory": false,
+        "status": false,
+        "offering": false,
+        "impact": false,
+        "allocation": false,
+        "growth": false
+      }
+    },
+    {
+      "at": "rest-approach",
+      "player": {
+        "x": 525.854547908483,
+        "y": 364.8782430314977
+      },
+      "route": "main",
+      "transitioning": false,
+      "pendingSave": false,
+      "worldPlayer": {
+        "x": 4.657503390467148,
+        "y": 0.044668093425463684,
+        "z": 3.978894367565544
+      },
+      "resting": false,
+      "rest": {
+        "x": 528.7701417249435,
+        "y": 391.868164617227,
+        "depth": 5.843310565925061
+      },
+      "nearTarget": "rest",
+      "fps": 60.37865161895752,
+      "camera": {
+        "zoom": 1,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "devices": {
+        "core": {
+          "x": 684.1171244047266,
+          "y": 391.69284342892763
+        },
+        "storage": {
+          "x": 730.2721281671445,
+          "y": 249.0266190132017
+        },
+        "purifier": {
+          "x": 435.60091566112055,
+          "y": 294.1897074452697
+        },
+        "entrance": {
+          "x": 458.0525543975513,
+          "y": 334.63152000519256
+        },
+        "offering": {
+          "x": 465.42557207627164,
+          "y": 234.51720081356174
+        },
+        "growth": {
+          "x": 659.5419039172348,
+          "y": 227.8069946921345
+        }
+      },
+      "panels": {
+        "inventory": false,
+        "status": false,
+        "offering": false,
+        "impact": false,
+        "allocation": false,
+        "growth": false
+      }
+    },
+    {
+      "at": "seated",
+      "player": {
+        "x": 525.854547908483,
+        "y": 364.8782430314977
+      },
+      "route": "main",
+      "transitioning": false,
+      "pendingSave": false,
+      "worldPlayer": {
+        "x": 4.657503390467148,
+        "y": 0.044668093425463684,
+        "z": 3.978894367565544
+      },
+      "resting": true,
+      "rest": {
+        "x": 528.7701417249435,
+        "y": 391.868164617227,
+        "depth": 5.843310565925061
+      },
+      "nearTarget": "stand",
+      "fps": 60.28398871421814,
+      "camera": {
+        "zoom": 1.18,
+        "scrollX": 14,
+        "scrollY": 21
+      },
+      "devices": {
+        "core": {
+          "x": 684.1171244047266,
+          "y": 391.69284342892763
+        },
+        "storage": {
+          "x": 730.2721281671445,
+          "y": 249.0266190132017
+        },
+        "purifier": {
+          "x": 435.60091566112055,
+          "y": 294.1897074452697
+        },
+        "entrance": {
+          "x": 458.0525543975513,
+          "y": 334.63152000519256
+        },
+        "offering": {
+          "x": 465.42557207627164,
+          "y": 234.51720081356174
+        },
+        "growth": {
+          "x": 659.5419039172348,
+          "y": 227.8069946921345
+        }
+      },
+      "panels": {
+        "inventory": false,
+        "status": false,
+        "offering": false,
+        "impact": false,
+        "allocation": false,
+        "growth": false
+      }
+    },
+    {
+      "at": "purifier-approach",
+      "player": {
+        "x": 440.02161367941653,
+        "y": 293.5424938335493
+      },
+      "route": "main",
+      "transitioning": false,
+      "pendingSave": false,
+      "worldPlayer": {
+        "x": -0.6863861855174405,
+        "y": 0,
+        "z": 1.5947503820490734
+      },
+      "resting": false,
+      "rest": {
+        "x": 528.7701417249435,
+        "y": 391.868164617227,
+        "depth": 5.843310565925061
+      },
+      "nearTarget": "purifier",
+      "fps": 59.09314473376435,
+      "camera": {
+        "zoom": 1,
+        "scrollX": 0,
+        "scrollY": 0
+      },
+      "devices": {
+        "core": {
+          "x": 684.1171244047266,
+          "y": 391.69284342892763
+        },
+        "storage": {
+          "x": 730.2721281671445,
+          "y": 249.0266190132017
+        },
+        "purifier": {
+          "x": 435.60091566112055,
+          "y": 294.1897074452697
+        },
+        "entrance": {
+          "x": 458.0525543975513,
+          "y": 334.63152000519256
+        },
+        "offering": {
+          "x": 465.42557207627164,
+          "y": 234.51720081356174
+        },
+        "growth": {
+          "x": 659.5419039172348,
+          "y": 227.8069946921345
+        }
+      },
+      "panels": {
+        "inventory": false,
+        "status": false,
+        "offering": false,
+        "impact": false,
+        "allocation": false,
+        "growth": false
+      }
+    }
+  ],
+  "frameSample": {
+    "durationMs": 5008.5,
+    "interval": {
+      "count": 300,
+      "meanMs": 16.665999999999997,
+      "p95Ms": 16.700000000000728,
+      "maxMs": 16.80000000000109
+    },
+    "cpuDrawSubmission": {
+      "count": 301,
+      "meanMs": 0.2538205975313915,
+      "p95Ms": 0.40000009536743164,
+      "maxMs": 2.1000001430511475
+    },
+    "renderer": "webgl2",
+    "worldPlayer": {
+      "x": 3.8,
+      "y": 0,
+      "z": 3.8
+    },
+    "camera": {
+      "zoom": 1,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    "viewport": [
+      1100,
+      800
+    ],
+    "note": "CPU method duration excludes asynchronous GPU completion. RAF intervals include the browser and test host."
+  },
+  "baselineSample": {
+    "durationMs": 5009.599999904633,
+    "interval": {
+      "count": 300,
+      "meanMs": 16.666,
+      "p95Ms": 16.799999999999272,
+      "maxMs": 16.80000000000109
+    },
+    "cpuDrawSubmission": {
+      "count": 301,
+      "meanMs": 0.27176080193630486,
+      "p95Ms": 0.40000009536743164,
+      "maxMs": 2.0999999046325684
+    },
+    "renderer": "webgl2",
+    "worldPlayer": {
+      "x": 3.8,
+      "y": 0,
+      "z": 3.8
+    },
+    "camera": {
+      "zoom": 1,
+      "scrollX": 0,
+      "scrollY": 0
+    },
+    "viewport": [
+      1100,
+      800
+    ],
+    "note": "CPU method duration excludes asynchronous GPU completion. RAF intervals include the browser and test host."
+  },
+  "errors": [],
+  "failed": []
+}

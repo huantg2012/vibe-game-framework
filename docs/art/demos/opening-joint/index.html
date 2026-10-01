@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+  <title>那天之后 · 同一处庇护所</title>
+  <link rel="stylesheet" href="/docs/art/demos/opening-joint/style.css" />
+</head>
+<body>
+  <main class="joint-shell">
+    <nav class="joint-controls" aria-label="体验与对照">
+      <button type="button" id="return-title" disabled>返回首页</button>
+      <button type="button" id="compare-frames" disabled>直接对照</button>
+    </nav>
+    <div id="game-container" aria-label="那天之后，首页与真实净化点"></div>
+    <footer class="joint-footer">
+      <span id="joint-status" role="status" aria-live="polite">载入中</span>
+      <span>独立试玩记录 · 刷新后重置</span>
+    </footer>
+  </main>
+  <script>
+    // Isolate storage before every imported module, including direct UI flags.
+    // Returning to the title keeps this Map; the user's real Storage is never read.
+    try {
+      const records = new Map([['coh_locale', 'zh-CN']]);
+      const memory = Object.freeze({
+        get length() { return records.size; },
+        key(index) { return Array.from(records.keys())[Number(index)] ?? null; },
+        getItem(key) { return records.get(String(key)) ?? null; },
+        setItem(key, value) { records.set(String(key), String(value)); },
+        removeItem(key) { records.delete(String(key)); },
+        clear() { records.clear(); },
+      });
+      Object.defineProperty(window, 'localStorage', { configurable: true, get: () => memory });
+      Object.defineProperty(window, '__openingJointStorageReady', { value: true });
+    } catch {
+      document.getElementById('joint-status').textContent = '隔离体验未能启动，请重新打开本页。';
+    }
+  </script>
+  <script type="module">
+    if (window.__openingJointStorageReady) import('/docs/art/demos/opening-joint/entry.ts');
+  </script>
+</body>
+</html>

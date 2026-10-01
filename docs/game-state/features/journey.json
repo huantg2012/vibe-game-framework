@@ -61,12 +61,13 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。 2026-10-01首页与净化点联合重构规格已落盘，下一轮实施未开始、美术未验收；旧三版均未获选，仅有A/C限定验证，生产默认未替换。",
+    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。 2026-10-01联合单方向样片已独立DEV接入：完成首页与配套巨构实景、真实操作及无转场对照。限定验证，待人审；生产默认未替换。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "/ → MainMenuScene；方向键、Enter/Space 或鼠标",
-      "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。"
+      "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。",
+      "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。"
     ],
     "sources": [
       {
@@ -92,7 +93,7 @@
       {
         "path": "docs/specs/art-opening-haven-continuity.md",
         "role": "spec",
-        "note": "下一轮联合视觉制作与验收唯一规格；PLANNED，实施未开始、美术未验收，不改变现行入场行为合同。"
+        "note": "联合视觉制作与验收唯一规格；DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING，现行入场行为不变。"
       },
       {
         "path": "src/managers/save-manager.ts",
@@ -117,7 +118,7 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "设计入口与历史记录；旧静态路线被否决、三版均未获选，下一轮按联合视觉规格推进。"
+        "note": "当前联合DEV实现入口与历史记录；旧静态路线否决、三版未获选，新样片等待人审。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
@@ -193,6 +194,58 @@
         "path": "docs/qa/2026-10-01-opening-three.md",
         "role": "doc",
         "note": "本轮隔离试玩与三版衔接的限定验证记录，实际执行结果由QA登记。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/entry.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/style.css",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/title-motion.ts",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/master.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/source.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/haven/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "tools/last-light/joint-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export-joint.mjs",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/last-light/joint-air.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-opening-joint.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -205,12 +258,13 @@
       "COH-E101",
       "COH-E102",
       "COH-E107",
-      "COH-E108"
+      "COH-E108",
+      "COH-E109"
     ],
     "unknowns": [
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
       "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
-      "2026-10-01联合视觉规格仅落盘：最终构图、新母版、实景提升与衔接尚未实施；旧DEV证据和迭代14入场验收不能代作本轮验证。"
+      "2026-10-01 opening-joint已完成单方向DEV实现和限定键盘/存储/生命周期检查。首页是独立生成母版，实景是确定性模型与真实Renderer；旧资源、导航和正式首页保持。美术吸引力/连续性待用户审查；非起身演出或一镜到底，长期性能/低端回退/完整搜撤交易未验。"
     ]
   },
   {
@@ -395,12 +449,13 @@
     "id": "COH-F005",
     "title": "资源加载与场景过渡",
     "domain": "loop",
-    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。 2026-10-01首页与净化点联合重构规格已落盘，下一轮实施未开始、美术未验收；旧三版均未获选，仅有A/C限定验证，生产默认未替换。",
+    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。 2026-10-01联合单方向样片已独立DEV接入：完成首页与配套巨构实景、真实操作及无转场对照。限定验证，待人审；生产默认未替换。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "/ → BootScene → MainMenuScene；净化点出发",
-      "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。"
+      "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。",
+      "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。"
     ],
     "sources": [
       {
@@ -430,12 +485,12 @@
       {
         "path": "docs/specs/art-opening-haven-continuity.md",
         "role": "spec",
-        "note": "下一轮联合视觉制作与验收唯一规格；PLANNED，实施未开始、美术未验收，不改变现行入场行为合同。"
+        "note": "联合视觉制作与验收唯一规格；DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING，现行入场行为不变。"
       },
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "设计入口与历史记录；旧静态路线被否决、三版均未获选，下一轮按联合视觉规格推进。"
+        "note": "当前联合DEV实现入口与历史记录；旧静态路线否决、三版未获选，新样片等待人审。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
@@ -511,6 +566,58 @@
         "path": "docs/qa/2026-10-01-opening-three.md",
         "role": "doc",
         "note": "本轮隔离试玩与三版衔接的限定验证记录，实际执行结果由QA登记。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/entry.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/style.css",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/title-motion.ts",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/master.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/source.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/haven/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "tools/last-light/joint-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export-joint.mjs",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/last-light/joint-air.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-opening-joint.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -521,13 +628,14 @@
       "COH-E-SRC-journey",
       "COH-E-HIST-TRANSITION",
       "COH-E107",
-      "COH-E108"
+      "COH-E108",
+      "COH-E109"
     ],
     "unknowns": [
       "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
       "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
-      "2026-10-01联合视觉规格仅落盘：最终构图、新母版、实景提升与衔接尚未实施；旧DEV证据和迭代14入场验收不能代作本轮验证。"
+      "2026-10-01 opening-joint已完成单方向DEV实现和限定键盘/存储/生命周期检查。首页是独立生成母版，实景是确定性模型与真实Renderer；旧资源、导航和正式首页保持。美术吸引力/连续性待用户审查；非起身演出或一镜到底，长期性能/低端回退/完整搜撤交易未验。"
     ]
   },
   {

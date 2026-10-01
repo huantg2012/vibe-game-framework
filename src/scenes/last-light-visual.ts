@@ -36,6 +36,24 @@ interface RuntimeManifest {
 type PulseKind = 'repair' | 'growth' | 'offering' | 'offering-complete';
 const ROOT = 'assets/last-light/';
 const KEY = 'last-light:';
+interface LastLightAssetProfile { root: string; cachePrefix: string; }
+const PRODUCTION_ASSETS: LastLightAssetProfile = { root: ROOT, cachePrefix: KEY };
+
+/** An explicit DEV fixture may own a complete asset pack. Never replace a
+ * production texture under the same cache key, or let a query string silently
+ * change the production scene. Set before BootScene starts its preload. */
+function assetProfile(scene: Phaser.Scene): LastLightAssetProfile {
+  if (!import.meta.env.DEV) return PRODUCTION_ASSETS;
+  const candidate: unknown = scene.registry.get('lastLightAssetProfile');
+  if (candidate == null) return PRODUCTION_ASSETS;
+  const profile = candidate as Partial<LastLightAssetProfile>;
+  if (typeof profile.root !== 'string' || !profile.root.startsWith('/') || !profile.root.endsWith('/')
+    || typeof profile.cachePrefix !== 'string' || !profile.cachePrefix.endsWith(':')
+    || profile.cachePrefix === KEY || profile.cachePrefix.length < 2) {
+    throw new Error('A DEV Last Light asset profile needs an absolute root ending in / and a unique cachePrefix ending in :.');
+  }
+  return { root: profile.root, cachePrefix: profile.cachePrefix };
+}
 const IMAGE_FILES = [
   'base-before-energy.png', 'background.png', 'haven.png', 'albedo.png', 'normal.png', 'rough-spec.png',
   'depth.png', 'energy-depth.png', 'reference.png', 'motion.png', 'objects.png', 'core-energy.png', 'light-pollution.png',
@@ -47,8 +65,8 @@ const IMAGE_FILES = [
  * discard it. This loader keeps straight channels and participates in Phaser's
  * processing queue, so create() never races an asynchronous decode. */
 class LastLightBitmapFile extends Phaser.Loader.File {
-  constructor(loader: Phaser.Loader.LoaderPlugin, filename: string) {
-    super(loader, { type: 'lastlightbitmap', key: KEY + filename, url: ROOT + filename,
+  constructor(loader: Phaser.Loader.LoaderPlugin, filename: string, profile: LastLightAssetProfile) {
+    super(loader, { type: 'lastlightbitmap', key: profile.cachePrefix + filename, url: profile.root + filename,
       extension: 'png', responseType: 'arraybuffer' });
     this.cache = loader.cacheManager.binary;
   }
@@ -86,17 +104,19 @@ export class LastLightVisual {
   private disposed = false;
 
   static preload(scene: Phaser.Scene): void {
-    if (!scene.cache.json.exists(KEY + 'manifest')) scene.load.json(KEY + 'manifest', ROOT + 'manifest.json');
-    if (!scene.cache.json.exists(KEY + 'occluders')) scene.load.json(KEY + 'occluders', ROOT + 'occluders.json');
+    const { root, cachePrefix } = assetProfile(scene);
+    if (!scene.cache.json.exists(cachePrefix + 'manifest')) scene.load.json(cachePrefix + 'manifest', root + 'manifest.json');
+    if (!scene.cache.json.exists(cachePrefix + 'occluders')) scene.load.json(cachePrefix + 'occluders', root + 'occluders.json');
     for (const filename of IMAGE_FILES) {
-      if (!scene.cache.binary.exists(KEY + filename)) scene.load.addFile(new LastLightBitmapFile(scene.load, filename));
+      if (!scene.cache.binary.exists(cachePrefix + filename)) scene.load.addFile(new LastLightBitmapFile(scene.load, filename, { root, cachePrefix }));
     }
   }
   constructor(private readonly scene: Phaser.Scene) {
-    const manifest = scene.cache.json.get(KEY + 'manifest') as RuntimeManifest | undefined;
+    const { root, cachePrefix } = assetProfile(scene);
+    const manifest = scene.cache.json.get(cachePrefix + 'manifest') as RuntimeManifest | undefined;
     if (!manifest?.camera || !manifest.actor?.frames?.length) throw new Error('Last Light production assets are missing; preload must finish before creating the scene.');
     const image = (filename: string | undefined): LastLightImage => {
-      const bitmap = filename && scene.cache.binary.get(KEY + filename) as ImageBitmap | undefined;
+      const bitmap = filename && scene.cache.binary.get(cachePrefix + filename) as ImageBitmap | undefined;
       if (!bitmap) throw new Error(`Missing Last Light texture: ${filename ?? 'undefined'}`);
       return bitmap;
     };
@@ -109,7 +129,7 @@ export class LastLightVisual {
       normal: image(t.normal), albedo: image(t.albedo), rough: image(t.roughSpec),
       actorColor: image(a.albedo), actorNormal: image(a.normal), actorDepth: image(a.depth), actorRough: image(a.roughSpec),
     };
-    const occluders = scene.cache.json.get(KEY + 'occluders') as { triangles: number[] } | number[];
+    const occluders = scene.cache.json.get(cachePrefix + 'occluders') as { triangles: number[] } | number[];
     const frames: LastLightFrame[] = manifest.actor.frames.map(frame => ({
       ...frame.rect, anchor: frame.anchor, yaw: frame.yaw, pose: frame.pose, phase: frame.frame, lamp: frame.lamp, shadowCapsules: frame.shadowCapsules,
     }));
@@ -126,6 +146,8 @@ export class LastLightVisual {
       this.renderer = new LastLightFallback(this.pack, this.fallbackBase, this.fallbackActor);
     }
     scene.game.canvas.dataset.lastLightRenderer = this.renderer instanceof LastLightRenderer ? 'webgl2' : 'canvas-degraded';
+    scene.game.canvas.dataset.lastLightAssetRoot = root;
+    scene.game.canvas.dataset.lastLightAssetCache = cachePrefix;
     this.textureKey = `last-light-composite-${++visualId}`;
     // TextureSource natively accepts canvas sources. addCanvas would force a
     // 2D context and CPU readback, so use TextureSource's WebGL upload path.

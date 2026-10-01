@@ -1,5 +1,5 @@
 ---
-status: PLANNED
+status: DEV-IMPLEMENTED
 created-date: 2026-10-01
 last-modified-date: 2026-10-01
 feature-ids: [COH-F002, COH-F005]
@@ -10,23 +10,24 @@ exposes:
   - 首页与净化点共同的视觉身份及允许降级边界
   - 单一方向的联合制作顺序、交付物与验收条件
 interface-changed: false
-implementation: NOT-STARTED
-human-art-review: NOT-REVIEWED
+implementation: DEV
+verification: LIMITED-VERIFIED
+human-art-review: REVIEW-PENDING
 ---
 
-**TL;DR：下一轮只推进一个完整方向，同时制作首页、对应净化点实景和可操作的进入过程。首页须激起进入欲望；实景允许减少微细节，但必须保住同一个人、同一处庇护所的视觉身份、建筑重量、光源关系与世界纵深。**
+**TL;DR：以一个联合方向制作首页、对应净化点实景和可操作的进入过程，现已接入独立 DEV 样片，待用户审查。首页须激起进入欲望；实景允许减少微细节，但必须保住同一个人、同一处庇护所的视觉身份、建筑重量、光源关系与世界纵深。**
 
 # 首页与净化点视觉连续性
 
 ## 1. 状态与规格边界
 
-本规格记录2026-10-01用户要求落盘的下一轮计划，**规格已记录，实施未开始，美术未验收**。本次落盘不修改游戏、资产或正式首页。
+2026-10-01已依本规格完成[单方向可操作样片](../art/demos/opening-joint/index.html)：**DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING**。首页母版、对应实景资产和入场已接入独立 DEV 入口；生产默认首页与原场景资产未替换。实际操作证据与未验范围归[本轮 QA](../qa/2026-10-01-opening-joint.md)，技术通过不代表视觉连续性已获认可。
 
 本文件是这轮联合视觉制作与验收的唯一规格；[美术方向](../art-direction.md#resume-art-rebuild)继续维护全游戏材料、污染和场景原则。[入场规格](ui-menu-entry-transition.md)独占新游戏/继续、存档安全、输入锁、时序和清理等运行时行为。本文件不另建一套转场参数。
 
 现行入场仍按原合同执行，包括遮黑切场和轻微居中缩放。下文“不借黑场也能认出同一世界”是**两端画面的独立验收方法**，不是已经取消黑场或批准新镜头。若新制作需要改转场，先在原入场规格中原地修订，再实现和验证。迭代14的验收只属于当时的实现，不覆盖本轮新美术。
 
-[旧静态换镜头母版](../art/demos/opening-master/index.html)已被否决；[三版独立首页](../art/demos/opening-three/index.html)均未获选，不作为定稿推进，保留作失败对照。下一轮不默认选择A/B/C，不继续独立首页抽图。
+[旧静态换镜头母版](../art/demos/opening-master/index.html)已被否决；[三版独立首页](../art/demos/opening-three/index.html)均未获选，不作为定稿推进，保留作失败对照。本轮采用一个联合方向，不默认选择A/B/C，也不沿用三版的验证结论。
 
 ## 2. 要解决的体验问题
 
@@ -131,16 +132,24 @@ human-art-review: NOT-REVIEWED
 
 任何一项不成立，继续修同一联合方向中对应的问题，不以另一批独立漂亮图绕开，也不把技术通过标成美术通过。完整样片通过审查前，生产默认首页保持现状。
 
-## 7. 接续工作与实现入口
+## 7. 当前实现与接续入口
 
-当前只完成规格落盘。下一步从第五节第一步开始，两端联合制作；尚未选定最终构图、制作新母版或改写转场。
+本轮共同画面内容为炉边停留处、灰绿核心、厚断沿与向黑暗延伸的倾斜书廊巨构。首页采用内置 image_gen 独立创作的1536×1024母版，以本轮实景渲染、实际人物/核心模型和最初首页原画分别约束身份与表现力；来源及提示记录在 `assets/title/source.json`。`title-motion.ts`仅让画中已有的炉火、污染源及其受光处作低幅变化，不扭动整张画面。
+
+实景由 `joint-scene.ts`在已选 A 的几何上重做中远景巨构、局部地坪和建筑断面的结构层次，`export-joint.mjs`导出独立资产包，交由正式 `PurificationScene`和 `LastLightRenderer`运行。相机、站位、交互及导航保持；1035帧人物资产原样复用，Rift人物未改。DEV专用资源 profile使用独立路径与缓存前缀，生产构建忽略该 profile。
+
+入口通过页面内存存储隔离正式记录，沿用现行新建/继续与 `MenuEntryTransition`。首页坐姿到净化点炉边站姿采用剪辑，未实现一镜到底或起身动画；本轮未另设转场时序。“直接对照”读取当前真实渲染帧，与首页交替显示，不用离线实景图替代游戏。
+
+限定实测已覆盖进入、真实键盘位移、E坐下/起身、Tab报告、返回及继续、覆盖取消、失焦/减少动态、真实截帧对照，以及正式存储哨兵未变。最终画面、两端连续性和跨设备表现仍待审查；后续继续修同一联合方向，通过人审后再决定生产替换。
 
 | 职责 | 当前实现或文档入口 |
 | --- | --- |
-| 首页及其动态层 | [MainMenuScene](../../src/scenes/main-menu-scene.ts)、[人物](../../src/scenes/main-menu-actor.ts)、[氛围](../../src/scenes/main-menu-atmosphere.ts) |
+| 单方向可操作入口 | [opening-joint](../art/demos/opening-joint/index.html)、[entry.ts](../art/demos/opening-joint/entry.ts) |
+| 首页母版与弱动态 | [master.png](../art/demos/opening-joint/assets/title/master.png)、[来源](../art/demos/opening-joint/assets/title/source.json)、[title-motion.ts](../art/demos/opening-joint/title-motion.ts) |
+| 联合实景几何与导出 | [joint-scene.ts](../../tools/last-light/joint-scene.ts)、[export-joint.mjs](../../tools/last-light/export-joint.mjs)、[DEV资产](../art/demos/opening-joint/assets/haven/manifest.json) |
 | 正式入场行为 | [唯一入场规格](ui-menu-entry-transition.md)、[MenuEntryTransition](../../src/scenes/menu-entry-transition.ts) |
 | 净化点及视觉合成 | [PurificationScene](../../src/scenes/purification-scene.ts)、[视觉适配](../../src/scenes/last-light-visual.ts)、[Renderer](../../src/art/last-light-renderer.ts) |
-| 当前正式场景资产入口 | [manifest](../../public/assets/last-light/manifest.json) |
-| 三版历史与证据边界 | [设计记录](../design-notes/opening-haven-reconstruction.md)、[限定QA](../qa/2026-10-01-opening-three.md) |
+| 未替换的生产资产 | [manifest](../../public/assets/last-light/manifest.json) |
+| 本轮实测与历史边界 | [本轮QA](../qa/2026-10-01-opening-joint.md)、[设计记录](../design-notes/opening-haven-reconstruction.md)、[三版限定QA](../qa/2026-10-01-opening-three.md) |
 
 状态更新只描述实际完成部分。规格确认、资产制作、DEV接入、运行验证、人审、生产替换分别记录；不因文件存在或旧功能已接入而跳过任何事实边界。

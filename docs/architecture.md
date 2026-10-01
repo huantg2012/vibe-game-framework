@@ -10,7 +10,15 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
-下一轮 [首页与净化点联合视觉规格](specs/art-opening-haven-continuity.md)已落盘，实施未开始。本轮未新增渲染模块或改写入场运行时合同；新管线及接入事实须随实际实施更新，不能由计划推定。
+## 2026-10-01：首页与净化点单方向联合样片
+
+[联合视觉规格](specs/art-opening-haven-continuity.md)已接入独立 DEV 页 `docs/art/demos/opening-joint/index.html`。`entry.ts`复用正式 `BootScene`、`PurificationScene`及出击场景；页面在导入游戏模块前隔离 `localStorage`，再向 `SaveManager`注入同一 Map。新建、继续沿用 `session`及 `MenuEntryTransition`，返回保留页内记录并清理场景/UI；正式记录不读写。坐姿首页到炉边站姿采用原短过渡剪辑，未新增起身动画或转场时序。
+
+`assets/title/master.png`为 image_gen 独立创作的1536×1024母版，原画、本轮实景及实际人物/核心模型的参考角色和提示记录于 `assets/title/source.json`。`title-motion.ts`从母版已有炉火/污染源及受光处生成低幅动态层；失焦、直接对照和减少动态会暂停。对照功能从当前真实 WebGL 渲染帧截取画面，不以离线模型图替代实景。
+
+`tools/last-light/joint-scene.ts`继承已选 A 的可走几何、站位与相机，重做中远景巨构及局部地坪/断面层次；`export-joint.mjs`独立导出到 `opening-joint/assets/haven/`，包含静态四层、深度/材质/光场、核心八帧、遮挡体和来源校验。原1035帧人物及元数据逐字节复用，不重写导航或生产包。`LastLightVisual`仅在 DEV 下读取 `lastLightAssetProfile`注册值，按独立根路径与缓存前缀预载及使用该包；生产构建忽略此值，默认资源路径和渲染器保持。
+
+当前 **DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING**。真实键盘位移、E坐下/起身、Tab报告、返回继续、覆盖取消、失焦/减少动态、截帧对照及正式存储哨兵隔离已有限定实测；不能由此推出全流程、跨设备性能或美术已通过。证据与限制见[本轮QA](qa/2026-10-01-opening-joint.md)。
 
 ## 2026-10-01：三版首页DEV比较
 

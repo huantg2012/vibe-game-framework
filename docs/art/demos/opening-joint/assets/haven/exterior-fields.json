@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "texture": "exterior-fields.png",
+  "width": 4096,
+  "height": 4928,
+  "tile": {
+    "width": 1024,
+    "height": 704,
+    "padding": 32
+  },
+  "columns": [
+    "far",
+    "middle",
+    "near",
+    "haven"
+  ],
+  "rows": [
+    "otherPollution",
+    "core",
+    "storage",
+    "purifier",
+    "furnace",
+    "motion",
+    "normal"
+  ],
+  "timing": {
+    "scene": 8658,
+    "far": 1507,
+    "middle": 1311,
+    "near": 2218,
+    "haven": 5832
+  },
+  "sourceHashes": {
+    "docs/art/demos/purification-forecourt-options/option-a.ts": "d138d45b23dc5b245b67bd9e90ce5e0f143755761d4153ccdbd3a112f1791f84",
+    "docs/art/demos/purification-forecourt-options/rift-a.ts": "f6f7ac7911228ccb55079fc34a56b0cf962b96a6c8abcb1075c31226b627a9c2",
+    "docs/art/demos/purification-forecourt-options/shared.ts": "a819a26f935c2b6b0c36880d4da5ac23880f8237abe9552f128f6dbed1b31c83",
+    "docs/art/demos/purification-last-light/actor.ts": "c8d895f0772a48b9bc751d93813bb8da5450bf127912b46668eb769bb3440842",
+    "docs/art/demos/purification-last-light/devices.ts": "5d5d9c3bf0c2728fe6a71841ce7ac0edafd926e5ed7e4105857122861d8c24b9",
+    "docs/art/demos/purification-last-light/energy.ts": "34e1a53759dc1e30a816fe4e65337885dde705dcb64b273f9fc670f067d08cf9",
+    "docs/art/demos/purification-last-light/environment.ts": "4b24ee373640af2ae7ef61a558c0e348f7c7b7f61d2970220cb2e087d1665ee2",
+    "docs/art/demos/purification-last-light/model.ts": "edabcec3345472bba38f37cfce3cde2510668496ffc0ee4aecf20ddf0106381a",
+    "docs/art/demos/purification-last-light/render.ts": "f24698f6c46521af58a198075a9aad38c5804cd01e918572fc4b4cd2395df48d",
+    "docs/art/demos/purification-last-light/rest.ts": "7dc1136fe1a9b44aaf1b58d7cb20098f2523d76c01df1c1073c72103fdd83e29",
+    "docs/art/demos/purification-last-light/scene.ts": "39df57b292db557391897e4fb772ca8a65a553aca4c409d2d4b2d7825eb535b8",
+    "package-lock.json": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88",
+    "package.json": "c1ce262d6b10a66ea04eb330b1291f1f575917c17b94c21d74610590a833cd93",
+    "src/art/last-light-exterior.ts": "960bcbe1c347d3cd077b2dd82ba920e8e13129916a18cbc339beee35924323d2",
+    "src/art/last-light-gait.ts": "feaa5dce24f0610950f9bd8e9910b6918e04c0af1bd097ddd8c1301485e32509",
+    "src/art/last-light-spatial.ts": "748755124e53d1e3894e36f8691a8e2c2c9373c6b5756888ebb3f45dd399a32d",
+    "tools/last-light/export-joint.mjs": "3037c852365fd735d8344f44e69b550492513fab540f9e9c58245c14b052b07e",
+    "tools/last-light/joint-air.ts": "4dbd2fc0389f2958650bba867fd48c64e9f2b9bc727ad4e09167da3b8b22e51b",
+    "tools/last-light/joint-scene.ts": "bcdf30ef1e1dec4db85bcbdabf5db12bc858ed198a16b7ead8605384d00fa7a7"
+  },
+  "textureHash": "6b32330b00fa7f61423766fe445491edb7304aa5cf28ec6f3c1f13b08d966b14",
+  "encoding": "Each layer colour/depth/received light/material uses the same padded UV. Raw RGBA preserves additive air at alpha zero. Full-world shadow casters; actor and shoulder absent."
+}

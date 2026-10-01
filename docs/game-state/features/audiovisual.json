@@ -381,7 +381,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "Last Light A正式场景保留断口回廊、单西坡、三层外景与真实光影。2026-09-30入口改为ground-throat-v2：左前地坪0.75m狭口穿建筑断面向下2.12m，移除竖立黑膜；作者几何、碰撞切口、显式交互阈边与烘焙资源同源。七处操作改为世界操作边资格。限定几何/交互测试与真实场景局部E流程不代签整体画面、动态和手感人审。",
+    "summary": "Last Light A正式场景保留断口回廊、单西坡、三层外景与真实光影。2026-09-30入口改为ground-throat-v2：左前地坪0.75m狭口穿建筑断面向下2.12m，移除竖立黑膜；作者几何、碰撞切口、显式交互阈边与烘焙资源同源。七处操作改为世界操作边资格。限定几何/交互测试与真实场景局部E流程不代签整体画面、动态和手感人审。 2026-10-01 opening-joint独立DEV重做中远景巨构/深井空气/局部地坪断面并同步首页；角色导航站位不变，等待两端美术审查。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -390,7 +390,8 @@
       "集中美术设计：docs/art-direction.md；已选 A 源几何：docs/art/demos/purification-forecourt-options/option-a.ts 与 rift-a.ts。",
       "历史参照：docs/art/demos/purification-last-light/index.html、purification-forecourt-options/index.html；样景及历史候选的验收不等同本次正式接入。",
       "旧 A/C 构图与局部样板仅作历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；被用户否决的6127218不再是当前画法。",
-      "限定DEV验收：docs/qa/interactive/last-light-interaction-review.html；真实生产场景，页内Map存档，六站合法脚点按钮与WASD/E/Esc；不是正式存档入口。"
+      "限定DEV验收：docs/qa/interactive/last-light-interaction-review.html；真实生产场景，页内Map存档，六站合法脚点按钮与WASD/E/Esc；不是正式存档入口。",
+      "DEV：docs/art/demos/opening-joint/index.html；联合首页与独立巨构外景资产，复用正式Renderer，非生产默认。"
     ],
     "sources": [
       {
@@ -1160,6 +1161,34 @@
         "path": "docs/qa/interactive/last-light-interaction-review.html",
         "role": "test",
         "note": "仅DEV真实scene/SaveManager＋页内Map；脚点夹具不伪造目标或E资格"
+      },
+      {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/haven/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "tools/last-light/joint-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/joint-air.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export-joint.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-opening-joint.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -1239,7 +1268,8 @@
       "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
       "COH-E103",
-      "COH-E104"
+      "COH-E104",
+      "COH-E109"
     ],
     "unknowns": [
       "2026-09-30新裂隙与七处操作区域尚无用户审美/手感终审；限定浏览器证据先覆盖净化器原approach与圆角E、裂口E进备行，其余完整动线/动态/跨设备与业务回归只按本轮QA实际记录，不由旧渲染证据推定通过。I28继续挂起。",
@@ -1249,7 +1279,8 @@
       "历史截至2026-09-28的覆盖限制：外景near=0、middle≤3.5px、far≤6px，XZ观察140ms平滑，各层颜色/深度/光场/侵蚀共UV。CPU原点对照平台/近景/空背景0改动；验证页左右极端实帧近层不拉开。空气递进与动态节奏仍待用户体验。",
       "历史截至2026-09-28的覆盖限制：肩灯512 cubemap随移动刷新，固定灯192阵列逐像素可见性，每姿态11胶囊。新GPU已编译运行，实帧覆盖坡脚/坡中、上层书架设备、净化器、炉旁混光、核心及外景极端，方块阴影消失；不宣称完整人体网格光追。",
       "历史截至2026-09-28的覆盖限制：正式根游戏WebGL2无fallback、主菜单继续重入与W短移通过，本机短样约120fps；不是性能基准或长时稳定性证明。外景atlas单份解码约80.7MB，未做完整GPU内存画像或fallback实机验证。",
-      "历史截至2026-09-28的覆盖限制：同正式Renderer/素材/step/gait的可复现页不写存档，不等于正式键盘完整六站复走；本轮未重验业务交易、坐下UI、Rift全流程、全成长/供奉/随机世界、专门音频、无障碍和长期体验。I28及原未评审项保持。"
+      "历史截至2026-09-28的覆盖限制：同正式Renderer/素材/step/gait的可复现页不写存档，不等于正式键盘完整六站复走；本轮未重验业务交易、坐下UI、Rift全流程、全成长/供奉/随机世界、专门音频、无障碍和长期体验。I28及原未评审项保持。",
+      "联合样片独立DEV资源包不构成正式外景替换或用户美术通过；新的深度层次、角色炉边受光和标题连续性须在实际操作中审查。"
     ]
   }
 ]
