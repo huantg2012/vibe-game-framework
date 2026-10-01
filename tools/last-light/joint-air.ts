@@ -5,13 +5,16 @@ import { cameraBasis, type Camera } from '../../docs/art/demos/purification-last
 import type { V3 } from '../../docs/art/demos/purification-last-light/model';
 
 export const JOINT_AIR = {
-  version: 1,
+  version: 2,
   steps: 16,
   maxIncrement: [4, 7, 6],
   extinction: .27,
   volumes: [
     { id: 'behind-high-archive', center: [-13.2, -11.7, -14.2], radius: [3.1, 21, 3.4], gain: 1 },
     { id: 'behind-inclined-wing', center: [-16.2, -16.7, -7.2], radius: [2.7, 17, 3], gain: .82 },
+    // Deep air occupies the new rib openings, not the upper platform. A weak
+    // return gives the remote order a place in space without a blue backdrop.
+    { id: 'beyond-east-ribs', center: [-4, -22, -34], radius: [8, 25, 5], gain: .38 },
   ],
   coordinateSpace: 'world',
   encoding: 'Additive RGB in far.energyBase; original alpha and geometry depth unchanged.',

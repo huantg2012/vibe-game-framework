@@ -30,6 +30,8 @@ export interface LastLightRenderPack {
   exteriorMotion?: 'joint-depth';
 }
 export interface LastLightRenderState {
+  /** Independent haven ambience time; absent in older controlled replays. */
+  exteriorSeconds?: number;
   seconds: number; world: LightVector; yaw: number; walking: boolean; resting: boolean;
   health: readonly [number, number, number]; charge: number; growth: number; thicken: number;
   pulses: Float32Array; reducedMotion: boolean;
@@ -300,6 +302,7 @@ export class LastLightRenderer {
     const p = this.environment;
     this.begin(p, [['uScene',image('scene')],['uBackground',image('background')],['uFar',image('far')],['uMiddle',image('middle')],['uNear',image('near')],['uExteriorDepth',image('exteriorDepth')],['uExteriorFields',image('exteriorFields')]]);
     gl.uniform1f(this.uniform(p, 'uSeconds'), state.reducedMotion ? 0 : state.seconds);
+    gl.uniform1f(this.uniform(p, 'uExteriorSeconds'), state.reducedMotion ? 0 : (state.exteriorSeconds ?? state.seconds));
     gl.uniform1f(this.uniform(p, 'uJointExterior'), this.pack.exteriorMotion === 'joint-depth' ? 1 : 0);
     if(this.pack.exteriorMotion === 'joint-depth'){
       for(const [name,value] of [['uExteriorRight',this.basis.right],['uExteriorUp',this.basis.up],['uExteriorBack',this.basis.back],['uExteriorTarget',this.pack.camera.target]] as const)gl.uniform3fv(this.uniform(p,name),value);

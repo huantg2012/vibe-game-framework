@@ -88,6 +88,43 @@ function appendTilted(m:Model,origin:V3,yaw:number,lean:number,layer:Layer,id:nu
   for(const l of part.lights)m.lights.push({...l,position:transform(l.position)});
 }
 
+/** Load-bearing ribs of the archive well, far behind the surviving floors.
+ * Open bays retain black depth. Voussoirs have an actual soffit and return,
+ * rather than a bright outline or another freestanding rectangular bookshelf. */
+function archiveRib(m:Model,center:V3,radius:number,rise:number,seed:number,tint:number,broken=false):void {
+  const [x,y,z]=center,thickness=1.12,depth=1.9,segments=15,rng=random(seed);
+  for(let i=0;i<segments;i++){
+    // A missing upper-right haunch reveals the deeper order of ribs.
+    if(broken&&i>=3&&i<=5)continue;
+    const a=i*Math.PI/segments+.005,b=(i+1)*Math.PI/segments-.005;
+    const at=(t:number,out:number,zz:number):V3=>[x+Math.cos(t)*(radius+out),y+Math.sin(t)*(rise+out),z+zz];
+    const p=at(a,0,depth/2),q=at(b,0,depth/2),r=at(b,thickness,depth/2),s=at(a,thickness,depth/2);
+    const p0=at(a,0,-depth/2),q0=at(b,0,-depth/2),r0=at(b,thickness,-depth/2),s0=at(a,thickness,-depth/2);
+    const t=tint*(.94+rng()*.10);
+    m.quad(p,q,r,s,'stone',t);m.quad(s0,r0,q0,p0,'stone',t*.74);
+    m.quad(p0,q0,q,p,'stone',t*.72);m.quad(s,r,r0,s0,'stone',t*.88);
+    m.quad(p,s,s0,p0,'stone',t);m.quad(q0,r0,r,q,'stone',t*.83);
+  }
+  for(const side of [-1,1]){
+    const xx=x+side*(radius+thickness/2);
+    wallPier(m,xx,z,-48,y,thickness,seed+(side+1)*17,tint*.91);
+    // Recessed, unequally surviving buttress; the rib visibly carries weight.
+    m.beam([xx,-43,z-.55],[xx,y-3.2,z-3.8],.87,1.16,'stone',tint*.62);
+    m.box([xx,y-.4,z+.3],[thickness*1.38,.38,depth+.24],'cutstone',.035,tint*.92);
+  }
+}
+
+function galleryReturn(m:Model,width:number,tint:number):void {
+  // Return perpendicular to the visible front: a broken wing has floor depth
+  // and real load paths, not an ornamental shelf floating above two sticks.
+  const x=-width/2+.7;
+  m.slab([[x-.52,-1.50],[x+1.18,-1.50],[x+.91,-5.70],[x+.34,-6.16],[x-.57,-5.39]],-.12,-.75,'stone',tint*.79);
+  m.beam([x,-.85,-5.18],[x,-5.1,-.52],.63,.68,'stone',tint*.73);
+  m.beam([x,-.8,-5.12],[x,-8.7,-5.12],.73,.82,'stone',tint*.69);
+  m.beam([x,-5.1,-.52],[x,-8.7,-5.12],.22,.24,'iron',tint*.62);
+  m.cable([[x+.82,-.38,-5.43],[x+.74,-2.7,-5.18],[x+.96,-6.2,-5.01]],.037,'iron',tint*.76);
+}
+
 function fissure(m:Model,points:V3[],id:string,power:number):void {
   m.cable(points,.045,'pollutant',.95);
   // Broken mineral skins cling to the fracture rather than outlining every
@@ -187,11 +224,13 @@ export function buildJointScene(){
   // playable plane, and no distant colonnade receives a navigation surface.
   appendTilted(m,[-11.8,-7.8,-.8],.24,-.28,'middle',91,p=>{
     gallery(p,10.6,4001,.78,true);
+    galleryReturn(p,10.6,.78);
     fissure(p,[[-3.7,.027,.66],[-3.1,.028,.61],[-2.7,.03,.4],[-2.3,.03,.5]],'joint-middle-wound',2.15);
     fissure(p,[[3.6,-.4,.05],[3.67,-1.2,.05],[3.55,-1.8,.08],[3.62,-2.35,.06]],'joint-middle-pier',1.65);
   });
   appendTilted(m,[-18.4,-9.6,7.7],-.34,-.17,'middle',92,p=>{
     gallery(p,8.6,4101,.77,true);
+    galleryReturn(p,8.6,.72);
     fissure(p,[[2.9,-.1,.79],[3.1,-.6,.85],[3.04,-1.1,.8]],'joint-lower-wound',1.8);
     fissure(p,[[-2.5,.04,.58],[-1.8,.03,.63],[-1.45,.035,.48]],'joint-lower-gallery',1.55);
   });
@@ -208,6 +247,16 @@ export function buildJointScene(){
     fissure(p,[[2.5,.03,.63],[2.9,.03,.67],[3.2,.03,.48]],'joint-abyss-wound',1.7);
   });
   appendTilted(m,[-7,-20,-5],-.14,.23,'far',95,p=>gallery(p,11.4,4401,.65,true));
+  // The remote order connects the existing isolated wings into one immense
+  // archive. No new lamps: broad shadow planes emerge through the existing air.
+  m.layer='far';m.object=96;
+  archiveRib(m,[-4,-20,-31],7.4,10.8,4601,.72,true);
+  archiveRib(m,[-21,-24,-34],7.6,11.4,4611,.60);
+  m.beam([-11.8,-19.95,-30.9],[-13.5,-23.85,-33.9],.78,1.14,'stone',.55);
+  // A deeper transverse rib is seen only through missing haunches. This is
+  // sparse architectural mass, deliberately without shelf/book micro-detail.
+  m.object=97;
+  archiveRib(m,[-14,-34,-45],9.2,13.1,4701,.48,true);
   paving(m);masonrySection(m);
   // One source power drives both baked receivers and the real moving actor.
   // Keep furnace emission bright, while retaining coat/helmet form at its side.

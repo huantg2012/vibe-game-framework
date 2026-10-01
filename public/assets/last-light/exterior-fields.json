@@ -44,13 +44,21 @@
     "docs/art/demos/purification-last-light/scene.ts": "39df57b292db557391897e4fb772ca8a65a553aca4c409d2d4b2d7825eb535b8",
     "package-lock.json": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88",
     "package.json": "c1ce262d6b10a66ea04eb330b1291f1f575917c17b94c21d74610590a833cd93",
-    "src/art/last-light-exterior.ts": "960bcbe1c347d3cd077b2dd82ba920e8e13129916a18cbc339beee35924323d2",
     "src/art/last-light-gait.ts": "feaa5dce24f0610950f9bd8e9910b6918e04c0af1bd097ddd8c1301485e32509",
-    "src/art/last-light-spatial.ts": "748755124e53d1e3894e36f8691a8e2c2c9373c6b5756888ebb3f45dd399a32d",
-    "tools/last-light/export-joint.mjs": "3037c852365fd735d8344f44e69b550492513fab540f9e9c58245c14b052b07e",
-    "tools/last-light/joint-air.ts": "4dbd2fc0389f2958650bba867fd48c64e9f2b9bc727ad4e09167da3b8b22e51b",
-    "tools/last-light/joint-scene.ts": "bcdf30ef1e1dec4db85bcbdabf5db12bc858ed198a16b7ead8605384d00fa7a7"
+    "tools/last-light/joint-air.ts": "7cb14d0fc3f0d1199ec41e28621cd9e90481548f911c7ba46a8b3185f41221fa",
+    "tools/last-light/joint-scene.ts": "0fb690db72ce9de9df372382b98610c9709dd031ba066ec0450289663e1e25bf",
+    "tools/last-light/promote-joint.mjs": "7819e365a34cfdd2eda52766e241aa2a5116e54e84d9a16d79d8038298514f15",
+    "tools/last-light/revise-exterior.mjs": "3a329ce189d288477949da4d2ea2f965fcd6d71ae297e0de26864d1effe4cddc"
   },
-  "textureHash": "6b32330b00fa7f61423766fe445491edb7304aa5cf28ec6f3c1f13b08d966b14",
-  "encoding": "Each layer colour/depth/received light/material uses the same padded UV. Raw RGBA preserves additive air at alpha zero. Full-world shadow casters; actor and shoulder absent."
+  "textureHash": "885ea445658a8571840a0261b79e95ff10c17c5d63f7cf4db94db45d06e1141e",
+  "encoding": "Far/middle rebaked with full-world shadows. Near/haven raw tiles copied from accepted baseline. Additive RGB at zero alpha preserved.",
+  "inheritedColumns": [
+    "near",
+    "haven"
+  ],
+  "baselineChecksumsSha256": "df478e73154b90da52939c2d36c5f294aaeb7f85f2bf76890cd63c9271b48d4e",
+  "revisionTiming": {
+    "far": 2589,
+    "middle": 1737
+  }
 }

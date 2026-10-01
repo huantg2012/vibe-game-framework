@@ -21,7 +21,7 @@ const json=async file=>JSON.parse(await fs.readFile(file,'utf8'));
 const encode=value=>JSON.stringify(value,null,2)+'\n';
 const historicalTools=new Set(['src/art/last-light-exterior.ts','tools/last-light/export-joint.mjs','tools/last-light/export.mjs']);
 
-async function selectedPack(){
+export async function readAcceptedJointPack({verifyCurrentSources=true}={}){
   const directory=path.join(root,sourceRoot);
   const sourceChecksumBytes=await fs.readFile(path.join(directory,'checksums.json'));
   const selectedBytes=execFileSync('git',['show',`${acceptedRevision}:${sourceRoot}/checksums.json`],{cwd:root});
@@ -38,16 +38,20 @@ async function selectedPack(){
   assert.equal(hash(await fs.readFile(path.join(root,navigation))),checksums.reusedInputs[navigation],'The selected pack may not silently change navigation.');
   // Rendered pixels retain the original bake hashes. Runtime shader changes or
   // adding a safety guard to the exporter do not claim a new image bake.
-  for(const [file,expected] of Object.entries({...checksums.sources,...manifest.actor.sourceHashes})){
+  if(verifyCurrentSources)for(const [file,expected] of Object.entries({...checksums.sources,...manifest.actor.sourceHashes})){
     if(historicalTools.has(file))continue;
     assert.equal(hash(await fs.readFile(path.join(root,file))),expected,`Changed selected geometry/actor source: ${file}`);
   }
-  return {directory,manifest,checksums,sourceChecksumsSha256:hash(sourceChecksumBytes)};
+  return {directory,manifest,checksums,acceptedRevision,sourceRoot,sourceChecksumsSha256:hash(sourceChecksumBytes)};
 }
 
 export async function verifyPromotedJointPack(directory=path.join(root,targetRoot)){
-  const selected=await selectedPack();
   const manifest=await json(path.join(directory,'manifest.json'));
+  if(manifest.exteriorRevision){
+    const {verifyExteriorRevisionPack}=await import('./revise-exterior.mjs');
+    return verifyExteriorRevisionPack(directory);
+  }
+  const selected=await readAcceptedJointPack();
   const checksums=await json(path.join(directory,'checksums.json'));
   assert.equal(manifest.status,'complete');
   assert.equal(manifest.delivery,'production');
@@ -86,8 +90,9 @@ export async function verifyPromotedJointPack(directory=path.join(root,targetRoo
 }
 
 async function promote(){
-  const selected=await selectedPack(),target=path.join(root,targetRoot);
+  const selected=await readAcceptedJointPack(),target=path.join(root,targetRoot);
   const previous=await json(path.join(target,'manifest.json'));
+  assert(!previous.exteriorRevision,'Production contains an exterior revision. Do not overwrite it with the historical promotion; use the bounded exterior exporter.');
   for(const key of ['camera','actor','stations','rest'])assert.deepEqual(previous[key],selected.manifest[key],`Selected pack would change ${key}`);
   for(const file of Object.values(previous.actor.textures)){
     assert.equal(hash(await fs.readFile(path.join(target,file))),selected.checksums.outputs[file],`Selected pack would change actor atlas ${file}`);

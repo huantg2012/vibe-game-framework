@@ -81,6 +81,10 @@ class LastLightBitmapFile extends Phaser.Loader.File {
   }
 }
 let visualId = 0;
+// A game-scoped active-time clock survives haven reconstruction after a Rift
+// trip. It does not run while the Scene is paused, hidden, or reduced-motion;
+// no wall-clock timers, save fields or changes to actor / source-light phases.
+const exteriorClocks = new WeakMap<Phaser.Game, { seconds: number }>();
 const clamp = (value: number): number => Math.max(0, Math.min(1, value));
 
 /** Production owner of the A model's material compositor. All animation is
@@ -102,6 +106,7 @@ export class LastLightVisual {
   };
   private readonly gait = new LastLightGait();
   private elapsed = 0;
+  private readonly exteriorClock: { seconds: number };
   private disposed = false;
 
   static preload(scene: Phaser.Scene): void {
@@ -113,6 +118,9 @@ export class LastLightVisual {
     }
   }
   constructor(private readonly scene: Phaser.Scene) {
+    const clock = exteriorClocks.get(scene.game) ?? { seconds: 0 };
+    exteriorClocks.set(scene.game, clock);
+    this.exteriorClock = clock;
     const { root, cachePrefix, exteriorMotion } = assetProfile(scene);
     const manifest = scene.cache.json.get(cachePrefix + 'manifest') as RuntimeManifest | undefined;
     if (!manifest?.camera || !manifest.actor?.frames?.length) throw new Error('Last Light production assets are missing; preload must finish before creating the scene.');
@@ -163,9 +171,10 @@ export class LastLightVisual {
     if (this.disposed) return;
     const step = Math.max(0, Math.min(delta, 100)) / 1000;
     this.elapsed += step;
+    if (!this.reducedMotion.matches) this.exteriorClock.seconds += step;
     for (let i = 0; i < this.pulses.length; i++) this.pulses[i] = Math.max(0, this.pulses[i]! - step * .75);
     const s = this.renderState;
-    s.seconds = this.elapsed; s.world = [state.worldPlayer.x, state.worldPlayer.y, state.worldPlayer.z];
+    s.seconds = this.elapsed; s.exteriorSeconds = this.exteriorClock.seconds; s.world = [state.worldPlayer.x, state.worldPlayer.y, state.worldPlayer.z];
     const gait=this.gait.update(s.world,step,state.resting);
     s.gaitPose=gait.pose; s.gaitFrame=gait.frame;
     s.yaw = state.facingYaw; s.walking = gait.moving; s.resting = state.resting;

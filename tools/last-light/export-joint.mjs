@@ -112,6 +112,8 @@ if (args.includes('--check')) {
   } else await checkPack(output);
   process.exit(0);
 }
+assert(!actorManifest.promotion,
+  'The joint study is now an accepted historical baseline. Use node --import tsx tools/last-light/revise-exterior.mjs --write for a bounded production exterior revision; do not overwrite the selected study.');
 
 // Missing joint-scene is deliberately fatal: never silently substitute the old
 // scene and label it a new joint study.

@@ -381,11 +381,11 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "Last Light A保留断裂回廊、单西坡、ground-throat-v2狭裂口、七处世界操作边及1035帧人物。2026-10-01用户认可48b700c联合画面与动效并授权推广；F正式首页及对应巨构实景原样接入public资源，灰雾/污染/落屑/屈折巨影按原参数运行。人物、相机、站位与导航不变；推广与运行验证单列，不扩大到所有业务、低端性能或其他历史未验项目。",
+    "summary": "Last Light A保留断裂回廊、单西坡、ground-throat-v2狭裂口、七处操作边及1035帧人物。2026-10-02正式外景在获批48b700c基线上深化：中景回折承重、远景两级断拱/壁墩，仅重烘far/middle及对应深度/光场，近景与平台像素、核心、灯源、人物、相机、站位和导航保持。巨影改用逐段世界体积与真实深度遮挡，外景活动时钟跨净化点重入续接。首页F及原近景认可保留；新外景IMPLEMENTED/production integrated、限定本地验证，审美待用户复看。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "正式入口：项目根index.html F主菜单→新游戏/继续/归来→已认可联合巨构资源的Last Light A净化点。",
+      "正式入口：项目根index.html F主菜单→新游戏/继续/归来→Last Light A净化点；首页与近景沿获批基线，远/中景为2026-10-02增量修订，完整刷新后加载新资源。",
       "当前实现及验证：src/scenes/last-light-visual.ts、src/systems/last-light-locomotion.ts；docs/qa/iteration-30-last-light-production.md。",
       "集中美术设计：docs/art-direction.md；已选 A 源几何：docs/art/demos/purification-forecourt-options/option-a.ts 与 rift-a.ts。",
       "历史参照：docs/art/demos/purification-last-light/index.html、purification-forecourt-options/index.html；样景及历史候选的验收不等同本次正式接入。",
@@ -1279,7 +1279,7 @@
       {
         "path": "src/art/last-light-joint-exterior.ts",
         "role": "code",
-        "note": "已认可joint-depth动态GLSL现为正式默认；世界射线/真实深度、污染材质与落屑保持。"
+        "note": "正式joint-depth外景：巨影按世界空间分段体积与逐段深度遮挡，211秒长周期内不等事件窗；空气/污染/真实断沿落屑，最新验证范围见2026-10-02专项。"
       },
       {
         "path": "tools/qa/check-opening-exterior.mjs",
@@ -1304,12 +1304,33 @@
       },
       {
         "path": "tools/last-light/promote-joint.mjs",
-        "role": "code"
+        "role": "code",
+        "note": "48b700c原样推广历史及不可变基线；存在exteriorRevision时分流增量验证，不把新版外景冒记为原获批资源。"
       },
       {
         "path": "docs/qa/2026-10-01-opening-production.md",
         "role": "doc",
         "note": "48b700c获用户认可后的正式推广：production资产、入口/存档/生命周期及未验范围单列。"
+      },
+      {
+        "path": "tools/last-light/revise-exterior.mjs",
+        "role": "code",
+        "note": "仅far/middle增量烘焙、共享sheet保护区域逐tile校验、新世界occluders与独立revision来源；原获批联合包只读。"
+      },
+      {
+        "path": "docs/qa/2026-10-02-haven-exterior.md",
+        "role": "doc",
+        "note": "本轮外景源码/资源、真实Renderer受控帧、生命周期与移动/坐下/变焦实际范围；限定验证不代签新外景审美。"
+      },
+      {
+        "path": "tools/qa/check-haven-exterior-atmosphere.mjs",
+        "role": "test",
+        "note": "真实WebGL受控相位、逐段深度、207594近景保护像素、减动及Scene暂停/重入时钟专项。"
+      },
+      {
+        "path": "docs/qa/artifacts/haven-exterior-atmosphere/result.json",
+        "role": "doc",
+        "note": "新隔离浏览器根入口；受控时间及shader变体、派发blur、MainMenu/Continue真实重建；非OS焦点/自然长玩测试。"
       }
     ],
     "dependsOn": [
@@ -1396,9 +1417,11 @@
       "COH-E112",
       "COH-E113",
       "COH-E114",
-      "COH-E115"
+      "COH-E115",
+      "COH-E116"
     ],
     "unknowns": [
+      "2026-10-02外景深化已正式接入并有限本地验证；48b700c的人类认可仅覆盖保留的首页F与原基线，不授予新远/中景、世界巨影和新节奏审美通过。原始联合样片只读，生产revision单列来源；受控相位、自动导航和派发blur分别按本轮QA判读，不扩成OS失焦、全业务、低端/跨设备或长时体验验收。",
       "2026-09-30新裂隙与七处操作区域尚无用户审美/手感终审；限定浏览器证据先覆盖净化器原approach与圆角E、裂口E进备行，其余完整动线/动态/跨设备与业务回归只按本轮QA实际记录，不由旧渲染证据推定通过。I28继续挂起。",
       "历史截至2026-09-28的覆盖限制：西坡顶修复已完成新资源、正式移动回归及正式Renderer受控25实帧回放；根游戏加载继续无错误但当前存档进入Rift，未放弃/重置，所以没有正式净化点键盘跨坡证据。受控回放不写存档，不等于正式键盘全程；六站业务、Rift全链与整体美术人审不扩验。",
       "历史截至2026-09-28的覆盖限制：2026-09-28人物专项已完成自动检查与正式Renderer走停/四斜向/坡面限定复核；正式根页只验证继续存档及W/A短移停下，不含完整六站、坐下UI、场景重入或Rift全链。动作自然度与整体美术仍待用户复看。",

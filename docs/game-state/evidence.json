@@ -4190,5 +4190,90 @@
         "note": "正式生产构建根入口10项实际浏览器验证及源码指纹；独立上下文，派发blur，原生在途Rift恢复未重验。"
       }
     ]
+  },
+  {
+    "id": "COH-E116",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-02",
+    "revision": "e10326c之后的净化点外景深化工作树（2026-10-02）；增量资源身份见manifest.exteriorRevision",
+    "scope": "用户授权自主完成外景深化。中景楼板回折与承重路径、远景两级断拱/壁墩进入正式far/middle资源；新revision独立记录当前烘焙来源与REVIEW-PENDING，48b700c历史基线只读。近/平台颜色和共享depth/fields对应区、核心、固定灯、相机、站位、角色图集及导航保持，occluders同步新外景。巨影由逐段世界空间体积求交、每段真实深度截断，211秒长周期内事件时间/屈折变化；稀疏落屑源于真实断沿。独立外景活动时钟在同一Game中跨净化点重建续接，暂停与减动冻结。新版资源与自动检查、实际移动/坐下/变焦覆盖按本轮QA记实；已执行layout一致、10项移动、8项交互及7851帧边界动作回归。真实WebGL专项受控相位验证207594近景像素零新增覆盖、深度遮挡与减动；新隔离根入口派发blur暂停及MainMenu/Continue重建检查，未操作用户存档。 最终真实按键覆盖E坐下1.18倍、WASD西坡上下往返、E储藏2.2倍及Esc恢复，44个视差采样有界，29.70秒自然Canvas录像。第三远拱空气仅增量作用右侧，最大3/255，近景零变化。",
+    "limitations": "IMPLEMENTED / production integrated / LIMITED-VERIFIED。首页F与原前景获批保持，新外景审美待用户复看；技术通过不能代签氛围、巨影观感或长期节奏。Renderer受控时间/shader变体不是自然完整游玩，blur为派发事件不是OS焦点操作；完整交易/搜撤、低端或跨设备性能、长期稳定性和fallback动态未扩大验证。当前原始reference.png仍属于历史基线，需以正式Renderer和本轮QA查看新版；未刷新全局来源基线。",
+    "sources": [
+      {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/qa/2026-10-02-haven-exterior.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/last-light/joint-scene.ts",
+        "role": "art"
+      },
+      {
+        "path": "tools/last-light/revise-exterior.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/promote-joint.mjs",
+        "role": "code"
+      },
+      {
+        "path": "public/assets/last-light/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/last-light/checksums.json",
+        "role": "test"
+      },
+      {
+        "path": "src/art/last-light-joint-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/export-layout.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-movement.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-interaction.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/last-light/check-boundary-motion.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-haven-exterior-atmosphere.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/haven-exterior-atmosphere/result.json",
+        "role": "doc",
+        "note": "受控WebGL相位及根入口时钟生命周期专项；来源指纹和未覆盖项保留。"
+      },
+      {
+        "path": "tools/qa/check-haven-exterior-play.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/haven-exterior-2026-10-02/result.json",
+        "role": "doc",
+        "note": "独立root上下文真实按键/坐下/变焦及返回，未瞬移；录像不覆盖整个长事件周期。"
+      }
+    ]
   }
 ]

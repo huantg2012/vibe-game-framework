@@ -90,7 +90,7 @@ vec4 exterior(vec4 plate,vec2 uv,float layer,vec4 encodedDepth){
   vec4 data=exteriorField(uv,layer,5.);
   vec2 sourcePixel=vec2(uv.x,1.-uv.y)*uPlateSize-uPadding;
   plate.rgb+=erosion(other,data,sourcePixel);
-  if(uJointExterior>.5&&layer<1.5)plate.rgb+=jointWound(plate.rgb,other,data,sourcePixel,uSeconds);
+  if(uJointExterior>.5&&layer<1.5)plate.rgb+=jointWound(plate.rgb,other,data,sourcePixel,uExteriorSeconds);
   // Preserve every near joint and its contact shadow exactly. Depth comes from
   // the middle and remote fabric behind it, not a moving or rubber-like root.
   if(layer>1.5||encodedDepth.a<.5)return plate;
@@ -173,7 +173,7 @@ void main(){
   color=near.rgb+color*(1.-near.a);color=haven.rgb+color*(1.-haven.a);
   float visibleLayer=floor(resolved.b*255.+.5);
   if(uJointExterior>.5&&visibleLayer<2.5){
-    color=jointExteriorAtmosphere(color,pixel,closest,farOffset,middleOffset,uSeconds);
+    color=jointExteriorAtmosphere(color,pixel,closest,farOffset,middleOffset,uExteriorSeconds);
   }else if(visibleLayer<2.5){
     // Air and the unplaceable passing contour are tied to the deep field and
     // hidden by the actual winning depth. Near joints/platform stay untouched.

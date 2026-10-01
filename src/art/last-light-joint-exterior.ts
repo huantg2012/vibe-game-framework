@@ -3,7 +3,7 @@
  * effect is clipped against the resolved, parallax-adjusted opaque depth.
  * Production and the isolated review pack use the same authored fields. */
 export const LAST_LIGHT_JOINT_EXTERIOR_GLSL = `
-uniform float uJointExterior;
+uniform float uJointExterior,uExteriorSeconds;
 uniform vec3 uExteriorRight,uExteriorUp,uExteriorBack,uExteriorTarget;
 uniform vec2 uExteriorOrigin;
 uniform float uExteriorScale;
@@ -49,60 +49,74 @@ vec3 jointWound(vec3 base,vec3 light,vec4 data,vec2 pixel,float time){
   return light*(crest-initial)*.32+base*material*(crest-initial)*.23;
 }
 
-// A broad fold has a dark turning side and a dim plane, not an emissive rim.
-// Rounded segment ends only join internal bends: every actual limb endpoint
-// lies outside the view, so this cannot make a closed disc-shaped apparition.
-vec2 jointFoldSegment(vec2 pixel,vec2 a,vec2 b,float radiusA,float radiusB,float salt){
-  vec2 axis=b-a;
-  float along=clamp(dot(pixel-a,axis)/dot(axis,axis),0.,1.);
-  vec2 local=pixel-(a+axis*along);
-  float radius=mix(radiusA,radiusB,along);
-  float signedSide=dot(local,normalize(vec2(-axis.y,axis.x)))/radius;
-  float fold=1.-smoothstep(radius-2.5,radius+3.5,length(local));
+// The silhouette retains the accepted giant's angular, incomplete folds, but
+// each section now has a world-space axis, thickness and independent depth.
+// Intersect the view ray with the projected section, then use its curved front
+// surface for occlusion. A nearer column may hide one joint and expose another.
+vec3 jointFoldSegment(vec3 origin,float surface,vec3 a,vec3 b,float radiusA,float radiusB,float salt){
+  vec3 axis=b-a,planeAxis=axis-uExteriorBack*dot(axis,uExteriorBack);
+  float along=clamp(dot(origin-a,planeAxis)/max(.001,dot(planeAxis,planeAxis)),0.,1.);
+  vec3 center=mix(a,b,along);
+  float centerDepth=dot(center-uExteriorTarget,uExteriorBack);
+  vec3 local=origin-center+uExteriorBack*centerDepth;
+  float radius=mix(radiusA,radiusB,along),distance=length(local);
+  float coverage=1.-smoothstep(radius-1.5/uExteriorScale,radius+2.5/uExteriorScale,distance);
+  if(coverage<=0.)return vec3(0.,0.,-2000.);
+  float depth=centerDepth+sqrt(max(0.,radius*radius-distance*distance))*.62;
+  if(depth<=surface+.02)return vec3(0.,0.,-2000.);
+  float signedSide=dot(local,normalize(cross(uExteriorBack,planeAxis)))/radius;
   float plane=smoothstep(-.73,-.08,signedSide)*(1.-smoothstep(.23,.90,signedSide));
   float crease=(1.-smoothstep(.025,.13,abs(signedSide+.27)))*.32;
-  // Incomplete oblique ridges describe a folded surface; their support belongs
-  // to this plane and never becomes a complete contour or parallel scan lines.
   float ridge=smoothstep(.87,.98,sin(along*18.5+signedSide*2.4+salt))
     *smoothstep(-.12,.21,signedSide)*(1.-smoothstep(.3,.63,signedSide))*.16;
-  return vec2(fold,clamp(plane*.69-crease+ridge,0.,1.));
+  return vec3(coverage,clamp(plane*.69-crease+ridge,0.,1.),depth);
 }
-
-vec2 jointFoldChain(vec2 pixel,vec2 a,vec2 b,vec2 c,vec2 d,vec4 radius,float salt){
-  vec2 ab=jointFoldSegment(pixel,a,b,radius.x,radius.y,salt);
-  vec2 bc=jointFoldSegment(pixel,b,c,radius.y,radius.z,salt+2.1);
-  vec2 cd=jointFoldSegment(pixel,c,d,radius.z,radius.w,salt+4.8);
-  // At the bend, the larger coverage owns the visible face. Darker material
-  // remains at the joint rather than adding three overlapping light ribbons.
-  vec2 form=ab.x>bc.x?ab:bc;
-  return cd.x>form.x?cd:form;
+vec3 jointFrontFold(vec3 a,vec3 b){
+  return a.x>0.&&(a.z>b.z||b.x<=0.)?a:b;
 }
+vec3 jointFoldChain(vec3 origin,float surface,vec3 a,vec3 b,vec3 c,vec3 d,vec4 radius,float salt){
+  vec3 ab=jointFoldSegment(origin,surface,a,b,radius.x,radius.y,salt);
+  vec3 bc=jointFoldSegment(origin,surface,b,c,radius.y,radius.z,salt+2.1);
+  vec3 cd=jointFoldSegment(origin,surface,c,d,radius.z,radius.w,salt+4.8);
+  return jointFrontFold(jointFrontFold(ab,bc),cd);
+}
+float jointEventSeed(float cycle,float salt){return fract(sin(cycle*91.731+salt)*15731.743);}
 
-// We glimpse articulated portions of something much larger than the opening.
-// Upper roots stay fixed while one joint flexes and two thinner folds follow
-// late. There is no global translating body and no encompassing oval mask.
-vec3 jointPassingMass(vec3 color,vec2 pixel,float surface,float time){
-  float cycle=mod(time,78.),start=cycle<39.?7.:49.;
-  float age=cycle-start;
-  if(age<0.||age>11.||surface>-27.)return color;
-  float alternate=step(39.,cycle);
-  vec2 q=pixel-vec2(alternate*14.,alternate*-64.);
-  float bend=sin(clamp((age-.45)/8.35,0.,1.)*3.14159265);
-  float follow=sin(clamp((age-1.80)/8.1,0.,1.)*3.14159265);
-  float late=sin(clamp((age-2.65)/8.2,0.,1.)*3.14159265);
-  vec2 rear=jointFoldChain(q,vec2(472.,-230.),vec2(414.-follow*24.,202.+follow*19.),
-    vec2(323.+follow*31.,476.-follow*8.),vec2(190.,920.),vec4(31.,34.,22.,37.),2.7);
-  vec2 narrow=jointFoldChain(q,vec2(123.,-170.),vec2(191.+late*18.,192.-late*11.),
-    vec2(135.-late*24.,433.+late*27.),vec2(109.,870.),vec4(15.,19.,11.,23.),5.2);
-  vec2 main=jointFoldChain(q,vec2(381.,-230.),vec2(301.-bend*48.,220.+bend*19.),
-    vec2(365.+bend*26.,521.-bend*17.),vec2(494.,920.),vec4(63.,52.,41.,72.),.4);
-  float arrival=smoothstep(0.,1.85,age)*(1.-smoothstep(8.75,11.,age));
-  // Dim neutral incident light reveals turning planes. Middle air is composited
-  // afterwards, naturally swallowing the lower-contrast fragments again.
-  vec3 dark=vec3(.0095,.011,.0105),light=vec3(.010,.011,.010);
-  color=mix(color,dark+light*rear.y,rear.x*arrival*.67);
-  color=mix(color,dark+light*narrow.y,narrow.x*arrival*.59);
-  return mix(color,dark+light*main.y,main.x*arrival*.78);
+// Two unequal windows in a long cycle; later cycles vary timing and flexion.
+// There is no global body translation. Roots remain fixed outside the opening,
+// one broad joint changes its load and the thinner folds respond seconds later.
+// The clock belongs to the game instance and survives interaction / scene return.
+vec3 jointPassingMass(vec3 color,vec3 origin,float surface,float time){
+  float cycle=floor(time/211.),phase=mod(time,211.);
+  float second=step(100.,phase),seed=jointEventSeed(cycle,3.1+second*8.7);
+  float start=second<.5?26.+seed*17.:131.+seed*19.;
+  float duration=16.5+seed*3.,age=phase-start;
+  if(age<0.||age>duration)return color;
+  float bend=sin(clamp((age-.8)/(duration-2.),0.,1.)*3.14159265);
+  float follow=sin(clamp((age-2.6)/(duration-2.8),0.,1.)*3.14159265);
+  float late=sin(clamp((age-4.1)/(duration-4.4),0.,1.)*3.14159265);
+  float strength=.81+seed*.23;
+  bend*=strength;follow*=strength;late*=strength;
+  vec3 rear=jointFoldChain(origin,surface,
+    vec3(-23.791,-6.172,-37.142),
+    vec3(-19.426,-17.998,-26.159)+vec3(-.57,.47,.46)*follow,
+    vec3(-18.786,-26.005,-18.730)+vec3(.71,-.23,-.42)*follow,
+    vec3(-21.109,-43.806,-13.019),vec4(1.17,1.28,.83,1.40),2.7);
+  vec3 narrow=jointFoldChain(origin,surface,
+    vec3(-35.569,-9.728,-31.124),
+    vec3(-27.978,-19.366,-23.935)+vec3(.48,.26,-.28)*late,
+    vec3(-26.152,-25.781,-17.102)+vec3(-.73,-.63,.34)*late,
+    vec3(-25.587,-43.923,-14.376),vec4(.57,.72,.42,.87),5.2);
+  vec3 main=jointFoldChain(origin,surface,
+    vec3(-24.919,-3.932,-32.505),
+    vec3(-21.052,-16.321,-20.756)+vec3(-1.48,-.46,.69)*bend,
+    vec3(-15.165,-25.172,-15.975)+vec3(.86,.51,-.37)*bend,
+    vec3(-9.645,-41.567,-16.357),vec4(2.38,1.96,1.55,2.72),.4);
+  vec3 form=jointFrontFold(jointFrontFold(rear,narrow),main);
+  float arrival=smoothstep(0.,3.2,age)*(1.-smoothstep(duration-3.8,duration,age));
+  // Neutral dim planes are revealed by incident air; never glowing contours.
+  // Middle air follows this pass and partially swallows the form again.
+  return mix(color,vec3(.0095,.011,.0105)+vec3(.010,.011,.010)*form.y,form.x*arrival*.75);
 }
 
 vec3 jointFallingGrit(vec2 pixel,float surface,vec2 middleOffset,vec2 farOffset,float time){
@@ -113,8 +127,10 @@ vec3 jointFallingGrit(vec2 pixel,float surface,vec2 middleOffset,vec2 farOffset,
     float slot=float(i),group=floor(slot*.5),companion=mod(slot,2.);
     vec3 source=group<.5?vec3(-7.254,-9.319,-1.398)
       :group<1.5?vec3(-16.099,-6.693,.870):vec3(-15.279,-4.250,-13.651);
-    float period=10.7+group*3.8,age=mod(time+group*3.9-companion*.43+period,period);
-    if(age>3.2)continue;
+    float period=33.+group*11.,cycle=floor(time/period);
+    float onset=5.+group*3.+jointEventSeed(cycle,17.3+group*2.9)*8.;
+    float age=mod(time,period)-onset-companion*.43;
+    if(age<0.||age>3.2)continue;
     vec3 world=source+vec3(sin(age*1.4+slot)*.13,-(.23*age+.56*age*age),companion*.08);
     vec3 relative=world-uExteriorTarget;
     float depth=dot(relative,uExteriorBack);
@@ -131,9 +147,14 @@ vec3 jointFallingGrit(vec2 pixel,float surface,vec2 middleOffset,vec2 farOffset,
 
 vec3 jointExteriorAtmosphere(vec3 color,vec2 pixel,float surface,vec2 farOffset,vec2 middleOffset,float time){
   vec3 farOrigin=jointRayOrigin(pixel-farOffset);
+  // The upper-right broken vault opens onto a deeper air column. Its quieter
+  // rate and low optical contribution let the negative space slowly breathe
+  // without lifting the whole exterior or washing the nearer masonry.
+  float vault=jointAir(farOrigin,surface,vec3(-4.,-22.,-34.),vec3(8.,25.,5.),time,.24);
+  color=mix(color,vec3(.067,.073,.069),vault*.22);
   float remote=jointAir(farOrigin,surface,vec3(-13.2,-11.7,-14.2),vec3(4.2,22.,4.4),time,.52);
   color=mix(color,vec3(.073,.079,.074),remote*.66);
-  color=jointPassingMass(color,pixel-farOffset,surface,time);
+  color=jointPassingMass(color,farOrigin,surface,time);
   vec3 middleOrigin=jointRayOrigin(pixel-middleOffset);
   float middle=jointAir(middleOrigin,surface,vec3(-16.2,-16.7,-7.2),vec3(4.0,18.,3.8),time,1.);
   color=mix(color,vec3(.078,.084,.079),middle*.54);
