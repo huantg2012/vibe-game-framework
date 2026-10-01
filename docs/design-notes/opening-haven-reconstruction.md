@@ -1,12 +1,14 @@
 # 开场 → 净化点：设计入口与历史探索
 
-当前规格：[首页与净化点视觉连续性](../specs/art-opening-haven-continuity.md)。日期：2026-10-01。主关联 COH-F002 / COH-F005。
+当前规格：[首页与净化点视觉连续性](../specs/art-opening-haven-continuity.md)。日期：2026-10-01。主关联 COH-F002 / COH-F005 / COH-F042。
 
-**当前状态：DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** [单方向可操作样片](../art/demos/opening-joint/index.html)已将独立首页母版与对应巨构外景接到真实净化点，可进入、移动、坐下、返回及继续，并以真实渲染帧直接对照。首页由 image_gen 创作，实景由可编辑几何与正式渲染器呈现；[来源](../art/demos/opening-joint/assets/title/source.json)和[本轮QA](../qa/2026-10-01-opening-joint.md)分别记录制作与验证。坐姿首页至站姿实景沿用原短过渡剪辑，没有起身动画。完整设计及验收仍统一维护在上述规格；生产默认首页未替换，视觉连续性待用户审查。
+**当前状态：F 画法 HUMAN-SELECTED；DEV-IMPLEMENTED；新增动效 HUMAN-REVIEW-PENDING。** 用户从六张重绘中明确选择 F，并要求适度生动的动效。[联合样片](../art/demos/opening-joint/index.html)默认已使用 F 静图与专属炉火、光照起伏、核心密度流动/胀缩、烟灰和深层空气；人物、建筑与镜头不动。完整实现与生命周期统一归[视觉连续性规格](../specs/art-opening-haven-continuity.md)，实际执行证据归[本轮QA](../qa/2026-10-01-opening-joint.md)。画法选中不代表新动画观感、两端连续性或生产替换已通过。
 
-## 同日画法复选
+## 同日画法选择与动态接续
 
-用户认可联合样片的坐姿与角度，但指出首页生成感明显。保持这两个已认可条件与实景对象身份，制作六张描绘处理候选（A–D 较保守，E/F 放宽微轮廓约束）；[比较页](../art/demos/opening-pixel-candidates/index.html)保留原图、实景和统一局部放大，候选均可进入同一真实净化点。未选中前不替换默认，后续状态与验证归[联合样片QA](../qa/2026-10-01-opening-joint.md)。
+用户先认可坐姿与角度，指出首页生成感明显，随后从六张描绘处理候选中选中 F「手绘块面」。[比较页](../art/demos/opening-pixel-candidates/index.html)默认展示 F 静帧，并保留原图、历史候选、统一局部放大和实景截帧；动态在联合样片查看。原始生成参考与提示保存在[来源记录](../art/demos/opening-joint/assets/title/candidates/source.json)，不是精确像素网格或固定色数的完成证明。
+
+DEV无参数使用 F；`?title=0`为原版静图，`?title=a`至`e`为历史候选静图。F专属透明Canvas跟随Scene暂停、减动和销毁，避免把旧图遮罩贴到新图；本轮未重绘F、未改实景资产、未替换正式默认。首页坐姿至实景站姿仍沿用原短过渡剪辑，没有起身动画。
 
 ## 已否决的静态路线
 

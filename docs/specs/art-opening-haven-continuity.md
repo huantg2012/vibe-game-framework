@@ -2,7 +2,7 @@
 status: DEV-IMPLEMENTED
 created-date: 2026-10-01
 last-modified-date: 2026-10-01
-feature-ids: [COH-F002, COH-F005]
+feature-ids: [COH-F002, COH-F005, COH-F042]
 interfaces-with:
   - ui-menu-entry-transition
   - system-purification-impact
@@ -12,10 +12,11 @@ exposes:
 interface-changed: false
 implementation: DEV
 verification: LIMITED-VERIFIED
+title-art-selection: HUMAN-SELECTED-F
 human-art-review: REVIEW-PENDING
 ---
 
-**TL;DR：以一个联合方向制作首页、对应净化点实景和可操作的进入过程，现已接入独立 DEV 样片，待用户审查。首页须激起进入欲望；实景允许减少微细节，但必须保住同一个人、同一处庇护所的视觉身份、建筑重量、光源关系与世界纵深。**
+**TL;DR：以一个联合方向制作首页、对应净化点实景和可操作的进入过程，现已接入独立 DEV 样片；用户已选 F 画法，新增动态与两端连续性仍待审查。首页须激起进入欲望；实景允许减少微细节，但必须保住同一个人、同一处庇护所的视觉身份、建筑重量、光源关系与世界纵深。**
 
 # 首页与净化点视觉连续性
 
@@ -23,9 +24,11 @@ human-art-review: REVIEW-PENDING
 
 2026-10-01已依本规格完成[单方向可操作样片](../art/demos/opening-joint/index.html)：**DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING**。首页母版、对应实景资产和入场已接入独立 DEV 入口；生产默认首页与原场景资产未替换。实际操作证据与未验范围归[本轮 QA](../qa/2026-10-01-opening-joint.md)，技术通过不代表视觉连续性已获认可。
 
-同日用户反馈：认可坐下的想法与取景角度，但首页画质/画风仍有明显生成感。因此保留坐姿、构图与对象关系，针对像素形状组织、边缘控制、材质细节分布和明暗概括制作六张画法候选，供同画幅比较及真实入场检验；不是重新选择世界构图，也不是已通过整张母版。候选未选中前不替换原默认。 [画法比较页](../art/demos/opening-pixel-candidates/index.html)支持原版＋A–F、固定局部放大、实际标题布局、真实净化点截帧及进入同一可操作样片。六张均为 image_gen 重绘，未经过降采样、加噪点等滤镜来冒充绘制语言改变；完整来源在[候选记录](../art/demos/opening-joint/assets/title/candidates/source.json)。
+同日画法复选已由用户明确选择 **F「手绘块面」：HUMAN-SELECTED**。此前认可坐姿与角度、要求减轻生成感的反馈，经过六张 image_gen 重绘比较后收敛到 F；该选择确认绘制方向，不自动验收本轮新增动效或首页与实景的全部连续性。生成参考与原始提示保留在[候选来源](../art/demos/opening-joint/assets/title/candidates/source.json)，不能把提示中的像素网格、色数目标写成已达成规格。
 
-当前实图判断：C 保留原貌较稳，F 的环境块面与暗部概括改善最明显，E 提供粗像素方向；A/B/D 属于保守修饰。E 没有达到严格统一的低分辨率网格，E/F 的核心出现晶体/胞块化，F 少量管口增生，均为待修问题，不能将提示词要求视为已实现。候选仅评审画法，不提升美术验收；候选试玩停用原图专属光效遮罩，避免光源错位。
+[联合样片](../art/demos/opening-joint/index.html)的 DEV 默认已改为 F 动态首页；`?title=0`查看原版静图，`?title=a`至`e`查看历史候选静图，`?title=f`显式查看 F。无参数或非法参数在 DEV 回到 F。 [比较页](../art/demos/opening-pixel-candidates/index.html)默认展示 F 静帧，并保留原图、历史候选、固定局部放大与实景截帧；动态在联合样片查看。选择不写入生产偏好，正式首页和实景资产未替换。
+
+本轮按“适度生动”给 F 单独制作炉火、源光与受光同步、核心内质缓慢变化、烟灰及深层空气，构图、人物姿态和建筑保持静止。未重绘 F 静图，不能声称前轮对核心胞块化或少量管口差异的观察已经修复；不复用其他图片的坐标遮罩。动效实现及生命周期见第7节，体验仍待人审。
 
 本文件是这轮联合视觉制作与验收的唯一规格；[美术方向](../art-direction.md#resume-art-rebuild)继续维护全游戏材料、污染和场景原则。[入场规格](ui-menu-entry-transition.md)独占新游戏/继续、存档安全、输入锁、时序和清理等运行时行为。本文件不另建一套转场参数。
 
@@ -138,18 +141,27 @@ human-art-review: REVIEW-PENDING
 
 ## 7. 当前实现与接续入口
 
-本轮共同画面内容为炉边停留处、灰绿核心、厚断沿与向黑暗延伸的倾斜书廊巨构。首页采用内置 image_gen 独立创作的1536×1024母版，以本轮实景渲染、实际人物/核心模型和最初首页原画分别约束身份与表现力；来源及提示记录在 `assets/title/source.json`。`title-motion.ts`仅让画中已有的炉火、污染源及其受光处作低幅变化，不扭动整张画面。
+共同画面内容仍为炉边停留处、灰绿核心、厚断沿与向黑暗延伸的倾斜书廊巨构。当前首页采用用户已选的 `assets/title/candidates/f.png`，为 image_gen 重绘的静态画面；原版及其参考保留在 `assets/title/master.png`和两份来源记录中。本轮未修改静图或实景几何。
+
+F 的 `title-motion.ts`在960×640图像坐标中用专属透明 Canvas 以 `source-over`合成，人物、建筑与相机均不变形：
+
+- 炉内火焰按亮部炉栅遮罩活动；同一闪烁信号调制炉火及画中已有的暖色受光像素，保留格栅、石材细节和接触暗部。
+- 核心内部作缓慢密度流动及低幅胀缩，以同一呼吸信号调制附近既有灰绿受光。变化限于内质与真实画中接收区，不让约束装置旋转，也不新增整体绿光罩。
+- 烟从 F 的烟口上升消散，局部仅有少量灰和偶发火星；深层空气限制在图像中的暗部间隙遮罩。这是首页图像域表现，不宣称三维实时光照。
+- 所有变化由 Phaser Scene 的 `delta`推进，Canvas最多每秒重绘30次，不设独立常驻动画时钟。失焦随 Scene 暂停冻结；`prefers-reduced-motion`清空叠加层并保留 F 静图，恢复后继续；场景关闭销毁 Canvas 与监听，返回首页重新建立一份。原版和 A–E 保持静态。
+
+上述为实现合同；更新频率不等于实际帧率或性能验收。新动效的执行记录及录屏统一归[本轮QA](../qa/2026-10-01-opening-joint.md)。
 
 实景由 `joint-scene.ts`在已选 A 的几何上重做中远景巨构、局部地坪和建筑断面的结构层次，`export-joint.mjs`导出独立资产包，交由正式 `PurificationScene`和 `LastLightRenderer`运行。相机、站位、交互及导航保持；1035帧人物资产原样复用，Rift人物未改。DEV专用资源 profile使用独立路径与缓存前缀，生产构建忽略该 profile。
 
 入口通过页面内存存储隔离正式记录，沿用现行新建/继续与 `MenuEntryTransition`。首页坐姿到净化点炉边站姿采用剪辑，未实现一镜到底或起身动画；本轮未另设转场时序。“直接对照”读取当前真实渲染帧，与首页交替显示，不用离线实景图替代游戏。
 
-限定实测已覆盖进入、真实键盘位移、E坐下/起身、Tab报告、返回及继续、覆盖取消、失焦/减少动态、真实截帧对照，以及正式存储哨兵未变。最终画面、两端连续性和跨设备表现仍待审查；后续继续修同一联合方向，通过人审后再决定生产替换。
+此前联合样片的限定实测已覆盖进入、真实键盘位移、E坐下/起身、Tab报告、返回及继续、覆盖取消、失焦/减少动态、真实截帧对照，以及正式存储哨兵未变。这些旧结果不自动证明 F 新动效通过；F 绘制方向已选，动画观感、两端连续性和跨设备表现仍待审查，生产替换仍未执行。
 
 | 职责 | 当前实现或文档入口 |
 | --- | --- |
 | 单方向可操作入口 | [opening-joint](../art/demos/opening-joint/index.html)、[entry.ts](../art/demos/opening-joint/entry.ts) |
-| 首页母版与弱动态 | [master.png](../art/demos/opening-joint/assets/title/master.png)、[来源](../art/demos/opening-joint/assets/title/source.json)、[title-motion.ts](../art/demos/opening-joint/title-motion.ts) |
+| 已选 F 与专属动态 | [F 静图](../art/demos/opening-joint/assets/title/candidates/f.png)、[重绘来源](../art/demos/opening-joint/assets/title/candidates/source.json)、[title-motion.ts](../art/demos/opening-joint/title-motion.ts) |
 | 联合实景几何与导出 | [joint-scene.ts](../../tools/last-light/joint-scene.ts)、[export-joint.mjs](../../tools/last-light/export-joint.mjs)、[DEV资产](../art/demos/opening-joint/assets/haven/manifest.json) |
 | 正式入场行为 | [唯一入场规格](ui-menu-entry-transition.md)、[MenuEntryTransition](../../src/scenes/menu-entry-transition.ts) |
 | 净化点及视觉合成 | [PurificationScene](../../src/scenes/purification-scene.ts)、[视觉适配](../../src/scenes/last-light-visual.ts)、[Renderer](../../src/art/last-light-renderer.ts) |

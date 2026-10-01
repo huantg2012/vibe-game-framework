@@ -3970,5 +3970,42 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E111",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-01",
+    "revision": "f4fa432636646c7428205804109052ecc6e1b3a9之后的F首页动效工作树（2026-10-01）",
+    "scope": "静态核对用户选中F后的DEV接入：默认F，?title=0原版与A–E静态对照；F专属透明Canvas以source-over叠加炉火及同频暖光受光、核心密度流动/低幅胀缩及同步灰绿受光、烟灰和深层暗部遮罩空气。由Scene delta推进并限30Hz重绘，失焦随Scene冻结，减动清空叠加层保留静图，关闭销毁、返回重建。用户F绘制方向为HUMAN-SELECTED，新动画仍待审。",
+    "limitations": "本条为源码与设计记录核查，不冒充本代理运行验证。实际自动检查、浏览器复核与录屏由统一QA追加，按其最终源码指纹和覆盖范围判读；旧14项联合检查不自动覆盖新动效。动画体验、两端完整连续性与跨设备表现未获用户验收；未重绘F静图、未改联合实景资产或替换正式生产。",
+    "sources": [
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc",
+        "note": "本轮F动效实际执行结果及录屏的统一增量记录。"
+      },
+      {
+        "path": "docs/design-notes/opening-haven-reconstruction.md",
+        "role": "doc",
+        "note": "用户明确选择F画法，新增动效待审。"
+      },
+      {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/entry.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/title-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-opening-title-motion.mjs",
+        "role": "test"
+      }
+    ]
   }
 ]

@@ -49,3 +49,17 @@
 - 两个入口的定向 TypeScript 与差异检查通过；本次未改生产代码和实景资产。
 
 实图评审结论：优先对比 C/E/F。C 保留原貌最稳；F 的环境大面与安静暗部最能减弱材质滤镜感；E 粗像素区别明显。A/B/D 变化有限，不包装成三种全新画风。E 并非严格统一的低分辨率网格，E/F 核心有晶体/胞块化，F 新增少量管口；选中方向后仍需恢复核心灰绿能量体的身份并修整误生结构。所有候选为 **DEV / HUMAN-SELECTION-PENDING**，不能据类型检查或生成提示声称美术通过。
+
+## 同日：F 已选，首页动效
+
+用户随后明确选择 F，并要求适度、生动的首页动效。当前[联合样片](../art/demos/opening-joint/index.html)默认 F；静态原始像素未改，`?title=0`及 A–E 保留为历史对照。**F 绘制方向 HUMAN-SELECTED，动效 MOTION-REVIEW-PENDING**；正式生产首页与实景资产未在此轮替换。
+
+动效由 F 专属的960×640透明层实时绘制：炉栅内的明焰起伏与暖光受光同频；核心密度缓慢流动、约3.8%低幅采样胀缩及附近灰绿受光共用慢周期；烟囱出烟、少量余烬/浮尘与深景受限空气各有更慢节奏。建筑与人物轮廓、镜头和标题保持稳定。亮暗遮罩使用既有受光像素，远景空气只进入作者划定的暗部空间；不对整张图加呼吸缩放、全屏曝光或蓝色蒙层。
+
+[专项脚本](../../tools/qa/check-opening-title-motion.mjs)在一次性 headless Chromium 内最终通过12项，[结果](artifacts/opening-title-motion/result.json)锁定本轮 F 图片、entry/motion/CSS 来源 SHA：默认F及唯一动效实例；真实RGBA像素/时钟变化；8秒实际图＋动效画布录制；分发 blur 后冻结及按键恢复；切换减少动态时清空覆盖层并冻结，初始减少动态亦为0时钟/0动效像素，恢复后继续；点击进入真实净化点销毁旧实例；返回重建唯一新实例；正式源 Storage 哨兵未变。14次取样的菜单安全区 x<360 均无动效像素，页面错误和失败请求均为0。
+
+检查过程中修复一项实际遗漏：仅依赖 MediaQueryList 的 change 事件，在测试宿主中会冻结旧覆盖帧。现于 Scene update 边界同时观察 matches，保证减少动态时回到原静图；新增0alpha断言拒绝了前次42744可见像素的证据，最终重测通过。
+
+主线程亦在 Codex 内置浏览器查看 F 动态标题、确认位置和普通 source-over 合成；专项首末帧未见整体构图漂移或错位光斑。证据：[8秒动效](artifacts/opening-title-motion/f-title-motion.webm) · [首页](artifacts/opening-title-motion/f-title-start.png) · [初始减少动态](artifacts/opening-title-motion/f-title-initial-reduced.png) · [实际入场](artifacts/opening-title-motion/entered-haven.png)。视频直接合成实际F图片与实际动效canvas，960×640、请求30fps，不含DOM文字/声音；合成采样次数不是编码帧率。动效美感和可感知程度仍由用户审查，不把像素变化当成审美通过。
+
+定向 TypeScript、脚本语法与差异检查通过。本轮没有重测全交易、导航、Rift恢复或14项原联合样片全套；未宣称长期性能、低端设备、系统真实窗口失焦和跨浏览器通过。F 原图中晶体感及误生管口仍保留为静态图修整项，此轮没有重新生图。

@@ -14,7 +14,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 [联合视觉规格](specs/art-opening-haven-continuity.md)已接入独立 DEV 页 `docs/art/demos/opening-joint/index.html`。`entry.ts`复用正式 `BootScene`、`PurificationScene`及出击场景；页面在导入游戏模块前隔离 `localStorage`，再向 `SaveManager`注入同一 Map。新建、继续沿用 `session`及 `MenuEntryTransition`，返回保留页内记录并清理场景/UI；正式记录不读写。坐姿首页到炉边站姿采用原短过渡剪辑，未新增起身动画或转场时序。
 
-`assets/title/master.png`为 image_gen 独立创作的1536×1024母版，原画、本轮实景及实际人物/核心模型的参考角色和提示记录于 `assets/title/source.json`。`title-motion.ts`从母版已有炉火/污染源及受光处生成低幅动态层；失焦、直接对照和减少动态会暂停。对照功能从当前真实 WebGL 渲染帧截取画面，不以离线模型图替代实景。
+首页已选 F：`assets/title/candidates/f.png`为默认图，原图通过`?title=0`保留，A–E 为静态历史对照；生成及选择记录归`assets/title/candidates/source.json`。`title-motion.ts`专属 F 的960×640坐标，source-over画布依次合成受限深景空气、炉/核心受光、能量密度形变、炉内火焰及烟尘；受光和炉栅遮罩由原图像素及作者空间范围共同定义，不抬高全屏曝光。Scene delta驱动30Hz更新，失焦/直接对照暂停；减少动态清空透明层保留原静图，退出场景释放画布与监听。对照功能从当前真实 WebGL 渲染帧截取画面，不以离线模型图替代实景。专项生命周期检查归`tools/qa/check-opening-title-motion.mjs`；动效审美仍待人审，正式首页未替换。
 
 `tools/last-light/joint-scene.ts`继承已选 A 的可走几何、站位与相机，重做中远景巨构及局部地坪/断面层次；`export-joint.mjs`独立导出到 `opening-joint/assets/haven/`，包含静态四层、深度/材质/光场、核心八帧、遮挡体和来源校验。原1035帧人物及元数据逐字节复用，不重写导航或生产包。`LastLightVisual`仅在 DEV 下读取 `lastLightAssetProfile`注册值，按独立根路径与缓存前缀预载及使用该包；生产构建忽略此值，默认资源路径和渲染器保持。
 

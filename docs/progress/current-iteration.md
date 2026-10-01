@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-10-01
-note: 2026-10-01首页与净化点单方向联合样片已接DEV，LIMITED-VERIFIED，HUMAN-REVIEW-PENDING；旧静态候选被否决，三版探索均未获选。生产首页、I31交付及I28等挂起保持。
+note: 2026-10-01首页F画法HUMAN-SELECTED；联合DEV默认F并加入专属适度动效，动画观感及两端连续性待审。生产首页/实景、I31交付及I28挂起保持。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -20,11 +20,11 @@ note: 2026-10-01首页与净化点单方向联合样片已接DEV，LIMITED-VERIF
 
 ## 当前工作 · 首页与净化点联合样片（2026-10-01）
 
-**同日人审反馈：坐姿与角度方向获认可，首页画质/画风要求继续修改。** 本轮锁定构图制作六张画法候选，供[统一比较页](../art/demos/opening-pixel-candidates/index.html)审查；选择前维持原DEV默认及正式资源。候选不继承原样片的美术认可，入场验证另行记录。
+**F 画法 HUMAN-SELECTED，新增动效待人审。** 用户已从六张重绘中选择 F「手绘块面」，并要求适度生动。[联合样片](../art/demos/opening-joint/index.html)的 DEV 默认改为 F，专属透明Canvas加入炉内火焰及同步暖色受光、核心密度流动/低幅胀缩及同步灰绿受光、烟灰与深层空气。人物、建筑、镜头和静图内容保持；`?title=0`原版、`?title=a`至`e`为静态历史对照，[比较页](../art/demos/opening-pixel-candidates/index.html)保留统一裁切。
 
-**DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** 主 COH-F002 / COH-F005。[正式 spec](../specs/art-opening-haven-continuity.md)对应的[单方向可操作样片](../art/demos/opening-joint/index.html)已接入：独立1536×1024首页母版及弱光源动态、对应巨构外景与局部建筑层次、真实净化点及原入场流程。人物、核心身份及已有导航/交互保持；首页吸引力和两端视觉连续性待用户审查。
+**DEV-IMPLEMENTED / MOTION-REVIEW-PENDING。** 主 COH-F002 / COH-F005，关联 COH-F042。动效由Scene delta驱动、最多30Hz重绘，失焦随Scene冻结，减少动态时清空overlay只留F静图，关闭销毁、返回重建。实现及两端视觉合同归[唯一spec](../specs/art-opening-haven-continuity.md)；本轮执行结果与录屏增量归[联合QA](../qa/2026-10-01-opening-joint.md)，旧14项检查不自动继承为新动效验收。
 
-首页由 image_gen 在本轮真实实景和人物/核心参考约束下独立创作；实景由可编辑几何导出独立 DEV 资产包，复用正式场景与渲染器。1035帧人物原样复用，生产资源未替换。坐姿首页到炉边站姿为剪辑，不是起身表演或一镜到底；现行[入场合同](../specs/ui-menu-entry-transition.md)的时序保持。限定实测覆盖真实位移、E坐下/起身、Tab报告、返回继续、覆盖取消、失焦/减少动态、真实截帧对照及正式存储隔离，范围详见[本轮QA](../qa/2026-10-01-opening-joint.md)。
+对应实景仍为原联合DEV巨构资产与正式渲染器，1035帧人物、导航交互及正式生产首页/资源均未改变。首页坐姿到实景炉边站姿仍是原短剪辑，无起身或一镜到底。F绘制方向获选不代表本轮动画观感、全部视觉连续性、低端表现或完整搜撤交易通过。
 
 [设计记录](../design-notes/opening-haven-reconstruction.md)保留旧方案状态与证据边界。静态换镜头候选为 HUMAN-REJECTED；[三版DEV探索](../art/demos/opening-three/index.html)均未获选、不作定稿推进。旧 A/C 入场与切换的有限验证仍只属于 [旧轮QA](../qa/2026-10-01-opening-three.md)，不证明本轮的操作通过或美术认可；[此前体验评审](../reviews/2026-09-30-opening-haven-experience.md)保留观察依据。I31交付、现有业务与I28等挂起状态保持。
 

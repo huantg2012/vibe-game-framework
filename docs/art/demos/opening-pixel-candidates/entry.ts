@@ -11,7 +11,7 @@ const candidates: Record<Candidate, { name: string; description: string; url: st
   c: { name: 'C · 手绘硬边', description: '保留原貌最稳，材质噪点有所减少。', url: `${TITLE_ROOT}candidates/c.png` },
   d: { name: 'D · 暗面修饰', description: '暗面修饰较保守，刻痕未形成鲜明画法。', url: `${TITLE_ROOT}candidates/d.png` },
   e: { name: 'E · 粗像素概括', description: '大像素色簇更明确，高频噪点更少；并非精确低分辨率网格。', url: `${TITLE_ROOT}candidates/e.png` },
-  f: { name: 'F · 手绘块面', description: '块面概括最明显；核心偏晶体、少量管口增生，选中后修整。', url: `${TITLE_ROOT}candidates/f.png` },
+  f: { name: 'F · 手绘块面（已选）', description: '本页保留静帧对照；进入联合样片可看动态首页。', url: `${TITLE_ROOT}candidates/f.png` },
 };
 // All candidates use the same image-space crop. Switching never follows an
 // object or hides a compositional drift. Coordinates are in the 960 × 640 frame.
@@ -33,7 +33,7 @@ const havenButton = document.querySelector<HTMLButtonElement>('#toggle-haven')!;
 const candidateButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-candidate]')];
 const viewButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-view]')];
 const requested = new URLSearchParams(location.search).get('title');
-let candidate: Candidate = requested && Object.prototype.hasOwnProperty.call(candidates, requested) ? requested as Candidate : '0';
+let candidate: Candidate = requested && Object.prototype.hasOwnProperty.call(candidates, requested) ? requested as Candidate : 'f';
 let view: View = 'full';
 let uiHidden = false;
 let haven = false;
@@ -86,9 +86,10 @@ async function render(): Promise<void> {
   ready = false; art.hidden = true; imageStatus.hidden = false;
   imageStatus.textContent = '载入画面';
   const item = candidates[candidate];
-  const gameUrl = candidate === '0' ? GAME_URL : `${GAME_URL}?title=${candidate}`;
+  const gameUrl = candidate === 'f' ? GAME_URL : `${GAME_URL}?title=${candidate}`;
   playLink.href = stagePlay.href = gameUrl;
-  playLink.textContent = `用${candidate === '0' ? '原版' : `候选 ${candidate.toUpperCase()}`}进入游戏 →`;
+  playLink.textContent = candidate === 'f' ? '进入 F 动态首页 →'
+    : `用${candidate === '0' ? '原版' : `历史候选 ${candidate.toUpperCase()}`}进入游戏 →`;
   description.textContent = `${item.name} · ${item.description}`;
   candidateButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.candidate === candidate)));
   viewButtons.forEach(button => {
@@ -120,7 +121,7 @@ async function render(): Promise<void> {
 
 function choose(next: Candidate): void {
   candidate = next; haven = false; frame.scrollTop = frame.scrollLeft = 0;
-  const query = candidate === '0' ? '' : `?title=${candidate}`;
+  const query = candidate === 'f' ? '' : `?title=${candidate}`;
   history.replaceState(null, '', location.pathname + query);
   void render();
 }

@@ -23,6 +23,7 @@ const out = process.env.OPENING_JOINT_OUT ?? 'docs/qa/artifacts/opening-joint';
 const captureOnly = process.argv.includes('--capture-only');
 const sources = ['docs/art/demos/opening-joint/entry.ts', 'docs/art/demos/opening-joint/title-motion.ts',
  'src/scenes/last-light-visual.ts', 'src/art/last-light-renderer.ts', 'docs/art/demos/opening-joint/assets/title/master.png',
+ 'docs/art/demos/opening-joint/assets/title/candidates/f.png',
  'docs/art/demos/opening-joint/assets/haven/manifest.json', 'public/assets/last-light/manifest.json'];
 const fingerprint = () => Object.fromEntries(sources.map(file => [file, createHash('sha256').update(readFileSync(file)).digest('hex')]));
 const started = new Date().toISOString();

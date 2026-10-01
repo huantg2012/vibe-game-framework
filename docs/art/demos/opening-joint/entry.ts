@@ -18,10 +18,11 @@ declare global { interface Window { __openingJointStorageReady?: boolean; } }
 type Phase = 'loading' | 'title' | 'entering' | 'playing' | 'returning' | 'error';
 type MenuMode = 'root' | 'overwrite' | 'abandon';
 interface MenuAction { label: string; run: () => void; }
-// Review candidates are opt-in DEV art only. An unrecognized query uses the
-// original master, and no selection writes a user preference or production data.
+// F is the selected DEV title. Keep the original at ?title=0 and the other
+// candidates at ?title=a…e for review, without writing a production preference.
 const requestedTitle = new URLSearchParams(location.search).get('title') ?? '';
-const TITLE_CANDIDATE = import.meta.env.DEV && /^[a-f]$/.test(requestedTitle) ? requestedTitle : null;
+const TITLE_CANDIDATE = !import.meta.env.DEV || requestedTitle === '0' ? null
+  : /^[a-f]$/.test(requestedTitle) ? requestedTitle : 'f';
 const TITLE_URL = TITLE_CANDIDATE
   ? `/docs/art/demos/opening-joint/assets/title/candidates/${TITLE_CANDIDATE}.png`
   : '/docs/art/demos/opening-joint/assets/title/master.png';
@@ -57,7 +58,8 @@ function refreshControls(message?: string): void {
   status.textContent = message ?? (comparing ? '首页 / 本次真实渲染截帧'
     : phase === 'playing' ? (game.scene.isActive('RiftScene') ? '裂隙' : '净化点')
     : phase === 'entering' ? '进入中' : phase === 'loading' ? '载入中'
-    : TITLE_CANDIDATE ? `候选 ${TITLE_CANDIDATE.toUpperCase()} · 静态画法审查` : '同一处庇护所');
+    : TITLE_CANDIDATE === 'f' ? 'F · 手绘块面 · 动态首页'
+    : TITLE_CANDIDATE ? `历史候选 ${TITLE_CANDIDATE.toUpperCase()} · 静态对照` : '原版 · 静态对照');
 }
 
 function silence(): void {
@@ -136,9 +138,9 @@ class JointTitleScene extends Phaser.Scene {
         }
         art.classList.add('is-ready'); note.textContent = '';
         this.motion?.destroy();
-        // Original masks are painted for the original image's exact emitters;
-        // applying them to alternate art would invent drifting light sources.
-        this.motion = TITLE_CANDIDATE ? null : new JointTitleMotion(art);
+        // Motion is authored for F's exact emitters and silhouettes. Historical
+        // images stay static rather than inheriting another image's masks.
+        this.motion = TITLE_CANDIDATE === 'f' ? new JointTitleMotion(art) : null;
         if (this.motion) art.after(this.motion.canvas);
         this.ready = true; this.refreshActions(); refreshControls();
       } catch {

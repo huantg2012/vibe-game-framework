@@ -1,0 +1,73 @@
+{
+  "method": "Compare final actual browser title frame against the initially reduced-motion title frame, whose overlay was independently verified to contain zero visible pixels. Both screenshots use the same viewport and artwork. 960x640 game-container crop is (70,82) in the 1100x800 screenshots. Values are absolute RGB channel differences (0-255).",
+  "limitations": [
+    "One observed animation phase only; not a visibility or aesthetic acceptance threshold.",
+    "The distant-air rectangle can overlap scene details; this is a region measurement, not isolated effect-layer attribution."
+  ],
+  "sources": {
+    "animated": "f-title-after-8s.png",
+    "still": "f-title-initial-reduced.png"
+  },
+  "measurements": {
+    "scene": {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 960,
+        "h": 640
+      },
+      "changedPixels": 33122,
+      "totalPixels": 614400,
+      "meanChannelDeltaOnChangedPixels": 3.32536280015297,
+      "maxChannelDelta": 166
+    },
+    "menuSafety": {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "w": 360,
+        "h": 640
+      },
+      "changedPixels": 0,
+      "totalPixels": 230400,
+      "meanChannelDeltaOnChangedPixels": 0,
+      "maxChannelDelta": 0
+    },
+    "coreInterior": {
+      "bounds": {
+        "x": 794,
+        "y": 237,
+        "w": 47,
+        "h": 67
+      },
+      "changedPixels": 2175,
+      "totalPixels": 3149,
+      "meanChannelDeltaOnChangedPixels": 18.646130268199233,
+      "maxChannelDelta": 166
+    },
+    "furnaceGrille": {
+      "bounds": {
+        "x": 662,
+        "y": 354,
+        "w": 42,
+        "h": 51
+      },
+      "changedPixels": 1009,
+      "totalPixels": 2142,
+      "meanChannelDeltaOnChangedPixels": 5.637594978526594,
+      "maxChannelDelta": 36
+    },
+    "distantAir": {
+      "bounds": {
+        "x": 405,
+        "y": 55,
+        "w": 235,
+        "h": 585
+      },
+      "changedPixels": 16161,
+      "totalPixels": 137475,
+      "meanChannelDeltaOnChangedPixels": 0.9686281789493224,
+      "maxChannelDelta": 46
+    }
+  }
+}

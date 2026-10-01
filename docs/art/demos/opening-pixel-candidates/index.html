@@ -11,16 +11,16 @@
   <main class="review-shell">
     <header class="review-heading">
       <span>那天之后 <span class="muted">/ 首页画法</span></span>
-      <a href="../opening-joint/index.html">返回联合样片</a>
+      <a href="../opening-joint/index.html">查看 F 动态首页</a>
     </header>
     <nav class="candidate-tabs" aria-label="切换画法候选">
-      <button type="button" data-candidate="0" aria-pressed="true">0 · 原版</button>
+      <button type="button" data-candidate="0" aria-pressed="false">0 · 原版</button>
       <button type="button" data-candidate="a" aria-pressed="false">1 · A 整簇像素</button>
       <button type="button" data-candidate="b" aria-pressed="false">2 · B 克制明暗</button>
       <button type="button" data-candidate="c" aria-pressed="false">3 · C 手绘硬边</button>
       <button type="button" data-candidate="d" aria-pressed="false">4 · D 暗面修饰</button>
       <button type="button" data-candidate="e" aria-pressed="false">5 · E 粗像素概括</button>
-      <button type="button" data-candidate="f" aria-pressed="false">6 · F 手绘块面</button>
+      <button type="button" data-candidate="f" aria-pressed="true">6 · F 手绘块面 · 已选</button>
     </nav>
     <div class="view-controls">
       <nav aria-label="画面观察范围">
@@ -38,7 +38,7 @@
     </div>
     <div id="frame" class="art-frame" tabindex="0" aria-label="首页候选画面；数字 0 到 6 切换候选">
       <div id="stage" class="art-stage">
-        <img id="art" alt="原版首页" draggable="false">
+        <img id="art" alt="已选 F 手绘块面首页" draggable="false">
         <div id="title-copy" class="joint-copy">
           <h1>那天之后</h1><p class="joint-english">AFTER THAT DAY</p>
           <div class="joint-actions"><a id="stage-play" class="joint-action is-selected" href="../opening-joint/index.html">开始</a></div>
@@ -48,10 +48,10 @@
       <span id="frame-note" class="frame-note" hidden></span>
     </div>
     <footer class="review-footer">
-      <div><p id="description">原版 · 保留已认可的坐姿与取景，作为画法对照。</p>
-        <p>建议优先对比 C / E / F；A / B / D 仍可切换查看。</p>
-        <p class="muted">0–6 切换 · H 显隐标题 · 空格对照实景 · 六张均为 AI 重绘风格，尚未选定，正式首页保持原样。</p></div>
-      <a id="play-link" class="play-link" href="../opening-joint/index.html">用原版进入游戏 →</a>
+      <div><p id="description">F · 手绘块面（已选） · 本页保留静帧对照；进入联合样片可看动态首页。</p>
+        <p>F 已选为联合样片首页；原版和其余候选保留对照。</p>
+        <p class="muted">0–6 切换 · H 显隐标题 · 空格对照实景 · 六张均为 AI 重绘风格，正式生产首页保持原样。</p></div>
+      <a id="play-link" class="play-link" href="../opening-joint/index.html">进入 F 动态首页 →</a>
     </footer>
   </main>
   <script type="module" src="./entry.ts"></script>
