@@ -6,18 +6,15 @@ import { BootScene } from '@/scenes/boot-scene';
 import { PurificationScene } from '@/scenes/purification-scene';
 import { RiftScene } from '@/scenes/rift-scene';
 import { MenuEntryTransition } from '@/scenes/menu-entry-transition';
-import { abandonInterruptedExpedition, beginNewExpedition, hasReadableSave, loadExpedition, type ExpeditionEntryMode } from '@/managers/session';
 import { saveManager } from '@/managers/save-manager';
 import { audioManager } from '@/managers/audio-manager';
 import { inventoryStore } from '@/systems/inventory-store';
 import { bindDomUiRootToGame, getDomUiRoot } from '@/ui/dom/panel-styles';
 import { pauseMenu } from '@/ui/dom/pause-menu';
-import { JointTitleMotion } from './title-motion';
+import { MainMenuScene } from '@/scenes/main-menu-scene';
 
 declare global { interface Window { __openingJointStorageReady?: boolean; } }
 type Phase = 'loading' | 'title' | 'entering' | 'playing' | 'returning' | 'error';
-type MenuMode = 'root' | 'overwrite' | 'abandon';
-interface MenuAction { label: string; run: () => void; }
 // F is the selected DEV title. Keep the original at ?title=0 and the other
 // candidates at ?title=a…e for review, without writing a production preference.
 const requestedTitle = new URLSearchParams(location.search).get('title') ?? '';
@@ -85,178 +82,14 @@ class JointRiftScene extends RiftScene {
   }
 }
 
-class JointTitleScene extends Phaser.Scene {
-  private titleRoot: HTMLDivElement | null = null;
-  private transition: MenuEntryTransition | null = null;
-  private handedOff = false;
-  private generation = 0;
-  private ready = false;
-  private mode: MenuMode = 'root';
-  private actions: MenuAction[] = [];
-  private selected = 0;
-  private abort: AbortController | null = null;
-  private motion: JointTitleMotion | null = null;
-
-  constructor() { super({ key: 'MainMenuScene' }); }
-
-  create(data?: { recoveryError?: string }): void {
-    this.transition = null; this.handedOff = false; this.ready = false;
-    this.mode = 'root'; this.input.enabled = true;
-    this.abort = new AbortController();
-    const signal = this.abort.signal;
-    const generation = ++this.generation;
-    phase = 'title'; refreshControls('画面载入中');
-    const root = document.createElement('div');
-    root.className = 'joint-title';
-    root.innerHTML = '<img class="joint-art" alt="" draggable="false">'
-      + '<div class="joint-copy"><h1>那天之后</h1><p class="joint-english">AFTER THAT DAY</p>'
-      + '<p class="joint-warning" hidden></p><div class="joint-actions" aria-label="游戏菜单"></div>'
-      + '<p class="joint-back-hint" hidden>Esc 返回</p></div><div class="joint-load-note" role="status"></div>';
-    this.titleRoot = root;
-    getDomUiRoot().appendChild(root);
-    this.renderMenu();
-    if (data?.recoveryError) {
-      if (saveManager.canAbandonInterruptedRun()) this.renderMenu('abandon');
-      else this.warn(data.recoveryError);
-    }
-    root.addEventListener('pointerdown', () => audioManager.unlock(), { signal });
-    document.addEventListener('keydown', event => this.keyDown(event), { signal });
-    const art = root.querySelector<HTMLImageElement>('.joint-art')!;
-    const note = root.querySelector<HTMLDivElement>('.joint-load-note')!;
-    const loadArt = async (): Promise<void> => {
-      this.ready = false; this.refreshActions(); note.textContent = '画面载入中';
-      art.src = TITLE_URL;
-      try {
-        await art.decode();
-        if (signal.aborted || generation !== this.generation) return;
-        if (TITLE_CANDIDATE) {
-          if (art.naturalWidth < 960 || Math.abs(art.naturalWidth / art.naturalHeight - 1.5) > .002) {
-            throw new Error('Expected a 3:2 title candidate at least 960 pixels wide.');
-          }
-        } else if (art.naturalWidth !== 1536 || art.naturalHeight !== 1024) {
-          throw new Error('Expected 1536 × 1024 title master.');
-        }
-        art.classList.add('is-ready'); note.textContent = '';
-        this.motion?.destroy();
-        // Motion is authored for F's exact emitters and silhouettes. Historical
-        // images stay static rather than inheriting another image's masks.
-        this.motion = TITLE_CANDIDATE === 'f' ? new JointTitleMotion(art) : null;
-        if (this.motion) art.after(this.motion.canvas);
-        this.ready = true; this.refreshActions(); refreshControls();
-      } catch {
-        if (signal.aborted || generation !== this.generation) return;
-        note.textContent = '画面未能载入。';
-        const retry = document.createElement('button');
-        retry.type = 'button'; retry.className = 'joint-retry'; retry.textContent = '重新载入';
-        retry.addEventListener('click', () => { art.removeAttribute('src'); void loadArt(); }, { once: true, signal });
-        note.append(document.createElement('br'), retry); refreshControls('等待画面');
-      }
-    };
-    void loadArt();
-    audioManager.unlock(); audioManager.playBGM('bgm-menu-void-pad');
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      this.generation++; this.abort?.abort(); this.abort = null;
-      this.motion?.destroy(); this.motion = null;
-      this.titleRoot?.remove(); this.titleRoot = null;
-      if (!this.handedOff) this.transition?.destroy();
-      this.transition = null; this.ready = false;
-    });
+class JointTitleScene extends MainMenuScene {
+  constructor() {
+    super({ artUrl: TITLE_URL, animate: TITLE_CANDIDATE === 'f',
+      canInteract: () => phase === 'title' && !focusPaused && !comparing,
+      onTitle: () => { phase = 'title'; }, onStatus: refreshControls,
+      onEnter: () => { phase = 'entering'; refreshControls(); },
+      createTransition: mode => new JointEntry(mode) });
   }
-
-  update(_time: number, delta: number): void { this.motion?.update(delta); }
-
-  private renderMenu(mode: MenuMode = 'root'): void {
-    if (!this.titleRoot) return;
-    this.mode = mode; this.selected = 0;
-    const warning = this.titleRoot.querySelector<HTMLParagraphElement>('.joint-warning')!;
-    warning.hidden = mode === 'root';
-    this.titleRoot.querySelector<HTMLParagraphElement>('.joint-back-hint')!.hidden = mode === 'root';
-    this.titleRoot.querySelector<HTMLParagraphElement>('.joint-english')!.hidden = mode !== 'root';
-    if (mode === 'overwrite') {
-      warning.textContent = '重新开始会替换本页试玩记录。原记录将无法恢复。';
-      this.actions = [{ label: '保留记录，返回', run: () => this.renderMenu() },
-        { label: '确认重新开始', run: () => this.startNew(true) }];
-    } else if (mode === 'abandon') {
-      warning.textContent = '这趟出行暂时无法恢复。可保留记录，或放弃随身物回到净化点，保留基地收存与成长。';
-      this.actions = [{ label: '保留记录，返回', run: () => this.renderMenu() },
-        { label: '放弃本趟，返回净化点', run: () => abandonInterruptedExpedition(this, this.enter) }];
-    } else {
-      this.actions = [];
-      if (hasReadableSave()) this.actions.push({ label: '继续', run: () => this.continueRecord() });
-      this.actions.push({ label: this.actions.length ? '重新开始' : '开始', run: () => {
-        if (saveManager.getRecordPresence() === 'present') this.renderMenu('overwrite');
-        else this.startNew();
-      } });
-    }
-    const container = this.titleRoot.querySelector<HTMLDivElement>('.joint-actions')!;
-    container.replaceChildren();
-    this.actions.forEach((action, index) => {
-      const button = document.createElement('button');
-      button.type = 'button'; button.className = 'joint-action'; button.textContent = action.label;
-      button.addEventListener('pointerenter', () => { this.selected = index; this.refreshActions(); });
-      button.addEventListener('focus', () => { this.selected = index; this.refreshActions(); });
-      button.addEventListener('click', () => { this.selected = index; this.activate(); });
-      container.appendChild(button);
-    });
-    this.refreshActions();
-  }
-
-  private refreshActions(): void {
-    this.titleRoot?.querySelectorAll<HTMLButtonElement>('.joint-action').forEach((button, index) => {
-      button.disabled = !this.ready || !!this.transition;
-      button.classList.toggle('is-selected', index === this.selected);
-    });
-  }
-
-  private warn(message: string): void {
-    const warning = this.titleRoot?.querySelector<HTMLParagraphElement>('.joint-warning');
-    if (warning) { warning.hidden = false; warning.textContent = message; }
-  }
-
-  private keyDown(event: KeyboardEvent): void {
-    if (phase !== 'title' || focusPaused || comparing || event.repeat || event.altKey || event.ctrlKey || event.metaKey) return;
-    if (event.target instanceof HTMLElement && event.target.closest('.joint-controls')) return;
-    if (event.key === 'Escape' && this.mode !== 'root') { event.preventDefault(); this.renderMenu(); }
-    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      event.preventDefault(); this.selected = (this.selected + (event.key === 'ArrowDown' ? 1 : -1) + this.actions.length) % this.actions.length;
-      this.refreshActions(); audioManager.playSFX('sfx-ui-hover');
-    }
-    if (event.key === 'Enter' || event.code === 'Space') { event.preventDefault(); this.activate(); }
-  }
-
-  private activate(): void {
-    if (!this.ready || this.transition || phase !== 'title' || focusPaused || comparing) return;
-    audioManager.unlock(); audioManager.playSFX('sfx-ui-click'); this.actions[this.selected]?.run();
-  }
-
-  private startNew(confirmedReplacement = false): void {
-    if (!beginNewExpedition(this, this.enter, confirmedReplacement)) this.warn('无法安全创建记录。当前进度未重置，请重试。');
-  }
-
-  private continueRecord(): void {
-    // Native Rift recovery queues a scene directly without the haven entry
-    // callback. Lock repeated clicks until that queued operation completes.
-    this.ready = false; this.refreshActions();
-    loadExpedition(this, this.enter, () => this.renderMenu('abandon'));
-    if (!this.transition) this.time.delayedCall(0, () => {
-      if (!this.titleRoot || phase !== 'title') return;
-      this.ready = true; this.refreshActions();
-    });
-  }
-
-  private readonly enter = (mode: ExpeditionEntryMode): void => {
-    if (this.transition || phase !== 'title') return;
-    this.ready = false; this.input.enabled = false;
-    phase = 'entering'; refreshControls();
-    const copy = this.titleRoot?.querySelector<HTMLElement>('.joint-copy');
-    if (copy) copy.style.opacity = '0';
-    const transition = new JointEntry(mode);
-    this.transition = transition; this.refreshActions();
-    transition.depart(this, [], () => {
-      this.handedOff = true;
-      this.scene.start('PurificationScene', { fromMenu: true, menuEntry: transition });
-    });
-  };
 }
 
 function returnToTitle(): void {

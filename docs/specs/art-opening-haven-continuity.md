@@ -1,5 +1,5 @@
 ---
-status: DEV-IMPLEMENTED
+status: PRODUCTION-INTEGRATED
 created-date: 2026-10-01
 last-modified-date: 2026-10-01
 feature-ids: [COH-F002, COH-F005, COH-F042]
@@ -10,25 +10,27 @@ exposes:
   - 首页与净化点共同的视觉身份及允许降级边界
   - 单一方向的联合制作顺序、交付物与验收条件
 interface-changed: false
-implementation: DEV
+implementation: PRODUCTION
 verification: LIMITED-VERIFIED
 title-art-selection: HUMAN-SELECTED-F
-human-art-review: REVIEW-PENDING
+human-art-review: HUMAN-APPROVED-48b700c
 ---
 
-**TL;DR：以一个联合方向制作首页、对应净化点实景和可操作的进入过程，现已接入独立 DEV 样片；用户已选 F 画法并认可近处动效及外景灰雾、污染迁移、落屑；本轮仅重做被否定的巨影，新形态与两端连续性仍待审查。首页须激起进入欲望；实景允许减少微细节，但必须保住同一个人、同一处庇护所的视觉身份、建筑重量、光源关系与世界纵深。**
+**TL;DR：用户已认可`48b700c`的联合画面与动效，并授权进入正式游戏；F 首页、对应净化点及外景沿已认可版本接入，正式验证独立记录。首页须激起进入欲望；实景允许减少微细节，但必须保住同一个人、同一处庇护所的视觉身份、建筑重量、光源关系与世界纵深。**
 
 # 首页与净化点视觉连续性
 
 ## 1. 状态与规格边界
 
-2026-10-01已依本规格完成[单方向可操作样片](../art/demos/opening-joint/index.html)：**DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING**。首页母版、对应实景资产和入场已接入独立 DEV 入口；生产默认首页与原场景资产未替换。实际操作证据与未验范围归[本轮 QA](../qa/2026-10-01-opening-joint.md)，技术通过不代表视觉连续性已获认可。
+**2026-10-01正式推广授权：** 用户对`48b700c`明确反馈“非常好，放到游戏里吧”，认可当前联合画面与动效并授权接入正式游戏。当前正式首页使用`/assets/art/menu-refuge-f.png`，净化点使用推广后的`/assets/last-light/`；原DEV验收范围保留，正式入口及生命周期限定验证已完成，证据单列在[正式推广QA](../qa/2026-10-01-opening-production.md)。此次不重做画法、构图或玩法。
 
-同日画法复选已由用户明确选择 **F「手绘块面」：HUMAN-SELECTED**。此前认可坐姿与角度、要求减轻生成感的反馈，经过六张 image_gen 重绘比较后收敛到 F；该选择确认绘制方向，不自动验收本轮新增动效或首页与实景的全部连续性。生成参考与原始提示保留在[候选来源](../art/demos/opening-joint/assets/title/candidates/source.json)，不能把提示中的像素网格、色数目标写成已达成规格。
+[单方向可操作样片](../art/demos/opening-joint/index.html)保留为隔离正式存档的DEV比较入口。正式接入复用已认可的画面、动效及短过渡，不重绘资源；样片人审与生产执行验证分别记录，历史样片证据归[联合QA](../qa/2026-10-01-opening-joint.md)，正式接入范围归[推广QA](../qa/2026-10-01-opening-production.md)。
 
-[联合样片](../art/demos/opening-joint/index.html)的 DEV 默认已改为 F 动态首页；`?title=0`查看原版静图，`?title=a`至`e`查看历史候选静图，`?title=f`显式查看 F。无参数或非法参数在 DEV 回到 F。 [比较页](../art/demos/opening-pixel-candidates/index.html)默认展示 F 静帧，并保留原图、历史候选、固定局部放大与实景截帧；动态在联合样片查看。选择不写入生产偏好，正式首页和实景资产未替换。
+同日画法复选已由用户明确选择 **F「手绘块面」：HUMAN-SELECTED**。此前认可坐姿与角度、要求减轻生成感的反馈，经过六张 image_gen 重绘比较后收敛到 F；随后`48b700c`的联合画面及动效获整体认可；这不扩展为跨设备性能或全部业务验收。生成参考与原始提示保留在[候选来源](../art/demos/opening-joint/assets/title/candidates/source.json)，不能把提示中的像素网格、色数目标写成已达成规格。
 
-本轮按“适度生动”给 F 单独制作炉火、源光与受光同步、核心内质缓慢变化、烟灰及深层空气，构图、人物姿态和建筑保持静止。未重绘 F 静图，不能声称前轮对核心胞块化或少量管口差异的观察已经修复；不复用其他图片的坐标遮罩。用户已认可增强后的近处动效，以及外景灰雾、污染迁移和落屑；旧巨影被指出像“椭圆黑盘子飞过”，本轮仅修巨影形态，修订版仍待人审。实现及生命周期见第7节。
+[联合样片](../art/demos/opening-joint/index.html)的 DEV 默认已改为 F 动态首页；`?title=0`查看原版静图，`?title=a`至`e`查看历史候选静图，`?title=f`显式查看 F。无参数或非法参数在 DEV 回到 F。 [比较页](../art/demos/opening-pixel-candidates/index.html)默认展示 F 静帧，并保留原图、历史候选、固定局部放大与实景截帧；动态在联合样片查看。DEV对照选择不写入生产偏好；正式入口固定采用已认可F及对应实景。
+
+本轮按“适度生动”给 F 单独制作炉火、源光与受光同步、核心内质缓慢变化、烟灰及深层空气，构图、人物姿态和建筑保持静止。未重绘 F 静图，不能声称前轮对核心胞块化或少量管口差异的观察已经修复；不复用其他图片的坐标遮罩。旧巨影被指出像“椭圆黑盘子飞过”，修订为不完整屈折形体后，用户已认可包含巨影在内的联合画面与动效。实现及生命周期见第7节。
 
 本文件是这轮联合视觉制作与验收的唯一规格；[美术方向](../art-direction.md#resume-art-rebuild)继续维护全游戏材料、污染和场景原则。[入场规格](ui-menu-entry-transition.md)独占新游戏/继续、存档安全、输入锁、时序和清理等运行时行为。本文件不另建一套转场参数。
 
@@ -137,52 +139,52 @@ human-art-review: REVIEW-PENDING
 - **进去后是否认得这个世界？** 人物、核心、建筑、材料、照明与纵深的承诺是否兑现？
 - **获得操作权带来的真实感，是否足以补偿细节减少？** 行走、光照、空间反馈是否使画面成为可信且可居留的场所？
 
-任何一项不成立，继续修同一联合方向中对应的问题，不以另一批独立漂亮图绕开，也不把技术通过标成美术通过。完整样片通过审查前，生产默认首页保持现状。
+任何一项不成立，继续修同一联合方向中对应的问题，不以另一批独立漂亮图绕开，也不把技术通过标成美术通过。用户已认可`48b700c`并授权正式推广；后续改画或新增效果仍须分别记录人审，不自动继承本次认可。
 
 ## 7. 当前实现与接续入口
 
-共同画面内容仍为炉边停留处、灰绿核心、厚断沿与向黑暗延伸的倾斜书廊巨构。当前首页采用用户已选的 `assets/title/candidates/f.png`，为 image_gen 重绘的静态画面；原版及其参考保留在 `assets/title/master.png`和两份来源记录中。本轮未修改静图或实景几何。
+共同画面内容仍为炉边停留处、灰绿核心、厚断沿与向黑暗延伸的倾斜书廊巨构。正式首页采用`public/assets/art/menu-refuge-f.png`，与用户已选的`assets/title/candidates/f.png`同图，为 image_gen 重绘的静态画面；原版及来源保留在DEV目录。本轮推广既有资源，不重绘静图或改变实景几何。
 
-F 的 `title-motion.ts`在960×640图像坐标中用专属透明 Canvas 以 `source-over`合成，人物、建筑与相机均不变形：
+F 的 `src/art/title-motion.ts`在960×640图像坐标中用专属透明 Canvas 以 `source-over`合成，人物、建筑与相机均不变形：
 
 - 炉内火焰按亮部炉栅遮罩活动；同一闪烁信号调制炉火及画中已有的暖色受光像素，保留格栅、石材细节和接触暗部。
 - 核心内部作缓慢密度流动及低幅胀缩，以同一呼吸信号调制附近既有灰绿受光。变化限于内质与真实画中接收区，不让约束装置旋转，也不新增整体绿光罩。
 - 烟从 F 的烟口上升消散，局部仅有少量灰和偶发火星；深层空气限制在图像中的暗部间隙遮罩。这是首页图像域表现，不宣称三维实时光照。
 - 所有变化由 Phaser Scene 的 `delta`推进，Canvas最多每秒重绘30次，不设独立常驻动画时钟。失焦随 Scene 暂停冻结；`prefers-reduced-motion`清空叠加层并保留 F 静图，恢复后继续；场景关闭销毁 Canvas 与监听，返回首页重新建立一份。原版和 A–E 保持静态。
 
-同日强度修订：用户认可动效选点，但认为上一版太弱；本轮保留 F、原位置、构图及上述生命周期，提高正常显示尺度下的可见变化。核心采样胀缩系数由3.8%增至8.5%，XY采样扰动由1.3/1.5px增至3.0/3.4px，主呼吸周期由7.1秒调为5.8秒；这些是内质采样参数，不是整台设备缩放。源光与受光一起增强明暗振幅，平均照度以接近弱版为约束；炉内火焰改为可辨的明峰/暗谷，烟灰增大可见尺度，远景灰粒受暗部空气遮罩裁切。增强后的近处动效已获本轮用户认可，新增外景不继承该结论；旧弱版证据保留在 `opening-title-motion`，本轮证据另存 `opening-title-motion-strong`，统一在同一QA记实测。
+同日强度修订：用户认可动效选点，但认为上一版太弱；本轮保留 F、原位置、构图及上述生命周期，提高正常显示尺度下的可见变化。核心采样胀缩系数由3.8%增至8.5%，XY采样扰动由1.3/1.5px增至3.0/3.4px，主呼吸周期由7.1秒调为5.8秒；这些是内质采样参数，不是整台设备缩放。源光与受光一起增强明暗振幅，平均照度以接近弱版为约束；炉内火焰改为可辨的明峰/暗谷，烟灰增大可见尺度，远景灰粒受暗部空气遮罩裁切。增强后的近处动效当时获用户认可，后续外景复修的认可另由`48b700c`确认；旧弱版证据保留在 `opening-title-motion`，本轮证据另存 `opening-title-motion-strong`，统一在同一QA记实测。
 
-外景动态只作用于 F 首页与 joint DEV 实景。灰雾输运、已有污染局部迁移和少量断沿落屑已获用户认可；本轮仅重做旧闭合黑盘及整体平移的巨影，以超画幅的不等宽形体、局部屈折和滞后褶片表达深处存在。近处动效、其他三类外景的参数与遮挡合同保持，新巨影仍待用户审美终审。
+已认可外景动态接入 F 正式首页与净化点，DEV对照继续共用。灰雾输运、已有污染迁移、落屑与超画幅屈折巨影的参数及遮挡合同保持；本轮仅推广已认可版本。
 
-首页由 `title-exterior.ts / JointTitleExterior`按 F 的960×640画幅制作：
+首页由 `src/art/title-exterior.ts / JointTitleExterior`按 F 的960×640画幅制作：
 
 - 远柱间、中柱廊、下深井三组作者空间窗口配合逐处梁柱及前景轮廓遮罩（含核心上弧与平台边沿），预计算可见范围；底图亮度只软化雾密度。这是与原画对齐的图像域遮挡，不是三维深度重建。灰雾近/中/远输运速度分别为8.2/5.4/2.7px/s，局部密度沿空间连续经过，建筑不随之移动。
 - 巨影由一条厚重不对称主干和一条斜向后随褶片组成，肘部在右上柱隙露出；轮廓延至画外，经柱梁遮挡成不同宽度的碎段，局部屈折后延迟收拢，褶片隐入空气。保留127秒序列内7–19、49–63、103–114秒的事件窗口；不作闭合椭圆整体飞过，也不补完整生物轮廓。
 - 污染变化限于5组原画污染区域中已有的灰绿像素，沿其表面局部迁移，不给干净建筑新增绿纹。六个作者断沿落点间歇落下细屑，带下坠加速度，进入遮挡与深处时消失；坐标以同一模块为准，不在其他状态文档复制。
 - 外景层复用原Scene时钟和30Hz绘制节奏；暂停冻结、减动清空最终叠加层、退出释放独立Canvas，均延续首页生命周期。执行与录屏另存 `opening-title-exterior`（含 `lifecycle`），不覆盖旧近处动效证据。
 
-joint DEV 实景的外景由 `src/art/last-light-joint-exterior.ts`接入正式WebGL2渲染器，但必须经DEV资产profile显式设置 `exteriorMotion: 'joint-depth'`才启用，生产入口不设置且生产构建忽略DEV profile。按包内正交相机重建世界射线，两处世界空间椭球空气体各用4点积分，以视差调整后解析出的真实不透明深度截断；新增雾、暗影和落屑只进入远/中层或无物像素，近层接根与据点表面不覆盖。远层流动慢于中层；巨影位于深处，保留78秒序列的7–18和49–60秒事件窗口及前后雾遮挡关系；三条不等宽、超画幅的分段折片作局部屈折，后随延迟响应，不再作闭合椭圆整体平移。污染变化使用far/middle原有污染材质与同源灯场，三处真实断沿各投影两颗稀疏碎屑，均接受深度裁切。世界坐标和周期参数以该模块为准。
+实景外景由 `src/art/last-light-joint-exterior.ts`接入正式WebGL2渲染器，正式默认资源配置启用`exteriorMotion: 'joint-depth'`。DEV仍可显式使用独立资产profile与缓存前缀，生产构建忽略DEV覆盖配置。按包内正交相机重建世界射线，两处世界空间椭球空气体各用4点积分，以视差调整后解析出的真实不透明深度截断；新增雾、暗影和落屑只进入远/中层或无物像素，近层接根与据点表面不覆盖。远层流动慢于中层；巨影位于深处，保留78秒序列的7–18和49–60秒事件窗口及前后雾遮挡关系；三条不等宽、超画幅的分段折片作局部屈折，后随延迟响应，不再作闭合椭圆整体平移。污染变化使用far/middle原有污染材质与同源灯场，三处真实断沿各投影两颗稀疏碎屑，均接受深度裁切。世界坐标和周期参数以该模块为准。
 
-实景复用Scene秒钟，无独立RAF/计时器；暂停冻结，减动将效果时间置0并保持静态空气，区别于首页清空动态叠加层。新增动态仅实现于WebGL2，Canvas降级未补同等动态。本轮未重导静态资源、改变导航/人物或修改生产入口；实景受控证据另存 `opening-exterior-runtime`，实际验证范围仍由统一QA记录。
+实景复用Scene秒钟，无独立RAF/计时器；暂停冻结，减动将效果时间置0并保持静态空气，区别于首页清空动态叠加层。新增动态仅实现于WebGL2，Canvas降级未补同等动态。本轮把已认可实景资源原样推广到生产目录，未重烘或改变导航/人物；此前受控证据保留在`opening-exterior-runtime`，正式接入验证另记于统一QA。
 
-本轮巨影复修证据另存 `opening-presence`与`opening-presence-runtime`，前轮外景证据保留。独立复核认为黑盘读法已消除，但实景后随在静帧中仍可能读成斜梁或悬索，需结合运动判断；不据此代签未知存在的观感。
+巨影复修证据保留在`opening-presence`与`opening-presence-runtime`。当时独立复核记录实景后随静帧仍可能读成斜梁或悬索；用户随后认可`48b700c`并授权推广，此历史观察不再作为人审待定状态。
 
 上述为实现合同；更新频率不等于实际帧率或性能验收。新动效的执行记录及录屏统一归[本轮QA](../qa/2026-10-01-opening-joint.md)。
 
-实景由 `joint-scene.ts`在已选 A 的几何上重做中远景巨构、局部地坪和建筑断面的结构层次，`export-joint.mjs`导出独立资产包，交由正式 `PurificationScene`和 `LastLightRenderer`运行。相机、站位、交互及导航保持；1035帧人物资产原样复用，Rift人物未改。DEV专用资源 profile使用独立路径与缓存前缀，生产构建忽略该 profile。
+实景由`joint-scene.ts`在已选A几何上构建中远景巨构及局部地坪/断面层次，`export-joint.mjs`导出联合资源。`promote-joint.mjs`将`48b700c`认可的资源原样推广到`public/assets/last-light/`，保留原烘焙来源并另记推广来源，不伪造新烘焙。正式`PurificationScene`/`LastLightRenderer`消费生产目录；相机、站位、交互、导航及1035帧人物保持，Rift人物未改。
 
-入口通过页面内存存储隔离正式记录，沿用现行新建/继续与 `MenuEntryTransition`。首页坐姿到净化点炉边站姿采用剪辑，未实现一镜到底或起身动画；本轮未另设转场时序。“直接对照”读取当前真实渲染帧，与首页交替显示，不用离线实景图替代游戏。
+正式入口复用`MainMenuScene`和既有session/SaveManager，保留有效继续、已有坏包的安全覆盖确认、记录摘要与在途弃局恢复；只有DEV比较入口通过页面内存存储隔离正式记录。两端沿用`MenuEntryTransition`。首页坐姿到净化点炉边站姿采用剪辑，未实现一镜到底或起身动画；本轮未另设转场时序。“直接对照”读取当前真实渲染帧，与首页交替显示，不用离线实景图替代游戏。
 
-此前联合样片的限定实测已覆盖进入、真实键盘位移、E坐下/起身、Tab报告、返回及继续、覆盖取消、失焦/减少动态、真实截帧对照，以及正式存储哨兵未变。这些旧结果不自动证明 F 新动效通过；F 绘制方向、增强后的近处动效及外景灰雾/污染迁移/落屑已获认可；新版巨影、两端连续性和跨设备表现仍待审查，生产替换仍未执行。
+此前联合样片的限定实测已覆盖进入、真实键盘位移、E坐下/起身、Tab报告、返回及继续、覆盖取消、失焦/减少动态、真实截帧对照，以及正式存储哨兵未变。这些旧DEV结果不自动证明正式入口通过；用户对`48b700c`的认可涵盖本次推广画面与动效，正式存档/生命周期执行范围和跨设备限制仍按本轮QA分别记录。
 
 | 职责 | 当前实现或文档入口 |
 | --- | --- |
-| 单方向可操作入口 | [opening-joint](../art/demos/opening-joint/index.html)、[entry.ts](../art/demos/opening-joint/entry.ts) |
-| 已选 F 与专属动态 | [F 静图](../art/demos/opening-joint/assets/title/candidates/f.png)、[重绘来源](../art/demos/opening-joint/assets/title/candidates/source.json)、[title-motion.ts](../art/demos/opening-joint/title-motion.ts) |
+| 正式与隔离比较入口 | [MainMenuScene](../../src/scenes/main-menu-scene.ts)；[opening-joint DEV](../art/demos/opening-joint/index.html) |
+| 已选 F 与共用动态 | [正式 F 静图](../../public/assets/art/menu-refuge-f.png)、[重绘来源](../art/demos/opening-joint/assets/title/candidates/source.json)、[title-motion.ts](../../src/art/title-motion.ts)、[title-exterior.ts](../../src/art/title-exterior.ts) |
 | 联合实景几何与导出 | [joint-scene.ts](../../tools/last-light/joint-scene.ts)、[export-joint.mjs](../../tools/last-light/export-joint.mjs)、[DEV资产](../art/demos/opening-joint/assets/haven/manifest.json) |
 | 正式入场行为 | [唯一入场规格](ui-menu-entry-transition.md)、[MenuEntryTransition](../../src/scenes/menu-entry-transition.ts) |
 | 净化点及视觉合成 | [PurificationScene](../../src/scenes/purification-scene.ts)、[视觉适配](../../src/scenes/last-light-visual.ts)、[Renderer](../../src/art/last-light-renderer.ts) |
-| 未替换的生产资产 | [manifest](../../public/assets/last-light/manifest.json) |
-| 本轮实测与历史边界 | [本轮QA](../qa/2026-10-01-opening-joint.md)、[设计记录](../design-notes/opening-haven-reconstruction.md)、[三版限定QA](../qa/2026-10-01-opening-three.md) |
+| 正式资源与原样推广 | [manifest](../../public/assets/last-light/manifest.json)、[promote-joint.mjs](../../tools/last-light/promote-joint.mjs) |
+| 正式实测与历史边界 | [正式推广QA](../qa/2026-10-01-opening-production.md)、[历史联合QA](../qa/2026-10-01-opening-joint.md)、[设计记录](../design-notes/opening-haven-reconstruction.md)、[三版限定QA](../qa/2026-10-01-opening-three.md) |
 
 状态更新只描述实际完成部分。规格确认、资产制作、DEV接入、运行验证、人审、生产替换分别记录；不因文件存在或旧功能已接入而跳过任何事实边界。

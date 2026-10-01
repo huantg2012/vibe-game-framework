@@ -102,7 +102,16 @@ async function checkPack(directory) {
   assert(additivePixels >= air.additivePixels, 'PNG roundtrip lost air radiance at zero alpha');
   console.log(JSON.stringify({ valid: true, output: path.relative(root, output), statistics: manifest.statistics, imageCount: Object.keys(checksums.imageDimensions).length, timing: manifest.timing }, null, 2));
 }
-if (args.includes('--check')) { await checkPack(output); process.exit(0); }
+if (args.includes('--check')) {
+  if (actorManifest.promotion) {
+    // The old production manifest was an immutable input at bake time. After
+    // promotion it is intentionally replaced; verify the selected snapshot and
+    // copied production bytes without pretending they were freshly rebaked.
+    const { verifyPromotedJointPack } = await import('./promote-joint.mjs');
+    console.log(JSON.stringify(await verifyPromotedJointPack(),null,2));
+  } else await checkPack(output);
+  process.exit(0);
+}
 
 // Missing joint-scene is deliberately fatal: never silently substitute the old
 // scene and label it a new joint study.
@@ -250,6 +259,7 @@ try {
     imageDimensions[filename] = { width: dimensions.width, height: dimensions.height };
   }
   const manifest = structuredClone(actorManifest);
+  delete manifest.promotion;
   manifest.status = 'complete'; manifest.delivery = 'dev';
   manifest.review = { status: 'REVIEW-PENDING', scope: 'Joint opening and playable haven visual continuity',
     note: 'Complete describes the exported resource pack only. Reused production actor/geometry metadata does not grant this new scene human art approval.' };

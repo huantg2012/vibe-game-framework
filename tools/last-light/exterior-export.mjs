@@ -9,6 +9,8 @@ import {Model} from '../../docs/art/demos/purification-last-light/model.ts';
 import {CAMERA,render} from '../../docs/art/demos/purification-last-light/render.ts';
 
 const dir=path.resolve('public/assets/last-light');
+const installedManifest=JSON.parse(await fs.readFile(path.join(dir,'manifest.json'),'utf8'));
+if(installedManifest.promotion)throw new Error('The selected joint haven owns its matching exterior fields. Rebuild with export-joint.mjs; the historical option-A field exporter may not overwrite them.');
 const padding=32,W=CAMERA.width+padding*2,H=CAMERA.height+padding*2;
 const columns=['far','middle','near','haven'];
 const rows=['otherPollution','core','storage','purifier','furnace','motion','normal'];

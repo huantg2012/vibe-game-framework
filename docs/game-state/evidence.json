@@ -4129,5 +4129,66 @@
         "note": "实景0/4/23秒非巨影事件全帧PNG与515b779旧外景证据逐字节相同。"
       }
     ]
+  },
+  {
+    "id": "COH-E115",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-01",
+    "revision": "48b700c之后的正式推广工作树（2026-10-01）",
+    "scope": "用户认可48b700c并授权正式推广。F首页与两份共用动效保持原图/代码字节，joint实景30文件/28PNG原样进入生产目录并默认启用joint-depth，导航、相机、站位及1035帧人物不变。资源/导航/交互、构建/定向类型与shared DEV12项通过；独立生产构建根入口10项通过：F唯一动效、派发blur冻结及focused Enter原生repeat仅恢复、减动清空、实际新建完整保存、刷新继续与三行摘要、取消覆盖字节不变、真实继续保留基地状态、坏JSON保留、存储不可读阻止开始，以及无docs资源请求/页面异常/HTTP失败。主线程另在3028独立origin亲自开始实景并刷新确认继续标题，未操作用户3027存档。",
+    "limitations": "LIMITED-VERIFIED：正式专项运行于新隔离Chromium上下文的生产构建，blur为派发事件而非OS失焦操作；原生在途Rift恢复/弃局分支未在本轮重新验证。原DEV12项仍是隔离入口证据，未扩成完整交易/搜撤、长期或低端性能与Canvas动态验收。用户认可的是48b700c既有画面，本轮验证接入保真与限定功能；未刷新全局来源基线。",
+    "sources": [
+      {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/scenes/main-menu-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/title-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/title-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/last-light-visual.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/last-light/promote-joint.mjs",
+        "role": "code"
+      },
+      {
+        "path": "public/assets/last-light/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-production-assets/promotion.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-production-assets/legacy-export-guards.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-production-review/result.json",
+        "role": "doc",
+        "note": "迁移后隔离DEV原12项生命周期及正式记录哨兵保持；不冒充正式根入口运行。"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-production/result.json",
+        "role": "doc",
+        "note": "正式生产构建根入口10项实际浏览器验证及源码指纹；独立上下文，派发blur，原生在途Rift恢复未重验。"
+      }
+    ]
   }
 ]

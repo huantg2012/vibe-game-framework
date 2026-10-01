@@ -296,7 +296,7 @@ if (import.meta.env.DEV) {
           rows.push(row);
           note.textContent = `${row.ms}ms · ${row.scene} · ${row.phase} · 罩${row.alpha} · HUD${row.hud.toFixed(2)} · zoom${row.zoom?.toFixed(3)}`;
           if (stress && overlay && current) {
-            if (current.scene.key === 'MainMenuScene') current.input.keyboard?.emit('keydown-ENTER', new KeyboardEvent('keydown', {key:'Enter'}));
+            if (current.scene.key === 'MainMenuScene') document.dispatchEvent(new KeyboardEvent('keydown', {key:'Enter',code:'Enter',bubbles:true,cancelable:true}));
             else for (const keyCode of [Phaser.Input.Keyboard.KeyCodes.W, Phaser.Input.Keyboard.KeyCodes.E, Phaser.Input.Keyboard.KeyCodes.TAB, Phaser.Input.Keyboard.KeyCodes.ESC]) {
               current.input.keyboard?.addKey(keyCode).onDown(new KeyboardEvent('keydown', {keyCode}));
             }

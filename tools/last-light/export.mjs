@@ -18,6 +18,8 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const output=path.join(root,'public/assets/last-light');
 await fs.mkdir(output,{recursive:true});
 const actorsOnly=process.argv.includes('--actors-only'),sceneOnly=process.argv.includes('--scene-only');
+const installedManifest=await fs.readFile(path.join(output,'manifest.json'),'utf8').then(JSON.parse,()=>null);
+if(installedManifest?.promotion&&!actorsOnly)throw new Error('The accepted joint haven is now production. Do not overwrite it with the historical option-A bake; use export-joint.mjs and an explicitly reviewed promotion.');
 const W=CAMERA.width,H=CAMERA.height,OVER=32;
 const WALK_ROWS=LAST_LIGHT_WALK_FRAMES*(1+LAST_LIGHT_SETTLE_STAGES);
 const slope=WALK_SURFACES.find(surface=>surface.id==='west-ramp');

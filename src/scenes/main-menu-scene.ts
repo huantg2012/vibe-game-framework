@@ -1,348 +1,237 @@
-/**
- * Title scene: stable left-aligned actions beside the locked refuge key art.
- * Iteration 13 composition lives in ui-art-overhaul.md §A. Session operations
- * remain shared with the in-game record menu; overwrite defaults to keeping
- * the existing expedition and Escape returns to the root menu.
- */
-
+/** Selected F title, shared with the isolated art review. Scene clocks own
+ * motion; the existing session and transition own all persistent game actions. */
 import Phaser from 'phaser';
-import { MainMenuAtmosphere } from './main-menu-atmosphere';
-import { MainMenuActor } from './main-menu-actor';
+import { JointTitleMotion } from '@/art/title-motion';
 import { MenuEntryTransition } from './menu-entry-transition';
-import type { ExpeditionEntryMode } from '@/managers/session';
-import { t } from '@/i18n';
-import { audioManager } from '@/managers/audio-manager';
+import { abandonInterruptedExpedition, beginNewExpedition, hasReadableSave, loadExpedition,
+  type ExpeditionEntryMode } from '@/managers/session';
 import { saveManager } from '@/managers/save-manager';
-import { abandonInterruptedExpedition, beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/session';
+import { audioManager } from '@/managers/audio-manager';
+import { getDomUiRoot } from '@/ui/dom/panel-styles';
+import { t } from '@/i18n';
+import '@/ui/dom/main-menu.css';
 
-const COLOR_TEXT_BRIGHT = '#c8cdd4';
-const COLOR_TEXT = '#8a8f96';
-const FONT_FAMILY = '"PingFang SC", "Microsoft YaHei", sans-serif';
-
-/** Authored 960×640 title composition; every menu state shares this axis. */
-const TEXT_X = 176;
-const TITLE_Y = 212;
-const SUBTITLE_Y = 250;
-const ACTION_Y = 326;
-const ACTION_STEP = 40;
-const SUMMARY_Y = 424;
-const SUMMARY_STEP = 20;
-
-/** CJK ascent exceeds Courier canvas metrics. Top-only; sizes from clip + visual contracts. */
-function padMenuText(
-  text: Phaser.GameObjects.Text,
-  fontSizePx: number,
-  paddingLeft = 0,
-): Phaser.GameObjects.Text {
-  const top = fontSizePx >= 28 ? 8 : 4;
-  return text.setPadding({ top, right: 0, bottom: 0, left: paddingLeft });
+export const TITLE_ART_URL = '/assets/art/menu-refuge-f.png';
+type MenuMode = 'root' | 'overwrite' | 'abandon';
+interface MenuAction { label: string; run: () => void; }
+/** Review hooks never change the production storage or session implementation. */
+interface TitlePresentation {
+  artUrl?: string;
+  animate?: boolean;
+  canInteract?: () => boolean;
+  onTitle?: () => void;
+  onStatus?: (message?: string) => void;
+  onEnter?: () => void;
+  createTransition?: (mode: ExpeditionEntryMode) => MenuEntryTransition;
 }
-
-interface MenuItem {
-  label: string;
-  action: () => void;
-}
-
-type MenuMode = 'root' | 'confirmOverwrite' | 'confirmAbandon';
 
 export class MainMenuScene extends Phaser.Scene {
-  private items: MenuItem[] = [];
-  private itemTexts: Phaser.GameObjects.Text[] = [];
-  private summaryTexts: Phaser.GameObjects.Text[] = [];
-  private selectedIndex = 0;
+  private titleRoot: HTMLDivElement | null = null;
+  private transition: MenuEntryTransition | null = null;
+  private handedOff = false;
+  private generation = 0;
+  private ready = false;
   private mode: MenuMode = 'root';
-  private canContinue = false;
-  private focusMark!: Phaser.GameObjects.Rectangle;
-  private subtitleText!: Phaser.GameObjects.Text;
-  private backHint!: Phaser.GameObjects.Text;
-  private atmosphere: MainMenuAtmosphere | null = null;
-  private actor: MainMenuActor | null = null;
-  private warningText!: Phaser.GameObjects.Text;
-  private entryTransition: MenuEntryTransition | null = null;
-  private entryHandoff = false;
+  private actions: MenuAction[] = [];
+  private selected = 0;
+  private abort: AbortController | null = null;
+  private motion: JointTitleMotion | null = null;
 
-  constructor() {
-    super({ key: 'MainMenuScene' });
-  }
-
-  private onSelectNewSave(): void {
-    const presence = saveManager.getRecordPresence();
-    if (presence === 'present') {
-      this.renderConfirmOverwrite();
-      return;
-    }
-    if (presence === 'unavailable') {
-      this.showNewRecordFailure();
-      return;
-    }
-    this.startNewRecord();
-  }
-
-  private startNewRecord(confirmedReplacement = false): void {
-    if (!beginNewExpedition(this, this.startEntry, confirmedReplacement)) this.showNewRecordFailure();
-  }
-
-  private showNewRecordFailure(): void {
-    this.subtitleText.setVisible(false);
-    this.warningText.setY(268).setText('无法安全创建新记录。请检查浏览器存储后重试；当前进度未重置。').setVisible(true);
-  }
+  constructor(private readonly presentation: TitlePresentation = {}) { super({ key: 'MainMenuScene' }); }
 
   create(data?: { recoveryError?: string }): void {
-    this.entryTransition = null;
-    this.entryHandoff = false;
-    this.input.enabled = true;
-    // The title illustration has subpixel idle motion. World cameras retain
-    // their pixel snapping; rounding here quantizes a 2px breath into jumps.
-    this.cameras.main.setRoundPixels(false);
-    const width = this.cameras.main.width;
-    const height = this.cameras.main.height;
-
-    // Authored key art: one last industrial refuge against rewritten space.
-    this.add.image(0, 0, 'menu-last-light').setOrigin(0).setDisplaySize(width, height);
-    this.actor = new MainMenuActor(this);
-    this.atmosphere = new MainMenuAtmosphere(this);
-
-    this.canContinue = hasReadableSave();
-
-    padMenuText(this.add.text(TEXT_X, TITLE_Y, t('menu.title'), {
-      fontSize: '36px',
-      fontStyle: 'normal',
-      color: COLOR_TEXT_BRIGHT,
-      fontFamily: FONT_FAMILY,
-    }).setOrigin(0, 0.5), 36);
-
-    this.subtitleText = padMenuText(this.add.text(TEXT_X, SUBTITLE_Y, t('menu.subtitle'), {
-      fontSize: '13px',
-      color: COLOR_TEXT,
-      fontFamily: FONT_FAMILY,
-      wordWrap: { width: 260, useAdvancedWrap: true },
-      lineSpacing: 5,
-    }).setOrigin(0, 0.5), 13);
-
-    this.warningText = padMenuText(this.add.text(TEXT_X, 268, '', {
-      fontSize: '12px',
-      color: COLOR_TEXT,
-      fontFamily: FONT_FAMILY,
-      wordWrap: { width: 260, useAdvancedWrap: true },
-      lineSpacing: 6,
-    }).setOrigin(0, 0).setVisible(false), 13);
-
-    this.backHint = padMenuText(this.add.text(TEXT_X, SUMMARY_Y, t('menu.backHint'), {
-      fontSize: '11px', color: COLOR_TEXT, fontFamily: FONT_FAMILY,
-    }).setOrigin(0, 0.5).setVisible(false), 11);
-
-    this.focusMark = this.add.rectangle(TEXT_X - 20, ACTION_Y, 7, 1, 0xc8cdd4).setOrigin(0, 0.5);
-
-    this.renderRoot();
+    this.transition = null; this.handedOff = false; this.ready = false;
+    this.mode = 'root'; this.input.enabled = true;
+    this.abort = new AbortController();
+    const signal = this.abort.signal;
+    const generation = ++this.generation;
+    this.presentation.onTitle?.(); this.presentation.onStatus?.('画面载入中');
+    const root = document.createElement('div');
+    root.className = 'joint-title'; root.dataset.titleVariant = this.presentation.animate === false ? 'historical' : 'f';
+    root.innerHTML = '<img class="joint-art" alt="" draggable="false">'
+      + '<div class="joint-copy"><h1>那天之后</h1><p class="joint-english">AFTER THAT DAY</p>'
+      + '<p class="joint-warning" hidden></p><div class="joint-actions" aria-label="游戏菜单"></div>'
+      + '<div class="joint-summary" hidden></div><p class="joint-back-hint" hidden>Esc 返回</p></div><div class="joint-load-note" role="status"></div>';
+    this.titleRoot = root;
+    getDomUiRoot().appendChild(root);
+    this.renderMenu();
     if (data?.recoveryError) {
-      if (saveManager.canAbandonInterruptedRun()) this.renderConfirmAbandon();
-      else { this.warningText.setText(data.recoveryError).setVisible(true); this.subtitleText.setVisible(false); }
+      if (saveManager.canAbandonInterruptedRun()) this.renderMenu('abandon');
+      else this.warn(data.recoveryError);
     }
-
-    audioManager.unlock();
-    audioManager.playBGM('bgm-menu-void-pad');
-
-    this.input.keyboard?.on('keydown-UP', () => this.moveCursor(-1));
-    this.input.keyboard?.on('keydown-DOWN', () => this.moveCursor(1));
-    this.input.keyboard?.on('keydown-ENTER', () => this.activateSelection());
-    this.input.keyboard?.on('keydown-SPACE', () => this.activateSelection());
-    this.input.keyboard?.on('keydown-ESC', () => this.handleEscape());
-
-    this.events.once('shutdown', () => {
-      this.input.keyboard?.removeAllListeners();
-      this.atmosphere?.destroy();
-      this.atmosphere = null;
-      this.actor?.destroy();
-      this.actor = null;
-      if (!this.entryHandoff) {
-        this.entryTransition?.destroy();
-        audioManager.haltNonBgm();
+    root.addEventListener('pointerdown', () => audioManager.unlock(), { signal });
+    document.addEventListener('keydown', event => this.keyDown(event), { signal });
+    const art = root.querySelector<HTMLImageElement>('.joint-art')!;
+    const note = root.querySelector<HTMLDivElement>('.joint-load-note')!;
+    const loadArt = async (): Promise<void> => {
+      this.ready = false; this.refreshActions(); note.textContent = '画面载入中';
+      art.src = this.presentation.artUrl ?? TITLE_ART_URL;
+      try {
+        await art.decode();
+        if (signal.aborted || generation !== this.generation) return;
+        if (art.naturalWidth < 960 || Math.abs(art.naturalWidth / art.naturalHeight - 1.5) > .002) {
+          throw new Error('Expected a 3:2 title image at least 960 pixels wide.');
+        }
+        art.classList.add('is-ready'); note.textContent = '';
+        this.motion?.destroy();
+        // Motion is authored for F's exact emitters and silhouettes. Historical
+        // images stay static rather than inheriting another image's masks.
+        this.motion = this.presentation.animate !== false ? new JointTitleMotion(art) : null;
+        if (this.motion) art.after(this.motion.canvas);
+        this.ready = true; this.refreshActions(); this.presentation.onStatus?.();
+      } catch {
+        if (signal.aborted || generation !== this.generation) return;
+        note.textContent = '画面未能载入。';
+        const retry = document.createElement('button');
+        retry.type = 'button'; retry.className = 'joint-retry'; retry.textContent = '重新载入';
+        retry.addEventListener('click', () => { art.removeAttribute('src'); void loadArt(); }, { once: true, signal });
+        note.append(document.createElement('br'), retry); this.presentation.onStatus?.('等待画面');
       }
-      this.entryTransition = null;
+    };
+    void loadArt();
+    audioManager.unlock(); audioManager.playBGM('bgm-menu-void-pad');
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.generation++; this.abort?.abort(); this.abort = null;
+      this.motion?.destroy(); this.motion = null;
+      this.titleRoot?.remove(); this.titleRoot = null;
+      if (!this.handedOff) { this.transition?.destroy(); audioManager.haltNonBgm(); }
+      this.transition = null; this.ready = false;
     });
   }
 
-  update(_time: number, delta: number): void {
-    this.actor?.update(delta);
-    if (this.actor) this.atmosphere?.setActorOffset(this.actor.lampOffset.x, this.actor.lampOffset.y);
-    this.atmosphere?.update(delta);
+  update(_time: number, delta: number): void { this.motion?.update(delta); }
+
+  private renderMenu(mode: MenuMode = 'root'): void {
+    if (!this.titleRoot) return;
+    this.mode = mode; this.selected = 0; this.titleRoot.dataset.menuMode = mode;
+    const warning = this.titleRoot.querySelector<HTMLParagraphElement>('.joint-warning')!;
+    warning.hidden = mode === 'root';
+    this.titleRoot.querySelector<HTMLParagraphElement>('.joint-back-hint')!.hidden = mode === 'root';
+    this.titleRoot.querySelector<HTMLParagraphElement>('.joint-english')!.hidden = mode !== 'root';
+    if (mode === 'overwrite') {
+      const tideNumber = saveManager.peekTideNumber();
+      warning.textContent = tideNumber === null
+        ? '已有记录暂时无法读取。清除后将永久替换这份记录。'
+        : t('menu.overwriteWarning', { tideNumber });
+      this.actions = [hasReadableSave()
+        ? { label: '继续已保存的记录', run: () => this.continueRecord() }
+        : { label: '保留记录，返回', run: () => this.renderMenu() },
+        { label: t('menu.overwriteClear'), run: () => this.startNew(true) }];
+    } else if (mode === 'abandon') {
+      warning.textContent = '这趟出行暂时无法恢复。可保留原记录，或明确放弃随身物后回到原净化点。基地收存与成长保留，归来冲击结算一次。';
+      this.actions = [{ label: '保留记录，返回', run: () => this.renderMenu() },
+        { label: '确认放弃本趟，返回净化点', run: () => abandonInterruptedExpedition(this, this.enter) }];
+    } else {
+      this.actions = [];
+      if (hasReadableSave()) this.actions.push({ label: '继续', run: () => this.continueRecord() });
+      this.actions.push({ label: this.actions.length ? '重新开始' : '开始', run: () => {
+        if (saveManager.getRecordPresence() === 'present') this.renderMenu('overwrite');
+        else this.startNew();
+      } });
+    }
+    this.renderSummary(mode === 'root');
+    const container = this.titleRoot.querySelector<HTMLDivElement>('.joint-actions')!;
+    container.replaceChildren();
+    this.actions.forEach((action, index) => {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'joint-action'; button.textContent = action.label;
+      // A replaced confirmation under a stationary pointer keeps its safe default.
+      button.addEventListener('pointermove', () => { if (this.interactive()) { this.selected = index; this.refreshActions(); } });
+      button.addEventListener('focus', () => { if (this.interactive()) { this.selected = index; this.refreshActions(); } });
+      button.addEventListener('click', () => { this.selected = index; this.activate(); });
+      container.appendChild(button);
+    });
+    this.refreshActions();
   }
 
-  private readonly startEntry = (mode: ExpeditionEntryMode): void => {
-    if (this.entryTransition) return;
-    this.input.enabled = false;
-    const transition = new MenuEntryTransition(mode);
-    this.entryTransition = transition;
-    const text: Phaser.GameObjects.GameObject[] = this.children.list.filter(child => child instanceof Phaser.GameObjects.Text);
-    text.push(this.focusMark);
-    transition.depart(this, text, () => {
-      this.entryHandoff = true;
+
+  private interactive(): boolean {
+    return this.ready && !this.transition && this.input.enabled && this.scene.isActive()
+      && !this.scene.isPaused() && this.presentation.canInteract?.() !== false;
+  }
+
+  private renderSummary(visible: boolean): void {
+    const container = this.titleRoot!.querySelector<HTMLDivElement>('.joint-summary')!;
+    container.replaceChildren();
+    const summary = visible && hasReadableSave() ? saveManager.peekRecordSummary() : null;
+    container.hidden = !summary;
+    if (!summary) return;
+    const phaseKey = summary.phase === 'rise' ? 'menu.phaseRise'
+      : summary.phase === 'crest' ? 'menu.phaseCrest' : 'menu.phaseEbb';
+    const rows = [
+      [t('menu.summaryTide'), t('menu.tideNth', { n: summary.tideNumber }), t(phaseKey)],
+      [t('menu.summaryCycle'), String(summary.cycle)],
+      [t('menu.summaryStability'), `${Math.round(summary.progress)}%`,
+        t(summary.reached ? 'menu.stabilityComplete' : 'menu.stabilityIncomplete')],
+    ];
+    for (const fields of rows) {
+      const row = document.createElement('div'); row.className = 'joint-summary-row';
+      for (const text of fields) { const span = document.createElement('span'); span.textContent = text; row.appendChild(span); }
+      container.appendChild(row);
+    }
+  }
+
+  private refreshActions(): void {
+    this.titleRoot?.querySelectorAll<HTMLButtonElement>('.joint-action').forEach((button, index) => {
+      button.disabled = !this.ready || !!this.transition;
+      button.setAttribute('aria-current', index === this.selected ? 'true' : 'false');
+      button.classList.toggle('is-selected', index === this.selected);
+    });
+  }
+
+  private warn(message: string): void {
+    const warning = this.titleRoot?.querySelector<HTMLParagraphElement>('.joint-warning');
+    if (warning) { warning.hidden = false; warning.textContent = message; }
+  }
+
+  private keyDown(event: KeyboardEvent): void {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    if (event.target instanceof HTMLElement && event.target.closest('.joint-controls, .joint-retry')) return;
+    const menuKey = ['Escape', 'ArrowUp', 'ArrowDown', 'Enter'].includes(event.key) || event.code === 'Space';
+    if (!menuKey) return;
+    // Suppress native focused-button activation even for repeats or while the
+    // scene is paused: held Enter must not turn a resume into a new action.
+    event.preventDefault();
+    if (!this.interactive() || event.repeat) return;
+    if (event.key === 'Escape' && this.mode !== 'root') { event.preventDefault(); this.renderMenu(); }
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      event.preventDefault(); this.selected = (this.selected + (event.key === 'ArrowDown' ? 1 : -1) + this.actions.length) % this.actions.length;
+      this.refreshActions(); audioManager.playSFX('sfx-ui-hover');
+    }
+    if (event.key === 'Enter' || event.code === 'Space') { event.preventDefault(); this.activate(); }
+  }
+
+  private activate(): void {
+    if (!this.interactive()) return;
+    audioManager.unlock(); audioManager.playSFX('sfx-ui-click'); this.actions[this.selected]?.run();
+  }
+
+  private startNew(confirmedReplacement = false): void {
+    if (!beginNewExpedition(this, this.enter, confirmedReplacement)) this.warn('无法安全创建记录。当前进度未重置，请重试。');
+  }
+
+  private continueRecord(): void {
+    // Native Rift recovery queues a scene directly without the haven entry
+    // callback. Lock repeated clicks until that queued operation completes.
+    this.ready = false; this.refreshActions();
+    loadExpedition(this, this.enter, () => this.renderMenu('abandon'));
+    if (!this.transition) this.time.delayedCall(0, () => {
+      if (!this.titleRoot || !this.scene.isActive()) return;
+      this.ready = true; this.refreshActions();
+    });
+  }
+
+  private readonly enter = (mode: ExpeditionEntryMode): void => {
+    if (this.transition || !this.scene.isActive()) return;
+    this.ready = false; this.input.enabled = false;
+    this.presentation.onEnter?.();
+    const copy = this.titleRoot?.querySelector<HTMLElement>('.joint-copy');
+    if (copy) copy.style.opacity = '0';
+    const transition = this.presentation.createTransition?.(mode) ?? new MenuEntryTransition(mode);
+    this.transition = transition; this.refreshActions();
+    transition.depart(this, [], () => {
+      this.handedOff = true;
       this.scene.start('PurificationScene', { fromMenu: true, menuEntry: transition });
     });
   };
-
-  private moveCursor(delta: number): void {
-    if (this.entryTransition) return;
-    if (this.items.length === 0) return;
-    this.selectedIndex = (this.selectedIndex + delta + this.items.length) % this.items.length;
-    audioManager.playSFX('sfx-ui-hover');
-    this.refreshItemVisuals();
-  }
-
-  private activateSelection(): void {
-    if (this.entryTransition) return;
-    audioManager.playSFX('sfx-ui-click');
-    this.items[this.selectedIndex]?.action();
-  }
-
-  private handleEscape(): void {
-    if (this.entryTransition) return;
-    if (this.mode !== 'root') this.renderRoot();
-  }
-
-  private clearSummary(): void {
-    for (const text of this.summaryTexts) text.destroy();
-    this.summaryTexts = [];
-  }
-
-  private phaseLabel(phase: 'rise' | 'crest' | 'ebb'): string {
-    if (phase === 'rise') return t('menu.phaseRise');
-    if (phase === 'crest') return t('menu.phaseCrest');
-    return t('menu.phaseEbb');
-  }
-
-  private renderSummary(): void {
-    this.clearSummary();
-    const summary = saveManager.peekRecordSummary();
-    if (!summary) return;
-
-    const rows: { label: string; value: string; extra?: string }[] = [
-      {
-        label: t('menu.summaryTide'),
-        value: t('menu.tideNth', { n: summary.tideNumber }),
-        extra: this.phaseLabel(summary.phase),
-      },
-      {
-        label: t('menu.summaryCycle'),
-        value: String(summary.cycle),
-      },
-      {
-        label: t('menu.summaryStability'),
-        value: `${Math.round(summary.progress)}%`,
-        extra: summary.reached ? t('menu.stabilityComplete') : t('menu.stabilityIncomplete'),
-      },
-    ];
-
-    rows.forEach((row, index) => {
-      const y = SUMMARY_Y + index * SUMMARY_STEP;
-      const addNode = (x: number, text: string): void => {
-        this.summaryTexts.push(padMenuText(this.add.text(x, y, text, {
-          fontSize: '11px',
-          color: COLOR_TEXT,
-          fontFamily: FONT_FAMILY,
-        }).setOrigin(0, 0.5), 11));
-      };
-      addNode(TEXT_X, row.label);
-      addNode(224, row.value);
-      if (row.extra) addNode(280, row.extra);
-    });
-  }
-
-  private renderRoot(): void {
-    this.mode = 'root';
-    this.canContinue = hasReadableSave();
-    this.warningText.setVisible(false);
-    this.backHint.setVisible(false);
-    this.subtitleText.setVisible(true);
-
-    const items: MenuItem[] = [];
-    let defaultIndex = 0;
-
-    if (this.canContinue) {
-      this.renderSummary();
-      items.push({ label: '继续已保存的记录', action: () => loadExpedition(this, this.startEntry, () => this.renderConfirmAbandon()) });
-      items.push({ label: t('menu.newSave'), action: () => this.onSelectNewSave() });
-      defaultIndex = 0;
-    } else {
-      this.clearSummary();
-      items.push({ label: t('menu.newGame'), action: () => this.onSelectNewSave() });
-    }
-
-    this.items = items;
-    this.selectedIndex = defaultIndex;
-    this.layoutItems();
-  }
-
-  private renderConfirmAbandon(): void {
-    this.mode = 'confirmAbandon'; this.clearSummary(); this.subtitleText.setVisible(false);
-    this.warningText.setText('这趟出行暂时无法恢复。可保留原记录，或明确放弃随身物后回到原净化点。基地收存与成长保留，归来冲击结算一次。').setY(258).setVisible(true);
-    this.backHint.setVisible(true);
-    this.items = [{ label: '保留记录，返回', action: () => this.renderRoot() },
-      { label: '确认放弃本趟，返回净化点', action: () => abandonInterruptedExpedition(this, this.startEntry) }];
-    this.selectedIndex = 0; this.layoutItems();
-  }
-
-  private renderConfirmOverwrite(): void {
-    this.mode = 'confirmOverwrite';
-    this.clearSummary();
-    const tideNumber = saveManager.peekTideNumber();
-    this.warningText.setText(tideNumber === null
-      ? '已有记录暂时无法读取。清除后将永久替换这份记录。'
-      : t('menu.overwriteWarning', { tideNumber }));
-    this.warningText.setY(268);
-    this.backHint.setVisible(true);
-    this.subtitleText.setVisible(false);
-    this.warningText.setVisible(true);
-
-    this.items = [
-      hasReadableSave()
-        ? { label: '继续已保存的记录', action: () => loadExpedition(this, this.startEntry, () => this.renderConfirmAbandon()) }
-        : { label: '保留记录，返回', action: () => this.renderRoot() },
-      { label: t('menu.overwriteClear'), action: () => this.startNewRecord(true) },
-    ];
-    this.selectedIndex = 0;
-    this.layoutItems();
-  }
-
-  private layoutItems(): void {
-    for (const text of this.itemTexts) text.destroy();
-    this.itemTexts = [];
-
-    this.items.forEach((item, index) => {
-      const itemText = padMenuText(this.add.text(TEXT_X, ACTION_Y + index * ACTION_STEP, item.label, {
-        fontSize: '13px',
-        color: COLOR_TEXT,
-        fontFamily: FONT_FAMILY,
-      }).setOrigin(0, 0.5), 13);
-      // Stable generous target; changing focus never moves text or its hit area.
-      itemText.setInteractive({
-        hitArea: new Phaser.Geom.Rectangle(-12, -8, Math.max(180, itemText.width + 24), 36),
-        hitAreaCallback: Phaser.Geom.Rectangle.Contains,
-        useHandCursor: true,
-      });
-      // A confirmation can replace the row under a stationary pointer; only
-      // deliberate movement may override its safe default keyboard selection.
-      itemText.on('pointermove', () => {
-        if (this.entryTransition) return;
-        if (this.selectedIndex !== index) audioManager.playSFX('sfx-ui-hover');
-        this.selectedIndex = index;
-        this.refreshItemVisuals();
-      });
-      itemText.on('pointerdown', () => {
-        if (this.entryTransition) return;
-        this.selectedIndex = index;
-        audioManager.playSFX('sfx-ui-click');
-        item.action();
-      });
-      this.itemTexts.push(itemText);
-    });
-    this.refreshItemVisuals();
-  }
-
-  private refreshItemVisuals(): void {
-    this.itemTexts.forEach((text, index) => {
-      text.setColor(index === this.selectedIndex ? COLOR_TEXT_BRIGHT : COLOR_TEXT);
-    });
-    this.focusMark.setY(ACTION_Y + this.selectedIndex * ACTION_STEP);
-  }
 }

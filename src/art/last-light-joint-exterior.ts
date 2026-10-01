@@ -1,7 +1,7 @@
-/** Optional atmosphere for the joint opening DEV asset pack. Camera-space
+/** Selected joint-opening atmosphere, promoted with its matching haven pack. Camera-space
  * rays are reconstructed from the pack's real orthographic camera; every
  * effect is clipped against the resolved, parallax-adjusted opaque depth.
- * The production pack never opts in to these authored volumes or emitters. */
+ * Production and the isolated review pack use the same authored fields. */
 export const LAST_LIGHT_JOINT_EXTERIOR_GLSL = `
 uniform float uJointExterior;
 uniform vec3 uExteriorRight,uExteriorUp,uExteriorBack,uExteriorTarget;

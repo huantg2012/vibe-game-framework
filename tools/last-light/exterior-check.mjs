@@ -4,12 +4,14 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import sharp from 'sharp';
 import {getLastLightExteriorObserver,getLastLightExteriorOffsets,LAST_LIGHT_EXTERIOR,createLastLightEnvironmentShader} from '../../src/art/last-light-exterior.ts';
+import {verifyPromotedJointPack} from './promote-joint.mjs';
 
 const dir='public/assets/last-light';
 const meta=JSON.parse(await fs.readFile(`${dir}/exterior-fields.json`,'utf8'));
 const manifest=JSON.parse(await fs.readFile(`${dir}/manifest.json`,'utf8'));
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
-for(const [file,hash]of Object.entries(meta.sourceHashes))assert.equal(digest(await fs.readFile(file)),hash,`Stale exterior source ${file}`);
+if(manifest.promotion)await verifyPromotedJointPack();
+else for(const [file,hash]of Object.entries(meta.sourceHashes))assert.equal(digest(await fs.readFile(file)),hash,`Stale exterior source ${file}`);
 assert.equal(digest(await fs.readFile(`${dir}/${meta.texture}`)),meta.textureHash,'Stale exterior field PNG');
 assert.deepEqual(meta.columns,['far','middle','near','haven']);
 assert.deepEqual(meta.rows,['otherPollution','core','storage','purifier','furnace','motion','normal']);

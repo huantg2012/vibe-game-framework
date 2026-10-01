@@ -61,15 +61,15 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。用户已选联合首页F画法并认可近处动效与外景灰雾/污染/落屑；DEV默认F与joint实景仅重做被否定的黑盘巨影，改为超画幅分段屈折与滞后形体。新巨影及两端连续性待审，正式生产首页保持。",
+    "summary": "标题支持新记录、有效存档继续与明确弃局。I31记录安全语义保持：坏包也须明确替换，首笔完整保存成功后才替换原记录。用户认可48b700c并授权推广，正式默认采用F首页与已认可动效；MainMenuScene保留记录摘要、安全覆盖和在途弃局恢复。DEV比较继续隔离正式存档，生产执行范围按本轮QA记录。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "/ → MainMenuScene；方向键、Enter/Space 或鼠标",
+      "/ → MainMenuScene：已认可F正式首页；方向键、Enter/Space或鼠标，继续/重新开始/记录摘要。",
       "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。",
       "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。",
       "DEV画法对照：docs/art/demos/opening-pixel-candidates/index.html；默认已选F静帧，保留原版及A–E历史图、统一局部与实景截帧。",
-      "DEV首页：docs/art/demos/opening-joint/index.html默认已选F动态；?title=0原版静图，?title=a至e历史静图，?title=f显式F；生产默认不变。"
+      "DEV对照：docs/art/demos/opening-joint/index.html复用正式F菜单与共用动效；?title=0及A–E历史静图，页内记录隔离。"
     ],
     "sources": [
       {
@@ -82,11 +82,13 @@
       },
       {
         "path": "src/scenes/main-menu-atmosphere.ts",
-        "role": "code"
+        "role": "code",
+        "note": "旧首页历史实现，正式F已由src/art/title-motion.ts接替。"
       },
       {
         "path": "src/scenes/main-menu-actor.ts",
-        "role": "code"
+        "role": "code",
+        "note": "旧首页人物分层历史实现，正式F保持已认可坐姿静态轮廓。"
       },
       {
         "path": "docs/specs/ui-menu-entry-transition.md",
@@ -95,7 +97,7 @@
       {
         "path": "docs/specs/art-opening-haven-continuity.md",
         "role": "spec",
-        "note": "F画法、近处动效与外景灰雾/污染/落屑获认可；本轮仅复修巨影，两端管线边界与待审范围的唯一规格。"
+        "note": "48b700c用户认可与正式推广的唯一视觉规格；正式实现/限定验证/历史DEV证据分别记录。"
       },
       {
         "path": "src/managers/save-manager.ts",
@@ -213,7 +215,7 @@
       {
         "path": "docs/art/demos/opening-joint/title-motion.ts",
         "role": "art",
-        "note": "F专属source-over透明Canvas；源光与受光同步、核心内质、烟灰/遮罩空气，Scene delta驱动与减动清空/关闭释放。"
+        "note": "历史DEV导出入口，现转导出src/art/title-motion.ts共用实现。"
       },
       {
         "path": "docs/art/demos/opening-joint/assets/title/master.png",
@@ -237,7 +239,8 @@
       },
       {
         "path": "src/scenes/last-light-visual.ts",
-        "role": "code"
+        "role": "code",
+        "note": "正式默认/assets/last-light与joint-depth；DEV独立profile覆盖仍隔离，生产构建忽略DEV覆盖。"
       },
       {
         "path": "docs/qa/2026-10-01-opening-joint.md",
@@ -279,12 +282,33 @@
       {
         "path": "docs/art/demos/opening-joint/title-exterior.ts",
         "role": "code",
-        "note": "F原画专属空间窗口/前景轮廓遮罩，灰雾、巨大不完整暗影、已有污染与断沿落屑；非3D重建。"
+        "note": "历史DEV导出入口，现转导出src/art/title-exterior.ts共用实现。"
       },
       {
         "path": "tools/qa/check-opening-title-exterior.mjs",
         "role": "test",
         "note": "F首页外景专项及原画保护；实际执行与限制归统一QA。"
+      },
+      {
+        "path": "src/art/title-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/title-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/main-menu.css",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/art/menu-refuge-f.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-production.md",
+        "role": "doc",
+        "note": "48b700c获用户认可后的正式推广：production资产、入口/存档/生命周期及未验范围单列。"
       }
     ],
     "dependsOn": [
@@ -303,13 +327,14 @@
       "COH-E111",
       "COH-E112",
       "COH-E113",
-      "COH-E114"
+      "COH-E114",
+      "COH-E115"
     ],
     "unknowns": [
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
       "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
-      "2026-10-01用户已选F画法并认可近处动效及外景灰雾/污染迁移/落屑；旧黑盘巨影被否定，本轮只改为超画幅分段屈折与滞后形体，新巨影仍待人审。独立复核不代签观感，实景后随静帧仍可能读成斜梁/悬索。首页作者空间遮罩与实景真实深度裁切的边界保持；未重绘F或替换生产资产，两端整体连续性、跨设备/Canvas动态与完整搜撤未扩验。",
-      "联合DEV旧操作证据按原范围保留，不自动覆盖新版巨影；本轮两端执行范围归统一QA。首页坐姿到实景站姿仍为剪辑，长期性能/低端回退/完整搜撤交易未验。"
+      "2026-10-01用户认可48b700c联合画面与动效并授权正式推广，巨影不再记人审待定。正式资源原样推广，运行与存档/生命周期证据按统一QA实际范围判断，不由旧DEV结果推定。首页图像域遮罩与实景真实深度管线保持；跨设备/Canvas动态、长期性能及完整搜撤交易未自动扩验。",
+      "联合DEV旧操作证据按原范围保留，正式接入另验；首页坐姿到实景站姿仍为剪辑，长期性能/低端回退/完整搜撤交易的未验范围归本轮QA。"
     ]
   },
   {
@@ -494,7 +519,7 @@
     "id": "COH-F005",
     "title": "资源加载与场景过渡",
     "domain": "loop",
-    "summary": "Boot加载资源后转入标题；主菜单进入基地及基地进入Rift使用既有过场，DEV深链单独处理。opening-joint默认已选F；本轮仅修首页与joint实景的巨影，原Scene时间、显式DEV profile及生命周期保持。首页减动清空动态层，实景time=0保留静态，生产入口不启用。灰雾/污染/落屑获认可，新巨影待审；正式过渡与存储策略不变。",
+    "summary": "Boot加载正式资源后进入F标题；主菜单进入净化点仍使用既有新建/继续短过渡和session存档逻辑。共用title-motion/title-exterior由Scene时间驱动，首页减动清空叠加、实景time=0保留静态。正式默认资产启用joint-depth，DEV独立profile及历史对照保持且不覆盖生产配置；生命周期执行范围按本轮QA记录。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -502,7 +527,7 @@
       "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。",
       "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。",
       "DEV画法对照：docs/art/demos/opening-pixel-candidates/index.html；默认已选F静帧，保留原版及A–E历史图、统一局部与实景截帧。",
-      "DEV首页：docs/art/demos/opening-joint/index.html默认已选F动态；?title=0原版静图，?title=a至e历史静图，?title=f显式F；生产默认不变。"
+      "DEV对照：docs/art/demos/opening-joint/index.html复用正式F菜单与共用动效；?title=0及A–E历史静图，页内记录隔离。"
     ],
     "sources": [
       {
@@ -532,7 +557,7 @@
       {
         "path": "docs/specs/art-opening-haven-continuity.md",
         "role": "spec",
-        "note": "F画法、近处动效与外景灰雾/污染/落屑获认可；本轮仅复修巨影，两端管线边界与待审范围的唯一规格。"
+        "note": "48b700c用户认可与正式推广的唯一视觉规格；正式实现/限定验证/历史DEV证据分别记录。"
       },
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
@@ -630,7 +655,7 @@
       {
         "path": "docs/art/demos/opening-joint/title-motion.ts",
         "role": "art",
-        "note": "F专属source-over透明Canvas；源光与受光同步、核心内质、烟灰/遮罩空气，Scene delta驱动与减动清空/关闭释放。"
+        "note": "历史DEV导出入口，现转导出src/art/title-motion.ts共用实现。"
       },
       {
         "path": "docs/art/demos/opening-joint/assets/title/master.png",
@@ -655,7 +680,7 @@
       {
         "path": "src/scenes/last-light-visual.ts",
         "role": "code",
-        "note": "DEV-only资产profile验证与exteriorMotion可选字段传递；生产构建忽略DEV profile。"
+        "note": "正式默认/assets/last-light与joint-depth；DEV独立profile覆盖仍隔离，生产构建忽略DEV覆盖。"
       },
       {
         "path": "docs/qa/2026-10-01-opening-joint.md",
@@ -682,12 +707,37 @@
       {
         "path": "src/art/last-light-joint-exterior.ts",
         "role": "code",
-        "note": "joint-depth显式DEV动态GLSL；世界射线空气与resolved opaque depth裁切，原有污染材质和真实断沿落屑。"
+        "note": "已认可joint-depth动态GLSL现为正式默认；世界射线/真实深度、污染材质与落屑保持。"
       },
       {
         "path": "tools/qa/check-opening-exterior.mjs",
         "role": "test",
         "note": "joint实景受控WebGL2帧、关闭分支与旧shader对照、深度/近景保护及减动检查；不等于完整正式游玩。"
+      },
+      {
+        "path": "src/scenes/main-menu-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/title-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/title-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "public/assets/last-light/manifest.json",
+        "role": "art"
+      },
+      {
+        "path": "tools/last-light/promote-joint.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-production.md",
+        "role": "doc",
+        "note": "48b700c获用户认可后的正式推广：production资产、入口/存档/生命周期及未验范围单列。"
       }
     ],
     "dependsOn": [
@@ -704,14 +754,15 @@
       "COH-E111",
       "COH-E112",
       "COH-E113",
-      "COH-E114"
+      "COH-E114",
+      "COH-E115"
     ],
     "unknowns": [
       "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
       "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
-      "2026-10-01用户已选F画法并认可近处动效及外景灰雾/污染迁移/落屑；旧黑盘巨影被否定，本轮只改为超画幅分段屈折与滞后形体，新巨影仍待人审。独立复核不代签观感，实景后随静帧仍可能读成斜梁/悬索。首页作者空间遮罩与实景真实深度裁切的边界保持；未重绘F或替换生产资产，两端整体连续性、跨设备/Canvas动态与完整搜撤未扩验。",
-      "联合DEV旧操作证据按原范围保留，不自动覆盖新版巨影；本轮两端执行范围归统一QA。首页坐姿到实景站姿仍为剪辑，长期性能/低端回退/完整搜撤交易未验。"
+      "2026-10-01用户认可48b700c联合画面与动效并授权正式推广，巨影不再记人审待定。正式资源原样推广，运行与存档/生命周期证据按统一QA实际范围判断，不由旧DEV结果推定。首页图像域遮罩与实景真实深度管线保持；跨设备/Canvas动态、长期性能及完整搜撤交易未自动扩验。",
+      "联合DEV旧操作证据按原范围保留，正式接入另验；首页坐姿到实景站姿仍为剪辑，长期性能/低端回退/完整搜撤交易的未验范围归本轮QA。"
     ]
   },
   {

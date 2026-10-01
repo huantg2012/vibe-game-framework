@@ -24,7 +24,8 @@ const { chromium } = await import(playwrightModule).catch(error => {
 });
 const url = process.env.OPENING_TITLE_MOTION_URL ?? 'http://127.0.0.1:3027/docs/art/demos/opening-joint/index.html';
 const out = process.env.OPENING_TITLE_MOTION_OUT ?? 'docs/qa/artifacts/opening-title-motion';
-const sourceFiles = ['docs/art/demos/opening-joint/entry.ts', 'docs/art/demos/opening-joint/title-motion.ts',
+const sourceFiles = ['src/scenes/main-menu-scene.ts', 'src/art/title-motion.ts',
+  'src/art/title-exterior.ts', 'src/ui/dom/main-menu.css', 'docs/art/demos/opening-joint/entry.ts', 'docs/art/demos/opening-joint/title-motion.ts',
   'docs/art/demos/opening-joint/style.css', 'docs/art/demos/opening-joint/assets/title/candidates/f.png'];
 const fingerprint = () => Object.fromEntries(sourceFiles.map(file => [file,
   createHash('sha256').update(readFileSync(file)).digest('hex')]));

@@ -26,7 +26,7 @@ export interface LastLightRenderPack {
   actorDepthOffset: number; actorDepthScale: number;
   /** Full hidden exterior plates include a guard band on every side. */
   exteriorPadding: number; exteriorParallax: readonly [number, number, number];
-  /** Explicitly opt-in DEV pack; absent for the production asset root. */
+  /** Authored depth-aware atmosphere; also selectable by isolated DEV packs. */
   exteriorMotion?: 'joint-depth';
 }
 export interface LastLightRenderState {

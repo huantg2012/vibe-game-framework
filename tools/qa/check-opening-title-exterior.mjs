@@ -19,7 +19,8 @@ assert(Number.isFinite(durationMs) && durationMs >= 19000 && durationMs <= 45000
   'Capture must cover the first exterior event, without an unbounded recording');
 const started = new Date().toISOString();
 const revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-const sourceFiles = ['docs/art/demos/opening-joint/entry.ts', 'docs/art/demos/opening-joint/title-motion.ts',
+const sourceFiles = ['src/scenes/main-menu-scene.ts', 'src/art/title-motion.ts',
+  'src/art/title-exterior.ts', 'src/ui/dom/main-menu.css', 'docs/art/demos/opening-joint/entry.ts', 'docs/art/demos/opening-joint/title-motion.ts',
   'docs/art/demos/opening-joint/title-exterior.ts', 'docs/art/demos/opening-joint/style.css',
   'docs/art/demos/opening-joint/assets/title/candidates/f.png'];
 const fingerprint = () => Object.fromEntries(sourceFiles.map(file => [file,

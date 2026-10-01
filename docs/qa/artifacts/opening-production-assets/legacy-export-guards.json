@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "command": "node --import tsx tools/last-light/export.mjs --scene-only",
+      "blocked": true,
+      "reason": "Error: The accepted joint haven is now production. Do not overwrite it with the historical option-A bake; use export-joint.mjs and an explicitly reviewed promotion."
+    },
+    {
+      "command": "node --import tsx tools/last-light/exterior-export.mjs --install",
+      "blocked": true,
+      "reason": "Error: The selected joint haven owns its matching exterior fields. Rebuild with export-joint.mjs; the historical option-A field exporter may not overwrite them."
+    }
+  ],
+  "productionChecksumsUnchanged": true,
+  "sha256": "774779f7cb2e8b9fb842e16579df672f6f37d7f0b212e7e13354824f6e72a26e"
+}

@@ -164,18 +164,17 @@ if (import.meta.env.DEV) {
   rejectButton.setAttribute('aria-pressed', 'false');
   button('检查记录', inspect);
   controls.append(document.createElement('br'));
-  for (const [label, keyName, code, keyCode, engineName] of [
-    ['菜单 ↑', 'ArrowUp', 'ArrowUp', 38, 'UP'],
-    ['菜单 ↓', 'ArrowDown', 'ArrowDown', 40, 'DOWN'],
-    ['菜单 Enter', 'Enter', 'Enter', 13, 'ENTER'],
-    ['菜单 Escape', 'Escape', 'Escape', 27, 'ESC'],
+  for (const [label, keyName, code, keyCode] of [
+    ['菜单 ↑', 'ArrowUp', 'ArrowUp', 38],
+    ['菜单 ↓', 'ArrowDown', 'ArrowDown', 40],
+    ['菜单 Enter', 'Enter', 'Enter', 13],
+    ['菜单 Escape', 'Escape', 'Escape', 27],
   ] as const) {
     button(label, () => {
       const event = new KeyboardEvent('keydown', { key: keyName, code, keyCode, which: keyCode, bubbles: true, cancelable: true });
-      if (pauseMenu.isOpen()) document.dispatchEvent(event);
-      else if (playingScene()?.scene.key === 'MainMenuScene') playingScene()!.input.keyboard?.emit(`keydown-${engineName}`, event);
+      if (pauseMenu.isOpen() || playingScene()?.scene.key === 'MainMenuScene') document.dispatchEvent(event);
       else { lastAction = '这些按键只用于正式标题或暂停菜单；场内重试请点击实际按钮。'; return; }
-      lastAction = `${label} → ${pauseMenu.isOpen() ? 'DOM 暂停菜单' : 'Phaser 标题菜单'}`;
+      lastAction = `${label} → ${pauseMenu.isOpen() ? 'DOM 暂停菜单' : 'DOM 标题菜单'}`;
     });
   }
 

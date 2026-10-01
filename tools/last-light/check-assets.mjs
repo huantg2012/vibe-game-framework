@@ -3,21 +3,24 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 import sharp from 'sharp';
+import {verifyPromotedJointPack} from './promote-joint.mjs';
 const root=process.cwd(),dir=path.join(root,'public/assets/last-light');
 const manifest=JSON.parse(await fs.readFile(path.join(dir,'manifest.json'),'utf8'));
 const checksums=JSON.parse(await fs.readFile(path.join(dir,'checksums.json'),'utf8'));
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const promoted=manifest.promotion?.runtimeExterior==='joint-depth';
+if(promoted)await verifyPromotedJointPack(dir);
 assert.equal(manifest.status,'complete');assert.deepEqual(manifest.source.riftForm,{shape:'ground-throat-v2',mouthWidth:.75,depth:2.12});
 assert.deepEqual(manifest.canvas,{width:960,height:640});
 // Scene provenance is the recipe used for the last scene bake. An actor-only
 // bake must preserve it, even when the actor/tool source has since changed.
 const actorOnlySourceChanges=new Set(['docs/art/demos/purification-last-light/actor.ts','src/art/last-light-gait.ts','src/art/last-light-facing.ts','src/art/last-light-spatial.ts','tools/last-light/export.mjs']);
 assert.deepEqual(checksums.actorSources,manifest.actor.sourceHashes,'Actor provenance must agree with manifest');
-for(const [file,value] of Object.entries(checksums.actorSources??{}))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale actor source ${file}`);
+if(!promoted)for(const [file,value] of Object.entries(checksums.actorSources??{}))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale actor source ${file}`);
 assert.ok(manifest.exteriorFields,'Per-layer exterior light/material contract missing');
 assert.deepEqual(checksums.exteriorSources,manifest.exteriorFields.sourceHashes,'Exterior provenance must agree with manifest');
-for(const [file,value] of Object.entries(checksums.exteriorSources??{}))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale exterior source ${file}`);
-for(const [file,value] of Object.entries(checksums.sources)){
+if(!promoted)for(const [file,value] of Object.entries(checksums.exteriorSources??{}))assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale exterior source ${file}`);
+if(!promoted)for(const [file,value] of Object.entries(checksums.sources)){
  if(actorOnlySourceChanges.has(file)&&checksums.actorSources?.[file])continue;
  assert.equal(hash(await fs.readFile(path.join(root,file))),value,`Stale scene source ${file}`);
 }

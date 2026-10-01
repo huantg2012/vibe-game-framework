@@ -66,8 +66,13 @@ window.addEventListener('focus', () => {
 overlay.addEventListener('click', resumeGame);
 document.addEventListener('keydown', (e) => {
   if (pauseMenu.isOpen()) return;
-  if (paused && !e.repeat) resumeGame();
-});
+  if (paused) {
+    // Resume is one action: never let this same Enter reach a DOM menu or
+    // Phaser input after the scene has been resumed.
+    e.preventDefault(); e.stopImmediatePropagation();
+    if (!e.repeat) resumeGame();
+  }
+}, true);
 
 // Expose game instance for debugging (dev only)
 if (import.meta.env.DEV) {

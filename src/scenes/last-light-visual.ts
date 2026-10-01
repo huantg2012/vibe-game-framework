@@ -37,7 +37,7 @@ type PulseKind = 'repair' | 'growth' | 'offering' | 'offering-complete';
 const ROOT = 'assets/last-light/';
 const KEY = 'last-light:';
 interface LastLightAssetProfile { root: string; cachePrefix: string; exteriorMotion?: 'joint-depth'; }
-const PRODUCTION_ASSETS: LastLightAssetProfile = { root: ROOT, cachePrefix: KEY };
+const PRODUCTION_ASSETS: LastLightAssetProfile = { root: ROOT, cachePrefix: KEY, exteriorMotion: 'joint-depth' };
 
 /** An explicit DEV fixture may own a complete asset pack. Never replace a
  * production texture under the same cache key, or let a query string silently

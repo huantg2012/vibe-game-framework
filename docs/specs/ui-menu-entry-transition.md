@@ -10,7 +10,7 @@ exposes:
 interface-changed: false
 ---
 
-**TL;DR：现行首页进入净化点的短过渡合同，管理新建/继续、存档安全、输入锁和生命周期。联合 DEV 样片复用本合同，视觉制作与人审另见[联合视觉规格](art-opening-haven-continuity.md)，本轮未改变以下运行时行为。**
+**TL;DR：现行首页进入净化点的短过渡合同，管理新建/继续、存档安全、输入锁和生命周期。F正式首页与隔离DEV比较共用本合同，已认可画面和推广范围见[联合视觉规格](art-opening-haven-continuity.md)，本轮未改变以下时序与存档行为。**
 
 # 首页 → 净化点入场
 
@@ -46,4 +46,4 @@ interface-changed: false
 
 2026-09-07，用户体验后明确“结案，提交”。本规格已获接受，迭代14 COMPLETE；机器验证边界仍按 docs/qa/iteration-14.md 保留。
 
-2026-10-01说明：上述验收仅覆盖迭代14对应实现。[联合 DEV 样片](../art/demos/opening-joint/index.html)已复用本合同，沿用新建/继续时序和缩放；首页坐姿到净化点站姿采用剪辑，没有新增起身动画或一镜到底。其限定运行检查归[本轮QA](../qa/2026-10-01-opening-joint.md)，新美术及连续性仍为 HUMAN-REVIEW-PENDING，不继承迭代14的美术验收。后续若改变时序或镜头，须在本规格原地修订并另行验证。
+2026-10-01：用户认可`48b700c`联合画面与动效并授权正式推广。`MainMenuScene`采用`/assets/art/menu-refuge-f.png`及共用`src/art/title-motion.ts`，保留有效继续、已有坏包的安全覆盖、记录摘要及在途弃局恢复；[联合DEV](../art/demos/opening-joint/index.html)继续隔离正式存档。首页坐姿到净化点站姿仍采用本合同短剪辑，没有起身动画或一镜到底。正式接入执行范围归[推广QA](../qa/2026-10-01-opening-production.md)，不借迭代14旧结果推定新实现通过。后续若改变时序或镜头，须在本规格原地修订并另行验证。

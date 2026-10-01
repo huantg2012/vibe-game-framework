@@ -1,0 +1,177 @@
+{
+  "ok": true,
+  "started": "2026-10-01T15:40:17.471Z",
+  "revision": "48b700cfad4b3e0b9cf6284427d5abe2960b04db",
+  "url": "http://127.0.0.1:3027/docs/art/demos/opening-joint/index.html",
+  "sourceFingerprints": {
+    "src/scenes/main-menu-scene.ts": "e1fc66a52b06dc45b4875fac74f5807def685734906b5b1fb2085c650f129ebe",
+    "src/art/title-motion.ts": "6e3d2f26774445a651e5325f6763b646b7a970f3e17a75e74fa88f4bec448c85",
+    "src/art/title-exterior.ts": "55b62db91cb7729a6134f5963cca50f78b8ea5cd902c2e34f3ef10e5d893d635",
+    "src/ui/dom/main-menu.css": "0a6eaec8e6a92d7207d239b765f118dbbb4cafe875957538774f44d7afb52a64",
+    "docs/art/demos/opening-joint/entry.ts": "ead1b989092fe8302a56c694375a48362ebd6d08b26d5bdce51d44a59a6e6e50",
+    "docs/art/demos/opening-joint/title-motion.ts": "4035a719d6071518ff0f48c8cf2d02bcfadb2f80f6f3c2ea9517752af5d9411a",
+    "docs/art/demos/opening-joint/style.css": "1c9a15b1118daca99e9773df578764b33d24c338291a9ee83befd04d1323c56d",
+    "docs/art/demos/opening-joint/assets/title/candidates/f.png": "3d7ab12956aab13cab7331b66572331c52ddb99b55565ce10005fcb55bc04564"
+  },
+  "checks": [
+    "default entry loads F and exactly one motion canvas",
+    "scene time advances and real canvas RGBA pixels change",
+    "8-second WebM captures actual artwork plus live motion",
+    "dispatched browser blur freezes clock and pixels",
+    "keyboard resume restores actual animation",
+    "reduced-motion clears the overlay to the original F illustration and freezes its clock",
+    "restoring motion preference resumes pixels and clock",
+    "real haven entry removes the original motion instance and stops its clock",
+    "return creates exactly one new F motion instance and playback resumes",
+    "initial reduced-motion load has a zero-alpha overlay and finite zero clock; disabling it restores motion",
+    "original-origin storage sentinel remains untouched",
+    "every sampled frame leaves the x < 360 menu safety region fully transparent"
+  ],
+  "samples": [
+    {
+      "label": "initial",
+      "time": 0.416,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 116977,
+      "menuSafetyPixels": 0,
+      "sha256": "4eabc2ceb205b9e441f1c6a975e22ba737ce5b548d6d4cf4ad66879c90486c05"
+    },
+    {
+      "label": "after-650ms",
+      "time": 1.315,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 116971,
+      "menuSafetyPixels": 0,
+      "sha256": "1d60fe3c84e9d242aaa19bb8b70b7dceeb900e05d6244dd0428b9225d9ad2241"
+    },
+    {
+      "label": "after-recording",
+      "time": 9.981,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 117185,
+      "menuSafetyPixels": 0,
+      "sha256": "5ebcd822a60451662bd4f6875e8313b5d7dc67aebbf77b4ec64fecfb2e73d0ba"
+    },
+    {
+      "label": "blurred",
+      "time": 9.981,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 117185,
+      "menuSafetyPixels": 0,
+      "sha256": "5ebcd822a60451662bd4f6875e8313b5d7dc67aebbf77b4ec64fecfb2e73d0ba"
+    },
+    {
+      "label": "blurred-after-450ms",
+      "time": 9.981,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 117185,
+      "menuSafetyPixels": 0,
+      "sha256": "5ebcd822a60451662bd4f6875e8313b5d7dc67aebbf77b4ec64fecfb2e73d0ba"
+    },
+    {
+      "label": "focus-resumed",
+      "time": 10.613,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 117166,
+      "menuSafetyPixels": 0,
+      "sha256": "ebe9a1b821939de72359603ae75ef93b27bebae8e04105233f8c9e055d33edde"
+    },
+    {
+      "label": "reduced-motion",
+      "time": 10.613,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "reduced-motion-after-450ms",
+      "time": 10.613,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "motion-preference-restored",
+      "time": 11.245,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 117021,
+      "menuSafetyPixels": 0,
+      "sha256": "b62f2fb6234cb85b78429cf893e448839bee05e1ea3500bae69b6b8d47a86df4"
+    },
+    {
+      "label": "returned-title",
+      "time": 0.05,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 116943,
+      "menuSafetyPixels": 0,
+      "sha256": "b1d7badc14f4011368aa9ef425ad84a28d6bdeedc108e1bc96a39606c38ef87b"
+    },
+    {
+      "label": "returned-title-after-600ms",
+      "time": 0.649,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 116963,
+      "menuSafetyPixels": 0,
+      "sha256": "a6ff5ce9ddf937a0780b1015a521d0beb5d6cde2708e2f85de240db94a56499a"
+    },
+    {
+      "label": "initial-reduced-motion",
+      "time": 0,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "initial-reduced-motion-after-350ms",
+      "time": 0,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "initially-reduced-then-resumed",
+      "time": 0.616,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 116952,
+      "menuSafetyPixels": 0,
+      "sha256": "a9386acb8e77ae678c4331b47f69739a97c1577a371efcb069cb309533e64d6d"
+    }
+  ],
+  "recording": {
+    "supported": true,
+    "mimeType": "video/webm;codecs=vp9",
+    "durationMs": 8032.899999856949,
+    "compositeSamples": 482,
+    "width": 960,
+    "height": 640,
+    "requestedCaptureFps": 30,
+    "bytes": 3002468
+  },
+  "errors": [],
+  "failedRequests": [],
+  "compositeFrameDelta": "frame-delta.json",
+  "method": "One fresh headless Chromium context; production-origin sentinel in a separate blank page. F loaded through default DEV entry; native Enter and Return button own scene transitions. Read-only motion pixel and DOM probes.",
+  "limitations": [
+    "Finite local lifecycle check, not human aesthetic acceptance or sustained performance certification.",
+    "Browser blur is a dispatched event. The optional 8-second WebM composites the actual image and actual motion canvas, excluding DOM text and audio.",
+    "Navigation, inventory transactions and Rift recovery are outside this motion-only check."
+  ]
+}

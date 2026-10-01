@@ -13,25 +13,8 @@ button:focus-visible { outline: 1px solid #91998a; outline-offset: 5px; }
 #game-container canvas { display: block; }
 .joint-footer { height: 32px; display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: #59635d; letter-spacing: .3px; white-space: nowrap; }
 #joint-status { color: #829083; }
-.joint-title, .joint-compare { position: absolute; inset: 0; width: 960px; height: 640px; overflow: hidden; background: #080b0c; z-index: 200; pointer-events: auto; }
-.joint-art, .joint-compare-image { position: absolute; inset: 0; width: 960px; height: 640px; object-fit: cover; image-rendering: pixelated; }
-.joint-art { opacity: 0; transition: opacity 240ms ease; }
-.joint-art.is-ready { opacity: 1; }
-.joint-title-motion { position: absolute; inset: 0; width: 960px; height: 640px; image-rendering: pixelated; pointer-events: none; }
-.joint-copy { position: absolute; left: 100px; top: 174px; width: 280px; color: #c1c4b7; transition: opacity 160ms ease; }
-.joint-copy h1 { margin: 0; font: 400 36px/1.45 "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: 4px; white-space: nowrap; text-shadow: 0 1px 9px #030807; }
-.joint-english { margin: 7px 0 0 2px; font: 400 10px/18px "Helvetica Neue", Arial, sans-serif; letter-spacing: 3.2px; color: #89958d; }
-.joint-actions { display: flex; align-items: flex-start; flex-direction: column; gap: 9px; margin-top: 51px; }
-.joint-action { position: relative; display: block; padding: 7px 14px 7px 2px; border: 0; background: transparent; color: #929d91; font: 400 13px/22px "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: 2px; cursor: pointer; text-align: left; }
-.joint-action::before { content: ''; position: absolute; left: -16px; top: 18px; width: 7px; height: 1px; background: #bbc1ae; opacity: 0; }
-.joint-action.is-selected { color: #d0d1bf; }
-.joint-action.is-selected::before { opacity: 1; }
-.joint-action:disabled { color: #626e64; cursor: default; }
-.joint-action:disabled::before { opacity: 0; }
-.joint-warning { margin: 19px 0 -25px 2px; font-size: 12px; line-height: 20px; color: #aba897; max-width: 265px; }
-.joint-back-hint { margin: 25px 0 0 2px; color: #707c70; font-size: 10px; line-height: 18px; }
-.joint-load-note { position: absolute; left: 100px; bottom: 38px; margin: 0; max-width: 420px; font: 11px/20px "PingFang SC", "Microsoft YaHei", sans-serif; color: #849082; }
-.joint-retry { margin: 8px 0 0; border: 0; border-bottom: 1px solid #536356; background: transparent; padding: 2px 0; color: #b0b9a7; cursor: pointer; font: inherit; }
+.joint-compare { position:absolute;inset:0;width:960px;height:640px;overflow:hidden;background:#080b0c;pointer-events:auto; }
+.joint-compare-image { position:absolute;inset:0;width:960px;height:640px;object-fit:cover;image-rendering:pixelated; }
 .joint-focus-pause { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 12px; background: rgba(5, 10, 9, .74); color: #b0b6a8; font: 16px/24px "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: 2px; z-index: 9900; pointer-events: auto; cursor: pointer; }
 .joint-focus-pause small { font-size: 11px; color: #899584; letter-spacing: 1px; }
 .joint-compare { z-index: 9000; }

@@ -32,8 +32,7 @@ export class BootScene extends Phaser.Scene {
   preload(): void {
     injectPanelStyles();
     LastLightVisual.preload(this);
-    this.load.image('menu-last-light', 'assets/art/menu-last-light.png');
-    this.load.image('menu-last-light-clean-plate', 'assets/art/menu-last-light-clean-plate.png');
+    this.load.image('menu-refuge-f', 'assets/art/menu-refuge-f.png');
     // Create loading bar
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
