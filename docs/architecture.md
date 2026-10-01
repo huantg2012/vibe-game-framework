@@ -14,11 +14,11 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 [联合视觉规格](specs/art-opening-haven-continuity.md)已接入独立 DEV 页 `docs/art/demos/opening-joint/index.html`。`entry.ts`复用正式 `BootScene`、`PurificationScene`及出击场景；页面在导入游戏模块前隔离 `localStorage`，再向 `SaveManager`注入同一 Map。新建、继续沿用 `session`及 `MenuEntryTransition`，返回保留页内记录并清理场景/UI；正式记录不读写。坐姿首页到炉边站姿采用原短过渡剪辑，未新增起身动画或转场时序。
 
-首页已选 F：`assets/title/candidates/f.png`为默认图，原图通过`?title=0`保留，A–E 为静态历史对照；生成及选择记录归`assets/title/candidates/source.json`。`title-motion.ts`专属 F 的960×640坐标，source-over画布依次合成受限深景空气、炉/核心受光、能量密度形变、炉内火焰及烟尘；受光和炉栅遮罩由原图像素及作者空间范围共同定义，不抬高全屏曝光。Scene delta驱动30Hz更新，失焦/直接对照暂停；减少动态清空透明层保留原静图，退出场景释放画布与监听。对照功能从当前真实 WebGL 渲染帧截取画面，不以离线模型图替代实景。专项生命周期检查归`tools/qa/check-opening-title-motion.mjs`；增强后的近处动效获用户认可，新增外景仍待人审，正式首页未替换。
+首页已选 F：`assets/title/candidates/f.png`为默认图，原图通过`?title=0`保留，A–E 为静态历史对照；生成及选择记录归`assets/title/candidates/source.json`。`title-motion.ts`专属 F 的960×640坐标，source-over画布依次合成受限深景空气、炉/核心受光、能量密度形变、炉内火焰及烟尘；受光和炉栅遮罩由原图像素及作者空间范围共同定义，不抬高全屏曝光。Scene delta驱动30Hz更新，失焦/直接对照暂停；减少动态清空透明层保留原静图，退出场景释放画布与监听。对照功能从当前真实 WebGL 渲染帧截取画面，不以离线模型图替代实景。专项生命周期检查归`tools/qa/check-opening-title-motion.mjs`；近处动效及外景灰雾/污染/落屑获用户认可，新版巨影仍待人审，正式首页未替换。
 
 `tools/last-light/joint-scene.ts`继承已选 A 的可走几何、站位与相机，重做中远景巨构及局部地坪/断面层次；`export-joint.mjs`独立导出到 `opening-joint/assets/haven/`，包含静态四层、深度/材质/光场、核心八帧、遮挡体和来源校验。原1035帧人物及元数据逐字节复用，不重写导航或生产包。`LastLightVisual`仅在 DEV 下读取 `lastLightAssetProfile`注册值，按独立根路径与缓存前缀预载及使用该包；生产构建忽略此值，默认资源路径及未启用新动态的分支保持。
 
-外景续作分两条管线：`title-exterior.ts / JointTitleExterior`在F原画的空间窗口内用逐处梁柱/核心/平台轮廓遮罩合成灰雾、局部暗影、已有污染和落屑，接入原`JointTitleMotion`的Scene时间/减动清空/销毁，不把图像遮罩称为三维深度。实景的`LastLightRenderPack.exteriorMotion?: 'joint-depth'`由联合页`ASSETS`显式设置，经DEV-only `lastLightAssetProfile`传入；`last-light-joint-exterior.ts`提供GLSL，渲染器从包内正交相机重建射线，每空气体4点积分并以视差调整后的resolved opaque depth截断，近层与据点不叠加新外景。生产入口不设置该开关，生产构建忽略DEV profile，`uJointExterior=0`保留旧分支；原生产资产不重烘。实景复用Scene秒钟，减动time=0，新增动态未另建Canvas fallback。
+外景续作分两条管线：`title-exterior.ts / JointTitleExterior`在F原画的空间窗口内用逐处梁柱/核心/平台轮廓遮罩合成灰雾、局部暗影、已有污染和落屑，接入原`JointTitleMotion`的Scene时间/减动清空/销毁，不把图像遮罩称为三维深度。实景的`LastLightRenderPack.exteriorMotion?: 'joint-depth'`由联合页`ASSETS`显式设置，经DEV-only `lastLightAssetProfile`传入；`last-light-joint-exterior.ts`提供GLSL，渲染器从包内正交相机重建射线，每空气体4点积分并以视差调整后的resolved opaque depth截断，近层与据点不叠加新外景。生产入口不设置该开关，生产构建忽略DEV profile，`uJointExterior=0`保留旧分支；原生产资产不重烘。实景复用Scene秒钟，减动time=0，新增动态未另建Canvas fallback。本轮仅修巨影：两端均以超画幅的不等宽分段形体作局部屈折与滞后收拢，替代闭合椭圆整体平移；事件窗口、原遮挡/雾先后及其他三类效果保持。
 
 当前 **DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING**。真实键盘位移、E坐下/起身、Tab报告、返回继续、覆盖取消、失焦/减少动态、截帧对照及正式存储哨兵隔离已有限定实测；不能由此推出全流程、跨设备性能或美术已通过。证据与限制见[本轮QA](qa/2026-10-01-opening-joint.md)。
 

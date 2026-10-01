@@ -25,6 +25,15 @@ const sourceFiles = ['docs/art/demos/opening-joint/entry.ts', 'docs/art/demos/op
 const fingerprint = () => Object.fromEntries(sourceFiles.map(file => [file,
   createHash('sha256').update(readFileSync(file)).digest('hex')]));
 const sourceFingerprints = fingerprint();
+const baselineRevision = process.env.OPENING_TITLE_EXTERIOR_BASELINE_REVISION;
+let baseline = null;
+if (baselineRevision) {
+  assert(/^[a-f0-9]{7,40}$/i.test(baselineRevision), 'Use a concrete accepted commit for exterior preservation checks');
+  const source = execFileSync('git', ['show', `${baselineRevision}:docs/art/demos/opening-joint/title-exterior.ts`], { encoding: 'utf8' });
+  const { transform } = await import('esbuild');
+  baseline = { revision: baselineRevision, sha256: createHash('sha256').update(source).digest('hex'),
+    code: (await transform(source, { loader: 'ts', format: 'esm', target: 'es2022' })).code };
+}
 await mkdir(out, { recursive: true });
 
 // This remains the single implementation of the actual entry/return, storage,
@@ -146,13 +155,19 @@ try {
   checks.push('actual default F playback changes in all three exterior depth regions within the first three seconds');
   checks.push('at least 19 seconds of natural playback includes the first event window, with real scene-clock and frame evidence');
 
-  const isolated = await page.evaluate(async ({ regions }) => {
+  const isolated = await page.evaluate(async ({ regions, baseline }) => {
     const { JointTitleExterior } = await import('/docs/art/demos/opening-joint/title-exterior.ts');
     const art = document.querySelector('.joint-art');
     const base = document.createElement('canvas'); base.width = 960; base.height = 640;
     const baseCtx = base.getContext('2d'); baseCtx.imageSmoothingEnabled = false; baseCtx.drawImage(art, 0, 0, 960, 640);
     const source = baseCtx.getImageData(0, 0, 960, 640).data;
     const exterior = new JointTitleExterior(source), ctx = exterior.canvas.getContext('2d');
+    let accepted = null;
+    if (baseline) {
+      const moduleUrl = URL.createObjectURL(new Blob([baseline.code], { type: 'text/javascript' }));
+      try { accepted = new (await import(moduleUrl)).JointTitleExterior(source); }
+      finally { URL.revokeObjectURL(moduleUrl); }
+    }
     const protectedAreas = {
       menu: { x: 0, y: 0, w: 360, h: 640 },
       seatedActor: { x: 606, y: 350, w: 57, h: 84 },
@@ -165,10 +180,25 @@ try {
     };
     const sha = async pixels => Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', pixels)),
       value => value.toString(16).padStart(2, '0')).join('');
-    const snapshots = [], samples = [];
+    const snapshots = [], samples = [], preservation = [];
     for (const time of [0, .5, 1, 2, 3, 6, 7, 9, 11, 13, 15, 17, 18, 19, 22, 33, 52]) {
       exterior.draw(time);
       const pixels = ctx.getImageData(0, 0, 960, 640).data;
+      if (accepted) {
+        accepted.draw(time);
+        const previous = accepted.canvas.getContext('2d').getImageData(0, 0, 960, 640).data;
+        let changedPixels = 0, maxByteDelta = 0;
+        for (let i = 0; i < pixels.length; i += 4) {
+          let changed = false;
+          for (let c = 0; c < 4; c++) {
+            const delta = Math.abs(pixels[i + c] - previous[i + c]);
+            if (delta) changed = true;
+            maxByteDelta = Math.max(maxByteDelta, delta);
+          }
+          if (changed) changedPixels++;
+        }
+        preservation.push({ time, changedPixels, maxByteDelta });
+      }
       const protectedPixels = {};
       for (const [name, r] of Object.entries(protectedAreas)) {
         let count = 0;
@@ -193,9 +223,10 @@ try {
       if ([0, 2, 11, 15, 19].includes(time)) snapshots.push({ time, png: exterior.canvas.toDataURL('image/png') });
     }
     exterior.draw(11); const repeatSha256 = await sha(ctx.getImageData(0, 0, 960, 640).data);
-    exterior.destroy();
-    return { samples, snapshots, protectedAreas, repeatSha256, afterDestroy: { width: exterior.canvas.width, height: exterior.canvas.height } };
-  }, { regions });
+    exterior.destroy(); accepted?.destroy();
+    return { samples, snapshots, protectedAreas, repeatSha256, afterDestroy: { width: exterior.canvas.width, height: exterior.canvas.height },
+      baselineComparison: baseline ? { revision: baseline.revision, sha256: baseline.sha256, phases: preservation } : null };
+  }, { regions, baseline });
   for (const snapshot of isolated.snapshots) {
     const file = `exterior-only-${snapshot.time}s.png`;
     await writeFile(path.join(out, file), Buffer.from(snapshot.png.split(',')[1], 'base64'));
@@ -217,11 +248,19 @@ try {
   checks.push('actual exported exterior layer remains transparent over menu, seated actor, furnace, core, foreground floor and main column in 17 sampled phases');
   checks.push('isolated actual exterior renderer changes before the first event and repeats deterministically at identical scene time');
   checks.push('first event measurably darkens the far corridor beyond pre/post-event phases');
+  if (isolated.baselineComparison) {
+    const quietPhases = isolated.baselineComparison.phases.filter(sample => [0, .5, 1, 2, 3, 6, 7, 19, 22, 33].includes(sample.time));
+    assert(quietPhases.every(sample => sample.changedPixels === 0), 'Accepted non-event atmosphere must remain byte-identical to the supplied baseline');
+    assert(isolated.baselineComparison.phases.some(sample => sample.time > 7 && sample.time < 19 && sample.changedPixels > 0),
+      'The revised event itself must differ from the rejected baseline silhouette');
+    checks.push('accepted non-event exterior remains byte-identical to the previous commit in ten phases, while the event changes');
+  }
   assert.deepEqual(errors, []); assert.deepEqual(failedRequests, []);
   assert.deepEqual(fingerprint(), sourceFingerprints, 'Source changed during QA; regenerate final evidence after implementation freezes');
   await writeFile(path.join(out, 'result.json'), JSON.stringify({ ok: true, started, revision, url, sourceFingerprints,
     lifecycle: { result: 'lifecycle/result.json', checks: lifecycle.checks }, checks, regions, recording,
-    isolatedEvidence: 'exterior-layer.json', errors, failedRequests,
+    isolatedEvidence: 'exterior-layer.json', acceptedBaseline: baseline ? { revision: baseline.revision, sha256: baseline.sha256 } : null,
+    errors, failedRequests,
     method: 'Actual default DEV scene in a fresh headless context; real image+motion canvas captured naturally. A separate offscreen instance of the actual exported exterior renderer receives the same F pixels for layer-isolation checks.',
     limitations: ['Pixel changes establish animation, not human aesthetic approval or guaranteed subjective visibility.',
       'Offscreen phase samples directly render known scene times; they are not a second natural playback or gameplay session.',

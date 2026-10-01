@@ -49,21 +49,60 @@ vec3 jointWound(vec3 base,vec3 light,vec4 data,vec2 pixel,float time){
   return light*(crest-initial)*.32+base*material*(crest-initial)*.23;
 }
 
-// The front of a mass is glimpsed in separate architectural apertures. Its
-// body extends beyond the view; there are no eyes, sprite outlines or complete
-// creature icon. Two unequal gaps avoid an attention-seeking metronome.
-float jointPassingMass(vec2 pixel,float surface,float time){
+// A broad fold has a dark turning side and a dim plane, not an emissive rim.
+// Rounded segment ends only join internal bends: every actual limb endpoint
+// lies outside the view, so this cannot make a closed disc-shaped apparition.
+vec2 jointFoldSegment(vec2 pixel,vec2 a,vec2 b,float radiusA,float radiusB,float salt){
+  vec2 axis=b-a;
+  float along=clamp(dot(pixel-a,axis)/dot(axis,axis),0.,1.);
+  vec2 local=pixel-(a+axis*along);
+  float radius=mix(radiusA,radiusB,along);
+  float signedSide=dot(local,normalize(vec2(-axis.y,axis.x)))/radius;
+  float fold=1.-smoothstep(radius-2.5,radius+3.5,length(local));
+  float plane=smoothstep(-.73,-.08,signedSide)*(1.-smoothstep(.23,.90,signedSide));
+  float crease=(1.-smoothstep(.025,.13,abs(signedSide+.27)))*.32;
+  // Incomplete oblique ridges describe a folded surface; their support belongs
+  // to this plane and never becomes a complete contour or parallel scan lines.
+  float ridge=smoothstep(.87,.98,sin(along*18.5+signedSide*2.4+salt))
+    *smoothstep(-.12,.21,signedSide)*(1.-smoothstep(.3,.63,signedSide))*.16;
+  return vec2(fold,clamp(plane*.69-crease+ridge,0.,1.));
+}
+
+vec2 jointFoldChain(vec2 pixel,vec2 a,vec2 b,vec2 c,vec2 d,vec4 radius,float salt){
+  vec2 ab=jointFoldSegment(pixel,a,b,radius.x,radius.y,salt);
+  vec2 bc=jointFoldSegment(pixel,b,c,radius.y,radius.z,salt+2.1);
+  vec2 cd=jointFoldSegment(pixel,c,d,radius.z,radius.w,salt+4.8);
+  // At the bend, the larger coverage owns the visible face. Darker material
+  // remains at the joint rather than adding three overlapping light ribbons.
+  vec2 form=ab.x>bc.x?ab:bc;
+  return cd.x>form.x?cd:form;
+}
+
+// We glimpse articulated portions of something much larger than the opening.
+// Upper roots stay fixed while one joint flexes and two thinner folds follow
+// late. There is no global translating body and no encompassing oval mask.
+vec3 jointPassingMass(vec3 color,vec2 pixel,float surface,float time){
   float cycle=mod(time,78.),start=cycle<39.?7.:49.;
-  float age=cycle-start,progress=age/11.;
-  if(age<0.||age>11.||surface>-27.)return 0.;
+  float age=cycle-start;
+  if(age<0.||age>11.||surface>-27.)return color;
   float alternate=step(39.,cycle);
-  float x=mix(-95.,605.,progress);
-  vec2 q=pixel-vec2(mix(x,510.-x,alternate),mix(222.,422.,alternate));
-  float boundary=q.y-(sin(q.x*.011+time*.035)*37.+q.x*.075);
-  float aperture=1.-smoothstep(.58,1.12,length(q/vec2(260.,130.)));
-  float bulk=smoothstep(-22.,3.,boundary)*(1.-smoothstep(50.,106.,boundary));
-  float arrival=smoothstep(0.,1.4,age)*(1.-smoothstep(9.4,11.,age));
-  return aperture*bulk*arrival*.58;
+  vec2 q=pixel-vec2(alternate*14.,alternate*-64.);
+  float bend=sin(clamp((age-.45)/8.35,0.,1.)*3.14159265);
+  float follow=sin(clamp((age-1.80)/8.1,0.,1.)*3.14159265);
+  float late=sin(clamp((age-2.65)/8.2,0.,1.)*3.14159265);
+  vec2 rear=jointFoldChain(q,vec2(472.,-230.),vec2(414.-follow*24.,202.+follow*19.),
+    vec2(323.+follow*31.,476.-follow*8.),vec2(190.,920.),vec4(31.,34.,22.,37.),2.7);
+  vec2 narrow=jointFoldChain(q,vec2(123.,-170.),vec2(191.+late*18.,192.-late*11.),
+    vec2(135.-late*24.,433.+late*27.),vec2(109.,870.),vec4(15.,19.,11.,23.),5.2);
+  vec2 main=jointFoldChain(q,vec2(381.,-230.),vec2(301.-bend*48.,220.+bend*19.),
+    vec2(365.+bend*26.,521.-bend*17.),vec2(494.,920.),vec4(63.,52.,41.,72.),.4);
+  float arrival=smoothstep(0.,1.85,age)*(1.-smoothstep(8.75,11.,age));
+  // Dim neutral incident light reveals turning planes. Middle air is composited
+  // afterwards, naturally swallowing the lower-contrast fragments again.
+  vec3 dark=vec3(.0095,.011,.0105),light=vec3(.010,.011,.010);
+  color=mix(color,dark+light*rear.y,rear.x*arrival*.67);
+  color=mix(color,dark+light*narrow.y,narrow.x*arrival*.59);
+  return mix(color,dark+light*main.y,main.x*arrival*.78);
 }
 
 vec3 jointFallingGrit(vec2 pixel,float surface,vec2 middleOffset,vec2 farOffset,float time){
@@ -94,7 +133,7 @@ vec3 jointExteriorAtmosphere(vec3 color,vec2 pixel,float surface,vec2 farOffset,
   vec3 farOrigin=jointRayOrigin(pixel-farOffset);
   float remote=jointAir(farOrigin,surface,vec3(-13.2,-11.7,-14.2),vec3(4.2,22.,4.4),time,.52);
   color=mix(color,vec3(.073,.079,.074),remote*.66);
-  color*=1.-jointPassingMass(pixel-farOffset,surface,time);
+  color=jointPassingMass(color,pixel-farOffset,surface,time);
   vec3 middleOrigin=jointRayOrigin(pixel-middleOffset);
   float middle=jointAir(middleOrigin,surface,vec3(-16.2,-16.7,-7.2),vec3(4.0,18.,3.8),time,1.);
   color=mix(color,vec3(.078,.084,.079),middle*.54);

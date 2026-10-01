@@ -54,6 +54,38 @@ const STAIN_AREAS: readonly Poly[] = [
 ];
 interface AirPixel { x: number; y: number; index: number; weight: number; depth: number; }
 interface StainPixel { x: number; y: number; index: number; weight: number; }
+interface PresenceSegment {
+  ax: number; ay: number; dx: number; dy: number; lengthSquared: number;
+  nx: number; ny: number; radius: number; taper: number; order: number;
+  minX: number; maxX: number; minY: number; maxY: number;
+}
+
+/** The body is above/beyond the shot. What enters the apertures is a set of
+ * unequal folded members with trailing articulation, not a translated body.
+ * Open ends remain outside the windows, so no frame shows a complete outline. */
+function articulatedPresence(age: number, reverse: boolean): PresenceSegment[] {
+  const fold = (lag: number): number => Math.sin(Math.PI * smooth((age - lag) / (1 - lag)));
+  const a = fold(0), b = fold(.14), c = fold(.24);
+  const direction = reverse ? -.72 : 1;
+  const ribbons: readonly (readonly (readonly [number, number, number])[])[] = [
+    [[765,-180,103],[786,-36,81],[755-40*a*direction,117+31*a,68],[817+20*b*direction,278-35*b,30],[793,538,20]],
+    [[974,-190,45],[874-19*b*direction,32+24*b,38],[798-41*b*direction,169+26*b,32],[578+29*c*direction,308-19*c,25],[412,491,8]],
+  ];
+  const segments: PresenceSegment[] = [];
+  for (let branch = ribbons.length - 1; branch >= 0; branch--) {
+    const points = ribbons[branch]!;
+    for (let i = 0; i < points.length - 1; i++) {
+      const [ax, ay, radius] = points[i]!, [bx, by, endRadius] = points[i + 1]!;
+      const dx = bx - ax, dy = by - ay, lengthSquared = dx * dx + dy * dy;
+      const length = Math.sqrt(lengthSquared), padding = Math.max(radius, endRadius) * 1.12 + 12;
+      segments.push({ ax, ay, dx, dy, lengthSquared, nx: -dy / length, ny: dx / length,
+        radius, taper: endRadius - radius, order: branch * 5 + i,
+        minX: Math.min(ax, bx) - padding, maxX: Math.max(ax, bx) + padding,
+        minY: Math.min(ay, by) - padding, maxY: Math.max(ay, by) + padding });
+    }
+  }
+  return segments;
+}
 
 export class JointTitleExterior {
   readonly canvas = document.createElement('canvas');
@@ -119,7 +151,7 @@ export class JointTitleExterior {
     if (!Number.isFinite(t)) t = 0;
     const out = this.frame.data; out.fill(0);
     const event = this.passage(t);
-    const position = event ? (event.reverse ? 1 - event.age : event.age) : 0;
+    const members = event ? articulatedPresence(event.age, event.reverse) : [];
     for (const p of this.air) {
       const speed = p.depth === 1 ? 8.2 : p.depth === 2 ? 5.4 : 2.7;
       const u = p.x + t * speed, v = p.y - t * (p.depth === 1 ? 3.4 : 1.25);
@@ -133,19 +165,38 @@ export class JointTitleExterior {
       let red = 57, green = 67, blue = 64;
       let opacity = alpha;
       if (event && p.depth >= 2) {
-        // Only an enormous partial curved flank is seen, never an outlined
-        // creature. Its interior subtracts the far air, with the pillars in front.
-        const cx = 465 + position * 440;
-        const center = 155 + (p.x - cx) * .21 + Math.sin((p.x - cx) / 110) * 29;
-        const dx = (p.x - cx) / 136;
-        const dy = (p.y - center) / (57 + this.field(p.x / 53, p.y / 49) * 24);
-        const flank = smooth((1 - dx * dx - dy * dy) * 3);
-        const shadow = flank * event.strength * .72 * p.weight;
+        let coverage = 0, surface = 0;
+        for (const segment of members) {
+          if (p.x < segment.minX || p.x > segment.maxX || p.y < segment.minY || p.y > segment.maxY) continue;
+          const rx = p.x - segment.ax, ry = p.y - segment.ay;
+          const along = clamp((rx * segment.dx + ry * segment.dy) / segment.lengthSquared);
+          const ox = rx - along * segment.dx, oy = ry - along * segment.dy;
+          const side = ox * segment.nx + oy * segment.ny;
+          const radius = (segment.radius + along * segment.taper) * (side < 0 ? 1.12 : .82);
+          // Creased, unequal edges and a long side plane give the glimpsed
+          // member thickness. Surface detail travels with the articulated part.
+          const grain = this.field(along * 9 + segment.order * 13, side * .085 + 27);
+          const contour = Math.hypot(ox, oy) - radius - (grain - .5) * 7;
+          // The trailing fold is seen in broken patches through the air; it
+          // cannot be traced as another full-height parallel hanging cable.
+          const fragment = segment.order >= 5
+            ? .3 + .7 * smooth((this.field(along * 3 + segment.order, side / 37) - .28) / .40) : 1;
+          const member = smooth((5 - contour) / 10) * fragment;
+          if (member <= coverage) continue;
+          const crease = smooth(1 - Math.abs(side / radius + .43 + grain * .11) / .13);
+          const face = smooth((side / radius + .85) / 1.7);
+          coverage = member;
+          surface = 10 + face * 11 + crease * 9 + grain * 3;
+        }
+        // Foreground air veils uneven portions of the limb. The silhouette
+        // neither cuts a clean hole in all mist nor has an all-black interior.
+        const veil = this.field(p.x / 74 + t * .045, p.y / 49 - t * .036);
+        const shadow = coverage * event.strength * (.74 - veil * .28) * p.weight;
         opacity = alpha + shadow * (1 - alpha);
         if (opacity > 0) {
-          red = (57 * alpha * (1 - shadow) + 5 * shadow) / opacity;
-          green = (67 * alpha * (1 - shadow) + 10 * shadow) / opacity;
-          blue = (64 * alpha * (1 - shadow) + 10 * shadow) / opacity;
+          red = (57 * alpha * (1 - shadow) + (surface - 3) * shadow) / opacity;
+          green = (67 * alpha * (1 - shadow) + surface * shadow) / opacity;
+          blue = (64 * alpha * (1 - shadow) + (surface - 1) * shadow) / opacity;
         }
       }
       out[p.index] = red; out[p.index + 1] = green; out[p.index + 2] = blue;

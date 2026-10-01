@@ -90,3 +90,17 @@
 复验前修正三项真实缺口：首页核心顶部金属弧超出原前景遮罩，新增轮廓保护后窄实体采样零覆盖；实景作者层索引与合成层索引不同，初版误将近层纳入侵蚀，收紧到far/middle后真实近层/据点全样本零差；首页碎屑从只检查锚点改成每个像素都裁切，避免2×3像素碎片跨越前景边缘。最后改动后完整重跑首页专项并更新录像和SHA，首次失败录制不混入最终证据。
 
 审查入口：[20秒首页连续录像](artifacts/opening-title-exterior/f-title-exterior.webm) · [13.3秒经过画面](artifacts/opening-title-exterior/f-title-exterior-frame-3.png) · [实景13秒受控帧](artifacts/opening-exterior-runtime/runtime-13s.png)。技术验证不代签暗影形态、雾的可读性及两端动态连续性的用户审美验收。正式默认首页、正式资产未替换；导航、交易、Rift、Canvas降级和长期性能本轮未扩验。
+
+## 同日：巨影形态复修
+
+用户认可其他外景动态，否决巨影“椭圆黑盘子飞过去”的表现。本轮只改巨影：首页改为一条不对称的厚重主干与一条斜向后随褶片，实景使用三个画外延伸的关节局部；主关节先屈曲，后部延迟收拢。暗侧、微弱受光面和褶皱提供体积，柱廊与前方空气把轮廓切断。原事件时序、F原图、灰雾、污染、坠屑及近处动效保持。
+
+独立复审第一稿发现标题仍像三根等权帘带，据此只做一次收敛：加厚主干、突出右上局部关节、删除第三条垂直细带，使后片斜向且间断可见。第二次8/10/13/16/18秒相位审查及最终自然录像13.315秒帧确认闭合黑盘和整体平移问题已解决。实景次要局部在静帧仍可能读作远处巨构，需结合缓慢屈折理解；“未知存在”的最终观感继续待用户审查，不以技术检查代签美术通过。
+
+最终验证与证据：
+
+- [标题结果](artifacts/opening-presence/result.json)：12项生命周期与6项外景检查通过；17相位的前景/菜单保护采样均零覆盖。以`515b779`实际旧类与当前类绘制相同F像素，10个事件外相位RGBA逐字节相同，事件本身有变化。新[20.017秒自然录像](artifacts/opening-presence/f-title-exterior.webm)与[13.315秒代表帧](artifacts/opening-presence/f-title-exterior-frame-3.png)锁定最终源码，零页面错误/失败请求。本机录制rAF均值16.70ms、p95 29.3ms、p99 31.6ms、最大41.7ms；没有超过50ms的间隔，不作长期或低端性能认证。
+- [实景结果](artifacts/opening-presence-runtime/result.json)：实际WebGL Renderer下207594个近层/据点像素零变化，减少动态两时刻零差，关闭profile与原生产shader逐像素一致。[非事件对比](artifacts/opening-presence-runtime/unchanged-phases.json)中0/4/23秒整帧PNG与上一轮证据逐字节相同。实际[13秒形态](artifacts/opening-presence-runtime/runtime-13s.png)已复看；这是受控渲染，不冒充完整自然游玩回归。
+- 主线程查看最终首页和相位实帧；目标TypeScript、生产构建通过，保留既有大chunk警告。原外景证据目录保留，新证据单独保存。本轮不重验交易、导航或Rift；正式默认首页与资产接入范围不变。
+
+状态：**DEV / PRESENCE-IMPLEMENTED / HUMAN-REVIEW-PENDING**；灰雾、原污染和坠屑保留本次用户认可，巨影不继承该认可。

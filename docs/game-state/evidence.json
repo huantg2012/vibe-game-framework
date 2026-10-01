@@ -4086,5 +4086,48 @@
         "note": "受控真实Renderer的深度保护、关闭分支与减动对照，不冒充正式全程。"
       }
     ]
+  },
+  {
+    "id": "COH-E114",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-01",
+    "revision": "515b779357fa78bf17dcd3580fc13d215e4ea101之后的巨影修订工作树（2026-10-01）",
+    "scope": "用户认可灰雾、已有污染迁移与落屑，否定旧巨影的椭圆黑盘读法。本轮仅修F首页和joint DEV实景巨影：标题为不对称主干与斜向滞后褶片，实景为三条不等宽分段折片，均延出画幅并作局部屈折，保留原事件窗口与各自遮挡/雾先后。其他效果、静图、人物和生产入口保持；统一QA登记新源码指纹、保护区/非事件对照及限定自然录屏。",
+    "limitations": "本条登记实现与引用的验证范围，不冒充本代理执行浏览器检查。独立复核认为黑盘读法已消除，但实景后随静帧仍可能读成斜梁或悬索；新版未知存在观感与两端整体连续性仍待用户终审。受控Renderer与标题约20秒自然录像不等于正式游戏业务全程、跨设备或性能验收；旧外景证据不覆盖，新证据不替换基线。",
+    "sources": [
+      {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc",
+        "note": "同一QA末节“巨影形态复修”；技术结果、自然观察与未验证边界分别记录。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/title-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/art/last-light-joint-exterior.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-presence/result.json",
+        "role": "doc",
+        "note": "标题12项生命周期、6项外景、17相位前景保护及10个非事件相位旧版RGBA对照；含约20秒自然录像。"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-presence-runtime/result.json",
+        "role": "doc",
+        "note": "正式Renderer受控帧；207594个近层/据点像素零新增覆盖、关闭分支旧shader与减动对照。"
+      },
+      {
+        "path": "docs/qa/artifacts/opening-presence-runtime/unchanged-phases.json",
+        "role": "doc",
+        "note": "实景0/4/23秒非巨影事件全帧PNG与515b779旧外景证据逐字节相同。"
+      }
+    ]
   }
 ]
