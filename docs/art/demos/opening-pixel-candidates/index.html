@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>那天之后 · 首页画法候选</title>
+  <link rel="stylesheet" href="../opening-joint/style.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="review-shell">
+    <header class="review-heading">
+      <span>那天之后 <span class="muted">/ 首页画法</span></span>
+      <a href="../opening-joint/index.html">返回联合样片</a>
+    </header>
+    <nav class="candidate-tabs" aria-label="切换画法候选">
+      <button type="button" data-candidate="0" aria-pressed="true">0 · 原版</button>
+      <button type="button" data-candidate="a" aria-pressed="false">1 · A 整簇像素</button>
+      <button type="button" data-candidate="b" aria-pressed="false">2 · B 克制明暗</button>
+      <button type="button" data-candidate="c" aria-pressed="false">3 · C 手绘硬边</button>
+      <button type="button" data-candidate="d" aria-pressed="false">4 · D 暗面修饰</button>
+      <button type="button" data-candidate="e" aria-pressed="false">5 · E 粗像素概括</button>
+      <button type="button" data-candidate="f" aria-pressed="false">6 · F 手绘块面</button>
+    </nav>
+    <div class="view-controls">
+      <nav aria-label="画面观察范围">
+        <button type="button" data-view="full" aria-pressed="true">整图</button>
+        <button type="button" data-view="actor" aria-pressed="false">人物与炉席</button>
+        <button type="button" data-view="core" aria-pressed="false">核心</button>
+        <button type="button" data-view="exterior" aria-pressed="false">外景</button>
+        <button type="button" data-view="section" aria-pressed="false">建筑断面</button>
+        <button type="button" data-view="native" aria-pressed="false">原图 100%</button>
+      </nav>
+      <div class="view-actions">
+        <button type="button" id="toggle-ui" aria-pressed="false">隐藏标题</button>
+        <button type="button" id="toggle-haven" aria-pressed="false">看真实实景</button>
+      </div>
+    </div>
+    <div id="frame" class="art-frame" tabindex="0" aria-label="首页候选画面；数字 0 到 6 切换候选">
+      <div id="stage" class="art-stage">
+        <img id="art" alt="原版首页" draggable="false">
+        <div id="title-copy" class="joint-copy">
+          <h1>那天之后</h1><p class="joint-english">AFTER THAT DAY</p>
+          <div class="joint-actions"><a id="stage-play" class="joint-action is-selected" href="../opening-joint/index.html">开始</a></div>
+        </div>
+      </div>
+      <p id="image-status" class="image-status" role="status">载入画面</p>
+      <span id="frame-note" class="frame-note" hidden></span>
+    </div>
+    <footer class="review-footer">
+      <div><p id="description">原版 · 保留已认可的坐姿与取景，作为画法对照。</p>
+        <p>建议优先对比 C / E / F；A / B / D 仍可切换查看。</p>
+        <p class="muted">0–6 切换 · H 显隐标题 · 空格对照实景 · 六张均为 AI 重绘风格，尚未选定，正式首页保持原样。</p></div>
+      <a id="play-link" class="play-link" href="../opening-joint/index.html">用原版进入游戏 →</a>
+    </footer>
+  </main>
+  <script type="module" src="./entry.ts"></script>
+</body>
+</html>

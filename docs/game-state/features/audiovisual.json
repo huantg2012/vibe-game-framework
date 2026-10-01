@@ -381,7 +381,7 @@
     "id": "COH-F042",
     "title": "基地装置、边界与标题场景表现",
     "domain": "presentation",
-    "summary": "Last Light A正式场景保留断口回廊、单西坡、三层外景与真实光影。2026-09-30入口改为ground-throat-v2：左前地坪0.75m狭口穿建筑断面向下2.12m，移除竖立黑膜；作者几何、碰撞切口、显式交互阈边与烘焙资源同源。七处操作改为世界操作边资格。限定几何/交互测试与真实场景局部E流程不代签整体画面、动态和手感人审。 2026-10-01 opening-joint独立DEV重做中远景巨构/深井空气/局部地坪断面并同步首页；角色导航站位不变，等待两端美术审查。",
+    "summary": "Last Light A正式场景保留断口回廊、单西坡、三层外景与真实光影。2026-09-30入口改为ground-throat-v2：左前地坪0.75m狭口穿建筑断面向下2.12m，移除竖立黑膜；作者几何、碰撞切口、显式交互阈边与烘焙资源同源。七处操作改为世界操作边资格。限定几何/交互测试与真实场景局部E流程不代签整体画面、动态和手感人审。 2026-10-01 opening-joint独立DEV重做中远景巨构/深井空气/局部地坪断面。用户认可首页坐姿/角度，但绘制语言仍待改进；六张AI重绘候选供比较与同场景试玩，尚未选中，不替换生产。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -391,7 +391,9 @@
       "历史参照：docs/art/demos/purification-last-light/index.html、purification-forecourt-options/index.html；样景及历史候选的验收不等同本次正式接入。",
       "旧 A/C 构图与局部样板仅作历史：docs/art/demos/purification-r11/index.html、c-pixel-sample.html；被用户否决的6127218不再是当前画法。",
       "限定DEV验收：docs/qa/interactive/last-light-interaction-review.html；真实生产场景，页内Map存档，六站合法脚点按钮与WASD/E/Esc；不是正式存档入口。",
-      "DEV：docs/art/demos/opening-joint/index.html；联合首页与独立巨构外景资产，复用正式Renderer，非生产默认。"
+      "DEV：docs/art/demos/opening-joint/index.html；联合首页与独立巨构外景资产，复用正式Renderer，非生产默认。",
+      "DEV画法复选：docs/art/demos/opening-pixel-candidates/index.html；原版与六张AI重绘候选、统一局部放大及实景截帧对照，待用户选择。",
+      "DEV候选试玩：docs/art/demos/opening-joint/index.html?title=a（可选a至f）；均进入同一联合净化点，无参数或非法值保留原版，生产默认不变。"
     ],
     "sources": [
       {
@@ -1189,6 +1191,61 @@
       {
         "path": "tools/qa/check-opening-joint.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-pixel-candidates/index.html",
+        "role": "test",
+        "note": "首页画法比较DEV入口；原版、六候选和固定坐标对照，不是生产菜单。"
+      },
+      {
+        "path": "docs/art/demos/opening-pixel-candidates/entry.ts",
+        "role": "code",
+        "note": "同坐标局部/原生尺寸查看、实景截帧对照和各候选试玩链接；不写选中偏好。"
+      },
+      {
+        "path": "docs/art/demos/opening-pixel-candidates/style.css",
+        "role": "art",
+        "note": "候选比较页样式；不是生产UI样式替换。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/source.json",
+        "role": "doc",
+        "note": "六张内置image_gen重绘的参考、原始提示、来源和SHA；坐姿/角度认可范围及待选择状态。提示目标不等于实际达成。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/entry.ts",
+        "role": "test",
+        "note": "联合DEV首页的a至f白名单预览；无参数/非法值使用原版，不持久化选图。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/a.png",
+        "role": "art",
+        "note": "首页候选A：AI重绘探索，尚未选中，非手工绘制定稿或生产替换。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/b.png",
+        "role": "art",
+        "note": "首页候选B：AI重绘探索，尚未选中，非手工绘制定稿或生产替换。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/c.png",
+        "role": "art",
+        "note": "首页候选C：AI重绘探索，尚未选中，非手工绘制定稿或生产替换。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/d.png",
+        "role": "art",
+        "note": "首页候选D：AI重绘探索，尚未选中，非手工绘制定稿或生产替换。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/e.png",
+        "role": "art",
+        "note": "首页候选E：AI重绘探索，尚未选中，非手工绘制定稿或生产替换。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/f.png",
+        "role": "art",
+        "note": "首页候选F：AI重绘探索，尚未选中，非手工绘制定稿或生产替换。"
       }
     ],
     "dependsOn": [
@@ -1269,7 +1326,8 @@
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
       "COH-E103",
       "COH-E104",
-      "COH-E109"
+      "COH-E109",
+      "COH-E110"
     ],
     "unknowns": [
       "2026-09-30新裂隙与七处操作区域尚无用户审美/手感终审；限定浏览器证据先覆盖净化器原approach与圆角E、裂口E进备行，其余完整动线/动态/跨设备与业务回归只按本轮QA实际记录，不由旧渲染证据推定通过。I28继续挂起。",
@@ -1280,7 +1338,8 @@
       "历史截至2026-09-28的覆盖限制：肩灯512 cubemap随移动刷新，固定灯192阵列逐像素可见性，每姿态11胶囊。新GPU已编译运行，实帧覆盖坡脚/坡中、上层书架设备、净化器、炉旁混光、核心及外景极端，方块阴影消失；不宣称完整人体网格光追。",
       "历史截至2026-09-28的覆盖限制：正式根游戏WebGL2无fallback、主菜单继续重入与W短移通过，本机短样约120fps；不是性能基准或长时稳定性证明。外景atlas单份解码约80.7MB，未做完整GPU内存画像或fallback实机验证。",
       "历史截至2026-09-28的覆盖限制：同正式Renderer/素材/step/gait的可复现页不写存档，不等于正式键盘完整六站复走；本轮未重验业务交易、坐下UI、Rift全流程、全成长/供奉/随机世界、专门音频、无障碍和长期体验。I28及原未评审项保持。",
-      "联合样片独立DEV资源包不构成正式外景替换或用户美术通过；新的深度层次、角色炉边受光和标题连续性须在实际操作中审查。"
+      "联合样片独立DEV资源包不构成正式外景替换或用户美术通过；新的深度层次、角色炉边受光和标题连续性须在实际操作中审查。",
+      "2026-10-01用户只认可联合首页的坐姿与角度，仍认为绘制语言有AI生成感。六张重绘候选尚未选中；提示中的像素网格、色数和描绘方式是生成意图，不是已验证规格。选中后仍须修整对象身份并审核与实景的连续性；不代表生产替换或整体美术通过。"
     ]
   }
 ]

@@ -20,6 +20,8 @@ note: 2026-10-01首页与净化点单方向联合样片已接DEV，LIMITED-VERIF
 
 ## 当前工作 · 首页与净化点联合样片（2026-10-01）
 
+**同日人审反馈：坐姿与角度方向获认可，首页画质/画风要求继续修改。** 本轮锁定构图制作六张画法候选，供[统一比较页](../art/demos/opening-pixel-candidates/index.html)审查；选择前维持原DEV默认及正式资源。候选不继承原样片的美术认可，入场验证另行记录。
+
 **DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** 主 COH-F002 / COH-F005。[正式 spec](../specs/art-opening-haven-continuity.md)对应的[单方向可操作样片](../art/demos/opening-joint/index.html)已接入：独立1536×1024首页母版及弱光源动态、对应巨构外景与局部建筑层次、真实净化点及原入场流程。人物、核心身份及已有导航/交互保持；首页吸引力和两端视觉连续性待用户审查。
 
 首页由 image_gen 在本轮真实实景和人物/核心参考约束下独立创作；实景由可编辑几何导出独立 DEV 资产包，复用正式场景与渲染器。1035帧人物原样复用，生产资源未替换。坐姿首页到炉边站姿为剪辑，不是起身表演或一镜到底；现行[入场合同](../specs/ui-menu-entry-transition.md)的时序保持。限定实测覆盖真实位移、E坐下/起身、Tab报告、返回继续、覆盖取消、失焦/减少动态、真实截帧对照及正式存储隔离，范围详见[本轮QA](../qa/2026-10-01-opening-joint.md)。

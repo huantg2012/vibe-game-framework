@@ -4,6 +4,10 @@
 
 **当前状态：DEV-IMPLEMENTED / LIMITED-VERIFIED / HUMAN-REVIEW-PENDING。** [单方向可操作样片](../art/demos/opening-joint/index.html)已将独立首页母版与对应巨构外景接到真实净化点，可进入、移动、坐下、返回及继续，并以真实渲染帧直接对照。首页由 image_gen 创作，实景由可编辑几何与正式渲染器呈现；[来源](../art/demos/opening-joint/assets/title/source.json)和[本轮QA](../qa/2026-10-01-opening-joint.md)分别记录制作与验证。坐姿首页至站姿实景沿用原短过渡剪辑，没有起身动画。完整设计及验收仍统一维护在上述规格；生产默认首页未替换，视觉连续性待用户审查。
 
+## 同日画法复选
+
+用户认可联合样片的坐姿与角度，但指出首页生成感明显。保持这两个已认可条件与实景对象身份，制作六张描绘处理候选（A–D 较保守，E/F 放宽微轮廓约束）；[比较页](../art/demos/opening-pixel-candidates/index.html)保留原图、实景和统一局部放大，候选均可进入同一真实净化点。未选中前不替换默认，后续状态与验证归[联合样片QA](../qa/2026-10-01-opening-joint.md)。
+
 ## 已否决的静态路线
 
 2026-09-30的[静态母版](../art/demos/opening-master/index.html)为 **HUMAN-REJECTED**。[原技术检查](../qa/2026-09-30-opening-master.md)只保留当时导出与查看范围，不证明美术成立。旧“同源几何换镜头＋匹配剪辑”方案作废；不得以原世界坐标、相机角度或站立姿态限制新构图。

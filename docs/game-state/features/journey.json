@@ -61,13 +61,15 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。 2026-10-01联合单方向样片已独立DEV接入：完成首页与配套巨构实景、真实操作及无转场对照。限定验证，待人审；生产默认未替换。",
+    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。opening-joint联合DEV样片已有首页与实景的限定验证；用户认可坐姿/角度，绘制语言仍不满意。六张AI重绘首页已接比较与DEV试玩，待人选；原版和生产默认保留。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "/ → MainMenuScene；方向键、Enter/Space 或鼠标",
       "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。",
-      "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。"
+      "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。",
+      "DEV画法复选：docs/art/demos/opening-pixel-candidates/index.html；原版与六张AI重绘候选、统一局部放大及实景截帧对照，待用户选择。",
+      "DEV候选试玩：docs/art/demos/opening-joint/index.html?title=a（可选a至f）；均进入同一联合净化点，无参数或非法值保留原版，生产默认不变。"
     ],
     "sources": [
       {
@@ -118,7 +120,7 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "当前联合DEV实现入口与历史记录；旧静态路线否决、三版未获选，新样片等待人审。"
+        "note": "联合DEV实现、坐姿/角度局部认可及画法复选；旧静态路线否决、三版未获选，六张新候选待选择。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
@@ -246,6 +248,26 @@
       {
         "path": "tools/qa/check-opening-joint.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-pixel-candidates/index.html",
+        "role": "test",
+        "note": "首页画法比较DEV入口；原版、六候选和固定坐标对照，不是生产菜单。"
+      },
+      {
+        "path": "docs/art/demos/opening-pixel-candidates/entry.ts",
+        "role": "code",
+        "note": "同坐标局部/原生尺寸查看、实景截帧对照和各候选试玩链接；不写选中偏好。"
+      },
+      {
+        "path": "docs/art/demos/opening-pixel-candidates/style.css",
+        "role": "art",
+        "note": "候选比较页样式；不是生产UI样式替换。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/source.json",
+        "role": "doc",
+        "note": "六张内置image_gen重绘的参考、原始提示、来源和SHA；坐姿/角度认可范围及待选择状态。提示目标不等于实际达成。"
       }
     ],
     "dependsOn": [
@@ -259,12 +281,14 @@
       "COH-E102",
       "COH-E107",
       "COH-E108",
-      "COH-E109"
+      "COH-E109",
+      "COH-E110"
     ],
     "unknowns": [
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
       "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
-      "2026-10-01 opening-joint已完成单方向DEV实现和限定键盘/存储/生命周期检查。首页是独立生成母版，实景是确定性模型与真实Renderer；旧资源、导航和正式首页保持。美术吸引力/连续性待用户审查；非起身演出或一镜到底，长期性能/低端回退/完整搜撤交易未验。"
+      "2026-10-01用户只认可联合首页的坐姿与角度，仍认为绘制语言有AI生成感。六张重绘候选尚未选中；提示中的像素网格、色数和描绘方式是生成意图，不是已验证规格。选中后仍须修整对象身份并审核与实景的连续性；不代表生产替换或整体美术通过。",
+      "联合DEV的既有限定操作检查仍按COH-E109范围保留，不能直接作为六张新首页的全套回归；当前候选验证集中在联合样片QA。坐姿到站姿仍为剪辑；长期性能/低端回退/完整搜撤交易未验。"
     ]
   },
   {
@@ -449,13 +473,15 @@
     "id": "COH-F005",
     "title": "资源加载与场景过渡",
     "domain": "loop",
-    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。 2026-10-01联合单方向样片已独立DEV接入：完成首页与配套巨构实景、真实操作及无转场对照。限定验证，待人审；生产默认未替换。",
+    "summary": "Boot加载资源后转入标题；主菜单进入基地及基地进入Rift使用既有过场，DEV深链单独处理。opening-joint联合样片已有独立实景与限定验证；六张首页候选仅以DEV查询参数切换，仍进入同一场景并沿用原过渡。默认原版、生产入口与存储策略不变，候选与衔接体验待人审。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "/ → BootScene → MainMenuScene；净化点出发",
       "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。",
-      "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。"
+      "DEV：docs/art/demos/opening-joint/index.html；一个联合方向、独立完整实景资产、页内Map记录与真实场景操作。",
+      "DEV画法复选：docs/art/demos/opening-pixel-candidates/index.html；原版与六张AI重绘候选、统一局部放大及实景截帧对照，待用户选择。",
+      "DEV候选试玩：docs/art/demos/opening-joint/index.html?title=a（可选a至f）；均进入同一联合净化点，无参数或非法值保留原版，生产默认不变。"
     ],
     "sources": [
       {
@@ -490,7 +516,7 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "当前联合DEV实现入口与历史记录；旧静态路线否决、三版未获选，新样片等待人审。"
+        "note": "联合DEV实现、坐姿/角度局部认可及画法复选；旧静态路线否决、三版未获选，六张新候选待选择。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
@@ -618,6 +644,11 @@
       {
         "path": "tools/qa/check-opening-joint.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/source.json",
+        "role": "doc",
+        "note": "六张内置image_gen重绘的参考、原始提示、来源和SHA；坐姿/角度认可范围及待选择状态。提示目标不等于实际达成。"
       }
     ],
     "dependsOn": [
@@ -629,13 +660,15 @@
       "COH-E-HIST-TRANSITION",
       "COH-E107",
       "COH-E108",
-      "COH-E109"
+      "COH-E109",
+      "COH-E110"
     ],
     "unknowns": [
       "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
       "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。",
-      "2026-10-01 opening-joint已完成单方向DEV实现和限定键盘/存储/生命周期检查。首页是独立生成母版，实景是确定性模型与真实Renderer；旧资源、导航和正式首页保持。美术吸引力/连续性待用户审查；非起身演出或一镜到底，长期性能/低端回退/完整搜撤交易未验。"
+      "2026-10-01用户只认可联合首页的坐姿与角度，仍认为绘制语言有AI生成感。六张重绘候选尚未选中；提示中的像素网格、色数和描绘方式是生成意图，不是已验证规格。选中后仍须修整对象身份并审核与实景的连续性；不代表生产替换或整体美术通过。",
+      "联合DEV的既有限定操作检查仍按COH-E109范围保留，不能直接作为六张新首页的全套回归；当前候选验证集中在联合样片QA。坐姿到站姿仍为剪辑；长期性能/低端回退/完整搜撤交易未验。"
     ]
   },
   {

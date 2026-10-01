@@ -3937,5 +3937,38 @@
         "role": "art"
       }
     ]
+  },
+  {
+    "id": "COH-E110",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-01",
+    "revision": "7d27eed之后的首页画法候选工作树（2026-10-01）",
+    "scope": "静态核对六张AI重绘首页、source.json原始提示/来源和比较页接线：原版与a至f候选采用统一局部裁切，可查看原生尺寸及联合实景截帧；opening-joint仅在DEV接受白名单title参数，无参数/非法值回到原版。用户对联合样片只认可坐姿与角度，绘制语言仍不满意；本轮登记为待人选择。",
+    "limitations": "本条为来源与接线核查，不是本代理运行验证或人审通过。图片为AI重绘候选，不是精确网格/固定色数的已验收手工像素资产；提示意图不证明输出达成。旧联合样片运行证据不直接覆盖六候选全部操作；本轮实际验证由同一QA增量记录。原版与生产默认未替换，整体美术及两端连续性仍待用户复看。",
+    "sources": [
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc",
+        "note": "联合样片和本轮画法复选的统一验证记录；实际范围以该文档为准。"
+      },
+      {
+        "path": "docs/design-notes/opening-haven-reconstruction.md",
+        "role": "doc",
+        "note": "同日用户局部认可与画法复选范围。"
+      },
+      {
+        "path": "docs/art/demos/opening-pixel-candidates/entry.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/entry.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/assets/title/candidates/source.json",
+        "role": "doc"
+      }
+    ]
   }
 ]

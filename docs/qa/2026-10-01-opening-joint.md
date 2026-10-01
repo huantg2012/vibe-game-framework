@@ -35,3 +35,17 @@
 技术通过不等于连续性或美术通过。首页断面细节仍比实景丰富，最终差异是否可接受由用户对可操作样片审查。自然完整搜撤循环、全部交易、低端设备、Canvas 降级、长期性能、音频听感及普通玩家盲测未在本轮验收。I28 挂起与旧版本人审边界保持。
 
 已知旧包校验边界：生产 `check-assets.mjs`存在本轮之前的`rift-a.ts`来源指纹不匹配；本轮未重烘正式包或改写其指纹。DEV包使用当前作者源码独立完整校验，复用人物及导航的输入SHA另行锁定。
+
+## 同日：首页画法复选
+
+人审只认可坐姿与角度，要求改善首页的生成感。新增[六张候选比较页](../art/demos/opening-pixel-candidates/index.html)，不是六套构图；A–D 是保守处理，E/F 放宽微轮廓限制后加强粗像素或块面概括。全图均由内置 image_gen 重绘，未用缩图/噪点滤镜冒充新画法；[提示与来源](../art/demos/opening-joint/assets/title/candidates/source.json)完整保存。原 DEV 默认图及生产资源保持不变。
+
+本轮限定验证：
+
+- 六张原始 PNG 均为 1536×1024，来源 SHA 匹配：[资产核对](artifacts/opening-pixel-candidates/assets.json)。
+- Codex 内置浏览器实际用 0–6 切换原版与六候选，均显示对应图片：[切换记录](artifacts/opening-pixel-candidates/browser-switches.json)。人物局部放大、原图恢复、真实实景截帧切换已查看；所有局部使用一致的图像坐标，没有逐图移动裁切掩饰构图漂移。
+- 从 F 的“开始”链接进入真实 DEV 首页，再点击游戏“开始”，到达净化点并出现坐下提示；无控制台 warning/error。入场后的“直接对照”首页图源确认是 `candidates/f.png`，非原图。[F 标题比较页](artifacts/opening-pixel-candidates/f-title-page.png) · [F 入场后的实景](artifacts/opening-pixel-candidates/f-entered-haven.png)。本轮没有重验全部交易、移动或14项原联合样片检查。
+- 候选参数仅允许 DEV `a`–`f`，缺省/非法值回退原母版；不写用户选择至正式存储。原图专用光效遮罩在候选模式关闭，候选为明确标注的静态画法审查；真实游戏及过渡复用既有实现。
+- 两个入口的定向 TypeScript 与差异检查通过；本次未改生产代码和实景资产。
+
+实图评审结论：优先对比 C/E/F。C 保留原貌最稳；F 的环境大面与安静暗部最能减弱材质滤镜感；E 粗像素区别明显。A/B/D 变化有限，不包装成三种全新画风。E 并非严格统一的低分辨率网格，E/F 核心有晶体/胞块化，F 新增少量管口；选中方向后仍需恢复核心灰绿能量体的身份并修整误生结构。所有候选为 **DEV / HUMAN-SELECTION-PENDING**，不能据类型检查或生成提示声称美术通过。

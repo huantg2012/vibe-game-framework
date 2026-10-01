@@ -18,7 +18,13 @@ declare global { interface Window { __openingJointStorageReady?: boolean; } }
 type Phase = 'loading' | 'title' | 'entering' | 'playing' | 'returning' | 'error';
 type MenuMode = 'root' | 'overwrite' | 'abandon';
 interface MenuAction { label: string; run: () => void; }
-const TITLE_URL = '/docs/art/demos/opening-joint/assets/title/master.png';
+// Review candidates are opt-in DEV art only. An unrecognized query uses the
+// original master, and no selection writes a user preference or production data.
+const requestedTitle = new URLSearchParams(location.search).get('title') ?? '';
+const TITLE_CANDIDATE = import.meta.env.DEV && /^[a-f]$/.test(requestedTitle) ? requestedTitle : null;
+const TITLE_URL = TITLE_CANDIDATE
+  ? `/docs/art/demos/opening-joint/assets/title/candidates/${TITLE_CANDIDATE}.png`
+  : '/docs/art/demos/opening-joint/assets/title/master.png';
 const ASSETS = { root: '/docs/art/demos/opening-joint/assets/haven/', cachePrefix: 'opening-joint:' };
 const status = document.querySelector<HTMLSpanElement>('#joint-status')!;
 const returnButton = document.querySelector<HTMLButtonElement>('#return-title')!;
@@ -44,12 +50,14 @@ comparison.innerHTML = '<img class="joint-compare-image" alt="首页与真实游
 
 function refreshControls(message?: string): void {
   document.body.dataset.openingPhase = phase;
+  document.body.dataset.titleVariant = TITLE_CANDIDATE ?? 'original';
   returnButton.disabled = phase !== 'playing' || comparing || focusPaused || snapshotPending;
   compareButton.disabled = focusPaused || snapshotPending || (!comparing && !((phase === 'playing' && !!game?.scene.isActive('PurificationScene')) || (phase === 'title' && !!capturedHaven)));
   compareButton.textContent = comparing ? '结束对照' : '直接对照';
   status.textContent = message ?? (comparing ? '首页 / 本次真实渲染截帧'
     : phase === 'playing' ? (game.scene.isActive('RiftScene') ? '裂隙' : '净化点')
-    : phase === 'entering' ? '进入中' : phase === 'loading' ? '载入中' : '同一处庇护所');
+    : phase === 'entering' ? '进入中' : phase === 'loading' ? '载入中'
+    : TITLE_CANDIDATE ? `候选 ${TITLE_CANDIDATE.toUpperCase()} · 静态画法审查` : '同一处庇护所');
 }
 
 function silence(): void {
@@ -119,11 +127,19 @@ class JointTitleScene extends Phaser.Scene {
       try {
         await art.decode();
         if (signal.aborted || generation !== this.generation) return;
-        if (art.naturalWidth !== 1536 || art.naturalHeight !== 1024) throw new Error('Expected 1536 × 1024 title master.');
+        if (TITLE_CANDIDATE) {
+          if (art.naturalWidth < 960 || Math.abs(art.naturalWidth / art.naturalHeight - 1.5) > .002) {
+            throw new Error('Expected a 3:2 title candidate at least 960 pixels wide.');
+          }
+        } else if (art.naturalWidth !== 1536 || art.naturalHeight !== 1024) {
+          throw new Error('Expected 1536 × 1024 title master.');
+        }
         art.classList.add('is-ready'); note.textContent = '';
         this.motion?.destroy();
-        this.motion = new JointTitleMotion(art);
-        art.after(this.motion.canvas);
+        // Original masks are painted for the original image's exact emitters;
+        // applying them to alternate art would invent drifting light sources.
+        this.motion = TITLE_CANDIDATE ? null : new JointTitleMotion(art);
+        if (this.motion) art.after(this.motion.canvas);
         this.ready = true; this.refreshActions(); refreshControls();
       } catch {
         if (signal.aborted || generation !== this.generation) return;

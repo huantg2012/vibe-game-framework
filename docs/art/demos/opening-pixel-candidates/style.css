@@ -1,0 +1,30 @@
+html, body { min-height: 100%; height: auto; overflow: auto; }
+body { display: block; background: #090b0b; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: #9aab9e; text-decoration: none; }
+a:hover { color: #d3d7c9; }
+a:focus-visible { outline: 1px solid #91998a; outline-offset: 5px; }
+.review-shell { width: min(960px, calc(100vw - 32px)); margin: 20px auto; }
+.review-heading { display: flex; align-items: center; justify-content: space-between; font-size: 12px; line-height: 24px; letter-spacing: 1px; margin-bottom: 13px; }
+.review-heading a { font-size: 11px; }
+.muted { color: #626e66; }
+.candidate-tabs { display: flex; gap: 24px; border-bottom: 1px solid #28302b; overflow-x: auto; }
+.candidate-tabs button { color: #818d83; background: none; border: 0; border-bottom: 1px solid transparent; margin-bottom: -1px; padding: 10px 0; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.candidate-tabs button[aria-pressed="true"] { color: #d1d5c5; border-bottom-color: #a0ac94; }
+.view-controls, .view-controls nav, .view-actions { display: flex; align-items: center; gap: 15px; }
+.view-controls { justify-content: space-between; min-height: 43px; }
+.view-controls button { background: none; border: 0; color: #717f74; padding: 5px 0; font-size: 10px; cursor: pointer; white-space: nowrap; }
+.view-controls button[aria-pressed="true"], .view-controls button:hover { color: #d1d5c5; }
+.view-controls button:disabled { color: #39423c; cursor: default; }
+.art-frame { position: relative; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; background: #080b0c; }
+.art-stage { position: absolute; width: 960px; height: 640px; transform-origin: 0 0; overflow: hidden; }
+#art { display: block; position: absolute; left: 0; top: 0; width: 960px; height: 640px; image-rendering: pixelated; transform-origin: 0 0; }
+#art[hidden], #title-copy[hidden], #frame-note[hidden], #image-status[hidden] { display: none; }
+.art-frame.native { overflow: auto; }
+.art-frame.native .art-stage { position: relative; overflow: visible; }
+.joint-action { text-decoration: none; }
+.image-status { position: absolute; left: 24px; right: 24px; top: 45%; text-align: center; color: #9aab9e; font-size: 12px; }
+.frame-note { position: absolute; bottom: 15px; right: 18px; padding: 5px 8px; color: #a2ada2; background: #09100cd9; font-size: 10px; pointer-events: none; }
+.review-footer { display: flex; justify-content: space-between; align-items: flex-start; gap: 28px; padding-top: 15px; }
+.review-footer p { margin: 0 0 7px; line-height: 18px; font-size: 11px; }
+.play-link { flex-shrink: 0; font-size: 11px; line-height: 20px; padding-bottom: 2px; border-bottom: 1px solid #566a58; }
