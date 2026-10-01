@@ -4007,5 +4007,34 @@
         "role": "test"
       }
     ]
+  },
+  {
+    "id": "COH-E112",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-01",
+    "revision": "930cc4fe70ba8cc437772c2e9b70624f040a46ae之后的F动效强度修订工作树（2026-10-01）",
+    "scope": "用户认可F动效选点但反馈动态太弱。静态核对同位置增强：核心采样胀缩/扰动及周期调整，源光与受光明暗振幅同步提高，炉焰采用明峰暗谷，烟灰可见尺度增加，远景灰粒受暗部空气遮罩裁切。默认F、构图、静图、Scene时钟、减动及销毁合同保持；本轮证据另存opening-title-motion-strong并链接统一QA。",
+    "limitations": "仅源码与用户反馈范围登记，不由参数增大推定动态观感通过。旧弱版证据保留，自动/浏览器执行及照度均值对照以本轮QA实际结果为准；整体动画幅度、节奏及两端连续性仍待人审。未修改正式生产首页或实景资产。",
+    "sources": [
+      {
+        "path": "docs/specs/art-opening-haven-continuity.md",
+        "role": "spec",
+        "note": "同日动效强度反馈及参数范围。"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-joint.md",
+        "role": "doc",
+        "note": "弱版历史与增强版实际执行结果分别记录。"
+      },
+      {
+        "path": "docs/art/demos/opening-joint/title-motion.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/compare-opening-title-motion.mjs",
+        "role": "test"
+      }
+    ]
   }
 ]

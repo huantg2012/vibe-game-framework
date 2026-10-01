@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: director agent
 created-when: 2026-08-20
 last-modified: 2026-10-01
-note: 2026-10-01首页F画法HUMAN-SELECTED；联合DEV默认F并加入专属适度动效，动画观感及两端连续性待审。生产首页/实景、I31交付及I28挂起保持。
+note: 2026-10-01首页F画法与动效选点获认可；联合DEV原位增强动态强度，新幅度/节奏及两端连续性待审。生产首页/实景、I31交付及I28挂起保持。
 ---
 
 # 按需游戏迭代（DEC-072）
@@ -20,9 +20,9 @@ note: 2026-10-01首页F画法HUMAN-SELECTED；联合DEV默认F并加入专属适
 
 ## 当前工作 · 首页与净化点联合样片（2026-10-01）
 
-**F 画法 HUMAN-SELECTED，新增动效待人审。** 用户已从六张重绘中选择 F「手绘块面」，并要求适度生动。[联合样片](../art/demos/opening-joint/index.html)的 DEV 默认改为 F，专属透明Canvas加入炉内火焰及同步暖色受光、核心密度流动/低幅胀缩及同步灰绿受光、烟灰与深层空气。人物、建筑、镜头和静图内容保持；`?title=0`原版、`?title=a`至`e`为静态历史对照，[比较页](../art/demos/opening-pixel-candidates/index.html)保留统一裁切。
+**F 画法及动效选点获认可，增强后的强度待人审。** 用户已选择 F「手绘块面」，并认可动效选点，但反馈上一版动态太弱；本轮原位增强核心内质变化、源光与受光起伏、炉焰明暗和烟灰可见性，远景灰粒加入暗部遮罩。[联合样片](../art/demos/opening-joint/index.html)的 DEV 默认 F 和各处动效位置保持。人物、建筑、镜头和静图内容保持；`?title=0`原版、`?title=a`至`e`为静态历史对照，[比较页](../art/demos/opening-pixel-candidates/index.html)保留统一裁切。
 
-**DEV-IMPLEMENTED / MOTION-REVIEW-PENDING。** 主 COH-F002 / COH-F005，关联 COH-F042。动效由Scene delta驱动、最多30Hz重绘，失焦随Scene冻结，减少动态时清空overlay只留F静图，关闭销毁、返回重建。实现及两端视觉合同归[唯一spec](../specs/art-opening-haven-continuity.md)；本轮执行结果与录屏增量归[联合QA](../qa/2026-10-01-opening-joint.md)，旧14项检查不自动继承为新动效验收。
+**DEV-IMPLEMENTED / MOTION-REVIEW-PENDING。** 主 COH-F002 / COH-F005，关联 COH-F042。动效由Scene delta驱动、最多30Hz重绘，失焦随Scene冻结，减少动态时清空overlay只留F静图，关闭销毁、返回重建。实现及两端视觉合同归[唯一spec](../specs/art-opening-haven-continuity.md)；弱版证据保留，增强版另存`opening-title-motion-strong`；本轮执行结果与录屏增量归[联合QA](../qa/2026-10-01-opening-joint.md)，旧14项检查不自动继承为新动效验收。
 
 对应实景仍为原联合DEV巨构资产与正式渲染器，1035帧人物、导航交互及正式生产首页/资源均未改变。首页坐姿到实景炉边站姿仍是原短剪辑，无起身或一镜到底。F绘制方向获选不代表本轮动画观感、全部视觉连续性、低端表现或完整搜撤交易通过。
 

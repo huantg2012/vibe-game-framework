@@ -1,0 +1,288 @@
+{
+  "method": "Decode both actual 960x640 recordings with the same browser. Sample 39 frames from 0.2s to 7.8s and measure absolute RGB change between each 200ms pair. Active pixels require a maximum channel delta of at least 3/255.",
+  "sources": {
+    "baseline": "docs/qa/artifacts/opening-title-motion/f-title-motion.webm",
+    "current": "docs/qa/artifacts/opening-title-motion-strong/f-title-motion.webm"
+  },
+  "artworkSha256": "3d7ab12956aab13cab7331b66572331c52ddb99b55565ce10005fcb55bc04564",
+  "baseline": {
+    "sampledFrames": 39,
+    "framePairs": 38,
+    "stepSeconds": 0.2,
+    "firstSecond": 0.2,
+    "lastSecond": 7.8,
+    "regions": {
+      "coreInterior": {
+        "bounds": {
+          "x": 794,
+          "y": 237,
+          "w": 47,
+          "h": 67
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 3.373563314446803,
+        "meanChangedPixelsPer200msAtDelta3": 1588.7894736842106,
+        "meanChangedAreaFractionAtDelta3": 0.5045377814176597,
+        "meanChannelDeltaOnThresholdPixels": 5.861170923465951,
+        "peakChannelDelta": 184
+      },
+      "furnaceGrille": {
+        "bounds": {
+          "x": 662,
+          "y": 354,
+          "w": 42,
+          "h": 51
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 2.1766794437073074,
+        "meanChangedPixelsPer200msAtDelta3": 988.2894736842105,
+        "meanChangedAreaFractionAtDelta3": 0.4613863089095287,
+        "meanChannelDeltaOnThresholdPixels": 3.865894465894466,
+        "peakChannelDelta": 57
+      },
+      "chimneyAndSmoke": {
+        "bounds": {
+          "x": 660,
+          "y": 268,
+          "w": 49,
+          "h": 62
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 0.762724784311008,
+        "meanChangedPixelsPer200msAtDelta3": 457.2368421052632,
+        "meanChangedAreaFractionAtDelta3": 0.1505058729773743,
+        "meanChannelDeltaOnThresholdPixels": 2.5081822541966425,
+        "peakChannelDelta": 72
+      },
+      "distantAir": {
+        "bounds": {
+          "x": 405,
+          "y": 55,
+          "w": 235,
+          "h": 585
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 0.3653547215921236,
+        "meanChangedPixelsPer200msAtDelta3": 6555,
+        "meanChangedAreaFractionAtDelta3": 0.04768139661756683,
+        "meanChannelDeltaOnThresholdPixels": 2.347369759257029,
+        "peakChannelDelta": 49
+      },
+      "menuSafetyControl": {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "w": 360,
+          "h": 640
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 0.16681918555068226,
+        "meanChangedPixelsPer200msAtDelta3": 2166.5789473684213,
+        "meanChangedAreaFractionAtDelta3": 0.009403554459064328,
+        "meanChannelDeltaOnThresholdPixels": 2.188679703631726,
+        "peakChannelDelta": 18
+      }
+    }
+  },
+  "current": {
+    "sampledFrames": 39,
+    "framePairs": 38,
+    "stepSeconds": 0.2,
+    "firstSecond": 0.2,
+    "lastSecond": 7.8,
+    "regions": {
+      "coreInterior": {
+        "bounds": {
+          "x": 794,
+          "y": 237,
+          "w": 47,
+          "h": 67
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 6.952675034681018,
+        "meanChangedPixelsPer200msAtDelta3": 2094.2368421052633,
+        "meanChangedAreaFractionAtDelta3": 0.6650482191506075,
+        "meanChannelDeltaOnThresholdPixels": 10.006768784843954,
+        "peakChannelDelta": 201
+      },
+      "furnaceGrille": {
+        "bounds": {
+          "x": 662,
+          "y": 354,
+          "w": 42,
+          "h": 51
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 5.785562763116943,
+        "meanChangedPixelsPer200msAtDelta3": 1256.6315789473683,
+        "meanChangedAreaFractionAtDelta3": 0.5866627352695464,
+        "meanChannelDeltaOnThresholdPixels": 9.296071368738483,
+        "peakChannelDelta": 110
+      },
+      "chimneyAndSmoke": {
+        "bounds": {
+          "x": 660,
+          "y": 268,
+          "w": 49,
+          "h": 62
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 1.3725153898571314,
+        "meanChangedPixelsPer200msAtDelta3": 716.2368421052631,
+        "meanChangedAreaFractionAtDelta3": 0.23575932919857248,
+        "meanChannelDeltaOnThresholdPixels": 4.003821141198515,
+        "peakChannelDelta": 101
+      },
+      "distantAir": {
+        "bounds": {
+          "x": 405,
+          "y": 55,
+          "w": 235,
+          "h": 585
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 0.4099999680962727,
+        "meanChangedPixelsPer200msAtDelta3": 7235.421052631579,
+        "meanChangedAreaFractionAtDelta3": 0.05263081325791292,
+        "meanChannelDeltaOnThresholdPixels": 2.489151809203747,
+        "peakChannelDelta": 86
+      },
+      "menuSafetyControl": {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "w": 360,
+          "h": 640
+        },
+        "meanAbsoluteChannelDeltaPer200ms": 0.16249051991959065,
+        "meanChangedPixelsPer200msAtDelta3": 1922.0263157894738,
+        "meanChangedAreaFractionAtDelta3": 0.008342128106725147,
+        "meanChannelDeltaOnThresholdPixels": 2.166504648328929,
+        "peakChannelDelta": 20
+      }
+    }
+  },
+  "onePhaseVersusStill": {
+    "baseline": {
+      "scene": {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "w": 960,
+          "h": 640
+        },
+        "changedPixels": 33122,
+        "totalPixels": 614400,
+        "meanChannelDeltaOnChangedPixels": 3.32536280015297,
+        "maxChannelDelta": 166
+      },
+      "menuSafety": {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "w": 360,
+          "h": 640
+        },
+        "changedPixels": 0,
+        "totalPixels": 230400,
+        "meanChannelDeltaOnChangedPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "coreInterior": {
+        "bounds": {
+          "x": 794,
+          "y": 237,
+          "w": 47,
+          "h": 67
+        },
+        "changedPixels": 2175,
+        "totalPixels": 3149,
+        "meanChannelDeltaOnChangedPixels": 18.646130268199233,
+        "maxChannelDelta": 166
+      },
+      "furnaceGrille": {
+        "bounds": {
+          "x": 662,
+          "y": 354,
+          "w": 42,
+          "h": 51
+        },
+        "changedPixels": 1009,
+        "totalPixels": 2142,
+        "meanChannelDeltaOnChangedPixels": 5.637594978526594,
+        "maxChannelDelta": 36
+      },
+      "distantAir": {
+        "bounds": {
+          "x": 405,
+          "y": 55,
+          "w": 235,
+          "h": 585
+        },
+        "changedPixels": 16161,
+        "totalPixels": 137475,
+        "meanChannelDeltaOnChangedPixels": 0.9686281789493224,
+        "maxChannelDelta": 46
+      }
+    },
+    "current": {
+      "scene": {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "w": 960,
+          "h": 640
+        },
+        "changedPixels": 39868,
+        "totalPixels": 614400,
+        "meanChannelDeltaOnChangedPixels": 3.9347680679575934,
+        "maxChannelDelta": 205
+      },
+      "menuSafety": {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "w": 360,
+          "h": 640
+        },
+        "changedPixels": 0,
+        "totalPixels": 230400,
+        "meanChannelDeltaOnChangedPixels": 0,
+        "maxChannelDelta": 0
+      },
+      "coreInterior": {
+        "bounds": {
+          "x": 794,
+          "y": 237,
+          "w": 47,
+          "h": 67
+        },
+        "changedPixels": 2172,
+        "totalPixels": 3149,
+        "meanChannelDeltaOnChangedPixels": 26.73526703499079,
+        "maxChannelDelta": 205
+      },
+      "furnaceGrille": {
+        "bounds": {
+          "x": 662,
+          "y": 354,
+          "w": 42,
+          "h": 51
+        },
+        "changedPixels": 1010,
+        "totalPixels": 2142,
+        "meanChannelDeltaOnChangedPixels": 8.886798679867987,
+        "maxChannelDelta": 95
+      },
+      "distantAir": {
+        "bounds": {
+          "x": 405,
+          "y": 55,
+          "w": 235,
+          "h": 585
+        },
+        "changedPixels": 23463,
+        "totalPixels": 137475,
+        "meanChannelDeltaOnChangedPixels": 1.3322536191734504,
+        "maxChannelDelta": 57
+      }
+    }
+  },
+  "limitations": [
+    "This measures temporal pixel change, not aesthetic quality or a perceived-intensity multiplier.",
+    "Only one 8-second clip per version; starting animation phases are not synchronized.",
+    "Lossy video compression contributes some temporal variation; the static menu region is provided as a control.",
+    "The screenshot comparison is one phase versus the static illustration and cannot establish whole-cycle brightness."
+  ]
+}

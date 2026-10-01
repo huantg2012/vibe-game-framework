@@ -1,0 +1,173 @@
+{
+  "ok": true,
+  "started": "2026-10-01T14:06:53.972Z",
+  "revision": "930cc4fe70ba8cc437772c2e9b70624f040a46ae",
+  "url": "http://127.0.0.1:3027/docs/art/demos/opening-joint/index.html",
+  "sourceFingerprints": {
+    "docs/art/demos/opening-joint/entry.ts": "199f493c9f883d57a97f622e543b7f5acd20c57e77642313406d7a860bf0c7e7",
+    "docs/art/demos/opening-joint/title-motion.ts": "4794bb09c26bf21ea10cf4dfac16d0f238fefea7e6322cae7f316cf72380a91a",
+    "docs/art/demos/opening-joint/style.css": "8f3f07b164562ae313e2d75ddbce7067762885b2eb07134a38f429d6a0bd2f19",
+    "docs/art/demos/opening-joint/assets/title/candidates/f.png": "3d7ab12956aab13cab7331b66572331c52ddb99b55565ce10005fcb55bc04564"
+  },
+  "checks": [
+    "default entry loads F and exactly one motion canvas",
+    "scene time advances and real canvas RGBA pixels change",
+    "8-second WebM captures actual artwork plus live motion",
+    "dispatched browser blur freezes clock and pixels",
+    "keyboard resume restores actual animation",
+    "reduced-motion clears the overlay to the original F illustration and freezes its clock",
+    "restoring motion preference resumes pixels and clock",
+    "real haven entry removes the original motion instance and stops its clock",
+    "return creates exactly one new F motion instance and playback resumes",
+    "initial reduced-motion load has a zero-alpha overlay and finite zero clock; disabling it restores motion",
+    "original-origin storage sentinel remains untouched",
+    "every sampled frame leaves the x < 360 menu safety region fully transparent"
+  ],
+  "samples": [
+    {
+      "label": "initial",
+      "time": 0.483,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 52109,
+      "menuSafetyPixels": 0,
+      "sha256": "227eca68d92f6a61d1a533ad89196e1709377d74783f8255e70fa0dea5328f89"
+    },
+    {
+      "label": "after-650ms",
+      "time": 1.148,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 51448,
+      "menuSafetyPixels": 0,
+      "sha256": "a604246d979d724b013332852846a2589fa225d08bc55096d7e40c8f9041d3e0"
+    },
+    {
+      "label": "after-recording",
+      "time": 9.714,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 48890,
+      "menuSafetyPixels": 0,
+      "sha256": "1b6c123e4b8a71b258160d6cbfb1b6627d0143b276e5576220e7fb086ed892c8"
+    },
+    {
+      "label": "blurred",
+      "time": 9.747,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 48847,
+      "menuSafetyPixels": 0,
+      "sha256": "4904d3c2588ce4d9bdee0b1c6d8f9283190ebc41a7a851f311c1c3e4c19c7454"
+    },
+    {
+      "label": "blurred-after-450ms",
+      "time": 9.747,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 48847,
+      "menuSafetyPixels": 0,
+      "sha256": "4904d3c2588ce4d9bdee0b1c6d8f9283190ebc41a7a851f311c1c3e4c19c7454"
+    },
+    {
+      "label": "focus-resumed",
+      "time": 10.346,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 49046,
+      "menuSafetyPixels": 0,
+      "sha256": "ed1b0253ca3cb8c9429f8e0a7c17d7444c5817df8eb2f6822a7e5403b813ed8a"
+    },
+    {
+      "label": "reduced-motion",
+      "time": 10.346,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "reduced-motion-after-450ms",
+      "time": 10.346,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "motion-preference-restored",
+      "time": 10.945,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 48057,
+      "menuSafetyPixels": 0,
+      "sha256": "213025bb680659c773fdcc9c2d551e1317786684dfa6737055f37a6a3066ecbc"
+    },
+    {
+      "label": "returned-title",
+      "time": 0.05,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 52569,
+      "menuSafetyPixels": 0,
+      "sha256": "2979ddee2e45268c434566fff691561e7ddfa8001090b9326bd070341bb2c769"
+    },
+    {
+      "label": "returned-title-after-600ms",
+      "time": 0.649,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 51992,
+      "menuSafetyPixels": 0,
+      "sha256": "e4c68da6bbd9ff2862a13245fe089fe85f9356e35b7cec45c072b9ef30b87a6a"
+    },
+    {
+      "label": "initial-reduced-motion",
+      "time": 0,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "initial-reduced-motion-after-350ms",
+      "time": 0,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 0,
+      "menuSafetyPixels": 0,
+      "sha256": "54f980b5b3be8ce80cb6490c527e38d681deade50f239f2cb7d23cf9d0108c37"
+    },
+    {
+      "label": "initially-reduced-then-resumed",
+      "time": 0.582,
+      "width": 960,
+      "height": 640,
+      "visiblePixels": 51986,
+      "menuSafetyPixels": 0,
+      "sha256": "8eb836f0bde340939215320531ccb41b951e4f72b7351e1c0726b1b4b399f28f"
+    }
+  ],
+  "recording": {
+    "supported": true,
+    "mimeType": "video/webm;codecs=vp9",
+    "durationMs": 8018.600000143051,
+    "compositeSamples": 482,
+    "width": 960,
+    "height": 640,
+    "requestedCaptureFps": 30,
+    "bytes": 2759376
+  },
+  "errors": [],
+  "failedRequests": [],
+  "compositeFrameDelta": "frame-delta.json",
+  "method": "One fresh headless Chromium context; production-origin sentinel in a separate blank page. F loaded through default DEV entry; native Enter and Return button own scene transitions. Read-only motion pixel and DOM probes.",
+  "limitations": [
+    "Finite local lifecycle check, not human aesthetic acceptance or sustained performance certification.",
+    "Browser blur is a dispatched event. The optional 8-second WebM composites the actual image and actual motion canvas, excluding DOM text and audio.",
+    "Navigation, inventory transactions and Rift recovery are outside this motion-only check."
+  ]
+}

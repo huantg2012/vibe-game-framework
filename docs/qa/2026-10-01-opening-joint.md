@@ -63,3 +63,13 @@
 主线程亦在 Codex 内置浏览器查看 F 动态标题、确认位置和普通 source-over 合成；专项首末帧未见整体构图漂移或错位光斑。证据：[8秒动效](artifacts/opening-title-motion/f-title-motion.webm) · [首页](artifacts/opening-title-motion/f-title-start.png) · [初始减少动态](artifacts/opening-title-motion/f-title-initial-reduced.png) · [实际入场](artifacts/opening-title-motion/entered-haven.png)。视频直接合成实际F图片与实际动效canvas，960×640、请求30fps，不含DOM文字/声音；合成采样次数不是编码帧率。动效美感和可感知程度仍由用户审查，不把像素变化当成审美通过。
 
 定向 TypeScript、脚本语法与差异检查通过。本轮没有重测全交易、导航、Rift恢复或14项原联合样片全套；未宣称长期性能、低端设备、系统真实窗口失焦和跨浏览器通过。F 原图中晶体感及误生管口仍保留为静态图修整项，此轮没有重新生图。
+
+## 同日：动效强度复修
+
+用户认可动效选点，认为上一版过弱。本轮保持 F 图片、构图、人物与设备轮廓，提高原位置的可见运动：核心内部采样胀缩系数为8.5%、XY扰动为3.0/3.4逻辑像素；炉焰用可辨的亮峰和暗谷替换原来的微弱黄色叠加；两种光源的附近受光同步增强明暗振幅。烟柱上升、扩散及灰烬变得更清楚；远景灰粒增加暗部空气遮罩约束，避免强化后覆盖建筑。没有整体推拉、整图曝光呼吸或静态母版改绘。
+
+同一[专项脚本](../../tools/qa/check-opening-title-motion.mjs)最终12项通过，[新结果](artifacts/opening-title-motion-strong/result.json)锁定实际源码SHA；减少动态仍回到零alpha静图，菜单区所有取样及合成截图均零变化，进入/返回、实例回收和存储隔离通过，页面错误及失败请求均为0。定向TypeScript通过。主线程在内置浏览器正常首页尺寸查看核心、炉焰、烟的运动与原位对齐。
+
+证据：[增强版8秒实录](artifacts/opening-title-motion-strong/f-title-motion.webm) · [增强版首页](artifacts/opening-title-motion-strong/f-title-start.png) · [旧新版视频实帧对照](artifacts/opening-title-motion-strong/comparison-to-previous.json)。旧弱版证据保持原样。[比较脚本](../../tools/qa/compare-opening-title-motion.mjs)对两段960×640视频各取39帧，每200ms的区域平均RGB绝对变化量：核心3.37→6.95，炉栅2.18→5.79，烟区0.76→1.37，远空气0.37→0.41；静态菜单编码噪声对照0.167→0.162。该数字只证明这两段8秒录制中的时间变化增强，不代表感知强度倍率、整周期平均亮度或美术验收；两段起始相位未同步且有视频压缩误差。
+
+本轮仅为DEV联合样片强度修订，正式生产首页和资源未替换；F绘制方向继续为HUMAN-SELECTED，增强动效观感仍待用户审查。其余限定验证与未验收范围沿用上一节。

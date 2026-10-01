@@ -30,6 +30,7 @@ export class JointTitleMotion {
   private readonly flames = surface();
   private readonly mist = surface();
   private readonly mistMask = surface();
+  private readonly airVisibility = new Uint8ClampedArray(W * H);
   private readonly energy = document.createElement('canvas');
   private readonly energyPixels: ImageData;
   private readonly pixels: Uint8ClampedArray;
@@ -43,7 +44,7 @@ export class JointTitleMotion {
   constructor(image: HTMLImageElement) {
     this.canvas.className = 'joint-title-motion';
     this.canvas.setAttribute('aria-hidden', 'true');
-    this.canvas.dataset.motionProfile = 'selected-f';
+    this.canvas.dataset.motionProfile = 'selected-f-readable-motion';
     this.canvas.dataset.motionTime = '0.000';
     this.canvas.style.pointerEvents = 'none';
     this.context = this.canvas.getContext('2d')!;
@@ -108,6 +109,7 @@ export class JointTitleMotion {
         const edge = clamp((x - 405) / 25) * clamp((640 - y) / 25);
         air.data[i] = 255; air.data[i + 1] = 255; air.data[i + 2] = 255;
         air.data[i + 3] = Math.round(255 * clamp((35 - luminosity) / 22) * edge);
+        this.airVisibility[y * W + x] = air.data[i + 3]!;
       }
     }
     ctx.putImageData(data, 0, 0); this.mistMask.getContext('2d')!.putImageData(air, 0, 0);
@@ -138,7 +140,7 @@ export class JointTitleMotion {
   private drawEnergy(t: number, breath: number): void {
     const { x: left, y: top, w, h } = this.energyRect;
     const out = this.energyPixels.data;
-    const scale = 1 + .038 * breath;
+    const scale = 1 + .085 * breath;
     for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
       const dst = (y * w + x) * 4;
       const wx = left + x, wy = top + y;
@@ -148,13 +150,13 @@ export class JointTitleMotion {
       const edge = clamp((1 - oval) * 4);
       if (!edge || sg < 49 || sg < sr * 1.13 || sg < sb * 1.025) { out[dst + 3] = 0; continue; }
       // Advect density through a bounded volume, never orbit the frame.
-      const flow = Math.sin(x * .18 + y * .075 - t * .72) + .50 * Math.sin(y * .20 + t * .97 - x * .09);
-      const sx = Math.round(819 + (wx - 819) / scale + Math.sin(y * .12 + t * .8) * 1.3);
-      const sy = Math.round(270 + (wy - 270) / scale + Math.sin(x * .15 - t * .58) * 1.5);
+      const flow = Math.sin(x * .18 + y * .075 - t * 1.05) + .50 * Math.sin(y * .20 + t * 1.37 - x * .09);
+      const sx = Math.round(819 + (wx - 819) / scale + Math.sin(y * .12 + t * 1.0) * 3.0);
+      const sy = Math.round(270 + (wy - 270) / scale + Math.sin(x * .15 - t * .79) * 3.4);
       const src = (sy * W + sx) * 4;
-      const gain = 1.03 + .19 * flow + .07 * breath;
+      const gain = .98 + .31 * flow + .13 * breath;
       for (let c = 0; c < 3; c++) out[dst + c] = Math.min(230, this.pixels[src + c]! * gain);
-      out[dst + 3] = Math.round(edge * 215);
+      out[dst + 3] = Math.round(edge * 238);
     }
     this.energy.getContext('2d')!.putImageData(this.energyPixels, 0, 0);
     this.context.drawImage(this.energy, left, top);
@@ -164,8 +166,10 @@ export class JointTitleMotion {
     const ctx = this.flames.getContext('2d')!;
     ctx.clearRect(0, 0, W, H); ctx.globalCompositeOperation = 'source-over';
     for (let y = 354; y < 405; y += 2) for (let x = 662; x < 704; x += 2) {
-      const tongue = wave(y * .25 + t * 5 + Math.sin(x * .55 - t * 1.8) * 2);
-      ctx.fillStyle = `rgba(255,192,91,${(.08 + tongue * .33) * (.85 + flicker)})`;
+      const tongue = wave(y * .25 + t * 6.2 + Math.sin(x * .55 - t * 2.0) * 2.8);
+      // Bright crests and darker troughs both replace the baked flame pixels;
+      // merely adding faint yellow could not visibly animate an already-lit fire.
+      ctx.fillStyle = `rgba(${Math.round(150 + tongue * 105)},${Math.round(70 + tongue * 140)},${Math.round(15 + tongue * 90)},${.76 + flicker * .25})`;
       ctx.fillRect(x, y, 2, 2);
     }
     ctx.globalCompositeOperation = 'destination-in'; ctx.drawImage(this.grille, 0, 0);
@@ -176,46 +180,47 @@ export class JointTitleMotion {
     const ctx = this.mist.getContext('2d')!;
     ctx.clearRect(0, 0, W, H); ctx.globalCompositeOperation = 'source-over';
     for (let y = 55; y < H; y += 6) for (let x = 405; x < 640; x += 6) {
-      const field = wave(x * .023 + y * .018 - t * .085 + Math.sin(y * .031 + t * .11));
-      const layer = wave(x * .012 - y * .027 + t * .063);
-      ctx.fillStyle = `rgba(57,66,62,${field * layer * .065})`; ctx.fillRect(x, y, 6, 6);
+      const field = wave(x * .023 + y * .018 - t * .21 + Math.sin(y * .031 + t * .19));
+      const layer = wave(x * .012 - y * .027 + t * .13);
+      ctx.fillStyle = `rgba(57,66,62,${field * layer * .14})`; ctx.fillRect(x, y, 6, 6);
     }
     ctx.globalCompositeOperation = 'destination-in'; ctx.drawImage(this.mistMask, 0, 0);
     ctx.globalCompositeOperation = 'source-over'; this.context.drawImage(this.mist, 0, 0);
-    for (let i = 0; i < 25; i++) {
-      const near = i < 13;
-      const lifetime = near ? 6 + random(i) * 6 : 15 + random(i) * 10;
+    for (let i = 0; i < 34; i++) {
+      const near = i < 20;
+      const lifetime = near ? 4.2 + random(i) * 3.8 : 11 + random(i) * 8;
       const p = fract(t / lifetime + random(i + 71));
-      const x = near ? 607 + random(i + 12) * 126 + Math.sin(t * .22 + i) * 6
-        : 442 + random(i + 12) * 180 + Math.sin(t * .08 + i) * 3;
+      const x = near ? 607 + random(i + 12) * 126 + Math.sin(t * .35 + i) * 9
+        : 442 + random(i + 12) * 180 + Math.sin(t * .14 + i) * 5;
       const y = near ? 433 - p * 104 : 135 + p * 360;
       const fade = Math.sin(p * Math.PI) ** 2;
-      const light = near ? clamp(1 - Math.hypot((x - 675) / 97, (y - 386) / 73)) : .18;
-      this.context.fillStyle = near ? `rgba(204,177,127,${fade * light * .48})` : `rgba(102,116,107,${fade * light})`;
-      this.context.fillRect(Math.round(x), Math.round(y), 1, near && i % 6 === 0 ? 2 : 1);
+      const light = near ? clamp(1 - Math.hypot((x - 675) / 97, (y - 386) / 73))
+        : .35 * this.airVisibility[Math.round(y) * W + Math.round(x)]! / 255;
+      this.context.fillStyle = near ? `rgba(204,177,127,${fade * light * .82})` : `rgba(102,116,107,${fade * light})`;
+      this.context.fillRect(Math.round(x), Math.round(y), near && i % 3 === 0 ? 2 : 1, near && i % 2 === 0 ? 2 : 1);
     }
     this.drawSmoke(t);
   }
 
   private drawSmoke(t: number): void {
     // F chimney aperture (688,326): smoke disperses upward, away from the face.
-    for (let i = 0; i < 10; i++) {
-      const p = fract(t / 6.8 + i / 10);
-      const x = 688 - p * 9 + Math.sin(p * 6.2 + t * .42) * (1 + p * 4);
-      const y = 325 - p * 49, size = 1 + p * 4;
-      const fade = Math.sin(p * Math.PI) * (1 - p);
-      this.context.fillStyle = `rgba(121,123,108,${fade * .13})`;
-      for (let row = -2; row <= 2; row++) {
-        const width = Math.max(1, Math.round(size * (1 - Math.abs(row) * .19)));
+    for (let i = 0; i < 14; i++) {
+      const p = fract(t / 4.4 + i / 14);
+      const x = 688 - p * 13 + Math.sin(p * 6.2 + t * .58) * (1 + p * 5);
+      const y = 325 - p * 62, size = 2 + p * 7;
+      const fade = Math.sin(p * Math.PI) * Math.sqrt(1 - p);
+      this.context.fillStyle = `rgba(121,123,108,${fade * .28})`;
+      for (let row = -3; row <= 3; row++) {
+        const width = Math.max(1, Math.round(size * (1 - Math.abs(row) * .16)));
         this.context.fillRect(Math.round(x - width / 2), Math.round(y + row), width, 1);
       }
     }
-    for (let i = 0; i < 2; i++) {
-      const p = fract(t / (5.3 + i * 1.7) + i * .41);
-      if (p > .34) continue;
-      const age = p / .34;
-      this.context.fillStyle = `rgba(210,142,68,${Math.sin(age * Math.PI) * .55})`;
-      this.context.fillRect(Math.round(688 + Math.sin(age * 3 + i) * 3 - age * 5), Math.round(324 - age * 22), 1, 1);
+    for (let i = 0; i < 3; i++) {
+      const p = fract(t / (3.8 + i * 1.13) + i * .31);
+      if (p > .50) continue;
+      const age = p / .50;
+      this.context.fillStyle = `rgba(220,151,74,${Math.sin(age * Math.PI) * .75})`;
+      this.context.fillRect(Math.round(688 + Math.sin(age * 3 + i) * 4 - age * 8), Math.round(324 - age * 30), 1, i === 0 ? 2 : 1);
     }
   }
 
@@ -223,9 +228,9 @@ export class JointTitleMotion {
     this.context.clearRect(0, 0, W, H);
     if (this.reduced.matches || this.disposed) return;
     const t = this.elapsed;
-    const breath = Math.sin(t * TAU / 7.1) * .75 + Math.sin(t * TAU / 11.3 + .7) * .25;
-    const flicker = .055 + .057 * Math.sin(t * 4.19) + .035 * Math.sin(t * 9.73 + .8) + .020 * Math.sin(t * 16.41 + 1.2);
-    this.drawAir(t); this.light(this.core, .035 + breath * .10); this.light(this.fire, flicker);
+    const breath = Math.sin(t * TAU / 5.8) * .75 + Math.sin(t * TAU / 9.7 + .7) * .25;
+    const flicker = .06 + .18 * Math.sin(t * 3.7) + .085 * Math.sin(t * 8.3 + .8) + .045 * Math.sin(t * 14.6 + 1.2);
+    this.drawAir(t); this.light(this.core, .045 + breath * .24); this.light(this.fire, flicker);
     this.drawEnergy(t, breath); this.drawFlames(t, flicker);
     this.canvas.dataset.motionTime = t.toFixed(3);
   }
