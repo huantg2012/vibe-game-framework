@@ -61,11 +61,12 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。",
+    "summary": "标题支持新记录、有效存档继续与明确弃局。I31将记录存在与能否解析分开：坏包也须明确替换；存储不可读时不重置。新候选的首笔完整保存成功后才替换原记录。 2026-10-01另有三版独立首页DEV比较，接同一真实净化点；A/C进入与切换有限验证，用户仍不满意连续性，生产默认未替换。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "/ → MainMenuScene；方向键、Enter/Space 或鼠标"
+      "/ → MainMenuScene；方向键、Enter/Space 或鼠标",
+      "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。"
     ],
     "sources": [
       {
@@ -111,42 +112,82 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "开场重构提案及独立静态母版试作；未正式接入，静态图不覆盖动态衔接或人审结论。"
+        "note": "当前三版独立首页设计；旧同源几何换镜头路线已HUMAN-REJECTED，新候选未选中或接生产。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
         "role": "code",
-        "note": "独立开场静态试作：相机、角色朝向/布料校准与不相连中景平移；正式实现保持。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "tools/last-light/export-opening.mjs",
         "role": "code",
-        "note": "独立母版导出器；含第零帧能量增益和源指纹，不导正式生产包。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/art/demos/opening-master/index.html",
         "role": "art",
-        "note": "静态母版审查入口；非正式菜单或转场。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/qa/2026-09-30-opening-master.md",
         "role": "doc",
-        "note": "静态候选的导出/合成/几何及查看页限定检查；艺术差距与未验动态明确保留，不提升正式或人审状态。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "tools/last-light/opening-exterior.ts",
         "role": "code",
-        "note": "开场镜头深处扩展作者几何；独立试作，正式场景未接入。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/art/demos/opening-master/assets/master.png",
         "role": "art",
-        "note": "独立静态美术母版候选；限定导出/查看检查完成，艺术仍有差距、待人审，未正式接入。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/art/demos/opening-master/assets/manifest.json",
         "role": "art",
-        "note": "母版相机/锚点/能量增益与来源、产物指纹；静态导出合同。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/index.html",
+        "role": "art",
+        "note": "三版首页独立DEV入口；当前已制作，运行验证与用户选择待定，非生产默认。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/entry.ts",
+        "role": "code",
+        "note": "DEV标题经既有MenuEntryTransition进入同一真实PurificationScene；页内临时记录，隔离与操作待QA实测。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/style.css",
+        "role": "code",
+        "note": "独立比较页与三版首页样式；不替换生产菜单样式。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/prompts.json",
+        "role": "art",
+        "note": "内置image_gen的参考和原始提示；不是确定性绘制合同或生产选中。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/assets/a.png",
+        "role": "art",
+        "note": "A还能停留：炉边坐姿；1536×1024生成候选，待选择。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/assets/b.png",
+        "role": "art",
+        "note": "B借来的庇护：核心与人依存；1536×1024生成候选，待选择。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/assets/c.png",
+        "role": "art",
+        "note": "C再次出发：地坪狭裂口边；1536×1024生成候选，待选择。"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-three.md",
+        "role": "doc",
+        "note": "本轮隔离试玩与三版衔接的限定验证记录，实际执行结果由QA登记。"
       }
     ],
     "dependsOn": [
@@ -158,10 +199,12 @@
       "COH-E-HIST-PRODUCTION",
       "COH-E101",
       "COH-E102",
-      "COH-E107"
+      "COH-E107",
+      "COH-E108"
     ],
     "unknowns": [
-      "独立开场仅为静态美术母版候选，未正式接入；基地展示感、近梁遮挡和材质差距仍在，角色朝向/材料校准衔接、连续动态及人审未验。"
+      "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
+      "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。"
     ]
   },
   {
@@ -346,11 +389,12 @@
     "id": "COH-F005",
     "title": "资源加载与场景过渡",
     "domain": "loop",
-    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。",
+    "summary": "Boot 加载资源后转入标题；主菜单进入基地及基地进入 Rift 使用既有过场，DEV 深链单独处理。 2026-10-01另有三版独立首页DEV比较，接同一真实净化点；A/C进入与切换有限验证，用户仍不满意连续性，生产默认未替换。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "/ → BootScene → MainMenuScene；净化点出发"
+      "/ → BootScene → MainMenuScene；净化点出发",
+      "DEV：docs/art/demos/opening-three/index.html；三版独立首页→同一真实净化点，非生产默认。"
     ],
     "sources": [
       {
@@ -380,42 +424,82 @@
       {
         "path": "docs/design-notes/opening-haven-reconstruction.md",
         "role": "doc",
-        "note": "开场重构提案及独立静态母版试作；未正式接入，静态图不覆盖动态衔接或人审结论。"
+        "note": "当前三版独立首页设计；旧同源几何换镜头路线已HUMAN-REJECTED，新候选未选中或接生产。"
       },
       {
         "path": "tools/last-light/opening-shot.ts",
         "role": "code",
-        "note": "独立开场静态试作：相机、角色朝向/布料校准与不相连中景平移；正式实现保持。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "tools/last-light/export-opening.mjs",
         "role": "code",
-        "note": "独立母版导出器；含第零帧能量增益和源指纹，不导正式生产包。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/art/demos/opening-master/index.html",
         "role": "art",
-        "note": "静态母版审查入口；非正式菜单或转场。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/qa/2026-09-30-opening-master.md",
         "role": "doc",
-        "note": "静态候选的导出/合成/几何及查看页限定检查；艺术差距与未验动态明确保留，不提升正式或人审状态。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "tools/last-light/opening-exterior.ts",
         "role": "code",
-        "note": "开场镜头深处扩展作者几何；独立试作，正式场景未接入。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/art/demos/opening-master/assets/master.png",
         "role": "art",
-        "note": "独立静态美术母版候选；限定导出/查看检查完成，艺术仍有差距、待人审，未正式接入。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
       },
       {
         "path": "docs/art/demos/opening-master/assets/manifest.json",
         "role": "art",
-        "note": "母版相机/锚点/能量增益与来源、产物指纹；静态导出合同。"
+        "note": "HUMAN-REJECTED历史：2026-09-30静态换镜头试作，仅保留当时资产/导出/检查取证，不是当前候选或生产实现。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/index.html",
+        "role": "art",
+        "note": "三版首页独立DEV入口；当前已制作，运行验证与用户选择待定，非生产默认。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/entry.ts",
+        "role": "code",
+        "note": "DEV标题经既有MenuEntryTransition进入同一真实PurificationScene；页内临时记录，隔离与操作待QA实测。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/style.css",
+        "role": "code",
+        "note": "独立比较页与三版首页样式；不替换生产菜单样式。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/prompts.json",
+        "role": "art",
+        "note": "内置image_gen的参考和原始提示；不是确定性绘制合同或生产选中。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/assets/a.png",
+        "role": "art",
+        "note": "A还能停留：炉边坐姿；1536×1024生成候选，待选择。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/assets/b.png",
+        "role": "art",
+        "note": "B借来的庇护：核心与人依存；1536×1024生成候选，待选择。"
+      },
+      {
+        "path": "docs/art/demos/opening-three/assets/c.png",
+        "role": "art",
+        "note": "C再次出发：地坪狭裂口边；1536×1024生成候选，待选择。"
+      },
+      {
+        "path": "docs/qa/2026-10-01-opening-three.md",
+        "role": "doc",
+        "note": "本轮隔离试玩与三版衔接的限定验证记录，实际执行结果由QA登记。"
       }
     ],
     "dependsOn": [
@@ -425,11 +509,13 @@
     "evidence": [
       "COH-E-SRC-journey",
       "COH-E-HIST-TRANSITION",
-      "COH-E107"
+      "COH-E107",
+      "COH-E108"
     ],
     "unknowns": [
       "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",
-      "独立开场仅为静态美术母版候选，未正式接入；基地展示感、近梁遮挡和材质差距仍在，角色朝向/材料校准衔接、连续动态及人审未验。"
+      "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
+      "2026-10-01用户对三版均不满意：须同时满足首页吸引力和进入实景的风格/内容连续，合理降级限于描绘细节而非视觉身份；暂不推进生产替换。"
     ]
   },
   {

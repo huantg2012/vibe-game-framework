@@ -2,13 +2,19 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-09-30
+last-modified: 2026-10-01
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
+
+## 2026-10-01：三版首页DEV比较
+
+`docs/art/demos/opening-three/index.html`、`entry.ts`、`style.css`组成独立DEV入口；`assets/a.png`、`b.png`、`c.png`为image_gen生成的1536×1024首页位图，生成提示保存于`prompts.json`。它不注册为生产默认首页，旧opening-master的同源几何换镜头候选已HUMAN-REJECTED，不再作为当前构图合同。
+
+`index.html`在任何游戏模块导入前将当前页`localStorage`替换为Map内存实现，`entry.ts`再将其注入SaveManager；正式记录隔离须由专项QA实测。DEV标题复用`MenuEntryTransition`和`beginNewExpedition`进入真实`PurificationScene`，三版采用相同初始场景、时序与WASD/E/Tab操作，返回时只清临时记录。尚未实现每张首页到游戏的同位几何匹配或坐姿起身动画。当前IMPLEMENTED / VERIFICATION-PENDING，用户选择待定；实际结果与限制集中于[本轮QA](qa/2026-10-01-opening-three.md)，不以源码接线代替运行通过。
 
 ## 迭代31：修复收益、整趟回执与记录替换
 

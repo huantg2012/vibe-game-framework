@@ -3871,5 +3871,32 @@
         "note": "在正式Phaser场景创建前注入Map存储，不自动跳过标题"
       }
     ]
+  },
+  {
+    "id": "COH-E108",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-01",
+    "revision": "3cc744d8417da17091d464990378188696d61506",
+    "scope": "该revision后的工作树：三版独立首页生成位图及DEV比较入口，A/C真实进入PurificationScene、标题切换、报告打开与跨版DOM清理、重复开始保护。最终三图主线程IAB已查看；生产构建与副代理指定DEV入口类型检查通过。",
+    "limitations": "用户对三版仍不满意，尚未选中，内容/风格连续性未解决，未改生产默认。B完整入场、有效WASD/E/Tab按键、bfcache恢复、音频听感与盲测未验；页面采用独立内存存储，未读取用户真实存档作字节比对。",
+    "sources": [
+      {
+        "path": "docs/qa/2026-10-01-opening-three.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/demos/opening-three/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/demos/opening-three/entry.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/design-notes/opening-haven-reconstruction.md",
+        "role": "doc"
+      }
+    ]
   }
 ]

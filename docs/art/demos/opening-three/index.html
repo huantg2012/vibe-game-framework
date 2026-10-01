@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="/" />
+  <title>那天之后 · 三种开始</title>
+  <link rel="stylesheet" href="/docs/art/demos/opening-three/style.css" />
+</head>
+<body>
+  <main class="comparison-shell">
+    <nav class="comparison-controls" aria-label="选择首页">
+      <div class="variant-controls">
+        <button type="button" data-variant="a" aria-pressed="true"><span>A</span> 停留</button>
+        <button type="button" data-variant="b" aria-pressed="false"><span>B</span> 维持</button>
+        <button type="button" data-variant="c" aria-pressed="false"><span>C</span> 出发</button>
+      </div>
+      <button type="button" id="return-title" disabled>返回首页</button>
+    </nav>
+    <div id="game-container" aria-label="那天之后，首页与净化点体验"></div>
+    <footer class="comparison-footer">
+      <span id="comparison-status" role="status" aria-live="polite">载入中</span>
+      <span>首页按 1 / 2 / 3 切换 · 每次从同一起点开始</span>
+    </footer>
+  </main>
+  <script>
+    // This page's storage is replaced before ANY game module executes. Never
+    // read the real getter or change Storage.prototype / another page's data.
+    try {
+      const records = new Map([['coh_locale', 'zh-CN']]);
+      const memory = Object.freeze({
+        get length() { return records.size; },
+        key(index) { return Array.from(records.keys())[Number(index)] ?? null; },
+        getItem(key) { return records.get(String(key)) ?? null; },
+        setItem(key, value) { records.set(String(key), String(value)); },
+        removeItem(key) { records.delete(String(key)); },
+        clear() { records.clear(); },
+      });
+      Object.defineProperty(window, 'localStorage', { configurable: true, get: () => memory });
+      Object.defineProperty(window, '__openingStorageReady', { value: true });
+    } catch {
+      document.getElementById('comparison-status').textContent = '隔离体验未能启动，请重新打开本页。';
+    }
+  </script>
+  <script type="module">
+    if (window.__openingStorageReady) import('/docs/art/demos/opening-three/entry.ts');
+  </script>
+</body>
+</html>

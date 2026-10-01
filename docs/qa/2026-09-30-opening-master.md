@@ -1,8 +1,10 @@
 # 开场静态美术母版候选 · 限定 QA
 
-日期：2026-09-30。主关联 F002/F005。状态：**STATIC-ART-MASTER-CANDIDATE / LIMITED-CHECKED / HUMAN-REVIEW-PENDING / NOT-PRODUCTION**。
+日期：2026-09-30。主关联 F002/F005。状态：**HUMAN-REJECTED / HISTORICAL-LIMITED-CHECKS / NOT-PRODUCTION**。
 
 本页记录独立静态母版的实现及限定验证；最终导出、几何诊断、浏览器结果由制作主线程实际执行并汇总。它不是开场动态、正式转场或玩家体验验收。[方案与静态试作](../design-notes/opening-haven-reconstruction.md#当前静态试作2026-09-30) / [母版查看页](../art/demos/opening-master/index.html) / [候选原图](../art/demos/opening-master/assets/master.png) / [资产 manifest](../art/demos/opening-master/assets/manifest.json)。
+
+用户随后明确否决本图，旧同源几何换镜头路线作废；下方保留当时的技术证据，不再是待审美术基准。当前方向归[集中设计正文](../design-notes/opening-haven-reconstruction.md)。
 
 ## 最终候选与变更范围
 
