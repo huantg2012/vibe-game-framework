@@ -136,38 +136,57 @@ check('pending settlement and open inventory frames cannot be erased by new-reco
   inventoryStore.cancelFrameTransaction();
 });
 
-// Exercise the real title callbacks without Phaser rendering. Text and layout
-// are replaced only at their presentation boundary; selection logic is real.
-interface MenuHarness {
-  mode: string; entryTransition: null; items: { label: string; action: () => void }[];
-  selectedIndex: number; onSelectNewSave(): void; handleEscape(): void;
-  renderRoot(): void; clearSummary(): void; layoutItems(): void; startEntry(): void;
-  subtitleText: TextStub; warningText: TextStub; backHint: TextStub;
+// Exercise the current title render/actions/keyboard path. Only DOM primitives
+// are adapted; no menu decision or record-preservation method is replaced.
+class MenuElement {
+  hidden = false;
+  textContent = '';
+  children: MenuElement[] = [];
+  dataset: Record<string, string> = {};
+  classList = { toggle() {} };
+  appendChild(child: MenuElement): void { this.children.push(child); }
+  replaceChildren(): void { this.children = []; }
+  addEventListener(): void {}
+  setAttribute(): void {}
+  closest(): null { return null; }
 }
-interface TextStub { setText(value: string): TextStub; setY(value: number): TextStub; setVisible(value: boolean): TextStub }
-const text: TextStub = { setText: () => text, setY: () => text, setVisible: () => text };
-const menu = Object.assign(Object.create(MainMenuScene.prototype) as MenuHarness, {
-  mode: 'root', entryTransition: null, items: [], selectedIndex: 0,
-  subtitleText: text, warningText: text, backHint: text,
-  clearSummary: () => {}, layoutItems: () => {}, startEntry: enter,
-  renderRoot: () => { menu.mode = 'root'; },
+const elements = new Map(['.joint-warning', '.joint-back-hint', '.joint-english', '.joint-summary', '.joint-actions']
+  .map(selector => [selector, new MenuElement()]));
+const titleRoot = Object.assign(new MenuElement(), {
+  querySelector: (selector: string) => elements.get(selector) ?? null,
+  querySelectorAll: (selector: string) => selector === '.joint-action' ? elements.get('.joint-actions')!.children : [],
 });
+Object.defineProperty(globalThis, 'HTMLElement', { configurable: true, value: MenuElement });
+Object.defineProperty(globalThis, 'document', { configurable: true, value: { createElement: () => new MenuElement() } });
+interface MenuHarness {
+  mode: string; actions: { label: string; run: () => void }[]; selected: number;
+  renderMenu(mode?: string): void; keyDown(event: KeyboardEvent): void;
+}
+const menu = Object.assign(new MainMenuScene(), {
+  titleRoot, ready: true, input: { enabled: true },
+  scene: { isActive: () => true, isPaused: () => false },
+}) as unknown as MenuHarness;
 check('title new-game enters confirmation for damaged/future/empty records; cancel and Escape preserve bytes', () => {
   for (const bytes of ['{broken', '{"version":999}', '']) {
     records.set(key, bytes);
-    const before = snapshot(), beforeRemoves = removes;
-    menu.onSelectNewSave();
-    assert.equal(menu.mode, 'confirmOverwrite');
-    assert.equal(menu.items[menu.selectedIndex]?.label, '保留记录，返回');
-    menu.items[menu.selectedIndex]!.action();
+    const before = snapshot(), beforeRemoves = removes, beforeEntries = entries;
+    menu.renderMenu();
+    assert.equal(menu.actions.at(-1)?.label, '开始');
+    menu.actions.at(-1)!.run();
+    assert.equal(menu.mode, 'overwrite');
+    assert.equal(menu.actions[menu.selected]?.label, '保留记录，返回');
+    menu.actions[menu.selected]!.run();
     assert.equal(menu.mode, 'root');
     assert.equal(records.get(key), bytes);
-    menu.onSelectNewSave();
-    menu.handleEscape();
+    menu.actions.at(-1)!.run();
+    let prevented = false;
+    menu.keyDown({ key: 'Escape', target: null, repeat: false, preventDefault() { prevented = true; } } as unknown as KeyboardEvent);
+    assert(prevented, 'Escape is handled by the real menu keyboard path');
     assert.equal(menu.mode, 'root');
     assert.equal(records.get(key), bytes);
     assert.deepEqual(snapshot(), before);
     assert.equal(removes, beforeRemoves);
+    assert.equal(entries, beforeEntries);
   }
 });
 

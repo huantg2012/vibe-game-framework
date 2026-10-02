@@ -15,6 +15,7 @@ import { LastLightLocomotion } from '@/systems/last-light-locomotion';
 import type { LastLightInteractionKey } from '@/systems/last-light-interaction';
 import { ChamberModule } from '@/entities/purification-chamber-module';
 import { ChamberIntegritySelection } from '@/ui/chamber-integrity-lifecycle';
+import { HavenNarration } from '@/ui/dom/haven-narration';
 /**
  * Purification Scene - the base management walkable space.
  *
@@ -173,7 +174,7 @@ export class PurificationScene extends Phaser.Scene {
   private observationDelta = 0;
   private lastDiagnosticAt = -Infinity;
   private resting = false;
-  private restLine: HTMLDivElement | null = null;
+  private havenNarration = new HavenNarration();
   private restCamera: { scrollX: number; scrollY: number; zoom: number } | null = null;
   private restTween: Phaser.Tweens.Tween | null = null;
   private coreModule!: ChamberModule;
@@ -218,6 +219,8 @@ export class PurificationScene extends Phaser.Scene {
   }
 
   create(data?: { kindlingGained?: number; survived?: boolean; fromMenu?: boolean; menuEntry?: MenuEntryTransition; devSession?: PurificationDevSession }): void {
+    this.havenNarration.destroy();
+    this.havenNarration = new HavenNarration();
     this.shuttingDown = false;
     this.cleanupComplete = false;
     this.resting = false;
@@ -392,6 +395,8 @@ export class PurificationScene extends Phaser.Scene {
 
     // Post-update for visibility sync
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
+    this.events.on(Phaser.Scenes.Events.PAUSE, this.onNarrationPause, this);
+    this.events.on(Phaser.Scenes.Events.RESUME, this.onNarrationResume, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
 
     // Show impact result on arrival (player must dismiss before interacting).
@@ -422,6 +427,8 @@ export class PurificationScene extends Phaser.Scene {
           // B3: Show new tool toast after the merged panel is dismissed (Channel B —
           // non-blocking, so it doesn't re-introduce a second confirmation step).
           this.showNewToolToast(transformResults);
+          // A reveal already owns this beat. Do not add another sentence over it.
+          if (transformResults.length === 0) this.havenNarration.queueArrival(survived ? 'haven.return' : 'haven.return-lost');
         }, {
           firstReturnExempt: impactResult.skipped,
           chargeChanges: chargeChanges.length > 0 ? chargeChanges : undefined,
@@ -435,6 +442,7 @@ export class PurificationScene extends Phaser.Scene {
         });
       } else {
         this.startIsolationBed();
+        this.havenNarration.queueArrival('haven.arrival');
         if (!this.menuEntry) this.player.setInputEnabled(true);
       }
     };
@@ -480,6 +488,10 @@ export class PurificationScene extends Phaser.Scene {
     const target: InteractionTarget | null = this.resting ? { type: 'stand', distance: 0 } : this.findNearestTarget();
     this.lastOverlapType = target?.type ?? null;
     purificationHud.updatePrompt(target);
+    this.havenNarration.tick(delta, {
+      blocked: this.isAnyPanelOpen() || pauseMenu.isOpen() || !!this.menuEntry || !!this.interactionFocusReturn,
+      resting: this.resting, moving: this.player.isMoving(), target: target?.type ?? null,
+    });
 
     // During the standing-up camera return E is intentionally blocked; do not
     // advertise another action until that same input gate has reopened.
@@ -618,19 +630,13 @@ export class PurificationScene extends Phaser.Scene {
     this.restTween = this.tweens.add({ targets: camera, zoom,
       scrollX: centerX - camera.width / 2, scrollY: centerY - camera.height / 2,
       duration: 700, ease: 'Sine.easeInOut', onComplete: () => { this.restTween = null; } });
-    this.restLine?.remove();
-    const line = document.createElement('div');
-    line.id = 'purification-rest-line';
-    line.textContent = '石头还是冷的。火还没有熄。';
-    line.style.cssText = 'position:absolute;left:180px;top:534px;width:600px;text-align:center;pointer-events:none;color:#bbb9ab;font:14px/24px monospace;letter-spacing:2px;text-shadow:0 2px 4px #000;z-index:30';
-    getDomUiRoot().append(line);
-    this.restLine = line;
+    this.havenNarration.sit();
   }
 
   private standUp(): void {
     if (!this.resting) return;
     this.resting = false;
-    this.restLine?.remove(); this.restLine = null;
+    this.havenNarration.stand();
     this.restTween?.stop(); this.restTween = null;
     const previous = this.restCamera;
     this.restCamera = null;
@@ -645,6 +651,9 @@ export class PurificationScene extends Phaser.Scene {
       duration: 350, ease: 'Sine.easeInOut', onComplete: finish });
     else finish();
   }
+
+  private readonly onNarrationPause = (): void => this.havenNarration.setPaused(true);
+  private readonly onNarrationResume = (): void => this.havenNarration.setPaused(false);
 
   private startIsolationBed(): void {
     audioManager.playBGM('bgm-pp-isolation-drone');
@@ -1206,7 +1215,11 @@ export class PurificationScene extends Phaser.Scene {
     dispose('entry', () => this.menuEntry?.destroy()); this.menuEntry = null;
     dispose('transition-delay', () => this.transitionDelay?.remove(false)); this.transitionDelay = null;
     dispose('transition-overlay', () => this.transitionOverlay?.remove()); this.transitionOverlay = null;
-    dispose('rest', () => { this.restTween?.stop(); this.restTween = null; this.restLine?.remove(); this.restLine = null; this.restCamera = null; this.resting = false; });
+    dispose('rest', () => {
+      this.restTween?.stop(); this.restTween = null; this.havenNarration.destroy(); this.restCamera = null; this.resting = false;
+      this.events.off(Phaser.Scenes.Events.PAUSE, this.onNarrationPause, this);
+      this.events.off(Phaser.Scenes.Events.RESUME, this.onNarrationResume, this);
+    });
     dispose('interaction-focus', () => this.restoreInteractionFocus(true));
     dispose('audio', () => audioManager.haltNonBgm());
     for (const [name, close] of [

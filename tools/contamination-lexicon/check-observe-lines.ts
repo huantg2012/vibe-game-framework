@@ -23,30 +23,31 @@ import {
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 
-const EXPECTED_LINES: Readonly<Record<string, string>> = {
-  observe_jia_look_1: '慢一点，慢一点，别被他看见。',
-  observe_jia_look_2: '别动……他就在那儿看着路。',
-  observe_jia_hear_1: '轻一点，轻一点，别让他听见。',
-  observe_jia_hear_2: '别出声……他那边醒着。',
-  observe_yi_infiltrate_1: '那道缝还在张着，贴过去会……',
-  observe_yi_infiltrate_2: '别靠墙，别靠墙，那道缝还开着。',
-  observe_yi_overwrite_1: '缝里那点亮令人发麻，我走中间。',
-  observe_yi_overwrite_2: '别贴墙，别贴墙，那里已经不是墙了。',
-  observe_bing_infiltrate_1: '这层膜令人发麻，我还是不要……',
-  observe_bing_infiltrate_2: '地是潮的，绕着走吧。',
-  observe_bing_overwrite_1: '那滩在涨，我还是不要从那儿过……',
-  observe_bing_overwrite_2: '别过去，别过去，它在呼吸。',
-  observe_ding_infiltrate_1: '这段路窄得不对，换一条吧。',
-  observe_ding_infiltrate_2: '别走进去……边上那条还通着。',
-  observe_ding_overwrite_1: '那段雾令人发麻，我还是绕开……',
-  observe_ding_overwrite_2: '别穿过去，别穿过去，那已经不是路了。',
-  observe_utt_door: '门还在自己关，别站在当中。',
-  observe_utt_eye: '别贴边，别贴边，缝里有东西在看。',
-  observe_utt_lung: '这滩令人发麻，等一等，等一等。',
-  observe_utt_corridor: '别往里走，别往里走，走廊看着我。',
-};
+// Existing event/debug token identities survive copy edits and pool expansion.
+const LEGACY_IDS = [
+  'observe_jia_look_1',
+  'observe_jia_look_2',
+  'observe_jia_hear_1',
+  'observe_jia_hear_2',
+  'observe_yi_infiltrate_1',
+  'observe_yi_infiltrate_2',
+  'observe_yi_overwrite_1',
+  'observe_yi_overwrite_2',
+  'observe_bing_infiltrate_1',
+  'observe_bing_infiltrate_2',
+  'observe_bing_overwrite_1',
+  'observe_bing_overwrite_2',
+  'observe_ding_infiltrate_1',
+  'observe_ding_infiltrate_2',
+  'observe_ding_overwrite_1',
+  'observe_ding_overwrite_2',
+  'observe_utt_door',
+  'observe_utt_eye',
+  'observe_utt_lung',
+  'observe_utt_corridor',
+] as const;
 
-const BANNED = ['识别。', '我们', '危险', '敌人', '注意', '系统'] as const;
+const BANNED = ['识别。', '我们', '你', '危险', '敌人', '注意', '系统', '!', '！', '打不死', '打散重组'] as const;
 
 const UTTERANCE_MARKS: Readonly<Record<string, string>> = {
   door_still_closing: '开合',
@@ -92,20 +93,15 @@ function formFromUtterance(id: string): ContaminationForm {
 }
 
 export function checkObserveLines(assert: (cond: unknown, msg: string) => void): void {
-  assert(OBSERVE_LINE_IDS.length === 20, `OBSERVE_LINE_IDS ${OBSERVE_LINE_IDS.length} want 20`);
-  assert(
-    Object.keys(OBSERVE_LINE_DATA).length === 20,
-    `OBSERVE_LINE_DATA keys ${Object.keys(OBSERVE_LINE_DATA).length} want 20`,
-  );
-
-  for (const [id, text] of Object.entries(EXPECTED_LINES)) {
+  assert(OBSERVE_LINE_IDS.length >= LEGACY_IDS.length, 'Legacy observe tokens must remain available');
+  assert(new Set(OBSERVE_LINE_IDS).size === OBSERVE_LINE_IDS.length, 'Duplicate observe IDs');
+  assert(Object.keys(OBSERVE_LINE_DATA).length === OBSERVE_LINE_IDS.length, 'Observe ID/data cardinality mismatch');
+  for (const id of LEGACY_IDS) assert(!!OBSERVE_LINE_DATA[id], `missing legacy observe line ${id}`);
+  for (const id of OBSERVE_LINE_IDS) {
     const row = OBSERVE_LINE_DATA[id];
-    assert(!!row, `missing observe line ${id}`);
-    assert(row?.displayToken === text, `${id} display_token mismatch: ${row?.displayToken}`);
-    assert((row?.displayToken.length ?? 99) <= 40, `${id} longer than 40 (${row?.displayToken.length})`);
-    for (const banned of BANNED) {
-      assert(!row?.displayToken.includes(banned), `${id} contains banned ${banned}`);
-    }
+    assert(!!row && row.id === id, `missing/mismatched observe row ${id}`);
+    assert(!!row?.displayToken.trim() && [...(row?.displayToken ?? '')].length <= 40, `${id} must contain 1–40 characters`);
+    for (const banned of BANNED) assert(!row?.displayToken.includes(banned), `${id} contains banned ${banned}`);
   }
 
   const keys: readonly { label: string; form: ContaminationForm; wantIds: readonly string[] }[] = [
@@ -183,13 +179,17 @@ export function checkObserveLines(assert: (cond: unknown, msg: string) => void):
 
   for (const { label, form, wantIds } of keys) {
     const pool = observePoolFor(form);
-    assert(pool.length === wantIds.length, `${label} pool ${pool.length} want ${wantIds.length}`);
+    assert(pool.length >= wantIds.length, `${label} lost its legacy pool`);
     assert(
       wantIds.every((id) => pool.some((row) => row.id === id)),
       `${label} pool missing [${wantIds.join(',')}] got [${pool.map((row) => row.id).join(',')}]`,
     );
     const picked = pickObserveLine(form, 1);
-    assert(!!picked && wantIds.includes(picked.id), `${label} pick ${picked?.id} not in pool`);
+    assert(!!picked && pool.some(row => row.id === picked.id), `${label} pick ${picked?.id} not in pool`);
+    assert(pool.every(row => form.utteranceId ? row.utteranceId === form.utteranceId
+      : !row.utteranceId && row.occupancy === form.occupancy
+        && (form.occupancy === 'floor' ? row.sense === (form.lexemes.sense === 'sense_hear' ? 'hear' : 'cone')
+          : row.coverageBucket === (form.coverage === 'infiltrate' ? 'infiltrate' : 'overwrite'))), `${label} contains an unrelated prompt`);
     const nodes = encounterNodes(form, 1);
     assert(nodes[0]?.kind === 'observe', `${label} first node not observe`);
     assert(nodes.every((node) => node.kind === 'observe' || node.kind === 'utterance_mark'), `${label} illegal node kind`);
@@ -206,15 +206,18 @@ export function checkObserveLines(assert: (cond: unknown, msg: string) => void):
     assert(!displayTokenFor(nodes[0]!).includes('识别。'), `${label} observe still has prefix`);
   }
 
+  const reachable = new Set(keys.flatMap(({ form }) => observePoolFor(form).map(row => row.id)));
+  for (const id of OBSERVE_LINE_IDS) assert(reachable.has(id), `Unreachable observe line ${id}`);
+
   const inf = encounterNodes(INFILTRATOR_FORM, 0);
   assert(inf.length === 1 && inf[0]?.kind === 'observe', 'infiltrator is one observe node');
   assert(
-    ['observe_jia_look_1', 'observe_jia_look_2'].includes(inf[0]!.tokenId),
+    observePoolFor(INFILTRATOR_FORM).some(row => row.id === inf[0]!.tokenId),
     `infiltrator line ${inf[0]?.tokenId}`,
   );
   const hear = encounterNodes(REWRITER_FORM, 0);
   assert(
-    ['observe_jia_hear_1', 'observe_jia_hear_2'].includes(hear[0]!.tokenId),
+    observePoolFor(REWRITER_FORM).some(row => row.id === hear[0]!.tokenId),
     `rewriter line ${hear[0]?.tokenId}`,
   );
 

@@ -12,7 +12,7 @@ Object.defineProperty(globalThis, 'window', { value: {
   removeEventListener: (_event: string, listener: unknown) => windowListeners.delete(listener),
 } });
 Object.defineProperty(globalThis, 'document', { value: { removeEventListener() {}, getElementById: () => null } });
-Object.assign(Phaser, { Scenes: { Events: { POST_UPDATE: 'postupdate' } } });
+Object.assign(Phaser, { Scenes: { Events: { POST_UPDATE: 'postupdate', PAUSE: 'pause', RESUME: 'resume' } } });
 const { RiftScene } = await import('../../src/scenes/rift-scene');
 const haltNonBgm = audioManager.haltNonBgm; audioManager.haltNonBgm = () => {};
 
@@ -45,6 +45,7 @@ function fixture(freezeAfterEnd = true) {
     'search', 'chaos', 'trail', 'minimap', 'riftSurface', 'visibility', 'tilemapRenderer']) {
     scene[key] = { destroy: dispose(key) };
   }
+  scene.encounter.clear = () => {}; // DOM presentation adapter; real lifecycle still owns cleanup.
   return { scene, world, calls, setEnded(value: boolean) { ended = value; },
     enter() { Object.assign(scene.entryView, { active: true, elapsedMs: 100, durationMs: 1200, progress: 1 / 12 }); scene.beginEntryGate(); },
     end() { ended = true; scene.onRunEnded(); },

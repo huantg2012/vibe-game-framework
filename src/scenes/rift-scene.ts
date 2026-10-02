@@ -139,7 +139,8 @@ import { TrailSystem } from '@/systems/trail-system';
 import { RiftSurfacePainter } from '@/systems/procedural-surface';
 import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
 import { DetectionPulse } from '@/ui/dom/detection-pulse';
-import { EncounterNarration } from '@/ui/dom/encounter-narration';
+import { EncounterNarration, RiftAtmosphereSchedule, type EncounterSubject } from '@/ui/dom/encounter-narration';
+import { pickAtmosphere, type AtmospherePool } from '@/narrative/atmosphere';
 import { RiftHud, type ActiveEffectInfo, type RiftEquipmentSlot } from '@/ui/dom/rift-hud';
 import { Minimap } from '@/ui/minimap';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
@@ -155,6 +156,11 @@ import type { AICueId } from '@/types/ai-types';
 import type { LandmarkDef, OccluderGrid } from '@/types/map-types';
 import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
+
+// Cosmetic budgets are scoped by a genuine run identity, never a gameplay seed
+// draw. Retain a few recent runs for in-process scene restoration only.
+const atmosphereSchedules = new Map<string, RiftAtmosphereSchedule>();
+const NARRATED_WORLDS = new Set(['ash-strata', 'crystal-fibre', 'ivory-basin', 'carmine-lacquer', 'cobalt-gold']);
 
 /** Render depths. The gaps leave room for decals, entities and the HUD. */
 const DEPTH = {
@@ -212,6 +218,13 @@ export class RiftScene extends Phaser.Scene {
   private readonly hud = new RiftHud();
   private readonly encounter = new EncounterNarration();
   private thresholdUntilMs = 0;
+  private narrationMs = 0;
+  private lastNarrationHitMs = -Infinity;
+  private pendingNarrationThreshold: 0 | 1 | 2 | 3 = 0;
+  private thresholdOverlay: HTMLDivElement | null = null;
+  private thresholdLevel: 0 | 1 | 2 | 3 = 0;
+  private narrationWorld = 'generic';
+  private atmosphereSchedule = new RiftAtmosphereSchedule();
   private readonly detectionPulse = new DetectionPulse();
   private readonly minimap = new Minimap();
   private readonly riftSurface = new RiftSurfacePainter();
@@ -281,6 +294,9 @@ export class RiftScene extends Phaser.Scene {
     this.probeSearchHeld = false;
     this.inventoryClosedAt = -1000;
     this.thresholdUntilMs = 0;
+    this.narrationMs = 0; this.lastNarrationHitMs = -Infinity;
+    this.pendingNarrationThreshold = 0; this.thresholdLevel = 0;
+    this.thresholdOverlay?.remove(); this.thresholdOverlay = null;
     this.toolInputAllowed = true;
     const entryDurationMs = this.devFixture?.entryDurationMs ?? 0;
     if (!Number.isFinite(entryDurationMs) || entryDurationMs < 0 || entryDurationMs > 1500) {
@@ -313,6 +329,12 @@ export class RiftScene extends Phaser.Scene {
       this.recovery = { identity: proceduralRiftIdentity(generated), externalTargetIds: [] };
     }
     const productionWorld = !this.devFixture && this.recovery ? restoreProceduralWorld(this.recovery.identity) : null;
+    const worldId = this.recovery?.identity.generation?.profile.id;
+    this.narrationWorld = !this.devFixture && worldId && NARRATED_WORLDS.has(worldId) ? worldId : 'generic';
+    const narrationRunId = inventoryStore.getRun()?.id ?? `legacy:${generated.seed}:${this.recoveryConditions.cycle}`;
+    this.atmosphereSchedule = atmosphereSchedules.get(narrationRunId) ?? new RiftAtmosphereSchedule(!!restoring);
+    if (atmosphereSchedules.size >= 16 && !atmosphereSchedules.has(narrationRunId)) atmosphereSchedules.delete(atmosphereSchedules.keys().next().value!);
+    atmosphereSchedules.set(narrationRunId, this.atmosphereSchedule);
     const suppressVoidNoise = !!productionWorld || !!this.devFixture?.suppressVoidNoise;
     const tileMap = generated.tileMap;
     const grid = new TileGrid(tileMap);
@@ -687,6 +709,8 @@ export class RiftScene extends Phaser.Scene {
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
+    this.events.on(Phaser.Scenes.Events.PAUSE, this.onNarrationPause, this);
+    this.events.on(Phaser.Scenes.Events.RESUME, this.onNarrationResume, this);
 
     this.bindAIStimuli();
     this.ai.setCueListener(this.onAiCue);
@@ -736,26 +760,6 @@ export class RiftScene extends Phaser.Scene {
     this.devRuntime?.update(this.devElapsedMs, this.runController.isRunEnded());
     this.toolSystem.syncHostVisuals();
 
-    const tileSize = this.hostFloorGrid!.tileSize;
-    const p = this.player.getPosition();
-    const pCol = Math.floor(p.x / tileSize);
-    const pRow = Math.floor(p.y / tileSize);
-    this.encounter.tick(
-      this.time.now,
-      [
-        ...this.ai.getEnemies().map((enemy) => ({
-          id: enemy.getId(),
-          form: enemy.getForm(),
-          identifiable: this.visibility.getVisibilityAt(enemy.getPosition()) > 0,
-        })),
-        ...this.hosts.getSubjects().map((subject) => ({
-          id: subject.id,
-          form: subject.form,
-          identifiable: this.hosts.isIdentifiable(subject.id, pCol, pRow),
-        })),
-      ],
-      this.time.now < this.thresholdUntilMs,
-    );
 
     // T9 systems
     this.chaos.update(delta);
@@ -864,6 +868,7 @@ export class RiftScene extends Phaser.Scene {
     this.syncDetectionPulse(delta);
     this.syncDevPresentation();
     if (!this.commitRuntimeFrame()) return;
+    this.updateNarration(delta);
     this.devRuntime?.afterUpdate(this.devElapsedMs);
     this.worldSurface?.afterUpdate(this.devElapsedMs);
     this.frameCommit?.begin();
@@ -1011,6 +1016,9 @@ export class RiftScene extends Phaser.Scene {
   private readonly onPlayerDamaged = ({ amount, source }: { amount: number; source: string }): void => {
     this.frameCommit?.markChanged();
     this.hitThisFrame = true;
+    this.lastNarrationHitMs = this.narrationMs;
+    this.atmosphereSchedule.interrupt();
+    if (this.encounter.isAtmosphere()) this.encounter.clear();
     inventoryPanel.close();
     this.recordDevPresentationEvent('player-hit', 'player', source, amount, this.player.getPosition(),
       this.ai.getEnemyById(source)?.getPosition());
@@ -1071,6 +1079,7 @@ export class RiftScene extends Phaser.Scene {
    * the enemies mid-windup and the player's swing slow.
    */
   private readonly onRunEnded = (): void => {
+    this.clearNarration();
     const freeze = this.devFixture?.freezeAfterEnd === true;
     if (freeze && this.endFrozen) return;
     inventoryPanel.close();
@@ -1094,67 +1103,75 @@ export class RiftScene extends Phaser.Scene {
     }
   };
 
-  /**
-   * T9: Chaos threshold visual + narration overlay.
-   * DOM-based (pointer-events:none, z-index:998) so it won't be clipped by the
-   * Phaser vision mask and won't block gameplay input.
-   */
   private readonly onChaosThreshold = ({ level }: { level: 1 | 2 | 3 }): void => {
     if (commitEffects.defer(() => this.onChaosThreshold({ level }))) return;
-    this.thresholdUntilMs = this.time.now + 3000;
-    audioManager.playSFX('sfx-shared-chaos-threshold');
-    const config: Record<1 | 2 | 3, { color: string; alpha: number; text: string }> = {
-      1: { color: '0, 180, 160', alpha: 0.08, text: '边界在渗透。' },
-      2: { color: '0, 180, 160', alpha: 0.12, text: '混乱在蔓延。视野正在收缩。' },
-      3: { color: '220, 40, 40', alpha: 0.15, text: '临界。净化点的回忆在模糊。' },
-    };
-    const { color, alpha, text } = config[level];
-
-    // Inject keyframes once
-    if (!document.getElementById('chaos-threshold-style')) {
-      const style = document.createElement('style');
-      style.id = 'chaos-threshold-style';
-      style.textContent = `
-        @keyframes chaos-flash-in { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes chaos-flash-out { from { opacity: 1; } to { opacity: 0; } }
-      `;
-      document.head.appendChild(style);
-    }
-
-    // Full-screen flash overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'chaos-threshold-overlay';
-    overlay.style.cssText = [
-      'position:fixed', 'top:0', 'left:0', 'width:100%', 'height:100%',
-      'z-index:998', 'pointer-events:none',
-      `background:rgba(${color}, ${alpha})`,
-      'display:flex', 'align-items:flex-start', 'justify-content:center',
-      'padding-top:20vh',
-      'animation:chaos-flash-in 0.5s ease-out forwards',
-    ].join(';');
-
-    // Narration text
-    const narration = document.createElement('div');
-    narration.style.cssText = [
-      "font:14px 'Courier New',monospace", 'color:#c8cdd4',
-      'text-shadow:0 0 8px rgba(0,0,0,0.8)',
-      'opacity:0', 'animation:chaos-flash-in 0.5s ease-out forwards',
-    ].join(';');
-    narration.textContent = text;
-    overlay.appendChild(narration);
-
-    // Mounted on the shared DOM UI root (C6), not document.body directly - the root's
-    // transform is what keeps this text scaling in step with the canvas under Scale.FIT
-    // (ui-art-overhaul.md §A1), same as every other DOM overlay.
-    getDomUiRoot().appendChild(overlay);
-
-    // Timeline: 0.5s fade-in, 2.0s hold, 0.5s fade-out, then remove (total 3s)
-    setTimeout(() => {
-      overlay.style.animation = 'chaos-flash-out 0.5s ease-in forwards';
-      narration.style.animation = 'chaos-flash-out 0.5s ease-in forwards';
-      setTimeout(() => overlay.remove(), 500);
-    }, 2500); // 500ms fade-in + 2000ms hold
+    // One committed frame may cross several levels. Publish only its highest
+    // level, after visibility and the frame transaction have both settled.
+    this.pendingNarrationThreshold = Math.max(this.pendingNarrationThreshold, level) as 1 | 2 | 3;
   };
+
+  private clearNarration(): void {
+    this.encounter.clear(); this.pendingNarrationThreshold = 0;
+    this.thresholdOverlay?.remove(); this.thresholdOverlay = null;
+    this.thresholdUntilMs = 0; this.thresholdLevel = 0;
+  }
+
+  private readonly onNarrationPause = (): void => {
+    this.encounter.setHidden(true);
+    if (this.thresholdOverlay) this.thresholdOverlay.style.visibility = 'hidden';
+  };
+
+  private readonly onNarrationResume = (): void => {
+    this.encounter.setHidden(false);
+    if (this.thresholdOverlay) this.thresholdOverlay.style.visibility = '';
+  };
+
+  private updateNarration(deltaMs: number): void {
+    if (this.runController.isRunEnded()) { this.clearNarration(); return; }
+    const step = Number.isFinite(deltaMs) ? Math.max(0, deltaMs) : 0;
+    this.narrationMs += step; this.encounter.advance(step);
+    const panelBusy = inventoryPanel.isOpen() || riftResultPanel.isOpen() || pauseMenu.isOpen()
+      || !!document.getElementById('inventory-settlement-retry') || this.entryView.active;
+    if (panelBusy) this.clearNarration();
+    if (this.pendingNarrationThreshold && !panelBusy) {
+      const level = this.pendingNarrationThreshold; this.pendingNarrationThreshold = 0;
+      // A lower event cannot replace a higher warning still on screen.
+      if (level >= this.thresholdLevel) {
+        this.thresholdLevel = level; this.thresholdUntilMs = this.narrationMs + 3_000;
+        this.atmosphereSchedule.interrupt();
+        this.encounter.showThreshold(pickAtmosphere(`chaos.${level}` as AtmospherePool));
+        audioManager.playSFX('sfx-shared-chaos-threshold');
+        this.thresholdOverlay?.remove();
+        const overlay = document.createElement('div'); overlay.className = 'chaos-threshold-overlay';
+        overlay.style.cssText = 'position:absolute;inset:0;z-index:38;pointer-events:none';
+        overlay.style.background = level === 3 ? 'rgba(220,40,40,.15)' : `rgba(0,180,160,${level === 2 ? .12 : .08})`;
+        getDomUiRoot().appendChild(overlay); this.thresholdOverlay = overlay;
+      }
+    }
+    const thresholdActive = this.narrationMs < this.thresholdUntilMs;
+    if (this.thresholdOverlay) {
+      const remaining = this.thresholdUntilMs - this.narrationMs;
+      if (remaining <= 0) { this.thresholdOverlay.remove(); this.thresholdOverlay = null; this.thresholdLevel = 0; }
+      else this.thresholdOverlay.style.opacity = String(Math.max(0, Math.min(1, (3_000 - remaining) / 500, remaining / 500)));
+    }
+    const player = this.player.getPosition(), tileSize = this.hostFloorGrid!.tileSize;
+    const col = Math.floor(player.x / tileSize), row = Math.floor(player.y / tileSize);
+    const enemies = this.ai.getEnemies();
+    const subjects: EncounterSubject[] = [
+      ...enemies.map(enemy => ({ id: enemy.getId(), form: enemy.getForm(), identifiable: this.visibility.getVisibilityAt(enemy.getPosition()) > 0 })),
+      ...this.hosts.getSubjects().map(subject => ({ id: subject.id, form: subject.form, identifiable: this.hosts.isIdentifiable(subject.id, col, row) })),
+    ];
+    const identified = this.encounter.tick(subjects, panelBusy || thresholdActive);
+    if (identified) this.atmosphereSchedule.interrupt();
+    const threatened = subjects.some(subject => subject.identifiable) || enemies.some(enemy => enemy.getDetection() > 0
+      || [AIState.SUSPICIOUS, AIState.ALERT, AIState.CHASE].includes(enemy.getState()));
+    const quiet = !panelBusy && !thresholdActive && !threatened && this.narrationMs - this.lastNarrationHitMs >= 10_000
+      && this.search.getChannelProgress01() === null && !this.extraction.canExtract()
+      && !this.extractKey?.isDown && !this.attackKey?.isDown && !this.toolKeys.some(key => key.isDown);
+    if (!quiet && this.encounter.isAtmosphere()) this.encounter.clear();
+    const cue = this.atmosphereSchedule.tick(step, quiet, !this.encounter.isBusy());
+    if (cue) this.encounter.showAtmosphere(pickAtmosphere(`rift.${cue}.${this.narrationWorld}` as AtmospherePool));
+  }
 
   /** The single line that turns combat's noise policy into an AI stimulus. */
   private readonly reportNoise = (
@@ -2081,6 +2098,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
+    this.clearNarration();
     if (this.endOwnsPhysicsPause) this.physics.world?.resume();
     this.endOwnsPhysicsPause = false;
     this.endFrozen = false;
@@ -2094,6 +2112,8 @@ export class RiftScene extends Phaser.Scene {
     this.endEntryGate();
     this.devPresentation = null; this.devWorldProjector = null;
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
+    this.events.off(Phaser.Scenes.Events.PAUSE, this.onNarrationPause, this);
+    this.events.off(Phaser.Scenes.Events.RESUME, this.onNarrationResume, this);
     this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
     this.input.keyboard?.off('keydown-TAB', this.openBag, this);
     inventoryPanel.close();

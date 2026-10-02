@@ -185,7 +185,7 @@
     "id": "COH-F018",
     "title": "遭遇低语与被发现提示",
     "domain": "encounters",
-    "summary": "实际识别条件触发限频角色低语，发现压力以屏缘反馈表达，不以敌人名字和精确分类替代识别。",
+    "summary": "实际可见识别条件触发与占位/覆盖/感知或具名语句相符的限频角色低语；扩写表保留旧token，使用独立共享轮换历史。发现压力仍以屏缘反馈表达，不以敌人名字和精确分类替代识别。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -223,6 +223,42 @@
       {
         "path": "docs/specs/ui-detection-pulse.md",
         "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-atmosphere-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "src/narrative/atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/narrative/narration-memory.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/contamination-lexicon-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/csv-codegen/generate.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/contamination-lexicon/check-observe-lines.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-rift-narration.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/atmosphere-copy-2026-10-02.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/rift-narration/result.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -231,10 +267,12 @@
       "COH-F016"
     ],
     "evidence": [
-      "COH-E-SRC-threat"
+      "COH-E-SRC-threat",
+      "COH-E117"
     ],
     "unknowns": [
-      "ui-encounter-narration 的历史 frontmatter/注释仍含早期体验未验和旧发布边界，需按当前代码与适用决策辨别；本轮未复演所有文案触发。"
+      "本轮64句包含floor16、wall8、paint12、volume12、utterance16；旧wall池仅兼容，不能把词表数量当作正式投放数量。",
+      "保留20个旧ID及其语义桶；本轮文字重写与新轮换不继承I8原句的人审认可。实际自然遭遇的表达质量与长期节奏仍待玩家复看。"
     ]
   }
 ]

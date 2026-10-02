@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { generateContaminantCatalog } from './contaminant-catalog.mjs';
+import { generateAtmosphereCopy } from '../atmosphere-copy/generate.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
@@ -966,9 +967,7 @@ function generateContaminationLexicon() {
     'observe_utt_lung',
     'observe_utt_corridor',
   ];
-  if (observeCsv.rows.length !== 20) {
-    throw new Error(`[codegen] contamination-observe-lines.csv must have exactly 20 rows (got ${observeCsv.rows.length})`);
-  }
+  const seenObserveIds = new Set();
   const observeLines = observeCsv.rows.map((cols, rowI) => {
     if (cols.length !== observeCsv.header.length) {
       throw new Error(
@@ -981,6 +980,10 @@ function generateContaminationLexicon() {
     const coverageBucket = cols[oIdx.coverage_bucket] ?? '';
     const utteranceId = cols[oIdx.utterance_id] ?? '';
     const displayToken = cols[oIdx.display_token] ?? '';
+    if (!/^[a-z][a-z0-9_]*$/.test(id) || seenObserveIds.has(id)) {
+      throw new Error(`[codegen] contamination-observe-lines.csv duplicate or invalid id '${id}'`);
+    }
+    seenObserveIds.add(id);
     if (occupancy && !OCC_OK.has(occupancy)) {
       throw new Error(`[codegen] contamination-observe-lines.csv ${id}: illegal occupancy '${occupancy}'`);
     }
@@ -993,8 +996,8 @@ function generateContaminationLexicon() {
     if (utteranceId && !uttIds.has(utteranceId)) {
       throw new Error(`[codegen] contamination-observe-lines.csv ${id}: unknown utterance_id '${utteranceId}'`);
     }
-    if (!displayToken) {
-      throw new Error(`[codegen] contamination-observe-lines.csv ${id}: empty display_token`);
+    if (!displayToken.trim() || displayToken !== displayToken.trim() || [...displayToken].length > 40 || /[\u0000-\u001f\u007f]/.test(displayToken)) {
+      throw new Error(`[codegen] contamination-observe-lines.csv ${id}: display_token must be 1–40 characters without outside whitespace/control characters`);
     }
     if (utteranceId) {
       if (occupancy || sense || coverageBucket) {
@@ -1966,3 +1969,4 @@ generateWeapons();
 console.log('[codegen] Done.');
 
 generateContaminantCatalog(ROOT, OUT_DIR);
+generateAtmosphereCopy(ROOT, OUT_DIR);

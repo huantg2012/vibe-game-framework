@@ -100,7 +100,9 @@
     "state:index": "node .agents/skills/game-state/scripts/game-state.mjs render --root . --index-only",
     "state:view": "node .agents/skills/game-state/scripts/game-state.mjs render --root .",
     "check:game-state-tool": "node --test .agents/skills/game-state/scripts/check.test.mjs",
-    "check:iteration-31": "node tools/qa/check-iteration-31.mjs"
+    "check:iteration-31": "node tools/qa/check-iteration-31.mjs",
+    "check:atmosphere": "node --import tsx tools/atmosphere-copy/check.mjs",
+    "check:haven-narration": "node --import tsx tools/qa/check-haven-narration.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1",

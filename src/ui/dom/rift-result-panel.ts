@@ -15,6 +15,7 @@ import type { ContaminantRarity, ContaminantType } from '@/types/game-types';
 import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 import type { RunPassiveReceiptView } from '@/systems/run-passive-receipt';
+import { pickAtmosphere } from '@/narrative/atmosphere';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -88,7 +89,8 @@ export const riftResultPanel = {
     const peak = Math.round(data.peakChaos);
 
     let html = `<div class="panel-title">${titleText}</div><div class="scroll-area">
-      <div class="readout-note">${data.survived ? '这一趟带回的存续。' : '本次出击结束。带入的装备与沿途所得全部遗失。'}</div>
+      <div class="readout-note" data-result-narration></div>
+      ${data.survived ? '' : '<div class="readout-note">本次出击结束。带入的装备与沿途所得全部遗失。</div>'}
       <div class="readout-hero"><span class="readout-label">带回薪柴</span>
         <strong style="color:#b29a73">${data.kindlingGained}</strong>
       </div>`;
@@ -142,6 +144,9 @@ export const riftResultPanel = {
     </div>`;
 
     panel.innerHTML = html;
+    const hasReturns = data.kindlingGained > 0 || data.acquired.length > 0 || (data.weapons?.length ?? 0) > 0;
+    panel.querySelector('[data-result-narration]')!.textContent = pickAtmosphere(data.abandoned ? 'result.abandon'
+      : !data.survived ? 'result.death' : hasReturns ? 'result.return' : 'result.empty');
     panel.querySelector('#rift-result-continue')?.addEventListener('click', () => {
       const callback = continueCallback;
       if (callback?.() !== false) destroyPanel();

@@ -1353,3 +1353,12 @@ viewer 的世界与空间选项分别来自 `WORLD_PROFILES` / `SPACE_PROFILES`�
 - `systems/world-space-surface.ts`：DEV与正式唯一地表实现；Scene独立管理两张纹理及反射时钟，不冒充DEV运行态，不添加新的游戏状态所有者。反射、基础地表裁切及碰撞同源，VOID和未知背景均黑。
 - `RiftScene`：新世界实际Host以32px范围运行、识别与裁切；人物/AI/灯光用8px物理支撑。原翻堆物件外形沿用体验场既有户外残骸材质，搜寻来源保留真实world-study ID。新世界撤离标识显示glow8px，交互距离不变。
 - 首归：真实返程即使ImpactSystem因cycle<=1豁免，持久化成功后仍打开既有 `ImpactResultPanel`；只显示真实0损伤与未积累，不播放冲击反馈。详见冲击系统正文和专项QA。
+
+
+### 2026-10-02 氛围旁白接入
+
+`data/atmosphere-lines.csv` 经 `tools/atmosphere-copy/generate.mjs`（合入 codegen）生成具名池。`src/narrative/atmosphere.ts` / `narration-memory.ts` 提供实际呈现时才消费的无放回轮换，装饰性 localStorage 与业务存档/玩法 RNG 分离；坏存储降级内存。
+
+`HavenNarration` 由 PurificationScene 持有，负责到场、交互物驻足和坐下；Rift 的 `EncounterNarration` 共用单行承接遭遇、环境和阈值，由成功帧 delta 驱动。暂停事件临时隐藏并冻结，恢复继续，退出销毁。`rift-result-panel` / `impact-result-panel` 依据实际结算数据选一条辅助句，保留原事实和操作。世界匹配只读冻结 profile.id，未知/DEV 走 generic；完整恢复预算未知时不补环境句，不添加恢复字段。
+
+规则唯一正文：[氛围旁白](specs/system-atmosphere-narration.md)；污染形态/身份仍归句法 spec。无配音、新机制、新UI容器或美术素材重制。

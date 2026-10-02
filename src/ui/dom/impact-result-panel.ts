@@ -15,6 +15,7 @@ import { getDefenseName, getToolName } from '@/ui/contaminant-names';
 import { describeSideEffectBody } from '@/ui/side-effect-labels';
 import { createCrtPanel, getDomUiRoot, scrollFocusedIntoView } from './panel-styles';
 import { audioManager } from '@/managers/audio-manager';
+import { pickAtmosphere } from '@/narrative/atmosphere';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -104,6 +105,15 @@ export const impactResultPanel = {
     root.appendChild(backdrop);
 
     panel.innerHTML = buildHtml(damages, intensity, options);
+    if (!options.firstReturnExempt) {
+      const note = document.createElement('div');
+      note.className = 'readout-note';
+      note.dataset.impactNarration = '';
+      // Only damage that actually occurred may claim something broke this return.
+      note.textContent = pickAtmosphere(damages.some(entry => entry.damage > 0 && entry.newHp <= 0)
+        ? 'impact.broken' : damages.some(entry => entry.damage > 0) ? 'impact.damaged' : 'impact.held');
+      panel.querySelector('.scroll-area')?.prepend(note);
+    }
     root.appendChild(panel);
     scrollFocusedIntoView(panel);
 

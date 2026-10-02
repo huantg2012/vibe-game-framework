@@ -466,7 +466,7 @@ assert(
   'RiftScene must not import src/gym',
 );
 assert(
-  /this\.hosts\.create\(\s*this,\s*layout,\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*,\s*\{[^}]*\bliveMotion:\s*true\b/.test(
+  /this\.hosts\.create\(\s*this,\s*(?:hostLayout|layout),\s*this\.combat,\s*this\.chaos,\s*this\.visibilityAt\s*,\s*\{[^}]*\bliveMotion:\s*true\b/.test(
     riftSrc,
   ),
   'RiftScene hosts.create passes { liveMotion: true }',

@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "at": "2026-10-02T01:31:47.392Z",
+  "checks": [
+    "entry does not precede two quiet seconds",
+    "eligible entry is one opportunity",
+    "quiet line observes minimum 45 seconds",
+    "quiet line after interval",
+    "three-line sortie cap",
+    "busy entry expires without delayed catch-up",
+    "busy exploration opportunity discarded instead of queued",
+    "unknown checkpoint budget never replays entry or replenishes ambient cap",
+    "encounter/threshold cancels pending entry",
+    "first visible edge speaks",
+    "continuous visibility never repeats after cooldown",
+    "same identity next encounter rotates prose without changing identity",
+    "different individual shares identity cooldown",
+    "blocked edge not shown",
+    "blocked edge never becomes queued speech",
+    "new visible edge after silence still works",
+    "threshold owns the existing single slot",
+    "without Scene delta neither opacity nor text advances",
+    "active time releases slot",
+    "destroy removes the only line immediately",
+    "real ChaosSystem crosses three thresholds in one frame; Rift consumes only highest prose",
+    "actual Scene blur pause hides and freezes narration and threshold flash",
+    "resume restores current reading then finishes and removes warning",
+    "real scene shutdown leaves neither narration nor threshold overlay"
+  ],
+  "active": {
+    "world": "ivory-basin",
+    "level": 3,
+    "text": "先把脚从地上抬起来。",
+    "flash": 1,
+    "chaos": 102.28767850000001,
+    "consumed": [
+      "atmosphere:chaos.3"
+    ]
+  },
+  "errors": [],
+  "scope": "Controlled module/scheduler tests and actual Rift production entry, coalesced warning, pause/resume/shutdown in test-owned browser. Quiet encounters use controlled time; no full natural sortie claim."
+}

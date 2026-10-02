@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "at": "2026-10-02T01:30:56.228Z",
+  "origin": "http://127.0.0.1:3038/",
+  "checks": [
+    "real arrival after title, blur hides/freezes and resume retains remaining reading",
+    "real sit/stand clears; rapid resit reuses one line; continued rest becomes silent",
+    "later rest consumes a different line",
+    "Continue after reload retains used rest history without changing gameplay record format",
+    "actual result components: empty/loaded/death/abandon retain facts; exempt/held/old broken/damaged/new broken choose truthful pool"
+  ],
+  "lines": [
+    {
+      "context": "real new-game arrival",
+      "text": "先在光里站稳。"
+    },
+    {
+      "context": "real E sit",
+      "text": "能坐的只有这一截。也够了。"
+    },
+    {
+      "context": "later rest",
+      "text": "把脚收近一点。就这一小块地方暖。"
+    },
+    {
+      "context": "rest after real page reload",
+      "text": "这块断石原来接着哪里，已经看不出了。"
+    },
+    {
+      "pool": "result.empty",
+      "text": "没有添上什么。先回去。"
+    },
+    {
+      "pool": "result.return",
+      "text": "带得走的，已经在这里了。"
+    },
+    {
+      "pool": "result.death",
+      "text": "鞋尖停在最后一步。"
+    },
+    {
+      "pool": "result.abandon",
+      "text": "这趟的东西不再清点。"
+    },
+    {
+      "pool": null,
+      "text": null
+    },
+    {
+      "pool": "impact.held",
+      "text": "几处接缝都撑过来了。"
+    },
+    {
+      "pool": "impact.damaged",
+      "text": "有些东西又得修一遍。"
+    },
+    {
+      "pool": "impact.broken",
+      "text": "先把断掉的那一处找出来。"
+    }
+  ],
+  "errors": [],
+  "scope": "Fresh isolated context, actual root menu and E/Esc sitting. Result/impact components tested with explicitly injected presentation fixtures, not natural full sorties. User browser/save untouched."
+}

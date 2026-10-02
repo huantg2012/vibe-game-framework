@@ -104,7 +104,7 @@ try {
  const beforeRest=await state();states.push({at:'rest-approach',...beforeRest});
  assert.equal(beforeRest.nearTarget,'rest');await gameKey('e');await wait(850);
  const seated=await state();states.push({at:'seated',...seated});assert.equal(seated.resting,true);
- assert.equal(await page.locator('#purification-rest-line').textContent(),'石头还是冷的。火还没有熄。');
+ assert(await page.locator('#purification-rest-line').evaluate(async el => { const { ATMOSPHERE_LINES } = await import('/src/generated/atmosphere-copy-data.ts'); return ATMOSPHERE_LINES['haven.rest'].some(row => row.text === el.textContent); }));
  await page.screenshot({path:path.join(out, 'seated.png')});
  await gameKey('e');await wait(500);assert.equal((await state()).resting,false);checks.push('native E sit and stand, atmospheric line and modest zoom');
  if (!captureOnly) {

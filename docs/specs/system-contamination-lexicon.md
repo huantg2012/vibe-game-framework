@@ -3,7 +3,7 @@ status: DRAFT
 created-by: design conversation（迭代 1）
 created-when: 2026-08-20
 last-modified-by: code（I18 R4-C：实体占空共享场与合法局部宿主）
-last-modified-date: 2026-09-10
+last-modified-date: 2026-10-02
 interface-changed: true
 interfaces-with:
   - system-enemy-ai                 # 一份五态仍由本接口的消费方拥有；句法只决定孔谱与填词，禁止第二份 FSM。出击甲 spawn 带 form
@@ -11,6 +11,7 @@ interfaces-with:
   - system-map-generation           # 出生钉层 + 一份 contaminationDraw（SortieDraw）；菌落与场不得加墙
   - system-movement-vision          # 占空体积低于视野蒙层；反视读玩家视野扫核；平衡不变量来源
   - system-chaos-scavenge-extract   # 踩踏 / 场内加速混乱走既有混乱通道，不另造一条隐蔽伤害
+  - system-atmosphere-narration    # 全游戏选句记忆与环境/阈值优先级
   - ui-encounter-narration          # 本体系的识别表面（载体 / 视觉 / U1–U12）；不是独立玩法。逻辑在本文
 exposes:
   - 底材（基体 × 覆盖深度）、孔谱（连续性 × 占位）、词素四槽、成句配方
@@ -196,39 +197,21 @@ interface ContaminationForm {
 1. 同一身份键：本趟出击冷却 **60s**（从该行开始显示起算）。冷却内静默。同图多只占漆若身份键相同（同份 form 复制），**共享这条冷却**——第一口报完，其余静默。这是特性：教「这张图一种有主的漆」，不是漏报。禁止为加量拆身份键或改本条秒数。
 2. 任意身份：两条记录之间至少空 **2.5s**（含上一条淡出）。
 3. 同时只允许 **1 行**。
-4. 与混乱阈值全屏层重叠：阈值优先；阈值结束后若仍在冷却窗内则**作废这次**，不补打。
+4. 混乱阈值占用同一底部低语位置并优先覆盖；阈值期间发生的识别边沿作废，不补打。普通环境句可被遭遇打断。
 5. 出击结束清空冷却表。不进存档。
 
 ### 上屏（观察句）
 
-骨架（I8-R2）：`[观察句]`。不上「识别。」。成句命中时观察句换成该成句专用句，并可加短标记节点。观察句一个 span，禁止再拆成覆盖 / 基体 / 占位三个分类标签（DEC-104 否决精确分类）。整行按详细描述计不超过 40 字。本表面允许第一人称自语（「我」或零主语）与「他 / 它」；禁止「我们」、禁止「你」、感叹号、软件词、说明书词（危险 / 敌人 / 注意）。禁止电报缩写。覆盖深度不上屏，化进选哪个句池（渗透走残余、话说到一半；改写与覆盖走关死、更发麻）。排版与成品行见 `ui-encounter-narration.md`。CSV 由 I8-N 落地。
+骨架（I8-R2）：`[观察句]`。不上「识别。」。成句命中时观察句换成该成句专用句，并可加短标记节点。观察句一个 span，禁止再拆成覆盖 / 基体 / 占位三个分类标签（DEC-104 否决精确分类）。整行按详细描述计不超过 40 字。本表面允许第一人称自语（「我」或零主语）与「他 / 它」；禁止「我们」、禁止「你」、感叹号、软件词、说明书词（危险 / 敌人 / 注意）。禁止电报缩写。覆盖深度不上屏，只参与语义池选择。句子描述能观察到的异常与行动顾虑，不强行让所有基体潮湿、呼吸或令人发麻。呈现见 `ui-encounter-narration.md`，完整文本只维护于 CSV。
 
-选行（code 不得另猜；I8-N 按此建表；同一条件一个句池，按宿主种子抽 1 行）：
+选行以 `data/contamination-observe-lines.csv` 为唯一文本源，CSV → `contamination-lexicon-data.ts`。目前 64 行；保留旧 token ID 供历史工具解析，不锁死总数或旧句字面。
 
-| 条件 | 行 id | 观察句 |
-| ---- | ----- | ------ |
-| 占地 + 视锥或窄视 | observe_jia_look_1 | 慢一点，慢一点，别被他看见。 |
-| 同上 | observe_jia_look_2 | 别动……他就在那儿看着路。 |
-| 占地 + 听噪 | observe_jia_hear_1 | 轻一点，轻一点，别让他听见。 |
-| 同上 | observe_jia_hear_2 | 别出声……他那边醒着。 |
-| 占墙 + 渗透 | observe_yi_infiltrate_1 | 那道缝还在张着，贴过去会…… |
-| 同上 | observe_yi_infiltrate_2 | 别靠墙，别靠墙，那道缝还开着。 |
-| 占墙 + 改写或覆盖 | observe_yi_overwrite_1 | 缝里那点亮令人发麻，我走中间。 |
-| 同上 | observe_yi_overwrite_2 | 别贴墙，别贴墙，那里已经不是墙了。 |
-| 占漆 + 渗透 | observe_bing_infiltrate_1 | 这层膜令人发麻，我还是不要…… |
-| 同上 | observe_bing_infiltrate_2 | 地是潮的，绕着走吧。 |
-| 占漆 + 改写或覆盖 | observe_bing_overwrite_1 | 那滩在涨，我还是不要从那儿过…… |
-| 同上 | observe_bing_overwrite_2 | 别过去，别过去，它在呼吸。 |
-| 占空 + 渗透 | observe_ding_infiltrate_1 | 这段路窄得不对，换一条吧。 |
-| 同上 | observe_ding_infiltrate_2 | 别走进去……边上那条还通着。 |
-| 占空 + 改写或覆盖 | observe_ding_overwrite_1 | 那段雾令人发麻，我还是绕开…… |
-| 同上 | observe_ding_overwrite_2 | 别穿过去，别穿过去，那已经不是路了。 |
-| 成句门还想关 | observe_utt_door | 门还在自己关，别站在当中。 |
-| 成句缝里的眼 | observe_utt_eye | 别贴边，别贴边，缝里有东西在看。 |
-| 成句簇的肺 | observe_utt_lung | 这滩令人发麻，等一等，等一等。 |
-| 成句走廊在看你 | observe_utt_corridor | 别往里走，别往里走，走廊看着我。 |
-
-成句命中优先于无名行。narrow 与 cone 同走甲·看句池。
+- 成句优先于无名池；按 utteranceId 分池。
+- 占地按主感知分看/听，narrow 与 cone 同池。
+- 其他占位按 occupancy × coverageBucket 分池；infiltrate 一池，overwrite/covered 共池。占墙只保留旧内容兼容，不因此重新加入生产敌人。
+- 正式显示通过共享 `chooseNarration` 无放回选句；轮换作用域为语义句池，不能用 hostId 或身份键割碎池。固定宿主种子的 `encounterNodes` 只保留给开发复现，正式显示不使用它抽句。
+- 身份限频仍与文案轮换分开。当前出击的 60 秒身份冷却不持久化；已读句历史独立存于装饰性存储，不改玩法存档、种子和生成结果。
+- 具体避重、异常存储降级、普通环境句及阈值优先级归 [氛围旁白系统](system-atmosphere-narration.md)。
 
 ### 成句标记映射
 

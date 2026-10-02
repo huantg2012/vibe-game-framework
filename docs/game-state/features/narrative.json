@@ -3,11 +3,13 @@
     "id": "COH-F043",
     "title": "世界主题与游戏内叙事载体",
     "domain": "narrative",
-    "summary": "世界以被改写的碎片、净化点和污染异物为语义基础，玩家通过场景、物件说明、遭遇低语和结果文本接触主题。",
+    "summary": "世界主题通过场景、物件说明与节制的角色自语呈现。净化点坐下/驻足/归来、裂隙入场/安全间隙/混乱阈值及结果报告已接共享CSV旁白，按语义池无放回轮换；独立表现历史跨重载保留，不进入玩法存档或随机流。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "标题、Rift 遭遇低语、物件详情、基地报告"
+      "标题与物件详情保留原入口；净化点坐下、交互物前驻足及到场后短句",
+      "正式Rift入场、安全间隙、实际可见遭遇及混乱阈值",
+      "撤离/空载/死亡/放弃结果与实际归来冲击报告；首次归来免冲击不抽冲击旁白"
     ],
     "sources": [
       {
@@ -38,6 +40,86 @@
         "path": "docs/progress/decisions-log.md",
         "role": "decision",
         "note": "DEC-180仅更新净化点材质/色彩约束，未增写设施身世或世界规则。"
+      },
+      {
+        "path": "docs/specs/system-atmosphere-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/ui-encounter-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "data/atmosphere-lines.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/atmosphere-copy-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/narrative/atmosphere.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/narrative/narration-memory.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/haven-narration.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/rift-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/ui/dom/impact-result-panel.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/atmosphere-copy/generate.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/atmosphere-copy/check.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-haven-narration.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-rift-narration.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/atmosphere-copy-2026-10-02.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/atmosphere-copy-2026-10-02.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-atmosphere-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/atmosphere-copy-2026-10-02/result.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/rift-narration/result.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -46,10 +128,13 @@
       "COH-F034"
     ],
     "evidence": [
-      "COH-E-SRC-narrative"
+      "COH-E-SRC-narrative",
+      "COH-E117"
     ],
     "unknowns": [
-      "世界设定不等于所有设定已进入游戏；未找到正式任务日志、NPC 对话树或剧情章节入口，不登记为已实现内容。"
+      "本轮154句氛围文案与64句遭遇低语的写作质量、自然出现节奏及长期重复感仍待玩家复看；技术/生命周期验证不代替体验认可。",
+      "64句遭遇表含8句旧wall兼容内容，保留旧token不表示全部条目均在当前正式世界投放；五世界文案仅引用已有材料，不增设地点身世或生物。",
+      "世界设定不等于所有设定已进入游戏；未找到正式任务日志、NPC对话树或剧情章节入口，不登记为已实现内容。"
     ]
   }
 ]
