@@ -1,0 +1,3819 @@
+[
+  {
+    "file": "broken-shell-medium-20261003-0.jpg",
+    "state": {
+      "world": {
+        "identity": "broken-shell-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "70a011ab",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 10553,
+        "reachableBodySeats": 5808,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 580,
+          "y": 452
+        },
+        "enemyPoint": {
+          "x": 716,
+          "y": 172
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 212,
+        "solidCells": 738,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          },
+          {
+            "id": 2,
+            "role": "relief"
+          },
+          {
+            "id": 3,
+            "role": "relief"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": false,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "presentation": {
+        "mode": "normal",
+        "motion": true,
+        "phase": "静默",
+        "elapsedMs": 501.3600000000791,
+        "activity": 0.22,
+        "lastRenderMs": 0.20000004768371582,
+        "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+        "gpuBytes": 13762560,
+        "shoulderLight": {
+          "x": 271.51276345814017,
+          "y": 371.8533491522237,
+          "z": 28,
+          "radius": 264,
+          "intensity": 3.1,
+          "color": [
+            1,
+            0.94,
+            0.86
+          ],
+          "castsShadow": false
+        },
+        "sourceLights": [
+          {
+            "x": 474,
+            "y": 312,
+            "z": 45.71456527709961,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          },
+          {
+            "x": 659,
+            "y": 277,
+            "z": 3.969188690185547,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          }
+        ],
+        "geometryDiagnostics": {
+          "identity": "broken-shell-medium",
+          "family": "broken-shell",
+          "grade": "medium",
+          "seed": 20261003,
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "geometryFingerprint": "70a011ab",
+          "qualification": "author-local-art-lab; not a production-world admission",
+          "projection": "native XY topdown; height projection 0",
+          "nativeCanvas": [
+            960,
+            640
+          ],
+          "cameraZoom": 1.5,
+          "actorBody": 20,
+          "movementPxPerSecond": 80,
+          "supportCell": 8,
+          "triangles": 10553,
+          "reachableBodySeats": 5808,
+          "spawnPoint": {
+            "x": 260,
+            "y": 380
+          },
+          "exitPoint": {
+            "x": 196,
+            "y": 460
+          },
+          "searchPoint": {
+            "x": 580,
+            "y": 452
+          },
+          "enemyPoint": {
+            "x": 716,
+            "y": 172
+          },
+          "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+          "erosionCells": 212,
+          "solidCells": 738,
+          "physicalRoles": [
+            {
+              "id": 1,
+              "role": "solid"
+            },
+            {
+              "id": 2,
+              "role": "relief"
+            },
+            {
+              "id": 3,
+              "role": "relief"
+            }
+          ],
+          "geometryBeforeDeployment": true,
+          "dynamicTopology": false,
+          "gradeMechanics": false,
+          "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+        },
+        "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+        "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+        "sounds": {
+          "family": "broken-shell",
+          "grade": "medium",
+          "phase": "quiet",
+          "paused": false,
+          "disposed": false,
+          "clock": 501.3600000000791,
+          "pressure": 0,
+          "sourceIndex": -1,
+          "source": {
+            "x": 0,
+            "y": 0
+          },
+          "gain": 0,
+          "pan": 0,
+          "loop": null,
+          "lastEvent": null,
+          "eventCount": 0,
+          "maximumOwnedVoices": 2,
+          "priority": "low",
+          "runtimeSynthesis": false
+        }
+      },
+      "patrol": {
+        "mode": "five-station",
+        "active": true,
+        "status": "沿边巡查",
+        "outcome": "running",
+        "elapsedMs": 333.43999999999056,
+        "activeMovementInputMs": 325.11000000000917,
+        "minimumDurationMs": 0,
+        "stationDwellMs": 650,
+        "completedLegs": 0,
+        "legDirection": 1,
+        "blocked": null,
+        "actualDistance": 19.631728721508953,
+        "targetIndex": 2,
+        "plannedDistance": 1744,
+        "stations": [
+          {
+            "name": "侧缘",
+            "position": {
+              "x": 340,
+              "y": 260
+            },
+            "index": 24
+          },
+          {
+            "name": "背面",
+            "position": {
+              "x": 476,
+              "y": 84
+            },
+            "index": 63
+          },
+          {
+            "name": "另一侧缘",
+            "position": {
+              "x": 604,
+              "y": 260
+            },
+            "index": 101
+          },
+          {
+            "name": "搜取点",
+            "position": {
+              "x": 580,
+              "y": 452
+            },
+            "index": 168
+          },
+          {
+            "name": "回到入口",
+            "position": {
+              "x": 260,
+              "y": 380
+            },
+            "index": 217
+          }
+        ],
+        "position": {
+          "x": 270.18014162043806,
+          "y": 371.80979670731887
+        },
+        "samples": [
+          {
+            "elapsedMs": 8.329999999981373,
+            "x": 260,
+            "y": 380,
+            "actualDistance": 0,
+            "activeMovementInputMs": 0
+          }
+        ],
+        "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+      },
+      "runtime": {
+        "ready": true,
+        "running": true,
+        "starting": false,
+        "performance": {
+          "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+          "state": "sampling",
+          "warmupMs": 2000,
+          "requestedMs": 60000,
+          "sampledMs": 0,
+          "sampleCapacity": 60001,
+          "frames": null,
+          "cpuSubmission": null,
+          "heapStartBytes": 148694355,
+          "heapEndBytes": 148694355,
+          "pauseSegmentsExcluded": 0,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "viewport": [
+            1280,
+            900
+          ],
+          "dpr": 1,
+          "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+        },
+        "paused": false,
+        "probe": {
+          "elapsedMs": 501.3600000000791,
+          "ended": false,
+          "player": {
+            "x": 271.51276345814017,
+            "y": 371.8533491522237
+          },
+          "hp": 100,
+          "chaos": 15.198037200000046,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 172
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": []
+        }
+      }
+    }
+  },
+  {
+    "file": "broken-shell-medium-20261003-1.jpg",
+    "state": {
+      "world": {
+        "identity": "broken-shell-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "70a011ab",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 10553,
+        "reachableBodySeats": 5808,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 580,
+          "y": 452
+        },
+        "enemyPoint": {
+          "x": 716,
+          "y": 172
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 212,
+        "solidCells": 738,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          },
+          {
+            "id": 2,
+            "role": "relief"
+          },
+          {
+            "id": 3,
+            "role": "relief"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": false,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "presentation": {
+        "mode": "normal",
+        "motion": true,
+        "phase": "静默",
+        "elapsedMs": 5601.410000000081,
+        "activity": 0.22,
+        "lastRenderMs": 0.40000009536743164,
+        "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+        "gpuBytes": 13762560,
+        "shoulderLight": {
+          "x": 373.83837635046353,
+          "y": 148.2534364602964,
+          "z": 28,
+          "radius": 264,
+          "intensity": 3.1,
+          "color": [
+            1,
+            0.94,
+            0.86
+          ],
+          "castsShadow": false
+        },
+        "sourceLights": [
+          {
+            "x": 474,
+            "y": 312,
+            "z": 45.71456527709961,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          },
+          {
+            "x": 659,
+            "y": 277,
+            "z": 3.969188690185547,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          }
+        ],
+        "geometryDiagnostics": {
+          "identity": "broken-shell-medium",
+          "family": "broken-shell",
+          "grade": "medium",
+          "seed": 20261003,
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "geometryFingerprint": "70a011ab",
+          "qualification": "author-local-art-lab; not a production-world admission",
+          "projection": "native XY topdown; height projection 0",
+          "nativeCanvas": [
+            960,
+            640
+          ],
+          "cameraZoom": 1.5,
+          "actorBody": 20,
+          "movementPxPerSecond": 80,
+          "supportCell": 8,
+          "triangles": 10553,
+          "reachableBodySeats": 5808,
+          "spawnPoint": {
+            "x": 260,
+            "y": 380
+          },
+          "exitPoint": {
+            "x": 196,
+            "y": 460
+          },
+          "searchPoint": {
+            "x": 580,
+            "y": 452
+          },
+          "enemyPoint": {
+            "x": 716,
+            "y": 172
+          },
+          "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+          "erosionCells": 212,
+          "solidCells": 738,
+          "physicalRoles": [
+            {
+              "id": 1,
+              "role": "solid"
+            },
+            {
+              "id": 2,
+              "role": "relief"
+            },
+            {
+              "id": 3,
+              "role": "relief"
+            }
+          ],
+          "geometryBeforeDeployment": true,
+          "dynamicTopology": false,
+          "gradeMechanics": false,
+          "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+        },
+        "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+        "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+        "sounds": {
+          "family": "broken-shell",
+          "grade": "medium",
+          "phase": "quiet",
+          "paused": false,
+          "disposed": false,
+          "clock": 5601.410000000081,
+          "pressure": 0,
+          "sourceIndex": -1,
+          "source": {
+            "x": 0,
+            "y": 0
+          },
+          "gain": 0,
+          "pan": 0,
+          "loop": null,
+          "lastEvent": null,
+          "eventCount": 0,
+          "maximumOwnedVoices": 2,
+          "priority": "low",
+          "runtimeSynthesis": false
+        }
+      },
+      "patrol": {
+        "mode": "five-station",
+        "active": true,
+        "status": "观察：侧缘",
+        "outcome": "running",
+        "elapsedMs": 5433.489999999993,
+        "activeMovementInputMs": 4766.580000000003,
+        "minimumDurationMs": 0,
+        "stationDwellMs": 650,
+        "completedLegs": 0,
+        "legDirection": 1,
+        "blocked": null,
+        "actualDistance": 359.0416130385218,
+        "targetIndex": 43,
+        "plannedDistance": 1744,
+        "stations": [
+          {
+            "name": "侧缘",
+            "position": {
+              "x": 340,
+              "y": 260
+            },
+            "index": 24
+          },
+          {
+            "name": "背面",
+            "position": {
+              "x": 476,
+              "y": 84
+            },
+            "index": 63
+          },
+          {
+            "name": "另一侧缘",
+            "position": {
+              "x": 604,
+              "y": 260
+            },
+            "index": 101
+          },
+          {
+            "name": "搜取点",
+            "position": {
+              "x": 580,
+              "y": 452
+            },
+            "index": 168
+          },
+          {
+            "name": "回到入口",
+            "position": {
+              "x": 260,
+              "y": 380
+            },
+            "index": 217
+          }
+        ],
+        "position": {
+          "x": 373.94865608260926,
+          "y": 148.72109797913086
+        },
+        "samples": [
+          {
+            "elapsedMs": 8.329999999981373,
+            "x": 260,
+            "y": 380,
+            "actualDistance": 0,
+            "activeMovementInputMs": 0
+          },
+          {
+            "elapsedMs": 516.5100000000092,
+            "x": 284.8445251014822,
+            "y": 371.9919523934947,
+            "actualDistance": 34.298395388175564,
+            "activeMovementInputMs": 508.1800000000278
+          },
+          {
+            "elapsedMs": 1016.6300000000296,
+            "x": 324.84452154808173,
+            "y": 371.9999982317243,
+            "actualDistance": 74.29839538817582,
+            "activeMovementInputMs": 1008.3000000000482
+          },
+          {
+            "elapsedMs": 1516.7800000000059,
+            "x": 340.0200887166213,
+            "y": 351.1734500885065,
+            "actualDistance": 111.77288806249489,
+            "activeMovementInputMs": 1508.4500000000244
+          },
+          {
+            "elapsedMs": 2024.8500000000013,
+            "x": 340.0000026639696,
+            "y": 309.84014927749183,
+            "actualDistance": 153.10622139582821,
+            "activeMovementInputMs": 2016.5200000000198
+          },
+          {
+            "elapsedMs": 2525.0200000000127,
+            "x": 340.0000000006092,
+            "y": 269.84014927749274,
+            "actualDistance": 193.10622139582765,
+            "activeMovementInputMs": 2516.6900000000314
+          },
+          {
+            "elapsedMs": 3025.1199999999862,
+            "x": 339.9999999998663,
+            "y": 257.84041594415817,
+            "actualDistance": 205.10595472916222,
+            "activeMovementInputMs": 2616.560000000003
+          },
+          {
+            "elapsedMs": 3533.459999999969,
+            "x": 355.76316535258155,
+            "y": 259.8890184988247,
+            "actualDistance": 221.12426177424942,
+            "activeMovementInputMs": 2866.5499999999906
+          },
+          {
+            "elapsedMs": 4041.7500000000014,
+            "x": 356.00073735546414,
+            "y": 222.02235260492236,
+            "actualDistance": 260.6225980430586,
+            "activeMovementInputMs": 3374.840000000023
+          },
+          {
+            "elapsedMs": 4541.779999999961,
+            "x": 356.0000002466681,
+            "y": 182.02235262749227,
+            "actualDistance": 300.622598043058,
+            "activeMovementInputMs": 3874.8699999999735
+          },
+          {
+            "elapsedMs": 5041.789999999992,
+            "x": 364.046027472652,
+            "y": 159.8290418600454,
+            "actualDistance": 334.0969924533682,
+            "activeMovementInputMs": 4374.880000000001
+          }
+        ],
+        "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+      },
+      "runtime": {
+        "ready": true,
+        "running": true,
+        "starting": false,
+        "performance": {
+          "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+          "state": "sampling",
+          "warmupMs": 2000,
+          "requestedMs": 60000,
+          "sampledMs": 3416.7,
+          "sampleCapacity": 60001,
+          "frames": {
+            "count": 410,
+            "p50Ms": 8.3,
+            "p95Ms": 9.4,
+            "maxMs": 10.4,
+            "over33ms": 0
+          },
+          "cpuSubmission": {
+            "count": 411,
+            "p50Ms": 1.6,
+            "p95Ms": 2.1,
+            "maxMs": 2.3,
+            "over33ms": 0
+          },
+          "heapStartBytes": 148694355,
+          "heapEndBytes": 119253150,
+          "pauseSegmentsExcluded": 0,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "viewport": [
+            1280,
+            900
+          ],
+          "dpr": 1,
+          "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+        },
+        "paused": false,
+        "probe": {
+          "elapsedMs": 5601.410000000081,
+          "ended": false,
+          "player": {
+            "x": 373.83837635046353,
+            "y": 148.2534364602964
+          },
+          "hp": 100,
+          "chaos": 17.212556949999875,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 172
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": []
+        }
+      }
+    }
+  },
+  {
+    "file": "broken-shell-medium-20261003-2.jpg",
+    "state": {
+      "world": {
+        "identity": "broken-shell-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "70a011ab",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 10553,
+        "reachableBodySeats": 5808,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 580,
+          "y": 452
+        },
+        "enemyPoint": {
+          "x": 716,
+          "y": 172
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 212,
+        "solidCells": 738,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          },
+          {
+            "id": 2,
+            "role": "relief"
+          },
+          {
+            "id": 3,
+            "role": "relief"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": false,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "presentation": {
+        "mode": "normal",
+        "motion": true,
+        "phase": "静默",
+        "elapsedMs": 10859.770000000193,
+        "activity": 0.22,
+        "lastRenderMs": 0,
+        "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+        "gpuBytes": 13762560,
+        "shoulderLight": {
+          "x": 606.281454232114,
+          "y": 89.38480921174337,
+          "z": 28,
+          "radius": 264,
+          "intensity": 3.1,
+          "color": [
+            1,
+            0.94,
+            0.86
+          ],
+          "castsShadow": false
+        },
+        "sourceLights": [
+          {
+            "x": 474,
+            "y": 312,
+            "z": 45.71456527709961,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          },
+          {
+            "x": 659,
+            "y": 277,
+            "z": 3.969188690185547,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          }
+        ],
+        "geometryDiagnostics": {
+          "identity": "broken-shell-medium",
+          "family": "broken-shell",
+          "grade": "medium",
+          "seed": 20261003,
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "geometryFingerprint": "70a011ab",
+          "qualification": "author-local-art-lab; not a production-world admission",
+          "projection": "native XY topdown; height projection 0",
+          "nativeCanvas": [
+            960,
+            640
+          ],
+          "cameraZoom": 1.5,
+          "actorBody": 20,
+          "movementPxPerSecond": 80,
+          "supportCell": 8,
+          "triangles": 10553,
+          "reachableBodySeats": 5808,
+          "spawnPoint": {
+            "x": 260,
+            "y": 380
+          },
+          "exitPoint": {
+            "x": 196,
+            "y": 460
+          },
+          "searchPoint": {
+            "x": 580,
+            "y": 452
+          },
+          "enemyPoint": {
+            "x": 716,
+            "y": 172
+          },
+          "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+          "erosionCells": 212,
+          "solidCells": 738,
+          "physicalRoles": [
+            {
+              "id": 1,
+              "role": "solid"
+            },
+            {
+              "id": 2,
+              "role": "relief"
+            },
+            {
+              "id": 3,
+              "role": "relief"
+            }
+          ],
+          "geometryBeforeDeployment": true,
+          "dynamicTopology": false,
+          "gradeMechanics": false,
+          "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+        },
+        "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+        "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+        "sounds": {
+          "family": "broken-shell",
+          "grade": "medium",
+          "phase": "quiet",
+          "paused": false,
+          "disposed": false,
+          "clock": 10859.770000000193,
+          "pressure": 0,
+          "sourceIndex": -1,
+          "source": {
+            "x": 0,
+            "y": 0
+          },
+          "gain": 0,
+          "pan": 0,
+          "loop": null,
+          "lastEvent": null,
+          "eventCount": 0,
+          "maximumOwnedVoices": 2,
+          "priority": "low",
+          "runtimeSynthesis": false
+        }
+      },
+      "patrol": {
+        "mode": "five-station",
+        "active": true,
+        "status": "观察：背面",
+        "outcome": "running",
+        "elapsedMs": 10691.850000000099,
+        "activeMovementInputMs": 9366.489999999998,
+        "minimumDurationMs": 0,
+        "stationDwellMs": 650,
+        "completedLegs": 0,
+        "legDirection": 1,
+        "blocked": null,
+        "actualDistance": 690.1123430566693,
+        "targetIndex": 80,
+        "plannedDistance": 1744,
+        "stations": [
+          {
+            "name": "侧缘",
+            "position": {
+              "x": 340,
+              "y": 260
+            },
+            "index": 24
+          },
+          {
+            "name": "背面",
+            "position": {
+              "x": 476,
+              "y": 84
+            },
+            "index": 63
+          },
+          {
+            "name": "另一侧缘",
+            "position": {
+              "x": 604,
+              "y": 260
+            },
+            "index": 101
+          },
+          {
+            "name": "搜取点",
+            "position": {
+              "x": 580,
+              "y": 452
+            },
+            "index": 168
+          },
+          {
+            "name": "回到入口",
+            "position": {
+              "x": 260,
+              "y": 380
+            },
+            "index": 217
+          }
+        ],
+        "position": {
+          "x": 606.281454232114,
+          "y": 89.38480921174337
+        },
+        "samples": [
+          {
+            "elapsedMs": 8.329999999981373,
+            "x": 260,
+            "y": 380,
+            "actualDistance": 0,
+            "activeMovementInputMs": 0
+          },
+          {
+            "elapsedMs": 516.5100000000092,
+            "x": 284.8445251014822,
+            "y": 371.9919523934947,
+            "actualDistance": 34.298395388175564,
+            "activeMovementInputMs": 508.1800000000278
+          },
+          {
+            "elapsedMs": 1016.6300000000296,
+            "x": 324.84452154808173,
+            "y": 371.9999982317243,
+            "actualDistance": 74.29839538817582,
+            "activeMovementInputMs": 1008.3000000000482
+          },
+          {
+            "elapsedMs": 1516.7800000000059,
+            "x": 340.0200887166213,
+            "y": 351.1734500885065,
+            "actualDistance": 111.77288806249489,
+            "activeMovementInputMs": 1508.4500000000244
+          },
+          {
+            "elapsedMs": 2024.8500000000013,
+            "x": 340.0000026639696,
+            "y": 309.84014927749183,
+            "actualDistance": 153.10622139582821,
+            "activeMovementInputMs": 2016.5200000000198
+          },
+          {
+            "elapsedMs": 2525.0200000000127,
+            "x": 340.0000000006092,
+            "y": 269.84014927749274,
+            "actualDistance": 193.10622139582765,
+            "activeMovementInputMs": 2516.6900000000314
+          },
+          {
+            "elapsedMs": 3025.1199999999862,
+            "x": 339.9999999998663,
+            "y": 257.84041594415817,
+            "actualDistance": 205.10595472916222,
+            "activeMovementInputMs": 2616.560000000003
+          },
+          {
+            "elapsedMs": 3533.459999999969,
+            "x": 355.76316535258155,
+            "y": 259.8890184988247,
+            "actualDistance": 221.12426177424942,
+            "activeMovementInputMs": 2866.5499999999906
+          },
+          {
+            "elapsedMs": 4041.7500000000014,
+            "x": 356.00073735546414,
+            "y": 222.02235260492236,
+            "actualDistance": 260.6225980430586,
+            "activeMovementInputMs": 3374.840000000023
+          },
+          {
+            "elapsedMs": 4541.779999999961,
+            "x": 356.0000002466681,
+            "y": 182.02235262749227,
+            "actualDistance": 300.622598043058,
+            "activeMovementInputMs": 3874.8699999999735
+          },
+          {
+            "elapsedMs": 5041.789999999992,
+            "x": 364.046027472652,
+            "y": 159.8290418600454,
+            "actualDistance": 334.0969924533682,
+            "activeMovementInputMs": 4374.880000000001
+          },
+          {
+            "elapsedMs": 5541.799999999979,
+            "x": 372.29183724911263,
+            "y": 141.31609752344266,
+            "actualDistance": 366.62974991875564,
+            "activeMovementInputMs": 4874.8899999999885
+          },
+          {
+            "elapsedMs": 6050.129999999986,
+            "x": 380.1441009724342,
+            "y": 122.94592629122702,
+            "actualDistance": 398.82616332942183,
+            "activeMovementInputMs": 5383.219999999995
+          },
+          {
+            "elapsedMs": 6550.159999999993,
+            "x": 394.6379582482446,
+            "y": 114.91050400297284,
+            "actualDistance": 428.15248088338114,
+            "activeMovementInputMs": 5883.250000000002
+          },
+          {
+            "elapsedMs": 7058.439999999978,
+            "x": 413.77831056474173,
+            "y": 106.77237929016489,
+            "actualDistance": 461.0898640260472,
+            "activeMovementInputMs": 6391.529999999987
+          },
+          {
+            "elapsedMs": 7558.489999999977,
+            "x": 436.9326212783037,
+            "y": 100.00550388249907,
+            "actualDistance": 496.3114591771723,
+            "activeMovementInputMs": 6891.579999999986
+          },
+          {
+            "elapsedMs": 8066.389999999955,
+            "x": 476.57793065934794,
+            "y": 99.57997289965098,
+            "actualDistance": 536.0066933652246,
+            "activeMovementInputMs": 7399.479999999964
+          },
+          {
+            "elapsedMs": 8566.819999999998,
+            "x": 475.9402323789693,
+            "y": 81.88003283923445,
+            "actualDistance": 555.1028428524287,
+            "activeMovementInputMs": 7608.119999999978
+          },
+          {
+            "elapsedMs": 9066.840000000022,
+            "x": 482.492850817329,
+            "y": 83.60357333810715,
+            "actualDistance": 561.8783428524276,
+            "activeMovementInputMs": 7741.479999999942
+          },
+          {
+            "elapsedMs": 9566.850000000033,
+            "x": 522.4677455373976,
+            "y": 83.99997570127474,
+            "actualDistance": 601.8706153897818,
+            "activeMovementInputMs": 8241.489999999932
+          },
+          {
+            "elapsedMs": 10075.080000000085,
+            "x": 563.8010788707055,
+            "y": 83.99999999775704,
+            "actualDistance": 643.2039487231164,
+            "activeMovementInputMs": 8749.719999999985
+          },
+          {
+            "elapsedMs": 10575.170000000086,
+            "x": 603.7126229953052,
+            "y": 84.10700585288393,
+            "actualDistance": 683.1200833316772,
+            "activeMovementInputMs": 9249.809999999985
+          }
+        ],
+        "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+      },
+      "runtime": {
+        "ready": true,
+        "running": true,
+        "starting": false,
+        "performance": {
+          "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+          "state": "sampling",
+          "warmupMs": 2000,
+          "requestedMs": 60000,
+          "sampledMs": 8216.7,
+          "sampleCapacity": 60001,
+          "frames": {
+            "count": 986,
+            "p50Ms": 8.3,
+            "p95Ms": 9.3,
+            "maxMs": 10.4,
+            "over33ms": 0
+          },
+          "cpuSubmission": {
+            "count": 987,
+            "p50Ms": 1.7,
+            "p95Ms": 2.1,
+            "maxMs": 3.9,
+            "over33ms": 0
+          },
+          "heapStartBytes": 148694355,
+          "heapEndBytes": 140909748,
+          "pauseSegmentsExcluded": 0,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "viewport": [
+            1280,
+            900
+          ],
+          "dpr": 1,
+          "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+        },
+        "paused": false,
+        "probe": {
+          "elapsedMs": 10859.770000000193,
+          "ended": false,
+          "player": {
+            "x": 606.281454232114,
+            "y": 89.38480921174337
+          },
+          "hp": 100,
+          "chaos": 19.289609149999453,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 172
+              },
+              "hp": 75,
+              "detection": 0.11747109078092113,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": []
+        }
+      }
+    }
+  },
+  {
+    "file": "broken-shell-medium-20261003-3.jpg",
+    "state": {
+      "world": {
+        "identity": "broken-shell-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "70a011ab",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 10553,
+        "reachableBodySeats": 5808,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 580,
+          "y": 452
+        },
+        "enemyPoint": {
+          "x": 716,
+          "y": 172
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 212,
+        "solidCells": 738,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          },
+          {
+            "id": 2,
+            "role": "relief"
+          },
+          {
+            "id": 3,
+            "role": "relief"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": false,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "presentation": {
+        "mode": "normal",
+        "motion": true,
+        "phase": "层间承压",
+        "elapsedMs": 16101.390000000409,
+        "activity": 1,
+        "lastRenderMs": 0.40000009536743164,
+        "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+        "gpuBytes": 13762560,
+        "shoulderLight": {
+          "x": 763.9871492392114,
+          "y": 289.06799743023356,
+          "z": 28,
+          "radius": 264,
+          "intensity": 3.1,
+          "color": [
+            1,
+            0.94,
+            0.86
+          ],
+          "castsShadow": false
+        },
+        "sourceLights": [
+          {
+            "x": 474,
+            "y": 312,
+            "z": 45.71456527709961,
+            "radius": 134,
+            "intensity": 0.55,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          },
+          {
+            "x": 659,
+            "y": 277,
+            "z": 3.969188690185547,
+            "radius": 134,
+            "intensity": 0.48994000000000004,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          }
+        ],
+        "geometryDiagnostics": {
+          "identity": "broken-shell-medium",
+          "family": "broken-shell",
+          "grade": "medium",
+          "seed": 20261003,
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "geometryFingerprint": "70a011ab",
+          "qualification": "author-local-art-lab; not a production-world admission",
+          "projection": "native XY topdown; height projection 0",
+          "nativeCanvas": [
+            960,
+            640
+          ],
+          "cameraZoom": 1.5,
+          "actorBody": 20,
+          "movementPxPerSecond": 80,
+          "supportCell": 8,
+          "triangles": 10553,
+          "reachableBodySeats": 5808,
+          "spawnPoint": {
+            "x": 260,
+            "y": 380
+          },
+          "exitPoint": {
+            "x": 196,
+            "y": 460
+          },
+          "searchPoint": {
+            "x": 580,
+            "y": 452
+          },
+          "enemyPoint": {
+            "x": 716,
+            "y": 172
+          },
+          "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+          "erosionCells": 212,
+          "solidCells": 738,
+          "physicalRoles": [
+            {
+              "id": 1,
+              "role": "solid"
+            },
+            {
+              "id": 2,
+              "role": "relief"
+            },
+            {
+              "id": 3,
+              "role": "relief"
+            }
+          ],
+          "geometryBeforeDeployment": true,
+          "dynamicTopology": false,
+          "gradeMechanics": false,
+          "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+        },
+        "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+        "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+        "sounds": {
+          "family": "broken-shell",
+          "grade": "medium",
+          "phase": "stress",
+          "paused": false,
+          "disposed": false,
+          "clock": 16101.390000000409,
+          "pressure": 1,
+          "sourceIndex": 1,
+          "source": {
+            "x": 659,
+            "y": 277
+          },
+          "gain": 0.8991826511935684,
+          "pan": -0.5468080689542258,
+          "loop": null,
+          "lastEvent": "sfx-suspended-sea-shell-hit",
+          "eventCount": 1,
+          "maximumOwnedVoices": 2,
+          "priority": "low",
+          "runtimeSynthesis": false
+        }
+      },
+      "patrol": {
+        "mode": "five-station",
+        "active": true,
+        "status": "观察：另一侧缘",
+        "outcome": "running",
+        "elapsedMs": 15933.470000000314,
+        "activeMovementInputMs": 13949.740000000207,
+        "minimumDurationMs": 0,
+        "stationDwellMs": 650,
+        "completedLegs": 0,
+        "legDirection": 1,
+        "blocked": null,
+        "actualDistance": 1053.7290047726171,
+        "targetIndex": 125,
+        "plannedDistance": 1744,
+        "stations": [
+          {
+            "name": "侧缘",
+            "position": {
+              "x": 340,
+              "y": 260
+            },
+            "index": 24
+          },
+          {
+            "name": "背面",
+            "position": {
+              "x": 476,
+              "y": 84
+            },
+            "index": 63
+          },
+          {
+            "name": "另一侧缘",
+            "position": {
+              "x": 604,
+              "y": 260
+            },
+            "index": 101
+          },
+          {
+            "name": "搜取点",
+            "position": {
+              "x": 580,
+              "y": 452
+            },
+            "index": 168
+          },
+          {
+            "name": "回到入口",
+            "position": {
+              "x": 260,
+              "y": 380
+            },
+            "index": 217
+          }
+        ],
+        "position": {
+          "x": 763.9813053892362,
+          "y": 287.73467690343017
+        },
+        "samples": [
+          {
+            "elapsedMs": 8.329999999981373,
+            "x": 260,
+            "y": 380,
+            "actualDistance": 0,
+            "activeMovementInputMs": 0
+          },
+          {
+            "elapsedMs": 516.5100000000092,
+            "x": 284.8445251014822,
+            "y": 371.9919523934947,
+            "actualDistance": 34.298395388175564,
+            "activeMovementInputMs": 508.1800000000278
+          },
+          {
+            "elapsedMs": 1016.6300000000296,
+            "x": 324.84452154808173,
+            "y": 371.9999982317243,
+            "actualDistance": 74.29839538817582,
+            "activeMovementInputMs": 1008.3000000000482
+          },
+          {
+            "elapsedMs": 1516.7800000000059,
+            "x": 340.0200887166213,
+            "y": 351.1734500885065,
+            "actualDistance": 111.77288806249489,
+            "activeMovementInputMs": 1508.4500000000244
+          },
+          {
+            "elapsedMs": 2024.8500000000013,
+            "x": 340.0000026639696,
+            "y": 309.84014927749183,
+            "actualDistance": 153.10622139582821,
+            "activeMovementInputMs": 2016.5200000000198
+          },
+          {
+            "elapsedMs": 2525.0200000000127,
+            "x": 340.0000000006092,
+            "y": 269.84014927749274,
+            "actualDistance": 193.10622139582765,
+            "activeMovementInputMs": 2516.6900000000314
+          },
+          {
+            "elapsedMs": 3025.1199999999862,
+            "x": 339.9999999998663,
+            "y": 257.84041594415817,
+            "actualDistance": 205.10595472916222,
+            "activeMovementInputMs": 2616.560000000003
+          },
+          {
+            "elapsedMs": 3533.459999999969,
+            "x": 355.76316535258155,
+            "y": 259.8890184988247,
+            "actualDistance": 221.12426177424942,
+            "activeMovementInputMs": 2866.5499999999906
+          },
+          {
+            "elapsedMs": 4041.7500000000014,
+            "x": 356.00073735546414,
+            "y": 222.02235260492236,
+            "actualDistance": 260.6225980430586,
+            "activeMovementInputMs": 3374.840000000023
+          },
+          {
+            "elapsedMs": 4541.779999999961,
+            "x": 356.0000002466681,
+            "y": 182.02235262749227,
+            "actualDistance": 300.622598043058,
+            "activeMovementInputMs": 3874.8699999999735
+          },
+          {
+            "elapsedMs": 5041.789999999992,
+            "x": 364.046027472652,
+            "y": 159.8290418600454,
+            "actualDistance": 334.0969924533682,
+            "activeMovementInputMs": 4374.880000000001
+          },
+          {
+            "elapsedMs": 5541.799999999979,
+            "x": 372.29183724911263,
+            "y": 141.31609752344266,
+            "actualDistance": 366.62974991875564,
+            "activeMovementInputMs": 4874.8899999999885
+          },
+          {
+            "elapsedMs": 6050.129999999986,
+            "x": 380.1441009724342,
+            "y": 122.94592629122702,
+            "actualDistance": 398.82616332942183,
+            "activeMovementInputMs": 5383.219999999995
+          },
+          {
+            "elapsedMs": 6550.159999999993,
+            "x": 394.6379582482446,
+            "y": 114.91050400297284,
+            "actualDistance": 428.15248088338114,
+            "activeMovementInputMs": 5883.250000000002
+          },
+          {
+            "elapsedMs": 7058.439999999978,
+            "x": 413.77831056474173,
+            "y": 106.77237929016489,
+            "actualDistance": 461.0898640260472,
+            "activeMovementInputMs": 6391.529999999987
+          },
+          {
+            "elapsedMs": 7558.489999999977,
+            "x": 436.9326212783037,
+            "y": 100.00550388249907,
+            "actualDistance": 496.3114591771723,
+            "activeMovementInputMs": 6891.579999999986
+          },
+          {
+            "elapsedMs": 8066.389999999955,
+            "x": 476.57793065934794,
+            "y": 99.57997289965098,
+            "actualDistance": 536.0066933652246,
+            "activeMovementInputMs": 7399.479999999964
+          },
+          {
+            "elapsedMs": 8566.819999999998,
+            "x": 475.9402323789693,
+            "y": 81.88003283923445,
+            "actualDistance": 555.1028428524287,
+            "activeMovementInputMs": 7608.119999999978
+          },
+          {
+            "elapsedMs": 9066.840000000022,
+            "x": 482.492850817329,
+            "y": 83.60357333810715,
+            "actualDistance": 561.8783428524276,
+            "activeMovementInputMs": 7741.479999999942
+          },
+          {
+            "elapsedMs": 9566.850000000033,
+            "x": 522.4677455373976,
+            "y": 83.99997570127474,
+            "actualDistance": 601.8706153897818,
+            "activeMovementInputMs": 8241.489999999932
+          },
+          {
+            "elapsedMs": 10075.080000000085,
+            "x": 563.8010788707055,
+            "y": 83.99999999775704,
+            "actualDistance": 643.2039487231164,
+            "activeMovementInputMs": 8749.719999999985
+          },
+          {
+            "elapsedMs": 10575.170000000086,
+            "x": 603.7126229953052,
+            "y": 84.10700585288393,
+            "actualDistance": 683.1200833316772,
+            "activeMovementInputMs": 9249.809999999985
+          },
+          {
+            "elapsedMs": 11083.440000000128,
+            "x": 604.0019928267835,
+            "y": 119.32704937765709,
+            "actualDistance": 720.5449827127121,
+            "activeMovementInputMs": 9758.080000000027
+          },
+          {
+            "elapsedMs": 11583.510000000148,
+            "x": 604.0000006457548,
+            "y": 159.32704910469607,
+            "actualDistance": 760.5449827127132,
+            "activeMovementInputMs": 10258.150000000047
+          },
+          {
+            "elapsedMs": 12091.720000000181,
+            "x": 604.0000000001496,
+            "y": 200.66038243802964,
+            "actualDistance": 801.8783160460478,
+            "activeMovementInputMs": 10766.36000000008
+          },
+          {
+            "elapsedMs": 12591.810000000192,
+            "x": 604.0000000000001,
+            "y": 240.66038243802993,
+            "actualDistance": 841.8783160460489,
+            "activeMovementInputMs": 11266.450000000092
+          },
+          {
+            "elapsedMs": 13099.990000000165,
+            "x": 604.0000000000001,
+            "y": 261.99251577136357,
+            "actualDistance": 863.2104493793829,
+            "activeMovementInputMs": 11483.120000000099
+          },
+          {
+            "elapsedMs": 13600.100000000213,
+            "x": 610.5736748445127,
+            "y": 260.3552469209251,
+            "actualDistance": 869.9849493793826,
+            "activeMovementInputMs": 11616.370000000106
+          },
+          {
+            "elapsedMs": 14100.19000000024,
+            "x": 650.5521302888939,
+            "y": 260.00001677833234,
+            "actualDistance": 909.9778543204583,
+            "activeMovementInputMs": 12116.460000000134
+          },
+          {
+            "elapsedMs": 14608.430000000257,
+            "x": 691.8854636222147,
+            "y": 260.00000000121804,
+            "actualDistance": 951.3111876537914,
+            "activeMovementInputMs": 12624.70000000015
+          },
+          {
+            "elapsedMs": 15116.750000000278,
+            "x": 731.8854636222159,
+            "y": 260.0000000000001,
+            "actualDistance": 991.3111876537926,
+            "activeMovementInputMs": 13133.020000000171
+          },
+          {
+            "elapsedMs": 15625.060000000285,
+            "x": 766.3405207555408,
+            "y": 265.3556296445365,
+            "actualDistance": 1030.1858061850526,
+            "activeMovementInputMs": 13641.330000000178
+          }
+        ],
+        "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+      },
+      "runtime": {
+        "ready": true,
+        "running": true,
+        "starting": false,
+        "performance": {
+          "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+          "state": "sampling",
+          "warmupMs": 2000,
+          "requestedMs": 60000,
+          "sampledMs": 13616.9,
+          "sampleCapacity": 60001,
+          "frames": {
+            "count": 1634,
+            "p50Ms": 8.3,
+            "p95Ms": 9.4,
+            "maxMs": 10.4,
+            "over33ms": 0
+          },
+          "cpuSubmission": {
+            "count": 1635,
+            "p50Ms": 1.7,
+            "p95Ms": 2.5,
+            "maxMs": 3.9,
+            "over33ms": 0
+          },
+          "heapStartBytes": 148694355,
+          "heapEndBytes": 135517571,
+          "pauseSegmentsExcluded": 0,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "viewport": [
+            1280,
+            900
+          ],
+          "dpr": 1,
+          "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+        },
+        "paused": false,
+        "probe": {
+          "elapsedMs": 16101.390000000409,
+          "ended": false,
+          "player": {
+            "x": 763.9871492392114,
+            "y": 289.06799743023356
+          },
+          "hp": 85,
+          "chaos": 26.134282399999737,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "chase",
+              "position": {
+                "x": 739.7912218877301,
+                "y": 266.92048694697326
+              },
+              "hp": 75,
+              "detection": 1,
+              "engaged": false,
+              "visible": true
+            }
+          ],
+          "hosts": []
+        }
+      }
+    }
+  },
+  {
+    "file": "broken-shell-medium-20261003-4.jpg",
+    "state": {
+      "world": {
+        "identity": "broken-shell-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "70a011ab",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 10553,
+        "reachableBodySeats": 5808,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 580,
+          "y": 452
+        },
+        "enemyPoint": {
+          "x": 716,
+          "y": 172
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 212,
+        "solidCells": 738,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          },
+          {
+            "id": 2,
+            "role": "relief"
+          },
+          {
+            "id": 3,
+            "role": "relief"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": false,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "presentation": {
+        "mode": "normal",
+        "motion": true,
+        "phase": "静默",
+        "elapsedMs": 21209.80000000034,
+        "activity": 0.22,
+        "lastRenderMs": 0,
+        "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+        "gpuBytes": 13762560,
+        "shoulderLight": {
+          "x": 579.9357740186016,
+          "y": 454.29626584426893,
+          "z": 28,
+          "radius": 264,
+          "intensity": 3.1,
+          "color": [
+            1,
+            0.94,
+            0.86
+          ],
+          "castsShadow": false
+        },
+        "sourceLights": [
+          {
+            "x": 474,
+            "y": 312,
+            "z": 45.71456527709961,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          },
+          {
+            "x": 659,
+            "y": 277,
+            "z": 3.969188690185547,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          }
+        ],
+        "geometryDiagnostics": {
+          "identity": "broken-shell-medium",
+          "family": "broken-shell",
+          "grade": "medium",
+          "seed": 20261003,
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "geometryFingerprint": "70a011ab",
+          "qualification": "author-local-art-lab; not a production-world admission",
+          "projection": "native XY topdown; height projection 0",
+          "nativeCanvas": [
+            960,
+            640
+          ],
+          "cameraZoom": 1.5,
+          "actorBody": 20,
+          "movementPxPerSecond": 80,
+          "supportCell": 8,
+          "triangles": 10553,
+          "reachableBodySeats": 5808,
+          "spawnPoint": {
+            "x": 260,
+            "y": 380
+          },
+          "exitPoint": {
+            "x": 196,
+            "y": 460
+          },
+          "searchPoint": {
+            "x": 580,
+            "y": 452
+          },
+          "enemyPoint": {
+            "x": 716,
+            "y": 172
+          },
+          "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+          "erosionCells": 212,
+          "solidCells": 738,
+          "physicalRoles": [
+            {
+              "id": 1,
+              "role": "solid"
+            },
+            {
+              "id": 2,
+              "role": "relief"
+            },
+            {
+              "id": 3,
+              "role": "relief"
+            }
+          ],
+          "geometryBeforeDeployment": true,
+          "dynamicTopology": false,
+          "gradeMechanics": false,
+          "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+        },
+        "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+        "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+        "sounds": {
+          "family": "broken-shell",
+          "grade": "medium",
+          "phase": "quiet",
+          "paused": false,
+          "disposed": false,
+          "clock": 21209.80000000034,
+          "pressure": 0,
+          "sourceIndex": -1,
+          "source": {
+            "x": 659,
+            "y": 277
+          },
+          "gain": 0.381933413374749,
+          "pan": 0.18978450837431224,
+          "loop": null,
+          "lastEvent": "sfx-suspended-sea-drain",
+          "eventCount": 2,
+          "maximumOwnedVoices": 2,
+          "priority": "low",
+          "runtimeSynthesis": false
+        }
+      },
+      "patrol": {
+        "mode": "five-station",
+        "active": true,
+        "status": "观察：搜取点",
+        "outcome": "running",
+        "elapsedMs": 21041.880000000263,
+        "activeMovementInputMs": 18641.430000000277,
+        "minimumDurationMs": 0,
+        "stationDwellMs": 650,
+        "completedLegs": 0,
+        "legDirection": 1,
+        "blocked": null,
+        "actualDistance": 1416.5531159186144,
+        "targetIndex": 169,
+        "plannedDistance": 1744,
+        "stations": [
+          {
+            "name": "侧缘",
+            "position": {
+              "x": 340,
+              "y": 260
+            },
+            "index": 24
+          },
+          {
+            "name": "背面",
+            "position": {
+              "x": 476,
+              "y": 84
+            },
+            "index": 63
+          },
+          {
+            "name": "另一侧缘",
+            "position": {
+              "x": 604,
+              "y": 260
+            },
+            "index": 101
+          },
+          {
+            "name": "搜取点",
+            "position": {
+              "x": 580,
+              "y": 452
+            },
+            "index": 168
+          },
+          {
+            "name": "回到入口",
+            "position": {
+              "x": 260,
+              "y": 380
+            },
+            "index": 217
+          }
+        ],
+        "position": {
+          "x": 579.9357740186016,
+          "y": 454.29626584426893
+        },
+        "samples": [
+          {
+            "elapsedMs": 8.329999999981373,
+            "x": 260,
+            "y": 380,
+            "actualDistance": 0,
+            "activeMovementInputMs": 0
+          },
+          {
+            "elapsedMs": 516.5100000000092,
+            "x": 284.8445251014822,
+            "y": 371.9919523934947,
+            "actualDistance": 34.298395388175564,
+            "activeMovementInputMs": 508.1800000000278
+          },
+          {
+            "elapsedMs": 1016.6300000000296,
+            "x": 324.84452154808173,
+            "y": 371.9999982317243,
+            "actualDistance": 74.29839538817582,
+            "activeMovementInputMs": 1008.3000000000482
+          },
+          {
+            "elapsedMs": 1516.7800000000059,
+            "x": 340.0200887166213,
+            "y": 351.1734500885065,
+            "actualDistance": 111.77288806249489,
+            "activeMovementInputMs": 1508.4500000000244
+          },
+          {
+            "elapsedMs": 2024.8500000000013,
+            "x": 340.0000026639696,
+            "y": 309.84014927749183,
+            "actualDistance": 153.10622139582821,
+            "activeMovementInputMs": 2016.5200000000198
+          },
+          {
+            "elapsedMs": 2525.0200000000127,
+            "x": 340.0000000006092,
+            "y": 269.84014927749274,
+            "actualDistance": 193.10622139582765,
+            "activeMovementInputMs": 2516.6900000000314
+          },
+          {
+            "elapsedMs": 3025.1199999999862,
+            "x": 339.9999999998663,
+            "y": 257.84041594415817,
+            "actualDistance": 205.10595472916222,
+            "activeMovementInputMs": 2616.560000000003
+          },
+          {
+            "elapsedMs": 3533.459999999969,
+            "x": 355.76316535258155,
+            "y": 259.8890184988247,
+            "actualDistance": 221.12426177424942,
+            "activeMovementInputMs": 2866.5499999999906
+          },
+          {
+            "elapsedMs": 4041.7500000000014,
+            "x": 356.00073735546414,
+            "y": 222.02235260492236,
+            "actualDistance": 260.6225980430586,
+            "activeMovementInputMs": 3374.840000000023
+          },
+          {
+            "elapsedMs": 4541.779999999961,
+            "x": 356.0000002466681,
+            "y": 182.02235262749227,
+            "actualDistance": 300.622598043058,
+            "activeMovementInputMs": 3874.8699999999735
+          },
+          {
+            "elapsedMs": 5041.789999999992,
+            "x": 364.046027472652,
+            "y": 159.8290418600454,
+            "actualDistance": 334.0969924533682,
+            "activeMovementInputMs": 4374.880000000001
+          },
+          {
+            "elapsedMs": 5541.799999999979,
+            "x": 372.29183724911263,
+            "y": 141.31609752344266,
+            "actualDistance": 366.62974991875564,
+            "activeMovementInputMs": 4874.8899999999885
+          },
+          {
+            "elapsedMs": 6050.129999999986,
+            "x": 380.1441009724342,
+            "y": 122.94592629122702,
+            "actualDistance": 398.82616332942183,
+            "activeMovementInputMs": 5383.219999999995
+          },
+          {
+            "elapsedMs": 6550.159999999993,
+            "x": 394.6379582482446,
+            "y": 114.91050400297284,
+            "actualDistance": 428.15248088338114,
+            "activeMovementInputMs": 5883.250000000002
+          },
+          {
+            "elapsedMs": 7058.439999999978,
+            "x": 413.77831056474173,
+            "y": 106.77237929016489,
+            "actualDistance": 461.0898640260472,
+            "activeMovementInputMs": 6391.529999999987
+          },
+          {
+            "elapsedMs": 7558.489999999977,
+            "x": 436.9326212783037,
+            "y": 100.00550388249907,
+            "actualDistance": 496.3114591771723,
+            "activeMovementInputMs": 6891.579999999986
+          },
+          {
+            "elapsedMs": 8066.389999999955,
+            "x": 476.57793065934794,
+            "y": 99.57997289965098,
+            "actualDistance": 536.0066933652246,
+            "activeMovementInputMs": 7399.479999999964
+          },
+          {
+            "elapsedMs": 8566.819999999998,
+            "x": 475.9402323789693,
+            "y": 81.88003283923445,
+            "actualDistance": 555.1028428524287,
+            "activeMovementInputMs": 7608.119999999978
+          },
+          {
+            "elapsedMs": 9066.840000000022,
+            "x": 482.492850817329,
+            "y": 83.60357333810715,
+            "actualDistance": 561.8783428524276,
+            "activeMovementInputMs": 7741.479999999942
+          },
+          {
+            "elapsedMs": 9566.850000000033,
+            "x": 522.4677455373976,
+            "y": 83.99997570127474,
+            "actualDistance": 601.8706153897818,
+            "activeMovementInputMs": 8241.489999999932
+          },
+          {
+            "elapsedMs": 10075.080000000085,
+            "x": 563.8010788707055,
+            "y": 83.99999999775704,
+            "actualDistance": 643.2039487231164,
+            "activeMovementInputMs": 8749.719999999985
+          },
+          {
+            "elapsedMs": 10575.170000000086,
+            "x": 603.7126229953052,
+            "y": 84.10700585288393,
+            "actualDistance": 683.1200833316772,
+            "activeMovementInputMs": 9249.809999999985
+          },
+          {
+            "elapsedMs": 11083.440000000128,
+            "x": 604.0019928267835,
+            "y": 119.32704937765709,
+            "actualDistance": 720.5449827127121,
+            "activeMovementInputMs": 9758.080000000027
+          },
+          {
+            "elapsedMs": 11583.510000000148,
+            "x": 604.0000006457548,
+            "y": 159.32704910469607,
+            "actualDistance": 760.5449827127132,
+            "activeMovementInputMs": 10258.150000000047
+          },
+          {
+            "elapsedMs": 12091.720000000181,
+            "x": 604.0000000001496,
+            "y": 200.66038243802964,
+            "actualDistance": 801.8783160460478,
+            "activeMovementInputMs": 10766.36000000008
+          },
+          {
+            "elapsedMs": 12591.810000000192,
+            "x": 604.0000000000001,
+            "y": 240.66038243802993,
+            "actualDistance": 841.8783160460489,
+            "activeMovementInputMs": 11266.450000000092
+          },
+          {
+            "elapsedMs": 13099.990000000165,
+            "x": 604.0000000000001,
+            "y": 261.99251577136357,
+            "actualDistance": 863.2104493793829,
+            "activeMovementInputMs": 11483.120000000099
+          },
+          {
+            "elapsedMs": 13600.100000000213,
+            "x": 610.5736748445127,
+            "y": 260.3552469209251,
+            "actualDistance": 869.9849493793826,
+            "activeMovementInputMs": 11616.370000000106
+          },
+          {
+            "elapsedMs": 14100.19000000024,
+            "x": 650.5521302888939,
+            "y": 260.00001677833234,
+            "actualDistance": 909.9778543204583,
+            "activeMovementInputMs": 12116.460000000134
+          },
+          {
+            "elapsedMs": 14608.430000000257,
+            "x": 691.8854636222147,
+            "y": 260.00000000121804,
+            "actualDistance": 951.3111876537914,
+            "activeMovementInputMs": 12624.70000000015
+          },
+          {
+            "elapsedMs": 15116.750000000278,
+            "x": 731.8854636222159,
+            "y": 260.0000000000001,
+            "actualDistance": 991.3111876537926,
+            "activeMovementInputMs": 13133.020000000171
+          },
+          {
+            "elapsedMs": 15625.060000000285,
+            "x": 766.3405207555408,
+            "y": 265.3556296445365,
+            "actualDistance": 1030.1858061850526,
+            "activeMovementInputMs": 13641.330000000178
+          },
+          {
+            "elapsedMs": 16125.210000000312,
+            "x": 763.9994814140806,
+            "y": 303.7346491194299,
+            "actualDistance": 1069.7290047726162,
+            "activeMovementInputMs": 14141.480000000205
+          },
+          {
+            "elapsedMs": 16633.54000000035,
+            "x": 763.9999999335378,
+            "y": 343.7346490980336,
+            "actualDistance": 1109.729004772614,
+            "activeMovementInputMs": 14649.810000000256
+          },
+          {
+            "elapsedMs": 17141.66000000034,
+            "x": 763.9999999999941,
+            "y": 385.0679824313663,
+            "actualDistance": 1151.062338105945,
+            "activeMovementInputMs": 15157.930000000279
+          },
+          {
+            "elapsedMs": 17650.110000000306,
+            "x": 755.269359533642,
+            "y": 412.46385750285293,
+            "actualDistance": 1188.4532417108107,
+            "activeMovementInputMs": 15666.380000000278
+          },
+          {
+            "elapsedMs": 18158.140000000374,
+            "x": 732.716748483537,
+            "y": 420.1157825185812,
+            "actualDistance": 1223.6918513347418,
+            "activeMovementInputMs": 16174.41000000037
+          },
+          {
+            "elapsedMs": 18658.55000000032,
+            "x": 709.2280329982677,
+            "y": 427.98701681338287,
+            "actualDistance": 1258.2134682693759,
+            "activeMovementInputMs": 16674.820000000305
+          },
+          {
+            "elapsedMs": 19166.76000000033,
+            "x": 669.2280410588,
+            "y": 427.9999994581258,
+            "actualDistance": 1298.2134682693763,
+            "activeMovementInputMs": 17183.030000000315
+          },
+          {
+            "elapsedMs": 19666.87000000031,
+            "x": 629.2280410587989,
+            "y": 427.9999999999774,
+            "actualDistance": 1338.2134682693809,
+            "activeMovementInputMs": 17683.140000000294
+          },
+          {
+            "elapsedMs": 20175.180000000313,
+            "x": 587.8947077254644,
+            "y": 428,
+            "actualDistance": 1379.546801602719,
+            "activeMovementInputMs": 18191.4500000003
+          },
+          {
+            "elapsedMs": 20675.200000000284,
+            "x": 579.9636955560442,
+            "y": 453.2979895804732,
+            "actualDistance": 1415.5544492519475,
+            "activeMovementInputMs": 18641.430000000277
+          }
+        ],
+        "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+      },
+      "runtime": {
+        "ready": true,
+        "running": true,
+        "starting": false,
+        "performance": {
+          "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+          "state": "sampling",
+          "warmupMs": 2000,
+          "requestedMs": 60000,
+          "sampledMs": 19025.2,
+          "sampleCapacity": 60001,
+          "frames": {
+            "count": 2283,
+            "p50Ms": 8.3,
+            "p95Ms": 9.4,
+            "maxMs": 10.6,
+            "over33ms": 0
+          },
+          "cpuSubmission": {
+            "count": 2284,
+            "p50Ms": 1.7,
+            "p95Ms": 2.6,
+            "maxMs": 3.9,
+            "over33ms": 0
+          },
+          "heapStartBytes": 148694355,
+          "heapEndBytes": 139780752,
+          "pauseSegmentsExcluded": 0,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "viewport": [
+            1280,
+            900
+          ],
+          "dpr": 1,
+          "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+        },
+        "paused": false,
+        "probe": {
+          "elapsedMs": 21209.80000000034,
+          "ended": false,
+          "player": {
+            "x": 579.9357740186016,
+            "y": 454.29626584426893
+          },
+          "hp": 85,
+          "chaos": 30.16992630000009,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "chase",
+              "position": {
+                "x": 622.4162027998876,
+                "y": 438.87271971539275
+              },
+              "hp": 75,
+              "detection": 1,
+              "engaged": false,
+              "visible": true
+            }
+          ],
+          "hosts": []
+        }
+      }
+    }
+  },
+  {
+    "file": "broken-shell-medium-20261003-5.jpg",
+    "state": {
+      "world": {
+        "identity": "broken-shell-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "70a011ab",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 10553,
+        "reachableBodySeats": 5808,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 580,
+          "y": 452
+        },
+        "enemyPoint": {
+          "x": 716,
+          "y": 172
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 212,
+        "solidCells": 738,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          },
+          {
+            "id": 2,
+            "role": "relief"
+          },
+          {
+            "id": 3,
+            "role": "relief"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": false,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "presentation": {
+        "mode": "normal",
+        "motion": true,
+        "phase": "静默",
+        "elapsedMs": 26451.520000000386,
+        "activity": 0.22,
+        "lastRenderMs": 0.40000009536743164,
+        "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+        "gpuBytes": 13762560,
+        "shoulderLight": {
+          "x": 260.0000000505915,
+          "y": 379.4813734992954,
+          "z": 28,
+          "radius": 264,
+          "intensity": 3.1,
+          "color": [
+            1,
+            0.94,
+            0.86
+          ],
+          "castsShadow": false
+        },
+        "sourceLights": [
+          {
+            "x": 474,
+            "y": 312,
+            "z": 45.71456527709961,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          },
+          {
+            "x": 659,
+            "y": 277,
+            "z": 3.969188690185547,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          }
+        ],
+        "geometryDiagnostics": {
+          "identity": "broken-shell-medium",
+          "family": "broken-shell",
+          "grade": "medium",
+          "seed": 20261003,
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "geometryFingerprint": "70a011ab",
+          "qualification": "author-local-art-lab; not a production-world admission",
+          "projection": "native XY topdown; height projection 0",
+          "nativeCanvas": [
+            960,
+            640
+          ],
+          "cameraZoom": 1.5,
+          "actorBody": 20,
+          "movementPxPerSecond": 80,
+          "supportCell": 8,
+          "triangles": 10553,
+          "reachableBodySeats": 5808,
+          "spawnPoint": {
+            "x": 260,
+            "y": 380
+          },
+          "exitPoint": {
+            "x": 196,
+            "y": 460
+          },
+          "searchPoint": {
+            "x": 580,
+            "y": 452
+          },
+          "enemyPoint": {
+            "x": 716,
+            "y": 172
+          },
+          "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+          "erosionCells": 212,
+          "solidCells": 738,
+          "physicalRoles": [
+            {
+              "id": 1,
+              "role": "solid"
+            },
+            {
+              "id": 2,
+              "role": "relief"
+            },
+            {
+              "id": 3,
+              "role": "relief"
+            }
+          ],
+          "geometryBeforeDeployment": true,
+          "dynamicTopology": false,
+          "gradeMechanics": false,
+          "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+        },
+        "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+        "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+        "sounds": {
+          "family": "broken-shell",
+          "grade": "medium",
+          "phase": "quiet",
+          "paused": false,
+          "disposed": false,
+          "clock": 26451.520000000386,
+          "pressure": 0,
+          "sourceIndex": -1,
+          "source": {
+            "x": 659,
+            "y": 277
+          },
+          "gain": 0.381933413374749,
+          "pan": 0.18978450837431224,
+          "loop": null,
+          "lastEvent": "sfx-suspended-sea-drain",
+          "eventCount": 2,
+          "maximumOwnedVoices": 2,
+          "priority": "low",
+          "runtimeSynthesis": false
+        }
+      },
+      "patrol": {
+        "mode": "five-station",
+        "active": true,
+        "status": "观察：回到入口",
+        "outcome": "running",
+        "elapsedMs": 26283.600000000308,
+        "activeMovementInputMs": 23608.24000000029,
+        "minimumDurationMs": 0,
+        "stationDwellMs": 650,
+        "completedLegs": 0,
+        "legDirection": 1,
+        "blocked": null,
+        "actualDistance": 1809.4973432214838,
+        "targetIndex": 218,
+        "plannedDistance": 1744,
+        "stations": [
+          {
+            "name": "侧缘",
+            "position": {
+              "x": 340,
+              "y": 260
+            },
+            "index": 24
+          },
+          {
+            "name": "背面",
+            "position": {
+              "x": 476,
+              "y": 84
+            },
+            "index": 63
+          },
+          {
+            "name": "另一侧缘",
+            "position": {
+              "x": 604,
+              "y": 260
+            },
+            "index": 101
+          },
+          {
+            "name": "搜取点",
+            "position": {
+              "x": 580,
+              "y": 452
+            },
+            "index": 168
+          },
+          {
+            "name": "回到入口",
+            "position": {
+              "x": 260,
+              "y": 380
+            },
+            "index": 217
+          }
+        ],
+        "position": {
+          "x": 259.9999999530555,
+          "y": 380.48124016596194
+        },
+        "samples": [
+          {
+            "elapsedMs": 8.329999999981373,
+            "x": 260,
+            "y": 380,
+            "actualDistance": 0,
+            "activeMovementInputMs": 0
+          },
+          {
+            "elapsedMs": 516.5100000000092,
+            "x": 284.8445251014822,
+            "y": 371.9919523934947,
+            "actualDistance": 34.298395388175564,
+            "activeMovementInputMs": 508.1800000000278
+          },
+          {
+            "elapsedMs": 1016.6300000000296,
+            "x": 324.84452154808173,
+            "y": 371.9999982317243,
+            "actualDistance": 74.29839538817582,
+            "activeMovementInputMs": 1008.3000000000482
+          },
+          {
+            "elapsedMs": 1516.7800000000059,
+            "x": 340.0200887166213,
+            "y": 351.1734500885065,
+            "actualDistance": 111.77288806249489,
+            "activeMovementInputMs": 1508.4500000000244
+          },
+          {
+            "elapsedMs": 2024.8500000000013,
+            "x": 340.0000026639696,
+            "y": 309.84014927749183,
+            "actualDistance": 153.10622139582821,
+            "activeMovementInputMs": 2016.5200000000198
+          },
+          {
+            "elapsedMs": 2525.0200000000127,
+            "x": 340.0000000006092,
+            "y": 269.84014927749274,
+            "actualDistance": 193.10622139582765,
+            "activeMovementInputMs": 2516.6900000000314
+          },
+          {
+            "elapsedMs": 3025.1199999999862,
+            "x": 339.9999999998663,
+            "y": 257.84041594415817,
+            "actualDistance": 205.10595472916222,
+            "activeMovementInputMs": 2616.560000000003
+          },
+          {
+            "elapsedMs": 3533.459999999969,
+            "x": 355.76316535258155,
+            "y": 259.8890184988247,
+            "actualDistance": 221.12426177424942,
+            "activeMovementInputMs": 2866.5499999999906
+          },
+          {
+            "elapsedMs": 4041.7500000000014,
+            "x": 356.00073735546414,
+            "y": 222.02235260492236,
+            "actualDistance": 260.6225980430586,
+            "activeMovementInputMs": 3374.840000000023
+          },
+          {
+            "elapsedMs": 4541.779999999961,
+            "x": 356.0000002466681,
+            "y": 182.02235262749227,
+            "actualDistance": 300.622598043058,
+            "activeMovementInputMs": 3874.8699999999735
+          },
+          {
+            "elapsedMs": 5041.789999999992,
+            "x": 364.046027472652,
+            "y": 159.8290418600454,
+            "actualDistance": 334.0969924533682,
+            "activeMovementInputMs": 4374.880000000001
+          },
+          {
+            "elapsedMs": 5541.799999999979,
+            "x": 372.29183724911263,
+            "y": 141.31609752344266,
+            "actualDistance": 366.62974991875564,
+            "activeMovementInputMs": 4874.8899999999885
+          },
+          {
+            "elapsedMs": 6050.129999999986,
+            "x": 380.1441009724342,
+            "y": 122.94592629122702,
+            "actualDistance": 398.82616332942183,
+            "activeMovementInputMs": 5383.219999999995
+          },
+          {
+            "elapsedMs": 6550.159999999993,
+            "x": 394.6379582482446,
+            "y": 114.91050400297284,
+            "actualDistance": 428.15248088338114,
+            "activeMovementInputMs": 5883.250000000002
+          },
+          {
+            "elapsedMs": 7058.439999999978,
+            "x": 413.77831056474173,
+            "y": 106.77237929016489,
+            "actualDistance": 461.0898640260472,
+            "activeMovementInputMs": 6391.529999999987
+          },
+          {
+            "elapsedMs": 7558.489999999977,
+            "x": 436.9326212783037,
+            "y": 100.00550388249907,
+            "actualDistance": 496.3114591771723,
+            "activeMovementInputMs": 6891.579999999986
+          },
+          {
+            "elapsedMs": 8066.389999999955,
+            "x": 476.57793065934794,
+            "y": 99.57997289965098,
+            "actualDistance": 536.0066933652246,
+            "activeMovementInputMs": 7399.479999999964
+          },
+          {
+            "elapsedMs": 8566.819999999998,
+            "x": 475.9402323789693,
+            "y": 81.88003283923445,
+            "actualDistance": 555.1028428524287,
+            "activeMovementInputMs": 7608.119999999978
+          },
+          {
+            "elapsedMs": 9066.840000000022,
+            "x": 482.492850817329,
+            "y": 83.60357333810715,
+            "actualDistance": 561.8783428524276,
+            "activeMovementInputMs": 7741.479999999942
+          },
+          {
+            "elapsedMs": 9566.850000000033,
+            "x": 522.4677455373976,
+            "y": 83.99997570127474,
+            "actualDistance": 601.8706153897818,
+            "activeMovementInputMs": 8241.489999999932
+          },
+          {
+            "elapsedMs": 10075.080000000085,
+            "x": 563.8010788707055,
+            "y": 83.99999999775704,
+            "actualDistance": 643.2039487231164,
+            "activeMovementInputMs": 8749.719999999985
+          },
+          {
+            "elapsedMs": 10575.170000000086,
+            "x": 603.7126229953052,
+            "y": 84.10700585288393,
+            "actualDistance": 683.1200833316772,
+            "activeMovementInputMs": 9249.809999999985
+          },
+          {
+            "elapsedMs": 11083.440000000128,
+            "x": 604.0019928267835,
+            "y": 119.32704937765709,
+            "actualDistance": 720.5449827127121,
+            "activeMovementInputMs": 9758.080000000027
+          },
+          {
+            "elapsedMs": 11583.510000000148,
+            "x": 604.0000006457548,
+            "y": 159.32704910469607,
+            "actualDistance": 760.5449827127132,
+            "activeMovementInputMs": 10258.150000000047
+          },
+          {
+            "elapsedMs": 12091.720000000181,
+            "x": 604.0000000001496,
+            "y": 200.66038243802964,
+            "actualDistance": 801.8783160460478,
+            "activeMovementInputMs": 10766.36000000008
+          },
+          {
+            "elapsedMs": 12591.810000000192,
+            "x": 604.0000000000001,
+            "y": 240.66038243802993,
+            "actualDistance": 841.8783160460489,
+            "activeMovementInputMs": 11266.450000000092
+          },
+          {
+            "elapsedMs": 13099.990000000165,
+            "x": 604.0000000000001,
+            "y": 261.99251577136357,
+            "actualDistance": 863.2104493793829,
+            "activeMovementInputMs": 11483.120000000099
+          },
+          {
+            "elapsedMs": 13600.100000000213,
+            "x": 610.5736748445127,
+            "y": 260.3552469209251,
+            "actualDistance": 869.9849493793826,
+            "activeMovementInputMs": 11616.370000000106
+          },
+          {
+            "elapsedMs": 14100.19000000024,
+            "x": 650.5521302888939,
+            "y": 260.00001677833234,
+            "actualDistance": 909.9778543204583,
+            "activeMovementInputMs": 12116.460000000134
+          },
+          {
+            "elapsedMs": 14608.430000000257,
+            "x": 691.8854636222147,
+            "y": 260.00000000121804,
+            "actualDistance": 951.3111876537914,
+            "activeMovementInputMs": 12624.70000000015
+          },
+          {
+            "elapsedMs": 15116.750000000278,
+            "x": 731.8854636222159,
+            "y": 260.0000000000001,
+            "actualDistance": 991.3111876537926,
+            "activeMovementInputMs": 13133.020000000171
+          },
+          {
+            "elapsedMs": 15625.060000000285,
+            "x": 766.3405207555408,
+            "y": 265.3556296445365,
+            "actualDistance": 1030.1858061850526,
+            "activeMovementInputMs": 13641.330000000178
+          },
+          {
+            "elapsedMs": 16125.210000000312,
+            "x": 763.9994814140806,
+            "y": 303.7346491194299,
+            "actualDistance": 1069.7290047726162,
+            "activeMovementInputMs": 14141.480000000205
+          },
+          {
+            "elapsedMs": 16633.54000000035,
+            "x": 763.9999999335378,
+            "y": 343.7346490980336,
+            "actualDistance": 1109.729004772614,
+            "activeMovementInputMs": 14649.810000000256
+          },
+          {
+            "elapsedMs": 17141.66000000034,
+            "x": 763.9999999999941,
+            "y": 385.0679824313663,
+            "actualDistance": 1151.062338105945,
+            "activeMovementInputMs": 15157.930000000279
+          },
+          {
+            "elapsedMs": 17650.110000000306,
+            "x": 755.269359533642,
+            "y": 412.46385750285293,
+            "actualDistance": 1188.4532417108107,
+            "activeMovementInputMs": 15666.380000000278
+          },
+          {
+            "elapsedMs": 18158.140000000374,
+            "x": 732.716748483537,
+            "y": 420.1157825185812,
+            "actualDistance": 1223.6918513347418,
+            "activeMovementInputMs": 16174.41000000037
+          },
+          {
+            "elapsedMs": 18658.55000000032,
+            "x": 709.2280329982677,
+            "y": 427.98701681338287,
+            "actualDistance": 1258.2134682693759,
+            "activeMovementInputMs": 16674.820000000305
+          },
+          {
+            "elapsedMs": 19166.76000000033,
+            "x": 669.2280410588,
+            "y": 427.9999994581258,
+            "actualDistance": 1298.2134682693763,
+            "activeMovementInputMs": 17183.030000000315
+          },
+          {
+            "elapsedMs": 19666.87000000031,
+            "x": 629.2280410587989,
+            "y": 427.9999999999774,
+            "actualDistance": 1338.2134682693809,
+            "activeMovementInputMs": 17683.140000000294
+          },
+          {
+            "elapsedMs": 20175.180000000313,
+            "x": 587.8947077254644,
+            "y": 428,
+            "actualDistance": 1379.546801602719,
+            "activeMovementInputMs": 18191.4500000003
+          },
+          {
+            "elapsedMs": 20675.200000000284,
+            "x": 579.9636955560442,
+            "y": 453.2979895804732,
+            "actualDistance": 1415.5544492519475,
+            "activeMovementInputMs": 18641.430000000277
+          },
+          {
+            "elapsedMs": 21175.220000000325,
+            "x": 579.9357740186016,
+            "y": 454.29626584426893,
+            "actualDistance": 1416.5531159186144,
+            "activeMovementInputMs": 18641.430000000277
+          },
+          {
+            "elapsedMs": 21683.500000000302,
+            "x": 552.7403880882854,
+            "y": 452.0081866664267,
+            "actualDistance": 1444.017040940794,
+            "activeMovementInputMs": 19033.140000000283
+          },
+          {
+            "elapsedMs": 22191.800000000334,
+            "x": 511.40705925959077,
+            "y": 452.0000021750985,
+            "actualDistance": 1485.3503742741257,
+            "activeMovementInputMs": 19541.440000000315
+          },
+          {
+            "elapsedMs": 22700.0700000003,
+            "x": 471.40705925959156,
+            "y": 452.00000000080405,
+            "actualDistance": 1525.3503742741234,
+            "activeMovementInputMs": 20049.710000000283
+          },
+          {
+            "elapsedMs": 23200.24000000027,
+            "x": 431.40705925959213,
+            "y": 452.0000000000003,
+            "actualDistance": 1565.3503742741211,
+            "activeMovementInputMs": 20549.880000000252
+          },
+          {
+            "elapsedMs": 23708.380000000325,
+            "x": 390.0737259262594,
+            "y": 452.00000000000006,
+            "actualDistance": 1606.683707607452,
+            "activeMovementInputMs": 21058.020000000306
+          },
+          {
+            "elapsedMs": 24208.510000000308,
+            "x": 350.07372592625995,
+            "y": 452.00000000000006,
+            "actualDistance": 1646.6837076074498,
+            "activeMovementInputMs": 21558.15000000029
+          },
+          {
+            "elapsedMs": 24708.5800000003,
+            "x": 310.0737259262605,
+            "y": 452.00000000000006,
+            "actualDistance": 1686.6837076074476,
+            "activeMovementInputMs": 22058.22000000028
+          },
+          {
+            "elapsedMs": 25216.82000000031,
+            "x": 270.0737259262611,
+            "y": 452.00000000000006,
+            "actualDistance": 1726.6837076074453,
+            "activeMovementInputMs": 22566.46000000029
+          },
+          {
+            "elapsedMs": 25716.880000000292,
+            "x": 259.99666251869235,
+            "y": 425.70337277088026,
+            "actualDistance": 1764.275209888153,
+            "activeMovementInputMs": 23066.520000000273
+          },
+          {
+            "elapsedMs": 26216.930000000288,
+            "x": 259.9999994436417,
+            "y": 385.703373499295,
+            "actualDistance": 1804.2752098881508,
+            "activeMovementInputMs": 23566.57000000027
+          }
+        ],
+        "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+      },
+      "runtime": {
+        "ready": true,
+        "running": true,
+        "starting": false,
+        "performance": {
+          "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+          "state": "sampling",
+          "warmupMs": 2000,
+          "requestedMs": 60000,
+          "sampledMs": 23825.1,
+          "sampleCapacity": 60001,
+          "frames": {
+            "count": 2859,
+            "p50Ms": 8.3,
+            "p95Ms": 9.4,
+            "maxMs": 10.6,
+            "over33ms": 0
+          },
+          "cpuSubmission": {
+            "count": 2860,
+            "p50Ms": 1.7,
+            "p95Ms": 2.5,
+            "maxMs": 3.9,
+            "over33ms": 0
+          },
+          "heapStartBytes": 148694355,
+          "heapEndBytes": 139820377,
+          "pauseSegmentsExcluded": 0,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "viewport": [
+            1280,
+            900
+          ],
+          "dpr": 1,
+          "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+        },
+        "paused": false,
+        "probe": {
+          "elapsedMs": 26451.520000000386,
+          "ended": false,
+          "player": {
+            "x": 260.0000000505915,
+            "y": 379.4813734992954
+          },
+          "hp": 85,
+          "chaos": 34.31088509999981,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "chase",
+              "position": {
+                "x": 297.89844406184835,
+                "y": 427.0392677100026
+              },
+              "hp": 75,
+              "detection": 1,
+              "engaged": false,
+              "visible": true
+            }
+          ],
+          "hosts": []
+        }
+      }
+    }
+  },
+  {
+    "file": "broken-shell-medium-20261003-6.jpg",
+    "state": {
+      "world": {
+        "identity": "broken-shell-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "70a011ab",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 10553,
+        "reachableBodySeats": 5808,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 580,
+          "y": 452
+        },
+        "enemyPoint": {
+          "x": 716,
+          "y": 172
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 212,
+        "solidCells": 738,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "solid"
+          },
+          {
+            "id": 2,
+            "role": "relief"
+          },
+          {
+            "id": 3,
+            "role": "relief"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": false,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "presentation": {
+        "mode": "normal",
+        "motion": true,
+        "phase": "接点收紧",
+        "elapsedMs": 31551.520000000324,
+        "activity": 0.28854640000006293,
+        "lastRenderMs": 0,
+        "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+        "gpuBytes": 13762560,
+        "shoulderLight": {
+          "x": 260.0000002240206,
+          "y": 377.7035068326286,
+          "z": 28,
+          "radius": 264,
+          "intensity": 3.1,
+          "color": [
+            1,
+            0.94,
+            0.86
+          ],
+          "castsShadow": false
+        },
+        "sourceLights": [
+          {
+            "x": 474,
+            "y": 312,
+            "z": 45.71456527709961,
+            "radius": 134,
+            "intensity": 0.15870052000003462,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          },
+          {
+            "x": 659,
+            "y": 277,
+            "z": 3.969188690185547,
+            "radius": 134,
+            "intensity": 0.12100000000000001,
+            "castsShadow": false,
+            "color": [
+              0.42775099989744647,
+              1,
+              0.8950876833145319
+            ]
+          }
+        ],
+        "geometryDiagnostics": {
+          "identity": "broken-shell-medium",
+          "family": "broken-shell",
+          "grade": "medium",
+          "seed": 20261003,
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "geometryFingerprint": "70a011ab",
+          "qualification": "author-local-art-lab; not a production-world admission",
+          "projection": "native XY topdown; height projection 0",
+          "nativeCanvas": [
+            960,
+            640
+          ],
+          "cameraZoom": 1.5,
+          "actorBody": 20,
+          "movementPxPerSecond": 80,
+          "supportCell": 8,
+          "triangles": 10553,
+          "reachableBodySeats": 5808,
+          "spawnPoint": {
+            "x": 260,
+            "y": 380
+          },
+          "exitPoint": {
+            "x": 196,
+            "y": 460
+          },
+          "searchPoint": {
+            "x": 580,
+            "y": 452
+          },
+          "enemyPoint": {
+            "x": 716,
+            "y": 172
+          },
+          "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+          "erosionCells": 212,
+          "solidCells": 738,
+          "physicalRoles": [
+            {
+              "id": 1,
+              "role": "solid"
+            },
+            {
+              "id": 2,
+              "role": "relief"
+            },
+            {
+              "id": 3,
+              "role": "relief"
+            }
+          ],
+          "geometryBeforeDeployment": true,
+          "dynamicTopology": false,
+          "gradeMechanics": false,
+          "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+        },
+        "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+        "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+        "sounds": {
+          "family": "broken-shell",
+          "grade": "medium",
+          "phase": "loading",
+          "paused": false,
+          "disposed": false,
+          "clock": 31551.520000000324,
+          "pressure": 0.08788000000008067,
+          "sourceIndex": 0,
+          "source": {
+            "x": 474,
+            "y": 312
+          },
+          "gain": 0,
+          "pan": 0.8,
+          "loop": null,
+          "lastEvent": "sfx-suspended-sea-drain",
+          "eventCount": 2,
+          "maximumOwnedVoices": 2,
+          "priority": "low",
+          "runtimeSynthesis": false
+        }
+      },
+      "patrol": {
+        "mode": "five-station",
+        "active": false,
+        "status": "巡查完成",
+        "outcome": "completed",
+        "elapsedMs": 26925.160000000287,
+        "activeMovementInputMs": 23608.24000000029,
+        "minimumDurationMs": 0,
+        "stationDwellMs": 650,
+        "completedLegs": 1,
+        "legDirection": 1,
+        "blocked": null,
+        "actualDistance": 1812.2750765548171,
+        "targetIndex": 218,
+        "plannedDistance": 1744,
+        "stations": [
+          {
+            "name": "侧缘",
+            "position": {
+              "x": 340,
+              "y": 260
+            },
+            "index": 24
+          },
+          {
+            "name": "背面",
+            "position": {
+              "x": 476,
+              "y": 84
+            },
+            "index": 63
+          },
+          {
+            "name": "另一侧缘",
+            "position": {
+              "x": 604,
+              "y": 260
+            },
+            "index": 101
+          },
+          {
+            "name": "搜取点",
+            "position": {
+              "x": 580,
+              "y": 452
+            },
+            "index": 168
+          },
+          {
+            "name": "回到入口",
+            "position": {
+              "x": 260,
+              "y": 380
+            },
+            "index": 217
+          }
+        ],
+        "position": {
+          "x": 260.0000002240206,
+          "y": 377.7035068326286
+        },
+        "samples": [
+          {
+            "elapsedMs": 8.329999999981373,
+            "x": 260,
+            "y": 380,
+            "actualDistance": 0,
+            "activeMovementInputMs": 0
+          },
+          {
+            "elapsedMs": 516.5100000000092,
+            "x": 284.8445251014822,
+            "y": 371.9919523934947,
+            "actualDistance": 34.298395388175564,
+            "activeMovementInputMs": 508.1800000000278
+          },
+          {
+            "elapsedMs": 1016.6300000000296,
+            "x": 324.84452154808173,
+            "y": 371.9999982317243,
+            "actualDistance": 74.29839538817582,
+            "activeMovementInputMs": 1008.3000000000482
+          },
+          {
+            "elapsedMs": 1516.7800000000059,
+            "x": 340.0200887166213,
+            "y": 351.1734500885065,
+            "actualDistance": 111.77288806249489,
+            "activeMovementInputMs": 1508.4500000000244
+          },
+          {
+            "elapsedMs": 2024.8500000000013,
+            "x": 340.0000026639696,
+            "y": 309.84014927749183,
+            "actualDistance": 153.10622139582821,
+            "activeMovementInputMs": 2016.5200000000198
+          },
+          {
+            "elapsedMs": 2525.0200000000127,
+            "x": 340.0000000006092,
+            "y": 269.84014927749274,
+            "actualDistance": 193.10622139582765,
+            "activeMovementInputMs": 2516.6900000000314
+          },
+          {
+            "elapsedMs": 3025.1199999999862,
+            "x": 339.9999999998663,
+            "y": 257.84041594415817,
+            "actualDistance": 205.10595472916222,
+            "activeMovementInputMs": 2616.560000000003
+          },
+          {
+            "elapsedMs": 3533.459999999969,
+            "x": 355.76316535258155,
+            "y": 259.8890184988247,
+            "actualDistance": 221.12426177424942,
+            "activeMovementInputMs": 2866.5499999999906
+          },
+          {
+            "elapsedMs": 4041.7500000000014,
+            "x": 356.00073735546414,
+            "y": 222.02235260492236,
+            "actualDistance": 260.6225980430586,
+            "activeMovementInputMs": 3374.840000000023
+          },
+          {
+            "elapsedMs": 4541.779999999961,
+            "x": 356.0000002466681,
+            "y": 182.02235262749227,
+            "actualDistance": 300.622598043058,
+            "activeMovementInputMs": 3874.8699999999735
+          },
+          {
+            "elapsedMs": 5041.789999999992,
+            "x": 364.046027472652,
+            "y": 159.8290418600454,
+            "actualDistance": 334.0969924533682,
+            "activeMovementInputMs": 4374.880000000001
+          },
+          {
+            "elapsedMs": 5541.799999999979,
+            "x": 372.29183724911263,
+            "y": 141.31609752344266,
+            "actualDistance": 366.62974991875564,
+            "activeMovementInputMs": 4874.8899999999885
+          },
+          {
+            "elapsedMs": 6050.129999999986,
+            "x": 380.1441009724342,
+            "y": 122.94592629122702,
+            "actualDistance": 398.82616332942183,
+            "activeMovementInputMs": 5383.219999999995
+          },
+          {
+            "elapsedMs": 6550.159999999993,
+            "x": 394.6379582482446,
+            "y": 114.91050400297284,
+            "actualDistance": 428.15248088338114,
+            "activeMovementInputMs": 5883.250000000002
+          },
+          {
+            "elapsedMs": 7058.439999999978,
+            "x": 413.77831056474173,
+            "y": 106.77237929016489,
+            "actualDistance": 461.0898640260472,
+            "activeMovementInputMs": 6391.529999999987
+          },
+          {
+            "elapsedMs": 7558.489999999977,
+            "x": 436.9326212783037,
+            "y": 100.00550388249907,
+            "actualDistance": 496.3114591771723,
+            "activeMovementInputMs": 6891.579999999986
+          },
+          {
+            "elapsedMs": 8066.389999999955,
+            "x": 476.57793065934794,
+            "y": 99.57997289965098,
+            "actualDistance": 536.0066933652246,
+            "activeMovementInputMs": 7399.479999999964
+          },
+          {
+            "elapsedMs": 8566.819999999998,
+            "x": 475.9402323789693,
+            "y": 81.88003283923445,
+            "actualDistance": 555.1028428524287,
+            "activeMovementInputMs": 7608.119999999978
+          },
+          {
+            "elapsedMs": 9066.840000000022,
+            "x": 482.492850817329,
+            "y": 83.60357333810715,
+            "actualDistance": 561.8783428524276,
+            "activeMovementInputMs": 7741.479999999942
+          },
+          {
+            "elapsedMs": 9566.850000000033,
+            "x": 522.4677455373976,
+            "y": 83.99997570127474,
+            "actualDistance": 601.8706153897818,
+            "activeMovementInputMs": 8241.489999999932
+          },
+          {
+            "elapsedMs": 10075.080000000085,
+            "x": 563.8010788707055,
+            "y": 83.99999999775704,
+            "actualDistance": 643.2039487231164,
+            "activeMovementInputMs": 8749.719999999985
+          },
+          {
+            "elapsedMs": 10575.170000000086,
+            "x": 603.7126229953052,
+            "y": 84.10700585288393,
+            "actualDistance": 683.1200833316772,
+            "activeMovementInputMs": 9249.809999999985
+          },
+          {
+            "elapsedMs": 11083.440000000128,
+            "x": 604.0019928267835,
+            "y": 119.32704937765709,
+            "actualDistance": 720.5449827127121,
+            "activeMovementInputMs": 9758.080000000027
+          },
+          {
+            "elapsedMs": 11583.510000000148,
+            "x": 604.0000006457548,
+            "y": 159.32704910469607,
+            "actualDistance": 760.5449827127132,
+            "activeMovementInputMs": 10258.150000000047
+          },
+          {
+            "elapsedMs": 12091.720000000181,
+            "x": 604.0000000001496,
+            "y": 200.66038243802964,
+            "actualDistance": 801.8783160460478,
+            "activeMovementInputMs": 10766.36000000008
+          },
+          {
+            "elapsedMs": 12591.810000000192,
+            "x": 604.0000000000001,
+            "y": 240.66038243802993,
+            "actualDistance": 841.8783160460489,
+            "activeMovementInputMs": 11266.450000000092
+          },
+          {
+            "elapsedMs": 13099.990000000165,
+            "x": 604.0000000000001,
+            "y": 261.99251577136357,
+            "actualDistance": 863.2104493793829,
+            "activeMovementInputMs": 11483.120000000099
+          },
+          {
+            "elapsedMs": 13600.100000000213,
+            "x": 610.5736748445127,
+            "y": 260.3552469209251,
+            "actualDistance": 869.9849493793826,
+            "activeMovementInputMs": 11616.370000000106
+          },
+          {
+            "elapsedMs": 14100.19000000024,
+            "x": 650.5521302888939,
+            "y": 260.00001677833234,
+            "actualDistance": 909.9778543204583,
+            "activeMovementInputMs": 12116.460000000134
+          },
+          {
+            "elapsedMs": 14608.430000000257,
+            "x": 691.8854636222147,
+            "y": 260.00000000121804,
+            "actualDistance": 951.3111876537914,
+            "activeMovementInputMs": 12624.70000000015
+          },
+          {
+            "elapsedMs": 15116.750000000278,
+            "x": 731.8854636222159,
+            "y": 260.0000000000001,
+            "actualDistance": 991.3111876537926,
+            "activeMovementInputMs": 13133.020000000171
+          },
+          {
+            "elapsedMs": 15625.060000000285,
+            "x": 766.3405207555408,
+            "y": 265.3556296445365,
+            "actualDistance": 1030.1858061850526,
+            "activeMovementInputMs": 13641.330000000178
+          },
+          {
+            "elapsedMs": 16125.210000000312,
+            "x": 763.9994814140806,
+            "y": 303.7346491194299,
+            "actualDistance": 1069.7290047726162,
+            "activeMovementInputMs": 14141.480000000205
+          },
+          {
+            "elapsedMs": 16633.54000000035,
+            "x": 763.9999999335378,
+            "y": 343.7346490980336,
+            "actualDistance": 1109.729004772614,
+            "activeMovementInputMs": 14649.810000000256
+          },
+          {
+            "elapsedMs": 17141.66000000034,
+            "x": 763.9999999999941,
+            "y": 385.0679824313663,
+            "actualDistance": 1151.062338105945,
+            "activeMovementInputMs": 15157.930000000279
+          },
+          {
+            "elapsedMs": 17650.110000000306,
+            "x": 755.269359533642,
+            "y": 412.46385750285293,
+            "actualDistance": 1188.4532417108107,
+            "activeMovementInputMs": 15666.380000000278
+          },
+          {
+            "elapsedMs": 18158.140000000374,
+            "x": 732.716748483537,
+            "y": 420.1157825185812,
+            "actualDistance": 1223.6918513347418,
+            "activeMovementInputMs": 16174.41000000037
+          },
+          {
+            "elapsedMs": 18658.55000000032,
+            "x": 709.2280329982677,
+            "y": 427.98701681338287,
+            "actualDistance": 1258.2134682693759,
+            "activeMovementInputMs": 16674.820000000305
+          },
+          {
+            "elapsedMs": 19166.76000000033,
+            "x": 669.2280410588,
+            "y": 427.9999994581258,
+            "actualDistance": 1298.2134682693763,
+            "activeMovementInputMs": 17183.030000000315
+          },
+          {
+            "elapsedMs": 19666.87000000031,
+            "x": 629.2280410587989,
+            "y": 427.9999999999774,
+            "actualDistance": 1338.2134682693809,
+            "activeMovementInputMs": 17683.140000000294
+          },
+          {
+            "elapsedMs": 20175.180000000313,
+            "x": 587.8947077254644,
+            "y": 428,
+            "actualDistance": 1379.546801602719,
+            "activeMovementInputMs": 18191.4500000003
+          },
+          {
+            "elapsedMs": 20675.200000000284,
+            "x": 579.9636955560442,
+            "y": 453.2979895804732,
+            "actualDistance": 1415.5544492519475,
+            "activeMovementInputMs": 18641.430000000277
+          },
+          {
+            "elapsedMs": 21175.220000000325,
+            "x": 579.9357740186016,
+            "y": 454.29626584426893,
+            "actualDistance": 1416.5531159186144,
+            "activeMovementInputMs": 18641.430000000277
+          },
+          {
+            "elapsedMs": 21683.500000000302,
+            "x": 552.7403880882854,
+            "y": 452.0081866664267,
+            "actualDistance": 1444.017040940794,
+            "activeMovementInputMs": 19033.140000000283
+          },
+          {
+            "elapsedMs": 22191.800000000334,
+            "x": 511.40705925959077,
+            "y": 452.0000021750985,
+            "actualDistance": 1485.3503742741257,
+            "activeMovementInputMs": 19541.440000000315
+          },
+          {
+            "elapsedMs": 22700.0700000003,
+            "x": 471.40705925959156,
+            "y": 452.00000000080405,
+            "actualDistance": 1525.3503742741234,
+            "activeMovementInputMs": 20049.710000000283
+          },
+          {
+            "elapsedMs": 23200.24000000027,
+            "x": 431.40705925959213,
+            "y": 452.0000000000003,
+            "actualDistance": 1565.3503742741211,
+            "activeMovementInputMs": 20549.880000000252
+          },
+          {
+            "elapsedMs": 23708.380000000325,
+            "x": 390.0737259262594,
+            "y": 452.00000000000006,
+            "actualDistance": 1606.683707607452,
+            "activeMovementInputMs": 21058.020000000306
+          },
+          {
+            "elapsedMs": 24208.510000000308,
+            "x": 350.07372592625995,
+            "y": 452.00000000000006,
+            "actualDistance": 1646.6837076074498,
+            "activeMovementInputMs": 21558.15000000029
+          },
+          {
+            "elapsedMs": 24708.5800000003,
+            "x": 310.0737259262605,
+            "y": 452.00000000000006,
+            "actualDistance": 1686.6837076074476,
+            "activeMovementInputMs": 22058.22000000028
+          },
+          {
+            "elapsedMs": 25216.82000000031,
+            "x": 270.0737259262611,
+            "y": 452.00000000000006,
+            "actualDistance": 1726.6837076074453,
+            "activeMovementInputMs": 22566.46000000029
+          },
+          {
+            "elapsedMs": 25716.880000000292,
+            "x": 259.99666251869235,
+            "y": 425.70337277088026,
+            "actualDistance": 1764.275209888153,
+            "activeMovementInputMs": 23066.520000000273
+          },
+          {
+            "elapsedMs": 26216.930000000288,
+            "x": 259.9999994436417,
+            "y": 385.703373499295,
+            "actualDistance": 1804.2752098881508,
+            "activeMovementInputMs": 23566.57000000027
+          },
+          {
+            "elapsedMs": 26725.2700000003,
+            "x": 260.0000002240206,
+            "y": 377.7035068326286,
+            "actualDistance": 1812.2750765548171,
+            "activeMovementInputMs": 23608.24000000029
+          }
+        ],
+        "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+      },
+      "runtime": {
+        "ready": true,
+        "running": true,
+        "starting": false,
+        "performance": {
+          "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+          "state": "sampling",
+          "warmupMs": 2000,
+          "requestedMs": 60000,
+          "sampledMs": 29225.2,
+          "sampleCapacity": 60001,
+          "frames": {
+            "count": 3507,
+            "p50Ms": 8.3,
+            "p95Ms": 9.4,
+            "maxMs": 11.5,
+            "over33ms": 0
+          },
+          "cpuSubmission": {
+            "count": 3508,
+            "p50Ms": 1.7,
+            "p95Ms": 2.5,
+            "maxMs": 3.9,
+            "over33ms": 0
+          },
+          "heapStartBytes": 148694355,
+          "heapEndBytes": 147915827,
+          "pauseSegmentsExcluded": 0,
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+          "viewport": [
+            1280,
+            900
+          ],
+          "dpr": 1,
+          "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+        },
+        "paused": false,
+        "probe": {
+          "elapsedMs": 31551.520000000324,
+          "ended": false,
+          "player": {
+            "x": 260.0000002240206,
+            "y": 377.7035068326286
+          },
+          "hp": 40,
+          "chaos": 38.339885099998995,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "chase",
+              "position": {
+                "x": 278.08590781059814,
+                "y": 401.27692553250955
+              },
+              "hp": 75,
+              "detection": 1,
+              "engaged": true,
+              "visible": true
+            }
+          ],
+          "hosts": []
+        }
+      }
+    }
+  }
+]

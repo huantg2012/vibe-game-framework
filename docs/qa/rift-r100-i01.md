@@ -27,6 +27,16 @@ baseline: ac9ddd7
 
 32例期间依赖稳定；随后缓存修复改了manager。第二份证据的9例逐项比较前后identity和world SHA一致，178依赖只变manager。**原大样本仍标修复前版本**，没有将旧耗时重标新源码。以该样本均值估算12,960资格例单串生成9.23h、加冷恢复18.00h、含进程装载与核验22.48h；不包括新材料成本、保留样本、美术与实玩，不是工期承诺。
 
+2026-10-03 工具口径修正，仅复核旧证据，未重采样：`measure-r100-baseline.ts` 的单进程默认/上限改为60,000ms，低于该值的定向诊断仍可显式指定；总时限不足会保留未测与失败分母。新报告分别保存采集状态与预算判定，完整且至少32个预登记自然seed才能通过样本门；自然生成/冷恢复各按p95≤5,000ms判断，定向/历史成功例不能补自然失败。默认文件带时间与PID，并拒绝覆盖既有证据。进程退出0仅表示完整有效的样本时限门通过，不表示浏览器主线程、原生运行、资源生命周期或新世界包资格通过；这些独立门仍明确未测。
+
+轻量复核命令 `node --import tsx tools/world-study/measure-r100-baseline.ts --self-test` 已通过，覆盖失败不补抽、部分样本、坏计时、来源变动与60秒上限。`node --import tsx tools/world-study/measure-r100-baseline.ts --review-report docs/qa/artifacts/rift-r100-i01/generation-baseline.json` 只读旧文件并保留其日期/revision/sourceHash；实得生成p95=8,311.053458ms、冷恢复p95=8,330.59175ms，均FAIL，按设计退出1。既有报告的 `finite-sample-complete` 只指采集完成，未被重写成当前源码性能。未来空闲参考机复测入口为 `node --import tsx tools/world-study/measure-r100-baseline.ts --budget-ms 1800000`；此次美术/语义纠偏不重复测被冻结的32例，也不以DEV GPU帧时关闭R100-P01。
+
+**I03安全离线程的最小接入范围（静态调查，尚未实施）：** 正式新出击在 `PurificationScene.transitionToRift` 同步调用 `createProceduralDeparture`；冷续局在 `session.loadExpedition` 的 `saveManager.load` 同步准入中调用恢复。应新增纯生成Worker入口/传输数据/client，生成前固定一次recipe与seed，Worker内执行既有冻结算法、合法性与指纹核验，60秒硬截止并支持取消；不得重抽身份或修改冻结执行器。不能把带Phaser/存档singleton的整个 `rift-recovery` manager导入Worker。传回的layout需剥离/重建 `walkableMask` 方法，其余plain对象和typed array可按明确DTO传输；主线程将已核验产物登记进现有完整recipe键缓存，不通过改变存档签名规避兼容。
+
+新出击须await准备成功后才运行现有原子 `beginRun`/库存/出发意图提交；取消、超时、Scene关闭或生成错误不得消费准备或改写原存档。续局先只读取得checkpoint/departure身份，预热对应缓存后再调用现有同步load/validator；等待期间需固定并复核存档快照，变化则拒绝本次载入，不能缓存miss后退回主线程同步生成。需要改动的生产边界为新增纯Worker/DTO/client、`rift-recovery`异步准备及缓存登记、`PurificationScene`等待与取消、`session`及`MainMenuScene`载入互斥，必要的存档快照核验接口；这些保留为I03实施范围，本次没有接线。
+
+**Worker之后仍须逐项测<50ms：** 主线程接收/克隆与TileGrid重建、recipe/identity签名核验、admission的Host manifest/paint bake与AI配置构造、RiftScene表面预烤/纹理提交/首次建立。Worker仅迁走生成不能证明这些阶段达标；需按阶段记录真实主线程连续任务，超预算阶段继续移入纯Worker或按可取消分片处理。还须做生成中取消/超时、场景销毁、等待中存档变化、保存失败重试以及v1/v2/无配方冷恢复指纹负例。纯Promise包裹同步函数不会消除阻塞；Node子进程时限也不能替代浏览器Long Task与生命周期证据。
+
 ## 原生基线与未完成范围
 
 Gym新增只读有界Phaser帧时探针，2秒预热、12秒采样；CPU提交与帧间隔分开，暂停/后台排除，缺少heap能力记null。探针的预热、暂停/后台、计时边界与重置5项专项通过。原生浏览器结果与截图保存在本轮`native/`，由正常进入按钮启动；不修改正式存档，不注入游戏状态。短时静止基线不证明移动、交战、重度峰值、GPU耗时或资源回收通过。

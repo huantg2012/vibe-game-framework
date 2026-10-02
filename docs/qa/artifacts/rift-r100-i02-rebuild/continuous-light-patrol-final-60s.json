@@ -1,0 +1,1247 @@
+{
+  "world": {
+    "identity": "broken-shell-severe",
+    "family": "broken-shell",
+    "grade": "severe",
+    "seed": 20261002,
+    "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+    "geometryFingerprint": "a64517c1",
+    "qualification": "author-local-art-lab; not a production-world admission",
+    "projection": "native XY topdown; height projection 0",
+    "nativeCanvas": [
+      960,
+      640
+    ],
+    "cameraZoom": 1.5,
+    "actorBody": 20,
+    "movementPxPerSecond": 80,
+    "supportCell": 8,
+    "triangles": 10556,
+    "reachableBodySeats": 4195,
+    "spawnPoint": {
+      "x": 260,
+      "y": 380
+    },
+    "exitPoint": {
+      "x": 196,
+      "y": 460
+    },
+    "searchPoint": {
+      "x": 612,
+      "y": 468
+    },
+    "enemyPoint": {
+      "x": 764,
+      "y": 172
+    },
+    "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+    "erosionCells": 612,
+    "solidCells": 1848,
+    "physicalRoles": [
+      {
+        "id": 1,
+        "role": "solid"
+      },
+      {
+        "id": 2,
+        "role": "solid"
+      },
+      {
+        "id": 3,
+        "role": "relief"
+      }
+    ],
+    "geometryBeforeDeployment": true,
+    "dynamicTopology": false,
+    "gradeMechanics": false,
+    "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+  },
+  "presentation": {
+    "mode": "normal",
+    "motion": true,
+    "phase": "余压回落",
+    "elapsedMs": 99600.65999999981,
+    "activity": 0.8675727335640623,
+    "lastRenderMs": 0,
+    "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+    "gpuBytes": 13762560,
+    "shoulderLight": {
+      "x": 299.99867833777347,
+      "y": 355.97300261630306,
+      "z": 28,
+      "radius": 264,
+      "intensity": 3.1,
+      "color": [
+        1,
+        0.94,
+        0.86
+      ],
+      "castsShadow": false
+    },
+    "sourceLights": [
+      {
+        "x": 478,
+        "y": 300,
+        "z": 40.95100784301758,
+        "radius": 155,
+        "intensity": 0.6246523681661248,
+        "castsShadow": false,
+        "color": [
+          0.42775099989744647,
+          1,
+          0.8950876833145319
+        ]
+      },
+      {
+        "x": 724,
+        "y": 297,
+        "z": 41.139251708984375,
+        "radius": 155,
+        "intensity": 0.5460283681661249,
+        "castsShadow": false,
+        "color": [
+          0.42775099989744647,
+          1,
+          0.8950876833145319
+        ]
+      }
+    ],
+    "geometryDiagnostics": {
+      "identity": "broken-shell-severe",
+      "family": "broken-shell",
+      "grade": "severe",
+      "seed": 20261002,
+      "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+      "geometryFingerprint": "a64517c1",
+      "qualification": "author-local-art-lab; not a production-world admission",
+      "projection": "native XY topdown; height projection 0",
+      "nativeCanvas": [
+        960,
+        640
+      ],
+      "cameraZoom": 1.5,
+      "actorBody": 20,
+      "movementPxPerSecond": 80,
+      "supportCell": 8,
+      "triangles": 10556,
+      "reachableBodySeats": 4195,
+      "spawnPoint": {
+        "x": 260,
+        "y": 380
+      },
+      "exitPoint": {
+        "x": 196,
+        "y": 460
+      },
+      "searchPoint": {
+        "x": 612,
+        "y": 468
+      },
+      "enemyPoint": {
+        "x": 764,
+        "y": 172
+      },
+      "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+      "erosionCells": 612,
+      "solidCells": 1848,
+      "physicalRoles": [
+        {
+          "id": 1,
+          "role": "solid"
+        },
+        {
+          "id": 2,
+          "role": "solid"
+        },
+        {
+          "id": 3,
+          "role": "relief"
+        }
+      ],
+      "geometryBeforeDeployment": true,
+      "dynamicTopology": false,
+      "gradeMechanics": false,
+      "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+    },
+    "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+    "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+    "sounds": {
+      "family": "broken-shell",
+      "grade": "severe",
+      "phase": "stress",
+      "paused": false,
+      "disposed": false,
+      "clock": 99600.65999999981,
+      "pressure": 0.8302214532872594,
+      "sourceIndex": 0,
+      "source": {
+        "x": 478,
+        "y": 300
+      },
+      "gain": 0.05630896348743667,
+      "pan": 0.8,
+      "loop": null,
+      "lastEvent": "sfx-suspended-sea-shell-hit",
+      "eventCount": 9,
+      "maximumOwnedVoices": 2,
+      "priority": "low",
+      "runtimeSynthesis": false
+    }
+  },
+  "patrol": {
+    "mode": "lighting-return",
+    "active": false,
+    "status": "持续巡查完成",
+    "outcome": "completed",
+    "elapsedMs": 65000.370000000235,
+    "activeMovementInputMs": 64992.040000000234,
+    "minimumDurationMs": 65000,
+    "stationDwellMs": 0,
+    "completedLegs": 24,
+    "legDirection": 1,
+    "blocked": null,
+    "actualDistance": 4973.105007618299,
+    "targetIndex": 7,
+    "plannedDistance": 208,
+    "stations": [
+      {
+        "name": "入口",
+        "position": {
+          "x": 260,
+          "y": 372
+        },
+        "index": 0
+      },
+      {
+        "name": "第一侧缘",
+        "position": {
+          "x": 300,
+          "y": 212
+        },
+        "index": 25
+      }
+    ],
+    "position": {
+      "x": 300.22660186890545,
+      "y": 360.62876026768487
+    },
+    "samples": [
+      {
+        "elapsedMs": 8.329999999998837,
+        "x": 260,
+        "y": 380,
+        "actualDistance": 0,
+        "activeMovementInputMs": 0
+      },
+      {
+        "elapsedMs": 508.47000000000116,
+        "x": 284.68051719811547,
+        "y": 371.9850988071635,
+        "actualDistance": 34.44644903209907,
+        "activeMovementInputMs": 500.1400000000023
+      },
+      {
+        "elapsedMs": 1016.8000000000028,
+        "x": 300.0135552831911,
+        "y": 351.0833859301331,
+        "actualDistance": 71.99585679799324,
+        "activeMovementInputMs": 1008.470000000004
+      },
+      {
+        "elapsedMs": 1516.8000000000036,
+        "x": 300.000002525496,
+        "y": 311.08340138809933,
+        "actualDistance": 111.99585679799289,
+        "activeMovementInputMs": 1508.4700000000048
+      },
+      {
+        "elapsedMs": 2025.0100000000048,
+        "x": 300.00000000026705,
+        "y": 269.75006805476704,
+        "actualDistance": 153.3291901313257,
+        "activeMovementInputMs": 2016.680000000006
+      },
+      {
+        "elapsedMs": 2525.1300000000024,
+        "x": 300.00000000000006,
+        "y": 229.75006805476664,
+        "actualDistance": 193.3291901313261,
+        "activeMovementInputMs": 2516.8000000000034
+      },
+      {
+        "elapsedMs": 3025.160000000001,
+        "x": 300.00000000000006,
+        "y": 224.9695680547664,
+        "actualDistance": 226.9413567979931,
+        "activeMovementInputMs": 3016.830000000002
+      },
+      {
+        "elapsedMs": 3533.460000000002,
+        "x": 300.00000000000006,
+        "y": 264.9695680547668,
+        "actualDistance": 266.9413567979936,
+        "activeMovementInputMs": 3525.130000000003
+      },
+      {
+        "elapsedMs": 4033.490000000002,
+        "x": 300.00000000000006,
+        "y": 304.9695680547662,
+        "actualDistance": 306.941356797993,
+        "activeMovementInputMs": 4025.160000000003
+      },
+      {
+        "elapsedMs": 4541.820000000005,
+        "x": 300.00000000000006,
+        "y": 346.302901388099,
+        "actualDistance": 348.27469013132577,
+        "activeMovementInputMs": 4533.490000000006
+      },
+      {
+        "elapsedMs": 5049.999999999997,
+        "x": 289.8306578951107,
+        "y": 372.43930216771463,
+        "actualDistance": 385.72638290609734,
+        "activeMovementInputMs": 5041.669999999998
+      },
+      {
+        "elapsedMs": 5550.19,
+        "x": 261.08395474704275,
+        "y": 371.9982727801724,
+        "actualDistance": 419.37455067715916,
+        "activeMovementInputMs": 5541.860000000001
+      },
+      {
+        "elapsedMs": 6058.410000000001,
+        "x": 301.55349423725903,
+        "y": 371.0779154150926,
+        "actualDistance": 460.02987298320215,
+        "activeMovementInputMs": 6050.080000000002
+      },
+      {
+        "elapsedMs": 6558.4699999999975,
+        "x": 300.0007318451643,
+        "y": 333.9674366740819,
+        "actualDistance": 498.0560172238183,
+        "activeMovementInputMs": 6550.1399999999985
+      },
+      {
+        "elapsedMs": 7058.509999999995,
+        "x": 300.0000002192833,
+        "y": 293.96743669652017,
+        "actualDistance": 538.0560172238185,
+        "activeMovementInputMs": 7050.179999999996
+      },
+      {
+        "elapsedMs": 7566.839999999994,
+        "x": 300.0000000000657,
+        "y": 253.96743669652022,
+        "actualDistance": 578.0560172238181,
+        "activeMovementInputMs": 7558.509999999995
+      },
+      {
+        "elapsedMs": 8066.839999999995,
+        "x": 300.00000000000006,
+        "y": 213.96743669651994,
+        "actualDistance": 618.0560172238193,
+        "activeMovementInputMs": 8058.509999999996
+      },
+      {
+        "elapsedMs": 8575.219999999987,
+        "x": 300.00000000000006,
+        "y": 242.54627002985356,
+        "actualDistance": 653.0265172238203,
+        "activeMovementInputMs": 8566.889999999989
+      },
+      {
+        "elapsedMs": 9083.519999999971,
+        "x": 300.00000000000006,
+        "y": 282.5462700298536,
+        "actualDistance": 693.0265172238201,
+        "activeMovementInputMs": 9075.189999999973
+      },
+      {
+        "elapsedMs": 9591.589999999976,
+        "x": 300.00000000000006,
+        "y": 323.87960336318633,
+        "actualDistance": 734.359850557151,
+        "activeMovementInputMs": 9583.259999999978
+      },
+      {
+        "elapsedMs": 10091.859999999962,
+        "x": 300.00000000000006,
+        "y": 363.87960336318577,
+        "actualDistance": 774.3598505571488,
+        "activeMovementInputMs": 10083.529999999964
+      },
+      {
+        "elapsedMs": 10591.889999999954,
+        "x": 273.5960704649538,
+        "y": 371.97553110630224,
+        "actualDistance": 811.4489622482648,
+        "activeMovementInputMs": 10583.559999999956
+      },
+      {
+        "elapsedMs": 11100.169999999938,
+        "x": 276.81411245328877,
+        "y": 372.0000943817532,
+        "actualDistance": 845.053297912111,
+        "activeMovementInputMs": 11091.83999999994
+      },
+      {
+        "elapsedMs": 11608.439999999924,
+        "x": 300.0636136077549,
+        "y": 357.82576021482635,
+        "actualDistance": 883.8713067957565,
+        "activeMovementInputMs": 11600.109999999926
+      },
+      {
+        "elapsedMs": 12108.539999999919,
+        "x": 300.00001409654016,
+        "y": 317.82593386553685,
+        "actualDistance": 923.8713067957576,
+        "activeMovementInputMs": 12100.209999999921
+      },
+      {
+        "elapsedMs": 12608.579999999918,
+        "x": 300.0000000031237,
+        "y": 277.82593386554595,
+        "actualDistance": 963.8713067957567,
+        "activeMovementInputMs": 12600.24999999992
+      },
+      {
+        "elapsedMs": 13116.809999999912,
+        "x": 300.0000000000007,
+        "y": 237.82593386554566,
+        "actualDistance": 1003.8713067957569,
+        "activeMovementInputMs": 13108.479999999914
+      },
+      {
+        "elapsedMs": 13616.869999999903,
+        "x": 300.00000000000006,
+        "y": 217.03843386554541,
+        "actualDistance": 1037.4808067957572,
+        "activeMovementInputMs": 13608.539999999904
+      },
+      {
+        "elapsedMs": 14125.209999999894,
+        "x": 300.00000000000006,
+        "y": 258.37176719887907,
+        "actualDistance": 1078.8141401290882,
+        "activeMovementInputMs": 14116.879999999896
+      },
+      {
+        "elapsedMs": 14633.539999999886,
+        "x": 300.00000000000006,
+        "y": 298.3717671988788,
+        "actualDistance": 1118.814140129087,
+        "activeMovementInputMs": 14625.209999999888
+      },
+      {
+        "elapsedMs": 15133.56999999988,
+        "x": 300.00000000000006,
+        "y": 338.3717671988782,
+        "actualDistance": 1158.8141401290848,
+        "activeMovementInputMs": 15125.239999999882
+      },
+      {
+        "elapsedMs": 15641.889999999867,
+        "x": 295.63903559898574,
+        "y": 374.6055510833643,
+        "actualDistance": 1197.9660706445122,
+        "activeMovementInputMs": 15633.559999999869
+      },
+      {
+        "elapsedMs": 16150.219999999857,
+        "x": 258.8417541390696,
+        "y": 371.9991402250768,
+        "actualDistance": 1235.3089233653611,
+        "activeMovementInputMs": 16141.88999999986
+      },
+      {
+        "elapsedMs": 16650.229999999858,
+        "x": 294.511254231183,
+        "y": 371.9999993938352,
+        "actualDistance": 1271.144423855976,
+        "activeMovementInputMs": 16641.89999999986
+      },
+      {
+        "elapsedMs": 17150.22999999986,
+        "x": 300.0047904757107,
+        "y": 342.0360967981028,
+        "actualDistance": 1308.4655030777833,
+        "activeMovementInputMs": 17141.899999999863
+      },
+      {
+        "elapsedMs": 17650.22999999987,
+        "x": 300.0000016464456,
+        "y": 302.03609774857796,
+        "actualDistance": 1348.465503077781,
+        "activeMovementInputMs": 17641.89999999987
+      },
+      {
+        "elapsedMs": 18158.559999999874,
+        "x": 300.0000000004907,
+        "y": 260.70276441524504,
+        "actualDistance": 1389.7988364111125,
+        "activeMovementInputMs": 18150.229999999876
+      },
+      {
+        "elapsedMs": 18658.579999999874,
+        "x": 300.00000000000017,
+        "y": 220.70276441524467,
+        "actualDistance": 1429.7988364111109,
+        "activeMovementInputMs": 18650.249999999876
+      },
+      {
+        "elapsedMs": 19158.579999999893,
+        "x": 300.00000000000006,
+        "y": 234.58459774857815,
+        "actualDistance": 1463.4103364111093,
+        "activeMovementInputMs": 19150.249999999894
+      },
+      {
+        "elapsedMs": 19666.90999999989,
+        "x": 300.00000000000006,
+        "y": 274.58459774857835,
+        "actualDistance": 1503.4103364111081,
+        "activeMovementInputMs": 19658.579999999893
+      },
+      {
+        "elapsedMs": 20166.919999999896,
+        "x": 300.00000000000006,
+        "y": 314.5845977485778,
+        "actualDistance": 1543.4103364111058,
+        "activeMovementInputMs": 20158.5899999999
+      },
+      {
+        "elapsedMs": 20675.139999999905,
+        "x": 300.00000000000006,
+        "y": 355.9179310819105,
+        "actualDistance": 1584.7436697444368,
+        "activeMovementInputMs": 20666.809999999907
+      },
+      {
+        "elapsedMs": 21175.259999999907,
+        "x": 281.61355366196625,
+        "y": 371.84979901966904,
+        "actualDistance": 1621.8179399555984,
+        "activeMovementInputMs": 21166.92999999991
+      },
+      {
+        "elapsedMs": 21683.46999999991,
+        "x": 268.8322362666632,
+        "y": 372.000515527027,
+        "actualDistance": 1655.4251091095634,
+        "activeMovementInputMs": 21675.139999999912
+      },
+      {
+        "elapsedMs": 22183.609999999913,
+        "x": 302.0720269948804,
+        "y": 366.5022823989994,
+        "actualDistance": 1693.1214260637082,
+        "activeMovementInputMs": 22175.279999999915
+      },
+      {
+        "elapsedMs": 22691.91999999991,
+        "x": 300.0000229606222,
+        "y": 325.83513015315475,
+        "actualDistance": 1734.2393264539323,
+        "activeMovementInputMs": 22683.589999999913
+      },
+      {
+        "elapsedMs": 23191.949999999913,
+        "x": 300.000000005193,
+        "y": 285.83513015317783,
+        "actualDistance": 1774.23932645393,
+        "activeMovementInputMs": 23183.619999999915
+      },
+      {
+        "elapsedMs": 23700.249999999913,
+        "x": 300.0000000000012,
+        "y": 245.83513015317772,
+        "actualDistance": 1814.2393264539296,
+        "activeMovementInputMs": 23691.919999999915
+      },
+      {
+        "elapsedMs": 24208.45999999991,
+        "x": 300.00000000000006,
+        "y": 211.30763015317768,
+        "actualDistance": 1850.100159787261,
+        "activeMovementInputMs": 24200.129999999914
+      },
+      {
+        "elapsedMs": 24708.549999999916,
+        "x": 300.00000000000006,
+        "y": 250.38446348651152,
+        "actualDistance": 1889.1769931205924,
+        "activeMovementInputMs": 24700.219999999917
+      },
+      {
+        "elapsedMs": 25208.609999999906,
+        "x": 300.00000000000006,
+        "y": 290.3844634865114,
+        "actualDistance": 1929.176993120591,
+        "activeMovementInputMs": 25200.279999999908
+      },
+      {
+        "elapsedMs": 25708.619999999904,
+        "x": 300.00000000000006,
+        "y": 330.3844634865108,
+        "actualDistance": 1969.1769931205888,
+        "activeMovementInputMs": 25700.289999999906
+      },
+      {
+        "elapsedMs": 26208.629999999906,
+        "x": 300.00000000000006,
+        "y": 370.38446348651024,
+        "actualDistance": 2009.1769931205865,
+        "activeMovementInputMs": 26200.29999999991
+      },
+      {
+        "elapsedMs": 26708.6399999999,
+        "x": 265.9588675856711,
+        "y": 372.00216812040395,
+        "actualDistance": 2046.5557758539328,
+        "activeMovementInputMs": 26700.309999999903
+      },
+      {
+        "elapsedMs": 27216.939999999897,
+        "x": 285.18870160193245,
+        "y": 371.99999521745093,
+        "actualDistance": 2080.1706098120735,
+        "activeMovementInputMs": 27208.6099999999
+      },
+      {
+        "elapsedMs": 27716.959999999897,
+        "x": 300.0379798465981,
+        "y": 351.3644198461809,
+        "actualDistance": 2117.489026505258,
+        "activeMovementInputMs": 27708.6299999999
+      },
+      {
+        "elapsedMs": 28225.2699999999,
+        "x": 300.0000078051927,
+        "y": 310.03119325382784,
+        "actualDistance": 2158.822359838596,
+        "activeMovementInputMs": 28216.9399999999
+      },
+      {
+        "elapsedMs": 28733.58999999989,
+        "x": 300.0000000026569,
+        "y": 270.0311932538308,
+        "actualDistance": 2198.8223598386007,
+        "activeMovementInputMs": 28725.259999999893
+      },
+      {
+        "elapsedMs": 29233.62999999989,
+        "x": 300.0000000000009,
+        "y": 230.03119325383045,
+        "actualDistance": 2238.8223598386053,
+        "activeMovementInputMs": 29225.29999999989
+      },
+      {
+        "elapsedMs": 29741.849999999886,
+        "x": 300.00000000000006,
+        "y": 226.58585992049666,
+        "actualDistance": 2273.7646931719423,
+        "activeMovementInputMs": 29733.519999999888
+      },
+      {
+        "elapsedMs": 30241.959999999886,
+        "x": 300.00000000000006,
+        "y": 266.58585992049706,
+        "actualDistance": 2313.764693171947,
+        "activeMovementInputMs": 30233.62999999989
+      },
+      {
+        "elapsedMs": 30741.969999999877,
+        "x": 300.00000000000006,
+        "y": 306.5858599204965,
+        "actualDistance": 2353.7646931719514,
+        "activeMovementInputMs": 30733.63999999988
+      },
+      {
+        "elapsedMs": 31241.979999999883,
+        "x": 300.00000000000006,
+        "y": 346.5858599204959,
+        "actualDistance": 2393.764693171956,
+        "activeMovementInputMs": 31233.649999999885
+      },
+      {
+        "elapsedMs": 31750.28999999988,
+        "x": 290.61048749842064,
+        "y": 371.34276158980623,
+        "actualDistance": 2431.050199743925,
+        "activeMovementInputMs": 31741.959999999883
+      },
+      {
+        "elapsedMs": 32250.31999999988,
+        "x": 259.8382900330022,
+        "y": 372.0029642902954,
+        "actualDistance": 2464.7867619237077,
+        "activeMovementInputMs": 32241.98999999988
+      },
+      {
+        "elapsedMs": 32758.62999999989,
+        "x": 300.48113457183985,
+        "y": 371.5714424205405,
+        "actualDistance": 2505.481140506689,
+        "activeMovementInputMs": 32750.29999999989
+      },
+      {
+        "elapsedMs": 33258.67999999989,
+        "x": 300.0006611321751,
+        "y": 335.16537279087817,
+        "actualDistance": 2543.2659552393584,
+        "activeMovementInputMs": 33250.34999999989
+      },
+      {
+        "elapsedMs": 33766.96999999991,
+        "x": 300.0000001485061,
+        "y": 295.16537282623733,
+        "actualDistance": 2583.265955239363,
+        "activeMovementInputMs": 33758.639999999905
+      },
+      {
+        "elapsedMs": 34266.97999999989,
+        "x": 300.0000000000334,
+        "y": 255.16537282623747,
+        "actualDistance": 2623.2659552393675,
+        "activeMovementInputMs": 34258.649999999885
+      },
+      {
+        "elapsedMs": 34766.9899999999,
+        "x": 300.00000000000006,
+        "y": 215.1653728262372,
+        "actualDistance": 2663.265955239372,
+        "activeMovementInputMs": 34758.6599999999
+      },
+      {
+        "elapsedMs": 35266.989999999925,
+        "x": 300.00000000000006,
+        "y": 239.72220615957062,
+        "actualDistance": 2696.8781219060415,
+        "activeMovementInputMs": 35258.65999999992
+      },
+      {
+        "elapsedMs": 35766.98999999994,
+        "x": 300.00000000000006,
+        "y": 279.7222061595707,
+        "actualDistance": 2736.878121906046,
+        "activeMovementInputMs": 35758.65999999994
+      },
+      {
+        "elapsedMs": 36267.01999999993,
+        "x": 300.00000000000006,
+        "y": 319.72220615957013,
+        "actualDistance": 2776.8781219060506,
+        "activeMovementInputMs": 36258.68999999993
+      },
+      {
+        "elapsedMs": 36775.34999999992,
+        "x": 300.00000000000006,
+        "y": 361.0555394929029,
+        "actualDistance": 2818.2114552393887,
+        "activeMovementInputMs": 36767.01999999992
+      },
+      {
+        "elapsedMs": 37283.67999999995,
+        "x": 275.2945146607815,
+        "y": 372.01354817640424,
+        "actualDistance": 2855.587514060172,
+        "activeMovementInputMs": 37275.34999999995
+      },
+      {
+        "elapsedMs": 37783.67999999998,
+        "x": 275.8485248172839,
+        "y": 371.9999627970607,
+        "actualDistance": 2889.1978480213306,
+        "activeMovementInputMs": 37775.34999999998
+      },
+      {
+        "elapsedMs": 38283.68000000002,
+        "x": 299.002103354798,
+        "y": 361.3874608301491,
+        "actualDistance": 2926.402655776563,
+        "activeMovementInputMs": 38275.35000000002
+      },
+      {
+        "elapsedMs": 38791.970000000074,
+        "x": 299.9999151278421,
+        "y": 320.25876987750166,
+        "actualDistance": 2967.626170760385,
+        "activeMovementInputMs": 38783.64000000007
+      },
+      {
+        "elapsedMs": 39292.02000000011,
+        "x": 299.99999998930815,
+        "y": 280.25876987807646,
+        "actualDistance": 3007.6261707603894,
+        "activeMovementInputMs": 39283.69000000011
+      },
+      {
+        "elapsedMs": 39792.02000000011,
+        "x": 299.99999999999864,
+        "y": 240.25876987807624,
+        "actualDistance": 3047.626170760394,
+        "activeMovementInputMs": 39783.69000000011
+      },
+      {
+        "elapsedMs": 40300.14000000017,
+        "x": 299.99999999999994,
+        "y": 214.14810321140956,
+        "actualDistance": 3081.2365040937307,
+        "activeMovementInputMs": 40291.810000000165
+      },
+      {
+        "elapsedMs": 40800.37000000018,
+        "x": 299.99999999999994,
+        "y": 254.14810321140985,
+        "actualDistance": 3121.236504093735,
+        "activeMovementInputMs": 40792.040000000175
+      },
+      {
+        "elapsedMs": 41308.58000000021,
+        "x": 299.99999999999994,
+        "y": 295.48143654474296,
+        "actualDistance": 3162.5698374270733,
+        "activeMovementInputMs": 41300.25000000021
+      },
+      {
+        "elapsedMs": 41808.69000000029,
+        "x": 299.99999999999994,
+        "y": 335.4814365447424,
+        "actualDistance": 3202.569837427078,
+        "activeMovementInputMs": 41800.36000000029
+      },
+      {
+        "elapsedMs": 42308.7000000003,
+        "x": 298.3827109103312,
+        "y": 373.96980984731,
+        "actualDistance": 3241.5411549480364,
+        "activeMovementInputMs": 42300.3700000003
+      },
+      {
+        "elapsedMs": 42817.060000000325,
+        "x": 260.6297032089515,
+        "y": 372.00011098397124,
+        "actualDistance": 3279.919763588167,
+        "activeMovementInputMs": 42808.73000000032
+      },
+      {
+        "elapsedMs": 43325.37000000035,
+        "x": 291.71236998036477,
+        "y": 371.9999993000274,
+        "actualDistance": 3314.996763781239,
+        "activeMovementInputMs": 43317.04000000035
+      },
+      {
+        "elapsedMs": 43825.38000000042,
+        "x": 300.00846163302816,
+        "y": 344.6223107552871,
+        "actualDistance": 3352.378028235649,
+        "activeMovementInputMs": 43817.05000000042
+      },
+      {
+        "elapsedMs": 44333.65000000046,
+        "x": 300.00000247492085,
+        "y": 304.62231576143733,
+        "actualDistance": 3392.3780282356533,
+        "activeMovementInputMs": 44325.32000000046
+      },
+      {
+        "elapsedMs": 44833.720000000445,
+        "x": 300.0000000007239,
+        "y": 264.62231576143813,
+        "actualDistance": 3432.378028235658,
+        "activeMovementInputMs": 44825.39000000044
+      },
+      {
+        "elapsedMs": 45333.72000000046,
+        "x": 300.0000000000002,
+        "y": 224.62231576143768,
+        "actualDistance": 3472.3780282356624,
+        "activeMovementInputMs": 45325.39000000046
+      },
+      {
+        "elapsedMs": 45841.85000000046,
+        "x": 300.00000000000006,
+        "y": 231.84548242810425,
+        "actualDistance": 3507.330194902332,
+        "activeMovementInputMs": 45833.520000000455
+      },
+      {
+        "elapsedMs": 46341.92000000047,
+        "x": 300.00000000000006,
+        "y": 271.8454824281045,
+        "actualDistance": 3547.3301949023366,
+        "activeMovementInputMs": 46333.59000000047
+      },
+      {
+        "elapsedMs": 46842.05000000048,
+        "x": 300.00000000000006,
+        "y": 311.84548242810394,
+        "actualDistance": 3587.330194902341,
+        "activeMovementInputMs": 46833.72000000048
+      },
+      {
+        "elapsedMs": 47342.05000000053,
+        "x": 300.00000000000006,
+        "y": 351.84548242810337,
+        "actualDistance": 3627.3301949023457,
+        "activeMovementInputMs": 47333.720000000525
+      },
+      {
+        "elapsedMs": 47842.050000000556,
+        "x": 284.69587400804306,
+        "y": 372.0982515960013,
+        "actualDistance": 3664.6512787986703,
+        "activeMovementInputMs": 47833.720000000554
+      },
+      {
+        "elapsedMs": 48342.070000000575,
+        "x": 266.57548861751474,
+        "y": 371.9996639082133,
+        "actualDistance": 3698.2527798195065,
+        "activeMovementInputMs": 48333.74000000057
+      },
+      {
+        "elapsedMs": 48842.08000000059,
+        "x": 302.884692903363,
+        "y": 368.6993343329155,
+        "actualDistance": 3736.3259865044456,
+        "activeMovementInputMs": 48833.75000000059
+      },
+      {
+        "elapsedMs": 49342.08000000059,
+        "x": 299.9991255611816,
+        "y": 330.94558528295926,
+        "actualDistance": 3775.3315228597053,
+        "activeMovementInputMs": 49333.75000000059
+      },
+      {
+        "elapsedMs": 49842.1000000006,
+        "x": 299.9999998839171,
+        "y": 290.9455853270626,
+        "actualDistance": 3815.33152285971,
+        "activeMovementInputMs": 49833.7700000006
+      },
+      {
+        "elapsedMs": 50350.42000000062,
+        "x": 299.9999999999846,
+        "y": 250.94558532706264,
+        "actualDistance": 3855.3315228597144,
+        "activeMovementInputMs": 50342.090000000615
+      },
+      {
+        "elapsedMs": 50858.63000000061,
+        "x": 299.99999999999994,
+        "y": 210.8649186603957,
+        "actualDistance": 3895.412189526385,
+        "activeMovementInputMs": 50850.30000000061
+      },
+      {
+        "elapsedMs": 51366.920000000595,
+        "x": 299.99999999999994,
+        "y": 244.8524186603959,
+        "actualDistance": 3930.284689526389,
+        "activeMovementInputMs": 51358.59000000059
+      },
+      {
+        "elapsedMs": 51867.08000000059,
+        "x": 299.99999999999994,
+        "y": 284.8524186603959,
+        "actualDistance": 3970.2846895263933,
+        "activeMovementInputMs": 51858.75000000059
+      },
+      {
+        "elapsedMs": 52375.390000000574,
+        "x": 299.99999999999994,
+        "y": 326.1857519937287,
+        "actualDistance": 4011.6180228597314,
+        "activeMovementInputMs": 52367.06000000057
+      },
+      {
+        "elapsedMs": 52875.43000000056,
+        "x": 299.99999999999994,
+        "y": 366.1857519937281,
+        "actualDistance": 4051.618022859736,
+        "activeMovementInputMs": 52867.10000000056
+      },
+      {
+        "elapsedMs": 53383.760000000555,
+        "x": 269.84374274258715,
+        "y": 372.0023713223405,
+        "actualDistance": 4089.0871249363436,
+        "activeMovementInputMs": 53375.43000000055
+      },
+      {
+        "elapsedMs": 53891.97000000056,
+        "x": 282.39624315694255,
+        "y": 371.9999945076032,
+        "actualDistance": 4124.028291868426,
+        "activeMovementInputMs": 53883.64000000056
+      },
+      {
+        "elapsedMs": 54392.10000000056,
+        "x": 300.05421792662963,
+        "y": 353.9576647199959,
+        "actualDistance": 4161.406924757825,
+        "activeMovementInputMs": 54383.77000000056
+      },
+      {
+        "elapsedMs": 54900.34000000055,
+        "x": 300.00001593004555,
+        "y": 313.95784367004785,
+        "actualDistance": 4201.406924757816,
+        "activeMovementInputMs": 54892.01000000055
+      },
+      {
+        "elapsedMs": 55400.45000000053,
+        "x": 300.0000000046804,
+        "y": 273.95784367006377,
+        "actualDistance": 4241.406924757807,
+        "activeMovementInputMs": 55392.12000000053
+      },
+      {
+        "elapsedMs": 55908.62000000053,
+        "x": 300.0000000000011,
+        "y": 232.6245103367301,
+        "actualDistance": 4282.740258091131,
+        "activeMovementInputMs": 55900.290000000525
+      },
+      {
+        "elapsedMs": 56408.79000000049,
+        "x": 300.00000000000006,
+        "y": 222.51967700339725,
+        "actualDistance": 4316.358424757792,
+        "activeMovementInputMs": 56400.46000000049
+      },
+      {
+        "elapsedMs": 56917.03000000048,
+        "x": 300.00000000000006,
+        "y": 262.51967700339765,
+        "actualDistance": 4356.358424757783,
+        "activeMovementInputMs": 56908.70000000048
+      },
+      {
+        "elapsedMs": 57425.29000000047,
+        "x": 300.00000000000006,
+        "y": 303.8530103367305,
+        "actualDistance": 4397.691758091107,
+        "activeMovementInputMs": 57416.960000000465
+      },
+      {
+        "elapsedMs": 57925.44000000046,
+        "x": 300.00000000000006,
+        "y": 343.85301033672994,
+        "actualDistance": 4437.691758091098,
+        "activeMovementInputMs": 57917.11000000046
+      },
+      {
+        "elapsedMs": 58425.450000000434,
+        "x": 292.5151763877431,
+        "y": 372.9449358582862,
+        "actualDistance": 4475.0957982255395,
+        "activeMovementInputMs": 58417.12000000043
+      },
+      {
+        "elapsedMs": 58933.67000000042,
+        "x": 259.49270591884004,
+        "y": 371.9983287278352,
+        "actualDistance": 4509.540047149349,
+        "activeMovementInputMs": 58925.34000000042
+      },
+      {
+        "elapsedMs": 59433.790000000394,
+        "x": 298.5725391579289,
+        "y": 371.99999982852313,
+        "actualDistance": 4548.619880538227,
+        "activeMovementInputMs": 59425.46000000039
+      },
+      {
+        "elapsedMs": 59942.05000000037,
+        "x": 299.9957951875121,
+        "y": 337.6094339654796,
+        "actualDistance": 4587.032856953257,
+        "activeMovementInputMs": 59933.720000000365
+      },
+      {
+        "elapsedMs": 60442.15000000032,
+        "x": 299.99999944585323,
+        "y": 297.6094351541359,
+        "actualDistance": 4627.032856953248,
+        "activeMovementInputMs": 60433.82000000032
+      },
+      {
+        "elapsedMs": 60942.17000000029,
+        "x": 299.99999999992696,
+        "y": 257.6094351541361,
+        "actualDistance": 4667.0328569532385,
+        "activeMovementInputMs": 60933.84000000029
+      },
+      {
+        "elapsedMs": 61450.38000000031,
+        "x": 299.99999999999994,
+        "y": 217.6094351541358,
+        "actualDistance": 4707.032856953229,
+        "activeMovementInputMs": 61442.05000000031
+      },
+      {
+        "elapsedMs": 61950.4400000003,
+        "x": 299.99999999999994,
+        "y": 236.83343515413625,
+        "actualDistance": 4740.64552361989,
+        "activeMovementInputMs": 61942.1100000003
+      },
+      {
+        "elapsedMs": 62450.470000000285,
+        "x": 299.99999999999994,
+        "y": 276.83343515413645,
+        "actualDistance": 4780.645523619881,
+        "activeMovementInputMs": 62442.14000000028
+      },
+      {
+        "elapsedMs": 62958.790000000285,
+        "x": 299.99999999999994,
+        "y": 318.1667684874692,
+        "actualDistance": 4821.978856953205,
+        "activeMovementInputMs": 62950.46000000028
+      },
+      {
+        "elapsedMs": 63458.810000000274,
+        "x": 299.99999999999994,
+        "y": 358.16676848746863,
+        "actualDistance": 4861.978856953196,
+        "activeMovementInputMs": 63450.48000000027
+      },
+      {
+        "elapsedMs": 63967.010000000264,
+        "x": 277.84320633470236,
+        "y": 372.01175168339637,
+        "actualDistance": 4899.457303851451,
+        "activeMovementInputMs": 63958.68000000026
+      },
+      {
+        "elapsedMs": 64467.04000000026,
+        "x": 273.0605457266294,
+        "y": 371.9999440077488,
+        "actualDistance": 4933.065970745949,
+        "activeMovementInputMs": 64458.71000000026
+      },
+      {
+        "elapsedMs": 64975.37000000023,
+        "x": 300.29179738696376,
+        "y": 361.9604987263181,
+        "actualDistance": 4971.771674284966,
+        "activeMovementInputMs": 64967.04000000023
+      }
+    ],
+    "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+  },
+  "runtime": {
+    "ready": true,
+    "running": true,
+    "starting": false,
+    "performance": {
+      "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+      "state": "complete",
+      "warmupMs": 2000,
+      "requestedMs": 60000,
+      "sampledMs": 60000.2,
+      "sampleCapacity": 60001,
+      "frames": {
+        "count": 7200,
+        "p50Ms": 8.3,
+        "p95Ms": 8.7,
+        "p99Ms": 10.2,
+        "maxMs": 11.7,
+        "over33ms": 0,
+        "over50ms": 0
+      },
+      "cpuSubmission": {
+        "count": 7201,
+        "p50Ms": 1.5,
+        "p95Ms": 1.9,
+        "p99Ms": 2,
+        "maxMs": 2.3,
+        "over33ms": 0,
+        "over50ms": 0
+      },
+      "heapStartBytes": 205985701,
+      "heapEndBytes": 223875477,
+      "pauseSegmentsExcluded": 0,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "viewport": [
+        1280,
+        900
+      ],
+      "dpr": 1,
+      "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+    },
+    "resources": {
+      "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+      "textureKeys": 273,
+      "registeredTextureCanvases": 260,
+      "domCanvases": 3,
+      "sharedCanvasPoolUsed": 260,
+      "sharedCanvasPoolFree": 0,
+      "displayListEntries": 69,
+      "scenes": [
+        {
+          "key": "BootScene",
+          "active": false,
+          "paused": false,
+          "displayListEntries": 0
+        },
+        {
+          "key": "RiftScene",
+          "active": true,
+          "paused": false,
+          "displayListEntries": 69
+        }
+      ],
+      "soundsRegistered": 2,
+      "soundsPlaying": 2,
+      "soundsPaused": 0,
+      "soundsPendingRemoval": 0,
+      "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+    },
+    "paused": false,
+    "probe": {
+      "elapsedMs": 99600.65999999981,
+      "ended": false,
+      "player": {
+        "x": 299.99867833777347,
+        "y": 355.97300261630306
+      },
+      "hp": 100,
+      "chaos": 54.34226070000383,
+      "attack": {
+        "phase": "idle",
+        "cooldownRemainingMs": 0
+      },
+      "kindling": 0,
+      "search": {
+        "prompt": null,
+        "progress": null,
+        "remaining": 1
+      },
+      "enemies": [
+        {
+          "id": "master-listener",
+          "state": "patrol",
+          "position": {
+            "x": 764,
+            "y": 172
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        }
+      ],
+      "hosts": []
+    }
+  }
+}

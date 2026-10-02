@@ -1,0 +1,574 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-02T19:10:57.335Z",
+  "cases": 18,
+  "method": "Actual constructor allocations and object-graph ArrayBuffer identity de-duplication; sequential worlds; fake GL upload sink retains no payload.",
+  "scope": "Explicit R100 material/world CPU buffers only, not total browser heap, GC, leak, decoded image, Canvas, Phaser or GPU driver measurement.",
+  "cpuCacheLimitBytes": 67108864,
+  "maximumExplicitResidentUpperBoundBytes": 25565652,
+  "maximumCumulativeExplicitAllocationUpperBoundBytes": 86923764,
+  "materialCache": {
+    "bytes": 3145728,
+    "sources": [
+      {
+        "source": "/assets/r100-materials/ash-strata-source.png",
+        "logicalPixels": 512,
+        "rgbaBytes": 1048576
+      },
+      {
+        "source": "/assets/r100-materials/crystal-fibre-source.png",
+        "logicalPixels": 512,
+        "rgbaBytes": 1048576
+      },
+      {
+        "source": "/assets/r100-materials/ivory-basin-source.png",
+        "logicalPixels": 512,
+        "rgbaBytes": 1048576
+      }
+    ],
+    "method": "Manifest-sized decoded native pixel caches, summed separately across three sources; source-image decode and scratch Canvas are not measured in Node."
+  },
+  "limitations": [
+    "World closures are opaque: all unexposed world allocations are conservatively included as potentially resident.",
+    "Cumulative explicit allocation upper bound assumes no intermediate collection and includes scratch/preparation/upload arrays; it is not a measured concurrent peak or resident cache.",
+    "Plain JS objects/arrays, strings, closure/Map overhead, browser image decode/Canvas backing, Phaser actors/fog/audio and driver copies are excluded.",
+    "Typed-array constructors are observed in this isolated test; built-in output stores are additionally found through returned object graphs. This is not a universal allocation profiler.",
+    "NativeVolumeLighting is prepared but not CPU-rendered in the live GPU path, so its unused shadow WeakMap does not accumulate light caches.",
+    "No 10-enter/leave retained-heap or GC claim; only one current world is included, not 9/18 resident worlds."
+  ],
+  "sources": {
+    "tools/world-study/check-master-resources.ts": "f6ebc28f8a48492497ac5045f462b89fe0f76ea7e29968e6ec15328ee07f2276",
+    "src/dev/rift-r100-masters/world.ts": "cd2aaf0be22ab88b20ab50980d3db1e497cb12caaee165063da907fd425e1df6",
+    "src/dev/rift-r100-masters/ground.ts": "17cdd274a7eeab479807f7599c2e9444accb00037ff94049f1b73e28df82b761",
+    "src/dev/rift-r100-masters/surface-renderer.ts": "5dccc50a68d840676551c2b724122e98d273dd7f687174749c62da926bb048cb",
+    "src/dev/rift-r100-masters/generated-scenes.ts": "6b3c974c97025874e5cb7fa3e3dd29147a1397616d003852e52cde5685f57d73",
+    "src/dev/rift-r100-masters/generated-materials.ts": "3fdca7e6ce80e405ba72a5f8e7422a6318596661510ff57b0a406f71b0c9ade9",
+    "src/generation/world-study/master-ground-field.ts": "38840462baf78c4e7f31438390d2b7a03457ca90aecbe002b4edc7d776023eca",
+    "src/generation/world-study/native-volume-geometry.ts": "994580013e68c6b276b1b25656a09e5ede6461661c5c66aedc5eabfaa4e323a5",
+    "src/generation/world-study/native-volume-raster.ts": "a5defd0fba25b07e7947b3017cb79c587068d8892bd102514b6d93f98d3b58a6"
+  },
+  "results": [
+    {
+      "id": "folded-slab-low",
+      "seed": 20261002,
+      "geometryFingerprint": "60148c40",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 32,
+        "worldBytes": 20901876,
+        "rasterBytes": 20820556,
+        "meshBytes": 48840,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 20946676,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24092660,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85450772,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "folded-slab-low",
+      "seed": 20261003,
+      "geometryFingerprint": "80936664",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 32,
+        "worldBytes": 20902560,
+        "rasterBytes": 20821240,
+        "meshBytes": 48840,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 20947360,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24093344,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85451456,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "folded-slab-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "e142ebcc",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21040876,
+        "rasterBytes": 20935136,
+        "meshBytes": 73260,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21085676,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24231660,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85589772,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "folded-slab-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "d17f1364",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21041492,
+        "rasterBytes": 20935752,
+        "meshBytes": 73260,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21086292,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24232276,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85590388,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "folded-slab-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "cdf17c02",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21211416,
+        "rasterBytes": 21105676,
+        "meshBytes": 73260,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21256216,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24402200,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85760312,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "folded-slab-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "ecea0dbd",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21212244,
+        "rasterBytes": 21106504,
+        "meshBytes": 73260,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21257044,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24403028,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85761140,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "fibre-knot-low",
+      "seed": 20261002,
+      "geometryFingerprint": "08eacd86",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 32,
+        "worldBytes": 21400132,
+        "rasterBytes": 20745932,
+        "meshBytes": 621720,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21444932,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24590916,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85949028,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "fibre-knot-low",
+      "seed": 20261003,
+      "geometryFingerprint": "4f67df07",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 32,
+        "worldBytes": 21400188,
+        "rasterBytes": 20745988,
+        "meshBytes": 621720,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21444988,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24590972,
+      "cumulativeExplicitAllocationUpperBoundBytes": 85949084,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "fibre-knot-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "eb2cf06d",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21913644,
+        "rasterBytes": 20800084,
+        "meshBytes": 1081080,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21958444,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25104428,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86462540,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "fibre-knot-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "9263fe0d",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21913676,
+        "rasterBytes": 20800116,
+        "meshBytes": 1081080,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21958476,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25104460,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86462572,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "fibre-knot-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "e1fc4aca",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21999312,
+        "rasterBytes": 20885752,
+        "meshBytes": 1081080,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 22044112,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25190096,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86548208,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "fibre-knot-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "55d7a148",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 21999480,
+        "rasterBytes": 20885920,
+        "meshBytes": 1081080,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 22044280,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25190264,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86548376,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "broken-shell-low",
+      "seed": 20261002,
+      "geometryFingerprint": "591f428a",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 32,
+        "worldBytes": 21658564,
+        "rasterBytes": 20852124,
+        "meshBytes": 773960,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21703364,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24849348,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86207460,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "broken-shell-low",
+      "seed": 20261003,
+      "geometryFingerprint": "b6353c0a",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 32,
+        "worldBytes": 21658564,
+        "rasterBytes": 20852124,
+        "meshBytes": 773960,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 21703364,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 24849348,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86207460,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "broken-shell-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "f401d16f",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 22166154,
+        "rasterBytes": 20972844,
+        "meshBytes": 1160830,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 22210954,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25356938,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86715050,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "broken-shell-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "70a011ab",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 22166154,
+        "rasterBytes": 20972844,
+        "meshBytes": 1160830,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 22210954,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25356938,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86715050,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "broken-shell-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "a64517c1",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 22374868,
+        "rasterBytes": 21181228,
+        "meshBytes": 1161160,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 22419668,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25565652,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86923764,
+      "estimatedGpuBytes": 13762560
+    },
+    {
+      "id": "broken-shell-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "30d9c129",
+      "width": 896,
+      "height": 640,
+      "graph": {
+        "uniqueWorldBuffers": 38,
+        "worldBytes": 22374868,
+        "rasterBytes": 21181228,
+        "meshBytes": 1161160,
+        "rendererBytes": 256,
+        "groundPreparationBytes": 20070400,
+        "volumePreparationExclusiveBytes": 20070400
+      },
+      "allocationBytesByPhase": {
+        "world": 22419668,
+        "ground": 32112640,
+        "volume-material": 20070400,
+        "renderer-upload": 9175328
+      },
+      "hiddenWorldRetentionUpperBoundBytes": 44800,
+      "uploadStagingBytes": 9175040,
+      "quadUploadBytes": 32,
+      "allThreeMaterialCacheBytes": 3145728,
+      "explicitResidentUpperBoundBytes": 25565652,
+      "cumulativeExplicitAllocationUpperBoundBytes": 86923764,
+      "estimatedGpuBytes": 13762560
+    }
+  ]
+}

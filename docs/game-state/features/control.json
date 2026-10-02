@@ -3,12 +3,13 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "净化点保留1.8m/s世界步速、完整脚圆碰撞、贴边滑动、单西坡与1035帧距离步态。2026-09-30新裂隙切口参与同源导航，七处交互调用实际脚圆可达判定；本轮10组移动检查通过。94faa33的7851帧贴边节奏与38076步进为历史证据，不自动覆盖新切口或当前全场手感；新几何边界回归及自然往返范围以本轮QA为准。 R100-I02为DEV巡查增加可选方向输入，正式入口不提供该回调；键盘优先，既有Player速度/碰撞/动画仍唯一执行。",
+    "summary": "净化点保留1.8m/s世界步速、完整脚圆碰撞、贴边滑动、单西坡与1035帧距离步态。2026-09-30新裂隙切口参与同源导航，七处交互调用实际脚圆可达判定；本轮10组移动检查通过。94faa33的7851帧贴边节奏与38076步进为历史证据，不自动覆盖新切口或当前全场手感；新几何边界回归及自然往返范围以本轮QA为准。 R100-I02的DEV巡查通过可选方向输入驱动既有Player；键盘优先，五站沿边和入口往返均经过真实速度/碰撞/动画，不直接移动精灵。正式入口不提供巡查回调。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "主菜单新游戏/继续/归来→净化点：WASD/方向键；单西坡上下层、宽桥到核心，无跳跃或楼梯模式。",
-      "进入 Rift 后使用既有俯视移动与原角色呈现。"
+      "进入 Rift 后使用既有俯视移动与原角色呈现。",
+      "DEV：rift-r100-masters.html → 沿边巡查 / 60秒灯光往返；真实键盘接管或暂停停止巡查。"
     ],
     "sources": [
       {
@@ -311,6 +312,19 @@
       {
         "path": "docs/qa/rift-r100-i02.md",
         "role": "doc"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/patrol.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/main.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
+        "role": "doc",
+        "note": "2026-10-03限定代码审查及CPU合同：两项P2修复复核；不签GLSL、浏览器性能、视觉或听感；绘画映射再改须重跑。"
       }
     ],
     "dependsOn": [],
@@ -329,7 +343,8 @@
       "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
       "COH-E103",
-      "COH-E126"
+      "COH-E126",
+      "COH-E127"
     ],
     "unknowns": [
       "2026-09-30十组移动检查不等于全部新切口边界、根页自然按键路线或帧率验收；当前新增浏览器记录主要针对交互资格，后续脚圆边界回归须有本轮执行记录后才算覆盖。",
@@ -339,18 +354,20 @@
       "历史截至2026-09-28的覆盖限制：本轮全身动作已有新图集、全身/接地/模型同源及实景连续片段证据；正式根页仅新开继续、A短键真实移动与松手站稳；D短按无位移不计验证，完整左右周期只归正式Renderer复现页。不能以数学通过代签自然度，3cd4372好多了的改善评价不升级成整体验收；六站/坐下UI/重入/Rift全链未扩验。",
       "历史截至2026-09-28的覆盖限制：e05e9a8的六站与路线记录为历史功能证据，不能视为当前人物动作或整体画质人审通过。",
       "历史截至2026-09-28的覆盖限制：本轮正式根游戏只确认WebGL2主菜单继续重入与W短移。动态验证页使用真实step与gait，覆盖坡脚/坡中/上层实帧、默认坡道连续超过23秒和八向连续超过30秒；不等于正式键盘完整六站复走。",
-      "历史截至2026-09-28的覆盖限制：坐下/起身呈现锚点被误算为步行的helper问题已专项回归修复；坐下UI本轮未复走。人的初见导航、全边缝手感与长期往返体验未完成，I28及原Rift全世界组合边界保持。"
+      "历史截至2026-09-28的覆盖限制：坐下/起身呈现锚点被误算为步行的helper问题已专项回归修复；坐下UI本轮未复走。人的初见导航、全边缝手感与长期往返体验未完成，I28及原Rift全世界组合边界保持。",
+      "R100巡查的实际位移、非零输入时长和帧时分别记录；可执行的巡查入口及CPU断言不等于人类手感、完整九格连续操作或性能达标。"
     ]
   },
   {
     "id": "COH-F007",
     "title": "有限视野与不可照亮的空间空洞",
     "domain": "controls",
-    "summary": "朝向视域与环身弱光按地图遮挡求可见性；空间空洞不产生可照亮表面，局部照到群落时只显示受光部分。 R100-I02将原范围/朝向/混乱带只读查询暴露给DEV实体受光；正式目标仍使用原LOS，缓存按真实视野revision失效。",
+    "summary": "朝向视域与环身弱光按地图遮挡求可见性；空间空洞不产生可照亮表面，局部照到群落时只显示受光部分。R100-I02 DEV将普通solid/relief景观与8px缺地/侵蚀分开：普通实体可挡身体和近战，视野只由缺地/侵蚀阻断。GPU材质受光在原生有限fog下合成，materialLighting仅关闭重复ADD灯图；正式入口默认配置与目标LOS保持。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "进入 Rift，移动/转向观察地形与敌人"
+      "进入 Rift，移动/转向观察地形与敌人",
+      "DEV：rift-r100-masters.html；原生有限视野覆盖普通地表/实体材质，独立侵蚀仍阻光。"
     ],
     "sources": [
       {
@@ -375,7 +392,8 @@
       },
       {
         "path": "src/dev/rift-r100-masters/visibility.ts",
-        "role": "code"
+        "role": "code",
+        "note": "I02早期CPU受光/物质路径辅助仍作定向检查；当前GPU接收器不以该辅助替换原生fog。"
       },
       {
         "path": "tools/world-study/check-native-volume-visibility.ts",
@@ -384,6 +402,31 @@
       {
         "path": "docs/qa/rift-r100-i02.md",
         "role": "doc"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/world.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/surface-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-semantics.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-render-contract.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
+        "role": "doc",
+        "note": "2026-10-03限定代码审查及CPU合同：两项P2修复复核；不签GLSL、浏览器性能、视觉或听感；绘画映射再改须重跑。"
       }
     ],
     "dependsOn": [
@@ -393,10 +436,12 @@
     "evidence": [
       "COH-E-SRC-control",
       "COH-E-HIST-PAINT",
-      "COH-E126"
+      "COH-E126",
+      "COH-E127"
     ],
     "unknowns": [
-      "不同世界全光照、压力与动态辨识的扩展验收仍挂起。"
+      "历史I28所列全世界光照、压力与动态辨识扩展验收仍沿原挂起边界；R100专项按当前任务推进，不由旧记录判通过。",
+      "R100受光与战术可见性分离只在DEV母版入口接入；当前GLSL实际结果、跨设备与新美术资格按独立证据判定，不能沿用E126旧试制通过范围。"
     ]
   },
   {
@@ -448,7 +493,7 @@
     "id": "COH-F009",
     "title": "近战、前兆与受击",
     "domain": "controls",
-    "summary": "装备撬棍后以空格挥击，按合法目标、距离与遮挡结算；有效命中扣耐久，末次挥击完成后卸下损坏武器。",
+    "summary": "装备撬棍后以空格挥击，按合法目标、距离与遮挡结算；有效命中扣耐久，末次挥击完成后卸下损坏武器。R100-I02 DEV可显式提供独立combatGrid：普通实体不吞视野，仍阻断近战；未提供该hook时沿用原sightGrid，正式默认行为保持。 03d4e4c受击闪白改为原生上下身透明轮廓，暂停/结束/死亡清理；真实命中/恢复/死亡及专项通过。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -482,6 +527,24 @@
       {
         "path": "docs/specs/system-player-weapons.md",
         "role": "spec"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/world.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-semantics.ts",
+        "role": "test",
+        "note": "真实CombatSystem使用物理网格；光学透明障碍的反例防止隔物命中。"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
+        "role": "doc",
+        "note": "2026-10-03限定代码审查及CPU合同：两项P2修复复核；不签GLSL、浏览器性能、视觉或听感；绘画映射再改须重跑。"
+      },
+      {
+        "path": "tools/contamination-lexicon/check-player-hit-flash.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -492,10 +555,12 @@
     ],
     "evidence": [
       "COH-E-SRC-control",
-      "COH-E-HIST-CYCLE"
+      "COH-E-HIST-CYCLE",
+      "COH-E127"
     ],
     "unknowns": [
-      "战斗场覆盖与少量正式近战样本不代表全部敌人组合难度已平衡。"
+      "战斗场覆盖与少量正式近战样本不代表全部敌人组合难度已平衡。",
+      "DEV combat/sight分离的局部合同检查不等于所有敌人、碰撞边角、能力组合或正式出击全链重验。"
     ]
   },
   {

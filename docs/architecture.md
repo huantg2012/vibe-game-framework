@@ -14,13 +14,17 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `rift-r100-masters.html` → `dev/rift-r100-masters/` 复用 `createRiftGymRuntime` 与正式 `RiftScene`。Gym 接口额外接受作者 `GeneratedRiftLayout` 和限定 fixture 覆盖；只有真实 `WorldProductionMap` 才注入 `productionWorld`，作者小场景不伪装正式生成准入。CSV 描述三种构造、三级配置与观察落点，生成模块由编译工具产出。
 
-`native-volume-geometry.ts` 以同一局部几何建立可见面、面法向、材料区和高度；`native-volume-raster.ts` 生成原生像素接收面与 8px 物理/光学掩膜。地图先合成实体占地，再按完整 20px 身体求出生、翻找和撤离的可达站位。XY 为原 Rift 顶视地面，高度不向屏幕 Y 投影；不新增可走第二层或可钻过的悬挑。
+`native-volume-geometry.ts` 生成真XY顶视可见面、逐三角形法向、材质区和高度。`native-volume-raster.ts` 编译静态像素字段；高度只服务形体和受光，不授予吞光资格。CSV显式 `relief/solid` 与独立 `erosion`：8px物理网格含solid与侵蚀，观察网格仅侵蚀/缺失地面，攻击网格另阻挡solid。DEV `createCombatGrid` 分离观察与攻击，正式默认不变。部署在最终20px身体连通后进行。
 
-`VisibilitySystem.getUnoccludedVisibilityAt` 只开放已有有限范围、朝向、混乱与明暗带，供 DEV 实体表面另求几何遮蔽。原 `getVisibilityAt` 仍合成完整 2D LOS，角色、敌人、物件与玩法查询不改用部分结果。接收面必须同时受同源几何和不透明 VOID 限制后，才可用 `revealProjectedTerrain` 擦除自身像素处的原迷雾；不能因一个角落可见而暴露整件实体。
+`master-ground-field.ts` 先烤连续基材与成因分区，输出底色、浅高度、法向、粗糙度、AO；`MasterSurfaceRenderer` 将地表和同源实体字段交给WebGL2。构造贴地部分继承基床，GPU按肩灯和局部污染源实时着色，独立侵蚀DDA阻断光传播。4份RGBA输入、1份离屏目标和1份Phaser纹理副本计入显式GPU估算；驱动开销另列。字段烤好并上传后不在每帧分配或重扫全图。初始化失败/销毁释放context，context丢失显式报告。
 
-当前美术、逐级压力动效与帧时仍在反复验证；实现入口不等于母版通过。状态和限制归 [I02 任务](tasks/rift-r100-i02.md) 与 [独立美术记录](art/rift-r100-i02-review.md)，不计入 108 世界或 324 等级资格。
+`rift-master-materials.csv` → 材料编译器 → `generated-materials.ts` 声明三族绘制来源。`painted-material.ts` 异步解码原图、准备512像素母片，并有界缓存三份；失败可重试，并发复用同一请求。`build` 用序列token拒绝过期成功和过期错误。材料色映射不从亮度生成碰撞或高度；几何法向、浅起伏、粗糙度、接触暗部保持独立来源。原图与制作记录在 `public/assets/r100-materials/`。
 
-`PlayerConfig.readMovementInput` 经 `RiftDevFixture` 接入可选 DEV 巡查方向，真实按键始终优先。`MasterPatrol` 只沿最终身体网格提供意图，不移动sprite；速度、加速度、碰撞与动画仍归原 Player。`getVisibilityRevision`转发原生视野查询版本以正确复用接收面；静态几何的遮光缓存由灯XYZ失效，装饰光强变化不触发重复射线。完整边界与测量见 [I02 QA](qa/rift-r100-i02.md)。
+`MasterMaterialAudio` 消费与材质压力相同的有效时间，复用现有环境摩擦/阻力音源。至多两个低优先级声部，最近真实接点提供距离与声像；静默、减动、销毁及时间跳变不补播历史。没有把装饰相位接成伤害、搜取或奖励反馈。声音行为检查与实际审听分别记录。
+
+所有像素放回原生fog之下；本入口不调用 `revealProjectedTerrain`、不以高度场自阴影修改有限可见性。`materialLighting` 仅停用旧ADD平光贴图，肩灯由新材质接收，不影响范围、朝向、混乱或AI观察。player与enemies按实际显示包围盒及solid角色裁前景，可走浮雕不裁人物，武器不再被旧48px固定遮罩截断。
+
+`PlayerConfig.readMovementInput` 只接受DEV巡查意图，真实键盘优先；`MasterPatrol` 在最终身体网格找路线，移动、加速、碰撞、动画仍归Player。作者小场景不计入108世界或324等级资格；I02实际美术和运行证据归[任务](tasks/rift-r100-i02.md)、[独立美术记录](art/rift-r100-i02-review.md)及[QA](qa/rift-r100-i02.md)。
 
 ## R100 I01：持久生成版本与DEV资格底座
 
@@ -28,7 +32,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `data/rift-world-packages.csv` 与 `rift-pollution-grades.csv` → `tools/world-study/codegen-world-packages.ts` → generated模块与依赖manifest。`world-package.ts` / `pollution-grade.ts`只拥有DEV合同校验，不负责运行时出击或资格判定；五份旧demo、十五个未实施级别不自动进R100已验收台账。哈希范围明确为生成依赖与合同，最终资产发布清单尚未实现。
 
-`dev/rift-gym-performance.ts`由隔离Gym记录原生Phaser帧间隔与CPU提交时段：2秒预热、12秒有界采样，暂停/失焦排除，JSON随原诊断和导出记录提供。不是GPU计时器、全硬件认证或正式游戏HUD；已有运行规则和存档隔离不变。
+`dev/rift-gym-performance.ts`由隔离Gym记录原生Phaser帧间隔与CPU提交时段：2秒预热，普通Gym默认12秒，R100母版显式60秒有界采样；暂停/失焦排除，JSON随原诊断和导出记录提供。灯光往返从新建入口沿可达路线行走65秒，记录输入有效时长与实际位移，两者不混称实际移动时间。不是GPU计时器、全硬件认证或正式游戏HUD；已有运行规则和存档隔离不变。
 
 ## 2026-10-02：Rift v2 地图巡览 gym
 

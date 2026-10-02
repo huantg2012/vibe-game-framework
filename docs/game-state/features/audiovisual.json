@@ -3,11 +3,12 @@
     "id": "COH-F039",
     "title": "玩家身份、净化点人物与裂隙像素呈现",
     "domain": "presentation",
-    "summary": "当前净化点角色为15朝向1035帧：1.25m距离步态、12行走/48收步/8静息/1坐姿，全身承重、早收膝、髋胸反向及分部动作同源。角色专项已有限验证左右/斜向/归位与根页A短移；94faa33边界修复保持角色资产，仅纠正位移预算与步频。Rift保留原角色，局部改善认可不等于整体自然度验收。",
+    "summary": "当前净化点角色为15朝向1035帧：1.25m距离步态、12行走/48收步/8静息/1坐姿，全身承重、早收膝、髋胸反向及分部动作同源。角色专项已有限验证左右/斜向/归位与根页A短移；94faa33边界修复保持角色资产，仅纠正位移预算与步频。Rift保留原角色，局部改善认可不等于整体自然度验收。 R100-I02 DEV保留原生Rift人物、武器与移动，仅由presentation按实体的solid物理标记设置前景遮罩；relief地表不裁掉演员，GPU材质层仍在原生fog下。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "正式净化点：新人物随实际行走与坐下状态呈现；进入 Rift 后沿用原低精度玩家、持具与灯晕。"
+      "正式净化点：新人物随实际行走与坐下状态呈现；进入 Rift 后沿用原低精度玩家、持具与灯晕。",
+      "DEV：rift-r100-masters.html 使用原生Rift演员同场检查实体遮挡；不替换正式Rift角色资源。"
     ],
     "sources": [
       {
@@ -246,6 +247,19 @@
       {
         "path": "docs/qa/artifacts/last-light-actor/whole-body/game-smoke.json",
         "role": "test"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
+        "role": "doc",
+        "note": "2026-10-03限定代码审查及CPU合同：两项P2修复复核；不签GLSL、浏览器性能、视觉或听感；绘画映射再改须重跑。"
       }
     ],
     "dependsOn": [
@@ -266,11 +280,13 @@
       "COH-E-I30-LAST-LIGHT-PRODUCTION",
       "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
       "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
-      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR"
+      "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
+      "COH-E127"
     ],
     "unknowns": [
       "本轮全身动作已有新图集、全身/接地/模型同源及实景连续片段证据；正式根页仅新开继续、A短键真实移动与松手站稳；D短按无位移不计验证，完整左右周期只归正式Renderer复现页。不能以数学通过代签自然度，3cd4372好多了的改善评价不升级成整体验收；六站/坐下UI/重入/Rift全链未扩验。",
-      "人物阴影由每姿态11个胶囊近似，不等于完整人体三角网格光追；无WebGL2 fallback、Rift全量动作和长期体验仍未覆盖。"
+      "人物阴影由每姿态11个胶囊近似，不等于完整人体三角网格光追；无WebGL2 fallback、Rift全量动作和长期体验仍未覆盖。",
+      "R100-I02演员遮罩仅经限定接入/生命周期代码复核；未据此签九格遮挡、动作辨识或视觉通过，旧净化点人物证据不覆盖该DEV场景。"
     ]
   },
   {
@@ -332,11 +348,12 @@
     "id": "COH-F041",
     "title": "场景音乐、环境声与动作音效",
     "domain": "presentation",
-    "summary": "AudioManager 管理标题/净化点/Rift 音乐、环境与移动/交互/战斗音效，并随场景和暂停处理生命周期。",
+    "summary": "AudioManager管理标题/净化点/Rift音乐、环境与移动/交互/战斗音效，并随场景和暂停处理生命周期。R100-I02 DEV新增三族环境材质声，复用现有文件的摩擦/阻力音源，跟随可见压力时钟、最近接点距离和污染档强弱；只占两个低优先级实例，暂停/结束/重建清理。已排除受损、搜取与结果提示音复用，不新增玩法噪声事件。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "Boot 预载 → 玩家动作解锁声音 → 各正式场景事件"
+      "Boot 预载 → 玩家动作解锁声音 → 各正式场景事件",
+      "DEV：rift-r100-masters.html → 原生角色靠近构造接点；安静、蓄压、短促应力和回落随同一场景时钟。"
     ],
     "sources": [
       {
@@ -366,15 +383,39 @@
       {
         "path": "docs/audio-direction.md",
         "role": "audio"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/audio.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-gym-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-audio.ts",
+        "role": "test",
+        "note": "47项文件/CPU行为检查；不执行真实播放或签听感。"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
+        "role": "doc",
+        "note": "2026-10-03限定代码审查及CPU合同：两项P2修复复核；不签GLSL、浏览器性能、视觉或听感；绘画映射再改须重跑。"
       }
     ],
     "dependsOn": [],
     "evidence": [
       "COH-E-SRC-audiovisual",
-      "COH-E-HIST-AUDIO"
+      "COH-E-HIST-AUDIO",
+      "COH-E127"
     ],
     "unknowns": [
-      "历史报告仅有解码/非静音/峰值/生命周期与录音，未实际审听；不宣称声音成品质感 PASS。"
+      "历史报告仅有解码/非静音/峰值/生命周期与录音，未实际审听；不宣称声音成品质感 PASS。",
+      "R100三族为既有环境音源的组合复用，不是三套新录音；47项CPU案例不等于实际审听、完整游戏混音或声音成品质感通过。"
     ]
   },
   {

@@ -1,0 +1,123 @@
+
+> coh@0.1.0 check:r100
+> node tools/world-study/r100-progress.mjs check && node tools/world-study/r100-progress.mjs self-test && node --import tsx tools/world-study/codegen-world-packages.ts --check && node --import tsx tools/world-study/check-world-packages.ts && node tools/recovery/freeze-legacy-generation.mjs --check && node --import tsx tools/world-study/check-gym-performance.ts && node --import tsx tools/world-study/measure-r100-baseline.ts --self-test
+
+{
+  "command": "check",
+  "status": "active",
+  "counts": {
+    "candidates": 0,
+    "qualified": 0,
+    "production": 0,
+    "humanApproved": 0,
+    "qualifiedGradeCases": 0,
+    "productionGradeCases": 0
+  },
+  "warnings": [],
+  "iterations": 14,
+  "workflowSteps": 10,
+  "sourceSha256": "09c5b6f31e7bb8f7f957b74ea71daeee63e3d6648e7d93d6e4714a59cac7e4f3"
+}
+{
+  "passed": 70,
+  "cases": [
+    "actual active or planned canonical state accepted without fixture mutation",
+    "canonical awaiting-start accepted with zero derived count",
+    "duplicate iteration rejected",
+    "cyclic dependency rejected",
+    "unknown dependency rejected",
+    "decreasing cumulative target rejected",
+    "active version without human authorization rejected",
+    "awaiting-start cannot claim implementation",
+    "released version without 108 qualified worlds rejected",
+    "nonexistent evidence rejected",
+    "future qualified production world derives counts without human conflation",
+    "invalidated record is removed from qualified and production counts",
+    "a missing grade cannot be replaced by overall world reviews",
+    "a passed grade cannot reuse evidence that only covers another grade",
+    "overall evidence without explicit grade coverage cannot qualify grade cases",
+    "each grade needs its own review evidence references",
+    "two verified grades are two cells, not one complete world",
+    "invalidating one grade removes its cell and complete world qualification",
+    "one dev grade blocks complete production but preserves internal qualification",
+    "production labels without integration evidence do not count",
+    "review runtime evidence is not production integration evidence",
+    "integration requires runtime evidence rather than source assertions",
+    "production entry without recovery evidence is incomplete",
+    "integration evidence cannot cross grade scope",
+    "integration evidence cannot cross revision",
+    "integration evidence cannot cross dependency hash",
+    "entry and recovery may be proved by separate runtime records",
+    "world target and grade target cannot be conflated",
+    "iteration grade target must equal three times world target",
+    "unknown fourth grade is rejected",
+    "world grade cannot claim an unapproved severity ID in evidence",
+    "all three grade designs must have actionable content",
+    "fourteen iterations are required",
+    "stale revision evidence cannot support current qualification",
+    "human approval cannot be fabricated from a runtime result",
+    "three pass labels without per-axis proof are rejected",
+    "manifest file mutation invalidates old hash",
+    "evidence from old dependencies cannot support a passed review",
+    "evidence from another world cannot support a passed review",
+    "review proof must be listed among world evidence",
+    "batch-scoped current human evidence records approval separately",
+    "verified iteration cannot claim an unproven revision",
+    "authorized waiting-user version state accepted",
+    "authorized paused version state accepted",
+    "authorized release-review version state accepted",
+    "future complete release requires 108 worlds, 324 grade cases and all declared gates",
+    "complete world count alone cannot bypass a missing release gate",
+    "duplicate release result rejected",
+    "undeclared release result rejected",
+    "release gate requires current revision evidence",
+    "duplicate planned release gate rejected",
+    "release gate points to an existing iteration",
+    "start authority cannot masquerade as final acceptance",
+    "start authority cannot masquerade as a release gate",
+    "a different release gate cannot cover this gate",
+    "a stale RC cannot support final acceptance",
+    "a stale manifest cannot support a release gate",
+    "the release manifest must match its actual file hash",
+    "release requires a release manifest",
+    "historical closure survives current invalidation but displays a qualification gap",
+    "a historical closure cannot permit release below current qualification",
+    "first closure cannot claim an empty snapshot for a positive target",
+    "unbound historical achievement cannot close an iteration",
+    "editing a historical snapshot invalidates its evidence binding",
+    "historical qualification requires complete grade cases",
+    "repository escape evidence rejected",
+    "directory cannot masquerade as evidence"
+  ],
+  "render": [
+    "source immutability",
+    "no executable/persistent browser state",
+    "JSON hash"
+  ]
+}
+{"packages":5,"grades":3,"dependencyHash":"7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42","dependencies":184,"check":true}
+{
+  "result": "pass",
+  "checks": [
+    "CSV compiles to installed DEV descriptors and canonical dependency manifest",
+    "Three map grades are distinct from age, entity coverage and personal chaos",
+    "Legacy demos cannot claim new-world eligibility, active grades or production scope",
+    "Unknown, duplicate, incompatible and unavailable capability versions reject",
+    "Missing grades, unknown references, duplicate world identities and malformed CSV reject",
+    "Exact installed version identity survives serialization but rejects tampering and substitution",
+    "Dependency manifest rejects scope escalation, hash tampering, traversal and duplicate paths",
+    "Real source mutation and newly imported dependency invalidate a previously compiled package"
+  ],
+  "packages": 5,
+  "activeGradedWorlds": 0,
+  "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42",
+  "dependencyFiles": 184,
+  "limitations": [
+    "DEV contract only; no grade gameplay, art approval or production selection enabled.",
+    "Source closure is conservative; an unchanged fingerprint is not a gameplay/art qualification.",
+    "Exact package comparison does not supply a frozen old-version executor or migrate saves."
+  ]
+}
+PASS immutable generation archive: 61 dependencies, 376195 bytes, no mutable imports, 330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074
+{"passed":5,"cases":["warmup","CPU submission distinct from intervals","unsupported heap","pause/hidden exclusion","bounded/reset sampling"]}
+PASS R100 measurement statistics, fixed cohorts, separate denominators, 60 s ceiling, budget failures, incomplete/invalid evidence and unmeasured browser gates

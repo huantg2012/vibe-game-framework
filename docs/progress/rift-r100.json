@@ -40,9 +40,9 @@
   },
   "resume": {
     "iteration": "R100-I02",
-    "batch": "R100-I02-B02 folded-slab structure/material revision",
-    "nextAction": "I02-B02：以三条不等厚层位同源生成折板厚体与材料，一端埋入地床，另一端在真实折轴错断；从低档固定入口复审。保留宽斜断面/G-buffer，修规则围台与重复纹理，未过不扩束/壳；P02移动CPU预算继续整改。",
-    "lastCompleted": "I01已交付302d529；I02-B01已提交e0a460d：原生试制与24秒巡查接通，工程回归通过，但第六轮美术及移动CPU预算未过。合格仍0世界/0格，I02未结单。"
+    "batch": "I01 correction complete; I02 implemented and independently image-reviewed",
+    "nextAction": "以03d4e4c的九格双种子原生母版继续验收；补实际声景审听与受控GC保留量验证、用户审美检查点。不要重开已修复的地表/吞光混淆，不假结I02，不计新世界。I03正式接入前仍须解决同步生成长尾。",
+    "lastCompleted": "I01绘制方法及普通景观/侵蚀语义纠偏完成；I02三材料九格、双seed128帧独立图像审核、原生65秒往返与60秒帧时、十次重建计数、真实受击修复及工程检查完成；0/108、0/324。"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -183,7 +183,8 @@
       ],
       "evidenceIds": [
         "R100-H-START",
-        "R100-E-I01"
+        "R100-E-I01",
+        "R100-E-I02-REBUILD"
       ],
       "targetGradeCases": 0,
       "achievement": {
@@ -193,6 +194,16 @@
         "evidenceIds": [
           "R100-E-I01"
         ]
+      },
+      "rework": {
+        "state": "closed",
+        "reason": "用户否决景观/吞光混淆与地面薄弱，保留旧恢复/包编译有效证据",
+        "task": "docs/tasks/rift-r100-i01.md",
+        "revision": "03d4e4c",
+        "evidenceIds": [
+          "R100-E-I02-REBUILD"
+        ],
+        "note": "普通材料/光照与侵蚀语义独立、绘制方法有实景证据；原302d529兼容底座历史达成保持。"
       }
     },
     {
@@ -203,8 +214,8 @@
       "dependencies": [
         "R100-I01"
       ],
-      "state": "active",
-      "stage": "implementation",
+      "state": "in-review",
+      "stage": "visual-review",
       "goal": "做出三种新构造与三档成品对照，先证明渲染和形体压迫；仍是待完整玩法审核的样板，不报合格世界数。",
       "technical": "统一几何进入通行/视线/内容准入；实现高体量排序与受光、束/板/壳三个共享形体算子及对应空间组织。 三种新包同步接入最小编译/冻结恢复与多种子、混合边界资格，此轮不给完整世界资格；I03补齐压力/准备/回报闭环再审。",
       "visual": "逐个完成真实角色尺度的材料与光影母版，再扩为整张原生地图；转折/断面/内腔必须成立，角色和敌人融入。 折叠板先做低/中/重同源样板，纤维和壳腔再迁移；三档都达到成品质量，重度有静帧压力和峰后可读间隙。",
@@ -224,14 +235,77 @@
         "三档母版、受控动态与现有搜撤承载关系可审；新增压力/准备/回报完整体验保持pending，转I03验证。"
       ],
       "exit": "三构造及其三级待验样板；美术人审检查点，合格计数仍0。压力机制及完整出行未通过前不扩产。",
-      "actualRevision": "e0a460d",
-      "gateResults": [],
+      "actualRevision": "03d4e4c",
+      "gateResults": [
+        {
+          "id": "terrain-erosion-semantics",
+          "status": "pass",
+          "revision": "03d4e4c",
+          "evidenceIds": [
+            "R100-E-I02-REBUILD"
+          ]
+        },
+        {
+          "id": "eighteen-native-material-cases",
+          "status": "pass",
+          "revision": "03d4e4c",
+          "evidenceIds": [
+            "R100-E-I02-REBUILD"
+          ]
+        },
+        {
+          "id": "independent-image-review",
+          "status": "pass",
+          "revision": "03d4e4c",
+          "evidenceIds": [
+            "R100-E-I02-REBUILD"
+          ]
+        },
+        {
+          "id": "native-60s-sample-cpu-frame-budget",
+          "status": "pass",
+          "revision": "03d4e4c",
+          "evidenceIds": [
+            "R100-E-I02-REBUILD"
+          ]
+        },
+        {
+          "id": "ten-rebuild-registry-counts",
+          "status": "pass",
+          "revision": "03d4e4c",
+          "evidenceIds": [
+            "R100-E-I02-REBUILD"
+          ]
+        },
+        {
+          "id": "native-hit-recovery-death",
+          "status": "pass",
+          "revision": "03d4e4c",
+          "evidenceIds": [
+            "R100-E-I02-REBUILD"
+          ]
+        },
+        {
+          "id": "actual-material-audio-listening",
+          "status": "pending"
+        },
+        {
+          "id": "controlled-retained-memory",
+          "status": "pending"
+        },
+        {
+          "id": "human-art-review",
+          "status": "pending"
+        }
+      ],
       "issueIds": [
         "R100-P02",
-        "R100-P03"
+        "R100-P03",
+        "R100-P04"
       ],
       "evidenceIds": [
-        "R100-E-I02-B01"
+        "R100-E-I02-B01",
+        "R100-E-I02-REBUILD"
       ],
       "targetGradeCases": 0
     },
@@ -658,6 +732,16 @@
       "path": "docs/qa/rift-r100-i02.md",
       "scope": "原生实体几何/CSV作者入口/视野与遮光/方向输入巡查的技术批次；低折板真实24秒巡查与独立六轮静帧美术裁决。",
       "limitations": "I02未完成。美术退回、CPU预算超标；新三级玩法、材料专声与完整物理动态未交付。自动巡查不代替人工体验。"
+    },
+    {
+      "id": "R100-E-I02-REBUILD",
+      "kind": "runtime",
+      "purpose": "scoped-rebuild-verification",
+      "iterationId": "R100-I02",
+      "revision": "03d4e4c",
+      "path": "docs/qa/rift-r100-i02.md",
+      "scope": "三材料九格×双seed的原生128帧与非作者图像审查；FOV/身体/近战语义分离；60秒持续输入帧时、十次重建公开计数及受击/死亡修复；I01绘制及显隐纠偏。",
+      "limitations": "仅作者DEV母版；普通路线巡查非自然完整搜撤。实际声景审听、受控GC保留量和用户认可未验，不构成I02全门结单或新世界/正式等级准入。"
     }
   ],
   "risks": [
@@ -740,27 +824,41 @@
     },
     {
       "id": "R100-P02",
-      "title": "固定原生短样本CPU提交超过12ms预算，须隔离长路线复测并约束新实体成本",
+      "title": "新增材料地段单样本CPU已达标；完整负载及GC保留量仍需验证",
       "severity": "P2",
       "status": "open",
       "iteration": "R100-I02",
       "owner": "code/art",
       "evidenceIds": [
-        "R100-E-I01"
+        "R100-E-I01",
+        "R100-E-I02-REBUILD"
       ],
-      "note": "I01并行负载下三固定视口12s样本p95为18.6/16.7/13.0ms；不是GPU或长路线资格。 I02低折板R4移动12秒段：frame p95 20.1ms，CPU p95 18.9ms；24秒巡查完成但不是60秒/GPU/回收资格。"
+      "note": "I01并行负载下三固定视口12s样本p95为18.6/16.7/13.0ms；不是GPU或长路线资格。 I02低折板R4移动12秒段：frame p95 20.1ms，CPU p95 18.9ms；24秒巡查完成但不是60秒/GPU/回收资格。 03d4e4c：原生壳重档安全往返60s frame p95 8.7ms/p99 10.2ms、CPU p95 1.9ms通过本样本；18格显式CPU驻留上界24.381MiB、十次重建计数稳定。不能外推整池/战斗/GPU/GC后保留量，通过部分不覆盖未测部分。"
     },
     {
       "id": "R100-P03",
       "title": "折板母版仍呈规则围台/重复纹理，未达到材料与世界身份门槛",
       "severity": "P1",
-      "status": "open",
+      "status": "resolved",
       "iteration": "R100-I02",
       "owner": "art/code",
       "evidenceIds": [
-        "R100-E-I02-B01"
+        "R100-E-I02-REBUILD"
       ],
-      "note": "R4只证明宽斜断面与肩灯关系；下一批以不等厚层位同源改几何和材质，禁止扩产或计合格世界。"
+      "note": "独立实看18组128帧后，旧平灰贴斑/孤立梁已不再是整体症状，三材料、接地与普通背光成立；折板长硬折缝P3意见保留给人审，不冒充用户认可。",
+      "revision": "03d4e4c"
+    },
+    {
+      "id": "R100-P04",
+      "title": "材料声音实际审听与视听同步尚无可听验收证据",
+      "severity": "P2",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "art/audio",
+      "evidenceIds": [
+        "R100-E-I02-REBUILD"
+      ],
+      "note": "真实原生资源和最多两声部播放已接，47项行为与音源检查通过；未实际听到，不以文件/波形/测试代签最终混音与听感。"
     }
   ],
   "changeLog": [
@@ -788,6 +886,11 @@
       "date": "2026-10-03",
       "kind": "implementation-checkpoint",
       "note": "I02首技术批次落地并实走；六轮美术记录退回，保留厚体宽截面方法，下一批三层位同源。不结I02、不扩产、不计世界。"
+    },
+    {
+      "date": "2026-10-03",
+      "kind": "rebuild-review",
+      "note": "03d4e4c重做地床/三材料及吞光语义；I01纠偏重结。I02实现与独立图像审核完成，真实65s输入/60s采样和十次重建有界；听感/受控GC及人审仍待验，状态in-review，0世界0格。"
     }
   ],
   "qualityPlan": {

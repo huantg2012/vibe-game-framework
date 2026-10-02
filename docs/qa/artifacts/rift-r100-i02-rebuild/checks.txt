@@ -1,0 +1,565 @@
+
+> coh@0.1.0 check:r100-masters
+> node tools/world-study/generate-master-scenes.mjs --check && node --import tsx tools/world-study/check-native-volumes.ts && node --import tsx tools/world-study/check-native-shadow-cache.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-native-volume-visibility.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-scenes.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-patrol.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-semantics.ts && node --import tsx tools/world-study/check-master-ground.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-render-contract.ts && node tools/world-study/generate-master-materials.mjs --check && node --import tsx tools/world-study/check-painted-material.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-audio.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-resources.ts --self-test && npm run check:player-hit-flash
+
+9 art-lab scenes / 3 families × 3 grades: CSV and generated data match
+{
+  "status": "pass",
+  "checks": 63,
+  "metrics": [
+    {
+      "family": "folded-slab",
+      "triangles": 222,
+      "matterPixels": 21310,
+      "physicalCells": 383,
+      "opticalCells": 141,
+      "lampChangedPixels": 17501,
+      "shadowedSamples": 253,
+      "normalTriangles": 222,
+      "distinctPlanes": 162,
+      "upwardArea": 47246.90574455576,
+      "lateralArea": 15148.09216502847,
+      "projectedCutArea": 5762.577140880167,
+      "elapsedMs": 7.7378750000000025
+    },
+    {
+      "family": "fibre-knot",
+      "triangles": 3276,
+      "matterPixels": 10715,
+      "physicalCells": 225,
+      "opticalCells": 154,
+      "lampChangedPixels": 5326,
+      "shadowedSamples": 478,
+      "normalTriangles": 3276,
+      "distinctPlanes": 1811,
+      "upwardArea": 14562.174257869023,
+      "lateralArea": 15531.744341963984,
+      "projectedCutArea": 0.00019060057820752263,
+      "elapsedMs": 5.433458000000002
+    },
+    {
+      "family": "broken-shell",
+      "triangles": 3518,
+      "matterPixels": 24796,
+      "physicalCells": 433,
+      "opticalCells": 198,
+      "lampChangedPixels": 9922,
+      "shadowedSamples": 438,
+      "normalTriangles": 3516,
+      "distinctPlanes": 1611,
+      "upwardArea": 9516.980051197836,
+      "lateralArea": 31158.160765907745,
+      "projectedCutArea": 8508.016871208209,
+      "elapsedMs": 1.954416999999978
+    }
+  ]
+}
+{"checked":5310,"changed":1734,"rotatedSamples":36,"nonFlatSamples":36,"passed":["all-axis invalidation","stationary reuse","colour/intensity independent","empty receivers","shadow mode changes","material-frame rotation","rotated lighting equivalence","cut-face normal isolation","zero authoritative visibility"]}
+{"checked":16900,"wallSurfaces":1920,"outside":12640,"passed":["same gameplay LOS","finite range/facing","same bands","chaos modulation","near-foot safety"]}
+{
+  "checks": 24,
+  "status": "pass",
+  "scope": "18 authored family/grade/seed geometry-first native-body admissions; invalid seeds; not production/world/art qualification",
+  "results": [
+    {
+      "id": "folded-slab-low",
+      "seed": 20261002,
+      "geometryFingerprint": "60148c40",
+      "seats": 6648,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 30739
+    },
+    {
+      "id": "folded-slab-low",
+      "seed": 20261003,
+      "geometryFingerprint": "80936664",
+      "seats": 6648,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 30910
+    },
+    {
+      "id": "folded-slab-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "e142ebcc",
+      "seats": 5950,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 59384
+    },
+    {
+      "id": "folded-slab-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "d17f1364",
+      "seats": 5950,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 59538
+    },
+    {
+      "id": "folded-slab-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "cdf17c02",
+      "seats": 4631,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 102019
+    },
+    {
+      "id": "folded-slab-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "ecea0dbd",
+      "seats": 4633,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 102226
+    },
+    {
+      "id": "fibre-knot-low",
+      "seed": 20261002,
+      "geometryFingerprint": "08eacd86",
+      "seats": 6781,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 12083
+    },
+    {
+      "id": "fibre-knot-low",
+      "seed": 20261003,
+      "geometryFingerprint": "4f67df07",
+      "seats": 6781,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 12097
+    },
+    {
+      "id": "fibre-knot-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "eb2cf06d",
+      "seats": 6206,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 25621
+    },
+    {
+      "id": "fibre-knot-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "9263fe0d",
+      "seats": 6210,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 25629
+    },
+    {
+      "id": "fibre-knot-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "e1fc4aca",
+      "seats": 5190,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 47038
+    },
+    {
+      "id": "fibre-knot-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "55d7a148",
+      "seats": 5193,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 47080
+    },
+    {
+      "id": "broken-shell-low",
+      "seed": 20261002,
+      "geometryFingerprint": "591f428a",
+      "seats": 6659,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 38631
+    },
+    {
+      "id": "broken-shell-low",
+      "seed": 20261003,
+      "geometryFingerprint": "b6353c0a",
+      "seats": 6659,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 38631
+    },
+    {
+      "id": "broken-shell-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "f401d16f",
+      "seats": 5808,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 68811
+    },
+    {
+      "id": "broken-shell-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "70a011ab",
+      "seats": 5808,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 68811
+    },
+    {
+      "id": "broken-shell-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "a64517c1",
+      "seats": 4195,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 120907
+    },
+    {
+      "id": "broken-shell-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "30d9c129",
+      "seats": 4195,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 120907
+    }
+  ]
+}
+{
+  "status": "pass",
+  "checks": [
+    "native-keyboard-default",
+    "diagonal-normalization",
+    "external-normalization",
+    "keyboard-priority",
+    "freeze",
+    "invalid-intent",
+    "callback-clear",
+    "route-follow",
+    "manual-cancel",
+    "pause-stop",
+    "blocked-exit",
+    "3-folded-body-safe-routes"
+  ],
+  "results": [
+    {
+      "id": "folded-slab-low",
+      "distance": 1360,
+      "points": 170,
+      "stations": [
+        {
+          "name": "侧缘",
+          "position": {
+            "x": 268,
+            "y": 276
+          },
+          "index": 13
+        },
+        {
+          "name": "背面",
+          "position": {
+            "x": 436,
+            "y": 172
+          },
+          "index": 47
+        },
+        {
+          "name": "另一侧缘",
+          "position": {
+            "x": 628,
+            "y": 236
+          },
+          "index": 79
+        },
+        {
+          "name": "搜取点",
+          "position": {
+            "x": 548,
+            "y": 420
+          },
+          "index": 128
+        },
+        {
+          "name": "回到入口",
+          "position": {
+            "x": 260,
+            "y": 380
+          },
+          "index": 169
+        }
+      ]
+    },
+    {
+      "id": "folded-slab-medium",
+      "distance": 1376,
+      "points": 172,
+      "stations": [
+        {
+          "name": "侧缘",
+          "position": {
+            "x": 236,
+            "y": 276
+          },
+          "index": 15
+        },
+        {
+          "name": "背面",
+          "position": {
+            "x": 436,
+            "y": 156
+          },
+          "index": 55
+        },
+        {
+          "name": "另一侧缘",
+          "position": {
+            "x": 644,
+            "y": 276
+          },
+          "index": 96
+        },
+        {
+          "name": "搜取点",
+          "position": {
+            "x": 572,
+            "y": 436
+          },
+          "index": 125
+        },
+        {
+          "name": "回到入口",
+          "position": {
+            "x": 260,
+            "y": 380
+          },
+          "index": 171
+        }
+      ]
+    },
+    {
+      "id": "folded-slab-severe",
+      "distance": 2112,
+      "points": 264,
+      "stations": [
+        {
+          "name": "侧缘",
+          "position": {
+            "x": 140,
+            "y": 236
+          },
+          "index": 32
+        },
+        {
+          "name": "背面",
+          "position": {
+            "x": 436,
+            "y": 92
+          },
+          "index": 87
+        },
+        {
+          "name": "另一侧缘",
+          "position": {
+            "x": 724,
+            "y": 236
+          },
+          "index": 141
+        },
+        {
+          "name": "搜取点",
+          "position": {
+            "x": 620,
+            "y": 452
+          },
+          "index": 209
+        },
+        {
+          "name": "回到入口",
+          "position": {
+            "x": 260,
+            "y": 380
+          },
+          "index": 263
+        }
+      ]
+    }
+  ]
+}
+{
+  "status": "pass",
+  "scope": "9 authored cells: explicit scenery roles, 8px terrain/erosion, production visibility and real melee; no art or human approval",
+  "results": [
+    {
+      "id": "folded-slab-low",
+      "reliefSeats": 298,
+      "solidCells": 208,
+      "erosionCells": 37,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "folded-slab-medium",
+      "reliefSeats": 355,
+      "solidCells": 583,
+      "erosionCells": 212,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "folded-slab-severe",
+      "reliefSeats": 274,
+      "solidCells": 1307,
+      "erosionCells": 612,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "fibre-knot-low",
+      "reliefSeats": 125,
+      "solidCells": 97,
+      "erosionCells": 37,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "fibre-knot-medium",
+      "reliefSeats": 127,
+      "solidCells": 309,
+      "erosionCells": 212,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "fibre-knot-severe",
+      "reliefSeats": 149,
+      "solidCells": 696,
+      "erosionCells": 612,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "broken-shell-low",
+      "reliefSeats": 428,
+      "solidCells": 210,
+      "erosionCells": 37,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "broken-shell-medium",
+      "reliefSeats": 336,
+      "solidCells": 738,
+      "erosionCells": 212,
+      "landscapeRay": true,
+      "erosionRay": true
+    },
+    {
+      "id": "broken-shell-severe",
+      "reliefSeats": 12,
+      "solidCells": 1848,
+      "erosionCells": 612,
+      "landscapeRay": true,
+      "erosionRay": true
+    }
+  ]
+}
+Ground contract: deterministic material/deposit fields, support void, normal response, roughness/AO bounds and sampler checked. Visual quality requires the actual scene review.
+{"status":"pass","checks":["real authored world metadata fixture","seven GL initialization failures rollback","painted preparation failure rollback","matter-clipped uploads including painting","ground/volume height byte roundtrip","normal encoding","emission ownership","six RGBA allocations","light-count bounds","context-lost rejection","idempotent resource release","painted albedo and explicit event finish without geometry mutation","shared cached pixels remain read-only","cut UV versus world-axis material coordinates","seed-dependent pigment placement","inner/joint material response"],"scope":"CPU upload/lifecycle contract with fake GL; no GLSL execution, browser or visual approval"}
+3 painted material families: CSV and generated manifest match
+{"status":"pass","families":3,"sourceAttempts":6,"drawCalls":4,"nativePixelBuffers":3,"checks":["CSV validation/staleness","concurrent decode deduplication","native smoothing/size","pixel payload","decode/context/read retry","three-source cache reuse","scratch cleanup"],"scope":"fake Image/Canvas lifecycle; actual PNG decoding and visual integration require the browser"}
+{
+  "status": "pass",
+  "checks": 47,
+  "cases": [
+    "folded-slab: registered real dual-format sources",
+    "folded-slab: no damage, reward, enemy or player-action cues",
+    "folded-slab: first half of visible cycle is silent",
+    "folded-slab: one loading phase, stress and release per cycle",
+    "folded-slab: low priority, bounded gain and native source attenuation",
+    "folded-slab: updates reuse at most two owned voice IDs",
+    "folded-slab: explicit pause remains paused during active updates",
+    "folded-slab: mid-release resume consumes the partial cycle",
+    "folded-slab: destruction is idempotent and prevents replay",
+    "fibre-knot: registered real dual-format sources",
+    "fibre-knot: no damage, reward, enemy or player-action cues",
+    "fibre-knot: first half of visible cycle is silent",
+    "fibre-knot: one loading phase, stress and release per cycle",
+    "fibre-knot: low priority, bounded gain and native source attenuation",
+    "fibre-knot: updates reuse at most two owned voice IDs",
+    "fibre-knot: explicit pause remains paused during active updates",
+    "fibre-knot: mid-release resume consumes the partial cycle",
+    "fibre-knot: destruction is idempotent and prevents replay",
+    "broken-shell: registered real dual-format sources",
+    "broken-shell: no damage, reward, enemy or player-action cues",
+    "broken-shell: first half of visible cycle is silent",
+    "broken-shell: one loading phase, stress and release per cycle",
+    "broken-shell: low priority, bounded gain and native source attenuation",
+    "broken-shell: updates reuse at most two owned voice IDs",
+    "broken-shell: explicit pause remains paused during active updates",
+    "broken-shell: mid-release resume consumes the partial cycle",
+    "broken-shell: destruction is idempotent and prevents replay",
+    "grade changes strength without changing cue count or priority",
+    "same seed produces identical envelope despite distinct owners",
+    "motion disable stops once and does not silently unpause explicit pause",
+    "forward jump consumes unobserved pressure and rearms after quiet",
+    "backward clock consumes unobserved pressure and rearms after quiet",
+    "exactly 500 ms is a regular update, not a suspended-tab backlog",
+    "starting in high pressure never invents loading or release",
+    "explicit synchronization consumes partial cycle without catch-up",
+    "threshold jitter does not duplicate stress or release",
+    "audibility uses world distance with full, partial and zero ranges",
+    "left/right pan follows source and is bounded before cutoff",
+    "moving into range cannot replay an inaudible stress event",
+    "one nearest source remains locked through the cycle",
+    "missing and nonfinite source locations never produce audio",
+    "disappearing source releases the owned loading voice",
+    "nonfinite time releases voices and resets recovery",
+    "nonfinite pressure releases voices and resets recovery",
+    "nonfinite listener releases voices and resets recovery",
+    "pressure outside authored range is safely clamped",
+    "separate controllers cannot stop another controller’s voice"
+  ],
+  "scope": "File registration/headers and injected-port CPU behavior only; no browser playback, actual listening, final mix or aesthetic approval"
+}
+PASS unique backing stores, view offsets/aliases, object cycles, hidden closure allocation accounting and constructor restoration
+
+> coh@0.1.0 check:player-hit-flash
+> tsx --tsconfig tools/contam-preview/tsconfig.json tools/contamination-lexicon/check-player-hit-flash.ts
+
+check:player-hit-flash ok (native transparent pixels, split torso/feet, live frame, original mask/tint, clocks, pause/sleep/end/reset/death/destroy)

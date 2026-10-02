@@ -122,7 +122,8 @@
       "COH-E-HIST-PRODUCTION",
       "COH-E119",
       "COH-E120",
-      "COH-E126"
+      "COH-E126",
+      "COH-E127"
     ],
     "unknowns": [
       "支持范围为已有材料/单层碰撞能力内的有界条件链；完整24维设计、罕见世界供给和历史新奇权重尚未完成。",
@@ -229,7 +230,8 @@
       "COH-E-SRC-world",
       "COH-E-HIST-PRODUCTION",
       "COH-E119",
-      "COH-E120"
+      "COH-E120",
+      "COH-E127"
     ],
     "unknowns": [
       "v1与无generation旧局维持旧地面/地标表现；新的material随机支流与地标不改变可走碰撞。未实现多层可行走、高体积阻挡景观或动态改碰撞。",
@@ -395,14 +397,14 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100已获启动授权。I01已实现旧生成执行器封存、CSV世界/三级DEV合同和测量入口；32自然样本冷恢复通过，发现秒级同步生成长尾。108世界/324等级开发继续，当前新世界与新等级合格数均为0。 I02已有原生实体试制/九格作者配置及实际沿边巡查；美术与性能仍退回，不构成母版或世界通过。",
+    "summary": "R100已启动108世界/324等级大版本。I01保留旧生成执行器、CSV包及测量底座，普通景观/吞光语义与制作方法纠偏完成。03d4e4c已实现三材料九档DEV地段，两种子128帧独立图像审核、65秒原生往返及60秒CPU/帧时、十次重建计数与受击修复完成；实际声景听验、受控GC保留量及人审待验。仍0新世界/0等级资格，正式出击池不由作者样板替换。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "净化点 → 备行 → 正式新出击v2：已落地有界3过程子集（COH-F011/012/013）；完整24维能力未全实现",
       "离线资格编译 tools/world-study/compile-world-library.ts；有限机器资格不是逐包人审入库",
       "R100进度 docs/reading/rift-r100.html；I01最小包 npm run check:r100；首组三档母版制作单 docs/art/rift-r100-masters.md",
-      "DEV原生试制 rift-r100-masters.html；npm run check:r100-masters；美术/性能未过，不属正式生成池"
+      "DEV原生母版 rift-r100-masters.html；18组实际图 docs/qa/interactive/r100-i02-rebuild.html；npm run check:r100-masters；不属正式生成池"
     ],
     "sources": [
       {
@@ -601,6 +603,82 @@
       {
         "path": "src/dev/rift-r100-masters/world.ts",
         "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/master-ground-field.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/surface-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/audio.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/painted-material.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/generated-materials.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-master-materials.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/world-study/check-master-semantics.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-ground.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-render-contract.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-audio.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-painted-material.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/generate-master-materials.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/render-master-ground.ts",
+        "role": "test"
+      },
+      {
+        "path": "public/assets/r100-materials/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/world-study/check-master-resources.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/render-master-review.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i02-rebuild.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02-visual-review-2026-10-03.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -620,12 +698,13 @@
       "COH-E123",
       "COH-E124",
       "COH-E125",
-      "COH-E126"
+      "COH-E126",
+      "COH-E127"
     ],
     "unknowns": [
       "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
-      "R100 I01底座和有限测量已完成；108世界/324等级、三级可玩母版、知情选级/周期压力/等级回报尚未实现。现行同步生成样本最长15.365s与冷恢复p95 8.331s需整改；12s静止帧时不证明移动/重度/GPU/回收达标。相关经济与准备验证纳入R100，不相关I28/四B边界保持。内部审查不代签用户认可。"
+      "I02材料/图像审核与本次60s原生样本完成，实际听感、受控GC及用户审美未验，不代签全门结单。108世界/324等级、知情选级/周期压力/等级回报尚未实现；正式同步生成最长15.365s及冷恢复p95 8.331s仍待I03整改，不由DEV帧时通过抵消。"
     ]
   }
 ]
