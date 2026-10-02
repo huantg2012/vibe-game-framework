@@ -45,6 +45,11 @@
       {
         "path": "docs/dev/rift-world-study.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
+        "role": "doc",
+        "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
       }
     ],
     "dependsOn": [
@@ -53,10 +58,12 @@
     ],
     "evidence": [
       "COH-E-SRC-world",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E119"
     ],
     "unknowns": [
-      "当前池是有限已实现配方，不是设计提案中完整条件泛空间；rift-world-space 历史段仍有“未接生产”，以本条生产入口及正式 spec 为范围依据。"
+      "当前池是有限已实现配方，不是设计提案中完整条件泛空间；rift-world-space 历史段仍有“未接生产”，以本条生产入口及正式 spec 为范围依据。",
+      "2026-10-02概要审查：14个固定正式样本通过只支持生成合同；当前缺少按世界/空间划分的未筛选种子拒绝率、重试尾部与加载耗时分布，长期采样保持挂起。"
     ]
   },
   {
@@ -105,6 +112,11 @@
       {
         "path": "docs/design-notes/rift-world-space.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
+        "role": "doc",
+        "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
       }
     ],
     "dependsOn": [
@@ -112,10 +124,12 @@
     ],
     "evidence": [
       "COH-E-SRC-world",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E119"
     ],
     "unknowns": [
-      "旧地面路径保留给旧在途地图；不能把新地表的验证外推到未生成的新材质能力。"
+      "旧地面路径保留给旧在途地图；不能把新地表的验证外推到未生成的新材质能力。",
+      "2026-10-02同seed1002007的十组合原始地表对照仅支持材料/空间静帧判断；地点身份、主形家族重复与贴附感仍有余量，不证明正常视野下的动态完整审美或用户认可。"
     ]
   },
   {
@@ -169,6 +183,11 @@
         "path": "src/scenes/rift-map-data.ts",
         "role": "code",
         "note": "Slice 1 固定图未作为当前新出击布局；rift-layout 仍读取其旧撤离坐标作为禁止生成的参照，故不是完全死文件。"
+      },
+      {
+        "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
+        "role": "doc",
+        "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
       }
     ],
     "dependsOn": [
@@ -178,10 +197,13 @@
     ],
     "evidence": [
       "COH-E-SRC-world",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E119"
     ],
     "unknowns": [
-      "新世界配方不自动带来新敌人技能；候选当前沿用正式旧图书馆内容方言。"
+      "新世界配方不自动带来新敌人技能；候选当前沿用正式旧图书馆内容方言。",
+      "2026-10-02审查RG-01：双路径准入证明替代路线存在，尚未保证时间、暴露与收益形成可读取舍；需正常视野下对照保守撤离与多搜一个深区点。",
+      "2026-10-02审查RG-02/03：深区距离条件与搜撤规格存在差距，资源风险分档先于最终敌人形态替换且未重评；现有FLOOR/VOID宿主图没有占墙落点，复用方言不等于覆盖全部形态。实际分档偏差频率仍未测得。"
     ]
   },
   {
@@ -251,6 +273,11 @@
       {
         "path": "docs/tasks/iteration-26.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
+        "role": "doc",
+        "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
       }
     ],
     "dependsOn": [
@@ -259,10 +286,12 @@
       "COH-F013"
     ],
     "evidence": [
-      "COH-E-SRC-world"
+      "COH-E-SRC-world",
+      "COH-E119"
     ],
     "unknowns": [
-      "完整条件约束求解、改写算子、罕见世界供给及语义部署尚不能视为已实现。"
+      "完整条件约束求解、改写算子、罕见世界供给及语义部署尚不能视为已实现。",
+      "2026-10-02概要审查只核对已落地子集与设计边界；建议的路线—威胁—收益取证尚未实施，不解锁完整条件空间或长期采样。"
     ]
   }
 ]

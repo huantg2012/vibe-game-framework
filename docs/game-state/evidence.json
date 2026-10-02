@@ -4418,5 +4418,68 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E119",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-02",
+    "revision": "5644b72",
+    "scope": "Rift生成概要审查的限定自动证据：check-production-map.ts在2026-10-02运行exit0，14/14通过，real3.32秒；包含原4个片龄/空间样本及5世界×2空间各seed1000，校核配额、完整身体/Host动画包络支撑、巡逻、双路与确定性重建，14例实际seed均等于请求seed。另导出seed1002007的十组合1792×1216原始地表并检查VOID纯黑、反射支撑和无彩色一致性。报告同时进行正式调用链/CSV/规格/旧审查整改状态的静态核对；F052仅核对设计边界，未实现或执行完整条件空间。",
+    "limitations": "十组合地表使用同一个种子对照，不是十个独立随机样本；14例是既定生成合同回归，不统计广泛拒绝分布，脚本未输出attempt/rejected。源码推断的路线取舍与资源风险分档问题未测得发生频率；未自然完成搜撤、长期重玩、五世界动态完整审美、音频审听或低端/长时性能。本轮未重跑恢复套件，历史恢复/用户接受检查点保留原范围；不提升人审或改动F052与长期采样的暂停状态。",
+    "sources": [
+      {
+        "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/artifacts/2026-10-02-rift-generation/production-map-check.log",
+        "role": "doc"
+      },
+      {
+        "path": "docs/reviews/artifacts/2026-10-02-rift-generation/terrain-manifest.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/world-study/check-production-map.ts",
+        "role": "test"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/rift-layout.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/dual-path.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/managers/rift-recovery.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-world-pool.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-spaces.csv",
+        "role": "data"
+      },
+      {
+        "path": "docs/specs/system-map-generation.md",
+        "role": "spec"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec"
+      }
+    ]
   }
 ]
